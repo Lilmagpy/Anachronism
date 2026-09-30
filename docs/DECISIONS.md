@@ -230,3 +230,32 @@ Per-province adoption can come later if the map needs it.
 The `year` of each core tech node (first historical appearance) is an approximate value from
 general knowledge, good enough for the fictional test world. Before real-history packs rely on
 them (Phase 5), each gets a source note and a confidence level.
+
+## D-041 Literacy fades without teaching — DELEGATED (Phase 1)
+A share of literacy (5% per decade) is lost each turn, so literacy effects set a sustainable
+level: writing alone sustains about 6%, printing and schools push toward 20-30%. Without this,
+writing alone reached 20% literacy and a careful player 70% by 600 BC, far above history.
+
+## D-042 Knowledge from everyone, not only the literate — DELEGATED
+A small base amount of knowledge comes from the whole population (crafts, lore, observation);
+literate people add much more. Otherwise a society without writing could never invent anything,
+yet steppe peoples invented riding and the composite bow.
+
+## D-043 Strain follows current conditions — DELEGATED
+Strain moves toward a target set by this turn's project shortfall, labour diversion and unpaid
+administration, instead of accumulating without limit. It measures how stressed society is now;
+unrest carries the memory.
+
+## D-044 Bots take actions only, with no randomness — DELEGATED
+Automated players choose actions from the state and nothing else, so bot-played games replay
+exactly from their action log. They run rival civilisations until Phase 4's scripts arrive.
+
+## D-045 `uv run anachronism` starts the text console until Phase 3 — DELEGATED
+One command to remember. When the window arrives, `anachronism` opens it and the text version
+stays available as `anachronism-console`.
+
+## D-046 First-pass balance, to tune with the owner — OPEN (Phase 7 per the brief)
+Current numbers make overextension collapse reliably and careful growth thrive. Known issues:
+a careful player is comfortable (the 55-node test tree is nearly exhausted by 600 BC) and
+suspicion bites only when the "witchcraft" or "fraud" framing comes up. The brief asks for the
+owner's help tuning suspicion; pacing is tuned when real content and conflict exist.

@@ -26,13 +26,33 @@ milestone. This page is for when you want to try the game yourself.
    uv run anachronism
    ```
 
-   The first run downloads Python 3.12 and the libraries (a minute or two). You should see:
+   The first run downloads Python 3.12 and the libraries (a minute or two), then the text
+   version of the game starts:
 
    ```
-   Anachronism 0.0.1
-   Python 3.12.x on macOS 26.x (arm64)
-   Setup works. There is nothing to play yet: the game engine arrives in Phase 1.
+   ANACHRONISM (working title) — Test world: Bronze Dawn, seed 123456
+   ─── Kingdom of Veyra ── 1200 BC ── turn 1 ───
+   People 370,000 →   literacy 3.0% →   unrest 8.0% →   legitimacy 60.0% →
+   ...
+   >
    ```
+
+## Playing the text version
+
+You guide the Kingdom of Veyra, a river kingdom in 1200 BC with full granaries but no iron.
+Type a command and press Return:
+
+- `ideas` — what your scholars could try now, with costs per turn
+- `about paper` — everything about one idea (what it needs, what it does)
+- `start paper` — begin experimenting; it costs labour, materials, knowledge and wealth
+  every turn until it is adopted
+- `end` — let ten years pass and see what happened
+- `help` — every command; `quit` to leave
+
+Try starting everything at once and watch what happens to your kingdom. Then try a
+careful game. `save mygame` and `load mygame` keep your progress in the `saves` folder.
+The same `--seed` and the same moves always give the same game:
+`uv run anachronism --seed 42`.
 
 ## Getting the latest version
 

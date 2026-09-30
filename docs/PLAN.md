@@ -1,7 +1,8 @@
 # Anachronism — Plan
 
-**Current phase:** Phase 1 — headless engine on a test world (branch `claude/phase-1-engine`).
-**Next action:** step 1.1.
+**Current phase:** Phase 1 gate — headless engine done; waiting for the owner's approval
+(merging the Phase 1 pull request).
+**Next action:** on approval, Phase 2 step 2.1.
 
 Each phase ends at a **gate**: Claude stops, summarises, shows how to run it, lists known
 problems, and waits for approval (D-002: approval = merging the phase PR).
@@ -17,20 +18,20 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] 0.6 SessionStart hook so cloud sessions can run tests and linters
 - [x] 0.7 Repo moved to `Lilmagpy/Anachronism` with `main` (D-033); gate passed 2026-09-30
 
-## Phase 1 — Headless engine on a test world
-- [ ] 1.1 `GameRng` (seeded, serialisable) + tests
-- [ ] 1.2 Content schemas + loader + linter for `core` and `testworld` packs
-- [ ] 1.3 Test world: 3 fictional civs, ~20 provinces, ~40 core tech nodes
-- [ ] 1.4 GameState models; save/load round-trip
-- [ ] 1.5 Resources: production, upkeep, free capacity, stat history
-- [ ] 1.6 Projects: funding, proportional shortfall, progress, decay
-- [ ] 1.7 Strain → unrest → collapse spiral
-- [ ] 1.8 Tech graph: stages, feasibility checks, goal stubs, effects + caps + stacking
-- [ ] 1.9 Suspicion
-- [ ] 1.10 Turn pipeline wiring; action log; replay
-- [ ] 1.11 Interactive console mode (`anachronism-console`)
-- [ ] 1.12 Bots + simulation tests (invariants over hundreds of turns, several seeds)
-- [ ] 1.13 Gate
+## Phase 1 — Headless engine on a test world (design: plans/phase-1.md)
+- [x] 1.1 `GameRng` (PCG32, seeded, serialisable) + integer maths helpers
+- [x] 1.2 Content schemas + loader + linter for `core` and `testworld` packs
+- [x] 1.3 Test world: 3 fictional civs, 20 provinces, 55 core tech nodes
+- [x] 1.4 GameState models; new game; save/load round-trip
+- [x] 1.5 Economy: workforce, surplus, production, upkeep, granary, history snapshots
+- [x] 1.6 Projects: priority funding, scarcest input, progress, luck, stalling, decay
+- [x] 1.7 Strain → unrest → riots → revolts → collapse spiral
+- [x] 1.8 Tech graph: stages, feasibility, goals, stubs, effects with caps and stacking
+- [x] 1.9 Suspicion and framings
+- [x] 1.10 Turn pipeline; action log; replay
+- [x] 1.11 Interactive console (`uv run anachronism`)
+- [x] 1.12 Bots, simulation tool, long-game invariant and balance tests
+- [ ] 1.13 Gate: owner reviews and merges the Phase 1 pull request
 
 ## Phase 2 — LLM ruling pipeline
 - [ ] 2.1 Output schemas; guard (validate, clamp, reject)

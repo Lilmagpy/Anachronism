@@ -9,6 +9,7 @@ updating `docs/PLAN.md` (checkboxes, current step) and logging decisions in `doc
 ## Docs
 - `docs/DESIGN.md` — game design · `docs/ARCHITECTURE.md` — modules, data flow, schemas
 - `docs/PLAN.md` — roadmap and current step · `docs/DECISIONS.md` — every decision and why
+- `docs/plans/phase-N.md` — the detailed design of each phase
 - `docs/CONTENT_GUIDE.md` — authoring packs · `docs/BRIEF.md` — owner's original master brief
 
 ## Owner and working style
@@ -36,8 +37,8 @@ updating `docs/PLAN.md` (checkboxes, current step) and logging decisions in `doc
 - Setup: `uv sync` (cloud sessions do this automatically via `.claude/hooks/session-start.sh`)
 - Everything CI runs: `scripts/check.sh` (ruff lint + format check, mypy, pytest)
 - Single steps: `uv run pytest` · `uv run ruff check .` · `uv run ruff format .` · `uv run mypy`
-- Launcher: `uv run anachronism`
-- From Phase 1: `uv run anachronism-console` (text play) · `uv run anachronism-lint` (content)
+- Play (text console until Phase 3): `uv run anachronism` (`--seed N` to reproduce a game)
+- Content check: `uv run anachronism-lint` · Balance runs: `uv run anachronism-sim --turns 60`
 
 ## Coding standards
 - Python 3.12, type hints everywhere, docstrings on public functions, small modules.
@@ -50,8 +51,11 @@ updating `docs/PLAN.md` (checkboxes, current step) and logging decisions in `doc
 ## Common pitfalls
 - The project repo is `Lilmagpy/Anachronism` (private). The old `Lilmagpy/Lilmagpy` profile
   repo is not used any more (D-033).
-- Floating-point drift breaks determinism across machines: store money-like values as ints
-  (fixed-point) in state.
+- No floats in the engine: integers and basis points only (D-035, `engine/fixed.py`).
+- Balance numbers live in `packs/core/rules.yaml`; adding a rule means schema + YAML + test.
+- Every unpaused project draws exactly two random numbers per turn; keep draw counts stable
+  when changing mechanics, or replays of old logs will differ (that is expected, but know it).
+- `end_turn`/`apply_action` deep-copy the state; frozen content is shared, never mutate it.
 - Don't let pygame_gui widgets hold game state — UI reads from engine state each frame.
 - Keep the LLM summary under ~500 tokens; include only related nodes.
 - Seshat data is CC BY-NC-SA and historical-basemaps is GPL-3.0: consult, don't copy (D-009).

@@ -4,7 +4,8 @@ A turn-based historical strategy game. You are the unseen hand behind a real civ
 real moment in history, feeding it ideas that don't exist yet, and discovering that knowing an
 idea is not the same as being able to build it.
 
-**Status:** Phase 0 (foundations) is complete; Phase 1 (the game engine) is in progress.
+**Status:** Phase 1 (the game engine) is built and playable as a text game:
+`uv run anachronism`. Phase 2 (the idea-ruling AI layer) is next.
 See [the plan](docs/PLAN.md).
 
 - **Try it on a Mac:** [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md)
