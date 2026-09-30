@@ -448,3 +448,10 @@ docs/history/three_kingdoms.md. A Japan-centred moment is left for later.
 Also tonight: an ally or tributary under attack pulls in its AI protectors, but the player
 is never dragged into a war automatically; their general asks instead.
 
+## D-070 Drafted content needs a real source before it ships — DELEGATED (2026-10-01)
+`uv run anachronism-draft --region "East Asia" --era classical` asks the model for new
+library ideas and writes them to `drafts/` (git-ignored), each marked as a draft. The
+`--promote` step refuses any entry still carrying the draft note, so an idea reaches a
+pack only after someone has checked its date and written a real source (brief §9.2:
+the model's memory is never the only source for shipped facts).
+

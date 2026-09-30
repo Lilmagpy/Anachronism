@@ -237,6 +237,16 @@ class Session:
         ]
         return {"entries": entries[-400:]}
 
+    def history(self, args: dict[str, Any]) -> dict[str, Any]:
+        """Each turn's key numbers for the player, and the population of every state."""
+        state = self.game()
+        mine = [snap.model_dump() for snap in state.civs[state.player_civ].history]
+        populations = {
+            civ_id: [snap.population for snap in civ.history]
+            for civ_id, civ in sorted(state.civs.items())
+        }
+        return {"player": mine, "populations": populations}
+
     def tree(self, args: dict[str, Any]) -> dict[str, Any]:
         """The whole tech graph from the player's point of view, for the tech tree screen."""
         state = self.game()
@@ -315,6 +325,7 @@ def handle(session: Session, line: str) -> tuple[dict[str, Any], bool]:
         "saves": session.saves,
         "chronicle": session.chronicle,
         "tree": session.tree,
+        "history": session.history,
         "settings": session.settings,
     }
     handler = commands.get(str(command))

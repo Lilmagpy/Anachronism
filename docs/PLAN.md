@@ -71,7 +71,8 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] 2.15a Screens (brief §11): pre-play disclaimer; a timeline of starting moments in the
       picker; in-game menu (Esc) with save, load, chronicle, tech tree (goal stubs, your
       own ideas marked) and settings (model status, offline switch); developer overlay (F3)
-- [ ] 2.15b Polish: charts over time, sound
+- [x] 2.15b Charts over time (menu → Charts): people, stores, society, the largest states
+- [ ] 2.15c Sound and music (needs CC0 assets)
 - [ ] 2.16 Gate: owner plays the new build on their Mac and merges the phase PR
 
 ## Phase 3 — LLM ruling pipeline (moved after the 3D world, D-049)
@@ -105,7 +106,9 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [ ] 4.9 Gate: owner review (scripts are drafts from general history; see D-066)
 
 ## Phase 5 — East Asia pilot
-- [ ] Finalise schemas; review workflow (`drafts/` → `packs/`); choose flagship scenario;
+- [x] Review workflow: `anachronism-draft` drafts ideas into git-ignored `drafts/`;
+      `--promote` moves only sourced, reviewed entries into a pack (D-070)
+- [ ] Finalise schemas; choose flagship scenario;
       author 8–10 civs; timeline UI; CJK fonts; balance pass; gate
 
 ## Phase 6 — Europe (schema stress test) + steppe connector; gate

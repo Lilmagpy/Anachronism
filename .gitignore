@@ -31,3 +31,6 @@ cache/
 # Mac app build (scripts/package_mac.sh)
 client/engine_src/
 build/
+
+# Model-drafted content awaiting review (brief §9.2)
+drafts/

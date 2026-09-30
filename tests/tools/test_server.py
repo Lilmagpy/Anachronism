@@ -169,6 +169,7 @@ def test_menu_commands(tmp_path: Path) -> None:
             {"id": 5, "cmd": "chronicle"},
             {"id": 6, "cmd": "tree"},
             {"id": 7, "cmd": "act", "args": {"action": {"kind": "envoy", "target": "normandy"}}},
+            {"id": 8, "cmd": "history"},
         ],
         tmp_path,
     )
@@ -181,3 +182,6 @@ def test_menu_commands(tmp_path: Path) -> None:
     view = replies[6]["result"]["view"]
     assert "victory" in view
     assert any(c["relation"] == "trading" for c in view["civs"] if c["id"] == "normandy")
+    history = replies[7]["result"]
+    assert len(history["player"]) == 2
+    assert len(history["populations"]["england"]) == 2

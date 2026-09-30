@@ -38,7 +38,7 @@ func open_menu() -> void:
 	var body := VBoxContainer.new()
 	body.add_theme_constant_override("separation", 10)
 	for entry in [["Save game", open_save], ["Load game", open_load], ["Chronicle", open_chronicle],
-			["Tech tree", open_tree], ["Settings", open_settings], ["Quit to title", func():
+			["Charts", open_charts], ["Tech tree", open_tree], ["Settings", open_settings], ["Quit to title", func():
 				close()
 				quit_to_title.emit()]]:
 		var button := UiStyle.big_button(entry[0], 22, UiStyle.GOLD if entry[0] != "Quit to title" else Color(0.85, 0.8, 0.7))
@@ -142,6 +142,38 @@ func open_chronicle() -> void:
 		var colour := UiStyle.INK if entry["mine"] else UiStyle.INK_SOFT
 		body.add_child(UiStyle.wrapped("• " + str(entry["message"]), 15, colour, 660))
 	_open("Chronicle", body, Vector2(720, 0), true)
+
+
+func open_charts() -> void:
+	var reply: Variant = bridge.request("history")
+	if reply == null:
+		message.emit(bridge.last_error)
+		return
+	var turns: Array = reply["player"]
+	var years: Array = turns.map(func(t): return t["year"])
+	var pick := func(field: String) -> Array: return turns.map(func(t): return t[field])
+	var grid := GridContainer.new()
+	grid.columns = 2
+	grid.add_theme_constant_override("h_separation", 20)
+	grid.add_theme_constant_override("v_separation", 14)
+	var charts := [
+		["Your people", [["People", Color(0.2, 0.45, 0.8), pick.call("population")]], false],
+		["Your stores", [["Food", Color(0.85, 0.65, 0.15), pick.call("food")], ["Materials", Color(0.5, 0.45, 0.4), pick.call("materials")],
+			["Wealth", Color(0.9, 0.75, 0.2), pick.call("wealth")], ["Knowledge", Color(0.3, 0.55, 0.3), pick.call("knowledge")]], false],
+		["Your society", [["Literacy", Color(0.2, 0.5, 0.7), pick.call("literacy_bp")], ["Unrest", Color(0.8, 0.3, 0.15), pick.call("unrest_bp")],
+			["Legitimacy", Color(0.85, 0.65, 0.1), pick.call("legitimacy_bp")], ["Suspicion", Color(0.45, 0.3, 0.6), pick.call("suspicion_bp")]], true],
+	]
+	var biggest: Array = reply["populations"].keys()
+	biggest.sort_custom(func(a, b): return reply["populations"][a][-1] > reply["populations"][b][-1])
+	var states: Array = []
+	for civ_id in biggest.slice(0, 5):
+		states.append([str(civ_id).capitalize().replace("_", " "), Color.from_hsv(float(states.size()) / 5.0, 0.6, 0.75), reply["populations"][civ_id]])
+	charts.append(["The largest states", states, false])
+	for entry in charts:
+		var chart := Charts.new()
+		chart.setup(entry[0], years, entry[1], entry[2])
+		grid.add_child(chart)
+	_open("Charts", grid, Vector2(1320, 0))
 
 
 func open_tree() -> void:
