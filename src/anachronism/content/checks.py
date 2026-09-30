@@ -2,11 +2,20 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from itertools import pairwise
 
 from anachronism.content.issues import ContentIssue
 from anachronism.content.registry import Registry
-from anachronism.content.schema import MOMENTS, NUMERIC_EFFECTS, SPECIAL_SPEAKERS, EffectType, Stage
+from anachronism.content.schema import (
+    MOMENTS,
+    NUMERIC_EFFECTS,
+    SPECIAL_SPEAKERS,
+    EffectType,
+    Scenario,
+    ScriptGoal,
+    Stage,
+)
 
 
 def cross_reference_issues(registry: Registry) -> list[ContentIssue]:
@@ -223,6 +232,7 @@ def _scenario_issues(registry: Registry) -> list[ContentIssue]:
                             )
                 if stage is Stage.EXPERIMENTING:
                     report(f"{civ_id}: {tech_id!r} cannot start mid-experiment")
+        _rival_issues(registry, scenario, report)
         for province in claimed:
             if registry.is_unknown("provinces", province):
                 report(f"unknown province {province!r}")
@@ -233,3 +243,36 @@ def _scenario_issues(registry: Registry) -> list[ContentIssue]:
                 elif scenario.map is None and geography.position is None:
                     report(f"province {province!r} has no map position")
     return issues
+
+
+def _rival_issues(registry: Registry, scenario: Scenario, report: Callable[[str], None]) -> None:
+    """Scripts and relations must name civilisations of the scenario and known ideas."""
+    script_ids: set[str] = set()
+    for start in scenario.civs.values():
+        script_ids.update(script.id for script in start.scripts)
+    seen: set[str] = set()
+    for civ_id, start in scenario.civs.items():
+        for script in start.scripts:
+            if script.id in seen:
+                report(f"{civ_id}: script {script.id!r} is defined twice")
+            seen.add(script.id)
+            if script.goal is ScriptGoal.ADOPT:
+                if registry.is_unknown("techs", script.target):
+                    report(f"{civ_id}: script {script.id!r} adopts unknown tech {script.target!r}")
+            elif script.target not in scenario.civs or script.target == civ_id:
+                report(f"{civ_id}: script {script.id!r} targets {script.target!r}: not a rival")
+            for tech_id in script.preconditions.adopted:
+                if registry.is_unknown("techs", tech_id):
+                    report(f"{civ_id}: script {script.id!r} needs unknown tech {tech_id!r}")
+            for dependency in script.depends_on:
+                if dependency not in script_ids:
+                    report(f"{civ_id}: script {script.id!r} depends on unknown {dependency!r}")
+    pairs: set[tuple[str, str]] = set()
+    for relation in scenario.relations:
+        for civ_id in (relation.a, relation.b):
+            if civ_id not in scenario.civs:
+                report(f"relation names {civ_id!r}, not a civilisation of the scenario")
+        pair = (min(relation.a, relation.b), max(relation.a, relation.b))
+        if pair in pairs:
+            report(f"relation {pair[0]}-{pair[1]} is listed twice")
+        pairs.add(pair)

@@ -83,8 +83,20 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [ ] 3.9 Gate (owner needs an Anthropic API key and a model name for live testing)
 
 ## Phase 4 — Scripts, awareness, information (headless)
-- [ ] Scripts with preconditions; awareness states; news propagation with garbling;
-      script dependency graph; relations with memory; intelligence reports; tech leakage; gate
+- [x] 4.1 Scripts with preconditions (conquer / ally / trade / adopt), per civ per scenario,
+      lapsing when their moment passes; dependency graph (lapses ripple) (D-066)
+- [x] 4.2 Awareness: on-script → aware (heard news) → free agent (grudge, war, conquest);
+      rulers' dispositions steer free agents
+- [x] 4.3 News of anachronistic adoptions travels border by border, faster along friendly
+      ties and with suspicion, slower with secrecy; far news garbled, truth later;
+      intelligence reports ("Chu has learned of your Paper"); rivals copy what they hear
+- [x] 4.4 Relations with memory (grievances fade slowly); alliances join defensive wars
+- [x] 4.5 Abstract war: strength from workforce, military effects and legitimacy; frontier
+      captures, losses, weariness, peace; capitals move; states can be destroyed (D-067)
+- [x] 4.6 Player diplomacy: envoy, alliance, war, peace; World tab; war fronts on the map
+- [x] 4.7 Tiered victory (regional for now): military, economic, cultural; defeat (D-068)
+- [x] 4.8 Historical scripts and relations for all four starting moments
+- [ ] 4.9 Gate: owner review (scripts are drafts from general history; see D-066)
 
 ## Phase 5 — East Asia pilot
 - [ ] Finalise schemas; review workflow (`drafts/` → `packs/`); choose flagship scenario;

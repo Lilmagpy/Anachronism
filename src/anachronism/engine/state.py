@@ -12,12 +12,15 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from anachronism.content.schema import (
     Access,
+    Disposition,
     EffectType,
     Era,
     Frozen,
     MapResource,
     ProvinceGeography,
+    RelationStatus,
     Rules,
+    Script,
     SeaZone,
     SocialGroup,
     Stage,
@@ -65,6 +68,8 @@ class World(Frozen):
     """Real-Earth map region, or ``None`` for a generated map."""
     cost_scale: int = 1
     """Multiplier on every project cost (see ``Scenario.cost_scale``)."""
+    scripts: dict[str, tuple[Script, ...]] = Field(default_factory=dict)
+    """Each civilisation's intentions (brief §7.1), from the scenario."""
 
 
 class ProvinceState(Mutable):
@@ -136,6 +141,63 @@ class Snapshot(Mutable):
     strain_bp: int
 
 
+class Awareness(StrEnum):
+    """How far a rival has noticed the player's meddling (brief §7.2)."""
+
+    ON_SCRIPT = "on_script"
+    """Untouched: plays out its own history."""
+    AWARE = "aware"
+    """Has heard something; still follows its plans, but reacts (copies, grows wary)."""
+    FREE_AGENT = "free_agent"
+    """Knocked off its script: acts on its ruler's temperament and its situation."""
+
+
+class Heard(Mutable):
+    """News a civilisation has received about another's advancement (brief §7.3)."""
+
+    about: str
+    node_id: str
+    turn: int
+    garbled: bool
+    """Garbled news ("strange fire weapons") makes a rival wary but gives nothing to copy."""
+
+
+class NewsInTransit(Mutable):
+    """News on its way along trade routes, envoys, refugees and soldiers."""
+
+    to_civ: str
+    about: str
+    node_id: str
+    arrives_turn: int
+    garbled: bool
+
+
+class Relation(Mutable):
+    """How two civilisations stand, with the memory of what passed between them (§7.5)."""
+
+    status: RelationStatus
+    since_turn: int = 0
+    grievance: dict[str, int] = Field(default_factory=dict)
+    """Each side's grudge against the other, in basis points."""
+    weariness: dict[str, int] = Field(default_factory=dict)
+    """During a war: how tired of it each side is."""
+    losses: dict[str, int] = Field(default_factory=dict)
+    """During a war: provinces each side has lost."""
+
+
+class Outcome(Mutable):
+    """How the game ended for the player (DESIGN §11)."""
+
+    result: str
+    """``victory`` or ``defeat``."""
+    path: str
+    """``military``, ``economic``, ``cultural`` or ``collapse``."""
+    tier: str
+    """``regional`` for now; hemispheric and world need several regions (Phase 8)."""
+    turn: int
+    year: int
+
+
 class CivState(Mutable):
     """A civilisation in play."""
 
@@ -157,6 +219,9 @@ class CivState(Mutable):
     """Buildings and units unlocked by advancements (used from later phases)."""
     history: list[Snapshot] = Field(default_factory=list)
     collapsed: bool = False
+    disposition: Disposition = Disposition.CAUTIOUS
+    awareness: Awareness = Awareness.ON_SCRIPT
+    heard: list[Heard] = Field(default_factory=list)
 
 
 class Event(Mutable):
@@ -188,6 +253,16 @@ class GameState(Mutable):
     civs: dict[str, CivState]
     action_log: list[LoggedAction] = Field(default_factory=list)
     events: list[Event] = Field(default_factory=list)
+    relations: dict[str, Relation] = Field(default_factory=dict)
+    """Keyed ``"a|b"`` with the ids sorted; only pairs that can reach each other."""
+    news: list[NewsInTransit] = Field(default_factory=list)
+    scripts_fired: dict[str, int] = Field(default_factory=dict)
+    """Script id -> turn it fired."""
+    scripts_lapsed: dict[str, int] = Field(default_factory=dict)
+    """Script id -> turn it lapsed (its moment passed or what it needed failed)."""
+    outcome: Outcome | None = None
+    victory_start: dict[str, int] = Field(default_factory=dict)
+    """The player's share on each victory path at the start: victory means gaining ground."""
 
     def owned_provinces(self, civ_id: str) -> list[str]:
         """Ids of the provinces a civilisation owns, sorted."""

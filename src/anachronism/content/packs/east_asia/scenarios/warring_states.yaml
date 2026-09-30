@@ -15,6 +15,15 @@ scenarios:
     cost_scale: 10
     civs:
       qin:
+        disposition: aggressive
+        scripts:
+          - {id: "qin_takes_hexi", goal: "conquer", target: "wei", preconditions: {after_year: -345, min_strength_ratio_bp: 8000}, note: "Qin, remade by Shang Yang, defeats Wei and takes the Hexi lands west of the Yellow River (340-328 BC)."}
+          - {id: "qin_conquers_shu", goal: "conquer", target: "shu", preconditions: {after_year: -320, min_strength_ratio_bp: 13000}, note: "Sima Cuo leads Qin over the Qinling mountains and conquers Shu (316 BC)."}
+          - {id: "qin_conquers_ba", goal: "conquer", target: "ba", preconditions: {after_year: -320}, depends_on: ["qin_conquers_shu"], note: "Qin absorbs Ba in the same campaign (316 BC)."}
+          - {id: "qin_crushes_yiqu", goal: "conquer", target: "yiqu", preconditions: {after_year: -285}, note: "Queen Dowager Xuan destroys the Yiqu Rong (272 BC)."}
+          - {id: "qin_sacks_ying", goal: "conquer", target: "chu", preconditions: {after_year: -290, min_strength_ratio_bp: 11000}, depends_on: ["qin_conquers_shu"], note: "Bai Qi sacks Ying, the capital of Chu (278 BC)."}
+          - {id: "qin_at_changping", goal: "conquer", target: "zhao", preconditions: {after_year: -270, min_strength_ratio_bp: 11000}, note: "The battle of Changping breaks Zhao (260 BC)."}
+          - {id: "qin_takes_han", goal: "conquer", target: "han", preconditions: {after_year: -240, min_strength_ratio_bp: 15000}, note: "Han is the first of the six states to fall (230 BC)."}
         capital: qin_guanzhong
         leader: Duke Xiao
         pitch: "A poor, tough frontier state in the middle of radical reform. Turn Shang Yang's farmers and soldiers into the first empire - decades early."
@@ -55,6 +64,9 @@ scenarios:
           roads: adopted
           postal_relay: concept
       wei:
+        disposition: aggressive
+        scripts:
+          - {id: "wei_attacks_han", goal: "conquer", target: "han", preconditions: {after_year: -345}, note: "Wei attacks Han; Qi intervenes and destroys Wei's army at Maling (342 BC)."}
         capital: wei_daliang
         leader: Marquis Hui
         pitch: "The strongest state under Heaven, rich and well drilled, but ringed by jealous rivals on every side."
@@ -98,6 +110,9 @@ scenarios:
           canals: adopted
           blast_furnace: adopted
       zhao:
+        disposition: aggressive
+        scripts:
+          - {id: "zhao_takes_zhongshan", goal: "conquer", target: "zhongshan", preconditions: {after_year: -310}, note: "King Wuling, with his new mounted archers, conquers Zhongshan (296 BC)."}
         capital: zhao_handan
         leader: Marquis Cheng
         pitch: "Plains, iron and the horse frontier: learn from the steppe riders before they learn from you."
@@ -138,6 +153,7 @@ scenarios:
           roads: adopted
           coal_mining: concept
       han:
+        disposition: cautious
         capital: han_xinzheng
         leader: Marquis Zhao
         pitch: "Small and squeezed at the centre, with the best iron and crossbows in the world. Out-think your neighbours."
@@ -178,6 +194,7 @@ scenarios:
           roads: adopted
           blast_furnace: adopted
       zhou:
+        disposition: pious
         capital: zhou_luoyang
         leader: King Xian
         pitch: "The Son of Heaven, honoured by all and obeyed by none. Can ideas restore what armies lost?"
@@ -212,6 +229,11 @@ scenarios:
           iron_working: adopted
           schools: adopted
       qi:
+        disposition: mercantile
+        scripts:
+          - {id: "qi_saves_han", goal: "ally", target: "han", preconditions: {after_year: -345}, note: "Qi comes to Han's aid against Wei (342 BC)."}
+          - {id: "qi_occupies_yan", goal: "conquer", target: "yan", preconditions: {after_year: -320, target_min_unrest_bp: 2000}, note: "Qi occupies Yan during its succession crisis (314 BC)."}
+          - {id: "qi_annexes_song", goal: "conquer", target: "song", preconditions: {after_year: -290}, note: "Qi annexes Song (286 BC)."}
         capital: qi_linzi
         leader: King Wei
         pitch: "Salt, silk and the Jixia Academy: the richest and most learned court in the east."
@@ -253,6 +275,7 @@ scenarios:
           roads: adopted
           alchemy: concept
       lu:
+        disposition: scholarly
         capital: lu_qufu
         leader: Duke Kang
         pitch: "Confucius's homeland: tiny, cultured and surrounded. Survive by wisdom alone."
@@ -287,6 +310,7 @@ scenarios:
           iron_working: adopted
           schools: widespread
       song:
+        disposition: cautious
         capital: song_shangqiu
         pitch: "An ancient merchant state on the central plain, heir to the Shang kings."
         provinces:
@@ -320,6 +344,7 @@ scenarios:
           iron_working: adopted
           schools: adopted
       wey:
+        disposition: cautious
         capital: wey_puyang
         pitch: "An old river state in Wei's shadow. A hard start for a patient player."
         provinces:
@@ -353,6 +378,7 @@ scenarios:
           iron_working: adopted
           schools: adopted
       zhongshan:
+        disposition: cautious
         capital: zhongshan_lingshou
         pitch: "A hill kingdom of the Di people, fortified between Zhao and Yan."
         provinces:
@@ -386,6 +412,11 @@ scenarios:
           iron_working: adopted
           schools: adopted
       yan:
+        disposition: cautious
+        scripts:
+          - {id: "yan_drives_back_donghu", goal: "conquer", target: "donghu", preconditions: {after_year: -305}, note: "General Qin Kai drives the Donghu back a thousand li (c. 300 BC)."}
+          - {id: "yue_yi_invades_qi", goal: "conquer", target: "qi", preconditions: {after_year: -290}, depends_on: ["qi_occupies_yan"], note: "Yue Yi leads five states against Qi and takes seventy cities (284 BC)."}
+          - {id: "yan_raids_gojoseon", goal: "conquer", target: "gojoseon", preconditions: {after_year: -285}, note: "Yan pushes east into Gojoseon's lands (c. 280 BC)."}
         capital: yan_ji
         leader: Duke Wen
         pitch: "The remote north-east, facing the Donghu and the lands beyond the Liao."
@@ -423,6 +454,10 @@ scenarios:
           schools: adopted
           iron_plough: concept
       chu:
+        disposition: aggressive
+        scripts:
+          - {id: "chu_breaks_yue", goal: "conquer", target: "yue", preconditions: {after_year: -335}, note: "Chu defeats Yue and takes its heartland (c. 306 BC)."}
+          - {id: "chu_annexes_lu", goal: "conquer", target: "lu", preconditions: {after_year: -265}, note: "Chu annexes Lu, Confucius's homeland (256 BC)."}
         capital: chu_ying
         leader: King Xuan
         pitch: "The vast southern kingdom of lakes, forests and shamans, the largest state of all."
@@ -468,6 +503,7 @@ scenarios:
           blast_furnace: adopted
           canals: concept
       yue:
+        disposition: mercantile
         capital: yue_wu
         pitch: "Heirs of Goujian: rivers, sea and the finest bronze swords in the world."
         provinces:
@@ -497,6 +533,7 @@ scenarios:
           crossbow: adopted
           chariot: concept
       shu:
+        disposition: cautious
         capital: shu_chengdu
         pitch: "The Kaiming kings of the Chengdu plain, walled off by mountains with their own script."
         provinces:
@@ -523,6 +560,7 @@ scenarios:
           iron_working: concept
           horse_riding: concept
       ba:
+        disposition: cautious
         capital: ba_jiangzhou
         pitch: "Warriors of the Yangtze gorges, rich in salt."
         provinces:
@@ -547,6 +585,7 @@ scenarios:
           ore_prospecting: adopted
           iron_working: concept
       yiqu:
+        disposition: aggressive
         capital: yiqu_rong
         pitch: "A Rong kingdom of walled towns and herds on Qin's northern flank."
         provinces:
@@ -569,6 +608,7 @@ scenarios:
           masonry: adopted
           fortification: adopted
       donghu:
+        disposition: aggressive
         capital: donghu_xilamulun
         pitch: "Horse peoples of the eastern steppe. Few, fast and free."
         provinces:
@@ -589,6 +629,7 @@ scenarios:
           chariot: adopted
           iron_working: concept
       gojoseon:
+        disposition: cautious
         capital: joseon_liaodong
         pitch: "Korea's first kingdom: bronze daggers, walled towns and a people between the steppe and the sea."
         provinces:
@@ -623,3 +664,13 @@ scenarios:
       lingnan: 300000
       red_river: 500000
       dian: 200000
+    relations:
+      - {a: "qin", b: "wei", status: "hostile", grievance_bp: 3500, note: "A century of war over the Hexi lands."}
+      - {a: "wei", b: "zhao", status: "hostile", grievance_bp: 2500, note: "Wei besieged the Zhao capital Handan in 354-353 BC."}
+      - {a: "wei", b: "qi", status: "hostile", grievance_bp: 2500, note: "Qi routed Wei at Guiling (353 BC)."}
+      - {a: "qi", b: "yan", status: "hostile", grievance_bp: 1500, note: "Old rivals on the northeast plain."}
+      - {a: "chu", b: "yue", status: "hostile", grievance_bp: 2000, note: "Yue's kings harry Chu's eastern frontier."}
+      - {a: "ba", b: "shu", status: "hostile", grievance_bp: 3000, note: "Ba and Shu are bitter rivals in the Sichuan basin."}
+      - {a: "qin", b: "yiqu", status: "hostile", grievance_bp: 2000, note: "The Yiqu Rong raid Qin's northern frontier."}
+      - {a: "han", b: "zhao", status: "trading", note: "Two of the three states carved from Jin."}
+      - {a: "zhou", b: "qin", status: "tributary", note: "Every state still pays the Zhou king honour, if little else."}

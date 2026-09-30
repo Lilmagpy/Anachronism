@@ -12,6 +12,7 @@ from anachronism.engine.reports import snapshot
 from anachronism.engine.setup import build_state
 from anachronism.engine.state import GameState
 from anachronism.engine.turn import end_turn
+from anachronism.engine.victory import record_start
 
 __all__ = ["apply_action", "end_turn", "new_game", "replay"]
 
@@ -26,6 +27,7 @@ def new_game(
     state = build_state(content, scenario_id, seed, player_civ)
     for civ_id in sorted(state.civs):
         state.civs[civ_id].history.append(snapshot(state, civ_id))
+    record_start(state)
     return state
 
 

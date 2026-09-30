@@ -10,8 +10,11 @@ from anachronism.engine.commands import describe_blockers
 from anachronism.engine.economy import project_costs
 from anachronism.engine.projects import project_turns
 from anachronism.engine.reports import capacity
+from anachronism.engine.rivals import relation, strength
 from anachronism.engine.state import Event, GameState
 from anachronism.engine.tech import feasibility
+from anachronism.engine.victory import progress
+from anachronism.engine.war import fronts
 from anachronism.tools.console import describe_effect
 
 TRENDED = ("population", "food", "literacy_bp", "unrest_bp", "legitimacy_bp", "suspicion_bp")
@@ -32,6 +35,7 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
     civ_id = state.player_civ
     civ = state.civs[civ_id]
     room = capacity(state, civ_id)
+    strengths = {c: strength(state, c) for c in sorted(state.civs)}
     return {
         "turn": state.turn + 1,
         "year": state.year,
@@ -61,9 +65,19 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
                 "provinces": len(state.owned_provinces(other_id)),
                 "unrest_bp": other.stats.unrest_bp,
                 "advances": sum(t.stage.is_adopted for t in other.tech.values()),
+                "alive": bool(state.owned_provinces(other_id)),
+                "disposition": other.disposition.value,
+                "awareness": other.awareness.value,
+                "strength": strengths[other_id],
+                **_relation_to_player(state, other_id),
             }
             for other_id, other in sorted(state.civs.items())
         ],
+        "wars": fronts(state),
+        "victory": {
+            "paths": progress(state),
+            "outcome": state.outcome.model_dump() if state.outcome else None,
+        },
         "provinces": [
             {
                 "id": pid,
@@ -157,6 +171,23 @@ def _ideas(state: GameState, civ_id: str) -> list[dict[str, Any]]:
             }
         )
     return ideas
+
+
+def _relation_to_player(state: GameState, other_id: str) -> dict[str, Any]:
+    """How a civilisation stands with the player, for the World tab."""
+    if other_id == state.player_civ:
+        return {"relation": None, "grievance_bp": 0, "heard_of_you": []}
+    rel = relation(state, state.player_civ, other_id)
+    heard = [
+        state.tech_nodes[h.node_id].name if not h.garbled else "strange rumours"
+        for h in state.civs[other_id].heard
+        if h.about == state.player_civ
+    ]
+    return {
+        "relation": rel.status.value if rel else None,
+        "grievance_bp": rel.grievance.get(other_id, 0) if rel else 0,
+        "heard_of_you": sorted(set(heard)),
+    }
 
 
 def build_catalog(content: Content) -> list[dict[str, Any]]:

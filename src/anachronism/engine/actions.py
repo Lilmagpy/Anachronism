@@ -85,6 +85,41 @@ class RuleOnIdea(Frozen):
     ruling: Ruling
 
 
+class DeclareWar(Frozen):
+    """Go to war with another civilisation."""
+
+    kind: Literal["declare_war"] = "declare_war"
+    civ: str
+    target: str
+
+
+class MakePeace(Frozen):
+    """Offer peace; accepted if the other side is weary, losing or outmatched."""
+
+    kind: Literal["peace"] = "peace"
+    civ: str
+    target: str
+
+
+class SendEnvoy(Frozen):
+    """Send an embassy with gifts: eases grudges and warms relations a step."""
+
+    kind: Literal["envoy"] = "envoy"
+    civ: str
+    target: str
+
+
+class ProposeAlliance(Frozen):
+    """Ask for an alliance: allies join each other's defensive wars."""
+
+    kind: Literal["alliance"] = "alliance"
+    civ: str
+    target: str
+
+
+Diplomacy = DeclareWar | MakePeace | SendEnvoy | ProposeAlliance
+
+
 Action = Annotated[
     ProposeIdea
     | StartProject
@@ -92,7 +127,11 @@ Action = Annotated[
     | ResumeProject
     | CancelProject
     | SetPriority
-    | RuleOnIdea,
+    | RuleOnIdea
+    | DeclareWar
+    | MakePeace
+    | SendEnvoy
+    | ProposeAlliance,
     Field(discriminator="kind"),
 ]
 

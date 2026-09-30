@@ -9,10 +9,12 @@ from __future__ import annotations
 import pytest
 
 from anachronism.content.loader import Content, load_content
+from anachronism.content.schema import RelationStatus
 from anachronism.engine.bots import make_bot, play_turn
 from anachronism.engine.economy import project_costs
 from anachronism.engine.game import new_game, replay
 from anachronism.engine.save import dumps, loads
+from anachronism.engine.state import GameState
 from tests.engine.test_simulation import check_invariants
 
 SCENARIO = "warring_states"
@@ -72,10 +74,22 @@ def test_careful_qin_is_stable_and_advances(content: Content) -> None:
     assert state.population("qin") > initial.population("qin")
 
 
+def peaceful(state: GameState) -> GameState:
+    """The same world with no scripts and no wars."""
+    state.world = state.world.model_copy(update={"scripts": {}})
+    for rel in state.relations.values():
+        if rel.status is RelationStatus.WAR:
+            rel.status = RelationStatus.HOSTILE
+    return state
+
+
 @pytest.mark.parametrize("scenario", REAL)
 def test_nobody_starves_when_left_alone(content: Content, scenario: str) -> None:
-    """Content check: every state can feed its people (catches wrong terrain or capacity)."""
-    initial = new_game(content, scenario, seed=5)
+    """Content check: every state can feed its people (catches wrong terrain or capacity).
+
+    Wars are switched off: this is about farmland, not about who conquers whom.
+    """
+    initial = peaceful(new_game(content, scenario, seed=5))
     bots = {civ_id: make_bot("idle") for civ_id in initial.civs}
     state = initial
     famines: set[str] = set()

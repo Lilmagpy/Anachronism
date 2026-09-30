@@ -27,7 +27,8 @@ def check_invariants(state: GameState, start_year: int) -> None:
     for civ_id, civ in state.civs.items():
         assert min(civ.stockpiles.model_dump().values()) >= 0, civ_id
         assert all(0 <= value <= BP for value in civ.stats.model_dump().values()), civ_id
-        assert state.provinces[civ.capital].owner == civ_id, "a capital never breaks away"
+        if state.owned_provinces(civ_id):
+            assert state.provinces[civ.capital].owner == civ_id, "a living civ keeps its capital"
         assert len(civ.history) == state.turn + 1
         for node_id, tech in civ.tech.items():
             assert node_id in state.tech_nodes

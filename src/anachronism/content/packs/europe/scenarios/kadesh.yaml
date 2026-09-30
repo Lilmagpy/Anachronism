@@ -15,6 +15,10 @@ scenarios:
     cost_scale: 10
     civs:
       egypt:
+        disposition: aggressive
+        scripts:
+          - {id: "battle_of_kadesh", goal: "conquer", target: "hatti", preconditions: {after_year: -1280}, note: "Ramesses II marches north; the battle of Kadesh ends in a bloody draw (1274 BC)."}
+          - {id: "eternal_treaty", goal: "ally", target: "hatti", preconditions: {after_year: -1265}, depends_on: ["battle_of_kadesh"], note: "Egypt and Hatti sign the first recorded peace treaty (1259 BC)."}
         capital: egy_delta
         leader: Ramesses II
         pitch: "Ramesses II is young and hungry for glory, and Kadesh is in Hittite hands. Win with ideas what chariots cannot."
@@ -52,6 +56,9 @@ scenarios:
           canals: adopted
           schools: concept
       hatti:
+        disposition: aggressive
+        scripts:
+          - {id: "hatti_retakes_amurru", goal: "conquer", target: "amurru", preconditions: {after_year: -1276}, depends_on: ["battle_of_kadesh"], note: "After Kadesh, Amurru is forced back under Hittite rule."}
         capital: hat_hattusa
         leader: Muwatalli II
         pitch: "Hold Syria against Egypt and watch Assyria rise. The iron you barely understand could change everything."
@@ -90,6 +97,11 @@ scenarios:
           ore_prospecting: adopted
           iron_working: concept
       assyria:
+        disposition: aggressive
+        scripts:
+          - {id: "assyria_ends_hanigalbat", goal: "conquer", target: "hanigalbat", preconditions: {after_year: -1280}, note: "Shalmaneser I destroys what is left of Mitanni (c. 1263 BC)."}
+          - {id: "battle_of_nihriya", goal: "conquer", target: "hatti", preconditions: {after_year: -1245}, depends_on: ["assyria_ends_hanigalbat"], note: "Tukulti-Ninurta I defeats the Hittites at Nihriya (c. 1237 BC)."}
+          - {id: "assyria_sacks_babylon", goal: "conquer", target: "babylon", preconditions: {after_year: -1235}, depends_on: ["assyria_ends_hanigalbat"], note: "Tukulti-Ninurta I sacks Babylon and carries off Marduk's statue (1225 BC)."}
         capital: ass_assur
         leader: Adad-nirari I
         pitch: "Young, ambitious and surrounded. Assyria's great age is still ahead - bring it forward."
@@ -123,6 +135,7 @@ scenarios:
           ore_prospecting: adopted
           canals: concept
       hanigalbat:
+        disposition: cautious
         capital: han_washukanni
         leader: Wasashatta
         pitch: "The chariot empire of Mitanni is a memory. Revive it before Assyria swallows you."
@@ -154,6 +167,9 @@ scenarios:
           fortification: widespread
           ore_prospecting: adopted
       babylon:
+        disposition: cautious
+        scripts:
+          - {id: "babylon_trades_hatti", goal: "trade", target: "hatti", preconditions: {after_year: -1275}, note: "Letters and gifts pass between Babylon and Hattusa."}
         capital: bab_babylon
         leader: Kadashman-Turgu
         pitch: "The oldest schools and the finest astronomers on earth. Turn learning into power."
@@ -187,6 +203,9 @@ scenarios:
           canals: adopted
           schools: concept
       elam:
+        disposition: cautious
+        scripts:
+          - {id: "elam_sacks_babylon", goal: "conquer", target: "babylon", preconditions: {after_year: -1165}, note: "Shutruk-Nakhunte of Elam sacks Babylon (1158 BC)."}
         capital: ela_susa
         leader: Untash-Napirisha
         pitch: "Mountains behind you, Mesopotamia before you. Build greater than Babylon."
@@ -218,6 +237,9 @@ scenarios:
           fortification: widespread
           ore_prospecting: adopted
       mycenae:
+        disposition: aggressive
+        scripts:
+          - {id: "war_for_wilusa", goal: "conquer", target: "wilusa", preconditions: {after_year: -1260}, note: "The war remembered as the Trojan War (traditionally c. 1250-1180 BC)."}
         capital: myc_argolid
         pitch: "Palaces, ships and ambition across the Aegean. Keep your age of heroes from ending in ruin."
         provinces:
@@ -252,6 +274,7 @@ scenarios:
           fortification: widespread
           ore_prospecting: adopted
       wilusa:
+        disposition: cautious
         capital: wil_wilusa
         leader: Alaksandu
         pitch: "Rich, walled and envied by the Greeks across the sea. Change the ending of the story."
@@ -282,6 +305,7 @@ scenarios:
           fortification: widespread
           ore_prospecting: adopted
       alashiya:
+        disposition: mercantile
         capital: ala_alashiya
         pitch: "The copper everyone needs. Be the island every empire must court."
         provinces:
@@ -311,6 +335,7 @@ scenarios:
           fortification: widespread
           ore_prospecting: adopted
       amurru:
+        disposition: cautious
         capital: amu_amurru
         leader: Benteshina
         pitch: "Caught between the two great powers. Choose wisely, or choose ideas."
@@ -342,6 +367,7 @@ scenarios:
           ore_prospecting: adopted
           alphabet: concept
       ugarit:
+        disposition: mercantile
         capital: uga_ugarit
         pitch: "A merchant city with a revolutionary idea: an alphabet. Spread it before anyone else."
         provinces:
@@ -388,3 +414,14 @@ scenarios:
       br_gaul: 350000
       br_britain: 200000
       br_irem: 80000
+    relations:
+      - {a: "egypt", b: "hatti", status: "hostile", grievance_bp: 4000, note: "Amurru has just defected from Hatti to Egypt."}
+      - {a: "egypt", b: "amurru", status: "allied", note: "King Benteshina of Amurru has gone over to Egypt."}
+      - {a: "hatti", b: "amurru", status: "hostile", grievance_bp: 3000, note: "Hatti will not forgive Amurru's defection."}
+      - {a: "hatti", b: "ugarit", status: "tributary", note: "Ugarit is a loyal Hittite vassal."}
+      - {a: "hatti", b: "hanigalbat", status: "allied", note: "Hatti props up what remains of Mitanni against Assyria."}
+      - {a: "assyria", b: "hanigalbat", status: "war", grievance_bp: 3000, note: "Assyria is swallowing the old Mitanni kingdom."}
+      - {a: "hatti", b: "wilusa", status: "allied", note: "The Alaksandu treaty binds Wilusa (Troy) to Hatti."}
+      - {a: "mycenae", b: "wilusa", status: "hostile", grievance_bp: 2000, note: "Ahhiyawa (the Mycenaeans) meddle on the Anatolian coast."}
+      - {a: "egypt", b: "alashiya", status: "trading", note: "Cypriot copper for Egyptian gold."}
+      - {a: "ugarit", b: "alashiya", status: "trading", note: "The great port of Ugarit trades with Cyprus."}

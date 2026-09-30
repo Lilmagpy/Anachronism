@@ -7,6 +7,7 @@ from typing import Annotated
 from pydantic import Field
 
 from anachronism.content.schema.base import Frozen, Identifier, NonNegative, Positive, Rate
+from anachronism.content.schema.rivals import Disposition, Script, StartingRelation
 from anachronism.content.schema.tech import SocialGroup, Stage
 
 
@@ -44,6 +45,10 @@ class ScenarioCiv(Frozen):
     """Who rules at the start, e.g. ``Duke Xiao``; empty when the sources are unclear."""
     pitch: str = ""
     """One or two sentences for the civilisation picker: why play this state now."""
+    disposition: Disposition = Disposition.CAUTIOUS
+    """The ruler's temperament, which steers the civilisation once it leaves its script."""
+    scripts: tuple[Script, ...] = ()
+    """What this civilisation means to do, if conditions allow (brief §7.1)."""
 
 
 class Scenario(Frozen):
@@ -61,6 +66,8 @@ class Scenario(Frozen):
     map: Identifier | None = None
     """Real-Earth map region the client draws (e.g. ``east_asia``); ``None`` means a map
     generated from province positions. On a real map every province needs a ``latlon``."""
+    relations: tuple[StartingRelation, ...] = ()
+    """Alliances, wars and grudges at the start; other reachable pairs begin neutral."""
     cost_scale: Annotated[int, Field(ge=1, le=1000)] = 1
     """Multiplies every project cost. Scenarios with real historical populations (millions,
     not tens of thousands) raise it so inventions cost the same share of a state's effort."""

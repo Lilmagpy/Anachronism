@@ -1,4 +1,4 @@
-"""Resolving a turn: the fixed pipeline of ARCHITECTURE §4 (the Phase 1 subset)."""
+"""Resolving a turn: the fixed pipeline of ARCHITECTURE §4."""
 
 from __future__ import annotations
 
@@ -10,12 +10,15 @@ from anachronism.engine.fixed import BP, apply_bp, clamp
 from anachronism.engine.population import grow_population
 from anachronism.engine.projects import advance_projects
 from anachronism.engine.reports import snapshot
+from anachronism.engine.rivals import rivals_turn
 from anachronism.engine.rng import GameRng
 from anachronism.engine.society import update_society
 from anachronism.engine.state import Event, GameState, Stats
 from anachronism.engine.suspicion import update_suspicion
 from anachronism.engine.tech import spread_step
 from anachronism.engine.timeflow import per_turn, rate_per_turn
+from anachronism.engine.victory import check_outcome
+from anachronism.engine.war import resolve_wars
 
 
 def end_turn(state: GameState) -> tuple[GameState, list[Event]]:
@@ -45,11 +48,15 @@ def end_turn(state: GameState) -> tuple[GameState, list[Event]]:
         update_suspicion(new, civ, rng, events)
         _update_literacy(new, civ.stats, effects)
         effects_by_civ[civ_id] = effects
+    # rivals: news, awareness, scripts, free agents; then the wars (brief §7)
+    strengths = rivals_turn(new, effects_by_civ, list(events.items), rng, events)
+    resolve_wars(new, strengths, rng, events)
     grow_population(new, effects_by_civ, starving)
     new.turn += 1
     new.year += new.world.years_per_turn
     for civ_id in sorted(new.civs):
         new.civs[civ_id].history.append(snapshot(new, civ_id))
+    check_outcome(new, events)
     new.events.extend(events.items)
     return new, events.items
 

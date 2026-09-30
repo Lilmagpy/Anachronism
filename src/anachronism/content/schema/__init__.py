@@ -4,6 +4,14 @@ from anachronism.content.schema.base import CURRENT_SCHEMA_VERSION, Frozen, Iden
 from anachronism.content.schema.civ import CivDefinition
 from anachronism.content.schema.dialogue import MOMENTS, SPECIAL_SPEAKERS, Dialogue, Speaker
 from anachronism.content.schema.pack import CONTENT_KINDS, LIST_KINDS, SINGLE_KINDS, PackManifest
+from anachronism.content.schema.rivals import (
+    Disposition,
+    Preconditions,
+    RelationStatus,
+    Script,
+    ScriptGoal,
+    StartingRelation,
+)
 from anachronism.content.schema.rules import Rules
 from anachronism.content.schema.scenario import (
     Scenario,
@@ -44,6 +52,7 @@ __all__ = [
     "Category",
     "CivDefinition",
     "Dialogue",
+    "Disposition",
     "Effect",
     "EffectType",
     "Era",
@@ -51,18 +60,23 @@ __all__ = [
     "Identifier",
     "MapResource",
     "PackManifest",
+    "Preconditions",
     "Provenance",
     "ProvinceGeography",
     "Rate",
+    "RelationStatus",
     "Requirements",
     "Resistance",
     "Rules",
     "Scenario",
     "ScenarioCiv",
+    "Script",
+    "ScriptGoal",
     "SeaZone",
     "SocialGroup",
     "Speaker",
     "Stage",
+    "StartingRelation",
     "StartingStats",
     "StartingStockpiles",
     "TechNode",

@@ -128,3 +128,57 @@ dialogue:
       - "The oracle bones are silent on this. Our people have no words for what you describe - yet."
       - "The scholars stared at your drawings and saw only riddles. Perhaps something simpler first?"
       - "Even the heavens cannot say what that is. Give our craftsmen something they can hold."
+
+  - id: war
+    speaker: general
+    lines:
+      - "War with {subject}! The drums are beating and the granaries are open. Give me men and bronze, and trust me with the rest."
+      - "So it is {subject}. I have walked their roads in my dreams for years. Now I shall walk them in boots."
+      - "{subject} wants war? Then we give them war - short, sharp, and on our terms."
+
+  - id: conquest
+    speaker: general
+    lines:
+      - "{subject} is ours! The banners are up and the looters are being flogged. Mostly."
+      - "We hold {subject}. Their garrison ran faster than our scouts could count."
+      - "{subject} has fallen to us. The people there watch us warily - treat them well and they may yet cheer."
+
+  - id: province_lost
+    speaker: general
+    lines:
+      - "We have lost {subject}. I take the blame - and I will take it back."
+      - "{subject} is in enemy hands. Our lines bent, then broke. Send more men, or send for peace."
+
+  - id: capital_lost
+    speaker: ruler
+    lines:
+      - "They have taken {subject}, the seat of our ancestors. We move the court - and we remember."
+
+  - id: peace
+    speaker: steward
+    lines:
+      - "Peace with {subject}. The fields will be ploughed again and the tax clerks can stop weeping."
+      - "The war with {subject} is over. I have already started counting what it cost us. Do not ask."
+
+  - id: news
+    speaker: diviner
+    lines:
+      - "The winds carry our name: {subject} has heard of what we do. Secrets travel faster than horses."
+      - "Traders speak of us in the markets of {subject}. They are curious. Curiosity becomes envy; envy becomes war."
+      - "Word has reached {subject}. I read unease in the omens."
+
+  - id: imitation
+    speaker: scholar
+    lines:
+      - "{subject} is trying to copy our work! Imitation is flattery - and also theft."
+      - "Spies say {subject}'s scholars are fumbling with our ideas. Let them fumble."
+
+  - id: victory
+    speaker: ruler
+    lines:
+      - "Look at what {civ} has become. No one under Heaven can stand against us now. History will remember - and wonder how."
+
+  - id: defeat
+    speaker: ruler
+    lines:
+      - "It is over. {civ} falls. Perhaps we reached too far, too fast. Perhaps the world was not ready."

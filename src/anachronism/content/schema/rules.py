@@ -175,6 +175,56 @@ class RulingRules(Frozen):
     """A new node is at least as complex as its most complex prerequisite, minus this."""
 
 
+class RivalRules(Frozen):
+    """News, awareness, relations, war and victory (brief §7, DESIGN §10-11)."""
+
+    news_ahead_years: NonNegative
+    """An adoption at least this many years ahead of its time is news worth spreading."""
+    news_years_per_hop: Positive
+    """Years news takes to cross one province border (halved along friendly ties)."""
+    garble_per_hop_bp: Rate
+    """Chance per border crossed that the news arrives garbled."""
+    clarify_years: Positive
+    """Years after garbled news until the truth arrives."""
+    free_agent_grievance_bp: Rate
+    """An aware civilisation with this much grievance toward the player breaks from its
+    script and acts on its own judgement."""
+    imitation_chance_bp: Rate
+    """Chance per turn that an aware civilisation starts copying an idea it heard about."""
+    strength_per_worker_bp: Positive
+    """Military strength from each unit of workforce (before effects and legitimacy)."""
+    capture_per_excess_bp: NonNegative
+    """Chance per turn to take a frontier province, per 100% of strength advantage."""
+    max_capture_bp: Rate
+    war_losses_bp: Rate
+    """Share of each frontier province's people lost per turn of war."""
+    war_unrest_bp: NonNegative
+    """Unrest per turn at war."""
+    weariness_per_turn_bp: NonNegative
+    weariness_per_loss_bp: NonNegative
+    """Extra weariness for each province lost."""
+    peace_weariness_bp: Rate
+    """A side this weary sues for peace (or accepts it)."""
+    war_grievance_bp: NonNegative
+    """Grievance the side that lost ground carries away from a war."""
+    grievance_fade_bp: Rate
+    """Share of grievance forgotten each decade."""
+    aggressive_war_chance_bp: Rate
+    """Chance per turn that an aggressive free agent attacks a much weaker neighbour."""
+    envoy_wealth: NonNegative
+    """Wealth an envoy costs."""
+    capital_loss_legitimacy_bp: NonNegative
+    military_victory_share_bp: Rate
+    """Share of the scenario's people the player must rule for a military victory."""
+    economic_victory_share_bp: Rate
+    """Share of the other civilisations' people the player's trade network must reach."""
+    cultural_victory_share_bp: Rate
+    victory_margin_bp: Rate
+    """A path's target is at least the player's starting share plus this, so nobody wins
+    by standing still."""
+    """Share of the scenario's total culture (people x literacy and influence) needed."""
+
+
 class Rules(Frozen):
     """All engine rules, grouped by system."""
 
@@ -188,3 +238,4 @@ class Rules(Frozen):
     population: PopulationRules
     suspicion: SuspicionRules
     rulings: RulingRules
+    rivals: RivalRules

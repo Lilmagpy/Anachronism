@@ -31,7 +31,8 @@ var message := ""
 var deliberating := false       ## waiting for the court's ruling on the player's idea
 var question := ""              ## the court's clarifying question, if it asked one
 var rulings: Array = []         ## the latest rulings, shown at the top of the Ideas tab
-var court_mode := "offline"     ## "online" when a language model rules, from settings
+var court_mode := "offline"
+var _outcome_shown := false     ## "online" when a language model rules, from settings
 
 var _root := Control.new()
 var _top := HBoxContainer.new()
@@ -83,6 +84,44 @@ func show_view(new_view: Dictionary) -> void:
 	_fill_side()
 	_fill_card()
 	_fill_chronicle()
+	var outcome: Variant = view.get("victory", {}).get("outcome")
+	if outcome != null and not _outcome_shown:
+		_outcome_shown = true
+		_show_outcome(outcome)
+
+
+## The end of the game (DESIGN §11): a banner across the screen; play can continue.
+func _show_outcome(outcome: Dictionary) -> void:
+	var won: bool = outcome["result"] == "victory"
+	var shade := ColorRect.new()
+	shade.set_anchors_preset(Control.PRESET_FULL_RECT)
+	shade.color = Color(0, 0, 0, 0.45)
+	_root.add_child(shade)
+	var box := PanelContainer.new()
+	box.set_anchors_preset(Control.PRESET_CENTER)
+	box.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	box.grow_vertical = Control.GROW_DIRECTION_BOTH
+	var column := VBoxContainer.new()
+	column.alignment = BoxContainer.ALIGNMENT_CENTER
+	column.add_theme_constant_override("separation", 14)
+	var title := UiStyle.headline("VICTORY" if won else "DEFEAT", 84, UiStyle.GOLD if won else Color(0.8, 0.25, 0.2))
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	column.add_child(title)
+	var how := {"military": "by the sword", "economic": "through trade", "cultural": "by the pen and the word", "collapse": "your state has fallen"}
+	var line := "%s dominates the region %s, %s." % [view["status"]["name"], how.get(outcome["path"], ""), year_text(outcome["year"])] if won else "In %s %s." % [year_text(outcome["year"]), how["collapse"]]
+	var words := UiStyle.wrapped(line, 22, UiStyle.INK, 620)
+	words.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	column.add_child(words)
+	if won:
+		column.add_child(_label("A regional victory. Greater tiers - a hemisphere, the world - await more regions.", 13, DIM))
+	var keep := UiStyle.big_button("KEEP PLAYING", 24)
+	keep.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	keep.pressed.connect(func():
+		shade.queue_free()
+		box.queue_free())
+	column.add_child(keep)
+	box.add_child(column)
+	_root.add_child(box)
 
 
 ## Characters take turns to speak: portrait, name ribbon and speech bubble, bottom left.
@@ -370,8 +409,9 @@ func _stat(icon: String, name: String, value: String, trend: int, up_is_good: bo
 func _build_side_panel() -> void:
 	var panel := PanelContainer.new()
 	panel.set_anchors_preset(Control.PRESET_RIGHT_WIDE)
-	panel.offset_left = -420
+	panel.offset_left = -440
 	panel.offset_right = -8
+	panel.grow_horizontal = Control.GROW_DIRECTION_BEGIN
 	panel.offset_top = 86
 	panel.offset_bottom = -92
 	var column := VBoxContainer.new()
@@ -384,7 +424,11 @@ func _build_side_panel() -> void:
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	_side_body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_side_body.add_theme_constant_override("separation", 8)
-	scroll.add_child(_side_body)
+	var gutter := MarginContainer.new()  # room for the scroll bar
+	gutter.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	gutter.add_theme_constant_override("margin_right", 14)
+	gutter.add_child(_side_body)
+	scroll.add_child(gutter)
 	column.add_child(scroll)
 	panel.add_child(column)
 	_root.add_child(panel)
@@ -392,7 +436,7 @@ func _build_side_panel() -> void:
 
 func _fill_side() -> void:
 	_clear(_tabs)
-	for entry in [["ideas", "Ideas"], ["projects", "Projects (%d)" % view["projects"].size()], ["world", "World"]]:
+	for entry in [["ideas", "Ideas"], ["projects", "Projects %d" % view["projects"].size()], ["world", "World"]]:
 		var button := _button("", set_tab.bind(entry[0]))
 		button.toggle_mode = true
 		button.button_pressed = tab == entry[0]
@@ -404,8 +448,8 @@ func _fill_side() -> void:
 		holder.alignment = BoxContainer.ALIGNMENT_CENTER
 		holder.add_theme_constant_override("separation", 6)
 		holder.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		holder.add_child(GameIcon.make(entry[0], 26))
-		var name := UiStyle.label(entry[1], 17, INK, "body", 800)
+		holder.add_child(GameIcon.make(entry[0], 22))
+		var name := UiStyle.label(entry[1], 15, INK, "body", 800)
 		name.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		holder.add_child(name)
 		button.add_child(holder)
@@ -635,21 +679,134 @@ func _fill_projects() -> void:
 
 
 func _fill_world() -> void:
-	_side_body.add_child(_label("The states under Heaven", 17, GOLD))
-	var civs: Array = view["civs"].duplicate()
-	civs.sort_custom(func(a, b): return a["population"] > b["population"])
+	var victory: Dictionary = view.get("victory", {})
+	var outcome: Variant = victory.get("outcome")
+	if outcome != null:
+		var won: bool = outcome["result"] == "victory"
+		_side_body.add_child(_label(("Victory: " if won else "Defeat: ") + str(outcome["path"]), 18, GOOD if won else BAD))
+	_side_body.add_child(_label("Paths to dominance", 17, GOLD))
+	var names := {"military": ["army", "By the sword", "Rule over this share of all the people"],
+		"economic": ["wealth", "Through trade", "Reach this share of other peoples through trade partners and allies, and hold the richest treasury"],
+		"cultural": ["knowledge", "By the pen", "Hold this share of the region's culture (people weighted by literacy and influence)"]}
+	var paths: Dictionary = victory.get("paths", {})
+	for path in ["military", "economic", "cultural"]:
+		if paths.has(path):
+			_side_body.add_child(_victory_bar(names[path], paths[path]))
+	var wars: Array = view.get("wars", [])
+	if not wars.is_empty():
+		_side_body.add_child(_label("Wars", 17, GOLD))
+		for war in wars:
+			_side_body.add_child(_wrapped("⚔ %s and %s are at war" % [_civ_name(war["a"]), _civ_name(war["b"])], 14, BAD))
+	_side_body.add_child(_label("The powers of the world", 17, GOLD))
+	var me: Dictionary = {}
+	for civ in view["civs"]:
+		if civ["id"] == view["player"]:
+			me = civ
+	var civs: Array = view["civs"].filter(func(c): return c["id"] != view["player"] and c["alive"])
+	civs.sort_custom(func(a, b):
+		var ka := 0 if a["relation"] != null else 1
+		var kb := 0 if b["relation"] != null else 1
+		return a["population"] > b["population"] if ka == kb else ka < kb)
 	for civ in civs:
-		var row := HBoxContainer.new()
-		var swatch := ColorRect.new()
-		swatch.color = Color(civ["colour"])
-		swatch.custom_minimum_size = Vector2(14, 14)
-		swatch.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-		row.add_child(swatch)
-		var name := _label(str(civ["name"]) + ("  (you)" if civ["id"] == view["player"] else ""), 15)
-		name.custom_minimum_size.x = 150
-		row.add_child(name)
-		row.add_child(_label("%s people · %d prov. · %d advances" % [people(civ["population"]), civ["provinces"], civ["advances"]], 12, DIM))
-		_side_body.add_child(row)
+		_side_body.add_child(_rival_card(civ, me))
+
+
+func _civ_name(civ_id: String) -> String:
+	for civ in view["civs"]:
+		if civ["id"] == civ_id:
+			return str(civ["name"])
+	return civ_id
+
+
+func _victory_bar(info: Array, path: Dictionary) -> Control:
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 1)
+	box.tooltip_text = str(info[2])
+	var head := HBoxContainer.new()
+	head.add_theme_constant_override("separation", 6)
+	head.add_child(GameIcon.make(str(info[0]), 22))
+	var title := _label(str(info[1]), 14, INK)
+	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	head.add_child(title)
+	head.add_child(_label("%s of %s" % [pct(int(path["share_bp"])), pct(int(path["target_bp"]))], 12, DIM))
+	box.add_child(head)
+	var bar := ProgressBar.new()
+	bar.max_value = max(1, int(path["target_bp"]))
+	bar.value = min(int(path["share_bp"]), int(path["target_bp"]))
+	bar.show_percentage = false
+	bar.custom_minimum_size = Vector2(0, 12)
+	var fill := StyleBoxFlat.new()
+	fill.bg_color = Color(0.80, 0.55, 0.12)
+	fill.set_corner_radius_all(5)
+	var back := StyleBoxFlat.new()
+	back.bg_color = Color(0.85, 0.80, 0.70)
+	back.set_corner_radius_all(5)
+	bar.add_theme_stylebox_override("fill", fill)
+	bar.add_theme_stylebox_override("background", back)
+	box.add_child(bar)
+	return box
+
+
+func _rival_card(civ: Dictionary, me: Dictionary) -> Control:
+	var relation: Variant = civ["relation"]
+	var colours := {"war": BAD, "hostile": Color(0.75, 0.35, 0.1), "neutral": DIM, "trading": Color(0.1, 0.45, 0.6),
+		"allied": GOOD, "tributary": Color(0.45, 0.3, 0.6)}
+	var box := PanelContainer.new()
+	var edge: Color = civ_colours.get(civ["id"], DIM)
+	box.add_theme_stylebox_override("panel", UiStyle.panel(Color(1, 0.98, 0.93), edge.darkened(0.1), 8))
+	var body := VBoxContainer.new()
+	body.add_theme_constant_override("separation", 2)
+	var head := HBoxContainer.new()
+	head.add_theme_constant_override("separation", 6)
+	var swatch := ColorRect.new()
+	swatch.color = edge
+	swatch.custom_minimum_size = Vector2(14, 14)
+	swatch.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	head.add_child(swatch)
+	var name := _label(str(civ["name"]), 15, INK)
+	name.add_theme_font_override("font", UiStyle.font("body", 800))
+	name.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	head.add_child(name)
+	var standing := "no contact" if relation == null else str(relation)
+	head.add_child(_label(standing, 12, colours.get(standing, DIM)))
+	body.add_child(head)
+	var mine: int = max(1, int(me.get("strength", 1)))
+	var ratio: float = float(civ["strength"]) / float(mine)
+	var might := "about your match"
+	if ratio > 1.6:
+		might = "far stronger than you"
+	elif ratio > 1.15:
+		might = "stronger than you"
+	elif ratio < 0.6:
+		might = "far weaker than you"
+	elif ratio < 0.85:
+		might = "weaker than you"
+	body.add_child(_label("%s people · %s · %s ruler" % [people(civ["population"]), might, civ["disposition"]], 12, DIM))
+	var heard: Array = civ.get("heard_of_you", [])
+	if not heard.is_empty():
+		body.add_child(_wrapped("Has heard of your %s" % ", ".join(heard), 12, Color(0.6, 0.3, 0.1)))
+	if int(civ["grievance_bp"]) >= 2000:
+		body.add_child(_label("Bears you a grudge", 12, BAD))
+	if relation != null:
+		var buttons := HBoxContainer.new()
+		buttons.add_theme_constant_override("separation", 4)
+		var target: String = civ["id"]
+		if relation == "war":
+			buttons.add_child(_small_button("Offer peace", {"kind": "peace", "target": target}))
+		else:
+			buttons.add_child(_small_button("Send envoy", {"kind": "envoy", "target": target}))
+			if relation in ["neutral", "trading"]:
+				buttons.add_child(_small_button("Propose alliance", {"kind": "alliance", "target": target}))
+			buttons.add_child(_small_button("Declare war", {"kind": "declare_war", "target": target}))
+		body.add_child(buttons)
+	box.add_child(body)
+	return box
+
+
+func _small_button(text: String, action: Dictionary) -> Button:
+	var button := _button(text, func(): action_requested.emit(action))
+	button.add_theme_font_size_override("font_size", 13)
+	return button
 
 
 # --- province card ------------------------------------------------------------------------

@@ -14,7 +14,9 @@ from anachronism.content.loader import Content
 from anachronism.engine.state import Event, GameState
 
 PRIORITY = (
-    "collapse", "revolt", "famine", "riot", "adopted", "breakthrough", "discovery",
+    "victory", "defeat", "collapse", "capital_lost", "war", "province_lost", "conquest",
+    "revolt", "famine", "riot", "peace", "adopted", "imitation", "news", "breakthrough",
+    "discovery",
     "suspicion", "framing", "resistance", "setback", "stalled", "widespread",
 )  # fmt: skip
 """Moments in order of importance; at most ``MAX_VOICES`` are spoken per turn."""

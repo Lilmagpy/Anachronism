@@ -166,6 +166,7 @@ func neighbours() -> Dictionary:
 # --- drawing -----------------------------------------------------------------------------
 
 var _overlay: Node3D
+var _war_marks: Node3D
 var _outline: MeshInstance3D
 
 
@@ -173,6 +174,9 @@ func build(parent: Node3D) -> void:
 	_overlay = Node3D.new()
 	_overlay.name = "Provinces"
 	parent.add_child(_overlay)
+	_war_marks = Node3D.new()
+	_war_marks.name = "WarFronts"
+	parent.add_child(_war_marks)
 	_redraw()
 
 
@@ -361,6 +365,32 @@ func _ribbon(st: SurfaceTool, cells: Array, width: float, colour: Color) -> void
 	for p in pts:
 		line.append(earth.ground_at_pixel(p))
 	EarthBuilder.add_line(st, line, width, colour)
+
+## Crossed swords over every province on a war front (the view's "wars").
+func show_wars(wars: Array) -> void:
+	for child in _war_marks.get_children():
+		child.queue_free()
+	var marked := {}
+	for war in wars:
+		for pid in war["front"]:
+			if marked.has(pid):
+				continue
+			marked[pid] = true
+			for site in sites:
+				if site["id"] == pid:
+					var mark := Label3D.new()
+					mark.text = "⚔"
+					mark.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+					mark.fixed_size = true
+					mark.pixel_size = 0.0007
+					mark.font_size = 40
+					mark.outline_size = 14
+					mark.modulate = Color(1.0, 0.92, 0.75)
+					mark.outline_modulate = Color(0.65, 0.08, 0.05)
+					mark.no_depth_test = true
+					mark.position = earth.ground_at_pixel(site["pixel"]) + Vector3(0, 12.0, 0)
+					_war_marks.add_child(mark)
+
 
 func _province_label(site: Dictionary) -> Label3D:
 	var label := Label3D.new()

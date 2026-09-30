@@ -143,6 +143,7 @@ func _build_earth(holder: Node3D, region: String) -> void:
 	provinces.build(holder)
 	settlements = Settlements.new(provinces)
 	settlements.build(holder)
+	provinces.show_wars(view.get("wars", []))
 	environment.fog_density = 0.00003  # a continent-sized map needs thinner haze
 	var sky_material: ProceduralSkyMaterial = environment.sky.sky_material
 	sky_material.ground_bottom_color = Color(0.03, 0.10, 0.20)  # open ocean beyond the map edge
@@ -262,6 +263,7 @@ func _on_end_turn() -> void:
 		view = reply
 		if provinces.update(view) and settlements != null:
 			settlements.recolour()
+		provinces.show_wars(view.get("wars", []))
 	hud.show_view(view)
 	hud.speak(view.get("voices", []), true)
 

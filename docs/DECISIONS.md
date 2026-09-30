@@ -410,3 +410,31 @@ uses only Python's standard library (no new dependency), forces structured outpu
 a single tool, marks the fixed system prompt for prompt caching, and retries rate limits.
 A monthly token cap (default 2 million) stops calls once reached.
 
+## D-066 Rival scripts live in the scenario files — DELEGATED (2026-10-01)
+Each civilisation in a scenario lists its intentions (`scripts`) and temperament
+(`disposition`); the scenario lists starting `relations` (alliances, wars, grudges).
+Scripts are conditional: they fire when their preconditions hold (year window, stability,
+strength against the target, turmoil in the target, advancements known, other scripts
+fired) and lapse when their moment passes or their target is gone, taking dependent scripts
+with them. The player's own civilisation never follows a script. The scripts for all four
+moments were drafted from well-known history (the notes cite what really happened); they
+are drafts for the owner's review, in the spirit of the brief's review workflow (§9.2).
+
+## D-067 War is abstract — DELEGATED (2026-10-01)
+No individual armies to move yet. Strength = workforce x military effects x legitimacy;
+allies at war with the same enemy lend half their strength. Each turn the stronger side
+may take one frontier province (chance grows with its advantage, capped at 50%); both sides
+lose people on the front, gain unrest and weariness; the side that tires first makes peace
+and keeps a grievance. A lost capital moves the court and costs legitimacy; losing every
+province destroys a state. The map shows crossed swords on war fronts. Moving armies and
+battles can come later (Phase 7) without changing saves' meaning.
+
+## D-068 Victory paths and how they are measured — DELEGATED (2026-10-01)
+The brief asked the owner how to measure each path; tonight's measures, all tunable in
+`rules.yaml`: military = rule 50% of the scenario's people; economic = trade partners,
+allies and tributaries hold 60% of everyone else's people, and you hold the richest
+treasury; cultural = 40% of the region's culture (people weighted by literacy and cultural
+influence), and the largest. Each target is at least the starting share plus 20 points,
+so a dominant start (Egypt in 1275 BC) must still gain ground. Every victory is regional
+until games span several regions. The game can continue after the banner.
+

@@ -7,16 +7,19 @@ from anachronism.content.loader import Content
 from anachronism.content.schema import (
     CivDefinition,
     ProvinceGeography,
+    RelationStatus,
     ScenarioCiv,
     SocialGroup,
     Stage,
 )
 from anachronism.engine.fixed import BP
+from anachronism.engine.rivals import contact_pairs
 from anachronism.engine.rng import GameRng
 from anachronism.engine.state import (
     CivState,
     GameState,
     ProvinceState,
+    Relation,
     Stats,
     Stockpiles,
     TechState,
@@ -75,12 +78,26 @@ def build_state(
         },
         map=scenario.map,
         cost_scale=scenario.cost_scale,
+        scripts={c: start.scripts for c, start in sorted(scenario.civs.items()) if start.scripts},
     )
     civs = {
         civ_id: _start_civ(content.civs[civ_id], start, content.rules.spread.baseline_adopted_bp)
         for civ_id, start in sorted(scenario.civs.items())
     }
+    for civ_id, start in scenario.civs.items():
+        civs[civ_id].disposition = start.disposition
+    relations = {
+        f"{a}|{b}": Relation(status=RelationStatus.NEUTRAL)
+        for a, b in sorted(contact_pairs(world, owners))
+    }
+    for listed in scenario.relations:
+        a, b = sorted((listed.a, listed.b))
+        rel = relations.setdefault(f"{a}|{b}", Relation(status=listed.status))
+        rel.status = listed.status
+        if listed.grievance_bp:
+            rel.grievance = {a: listed.grievance_bp, b: listed.grievance_bp}
     return GameState(
+        relations=relations,
         engine_version=__version__,
         seed=seed,
         rng=GameRng.from_seed(seed).state,

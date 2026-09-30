@@ -15,6 +15,7 @@ scenarios:
     cost_scale: 10
     civs:
       england:
+        disposition: cautious
         capital: m_wessex
         leader: Æthelred II
         pitch: "The Danes are raiding again and Æthelred pays them to leave. Find a better idea than silver."
@@ -61,6 +62,7 @@ scenarios:
           crop_rotation: adopted
           schools: concept
       scotland:
+        disposition: aggressive
         capital: m_alba
         leader: Kenneth III
         pitch: "A hard land and proud clans. Make Alba more than a kingdom of feuds."
@@ -103,6 +105,9 @@ scenarios:
           heavy_plough: adopted
           sternpost_rudder: concept
       ireland:
+        disposition: aggressive
+        scripts:
+          - {id: "brian_boru", goal: "conquer", target: "scotland", preconditions: {after_year: 1005}, note: "Brian Boru, High King of Ireland, claims tribute from across the sea."}
         capital: m_munster
         leader: Brian Boru
         pitch: "Brian Boru is uniting Ireland. The monasteries hold the learning of Europe; use it."
@@ -147,6 +152,7 @@ scenarios:
           crop_rotation: adopted
           schools: adopted
       france:
+        disposition: cautious
         capital: m_ile_de_france
         leader: Robert II
         pitch: "You wear the crown; your dukes hold the land. Can ideas make the king of France a king in fact?"
@@ -195,6 +201,9 @@ scenarios:
           crop_rotation: adopted
           schools: concept
       normandy:
+        disposition: aggressive
+        scripts:
+          - {id: "norman_conquest", goal: "conquer", target: "england", preconditions: {after_year: 1060}, note: "William of Normandy conquers England (1066)."}
         capital: m_normandy
         leader: Richard II
         pitch: "Northmen who became Frenchmen. The world does not yet know what Normans can do."
@@ -238,6 +247,7 @@ scenarios:
           crop_rotation: adopted
           schools: concept
       hre:
+        disposition: aggressive
         capital: m_lotharingia
         leader: Otto III
         pitch: "A young emperor with a dream of Rome renewed. Make the dream real."
@@ -287,6 +297,7 @@ scenarios:
           crop_rotation: adopted
           schools: concept
       papacy:
+        disposition: pious
         capital: m_rome
         leader: Sylvester II
         pitch: "The scholar-pope himself. You know the astrolabe and Arabic numerals already - what comes next?"
@@ -333,6 +344,7 @@ scenarios:
           paper: concept
           aqueduct: adopted
       venice:
+        disposition: mercantile
         capital: m_venice
         leader: Pietro II Orseolo
         pitch: "Salt, ships and a lagoon no army can cross. Trade your way to an empire."
@@ -376,6 +388,10 @@ scenarios:
           paper: concept
           canals: adopted
       denmark:
+        disposition: aggressive
+        scripts:
+          - {id: "battle_of_svolder", goal: "conquer", target: "norway", preconditions: {after_year: 999}, note: "Sweyn Forkbeard and his allies defeat Olaf Tryggvason at Svolder (1000)."}
+          - {id: "sweyn_conquers_england", goal: "conquer", target: "england", preconditions: {after_year: 1005, min_strength_ratio_bp: 8000}, note: "Sweyn Forkbeard conquers England (1013); Cnut rules it from 1016."}
         capital: m_jutland
         leader: Sweyn Forkbeard
         pitch: "Longships, raiders and a king who wants England. Conquer with ideas as well as axes."
@@ -419,6 +435,7 @@ scenarios:
           heavy_plough: adopted
           sternpost_rudder: concept
       norway:
+        disposition: cautious
         capital: m_trondelag
         leader: Olaf Tryggvason
         pitch: "A great sea-king with enemies on every side. The Battle of Svolder is coming."
@@ -462,6 +479,7 @@ scenarios:
           heavy_plough: adopted
           sternpost_rudder: concept
       sweden:
+        disposition: cautious
         capital: m_svealand
         leader: Olof Skötkonung
         pitch: "The eastern Vikings: rivers to Constantinople and iron in the hills."
@@ -505,6 +523,11 @@ scenarios:
           heavy_plough: adopted
           sternpost_rudder: concept
       poland:
+        disposition: aggressive
+        scripts:
+          - {id: "polish_german_war", goal: "conquer", target: "hre", preconditions: {after_year: 1002}, note: "Boleslaw the Brave fights Henry II for fifteen years (1002-1018)."}
+          - {id: "boleslaw_takes_prague", goal: "conquer", target: "bohemia", preconditions: {after_year: 1002}, note: "Boleslaw briefly takes Prague (1003)."}
+          - {id: "boleslaw_in_kiev", goal: "conquer", target: "rus", preconditions: {after_year: 1015}, note: "Boleslaw enters Kiev (1018)."}
         capital: m_greater_poland
         leader: Bolesław I the Brave
         pitch: "The emperor has just crowned your ambitions. Build a kingdom to match them."
@@ -551,6 +574,7 @@ scenarios:
           crop_rotation: adopted
           schools: concept
       bohemia:
+        disposition: cautious
         capital: m_bohemia
         leader: Boleslaus III
         pitch: "Silver, castles and powerful neighbours. Hold the heart of Europe."
@@ -594,6 +618,7 @@ scenarios:
           crop_rotation: adopted
           schools: concept
       hungary:
+        disposition: pious
         capital: m_esztergom
         leader: Stephen I
         pitch: "Stephen is about to be crowned. Turn the raiders' grandchildren into builders."
@@ -638,6 +663,7 @@ scenarios:
           crop_rotation: adopted
           schools: concept
       rus:
+        disposition: cautious
         capital: m_kiev
         leader: Vladimir the Great
         pitch: "The largest realm in Europe, stitched together by rivers. Make it hold."
@@ -686,6 +712,11 @@ scenarios:
           sternpost_rudder: concept
           schools: concept
       byzantium:
+        disposition: aggressive
+        scripts:
+          - {id: "basil_crushes_bulgaria", goal: "conquer", target: "bulgaria", preconditions: {after_year: 1000}, note: "Basil II, 'the Bulgar-slayer', annexes Bulgaria (1018)."}
+          - {id: "byzantium_takes_ani", goal: "conquer", target: "armenia", preconditions: {after_year: 1040}, note: "Byzantium annexes the Armenian kingdom of Ani (1045)."}
+          - {id: "maniakes_in_sicily", goal: "conquer", target: "sicily_emirate", preconditions: {after_year: 1035}, note: "George Maniakes invades Muslim Sicily (1038)."}
         capital: m_constantinople
         leader: Basil II
         pitch: "The richest state in Europe and the heir of Rome. Basil II is at war with Bulgaria; win it with more than swords."
@@ -742,6 +773,7 @@ scenarios:
           alchemy: concept
           canals: concept
       bulgaria:
+        disposition: cautious
         capital: m_ohrid
         leader: Samuel
         pitch: "Byzantium wants you gone. Survive the Bulgar-slayer."
@@ -784,6 +816,7 @@ scenarios:
           horse_collar: adopted
           schools: adopted
       cordoba:
+        disposition: aggressive
         capital: m_cordoba
         leader: al-Mansur
         pitch: "The most brilliant city in western Europe. Its splendour will not last - unless you change the story."
@@ -840,6 +873,9 @@ scenarios:
           postal_relay: adopted
           sternpost_rudder: concept
       leon:
+        disposition: cautious
+        scripts:
+          - {id: "leon_after_the_fitna", goal: "conquer", target: "cordoba", preconditions: {after_year: 1009, target_min_unrest_bp: 2500}, note: "The Caliphate of Cordoba falls apart in civil war (1009-1031)."}
         capital: m_leon
         leader: Alfonso V
         pitch: "Al-Mansur has sacked your cities. Rebuild, and turn the tide."
@@ -884,6 +920,9 @@ scenarios:
           crop_rotation: adopted
           schools: concept
       navarre:
+        disposition: aggressive
+        scripts:
+          - {id: "sancho_the_great", goal: "conquer", target: "leon", preconditions: {after_year: 1025}, note: "Sancho III of Navarre dominates Christian Spain (1030s)."}
         capital: m_navarre
         pitch: "Mountains, Basque pride and a great king coming. Get there sooner."
         provinces:
@@ -926,6 +965,9 @@ scenarios:
           crop_rotation: adopted
           schools: concept
       barcelona:
+        disposition: mercantile
+        scripts:
+          - {id: "catalans_sack_cordoba", goal: "conquer", target: "cordoba", preconditions: {after_year: 1009, target_min_unrest_bp: 2500}, note: "Catalan troops join the Cordoban civil war and sack the city (1010)."}
         capital: m_barcelona
         leader: Ramon Borrell
         pitch: "A port, a march and a sea full of opportunity."
@@ -969,6 +1011,7 @@ scenarios:
           crop_rotation: adopted
           schools: concept
       fatimids:
+        disposition: pious
         capital: m_cairo
         leader: al-Hakim
         pitch: "Cairo, al-Azhar and the trade of the Red Sea. Build a House of Knowledge the world will envy."
@@ -1023,6 +1066,7 @@ scenarios:
           postal_relay: adopted
           sternpost_rudder: concept
       zirids:
+        disposition: cautious
         capital: m_ifriqiya
         leader: Badis ibn Mansur
         pitch: "Rich Ifriqiya, a distant overlord. Will you stay loyal?"
@@ -1075,6 +1119,7 @@ scenarios:
           postal_relay: adopted
           sternpost_rudder: concept
       sicily_emirate:
+        disposition: mercantile
         capital: m_sicily
         leader: Ja'far al-Kalbi
         pitch: "Lemons, sugar cane and silk in Palermo's gardens. An island of plenty between three worlds."
@@ -1126,6 +1171,7 @@ scenarios:
           postal_relay: adopted
           sternpost_rudder: concept
       buyids:
+        disposition: cautious
         capital: m_baghdad
         leader: Baha al-Dawla
         pitch: "Baghdad, the House of Wisdom's heirs, and Persian ambition."
@@ -1180,6 +1226,7 @@ scenarios:
           postal_relay: adopted
           sternpost_rudder: concept
       armenia:
+        disposition: cautious
         capital: m_ani
         leader: Gagik I
         pitch: "Ani is booming. Keep it free between Byzantium and the Muslim emirs."
@@ -1227,6 +1274,7 @@ scenarios:
           alchemy: concept
           canals: concept
       georgia:
+        disposition: cautious
         capital: m_kutaisi
         leader: Bagrat III
         pitch: "Unite Georgia and hold the passes of the Caucasus."
@@ -1274,6 +1322,9 @@ scenarios:
           alchemy: concept
           canals: concept
       ghaznavids:
+        disposition: aggressive
+        scripts:
+          - {id: "mahmud_takes_rayy", goal: "conquer", target: "buyids", preconditions: {after_year: 1025}, note: "Mahmud of Ghazni takes Rayy from the Buyids (1029)."}
         capital: m_khorasan
         leader: Mahmud of Ghazni
         pitch: "A sultan with an army and a hunger for India. Point it somewhere wiser."
@@ -1325,6 +1376,7 @@ scenarios:
           postal_relay: adopted
           sternpost_rudder: concept
       makuria:
+        disposition: pious
         capital: m_dongola
         pitch: "The Christian kingdom of the Nile. Hold Egypt at arm's length."
         provinces:
@@ -1381,3 +1433,20 @@ scenarios:
       m_finland: 100000
       m_arabia: 300000
       m_sahara: 150000
+    relations:
+      - {a: "byzantium", b: "bulgaria", status: "war", grievance_bp: 4500, note: "Basil II has fought Tsar Samuel since 976."}
+      - {a: "england", b: "denmark", status: "hostile", grievance_bp: 4000, note: "Danish raids on England grow every year."}
+      - {a: "england", b: "normandy", status: "trading", note: "Aethelred will marry Emma of Normandy (1002)."}
+      - {a: "hre", b: "poland", status: "allied", note: "The Congress of Gniezno (1000): Otto III honours Boleslaw."}
+      - {a: "hre", b: "papacy", status: "allied", note: "Otto III and Pope Sylvester II dream of a renewed Roman empire."}
+      - {a: "cordoba", b: "leon", status: "hostile", grievance_bp: 4000, note: "Almanzor has sacked Leon and Santiago."}
+      - {a: "cordoba", b: "barcelona", status: "hostile", grievance_bp: 4000, note: "Almanzor sacked Barcelona in 985."}
+      - {a: "cordoba", b: "navarre", status: "hostile", grievance_bp: 3000, note: "Navarre has suffered Almanzor's raids."}
+      - {a: "fatimids", b: "byzantium", status: "hostile", grievance_bp: 1500, note: "A ten-year truce (1001) after wars in Syria."}
+      - {a: "venice", b: "byzantium", status: "trading", note: "The golden bull of 992 gives Venice trading privileges."}
+      - {a: "denmark", b: "norway", status: "war", grievance_bp: 3000, note: "The war that ends at Svolder."}
+      - {a: "sweden", b: "norway", status: "war", grievance_bp: 2000, note: "Sweden joins Denmark against Olaf Tryggvason."}
+      - {a: "denmark", b: "sweden", status: "allied", note: "Allies against Norway."}
+      - {a: "fatimids", b: "zirids", status: "tributary", note: "The Zirids govern Ifriqiya for the Fatimid caliph."}
+      - {a: "ghaznavids", b: "buyids", status: "hostile", grievance_bp: 2000, note: "Mahmud of Ghazni eyes western Iran."}
+      - {a: "byzantium", b: "armenia", status: "trading", note: "Armenian princes look to Constantinople."}
