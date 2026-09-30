@@ -11,7 +11,9 @@ dependencies = [
 
 [project.scripts]
 anachronism = "anachronism.__main__:main"
+anachronism-console = "anachronism.tools.console:main"
 anachronism-lint = "anachronism.tools.lint_content:main"
+anachronism-sim = "anachronism.tools.simulate:main"
 
 [dependency-groups]
 dev = [

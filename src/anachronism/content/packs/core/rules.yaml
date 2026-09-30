@@ -14,6 +14,7 @@ rules:
     spoilage_bp: 1000
     wealth_per_1000_bp: 3000
     admin_upkeep_per_province: 3
+    knowledge_per_1000_bp: 500
     knowledge_per_1000_literate_bp: 30000
     base_trade_bp: 1000
     coastal_trade_bp: 1500
@@ -53,6 +54,7 @@ rules:
     unrest_recovery_bp: 1500
     unrest_recovery_legitimacy_bp: 400
     labour_penalty_at_full_unrest_bp: 5000
+    literacy_attrition_bp: 500
     resistance_unrest_bp: 300
     legitimacy_baseline_bp: 5000
     legitimacy_drift_bp: 1000

@@ -30,6 +30,8 @@ class EconomyRules(Frozen):
     wealth_per_1000_bp: NonNegative
     admin_upkeep_per_province: NonNegative
     """Wealth spent per owned province per decade."""
+    knowledge_per_1000_bp: NonNegative
+    """Knowledge from everyone (crafts, lore, observation), per 1,000 people."""
     knowledge_per_1000_literate_bp: NonNegative
     base_trade_bp: NonNegative
     """Trade income of any province, as a share of its taxes."""
@@ -101,6 +103,9 @@ class SocietyRules(Frozen):
     unrest_recovery_legitimacy_bp: NonNegative
     """Extra unrest removed per decade at 100% legitimacy."""
     labour_penalty_at_full_unrest_bp: Rate
+    literacy_attrition_bp: Rate
+    """Share of literacy lost each decade unless teaching replaces it (so literacy effects
+    set a sustainable level rather than growing forever)."""
     resistance_unrest_bp: NonNegative
     """Unrest per decade per resistance level from a group with 100% influence."""
     legitimacy_baseline_bp: Rate

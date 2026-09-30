@@ -6,16 +6,16 @@ from anachronism.content.schema import EffectType
 from anachronism.engine.economy import run_economy
 from anachronism.engine.effects import Effects, civ_effects
 from anachronism.engine.events import EventLog
-from anachronism.engine.fixed import BP, clamp
+from anachronism.engine.fixed import BP, apply_bp, clamp
 from anachronism.engine.population import grow_population
 from anachronism.engine.projects import advance_projects
 from anachronism.engine.reports import snapshot
 from anachronism.engine.rng import GameRng
 from anachronism.engine.society import update_society
-from anachronism.engine.state import Event, GameState
+from anachronism.engine.state import Event, GameState, Stats
 from anachronism.engine.suspicion import update_suspicion
 from anachronism.engine.tech import spread_step
-from anachronism.engine.timeflow import per_turn
+from anachronism.engine.timeflow import per_turn, rate_per_turn
 
 
 def end_turn(state: GameState) -> tuple[GameState, list[Event]]:
@@ -43,8 +43,7 @@ def end_turn(state: GameState) -> tuple[GameState, list[Event]]:
         update_society(new, civ, outcome, effects, rng, events)
         spread_step(new, civ, effects, events)
         update_suspicion(new, civ, rng, events)
-        literacy_gain = per_turn(new, effects[EffectType.LITERACY_GROWTH])
-        civ.stats.literacy_bp = clamp(civ.stats.literacy_bp + literacy_gain, 0, BP)
+        _update_literacy(new, civ.stats, effects)
         effects_by_civ[civ_id] = effects
     grow_population(new, effects_by_civ, starving)
     new.turn += 1
@@ -53,3 +52,11 @@ def end_turn(state: GameState) -> tuple[GameState, list[Event]]:
         new.civs[civ_id].history.append(snapshot(new, civ_id))
     new.events.extend(events.items)
     return new, events.items
+
+
+def _update_literacy(state: GameState, stats: Stats, effects: Effects) -> None:
+    """Teaching adds literacy; attrition removes a share, so effects set a sustainable level."""
+    gain = per_turn(state, effects[EffectType.LITERACY_GROWTH])
+    attrition_bp = rate_per_turn(state, state.world.rules.society.literacy_attrition_bp)
+    loss = apply_bp(stats.literacy_bp, attrition_bp)
+    stats.literacy_bp = clamp(stats.literacy_bp + gain - loss, 0, BP)
