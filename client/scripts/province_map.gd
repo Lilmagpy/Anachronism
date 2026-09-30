@@ -177,7 +177,8 @@ func build(parent: Node3D) -> void:
 
 
 ## Owners change during the game (revolts, collapses): recolour and relabel the map.
-func update(view: Dictionary) -> void:
+## Returns whether anything changed hands, so cities can be repainted too.
+func update(view: Dictionary) -> bool:
 	var owners := {}
 	var capitals := {}
 	for p in view["provinces"]:
@@ -191,6 +192,7 @@ func update(view: Dictionary) -> void:
 			changed = true
 	if changed:
 		_redraw()
+	return changed
 
 
 func _redraw() -> void:

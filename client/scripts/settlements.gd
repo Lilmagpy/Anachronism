@@ -6,6 +6,9 @@
 ## people farmed. Placement is seeded by the province id, so the map always looks the same.
 ## The style follows the period in East Asia: rectangular rammed-earth walls, gate towers,
 ## pale walls and dark tiled roofs.
+##
+## Cities and towns wear their owner's colour: roofs, capital walls and a banner over every
+## chief city. When a province changes hands, `recolour()` repaints them in place.
 class_name Settlements
 extends RefCounted
 
@@ -18,7 +21,8 @@ const MAX_VILLAGES := 40
 var map: ProvinceMap
 var earth: EarthBuilder
 var rng := RandomNumberGenerator.new()
-var _parts := {}   ## part name -> {mesh, transforms, colours}
+var _parts := {}   ## part name -> {mesh, transforms, colours, multimesh}
+var _owned: Array = []   ## [part, instance index, site index, how much owner colour]
 
 
 func _init(province_map: ProvinceMap) -> void:
@@ -40,8 +44,16 @@ func _init(province_map: ProvinceMap) -> void:
 	terrace.size = Vector3(0.7, 0.08, 0.5) * S
 	var field := BoxMesh.new()
 	field.size = Vector3(0.34, 0.012, 0.24) * S
+	var pole := CylinderMesh.new()
+	pole.top_radius = 0.012 * S
+	pole.bottom_radius = 0.016 * S
+	pole.height = 0.7 * S
+	pole.radial_segments = 6
+	var banner := BoxMesh.new()
+	banner.size = Vector3(0.3, 0.2, 0.012) * S
 	for entry in [["house", house], ["roof", roof], ["wall", wall], ["tower", tower],
-			["hall", hall], ["hall_roof", hall_roof], ["terrace", terrace], ["field", field]]:
+			["hall", hall], ["hall_roof", hall_roof], ["terrace", terrace], ["field", field],
+			["pole", pole], ["banner", banner]]:
 		_parts[entry[0]] = {"mesh": entry[1], "transforms": [], "colours": []}
 
 
@@ -55,13 +67,13 @@ func build(parent: Node3D) -> void:
 		var cells := _good_land(index)
 		if cells.is_empty():
 			continue
-		_city(site, population)
+		_city(site, population, index)
 		var towns := clampi(population / PEOPLE_PER_TOWN, 0, 12)
 		var villages := clampi(population / PEOPLE_PER_VILLAGE, 1, MAX_VILLAGES)
 		for i in towns:
-			_cluster(_pick(cells), rng.randi_range(7, 14), 0.55, true)
+			_cluster(_pick(cells), rng.randi_range(7, 14), 0.55, true, index, 0.45)
 		for i in villages:
-			_cluster(_pick(cells), rng.randi_range(2, 5), 0.3, rng.randf() < 0.6)
+			_cluster(_pick(cells), rng.randi_range(2, 5), 0.3, rng.randf() < 0.6, index, 0.0)
 	var holder := Node3D.new()
 	holder.name = "Settlements"
 	parent.add_child(holder)
@@ -69,7 +81,22 @@ func build(parent: Node3D) -> void:
 		var entry: Dictionary = _parts[part]
 		if not entry["transforms"].is_empty():
 			holder.add_child(_multimesh(entry))
+	recolour()
 
+
+## Repaint roofs, walls and banners in their province's current owner's colour.
+func recolour() -> void:
+	for item in _owned:
+		var entry: Dictionary = _parts[item[0]]
+		var mm: MultiMesh = entry["multimesh"]
+		var base: Color = entry["colours"][item[1]]
+		var owner: Variant = map.sites[item[2]]["owner"]
+		var colour := base
+		if owner != null and map.civ_colours.has(owner):
+			colour = base.lerp(map.civ_colours[owner], item[3])
+		elif item[0] == "banner":
+			colour = Color(0.85, 0.82, 0.75)  # a masterless city flies a plain flag
+		mm.set_instance_color(item[1], colour)
 
 # --- where people live -------------------------------------------------------------------
 
@@ -106,27 +133,31 @@ func _pick(cells: Array) -> Vector2:
 
 # --- building ----------------------------------------------------------------------------
 
-func _add(part: String, pixel: Vector2, lift: float, turn: float, scale: Vector3, colour: Color) -> void:
+## Place one part; with `site` >= 0 and `mix` > 0 it takes on that province's owner colour.
+func _add(part: String, pixel: Vector2, lift: float, turn: float, scale: Vector3, colour: Color,
+		site := -1, mix := 0.0) -> void:
 	var ground := earth.ground_at_pixel(pixel)
 	var basis := Basis(Vector3.UP, turn).scaled(scale)
 	var height: float = _parts[part]["mesh"].get_aabb().size.y * scale.y
 	_parts[part]["transforms"].append(Transform3D(basis, ground + Vector3(0, lift + height / 2.0, 0)))
 	_parts[part]["colours"].append(colour)
+	if site >= 0 and (mix > 0.0 or part == "banner"):
+		_owned.append([part, _parts[part]["colours"].size() - 1, site, mix])
 
 
-func _house(pixel: Vector2, turn: float, size := 1.0) -> void:
+func _house(pixel: Vector2, turn: float, size := 1.0, site := -1, mix := 0.0) -> void:
 	var walls := Color(0.78, 0.72, 0.60).darkened(rng.randf() * 0.15)
 	var roof := Color(0.26, 0.27, 0.30).lerp(Color(0.40, 0.30, 0.22), rng.randf() * 0.5)
 	_add("house", pixel, 0.0, turn, Vector3.ONE * size, walls)
-	_add("roof", pixel, 0.09 * S * size, turn, Vector3.ONE * size, roof)
+	_add("roof", pixel, 0.09 * S * size, turn, Vector3.ONE * size, roof, site, mix * rng.randf_range(0.8, 1.1))
 
 
 ## A town or village: houses around a centre, with fields around it.
-func _cluster(centre: Vector2, houses: int, radius: float, fields: bool) -> void:
+func _cluster(centre: Vector2, houses: int, radius: float, fields: bool, site: int, mix: float) -> void:
 	var turn := rng.randf() * PI
 	for i in houses:
 		var offset := Vector2(rng.randf_range(-radius, radius), rng.randf_range(-radius, radius) * 0.7).rotated(turn)
-		_house(centre + offset * S, turn + (PI / 2.0 if rng.randf() < 0.3 else 0.0), rng.randf_range(0.8, 1.2))
+		_house(centre + offset * S, turn + (PI / 2.0 if rng.randf() < 0.3 else 0.0), rng.randf_range(0.8, 1.2), site, mix)
 	if fields:
 		var crops := [Color(0.48, 0.46, 0.28), Color(0.36, 0.42, 0.24), Color(0.44, 0.38, 0.27)]
 		for i in houses + 2:
@@ -136,15 +167,20 @@ func _cluster(centre: Vector2, houses: int, radius: float, fields: bool) -> void
 
 
 ## The province's chief city; a capital gets walls, gate towers and a palace hall.
-func _city(site: Dictionary, population: int) -> void:
+func _city(site: Dictionary, population: int, index: int) -> void:
 	var centre: Vector2 = site["pixel"]
 	var half := clampf(0.5 + sqrt(population / 100000.0) * 0.28, 0.6, 1.8) * S
 	var turn := 0.0  # cities were laid out on the cardinal directions
 	var houses := clampi(population / 30000, 8, 60)
 	for i in houses:
 		var p := centre + Vector2(rng.randf_range(-half, half) * 0.85, rng.randf_range(-half, half) * 0.85)
-		_house(p, turn + (PI / 2.0 if rng.randf() < 0.5 else 0.0), rng.randf_range(0.9, 1.3))
+		_house(p, turn + (PI / 2.0 if rng.randf() < 0.5 else 0.0), rng.randf_range(0.9, 1.3), index, 0.7)
 	var earth_wall := Color(0.66, 0.56, 0.42)
+	# the owner's banner flies over every chief city; a capital's is twice the size
+	var flag := 1.6 if site["capital"] else 1.0
+	var mast := centre + Vector2(half * 0.55, -half * 0.55) if site["capital"] else centre
+	_add("pole", mast, 0.0, 0.0, Vector3.ONE * flag, Color(0.35, 0.25, 0.15))
+	_add("banner", mast + Vector2(0.15 * S * flag, 0), 0.45 * S * flag, 0.0, Vector3.ONE * flag, Color.WHITE, index, 1.0)
 	if site["capital"]:
 		var corners := [Vector2(-half, -half), Vector2(half, -half), Vector2(half, half), Vector2(-half, half)]
 		for side in 4:
@@ -155,12 +191,12 @@ func _city(site: Dictionary, population: int) -> void:
 			var pieces := int(ceil(length / (0.9 * S)))
 			for k in pieces:
 				var p := a.lerp(b, (k + 0.5) / pieces)
-				_add("wall", p, 0.0, angle, Vector3(length / pieces / S + 0.02, 1, 1), earth_wall)
-			_add("tower", a, 0.0, 0.0, Vector3.ONE, earth_wall.darkened(0.1))
-			_add("tower", a.lerp(b, 0.5), 0.0, 0.0, Vector3(1.3, 1.2, 1.3), earth_wall.darkened(0.15))
+				_add("wall", p, 0.0, angle, Vector3(length / pieces / S + 0.02, 1, 1), earth_wall, index, 0.2)
+			_add("tower", a, 0.0, 0.0, Vector3.ONE, earth_wall.darkened(0.1), index, 0.35)
+			_add("tower", a.lerp(b, 0.5), 0.0, 0.0, Vector3(1.3, 1.2, 1.3), earth_wall.darkened(0.15), index, 0.35)
 		_add("terrace", centre, 0.0, turn, Vector3.ONE, Color(0.62, 0.55, 0.45))
 		_add("hall", centre, 0.08 * S, turn, Vector3.ONE, Color(0.55, 0.20, 0.14))
-		_add("hall_roof", centre, 0.26 * S, turn, Vector3.ONE, Color(0.18, 0.18, 0.20))
+		_add("hall_roof", centre, 0.26 * S, turn, Vector3.ONE, Color(0.18, 0.18, 0.20), index, 0.55)
 
 
 func _multimesh(entry: Dictionary) -> MultiMeshInstance3D:
@@ -175,6 +211,7 @@ func _multimesh(entry: Dictionary) -> MultiMeshInstance3D:
 	var material := StandardMaterial3D.new()
 	material.vertex_color_use_as_albedo = true
 	material.roughness = 0.9
+	entry["multimesh"] = mm
 	var instance := MultiMeshInstance3D.new()
 	instance.multimesh = mm
 	instance.material_override = material

@@ -74,6 +74,7 @@ def speak(
         "name": name[:1].upper() + name[1:],
         "title": title,
         "portrait": portrait,
+        "culture": civ_def.portrait,
         "colour": civ_def.colour,
         "emblem": civ_def.emblem or civ_def.adjective[:1],
         "civ": speaker_civ,

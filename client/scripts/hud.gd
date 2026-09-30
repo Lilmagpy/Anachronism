@@ -146,7 +146,8 @@ func _show_next_voice() -> void:
 	portrait.position = Vector2(0, 0)
 	portrait.size = Vector2(190, 240)
 	portrait.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	portrait.setup({"colour": voice["colour"], "portrait": voice["portrait"], "id": "%s_%s" % [voice["civ"], voice["speaker"]]})
+	portrait.setup({"colour": voice["colour"], "portrait": voice["portrait"], "culture": voice.get("culture", ""),
+		"id": "%s_%s" % [voice["civ"], voice["speaker"]]})
 	box.add_child(portrait)
 	_root.add_child(box)
 	_speech = box
@@ -213,7 +214,13 @@ func _theme() -> Theme:
 	return theme
 
 
+## Text sizes below are a design size; small text is enlarged so nothing is hard to read.
+static func readable(size: int) -> int:
+	return size + 3 if size <= 13 else size + 2
+
+
 func _label(text: String, size := 15, colour := INK) -> Label:
+	size = readable(size)
 	var label := Label.new()
 	label.text = text
 	label.add_theme_font_size_override("font_size", size)
@@ -282,7 +289,7 @@ func _build_top_bar() -> void:
 	style.content_margin_top = 6
 	style.content_margin_bottom = 6
 	bar.add_theme_stylebox_override("panel", style)
-	_top.add_theme_constant_override("separation", 22)
+	_top.add_theme_constant_override("separation", 16)
 	bar.add_child(_top)
 	_root.add_child(bar)
 
@@ -291,34 +298,59 @@ func _fill_top_bar() -> void:
 	_clear(_top)
 	var status: Dictionary = view["status"]
 	var trends: Dictionary = status["trends"]
-	var title := UiStyle.label("%s   %s · turn %d" % [str(status["name"]).to_upper(), year_text(view["year"]), view["turn"]], 20, GOLD, "title", 900)
-	_top.add_child(title)
+	var me: Dictionary = {}
+	for civ in view["civs"]:
+		if civ["id"] == view["player"]:
+			me = civ
+	var badge := PanelContainer.new()
+	var badge_style := UiStyle.panel(civ_colours.get(view["player"], UiStyle.GOLD), UiStyle.GOLD_DARK, 22)
+	badge_style.set_content_margin_all(4)
+	badge_style.content_margin_left = 10
+	badge_style.content_margin_right = 10
+	badge_style.shadow_size = 0
+	badge.add_theme_stylebox_override("panel", badge_style)
+	var emblem := UiStyle.headline(str(me.get("emblem", "")), 24, UiStyle.CREAM)
+	emblem.add_theme_font_override("font", UiStyle.font("emblem"))
+	badge.add_child(emblem)
+	_top.add_child(badge)
+	var titles := VBoxContainer.new()
+	titles.add_theme_constant_override("separation", -4)
+	titles.add_child(UiStyle.label(str(status["name"]).to_upper(), 22, GOLD, "title", 900))
+	titles.add_child(UiStyle.label("%s · turn %d" % [year_text(view["year"]), view["turn"]], 15, DIM, "body", 700))
+	_top.add_child(titles)
+	_top.add_child(VSeparator.new())
 	var stores: Dictionary = status["stores"]
-	_stat("People", people(status["population"]), trends["population"], true)
-	_stat("Food", number(stores["food"]), trends["food"], true)
-	_stat("Materials", number(stores["materials"]), 0, true)
-	_stat("Wealth", number(stores["wealth"]), 0, true)
-	_stat("Knowledge", number(stores["knowledge"]), 0, true)
-	_stat("Labour", "%s (%s free)" % [number(status["workforce"]), number(status["free_labour"])], 0, true)
-	_stat("Literacy", pct(status["literacy_bp"]), trends["literacy_bp"], true)
-	_stat("Unrest", pct(status["unrest_bp"]), trends["unrest_bp"], false)
-	_stat("Legitimacy", pct(status["legitimacy_bp"]), trends["legitimacy_bp"], true)
-	_stat("Suspicion", pct(status["suspicion_bp"]), trends["suspicion_bp"], false)
+	_stat("people", "People", people(status["population"]), trends["population"], true)
+	_stat("food", "Food in store", number(stores["food"]), trends["food"], true)
+	_stat("materials", "Materials", number(stores["materials"]), 0, true)
+	_stat("wealth", "Wealth", number(stores["wealth"]), 0, true)
+	_stat("knowledge", "Knowledge", number(stores["knowledge"]), 0, true)
+	_stat("labour", "Labour: workforce (free for projects)", "%s (%s)" % [number(status["workforce"]), number(status["free_labour"])], 0, true)
+	_top.add_child(VSeparator.new())
+	_stat("literacy", "Literacy", pct(status["literacy_bp"]), trends["literacy_bp"], true)
+	_stat("unrest", "Unrest", pct(status["unrest_bp"]), trends["unrest_bp"], false)
+	_stat("legitimacy", "Legitimacy", pct(status["legitimacy_bp"]), trends["legitimacy_bp"], true)
+	_stat("suspicion", "Suspicion: how uncanny your progress looks", pct(status["suspicion_bp"]), trends["suspicion_bp"], false)
 
 
-## One figure with an arrow; `up_is_good` decides whether a rise shows green or red.
-func _stat(name: String, value: String, trend: int, up_is_good: bool) -> void:
-	var box := VBoxContainer.new()
-	box.add_theme_constant_override("separation", -2)
-	box.add_child(_label(name, 12, DIM))
+## One figure with its icon and a trend arrow; `up_is_good` decides green or red.
+## Hover it for its name.
+func _stat(icon: String, name: String, value: String, trend: int, up_is_good: bool) -> void:
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 4)
-	row.add_child(_label(value, 16))
+	row.add_theme_constant_override("separation", 5)
+	row.tooltip_text = name
+	row.mouse_filter = Control.MOUSE_FILTER_STOP
+	var picture := GameIcon.make(icon, 30)
+	row.add_child(picture)
+	var figure := UiStyle.label(value, 19, INK, "body", 800)
+	figure.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_child(figure)
 	if trend != 0:
 		var good := (trend > 0) == up_is_good
-		row.add_child(_label("▲" if trend > 0 else "▼", 12, GOOD if good else BAD))
-	box.add_child(row)
-	_top.add_child(box)
+		var arrow := UiStyle.label("▲" if trend > 0 else "▼", 14, GOOD if good else BAD)
+		arrow.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		row.add_child(arrow)
+	_top.add_child(row)
 
 
 # --- side panel: ideas, projects, world -------------------------------------------------
@@ -328,7 +360,7 @@ func _build_side_panel() -> void:
 	panel.set_anchors_preset(Control.PRESET_RIGHT_WIDE)
 	panel.offset_left = -420
 	panel.offset_right = -8
-	panel.offset_top = 72
+	panel.offset_top = 86
 	panel.offset_bottom = -92
 	var column := VBoxContainer.new()
 	column.add_theme_constant_override("separation", 8)
@@ -347,9 +379,22 @@ func _build_side_panel() -> void:
 func _fill_side() -> void:
 	_clear(_tabs)
 	for entry in [["ideas", "Ideas"], ["projects", "Projects (%d)" % view["projects"].size()], ["world", "World"]]:
-		var button := _button(entry[1], set_tab.bind(entry[0]))
+		var button := _button("", set_tab.bind(entry[0]))
 		button.toggle_mode = true
 		button.button_pressed = tab == entry[0]
+		button.custom_minimum_size.y = 46
+		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		# icon + name, centred inside the button
+		var holder := HBoxContainer.new()
+		holder.set_anchors_preset(Control.PRESET_FULL_RECT)
+		holder.alignment = BoxContainer.ALIGNMENT_CENTER
+		holder.add_theme_constant_override("separation", 6)
+		holder.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		holder.add_child(GameIcon.make(entry[0], 26))
+		var name := UiStyle.label(entry[1], 17, INK, "body", 800)
+		name.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		holder.add_child(name)
+		button.add_child(holder)
 		_tabs.add_child(button)
 	_clear(_side_body)
 	if message != "":

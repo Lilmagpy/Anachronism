@@ -68,7 +68,7 @@ class Session:
         except ValueError as error:
             raise RequestError(str(error)) from error
         self.events = []
-        view = build_view(self.state)
+        view = self._view([])
         view["voices"] = [v for v in [speak(self.content, self.state, "game_start")] if v]
         return view
 
@@ -78,7 +78,7 @@ class Session:
 
     def view(self, args: dict[str, Any]) -> dict[str, Any]:
         """The current view, with the last turn's events."""
-        return build_view(self.game(), self.events)
+        return self._view(self.events, self.game())
 
     def act(self, args: dict[str, Any]) -> dict[str, Any]:
         """Apply a player action: ``{"action": {"kind": "start", "node_id": "paper"}}``."""
@@ -97,7 +97,7 @@ class Session:
         return {
             "accepted": logged.ok,
             "message": logged.message,
-            "view": build_view(self.state, self.events),
+            "view": self._view(self.events),
             "voices": voices,
         }
 
@@ -109,8 +109,17 @@ class Session:
                 for action in self.rivals[civ_id].decide(state, civ_id):
                     state, _ = apply_action(state, action)
         self.state, self.events = end_turn(state)
-        view = build_view(self.state, self.events)
+        view = self._view(self.events)
         view["voices"] = voices_for_turn(self.content, self.state, self.events)
+        return view
+
+    def _view(self, events: list[Event], state: GameState | None = None) -> dict[str, Any]:
+        """The player's view, with each civilisation's emblem and portrait from the content."""
+        view = build_view(state or self.game(), events)
+        for civ in view["civs"]:
+            definition = self.content.civs.get(civ["id"])
+            civ["emblem"] = (definition.emblem or definition.adjective[:1]) if definition else "?"
+            civ["portrait"] = definition.portrait if definition else ""
         return view
 
     def _path(self, args: dict[str, Any]) -> Path:
@@ -137,7 +146,7 @@ class Session:
             raise RequestError(str(error)) from error
         self.rivals = {c: make_bot("growth") for c in self.state.civs if c != self.state.player_civ}
         self.events = []
-        view = build_view(self.state)
+        view = self._view([])
         view["voices"] = [v for v in [speak(self.content, self.state, "game_start")] if v]
         return view
 

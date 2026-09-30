@@ -17,6 +17,7 @@ var rig := CameraRig.new()
 var world: WorldBuilder
 var earth: EarthBuilder
 var provinces: ProvinceMap
+var settlements: Settlements
 var hud: GameHud
 var menus: Menus
 var holder: Node3D
@@ -140,7 +141,8 @@ func _build_earth(holder: Node3D, region: String) -> void:
 	_ensure_earth(region)
 	provinces = ProvinceMap.new(earth, view)
 	provinces.build(holder)
-	Settlements.new(provinces).build(holder)
+	settlements = Settlements.new(provinces)
+	settlements.build(holder)
 	environment.fog_density = 0.00003  # a continent-sized map needs thinner haze
 	var sky_material: ProceduralSkyMaterial = environment.sky.sky_material
 	sky_material.ground_bottom_color = Color(0.03, 0.10, 0.20)  # open ocean beyond the map edge
@@ -225,7 +227,8 @@ func _on_end_turn() -> void:
 	else:
 		hud.message = ""
 		view = reply
-		provinces.update(view)
+		if provinces.update(view) and settlements != null:
+			settlements.recolour()
 	hud.show_view(view)
 	hud.speak(view.get("voices", []), true)
 
@@ -279,7 +282,7 @@ func _process(delta: float) -> void:
 	if menus != null and earth != null:  # the title backdrop drifts slowly east
 		rig.position.x += delta * 6.0
 	if earth != null:  # territory colours fade as you zoom in, so the land itself shows
-		earth.terrain_material.set_shader_parameter("tint", lerpf(0.24, 0.06, rig.zoom_level()))
+		earth.terrain_material.set_shader_parameter("tint", lerpf(0.40, 0.16, rig.zoom_level()))
 
 
 func _unhandled_input(event: InputEvent) -> void:
