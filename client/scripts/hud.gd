@@ -11,6 +11,7 @@ signal action_requested(action: Dictionary)
 signal end_turn_requested
 signal idea_submitted(text: String, answer: String)
 signal menu_requested
+signal capital_requested
 
 const GOLD := Color(0.62, 0.20, 0.12)     ## headings: deep red on cream (UiStyle, D-059)
 const INK := UiStyle.INK
@@ -363,16 +364,25 @@ func _fill_top_bar() -> void:
 	for civ in view["civs"]:
 		if civ["id"] == view["player"]:
 			me = civ
-	var badge := PanelContainer.new()
+	var badge := Button.new()
+	badge.flat = true
+	badge.focus_mode = Control.FOCUS_NONE
+	badge.tooltip_text = "Visit your capital and see what your ideas have built"
+	badge.pressed.connect(func(): capital_requested.emit())
+	var badge_inner := PanelContainer.new()
+	badge_inner.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	badge.add_child(badge_inner)
+	badge_inner.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	badge.custom_minimum_size = Vector2(maxf(56.0, 30.0 + 19.0 * str(me.get("emblem", "")).length()), 52)
 	var badge_style := UiStyle.panel(civ_colours.get(view["player"], UiStyle.GOLD), UiStyle.GOLD_DARK, 22)
 	badge_style.set_content_margin_all(4)
 	badge_style.content_margin_left = 10
 	badge_style.content_margin_right = 10
 	badge_style.shadow_size = 0
-	badge.add_theme_stylebox_override("panel", badge_style)
+	badge_inner.add_theme_stylebox_override("panel", badge_style)
 	var emblem := UiStyle.headline(str(me.get("emblem", "")), 24, UiStyle.CREAM)
 	emblem.add_theme_font_override("font", UiStyle.font("emblem"))
-	badge.add_child(emblem)
+	badge_inner.add_child(emblem)
 	_top.add_child(badge)
 	var titles := VBoxContainer.new()
 	titles.add_theme_constant_override("separation", -4)

@@ -241,12 +241,9 @@ func _open_ocean() -> MeshInstance3D:
 
 func _sea() -> MeshInstance3D:
 	var plane := PlaneMesh.new()
-	plane.size = size() * 6.0  # the glossy water surface covers the open ocean too
-	var material := StandardMaterial3D.new()
-	material.albedo_color = Color(0.04, 0.14, 0.28, 0.45)  # Blue Marble already shades the sea floor
-	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	material.metallic = 0.3
-	material.roughness = 0.08
+	plane.size = size() * 6.0  # the water surface covers the open ocean too
+	var material := ShaderMaterial.new()  # animated waves over the painted sea floor
+	material.shader = load("res://shaders/water.gdshader")
 	var sea := MeshInstance3D.new()
 	sea.name = "Sea"
 	sea.mesh = plane

@@ -19,6 +19,7 @@ var earth: EarthBuilder
 var provinces: ProvinceMap
 var settlements: Settlements
 var game_menu: GameMenu
+var landmarks: Landmarks
 var hud: GameHud
 var menus: Menus
 var holder: Node3D
@@ -132,6 +133,9 @@ func _ensure_earth(region: String) -> void:
 	earth.build(holder)
 	Scenery.new(earth).build(holder)
 	var half := earth.size() / 2.0
+	var clouds := Clouds.new()
+	clouds.build(Rect2(-half, earth.size()))
+	holder.add_child(clouds)
 	rig.bounds = Rect2(-half, earth.size())
 	rig.far = earth.size().x * 0.9
 	rig.near = 18.0
@@ -145,6 +149,10 @@ func _build_earth(holder: Node3D, region: String) -> void:
 	settlements = Settlements.new(provinces)
 	settlements.build(holder)
 	provinces.show_wars(view.get("wars", []))
+	landmarks = Landmarks.new()
+	landmarks.setup(provinces)
+	holder.add_child(landmarks)
+	landmarks.update(view)
 	environment.fog_density = 0.00003  # a continent-sized map needs thinner haze
 	var sky_material: ProceduralSkyMaterial = environment.sky.sky_material
 	sky_material.ground_bottom_color = Color(0.03, 0.10, 0.20)  # open ocean beyond the map edge
@@ -190,6 +198,7 @@ func _build_hud() -> void:
 	game_menu.bridge = bridge
 	add_child(game_menu)
 	hud.menu_requested.connect(game_menu.open_menu)
+	hud.capital_requested.connect(_visit_capital)
 	game_menu.message.connect(func(text: String):
 		hud.message = text
 		hud.show_view(view))
@@ -221,6 +230,8 @@ func _build_hud() -> void:
 		game_menu.call("open_menu" if screen == "menu" else "open_" + screen)
 	if options.has("dev"):
 		hud.toggle_dev()
+	if options.has("visit"):
+		_visit_capital()
 	if options.has("idea"):  # --idea=TEXT: propose an idea, as if typed (screenshots, tests)
 		_on_idea(str(options["idea"]).replace("_", " "), "")
 		while bridge.busy:
@@ -253,6 +264,13 @@ func _on_idea(text: String, answer: String) -> void:
 			hud.show_view(view)
 		hud.show_rulings(reply)
 		hud.speak(reply.get("voices", [])))
+
+
+## Fly down to the player's capital, close enough to see what their ideas have built.
+func _visit_capital() -> void:
+	for p in view["provinces"]:
+		if p["owner"] == view["player"] and p["capital"] and p["latlon"] != null:
+			rig.look_at_point(earth.ground_at(p["latlon"][0], p["latlon"][1]), 70.0)
 
 
 ## A saved game was loaded: redraw the map for it (a different region if need be).
@@ -307,6 +325,7 @@ func _on_end_turn() -> void:
 		if provinces.update(view) and settlements != null:
 			settlements.recolour()
 		provinces.show_wars(view.get("wars", []))
+		landmarks.update(view)
 	hud.show_view(view)
 	hud.speak(view.get("voices", []), true)
 
