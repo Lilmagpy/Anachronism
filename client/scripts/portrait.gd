@@ -49,6 +49,14 @@ func _draw() -> void:
 			_topknot(head, r)
 		"hills":
 			_helmet(head, r)
+		"scholar":
+			_scholar_cap(head, r)
+		"steward":
+			_steward_cap(head, r)
+		"general":
+			_general(head, r, w, h)
+		"diviner":
+			_diviner(head, r, w, h)
 		_:
 			_crown(head, r)
 	# frame
@@ -118,8 +126,10 @@ func _face(head: Vector2, r: float) -> void:
 	if style != "southern":
 		draw_polyline([head + Vector2(-r * 0.4, r * 0.55), head + Vector2(-r * 0.1, r * 0.42),
 			head + Vector2(r * 0.1, r * 0.42), head + Vector2(r * 0.4, r * 0.55)], HAIR, r * 0.08)
-		draw_colored_polygon([head + Vector2(-r * 0.12, r * 0.7), head + Vector2(r * 0.12, r * 0.7),
-			head + Vector2(0, r * (1.35 if style == "court" else 1.1))], HAIR)
+		var beard: float = {"court": 1.35, "scholar": 1.9, "diviner": 1.6, "general": 1.0}.get(style, 1.1)
+		var beard_colour: Color = Color(0.85, 0.85, 0.82) if style in ["scholar", "diviner"] else HAIR
+		draw_colored_polygon([head + Vector2(-r * 0.14, r * 0.7), head + Vector2(r * 0.14, r * 0.7),
+			head + Vector2(0, r * beard)], beard_colour)
 	else:
 		draw_line(head + Vector2(-r * 0.2, r * 0.5), head + Vector2(r * 0.2, r * 0.5), Color(0.55, 0.2, 0.15), r * 0.06)
 	# hair at the temples
@@ -179,6 +189,51 @@ func _helmet(head: Vector2, r: float) -> void:
 			head + Vector2(side * r * 0.72, r * 0.3), head + Vector2(side * r * 0.8, -r * 0.4)], BRONZE.darkened(0.1))
 	for i in 5:
 		draw_circle(Vector2(head.x - r * 0.7 + i * r * 0.35, head.y - r * 0.5), r * 0.06, UiStyle.GOLD)
+
+
+## A soft black scholar's cap with two ribbons, like the later futou.
+func _scholar_cap(head: Vector2, r: float) -> void:
+	_ellipse(head + Vector2(0, -r * 0.62), Vector2(r * 0.96, r * 0.62), Color(0.85, 0.85, 0.82))
+	_ellipse(head + Vector2(0, -r * 0.95), Vector2(r * 0.85, r * 0.55), Color(0.12, 0.1, 0.1))
+	for side in [-1, 1]:
+		draw_line(head + Vector2(side * r * 0.6, -r * 0.9), head + Vector2(side * r * 1.5, -r * 0.4), Color(0.12, 0.1, 0.1), r * 0.12)
+
+
+func _steward_cap(head: Vector2, r: float) -> void:
+	_ellipse(head + Vector2(0, -r * 0.62), Vector2(r * 0.96, r * 0.62), HAIR)
+	draw_rect(Rect2(head.x - r * 0.75, head.y - r * 1.3, r * 1.5, r * 0.6), Color(0.15, 0.12, 0.1))
+	draw_rect(Rect2(head.x - r * 0.75, head.y - r * 0.85, r * 1.5, r * 0.14), Color(0.7, 0.18, 0.12))
+	# a scroll of accounts
+	var at := head + Vector2(r * 1.2, r * 3.2)
+	draw_rect(Rect2(at, Vector2(r * 1.4, r * 0.5)), Color(0.93, 0.87, 0.72))
+	draw_circle(at + Vector2(0, r * 0.25), r * 0.28, Color(0.55, 0.35, 0.2))
+	draw_circle(at + Vector2(r * 1.4, r * 0.25), r * 0.28, Color(0.55, 0.35, 0.2))
+
+
+func _general(head: Vector2, r: float, w: float, h: float) -> void:
+	_helmet(head, r)
+	# red horsehair plume
+	for i in 5:
+		draw_line(head + Vector2(0, -r * 1.9), head + Vector2(-r * 0.6 + i * r * 0.3, -r * 2.7), Color(0.8, 0.12, 0.1), r * 0.14)
+	# lamellar armour on the shoulders
+	for side in [-1, 1]:
+		for row in 3:
+			for k in 4:
+				var x: float = w * 0.5 + side * (w * 0.22 + k * w * 0.045)
+				var y := h * 0.66 + row * h * 0.035
+				draw_rect(Rect2(x - w * 0.02, y, w * 0.04, h * 0.03), BRONZE.darkened(0.1 + row * 0.1))
+
+
+func _diviner(head: Vector2, r: float, w: float, h: float) -> void:
+	_ellipse(head + Vector2(0, -r * 0.62), Vector2(r * 0.96, r * 0.62), Color(0.85, 0.85, 0.82))
+	draw_colored_polygon([head + Vector2(-r * 0.7, -r * 0.8), head + Vector2(r * 0.7, -r * 0.8),
+		head + Vector2(r * 0.4, -r * 2.2), head + Vector2(-r * 0.4, -r * 2.2)], Color(0.2, 0.18, 0.35))
+	draw_circle(head + Vector2(0, -r * 1.5), r * 0.25, Color(0.95, 0.9, 0.6))
+	draw_circle(head + Vector2(r * 0.1, -r * 1.55), r * 0.22, Color(0.2, 0.18, 0.35))  # crescent moon
+	# oracle-bone beads
+	for i in 9:
+		var a := PI * (0.15 + i * 0.0875)
+		draw_circle(Vector2(w * 0.5, h * 0.64) + Vector2(cos(a) * w * 0.16, sin(a) * h * 0.12), r * 0.09, Color(0.9, 0.85, 0.7))
 
 
 func _ellipse(centre: Vector2, radius: Vector2, fill: Color) -> void:

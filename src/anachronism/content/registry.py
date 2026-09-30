@@ -6,6 +6,7 @@ from dataclasses import dataclass, field
 
 from anachronism.content.schema import (
     CivDefinition,
+    Dialogue,
     EffectType,
     Era,
     MapResource,
@@ -14,6 +15,7 @@ from anachronism.content.schema import (
     Rules,
     Scenario,
     SeaZone,
+    Speaker,
     TechNode,
     Terrain,
 )
@@ -34,6 +36,8 @@ class Registry:
     seas: dict[str, SeaZone] = field(default_factory=dict)
     civs: dict[str, CivDefinition] = field(default_factory=dict)
     scenarios: dict[str, Scenario] = field(default_factory=dict)
+    speakers: dict[str, Speaker] = field(default_factory=dict)
+    dialogue: dict[str, Dialogue] = field(default_factory=dict)
     origins: dict[tuple[str, str], str] = field(default_factory=dict)
     invalid: dict[str, set[str]] = field(default_factory=dict)
     """Ids of items that exist but failed validation (already reported), per kind."""

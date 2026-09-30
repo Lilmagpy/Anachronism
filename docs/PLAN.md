@@ -1,7 +1,7 @@
 # Anachronism — Plan
 
 **Current phase:** Phase 2 — 3D world (Godot) on the Phase 1 engine (branch `claude/phase-2-3d`).
-**Next action:** step 2.12 — characters who pop up and speak (scripted lines).
+**Next action:** step 2.14 — new regions and moments (Mediterranean first).
 
 Each phase ends at a **gate**: Claude stops, summarises, shows how to run it, lists known
 problems, and waits for approval (D-002: approval = merging the phase PR).
@@ -56,8 +56,8 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
       satellite image), toon light bands, sea painted by depth with coastal foam, cartoon
       forests; cream-and-gold game screens. Still to come: animated water, clouds
 - [ ] 2.11b Animated water, drifting clouds, better cartoon mountains
-- [ ] 2.12 Characters: rulers, advisers and rivals pop up and speak (scripted lines as
-      content data; placeholder portraits made in code, D-060)
+- [x] 2.12 Characters: rulers, advisers and rivals pop up and speak (scripted lines as
+      content data in core/dialogue.yaml and speakers.yaml; placeholder portraits, D-060)
 - [ ] 2.13 Cartoon cities from CC0 art packs; a close-up capital view where adopted ideas
       appear as buildings
 - [ ] 2.14 New regions and moments (D-061): Mediterranean (Rome, Greece), Egypt / Near East,

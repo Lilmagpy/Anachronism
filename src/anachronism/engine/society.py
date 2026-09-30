@@ -94,7 +94,7 @@ def _revolt(state: GameState, civ: CivState, rng: GameRng, events: EventLog) -> 
     stats.unrest_bp = clamp(stats.unrest_bp - rules.revolt_unrest_release_bp, 0, BP)
     stats.legitimacy_bp = clamp(stats.legitimacy_bp - rules.revolt_legitimacy_bp, 0, BP)
     place = state.world.geography[province_id].name
-    events.add(civ.id, "revolt", f"{place} rises in revolt and breaks away from {civ.name}.")
+    events.add(civ.id, "revolt", f"{place} rises in revolt and breaks away from {civ.name}.", place)
 
 
 def _check_collapse(state: GameState, civ: CivState, events: EventLog) -> None:

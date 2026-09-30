@@ -167,6 +167,8 @@ class Event(Mutable):
     civ: str | None
     kind: str
     message: str
+    subject: str = ""
+    """What it is about, by name (an idea, a province or a resource); used by dialogue."""
 
 
 class GameState(Mutable):

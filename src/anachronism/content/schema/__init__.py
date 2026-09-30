@@ -2,6 +2,7 @@
 
 from anachronism.content.schema.base import CURRENT_SCHEMA_VERSION, Frozen, Identifier, Rate
 from anachronism.content.schema.civ import CivDefinition
+from anachronism.content.schema.dialogue import MOMENTS, SPECIAL_SPEAKERS, Dialogue, Speaker
 from anachronism.content.schema.pack import CONTENT_KINDS, LIST_KINDS, SINGLE_KINDS, PackManifest
 from anachronism.content.schema.rules import Rules
 from anachronism.content.schema.scenario import (
@@ -35,11 +36,14 @@ __all__ = [
     "CONTENT_KINDS",
     "CURRENT_SCHEMA_VERSION",
     "LIST_KINDS",
+    "MOMENTS",
     "NUMERIC_EFFECTS",
     "SINGLE_KINDS",
+    "SPECIAL_SPEAKERS",
     "Access",
     "Category",
     "CivDefinition",
+    "Dialogue",
     "Effect",
     "EffectType",
     "Era",
@@ -57,6 +61,7 @@ __all__ = [
     "ScenarioCiv",
     "SeaZone",
     "SocialGroup",
+    "Speaker",
     "Stage",
     "StartingStats",
     "StartingStockpiles",

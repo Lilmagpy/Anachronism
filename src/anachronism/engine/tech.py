@@ -125,7 +125,7 @@ def adopt(state: GameState, civ: CivState, node_id: str, events: EventLog) -> No
     tech.stage = Stage.ADOPTED
     tech.goal = False
     tech.spread_bp = max(tech.spread_bp, state.world.rules.projects.initial_spread_bp)
-    events.add(civ.id, "adopted", f"{civ.name} adopts {node.name}.")
+    events.add(civ.id, "adopted", f"{civ.name} adopts {node.name}.", node.name)
     for effect in node.effects:
         if effect.type is EffectType.UNLOCKS_RESOURCE and effect.target is not None:
             _discover(state, civ, effect.target, events)
@@ -138,7 +138,9 @@ def adopt(state: GameState, civ: CivState, node_id: str, events: EventLog) -> No
     opposition = resistance_bp(state, civ, node)
     if opposition:
         civ.stats.unrest_bp = clamp(civ.stats.unrest_bp + opposition, 0, BP)
-        events.add(civ.id, "resistance", f"Some in {civ.name} resent the new {node.name}.")
+        events.add(
+            civ.id, "resistance", f"Some in {civ.name} resent the new {node.name}.", node.name
+        )
     on_adoption(state, civ, node, events)
 
 
@@ -149,7 +151,7 @@ def _discover(state: GameState, civ: CivState, resource: str, events: EventLog) 
         if province.resources.get(resource) is Access.UNEXPLORED:
             province.resources[resource] = Access.ACCESSIBLE
             place = state.world.geography[province_id].name
-            events.add(civ.id, "discovery", f"{name} found in {place}.")
+            events.add(civ.id, "discovery", f"{name} found in {place}.", name)
 
 
 def spread_step(state: GameState, civ: CivState, effects: Effects, events: EventLog) -> None:
@@ -171,4 +173,5 @@ def spread_step(state: GameState, civ: CivState, effects: Effects, events: Event
             civ.id,
             "widespread",
             f"{list_names(now_common)} {verb} now common across {civ.name}.",
+            list_names(now_common),
         )

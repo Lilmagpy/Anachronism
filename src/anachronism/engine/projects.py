@@ -52,10 +52,10 @@ def advance_projects(
         breakthrough = rng.chance(rules.breakthrough_chance_bp)
         if share > 0 and setback:
             gain = -rules.setback_loss_bp
-            events.add(civ.id, "setback", f"Experiments with {name} in {civ.name} go badly.")
+            events.add(civ.id, "setback", f"Experiments with {name} in {civ.name} go badly.", name)
         elif share > 0 and breakthrough:
             gain += rules.breakthrough_gain_bp
-            events.add(civ.id, "breakthrough", f"A breakthrough with {name} in {civ.name}!")
+            events.add(civ.id, "breakthrough", f"A breakthrough with {name} in {civ.name}!", name)
         project.stalled_turns = project.stalled_turns + 1 if share < rules.stall_funding_bp else 0
         if project.stalled_turns >= rules.stall_turns:
             gain -= apply_bp(project.progress_bp, decay)
@@ -70,4 +70,5 @@ def advance_projects(
             civ.id,
             "stalled",
             f"Work in {civ.name} has stalled on {list_names(newly_stalled)}; progress is decaying.",
+            list_names(newly_stalled),
         )

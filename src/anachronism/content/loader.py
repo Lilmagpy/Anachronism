@@ -20,6 +20,7 @@ from anachronism.content.schema import (
     LIST_KINDS,
     SINGLE_KINDS,
     CivDefinition,
+    Dialogue,
     EffectType,
     Era,
     MapResource,
@@ -28,6 +29,7 @@ from anachronism.content.schema import (
     Rules,
     Scenario,
     SeaZone,
+    Speaker,
     TechNode,
     Terrain,
 )
@@ -51,6 +53,8 @@ class Content:
     seas: Mapping[str, SeaZone]
     civs: Mapping[str, CivDefinition]
     scenarios: Mapping[str, Scenario]
+    speakers: Mapping[str, Speaker]
+    dialogue: Mapping[str, Dialogue]
     digest: str
     """SHA-256 of every loaded file, recorded in saves to identify the content version."""
 
@@ -127,6 +131,8 @@ def load_content(pack_ids: Sequence[str] | None = None, root: Path = PACKS_DIR) 
         seas=registry.seas,
         civs=registry.civs,
         scenarios=registry.scenarios,
+        speakers=registry.speakers,
+        dialogue=registry.dialogue,
         digest=digest.hexdigest(),
     )
 

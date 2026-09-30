@@ -17,12 +17,13 @@ from typing import Any, TextIO
 from pydantic import TypeAdapter, ValidationError
 
 from anachronism.content.loader import Content, load_content
-from anachronism.engine.actions import Action
+from anachronism.engine.actions import Action, StartProject
 from anachronism.engine.bots import Bot, make_bot
 from anachronism.engine.game import apply_action, end_turn, new_game
 from anachronism.engine.save import SaveError, dumps, loads
 from anachronism.engine.state import Event, GameState
 from anachronism.tools.view import build_catalog, build_view
+from anachronism.tools.voices import speak, voices_for_turn
 
 ACTION = TypeAdapter[Action](Action)
 
@@ -67,7 +68,9 @@ class Session:
         except ValueError as error:
             raise RequestError(str(error)) from error
         self.events = []
-        return build_view(self.state)
+        view = build_view(self.state)
+        view["voices"] = [v for v in [speak(self.content, self.state, "game_start")] if v]
+        return view
 
     def scenarios(self, args: dict[str, Any]) -> dict[str, Any]:
         """Every starting moment and its civilisations, for the picker."""
@@ -87,10 +90,15 @@ class Session:
         except ValidationError as error:
             raise RequestError(f"bad action: {error.errors()[0]['msg']}") from error
         self.state, logged = apply_action(state, action)
+        voices = []
+        if logged.ok and isinstance(action, StartProject):
+            name = self.state.tech_nodes[action.node_id].name
+            voices = [v for v in [speak(self.content, self.state, "project_started", name)] if v]
         return {
             "accepted": logged.ok,
             "message": logged.message,
             "view": build_view(self.state, self.events),
+            "voices": voices,
         }
 
     def end_turn(self, args: dict[str, Any]) -> dict[str, Any]:
@@ -101,7 +109,9 @@ class Session:
                 for action in self.rivals[civ_id].decide(state, civ_id):
                     state, _ = apply_action(state, action)
         self.state, self.events = end_turn(state)
-        return build_view(self.state, self.events)
+        view = build_view(self.state, self.events)
+        view["voices"] = voices_for_turn(self.content, self.state, self.events)
+        return view
 
     def _path(self, args: dict[str, Any]) -> Path:
         name = str(args.get("name", "quicksave"))
@@ -127,7 +137,9 @@ class Session:
             raise RequestError(str(error)) from error
         self.rivals = {c: make_bot("growth") for c in self.state.civs if c != self.state.player_civ}
         self.events = []
-        return build_view(self.state)
+        view = build_view(self.state)
+        view["voices"] = [v for v in [speak(self.content, self.state, "game_start")] if v]
+        return view
 
 
 def handle(session: Session, line: str) -> tuple[dict[str, Any], bool]:

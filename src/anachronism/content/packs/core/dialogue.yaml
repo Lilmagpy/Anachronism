@@ -1,0 +1,109 @@
+schema_version: 1
+# What characters say, by moment (see content/schema/dialogue.py). One line is picked each
+# time. Placeholders: {civ} {ruler} {subject} {year} {rival} {rival_ruler}.
+dialogue:
+  - id: game_start
+    speaker: ruler
+    lines:
+      - "The year is {year}. {civ} looks to me - and I look to you. Whisper your ideas, and we shall see what they become."
+      - "They say a ruler is only as wise as the voices around the throne. Speak, then. {civ} is listening."
+      - "Our rivals sharpen swords. Let us sharpen minds instead. What should {civ} learn first?"
+
+  - id: project_started
+    speaker: scholar
+    lines:
+      - "{subject}? Fascinating. The workshops will begin at once - though the old masters are already muttering."
+      - "I have cleared a whole hall for {subject}. The ink is ground, the apprentices are nervous. Excellent."
+      - "We start on {subject} today. Give us labour and patience, and do not ask me how long."
+
+  - id: breakthrough
+    speaker: scholar
+    lines:
+      - "A breakthrough with {subject}! One of the apprentices spilled something, and suddenly it all made sense."
+      - "{subject} leaps ahead! I would take the credit, but in truth it was luck. Mostly luck."
+
+  - id: setback
+    speaker: scholar
+    lines:
+      - "The {subject} trials went... badly. We have lost weeks of work, and one workshop roof."
+      - "A setback with {subject}. The craftsmen swear it was the weather. I suspect it was the craftsmen."
+
+  - id: stalled
+    speaker: steward
+    lines:
+      - "Work on {subject} has stalled. The storehouses cannot feed every clever idea at once."
+      - "We are spreading ourselves too thin. {subject} is gathering dust while the fields go untended."
+
+  - id: adopted
+    speaker: scholar
+    lines:
+      - "It works! {subject} is ours. The other courts will spend a generation wondering how."
+      - "{subject} is no longer a dream but a craft. Let the chroniclers record that {civ} did it first."
+      - "We have mastered {subject}. I have not slept in a month, and I have never been happier."
+
+  - id: widespread
+    speaker: steward
+    lines:
+      - "{subject} - once a marvel, now a habit. Every village uses it without a second thought."
+      - "Good news from the provinces: {subject} is everywhere now. The tax clerks are delighted."
+
+  - id: resistance
+    speaker: diviner
+    lines:
+      - "Some grumble against the new {subject}. The old ways have loud friends."
+      - "The elders call {subject} unnatural. Give them time - or give them something else to worry about."
+
+  - id: suspicion
+    speaker: diviner
+    lines:
+      - "People ask where {civ} learned {subject}. Some say from spirits. Some say worse."
+      - "Whispers in the markets, Majesty. {subject} came too soon, they say. Nobody invents that from nothing."
+
+  - id: framing
+    speaker: diviner
+    lines:
+      - "The people have decided what our cleverness means. Pray they decided kindly."
+      - "A story is spreading about {civ} and its uncanny knowledge. Stories are hard to kill."
+
+  - id: discovery
+    speaker: steward
+    lines:
+      - "{subject}! The prospectors found it where nobody thought to look. Our new skills pay for themselves."
+      - "We have found {subject} in our own hills. The smiths are already arguing over it."
+
+  - id: riot
+    speaker: general
+    lines:
+      - "Riots! They looted the granaries. We ask too much of them - too many projects, too little bread."
+      - "The crowds are angry, and angry crowds do not care about progress. Ease the burden, or I will have to."
+
+  - id: revolt
+    speaker: general
+    lines:
+      - "{subject} has risen against us and broken away. We pushed too hard."
+      - "We have lost {subject}. The rebels fly their own banners now."
+
+  - id: famine
+    speaker: steward
+    lines:
+      - "Famine. People are dying, and they know exactly whose projects ate the harvest."
+      - "The granaries are empty. Whatever we are building, it will not feed a single child this winter."
+
+  - id: collapse
+    speaker: general
+    lines:
+      - "It is over. {civ} has fallen apart. Perhaps history will judge our ambition more kindly than the people did."
+
+  - id: rival_adopted
+    speaker: rival
+    lines:
+      - "Do not imagine {civ} alone dreams of new things. {rival} has mastered {subject}."
+      - "{subject} is ours now. Let the other courts wonder how {rival} managed it."
+      - "Greetings from {rival}. We thought you should hear it from us: we have {subject}."
+
+  - id: quiet
+    speaker: steward
+    lines:
+      - "Ten quiet years. The harvest was fair and nobody burned anything down. I call that a triumph."
+      - "Nothing of note to report - which, in these times, is the best report of all."
+      - "The realm is calm. Perhaps too calm for a ruler with ideas..."

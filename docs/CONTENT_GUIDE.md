@@ -138,6 +138,20 @@ scenarios:
   `experimenting` is not allowed (there is no project data); stubs are not allowed.
 - Every civ, AI or player, needs an era-appropriate baseline of techs.
 
+## Characters and dialogue
+`core/speakers.yaml` lists the advisers at every court (title and placeholder portrait
+style); `core/dialogue.yaml` lists what is said at each *moment* (an idea adopted, a riot,
+the game starting…). One line is picked each time, the same way in every replay:
+```yaml
+dialogue:
+  - id: adopted              # the moment (see content/schema/dialogue.py for the list)
+    speaker: scholar         # an adviser, or `ruler` (yours) or `rival` (another state's)
+    lines:
+      - "It works! {subject} is ours."
+```
+Placeholders: `{civ}` `{ruler}` `{subject}` `{year}` `{rival}` `{rival_ruler}`; the linter
+rejects any other. Rulers' names come from each scenario civ's `leader`.
+
 ## Rules
 `core/rules.yaml` holds every tunable number, grouped by system and documented field by field
 in `content/schema/rules.py`. Balance changes go here, never into code. After changing

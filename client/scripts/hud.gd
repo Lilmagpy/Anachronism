@@ -37,6 +37,8 @@ var _card_body := VBoxContainer.new()
 var _chronicle := VBoxContainer.new()
 var _end_turn := Button.new()
 var _hover := Label.new()
+var _speech_queue: Array = []
+var _speech: Control
 
 
 func _ready() -> void:
@@ -70,6 +72,91 @@ func show_view(new_view: Dictionary) -> void:
 	_fill_side()
 	_fill_card()
 	_fill_chronicle()
+
+
+## Characters take turns to speak: portrait, name ribbon and speech bubble, bottom left.
+## Click the bubble to hear the next one.
+func speak(voices: Array, replace := false) -> void:
+	if replace:  # a new turn: lines nobody clicked through are old news
+		_speech_queue.clear()
+		if _speech != null:
+			_speech.queue_free()
+			_speech = null
+	_speech_queue.append_array(voices)
+	if _speech == null and not _speech_queue.is_empty():
+		_show_next_voice()
+
+
+func _show_next_voice() -> void:
+	if _speech != null:
+		_speech.queue_free()
+		_speech = null
+	_card.visible = _speech_queue.is_empty()
+	if _speech_queue.is_empty():
+		return
+	var voice: Dictionary = _speech_queue.pop_front()
+	var colour := Color(voice["colour"])
+	var box := Control.new()
+	box.set_anchors_preset(Control.PRESET_BOTTOM_LEFT)
+	box.offset_left = 12
+	box.offset_top = -262
+	box.offset_right = 780
+	box.offset_bottom = -12
+	box.mouse_filter = Control.MOUSE_FILTER_STOP
+	box.gui_input.connect(func(event: InputEvent):
+		if event is InputEventMouseButton and event.pressed:
+			_show_next_voice())
+	var bubble := PanelContainer.new()
+	var bubble_style := UiStyle.panel(UiStyle.CREAM, colour.darkened(0.3), 16)
+	bubble_style.content_margin_left = 44
+	bubble.add_theme_stylebox_override("panel", bubble_style)
+	bubble.position = Vector2(170, 40)
+	bubble.custom_minimum_size = Vector2(590, 180)
+	bubble.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var column := VBoxContainer.new()
+	column.add_theme_constant_override("separation", 6)
+	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var spacer := Control.new()
+	spacer.custom_minimum_size.y = 18
+	column.add_child(spacer)
+	var text := UiStyle.wrapped(str(voice["text"]), 19, UiStyle.INK, 520)
+	text.add_theme_font_override("font", UiStyle.font("body", 700))
+	column.add_child(text)
+	var more := "▸ click to continue" + (" (%d more)" % _speech_queue.size() if not _speech_queue.is_empty() else "")
+	var hint := UiStyle.label(more, 13, UiStyle.INK_SOFT)
+	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	column.add_child(hint)
+	bubble.add_child(column)
+	box.add_child(bubble)
+	# name ribbon across the top of the bubble
+	var ribbon := PanelContainer.new()
+	var ribbon_style := UiStyle.panel(colour, colour.darkened(0.4), 8)
+	ribbon_style.content_margin_top = 4
+	ribbon_style.content_margin_bottom = 4
+	ribbon.add_theme_stylebox_override("panel", ribbon_style)
+	ribbon.position = Vector2(200, 18)
+	var names := HBoxContainer.new()
+	names.add_theme_constant_override("separation", 12)
+	var name := UiStyle.headline(str(voice["name"]), 24, UiStyle.CREAM)
+	names.add_child(name)
+	names.add_child(UiStyle.label(str(voice["title"]), 15, colour.lightened(0.75)))
+	ribbon.add_child(names)
+	box.add_child(ribbon)
+	var portrait := Portrait.new()
+	portrait.position = Vector2(0, 0)
+	portrait.size = Vector2(190, 240)
+	portrait.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	portrait.setup({"colour": voice["colour"], "portrait": voice["portrait"], "id": "%s_%s" % [voice["civ"], voice["speaker"]]})
+	box.add_child(portrait)
+	_root.add_child(box)
+	_speech = box
+	# slide in from the left
+	box.modulate.a = 0.0
+	var start := box.position
+	box.position.x -= 60
+	var tween := create_tween().set_parallel()
+	tween.tween_property(box, "position", start, 0.25).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.tween_property(box, "modulate:a", 1.0, 0.2)
 
 
 func select(place_id: String) -> void:
@@ -445,9 +532,9 @@ func _fill_card() -> void:
 
 func _build_chronicle() -> void:
 	var panel := PanelContainer.new()
-	panel.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
-	panel.offset_left = -330
-	panel.offset_right = 330
+	panel.set_anchors_preset(Control.PRESET_BOTTOM_LEFT)
+	panel.offset_left = 792
+	panel.offset_right = 1352
 	panel.offset_bottom = -8
 	panel.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	_chronicle.add_theme_constant_override("separation", 2)
@@ -467,7 +554,7 @@ func _fill_chronicle() -> void:
 	for e in events.slice(0, 6):
 		var colour := BAD if e["kind"] in ["riot", "revolt", "famine", "collapse", "setback", "stalled"] else INK
 		var line := _wrapped("• " + str(e["message"]), 13, colour)
-		line.custom_minimum_size.x = 620
+		line.custom_minimum_size.x = 520
 		_chronicle.add_child(line)
 	if events.size() > 6:
 		_chronicle.add_child(_label("… and %d more" % (events.size() - 6), 12, DIM))

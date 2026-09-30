@@ -187,6 +187,7 @@ func _build_hud() -> void:
 	if options.has("tab"):
 		hud.tab = str(options["tab"])
 	hud.show_view(view)
+	hud.speak(view.get("voices", []), true)
 	if options.has("start"):
 		_on_action({"kind": "start", "node_id": str(options["start"])})
 	for i in int(options.get("play", "0")):
@@ -213,6 +214,8 @@ func _on_action(action: Dictionary) -> void:
 		if reply["accepted"] and action["kind"] == "start":
 			hud.tab = "projects"
 	hud.show_view(view)
+	if reply != null:
+		hud.speak(reply.get("voices", []))
 
 
 func _on_end_turn() -> void:
@@ -224,6 +227,7 @@ func _on_end_turn() -> void:
 		view = reply
 		provinces.update(view)
 	hud.show_view(view)
+	hud.speak(view.get("voices", []), true)
 
 
 func _select(place_id: String) -> void:

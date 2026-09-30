@@ -6,7 +6,7 @@ from itertools import pairwise
 
 from anachronism.content.issues import ContentIssue
 from anachronism.content.registry import Registry
-from anachronism.content.schema import NUMERIC_EFFECTS, EffectType, Stage
+from anachronism.content.schema import MOMENTS, NUMERIC_EFFECTS, SPECIAL_SPEAKERS, EffectType, Stage
 
 
 def cross_reference_issues(registry: Registry) -> list[ContentIssue]:
@@ -18,7 +18,22 @@ def cross_reference_issues(registry: Registry) -> list[ContentIssue]:
         *_province_issues(registry),
         *_sea_issues(registry),
         *_scenario_issues(registry),
+        *_dialogue_issues(registry),
     ]
+
+
+def _dialogue_issues(registry: Registry) -> list[ContentIssue]:
+    issues: list[ContentIssue] = []
+    for moment in registry.dialogue.values():
+        where = registry.origin("dialogue", moment.id)
+        label = f"dialogue ({moment.id})"
+        if moment.id not in MOMENTS:
+            issues.append(ContentIssue(where, label, f"unknown moment (known: {sorted(MOMENTS)})"))
+        if moment.speaker not in SPECIAL_SPEAKERS and registry.is_unknown(
+            "speakers", moment.speaker
+        ):
+            issues.append(ContentIssue(where, label, f"unknown speaker {moment.speaker!r}"))
+    return issues
 
 
 def _era_issues(registry: Registry) -> list[ContentIssue]:
