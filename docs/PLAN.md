@@ -1,7 +1,8 @@
 # Anachronism — Plan
 
 **Current phase:** Phase 2 — 3D world (Godot) on the Phase 1 engine (branch `claude/phase-2-3d`).
-**Next action:** step 2.14 — new regions and moments (Mediterranean first).
+**Next action:** step 2.13 — cartoon cities (CC0 art) and a close-up capital view; then
+2.11b water and clouds, 2.15 polish.
 
 Each phase ends at a **gate**: Claude stops, summarises, shows how to run it, lists known
 problems, and waits for approval (D-002: approval = merging the phase PR).
@@ -62,7 +63,8 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
       appear as buildings
 - [ ] 2.14 New regions and moments (D-061): the "europe" map (Ireland to Persia, Sahara to
       Scandinavia) is built; [x] Rome and Carthage, 264 BC (19 states, 70 provinces);
-      [x] Egypt and the Hittites, 1275 BC (11 states, 50 provinces); [ ] Medieval Europe; [ ] more East Asian starts (Korea, Japan)
+      [x] Egypt and the Hittites, 1275 BC (11 states, 50 provinces); [x] Europe in the Year 1000
+      (29 states, 96 provinces); [ ] more East Asian starts (Korea, Japan)
 - [ ] 2.15 Polish: tooltips, charts over time, save/load and settings menus, sound
 - [ ] 2.16 Gate: owner plays the new build on their Mac and merges the phase PR
 

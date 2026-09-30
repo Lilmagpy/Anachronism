@@ -1,0 +1,1383 @@
+schema_version: 1
+scenarios:
+  - id: year_1000
+    name: "Europe in the Year 1000"
+    description: >-
+      AD 1000. Vikings still raid England; the new kingdoms of Poland and Hungary are being
+      born; a young emperor, Otto III, dreams of restoring Rome, and the scholar-pope Sylvester
+      II has brought Arabic numerals north. Byzantium under Basil II is the richest state in
+      Christendom, Córdoba the most brilliant city in the west, and Cairo is the new capital
+      of the Fatimid caliphs. Europe's great age is about to begin - or is it?
+    start_year: 1000
+    years_per_turn: 10
+    player_civ: england
+    map: europe
+    cost_scale: 10
+    civs:
+      england:
+        capital: m_wessex
+        leader: Æthelred II
+        pitch: "The Danes are raiding again and Æthelred pays them to leave. Find a better idea than silver."
+        provinces:
+          m_wessex: 700000
+          m_mercia: 600000
+          m_east_anglia: 450000
+          m_northumbria: 300000
+        stockpiles: {food: 3280, materials: 820, wealth: 1025, knowledge: 420}
+        stats: {literacy_bp: 400, unrest_bp: 1200, legitimacy_bp: 5000}
+        influence: {clergy: 4500, nobility: 4500, guilds: 1000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          heavy_plough: adopted
+          crop_rotation: adopted
+          schools: concept
+      scotland:
+        capital: m_alba
+        leader: Kenneth III
+        pitch: "A hard land and proud clans. Make Alba more than a kingdom of feuds."
+        provinces:
+          m_alba: 300000
+        stockpiles: {food: 480, materials: 120, wealth: 150, knowledge: 32}
+        stats: {literacy_bp: 150, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 4000, nobility: 5000, guilds: 1000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          heavy_plough: adopted
+          sternpost_rudder: concept
+      ireland:
+        capital: m_munster
+        leader: Brian Boru
+        pitch: "Brian Boru is uniting Ireland. The monasteries hold the learning of Europe; use it."
+        provinces:
+          m_munster: 300000
+          m_ulster: 250000
+        stockpiles: {food: 880, materials: 220, wealth: 275, knowledge: 120}
+        stats: {literacy_bp: 400, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 5000, nobility: 4500, guilds: 500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          heavy_plough: adopted
+          crop_rotation: adopted
+          schools: adopted
+      france:
+        capital: m_ile_de_france
+        leader: Robert II
+        pitch: "You wear the crown; your dukes hold the land. Can ideas make the king of France a king in fact?"
+        provinces:
+          m_ile_de_france: 700000
+          m_champagne: 600000
+          m_burgundy: 700000
+          m_aquitaine: 1100000
+          m_toulouse: 800000
+          m_flanders: 500000
+        stockpiles: {food: 7040, materials: 1760, wealth: 2200, knowledge: 670}
+        stats: {literacy_bp: 300, unrest_bp: 1100, legitimacy_bp: 4500}
+        influence: {clergy: 4500, nobility: 5000, guilds: 500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          heavy_plough: adopted
+          crop_rotation: adopted
+          schools: concept
+      normandy:
+        capital: m_normandy
+        leader: Richard II
+        pitch: "Northmen who became Frenchmen. The world does not yet know what Normans can do."
+        provinces:
+          m_normandy: 600000
+        stockpiles: {food: 960, materials: 240, wealth: 300, knowledge: 85}
+        stats: {literacy_bp: 250, unrest_bp: 900, legitimacy_bp: 7000}
+        influence: {clergy: 4000, nobility: 5500, guilds: 500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          heavy_plough: adopted
+          crop_rotation: adopted
+          schools: concept
+      hre:
+        capital: m_lotharingia
+        leader: Otto III
+        pitch: "A young emperor with a dream of Rome renewed. Make the dream real."
+        provinces:
+          m_saxony: 800000
+          m_lotharingia: 700000
+          m_franconia: 600000
+          m_swabia: 600000
+          m_bavaria: 700000
+          m_lombardy: 1200000
+          m_tuscany: 600000
+        stockpiles: {food: 8320, materials: 2080, wealth: 2600, knowledge: 920}
+        stats: {literacy_bp: 350, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 5000, nobility: 4500, guilds: 500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          heavy_plough: adopted
+          crop_rotation: adopted
+          schools: concept
+      papacy:
+        capital: m_rome
+        leader: Sylvester II
+        pitch: "The scholar-pope himself. You know the astrolabe and Arabic numerals already - what comes next?"
+        provinces:
+          m_rome: 600000
+        stockpiles: {food: 960, materials: 240, wealth: 300, knowledge: 280}
+        stats: {literacy_bp: 900, unrest_bp: 1100, legitimacy_bp: 5500}
+        influence: {clergy: 8000, nobility: 1500, guilds: 500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          heavy_plough: adopted
+          crop_rotation: adopted
+          schools: adopted
+          place_value_numerals: concept
+          paper: concept
+          aqueduct: adopted
+      venice:
+        capital: m_venice
+        leader: Pietro II Orseolo
+        pitch: "Salt, ships and a lagoon no army can cross. Trade your way to an empire."
+        provinces:
+          m_venice: 120000
+          m_dalmatia: 100000
+        stockpiles: {food: 352, materials: 88, wealth: 110, knowledge: 98}
+        stats: {literacy_bp: 800, unrest_bp: 700, legitimacy_bp: 7000}
+        influence: {clergy: 2500, nobility: 2500, guilds: 5000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          paper: concept
+          canals: adopted
+      denmark:
+        capital: m_jutland
+        leader: Sweyn Forkbeard
+        pitch: "Longships, raiders and a king who wants England. Conquer with ideas as well as axes."
+        provinces:
+          m_jutland: 300000
+          m_scania: 250000
+        stockpiles: {food: 880, materials: 220, wealth: 275, knowledge: 51}
+        stats: {literacy_bp: 150, unrest_bp: 900, legitimacy_bp: 6500}
+        influence: {clergy: 2000, nobility: 7000, guilds: 1000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          heavy_plough: adopted
+          sternpost_rudder: concept
+      norway:
+        capital: m_trondelag
+        leader: Olaf Tryggvason
+        pitch: "A great sea-king with enemies on every side. The Battle of Svolder is coming."
+        provinces:
+          m_trondelag: 100000
+          m_viken: 120000
+        stockpiles: {food: 352, materials: 88, wealth: 110, knowledge: 21}
+        stats: {literacy_bp: 100, unrest_bp: 1200, legitimacy_bp: 5500}
+        influence: {clergy: 2500, nobility: 7000, guilds: 500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          heavy_plough: adopted
+          sternpost_rudder: concept
+      sweden:
+        capital: m_svealand
+        leader: Olof Skötkonung
+        pitch: "The eastern Vikings: rivers to Constantinople and iron in the hills."
+        provinces:
+          m_svealand: 200000
+          m_gotaland: 200000
+        stockpiles: {food: 640, materials: 160, wealth: 200, knowledge: 30}
+        stats: {literacy_bp: 100, unrest_bp: 900, legitimacy_bp: 6000}
+        influence: {clergy: 2000, nobility: 7000, guilds: 1000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          heavy_plough: adopted
+          sternpost_rudder: concept
+      poland:
+        capital: m_greater_poland
+        leader: Bolesław I the Brave
+        pitch: "The emperor has just crowned your ambitions. Build a kingdom to match them."
+        provinces:
+          m_greater_poland: 400000
+          m_lesser_poland: 350000
+          m_silesia: 250000
+          m_masovia: 200000
+        stockpiles: {food: 1920, materials: 480, wealth: 600, knowledge: 130}
+        stats: {literacy_bp: 200, unrest_bp: 900, legitimacy_bp: 7000}
+        influence: {clergy: 4000, nobility: 5500, guilds: 500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          heavy_plough: adopted
+          crop_rotation: adopted
+          schools: concept
+      bohemia:
+        capital: m_bohemia
+        leader: Boleslaus III
+        pitch: "Silver, castles and powerful neighbours. Hold the heart of Europe."
+        provinces:
+          m_bohemia: 400000
+        stockpiles: {food: 640, materials: 160, wealth: 200, knowledge: 60}
+        stats: {literacy_bp: 250, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 4500, nobility: 5000, guilds: 500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          heavy_plough: adopted
+          crop_rotation: adopted
+          schools: concept
+      hungary:
+        capital: m_esztergom
+        leader: Stephen I
+        pitch: "Stephen is about to be crowned. Turn the raiders' grandchildren into builders."
+        provinces:
+          m_esztergom: 500000
+          m_transylvania: 250000
+        stockpiles: {food: 1200, materials: 300, wealth: 375, knowledge: 47}
+        stats: {literacy_bp: 100, unrest_bp: 1200, legitimacy_bp: 6000}
+        influence: {clergy: 4000, nobility: 5500, guilds: 500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: widespread
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          heavy_plough: adopted
+          crop_rotation: adopted
+          schools: concept
+      rus:
+        capital: m_kiev
+        leader: Vladimir the Great
+        pitch: "The largest realm in Europe, stitched together by rivers. Make it hold."
+        provinces:
+          m_kiev: 1200000
+          m_novgorod: 500000
+          m_smolensk: 600000
+          m_polotsk: 400000
+          m_rostov: 400000
+          m_volhynia: 500000
+        stockpiles: {food: 5760, materials: 1440, wealth: 1800, knowledge: 370}
+        stats: {literacy_bp: 200, unrest_bp: 1000, legitimacy_bp: 6500}
+        influence: {clergy: 3500, nobility: 5500, guilds: 1000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          heavy_plough: adopted
+          sternpost_rudder: concept
+          schools: concept
+      byzantium:
+        capital: m_constantinople
+        leader: Basil II
+        pitch: "The richest state in Europe and the heir of Rome. Basil II is at war with Bulgaria; win it with more than swords."
+        provinces:
+          m_apulia: 600000
+          m_constantinople: 1500000
+          m_thessalonica: 500000
+          m_hellas: 600000
+          m_thrakesion: 1000000
+          m_anatolikon: 1000000
+          m_armeniakon: 900000
+          m_antioch: 700000
+          m_crete: 200000
+          m_cyprus: 150000
+        stockpiles: {food: 11440, materials: 2860, wealth: 3575, knowledge: 4300}
+        stats: {literacy_bp: 1200, unrest_bp: 900, legitimacy_bp: 6500}
+        influence: {clergy: 4500, nobility: 3500, guilds: 2000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          paper: adopted
+          schools: adopted
+          aqueduct: adopted
+          civil_service: adopted
+          postal_relay: adopted
+          alchemy: concept
+          canals: concept
+      bulgaria:
+        capital: m_ohrid
+        leader: Samuel
+        pitch: "Byzantium wants you gone. Survive the Bulgar-slayer."
+        provinces:
+          m_ohrid: 500000
+          m_moesia: 400000
+        stockpiles: {food: 1440, materials: 360, wealth: 450, knowledge: 235}
+        stats: {literacy_bp: 500, unrest_bp: 1300, legitimacy_bp: 6000}
+        influence: {clergy: 4000, nobility: 5500, guilds: 500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          schools: adopted
+      cordoba:
+        capital: m_cordoba
+        leader: al-Mansur
+        pitch: "The most brilliant city in western Europe. Its splendour will not last - unless you change the story."
+        provinces:
+          m_cordoba: 1200000
+          m_seville: 700000
+          m_toledo: 700000
+          m_zaragoza: 500000
+          m_valencia: 600000
+          m_fez: 500000
+        stockpiles: {food: 6720, materials: 1680, wealth: 2100, knowledge: 3160}
+        stats: {literacy_bp: 1500, unrest_bp: 900, legitimacy_bp: 6000}
+        influence: {clergy: 3500, nobility: 3500, guilds: 3000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          paper: widespread
+          place_value_numerals: adopted
+          alchemy: adopted
+          schools: adopted
+          canals: adopted
+          aqueduct: adopted
+          windmill: adopted
+          crucible_steel: adopted
+          civil_service: adopted
+          postal_relay: adopted
+          sternpost_rudder: concept
+      leon:
+        capital: m_leon
+        leader: Alfonso V
+        pitch: "Al-Mansur has sacked your cities. Rebuild, and turn the tide."
+        provinces:
+          m_leon: 400000
+          m_galicia: 250000
+        stockpiles: {food: 1040, materials: 260, wealth: 325, knowledge: 91}
+        stats: {literacy_bp: 250, unrest_bp: 1200, legitimacy_bp: 5500}
+        influence: {clergy: 4500, nobility: 5000, guilds: 500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          heavy_plough: adopted
+          crop_rotation: adopted
+          schools: concept
+      navarre:
+        capital: m_navarre
+        pitch: "Mountains, Basque pride and a great king coming. Get there sooner."
+        provinces:
+          m_navarre: 200000
+        stockpiles: {food: 320, materials: 80, wealth: 100, knowledge: 30}
+        stats: {literacy_bp: 200, unrest_bp: 900, legitimacy_bp: 6500}
+        influence: {clergy: 4000, nobility: 5500, guilds: 500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          heavy_plough: adopted
+          crop_rotation: adopted
+          schools: concept
+      barcelona:
+        capital: m_barcelona
+        leader: Ramon Borrell
+        pitch: "A port, a march and a sea full of opportunity."
+        provinces:
+          m_barcelona: 200000
+        stockpiles: {food: 320, materials: 80, wealth: 100, knowledge: 40}
+        stats: {literacy_bp: 300, unrest_bp: 900, legitimacy_bp: 6000}
+        influence: {clergy: 4000, nobility: 4500, guilds: 1500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          heavy_plough: adopted
+          crop_rotation: adopted
+          schools: concept
+      fatimids:
+        capital: m_cairo
+        leader: al-Hakim
+        pitch: "Cairo, al-Azhar and the trade of the Red Sea. Build a House of Knowledge the world will envy."
+        provinces:
+          m_cairo: 2500000
+          m_upper_egypt: 1200000
+          m_syria: 1300000
+          m_barqa: 200000
+        stockpiles: {food: 8320, materials: 2080, wealth: 2600, knowledge: 3910}
+        stats: {literacy_bp: 1500, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 5000, nobility: 3000, guilds: 2000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          paper: widespread
+          place_value_numerals: adopted
+          alchemy: adopted
+          schools: adopted
+          canals: adopted
+          aqueduct: adopted
+          windmill: adopted
+          crucible_steel: adopted
+          civil_service: adopted
+          postal_relay: adopted
+          sternpost_rudder: concept
+      zirids:
+        capital: m_ifriqiya
+        leader: Badis ibn Mansur
+        pitch: "Rich Ifriqiya, a distant overlord. Will you stay loyal?"
+        provinces:
+          m_ifriqiya: 900000
+          m_tripolitania: 200000
+        stockpiles: {food: 1760, materials: 440, wealth: 550, knowledge: 505}
+        stats: {literacy_bp: 900, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 4000, nobility: 4500, guilds: 1500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          paper: widespread
+          place_value_numerals: adopted
+          alchemy: adopted
+          schools: adopted
+          canals: adopted
+          aqueduct: adopted
+          windmill: adopted
+          crucible_steel: adopted
+          civil_service: adopted
+          postal_relay: adopted
+          sternpost_rudder: concept
+      sicily_emirate:
+        capital: m_sicily
+        leader: Ja'far al-Kalbi
+        pitch: "Lemons, sugar cane and silk in Palermo's gardens. An island of plenty between three worlds."
+        provinces:
+          m_sicily: 500000
+        stockpiles: {food: 800, materials: 200, wealth: 250, knowledge: 310}
+        stats: {literacy_bp: 1200, unrest_bp: 1200, legitimacy_bp: 5000}
+        influence: {clergy: 3500, nobility: 4000, guilds: 2500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          paper: widespread
+          place_value_numerals: adopted
+          alchemy: adopted
+          schools: adopted
+          canals: adopted
+          aqueduct: adopted
+          windmill: adopted
+          crucible_steel: adopted
+          civil_service: adopted
+          postal_relay: adopted
+          sternpost_rudder: concept
+      buyids:
+        capital: m_baghdad
+        leader: Baha al-Dawla
+        pitch: "Baghdad, the House of Wisdom's heirs, and Persian ambition."
+        provinces:
+          m_baghdad: 1300000
+          m_basra: 700000
+          m_fars: 800000
+          m_jibal: 700000
+        stockpiles: {food: 5600, materials: 1400, wealth: 1750, knowledge: 2635}
+        stats: {literacy_bp: 1500, unrest_bp: 1100, legitimacy_bp: 5500}
+        influence: {clergy: 4000, nobility: 4500, guilds: 1500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          paper: widespread
+          place_value_numerals: adopted
+          alchemy: adopted
+          schools: adopted
+          canals: adopted
+          aqueduct: adopted
+          windmill: adopted
+          crucible_steel: adopted
+          civil_service: adopted
+          postal_relay: adopted
+          sternpost_rudder: concept
+      armenia:
+        capital: m_ani
+        leader: Gagik I
+        pitch: "Ani is booming. Keep it free between Byzantium and the Muslim emirs."
+        provinces:
+          m_ani: 800000
+        stockpiles: {food: 1280, materials: 320, wealth: 400, knowledge: 330}
+        stats: {literacy_bp: 800, unrest_bp: 900, legitimacy_bp: 6500}
+        influence: {clergy: 5000, nobility: 4000, guilds: 1000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          paper: adopted
+          schools: adopted
+          aqueduct: adopted
+          civil_service: concept
+          postal_relay: concept
+          alchemy: concept
+          canals: concept
+      georgia:
+        capital: m_kutaisi
+        leader: Bagrat III
+        pitch: "Unite Georgia and hold the passes of the Caucasus."
+        provinces:
+          m_kutaisi: 500000
+        stockpiles: {food: 800, materials: 200, wealth: 250, knowledge: 160}
+        stats: {literacy_bp: 600, unrest_bp: 900, legitimacy_bp: 6500}
+        influence: {clergy: 5000, nobility: 4500, guilds: 500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          paper: adopted
+          schools: adopted
+          aqueduct: adopted
+          civil_service: concept
+          postal_relay: concept
+          alchemy: concept
+          canals: concept
+      ghaznavids:
+        capital: m_khorasan
+        leader: Mahmud of Ghazni
+        pitch: "A sultan with an army and a hunger for India. Point it somewhere wiser."
+        provinces:
+          m_khorasan: 1000000
+        stockpiles: {food: 1600, materials: 400, wealth: 500, knowledge: 410}
+        stats: {literacy_bp: 800, unrest_bp: 1000, legitimacy_bp: 6500}
+        influence: {clergy: 3500, nobility: 5500, guilds: 1000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          paper: widespread
+          place_value_numerals: adopted
+          alchemy: adopted
+          schools: adopted
+          canals: adopted
+          aqueduct: adopted
+          windmill: adopted
+          crucible_steel: adopted
+          civil_service: adopted
+          postal_relay: adopted
+          sternpost_rudder: concept
+      makuria:
+        capital: m_dongola
+        pitch: "The Christian kingdom of the Nile. Hold Egypt at arm's length."
+        provinces:
+          m_dongola: 300000
+        stockpiles: {food: 480, materials: 120, wealth: 150, knowledge: 85}
+        stats: {literacy_bp: 500, unrest_bp: 900, legitimacy_bp: 6500}
+        influence: {clergy: 5500, nobility: 4000, guilds: 500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: adopted
+          stirrup: widespread
+          horse_collar: adopted
+          schools: concept
+    unowned:
+      m_wales: 150000
+      m_brittany: 300000
+      m_lombard_south: 800000
+      m_pomerania: 200000
+      m_croatia: 250000
+      m_serbia: 250000
+      m_central_maghreb: 500000
+      m_jazira: 500000
+      m_pecheneg: 200000
+      m_volga_bulgaria: 300000
+      m_prussia: 150000
+      m_lithuania: 200000
+      m_estonia: 100000
+      m_finland: 100000
+      m_arabia: 300000
+      m_sahara: 150000

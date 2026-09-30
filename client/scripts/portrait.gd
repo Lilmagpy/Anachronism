@@ -15,6 +15,10 @@ var civ_id := ""
 var _image: Texture2D
 
 
+func _ready() -> void:
+	clip_contents = true  # the backdrop's sun rays stay inside the frame
+
+
 func setup(civ: Dictionary) -> void:
 	colour = Color(civ["colour"])
 	style = str(civ.get("portrait", "court"))
@@ -78,6 +82,20 @@ func _draw() -> void:
 			_hittite_cap(head, r)
 		"assyrian":
 			_assyrian(head, r)
+		"medieval_king":
+			_medieval_crown(head, r, w, h)
+		"viking":
+			_viking(head, r)
+		"bishop":
+			_mitre(head, r)
+		"byzantine":
+			_byzantine(head, r)
+		"turban":
+			_turban(head, r)
+		"doge":
+			_doge(head, r)
+		"rus":
+			_rus_cap(head, r)
 		_:
 			_crown(head, r)
 	# frame
@@ -156,8 +174,11 @@ func _face(head: Vector2, r: float) -> void:
 	elif style != "southern":
 		draw_polyline([head + Vector2(-r * 0.4, r * 0.55), head + Vector2(-r * 0.1, r * 0.42),
 			head + Vector2(r * 0.1, r * 0.42), head + Vector2(r * 0.4, r * 0.55)], HAIR, r * 0.08)
-		var beard: float = {"court": 1.35, "scholar": 1.9, "diviner": 1.6, "general": 1.0}.get(style, 1.1)
-		var beard_colour: Color = Color(0.85, 0.85, 0.82) if style in ["scholar", "diviner"] else HAIR
+		var beard: float = {"court": 1.35, "scholar": 1.9, "diviner": 1.6, "general": 1.0,
+			"viking": 1.8, "byzantine": 1.5, "turban": 1.5, "rus": 1.6, "bishop": 1.2}.get(style, 1.1)
+		var beard_colour: Color = Color(0.85, 0.85, 0.82) if style in ["scholar", "diviner", "bishop"] else HAIR
+		if style == "viking":
+			beard_colour = Color(0.72, 0.45, 0.2)
 		draw_colored_polygon([head + Vector2(-r * 0.14, r * 0.7), head + Vector2(r * 0.14, r * 0.7),
 			head + Vector2(0, r * beard)], beard_colour)
 	else:
@@ -397,6 +418,77 @@ func _assyrian(head: Vector2, r: float) -> void:
 	draw_colored_polygon([head + Vector2(-r * 0.2, -r * 1.75), head + Vector2(r * 0.2, -r * 1.75), head + Vector2(0, -r * 2.15)], crown)
 	for band in 3:
 		draw_line(head + Vector2(-r * 0.83, -r * (0.7 + band * 0.4)), head + Vector2(r * 0.83, -r * (0.7 + band * 0.4)), UiStyle.GOLD, r * 0.08)
+
+
+func _medieval_crown(head: Vector2, r: float, w: float, h: float) -> void:
+	_ellipse(head + Vector2(0, -r * 0.6), Vector2(r * 1.0, r * 0.62), _hair())
+	var gold := UiStyle.GOLD
+	draw_rect(Rect2(head.x - r * 0.95, head.y - r * 1.05, r * 1.9, r * 0.35), gold)
+	for i in 5:  # the crown's points
+		var x := head.x - r * 0.9 + i * r * 0.45
+		draw_colored_polygon([Vector2(x - r * 0.14, head.y - r * 1.02), Vector2(x + r * 0.14, head.y - r * 1.02), Vector2(x, head.y - r * 1.5)], gold)
+		draw_circle(Vector2(x, head.y - r * 1.5), r * 0.07, Color(0.8, 0.15, 0.15))
+	# ermine-trimmed cloak
+	for i in 9:
+		draw_circle(Vector2(w * 0.5 - w * 0.32 + i * w * 0.08, h * 0.66), w * 0.035, Color(0.96, 0.95, 0.9))
+
+
+func _viking(head: Vector2, r: float) -> void:
+	var iron := Color(0.55, 0.57, 0.6)
+	_ellipse(head + Vector2(0, -r * 0.55), Vector2(r * 1.02, r * 0.85), iron)
+	draw_rect(Rect2(head.x - r * 1.02, head.y - r * 0.55, r * 2.04, r * 0.16), iron.darkened(0.25))
+	draw_rect(Rect2(head.x - r * 0.08, head.y - r * 0.55, r * 0.16, r * 0.75), iron.darkened(0.2))  # nose guard
+	for side in [-1, 1]:  # braids
+		draw_line(head + Vector2(side * r * 0.9, -r * 0.2), head + Vector2(side * r * 1.0, r * 1.5), Color(0.72, 0.45, 0.2), r * 0.18)
+
+
+func _mitre(head: Vector2, r: float) -> void:
+	_ellipse(head + Vector2(0, -r * 0.6), Vector2(r * 0.97, r * 0.6), Color(0.85, 0.85, 0.82))
+	var cloth := Color(0.97, 0.95, 0.9)
+	draw_colored_polygon([head + Vector2(-r * 0.8, -r * 0.7), head + Vector2(r * 0.8, -r * 0.7),
+		head + Vector2(r * 0.55, -r * 2.2), head + Vector2(0, -r * 2.5), head + Vector2(-r * 0.55, -r * 2.2)], cloth)
+	draw_line(head + Vector2(0, -r * 0.7), head + Vector2(0, -r * 2.45), UiStyle.GOLD, r * 0.12)
+	draw_line(head + Vector2(-r * 0.8, -r * 0.8), head + Vector2(r * 0.8, -r * 0.8), UiStyle.GOLD, r * 0.12)
+
+
+func _byzantine(head: Vector2, r: float) -> void:
+	_ellipse(head + Vector2(0, -r * 0.6), Vector2(r * 0.97, r * 0.62), HAIR)
+	var gold := UiStyle.GOLD
+	_ellipse(head + Vector2(0, -r * 1.0), Vector2(r * 0.95, r * 0.45), gold)
+	draw_rect(Rect2(head.x - r * 0.95, head.y - r * 1.0, r * 1.9, r * 0.35), gold)
+	for i in 5:
+		draw_circle(Vector2(head.x - r * 0.7 + i * r * 0.35, head.y - r * 0.85), r * 0.08, [Color(0.8, 0.15, 0.15), Color(0.2, 0.5, 0.8)][i % 2])
+	draw_line(head + Vector2(0, -r * 1.45), head + Vector2(0, -r * 1.85), gold, r * 0.1)  # small cross
+	draw_line(head + Vector2(-r * 0.15, -r * 1.7), head + Vector2(r * 0.15, -r * 1.7), gold, r * 0.1)
+	for side in [-1, 1]:  # pendilia: strings of pearls
+		for k in 5:
+			draw_circle(head + Vector2(side * r * 0.95, -r * 0.6 + k * r * 0.22), r * 0.07, Color(0.97, 0.95, 0.9))
+
+
+func _turban(head: Vector2, r: float) -> void:
+	var cloth := Color(0.97, 0.95, 0.9) if colour.v < 0.6 else colour.lightened(0.5)
+	_ellipse(head + Vector2(0, -r * 0.75), Vector2(r * 1.15, r * 0.75), cloth)
+	for band in 3:
+		draw_arc(head + Vector2(0, -r * 0.3), r * (0.95 + band * 0.12), PI * 1.15, PI * 1.85, 16, cloth.darkened(0.12), r * 0.08)
+	draw_circle(head + Vector2(0, -r * 1.05), r * 0.13, colour.darkened(0.1))
+	draw_colored_polygon([head + Vector2(0, -r * 1.2), head + Vector2(r * 0.12, -r * 1.7), head + Vector2(-r * 0.05, -r * 1.3)], colour)
+
+
+func _doge(head: Vector2, r: float) -> void:
+	_ellipse(head + Vector2(0, -r * 0.6), Vector2(r * 0.97, r * 0.6), Color(0.85, 0.85, 0.82))
+	var cap := colour.lightened(0.15)
+	draw_colored_polygon([head + Vector2(-r * 0.95, -r * 0.6), head + Vector2(r * 0.95, -r * 0.6),
+		head + Vector2(r * 0.8, -r * 1.3), head + Vector2(r * 0.3, -r * 2.0), head + Vector2(-r * 0.8, -r * 1.3)], cap)
+	draw_line(head + Vector2(-r * 0.95, -r * 0.65), head + Vector2(r * 0.95, -r * 0.65), UiStyle.GOLD, r * 0.12)
+
+
+func _rus_cap(head: Vector2, r: float) -> void:
+	_ellipse(head + Vector2(0, -r * 0.6), Vector2(r * 0.97, r * 0.6), HAIR)
+	_ellipse(head + Vector2(0, -r * 1.05), Vector2(r * 0.8, r * 0.6), colour.lightened(0.1))
+	draw_rect(Rect2(head.x - r * 1.0, head.y - r * 0.9, r * 2.0, r * 0.35), Color(0.45, 0.32, 0.2))  # fur trim
+	for i in 8:
+		draw_circle(Vector2(head.x - r * 0.9 + i * r * 0.26, head.y - r * 0.9), r * 0.12, Color(0.5, 0.36, 0.22))
+	draw_circle(head + Vector2(0, -r * 1.6), r * 0.1, UiStyle.GOLD)
 
 
 func _ellipse(centre: Vector2, radius: Vector2, fill: Color) -> void:

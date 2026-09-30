@@ -155,6 +155,7 @@ func _flood(starts: Array[int], mark: int) -> PackedInt32Array:
 
 func build(parent: Node3D) -> void:
 	parent.add_child(_terrain())
+	parent.add_child(_open_ocean())
 	parent.add_child(_sea())
 	parent.add_child(_rivers())
 
@@ -223,9 +224,24 @@ func _terrain() -> MeshInstance3D:
 	return instance
 
 
+## Deep water beyond the map's edges, so the world never ends in a void.
+func _open_ocean() -> MeshInstance3D:
+	var plane := PlaneMesh.new()
+	plane.size = size() * 6.0
+	var material := ShaderMaterial.new()
+	material.shader = load("res://shaders/ocean.gdshader")
+	var ocean_plane := MeshInstance3D.new()
+	ocean_plane.name = "OpenOcean"
+	ocean_plane.mesh = plane
+	ocean_plane.material_override = material
+	ocean_plane.position.y = -3.0
+	ocean_plane.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	return ocean_plane
+
+
 func _sea() -> MeshInstance3D:
 	var plane := PlaneMesh.new()
-	plane.size = size()
+	plane.size = size() * 6.0  # the glossy water surface covers the open ocean too
 	var material := StandardMaterial3D.new()
 	material.albedo_color = Color(0.04, 0.14, 0.28, 0.45)  # Blue Marble already shades the sea floor
 	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
