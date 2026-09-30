@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from anachronism.content.schema import EffectType
+from anachronism.engine.culture import spread_faiths, trade
 from anachronism.engine.economy import run_economy
 from anachronism.engine.effects import Effects, civ_effects
 from anachronism.engine.events import EventLog
@@ -55,6 +56,8 @@ def end_turn(state: GameState) -> tuple[GameState, list[Event]]:
     # rivals: news, awareness, scripts, free agents; then the wars (brief §7)
     strengths = rivals_turn(new, effects_by_civ, list(events.items), rng, events)
     resolve_wars(new, strengths, rng, events)
+    trade(new)
+    spread_faiths(new, effects_by_civ, rng, events)
     grow_population(new, effects_by_civ, starving)
     new.turn += 1
     new.year += new.world.years_per_turn

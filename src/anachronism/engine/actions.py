@@ -117,7 +117,15 @@ class ProposeAlliance(Frozen):
     target: str
 
 
-Diplomacy = DeclareWar | MakePeace | SendEnvoy | ProposeAlliance
+class SendMissionaries(Frozen):
+    """Send missionaries of your faith to another court."""
+
+    kind: Literal["missionaries"] = "missionaries"
+    civ: str
+    target: str
+
+
+Diplomacy = DeclareWar | MakePeace | SendEnvoy | ProposeAlliance | SendMissionaries
 
 
 Action = Annotated[
@@ -131,7 +139,8 @@ Action = Annotated[
     | DeclareWar
     | MakePeace
     | SendEnvoy
-    | ProposeAlliance,
+    | ProposeAlliance
+    | SendMissionaries,
     Field(discriminator="kind"),
 ]
 

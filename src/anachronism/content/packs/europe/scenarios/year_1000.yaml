@@ -1468,3 +1468,9 @@ scenarios:
       - {a: "fatimids", b: "zirids", status: "tributary", note: "The Zirids govern Ifriqiya for the Fatimid caliph."}
       - {a: "ghaznavids", b: "buyids", status: "hostile", grievance_bp: 2000, note: "Mahmud of Ghazni eyes western Iran."}
       - {a: "byzantium", b: "armenia", status: "trading", note: "Armenian princes look to Constantinople."}
+    faiths:
+      - {id: catholic, name: "Latin Christianity", followers: [england, scotland, ireland, france, normandy, hre, papacy, venice, poland, bohemia, hungary, leon, navarre, barcelona, denmark, norway], spreads: true, note: "The church of Rome, winning the north and east kingdom by kingdom."}
+      - {id: orthodox, name: "Orthodox Christianity", followers: [byzantium, rus, bulgaria, georgia, armenia, makuria], spreads: true, note: "The church of Constantinople, carried to Kiev in 988."}
+      - {id: sunni, name: "Sunni Islam", followers: [cordoba, ghaznavids, zirids, sicily_emirate], spreads: true}
+      - {id: shia, name: "Shia Islam", followers: [fatimids, buyids], spreads: true, note: "Ismaili Cairo and Twelver Baghdad."}
+      - {id: norse, name: "The old Norse gods", followers: [sweden], spreads: false, note: "Uppsala still honours Odin and Thor."}

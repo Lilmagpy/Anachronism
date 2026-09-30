@@ -48,6 +48,7 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
             "name": civ.name,
             "ruler": civ.ruler,
             "ruler_age": civ.ruler_age,
+            "faith": _faith_name(state, civ.faith),
             "population": state.population(civ_id),
             "provinces": len(state.owned_provinces(civ_id)),
             **civ.stats.model_dump(),
@@ -71,6 +72,8 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
                 "disposition": other.disposition.value,
                 "ruler": other.ruler,
                 "ruler_age": other.ruler_age,
+                "faith": _faith_name(state, other.faith),
+                "same_faith": bool(other.faith) and other.faith == civ.faith,
                 "awareness": other.awareness.value,
                 "strength": strengths[other_id],
                 **_relation_to_player(state, other_id),
@@ -175,6 +178,11 @@ def _ideas(state: GameState, civ_id: str) -> list[dict[str, Any]]:
             }
         )
     return ideas
+
+
+def _faith_name(state: GameState, faith_id: str) -> str:
+    faith = state.world.faiths.get(faith_id)
+    return faith.name if faith else ""
 
 
 def _relation_to_player(state: GameState, other_id: str) -> dict[str, Any]:

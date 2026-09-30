@@ -7,6 +7,7 @@ from anachronism.content.schema.happenings import Happening
 from anachronism.content.schema.pack import CONTENT_KINDS, LIST_KINDS, SINGLE_KINDS, PackManifest
 from anachronism.content.schema.rivals import (
     Disposition,
+    Faith,
     Preconditions,
     RelationStatus,
     Script,
@@ -58,6 +59,7 @@ __all__ = [
     "Effect",
     "EffectType",
     "Era",
+    "Faith",
     "Frozen",
     "Happening",
     "Identifier",

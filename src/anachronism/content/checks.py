@@ -268,6 +268,14 @@ def _rival_issues(registry: Registry, scenario: Scenario, report: Callable[[str]
             for dependency in script.depends_on:
                 if dependency not in script_ids:
                     report(f"{civ_id}: script {script.id!r} depends on unknown {dependency!r}")
+    held: dict[str, str] = {}
+    for faith in scenario.faiths:
+        for follower in faith.followers:
+            if follower not in scenario.civs:
+                report(f"faith {faith.id!r} names {follower!r}, not a civilisation of the scenario")
+            elif follower in held:
+                report(f"{follower!r} holds two faiths: {held[follower]!r} and {faith.id!r}")
+            held[follower] = faith.id
     pairs: set[tuple[str, str]] = set()
     for relation in scenario.relations:
         for civ_id in (relation.a, relation.b):

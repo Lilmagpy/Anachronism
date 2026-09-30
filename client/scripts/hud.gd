@@ -839,6 +839,8 @@ func _rival_card(civ: Dictionary, me: Dictionary) -> Control:
 	ruler_line = ("%s, %s, age %d" % [ruler_line, civ["disposition"], int(civ["ruler_age"])]) if ruler_line != "" else "%s ruler" % civ["disposition"]
 	body.add_child(_label("%s people · %s" % [people(civ["population"]), might], 12, DIM))
 	body.add_child(_label(ruler_line, 12, DIM))
+	if str(civ.get("faith", "")) != "":
+		body.add_child(_label("Faith: %s%s" % [civ["faith"], "  (as yours)" if civ.get("same_faith", false) else ""], 12, GOOD if civ.get("same_faith", false) else DIM))
 	var heard: Array = civ.get("heard_of_you", [])
 	if not heard.is_empty():
 		body.add_child(_wrapped("Has heard of your %s" % ", ".join(heard), 12, Color(0.6, 0.3, 0.1)))
@@ -855,6 +857,8 @@ func _rival_card(civ: Dictionary, me: Dictionary) -> Control:
 			if relation in ["neutral", "trading"]:
 				buttons.add_child(_small_button("Propose alliance", {"kind": "alliance", "target": target}))
 			buttons.add_child(_small_button("Declare war", {"kind": "declare_war", "target": target}))
+			if not civ.get("same_faith", false) and str(view["status"].get("faith", "")) != "":
+				buttons.add_child(_small_button("Missionaries", {"kind": "missionaries", "target": target}))
 		body.add_child(buttons)
 	box.add_child(body)
 	return box

@@ -15,6 +15,7 @@ from anachronism.content.schema import (
     Disposition,
     EffectType,
     Era,
+    Faith,
     Frozen,
     Happening,
     MapResource,
@@ -74,6 +75,7 @@ class World(Frozen):
     """Chance events that can strike (plague, flood, bumper harvests...)."""
     scripts: dict[str, tuple[Script, ...]] = Field(default_factory=dict)
     successors: dict[str, tuple[Successor, ...]] = Field(default_factory=dict)
+    faiths: dict[str, Faith] = Field(default_factory=dict)
     """Each civilisation's historical successors, in order."""
     """Each civilisation's intentions (brief §7.1), from the scenario."""
 
@@ -229,6 +231,8 @@ class CivState(Mutable):
     awareness: Awareness = Awareness.ON_SCRIPT
     ruler: str = ""
     """Who rules now (empty: unnamed)."""
+    faith: str = ""
+    """The court's religion or school of belief (a faith id, or empty)."""
     ruler_age: int = 40
     rulers: int = 1
     """How many rulers the state has had in this game (1 = the one it started with)."""

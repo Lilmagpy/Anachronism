@@ -244,3 +244,39 @@ def test_capitals_and_mountains_are_harder_to_take(warring: GameState) -> None:
     )
     rules = warring.world.rules.rivals
     assert defence_bp(warring, "chu", capital) >= rules.capital_defence_bp
+
+
+def test_faiths_start_from_the_scenario_and_spread(content: Content) -> None:
+    from anachronism.engine.culture import spread_faiths
+
+    state = new_game(content, "three_kingdoms", seed=1)
+    assert state.civs["goguryeo"].faith == "buddhism"
+    assert state.civs["silla"].faith == "korean_shamanism"
+    override = state.world.rules.rivals.model_copy(update={"faith_spread_bp": 10_000})
+    state.world = state.world.model_copy(
+        update={"rules": state.world.rules.model_copy(update={"rivals": override})}
+    )
+    events = EventLog(turn=0, year=state.year)
+    spread_faiths(state, {}, GameRng(state.rng), events)
+    assert any(e.kind == "faith" for e in events.items)
+
+
+def test_trade_pays_both_sides(warring: GameState) -> None:
+    from anachronism.engine.culture import trade
+
+    warring.relations[key("han", "zhao")].status = RelationStatus.TRADING
+    before = warring.civs["han"].stockpiles.wealth, warring.civs["zhao"].stockpiles.wealth
+    trade(warring)
+    assert warring.civs["han"].stockpiles.wealth > before[0]
+    assert warring.civs["zhao"].stockpiles.wealth > before[1]
+
+
+def test_missionaries(content: Content) -> None:
+    from anachronism.engine.actions import SendMissionaries
+
+    state = new_game(content, "three_kingdoms", seed=2)
+    state, logged = apply_action(state, SendMissionaries(civ="goguryeo", target="silla"))
+    assert logged.ok
+    assert state.civs["silla"].faith == "buddhism" or "home" in logged.message
+    state, logged = apply_action(state, SendMissionaries(civ="goguryeo", target="baekje"))
+    assert not logged.ok  # Baekje is already Buddhist

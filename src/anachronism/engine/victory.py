@@ -7,7 +7,8 @@ tiers need several regions in one game (Phase 8). The three paths:
 - **Economic**: your trade network (trading partners, allies, tributaries) reaches most of
   everyone else's people, and your treasury is the richest.
 - **Cultural**: your share of the region's culture (people weighted by literacy and
-  cultural influence) passes the threshold, and no one's culture is larger.
+  cultural influence, plus half the culture of every court that shares your faith) passes
+  the threshold, and no one's culture is larger.
 
 Defeat comes with collapse, or the loss of every province.
 """
@@ -17,6 +18,7 @@ from __future__ import annotations
 from typing import Any
 
 from anachronism.content.schema import EffectType
+from anachronism.engine.culture import shares_faith
 from anachronism.engine.effects import civ_effects
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import BP
@@ -47,6 +49,10 @@ def progress(state: GameState) -> dict[str, Any]:
     )
     cultures = {c: culture(state, c) for c in sorted(state.civs)}
     total_culture = sum(cultures.values())
+    # courts that share your faith carry half their culture into your sphere (brief §5.11)
+    my_sphere = cultures[me] + sum(
+        cultures[c] // 2 for c in sorted(state.civs) if c != me and shares_faith(state, me, c)
+    )
     margin = rules.victory_margin_bp
     start = state.victory_start
 
@@ -68,9 +74,9 @@ def progress(state: GameState) -> dict[str, Any]:
             "richest": richest == me,
         },
         "cultural": {
-            "share_bp": cultures[me] * BP // max(1, total_culture),
+            "share_bp": min(BP, my_sphere * BP // max(1, total_culture)),
             "target_bp": target("cultural", rules.cultural_victory_share_bp),
-            "leading": cultures[me] == max(cultures.values()),
+            "leading": my_sphere >= max(cultures.values()),
         },
     }
 

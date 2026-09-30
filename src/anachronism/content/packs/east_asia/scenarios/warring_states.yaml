@@ -688,3 +688,10 @@ scenarios:
       - {a: "qin", b: "yiqu", status: "hostile", grievance_bp: 2000, note: "The Yiqu Rong raid Qin's northern frontier."}
       - {a: "han", b: "zhao", status: "trading", note: "Two of the three states carved from Jin."}
       - {a: "zhou", b: "qin", status: "tributary", note: "Every state still pays the Zhou king honour, if little else."}
+    faiths:
+      - {id: zhou_rites, name: "The Zhou rites", followers: [qin, wei, zhao, han, qi, yan, song, lu, zhou, wey, zhongshan], spreads: false, note: "Ancestor worship and the rites of Heaven shared across the Zhou states."}
+      - {id: chu_shamans, name: "The shamans of Chu", followers: [chu], spreads: false, note: "Chu's own gods and spirit-mediums, remembered in the Songs of Chu."}
+      - {id: yue_spirits, name: "The spirits of Yue", followers: [yue], spreads: false}
+      - {id: steppe_tengri, name: "Heaven of the steppe", followers: [donghu, yiqu], spreads: false, note: "Sky worship of the northern peoples."}
+      - {id: shu_ba_cults, name: "The old cults of Shu and Ba", followers: [shu, ba], spreads: false, note: "The bronze-mask culture of Sanxingdui's heirs."}
+      - {id: korean_spirits, name: "Mountain spirits", followers: [gojoseon], spreads: false}

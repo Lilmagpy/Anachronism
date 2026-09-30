@@ -7,7 +7,15 @@ how friendly they already are and how much it resents the one asking.
 from __future__ import annotations
 
 from anachronism.content.schema import RelationStatus
-from anachronism.engine.actions import DeclareWar, Diplomacy, MakePeace, ProposeAlliance, SendEnvoy
+from anachronism.engine.actions import (
+    DeclareWar,
+    Diplomacy,
+    MakePeace,
+    ProposeAlliance,
+    SendEnvoy,
+    SendMissionaries,
+)
+from anachronism.engine.culture import convert
 from anachronism.engine.events import EventLog
 from anachronism.engine.rivals import (
     add_grievance,
@@ -19,6 +27,7 @@ from anachronism.engine.rivals import (
     status,
     strength,
 )
+from anachronism.engine.rng import GameRng
 from anachronism.engine.state import GameState
 from anachronism.engine.war import make_peace
 
@@ -108,4 +117,22 @@ def _apply(
             events.add(me, "alliance", f"An alliance with {them}.", them)
             return True, f"{them} agrees to an alliance."
         return False, f"{them} sees no reason to ally with you yet: trade first"
+    if isinstance(action, SendMissionaries):
+        civ = state.civs[me]
+        if not civ.faith:
+            return False, "your court has no faith to preach"
+        if state.civs[target].faith == civ.faith:
+            return False, f"{them} already shares your faith"
+        if current is None or current is RelationStatus.WAR:
+            return False, f"missionaries cannot reach {them}"
+        cost = rules.missionary_wealth * state.world.cost_scale
+        if civ.stockpiles.wealth < cost:
+            return False, f"missionaries need {cost} wealth"
+        civ.stockpiles.wealth -= cost
+        rng = GameRng(state.rng)
+        if rng.chance(rules.missionary_chance_bp):
+            convert(state, target, civ.faith, events, "won over by your missionaries")
+            return True, f"Your missionaries win over the court of {them}!"
+        add_grievance(state, target, me, 500)
+        return True, f"The court of {them} sends your missionaries home."
     raise AssertionError(f"unhandled action {action!r}")

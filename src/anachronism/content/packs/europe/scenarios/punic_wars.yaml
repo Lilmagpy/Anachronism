@@ -809,3 +809,9 @@ scenarios:
       - {a: "carthage", b: "numidia", status: "tributary", note: "Numidian princes serve Carthage."}
       - {a: "rome", b: "carthage", status: "trading", note: "Old treaties have kept the peace between Rome and Carthage."}
       - {a: "pergamon", b: "seleucid", status: "hostile", grievance_bp: 2000, note: "Pergamon has broken away from the Seleucids."}
+    faiths:
+      - {id: olympians, name: "The Olympian gods", followers: [macedon, athens, achaea, aetolia, sparta, epirus, syracuse, rhodes, massalia, pergamon, bithynia, pontus, seleucid, ptolemaic], spreads: true, note: "Greek gods, carried by Alexander's heirs from Egypt to Bactria."}
+      - {id: roman_gods, name: "The gods of Rome", followers: [rome], spreads: false, note: "Jupiter, Juno and Minerva on the Capitol - soon to meet their Greek cousins."}
+      - {id: punic_gods, name: "The gods of Carthage", followers: [carthage, numidia], spreads: false, note: "Baal Hammon and Tanit."}
+      - {id: celtic_gods, name: "The Celtic gods and druids", followers: [cisalpine_gauls], spreads: false}
+      - {id: kushite_gods, name: "Amun of Napata", followers: [kush], spreads: false}

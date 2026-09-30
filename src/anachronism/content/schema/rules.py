@@ -222,6 +222,16 @@ class RivalRules(Frozen):
     """Share of grievance forgotten each decade."""
     aggressive_war_chance_bp: Rate
     """Chance per turn that an aggressive free agent attacks a much weaker neighbour."""
+    trade_wealth_per_1000_bp: NonNegative
+    """Wealth each turn from each friendly partner, per 1,000 of the smaller side's people
+    (per decade, scaled like every flow)."""
+    faith_spread_bp: Rate
+    """Chance per decade that a spreading faith crosses to a neighbour of another faith."""
+    missionary_wealth: NonNegative
+    missionary_chance_bp: Rate
+    """Chance that missionaries convert the court they are sent to."""
+    shared_faith_fade_bp: Rate
+    """Extra share of grievance forgotten each decade between states of one faith."""
     envoy_wealth: NonNegative
     """Wealth an envoy costs."""
     capital_loss_legitimacy_bp: NonNegative

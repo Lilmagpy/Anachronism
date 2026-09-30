@@ -473,3 +473,14 @@ of Zhao, Cnut, Emperor Taiwu), then unnamed heirs. A death costs 8 points of leg
 below 40 legitimacy it brings a succession crisis (+15 unrest). The player's own ruler
 dies too; the state goes on. Successor lists are drafts from general history.
 
+## D-073 Trade and faith as first-class flows — DELEGATED (2026-10-01)
+Brief §7.5 asks for trade, religion and cultural flows as first-class things. Every
+friendly tie (trading, allied, tributary) now earns both sides wealth each turn, by the
+smaller side's people. Each scenario lists its faiths and who holds them (the Zhou rites,
+the thousand gods of Hatti, the Olympians, Latin and Orthodox Christianity, Sunni and Shia
+Islam, Buddhism, the kami...); faiths marked as spreading cross to neighbours by chance,
+more easily along friendly ties and from states of great cultural influence. States of one
+faith forget old grudges faster; courts sharing your faith add half their culture to your
+cultural victory share. You can send missionaries (a wealth cost, a 35% chance, a small
+grudge if refused). Faith lists are drafts from general history.
+

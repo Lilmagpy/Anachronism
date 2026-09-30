@@ -7,7 +7,7 @@ from typing import Annotated
 from pydantic import Field
 
 from anachronism.content.schema.base import Frozen, Identifier, NonNegative, Positive, Rate
-from anachronism.content.schema.rivals import Disposition, Script, StartingRelation
+from anachronism.content.schema.rivals import Disposition, Faith, Script, StartingRelation
 from anachronism.content.schema.tech import SocialGroup, Stage
 
 
@@ -80,6 +80,8 @@ class Scenario(Frozen):
     map: Identifier | None = None
     """Real-Earth map region the client draws (e.g. ``east_asia``); ``None`` means a map
     generated from province positions. On a real map every province needs a ``latlon``."""
+    faiths: tuple[Faith, ...] = ()
+    """Religions and schools of belief, and who holds them at the start."""
     relations: tuple[StartingRelation, ...] = ()
     """Alliances, wars and grudges at the start; other reachable pairs begin neutral."""
     cost_scale: Annotated[int, Field(ge=1, le=1000)] = 1

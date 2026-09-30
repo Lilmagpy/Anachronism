@@ -202,3 +202,9 @@ dialogue:
       - "{subject}! Heaven smiles on us. Spend the gift wisely - smiles do not last."
       - "{subject} - the omens were right. The people will say it is your doing. Let them."
 
+  - id: faith
+    speaker: diviner
+    lines:
+      - "{subject} is on the move. Faith travels where armies cannot - and it remembers who welcomed it."
+      - "The priests of {subject} have a new flock. Watch who prays with whom, my lord; it will tell you who fights with whom."
+

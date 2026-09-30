@@ -106,3 +106,18 @@ class StartingRelation(Frozen):
         if self.a == self.b:
             raise ValueError("a relation needs two different civilisations")
         return self
+
+
+class Faith(Frozen):
+    """A religion or school of belief in a scenario (brief §7.5).
+
+    Who holds it at the start, and whether it spreads to neighbours by itself (Buddhism
+    did; the old gods of a city did not).
+    """
+
+    id: Identifier
+    name: Annotated[str, Field(min_length=1, max_length=60)]
+    followers: tuple[Identifier, ...] = ()
+    """Civilisations holding it at the start."""
+    spreads: bool = False
+    note: Annotated[str, Field(max_length=300)] = ""

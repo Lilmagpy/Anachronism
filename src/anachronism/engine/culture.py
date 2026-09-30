@@ -1,0 +1,88 @@
+"""Trade and faith between states (brief §7.5: trade, religion and cultural flows).
+
+- **Trade**: every friendly tie (trading, allied, tributary) earns both sides wealth each
+  turn, in proportion to the smaller side's people.
+- **Faith**: a spreading faith (Buddhism, the Christian churches, Islam) may cross to a
+  neighbour of another faith each turn, more easily along friendly ties and from a state of
+  great cultural influence. States of one faith forget old grudges faster. Missionaries
+  (an action) try to convert a court directly.
+"""
+
+from __future__ import annotations
+
+from anachronism.content.schema import EffectType
+from anachronism.engine.effects import Effects
+from anachronism.engine.events import EventLog
+from anachronism.engine.fixed import BP, apply_bp
+from anachronism.engine.rivals import alive, status
+from anachronism.engine.rng import GameRng
+from anachronism.engine.state import GameState
+from anachronism.engine.timeflow import per_turn, rate_per_turn
+
+
+def trade(state: GameState) -> None:
+    """Pay each side of every friendly tie its share of the trade."""
+    rate = state.world.rules.rivals.trade_wealth_per_1000_bp
+    for pair, rel in sorted(state.relations.items()):
+        if not rel.status.friendly:
+            continue
+        a, b = pair.split("|")
+        if not alive(state, a) or not alive(state, b):
+            continue
+        smaller = min(state.population(a), state.population(b))
+        income = per_turn(state, apply_bp(smaller // 1000, rate))
+        state.civs[a].stockpiles.wealth += income
+        state.civs[b].stockpiles.wealth += income
+
+
+def convert(state: GameState, civ_id: str, faith_id: str, events: EventLog, how: str) -> None:
+    """A court takes up a faith."""
+    civ = state.civs[civ_id]
+    civ.faith = faith_id
+    name = state.world.faiths[faith_id].name
+    events.add(civ_id, "faith", f"{civ.name} takes up {name} ({how}).", name)
+    if civ_id != state.player_civ and state.civs[state.player_civ].faith == faith_id:
+        events.add(state.player_civ, "faith", f"{civ.name} now shares our faith, {name}.", name)
+
+
+def spread_faiths(
+    state: GameState, effects_by_civ: dict[str, Effects], rng: GameRng, events: EventLog
+) -> None:
+    """Spreading faiths may cross to neighbours; shared faith softens old grudges."""
+    rules = state.world.rules.rivals
+    base = per_turn(state, rules.faith_spread_bp)
+    converted: set[str] = set()
+    for pair, rel in sorted(state.relations.items()):
+        a, b = pair.split("|")
+        if not alive(state, a) or not alive(state, b):
+            continue
+        fa, fb = state.civs[a].faith, state.civs[b].faith
+        if fa and fa == fb:
+            fade = rate_per_turn(state, rules.shared_faith_fade_bp)
+            for holder in sorted(rel.grievance):
+                rel.grievance[holder] -= apply_bp(rel.grievance[holder], fade)
+            continue
+        for source, target in ((a, b), (b, a)):
+            faith = state.civs[source].faith
+            if not faith or target in converted or not state.world.faiths[faith].spreads:
+                continue
+            chance = base * (2 if rel.status.friendly else 1)
+            source_effects = effects_by_civ.get(source)
+            influence = source_effects[EffectType.CULTURAL_INFLUENCE] if source_effects else 0
+            chance = apply_bp(chance, BP + influence)
+            if rng.chance(chance):
+                convert(state, target, faith, events, f"carried from {state.civs[source].name}")
+                converted.add(target)
+                break
+
+
+def shares_faith(state: GameState, a: str, b: str) -> bool:
+    """True when two courts hold the same faith."""
+    fa = state.civs[a].faith
+    return bool(fa) and fa == state.civs[b].faith
+
+
+def friendly(state: GameState, a: str, b: str) -> bool:
+    """True for a trading, allied or tributary tie."""
+    tie = status(state, a, b)
+    return tie is not None and tie.friendly

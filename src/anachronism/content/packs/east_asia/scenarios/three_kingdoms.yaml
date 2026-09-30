@@ -534,3 +534,8 @@ scenarios:
       - {a: "eastern_jin", b: "later_qin", status: "hostile", grievance_bp: 2000, note: "Qin took Luoyang from Jin (399)."}
       - {a: "eastern_jin", b: "southern_yan", status: "hostile", grievance_bp: 1500, note: "Southern Yan raids Jin's northern border."}
       - {a: "baekje", b: "eastern_jin", status: "trading", note: "Baekje sends envoys to Jiankang."}
+    faiths:
+      - {id: buddhism, name: "Buddhism", followers: [goguryeo, baekje, later_qin, eastern_jin, northern_wei], spreads: true, note: "Reached Goguryeo in 372 and Baekje in 384; Silla held out until 528, Wa until 552."}
+      - {id: korean_shamanism, name: "Shamanism and mountain spirits", followers: [silla, gaya], spreads: false}
+      - {id: kami, name: "The kami", followers: [wa], spreads: false, note: "The gods of Wa's land and clans."}
+      - {id: steppe_tengri, name: "Heaven of the steppe", followers: [rouran, later_yan, southern_yan], spreads: false}

@@ -433,3 +433,8 @@ scenarios:
       - {a: "mycenae", b: "wilusa", status: "hostile", grievance_bp: 2000, note: "Ahhiyawa (the Mycenaeans) meddle on the Anatolian coast."}
       - {a: "egypt", b: "alashiya", status: "trading", note: "Cypriot copper for Egyptian gold."}
       - {a: "ugarit", b: "alashiya", status: "trading", note: "The great port of Ugarit trades with Cyprus."}
+    faiths:
+      - {id: egyptian_gods, name: "The gods of Egypt", followers: [egypt], spreads: false, note: "Amun-Ra, Osiris, Isis - and a divine pharaoh."}
+      - {id: thousand_gods, name: "The thousand gods of Hatti", followers: [hatti, amurru, ugarit, wilusa, alashiya], spreads: true, note: "The Hittites absorbed every god they met; their pantheon spread with their treaties."}
+      - {id: mesopotamian_gods, name: "The gods of Mesopotamia", followers: [babylon, assyria, hanigalbat, elam], spreads: false, note: "Marduk, Ashur, Ishtar."}
+      - {id: mycenaean_gods, name: "The gods of the Achaeans", followers: [mycenae], spreads: false, note: "Zeus, Poseidon and Potnia on the Linear B tablets."}
