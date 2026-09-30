@@ -135,6 +135,7 @@ func _ensure_earth(region: String) -> void:
 	earth = EarthBuilder.new(region)
 	earth.build(holder)
 	Scenery.new(earth).build(holder)
+	Peaks.new(earth).build(holder)
 	var half := earth.size() / 2.0
 	var clouds := Clouds.new()
 	clouds.build(Rect2(-half, earth.size()))

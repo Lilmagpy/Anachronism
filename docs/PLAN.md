@@ -56,7 +56,8 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] 2.11 Bright cartoon map over the real geography: painted biomes (classified from the
       satellite image), toon light bands, sea painted by depth with coastal foam, cartoon
       forests; cream-and-gold game screens. Still to come: animated water, clouds
-- [x] 2.11b Animated cartoon water (waves, crests, glints) and drifting clouds (mountains: later)
+- [x] 2.11b Animated cartoon water (waves, crests, glints), drifting clouds, low-poly
+      snow-capped peaks over the real ranges
 - [x] 2.12 Characters: rulers, advisers and rivals pop up and speak (scripted lines as
       content data in core/dialogue.yaml and speakers.yaml; placeholder portraits, D-060)
 - [x] 2.13a Your ideas made visible: landmarks around your capital for adopted ideas
