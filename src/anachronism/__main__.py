@@ -10,7 +10,7 @@ from anachronism import __version__
 
 
 def describe_platform() -> str:
-    """Return a human-readable description of the operating system, e.g. 'macOS 15.1 (arm64)'."""
+    """Return a human-readable description of the operating system, e.g. 'macOS 26.6 (arm64)'."""
     system = platform.system()
     if system == "Darwin":
         return f"macOS {platform.mac_ver()[0]} ({platform.machine()})"

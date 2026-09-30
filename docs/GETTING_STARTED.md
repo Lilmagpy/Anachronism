@@ -29,7 +29,7 @@ milestone. This page is for when you want to try the game yourself.
 
    ```
    Anachronism 0.0.1
-   Python 3.12.x on macOS 15.x (arm64)
+   Python 3.12.x on macOS 26.x (arm64)
    Setup works. There is nothing to play yet: the game engine arrives in Phase 1.
    ```
 
