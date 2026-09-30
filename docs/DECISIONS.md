@@ -259,3 +259,28 @@ Current numbers make overextension collapse reliably and careful growth thrive. 
 a careful player is comfortable (the 55-node test tree is nearly exhausted by 600 BC) and
 suspicion bites only when the "witchcraft" or "fraud" framing comes up. The brief asks for the
 owner's help tuning suspicion; pacing is tuned when real content and conflict exist.
+
+## D-047 Godot 4 replaces Pygame for the game's visuals — OWNER (2026-09-30)
+The owner wants "incredible graphics" and chose a modern 3D world over a 2D map. This overrides
+brief decision #1 (Pygame). Godot 4 is free, open source (MIT), has a full 3D renderer and
+exports to macOS. Verified 2026-09-30 that Godot 4.5.1 renders 3D in the cloud container
+(Xvfb + Mesa software rendering, Compatibility renderer), so screenshots can be sent to the
+owner. The Python engine is unchanged; the text console remains a developer tool.
+
+## D-048 Client-engine bridge — DELEGATED
+The Godot client starts the Python engine as a child process and they exchange one JSON
+message per line over its stdin/stdout. No network sockets (nothing to firewall, nothing
+exposed). The engine stays the only authority on rules; the client only renders and sends
+actions. The bridge lives in `tools/server.py`, outside the pure engine.
+
+## D-049 Phase order: 3D world before the LLM — OWNER
+Phase 2 is now the 3D world; the LLM ruling pipeline becomes Phase 3 and plugs into the 3D UI.
+
+## D-050 Getting builds to the owner — DELEGATED
+CI exports a macOS app for every pull request so the owner downloads and double-clicks; no
+Terminal. Unsigned at first (right-click → Open the first time). Bundling Python inside the
+app is solved in this phase; Apple signing waits for packaging (Phase 8).
+
+## D-051 3D art sources — DELEGATED
+Terrain, water and borders are generated from content data. Models come from openly licensed
+packs (CC0 only, licences recorded in `client/assets/LICENSES.md`) until custom art is made.

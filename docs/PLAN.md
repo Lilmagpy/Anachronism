@@ -1,8 +1,7 @@
 # Anachronism — Plan
 
-**Current phase:** Phase 1 gate — headless engine done; waiting for the owner's approval
-(merging the Phase 1 pull request).
-**Next action:** on approval, Phase 2 step 2.1.
+**Current phase:** Phase 2 — 3D world (Godot) on the Phase 1 engine (branch `claude/phase-2-3d`).
+**Next action:** step 2.1.
 
 Each phase ends at a **gate**: Claude stops, summarises, shows how to run it, lists known
 problems, and waits for approval (D-002: approval = merging the phase PR).
@@ -31,27 +30,28 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] 1.10 Turn pipeline; action log; replay
 - [x] 1.11 Interactive console (`uv run anachronism`)
 - [x] 1.12 Bots, simulation tool, long-game invariant and balance tests
-- [ ] 1.13 Gate: owner reviews and merges the Phase 1 pull request
+- [x] 1.13 Gate: approved and merged by the owner (2026-09-30)
 
-## Phase 2 — LLM ruling pipeline
-- [ ] 2.1 Output schemas; guard (validate, clamp, reject)
-- [ ] 2.2 Compact summary builder (token budget test: ≤ 500 tokens)
-- [ ] 2.3 Fake provider; pipeline interpret/clarify/split/rule/flavour
-- [ ] 2.4 Ruling cache; ruling records in saves; replay without calls
-- [ ] 2.5 Offline provider + small hand-made library
-- [ ] 2.6 Anthropic provider (config models, prompt caching, structured output, retries)
-- [ ] 2.7 Budget tracking + monthly cap; debug log
-- [ ] 2.8 Prompt-injection and failure-fallback test suite
-- [ ] 2.9 Gate (owner needs an Anthropic API key for live testing)
+## Phase 2 — 3D world (design: plans/phase-2.md; replaces the Pygame front end, D-047)
+- [ ] 2.1 Engine bridge: JSON messages over stdin/stdout (`anachronism-server`), tested
+- [ ] 2.2 Map layout in content: province positions, heights, rivers, coasts; linted
+- [ ] 2.3 Godot client: 3D terrain from the map, water, sky, camera (pan, zoom, orbit)
+- [ ] 2.4 Borders coloured by owner, province labels, selection and hover
+- [ ] 2.5 Game UI: top bar with trends, ideas and details, projects, end turn, events
+- [ ] 2.6 Settlements and scenery scaled by population (openly licensed models)
+- [ ] 2.7 Screenshot pipeline in the cloud; CI builds a downloadable Mac app
+- [ ] 2.8 Gate: owner plays the 3D game on their Mac
 
-## Phase 3 — Minimal Pygame front end
-- [ ] 3.1 App shell, screen stack, theme, async task pump
-- [ ] 3.2 Title, disclaimer, civ pick, settings (API key status, model, offline toggle)
-- [ ] 3.3 Main game: province map (zoom/pan), resource bar with trends, projects panel
-- [ ] 3.4 Idea input (robust text entry) with "scholars deliberating" state
-- [ ] 3.5 Tech tree view with stubs
-- [ ] 3.6 Save/load screens; developer overlay (tokens/cost)
-- [ ] 3.7 End-to-end play in both modes; screenshots for owner; gate
+## Phase 3 — LLM ruling pipeline (moved after the 3D world, D-049)
+- [ ] 3.1 Output schemas; guard (validate, clamp, reject)
+- [ ] 3.2 Compact summary builder (token budget test: ≤ 500 tokens)
+- [ ] 3.3 Fake provider; pipeline interpret/clarify/split/rule/flavour
+- [ ] 3.4 Ruling cache; ruling records in saves; replay without calls
+- [ ] 3.5 Offline provider + small hand-made library
+- [ ] 3.6 Anthropic provider (config models, prompt caching, structured output, retries)
+- [ ] 3.7 Budget tracking + monthly cap; debug log
+- [ ] 3.8 Prompt-injection and failure-fallback tests; free-text idea box in the 3D UI
+- [ ] 3.9 Gate (owner needs an Anthropic API key for live testing)
 
 ## Phase 4 — Scripts, awareness, information (headless)
 - [ ] Scripts with preconditions; awareness states; news propagation with garbling;
