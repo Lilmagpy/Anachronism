@@ -1,0 +1,29 @@
+# Secrets
+.env
+*.key
+config.local.*
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+
+# Game runtime data
+saves/
+logs/
+cache/
+*.log
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
