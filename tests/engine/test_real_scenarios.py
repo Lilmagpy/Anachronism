@@ -1,10 +1,14 @@
-"""The real-map scenario: 18 states with historical populations stay sound over long games."""
+"""Every real-map scenario: historical populations stay sound over long games.
+
+Scenario-specific facts are checked for the Warring States; the rest runs on every scenario
+that sits on a real map, so new starting moments are tested as soon as they are written.
+"""
 
 from __future__ import annotations
 
 import pytest
 
-from anachronism.content.loader import Content
+from anachronism.content.loader import Content, load_content
 from anachronism.engine.bots import make_bot, play_turn
 from anachronism.engine.economy import project_costs
 from anachronism.engine.game import new_game, replay
@@ -12,6 +16,7 @@ from anachronism.engine.save import dumps, loads
 from tests.engine.test_simulation import check_invariants
 
 SCENARIO = "warring_states"
+REAL = sorted(s.id for s in load_content().scenarios.values() if s.map is not None)
 
 
 def test_scenario_sits_on_the_real_map(content: Content) -> None:
@@ -36,10 +41,13 @@ def test_cost_scale_multiplies_project_costs(content: Content) -> None:
     assert scaled_cost.labour > base_cost.labour
 
 
+@pytest.mark.parametrize("scenario", REAL)
 @pytest.mark.parametrize("bot", ["growth", "greedy"])
 @pytest.mark.parametrize("seed", [1, 2])
-def test_long_games_keep_every_invariant(content: Content, bot: str, seed: int) -> None:
-    state = new_game(content, SCENARIO, seed)
+def test_long_games_keep_every_invariant(
+    content: Content, scenario: str, bot: str, seed: int
+) -> None:
+    state = new_game(content, scenario, seed)
     start_year = state.year
     bots = {civ_id: make_bot(bot) for civ_id in state.civs}
     for _ in range(30):
@@ -64,8 +72,24 @@ def test_careful_qin_is_stable_and_advances(content: Content) -> None:
     assert state.population("qin") > initial.population("qin")
 
 
-def test_games_replay_exactly(content: Content) -> None:
-    initial = new_game(content, SCENARIO, seed=9)
+@pytest.mark.parametrize("scenario", REAL)
+def test_nobody_starves_when_left_alone(content: Content, scenario: str) -> None:
+    """Content check: every state can feed its people (catches wrong terrain or capacity)."""
+    initial = new_game(content, scenario, seed=5)
+    bots = {civ_id: make_bot("idle") for civ_id in initial.civs}
+    state = initial
+    famines: set[str] = set()
+    for _ in range(20):
+        state, events = play_turn(state, bots)
+        famines |= {e.civ for e in events if e.kind == "famine" and e.civ}
+    assert not famines, f"famine in {sorted(famines)}"
+    for civ_id in initial.civs:
+        assert state.population(civ_id) >= initial.population(civ_id) * 0.9, civ_id
+
+
+@pytest.mark.parametrize("scenario", REAL)
+def test_games_replay_exactly(content: Content, scenario: str) -> None:
+    initial = new_game(content, scenario, seed=9)
     bots = {civ_id: make_bot("growth") for civ_id in initial.civs}
     state = initial
     for _ in range(10):

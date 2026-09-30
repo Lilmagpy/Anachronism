@@ -105,28 +105,52 @@ func _height_units(metres: float, is_ocean: bool) -> float:
 	return maxf(metres, 0.0) / METRES_PER_UNIT + LAND_LIFT
 
 
-## Ocean = below sea level and connected to the map's edge (inland basins stay dry).
+## Ocean = below sea level and connected to the map's edge, or a basin large enough to be
+## an inland sea (the Black Sea's strait is narrower than a map cell; the Caspian has none).
+## Small dry depressions below sea level (Turpan, Qattara) stay land.
+const INLAND_SEA_CELLS := 2500
+
+
 func _find_ocean() -> void:
 	ocean.resize(cols * rows)
 	ocean.fill(0)
-	var queue: Array[int] = []
+	var starts: Array[int] = []
 	for q in cols:
-		for r in [0, rows - 1]:
-			queue.append(r * cols + q)
+		starts.append(q)
+		starts.append((rows - 1) * cols + q)
 	for r in rows:
-		for q in [0, cols - 1]:
-			queue.append(r * cols + q)
+		starts.append(r * cols)
+		starts.append(r * cols + cols - 1)
+	_flood(starts, 1)
+	# every other basin below sea level: flood it, keep it if it is big
+	for i in cols * rows:
+		if ocean[i] == 0 and elev[i] < 0.0:
+			var cells := _flood([i], 2)
+			if cells.size() >= INLAND_SEA_CELLS:
+				for c in cells:
+					ocean[c] = 1
+	for i in cols * rows:
+		if ocean[i] == 2:
+			ocean[i] = 0
+
+
+## Marks below-sea-level cells reachable from `starts` with `mark`; returns them.
+func _flood(starts: Array[int], mark: int) -> PackedInt32Array:
+	var filled := PackedInt32Array()
+	var queue: Array[int] = starts.duplicate()
 	while not queue.is_empty():
 		var i: int = queue.pop_back()
-		if ocean[i] == 1 or elev[i] >= 0.0:
+		if ocean[i] != 0 or elev[i] >= 0.0:
 			continue
-		ocean[i] = 1
+		ocean[i] = mark
+		filled.append(i)
 		var q := i % cols
 		var r := i / cols
 		if q > 0: queue.append(i - 1)
 		if q < cols - 1: queue.append(i + 1)
 		if r > 0: queue.append(i - cols)
 		if r < rows - 1: queue.append(i + cols)
+	return filled
 
 
 func build(parent: Node3D) -> void:

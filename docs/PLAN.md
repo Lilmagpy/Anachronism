@@ -60,8 +60,9 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
       content data in core/dialogue.yaml and speakers.yaml; placeholder portraits, D-060)
 - [ ] 2.13 Cartoon cities from CC0 art packs; a close-up capital view where adopted ideas
       appear as buildings
-- [ ] 2.14 New regions and moments (D-061): Mediterranean (Rome, Greece), Egypt / Near East,
-      Medieval Europe (Britain, France, Vikings); more East Asian starts (Korea, Japan)
+- [ ] 2.14 New regions and moments (D-061): the "europe" map (Ireland to Persia, Sahara to
+      Scandinavia) is built; [x] Rome and Carthage, 264 BC (19 states, 70 provinces);
+      [ ] Egypt / Near East; [ ] Medieval Europe; [ ] more East Asian starts (Korea, Japan)
 - [ ] 2.15 Polish: tooltips, charts over time, save/load and settings menus, sound
 - [ ] 2.16 Gate: owner plays the new build on their Mac and merges the phase PR
 

@@ -1,0 +1,6 @@
+schema_version: 1
+pack:
+  id: europe
+  name: Europe, the Mediterranean and the Near East on the real map
+  version: 1
+  depends_on: [core]

@@ -35,12 +35,13 @@ func _draw() -> void:
 	var head := Vector2(cx, h * 0.42)
 	var r := w * 0.15
 	_robe(w, h, cx)
+	var skin := _skin()
 	# neck
-	draw_rect(Rect2(cx - r * 0.38, head.y + r * 0.8, r * 0.76, r * 0.9), SKIN_SHADE)
-	if style == "steppe":
-		_ellipse(head + Vector2(0, -r * 0.1), Vector2(r * 1.1, r * 1.05), HAIR)
-	_ellipse(head, Vector2(r * 0.92, r * 1.12), SKIN)
-	_ellipse(head + Vector2(r * 0.25, r * 0.25), Vector2(r * 0.55, r * 0.7), Color(SKIN_SHADE, 0.35))
+	draw_rect(Rect2(cx - r * 0.38, head.y + r * 0.8, r * 0.76, r * 0.9), skin.darkened(0.15))
+	if style in ["steppe", "celtic"]:
+		_ellipse(head + Vector2(0, r * 0.2 if style == "celtic" else -r * 0.1), Vector2(r * 1.15, r * (1.25 if style == "celtic" else 1.05)), _hair())
+	_ellipse(head, Vector2(r * 0.92, r * 1.12), skin)
+	_ellipse(head + Vector2(r * 0.25, r * 0.25), Vector2(r * 0.55, r * 0.7), Color(skin.darkened(0.15), 0.35))
 	_face(head, r)
 	match style:
 		"steppe":
@@ -57,6 +58,22 @@ func _draw() -> void:
 			_general(head, r, w, h)
 		"diviner":
 			_diviner(head, r, w, h)
+		"roman":
+			_laurel(head, r)
+		"greek":
+			_greek_helmet(head, r)
+		"hellenistic":
+			_diadem(head, r)
+		"punic":
+			_punic_cap(head, r)
+		"pharaoh":
+			_nemes(head, r)
+		"berber":
+			_headscarf(head, r)
+		"celtic":
+			_celtic(head, r, w, h)
+		"kushite":
+			_kushite_cap(head, r)
 		_:
 			_crown(head, r)
 	# frame
@@ -122,8 +139,15 @@ func _face(head: Vector2, r: float) -> void:
 		draw_circle(eye + Vector2(side * r * 0.02, 0), r * 0.06, HAIR)
 		draw_line(eye + Vector2(-r * 0.18, -r * 0.2), eye + Vector2(r * 0.18, -r * 0.24 + side * r * 0.03), HAIR, r * 0.07)
 	draw_line(head + Vector2(0, r * 0.05), head + Vector2(r * 0.06, r * 0.3), SKIN_SHADE, r * 0.06)
-	# moustache and beard
-	if style != "southern":
+	# moustache and beard (Romans and Hellenistic kings shaved; Celts wore only moustaches)
+	if style in ["roman", "hellenistic", "kushite"]:
+		draw_line(head + Vector2(-r * 0.2, r * 0.52), head + Vector2(r * 0.2, r * 0.52), Color(0.5, 0.2, 0.15), r * 0.06)
+	elif style == "celtic":
+		draw_polyline([head + Vector2(-r * 0.6, r * 0.85), head + Vector2(-r * 0.25, r * 0.45),
+			head + Vector2(r * 0.25, r * 0.45), head + Vector2(r * 0.6, r * 0.85)], Color(0.62, 0.36, 0.16), r * 0.16)
+	elif style == "pharaoh":
+		draw_rect(Rect2(head.x - r * 0.1, head.y + r * 0.75, r * 0.2, r * 0.55), Color(0.2, 0.15, 0.1))
+	elif style != "southern":
 		draw_polyline([head + Vector2(-r * 0.4, r * 0.55), head + Vector2(-r * 0.1, r * 0.42),
 			head + Vector2(r * 0.1, r * 0.42), head + Vector2(r * 0.4, r * 0.55)], HAIR, r * 0.08)
 		var beard: float = {"court": 1.35, "scholar": 1.9, "diviner": 1.6, "general": 1.0}.get(style, 1.1)
@@ -133,8 +157,9 @@ func _face(head: Vector2, r: float) -> void:
 	else:
 		draw_line(head + Vector2(-r * 0.2, r * 0.5), head + Vector2(r * 0.2, r * 0.5), Color(0.55, 0.2, 0.15), r * 0.06)
 	# hair at the temples
-	for side in [-1, 1]:
-		_ellipse(head + Vector2(side * r * 0.85, -r * 0.2), Vector2(r * 0.18, r * 0.5), HAIR)
+	if style != "pharaoh":
+		for side in [-1, 1]:
+			_ellipse(head + Vector2(side * r * 0.85, -r * 0.2), Vector2(r * 0.18, r * 0.5), _hair())
 
 
 ## Mianguan: the flat-topped crown with bead tassels worn by Zhou-world rulers.
@@ -234,6 +259,109 @@ func _diviner(head: Vector2, r: float, w: float, h: float) -> void:
 	for i in 9:
 		var a := PI * (0.15 + i * 0.0875)
 		draw_circle(Vector2(w * 0.5, h * 0.64) + Vector2(cos(a) * w * 0.16, sin(a) * h * 0.12), r * 0.09, Color(0.9, 0.85, 0.7))
+
+
+func _skin() -> Color:
+	match style:
+		"kushite":
+			return Color(0.45, 0.30, 0.20)
+		"pharaoh", "berber", "punic":
+			return Color(0.80, 0.60, 0.44)
+		"celtic":
+			return Color(0.96, 0.80, 0.68)
+	return SKIN
+
+
+func _hair() -> Color:
+	return Color(0.62, 0.36, 0.16) if style == "celtic" else HAIR
+
+
+func _short_hair(head: Vector2, r: float) -> void:
+	_ellipse(head + Vector2(0, -r * 0.6), Vector2(r * 0.98, r * 0.62), _hair())
+	for i in 7:
+		draw_circle(head + Vector2(-r * 0.75 + i * r * 0.25, -r * 0.62), r * 0.16, _hair())
+
+
+func _laurel(head: Vector2, r: float) -> void:
+	_short_hair(head, r)
+	for side in [-1, 1]:
+		for i in 6:
+			var a := PI * (1.05 + i * 0.09)
+			var at := head + Vector2(side * cos(a) * -r * 1.0, sin(a) * r * 0.75 - r * 0.25)
+			_ellipse(at, Vector2(r * 0.18, r * 0.09), Color(0.30, 0.55, 0.22))
+	# the toga's purple stripe
+	draw_line(Vector2(head.x - r * 1.6, head.y + r * 2.4), Vector2(head.x + r * 0.2, head.y + r * 4.2), Color(0.45, 0.12, 0.35), r * 0.25)
+
+
+func _greek_helmet(head: Vector2, r: float) -> void:
+	var bronze := BRONZE.lightened(0.1)
+	_ellipse(head + Vector2(0, -r * 0.45), Vector2(r * 1.05, r * 0.9), bronze)
+	for side in [-1, 1]:  # cheek pieces
+		draw_colored_polygon([head + Vector2(side * r * 1.0, -r * 0.4), head + Vector2(side * r * 1.0, r * 0.7),
+			head + Vector2(side * r * 0.55, r * 0.55), head + Vector2(side * r * 0.5, -r * 0.1)], bronze.darkened(0.1))
+	# the crest, front to back
+	var crest := PackedVector2Array()
+	for i in 13:
+		var a := PI * (1.0 + i / 12.0)
+		crest.append(head + Vector2(cos(a) * r * 1.2, -r * 1.2 + sin(a) * r * 0.9))
+	crest.append(head + Vector2(r * 1.2, -r * 1.15))
+	crest.append(head + Vector2(-r * 1.2, -r * 1.15))
+	draw_colored_polygon(crest, colour.lightened(0.15))
+
+
+func _diadem(head: Vector2, r: float) -> void:
+	_short_hair(head, r)
+	draw_line(head + Vector2(-r * 0.98, -r * 0.55), head + Vector2(r * 0.98, -r * 0.55), Color(0.97, 0.95, 0.9), r * 0.16)
+	for i in 2:  # the diadem's ribbon ends
+		draw_line(head + Vector2(r * 0.9, -r * 0.5), head + Vector2(r * (1.2 + i * 0.2), r * (0.3 + i * 0.25)), Color(0.97, 0.95, 0.9), r * 0.1)
+
+
+func _punic_cap(head: Vector2, r: float) -> void:
+	_ellipse(head + Vector2(0, -r * 0.6), Vector2(r * 0.97, r * 0.62), HAIR)
+	draw_colored_polygon([head + Vector2(-r * 0.85, -r * 0.7), head + Vector2(r * 0.85, -r * 0.7),
+		head + Vector2(r * 0.45, -r * 1.9), head + Vector2(-r * 0.45, -r * 1.9)], colour.lightened(0.2))
+	draw_rect(Rect2(head.x - r * 0.9, head.y - r * 0.85, r * 1.8, r * 0.2), UiStyle.GOLD)
+	for i in 6:  # curled beard
+		draw_circle(head + Vector2(-r * 0.5 + i * r * 0.2, r * 0.95 + (i % 2) * r * 0.12), r * 0.15, HAIR)
+
+
+func _nemes(head: Vector2, r: float) -> void:
+	var blue := Color(0.15, 0.3, 0.65)
+	var gold := UiStyle.GOLD
+	draw_colored_polygon([head + Vector2(-r * 0.95, -r * 0.9), head + Vector2(r * 0.95, -r * 0.9),
+		head + Vector2(r * 1.6, r * 1.8), head + Vector2(r * 0.85, r * 1.8), head + Vector2(r * 0.9, -r * 0.1),
+		head + Vector2(-r * 0.9, -r * 0.1), head + Vector2(-r * 0.85, r * 1.8), head + Vector2(-r * 1.6, r * 1.8)], gold)
+	for i in 6:  # stripes
+		var y := -r * 0.7 + i * r * 0.42
+		draw_line(head + Vector2(-r * 1.0 - i * r * 0.1, y), head + Vector2(-r * 0.9, y), blue, r * 0.14)
+		draw_line(head + Vector2(r * 0.9, y), head + Vector2(r * 1.0 + i * r * 0.1, y), blue, r * 0.14)
+	_ellipse(head + Vector2(0, -r * 0.85), Vector2(r * 0.97, r * 0.35), gold)
+	draw_line(head + Vector2(-r * 0.9, -r * 0.7), head + Vector2(r * 0.9, -r * 0.7), blue, r * 0.12)
+	draw_circle(head + Vector2(0, -r * 1.05), r * 0.14, Color(0.85, 0.2, 0.15))  # uraeus
+
+
+func _headscarf(head: Vector2, r: float) -> void:
+	var cloth := colour.lightened(0.45)
+	_ellipse(head + Vector2(0, -r * 0.55), Vector2(r * 1.05, r * 0.75), cloth)
+	draw_colored_polygon([head + Vector2(-r * 1.05, -r * 0.4), head + Vector2(-r * 0.85, r * 1.2),
+		head + Vector2(-r * 1.3, r * 1.4)], cloth.darkened(0.1))
+	draw_line(head + Vector2(-r * 1.0, -r * 0.45), head + Vector2(r * 1.0, -r * 0.45), colour.darkened(0.2), r * 0.12)
+
+
+func _celtic(head: Vector2, r: float, w: float, h: float) -> void:
+	_ellipse(head + Vector2(0, -r * 0.65), Vector2(r * 1.0, r * 0.6), _hair())
+	# gold torc at the neck
+	var neck := Vector2(w * 0.5, h * 0.62)
+	draw_arc(neck, w * 0.1, PI * 0.05, PI * 0.95, 16, UiStyle.GOLD, r * 0.18)
+	draw_circle(neck + Vector2(-w * 0.1, h * 0.01), r * 0.13, UiStyle.GOLD)
+	draw_circle(neck + Vector2(w * 0.1, h * 0.01), r * 0.13, UiStyle.GOLD)
+
+
+func _kushite_cap(head: Vector2, r: float) -> void:
+	_ellipse(head + Vector2(0, -r * 0.55), Vector2(r * 0.98, r * 0.7), Color(0.1, 0.08, 0.08))
+	draw_line(head + Vector2(-r * 0.97, -r * 0.35), head + Vector2(r * 0.97, -r * 0.35), UiStyle.GOLD, r * 0.14)
+	for side in [-1, 1]:  # the double uraeus of the Kushite kings
+		draw_circle(head + Vector2(side * r * 0.15, -r * 0.55), r * 0.12, Color(0.85, 0.2, 0.15))
 
 
 func _ellipse(centre: Vector2, radius: Vector2, fill: Color) -> void:

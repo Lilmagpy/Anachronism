@@ -1,0 +1,752 @@
+schema_version: 1
+scenarios:
+  - id: punic_wars
+    name: "Rome and Carthage, 264 BC"
+    description: >-
+      264 BC. Rome has just made itself master of Italy; Carthage rules the western sea.
+      A quarrel over Messana in Sicily is about to become the First Punic War. In the east,
+      the heirs of Alexander - Ptolemies in Egypt, Seleucids in Asia, Antigonids in
+      Macedon - fight endless wars, while Athens and Sparta make one last stand for Greek
+      freedom. In Syracuse, a young man named Archimedes is beginning to think.
+    start_year: -264
+    years_per_turn: 10
+    player_civ: rome
+    map: europe
+    cost_scale: 10
+    civs:
+      rome:
+        capital: rom_latium
+        leader: Consul Appius Claudius Caudex
+        pitch: "Italy is yours; Sicily beckons. Carthage rules the sea you have never sailed. Give Rome ideas before it gives the world its legions."
+        provinces:
+          rom_latium: 900000
+          rom_etruria: 600000
+          rom_campania: 800000
+          rom_samnium: 350000
+          rom_umbria: 450000
+          rom_apulia: 400000
+          rom_tarentum: 250000
+          rom_bruttium: 200000
+        stockpiles: {food: 6320, materials: 1580, wealth: 1975, knowledge: 997}
+        stats: {literacy_bp: 500, unrest_bp: 800, legitimacy_bp: 7000}
+        influence: {clergy: 2500, nobility: 5500, guilds: 2000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: concept
+          schools: concept
+          roads: adopted
+          piston_bellows: adopted
+          aqueduct: adopted
+          concrete: concept
+      carthage:
+        capital: car_carthage
+        pitch: "The richest city in the west, and its sea. But Rome is looking at Sicily. Buy, build and out-think them."
+        provinces:
+          car_carthage: 700000
+          car_byzacena: 400000
+          car_emporia: 150000
+          car_lilybaeum: 250000
+          car_sardinia: 300000
+          car_gades: 300000
+        stockpiles: {food: 3360, materials: 840, wealth: 1050, knowledge: 850}
+        stats: {literacy_bp: 800, unrest_bp: 900, legitimacy_bp: 6000}
+        influence: {clergy: 2500, nobility: 4000, guilds: 3500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          schools: adopted
+          roads: concept
+          piston_bellows: adopted
+          canals: adopted
+      syracuse:
+        capital: syr_syracuse
+        leader: Hiero II
+        pitch: "One city, two giants, and Archimedes. Survive by ingenuity alone."
+        provinces:
+          syr_syracuse: 400000
+        stockpiles: {food: 640, materials: 160, wealth: 200, knowledge: 230}
+        stats: {literacy_bp: 1100, unrest_bp: 900, legitimacy_bp: 6500}
+        influence: {clergy: 2500, nobility: 4000, guilds: 3500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: widespread
+          schools: widespread
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: concept
+      macedon:
+        capital: mac_macedonia
+        leader: Antigonus II Gonatas
+        pitch: "Hold Greece, rebuild Alexander's kingdom, and keep the Ptolemies out of the Aegean."
+        provinces:
+          mac_macedonia: 700000
+          mac_thessaly: 400000
+          mac_corinth: 150000
+        stockpiles: {food: 2000, materials: 500, wealth: 625, knowledge: 447}
+        stats: {literacy_bp: 700, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 2500, nobility: 6000, guilds: 1500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          schools: adopted
+          roads: adopted
+          piston_bellows: adopted
+      athens:
+        capital: ath_attica
+        pitch: "The schools of Plato and Aristotle, the silver of Laurion - and a Macedonian army outside the walls."
+        provinces:
+          ath_attica: 300000
+        stockpiles: {food: 480, materials: 120, wealth: 150, knowledge: 235}
+        stats: {literacy_bp: 1500, unrest_bp: 1100, legitimacy_bp: 5500}
+        influence: {clergy: 2500, nobility: 3000, guilds: 4500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          schools: widespread
+          roads: adopted
+          piston_bellows: adopted
+      sparta:
+        capital: spa_laconia
+        leader: Acrotatus
+        pitch: "Few citizens, iron discipline. Can Sparta reform before it withers away?"
+        provinces:
+          spa_laconia: 180000
+        stockpiles: {food: 288, materials: 72, wealth: 90, knowledge: 82}
+        stats: {literacy_bp: 800, unrest_bp: 1200, legitimacy_bp: 5500}
+        influence: {clergy: 3000, nobility: 6000, guilds: 1000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+      aetolia:
+        capital: aet_aetolia
+        pitch: "Mountain warriors and a federal league: lead Greece your own way."
+        provinces:
+          aet_aetolia: 200000
+        stockpiles: {food: 320, materials: 80, wealth: 100, knowledge: 70}
+        stats: {literacy_bp: 600, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 3000, nobility: 5500, guilds: 1500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          piston_bellows: adopted
+      achaea:
+        capital: ach_achaea
+        pitch: "A small federation with big ambitions: unite the Peloponnese."
+        provinces:
+          ach_achaea: 250000
+        stockpiles: {food: 400, materials: 100, wealth: 125, knowledge: 160}
+        stats: {literacy_bp: 1200, unrest_bp: 900, legitimacy_bp: 6000}
+        influence: {clergy: 2500, nobility: 3500, guilds: 4000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          schools: adopted
+          roads: adopted
+          piston_bellows: adopted
+      epirus:
+        capital: epi_epirus
+        leader: Alexander II
+        pitch: "Pyrrhus won battles and lost wars. Win the peace this time."
+        provinces:
+          epi_epirus: 300000
+        stockpiles: {food: 480, materials: 120, wealth: 150, knowledge: 85}
+        stats: {literacy_bp: 500, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 3000, nobility: 5500, guilds: 1500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+      rhodes:
+        capital: rho_rhodes
+        pitch: "The richest harbour of the east and its best sailors. Rule by trade, not conquest."
+        provinces:
+          rho_rhodes: 150000
+        stockpiles: {food: 240, materials: 60, wealth: 75, knowledge: 100}
+        stats: {literacy_bp: 1200, unrest_bp: 800, legitimacy_bp: 6500}
+        influence: {clergy: 2000, nobility: 3000, guilds: 5000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          schools: widespread
+          roads: adopted
+          piston_bellows: adopted
+      pergamon:
+        capital: per_pergamon
+        leader: Philetaerus
+        pitch: "A fortress, a fortune and a founding dynasty. Build a great library, and more."
+        provinces:
+          per_pergamon: 200000
+        stockpiles: {food: 320, materials: 80, wealth: 100, knowledge: 110}
+        stats: {literacy_bp: 1000, unrest_bp: 900, legitimacy_bp: 6000}
+        influence: {clergy: 2500, nobility: 4500, guilds: 3000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          schools: widespread
+          roads: adopted
+          piston_bellows: adopted
+      bithynia:
+        capital: bit_bithynia
+        leader: Nicomedes I
+        pitch: "Guard the gateway between Europe and Asia."
+        provinces:
+          bit_bithynia: 300000
+        stockpiles: {food: 480, materials: 120, wealth: 150, knowledge: 70}
+        stats: {literacy_bp: 400, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 3000, nobility: 5500, guilds: 1500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          schools: adopted
+          roads: adopted
+          piston_bellows: adopted
+      pontus:
+        capital: pon_pontus
+        leader: Ariobarzanes
+        pitch: "Iron, timber and Persian royal blood on the Black Sea."
+        provinces:
+          pon_pontus: 300000
+        stockpiles: {food: 480, materials: 120, wealth: 150, knowledge: 70}
+        stats: {literacy_bp: 400, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 3500, nobility: 5000, guilds: 1500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          schools: adopted
+          roads: adopted
+          piston_bellows: adopted
+      ptolemaic:
+        capital: pto_delta
+        leader: Ptolemy II Philadelphus
+        pitch: "The Library of Alexandria, the grain of the Nile and the best scholars alive. What could they build ahead of time?"
+        provinces:
+          pto_delta: 1800000
+          pto_middle: 1000000
+          pto_thebaid: 1200000
+          pto_cyrenaica: 250000
+          pto_coele_syria: 800000
+          pto_cyprus: 200000
+        stockpiles: {food: 8400, materials: 2100, wealth: 2625, knowledge: 2110}
+        stats: {literacy_bp: 800, unrest_bp: 1000, legitimacy_bp: 6500}
+        influence: {clergy: 4500, nobility: 4000, guilds: 1500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          schools: widespread
+          roads: adopted
+          piston_bellows: adopted
+          canals: widespread
+          alchemy: concept
+          water_wheel: concept
+      seleucid:
+        capital: sel_syria
+        leader: Antiochus I Soter
+        pitch: "The biggest empire in the west, stretched thin from Sardis to Persia. Hold it together."
+        provinces:
+          sel_syria: 1200000
+          sel_upper_mesopotamia: 600000
+          sel_babylonia: 2000000
+          sel_cilicia: 300000
+          sel_asia: 1000000
+          sel_media: 700000
+          sel_susiana: 400000
+          sel_persis: 500000
+        stockpiles: {food: 10720, materials: 2680, wealth: 3350, knowledge: 2020}
+        stats: {literacy_bp: 600, unrest_bp: 1100, legitimacy_bp: 6000}
+        influence: {clergy: 3000, nobility: 5500, guilds: 1500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          schools: adopted
+          roads: adopted
+          piston_bellows: adopted
+          canals: adopted
+          postal_relay: adopted
+      massalia:
+        capital: mas_massalia
+        pitch: "A small Greek city on the edge of the Celtic world: trade your way to greatness."
+        provinces:
+          mas_massalia: 100000
+        stockpiles: {food: 160, materials: 40, wealth: 50, knowledge: 70}
+        stats: {literacy_bp: 1200, unrest_bp: 900, legitimacy_bp: 6000}
+        influence: {clergy: 2500, nobility: 3500, guilds: 4000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          schools: adopted
+          roads: adopted
+          piston_bellows: adopted
+      numidia:
+        capital: num_massyli
+        pitch: "The best horsemen in the world, between Carthage and the desert."
+        provinces:
+          num_massyli: 400000
+          num_masaesyli: 350000
+        stockpiles: {food: 1200, materials: 300, wealth: 375, knowledge: 28}
+        stats: {literacy_bp: 50, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 3000, nobility: 6000, guilds: 500}
+        techs:
+          agriculture: widespread
+          ox_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: adopted
+          ore_prospecting: adopted
+          horse_riding: widespread
+          chariot: adopted
+          masonry: adopted
+          fortification: adopted
+          sailing: adopted
+          composite_bow: adopted
+      cisalpine_gauls:
+        capital: gau_insubria
+        pitch: "Your grandfathers sacked Rome. The Romans have not forgotten."
+        provinces:
+          gau_insubria: 400000
+          gau_boii: 350000
+        stockpiles: {food: 1200, materials: 300, wealth: 375, knowledge: 21}
+        stats: {literacy_bp: 30, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 4000, nobility: 5500, guilds: 500}
+        techs:
+          agriculture: widespread
+          ox_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          horse_riding: widespread
+          chariot: adopted
+          masonry: adopted
+          fortification: adopted
+          sailing: adopted
+          coinage: concept
+      kush:
+        capital: kus_meroe
+        pitch: "Iron, gold and your own script on the upper Nile, far from the Greek quarrels."
+        provinces:
+          kus_meroe: 400000
+        stockpiles: {food: 640, materials: 160, wealth: 200, knowledge: 50}
+        stats: {literacy_bp: 200, unrest_bp: 900, legitimacy_bp: 6500}
+        influence: {clergy: 5000, nobility: 4000, guilds: 1000}
+        techs:
+          agriculture: widespread
+          ox_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          horse_riding: widespread
+          chariot: adopted
+          masonry: widespread
+          fortification: adopted
+          sailing: adopted
+          irrigation: adopted
+          writing: adopted
+          astronomy_calendar: adopted
+    unowned:
+      messana: 50000
+      corsica: 40000
+      liguria: 150000
+      southern_gaul: 300000
+      central_gaul: 700000
+      belgic_gaul: 450000
+      britain: 600000
+      germania: 500000
+      celtiberia: 400000
+      east_iberia: 300000
+      lusitania: 250000
+      mauretania: 300000
+      garamantes: 100000
+      illyria: 250000
+      dacia: 300000
+      thrace: 500000
+      scythia: 300000
+      bosporus: 150000
+      colchis: 100000
+      armenia: 300000
+      galatia: 150000
+      cappadocia: 300000
+      nabataea: 100000
+      arabia: 200000

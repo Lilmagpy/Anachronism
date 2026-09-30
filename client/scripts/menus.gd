@@ -66,6 +66,8 @@ func show_picker(scenario_id := "", civ_id := "") -> void:
 	for s in catalog:
 		if s["id"] == scenario_id:
 			scenario = s
+		elif scenario_id == "" and civ_id != "" and s["civs"].any(func(c): return c["id"] == civ_id):
+			scenario = s  # the moment this civilisation belongs to
 	var wanted := civ_id if civ_id != "" else str(scenario["default_civ"])
 	civ = scenario["civs"][0]
 	for c in scenario["civs"]:

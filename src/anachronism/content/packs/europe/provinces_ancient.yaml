@@ -1,0 +1,601 @@
+schema_version: 1
+# Provinces of the ancient Mediterranean world, placed on the real Earth.
+# latlon: [degrees north, degrees east] of the province's centre (usually its chief city).
+# neighbours and coastal are checked against the map with client/tools/province_report.gd.
+provinces:
+  - id: rom_latium
+    name: Latium
+    latlon: [41.9, 12.5]
+    terrain: plains
+    coastal: true
+    river: true
+    capacity: 1220000
+    resources: {stone: accessible, salt: limited}
+    neighbours: [rom_campania, rom_etruria, rom_samnium, rom_umbria]
+  - id: rom_etruria
+    name: Etruria
+    latlon: [42.7, 11.5]
+    terrain: hills
+    coastal: true
+    river: true
+    capacity: 810000
+    resources: {iron: accessible, copper: limited, timber: accessible}
+    neighbours: [gau_boii, rom_latium, rom_umbria]
+  - id: rom_campania
+    name: Campania
+    latlon: [40.95, 14.4]
+    terrain: plains
+    coastal: true
+    river: true
+    capacity: 1080000
+    resources: {clay: accessible, stone: accessible}
+    neighbours: [rom_apulia, rom_latium, rom_samnium]
+  - id: rom_samnium
+    name: Samnium
+    latlon: [41.55, 14.8]
+    terrain: mountains
+    coastal: true
+    capacity: 470000
+    resources: {timber: accessible}
+    neighbours: [rom_apulia, rom_campania, rom_latium, rom_umbria]
+  - id: rom_umbria
+    name: Umbria and Picenum
+    latlon: [43.1, 12.9]
+    terrain: hills
+    coastal: true
+    river: true
+    capacity: 610000
+    resources: {timber: accessible}
+    neighbours: [gau_boii, rom_etruria, rom_latium, rom_samnium]
+  - id: rom_apulia
+    name: Apulia
+    latlon: [41.2, 16.0]
+    terrain: plains
+    coastal: true
+    capacity: 540000
+    resources: {horses: limited, salt: limited}
+    neighbours: [rom_campania, rom_samnium, rom_tarentum]
+  - id: rom_tarentum
+    name: Tarentum
+    latlon: [40.47, 17.24]
+    terrain: coast
+    coastal: true
+    capacity: 340000
+    resources: {salt: accessible}
+    neighbours: [rom_apulia, rom_bruttium]
+  - id: rom_bruttium
+    name: Bruttium
+    latlon: [39.1, 16.4]
+    terrain: mountains
+    coastal: true
+    capacity: 270000
+    resources: {timber: accessible}
+    neighbours: [rom_tarentum]
+  - id: car_carthage
+    name: Carthage
+    latlon: [36.85, 10.2]
+    terrain: coast
+    coastal: true
+    river: true
+    capacity: 950000
+    resources: {clay: accessible}
+    neighbours: [car_byzacena, num_massyli]
+  - id: car_byzacena
+    name: Byzacena
+    latlon: [35.4, 10.3]
+    terrain: plains
+    coastal: true
+    capacity: 540000
+    resources: {salt: accessible}
+    neighbours: [car_carthage, car_emporia, num_massyli]
+  - id: car_emporia
+    name: Emporia
+    latlon: [32.64, 14.29]
+    terrain: coast
+    coastal: true
+    capacity: 200000
+    resources: {salt: limited}
+    neighbours: [car_byzacena, garamantes, pto_cyrenaica]
+  - id: car_lilybaeum
+    name: Western Sicily
+    latlon: [37.8, 12.8]
+    terrain: coast
+    coastal: true
+    capacity: 340000
+    resources: {salt: accessible}
+    neighbours: [syr_syracuse]
+  - id: car_sardinia
+    name: Sardinia
+    latlon: [39.9, 9.0]
+    terrain: hills
+    coastal: true
+    capacity: 400000
+    resources: {silver: limited, iron: limited}
+    neighbours: []
+  - id: car_gades
+    name: Gades and Tartessos
+    latlon: [37.2, -5.8]
+    terrain: coast
+    coastal: true
+    river: true
+    capacity: 400000
+    resources: {silver: accessible, copper: accessible}
+    neighbours: [celtiberia, east_iberia, lusitania]
+  - id: syr_syracuse
+    name: Syracuse
+    latlon: [37.2, 14.9]
+    terrain: coast
+    coastal: true
+    capacity: 540000
+    resources: {stone: accessible, sulphur: limited}
+    neighbours: [car_lilybaeum, messana]
+  - id: gau_insubria
+    name: Insubria
+    latlon: [45.46, 9.19]
+    terrain: plains
+    river: true
+    capacity: 540000
+    resources: {horses: accessible, iron: limited}
+    neighbours: [gau_boii, liguria]
+  - id: gau_boii
+    name: Land of the Boii
+    latlon: [44.6, 11.3]
+    terrain: river_plains
+    coastal: true
+    river: true
+    capacity: 470000
+    resources: {horses: limited, timber: accessible}
+    neighbours: [gau_insubria, rom_etruria, rom_umbria]
+  - id: mas_massalia
+    name: Massalia
+    latlon: [43.3, 5.37]
+    terrain: coast
+    coastal: true
+    river: true
+    capacity: 140000
+    resources: {salt: accessible}
+    neighbours: [central_gaul, liguria, southern_gaul]
+  - id: num_massyli
+    name: Land of the Massyli
+    latlon: [36.2, 7.0]
+    terrain: hills
+    coastal: true
+    capacity: 540000
+    resources: {horses: accessible}
+    neighbours: [car_byzacena, car_carthage, num_masaesyli]
+  - id: num_masaesyli
+    name: Land of the Masaesyli
+    latlon: [35.2, 1.5]
+    terrain: steppe
+    coastal: true
+    capacity: 470000
+    resources: {horses: accessible}
+    neighbours: [num_massyli]
+  - id: mac_macedonia
+    name: Macedonia
+    latlon: [40.76, 22.52]
+    terrain: plains
+    coastal: true
+    river: true
+    capacity: 950000
+    resources: {timber: accessible, silver: limited, gold: limited}
+    neighbours: [epi_epirus, illyria, mac_thessaly, thrace]
+  - id: mac_thessaly
+    name: Thessaly
+    latlon: [39.55, 22.4]
+    terrain: plains
+    coastal: true
+    river: true
+    capacity: 540000
+    resources: {horses: accessible}
+    neighbours: [aet_aetolia, ath_attica, epi_epirus, mac_macedonia]
+  - id: mac_corinth
+    name: Corinth
+    latlon: [37.91, 22.88]
+    terrain: coast
+    coastal: true
+    capacity: 200000
+    resources: {clay: accessible}
+    neighbours: [ach_achaea, ath_attica, spa_laconia]
+  - id: ath_attica
+    name: Attica
+    latlon: [38.05, 23.75]
+    terrain: coast
+    coastal: true
+    capacity: 400000
+    resources: {silver: accessible, stone: accessible, clay: accessible}
+    neighbours: [ach_achaea, mac_corinth, mac_thessaly]
+  - id: spa_laconia
+    name: Laconia and Messenia
+    latlon: [37.1, 22.3]
+    terrain: hills
+    coastal: true
+    river: true
+    capacity: 240000
+    resources: {iron: limited}
+    neighbours: [ach_achaea, mac_corinth]
+  - id: aet_aetolia
+    name: Aetolia
+    latlon: [38.65, 21.55]
+    terrain: mountains
+    coastal: true
+    capacity: 270000
+    resources: {timber: accessible}
+    neighbours: [ach_achaea, epi_epirus, mac_thessaly]
+  - id: ach_achaea
+    name: Achaea
+    latlon: [37.95, 21.95]
+    terrain: coast
+    coastal: true
+    capacity: 340000
+    resources: {clay: accessible}
+    neighbours: [aet_aetolia, ath_attica, mac_corinth, spa_laconia]
+  - id: epi_epirus
+    name: Epirus
+    latlon: [39.5, 20.7]
+    terrain: mountains
+    coastal: true
+    capacity: 400000
+    resources: {horses: limited, timber: accessible}
+    neighbours: [aet_aetolia, illyria, mac_macedonia, mac_thessaly]
+  - id: rho_rhodes
+    name: Rhodes
+    latlon: [36.3, 28.0]
+    terrain: coast
+    coastal: true
+    capacity: 200000
+    resources: {timber: limited}
+    neighbours: []
+  - id: per_pergamon
+    name: Pergamon
+    latlon: [39.12, 27.18]
+    terrain: coast
+    coastal: true
+    river: true
+    capacity: 270000
+    resources: {silver: limited}
+    neighbours: [bit_bithynia, sel_asia, thrace]
+  - id: bit_bithynia
+    name: Bithynia
+    latlon: [40.55, 30.2]
+    terrain: hills
+    coastal: true
+    river: true
+    capacity: 400000
+    resources: {timber: accessible}
+    neighbours: [galatia, per_pergamon, sel_asia, thrace]
+  - id: pon_pontus
+    name: Pontus
+    latlon: [40.65, 36.0]
+    terrain: hills
+    coastal: true
+    river: true
+    capacity: 400000
+    resources: {iron: accessible, timber: accessible}
+    neighbours: [cappadocia, galatia]
+  - id: pto_delta
+    name: Lower Egypt (the Delta)
+    latlon: [30.8, 30.9]
+    terrain: river_plains
+    coastal: true
+    river: true
+    capacity: 2430000
+    resources: {clay: accessible, salt: accessible}
+    neighbours: [nabataea, pto_coele_syria, pto_cyrenaica, pto_middle]
+  - id: pto_middle
+    name: Middle Egypt and the Faiyum
+    latlon: [28.6, 30.8]
+    terrain: river_plains
+    coastal: true
+    river: true
+    capacity: 1350000
+    resources: {clay: accessible}
+    neighbours: [pto_delta, pto_thebaid]
+  - id: pto_thebaid
+    name: Upper Egypt (Thebaid)
+    latlon: [25.7, 32.64]
+    terrain: river_plains
+    coastal: true
+    river: true
+    capacity: 1620000
+    resources: {stone: accessible, gold: limited}
+    neighbours: [kus_meroe, pto_middle]
+  - id: pto_cyrenaica
+    name: Cyrenaica
+    latlon: [32.6, 21.7]
+    terrain: coast
+    coastal: true
+    capacity: 340000
+    resources: {horses: limited}
+    neighbours: [car_emporia, pto_delta]
+  - id: pto_coele_syria
+    name: Coele-Syria and Phoenicia
+    latlon: [32.6, 35.3]
+    terrain: hills
+    coastal: true
+    river: true
+    capacity: 1080000
+    resources: {timber: limited, clay: accessible}
+    neighbours: [nabataea, pto_delta, sel_syria, sel_upper_mesopotamia]
+  - id: pto_cyprus
+    name: Cyprus
+    latlon: [35.05, 33.2]
+    terrain: hills
+    coastal: true
+    capacity: 270000
+    resources: {copper: accessible, timber: accessible}
+    neighbours: []
+  - id: sel_syria
+    name: Syria (Antioch)
+    latlon: [35.8, 36.7]
+    terrain: plains
+    coastal: true
+    river: true
+    capacity: 1620000
+    resources: {clay: accessible}
+    neighbours: [cappadocia, pto_coele_syria, sel_cilicia, sel_upper_mesopotamia]
+  - id: sel_upper_mesopotamia
+    name: Upper Mesopotamia
+    latlon: [36.6, 40.5]
+    terrain: steppe
+    river: true
+    capacity: 810000
+    resources: {horses: accessible}
+    neighbours: [pto_coele_syria, sel_babylonia, sel_syria]
+  - id: sel_babylonia
+    name: Babylonia (Seleucia)
+    latlon: [32.8, 44.5]
+    terrain: river_plains
+    river: true
+    capacity: 2700000
+    resources: {clay: accessible}
+    neighbours: [arabia, sel_media, sel_susiana, sel_upper_mesopotamia]
+  - id: sel_cilicia
+    name: Cilicia
+    latlon: [36.95, 34.9]
+    terrain: coast
+    coastal: true
+    river: true
+    capacity: 400000
+    resources: {timber: accessible, iron: limited}
+    neighbours: [cappadocia, galatia, sel_syria]
+  - id: sel_asia
+    name: Lydia and Phrygia
+    latlon: [38.5, 29.8]
+    terrain: hills
+    coastal: true
+    river: true
+    capacity: 1350000
+    resources: {gold: limited, horses: limited}
+    neighbours: [bit_bithynia, galatia, per_pergamon]
+  - id: sel_media
+    name: Media
+    latlon: [34.8, 48.5]
+    terrain: mountains
+    capacity: 950000
+    resources: {horses: accessible}
+    neighbours: [sel_babylonia, sel_susiana]
+  - id: sel_susiana
+    name: Susiana
+    latlon: [32.19, 48.25]
+    terrain: river_plains
+    coastal: true
+    river: true
+    capacity: 540000
+    resources: {clay: accessible}
+    neighbours: [sel_babylonia, sel_media, sel_persis]
+  - id: sel_persis
+    name: Persis
+    latlon: [29.9, 52.9]
+    terrain: mountains
+    capacity: 680000
+    resources: {stone: accessible}
+    neighbours: [sel_susiana]
+  - id: kus_meroe
+    name: Napata and Meroë
+    latlon: [18.5, 31.8]
+    terrain: river_plains
+    river: true
+    capacity: 540000
+    resources: {iron: accessible, gold: accessible}
+    neighbours: [pto_thebaid]
+  - id: messana
+    name: Messana (the Mamertines)
+    latlon: [38.1, 15.4]
+    terrain: coast
+    coastal: true
+    capacity: 70000
+    resources: {}
+    neighbours: [syr_syracuse]
+  - id: corsica
+    name: Corsica
+    latlon: [42.1, 9.05]
+    terrain: mountains
+    coastal: true
+    capacity: 50000
+    resources: {timber: accessible}
+    neighbours: []
+  - id: liguria
+    name: Liguria
+    latlon: [44.3, 8.6]
+    terrain: mountains
+    coastal: true
+    capacity: 200000
+    resources: {timber: accessible}
+    neighbours: [gau_insubria, mas_massalia]
+  - id: southern_gaul
+    name: Southern Gaul
+    latlon: [43.8, 3.0]
+    terrain: hills
+    coastal: true
+    river: true
+    capacity: 400000
+    resources: {salt: limited}
+    neighbours: [celtiberia, central_gaul, east_iberia, mas_massalia]
+  - id: central_gaul
+    name: Central Gaul
+    latlon: [46.6, 2.8]
+    terrain: plains
+    coastal: true
+    river: true
+    capacity: 950000
+    resources: {iron: accessible, timber: accessible}
+    neighbours: [belgic_gaul, mas_massalia, southern_gaul]
+  - id: belgic_gaul
+    name: Belgic Gaul
+    latlon: [49.8, 3.5]
+    terrain: plains
+    coastal: true
+    river: true
+    capacity: 610000
+    resources: {timber: accessible}
+    neighbours: [central_gaul, germania]
+  - id: britain
+    name: Britain
+    latlon: [52.5, -1.5]
+    terrain: plains
+    coastal: true
+    river: true
+    capacity: 810000
+    resources: {tin: accessible, timber: accessible}
+    neighbours: []
+  - id: germania
+    name: Germania
+    latlon: [51.5, 10.0]
+    terrain: forest
+    coastal: true
+    river: true
+    capacity: 680000
+    resources: {timber: accessible, iron: unexplored}
+    neighbours: [belgic_gaul]
+  - id: celtiberia
+    name: Celtiberia
+    latlon: [41.3, -2.5]
+    terrain: hills
+    coastal: true
+    river: true
+    capacity: 540000
+    resources: {iron: accessible, horses: limited}
+    neighbours: [car_gades, east_iberia, lusitania, southern_gaul]
+  - id: east_iberia
+    name: Eastern Iberia
+    latlon: [39.6, -0.6]
+    terrain: coast
+    coastal: true
+    river: true
+    capacity: 400000
+    resources: {silver: limited}
+    neighbours: [car_gades, celtiberia, southern_gaul]
+  - id: lusitania
+    name: Lusitania
+    latlon: [39.5, -7.6]
+    terrain: hills
+    coastal: true
+    river: true
+    capacity: 340000
+    resources: {tin: limited, gold: limited}
+    neighbours: [car_gades, celtiberia]
+  - id: mauretania
+    name: Mauretania
+    latlon: [34.0, -5.5]
+    terrain: hills
+    coastal: true
+    river: true
+    capacity: 400000
+    resources: {horses: limited}
+    neighbours: []
+  - id: garamantes
+    name: Land of the Garamantes
+    latlon: [26.5, 13.0]
+    terrain: desert
+    capacity: 140000
+    resources: {salt: accessible}
+    neighbours: [car_emporia]
+  - id: illyria
+    name: Illyria
+    latlon: [42.4, 19.3]
+    terrain: hills
+    coastal: true
+    capacity: 340000
+    resources: {timber: accessible}
+    neighbours: [epi_epirus, mac_macedonia]
+  - id: dacia
+    name: Land of the Getae
+    latlon: [45.5, 25.0]
+    terrain: hills
+    river: true
+    capacity: 400000
+    resources: {gold: limited, salt: accessible}
+    neighbours: [thrace]
+  - id: thrace
+    name: Thrace
+    latlon: [42.2, 25.5]
+    terrain: plains
+    coastal: true
+    river: true
+    capacity: 680000
+    resources: {horses: accessible, gold: limited}
+    neighbours: [bit_bithynia, dacia, mac_macedonia, per_pergamon, scythia]
+  - id: scythia
+    name: Scythia
+    latlon: [46.8, 33.5]
+    terrain: steppe
+    coastal: true
+    river: true
+    capacity: 400000
+    resources: {horses: accessible}
+    neighbours: [bosporus, thrace]
+  - id: bosporus
+    name: The Bosporan Kingdom
+    latlon: [45.2, 36.0]
+    terrain: coast
+    coastal: true
+    capacity: 200000
+    resources: {salt: accessible}
+    neighbours: [scythia]
+  - id: colchis
+    name: Colchis
+    latlon: [42.2, 42.0]
+    terrain: coast
+    coastal: true
+    river: true
+    capacity: 140000
+    resources: {gold: limited, timber: accessible}
+    neighbours: [armenia]
+  - id: armenia
+    name: Armenia
+    latlon: [40.0, 44.5]
+    terrain: mountains
+    river: true
+    capacity: 400000
+    resources: {horses: accessible, copper: limited}
+    neighbours: [colchis]
+  - id: galatia
+    name: Galatia
+    latlon: [39.8, 32.9]
+    terrain: steppe
+    capacity: 200000
+    resources: {horses: accessible}
+    neighbours: [bit_bithynia, cappadocia, pon_pontus, sel_asia, sel_cilicia]
+  - id: cappadocia
+    name: Cappadocia
+    latlon: [38.6, 35.6]
+    terrain: hills
+    capacity: 400000
+    resources: {horses: accessible, silver: limited}
+    neighbours: [galatia, pon_pontus, sel_cilicia, sel_syria]
+  - id: nabataea
+    name: Nabataea
+    latlon: [30.3, 35.44]
+    terrain: desert
+    coastal: true
+    capacity: 140000
+    resources: {salt: limited}
+    neighbours: [pto_coele_syria, pto_delta]
+  - id: arabia
+    name: Arabia
+    latlon: [26.0, 42.0]
+    terrain: desert
+    capacity: 270000
+    resources: {}
+    neighbours: [sel_babylonia]

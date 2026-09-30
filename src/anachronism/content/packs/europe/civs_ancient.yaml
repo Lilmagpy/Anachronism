@@ -1,0 +1,174 @@
+schema_version: 1
+# The ancient Mediterranean (264 BC).
+civs:
+  - id: rome
+    name: Rome
+    adjective: Roman
+    lineage: rome
+    colour: "#b3261e"
+    emblem: SPQR
+    portrait: roman
+    description: >-
+      A republic of farmer-soldiers that has just made itself master of Italy, bound to its allies by roads, colonies and treaties.
+  - id: carthage
+    name: Carthage
+    adjective: Carthaginian
+    lineage: carthage
+    colour: "#6a2c91"
+    emblem: QRT
+    portrait: punic
+    description: >-
+      The great Phoenician city of Africa: merchant princes, the strongest navy in the west and silver from Iberia.
+  - id: syracuse
+    name: Syracuse
+    adjective: Syracusan
+    lineage: syracuse
+    colour: "#1f7a8c"
+    emblem: ΣΥΡ
+    portrait: hellenistic
+    description: >-
+      The greatest Greek city of the west, between Rome and Carthage, home of a young engineer named Archimedes.
+  - id: macedon
+    name: Macedon
+    adjective: Macedonian
+    lineage: macedon
+    colour: "#c9a227"
+    emblem: ΜΑΚ
+    portrait: hellenistic
+    description: >-
+      Alexander's homeland, now ruled by the Antigonids, holding Greece by garrisons and fighting Athens and Sparta once again.
+  - id: athens
+    name: Athens
+    adjective: Athenian
+    lineage: athens
+    colour: "#2f5d9e"
+    emblem: ΑΘΕ
+    portrait: greek
+    description: >-
+      The city of philosophers, faded but proud, at war with Macedon for its freedom with Sparta and Egypt as allies.
+  - id: sparta
+    name: Sparta
+    adjective: Spartan
+    lineage: sparta
+    colour: "#8c2d19"
+    emblem: Λ
+    portrait: greek
+    description: >-
+      The old warrior city, few in number, still dreaming of its past greatness.
+  - id: aetolia
+    name: Aetolian League
+    adjective: Aetolian
+    lineage: aetolia
+    colour: "#4f7942"
+    emblem: ΑΙΤ
+    portrait: greek
+    description: >-
+      A league of mountain peoples, famous for driving back the Gauls from Delphi.
+  - id: achaea
+    name: Achaean League
+    adjective: Achaean
+    lineage: achaea
+    colour: "#5a8fb0"
+    emblem: ΑΧ
+    portrait: greek
+    description: >-
+      A young federation of cities along the Gulf of Corinth, slowly growing.
+  - id: epirus
+    name: Epirus
+    adjective: Epirote
+    lineage: epirus
+    colour: "#7d5a8c"
+    emblem: ΑΠΕ
+    portrait: hellenistic
+    description: >-
+      Pyrrhus's kingdom, still proud after his costly victories over Rome, but its great king is dead.
+  - id: rhodes
+    name: Rhodes
+    adjective: Rhodian
+    lineage: rhodes
+    colour: "#e07b39"
+    emblem: ΡΟ
+    portrait: greek
+    description: >-
+      An island republic of traders and shipwrights, the banker and policeman of the eastern sea.
+  - id: pergamon
+    name: Pergamon
+    adjective: Pergamene
+    lineage: pergamon
+    colour: "#3d8c6e"
+    emblem: ΠΕΡ
+    portrait: hellenistic
+    description: >-
+      A citadel guarding a treasure, whose lords are slowly turning it into a kingdom.
+  - id: bithynia
+    name: Bithynia
+    adjective: Bithynian
+    lineage: bithynia
+    colour: "#a0522d"
+    emblem: ΒΙΘ
+    portrait: hellenistic
+    description: >-
+      A Thracian kingdom on the Asian shore, which invited the Gauls across the straits.
+  - id: pontus
+    name: Pontus
+    adjective: Pontic
+    lineage: pontus
+    colour: "#8a4f7d"
+    emblem: ΠΟΝ
+    portrait: hellenistic
+    description: >-
+      A Persian dynasty ruling the iron-rich Black Sea coast.
+  - id: ptolemaic
+    name: Ptolemaic Egypt
+    adjective: Egyptian
+    lineage: ptolemaic
+    colour: "#d4a017"
+    emblem: ΠΤΟ
+    portrait: pharaoh
+    description: >-
+      Pharaohs of Greek blood, ruling the richest land on earth from Alexandria, with its Museum, its Library and its Lighthouse.
+  - id: seleucid
+    name: Seleucid Empire
+    adjective: Seleucid
+    lineage: seleucid
+    colour: "#2e6f40"
+    emblem: ΣΕΛ
+    portrait: hellenistic
+    description: >-
+      The largest of Alexander's successor states, from the Aegean to Persia, held together by Greek cities and war elephants.
+  - id: massalia
+    name: Massalia
+    adjective: Massaliot
+    lineage: massalia
+    colour: "#4a90a4"
+    emblem: ΜΑΣ
+    portrait: greek
+    description: >-
+      A Greek trading city at the mouth of the Rhône, Rome's old friend and the gateway to Gaul's tin and wine trade.
+  - id: numidia
+    name: Numidia
+    adjective: Numidian
+    lineage: numidia
+    colour: "#b5813a"
+    emblem: N
+    portrait: berber
+    description: >-
+      Horse peoples of the North African highlands, the finest light cavalry of the age, courted by Carthage.
+  - id: cisalpine_gauls
+    name: Cisalpine Gauls
+    adjective: Gallic
+    lineage: cisalpine_gauls
+    colour: "#6b8e23"
+    emblem: G
+    portrait: celtic
+    description: >-
+      Celtic peoples of the Po valley, the Insubres and the Boii, who once sacked Rome itself.
+  - id: kush
+    name: Kush
+    adjective: Kushite
+    lineage: kush
+    colour: "#8b5a2b"
+    emblem: K
+    portrait: kushite
+    description: >-
+      The Nubian kingdom of the upper Nile, with its pyramids at Meroë, its iron furnaces and its gold.
