@@ -121,6 +121,11 @@ func open_settings() -> void:
 		close()
 		open_settings())
 	body.add_child(offline)
+	var tour := UiStyle.big_button("Show the guided tour again", 15, Color(0.85, 0.8, 0.7))
+	tour.pressed.connect(func():
+		close()
+		get_parent().add_child(Tutorial.new()))
+	body.add_child(tour)
 	if audio != null:
 		body.add_child(UiStyle.label("Sound", 20, UiStyle.RED, "title", 800))
 		var music := CheckBox.new()

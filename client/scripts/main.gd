@@ -238,6 +238,10 @@ func _build_hud() -> void:
 		hud.toggle_dev()
 	if options.has("visit"):
 		_visit_capital()
+	if options.has("tour") or (not Tutorial.seen() and not options.has("smoke") and not options.has("screenshot")):
+		var tour := Tutorial.new()
+		tour.start_at = int(options.get("tour", "1")) - 1 if str(options.get("tour", "")).is_valid_int() else 0
+		add_child(tour)
 	if options.has("idea"):  # --idea=TEXT: propose an idea, as if typed (screenshots, tests)
 		_on_idea(str(options["idea"]).replace("_", " "), "")
 		while bridge.busy:
