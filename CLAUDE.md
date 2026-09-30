@@ -31,11 +31,11 @@ updating `docs/PLAN.md` (checkboxes, current step) and logging decisions in `doc
 - Model names come from config. Never hard-code or commit API keys.
 
 ## Commands
-- Setup: `uv sync`
-- Tests: `uv run pytest` · Lint/format: `uv run ruff check . && uv run ruff format .`
-- Types: `uv run mypy src` · Content: `uv run anachronism-lint`
-- Play (window): `uv run anachronism` · Console: `uv run anachronism-console`
-(Commands exist from Phase 0/1 onward.)
+- Setup: `uv sync` (cloud sessions do this automatically via `.claude/hooks/session-start.sh`)
+- Everything CI runs: `scripts/check.sh` (ruff lint + format check, mypy, pytest)
+- Single steps: `uv run pytest` · `uv run ruff check .` · `uv run ruff format .` · `uv run mypy`
+- Launcher: `uv run anachronism`
+- From Phase 1: `uv run anachronism-console` (text play) · `uv run anachronism-lint` (content)
 
 ## Coding standards
 - Python 3.12, type hints everywhere, docstrings on public functions, small modules.
@@ -46,6 +46,8 @@ updating `docs/PLAN.md` (checkboxes, current step) and logging decisions in `doc
 - New major dependency → ask the owner first.
 
 ## Common pitfalls
+- No root README.md until the owner decides where the project lives: this is their
+  GitHub profile repo, whose README shows on their public profile (D-031).
 - Floating-point drift breaks determinism across machines: store money-like values as ints
   (fixed-point) in state.
 - Don't let pygame_gui widgets hold game state — UI reads from engine state each frame.

@@ -1,19 +1,22 @@
 # Anachronism — Plan
 
-**Current phase:** Phase 0 — awaiting owner approval of DESIGN / ARCHITECTURE / PLAN.
-**Next action:** on approval, start Phase 0 step 0.2.
+**Current phase:** Phase 0 gate — foundations done, waiting for the owner's approval and
+their answer on where the project lives (D-031).
+**Next action:** on approval, step 0.7 (repo location, `main` branch), then Phase 1 step 1.1.
 
 Each phase ends at a **gate**: Claude stops, summarises, shows how to run it, lists known
 problems, and waits for approval (D-002: approval = merging the phase PR).
 
 ## Phase 0 — Foundations
 - [x] 0.1 Read brief, ask questions, record decisions (DECISIONS.md), draft docs
-- [ ] 0.2 Owner approves DESIGN.md, ARCHITECTURE.md, PLAN.md
-- [ ] 0.3 `pyproject.toml` (uv, Python 3.12), ruff, mypy, pytest config; empty package skeleton
-- [ ] 0.4 README with Mac setup (install uv → `uv run anachronism`); `.env.example`
-- [ ] 0.5 Import-boundary test; CI-style `make check` equivalent (`uv run task check`)
-- [ ] 0.6 SessionStart hook so cloud sessions can run tests and linters
-- [ ] 0.7 Create `main`; gate
+- [x] 0.2 Owner approves DESIGN.md, ARCHITECTURE.md, PLAN.md (approved 2026-09-30)
+- [x] 0.3 `pyproject.toml` (uv, Python 3.12), ruff, mypy, pytest config; package skeleton;
+      `uv run anachronism` launcher
+- [x] 0.4 Mac setup guide (`docs/GETTING_STARTED.md`, see D-031); `.env.example`
+- [x] 0.5 Guard-rail tests (layers, network, secrets, docs); `scripts/check.sh`;
+      GitHub Actions CI on Ubuntu + macOS
+- [x] 0.6 SessionStart hook so cloud sessions can run tests and linters
+- [ ] 0.7 Settle repo location (D-031); create `main`; gate
 
 ## Phase 1 — Headless engine on a test world
 - [ ] 1.1 `GameRng` (seeded, serialisable) + tests

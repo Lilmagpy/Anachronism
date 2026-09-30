@@ -145,3 +145,44 @@ stage. Secrecy therefore protects a real advantage.
 Layered timeline data (polity exists X–Y, border changes in year Z, relation changes in year W)
 from which snapshots are assembled, plus per-scenario override files. East Asia will be built
 one scenario at a time, starting with one flagship moment (chosen in Phase 5).
+
+## D-026 Build, lock and Python pin — DELEGATED (Phase 0)
+`uv_build` backend, `.python-version` = 3.12, `uv.lock` committed. The lock is written by the
+cloud image's uv (0.8.17); verified 2026-09-30 that the newest uv (0.12.21, what the Mac and
+CI install) accepts it with `--locked` and does not rewrite it, so the owner's checkout never
+shows a modified lockfile.
+
+## D-027 Dependencies arrive when first used — DELEGATED (refines D-005)
+Now: `pydantic`, `pyyaml`; dev: `pytest`, `ruff`, `mypy`, `types-pyyaml`.
+`anthropic` is added in Phase 2 and `pygame-ce` + `pygame_gui` in Phase 3.
+
+## D-028 Guard rails are tests — DELEGATED
+- `tests/test_architecture.py` reads the source and fails on forbidden imports per layer
+  (engine: no network, pygame, clocks, threads, randomness, llm/ui/tools; content: no engine,
+  llm, ui; llm: no pygame/ui).
+- ruff bans `import random` project-wide (TID251).
+- An autouse fixture blocks outbound network connections in every test.
+- Hygiene tests: CLAUDE.md ≤ 100 lines, persistent docs exist, no API keys in tracked files,
+  `.env` is git-ignored.
+Each rule was verified by deliberately breaking it and watching the check fail.
+
+## D-029 Continuous integration — DELEGATED
+GitHub Actions runs `scripts/check.sh` plus the launcher on **Ubuntu and macOS** for every push
+and pull request. The repo is public, so minutes are free. If it ever becomes private, macOS
+minutes count 10×: then run macOS only on pull requests.
+
+## D-030 GameRng is our own generator — DELEGATED (implemented in Phase 1)
+Python only guarantees that `random.random()` keeps its sequence across versions; other
+methods (`randrange`, `choice`, `shuffle`…) may change. Saves must replay identically on any
+Python version, so `engine/rng.py` will implement a small documented PRNG (e.g. PCG32) whose
+whole state is a few integers stored in `GameState`.
+
+## D-031 Where the project lives — OPEN (owner question at the Phase 0 gate)
+`Lilmagpy/Lilmagpy` is the owner's GitHub **profile repository** (public): a `README.md` at its
+root is displayed on the owner's public GitHub profile page. Until the owner decides, no root
+README is added and setup instructions live in `docs/GETTING_STARTED.md`. Options: move to a
+dedicated repo (recommended) or keep it here (the README would then appear on the profile).
+
+## D-032 Licence — DEFERRED (owner decision, only needed before publishing a release)
+No licence file yet, which legally means "all rights reserved": others may view the public repo
+but not reuse it. Choose one before any public release.

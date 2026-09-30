@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Checks (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        # macOS is the owner's platform; Ubuntu matches the cloud sessions.
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.2.0
+      - name: Lint, types and tests
+        run: scripts/check.sh
+      - name: Launch the game command
+        run: uv run --locked anachronism

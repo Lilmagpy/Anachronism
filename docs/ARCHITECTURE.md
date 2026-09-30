@@ -19,8 +19,12 @@ engine/ (pure Python)   llm/ (network, sandboxed)
 
 ## 2. Module layout
 ```
-pyproject.toml  README.md  CLAUDE.md  .env.example
-docs/                     DESIGN, ARCHITECTURE, PLAN, DECISIONS, CONTENT_GUIDE
+pyproject.toml  uv.lock  .python-version  CLAUDE.md  .env.example
+scripts/check.sh          every automated check; CI runs the same script
+.github/workflows/ci.yml  CI on Ubuntu + macOS
+.claude/                  SessionStart hook for cloud sessions
+docs/                     BRIEF, DESIGN, ARCHITECTURE, PLAN, DECISIONS, CONTENT_GUIDE,
+                          GETTING_STARTED (Mac setup; becomes README once D-031 is settled)
 src/anachronism/
   __main__.py             entry point: `python -m anachronism` / `anachronism`
   config.py               settings from env + git-ignored local config

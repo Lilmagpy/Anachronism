@@ -1,0 +1,69 @@
+[project]
+name = "anachronism"
+version = "0.0.1"
+description = "Turn-based historical strategy: guide a civilisation with ideas ahead of their time."
+requires-python = ">=3.12"
+dependencies = [
+    "pydantic>=2.13.5",
+    "pyyaml>=6.0.3",
+]
+
+[project.scripts]
+anachronism = "anachronism.__main__:main"
+
+[dependency-groups]
+dev = [
+    "mypy>=2.3.1",
+    "pytest>=9.1.1",
+    "ruff>=0.16.9",
+    "types-pyyaml>=6.0.12.20260906",
+]
+
+[build-system]
+requires = ["uv_build>=0.8.17,<0.13"]
+build-backend = "uv_build"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E", "W",  # pycodestyle
+    "F",       # pyflakes
+    "I",       # import sorting
+    "B",       # likely bugs
+    "UP",      # modern syntax
+    "SIM",     # simplifications
+    "C4",      # comprehensions
+    "N",       # naming
+    "D",       # docstrings on public modules, classes and functions
+    "PT",      # pytest style
+    "TID",     # banned imports (see banned-api below)
+    "RUF",
+]
+ignore = [
+    "D105",  # magic methods need no docstring
+    "D107",  # __init__ is documented on the class
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["D"]
+
+[tool.ruff.lint.flake8-tidy-imports.banned-api]
+"random".msg = "All randomness goes through anachronism.engine.rng.GameRng (seeded, saved with the game)."
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["src", "tests"]
+plugins = ["pydantic.mypy"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = ["-ra", "--strict-markers", "--strict-config"]
+xfail_strict = true
+filterwarnings = ["error"]
