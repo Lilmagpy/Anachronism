@@ -10,6 +10,7 @@ extends CanvasLayer
 signal action_requested(action: Dictionary)
 signal end_turn_requested
 signal idea_submitted(text: String, answer: String)
+signal menu_requested
 
 const GOLD := Color(0.62, 0.20, 0.12)     ## headings: deep red on cream (UiStyle, D-059)
 const INK := UiStyle.INK
@@ -32,7 +33,9 @@ var deliberating := false       ## waiting for the court's ruling on the player'
 var question := ""              ## the court's clarifying question, if it asked one
 var rulings: Array = []         ## the latest rulings, shown at the top of the Ideas tab
 var court_mode := "offline"
-var _outcome_shown := false     ## "online" when a language model rules, from settings
+var _outcome_shown := false
+var dev_info: Dictionary = {}   ## filled by main: engine and model details for F3
+var _dev := Label.new()     ## "online" when a language model rules, from settings
 
 var _root := Control.new()
 var _top := HBoxContainer.new()
@@ -70,6 +73,13 @@ func _ready() -> void:
 	_hover.add_theme_font_size_override("font_size", 18)
 	_hover.visible = false
 	_root.add_child(_hover)
+	_dev.position = Vector2(16, 96)
+	_dev.add_theme_font_size_override("font_size", 14)
+	_dev.add_theme_color_override("font_color", Color(0.85, 1.0, 0.85))
+	_dev.add_theme_color_override("font_outline_color", Color(0, 0, 0))
+	_dev.add_theme_constant_override("outline_size", 6)
+	_dev.visible = false
+	_root.add_child(_dev)
 
 
 # --- updating --------------------------------------------------------------------------
@@ -382,6 +392,22 @@ func _fill_top_bar() -> void:
 	_stat("unrest", "Unrest", pct(status["unrest_bp"]), trends["unrest_bp"], false)
 	_stat("legitimacy", "Legitimacy", pct(status["legitimacy_bp"]), trends["legitimacy_bp"], true)
 	_stat("suspicion", "Suspicion: how uncanny your progress looks", pct(status["suspicion_bp"]), trends["suspicion_bp"], false)
+	var push := Control.new()
+	push.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_top.add_child(push)
+	var menu := Button.new()
+	menu.tooltip_text = "Menu: save, load, chronicle, tech tree, settings (Esc)"
+	menu.focus_mode = Control.FOCUS_NONE
+	menu.custom_minimum_size = Vector2(52, 44)
+	var picture := GameIcon.make("menu", 24)
+	picture.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	picture.offset_left = 10
+	picture.offset_right = -10
+	picture.offset_top = 8
+	picture.offset_bottom = -8
+	menu.add_child(picture)
+	menu.pressed.connect(func(): menu_requested.emit())
+	_top.add_child(menu)
 
 
 ## One figure with its icon and a trend arrow; `up_is_good` decides green or red.
@@ -547,7 +573,20 @@ func _update_idea_box() -> void:
 		_idea_input.placeholder_text = "Whisper an idea to your court…"
 
 
+## The developer overlay (brief §6.6, §11): engine, seed, turn, the court's model and its
+## token use. Toggled with F3.
+func toggle_dev() -> void:
+	_dev.visible = not _dev.visible
+
+
 func _process(delta: float) -> void:
+	if _dev.visible:
+		var lines := ["DEVELOPER (F3)", "fps %d" % Engine.get_frames_per_second()]
+		if not view.is_empty():
+			lines.append("%s · seed %d · turn %d" % [view["scenario"], int(view["seed"]), int(view["turn"])])
+		for key in dev_info:
+			lines.append("%s: %s" % [key, dev_info[key]])
+		_dev.text = "\n".join(lines)
 	if deliberating:
 		_dots += delta * 2.5
 		_idea_status.text = "The court deliberates" + ".".repeat(int(_dots) % 4)

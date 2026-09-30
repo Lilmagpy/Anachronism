@@ -65,7 +65,10 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
       Scandinavia) is built; [x] Rome and Carthage, 264 BC (19 states, 70 provinces);
       [x] Egypt and the Hittites, 1275 BC (11 states, 50 provinces); [x] Europe in the Year 1000
       (29 states, 96 provinces); [ ] more East Asian starts (Korea, Japan)
-- [ ] 2.15 Polish: tooltips, charts over time, save/load and settings menus, sound
+- [x] 2.15a Screens (brief §11): pre-play disclaimer; a timeline of starting moments in the
+      picker; in-game menu (Esc) with save, load, chronicle, tech tree (goal stubs, your
+      own ideas marked) and settings (model status, offline switch); developer overlay (F3)
+- [ ] 2.15b Polish: charts over time, sound
 - [ ] 2.16 Gate: owner plays the new build on their Mac and merges the phase PR
 
 ## Phase 3 — LLM ruling pipeline (moved after the 3D world, D-049)

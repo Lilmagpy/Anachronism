@@ -157,3 +157,27 @@ def test_ideas_through_the_bridge(tmp_path: Path) -> None:
     settings = replies[3]["result"]
     assert settings["online"] is False
     assert "key" not in json.dumps(settings).replace("has_key", "")
+
+
+def test_menu_commands(tmp_path: Path) -> None:
+    replies = talk(
+        [
+            {"id": 1, "cmd": "new_game", "args": {"scenario": "year_1000", "civ": "england"}},
+            {"id": 2, "cmd": "save", "args": {"name": "first"}},
+            {"id": 3, "cmd": "end_turn"},
+            {"id": 4, "cmd": "saves"},
+            {"id": 5, "cmd": "chronicle"},
+            {"id": 6, "cmd": "tree"},
+            {"id": 7, "cmd": "act", "args": {"action": {"kind": "envoy", "target": "normandy"}}},
+        ],
+        tmp_path,
+    )
+    assert all(r["ok"] for r in replies)
+    assert [s["name"] for s in replies[3]["result"]["saves"]] == ["first"]
+    assert replies[4]["result"]["entries"]
+    nodes = replies[5]["result"]["nodes"]
+    assert any(n["stage"] == "widespread" for n in nodes)
+    assert replies[6]["result"]["accepted"]
+    view = replies[6]["result"]["view"]
+    assert "victory" in view
+    assert any(c["relation"] == "trading" for c in view["civs"] if c["id"] == "normandy")

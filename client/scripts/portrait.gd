@@ -430,9 +430,9 @@ func _mouth(head: Vector2, r: float) -> void:
 
 
 func _short_hair(head: Vector2, r: float) -> void:
-	_ellipse(head + Vector2(0, -r * 0.6), Vector2(r * 0.98, r * 0.62), _hair())
+	_ellipse(head + Vector2(0, -r * 0.78), Vector2(r * 0.98, r * 0.5), _hair())
 	for i in 7:
-		draw_circle(head + Vector2(-r * 0.75 + i * r * 0.25, -r * 0.62), r * 0.16, _hair())
+		draw_circle(head + Vector2(-r * 0.75 + i * r * 0.25, -r * 0.46), r * 0.13, _hair())
 
 
 func _laurel(head: Vector2, r: float) -> void:

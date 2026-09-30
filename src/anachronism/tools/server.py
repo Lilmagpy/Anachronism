@@ -212,6 +212,55 @@ class Session:
             "env_file": str((config.data_dir / ".env").resolve()),
         }
 
+    def saves(self, args: dict[str, Any]) -> dict[str, Any]:
+        """Saved games, newest first: ``{"saves": [{"name", "modified"}]}``."""
+        found: list[tuple[int, str]] = []
+        if self.saves_dir.is_dir():
+            found = [(int(p.stat().st_mtime), p.stem) for p in self.saves_dir.glob("*.json")]
+        found.sort(key=lambda item: (-item[0], item[1]))
+        return {"saves": [{"name": name, "modified": when} for when, name in found]}
+
+    def chronicle(self, args: dict[str, Any]) -> dict[str, Any]:
+        """Everything that has happened to the player and the great events of the world."""
+        state = self.game()
+        major = {"war", "peace", "conquest", "destroyed", "alliance", "revolt", "collapse"}
+        entries = [
+            {
+                "turn": e.turn,
+                "year": e.year,
+                "kind": e.kind,
+                "message": e.message,
+                "mine": e.civ == state.player_civ,
+            }
+            for e in state.events
+            if e.civ == state.player_civ or (e.kind in major and "declared war on" not in e.message)
+        ]
+        return {"entries": entries[-400:]}
+
+    def tree(self, args: dict[str, Any]) -> dict[str, Any]:
+        """The whole tech graph from the player's point of view, for the tech tree screen."""
+        state = self.game()
+        civ = state.civs[state.player_civ]
+        nodes = []
+        for node_id, node in sorted(state.tech_nodes.items()):
+            known = civ.tech.get(node_id)
+            nodes.append(
+                {
+                    "id": node_id,
+                    "name": node.name,
+                    "category": node.category.value,
+                    "year": node.year,
+                    "complexity": node.complexity,
+                    "prerequisites": list(node.prerequisites),
+                    "stage": known.stage.value if known else None,
+                    "goal": bool(known and known.goal),
+                    "stub": node.stub,
+                    "provenance": node.provenance.value,
+                    "flavour": node.flavour,
+                }
+            )
+        return {"nodes": nodes, "year": state.year}
+
     def _path(self, args: dict[str, Any]) -> Path:
         name = str(args.get("name", "quicksave"))
         if not name.replace("_", "").replace("-", "").isalnum():
@@ -263,6 +312,9 @@ def handle(session: Session, line: str) -> tuple[dict[str, Any], bool]:
         "save": session.save,
         "load": session.load,
         "idea": session.idea,
+        "saves": session.saves,
+        "chronicle": session.chronicle,
+        "tree": session.tree,
         "settings": session.settings,
     }
     handler = commands.get(str(command))

@@ -44,7 +44,7 @@ func show_title() -> void:
 	var gap := Control.new()
 	gap.custom_minimum_size.y = 40
 	column.add_child(gap)
-	for entry in [["NEW GAME", show_picker, UiStyle.GOLD], ["QUIT", func(): quit_requested.emit(), Color(0.85, 0.80, 0.70)]]:
+	for entry in [["NEW GAME", show_disclaimer, UiStyle.GOLD], ["QUIT", func(): quit_requested.emit(), Color(0.85, 0.80, 0.70)]]:
 		var button := UiStyle.big_button(entry[0], 30, entry[2])
 		button.custom_minimum_size = Vector2(340, 70)
 		button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
@@ -57,6 +57,42 @@ func show_title() -> void:
 	credit.offset_top = -30
 	credit.offset_left = 16
 	_root.add_child(credit)
+
+
+## Before play (brief §8): this is a good-faith simulation, not a re-enactment.
+func show_disclaimer() -> void:
+	_clear()
+	var shade := ColorRect.new()
+	shade.set_anchors_preset(Control.PRESET_FULL_RECT)
+	shade.color = Color(0.05, 0.03, 0.02, 0.6)
+	_root.add_child(shade)
+	var card := PanelContainer.new()
+	card.set_anchors_preset(Control.PRESET_CENTER)
+	card.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	card.grow_vertical = Control.GROW_DIRECTION_BOTH
+	var column := VBoxContainer.new()
+	column.add_theme_constant_override("separation", 16)
+	column.add_child(UiStyle.label("A word before you begin", 36, UiStyle.RED, "title", 900))
+	for text in [
+		"Anachronism is a good-faith simulation of history, not an exact re-enactment. Its peoples, places and rulers are real, but borders, populations, dates and temperaments are simplified from general sources, and some are informed guesses.",
+		"From the moment you start, history is yours to change. The rival states follow what they really intended - until your ideas reach them. What happens after that is invention.",
+		"When a language model helps judge your ideas, its words are fiction written for the game; the game's own rules decide what is possible.",
+	]:
+		column.add_child(UiStyle.wrapped(text, 20, UiStyle.INK, 760))
+	var row := HBoxContainer.new()
+	var back := UiStyle.big_button("BACK", 20, Color(0.85, 0.80, 0.70))
+	back.pressed.connect(show_title)
+	row.add_child(back)
+	var push := Control.new()
+	push.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(push)
+	var go := UiStyle.big_button("I UNDERSTAND", 26)
+	go.custom_minimum_size = Vector2(300, 64)
+	go.pressed.connect(func(): show_picker())
+	row.add_child(go)
+	column.add_child(row)
+	card.add_child(column)
+	_root.add_child(card)
 
 
 func show_picker(scenario_id := "", civ_id := "") -> void:
@@ -83,33 +119,32 @@ func _draw_picker() -> void:
 	back.set_anchors_preset(Control.PRESET_FULL_RECT)
 	back.color = colour.darkened(0.55)
 	_root.add_child(back)
-	# moments in history (tabs)
-	var tabs := HBoxContainer.new()
-	tabs.position = Vector2(32, 22)
-	tabs.add_theme_constant_override("separation", 10)
-	tabs.add_child(UiStyle.headline("CHOOSE YOUR CIVILISATION", 34, UiStyle.GOLD))
-	var spacer := Control.new()
-	spacer.custom_minimum_size.x = 30
-	tabs.add_child(spacer)
-	for s in catalog:
-		var tab := UiStyle.big_button("%s · %s" % [GameHud.year_text(s["start_year"]), s["name"].split(",")[0]], 17,
-			UiStyle.GOLD if s["id"] == scenario["id"] else Color(0.82, 0.78, 0.70))
-		tab.pressed.connect(show_picker.bind(s["id"]))
-		tabs.add_child(tab)
-	_root.add_child(tabs)
+	# moments in history, on a timeline
+	var heading := UiStyle.headline("CHOOSE YOUR\nMOMENT", 28, UiStyle.GOLD)
+	heading.position = Vector2(36, 8)
+	_root.add_child(heading)
+	var moments := ScrollContainer.new()
+	moments.position = Vector2(300, 2)
+	moments.size = Vector2(1290, 120)
+	moments.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	var timeline := Timeline.new()
+	timeline.setup(catalog, str(scenario["id"]))
+	timeline.chosen.connect(func(id: String): show_picker(id))
+	moments.add_child(timeline)
+	_root.add_child(moments)
 	# portrait
 	var portrait := Portrait.new()
-	portrait.position = Vector2(40, 90)
-	portrait.size = Vector2(560, 610)
+	portrait.position = Vector2(40, 124)
+	portrait.size = Vector2(540, 580)
 	portrait.setup(civ)
 	_root.add_child(portrait)
 	# the civilisation's card
 	var card := PanelContainer.new()
-	card.position = Vector2(640, 90)
-	card.custom_minimum_size = Vector2(920, 610)
-	card.size = Vector2(920, 610)
+	card.position = Vector2(620, 124)
+	card.custom_minimum_size = Vector2(940, 580)
+	card.size = Vector2(940, 580)
 	var body := VBoxContainer.new()
-	body.add_theme_constant_override("separation", 10)
+	body.add_theme_constant_override("separation", 7)
 	card.add_child(body)
 	var head := HBoxContainer.new()
 	head.add_theme_constant_override("separation", 16)
@@ -124,7 +159,7 @@ func _draw_picker() -> void:
 	body.add_child(head)
 	var moment := UiStyle.label("%s" % scenario["name"], 20, UiStyle.RED, "title", 800)
 	body.add_child(moment)
-	body.add_child(UiStyle.wrapped(str(civ["description"]), 17, UiStyle.INK_SOFT, 860))
+	body.add_child(UiStyle.wrapped(str(civ["description"]), 16, UiStyle.INK_SOFT, 860))
 	if str(civ["pitch"]) != "":
 		var pitch_box := PanelContainer.new()
 		pitch_box.add_theme_stylebox_override("panel", UiStyle.panel(UiStyle.PARCHMENT, Color(UiStyle.GOLD_DARK, 0.5), 10))
@@ -138,7 +173,7 @@ func _draw_picker() -> void:
 			["Known ideas", str(int(civ["advances"]))], ["Literacy", GameHud.pct(int(civ["literacy_bp"]))]]:
 		stats.add_child(_chip(entry[0], entry[1], colour))
 	body.add_child(stats)
-	var story := UiStyle.wrapped(str(scenario["description"]), 15, UiStyle.INK_SOFT, 860)
+	var story := UiStyle.wrapped(str(scenario["description"]), 13, UiStyle.INK_SOFT, 860)
 	body.add_child(story)
 	var fill := Control.new()
 	fill.size_flags_vertical = Control.SIZE_EXPAND_FILL

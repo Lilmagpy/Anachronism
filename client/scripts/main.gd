@@ -18,6 +18,7 @@ var world: WorldBuilder
 var earth: EarthBuilder
 var provinces: ProvinceMap
 var settlements: Settlements
+var game_menu: GameMenu
 var hud: GameHud
 var menus: Menus
 var holder: Node3D
@@ -185,9 +186,21 @@ func _notice(text: String) -> CanvasLayer:
 func _build_hud() -> void:
 	hud = GameHud.new()
 	add_child(hud)
+	game_menu = GameMenu.new()
+	game_menu.bridge = bridge
+	add_child(game_menu)
+	hud.menu_requested.connect(game_menu.open_menu)
+	game_menu.message.connect(func(text: String):
+		hud.message = text
+		hud.show_view(view))
+	game_menu.loaded.connect(_on_loaded)
+	game_menu.quit_to_title.connect(func():
+		bridge.stop()
+		get_tree().reload_current_scene())
 	hud.action_requested.connect(_on_action)
 	hud.end_turn_requested.connect(_on_end_turn)
 	hud.idea_submitted.connect(_on_idea)
+	_refresh_dev()
 	var court: Variant = bridge.request("settings")
 	if court != null:
 		hud.court_mode = "a language model rules" if court["online"] else "offline: the library of ideas rules"
@@ -203,6 +216,11 @@ func _build_hud() -> void:
 		hud.set_tab(str(options["tab"]))
 	if options.has("select"):
 		_select(str(options["select"]))
+	if options.has("menu"):  # --menu=menu|save|load|chronicle|tree|settings (screenshots)
+		var screen := str(options["menu"])
+		game_menu.call("open_menu" if screen == "menu" else "open_" + screen)
+	if options.has("dev"):
+		hud.toggle_dev()
 	if options.has("idea"):  # --idea=TEXT: propose an idea, as if typed (screenshots, tests)
 		_on_idea(str(options["idea"]).replace("_", " "), "")
 		while bridge.busy:
@@ -228,11 +246,36 @@ func _on_idea(text: String, answer: String) -> void:
 			hud.show_view(view)
 			return
 		hud.message = ""
+		hud.dev_info["last ruling"] = "%s %s" % [reply.get("source", ""), reply.get("note", "")]
+		hud.dev_info["last usage"] = str(reply.get("usage", {}))
 		if reply.has("view"):
 			view = reply["view"]
 			hud.show_view(view)
 		hud.show_rulings(reply)
 		hud.speak(reply.get("voices", [])))
+
+
+## A saved game was loaded: redraw the map for it (a different region if need be).
+func _on_loaded(new_view: Dictionary) -> void:
+	view = new_view
+	for child in holder.get_children():
+		child.queue_free()
+	earth = null
+	provinces = null
+	settlements = null
+	await get_tree().process_frame
+	_build_earth(holder, str(view["map"]))
+	hud.rulings = []
+	hud.show_view(view)
+	hud.speak(view.get("voices", []), true)
+	_refresh_dev()
+
+
+func _refresh_dev() -> void:
+	var court: Variant = bridge.request("settings")
+	if court != null:
+		hud.dev_info["court"] = court["status"]
+		hud.dev_info["tokens this month"] = "%s (%d calls)" % [GameHud.number(int(court["tokens_this_month"])), int(court["calls_this_month"])]
 
 
 func _on_action(action: Dictionary) -> void:
@@ -323,6 +366,16 @@ func _process(delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if provinces == null:
 		return
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_ESCAPE:
+			if game_menu.is_open():
+				game_menu.close()
+			else:
+				game_menu.open_menu()
+			return
+		if event.keycode == KEY_F3:
+			hud.toggle_dev()
+			return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			_press_at = event.position
