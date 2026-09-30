@@ -90,6 +90,8 @@ func _build_earth(holder: Node3D, region: String) -> void:
 	var half := earth.size() / 2.0
 	rig.bounds = Rect2(-half, earth.size())
 	rig.far = earth.size().x * 0.9
+	rig.near = 18.0
+	Settlements.new(provinces).build(holder)
 	environment.fog_density = 0.00003  # a continent-sized map needs thinner haze
 	var sky_material: ProceduralSkyMaterial = environment.sky.sky_material
 	sky_material.ground_bottom_color = Color(0.03, 0.10, 0.20)  # open ocean beyond the map edge
@@ -218,6 +220,11 @@ func _pick(screen: Vector2) -> int:
 
 func _ground_height(point: Vector3) -> float:
 	return maxf(earth.ground_at_pixel(Vector2(point.x, point.z) + earth.size() / 2.0).y, 0.0)
+
+
+func _process(_delta: float) -> void:
+	if earth != null:  # territory colours fade as you zoom in, so the land itself shows
+		earth.terrain_material.set_shader_parameter("tint", lerpf(0.32, 0.08, rig.zoom_level()))
 
 
 func _unhandled_input(event: InputEvent) -> void:

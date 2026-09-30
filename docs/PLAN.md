@@ -1,8 +1,7 @@
 # Anachronism — Plan
 
 **Current phase:** Phase 2 — 3D world (Godot) on the Phase 1 engine (branch `claude/phase-2-3d`).
-**Next action:** step 2.6 — towns and cities on the real map, sized by population; then the
-Phase 2 gate (2.8): the owner plays the Mac app.
+**Next action:** Phase 2 gate (2.8) — the owner downloads the Mac app from CI and plays it.
 
 Each phase ends at a **gate**: Claude stops, summarises, shows how to run it, lists known
 problems, and waits for approval (D-002: approval = merging the phase PR).
@@ -43,7 +42,8 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] 2.3 Godot client: 3D terrain, water, sky, Rise of Kingdoms-style camera (pan, zoom)
 - [x] 2.4 Borders coloured by owner, province labels, selection and hover
 - [x] 2.5 Game UI: top bar with trends, ideas and details, projects, end turn, events
-- [ ] 2.6 Settlements and scenery scaled by population (openly licensed models)
+- [x] 2.6 Settlements scaled by population: walled capitals with palace halls, towns,
+      villages and fields on the flattest land (D-058); hand-made models can come later
 - [x] 2.7 Screenshot pipeline in the cloud; CI builds a downloadable Mac app (D-057)
 - [ ] 2.8 Gate: owner plays the 3D game on their Mac
 

@@ -15,7 +15,7 @@ const INK := Color(0.95, 0.92, 0.84)
 const DIM := Color(0.70, 0.67, 0.60)
 const BAD := Color(0.93, 0.45, 0.38)
 const GOOD := Color(0.55, 0.85, 0.50)
-const PANEL := Color(0.08, 0.07, 0.06, 0.86)
+const PANEL := Color(0.08, 0.07, 0.06, 0.95)
 const CATEGORY_NAMES := {
 	"agriculture": "Farming", "construction": "Building", "craft": "Craft",
 	"governance": "Government", "health": "Health", "knowledge": "Learning",

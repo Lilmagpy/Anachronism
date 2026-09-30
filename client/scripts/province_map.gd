@@ -232,15 +232,11 @@ func outline(parent: Node3D, index: int) -> void:
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	for line in _join(segments):
-		_ribbon(st, _smooth(line), 1.6, Color(1.0, 0.85, 0.35))
-	var material := StandardMaterial3D.new()
-	material.vertex_color_use_as_albedo = true
-	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	material.no_depth_test = true
+		_ribbon(st, _smooth(line), 0.0018, Color(1.0, 0.85, 0.35))
 	_outline = MeshInstance3D.new()
 	_outline.name = "Selection"
 	_outline.mesh = st.commit()
-	_outline.material_override = material
+	_outline.material_override = EarthBuilder.line_material(0.003)
 	_outline.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	parent.add_child(_outline)
 
@@ -275,18 +271,14 @@ func _borders() -> MeshInstance3D:
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	for kind in chains:
-		var width := 0.8 if kind == "frontier" else 0.3
+		var width := 0.0012 if kind == "frontier" else 0.0005
 		var colour := Color(0.98, 0.95, 0.85) if kind == "frontier" else Color(0.95, 0.92, 0.82, 0.55)
 		for line in _join(chains[kind]):
 			_ribbon(st, _smooth(line), width, colour)
-	var material := StandardMaterial3D.new()
-	material.vertex_color_use_as_albedo = true
-	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	var instance := MeshInstance3D.new()
 	instance.name = "Borders"
 	instance.mesh = st.commit()
-	instance.material_override = material
+	instance.material_override = EarthBuilder.line_material(0.002)
 	instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	return instance
 
@@ -363,20 +355,10 @@ func _ribbon(st: SurfaceTool, cells: Array, width: float, colour: Color) -> void
 	var pts: Array[Vector2] = []
 	for c in cells:
 		pts.append(c * CELL)
-	st.set_color(colour)
-	for i in pts.size() - 1:
-		var dir := (pts[mini(i + 1, pts.size() - 1)] - pts[maxi(i - 1, 0)]).normalized()
-		var dir2 := (pts[mini(i + 2, pts.size() - 1)] - pts[i]).normalized()
-		var s1 := dir.orthogonal() * width * 0.5
-		var s2 := dir2.orthogonal() * width * 0.5
-		var a := earth.ground_at_pixel(pts[i]) + Vector3(0, 0.35, 0)
-		var b := earth.ground_at_pixel(pts[i + 1]) + Vector3(0, 0.35, 0)
-		var quad := [a + Vector3(s1.x, 0, s1.y), b + Vector3(s2.x, 0, s2.y), a - Vector3(s1.x, 0, s1.y),
-			a - Vector3(s1.x, 0, s1.y), b + Vector3(s2.x, 0, s2.y), b - Vector3(s2.x, 0, s2.y)]
-		for p in quad:
-			st.set_normal(Vector3.UP)
-			st.add_vertex(p)
-
+	var line: Array[Vector3] = []
+	for p in pts:
+		line.append(earth.ground_at_pixel(p))
+	EarthBuilder.add_line(st, line, width, colour)
 
 func _province_label(site: Dictionary) -> Label3D:
 	var label := Label3D.new()

@@ -342,3 +342,13 @@ for "Open Anyway" once. CI proves the packaging on every push by exporting the s
 package for Linux and starting it with an empty home folder. Elevation data moved from EXR
 (readable only by the Godot editor) to a raw 16-bit file that exported games can read.
 Later options: bundle Python itself for offline first launch; sign and notarise (Phase 8).
+
+## D-058 Settlements are drawn larger than life — DELEGATED (2026-09-30)
+At true scale a city on the continental map is a few pixels wide even fully zoomed in, so,
+as in Rise of Kingdoms, settlements are drawn about 2.5 times larger than life and appear
+when the camera comes within about 1,000 km. Each province has its chief city at its
+centre (capitals walled in rammed earth, with gate towers and a palace hall on a terrace,
+laid out on the cardinal directions as cities of the period were), plus towns and villages
+by population, placed on the flattest, lowest land. Simple built shapes for now; the CC0
+models of D-051 or custom art can replace them. Map lines (borders, rivers) now keep a
+constant thickness on screen at every zoom.

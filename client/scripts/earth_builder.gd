@@ -215,36 +215,47 @@ func _rivers() -> MeshInstance3D:
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	st.set_color(Color(0.10, 0.24, 0.38))
 	for river in data["rivers"]:
-		var width := lerpf(1.4, 0.45, clampf((float(river["rank"]) - 1.0) / 8.0, 0.0, 1.0))
-		var pts: Array[Vector2] = []
+		var width := lerpf(0.0011, 0.0004, clampf((float(river["rank"]) - 1.0) / 8.0, 0.0, 1.0))
+		var line: Array[Vector3] = []
 		for p in river["points"]:
 			var v := Vector2(p[0], p[1])
-			if pts.is_empty() or pts[-1].distance_to(v) > 0.3:
-				pts.append(v)
-		if pts.size() < 2:
-			continue
-		# One continuous ribbon: each point is offset along the average of its two segments.
-		var left: Array[Vector3] = []
-		var right: Array[Vector3] = []
-		for j in pts.size():
-			var dir := (pts[mini(j + 1, pts.size() - 1)] - pts[maxi(j - 1, 0)]).normalized()
-			var side := dir.orthogonal() * width * 0.5
-			var y := _ground(pts[j]) + 0.12
-			left.append(Vector3(pts[j].x + side.x - size().x / 2.0, y, pts[j].y + side.y - size().y / 2.0))
-			right.append(Vector3(pts[j].x - side.x - size().x / 2.0, y, pts[j].y - side.y - size().y / 2.0))
-		for j in pts.size() - 1:
-			for p in [left[j], left[j + 1], right[j], right[j], left[j + 1], right[j + 1]]:
-				st.set_normal(Vector3.UP)
-				st.add_vertex(p)
-	var material := StandardMaterial3D.new()
-	material.vertex_color_use_as_albedo = true
-	material.roughness = 0.2
-	material.metallic = 0.2
+			line.append(ground_at_pixel(v))
+		EarthBuilder.add_line(st, line, width, Color(0.10, 0.24, 0.38))
 	var instance := MeshInstance3D.new()
 	instance.name = "Rivers"
 	instance.mesh = st.commit()
-	instance.material_override = material
+	instance.material_override = EarthBuilder.line_material(0.0012)
 	return instance
+
+
+## Adds a line that keeps its on-screen thickness at every zoom (shaders/line.gdshader).
+## `width` is a fraction of the camera distance (0.001 is about 4 pixels).
+static func add_line(st: SurfaceTool, points: Array[Vector3], width: float, colour: Color) -> void:
+	var pts: Array[Vector3] = []
+	for p in points:
+		if pts.is_empty() or Vector2(pts[-1].x, pts[-1].z).distance_to(Vector2(p.x, p.z)) > 0.05:
+			pts.append(p)
+	if pts.size() < 2:
+		return
+	var sides: Array[Vector2] = []
+	for i in pts.size():
+		var a := pts[maxi(i - 1, 0)]
+		var b := pts[mini(i + 1, pts.size() - 1)]
+		sides.append(Vector2(b.x - a.x, b.z - a.z).normalized().orthogonal())
+	st.set_color(colour)
+	st.set_uv(Vector2(width, 0))
+	for i in pts.size() - 1:
+		for corner in [[i, 1.0], [i + 1, 1.0], [i, -1.0], [i, -1.0], [i + 1, 1.0], [i + 1, -1.0]]:
+			st.set_uv2(sides[corner[0]] * corner[1])
+			st.set_normal(Vector3.UP)
+			st.add_vertex(pts[corner[0]])
+
+
+static func line_material(lift: float) -> ShaderMaterial:
+	var material := ShaderMaterial.new()
+	material.shader = load("res://shaders/line.gdshader")
+	material.set_shader_parameter("lift", lift)
+	return material
 
 
 ## Height of the terrain surface (world units) at a height-map pixel, bilinear on the grid.
