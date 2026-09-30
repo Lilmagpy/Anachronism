@@ -178,7 +178,8 @@ func _terrain() -> MeshInstance3D:
 	arrays[Mesh.ARRAY_INDEX] = indices
 	var mesh := ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-	var image := Image.load_from_file("res://data/%s_colour.png" % region)
+	var image := Image.new()
+	image.load_png_from_buffer(FileAccess.get_file_as_bytes("res://data/%s_colour.png" % region))
 	image.generate_mipmaps()
 	terrain_material.shader = load("res://shaders/terrain.gdshader")
 	terrain_material.set_shader_parameter("colour_map", ImageTexture.create_from_image(image))

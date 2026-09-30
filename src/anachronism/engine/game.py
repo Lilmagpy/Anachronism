@@ -16,9 +16,14 @@ from anachronism.engine.turn import end_turn
 __all__ = ["apply_action", "end_turn", "new_game", "replay"]
 
 
-def new_game(content: Content, scenario_id: str, seed: int) -> GameState:
-    """Start a scenario with a seed; the same inputs always give the same game."""
-    state = build_state(content, scenario_id, seed)
+def new_game(
+    content: Content, scenario_id: str, seed: int, player_civ: str | None = None
+) -> GameState:
+    """Start a scenario with a seed; the same inputs always give the same game.
+
+    ``player_civ`` picks which civilisation the player guides (default: the scenario's).
+    """
+    state = build_state(content, scenario_id, seed, player_civ)
     for civ_id in sorted(state.civs):
         state.civs[civ_id].history.append(snapshot(state, civ_id))
     return state

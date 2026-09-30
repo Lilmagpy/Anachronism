@@ -40,6 +40,10 @@ class ScenarioCiv(Frozen):
     """How much weight each social group carries (0-100%)."""
     techs: dict[Identifier, Stage] = Field(default_factory=dict)
     """Advancements already known at the start (the era baseline)."""
+    leader: str = ""
+    """Who rules at the start, e.g. ``Duke Xiao``; empty when the sources are unclear."""
+    pitch: str = ""
+    """One or two sentences for the civilisation picker: why play this state now."""
 
 
 class Scenario(Frozen):

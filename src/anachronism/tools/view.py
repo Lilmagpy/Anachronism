@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from anachronism.content.loader import Content
 from anachronism.content.schema import Stage
 from anachronism.engine.commands import describe_blockers
 from anachronism.engine.economy import project_costs
@@ -154,3 +155,43 @@ def _ideas(state: GameState, civ_id: str) -> list[dict[str, Any]]:
             }
         )
     return ideas
+
+
+def build_catalog(content: Content) -> list[dict[str, Any]]:
+    """Every playable starting moment, for the civilisation picker (real-map scenarios)."""
+    catalog: list[dict[str, Any]] = []
+    for scenario_id, scenario in sorted(content.scenarios.items(), key=lambda s: s[1].start_year):
+        civs: list[dict[str, Any]] = []
+        for civ_id, start in scenario.civs.items():
+            definition = content.civs[civ_id]
+            civs.append(
+                {
+                    "id": civ_id,
+                    "name": definition.name,
+                    "adjective": definition.adjective,
+                    "colour": definition.colour,
+                    "description": definition.description,
+                    "emblem": definition.emblem or definition.adjective[:1],
+                    "portrait": definition.portrait,
+                    "leader": start.leader,
+                    "pitch": start.pitch,
+                    "population": sum(start.provinces.values()),
+                    "provinces": len(start.provinces),
+                    "capital": content.provinces[start.capital].name,
+                    "advances": sum(stage.is_adopted for stage in start.techs.values()),
+                    "literacy_bp": start.stats.literacy_bp,
+                }
+            )
+        civs.sort(key=lambda c: -sum(scenario.civs[c["id"]].provinces.values()))
+        catalog.append(
+            {
+                "id": scenario_id,
+                "name": scenario.name,
+                "description": scenario.description,
+                "start_year": scenario.start_year,
+                "map": scenario.map,
+                "default_civ": scenario.player_civ,
+                "civs": civs,
+            }
+        )
+    return catalog

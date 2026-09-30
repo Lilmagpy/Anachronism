@@ -16,6 +16,8 @@ scenarios:
     civs:
       qin:
         capital: qin_guanzhong
+        leader: Duke Xiao
+        pitch: "A poor, tough frontier state in the middle of radical reform. Turn Shang Yang's farmers and soldiers into the first empire - decades early."
         provinces:
           qin_guanzhong: 1600000
           qin_longxi: 500000
@@ -54,6 +56,8 @@ scenarios:
           postal_relay: concept
       wei:
         capital: wei_daliang
+        leader: Marquis Hui
+        pitch: "The strongest state under Heaven, rich and well drilled, but ringed by jealous rivals on every side."
         provinces:
           wei_daliang: 1300000
           wei_hedong: 1100000
@@ -95,6 +99,8 @@ scenarios:
           blast_furnace: adopted
       zhao:
         capital: zhao_handan
+        leader: Marquis Cheng
+        pitch: "Plains, iron and the horse frontier: learn from the steppe riders before they learn from you."
         provinces:
           zhao_handan: 1400000
           zhao_jinyang: 900000
@@ -133,6 +139,8 @@ scenarios:
           coal_mining: concept
       han:
         capital: han_xinzheng
+        leader: Marquis Zhao
+        pitch: "Small and squeezed at the centre, with the best iron and crossbows in the world. Out-think your neighbours."
         provinces:
           han_xinzheng: 1100000
           han_yiyang: 600000
@@ -171,6 +179,8 @@ scenarios:
           blast_furnace: adopted
       zhou:
         capital: zhou_luoyang
+        leader: King Xian
+        pitch: "The Son of Heaven, honoured by all and obeyed by none. Can ideas restore what armies lost?"
         provinces:
           zhou_luoyang: 400000
         stockpiles: {food: 640, materials: 160, wealth: 160, knowledge: 150}
@@ -203,6 +213,8 @@ scenarios:
           schools: adopted
       qi:
         capital: qi_linzi
+        leader: King Wei
+        pitch: "Salt, silk and the Jixia Academy: the richest and most learned court in the east."
         provinces:
           qi_linzi: 1800000
           qi_pingyuan: 1100000
@@ -242,6 +254,8 @@ scenarios:
           alchemy: concept
       lu:
         capital: lu_qufu
+        leader: Duke Kang
+        pitch: "Confucius's homeland: tiny, cultured and surrounded. Survive by wisdom alone."
         provinces:
           lu_qufu: 500000
         stockpiles: {food: 800, materials: 200, wealth: 200, knowledge: 210}
@@ -274,6 +288,7 @@ scenarios:
           schools: widespread
       song:
         capital: song_shangqiu
+        pitch: "An ancient merchant state on the central plain, heir to the Shang kings."
         provinces:
           song_shangqiu: 900000
         stockpiles: {food: 1440, materials: 360, wealth: 360, knowledge: 235}
@@ -306,6 +321,7 @@ scenarios:
           schools: adopted
       wey:
         capital: wey_puyang
+        pitch: "An old river state in Wei's shadow. A hard start for a patient player."
         provinces:
           wey_puyang: 300000
         stockpiles: {food: 480, materials: 120, wealth: 120, knowledge: 85}
@@ -338,6 +354,7 @@ scenarios:
           schools: adopted
       zhongshan:
         capital: zhongshan_lingshou
+        pitch: "A hill kingdom of the Di people, fortified between Zhao and Yan."
         provinces:
           zhongshan_lingshou: 500000
         stockpiles: {food: 800, materials: 200, wealth: 200, knowledge: 85}
@@ -370,6 +387,8 @@ scenarios:
           schools: adopted
       yan:
         capital: yan_ji
+        leader: Duke Wen
+        pitch: "The remote north-east, facing the Donghu and the lands beyond the Liao."
         provinces:
           yan_ji: 800000
           yan_yi: 600000
@@ -405,6 +424,8 @@ scenarios:
           iron_plough: concept
       chu:
         capital: chu_ying
+        leader: King Xuan
+        pitch: "The vast southern kingdom of lakes, forests and shamans, the largest state of all."
         provinces:
           chu_ying: 1300000
           chu_nanyang: 900000
@@ -448,6 +469,7 @@ scenarios:
           canals: concept
       yue:
         capital: yue_wu
+        pitch: "Heirs of Goujian: rivers, sea and the finest bronze swords in the world."
         provinces:
           yue_wu: 600000
           yue_kuaiji: 400000
@@ -476,6 +498,7 @@ scenarios:
           chariot: concept
       shu:
         capital: shu_chengdu
+        pitch: "The Kaiming kings of the Chengdu plain, walled off by mountains with their own script."
         provinces:
           shu_chengdu: 800000
           shu_hanzhong: 250000
@@ -501,6 +524,7 @@ scenarios:
           horse_riding: concept
       ba:
         capital: ba_jiangzhou
+        pitch: "Warriors of the Yangtze gorges, rich in salt."
         provinces:
           ba_jiangzhou: 500000
         stockpiles: {food: 800, materials: 200, wealth: 200, knowledge: 35}
@@ -524,6 +548,7 @@ scenarios:
           iron_working: concept
       yiqu:
         capital: yiqu_rong
+        pitch: "A Rong kingdom of walled towns and herds on Qin's northern flank."
         provinces:
           yiqu_rong: 250000
         stockpiles: {food: 400, materials: 100, wealth: 100, knowledge: 16}
@@ -545,6 +570,7 @@ scenarios:
           fortification: adopted
       donghu:
         capital: donghu_xilamulun
+        pitch: "Horse peoples of the eastern steppe. Few, fast and free."
         provinces:
           donghu_xilamulun: 300000
         stockpiles: {food: 480, materials: 120, wealth: 120, knowledge: 13}
@@ -564,6 +590,7 @@ scenarios:
           iron_working: concept
       gojoseon:
         capital: joseon_liaodong
+        pitch: "Korea's first kingdom: bronze daggers, walled towns and a people between the steppe and the sea."
         provinces:
           joseon_liaodong: 300000
           joseon_taedong: 250000

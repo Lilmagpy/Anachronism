@@ -1,0 +1,189 @@
+## A placeholder portrait painted in code (D-060): a cartoon bust in the civilisation's
+## colours, with headwear by its portrait style. Real portrait images can replace it later:
+## if res://portraits/<civ_id>.png exists it is shown instead.
+class_name Portrait
+extends Control
+
+const SKIN := Color(0.93, 0.76, 0.60)
+const SKIN_SHADE := Color(0.80, 0.60, 0.45)
+const HAIR := Color(0.12, 0.09, 0.08)
+const BRONZE := Color(0.72, 0.52, 0.24)
+
+var colour := Color(0.5, 0.3, 0.2)
+var style := "court"
+var civ_id := ""
+var _image: Texture2D
+
+
+func setup(civ: Dictionary) -> void:
+	colour = Color(civ["colour"])
+	style = str(civ.get("portrait", "court"))
+	civ_id = str(civ["id"])
+	var path := "res://portraits/%s.png" % civ_id
+	_image = load(path) if ResourceLoader.exists(path) else null
+	queue_redraw()
+
+
+func _draw() -> void:
+	var w := size.x
+	var h := size.y
+	if _image != null:
+		draw_texture_rect(_image, Rect2(Vector2.ZERO, size), false)
+		return
+	_backdrop(w, h)
+	var cx := w * 0.5
+	var head := Vector2(cx, h * 0.42)
+	var r := w * 0.15
+	_robe(w, h, cx)
+	# neck
+	draw_rect(Rect2(cx - r * 0.38, head.y + r * 0.8, r * 0.76, r * 0.9), SKIN_SHADE)
+	if style == "steppe":
+		_ellipse(head + Vector2(0, -r * 0.1), Vector2(r * 1.1, r * 1.05), HAIR)
+	_ellipse(head, Vector2(r * 0.92, r * 1.12), SKIN)
+	_ellipse(head + Vector2(r * 0.25, r * 0.25), Vector2(r * 0.55, r * 0.7), Color(SKIN_SHADE, 0.35))
+	_face(head, r)
+	match style:
+		"steppe":
+			_fur_hat(head, r)
+		"southern":
+			_topknot(head, r)
+		"hills":
+			_helmet(head, r)
+		_:
+			_crown(head, r)
+	# frame
+	draw_rect(Rect2(Vector2.ZERO, size), UiStyle.GOLD_DARK, false, 6.0)
+	draw_rect(Rect2(Vector2(5, 5), size - Vector2(10, 10)), UiStyle.GOLD, false, 3.0)
+
+
+func _backdrop(w: float, h: float) -> void:
+	var top := colour.lightened(0.45)
+	var bottom := colour.darkened(0.2)
+	draw_polygon([Vector2(0, 0), Vector2(w, 0), Vector2(w, h), Vector2(0, h)], [top, top, bottom, bottom])
+	# sun rays behind the head
+	var centre := Vector2(w * 0.5, h * 0.38)
+	for i in 16:
+		var a := TAU * i / 16.0
+		var b := a + TAU / 32.0
+		var far := w * 1.2
+		draw_colored_polygon([centre, centre + Vector2(cos(a), sin(a)) * far, centre + Vector2(cos(b), sin(b)) * far],
+			Color(1, 1, 0.9, 0.10))
+	draw_circle(centre, w * 0.3, Color(1, 0.97, 0.85, 0.18))
+
+
+func _robe(w: float, h: float, cx: float) -> void:
+	var robe := colour.darkened(0.2)
+	var shade := colour.darkened(0.45)
+	var top := h * 0.62
+	# shoulders: a rounded mound
+	var pts := PackedVector2Array()
+	for i in 21:
+		var t := i / 20.0
+		var x := lerpf(cx - w * 0.46, cx + w * 0.46, t)
+		var y := top + h * 0.08 * pow(absf(t - 0.5) * 2.0, 2.0) - h * 0.02
+		pts.append(Vector2(x, y))
+	pts.append(Vector2(cx + w * 0.48, h))
+	pts.append(Vector2(cx - w * 0.48, h))
+	draw_colored_polygon(pts, robe)
+	# folds
+	for side in [-1, 1]:
+		draw_line(Vector2(cx + side * w * 0.30, top + h * 0.10), Vector2(cx + side * w * 0.36, h), shade, w * 0.012)
+	var neck := Vector2(cx, top - h * 0.01)
+	# white under-collar, then the two lapels (right over left, as in Chinese dress)
+	draw_colored_polygon([neck + Vector2(-w * 0.09, 0), neck + Vector2(w * 0.09, 0), neck + Vector2(0, h * 0.16)], Color(0.95, 0.93, 0.88))
+	var band := w * 0.05
+	var trim := UiStyle.GOLD if style != "steppe" else Color(0.62, 0.48, 0.32)
+	var left_lapel := PackedVector2Array([neck + Vector2(-w * 0.10, 0), neck + Vector2(-w * 0.10 + band, 0),
+		neck + Vector2(w * 0.12, h * 0.30), neck + Vector2(w * 0.12 - band, h * 0.32)])
+	var right_lapel := PackedVector2Array([neck + Vector2(w * 0.10, 0), neck + Vector2(w * 0.10 - band, 0),
+		neck + Vector2(-w * 0.02, h * 0.17), neck + Vector2(w * 0.02, h * 0.19)])
+	draw_colored_polygon(right_lapel, trim.darkened(0.15))
+	draw_colored_polygon(left_lapel, trim)
+	if style == "steppe":  # fur collar
+		for i in 11:
+			draw_circle(neck + Vector2(-w * 0.25 + i * w * 0.05, h * 0.0), w * 0.04, Color(0.68, 0.54, 0.38))
+	# belt
+	draw_rect(Rect2(cx - w * 0.40, h * 0.92, w * 0.80, h * 0.035), shade)
+	draw_rect(Rect2(cx - w * 0.03, h * 0.915, w * 0.06, h * 0.045), UiStyle.GOLD)
+
+
+func _face(head: Vector2, r: float) -> void:
+	for side in [-1, 1]:
+		var eye: Vector2 = head + Vector2(side * r * 0.36, -r * 0.05)
+		_ellipse(eye, Vector2(r * 0.13, r * 0.08), Color.WHITE)
+		draw_circle(eye + Vector2(side * r * 0.02, 0), r * 0.06, HAIR)
+		draw_line(eye + Vector2(-r * 0.18, -r * 0.2), eye + Vector2(r * 0.18, -r * 0.24 + side * r * 0.03), HAIR, r * 0.07)
+	draw_line(head + Vector2(0, r * 0.05), head + Vector2(r * 0.06, r * 0.3), SKIN_SHADE, r * 0.06)
+	# moustache and beard
+	if style != "southern":
+		draw_polyline([head + Vector2(-r * 0.4, r * 0.55), head + Vector2(-r * 0.1, r * 0.42),
+			head + Vector2(r * 0.1, r * 0.42), head + Vector2(r * 0.4, r * 0.55)], HAIR, r * 0.08)
+		draw_colored_polygon([head + Vector2(-r * 0.12, r * 0.7), head + Vector2(r * 0.12, r * 0.7),
+			head + Vector2(0, r * (1.35 if style == "court" else 1.1))], HAIR)
+	else:
+		draw_line(head + Vector2(-r * 0.2, r * 0.5), head + Vector2(r * 0.2, r * 0.5), Color(0.55, 0.2, 0.15), r * 0.06)
+	# hair at the temples
+	for side in [-1, 1]:
+		_ellipse(head + Vector2(side * r * 0.85, -r * 0.2), Vector2(r * 0.18, r * 0.5), HAIR)
+
+
+## Mianguan: the flat-topped crown with bead tassels worn by Zhou-world rulers.
+func _crown(head: Vector2, r: float) -> void:
+	_ellipse(head + Vector2(0, -r * 0.62), Vector2(r * 0.96, r * 0.62), HAIR)
+	# the cap (topknot cover) and its hairpin
+	var cap := Rect2(head.x - r * 0.42, head.y - r * 1.45, r * 0.84, r * 0.62)
+	draw_rect(cap, Color(0.10, 0.08, 0.08))
+	draw_line(Vector2(cap.position.x - r * 0.35, cap.position.y + r * 0.35), Vector2(cap.end.x + r * 0.35, cap.position.y + r * 0.35), UiStyle.GOLD, r * 0.07)
+	# the board, tilted slightly forward, black above and red beneath
+	var board := PackedVector2Array([Vector2(head.x - r * 1.35, head.y - r * 1.52), Vector2(head.x + r * 1.35, head.y - r * 1.52),
+		Vector2(head.x + r * 1.45, head.y - r * 1.36), Vector2(head.x - r * 1.45, head.y - r * 1.36)])
+	draw_colored_polygon(board, Color(0.08, 0.07, 0.07))
+	draw_line(board[3], board[2], Color(0.70, 0.16, 0.12), r * 0.06)
+	# bead strings hanging from the front edge
+	for i in 7:
+		var x := head.x - r * 1.3 + i * r * 2.6 / 6.0
+		if absf(x - head.x) < r * 0.5:
+			continue  # keep the face clear
+		for k in 4:
+			draw_circle(Vector2(x, head.y - r * 1.25 + k * r * 0.16), r * 0.05, [UiStyle.GOLD, Color(0.85, 0.25, 0.18), Color(0.25, 0.6, 0.4), Color(0.95, 0.95, 0.9)][k])
+
+
+func _fur_hat(head: Vector2, r: float) -> void:
+	draw_colored_polygon([head + Vector2(-r * 0.95, -r * 0.55), head + Vector2(r * 0.95, -r * 0.55),
+		head + Vector2(r * 0.15, -r * 2.1), head + Vector2(-r * 0.25, -r * 1.9)], colour.darkened(0.1))
+	for side in [-1, 1]:
+		draw_colored_polygon([head + Vector2(side * r * 0.95, -r * 0.6), head + Vector2(side * r * 1.2, r * 0.4),
+			head + Vector2(side * r * 0.75, r * 0.3)], Color(0.62, 0.48, 0.32))
+	draw_rect(Rect2(head.x - r * 1.05, head.y - r * 0.85, r * 2.1, r * 0.4), Color(0.62, 0.48, 0.32))
+	for i in 8:
+		draw_circle(Vector2(head.x - r * 0.95 + i * r * 0.27, head.y - r * 0.85), r * 0.13, Color(0.68, 0.54, 0.38))
+
+
+func _topknot(head: Vector2, r: float) -> void:
+	_ellipse(head + Vector2(0, -r * 0.7), Vector2(r * 0.97, r * 0.6), HAIR)
+	draw_circle(head + Vector2(r * 0.1, -r * 1.45), r * 0.42, HAIR)
+	draw_line(head + Vector2(-r * 0.6, -r * 1.7), head + Vector2(r * 0.9, -r * 1.25), UiStyle.GOLD, r * 0.09)
+	draw_rect(Rect2(head.x - r * 0.95, head.y - r * 0.72, r * 1.9, r * 0.18), Color(0.75, 0.15, 0.12))
+	# a phoenix feather for Chu and Yue
+	draw_colored_polygon([head + Vector2(r * 0.4, -r * 1.6), head + Vector2(r * 1.4, -r * 2.6),
+		head + Vector2(r * 0.7, -r * 1.5)], Color(0.2, 0.55, 0.45))
+
+
+func _helmet(head: Vector2, r: float) -> void:
+	_ellipse(head + Vector2(0, -r * 0.55), Vector2(r * 1.05, r * 0.85), BRONZE)
+	draw_rect(Rect2(head.x - r * 1.05, head.y - r * 0.6, r * 2.1, r * 0.22), BRONZE.darkened(0.25))
+	draw_colored_polygon([head + Vector2(-r * 0.12, -r * 1.35), head + Vector2(r * 0.12, -r * 1.35),
+		head + Vector2(0, -r * 2.0)], colour.lightened(0.1))
+	for side in [-1, 1]:
+		draw_colored_polygon([head + Vector2(side * r * 1.0, -r * 0.45), head + Vector2(side * r * 1.08, r * 0.45),
+			head + Vector2(side * r * 0.72, r * 0.3), head + Vector2(side * r * 0.8, -r * 0.4)], BRONZE.darkened(0.1))
+	for i in 5:
+		draw_circle(Vector2(head.x - r * 0.7 + i * r * 0.35, head.y - r * 0.5), r * 0.06, UiStyle.GOLD)
+
+
+func _ellipse(centre: Vector2, radius: Vector2, fill: Color) -> void:
+	var pts := PackedVector2Array()
+	for i in 40:
+		var a := TAU * i / 40.0
+		pts.append(centre + Vector2(cos(a) * radius.x, sin(a) * radius.y))
+	draw_colored_polygon(pts, fill)

@@ -22,7 +22,7 @@ from anachronism.engine.bots import Bot, make_bot
 from anachronism.engine.game import apply_action, end_turn, new_game
 from anachronism.engine.save import SaveError, dumps, loads
 from anachronism.engine.state import Event, GameState
-from anachronism.tools.view import build_view
+from anachronism.tools.view import build_catalog, build_view
 
 ACTION = TypeAdapter[Action](Action)
 
@@ -48,10 +48,17 @@ class Session:
         return self.state
 
     def new_game(self, args: dict[str, Any]) -> dict[str, Any]:
-        """Start a scenario: ``{"scenario": "bronze_dawn", "seed": 1, "rivals": "growth"}``."""
+        """Start a scenario: ``{"scenario": "bronze_dawn", "civ": "veyra", "seed": 1}``.
+
+        ``civ`` (optional) is the civilisation the player guides; ``rivals`` picks the bots.
+        """
+        civ = args.get("civ")
         try:
             self.state = new_game(
-                self.content, str(args.get("scenario", "bronze_dawn")), int(args.get("seed", 1))
+                self.content,
+                str(args.get("scenario", "bronze_dawn")),
+                int(args.get("seed", 1)),
+                None if civ is None else str(civ),
             )
             rivals = str(args.get("rivals", "growth"))
             self.rivals = {
@@ -61,6 +68,10 @@ class Session:
             raise RequestError(str(error)) from error
         self.events = []
         return build_view(self.state)
+
+    def scenarios(self, args: dict[str, Any]) -> dict[str, Any]:
+        """Every starting moment and its civilisations, for the picker."""
+        return {"scenarios": build_catalog(self.content)}
 
     def view(self, args: dict[str, Any]) -> dict[str, Any]:
         """The current view, with the last turn's events."""
@@ -134,6 +145,7 @@ def handle(session: Session, line: str) -> tuple[dict[str, Any], bool]:
         return {"id": request_id, "ok": True, "result": {}}, False
     commands: dict[str, Callable[[dict[str, Any]], dict[str, Any]]] = {
         "new_game": session.new_game,
+        "scenarios": session.scenarios,
         "view": session.view,
         "act": session.act,
         "end_turn": session.end_turn,

@@ -107,3 +107,27 @@ def test_save_and_load(tmp_path: Path) -> None:
     assert all(r["ok"] for r in replies)
     assert (tmp_path / "slot_1.json").is_file()
     assert replies[4]["result"]["year"] == replies[1]["result"]["year"]
+
+
+def test_scenario_catalog_and_playing_any_civ(tmp_path: Path) -> None:
+    replies = talk(
+        [
+            {"id": 1, "cmd": "scenarios"},
+            {"id": 2, "cmd": "new_game", "args": {"scenario": "warring_states", "civ": "chu"}},
+            {"id": 3, "cmd": "new_game", "args": {"scenario": "warring_states", "civ": "rome"}},
+        ],
+        tmp_path,
+    )
+    catalog = {s["id"]: s for s in replies[0]["result"]["scenarios"]}
+    warring = catalog["warring_states"]
+    assert warring["map"] == "east_asia"
+    assert warring["default_civ"] == "qin"
+    qin = next(c for c in warring["civs"] if c["id"] == "qin")
+    assert qin["leader"] == "Duke Xiao"
+    assert qin["capital"] == "Guanzhong (Wei valley)"
+    assert qin["pitch"]
+    assert warring["civs"][0]["id"] == "chu", "largest state first"
+    assert replies[1]["result"]["player"] == "chu"
+    assert replies[1]["result"]["status"]["name"] == "Chu"
+    assert not replies[2]["ok"]
+    assert "'rome' is not a civilisation in warring_states" in replies[2]["error"]

@@ -24,16 +24,22 @@ from anachronism.engine.state import (
 )
 
 
-def build_state(content: Content, scenario_id: str, seed: int) -> GameState:
+def build_state(
+    content: Content, scenario_id: str, seed: int, player_civ: str | None = None
+) -> GameState:
     """Create the state at the start of a scenario (before any turn is played).
 
     Raises:
-        ValueError: if the scenario does not exist.
+        ValueError: if the scenario does not exist, or ``player_civ`` is not in it.
     """
     scenario = content.scenarios.get(scenario_id)
     if scenario is None:
         known = ", ".join(sorted(content.scenarios)) or "none"
         raise ValueError(f"unknown scenario {scenario_id!r} (available: {known})")
+    player = scenario.player_civ if player_civ is None else player_civ
+    if player not in scenario.civs:
+        known = ", ".join(sorted(scenario.civs))
+        raise ValueError(f"{player!r} is not a civilisation in {scenario_id} (choose: {known})")
     in_play = sorted(
         {pid for start in scenario.civs.values() for pid in start.provinces} | set(scenario.unowned)
     )
@@ -79,7 +85,7 @@ def build_state(content: Content, scenario_id: str, seed: int) -> GameState:
         seed=seed,
         rng=GameRng.from_seed(seed).state,
         year=scenario.start_year,
-        player_civ=scenario.player_civ,
+        player_civ=player,
         world=world,
         tech_nodes=dict(sorted(content.techs.items())),
         provinces=provinces,

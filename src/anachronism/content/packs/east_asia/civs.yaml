@@ -5,6 +5,8 @@ civs:
     adjective: Qin
     lineage: qin
     colour: "#5d7290"
+    emblem: 秦
+    portrait: court
     description: >-
       The western march of the Zhou world, hardened by wars with the Rong. Shang Yang's reforms are remaking it into a state of farmers and soldiers, and this year it moves its capital to Xianyang.
   - id: wei
@@ -12,6 +14,8 @@ civs:
     adjective: Wei
     lineage: wei
     colour: "#b7472a"
+    emblem: 魏
+    portrait: court
     description: >-
       The strongest of the Three Jin: rich river plains, the new Hong Canal, and the Wei Wuzu, the first heavy infantry drilled by law. Its capital has just moved east to Daliang.
   - id: zhao
@@ -19,6 +23,8 @@ civs:
     adjective: Zhao
     lineage: zhao
     colour: "#6b8f3a"
+    emblem: 趙
+    portrait: court
     description: >-
       Northern heir of Jin, from the plains of Handan to the frontier of Dai, facing the horse peoples.
   - id: han
@@ -26,6 +32,8 @@ civs:
     adjective: Han
     lineage: han
     colour: "#8a5aa8"
+    emblem: 韓
+    portrait: court
     description: >-
       Smallest of the Three Jin, hemmed in at the centre, famous for its iron and its crossbows. Its minister Shen Buhai is reforming the administration.
   - id: zhou
@@ -33,6 +41,8 @@ civs:
     adjective: Zhou
     lineage: zhou
     colour: "#d6b656"
+    emblem: 周
+    portrait: court
     description: >-
       The Son of Heaven still reigns at Luoyang, honoured by all and obeyed by none.
   - id: qi
@@ -40,6 +50,8 @@ civs:
     adjective: Qi
     lineage: qi
     colour: "#2a7fb8"
+    emblem: 齊
+    portrait: court
     description: >-
       The wealthy eastern kingdom of salt, iron and silk. At the Jixia Academy in Linzi scholars of every school debate.
   - id: lu
@@ -47,6 +59,8 @@ civs:
     adjective: Lu
     lineage: lu
     colour: "#c98b6b"
+    emblem: 魯
+    portrait: court
     description: >-
       Home of Confucius, a small state of ritual and learning between great neighbours.
   - id: song
@@ -54,6 +68,8 @@ civs:
     adjective: Song
     lineage: song
     colour: "#b0617a"
+    emblem: 宋
+    portrait: court
     description: >-
       An old ducal state descended from the Shang kings, rich from trade on the central plain.
   - id: wey
@@ -61,6 +77,8 @@ civs:
     adjective: Wey
     lineage: wey
     colour: "#7a9a9a"
+    emblem: 衛
+    portrait: court
     description: >-
       A small old state on the Yellow River, now in the shadow of Wei.
   - id: zhongshan
@@ -68,6 +86,8 @@ civs:
     adjective: Zhongshan
     lineage: zhongshan
     colour: "#9a7b4f"
+    emblem: 中山
+    portrait: hills
     description: >-
       A kingdom founded by the Di people, restored and fortified in the hills west of the northern plain.
   - id: yan
@@ -75,6 +95,8 @@ civs:
     adjective: Yan
     lineage: yan
     colour: "#4f8f8f"
+    emblem: 燕
+    portrait: court
     description: >-
       The remote northeastern kingdom around Ji, facing the Donghu and the lands beyond the Liao.
   - id: chu
@@ -82,6 +104,8 @@ civs:
     adjective: Chu
     lineage: chu
     colour: "#c23b5a"
+    emblem: 楚
+    portrait: southern
     description: >-
       The vast southern kingdom of the Yangtze and the Han: lakes, forests, shamans and poets; the largest state under Heaven.
   - id: yue
@@ -89,6 +113,8 @@ civs:
     adjective: Yue
     lineage: yue
     colour: "#3a9a6a"
+    emblem: 越
+    portrait: southern
     description: >-
       Heirs of King Goujian, masters of the rivers, the sea and the finest bronze swords, ruling from old Wu.
   - id: shu
@@ -96,6 +122,8 @@ civs:
     adjective: Shu
     lineage: shu
     colour: "#d9822b"
+    emblem: 蜀
+    portrait: hills
     description: >-
       The Kaiming kings of the Chengdu plain, beyond the mountains, with their own script and bronze tradition.
   - id: ba
@@ -103,6 +131,8 @@ civs:
     adjective: Ba
     lineage: ba
     colour: "#8c6d3a"
+    emblem: 巴
+    portrait: hills
     description: >-
       A warrior people of the Yangtze gorges, rich in salt, allied and at war by turns with Shu and Chu.
   - id: yiqu
@@ -110,6 +140,8 @@ civs:
     adjective: Yiqu
     lineage: yiqu
     colour: "#7d6b5a"
+    emblem: 義渠
+    portrait: steppe
     description: >-
       A Rong kingdom north of Qin with walled towns and herds, long a rival of Qin.
   - id: donghu
@@ -117,6 +149,8 @@ civs:
     adjective: Donghu
     lineage: donghu
     colour: "#5a7d4f"
+    emblem: 東胡
+    portrait: steppe
     description: >-
       The Eastern Hu, horse peoples of the Xilamulun steppe beyond Yan.
   - id: gojoseon
@@ -124,5 +158,7 @@ civs:
     adjective: Joseon
     lineage: gojoseon
     colour: "#4a6aa0"
+    emblem: 朝鮮
+    portrait: hills
     description: >-
       An early Korean kingdom of bronze daggers and walled towns; where its heartland lay at this time is still debated by historians.

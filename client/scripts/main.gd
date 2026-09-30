@@ -7,7 +7,9 @@
 ## (default `warring_states`; `bronze_dawn` is the fictional test world). On the real map:
 ## `--start=idea_id` begins an experiment, `--select=province_id` selects a province and
 ## `--play=N` then ends N turns, `--click=x,y` clicks the map, `--tab=ideas|projects|world` opens a panel (all for
-## screenshots and tests). `--smoke` builds everything, prints SMOKE OK and quits.
+## screenshots and tests). `--smoke` goes through the title screen and picker, builds the
+## game, prints SMOKE OK and quits. `--screen=title|picker` (`--pick=civ_id`) shows the menus;
+## `--civ=ID` starts straight away as that civilisation.
 extends Node3D
 
 var bridge := EngineBridge.new()
@@ -16,6 +18,7 @@ var world: WorldBuilder
 var earth: EarthBuilder
 var provinces: ProvinceMap
 var hud: GameHud
+var menus: Menus
 var holder: Node3D
 var _press_at := Vector2.ZERO
 var view: Dictionary = {}
@@ -34,32 +37,67 @@ func _ready() -> void:
 	for i in 3:
 		await get_tree().process_frame
 	var repo_root := ProjectSettings.globalize_path("res://").get_base_dir().get_base_dir()
-	var result: Variant = null
+	var catalog: Variant = null
 	if bridge.start(repo_root):
-		result = bridge.request("new_game", {
-			"scenario": str(options.get("scenario", "warring_states")),
-			"seed": int(options.get("seed", "1")),
-		})
-	if result == null:
-		push_error(bridge.last_error)
-		if options.has("smoke") or options.has("screenshot"):
-			get_tree().quit(1)
-		else:  # tell the player instead of vanishing
-			var label: Label = notice.get_child(1)
-			label.text = "The game engine could not start:\n%s\n\nCheck your internet connection for the first launch, then open the game again." % bridge.last_error
+		catalog = bridge.request("scenarios")
+	if catalog == null:
+		_fail(notice)
 		return
-	view = result
 	notice.queue_free()
-	for i in int(options.get("turns", "0")):
-		view = bridge.request("end_turn")
 	holder = Node3D.new()
 	holder.name = "World"
 	add_child(holder)
+	var real: Array = catalog["scenarios"].filter(func(s): return s["map"] != null)
+	var direct := options.has("scenario") or options.has("civ") or (options.has("screenshot") and not options.has("screen"))
+	if direct or real.is_empty():
+		_start_game(str(options.get("scenario", "warring_states")), str(options.get("civ", "")))
+		return
+	# Title screen over a slowly drifting view of the real map, then the civilisation picker.
+	_ensure_earth(str(real[0]["map"]))
+	rig.look_at_point(earth.ground_at(33.0, 112.0), 1100.0)
+	menus = Menus.new()
+	menus.catalog = real
+	add_child(menus)
+	menus.start_requested.connect(_start_game)
+	menus.quit_requested.connect(func(): get_tree().quit())
+	menus.show_title()
+	if options.get("screen", "") == "picker" or options.has("smoke"):
+		menus.show_picker("", str(options.get("pick", "")))
+	if options.has("smoke"):  # CI self-test: title, picker, then the game itself
+		await get_tree().process_frame
+		_start_game(str(real[0]["id"]), "")
+	elif options.has("screenshot"):
+		_take_screenshot(str(options["screenshot"]))
+
+
+func _fail(notice: CanvasLayer) -> void:
+	push_error(bridge.last_error)
+	if options.has("smoke") or options.has("screenshot"):
+		get_tree().quit(1)
+	else:  # tell the player instead of vanishing
+		var label: Label = notice.get_child(1)
+		label.text = "The game engine could not start:\n%s\n\nCheck your internet connection for the first launch, then open the game again." % bridge.last_error
+
+
+func _start_game(scenario_id: String, civ_id: String) -> void:
+	var args := {"scenario": scenario_id, "seed": int(options.get("seed", "1"))}
+	if civ_id != "":
+		args["civ"] = civ_id
+	var result: Variant = bridge.request("new_game", args)
+	if result == null:
+		_fail(_notice(""))
+		return
+	if menus != null:
+		menus.queue_free()
+		menus = null
+	view = result
+	for i in int(options.get("turns", "0")):
+		view = bridge.request("end_turn")
 	if view.get("map") != null:
 		_build_earth(holder, str(view["map"]))
 		_build_hud()
 		if options.has("smoke"):  # CI self-test: the engine answered and the world was built
-			print("SMOKE OK: %s, %d provinces, %d ideas" % [view["scenario"], view["provinces"].size(), view["ideas"].size()])
+			print("SMOKE OK: %s as %s, %d provinces, %d ideas" % [view["scenario"], view["status"]["name"], view["provinces"].size(), view["ideas"].size()])
 			bridge.stop()
 			get_tree().quit()
 			return
@@ -81,16 +119,26 @@ func _ready() -> void:
 		_take_screenshot(str(options["screenshot"]))
 
 
-## The real map (D-053): measured elevation, coastlines and rivers.
-func _build_earth(holder: Node3D, region: String) -> void:
+## The bare real map (D-053), built once per region: also the title screen's backdrop.
+func _ensure_earth(region: String) -> void:
+	if earth != null and earth.region == region:
+		return
+	if earth != null:
+		for child in holder.get_children():
+			child.queue_free()
 	earth = EarthBuilder.new(region)
 	earth.build(holder)
-	provinces = ProvinceMap.new(earth, view)
-	provinces.build(holder)
 	var half := earth.size() / 2.0
 	rig.bounds = Rect2(-half, earth.size())
 	rig.far = earth.size().x * 0.9
 	rig.near = 18.0
+
+
+## The real map with the game on it: provinces, borders, settlements.
+func _build_earth(holder: Node3D, region: String) -> void:
+	_ensure_earth(region)
+	provinces = ProvinceMap.new(earth, view)
+	provinces.build(holder)
 	Settlements.new(provinces).build(holder)
 	environment.fog_density = 0.00003  # a continent-sized map needs thinner haze
 	var sky_material: ProceduralSkyMaterial = environment.sky.sky_material
@@ -102,7 +150,7 @@ func _build_earth(holder: Node3D, region: String) -> void:
 	for p in view["provinces"]:
 		if p["owner"] == view["player"] and p["capital"] and p["latlon"] != null:
 			start = earth.ground_at(p["latlon"][0], p["latlon"][1])
-	rig.look_at_point(start + Vector3(160, 0, 0), 900.0)  # east of Qin; the side panel covers the right
+	rig.look_at_point(start + Vector3(160, 0, 0), 900.0)  # capital left of centre: the side panel covers the right
 	if options.has("look"):
 		var f: PackedStringArray = str(options["look"]).split(",")
 		var d := float(f[2]) if f.size() > 2 else 200.0
@@ -222,7 +270,9 @@ func _ground_height(point: Vector3) -> float:
 	return maxf(earth.ground_at_pixel(Vector2(point.x, point.z) + earth.size() / 2.0).y, 0.0)
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	if menus != null and earth != null:  # the title backdrop drifts slowly east
+		rig.position.x += delta * 6.0
 	if earth != null:  # territory colours fade as you zoom in, so the land itself shows
 		earth.terrain_material.set_shader_parameter("tint", lerpf(0.32, 0.08, rig.zoom_level()))
 

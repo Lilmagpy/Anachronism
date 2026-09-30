@@ -191,3 +191,12 @@ def test_latlon_must_be_on_earth(packs: Path) -> None:
 def test_sea_zone_needs_a_place(packs: Path) -> None:
     edit(packs / "east_asia" / "seas.yaml", " latlon: [38.8, 119.8],", "")
     assert any("a sea zone needs a position or a latlon" in p for p in problems(packs))
+
+
+def test_emblem_font_has_every_emblem_character() -> None:
+    font_characters = (PACKS_DIR.parents[3] / "client" / "fonts" / "emblems.txt").read_text(
+        encoding="utf-8"
+    )
+    for civ in load_content().civs.values():
+        missing = {ch for ch in civ.emblem if not ch.isascii() and ch not in font_characters}
+        assert not missing, f"{civ.id}: run scripts/build_emblem_font.py (missing {missing})"
