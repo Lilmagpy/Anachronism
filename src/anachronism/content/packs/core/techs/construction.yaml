@@ -1,0 +1,51 @@
+schema_version: 1
+techs:
+  - id: masonry
+    name: Masonry
+    category: construction
+    year: -3000
+    complexity: 2
+    requires: {materials: [stone]}
+    effects: [{type: population_cap, bp: 400}, {type: military_strength, bp: 300}]
+    flavour: Dressed stone, fitted tight, outlasts its builders.
+
+  - id: roads
+    name: Paved roads
+    category: construction
+    year: -500
+    complexity: 3
+    prerequisites: [masonry, wheel]
+    effects:
+      - {type: mobility, bp: 1000}
+      - {type: trade_income, bp: 600}
+      - {type: information_speed, bp: 800}
+    flavour: A road is an order from the capital that never stops being obeyed.
+
+  - id: concrete
+    name: Hydraulic concrete
+    category: construction
+    year: -200
+    complexity: 3
+    prerequisites: [masonry]
+    requires: {materials: [stone]}
+    effects: [{type: population_cap, bp: 600}, {type: military_strength, bp: 300}]
+    flavour: Lime and ash that harden even under the sea.
+
+  - id: aqueduct
+    name: Aqueducts
+    category: construction
+    year: -700
+    complexity: 4
+    prerequisites: [masonry, surveying]
+    requires: {widespread: [masonry]}
+    effects: [{type: population_cap, bp: 1000}, {type: health, bp: 1000}]
+    flavour: Clean water carried across valleys on arches of stone.
+
+  - id: canals
+    name: Canals and locks
+    category: construction
+    year: -500
+    complexity: 4
+    prerequisites: [irrigation, surveying]
+    effects: [{type: trade_income, bp: 1000}, {type: mobility, bp: 600}]
+    flavour: Barges carry in a day what carts carry in a month.

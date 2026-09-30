@@ -1,0 +1,96 @@
+schema_version: 1
+techs:
+  - id: writing
+    name: Writing
+    category: knowledge
+    year: -3200
+    complexity: 2
+    effects: [{type: knowledge_gain, bp: 1000}, {type: literacy_growth, bp: 30}]
+    flavour: Words that outlive the breath that spoke them.
+
+  - id: surveying
+    name: Surveying and geometry
+    category: knowledge
+    year: -2500
+    complexity: 2
+    prerequisites: [writing]
+    effects: [{type: labour_output, bp: 300}, {type: knowledge_gain, bp: 300}]
+    flavour: Rope, stakes and a right angle measure a kingdom.
+
+  - id: astronomy_calendar
+    name: Astronomical calendar
+    category: knowledge
+    year: -2000
+    complexity: 2
+    prerequisites: [writing]
+    effects: [{type: food_output, bp: 400}, {type: legitimacy, bp: 100}]
+    flavour: The court that predicts the floods commands the fields.
+
+  - id: alphabet
+    name: Phonetic alphabet
+    category: knowledge
+    year: -1050
+    complexity: 2
+    visibility: 1
+    prerequisites: [writing]
+    resistance: [{group: clergy, level: 1}]
+    effects: [{type: literacy_growth, bp: 40}, {type: knowledge_gain, bp: 800}]
+    flavour: Two dozen signs instead of thousands. Any merchant's child can learn it.
+
+  - id: place_value_numerals
+    name: Place-value numerals with zero
+    category: knowledge
+    year: 500
+    complexity: 2
+    visibility: 1
+    prerequisites: [writing]
+    effects: [{type: knowledge_gain, bp: 1200}, {type: wealth_output, bp: 500}]
+    flavour: Ten signs and a circle for nothing, and arithmetic becomes easy.
+
+  - id: alchemy
+    name: Alchemy
+    category: knowledge
+    year: -300
+    complexity: 2
+    prerequisites: [writing, pottery_kiln]
+    resistance: [{group: clergy, level: 1}]
+    effects: [{type: knowledge_gain, bp: 400}, {type: health, bp: 300}]
+    flavour: Furnaces, flasks and patient notes on what changes into what.
+
+  - id: schools
+    name: Public schools
+    category: knowledge
+    year: -500
+    complexity: 3
+    prerequisites: [writing]
+    requires: {literacy_bp: 300}
+    effects: [{type: literacy_growth, bp: 60}]
+    flavour: Letters taught to many, not handed down to a few.
+
+  - id: woodblock_printing
+    name: Woodblock printing
+    category: knowledge
+    year: 650
+    complexity: 3
+    prerequisites: [paper]
+    requires: {literacy_bp: 500}
+    effects:
+      - {type: literacy_growth, bp: 40}
+      - {type: knowledge_gain, bp: 800}
+      - {type: cultural_influence, bp: 600}
+    flavour: Carve a page once, print it a thousand times.
+
+  - id: movable_type
+    name: Movable-type printing
+    category: knowledge
+    year: 1040
+    complexity: 4
+    visibility: 3
+    prerequisites: [woodblock_printing, bronze_working]
+    requires: {literacy_bp: 800, widespread: [paper]}
+    resistance: [{group: clergy, level: 2}, {group: guilds, level: 1}]
+    effects:
+      - {type: literacy_growth, bp: 80}
+      - {type: knowledge_gain, bp: 1500}
+      - {type: cultural_influence, bp: 1000}
+    flavour: Letters cast one by one, set in any order, used again tomorrow.

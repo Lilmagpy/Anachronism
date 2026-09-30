@@ -1,0 +1,31 @@
+schema_version: 1
+techs:
+  - id: sailing
+    name: Sailing boats
+    category: maritime
+    year: -4000
+    complexity: 1
+    effects: [{type: trade_income, bp: 500}, {type: naval_strength, bp: 500}]
+    flavour: A sheet of cloth, and the wind rows for you.
+
+  - id: sternpost_rudder
+    name: Sternpost rudder
+    category: maritime
+    year: 100
+    complexity: 2
+    prerequisites: [sailing]
+    effects: [{type: naval_strength, bp: 800}, {type: trade_income, bp: 500}]
+    flavour: One hinged board steers a ship far bigger than any oar could.
+
+  - id: compass
+    name: Magnetic compass
+    category: maritime
+    year: 1040
+    complexity: 3
+    prerequisites: [sailing, iron_working]
+    requires: {literacy_bp: 200}
+    effects:
+      - {type: naval_strength, bp: 800}
+      - {type: trade_income, bp: 800}
+      - {type: information_speed, bp: 300}
+    flavour: A needle that always points south, even under clouds.

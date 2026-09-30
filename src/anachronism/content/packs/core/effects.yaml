@@ -1,0 +1,24 @@
+schema_version: 1
+# Hard cap for one advancement's effect, per era (DESIGN §9), in basis points.
+# Percentage effects: 1000 = +10%. literacy_growth: points x100 per decade.
+# unrest and legitimacy: points x100 per decade, either direction. suspicion: once, on adoption.
+effect_caps:
+  food_output:        {ancient: 1000, classical: 1200, medieval: 1500, early_modern: 2000}
+  labour_output:      {ancient: 800, classical: 1000, medieval: 1200, early_modern: 1500}
+  materials_output:   {ancient: 1000, classical: 1200, medieval: 1500, early_modern: 2000}
+  wealth_output:      {ancient: 800, classical: 1000, medieval: 1200, early_modern: 1500}
+  knowledge_gain:     {ancient: 1000, classical: 1200, medieval: 1500, early_modern: 2000}
+  trade_income:       {ancient: 1000, classical: 1200, medieval: 1500, early_modern: 2000}
+  literacy_growth:    {ancient: 50, classical: 70, medieval: 100, early_modern: 150}
+  population_cap:     {ancient: 800, classical: 1000, medieval: 1200, early_modern: 1500}
+  health:             {ancient: 1000, classical: 1200, medieval: 1500, early_modern: 2000}
+  military_strength:  {ancient: 1000, classical: 1200, medieval: 1500, early_modern: 2500}
+  naval_strength:     {ancient: 1000, classical: 1200, medieval: 1500, early_modern: 2500}
+  mobility:           {ancient: 1000, classical: 1200, medieval: 1500, early_modern: 2000}
+  storage:            {ancient: 1500, classical: 1500, medieval: 2000, early_modern: 2500}
+  unrest:             {ancient: 300, classical: 300, medieval: 300, early_modern: 300}
+  legitimacy:         {ancient: 300, classical: 300, medieval: 300, early_modern: 300}
+  suspicion:          {ancient: 1500, classical: 1500, medieval: 1500, early_modern: 1500}
+  information_speed:  {ancient: 1000, classical: 1200, medieval: 1500, early_modern: 2000}
+  secrecy:            {ancient: 1000, classical: 1200, medieval: 1500, early_modern: 2000}
+  cultural_influence: {ancient: 1000, classical: 1200, medieval: 1500, early_modern: 2000}

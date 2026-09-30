@@ -1,0 +1,7 @@
+schema_version: 1
+# An era runs until the year before 'ends'; the last era never ends.
+eras:
+  - {id: ancient, name: Ancient, ends: -500}
+  - {id: classical, name: Classical, ends: 500}
+  - {id: medieval, name: Medieval, ends: 1400}
+  - {id: early_modern, name: Early modern, ends: null}

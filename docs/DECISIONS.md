@@ -199,3 +199,34 @@ owner's profile; the owner can delete that repo or leave it.
 Mac minutes count 10x on private repos. Linux checks run on every push and pull request; the macOS
 job runs only for pull requests, pushes to `main` and manual runs. Phase work is developed on a
 `claude/phase-N-*` branch and reaches `main` through the phase's pull request (D-002).
+
+## D-035 Integer maths everywhere — DELEGATED (Phase 1)
+All engine state and maths use Python integers; rates and 0-100 stats are basis points
+(10_000 bp = 100%). Floating-point maths can differ in the last digit between macOS and Linux
+libraries, which would make saves replay differently across machines. `engine/fixed.py` holds
+the rounding rules.
+
+## D-036 Content file format — DELEGATED
+Each YAML file holds `schema_version` plus exactly one kind (`techs`, `provinces`, `rules`…),
+so authors can split files freely. List items are validated one at a time, so a broken item is
+reported without hiding its valid siblings, and references to it are not reported twice.
+Duplicate YAML keys are errors (PyYAML would silently keep the last). Numbers are in basis
+points with `_bp` in the field name wherever that is not obvious.
+
+## D-037 What lives where in content — DELEGATED
+Province files hold fixed geography only; civ files hold lasting identity only; a scenario
+holds the moment: ownership, populations, stockpiles, stats, social-group influence and known
+techs. This keeps the Phase 5 layered timeline (D-025) possible without reshaping data.
+
+## D-038 Effect caps follow the current era — DELEGATED
+An advancement's effect is capped by the era the game is in, not the era it belongs to. An idea
+adopted centuries early is held back until society catches up with it.
+
+## D-039 Adoption spread is civilisation-wide in Phase 1 — DELEGATED
+Spread is one percentage per civilisation and advancement, not tracked province by province.
+Per-province adoption can come later if the map needs it.
+
+## D-040 Core tech years are placeholders — DELEGATED
+The `year` of each core tech node (first historical appearance) is an approximate value from
+general knowledge, good enough for the fictional test world. Before real-history packs rely on
+them (Phase 5), each gets a source note and a confidence level.

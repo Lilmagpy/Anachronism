@@ -1,0 +1,68 @@
+schema_version: 1
+techs:
+  - id: horse_riding
+    name: Horse riding
+    category: military
+    year: -3500
+    complexity: 1
+    requires: {materials: [horses]}
+    effects: [{type: mobility, bp: 800}, {type: military_strength, bp: 500}]
+    flavour: On horseback, a day's walk becomes an hour's ride.
+
+  - id: composite_bow
+    name: Composite bow
+    category: military
+    year: -2000
+    complexity: 2
+    effects: [{type: military_strength, bp: 800}]
+    flavour: Horn, wood and sinew glued into a bow small enough to shoot from the saddle.
+
+  - id: chariot
+    name: War chariot
+    category: military
+    year: -2000
+    complexity: 2
+    prerequisites: [wheel, horse_riding, bronze_working]
+    requires: {materials: [horses]}
+    effects: [{type: military_strength, bp: 1000}]
+    flavour: Two horses, two wheels, one archer and a terrified enemy.
+
+  - id: fortification
+    name: Stone fortifications
+    category: military
+    year: -3000
+    complexity: 2
+    prerequisites: [masonry]
+    effects: [{type: military_strength, bp: 600}]
+    flavour: Walls turn a raid into a siege, and a siege into a gamble.
+
+  - id: crossbow
+    name: Crossbow
+    category: military
+    year: -600
+    complexity: 3
+    prerequisites: [bronze_working]
+    effects: [{type: military_strength, bp: 1200}]
+    flavour: A peasant with a month's drill can kill a noble with a lifetime's.
+
+  - id: stirrup
+    name: Stirrups
+    category: military
+    year: 300
+    complexity: 1
+    prerequisites: [horse_riding]
+    requires: {materials: [horses]}
+    effects: [{type: military_strength, bp: 1000}, {type: mobility, bp: 400}]
+    flavour: Two loops of leather, and the rider stops falling off.
+
+  - id: gunpowder
+    name: Gunpowder
+    category: military
+    year: 850
+    complexity: 4
+    visibility: 3
+    prerequisites: [alchemy, charcoal_burning]
+    requires: {materials: [saltpetre, sulphur], literacy_bp: 300}
+    resistance: [{group: clergy, level: 1}]
+    effects: [{type: military_strength, bp: 1500}]
+    flavour: Saltpetre, sulphur and charcoal. The alchemists wanted eternal life.

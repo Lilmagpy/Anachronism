@@ -1,0 +1,15 @@
+schema_version: 1
+resources:
+  - {id: timber, name: Timber}
+  - {id: stone, name: Building stone}
+  - {id: clay, name: Clay}
+  - {id: copper, name: Copper}
+  - {id: tin, name: Tin}
+  - {id: iron, name: Iron ore}
+  - {id: coal, name: Coal}
+  - {id: horses, name: Horses}
+  - {id: salt, name: Salt}
+  - {id: saltpetre, name: Saltpetre}
+  - {id: sulphur, name: Sulphur}
+  - {id: gold, name: Gold}
+  - {id: silver, name: Silver}

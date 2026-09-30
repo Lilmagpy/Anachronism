@@ -1,0 +1,80 @@
+schema_version: 1
+# Every tunable number the engine uses (documented in content/schema/rules.py).
+# Flows are per decade (reference_years) and scaled to each scenario's turn length.
+# Rates are basis points: 10000 = 100%, and 100 = one point on a 0-100 stat.
+rules:
+  reference_years: 10
+  stacking_decay_bp: 8000
+  economy:
+    workforce_per_1000_bp: 10000
+    surplus_share_bp: 2000
+    diversion_floor_bp: 3000
+    food_consumption_per_1000_bp: 10000
+    granary_per_1000_bp: 20000
+    spoilage_bp: 1000
+    wealth_per_1000_bp: 3000
+    admin_upkeep_per_province: 3
+    knowledge_per_1000_literate_bp: 30000
+    coastal_trade_bp: 1500
+    river_trade_bp: 1000
+    resource_materials_accessible: 6
+    resource_materials_limited: 3
+  projects:
+    labour: [6, 18, 36, 60, 90]
+    materials: [4, 8, 12, 16, 20]
+    knowledge: [5, 10, 15, 20, 25]
+    wealth: [3, 6, 9, 12, 15]
+    heavy_categories: [metallurgy, construction, military]
+    heavy_materials_bp: 20000
+    duration_decades: [1, 2, 3, 4, 6]
+    anachronism_bp_per_century: 500
+    anachronism_cap_bp: 5000
+    setback_chance_bp: 500
+    setback_per_literacy_point_bp: 150
+    setback_loss_bp: 1500
+    breakthrough_chance_bp: 300
+    breakthrough_gain_bp: 1500
+    stall_funding_bp: 5000
+    stall_turns: 3
+    decay_bp: 1000
+    initial_spread_bp: 2000
+  spread:
+    base_bp: 1000
+    literacy_bonus_bp: 4000
+    widespread_at_bp: 8000
+  society:
+    strain_from_shortfall_bp: 5000
+    strain_from_diversion_bp: 8000
+    strain_decay_bp: 3000
+    unrest_from_strain_bp: 4000
+    unrest_from_famine_bp: 6000
+    unrest_recovery_bp: 1500
+    unrest_recovery_legitimacy_bp: 400
+    labour_penalty_at_full_unrest_bp: 5000
+    resistance_unrest_bp: 300
+    legitimacy_baseline_bp: 5000
+    legitimacy_drift_bp: 1000
+    famine_legitimacy_bp: 2000
+    riot_threshold_bp: 6000
+    riot_chance_per_excess_bp: 20000
+    riot_loss_bp: 2000
+    riot_legitimacy_bp: 400
+    revolt_threshold_bp: 8000
+    revolt_chance_per_excess_bp: 20000
+    revolt_unrest_release_bp: 2000
+    revolt_legitimacy_bp: 800
+    collapse_share_bp: 5000
+  population:
+    growth_bp: 1500
+    deaths_per_missing_food: 400
+  suspicion:
+    gain_per_year_ahead_bp: 5
+    max_gain_bp: 1500
+    visibility_bp: [5000, 10000, 20000]
+    decay_bp: 800
+    legitimacy_decay_bp: 200
+    framing_threshold_bp: 2500
+    framing_clear_bp: 1200
+    witchcraft_unrest_bp: 1500
+    fraud_legitimacy_bp: 1500
+    inspired_legitimacy_bp: 800

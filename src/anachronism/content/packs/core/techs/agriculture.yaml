@@ -1,0 +1,70 @@
+schema_version: 1
+# year = approximate first historical appearance anywhere (placeholder values pending the
+# Phase 5 source review, see DECISIONS D-040). complexity 1-5 drives cost and duration.
+techs:
+  - id: agriculture
+    name: Agriculture
+    category: agriculture
+    year: -9500
+    complexity: 1
+    visibility: 1
+    effects: [{type: food_output, bp: 1000}]
+    flavour: Seed saved is a harvest promised.
+
+  - id: irrigation
+    name: Irrigation canals
+    category: agriculture
+    year: -6000
+    complexity: 2
+    prerequisites: [agriculture]
+    effects: [{type: food_output, bp: 1000}, {type: population_cap, bp: 500}]
+    flavour: The river is taught to walk into the fields.
+
+  - id: ox_plough
+    name: Ox-drawn plough
+    category: agriculture
+    year: -4000
+    complexity: 2
+    prerequisites: [agriculture]
+    effects: [{type: food_output, bp: 800}, {type: labour_output, bp: 400}]
+    flavour: One ox does the digging of ten men.
+
+  - id: iron_plough
+    name: Iron-tipped plough
+    category: agriculture
+    year: -500
+    complexity: 2
+    prerequisites: [ox_plough, iron_working]
+    requires: {materials: [iron]}
+    effects: [{type: food_output, bp: 1000}, {type: labour_output, bp: 500}]
+    flavour: An iron share bites where wood only scratches.
+
+  - id: heavy_plough
+    name: Heavy mouldboard plough
+    category: agriculture
+    year: 600
+    complexity: 3
+    prerequisites: [iron_plough]
+    requires: {materials: [iron]}
+    effects: [{type: food_output, bp: 1200}]
+    flavour: It turns the heavy wet soils nobody could farm before.
+
+  - id: horse_collar
+    name: Horse collar
+    category: agriculture
+    year: 500
+    complexity: 2
+    prerequisites: [ox_plough, horse_riding]
+    requires: {materials: [horses]}
+    effects: [{type: labour_output, bp: 600}, {type: food_output, bp: 600}, {type: mobility, bp: 500}]
+    flavour: A padded collar, and suddenly the horse can pull without choking.
+
+  - id: crop_rotation
+    name: Three-field crop rotation
+    category: agriculture
+    year: 800
+    complexity: 2
+    visibility: 1
+    prerequisites: [ox_plough]
+    effects: [{type: food_output, bp: 1200}, {type: population_cap, bp: 600}]
+    flavour: Beans one year, grain the next, rest the third. The soil remembers.

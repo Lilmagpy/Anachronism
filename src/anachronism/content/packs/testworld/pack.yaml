@@ -1,0 +1,6 @@
+schema_version: 1
+pack:
+  id: testworld
+  name: Fictional test world for engine development
+  version: 1
+  depends_on: [core]

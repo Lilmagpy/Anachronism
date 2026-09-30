@@ -1,0 +1,5 @@
+schema_version: 1
+pack:
+  id: core
+  name: Core rules and generic technology
+  version: 1

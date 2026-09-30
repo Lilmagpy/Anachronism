@@ -1,0 +1,140 @@
+schema_version: 1
+# A small fictional map: the Veyran river kingdom in the south, the Ushkai steppe in the
+# west, the Kessrin highlands in the east, and unclaimed borderlands between them.
+provinces:
+  - id: ushkai_north_steppe
+    name: North Steppe
+    terrain: steppe
+    resources: {horses: accessible}
+    neighbours: [ushkai_grasslands, northern_forest]
+  - id: ushkai_grasslands
+    name: Ushkai Grasslands
+    terrain: steppe
+    resources: {horses: accessible, copper: limited}
+    neighbours: [ushkai_north_steppe, ushkai_high_pasture, borderland_plains, northern_forest]
+  - id: ushkai_high_pasture
+    name: High Pasture
+    terrain: hills
+    resources: {horses: accessible, tin: limited, iron: unexplored}
+    neighbours: [ushkai_grasslands, ushkai_salt_flats, borderland_plains, veyra_western_fields]
+  - id: ushkai_salt_flats
+    name: Salt Flats
+    terrain: desert
+    resources: {salt: accessible, saltpetre: limited}
+    neighbours: [ushkai_high_pasture, desert_oasis, veyra_western_fields]
+  - id: northern_forest
+    name: Northern Forest
+    terrain: forest
+    resources: {timber: accessible, iron: unexplored}
+    neighbours: [ushkai_north_steppe, ushkai_grasslands, borderland_plains, kessrin_pine_valley]
+  - id: borderland_plains
+    name: Borderland Plains
+    terrain: plains
+    resources: {horses: limited, clay: accessible}
+    neighbours:
+      - ushkai_grasslands
+      - ushkai_high_pasture
+      - northern_forest
+      - veyra_upper_river
+      - kessrin_highfort
+      - kessrin_lake_basin
+  - id: kessrin_pine_valley
+    name: Pine Valley
+    terrain: forest
+    resources: {timber: accessible}
+    neighbours: [northern_forest, kessrin_highfort, kessrin_iron_peaks]
+  - id: kessrin_highfort
+    name: Highfort
+    terrain: hills
+    resources: {stone: accessible, copper: accessible}
+    neighbours:
+      - borderland_plains
+      - kessrin_pine_valley
+      - kessrin_iron_peaks
+      - kessrin_lake_basin
+      - kessrin_copper_hills
+  - id: kessrin_iron_peaks
+    name: Iron Peaks
+    terrain: mountains
+    resources: {iron: limited, stone: accessible, silver: limited}
+    neighbours: [kessrin_pine_valley, kessrin_highfort, kessrin_copper_hills, eastern_marches]
+  - id: kessrin_lake_basin
+    name: Lake Basin
+    terrain: plains
+    resources: {clay: accessible, timber: limited}
+    neighbours:
+      - borderland_plains
+      - kessrin_highfort
+      - kessrin_copper_hills
+      - veyra_upper_river
+      - veyra_heartland
+  - id: kessrin_copper_hills
+    name: Copper Hills
+    terrain: hills
+    resources: {copper: accessible, tin: accessible, coal: unexplored}
+    neighbours: [kessrin_highfort, kessrin_iron_peaks, kessrin_lake_basin, eastern_marches]
+  - id: eastern_marches
+    name: Eastern Marches
+    terrain: hills
+    resources: {stone: accessible, gold: limited}
+    neighbours: [kessrin_iron_peaks, kessrin_copper_hills, veyra_coast]
+  - id: veyra_upper_river
+    name: Upper River
+    terrain: river_plains
+    river: true
+    resources: {timber: accessible, stone: limited, iron: unexplored}
+    neighbours: [borderland_plains, kessrin_lake_basin, veyra_heartland, veyra_western_fields]
+  - id: veyra_western_fields
+    name: Western Fields
+    terrain: plains
+    resources: {clay: limited, horses: limited}
+    neighbours:
+      - ushkai_high_pasture
+      - ushkai_salt_flats
+      - veyra_upper_river
+      - veyra_heartland
+      - veyra_marshes
+      - desert_oasis
+  - id: veyra_heartland
+    name: Veyran Heartland
+    terrain: river_plains
+    river: true
+    capacity: 140000
+    resources: {clay: accessible, timber: limited}
+    neighbours:
+      - veyra_upper_river
+      - veyra_western_fields
+      - kessrin_lake_basin
+      - veyra_delta
+      - veyra_marshes
+      - veyra_coast
+  - id: veyra_marshes
+    name: Reed Marshes
+    terrain: marsh
+    coastal: true
+    resources: {salt: limited}
+    neighbours: [veyra_western_fields, veyra_heartland, veyra_delta, desert_oasis, southern_isles]
+  - id: veyra_delta
+    name: River Delta
+    terrain: river_plains
+    river: true
+    coastal: true
+    resources: {clay: accessible, salt: accessible}
+    neighbours: [veyra_heartland, veyra_marshes, veyra_coast, southern_isles]
+  - id: veyra_coast
+    name: Veyran Coast
+    terrain: coast
+    coastal: true
+    resources: {salt: accessible, stone: limited}
+    neighbours: [veyra_heartland, veyra_delta, eastern_marches, southern_isles]
+  - id: desert_oasis
+    name: Sulphur Oasis
+    terrain: desert
+    resources: {saltpetre: accessible, sulphur: accessible}
+    neighbours: [ushkai_salt_flats, veyra_western_fields, veyra_marshes]
+  - id: southern_isles
+    name: Southern Isles
+    terrain: coast
+    coastal: true
+    resources: {salt: accessible, sulphur: limited}
+    neighbours: [veyra_marshes, veyra_delta, veyra_coast]
