@@ -78,6 +78,10 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
             }
             for pid, geography in sorted(state.world.geography.items())
         ],
+        "seas": [
+            {"id": sid, "name": sea.name, "position": list(sea.position)}
+            for sid, sea in sorted(state.world.seas.items())
+        ],
         "projects": [
             {
                 "id": node_id,

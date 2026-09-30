@@ -74,3 +74,14 @@ class ProvinceGeography(Frozen):
         if len(set(self.neighbours)) != len(self.neighbours):
             raise ValueError("neighbours contains duplicates")
         return self
+
+
+class SeaZone(Frozen):
+    """A named stretch of sea. Coastal provinces are exactly those next to a sea zone."""
+
+    id: Identifier
+    name: str
+    position: tuple[int, int]
+    """Centre of the sea zone on the map, in the same units as province positions."""
+    neighbours: tuple[Identifier, ...]
+    """Provinces on its shores."""

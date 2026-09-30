@@ -160,3 +160,17 @@ def test_lint_cli_reports_success_and_failure(
     output = capsys.readouterr().out
     assert "1 problem(s) found" in output
     assert "era end years must strictly increase" in output
+
+
+def test_coastal_provinces_must_touch_a_sea(packs: Path) -> None:
+    edit(
+        packs / "testworld" / "seas.yaml",
+        "neighbours: [southern_isles]\n",
+        "neighbours: [southern_isles, veyra_heartland]\n",
+    )
+    assert any("(veyra_heartland): touches a sea but is not coastal" in p for p in problems(packs))
+
+
+def test_scenario_provinces_need_map_positions(packs: Path) -> None:
+    edit(packs / "testworld" / "provinces.yaml", "    position: [300, 340]\n", "")
+    assert any("province 'veyra_heartland' has no map position" in p for p in problems(packs))

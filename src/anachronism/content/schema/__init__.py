@@ -27,6 +27,7 @@ from anachronism.content.schema.world import (
     Era,
     MapResource,
     ProvinceGeography,
+    SeaZone,
     Terrain,
 )
 
@@ -54,6 +55,7 @@ __all__ = [
     "Rules",
     "Scenario",
     "ScenarioCiv",
+    "SeaZone",
     "SocialGroup",
     "Stage",
     "StartingStats",

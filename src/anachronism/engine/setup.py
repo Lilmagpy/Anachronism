@@ -62,6 +62,11 @@ def build_state(content: Content, scenario_id: str, seed: int) -> GameState:
         terrain=dict(content.terrain),
         resources=dict(content.resources),
         geography=geography,
+        seas={
+            sid: sea
+            for sid, sea in sorted(content.seas.items())
+            if any(p in geography for p in sea.neighbours)
+        },
     )
     civs = {
         civ_id: _start_civ(content.civs[civ_id], start, content.rules.spread.baseline_adopted_bp)

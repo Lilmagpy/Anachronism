@@ -18,6 +18,7 @@ from anachronism.content.schema import (
     MapResource,
     ProvinceGeography,
     Rules,
+    SeaZone,
     SocialGroup,
     Stage,
     TechNode,
@@ -58,6 +59,8 @@ class World(Frozen):
     resources: dict[str, MapResource]
     geography: dict[str, ProvinceGeography]
     """Provinces in play; neighbours outside the scenario are removed."""
+    seas: dict[str, SeaZone] = Field(default_factory=dict)
+    """Sea zones touching provinces in play."""
 
 
 class ProvinceState(Mutable):

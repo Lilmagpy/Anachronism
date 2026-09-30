@@ -27,6 +27,7 @@ from anachronism.content.schema import (
     ProvinceGeography,
     Rules,
     Scenario,
+    SeaZone,
     TechNode,
     Terrain,
 )
@@ -47,6 +48,7 @@ class Content:
     resources: Mapping[str, MapResource]
     techs: Mapping[str, TechNode]
     provinces: Mapping[str, ProvinceGeography]
+    seas: Mapping[str, SeaZone]
     civs: Mapping[str, CivDefinition]
     scenarios: Mapping[str, Scenario]
     digest: str
@@ -122,6 +124,7 @@ def load_content(pack_ids: Sequence[str] | None = None, root: Path = PACKS_DIR) 
         resources=registry.resources,
         techs=registry.techs,
         provinces=registry.provinces,
+        seas=registry.seas,
         civs=registry.civs,
         scenarios=registry.scenarios,
         digest=digest.hexdigest(),

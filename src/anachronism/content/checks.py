@@ -16,6 +16,7 @@ def cross_reference_issues(registry: Registry) -> list[ContentIssue]:
         *_effect_cap_issues(registry),
         *_tech_issues(registry),
         *_province_issues(registry),
+        *_sea_issues(registry),
         *_scenario_issues(registry),
     ]
 
@@ -138,6 +139,31 @@ def _province_issues(registry: Registry) -> list[ContentIssue]:
                 issues.append(
                     ContentIssue(where, label, f"{neighbour!r} does not list it as a neighbour")
                 )
+    return issues
+
+
+def _sea_issues(registry: Registry) -> list[ContentIssue]:
+    issues: list[ContentIssue] = []
+    shores: set[str] = set()
+    for sea in registry.seas.values():
+        where = registry.origin("seas", sea.id)
+        for shore in sea.neighbours:
+            shores.add(shore)
+            if registry.is_unknown("provinces", shore):
+                issues.append(
+                    ContentIssue(where, f"seas ({sea.id})", f"unknown province {shore!r}")
+                )
+    if not registry.seas:
+        return issues
+    for province in registry.provinces.values():
+        if province.coastal != (province.id in shores):
+            where = registry.origin("provinces", province.id)
+            state = (
+                "is coastal but touches no sea"
+                if province.coastal
+                else "touches a sea but is not coastal"
+            )
+            issues.append(ContentIssue(where, f"provinces ({province.id})", state))
     return issues
 
 

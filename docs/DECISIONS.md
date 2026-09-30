@@ -284,3 +284,10 @@ app is solved in this phase; Apple signing waits for packaging (Phase 8).
 ## D-051 3D art sources — DELEGATED
 Terrain, water and borders are generated from content data. Models come from openly licensed
 packs (CC0 only, licences recorded in `client/assets/LICENSES.md`) until custom art is made.
+
+## D-052 Visual style: a Rise of Kingdoms-like "living map" — OWNER (2026-09-30)
+Fixed-angle tilted map (no free 3D orbit). Zoomed out: the strategic map with territories,
+borders, names and banners. Zooming in reveals detail that fades in by distance: towns sized by
+population, capitals with walls, farms, forests, and later units. Stylised, colourful low-poly
+art rather than photorealism. Built on the Godot 3D client (D-047) using distance-based
+level of detail.

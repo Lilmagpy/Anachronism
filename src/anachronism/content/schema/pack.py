@@ -11,7 +11,13 @@ from anachronism.content.schema.civ import CivDefinition
 from anachronism.content.schema.rules import Rules
 from anachronism.content.schema.scenario import Scenario
 from anachronism.content.schema.tech import EffectType, TechNode
-from anachronism.content.schema.world import Era, MapResource, ProvinceGeography, Terrain
+from anachronism.content.schema.world import (
+    Era,
+    MapResource,
+    ProvinceGeography,
+    SeaZone,
+    Terrain,
+)
 
 
 class PackManifest(Frozen):
@@ -36,6 +42,7 @@ LIST_KINDS: dict[str, type[Frozen]] = {
     "resources": MapResource,
     "techs": TechNode,
     "provinces": ProvinceGeography,
+    "seas": SeaZone,
     "civs": CivDefinition,
     "scenarios": Scenario,
 }

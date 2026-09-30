@@ -13,6 +13,7 @@ from anachronism.content.schema import (
     ProvinceGeography,
     Rules,
     Scenario,
+    SeaZone,
     TechNode,
     Terrain,
 )
@@ -30,6 +31,7 @@ class Registry:
     resources: dict[str, MapResource] = field(default_factory=dict)
     techs: dict[str, TechNode] = field(default_factory=dict)
     provinces: dict[str, ProvinceGeography] = field(default_factory=dict)
+    seas: dict[str, SeaZone] = field(default_factory=dict)
     civs: dict[str, CivDefinition] = field(default_factory=dict)
     scenarios: dict[str, Scenario] = field(default_factory=dict)
     origins: dict[tuple[str, str], str] = field(default_factory=dict)
