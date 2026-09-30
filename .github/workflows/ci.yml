@@ -13,14 +13,23 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  checks:
-    name: Checks (${{ matrix.os }})
-    strategy:
-      fail-fast: false
-      matrix:
-        # macOS is the owner's platform; Ubuntu matches the cloud sessions.
-        os: [ubuntu-latest, macos-latest]
-    runs-on: ${{ matrix.os }}
+  linux:
+    name: Checks (Linux)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.2.0
+      - name: Lint, types and tests
+        run: scripts/check.sh
+      - name: Launch the game command
+        run: uv run --locked anachronism
+
+  macos:
+    name: Checks (macOS)
+    # The owner plays on a Mac. Mac minutes count 10x on private repos, so this job runs only
+    # for pull requests, pushes to main and manual runs (D-034).
+    if: github.event_name != 'push' || github.ref == 'refs/heads/main'
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v7
       - uses: astral-sh/setup-uv@v10.2.0

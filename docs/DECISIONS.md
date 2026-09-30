@@ -177,7 +177,7 @@ methods (`randrange`, `choice`, `shuffle`…) may change. Saves must replay iden
 Python version, so `engine/rng.py` will implement a small documented PRNG (e.g. PCG32) whose
 whole state is a few integers stored in `GameState`.
 
-## D-031 Where the project lives — OPEN (owner question at the Phase 0 gate)
+## D-031 Where the project lives — RESOLVED by D-033
 `Lilmagpy/Lilmagpy` is the owner's GitHub **profile repository** (public): a `README.md` at its
 root is displayed on the owner's public GitHub profile page. Until the owner decides, no root
 README is added and setup instructions live in `docs/GETTING_STARTED.md`. Options: move to a
@@ -186,3 +186,16 @@ dedicated repo (recommended) or keep it here (the README would then appear on th
 ## D-032 Licence — DEFERRED (owner decision, only needed before publishing a release)
 No licence file yet, which legally means "all rights reserved": others may view the public repo
 but not reuse it. Choose one before any public release.
+
+## D-033 The project lives in Lilmagpy/Anachronism — OWNER (2026-09-30)
+The owner chose a dedicated repository and created **`Lilmagpy/Anachronism`** (private) themselves:
+the Claude GitHub App is not allowed to create repositories. History moved over intact; `main`
+holds approved work. "Anachronism" stays a **placeholder name** (owner: "can we do a placeholder
+for now"); renaming later is easy. The old profile repo `Lilmagpy/Lilmagpy` still holds a copy on
+branch `claude/new-session-8vxe44` (its default branch). It has no README, so nothing shows on the
+owner's profile; the owner can delete that repo or leave it.
+
+## D-034 CI on a private repo — DELEGATED (amends D-029)
+Mac minutes count 10x on private repos. Linux checks run on every push and pull request; the macOS
+job runs only for pull requests, pushes to `main` and manual runs. Phase work is developed on a
+`claude/phase-N-*` branch and reaches `main` through the phase's pull request (D-002).

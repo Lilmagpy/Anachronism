@@ -17,7 +17,8 @@ milestone. This page is for when you want to try the game yourself.
 
 2. **Get the code with GitHub Desktop** (free, no typing needed):
    download it from <https://desktop.github.com>, sign in with your GitHub account, then
-   choose **File → Clone Repository**, pick this repository and click **Clone**.
+   choose **File → Clone Repository**, pick **Lilmagpy/Anachronism** and click **Clone**.
+   (It is a private repository, so sign in to GitHub Desktop as **Lilmagpy**.)
 
 3. **Run it.** In GitHub Desktop choose **Repository → Open in Terminal**, then type:
 

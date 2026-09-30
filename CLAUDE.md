@@ -17,6 +17,8 @@ updating `docs/PLAN.md` (checkboxes, current step) and logging decisions in `doc
 - The owner prefers Claude to be resourceful: decide what can be decided (log it as
   `DELEGATED` in DECISIONS.md) and only ask what genuinely needs the owner.
 - Stop at every phase gate in PLAN.md and wait for approval.
+- Git: `main` holds approved work only. Each phase is built on a `claude/phase-N-*` branch
+  and reaches `main` through a pull request the owner merges at the gate (D-002).
 - Owner is on macOS; cannot see a window from cloud sessions — attach headless screenshots
   (`SDL_VIDEODRIVER=dummy`) for any UI work.
 
@@ -46,8 +48,8 @@ updating `docs/PLAN.md` (checkboxes, current step) and logging decisions in `doc
 - New major dependency → ask the owner first.
 
 ## Common pitfalls
-- No root README.md until the owner decides where the project lives: this is their
-  GitHub profile repo, whose README shows on their public profile (D-031).
+- The project repo is `Lilmagpy/Anachronism` (private). The old `Lilmagpy/Lilmagpy` profile
+  repo is not used any more (D-033).
 - Floating-point drift breaks determinism across machines: store money-like values as ints
   (fixed-point) in state.
 - Don't let pygame_gui widgets hold game state — UI reads from engine state each frame.
