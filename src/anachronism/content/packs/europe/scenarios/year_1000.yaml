@@ -18,6 +18,8 @@ scenarios:
         disposition: cautious
         capital: m_wessex
         leader: Æthelred II
+        leader_age: 34
+        successors: [{name: "Edmund Ironside", age: 26, disposition: "aggressive"}, {name: "Edward the Confessor", age: 40, disposition: "pious"}]
         pitch: "The Danes are raiding again and Æthelred pays them to leave. Find a better idea than silver."
         provinces:
           m_wessex: 700000
@@ -155,6 +157,8 @@ scenarios:
         disposition: cautious
         capital: m_ile_de_france
         leader: Robert II
+        leader_age: 28
+        successors: [{name: "Henry I", age: 23}]
         pitch: "You wear the crown; your dukes hold the land. Can ideas make the king of France a king in fact?"
         provinces:
           m_ile_de_france: 700000
@@ -250,6 +254,8 @@ scenarios:
         disposition: aggressive
         capital: m_lotharingia
         leader: Otto III
+        leader_age: 20
+        successors: [{name: "Henry II", age: 27, disposition: "pious"}, {name: "Conrad II", age: 34, disposition: "aggressive"}]
         pitch: "A young emperor with a dream of Rome renewed. Make the dream real."
         provinces:
           m_saxony: 800000
@@ -394,6 +400,8 @@ scenarios:
           - {id: "sweyn_conquers_england", goal: "conquer", target: "england", preconditions: {after_year: 1005, min_strength_ratio_bp: 8000}, note: "Sweyn Forkbeard conquers England (1013); Cnut rules it from 1016."}
         capital: m_jutland
         leader: Sweyn Forkbeard
+        leader_age: 37
+        successors: [{name: "Harald II", age: 20}, {name: "Cnut the Great", age: 23, disposition: "aggressive"}]
         pitch: "Longships, raiders and a king who wants England. Conquer with ideas as well as axes."
         provinces:
           m_jutland: 300000
@@ -530,6 +538,8 @@ scenarios:
           - {id: "boleslaw_in_kiev", goal: "conquer", target: "rus", preconditions: {after_year: 1015}, note: "Boleslaw enters Kiev (1018)."}
         capital: m_greater_poland
         leader: Bolesław I the Brave
+        leader_age: 33
+        successors: [{name: "Mieszko II", age: 35, disposition: "cautious"}]
         pitch: "The emperor has just crowned your ambitions. Build a kingdom to match them."
         provinces:
           m_greater_poland: 400000
@@ -621,6 +631,8 @@ scenarios:
         disposition: pious
         capital: m_esztergom
         leader: Stephen I
+        leader_age: 25
+        successors: [{name: "Peter Orseolo", age: 27}]
         pitch: "Stephen is about to be crowned. Turn the raiders' grandchildren into builders."
         provinces:
           m_esztergom: 500000
@@ -666,6 +678,8 @@ scenarios:
         disposition: cautious
         capital: m_kiev
         leader: Vladimir the Great
+        leader_age: 42
+        successors: [{name: "Sviatopolk the Accursed", age: 35, disposition: "aggressive"}, {name: "Yaroslav the Wise", age: 38, disposition: "scholarly"}]
         pitch: "The largest realm in Europe, stitched together by rivers. Make it hold."
         provinces:
           m_kiev: 1200000
@@ -719,6 +733,8 @@ scenarios:
           - {id: "maniakes_in_sicily", goal: "conquer", target: "sicily_emirate", preconditions: {after_year: 1035}, note: "George Maniakes invades Muslim Sicily (1038)."}
         capital: m_constantinople
         leader: Basil II
+        leader_age: 42
+        successors: [{name: "Constantine VIII", age: 65, disposition: "cautious"}, {name: "Romanos III", age: 60}]
         pitch: "The richest state in Europe and the heir of Rome. Basil II is at war with Bulgaria; win it with more than swords."
         provinces:
           m_apulia: 600000
@@ -819,6 +835,8 @@ scenarios:
         disposition: aggressive
         capital: m_cordoba
         leader: al-Mansur
+        leader_age: 62
+        successors: [{name: "Abd al-Malik al-Muzaffar", age: 27, disposition: "aggressive"}, {name: "Abd al-Rahman Sanchuelo", age: 25}]
         pitch: "The most brilliant city in western Europe. Its splendour will not last - unless you change the story."
         provinces:
           m_cordoba: 1200000

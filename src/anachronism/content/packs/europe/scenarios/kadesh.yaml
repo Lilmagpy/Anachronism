@@ -21,6 +21,8 @@ scenarios:
           - {id: "eternal_treaty", goal: "ally", target: "hatti", preconditions: {after_year: -1265}, depends_on: ["battle_of_kadesh"], note: "Egypt and Hatti sign the first recorded peace treaty (1259 BC)."}
         capital: egy_delta
         leader: Ramesses II
+        leader_age: 28
+        successors: [{name: "Merneptah", age: 55, disposition: "cautious"}, {name: "Seti II", age: 40}]
         pitch: "Ramesses II is young and hungry for glory, and Kadesh is in Hittite hands. Win with ideas what chariots cannot."
         provinces:
           egy_delta: 1300000
@@ -61,6 +63,8 @@ scenarios:
           - {id: "hatti_retakes_amurru", goal: "conquer", target: "amurru", preconditions: {after_year: -1276}, depends_on: ["battle_of_kadesh"], note: "After Kadesh, Amurru is forced back under Hittite rule."}
         capital: hat_hattusa
         leader: Muwatalli II
+        leader_age: 40
+        successors: [{name: "Mursili III", age: 25}, {name: "Hattusili III", age: 50, disposition: "cautious"}, {name: "Tudhaliya IV", age: 30}]
         pitch: "Hold Syria against Egypt and watch Assyria rise. The iron you barely understand could change everything."
         provinces:
           hat_hattusa: 500000
@@ -104,6 +108,8 @@ scenarios:
           - {id: "assyria_sacks_babylon", goal: "conquer", target: "babylon", preconditions: {after_year: -1235}, depends_on: ["assyria_ends_hanigalbat"], note: "Tukulti-Ninurta I sacks Babylon and carries off Marduk's statue (1225 BC)."}
         capital: ass_assur
         leader: Adad-nirari I
+        leader_age: 35
+        successors: [{name: "Tukulti-Ninurta I", age: 30, disposition: "aggressive"}]
         pitch: "Young, ambitious and surrounded. Assyria's great age is still ahead - bring it forward."
         provinces:
           ass_assur: 300000
@@ -172,6 +178,8 @@ scenarios:
           - {id: "babylon_trades_hatti", goal: "trade", target: "hatti", preconditions: {after_year: -1275}, note: "Letters and gifts pass between Babylon and Hattusa."}
         capital: bab_babylon
         leader: Kadashman-Turgu
+        leader_age: 40
+        successors: [{name: "Kadashman-Enlil II", age: 20}]
         pitch: "The oldest schools and the finest astronomers on earth. Turn learning into power."
         provinces:
           bab_babylon: 500000

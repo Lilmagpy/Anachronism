@@ -63,6 +63,10 @@ rules:
     riot_chance_per_excess_bp: 20000
     riot_loss_bp: 2000
     riot_legitimacy_bp: 400
+    death_chance_per_year_of_age_bp: 70
+    succession_legitimacy_bp: 800
+    succession_crisis_below_bp: 4000
+    succession_crisis_unrest_bp: 1500
     happening_frequency_bp: 10000
     revolt_threshold_bp: 8000
     revolt_chance_per_excess_bp: 20000

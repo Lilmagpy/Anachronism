@@ -117,6 +117,13 @@ class SocietyRules(Frozen):
     """Riot chance = (unrest above the threshold) * this / 10_000."""
     riot_loss_bp: Rate
     riot_legitimacy_bp: NonNegative
+    death_chance_per_year_of_age_bp: NonNegative
+    """A ruler's chance of dying each decade, per year of age above 30."""
+    succession_legitimacy_bp: NonNegative
+    """Legitimacy lost when a ruler dies (the new one must earn it)."""
+    succession_crisis_below_bp: Rate
+    """Below this legitimacy, a death brings a succession crisis (unrest)."""
+    succession_crisis_unrest_bp: NonNegative
     happening_frequency_bp: NonNegative
     """Scales the chance of every happening (0 switches them off)."""
     revolt_threshold_bp: Rate

@@ -29,6 +29,16 @@ class StartingStats(Frozen):
     suspicion_bp: Rate = 0
 
 
+class Successor(Frozen):
+    """Who comes next on the throne, if history is followed (brief §7.6)."""
+
+    name: Annotated[str, Field(min_length=1, max_length=60)]
+    age: Annotated[int, Field(ge=1, le=90)] = 25
+    """Age on taking the throne."""
+    disposition: Disposition | None = None
+    """Their temperament; empty keeps the state's."""
+
+
 class ScenarioCiv(Frozen):
     """One civilisation's situation at the scenario's start."""
 
@@ -45,6 +55,10 @@ class ScenarioCiv(Frozen):
     """Who rules at the start, e.g. ``Duke Xiao``; empty when the sources are unclear."""
     pitch: str = ""
     """One or two sentences for the civilisation picker: why play this state now."""
+    leader_age: Annotated[int, Field(ge=1, le=90)] = 40
+    """The ruler's age at the start."""
+    successors: tuple[Successor, ...] = ()
+    """Who follows, in order, when rulers die (after that, unnamed heirs)."""
     disposition: Disposition = Disposition.CAUTIOUS
     """The ruler's temperament, which steers the civilisation once it leaves its script."""
     scripts: tuple[Script, ...] = ()

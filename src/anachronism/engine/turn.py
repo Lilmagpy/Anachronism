@@ -13,6 +13,7 @@ from anachronism.engine.projects import advance_projects
 from anachronism.engine.reports import snapshot
 from anachronism.engine.rivals import rivals_turn
 from anachronism.engine.rng import GameRng
+from anachronism.engine.rulers import age_and_succeed
 from anachronism.engine.society import update_society
 from anachronism.engine.state import Event, GameState, Stats
 from anachronism.engine.suspicion import update_suspicion
@@ -49,6 +50,7 @@ def end_turn(state: GameState) -> tuple[GameState, list[Event]]:
         update_suspicion(new, civ, rng, events)
         _update_literacy(new, civ.stats, effects)
         strike(new, civ, effects, rng, events)
+        age_and_succeed(new, civ, rng, events)
         effects_by_civ[civ_id] = effects
     # rivals: news, awareness, scripts, free agents; then the wars (brief §7)
     strengths = rivals_turn(new, effects_by_civ, list(events.items), rng, events)

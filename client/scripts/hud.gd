@@ -210,7 +210,7 @@ func _show_next_voice() -> void:
 	portrait.size = Vector2(190, 240)
 	portrait.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	portrait.setup({"colour": voice["colour"], "portrait": voice["portrait"], "culture": voice.get("culture", ""),
-		"id": "%s_%s" % [voice["civ"], voice["speaker"]]})
+		"id": "%s_%s" % [voice["civ"], voice["name"] if voice["speaker"] in ["ruler", "rival"] else voice["speaker"]]})
 	box.add_child(portrait)
 	_root.add_child(box)
 	_speech = box
@@ -389,7 +389,10 @@ func _fill_top_bar() -> void:
 	var titles := VBoxContainer.new()
 	titles.add_theme_constant_override("separation", -4)
 	titles.add_child(UiStyle.label(str(status["name"]).to_upper(), 22, GOLD, "title", 900))
-	titles.add_child(UiStyle.label("%s · turn %d" % [year_text(view["year"]), view["turn"]], 15, DIM, "body", 700))
+	var reign := ""
+	if str(status.get("ruler", "")) != "":
+		reign = " · %s (%d)" % [status["ruler"], int(status["ruler_age"])]
+	titles.add_child(UiStyle.label("%s · turn %d%s" % [year_text(view["year"]), view["turn"], reign], 15, DIM, "body", 700))
 	_top.add_child(titles)
 	_top.add_child(VSeparator.new())
 	var stores: Dictionary = status["stores"]
@@ -832,7 +835,10 @@ func _rival_card(civ: Dictionary, me: Dictionary) -> Control:
 		might = "far weaker than you"
 	elif ratio < 0.85:
 		might = "weaker than you"
-	body.add_child(_label("%s people · %s · %s ruler" % [people(civ["population"]), might, civ["disposition"]], 12, DIM))
+	var ruler_line := str(civ.get("ruler", ""))
+	ruler_line = ("%s, %s, age %d" % [ruler_line, civ["disposition"], int(civ["ruler_age"])]) if ruler_line != "" else "%s ruler" % civ["disposition"]
+	body.add_child(_label("%s people · %s" % [people(civ["population"]), might], 12, DIM))
+	body.add_child(_label(ruler_line, 12, DIM))
 	var heard: Array = civ.get("heard_of_you", [])
 	if not heard.is_empty():
 		body.add_child(_wrapped("Has heard of your %s" % ", ".join(heard), 12, Color(0.6, 0.3, 0.1)))

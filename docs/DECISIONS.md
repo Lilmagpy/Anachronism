@@ -465,3 +465,11 @@ them all (0 turns them off, as the exact-number tests do). The steward and divin
 Also tonight: capitals are twice as hard to take and rough terrain is harder (D-067 tuning);
 armies appear on war fronts; sound and music are synthesised by scripts/make_sounds.py.
 
+## D-072 Rulers age, die and are succeeded — DELEGATED (2026-10-01)
+Every state's ruler ages each turn; the chance of dying each decade is 0.7% per year of
+age above 30 (so about 21% at 60, capped at 90% a turn). The next ruler is the scenario's
+next historical successor (with their own temperament where history is clear: King Wuling
+of Zhao, Cnut, Emperor Taiwu), then unnamed heirs. A death costs 8 points of legitimacy;
+below 40 legitimacy it brings a succession crisis (+15 unrest). The player's own ruler
+dies too; the state goes on. Successor lists are drafts from general history.
+

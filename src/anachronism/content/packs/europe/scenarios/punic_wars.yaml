@@ -119,6 +119,8 @@ scenarios:
           - {id: "hiero_joins_rome", goal: "ally", target: "rome", preconditions: {after_year: -265}, depends_on: ["first_punic_war"], note: "Hiero II switches sides and becomes Rome's loyal ally (263 BC)."}
         capital: syr_syracuse
         leader: Hiero II
+        leader_age: 43
+        successors: [{name: "Hieronymus", age: 15, disposition: "aggressive"}]
         pitch: "One city, two giants, and Archimedes. Survive by ingenuity alone."
         provinces:
           syr_syracuse: 400000
@@ -162,6 +164,8 @@ scenarios:
           - {id: "macedon_vs_achaea", goal: "conquer", target: "achaea", preconditions: {after_year: -245}, note: "Macedon and the Achaean League struggle for the Peloponnese."}
         capital: mac_macedonia
         leader: Antigonus II Gonatas
+        leader_age: 55
+        successors: [{name: "Demetrius II", age: 38}, {name: "Antigonus III Doson", age: 36, disposition: "cautious"}]
         pitch: "Hold Greece, rebuild Alexander's kingdom, and keep the Ptolemies out of the Aegean."
         provinces:
           mac_macedonia: 700000
@@ -549,6 +553,8 @@ scenarios:
           - {id: "third_syrian_war", goal: "conquer", target: "seleucid", preconditions: {after_year: -248}, depends_on: ["second_syrian_war"], note: "Ptolemy III marches to Babylon to avenge his sister (246 BC)."}
         capital: pto_delta
         leader: Ptolemy II Philadelphus
+        leader_age: 45
+        successors: [{name: "Ptolemy III", age: 38, disposition: "aggressive"}, {name: "Ptolemy IV", age: 23, disposition: "cautious"}]
         pitch: "The Library of Alexandria, the grain of the Nile and the best scholars alive. What could they build ahead of time?"
         provinces:
           pto_delta: 1800000
@@ -599,6 +605,8 @@ scenarios:
           - {id: "seleucids_vs_pergamon", goal: "conquer", target: "pergamon", preconditions: {after_year: -240}, note: "Attalus I defeats the Seleucids and Galatians (c. 230 BC)."}
         capital: sel_syria
         leader: Antiochus I Soter
+        leader_age: 60
+        successors: [{name: "Antiochus II", age: 25, disposition: "aggressive"}, {name: "Seleucus II", age: 20}]
         pitch: "The biggest empire in the west, stretched thin from Sardis to Persia. Hold it together."
         provinces:
           sel_syria: 1200000

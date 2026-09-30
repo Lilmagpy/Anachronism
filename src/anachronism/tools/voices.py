@@ -43,11 +43,10 @@ def speak(
     if dialogue is None:
         return None
     player = state.player_civ
-    scenario = content.scenarios.get(state.world.scenario_id)
 
     def ruler_of(civ_id: str) -> str:
-        start = scenario.civs.get(civ_id) if scenario else None
-        return start.leader if start and start.leader else f"the ruler of {state.civs[civ_id].name}"
+        ruler = state.civs[civ_id].ruler
+        return ruler if ruler else f"the ruler of {state.civs[civ_id].name}"
 
     speaker_civ = rival if dialogue.speaker == "rival" and rival else player
     civ_def = content.civs[speaker_civ]

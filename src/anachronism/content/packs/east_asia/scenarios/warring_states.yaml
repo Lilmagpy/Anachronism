@@ -26,6 +26,8 @@ scenarios:
           - {id: "qin_takes_han", goal: "conquer", target: "han", preconditions: {after_year: -240, min_strength_ratio_bp: 15000}, note: "Han is the first of the six states to fall (230 BC)."}
         capital: qin_guanzhong
         leader: Duke Xiao
+        leader_age: 31
+        successors: [{name: "King Huiwen", age: 19, disposition: "aggressive"}, {name: "King Wu", age: 19, disposition: "aggressive"}, {name: "King Zhaoxiang", age: 19, disposition: "aggressive"}]
         pitch: "A poor, tough frontier state in the middle of radical reform. Turn Shang Yang's farmers and soldiers into the first empire - decades early."
         provinces:
           qin_guanzhong: 1600000
@@ -69,6 +71,8 @@ scenarios:
           - {id: "wei_attacks_han", goal: "conquer", target: "han", preconditions: {after_year: -345}, note: "Wei attacks Han; Qi intervenes and destroys Wei's army at Maling (342 BC)."}
         capital: wei_daliang
         leader: Marquis Hui
+        leader_age: 50
+        successors: [{name: "King Xiang", age: 40}, {name: "King Ai", age: 40, disposition: "cautious"}]
         pitch: "The strongest state under Heaven, rich and well drilled, but ringed by jealous rivals on every side."
         provinces:
           wei_daliang: 1300000
@@ -115,6 +119,8 @@ scenarios:
           - {id: "zhao_takes_zhongshan", goal: "conquer", target: "zhongshan", preconditions: {after_year: -310}, note: "King Wuling, with his new mounted archers, conquers Zhongshan (296 BC)."}
         capital: zhao_handan
         leader: Marquis Cheng
+        leader_age: 40
+        successors: [{name: "Marquis Su", age: 35}, {name: "King Wuling", age: 15, disposition: "aggressive"}, {name: "King Huiwen of Zhao", age: 15}]
         pitch: "Plains, iron and the horse frontier: learn from the steppe riders before they learn from you."
         provinces:
           zhao_handan: 1400000
@@ -156,6 +162,8 @@ scenarios:
         disposition: cautious
         capital: han_xinzheng
         leader: Marquis Zhao
+        leader_age: 35
+        successors: [{name: "King Xuanhui", age: 30}]
         pitch: "Small and squeezed at the centre, with the best iron and crossbows in the world. Out-think your neighbours."
         provinces:
           han_xinzheng: 1100000
@@ -236,6 +244,8 @@ scenarios:
           - {id: "qi_annexes_song", goal: "conquer", target: "song", preconditions: {after_year: -290}, note: "Qi annexes Song (286 BC)."}
         capital: qi_linzi
         leader: King Wei
+        leader_age: 40
+        successors: [{name: "King Xuan", age: 35, disposition: "scholarly"}, {name: "King Min", age: 35, disposition: "aggressive"}]
         pitch: "Salt, silk and the Jixia Academy: the richest and most learned court in the east."
         provinces:
           qi_linzi: 1800000
@@ -419,6 +429,8 @@ scenarios:
           - {id: "yan_raids_gojoseon", goal: "conquer", target: "gojoseon", preconditions: {after_year: -285}, note: "Yan pushes east into Gojoseon's lands (c. 280 BC)."}
         capital: yan_ji
         leader: Duke Wen
+        leader_age: 40
+        successors: [{name: "King Yi", age: 30}, {name: "King Kuai", age: 30, disposition: "pious"}, {name: "King Zhao of Yan", age: 25, disposition: "aggressive"}]
         pitch: "The remote north-east, facing the Donghu and the lands beyond the Liao."
         provinces:
           yan_ji: 800000
@@ -460,6 +472,8 @@ scenarios:
           - {id: "chu_annexes_lu", goal: "conquer", target: "lu", preconditions: {after_year: -265}, note: "Chu annexes Lu, Confucius's homeland (256 BC)."}
         capital: chu_ying
         leader: King Xuan
+        leader_age: 45
+        successors: [{name: "King Wei of Chu", age: 35, disposition: "aggressive"}, {name: "King Huai", age: 30, disposition: "cautious"}]
         pitch: "The vast southern kingdom of lakes, forests and shamans, the largest state of all."
         provinces:
           chu_ying: 1300000

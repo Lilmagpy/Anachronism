@@ -25,6 +25,7 @@ from anachronism.content.schema import (
     SeaZone,
     SocialGroup,
     Stage,
+    Successor,
     TechNode,
     Terrain,
 )
@@ -72,6 +73,8 @@ class World(Frozen):
     happenings: dict[str, Happening] = Field(default_factory=dict)
     """Chance events that can strike (plague, flood, bumper harvests...)."""
     scripts: dict[str, tuple[Script, ...]] = Field(default_factory=dict)
+    successors: dict[str, tuple[Successor, ...]] = Field(default_factory=dict)
+    """Each civilisation's historical successors, in order."""
     """Each civilisation's intentions (brief §7.1), from the scenario."""
 
 
@@ -224,6 +227,11 @@ class CivState(Mutable):
     collapsed: bool = False
     disposition: Disposition = Disposition.CAUTIOUS
     awareness: Awareness = Awareness.ON_SCRIPT
+    ruler: str = ""
+    """Who rules now (empty: unnamed)."""
+    ruler_age: int = 40
+    rulers: int = 1
+    """How many rulers the state has had in this game (1 = the one it started with)."""
     heard: list[Heard] = Field(default_factory=list)
 
 

@@ -79,6 +79,9 @@ def build_state(
         map=scenario.map,
         cost_scale=scenario.cost_scale,
         happenings=dict(sorted(content.happenings.items())),
+        successors={
+            c: start.successors for c, start in sorted(scenario.civs.items()) if start.successors
+        },
         scripts={c: start.scripts for c, start in sorted(scenario.civs.items()) if start.scripts},
     )
     civs = {
@@ -87,6 +90,8 @@ def build_state(
     }
     for civ_id, start in scenario.civs.items():
         civs[civ_id].disposition = start.disposition
+        civs[civ_id].ruler = start.leader
+        civs[civ_id].ruler_age = start.leader_age
     relations = {
         f"{a}|{b}": Relation(status=RelationStatus.NEUTRAL)
         for a, b in sorted(contact_pairs(world, owners))

@@ -21,6 +21,8 @@ scenarios:
           - {id: "gwanggaeto_humbles_baekje", goal: "conquer", target: "baekje", preconditions: {after_year: 400, min_strength_ratio_bp: 12000}, note: "Goguryeo's southern campaigns; Jangsu takes Hanseong in 475."}
         capital: k4_gungnae
         leader: King Gwanggaeto
+        leader_age: 26
+        successors: [{name: "King Jangsu", age: 19, disposition: "aggressive"}]
         pitch: "Gwanggaeto the Great has just come to the throne. Push the frontiers to the Liao and the Han - and give Goguryeo ideas no one else has."
         provinces:
           k4_gungnae: 400000
@@ -65,6 +67,8 @@ scenarios:
           - {id: "baekje_wa_strike_north", goal: "conquer", target: "goguryeo", preconditions: {after_year: 402}, depends_on: ["wa_invades_silla"], note: "Baekje and Wa attack Goguryeo's Daebang border (404)."}
         capital: k4_hanseong
         leader: King Asin
+        leader_age: 35
+        successors: [{name: "King Jeonji", age: 25}]
         pitch: "Goguryeo humbled you in 396. Your ships reach Japan and China; your ideas could reach further."
         provinces:
           k4_hanseong: 500000
@@ -109,6 +113,8 @@ scenarios:
           - {id: "silla_absorbs_gaya", goal: "conquer", target: "gaya", preconditions: {after_year: 520, min_strength_ratio_bp: 12000}, note: "Silla annexes Geumgwan Gaya (532) and Daegaya (562)."}
         capital: k4_gyeongju
         leader: King Naemul
+        leader_age: 60
+        successors: [{name: "King Silseong", age: 30}, {name: "King Nulji", age: 30, disposition: "cautious"}]
         pitch: "The weakest kingdom today - the one that will unite Korea in 668. Get there first."
         provinces:
           k4_gyeongju: 350000
@@ -224,6 +230,8 @@ scenarios:
           - {id: "yan_strikes_goguryeo", goal: "conquer", target: "goguryeo", preconditions: {after_year: 395}, note: "Murong Sheng attacks Goguryeo and takes two fortresses (400)."}
         capital: k4_longcheng
         leader: Murong Sheng
+        leader_age: 27
+        successors: [{name: "Murong Xi", age: 15, disposition: "aggressive"}]
         pitch: "Wei has taken your heartland. Hold the north-east - or take Goguryeo's lands instead."
         provinces:
           k4_liaodong: 400000
@@ -278,6 +286,8 @@ scenarios:
           - {id: "wei_unites_the_north", goal: "conquer", target: "later_yan", preconditions: {after_year: 430}, note: "Northern Yan, the last Murong state, falls to Wei (436)."}
         capital: k4_pingcheng
         leader: Emperor Daowu
+        leader_age: 29
+        successors: [{name: "Emperor Mingyuan", age: 17, disposition: "cautious"}, {name: "Emperor Taiwu", age: 15, disposition: "aggressive"}]
         pitch: "You have just conquered the north China plain. Rule farmers as well as you ride horses."
         provinces:
           k4_pingcheng: 500000
@@ -328,6 +338,8 @@ scenarios:
         disposition: scholarly
         capital: k4_changan
         leader: Yao Xing
+        leader_age: 34
+        successors: [{name: "Yao Hong", age: 28}]
         pitch: "Kumarajiva is translating the sutras in your capital. Make Chang'an the city of learning it once was."
         provinces:
           k4_changan: 1500000
