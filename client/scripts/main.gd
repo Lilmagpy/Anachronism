@@ -20,6 +20,7 @@ var provinces: ProvinceMap
 var settlements: Settlements
 var game_menu: GameMenu
 var landmarks: Landmarks
+var audio: GameAudio
 var hud: GameHud
 var menus: Menus
 var holder: Node3D
@@ -36,6 +37,8 @@ func _ready() -> void:
 		options[parts[0]] = parts[1] if parts.size() > 1 else "true"
 	_setup_environment()
 	add_child(rig)
+	audio = GameAudio.new()
+	add_child(audio)
 	var notice := _notice("Starting the game engine…\nThe very first launch downloads Python and takes about a minute.")
 	for i in 3:
 		await get_tree().process_frame
@@ -196,9 +199,11 @@ func _build_hud() -> void:
 	add_child(hud)
 	game_menu = GameMenu.new()
 	game_menu.bridge = bridge
+	game_menu.audio = audio
 	add_child(game_menu)
 	hud.menu_requested.connect(game_menu.open_menu)
 	hud.capital_requested.connect(_visit_capital)
+	hud.spoke.connect(func(): audio.play("speak"))
 	game_menu.message.connect(func(text: String):
 		hud.message = text
 		hud.show_view(view))
@@ -250,6 +255,7 @@ func _on_idea(text: String, answer: String) -> void:
 	if bridge.busy:
 		return
 	hud.set_deliberating(true)
+	audio.play("click")
 	bridge.request_async("idea", {"text": text, "answer": answer}, func(reply: Variant):
 		hud.set_deliberating(false)
 		if reply == null:
@@ -263,6 +269,7 @@ func _on_idea(text: String, answer: String) -> void:
 			view = reply["view"]
 			hud.show_view(view)
 		hud.show_rulings(reply)
+		audio.play("idea")
 		hud.speak(reply.get("voices", [])))
 
 
@@ -299,6 +306,7 @@ func _refresh_dev() -> void:
 func _on_action(action: Dictionary) -> void:
 	if bridge.busy:
 		return
+	audio.play("click")
 	var reply: Variant = bridge.request("act", {"action": action})
 	if reply == null:
 		hud.message = bridge.last_error
@@ -315,6 +323,7 @@ func _on_action(action: Dictionary) -> void:
 func _on_end_turn() -> void:
 	if bridge.busy:
 		return
+	audio.play("end_turn")
 	hud.rulings = []
 	var reply: Variant = bridge.request("end_turn")
 	if reply == null:
@@ -326,6 +335,11 @@ func _on_end_turn() -> void:
 			settlements.recolour()
 		provinces.show_wars(view.get("wars", []))
 		landmarks.update(view)
+		var kinds: Array = view.get("events", []).map(func(e): return e["kind"])
+		if "victory" in kinds:
+			audio.play("victory")
+		elif "war" in kinds or "conquest" in kinds or "province_lost" in kinds:
+			audio.play("war")
 	hud.show_view(view)
 	hud.speak(view.get("voices", []), true)
 

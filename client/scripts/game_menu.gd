@@ -11,6 +11,7 @@ signal quit_to_title
 signal message(text: String)
 
 var bridge: EngineBridge
+var audio: GameAudio
 var _root := Control.new()
 var _modal: Control
 
@@ -120,6 +121,20 @@ func open_settings() -> void:
 		close()
 		open_settings())
 	body.add_child(offline)
+	if audio != null:
+		body.add_child(UiStyle.label("Sound", 20, UiStyle.RED, "title", 800))
+		var music := CheckBox.new()
+		music.text = "Music"
+		music.button_pressed = audio.music_on
+		music.add_theme_font_size_override("font_size", 16)
+		music.toggled.connect(audio.set_music)
+		body.add_child(music)
+		var effects := CheckBox.new()
+		effects.text = "Sound effects"
+		effects.button_pressed = audio.effects_on
+		effects.add_theme_font_size_override("font_size", 16)
+		effects.toggled.connect(audio.set_effects)
+		body.add_child(effects)
 	body.add_child(UiStyle.label("To switch the model on", 20, UiStyle.RED, "title", 800))
 	body.add_child(UiStyle.wrapped("Put your Anthropic API key and a model name in this file, then restart the game:\n%s\n\nANTHROPIC_API_KEY=your-key\nANACHRONISM_MODEL=a model name from docs.claude.com" % reply["env_file"], 14, UiStyle.INK_SOFT, 580))
 	body.add_child(UiStyle.wrapped("Press F3 during play for the developer overlay.", 13, UiStyle.INK_SOFT, 580))

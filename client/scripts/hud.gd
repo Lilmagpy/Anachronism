@@ -12,6 +12,7 @@ signal end_turn_requested
 signal idea_submitted(text: String, answer: String)
 signal menu_requested
 signal capital_requested
+signal spoke                    ## a character has started speaking (for the chime)
 
 const GOLD := Color(0.62, 0.20, 0.12)     ## headings: deep red on cream (UiStyle, D-059)
 const INK := UiStyle.INK
@@ -156,6 +157,7 @@ func _show_next_voice() -> void:
 	if _speech_queue.is_empty():
 		return
 	var voice: Dictionary = _speech_queue.pop_front()
+	spoke.emit()
 	var colour := Color(voice["colour"])
 	var box := Control.new()
 	box.set_anchors_preset(Control.PRESET_BOTTOM_LEFT)

@@ -72,7 +72,8 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
       picker; in-game menu (Esc) with save, load, chronicle, tech tree (goal stubs, your
       own ideas marked) and settings (model status, offline switch); developer overlay (F3)
 - [x] 2.15b Charts over time (menu → Charts): people, stores, society, the largest states
-- [ ] 2.15c Sound and music (needs CC0 assets)
+- [x] 2.15c Sound and music, synthesised by scripts/make_sounds.py (plucked-string theme,
+      gong, drums, chimes, clicks); switches in Settings
 - [ ] 2.16 Gate: owner plays the new build on their Mac and merges the phase PR
 
 ## Phase 3 — LLM ruling pipeline (moved after the 3D world, D-049)
