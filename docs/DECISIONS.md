@@ -199,3 +199,63 @@ owner's profile; the owner can delete that repo or leave it.
 Mac minutes count 10x on private repos. Linux checks run on every push and pull request; the macOS
 job runs only for pull requests, pushes to `main` and manual runs. Phase work is developed on a
 `claude/phase-N-*` branch and reaches `main` through the phase's pull request (D-002).
+
+## D-035 Integer maths everywhere — DELEGATED (Phase 1)
+All engine state and maths use Python integers; rates and 0-100 stats are basis points
+(10_000 bp = 100%). Floating-point maths can differ in the last digit between macOS and Linux
+libraries, which would make saves replay differently across machines. `engine/fixed.py` holds
+the rounding rules.
+
+## D-036 Content file format — DELEGATED
+Each YAML file holds `schema_version` plus exactly one kind (`techs`, `provinces`, `rules`…),
+so authors can split files freely. List items are validated one at a time, so a broken item is
+reported without hiding its valid siblings, and references to it are not reported twice.
+Duplicate YAML keys are errors (PyYAML would silently keep the last). Numbers are in basis
+points with `_bp` in the field name wherever that is not obvious.
+
+## D-037 What lives where in content — DELEGATED
+Province files hold fixed geography only; civ files hold lasting identity only; a scenario
+holds the moment: ownership, populations, stockpiles, stats, social-group influence and known
+techs. This keeps the Phase 5 layered timeline (D-025) possible without reshaping data.
+
+## D-038 Effect caps follow the current era — DELEGATED
+An advancement's effect is capped by the era the game is in, not the era it belongs to. An idea
+adopted centuries early is held back until society catches up with it.
+
+## D-039 Adoption spread is civilisation-wide in Phase 1 — DELEGATED
+Spread is one percentage per civilisation and advancement, not tracked province by province.
+Per-province adoption can come later if the map needs it.
+
+## D-040 Core tech years are placeholders — DELEGATED
+The `year` of each core tech node (first historical appearance) is an approximate value from
+general knowledge, good enough for the fictional test world. Before real-history packs rely on
+them (Phase 5), each gets a source note and a confidence level.
+
+## D-041 Literacy fades without teaching — DELEGATED (Phase 1)
+A share of literacy (5% per decade) is lost each turn, so literacy effects set a sustainable
+level: writing alone sustains about 6%, printing and schools push toward 20-30%. Without this,
+writing alone reached 20% literacy and a careful player 70% by 600 BC, far above history.
+
+## D-042 Knowledge from everyone, not only the literate — DELEGATED
+A small base amount of knowledge comes from the whole population (crafts, lore, observation);
+literate people add much more. Otherwise a society without writing could never invent anything,
+yet steppe peoples invented riding and the composite bow.
+
+## D-043 Strain follows current conditions — DELEGATED
+Strain moves toward a target set by this turn's project shortfall, labour diversion and unpaid
+administration, instead of accumulating without limit. It measures how stressed society is now;
+unrest carries the memory.
+
+## D-044 Bots take actions only, with no randomness — DELEGATED
+Automated players choose actions from the state and nothing else, so bot-played games replay
+exactly from their action log. They run rival civilisations until Phase 4's scripts arrive.
+
+## D-045 `uv run anachronism` starts the text console until Phase 3 — DELEGATED
+One command to remember. When the window arrives, `anachronism` opens it and the text version
+stays available as `anachronism-console`.
+
+## D-046 First-pass balance, to tune with the owner — OPEN (Phase 7 per the brief)
+Current numbers make overextension collapse reliably and careful growth thrive. Known issues:
+a careful player is comfortable (the 55-node test tree is nearly exhausted by 600 BC) and
+suspicion bites only when the "witchcraft" or "fraud" framing comes up. The brief asks for the
+owner's help tuning suspicion; pacing is tuned when real content and conflict exist.

@@ -1,0 +1,67 @@
+schema_version: 1
+techs:
+  - id: standard_measures
+    name: Standard weights and measures
+    category: governance
+    year: -2500
+    complexity: 2
+    prerequisites: [writing]
+    effects:
+      - {type: trade_income, bp: 800}
+      - {type: wealth_output, bp: 500}
+      - {type: labour_output, bp: 200}
+    flavour: One measure of grain means the same in every market.
+
+  - id: coinage
+    name: Coinage
+    category: trade
+    year: -600
+    complexity: 2
+    prerequisites: [bronze_working, standard_measures]
+    effects: [{type: trade_income, bp: 1000}, {type: wealth_output, bp: 800}]
+    flavour: Metal of known weight, stamped with the king's promise.
+
+  - id: postal_relay
+    name: Postal relay stations
+    category: governance
+    year: -550
+    complexity: 2
+    prerequisites: [roads, horse_riding]
+    effects: [{type: information_speed, bp: 1200}, {type: legitimacy, bp: 100}]
+    flavour: Fresh horses every day's ride, and the king's word outruns rumour.
+
+  - id: civil_service
+    name: Merit-based civil service
+    category: governance
+    year: -130
+    complexity: 3
+    prerequisites: [writing, schools]
+    requires: {literacy_bp: 400}
+    resistance: [{group: nobility, level: 2}]
+    effects:
+      - {type: wealth_output, bp: 700}
+      - {type: legitimacy, bp: 150}
+      - {type: unrest, bp: -100}
+    flavour: Offices won by examination, not by birth.
+
+  - id: paper_money
+    name: Paper money
+    category: trade
+    year: 1024
+    complexity: 3
+    prerequisites: [paper, woodblock_printing, coinage]
+    requires: {widespread: [coinage]}
+    resistance: [{group: guilds, level: 1}]
+    effects: [{type: trade_income, bp: 1200}, {type: wealth_output, bp: 800}]
+    flavour: A printed promise, worth as much as the state that backs it.
+
+  - id: bookkeeping
+    name: Double-entry bookkeeping
+    category: trade
+    year: 1300
+    complexity: 2
+    visibility: 1
+    prerequisites: [place_value_numerals]
+    requires: {literacy_bp: 500}
+    effects: [{type: wealth_output, bp: 1000}, {type: trade_income, bp: 500}]
+    flavour: Every debit has its credit, and every theft leaves a trace.

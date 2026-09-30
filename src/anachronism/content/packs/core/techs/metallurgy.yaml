@@ -1,0 +1,69 @@
+schema_version: 1
+techs:
+  - id: copper_smelting
+    name: Copper smelting
+    category: metallurgy
+    year: -5000
+    complexity: 1
+    requires: {materials: [copper]}
+    effects: [{type: materials_output, bp: 500}]
+    flavour: Green stone in the fire, red metal in the ashes.
+
+  - id: bronze_working
+    name: Bronze working
+    category: metallurgy
+    year: -3300
+    complexity: 2
+    prerequisites: [copper_smelting]
+    requires: {materials: [copper, tin]}
+    effects: [{type: materials_output, bp: 600}, {type: military_strength, bp: 800}]
+    flavour: A little tin makes copper hard enough to hold an edge.
+
+  - id: ore_prospecting
+    name: Ore prospecting
+    category: metallurgy
+    year: -2000
+    complexity: 2
+    visibility: 1
+    prerequisites: [copper_smelting]
+    effects: [{type: unlocks_resource, target: iron}]
+    flavour: Rust-red streams and bitter springs point to iron below.
+
+  - id: iron_working
+    name: Iron working
+    category: metallurgy
+    year: -1200
+    complexity: 3
+    prerequisites: [bronze_working, charcoal_burning]
+    requires: {materials: [iron]}
+    effects: [{type: materials_output, bp: 800}, {type: military_strength, bp: 1000}]
+    flavour: Hammered, folded, quenched. The bloom becomes a blade.
+
+  - id: coal_mining
+    name: Coal mining
+    category: metallurgy
+    year: -300
+    complexity: 2
+    prerequisites: [ore_prospecting]
+    effects: [{type: unlocks_resource, target: coal}, {type: materials_output, bp: 300}]
+    flavour: Black stone that burns hotter and longer than wood.
+
+  - id: blast_furnace
+    name: Blast furnace
+    category: metallurgy
+    year: -400
+    complexity: 4
+    prerequisites: [iron_working, piston_bellows]
+    requires: {materials: [iron], widespread: [charcoal_burning]}
+    effects: [{type: materials_output, bp: 1500}, {type: military_strength, bp: 600}]
+    flavour: Iron poured like water instead of beaten like dough.
+
+  - id: crucible_steel
+    name: Crucible steel
+    category: metallurgy
+    year: -300
+    complexity: 4
+    prerequisites: [iron_working, pottery_kiln]
+    requires: {materials: [iron]}
+    effects: [{type: military_strength, bp: 1200}, {type: materials_output, bp: 500}]
+    flavour: Sealed in clay and fired for days, the steel comes out patterned like water.

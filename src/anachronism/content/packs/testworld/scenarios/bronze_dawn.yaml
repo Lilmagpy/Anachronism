@@ -1,0 +1,92 @@
+schema_version: 1
+scenarios:
+  - id: bronze_dawn
+    name: "Test world: Bronze Dawn"
+    description: >-
+      1200 BC. Veyra's granaries are full and its scribes busy, but it has no iron and no
+      tin. The Ushkai clans ride the steppe; the Kessrin guard their mines.
+    start_year: -1200
+    years_per_turn: 10
+    player_civ: veyra
+    civs:
+      veyra:
+        capital: veyra_heartland
+        provinces:
+          veyra_heartland: 110000
+          veyra_delta: 80000
+          veyra_upper_river: 70000
+          veyra_western_fields: 55000
+          veyra_coast: 40000
+          veyra_marshes: 15000
+        stockpiles: {food: 600, materials: 150, wealth: 150, knowledge: 80}
+        stats: {literacy_bp: 300, unrest_bp: 800, legitimacy_bp: 6000}
+        influence: {clergy: 4500, nobility: 3000, guilds: 1500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: adopted
+          bronze_working: adopted
+          writing: adopted
+          masonry: adopted
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: adopted
+          sailing: adopted
+          composite_bow: adopted
+          horse_riding: adopted
+      ushkai:
+        capital: ushkai_grasslands
+        provinces:
+          ushkai_grasslands: 24000
+          ushkai_north_steppe: 20000
+          ushkai_high_pasture: 18000
+          ushkai_salt_flats: 5000
+        stockpiles: {food: 120, materials: 60, wealth: 50, knowledge: 10}
+        stats: {literacy_bp: 50, unrest_bp: 1000, legitimacy_bp: 5500}
+        influence: {clergy: 2000, nobility: 6000, guilds: 500}
+        techs:
+          horse_riding: widespread
+          composite_bow: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          agriculture: adopted
+          pottery_kiln: adopted
+          charcoal_burning: adopted
+          copper_smelting: adopted
+          bronze_working: adopted
+          chariot: adopted
+      kessrin:
+        capital: kessrin_highfort
+        provinces:
+          kessrin_lake_basin: 52000
+          kessrin_highfort: 38000
+          kessrin_copper_hills: 30000
+          kessrin_pine_valley: 24000
+          kessrin_iron_peaks: 14000
+        stockpiles: {food: 250, materials: 220, wealth: 120, knowledge: 30}
+        stats: {literacy_bp: 150, unrest_bp: 900, legitimacy_bp: 6500}
+        influence: {clergy: 3000, nobility: 4000, guilds: 3500}
+        techs:
+          agriculture: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          charcoal_burning: widespread
+          masonry: widespread
+          pottery_kiln: widespread
+          ox_plough: adopted
+          fortification: adopted
+          wheel: adopted
+          herbal_medicine: adopted
+          ore_prospecting: adopted
+          writing: concept
+    unowned:
+      borderland_plains: 22000
+      eastern_marches: 11000
+      northern_forest: 9000
+      southern_isles: 7000
+      desert_oasis: 3000

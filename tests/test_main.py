@@ -1,18 +1,11 @@
-"""Tests for the command-line launcher."""
+"""Tests for the ``anachronism`` launcher (the text console until Phase 3)."""
 
 from __future__ import annotations
 
 import pytest
 
 from anachronism import __version__
-from anachronism.__main__ import describe_platform, main
-
-
-def test_launcher_reports_version_and_status(capsys: pytest.CaptureFixture[str]) -> None:
-    assert main([]) == 0
-    out = capsys.readouterr().out
-    assert f"Anachronism {__version__}" in out
-    assert "nothing to play yet" in out
+from anachronism.__main__ import main
 
 
 def test_version_flag_prints_version_and_exits(capsys: pytest.CaptureFixture[str]) -> None:
@@ -22,5 +15,11 @@ def test_version_flag_prints_version_and_exits(capsys: pytest.CaptureFixture[str
     assert __version__ in capsys.readouterr().out
 
 
-def test_platform_description_is_readable() -> None:
-    assert describe_platform().strip()
+def test_launcher_starts_a_game_and_ends_cleanly_when_input_ends() -> None:
+    lines: list[str] = []
+
+    def no_more_input(prompt: str) -> str:
+        raise EOFError
+
+    assert main(["--seed", "1"], read=no_more_input, write=lines.append) == 0
+    assert any("Kingdom of Veyra" in line for line in lines)

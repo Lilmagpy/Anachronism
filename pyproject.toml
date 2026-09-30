@@ -11,6 +11,9 @@ dependencies = [
 
 [project.scripts]
 anachronism = "anachronism.__main__:main"
+anachronism-console = "anachronism.tools.console:main"
+anachronism-lint = "anachronism.tools.lint_content:main"
+anachronism-sim = "anachronism.tools.simulate:main"
 
 [dependency-groups]
 dev = [
@@ -61,10 +64,12 @@ convention = "google"
 python_version = "3.12"
 strict = true
 files = ["src", "tests"]
+mypy_path = ["src", "."]
+explicit_package_bases = true
 plugins = ["pydantic.mypy"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = ["-ra", "--strict-markers", "--strict-config"]
+addopts = ["-ra", "--strict-markers", "--strict-config", "--import-mode=importlib"]
 xfail_strict = true
 filterwarnings = ["error"]

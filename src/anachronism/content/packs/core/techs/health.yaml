@@ -1,0 +1,42 @@
+schema_version: 1
+techs:
+  - id: herbal_medicine
+    name: Herbal medicine
+    category: health
+    year: -2500
+    complexity: 1
+    visibility: 1
+    effects: [{type: health, bp: 500}]
+    flavour: Willow bark for fever, honey for wounds.
+
+  - id: quarantine
+    name: Quarantine
+    category: health
+    year: 1377
+    complexity: 2
+    prerequisites: [writing]
+    resistance: [{group: guilds, level: 1}]
+    effects: [{type: health, bp: 1000}]
+    flavour: Forty days at anchor before the ship may land.
+
+  - id: sanitation
+    name: Sanitation
+    category: health
+    year: 1850
+    complexity: 3
+    prerequisites: [masonry]
+    requires: {widespread: [masonry]}
+    effects: [{type: health, bp: 1500}, {type: population_cap, bp: 600}]
+    flavour: Keep the drains away from the wells, and whole plagues simply stop.
+
+  - id: inoculation
+    name: Inoculation
+    category: health
+    year: 1500
+    complexity: 3
+    visibility: 3
+    prerequisites: [herbal_medicine]
+    requires: {literacy_bp: 300}
+    resistance: [{group: clergy, level: 2}]
+    effects: [{type: health, bp: 1500}, {type: population_cap, bp: 300}]
+    flavour: A scratch of mild pox today spares a child the deadly kind tomorrow.

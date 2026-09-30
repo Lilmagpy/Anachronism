@@ -1,0 +1,13 @@
+schema_version: 1
+# food_bp / materials_bp: output per 1,000 people per decade (10000 = 1 unit).
+# 1,000 people eat 1 food unit per decade. capacity: default people a province supports.
+terrain:
+  - {id: river_plains, name: River plains, food_bp: 14000, materials_bp: 2500, capacity: 120000}
+  - {id: plains, name: Plains, food_bp: 12000, materials_bp: 2500, capacity: 80000}
+  - {id: coast, name: Coastal lowland, food_bp: 11500, materials_bp: 3000, capacity: 60000}
+  - {id: hills, name: Hills, food_bp: 9500, materials_bp: 5000, capacity: 50000}
+  - {id: forest, name: Forest, food_bp: 9000, materials_bp: 7000, capacity: 40000}
+  - {id: steppe, name: Steppe, food_bp: 10500, materials_bp: 2000, capacity: 30000}
+  - {id: mountains, name: Mountains, food_bp: 8000, materials_bp: 6000, capacity: 25000}
+  - {id: marsh, name: Marsh, food_bp: 9000, materials_bp: 3000, capacity: 20000}
+  - {id: desert, name: Desert, food_bp: 6000, materials_bp: 2000, capacity: 10000}

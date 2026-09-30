@@ -1,0 +1,65 @@
+schema_version: 1
+techs:
+  - id: pottery_kiln
+    name: Kiln-fired pottery
+    category: craft
+    year: -6000
+    complexity: 1
+    visibility: 1
+    effects: [{type: storage, bp: 1000}]
+    flavour: Sealed jars keep grain from damp and mice.
+
+  - id: charcoal_burning
+    name: Charcoal burning
+    category: craft
+    year: -4000
+    complexity: 1
+    visibility: 1
+    requires: {materials: [timber]}
+    effects: [{type: materials_output, bp: 300}]
+    flavour: Wood smothered in earth becomes a fuel fit for metal.
+
+  - id: wheel
+    name: The wheel
+    category: craft
+    year: -3500
+    complexity: 1
+    effects: [{type: mobility, bp: 500}, {type: labour_output, bp: 300}]
+    flavour: A round slab and an axle, and loads roll instead of drag.
+
+  - id: piston_bellows
+    name: Piston bellows
+    category: craft
+    year: -450
+    complexity: 2
+    prerequisites: [charcoal_burning]
+    effects: [{type: materials_output, bp: 400}]
+    flavour: A steady blast of air on the push and on the pull.
+
+  - id: water_wheel
+    name: Water wheel
+    category: craft
+    year: -250
+    complexity: 3
+    prerequisites: [wheel, masonry]
+    effects: [{type: labour_output, bp: 800}, {type: materials_output, bp: 500}]
+    flavour: The river grinds the grain while the miller sleeps.
+
+  - id: windmill
+    name: Windmill
+    category: craft
+    year: 900
+    complexity: 3
+    prerequisites: [water_wheel]
+    effects: [{type: labour_output, bp: 600}, {type: food_output, bp: 300}]
+    flavour: Where no river runs, the wind will do.
+
+  - id: paper
+    name: Paper
+    category: craft
+    year: -100
+    complexity: 2
+    prerequisites: [writing]
+    requires: {materials: [timber]}
+    effects: [{type: knowledge_gain, bp: 800}, {type: literacy_growth, bp: 20}]
+    flavour: Bark and rags beaten to pulp, dried into sheets lighter than any tablet.
