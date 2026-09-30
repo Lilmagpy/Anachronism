@@ -15,6 +15,7 @@ rules:
     wealth_per_1000_bp: 3000
     admin_upkeep_per_province: 3
     knowledge_per_1000_literate_bp: 30000
+    base_trade_bp: 1000
     coastal_trade_bp: 1500
     river_trade_bp: 1000
     resource_materials_accessible: 6
@@ -46,7 +47,7 @@ rules:
   society:
     strain_from_shortfall_bp: 5000
     strain_from_diversion_bp: 8000
-    strain_decay_bp: 3000
+    strain_response_bp: 5000
     unrest_from_strain_bp: 4000
     unrest_from_famine_bp: 6000
     unrest_recovery_bp: 1500
@@ -68,6 +69,7 @@ rules:
   population:
     growth_bp: 1500
     deaths_per_missing_food: 400
+    overcrowding_loss_bp: 2000
   suspicion:
     gain_per_year_ahead_bp: 5
     max_gain_bp: 1500

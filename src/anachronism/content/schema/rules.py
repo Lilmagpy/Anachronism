@@ -31,8 +31,10 @@ class EconomyRules(Frozen):
     admin_upkeep_per_province: NonNegative
     """Wealth spent per owned province per decade."""
     knowledge_per_1000_literate_bp: NonNegative
+    base_trade_bp: NonNegative
+    """Trade income of any province, as a share of its taxes."""
     coastal_trade_bp: NonNegative
-    """Extra wealth from a coastal province."""
+    """Extra trade share for a coastal province."""
     river_trade_bp: NonNegative
     resource_materials_accessible: NonNegative
     """Flat materials per decade from each accessible map resource in a province."""
@@ -86,8 +88,11 @@ class SocietyRules(Frozen):
     """Strain, unrest, legitimacy, riots and revolts."""
 
     strain_from_shortfall_bp: NonNegative
+    """Strain target added per unit of project or wealth shortfall."""
     strain_from_diversion_bp: NonNegative
-    strain_decay_bp: Rate
+    """Strain target added per unit of labour diverted from production."""
+    strain_response_bp: Rate
+    """Share of the gap between strain and its target closed each decade."""
     unrest_from_strain_bp: NonNegative
     unrest_from_famine_bp: NonNegative
     """Unrest added at a total famine (all food missing), scaled by the shortfall."""
@@ -122,6 +127,8 @@ class PopulationRules(Frozen):
     """Growth per decade when a province is nearly empty (logistic toward capacity)."""
     deaths_per_missing_food: NonNegative
     """People who die for each unit of food missing."""
+    overcrowding_loss_bp: Rate
+    """Share of the population above capacity lost each decade."""
 
 
 class SuspicionRules(Frozen):
