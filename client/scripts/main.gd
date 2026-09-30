@@ -128,6 +128,7 @@ func _ensure_earth(region: String) -> void:
 			child.queue_free()
 	earth = EarthBuilder.new(region)
 	earth.build(holder)
+	Scenery.new(earth).build(holder)
 	var half := earth.size() / 2.0
 	rig.bounds = Rect2(-half, earth.size())
 	rig.far = earth.size().x * 0.9
@@ -274,7 +275,7 @@ func _process(delta: float) -> void:
 	if menus != null and earth != null:  # the title backdrop drifts slowly east
 		rig.position.x += delta * 6.0
 	if earth != null:  # territory colours fade as you zoom in, so the land itself shows
-		earth.terrain_material.set_shader_parameter("tint", lerpf(0.32, 0.08, rig.zoom_level()))
+		earth.terrain_material.set_shader_parameter("tint", lerpf(0.24, 0.06, rig.zoom_level()))
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -340,3 +341,4 @@ func _take_screenshot(path: String) -> void:
 
 func _exit_tree() -> void:
 	bridge.stop()
+	UiStyle.release()

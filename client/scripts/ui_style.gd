@@ -38,6 +38,11 @@ static func font(role: String, weight := 400) -> Font:
 	return variation
 
 
+## Drops the cached fonts (call when the game closes, so nothing is left allocated).
+static func release() -> void:
+	_fonts.clear()
+
+
 static func theme() -> Theme:
 	var t := Theme.new()
 	t.default_font = font("body", 600)

@@ -1,7 +1,7 @@
 # Anachronism — Plan
 
 **Current phase:** Phase 2 — 3D world (Godot) on the Phase 1 engine (branch `claude/phase-2-3d`).
-**Next action:** step 2.10 then 2.9 — scenario list and the title/civilisation picker.
+**Next action:** step 2.12 — characters who pop up and speak (scripted lines).
 
 Each phase ends at a **gate**: Claude stops, summarises, shows how to run it, lists known
 problems, and waits for approval (D-002: approval = merging the phase PR).
@@ -49,11 +49,13 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
       of what the owner wants (D-059). Phase 2 continues with 2.9–2.16 before its gate.
 
 ### Phase 2, part two — look, characters and choice (D-059..D-061)
-- [ ] 2.9 Title screen and civilisation picker: choose a civilisation and a starting
+- [x] 2.9 Title screen and civilisation picker: choose a civilisation and a starting
       moment (portrait, description, bonus, Confirm), like Rise of Kingdoms
-- [ ] 2.10 Engine: list scenarios and playable civs; start as any civ in a scenario
-- [ ] 2.11 Bright cartoon map over the real geography: painted biomes, stylised mountains,
-      cartoon forests, animated water and clouds
+- [x] 2.10 Engine: list scenarios and playable civs; start as any civ in a scenario
+- [x] 2.11 Bright cartoon map over the real geography: painted biomes (classified from the
+      satellite image), toon light bands, sea painted by depth with coastal foam, cartoon
+      forests; cream-and-gold game screens. Still to come: animated water, clouds
+- [ ] 2.11b Animated water, drifting clouds, better cartoon mountains
 - [ ] 2.12 Characters: rulers, advisers and rivals pop up and speak (scripted lines as
       content data; placeholder portraits made in code, D-060)
 - [ ] 2.13 Cartoon cities from CC0 art packs; a close-up capital view where adopted ideas

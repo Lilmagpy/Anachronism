@@ -10,12 +10,12 @@ extends CanvasLayer
 signal action_requested(action: Dictionary)
 signal end_turn_requested
 
-const GOLD := Color(0.86, 0.72, 0.42)
-const INK := Color(0.95, 0.92, 0.84)
-const DIM := Color(0.70, 0.67, 0.60)
-const BAD := Color(0.93, 0.45, 0.38)
-const GOOD := Color(0.55, 0.85, 0.50)
-const PANEL := Color(0.08, 0.07, 0.06, 0.95)
+const GOLD := Color(0.62, 0.20, 0.12)     ## headings: deep red on cream (UiStyle, D-059)
+const INK := UiStyle.INK
+const DIM := UiStyle.INK_SOFT
+const BAD := Color(0.72, 0.16, 0.12)
+const GOOD := Color(0.16, 0.48, 0.14)
+const PANEL := UiStyle.CREAM
 const CATEGORY_NAMES := {
 	"agriculture": "Farming", "construction": "Building", "craft": "Craft",
 	"governance": "Government", "health": "Health", "knowledge": "Learning",
@@ -49,8 +49,11 @@ func _ready() -> void:
 	_build_card()
 	_build_chronicle()
 	_build_end_turn()
-	_hover.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.9))
-	_hover.add_theme_constant_override("outline_size", 6)
+	_hover.add_theme_color_override("font_color", UiStyle.CREAM)
+	_hover.add_theme_color_override("font_outline_color", Color(0.1, 0.06, 0.03, 0.95))
+	_hover.add_theme_constant_override("outline_size", 7)
+	_hover.add_theme_font_override("font", UiStyle.font("body", 800))
+	_hover.add_theme_font_size_override("font_size", 18)
 	_hover.visible = false
 	_root.add_child(_hover)
 
@@ -99,41 +102,25 @@ func _find_place(place_id: String) -> Dictionary:
 # --- look and feel ------------------------------------------------------------------------
 
 func _theme() -> Theme:
-	var theme := Theme.new()
+	var theme := UiStyle.theme()
 	theme.default_font_size = 15
-	var panel := StyleBoxFlat.new()
-	panel.bg_color = PANEL
-	panel.border_color = Color(GOLD, 0.55)
-	panel.set_border_width_all(1)
-	panel.set_corner_radius_all(6)
-	panel.set_content_margin_all(12)
-	theme.set_stylebox("panel", "PanelContainer", panel)
-	theme.set_color("font_color", "Label", INK)
 	for state in ["normal", "hover", "pressed", "disabled", "focus"]:
-		var box := StyleBoxFlat.new()
-		box.set_corner_radius_all(4)
-		box.set_content_margin_all(6)
+		var box := UiStyle.button_box(state)
 		box.content_margin_left = 12
 		box.content_margin_right = 12
-		box.bg_color = {
-			"normal": Color(0.30, 0.22, 0.12), "hover": Color(0.42, 0.31, 0.16),
-			"pressed": Color(0.22, 0.16, 0.09), "disabled": Color(0.18, 0.17, 0.16),
-			"focus": Color(0, 0, 0, 0),
-		}[state]
-		box.border_color = Color(GOLD, 0.7 if state != "disabled" else 0.2)
-		box.set_border_width_all(1)
-		if state == "focus":
-			box.draw_center = false
+		box.content_margin_top = 4
+		box.content_margin_bottom = 4
+		box.border_width_bottom = 4 if state != "pressed" else 2
 		theme.set_stylebox(state, "Button", box)
-	theme.set_color("font_color", "Button", INK)
-	theme.set_color("font_hover_color", "Button", Color(1, 0.95, 0.8))
-	theme.set_color("font_disabled_color", "Button", DIM)
+	var panel := UiStyle.panel()
+	panel.set_content_margin_all(12)
+	theme.set_stylebox("panel", "PanelContainer", panel)
 	var bar_bg := StyleBoxFlat.new()
-	bar_bg.bg_color = Color(0.2, 0.18, 0.15)
-	bar_bg.set_corner_radius_all(3)
+	bar_bg.bg_color = Color(0.82, 0.76, 0.64)
+	bar_bg.set_corner_radius_all(4)
 	var bar_fill := StyleBoxFlat.new()
-	bar_fill.bg_color = GOLD
-	bar_fill.set_corner_radius_all(3)
+	bar_fill.bg_color = UiStyle.GOLD
+	bar_fill.set_corner_radius_all(4)
 	theme.set_stylebox("background", "ProgressBar", bar_bg)
 	theme.set_stylebox("fill", "ProgressBar", bar_fill)
 	return theme
@@ -202,11 +189,7 @@ func _build_top_bar() -> void:
 	bar.offset_left = 8
 	bar.offset_right = -8
 	bar.offset_top = 8
-	var style := StyleBoxFlat.new()
-	style.bg_color = PANEL
-	style.border_color = Color(GOLD, 0.55)
-	style.set_border_width_all(1)
-	style.set_corner_radius_all(6)
+	var style := UiStyle.panel()
 	style.content_margin_left = 14
 	style.content_margin_right = 14
 	style.content_margin_top = 6
@@ -221,7 +204,7 @@ func _fill_top_bar() -> void:
 	_clear(_top)
 	var status: Dictionary = view["status"]
 	var trends: Dictionary = status["trends"]
-	var title := _label("%s   %s · turn %d" % [str(status["name"]).to_upper(), year_text(view["year"]), view["turn"]], 18, GOLD)
+	var title := UiStyle.label("%s   %s · turn %d" % [str(status["name"]).to_upper(), year_text(view["year"]), view["turn"]], 20, GOLD, "title", 900)
 	_top.add_child(title)
 	var stores: Dictionary = status["stores"]
 	_stat("People", people(status["population"]), trends["population"], true)
@@ -491,22 +474,11 @@ func _fill_chronicle() -> void:
 
 
 func _build_end_turn() -> void:
-	_end_turn.text = "End turn  ▸"
-	_end_turn.focus_mode = Control.FOCUS_NONE
-	_end_turn.add_theme_font_size_override("font_size", 20)
+	_end_turn = UiStyle.big_button("END TURN  ▸", 24)
 	_end_turn.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
-	_end_turn.offset_left = -228
-	_end_turn.offset_top = -74
+	_end_turn.offset_left = -236
+	_end_turn.offset_top = -80
 	_end_turn.offset_right = -8
 	_end_turn.offset_bottom = -8
-	var style := StyleBoxFlat.new()
-	style.bg_color = Color(0.55, 0.36, 0.12)
-	style.border_color = GOLD
-	style.set_border_width_all(2)
-	style.set_corner_radius_all(8)
-	_end_turn.add_theme_stylebox_override("normal", style)
-	var hover := style.duplicate()
-	hover.bg_color = Color(0.68, 0.45, 0.16)
-	_end_turn.add_theme_stylebox_override("hover", hover)
 	_end_turn.pressed.connect(func(): end_turn_requested.emit())
 	_root.add_child(_end_turn)

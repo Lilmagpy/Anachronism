@@ -20,6 +20,7 @@ var rows := 0
 var ocean := PackedByteArray()
 var elev := PackedFloat32Array()
 var terrain_material := ShaderMaterial.new()
+var colour_image: Image   ## the satellite colours (sRGB), for placing forests and fields
 
 
 func _init(region_name: String) -> void:
@@ -180,8 +181,12 @@ func _terrain() -> MeshInstance3D:
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 	var image := Image.new()
 	image.load_png_from_buffer(FileAccess.get_file_as_bytes("res://data/%s_colour.png" % region))
+	colour_image = image.duplicate()
 	image.generate_mipmaps()
 	terrain_material.shader = load("res://shaders/terrain.gdshader")
+	terrain_material.set_shader_parameter("metres_per_unit", METRES_PER_UNIT)
+	terrain_material.set_shader_parameter("land_lift", LAND_LIFT)
+	terrain_material.set_shader_parameter("sea_depth_scale", SEA_DEPTH_SCALE)
 	terrain_material.set_shader_parameter("colour_map", ImageTexture.create_from_image(image))
 	var clear := Image.create(1, 1, false, Image.FORMAT_RGBA8)
 	terrain_material.set_shader_parameter("political", ImageTexture.create_from_image(clear))

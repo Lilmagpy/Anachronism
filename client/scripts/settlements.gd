@@ -10,7 +10,7 @@ class_name Settlements
 extends RefCounted
 
 const SHOW_WITHIN := 320.0          ## camera distance at which settlements appear
-const S := 2.5                      ## settlements are drawn larger than life so they read
+const S := 4.0                      ## settlements are drawn larger than life so they read
 const PEOPLE_PER_TOWN := 160000
 const PEOPLE_PER_VILLAGE := 40000
 const MAX_VILLAGES := 40
