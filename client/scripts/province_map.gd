@@ -367,30 +367,37 @@ func _ribbon(st: SurfaceTool, cells: Array, width: float, colour: Color) -> void
 		line.append(earth.ground_at_pixel(p))
 	EarthBuilder.add_line(st, line, width, colour)
 
-## Crossed swords over every province on a war front (the view's "wars").
+## Where states are at war: an army of each side on each side of the border, with
+## crossed swords between them (the view's "wars").
 func show_wars(wars: Array) -> void:
 	for child in _war_marks.get_children():
 		child.queue_free()
-	var marked := {}
+	var by_id := {}
+	for site in sites:
+		by_id[site["id"]] = site
 	for war in wars:
-		for pid in war["front"]:
-			if marked.has(pid):
+		for clash in war.get("clashes", []):
+			if not by_id.has(clash[0]) or not by_id.has(clash[1]):
 				continue
-			marked[pid] = true
-			for site in sites:
-				if site["id"] == pid:
-					var mark := Label3D.new()
-					mark.text = "⚔"
-					mark.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-					mark.fixed_size = true
-					mark.pixel_size = 0.0007
-					mark.font_size = 40
-					mark.outline_size = 14
-					mark.modulate = Color(1.0, 0.92, 0.75)
-					mark.outline_modulate = Color(0.65, 0.08, 0.05)
-					mark.no_depth_test = true
-					mark.position = earth.ground_at_pixel(site["pixel"]) + Vector3(0, 12.0, 0)
-					_war_marks.add_child(mark)
+			var a: Vector2 = by_id[clash[0]]["pixel"]
+			var b: Vector2 = by_id[clash[1]]["pixel"]
+			var towards := (b - a).angle()
+			for side in [[war["a"], a.lerp(b, 0.3), -towards - PI / 2.0], [war["b"], b.lerp(a, 0.3), -towards + PI / 2.0]]:
+				var army := Armies.make(civ_colours.get(side[0], Color.GRAY), side[2])
+				army.position = earth.ground_at_pixel(side[1])
+				_war_marks.add_child(army)
+			var mark := Label3D.new()
+			mark.text = "⚔"
+			mark.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+			mark.fixed_size = true
+			mark.pixel_size = 0.0007
+			mark.font_size = 40
+			mark.outline_size = 14
+			mark.modulate = Color(1.0, 0.92, 0.75)
+			mark.outline_modulate = Color(0.65, 0.08, 0.05)
+			mark.no_depth_test = true
+			mark.position = earth.ground_at_pixel(a.lerp(b, 0.5)) + Vector3(0, 10.0, 0)
+			_war_marks.add_child(mark)
 
 
 func _province_label(site: Dictionary) -> Label3D:

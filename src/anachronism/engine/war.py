@@ -12,7 +12,7 @@ from __future__ import annotations
 from anachronism.content.schema import RelationStatus
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import BP, apply_bp, clamp
-from anachronism.engine.rivals import add_grievance, alive, frontier, set_status
+from anachronism.engine.rivals import add_grievance, alive, frontier, province_links, set_status
 from anachronism.engine.rng import GameRng
 from anachronism.engine.state import Awareness, GameState
 from anachronism.engine.timeflow import per_turn
@@ -26,9 +26,33 @@ def fronts(state: GameState) -> list[dict[str, object]]:
             continue
         a, b = pair.split("|")
         found.append(
-            {"a": a, "b": b, "front": sorted({*frontier(state, a, b), *frontier(state, b, a)})}
+            {
+                "a": a,
+                "b": b,
+                "front": sorted({*frontier(state, a, b), *frontier(state, b, a)}),
+                "clashes": clashes(state, a, b),
+            }
         )
     return found
+
+
+def clashes(state: GameState, a: str, b: str, limit: int = 4) -> list[list[str]]:
+    """Pairs of bordering provinces [a's, b's] where the two armies face each other."""
+    links = province_links(state.world)
+    theirs = set(state.owned_provinces(b))
+    pairs: list[list[str]] = []
+    for mine in state.owned_provinces(a):
+        land = [p for p in state.world.geography[mine].neighbours if p in theirs]
+        across = sorted(p for p in links.get(mine, set()) if p in theirs)
+        for other in sorted(land) or across[:1]:
+            pairs.append([mine, other])
+    pairs.sort(
+        key=lambda pair: (
+            -(state.provinces[pair[0]].population + state.provinces[pair[1]].population),
+            pair,
+        )
+    )
+    return pairs[:limit]
 
 
 def capture(state: GameState, taker: str, province_id: str, events: EventLog) -> None:
