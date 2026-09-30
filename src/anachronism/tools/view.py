@@ -11,6 +11,7 @@ from anachronism.engine.projects import project_turns
 from anachronism.engine.reports import capacity
 from anachronism.engine.state import Event, GameState
 from anachronism.engine.tech import feasibility
+from anachronism.tools.console import describe_effect
 
 TRENDED = ("population", "food", "literacy_bp", "unrest_bp", "legitimacy_bp", "suspicion_bp")
 
@@ -33,6 +34,7 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
     return {
         "turn": state.turn + 1,
         "year": state.year,
+        "years_per_turn": state.world.years_per_turn,
         "scenario": state.world.scenario_name,
         "map": state.world.map,
         "seed": state.seed,
@@ -141,7 +143,13 @@ def _ideas(state: GameState, civ_id: str) -> list[dict[str, Any]]:
                 },
                 "turns": project_turns(state, node_id),
                 "effects": [
-                    {"type": e.type.value, "bp": e.bp, "target": e.target} for e in node.effects
+                    {
+                        "type": e.type.value,
+                        "bp": e.bp,
+                        "target": e.target,
+                        "text": describe_effect(e.type, e.bp, e.target),
+                    }
+                    for e in node.effects
                 ],
             }
         )

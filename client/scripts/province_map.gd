@@ -165,16 +165,84 @@ func neighbours() -> Dictionary:
 
 # --- drawing -----------------------------------------------------------------------------
 
+var _overlay: Node3D
+var _outline: MeshInstance3D
+
+
 func build(parent: Node3D) -> void:
+	_overlay = Node3D.new()
+	_overlay.name = "Provinces"
+	parent.add_child(_overlay)
+	_redraw()
+
+
+## Owners change during the game (revolts, collapses): recolour and relabel the map.
+func update(view: Dictionary) -> void:
+	var owners := {}
+	var capitals := {}
+	for p in view["provinces"]:
+		owners[p["id"]] = p["owner"]
+		capitals[p["id"]] = p["capital"]
+	var changed := false
+	for site in sites:
+		if owners.has(site["id"]) and (site["owner"] != owners[site["id"]] or site["capital"] != capitals[site["id"]]):
+			site["owner"] = owners[site["id"]]
+			site["capital"] = capitals[site["id"]]
+			changed = true
+	if changed:
+		_redraw()
+
+
+func _redraw() -> void:
+	for child in _overlay.get_children():
+		child.queue_free()
 	earth.set_political(_political_image())
-	parent.add_child(_borders())
+	_overlay.add_child(_borders())
 	for index in sites.size():
 		if not sites[index]["sea"]:
-			parent.add_child(_province_label(sites[index]))
+			_overlay.add_child(_province_label(sites[index]))
 	for civ_id in civ_colours:
 		var label := _civ_label(civ_id)
 		if label != null:
-			parent.add_child(label)
+			_overlay.add_child(label)
+
+
+## The province or sea at a height-map pixel, or -1.
+func site_at(pixel: Vector2) -> int:
+	if pixel.x < 0 or pixel.y < 0 or pixel.x >= earth.size().x or pixel.y >= earth.size().y:
+		return -1
+	return region[_cell_of(pixel)]
+
+
+## A bright outline around one site (the selection); -1 clears it.
+func outline(parent: Node3D, index: int) -> void:
+	if _outline != null:
+		_outline.queue_free()
+		_outline = null
+	if index < 0:
+		return
+	var segments: Array = []
+	for r in rows:
+		for q in cols:
+			var c := r * cols + q
+			if q < cols - 1 and (region[c] == index) != (region[c + 1] == index):
+				segments.append([Vector2(q + 1, r), Vector2(q + 1, r + 1)])
+			if r < rows - 1 and (region[c] == index) != (region[c + cols] == index):
+				segments.append([Vector2(q, r + 1), Vector2(q + 1, r + 1)])
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	for line in _join(segments):
+		_ribbon(st, _smooth(line), 1.6, Color(1.0, 0.85, 0.35))
+	var material := StandardMaterial3D.new()
+	material.vertex_color_use_as_albedo = true
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	material.no_depth_test = true
+	_outline = MeshInstance3D.new()
+	_outline.name = "Selection"
+	_outline.mesh = st.commit()
+	_outline.material_override = material
+	_outline.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	parent.add_child(_outline)
 
 
 func _owner_of(index: int) -> Variant:

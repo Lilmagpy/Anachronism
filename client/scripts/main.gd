@@ -4,7 +4,10 @@
 ## `--seed=N` picks the game, `--turns=N` plays N turns (the player does nothing) first,
 ## `--focus=province_id,distance` points the camera at a province (practice map),
 ## `--look=lat,lon,distance` points it at a real place, `--scenario=ID` picks the scenario
-## (default `warring_states`; `bronze_dawn` is the fictional test world).
+## (default `warring_states`; `bronze_dawn` is the fictional test world). On the real map:
+## `--start=idea_id` begins an experiment, `--select=province_id` selects a province and
+## `--play=N` then ends N turns, `--click=x,y` clicks the map, `--tab=ideas|projects|world` opens a panel (all for
+## screenshots and tests).
 extends Node3D
 
 var bridge := EngineBridge.new()
@@ -12,6 +15,9 @@ var rig := CameraRig.new()
 var world: WorldBuilder
 var earth: EarthBuilder
 var provinces: ProvinceMap
+var hud: GameHud
+var holder: Node3D
+var _press_at := Vector2.ZERO
 var view: Dictionary = {}
 var options := {}
 var environment := Environment.new()
@@ -40,11 +46,12 @@ func _ready() -> void:
 	view = result
 	for i in int(options.get("turns", "0")):
 		view = bridge.request("end_turn")
-	var holder := Node3D.new()
+	holder = Node3D.new()
 	holder.name = "World"
 	add_child(holder)
 	if view.get("map") != null:
 		_build_earth(holder, str(view["map"]))
+		_build_hud()
 		if options.has("screenshot"):
 			_take_screenshot(str(options["screenshot"]))
 		return
@@ -82,11 +89,125 @@ func _build_earth(holder: Node3D, region: String) -> void:
 	for p in view["provinces"]:
 		if p["owner"] == view["player"] and p["capital"] and p["latlon"] != null:
 			start = earth.ground_at(p["latlon"][0], p["latlon"][1])
-	rig.look_at_point(start + Vector3(120, 0, 0), 900.0)
+	rig.look_at_point(start + Vector3(160, 0, 0), 900.0)  # east of Qin; the side panel covers the right
 	if options.has("look"):
 		var f: PackedStringArray = str(options["look"]).split(",")
 		var d := float(f[2]) if f.size() > 2 else 200.0
 		rig.look_at_point(earth.ground_at(float(f[0]), float(f[1])), d)
+
+
+# --- playing on the real map ---------------------------------------------------------
+
+func _build_hud() -> void:
+	hud = GameHud.new()
+	add_child(hud)
+	hud.action_requested.connect(_on_action)
+	hud.end_turn_requested.connect(_on_end_turn)
+	if options.has("tab"):
+		hud.tab = str(options["tab"])
+	hud.show_view(view)
+	if options.has("start"):
+		_on_action({"kind": "start", "node_id": str(options["start"])})
+	for i in int(options.get("play", "0")):
+		_on_end_turn()
+	if options.has("tab"):
+		hud.set_tab(str(options["tab"]))
+	if options.has("select"):
+		_select(str(options["select"]))
+	if options.has("click"):  # --click=x,y: pick whatever is at that screen point
+		await get_tree().process_frame
+		var xy: PackedStringArray = str(options["click"]).split(",")
+		var index := _pick(Vector2(float(xy[0]), float(xy[1])))
+		print("clicked: ", "nothing" if index < 0 else provinces.sites[index]["id"])
+		_select("" if index < 0 else str(provinces.sites[index]["id"]))
+
+
+func _on_action(action: Dictionary) -> void:
+	var reply: Variant = bridge.request("act", {"action": action})
+	if reply == null:
+		hud.message = bridge.last_error
+	else:
+		hud.message = "" if reply["accepted"] else str(reply["message"])
+		view = reply["view"]
+		if reply["accepted"] and action["kind"] == "start":
+			hud.tab = "projects"
+	hud.show_view(view)
+
+
+func _on_end_turn() -> void:
+	var reply: Variant = bridge.request("end_turn")
+	if reply == null:
+		hud.message = bridge.last_error
+	else:
+		hud.message = ""
+		view = reply
+		provinces.update(view)
+	hud.show_view(view)
+
+
+func _select(place_id: String) -> void:
+	hud.select(place_id)
+	for index in provinces.sites.size():
+		if provinces.sites[index]["id"] == place_id:
+			provinces.outline(holder, index)
+			return
+	provinces.outline(holder, -1)
+
+
+## The province or sea under a point on the screen, or -1.
+func _pick(screen: Vector2) -> int:
+	var camera := rig.camera
+	var origin := camera.project_ray_origin(screen)
+	var direction := camera.project_ray_normal(screen)
+	if direction.y >= 0.0:
+		return -1
+	# March along the ray until it passes under the ground, then narrow it down.
+	var step := maxf(rig.distance / 200.0, 0.5)
+	var t := 0.0
+	var previous := 0.0
+	var hit := false
+	for i in 3000:
+		var p := origin + direction * t
+		if p.y <= _ground_height(p):
+			hit = true
+			break
+		previous = t
+		t += step
+	if not hit:
+		return -1
+	for i in 12:
+		var middle := (previous + t) / 2.0
+		var p := origin + direction * middle
+		if p.y <= _ground_height(p):
+			t = middle
+		else:
+			previous = middle
+	var point := origin + direction * t
+	return provinces.site_at(Vector2(point.x, point.z) + earth.size() / 2.0)
+
+
+func _ground_height(point: Vector3) -> float:
+	return maxf(earth.ground_at_pixel(Vector2(point.x, point.z) + earth.size() / 2.0).y, 0.0)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if provinces == null:
+		return
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			_press_at = event.position
+		elif event.position.distance_to(_press_at) < 6.0:  # a click, not a drag
+			var index := _pick(event.position)
+			_select("" if index < 0 else str(provinces.sites[index]["id"]))
+	elif event is InputEventMouseMotion and not event.button_mask:
+		var index := _pick(event.position)
+		var text := ""
+		if index >= 0:
+			var site: Dictionary = provinces.sites[index]
+			text = str(site["name"])
+			if site["owner"] != null:
+				text += " · " + str(provinces.civ_names[site["owner"]])
+		hud.show_hover(text, event.position)
 
 
 func _setup_environment() -> void:
