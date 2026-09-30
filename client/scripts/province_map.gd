@@ -45,6 +45,7 @@ func _init(earth_builder: EarthBuilder, view: Dictionary) -> void:
 			"id": p["id"], "name": p["name"], "sea": false, "owner": p["owner"],
 			"capital": p["capital"], "population": p["population"],
 			"pixel": earth.pixel_of(p["latlon"][0], p["latlon"][1]),
+			"resources": p.get("resources", {}),
 		})
 	for s in view["seas"]:
 		if s["latlon"] == null:
@@ -406,6 +407,27 @@ func _province_label(site: Dictionary) -> Label3D:
 	label.no_depth_test = true
 	label.visibility_range_end = 700.0  # zoomed out, only the states' names show
 	label.position = earth.ground_at_pixel(site["pixel"]) + Vector3(0, 6.0, 0)
+	# the province's usable map resources, in small type under its name, when close
+	var found: Array = []
+	var resources: Dictionary = site.get("resources", {})
+	for res in resources:
+		if resources[res] != "unexplored":
+			found.append(str(res) + ("" if resources[res] == "accessible" else " (little)"))
+	if not found.is_empty():
+		var tag := Label3D.new()
+		tag.text = " · ".join(found)
+		tag.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+		tag.fixed_size = true
+		tag.pixel_size = 0.0007
+		tag.font_size = 18
+		tag.outline_size = 8
+		tag.modulate = Color(1.0, 0.88, 0.55)
+		tag.outline_modulate = Color(0.06, 0.05, 0.05, 0.85)
+		tag.no_depth_test = true
+		tag.visibility_range_end = 300.0
+		tag.position = Vector3(0, -0.03, 0)
+		tag.offset = Vector2(0, -34)
+		label.add_child(tag)
 	return label
 
 
