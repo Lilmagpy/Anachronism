@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from anachronism.engine.events import EventLog
+from anachronism.engine.events import EventLog, list_names
 from anachronism.engine.fixed import BP, apply_bp, clamp
 from anachronism.engine.rng import GameRng
 from anachronism.engine.state import CivState, GameState
@@ -71,12 +71,3 @@ def advance_projects(
             "stalled",
             f"Work in {civ.name} has stalled on {list_names(newly_stalled)}; progress is decaying.",
         )
-
-
-def list_names(names: list[str], limit: int = 3) -> str:
-    """Join names as "A, B and C", or "A, B, C and 4 more" beyond ``limit``."""
-    if len(names) > limit:
-        return f"{', '.join(names[:limit])} and {len(names) - limit} more"
-    if len(names) == 1:
-        return names[0]
-    return f"{', '.join(names[:-1])} and {names[-1]}"

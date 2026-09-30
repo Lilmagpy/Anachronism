@@ -6,7 +6,7 @@ from dataclasses import dataclass
 
 from anachronism.content.schema import Access, Category, EffectType, Provenance, Stage, TechNode
 from anachronism.engine.effects import Effects
-from anachronism.engine.events import EventLog
+from anachronism.engine.events import EventLog, list_names
 from anachronism.engine.fixed import BP, apply_bp, clamp, with_bonus
 from anachronism.engine.state import CivState, GameState, TechState
 from anachronism.engine.suspicion import on_adoption
@@ -157,11 +157,18 @@ def spread_step(state: GameState, civ: CivState, effects: Effects, events: Event
     rules = state.world.rules.spread
     per_decade = rules.base_bp + apply_bp(rules.literacy_bonus_bp, civ.stats.literacy_bp)
     gain = rate_per_turn(state, with_bonus(per_decade, effects[EffectType.MOBILITY]))
+    now_common: list[str] = []
     for node_id, tech in sorted(civ.tech.items()):
         if not tech.stage.is_adopted or tech.spread_bp >= BP:
             continue
         tech.spread_bp = min(BP, tech.spread_bp + gain)
         if tech.stage is Stage.ADOPTED and tech.spread_bp >= rules.widespread_at_bp:
             tech.stage = Stage.WIDESPREAD
-            name = state.tech_nodes[node_id].name
-            events.add(civ.id, "widespread", f"{name} is now common across {civ.name}.")
+            now_common.append(state.tech_nodes[node_id].name)
+    if now_common:
+        verb = "is" if len(now_common) == 1 else "are"
+        events.add(
+            civ.id,
+            "widespread",
+            f"{list_names(now_common)} {verb} now common across {civ.name}.",
+        )
