@@ -352,3 +352,24 @@ laid out on the cardinal directions as cities of the period were), plus towns an
 by population, placed on the flattest, lowest land. Simple built shapes for now; the CC0
 models of D-051 or custom art can replace them. Map lines (borders, rivers) now keep a
 constant thickness on screen at every zoom.
+
+## D-059 Art direction: bright cartoon, full of character — OWNER (2026-09-30)
+After playing the first Mac build the owner said the quality fell well short: the game must
+look good in the manner of Rise of Kingdoms (screenshots shared), may be cartoony, and needs
+characterisation (figures from each empire popping up and speaking) and an intro where the
+player picks a civilisation and a starting moment. The map keeps real geography (D-053) but
+is painted in a bright cartoon style instead of satellite colours (owner's choice). Sources:
+CC0 art packs for 3D models (D-051), code for the map, water, UI and effects. Scripted
+character lines come now; free AI conversation belongs to Phase 3. Phase 2 continues
+(steps 2.9–2.16) and its PR stays open until the owner is happy.
+
+## D-060 Character portraits: placeholders made in code for now — OWNER (2026-09-30)
+Offered AI-generated, artist-made or in-game-generated portraits; the owner chose
+placeholders for now. They are drawn in code (heraldic emblems and silhouettes in each
+civilisation's colours) and loaded from one folder per character, so real art can replace
+them without code changes.
+
+## D-061 First starting moments: all four regions — OWNER (2026-09-30)
+The picker will offer East Asia (already built; add Korea and Japan starts), the
+Mediterranean (Rome, Greece), Egypt / Near East and Medieval Europe (Britain, France,
+Vikings). Each needs its own map region and researched scenario; they arrive one at a time.
