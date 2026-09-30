@@ -19,7 +19,7 @@ const PANEL := UiStyle.CREAM
 const CATEGORY_NAMES := {
 	"agriculture": "Farming", "construction": "Building", "craft": "Craft",
 	"governance": "Government", "health": "Health", "knowledge": "Learning",
-	"maritime": "Seafaring", "metallurgy": "Metals", "military": "War",
+	"maritime": "Seafaring", "metallurgy": "Metals", "military": "War", "trade": "Trade",
 }
 
 var view: Dictionary = {}

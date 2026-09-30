@@ -74,6 +74,10 @@ func _draw() -> void:
 			_celtic(head, r, w, h)
 		"kushite":
 			_kushite_cap(head, r)
+		"hittite":
+			_hittite_cap(head, r)
+		"assyrian":
+			_assyrian(head, r)
 		_:
 			_crown(head, r)
 	# frame
@@ -140,11 +144,13 @@ func _face(head: Vector2, r: float) -> void:
 		draw_line(eye + Vector2(-r * 0.18, -r * 0.2), eye + Vector2(r * 0.18, -r * 0.24 + side * r * 0.03), HAIR, r * 0.07)
 	draw_line(head + Vector2(0, r * 0.05), head + Vector2(r * 0.06, r * 0.3), SKIN_SHADE, r * 0.06)
 	# moustache and beard (Romans and Hellenistic kings shaved; Celts wore only moustaches)
-	if style in ["roman", "hellenistic", "kushite"]:
+	if style in ["roman", "hellenistic", "kushite", "hittite"]:
 		draw_line(head + Vector2(-r * 0.2, r * 0.52), head + Vector2(r * 0.2, r * 0.52), Color(0.5, 0.2, 0.15), r * 0.06)
 	elif style == "celtic":
 		draw_polyline([head + Vector2(-r * 0.6, r * 0.85), head + Vector2(-r * 0.25, r * 0.45),
 			head + Vector2(r * 0.25, r * 0.45), head + Vector2(r * 0.6, r * 0.85)], Color(0.62, 0.36, 0.16), r * 0.16)
+	elif style == "assyrian":
+		pass  # the square curled beard is drawn with the crown
 	elif style == "pharaoh":
 		draw_rect(Rect2(head.x - r * 0.1, head.y + r * 0.75, r * 0.2, r * 0.55), Color(0.2, 0.15, 0.1))
 	elif style != "southern":
@@ -362,6 +368,35 @@ func _kushite_cap(head: Vector2, r: float) -> void:
 	draw_line(head + Vector2(-r * 0.97, -r * 0.35), head + Vector2(r * 0.97, -r * 0.35), UiStyle.GOLD, r * 0.14)
 	for side in [-1, 1]:  # the double uraeus of the Kushite kings
 		draw_circle(head + Vector2(side * r * 0.15, -r * 0.55), r * 0.12, Color(0.85, 0.2, 0.15))
+
+
+func _hittite_cap(head: Vector2, r: float) -> void:
+	# long hair falling behind, then the tall conical cap
+	draw_colored_polygon([head + Vector2(r * 0.6, -r * 0.4), head + Vector2(r * 1.2, r * 0.2),
+		head + Vector2(r * 1.1, r * 2.0), head + Vector2(r * 0.7, r * 1.9)], HAIR)
+	_ellipse(head + Vector2(0, -r * 0.62), Vector2(r * 0.97, r * 0.6), HAIR)
+	draw_colored_polygon([head + Vector2(-r * 0.9, -r * 0.65), head + Vector2(r * 0.9, -r * 0.65),
+		head + Vector2(r * 0.1, -r * 2.5)], colour.lightened(0.4))
+	draw_line(head + Vector2(-r * 0.85, -r * 0.75), head + Vector2(r * 0.85, -r * 0.75), UiStyle.GOLD, r * 0.12)
+
+
+func _assyrian(head: Vector2, r: float) -> void:
+	# long hair on the shoulders
+	for side in [-1, 1]:
+		draw_colored_polygon([head + Vector2(side * r * 0.8, -r * 0.3), head + Vector2(side * r * 1.3, r * 0.3),
+			head + Vector2(side * r * 1.25, r * 1.6), head + Vector2(side * r * 0.8, r * 1.5)], HAIR)
+	# the square beard in rows of curls
+	draw_rect(Rect2(head.x - r * 0.6, head.y + r * 0.45, r * 1.2, r * 1.35), HAIR)
+	for row in 4:
+		for k in 5:
+			draw_circle(Vector2(head.x - r * 0.48 + k * r * 0.24, head.y + r * 0.62 + row * r * 0.32), r * 0.1, Color(0.22, 0.17, 0.14))
+	# a tall crown with a small point, banded with gold
+	var crown := colour.lightened(0.35)
+	draw_colored_polygon([head + Vector2(-r * 0.85, -r * 0.55), head + Vector2(r * 0.85, -r * 0.55),
+		head + Vector2(r * 0.72, -r * 1.75), head + Vector2(-r * 0.72, -r * 1.75)], crown)
+	draw_colored_polygon([head + Vector2(-r * 0.2, -r * 1.75), head + Vector2(r * 0.2, -r * 1.75), head + Vector2(0, -r * 2.15)], crown)
+	for band in 3:
+		draw_line(head + Vector2(-r * 0.83, -r * (0.7 + band * 0.4)), head + Vector2(r * 0.83, -r * (0.7 + band * 0.4)), UiStyle.GOLD, r * 0.08)
 
 
 func _ellipse(centre: Vector2, radius: Vector2, fill: Color) -> void:
