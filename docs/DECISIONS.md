@@ -455,3 +455,13 @@ library ideas and writes them to `drafts/` (git-ignored), each marked as a draft
 pack only after someone has checked its date and written a real source (brief §9.2:
 the model's memory is never the only source for shipped facts).
 
+## D-071 Chance events are content — DELEGATED (2026-10-01)
+Plague, floods, droughts, locusts, earthquakes, fires, bandits, storms, bumper harvests,
+silver strikes, wandering sages and good omens live in `core/happenings.yaml`: a chance per
+decade, where each can strike (terrain, river, coast), what it does, and what softens it
+(health against plague, storage against flood and drought). At most one per state per turn,
+rolled on the game's RNG so replays match. `rules.society.happening_frequency_bp` scales
+them all (0 turns them off, as the exact-number tests do). The steward and diviner react.
+Also tonight: capitals are twice as hard to take and rough terrain is harder (D-067 tuning);
+armies appear on war fronts; sound and music are synthesised by scripts/make_sounds.py.
+

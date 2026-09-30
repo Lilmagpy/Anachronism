@@ -117,6 +117,8 @@ class SocietyRules(Frozen):
     """Riot chance = (unrest above the threshold) * this / 10_000."""
     riot_loss_bp: Rate
     riot_legitimacy_bp: NonNegative
+    happening_frequency_bp: NonNegative
+    """Scales the chance of every happening (0 switches them off)."""
     revolt_threshold_bp: Rate
     revolt_chance_per_excess_bp: NonNegative
     revolt_unrest_release_bp: Rate

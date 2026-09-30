@@ -188,3 +188,17 @@ dialogue:
     lines:
       - "{subject} is under attack and begs for our help. Say the word and we march - the World tab has the war drums."
       - "Our friends in {subject} are bleeding. If we stand aside, who will stand by us?"
+
+  - id: disaster
+    speaker: steward
+    lines:
+      - "{subject}! I have opened the granaries and sent every clerk I can spare. We will count the cost when the worst is over."
+      - "{subject} has struck us. The people look to the throne - let them see it act."
+      - "A black day: {subject}. Had we known what I suspect you know, we might have been ready."
+
+  - id: blessing
+    speaker: diviner
+    lines:
+      - "{subject}! Heaven smiles on us. Spend the gift wisely - smiles do not last."
+      - "{subject} - the omens were right. The people will say it is your doing. Let them."
+

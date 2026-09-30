@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import hashlib
 from collections.abc import Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
@@ -23,6 +23,7 @@ from anachronism.content.schema import (
     Dialogue,
     EffectType,
     Era,
+    Happening,
     MapResource,
     PackManifest,
     ProvinceGeography,
@@ -57,6 +58,8 @@ class Content:
     dialogue: Mapping[str, Dialogue]
     digest: str
     """SHA-256 of every loaded file, recorded in saves to identify the content version."""
+    happenings: Mapping[str, Happening] = field(default_factory=dict)
+    """Chance events (plague, flood, bumper harvests...)."""
 
 
 @dataclass(frozen=True)
@@ -133,6 +136,7 @@ def load_content(pack_ids: Sequence[str] | None = None, root: Path = PACKS_DIR) 
         scenarios=registry.scenarios,
         speakers=registry.speakers,
         dialogue=registry.dialogue,
+        happenings=registry.happenings,
         digest=digest.hexdigest(),
     )
 

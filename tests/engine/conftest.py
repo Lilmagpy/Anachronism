@@ -25,7 +25,11 @@ def content() -> Content:
 def game(content: Content) -> GameState:
     """A new Bronze Dawn game (seed 1), with luck switched off for exact outcomes."""
     state = new_game(content, "bronze_dawn", seed=1)
-    override_rules(state, projects={"setback_chance_bp": 0, "breakthrough_chance_bp": 0})
+    override_rules(
+        state,
+        projects={"setback_chance_bp": 0, "breakthrough_chance_bp": 0},
+        society={"happening_frequency_bp": 0},
+    )
     return state
 
 

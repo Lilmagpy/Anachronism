@@ -78,6 +78,7 @@ def build_state(
         },
         map=scenario.map,
         cost_scale=scenario.cost_scale,
+        happenings=dict(sorted(content.happenings.items())),
         scripts={c: start.scripts for c, start in sorted(scenario.civs.items()) if start.scripts},
     )
     civs = {

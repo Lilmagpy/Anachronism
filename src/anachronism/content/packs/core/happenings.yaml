@@ -1,0 +1,112 @@
+schema_version: 1
+# Chance events (content/schema/happenings.py). chance_bp is per decade per state;
+# changes are in basis points (population/stores: shares; unrest/legitimacy: points x100).
+happenings:
+  - id: plague
+    name: Plague
+    kind: disaster
+    message: "Plague sweeps through {province}. The dead are carried out by cartloads."
+    chance_bp: 700
+    population_bp: -1200
+    unrest_bp: 400
+    softened_by: health
+
+  - id: flood
+    name: Great flood
+    kind: disaster
+    message: "The river bursts its banks in {province}; fields and granaries are drowned."
+    chance_bp: 900
+    river: true
+    population_bp: -200
+    food_bp: -2500
+    unrest_bp: 200
+    softened_by: storage
+
+  - id: drought
+    name: Drought
+    kind: disaster
+    message: "No rain falls on {province}. The wells run dry and the crops wither."
+    chance_bp: 700
+    terrain: [plains, steppe, desert, hills]
+    food_bp: -2500
+    unrest_bp: 300
+    softened_by: storage
+
+  - id: locusts
+    name: Locusts
+    kind: disaster
+    message: "A cloud of locusts darkens the sky over {province} and strips the fields bare."
+    chance_bp: 500
+    terrain: [plains, river_plains, steppe]
+    food_bp: -2000
+    unrest_bp: 200
+
+  - id: earthquake
+    name: Earthquake
+    kind: disaster
+    message: "The earth shakes in {province}; walls and houses fall."
+    chance_bp: 300
+    terrain: [mountains, hills]
+    population_bp: -200
+    materials_bp: -2000
+    legitimacy_bp: -200
+
+  - id: fire
+    name: Great fire
+    kind: disaster
+    message: "A great fire rages through {province} for three days."
+    chance_bp: 300
+    wealth_bp: -1500
+    materials_bp: -1000
+    unrest_bp: 100
+
+  - id: bandits
+    name: Bandits
+    kind: disaster
+    message: "Bandits hold the roads of {province}; merchants dare not travel."
+    chance_bp: 500
+    terrain: [hills, forest, mountains, marsh]
+    wealth_bp: -1000
+    unrest_bp: 300
+
+  - id: storm
+    name: Great storm
+    kind: disaster
+    message: "A storm from the sea wrecks boats and harbours in {province}."
+    chance_bp: 500
+    coastal: true
+    wealth_bp: -800
+    food_bp: -800
+
+  - id: bumper_harvest
+    name: Bumper harvest
+    kind: blessing
+    message: "The harvest in {province} is the best in living memory."
+    chance_bp: 800
+    food_bp: 2500
+    legitimacy_bp: 200
+
+  - id: silver_strike
+    name: Silver strike
+    kind: blessing
+    message: "Prospectors strike a rich vein of silver in {province}!"
+    chance_bp: 300
+    terrain: [hills, mountains]
+    needs_adopted: [ore_prospecting]
+    wealth_bp: 3000
+
+  - id: wandering_sage
+    name: A wandering sage
+    kind: blessing
+    message: "A famous sage arrives in {province} and gathers students around him."
+    chance_bp: 500
+    needs_adopted: [writing]
+    knowledge_bp: 2500
+
+  - id: good_omen
+    name: A good omen
+    kind: blessing
+    message: "A comet blazes over {province}; the diviners declare it a sign of Heaven's favour."
+    chance_bp: 400
+    legitimacy_bp: 400
+    unrest_bp: -300

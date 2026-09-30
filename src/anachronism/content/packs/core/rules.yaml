@@ -63,6 +63,7 @@ rules:
     riot_chance_per_excess_bp: 20000
     riot_loss_bp: 2000
     riot_legitimacy_bp: 400
+    happening_frequency_bp: 10000
     revolt_threshold_bp: 8000
     revolt_chance_per_excess_bp: 20000
     revolt_unrest_release_bp: 2000

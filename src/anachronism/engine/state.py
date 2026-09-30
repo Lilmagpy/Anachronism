@@ -16,6 +16,7 @@ from anachronism.content.schema import (
     EffectType,
     Era,
     Frozen,
+    Happening,
     MapResource,
     ProvinceGeography,
     RelationStatus,
@@ -68,6 +69,8 @@ class World(Frozen):
     """Real-Earth map region, or ``None`` for a generated map."""
     cost_scale: int = 1
     """Multiplier on every project cost (see ``Scenario.cost_scale``)."""
+    happenings: dict[str, Happening] = Field(default_factory=dict)
+    """Chance events that can strike (plague, flood, bumper harvests...)."""
     scripts: dict[str, tuple[Script, ...]] = Field(default_factory=dict)
     """Each civilisation's intentions (brief §7.1), from the scenario."""
 

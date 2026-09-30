@@ -7,6 +7,7 @@ from anachronism.engine.economy import run_economy
 from anachronism.engine.effects import Effects, civ_effects
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import BP, apply_bp, clamp
+from anachronism.engine.happenings import strike
 from anachronism.engine.population import grow_population
 from anachronism.engine.projects import advance_projects
 from anachronism.engine.reports import snapshot
@@ -47,6 +48,7 @@ def end_turn(state: GameState) -> tuple[GameState, list[Event]]:
         spread_step(new, civ, effects, events)
         update_suspicion(new, civ, rng, events)
         _update_literacy(new, civ.stats, effects)
+        strike(new, civ, effects, rng, events)
         effects_by_civ[civ_id] = effects
     # rivals: news, awareness, scripts, free agents; then the wars (brief §7)
     strengths = rivals_turn(new, effects_by_civ, list(events.items), rng, events)

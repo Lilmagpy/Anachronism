@@ -75,8 +75,8 @@ def test_careful_qin_is_stable_and_advances(content: Content) -> None:
 
 
 def peaceful(state: GameState) -> GameState:
-    """The same world with no scripts and no wars."""
-    state.world = state.world.model_copy(update={"scripts": {}})
+    """The same world with no scripts, no wars and no chance events."""
+    state.world = state.world.model_copy(update={"scripts": {}, "happenings": {}})
     for rel in state.relations.values():
         if rel.status is RelationStatus.WAR:
             rel.status = RelationStatus.HOSTILE

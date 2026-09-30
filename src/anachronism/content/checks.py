@@ -27,6 +27,7 @@ def cross_reference_issues(registry: Registry) -> list[ContentIssue]:
         *_province_issues(registry),
         *_sea_issues(registry),
         *_scenario_issues(registry),
+        *_happening_issues(registry),
         *_dialogue_issues(registry),
     ]
 
@@ -276,3 +277,21 @@ def _rival_issues(registry: Registry, scenario: Scenario, report: Callable[[str]
         if pair in pairs:
             report(f"relation {pair[0]}-{pair[1]} is listed twice")
         pairs.add(pair)
+
+
+def _happening_issues(registry: Registry) -> list[ContentIssue]:
+    issues: list[ContentIssue] = []
+    for happening in registry.happenings.values():
+        where = registry.origin("happenings", happening.id)
+        label = f"happenings ({happening.id})"
+        for terrain in happening.terrain:
+            if registry.is_unknown("terrain", terrain):
+                issues.append(ContentIssue(where, label, f"unknown terrain {terrain!r}"))
+        for tech in happening.needs_adopted:
+            if registry.is_unknown("techs", tech):
+                issues.append(ContentIssue(where, label, f"unknown tech {tech!r}"))
+        try:
+            happening.message.format(civ="", province="")
+        except (KeyError, IndexError, ValueError):
+            issues.append(ContentIssue(where, label, "message may only use {civ} and {province}"))
+    return issues
