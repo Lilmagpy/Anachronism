@@ -63,6 +63,9 @@ class ProvinceGeography(Frozen):
     """Overrides the terrain's default capacity when set."""
     resources: dict[Identifier, Access] = Field(default_factory=dict)
     neighbours: tuple[Identifier, ...] = ()
+    position: tuple[int, int] | None = None
+    """Where the province's centre sits on the 3D map (x east, y south; about 1 unit per km).
+    Required for provinces used in a scenario."""
 
     @model_validator(mode="after")
     def _check_neighbours(self) -> ProvinceGeography:
