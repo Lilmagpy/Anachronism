@@ -373,3 +373,10 @@ them without code changes.
 The picker will offer East Asia (already built; add Korea and Japan starts), the
 Mediterranean (Rome, Greece), Egypt / Near East and Medieval Europe (Britain, France,
 Vikings). Each needs its own map region and researched scenario; they arrive one at a time.
+
+## D-062 Night shift: work through the brief without stopping — OWNER (2026-09-30)
+The owner is asleep and asked Claude to keep going without asking questions: improve
+graphics and UI scaling, colour cities and territories by owner, vary the characters, and
+implement the rest of the brief, then keep improving graphics. For this stretch the phase
+gates are waived (work continues on the open Phase 2 PR, Lilmagpy/Anachronism#2); every
+decision Claude makes alone is logged here as DELEGATED for review in the morning.
