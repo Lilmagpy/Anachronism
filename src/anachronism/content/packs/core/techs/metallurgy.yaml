@@ -2,6 +2,7 @@ schema_version: 1
 techs:
   - id: copper_smelting
     name: Copper smelting
+    keywords: [copper, smelting, smelt]
     category: metallurgy
     year: -5000
     complexity: 1
@@ -11,6 +12,7 @@ techs:
 
   - id: bronze_working
     name: Bronze working
+    keywords: [bronze, tin, alloy, casting]
     category: metallurgy
     year: -3300
     complexity: 2
@@ -21,6 +23,7 @@ techs:
 
   - id: ore_prospecting
     name: Ore prospecting
+    keywords: [prospecting, ore, mining, mines, surveying ore, geology]
     category: metallurgy
     year: -2000
     complexity: 2
@@ -31,6 +34,7 @@ techs:
 
   - id: iron_working
     name: Iron working
+    keywords: [iron, ironworking, smithing, blacksmith, forge]
     category: metallurgy
     year: -1200
     complexity: 3
@@ -41,6 +45,7 @@ techs:
 
   - id: coal_mining
     name: Coal mining
+    keywords: [coal, coal mining, collieries, fossil fuel]
     category: metallurgy
     year: -300
     complexity: 2
@@ -50,6 +55,7 @@ techs:
 
   - id: blast_furnace
     name: Blast furnace
+    keywords: [blast furnace, cast iron, furnace, pig iron]
     category: metallurgy
     year: -400
     complexity: 4
@@ -60,6 +66,7 @@ techs:
 
   - id: crucible_steel
     name: Crucible steel
+    keywords: [steel, crucible steel, damascus, hardened steel]
     category: metallurgy
     year: -300
     complexity: 4

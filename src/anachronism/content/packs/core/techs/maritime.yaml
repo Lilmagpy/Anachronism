@@ -2,6 +2,7 @@ schema_version: 1
 techs:
   - id: sailing
     name: Sailing boats
+    keywords: [sail, sails, sailing, boats, ships, seafaring]
     category: maritime
     year: -4000
     complexity: 1
@@ -10,6 +11,7 @@ techs:
 
   - id: sternpost_rudder
     name: Sternpost rudder
+    keywords: [rudder, sternpost, steering, helm]
     category: maritime
     year: 100
     complexity: 2
@@ -19,6 +21,7 @@ techs:
 
   - id: compass
     name: Magnetic compass
+    keywords: [compass, magnet, lodestone, navigation, north]
     category: maritime
     year: 1040
     complexity: 3

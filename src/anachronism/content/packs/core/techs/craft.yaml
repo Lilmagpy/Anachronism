@@ -2,6 +2,7 @@ schema_version: 1
 techs:
   - id: pottery_kiln
     name: Kiln-fired pottery
+    keywords: [kiln, pottery, ceramics, porcelain, firing, glaze]
     category: craft
     year: -6000
     complexity: 1
@@ -11,6 +12,7 @@ techs:
 
   - id: charcoal_burning
     name: Charcoal burning
+    keywords: [charcoal, charcoal burning, fuel, coke]
     category: craft
     year: -4000
     complexity: 1
@@ -21,6 +23,7 @@ techs:
 
   - id: wheel
     name: The wheel
+    keywords: [wheel, wheels, cart, carts, wagon]
     category: craft
     year: -3500
     complexity: 1
@@ -29,6 +32,7 @@ techs:
 
   - id: piston_bellows
     name: Piston bellows
+    keywords: [bellows, piston bellows, forced air, blowing air]
     category: craft
     year: -450
     complexity: 2
@@ -38,6 +42,7 @@ techs:
 
   - id: water_wheel
     name: Water wheel
+    keywords: [water wheel, watermill, water mill, mill, water power, trip hammer]
     category: craft
     year: -250
     complexity: 3
@@ -47,6 +52,7 @@ techs:
 
   - id: windmill
     name: Windmill
+    keywords: [windmill, wind power, wind mill, sails]
     category: craft
     year: 900
     complexity: 3
@@ -56,6 +62,7 @@ techs:
 
   - id: paper
     name: Paper
+    keywords: [paper, papermaking, pulp, writing material]
     category: craft
     year: -100
     complexity: 2

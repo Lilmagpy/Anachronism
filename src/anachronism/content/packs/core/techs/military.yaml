@@ -2,6 +2,7 @@ schema_version: 1
 techs:
   - id: horse_riding
     name: Horse riding
+    keywords: [horse riding, cavalry, horses, riders, mounted]
     category: military
     year: -3500
     complexity: 1
@@ -11,6 +12,7 @@ techs:
 
   - id: composite_bow
     name: Composite bow
+    keywords: [composite bow, bows, archery, archers]
     category: military
     year: -2000
     complexity: 2
@@ -19,6 +21,7 @@ techs:
 
   - id: chariot
     name: War chariot
+    keywords: [chariot, chariots, war cart]
     category: military
     year: -2000
     complexity: 2
@@ -29,6 +32,7 @@ techs:
 
   - id: fortification
     name: Stone fortifications
+    keywords: [walls, fortification, fort, forts, castle, defences, defenses, great wall]
     category: military
     year: -3000
     complexity: 2
@@ -38,6 +42,7 @@ techs:
 
   - id: crossbow
     name: Crossbow
+    keywords: [crossbow, crossbows, trigger, bolts]
     category: military
     year: -600
     complexity: 3
@@ -47,6 +52,7 @@ techs:
 
   - id: stirrup
     name: Stirrups
+    keywords: [stirrup, stirrups, saddle, lance]
     category: military
     year: 300
     complexity: 1
@@ -57,6 +63,7 @@ techs:
 
   - id: gunpowder
     name: Gunpowder
+    keywords: [gunpowder, black powder, explosives, fire powder, saltpetre, saltpeter, bombs, cannon, guns]
     category: military
     year: 850
     complexity: 4

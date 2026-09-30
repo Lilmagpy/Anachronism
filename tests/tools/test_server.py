@@ -131,3 +131,29 @@ def test_scenario_catalog_and_playing_any_civ(tmp_path: Path) -> None:
     assert replies[1]["result"]["status"]["name"] == "Chu"
     assert not replies[2]["ok"]
     assert "'rome' is not a civilisation in warring_states" in replies[2]["error"]
+
+
+def test_ideas_through_the_bridge(tmp_path: Path) -> None:
+    replies = talk(
+        [
+            {"id": 1, "cmd": "new_game", "args": {"scenario": "warring_states", "civ": "qin"}},
+            {"id": 2, "cmd": "idea", "args": {"text": "paper, and a compass"}},
+            {"id": 3, "cmd": "idea", "args": {"text": "teleport the army to the moon"}},
+            {"id": 4, "cmd": "settings"},
+            {"id": 5, "cmd": "quit"},
+        ],
+        tmp_path,
+    )
+    assert all(r["ok"] for r in replies)
+    ruled = replies[1]["result"]
+    assert [r["node_id"] for r in ruled["rulings"]] == ["paper", "compass"]
+    assert ruled["source"] == "offline"
+    assert ruled["voices"]
+    ideas = {i["id"]: i for i in ruled["view"]["ideas"]} if "ideas" in ruled["view"] else {}
+    assert ideas == {} or "paper" in ideas
+    implausible = replies[2]["result"]["rulings"][0]
+    assert implausible["verdict"] == "implausible_for_era"
+    assert implausible["hint"]
+    settings = replies[3]["result"]
+    assert settings["online"] is False
+    assert "key" not in json.dumps(settings).replace("has_key", "")

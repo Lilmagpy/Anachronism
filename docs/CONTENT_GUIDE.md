@@ -52,8 +52,12 @@ techs:
       - {type: materials_output, bp: 800}     # +8%
       - {type: military_strength, bp: 1000}
     flavour: Hammered, folded, quenched. The bloom becomes a blade.
+    keywords: [iron, ironworking, smithing, blacksmith, forge]   # words players might type
     sources: ["Approximate date; see D-040"]
 ```
+- **Keywords** are how the offline court recognises a typed idea ("a blacksmith's forge"
+  finds this node) and how the online court is shown related ideas. Give several everyday
+  words and short phrases; multi-word phrases count most when typed exactly.
 - **Effects** come from a fixed menu (DESIGN §9); anything else is rejected. Percentage
   effects: `bp: 1000` = +10%. `literacy_growth`, `unrest` and `legitimacy` are points per
   decade (`100` = one point). `suspicion` is added once, on adoption. Unlocks take a

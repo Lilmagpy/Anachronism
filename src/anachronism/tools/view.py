@@ -133,6 +133,8 @@ def _ideas(state: GameState, civ_id: str) -> list[dict[str, Any]]:
                 "flavour": node.flavour,
                 "stage": known.stage.value if known else None,
                 "goal": bool(known and known.goal),
+                "stub": node.stub,
+                "provenance": node.provenance.value,
                 "spread_bp": known.spread_bp if known else 0,
                 "ready": not result.blocked and not (known and known.stage is not Stage.CONCEPT),
                 "blockers": describe_blockers(state, result) if result.blocked else "",

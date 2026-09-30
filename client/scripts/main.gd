@@ -186,6 +186,10 @@ func _build_hud() -> void:
 	add_child(hud)
 	hud.action_requested.connect(_on_action)
 	hud.end_turn_requested.connect(_on_end_turn)
+	hud.idea_submitted.connect(_on_idea)
+	var court: Variant = bridge.request("settings")
+	if court != null:
+		hud.court_mode = "a language model rules" if court["online"] else "offline: the library of ideas rules"
 	if options.has("tab"):
 		hud.tab = str(options["tab"])
 	hud.show_view(view)
@@ -198,6 +202,10 @@ func _build_hud() -> void:
 		hud.set_tab(str(options["tab"]))
 	if options.has("select"):
 		_select(str(options["select"]))
+	if options.has("idea"):  # --idea=TEXT: propose an idea, as if typed (screenshots, tests)
+		_on_idea(str(options["idea"]).replace("_", " "), "")
+		while bridge.busy:
+			await get_tree().process_frame
 	if options.has("click"):  # --click=x,y: pick whatever is at that screen point
 		await get_tree().process_frame
 		var xy: PackedStringArray = str(options["click"]).split(",")
@@ -206,7 +214,29 @@ func _build_hud() -> void:
 		_select("" if index < 0 else str(provinces.sites[index]["id"]))
 
 
+## The player's own words go to the court (the idea pipeline). The engine may consult a
+## language model, which takes a few seconds, so this runs in the background.
+func _on_idea(text: String, answer: String) -> void:
+	if bridge.busy:
+		return
+	hud.set_deliberating(true)
+	bridge.request_async("idea", {"text": text, "answer": answer}, func(reply: Variant):
+		hud.set_deliberating(false)
+		if reply == null:
+			hud.message = bridge.last_error
+			hud.show_view(view)
+			return
+		hud.message = ""
+		if reply.has("view"):
+			view = reply["view"]
+			hud.show_view(view)
+		hud.show_rulings(reply)
+		hud.speak(reply.get("voices", [])))
+
+
 func _on_action(action: Dictionary) -> void:
+	if bridge.busy:
+		return
 	var reply: Variant = bridge.request("act", {"action": action})
 	if reply == null:
 		hud.message = bridge.last_error
@@ -221,6 +251,9 @@ func _on_action(action: Dictionary) -> void:
 
 
 func _on_end_turn() -> void:
+	if bridge.busy:
+		return
+	hud.rulings = []
 	var reply: Variant = bridge.request("end_turn")
 	if reply == null:
 		hud.message = bridge.last_error

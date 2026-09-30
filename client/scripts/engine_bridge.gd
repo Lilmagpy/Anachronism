@@ -7,6 +7,9 @@ var _pipe: FileAccess
 var _pid := -1
 var _next_id := 1
 var last_error := ""
+var busy := false          ## a request is running on the worker thread
+var _lock := Mutex.new()
+var _worker: Thread
 
 
 ## Where the packaged app keeps the engine's files, Python and saves (user data folder).
@@ -89,7 +92,35 @@ func _copy_tree(from: String, to: String) -> bool:
 
 
 ## Send a command and wait for its reply. Returns the result, or null on error (see last_error).
+## Send a request on a worker thread, so the window stays responsive while the engine thinks
+## (a ruling by a language model can take several seconds). `done` is called on the main
+## thread with the result, or null on failure (see `last_error`).
+func request_async(cmd: String, args: Dictionary, done: Callable) -> void:
+	if _worker != null and _worker.is_started():
+		_worker.wait_to_finish()
+	busy = true
+	_worker = Thread.new()
+	_worker.start(func():
+		var result: Variant = request(cmd, args)
+		_finish.call_deferred(result, done))
+
+
+func _finish(result: Variant, done: Callable) -> void:
+	if _worker != null:
+		_worker.wait_to_finish()
+		_worker = null
+	busy = false
+	done.call(result)
+
+
 func request(cmd: String, args: Dictionary = {}) -> Variant:
+	_lock.lock()
+	var result: Variant = _request(cmd, args)
+	_lock.unlock()
+	return result
+
+
+func _request(cmd: String, args: Dictionary) -> Variant:
 	if _pipe == null:
 		last_error = "The game engine is not running"
 		return null
@@ -109,6 +140,8 @@ func request(cmd: String, args: Dictionary = {}) -> Variant:
 
 
 func stop() -> void:
+	if _worker != null and _worker.is_started():
+		_worker.wait_to_finish()
 	if _pipe != null:
 		request("quit")
 		_pipe = null

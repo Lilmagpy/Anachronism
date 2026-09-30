@@ -10,9 +10,11 @@ from anachronism.engine.actions import (
     PauseProject,
     ProposeIdea,
     ResumeProject,
+    RuleOnIdea,
     SetPriority,
     StartProject,
 )
+from anachronism.engine.judge import apply_ruling
 from anachronism.engine.state import GameState, Project
 from anachronism.engine.tech import Feasibility, feasibility, propose
 
@@ -53,6 +55,8 @@ def _apply(state: GameState, action: Action) -> tuple[bool, str]:
     civ = state.civs.get(action.civ)
     if civ is None:
         return False, f"unknown civilisation {action.civ!r}"
+    if isinstance(action, RuleOnIdea):
+        return apply_ruling(state, civ.id, action.ruling)
     node = state.tech_nodes.get(action.node_id)
     if node is None:
         return False, f"unknown idea {action.node_id!r}"

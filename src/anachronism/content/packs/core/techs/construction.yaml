@@ -2,6 +2,7 @@ schema_version: 1
 techs:
   - id: masonry
     name: Masonry
+    keywords: [stone, masonry, stonework, cut stone, bricks, mortar]
     category: construction
     year: -3000
     complexity: 2
@@ -11,6 +12,7 @@ techs:
 
   - id: roads
     name: Paved roads
+    keywords: [roads, paved roads, highways, road network, paving]
     category: construction
     year: -500
     complexity: 3
@@ -23,6 +25,7 @@ techs:
 
   - id: concrete
     name: Hydraulic concrete
+    keywords: [concrete, cement, lime mortar, pozzolana]
     category: construction
     year: -200
     complexity: 3
@@ -33,6 +36,7 @@ techs:
 
   - id: aqueduct
     name: Aqueducts
+    keywords: [aqueduct, aqueducts, clean water, water supply, pipes, arches]
     category: construction
     year: -700
     complexity: 4
@@ -43,6 +47,7 @@ techs:
 
   - id: canals
     name: Canals and locks
+    keywords: [canal, canals, locks, waterway, grand canal, barge]
     category: construction
     year: -500
     complexity: 4

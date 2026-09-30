@@ -2,6 +2,7 @@ schema_version: 1
 techs:
   - id: herbal_medicine
     name: Herbal medicine
+    keywords: [medicine, herbs, herbal, remedies, doctors, healing]
     category: health
     year: -2500
     complexity: 1
@@ -11,6 +12,7 @@ techs:
 
   - id: quarantine
     name: Quarantine
+    keywords: [quarantine, isolation, isolate the sick, plague, contagion]
     category: health
     year: 1377
     complexity: 2
@@ -21,6 +23,7 @@ techs:
 
   - id: sanitation
     name: Sanitation
+    keywords: [sanitation, sewers, sewage, latrines, hygiene, drains, wash hands, soap]
     category: health
     year: 1850
     complexity: 3
@@ -31,6 +34,7 @@ techs:
 
   - id: inoculation
     name: Inoculation
+    keywords: [inoculation, vaccine, vaccination, variolation, smallpox, immunity]
     category: health
     year: 1500
     complexity: 3

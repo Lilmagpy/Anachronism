@@ -69,15 +69,18 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [ ] 2.16 Gate: owner plays the new build on their Mac and merges the phase PR
 
 ## Phase 3 — LLM ruling pipeline (moved after the 3D world, D-049)
-- [ ] 3.1 Output schemas; guard (validate, clamp, reject)
-- [ ] 3.2 Compact summary builder (token budget test: ≤ 500 tokens)
-- [ ] 3.3 Fake provider; pipeline interpret/clarify/split/rule/flavour
-- [ ] 3.4 Ruling cache; ruling records in saves; replay without calls
-- [ ] 3.5 Offline provider + small hand-made library
-- [ ] 3.6 Anthropic provider (config models, prompt caching, structured output, retries)
-- [ ] 3.7 Budget tracking + monthly cap; debug log
-- [ ] 3.8 Prompt-injection and failure-fallback tests; free-text idea box in the 3D UI
-- [ ] 3.9 Gate (owner needs an Anthropic API key for live testing)
+- [x] 3.1 Output schemas (`llm/schemas.py`); guard (`llm/guard.py`) plus engine bounds
+      (`engine/judge.py`): effect caps, complexity/year floors, capped adviser nudges (D-063)
+- [x] 3.2 Compact summary builder (`engine/summary.py`, tested under 600 tokens)
+- [x] 3.3 Fake provider; pipeline interpret/clarify/split/rule/flavour (`llm/pipeline.py`)
+- [x] 3.4 Ruling cache; rulings stored in the action log (`RuleOnIdea`); replay without calls
+- [x] 3.5 Offline interpreter over the library, with keywords on every node (D-064)
+- [x] 3.6 Anthropic provider: model from config (no default, D-065), prompt caching,
+      forced tool output, retries — standard library only, no new dependency
+- [x] 3.7 Monthly token cap and usage ledger; debug log of every call (toggle)
+- [x] 3.8 Prompt-injection and failure-fallback tests; the idea box in the 3D UI with a
+      "the court deliberates" state; "Ask the court" on goal stubs
+- [ ] 3.9 Gate (owner needs an Anthropic API key and a model name for live testing)
 
 ## Phase 4 — Scripts, awareness, information (headless)
 - [ ] Scripts with preconditions; awareness states; news propagation with garbling;

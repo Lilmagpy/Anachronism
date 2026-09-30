@@ -26,11 +26,13 @@ MOMENTS = frozenset(
         "game_start", "project_started", "adopted", "widespread", "breakthrough", "setback",
         "stalled", "resistance", "suspicion", "framing", "discovery", "riot", "revolt",
         "famine", "collapse", "rival_adopted", "quiet",
+        "idea_feasible", "idea_blocked", "idea_implausible",
     }
 )  # fmt: skip
 """When lines can be spoken. ``rival_adopted``: a rival adopts an idea ahead of its time,
 and its ruler tells you so (``{rival}`` is that rival);
-``quiet``: a turn with nothing else to say."""
+``quiet``: a turn with nothing else to say; ``idea_*``: the court's reaction to one of the
+player's own ideas when no language model is speaking for them (offline mode)."""
 
 
 class Speaker(Frozen):

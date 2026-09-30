@@ -153,6 +153,28 @@ class SuspicionRules(Frozen):
     inspired_legitimacy_bp: NonNegative
 
 
+class RulingRules(Frozen):
+    """Limits on what one ruling on a player's idea can do (DESIGN §8, D-020).
+
+    The model (or the offline interpreter) proposes; these bounds are enforced twice, by
+    ``llm/guard.py`` and again by the engine when the ruling is applied.
+    """
+
+    max_ideas_per_message: Positive
+    """A message naming more ideas than this has the rest ignored (no bundling)."""
+    max_effects: Positive
+    """Effects one new advancement may have."""
+    max_stubs: NonNegative
+    """New goal stubs one ruling may name."""
+    max_prerequisites: NonNegative
+    adviser_unrest_bp: NonNegative
+    """Most unrest the advisers' reactions to one idea may add."""
+    adviser_suspicion_bp: NonNegative
+    """Most suspicion the advisers' reactions to one idea may add."""
+    min_complexity_per_prerequisite_tier: Positive
+    """A new node is at least as complex as its most complex prerequisite, minus this."""
+
+
 class Rules(Frozen):
     """All engine rules, grouped by system."""
 
@@ -165,3 +187,4 @@ class Rules(Frozen):
     society: SocietyRules
     population: PopulationRules
     suspicion: SuspicionRules
+    rulings: RulingRules

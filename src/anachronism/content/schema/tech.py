@@ -155,6 +155,9 @@ class TechNode(Frozen):
     """A placeholder named by a ruling; must be ruled on before it can be started."""
     sources: tuple[str, ...] = ()
     """Internal research notes; never shown to players."""
+    keywords: tuple[Annotated[str, Field(min_length=2, max_length=40)], ...] = ()
+    """Words a player might use for this idea ("printing", "press"); the offline
+    interpreter and the model's related-node search match on them."""
 
     @model_validator(mode="after")
     def _check_consistency(self) -> TechNode:

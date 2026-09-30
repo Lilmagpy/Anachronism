@@ -9,6 +9,7 @@ extends CanvasLayer
 
 signal action_requested(action: Dictionary)
 signal end_turn_requested
+signal idea_submitted(text: String, answer: String)
 
 const GOLD := Color(0.62, 0.20, 0.12)     ## headings: deep red on cream (UiStyle, D-059)
 const INK := UiStyle.INK
@@ -27,6 +28,10 @@ var tab := "ideas"
 var selected: Dictionary = {}   ## the province (or sea) the player clicked, from the view
 var civ_colours := {}
 var message := ""
+var deliberating := false       ## waiting for the court's ruling on the player's idea
+var question := ""              ## the court's clarifying question, if it asked one
+var rulings: Array = []         ## the latest rulings, shown at the top of the Ideas tab
+var court_mode := "offline"     ## "online" when a language model rules, from settings
 
 var _root := Control.new()
 var _top := HBoxContainer.new()
@@ -37,6 +42,12 @@ var _card_body := VBoxContainer.new()
 var _chronicle := VBoxContainer.new()
 var _end_turn := Button.new()
 var _hover := Label.new()
+var _idea_box := VBoxContainer.new()
+var _idea_input := LineEdit.new()
+var _idea_send := Button.new()
+var _idea_status := Label.new()
+var _asked := ""                ## the words the question was about
+var _dots := 0.0
 var _speech_queue: Array = []
 var _speech: Control
 
@@ -174,6 +185,7 @@ func show_hover(text: String, at: Vector2) -> void:
 
 func set_tab(new_tab: String) -> void:
 	tab = new_tab
+	_update_idea_box()
 	_fill_side()
 
 
@@ -365,6 +377,8 @@ func _build_side_panel() -> void:
 	var column := VBoxContainer.new()
 	column.add_theme_constant_override("separation", 8)
 	column.add_child(_tabs)
+	_build_idea_box()
+	column.add_child(_idea_box)
 	var scroll := ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
@@ -408,6 +422,119 @@ func _fill_side() -> void:
 			_fill_world()
 
 
+# --- the idea box: the player's own words for the court (DESIGN §8) ----------------------
+
+func _build_idea_box() -> void:
+	_idea_box.add_theme_constant_override("separation", 4)
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 6)
+	_idea_input.placeholder_text = "Whisper an idea to your court…"
+	_idea_input.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_idea_input.custom_minimum_size.y = 44
+	_idea_input.max_length = 600
+	_idea_input.add_theme_font_override("font", UiStyle.font("body", 700))
+	_idea_input.add_theme_font_size_override("font_size", 17)
+	_idea_input.add_theme_color_override("font_color", INK)
+	_idea_input.add_theme_color_override("font_placeholder_color", Color(DIM, 0.7))
+	var field := UiStyle.panel(Color(1, 0.99, 0.95), UiStyle.GOLD_DARK, 10)
+	field.set_content_margin_all(8)
+	_idea_input.add_theme_stylebox_override("normal", field)
+	_idea_input.add_theme_stylebox_override("focus", field)
+	_idea_input.text_submitted.connect(func(_t: String): _submit_idea())
+	row.add_child(_idea_input)
+	_idea_send.text = "Propose"
+	_idea_send.custom_minimum_size = Vector2(104, 44)
+	_idea_send.focus_mode = Control.FOCUS_NONE
+	_idea_send.add_theme_font_size_override("font_size", 17)
+	_idea_send.pressed.connect(_submit_idea)
+	row.add_child(_idea_send)
+	_idea_box.add_child(row)
+	_idea_status.add_theme_font_size_override("font_size", readable(12))
+	_idea_status.add_theme_color_override("font_color", DIM)
+	_idea_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_idea_box.add_child(_idea_status)
+	_update_idea_box()
+
+
+func _submit_idea() -> void:
+	var text := _idea_input.text.strip_edges()
+	if deliberating or text == "":
+		return
+	if question != "":
+		idea_submitted.emit(_asked, text)  # the answer to the court's question
+	else:
+		_asked = text
+		idea_submitted.emit(text, "")
+	_idea_input.text = ""
+
+
+## The court starts or stops thinking about the player's idea.
+func set_deliberating(on: bool) -> void:
+	deliberating = on
+	_update_idea_box()
+
+
+## Show what the court made of the idea: a question, or one ruling per idea.
+func show_rulings(result: Dictionary) -> void:
+	question = str(result.get("question", ""))
+	rulings = result.get("rulings", [])
+	if question == "":
+		_asked = ""
+	tab = "ideas"
+	_update_idea_box()
+	if not view.is_empty():
+		_fill_side()
+
+
+func _update_idea_box() -> void:
+	_idea_input.editable = not deliberating
+	_idea_send.disabled = deliberating
+	_idea_box.visible = tab == "ideas"
+	if deliberating:
+		_idea_status.text = "The court deliberates"
+		_idea_status.add_theme_color_override("font_color", GOLD)
+	elif question != "":
+		_idea_status.text = "The court asks: %s" % question
+		_idea_status.add_theme_color_override("font_color", GOLD)
+		_idea_input.placeholder_text = "Your answer…"
+	else:
+		_idea_status.text = "Anything at all: \"make the river work for us\", \"a printing press\"… (%s)" % court_mode
+		_idea_status.add_theme_color_override("font_color", DIM)
+		_idea_input.placeholder_text = "Whisper an idea to your court…"
+
+
+func _process(delta: float) -> void:
+	if deliberating:
+		_dots += delta * 2.5
+		_idea_status.text = "The court deliberates" + ".".repeat(int(_dots) % 4)
+
+
+func _ruling_card(ruling: Dictionary) -> Control:
+	var verdict := str(ruling["verdict"])
+	var colours := {"feasible": GOOD, "blocked": Color(0.70, 0.45, 0.08), "implausible_for_era": BAD}
+	var words := {"feasible": "Within reach", "blocked": "Needs groundwork", "implausible_for_era": "Beyond this age"}
+	var box := PanelContainer.new()
+	var tint: Color = colours.get(verdict, DIM)
+	box.add_theme_stylebox_override("panel", UiStyle.panel(Color(tint.lightened(0.82), 1.0), tint, 10))
+	var body := VBoxContainer.new()
+	body.add_theme_constant_override("separation", 2)
+	var head := HBoxContainer.new()
+	var name := _label(str(ruling["name"]), 16, INK)
+	name.add_theme_font_override("font", UiStyle.font("body", 800))
+	name.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	name.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	head.add_child(name)
+	head.add_child(_label(words.get(verdict, verdict), 12, tint))
+	body.add_child(head)
+	if ruling.get("new", false):
+		body.add_child(_label("A new idea, added to your ideas", 12, GOLD))
+	for line in [str(ruling.get("message", "")), str(ruling.get("reason", "")), str(ruling.get("hint", ""))]:
+		if line != "":
+			body.add_child(_wrapped(line, 13, INK))
+	box.add_child(body)
+	return box
+
+
 func _fill_ideas() -> void:
 	var ready: Array = []
 	var blocked: Array = []
@@ -422,6 +549,10 @@ func _fill_ideas() -> void:
 		else:
 			blocked.append(idea)
 	ready.sort_custom(func(a, b): return a["year"] < b["year"])
+	if not rulings.is_empty():
+		_side_body.add_child(_label("The court's ruling", 17, GOLD))
+		for ruling in rulings:
+			_side_body.add_child(_ruling_card(ruling))
 	_side_body.add_child(_label("Ideas your scholars could try", 17, GOLD))
 	_side_body.add_child(_wrapped("Each costs labour, materials, knowledge and wealth every turn until it works. Ideas far ahead of their time cost more and draw suspicion."))
 	for idea in ready:
@@ -447,6 +578,10 @@ func _idea_card(idea: Dictionary) -> Control:
 	head.add_child(name)
 	if idea["ready"]:
 		head.add_child(_button("Begin", func(): action_requested.emit({"kind": "start", "node_id": idea["id"]})))
+	elif idea.get("stub", false):
+		var ask := _button("Ask the court", func(): idea_submitted.emit(str(idea["name"]), ""))
+		ask.disabled = deliberating
+		head.add_child(ask)
 	card.add_child(head)
 	var ahead: int = int(idea["year"]) - int(view["year"])
 	var when := "known elsewhere since %s" % year_text(idea["year"]) if ahead <= 0 else "%d years ahead of its time" % ahead

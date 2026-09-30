@@ -380,3 +380,33 @@ graphics and UI scaling, colour cities and territories by owner, vary the charac
 implement the rest of the brief, then keep improving graphics. For this stretch the phase
 gates are waived (work continues on the open Phase 2 PR, Lilmagpy/Anachronism#2); every
 decision Claude makes alone is logged here as DELEGATED for review in the morning.
+
+## D-063 How a ruling on the player's idea is bounded — DELEGATED (2026-10-01)
+The model (or the offline interpreter) returns loose numbers: percentages, 0-3 levels.
+`llm/guard.py` converts them into an engine `Ruling`, and `engine/judge.py` bounds the
+ruling again when it is applied, so even a ruling that skipped the guard is safe: effects
+are cut to the era's caps (at most 3 per idea, no unlocks from rulings), a new idea is at
+least as complex as its hardest prerequisite minus one and cannot be "invented" before
+its prerequisites (so the anachronism cost and suspicion cannot be dodged), unknown
+references are dropped, and the advisers' reactions add at most 2 unrest and 3 suspicion.
+Costs are never taken from the model (D-020). At most 3 ideas per message are ruled on
+(no bundling). The limits live in `rules.yaml` under `rulings`. Each ruling is stored in
+the save inside a `RuleOnIdea` action, so replays apply it again without any model (D-021).
+
+## D-064 Offline "Historical Advisors" mode matches words to the library — DELEGATED (2026-10-01)
+Every advancement now has `keywords` (words players might use: "printing press",
+"zero", "river"). Offline, a message is split into parts, each part is matched to the
+best advancement, and the ruling comes from the engine's own feasibility check; anything
+unmatched is "beyond this age" with a hint toward ideas within reach. The court's reaction
+comes from scripted dialogue (`idea_feasible`, `idea_blocked`, `idea_implausible`). The
+same interpreter is the fallback whenever a model call fails.
+
+## D-065 No model name in the code — DELEGATED (2026-10-01)
+Model names change often and must come from configuration (CLAUDE.md), so there is no
+default model: online play needs both `ANTHROPIC_API_KEY` and `ANACHRONISM_MODEL` in the
+environment or a git-ignored `.env` file (see `.env.example`), with an optional cheaper
+`ANACHRONISM_FAST_MODEL`. Without them the game plays offline and says so. The provider
+uses only Python's standard library (no new dependency), forces structured output through
+a single tool, marks the fixed system prompt for prompt caching, and retries rate limits.
+A monthly token cap (default 2 million) stops calls once reached.
+

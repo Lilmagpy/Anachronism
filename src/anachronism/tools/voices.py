@@ -82,6 +82,28 @@ def speak(
     }
 
 
+def adviser_voice(
+    content: Content, state: GameState, role: str, text: str, mood: str
+) -> dict[str, Any]:
+    """A speech bubble for an adviser's reaction written by the model (not from dialogue)."""
+    player = state.player_civ
+    civ_def = content.civs[player]
+    adviser = content.speakers.get(role)
+    return {
+        "moment": "idea",
+        "speaker": role,
+        "name": adviser.title if adviser else role.title(),
+        "title": f"{civ_def.adjective} court",
+        "portrait": (adviser.portrait if adviser else "") or civ_def.portrait,
+        "culture": civ_def.portrait,
+        "colour": civ_def.colour,
+        "emblem": civ_def.emblem or civ_def.adjective[:1],
+        "civ": player,
+        "text": text,
+        "mood": mood,
+    }
+
+
 def voices_for_turn(
     content: Content, state: GameState, events: list[Event]
 ) -> list[dict[str, Any]]:

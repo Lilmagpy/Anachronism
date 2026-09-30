@@ -83,3 +83,11 @@ rules:
     witchcraft_unrest_bp: 1500
     fraud_legitimacy_bp: 1500
     inspired_legitimacy_bp: 800
+  rulings:
+    max_ideas_per_message: 3
+    max_effects: 3
+    max_stubs: 3
+    max_prerequisites: 4
+    adviser_unrest_bp: 200
+    adviser_suspicion_bp: 300
+    min_complexity_per_prerequisite_tier: 1

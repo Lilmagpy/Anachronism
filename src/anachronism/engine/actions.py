@@ -8,6 +8,7 @@ from typing import Annotated, Literal
 from pydantic import Field
 
 from anachronism.content.schema import Frozen
+from anachronism.engine.rulings import Ruling
 
 
 class Priority(StrEnum):
@@ -73,8 +74,25 @@ class SetPriority(Frozen):
     priority: Priority
 
 
+class RuleOnIdea(Frozen):
+    """Apply the court's ruling on one of the player's own ideas (DESIGN §8).
+
+    The whole ruling is stored, so replays apply it again without asking any model.
+    """
+
+    kind: Literal["ruling"] = "ruling"
+    civ: str
+    ruling: Ruling
+
+
 Action = Annotated[
-    ProposeIdea | StartProject | PauseProject | ResumeProject | CancelProject | SetPriority,
+    ProposeIdea
+    | StartProject
+    | PauseProject
+    | ResumeProject
+    | CancelProject
+    | SetPriority
+    | RuleOnIdea,
     Field(discriminator="kind"),
 ]
 

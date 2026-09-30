@@ -107,3 +107,24 @@ dialogue:
       - "Ten quiet years. The harvest was fair and nobody burned anything down. I call that a triumph."
       - "Nothing of note to report - which, in these times, is the best report of all."
       - "The realm is calm. Perhaps too calm for a ruler with ideas..."
+
+  - id: idea_feasible
+    speaker: scholar
+    lines:
+      - "{subject}! Yes - I see how it would work. Give the word and the workshops will try it."
+      - "An idea with legs, my lord. {subject} is within our reach, if we pay for it."
+      - "I have turned {subject} over all night. It can be done. Expensive, but it can be done."
+
+  - id: idea_blocked
+    speaker: steward
+    lines:
+      - "{subject} is a fine dream, but we cannot build a roof before the walls. I have listed what must come first."
+      - "Before {subject}, my lord, we need other things. The court has written them down as goals."
+      - "{subject}? In time. First the groundwork - I have marked it on the ledger."
+
+  - id: idea_implausible
+    speaker: diviner
+    lines:
+      - "The oracle bones are silent on this. Our people have no words for what you describe - yet."
+      - "The scholars stared at your drawings and saw only riddles. Perhaps something simpler first?"
+      - "Even the heavens cannot say what that is. Give our craftsmen something they can hold."

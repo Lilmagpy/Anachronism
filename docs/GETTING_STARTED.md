@@ -103,8 +103,23 @@ every time new work is pushed.
 - `command not found: uv` — quit and reopen Terminal; if it still happens, repeat step 1.
 - Anything else — copy everything Terminal printed into the Claude chat.
 
-## The Anthropic API key
+## The Anthropic API key (optional: "Free Thought" mode)
 
-Not needed yet. From Phase 2 the online "Free Thought" mode needs a key; the game will explain
-where to put it. The key file (`.env`) is never uploaded: it is git-ignored, and a test fails
-if that ever stops being true.
+Without a key the game plays in offline "Historical Advisors" mode: type any idea in the
+box above the Ideas list and your court matches it against the library of ideas.
+
+To let a language model rule on anything you type:
+1. Get an API key at https://console.anthropic.com.
+2. Pick a model name from https://docs.claude.com (the models overview page).
+3. Make a plain text file called `.env` in the game's data folder. On a Mac that is
+   `~/Library/Application Support/Godot/app_userdata/Anachronism/` (in Finder: Go → Go to
+   Folder…, paste that path). Put these lines in it:
+   ```
+   ANTHROPIC_API_KEY=your-key-here
+   ANACHRONISM_MODEL=the-model-name
+   ```
+4. Restart the game. The hint under the idea box says "a language model rules".
+
+The `.env` file never leaves your computer: it is git-ignored, and a test fails if that ever
+stops being true. A monthly cap (2 million tokens by default, `ANACHRONISM_MONTHLY_TOKENS`)
+stops calls once reached; see `.env.example` for every setting.
