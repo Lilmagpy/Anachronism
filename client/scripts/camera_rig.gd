@@ -5,7 +5,7 @@ class_name CameraRig
 extends Node3D
 
 const NEAR := 60.0
-const FAR := 1100.0
+var far := 1100.0      ## farthest zoom; the map sets this to fit
 const PITCH_NEAR := 0.72  ## radians above the horizon when fully zoomed in (about 41°)
 const PITCH_FAR := 1.30   ## when fully zoomed out (about 75°)
 
@@ -26,7 +26,7 @@ func _ready() -> void:
 
 ## How far zoomed in, from 0 (fully out) to 1 (fully in).
 func zoom_level() -> float:
-	return 1.0 - inverse_lerp(log(NEAR), log(FAR), log(distance))
+	return 1.0 - inverse_lerp(log(NEAR), log(far), log(distance))
 
 
 func look_at_point(point: Vector3, new_distance: float) -> void:
@@ -37,7 +37,8 @@ func look_at_point(point: Vector3, new_distance: float) -> void:
 
 
 func _apply() -> void:
-	distance = clampf(distance, NEAR, FAR)
+	distance = clampf(distance, NEAR, far)
+	camera.near = maxf(1.0, distance * 0.05)  # keeps depth precise so land and water don't flicker
 	position.x = clampf(position.x, bounds.position.x, bounds.end.x)
 	position.z = clampf(position.z, bounds.position.y, bounds.end.y)
 	var pitch := lerpf(PITCH_FAR, PITCH_NEAR, zoom_level())
@@ -48,13 +49,13 @@ func _apply() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
-			target_distance = clampf(target_distance * 0.85, NEAR, FAR)
+			target_distance = clampf(target_distance * 0.85, NEAR, far)
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
-			target_distance = clampf(target_distance / 0.85, NEAR, FAR)
+			target_distance = clampf(target_distance / 0.85, NEAR, far)
 		elif event.button_index == MOUSE_BUTTON_LEFT:
 			_dragging = event.pressed
 	elif event is InputEventMagnifyGesture:
-		target_distance = clampf(target_distance / event.factor, NEAR, FAR)
+		target_distance = clampf(target_distance / event.factor, NEAR, far)
 	elif event is InputEventPanGesture:
 		_pan(event.delta * distance * 0.01)
 	elif event is InputEventMouseMotion and _dragging:

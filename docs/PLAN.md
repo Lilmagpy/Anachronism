@@ -1,7 +1,8 @@
 # Anachronism — Plan
 
 **Current phase:** Phase 2 — 3D world (Godot) on the Phase 1 engine (branch `claude/phase-2-3d`).
-**Next action:** step 2.1.
+**Next action:** step 2.2c — real historical provinces and civs on the real East Asia map
+(owner picks the scenario moments; D-053).
 
 Each phase ends at a **gate**: Claude stops, summarises, shows how to run it, lists known
 problems, and waits for approval (D-002: approval = merging the phase PR).
@@ -33,9 +34,12 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] 1.13 Gate: approved and merged by the owner (2026-09-30)
 
 ## Phase 2 — 3D world (design: plans/phase-2.md; replaces the Pygame front end, D-047)
-- [ ] 2.1 Engine bridge: JSON messages over stdin/stdout (`anachronism-server`), tested
-- [ ] 2.2 Map layout in content: province positions, heights, rivers, coasts; linted
-- [ ] 2.3 Godot client: 3D terrain from the map, water, sky, camera (pan, zoom, orbit)
+- [x] 2.1 Engine bridge: JSON messages over stdin/stdout (`anachronism-server`), tested
+- [x] 2.2 Map layout in content: province positions and sea zones; linted
+- [x] 2.2b Real Earth map (D-053): measured elevation, NASA satellite colour, Natural Earth
+      rivers; East Asia first. The fictional test world stays only for tests (`--map=testworld`)
+- [ ] 2.2c Real historical provinces and civs for East Asia, placed by latitude/longitude
+- [x] 2.3 Godot client: 3D terrain, water, sky, Rise of Kingdoms-style camera (pan, zoom)
 - [ ] 2.4 Borders coloured by owner, province labels, selection and hover
 - [ ] 2.5 Game UI: top bar with trends, ideas and details, projects, end turn, events
 - [ ] 2.6 Settlements and scenery scaled by population (openly licensed models)

@@ -291,3 +291,19 @@ borders, names and banners. Zooming in reveals detail that fades in by distance:
 population, capitals with walls, farms, forests, and later units. Stylised, colourful low-poly
 art rather than photorealism. Built on the Godot 3D client (D-047) using distance-based
 level of detail.
+
+## D-053 The map is the real Earth — OWNER (2026-09-30)
+The owner's goal is maximum realism, so the fictional map is replaced by real geography
+(the test world stays only for automated tests). This overrides the "stylised, not
+photorealistic" part of D-052; the living-map camera and zoom-in detail stay.
+- **Elevation:** Terrarium tiles (Mapzen / AWS Open Data; built from SRTM, GMTED2010, ETOPO1
+  and others; attribution required), stitched by `client/tools/build_heightmap.gd`.
+- **Colour:** NASA Blue Marble satellite mosaic (public domain, about 10 km per pixel),
+  reprojected by `client/tools/build_colour.gd`. Chosen over colours guessed from climate,
+  which looked wrong. Its snow cover is from one season. Higher-resolution imagery (Sentinel-2
+  cloudless, NASA servers) is blocked from cloud sessions; revisit on the owner's Mac.
+- **Rivers:** Natural Earth 10 m rivers (public domain), `scripts/build_rivers.py`.
+- **Projection:** Web Mercator, one world unit ≈ 5 km at the equator; heights exaggerated
+  about 14× so mountains read from a strategy camera. Regions are built one at a time,
+  East Asia first (67.5–151.9°E, 5.6–55.8°N).
+- Sources and licences are listed in `client/data/SOURCES.md`.
