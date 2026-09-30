@@ -66,6 +66,15 @@ def capture(state: GameState, taker: str, province_id: str, events: EventLog) ->
         loser.awareness = Awareness.FREE_AGENT  # a conquered people does not forget
 
 
+def defence_bp(state: GameState, defender: str, province_id: str) -> int:
+    """How hard a province is to take: its terrain, and walls if it is the capital."""
+    terrain = state.world.terrain[state.world.geography[province_id].terrain]
+    defence = terrain.defence_bp
+    if state.civs[defender].capital == province_id:
+        defence = defence * state.world.rules.rivals.capital_defence_bp // BP
+    return max(1, defence)
+
+
 def side_strength(state: GameState, civ: str, enemy: str, strengths: dict[str, int]) -> int:
     """A civilisation's strength in its war with ``enemy``.
 
@@ -101,8 +110,9 @@ def resolve_wars(
         if targets and s_strong > s_weak:
             advantage_bp = (s_strong - s_weak) * BP // max(1, s_weak)
             chance = min(rules.max_capture_bp, apply_bp(advantage_bp, rules.capture_per_excess_bp))
+            prize = min(targets, key=lambda p: (state.provinces[p].population, p))
+            chance = chance * BP // defence_bp(state, weak, prize)
             if rng.chance(chance):
-                prize = min(targets, key=lambda p: (state.provinces[p].population, p))
                 capture(state, strong, prize, events)
                 rel.losses[weak] = rel.losses.get(weak, 0) + 1
                 rel.weariness[weak] = rel.weariness.get(weak, 0) + rules.weariness_per_loss_bp

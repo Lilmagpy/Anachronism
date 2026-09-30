@@ -232,3 +232,15 @@ def test_the_player_is_asked_not_dragged_into_wars(warring: GameState) -> None:
     state, _ = apply_action(warring, DeclareWar(civ="wei", target="han"))
     assert status(state, "qin", "wei") is not RelationStatus.WAR
     assert any(e.kind == "ally_attacked" and e.civ == "qin" for e in state.events)
+
+
+def test_capitals_and_mountains_are_harder_to_take(warring: GameState) -> None:
+    from anachronism.engine.war import defence_bp
+
+    capital = warring.civs["chu"].capital
+    other = next(p for p in warring.owned_provinces("chu") if p != capital)
+    assert defence_bp(warring, "chu", capital) > defence_bp(warring, "chu", other) or (
+        warring.world.geography[other].terrain == "mountains"
+    )
+    rules = warring.world.rules.rivals
+    assert defence_bp(warring, "chu", capital) >= rules.capital_defence_bp

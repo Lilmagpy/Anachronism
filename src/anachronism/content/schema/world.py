@@ -40,6 +40,8 @@ class Terrain(Frozen):
     materials_bp: NonNegative
     capacity: Positive
     """Default number of people a province of this terrain can support."""
+    defence_bp: Positive = 10_000
+    """How hard a province here is to take in war (20_000 = half as likely to fall)."""
 
 
 class MapResource(Frozen):

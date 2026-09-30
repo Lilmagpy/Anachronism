@@ -196,6 +196,8 @@ class RivalRules(Frozen):
     capture_per_excess_bp: NonNegative
     """Chance per turn to take a frontier province, per 100% of strength advantage."""
     max_capture_bp: Rate
+    capital_defence_bp: Positive
+    """Walls and the court's guard: a capital is this much harder to take (10_000 = normal)."""
     war_losses_bp: Rate
     """Share of each frontier province's people lost per turn of war."""
     war_unrest_bp: NonNegative
