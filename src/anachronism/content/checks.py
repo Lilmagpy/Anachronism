@@ -211,6 +211,10 @@ def _scenario_issues(registry: Registry) -> list[ContentIssue]:
         for province in claimed:
             if registry.is_unknown("provinces", province):
                 report(f"unknown province {province!r}")
-            elif province in registry.provinces and registry.provinces[province].position is None:
-                report(f"province {province!r} has no map position")
+            elif province in registry.provinces:
+                geography = registry.provinces[province]
+                if scenario.map is not None and geography.latlon is None:
+                    report(f"province {province!r} has no latlon for the {scenario.map} map")
+                elif scenario.map is None and geography.position is None:
+                    report(f"province {province!r} has no map position")
     return issues

@@ -307,3 +307,27 @@ photorealistic" part of D-052; the living-map camera and zoom-in detail stay.
   about 14× so mountains read from a strategy camera. Regions are built one at a time,
   East Asia first (67.5–151.9°E, 5.6–55.8°N).
 - Sources and licences are listed in `client/data/SOURCES.md`.
+
+## D-054 First real scenario: the Warring States, 350 BC, playing Qin — DELEGATED (2026-09-30)
+The owner asked Claude to pick. Chosen because it is the best-documented early East Asian
+moment with many rival states (7 great states, 6 smaller ones, 5 frontier peoples), it sits
+where the "ideas ahead of their time" play is richest (paper, cast iron, crossbows, canals,
+civil service all within reach), and 350 BC is a clean anchor: Qin moves its capital to
+Xianyang under Shang Yang's reforms. The player is Qin, the best-known state; other starts
+can be added later as extra scenarios. Populations, borders and techs are Claude's estimates
+from general historical knowledge; uncertainties are listed in `docs/history/warring_states.md`.
+
+## D-055 Real-map content: latlon, map and cost scale — DELEGATED (2026-09-30)
+Provinces and seas on the real Earth use `latlon` (degrees; content only, not used by the
+simulation, so floats are safe for determinism). Scenarios name their `map`. Real
+populations are about ten times the test world's, which made every invention trivially
+cheap, so scenarios carry a `cost_scale` that multiplies project costs; shown populations stay
+real. Old saves load unchanged (new fields default to "no map" and scale 1).
+
+## D-056 Provinces are drawn by terrain-aware growth from their centres — DELEGATED (2026-09-30)
+Hand-drawing historical borders would be slow, and the historical-basemaps polygons are GPL
+(D-009). Instead each province grows from its centre over the real elevation, with steep
+and high ground costly to cross, so frontiers settle on ridges and rivers stay inside
+provinces. The client and the checking tool (`client/tools/province_report.gd`) use the same
+code, so the rules' neighbours always match what the player sees. Borders are about 20 km
+accurate. Hand-made border polygons can replace this later if the owner wants exact lines.

@@ -1,0 +1,598 @@
+schema_version: 1
+scenarios:
+  - id: warring_states
+    name: "The Warring States, 350 BC"
+    description: >-
+      350 BC. The Zhou king reigns in name only. Seven great states - Qin, Wei, Zhao,
+      Han, Qi, Yan and Chu - and a ring of smaller states and peoples compete for
+      survival. Iron tools and crossbows are spreading, philosophers argue in every
+      court, and in the west Shang Yang is turning Qin into a machine for farming and
+      war. Qin moves its capital to Xianyang this year.
+    start_year: -350
+    years_per_turn: 10
+    player_civ: qin
+    map: east_asia
+    cost_scale: 10
+    civs:
+      qin:
+        capital: qin_guanzhong
+        provinces:
+          qin_guanzhong: 1600000
+          qin_longxi: 500000
+          qin_shang: 250000
+        stockpiles: {food: 3760, materials: 940, wealth: 940, knowledge: 362}
+        stats: {literacy_bp: 300, unrest_bp: 900, legitimacy_bp: 6500}
+        influence: {clergy: 1500, nobility: 6000, guilds: 1500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          writing: adopted
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: adopted
+          coinage: adopted
+          sailing: adopted
+          composite_bow: widespread
+          horse_riding: widespread
+          chariot: widespread
+          fortification: widespread
+          crossbow: adopted
+          ore_prospecting: adopted
+          iron_working: adopted
+          iron_plough: adopted
+          piston_bellows: adopted
+          schools: adopted
+          roads: adopted
+          postal_relay: concept
+      wei:
+        capital: wei_daliang
+        provinces:
+          wei_daliang: 1300000
+          wei_hedong: 1100000
+          wei_henei: 1000000
+          wei_hexi: 450000
+          wei_shang: 250000
+        stockpiles: {food: 6560, materials: 1640, wealth: 1640, knowledge: 1035}
+        stats: {literacy_bp: 500, unrest_bp: 900, legitimacy_bp: 6000}
+        influence: {clergy: 2000, nobility: 5000, guilds: 3000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          writing: adopted
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: adopted
+          coinage: adopted
+          sailing: adopted
+          composite_bow: widespread
+          horse_riding: adopted
+          chariot: widespread
+          fortification: widespread
+          crossbow: adopted
+          ore_prospecting: adopted
+          iron_working: adopted
+          iron_plough: adopted
+          piston_bellows: adopted
+          schools: adopted
+          roads: adopted
+          canals: adopted
+          blast_furnace: adopted
+      zhao:
+        capital: zhao_handan
+        provinces:
+          zhao_handan: 1400000
+          zhao_jinyang: 900000
+          zhao_dai: 400000
+        stockpiles: {food: 4320, materials: 1080, wealth: 1080, knowledge: 550}
+        stats: {literacy_bp: 400, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 2000, nobility: 5500, guilds: 2500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          writing: adopted
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: adopted
+          coinage: adopted
+          sailing: adopted
+          composite_bow: widespread
+          horse_riding: widespread
+          chariot: widespread
+          fortification: widespread
+          crossbow: adopted
+          ore_prospecting: adopted
+          iron_working: adopted
+          iron_plough: adopted
+          piston_bellows: adopted
+          schools: adopted
+          roads: adopted
+          coal_mining: concept
+      han:
+        capital: han_xinzheng
+        provinces:
+          han_xinzheng: 1100000
+          han_yiyang: 600000
+          han_shangdang: 450000
+        stockpiles: {food: 3440, materials: 860, wealth: 860, knowledge: 493}
+        stats: {literacy_bp: 450, unrest_bp: 1100, legitimacy_bp: 5500}
+        influence: {clergy: 2000, nobility: 5000, guilds: 3000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          writing: adopted
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: adopted
+          coinage: adopted
+          sailing: adopted
+          composite_bow: widespread
+          horse_riding: adopted
+          chariot: widespread
+          fortification: widespread
+          crossbow: widespread
+          ore_prospecting: adopted
+          iron_working: adopted
+          iron_plough: adopted
+          piston_bellows: adopted
+          schools: adopted
+          roads: adopted
+          blast_furnace: adopted
+      zhou:
+        capital: zhou_luoyang
+        provinces:
+          zhou_luoyang: 400000
+        stockpiles: {food: 640, materials: 160, wealth: 160, knowledge: 150}
+        stats: {literacy_bp: 700, unrest_bp: 1200, legitimacy_bp: 4500}
+        influence: {clergy: 5000, nobility: 4000, guilds: 1000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          writing: adopted
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: widespread
+          standard_measures: adopted
+          coinage: adopted
+          sailing: adopted
+          composite_bow: widespread
+          horse_riding: adopted
+          chariot: widespread
+          fortification: widespread
+          crossbow: adopted
+          ore_prospecting: adopted
+          iron_working: adopted
+          schools: adopted
+      qi:
+        capital: qi_linzi
+        provinces:
+          qi_linzi: 1800000
+          qi_pingyuan: 1100000
+          qi_jimo: 800000
+          qi_langya: 700000
+        stockpiles: {food: 7040, materials: 1760, wealth: 1760, knowledge: 1330}
+        stats: {literacy_bp: 600, unrest_bp: 800, legitimacy_bp: 6500}
+        influence: {clergy: 2500, nobility: 4500, guilds: 3500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          writing: adopted
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: adopted
+          coinage: adopted
+          sailing: adopted
+          composite_bow: widespread
+          horse_riding: adopted
+          chariot: widespread
+          fortification: widespread
+          crossbow: adopted
+          ore_prospecting: adopted
+          iron_working: adopted
+          iron_plough: adopted
+          piston_bellows: adopted
+          schools: widespread
+          roads: adopted
+          alchemy: concept
+      lu:
+        capital: lu_qufu
+        provinces:
+          lu_qufu: 500000
+        stockpiles: {food: 800, materials: 200, wealth: 200, knowledge: 210}
+        stats: {literacy_bp: 800, unrest_bp: 900, legitimacy_bp: 5500}
+        influence: {clergy: 4500, nobility: 4000, guilds: 1500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          writing: adopted
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: adopted
+          coinage: adopted
+          sailing: adopted
+          composite_bow: widespread
+          horse_riding: adopted
+          chariot: widespread
+          fortification: widespread
+          crossbow: adopted
+          ore_prospecting: adopted
+          iron_working: adopted
+          schools: widespread
+      song:
+        capital: song_shangqiu
+        provinces:
+          song_shangqiu: 900000
+        stockpiles: {food: 1440, materials: 360, wealth: 360, knowledge: 235}
+        stats: {literacy_bp: 500, unrest_bp: 1000, legitimacy_bp: 5500}
+        influence: {clergy: 3500, nobility: 4000, guilds: 2500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          writing: adopted
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: adopted
+          coinage: adopted
+          sailing: adopted
+          composite_bow: widespread
+          horse_riding: adopted
+          chariot: widespread
+          fortification: widespread
+          crossbow: adopted
+          ore_prospecting: adopted
+          iron_working: adopted
+          schools: adopted
+      wey:
+        capital: wey_puyang
+        provinces:
+          wey_puyang: 300000
+        stockpiles: {food: 480, materials: 120, wealth: 120, knowledge: 85}
+        stats: {literacy_bp: 500, unrest_bp: 1100, legitimacy_bp: 5000}
+        influence: {clergy: 3500, nobility: 4500, guilds: 2000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          writing: adopted
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: adopted
+          coinage: adopted
+          sailing: adopted
+          composite_bow: widespread
+          horse_riding: adopted
+          chariot: widespread
+          fortification: widespread
+          crossbow: adopted
+          ore_prospecting: adopted
+          iron_working: adopted
+          schools: adopted
+      zhongshan:
+        capital: zhongshan_lingshou
+        provinces:
+          zhongshan_lingshou: 500000
+        stockpiles: {food: 800, materials: 200, wealth: 200, knowledge: 85}
+        stats: {literacy_bp: 300, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 2500, nobility: 5500, guilds: 2000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          writing: adopted
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: adopted
+          coinage: adopted
+          sailing: adopted
+          composite_bow: widespread
+          horse_riding: widespread
+          chariot: widespread
+          fortification: widespread
+          crossbow: adopted
+          ore_prospecting: adopted
+          iron_working: adopted
+          schools: adopted
+      yan:
+        capital: yan_ji
+        provinces:
+          yan_ji: 800000
+          yan_yi: 600000
+          yan_coast: 400000
+        stockpiles: {food: 2880, materials: 720, wealth: 720, knowledge: 280}
+        stats: {literacy_bp: 300, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 2500, nobility: 5500, guilds: 2000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          writing: adopted
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: adopted
+          coinage: adopted
+          sailing: adopted
+          composite_bow: widespread
+          horse_riding: widespread
+          chariot: widespread
+          fortification: widespread
+          crossbow: adopted
+          ore_prospecting: adopted
+          iron_working: adopted
+          schools: adopted
+          iron_plough: concept
+      chu:
+        capital: chu_ying
+        provinces:
+          chu_ying: 1300000
+          chu_nanyang: 900000
+          chu_chen: 900000
+          chu_huainan: 900000
+          chu_changsha: 600000
+          chu_yuzhang: 350000
+          chu_qianzhong: 300000
+        stockpiles: {food: 8400, materials: 2100, wealth: 2100, knowledge: 1060}
+        stats: {literacy_bp: 400, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 4000, nobility: 5000, guilds: 1500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          writing: adopted
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: adopted
+          coinage: adopted
+          sailing: adopted
+          composite_bow: widespread
+          horse_riding: adopted
+          chariot: widespread
+          fortification: widespread
+          crossbow: adopted
+          ore_prospecting: adopted
+          iron_working: adopted
+          iron_plough: adopted
+          piston_bellows: adopted
+          schools: adopted
+          roads: adopted
+          blast_furnace: adopted
+          canals: concept
+      yue:
+        capital: yue_wu
+        provinces:
+          yue_wu: 600000
+          yue_kuaiji: 400000
+        stockpiles: {food: 1600, materials: 400, wealth: 400, knowledge: 160}
+        stats: {literacy_bp: 300, unrest_bp: 1100, legitimacy_bp: 5500}
+        influence: {clergy: 4000, nobility: 4500, guilds: 1500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: adopted
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          writing: adopted
+          masonry: adopted
+          fortification: adopted
+          sailing: widespread
+          composite_bow: adopted
+          ore_prospecting: adopted
+          iron_working: adopted
+          surveying: adopted
+          canals: adopted
+          crossbow: adopted
+          chariot: concept
+      shu:
+        capital: shu_chengdu
+        provinces:
+          shu_chengdu: 800000
+          shu_hanzhong: 250000
+        stockpiles: {food: 1680, materials: 420, wealth: 420, knowledge: 88}
+        stats: {literacy_bp: 150, unrest_bp: 900, legitimacy_bp: 6500}
+        influence: {clergy: 5000, nobility: 4000, guilds: 1000}
+        techs:
+          agriculture: widespread
+          irrigation: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: adopted
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          writing: adopted
+          masonry: adopted
+          fortification: adopted
+          sailing: adopted
+          composite_bow: adopted
+          ore_prospecting: adopted
+          iron_working: concept
+          horse_riding: concept
+      ba:
+        capital: ba_jiangzhou
+        provinces:
+          ba_jiangzhou: 500000
+        stockpiles: {food: 800, materials: 200, wealth: 200, knowledge: 35}
+        stats: {literacy_bp: 100, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 4500, nobility: 5000, guilds: 500}
+        techs:
+          agriculture: widespread
+          irrigation: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: adopted
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          writing: adopted
+          masonry: adopted
+          fortification: adopted
+          sailing: adopted
+          composite_bow: adopted
+          ore_prospecting: adopted
+          iron_working: concept
+      yiqu:
+        capital: yiqu_rong
+        provinces:
+          yiqu_rong: 250000
+        stockpiles: {food: 400, materials: 100, wealth: 100, knowledge: 16}
+        stats: {literacy_bp: 50, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 3000, nobility: 6000, guilds: 500}
+        techs:
+          horse_riding: widespread
+          composite_bow: widespread
+          wheel: adopted
+          herbal_medicine: adopted
+          agriculture: adopted
+          pottery_kiln: adopted
+          charcoal_burning: adopted
+          copper_smelting: adopted
+          bronze_working: adopted
+          chariot: adopted
+          iron_working: concept
+          masonry: adopted
+          fortification: adopted
+      donghu:
+        capital: donghu_xilamulun
+        provinces:
+          donghu_xilamulun: 300000
+        stockpiles: {food: 480, materials: 120, wealth: 120, knowledge: 13}
+        stats: {literacy_bp: 20, unrest_bp: 1000, legitimacy_bp: 5500}
+        influence: {clergy: 2500, nobility: 7000, guilds: 300}
+        techs:
+          horse_riding: widespread
+          composite_bow: widespread
+          wheel: adopted
+          herbal_medicine: adopted
+          agriculture: adopted
+          pottery_kiln: adopted
+          charcoal_burning: adopted
+          copper_smelting: adopted
+          bronze_working: adopted
+          chariot: adopted
+          iron_working: concept
+      gojoseon:
+        capital: joseon_liaodong
+        provinces:
+          joseon_liaodong: 300000
+          joseon_taedong: 250000
+        stockpiles: {food: 880, materials: 220, wealth: 220, knowledge: 23}
+        stats: {literacy_bp: 50, unrest_bp: 900, legitimacy_bp: 6000}
+        influence: {clergy: 4000, nobility: 5500, guilds: 500}
+        techs:
+          horse_riding: adopted
+          composite_bow: adopted
+          wheel: adopted
+          herbal_medicine: adopted
+          agriculture: widespread
+          pottery_kiln: adopted
+          charcoal_burning: adopted
+          copper_smelting: widespread
+          bronze_working: widespread
+          chariot: adopted
+          iron_working: concept
+          masonry: adopted
+          fortification: adopted
+    unowned:
+      ordos_linhu: 120000
+      loufan: 100000
+      hexi_yuezhi: 120000
+      huangshui_qiang: 80000
+      korea_south: 150000
+      kyushu: 100000
+      kinai: 60000
+      min_yue: 200000
+      lingnan: 300000
+      red_river: 500000
+      dian: 200000

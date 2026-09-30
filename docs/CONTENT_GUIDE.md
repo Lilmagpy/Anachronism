@@ -79,6 +79,26 @@ Resource access: `accessible` (full), `limited` (usable, less output) or `unexpl
 (unusable until an advancement with `unlocks_resource` reveals it). Provinces hold fixed
 geography only; ownership and population belong to scenarios (D-037).
 
+### Provinces on the real Earth
+Scenarios on a real map (`map: east_asia`) place provinces by latitude and longitude instead
+of `position`:
+```yaml
+  - id: qin_guanzhong
+    name: Guanzhong (Wei valley)
+    latlon: [34.4, 108.9]       # degrees north, degrees east of its centre (usually its chief city)
+```
+Sea zones take a `latlon` too. The game divides the real land between provinces by growing
+each one out from its centre, with mountains costly to cross, so borders follow ridges.
+`neighbours` and `coastal` must match that division. Check them, and get the correct lists,
+with:
+```
+godot --headless --path client -s res://tools/province_report.gd -- warring_states out.json
+```
+It prints every disagreement (0 problems means the content matches the map); `out.json`
+holds the land neighbours of each province and the shores of each sea. If a province comes
+out the wrong shape, move its `latlon` or add a neighbouring province rather than editing
+borders by hand.
+
 ## Civilisations
 ```yaml
 civs:
@@ -109,6 +129,10 @@ scenarios:
         techs: {agriculture: widespread, writing: adopted, iron_working: concept}
     unowned: {desert_oasis: 3000}                 # provinces nobody controls
 ```
+- `map: east_asia` puts the scenario on the real Earth (every province needs a `latlon`);
+  leave it out for a map generated from `position`s.
+- `cost_scale: 10` multiplies every project cost. Use it when populations are real
+  historical numbers (millions): the testworld's costs suit states of a few hundred thousand.
 - Only listed provinces are in the scenario; borders to unlisted provinces are dropped.
 - Starting techs: `adopted` or `widespread` need their prerequisites adopted too;
   `experimenting` is not allowed (there is no project data); stubs are not allowed.

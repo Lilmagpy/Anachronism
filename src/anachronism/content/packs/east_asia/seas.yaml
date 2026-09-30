@@ -1,0 +1,15 @@
+schema_version: 1
+# Seas of East Asia. latlon: [degrees north, degrees east] roughly at each sea's middle.
+# Each stretch of sea goes to its nearest zone; neighbours are the provinces on its shores
+# (checked against the real map with client/tools/province_report.gd).
+seas:
+  - {id: bohai, name: Bohai Sea, latlon: [38.8, 119.8], neighbours: [joseon_liaodong, joseon_taedong, qi_jimo, qi_linzi, yan_coast]}
+  - {id: yellow_sea, name: Yellow Sea, latlon: [35.5, 123.0], neighbours: [joseon_taedong, korea_south, qi_jimo, qi_langya, yue_wu]}
+  - {id: east_china_sea, name: East China Sea, latlon: [29.5, 124.0], neighbours: [yue_kuaiji, yue_wu]}
+  - {id: korea_strait, name: Korea Strait, latlon: [34.3, 129.0], neighbours: [korea_south, kyushu]}
+  - {id: sea_of_japan, name: Sea of Japan, latlon: [39.0, 134.0], neighbours: [joseon_taedong, kinai]}
+  - {id: seto_sea, name: Seto Inland Sea, latlon: [34.2, 133.2], neighbours: [kinai, kyushu]}
+  - {id: philippine_sea, name: Philippine Sea, latlon: [30.0, 136.0], neighbours: [kinai]}
+  - {id: taiwan_strait, name: Taiwan Strait, latlon: [24.5, 119.6], neighbours: [lingnan, min_yue]}
+  - {id: south_china_sea, name: South China Sea, latlon: [19.5, 114.5], neighbours: [lingnan]}
+  - {id: gulf_of_tonkin, name: Gulf of Tonkin, latlon: [20.0, 107.5], neighbours: [lingnan, red_river]}

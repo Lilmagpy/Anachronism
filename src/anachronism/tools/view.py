@@ -34,6 +34,7 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
         "turn": state.turn + 1,
         "year": state.year,
         "scenario": state.world.scenario_name,
+        "map": state.world.map,
         "seed": state.seed,
         "player": civ_id,
         "status": {
@@ -68,6 +69,7 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
                 "river": geography.river,
                 "coastal": geography.coastal,
                 "position": list(geography.position) if geography.position else None,
+                "latlon": list(geography.latlon) if geography.latlon else None,
                 "neighbours": list(geography.neighbours),
                 "owner": state.provinces[pid].owner,
                 "population": state.provinces[pid].population,
@@ -79,7 +81,12 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
             for pid, geography in sorted(state.world.geography.items())
         ],
         "seas": [
-            {"id": sid, "name": sea.name, "position": list(sea.position)}
+            {
+                "id": sid,
+                "name": sea.name,
+                "position": list(sea.position) if sea.position else None,
+                "latlon": list(sea.latlon) if sea.latlon else None,
+            }
             for sid, sea in sorted(state.world.seas.items())
         ],
         "projects": [

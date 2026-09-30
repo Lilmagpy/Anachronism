@@ -1,7 +1,8 @@
 """Convert Natural Earth rivers (public domain) to pixel polylines on a game height map.
 
 Usage: uv run python scripts/build_rivers.py RIVERS.geojson BOUNDS.json OUT.json [MAX_RANK]
-Keeps rivers with scalerank <= MAX_RANK (default 7; lower = more important).
+Keeps rivers with scalerank <= MAX_RANK (default 9; lower = more important), including
+the stretches that run through lakes so rivers have no gaps.
 """
 
 from __future__ import annotations
@@ -21,7 +22,7 @@ def mercator(lat: float) -> float:
 def main() -> None:
     """Read the rivers and the height-map bounds, write pixel polylines."""
     rivers_path, bounds_path, out_path = sys.argv[1:4]
-    max_rank = int(sys.argv[4]) if len(sys.argv) > 4 else 7
+    max_rank = int(sys.argv[4]) if len(sys.argv) > 4 else 9
     bounds = json.loads(Path(bounds_path).read_text(encoding="utf-8"))
     west, east = bounds["west"], bounds["east"]
     top, bottom = mercator(bounds["north"]), mercator(bounds["south"])
@@ -36,7 +37,9 @@ def main() -> None:
     out: list[dict[str, Any]] = []
     for feature in features:
         props = feature["properties"]
-        if props.get("featurecla") != "River" or (props.get("scalerank") or 99) > max_rank:
+        if props.get("featurecla") not in {"River", "Lake Centerline"}:
+            continue
+        if (props.get("scalerank") or 99) > max_rank:
             continue
         geometry = feature["geometry"]
         coords = geometry["coordinates"]

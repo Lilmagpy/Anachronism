@@ -19,6 +19,7 @@ var cols := 0
 var rows := 0
 var ocean := PackedByteArray()
 var elev := PackedFloat32Array()
+var terrain_material := ShaderMaterial.new()
 
 
 func _init(region_name: String) -> void:
@@ -66,8 +67,33 @@ func pixel_of(lat: float, lon: float) -> Vector2:
 
 ## World position on the ground for a real place.
 func ground_at(lat: float, lon: float) -> Vector3:
-	var p := pixel_of(lat, lon)
-	return Vector3(p.x - size().x / 2.0, _ground(p), p.y - size().y / 2.0)
+	return ground_at_pixel(pixel_of(lat, lon))
+
+
+## World position on the ground at a height-map pixel.
+func ground_at_pixel(pixel: Vector2) -> Vector3:
+	return Vector3(pixel.x - size().x / 2.0, _ground(pixel), pixel.y - size().y / 2.0)
+
+
+## Elevation in metres at a height-map pixel (nearest grid point).
+func metres_at(pixel: Vector2) -> float:
+	return elev[_grid_index(pixel)]
+
+
+## True where the pixel is open sea (not a lake or a dry basin below sea level).
+func is_ocean_at(pixel: Vector2) -> bool:
+	return ocean[_grid_index(pixel)] == 1
+
+
+## Colours the land by owner: one texel per map cell, alpha = how strongly to tint.
+func set_political(image: Image) -> void:
+	terrain_material.set_shader_parameter("political", ImageTexture.create_from_image(image))
+
+
+func _grid_index(pixel: Vector2) -> int:
+	var q := clampi(int(round(pixel.x / STRIDE)), 0, cols - 1)
+	var r := clampi(int(round(pixel.y / STRIDE)), 0, rows - 1)
+	return r * cols + q
 
 
 func _height_units(metres: float, is_ocean: bool) -> float:
@@ -153,16 +179,16 @@ func _terrain() -> MeshInstance3D:
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 	var image := Image.load_from_file(ProjectSettings.globalize_path("res://data/%s_colour.png" % region))
 	image.generate_mipmaps()
-	var material := StandardMaterial3D.new()
-	material.albedo_texture = ImageTexture.create_from_image(image)
-	material.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS_ANISOTROPIC
-	material.roughness = 0.95
+	terrain_material.shader = load("res://shaders/terrain.gdshader")
+	terrain_material.set_shader_parameter("colour_map", ImageTexture.create_from_image(image))
+	var clear := Image.create(1, 1, false, Image.FORMAT_RGBA8)
+	terrain_material.set_shader_parameter("political", ImageTexture.create_from_image(clear))
 	var instance := MeshInstance3D.new()
 	instance.name = "Terrain"
 	instance.mesh = mesh
 	# The satellite image already holds real shading; cast shadows only add jagged artefacts.
 	instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	instance.material_override = material
+	instance.material_override = terrain_material
 	return instance
 
 
@@ -188,7 +214,7 @@ func _rivers() -> MeshInstance3D:
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	st.set_color(Color(0.10, 0.24, 0.38))
 	for river in data["rivers"]:
-		var width := lerpf(1.4, 0.5, clampf((float(river["rank"]) - 1.0) / 6.0, 0.0, 1.0))
+		var width := lerpf(1.4, 0.45, clampf((float(river["rank"]) - 1.0) / 8.0, 0.0, 1.0))
 		var pts: Array[Vector2] = []
 		for p in river["points"]:
 			var v := Vector2(p[0], p[1])

@@ -1,0 +1,73 @@
+"""The real-map scenario: 18 states with historical populations stay sound over long games."""
+
+from __future__ import annotations
+
+import pytest
+
+from anachronism.content.loader import Content
+from anachronism.engine.bots import make_bot, play_turn
+from anachronism.engine.economy import project_costs
+from anachronism.engine.game import new_game, replay
+from anachronism.engine.save import dumps, loads
+from tests.engine.test_simulation import check_invariants
+
+SCENARIO = "warring_states"
+
+
+def test_scenario_sits_on_the_real_map(content: Content) -> None:
+    state = new_game(content, SCENARIO, seed=1)
+    assert state.world.map == "east_asia"
+    assert state.player_civ == "qin"
+    assert state.year == -350
+    assert all(g.latlon is not None for g in state.world.geography.values())
+    assert state.world.seas, "seas touching the scenario's coasts are in play"
+    assert 20_000_000 < sum(p.population for p in state.provinces.values()) < 40_000_000
+
+
+def test_cost_scale_multiplies_project_costs(content: Content) -> None:
+    real = new_game(content, SCENARIO, seed=1)
+    unscaled = real.model_copy(update={"world": real.world.model_copy(update={"cost_scale": 1})})
+    scaled_cost = project_costs(real, "paper")
+    base_cost = project_costs(unscaled, "paper")
+    scale = real.world.cost_scale
+    # The anachronism premium is rounded after scaling, so allow one unit per scale step.
+    assert abs(scaled_cost.labour - base_cost.labour * scale) <= scale
+    assert abs(scaled_cost.knowledge - base_cost.knowledge * scale) <= scale
+    assert scaled_cost.labour > base_cost.labour
+
+
+@pytest.mark.parametrize("bot", ["growth", "greedy"])
+@pytest.mark.parametrize("seed", [1, 2])
+def test_long_games_keep_every_invariant(content: Content, bot: str, seed: int) -> None:
+    state = new_game(content, SCENARIO, seed)
+    start_year = state.year
+    bots = {civ_id: make_bot(bot) for civ_id in state.civs}
+    for _ in range(30):
+        state, _ = play_turn(state, bots)
+        check_invariants(state, start_year)
+    assert dumps(loads(dumps(state))) == dumps(state)
+
+
+def test_careful_qin_is_stable_and_advances(content: Content) -> None:
+    initial = new_game(content, SCENARIO, seed=3)
+    bots = {civ_id: make_bot("idle") for civ_id in initial.civs}
+    bots["qin"] = make_bot("growth")
+    state = initial
+    kinds: set[str] = set()
+    for _ in range(30):
+        state, events = play_turn(state, bots)
+        kinds |= {e.kind for e in events if e.civ == "qin"}
+    assert not {"riot", "revolt", "famine", "collapse"} & kinds
+    adopted_now = sum(t.stage.is_adopted for t in state.civs["qin"].tech.values())
+    adopted_then = sum(t.stage.is_adopted for t in initial.civs["qin"].tech.values())
+    assert adopted_now >= adopted_then + 5
+    assert state.population("qin") > initial.population("qin")
+
+
+def test_games_replay_exactly(content: Content) -> None:
+    initial = new_game(content, SCENARIO, seed=9)
+    bots = {civ_id: make_bot("growth") for civ_id in initial.civs}
+    state = initial
+    for _ in range(10):
+        state, _ = play_turn(state, bots)
+    assert dumps(replay(initial, state.action_log, until_turn=state.turn)) == dumps(state)

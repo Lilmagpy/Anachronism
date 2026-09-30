@@ -54,3 +54,9 @@ class Scenario(Frozen):
     civs: dict[Identifier, ScenarioCiv]
     unowned: dict[Identifier, NonNegative] = Field(default_factory=dict)
     """Provinces nobody controls, with their populations."""
+    map: Identifier | None = None
+    """Real-Earth map region the client draws (e.g. ``east_asia``); ``None`` means a map
+    generated from province positions. On a real map every province needs a ``latlon``."""
+    cost_scale: Annotated[int, Field(ge=1, le=1000)] = 1
+    """Multiplies every project cost. Scenarios with real historical populations (millions,
+    not tens of thousands) raise it so inventions cost the same share of a state's effort."""

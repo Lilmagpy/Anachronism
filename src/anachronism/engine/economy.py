@@ -104,7 +104,13 @@ def project_costs(state: GameState, node_id: str) -> Costs:
         materials = apply_bp(materials, rules.heavy_materials_bp)
     years_ahead = max(0, node.year - state.year)
     premium = min(rules.anachronism_cap_bp, years_ahead * rules.anachronism_bp_per_century // 100)
-    base = Costs(rules.labour[index], materials, rules.knowledge[index], rules.wealth[index])
+    scale = state.world.cost_scale
+    base = Costs(
+        rules.labour[index] * scale,
+        materials * scale,
+        rules.knowledge[index] * scale,
+        rules.wealth[index] * scale,
+    )
     return Costs(*(per_turn(state, with_bonus(base.get(r), premium)) for r in RESOURCES))
 
 

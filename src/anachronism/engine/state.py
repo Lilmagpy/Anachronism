@@ -61,6 +61,10 @@ class World(Frozen):
     """Provinces in play; neighbours outside the scenario are removed."""
     seas: dict[str, SeaZone] = Field(default_factory=dict)
     """Sea zones touching provinces in play."""
+    map: str | None = None
+    """Real-Earth map region, or ``None`` for a generated map."""
+    cost_scale: int = 1
+    """Multiplier on every project cost (see ``Scenario.cost_scale``)."""
 
 
 class ProvinceState(Mutable):

@@ -3,14 +3,15 @@
 ## Command-line options (after `--`): `--screenshot=PATH` saves a picture and quits,
 ## `--seed=N` picks the game, `--turns=N` plays N turns (the player does nothing) first,
 ## `--focus=province_id,distance` points the camera at a province (practice map),
-## `--look=lat,lon,distance` points it at a real place, `--map=NAME` picks the map:
-## a real region (default `east_asia`) or `testworld` for the fictional practice map.
+## `--look=lat,lon,distance` points it at a real place, `--scenario=ID` picks the scenario
+## (default `warring_states`; `bronze_dawn` is the fictional test world).
 extends Node3D
 
 var bridge := EngineBridge.new()
 var rig := CameraRig.new()
 var world: WorldBuilder
 var earth: EarthBuilder
+var provinces: ProvinceMap
 var view: Dictionary = {}
 var options := {}
 var environment := Environment.new()
@@ -28,7 +29,10 @@ func _ready() -> void:
 		push_error(bridge.last_error)
 		get_tree().quit(1)
 		return
-	var result: Variant = bridge.request("new_game", {"seed": int(options.get("seed", "1"))})
+	var result: Variant = bridge.request("new_game", {
+		"scenario": str(options.get("scenario", "warring_states")),
+		"seed": int(options.get("seed", "1")),
+	})
 	if result == null:
 		push_error(bridge.last_error)
 		get_tree().quit(1)
@@ -39,9 +43,8 @@ func _ready() -> void:
 	var holder := Node3D.new()
 	holder.name = "World"
 	add_child(holder)
-	var map_name := str(options.get("map", "east_asia"))
-	if map_name != "testworld":
-		_build_earth(holder, map_name)
+	if view.get("map") != null:
+		_build_earth(holder, str(view["map"]))
 		if options.has("screenshot"):
 			_take_screenshot(str(options["screenshot"]))
 		return
@@ -64,6 +67,8 @@ func _ready() -> void:
 func _build_earth(holder: Node3D, region: String) -> void:
 	earth = EarthBuilder.new(region)
 	earth.build(holder)
+	provinces = ProvinceMap.new(earth, view)
+	provinces.build(holder)
 	var half := earth.size() / 2.0
 	rig.bounds = Rect2(-half, earth.size())
 	rig.far = earth.size().x * 0.9
@@ -72,7 +77,12 @@ func _build_earth(holder: Node3D, region: String) -> void:
 	sky_material.ground_bottom_color = Color(0.03, 0.10, 0.20)  # open ocean beyond the map edge
 	sky_material.ground_horizon_color = Color(0.10, 0.20, 0.32)
 	sun.directional_shadow_max_distance = rig.far * 1.5
-	rig.look_at_point(Vector3.ZERO, rig.far)
+	# Open over the player's capital, far enough out to see the neighbouring states.
+	var start := Vector3.ZERO
+	for p in view["provinces"]:
+		if p["owner"] == view["player"] and p["capital"] and p["latlon"] != null:
+			start = earth.ground_at(p["latlon"][0], p["latlon"][1])
+	rig.look_at_point(start + Vector3(120, 0, 0), 900.0)
 	if options.has("look"):
 		var f: PackedStringArray = str(options["look"]).split(",")
 		var d := float(f[2]) if f.size() > 2 else 200.0
