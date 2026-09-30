@@ -36,7 +36,7 @@ def problems(root: Path) -> list[str]:
 def test_real_packs_load_cleanly() -> None:
     content = load_content()
     assert isinstance(content, Content)
-    assert [pack.id for pack in content.packs] == ["core", "east_asia", "testworld"]
+    assert [pack.id for pack in content.packs] == ["core", "east_asia", "europe", "testworld"]
     assert content.scenarios["bronze_dawn"].player_civ == "veyra"
     assert content.techs["iron_working"].prerequisites == ("bronze_working", "charcoal_burning")
     assert content.scenarios["bronze_dawn"].civs["veyra"].techs["writing"] is Stage.ADOPTED
@@ -138,8 +138,8 @@ def test_scenario_consistency(packs: Path) -> None:
 
 
 def test_unknown_dependency_pack(packs: Path) -> None:
-    edit(packs / "testworld" / "pack.yaml", "depends_on: [core]", "depends_on: [core, europe]")
-    assert any("unknown pack 'europe'" in p for p in problems(packs))
+    edit(packs / "testworld" / "pack.yaml", "depends_on: [core]", "depends_on: [core, atlantis]")
+    assert any("unknown pack 'atlantis'" in p for p in problems(packs))
 
 
 def test_all_problems_are_reported_together(packs: Path) -> None:
@@ -154,7 +154,7 @@ def test_lint_cli_reports_success_and_failure(
     packs: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
     assert lint_main([]) == 0
-    assert "OK: core v1, east_asia v1, testworld v1" in capsys.readouterr().out
+    assert "OK: core v1, east_asia v1, europe v1, testworld v1" in capsys.readouterr().out
     edit(packs / "core" / "eras.yaml", "ends: 500}", "ends: -600}")
     assert lint_main(["--root", str(packs)]) == 1
     output = capsys.readouterr().out
