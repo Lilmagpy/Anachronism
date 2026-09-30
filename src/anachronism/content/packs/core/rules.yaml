@@ -42,6 +42,7 @@ rules:
     base_bp: 1000
     literacy_bonus_bp: 4000
     widespread_at_bp: 8000
+    baseline_adopted_bp: 5000
   society:
     strain_from_shortfall_bp: 5000
     strain_from_diversion_bp: 8000

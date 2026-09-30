@@ -78,6 +78,8 @@ class SpreadRules(Frozen):
     literacy_bonus_bp: NonNegative
     """Extra spread per decade at 100% literacy (scaled by actual literacy)."""
     widespread_at_bp: Rate
+    baseline_adopted_bp: Rate
+    """Spread given to advancements a scenario lists as adopted (widespread ones get 100%)."""
 
 
 class SocietyRules(Frozen):
