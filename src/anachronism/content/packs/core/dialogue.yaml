@@ -182,3 +182,9 @@ dialogue:
     speaker: ruler
     lines:
       - "It is over. {civ} falls. Perhaps we reached too far, too fast. Perhaps the world was not ready."
+
+  - id: ally_attacked
+    speaker: general
+    lines:
+      - "{subject} is under attack and begs for our help. Say the word and we march - the World tab has the war drums."
+      - "Our friends in {subject} are bleeding. If we stand aside, who will stand by us?"

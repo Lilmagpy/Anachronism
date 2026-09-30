@@ -438,3 +438,13 @@ influence), and the largest. Each target is at least the starting share plus 20 
 so a dominant start (Egypt in 1275 BC) must still gain ground. Every victory is regional
 until games span several regions. The game can continue after the banner.
 
+## D-069 Korea's moment: the Three Kingdoms in AD 400 — DELEGATED (2026-10-01)
+For the East Asian starts the owner asked for (D-061), the first Korean moment is AD 400:
+Gwanggaeto's Goguryeo, Baekje, Silla, Gaya and the Wa of Japan, with the northern
+dynasties (Wei, Yan, Qin), Eastern Jin and the Rouran. Korea and Japan get finer
+provinces than in 350 BC. It suits the game: a young conqueror-king, a weak Silla that
+history says will win, and Japan across the strait. Notes and uncertainties are in
+docs/history/three_kingdoms.md. A Japan-centred moment is left for later.
+Also tonight: an ally or tributary under attack pulls in its AI protectors, but the player
+is never dragged into a war automatically; their general asks instead.
+

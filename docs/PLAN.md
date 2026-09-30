@@ -62,12 +62,12 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] 2.13a Your ideas made visible: landmarks around your capital for adopted ideas
       (aqueduct, windmill, water wheel, observatory, school, workshops, forges, harbour…);
       click your emblem to fly down to the capital
-- [ ] 2.13b Cartoon cities from CC0 art packs; a close-up capital view where adopted ideas
-      appear as buildings
-- [ ] 2.14 New regions and moments (D-061): the "europe" map (Ireland to Persia, Sahara to
+- [ ] 2.13b Cartoon cities from CC0 art packs (needs network access to the packs)
+- [x] 2.14 New regions and moments (D-061): the "europe" map (Ireland to Persia, Sahara to
       Scandinavia) is built; [x] Rome and Carthage, 264 BC (19 states, 70 provinces);
       [x] Egypt and the Hittites, 1275 BC (11 states, 50 provinces); [x] Europe in the Year 1000
-      (29 states, 96 provinces); [ ] more East Asian starts (Korea, Japan)
+      (29 states, 96 provinces); [x] The Three Kingdoms of Korea, AD 400 (11 states, 38
+      provinces, Korea and Japan in detail; D-069). Later: a Japan-centred moment
 - [x] 2.15a Screens (brief §11): pre-play disclaimer; a timeline of starting moments in the
       picker; in-game menu (Esc) with save, load, chronicle, tech tree (goal stubs, your
       own ideas marked) and settings (model status, offline switch); developer overlay (F3)

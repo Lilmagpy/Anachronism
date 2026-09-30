@@ -188,20 +188,29 @@ def declare_war(
     events.add(attacker, "war", f"{a.name} goes to war with {d.name}.{why}", d.name)
     events.add(defender, "war", f"{a.name} has declared war on {d.name}.", a.name)
     for pair, rel in sorted(state.relations.items()):
-        if rel.status is RelationStatus.ALLIED and defender in pair.split("|"):
-            ally = next(c for c in pair.split("|") if c != defender)
-            if (
-                ally != attacker
-                and alive(state, ally)
-                and status(state, ally, attacker) is not RelationStatus.WAR
-            ):
-                set_status(state, ally, attacker, RelationStatus.WAR)
-                events.add(
-                    ally,
-                    "war",
-                    f"{state.civs[ally].name} honours its alliance and marches against {a.name}.",
-                    a.name,
-                )
+        protects = rel.status in (RelationStatus.ALLIED, RelationStatus.TRIBUTARY)
+        if not protects or defender not in pair.split("|"):
+            continue
+        ally = next(c for c in pair.split("|") if c != defender)
+        if ally == attacker or not alive(state, ally):
+            continue
+        if status(state, ally, attacker) is RelationStatus.WAR:
+            continue
+        if ally == state.player_civ:  # the player is told, and decides
+            events.add(
+                ally,
+                "ally_attacked",
+                f"{a.name} has attacked your friend {d.name}. Will you march to their aid?",
+                d.name,
+            )
+            continue
+        set_status(state, ally, attacker, RelationStatus.WAR)
+        events.add(
+            ally,
+            "war",
+            f"{state.civs[ally].name} honours its bond with {d.name} and marches against {a.name}.",
+            a.name,
+        )
     if defender == state.player_civ or attacker == state.player_civ:
         other = attacker if defender == state.player_civ else defender
         if state.civs[other].awareness is not Awareness.FREE_AGENT:

@@ -225,3 +225,10 @@ def test_turns_with_rivals_stay_deterministic(content: Content) -> None:
         b, _ = end_turn(b)
     assert a == b
     assert a.scripts_fired
+
+
+def test_the_player_is_asked_not_dragged_into_wars(warring: GameState) -> None:
+    warring.relations[key("han", "qin")].status = RelationStatus.ALLIED
+    state, _ = apply_action(warring, DeclareWar(civ="wei", target="han"))
+    assert status(state, "qin", "wei") is not RelationStatus.WAR
+    assert any(e.kind == "ally_attacked" and e.civ == "qin" for e in state.events)
