@@ -331,3 +331,14 @@ and high ground costly to cross, so frontiers settle on ridges and rivers stay i
 provinces. The client and the checking tool (`client/tools/province_report.gd`) use the same
 code, so the rules' neighbours always match what the player sees. Borders are about 20 km
 accurate. Hand-made border polygons can replace this later if the owner wants exact lines.
+
+## D-057 How the Mac app carries the Python engine — DELEGATED (2026-09-30)
+The exported Godot app contains the engine's Python source, its lock file and the `uv` tool
+(both Mac chip types). On first launch it unpacks them into the game's user-data folder and
+uv downloads its own Python 3.12 and the exact locked libraries (about a minute, once);
+the Mac's own Python is never used. Nothing is installed system-wide and the owner needs no
+Terminal. The app is ad-hoc signed only (no paid Apple developer account), so macOS asks
+for "Open Anyway" once. CI proves the packaging on every push by exporting the same
+package for Linux and starting it with an empty home folder. Elevation data moved from EXR
+(readable only by the Godot editor) to a raw 16-bit file that exported games can read.
+Later options: bundle Python itself for offline first launch; sign and notarise (Phase 8).

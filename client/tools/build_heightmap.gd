@@ -1,7 +1,8 @@
 ## Stitches Terrarium elevation tiles into one height map for the game (run headless):
 ##   godot --headless --path client -s res://tools/build_heightmap.gd -- TILES_DIR ZOOM X0 X1 Y0 Y1 OUT_PREFIX
 ## Terrarium encodes metres as R*256 + G + B/256 - 32768 (Web Mercator tiles).
-## Output: OUT_PREFIX.exr (half-size, metres, 32-bit float) and OUT_PREFIX.json (bounds).
+## Output: OUT_PREFIX.i16 (half-size; whole metres as little-endian 16-bit integers, row by
+## row, which exported games can read) and OUT_PREFIX.json (bounds).
 extends SceneTree
 
 
@@ -26,7 +27,13 @@ func _init() -> void:
 					var metres := (c.r8 * 256.0 + c.g8 + c.b8 / 256.0) - 32768.0
 					full.set_pixel((tx - x0) * 256 + px, (ty - y0) * 256 + py, Color(metres, 0, 0))
 	full.resize(cols / 2, rows / 2, Image.INTERPOLATE_BILINEAR)
-	full.save_exr(out + ".exr", true)
+	var raw := PackedByteArray()
+	raw.resize(full.get_width() * full.get_height() * 2)
+	for y in full.get_height():
+		for x in full.get_width():
+			var m := clampi(int(round(full.get_pixel(x, y).r)), -32768, 32767)
+			raw.encode_s16((y * full.get_width() + x) * 2, m)
+	FileAccess.open(out + ".i16", FileAccess.WRITE).store_buffer(raw)
 	var n := float(1 << zoom)
 	var bounds := {
 		"zoom": zoom, "width": cols / 2, "height": rows / 2,

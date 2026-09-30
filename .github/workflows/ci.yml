@@ -37,3 +37,49 @@ jobs:
         run: scripts/check.sh
       - name: Launch the game command
         run: uv run --locked anachronism
+
+  app:
+    name: Mac app (built on Linux)
+    # Exports the game for macOS and uploads it to the run page (D-050). Before that, the same
+    # packaging is exported for Linux and started with an empty home folder, to prove that a
+    # fresh install unpacks the engine, fetches Python and answers.
+    runs-on: ubuntu-latest
+    env:
+      GODOT_VERSION: 4.5.1
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.2.0
+      - name: Cache Godot and its export templates
+        id: godot-cache
+        uses: actions/cache@v6
+        with:
+          path: |
+            ~/godot
+            ~/.local/share/godot/export_templates
+          key: godot-${{ env.GODOT_VERSION }}
+      - name: Download Godot
+        if: steps.godot-cache.outputs.cache-hit != 'true'
+        run: |
+          base="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable"
+          mkdir -p ~/godot
+          curl -sSL -o /tmp/godot.zip "$base/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          unzip -q /tmp/godot.zip -d ~/godot
+          mv ~/godot/Godot_v${GODOT_VERSION}-stable_linux.x86_64 ~/godot/godot
+          curl -sSL -o /tmp/templates.tpz "$base/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
+          unzip -q /tmp/templates.tpz 'templates/macos.zip' 'templates/linux_release.x86_64' 'templates/version.txt' -d /tmp/tpl
+          mkdir -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          mv /tmp/tpl/templates/* ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
+      - name: Package for Linux and start it as a brand-new user
+        run: |
+          scripts/package.sh linux ~/godot/godot
+          mkdir -p /tmp/fresh-home
+          env -i HOME=/tmp/fresh-home PATH=/usr/bin:/bin \
+            build/linux/anachronism.x86_64 --headless -- --smoke | tee /tmp/smoke.txt
+          grep -q "SMOKE OK" /tmp/smoke.txt
+      - name: Package for macOS
+        run: scripts/package.sh mac ~/godot/godot
+      - uses: actions/upload-artifact@v7
+        with:
+          name: Anachronism-mac
+          path: build/Anachronism-mac.zip
+          retention-days: 30

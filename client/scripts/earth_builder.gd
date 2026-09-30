@@ -1,4 +1,5 @@
-## Builds real Earth terrain from measured elevation (client/data/<region>_height.exr) and
+## Builds real Earth terrain from measured elevation (client/data/<region>_height.i16: whole
+## metres as little-endian 16-bit integers, row by row) and
 ## Natural Earth rivers. One world unit = one height-map pixel (about 5 km at the equator,
 ## Web Mercator). Heights are exaggerated so mountains read from a strategy camera.
 ##
@@ -14,7 +15,6 @@ const LAND_LIFT := 0.5          ## gap between land and water so the two never f
 
 var region := ""
 var bounds: Dictionary = {}
-var heights: Image
 var cols := 0
 var rows := 0
 var ocean := PackedByteArray()
@@ -26,13 +26,14 @@ func _init(region_name: String) -> void:
 	region = region_name
 	var base := "res://data/%s_height" % region
 	bounds = JSON.parse_string(FileAccess.get_file_as_string(base + ".json"))
-	heights = Image.load_from_file(ProjectSettings.globalize_path(base + ".exr"))
-	cols = int(bounds["width"]) / STRIDE
+	var metres := FileAccess.get_file_as_bytes(base + ".i16")
+	var width := int(bounds["width"])
+	cols = width / STRIDE
 	rows = int(bounds["height"]) / STRIDE
 	elev.resize(cols * rows)
 	for r in rows:
 		for q in cols:
-			elev[r * cols + q] = heights.get_pixel(q * STRIDE, r * STRIDE).r
+			elev[r * cols + q] = metres.decode_s16((r * STRIDE * width + q * STRIDE) * 2)
 	_find_ocean()
 
 
@@ -177,7 +178,7 @@ func _terrain() -> MeshInstance3D:
 	arrays[Mesh.ARRAY_INDEX] = indices
 	var mesh := ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-	var image := Image.load_from_file(ProjectSettings.globalize_path("res://data/%s_colour.png" % region))
+	var image := Image.load_from_file("res://data/%s_colour.png" % region)
 	image.generate_mipmaps()
 	terrain_material.shader = load("res://shaders/terrain.gdshader")
 	terrain_material.set_shader_parameter("colour_map", ImageTexture.create_from_image(image))

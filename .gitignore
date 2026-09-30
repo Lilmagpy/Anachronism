@@ -27,3 +27,7 @@ cache/
 .DS_Store
 .idea/
 .vscode/
+
+# Mac app build (scripts/package_mac.sh)
+client/engine_src/
+build/

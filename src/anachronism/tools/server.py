@@ -8,6 +8,7 @@ Nothing else is ever written to stdout, so the client can trust every line.
 from __future__ import annotations
 
 import json
+import os
 import sys
 from collections.abc import Callable, Iterable
 from pathlib import Path
@@ -161,8 +162,8 @@ def serve(lines: Iterable[str], out: TextIO, session: Session) -> None:
 
 
 def main() -> int:
-    """Run the bridge on stdin/stdout."""
-    session = Session(load_content(), Path("saves"))
+    """Run the bridge on stdin/stdout. Saves go to $ANACHRONISM_SAVES (default ./saves)."""
+    session = Session(load_content(), Path(os.environ.get("ANACHRONISM_SAVES", "saves")))
     serve(sys.stdin, sys.stdout, session)
     return 0
 

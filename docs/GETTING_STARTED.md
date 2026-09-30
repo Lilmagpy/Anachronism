@@ -3,7 +3,30 @@
 You don't have to run anything to follow the project: Claude attaches screenshots at each
 milestone. This page is for when you want to try the game yourself.
 
-## One-time setup (about 5 minutes)
+## Playing the 3D game on your Mac (no setup)
+
+Every time new work is pushed, GitHub builds a Mac app automatically.
+
+1. Open the project's **Actions** page on GitHub:
+   <https://github.com/Lilmagpy/Anachronism/actions>, click the newest run with a green
+   tick, scroll to **Artifacts** and click **Anachronism-mac** to download it.
+2. Double-click the downloaded file to unzip it; inside is **Anachronism-mac.zip** —
+   double-click that too. You now have **Anachronism.app**. Drag it into **Applications**.
+3. **The first time only**, macOS will refuse to open it because it is not from the App
+   Store or a registered developer (the app isn't signed with a paid Apple account yet).
+   Double-click it once and press **Done** when the warning appears. Then open
+   **System Settings → Privacy & Security**, scroll down to the line saying Anachronism was
+   blocked, and click **Open Anyway** (enter your Mac password if asked).
+4. The first launch shows *Starting the game engine…* for about a minute while it downloads
+   Python (it needs the internet this once). After that it starts in a few seconds.
+
+How to play: drag the map to move, scroll (or pinch) to zoom, click a province to see it.
+Pick ideas in the **Ideas** panel and press **Begin**; press **End turn** to let ten years
+pass. Your games and the engine live in
+`~/Library/Application Support/Godot/app_userdata/Anachronism` (delete that folder to
+start completely fresh).
+
+## The text version: one-time setup (about 5 minutes)
 
 1. **Install uv**, the tool that installs Python and the game's libraries for you.
    Open the **Terminal** app (press ⌘ Space, type `Terminal`, press Return), paste this line

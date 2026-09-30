@@ -7,7 +7,7 @@
 ## (default `warring_states`; `bronze_dawn` is the fictional test world). On the real map:
 ## `--start=idea_id` begins an experiment, `--select=province_id` selects a province and
 ## `--play=N` then ends N turns, `--click=x,y` clicks the map, `--tab=ideas|projects|world` opens a panel (all for
-## screenshots and tests).
+## screenshots and tests). `--smoke` builds everything, prints SMOKE OK and quits.
 extends Node3D
 
 var bridge := EngineBridge.new()
@@ -30,20 +30,26 @@ func _ready() -> void:
 		options[parts[0]] = parts[1] if parts.size() > 1 else "true"
 	_setup_environment()
 	add_child(rig)
+	var notice := _notice("Starting the game engine…\nThe very first launch downloads Python and takes about a minute.")
+	for i in 3:
+		await get_tree().process_frame
 	var repo_root := ProjectSettings.globalize_path("res://").get_base_dir().get_base_dir()
-	if not bridge.start(repo_root):
-		push_error(bridge.last_error)
-		get_tree().quit(1)
-		return
-	var result: Variant = bridge.request("new_game", {
-		"scenario": str(options.get("scenario", "warring_states")),
-		"seed": int(options.get("seed", "1")),
-	})
+	var result: Variant = null
+	if bridge.start(repo_root):
+		result = bridge.request("new_game", {
+			"scenario": str(options.get("scenario", "warring_states")),
+			"seed": int(options.get("seed", "1")),
+		})
 	if result == null:
 		push_error(bridge.last_error)
-		get_tree().quit(1)
+		if options.has("smoke") or options.has("screenshot"):
+			get_tree().quit(1)
+		else:  # tell the player instead of vanishing
+			var label: Label = notice.get_child(1)
+			label.text = "The game engine could not start:\n%s\n\nCheck your internet connection for the first launch, then open the game again." % bridge.last_error
 		return
 	view = result
+	notice.queue_free()
 	for i in int(options.get("turns", "0")):
 		view = bridge.request("end_turn")
 	holder = Node3D.new()
@@ -52,6 +58,11 @@ func _ready() -> void:
 	if view.get("map") != null:
 		_build_earth(holder, str(view["map"]))
 		_build_hud()
+		if options.has("smoke"):  # CI self-test: the engine answered and the world was built
+			print("SMOKE OK: %s, %d provinces, %d ideas" % [view["scenario"], view["provinces"].size(), view["ideas"].size()])
+			bridge.stop()
+			get_tree().quit()
+			return
 		if options.has("screenshot"):
 			_take_screenshot(str(options["screenshot"]))
 		return
@@ -94,6 +105,25 @@ func _build_earth(holder: Node3D, region: String) -> void:
 		var f: PackedStringArray = str(options["look"]).split(",")
 		var d := float(f[2]) if f.size() > 2 else 200.0
 		rig.look_at_point(earth.ground_at(float(f[0]), float(f[1])), d)
+
+
+## A centred message on a dark screen (while the engine starts).
+func _notice(text: String) -> CanvasLayer:
+	var layer := CanvasLayer.new()
+	var back := ColorRect.new()
+	back.color = Color(0.06, 0.05, 0.04)
+	back.set_anchors_preset(Control.PRESET_FULL_RECT)
+	layer.add_child(back)
+	var label := Label.new()
+	label.text = text
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.set_anchors_preset(Control.PRESET_FULL_RECT)
+	label.add_theme_font_size_override("font_size", 22)
+	label.add_theme_color_override("font_color", Color(0.86, 0.72, 0.42))
+	layer.add_child(label)
+	add_child(layer)
+	return layer
 
 
 # --- playing on the real map ---------------------------------------------------------
