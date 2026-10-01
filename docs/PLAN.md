@@ -152,5 +152,6 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] Historical generals with gifts, mercenary companies, land-for-peace, elephants where they lived (D-101)
 - [x] Walls in three levels, pillage, levies that breed unrest; field battles weigh the ground only (D-102)
 - [x] Battles told as stories (D-103); dilemmas: historical choices put to the ruler (D-104)
+- [x] Envoys: rival courts sue for peace, deliver ultimatums, propose alliances and trade (D-105)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

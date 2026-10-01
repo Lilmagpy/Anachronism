@@ -5,6 +5,7 @@ from __future__ import annotations
 from anachronism.content.schema import Stage
 from anachronism.engine.actions import (
     Action,
+    AnswerEnvoy,
     ArmyStance,
     CancelProject,
     ChooseDilemma,
@@ -35,7 +36,9 @@ from anachronism.engine.armies import apply_orders
 from anachronism.engine.decrees import apply_decree
 from anachronism.engine.dilemmas import answer
 from anachronism.engine.diplomacy import apply_diplomacy
+from anachronism.engine.events import EventLog
 from anachronism.engine.judge import apply_ruling
+from anachronism.engine.offers import respond
 from anachronism.engine.state import GameState, Project
 from anachronism.engine.tech import Feasibility, feasibility, propose
 
@@ -80,6 +83,13 @@ def _apply(state: GameState, action: Action) -> tuple[bool, str]:
         return apply_decree(state, action)
     if isinstance(action, RaiseArmy | MarchArmy | ArmyStance | DisbandArmy | Fortify):
         return apply_orders(state, action)
+    if isinstance(action, AnswerEnvoy):
+        if state.offer is None or civ.id != state.player_civ:
+            return False, "no envoys are waiting"
+        events = EventLog(turn=state.turn, year=state.year)
+        message = respond(state, accept=action.accept, events=events)
+        state.events.extend(events.items)
+        return True, message
     if isinstance(action, ChooseDilemma):
         dilemma = state.world.dilemmas.get(action.dilemma)
         if dilemma is None or state.dilemma != action.dilemma or civ.id != state.player_civ:

@@ -820,3 +820,14 @@ and historical ones: the Gordian knot and Diogenes for Alexander, the corvus for
 the year 1000, Shang Yang's reforms for Qin, Chanakya's Arthashastra for the Mauryas, the
 Yassa and the captured craftsmen for the Mongols, and the Portuguese guns of Tanegashima
 in Sengoku Japan. Answers are recorded actions, so replays stay exact.
+
+## D-105 Envoys come to you — DELEGATED (2026-10-01)
+Diplomacy was all one way: the player sent envoys, rivals only acted. Now rival courts send
+envoys with proposals the player must answer, shown on the same card as dilemmas: a beaten,
+weary enemy **sues for peace**; a far stronger, aggrieved, warlike neighbour delivers an
+**ultimatum** (pay a quarter of the treasury and become its tributary, or face war); a
+friendly trading partner at war with the player's enemy **proposes an alliance** (accepting
+means joining its war); a merchant court **proposes a trade pact**. A court with something
+to propose sends envoys with a 25% chance per decade, one proposal at a time. Unanswered,
+the court refuses for the player - which, for an ultimatum, means war. Answers are recorded
+actions, so replays stay exact.

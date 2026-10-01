@@ -21,6 +21,7 @@ from anachronism.engine.commands import describe_blockers
 from anachronism.engine.decrees import cost, explain_costs, explain_ready_in, news_on_the_road
 from anachronism.engine.dilemmas import effects_text, fill
 from anachronism.engine.economy import project_costs
+from anachronism.engine.offers import describe
 from anachronism.engine.projects import project_turns
 from anachronism.engine.reports import capacity
 from anachronism.engine.rivals import relation, strength
@@ -110,6 +111,13 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
         "wars": fronts(state),
         "armies": _armies(state),
         "dilemma": _dilemma(state),
+        "offer": {
+            "from": state.offer.from_civ,
+            "kind": state.offer.kind,
+            **describe(state, state.offer),
+        }
+        if state.offer
+        else None,
         "levy": _levy(state, civ_id),
         "battles": _battle_sites(state, events or []),
         "victory": {

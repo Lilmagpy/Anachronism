@@ -225,6 +225,8 @@ class RivalRules(Frozen):
     """Walls and the court's guard: a capital is this much harder to take (10_000 = normal)."""
     last_stand_defence_bp: Positive = 20000
     """A state's last province is defended to the end: its defence is multiplied by this."""
+    envoy_offer_bp: Rate = 2500
+    """Chance per decade that a rival court with something to propose sends envoys."""
     player_grace_turns: NonNegative = 2
     """For this many opening turns the player loses no provinces in war (time to respond)."""
     war_losses_bp: Rate

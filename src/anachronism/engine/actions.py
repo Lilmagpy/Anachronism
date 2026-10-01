@@ -239,6 +239,14 @@ class ChooseDilemma(Frozen):
     choice: int
 
 
+class AnswerEnvoy(Frozen):
+    """Accept or refuse a rival court's proposal (D-105)."""
+
+    kind: Literal["envoy_answer"] = "envoy_answer"
+    civ: str
+    accept: bool
+
+
 Orders = RaiseArmy | MarchArmy | ArmyStance | DisbandArmy | Fortify
 
 
@@ -272,7 +280,8 @@ Action = Annotated[
     | ArmyStance
     | DisbandArmy
     | Fortify
-    | ChooseDilemma,
+    | ChooseDilemma
+    | AnswerEnvoy,
     Field(discriminator="kind"),
 ]
 

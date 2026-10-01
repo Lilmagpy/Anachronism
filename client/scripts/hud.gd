@@ -120,7 +120,11 @@ func _fill_dilemma() -> void:
 	for child in _dilemma.get_children():
 		child.queue_free()
 	var question: Variant = view.get("dilemma")
-	_dilemma.visible = question != null
+	var offer: Variant = view.get("offer")
+	_dilemma.visible = question != null or offer != null
+	if question == null and offer != null:
+		_fill_offer(offer)
+		return
 	if question == null:
 		return
 	var body := VBoxContainer.new()
@@ -140,6 +144,34 @@ func _fill_dilemma() -> void:
 		row.add_child(_label(str(choice["hint"]), 12, DIM))
 		body.add_child(row)
 	body.add_child(_label("If you do not choose, the court will take the first answer.", 12, DIM))
+	_dilemma.add_child(body)
+
+
+## Envoys from a rival court (D-105): their proposal, and accept or refuse.
+func _fill_offer(offer: Dictionary) -> void:
+	var body := VBoxContainer.new()
+	body.add_theme_constant_override("separation", 6)
+	var head := HBoxContainer.new()
+	var swatch := ColorRect.new()
+	swatch.color = civ_colours.get(offer["from"], Color.GRAY)
+	swatch.custom_minimum_size = Vector2(18, 18)
+	swatch.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	head.add_child(swatch)
+	head.add_child(UiStyle.label(str(offer["title"]), 24, UiStyle.RED, "title", 800))
+	body.add_child(head)
+	var text := _wrapped(str(offer["text"]), 16, INK)
+	text.custom_minimum_size = Vector2(580, 0)
+	body.add_child(text)
+	body.add_child(_wrapped(str(offer["hint"]), 13, DIM))
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 8)
+	for answer in [[str(offer["accept"]), true], [str(offer["decline"]), false]]:
+		var pick := _button(answer[0], func(): action_requested.emit({"kind": "envoy_answer", "accept": answer[1]}))
+		pick.add_theme_font_size_override("font_size", 16)
+		pick.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_child(pick)
+	body.add_child(row)
+	body.add_child(_label("If you give no answer, the court refuses for you.", 12, DIM))
 	_dilemma.add_child(body)
 
 

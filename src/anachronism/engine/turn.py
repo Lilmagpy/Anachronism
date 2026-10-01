@@ -11,6 +11,7 @@ from anachronism.engine.effects import Effects, civ_effects
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import BP, apply_bp, clamp
 from anachronism.engine.happenings import strike
+from anachronism.engine.offers import envoys
 from anachronism.engine.population import grow_population
 from anachronism.engine.projects import advance_projects
 from anachronism.engine.reports import snapshot
@@ -67,6 +68,7 @@ def end_turn(state: GameState) -> tuple[GameState, list[Event]]:
         new.civs[civ_id].mercenaries = max(0, new.civs[civ_id].mercenaries - 1)
         new.civs[civ_id].sealed = max(0, new.civs[civ_id].sealed - 1)
     ask(new, rng, events)
+    envoys(new, rng, events)
     trade(new)
     spread_faiths(new, effects_by_civ, rng, events)
     grow_population(new, effects_by_civ, starving)

@@ -258,6 +258,16 @@ class Army(Mutable):
         return sum(self.troops.values())
 
 
+class Offer(Mutable):
+    """A rival court's proposal waiting for the player's answer (D-105)."""
+
+    kind: Literal["peace", "ultimatum", "alliance", "trade"]
+    from_civ: str
+    against: str = ""
+    """For an alliance: the common enemy."""
+    turn: int = 0
+
+
 class CivState(Mutable):
     """A civilisation in play."""
 
@@ -333,6 +343,8 @@ class GameState(Mutable):
     civs: dict[str, CivState]
     action_log: list[LoggedAction] = Field(default_factory=list)
     events: list[Event] = Field(default_factory=list)
+    offer: Offer | None = None
+    """A rival court's proposal waiting for the player's answer, if any."""
     dilemma: str | None = None
     """The dilemma waiting for the player's answer, if any."""
     dilemmas_seen: list[str] = Field(default_factory=list)
