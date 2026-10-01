@@ -831,3 +831,13 @@ means joining its war); a merchant court **proposes a trade pact**. A court with
 to propose sends envoys with a 25% chance per decade, one proposal at a time. Unanswered,
 the court refuses for the player - which, for an ultimatum, means war. Answers are recorded
 actions, so replays stay exact.
+
+## D-106 Conquered peoples remember — DELEGATED (2026-10-01)
+Conquest was permanent the moment the walls fell. Now every province has a people (its
+owner at the start). A conquered province keeps its people, and while it has no garrison
+(an army of its rulers with at least one man per hundred people) it may rise - 15% a decade,
+more when the realm is restless - going back to its old state if that still stands, or
+breaking free if not (a capital, with its court and guards, never rises). After 150 years
+a conquered people thinks of itself as its rulers.
+own. The province card says whose people live there, how long ago they were conquered,
+and what garrison holds them. Empires now cost soldiers to keep, not only to win.

@@ -21,6 +21,7 @@ from anachronism.engine.commands import describe_blockers
 from anachronism.engine.decrees import cost, explain_costs, explain_ready_in, news_on_the_road
 from anachronism.engine.dilemmas import effects_text, fill
 from anachronism.engine.economy import project_costs
+from anachronism.engine.occupation import garrisoned, restless
 from anachronism.engine.offers import describe
 from anachronism.engine.projects import project_turns
 from anachronism.engine.reports import capacity
@@ -142,6 +143,7 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
                 "capital": any(c.capital == pid for c in state.civs.values()),
                 "defence_bp": _defence(state, pid),
                 "walls": state.provinces[pid].walls,
+                **_people(state, pid),
                 "ravaged": state.provinces[pid].ravaged,
                 **_walls_next(state, pid),
             }
@@ -255,6 +257,23 @@ def _ideas(state: GameState, civ_id: str) -> list[dict[str, Any]]:
             }
         )
     return ideas
+
+
+def _people(state: GameState, province_id: str) -> dict[str, Any]:
+    """Whose people live in a conquered province, and what holding it down takes."""
+    if not restless(state, province_id):
+        return {}
+    province = state.provinces[province_id]
+    people = state.civs.get(province.people or "")
+    years = (state.turn - province.held_since) * state.world.years_per_turn
+    rules = state.world.rules.armies
+    return {
+        "people": people.adjective if people else "",
+        "conquered_years": years,
+        "assimilate_in": max(0, rules.assimilation_years - years),
+        "garrison_need": province.population // rules.garrison_people_per_man,
+        "garrisoned": garrisoned(state, province_id),
+    }
 
 
 def _dilemma(state: GameState) -> dict[str, Any] | None:

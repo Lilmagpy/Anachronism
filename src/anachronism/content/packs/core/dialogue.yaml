@@ -198,6 +198,16 @@ dialogue:
       - "We have stripped {subject} bare. The men eat well, and the enemy's purse is lighter."
       - "{subject} burns. Ugly work - but every barn we empty is one less that feeds their army."
 
+  - id: uprising
+    speaker: general
+    lines:
+      - "{subject} has risen against us. I told the court: a conquered people must be watched, and watching takes soldiers."
+      - "We lost {subject} without a battle - to its own people. Next time, leave a garrison."
+  - id: uprising_won
+    speaker: steward
+    lines:
+      - "Our people in {subject} have thrown out the foreigners and come home to us! The bells are ringing."
+
   - id: quiet
     speaker: steward
     lines:

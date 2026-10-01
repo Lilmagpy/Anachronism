@@ -368,6 +368,10 @@ class ArmyRules(Frozen):
     weariness_per_battle_bp: NonNegative = 700
     """War weariness for losing a battle."""
     min_army: Positive = 200
+    uprising_bp: Rate = 1500
+    """Chance per decade that an ungarrisoned conquered province rises (more with unrest)."""
+    assimilation_years: Positive = 150
+    """Years until a conquered people thinks of itself as its rulers' own."""
     wall_level_bp: NonNegative = 6000
     """Extra defence for each level of walls built in a province."""
     wall_materials: NonNegative = 150

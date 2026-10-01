@@ -34,6 +34,7 @@ MOMENTS = frozenset(
         "war", "conquest", "province_lost", "capital_lost", "peace", "news", "imitation",
         "victory", "defeat", "ally_attacked", "disaster", "blessing", "faith", "coalition",
         "consequence", "battle_won", "battle_lost", "siege", "army_lost", "pillage", "pillaged",
+        "uprising", "uprising_won",
         "advise_steward", "advise_steward_urgent", "advise_general",
         "advise_general_urgent", "advise_scholar", "advise_diviner", "advise_diviner_urgent",
     }

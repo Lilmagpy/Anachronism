@@ -64,6 +64,7 @@ def build_state(
     provinces = {
         pid: ProvinceState(
             owner=owners.get(pid),
+            people=owners.get(pid),
             population=populations[pid],
             resources=dict(sorted(geography[pid].resources.items())),
         )

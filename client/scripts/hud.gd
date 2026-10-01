@@ -1172,6 +1172,14 @@ func _fill_card() -> void:
 		why.append(str(p["terrain"]))
 	if int(p.get("walls", 0)) > 0:
 		why.append(["stone walls", "towers and gates", "star bastions"][mini(2, int(p["walls"]) - 1)])
+	if str(p.get("people", "")) != "":
+		var held := "Its people are %s, conquered %d years ago (theirs again in thought after %d more)." % [
+			str(p["people"]), int(p["conquered_years"]), int(p["assimilate_in"])]
+		if bool(p["garrisoned"]):
+			held += " The garrison holds them down."
+		else:
+			held += " Without a garrison of %s men they may rise." % number(int(p["garrison_need"]))
+		_card_body.add_child(_wrapped(held, 13, INK if bool(p["garrisoned"]) else BAD))
 	if int(p.get("ravaged", 0)) > 0:
 		_card_body.add_child(_wrapped("Ravaged by war: half its crops and goods are lost until it recovers.", 13, BAD))
 	var hard := "easy" if defence < 11000 else ("hard" if defence < 25000 else "very hard")

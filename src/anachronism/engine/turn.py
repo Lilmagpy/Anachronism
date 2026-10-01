@@ -11,6 +11,7 @@ from anachronism.engine.effects import Effects, civ_effects
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import BP, apply_bp, clamp
 from anachronism.engine.happenings import strike
+from anachronism.engine.occupation import occupation
 from anachronism.engine.offers import envoys
 from anachronism.engine.population import grow_population
 from anachronism.engine.projects import advance_projects
@@ -63,6 +64,7 @@ def end_turn(state: GameState) -> tuple[GameState, list[Event]]:
     march(new, rng, events)
     sieges(new, events)
     upkeep(new, events)
+    occupation(new, rng, events)
     wear_wars(new, events)
     for civ_id in sorted(new.civs):
         new.civs[civ_id].mercenaries = max(0, new.civs[civ_id].mercenaries - 1)

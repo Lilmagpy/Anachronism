@@ -58,6 +58,9 @@ def capture(state: GameState, taker: str, province_id: str, events: EventLog) ->
     province = state.provinces[province_id]
     loser_id = province.owner
     province.owner = taker
+    province.held_since = state.turn
+    if province.people is None:
+        province.people = taker  # unclaimed land: its people take the new lords as their own
     name = state.world.geography[province_id].name
     taker_civ = state.civs[taker]
     events.add(taker, "conquest", f"{taker_civ.adjective} armies take {name}.", name)

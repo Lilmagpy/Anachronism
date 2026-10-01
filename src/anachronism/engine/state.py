@@ -100,6 +100,10 @@ class ProvinceState(Mutable):
     population: int
     resources: dict[str, Access]
     """Current access to each map resource (discoveries change it)."""
+    people: str | None = None
+    """Whose people live here (a civ id): conquered peoples remember their old lords."""
+    held_since: int = 0
+    """The turn the present owner took it."""
     walls: int = 0
     """Fortifications built here, 0-3 (each makes the province harder to take)."""
     ravaged: int = 0
