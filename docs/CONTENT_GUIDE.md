@@ -137,6 +137,8 @@ scenarios:
   leave it out for a map generated from `position`s.
 - `cost_scale: 10` multiplies every project cost. Use it when populations are real
   historical numbers (millions): the testworld's costs suit states of a few hundred thousand.
+- `common_techs: {written_law: widespread}` lists what every state of the age knows. Each
+  state gets these only if it already has their prerequisites; its own entry wins.
 - Only listed provinces are in the scenario; borders to unlisted provinces are dropped.
 - Starting techs: `adopted` or `widespread` need their prerequisites adopted too;
   `experimenting` is not allowed (there is no project data); stubs are not allowed.

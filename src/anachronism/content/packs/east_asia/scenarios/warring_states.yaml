@@ -13,6 +13,8 @@ scenarios:
     player_civ: qin
     map: east_asia
     cost_scale: 10
+    # what every state of the age knows, where it has the prerequisites (Zichan's cast law codes (536 BC), Li Kui's Canon of Laws, household registers)
+    common_techs: {written_law: adopted, census: adopted}
     civs:
       qin:
         disposition: aggressive

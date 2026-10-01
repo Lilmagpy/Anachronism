@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping, Set
 from typing import Annotated
 
 from pydantic import Field
@@ -87,3 +88,24 @@ class Scenario(Frozen):
     cost_scale: Annotated[int, Field(ge=1, le=1000)] = 1
     """Multiplies every project cost. Scenarios with real historical populations (millions,
     not tens of thousands) raise it so inventions cost the same share of a state's effort."""
+    common_techs: dict[Identifier, Stage] = Field(default_factory=dict)
+    """What every state of the age knows (written law, say), so each civ need not list it.
+    A state gets one only if it already has its prerequisites (no law code without
+    writing); a civ's own entry for the same idea wins."""
+
+    def starting_techs(
+        self, civ_id: str, prerequisites: Mapping[str, Set[str]]
+    ) -> dict[str, Stage]:
+        """A civ's starting ideas: its own list plus the age's common ones it can hold."""
+        techs = dict(self.civs[civ_id].techs)
+        added = True
+        while added:  # a common idea may rest on another (a census on standard measures)
+            added = False
+            for node_id, stage in sorted(self.common_techs.items()):
+                if node_id in techs:
+                    continue
+                needs = prerequisites.get(node_id, frozenset())
+                if all(n in techs and techs[n].is_adopted for n in needs):
+                    techs[node_id] = stage
+                    added = True
+        return techs

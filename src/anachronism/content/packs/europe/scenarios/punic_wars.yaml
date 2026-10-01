@@ -13,6 +13,8 @@ scenarios:
     player_civ: rome
     map: europe
     cost_scale: 10
+    # what every state of the age knows, where it has the prerequisites (Rome's Twelve Tables, Greek city laws, Carthage's constitution)
+    common_techs: {written_law: widespread}
     civs:
       rome:
         disposition: aggressive

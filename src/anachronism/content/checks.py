@@ -203,6 +203,14 @@ def _scenario_issues(registry: Registry) -> list[ContentIssue]:
 
         if scenario.player_civ not in scenario.civs:
             report(f"player civ {scenario.player_civ!r} is not in the scenario")
+        for tech_id, stage in scenario.common_techs.items():
+            common = registry.techs.get(tech_id)
+            if common is None and registry.is_unknown("techs", tech_id):
+                report(f"common_techs: unknown tech {tech_id!r}")
+            elif common is not None and common.stub:
+                report(f"common_techs: {tech_id!r} is a stub")
+            if not stage.is_adopted:
+                report(f"common_techs: {tech_id!r} must be adopted or widespread")
         claimed: dict[str, str] = {}
         for province in scenario.unowned:
             claimed[province] = "unowned"

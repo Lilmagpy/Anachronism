@@ -85,8 +85,14 @@ def build_state(
         },
         scripts={c: start.scripts for c, start in sorted(scenario.civs.items()) if start.scripts},
     )
+    needs = {node_id: set(node.prerequisites) for node_id, node in content.techs.items()}
     civs = {
-        civ_id: _start_civ(content.civs[civ_id], start, content.rules.spread.baseline_adopted_bp)
+        civ_id: _start_civ(
+            content.civs[civ_id],
+            start,
+            scenario.starting_techs(civ_id, needs),
+            content.rules.spread.baseline_adopted_bp,
+        )
         for civ_id, start in sorted(scenario.civs.items())
     }
     for civ_id, start in scenario.civs.items():
@@ -127,9 +133,11 @@ def _trim_neighbours(geography: ProvinceGeography, in_play: set[str]) -> Provinc
     return geography.model_copy(update={"neighbours": kept})
 
 
-def _start_civ(identity: CivDefinition, start: ScenarioCiv, adopted_spread_bp: int) -> CivState:
+def _start_civ(
+    identity: CivDefinition, start: ScenarioCiv, techs: dict[str, Stage], adopted_spread_bp: int
+) -> CivState:
     tech = {}
-    for node_id, stage in sorted(start.techs.items()):
+    for node_id, stage in sorted(techs.items()):
         if stage is Stage.WIDESPREAD:
             spread = BP
         elif stage is Stage.ADOPTED:

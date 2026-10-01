@@ -13,6 +13,8 @@ scenarios:
     player_civ: goguryeo
     map: east_asia
     cost_scale: 10
+    # what every state of the age knows, where it has the prerequisites (The Jin Taishi code (268); Goguryeo's law code (373); household registers)
+    common_techs: {written_law: widespread, census: adopted}
     civs:
       goguryeo:
         disposition: aggressive

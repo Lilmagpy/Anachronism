@@ -13,6 +13,8 @@ scenarios:
     player_civ: england
     map: europe
     cost_scale: 10
+    # what every state of the age knows, where it has the prerequisites (Justinian's code and Germanic law codes; Islamic and Byzantine soap, glass and hospitals)
+    common_techs: {written_law: widespread, soap: adopted, glassmaking: adopted, hospitals: adopted, census: adopted}
     civs:
       england:
         disposition: cautious

@@ -545,3 +545,12 @@ state's last province is defended to the end (three times harder to take); the p
 loses no provinces in the first two turns, to answer an opening war; and Oda starts
 with the wealth of Owari's port trade (enough to hire mercenaries at once). Sengoku stays
 the hard start: about one game in six still ends early.
+
+## D-080 What every state of an age knows — DELEGATED (2026-10-01)
+The 35 newer advancements (D-075) were never added to the starting moments, so Rome was
+offered "written law" despite its Twelve Tables, and Byzantium "hospitals" and "glass".
+Scenarios now list `common_techs`, ideas every state of the age knows, given to each
+state that already has their prerequisites (so peoples without writing get no law code).
+Written law everywhere it fits; soap at Kadesh and in AD 1000; household registers in
+East Asia; glass, hospitals and registers in AD 1000. Drafts from general history,
+for the source review with the rest (D-040). CONTENT_GUIDE documents the field.

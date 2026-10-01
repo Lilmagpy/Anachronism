@@ -13,6 +13,8 @@ scenarios:
     player_civ: egypt
     map: europe
     cost_scale: 10
+    # what every state of the age knows, where it has the prerequisites (Law codes from Ur-Nammu and Hammurabi to the Hittite laws; soap-like cleansers in Babylon and the Ebers papyrus)
+    common_techs: {written_law: widespread, soap: adopted}
     civs:
       egypt:
         disposition: aggressive
