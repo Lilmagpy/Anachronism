@@ -186,6 +186,11 @@ tenths of wealth a turn. A state builds the strongest kind it can. A scenario's 
 `navy_bp` (default 10000): how seafaring it is, scaling the fleet it starts with (0 for a
 people of the steppe, 40000 for Carthage or Venice).
 
+`core/tactics.yaml` lists the battle plans (D-108): `name`, `note`, what each `beats`,
+the soldiers it `needs_units` (at least `needs_share_bp` of the men), `needs_terrain`,
+`when` (attacking/defending), `power_bp`, `terrain_bp`, `losses_bp`, `rout_bp`, and the
+general's `trait` that doubles its edge. A tale may name a `tactic` to tell that plan's victories.
+
 ## Dilemmas and battle tales
 `dilemmas.yaml` (in core and in any pack) holds choices put to the ruler (D-104): a title,
 the situation (`{civ}`, `{ruler}`, `{adjective}` are filled in), when it can arise

@@ -41,6 +41,7 @@ var marching_army := ""        ## waiting for the player to click where this arm
 var levy_style := "balanced"   ## the mix of soldiers the next levy will have
 var selected_fleet := ""       ## the fleet the player picked (drawn with a gold ring)
 var sailing_fleet := ""        ## waiting for the player to click where this fleet should sail
+var open_box := ""             ## the unfolded section of the province card: "levy", "fleet" or ""
 var _outcome_shown := false
 var dev_info: Dictionary = {}   ## filled by main: engine and model details for F3
 var _dev := Label.new()     ## "online" when a language model rules, from settings
@@ -1204,10 +1205,25 @@ func _fill_card() -> void:
 			build.disabled = int(stores["materials"]) < int(next["materials"]) or int(stores["wealth"]) < int(next["wealth"])
 			build.tooltip_text = "Each level of walls makes the province much harder to besiege"
 			_card_body.add_child(build)
-	if p["owner"] == view["player"] and view.has("levy"):
-		_card_body.add_child(_levy_box(p))
-	if p["owner"] == view["player"] and p.get("port") != null and view.has("navy"):
-		_card_body.add_child(_shipyard_box(p))
+	if p["owner"] == view["player"]:
+		# raising troops and building ships fold away so the card fits the screen
+		var tools := HBoxContainer.new()
+		tools.add_theme_constant_override("separation", 4)
+		if view.has("levy"):
+			tools.add_child(_button(("▾ " if open_box == "levy" else "▸ ") + "Raise a levy", func():
+				open_box = "" if open_box == "levy" else "levy"
+				_fill_card()))
+		if p.get("port") != null and view.has("navy"):
+			tools.add_child(_button(("▾ " if open_box == "fleet" else "▸ ") + "Build a fleet", func():
+				open_box = "" if open_box == "fleet" else "fleet"
+				_fill_card()))
+		for b in tools.get_children():
+			(b as Button).add_theme_font_size_override("font_size", 13)
+		_card_body.add_child(tools)
+		if open_box == "levy" and view.has("levy"):
+			_card_body.add_child(_levy_box(p))
+		if open_box == "fleet" and p.get("port") != null and view.has("navy"):
+			_card_body.add_child(_shipyard_box(p))
 	# a rival's province: where you stand with its holder, and what you can do
 	for civ in view["civs"]:
 		if civ["id"] == p["owner"] and civ["id"] != view["player"] and civ.get("relation") != null:
@@ -1244,6 +1260,13 @@ func _army_box(army: Dictionary) -> Control:
 		parts.append("%s %s" % [str(t["name"]), number(int(t["men"]))])
 	box.add_child(_wrapped(", ".join(parts), 12, DIM))
 	var notes: Array = ["morale %d%%" % (int(army["morale_bp"]) / 100)]
+	var vet := int(army.get("veterancy_bp", 0))
+	if vet >= 2000:
+		notes.append("hardened veterans")
+	elif vet >= 800:
+		notes.append("veterans")
+	elif vet == 0:
+		notes.append("raw recruits")
 	if str(army["general"]) != "":
 		var gift := {"horse": "master of horse", "siege": "a siege master", "shield": "a stubborn defender",
 			"bold": "a bold attacker", "quartermaster": "a careful quartermaster", "beloved": "beloved by the men"}
@@ -1262,7 +1285,14 @@ func _army_box(army: Dictionary) -> Control:
 	elif mine:
 		notes.append("defending our land" if army["stance"] == "defend" else "holding")
 	box.add_child(_wrapped(" · ".join(notes), 12, DIM))
+	if not mine and army.get("likely") != null:
+		var plan := _wrapped("Likely battle plan: %s%s" % [str(army["likely"]["name"]).to_lower(),
+			" - and its general reads his enemy's plan" if army.get("reads", false) else ""], 12, INK)
+		plan.tooltip_text = _plan_tip(str(army["likely"]["id"]))
+		plan.mouse_filter = Control.MOUSE_FILTER_PASS
+		box.add_child(plan)
 	if mine:
+		box.add_child(_plan_picker(army))
 		var orders := HBoxContainer.new()
 		orders.add_theme_constant_override("separation", 4)
 		var go := _button("March…", func():
@@ -1291,6 +1321,56 @@ func _army_box(army: Dictionary) -> Control:
 		orders.add_child(home)
 		box.add_child(orders)
 	return box
+
+
+## The battle plan an army of yours fights with (D-108): the general's own choice, or yours.
+func _plan_picker(army: Dictionary) -> Control:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 6)
+	var caption := _label("Battle plan", 12, DIM)
+	caption.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	row.add_child(caption)
+	var pick := OptionButton.new()
+	pick.add_theme_font_size_override("font_size", 12)
+	pick.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var ids: Array = ["auto"]
+	var likely: Variant = army.get("likely")
+	pick.add_item("The general decides" + (" (%s)" % str(likely["name"]).to_lower() if likely != null else ""))
+	pick.set_item_tooltip(0, "He picks the plan that suits his soldiers and the ground" + (
+		"; a great general also reads the enemy's plan and answers it" if army.get("reads", false) else ""))
+	var lacking: Dictionary = army.get("lacking", {})
+	for t in view.get("tactics", []):
+		ids.append(t["id"])
+		pick.add_item(str(t["name"]))
+		var i := pick.item_count - 1
+		var tip := _plan_tip(str(t["id"]))
+		if lacking.has(t["id"]):
+			pick.set_item_disabled(i, true)
+			tip += "\nThis army cannot: it " + str(lacking[t["id"]]) + "."
+		pick.set_item_tooltip(i, tip)
+		if army["plan"] == t["id"]:
+			pick.select(i)
+	if army["plan"] == "auto":
+		pick.select(0)
+	pick.item_selected.connect(func(i): action_requested.emit({"kind": "plan", "army": army["id"], "plan": ids[i]}))
+	pick.tooltip_text = "How the army means to fight. Each plan beats some plans and loses to others."
+	row.add_child(pick)
+	return row
+
+
+static func _list_or_none(items: Array) -> String:
+	return "nothing" if items.is_empty() else ", ".join(items).to_lower()
+
+
+## A battle plan explained: what it is, what it beats, what beats it, what it needs.
+func _plan_tip(plan_id: String) -> String:
+	for t in view.get("tactics", []):
+		if t["id"] == plan_id:
+			var tip := "%s\nBeats: %s. Beaten by: %s." % [str(t["note"]), _list_or_none(t["beats"]), _list_or_none(t["beaten_by"])]
+			if str(t["needs"]) != "":
+				tip += "\nNeeds: " + str(t["needs"]) + "."
+			return tip
+	return ""
 
 
 ## Raising a levy in one of your provinces: size, mix, and what it costs.

@@ -858,3 +858,18 @@ coastal people and a historical seafaring factor per scenario (`navy_bp`: Cartha
 Rome almost none in 264 BC; Venice, Denmark and Norway strong in 1000). Rival courts at
 war build ships when out-matched at sea and send their fleets to meet the enemy's - or to
 blockade its coasts.
+
+## D-108 Battle plans and veterans — DELEGATED (2026-10-01)
+Battles were decided by numbers, soldiers and ground alone. Now every army fights with a
+battle plan (content, `core/tactics.yaml`): steady line, headlong charge, shield wall
+(defence only), skirmishing (needs archers), envelopment (needs horse), feigned retreat
+(needs much horse) and ambush (defence in forest, hills or marsh). Each beats some plans
+and loses to others (a shield wall breaks a charge; arrows wear down a shield wall; a
+feigned retreat draws an envelopment away), and the side whose plan wins gets +30% (+60%
+with a general gifted for it). Plans also change the ground's worth, the blood spilt (a
+charge is bloody, skirmishing is not) and how badly the beaten are destroyed (Cannae).
+A general left to choose answers what he expects the enemy to do; a great general (3 stars
+or more) reads the enemy's real plan. The player may order a plan for each army, and sees
+the likely plan of rival armies. Battles are told by plan (Cannae, the Mongol feigned
+retreat, the Teutoburg forest). Armies also learn: victories (and surviving defeats) make
+veterans, up to +30%; raw recruits dilute them; mercenaries come as veterans.

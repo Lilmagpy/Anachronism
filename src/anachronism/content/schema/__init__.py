@@ -32,6 +32,7 @@ from anachronism.content.schema.scenario import (
     Successor,
 )
 from anachronism.content.schema.ships import Ship
+from anachronism.content.schema.tactics import Tactic
 from anachronism.content.schema.tales import Tale
 from anachronism.content.schema.tech import (
     NUMERIC_EFFECTS,
@@ -103,6 +104,7 @@ __all__ = [
     "StartingStats",
     "StartingStockpiles",
     "Successor",
+    "Tactic",
     "Tale",
     "TechNode",
     "Terrain",

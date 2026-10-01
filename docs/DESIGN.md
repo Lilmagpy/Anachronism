@@ -168,6 +168,9 @@ buildings. Edges: land, river, sea lane, mountain pass (with movement costs).
   and marsh, and fast when a province cannot feed them; unpaid armies lose heart and desert.
 - **Weariness**: wars grind on until one side tires; the side losing battles and provinces
   tires faster, and carries the grievance away.
+- **Battle plans** (D-108): each army fights with a plan (line, charge, shield wall,
+  skirmish, envelopment, feigned retreat, ambush) that beats some and loses to others;
+  great generals read the enemy's plan. Victories make veterans.
 - **The sea** (D-107): fleets of warships (galleys to gun ships, content in
   `core/ships.yaml`) are built on your coasts, sail two seas a turn and fight enemy fleets
   they meet. Whoever commands a sea decides which armies may cross it; enemy fleets that

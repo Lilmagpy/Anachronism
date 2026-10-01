@@ -15,8 +15,9 @@ from __future__ import annotations
 
 from collections import deque
 
-from anachronism.content.schema import General, RelationStatus, Unit
+from anachronism.content.schema import General, RelationStatus, Tactic, Unit
 from anachronism.engine.actions import (
+    ArmyPlan,
     ArmyStance,
     BuildFleet,
     DisbandArmy,
@@ -32,6 +33,7 @@ from anachronism.engine.navies import SIZES, build_fleet, can_cross, sea_route
 from anachronism.engine.rivals import alive, at_war, frontier, province_links, relation, status
 from anachronism.engine.rng import GameRng
 from anachronism.engine.state import Army, GameState
+from anachronism.engine.tactics import AUTO, bonus, commander, edge, plans
 from anachronism.engine.tales import tell
 from anachronism.engine.tech import is_adopted, usable_resources
 from anachronism.engine.war import capture, defence_bp
@@ -173,8 +175,10 @@ def raise_army(
     ]
     if here:
         army = here[0]
+        old = army.men
         for unit_id, n in troops.items():
             army.troops[unit_id] = army.troops.get(unit_id, 0) + n
+        army.veterancy_bp = army.veterancy_bp * old // max(1, army.men)  # raw recruits
         return army, f"{men:,} men join the {army.name}."
     civ.armies_raised += 1
     place = state.world.geography[province_id].name.split(" (")[0]
@@ -230,6 +234,7 @@ def hire_company(state: GameState, civ_id: str, turns: int) -> Army | None:
         skill=2,
         raised_turn=state.turn,
         contract=turns,
+        veterancy_bp=state.world.rules.armies.mercenary_veterancy_bp,
     )
     state.armies[army.id] = army
     return army
@@ -263,7 +268,7 @@ def standing_armies(state: GameState) -> None:
         men = apply_bp(apply_bp(people, rules.standing_army_bp), civ.martial_bp)
         if men >= rules.min_army:
             general = civ.ruler if civ.disposition.value == "aggressive" else ""
-            raise_army(
+            army, _ = raise_army(
                 state,
                 civ_id,
                 civ.capital,
@@ -272,6 +277,8 @@ def standing_armies(state: GameState) -> None:
                 general=general,
                 skill=2 if general else 1,
             )
+            if army is not None:
+                army.veterancy_bp = rules.standing_veterancy_bp
 
 
 # --- movement ------------------------------------------------------------------------------
@@ -421,6 +428,7 @@ def side_power(
             power += p
         power = power * (5000 + army.morale_bp // 2) // BP
         power = power * (BP + army.skill * rules.general_skill_bp) // BP
+        power = power * (BP + army.veterancy_bp) // BP
         if attacking:
             power = power * (BP + trait_bp(state, army, "bold")) // BP
         else:
@@ -493,24 +501,43 @@ def battle(
 ) -> str:
     """Fight it out. Returns the winning state's id."""
     rules = state.world.rules.armies
+    terrain = state.world.geography[province_id].terrain
     pa, units_a = side_power(state, attackers, defenders, True, province_id)
     pd, units_d = side_power(state, defenders, attackers, False, province_id)
+    # the plans (D-108): each side's own worth on this ground, and the edge of the better one
+    plan_a, plan_d = plans(state, attackers, defenders, terrain)
+    edge_a = edge_d = 0
+    if plan_a is not None and plan_d is not None:
+        edge_a = edge(state, plan_a, plan_d, commander(attackers))
+        edge_d = edge(state, plan_d, plan_a, commander(defenders))
+    if plan_a is not None:
+        pa = pa * max(2000, BP + bonus(plan_a, terrain) + edge_a) // BP
+    if plan_d is not None:
+        pd = pd * max(2000, BP + bonus(plan_d, terrain) + edge_d) // BP
     luck = rules.battle_luck_bp
     pa = pa * (BP - luck + rng.below(2 * luck + 1)) // BP
     pd = pd * (BP - luck + rng.below(2 * luck + 1)) // BP
     won_a = pa > pd
     winners, losers = (attackers, defenders) if won_a else (defenders, attackers)
     pw, pl = (pa, pd) if won_a else (pd, pa)
+    plan_w, plan_l = (plan_a, plan_d) if won_a else (plan_d, plan_a)
     margin = (pw - pl) * BP // max(1, pw + pl)  # 0 (even) .. 10_000 (rout)
-    lose_bp = clamp(rules.loser_losses_bp + apply_bp(rules.loser_losses_bp, margin * 2), 0, 9000)
-    win_bp = clamp(rules.winner_losses_bp - apply_bp(rules.winner_losses_bp, margin), 300, 9000)
+    crush = margin + (plan_w.rout_bp if plan_w else 0)  # an envelopment destroys the beaten
+    blood = BP + sum(p.losses_bp for p in (plan_a, plan_d) if p is not None)
+    blood = clamp(blood, 2000, 20_000)  # a charge is bloody, skirmishing is not
+    lose_bp = rules.loser_losses_bp + apply_bp(rules.loser_losses_bp, crush * 2)
+    lose_bp = clamp(lose_bp * blood // BP, 0, 9000)
+    win_bp = rules.winner_losses_bp - apply_bp(rules.winner_losses_bp, margin)
+    win_bp = clamp(win_bp * blood // BP, 300, 9000)
     dead_w = sum(_casualties(army, win_bp) for army in winners)
     dead_l = sum(_casualties(army, lose_bp) for army in losers)
     for army in winners:
         army.morale_bp = clamp(army.morale_bp - rules.morale_loss_bp // 6, 1000, BP)
+        army.veterancy_bp = min(rules.max_veterancy_bp, army.veterancy_bp + rules.veterancy_win_bp)
     for army in losers:
         loss = rules.morale_loss_bp * BP // (BP + trait_bp(state, army, "beloved"))
         army.morale_bp = clamp(army.morale_bp - loss, 1000, BP)
+        army.veterancy_bp = min(rules.max_veterancy_bp, army.veterancy_bp + rules.veterancy_loss_bp)
     winner, loser = winners[0].owner, losers[0].owner
     w_civ, l_civ = state.civs[winner], state.civs[loser]
     place = state.world.geography[province_id].name.split(" (")[0]
@@ -524,16 +551,16 @@ def battle(
             if army.general == general:
                 army.general = ""
                 army.skill = 1
-    rout = margin >= 4000
-    terrain = state.world.geography[province_id].terrain
+    rout = crush >= 4000
     named = "the " + place[4:] if place.startswith("The ") else place  # "of the Punjab"
-    story = tell(state, state.world.units[hero].kind, terrain, rout, rng, winner=winner).format(
-        place=named, winner=w_civ.adjective, loser=l_civ.adjective, unit=hero_name
-    )
+    kind = state.world.units[hero].kind
+    told = tell(state, kind, terrain, rout, rng, winner=winner, plan=plan_w.id if plan_w else "")
+    story = told.format(place=named, winner=w_civ.adjective, loser=l_civ.adjective, unit=hero_name)
     story = story[:1].upper() + story[1:]
+    schemes = _plans_told(w_civ.adjective, plan_w, l_civ.adjective, plan_l)
     text = (
-        f"Battle of {named}. {story}{fallen} {w_civ.adjective} losses {dead_w:,},"
-        f" {l_civ.adjective} {dead_l:,}."
+        f"Battle of {named}. {story}{fallen}{schemes}"
+        f" {w_civ.adjective} losses {dead_w:,}, {l_civ.adjective} {dead_l:,}."
     )
     events.add(winner, "battle_won", text, place)
     events.add(loser, "battle_lost", text, place)
@@ -545,6 +572,18 @@ def battle(
         _retreat(state, army, events)
     _prune(state)
     return winner
+
+
+def _plans_told(won: str, plan_w: Tactic | None, lost: str, plan_l: Tactic | None) -> str:
+    """The plans in a sentence, for the battle report (empty if both stood in line)."""
+    if plan_w is None or plan_l is None or (plan_w.id == plan_l.id == "line"):
+        return ""
+    w, ll = plan_w.name.lower(), plan_l.name.lower()
+    if plan_l.id in plan_w.beats:
+        return f" The {won} {w} beat the {lost} {ll}."
+    if plan_w.id in plan_l.beats:
+        return f" The {lost} {ll} should have beaten the {won} {w}, but numbers told."
+    return f" {won} {w} against {lost} {ll}."
 
 
 def _casualties(army: Army, loss_bp: int) -> int:
@@ -775,6 +814,9 @@ def merge(state: GameState) -> None:
             keep.morale_bp = (keep.morale_bp * keep.men + other.morale_bp * other.men) // max(
                 1, total
             )
+            keep.veterancy_bp = (
+                keep.veterancy_bp * keep.men + other.veterancy_bp * other.men
+            ) // max(1, total)
             for unit_id, men in other.troops.items():
                 keep.troops[unit_id] = keep.troops.get(unit_id, 0) + men
             if other.general and (not keep.general or other.skill > keep.skill):
@@ -943,6 +985,14 @@ def apply_orders(state: GameState, action: Orders) -> tuple[bool, str]:
         return False, f"you have no army {action.army!r}"
     if isinstance(action, DisbandArmy):
         return True, disband(state, army.id)
+    if isinstance(action, ArmyPlan):
+        chosen = state.world.tactics.get(action.plan)
+        if chosen is None and action.plan != AUTO:
+            return False, f"unknown battle plan {action.plan!r}"
+        army.plan = action.plan
+        if chosen is None:
+            return True, f"The {army.name}'s general will choose how to fight."
+        return True, f"The {army.name} will fight with a {chosen.name.lower()}."
     if isinstance(action, ArmyStance):
         army.target = None
         army.stance = action.stance

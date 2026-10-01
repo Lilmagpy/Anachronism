@@ -94,6 +94,7 @@ def build_state(
         tales=dict(sorted(content.tales.items())),
         dilemmas=dict(sorted(content.dilemmas.items())),
         ships=dict(sorted(content.ships.items())),
+        tactics=dict(sorted(content.tactics.items())),
         faiths={f.id: f for f in scenario.faiths},
         successors={
             c: start.successors for c, start in sorted(scenario.civs.items()) if start.successors

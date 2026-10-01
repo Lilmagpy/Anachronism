@@ -33,6 +33,7 @@ from anachronism.content.schema import (
     SeaZone,
     Ship,
     Speaker,
+    Tactic,
     Tale,
     TechNode,
     Terrain,
@@ -67,6 +68,7 @@ class Content:
     tales: Mapping[str, Tale] = field(default_factory=dict)
     dilemmas: Mapping[str, Dilemma] = field(default_factory=dict)
     ships: Mapping[str, Ship] = field(default_factory=dict)
+    tactics: Mapping[str, Tactic] = field(default_factory=dict)
     """Chance events (plague, flood, bumper harvests...)."""
 
 
@@ -149,6 +151,7 @@ def load_content(pack_ids: Sequence[str] | None = None, root: Path = PACKS_DIR) 
         tales=registry.tales,
         dilemmas=registry.dilemmas,
         ships=registry.ships,
+        tactics=registry.tactics,
         digest=digest.hexdigest(),
     )
 

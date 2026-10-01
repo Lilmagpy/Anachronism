@@ -15,10 +15,12 @@ def tell(
     *,
     ship: str | None = None,
     winner: str = "",
+    plan: str = "",
 ) -> str:
     """The most fitting way to tell a battle (content ``tales``), one of its lines.
 
-    A sea battle passes the winners' ``ship`` kind; only sea tales tell those.
+    A sea battle passes the winners' ``ship`` kind; only sea tales tell those. ``plan`` is
+    the winners' battle plan: a tale of that plan tells it best.
     """
     best: tuple[int, str] | None = None
     for tale_id, tale in sorted(state.world.tales.items()):
@@ -32,8 +34,10 @@ def tell(
             continue
         if tale.rout is not None and tale.rout != rout:
             continue
+        if tale.tactic and tale.tactic != plan:
+            continue
         score = 2 * bool(tale.kind) + 2 * bool(tale.terrain) + (tale.rout is not None)
-        score += 2 * bool(tale.ships) + 3 * bool(tale.civs)
+        score += 2 * bool(tale.ships) + 3 * bool(tale.civs) + 4 * bool(tale.tactic)
         if best is None or score > best[0]:
             best = (score, tale_id)
     if best is None:

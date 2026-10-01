@@ -145,3 +145,50 @@ tales:
     civs: [venice]
     lines:
       - "The {winner} galleys, built in the city's great shipyards and rowed by its own citizens, swept the {loser} fleet from the {place}."
+
+  # --- battle plans (D-108): told when the winners' plan carried the day -----------------
+  - id: plan_charge
+    tactic: charge
+    lines:
+      - "At {place} the {winner} {unit} came on at a run and crashed into the {loser} ranks before they had dressed their lines."
+      - "Nobody at {place} remembers who gave the order to charge; everyone remembers the {loser} line breaking."
+  - id: plan_hold
+    tactic: hold
+    lines:
+      - "All day at {place} the {winner} {unit} stood shoulder to shoulder and did not give a step. The {loser} host broke itself against them."
+      - "The {loser} attack came up the slope at {place} three times. Three times it rolled back down, fewer each time."
+  - id: plan_skirmish
+    tactic: skirmish
+    lines:
+      - "At {place} the {winner} {unit} never closed: they shot, fell back and shot again, until the {loser} ranks thinned and broke."
+      - "The {loser} host at {place} stood waiting for a fight that never came, while the arrows fell and fell."
+  - id: plan_flank
+    tactic: flank
+    lines:
+      - "At {place} the {winner} centre gave ground on purpose; when the {loser} host pressed in, the {winner} horse closed the ring behind them. Few escaped."
+      - "The {loser} line at {place} looked to its flanks too late: the {winner} horsemen were already there."
+  - id: plan_feint
+    tactic: feint
+    lines:
+      - "At {place} the {winner} horsemen turned and fled - or seemed to. The {loser} army broke ranks to chase them, and rode into the trap."
+      - "Three times the {winner} riders ran from the {loser} host at {place}. The third time they ran until the pursuit was strung out across the plain - and then they turned."
+  - id: plan_ambush
+    tactic: ambush
+    lines:
+      - "The {loser} column was strung out along the road through {place} when the {winner} host rose from cover on every side."
+      - "At {place} the {loser} army marched into a valley that was quiet, and then was not."
+  - id: cannae
+    tactic: flank
+    civs: [carthage]
+    lines:
+      - "At {place} the Carthaginian line bowed back like a drawn bow; the {loser} legions pushed into it, and the African foot and the Numidian horse closed around them until they could not raise their swords."
+  - id: mongol_feint
+    tactic: feint
+    civs: [mongols]
+    lines:
+      - "The Mongol tumens fled before the {loser} host at {place} for a whole day. When the pursuers' horses were blown and their ranks scattered, the drums sounded, and the Mongols turned."
+  - id: teutoburg
+    tactic: ambush
+    terrain: [forest]
+    lines:
+      - "In the forest at {place} the {loser} column, three miles long and slowed by its baggage, was cut to pieces from the trees over three days of rain."

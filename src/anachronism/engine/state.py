@@ -31,6 +31,7 @@ from anachronism.content.schema import (
     SocialGroup,
     Stage,
     Successor,
+    Tactic,
     Tale,
     TechNode,
     Terrain,
@@ -80,15 +81,17 @@ class World(Frozen):
     cost_scale: int = 1
     """Multiplier on every project cost (see ``Scenario.cost_scale``)."""
     happenings: dict[str, Happening] = Field(default_factory=dict)
+    """Chance events that can strike (plague, flood, bumper harvests...)."""
     units: dict[str, Unit] = Field(default_factory=dict)
+    """The kinds of soldier that exist (raising them needs their advancements)."""
     tales: dict[str, Tale] = Field(default_factory=dict)
+    """How battles are told."""
     dilemmas: dict[str, Dilemma] = Field(default_factory=dict)
     """Choices that may be put to the ruler."""
     ships: dict[str, Ship] = Field(default_factory=dict)
     """The kinds of warship that exist."""
-    """How battles are told."""
-    """The kinds of soldier that exist (raising them needs their advancements)."""
-    """Chance events that can strike (plague, flood, bumper harvests...)."""
+    tactics: dict[str, Tactic] = Field(default_factory=dict)
+    """The battle plans armies may fight with."""
     scripts: dict[str, tuple[Script, ...]] = Field(default_factory=dict)
     successors: dict[str, tuple[Successor, ...]] = Field(default_factory=dict)
     faiths: dict[str, Faith] = Field(default_factory=dict)
@@ -260,6 +263,10 @@ class Army(Mutable):
     raised_turn: int = 0
     contract: int = 0
     """Turns a mercenary company still serves (0: the state's own men)."""
+    plan: str = "auto"
+    """The battle plan its ruler ordered (a tactic id), or ``auto``: its general decides."""
+    veterancy_bp: int = 0
+    """Extra fighting power its men have learned in battle (D-108)."""
 
     @property
     def men(self) -> int:

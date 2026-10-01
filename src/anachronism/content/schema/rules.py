@@ -398,6 +398,20 @@ class ArmyRules(Frozen):
     """Turns a pillaged province takes to recover."""
     mercenary_men_bp: NonNegative = 150
     """A mercenary company numbers this share of the hiring state's people (1.5%)."""
+    tactic_edge_bp: NonNegative = 3000
+    """Extra power for a side whose battle plan beats the enemy's (doubled by a gifted general)."""
+    reads_enemy_skill: Positive = 3
+    """A general this skilled, left to choose, reads the enemy's plan and answers it."""
+    veterancy_win_bp: NonNegative = 600
+    """Power an army's men learn from a victory ..."""
+    veterancy_loss_bp: NonNegative = 300
+    """... and its survivors from a defeat ..."""
+    max_veterancy_bp: NonNegative = 3000
+    """... up to this much."""
+    standing_veterancy_bp: NonNegative = 500
+    """What a state's standing army has learned by the start."""
+    mercenary_veterancy_bp: NonNegative = 2000
+    """What a mercenary company has learned in other men's wars."""
     trait_bp: dict[Identifier, NonNegative] = Field(
         default_factory=lambda: {
             "horse": 2500,

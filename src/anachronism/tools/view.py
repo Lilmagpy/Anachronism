@@ -28,7 +28,8 @@ from anachronism.engine.offers import describe
 from anachronism.engine.projects import project_turns
 from anachronism.engine.reports import capacity
 from anachronism.engine.rivals import relation, strength
-from anachronism.engine.state import Event, GameState
+from anachronism.engine.state import Army, Event, GameState
+from anachronism.engine.tactics import AUTO, final, natural, needs_text, short_of_men
 from anachronism.engine.tech import feasibility, is_adopted
 from anachronism.engine.victory import progress
 from anachronism.engine.war import defence_bp, fronts
@@ -114,6 +115,7 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
         ],
         "wars": fronts(state),
         "armies": _armies(state),
+        "tactics": _tactics(state),
         "fleets": _fleets(state),
         "navy": _navy(state, civ_id),
         "dilemma": _dilemma(state),
@@ -346,6 +348,8 @@ def _armies(state: GameState) -> list[dict[str, Any]]:
                 if army.target
                 else [],
                 "stance": army.stance,
+                **_plan(state, army),
+                "veterancy_bp": army.veterancy_bp,
                 "siege_bp": army.siege_bp,
                 "siege_needed": defence_bp(state, owner, army.province)
                 if besieged and owner
@@ -353,6 +357,62 @@ def _armies(state: GameState) -> list[dict[str, Any]]:
             }
         )
     return out
+
+
+def _plan(state: GameState, army: Army) -> dict[str, Any]:
+    """An army's battle plan: ordered, likely here, and (if yours) which its men cannot do.
+
+    A rival army's likely plan is its answer to the nearest of the player's armies.
+    """
+    owner = state.provinces[army.province].owner
+    attacking = owner is not None and owner != army.owner
+    terrain = state.world.geography[army.province].terrain
+    out: dict[str, Any] = {
+        "plan": army.plan,
+        "reads": army.plan == AUTO and army.skill >= state.world.rules.armies.reads_enemy_skill,
+    }
+    if army.owner == state.player_civ:
+        likely = natural(state, [army], attacking, terrain)
+        out["lacking"] = {
+            tid: why
+            for tid, tactic in sorted(state.world.tactics.items())
+            if (why := short_of_men(state, tactic, [army]))
+        }
+    else:
+        foe = _nearest(state, army)
+        if foe is None:
+            likely = natural(state, [army], attacking, terrain)
+        else:
+            likely = final(state, [army], [foe], attacking, terrain)
+    out["likely"] = {"id": likely.id, "name": likely.name} if likely else None
+    return out
+
+
+def _nearest(state: GameState, army: Army) -> Army | None:
+    """The player's army a rival army would most likely meet: here, next door, or the largest."""
+    near = set(state.world.geography[army.province].neighbours)
+    mine = [a for a in state.armies.values() if a.owner == state.player_civ]
+    return min(
+        mine,
+        key=lambda a: (a.province != army.province, a.province not in near, -a.men, a.id),
+        default=None,
+    )
+
+
+def _tactics(state: GameState) -> list[dict[str, Any]]:
+    """The battle plans, what each beats and what beats it, for the plan picker."""
+    tactics = state.world.tactics
+    return [
+        {
+            "id": tid,
+            "name": t.name,
+            "note": t.note,
+            "beats": [tactics[b].name for b in t.beats if b in tactics],
+            "beaten_by": [o.name for _, o in sorted(tactics.items()) if tid in o.beats],
+            "needs": needs_text(state, t),
+        }
+        for tid, t in sorted(tactics.items())
+    ]
 
 
 def _fleets(state: GameState) -> list[dict[str, Any]]:

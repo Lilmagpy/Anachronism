@@ -14,6 +14,7 @@ from anachronism.content.schema.happenings import Happening
 from anachronism.content.schema.rules import Rules
 from anachronism.content.schema.scenario import Scenario
 from anachronism.content.schema.ships import Ship
+from anachronism.content.schema.tactics import Tactic
 from anachronism.content.schema.tales import Tale
 from anachronism.content.schema.tech import EffectType, TechNode
 from anachronism.content.schema.units import Unit
@@ -58,6 +59,7 @@ LIST_KINDS: dict[str, type[Frozen]] = {
     "tales": Tale,
     "dilemmas": Dilemma,
     "ships": Ship,
+    "tactics": Tactic,
 }
 """Kinds holding a list of items with ids; each item is validated on its own."""
 

@@ -36,6 +36,9 @@ walks you through the screen the first time (Settings can replay it). Then:
   soldiers you choose: spears stop horsemen, horsemen ride down archers, archers shred
   infantry, chariots are deadly on plains and useless in hills. Armies cost food and wealth
   every turn and waste away far from home, fastest in deserts and mountains.
+- **Battle plans**: each of your armies has a **Battle plan** (hover each choice to see
+  what it beats and what beats it); rival armies show their likely plan. Leave it to the
+  general, or outwit the enemy yourself.
 - **The sea**: click a sea to see who commands it and the fleets on it. Your coastal
   provinces can **Build a fleet**; a fleet can **Sail…** (then click a sea, or a coastal
   province for the sea on its shore) and fights enemy fleets it meets. An army can only

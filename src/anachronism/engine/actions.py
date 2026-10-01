@@ -214,6 +214,18 @@ class ArmyStance(Frozen):
     stance: Literal["defend", "hold", "pillage"] = "hold"
 
 
+class ArmyPlan(Frozen):
+    """Order the battle plan an army fights with (D-108).
+
+    ``plan`` is a tactic id, or ``auto``: its general chooses.
+    """
+
+    kind: Literal["plan"] = "plan"
+    civ: str
+    army: str
+    plan: str = "auto"
+
+
 class Fortify(Frozen):
     """Build (or raise higher) the walls of one of your provinces."""
 
@@ -277,6 +289,7 @@ Orders = (
     RaiseArmy
     | MarchArmy
     | ArmyStance
+    | ArmyPlan
     | DisbandArmy
     | Fortify
     | BuildFleet
@@ -313,6 +326,7 @@ Action = Annotated[
     | RaiseArmy
     | MarchArmy
     | ArmyStance
+    | ArmyPlan
     | DisbandArmy
     | Fortify
     | BuildFleet

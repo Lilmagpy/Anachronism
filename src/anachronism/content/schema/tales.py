@@ -25,6 +25,8 @@ class Tale(Frozen):
     """For sea battles: the kind of warship that won it (empty: any)."""
     civs: tuple[Identifier, ...] = ()
     """Only when one of these states wins (empty: anyone) - Greek fire, the legions."""
+    tactic: Identifier | None = None
+    """Only when the winners fought with this battle plan (D-108)."""
     kind: UnitKind | None = None
     """The kind of soldier that won it (empty: any)."""
     terrain: tuple[Identifier, ...] = ()

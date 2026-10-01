@@ -32,6 +32,7 @@ def cross_reference_issues(registry: Registry) -> list[ContentIssue]:
         *_tale_issues(registry),
         *_dilemma_issues(registry),
         *_ship_issues(registry),
+        *_tactic_issues(registry),
         *_dialogue_issues(registry),
     ]
 
@@ -347,6 +348,8 @@ def _tale_issues(registry: Registry) -> list[ContentIssue]:
         for ship in tale.ships:
             if registry.is_unknown("ships", ship):
                 issues.append(ContentIssue(where, label, f"unknown ship {ship!r}"))
+        if tale.tactic and registry.is_unknown("tactics", tale.tactic):
+            issues.append(ContentIssue(where, label, f"unknown battle plan {tale.tactic!r}"))
         if tale.sea and (tale.kind or tale.terrain):
             issues.append(ContentIssue(where, label, "a sea tale names ships, not soldiers"))
         for line in tale.lines:
@@ -385,6 +388,24 @@ def _dilemma_issues(registry: Registry) -> list[ContentIssue]:
                 text.format(civ="", ruler="", adjective="")
             except (KeyError, IndexError, ValueError):
                 report("texts may use only {civ} {ruler} {adjective}")
+    return issues
+
+
+def _tactic_issues(registry: Registry) -> list[ContentIssue]:
+    issues: list[ContentIssue] = []
+    for tactic in registry.tactics.values():
+        where = registry.origin("tactics", tactic.id)
+        label = f"tactics ({tactic.id})"
+        refs = [("tactics", b, "battle plan") for b in tactic.beats]
+        refs += [("units", u, "unit") for u in tactic.needs_units]
+        refs += [("terrain", t, "terrain") for t in (*tactic.needs_terrain, *tactic.terrain_bp)]
+        for kind, ref, what in refs:
+            if registry.is_unknown(kind, ref):
+                issues.append(ContentIssue(where, label, f"unknown {what} {ref!r}"))
+        for other in tactic.beats:
+            beaten = registry.tactics.get(other)
+            if beaten is not None and tactic.id in beaten.beats:
+                issues.append(ContentIssue(where, label, f"{other!r} and it beat each other"))
     return issues
 
 
