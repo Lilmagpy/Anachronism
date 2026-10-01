@@ -465,7 +465,17 @@ def free_agents(
                 ]
                 targets.sort(key=lambda n: (-grievance(state, civ_id, n), strengths.get(n, 0), n))
                 if targets:
-                    declare_war(state, civ_id, targets[0], events)
+                    target = targets[0]
+                    # a court far stronger often takes tribute instead of war (never from
+                    # the player, whose submission is the player's own choice)
+                    overawed = strengths.get(civ_id, 0) * BP >= (
+                        strengths.get(target, 0) * rules.tribute_strength_ratio_bp
+                    )
+                    if overawed and target != state.player_civ and rng.chance(BP // 2):
+                        set_status(state, civ_id, target, RelationStatus.TRIBUTARY)
+                        add_grievance(state, target, civ_id, 1000)
+                    else:
+                        declare_war(state, civ_id, target, events)
         elif civ.disposition is Disposition.MERCANTILE:
             for other in neighbours:
                 if (

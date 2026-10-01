@@ -607,4 +607,5 @@ Ryukyu the Ming). A court submits as your tributary if you are two and a half ti
 stronger, or, at war, once it has lost ground (submission is then the price of peace). It
 resents it (a small grudge), and a refusal stings more. Tributaries already count fully
 toward an economic victory and join your defensive wars. A "Demand tribute" button sits
-with the other diplomacy buttons.
+with the other diplomacy buttons. Aggressive rival courts far stronger than a
+neighbour take tribute instead of war half the time (never from the player).
