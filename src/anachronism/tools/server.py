@@ -165,7 +165,7 @@ class Session:
                     "hint": ruling.hint,
                     "message": logged.message,
                     "accepted": logged.ok,
-                    "next_steps": next_steps(self.state, state.player_civ, ruling.node_id)
+                    "next_steps": next_steps(self.state, state.player_civ, node.id)
                     if node and ruling.verdict is Verdict.BLOCKED
                     else [],
                 }
