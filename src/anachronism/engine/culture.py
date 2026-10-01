@@ -81,6 +81,8 @@ def spread_faiths(
             faith = state.civs[source].faith
             if not faith or target in converted or not state.world.faiths[faith].spreads:
                 continue
+            if target == state.player_civ:
+                continue  # your court changes its faith only by your choice
             chance = base * (2 if rel.status.friendly else 1)
             source_effects = effects_by_civ.get(source)
             influence = source_effects[EffectType.CULTURAL_INFLUENCE] if source_effects else 0

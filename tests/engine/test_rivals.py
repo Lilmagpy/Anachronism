@@ -324,6 +324,20 @@ def test_courts_of_world_faiths_hold_to_them(content: Content) -> None:
     assert any(state.civs[c].faith != f for c, f in before.items())  # the Norse gods do
 
 
+def test_the_players_faith_changes_only_by_choice(content: Content) -> None:
+    from anachronism.engine.culture import spread_faiths
+
+    state = new_game(content, "kadesh", seed=1)
+    override = state.world.rules.rivals.model_copy(update={"faith_spread_bp": 10_000})
+    state.world = state.world.model_copy(
+        update={"rules": state.world.rules.model_copy(update={"rivals": override})}
+    )
+    faith = state.civs["egypt"].faith
+    for turn in range(5):
+        spread_faiths(state, {}, GameRng(state.rng), EventLog(turn=turn, year=state.year))
+    assert state.civs["egypt"].faith == faith
+
+
 def test_trade_pays_both_sides(warring: GameState) -> None:
     from anachronism.engine.culture import trade
 
