@@ -15,7 +15,7 @@ from anachronism.engine.rivals import relation, strength
 from anachronism.engine.state import Event, GameState
 from anachronism.engine.tech import feasibility
 from anachronism.engine.victory import progress
-from anachronism.engine.war import fronts
+from anachronism.engine.war import defence_bp, fronts
 from anachronism.tools.console import describe_effect
 
 TRENDED = ("population", "food", "literacy_bp", "unrest_bp", "legitimacy_bp", "suspicion_bp")
@@ -107,6 +107,7 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
                     res: access.value for res, access in state.provinces[pid].resources.items()
                 },
                 "capital": any(c.capital == pid for c in state.civs.values()),
+                "defence_bp": _defence(state, pid),
             }
             for pid, geography in sorted(state.world.geography.items())
         ],
@@ -138,6 +139,15 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
             if e.civ == civ_id or e.kind in ("revolt", "collapse")
         ],
     }
+
+
+def _defence(state: GameState, province_id: str) -> int:
+    """How hard the province is to take from its holder (terrain, walls, last stand)."""
+    owner = state.provinces[province_id].owner
+    if owner is None:
+        terrain = state.world.terrain[state.world.geography[province_id].terrain]
+        return terrain.defence_bp
+    return defence_bp(state, owner, province_id)
 
 
 def _ideas(state: GameState, civ_id: str) -> list[dict[str, Any]]:

@@ -226,6 +226,10 @@ func _show_next_voice() -> void:
 func select(place_id: String) -> void:
 	selected = _find_place(place_id)
 	_fill_card()
+	if not selected.is_empty() and _speech != null:
+		# the player wants the map now: let the court fall silent so the card shows
+		_speech_queue.clear()
+		_show_next_voice()
 
 
 ## Floating name under the mouse; empty text hides it.
@@ -891,21 +895,28 @@ func _rival_card(civ: Dictionary, me: Dictionary) -> Control:
 	if int(civ["grievance_bp"]) >= 2000:
 		body.add_child(_label("Bears you a grudge", 12, BAD))
 	if relation != null:
-		var buttons := HBoxContainer.new()
-		buttons.add_theme_constant_override("separation", 4)
-		var target: String = civ["id"]
-		if relation == "war":
-			buttons.add_child(_small_button("Offer peace", {"kind": "peace", "target": target}))
-		else:
-			buttons.add_child(_small_button("Send envoy", {"kind": "envoy", "target": target}))
-			if relation in ["neutral", "trading"]:
-				buttons.add_child(_small_button("Propose alliance", {"kind": "alliance", "target": target}))
-			buttons.add_child(_small_button("Declare war", {"kind": "declare_war", "target": target}))
-			if not civ.get("same_faith", false) and str(view["status"].get("faith", "")) != "":
-				buttons.add_child(_small_button("Missionaries", {"kind": "missionaries", "target": target}))
-		body.add_child(buttons)
+		body.add_child(_diplomacy_buttons(civ))
 	box.add_child(body)
 	return box
+
+
+## What you can do about a civilisation you are in touch with.
+func _diplomacy_buttons(civ: Dictionary) -> Control:
+	var relation: Variant = civ["relation"]
+	var buttons := HFlowContainer.new()
+	buttons.add_theme_constant_override("h_separation", 4)
+	buttons.add_theme_constant_override("v_separation", 4)
+	var target: String = civ["id"]
+	if relation == "war":
+		buttons.add_child(_small_button("Offer peace", {"kind": "peace", "target": target}))
+	else:
+		buttons.add_child(_small_button("Send envoy", {"kind": "envoy", "target": target}))
+		if relation in ["neutral", "trading"]:
+			buttons.add_child(_small_button("Propose alliance", {"kind": "alliance", "target": target}))
+		buttons.add_child(_small_button("Declare war", {"kind": "declare_war", "target": target}))
+		if not civ.get("same_faith", false) and str(view["status"].get("faith", "")) != "":
+			buttons.add_child(_small_button("Missionaries", {"kind": "missionaries", "target": target}))
+	return buttons
 
 
 func _small_button(text: String, action: Dictionary) -> Button:
@@ -954,7 +965,7 @@ func _fill_card() -> void:
 	var land: Array = [str(p["terrain"]).replace("_", " ").capitalize()]
 	if p["river"]:
 		land.append("river")
-	if p["coastal"]:
+	if p["coastal"] and str(p["terrain"]) != "coast":
 		land.append("coast")
 	_card_body.add_child(_label("%s people · %s" % [number(p["population"]), ", ".join(land)], 14))
 	var found: Array = []
@@ -968,6 +979,20 @@ func _fill_card() -> void:
 		names.append(str(_find_place(n).get("name", n)))
 	if not names.is_empty():
 		_card_body.add_child(_wrapped("Borders: " + ", ".join(names), 13, DIM))
+	var defence := int(p.get("defence_bp", 10000))
+	var why: Array = []
+	if p["capital"]:
+		why.append("capital walls")
+	if str(p["terrain"]) in ["hills", "mountains", "forest", "marsh", "desert"]:
+		why.append(str(p["terrain"]))
+	var hard := "easy" if defence < 11000 else ("hard" if defence < 25000 else "very hard")
+	_card_body.add_child(_wrapped("To take in war: %s (%.1f×%s)" % [hard, defence / 10000.0,
+		(", " + ", ".join(why)) if not why.is_empty() else ""], 13, DIM))
+	# a rival's province: where you stand with its holder, and what you can do
+	for civ in view["civs"]:
+		if civ["id"] == p["owner"] and civ["id"] != view["player"] and civ.get("relation") != null:
+			_card_body.add_child(_label("Relations: %s" % str(civ["relation"]), 13, BAD if civ["relation"] == "war" else INK))
+			_card_body.add_child(_diplomacy_buttons(civ))
 
 
 # --- chronicle and end turn -------------------------------------------------------------
