@@ -10,7 +10,7 @@ from anachronism.content.issues import ContentError
 from anachronism.content.loader import Content, load_content
 from anachronism.engine.game import new_game
 from anachronism.engine.state import Event
-from anachronism.tools.voices import speak, voices_for_turn
+from anachronism.tools.voices import opening_voices, speak, voices_for_turn
 from tests.content.test_loader import edit, packs  # noqa: F401  (fixture)
 
 
@@ -30,6 +30,14 @@ def test_the_ruler_opens_the_game(content: Content) -> None:
     assert voice["name"] == "Duke Xiao"
     assert voice["portrait"] == "court"
     assert "{" not in voice["text"]
+
+
+def test_the_steward_briefs_a_new_game_on_its_moment(content: Content) -> None:
+    state = new_game(content, "sengoku", seed=1)
+    voices = opening_voices(content, state)
+    assert [v["moment"] for v in voices] == ["briefing", "game_start"]
+    assert "Imagawa" in voices[0]["text"]
+    assert voices[0]["speaker"] == "steward"
 
 
 def test_worst_news_first_and_at_most_two(content: Content) -> None:

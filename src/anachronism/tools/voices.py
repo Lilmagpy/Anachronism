@@ -105,6 +105,20 @@ def adviser_voice(
     }
 
 
+def opening_voices(content: Content, state: GameState) -> list[dict[str, Any]]:
+    """A new game opens with the steward's briefing on the moment, then the ruler's welcome."""
+    voices: list[dict[str, Any]] = []
+    scenario = content.scenarios.get(state.world.scenario_id)
+    start = scenario.civs.get(state.player_civ) if scenario else None
+    if start is not None and start.pitch:
+        voices.append(adviser_voice(content, state, "steward", start.pitch, "neutral"))
+        voices[-1]["moment"] = "briefing"
+    welcome = speak(content, state, "game_start")
+    if welcome:
+        voices.append(welcome)
+    return voices
+
+
 def voices_for_turn(
     content: Content, state: GameState, events: list[Event]
 ) -> list[dict[str, Any]]:

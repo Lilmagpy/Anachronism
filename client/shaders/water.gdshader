@@ -44,6 +44,8 @@ void fragment() {
 	// cartoon crests: thin bright bands where the wave field crosses a level
 	float small = noise(p * 4.0 + vec2(t * 1.3, -t * 0.9));
 	float crest = smoothstep(0.80, 0.82, small) * (1.0 - smoothstep(0.83, 0.87, small)) * (0.4 + h);
+	// from high up the crests would scatter white squiggles over the whole sea: fade them out
+	crest *= 1.0 - smoothstep(220.0, 520.0, distance(CAMERA_POSITION_WORLD, world));
 	ALBEDO = mix(tint, vec3(0.55, 0.78, 0.92), rim * 0.6) + crest * 0.35;
 	ALPHA = clamp(opacity + rim * 0.35 + crest * 0.3, 0.0, 0.95);
 	ROUGHNESS = 0.2;

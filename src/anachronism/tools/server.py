@@ -26,7 +26,7 @@ from anachronism.engine.state import Event, GameState
 from anachronism.llm.config import LlmConfig, load_config
 from anachronism.llm.pipeline import IdeaPipeline, make_pipeline
 from anachronism.tools.view import build_catalog, build_view
-from anachronism.tools.voices import adviser_voice, speak, voices_for_turn
+from anachronism.tools.voices import adviser_voice, opening_voices, speak, voices_for_turn
 
 ACTION = TypeAdapter[Action](Action)
 
@@ -75,7 +75,7 @@ class Session:
             raise RequestError(str(error)) from error
         self.events = []
         view = self._view([])
-        view["voices"] = [v for v in [speak(self.content, self.state, "game_start")] if v]
+        view["voices"] = opening_voices(self.content, self.state)
         return view
 
     def scenarios(self, args: dict[str, Any]) -> dict[str, Any]:
