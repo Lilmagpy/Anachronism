@@ -87,6 +87,17 @@ func is_ocean_at(pixel: Vector2) -> bool:
 	return ocean[_grid_index(pixel)] == 1
 
 
+## Sea, or ground the satellite image shows as water (bays and lagoons the elevation data
+## counts as land): nowhere to build a house.
+func is_wet(pixel: Vector2) -> bool:
+	if is_ocean_at(pixel):
+		return true
+	var w := colour_image.get_width()
+	var h := colour_image.get_height()
+	var c := colour_image.get_pixel(clampi(int(pixel.x * w / size().x), 0, w - 1), clampi(int(pixel.y * h / size().y), 0, h - 1))
+	return c.b > c.g * 1.05 and c.b > c.r * 1.25
+
+
 ## Colours the land by owner: one texel per map cell, alpha = how strongly to tint.
 func set_political(image: Image) -> void:
 	terrain_material.set_shader_parameter("political", ImageTexture.create_from_image(image))

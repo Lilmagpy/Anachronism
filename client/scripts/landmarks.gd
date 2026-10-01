@@ -84,7 +84,7 @@ func _find_spot(centre: Vector2, angle: float, radius: float, wet: bool, taken: 
 		var a := angle + step * TAU / 24.0 * (1.0 if step % 2 == 0 else -1.0) * 0.5
 		for r in [radius, radius * 1.4, radius * 0.75]:
 			var spot: Vector2 = centre + Vector2(cos(a), sin(a)) * float(r)
-			if earth.is_ocean_at(spot) != wet:
+			if earth.is_wet(spot) != wet:
 				continue
 			var clear := true
 			for other in taken:

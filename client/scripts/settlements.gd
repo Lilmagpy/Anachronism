@@ -221,6 +221,8 @@ func _add(part: String, pixel: Vector2, lift: float, turn: float, scale: Vector3
 
 
 func _house(pixel: Vector2, turn: float, size := 1.0, site := -1, mix := 0.0) -> void:
+	if earth.is_wet(pixel):
+		return  # a coastal city stops at the shore
 	var tint := mix * rng.randf_range(0.8, 1.1)
 	match style:
 		"steppe":
@@ -261,6 +263,8 @@ func _cluster(centre: Vector2, houses: int, radius: float, fields: bool, site: i
 		for i in houses + 2:
 			var angle := rng.randf() * TAU
 			var at := centre + Vector2(cos(angle), sin(angle)) * (radius + rng.randf_range(0.3, 0.9)) * S
+			if earth.is_wet(at):
+				continue
 			_add("field", at, 0.0, turn, Vector3.ONE, crops[rng.randi() % crops.size()])
 
 
@@ -300,10 +304,14 @@ func _walls(centre: Vector2, half: float, index: int) -> void:
 		var pieces := int(ceil(length / (0.9 * S)))
 		for k in pieces:
 			var p := a.lerp(b, (k + 0.5) / pieces)
+			if earth.is_wet(p):
+				continue  # the sea is the wall on that side
 			_add("wall", p, 0.0, angle, Vector3(length / pieces / S + 0.02, 1, 1), stone, index, 0.2)
-		_add(corner_part, a, 0.0, 0.0, Vector3.ONE, stone.darkened(0.1), index, 0.35)
-		_add("tower", a.lerp(b, 0.5), 0.0, 0.0, Vector3(1.3, 1.2, 1.3), stone.darkened(0.15), index, 0.35)
-		if style == "northern":
+		if not earth.is_wet(a):
+			_add(corner_part, a, 0.0, 0.0, Vector3.ONE, stone.darkened(0.1), index, 0.35)
+		if not earth.is_wet(a.lerp(b, 0.5)):
+			_add("tower", a.lerp(b, 0.5), 0.0, 0.0, Vector3(1.3, 1.2, 1.3), stone.darkened(0.15), index, 0.35)
+		if style == "northern" and not earth.is_wet(a):
 			_add("spire", a, 0.3 * S, 0.0, Vector3(0.9, 0.7, 0.9), Color(0.30, 0.30, 0.34), index, 0.5)
 
 
