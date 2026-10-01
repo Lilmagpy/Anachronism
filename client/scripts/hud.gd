@@ -646,15 +646,27 @@ func _fill_ideas() -> void:
 			ready.append(idea)
 		else:
 			blocked.append(idea)
-	ready.sort_custom(func(a, b): return a["year"] < b["year"])
+	# the game's hook first: ideas ahead of their time, soonest first; then what the wider
+	# world already knows, most recent first (old basics would otherwise top every list)
+	var now: int = int(view["year"])
+	var ahead_ideas: Array = ready.filter(func(i): return int(i["year"]) > now)
+	var abroad: Array = ready.filter(func(i): return int(i["year"]) <= now)
+	ahead_ideas.sort_custom(func(a, b): return a["year"] < b["year"])
+	abroad.sort_custom(func(a, b): return a["year"] > b["year"])
 	if not rulings.is_empty():
 		_side_body.add_child(_label("The court's ruling", 17, GOLD))
 		for ruling in rulings:
 			_side_body.add_child(_ruling_card(ruling))
-	_side_body.add_child(_label("Ideas your scholars could try", 17, GOLD))
-	_side_body.add_child(_wrapped("Each costs labour, materials, knowledge and wealth every turn until it works. Ideas far ahead of their time cost more and draw suspicion."))
-	for idea in ready:
+	_side_body.add_child(_label("Ideas ahead of their time", 17, GOLD))
+	_side_body.add_child(_wrapped("Each costs labour, materials, knowledge and wealth every turn until it works. The further ahead of its time, the more it costs and the more suspicion it draws."))
+	if ahead_ideas.is_empty():
+		_side_body.add_child(_wrapped("None within reach yet: whisper your own, or learn what the world already knows.", 13, DIM))
+	for idea in ahead_ideas:
 		_side_body.add_child(_idea_card(idea))
+	if not abroad.is_empty():
+		_side_body.add_child(_label("Known abroad: catch up", 17, GOLD))
+		for idea in abroad:
+			_side_body.add_child(_idea_card(idea))
 	if not blocked.is_empty():
 		_side_body.add_child(_label("Out of reach for now", 17, GOLD))
 		for idea in blocked:
