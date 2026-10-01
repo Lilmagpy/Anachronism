@@ -61,7 +61,9 @@ func setup(civ: Dictionary) -> void:
 	style = str(civ.get("portrait", "court"))
 	culture = str(civ.get("culture", ""))
 	civ_id = str(civ["id"])
-	if ADVISERS.has(style) and not culture in EAST_ASIAN:
+	if ADVISERS.has(style) and culture == "steppe":
+		style = "steppe"  # a khan's counsellors wear the steppe's furs too
+	elif ADVISERS.has(style) and not culture in EAST_ASIAN:
 		style = ADVISERS[style].get(FAMILY.get(culture, "classical"), style)
 	_roll(civ_id)
 	var path := "res://portraits/%s.png" % civ_id
