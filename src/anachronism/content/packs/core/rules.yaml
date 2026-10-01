@@ -130,6 +130,10 @@ rules:
     capital_loss_legitimacy_bp: 1500
     military_victory_share_bp: 5000
     economic_victory_share_bp: 6000
+    economic_trading_weight_bp: 5000
+    economic_income_share_bp: 5000
+    economic_partners_share_bp: 5000
+    alliance_trust_turns: 2
     cultural_victory_share_bp: 4000
     cultural_influence_needed_bp: 1000
     victory_margin_bp: 2000

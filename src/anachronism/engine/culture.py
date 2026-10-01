@@ -20,17 +20,32 @@ from anachronism.engine.state import GameState
 from anachronism.engine.timeflow import per_turn, rate_per_turn
 
 
+def _tie_income(state: GameState, a: str, b: str) -> int:
+    """What one friendly tie pays each side per turn, by the smaller side's people."""
+    smaller = min(state.population(a), state.population(b))
+    rate = state.world.rules.rivals.trade_wealth_per_1000_bp
+    return per_turn(state, apply_bp(smaller // 1000, rate))
+
+
+def _live_ties(state: GameState) -> list[tuple[str, str]]:
+    """Every friendly tie between two living civilisations, in id order."""
+    ties = []
+    for pair, rel in sorted(state.relations.items()):
+        a, b = pair.split("|")
+        if rel.status.friendly and alive(state, a) and alive(state, b):
+            ties.append((a, b))
+    return ties
+
+
+def trade_income(state: GameState, civ_id: str) -> int:
+    """A civilisation's wealth per turn from all its friendly ties."""
+    return sum(_tie_income(state, a, b) for a, b in _live_ties(state) if civ_id in (a, b))
+
+
 def trade(state: GameState) -> None:
     """Pay each side of every friendly tie its share of the trade."""
-    rate = state.world.rules.rivals.trade_wealth_per_1000_bp
-    for pair, rel in sorted(state.relations.items()):
-        if not rel.status.friendly:
-            continue
-        a, b = pair.split("|")
-        if not alive(state, a) or not alive(state, b):
-            continue
-        smaller = min(state.population(a), state.population(b))
-        income = per_turn(state, apply_bp(smaller // 1000, rate))
+    for a, b in _live_ties(state):
+        income = _tie_income(state, a, b)
         state.civs[a].stockpiles.wealth += income
         state.civs[b].stockpiles.wealth += income
 

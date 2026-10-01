@@ -242,11 +242,21 @@ class RivalRules(Frozen):
     mercenary_turns: Positive
     envoy_wealth: NonNegative
     """Wealth an envoy costs."""
+    alliance_trust_turns: NonNegative = 2
+    """Turns of trade before a court will ally with you (a common enemy is reason enough)."""
     capital_loss_legitimacy_bp: NonNegative
     military_victory_share_bp: Rate
     """Share of the scenario's people the player must rule for a military victory."""
     economic_victory_share_bp: Rate
     """Share of the other civilisations' people the player's trade network must reach."""
+    economic_trading_weight_bp: Rate = 5000
+    """How much a trading partner's people count towards your trade network; allies and
+    tributaries count in full."""
+    economic_partners_share_bp: Rate = 5000
+    """Economic victory also needs friendly ties with this share of the other living states."""
+    economic_income_share_bp: Rate = 5000
+    """Economic victory also needs income per turn of at least this share of the largest
+    rival economy's."""
     cultural_victory_share_bp: Rate
     cultural_influence_needed_bp: NonNegative
     """A cultural victory also needs this much cultural influence from adopted advancements

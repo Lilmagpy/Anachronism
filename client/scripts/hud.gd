@@ -740,7 +740,7 @@ func _fill_world() -> void:
 		_side_body.add_child(_label(("Victory: " if won else "Defeat: ") + str(outcome["path"]), 18, GOOD if won else BAD))
 	_side_body.add_child(_label("Paths to dominance", 17, GOLD))
 	var names := {"military": ["army", "By the sword", "Rule over this share of all the people"],
-		"economic": ["wealth", "Through trade", "Reach this share of other peoples through trade partners and allies, and hold the richest treasury"],
+		"economic": ["wealth", "Through trade", "Reach this share of other peoples through trade partners and allies (allies count double), with friendly ties to half the other states, and earn at least half the wealth per turn of the largest economy"],
 		"cultural": ["knowledge", "By the pen", "Hold this share of the region's culture (people weighted by literacy and influence)"]}
 	var paths: Dictionary = victory.get("paths", {})
 	for path in ["military", "economic", "cultural"]:
@@ -815,6 +815,21 @@ func _victory_bar(info: Array, path: Dictionary) -> Control:
 	bar.add_theme_stylebox_override("fill", fill)
 	bar.add_theme_stylebox_override("background", back)
 	box.add_child(bar)
+	# the other conditions a path needs, ticked off as they are met
+	var also: Array = []
+	if path.has("partners"):
+		also.append([int(path["partners"]) >= int(path["partners_needed"]),
+			"Friendly ties: %d of %d states" % [int(path["partners"]), int(path["partners_needed"])]])
+	if path.has("income"):
+		also.append([bool(path["richest"]),
+			"Income %s a turn (need %s)" % [number(int(path["income"])), number(int(path["income_target"]))]])
+	if path.has("leading"):
+		also.append([bool(path["leading"]), "No rival's culture larger"])
+	if path.has("influence_bp"):
+		also.append([int(path["influence_bp"]) >= int(path["influence_target_bp"]),
+			"Cultural influence %s (need %s)" % [pct(int(path["influence_bp"])), pct(int(path["influence_target_bp"]))]])
+	for item in also:
+		box.add_child(_label(("✔ " if item[0] else "· ") + str(item[1]), 12, GOOD if item[0] else DIM))
 	return box
 
 

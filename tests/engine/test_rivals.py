@@ -178,6 +178,11 @@ def test_player_diplomacy(warring: GameState) -> None:
     assert logged.ok
     assert state.civs["qin"].stockpiles.wealth < warring.civs["qin"].stockpiles.wealth
     assert status(state, "qin", "han") is RelationStatus.TRADING
+    _, logged = apply_action(state, SendEnvoy(civ="qin", target="wei"))
+    assert not logged.ok  # one embassy a turn
+    state, logged = apply_action(state, ProposeAlliance(civ="qin", target="han"))
+    assert not logged.ok  # trade a while first
+    state.turn += state.world.rules.rivals.alliance_trust_turns
     state, logged = apply_action(state, ProposeAlliance(civ="qin", target="han"))
     assert logged.ok
     assert status(state, "qin", "han") is RelationStatus.ALLIED
@@ -208,6 +213,28 @@ def test_victory_needs_ground_gained(warring: GameState) -> None:
     assert warring.outcome is not None
     assert warring.outcome.result == "victory"
     assert warring.outcome.path == "military"
+
+
+def test_economic_victory_needs_allies_and_a_great_economy(warring: GameState) -> None:
+    from anachronism.engine.rivals import set_status
+
+    events = EventLog(turn=0, year=warring.year)
+    others = [c for c in sorted(warring.civs) if c != "qin"]
+    for other in others:
+        set_status(warring, "qin", other, RelationStatus.TRADING)
+    trading = progress(warring)["economic"]
+    for other in others:
+        set_status(warring, "qin", other, RelationStatus.ALLIED)
+    allied = progress(warring)["economic"]
+    assert allied["share_bp"] > trading["share_bp"]  # trading partners count only in part
+    assert allied["partners"] == len(others)
+    assert allied["income"] > 0
+    check_outcome(warring, events)
+    if allied["richest"]:
+        assert warring.outcome is not None
+        assert warring.outcome.path == "economic"
+    else:
+        assert warring.outcome is None
 
 
 def test_losing_everything_is_defeat(warring: GameState) -> None:

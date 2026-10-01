@@ -523,3 +523,17 @@ felt tents and a great yurt on the steppe. Trees no longer grow inside city wall
 Fixed on the way: on large maps (Europe 1000) cities vanished, because each kind of
 building was one batch for the whole map and Godot hides a batch by its centre's distance
 from the camera; buildings are now batched by map tile like the trees.
+
+## D-078 Economic victory measured by network and income — DELEGATED (2026-10-01)
+Playtests showed economic victory either came on turn 3 (Egypt at Kadesh: one envoy a turn
+to each neighbour, instant alliances) or never (the "richest treasury" test failed against
+any bigger empire, and spending on decrees counted against you). Now:
+- your trade network must reach 60% of other peoples, with trading partners counting half
+  and allies and tributaries in full, and include at least half the other living states;
+- your income per turn (own lands plus trade ties) must be at least half the largest
+  rival's: what you spend no longer counts against you;
+- one embassy a turn, and a court allies only after two turns of trade (or against a
+  common enemy).
+Egypt at Kadesh, the region's superpower, can still win by trade in about 60 years of
+patient diplomacy; elsewhere it takes most of a game. The World tab ticks off each
+path's extra conditions.

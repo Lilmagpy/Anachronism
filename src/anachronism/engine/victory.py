@@ -4,8 +4,10 @@ A scenario is one region, so for now every victory is *regional*; hemispheric an
 tiers need several regions in one game (Phase 8). The three paths:
 
 - **Military**: rule over half of all the people in the scenario.
-- **Economic**: your trade network (trading partners, allies, tributaries) reaches most of
-  everyone else's people, and your treasury is the richest.
+- **Economic**: your trade network reaches most of everyone else's people (trading
+  partners count half, allies and tributaries in full) and at least half the other states,
+  and your economy rivals the largest: wealth earned per turn, from your own lands and your
+  trade, of at least half the biggest rival's (what you have spent does not count).
 - **Cultural**: your share of the region's culture (people weighted by literacy and
   cultural influence, plus half the culture of every court won to the faith you started
   with) passes the threshold, no one's culture is larger, and your own advancements give
@@ -18,8 +20,9 @@ from __future__ import annotations
 
 from typing import Any
 
-from anachronism.content.schema import EffectType, Faith
-from anachronism.engine.culture import shares_faith
+from anachronism.content.schema import EffectType, Faith, RelationStatus
+from anachronism.engine.culture import shares_faith, trade_income
+from anachronism.engine.economy import production
 from anachronism.engine.effects import civ_effects
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import BP
@@ -43,8 +46,11 @@ def progress(state: GameState) -> dict[str, Any]:
     everyone = sum(state.population(c) for c in state.civs)
     mine = state.population(me)
     others = everyone - mine
+    # trading partners count in part, allies and tributaries in full
     reached = sum(
         state.population(c)
+        * (BP if s is not RelationStatus.TRADING else rules.economic_trading_weight_bp)
+        // BP
         for c in sorted(state.civs)
         if c != me and alive(state, c) and (s := status(state, me, c)) is not None and s.friendly
     )
@@ -69,9 +75,13 @@ def progress(state: GameState) -> dict[str, Any]:
     def target(path: str, base: int) -> int:
         return min(BP, max(base, start.get(path, 0) + margin))
 
-    richest = max(
-        sorted(state.civs),
-        key=lambda c: (state.civs[c].stockpiles.wealth if alive(state, c) else -1, c == me),
+    rivals_alive = [c for c in sorted(state.civs) if c != me and alive(state, c)]
+    partners = sum(
+        1 for c in rivals_alive if (s := status(state, me, c)) is not None and s.friendly
+    )
+    my_income = income(state, me)
+    top_rival = max(
+        (income(state, c) for c in sorted(state.civs) if c != me and alive(state, c)), default=0
     )
     return {
         "military": {
@@ -81,7 +91,11 @@ def progress(state: GameState) -> dict[str, Any]:
         "economic": {
             "share_bp": reached * BP // max(1, others),
             "target_bp": target("economic", rules.economic_victory_share_bp),
-            "richest": richest == me,
+            "richest": my_income * BP >= top_rival * rules.economic_income_share_bp,
+            "income": my_income,
+            "partners": partners,
+            "partners_needed": -(-len(rivals_alive) * rules.economic_partners_share_bp // BP),
+            "income_target": top_rival * rules.economic_income_share_bp // BP,
         },
         "cultural": {
             "share_bp": min(BP, my_sphere * BP // max(1, total_culture)),
@@ -91,6 +105,12 @@ def progress(state: GameState) -> dict[str, Any]:
             "influence_target_bp": rules.cultural_influence_needed_bp,
         },
     }
+
+
+def income(state: GameState, civ_id: str) -> int:
+    """Wealth earned per turn: the civilisation's own lands plus its trade ties."""
+    own = production(state, civ_id, civ_effects(state, civ_id), BP).wealth
+    return own + trade_income(state, civ_id)
 
 
 def record_start(state: GameState) -> None:
@@ -116,6 +136,7 @@ def check_outcome(state: GameState, events: EventLog) -> None:
     elif (
         paths["economic"]["share_bp"] >= paths["economic"]["target_bp"]
         and paths["economic"]["richest"]
+        and paths["economic"]["partners"] >= paths["economic"]["partners_needed"]
     ):
         won = "economic"
     elif (

@@ -88,10 +88,13 @@ def _apply(
         if current is RelationStatus.WAR:
             return False, "envoys cannot travel in wartime; offer peace instead"
         civ = state.civs[me]
+        if civ.envoy_turn == state.turn:
+            return False, "your one embassy this turn has already set out"
         cost = rules.envoy_wealth * state.world.cost_scale
         if civ.stockpiles.wealth < cost:
             return False, f"an embassy needs {cost} wealth"
         civ.stockpiles.wealth -= cost
+        civ.envoy_turn = state.turn
         rel = relation(state, me, target)
         assert rel is not None
         rel.grievance[target] = max(0, rel.grievance.get(target, 0) - 1500)
@@ -112,7 +115,15 @@ def _apply(
             for other in pair.split("|")
             if other != target
         }
-        if current is RelationStatus.TRADING or enemies:
+        rel = relation(state, me, target)
+        trusted = (
+            current is RelationStatus.TRADING
+            and rel is not None
+            and state.turn - rel.since_turn >= rules.alliance_trust_turns
+        )
+        if current is RelationStatus.TRADING and not trusted and not enemies:
+            return False, f"{them} wants to trade a while longer before an alliance"
+        if trusted or enemies:
             set_status(state, me, target, RelationStatus.ALLIED)
             events.add(me, "alliance", f"An alliance with {them}.", them)
             return True, f"{them} agrees to an alliance."
