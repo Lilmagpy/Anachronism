@@ -11,7 +11,7 @@ const KNOWN := Color(0.62, 0.78, 0.92)
 const GOAL := Color(0.95, 0.55, 0.35)
 const STUB := Color(0.80, 0.62, 0.90)
 const UNKNOWN := Color(0.86, 0.83, 0.77)
-const CARD := Vector2(150, 44)
+const CARD := Vector2(160, 44)
 const GAP := Vector2(24, 18)
 const LANE_LABEL := 130.0
 const CATEGORY_NAMES := GameHud.CATEGORY_NAMES
@@ -92,7 +92,12 @@ func _draw() -> void:
 		draw_rect(rect, fill.darkened(0.4), false, 2.0)
 		if node["provenance"] == "player_idea":
 			draw_circle(rect.position + Vector2(rect.size.x - 8, 8), 5, UiStyle.GOLD)  # your own idea
-		draw_string(font, rect.position + Vector2(6, 18), str(node["name"]), HORIZONTAL_ALIGNMENT_LEFT, CARD.x - 12, 13, UiStyle.INK)
+		# long names shrink to fit the card rather than being cut off
+		var title := str(node["name"])
+		var size := 13
+		while size > 10 and font.get_string_size(title, HORIZONTAL_ALIGNMENT_LEFT, -1, size).x > CARD.x - 12:
+			size -= 1
+		draw_string(font, rect.position + Vector2(6, 18), title, HORIZONTAL_ALIGNMENT_LEFT, CARD.x - 12, size, UiStyle.INK)
 		var when := GameHud.year_text(int(node["year"]))
 		var ahead := int(node["year"]) - year
 		draw_string(font, rect.position + Vector2(6, 36), when + ("  ▲ ahead" if ahead > 100 else ""), HORIZONTAL_ALIGNMENT_LEFT, CARD.x - 12, 11,
