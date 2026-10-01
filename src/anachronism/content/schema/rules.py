@@ -232,6 +232,14 @@ class RivalRules(Frozen):
     """Chance that missionaries convert the court they are sent to."""
     shared_faith_fade_bp: Rate
     """Extra share of grievance forgotten each decade between states of one faith."""
+    festival_wealth_per_1000: NonNegative
+    """Wealth a festival costs per 1,000 people (x100: 100 = one unit per 1,000)."""
+    festival_legitimacy_bp: NonNegative
+    festival_unrest_bp: NonNegative
+    mercenary_wealth_per_1000: NonNegative
+    mercenary_strength_bp: NonNegative
+    """Extra strength while mercenaries serve (5_000 = +50%)."""
+    mercenary_turns: Positive
     envoy_wealth: NonNegative
     """Wealth an envoy costs."""
     capital_loss_legitimacy_bp: NonNegative
@@ -240,6 +248,9 @@ class RivalRules(Frozen):
     economic_victory_share_bp: Rate
     """Share of the other civilisations' people the player's trade network must reach."""
     cultural_victory_share_bp: Rate
+    cultural_influence_needed_bp: NonNegative
+    """A cultural victory also needs this much cultural influence from adopted advancements
+    (writing systems, printing, universities...): culture must be made, not just inherited."""
     victory_margin_bp: Rate
     """A path's target is at least the player's starting share plus this, so nobody wins
     by standing still."""

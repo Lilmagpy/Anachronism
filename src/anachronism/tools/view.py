@@ -7,6 +7,7 @@ from typing import Any
 from anachronism.content.loader import Content
 from anachronism.content.schema import Stage
 from anachronism.engine.commands import describe_blockers
+from anachronism.engine.decrees import cost
 from anachronism.engine.economy import project_costs
 from anachronism.engine.projects import project_turns
 from anachronism.engine.reports import capacity
@@ -49,6 +50,11 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
             "ruler": civ.ruler,
             "ruler_age": civ.ruler_age,
             "faith": _faith_name(state, civ.faith),
+            "mercenaries": civ.mercenaries,
+            "festival_cost": cost(state, civ_id, state.world.rules.rivals.festival_wealth_per_1000),
+            "mercenary_cost": cost(
+                state, civ_id, state.world.rules.rivals.mercenary_wealth_per_1000
+            ),
             "population": state.population(civ_id),
             "provinces": len(state.owned_provinces(civ_id)),
             **civ.stats.model_dump(),

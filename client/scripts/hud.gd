@@ -751,6 +751,23 @@ func _fill_world() -> void:
 		_side_body.add_child(_label("Wars", 17, GOLD))
 		for war in wars:
 			_side_body.add_child(_wrapped("⚔ %s and %s are at war" % [_civ_name(war["a"]), _civ_name(war["b"])], 14, BAD))
+	var status: Dictionary = view["status"]
+	if status.has("festival_cost"):
+		_side_body.add_child(_label("Royal decrees", 17, GOLD))
+		var decrees := HBoxContainer.new()
+		decrees.add_theme_constant_override("separation", 6)
+		var rich: int = int(status["stores"]["wealth"])
+		var feast := _small_button("Hold a festival (%s)" % number(int(status["festival_cost"])), {"kind": "festival"})
+		feast.disabled = rich < int(status["festival_cost"])
+		feast.tooltip_text = "Feasts and games: legitimacy up, unrest down"
+		decrees.add_child(feast)
+		var hire := _small_button("Hire mercenaries (%s)" % number(int(status["mercenary_cost"])), {"kind": "mercenaries"})
+		hire.disabled = rich < int(status["mercenary_cost"]) or int(status["mercenaries"]) > 0
+		hire.tooltip_text = "More military strength for two turns"
+		decrees.add_child(hire)
+		_side_body.add_child(decrees)
+		if int(status["mercenaries"]) > 0:
+			_side_body.add_child(_label("Mercenaries serve for %d more turn(s)" % int(status["mercenaries"]), 12, DIM))
 	_side_body.add_child(_label("The powers of the world", 17, GOLD))
 	var me: Dictionary = {}
 	for civ in view["civs"]:
@@ -930,10 +947,11 @@ func _fill_card() -> void:
 
 func _build_chronicle() -> void:
 	var panel := PanelContainer.new()
-	panel.set_anchors_preset(Control.PRESET_BOTTOM_LEFT)
+	panel.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
 	panel.offset_left = 792
-	panel.offset_right = 1352
+	panel.offset_right = -470  # clear of the side panel at any window width
 	panel.offset_bottom = -8
+	panel.offset_top = -8
 	panel.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	_chronicle.add_theme_constant_override("separation", 2)
 	panel.add_child(_chronicle)

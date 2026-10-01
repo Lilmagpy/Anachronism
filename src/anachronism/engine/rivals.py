@@ -26,6 +26,7 @@ from anachronism.content.schema import (
     ScriptGoal,
     Stage,
 )
+from anachronism.engine.decrees import cost
 from anachronism.engine.economy import labour
 from anachronism.engine.effects import Effects, civ_effects
 from anachronism.engine.events import EventLog
@@ -137,6 +138,8 @@ def strength(state: GameState, civ_id: str, effects: Effects | None = None) -> i
     effects = effects if effects is not None else civ_effects(state, civ_id)
     workers = labour(state, civ_id, effects).workforce
     base = apply_bp(workers, state.world.rules.rivals.strength_per_worker_bp)
+    if state.civs[civ_id].mercenaries > 0:
+        base = apply_bp(base, BP + state.world.rules.rivals.mercenary_strength_bp)
     base = apply_bp(base, BP + effects[EffectType.MILITARY_STRENGTH])
     return apply_bp(base, 5000 + state.civs[civ_id].stats.legitimacy_bp // 2)
 
@@ -468,6 +471,33 @@ def free_agents(
                     break
 
 
+def rival_decrees(state: GameState, events: EventLog) -> None:
+    """Rival courts spend their treasuries too: swords for hire in wartime, feasts in unrest.
+
+    A court keeps half its treasury in reserve, so decrees never empty it.
+    """
+    rules = state.world.rules.rivals
+    for civ_id in sorted(state.civs):
+        civ = state.civs[civ_id]
+        if civ_id == state.player_civ or not alive(state, civ_id):
+            continue
+        if at_war(state, civ_id) and civ.mercenaries == 0:
+            price = cost(state, civ_id, rules.mercenary_wealth_per_1000)
+            if civ.stockpiles.wealth >= price * 2:
+                civ.stockpiles.wealth -= price
+                civ.mercenaries = rules.mercenary_turns
+                events.add(civ_id, "decree", f"{civ.name} hires swords for its war.", civ.name)
+                continue
+        if civ.stats.unrest_bp >= 3000:
+            price = cost(state, civ_id, rules.festival_wealth_per_1000)
+            if civ.stockpiles.wealth >= price * 2:
+                civ.stockpiles.wealth -= price
+                civ.stats.legitimacy_bp = clamp(
+                    civ.stats.legitimacy_bp + rules.festival_legitimacy_bp, 0, BP
+                )
+                civ.stats.unrest_bp = clamp(civ.stats.unrest_bp - rules.festival_unrest_bp, 0, BP)
+
+
 def update_awareness(state: GameState) -> None:
     """Aware civilisations with a deep grudge against the player leave their scripts."""
     threshold = state.world.rules.rivals.free_agent_grievance_bp
@@ -498,6 +528,7 @@ def rivals_turn(
     spread_news(state, new_events, effects_by_civ, rng)
     deliver_news(state, events)
     update_awareness(state)
+    rival_decrees(state, events)
     strengths = {c: strength(state, c, effects_by_civ.get(c)) for c in sorted(state.civs)}
     for civ_id in sorted(state.civs):
         civ = state.civs[civ_id]

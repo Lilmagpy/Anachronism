@@ -125,6 +125,23 @@ class SendMissionaries(Frozen):
     target: str
 
 
+class HoldFestival(Frozen):
+    """Spend wealth on games and feasts: legitimacy up, unrest down."""
+
+    kind: Literal["festival"] = "festival"
+    civ: str
+
+
+class HireMercenaries(Frozen):
+    """Spend wealth on hired soldiers: more military strength for a few turns."""
+
+    kind: Literal["mercenaries"] = "mercenaries"
+    civ: str
+
+
+Decree = HoldFestival | HireMercenaries
+
+
 Diplomacy = DeclareWar | MakePeace | SendEnvoy | ProposeAlliance | SendMissionaries
 
 
@@ -140,7 +157,9 @@ Action = Annotated[
     | MakePeace
     | SendEnvoy
     | ProposeAlliance
-    | SendMissionaries,
+    | SendMissionaries
+    | HoldFestival
+    | HireMercenaries,
     Field(discriminator="kind"),
 ]
 

@@ -56,6 +56,8 @@ def end_turn(state: GameState) -> tuple[GameState, list[Event]]:
     # rivals: news, awareness, scripts, free agents; then the wars (brief §7)
     strengths = rivals_turn(new, effects_by_civ, list(events.items), rng, events)
     resolve_wars(new, strengths, rng, events)
+    for civ_id in sorted(new.civs):
+        new.civs[civ_id].mercenaries = max(0, new.civs[civ_id].mercenaries - 1)
     trade(new)
     spread_faiths(new, effects_by_civ, rng, events)
     grow_population(new, effects_by_civ, starving)

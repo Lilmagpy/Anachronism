@@ -233,6 +233,8 @@ class CivState(Mutable):
     """Who rules now (empty: unnamed)."""
     faith: str = ""
     """The court's religion or school of belief (a faith id, or empty)."""
+    mercenaries: int = 0
+    """Turns of hired soldiers left."""
     ruler_age: int = 40
     rulers: int = 1
     """How many rulers the state has had in this game (1 = the one it started with)."""

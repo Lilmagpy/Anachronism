@@ -502,3 +502,13 @@ ideas and the offline court recognises more of what players type. Dates are appr
 first appearances (placeholders pending the source review, as D-040). Several now appear
 as landmarks around the capital.
 
+
+## D-076 Royal decrees, and cultural victory must be earned — DELEGATED (2026-10-01)
+Playtests showed wealth piling up with nothing to spend it on, and some starts winning a
+cultural victory without the player doing anything (a big faith the player never held
+counted towards their share). Two royal decrees now spend wealth, priced by the size of
+your people: a festival (raises legitimacy, calms unrest) and hiring mercenaries (30% more
+strength for two turns). A faith now counts towards your cultural share only if you held it
+at the start, and cultural victory also needs at least 10% cultural influence of your own.
+Rival courts use the same decrees: at war they hire swords, in unrest they hold feasts,
+always keeping half their treasury in reserve.

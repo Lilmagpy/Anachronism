@@ -7,8 +7,9 @@ tiers need several regions in one game (Phase 8). The three paths:
 - **Economic**: your trade network (trading partners, allies, tributaries) reaches most of
   everyone else's people, and your treasury is the richest.
 - **Cultural**: your share of the region's culture (people weighted by literacy and
-  cultural influence, plus half the culture of every court that shares your faith) passes
-  the threshold, and no one's culture is larger.
+  cultural influence, plus half the culture of every court won to the faith you started
+  with) passes the threshold, no one's culture is larger, and your own advancements give
+  you real cultural influence.
 
 Defeat comes with collapse, or the loss of every province.
 """
@@ -17,7 +18,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from anachronism.content.schema import EffectType
+from anachronism.content.schema import EffectType, Faith
 from anachronism.engine.culture import shares_faith
 from anachronism.engine.effects import civ_effects
 from anachronism.engine.events import EventLog
@@ -49,10 +50,19 @@ def progress(state: GameState) -> dict[str, Any]:
     )
     cultures = {c: culture(state, c) for c in sorted(state.civs)}
     total_culture = sum(cultures.values())
-    # courts that share your faith carry half their culture into your sphere (brief §5.11)
-    my_sphere = cultures[me] + sum(
-        cultures[c] // 2 for c in sorted(state.civs) if c != me and shares_faith(state, me, c)
+    # courts won to your own faith (one you held from the start) carry half their culture
+    # into your sphere (brief §5.11); converting to another's faith does not
+    mine_from_start = (
+        state.civs[me].faith
+        and me
+        in state.world.faiths.get(state.civs[me].faith, Faith(id="none", name="none")).followers
     )
+    my_sphere = cultures[me] + sum(
+        cultures[c] // 2
+        for c in sorted(state.civs)
+        if mine_from_start and c != me and shares_faith(state, me, c)
+    )
+    influence = civ_effects(state, me)[EffectType.CULTURAL_INFLUENCE]
     margin = rules.victory_margin_bp
     start = state.victory_start
 
@@ -77,6 +87,8 @@ def progress(state: GameState) -> dict[str, Any]:
             "share_bp": min(BP, my_sphere * BP // max(1, total_culture)),
             "target_bp": target("cultural", rules.cultural_victory_share_bp),
             "leading": my_sphere >= max(cultures.values()),
+            "influence_bp": influence,
+            "influence_target_bp": rules.cultural_influence_needed_bp,
         },
     }
 
@@ -109,6 +121,7 @@ def check_outcome(state: GameState, events: EventLog) -> None:
     elif (
         paths["cultural"]["share_bp"] >= paths["cultural"]["target_bp"]
         and paths["cultural"]["leading"]
+        and paths["cultural"]["influence_bp"] >= paths["cultural"]["influence_target_bp"]
     ):
         won = "cultural"
     if won:

@@ -15,6 +15,7 @@ from anachronism.engine.rivals import (
     hops,
     key,
     relation,
+    rival_decrees,
     run_scripts,
     spread_news,
     status,
@@ -280,3 +281,40 @@ def test_missionaries(content: Content) -> None:
     assert state.civs["silla"].faith == "buddhism" or "home" in logged.message
     state, logged = apply_action(state, SendMissionaries(civ="goguryeo", target="baekje"))
     assert not logged.ok  # Baekje is already Buddhist
+
+
+def test_decrees_spend_the_treasury(warring: GameState) -> None:
+    from anachronism.engine.actions import HireMercenaries, HoldFestival
+
+    qin = warring.civs["qin"]
+    qin.stockpiles.wealth = 100_000
+    qin.stats.unrest_bp = 3000
+    state, logged = apply_action(warring, HoldFestival(civ="qin"))
+    assert logged.ok
+    assert state.civs["qin"].stats.unrest_bp < 3000
+    assert state.civs["qin"].stockpiles.wealth < 100_000
+    before = strength(state, "qin")
+    state, logged = apply_action(state, HireMercenaries(civ="qin"))
+    assert logged.ok
+    assert strength(state, "qin") > before
+    state, logged = apply_action(state, HireMercenaries(civ="qin"))
+    assert not logged.ok  # still serving
+    poor = warring.model_copy(deep=True)
+    poor.civs["qin"].stockpiles.wealth = 0
+    _, logged = apply_action(poor, HoldFestival(civ="qin"))
+    assert not logged.ok
+
+
+def test_rival_courts_issue_decrees(warring: GameState) -> None:
+    state, _ = apply_action(warring, DeclareWar(civ="wei", target="han"))
+    state.civs["wei"].stockpiles.wealth = 100_000
+    state.civs["chu"].stockpiles.wealth = 100_000
+    state.civs["chu"].stats.unrest_bp = 5000
+    state.civs["yan"].stockpiles.wealth = 0
+    state.civs["yan"].stats.unrest_bp = 5000
+    rival_decrees(state, EventLog(state.turn, state.year))
+    assert state.civs["wei"].mercenaries > 0
+    assert state.civs["wei"].stockpiles.wealth >= 50_000  # half kept in reserve
+    assert state.civs["chu"].stats.unrest_bp < 5000
+    assert state.civs["yan"].stats.unrest_bp == 5000  # cannot afford it
+    assert state.civs["qin"].mercenaries == 0  # the player decides for themselves
