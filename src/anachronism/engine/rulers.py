@@ -29,7 +29,7 @@ def age_and_succeed(state: GameState, civ: CivState, rng: GameRng, events: Event
     if not rng.chance(death_chance_bp(state, civ)):
         return
     old = civ.ruler or f"the ruler of {civ.name}"
-    old_desc = f"{civ.ruler} of {civ.name}" if civ.ruler else old
+    old_desc = old  # a named ruler needs no state name ("Genghis Khan has died")
     line = state.world.successors.get(civ.id, ())
     index = civ.rulers - 1
     if index < len(line):
