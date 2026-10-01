@@ -483,6 +483,13 @@ def free_agents(
                     and grievance(state, civ_id, other) < 2000
                 ):
                     set_status(state, civ_id, other, RelationStatus.TRADING)
+                    if other == state.player_civ:
+                        events.add(
+                            other,
+                            "alliance",
+                            f"The {civ.adjective} court opens its markets to your merchants.",
+                            civ.name,
+                        )
                     break
 
 
