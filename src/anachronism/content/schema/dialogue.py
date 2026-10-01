@@ -3,7 +3,9 @@
 Lines are written for *moments* (an idea adopted, a riot, the game starting...). The client
 shows a character's portrait with a line chosen from the moment's list. Placeholders in
 braces are filled in by the game: ``{civ}``, ``{ruler}``, ``{subject}`` (the idea, place or
-resource the moment is about), ``{year}``, and for rivals ``{rival}`` and ``{rival_ruler}``.
+resource the moment is about), ``{year}``, ``{adjective}`` (Mongol, Roman), and for rivals
+``{rival}``, ``{rival_ruler}`` and ``{rival_adjective}``. Prefer "the {adjective} realm" to
+"{civ}" before a verb: names like "Mongols" are plural.
 In Phase 3 the same characters speak freely through the language model.
 """
 
@@ -15,7 +17,9 @@ from pydantic import field_validator
 
 from anachronism.content.schema.base import Frozen, Identifier
 
-PLACEHOLDERS = frozenset({"civ", "ruler", "subject", "year", "rival", "rival_ruler"})
+PLACEHOLDERS = frozenset(
+    {"civ", "ruler", "subject", "year", "rival", "rival_ruler", "adjective", "rival_adjective"}
+)
 """Names that may appear in braces in a line."""
 
 SPECIAL_SPEAKERS = frozenset({"ruler", "rival"})

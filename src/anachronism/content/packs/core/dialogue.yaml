@@ -5,8 +5,8 @@ dialogue:
   - id: game_start
     speaker: ruler
     lines:
-      - "The year is {year}. {civ} looks to me - and I look to you. Whisper your ideas, and we shall see what they become."
-      - "They say a ruler is only as wise as the voices around the throne. Speak, then. {civ} is listening."
+      - "The year is {year}. The {adjective} realm looks to me - and I look to you. Whisper your ideas, and we shall see what they become."
+      - "They say a ruler is only as wise as the voices around the throne. Speak, then. The {adjective} court is listening."
       - "Our rivals sharpen swords. Let us sharpen minds instead. What should {civ} learn first?"
 
   - id: project_started
@@ -92,12 +92,12 @@ dialogue:
   - id: collapse
     speaker: general
     lines:
-      - "It is over. {civ} has fallen apart. Perhaps history will judge our ambition more kindly than the people did."
+      - "It is over. The {adjective} realm has fallen apart. Perhaps history will judge our ambition more kindly than the people did."
 
   - id: rival_adopted
     speaker: rival
     lines:
-      - "Do not imagine {civ} alone dreams of new things. {rival} has mastered {subject}."
+      - "Do not imagine we alone dream of new things. The {rival_adjective} court has mastered {subject}."
       - "{subject} is ours now. Let the other courts wonder how {rival} managed it."
       - "Greetings from {rival}. We thought you should hear it from us: we have {subject}."
 
@@ -176,12 +176,12 @@ dialogue:
   - id: victory
     speaker: ruler
     lines:
-      - "Look at what {civ} has become. No one under Heaven can stand against us now. History will remember - and wonder how."
+      - "Look at what the {adjective} realm has become. No one under Heaven can stand against us now. History will remember - and wonder how."
 
   - id: defeat
     speaker: ruler
     lines:
-      - "It is over. {civ} falls. Perhaps we reached too far, too fast. Perhaps the world was not ready."
+      - "It is over. The {adjective} realm falls. Perhaps we reached too far, too fast. Perhaps the world was not ready."
 
   - id: ally_attacked
     speaker: general

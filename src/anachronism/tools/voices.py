@@ -68,6 +68,8 @@ def speak(
         year=year_text(state.year),
         rival=state.civs[rival].name if rival else "",
         rival_ruler=ruler_of(rival) if rival else "",
+        adjective=state.civs[player].adjective,
+        rival_adjective=state.civs[rival].adjective if rival else "",
     )
     return {
         "moment": moment,

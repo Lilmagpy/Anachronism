@@ -157,7 +157,7 @@ dialogue:
     lines:
       - "It works! {subject} is ours."
 ```
-Placeholders: `{civ}` `{ruler}` `{subject}` `{year}` `{rival}` `{rival_ruler}`; the linter
+Placeholders: `{civ}` `{ruler}` `{subject}` `{year}` `{adjective}` `{rival}` `{rival_ruler}` `{rival_adjective}` (write "the {adjective} realm" before a verb: some names are plural); the linter
 rejects any other. Rulers' names come from each scenario civ's `leader`.
 
 ## Rules
