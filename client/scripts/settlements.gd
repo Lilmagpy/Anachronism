@@ -29,6 +29,7 @@ var earth: EarthBuilder
 var rng := RandomNumberGenerator.new()
 var _parts := {}   ## part name -> {mesh, transforms, colours, multimesh}
 var clearings: Array = []   ## [pixel, radius] of each chief city, kept free of trees
+var _chimneys: Array = []   ## where hearth smoke rises over capitals
 var _owned: Array = []   ## [part, instance index, site index, how much owner colour]
 var _material := StandardMaterial3D.new()   ## shared by every batch: colour comes per instance
 var style := "east"   ## the building style of the province being built
@@ -111,6 +112,9 @@ func _init(province_map: ProvinceMap) -> void:
 			["low_roof", low_roof], ["yurt", yurt], ["yurt_roof", yurt_roof],
 			["round_tower", round_tower], ["spire", spire], ["column", column], ["pyramid", pyramid]]:
 		_parts[entry[0]] = {"mesh": entry[1], "transforms": [], "colours": []}
+	var furrows := ShaderMaterial.new()
+	furrows.shader = load("res://shaders/field.gdshader")
+	_parts["field"]["material"] = furrows
 	# castles from the Kenney castle kit (CC0, G1): their blue roofs and flags take the
 	# owner's colour; they keep their own stone (`kit` parts are drawn with their own materials)
 	for entry in [
@@ -147,6 +151,8 @@ func build(parent: Node3D) -> void:
 	var holder := Node3D.new()
 	holder.name = "Settlements"
 	parent.add_child(holder)
+	for spot in _chimneys:
+		holder.add_child(_smoke(spot))
 	for part in _parts:
 		var entry: Dictionary = _parts[part]
 		var groups := {}   # tile -> indices of this part's instances there
@@ -287,7 +293,7 @@ func _cluster(centre: Vector2, houses: int, radius: float, fields: bool, site: i
 		var offset := Vector2(rng.randf_range(-radius, radius), rng.randf_range(-radius, radius) * 0.7).rotated(turn)
 		_house(centre + offset * S, turn + (PI / 2.0 if rng.randf() < 0.3 else 0.0), rng.randf_range(0.8, 1.2), site, mix)
 	if fields:
-		var crops := [Color(0.48, 0.46, 0.28), Color(0.36, 0.42, 0.24), Color(0.44, 0.38, 0.27)]
+		var crops := [Color(0.86, 0.72, 0.30), Color(0.55, 0.70, 0.28), Color(0.74, 0.64, 0.30), Color(0.45, 0.62, 0.26)]
 		for i in houses + 2:
 			var angle := rng.randf() * TAU
 			var at := centre + Vector2(cos(angle), sin(angle)) * (radius + rng.randf_range(0.3, 0.9)) * S
@@ -316,6 +322,8 @@ func _city(site: Dictionary, population: int, index: int) -> void:
 		if style != "steppe":
 			_walls(centre, half, index)
 		_palace(centre, index)
+		for k in 3:
+			_chimneys.append(centre + Vector2(rng.randf_range(-half, half), rng.randf_range(-half, half)) * 0.6)
 
 
 ## A capital's walls with corner towers and a gatehouse on each side (Kenney castle kit);
@@ -407,8 +415,50 @@ func _multimesh(entry: Dictionary, indices: Array) -> MultiMeshInstance3D:
 		entry["where"][i] = [mm, local]
 	var instance := MultiMeshInstance3D.new()
 	instance.multimesh = mm
-	if not entry.get("kit", false):
+	if entry.has("material"):
+		instance.material_override = entry["material"]
+	elif not entry.get("kit", false):
 		instance.material_override = _material
 	instance.visibility_range_end = SHOW_WITHIN
-	instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON   # soft shadows under buildings (G1)
 	return instance
+
+
+## Hearth smoke drifting up from a city (G1): soft grey puffs that rise, swell and fade.
+func _smoke(pixel: Vector2) -> CPUParticles3D:
+	var smoke := CPUParticles3D.new()
+	var puff := SphereMesh.new()
+	puff.radius = 0.06 * S
+	puff.height = 0.12 * S
+	puff.radial_segments = 8
+	puff.rings = 4
+	var material := StandardMaterial3D.new()
+	material.albedo_color = Color(0.9, 0.9, 0.92, 0.32)
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	material.vertex_color_use_as_albedo = true
+	puff.material = material
+	smoke.mesh = puff
+	smoke.amount = 18
+	smoke.lifetime = 5.0
+	smoke.preprocess = 5.0
+	smoke.direction = Vector3(0.3, 1, 0)
+	smoke.spread = 12.0
+	smoke.initial_velocity_min = 0.35 * S
+	smoke.initial_velocity_max = 0.5 * S
+	smoke.gravity = Vector3(0.08 * S, 0, 0)
+	smoke.scale_amount_min = 0.6
+	smoke.scale_amount_max = 1.0
+	var grow := Curve.new()
+	grow.add_point(Vector2(0, 0.4))
+	grow.add_point(Vector2(1, 2.6))
+	smoke.scale_amount_curve = grow
+	var fade := Gradient.new()
+	fade.set_color(0, Color(1, 1, 1, 0.45))
+	fade.set_color(1, Color(1, 1, 1, 0.0))
+	smoke.color_ramp = fade
+	smoke.position = earth.ground_at_pixel(pixel) + Vector3(0, 0.35 * S, 0)
+	smoke.visibility_range_end = SHOW_WITHIN
+	smoke.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	return smoke
+

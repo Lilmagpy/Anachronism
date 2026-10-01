@@ -457,6 +457,61 @@ func show_ties(view: Dictionary) -> void:
 	_war_marks.get_parent().add_child(_ties)
 
 
+## Ships rock on the swell (called every frame with the time in seconds).
+func animate(t: float) -> void:
+	for item in _afloat:
+		var piece: Node3D = item[0]
+		if not is_instance_valid(piece):
+			continue
+		var phase: float = item[2]
+		piece.position.y = item[1] + sin(t * 1.3 + phase) * 0.25
+		piece.rotation.z = sin(t * 0.9 + phase) * 0.06
+		piece.rotation.x = sin(t * 1.1 + phase * 1.7) * 0.04
+
+
+## Roads between neighbouring provinces' chief cities (G1): dirt tracks following the
+## ground, seen as the camera comes down. Drawn once; borders change, roads stay.
+func show_roads(view: Dictionary, parent: Node3D) -> void:
+	var by_id := {}
+	for site in sites:
+		by_id[site["id"]] = site
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var drawn := {}
+	for p in view["provinces"]:
+		if not by_id.has(p["id"]):
+			continue
+		for n in p["neighbours"]:
+			var key := [p["id"], n] if str(p["id"]) < str(n) else [n, p["id"]]
+			if drawn.has(key) or not by_id.has(n):
+				continue
+			drawn[key] = true
+			var a: Vector2 = by_id[p["id"]]["pixel"]
+			var b: Vector2 = by_id[n]["pixel"]
+			if a.distance_to(b) > 160.0:
+				continue
+			# a gentle bend, so roads do not look ruled
+			var bend := (b - a).orthogonal().normalized() * a.distance_to(b) * 0.08 * (1.0 if hash(key) % 2 == 0 else -1.0)
+			var line: Array[Vector3] = []
+			var wet := false
+			for i in 17:
+				var t := i / 16.0
+				var at := a.lerp(b, t) + bend * sin(t * PI)
+				if earth.is_ocean_at(at):
+					wet = true
+					break
+				line.append(earth.ground_at_pixel(at) + Vector3(0, 0.15, 0))
+			if not wet:
+				EarthBuilder.add_line(st, line, 0.0016, Color(0.86, 0.74, 0.52))
+	var roads := MeshInstance3D.new()
+	roads.name = "Roads"
+	roads.mesh = st.commit()
+	roads.material_override = EarthBuilder.line_material(0.0015)
+	roads.visibility_range_end = 420.0
+	roads.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	parent.add_child(roads)
+
+
 ## Armies in the field (D-099): soldiers in their owner's colours, larger for larger hosts,
 ## with their strength above them; a marching army's road drawn ahead of it; crossed swords
 ## where battles were fought last turn. `selected_army` is drawn with a gold ring. Fleets
@@ -466,6 +521,7 @@ func show_armies(armies: Array, battles: Array, selected_army := "", fleets: Arr
 	for child in _war_marks.get_children():
 		child.queue_free()
 	_war_labels.clear()
+	_afloat.clear()
 	var by_id := {}
 	for site in sites:
 		by_id[site["id"]] = site
@@ -579,6 +635,7 @@ func _draw_fleets(st: SurfaceTool, by_id: Dictionary, fleets: Array, selected_fl
 		piece.scale = Vector3.ONE * clampf(0.7 + log(maxf(ships, 5.0) / 5.0) / log(10.0) * 0.3, 0.7, 1.3)
 		piece.position = at
 		_war_marks.add_child(piece)
+		_afloat.append([piece, at.y, float(hash(fleet["id"]) % 628) / 100.0])
 		var label := Label3D.new()
 		label.text = "%d ships" % ships
 		label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
@@ -662,6 +719,7 @@ var player := ""   ## the player's civ: its name is never hidden by another's
 var _region_cells := {}   ## site index -> Array of its cells (built once)
 var _labels: Array = []   ## [label, priority], most important first, for decluttering
 var _war_labels: Array = []   ## [label, priority] of armies' and fleets' strengths
+var _afloat: Array = []   ## [fleet piece, its resting height, a phase] to rock on the waves
 
 
 ## The map cells of a site, indexed once (borders never move; only owners change).

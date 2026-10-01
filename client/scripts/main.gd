@@ -172,6 +172,7 @@ func _build_earth(holder: Node3D, region: String) -> void:
 	settlements = Settlements.new(provinces)
 	settlements.build(holder)
 	scenery.clear(settlements.clearings)
+	provinces.show_roads(view, holder)
 	_draw_armies()
 	provinces.show_ties(view)
 	landmarks = Landmarks.new()
@@ -182,7 +183,6 @@ func _build_earth(holder: Node3D, region: String) -> void:
 	var sky_material: ProceduralSkyMaterial = environment.sky.sky_material
 	sky_material.ground_bottom_color = Color(0.03, 0.10, 0.20)  # open ocean beyond the map edge
 	sky_material.ground_horizon_color = Color(0.10, 0.20, 0.32)
-	sun.directional_shadow_max_distance = rig.far * 1.5
 	# Open over the player's capital, far enough out to see the neighbouring states.
 	var start := Vector3.ZERO
 	var owned := 0
@@ -455,8 +455,13 @@ func _ground_height(point: Vector3) -> float:
 func _process(delta: float) -> void:
 	if menus != null and earth != null:  # the title backdrop drifts slowly east
 		rig.position.x += delta * 6.0
+	if provinces != null:
+		provinces.animate(Time.get_ticks_msec() / 1000.0)
+	if earth != null and rig != null:  # shadows sharp near the camera, wherever it is
+		sun.directional_shadow_max_distance = clampf(rig.distance * 2.5, 60.0, 900.0)
 	if earth != null:  # territory colours fade as you zoom in, so the land itself shows
 		earth.terrain_material.set_shader_parameter("tint", lerpf(0.32, 0.05, rig.zoom_level()))
+		earth.terrain_material.set_shader_parameter("edge_tint", lerpf(0.8, 0.12, smoothstep(0.35, 0.95, rig.zoom_level())))
 	if provinces != null:
 		var pose := rig.camera.global_transform
 		if pose != _last_pose:  # names that would overlap give way as the camera moves
