@@ -492,3 +492,13 @@ sea. The Ming appear only as the provinces within reach, and far smaller than th
 empire, so a regional victory stays possible (noted in docs/history/sengoku.md). New
 portrait styles: armoured samurai and a Joseon official's gat.
 
+## D-075 A bigger library of ideas — DELEGATED (2026-10-01)
+The library grows from 55 to 90 advancements, mostly medieval to early modern (lenses,
+eyeglasses, telescope, microscope, germ theory, vaccination, the printing press,
+newspapers, universities, the scientific method, banking, double-entry bookkeeping,
+joint-stock companies, ocean-going ships, cannon, muskets, star forts, new crops, spinning
+machines, coke smelting, the steam engine, railways...), so later moments have curated
+ideas and the offline court recognises more of what players type. Dates are approximate
+first appearances (placeholders pending the source review, as D-040). Several now appear
+as landmarks around the capital.
+

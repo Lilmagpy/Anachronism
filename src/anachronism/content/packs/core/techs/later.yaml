@@ -1,0 +1,369 @@
+schema_version: 1
+# Medieval to early-modern advancements: the ideas a player is most likely to bring back.
+# year = approximate first appearance anywhere (placeholder values pending the source review,
+# see DECISIONS D-040 and D-075). complexity 1-5 drives cost and duration.
+techs:
+  - id: eyeglasses
+    name: Eyeglasses
+    keywords: [eyeglasses, spectacles, glasses, lenses for eyes, reading glasses]
+    category: craft
+    year: 1286
+    complexity: 2
+    prerequisites: [glassmaking]
+    effects: [{type: knowledge_gain, bp: 500}, {type: literacy_growth, bp: 20}]
+    flavour: "Old scholars read again; old craftsmen see their work."
+
+  - id: glassmaking
+    name: Clear glass
+    keywords: [glass, glassmaking, glassblowing, clear glass, windows]
+    category: craft
+    year: -100
+    complexity: 2
+    prerequisites: [pottery_kiln]
+    requires: {materials: [clay]}
+    effects: [{type: wealth_output, bp: 400}, {type: health, bp: 200}]
+    flavour: "Sand and ash made into something you can see through."
+
+  - id: lenses
+    name: Ground lenses
+    keywords: [lens, lenses, magnifying glass, ground glass, optics]
+    category: knowledge
+    year: 1000
+    complexity: 2
+    prerequisites: [glassmaking]
+    effects: [{type: knowledge_gain, bp: 500}]
+    flavour: "A curved glass that makes the small large."
+
+  - id: telescope
+    name: Telescope
+    keywords: [telescope, spyglass, looking glass, see far]
+    category: knowledge
+    year: 1608
+    complexity: 3
+    prerequisites: [lenses, astronomy_calendar]
+    effects: [{type: knowledge_gain, bp: 800}, {type: naval_strength, bp: 500}]
+    flavour: "The moon has mountains, and the enemy's sails are seen an hour sooner."
+
+  - id: microscope
+    name: Microscope
+    keywords: [microscope, tiny creatures, small life, animalcules]
+    category: health
+    year: 1670
+    complexity: 3
+    prerequisites: [lenses]
+    effects: [{type: knowledge_gain, bp: 600}, {type: health, bp: 400}]
+    flavour: "A drop of pond water holds a city of tiny beasts."
+
+  - id: germ_theory
+    name: Germ theory
+    keywords: [germs, germ theory, disease is caused by, invisible creatures cause disease, contagion, wash hands]
+    category: health
+    year: 1860
+    complexity: 4
+    prerequisites: [microscope, quarantine]
+    requires: {literacy_bp: 2000}
+    resistance: [{group: clergy, level: 1}]
+    effects: [{type: health, bp: 1500}, {type: population_cap, bp: 600}]
+    flavour: "Sickness is not a curse or a bad air. It is alive, and it can be killed."
+
+  - id: vaccination
+    name: Vaccination
+    keywords: [vaccine, vaccination, cowpox, jenner, immunise]
+    category: health
+    year: 1796
+    complexity: 3
+    prerequisites: [inoculation]
+    effects: [{type: health, bp: 1200}]
+    resistance: [{group: clergy, level: 1}]
+    flavour: "The milkmaids never caught smallpox. Now no one has to."
+
+  - id: soap
+    name: Soap
+    keywords: [soap, washing, lye, cleanliness]
+    category: health
+    year: -2800
+    complexity: 1
+    prerequisites: [pottery_kiln]
+    effects: [{type: health, bp: 400}]
+    flavour: "Fat, ash and water - and fewer fevers."
+
+  - id: distillation
+    name: Distillation
+    keywords: [distillation, distil, still, spirits, alcohol, alembic]
+    category: craft
+    year: 800
+    complexity: 2
+    prerequisites: [alchemy]
+    effects: [{type: wealth_output, bp: 400}, {type: health, bp: 300}]
+    flavour: "Wine boiled, its spirit caught - for medicine, and for merriment."
+
+  - id: mechanical_clock
+    name: Mechanical clock
+    keywords: [clock, mechanical clock, escapement, timekeeping, hours]
+    category: craft
+    year: 1280
+    complexity: 3
+    prerequisites: [wheel, iron_working, astronomy_calendar]
+    effects: [{type: labour_output, bp: 500}, {type: knowledge_gain, bp: 400}]
+    flavour: "The bell in the tower tells the whole town when to work and when to pray."
+
+  - id: printing_press
+    name: Printing press
+    keywords: [printing press, gutenberg, press, printed books, mass printing, books for everyone]
+    category: knowledge
+    year: 1450
+    complexity: 4
+    prerequisites: [movable_type, paper]
+    requires: {literacy_bp: 500}
+    resistance: [{group: clergy, level: 1}]
+    effects: [{type: literacy_growth, bp: 100}, {type: knowledge_gain, bp: 1500}, {type: cultural_influence, bp: 1000}]
+    flavour: "A screw press, metal type and oily ink - a thousand pages a day."
+
+  - id: newspapers
+    name: Newspapers
+    keywords: [newspaper, news sheets, gazette, broadsheet, journalism]
+    category: knowledge
+    year: 1605
+    complexity: 2
+    prerequisites: [printing_press, postal_relay]
+    resistance: [{group: nobility, level: 1}]
+    effects: [{type: information_speed, bp: 1500}, {type: literacy_growth, bp: 50}, {type: unrest, bp: 100}]
+    flavour: "Everyone knows everything by Thursday - including what the court would rather hide."
+
+  - id: scientific_method
+    name: The scientific method
+    keywords: [scientific method, experiment, hypothesis, test ideas, evidence, science]
+    category: knowledge
+    year: 1620
+    complexity: 3
+    prerequisites: [writing, place_value_numerals, schools]
+    requires: {literacy_bp: 1000}
+    resistance: [{group: clergy, level: 2}]
+    effects: [{type: knowledge_gain, bp: 2000}]
+    flavour: "Do not argue about how many teeth a horse has. Open its mouth and count."
+
+  - id: universities
+    name: Universities
+    keywords: [university, universities, college, academy of scholars, higher learning]
+    category: knowledge
+    year: 1088
+    complexity: 3
+    prerequisites: [schools, writing]
+    effects: [{type: knowledge_gain, bp: 1000}, {type: literacy_growth, bp: 50}, {type: cultural_influence, bp: 500}]
+    flavour: "Scholars gather where there are books and freedom to argue."
+
+  - id: algebra
+    name: Algebra
+    keywords: [algebra, equations, unknowns, al-jabr, mathematics]
+    category: knowledge
+    year: 820
+    complexity: 3
+    prerequisites: [place_value_numerals]
+    effects: [{type: knowledge_gain, bp: 800}, {type: wealth_output, bp: 300}]
+    flavour: "Name the unknown x, and it gives itself up."
+
+  - id: double_entry
+    name: Double-entry bookkeeping
+    keywords: [double entry, double-entry, debits and credits, balance sheet, pacioli]
+    category: trade
+    year: 1300
+    complexity: 2
+    prerequisites: [bookkeeping]
+    effects: [{type: wealth_output, bp: 800}, {type: trade_income, bp: 500}]
+    flavour: "Every coin is written twice, and the books always balance - or someone is stealing."
+
+  - id: banking
+    name: Banks and bills of exchange
+    keywords: [bank, banking, bills of exchange, credit, loans, letters of credit, interest]
+    category: trade
+    year: 1150
+    complexity: 3
+    prerequisites: [coinage, bookkeeping]
+    resistance: [{group: clergy, level: 1}]
+    effects: [{type: trade_income, bp: 1200}, {type: wealth_output, bp: 600}]
+    flavour: "Gold stays safe at home; a piece of paper travels instead."
+
+  - id: joint_stock_company
+    name: Joint-stock company
+    keywords: [joint stock, shares, company, stock exchange, investors, corporation]
+    category: trade
+    year: 1600
+    complexity: 3
+    prerequisites: [banking, double_entry]
+    effects: [{type: trade_income, bp: 1500}, {type: naval_strength, bp: 500}]
+    flavour: "Many purses, one ship, and the risk shared by all."
+
+  - id: caravel
+    name: Ocean-going ships
+    keywords: [caravel, ocean ship, carrack, galleon, ocean going, lateen sail, blue water]
+    category: maritime
+    year: 1440
+    complexity: 3
+    prerequisites: [sternpost_rudder, compass]
+    requires: {materials: [timber]}
+    effects: [{type: naval_strength, bp: 1200}, {type: trade_income, bp: 1000}, {type: mobility, bp: 600}]
+    flavour: "A ship that can sail against the wind and come home from beyond the edge of the map."
+
+  - id: astrolabe
+    name: Navigation by the stars
+    keywords: [astrolabe, quadrant, sextant, latitude, navigation, star navigation]
+    category: maritime
+    year: 800
+    complexity: 2
+    prerequisites: [astronomy_calendar, sailing]
+    effects: [{type: naval_strength, bp: 400}, {type: mobility, bp: 400}]
+    flavour: "The pole star's height tells the sailor how far north he is."
+
+  - id: cannon
+    name: Cannon
+    keywords: [cannon, artillery, bombard, siege gun, big guns]
+    category: military
+    year: 1326
+    complexity: 3
+    prerequisites: [gunpowder, bronze_working]
+    effects: [{type: military_strength, bp: 1200}]
+    flavour: "No wall stands for long against a gun that throws stone balls."
+
+  - id: musket
+    name: Muskets
+    keywords: [musket, arquebus, matchlock, firearms, guns, rifle, harquebus, tanegashima]
+    category: military
+    year: 1450
+    complexity: 3
+    prerequisites: [gunpowder, iron_working]
+    effects: [{type: military_strength, bp: 1500}]
+    flavour: "A farmer with a month's drill and a gun can stop a knight."
+
+  - id: star_fort
+    name: Star forts
+    keywords: [star fort, bastion, trace italienne, angled walls, artillery fortress]
+    category: military
+    year: 1500
+    complexity: 3
+    prerequisites: [cannon, fortification, surveying]
+    effects: [{type: military_strength, bp: 800}, {type: legitimacy, bp: 100}]
+    flavour: "Low, thick, angled walls that cannon cannot break and every gun can cover."
+
+  - id: seed_drill
+    name: Seed drill
+    keywords: [seed drill, sow in rows, planting machine]
+    category: agriculture
+    year: -150
+    complexity: 2
+    prerequisites: [ox_plough, iron_working]
+    effects: [{type: food_output, bp: 700}]
+    flavour: "Seeds in neat rows, not scattered to the birds."
+
+  - id: new_world_crops
+    name: New crops (maize, potatoes)
+    keywords: [potato, potatoes, maize, corn, sweet potato, new crops]
+    category: agriculture
+    year: 1550
+    complexity: 2
+    prerequisites: [agriculture]
+    effects: [{type: food_output, bp: 1200}, {type: population_cap, bp: 800}]
+    flavour: "A crop that grows where wheat will not, and feeds twice as many."
+
+  - id: spinning_wheel
+    name: Spinning wheel
+    keywords: [spinning wheel, spinning, thread, yarn, textiles]
+    category: craft
+    year: 1000
+    complexity: 2
+    prerequisites: [wheel]
+    effects: [{type: wealth_output, bp: 500}, {type: labour_output, bp: 300}]
+    flavour: "A wheel turns, and a day's thread is spun in an hour."
+
+  - id: spinning_machine
+    name: Spinning machines
+    keywords: [spinning jenny, water frame, textile machine, cotton mill, factory, mill]
+    category: craft
+    year: 1765
+    complexity: 4
+    prerequisites: [spinning_wheel, water_wheel]
+    resistance: [{group: guilds, level: 2}]
+    effects: [{type: wealth_output, bp: 1500}, {type: labour_output, bp: 1000}]
+    flavour: "One machine, eight spindles - and the spinners riot."
+
+  - id: coke_smelting
+    name: Coke smelting
+    keywords: [coke, coke smelting, coal iron, darby]
+    category: metallurgy
+    year: 1709
+    complexity: 3
+    prerequisites: [coal_mining, blast_furnace]
+    requires: {materials: [coal]}
+    effects: [{type: materials_output, bp: 1500}]
+    flavour: "Iron from coal, not forests - and suddenly iron is cheap."
+
+  - id: steam_engine
+    name: Steam engine
+    keywords: [steam engine, steam power, boiling water push, piston engine, watt, newcomen, engine]
+    category: craft
+    year: 1712
+    complexity: 5
+    prerequisites: [coke_smelting, piston_bellows]
+    requires: {materials: [iron, coal], literacy_bp: 1500}
+    effects: [{type: labour_output, bp: 1500}, {type: materials_output, bp: 1000}]
+    flavour: "Fire makes water into a giant that never sleeps."
+
+  - id: railways
+    name: Railways
+    keywords: [railway, railroad, train, locomotive, rails, steam train]
+    category: construction
+    year: 1825
+    complexity: 5
+    prerequisites: [steam_engine, roads]
+    requires: {materials: [iron, coal]}
+    effects: [{type: mobility, bp: 2000}, {type: trade_income, bp: 1500}, {type: military_strength, bp: 500}]
+    flavour: "Iron roads and fire horses: a month's journey in a day."
+
+  - id: lightning_rod
+    name: Lightning rod
+    keywords: [lightning rod, electricity, franklin, lightning]
+    category: knowledge
+    year: 1752
+    complexity: 2
+    prerequisites: [scientific_method, iron_working]
+    effects: [{type: knowledge_gain, bp: 400}, {type: legitimacy, bp: 100}]
+    flavour: "Heaven's fire, led politely into the ground."
+
+  - id: hospitals
+    name: Hospitals
+    keywords: [hospital, hospitals, infirmary, care for the sick]
+    category: health
+    year: 400
+    complexity: 2
+    prerequisites: [herbal_medicine, masonry]
+    effects: [{type: health, bp: 800}, {type: legitimacy, bp: 100}]
+    flavour: "A house where the sick are cared for, not merely prayed over."
+
+  - id: census
+    name: The census
+    keywords: [census, count the people, population count, registry, records of people]
+    category: governance
+    year: -500
+    complexity: 2
+    prerequisites: [writing, standard_measures]
+    effects: [{type: wealth_output, bp: 600}, {type: labour_output, bp: 300}]
+    flavour: "Count every household, and the tax collector cannot be cheated."
+
+  - id: written_law
+    name: Written law code
+    keywords: [law code, written law, laws, legal code, courts, justice]
+    category: governance
+    year: -1750
+    complexity: 2
+    prerequisites: [writing]
+    effects: [{type: legitimacy, bp: 200}, {type: unrest, bp: -100}]
+    flavour: "The same law for the farmer and the lord - in theory."
+
+  - id: windpump_polders
+    name: Polders and pumps
+    keywords: [polder, dykes, drain the marsh, reclaim land, land from the sea]
+    category: agriculture
+    year: 1400
+    complexity: 3
+    prerequisites: [windmill, canals]
+    effects: [{type: food_output, bp: 800}, {type: population_cap, bp: 600}]
+    flavour: "God made the world; the Dutch made Holland."

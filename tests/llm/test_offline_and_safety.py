@@ -38,7 +38,10 @@ def game(content: Content) -> GameState:
     ("text", "expected"),
     [
         ("make the river work for us", "irrigation"),
-        ("a printing press", "movable_type"),
+        ("a printing press", "printing_press"),
+        ("movable type", "movable_type"),
+        ("germs cause disease", "germ_theory"),
+        ("a steam engine", "steam_engine"),
         ("rotate crops with clover", "crop_rotation"),
         ("the number zero", "place_value_numerals"),
         ("stirrups for our riders", "stirrup"),

@@ -25,7 +25,13 @@ const KINDS := {
 	"coinage": "mint", "paper_money": "mint",
 	"pottery_kiln": "kiln",
 	"gunpowder": "powder_tower",
-	"sailing": "harbour", "compass": "harbour", "sternpost_rudder": "harbour",
+	"sailing": "harbour", "compass": "harbour", "sternpost_rudder": "harbour", "caravel": "harbour",
+	"printing_press": "press", "newspapers": "press", "telescope": "observatory",
+	"universities": "school", "scientific_method": "school", "hospitals": "school",
+	"cannon": "powder_tower", "musket": "powder_tower", "star_fort": "watchtower",
+	"banking": "mint", "joint_stock_company": "mint", "double_entry": "mint",
+	"steam_engine": "furnace", "coke_smelting": "furnace", "railways": "milestone",
+	"mechanical_clock": "clock_tower", "glassmaking": "kiln", "spinning_machine": "workshop",
 }
 
 var map: ProvinceMap
@@ -112,6 +118,10 @@ func _make(kind: String, colour: Color, spot: Vector2, centre: Vector2) -> Node3
 			_cylinder(node, Vector3(0, 0.2 * S, 0), 0.16 * S, 0.4 * S, Color(0.35, 0.30, 0.28))
 			_sphere(node, Vector3(0, 0.46 * S, 0), 0.1 * S, Color(1.0, 0.55, 0.15))   # glow
 			_sphere(node, Vector3(0.05 * S, 0.75 * S, 0), 0.14 * S, Color(0.55, 0.55, 0.55, 0.8))   # smoke
+		"clock_tower":
+			_box(node, Vector3(0, 0.4 * S, 0), Vector3(0.2, 0.8, 0.2) * S, stone)
+			_cylinder(node, Vector3(0, 0.65 * S, 0.105 * S), 0.07 * S, 0.01 * S, Color(0.98, 0.95, 0.85)).rotation.x = PI / 2.0
+			_cone(node, Vector3(0, 0.88 * S, 0), 0.16 * S, 0.18 * S, roof)
 		"watchtower", "powder_tower":
 			_box(node, Vector3(0, 0.3 * S, 0), Vector3(0.18, 0.6, 0.18) * S, stone.darkened(0.1))
 			_cone(node, Vector3(0, 0.68 * S, 0), 0.16 * S, 0.16 * S, roof)

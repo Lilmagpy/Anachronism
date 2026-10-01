@@ -37,7 +37,7 @@ def steam_engine(**overrides: Any) -> dict[str, Any]:
     idea: dict[str, Any] = {
         "text": "a machine that boils water to push a piston",
         "verdict": "blocked",
-        "name": "Steam engine",
+        "name": "Heat engine",
         "category": "craft",
         "complexity": 5,
         "year": 1712,
@@ -75,7 +75,7 @@ def test_a_new_idea_is_bounded_and_recorded(game: GameState) -> None:
     assert [s.name for s in ruling.stubs] == ["Precision boring"]
     state, logged = apply_action(game, RuleOnIdea(civ="qin", ruling=ruling))
     assert logged.ok
-    node = state.tech_nodes["steam_engine"]
+    node = state.tech_nodes["heat_engine"]
     caps = state.world.effect_caps
     era = "classical"
     assert len(node.effects) <= state.world.rules.rulings.max_effects

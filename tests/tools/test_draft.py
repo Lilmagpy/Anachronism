@@ -14,15 +14,15 @@ PROPOSALS = {
     "nodes": [
         {"name": "Paper", "category": "craft", "complexity": 2, "year": -100},  # already known
         {
-            "name": "Seed drill",
+            "name": "Wheelbarrow",
             "category": "agriculture",
             "complexity": 2,
             "year": -150,
             "prerequisites": ["ox_plough", "not_real"],
             "effects": [{"type": "food_output", "percent": 6}],
-            "flavour": "Seeds in rows, not scattered to the birds.",
-            "keywords": ["seed drill", "sowing", "rows"],
-            "note": "Han dynasty multi-tube seed drill",
+            "flavour": "One wheel, two handles, and one man moves what took three.",
+            "keywords": ["wheelbarrow", "barrow", "one wheel cart"],
+            "note": "Han dynasty wheelbarrows (Needham)",
         },
     ]
 }
@@ -31,7 +31,7 @@ PROPOSALS = {
 def test_drafts_skip_known_ideas_and_are_marked(tmp_path: Path) -> None:
     content = load_content()
     entries = draft(FakeProvider(PROPOSALS), "East Asia", "classical", 2, content.techs)
-    assert [e["id"] for e in entries] == ["seed_drill"]
+    assert [e["id"] for e in entries] == ["wheelbarrow"]
     entry = entries[0]
     assert entry["prerequisites"] == ["ox_plough"]
     assert DRAFT_NOTE in entry["sources"]
@@ -52,5 +52,5 @@ def test_only_reviewed_drafts_are_promoted(tmp_path: Path) -> None:
     reviewed.write_text(yaml.safe_dump({"schema_version": 1, "techs": entries}))
     assert promote(reviewed, pack) == []
     written = yaml.safe_load((pack / "techs" / "drafted.yaml").read_text())
-    assert written["techs"][0]["id"] == "seed_drill"
+    assert written["techs"][0]["id"] == "wheelbarrow"
     assert written["techs"][0]["provenance"] == "library"
