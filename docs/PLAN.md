@@ -1,8 +1,8 @@
 # Anachronism — Plan
 
 **Current phase:** Phase 2 — 3D world (Godot) on the Phase 1 engine (branch `claude/phase-2-3d`).
-**Next action:** step 2.13 — cartoon cities (CC0 art) and a close-up capital view; then
-2.11b water and clouds, 2.15 polish.
+**Next action:** the owner plays the build (gate 2.16). Meanwhile, depth from Phase 7 is
+being added ahead of schedule (see "Phase 7, early" below), and polish continues.
 
 Each phase ends at a **gate**: Claude stops, summarises, shows how to run it, lists known
 problems, and waits for approval (D-002: approval = merging the phase PR).
@@ -64,6 +64,9 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
       (aqueduct, windmill, water wheel, observatory, school, workshops, forges, harbour…);
       click your emblem to fly down to the capital
 - [ ] 2.13b Cartoon cities from CC0 art packs (needs network access to the packs)
+- [x] 2.13c Cities in their region's style (East Asian, Nile, Near Eastern, Mediterranean,
+      northern, steppe), no trees inside walls; batches tiled so cities show on large maps
+      (D-077); map names give way instead of overlapping
 - [x] 2.14 New regions and moments (D-061): the "europe" map (Ireland to Persia, Sahara to
       Scandinavia) is built; [x] Rome and Carthage, 264 BC (19 states, 70 provinces);
       [x] Egypt and the Hittites, 1275 BC (11 states, 50 provinces); [x] Europe in the Year 1000
@@ -116,4 +119,14 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 
 ## Phase 6 — Europe (schema stress test) + steppe connector; gate
 ## Phase 7 — Depth: events, rival rulers via LLM, chronicle, advisors, victory, suspicion tuning; gate
+### Phase 7, early (done during the night shift, before its gate)
+- [x] Rulers age, die and are succeeded (named heirs per scenario); succession crises
+- [x] Happenings: plague, flood, harvest, comet… at most one a turn (core/happenings.yaml)
+- [x] Trade and faith as flows: friendly ties pay wealth; faiths spread; missionaries (D-073)
+- [x] Capitals and terrain defend; a last stand; two turns' grace for the player (D-079)
+- [x] Royal decrees (festival, mercenaries), used by rival courts too (D-076)
+- [x] Victory tuning: cultural needs your own influence; economic needs a network of
+      allies and a large economy, one embassy a turn (D-076, D-078)
+- [x] A library of 90 advancements to the steam age (D-075)
+- [ ] Rival rulers voiced by the model; suspicion tuning; gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging
