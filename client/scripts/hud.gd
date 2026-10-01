@@ -719,6 +719,18 @@ func _idea_card(idea: Dictionary) -> Control:
 
 
 func _fill_projects() -> void:
+	# how much of the workforce is still free: the one limit on how much you can try
+	var status: Dictionary = view["status"]
+	var workforce := int(status.get("workforce", 0))
+	var free := int(status.get("free_labour", 0))
+	if workforce > 0:
+		var share := float(free) / float(workforce)
+		var note := "Free hands: %s of %s workers (%d%%)." % [number(free), number(workforce), int(share * 100.0)]
+		if share < 0.1:
+			note += " Almost everyone is busy: more work now means hunger and unrest."
+		else:
+			note += " Each experiment takes some of them from the fields."
+		_side_body.add_child(_wrapped(note, 13, BAD if share < 0.1 else DIM))
 	_side_body.add_child(_label("Experiments under way", 17, GOLD))
 	if view["projects"].is_empty():
 		_side_body.add_child(_wrapped("None yet. Choose an idea in the Ideas tab and press Begin."))
