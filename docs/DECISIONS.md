@@ -484,3 +484,11 @@ faith forget old grudges faster; courts sharing your faith add half their cultur
 cultural victory share. You can send missionaries (a wealth cost, a 35% chance, a small
 grudge if refused). Faith lists are drafts from general history.
 
+## D-074 Japan's moment: the Warring States in 1560 — DELEGATED (2026-10-01)
+The Japan-centred start the owner asked for (D-061) is May 1560, on the eve of Okehazama:
+play Oda Nobunaga with 3,000 men as Imagawa marches on Kyoto, among the Takeda, Uesugi,
+Hojo, Mori, Shimazu and the rest, with Joseon Korea, Ryukyu and the Ming coast across the
+sea. The Ming appear only as the provinces within reach, and far smaller than the real
+empire, so a regional victory stays possible (noted in docs/history/sengoku.md). New
+portrait styles: armoured samurai and a Joseon official's gat.
+

@@ -12,7 +12,7 @@ const CASTS := [
 	["egypt_general", "general", "pharaoh"], ["egypt_diviner", "diviner", "pharaoh"],
 	["england_scholar", "scholar", "medieval_king"], ["england_steward", "steward", "medieval_king"],
 	["england_general", "general", "medieval_king"], ["england_diviner", "diviner", "medieval_king"],
-	["wei_scholar", "scholar", "court"], ["han_scholar", "scholar", "court"],
+	["oda", "samurai", ""], ["joseon", "joseon", ""],
 ]
 const COLOURS := ["#3a4a6b", "#b04a2e", "#6b8e3a", "#8a5a9e", "#c49a2a", "#2e7d8c", "#9e3a3a"]
 

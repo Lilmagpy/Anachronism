@@ -400,6 +400,19 @@ func show_wars(wars: Array) -> void:
 			_war_marks.add_child(mark)
 
 
+var _cell_counts := {}
+
+
+## How many map cells a site covers (its size on the map).
+func _cells_of(site: Dictionary) -> int:
+	if _cell_counts.is_empty():
+		for c in cols * rows:
+			var index: int = region[c]
+			if index >= 0:
+				_cell_counts[index] = int(_cell_counts.get(index, 0)) + 1
+	return int(_cell_counts.get(sites.find(site), 0))
+
+
 func _province_label(site: Dictionary) -> Label3D:
 	var label := Label3D.new()
 	label.name = "Label_" + str(site["id"])
@@ -412,7 +425,8 @@ func _province_label(site: Dictionary) -> Label3D:
 	label.modulate = Color(1.0, 0.97, 0.90)
 	label.outline_modulate = Color(0.06, 0.05, 0.05, 0.9)
 	label.no_depth_test = true
-	label.visibility_range_end = 700.0  # zoomed out, only the states' names show
+	# small provinces are named only when the camera is close, so labels never pile up
+	label.visibility_range_end = clampf(160.0 + sqrt(float(_cells_of(site))) * 30.0, 220.0, 700.0)
 	label.position = earth.ground_at_pixel(site["pixel"]) + Vector3(0, 6.0, 0)
 	# the province's usable map resources, in small type under its name, when close
 	var found: Array = []
@@ -446,21 +460,23 @@ func _civ_label(civ_id: String) -> Label3D:
 		if _owner_of(region[c]) == civ_id:
 			total += Vector2(c % cols + 0.5, c / cols + 0.5) * CELL
 			count += 1
-	if count < 60:
-		return null  # small states: their capital's label names them when zoomed in
+	if count == 0:
+		return null
 	var centre := total / count
 	var label := Label3D.new()
 	label.name = "State_" + civ_id
 	label.text = str(civ_names[civ_id]).to_upper()
 	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	label.font_size = clampi(16 + int(sqrt(count) * 1.2), 22, 44)
+	label.font_size = clampi(16 + int(sqrt(count) * 1.2), 18, 44)
 	label.fixed_size = true
 	label.pixel_size = 0.0007
 	label.outline_size = 16
 	label.modulate = Color(1.0, 0.96, 0.86)
 	label.outline_modulate = civ_colours[civ_id].darkened(0.6)
 	label.no_depth_test = true
-	label.visibility_range_begin = 700.0
+	# big states are named from far away; small ones once the camera is a little closer,
+	# as their provinces' own names only appear closer still
+	label.visibility_range_begin = 480.0 if count >= 60 else 300.0
 	label.position = earth.ground_at_pixel(centre) + Vector3(0, 8.0, 0)
 	return label
 

@@ -164,10 +164,15 @@ func _build_earth(holder: Node3D, region: String) -> void:
 	sun.directional_shadow_max_distance = rig.far * 1.5
 	# Open over the player's capital, far enough out to see the neighbouring states.
 	var start := Vector3.ZERO
+	var owned := 0
 	for p in view["provinces"]:
-		if p["owner"] == view["player"] and p["capital"] and p["latlon"] != null:
-			start = earth.ground_at(p["latlon"][0], p["latlon"][1])
-	rig.look_at_point(start + Vector3(160, 0, 0), 900.0)  # capital left of centre: the side panel covers the right
+		if p["owner"] == view["player"]:
+			owned += 1
+			if p["capital"] and p["latlon"] != null:
+				start = earth.ground_at(p["latlon"][0], p["latlon"][1])
+	# a small state opens closer; the capital sits left of centre, as the panel covers the right
+	var distance := clampf(420.0 + owned * 80.0, 450.0, 900.0)
+	rig.look_at_point(start + Vector3(distance * 0.18, 0, 0), distance)
 	if options.has("look"):
 		var f: PackedStringArray = str(options["look"]).split(",")
 		var d := float(f[2]) if f.size() > 2 else 200.0

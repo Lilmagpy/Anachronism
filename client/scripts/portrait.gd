@@ -13,7 +13,7 @@ const SKIN := Color(0.93, 0.76, 0.60)
 const SKIN_SHADE := Color(0.80, 0.60, 0.45)
 const HAIR := Color(0.12, 0.09, 0.08)
 const BRONZE := Color(0.72, 0.52, 0.24)
-const EAST_ASIAN := ["court", "steppe", "southern", "hills", ""]
+const EAST_ASIAN := ["court", "steppe", "southern", "hills", "samurai", "joseon", ""]
 const FAMILY := {
 	"roman": "classical", "greek": "classical", "hellenistic": "classical", "punic": "classical",
 	"celtic": "northern", "pharaoh": "near_east", "berber": "near_east", "kushite": "near_east",
@@ -185,6 +185,10 @@ func _draw() -> void:
 			_augur(head, r, w, h)
 		"priest":
 			_priest(head, r, w, h)
+		"samurai":
+			_samurai(head, r, w, h)
+		"joseon":
+			_gat(head, r)
 		_:
 			_crown(head, r)
 	# frame
@@ -615,6 +619,36 @@ func _rus_cap(head: Vector2, r: float) -> void:
 	for i in 8:
 		draw_circle(Vector2(head.x - r * 0.9 + i * r * 0.26, head.y - r * 0.9), r * 0.12, Color(0.5, 0.36, 0.22))
 	draw_circle(head + Vector2(0, -r * 1.6), r * 0.1, UiStyle.GOLD)
+
+
+## A daimyo in armour: a lacquered kabuto with a golden crescent crest and neck guard.
+func _samurai(head: Vector2, r: float, w: float, h: float) -> void:
+	var lacquer := Color(0.12, 0.10, 0.10)
+	for k in 3:  # neck guard plates (shikoro)
+		var y := head.y - r * 0.2 + k * r * 0.22
+		draw_colored_polygon([Vector2(head.x - r * (1.05 + k * 0.12), y), Vector2(head.x + r * (1.05 + k * 0.12), y),
+			Vector2(head.x + r * (1.12 + k * 0.12), y + r * 0.2), Vector2(head.x - r * (1.12 + k * 0.12), y + r * 0.2)],
+			colour.darkened(0.2 + k * 0.1))
+	_ellipse(head + Vector2(0, -r * 0.62), Vector2(r * 1.05, r * 0.7), lacquer)
+	draw_rect(Rect2(head.x - r * 1.0, head.y - r * 0.52, r * 2.0, r * 0.14), UiStyle.GOLD.darkened(0.2))
+	# the maedate: a golden crescent
+	draw_arc(head + Vector2(0, -r * 1.55), r * 0.7, PI * 0.1, PI * 0.9, 20, UiStyle.GOLD, r * 0.16)
+	draw_circle(head + Vector2(0, -r * 1.05), r * 0.14, UiStyle.GOLD)
+	# lamellar shoulders (sode) in the clan colour
+	for side in [-1, 1]:
+		for row in 3:
+			var x: float = w * 0.5 + side * w * 0.3
+			draw_rect(Rect2(x - w * 0.09, h * 0.65 + row * h * 0.045, w * 0.18, h * 0.04), colour.darkened(0.1 + row * 0.12))
+			draw_line(Vector2(x - w * 0.09, h * 0.65 + row * h * 0.045 + h * 0.04), Vector2(x + w * 0.09, h * 0.65 + row * h * 0.045 + h * 0.04), UiStyle.GOLD, 1.5)
+
+
+## A Joseon scholar-official's gat: a wide black horsehair hat.
+func _gat(head: Vector2, r: float) -> void:
+	_ellipse(head + Vector2(0, -r * 0.62), Vector2(r * 0.96, r * 0.62), _hair())
+	_ellipse(head + Vector2(0, -r * 0.72), Vector2(r * 1.9, r * 0.22), Color(0.1, 0.1, 0.12, 0.85))
+	draw_rect(Rect2(head.x - r * 0.5, head.y - r * 1.5, r * 1.0, r * 0.8), Color(0.1, 0.1, 0.12, 0.9))
+	draw_line(head + Vector2(-r * 0.9, -r * 0.6), head + Vector2(-r * 0.7, r * 0.9), Color(0.1, 0.1, 0.12), r * 0.05)
+	draw_line(head + Vector2(r * 0.9, -r * 0.6), head + Vector2(r * 0.7, r * 0.9), Color(0.1, 0.1, 0.12), r * 0.05)
 
 
 # --- advisers of the Mediterranean, the Near East and the medieval north -----------------
