@@ -79,6 +79,10 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] 2.15b Charts over time (menu → Charts): people, stores, society, the largest states
 - [x] 2.15c Sound and music, synthesised by scripts/make_sounds.py (plucked-string theme,
       gong, drums, chimes, clicks); switches in Settings
+- [x] 2.15d Comfort: autosave every turn and Continue (D-088); difficulty levels (D-089);
+      Enter ends the turn, 1/2/3 switch tabs; trade routes drawn on the map; blocked
+      rulings offer the first steps; click an idea in the tech tree to ask the court; an
+      end screen that sums up the reign; tooltips on every figure
 - [ ] 2.16 Gate: owner plays the new build on their Mac and merges the phase PR
 
 ## Phase 3 — LLM ruling pipeline (moved after the 3D world, D-049)
