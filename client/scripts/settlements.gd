@@ -98,7 +98,13 @@ func _init(province_map: ProvinceMap) -> void:
 	pyramid.bottom_radius = 0.45 * S
 	pyramid.height = 0.45 * S
 	pyramid.radial_segments = 4
-	for entry in [["house", house], ["roof", roof], ["wall", wall], ["tower", tower],
+	var dome := SphereMesh.new()  # a stupa's dome: a half sphere on its drum
+	dome.radius = 0.32 * S
+	dome.height = 0.32 * S
+	dome.is_hemisphere = true
+	dome.radial_segments = 16
+	dome.rings = 6
+	for entry in [["dome", dome], ["house", house], ["roof", roof], ["wall", wall], ["tower", tower],
 			["hall", hall], ["hall_roof", hall_roof], ["terrace", terrace], ["field", field],
 			["pole", pole], ["banner", banner], ["flat_roof", flat_roof], ["steep_roof", steep_roof],
 			["low_roof", low_roof], ["yurt", yurt], ["yurt_roof", yurt_roof],
@@ -158,7 +164,8 @@ func recolour() -> void:
 			colour = Color(0.85, 0.82, 0.75)  # a masterless city flies a plain flag
 		mm.set_instance_color(where[1], colour)
 
-## A portrait style's building style: east, nile, near_east, classical, northern or steppe.
+## A portrait style's building style: east, nile, near_east, classical, northern, steppe or
+## south_asian.
 static func style_of(portrait: String) -> String:
 	if portrait in ["steppe", "rus"]:
 		return "steppe" if portrait == "steppe" else "northern"
@@ -171,6 +178,8 @@ static func style_of(portrait: String) -> String:
 			return "classical"
 		"northern":
 			return "northern"
+		"south_asian":
+			return "south_asian"
 	return "east"
 
 # --- where people live -------------------------------------------------------------------
@@ -234,6 +243,12 @@ func _house(pixel: Vector2, turn: float, size := 1.0, site := -1, mix := 0.0) ->
 			brick = brick.darkened(rng.randf() * 0.12)
 			_add("house", pixel, 0.0, turn, Vector3(1.0, 1.25, 1.0) * size, brick)
 			_add("flat_roof", pixel, 0.11 * S * size, turn, Vector3.ONE * size, brick.lerp(Color(0.55, 0.40, 0.26), 0.4), site, tint * 0.3)
+		"south_asian":
+			# whitewash or fired brick under flat roofs, the roof terrace in the owner's colour
+			var walls := Color(0.94, 0.90, 0.80) if rng.randf() < 0.5 else Color(0.76, 0.46, 0.32)
+			walls = walls.darkened(rng.randf() * 0.1)
+			_add("house", pixel, 0.0, turn, Vector3(1.0, 1.15, 1.0) * size, walls)
+			_add("flat_roof", pixel, 0.105 * S * size, turn, Vector3.ONE * size, walls.darkened(0.2), site, tint * 0.5)
 		"classical":
 			var white := Color(0.93, 0.91, 0.85).darkened(rng.randf() * 0.08)
 			var tile := Color(0.74, 0.38, 0.24).lerp(Color(0.62, 0.30, 0.20), rng.randf())
@@ -294,6 +309,7 @@ func _city(site: Dictionary, population: int, index: int) -> void:
 func _walls(centre: Vector2, half: float, index: int) -> void:
 	var stone := {"east": Color(0.66, 0.56, 0.42), "nile": Color(0.74, 0.60, 0.40),
 		"near_east": Color(0.66, 0.52, 0.36), "classical": Color(0.80, 0.77, 0.70),
+		"south_asian": Color(0.72, 0.44, 0.30),
 		"northern": Color(0.58, 0.57, 0.55)}[style] as Color
 	var corner_part := "round_tower" if style in ["northern", "classical"] else "tower"
 	var corners := [Vector2(-half, -half), Vector2(half, -half), Vector2(half, half), Vector2(-half, half)]
@@ -345,6 +361,15 @@ func _palace(centre: Vector2, index: int) -> void:
 					var at := centre + Vector2((k - 2.5) * 0.1 * S, row * 0.16 * S)
 					_add("column", at, 0.064 * S, 0.0, Vector3.ONE, Color(0.96, 0.95, 0.90))
 			_add("low_roof", centre, 0.264 * S, 0.0, Vector3(3.3, 2.0, 2.6), Color(0.92, 0.90, 0.84), index, 0.35)
+		"south_asian":
+			# a pillared hall with a curved roof, and a white stupa beside it
+			_add("terrace", centre, 0.0, 0.0, Vector3.ONE, Color(0.72, 0.50, 0.36))
+			_add("hall", centre, 0.08 * S, 0.0, Vector3(1.0, 1.1, 1.0), Color(0.92, 0.86, 0.72))
+			_add("hall_roof", centre, 0.28 * S, 0.0, Vector3(1.0, 0.8, 1.0), Color(0.62, 0.36, 0.22), index, 0.5)
+			var stupa := centre + Vector2(0.75, 0.45) * S
+			_add("yurt", stupa, 0.0, 0.0, Vector3(4.2, 1.2, 4.2), Color(0.86, 0.82, 0.74))
+			_add("dome", stupa, 0.07 * S, 0.0, Vector3.ONE, Color(0.97, 0.95, 0.90))
+			_add("pole", stupa, 0.3 * S, 0.0, Vector3(1.0, 0.4, 1.0), UiStyle.GOLD, index, 0.0)
 		"northern":
 			# a stone keep with a steep roof, and a church spire beside it
 			_add("tower", centre, 0.0, 0.0, Vector3(2.4, 1.6, 2.0), Color(0.60, 0.59, 0.56))

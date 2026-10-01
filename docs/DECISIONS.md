@@ -715,3 +715,14 @@ railway fever, ships held in quarantine, fear of the needle (vaccination), adven
 sail with the compass, and lawyers (written law). Happenings can now also move suspicion
 and the influence of clergy, nobles and guilds. Fixed content rather than model-written:
 deterministic, free, and reviewable; the model may later phrase them.
+
+## D-097 A ninth moment: the Mauryan dawn, 321 BC — DELEGATED (2026-10-01)
+India was missing. The East Asia map already reaches it (67.5°E to the Pacific, south to
+Lanka), so no new map was needed; three Indian seas were added. Play Chandragupta, with
+Chanakya's vow to destroy the Nandas, against the vast Nanda empire of the Ganges, the
+Macedonian satraps left on the Indus (later Seleucus), Kalinga, the Chola, Pandya and Chera
+kingdoms and Lanka (8 states, 35 provinces; history notes in docs/history/maurya.md).
+Tested over three seeds: a passive Mauryan player keeps the Punjab; one who goes to war
+survives every time and sometimes takes most of the Ganges. India gets its own look: new
+portraits (a king in a jewelled turban, a brahmin, a minister) and buildings (whitewash
+and brick under flat roofs, and a white stupa beside the palace hall).

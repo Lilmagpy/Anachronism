@@ -13,3 +13,6 @@ seas:
   - {id: taiwan_strait, name: Taiwan Strait, latlon: [24.5, 119.6], neighbours: [g_fujian, g_guangnan, g_linan, lingnan, min_yue]}
   - {id: south_china_sea, name: South China Sea, latlon: [19.5, 114.5], neighbours: [g_guangnan, lingnan]}
   - {id: gulf_of_tonkin, name: Gulf of Tonkin, latlon: [20.0, 107.5], neighbours: [lingnan, red_river]}
+  - {id: arabian_sea, name: Arabian Sea, latlon: [18.0, 69.5], neighbours: [in_karnata, in_konkan, in_saurashtra, in_sindh]}
+  - {id: laccadive_sea, name: Laccadive Sea, latlon: [8.5, 76.0], neighbours: [in_chera, in_chola, in_karnata, in_lanka, in_pandya, in_tondai]}
+  - {id: bay_of_bengal, name: Bay of Bengal, latlon: [15.0, 86.5], neighbours: [in_andhra, in_kalinga, in_tondai, in_vanga]}

@@ -19,14 +19,14 @@ const FAMILY := {
 	"celtic": "northern", "pharaoh": "near_east", "berber": "near_east", "kushite": "near_east",
 	"hittite": "near_east", "assyrian": "near_east", "turban": "near_east",
 	"medieval_king": "northern", "viking": "northern", "bishop": "northern", "byzantine": "classical",
-	"doge": "northern", "rus": "northern",
+	"doge": "northern", "rus": "northern", "indian": "south_asian",
 }
 ## adviser role -> culture family -> portrait style
 const ADVISERS := {
-	"scholar": {"classical": "philosopher", "near_east": "scribe", "northern": "monk"},
-	"steward": {"classical": "senator", "near_east": "vizier", "northern": "chamberlain"},
-	"general": {"classical": "legate", "near_east": "charioteer", "northern": "knight"},
-	"diviner": {"classical": "augur", "near_east": "priest", "northern": "bishop"},
+	"scholar": {"classical": "philosopher", "near_east": "scribe", "northern": "monk", "south_asian": "brahmin"},
+	"steward": {"classical": "senator", "near_east": "vizier", "northern": "chamberlain", "south_asian": "minister"},
+	"general": {"classical": "legate", "near_east": "charioteer", "northern": "knight", "south_asian": "charioteer"},
+	"diviner": {"classical": "augur", "near_east": "priest", "northern": "bishop", "south_asian": "brahmin"},
 }
 const HAIR_COLOURS := [Color(0.12, 0.09, 0.08), Color(0.22, 0.14, 0.09), Color(0.35, 0.22, 0.12),
 	Color(0.55, 0.38, 0.20), Color(0.72, 0.52, 0.28), Color(0.62, 0.30, 0.14)]
@@ -79,7 +79,7 @@ func _roll(id: String) -> void:
 	face_h = dice.randf_range(0.96, 1.16)
 	skin_shift = dice.randf_range(-0.10, 0.08)
 	age = dice.randf()
-	if style in ["scholar", "diviner", "philosopher", "augur", "bishop", "monk", "priest"]:
+	if style in ["scholar", "diviner", "philosopher", "augur", "bishop", "monk", "priest", "brahmin"]:
 		age = maxf(age, 0.65)  # wise men are old men
 	beard_len = dice.randf_range(0.75, 1.35)
 	brow_tilt = dice.randf_range(-0.08, 0.12)
@@ -89,7 +89,7 @@ func _roll(id: String) -> void:
 	blush = dice.randf() < 0.35
 	scar = style in ["general", "legate", "knight", "charioteer", "viking"] and dice.randf() < 0.4
 	rays = dice.randi_range(10, 22)
-	var dark_haired: bool = culture in EAST_ASIAN or style in EAST_ASIAN or FAMILY.get(culture, "") == "near_east"
+	var dark_haired: bool = culture in EAST_ASIAN or style in EAST_ASIAN or FAMILY.get(culture, "") in ["near_east", "south_asian"]
 	hair_colour = HAIR_COLOURS[dice.randi() % (2 if dark_haired else HAIR_COLOURS.size())]
 	if age > 0.7:
 		hair_colour = hair_colour.lerp(Color(0.86, 0.86, 0.84), (age - 0.7) / 0.3 * 0.9)
@@ -191,6 +191,12 @@ func _draw() -> void:
 			_samurai(head, r, w, h)
 		"joseon":
 			_gat(head, r)
+		"indian":
+			_indian(head, r, w, h)
+		"brahmin":
+			_brahmin(head, r, w, h)
+		"minister":
+			_minister(head, r, w, h)
 		_:
 			_crown(head, r)
 	# frame
@@ -417,6 +423,8 @@ func _skin() -> Color:
 			base = Color(0.96, 0.80, 0.68)
 		"roman", "greek", "hellenistic", "byzantine":
 			base = Color(0.90, 0.72, 0.56)
+		"indian", "brahmin", "minister":
+			base = Color(0.70, 0.50, 0.35)
 	return base.lightened(skin_shift) if skin_shift > 0.0 else base.darkened(-skin_shift)
 
 
@@ -804,3 +812,42 @@ func _ellipse(centre: Vector2, radius: Vector2, fill: Color) -> void:
 		var a := TAU * i / 40.0
 		pts.append(centre + Vector2(cos(a) * radius.x, sin(a) * radius.y))
 	draw_colored_polygon(pts, fill)
+
+
+## An Indian king: a turban with a jewelled crest and a pearl string, gold earrings, a necklace.
+func _indian(head: Vector2, r: float, w: float, h: float) -> void:
+	var cloth := colour.lightened(0.35)
+	_ellipse(head + Vector2(0, -r * 0.72), Vector2(r * 1.12, r * 0.72), cloth)
+	for band in 3:
+		draw_arc(head + Vector2(0, -r * 0.25), r * (0.92 + band * 0.12), PI * 1.12, PI * 1.88, 16, cloth.darkened(0.15), r * 0.07)
+	for k in 7:  # a string of pearls across the turban
+		draw_circle(head + Vector2(-r * 0.75 + k * r * 0.25, -r * 0.55 - sin(k / 6.0 * PI) * r * 0.25), r * 0.06, Color(0.97, 0.95, 0.9))
+	draw_circle(head + Vector2(0, -r * 1.0), r * 0.2, UiStyle.GOLD)
+	draw_circle(head + Vector2(0, -r * 1.0), r * 0.11, Color(0.75, 0.1, 0.2))
+	draw_colored_polygon([head + Vector2(-r * 0.08, -r * 1.15), head + Vector2(r * 0.25, -r * 1.85), head + Vector2(r * 0.1, -r * 1.15)], Color(0.97, 0.95, 0.9))
+	for side in [-1, 1]:  # earrings
+		draw_arc(head + Vector2(side * r * 0.95, r * 0.35), r * 0.16, 0, TAU, 16, UiStyle.GOLD, r * 0.07)
+	_chain(w, h)
+
+
+## A brahmin: shaven head with a tuft, three marks of ash on the brow, a sacred thread.
+func _brahmin(head: Vector2, r: float, w: float, h: float) -> void:
+	_ellipse(head + Vector2(0, -r * 1.05), Vector2(r * 0.12, r * 0.2), _hair())
+	for k in 3:
+		draw_line(head + Vector2(-r * 0.4, -r * 0.62 + k * r * 0.1), head + Vector2(r * 0.4, -r * 0.62 + k * r * 0.1), Color(0.97, 0.95, 0.9), r * 0.05)
+	draw_circle(head + Vector2(0, -r * 0.42), r * 0.06, Color(0.8, 0.15, 0.1))
+	_himation(w, h, Color(0.97, 0.94, 0.85))
+	draw_line(Vector2(w * 0.32, h * 0.62), Vector2(w * 0.66, h), Color(0.95, 0.88, 0.6), w * 0.012)
+	_scroll(head + Vector2(r * 1.1, r * 3.1), r)
+
+
+## A minister of the court: a white turban and a palm-leaf ledger.
+func _minister(head: Vector2, r: float, w: float, h: float) -> void:
+	var cloth := Color(0.97, 0.95, 0.9)
+	_ellipse(head + Vector2(0, -r * 0.7), Vector2(r * 1.08, r * 0.68), cloth)
+	for band in 2:
+		draw_arc(head + Vector2(0, -r * 0.25), r * (0.95 + band * 0.12), PI * 1.15, PI * 1.85, 16, cloth.darkened(0.12), r * 0.07)
+	draw_circle(head + Vector2(0, -r * 0.95), r * 0.1, colour)
+	var leaf := head + Vector2(r * 0.9, r * 3.0)
+	draw_rect(Rect2(leaf, Vector2(r * 1.4, r * 0.35)), Color(0.82, 0.70, 0.45))
+	draw_line(leaf + Vector2(r * 0.1, r * 0.17), leaf + Vector2(r * 1.3, r * 0.17), Color(0.4, 0.3, 0.2), r * 0.03)

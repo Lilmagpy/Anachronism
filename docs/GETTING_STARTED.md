@@ -20,7 +20,7 @@ Every time new work is pushed, GitHub builds a Mac app automatically.
 4. The first launch shows *Starting the game engine…* for about a minute while it downloads
    Python (it needs the internet this once). After that it starts in a few seconds.
 
-How to play: pick a **moment** on the timeline (seven, from Egypt and the Hittites in
+How to play: pick a **moment** on the timeline (nine, from Egypt and the Hittites in
 1275 BC to Japan's Warring States in 1560), any of its states, and a difficulty (Easy is
 gentler on a first game). A short guided tour
 walks you through the screen the first time (Settings can replay it). Then:
