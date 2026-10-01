@@ -239,6 +239,8 @@ class CivState(Mutable):
     revolts: int = 0  # provinces lost to revolt: half the starting ones is collapse
     envoy_turn: int = -1  # the turn the last embassy left: one a turn
     mercenaries: int = 0
+    explained_turn: int = -99
+    """The turn the court last explained its new arts (see ``Explain``)."""
     """Turns of hired soldiers left."""
     ruler_age: int = 40
     rulers: int = 1

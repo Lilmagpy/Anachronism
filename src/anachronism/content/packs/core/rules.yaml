@@ -88,6 +88,12 @@ rules:
     witchcraft_unrest_bp: 1500
     fraud_legitimacy_bp: 1500
     inspired_legitimacy_bp: 800
+    explain_wealth_per_1000: 60
+    explain_suspicion_bp: 2000
+    explain_belief_legitimacy_bp: 5000
+    sages_knowledge_per_1000: 30
+    sages_suspicion_bp: 3500
+    explain_cooldown_turns: 3
   rulings:
     max_ideas_per_message: 3
     max_effects: 3

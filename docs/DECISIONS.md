@@ -654,3 +654,15 @@ of a speech bubble and changes nothing in the game, so replays need no record of
 still are recorded, D-021); the player's own words are never sent; the reply is cut to one
 tidy line; any failure, odd shape or empty answer keeps the stock line; answers are cached
 and count toward the monthly token cap. At most one rival speaks per turn.
+
+## D-092 Explaining the court's new arts — DELEGATED (2026-10-01)
+The design (§7) promised that suspicion could fall through "explanations", but nothing in
+the game did that: the only cure was waiting. Measured: each idea far ahead of its time
+adds up to 15% suspicion and talk settles into a framing at 25%, so two bold ideas in a row
+are enough. A new royal decree gives the player a choice. **A divine gift**: priests
+proclaim the arts sent by the gods (costs wealth like a festival; suspicion -20%; if the
+people trust the throne - legitimacy 50% or more - talk of witchcraft or fraud turns to awe,
+the "inspired" framing). **Foreign sages**: credit wise strangers from distant lands (costs
+knowledge; suspicion -35%; but the story travels, and rivals learn of your inventions at
+once). A story told too often is doubted: once every three turns. All numbers are in
+rules.yaml. The buttons appear under Royal decrees only while people are asking.

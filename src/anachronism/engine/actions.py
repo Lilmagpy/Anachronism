@@ -151,7 +151,19 @@ class HireMercenaries(Frozen):
     civ: str
 
 
-Decree = HoldFestival | HireMercenaries
+class Explain(Frozen):
+    """Explain the court's new arts to quiet suspicion (DESIGN §7).
+
+    ``divine``: proclaim them a gift of the gods (wealth; believed if legitimacy is high).
+    ``sages``: credit foreign sages (knowledge; quiets more, but rivals hear sooner).
+    """
+
+    kind: Literal["explain"] = "explain"
+    civ: str
+    story: Literal["divine", "sages"] = "divine"
+
+
+Decree = HoldFestival | HireMercenaries | Explain
 
 
 Diplomacy = DeclareWar | MakePeace | SendEnvoy | ProposeAlliance | SendMissionaries | DemandTribute
@@ -172,7 +184,8 @@ Action = Annotated[
     | SendMissionaries
     | DemandTribute
     | HoldFestival
-    | HireMercenaries,
+    | HireMercenaries
+    | Explain,
     Field(discriminator="kind"),
 ]
 

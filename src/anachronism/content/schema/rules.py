@@ -164,6 +164,18 @@ class SuspicionRules(Frozen):
     witchcraft_unrest_bp: NonNegative
     fraud_legitimacy_bp: NonNegative
     inspired_legitimacy_bp: NonNegative
+    explain_wealth_per_1000: NonNegative = 60
+    """Wealth an explanation decree costs per 1,000 people (x100, like a festival)."""
+    explain_suspicion_bp: Rate = 2000
+    """Suspicion removed by proclaiming the new arts a gift of the gods."""
+    explain_belief_legitimacy_bp: Rate = 5000
+    """Legitimacy at which such a proclamation is believed (an ill framing turns to awe)."""
+    sages_knowledge_per_1000: NonNegative = 30
+    """Knowledge spent (x100 per 1,000 people) on crediting foreign sages."""
+    sages_suspicion_bp: Rate = 3500
+    """Suspicion removed by crediting foreign sages (rivals then hear of your arts sooner)."""
+    explain_cooldown_turns: Positive = 3
+    """Turns before the court can explain itself again (a story told too often is doubted)."""
 
 
 class RulingRules(Frozen):

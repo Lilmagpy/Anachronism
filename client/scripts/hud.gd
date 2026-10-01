@@ -832,6 +832,23 @@ func _fill_world() -> void:
 		_side_body.add_child(decrees)
 		if int(status["mercenaries"]) > 0:
 			_side_body.add_child(_label("Mercenaries serve for %d more turn(s)" % int(status["mercenaries"]), 12, DIM))
+		if status.has("explain_costs") and int(status["suspicion_bp"]) > 0:
+			var costs: Array = status["explain_costs"]
+			var wait: int = int(status["explain_ready_in"])
+			var stories := HBoxContainer.new()
+			stories.add_theme_constant_override("separation", 6)
+			var divine := _small_button("Divine gift (%s)" % number(int(costs[0])), {"kind": "explain", "story": "divine"})
+			divine.disabled = wait > 0 or rich < int(costs[0])
+			divine.tooltip_text = "Priests proclaim the new arts divine: suspicion down. If the people trust the throne, talk of witchcraft or fraud turns to awe"
+			stories.add_child(divine)
+			var sages := _small_button("Foreign sages (%s knowledge)" % number(int(costs[1])), {"kind": "explain", "story": "sages"})
+			sages.disabled = wait > 0 or int(status["stores"]["knowledge"]) < int(costs[1])
+			sages.tooltip_text = "Blame wise strangers from distant lands: suspicion falls further, but rivals hear of your arts at once"
+			stories.add_child(sages)
+			_side_body.add_child(_label("People ask where the court's new arts come from", 13, INK))
+			_side_body.add_child(stories)
+			if wait > 0:
+				_side_body.add_child(_label("The court's last story is still fresh: wait %d turn(s)" % wait, 12, DIM))
 	_side_body.add_child(_label("The powers of the world", 17, GOLD))
 	_side_body.add_child(_wrapped("On the map, lines from your capital: gold to trading partners, green to allies, purple to tributaries.", 12, DIM))
 	var me: Dictionary = {}

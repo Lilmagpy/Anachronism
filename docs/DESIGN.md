@@ -91,6 +91,10 @@ resources committed until the player pursues them.
 - Framing: **inspired** (legitimacy bonus), **witchcraft** (clergy hostility, unrest),
   **fraud** (nobles plot). Framing drifts according to religion, events and advisors.
 - High suspicion also makes news of your inventions travel faster to rivals.
+- Explanations (a royal decree, D-092): proclaim the new arts **a gift of the gods**
+  (wealth; turns witchcraft or fraud talk into awe if legitimacy is high) or **credit
+  foreign sages** (knowledge; quiets more, but rivals hear of your arts at once). Once
+  every few turns.
 
 ## 8. The idea pipeline (online "Free Thought" mode)
 1. **Interpret** player text → one or more candidate concepts, matched to existing nodes
