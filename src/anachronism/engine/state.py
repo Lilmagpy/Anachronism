@@ -29,6 +29,7 @@ from anachronism.content.schema import (
     SocialGroup,
     Stage,
     Successor,
+    Tale,
     TechNode,
     Terrain,
     Unit,
@@ -78,6 +79,8 @@ class World(Frozen):
     """Multiplier on every project cost (see ``Scenario.cost_scale``)."""
     happenings: dict[str, Happening] = Field(default_factory=dict)
     units: dict[str, Unit] = Field(default_factory=dict)
+    tales: dict[str, Tale] = Field(default_factory=dict)
+    """How battles are told."""
     """The kinds of soldier that exist (raising them needs their advancements)."""
     """Chance events that can strike (plague, flood, bumper harvests...)."""
     scripts: dict[str, tuple[Script, ...]] = Field(default_factory=dict)

@@ -797,3 +797,12 @@ More choices in war, each with a cost:
   field and evenly matched rivals (Sengoku Japan) never dared attack. Rival courts now
   accept an even fight if warlike and want a modest edge if cautious, judged against the
   enemy armies near their objective.
+
+## D-103 Battles told as stories — DELEGATED (2026-10-01)
+Battle reports were formulaic. Now each battle is told by a fitting tale from content
+(core/tales.yaml): horsemen sweeping round a flank on open ground, horse archers wearing
+down an army on the steppe, a hedge of spears holding a pass, arrows darkening the sky, a
+long grinding slaughter of infantry, elephants scattering horses, an army caught crossing
+a river or strung out in a forest. The engine picks the tale that best fits the soldiers
+who decided it, the ground, and whether it was a rout, then adds the losses and any fallen
+general. A new way to tell a battle is a YAML entry.

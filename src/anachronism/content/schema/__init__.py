@@ -30,6 +30,7 @@ from anachronism.content.schema.scenario import (
     StartingStockpiles,
     Successor,
 )
+from anachronism.content.schema.tales import Tale
 from anachronism.content.schema.tech import (
     NUMERIC_EFFECTS,
     Category,
@@ -97,6 +98,7 @@ __all__ = [
     "StartingStats",
     "StartingStockpiles",
     "Successor",
+    "Tale",
     "TechNode",
     "Terrain",
     "Unit",

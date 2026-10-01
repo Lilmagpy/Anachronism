@@ -1,0 +1,67 @@
+schema_version: 1
+# How battles are told (content/schema/tales.py, D-103). The engine picks the tale that
+# fits best (the kind of soldier that won, the ground, a rout or a hard fight).
+# Placeholders: {place} {winner} {loser} (adjectives), {unit} (the winners' soldiers).
+tales:
+  - id: horse_on_open_ground
+    kind: mounted
+    terrain: [plains, steppe, desert, river_plains]
+    lines:
+      - "On the open ground at {place} the {winner} {unit} swept round the {loser} flank, and the line dissolved."
+      - "At {place} the {loser} foot never saw the charge coming until the {winner} {unit} were among them."
+      - "Dust, thunder, and then nothing: the {winner} {unit} rode down the {loser} host at {place}."
+  - id: horse_archers_steppe
+    kind: mounted
+    terrain: [steppe, desert]
+    rout: true
+    lines:
+      - "For a whole day at {place} the {winner} {unit} shot and wheeled away, shot and wheeled away, until the {loser} army broke from thirst and despair."
+  - id: spears_hold
+    kind: spear
+    lines:
+      - "At {place} the {loser} attack broke on a hedge of {winner} spears, again and again, until there was no one left to send."
+      - "The {winner} {unit} locked shields at {place} and simply did not move. The {loser} host could not make them."
+  - id: spears_in_hills
+    kind: spear
+    terrain: [hills, mountains]
+    lines:
+      - "Above {place} the {winner} {unit} held the pass, and the {loser} dead filled the road below."
+  - id: archers_rain
+    kind: missile
+    lines:
+      - "The sky over {place} went dark with {winner} arrows. The {loser} ranks thinned before they ever closed."
+      - "At {place} the {winner} {unit} loosed volley after volley; the {loser} charge died in the mud short of their line."
+  - id: infantry_grind
+    kind: infantry
+    rout: false
+    lines:
+      - "{place} was a long, grinding slaughter, shield against shield, until at last the {loser} line gave."
+      - "Neither side would yield at {place} until dusk, when the {winner} {unit} made one more push - and the {loser} host broke."
+  - id: infantry_rout
+    kind: infantry
+    rout: true
+    lines:
+      - "The {winner} {unit} smashed through the {loser} centre at {place}, and the rout ran for miles."
+  - id: elephants
+    kind: elephant
+    lines:
+      - "At {place} the {winner} elephants trumpeted, the {loser} horses bolted, and the battle was over before it began."
+      - "Like moving towers the {winner} elephants waded into the {loser} ranks at {place}. Nothing could stand before them."
+  - id: siege_guns
+    kind: siege
+    lines:
+      - "At {place} the {winner} engines hurled stones into the {loser} ranks until the survivors ran."
+  - id: forest_ambush
+    terrain: [forest, marsh]
+    lines:
+      - "In the trees about {place} the {loser} column was caught strung out on the road and cut to pieces."
+      - "The {loser} host floundered in the wet ground at {place}, and the {winner} fell on them before they could form."
+  - id: river_crossing
+    terrain: [river_plains]
+    rout: true
+    lines:
+      - "The {loser} army was caught crossing the river at {place}; more drowned than fell."
+  - id: plain_fight
+    lines:
+      - "At {place} the {winner} {unit} carried the day against the {loser} host."
+      - "The armies met at {place}, and when the day was done the field belonged to the {winner}."

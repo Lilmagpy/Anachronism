@@ -29,6 +29,7 @@ def cross_reference_issues(registry: Registry) -> list[ContentIssue]:
         *_scenario_issues(registry),
         *_happening_issues(registry),
         *_unit_issues(registry),
+        *_tale_issues(registry),
         *_dialogue_issues(registry),
     ]
 
@@ -330,4 +331,22 @@ def _unit_issues(registry: Registry) -> list[ContentIssue]:
         for terrain in unit.terrain:
             if registry.is_unknown("terrain", terrain):
                 issues.append(ContentIssue(where, label, f"unknown terrain {terrain!r}"))
+    return issues
+
+
+def _tale_issues(registry: Registry) -> list[ContentIssue]:
+    issues: list[ContentIssue] = []
+    for tale in registry.tales.values():
+        where = registry.origin("tales", tale.id)
+        label = f"tales ({tale.id})"
+        for terrain in tale.terrain:
+            if registry.is_unknown("terrain", terrain):
+                issues.append(ContentIssue(where, label, f"unknown terrain {terrain!r}"))
+        for line in tale.lines:
+            try:
+                line.format(place="", winner="", loser="", unit="")
+            except (KeyError, IndexError, ValueError):
+                issues.append(
+                    ContentIssue(where, label, "lines may use only {place} {winner} {loser} {unit}")
+                )
     return issues

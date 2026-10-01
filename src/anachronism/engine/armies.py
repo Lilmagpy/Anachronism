@@ -502,10 +502,15 @@ def battle(
             if army.general == general:
                 army.general = ""
                 army.skill = 1
-    rout = " It was a rout." if margin >= 4000 else ""
+    rout = margin >= 4000
+    terrain = state.world.geography[province_id].terrain
+    named = "the " + place[4:] if place.startswith("The ") else place  # "of the Punjab"
+    story = tell(state, state.world.units[hero].kind, terrain, rout, rng).format(
+        place=named, winner=w_civ.adjective, loser=l_civ.adjective, unit=hero_name
+    )
+    story = story[:1].upper() + story[1:]
     text = (
-        f"Battle of {place}: the {w_civ.adjective} {hero_name} carried the day against the"
-        f" {l_civ.adjective} host.{rout}{fallen} {w_civ.adjective} losses {dead_w:,},"
+        f"Battle of {named}. {story}{fallen} {w_civ.adjective} losses {dead_w:,},"
         f" {l_civ.adjective} {dead_l:,}."
     )
     events.add(winner, "battle_won", text, place)
@@ -518,6 +523,23 @@ def battle(
         _retreat(state, army, events)
     _prune(state)
     return winner
+
+
+def tell(state: GameState, kind: str, terrain: str, rout: bool, rng: GameRng) -> str:
+    """The most fitting way to tell a battle (content ``tales``), one of its lines."""
+    best: tuple[int, str] | None = None
+    for tale_id, tale in sorted(state.world.tales.items()):
+        if (tale.kind and tale.kind != kind) or (tale.terrain and terrain not in tale.terrain):
+            continue
+        if tale.rout is not None and tale.rout != rout:
+            continue
+        score = 2 * bool(tale.kind) + 2 * bool(tale.terrain) + (tale.rout is not None)
+        if best is None or score > best[0]:
+            best = (score, tale_id)
+    if best is None:
+        return "At {place} the {winner} {unit} carried the day against the {loser} host."
+    lines = state.world.tales[best[1]].lines
+    return lines[rng.below(len(lines))]
 
 
 def _casualties(army: Army, loss_bp: int) -> int:

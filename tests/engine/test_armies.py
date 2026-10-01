@@ -297,3 +297,16 @@ def test_levies_breed_unrest(warring: GameState) -> None:
     state, logged = apply_action(warring, RaiseArmy(civ="qin", province=capital, size="large"))
     assert logged.ok
     assert state.civs["qin"].stats.unrest_bp > unrest
+
+
+def test_battles_are_told_to_fit(warring: GameState) -> None:
+    from anachronism.engine.armies import tell
+
+    rng = GameRng(warring.rng)
+    steppe_rout = tell(warring, "mounted", "steppe", True, rng)
+    assert steppe_rout in warring.world.tales["horse_archers_steppe"].lines
+    spears = tell(warring, "spear", "plains", False, rng)
+    assert spears in warring.world.tales["spears_hold"].lines
+    for kind in ("infantry", "spear", "missile", "mounted", "elephant", "siege"):
+        line = tell(warring, kind, "hills", False, rng)
+        assert line.format(place="X", winner="A", loser="B", unit="men")
