@@ -152,6 +152,8 @@ def _apply(
         civ = state.civs[me]
         if not civ.faith:
             return False, "your court has no faith to preach"
+        if not state.world.faiths[civ.faith].spreads:
+            return False, f"{state.world.faiths[civ.faith].name} does not seek converts"
         if state.civs[target].faith == civ.faith:
             return False, f"{them} already shares your faith"
         if current is None or current is RelationStatus.WAR:

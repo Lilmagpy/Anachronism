@@ -50,6 +50,7 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
             "ruler": civ.ruler,
             "ruler_age": civ.ruler_age,
             "faith": _faith_name(state, civ.faith),
+            "faith_spreads": bool(civ.faith) and state.world.faiths[civ.faith].spreads,
             "mercenaries": civ.mercenaries,
             "festival_cost": cost(state, civ_id, state.world.rules.rivals.festival_wealth_per_1000),
             "mercenary_cost": cost(

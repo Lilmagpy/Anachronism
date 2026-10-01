@@ -390,6 +390,9 @@ def test_missionaries(content: Content) -> None:
     assert state.civs["silla"].faith == "buddhism" or "home" in logged.message
     state, logged = apply_action(state, SendMissionaries(civ="goguryeo", target="baekje"))
     assert not logged.ok  # Baekje is already Buddhist
+    khan = new_game(content, "great_khan", seed=1)
+    _, logged = apply_action(khan, SendMissionaries(civ="mongols", target="jurchen_jin"))
+    assert not logged.ok  # Tengri seeks no converts
 
 
 def test_decrees_spend_the_treasury(warring: GameState) -> None:

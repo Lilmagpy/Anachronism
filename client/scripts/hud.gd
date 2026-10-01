@@ -931,7 +931,7 @@ func _diplomacy_buttons(civ: Dictionary) -> Control:
 		if relation in ["neutral", "trading"]:
 			buttons.add_child(_small_button("Propose alliance", {"kind": "alliance", "target": target}))
 		buttons.add_child(_small_button("Declare war", {"kind": "declare_war", "target": target}))
-		if not civ.get("same_faith", false) and str(view["status"].get("faith", "")) != "":
+		if not civ.get("same_faith", false) and bool(view["status"].get("faith_spreads", false)):
 			buttons.add_child(_small_button("Missionaries", {"kind": "missionaries", "target": target}))
 	return buttons
 
