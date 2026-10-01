@@ -82,6 +82,18 @@ void fragment() {
 	vec3 grass = mix(GRASS, MEADOW, smoothstep(0.25, 0.4, lum) * 0.7 + wobble * 0.3);
 	vec3 colour = FOREST * w.x + grass * w.y + STEPPE * w.z + DESERT * w.w;
 	colour *= 0.92 + wobble * 0.16;   // painterly variation
+	// close up, the grass gets texture: darker tufts, sunlit patches and a few flowers
+	float near = 1.0 - smoothstep(60.0, 180.0, length(CAMERA_POSITION_WORLD - world_pos));
+	if (near > 0.0) {
+		float tuft = noise(world_pos.xz * 6.0) * 0.6 + noise(world_pos.xz * 17.0) * 0.4;
+		float patch = noise(world_pos.xz * 1.7 + 11.0);
+		float green = w.x + w.y;
+		vec3 detailed = colour * (0.86 + tuft * 0.26);
+		detailed = mix(detailed, detailed * vec3(1.08, 1.1, 0.85), smoothstep(0.55, 0.8, patch) * 0.6);
+		float flower = step(0.93, hash(floor(world_pos.xz * 9.0))) * step(0.6, patch) * green;
+		detailed = mix(detailed, mix(vec3(1.0, 0.95, 0.6), vec3(1.0, 0.75, 0.8), hash(floor(world_pos.xz * 9.0) + 3.0)), flower * 0.7);
+		colour = mix(colour, detailed, near);
+	}
 	float slope = 1.0 - world_normal.y;
 	colour = mix(colour, ROCK, smoothstep(1800.0, 3200.0, metres) * 0.8 + smoothstep(0.25, 0.5, slope) * 0.45);
 	colour = mix(colour, vec3(0.66, 0.60, 0.44), smoothstep(3300.0, 4200.0, metres) * 0.6);
