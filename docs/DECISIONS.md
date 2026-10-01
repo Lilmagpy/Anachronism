@@ -630,3 +630,15 @@ to the rival rules in rules.yaml (data, not code): Easy halves how often aggress
 start wars, slows conquest and gives five quiet opening turns; Hard does the opposite with
 one grace turn. Normal is the rules as written. The chosen rules are stored in the save,
 so a game and its replay stay exactly the same.
+
+## D-090 An eighth moment: Alexander's inheritance, 336 BC — DELEGATED (2026-10-01)
+On the Europe map: play the twenty-year-old Alexander the moment his father Philip is
+murdered, with Greece restless (Athens, Thebes, Sparta), Epirus allied, the Illyrians and
+Thracians waiting to rebel, the Scythians on the Danube, and the Achaemenid empire of
+Darius III from the Aegean to Bactria's edge; in the west, Carthage, Syracuse and Rome
+(12 states, 54 provinces; history notes in docs/history/alexander.md). Scripted rivals
+follow history loosely: the Theban and Illyrian revolts, Agis III's war, the Persian
+counter-offensive in the Aegean, the Sicilian wars. Persia is much larger but raises a
+smaller share of its people (`martial_bp`), and the Macedonian army a much larger one, so
+the two start roughly level in strength. Tested over three seeds: a passive Macedon keeps
+its lands; Persia slowly absorbs the Greek cities if nobody stops it.

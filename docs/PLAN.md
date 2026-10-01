@@ -72,7 +72,8 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
       [x] Egypt and the Hittites, 1275 BC (11 states, 50 provinces); [x] Europe in the Year 1000
       (29 states, 96 provinces); [x] The Three Kingdoms of Korea, AD 400 (11 states, 38
       provinces, Korea and Japan in detail; D-069); [x] Japan's Warring States, 1560 (18 states,
-      41 provinces; D-074); [x] The Great Khan, 1206 (10 states, 54 provinces; D-084)
+      41 provinces; D-074); [x] The Great Khan, 1206 (10 states, 54 provinces; D-084);
+      [x] Alexander's inheritance, 336 BC (12 states, 54 provinces; D-090)
 - [x] 2.15a Screens (brief §11): pre-play disclaimer; a timeline of starting moments in the
       picker; in-game menu (Esc) with save, load, chronicle, tech tree (goal stubs, your
       own ideas marked) and settings (model status, offline switch); developer overlay (F3)
@@ -135,6 +136,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
       (D-075, D-082, D-087)
 - [x] Coalitions against a dominant player; demanding tribute (D-085, D-086)
 - [x] A seventh moment, the Great Khan 1206, with steppe mobilisation (D-084)
+- [x] An eighth moment, Alexander's inheritance 336 BC (D-090)
 - [x] Confidence tiers and a source-review checklist (D-083)
 - [ ] Rival rulers voiced by the model; suspicion tuning; gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging
