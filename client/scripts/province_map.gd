@@ -21,6 +21,7 @@ var region := PackedInt32Array()    ## site index per cell, or -1
 var ocean := PackedByteArray()
 var metres := PackedFloat32Array()
 var civ_colours := {}
+var civ_portraits := {}   ## civ id -> portrait style, which also picks its building style
 var civ_names := {}
 
 
@@ -37,6 +38,7 @@ func _init(earth_builder: EarthBuilder, view: Dictionary) -> void:
 			metres[r * cols + q] = earth.metres_at(pixel)
 	for civ in view["civs"]:
 		civ_colours[civ["id"]] = Color(civ["colour"])
+		civ_portraits[civ["id"]] = str(civ.get("portrait", ""))
 		civ_names[civ["id"]] = civ["name"]
 	for p in view["provinces"]:
 		if p["latlon"] == null:

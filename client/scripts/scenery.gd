@@ -13,6 +13,8 @@ const S := 2.4                 ## trees are drawn larger than life, like the tow
 
 var earth: EarthBuilder
 var rng := RandomNumberGenerator.new()
+var _batches := {}   ## tile -> [[multimesh, transforms], ...], for clearing city ground
+var _cleared: Array = []   ## [multimesh, index, transform] of trees taken away
 
 
 func _init(earth_builder: EarthBuilder) -> void:
@@ -60,7 +62,33 @@ func build(parent: Node3D) -> void:
 			var entry: Array = tiles[key][kind]
 			if entry[0].is_empty():
 				continue
-			holder.add_child(_multimesh(meshes[kind], entry[0], entry[1]))
+			var instance := _multimesh(meshes[kind], entry[0], entry[1])
+			holder.add_child(instance)
+			if not _batches.has(key):
+				_batches[key] = []
+			_batches[key].append([instance.multimesh, entry[0]])
+
+
+## No trees inside cities: clear each circle [pixel, radius] (and restore earlier clearings,
+## since one map serves several scenarios).
+func clear(circles: Array) -> void:
+	for item in _cleared:
+		(item[0] as MultiMesh).set_instance_transform(item[1], item[2])
+	_cleared.clear()
+	var hidden := Transform3D(Basis().scaled(Vector3.ZERO), Vector3.ZERO)
+	for circle in circles:
+		var centre: Vector3 = earth.ground_at_pixel(circle[0])
+		var reach: float = circle[1]
+		var tile := Vector2i(int(circle[0].x / TILE), int(circle[0].y / TILE))
+		for dx in [-1, 0, 1]:
+			for dy in [-1, 0, 1]:
+				for batch in _batches.get(tile + Vector2i(dx, dy), []):
+					var transforms: Array = batch[1]
+					for i in transforms.size():
+						var at: Vector3 = transforms[i].origin
+						if Vector2(at.x - centre.x, at.z - centre.z).length() < reach:
+							_cleared.append([batch[0], i, transforms[i]])
+							(batch[0] as MultiMesh).set_instance_transform(i, hidden)
 
 
 ## A lollipop tree: a brown trunk under a round canopy (canopy takes the instance colour).

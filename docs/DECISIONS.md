@@ -512,3 +512,14 @@ strength for two turns). A faith now counts towards your cultural share only if 
 at the start, and cultural victory also needs at least 10% cultural influence of your own.
 Rival courts use the same decrees: at war they hire swords, in unrest they hold feasts,
 always keeping half their treasury in reserve.
+
+## D-077 Cities in their region's style — DELEGATED (2026-10-01)
+Every city was drawn in the East Asian style. Buildings now follow the region of the
+province's first owner (from its portrait family): tiled roofs and rammed earth in East
+Asia; flat-roofed mud brick, a columned temple and a pyramid on the Nile; mud brick and a
+stepped temple tower in the Near East; white walls, terracotta and a columned temple around
+the Mediterranean; steep roofs, a stone keep, round towers and a church spire in the north;
+felt tents and a great yurt on the steppe. Trees no longer grow inside city walls.
+Fixed on the way: on large maps (Europe 1000) cities vanished, because each kind of
+building was one batch for the whole map and Godot hides a batch by its centre's distance
+from the camera; buildings are now batched by map tile like the trees.

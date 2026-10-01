@@ -18,6 +18,7 @@ var world: WorldBuilder
 var earth: EarthBuilder
 var provinces: ProvinceMap
 var settlements: Settlements
+var scenery: Scenery
 var game_menu: GameMenu
 var landmarks: Landmarks
 var audio: GameAudio
@@ -134,7 +135,8 @@ func _ensure_earth(region: String) -> void:
 			child.queue_free()
 	earth = EarthBuilder.new(region)
 	earth.build(holder)
-	Scenery.new(earth).build(holder)
+	scenery = Scenery.new(earth)
+	scenery.build(holder)
 	Peaks.new(earth).build(holder)
 	var half := earth.size() / 2.0
 	var clouds := Clouds.new()
@@ -152,6 +154,7 @@ func _build_earth(holder: Node3D, region: String) -> void:
 	provinces.build(holder)
 	settlements = Settlements.new(provinces)
 	settlements.build(holder)
+	scenery.clear(settlements.clearings)
 	provinces.show_wars(view.get("wars", []))
 	landmarks = Landmarks.new()
 	landmarks.setup(provinces)
