@@ -440,19 +440,26 @@ func show_wars(wars: Array) -> void:
 			_war_marks.add_child(mark)
 
 
-var _cell_counts := {}
 var player := ""   ## the player's civ: its name is never hidden by another's
+var _region_cells := {}   ## site index -> Array of its cells (built once)
 var _labels: Array = []   ## [label, priority], most important first, for decluttering
+
+
+## The map cells of a site, indexed once (borders never move; only owners change).
+func cells_in(index: int) -> Array:
+	if _region_cells.is_empty():
+		for c in cols * rows:
+			var r: int = region[c]
+			if r >= 0:
+				if not _region_cells.has(r):
+					_region_cells[r] = []   # an Array is shared by reference; a packed array is not
+				_region_cells[r].append(c)
+	return _region_cells.get(index, [])
 
 
 ## How many map cells a site covers (its size on the map).
 func _cells_of(site: Dictionary) -> int:
-	if _cell_counts.is_empty():
-		for c in cols * rows:
-			var index: int = region[c]
-			if index >= 0:
-				_cell_counts[index] = int(_cell_counts.get(index, 0)) + 1
-	return int(_cell_counts.get(sites.find(site), 0))
+	return cells_in(sites.find(site)).size()
 
 
 func _province_label(site: Dictionary) -> Label3D:
@@ -500,8 +507,10 @@ func _province_label(site: Dictionary) -> Label3D:
 func _civ_label(civ_id: String) -> Label3D:
 	var total := Vector2.ZERO
 	var count := 0
-	for c in cols * rows:
-		if _owner_of(region[c]) == civ_id:
+	for index in sites.size():
+		if sites[index]["owner"] != civ_id:
+			continue
+		for c in cells_in(index):
 			total += Vector2(c % cols + 0.5, c / cols + 0.5) * CELL
 			count += 1
 	if count == 0:

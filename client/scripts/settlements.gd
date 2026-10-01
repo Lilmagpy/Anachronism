@@ -178,9 +178,7 @@ static func style_of(portrait: String) -> String:
 ## The province's cells, flattest and lowest first weighted in: a list to draw from.
 func _good_land(index: int) -> Array:
 	var cells: Array = []
-	for c in map.cols * map.rows:
-		if map.region[c] != index:
-			continue
+	for c in map.cells_in(index):
 		var metres: float = map.metres[c]
 		var slope := _slope(c)
 		# Plains and valley floors hold the farms; steep or high land very few.
