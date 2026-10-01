@@ -224,17 +224,25 @@ class Session:
         """Everything that has happened to the player and the great events of the world."""
         state = self.game()
         major = {"war", "peace", "conquest", "destroyed", "alliance", "revolt", "collapse"}
-        entries = [
-            {
-                "turn": e.turn,
-                "year": e.year,
-                "kind": e.kind,
-                "message": e.message,
-                "mine": e.civ == state.player_civ,
-            }
-            for e in state.events
-            if e.civ == state.player_civ or (e.kind in major and "declared war on" not in e.message)
-        ]
+        entries: list[dict[str, Any]] = []
+        seen: set[tuple[int, str]] = set()  # a peace is logged for each side: show it once
+        for e in state.events:
+            if e.civ != state.player_civ and (
+                e.kind not in major or "declared war on" in e.message
+            ):
+                continue
+            if (e.turn, e.message) in seen:
+                continue
+            seen.add((e.turn, e.message))
+            entries.append(
+                {
+                    "turn": e.turn,
+                    "year": e.year,
+                    "kind": e.kind,
+                    "message": e.message,
+                    "mine": e.civ == state.player_civ,
+                }
+            )
         return {"entries": entries[-400:]}
 
     def history(self, args: dict[str, Any]) -> dict[str, Any]:

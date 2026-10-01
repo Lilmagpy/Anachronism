@@ -178,7 +178,7 @@ func open_charts() -> void:
 	grid.add_theme_constant_override("v_separation", 14)
 	var charts := [
 		["Your people", [["People", Color(0.2, 0.45, 0.8), pick.call("population")]], false],
-		["Your stores", [["Food", Color(0.85, 0.65, 0.15), pick.call("food")], ["Materials", Color(0.5, 0.45, 0.4), pick.call("materials")],
+		["Your stores", [["Food", Color(0.85, 0.38, 0.18), pick.call("food")], ["Materials", Color(0.5, 0.45, 0.4), pick.call("materials")],
 			["Wealth", Color(0.9, 0.75, 0.2), pick.call("wealth")], ["Knowledge", Color(0.3, 0.55, 0.3), pick.call("knowledge")]], false],
 		["Your society", [["Literacy", Color(0.2, 0.5, 0.7), pick.call("literacy_bp")], ["Unrest", Color(0.8, 0.3, 0.15), pick.call("unrest_bp")],
 			["Legitimacy", Color(0.85, 0.65, 0.1), pick.call("legitimacy_bp")], ["Suspicion", Color(0.45, 0.3, 0.6), pick.call("suspicion_bp")]], true],

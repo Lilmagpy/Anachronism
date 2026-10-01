@@ -29,6 +29,7 @@ def age_and_succeed(state: GameState, civ: CivState, rng: GameRng, events: Event
     if not rng.chance(death_chance_bp(state, civ)):
         return
     old = civ.ruler or f"the ruler of {civ.name}"
+    old_desc = f"{civ.ruler} of {civ.name}" if civ.ruler else old
     line = state.world.successors.get(civ.id, ())
     index = civ.rulers - 1
     if index < len(line):
@@ -41,13 +42,13 @@ def age_and_succeed(state: GameState, civ: CivState, rng: GameRng, events: Event
         civ.ruler = ""
         civ.ruler_age = 20 + rng.below(21)
     civ.rulers += 1
-    new = civ.ruler or f"a new ruler of {civ.name}"
+    new = civ.ruler or "a new ruler"
     shaky = civ.stats.legitimacy_bp < rules.succession_crisis_below_bp
     civ.stats.legitimacy_bp = clamp(civ.stats.legitimacy_bp - rules.succession_legitimacy_bp, 0, BP)
     events.add(
         civ.id,
         "ruler_died",
-        f"{_cap(old)} of {civ.name} has died. {_cap(new)} takes the throne.",
+        f"{_cap(old_desc)} has died. {_cap(new)} takes the throne.",
         old,
     )
     if shaky:

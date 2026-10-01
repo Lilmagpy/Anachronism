@@ -43,3 +43,5 @@ def test_succession_follows_history_then_heirs(content: Content) -> None:
     kinds = [e.kind for e in events.items]
     assert "ruler_died" in kinds
     assert "succession_crisis" in kinds
+    for e in events.items:
+        assert " of Qin of Qin" not in e.message  # an unnamed ruler still reads naturally

@@ -175,7 +175,10 @@ def test_menu_commands(tmp_path: Path) -> None:
     )
     assert all(r["ok"] for r in replies)
     assert [s["name"] for s in replies[3]["result"]["saves"]] == ["first"]
-    assert replies[4]["result"]["entries"]
+    entries = replies[4]["result"]["entries"]
+    assert entries
+    told = [(e["turn"], e["message"]) for e in entries]
+    assert len(told) == len(set(told))  # each event once, though logged for both sides
     nodes = replies[5]["result"]["nodes"]
     assert any(n["stage"] == "widespread" for n in nodes)
     assert replies[6]["result"]["accepted"]
