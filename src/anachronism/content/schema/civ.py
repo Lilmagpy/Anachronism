@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from anachronism.content.schema.base import Frozen, HexColour, Identifier
+from anachronism.content.schema.base import Confidence, Frozen, HexColour, Identifier
 
 
 class CivDefinition(Frozen):
@@ -22,3 +22,7 @@ class CivDefinition(Frozen):
     portrait: str = ""
     """Placeholder portrait style drawn by the client (e.g. ``court``, ``steppe``,
     ``southern``, ``hills``); real portraits replace these later (D-060)."""
+    sources: tuple[str, ...] = ()
+    """Internal research notes; never shown to players."""
+    confidence: Confidence = Confidence.LOW
+    """How sure the profile is; internal only."""

@@ -13,9 +13,11 @@ scripts, relations, rulers and the timeline are added in Phases 4-5.
 - Ids are lower-case `snake_case` and unique within their kind across all loaded packs.
 - Numbers are integers. Percentages and 0-100 stats are **basis points**: `100 = 1%` or one
   point, `10000 = 100%`. Field names say so with `_bp` where it is not obvious.
-- Facts in shipped data need a `sources:` note (internal, never shown to players). From
-  Phase 5 each fact also gets a confidence tier (`high` / `medium` / `low`). Contested facts:
-  pick the most defensible version and note the alternatives in `sources`.
+- Facts in shipped data need a `sources:` note (internal, never shown to players), and
+  advancements, civilisations and scenarios carry a `confidence:` tier (`high` / `medium` /
+  `low`; `low` when left out, meaning drafted and not yet checked). Contested facts: pick
+  the most defensible version and note the alternatives in `sources`.
+  `uv run anachronism-lint --review` lists every entry still without a source.
 - LLM-drafted content goes to `drafts/` and moves into `packs/` only after owner review.
   Model memory is never the only source for a shipped fact. Licences: D-009.
 

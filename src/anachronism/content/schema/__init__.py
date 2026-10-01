@@ -1,6 +1,12 @@
 """Pydantic models for content packs. Unknown fields are errors, so typos are caught."""
 
-from anachronism.content.schema.base import CURRENT_SCHEMA_VERSION, Frozen, Identifier, Rate
+from anachronism.content.schema.base import (
+    CURRENT_SCHEMA_VERSION,
+    Confidence,
+    Frozen,
+    Identifier,
+    Rate,
+)
 from anachronism.content.schema.civ import CivDefinition
 from anachronism.content.schema.dialogue import MOMENTS, SPECIAL_SPEAKERS, Dialogue, Speaker
 from anachronism.content.schema.happenings import Happening
@@ -54,6 +60,7 @@ __all__ = [
     "Access",
     "Category",
     "CivDefinition",
+    "Confidence",
     "Dialogue",
     "Disposition",
     "Effect",

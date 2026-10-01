@@ -574,3 +574,10 @@ exactly a keyword as a match, ignores generic words alone ("flying machines" is 
 "spinning machines"), suggests the nearest ideas ahead of their time, and says when it is
 offline that it only knows its library. The content linter now checks each civ's
 starting ideas together with the age's common ones.
+
+## D-083 Confidence tiers and a source-review checklist — DELEGATED (2026-10-01)
+Brief §2.14 asks for internal source notes and confidence levels. Advancements,
+civilisations and scenarios now carry `sources` and `confidence` (high / medium / low,
+low by default). `anachronism-lint --review` prints the checklist. Today everything is
+honestly "low, no source": it was drafted from general history, so the Phase 5 source
+review (D-040) starts from a complete list instead of a guess.

@@ -7,7 +7,7 @@ from typing import Annotated
 
 from pydantic import Field, model_validator
 
-from anachronism.content.schema.base import Frozen, Identifier, Rate
+from anachronism.content.schema.base import Confidence, Frozen, Identifier, Rate
 
 
 class Category(StrEnum):
@@ -155,6 +155,8 @@ class TechNode(Frozen):
     """A placeholder named by a ruling; must be ruled on before it can be started."""
     sources: tuple[str, ...] = ()
     """Internal research notes; never shown to players."""
+    confidence: Confidence = Confidence.LOW
+    """How sure the date and effects are; internal only."""
     keywords: tuple[Annotated[str, Field(min_length=2, max_length=40)], ...] = ()
     """Words a player might use for this idea ("printing", "press"); the offline
     interpreter and the model's related-node search match on them."""

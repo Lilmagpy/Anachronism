@@ -162,6 +162,13 @@ def test_lint_cli_reports_success_and_failure(
     assert "era end years must strictly increase" in output
 
 
+def test_lint_review_lists_what_needs_a_source(capsys: pytest.CaptureFixture[str]) -> None:
+    assert lint_main(["--review"]) == 0
+    output = capsys.readouterr().out
+    assert "advancements:" in output
+    assert "without a source" in output
+
+
 def test_coastal_provinces_must_touch_a_sea(packs: Path) -> None:
     edit(
         packs / "testworld" / "seas.yaml",

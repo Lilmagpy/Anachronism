@@ -7,7 +7,14 @@ from typing import Annotated
 
 from pydantic import Field
 
-from anachronism.content.schema.base import Frozen, Identifier, NonNegative, Positive, Rate
+from anachronism.content.schema.base import (
+    Confidence,
+    Frozen,
+    Identifier,
+    NonNegative,
+    Positive,
+    Rate,
+)
 from anachronism.content.schema.rivals import Disposition, Faith, Script, StartingRelation
 from anachronism.content.schema.tech import SocialGroup, Stage
 
@@ -88,6 +95,10 @@ class Scenario(Frozen):
     cost_scale: Annotated[int, Field(ge=1, le=1000)] = 1
     """Multiplies every project cost. Scenarios with real historical populations (millions,
     not tens of thousands) raise it so inventions cost the same share of a state's effort."""
+    sources: tuple[str, ...] = ()
+    """Internal research notes on the moment (populations, borders, rulers)."""
+    confidence: Confidence = Confidence.LOW
+    """How sure the snapshot is; internal only."""
     common_techs: dict[Identifier, Stage] = Field(default_factory=dict)
     """What every state of the age knows (written law, say), so each civ need not list it.
     A state gets one only if it already has its prerequisites (no law code without
