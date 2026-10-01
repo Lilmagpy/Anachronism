@@ -46,6 +46,11 @@ func show_title() -> void:
 	var tagline := UiStyle.headline("Guide a civilisation with ideas ahead of their time", 26, UiStyle.CREAM)
 	tagline.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	column.add_child(tagline)
+	# which build this is, so old downloads can be told from new ones (written by package.sh)
+	var stamp := FileAccess.get_file_as_string("res://engine_src/VERSION").strip_edges()
+	var version := UiStyle.headline(stamp if stamp != "" else "Development build", 20, Color(0.85, 0.80, 0.70))
+	version.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	column.add_child(version)
 	var gap := Control.new()
 	gap.custom_minimum_size.y = 40
 	column.add_child(gap)

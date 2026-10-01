@@ -6,7 +6,8 @@
 #                                                packaged app end to end: unpack, fetch
 #                                                Python, answer, quit)
 #
-# Needs Godot 4.5.1 and its export templates (CI downloads both). The app carries the Python
+# The title screen shows "Version N" (N = the number of commits), so each build has a higher
+# number than the last. Needs Godot 4.5.1 and its export templates (CI downloads both). The app carries the Python
 # engine's source and uv inside it; on first launch it unpacks them and uv fetches Python
 # and the libraries, so the owner installs nothing. Unsigned: see docs/GETTING_STARTED.md.
 set -euo pipefail
@@ -25,6 +26,9 @@ cp "$ROOT/pyproject.toml" "$ROOT/uv.lock" "$ROOT/README.md" "$ROOT/.python-versi
 cp -R "$ROOT/src" "$STAGE/"
 find "$STAGE/src" -name __pycache__ -prune -exec rm -rf {} +
 git -C "$ROOT" rev-parse --short HEAD > "$STAGE/STAMP"
+# the version shown on the title screen: the number of commits, so each build is higher
+VERSION="$(git -C "$ROOT" rev-list --count HEAD)"
+echo "Version $VERSION · $(date -u '+%-d %b %Y')" > "$STAGE/VERSION"
 if [ "$PLATFORM" = mac ]; then
   ARCHES="aarch64 x86_64"; OS_TRIPLE="apple-darwin"
 else
