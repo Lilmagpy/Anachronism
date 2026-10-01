@@ -127,6 +127,10 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] Royal decrees (festival, mercenaries), used by rival courts too (D-076)
 - [x] Victory tuning: cultural needs your own influence; economic needs a network of
       allies and a large economy, one embassy a turn (D-076, D-078)
-- [x] A library of 90 advancements to the steam age (D-075)
+- [x] A library of 92 advancements to the steam age, with the republic and democracy
+      (D-075, D-082)
+- [x] Coalitions against a dominant player; demanding tribute (D-085, D-086)
+- [x] A seventh moment, the Great Khan 1206, with steppe mobilisation (D-084)
+- [x] Confidence tiers and a source-review checklist (D-083)
 - [ ] Rival rulers voiced by the model; suspicion tuning; gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging
