@@ -32,6 +32,8 @@ from anachronism.llm.counsel import (
 )
 from anachronism.llm.guard import to_rulings
 from anachronism.llm.prompts import (
+    NARRATE_SYSTEM,
+    NARRATE_TOOL,
     PROMPT_VERSION,
     SYSTEM,
     VOICE_SYSTEM,
@@ -215,6 +217,36 @@ class IdeaPipeline:
             return None, ""
         self.log.write({"user": user, "reply": completion.data, "model": completion.model})
         return to_action(state, rival, reply.move), clean_line(reply.line)
+
+    def narrate(self, facts: dict[str, str], plain: str, *, call: bool = True) -> tuple[str, str]:
+        """A finished chapter of the chronicle, told by the model when one is configured.
+
+        Returns the text and its source ("content", "cache" or "model"). With ``call=False``
+        only the cache is consulted (to bound how many calls one request makes).
+        """
+        if not self.online:
+            return plain, "content"
+        key = RulingCache.key("chronicle", "|".join(f"{k}={v}" for k, v in facts.items()))
+        cached = self.cache.get(key)
+        if cached is not None and isinstance(cached.get("line"), str):
+            return cached["line"], "cache"
+        if not call:
+            return plain, "content"
+        user = facts_message(facts)
+        try:
+            completion = self.provider.complete(  # type: ignore[union-attr]
+                NARRATE_SYSTEM, user, voice_schema("The chapter."), fast=True, tool=NARRATE_TOOL
+            )
+            self.ledger.add(completion.usage)
+            text = clean_line(VoiceReply.model_validate(completion.data).line, 700)
+        except (ProviderError, ValidationError) as failure:
+            self.log.write({"user": user, "error": str(failure)[:200]})
+            return plain, "content"
+        if not text:
+            return plain, "content"
+        self.log.write({"user": user, "reply": completion.data, "model": completion.model})
+        self.cache.put(key, {"line": text})
+        return text, "model"
 
     def _offline(self, state: GameState, civ_id: str, text: str, note: str) -> Outcome:
         reply = offline.interpret(state, civ_id, text)

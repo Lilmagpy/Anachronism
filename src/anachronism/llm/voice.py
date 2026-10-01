@@ -37,21 +37,21 @@ class VoiceReply(BaseModel):
     line: str = Field(min_length=1, max_length=600)
 
 
-def voice_schema() -> dict[str, Any]:
-    """The JSON schema of the speech tool."""
+def voice_schema(about: str = "What the ruler says.") -> dict[str, Any]:
+    """The JSON schema of the speech tool (and of the chronicler's, with ``about``)."""
     return {
         "type": "object",
-        "properties": {"line": {"type": "string", "description": "What the ruler says."}},
+        "properties": {"line": {"type": "string", "description": about}},
         "required": ["line"],
     }
 
 
-def clean_line(text: str) -> str:
+def clean_line(text: str, max_chars: int = MAX_CHARS) -> str:
     """One tidy line: no markup or wrapping quotes, cut at a sentence end if too long."""
     text = re.sub(r"[<>*_#`]", "", " ".join(text.split())).strip().strip(QUOTES).strip()
-    if len(text) <= MAX_CHARS:
+    if len(text) <= max_chars:
         return text
-    cut = text[:MAX_CHARS]
+    cut = text[:max_chars]
     end = max(cut.rfind(". "), cut.rfind("! "), cut.rfind("? "))
     return cut[: end + 1] if end > 40 else cut.rsplit(" ", 1)[0] + "..."
 

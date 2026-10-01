@@ -141,6 +141,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] Rival rulers voiced by the model: war, peace, tribute and boasts (D-091)
 - [x] Suspicion: the court can explain its new arts - a divine gift or foreign sages (D-092)
 - [x] Aware rival courts decide with the model: war, envoy or wait, guarded and recorded (D-094)
+- [x] The story so far: the chronicle told in chapters, by the model when online (D-095)
 - [x] Secrets (brief §7.3): seal the borders; spread false rumours (D-093)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

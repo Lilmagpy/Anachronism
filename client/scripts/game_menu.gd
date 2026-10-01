@@ -155,8 +155,15 @@ func open_chronicle() -> void:
 	body.add_theme_constant_override("separation", 4)
 	var reply: Variant = bridge.request("chronicle")
 	var entries: Array = reply["entries"] if reply != null else []
+	var told: Array = reply.get("chapters", []) if reply != null else []
 	if entries.is_empty():
 		body.add_child(UiStyle.label("Nothing has happened yet. History is waiting.", 17, UiStyle.INK_SOFT))
+	if not told.is_empty():
+		body.add_child(UiStyle.label("The story so far", 22, UiStyle.RED, "title", 800))
+		for chapter in told:
+			body.add_child(UiStyle.label(str(chapter["title"]), 16, UiStyle.INK, "title", 700))
+			body.add_child(UiStyle.wrapped(str(chapter["text"]), 15, UiStyle.INK, 660))
+		body.add_child(UiStyle.label("Year by year", 22, UiStyle.RED, "title", 800))
 	var year: Variant = null
 	entries.reverse()  # newest first
 	for entry in entries:

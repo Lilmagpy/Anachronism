@@ -32,6 +32,7 @@ from anachronism.engine.state import Event, GameState
 from anachronism.llm.config import LlmConfig, load_config
 from anachronism.llm.counsel import who_counsels
 from anachronism.llm.pipeline import IdeaPipeline, make_pipeline
+from anachronism.tools.chronicle import chapters
 from anachronism.tools.view import build_catalog, build_view, next_steps
 from anachronism.tools.voices import (
     adviser_voice,
@@ -305,7 +306,15 @@ class Session:
                     "mine": e.civ == state.player_civ,
                 }
             )
-        return {"entries": entries[-400:]}
+        calls = 0
+        told = []
+        for chapter in chapters(state):
+            text, source = chapter.text, "content"
+            if chapter.finished:
+                text, source = self.pipeline.narrate(chapter.facts, chapter.text, call=calls < 2)
+                calls += source == "model"
+            told.append({"title": chapter.title, "text": text, "source": source})
+        return {"entries": entries[-400:], "chapters": told[::-1]}
 
     def history(self, args: dict[str, Any]) -> dict[str, Any]:
         """Each turn's key numbers for the player, and the population of every state."""

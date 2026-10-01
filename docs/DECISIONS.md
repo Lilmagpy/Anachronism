@@ -691,3 +691,14 @@ waiting. The move becomes an ordinary action, validated again by the engine and 
 the save, so replays never call the model (D-021). The ruler's line opens the turn's
 speech bubbles. Alliances were left off the menu on purpose: a rival proposing one would
 have to be accepted on the player's behalf. Offline play is unchanged.
+
+## D-095 The story so far — DELEGATED (2026-10-01)
+Brief §6.7 asks for a chronicle that reads like an alternate history. The Chronicle screen
+now opens with "The story so far": the game in chapters of five turns, newest first, each
+telling what the player's people learned, their wars and peaces, lands won and lost,
+rulers who died, how the people saw the court, and which states fell, with the population
+in round figures. Offline, chapters are told plainly from those facts. With a model
+configured, each finished chapter is rewritten once by the chronicler (two to four
+sentences, facts only) and cached; at most two new chapters are written per visit to keep
+the screen quick and cheap. Like rival speech, this is presentation only and changes
+nothing in the game.
