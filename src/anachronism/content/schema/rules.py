@@ -251,6 +251,11 @@ class RivalRules(Frozen):
     mercenary_turns: Positive
     envoy_wealth: NonNegative
     """Wealth an envoy costs."""
+    coalition_share_bp: Rate = 3500
+    """Once the player rules this share of the region's people, rivals start allying
+    against them."""
+    coalition_chance_bp: Rate = 1500
+    """Chance each turn that a pair of the player's wary neighbours forms a league."""
     alliance_trust_turns: NonNegative = 2
     """Turns of trade before a court will ally with you (a common enemy is reason enough)."""
     capital_loss_legitimacy_bp: NonNegative

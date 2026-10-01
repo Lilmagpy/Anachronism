@@ -508,6 +508,41 @@ def rival_decrees(state: GameState, events: EventLog) -> None:
                 civ.stats.unrest_bp = clamp(civ.stats.unrest_bp - rules.festival_unrest_bp, 0, BP)
 
 
+def coalitions(state: GameState, rng: GameRng, events: EventLog) -> None:
+    """A player grown too great frightens the others into leagues (the balance of power).
+
+    Once the player rules a large share of the region's people (and more than at the
+    start), two neighbours of the
+    player that are at peace with each other may ally against them: at most one new
+    league a turn.
+    """
+    rules = state.world.rules.rivals
+    me = state.player_civ
+    everyone = sum(state.population(c) for c in state.civs)
+    # it is growth that frightens: a state that began great must grow further still
+    threshold = max(rules.coalition_share_bp, state.victory_start.get("military", 0) + 1000)
+    if state.population(me) * BP < everyone * threshold:
+        return
+    wary = [
+        c
+        for c in sorted(state.civs)
+        if c != me
+        and alive(state, c)
+        and status(state, me, c) is not None
+        and status(state, me, c) not in (RelationStatus.ALLIED, RelationStatus.TRIBUTARY)
+    ]
+    for i, a in enumerate(wary):
+        for b in wary[i + 1 :]:
+            if status(state, a, b) not in (RelationStatus.NEUTRAL, RelationStatus.TRADING):
+                continue
+            if not rng.chance(rules.coalition_chance_bp):
+                continue
+            set_status(state, a, b, RelationStatus.ALLIED)
+            names = f"the {state.civs[a].adjective} and {state.civs[b].adjective} courts"
+            events.add(me, "coalition", f"Fearing your power, {names} have allied.", names)
+            return
+
+
 def update_awareness(state: GameState) -> None:
     """Aware civilisations with a deep grudge against the player leave their scripts."""
     threshold = state.world.rules.rivals.free_agent_grievance_bp
@@ -550,5 +585,6 @@ def rivals_turn(
             _imitate(state, civ_id, rng, events)
     run_scripts(state, strengths, events)
     free_agents(state, strengths, rng, events)
+    coalitions(state, rng, events)
     fade_grievances(state)
     return strengths

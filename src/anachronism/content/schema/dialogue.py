@@ -32,7 +32,7 @@ MOMENTS = frozenset(
         "famine", "collapse", "rival_adopted", "quiet",
         "idea_feasible", "idea_blocked", "idea_implausible",
         "war", "conquest", "province_lost", "capital_lost", "peace", "news", "imitation",
-        "victory", "defeat", "ally_attacked", "disaster", "blessing", "faith",
+        "victory", "defeat", "ally_attacked", "disaster", "blessing", "faith", "coalition",
     }
 )  # fmt: skip
 """When lines can be spoken. ``rival_adopted``: a rival adopts an idea ahead of its time,

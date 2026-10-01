@@ -189,6 +189,12 @@ dialogue:
       - "{subject} is under attack and begs for our help. Say the word and we march - the World tab has the war drums."
       - "Our friends in {subject} are bleeding. If we stand aside, who will stand by us?"
 
+  - id: coalition
+    speaker: steward
+    lines:
+      - "{subject} have joined hands against us. When a realm grows this great, its neighbours stop competing and start counting."
+      - "A league against us: {subject}. Strike one and the others will come. Perhaps an envoy first?"
+
   - id: disaster
     speaker: steward
     lines:

@@ -138,6 +138,8 @@ rules:
     economic_income_share_bp: 5000
     economic_partners_share_bp: 5000
     alliance_trust_turns: 2
+    coalition_share_bp: 3500
+    coalition_chance_bp: 1500
     cultural_victory_share_bp: 4000
     cultural_influence_needed_bp: 1000
     victory_margin_bp: 2000

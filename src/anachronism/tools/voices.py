@@ -14,7 +14,8 @@ from anachronism.content.loader import Content
 from anachronism.engine.state import Event, GameState
 
 PRIORITY = (
-    "victory", "defeat", "collapse", "capital_lost", "war", "ally_attacked", "province_lost",
+    "victory", "defeat", "collapse", "capital_lost", "war", "ally_attacked", "coalition",
+    "province_lost",
     "conquest", "disaster", "revolt", "famine", "riot", "peace", "adopted", "imitation",
     "news", "breakthrough", "discovery", "suspicion", "framing", "resistance", "setback",
     "stalled", "widespread", "blessing", "faith",

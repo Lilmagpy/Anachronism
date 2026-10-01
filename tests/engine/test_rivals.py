@@ -338,6 +338,23 @@ def test_the_players_faith_changes_only_by_choice(content: Content) -> None:
     assert state.civs["egypt"].faith == faith
 
 
+def test_rivals_league_against_a_dominant_player(warring: GameState) -> None:
+    from anachronism.engine.rivals import coalitions
+
+    events = EventLog(turn=0, year=warring.year)
+    coalitions(warring, GameRng(warring.rng), events)
+    assert not events.items  # Qin is not yet feared
+    for pid in sorted(warring.provinces)[: len(warring.provinces) * 2 // 3]:
+        if warring.provinces[pid].owner is not None:
+            warring.provinces[pid].owner = "qin"
+    override = warring.world.rules.rivals.model_copy(update={"coalition_chance_bp": 10_000})
+    warring.world = warring.world.model_copy(
+        update={"rules": warring.world.rules.model_copy(update={"rivals": override})}
+    )
+    coalitions(warring, GameRng(warring.rng), events)
+    assert [e.kind for e in events.items] == ["coalition"]
+
+
 def test_trade_pays_both_sides(warring: GameState) -> None:
     from anachronism.engine.culture import trade
 

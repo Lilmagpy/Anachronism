@@ -593,3 +593,10 @@ nothing; one who goes to war takes Xia and much of the Jin over about two centur
 Where the map's province growth leaves gaps across the Gobi, the steppe and the Tibetan
 plateau, a few historical routes are linked by hand. Steppe capitals are camps of felt
 tents around the khan's great yurt.
+
+## D-085 Coalitions against a dominant player — DELEGATED (2026-10-01)
+A player who grows to rule over 35% of a region's people (and ten points more than at the
+start, so a state that began great is not punished for it) frightens its neighbours:
+each turn, two of them at peace with each other may ally against the player (a 15%
+chance, one new league a turn). Alliances already join defensive wars, so attacking one
+member brings in the others. The steward warns you when a league forms.
