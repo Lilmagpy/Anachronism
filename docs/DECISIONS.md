@@ -677,3 +677,17 @@ false rumours** (wealth): every true report of your arts already on the road arr
 muddle instead (rivals do not copy what they have only half heard), and the truth follows
 much later. Only offered while there is news on the road; the panel says how many courts
 it is heading to. Numbers in rules.yaml.
+
+## D-094 Aware rival courts decide with the model — DELEGATED (2026-10-01)
+Brief §7.2: courts that have heard of the player should have the model reason about how
+their ruler responds; on-script courts cost nothing. Now, when a model is configured, once a
+turn the aware (or free-agent) court with the deepest grudge against the player is asked
+what its ruler does: **make war**, **send an envoy** or **wait**, and what they say. The
+model sees only game facts (ruler, temperament, faith, relation, grudge, relative
+strength, what they have heard of the player's arts, and which moves are allowed). A guard
+offers war only when the court is at least two thirds the player's strength and not
+already at war, and an envoy only when it can pay; anything else, or any failure, means
+waiting. The move becomes an ordinary action, validated again by the engine and recorded in
+the save, so replays never call the model (D-021). The ruler's line opens the turn's
+speech bubbles. Alliances were left off the menu on purpose: a rival proposing one would
+have to be accepted on the player's behalf. Offline play is unchanged.

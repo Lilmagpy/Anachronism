@@ -65,7 +65,7 @@ src/anachronism/
     packs/testworld/      fictional 3-civ world and the Bronze Dawn scenario
     packs/east_asia/      pilot                                                (Phase 5)
   llm/                    provider, fake, offline, anthropic, schemas, guard, pipeline,
-                          cache, budget, prompts, voice (rival speech)           (Phase 2)
+                          cache, budget, prompts, voice, counsel (rival rulers)   (Phase 2)
   ui/                     app, screens, widgets, theme, assets                  (Phase 3)
   tools/
     console.py            `anachronism-console`: play in a terminal

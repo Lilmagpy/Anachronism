@@ -109,6 +109,26 @@ def adviser_voice(
     }
 
 
+def rival_says(content: Content, state: GameState, rival: str, text: str) -> dict[str, Any]:
+    """A speech bubble for a rival ruler's own words (decided with the model)."""
+    civ_def = content.civs[rival]
+    ruler = state.civs[rival].ruler or f"the ruler of {state.civs[rival].name}"
+    return {
+        "moment": "rival_counsel",
+        "speaker": "rival",
+        "name": ruler[:1].upper() + ruler[1:],
+        "title": f"Ruler of {civ_def.name}",
+        "portrait": civ_def.portrait,
+        "culture": civ_def.portrait,
+        "colour": civ_def.colour,
+        "emblem": civ_def.emblem or civ_def.adjective[:1],
+        "civ": rival,
+        "subject": "",
+        "text": text,
+        "source": "model",
+    }
+
+
 def opening_voices(content: Content, state: GameState) -> list[dict[str, Any]]:
     """A new game opens with the steward's briefing on the moment, then the ruler's welcome."""
     voices: list[dict[str, Any]] = []

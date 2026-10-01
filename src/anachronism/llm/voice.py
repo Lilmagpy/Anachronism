@@ -25,6 +25,7 @@ MOMENTS = {
     "rival_peace": "has just made peace with the player after a war",
     "rival_tribute": "has just submitted to the player and agreed to pay tribute",
     "rival_adopted": "has just mastered a new advancement ({subject}) and boasts of it",
+    "rival_counsel": "has heard of the player's strange new arts and must decide what to do",
 }
 
 

@@ -14,6 +14,7 @@ from dataclasses import dataclass, field
 
 from pydantic import ValidationError
 
+from anachronism.engine.actions import Action
 from anachronism.engine.rulings import Ruling
 from anachronism.engine.state import GameState
 from anachronism.engine.summary import build, related_nodes
@@ -21,6 +22,14 @@ from anachronism.engine.tech import is_adopted
 from anachronism.engine.timeflow import current_era
 from anachronism.llm import offline
 from anachronism.llm.config import LlmConfig
+from anachronism.llm.counsel import (
+    COUNSEL_SYSTEM,
+    COUNSEL_TOOL,
+    CounselReply,
+    counsel_facts,
+    counsel_schema,
+    to_action,
+)
 from anachronism.llm.guard import to_rulings
 from anachronism.llm.prompts import (
     PROMPT_VERSION,
@@ -28,6 +37,7 @@ from anachronism.llm.prompts import (
     VOICE_SYSTEM,
     VOICE_TOOL,
     clean_player_text,
+    facts_message,
     user_message,
     voice_message,
 )
@@ -183,6 +193,28 @@ class IdeaPipeline:
         self.log.write({"user": user, "reply": completion.data, "model": completion.model})
         self.cache.put(key, {"line": spoken})
         return spoken, "model"
+
+    def counsel(self, state: GameState, rival: str) -> tuple[Action | None, str]:
+        """How an aware rival court responds to the player this turn (brief §7.2).
+
+        Returns the guarded engine action (``None`` to wait) and the ruler's line ("" when
+        offline or on any failure, in which case the court just follows its usual rules).
+        """
+        if not self.online or rival not in state.civs:
+            return None, ""
+        known = {**facts(state, rival, "rival_counsel", ""), **counsel_facts(state, rival)}
+        user = facts_message(known)
+        try:
+            completion = self.provider.complete(  # type: ignore[union-attr]
+                COUNSEL_SYSTEM, user, counsel_schema(), fast=True, tool=COUNSEL_TOOL
+            )
+            self.ledger.add(completion.usage)
+            reply = CounselReply.model_validate(completion.data)
+        except (ProviderError, ValidationError) as failure:
+            self.log.write({"user": user, "error": str(failure)[:200]})
+            return None, ""
+        self.log.write({"user": user, "reply": completion.data, "model": completion.model})
+        return to_action(state, rival, reply.move), clean_line(reply.line)
 
     def _offline(self, state: GameState, civ_id: str, text: str, note: str) -> Outcome:
         reply = offline.interpret(state, civ_id, text)

@@ -16,6 +16,7 @@ import urllib.request
 from typing import Any
 
 from anachronism.llm.config import LlmConfig
+from anachronism.llm.counsel import COUNSEL_TOOL
 from anachronism.llm.prompts import TOOL_NAME, VOICE_TOOL
 from anachronism.llm.provider import Completion, ProviderError
 
@@ -23,6 +24,7 @@ API_VERSION = "2023-06-01"
 TOOL_DESCRIPTIONS = {
     TOOL_NAME: "Report the court's ruling on the player's ideas.",
     VOICE_TOOL: "Say the rival ruler's line.",
+    COUNSEL_TOOL: "Decide the rival ruler's move toward the player and what they say.",
 }
 RETRY_STATUSES = frozenset({408, 409, 429, 500, 502, 503, 504, 529})
 

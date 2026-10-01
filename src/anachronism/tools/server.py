@@ -30,9 +30,16 @@ from anachronism.engine.rulings import Verdict
 from anachronism.engine.save import SaveError, dumps, loads
 from anachronism.engine.state import Event, GameState
 from anachronism.llm.config import LlmConfig, load_config
+from anachronism.llm.counsel import who_counsels
 from anachronism.llm.pipeline import IdeaPipeline, make_pipeline
 from anachronism.tools.view import build_catalog, build_view, next_steps
-from anachronism.tools.voices import adviser_voice, opening_voices, speak, voices_for_turn
+from anachronism.tools.voices import (
+    adviser_voice,
+    opening_voices,
+    rival_says,
+    speak,
+    voices_for_turn,
+)
 
 ACTION = TypeAdapter[Action](Action)
 
@@ -126,6 +133,8 @@ class Session:
     def end_turn(self, args: dict[str, Any]) -> dict[str, Any]:
         """Let the rivals act, resolve the turn, and return the new view with its events."""
         state = self.game()
+        counsel = self._counsel(state)
+        state = self.game()
         for civ_id in sorted(self.rivals):
             if state.owned_provinces(civ_id):
                 for action in self.rivals[civ_id].decide(state, civ_id):
@@ -133,10 +142,27 @@ class Session:
         self.state, self.events = end_turn(state)
         self._autosave()
         view = self._view(self.events)
-        view["voices"] = [
-            self._voiced(v) for v in voices_for_turn(self.content, self.state, self.events)
-        ]
+        voices = [self._voiced(v) for v in voices_for_turn(self.content, self.state, self.events)]
+        if counsel:  # the court that decided speaks for itself, once
+            voices = [counsel] + [v for v in voices if v.get("civ") != counsel["civ"]]
+        view["voices"] = voices
         return view
+
+    def _counsel(self, state: GameState) -> dict[str, Any] | None:
+        """One aware rival court decides its move with the model (brief §7.2), if online.
+
+        The move is applied as an ordinary, recorded action; the ruler's line is returned
+        as a speech bubble for the turn.
+        """
+        rival = who_counsels(state)
+        if rival is None or not self.pipeline.online:
+            return None
+        action, line = self.pipeline.counsel(state, rival)
+        if action is not None:
+            self.state, _ = apply_action(state, action)
+        if not line:
+            return None
+        return rival_says(self.content, self.game(), rival, line)
 
     def _voiced(self, voice: dict[str, Any]) -> dict[str, Any]:
         """A rival's speech bubble, in their own words when a model is configured."""
