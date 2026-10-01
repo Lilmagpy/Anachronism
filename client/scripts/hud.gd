@@ -660,6 +660,15 @@ func _ruling_card(ruling: Dictionary) -> Control:
 	for line in [str(ruling.get("message", "")), str(ruling.get("reason", "")), str(ruling.get("hint", ""))]:
 		if line != "":
 			body.add_child(_wrapped(line, 13, INK))
+	var steps: Array = ruling.get("next_steps", [])
+	if not steps.is_empty():
+		body.add_child(_label("Start on the road there:", 12, DIM))
+		var row := HFlowContainer.new()
+		row.add_theme_constant_override("h_separation", 4)
+		row.add_theme_constant_override("v_separation", 4)
+		for step in steps:
+			row.add_child(_small_button("Begin " + str(step["name"]), {"kind": "start", "node_id": str(step["id"])}))
+		body.add_child(row)
 	box.add_child(body)
 	return box
 

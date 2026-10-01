@@ -140,7 +140,8 @@ def test_ideas_through_the_bridge(tmp_path: Path) -> None:
             {"id": 2, "cmd": "idea", "args": {"text": "paper, and a compass"}},
             {"id": 3, "cmd": "idea", "args": {"text": "teleport the army to the moon"}},
             {"id": 4, "cmd": "settings"},
-            {"id": 5, "cmd": "quit"},
+            {"id": 5, "cmd": "idea", "args": {"text": "electricity"}},
+            {"id": 6, "cmd": "quit"},
         ],
         tmp_path,
     )
@@ -157,6 +158,9 @@ def test_ideas_through_the_bridge(tmp_path: Path) -> None:
     settings = replies[3]["result"]
     assert settings["online"] is False
     assert "key" not in json.dumps(settings).replace("has_key", "")
+    far = replies[4]["result"]["rulings"][0]
+    assert far["verdict"] == "blocked"
+    assert far["next_steps"]  # the first steps on the road that can begin now
 
 
 def test_menu_commands(tmp_path: Path) -> None:

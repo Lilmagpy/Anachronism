@@ -151,6 +151,31 @@ def _defence(state: GameState, province_id: str) -> int:
     return defence_bp(state, owner, province_id)
 
 
+def next_steps(state: GameState, civ_id: str, node_id: str, limit: int = 3) -> list[dict[str, str]]:
+    """The first ideas on the road to a blocked one that can be started now.
+
+    Walks back through prerequisites not yet in use, nearest first, and keeps those whose
+    own needs are met, so a ruling can offer "Begin" on the next step.
+    """
+    civ = state.civs[civ_id]
+    found: list[dict[str, str]] = []
+    seen: set[str] = set()
+    queue = list(state.tech_nodes[node_id].prerequisites) if node_id in state.tech_nodes else []
+    while queue and len(found) < limit:
+        current = queue.pop(0)
+        if current in seen or current not in state.tech_nodes:
+            continue
+        seen.add(current)
+        known = civ.tech.get(current)
+        if known is not None and known.stage is not Stage.CONCEPT:
+            continue  # in use, or already being tried
+        if feasibility(state, civ_id, current).blocked:
+            queue.extend(sorted(state.tech_nodes[current].prerequisites))
+        else:
+            found.append({"id": current, "name": state.tech_nodes[current].name})
+    return found
+
+
 def _ideas(state: GameState, civ_id: str) -> list[dict[str, Any]]:
     """Every idea the player could see: known ones and those ready to start."""
     civ = state.civs[civ_id]
