@@ -160,6 +160,16 @@ dialogue:
 Placeholders: `{civ}` `{ruler}` `{subject}` `{year}` `{adjective}` `{rival}` `{rival_ruler}` `{rival_adjective}` (write "the {adjective} realm" before a verb: some names are plural); the linter
 rejects any other. Rulers' names come from each scenario civ's `leader`.
 
+## Happenings and consequences
+`core/happenings.yaml` holds chance events: disasters and blessings (plague, flood, a bumper
+harvest) and **consequences** - second-order effects of an advancement that the ruler did
+not plan for (printing breeds pamphlet wars against the priests; paper money brings
+inflation). A consequence must name the advancement it follows in `needs_adopted`. Each
+entry gives a chance per decade, where it can strike (terrain, river, coast), and changes
+to people, stores, unrest, legitimacy, suspicion and the influence of clergy, nobles and
+guilds (`influence: {clergy: -800}`), all bounded to 50% either way. `{civ}` and
+`{province}` are filled into the message.
+
 ## Rules
 `core/rules.yaml` holds every tunable number, grouped by system and documented field by field
 in `content/schema/rules.py`. Balance changes go here, never into code. After changing

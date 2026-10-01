@@ -121,6 +121,13 @@ dialogue:
       - "Take your tribute, then. {rival} pays - and counts every coin."
       - "The {rival_adjective} court bows. Bowing is not kneeling; remember that."
 
+  - id: consequence
+    speaker: scholar
+    lines:
+      - "{subject}. Nobody warned us of this. New things have a way of changing more than they were meant to."
+      - "Ah. {subject}. I did say every invention has a second edge - did I not? I meant to."
+      - "{subject}: the world bends around our new arts in ways no scholar foresaw."
+
   - id: quiet
     speaker: steward
     lines:

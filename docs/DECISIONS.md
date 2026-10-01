@@ -702,3 +702,16 @@ configured, each finished chapter is rewritten once by the chronicler (two to fo
 sentences, facts only) and cached; at most two new chapters are written per visit to keep
 the screen quick and cheap. Like rival speech, this is presentation only and changes
 nothing in the game.
+
+## D-096 Consequences of new ideas — DELEGATED (2026-10-01)
+Brief §6.7 asks for second-order effects: consequences the player did not plan for, like
+printing's effect on religion. These are now content, in core/happenings.yaml, as a third
+kind of happening ("consequence") that can only strike a state using the advancement it
+follows. Fourteen to start: pamphlet wars and cheap scriptures (printing: the clergy lose
+influence), the end of the knights (gunpowder: the nobles do), inflation (paper money), the
+tyranny of the clock, the heavens are wrong (telescope: suspicion), public opinion
+(newspapers), restless scholars (universities), machine breakers (spinning machines),
+railway fever, ships held in quarantine, fear of the needle (vaccination), adventurers who
+sail with the compass, and lawyers (written law). Happenings can now also move suspicion
+and the influence of clergy, nobles and guilds. Fixed content rather than model-written:
+deterministic, free, and reviewable; the model may later phrase them.

@@ -110,3 +110,137 @@ happenings:
     chance_bp: 400
     legitimacy_bp: 400
     unrest_bp: -300
+
+  # --- Consequences: second-order effects of advancements (brief §6.7) ---------------------
+  # Things the ruler did not plan for. kind: consequence needs the advancement it follows.
+
+  - id: pamphlet_wars
+    name: Pamphlet wars
+    kind: consequence
+    message: "Printed pamphlets mocking the priests pass from hand to hand in {province}. The temples are furious."
+    chance_bp: 900
+    needs_adopted: [printing_press]
+    unrest_bp: 500
+    influence: {clergy: -800, guilds: 300}
+
+  - id: scripture_for_all
+    name: Scripture for all
+    kind: consequence
+    message: "Cheap printed scriptures reach the villages of {province}. Every farmer now argues theology."
+    chance_bp: 600
+    needs_adopted: [printing_press]
+    knowledge_bp: 500
+    influence: {clergy: -500}
+    unrest_bp: 300
+
+  - id: gunpowder_levels_knights
+    name: The end of the knights
+    kind: consequence
+    message: "A peasant with a handgun shot a lord off his horse in {province}. The nobles feel the ground shift."
+    chance_bp: 700
+    needs_adopted: [gunpowder]
+    influence: {nobility: -900}
+    legitimacy_bp: -300
+
+  - id: paper_money_inflation
+    name: Inflation
+    kind: consequence
+    message: "The mints print too freely: prices in {province} double in a season, and savings melt away."
+    chance_bp: 800
+    needs_adopted: [paper_money]
+    wealth_bp: -2000
+    unrest_bp: 600
+
+  - id: clock_discipline
+    name: The tyranny of the clock
+    kind: consequence
+    message: "Workshops in {province} now ring a bell for every hour. Work is steadier; the workers grumble."
+    chance_bp: 500
+    needs_adopted: [mechanical_clock]
+    materials_bp: 1000
+    unrest_bp: 200
+    influence: {guilds: 400}
+
+  - id: telescope_heresy
+    name: The heavens are wrong
+    kind: consequence
+    message: "Astronomers in {province} say the heavens are not as the priests taught. Sermons answer them."
+    chance_bp: 600
+    needs_adopted: [telescope]
+    influence: {clergy: -600}
+    suspicion_bp: 500
+    knowledge_bp: 800
+
+  - id: newspapers_opinion
+    name: Public opinion
+    kind: consequence
+    message: "The newspapers of {province} criticise the court. A ruler must now win arguments, not just battles."
+    chance_bp: 700
+    needs_adopted: [newspapers]
+    legitimacy_bp: -400
+    influence: {guilds: 500, nobility: -300}
+
+  - id: schools_restless_youth
+    name: Restless scholars
+    kind: consequence
+    message: "Students of {province} who learned to read have read things the court would rather they had not."
+    chance_bp: 500
+    needs_adopted: [universities]
+    knowledge_bp: 1000
+    unrest_bp: 400
+
+  - id: steam_unemployment
+    name: Machine breakers
+    kind: consequence
+    message: "Hand weavers in {province}, put out of work by machines, smash the new engines by night."
+    chance_bp: 800
+    needs_adopted: [spinning_machine]
+    unrest_bp: 700
+    materials_bp: -800
+    influence: {guilds: -700}
+
+  - id: railway_boom
+    name: Railway fever
+    kind: consequence
+    message: "Everyone in {province} wants shares in the new railways. Fortunes are made, and some are lost."
+    chance_bp: 600
+    needs_adopted: [railways]
+    wealth_bp: 1500
+    influence: {guilds: 500}
+
+  - id: quarantine_trade_loss
+    name: Ships held at the harbour
+    kind: consequence
+    message: "Quarantine keeps the merchant ships of {province} waiting forty days. The merchants count their losses."
+    chance_bp: 600
+    coastal: true
+    needs_adopted: [quarantine]
+    wealth_bp: -800
+    influence: {guilds: -300}
+
+  - id: vaccination_fear
+    name: Fear of the needle
+    kind: consequence
+    message: "Rumours in {province} say the cowpox cure turns children into cattle. Mothers hide from the doctors."
+    chance_bp: 700
+    needs_adopted: [vaccination]
+    unrest_bp: 400
+    suspicion_bp: 600
+
+  - id: compass_adventurers
+    name: Adventurers sail
+    kind: consequence
+    message: "With the compass, captains from {province} sail beyond sight of land - and some come back rich."
+    chance_bp: 500
+    coastal: true
+    needs_adopted: [compass]
+    wealth_bp: 1200
+
+  - id: written_law_lawyers
+    name: Lawyers
+    kind: consequence
+    message: "Now that the laws are written down, clever men in {province} argue about every word of them."
+    chance_bp: 400
+    needs_adopted: [written_law]
+    legitimacy_bp: 300
+    influence: {nobility: -300, guilds: 300}

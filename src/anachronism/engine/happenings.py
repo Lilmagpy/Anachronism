@@ -96,6 +96,9 @@ def _apply(
     stats = civ.stats
     stats.unrest_bp = clamp(stats.unrest_bp + happening.unrest_bp, 0, BP)
     stats.legitimacy_bp = clamp(stats.legitimacy_bp + happening.legitimacy_bp, 0, BP)
+    stats.suspicion_bp = clamp(stats.suspicion_bp + happening.suspicion_bp, 0, BP)
+    for group, change in sorted(happening.influence.items()):
+        civ.influence[group] = clamp(civ.influence.get(group, 0) + change, 0, BP)
     name = state.world.geography[where].name
     events.add(
         civ.id,

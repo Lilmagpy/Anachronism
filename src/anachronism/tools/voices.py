@@ -18,7 +18,7 @@ PRIORITY = (
     "province_lost",
     "conquest", "disaster", "revolt", "famine", "riot", "peace", "adopted", "imitation",
     "news", "breakthrough", "discovery", "suspicion", "framing", "resistance", "setback",
-    "stalled", "widespread", "blessing", "faith",
+    "stalled", "widespread", "consequence", "blessing", "faith",
 )  # fmt: skip
 """Moments in order of importance; at most ``MAX_VOICES`` are spoken per turn."""
 
