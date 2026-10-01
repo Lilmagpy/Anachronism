@@ -154,6 +154,7 @@ func _show_next_voice() -> void:
 		_speech.queue_free()
 		_speech = null
 	_card.visible = _speech_queue.is_empty()
+	_chronicle.get_parent().visible = _speech_queue.is_empty() and int(view.get("turn", 1)) > 1
 	if _speech_queue.is_empty():
 		return
 	var voice: Dictionary = _speech_queue.pop_front()
@@ -1000,7 +1001,7 @@ func _fill_card() -> void:
 func _build_chronicle() -> void:
 	var panel := PanelContainer.new()
 	panel.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
-	panel.offset_left = 792
+	panel.offset_left = 380   # beside the province card (speeches hide it while they show)
 	panel.offset_right = -470  # clear of the side panel at any window width
 	panel.offset_bottom = -8
 	panel.offset_top = -8
@@ -1014,7 +1015,7 @@ func _build_chronicle() -> void:
 func _fill_chronicle() -> void:
 	_clear(_chronicle)
 	var events: Array = view["events"]
-	_chronicle.get_parent().visible = int(view["turn"]) > 1
+	_chronicle.get_parent().visible = int(view["turn"]) > 1 and _speech == null
 	_chronicle.add_child(_label("The last %d years" % int(view["years_per_turn"]), 14, GOLD))
 	if events.is_empty():
 		_chronicle.add_child(_label("Quiet years: nothing of note happened.", 13, DIM))
@@ -1022,7 +1023,7 @@ func _fill_chronicle() -> void:
 	for e in events.slice(0, 6):
 		var colour := BAD if e["kind"] in ["riot", "revolt", "famine", "collapse", "setback", "stalled"] else INK
 		var line := _wrapped("• " + str(e["message"]), 13, colour)
-		line.custom_minimum_size.x = 520
+		line.custom_minimum_size.x = 0  # wrap to the space between card and side panel
 		_chronicle.add_child(line)
 	if events.size() > 6:
 		_chronicle.add_child(_label("… and %d more" % (events.size() - 6), 12, DIM))
