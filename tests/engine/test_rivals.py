@@ -355,6 +355,22 @@ def test_rivals_league_against_a_dominant_player(warring: GameState) -> None:
     assert [e.kind for e in events.items] == ["coalition"]
 
 
+def test_a_far_weaker_court_pays_tribute(warring: GameState) -> None:
+    from anachronism.engine.actions import DemandTribute
+
+    _, logged = apply_action(warring, DemandTribute(civ="qin", target="chu"))
+    assert not logged.ok  # Chu is no weakling
+    small = next(c for c in sorted(warring.civs) if c != "qin" and status(warring, "qin", c))
+    warring.civs["qin"].mercenaries = 0
+    for pid in warring.owned_provinces(small)[1:]:
+        warring.provinces[pid].owner = "qin"  # leave it one province
+    if strength(warring, "qin") < strength(warring, small) * 3:
+        warring.civs["qin"].martial_bp = 100_000
+    state, logged = apply_action(warring, DemandTribute(civ="qin", target=small))
+    assert logged.ok
+    assert status(state, "qin", small) is RelationStatus.TRIBUTARY
+
+
 def test_trade_pays_both_sides(warring: GameState) -> None:
     from anachronism.engine.culture import trade
 

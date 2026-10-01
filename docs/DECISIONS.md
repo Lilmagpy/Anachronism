@@ -600,3 +600,11 @@ start, so a state that began great is not punished for it) frightens its neighbo
 each turn, two of them at peace with each other may ally against the player (a 15%
 chance, one new league a turn). Alliances already join defensive wars, so attacking one
 member brings in the others. The steward warns you when a league forms.
+
+## D-086 Demanding tribute — DELEGATED (2026-10-01)
+Much of history ran on tribute, not conquest (Goryeo and Xia paid the Jin; Joseon and
+Ryukyu the Ming). A court submits as your tributary if you are two and a half times
+stronger, or, at war, once it has lost ground (submission is then the price of peace). It
+resents it (a small grudge), and a refusal stings more. Tributaries already count fully
+toward an economic victory and join your defensive wars. A "Demand tribute" button sits
+with the other diplomacy buttons.

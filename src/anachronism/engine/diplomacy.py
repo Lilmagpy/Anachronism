@@ -9,6 +9,7 @@ from __future__ import annotations
 from anachronism.content.schema import RelationStatus
 from anachronism.engine.actions import (
     DeclareWar,
+    DemandTribute,
     Diplomacy,
     MakePeace,
     ProposeAlliance,
@@ -17,7 +18,7 @@ from anachronism.engine.actions import (
 )
 from anachronism.engine.culture import convert
 from anachronism.engine.events import EventLog
-from anachronism.engine.fixed import apply_bp
+from anachronism.engine.fixed import BP, apply_bp
 from anachronism.engine.rivals import (
     add_grievance,
     alive,
@@ -129,6 +130,24 @@ def _apply(
             events.add(me, "alliance", f"An alliance with {them}.", them)
             return True, f"{them} agrees to an alliance."
         return False, f"{them} sees no reason to ally with you yet: trade first"
+    if isinstance(action, DemandTribute):
+        if current is None:
+            return False, f"{them} is out of reach"
+        if current in (RelationStatus.TRIBUTARY, RelationStatus.ALLIED):
+            return False, f"{them} is already bound to you"
+        theirs, ours = strength(state, target), strength(state, me)
+        rel = relation(state, me, target)
+        assert rel is not None
+        beaten = current is RelationStatus.WAR and rel.losses.get(target, 0) > 0
+        if beaten or ours * BP >= theirs * rules.tribute_strength_ratio_bp:
+            if current is RelationStatus.WAR:
+                make_peace(state, me, target, events)
+            set_status(state, me, target, RelationStatus.TRIBUTARY)
+            add_grievance(state, target, me, 1000)  # submission is resented
+            events.add(me, "tribute", f"{them} bows and sends tribute.", them)
+            return True, f"{them} submits and becomes your tributary."
+        add_grievance(state, target, me, 1500)
+        return False, f"{them} laughs at your envoys: you are not strong enough to ask."
     if isinstance(action, SendMissionaries):
         civ = state.civs[me]
         if not civ.faith:

@@ -908,6 +908,10 @@ func _diplomacy_buttons(civ: Dictionary) -> Control:
 	buttons.add_theme_constant_override("h_separation", 4)
 	buttons.add_theme_constant_override("v_separation", 4)
 	var target: String = civ["id"]
+	if not relation in ["tributary", "allied"]:
+		var demand := _small_button("Demand tribute", {"kind": "tribute", "target": target})
+		demand.tooltip_text = "A court far weaker than you (or beaten in war) may submit as your tributary"
+		buttons.add_child(demand)
 	if relation == "war":
 		buttons.add_child(_small_button("Offer peace", {"kind": "peace", "target": target}))
 	else:

@@ -125,6 +125,18 @@ class SendMissionaries(Frozen):
     target: str
 
 
+class DemandTribute(Frozen):
+    """Demand that a much weaker (or beaten) court become your tributary.
+
+    At war, submission is the price of peace. Tributaries count fully in your trade
+    network and stand with you in war.
+    """
+
+    kind: Literal["tribute"] = "tribute"
+    civ: str
+    target: str
+
+
 class HoldFestival(Frozen):
     """Spend wealth on games and feasts: legitimacy up, unrest down."""
 
@@ -142,7 +154,7 @@ class HireMercenaries(Frozen):
 Decree = HoldFestival | HireMercenaries
 
 
-Diplomacy = DeclareWar | MakePeace | SendEnvoy | ProposeAlliance | SendMissionaries
+Diplomacy = DeclareWar | MakePeace | SendEnvoy | ProposeAlliance | SendMissionaries | DemandTribute
 
 
 Action = Annotated[
@@ -158,6 +170,7 @@ Action = Annotated[
     | SendEnvoy
     | ProposeAlliance
     | SendMissionaries
+    | DemandTribute
     | HoldFestival
     | HireMercenaries,
     Field(discriminator="kind"),

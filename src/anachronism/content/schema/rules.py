@@ -251,6 +251,9 @@ class RivalRules(Frozen):
     mercenary_turns: Positive
     envoy_wealth: NonNegative
     """Wealth an envoy costs."""
+    tribute_strength_ratio_bp: Positive = 25000
+    """A court submits as a tributary to a state this much stronger (25_000 = 2.5 times),
+    or when beaten in a war."""
     coalition_share_bp: Rate = 3500
     """Once the player rules this share of the region's people, rivals start allying
     against them."""
