@@ -19,6 +19,7 @@ from anachronism.engine.armies import (
 )
 from anachronism.engine.commands import describe_blockers
 from anachronism.engine.decrees import cost, explain_costs, explain_ready_in, news_on_the_road
+from anachronism.engine.dilemmas import effects_text, fill
 from anachronism.engine.economy import project_costs
 from anachronism.engine.projects import project_turns
 from anachronism.engine.reports import capacity
@@ -108,6 +109,7 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
         ],
         "wars": fronts(state),
         "armies": _armies(state),
+        "dilemma": _dilemma(state),
         "levy": _levy(state, civ_id),
         "battles": _battle_sites(state, events or []),
         "victory": {
@@ -245,6 +247,19 @@ def _ideas(state: GameState, civ_id: str) -> list[dict[str, Any]]:
             }
         )
     return ideas
+
+
+def _dilemma(state: GameState) -> dict[str, Any] | None:
+    """The question waiting for the player's answer, if any."""
+    dilemma = state.world.dilemmas.get(state.dilemma or "")
+    if dilemma is None:
+        return None
+    return {
+        "id": dilemma.id,
+        "title": dilemma.title,
+        "text": fill(state, dilemma.text),
+        "choices": [{"label": c.label, "hint": effects_text(c)} for c in dilemma.choices],
+    }
 
 
 def _walls_next(state: GameState, province_id: str) -> dict[str, Any]:

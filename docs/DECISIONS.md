@@ -806,3 +806,17 @@ long grinding slaughter of infantry, elephants scattering horses, an army caught
 a river or strung out in a forest. The engine picks the tale that best fits the soldiers
 who decided it, the ground, and whether it was a rout, then adds the losses and any fallen
 general. A new way to tell a battle is a YAML entry.
+
+## D-104 Dilemmas — DELEGATED (2026-10-01)
+Brief §6.7 asks for events generated from the situation; the owner asked for storytelling
+and strategy. Dilemmas are choices put to the ruler, as content: when one's conditions hold
+it may arise (its chance per decade), a card in the middle of the screen tells the
+situation and offers two or three answers, each showing what it will do (stores, unrest,
+legitimacy, suspicion, the favour of clergy, nobles and guilds, a new idea, volunteers).
+Unanswered at the end of the turn, the court takes the first answer. General ones (a comet,
+a hungry city, a wandering preacher, whispers of sorcery, a merchants' charter, a library
+for sale, deserters, veterans who want land, strangers from afar, a fever in the slums)
+and historical ones: the Gordian knot and Diogenes for Alexander, the corvus for Rome,
+the year 1000, Shang Yang's reforms for Qin, Chanakya's Arthashastra for the Mauryas, the
+Yassa and the captured craftsmen for the Mongols, and the Portuguese guns of Tanegashima
+in Sengoku Japan. Answers are recorded actions, so replays stay exact.

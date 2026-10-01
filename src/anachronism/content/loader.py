@@ -21,6 +21,7 @@ from anachronism.content.schema import (
     SINGLE_KINDS,
     CivDefinition,
     Dialogue,
+    Dilemma,
     EffectType,
     Era,
     Happening,
@@ -63,6 +64,7 @@ class Content:
     happenings: Mapping[str, Happening] = field(default_factory=dict)
     units: Mapping[str, Unit] = field(default_factory=dict)
     tales: Mapping[str, Tale] = field(default_factory=dict)
+    dilemmas: Mapping[str, Dilemma] = field(default_factory=dict)
     """Chance events (plague, flood, bumper harvests...)."""
 
 
@@ -143,6 +145,7 @@ def load_content(pack_ids: Sequence[str] | None = None, root: Path = PACKS_DIR) 
         happenings=registry.happenings,
         units=registry.units,
         tales=registry.tales,
+        dilemmas=registry.dilemmas,
         digest=digest.hexdigest(),
     )
 

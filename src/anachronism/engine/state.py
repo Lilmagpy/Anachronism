@@ -13,6 +13,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from anachronism.content.schema import (
     Access,
+    Dilemma,
     Disposition,
     EffectType,
     Era,
@@ -80,6 +81,8 @@ class World(Frozen):
     happenings: dict[str, Happening] = Field(default_factory=dict)
     units: dict[str, Unit] = Field(default_factory=dict)
     tales: dict[str, Tale] = Field(default_factory=dict)
+    dilemmas: dict[str, Dilemma] = Field(default_factory=dict)
+    """Choices that may be put to the ruler."""
     """How battles are told."""
     """The kinds of soldier that exist (raising them needs their advancements)."""
     """Chance events that can strike (plague, flood, bumper harvests...)."""
@@ -330,6 +333,9 @@ class GameState(Mutable):
     civs: dict[str, CivState]
     action_log: list[LoggedAction] = Field(default_factory=list)
     events: list[Event] = Field(default_factory=list)
+    dilemma: str | None = None
+    """The dilemma waiting for the player's answer, if any."""
+    dilemmas_seen: list[str] = Field(default_factory=list)
     armies: dict[str, Army] = Field(default_factory=dict)
     """Every army in the field, keyed by id."""
     relations: dict[str, Relation] = Field(default_factory=dict)

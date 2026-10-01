@@ -5,6 +5,7 @@ from __future__ import annotations
 from anachronism.content.schema import EffectType
 from anachronism.engine.armies import command, march, sieges, upkeep
 from anachronism.engine.culture import spread_faiths, trade
+from anachronism.engine.dilemmas import ask
 from anachronism.engine.economy import run_economy
 from anachronism.engine.effects import Effects, civ_effects
 from anachronism.engine.events import EventLog
@@ -65,6 +66,7 @@ def end_turn(state: GameState) -> tuple[GameState, list[Event]]:
     for civ_id in sorted(new.civs):
         new.civs[civ_id].mercenaries = max(0, new.civs[civ_id].mercenaries - 1)
         new.civs[civ_id].sealed = max(0, new.civs[civ_id].sealed - 1)
+    ask(new, rng, events)
     trade(new)
     spread_faiths(new, effects_by_civ, rng, events)
     grow_population(new, effects_by_civ, starving)

@@ -230,6 +230,15 @@ class DisbandArmy(Frozen):
     army: str
 
 
+class ChooseDilemma(Frozen):
+    """Answer the dilemma put to the court (D-104)."""
+
+    kind: Literal["dilemma"] = "dilemma"
+    civ: str
+    dilemma: str
+    choice: int
+
+
 Orders = RaiseArmy | MarchArmy | ArmyStance | DisbandArmy | Fortify
 
 
@@ -262,7 +271,8 @@ Action = Annotated[
     | MarchArmy
     | ArmyStance
     | DisbandArmy
-    | Fortify,
+    | Fortify
+    | ChooseDilemma,
     Field(discriminator="kind"),
 ]
 

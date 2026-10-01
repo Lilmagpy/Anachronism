@@ -30,6 +30,7 @@ def cross_reference_issues(registry: Registry) -> list[ContentIssue]:
         *_happening_issues(registry),
         *_unit_issues(registry),
         *_tale_issues(registry),
+        *_dilemma_issues(registry),
         *_dialogue_issues(registry),
     ]
 
@@ -349,4 +350,33 @@ def _tale_issues(registry: Registry) -> list[ContentIssue]:
                 issues.append(
                     ContentIssue(where, label, "lines may use only {place} {winner} {loser} {unit}")
                 )
+    return issues
+
+
+def _dilemma_issues(registry: Registry) -> list[ContentIssue]:
+    issues: list[ContentIssue] = []
+    for dilemma in registry.dilemmas.values():
+        where = registry.origin("dilemmas", dilemma.id)
+        label = f"dilemmas ({dilemma.id})"
+
+        def report(message: str) -> None:
+            issues.append(ContentIssue(where, label, message))  # noqa: B023
+
+        for scenario in dilemma.scenarios:
+            if registry.is_unknown("scenarios", scenario):
+                report(f"unknown scenario {scenario!r}")
+        for civ in dilemma.civs:
+            if registry.is_unknown("civs", civ):
+                report(f"unknown civ {civ!r}")
+        for tech in dilemma.needs_adopted:
+            if registry.is_unknown("techs", tech):
+                report(f"unknown tech {tech!r}")
+        for choice in dilemma.choices:
+            if choice.idea and registry.is_unknown("techs", choice.idea):
+                report(f"unknown idea {choice.idea!r}")
+        for text in (dilemma.text, *(c.outcome for c in dilemma.choices)):
+            try:
+                text.format(civ="", ruler="", adjective="")
+            except (KeyError, IndexError, ValueError):
+                report("texts may use only {civ} {ruler} {adjective}")
     return issues

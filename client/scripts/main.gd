@@ -354,7 +354,7 @@ func _on_action(action: Dictionary) -> void:
 		view = reply["view"]
 		if reply["accepted"] and action["kind"] == "start":
 			hud.tab = "projects"
-		if action["kind"] in ["raise", "march", "stance", "disband"]:
+		if action["kind"] in ["raise", "march", "stance", "disband", "fortify", "dilemma"]:
 			hud.message = str(reply["message"])
 			if reply["accepted"] and action["kind"] == "disband":
 				hud.selected_army = ""

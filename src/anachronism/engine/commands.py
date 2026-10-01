@@ -7,6 +7,7 @@ from anachronism.engine.actions import (
     Action,
     ArmyStance,
     CancelProject,
+    ChooseDilemma,
     DeclareWar,
     DemandTribute,
     DisbandArmy,
@@ -32,6 +33,7 @@ from anachronism.engine.actions import (
 )
 from anachronism.engine.armies import apply_orders
 from anachronism.engine.decrees import apply_decree
+from anachronism.engine.dilemmas import answer
 from anachronism.engine.diplomacy import apply_diplomacy
 from anachronism.engine.judge import apply_ruling
 from anachronism.engine.state import GameState, Project
@@ -78,6 +80,14 @@ def _apply(state: GameState, action: Action) -> tuple[bool, str]:
         return apply_decree(state, action)
     if isinstance(action, RaiseArmy | MarchArmy | ArmyStance | DisbandArmy | Fortify):
         return apply_orders(state, action)
+    if isinstance(action, ChooseDilemma):
+        dilemma = state.world.dilemmas.get(action.dilemma)
+        if dilemma is None or state.dilemma != action.dilemma or civ.id != state.player_civ:
+            return False, "that question is not before the court"
+        if not 0 <= action.choice < len(dilemma.choices):
+            return False, "no such answer"
+        state.dilemma = None
+        return True, answer(state, dilemma, action.choice)
     if isinstance(action, RuleOnIdea):
         return apply_ruling(state, civ.id, action.ruling)
     if isinstance(

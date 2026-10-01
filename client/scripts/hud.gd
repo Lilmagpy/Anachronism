@@ -47,6 +47,7 @@ var _root := Control.new()
 var _top := HBoxContainer.new()
 var _side_body := VBoxContainer.new()
 var _tabs := HBoxContainer.new()
+var _dilemma := PanelContainer.new()
 var _card := PanelContainer.new()
 var _card_body := VBoxContainer.new()
 var _chronicle := VBoxContainer.new()
@@ -72,6 +73,12 @@ func _ready() -> void:
 	_build_card()
 	_build_chronicle()
 	_build_end_turn()
+	_dilemma.set_anchors_preset(Control.PRESET_CENTER_TOP)
+	_dilemma.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	_dilemma.offset_top = 110
+	_dilemma.custom_minimum_size = Vector2(620, 0)
+	_dilemma.visible = false
+	_root.add_child(_dilemma)
 	_hover.add_theme_color_override("font_color", UiStyle.CREAM)
 	_hover.add_theme_color_override("font_outline_color", Color(0.1, 0.06, 0.03, 0.95))
 	_hover.add_theme_constant_override("outline_size", 7)
@@ -100,10 +107,40 @@ func show_view(new_view: Dictionary) -> void:
 	_fill_side()
 	_fill_card()
 	_fill_chronicle()
+	_fill_dilemma()
 	var outcome: Variant = view.get("victory", {}).get("outcome")
 	if outcome != null and not _outcome_shown:
 		_outcome_shown = true
 		_show_outcome(outcome)
+
+
+## A choice put to the ruler (D-104): the situation and a button for each answer, with what
+## it will do. Left unanswered, the court takes the first answer when the turn ends.
+func _fill_dilemma() -> void:
+	for child in _dilemma.get_children():
+		child.queue_free()
+	var question: Variant = view.get("dilemma")
+	_dilemma.visible = question != null
+	if question == null:
+		return
+	var body := VBoxContainer.new()
+	body.add_theme_constant_override("separation", 6)
+	body.add_child(UiStyle.label(str(question["title"]), 24, UiStyle.RED, "title", 800))
+	var text := _wrapped(str(question["text"]), 16, INK)
+	text.custom_minimum_size = Vector2(580, 0)
+	body.add_child(text)
+	for i in question["choices"].size():
+		var choice: Dictionary = question["choices"][i]
+		var row := VBoxContainer.new()
+		row.add_theme_constant_override("separation", 0)
+		var pick := _button(str(choice["label"]), func():
+			action_requested.emit({"kind": "dilemma", "dilemma": question["id"], "choice": i}))
+		pick.add_theme_font_size_override("font_size", 16)
+		row.add_child(pick)
+		row.add_child(_label(str(choice["hint"]), 12, DIM))
+		body.add_child(row)
+	body.add_child(_label("If you do not choose, the court will take the first answer.", 12, DIM))
+	_dilemma.add_child(body)
 
 
 ## The end of the game (DESIGN §11): a banner across the screen; play can continue.
