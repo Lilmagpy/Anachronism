@@ -207,6 +207,25 @@ dialogue:
     speaker: steward
     lines:
       - "Our people in {subject} have thrown out the foreigners and come home to us! The bells are ringing."
+  - id: sea_battle_won
+    speaker: general
+    lines:
+      - "Our fleet has won on the {subject}! Their ships are sunk or fled, and the sea is ours to cross."
+      - "Victory on the {subject}. Every shore of it lies open to us now - and closed to them."
+  - id: sea_battle_lost
+    speaker: general
+    lines:
+      - "Our fleet is beaten on the {subject}. What ships we have left are running for harbour."
+      - "The {subject} belongs to them now. Until we build again, our armies cannot cross it."
+  - id: blockade
+    speaker: steward
+    lines:
+      - "Their warships lie off {subject}. No ship comes in, no ship goes out, and the merchants are ruined."
+      - "{subject} is blockaded. Grain rots on the quays and the customs house is empty."
+  - id: crossing_barred
+    speaker: general
+    lines:
+      - "The army waits on the shore, but their fleet commands the water. Win the sea first; then we cross to {subject}."
 
   - id: quiet
     speaker: steward

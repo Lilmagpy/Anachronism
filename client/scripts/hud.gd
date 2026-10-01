@@ -39,6 +39,8 @@ var court_mode := "offline"
 var selected_army := ""        ## the army the player picked (drawn with a gold ring)
 var marching_army := ""        ## waiting for the player to click where this army should march
 var levy_style := "balanced"   ## the mix of soldiers the next levy will have
+var selected_fleet := ""       ## the fleet the player picked (drawn with a gold ring)
+var sailing_fleet := ""        ## waiting for the player to click where this fleet should sail
 var _outcome_shown := false
 var dev_info: Dictionary = {}   ## filled by main: engine and model details for F3
 var _dev := Label.new()     ## "online" when a language model rules, from settings
@@ -1129,8 +1131,7 @@ func _fill_card() -> void:
 		_card_body.add_child(_wrapped("Click a province to see who holds it and what it has. Drag to move, scroll to zoom.", 13))
 		return
 	if not selected.has("owner"):
-		_card_body.add_child(_label(str(selected["name"]), 20, GOLD))
-		_card_body.add_child(_label("Sea", 13, DIM))
+		_fill_sea_card()
 		return
 	var p := selected
 	_card_body.add_child(_label(("♛ " if p["capital"] else "") + str(p["name"]), 20, GOLD))
@@ -1182,6 +1183,8 @@ func _fill_card() -> void:
 		_card_body.add_child(_wrapped(held, 13, INK if bool(p["garrisoned"]) else BAD))
 	if int(p.get("ravaged", 0)) > 0:
 		_card_body.add_child(_wrapped("Ravaged by war: half its crops and goods are lost until it recovers.", 13, BAD))
+	if bool(p.get("blockaded", false)):
+		_card_body.add_child(_wrapped("Blockaded: enemy warships close its harbours, and most of its trade is lost. Win the sea to lift it.", 13, BAD))
 	var hard := "easy" if defence < 11000 else ("hard" if defence < 25000 else "very hard")
 	_card_body.add_child(_wrapped("To take in war: %s (%.1f×%s)" % [hard, defence / 10000.0,
 		(", " + ", ".join(why)) if not why.is_empty() else ""], 13, DIM))
@@ -1203,6 +1206,8 @@ func _fill_card() -> void:
 			_card_body.add_child(build)
 	if p["owner"] == view["player"] and view.has("levy"):
 		_card_body.add_child(_levy_box(p))
+	if p["owner"] == view["player"] and p.get("port") != null and view.has("navy"):
+		_card_body.add_child(_shipyard_box(p))
 	# a rival's province: where you stand with its holder, and what you can do
 	for civ in view["civs"]:
 		if civ["id"] == p["owner"] and civ["id"] != view["player"] and civ.get("relation") != null:
@@ -1325,6 +1330,106 @@ func _levy_box(p: Dictionary) -> Control:
 		sizes.add_child(button)
 	box.add_child(sizes)
 	return box
+
+
+# --- fleets ------------------------------------------------------------------------------
+
+## A sea: who commands it, its shores, and the fleets on it (D-107).
+func _fill_sea_card() -> void:
+	_card_body.add_child(_label(str(selected["name"]), 20, GOLD))
+	var command: Variant = selected.get("command")
+	var who := "No warships sail here."
+	if command != null:
+		who = "The %s fleet commands it%s." % [_civ_adjective(str(command)), " (yours)" if command == view["player"] else ""]
+	_card_body.add_child(_label("Sea · " + who, 13, DIM))
+	var shores: Array = []
+	for pid in selected.get("shores", []):
+		shores.append(str(_find_place(pid).get("name", pid)))
+	if shores.size() > 8:
+		shores = shores.slice(0, 8) + ["%d more" % (shores.size() - 8)]
+	if not shores.is_empty():
+		_card_body.add_child(_wrapped("Shores: " + ", ".join(shores), 12, DIM))
+	_card_body.add_child(_wrapped("Armies cross a sea only where no stronger enemy fleet holds it.", 12, DIM))
+	var here: Array = view.get("fleets", []).filter(func(f): return f["sea"] == selected["id"])
+	if not here.is_empty():
+		_card_body.add_child(_label("Fleets here", 15, GOLD))
+		for fleet in here:
+			_card_body.add_child(_fleet_box(fleet))
+
+
+## One fleet: its colours, ships and doings; orders if yours.
+func _fleet_box(fleet: Dictionary) -> Control:
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 1)
+	var mine: bool = fleet["owner"] == view["player"]
+	var head := HBoxContainer.new()
+	var swatch := ColorRect.new()
+	swatch.color = civ_colours.get(fleet["owner"], Color.GRAY)
+	swatch.custom_minimum_size = Vector2(12, 12)
+	swatch.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	head.add_child(swatch)
+	var title := "%s · %d %s" % [str(fleet["name"]), int(fleet["ships"]), str(fleet["ship_name"]).to_lower()]
+	if not mine:
+		title = "%s %s" % [_civ_adjective(str(fleet["owner"])), title]
+	var name := _label(title, 14, GOLD if fleet["id"] == selected_fleet else INK)
+	name.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	head.add_child(name)
+	box.add_child(head)
+	var notes: Array = ["strength %s" % number(int(fleet["power"]))]
+	if mine:
+		notes.append("costs %d wealth a turn" % int(fleet["upkeep"]))
+	if fleet["target"] != null:
+		notes.append("sailing for the %s" % str(_find_place(str(fleet["target"])).get("name", fleet["target"])))
+	box.add_child(_wrapped(" · ".join(notes), 12, DIM))
+	if mine:
+		var orders := HBoxContainer.new()
+		orders.add_theme_constant_override("separation", 4)
+		var go := _button("Sail…", func():
+			selected_fleet = str(fleet["id"])
+			sailing_fleet = str(fleet["id"])
+			message = "Click the sea (or a coastal province) the %s should sail to." % str(fleet["name"])
+			armies_changed.emit()
+			show_view(view))
+		go.add_theme_font_size_override("font_size", 13)
+		go.tooltip_text = "Then click a sea: the fleet sails there (two seas a turn) and fights any enemy fleet it meets"
+		orders.add_child(go)
+		var scrap := _small_button("Lay up", {"kind": "scuttle", "fleet": fleet["id"]})
+		scrap.tooltip_text = "Break up the ships: they cost nothing more - but the sea is open to your enemies"
+		orders.add_child(scrap)
+		box.add_child(orders)
+	return box
+
+
+## Building warships in one of your coastal provinces.
+func _shipyard_box(p: Dictionary) -> Control:
+	var navy: Dictionary = view["navy"]
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 2)
+	box.add_child(_label("Build a fleet here", 15, GOLD))
+	if navy.get("ship") == null:
+		box.add_child(_wrapped("Warships need %s." % str(navy.get("needs", "Sailing")), 12, DIM))
+		return box
+	var sea := str(_find_place(str(p["port"])).get("name", p["port"]))
+	box.add_child(_wrapped("%s: %s They put to sea in the %s." % [str(navy["ship"]), str(navy["note"]), sea], 12, DIM))
+	var sizes := HBoxContainer.new()
+	sizes.add_theme_constant_override("separation", 4)
+	var stores: Dictionary = view["status"]["stores"]
+	for size in ["small", "medium", "large"]:
+		var cost: Dictionary = navy["sizes"][size]
+		var button := _small_button("%s %d" % [size.capitalize(), int(cost["ships"])],
+			{"kind": "build_fleet", "province": p["id"], "size": size})
+		button.tooltip_text = "%d %s: %d materials and %d wealth, then %d wealth a turn" % [int(cost["ships"]),
+			str(navy["ship"]).to_lower(), int(cost["materials"]), int(cost["wealth"]), int(cost["upkeep"])]
+		button.disabled = int(stores["materials"]) < int(cost["materials"]) or int(stores["wealth"]) < int(cost["wealth"])
+		sizes.add_child(button)
+	box.add_child(sizes)
+	return box
+
+
+## The sea a coastal province launches into (for a click while choosing where to sail).
+func port_of(place_id: String) -> String:
+	var port: Variant = _find_place(place_id).get("port")
+	return str(port) if port != null else ""
 
 
 func _relation_of(civ_id: String) -> String:

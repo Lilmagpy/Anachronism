@@ -300,7 +300,7 @@ def test_levies_breed_unrest(warring: GameState) -> None:
 
 
 def test_battles_are_told_to_fit(warring: GameState) -> None:
-    from anachronism.engine.armies import tell
+    from anachronism.engine.tales import tell
 
     rng = GameRng(warring.rng)
     steppe_rout = tell(warring, "mounted", "steppe", True, rng)

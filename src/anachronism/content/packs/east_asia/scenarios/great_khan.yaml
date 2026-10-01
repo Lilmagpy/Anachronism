@@ -17,6 +17,7 @@ scenarios:
     common_techs: {written_law: widespread, census: adopted}
     civs:
       mongols:
+        navy_bp: 0
         disposition: aggressive
         scripts:
           - {id: "raids_on_xia", goal: "conquer", target: "western_xia", preconditions: {after_year: 1205}, note: "Genghis Khan's campaigns against the Tangut (1205-1209) end with Xia a Mongol vassal."}
@@ -203,6 +204,7 @@ scenarios:
           postal_relay: adopted
           movable_type: concept
       southern_song:
+        navy_bp: 20000
         disposition: aggressive
         scripts:
           - {id: "kaixi_expedition", goal: "conquer", target: "jurchen_jin", preconditions: {after_year: 1205, before_year: 1210}, note: "Han Tuozhou's northern expedition to recover the north (1206) - and its failure."}
@@ -371,6 +373,7 @@ scenarios:
           crucible_steel: widespread
           sternpost_rudder: adopted
       kara_khitai:
+        navy_bp: 0
         disposition: cautious
         scripts:
           - {id: "kuchlug_seizes_the_west", goal: "conquer", target: "uyghurs", preconditions: {after_year: 1210}, note: "Kuchlug usurps the Gurkhan's throne (1211) and lords it over the oasis cities."}
@@ -411,6 +414,7 @@ scenarios:
           schools: adopted
           ox_plough: adopted
       uyghurs:
+        navy_bp: 0
         disposition: mercantile
         scripts:
           - {id: "uyghurs_submit", goal: "ally", target: "mongols", preconditions: {after_year: 1208}, note: "The idiqut kills the Qara Khitai governor and submits to Genghis Khan (1209)."}

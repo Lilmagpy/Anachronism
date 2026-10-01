@@ -19,6 +19,12 @@ class Tale(Frozen):
     """One way of telling a battle."""
 
     id: Identifier
+    sea: bool = False
+    """A sea battle's tale (D-107): ``{unit}`` is then the winners' ships."""
+    ships: tuple[Identifier, ...] = ()
+    """For sea battles: the kind of warship that won it (empty: any)."""
+    civs: tuple[Identifier, ...] = ()
+    """Only when one of these states wins (empty: anyone) - Greek fire, the legions."""
     kind: UnitKind | None = None
     """The kind of soldier that won it (empty: any)."""
     terrain: tuple[Identifier, ...] = ()
@@ -26,4 +32,5 @@ class Tale(Frozen):
     rout: bool | None = None
     """Only for a rout (true), only for a hard fight (false), or either (empty)."""
     lines: tuple[Annotated[str, Field(min_length=1, max_length=300)], ...] = Field(min_length=1)
-    """Placeholders: {place} {winner} {loser} (adjectives), {unit} (the winners' soldiers)."""
+    """Placeholders: {place} {winner} {loser} (adjectives), {unit} (the winners' soldiers or
+    ships)."""

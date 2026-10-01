@@ -31,6 +31,7 @@ def cross_reference_issues(registry: Registry) -> list[ContentIssue]:
         *_unit_issues(registry),
         *_tale_issues(registry),
         *_dilemma_issues(registry),
+        *_ship_issues(registry),
         *_dialogue_issues(registry),
     ]
 
@@ -343,6 +344,11 @@ def _tale_issues(registry: Registry) -> list[ContentIssue]:
         for terrain in tale.terrain:
             if registry.is_unknown("terrain", terrain):
                 issues.append(ContentIssue(where, label, f"unknown terrain {terrain!r}"))
+        for ship in tale.ships:
+            if registry.is_unknown("ships", ship):
+                issues.append(ContentIssue(where, label, f"unknown ship {ship!r}"))
+        if tale.sea and (tale.kind or tale.terrain):
+            issues.append(ContentIssue(where, label, "a sea tale names ships, not soldiers"))
         for line in tale.lines:
             try:
                 line.format(place="", winner="", loser="", unit="")
@@ -379,4 +385,14 @@ def _dilemma_issues(registry: Registry) -> list[ContentIssue]:
                 text.format(civ="", ruler="", adjective="")
             except (KeyError, IndexError, ValueError):
                 report("texts may use only {civ} {ruler} {adjective}")
+    return issues
+
+
+def _ship_issues(registry: Registry) -> list[ContentIssue]:
+    issues: list[ContentIssue] = []
+    for ship in registry.ships.values():
+        for tech in ship.needs_techs:
+            if registry.is_unknown("techs", tech):
+                where = registry.origin("ships", ship.id)
+                issues.append(ContentIssue(where, f"ships ({ship.id})", f"unknown tech {tech!r}"))
     return issues

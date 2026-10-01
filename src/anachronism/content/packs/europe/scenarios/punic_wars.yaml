@@ -17,6 +17,7 @@ scenarios:
     common_techs: {written_law: widespread}
     civs:
       rome:
+        navy_bp: 500
         disposition: aggressive
         scripts:
           - {id: "first_punic_war", goal: "conquer", target: "carthage", preconditions: {after_year: -266}, note: "Rome crosses to Sicily and the First Punic War begins (264-241 BC)."}
@@ -72,6 +73,7 @@ scenarios:
           aqueduct: adopted
           concrete: concept
       carthage:
+        navy_bp: 40000
         disposition: mercantile
         scripts:
           - {id: "hannibals_war", goal: "conquer", target: "rome", preconditions: {after_year: -222}, depends_on: ["first_punic_war"], note: "Hannibal crosses the Alps (218 BC)."}
@@ -401,6 +403,7 @@ scenarios:
           roads: adopted
           piston_bellows: adopted
       rhodes:
+        navy_bp: 30000
         disposition: mercantile
         capital: rho_rhodes
         pitch: "The richest harbour of the east and its best sailors. Rule by trade, not conquest."
@@ -558,6 +561,7 @@ scenarios:
           roads: adopted
           piston_bellows: adopted
       ptolemaic:
+        navy_bp: 15000
         disposition: scholarly
         scripts:
           - {id: "third_syrian_war", goal: "conquer", target: "seleucid", preconditions: {after_year: -248}, depends_on: ["second_syrian_war"], note: "Ptolemy III marches to Babylon to avenge his sister (246 BC)."}
@@ -662,6 +666,7 @@ scenarios:
           canals: adopted
           postal_relay: adopted
       massalia:
+        navy_bp: 20000
         disposition: mercantile
         capital: mas_massalia
         pitch: "A small Greek city on the edge of the Celtic world: trade your way to greatness."
@@ -701,6 +706,7 @@ scenarios:
           roads: adopted
           piston_bellows: adopted
       numidia:
+        navy_bp: 0
         disposition: aggressive
         scripts:
           - {id: "masinissa_vs_carthage", goal: "conquer", target: "carthage", preconditions: {after_year: -170}, note: "Masinissa's Numidia nibbles at Carthage's lands (from 160 BC)."}
@@ -730,6 +736,7 @@ scenarios:
           sailing: adopted
           composite_bow: adopted
       cisalpine_gauls:
+        navy_bp: 0
         disposition: aggressive
         capital: gau_insubria
         pitch: "Your grandfathers sacked Rome. The Romans have not forgotten."

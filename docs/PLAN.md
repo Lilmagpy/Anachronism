@@ -154,5 +154,6 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] Battles told as stories (D-103); dilemmas: historical choices put to the ruler (D-104)
 - [x] Envoys: rival courts sue for peace, deliver ultimatums, propose alliances and trade (D-105)
 - [x] Holding conquered land: peoples remember, rise without garrisons, assimilate in time (D-106)
+- [x] Navies: fleets, sea battles told as stories, command of the sea, blockades (D-107)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

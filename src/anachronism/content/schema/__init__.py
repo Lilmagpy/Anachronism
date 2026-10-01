@@ -31,6 +31,7 @@ from anachronism.content.schema.scenario import (
     StartingStockpiles,
     Successor,
 )
+from anachronism.content.schema.ships import Ship
 from anachronism.content.schema.tales import Tale
 from anachronism.content.schema.tech import (
     NUMERIC_EFFECTS,
@@ -94,6 +95,7 @@ __all__ = [
     "Script",
     "ScriptGoal",
     "SeaZone",
+    "Ship",
     "SocialGroup",
     "Speaker",
     "Stage",

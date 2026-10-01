@@ -11,6 +11,7 @@ from anachronism.engine.effects import Effects, civ_effects
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import BP, apply_bp, clamp
 from anachronism.engine.happenings import strike
+from anachronism.engine.navies import admiralty, blockades, fleet_upkeep, sail
 from anachronism.engine.occupation import occupation
 from anachronism.engine.offers import envoys
 from anachronism.engine.population import grow_population
@@ -61,9 +62,13 @@ def end_turn(state: GameState) -> tuple[GameState, list[Event]]:
     strengths = rivals_turn(new, effects_by_civ, list(events.items), rng, events)
     # the campaigns: orders, marches and battles, sieges, supply; then the toll of war
     command(new, strengths)
+    admiralty(new)
+    sail(new, rng, events)
+    blockades(new, events)
     march(new, rng, events)
     sieges(new, events)
     upkeep(new, events)
+    fleet_upkeep(new)
     occupation(new, rng, events)
     wear_wars(new, events)
     for civ_id in sorted(new.civs):

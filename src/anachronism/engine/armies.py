@@ -16,12 +16,23 @@ from __future__ import annotations
 from collections import deque
 
 from anachronism.content.schema import General, RelationStatus, Unit
-from anachronism.engine.actions import ArmyStance, DisbandArmy, Fortify, Orders, RaiseArmy
+from anachronism.engine.actions import (
+    ArmyStance,
+    BuildFleet,
+    DisbandArmy,
+    Fortify,
+    Orders,
+    RaiseArmy,
+    SailFleet,
+    ScuttleFleet,
+)
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import BP, apply_bp, clamp
+from anachronism.engine.navies import SIZES, build_fleet, can_cross, sea_route
 from anachronism.engine.rivals import alive, at_war, frontier, province_links, relation, status
 from anachronism.engine.rng import GameRng
 from anachronism.engine.state import Army, GameState
+from anachronism.engine.tales import tell
 from anachronism.engine.tech import is_adopted, usable_resources
 from anachronism.engine.war import capture, defence_bp
 
@@ -345,7 +356,18 @@ def march(state: GameState, rng: GameRng, events: EventLog) -> None:
                 army.target = None
                 continue
             nxt = path[0]
-            steps[army_id] = 0 if _by_sea(state, army.province, nxt) else steps[army_id] - 1
+            by_sea = _by_sea(state, army.province, nxt)
+            if by_sea and not can_cross(state, army.owner, army.province, nxt):
+                army.target = None  # the enemy commands the sea
+                place = state.world.geography[nxt].name
+                events.add(
+                    army.owner,
+                    "crossing_barred",
+                    f"Enemy warships bar the crossing to {place}.",
+                    place,
+                )
+                continue
+            steps[army_id] = 0 if by_sea else steps[army_id] - 1
             army.came_from = army.province
             army.province = nxt
             army.siege_bp = 0
@@ -505,7 +527,7 @@ def battle(
     rout = margin >= 4000
     terrain = state.world.geography[province_id].terrain
     named = "the " + place[4:] if place.startswith("The ") else place  # "of the Punjab"
-    story = tell(state, state.world.units[hero].kind, terrain, rout, rng).format(
+    story = tell(state, state.world.units[hero].kind, terrain, rout, rng, winner=winner).format(
         place=named, winner=w_civ.adjective, loser=l_civ.adjective, unit=hero_name
     )
     story = story[:1].upper() + story[1:]
@@ -523,23 +545,6 @@ def battle(
         _retreat(state, army, events)
     _prune(state)
     return winner
-
-
-def tell(state: GameState, kind: str, terrain: str, rout: bool, rng: GameRng) -> str:
-    """The most fitting way to tell a battle (content ``tales``), one of its lines."""
-    best: tuple[int, str] | None = None
-    for tale_id, tale in sorted(state.world.tales.items()):
-        if (tale.kind and tale.kind != kind) or (tale.terrain and terrain not in tale.terrain):
-            continue
-        if tale.rout is not None and tale.rout != rout:
-            continue
-        score = 2 * bool(tale.kind) + 2 * bool(tale.terrain) + (tale.rout is not None)
-        if best is None or score > best[0]:
-            best = (score, tale_id)
-    if best is None:
-        return "At {place} the {winner} {unit} carried the day against the {loser} host."
-    lines = state.world.tales[best[1]].lines
-    return lines[rng.below(len(lines))]
 
 
 def _casualties(army: Army, loss_bp: int) -> int:
@@ -911,6 +916,22 @@ def apply_orders(state: GameState, action: Orders) -> tuple[bool, str]:
     """Carry out an order to raise, march, halt or disband an army, or to build walls."""
     if isinstance(action, Fortify):
         return fortify(state, action.civ, action.province)
+    if isinstance(action, BuildFleet):
+        fleet, message = build_fleet(state, action.civ, action.province, SIZES[action.size])
+        return fleet is not None, message
+    if isinstance(action, SailFleet | ScuttleFleet):
+        fleet = state.fleets.get(action.fleet)
+        if fleet is None or fleet.owner != action.civ:
+            return False, f"you have no fleet {action.fleet!r}"
+        if isinstance(action, ScuttleFleet):
+            state.fleets.pop(fleet.id)
+            return True, f"The {fleet.name} is laid up and its ships broken up."
+        if action.sea == fleet.sea:
+            return False, f"the {fleet.name} is already there"
+        if action.sea not in state.world.seas or not sea_route(state, fleet.sea, action.sea):
+            return False, "the fleet cannot sail there"
+        fleet.target = action.sea
+        return True, f"The {fleet.name} sails for the {state.world.seas[action.sea].name}."
     if isinstance(action, RaiseArmy):
         if action.province not in state.provinces:
             return False, f"unknown province {action.province!r}"

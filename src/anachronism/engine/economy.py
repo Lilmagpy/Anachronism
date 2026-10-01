@@ -180,6 +180,10 @@ def production(state: GameState, civ_id: str, effects: Effects, production_bp: i
         trade_bp = economy.base_trade_bp
         trade_bp += economy.coastal_trade_bp if geography.coastal else 0
         trade_bp += economy.river_trade_bp if geography.river else 0
+        if province.blockaded:  # enemy warships close the harbours (D-107)
+            blockade = state.world.rules.armies.blockade_trade_bp
+            trade_bp -= economy.coastal_trade_bp if geography.coastal else 0
+            trade_bp -= apply_bp(trade_bp, blockade)
         trade += people * economy.wealth_per_1000_bp * trade_bp // BP
         knowledge += people * economy.knowledge_per_1000_bp
         knowledge += people * literacy // BP * economy.knowledge_per_1000_literate_bp

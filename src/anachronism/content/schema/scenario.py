@@ -88,6 +88,8 @@ class ScenarioCiv(Frozen):
     disposition: Disposition = Disposition.CAUTIOUS
     """The ruler's temperament, which steers the civilisation once it leaves its script."""
     martial_bp: Annotated[int, Field(ge=1000, le=200_000)] = 10_000
+    navy_bp: Annotated[int, Field(ge=0, le=100_000)] = 10_000
+    """Seafaring, against the usual: Carthage's fleet was many times Rome's in 264 BC."""
     """How much of its people a state can put under arms, against the usual 10_000: steppe
     peoples, where every adult man rode and shot, raise far more; a demilitarised court less."""
     scripts: tuple[Script, ...] = ()

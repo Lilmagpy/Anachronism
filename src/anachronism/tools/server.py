@@ -298,6 +298,7 @@ class Session:
             "revolt",
             "collapse",
             "battle_won",
+            "sea_battle_won",
         }
         entries: list[dict[str, Any]] = []
         seen: set[tuple[int, str]] = set()  # a peace is logged for each side: show it once

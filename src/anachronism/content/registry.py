@@ -17,6 +17,7 @@ from anachronism.content.schema import (
     Rules,
     Scenario,
     SeaZone,
+    Ship,
     Speaker,
     Tale,
     TechNode,
@@ -46,6 +47,7 @@ class Registry:
     units: dict[str, Unit] = field(default_factory=dict)
     tales: dict[str, Tale] = field(default_factory=dict)
     dilemmas: dict[str, Dilemma] = field(default_factory=dict)
+    ships: dict[str, Ship] = field(default_factory=dict)
     origins: dict[tuple[str, str], str] = field(default_factory=dict)
     invalid: dict[str, set[str]] = field(default_factory=dict)
     """Ids of items that exist but failed validation (already reported), per kind."""

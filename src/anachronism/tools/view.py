@@ -21,6 +21,8 @@ from anachronism.engine.commands import describe_blockers
 from anachronism.engine.decrees import cost, explain_costs, explain_ready_in, news_on_the_road
 from anachronism.engine.dilemmas import effects_text, fill
 from anachronism.engine.economy import project_costs
+from anachronism.engine.navies import SIZES, best_ship, sea_links, sea_route, seas_of
+from anachronism.engine.navies import power as sea_power
 from anachronism.engine.occupation import garrisoned, restless
 from anachronism.engine.offers import describe
 from anachronism.engine.projects import project_turns
@@ -51,6 +53,7 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
     civ = state.civs[civ_id]
     room = capacity(state, civ_id)
     strengths = {c: strength(state, c) for c in sorted(state.civs)}
+    links = sea_links(state)
     return {
         "turn": state.turn + 1,
         "year": state.year,
@@ -111,6 +114,8 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
         ],
         "wars": fronts(state),
         "armies": _armies(state),
+        "fleets": _fleets(state),
+        "navy": _navy(state, civ_id),
         "dilemma": _dilemma(state),
         "offer": {
             "from": state.offer.from_civ,
@@ -121,6 +126,7 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
         else None,
         "levy": _levy(state, civ_id),
         "battles": _battle_sites(state, events or []),
+        "sea_battles": _sea_battle_sites(state, events or []),
         "victory": {
             "paths": progress(state),
             "outcome": state.outcome.model_dump() if state.outcome else None,
@@ -145,6 +151,8 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
                 "walls": state.provinces[pid].walls,
                 **_people(state, pid),
                 "ravaged": state.provinces[pid].ravaged,
+                "port": next(iter(seas_of(state, pid)), None),
+                "blockaded": state.provinces[pid].blockaded,
                 **_walls_next(state, pid),
             }
             for pid, geography in sorted(state.world.geography.items())
@@ -155,6 +163,9 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
                 "name": sea.name,
                 "position": list(sea.position) if sea.position else None,
                 "latlon": list(sea.latlon) if sea.latlon else None,
+                "shores": sorted(p for p in sea.neighbours if p in state.provinces),
+                "links": sorted(links[sid]),
+                "command": _command_of(state, sid),
             }
             for sid, sea in sorted(state.world.seas.items())
         ],
@@ -344,6 +355,60 @@ def _armies(state: GameState) -> list[dict[str, Any]]:
     return out
 
 
+def _fleets(state: GameState) -> list[dict[str, Any]]:
+    """Every fleet at sea: whose, where, how many ships, and where it is sailing."""
+    out = []
+    for fleet_id, fleet in sorted(state.fleets.items()):
+        ship = state.world.ships[fleet.ship]
+        out.append(
+            {
+                "id": fleet_id,
+                "owner": fleet.owner,
+                "name": fleet.name,
+                "sea": fleet.sea,
+                "ship": fleet.ship,
+                "ship_name": ship.name,
+                "ships": fleet.ships,
+                "power": fleet.ships * ship.attack,
+                "upkeep": fleet.ships * ship.upkeep_wealth // 10,
+                "target": fleet.target,
+                "route": sea_route(state, fleet.sea, fleet.target) if fleet.target else [],
+            }
+        )
+    return out
+
+
+def _navy(state: GameState, civ_id: str) -> dict[str, Any]:
+    """What the player's shipyards can build: the best warship and what squadrons cost."""
+    ship = best_ship(state, civ_id)
+    if ship is None:
+        sailing = state.tech_nodes.get("sailing")
+        return {"ship": None, "needs": sailing.name if sailing else "Sailing"}
+    return {
+        "ship": ship.name,
+        "ship_id": ship.id,
+        "attack": ship.attack,
+        "note": ship.note,
+        "sizes": {
+            size: {
+                "ships": n,
+                "materials": ship.materials * n,
+                "wealth": ship.wealth * n,
+                "upkeep": n * ship.upkeep_wealth // 10,
+            }
+            for size, n in SIZES.items()
+        },
+    }
+
+
+def _command_of(state: GameState, sea: str) -> str | None:
+    """Who commands a sea: the owner of the most naval power there, if anyone's ships are."""
+    owners = sorted({f.owner for f in state.fleets.values() if f.sea == sea})
+    if not owners:
+        return None
+    return max(owners, key=lambda o: (sea_power(state, o, sea), o))
+
+
 def _levy(state: GameState, civ_id: str) -> dict[str, Any]:
     """What raising troops would give and cost: shares, styles and costs per 10,000 men."""
     rules = state.world.rules.armies
@@ -376,6 +441,14 @@ def _battle_sites(state: GameState, events: list[Event]) -> list[str]:
     by_name = {g.name.split(" (")[0]: pid for pid, g in state.world.geography.items()}
     return sorted(
         {by_name[e.subject] for e in events if e.kind == "battle_won" and e.subject in by_name}
+    )
+
+
+def _sea_battle_sites(state: GameState, events: list[Event]) -> list[str]:
+    """Seas where fleets fought in the last turn."""
+    by_name = {sea.name: sid for sid, sea in state.world.seas.items()}
+    return sorted(
+        {by_name[e.subject] for e in events if e.kind == "sea_battle_won" and e.subject in by_name}
     )
 
 

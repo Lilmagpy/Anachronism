@@ -168,6 +168,12 @@ buildings. Edges: land, river, sea lane, mountain pass (with movement costs).
   and marsh, and fast when a province cannot feed them; unpaid armies lose heart and desert.
 - **Weariness**: wars grind on until one side tires; the side losing battles and provinces
   tires faster, and carries the grievance away.
+- **The sea** (D-107): fleets of warships (galleys to gun ships, content in
+  `core/ships.yaml`) are built on your coasts, sail two seas a turn and fight enemy fleets
+  they meet. Whoever commands a sea decides which armies may cross it; enemy fleets that
+  command every sea on a province's shore blockade it (most of its trade lost, its people
+  tiring of the war). Fleets cost wealth every turn. Seafaring states (Carthage, Venice, the
+  Norse) start with strong fleets; others must build them.
 
 ## 11. Rival civilisations
 - **Scripts** are conditional intentions with preconditions and triggers, not dated events.

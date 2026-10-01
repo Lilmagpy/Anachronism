@@ -352,6 +352,7 @@ scenarios:
           paper: concept
           aqueduct: adopted
       venice:
+        navy_bp: 40000
         disposition: mercantile
         capital: m_venice
         leader: Pietro II Orseolo
@@ -396,6 +397,7 @@ scenarios:
           paper: concept
           canals: adopted
       denmark:
+        navy_bp: 30000
         disposition: aggressive
         scripts:
           - {id: "battle_of_svolder", goal: "conquer", target: "norway", preconditions: {after_year: 999}, note: "Sweyn Forkbeard and his allies defeat Olaf Tryggvason at Svolder (1000)."}
@@ -445,6 +447,7 @@ scenarios:
           heavy_plough: adopted
           sternpost_rudder: concept
       norway:
+        navy_bp: 30000
         disposition: cautious
         capital: m_trondelag
         leader: Olaf Tryggvason
@@ -729,6 +732,7 @@ scenarios:
           sternpost_rudder: concept
           schools: concept
       byzantium:
+        navy_bp: 15000
         disposition: aggressive
         scripts:
           - {id: "basil_crushes_bulgaria", goal: "conquer", target: "bulgaria", preconditions: {after_year: 1000}, note: "Basil II, 'the Bulgar-slayer', annexes Bulgaria (1018)."}
@@ -1034,6 +1038,7 @@ scenarios:
           crop_rotation: adopted
           schools: concept
       fatimids:
+        navy_bp: 15000
         disposition: pious
         capital: m_cairo
         leader: al-Hakim

@@ -93,6 +93,7 @@ def build_state(
         units=dict(content.units),
         tales=dict(sorted(content.tales.items())),
         dilemmas=dict(sorted(content.dilemmas.items())),
+        ships=dict(sorted(content.ships.items())),
         faiths={f.id: f for f in scenario.faiths},
         successors={
             c: start.successors for c, start in sorted(scenario.civs.items()) if start.successors
@@ -114,6 +115,7 @@ def build_state(
         civs[civ_id].ruler = start.leader
         civs[civ_id].ruler_age = start.leader_age
         civs[civ_id].martial_bp = start.martial_bp
+        civs[civ_id].navy_bp = start.navy_bp
         civs[civ_id].generals = list(start.generals)
     for faith in scenario.faiths:
         for follower in faith.followers:

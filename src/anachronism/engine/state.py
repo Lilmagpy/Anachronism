@@ -27,6 +27,7 @@ from anachronism.content.schema import (
     Rules,
     Script,
     SeaZone,
+    Ship,
     SocialGroup,
     Stage,
     Successor,
@@ -83,6 +84,8 @@ class World(Frozen):
     tales: dict[str, Tale] = Field(default_factory=dict)
     dilemmas: dict[str, Dilemma] = Field(default_factory=dict)
     """Choices that may be put to the ruler."""
+    ships: dict[str, Ship] = Field(default_factory=dict)
+    """The kinds of warship that exist."""
     """How battles are told."""
     """The kinds of soldier that exist (raising them needs their advancements)."""
     """Chance events that can strike (plague, flood, bumper harvests...)."""
@@ -108,6 +111,8 @@ class ProvinceState(Mutable):
     """Fortifications built here, 0-3 (each makes the province harder to take)."""
     ravaged: int = 0
     """Turns of ruin left from pillage: fewer crops and goods until it recovers."""
+    blockaded: bool = False
+    """Enemy warships command every sea on its shore: its harbours are closed."""
 
 
 class Stockpiles(Mutable):
@@ -262,6 +267,20 @@ class Army(Mutable):
         return sum(self.troops.values())
 
 
+class Fleet(Mutable):
+    """Warships at sea (D-107): where they sail, how many, and their orders."""
+
+    id: str
+    owner: str
+    name: str
+    sea: str
+    ship: str
+    """The kind of ship (all of one kind)."""
+    ships: int
+    target: str | None = None
+    """The sea it is sailing to, if any."""
+
+
 class Offer(Mutable):
     """A rival court's proposal waiting for the player's answer (D-105)."""
 
@@ -300,6 +319,7 @@ class CivState(Mutable):
     faith: str = ""
     """The court's religion or school of belief (a faith id, or empty)."""
     martial_bp: int = 10_000  # share of the people under arms, against the usual (steppe: more)
+    navy_bp: int = 10_000  # seafaring, against the usual: the size of its starting fleet
     revolts: int = 0  # provinces lost to revolt: half the starting ones is collapse
     envoy_turn: int = -1  # the turn the last embassy left: one a turn
     mercenaries: int = 0
@@ -354,6 +374,8 @@ class GameState(Mutable):
     dilemmas_seen: list[str] = Field(default_factory=list)
     armies: dict[str, Army] = Field(default_factory=dict)
     """Every army in the field, keyed by id."""
+    fleets: dict[str, Fleet] = Field(default_factory=dict)
+    """Every fleet at sea, keyed by id."""
     relations: dict[str, Relation] = Field(default_factory=dict)
     """Keyed ``"a|b"`` with the ids sorted; only pairs that can reach each other."""
     news: list[NewsInTransit] = Field(default_factory=list)

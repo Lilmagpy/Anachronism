@@ -17,6 +17,7 @@ scenarios:
     common_techs: {written_law: widespread}
     civs:
       macedon:
+        navy_bp: 5000
         disposition: aggressive
         capital: a3_pella
         leader: "Alexander"
@@ -64,6 +65,7 @@ scenarios:
           piston_bellows: adopted
           crossbow: concept
       persia:
+        navy_bp: 15000
         disposition: cautious
         scripts:
           - {id: "persian_counteroffensive", goal: "conquer", target: "macedon", preconditions: {after_year: -335}, note: "Memnon of Rhodes and the Persian fleet carry the war to the Aegean (333 BC)."}
@@ -132,6 +134,7 @@ scenarios:
           aqueduct: adopted
           republic: concept
       athens:
+        navy_bp: 40000
         disposition: cautious
         capital: a3_attica
         leader: "Demosthenes"
@@ -297,6 +300,7 @@ scenarios:
           roads: adopted
           piston_bellows: adopted
       illyrians:
+        navy_bp: 15000
         disposition: aggressive
         scripts:
           - {id: "illyrian_revolt", goal: "conquer", target: "macedon", preconditions: {after_year: -337, before_year: -325}, note: "Cleitus and Glaucias rise against the new king (335 BC)."}
@@ -328,6 +332,7 @@ scenarios:
           fortification: adopted
           sailing: adopted
       odrysians:
+        navy_bp: 0
         disposition: cautious
         capital: a3_odrysia
         leader: "Seuthes III"
@@ -358,6 +363,7 @@ scenarios:
           writing: concept
           composite_bow: adopted
       scythians:
+        navy_bp: 0
         disposition: aggressive
         scripts:
           - {id: "scythians_cross_the_danube", goal: "conquer", target: "odrysians", preconditions: {after_year: -337}, note: "The steppe riders strike south across the Danube."}
@@ -389,6 +395,7 @@ scenarios:
           sailing: adopted
           composite_bow: widespread
       carthage:
+        navy_bp: 30000
         disposition: mercantile
         scripts:
           - {id: "sicilian_wars", goal: "conquer", target: "syracuse", preconditions: {after_year: -337}, note: "Carthage and Syracuse fight on for Sicily, as they have for a century."}

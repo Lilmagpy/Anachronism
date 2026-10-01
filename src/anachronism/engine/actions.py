@@ -247,7 +247,42 @@ class AnswerEnvoy(Frozen):
     accept: bool
 
 
-Orders = RaiseArmy | MarchArmy | ArmyStance | DisbandArmy | Fortify
+class BuildFleet(Frozen):
+    """Build warships in a coastal province (D-107)."""
+
+    kind: Literal["build_fleet"] = "build_fleet"
+    civ: str
+    province: str
+    size: Literal["small", "medium", "large"] = "medium"
+
+
+class SailFleet(Frozen):
+    """Order a fleet to sail to a sea."""
+
+    kind: Literal["sail"] = "sail"
+    civ: str
+    fleet: str
+    sea: str
+
+
+class ScuttleFleet(Frozen):
+    """Lay up a fleet: its ships are broken up and cost nothing more."""
+
+    kind: Literal["scuttle"] = "scuttle"
+    civ: str
+    fleet: str
+
+
+Orders = (
+    RaiseArmy
+    | MarchArmy
+    | ArmyStance
+    | DisbandArmy
+    | Fortify
+    | BuildFleet
+    | SailFleet
+    | ScuttleFleet
+)
 
 
 Decree = HoldFestival | HireMercenaries | Explain | SealBorders | SpreadRumours
@@ -280,6 +315,9 @@ Action = Annotated[
     | ArmyStance
     | DisbandArmy
     | Fortify
+    | BuildFleet
+    | SailFleet
+    | ScuttleFleet
     | ChooseDilemma
     | AnswerEnvoy,
     Field(discriminator="kind"),

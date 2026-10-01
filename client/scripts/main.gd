@@ -354,10 +354,13 @@ func _on_action(action: Dictionary) -> void:
 		view = reply["view"]
 		if reply["accepted"] and action["kind"] == "start":
 			hud.tab = "projects"
-		if action["kind"] in ["raise", "march", "stance", "disband", "fortify", "dilemma", "envoy_answer"]:
+		if action["kind"] in ["raise", "march", "stance", "disband", "fortify", "dilemma", "envoy_answer",
+				"build_fleet", "sail", "scuttle"]:
 			hud.message = str(reply["message"])
 			if reply["accepted"] and action["kind"] == "disband":
 				hud.selected_army = ""
+			if reply["accepted"] and action["kind"] == "scuttle":
+				hud.selected_fleet = ""
 		_draw_armies()
 	hud.show_view(view)
 	if reply != null:
@@ -392,12 +395,16 @@ func _on_end_turn() -> void:
 func _draw_armies() -> void:
 	if provinces != null:
 		var chosen := hud.selected_army if hud != null else ""
-		provinces.show_armies(view.get("armies", []), view.get("battles", []), chosen)
+		var ships := hud.selected_fleet if hud != null else ""
+		provinces.show_armies(view.get("armies", []), view.get("battles", []), chosen,
+			view.get("fleets", []), view.get("sea_battles", []), ships)
 
 
 func _select(place_id: String) -> void:
 	var mine: Array = view.get("armies", []).filter(func(a): return a["province"] == place_id and a["owner"] == view["player"])
 	hud.selected_army = str(mine[0]["id"]) if not mine.is_empty() else ""
+	var ships: Array = view.get("fleets", []).filter(func(f): return f["sea"] == place_id and f["owner"] == view["player"])
+	hud.selected_fleet = str(ships[0]["id"]) if not ships.is_empty() else ""
 	_draw_armies()
 	hud.select(place_id)
 	for index in provinces.sites.size():
@@ -488,6 +495,13 @@ func _unhandled_input(event: InputEvent) -> void:
 				var army := hud.marching_army
 				hud.marching_army = ""
 				_on_action({"kind": "march", "army": army, "target": place})
+				return
+			if hud.sailing_fleet != "" and place != "":
+				var fleet := hud.sailing_fleet
+				hud.sailing_fleet = ""
+				# a click on a coastal province means the sea on its shore
+				var sea := place if provinces.sites[index]["sea"] else hud.port_of(place)
+				_on_action({"kind": "sail", "fleet": fleet, "sea": sea if sea != "" else place})
 				return
 			_select(place)
 	elif event is InputEventMouseMotion and not event.button_mask:

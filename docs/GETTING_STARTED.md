@@ -36,6 +36,11 @@ walks you through the screen the first time (Settings can replay it). Then:
   soldiers you choose: spears stop horsemen, horsemen ride down archers, archers shred
   infantry, chariots are deadly on plains and useless in hills. Armies cost food and wealth
   every turn and waste away far from home, fastest in deserts and mountains.
+- **The sea**: click a sea to see who commands it and the fleets on it. Your coastal
+  provinces can **Build a fleet**; a fleet can **Sail…** (then click a sea, or a coastal
+  province for the sea on its shore) and fights enemy fleets it meets. An army can only
+  cross a sea where no stronger enemy fleet holds it, and enemy fleets that command the
+  seas around a province blockade it, cutting its trade.
 - **Ideas**: whisper any idea in the box, or **Begin** one from the list ("ahead of their
   time" first). Each costs labour, materials, knowledge and wealth every turn until it
   works; ideas far ahead of their time cost more and make neighbours suspicious.

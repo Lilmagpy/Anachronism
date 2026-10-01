@@ -9,6 +9,7 @@ from anachronism.content.loader import Content
 from anachronism.engine.actions import LoggedAction
 from anachronism.engine.armies import standing_armies
 from anachronism.engine.commands import apply_action
+from anachronism.engine.navies import standing_fleets
 from anachronism.engine.reports import snapshot
 from anachronism.engine.setup import build_state
 from anachronism.engine.state import GameState
@@ -32,6 +33,7 @@ def new_game(
     """
     state = build_state(content, scenario_id, seed, player_civ, difficulty)
     standing_armies(state)
+    standing_fleets(state)
     for civ_id in sorted(state.civs):
         state.civs[civ_id].history.append(snapshot(state, civ_id))
     record_start(state)

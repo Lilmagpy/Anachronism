@@ -838,6 +838,23 @@ owner at the start). A conquered province keeps its people, and while it has no 
 (an army of its rulers with at least one man per hundred people) it may rise - 15% a decade,
 more when the realm is restless - going back to its old state if that still stands, or
 breaking free if not (a capital, with its court and guards, never rises). After 150 years
-a conquered people thinks of itself as its rulers.
-own. The province card says whose people live there, how long ago they were conquered,
+a conquered people thinks of itself as its rulers' own. The province card says whose people live there, how long ago they were conquered,
 and what garrison holds them. Empires now cost soldiers to keep, not only to win.
+
+## D-107 Navies: fleets, sea battles, command of the sea — DELEGATED (2026-10-01)
+Armies crossed seas freely: Carthage's great fleet and Rome's lack of one meant nothing.
+Now warships are content (`ships.yaml`: galleys, heavy warships, war junks, carracks, gun
+ships, each needing its advancements), built as squadrons of 10, 25 or 60 in a coastal
+province and launched into the sea on its shore. Fleets sail two seas a turn; enemy fleets
+that meet fight once a turn (the stronger, with luck, wins; the beaten fall back to home
+waters or a safe sea); sea battles are told like land battles, from content tales fitted to
+the winners' ships and people (rams in the narrows, fire-bombs from Song junks, broadsides,
+Greek fire for Byzantium, the corvus for Rome, turtle ships for Joseon). **Whoever commands
+a sea decides who crosses it**: an army may cross only where no stronger enemy fleet holds
+the water. **Blockades**: where enemy fleets command every sea on a province's shore, its
+harbours close - it loses most of its trade, and its people tire of the war. Fleets cost
+wealth every turn; unpaid crews desert. States start with fleets in proportion to their
+coastal people and a historical seafaring factor per scenario (`navy_bp`: Carthage 4x,
+Rome almost none in 264 BC; Venice, Denmark and Norway strong in 1000). Rival courts at
+war build ships when out-matched at sea and send their fleets to meet the enemy's - or to
+blockade its coasts.

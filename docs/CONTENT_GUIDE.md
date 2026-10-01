@@ -180,6 +180,12 @@ optional `siege` power and `mobility`, the advancements (`needs_techs`) and map 
 bold, quartermaster or beloved. New armies take the next free general; a general whose
 army disbands returns to court.
 
+`core/ships.yaml` lists the kinds of warship (D-107): `attack` per ship, the advancements
+it needs (`needs_techs`), `materials` and `wealth` to build one, and `upkeep_wealth` in
+tenths of wealth a turn. A state builds the strongest kind it can. A scenario's civ may set
+`navy_bp` (default 10000): how seafaring it is, scaling the fleet it starts with (0 for a
+people of the steppe, 40000 for Carthage or Venice).
+
 ## Dilemmas and battle tales
 `dilemmas.yaml` (in core and in any pack) holds choices put to the ruler (D-104): a title,
 the situation (`{civ}`, `{ruler}`, `{adjective}` are filled in), when it can arise
@@ -190,7 +196,9 @@ unrest, legitimacy and suspicion, `influence` of clergy, nobility and guilds, an
 (an advancement the court now knows of) and `volunteers_bp` (men who take up arms).
 `core/tales.yaml` holds the ways battles are told (D-103): a tale may require the kind of
 soldier that won, the terrain and a rout or a hard fight, and its lines may use `{place}`,
-`{winner}`, `{loser}` and `{unit}`.
+`{winner}`, `{loser}` and `{unit}`. A tale with `sea: true` tells a sea battle (D-107):
+it may require the winners' `ships` instead of soldiers and terrain. Any tale may name
+`civs`: it is then told only when one of them wins (Greek fire for Byzantium).
 
 ## Rules
 `core/rules.yaml` holds every tunable number, grouped by system and documented field by field

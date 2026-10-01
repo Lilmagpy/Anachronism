@@ -450,8 +450,10 @@ func show_ties(view: Dictionary) -> void:
 
 ## Armies in the field (D-099): soldiers in their owner's colours, larger for larger hosts,
 ## with their strength above them; a marching army's road drawn ahead of it; crossed swords
-## where battles were fought last turn. `selected_army` is drawn with a gold ring.
-func show_armies(armies: Array, battles: Array, selected_army := "") -> void:
+## where battles were fought last turn. `selected_army` is drawn with a gold ring. Fleets
+## (D-107) are drawn the same way on their seas.
+func show_armies(armies: Array, battles: Array, selected_army := "", fleets: Array = [],
+		sea_battles: Array = [], selected_fleet := "") -> void:
 	for child in _war_marks.get_children():
 		child.queue_free()
 	var by_id := {}
@@ -516,13 +518,14 @@ func show_armies(armies: Array, battles: Array, selected_army := "") -> void:
 					line.append(earth.ground_at_pixel(by_id[step]["pixel"]) + Vector3(0, 0.8, 0))
 			EarthBuilder.add_line(st, line, 0.0022, colour.lightened(0.35) if not mine else Color(1.0, 0.86, 0.35))
 			roads += 1
+	roads += _draw_fleets(st, by_id, fleets, selected_fleet)
 	if roads > 0:
 		var paths := MeshInstance3D.new()
 		paths.mesh = st.commit()
 		paths.material_override = EarthBuilder.line_material(0.002)
 		paths.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		_war_marks.add_child(paths)
-	for place in battles:
+	for place in battles + sea_battles:
 		if not by_id.has(place):
 			continue
 		var mark := Label3D.new()
@@ -537,6 +540,82 @@ func show_armies(armies: Array, battles: Array, selected_army := "") -> void:
 		mark.no_depth_test = true
 		mark.position = earth.ground_at_pixel(by_id[place]["pixel"]) + Vector3(0, 14.0, 0)
 		_war_marks.add_child(mark)
+
+
+## Fleets on their seas, with their ship counts; a sailing fleet's course drawn ahead of it.
+## Returns how many courses were added to `st`.
+func _draw_fleets(st: SurfaceTool, by_id: Dictionary, fleets: Array, selected_fleet: String) -> int:
+	var count := {}
+	var courses := 0
+	for fleet in fleets:
+		var sea: String = fleet["sea"]
+		if not by_id.has(sea):
+			continue
+		var k: int = count.get(sea, 0)
+		count[sea] = k + 1
+		var spot := _fleet_spot(by_id[sea], k)
+		var at := earth.ground_at_pixel(spot)
+		at.y = maxf(at.y, 0.0) + 0.3
+		var facing := 0.0
+		var course: Array = fleet.get("route", [])
+		if not course.is_empty() and by_id.has(course[0]):
+			facing = -(by_id[course[0]]["pixel"] - spot).angle() - PI / 2.0
+		var colour: Color = civ_colours.get(fleet["owner"], Color.GRAY)
+		var ships := int(fleet["ships"])
+		var piece := Armies.make_fleet(colour, facing, 1 if ships < 20 else (2 if ships < 50 else 3))
+		piece.scale = Vector3.ONE * clampf(1.6 + log(maxf(ships, 5.0) / 5.0) / log(10.0) * 0.8, 1.6, 3.2)
+		piece.position = at
+		_war_marks.add_child(piece)
+		var label := Label3D.new()
+		label.text = "%d ships" % ships
+		label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+		label.fixed_size = true
+		label.pixel_size = 0.0006
+		label.font_size = 32
+		label.outline_size = 12
+		var mine: bool = fleet["owner"] == player
+		label.modulate = Color(1.0, 0.86, 0.35) if mine else Color(1, 1, 1)
+		label.outline_modulate = colour.darkened(0.5)
+		label.no_depth_test = true
+		label.render_priority = 13
+		label.outline_render_priority = 12
+		label.position = at + Vector3(0, 7.0 * piece.scale.y, 0)
+		_war_marks.add_child(label)
+		if fleet["id"] == selected_fleet:
+			var ring := MeshInstance3D.new()
+			var torus := TorusMesh.new()
+			torus.inner_radius = 7.0
+			torus.outer_radius = 8.2
+			ring.mesh = torus
+			var gold := StandardMaterial3D.new()
+			gold.albedo_color = Color(1.0, 0.82, 0.2)
+			gold.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+			ring.material_override = gold
+			ring.position = at + Vector3(0, 0.2, 0)
+			_war_marks.add_child(ring)
+		if not course.is_empty():
+			var line: Array[Vector3] = [at + Vector3(0, 0.6, 0)]
+			for step in course:
+				if by_id.has(step):
+					var p := earth.ground_at_pixel(by_id[step]["pixel"])
+					line.append(Vector3(p.x, maxf(p.y, 0.0) + 0.9, p.z))
+			EarthBuilder.add_line(st, line, 0.0022, colour.lightened(0.35) if not mine else Color(1.0, 0.86, 0.35))
+			courses += 1
+	return courses
+
+
+## Where a fleet lies in its sea: near the sea's centre, on open water inside the sea zone
+## (a second fleet in the same sea lies elsewhere around it).
+func _fleet_spot(site: Dictionary, k: int) -> Vector2:
+	var centre: Vector2 = site["pixel"]
+	var index := sites.find(site)
+	for radius in [16.0, 24.0, 10.0]:
+		for turn in 8:
+			var spot: Vector2 = centre + Vector2(radius, 0).rotated(k * 2.3 + turn * PI / 4.0 + 2.4)
+			var cell := _cell_of(spot)
+			if earth.is_wet(spot) and cell >= 0 and cell < region.size() and region[cell] == index:
+				return spot
+	return centre
 
 
 ## Where an army stands in a province: beside the city, on dry land inside the province

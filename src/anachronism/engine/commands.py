@@ -7,6 +7,7 @@ from anachronism.engine.actions import (
     Action,
     AnswerEnvoy,
     ArmyStance,
+    BuildFleet,
     CancelProject,
     ChooseDilemma,
     DeclareWar,
@@ -25,6 +26,8 @@ from anachronism.engine.actions import (
     RaiseArmy,
     ResumeProject,
     RuleOnIdea,
+    SailFleet,
+    ScuttleFleet,
     SealBorders,
     SendEnvoy,
     SendMissionaries,
@@ -81,7 +84,17 @@ def _apply(state: GameState, action: Action) -> tuple[bool, str]:
         return False, f"unknown civilisation {action.civ!r}"
     if isinstance(action, HoldFestival | HireMercenaries | Explain | SealBorders | SpreadRumours):
         return apply_decree(state, action)
-    if isinstance(action, RaiseArmy | MarchArmy | ArmyStance | DisbandArmy | Fortify):
+    if isinstance(
+        action,
+        RaiseArmy
+        | MarchArmy
+        | ArmyStance
+        | DisbandArmy
+        | Fortify
+        | BuildFleet
+        | SailFleet
+        | ScuttleFleet,
+    ):
         return apply_orders(state, action)
     if isinstance(action, AnswerEnvoy):
         if state.offer is None or civ.id != state.player_civ:

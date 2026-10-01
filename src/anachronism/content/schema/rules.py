@@ -368,6 +368,14 @@ class ArmyRules(Frozen):
     weariness_per_battle_bp: NonNegative = 700
     """War weariness for losing a battle."""
     min_army: Positive = 200
+    standing_ships_per_100k: NonNegative = 3
+    """Warships a seafaring state keeps at the start, per 100,000 people on its coasts."""
+    standing_fleet_min: Positive = 10
+    """Smaller starting navies than this are not kept at all."""
+    blockade_weariness_bp: NonNegative = 100
+    """War weariness a turn for each province whose harbours an enemy fleet closes."""
+    blockade_trade_bp: Rate = 5000
+    """Share of a blockaded province's trade lost (and its coastal trade bonus with it)."""
     uprising_bp: Rate = 1500
     """Chance per decade that an ungarrisoned conquered province rises (more with unrest)."""
     assimilation_years: Positive = 150

@@ -126,6 +126,7 @@ scenarios:
           postal_relay: concept
           gunpowder: adopted
       takeda:
+        navy_bp: 0
         disposition: aggressive
         scripts:
           - {id: "kawanakajima", goal: "conquer", target: "uesugi", preconditions: {after_year: 1560}, note: "The fourth and bloodiest battle of Kawanakajima (1561)."}
@@ -555,6 +556,7 @@ scenarios:
           postal_relay: concept
           gunpowder: adopted
       mori:
+        navy_bp: 20000
         disposition: aggressive
         scripts:
           - {id: "mori_takes_izumo", goal: "conquer", target: "amago", preconditions: {after_year: 1560}, note: "Mori Motonari takes Gassan-Toda castle and ends the Amago (1566)."}

@@ -90,6 +90,8 @@ def chapters(state: GameState) -> list[Chapter]:
             "peace with": _join(peace),
             "battles won": _join(_names(mine, "battle_won")),
             "battles lost": _join(_names(mine, "battle_lost")),
+            "sea battles won": _join(_names(mine, "sea_battle_won")),
+            "sea battles lost": _join(_names(mine, "sea_battle_lost")),
             "lands won": _join(_names(mine, "conquest")),
             "lands lost": _join(_names(mine, "province_lost")),
             "rulers": " ".join(e.message for e in mine if e.kind == "ruler_died"),
@@ -122,6 +124,10 @@ def plain_text(chapter: Chapter) -> str:
         parts.append(f"Its armies won at {f['battles won']}.")
     if f["battles lost"]:
         parts.append(f"They were beaten at {f['battles lost']}.")
+    if f["sea battles won"]:
+        parts.append(f"Its fleets won on the {f['sea battles won']}.")
+    if f["sea battles lost"]:
+        parts.append(f"Its fleets were beaten on the {f['sea battles lost']}.")
     if f["lands won"]:
         parts.append(f"Its armies took {f['lands won']}.")
     if f["lands lost"]:
