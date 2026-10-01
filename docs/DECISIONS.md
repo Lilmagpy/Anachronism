@@ -537,3 +537,11 @@ any bigger empire, and spending on decrees counted against you). Now:
 Egypt at Kadesh, the region's superpower, can still win by trade in about 60 years of
 patient diplomacy; elsewhere it takes most of a game. The World tab ticks off each
 path's extra conditions.
+
+## D-079 A fair chance for small starts — DELEGATED (2026-10-01)
+Playing Oda in 1560 (one province against Imagawa and Saito) ended in collapse within six
+turns in half of all games, often on turn 2, before a player could do anything. Now a
+state's last province is defended to the end (three times harder to take); the player
+loses no provinces in the first two turns, to answer an opening war; and Oda starts
+with the wealth of Owari's port trade (enough to hire mercenaries at once). Sengoku stays
+the hard start: about one game in six still ends early.

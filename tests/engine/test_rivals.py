@@ -274,6 +274,23 @@ def test_capitals_and_mountains_are_harder_to_take(warring: GameState) -> None:
     assert defence_bp(warring, "chu", capital) >= rules.capital_defence_bp
 
 
+def test_a_last_province_holds_out_and_the_player_has_grace(warring: GameState) -> None:
+    from anachronism.engine.war import defence_bp
+
+    capital = warring.civs["chu"].capital
+    walled = defence_bp(warring, "chu", capital)
+    for pid in warring.owned_provinces("chu"):
+        if pid != capital:
+            warring.provinces[pid].owner = "qin"
+    assert defence_bp(warring, "chu", capital) > walled  # the last stand
+    # in the opening turns an overwhelming enemy takes nothing from the player
+    state, _ = apply_action(warring, DeclareWar(civ="chu", target="qin"))
+    before = set(state.owned_provinces("qin"))
+    strengths = dict.fromkeys(state.civs, 1) | {"chu": 1_000_000}
+    resolve_wars(state, strengths, GameRng(state.rng), EventLog(state.turn, state.year))
+    assert set(state.owned_provinces("qin")) == before
+
+
 def test_faiths_start_from_the_scenario_and_spread(content: Content) -> None:
     from anachronism.engine.culture import spread_faiths
 

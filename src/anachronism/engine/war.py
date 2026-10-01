@@ -91,11 +91,14 @@ def capture(state: GameState, taker: str, province_id: str, events: EventLog) ->
 
 
 def defence_bp(state: GameState, defender: str, province_id: str) -> int:
-    """How hard a province is to take: its terrain, and walls if it is the capital."""
+    """How hard a province is to take: terrain, capital walls, and a last stand."""
+    rules = state.world.rules.rivals
     terrain = state.world.terrain[state.world.geography[province_id].terrain]
     defence = terrain.defence_bp
     if state.civs[defender].capital == province_id:
-        defence = defence * state.world.rules.rivals.capital_defence_bp // BP
+        defence = defence * rules.capital_defence_bp // BP
+    if len(state.owned_provinces(defender)) == 1:
+        defence = defence * rules.last_stand_defence_bp // BP
     return max(1, defence)
 
 
@@ -131,7 +134,9 @@ def resolve_wars(
         strong, weak = (a, b) if (sa, b) >= (sb, a) else (b, a)
         s_strong, s_weak = max(sa, sb), min(sa, sb)
         targets = frontier(state, strong, weak)
-        if targets and s_strong > s_weak:
+        # the player gets a couple of turns to answer an opening war before losing ground
+        grace = weak == state.player_civ and state.turn < rules.player_grace_turns
+        if targets and s_strong > s_weak and not grace:
             advantage_bp = (s_strong - s_weak) * BP // max(1, s_weak)
             chance = min(rules.max_capture_bp, apply_bp(advantage_bp, rules.capture_per_excess_bp))
             prize = min(targets, key=lambda p: (state.provinces[p].population, p))

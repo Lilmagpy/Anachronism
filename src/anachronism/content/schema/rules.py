@@ -207,6 +207,10 @@ class RivalRules(Frozen):
     max_capture_bp: Rate
     capital_defence_bp: Positive
     """Walls and the court's guard: a capital is this much harder to take (10_000 = normal)."""
+    last_stand_defence_bp: Positive = 20000
+    """A state's last province is defended to the end: its defence is multiplied by this."""
+    player_grace_turns: NonNegative = 2
+    """For this many opening turns the player loses no provinces in war (time to respond)."""
     war_losses_bp: Rate
     """Share of each frontier province's people lost per turn of war."""
     war_unrest_bp: NonNegative

@@ -23,7 +23,7 @@ scenarios:
         pitch: "Imagawa Yoshimoto marches on Kyoto with 25,000 men, and Owari is in his way. You have 3,000. History says you win - and then unite Japan. Do it sooner."
         provinces:
           j_owari: 550000
-        stockpiles: {food: 880, materials: 220, wealth: 275, knowledge: 147}
+        stockpiles: {food: 880, materials: 220, wealth: 900, knowledge: 147}
         stats: {literacy_bp: 500, unrest_bp: 900, legitimacy_bp: 6000}
         influence: {clergy: 2500, nobility: 6000, guilds: 1500}
         techs:

@@ -107,6 +107,8 @@ rules:
     capture_per_excess_bp: 4000
     max_capture_bp: 5000
     capital_defence_bp: 20000
+    last_stand_defence_bp: 30000
+    player_grace_turns: 2
     war_losses_bp: 150
     war_unrest_bp: 300
     weariness_per_turn_bp: 1200
