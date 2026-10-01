@@ -173,9 +173,10 @@ def production(state: GameState, civ_id: str, effects: Effects, production_bp: i
         geography = state.world.geography[province_id]
         terrain = state.world.terrain[geography.terrain]
         people = province.population
-        food += people * terrain.food_bp
-        materials += people * terrain.materials_bp
-        taxes += people * economy.wealth_per_1000_bp
+        ruin = 2 if province.ravaged else 1  # pillaged fields and burned workshops
+        food += people * terrain.food_bp // ruin
+        materials += people * terrain.materials_bp // ruin
+        taxes += people * economy.wealth_per_1000_bp // ruin
         trade_bp = economy.base_trade_bp
         trade_bp += economy.coastal_trade_bp if geography.coastal else 0
         trade_bp += economy.river_trade_bp if geography.river else 0

@@ -1101,6 +1101,10 @@ func _fill_card() -> void:
 		why.append("capital walls")
 	if str(p["terrain"]) in ["hills", "mountains", "forest", "marsh", "desert"]:
 		why.append(str(p["terrain"]))
+	if int(p.get("walls", 0)) > 0:
+		why.append(["stone walls", "towers and gates", "star bastions"][mini(2, int(p["walls"]) - 1)])
+	if int(p.get("ravaged", 0)) > 0:
+		_card_body.add_child(_wrapped("Ravaged by war: half its crops and goods are lost until it recovers.", 13, BAD))
 	var hard := "easy" if defence < 11000 else ("hard" if defence < 25000 else "very hard")
 	_card_body.add_child(_wrapped("To take in war: %s (%.1f×%s)" % [hard, defence / 10000.0,
 		(", " + ", ".join(why)) if not why.is_empty() else ""], 13, DIM))
@@ -1109,6 +1113,17 @@ func _fill_card() -> void:
 		_card_body.add_child(_label("Armies here", 15, GOLD))
 		for army in here:
 			_card_body.add_child(_army_box(army))
+	if p["owner"] == view["player"] and p.get("wall_next") != null:
+		var next: Dictionary = p["wall_next"]
+		if str(next["needs"]) != "":
+			_card_body.add_child(_wrapped("Higher walls need %s." % str(next["needs"]), 12, DIM))
+		else:
+			var stores: Dictionary = view["status"]["stores"]
+			var build := _small_button("Build walls (%s materials, %s wealth)" % [number(int(next["materials"])), number(int(next["wealth"]))],
+				{"kind": "fortify", "province": p["id"]})
+			build.disabled = int(stores["materials"]) < int(next["materials"]) or int(stores["wealth"]) < int(next["wealth"])
+			build.tooltip_text = "Each level of walls makes the province much harder to besiege"
+			_card_body.add_child(build)
 	if p["owner"] == view["player"] and view.has("levy"):
 		_card_body.add_child(_levy_box(p))
 	# a rival's province: where you stand with its holder, and what you can do
@@ -1160,6 +1175,8 @@ func _army_box(army: Dictionary) -> Control:
 		notes.append("besieging: %d%% of the walls down" % mini(99, int(army["siege_bp"]) * 100 / int(army["siege_needed"])))
 	elif army["target"] != null:
 		notes.append("marching on %s" % str(_find_place(str(army["target"])).get("name", army["target"])))
+	elif army["stance"] == "pillage":
+		notes.append("pillaging the land")
 	elif mine:
 		notes.append("defending our land" if army["stance"] == "defend" else "holding")
 	box.add_child(_wrapped(" · ".join(notes), 12, DIM))
@@ -1181,6 +1198,12 @@ func _army_box(army: Dictionary) -> Control:
 		var guard := _small_button("Defend", {"kind": "stance", "army": army["id"], "stance": "defend"})
 		guard.tooltip_text = "Stop, and march on any invader of our land"
 		orders.add_child(guard)
+		var place: Dictionary = _find_place(str(army["province"]))
+		var foe_land: bool = place.get("owner") != null and place.get("owner") != view["player"] and _relation_of(str(place["owner"])) == "war"
+		if foe_land:
+			var ravage := _small_button("Pillage", {"kind": "stance", "army": army["id"], "stance": "pillage"})
+			ravage.tooltip_text = "Instead of besieging: burn, loot and drive off the people. The army lives off the land; the enemy tires faster - and never forgets"
+			orders.add_child(ravage)
 		var home := _small_button("Disband", {"kind": "disband", "army": army["id"]})
 		home.tooltip_text = "Send the men home to their fields (they work again, and cost nothing)"
 		orders.add_child(home)
@@ -1194,6 +1217,7 @@ func _levy_box(p: Dictionary) -> Control:
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 2)
 	box.add_child(_label("Raise a levy here", 15, GOLD))
+	box.add_child(_wrapped("Every levy takes sons from their fields: the people grumble (unrest rises), less among warlike peoples.", 12, DIM))
 	box.add_child(_wrapped("Under arms: %s of at most %s. Can raise: %s." % [number(int(levy["under_arms"])),
 		number(int(levy["cap"])), ", ".join(levy["kinds"])], 12, DIM))
 	var mix := OptionButton.new()
@@ -1224,6 +1248,13 @@ func _levy_box(p: Dictionary) -> Control:
 		sizes.add_child(button)
 	box.add_child(sizes)
 	return box
+
+
+func _relation_of(civ_id: String) -> String:
+	for civ in view["civs"]:
+		if civ["id"] == civ_id:
+			return str(civ.get("relation", ""))
+	return ""
 
 
 func _civ_adjective(civ_id: String) -> String:

@@ -339,8 +339,9 @@ class ArmyRules(Frozen):
     """Extra power per point of a general's skill (1-5)."""
     general_death_bp: Rate = 1500
     """Chance that a beaten army's general falls."""
-    field_defence_share_bp: Rate = 5000
-    """How much of a province's defence (hills, walls) helps its owner in a field battle."""
+    field_defence_share_bp: Rate = 6000
+    """How much of the ground's defence (hills, mountains, marsh) helps its owner in a
+    field battle (walls count in sieges, not here)."""
     attrition_home_bp: Rate = 100
     """Men lost each turn to sickness and desertion at home."""
     attrition_abroad_bp: Rate = 400
@@ -365,6 +366,22 @@ class ArmyRules(Frozen):
     weariness_per_battle_bp: NonNegative = 700
     """War weariness for losing a battle."""
     min_army: Positive = 200
+    wall_level_bp: NonNegative = 6000
+    """Extra defence for each level of walls built in a province."""
+    wall_materials: NonNegative = 150
+    """Materials (times the scenario's cost scale) for each level of walls; wealth is half."""
+    wall_techs: tuple[Identifier, ...] = ("masonry", "fortification", "star_fort")
+    """The advancement each level of walls needs: stone, then towers, then bastions."""
+    levy_unrest_bp: NonNegative = 300
+    """Unrest from a levy, per 1% of the people called up (less for warlike peoples)."""
+    pillage_people_bp: Rate = 800
+    """Share of a pillaged province's people killed or driven off each turn."""
+    pillage_loot_per_1000: NonNegative = 3
+    """Wealth taken per 1,000 people of a pillaged province each turn."""
+    pillage_grievance_bp: NonNegative = 1500
+    """How bitterly a people remembers its province being pillaged."""
+    ravaged_turns: Positive = 2
+    """Turns a pillaged province takes to recover."""
     mercenary_men_bp: NonNegative = 150
     """A mercenary company numbers this share of the hiring state's people (1.5%)."""
     trait_bp: dict[Identifier, NonNegative] = Field(

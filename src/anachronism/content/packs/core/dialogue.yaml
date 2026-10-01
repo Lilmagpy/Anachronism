@@ -187,6 +187,17 @@ dialogue:
     lines:
       - "The {subject} is gone - surrounded and forced to yield. I have no words. Only a request for vengeance."
 
+  - id: pillaged
+    speaker: steward
+    lines:
+      - "They are burning the villages of {subject}. The harvest is gone, and the people flee to the walls. Drive them out!"
+      - "Smoke over {subject}. Raiders are taking everything that can be carried and burning the rest."
+  - id: pillage
+    speaker: general
+    lines:
+      - "We have stripped {subject} bare. The men eat well, and the enemy's purse is lighter."
+      - "{subject} burns. Ugly work - but every barn we empty is one less that feeds their army."
+
   - id: quiet
     speaker: steward
     lines:

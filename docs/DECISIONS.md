@@ -779,3 +779,21 @@ are ordinary recorded actions, so replays stay exact.
   outmatched) agrees, and it never signs itself out of existence.
 - **Elephants** are a map resource where war elephants came from (the Ganges and Kalinga,
   Assam, Lanka, Numidia and Carthage, Kush, and the Seleucid stud at Apamea).
+
+## D-102 Walls, pillage and the price of levies — DELEGATED (2026-10-01)
+More choices in war, each with a cost:
+- **Walls**: build up to three levels in any of your provinces (stone walls, then towers
+  and gates with Fortification, then star bastions with the Star fort). Each level adds
+  to how long a siege takes. Costs materials and wealth.
+- **Pillage**: an army in enemy land can ravage it instead of besieging: people killed or
+  driven off, wealth carried off, half the crops and goods lost for two turns, the enemy
+  wearier - and a lasting grudge. Pillaging armies live off the land (no campaign
+  attrition). Steppe peoples (four times the usual mobilisation and more) raid what they
+  cannot take quickly.
+- **Levies breed unrest**: calling up men angers their families, in proportion to how many,
+  less among warlike peoples.
+- **Field battles weigh only the ground** (hills, mountains, marsh); walls, capitals and
+  last stands count in sieges. Before, a lone capital's defenders counted triple in the open
+  field and evenly matched rivals (Sengoku Japan) never dared attack. Rival courts now
+  accept an even fight if warlike and want a modest edge if cautious, judged against the
+  enemy armies near their objective.

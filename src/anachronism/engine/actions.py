@@ -202,12 +202,24 @@ class MarchArmy(Frozen):
 
 
 class ArmyStance(Frozen):
-    """Halt an army: ``defend`` meets invaders of your land, ``hold`` stays put."""
+    """Halt an army in one of three stances.
+
+    ``defend`` meets invaders of your land, ``hold`` stays put, ``pillage`` ravages the enemy
+    province it stands in.
+    """
 
     kind: Literal["stance"] = "stance"
     civ: str
     army: str
-    stance: Literal["defend", "hold"] = "hold"
+    stance: Literal["defend", "hold", "pillage"] = "hold"
+
+
+class Fortify(Frozen):
+    """Build (or raise higher) the walls of one of your provinces."""
+
+    kind: Literal["fortify"] = "fortify"
+    civ: str
+    province: str
 
 
 class DisbandArmy(Frozen):
@@ -218,7 +230,7 @@ class DisbandArmy(Frozen):
     army: str
 
 
-Orders = RaiseArmy | MarchArmy | ArmyStance | DisbandArmy
+Orders = RaiseArmy | MarchArmy | ArmyStance | DisbandArmy | Fortify
 
 
 Decree = HoldFestival | HireMercenaries | Explain | SealBorders | SpreadRumours
@@ -249,7 +261,8 @@ Action = Annotated[
     | RaiseArmy
     | MarchArmy
     | ArmyStance
-    | DisbandArmy,
+    | DisbandArmy
+    | Fortify,
     Field(discriminator="kind"),
 ]
 

@@ -244,3 +244,56 @@ def test_a_losing_enemy_cedes_the_land_we_hold(warring: GameState) -> None:
     assert logged.ok
     assert state.provinces[held].owner == "qin"
     assert status(state, "qin", "wei") is not RelationStatus.WAR
+
+
+def test_walls_make_a_province_harder_to_take(warring: GameState) -> None:
+    from anachronism.engine.actions import Fortify
+    from anachronism.engine.war import defence_bp
+
+    province = warring.civs["qin"].capital
+    before = defence_bp(warring, "qin", province)
+    warring.civs["qin"].stockpiles.materials = 100_000
+    warring.civs["qin"].stockpiles.wealth = 100_000
+    state, logged = apply_action(warring, Fortify(civ="qin", province=province))
+    assert logged.ok, logged.message
+    assert state.provinces[province].walls == 1
+    assert defence_bp(state, "qin", province) > before
+    enemy = state.civs["wei"].capital
+    _, logged = apply_action(state, Fortify(civ="qin", province=enemy))
+    assert not logged.ok
+
+
+def test_pillage_ravages_loots_and_feeds_the_army(warring: GameState) -> None:
+    state, _ = apply_action(warring, DeclareWar(civ="qin", target="wei"))
+    target = next(p for p in state.owned_provinces("wei") if p != state.civs["wei"].capital)
+    state.armies = {
+        "q": Army(
+            id="q",
+            owner="qin",
+            name="Raiders",
+            province=target,
+            troops={"cavalry": 20_000},
+            stance="pillage",
+        )
+    }
+    state.civs["wei"].stockpiles.wealth = 50_000
+    people = state.provinces[target].population
+    qin_wealth = state.civs["qin"].stockpiles.wealth
+    events = log(state)
+    sieges(state, events)
+    assert state.provinces[target].population < people
+    assert state.provinces[target].owner == "wei"  # ravaged, not taken
+    assert state.provinces[target].ravaged > 0
+    assert state.civs["qin"].stockpiles.wealth > qin_wealth
+    assert any(e.kind == "pillaged" for e in events.items)
+
+
+def test_levies_breed_unrest(warring: GameState) -> None:
+    capital = warring.civs["qin"].capital
+    unrest = warring.civs["qin"].stats.unrest_bp
+    warring.civs["qin"].stockpiles.wealth = 100_000
+    warring.civs["qin"].stockpiles.food = 100_000
+    warring.civs["qin"].stockpiles.materials = 100_000
+    state, logged = apply_action(warring, RaiseArmy(civ="qin", province=capital, size="large"))
+    assert logged.ok
+    assert state.civs["qin"].stats.unrest_bp > unrest

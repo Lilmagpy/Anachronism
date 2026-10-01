@@ -92,7 +92,7 @@ def capture(state: GameState, taker: str, province_id: str, events: EventLog) ->
 
 
 def defence_bp(state: GameState, defender: str, province_id: str) -> int:
-    """How hard a province is to take: terrain, capital walls, and a last stand."""
+    """How hard a province is to take: terrain, capital walls, built walls, a last stand."""
     rules = state.world.rules.rivals
     terrain = state.world.terrain[state.world.geography[province_id].terrain]
     defence = terrain.defence_bp
@@ -100,6 +100,8 @@ def defence_bp(state: GameState, defender: str, province_id: str) -> int:
         defence = defence * rules.capital_defence_bp // BP
     if len(state.owned_provinces(defender)) == 1:
         defence = defence * rules.last_stand_defence_bp // BP
+    walls = state.provinces[province_id].walls if province_id in state.provinces else 0
+    defence += walls * state.world.rules.armies.wall_level_bp
     return max(1, defence)
 
 
@@ -159,6 +161,8 @@ def make_peace(state: GameState, a: str, b: str, events: EventLog) -> None:
             army.province = state.civs[army.owner].capital
             army.target = None
             army.siege_bp = 0
+            if army.stance == "pillage":
+                army.stance = "defend"
     loser = (
         a
         if losses.get(a, 0) > losses.get(b, 0)

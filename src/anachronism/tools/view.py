@@ -14,6 +14,8 @@ from anachronism.engine.armies import (
     raise_cost,
     route,
     under_arms,
+    wall_cost,
+    wall_tech,
 )
 from anachronism.engine.commands import describe_blockers
 from anachronism.engine.decrees import cost, explain_costs, explain_ready_in, news_on_the_road
@@ -22,7 +24,7 @@ from anachronism.engine.projects import project_turns
 from anachronism.engine.reports import capacity
 from anachronism.engine.rivals import relation, strength
 from anachronism.engine.state import Event, GameState
-from anachronism.engine.tech import feasibility
+from anachronism.engine.tech import feasibility, is_adopted
 from anachronism.engine.victory import progress
 from anachronism.engine.war import defence_bp, fronts
 from anachronism.tools.console import describe_effect
@@ -129,6 +131,9 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
                 },
                 "capital": any(c.capital == pid for c in state.civs.values()),
                 "defence_bp": _defence(state, pid),
+                "walls": state.provinces[pid].walls,
+                "ravaged": state.provinces[pid].ravaged,
+                **_walls_next(state, pid),
             }
             for pid, geography in sorted(state.world.geography.items())
         ],
@@ -240,6 +245,25 @@ def _ideas(state: GameState, civ_id: str) -> list[dict[str, Any]]:
             }
         )
     return ideas
+
+
+def _walls_next(state: GameState, province_id: str) -> dict[str, Any]:
+    """What the next level of walls here would cost and need (for the player's provinces)."""
+    if state.provinces[province_id].owner != state.player_civ:
+        return {}
+    needed = wall_tech(state, province_id)
+    if needed is None:
+        return {"wall_next": None}
+    materials, wealth = wall_cost(state, province_id)
+    node = state.tech_nodes.get(needed)
+    ready = node is None or is_adopted(state.civs[state.player_civ], needed)
+    return {
+        "wall_next": {
+            "materials": materials,
+            "wealth": wealth,
+            "needs": "" if ready else (node.name if node else needed),
+        }
+    }
 
 
 def _armies(state: GameState) -> list[dict[str, Any]]:

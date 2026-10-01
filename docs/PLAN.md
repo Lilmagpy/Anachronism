@@ -150,5 +150,6 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] War of armies: unit types, raising, marching, battles, sieges, supply, rival generalship (D-099)
 - [x] Armies on the map in the client: markers, routes, sieges, orders, raising, battle sites (D-100)
 - [x] Historical generals with gifts, mercenary companies, land-for-peace, elephants where they lived (D-101)
+- [x] Walls in three levels, pillage, levies that breed unrest; field battles weigh the ground only (D-102)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

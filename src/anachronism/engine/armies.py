@@ -16,7 +16,7 @@ from __future__ import annotations
 from collections import deque
 
 from anachronism.content.schema import General, RelationStatus, Unit
-from anachronism.engine.actions import ArmyStance, DisbandArmy, Orders, RaiseArmy
+from anachronism.engine.actions import ArmyStance, DisbandArmy, Fortify, Orders, RaiseArmy
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import BP, apply_bp, clamp
 from anachronism.engine.rivals import alive, at_war, frontier, province_links, relation, status
@@ -149,6 +149,11 @@ def raise_army(
         stores.food -= food
         stores.materials -= materials
         stores.wealth -= wealth
+        # every family that loses a son to the levy grumbles (warlike peoples less)
+        rules = state.world.rules.armies
+        share = men * 100 * BP // max(1, state.population(civ_id))  # bp of a 1% unit
+        unrest = rules.levy_unrest_bp * share // BP * BP // max(BP, civ.martial_bp)
+        civ.stats.unrest_bp = clamp(civ.stats.unrest_bp + unrest, 0, BP)
     province.population -= men
     here = [
         a
@@ -400,10 +405,11 @@ def side_power(
             gift = trait_bp(state, army, "shield") - trait_bp(state, army, "bold") // 2
             power = power * (BP + gift) // BP
         total += power
-    if not attacking:
+    if not attacking:  # defenders hold the high ground (walls matter in sieges, not here)
         owner = state.provinces[province_id].owner
         if owner is not None and armies and armies[0].owner == owner:
-            extra = defence_bp(state, owner, province_id) - BP
+            ground = state.world.terrain[state.world.geography[province_id].terrain]
+            extra = ground.defence_bp - BP
             total = total * (BP + apply_bp(max(0, extra), rules.field_defence_share_bp)) // BP
     return total, by_unit
 
@@ -600,6 +606,9 @@ def sieges(state: GameState, events: EventLog) -> None:
         if _enemies_here(state, army):
             continue
         place = state.world.geography[army.province].name
+        if army.stance == "pillage":
+            pillage(state, army, owner, events)
+            continue
         if army.siege_bp == 0:
             events.add(
                 owner, "siege", f"{state.civs[army.owner].adjective} armies besiege {place}.", place
@@ -615,12 +624,42 @@ def sieges(state: GameState, events: EventLog) -> None:
                 rel.weariness[owner] = rel.weariness.get(owner, 0) + rules.weariness_per_loss_bp
 
 
+def pillage(state: GameState, army: Army, owner: str, events: EventLog) -> None:
+    """Ravage an enemy province: burn, loot and drive off its people instead of besieging."""
+    rules = state.world.rules.armies
+    province = state.provinces[army.province]
+    lost = apply_bp(province.population, rules.pillage_people_bp)
+    province.population -= lost
+    loot = min(
+        state.civs[owner].stockpiles.wealth,
+        province.population // 1000 * rules.pillage_loot_per_1000,
+    )
+    state.civs[owner].stockpiles.wealth -= loot
+    state.civs[army.owner].stockpiles.wealth += loot
+    province.ravaged = rules.ravaged_turns
+    rel = relation(state, army.owner, owner)
+    if rel is not None:
+        rel.grievance[owner] = rel.grievance.get(owner, 0) + rules.pillage_grievance_bp // 3
+        rival_rules = state.world.rules.rivals
+        rel.weariness[owner] = rel.weariness.get(owner, 0) + rival_rules.weariness_per_loss_bp // 3
+    place = state.world.geography[army.province].name
+    adjective = state.civs[army.owner].adjective
+    text = f"{adjective} armies ravage {place}: {lost:,} dead or fled, {loot:,} wealth carried off."
+    events.add(owner, "pillaged", text, place)
+    events.add(army.owner, "pillage", text, place)
+
+
 # --- supply and upkeep ---------------------------------------------------------------------
 
 
 def upkeep(state: GameState, events: EventLog) -> None:
-    """Armies eat, are paid, sicken and recover; unpaid armies lose heart and desert."""
+    """Armies eat, are paid, sicken and recover; unpaid armies lose heart and desert.
+
+    Ravaged provinces recover a little each turn.
+    """
     rules = state.world.rules.armies
+    for province in state.provinces.values():
+        province.ravaged = max(0, province.ravaged - 1)
     by_place: dict[tuple[str, str], int] = {}
     for army in state.armies.values():
         key = (army.owner, army.province)
@@ -634,10 +673,11 @@ def upkeep(state: GameState, events: EventLog) -> None:
         civ.stockpiles.food = max(0, civ.stockpiles.food - food)
         civ.stockpiles.wealth = max(0, civ.stockpiles.wealth - wealth)
         home = state.provinces[army.province].owner == army.owner
-        loss = rules.attrition_home_bp if home else rules.attrition_abroad_bp
-        if not home:
+        if home or army.stance == "pillage":  # at home, or living off an enemy's land
+            loss = rules.attrition_home_bp
+        else:
             terrain = state.world.geography[army.province].terrain
-            loss += rules.attrition_terrain_bp.get(terrain, 0)
+            loss = rules.attrition_abroad_bp + rules.attrition_terrain_bp.get(terrain, 0)
             loss = loss * BP // (BP + trait_bp(state, army, "quartermaster"))
         supply = state.provinces[army.province].population // rules.supply_people_per_man
         crowd = by_place[(army.owner, army.province)]
@@ -686,6 +726,10 @@ def defend(state: GameState, civ_id: str) -> None:
             )
             if nearest.province != army.province:
                 army.target = nearest.province
+
+
+RAIDER_MARTIAL_BP = 30_000
+"""Peoples this warlike (steppe horsemen) ravage what they cannot quickly take."""
 
 
 def merge(state: GameState) -> None:
@@ -763,7 +807,14 @@ def command(state: GameState, strengths: dict[str, int]) -> None:
                 if state.provinces[army.province].owner != civ_id:
                     army.target = seat
             continue
-        if main.target is not None or main.siege_bp > 0:
+        raiders = civ.martial_bp >= RAIDER_MARTIAL_BP  # the steppe raids rather than besieges
+        for army in mine:
+            owner = state.provinces[army.province].owner
+            if raiders and army.target is None and owner and at_war_with(state, civ_id, owner):
+                progress = max(1, siege_progress(state, army))
+                if defence_bp(state, owner, army.province) // progress >= 3:
+                    army.stance = "pillage"
+        if main.target is not None or main.siege_bp > 0 or main.stance == "pillage":
             continue
         # the nearest enemy province it can reach, weakest walls and richest first
         choices: list[tuple[int, int, int, str, str]] = []
@@ -785,17 +836,59 @@ def command(state: GameState, strengths: dict[str, int]) -> None:
         if not choices:
             continue
         _, _, _, objective, enemy = min(choices)
-        # march only with the odds clearly in its favour against the enemy's whole army
-        theirs = [a for a in state.armies.values() if a.owner == enemy]
-        if odds(state, [main], theirs, objective) >= 12_000:
+        # march when the odds against the enemy armies near the objective are good enough:
+        # a warlike court accepts an even fight, a cautious one wants the upper hand
+        near = {objective, *state.world.geography[objective].neighbours}
+        theirs = [a for a in state.armies.values() if a.owner == enemy and a.province in near]
+        nerve = 9_000 if civ.disposition.value == "aggressive" else 11_500
+        if odds(state, [main], theirs, objective) >= nerve:
             main.target = objective
 
 
 # --- the player's orders -------------------------------------------------------------------
 
 
+def wall_cost(state: GameState, province_id: str) -> tuple[int, int]:
+    """Materials and wealth for the next level of walls in a province."""
+    rules = state.world.rules.armies
+    level = state.provinces[province_id].walls + 1
+    materials = rules.wall_materials * level * state.world.cost_scale
+    return materials, materials // 2
+
+
+def wall_tech(state: GameState, province_id: str) -> str | None:
+    """The advancement the next level of walls needs (None: no higher walls exist)."""
+    techs = state.world.rules.armies.wall_techs
+    level = state.provinces[province_id].walls
+    return techs[level] if level < len(techs) else None
+
+
+def fortify(state: GameState, civ_id: str, province_id: str) -> tuple[bool, str]:
+    """Build the next level of walls in one of the state's provinces."""
+    province = state.provinces.get(province_id)
+    if province is None or province.owner != civ_id:
+        return False, "walls are built in your own provinces"
+    needed = wall_tech(state, province_id)
+    if needed is None:
+        return False, "these walls are as strong as walls can be"
+    civ = state.civs[civ_id]
+    if needed in state.tech_nodes and not is_adopted(civ, needed):
+        return False, f"higher walls need {state.tech_nodes[needed].name}"
+    materials, wealth = wall_cost(state, province_id)
+    if civ.stockpiles.materials < materials or civ.stockpiles.wealth < wealth:
+        return False, f"the walls need {materials} materials and {wealth} wealth"
+    civ.stockpiles.materials -= materials
+    civ.stockpiles.wealth -= wealth
+    province.walls += 1
+    place = state.world.geography[province_id].name
+    kind = ("stone walls", "towers and gates", "star-shaped bastions")[min(2, province.walls - 1)]
+    return True, f"Masons raise {kind} around {place}."
+
+
 def apply_orders(state: GameState, action: Orders) -> tuple[bool, str]:
-    """Carry out an order to raise, march, halt or disband an army."""
+    """Carry out an order to raise, march, halt or disband an army, or to build walls."""
+    if isinstance(action, Fortify):
+        return fortify(state, action.civ, action.province)
     if isinstance(action, RaiseArmy):
         if action.province not in state.provinces:
             return False, f"unknown province {action.province!r}"
@@ -810,7 +903,11 @@ def apply_orders(state: GameState, action: Orders) -> tuple[bool, str]:
     if isinstance(action, ArmyStance):
         army.target = None
         army.stance = action.stance
-        verb = "holds its ground" if action.stance == "hold" else "stands ready to defend"
+        verb = {
+            "hold": "holds its ground",
+            "defend": "stands ready to defend",
+            "pillage": "turns to plunder",
+        }[action.stance]
         return True, f"The {army.name} {verb}."
     if action.target not in state.provinces:
         return False, f"unknown province {action.target!r}"

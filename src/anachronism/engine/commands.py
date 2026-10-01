@@ -11,6 +11,7 @@ from anachronism.engine.actions import (
     DemandTribute,
     DisbandArmy,
     Explain,
+    Fortify,
     HireMercenaries,
     HoldFestival,
     LoggedAction,
@@ -75,7 +76,7 @@ def _apply(state: GameState, action: Action) -> tuple[bool, str]:
         return False, f"unknown civilisation {action.civ!r}"
     if isinstance(action, HoldFestival | HireMercenaries | Explain | SealBorders | SpreadRumours):
         return apply_decree(state, action)
-    if isinstance(action, RaiseArmy | MarchArmy | ArmyStance | DisbandArmy):
+    if isinstance(action, RaiseArmy | MarchArmy | ArmyStance | DisbandArmy | Fortify):
         return apply_orders(state, action)
     if isinstance(action, RuleOnIdea):
         return apply_ruling(state, civ.id, action.ruling)

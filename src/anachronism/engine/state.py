@@ -94,6 +94,10 @@ class ProvinceState(Mutable):
     population: int
     resources: dict[str, Access]
     """Current access to each map resource (discoveries change it)."""
+    walls: int = 0
+    """Fortifications built here, 0-3 (each makes the province harder to take)."""
+    ravaged: int = 0
+    """Turns of ruin left from pillage: fewer crops and goods until it recovers."""
 
 
 class Stockpiles(Mutable):
@@ -231,8 +235,9 @@ class Army(Mutable):
     """The general's gift (see ``content.schema.General``), if any."""
     target: str | None = None
     """The province it is marching to, if any."""
-    stance: Literal["defend", "hold"] = "defend"
-    """Without a march order: ``defend`` meets invaders of its own land, ``hold`` stays put."""
+    stance: Literal["defend", "hold", "pillage"] = "defend"
+    """Without a march order: ``defend`` meets invaders of its own land, ``hold`` stays put,
+    ``pillage`` ravages the enemy province it stands in instead of besieging it."""
     came_from: str = ""
     """Where it marched from last (a beaten army falls back that way)."""
     siege_bp: int = 0
