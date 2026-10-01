@@ -19,6 +19,7 @@ var earth: EarthBuilder
 var provinces: ProvinceMap
 var settlements: Settlements
 var scenery: Scenery
+var _last_pose := Transform3D()
 var game_menu: GameMenu
 var landmarks: Landmarks
 var audio: GameAudio
@@ -407,6 +408,11 @@ func _process(delta: float) -> void:
 		rig.position.x += delta * 6.0
 	if earth != null:  # territory colours fade as you zoom in, so the land itself shows
 		earth.terrain_material.set_shader_parameter("tint", lerpf(0.40, 0.16, rig.zoom_level()))
+	if provinces != null:
+		var pose := rig.camera.global_transform
+		if pose != _last_pose:  # names that would overlap give way as the camera moves
+			_last_pose = pose
+			provinces.declutter(rig.camera)
 
 
 func _unhandled_input(event: InputEvent) -> void:

@@ -9,6 +9,7 @@ const STEP := 16                ## sample every STEP height-map pixels
 const MIN_METRES := 1500.0
 const MIN_RELIEF := 600.0       ## height difference within the neighbourhood
 const SHOW_WITHIN := 900.0
+const TILE := 300.0             ## batched by tile: Godot hides a batch by its centre's distance
 
 var earth: EarthBuilder
 var rng := RandomNumberGenerator.new()
@@ -20,8 +21,7 @@ func _init(earth_builder: EarthBuilder) -> void:
 
 
 func build(parent: Node3D) -> void:
-	var snowy: Array = []
-	var bare: Array = []
+	var tiles := {}   # Vector2i -> [snowy transforms, bare transforms]
 	var w := int(earth.size().x)
 	var h := int(earth.size().y)
 	for y in range(STEP, h - STEP, STEP):
@@ -40,14 +40,18 @@ func build(parent: Node3D) -> void:
 			var width := height * rng.randf_range(1.3, 1.8)
 			var basis := Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3(width, height, width))
 			var at := earth.ground_at_pixel(pixel) - Vector3(0, height * 0.12, 0)
-			(snowy if metres > 3000.0 else bare).append(Transform3D(basis, at))
+			var key := Vector2i(int(x / TILE), int(y / TILE))
+			if not tiles.has(key):
+				tiles[key] = [[], []]
+			tiles[key][0 if metres > 3000.0 else 1].append(Transform3D(basis, at))
 	var holder := Node3D.new()
 	holder.name = "Peaks"
 	parent.add_child(holder)
-	if not snowy.is_empty():
-		holder.add_child(_multimesh(_peak(true), snowy))
-	if not bare.is_empty():
-		holder.add_child(_multimesh(_peak(false), bare))
+	var meshes := [_peak(true), _peak(false)]
+	for key in tiles:
+		for kind in 2:
+			if not tiles[key][kind].is_empty():
+				holder.add_child(_multimesh(meshes[kind], tiles[key][kind]))
 
 
 ## A unit peak (height 1, radius 0.5): a lumpy cone, rock below and snow (or rock) above.

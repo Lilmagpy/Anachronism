@@ -26,6 +26,7 @@ var civ_names := {}
 
 
 func _init(earth_builder: EarthBuilder, view: Dictionary) -> void:
+	player = str(view.get("player", ""))
 	earth = earth_builder
 	cols = int(earth.size().x) / CELL
 	rows = int(earth.size().y) / CELL
@@ -207,13 +208,50 @@ func _redraw() -> void:
 		child.queue_free()
 	earth.set_political(_political_image())
 	_overlay.add_child(_borders())
+	_labels.clear()
 	for index in sites.size():
 		if not sites[index]["sea"]:
-			_overlay.add_child(_province_label(sites[index]))
+			var label := _province_label(sites[index])
+			_overlay.add_child(label)
+			_labels.append([label, (1000000 if sites[index]["capital"] else 0) + _cells_of(sites[index])])
 	for civ_id in civ_colours:
 		var label := _civ_label(civ_id)
 		if label != null:
 			_overlay.add_child(label)
+			_labels.append([label, 3000000 if civ_id == player else 2000000 + label.font_size])
+	_labels.sort_custom(func(a: Array, b: Array) -> bool: return a[1] > b[1])
+
+
+## Hide any name that would overlap a more important one on screen: state names first, then
+## capitals, then larger provinces. Called as the camera moves.
+func declutter(camera: Camera3D) -> void:
+	var view_height := camera.get_viewport().get_visible_rect().size.y
+	var scale := view_height / (2.0 * tan(deg_to_rad(camera.fov) / 2.0))
+	var placed: Array[Rect2] = []
+	for entry in _labels:
+		var label: Label3D = entry[0]
+		if not is_instance_valid(label):
+			continue
+		var at := label.global_position
+		var distance := camera.global_position.distance_to(at)
+		var in_range := distance >= label.visibility_range_begin and (
+			label.visibility_range_end <= 0.0 or distance < label.visibility_range_end)
+		if not in_range or camera.is_position_behind(at):
+			label.visible = true  # its visibility range decides
+			continue
+		# measured from screenshots: a line is about 1.3 font sizes tall with its outline
+		var height := label.font_size * label.pixel_size * scale * 1.3
+		var per_char := 0.62 if label.text == label.text.to_upper() else 0.48
+		var width := label.text.length() * height * per_char
+		var rect := Rect2(camera.unproject_position(at) - Vector2(width, height) / 2.0, Vector2(width, height)).grow(3.0)
+		var clear := true
+		for other in placed:
+			if other.intersects(rect):
+				clear = false
+				break
+		label.visible = clear
+		if clear:
+			placed.append(rect)
 
 
 ## The province or sea at a height-map pixel, or -1.
@@ -403,6 +441,8 @@ func show_wars(wars: Array) -> void:
 
 
 var _cell_counts := {}
+var player := ""   ## the player's civ: its name is never hidden by another's
+var _labels: Array = []   ## [label, priority], most important first, for decluttering
 
 
 ## How many map cells a site covers (its size on the map).
