@@ -449,6 +449,16 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.keycode == KEY_F3:
 			hud.toggle_dev()
 			return
+		if game_menu.is_open():
+			return
+		# shortcuts (typing in the idea box never reaches here: the box takes its keys)
+		if event.keycode in [KEY_ENTER, KEY_KP_ENTER] and not hud.deliberating:
+			_on_end_turn()
+			return
+		var tabs := {KEY_1: "ideas", KEY_2: "projects", KEY_3: "world"}
+		if tabs.has(event.keycode):
+			hud.set_tab(tabs[event.keycode])
+			return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			_press_at = event.position

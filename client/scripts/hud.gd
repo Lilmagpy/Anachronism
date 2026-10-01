@@ -1080,4 +1080,5 @@ func _build_end_turn() -> void:
 	_end_turn.offset_right = -8
 	_end_turn.offset_bottom = -8
 	_end_turn.pressed.connect(func(): end_turn_requested.emit())
+	_end_turn.tooltip_text = "Let ten years pass (Enter). Tabs: 1 Ideas, 2 Projects, 3 World"
 	_root.add_child(_end_turn)

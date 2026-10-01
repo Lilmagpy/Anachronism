@@ -33,7 +33,7 @@ walks you through the screen the first time (Settings can replay it). Then:
 - **World**: the paths to victory (by the sword, through trade, by the pen) with what each
   still needs; royal decrees (a festival, mercenaries); and every state you know, with
   envoys, alliances, missionaries, war and peace.
-- **End turn** lets ten years pass. Characters pop up to tell you what happened; the
+- **End turn** (or Enter) lets ten years pass. Characters pop up to tell you what happened; the
   chronicle at the bottom lists the rest.
 - **Esc** opens the menu: save, load, the full chronicle, charts, the tech tree and
   settings (sound, music, offline mode).
