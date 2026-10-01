@@ -62,11 +62,11 @@ def capture(state: GameState, taker: str, province_id: str, events: EventLog) ->
     province.owner = taker
     name = state.world.geography[province_id].name
     taker_civ = state.civs[taker]
-    events.add(taker, "conquest", f"{taker_civ.name} takes {name}.", name)
+    events.add(taker, "conquest", f"{taker_civ.adjective} armies take {name}.", name)
     if loser_id is None:
         return
     loser = state.civs[loser_id]
-    events.add(loser_id, "province_lost", f"{loser.name} loses {name} to {taker_civ.name}.", name)
+    events.add(loser_id, "province_lost", f"{name} falls to {taker_civ.adjective} armies.", name)
     if loser.capital == province_id:
         left = state.owned_provinces(loser_id)
         if left:
@@ -77,13 +77,16 @@ def capture(state: GameState, taker: str, province_id: str, events: EventLog) ->
                 BP,
             )
             new_seat = state.world.geography[loser.capital].name
-            events.add(loser_id, "capital_lost", f"{loser.name}'s court flees to {new_seat}.", name)
+            events.add(
+                loser_id, "capital_lost", f"The {loser.adjective} court flees to {new_seat}.", name
+            )
     if not state.owned_provinces(loser_id):
         loser.collapsed = True
         events.add(
             loser_id,
             "destroyed",
-            f"{loser.name} is no more: {taker_civ.name} holds all its lands.",
+            f"The {loser.adjective} state is no more:"
+            f" {taker_civ.adjective} armies hold all its lands.",
             loser.name,
         )
     if taker == state.player_civ and loser_id != state.player_civ:

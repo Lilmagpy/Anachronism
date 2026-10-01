@@ -189,8 +189,10 @@ def declare_war(
     set_status(state, attacker, defender, RelationStatus.WAR)
     add_grievance(state, defender, attacker, 1000)
     a, d = state.civs[attacker], state.civs[defender]
-    events.add(attacker, "war", f"{a.name} goes to war with {d.name}.{why}", d.name)
-    events.add(defender, "war", f"{a.name} has declared war on {d.name}.", a.name)
+    events.add(
+        attacker, "war", f"War: the {a.adjective} court marches against {d.name}.{why}", d.name
+    )
+    events.add(defender, "war", f"The {a.adjective} court has declared war on {d.name}.", a.name)
     for pair, rel in sorted(state.relations.items()):
         protects = rel.status in (RelationStatus.ALLIED, RelationStatus.TRIBUTARY)
         if not protects or defender not in pair.split("|"):
@@ -204,7 +206,8 @@ def declare_war(
             events.add(
                 ally,
                 "ally_attacked",
-                f"{a.name} has attacked your friend {d.name}. Will you march to their aid?",
+                f"The {a.adjective} court has attacked your friend {d.name}."
+                " Will you march to their aid?",
                 d.name,
             )
             continue
@@ -212,7 +215,8 @@ def declare_war(
         events.add(
             ally,
             "war",
-            f"{state.civs[ally].name} honours its bond with {d.name} and marches against {a.name}.",
+            f"The {state.civs[ally].adjective} court honours its bond with {d.name}"
+            f" and marches against {a.name}.",
             a.name,
         )
     if defender == state.player_civ or attacker == state.player_civ:
