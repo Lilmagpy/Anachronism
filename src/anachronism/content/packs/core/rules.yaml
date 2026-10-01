@@ -119,8 +119,10 @@ rules:
     aggressive_war_chance_bp: 2500
     trade_wealth_per_1000_bp: 300
     faith_spread_bp: 800
+    faith_rooted_resistance_bp: 1000
     missionary_wealth: 40
     missionary_chance_bp: 3500
+    missionary_rooted_bp: 3000
     shared_faith_fade_bp: 1000
     festival_wealth_per_1000: 60
     festival_legitimacy_bp: 600

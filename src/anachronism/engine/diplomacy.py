@@ -17,6 +17,7 @@ from anachronism.engine.actions import (
 )
 from anachronism.engine.culture import convert
 from anachronism.engine.events import EventLog
+from anachronism.engine.fixed import apply_bp
 from anachronism.engine.rivals import (
     add_grievance,
     alive,
@@ -141,7 +142,11 @@ def _apply(
             return False, f"missionaries need {cost} wealth"
         civ.stockpiles.wealth -= cost
         rng = GameRng(state.rng)
-        if rng.chance(rules.missionary_chance_bp):
+        chance = rules.missionary_chance_bp
+        held = state.civs[target].faith
+        if held and state.world.faiths[held].spreads:
+            chance = apply_bp(chance, rules.missionary_rooted_bp)  # a rival world faith
+        if rng.chance(chance):
             convert(state, target, civ.faith, events, "won over by your missionaries")
             return True, f"Your missionaries win over the court of {them}!"
         add_grievance(state, target, me, 500)

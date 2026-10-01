@@ -90,6 +90,7 @@ def _revolt(state: GameState, civ: CivState, rng: GameRng, events: EventLog) -> 
         return
     province_id = rng.pick(candidates)
     state.provinces[province_id].owner = None
+    civ.revolts += 1
     stats = civ.stats
     stats.unrest_bp = clamp(stats.unrest_bp - rules.revolt_unrest_release_bp, 0, BP)
     stats.legitimacy_bp = clamp(stats.legitimacy_bp - rules.revolt_legitimacy_bp, 0, BP)
@@ -100,7 +101,7 @@ def _revolt(state: GameState, civ: CivState, rng: GameRng, events: EventLog) -> 
 def _check_collapse(state: GameState, civ: CivState, events: EventLog) -> None:
     if civ.collapsed or civ.starting_provinces == 0:
         return
-    lost = civ.starting_provinces - len(state.owned_provinces(civ.id))
-    if lost * BP >= civ.starting_provinces * state.world.rules.society.collapse_share_bp:
+    # collapse is breaking apart from within: provinces lost in war do not count
+    if civ.revolts * BP >= civ.starting_provinces * state.world.rules.society.collapse_share_bp:
         civ.collapsed = True
         events.add(civ.id, "collapse", f"{civ.name} has collapsed, its provinces in open revolt.")

@@ -231,9 +231,14 @@ class RivalRules(Frozen):
     (per decade, scaled like every flow)."""
     faith_spread_bp: Rate
     """Chance per decade that a spreading faith crosses to a neighbour of another faith."""
+    faith_rooted_resistance_bp: Rate = 1000
+    """A court holding another spreading (organised) faith converts at this share of the
+    usual chance: Cairo does not turn Latin Christian in a generation."""
     missionary_wealth: NonNegative
     missionary_chance_bp: Rate
     """Chance that missionaries convert the court they are sent to."""
+    missionary_rooted_bp: Rate = 3000
+    """Missionaries to a court of another world faith succeed at this share of the chance."""
     shared_faith_fade_bp: Rate
     """Extra share of grievance forgotten each decade between states of one faith."""
     festival_wealth_per_1000: NonNegative

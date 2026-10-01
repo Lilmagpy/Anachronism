@@ -306,6 +306,24 @@ def test_faiths_start_from_the_scenario_and_spread(content: Content) -> None:
     assert any(e.kind == "faith" for e in events.items)
 
 
+def test_courts_of_world_faiths_hold_to_them(content: Content) -> None:
+    from anachronism.engine.culture import spread_faiths
+
+    state = new_game(content, "year_1000", seed=1)
+    override = state.world.rules.rivals.model_copy(
+        update={"faith_spread_bp": 10_000, "faith_rooted_resistance_bp": 0}
+    )
+    state.world = state.world.model_copy(
+        update={"rules": state.world.rules.model_copy(update={"rivals": override})}
+    )
+    before = {c: civ.faith for c, civ in state.civs.items()}
+    spread_faiths(state, {}, GameRng(state.rng), EventLog(turn=0, year=state.year))
+    for civ_id, faith in before.items():
+        if faith and state.world.faiths[faith].spreads:
+            assert state.civs[civ_id].faith == faith, civ_id  # no world faith gives way
+    assert any(state.civs[c].faith != f for c, f in before.items())  # the Norse gods do
+
+
 def test_trade_pays_both_sides(warring: GameState) -> None:
     from anachronism.engine.culture import trade
 

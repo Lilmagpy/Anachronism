@@ -85,6 +85,10 @@ def spread_faiths(
             source_effects = effects_by_civ.get(source)
             influence = source_effects[EffectType.CULTURAL_INFLUENCE] if source_effects else 0
             chance = apply_bp(chance, BP + influence)
+            held = state.civs[target].faith
+            if held and state.world.faiths[held].spreads:
+                # a court of another world faith holds to it: conversions are rare
+                chance = apply_bp(chance, rules.faith_rooted_resistance_bp)
             if rng.chance(chance):
                 convert(state, target, faith, events, f"carried from {state.civs[source].name}")
                 converted.add(target)

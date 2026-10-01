@@ -554,3 +554,13 @@ state that already has their prerequisites (so peoples without writing get no la
 Written law everywhere it fits; soap at Kadesh and in AD 1000; household registers in
 East Asia; glass, hospitals and registers in AD 1000. Drafts from general history,
 for the source review with the rest (D-040). CONTENT_GUIDE documents the field.
+
+## D-081 Collapse comes from within; world faiths hold — DELEGATED (2026-10-01)
+Two rules misfired in AD 1000 playtests. (1) "Collapse" counted any lost province, so a
+two-province state that lost one battle "collapsed" - and for the player that meant game
+over. As DESIGN §5 intends, collapse is now breaking apart from within: half the starting
+provinces lost to revolt. Conquest is the war system's business (a state with nothing
+left is destroyed). (2) Faiths converted courts of other world faiths as easily as pagan
+ones: the Fatimid caliphate and the Zirids turned Latin Christian within decades. A court
+holding another spreading faith now converts at a tenth of the chance, and missionaries
+sent to one succeed at 30% of theirs.
