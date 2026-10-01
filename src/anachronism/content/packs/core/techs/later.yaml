@@ -389,3 +389,108 @@ techs:
     prerequisites: [windmill, canals]
     effects: [{type: food_output, bp: 800}, {type: population_cap, bp: 600}]
     flavour: "God made the world; the Dutch made Holland."
+
+  - id: battery
+    name: Electric battery
+    keywords: [electricity, electric, battery, voltaic pile, current, galvanic, lightning in a jar, electric power]
+    category: knowledge
+    year: 1800
+    complexity: 5
+    prerequisites: [copper_smelting, alchemy, scientific_method]
+    requires: {materials: [copper], literacy_bp: 1500}
+    effects: [{type: knowledge_gain, bp: 800}]
+    flavour: "Copper, zinc and brine: a spark that never runs out."
+
+  - id: telegraph
+    name: Electric telegraph
+    keywords: [telegraph, morse, wires, messages by wire, electric messages, cable]
+    category: governance
+    year: 1837
+    complexity: 5
+    prerequisites: [battery, postal_relay]
+    requires: {materials: [copper]}
+    effects: [{type: information_speed, bp: 3000}, {type: legitimacy, bp: 200}, {type: trade_income, bp: 500}]
+    flavour: "News that once took a month arrives before the messenger has saddled his horse."
+
+  - id: telephone
+    name: Telephone
+    keywords: [telephone, phone, voice over wire, talking at a distance]
+    category: governance
+    year: 1876
+    complexity: 5
+    prerequisites: [telegraph]
+    requires: {materials: [copper]}
+    effects: [{type: information_speed, bp: 2000}, {type: trade_income, bp: 500}]
+    flavour: "A voice from a hundred miles away, as if in the next room."
+
+  - id: photography
+    name: Photography
+    keywords: [photography, photograph, camera, daguerreotype, pictures of light, capture an image]
+    category: knowledge
+    year: 1839
+    complexity: 4
+    prerequisites: [lenses, alchemy]
+    effects: [{type: cultural_influence, bp: 400}, {type: knowledge_gain, bp: 300}]
+    flavour: "Light itself paints the picture, and it never lies - or so they say."
+
+  - id: anaesthesia
+    name: Anaesthesia
+    keywords: [anaesthesia, anesthesia, ether, chloroform, painless surgery, sleep for surgery]
+    category: health
+    year: 1846
+    complexity: 4
+    prerequisites: [distillation, herbal_medicine]
+    effects: [{type: health, bp: 800}]
+    flavour: "The surgeon may take his time: the patient sleeps through the knife."
+
+  - id: steamship
+    name: Steamships
+    keywords: [steamship, steamboat, paddle steamer, steam ship, ships without sails]
+    category: maritime
+    year: 1807
+    complexity: 5
+    prerequisites: [steam_engine, caravel]
+    requires: {materials: [iron, coal]}
+    effects: [{type: naval_strength, bp: 2000}, {type: trade_income, bp: 1500}, {type: mobility, bp: 800}]
+    flavour: "Against the wind and against the current, on time."
+
+  - id: canning
+    name: Canned food
+    keywords: [canning, tin cans, preserved food, canned food, sealed jars, rations]
+    category: agriculture
+    year: 1810
+    complexity: 3
+    prerequisites: [glassmaking, iron_working]
+    effects: [{type: storage, bp: 2000}, {type: military_strength, bp: 300}]
+    flavour: "Summer's harvest, sealed and boiled, still good next winter."
+
+  - id: fertiliser
+    name: Chemical fertiliser
+    keywords: [fertiliser, fertilizer, chemical fertiliser, superphosphate, nitrates, feed the soil]
+    category: agriculture
+    year: 1842
+    complexity: 4
+    prerequisites: [alchemy, crop_rotation]
+    effects: [{type: food_output, bp: 2000}, {type: population_cap, bp: 1000}]
+    flavour: "What the soil lacks, the chemist can put back."
+
+  - id: bessemer_steel
+    name: Cheap steel
+    keywords: [bessemer, cheap steel, mass steel, steel mill, converter]
+    category: metallurgy
+    year: 1856
+    complexity: 5
+    prerequisites: [blast_furnace, coke_smelting]
+    requires: {materials: [iron, coal]}
+    effects: [{type: materials_output, bp: 1500}, {type: military_strength, bp: 800}]
+    flavour: "Blow air through molten iron and steel pours out by the ton."
+
+  - id: dynamite
+    name: Dynamite
+    keywords: [dynamite, nitroglycerine, high explosive, blasting]
+    category: military
+    year: 1867
+    complexity: 5
+    prerequisites: [gunpowder, distillation]
+    effects: [{type: materials_output, bp: 800}, {type: military_strength, bp: 800}]
+    flavour: "Mountains move aside; so, sadly, do armies."

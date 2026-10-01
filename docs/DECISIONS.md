@@ -609,3 +609,11 @@ resents it (a small grudge), and a refusal stings more. Tributaries already coun
 toward an economic victory and join your defensive wars. A "Demand tribute" button sits
 with the other diplomacy buttons. Aggressive rival courts far stronger than a
 neighbour take tribute instead of war half the time (never from the player).
+
+## D-087 The library reaches the telephone — DELEGATED (2026-10-01)
+Players love to rush far-future ideas ("electricity in Rome"), and the offline court
+could not recognise them. Ten 19th-century advancements join the library (102 in all):
+the electric battery, telegraph, telephone, photography, anaesthesia, steamships, canned
+food, chemical fertiliser, cheap (Bessemer) steel and dynamite, each with prerequisites
+reaching back through the tree, so asking for electricity in 264 BC shows the long road
+there as goal stubs. Dates are approximate first appearances (D-040).

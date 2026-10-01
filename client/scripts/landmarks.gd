@@ -32,6 +32,8 @@ const KINDS := {
 	"banking": "mint", "joint_stock_company": "mint", "double_entry": "mint",
 	"steam_engine": "furnace", "coke_smelting": "furnace", "railways": "milestone",
 	"mechanical_clock": "clock_tower", "glassmaking": "kiln", "spinning_machine": "workshop",
+	"telegraph": "milestone", "steamship": "harbour", "bessemer_steel": "furnace", "battery": "workshop",
+	"photography": "workshop", "dynamite": "powder_tower",
 }
 
 var map: ProvinceMap
