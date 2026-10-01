@@ -726,3 +726,14 @@ Tested over three seeds: a passive Mauryan player keeps the Punjab; one who goes
 survives every time and sometimes takes most of the Ganges. India gets its own look: new
 portraits (a king in a jewelled turban, a brahmin, a minister) and buildings (whitewash
 and brick under flat roofs, and a white stupa beside the palace hall).
+
+## D-098 The court's counsel — DELEGATED (2026-10-01)
+The brief's offline "Historical Advisors" mode (§10, DESIGN §14) had the matching of typed
+ideas but not the advisers' own suggestions. Now, every turn, the Ideas tab opens with
+"Your court's counsel": the steward, the general, the scholar and the diviner each
+recommend one advancement you can begin now, with a reason in their own voice (lines in
+core/dialogue.yaml). Each values different effects (food and wealth; strength; knowledge;
+legitimacy and calm), and the one whose worry is pressing - thin granaries, a war or a
+stronger hostile neighbour, restless streets or wild rumours - speaks first and urgently.
+Advisers think within their age: an idea a little ahead of its time pleases them, but what
+lies centuries away is the ruler's own strange knowledge, not theirs to suggest.

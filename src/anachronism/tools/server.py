@@ -32,6 +32,7 @@ from anachronism.engine.state import Event, GameState
 from anachronism.llm.config import LlmConfig, load_config
 from anachronism.llm.counsel import who_counsels
 from anachronism.llm.pipeline import IdeaPipeline, make_pipeline
+from anachronism.tools.advisers import counsel
 from anachronism.tools.chronicle import chapters
 from anachronism.tools.view import build_catalog, build_view, next_steps
 from anachronism.tools.voices import (
@@ -180,7 +181,9 @@ class Session:
 
     def _view(self, events: list[Event], state: GameState | None = None) -> dict[str, Any]:
         """The player's view, with each civilisation's emblem and portrait from the content."""
-        view = build_view(state or self.game(), events)
+        game = state or self.game()
+        view = build_view(game, events)
+        view["advice"] = counsel(self.content, game)
         for civ in view["civs"]:
             definition = self.content.civs.get(civ["id"])
             civ["emblem"] = (definition.emblem or definition.adjective[:1]) if definition else "?"

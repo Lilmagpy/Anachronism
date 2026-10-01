@@ -697,6 +697,11 @@ func _fill_ideas() -> void:
 		_side_body.add_child(_label("The court's ruling", 17, GOLD))
 		for ruling in rulings:
 			_side_body.add_child(_ruling_card(ruling))
+	var advice: Array = view.get("advice", [])
+	if not advice.is_empty():
+		_side_body.add_child(_label("Your court's counsel", 17, GOLD))
+		for item in advice:
+			_side_body.add_child(_advice_card(item))
 	_side_body.add_child(_label("Ideas ahead of their time", 17, GOLD))
 	_side_body.add_child(_wrapped("Each costs labour, materials, knowledge and wealth every turn until it works. The further ahead of its time, the more it costs and the more suspicion it draws."))
 	if ahead_ideas.is_empty():
@@ -717,6 +722,21 @@ func _fill_ideas() -> void:
 		for idea in known:
 			names.append(str(idea["name"]))
 		_side_body.add_child(_wrapped(", ".join(names)))
+
+
+## One adviser's recommendation: who speaks, their reason, and a button to begin.
+func _advice_card(item: Dictionary) -> Control:
+	var card := VBoxContainer.new()
+	card.add_theme_constant_override("separation", 2)
+	var head := HBoxContainer.new()
+	var who := _label(str(item["name"]), 15, BAD if item["urgent"] else INK)
+	who.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	head.add_child(who)
+	var node_id := str(item["node_id"])
+	head.add_child(_small_button("Begin", {"kind": "start", "node_id": node_id}))
+	card.add_child(head)
+	card.add_child(_wrapped("\u201c%s\u201d" % str(item["text"]), 13, DIM))
+	return card
 
 
 func _idea_card(idea: Dictionary) -> Control:

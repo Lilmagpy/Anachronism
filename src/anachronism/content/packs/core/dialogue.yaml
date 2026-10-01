@@ -128,6 +128,43 @@ dialogue:
       - "Ah. {subject}. I did say every invention has a second edge - did I not? I meant to."
       - "{subject}: the world bends around our new arts in ways no scholar foresaw."
 
+  # --- Counsel: each adviser recommends one idea a turn (Historical Advisors, DESIGN §14) ---
+  - id: advise_steward
+    speaker: steward
+    lines:
+      - "If you want my counsel: {subject}. More in the storehouses, fewer complaints at the gates."
+      - "The ledgers say {subject}. Wealth today is armies and temples tomorrow."
+  - id: advise_steward_urgent
+    speaker: steward
+    lines:
+      - "The granaries are thin and the people know it. {subject} - and soon."
+      - "We cannot feed ambition on empty stores. Begin {subject} before the next lean year."
+  - id: advise_general
+    speaker: general
+    lines:
+      - "Peace is only the time between wars. {subject} would make the next one shorter."
+      - "My soldiers ask for {subject}. Soldiers rarely ask for anything sensible, but they are right this time."
+  - id: advise_general_urgent
+    speaker: general
+    lines:
+      - "Our enemies are at the gates - or soon will be. Give me {subject}, and give it to me now."
+      - "We are outmatched. {subject} is the cheapest way I know to change that."
+  - id: advise_scholar
+    speaker: scholar
+    lines:
+      - "Knowledge grows knowledge. {subject} would open doors we cannot yet see."
+      - "If I may: {subject}. The young scholars talk of nothing else."
+  - id: advise_diviner
+    speaker: diviner
+    lines:
+      - "The omens favour {subject}. A contented people is a quiet people."
+      - "Heaven smiles on rulers who care for their own. {subject} would show that you do."
+  - id: advise_diviner_urgent
+    speaker: diviner
+    lines:
+      - "The streets mutter and the priests whisper. {subject} would calm them - before they find a reason to rise."
+      - "People fear what they do not understand, and lately they fear the court. {subject} would win them back."
+
   - id: quiet
     speaker: steward
     lines:

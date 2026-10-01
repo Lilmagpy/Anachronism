@@ -145,6 +145,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] Aware rival courts decide with the model: war, envoy or wait, guarded and recorded (D-094)
 - [x] The story so far: the chronicle told in chapters, by the model when online (D-095)
 - [x] Consequences: second-order effects of advancements, as content (D-096)
+- [x] The court's counsel: each adviser recommends an idea a turn (D-098)
 - [x] Secrets (brief §7.3): seal the borders; spread false rumours (D-093)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging
