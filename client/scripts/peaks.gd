@@ -5,7 +5,7 @@
 class_name Peaks
 extends RefCounted
 
-const STEP := 16                ## sample every STEP height-map pixels
+const STEP := 11                ## sample every STEP height-map pixels
 const MIN_METRES := 1500.0
 const MIN_RELIEF := 600.0       ## height difference within the neighbourhood
 const SHOW_WITHIN := 900.0
@@ -36,14 +36,19 @@ func build(parent: Node3D) -> void:
 			var relief := metres - low
 			if relief < MIN_RELIEF or rng.randf() > 0.55:
 				continue
-			var height := clampf(relief / 70.0, 9.0, 30.0)
-			var width := height * rng.randf_range(1.3, 1.8)
-			var basis := Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3(width, height, width))
-			var at := earth.ground_at_pixel(pixel) - Vector3(0, height * 0.12, 0)
+			# a main peak with smaller ones crowding round it: a range, not a cone
 			var key := Vector2i(int(x / TILE), int(y / TILE))
 			if not tiles.has(key):
 				tiles[key] = [[], []]
-			tiles[key][0 if metres > 3000.0 else 1].append(Transform3D(basis, at))
+			var main := clampf(relief / 60.0, 11.0, 36.0)
+			for k in rng.randi_range(2, 4):
+				var height := main * (1.0 if k == 0 else rng.randf_range(0.45, 0.75))
+				var width := height * rng.randf_range(1.2, 1.6)
+				var spot := pixel + (Vector2.ZERO if k == 0 else Vector2(rng.randf_range(-5, 5), rng.randf_range(-5, 5)))
+				var basis := Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3(width, height, width))
+				var at := earth.ground_at_pixel(spot) - Vector3(0, height * 0.12, 0)
+				var snowy := metres > 2600.0 and (k == 0 or metres > 3400.0)
+				tiles[key][0 if snowy else 1].append(Transform3D(basis, at))
 	var holder := Node3D.new()
 	holder.name = "Peaks"
 	parent.add_child(holder)
@@ -59,16 +64,16 @@ func _peak(snow: bool) -> Mesh:
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	var sides := 7
-	var rock := Color(0.52, 0.45, 0.38)
-	var dark := Color(0.40, 0.34, 0.29)
-	var cap := Color(0.97, 0.98, 1.0) if snow else Color(0.60, 0.53, 0.45)
+	var rock := Color(0.58, 0.55, 0.52)
+	var dark := Color(0.44, 0.42, 0.42)
+	var cap := Color(0.98, 0.99, 1.0) if snow else Color(0.66, 0.62, 0.56)
 	var ring: Array[Vector3] = []
 	var mid: Array[Vector3] = []
 	for i in sides:
 		var a := TAU * i / sides
 		var r := 0.5 * (0.85 + 0.3 * sin(i * 2.7))
 		ring.append(Vector3(cos(a) * r, 0, sin(a) * r))
-		mid.append(Vector3(cos(a + 0.3) * r * 0.45, 0.58, sin(a + 0.3) * r * 0.45))
+		mid.append(Vector3(cos(a + 0.3) * r * 0.5, 0.5 if snow else 0.62, sin(a + 0.3) * r * 0.5))
 	var top := Vector3(0.04, 1.0, -0.03)
 	for i in sides:
 		var j := (i + 1) % sides
@@ -95,6 +100,7 @@ func _multimesh(mesh: Mesh, transforms: Array) -> MultiMeshInstance3D:
 		mm.set_instance_transform(i, transforms[i])
 	var material := StandardMaterial3D.new()
 	material.vertex_color_use_as_albedo = true
+	material.vertex_color_is_srgb = true
 	material.roughness = 1.0
 	var instance := MultiMeshInstance3D.new()
 	instance.multimesh = mm

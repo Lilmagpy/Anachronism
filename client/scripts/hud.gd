@@ -487,9 +487,21 @@ func _fill_top_bar() -> void:
 	badge_style.content_margin_right = 10
 	badge_style.shadow_size = 0
 	badge_inner.add_theme_stylebox_override("panel", badge_style)
-	var emblem := UiStyle.headline(str(me.get("emblem", "")), 24, UiStyle.CREAM)
-	emblem.add_theme_font_override("font", UiStyle.font("emblem"))
-	badge_inner.add_child(emblem)
+	if str(me.get("symbol", "")) != "":
+		# the realm's heraldic shield (G1)
+		badge.custom_minimum_size = Vector2(52, 60)
+		badge_style.bg_color = Color(0, 0, 0, 0)
+		badge_style.border_color = Color(0, 0, 0, 0)
+		var arms := TextureRect.new()
+		arms.texture = Symbols.shield(civ_colours.get(view["player"], UiStyle.GOLD), str(me["symbol"]), 128)
+		arms.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		arms.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		arms.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		badge_inner.add_child(arms)
+	else:
+		var emblem := UiStyle.headline(str(me.get("emblem", "")), 24, UiStyle.CREAM)
+		emblem.add_theme_font_override("font", UiStyle.font("emblem"))
+		badge_inner.add_child(emblem)
 	_top.add_child(badge)
 	var titles := VBoxContainer.new()
 	titles.add_theme_constant_override("separation", -4)

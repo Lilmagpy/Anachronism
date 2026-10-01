@@ -61,6 +61,7 @@ func _material(key: String) -> StandardMaterial3D:
 	if not _materials.has(key):
 		var m := StandardMaterial3D.new()
 		m.vertex_color_use_as_albedo = true
+		m.vertex_color_is_srgb = true
 		m.roughness = 0.85
 		_materials[key] = m
 	return _materials[key]

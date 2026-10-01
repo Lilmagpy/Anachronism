@@ -33,6 +33,7 @@ def cross_reference_issues(registry: Registry) -> list[ContentIssue]:
         *_dilemma_issues(registry),
         *_ship_issues(registry),
         *_tactic_issues(registry),
+        *_symbol_issues(registry),
         *_dialogue_issues(registry),
     ]
 
@@ -389,6 +390,16 @@ def _dilemma_issues(registry: Registry) -> list[ContentIssue]:
             except (KeyError, IndexError, ValueError):
                 report("texts may use only {civ} {ruler} {adjective}")
     return issues
+
+
+def _symbol_issues(registry: Registry) -> list[ContentIssue]:
+    return [
+        ContentIssue(
+            registry.origin("civs", civ.id), f"civs ({civ.id})", f"unknown symbol {civ.symbol!r}"
+        )
+        for civ in registry.civs.values()
+        if civ.symbol and registry.is_unknown("symbols", civ.symbol)
+    ]
 
 
 def _tactic_issues(registry: Registry) -> list[ContentIssue]:

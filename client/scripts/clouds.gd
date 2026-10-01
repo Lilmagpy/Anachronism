@@ -5,7 +5,7 @@
 class_name Clouds
 extends Node3D
 
-const COUNT := 22
+const COUNT := 16
 const HEIGHT := 140.0
 const WIND := Vector3(6.0, 0.0, 1.5)   ## map units per second
 
@@ -17,7 +17,7 @@ func build(area: Rect2) -> void:
 	bounds = area
 	name = "Clouds"
 	var material := StandardMaterial3D.new()
-	material.albedo_color = Color(1, 1, 1, 0.82)
+	material.albedo_color = Color(1, 1, 1, 0.7)
 	# a depth pre-pass draws only each cloud's outer surface, so its overlapping puffs
 	# do not show through one another as darker discs
 	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_DEPTH_PRE_PASS
@@ -50,8 +50,8 @@ func build(area: Rect2) -> void:
 		part.mesh = st.commit()
 		part.material_override = material
 		part.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF  # solid clouds cast black blots
-		part.visibility_range_begin = 420.0
-		part.visibility_range_begin_margin = 180.0
+		part.visibility_range_begin = 950.0   # only over the whole-world view
+		part.visibility_range_begin_margin = 250.0
 		part.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
 		var cloud := Node3D.new()
 		cloud.add_child(part)

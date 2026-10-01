@@ -100,7 +100,47 @@ func is_wet(pixel: Vector2) -> bool:
 
 ## Colours the land by owner: one texel per map cell, alpha = how strongly to tint.
 func set_political(image: Image) -> void:
-	terrain_material.set_shader_parameter("political", ImageTexture.create_from_image(image))
+	# smoothed up so territories have rounded edges, not the cells they are counted in
+	var smooth := image.duplicate()
+	# spread each owner a few cells out to sea, so its colour reaches right to the coast
+	for _pass in 3:
+		var grown := smooth.duplicate()
+		for y in smooth.get_height():
+			for x in smooth.get_width():
+				if smooth.get_pixel(x, y).a > 0.5:
+					continue
+				for d in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+					var q: Vector2i = Vector2i(x, y) + d
+					if q.x >= 0 and q.y >= 0 and q.x < smooth.get_width() and q.y < smooth.get_height() and smooth.get_pixel(q.x, q.y).a > 0.5 and is_ocean_at((Vector2(x, y) + Vector2(0.5, 0.5)) * size() / Vector2(smooth.get_size())):
+						grown.set_pixel(x, y, smooth.get_pixel(q.x, q.y))
+						break
+		smooth = grown
+	smooth.resize(image.get_width() * 4, image.get_height() * 4, Image.INTERPOLATE_CUBIC)
+	terrain_material.set_shader_parameter("political", ImageTexture.create_from_image(smooth))
+
+
+var coast_sharp: ImageTexture   ## land 1, sea 0, smoothly interpolated: the coastline
+var coast_soft: ImageTexture    ## the same, blurred: how near the coast (foam, shallows)
+
+
+## The coastline as smooth textures, so it curves instead of following the height grid.
+func _coast_textures() -> void:
+	var mask := Image.create(cols, rows, false, Image.FORMAT_L8)
+	for r in rows:
+		for q in cols:
+			# from the real heights, so the 0 m line between cells is smooth; ocean and
+			# land cells stay on their own side of it
+			var i := r * cols + q
+			var v := clampf(0.5 + elev[i] / 120.0, 0.0, 1.0)
+			v = minf(v, 0.42) if ocean[i] == 1 else maxf(v, 0.58)
+			mask.set_pixel(q, r, Color(v, v, v))
+	var sharp := mask.duplicate()
+	sharp.resize(cols * 4, rows * 4, Image.INTERPOLATE_CUBIC)
+	coast_sharp = ImageTexture.create_from_image(sharp)
+	var soft := mask.duplicate()
+	soft.resize(cols / 6, rows / 6, Image.INTERPOLATE_BILINEAR)
+	soft.resize(cols * 2, rows * 2, Image.INTERPOLATE_CUBIC)
+	coast_soft = ImageTexture.create_from_image(soft)
 
 
 func _grid_index(pixel: Vector2) -> int:
@@ -226,6 +266,9 @@ func _terrain() -> MeshInstance3D:
 	terrain_material.set_shader_parameter("colour_map", ImageTexture.create_from_image(image))
 	var clear := Image.create(1, 1, false, Image.FORMAT_RGBA8)
 	terrain_material.set_shader_parameter("political", ImageTexture.create_from_image(clear))
+	_coast_textures()
+	terrain_material.set_shader_parameter("coast", coast_sharp)
+	terrain_material.set_shader_parameter("coast_soft", coast_soft)
 	var instance := MeshInstance3D.new()
 	instance.name = "Terrain"
 	instance.mesh = mesh
@@ -255,6 +298,9 @@ func _sea() -> MeshInstance3D:
 	plane.size = size() * 6.0  # the water surface covers the open ocean too
 	var material := ShaderMaterial.new()  # animated waves over the painted sea floor
 	material.shader = load("res://shaders/water.gdshader")
+	material.set_shader_parameter("coast_soft", coast_soft)
+	material.set_shader_parameter("coast", coast_sharp)
+	material.set_shader_parameter("map_size", size())
 	var sea := MeshInstance3D.new()
 	sea.name = "Sea"
 	sea.mesh = plane

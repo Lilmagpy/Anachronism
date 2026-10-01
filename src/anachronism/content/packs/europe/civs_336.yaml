@@ -6,6 +6,7 @@ civs:
     adjective: Persian
     lineage: persia
     colour: "#7d3c98"
+    symbol: hawk
     emblem: ΠΕΡ
     portrait: assyrian
     description: >-
@@ -15,6 +16,7 @@ civs:
     adjective: Theban
     lineage: thebes
     colour: "#1f618d"
+    symbol: lyre
     emblem: ΘΗΒ
     portrait: greek
     description: >-
@@ -24,6 +26,7 @@ civs:
     adjective: Thracian
     lineage: odrysians
     colour: "#a04000"
+    symbol: horse
     emblem: ODR
     portrait: steppe
     description: >-
@@ -33,6 +36,7 @@ civs:
     adjective: Illyrian
     lineage: illyrians
     colour: "#566573"
+    symbol: snake
     emblem: ILL
     portrait: celtic
     description: >-
@@ -42,6 +46,7 @@ civs:
     adjective: Scythian
     lineage: scythians
     colour: "#b7950b"
+    symbol: stag
     emblem: SKY
     portrait: steppe
     description: >-

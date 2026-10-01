@@ -398,6 +398,8 @@ func _draw_armies() -> void:
 		var ships := hud.selected_fleet if hud != null else ""
 		provinces.show_armies(view.get("armies", []), view.get("battles", []), chosen,
 			view.get("fleets", []), view.get("sea_battles", []), ships)
+		if rig != null and rig.camera != null:
+			provinces.declutter(rig.camera)
 
 
 func _select(place_id: String) -> void:
@@ -454,7 +456,7 @@ func _process(delta: float) -> void:
 	if menus != null and earth != null:  # the title backdrop drifts slowly east
 		rig.position.x += delta * 6.0
 	if earth != null:  # territory colours fade as you zoom in, so the land itself shows
-		earth.terrain_material.set_shader_parameter("tint", lerpf(0.40, 0.16, rig.zoom_level()))
+		earth.terrain_material.set_shader_parameter("tint", lerpf(0.32, 0.05, rig.zoom_level()))
 	if provinces != null:
 		var pose := rig.camera.global_transform
 		if pose != _last_pose:  # names that would overlap give way as the camera moves
@@ -531,10 +533,21 @@ func _setup_environment() -> void:
 	environment.fog_enabled = true
 	environment.fog_light_color = Color(0.78, 0.76, 0.72)
 	environment.fog_density = 0.00025
+	# colour grading for a bright storybook map (G1); global illumination (SDFGI) washed the
+	# colours out on the Mac, so the light stays simple
+	environment.adjustment_enabled = true
+	environment.adjustment_saturation = 1.18
+	environment.adjustment_contrast = 1.06
 	if RenderingServer.get_current_rendering_method() == "forward_plus":
+		environment.tonemap_mode = Environment.TONE_MAPPER_FILMIC
+		environment.tonemap_exposure = 0.92
+		environment.adjustment_saturation = 1.32
 		environment.ssao_enabled = true
+		environment.ssao_intensity = 1.2
+		environment.ssao_radius = 2.0
 		environment.glow_enabled = true
-		environment.sdfgi_enabled = true
+		environment.glow_intensity = 0.35
+		environment.glow_bloom = 0.04
 	var world_environment := WorldEnvironment.new()
 	world_environment.environment = environment
 	add_child(world_environment)

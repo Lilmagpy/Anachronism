@@ -6,6 +6,7 @@ civs:
     adjective: Mauryan
     lineage: maurya
     colour: "#d35400"
+    symbol: lion
     emblem: MAU
     portrait: indian
     description: >-
@@ -15,6 +16,7 @@ civs:
     adjective: Nanda
     lineage: nanda
     colour: "#6c3483"
+    symbol: bull
     emblem: NAN
     portrait: indian
     description: >-
@@ -24,6 +26,7 @@ civs:
     adjective: Macedonian
     lineage: satraps
     colour: "#566573"
+    symbol: falcon
     emblem: ΜΑΚ
     portrait: hellenistic
     description: >-
@@ -33,6 +36,7 @@ civs:
     adjective: Kalingan
     lineage: kalinga
     colour: "#117864"
+    symbol: elephant
     emblem: KAL
     portrait: indian
     description: >-
@@ -42,6 +46,7 @@ civs:
     adjective: Chola
     lineage: chola
     colour: "#b03a2e"
+    symbol: tiger
     emblem: CHO
     portrait: indian
     description: >-
@@ -51,6 +56,7 @@ civs:
     adjective: Pandya
     lineage: pandya
     colour: "#1f618d"
+    symbol: fish
     emblem: PAN
     portrait: indian
     description: >-
@@ -60,6 +66,7 @@ civs:
     adjective: Chera
     lineage: chera
     colour: "#7d6608"
+    symbol: bow
     emblem: CHE
     portrait: indian
     description: >-
@@ -69,6 +76,7 @@ civs:
     adjective: Sinhalese
     lineage: lanka
     colour: "#a04000"
+    symbol: lion
     emblem: LAN
     portrait: indian
     description: >-

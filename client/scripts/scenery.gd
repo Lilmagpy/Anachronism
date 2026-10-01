@@ -45,28 +45,38 @@ func build(parent: Node3D) -> void:
 			var lat := earth.latitude(y)
 			var conifer := lat > 42.0 or metres > 1600.0 or (lat > 33.0 and rng.randf() < 0.3)
 			var kind := "conifer" if conifer else "leafy"
+			if lat < 32.0 and metres < 400.0 and lum > 0.22 and rng.randf() < 0.6:
+				kind = "palm"   # warm lowlands: date and coconut palms
 			var key := Vector2i(int(x / TILE), int(y / TILE))
 			if not tiles.has(key):
-				tiles[key] = {"leafy": [[], []], "conifer": [[], []]}
+				tiles[key] = {}
 			var grove := pixel + Vector2(rng.randf_range(0, STEP), rng.randf_range(0, STEP))
 			for i in rng.randi_range(3, 7):
+				var variant: String = KINDS[kind][rng.randi() % KINDS[kind].size()]
+				if not tiles[key].has(variant):
+					tiles[key][variant] = [[], []]
 				var p := grove + Vector2(rng.randf_range(-1.6, 1.6), rng.randf_range(-1.6, 1.6))
-				var size := rng.randf_range(0.8, 1.3) * S
+				var size := rng.randf_range(0.75, 1.3) * S
 				var ground := earth.ground_at_pixel(p)
-				tiles[key][kind][0].append(Transform3D(Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3.ONE * size), ground))
-				var green := Color(0.30, 0.60, 0.25) if not conifer else Color(0.22, 0.48, 0.30)
-				tiles[key][kind][1].append(green.lightened(rng.randf() * 0.18))
-	var meshes := {"leafy": _leafy_tree(), "conifer": _conifer()}
+				tiles[key][variant][0].append(Transform3D(Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3.ONE * size), ground))
+				var green := Color(0.36, 0.66, 0.26) if kind != "conifer" else Color(0.22, 0.52, 0.30)
+				tiles[key][variant][1].append(green.lightened(rng.randf() * 0.2).darkened(rng.randf() * 0.1))
 	for key in tiles:
-		for kind in ["leafy", "conifer"]:
-			var entry: Array = tiles[key][kind]
-			if entry[0].is_empty():
-				continue
-			var instance := _multimesh(meshes[kind], entry[0], entry[1])
+		for variant in tiles[key]:
+			var entry: Array = tiles[key][variant]
+			var instance := _multimesh(KenneyKit.mesh(variant, 0.8, "foliage"), entry[0], entry[1])
 			holder.add_child(instance)
 			if not _batches.has(key):
 				_batches[key] = []
 			_batches[key].append([instance.multimesh, entry[0]])
+
+
+## The Kenney nature kit's trees (CC0), by kind.
+const KINDS := {
+	"leafy": ["nature/tree_default", "nature/tree_oak", "nature/tree_detailed", "nature/tree_fat"],
+	"conifer": ["nature/tree_pineRoundA", "nature/tree_pineTallA", "nature/tree_pineDefaultA", "nature/tree_cone"],
+	"palm": ["nature/tree_palm", "nature/tree_palmTall"],
+}
 
 
 ## No trees inside cities: clear each circle [pixel, radius] (and restore earlier clearings,
@@ -145,24 +155,17 @@ func _coloured(mesh: Mesh, trunk_top: float) -> Mesh:
 	return out
 
 
-static var _material: ShaderMaterial
-
-
 func _multimesh(mesh: Mesh, transforms: Array, colours: Array) -> MultiMeshInstance3D:
 	var mm := MultiMesh.new()
 	mm.transform_format = MultiMesh.TRANSFORM_3D
-	mm.use_custom_data = true  # the paint colour; vertex colours mark the trunk
+	mm.use_colors = true  # the leaves' green (trunks keep their own colour)
 	mm.mesh = mesh
 	mm.instance_count = transforms.size()
 	for i in transforms.size():
 		mm.set_instance_transform(i, transforms[i])
-		mm.set_instance_custom_data(i, colours[i])
-	if _material == null:
-		_material = ShaderMaterial.new()
-		_material.shader = load("res://shaders/props.gdshader")
+		mm.set_instance_color(i, colours[i])
 	var instance := MultiMeshInstance3D.new()
 	instance.multimesh = mm
-	instance.material_override = _material
 	instance.visibility_range_end = SHOW_WITHIN
 	instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	return instance

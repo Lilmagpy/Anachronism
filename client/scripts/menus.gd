@@ -64,7 +64,7 @@ func show_title() -> void:
 		button.pressed.connect(entry[1])
 		column.add_child(button)
 	_root.add_child(column)
-	var credit := UiStyle.label("Map: Mapzen Terrain Tiles · NASA Blue Marble · Natural Earth", 13, Color(1, 1, 1, 0.7))
+	var credit := UiStyle.label("Map: Mapzen Terrain Tiles · NASA Blue Marble · Natural Earth   ·   Models: Kenney (CC0)   ·   Heraldry: game-icons.net by Lorc, Delapouite and others (CC BY 3.0)", 13, Color(1, 1, 1, 0.7))
 	credit.set_anchors_preset(Control.PRESET_BOTTOM_LEFT)
 	credit.position = Vector2(16, -30)
 	credit.offset_top = -30
@@ -161,8 +161,16 @@ func _draw_picker() -> void:
 	card.add_child(body)
 	var head := HBoxContainer.new()
 	head.add_theme_constant_override("separation", 16)
-	var emblem := UiStyle.label(str(civ["emblem"]), 64, colour.darkened(0.3), "emblem")
-	head.add_child(emblem)
+	if str(civ.get("symbol", "")) != "":
+		var arms := TextureRect.new()
+		arms.texture = Symbols.shield(colour, str(civ["symbol"]), 128)
+		arms.custom_minimum_size = Vector2(80, 94)
+		arms.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		arms.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		head.add_child(arms)
+	else:
+		var emblem := UiStyle.label(str(civ["emblem"]), 64, colour.darkened(0.3), "emblem")
+		head.add_child(emblem)
 	var names := VBoxContainer.new()
 	names.add_theme_constant_override("separation", -4)
 	names.add_child(UiStyle.label(str(civ["name"]), 48, UiStyle.INK, "title", 900))

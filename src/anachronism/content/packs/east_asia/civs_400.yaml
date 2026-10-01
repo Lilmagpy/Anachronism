@@ -6,6 +6,7 @@ civs:
     adjective: Goguryeo
     lineage: goguryeo
     colour: "#b3261e"
+    symbol: raven
     emblem: 麗
     portrait: hills
     description: >-
@@ -15,6 +16,7 @@ civs:
     adjective: Baekje
     lineage: baekje
     colour: "#2e6fb5"
+    symbol: lotus
     emblem: 濟
     portrait: court
     description: >-
@@ -24,6 +26,7 @@ civs:
     adjective: Silla
     lineage: silla
     colour: "#d4a017"
+    symbol: crown
     emblem: 羅
     portrait: court
     description: >-
@@ -33,6 +36,7 @@ civs:
     adjective: Gaya
     lineage: gaya
     colour: "#5a8f29"
+    symbol: turtle
     emblem: 伽
     portrait: hills
     description: >-
@@ -42,6 +46,7 @@ civs:
     adjective: Wa
     lineage: wa
     colour: "#8a3d8f"
+    symbol: sun
     emblem: 倭
     portrait: southern
     description: >-
@@ -51,6 +56,7 @@ civs:
     adjective: Yan
     lineage: later_yan
     colour: "#4f6d7a"
+    symbol: hawk
     emblem: 後燕
     portrait: steppe
     description: >-
@@ -60,6 +66,7 @@ civs:
     adjective: Wei
     lineage: northern_wei
     colour: "#7a5230"
+    symbol: horse
     emblem: 北魏
     portrait: steppe
     description: >-
@@ -69,6 +76,7 @@ civs:
     adjective: Qin
     lineage: later_qin
     colour: "#9b3a3a"
+    symbol: dragon
     emblem: 後秦
     portrait: court
     description: >-
@@ -78,6 +86,7 @@ civs:
     adjective: Yan
     lineage: southern_yan
     colour: "#3b7a6d"
+    symbol: swan
     emblem: 南燕
     portrait: steppe
     description: >-
@@ -87,6 +96,7 @@ civs:
     adjective: Jin
     lineage: eastern_jin
     colour: "#c46b1b"
+    symbol: dragon
     emblem: 東晉
     portrait: court
     description: >-
@@ -96,6 +106,7 @@ civs:
     adjective: Rouran
     lineage: rouran
     colour: "#6b6b2f"
+    symbol: wolf
     emblem: 柔然
     portrait: steppe
     description: >-

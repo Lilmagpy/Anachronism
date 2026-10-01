@@ -6,6 +6,7 @@ civs:
     adjective: English
     lineage: england
     colour: "#c8102e"
+    symbol: dragon
     emblem: ENG
     portrait: medieval_king
     description: >-
@@ -15,6 +16,7 @@ civs:
     adjective: Scottish
     lineage: scotland
     colour: "#1f4e9c"
+    symbol: lion
     emblem: SCO
     portrait: medieval_king
     description: >-
@@ -24,6 +26,7 @@ civs:
     adjective: Irish
     lineage: ireland
     colour: "#2e8b57"
+    symbol: harp
     emblem: ÉIR
     portrait: celtic
     description: >-
@@ -33,6 +36,7 @@ civs:
     adjective: French
     lineage: france
     colour: "#1d4ed8"
+    symbol: lily
     emblem: FRA
     portrait: medieval_king
     description: >-
@@ -42,6 +46,7 @@ civs:
     adjective: Norman
     lineage: normandy
     colour: "#b8860b"
+    symbol: longship
     emblem: NOR
     portrait: viking
     description: >-
@@ -51,6 +56,7 @@ civs:
     adjective: Imperial
     lineage: hre
     colour: "#e3b505"
+    symbol: eagle
     emblem: HRE
     portrait: medieval_king
     description: >-
@@ -60,6 +66,7 @@ civs:
     adjective: Papal
     lineage: papacy
     colour: "#f5f0e1"
+    symbol: crown
     emblem: PAP
     portrait: bishop
     description: >-
@@ -69,6 +76,7 @@ civs:
     adjective: Venetian
     lineage: venice
     colour: "#a51c30"
+    symbol: lion
     emblem: VEN
     portrait: doge
     description: >-
@@ -78,6 +86,7 @@ civs:
     adjective: Danish
     lineage: denmark
     colour: "#c1272d"
+    symbol: raven
     emblem: DAN
     portrait: viking
     description: >-
@@ -87,6 +96,7 @@ civs:
     adjective: Norwegian
     lineage: norway
     colour: "#9e2a2b"
+    symbol: longship
     emblem: NRG
     portrait: viking
     description: >-
@@ -96,6 +106,7 @@ civs:
     adjective: Swedish
     lineage: sweden
     colour: "#1e5aa8"
+    symbol: crown
     emblem: SVE
     portrait: viking
     description: >-
@@ -105,6 +116,7 @@ civs:
     adjective: Polish
     lineage: poland
     colour: "#dc143c"
+    symbol: eagle
     emblem: POL
     portrait: medieval_king
     description: >-
@@ -114,6 +126,7 @@ civs:
     adjective: Bohemian
     lineage: bohemia
     colour: "#7b2d8b"
+    symbol: lion
     emblem: BOH
     portrait: medieval_king
     description: >-
@@ -123,6 +136,7 @@ civs:
     adjective: Hungarian
     lineage: hungary
     colour: "#3c8d2f"
+    symbol: cross
     emblem: MAG
     portrait: medieval_king
     description: >-
@@ -132,6 +146,7 @@ civs:
     adjective: Rus'
     lineage: rus
     colour: "#b5451b"
+    symbol: trident
     emblem: РУСЬ
     portrait: rus
     description: >-
@@ -141,6 +156,7 @@ civs:
     adjective: Byzantine
     lineage: byzantium
     colour: "#6b2c91"
+    symbol: cross
     emblem: ΡΩΜ
     portrait: byzantine
     description: >-
@@ -150,6 +166,7 @@ civs:
     adjective: Bulgarian
     lineage: bulgaria
     colour: "#2f6b3a"
+    symbol: horse
     emblem: БЪЛ
     portrait: medieval_king
     description: >-
@@ -159,6 +176,7 @@ civs:
     adjective: Andalusi
     lineage: cordoba
     colour: "#0f7b5b"
+    symbol: moon
     emblem: COR
     portrait: turban
     description: >-
@@ -168,6 +186,7 @@ civs:
     adjective: Leonese
     lineage: leon
     colour: "#8b1a1a"
+    symbol: lion
     emblem: LEÓ
     portrait: medieval_king
     description: >-
@@ -177,6 +196,7 @@ civs:
     adjective: Navarrese
     lineage: navarre
     colour: "#b22222"
+    symbol: star
     emblem: NAV
     portrait: medieval_king
     description: >-
@@ -186,6 +206,7 @@ civs:
     adjective: Catalan
     lineage: barcelona
     colour: "#e6a817"
+    symbol: star
     emblem: BAR
     portrait: medieval_king
     description: >-
@@ -195,6 +216,7 @@ civs:
     adjective: Fatimid
     lineage: fatimids
     colour: "#2f8f4e"
+    symbol: star
     emblem: FAT
     portrait: turban
     description: >-
@@ -204,6 +226,7 @@ civs:
     adjective: Zirid
     lineage: zirids
     colour: "#8a9a5b"
+    symbol: star
     emblem: ZIR
     portrait: turban
     description: >-
@@ -213,6 +236,7 @@ civs:
     adjective: Sicilian
     lineage: sicily_emirate
     colour: "#1f7a8c"
+    symbol: moon
     emblem: SIC
     portrait: turban
     description: >-
@@ -222,6 +246,7 @@ civs:
     adjective: Buyid
     lineage: buyids
     colour: "#556b2f"
+    symbol: moon
     emblem: BUY
     portrait: turban
     description: >-
@@ -231,6 +256,7 @@ civs:
     adjective: Armenian
     lineage: armenia
     colour: "#d2691e"
+    symbol: eagle
     emblem: ARM
     portrait: medieval_king
     description: >-
@@ -240,6 +266,7 @@ civs:
     adjective: Georgian
     lineage: georgia
     colour: "#8b0000"
+    symbol: cross
     emblem: GEO
     portrait: medieval_king
     description: >-
@@ -249,6 +276,7 @@ civs:
     adjective: Ghaznavid
     lineage: ghaznavids
     colour: "#4b0082"
+    symbol: elephant
     emblem: GHZ
     portrait: turban
     description: >-
@@ -258,6 +286,7 @@ civs:
     adjective: Makurian
     lineage: makuria
     colour: "#8b5a2b"
+    symbol: cross
     emblem: MAK
     portrait: kushite
     description: >-

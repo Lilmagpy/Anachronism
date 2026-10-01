@@ -191,6 +191,10 @@ the soldiers it `needs_units` (at least `needs_share_bp` of the men), `needs_ter
 `when` (attacking/defending), `power_bp`, `terrain_bp`, `losses_bp`, `rout_bp`, and the
 general's `trait` that doubles its edge. A tale may name a `tactic` to tell that plan's victories.
 
+`core/symbols.yaml` lists the heraldic symbols (D-109); a civ's `symbol` names one, and
+the client draws `client/assets/symbols/<id>.svg` on a shield in its colour. A new symbol is
+a white SVG there plus a line in the YAML (credit its source).
+
 ## Dilemmas and battle tales
 `dilemmas.yaml` (in core and in any pack) holds choices put to the ruler (D-104): a title,
 the situation (`{civ}`, `{ruler}`, `{adjective}` are filled in), when it can arise

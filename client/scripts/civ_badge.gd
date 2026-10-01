@@ -34,6 +34,11 @@ func _draw() -> void:
 		for p in shield:
 			glow.append(o + Vector2(w / 2, h / 2) + (p - o - Vector2(w / 2, h / 2)) * 1.14)
 		draw_colored_polygon(glow, Color(1.0, 0.95, 0.6, 0.85))
+	var art := Symbols.shield(colour, str(civ.get("symbol", "")), int(h))
+	if str(civ.get("symbol", "")) != "":
+		draw_texture_rect(art, Rect2(o + Vector2((w - h * 0.86) / 2.0, 0), Vector2(h * 0.86, h)), false)
+		_draw_name(selected)
+		return
 	draw_colored_polygon(shield, colour.darkened(0.15))
 	var inner := PackedVector2Array()
 	for p in shield:
@@ -48,10 +53,14 @@ func _draw() -> void:
 	var at := o + Vector2((w - text_size.x) / 2, h * 0.42 + font_size * 0.36)
 	draw_string_outline(font, at, emblem, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, 8, Color(0.1, 0.06, 0.03))
 	draw_string(font, at, emblem, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, UiStyle.CREAM)
+	_draw_name(selected)
+
+
+func _draw_name(is_selected: bool) -> void:
 	var name_font := UiStyle.font("body", 800)
 	var name := str(civ["name"])
 	var name_size := 15 if name.length() < 13 else 12
 	var nw := name_font.get_string_size(name, HORIZONTAL_ALIGNMENT_LEFT, -1, name_size).x
 	var name_at := Vector2((size.x - nw) / 2, size.y - 6)
 	draw_string_outline(name_font, name_at, name, HORIZONTAL_ALIGNMENT_LEFT, -1, name_size, 5, Color(0.1, 0.06, 0.03))
-	draw_string(name_font, name_at, name, HORIZONTAL_ALIGNMENT_LEFT, -1, name_size, UiStyle.CREAM if not selected else UiStyle.GOLD)
+	draw_string(name_font, name_at, name, HORIZONTAL_ALIGNMENT_LEFT, -1, name_size, UiStyle.CREAM if not is_selected else UiStyle.GOLD)

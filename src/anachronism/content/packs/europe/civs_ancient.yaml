@@ -6,6 +6,7 @@ civs:
     adjective: Roman
     lineage: rome
     colour: "#b3261e"
+    symbol: eagle
     emblem: SPQR
     portrait: roman
     description: >-
@@ -15,6 +16,7 @@ civs:
     adjective: Carthaginian
     lineage: carthage
     colour: "#6a2c91"
+    symbol: elephant
     emblem: QRT
     portrait: punic
     description: >-
@@ -24,6 +26,7 @@ civs:
     adjective: Syracusan
     lineage: syracuse
     colour: "#1f7a8c"
+    symbol: dolphin
     emblem: ΣΥΡ
     portrait: hellenistic
     description: >-
@@ -33,6 +36,7 @@ civs:
     adjective: Macedonian
     lineage: macedon
     colour: "#c9a227"
+    symbol: sun
     emblem: ΜΑΚ
     portrait: hellenistic
     description: >-
@@ -42,6 +46,7 @@ civs:
     adjective: Athenian
     lineage: athens
     colour: "#2f5d9e"
+    symbol: owl
     emblem: ΑΘΕ
     portrait: greek
     description: >-
@@ -51,6 +56,7 @@ civs:
     adjective: Spartan
     lineage: sparta
     colour: "#8c2d19"
+    symbol: helm
     emblem: Λ
     portrait: greek
     description: >-
@@ -60,6 +66,7 @@ civs:
     adjective: Aetolian
     lineage: aetolia
     colour: "#4f7942"
+    symbol: boar
     emblem: ΑΙΤ
     portrait: greek
     description: >-
@@ -69,6 +76,7 @@ civs:
     adjective: Achaean
     lineage: achaea
     colour: "#5a8fb0"
+    symbol: column
     emblem: ΑΧ
     portrait: greek
     description: >-
@@ -78,6 +86,7 @@ civs:
     adjective: Epirote
     lineage: epirus
     colour: "#7d5a8c"
+    symbol: oak
     emblem: ΑΠΕ
     portrait: hellenistic
     description: >-
@@ -87,6 +96,7 @@ civs:
     adjective: Rhodian
     lineage: rhodes
     colour: "#e07b39"
+    symbol: rose
     emblem: ΡΟ
     portrait: greek
     description: >-
@@ -96,6 +106,7 @@ civs:
     adjective: Pergamene
     lineage: pergamon
     colour: "#3d8c6e"
+    symbol: snake
     emblem: ΠΕΡ
     portrait: hellenistic
     description: >-
@@ -105,6 +116,7 @@ civs:
     adjective: Bithynian
     lineage: bithynia
     colour: "#a0522d"
+    symbol: trident
     emblem: ΒΙΘ
     portrait: hellenistic
     description: >-
@@ -114,6 +126,7 @@ civs:
     adjective: Pontic
     lineage: pontus
     colour: "#8a4f7d"
+    symbol: star
     emblem: ΠΟΝ
     portrait: hellenistic
     description: >-
@@ -123,6 +136,7 @@ civs:
     adjective: Egyptian
     lineage: ptolemaic
     colour: "#d4a017"
+    symbol: eagle
     emblem: ΠΤΟ
     portrait: pharaoh
     description: >-
@@ -132,6 +146,7 @@ civs:
     adjective: Seleucid
     lineage: seleucid
     colour: "#2e6f40"
+    symbol: anchor
     emblem: ΣΕΛ
     portrait: hellenistic
     description: >-
@@ -141,6 +156,7 @@ civs:
     adjective: Massaliot
     lineage: massalia
     colour: "#4a90a4"
+    symbol: lion
     emblem: ΜΑΣ
     portrait: greek
     description: >-
@@ -150,6 +166,7 @@ civs:
     adjective: Numidian
     lineage: numidia
     colour: "#b5813a"
+    symbol: horse
     emblem: N
     portrait: berber
     description: >-
@@ -159,6 +176,7 @@ civs:
     adjective: Gallic
     lineage: cisalpine_gauls
     colour: "#6b8e23"
+    symbol: carnyx
     emblem: G
     portrait: celtic
     description: >-
@@ -168,6 +186,7 @@ civs:
     adjective: Kushite
     lineage: kush
     colour: "#8b5a2b"
+    symbol: ram
     emblem: K
     portrait: kushite
     description: >-

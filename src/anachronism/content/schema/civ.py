@@ -15,6 +15,8 @@ class CivDefinition(Frozen):
     """Cultural line the player's guiding hand follows across dynasties (D-011)."""
     colour: HexColour
     description: str = ""
+    symbol: Identifier | None = None
+    """Its heraldic symbol (an id in ``symbols.yaml``): an eagle, a lotus, a wave..."""
     emblem: str = ""
     """One or two characters on the civilisation's badge (e.g. 秦); the adjective's first
     letter when empty. Characters outside Latin must be in the client's emblem font

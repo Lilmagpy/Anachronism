@@ -873,3 +873,21 @@ or more) reads the enemy's real plan. The player may order a plan for each army,
 the likely plan of rival armies. Battles are told by plan (Cannae, the Mongol feigned
 retreat, the Teutoburg forest). Armies also learn: victories (and surviving defeats) make
 veterans, up to +30%; raw recruits dilute them; mercenaries come as veterans.
+
+## D-109 Graphics pass toward Rise of Kingdoms; heraldic symbols — DELEGATED (2026-10-01)
+The owner asked for graphics "incredible", modelled on Rise of Kingdoms, rated 0-10 against
+it and improved past 8; and for empires to bear symbols rather than letters. Done so far:
+the coastline is drawn from the real heights as a smooth line with sand beaches and surf
+(no more staircase cells); turquoise shallows deepen to rich blue, with painted swells
+offshore; land is lush green; owned land carries a light wash and a glowing border in its
+owner's colour; mountain ranges are fuller, with snowy peaks. Real 3D models from the
+Kenney kits (CC0): forests of oaks, pines and palms; capitals as castles with towers,
+gatehouses and banners whose roofs take the owner's colour; fleets as sailing warships;
+siege trains with trebuchets. Armies are ranks of soldiers with shields in their colours
+under a mounted commander and a standard. Every civilisation has a heraldic symbol (content
+`symbols.yaml`, chosen from its history: the Roman eagle, the Athenian owl, the Seleucid
+anchor, the Chola tiger, the Gojoseon bear, the Mongol wolf...), drawn on a shield in the
+picker, the top bar and over its lands; art from game-icons.net (CC BY 3.0, credited on
+the title screen). The Mac renderer's global illumination washed colours out, so it is off
+and colours are graded instead. Labels of armies and fleets give way to more important
+names. Clouds only appear over the whole-world view.

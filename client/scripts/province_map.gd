@@ -23,6 +23,7 @@ var metres := PackedFloat32Array()
 var civ_colours := {}
 var civ_portraits := {}   ## civ id -> portrait style, which also picks its building style
 var civ_names := {}
+var civ_symbols := {}   ## civ id -> heraldic symbol id (G1)
 
 
 func _init(earth_builder: EarthBuilder, view: Dictionary) -> void:
@@ -41,6 +42,7 @@ func _init(earth_builder: EarthBuilder, view: Dictionary) -> void:
 		civ_colours[civ["id"]] = Color(civ["colour"])
 		civ_portraits[civ["id"]] = str(civ.get("portrait", ""))
 		civ_names[civ["id"]] = civ["name"]
+		civ_symbols[civ["id"]] = str(civ.get("symbol", ""))
 	for p in view["provinces"]:
 		if p["latlon"] == null:
 			continue
@@ -228,7 +230,9 @@ func declutter(camera: Camera3D) -> void:
 	var view_height := camera.get_viewport().get_visible_rect().size.y
 	var scale := view_height / (2.0 * tan(deg_to_rad(camera.fov) / 2.0))
 	var placed: Array[Rect2] = []
-	for entry in _labels:
+	var everything := _labels + _war_labels
+	everything.sort_custom(func(a: Array, b: Array) -> bool: return a[1] > b[1])
+	for entry in everything:
 		var label: Label3D = entry[0]
 		if not is_instance_valid(label):
 			continue
@@ -244,6 +248,11 @@ func declutter(camera: Camera3D) -> void:
 		var per_char := 0.62 if label.text == label.text.to_upper() else 0.48
 		var width := label.text.length() * height * per_char
 		var rect := Rect2(camera.unproject_position(at) - Vector2(width, height) / 2.0, Vector2(width, height)).grow(3.0)
+		for child in label.get_children():
+			if child is Sprite3D:  # a state's shield stands above its name
+				var arms := child as Sprite3D
+				var tall := arms.texture.get_height() * arms.pixel_size * scale
+				rect = rect.merge(Rect2(rect.get_center() - Vector2(tall * 0.43, tall * 1.7), Vector2(tall * 0.86, tall)))
 		var clear := true
 		for other in placed:
 			if other.intersects(rect):
@@ -456,6 +465,7 @@ func show_armies(armies: Array, battles: Array, selected_army := "", fleets: Arr
 		sea_battles: Array = [], selected_fleet := "") -> void:
 	for child in _war_marks.get_children():
 		child.queue_free()
+	_war_labels.clear()
 	var by_id := {}
 	for site in sites:
 		by_id[site["id"]] = site
@@ -476,9 +486,10 @@ func show_armies(armies: Array, battles: Array, selected_army := "", fleets: Arr
 		if not route.is_empty() and by_id.has(route[0]):
 			facing = -(by_id[route[0]]["pixel"] - spot).angle() - PI / 2.0
 		var colour: Color = civ_colours.get(army["owner"], Color.GRAY)
-		var piece := Armies.make(colour, facing)
+		var siege: bool = army.get("troops", []).any(func(t): return str(t["unit"]) in ["siege_engines", "cannon"])
+		var piece := Armies.make(colour, facing, siege)
 		var men := float(army["men"])
-		piece.scale = Vector3.ONE * clampf(1.4 + log(maxf(men, 1000.0) / 1000.0) / log(10.0) * 0.7, 1.4, 3.4)
+		piece.scale = Vector3.ONE * clampf(0.6 + log(maxf(men, 1000.0) / 1000.0) / log(10.0) * 0.25, 0.6, 1.25)
 		piece.position = earth.ground_at_pixel(spot)
 		_war_marks.add_child(piece)
 		var label := Label3D.new()
@@ -497,8 +508,10 @@ func show_armies(armies: Array, battles: Array, selected_army := "", fleets: Arr
 		label.no_depth_test = true
 		label.render_priority = 13  # an army's strength reads over place names
 		label.outline_render_priority = 12
-		label.position = earth.ground_at_pixel(spot) + Vector3(0, 8.0 * piece.scale.y, 0)
+		label.position = earth.ground_at_pixel(spot) + Vector3(0, 10.0 * piece.scale.y, 0)
+		label.visibility_range_end = 1300.0   # not over the whole-world view
 		_war_marks.add_child(label)
+		_war_labels.append([label, 1500000 + (500000 if mine else 0) + int(men / 1000)])
 		if army["id"] == selected_army:
 			var ring := MeshInstance3D.new()
 			var torus := TorusMesh.new()
@@ -563,7 +576,7 @@ func _draw_fleets(st: SurfaceTool, by_id: Dictionary, fleets: Array, selected_fl
 		var colour: Color = civ_colours.get(fleet["owner"], Color.GRAY)
 		var ships := int(fleet["ships"])
 		var piece := Armies.make_fleet(colour, facing, 1 if ships < 20 else (2 if ships < 50 else 3))
-		piece.scale = Vector3.ONE * clampf(1.6 + log(maxf(ships, 5.0) / 5.0) / log(10.0) * 0.8, 1.6, 3.2)
+		piece.scale = Vector3.ONE * clampf(0.7 + log(maxf(ships, 5.0) / 5.0) / log(10.0) * 0.3, 0.7, 1.3)
 		piece.position = at
 		_war_marks.add_child(piece)
 		var label := Label3D.new()
@@ -579,8 +592,10 @@ func _draw_fleets(st: SurfaceTool, by_id: Dictionary, fleets: Array, selected_fl
 		label.no_depth_test = true
 		label.render_priority = 13
 		label.outline_render_priority = 12
-		label.position = at + Vector3(0, 7.0 * piece.scale.y, 0)
+		label.position = at + Vector3(0, 9.0 * piece.scale.y, 0)
+		label.visibility_range_end = 1300.0
 		_war_marks.add_child(label)
+		_war_labels.append([label, 1400000 + (500000 if mine else 0) + ships])
 		if fleet["id"] == selected_fleet:
 			var ring := MeshInstance3D.new()
 			var torus := TorusMesh.new()
@@ -646,6 +661,7 @@ var _ties: MeshInstance3D = null   ## the arcs of show_ties
 var player := ""   ## the player's civ: its name is never hidden by another's
 var _region_cells := {}   ## site index -> Array of its cells (built once)
 var _labels: Array = []   ## [label, priority], most important first, for decluttering
+var _war_labels: Array = []   ## [label, priority] of armies' and fleets' strengths
 
 
 ## The map cells of a site, indexed once (borders never move; only owners change).
@@ -736,6 +752,18 @@ func _civ_label(civ_id: String) -> Label3D:
 	# as their provinces' own names only appear closer still
 	label.visibility_range_begin = 480.0 if count >= 60 else 300.0
 	label.position = earth.ground_at_pixel(centre) + Vector3(0, 8.0, 0)
+	if civ_symbols.get(civ_id, "") != "":
+		# the state's arms above its name, as a banner over its lands
+		var arms := Sprite3D.new()
+		arms.texture = Symbols.shield(civ_colours[civ_id], civ_symbols[civ_id], 128)
+		arms.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+		arms.fixed_size = true
+		arms.pixel_size = 0.00042 * clampf(label.font_size / 30.0, 0.8, 1.3)
+		arms.offset = Vector2(0, 150)
+		arms.no_depth_test = true
+		arms.render_priority = 12
+		arms.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		label.add_child(arms)
 	return label
 
 

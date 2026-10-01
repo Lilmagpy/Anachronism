@@ -188,6 +188,7 @@ class Session:
             definition = self.content.civs.get(civ["id"])
             civ["emblem"] = (definition.emblem or definition.adjective[:1]) if definition else "?"
             civ["portrait"] = definition.portrait if definition else ""
+            civ["symbol"] = (definition.symbol or "") if definition else ""
         return view
 
     def idea(self, args: dict[str, Any]) -> dict[str, Any]:

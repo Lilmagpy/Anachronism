@@ -549,6 +549,7 @@ def build_catalog(content: Content) -> list[dict[str, Any]]:
                     "colour": definition.colour,
                     "description": definition.description,
                     "emblem": definition.emblem or definition.adjective[:1],
+                    "symbol": definition.symbol or "",
                     "portrait": definition.portrait,
                     "leader": start.leader,
                     "pitch": start.pitch,

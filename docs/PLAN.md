@@ -156,5 +156,6 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] Holding conquered land: peoples remember, rise without garrisons, assimilate in time (D-106)
 - [x] Navies: fleets, sea battles told as stories, command of the sea, blockades (D-107)
 - [x] Battle plans that beat each other, great generals who read the enemy, veterans (D-108)
+- [ ] Graphics toward Rise of Kingdoms: coasts, water, models, heraldic symbols (D-109, in progress)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

@@ -6,6 +6,7 @@ civs:
     adjective: Oda
     lineage: oda
     colour: "#c0392b"
+    symbol: flower
     emblem: 織田
     portrait: samurai
     description: >-
@@ -15,6 +16,7 @@ civs:
     adjective: Imagawa
     lineage: imagawa
     colour: "#2e6fb5"
+    symbol: sun
     emblem: 今川
     portrait: samurai
     description: >-
@@ -24,6 +26,7 @@ civs:
     adjective: Takeda
     lineage: takeda
     colour: "#b22222"
+    symbol: diamond
     emblem: 武田
     portrait: samurai
     description: >-
@@ -33,6 +36,7 @@ civs:
     adjective: Uesugi
     lineage: uesugi
     colour: "#1f4e9c"
+    symbol: bamboo
     emblem: 上杉
     portrait: samurai
     description: >-
@@ -42,6 +46,7 @@ civs:
     adjective: Hojo
     lineage: hojo
     colour: "#7a4f9c"
+    symbol: scales
     emblem: 北条
     portrait: samurai
     description: >-
@@ -51,6 +56,7 @@ civs:
     adjective: Date
     lineage: date
     colour: "#16a085"
+    symbol: moon
     emblem: 伊達
     portrait: samurai
     description: >-
@@ -60,6 +66,7 @@ civs:
     adjective: Asakura
     lineage: asakura
     colour: "#8e6b3e"
+    symbol: tower
     emblem: 朝倉
     portrait: samurai
     description: >-
@@ -69,6 +76,7 @@ civs:
     adjective: Saito
     lineage: saito
     colour: "#556b2f"
+    symbol: wave
     emblem: 斎藤
     portrait: samurai
     description: >-
@@ -78,6 +86,7 @@ civs:
     adjective: Miyoshi
     lineage: miyoshi
     colour: "#d35400"
+    symbol: flower
     emblem: 三好
     portrait: samurai
     description: >-
@@ -87,6 +96,7 @@ civs:
     adjective: Ashikaga
     lineage: ashikaga
     colour: "#f5f0e1"
+    symbol: crossbow
     emblem: 足利
     portrait: court
     description: >-
@@ -96,6 +106,7 @@ civs:
     adjective: Mori
     lineage: mori
     colour: "#2c3e50"
+    symbol: star
     emblem: 毛利
     portrait: samurai
     description: >-
@@ -105,6 +116,7 @@ civs:
     adjective: Amago
     lineage: amago
     colour: "#6d4c41"
+    symbol: wave
     emblem: 尼子
     portrait: samurai
     description: >-
@@ -114,6 +126,7 @@ civs:
     adjective: Otomo
     lineage: otomo
     colour: "#27ae60"
+    symbol: ginkgo
     emblem: 大友
     portrait: samurai
     description: >-
@@ -123,6 +136,7 @@ civs:
     adjective: Shimazu
     lineage: shimazu
     colour: "#8e44ad"
+    symbol: cross
     emblem: 島津
     portrait: samurai
     description: >-
@@ -132,6 +146,7 @@ civs:
     adjective: Chosokabe
     lineage: chosokabe
     colour: "#a0522d"
+    symbol: ginkgo
     emblem: 長宗
     portrait: samurai
     description: >-
@@ -141,6 +156,7 @@ civs:
     adjective: Joseon
     lineage: joseon
     colour: "#1e5aa8"
+    symbol: yin_yang
     emblem: 朝鮮
     portrait: joseon
     description: >-
@@ -150,6 +166,7 @@ civs:
     adjective: Ming
     lineage: ming
     colour: "#e3b505"
+    symbol: sun
     emblem: 大明
     portrait: court
     description: >-
@@ -159,6 +176,7 @@ civs:
     adjective: Ryukyuan
     lineage: ryukyu
     colour: "#16a0a0"
+    symbol: triple_comma
     emblem: 琉球
     portrait: southern
     description: >-

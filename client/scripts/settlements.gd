@@ -36,6 +36,7 @@ var style := "east"   ## the building style of the province being built
 
 func _init(province_map: ProvinceMap) -> void:
 	_material.vertex_color_use_as_albedo = true
+	_material.vertex_color_is_srgb = true   # instance colours are everyday (sRGB) colours
 	_material.roughness = 0.9
 	map = province_map
 	earth = province_map.earth
@@ -110,6 +111,19 @@ func _init(province_map: ProvinceMap) -> void:
 			["low_roof", low_roof], ["yurt", yurt], ["yurt_roof", yurt_roof],
 			["round_tower", round_tower], ["spire", spire], ["column", column], ["pyramid", pyramid]]:
 		_parts[entry[0]] = {"mesh": entry[1], "transforms": [], "colours": []}
+	# castles from the Kenney castle kit (CC0, G1): their blue roofs and flags take the
+	# owner's colour; they keep their own stone (`kit` parts are drawn with their own materials)
+	for entry in [
+			["k_wall", KenneyKit.mesh("castle/wall", 0.24 * S)],
+			["k_tower", KenneyKit.stack(["castle/tower-square-base", "castle/tower-square-mid",
+				"castle/tower-square-top-roof-high"], 0.62 * S)],
+			["k_round", KenneyKit.stack(["castle/tower-hexagon-base", "castle/tower-hexagon-mid",
+				"castle/tower-hexagon-roof"], 0.66 * S)],
+			["k_keep", KenneyKit.stack(["castle/tower-square-base", "castle/tower-square-mid-windows",
+				"castle/tower-square-mid", "castle/tower-square-top-roof-high"], 1.05 * S)],
+			["k_gate", KenneyKit.mesh("castle/gate", 0.36 * S)],
+			["k_flag", KenneyKit.mesh("castle/flag-banner-long", 0.75 * S)]]:
+		_parts[entry[0]] = {"mesh": entry[1], "transforms": [], "colours": [], "kit": true}
 
 
 func build(parent: Node3D) -> void:
@@ -160,7 +174,7 @@ func recolour() -> void:
 		var colour := base
 		if owner != null and map.civ_colours.has(owner):
 			colour = base.lerp(map.civ_colours[owner], item[3])
-		elif item[0] == "banner":
+		elif item[0] in ["banner", "k_flag"]:
 			colour = Color(0.85, 0.82, 0.75)  # a masterless city flies a plain flag
 		mm.set_instance_color(where[1], colour)
 
@@ -223,7 +237,7 @@ func _add(part: String, pixel: Vector2, lift: float, turn: float, scale: Vector3
 	var height: float = _parts[part]["mesh"].get_aabb().size.y * scale.y
 	_parts[part]["transforms"].append(Transform3D(basis, ground + Vector3(0, lift + height / 2.0, 0)))
 	_parts[part]["colours"].append(colour)
-	if site >= 0 and (mix > 0.0 or part == "banner"):
+	if site >= 0 and (mix > 0.0 or part in ["banner", "k_flag"]):
 		_owned.append([part, _parts[part]["colours"].size() - 1, site, mix])
 
 
@@ -297,39 +311,36 @@ func _city(site: Dictionary, population: int, index: int) -> void:
 	# the owner's banner flies over every chief city; a capital's is twice the size
 	var flag := 1.6 if site["capital"] else 1.0
 	var mast := centre + Vector2(half * 0.55, -half * 0.55) if site["capital"] else centre
-	_add("pole", mast, 0.0, 0.0, Vector3.ONE * flag, Color(0.35, 0.25, 0.15))
-	_add("banner", mast + Vector2(0.15 * S * flag, 0), 0.45 * S * flag, 0.0, Vector3.ONE * flag, Color.WHITE, index, 1.0)
+	_add("k_flag", mast, 0.0, 0.0, Vector3.ONE * flag, Color.WHITE, index, 1.0)
 	if site["capital"]:
 		if style != "steppe":
 			_walls(centre, half, index)
 		_palace(centre, index)
 
 
-## A capital's walls with corner and gate towers, in the local stone or earth.
+## A capital's walls with corner towers and a gatehouse on each side (Kenney castle kit);
+## roofs and banners fly the owner's colours.
 func _walls(centre: Vector2, half: float, index: int) -> void:
-	var stone := {"east": Color(0.66, 0.56, 0.42), "nile": Color(0.74, 0.60, 0.40),
-		"near_east": Color(0.66, 0.52, 0.36), "classical": Color(0.80, 0.77, 0.70),
-		"south_asian": Color(0.72, 0.44, 0.30),
-		"northern": Color(0.58, 0.57, 0.55)}[style] as Color
-	var corner_part := "round_tower" if style in ["northern", "classical"] else "tower"
+	var stone := Color.WHITE
+	var corner_part := "k_round" if style in ["northern", "classical"] else "k_tower"
 	var corners := [Vector2(-half, -half), Vector2(half, -half), Vector2(half, half), Vector2(-half, half)]
+	var piece_width := 0.24 * S / 1.31  # the wall model's width for its height
 	for side in 4:
 		var a: Vector2 = centre + corners[side]
 		var b: Vector2 = centre + corners[(side + 1) % 4]
 		var length := a.distance_to(b)
 		var angle := -(b - a).angle()
-		var pieces := int(ceil(length / (0.9 * S)))
+		var pieces := int(ceil(length / piece_width))
 		for k in pieces:
 			var p := a.lerp(b, (k + 0.5) / pieces)
-			if earth.is_wet(p):
-				continue  # the sea is the wall on that side
-			_add("wall", p, 0.0, angle, Vector3(length / pieces / S + 0.02, 1, 1), stone, index, 0.2)
+			if earth.is_wet(p) or (k == pieces / 2):
+				continue  # the sea is the wall on that side; the gate stands mid-way
+			_add("k_wall", p, 0.0, angle, Vector3(length / pieces / piece_width * 1.02, 1, 1), stone, index, 1.0)
 		if not earth.is_wet(a):
-			_add(corner_part, a, 0.0, 0.0, Vector3.ONE, stone.darkened(0.1), index, 0.35)
-		if not earth.is_wet(a.lerp(b, 0.5)):
-			_add("tower", a.lerp(b, 0.5), 0.0, 0.0, Vector3(1.3, 1.2, 1.3), stone.darkened(0.15), index, 0.35)
-		if style == "northern" and not earth.is_wet(a):
-			_add("spire", a, 0.3 * S, 0.0, Vector3(0.9, 0.7, 0.9), Color(0.30, 0.30, 0.34), index, 0.5)
+			_add(corner_part, a, 0.0, 0.0, Vector3.ONE, stone, index, 1.0)
+		var mid := a.lerp(b, (pieces / 2 + 0.5) / pieces)
+		if not earth.is_wet(mid):
+			_add("k_gate", mid, 0.0, angle, Vector3.ONE, stone, index, 1.0)
 
 
 ## The seat of power at a capital's heart, in the local manner.
@@ -372,8 +383,7 @@ func _palace(centre: Vector2, index: int) -> void:
 			_add("pole", stupa, 0.3 * S, 0.0, Vector3(1.0, 0.4, 1.0), UiStyle.GOLD, index, 0.0)
 		"northern":
 			# a stone keep with a steep roof, and a church spire beside it
-			_add("tower", centre, 0.0, 0.0, Vector3(2.4, 1.6, 2.0), Color(0.60, 0.59, 0.56))
-			_add("steep_roof", centre, 0.42 * S, 0.0, Vector3(2.0, 1.4, 2.2), Color(0.26, 0.26, 0.30), index, 0.55)
+			_add("k_keep", centre, 0.0, 0.0, Vector3(1.4, 1.0, 1.4), Color.WHITE, index, 1.0)
 			var church := centre + Vector2(0.55, 0.35) * S
 			_add("hall", church, 0.0, 0.0, Vector3(0.45, 1.0, 0.4), Color(0.80, 0.78, 0.72))
 			_add("round_tower", church + Vector2(0.14, 0) * S, 0.0, 0.0, Vector3(0.5, 1.6, 0.5), Color(0.80, 0.78, 0.72))
@@ -397,7 +407,8 @@ func _multimesh(entry: Dictionary, indices: Array) -> MultiMeshInstance3D:
 		entry["where"][i] = [mm, local]
 	var instance := MultiMeshInstance3D.new()
 	instance.multimesh = mm
-	instance.material_override = _material
+	if not entry.get("kit", false):
+		instance.material_override = _material
 	instance.visibility_range_end = SHOW_WITHIN
 	instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	return instance
