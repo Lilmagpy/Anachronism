@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Mapping, Set
-from typing import Annotated
+from typing import Annotated, Literal
 
 from pydantic import Field
 
@@ -47,6 +47,22 @@ class Successor(Frozen):
     """Their temperament; empty keeps the state's."""
 
 
+GeneralTrait = Literal["horse", "siege", "shield", "bold", "quartermaster", "beloved"]
+"""A general's gift: horse (cavalry fight harder), siege (walls fall faster), shield
+(stubborn in defence), bold (fierce in attack, careless in defence), quartermaster (less
+attrition), beloved (morale recovers faster and breaks slower)."""
+
+
+class General(Frozen):
+    """A commander a state can give its armies (D-101)."""
+
+    name: Annotated[str, Field(min_length=1, max_length=60)]
+    skill: Annotated[int, Field(ge=1, le=5)] = 2
+    trait: GeneralTrait | None = None
+    note: str = ""
+    """A line of history."""
+
+
 class ScenarioCiv(Frozen):
     """One civilisation's situation at the scenario's start."""
 
@@ -66,6 +82,8 @@ class ScenarioCiv(Frozen):
     leader_age: Annotated[int, Field(ge=1, le=90)] = 40
     """The ruler's age at the start."""
     successors: tuple[Successor, ...] = ()
+    generals: tuple[General, ...] = ()
+    """Commanders, best first: new armies take the next free one."""
     """Who follows, in order, when rulers die (after that, unnamed heirs)."""
     disposition: Disposition = Disposition.CAUTIOUS
     """The ruler's temperament, which steers the civilisation once it leaves its script."""

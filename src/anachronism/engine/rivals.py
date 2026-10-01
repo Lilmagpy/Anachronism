@@ -510,6 +510,9 @@ def rival_decrees(state: GameState, events: EventLog) -> None:
             if civ.stockpiles.wealth >= price * 2:
                 civ.stockpiles.wealth -= price
                 civ.mercenaries = rules.mercenary_turns
+                from anachronism.engine.armies import hire_company  # armies builds on rivals
+
+                hire_company(state, civ_id, rules.mercenary_turns)
                 events.add(
                     civ_id,
                     "decree",

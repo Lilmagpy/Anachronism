@@ -262,6 +262,8 @@ def _armies(state: GameState) -> list[dict[str, Any]]:
                 "morale_bp": army.morale_bp,
                 "general": army.general,
                 "skill": army.skill,
+                "trait": army.trait,
+                "mercenary": army.contract > 0,
                 "target": army.target,
                 "route": route(state, army.owner, army.province, army.target)
                 if army.target

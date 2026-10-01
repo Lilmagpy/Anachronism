@@ -681,6 +681,7 @@ scenarios:
         capital: m_kiev
         leader: Vladimir the Great
         leader_age: 42
+        generals: [{name: "Dobrynya", skill: 3, trait: beloved, note: "Vladimir's uncle and voivode, hero of the byliny."}]
         successors: [{name: "Sviatopolk the Accursed", age: 35, disposition: "aggressive"}, {name: "Yaroslav the Wise", age: 38, disposition: "scholarly"}]
         pitch: "The largest realm in Europe, stitched together by rivers. Make it hold."
         provinces:
@@ -736,6 +737,7 @@ scenarios:
         capital: m_constantinople
         leader: Basil II
         leader_age: 42
+        generals: [{name: "Nikephoros Ouranos", skill: 4, trait: shield, note: "Victor over Samuel at the Spercheios, 997."}]
         successors: [{name: "Constantine VIII", age: 65, disposition: "cautious"}, {name: "Romanos III", age: 60}]
         pitch: "The richest state in Europe and the heir of Rome. Basil II is at war with Bulgaria; win it with more than swords."
         provinces:
@@ -838,6 +840,7 @@ scenarios:
         capital: m_cordoba
         leader: al-Mansur
         leader_age: 62
+        generals: [{name: "Abd al-Malik al-Muzaffar", skill: 3, trait: bold, note: "Al-Mansur's son and heir in war."}]
         successors: [{name: "Abd al-Malik al-Muzaffar", age: 27, disposition: "aggressive"}, {name: "Abd al-Rahman Sanchuelo", age: 25}]
         pitch: "The most brilliant city in western Europe. Its splendour will not last - unless you change the story."
         provinces:

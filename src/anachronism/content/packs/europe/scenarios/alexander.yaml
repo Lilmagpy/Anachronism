@@ -21,6 +21,7 @@ scenarios:
         capital: a3_pella
         leader: "Alexander"
         leader_age: 20
+        generals: [{name: "Parmenion", skill: 4, trait: shield, note: "Philip's old general, master of the left wing at Chaeronea."}, {name: "Craterus", skill: 3, trait: bold, note: "Commander of the phalanx; the soldiers' favourite."}, {name: "Antipater", skill: 3, trait: quartermaster, note: "Regent of Macedon while the king campaigns."}, {name: "Ptolemy", skill: 2, trait: beloved, note: "Boyhood friend of Alexander; one day Pharaoh."}]
         successors: [{name: "Philip III Arrhidaeus", age: 36, disposition: cautious}, {name: "Cassander", age: 50, disposition: aggressive}]
         martial_bp: 40000
         pitch: "Your father Philip has been murdered at his daughter's wedding. You are twenty, Greece is restless, and Persia is waiting. History says you conquer it all; make it last longer than you do."
@@ -69,6 +70,7 @@ scenarios:
         capital: a3_susiana
         leader: "Darius III"
         leader_age: 44
+        generals: [{name: "Memnon of Rhodes", skill: 4, trait: bold, note: "Greek mercenary captain: the only Persian commander Alexander feared."}, {name: "Mazaeus", skill: 3, trait: horse, note: "Satrap of Babylon; led the right wing at Gaugamela."}, {name: "Bessus", skill: 2, trait: horse, note: "Satrap of Bactria, with the eastern horsemen."}]
         successors: [{name: "Bessus", age: 40, disposition: aggressive}]
         martial_bp: 4500
         pitch: "You have just taken the throne of the greatest empire on earth. A boy king in Macedon thinks he can take it from you. Prove him wrong."
@@ -134,6 +136,7 @@ scenarios:
         capital: a3_attica
         leader: "Demosthenes"
         leader_age: 48
+        generals: [{name: "Phocion", skill: 3, trait: shield, note: "Elected general forty-five times; a cautious man."}]
         pitch: "Chaeronea is lost and Philip is dead. Athens still has its fleet, its silver and its voice. Use them."
         provinces:
           a3_attica: 350000
@@ -435,6 +438,7 @@ scenarios:
         disposition: cautious
         capital: a3_syracuse
         leader_age: 45
+        generals: [{name: "Agathocles", skill: 3, trait: bold, note: "A potter's son who will seize Syracuse in 317 BC."}]
         pitch: "Timoleon freed you from tyrants and Carthage alike, then died. Who will lead Syracuse now?"
         provinces:
           a3_syracuse: 300000
@@ -476,6 +480,7 @@ scenarios:
           - {id: "samnite_wars", goal: "conquer", target: "syracuse", preconditions: {after_year: -300}, note: "Rome, master of Italy, looks across the strait to Sicily."}
         capital: a3_latium
         leader_age: 40
+        generals: [{name: "Lucius Papirius Cursor", skill: 3, trait: bold, note: "Hero of the Samnite wars."}, {name: "Marcus Valerius Corvus", skill: 3, trait: beloved, note: "Six times consul; his men adored him."}]
         martial_bp: 20000
         pitch: "A city of Latium at war with the Samnites in the hills. Nobody in Pella or Persepolis has heard of you. Yet."
         provinces:

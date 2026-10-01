@@ -29,6 +29,7 @@ scenarios:
         capital: qin_guanzhong
         leader: Duke Xiao
         leader_age: 31
+        generals: [{name: "Sima Cuo", skill: 4, trait: siege, note: "Will conquer Shu and Ba in 316 BC."}, {name: "Bai Qi", skill: 5, trait: bold, note: "Born about 332 BC: the victor of Changping, Qin's most feared general."}]
         successors: [{name: "King Huiwen", age: 19, disposition: "aggressive"}, {name: "King Wu", age: 19, disposition: "aggressive"}, {name: "King Zhaoxiang", age: 19, disposition: "aggressive"}]
         pitch: "A poor, tough frontier state in the middle of radical reform. Turn Shang Yang's farmers and soldiers into the first empire - decades early."
         provinces:
@@ -74,6 +75,7 @@ scenarios:
         capital: wei_daliang
         leader: Marquis Hui
         leader_age: 50
+        generals: [{name: "Pang Juan", skill: 4, trait: bold, note: "Sun Bin's jealous rival; killed at Maling in 342 BC."}, {name: "Gongsun Yan", skill: 3, trait: horse, note: "Wei general who later served Qin."}]
         successors: [{name: "King Xiang", age: 40}, {name: "King Ai", age: 40, disposition: "cautious"}]
         pitch: "The strongest state under Heaven, rich and well drilled, but ringed by jealous rivals on every side."
         provinces:
@@ -122,6 +124,7 @@ scenarios:
         capital: zhao_handan
         leader: Marquis Cheng
         leader_age: 40
+        generals: [{name: "Lian Po", skill: 4, trait: shield, note: "Zhao's great defender (active in the next century)."}]
         successors: [{name: "Marquis Su", age: 35}, {name: "King Wuling", age: 15, disposition: "aggressive"}, {name: "King Huiwen of Zhao", age: 15}]
         pitch: "Plains, iron and the horse frontier: learn from the steppe riders before they learn from you."
         provinces:
@@ -247,6 +250,7 @@ scenarios:
         capital: qi_linzi
         leader: King Wei
         leader_age: 40
+        generals: [{name: "Sun Bin", skill: 5, trait: bold, note: "The crippled strategist of Guiling and Maling."}, {name: "Tian Ji", skill: 3, trait: horse, note: "Sun Bin's patron, famous for a horse race he won by cunning."}]
         successors: [{name: "King Xuan", age: 35, disposition: "scholarly"}, {name: "King Min", age: 35, disposition: "aggressive"}]
         pitch: "Salt, silk and the Jixia Academy: the richest and most learned court in the east."
         provinces:
@@ -432,6 +436,7 @@ scenarios:
         capital: yan_ji
         leader: Duke Wen
         leader_age: 40
+        generals: [{name: "Yue Yi", skill: 4, trait: siege, note: "Will take seventy cities of Qi in 284 BC."}]
         successors: [{name: "King Yi", age: 30}, {name: "King Kuai", age: 30, disposition: "pious"}, {name: "King Zhao of Yan", age: 25, disposition: "aggressive"}]
         pitch: "The remote north-east, facing the Donghu and the lands beyond the Liao."
         provinces:
@@ -475,6 +480,7 @@ scenarios:
         capital: chu_ying
         leader: King Xuan
         leader_age: 45
+        generals: [{name: "Zhuang Qiao", skill: 3, trait: quartermaster, note: "Will lead a Chu army to far Yunnan."}]
         successors: [{name: "King Wei of Chu", age: 35, disposition: "aggressive"}, {name: "King Huai", age: 30, disposition: "cautious"}]
         pitch: "The vast southern kingdom of lakes, forests and shamans, the largest state of all."
         provinces:

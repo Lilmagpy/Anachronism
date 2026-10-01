@@ -15,7 +15,7 @@ from __future__ import annotations
 
 from collections import deque
 
-from anachronism.content.schema import RelationStatus, Unit
+from anachronism.content.schema import General, RelationStatus, Unit
 from anachronism.engine.actions import ArmyStance, DisbandArmy, Orders, RaiseArmy
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import BP, apply_bp, clamp
@@ -163,6 +163,10 @@ def raise_army(
     civ.armies_raised += 1
     place = state.world.geography[province_id].name.split(" (")[0]
     name = "Royal Army" if civ.armies_raised == 1 else f"Army of {place}"
+    trait = ""
+    if not general and civ.generals:  # the next free commander takes it
+        chosen = civ.generals.pop(0)
+        general, skill, trait = chosen.name, chosen.skill, chosen.trait or ""
     army = Army(
         id=f"{civ_id}-{civ.armies_raised}",
         owner=civ_id,
@@ -171,6 +175,7 @@ def raise_army(
         troops=troops,
         general=general,
         skill=skill,
+        trait=trait,
         raised_turn=state.turn,
     )
     state.armies[army.id] = army
@@ -180,11 +185,55 @@ def raise_army(
 def disband(state: GameState, army_id: str) -> str:
     """Send an army home: the men return to the province (if it is their own)."""
     army = state.armies.pop(army_id)
+    release(state, army)
+    if army.contract:
+        return "The mercenaries are paid off and leave."
     province = state.provinces.get(army.province)
     if province is not None and province.owner == army.owner:
         province.population += army.men
         return f"The {army.name} goes home to its fields."
     return f"The {army.name} disbands far from home; few find their way back."
+
+
+def hire_company(state: GameState, civ_id: str, turns: int) -> Army | None:
+    """Hired swords muster at the capital: professionals, keen, and not your people."""
+    civ = state.civs[civ_id]
+    if civ.capital not in state.provinces:
+        return None
+    men = apply_bp(state.population(civ_id), state.world.rules.armies.mercenary_men_bp)
+    if men < state.world.rules.armies.min_army:
+        return None
+    civ.armies_raised += 1
+    army = Army(
+        id=f"{civ_id}-{civ.armies_raised}",
+        owner=civ_id,
+        name="Mercenary Company",
+        province=civ.capital,
+        troops=composition(state, civ_id, men, "balanced"),
+        morale_bp=BP,
+        skill=2,
+        raised_turn=state.turn,
+        contract=turns,
+    )
+    state.armies[army.id] = army
+    return army
+
+
+def release(state: GameState, army: Army) -> None:
+    """A general whose army is gone returns to the court, free for another command."""
+    civ = state.civs[army.owner]
+    if army.general and army.general != civ.ruler:
+        trait = army.trait if army.trait in TRAITS else None
+        civ.generals.insert(0, General(name=army.general, skill=army.skill, trait=trait))
+    army.general, army.skill, army.trait = "", 1, ""
+
+
+TRAITS = ("horse", "siege", "shield", "bold", "quartermaster", "beloved")
+
+
+def trait_bp(state: GameState, army: Army, trait: str) -> int:
+    """The strength of a general's gift for this army (0 if its general lacks it)."""
+    return state.world.rules.armies.trait_bp.get(trait, 0) if army.trait == trait else 0
 
 
 def standing_armies(state: GameState) -> None:
@@ -335,12 +384,21 @@ def side_power(
     by_unit: dict[str, int] = {}
     for army in armies:
         power = 0
+        horse = trait_bp(state, army, "horse")
         for unit_id, men in sorted(army.troops.items()):
-            p = unit_power(state.world.units[unit_id], men, attacking, enemy_kinds, terrain)
+            unit = state.world.units[unit_id]
+            p = unit_power(unit, men, attacking, enemy_kinds, terrain)
+            if horse and unit.kind == "mounted":
+                p = p * (BP + horse) // BP
             by_unit[unit_id] = by_unit.get(unit_id, 0) + p
             power += p
         power = power * (5000 + army.morale_bp // 2) // BP
         power = power * (BP + army.skill * rules.general_skill_bp) // BP
+        if attacking:
+            power = power * (BP + trait_bp(state, army, "bold")) // BP
+        else:
+            gift = trait_bp(state, army, "shield") - trait_bp(state, army, "bold") // 2
+            power = power * (BP + gift) // BP
         total += power
     if not attacking:
         owner = state.provinces[province_id].owner
@@ -423,7 +481,8 @@ def battle(
     for army in winners:
         army.morale_bp = clamp(army.morale_bp - rules.morale_loss_bp // 6, 1000, BP)
     for army in losers:
-        army.morale_bp = clamp(army.morale_bp - rules.morale_loss_bp, 1000, BP)
+        loss = rules.morale_loss_bp * BP // (BP + trait_bp(state, army, "beloved"))
+        army.morale_bp = clamp(army.morale_bp - loss, 1000, BP)
     winner, loser = winners[0].owner, losers[0].owner
     w_civ, l_civ = state.civs[winner], state.civs[loser]
     place = state.world.geography[province_id].name.split(" (")[0]
@@ -525,7 +584,7 @@ def siege_progress(state: GameState, army: Army) -> int:
         state.world.units[u].siege * men // 1000 * rules.siege_point_bp
         for u, men in army.troops.items()
     )
-    return base + engines
+    return (base + engines) * (BP + trait_bp(state, army, "siege")) // BP
 
 
 def sieges(state: GameState, events: EventLog) -> None:
@@ -579,6 +638,7 @@ def upkeep(state: GameState, events: EventLog) -> None:
         if not home:
             terrain = state.world.geography[army.province].terrain
             loss += rules.attrition_terrain_bp.get(terrain, 0)
+            loss = loss * BP // (BP + trait_bp(state, army, "quartermaster"))
         supply = state.provinces[army.province].population // rules.supply_people_per_man
         crowd = by_place[(army.owner, army.province)]
         if crowd > supply:
@@ -587,8 +647,14 @@ def upkeep(state: GameState, events: EventLog) -> None:
             loss += rules.unpaid_desertion_bp
             army.morale_bp = clamp(army.morale_bp - rules.unpaid_morale_bp, 1000, BP)
         elif home:
-            army.morale_bp = clamp(army.morale_bp + rules.morale_recovery_bp, 0, BP)
+            recovery = rules.morale_recovery_bp * (BP + trait_bp(state, army, "beloved")) // BP
+            army.morale_bp = clamp(army.morale_bp + recovery, 0, BP)
         _casualties(army, clamp(loss, 0, 9000))
+        if army.contract:
+            army.contract -= 1
+            if army.contract == 0:  # paid off: they take their swords elsewhere
+                state.armies.pop(army_id)
+                events.add(army.owner, "news", "The mercenaries' contract ends; they march away.")
     _prune(state)
 
 
@@ -626,7 +692,7 @@ def merge(state: GameState) -> None:
     """Idle armies of one state standing in the same province join into one host."""
     groups: dict[tuple[str, str], list[Army]] = {}
     for army in sorted(state.armies.values(), key=lambda a: a.id):
-        if army.target is None:
+        if army.target is None and not army.contract:
             groups.setdefault((army.owner, army.province), []).append(army)
     for armies in groups.values():
         if len(armies) < 2:
@@ -640,8 +706,12 @@ def merge(state: GameState) -> None:
             )
             for unit_id, men in other.troops.items():
                 keep.troops[unit_id] = keep.troops.get(unit_id, 0) + men
-            if other.skill > keep.skill:
-                keep.general, keep.skill = other.general, other.skill
+            if other.general and (not keep.general or other.skill > keep.skill):
+                if keep.general:
+                    release(state, keep)
+                keep.general, keep.skill, keep.trait = other.general, other.skill, other.trait
+            else:
+                release(state, other)
             keep.siege_bp = max(keep.siege_bp, other.siege_bp)
             state.armies.pop(other.id)
 

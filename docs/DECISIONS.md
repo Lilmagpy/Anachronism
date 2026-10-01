@@ -763,3 +763,19 @@ lists the armies there (soldiers, morale, general, what they are doing) and, for
 the orders March… (then click the destination), Hold, Defend and Disband; your provinces
 also offer "Raise a levy here" in three sizes and five mixes, with the cost shown. Orders
 are ordinary recorded actions, so replays stay exact.
+
+## D-101 Generals, mercenaries, land for peace and elephants — DELEGATED (2026-10-01)
+- **Generals**: scenarios name each state's commanders (Parmenion and Craterus, Memnon of
+  Rhodes, Hamilcar Barca and Xanthippus, Bai Qi and Sun Bin, Subutai and Jebe, Shibata
+  Katsuie and the young Hideyoshi, Yamagata Masakage...), with a skill of 1-5 and a gift:
+  master of horse, siege master, stubborn defender, bold attacker, careful quartermaster,
+  or beloved by the men (strengths in rules.yaml). New armies take the next free general;
+  one whose army disbands returns to court; one who falls in battle is gone. Generals
+  whose careers came later are noted as such.
+- **Mercenaries** are now a real company of professionals that musters at the capital
+  for two turns, costs no men of your own, and then marches away.
+- **Land for peace**: at war, "Demand land" asks for every province your armies stand
+  in; only a side that is losing (more battles and provinces lost, and tired or clearly
+  outmatched) agrees, and it never signs itself out of existence.
+- **Elephants** are a map resource where war elephants came from (the Ganges and Kalinga,
+  Assam, Lanka, Numidia and Carthage, Kush, and the Seleucid stud at Apamea).

@@ -78,7 +78,7 @@ provinces:
     coastal: true
     river: true
     capacity: 950000
-    resources: {clay: accessible}
+    resources: {clay: accessible, elephants: limited}
     neighbours: [car_byzacena, num_massyli]
   - id: car_byzacena
     name: Byzacena
@@ -161,7 +161,7 @@ provinces:
     terrain: hills
     coastal: true
     capacity: 540000
-    resources: {horses: accessible}
+    resources: {horses: accessible, elephants: accessible}
     neighbours: [car_byzacena, car_carthage, num_masaesyli]
   - id: num_masaesyli
     name: Land of the Masaesyli
@@ -169,7 +169,7 @@ provinces:
     terrain: steppe
     coastal: true
     capacity: 470000
-    resources: {horses: accessible}
+    resources: {horses: accessible, elephants: accessible}
     neighbours: [num_massyli]
   - id: mac_macedonia
     name: Macedonia
@@ -332,7 +332,7 @@ provinces:
     coastal: true
     river: true
     capacity: 1620000
-    resources: {clay: accessible}
+    resources: {clay: accessible, elephants: limited}
     neighbours: [cappadocia, pto_coele_syria, sel_cilicia, sel_upper_mesopotamia]
   - id: sel_upper_mesopotamia
     name: Upper Mesopotamia
@@ -397,7 +397,7 @@ provinces:
     terrain: river_plains
     river: true
     capacity: 540000
-    resources: {iron: accessible, gold: accessible}
+    resources: {iron: accessible, gold: accessible, elephants: accessible}
     neighbours: [pto_thebaid]
   - id: messana
     name: Messana (the Mamertines)

@@ -22,6 +22,8 @@ from anachronism.content.schema.rivals import (
 )
 from anachronism.content.schema.rules import Rules
 from anachronism.content.schema.scenario import (
+    General,
+    GeneralTrait,
     Scenario,
     ScenarioCiv,
     StartingStats,
@@ -69,6 +71,8 @@ __all__ = [
     "Era",
     "Faith",
     "Frozen",
+    "General",
+    "GeneralTrait",
     "Happening",
     "Identifier",
     "MapResource",

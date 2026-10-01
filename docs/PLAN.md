@@ -149,6 +149,6 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] Secrets (brief §7.3): seal the borders; spread false rumours (D-093)
 - [x] War of armies: unit types, raising, marching, battles, sieges, supply, rival generalship (D-099)
 - [x] Armies on the map in the client: markers, routes, sieges, orders, raising, battle sites (D-100)
-- [ ] Generals with traits, peace terms, more history in the armies
+- [x] Historical generals with gifts, mercenary companies, land-for-peace, elephants where they lived (D-101)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

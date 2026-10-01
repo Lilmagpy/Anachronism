@@ -21,6 +21,7 @@ scenarios:
         capital: j_owari
         leader: Oda Nobunaga
         leader_age: 26
+        generals: [{name: "Shibata Katsuie", skill: 4, trait: bold, note: "'Oni Shibata', Nobunaga's fiercest general."}, {name: "Kinoshita Tokichiro", skill: 4, trait: siege, note: "A peasant's son: the future Toyotomi Hideyoshi."}, {name: "Niwa Nagahide", skill: 3, trait: quartermaster, note: "Builder of Azuchi castle."}, {name: "Akechi Mitsuhide", skill: 3, trait: shield, note: "Cultured, able - and the man who will betray Nobunaga in 1582."}]
         successors: [{name: "Oda Nobutada", age: 25}]
         pitch: "Imagawa Yoshimoto marches on Kyoto with 25,000 men, and Owari is in his way. You have 3,000. History says you win - and then unite Japan. Do it sooner."
         provinces:
@@ -75,6 +76,7 @@ scenarios:
         capital: j_suruga
         leader: Imagawa Yoshimoto
         leader_age: 41
+        generals: [{name: "Matsudaira Motoyasu", skill: 3, trait: shield, note: "A hostage-vassal of the Imagawa: the future Tokugawa Ieyasu."}]
         successors: [{name: "Imagawa Ujizane", age: 22, disposition: cautious}]
         pitch: "Your army is the greatest in the east. Kyoto is within reach - if nothing goes wrong at Okehazama."
         provinces:
@@ -131,6 +133,7 @@ scenarios:
         capital: j_kai
         leader: Takeda Shingen
         leader_age: 39
+        generals: [{name: "Yamagata Masakage", skill: 4, trait: horse, note: "Commander of the red-armoured cavalry."}, {name: "Baba Nobuharu", skill: 4, trait: shield, note: "Fought seventy battles without a wound."}, {name: "Yamamoto Kansuke", skill: 4, trait: bold, note: "Shingen's one-eyed strategist."}]
         successors: [{name: "Takeda Katsuyori", age: 27, disposition: aggressive}]
         pitch: "The finest cavalry in Japan and a genius general. Win the mountains; then win the plains."
         provinces:
@@ -186,6 +189,7 @@ scenarios:
         capital: j_echigo
         leader: Uesugi Kenshin
         leader_age: 30
+        generals: [{name: "Kakizaki Kageie", skill: 4, trait: bold, note: "Kenshin's vanguard at Kawanakajima."}, {name: "Naoe Kagetsuna", skill: 3, trait: quartermaster, note: "Kenshin's steward and general."}]
         successors: [{name: "Uesugi Kagekatsu", age: 23}]
         pitch: "A warrior-monk and his loyal north. Beat the Tiger of Kai, then look to the Kanto."
         provinces:
@@ -238,6 +242,7 @@ scenarios:
         capital: j_sagami
         leader: Hojo Ujiyasu
         leader_age: 45
+        generals: [{name: "Hojo Tsunashige", skill: 4, trait: shield, note: "'Yellow Banner Tsunashige', defender of Kawagoe."}]
         successors: [{name: "Hojo Ujimasa", age: 22, disposition: cautious}]
         pitch: "Odawara has never fallen. Govern well, tax fairly - and build something the others cannot match."
         provinces:
@@ -556,6 +561,7 @@ scenarios:
         capital: j_aki
         leader: Mori Motonari
         leader_age: 63
+        generals: [{name: "Kikkawa Motoharu", skill: 4, trait: bold, note: "Motonari's second son, fifty battles undefeated."}, {name: "Kobayakawa Takakage", skill: 4, trait: quartermaster, note: "Motonari's third son; commander of the Mori fleet."}]
         successors: [{name: "Mori Terumoto", age: 11, disposition: cautious}]
         pitch: "An old fox who took the west by cunning. Take the Amago's silver mines next."
         provinces:
@@ -717,6 +723,7 @@ scenarios:
         capital: j_satsuma
         leader: Shimazu Takahisa
         leader_age: 46
+        generals: [{name: "Shimazu Yoshihiro", skill: 4, trait: bold, note: "Will win at Kizaki against odds of ten to one."}]
         successors: [{name: "Shimazu Yoshihisa", age: 27, disposition: aggressive}]
         pitch: "Satsuma made Japan's first muskets. Make its last word in war."
         provinces:

@@ -24,6 +24,7 @@ scenarios:
           - {id: "first_macedonian_war", goal: "conquer", target: "macedon", preconditions: {after_year: -216}, depends_on: ["first_punic_war"], note: "Philip V allies with Hannibal; Rome turns east (214 BC)."}
           - {id: "rome_vs_antiochus", goal: "conquer", target: "seleucid", preconditions: {after_year: -195}, depends_on: ["first_macedonian_war"], note: "Rome defeats Antiochus III at Magnesia (190 BC)."}
         capital: rom_latium
+        generals: [{name: "Manius Valerius Maximus", skill: 3, trait: siege, note: "Took sixty-seven Sicilian towns in 263 BC."}, {name: "Marcus Atilius Regulus", skill: 3, trait: bold, note: "Will carry the war to Africa in 256 BC."}, {name: "Gaius Duilius", skill: 2, trait: shield, note: "Victor of Mylae, Rome's first sea battle."}]
         leader: Consul Appius Claudius Caudex
         pitch: "Italy is yours; Sicily beckons. Carthage rules the sea you have never sailed. Give Rome ideas before it gives the world its legions."
         provinces:
@@ -75,6 +76,7 @@ scenarios:
         scripts:
           - {id: "hannibals_war", goal: "conquer", target: "rome", preconditions: {after_year: -222}, depends_on: ["first_punic_war"], note: "Hannibal crosses the Alps (218 BC)."}
         capital: car_carthage
+        generals: [{name: "Hamilcar Barca", skill: 5, trait: bold, note: "Undefeated in Sicily; father of Hannibal."}, {name: "Xanthippus", skill: 4, trait: horse, note: "Spartan mercenary who crushed Regulus in 255 BC."}, {name: "Hanno the Great", skill: 2, trait: quartermaster, note: "Leader of Carthage's landed party; conquered in Africa."}]
         pitch: "The richest city in the west, and its sea. But Rome is looking at Sicily. Buy, build and out-think them."
         provinces:
           car_carthage: 700000

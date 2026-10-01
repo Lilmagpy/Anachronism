@@ -1019,7 +1019,12 @@ func _diplomacy_buttons(civ: Dictionary) -> Control:
 		demand.tooltip_text = "A court far weaker than you (or beaten in war) may submit as your tributary"
 		buttons.add_child(demand)
 	if relation == "war":
-		buttons.add_child(_small_button("Offer peace", {"kind": "peace", "target": target}))
+		var white := _small_button("Offer peace", {"kind": "peace", "target": target})
+		white.tooltip_text = "Each side keeps what it holds now"
+		buttons.add_child(white)
+		var cede := _small_button("Demand land", {"kind": "peace", "target": target, "terms": "cede"})
+		cede.tooltip_text = "Peace, if they cede every province your armies stand in - only a side that is losing gives up land"
+		buttons.add_child(cede)
 	else:
 		buttons.add_child(_small_button("Send envoy", {"kind": "envoy", "target": target}))
 		if relation in ["neutral", "trading"]:
@@ -1143,7 +1148,14 @@ func _army_box(army: Dictionary) -> Control:
 	box.add_child(_wrapped(", ".join(parts), 12, DIM))
 	var notes: Array = ["morale %d%%" % (int(army["morale_bp"]) / 100)]
 	if str(army["general"]) != "":
-		notes.append("led by %s %s" % [str(army["general"]), "★".repeat(int(army["skill"]))])
+		var gift := {"horse": "master of horse", "siege": "a siege master", "shield": "a stubborn defender",
+			"bold": "a bold attacker", "quartermaster": "a careful quartermaster", "beloved": "beloved by the men"}
+		var who := "led by %s %s" % [str(army["general"]), "★".repeat(int(army["skill"]))]
+		if gift.has(str(army.get("trait", ""))):
+			who += ", " + str(gift[str(army["trait"])])
+		notes.append(who)
+	if army.get("mercenary", false):
+		notes.append("hired swords")
 	if int(army.get("siege_needed", 0)) > 0:
 		notes.append("besieging: %d%% of the walls down" % mini(99, int(army["siege_bp"]) * 100 / int(army["siege_needed"])))
 	elif army["target"] != null:

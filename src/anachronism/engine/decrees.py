@@ -45,7 +45,11 @@ def apply_decree(state: GameState, action: Decree) -> tuple[bool, str]:
             return False, "the mercenaries you hired are still serving"
         civ.stockpiles.wealth -= price
         civ.mercenaries = rules.mercenary_turns
-        return True, f"Hired swords join {civ.name}'s army for {rules.mercenary_turns} turns."
+        from anachronism.engine.armies import hire_company  # armies builds on the decrees
+
+        company = hire_company(state, civ.id, rules.mercenary_turns)
+        men = f"{company.men:,} " if company else ""
+        return True, f"{men}hired swords muster at the capital for {rules.mercenary_turns} turns."
     if isinstance(action, Explain):
         return _explain(state, action)
     if isinstance(action, SealBorders):

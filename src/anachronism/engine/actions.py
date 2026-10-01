@@ -94,11 +94,16 @@ class DeclareWar(Frozen):
 
 
 class MakePeace(Frozen):
-    """Offer peace; accepted if the other side is weary, losing or outmatched."""
+    """Offer peace; accepted if the other side is weary, losing or outmatched.
+
+    ``cede`` also demands every province your armies stand in (D-101): only a side that is
+    losing gives up land.
+    """
 
     kind: Literal["peace"] = "peace"
     civ: str
     target: str
+    terms: Literal["white", "cede"] = "white"
 
 
 class SendEnvoy(Frozen):

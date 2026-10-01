@@ -113,7 +113,7 @@ provinces:
     terrain: river_plains
     river: true
     capacity: 2430000
-    resources: {iron: accessible, clay: accessible}
+    resources: {iron: accessible, clay: accessible, elephants: accessible}
     neighbours: [in_anga, in_dandaka, in_kalinga, in_kashi, in_kosala, in_nepal]
   - id: in_anga
     name: "Anga (Champa)"
@@ -121,7 +121,7 @@ provinces:
     terrain: river_plains
     river: true
     capacity: 1080000
-    resources: {clay: accessible}
+    resources: {clay: accessible, elephants: accessible}
     neighbours: [in_kalinga, in_magadha, in_nepal, in_pundra, in_vanga]
   - id: in_vanga
     name: "Vanga (the Ganges delta)"
@@ -130,7 +130,7 @@ provinces:
     coastal: true
     river: true
     capacity: 1220000
-    resources: {salt: accessible}
+    resources: {salt: accessible, elephants: limited}
     neighbours: [in_anga, in_kalinga, in_kamarupa, in_pundra]
   - id: in_pundra
     name: "Pundra (north Bengal)"
@@ -170,7 +170,7 @@ provinces:
     terrain: forest
     river: true
     capacity: 470000
-    resources: {timber: accessible}
+    resources: {timber: accessible, elephants: accessible}
     neighbours: [in_pundra, in_vanga]
   - id: in_marwar
     name: "The Thar desert"
@@ -217,7 +217,7 @@ provinces:
     terrain: forest
     river: true
     capacity: 400000
-    resources: {timber: accessible, iron: limited}
+    resources: {timber: accessible, iron: limited, elephants: accessible}
     neighbours: [in_andhra, in_chedi, in_kalinga, in_kashi, in_magadha, in_vatsa, in_vidarbha]
   - id: in_kalinga
     name: "Kalinga (Tosali)"
@@ -226,7 +226,7 @@ provinces:
     coastal: true
     river: true
     capacity: 1220000
-    resources: {iron: accessible, salt: accessible}
+    resources: {iron: accessible, salt: accessible, elephants: accessible}
     neighbours: [in_andhra, in_anga, in_dandaka, in_magadha, in_vanga]
   - id: in_andhra
     name: "Andhra (the Krishna delta)"
@@ -280,7 +280,7 @@ provinces:
     coastal: true
     river: true
     capacity: 540000
-    resources: {timber: accessible}
+    resources: {timber: accessible, elephants: limited}
     neighbours: [in_chola, in_karnata, in_pandya]
   - id: in_lanka
     name: "Lanka (Anuradhapura)"
@@ -288,5 +288,5 @@ provinces:
     terrain: coast
     coastal: true
     capacity: 540000
-    resources: {salt: accessible}
+    resources: {salt: accessible, elephants: accessible}
     neighbours: []

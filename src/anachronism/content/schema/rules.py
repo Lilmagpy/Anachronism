@@ -365,6 +365,21 @@ class ArmyRules(Frozen):
     weariness_per_battle_bp: NonNegative = 700
     """War weariness for losing a battle."""
     min_army: Positive = 200
+    mercenary_men_bp: NonNegative = 150
+    """A mercenary company numbers this share of the hiring state's people (1.5%)."""
+    trait_bp: dict[Identifier, NonNegative] = Field(
+        default_factory=lambda: {
+            "horse": 2500,
+            "siege": 5000,
+            "shield": 2000,
+            "bold": 2000,
+            "quartermaster": 5000,
+            "beloved": 5000,
+        }
+    )
+    """How strong each general's gift is (see ``General``): bonus to cavalry, siege
+    progress, defence, attack (and a tenth as much off defence), less attrition, faster
+    morale recovery and gentler morale loss."""
     """An army reduced below this many men melts away."""
 
 

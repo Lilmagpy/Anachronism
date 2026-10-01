@@ -63,6 +63,7 @@ scenarios:
         capital: in_magadha
         leader: "Dhana Nanda"
         leader_age: 50
+        generals: [{name: "Bhaddasala", skill: 3, trait: shield, note: "Commander of the Nanda armies in the Buddhist chronicles."}]
         martial_bp: 7000
         pitch: "Your treasury is the envy of India and your army the largest in the world. Your subjects hate your taxes. A boy in the Punjab thinks that is enough."
         provinces:

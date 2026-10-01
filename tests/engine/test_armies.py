@@ -177,3 +177,70 @@ def test_raise_army_respects_the_cap(warring: GameState) -> None:
     from anachronism.engine.armies import mobilisation_cap
 
     assert total <= mobilisation_cap(warring, "qin") + 1
+
+
+def test_new_armies_take_the_next_general(content: Content) -> None:
+    state = new_game(content, "punic_wars", seed=1)
+    carthage = state.civs["carthage"]
+    royal = next(a for a in state.armies.values() if a.owner == "carthage")
+    assert royal.general == "Hamilcar Barca"
+    assert royal.trait == "bold"
+    pool = [g.name for g in carthage.generals]
+    army, _ = raise_army(
+        state,
+        "carthage",
+        "num_massyli" if state.provinces["num_massyli"].owner == "carthage" else carthage.capital,
+        5000,
+        free=True,
+    )
+    if army is not None and army.id != royal.id:
+        assert army.general == pool[0]
+        state, _ = apply_action(state, DisbandArmy(civ="carthage", army=army.id))
+        assert state.civs["carthage"].generals[0].name == pool[0]  # back at court
+
+
+def test_a_horse_master_makes_cavalry_fight_harder(warring: GameState) -> None:
+    from anachronism.engine.armies import side_power
+
+    field = warring.civs["qin"].capital
+    plain = Army(id="a", owner="qin", name="A", province=field, troops={"cavalry": 10_000})
+    gifted = plain.model_copy(update={"id": "b", "trait": "horse"})
+    foe = [Army(id="c", owner="wei", name="C", province=field, troops={"levy": 10_000})]
+    assert (
+        side_power(warring, [gifted], foe, True, field)[0]
+        > side_power(warring, [plain], foe, True, field)[0]
+    )
+
+
+def test_mercenaries_serve_their_contract_then_leave(warring: GameState) -> None:
+    from anachronism.engine.actions import HireMercenaries
+
+    warring.civs["qin"].stockpiles.wealth = 100_000
+    people = warring.population("qin")
+    state, logged = apply_action(warring, HireMercenaries(civ="qin"))
+    assert logged.ok
+    company = [a for a in state.armies.values() if a.owner == "qin" and a.contract]
+    assert len(company) == 1
+    assert state.population("qin") == people  # not our own men
+    for _ in range(state.world.rules.rivals.mercenary_turns):
+        state, _ = end_turn(state)
+    assert not [a for a in state.armies.values() if a.owner == "qin" and a.contract]
+
+
+def test_a_losing_enemy_cedes_the_land_we_hold(warring: GameState) -> None:
+    from anachronism.engine.actions import MakePeace
+    from anachronism.engine.rivals import frontier, relation
+
+    state, _ = apply_action(warring, DeclareWar(civ="qin", target="wei"))
+    held = frontier(state, "qin", "wei")[0]
+    state.armies["q"] = Army(id="q", owner="qin", name="Q", province=held, troops={"levy": 5000})
+    rel = relation(state, "qin", "wei")
+    assert rel is not None
+    _, logged = apply_action(state, MakePeace(civ="qin", target="wei", terms="cede"))
+    assert not logged.ok  # they have lost nothing yet
+    rel.losses["wei"] = 3
+    rel.weariness["wei"] = 9000
+    state, logged = apply_action(state, MakePeace(civ="qin", target="wei", terms="cede"))
+    assert logged.ok
+    assert state.provinces[held].owner == "qin"
+    assert status(state, "qin", "wei") is not RelationStatus.WAR

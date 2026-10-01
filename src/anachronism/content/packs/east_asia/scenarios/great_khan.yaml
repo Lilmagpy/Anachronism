@@ -28,6 +28,7 @@ scenarios:
         capital: g_onon
         leader: "Genghis Khan"
         leader_age: 44
+        generals: [{name: "Subutai", skill: 5, trait: horse, note: "The greatest of the Mongol generals: from China to Hungary."}, {name: "Jebe", skill: 4, trait: horse, note: "'The Arrow': once shot Temujin's horse, then served him."}, {name: "Muqali", skill: 4, trait: siege, note: "Viceroy of the war on the Jin in north China."}, {name: "Jochi", skill: 3, trait: horse, note: "Genghis Khan's eldest son."}]
         successors: [{name: "Ogedei Khan", age: 43, disposition: aggressive}, {name: "Guyuk Khan", age: 40, disposition: aggressive}, {name: "Mongke Khan", age: 42, disposition: aggressive}, {name: "Kublai Khan", age: 45, disposition: cautious}]
         martial_bp: 150000
         pitch: "At the kurultai of 1206 the tribes have named you Genghis Khan. You have the finest horsemen on earth and almost nothing else. History says you conquer half the world; build something that lasts."
@@ -140,6 +141,7 @@ scenarios:
         capital: g_zhongdu
         leader: "Emperor Zhangzong"
         leader_age: 38
+        generals: [{name: "Wanyan Chenghui", skill: 3, trait: shield, note: "Defender of the Tongguan pass."}]
         successors: [{name: "Wanyan Yongji", age: 40, disposition: cautious}, {name: "Emperor Xuanzong", age: 50, disposition: cautious}, {name: "Emperor Aizong", age: 26}]
         martial_bp: 5000
         pitch: "Forty million subjects and the walls of Zhongdu. The northern barbarians your fathers once were are coming. Do not be surprised."
@@ -207,6 +209,7 @@ scenarios:
         capital: g_linan
         leader: "Emperor Ningzong"
         leader_age: 38
+        generals: [{name: "Bi Zaiyu", skill: 3, trait: bold, note: "The one hero of the failed Kaixi war of 1206."}, {name: "Meng Gong", skill: 4, trait: shield, note: "Will hold the Yangzi against the Mongols in the 1230s."}]
         successors: [{name: "Emperor Lizong", age: 19, disposition: cautious}, {name: "Emperor Duzong", age: 24}]
         martial_bp: 4000
         pitch: "You already have gunpowder, the compass and paper money. Your generals have just attacked the Jin. Turn genius into power."

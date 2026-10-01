@@ -31,7 +31,7 @@ from anachronism.engine.rivals import (
 )
 from anachronism.engine.rng import GameRng
 from anachronism.engine.state import GameState
-from anachronism.engine.war import make_peace
+from anachronism.engine.war import capture, make_peace
 
 _WARMER = {
     RelationStatus.HOSTILE: RelationStatus.NEUTRAL,
@@ -80,6 +80,27 @@ def _apply(
             return False, f"not at war with {them}"
         theirs, ours = strength(state, target), strength(state, me)
         tired = rel.weariness.get(target, 0) * 2 >= rules.peace_weariness_bp
+        if action.terms == "cede":
+            occupied = sorted(
+                {
+                    a.province
+                    for a in state.armies.values()
+                    if a.owner == me and state.provinces[a.province].owner == target
+                }
+            )
+            if not occupied:
+                return False, f"your armies hold none of {them}'s land"
+            losing = rel.losses.get(target, 0) > rel.losses.get(me, 0)
+            if not losing or not (tired or ours * 10 >= theirs * 15):
+                return False, f"{them} will not give up land while they think they can win"
+            if len(occupied) >= len(state.owned_provinces(target)):
+                occupied = occupied[:-1]  # a state does not sign itself out of existence
+            for pid in occupied:
+                capture(state, me, pid, events)
+            add_grievance(state, target, me, 1500)
+            make_peace(state, me, target, events)
+            names = ", ".join(state.world.geography[p].name for p in occupied)
+            return True, f"{them} sues for peace and cedes {names}."
         if tired or ours * 10 >= theirs * 12 or rel.losses.get(target, 0) > 0:
             make_peace(state, me, target, events)
             return True, f"{them} accepts peace."

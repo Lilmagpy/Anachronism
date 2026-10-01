@@ -18,6 +18,7 @@ from anachronism.content.schema import (
     Era,
     Faith,
     Frozen,
+    General,
     Happening,
     MapResource,
     ProvinceGeography,
@@ -226,6 +227,8 @@ class Army(Mutable):
     """Who commands it (empty: no named general)."""
     skill: int = 1
     """The general's skill, 1-5."""
+    trait: str = ""
+    """The general's gift (see ``content.schema.General``), if any."""
     target: str | None = None
     """The province it is marching to, if any."""
     stance: Literal["defend", "hold"] = "defend"
@@ -235,6 +238,8 @@ class Army(Mutable):
     siege_bp: int = 0
     """Progress of its siege of the province it stands in (10_000 = a normal province)."""
     raised_turn: int = 0
+    contract: int = 0
+    """Turns a mercenary company still serves (0: the state's own men)."""
 
     @property
     def men(self) -> int:
@@ -278,6 +283,8 @@ class CivState(Mutable):
     """The turn the court last explained its new arts (see ``Explain``)."""
     sealed: int = 0
     """Turns the borders stay sealed (no trade; news of the court's arts travels slowly)."""
+    generals: list[General] = Field(default_factory=list)
+    """Commanders not yet leading an army (best first)."""
     armies_raised: int = 0
     """How many armies the state has raised (numbers new ones)."""
     ruler_age: int = 40

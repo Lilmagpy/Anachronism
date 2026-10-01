@@ -170,6 +170,16 @@ to people, stores, unrest, legitimacy, suspicion and the influence of clergy, no
 guilds (`influence: {clergy: -800}`), all bounded to 50% either way. `{civ}` and
 `{province}` are filled into the message.
 
+## Soldiers and generals
+`core/units.yaml` lists the kinds of soldier (D-099): each has a `kind` (infantry, spear,
+missile, mounted, elephant, siege) used for match-ups, attack and defence per 1,000 men,
+optional `siege` power and `mobility`, the advancements (`needs_techs`) and map resources
+(`needs_resources`, e.g. horses, iron, elephants) it needs, costs to raise and keep, and
+`bonus_vs` / `terrain` modifiers in basis points. A scenario's civ may list `generals`
+(best first): `{name, skill: 1-5, trait, note}`, with trait one of horse, siege, shield,
+bold, quartermaster or beloved. New armies take the next free general; a general whose
+army disbands returns to court.
+
 ## Rules
 `core/rules.yaml` holds every tunable number, grouped by system and documented field by field
 in `content/schema/rules.py`. Balance changes go here, never into code. After changing
