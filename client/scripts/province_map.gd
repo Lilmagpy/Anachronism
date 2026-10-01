@@ -422,7 +422,10 @@ func show_wars(wars: Array) -> void:
 			var a: Vector2 = by_id[clash[0]]["pixel"]
 			var b: Vector2 = by_id[clash[1]]["pixel"]
 			var towards := (b - a).angle()
-			for side in [[war["a"], a.lerp(b, 0.3), -towards - PI / 2.0], [war["b"], b.lerp(a, 0.3), -towards + PI / 2.0]]:
+			# the armies face each other across the border, clear of both cities
+			var mid := a.lerp(b, 0.5)
+			var gap := (b - a).normalized() * minf(10.0, a.distance_to(b) * 0.2)
+			for side in [[war["a"], mid - gap, -towards - PI / 2.0], [war["b"], mid + gap, -towards + PI / 2.0]]:
 				var army := Armies.make(civ_colours.get(side[0], Color.GRAY), side[2])
 				army.position = earth.ground_at_pixel(side[1])
 				_war_marks.add_child(army)
