@@ -5,6 +5,8 @@
 class_name TechTree
 extends Control
 
+signal asked(idea_name: String)   ## a card was clicked: ask the court about it
+
 const ADOPTED := Color(0.45, 0.70, 0.35)
 const TRYING := Color(0.95, 0.72, 0.25)
 const KNOWN := Color(0.62, 0.78, 0.92)
@@ -104,13 +106,22 @@ func _draw() -> void:
 			Color(0.6, 0.15, 0.1) if ahead > 100 else UiStyle.INK_SOFT)
 
 
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		for node in nodes:
+			if (_where[node["id"]] as Rect2).has_point(event.position):
+				if not node["stage"] in ["adopted", "widespread", "experimenting"]:
+					asked.emit(str(node["name"]))
+				return
+
+
 func _get_tooltip(at: Vector2) -> String:
 	for node in nodes:
 		if (_where[node["id"]] as Rect2).has_point(at):
 			var text := "%s (%s)" % [node["name"], GameHud.year_text(int(node["year"]))]
 			if node["flavour"] != "":
 				text += "\n" + str(node["flavour"])
-			if node["stub"]:
-				text += "\nA goal your court named. Ask the court about it in the Ideas tab."
+			if not node["stage"] in ["adopted", "widespread", "experimenting"]:
+				text += "\nClick to ask the court about it."
 			return text
 	return ""

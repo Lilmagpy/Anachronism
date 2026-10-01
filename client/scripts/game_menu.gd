@@ -9,6 +9,7 @@ extends CanvasLayer
 signal loaded(view: Dictionary)      ## a saved game was loaded
 signal quit_to_title
 signal message(text: String)
+signal asked(idea_name: String)   ## the player clicked an idea in the tech tree
 
 var bridge: EngineBridge
 var audio: GameAudio
@@ -203,6 +204,9 @@ func open_tree() -> void:
 		return
 	var tree := TechTree.new()
 	tree.setup(reply["nodes"], int(reply["year"]))
+	tree.asked.connect(func(name: String):
+		close()
+		asked.emit(name))
 	var legend := HBoxContainer.new()
 	legend.add_theme_constant_override("separation", 18)
 	for entry in [["In use", TechTree.ADOPTED], ["Being tried", TechTree.TRYING], ["Known idea", TechTree.KNOWN],

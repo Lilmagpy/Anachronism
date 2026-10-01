@@ -234,6 +234,9 @@ func _build_hud() -> void:
 		hud.message = text
 		hud.show_view(view))
 	game_menu.loaded.connect(_on_loaded)
+	game_menu.asked.connect(func(name: String):
+		hud.set_tab("ideas")
+		_on_idea(name, ""))
 	game_menu.quit_to_title.connect(func():
 		bridge.stop()
 		get_tree().reload_current_scene())
