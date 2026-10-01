@@ -904,7 +904,11 @@ dashed lines flowing out from your capital, and fade out as you zoom into a city
 owner wash is paler, so red over green land turns rosy rather than muddy. Province names
 sit on dark name plates with a gold rim and their owner's colour at one end. Armies and
 fleets are drawn large to read from afar and shrink toward life size as the camera comes
-down to a city; soldiers carry tall rimmed shields and crested helmets.
+down to a city; soldiers carry tall rimmed shields and crested helmets. Mountain peaks are
+faceted grey rock on a green foot with snow caps only on top (they were all-white blobs up
+close), and settle into lower hills as the camera comes down so they never wall off a town.
+East Asian towns have grey-tiled roofs and a palace of red pillars under a double roof; an
+inland capital no longer shows a harbour boat on dry land.
 
 ## D-110 CI uses far fewer free minutes — DELEGATED (2026-10-01)
 GitHub Actions stopped running because the repository's free monthly minutes ran out (the

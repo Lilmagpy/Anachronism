@@ -294,7 +294,7 @@ func _house(pixel: Vector2, turn: float, size := 1.0, site := -1, mix := 0.0) ->
 			_add(part, pixel, 0.0, turn, Vector3.ONE * size, thatch, site, tint)
 		_:
 			# plastered houses under dark tiled roofs
-			var roof := Color(0.28, 0.30, 0.34).lerp(Color(0.42, 0.32, 0.26), rng.randf() * 0.5)
+			var roof := Color(0.50, 0.53, 0.58).lerp(Color(0.56, 0.44, 0.36), rng.randf() * 0.5)
 			var part := "k_house" if rng.randf() < 0.6 else ("k_hall" if rng.randf() < 0.3 else "k_cottage")
 			_add(part, pixel, 0.0, turn, Vector3.ONE * size, roof, site, tint)
 
@@ -418,9 +418,15 @@ func _palace(centre: Vector2, index: int) -> void:
 			_add("round_tower", church + Vector2(0.14, 0) * S, 0.0, 0.0, Vector3(0.5, 1.6, 0.5), Color(0.80, 0.78, 0.72))
 			_add("spire", church + Vector2(0.14, 0) * S, 0.48 * S, 0.0, Vector3(0.5, 1.2, 0.5), Color(0.26, 0.26, 0.30), index, 0.4)
 		_:
-			_add("terrace", centre, 0.0, 0.0, Vector3.ONE, Color(0.62, 0.55, 0.45))
-			_add("hall", centre, 0.08 * S, 0.0, Vector3.ONE, Color(0.55, 0.20, 0.14))
-			_add("hall_roof", centre, 0.26 * S, 0.0, Vector3.ONE, Color(0.18, 0.18, 0.20), index, 0.55)
+			# a palace hall of red pillars on a stone terrace, under a double roof of grey tile
+			_add("terrace", centre, 0.0, 0.0, Vector3(1.2, 1.0, 1.2), Color(0.74, 0.70, 0.62))
+			_add("terrace", centre, 0.08 * S, 0.0, Vector3(1.0, 0.6, 1.0), Color(0.80, 0.76, 0.68))
+			_add("hall", centre, 0.13 * S, 0.0, Vector3(0.9, 0.9, 0.85), Color(0.66, 0.22, 0.16))
+			for k in 6:
+				_add("column", centre + Vector2((k - 2.5) * 0.085 * S, 0.15 * S), 0.13 * S, 0.0, Vector3(1.0, 0.85, 1.0), Color(0.72, 0.18, 0.12))
+			_add("hall_roof", centre, 0.29 * S, 0.0, Vector3(1.15, 0.7, 1.15), Color(0.42, 0.44, 0.48), index, 0.35)
+			_add("hall", centre, 0.38 * S, 0.0, Vector3(0.6, 0.45, 0.55), Color(0.66, 0.22, 0.16))
+			_add("hall_roof", centre, 0.45 * S, 0.0, Vector3(0.8, 0.6, 0.8), Color(0.42, 0.44, 0.48), index, 0.35)
 
 
 func _multimesh(entry: Dictionary, indices: Array) -> MultiMeshInstance3D:

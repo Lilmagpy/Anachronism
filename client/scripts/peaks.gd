@@ -43,7 +43,7 @@ func build(parent: Node3D) -> void:
 			var main := clampf(relief / 60.0, 11.0, 36.0)
 			for k in rng.randi_range(2, 4):
 				var height := main * (1.0 if k == 0 else rng.randf_range(0.45, 0.75))
-				var width := height * rng.randf_range(1.2, 1.6)
+				var width := height * rng.randf_range(0.95, 1.25)
 				var spot := pixel + (Vector2.ZERO if k == 0 else Vector2(rng.randf_range(-5, 5), rng.randf_range(-5, 5)))
 				var basis := Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3(width, height, width))
 				var at := earth.ground_at_pixel(spot) - Vector3(0, height * 0.12, 0)
@@ -59,28 +59,38 @@ func build(parent: Node3D) -> void:
 				holder.add_child(_multimesh(meshes[kind], tiles[key][kind]))
 
 
-## A unit peak (height 1, radius 0.5): a lumpy cone, rock below and snow (or rock) above.
+## A unit peak (height 1, radius 0.5): a lumpy, faceted cone - a grassy foot, warm rock
+## shading darker on alternate facets, and a snow cap (or bare rock) at the top.
 func _peak(snow: bool) -> Mesh:
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
-	var sides := 7
-	var rock := Color(0.58, 0.55, 0.52)
-	var dark := Color(0.44, 0.42, 0.42)
-	var cap := Color(0.98, 0.99, 1.0) if snow else Color(0.66, 0.62, 0.56)
-	var ring: Array[Vector3] = []
-	var mid: Array[Vector3] = []
-	for i in sides:
-		var a := TAU * i / sides
-		var r := 0.5 * (0.85 + 0.3 * sin(i * 2.7))
-		ring.append(Vector3(cos(a) * r, 0, sin(a) * r))
-		mid.append(Vector3(cos(a + 0.3) * r * 0.5, 0.5 if snow else 0.62, sin(a + 0.3) * r * 0.5))
+	var sides := 9
+	var foot := [Color(0.48, 0.58, 0.32), Color(0.40, 0.50, 0.30)]
+	var rock := [Color(0.66, 0.64, 0.62), Color(0.50, 0.49, 0.52)]
+	var cap := [Color(0.97, 0.98, 1.0), Color(0.84, 0.88, 0.95)] if snow else [Color(0.74, 0.71, 0.66), Color(0.58, 0.56, 0.56)]
+	# rings from the foot to the shoulder; each a little twisted and lumpy
+	var heights := [0.0, 0.22, 0.58 if snow else 0.7]
+	var radii := [0.5, 0.4, 0.2]
+	var rings: Array = []
+	for level in heights.size():
+		var ring: Array[Vector3] = []
+		for i in sides:
+			var a := TAU * i / sides + level * 0.25
+			var r: float = radii[level] * (0.82 + 0.3 * absf(sin(i * 2.7 + level * 1.3)))
+			ring.append(Vector3(cos(a) * r, heights[level] + 0.04 * sin(i * 1.9 + level), sin(a) * r))
+		rings.append(ring)
 	var top := Vector3(0.04, 1.0, -0.03)
 	for i in sides:
 		var j := (i + 1) % sides
-		var shade := rock if i % 2 == 0 else dark
-		_tri(st, ring[i], ring[j], mid[j], shade)
-		_tri(st, ring[i], mid[j], mid[i], shade)
-		_tri(st, mid[i], mid[j], top, cap)
+		var face := i % 2
+		var r0: Array[Vector3] = rings[0]
+		var r1: Array[Vector3] = rings[1]
+		var r2: Array[Vector3] = rings[2]
+		_tri(st, r0[i], r0[j], r1[j], foot[face])
+		_tri(st, r0[i], r1[j], r1[i], foot[face])
+		_tri(st, r1[i], r1[j], r2[j], rock[face])
+		_tri(st, r1[i], r2[j], r2[i], rock[face])
+		_tri(st, r2[i], r2[j], top, cap[face])
 	st.generate_normals()
 	return st.commit()
 
@@ -98,10 +108,8 @@ func _multimesh(mesh: Mesh, transforms: Array) -> MultiMeshInstance3D:
 	mm.instance_count = transforms.size()
 	for i in transforms.size():
 		mm.set_instance_transform(i, transforms[i])
-	var material := StandardMaterial3D.new()
-	material.vertex_color_use_as_albedo = true
-	material.vertex_color_is_srgb = true
-	material.roughness = 1.0
+	var material := ShaderMaterial.new()
+	material.shader = load("res://shaders/peak.gdshader")
 	var instance := MultiMeshInstance3D.new()
 	instance.multimesh = mm
 	instance.material_override = material

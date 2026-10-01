@@ -77,6 +77,8 @@ func update(view: Dictionary) -> void:
 		var angle := TAU * i / maxf(kinds.size(), 1.0) + 0.4
 		var radius := (2.6 + (i % 2) * 0.9) * S
 		var spot := _find_spot(centre, angle, radius, kinds[i] == "harbour", taken)
+		if kinds[i] == "harbour" and not earth.is_wet(spot):
+			continue   # an inland capital has no harbour to show
 		taken.append(spot)
 		var piece := _make(kinds[i], colour, spot, centre)
 		if piece != null:
