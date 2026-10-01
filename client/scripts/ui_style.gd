@@ -60,6 +60,44 @@ static func theme() -> Theme:
 
 
 static var _ornate: StyleBoxTexture
+static var _plates := {}
+
+
+## A name plate for a place on the map (G1): a dark translucent ribbon with a gold rim and
+## its owner's colour at the left end, like the name banners of Rise of Kingdoms' cities.
+## Widths are rounded up so plates of similar names share one texture.
+static func name_plate(width: int, height: int, colour: Color) -> ImageTexture:
+	width = int(ceil(width / 16.0)) * 16
+	var key := "%d|%d|%s" % [width, height, colour.to_html()]
+	if _plates.has(key):
+		return _plates[key]
+	var image := Image.create(width, height, false, Image.FORMAT_RGBA8)
+	var radius := height * 0.42
+	var cap := int(height * 0.32)   # the owner's colour band at the left
+	for y in height:
+		for x in width:
+			# distance inside a rounded rectangle (negative outside)
+			var dx := maxf(radius - x, x - (width - 1 - radius))
+			var dy := maxf(radius - y, y - (height - 1 - radius))
+			var outside := Vector2(maxf(dx, 0.0), maxf(dy, 0.0)).length() + minf(maxf(dx, dy), 0.0) - radius
+			var inside := -outside
+			if inside < -0.5:
+				continue
+			var a := clampf(inside + 0.5, 0.0, 1.0)
+			var fill := Color(0.10, 0.08, 0.07, 0.66).lerp(Color(0.16, 0.12, 0.09, 0.72), float(y) / height)
+			if x < cap + radius * 0.4:
+				fill = Color(colour.darkened(0.15), 0.92)
+			var c := fill
+			if inside < 2.5:
+				c = Color(GOLD.r, GOLD.g, GOLD.b, 0.95)   # the rim
+			elif inside < 3.5:
+				c = Color(0.0, 0.0, 0.0, 0.5)
+			c.a *= a
+			image.set_pixel(x, y, c)
+	image.generate_mipmaps()
+	var texture := ImageTexture.create_from_image(image)
+	_plates[key] = texture
+	return texture
 
 
 ## The game's framed panel (G1): parchment inside a double gold frame with studded corners,

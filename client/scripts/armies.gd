@@ -32,11 +32,14 @@ static func make(colour: Color, facing: float, siege := false) -> Node3D:
 	helmet.radius = 0.05 * S
 	helmet.height = 0.05 * S
 	helmet.is_hemisphere = true
-	var shield := CylinderMesh.new()
-	shield.top_radius = 0.065 * S
-	shield.bottom_radius = 0.065 * S
-	shield.height = 0.015 * S
-	shield.radial_segments = 10
+	var shield := BoxMesh.new()   # a tall oblong shield, rimmed
+	shield.size = Vector3(0.1, 0.16, 0.015) * S
+	var rim := BoxMesh.new()
+	rim.size = Vector3(0.112, 0.172, 0.01) * S
+	var crest := BoxMesh.new()
+	crest.size = Vector3(0.016, 0.035, 0.07) * S
+	var belt := BoxMesh.new()
+	belt.size = Vector3(0.115, 0.02, 0.085) * S
 	var boss := SphereMesh.new()
 	boss.radius = 0.02 * S
 	boss.height = 0.02 * S
@@ -54,9 +57,11 @@ static func make(colour: Color, facing: float, siege := false) -> Node3D:
 			_part(army, body, coat, Vector3(x, 0.185 * S, z))
 			_part(army, head, skin, Vector3(x, 0.315 * S, z))
 			_part(army, helmet, steel, Vector3(x, 0.33 * S, z))
-			var guard := _part(army, shield, coat, Vector3(x - 0.055 * S, 0.19 * S, z - 0.035 * S))
-			guard.rotation.x = PI / 2.0
-			_part(army, boss, trim, Vector3(x - 0.055 * S, 0.19 * S, z - 0.045 * S))
+			_part(army, crest, trim, Vector3(x, 0.37 * S, z))
+			_part(army, belt, dark, Vector3(x, 0.13 * S, z))
+			_part(army, rim, steel, Vector3(x - 0.045 * S, 0.19 * S, z - 0.052 * S))
+			_part(army, shield, coat, Vector3(x - 0.045 * S, 0.19 * S, z - 0.06 * S))
+			_part(army, boss, trim, Vector3(x - 0.045 * S, 0.19 * S, z - 0.07 * S))
 			_part(army, spear, wood, Vector3(x + 0.06 * S, 0.3 * S, z))
 			_part(army, _cone(0.014 * S, 0.05 * S), steel, Vector3(x + 0.06 * S, 0.57 * S, z))
 	# the commander on horseback

@@ -460,8 +460,15 @@ func show_ties(view: Dictionary) -> void:
 	_war_marks.get_parent().add_child(_ties)
 
 
-## Ships rock on the swell (called every frame with the time in seconds).
-func animate(t: float) -> void:
+## Ships rock on the swell and marching armies bob (called every frame with the time in
+## seconds). Armies and fleets are drawn large to read from afar, and shrink toward life size
+## as the camera comes down to a city (`distance`, the camera's distance), as in Rise of
+## Kingdoms.
+func animate(t: float, distance := 1000.0) -> void:
+	var near := clampf(distance / 140.0, 0.4, 1.0)
+	for item in _sized:
+		if is_instance_valid(item[0]):
+			(item[0] as Node3D).scale = Vector3.ONE * item[1] * near
 	for item in _afloat:
 		var piece: Node3D = item[0]
 		if not is_instance_valid(piece):
@@ -530,6 +537,7 @@ func show_armies(armies: Array, battles: Array, selected_army := "", fleets: Arr
 	_war_labels.clear()
 	_afloat.clear()
 	_marching.clear()
+	_sized.clear()
 	var by_id := {}
 	for site in sites:
 		by_id[site["id"]] = site
@@ -556,6 +564,7 @@ func show_armies(armies: Array, battles: Array, selected_army := "", fleets: Arr
 		piece.scale = Vector3.ONE * clampf(0.6 + log(maxf(men, 1000.0) / 1000.0) / log(10.0) * 0.25, 0.6, 1.25)
 		piece.position = earth.ground_at_pixel(spot)
 		_war_marks.add_child(piece)
+		_sized.append([piece, piece.scale.x])
 		if not route.is_empty():  # on the march: the ranks bob as they walk
 			_marching.append([piece, piece.position.y, float(hash(army["id"]) % 628) / 100.0])
 		var label := Label3D.new()
@@ -645,6 +654,7 @@ func _draw_fleets(st: SurfaceTool, by_id: Dictionary, fleets: Array, selected_fl
 		piece.scale = Vector3.ONE * clampf(0.7 + log(maxf(ships, 5.0) / 5.0) / log(10.0) * 0.3, 0.7, 1.3)
 		piece.position = at
 		_war_marks.add_child(piece)
+		_sized.append([piece, piece.scale.x])
 		_afloat.append([piece, at.y, float(hash(fleet["id"]) % 628) / 100.0])
 		var label := Label3D.new()
 		label.text = "%d ships" % ships
@@ -731,6 +741,7 @@ var _labels: Array = []   ## [label, priority], most important first, for declut
 var _war_labels: Array = []   ## [label, priority] of armies' and fleets' strengths
 var _afloat: Array = []   ## [fleet piece, its resting height, a phase] to rock on the waves
 var _marching: Array = []   ## [army piece, its resting height, a phase] bobbing on the march
+var _sized: Array = []   ## [army or fleet piece, its scale from afar]: smaller up close
 
 
 ## The map cells of a site, indexed once (borders never move; only owners change).
@@ -767,6 +778,22 @@ func _province_label(site: Dictionary) -> Label3D:
 	# small provinces are named only when the camera is close, so labels never pile up
 	label.visibility_range_end = clampf(160.0 + sqrt(float(_cells_of(site))) * 30.0, 220.0, 700.0)
 	label.position = earth.ground_at_pixel(site["pixel"]) + Vector3(0, 6.0, 0)
+	# on a plate in its owner's colours, like a city's name banner
+	label.outline_size = 6
+	var font: Font = label.font if label.font != null else ThemeDB.fallback_font
+	var text_width := font.get_string_size(label.text, HORIZONTAL_ALIGNMENT_LEFT, -1, label.font_size).x
+	var plate := Sprite3D.new()
+	var owner_colour: Color = civ_colours.get(site["owner"], Color(0.55, 0.52, 0.48))
+	plate.texture = UiStyle.name_plate(int(text_width) + label.font_size + 34, int(label.font_size * 1.55), owner_colour)
+	plate.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	plate.fixed_size = true
+	plate.pixel_size = label.pixel_size
+	plate.offset = Vector2(-label.font_size * 0.18, 0)
+	plate.no_depth_test = true
+	plate.render_priority = 9
+	plate.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	plate.visibility_range_end = label.visibility_range_end
+	label.add_child(plate)
 	# the province's usable map resources, in small type under its name, when close
 	var found: Array = []
 	var resources: Dictionary = site.get("resources", {})
@@ -786,7 +813,7 @@ func _province_label(site: Dictionary) -> Label3D:
 		tag.no_depth_test = true
 		tag.visibility_range_end = 300.0
 		tag.position = Vector3(0, -0.03, 0)
-		tag.offset = Vector2(0, -34)
+		tag.offset = Vector2(0, -46)
 		label.add_child(tag)
 	return label
 

@@ -456,7 +456,7 @@ func _process(delta: float) -> void:
 	if menus != null and earth != null:  # the title backdrop drifts slowly east
 		rig.position.x += delta * 6.0
 	if provinces != null:
-		provinces.animate(Time.get_ticks_msec() / 1000.0)
+		provinces.animate(Time.get_ticks_msec() / 1000.0, rig.distance)
 	if earth != null and rig != null:  # shadows sharp near the camera, wherever it is
 		sun.directional_shadow_max_distance = clampf(rig.distance * 2.5, 60.0, 900.0)
 	if earth != null:  # territory colours fade as you zoom in, so the land itself shows

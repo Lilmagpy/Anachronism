@@ -901,7 +901,10 @@ from far off, where the towns are hidden, each chief city stands as one larger-t
 icon (a walled castle for a capital, a cluster of houses for a town) in its owner's
 colours, as cities do on Rise of Kingdoms' map. Trade, alliance and tribute ties are
 dashed lines flowing out from your capital, and fade out as you zoom into a city. The
-owner wash is paler, so red over green land turns rosy rather than muddy.
+owner wash is paler, so red over green land turns rosy rather than muddy. Province names
+sit on dark name plates with a gold rim and their owner's colour at one end. Armies and
+fleets are drawn large to read from afar and shrink toward life size as the camera comes
+down to a city; soldiers carry tall rimmed shields and crested helmets.
 
 ## D-110 CI uses far fewer free minutes — DELEGATED (2026-10-01)
 GitHub Actions stopped running because the repository's free monthly minutes ran out (the
