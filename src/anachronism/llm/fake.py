@@ -25,7 +25,13 @@ class FakeProvider:
         self.calls: list[tuple[str, str]] = []
 
     def complete(
-        self, system: str, user: str, schema: dict[str, Any], *, fast: bool = False
+        self,
+        system: str,
+        user: str,
+        schema: dict[str, Any],
+        *,
+        fast: bool = False,
+        tool: str = "rule_on_ideas",
     ) -> Completion:
         """Return the next scripted reply."""
         self.calls.append((system, user))

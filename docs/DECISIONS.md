@@ -642,3 +642,15 @@ counter-offensive in the Aegean, the Sicilian wars. Persia is much larger but ra
 smaller share of its people (`martial_bp`), and the Macedonian army a much larger one, so
 the two start roughly level in strength. Tested over three seeds: a passive Macedon keeps
 its lands; Persia slowly absorbs the Greek cities if nobody stops it.
+
+## D-091 Rival rulers voiced by the model — DELEGATED (2026-10-01)
+Rival rulers now speak to the player when they declare war on you, make peace, bow to a
+tribute demand, or boast of something far ahead of its time. Each moment has stock lines in
+the content (core/dialogue.yaml), so offline play is unchanged. When a model is
+configured, the stock line and a few facts from the game (the ruler, their people, year,
+temperament, faith, grudge and relative strength) go to the cheaper "fast" model, which
+rewrites the line in that ruler's own voice. Why this is safe: the reply is only the text
+of a speech bubble and changes nothing in the game, so replays need no record of it (rulings
+still are recorded, D-021); the player's own words are never sent; the reply is cut to one
+tidy line; any failure, odd shape or empty answer keeps the stock line; answers are cached
+and count toward the monthly token cap. At most one rival speaks per turn.

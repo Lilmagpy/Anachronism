@@ -27,11 +27,18 @@ class Provider(Protocol):
     name: str
 
     def complete(
-        self, system: str, user: str, schema: dict[str, Any], *, fast: bool = False
+        self,
+        system: str,
+        user: str,
+        schema: dict[str, Any],
+        *,
+        fast: bool = False,
+        tool: str = "rule_on_ideas",
     ) -> Completion:
         """Send the fixed ``system`` prompt and one ``user`` message; return the tool input.
 
-        ``fast`` asks for the cheaper model where one is configured (clarifying steps).
+        ``fast`` asks for the cheaper model where one is configured (clarifying steps and
+        rival speech). ``tool`` names the single tool the reply is forced through.
         Raises ``ProviderError`` on any failure.
         """
         ...

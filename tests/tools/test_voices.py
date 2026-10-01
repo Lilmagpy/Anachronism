@@ -84,3 +84,24 @@ def test_bad_dialogue_is_reported(packs: Path) -> None:  # noqa: F811
     found = load(packs)
     assert any("unknown speaker 'jester'" in p for p in found)
     assert any("unknown placeholder(s) ['idea']" in p for p in found)
+
+
+def test_a_rival_who_declares_war_says_so(content: Content) -> None:
+    state = new_game(content, "warring_states", seed=1)
+    wei = state.civs["wei"].name
+    war = Event(
+        turn=1, year=-340, civ="qin", kind="war",
+        message=f"The Wei court has declared war on {state.civs['qin'].name}.", subject=wei,
+    )  # fmt: skip
+    voices = voices_for_turn(content, state, [war])
+    rival = [v for v in voices if v["speaker"] == "rival"]
+    assert len(rival) == 1
+    assert rival[0]["civ"] == "wei"
+    assert rival[0]["moment"] == "rival_war"
+    assert voices[0]["speaker"] != "rival"  # the court speaks first
+
+
+def test_a_rival_makes_peace(content: Content) -> None:
+    state = new_game(content, "warring_states", seed=1)
+    voices = voices_for_turn(content, state, [event("peace", "qin", state.civs["zhao"].name)])
+    assert any(v["moment"] == "rival_peace" and v["civ"] == "zhao" for v in voices)

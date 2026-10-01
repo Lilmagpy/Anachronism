@@ -16,10 +16,14 @@ import urllib.request
 from typing import Any
 
 from anachronism.llm.config import LlmConfig
-from anachronism.llm.prompts import TOOL_NAME
+from anachronism.llm.prompts import TOOL_NAME, VOICE_TOOL
 from anachronism.llm.provider import Completion, ProviderError
 
 API_VERSION = "2023-06-01"
+TOOL_DESCRIPTIONS = {
+    TOOL_NAME: "Report the court's ruling on the player's ideas.",
+    VOICE_TOOL: "Say the rival ruler's line.",
+}
 RETRY_STATUSES = frozenset({408, 409, 429, 500, 502, 503, 504, 529})
 
 
@@ -36,31 +40,46 @@ class AnthropicProvider:
         self.retries = retries
 
     def request_body(
-        self, system: str, user: str, schema: dict[str, Any], model: str
+        self,
+        system: str,
+        user: str,
+        schema: dict[str, Any],
+        model: str,
+        tool: str = TOOL_NAME,
+        temperature: float = 0.2,
     ) -> dict[str, Any]:
         """The JSON body for one call (separate so tests can inspect it without a network)."""
         return {
             "model": model,
             "max_tokens": 2000,
-            "temperature": 0.2,
+            "temperature": temperature,
             "system": [{"type": "text", "text": system, "cache_control": {"type": "ephemeral"}}],
             "tools": [
                 {
-                    "name": TOOL_NAME,
-                    "description": "Report the court's ruling on the player's ideas.",
+                    "name": tool,
+                    "description": TOOL_DESCRIPTIONS.get(tool, "Report your answer."),
                     "input_schema": schema,
                 }
             ],
-            "tool_choice": {"type": "tool", "name": TOOL_NAME},
+            "tool_choice": {"type": "tool", "name": tool},
             "messages": [{"role": "user", "content": user}],
         }
 
     def complete(
-        self, system: str, user: str, schema: dict[str, Any], *, fast: bool = False
+        self,
+        system: str,
+        user: str,
+        schema: dict[str, Any],
+        *,
+        fast: bool = False,
+        tool: str = TOOL_NAME,
     ) -> Completion:
         """Call the API and return the tool input the model produced."""
-        model = self.config.fast_model if fast else self.config.model
-        body = json.dumps(self.request_body(system, user, schema, model)).encode()
+        model = (self.config.fast_model or self.config.model) if fast else self.config.model
+        temperature = 0.2 if tool == TOOL_NAME else 0.8  # rulings steady, speech lively
+        body = json.dumps(
+            self.request_body(system, user, schema, model, tool, temperature)
+        ).encode()
         request = urllib.request.Request(
             f"{self.config.base_url}/v1/messages",
             data=body,
@@ -73,7 +92,7 @@ class AnthropicProvider:
         )
         reply = self._send(request)
         for block in reply.get("content", []):
-            if block.get("type") == "tool_use" and block.get("name") == TOOL_NAME:
+            if block.get("type") == "tool_use" and block.get("name") == tool:
                 usage = reply.get("usage", {})
                 return Completion(
                     data=dict(block.get("input") or {}),

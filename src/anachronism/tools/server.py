@@ -17,7 +17,13 @@ from typing import Any, TextIO
 from pydantic import TypeAdapter, ValidationError
 
 from anachronism.content.loader import Content, load_content
-from anachronism.engine.actions import Action, RuleOnIdea, StartProject
+from anachronism.engine.actions import (
+    Action,
+    DemandTribute,
+    MakePeace,
+    RuleOnIdea,
+    StartProject,
+)
 from anachronism.engine.bots import Bot, make_bot
 from anachronism.engine.game import apply_action, end_turn, new_game
 from anachronism.engine.rulings import Verdict
@@ -105,6 +111,11 @@ class Session:
         if logged.ok and isinstance(action, StartProject):
             name = self.state.tech_nodes[action.node_id].name
             voices = [v for v in [speak(self.content, self.state, "project_started", name)] if v]
+        elif logged.ok and isinstance(action, DemandTribute | MakePeace):
+            moment = "rival_tribute" if isinstance(action, DemandTribute) else "rival_peace"
+            subject = self.state.civs[action.target].name
+            voice = speak(self.content, self.state, moment, subject, rival=action.target)
+            voices = [self._voiced(voice)] if voice else []
         return {
             "accepted": logged.ok,
             "message": logged.message,
@@ -122,8 +133,23 @@ class Session:
         self.state, self.events = end_turn(state)
         self._autosave()
         view = self._view(self.events)
-        view["voices"] = voices_for_turn(self.content, self.state, self.events)
+        view["voices"] = [
+            self._voiced(v) for v in voices_for_turn(self.content, self.state, self.events)
+        ]
         return view
+
+    def _voiced(self, voice: dict[str, Any]) -> dict[str, Any]:
+        """A rival's speech bubble, in their own words when a model is configured."""
+        if voice.get("speaker") != "rival":
+            return voice
+        text, source = self.pipeline.voice_rival(
+            self.game(),
+            str(voice["civ"]),
+            str(voice["moment"]),
+            str(voice.get("subject", "")),
+            str(voice["text"]),
+        )
+        return {**voice, "text": text, "source": source}
 
     def _view(self, events: list[Event], state: GameState | None = None) -> dict[str, Any]:
         """The player's view, with each civilisation's emblem and portrait from the content."""

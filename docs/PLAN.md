@@ -138,5 +138,6 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] A seventh moment, the Great Khan 1206, with steppe mobilisation (D-084)
 - [x] An eighth moment, Alexander's inheritance 336 BC (D-090)
 - [x] Confidence tiers and a source-review checklist (D-083)
-- [ ] Rival rulers voiced by the model; suspicion tuning; gate
+- [x] Rival rulers voiced by the model: war, peace, tribute and boasts (D-091)
+- [ ] Suspicion tuning; gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

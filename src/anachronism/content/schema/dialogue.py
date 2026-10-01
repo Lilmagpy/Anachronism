@@ -29,7 +29,7 @@ MOMENTS = frozenset(
     {
         "game_start", "project_started", "adopted", "widespread", "breakthrough", "setback",
         "stalled", "resistance", "suspicion", "framing", "discovery", "riot", "revolt",
-        "famine", "collapse", "rival_adopted", "quiet",
+        "famine", "collapse", "rival_adopted", "rival_war", "rival_peace", "rival_tribute", "quiet",
         "idea_feasible", "idea_blocked", "idea_implausible",
         "war", "conquest", "province_lost", "capital_lost", "peace", "news", "imitation",
         "victory", "defeat", "ally_attacked", "disaster", "blessing", "faith", "coalition",

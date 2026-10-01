@@ -82,6 +82,7 @@ def speak(
         "colour": civ_def.colour,
         "emblem": civ_def.emblem or civ_def.adjective[:1],
         "civ": speaker_civ,
+        "subject": subject,
         "text": text,
     }
 
@@ -122,6 +123,46 @@ def opening_voices(content: Content, state: GameState) -> list[dict[str, Any]]:
     return voices
 
 
+def civ_named(state: GameState, name: str) -> str | None:
+    """The id of the civilisation called ``name``, if any."""
+    for civ_id in sorted(state.civs):
+        if state.civs[civ_id].name == name:
+            return civ_id
+    return None
+
+
+def _rival_speaks(content: Content, state: GameState, events: list[Event]) -> dict[str, Any] | None:
+    """A rival ruler's word to the player when they declare war or make peace."""
+    for event in events:
+        if event.civ != state.player_civ:
+            continue
+        if event.kind == "war" and "declared war on" in event.message:
+            moment = "rival_war"
+        elif event.kind == "peace":
+            moment = "rival_peace"
+        else:
+            continue
+        rival = civ_named(state, event.subject)
+        if rival is not None and rival != state.player_civ:
+            return speak(content, state, moment, event.subject, rival=rival)
+    return None
+
+
+def _rival_boasts(content: Content, state: GameState, events: list[Event]) -> dict[str, Any] | None:
+    """A rival ruler's boast when their court adopts something far ahead of its time."""
+    by_name = {node.name: node for node in state.tech_nodes.values()}
+    for event in events:
+        node = by_name.get(event.subject)
+        if (
+            event.kind == "adopted"
+            and event.civ not in (None, state.player_civ)
+            and node is not None
+            and node.year - state.year >= AHEAD_YEARS
+        ):
+            return speak(content, state, "rival_adopted", event.subject, rival=event.civ)
+    return None
+
+
 def voices_for_turn(
     content: Content, state: GameState, events: list[Event]
 ) -> list[dict[str, Any]]:
@@ -134,19 +175,9 @@ def voices_for_turn(
             voice = speak(content, state, moment, mine[moment].subject)
             if voice:
                 said.append(voice)
-    by_name = {node.name: node for node in state.tech_nodes.values()}
-    for event in events:
-        node = by_name.get(event.subject)
-        if (
-            event.kind == "adopted"
-            and event.civ not in (None, player)
-            and node is not None
-            and node.year - state.year >= AHEAD_YEARS
-        ):
-            voice = speak(content, state, "rival_adopted", event.subject, rival=event.civ)
-            if voice:
-                said.append(voice)
-            break
+    rival = _rival_speaks(content, state, events) or _rival_boasts(content, state, events)
+    if rival:
+        said.append(rival)
     if not said:
         voice = speak(content, state, "quiet")
         if voice:

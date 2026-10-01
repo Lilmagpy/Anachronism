@@ -101,6 +101,26 @@ dialogue:
       - "{subject} is ours now. Let the other courts wonder how {rival} managed it."
       - "Greetings from {rival}. We thought you should hear it from us: we have {subject}."
 
+  - id: rival_war
+    speaker: rival
+    lines:
+      - "You heard right. {rival} marches against {civ}. Your clever ideas will not stop our spears."
+      - "There is no shame in war, only in losing it. {rival} is coming, and we do not intend to lose."
+      - "We sent envoys; you sent excuses. Now {rival} sends its armies."
+
+  - id: rival_peace
+    speaker: rival
+    lines:
+      - "Enough. The fields need hands more than the battlefield needs bodies. {rival} accepts peace - for now."
+      - "Let it be peace. {rival} will remember this war, and so, I think, will {civ}."
+      - "We lay down our arms. Do not mistake this for friendship."
+
+  - id: rival_tribute
+    speaker: rival
+    lines:
+      - "Take your tribute, then. {rival} pays - and counts every coin."
+      - "The {rival_adjective} court bows. Bowing is not kneeling; remember that."
+
   - id: quiet
     speaker: steward
     lines:

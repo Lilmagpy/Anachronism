@@ -22,10 +22,19 @@ from anachronism.engine.timeflow import current_era
 from anachronism.llm import offline
 from anachronism.llm.config import LlmConfig
 from anachronism.llm.guard import to_rulings
-from anachronism.llm.prompts import PROMPT_VERSION, SYSTEM, clean_player_text, user_message
+from anachronism.llm.prompts import (
+    PROMPT_VERSION,
+    SYSTEM,
+    VOICE_SYSTEM,
+    VOICE_TOOL,
+    clean_player_text,
+    user_message,
+    voice_message,
+)
 from anachronism.llm.provider import Provider, ProviderError
 from anachronism.llm.schemas import ModelReply, reply_schema
 from anachronism.llm.store import DebugLog, Ledger, RulingCache
+from anachronism.llm.voice import VoiceReply, clean_line, facts, voice_schema
 
 
 @dataclass
@@ -143,6 +152,37 @@ class IdeaPipeline:
             )
             return reply, usage, ""
         return None, usage, error
+
+    def voice_rival(
+        self, state: GameState, rival: str, moment: str, subject: str, line: str
+    ) -> tuple[str, str]:
+        """A rival ruler's ``line``, rewritten in their own voice when a model is available.
+
+        Returns the text and where it came from ("content", "cache" or "model"). Any
+        failure keeps the content line: speech is flavour and must never block a turn.
+        """
+        if not self.online or rival not in state.civs:
+            return line, "content"
+        known = facts(state, rival, moment, subject)
+        key = RulingCache.key(f"voice|{moment}|{line}", "|".join(known.values()))
+        cached = self.cache.get(key)
+        if cached is not None and isinstance(cached.get("line"), str):
+            return cached["line"], "cache"
+        user = voice_message(known, line)
+        try:
+            completion = self.provider.complete(  # type: ignore[union-attr]
+                VOICE_SYSTEM, user, voice_schema(), fast=True, tool=VOICE_TOOL
+            )
+            self.ledger.add(completion.usage)
+            spoken = clean_line(VoiceReply.model_validate(completion.data).line)
+        except (ProviderError, ValidationError) as failure:
+            self.log.write({"user": user, "error": str(failure)[:200]})
+            return line, "content"
+        if not spoken:
+            return line, "content"
+        self.log.write({"user": user, "reply": completion.data, "model": completion.model})
+        self.cache.put(key, {"line": spoken})
+        return spoken, "model"
 
     def _offline(self, state: GameState, civ_id: str, text: str, note: str) -> Outcome:
         reply = offline.interpret(state, civ_id, text)
