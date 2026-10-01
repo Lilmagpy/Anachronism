@@ -115,6 +115,9 @@ func _init(province_map: ProvinceMap) -> void:
 	var furrows := ShaderMaterial.new()
 	furrows.shader = load("res://shaders/field.gdshader")
 	_parts["field"]["material"] = furrows
+	var walls := ShaderMaterial.new()
+	walls.shader = load("res://shaders/house.gdshader")
+	_parts["house"]["material"] = walls
 	# castles from the Kenney castle kit (CC0, G1): their blue roofs and flags take the
 	# owner's colour; they keep their own stone (`kit` parts are drawn with their own materials)
 	for entry in [

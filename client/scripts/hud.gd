@@ -369,8 +369,8 @@ func _theme() -> Theme:
 		box.content_margin_bottom = 4
 		box.border_width_bottom = 4 if state != "pressed" else 2
 		theme.set_stylebox(state, "Button", box)
-	var panel := UiStyle.panel()
-	panel.set_content_margin_all(12)
+	var panel := UiStyle.ornate_panel().duplicate() as StyleBoxTexture
+	panel.set_content_margin_all(16)
 	theme.set_stylebox("panel", "PanelContainer", panel)
 	var bar_bg := StyleBoxFlat.new()
 	bar_bg.bg_color = Color(0.82, 0.76, 0.64)
@@ -452,11 +452,11 @@ func _build_top_bar() -> void:
 	bar.offset_left = 8
 	bar.offset_right = -8
 	bar.offset_top = 8
-	var style := UiStyle.panel()
-	style.content_margin_left = 14
-	style.content_margin_right = 14
-	style.content_margin_top = 6
-	style.content_margin_bottom = 6
+	var style := UiStyle.ornate_panel().duplicate() as StyleBoxTexture
+	style.content_margin_left = 18
+	style.content_margin_right = 18
+	style.content_margin_top = 8
+	style.content_margin_bottom = 8
 	bar.add_theme_stylebox_override("panel", style)
 	_top.add_theme_constant_override("separation", 16)
 	bar.add_child(_top)

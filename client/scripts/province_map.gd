@@ -467,6 +467,10 @@ func animate(t: float) -> void:
 		piece.position.y = item[1] + sin(t * 1.3 + phase) * 0.25
 		piece.rotation.z = sin(t * 0.9 + phase) * 0.06
 		piece.rotation.x = sin(t * 1.1 + phase * 1.7) * 0.04
+	for item in _marching:
+		var army: Node3D = item[0]
+		if is_instance_valid(army):
+			army.position.y = item[1] + absf(sin(t * 5.0 + item[2])) * 0.35 * army.scale.y
 
 
 ## Roads between neighbouring provinces' chief cities (G1): dirt tracks following the
@@ -522,6 +526,7 @@ func show_armies(armies: Array, battles: Array, selected_army := "", fleets: Arr
 		child.queue_free()
 	_war_labels.clear()
 	_afloat.clear()
+	_marching.clear()
 	var by_id := {}
 	for site in sites:
 		by_id[site["id"]] = site
@@ -548,6 +553,8 @@ func show_armies(armies: Array, battles: Array, selected_army := "", fleets: Arr
 		piece.scale = Vector3.ONE * clampf(0.6 + log(maxf(men, 1000.0) / 1000.0) / log(10.0) * 0.25, 0.6, 1.25)
 		piece.position = earth.ground_at_pixel(spot)
 		_war_marks.add_child(piece)
+		if not route.is_empty():  # on the march: the ranks bob as they walk
+			_marching.append([piece, piece.position.y, float(hash(army["id"]) % 628) / 100.0])
 		var label := Label3D.new()
 		var text := _men_text(int(army["men"]))
 		if int(army.get("siege_needed", 0)) > 0:
@@ -720,6 +727,7 @@ var _region_cells := {}   ## site index -> Array of its cells (built once)
 var _labels: Array = []   ## [label, priority], most important first, for decluttering
 var _war_labels: Array = []   ## [label, priority] of armies' and fleets' strengths
 var _afloat: Array = []   ## [fleet piece, its resting height, a phase] to rock on the waves
+var _marching: Array = []   ## [army piece, its resting height, a phase] bobbing on the march
 
 
 ## The map cells of a site, indexed once (borders never move; only owners change).

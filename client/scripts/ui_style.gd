@@ -48,7 +48,7 @@ static func theme() -> Theme:
 	t.default_font = font("body", 600)
 	t.default_font_size = 17
 	t.set_color("font_color", "Label", INK)
-	t.set_stylebox("panel", "PanelContainer", panel())
+	t.set_stylebox("panel", "PanelContainer", ornate_panel())
 	for state in ["normal", "hover", "pressed", "disabled", "focus"]:
 		t.set_stylebox(state, "Button", button_box(state))
 	t.set_color("font_color", "Button", INK)
@@ -57,6 +57,60 @@ static func theme() -> Theme:
 	t.set_color("font_disabled_color", "Button", Color(INK, 0.4))
 	t.set_font("font", "Button", font("body", 800))
 	return t
+
+
+static var _ornate: StyleBoxTexture
+
+
+## The game's framed panel (G1): parchment inside a double gold frame with studded corners,
+## drawn once into a nine-patch so it stretches to any size.
+static func ornate_panel() -> StyleBoxTexture:
+	if _ornate != null:
+		return _ornate
+	var n := 96
+	var m := 26   # the frame's width in the nine-patch
+	var image := Image.create(n, n, false, Image.FORMAT_RGBA8)
+	var dark := Color(0.45, 0.28, 0.08)
+	var rim := Color(0.86, 0.64, 0.22)
+	var bright := Color(1.0, 0.86, 0.45)
+	for y in n:
+		for x in n:
+			var d := mini(mini(x, y), mini(n - 1 - x, n - 1 - y))   # distance from the edge
+			var corner := Vector2(mini(x, n - 1 - x), mini(y, n - 1 - y))
+			# rounded outer corners
+			if corner.x < 8 and corner.y < 8 and corner.distance_to(Vector2(8, 8)) > 8.5:
+				continue
+			var c: Color
+			if d < 2:
+				c = dark
+			elif d < 6:
+				c = rim.lerp(bright, 1.0 - absf(d - 4.0) / 2.0)
+			elif d < 7:
+				c = dark
+			elif d < 9:
+				c = Color(0.80, 0.70, 0.52)
+			elif d < 10:
+				c = rim
+			else:
+				# parchment, a shade darker toward the frame
+				var shade := clampf((d - 10) / 18.0, 0.0, 1.0)
+				c = PARCHMENT.lerp(CREAM, shade)
+			image.set_pixel(x, y, c)
+	# a gold stud in each corner
+	for cx in [12, n - 13]:
+		for cy in [12, n - 13]:
+			for y in range(cy - 4, cy + 5):
+				for x in range(cx - 4, cx + 5):
+					var r := Vector2(x - cx, y - cy).length()
+					if r <= 4.2:
+						image.set_pixel(x, y, dark if r > 3.2 else bright.lerp(rim, r / 3.2))
+	var box := StyleBoxTexture.new()
+	box.texture = ImageTexture.create_from_image(image)
+	box.set_texture_margin_all(m)
+	box.set_content_margin_all(18)
+	box.content_margin_top = 16
+	_ornate = box
+	return box
 
 
 static func panel(fill := CREAM, border := GOLD_DARK, radius := 14) -> StyleBoxFlat:
