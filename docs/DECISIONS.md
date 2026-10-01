@@ -900,3 +900,6 @@ count tenfold. Now the Linux checks run once per pull request update (and on pus
 main); the macOS checks and the Mac app build run only when started by hand from the
 Actions tab. The checks and the app are run and built in the cloud session anyway before
 each commit. Roughly a tenth of the minutes per push.
+Later the same day the owner made the repository public (free, unlimited minutes for
+public repositories); the macOS checks and the Mac app build run on every pull request
+update again, and each update still runs only once.

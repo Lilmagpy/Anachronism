@@ -1,9 +1,7 @@
 name: CI
 
-# Free GitHub minutes are limited on private repositories (D-110): every push used to run
-# everything twice (as a push and as a pull request), Mac minutes counting tenfold. Now the
-# Linux checks run once per pull request update (and on main); the macOS checks and the app
-# build run only when started by hand (Actions tab -> CI -> Run workflow).
+# The repository is public, so Actions minutes are free (D-110). Each pull request update
+# runs once (pushes to other branches do not also run separately), plus pushes to main.
 on:
   push:
     branches: [main]
@@ -31,9 +29,7 @@ jobs:
 
   macos:
     name: Checks (macOS)
-    # The owner plays on a Mac. Mac minutes count 10x on private repos, so this job runs only
-    # when started by hand (D-034, D-110).
-    if: github.event_name == 'workflow_dispatch'
+    # The owner plays on a Mac (D-034).
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v7
@@ -48,8 +44,6 @@ jobs:
     # Exports the game for macOS and uploads it to the run page (D-050). Before that, the same
     # packaging is exported for Linux and started with an empty home folder, to prove that a
     # fresh install unpacks the engine, fetches Python and answers.
-    # Only when started by hand (D-110): the app can also be built locally with package.sh.
-    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     env:
       GODOT_VERSION: 4.5.1
