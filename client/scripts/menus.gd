@@ -8,6 +8,7 @@ extends CanvasLayer
 
 signal start_requested(scenario_id: String, civ_id: String)
 signal quit_requested
+signal continue_requested   ## resume the autosaved game
 
 var catalog: Array = []        ## real-map scenarios from the engine's "scenarios" command
 var scenario: Dictionary = {}
@@ -20,6 +21,9 @@ func _ready() -> void:
 	_root.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_root.theme = UiStyle.theme()
 	add_child(_root)
+
+
+var can_continue := false   ## an autosaved game exists
 
 
 func show_title() -> void:
@@ -44,7 +48,10 @@ func show_title() -> void:
 	var gap := Control.new()
 	gap.custom_minimum_size.y = 40
 	column.add_child(gap)
-	for entry in [["NEW GAME", show_disclaimer, UiStyle.GOLD], ["QUIT", func(): quit_requested.emit(), Color(0.85, 0.80, 0.70)]]:
+	var entries := [["NEW GAME", show_disclaimer, UiStyle.GOLD], ["QUIT", func(): quit_requested.emit(), Color(0.85, 0.80, 0.70)]]
+	if can_continue:
+		entries.push_front(["CONTINUE", func(): continue_requested.emit(), UiStyle.GOLD])
+	for entry in entries:
 		var button := UiStyle.big_button(entry[0], 30, entry[2])
 		button.custom_minimum_size = Vector2(340, 70)
 		button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER

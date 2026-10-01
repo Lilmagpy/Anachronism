@@ -174,7 +174,8 @@ def test_menu_commands(tmp_path: Path) -> None:
         tmp_path,
     )
     assert all(r["ok"] for r in replies)
-    assert [s["name"] for s in replies[3]["result"]["saves"]] == ["first"]
+    # each turn is kept in the autosave slot too (Continue on the title screen)
+    assert sorted(s["name"] for s in replies[3]["result"]["saves"]) == ["autosave", "first"]
     entries = replies[4]["result"]["entries"]
     assert entries
     told = [(e["turn"], e["message"]) for e in entries]

@@ -617,3 +617,9 @@ the electric battery, telegraph, telephone, photography, anaesthesia, steamships
 food, chemical fertiliser, cheap (Bessemer) steel and dynamite, each with prerequisites
 reaching back through the tree, so asking for electricity in 264 BC shows the long road
 there as goal stubs. Dates are approximate first appearances (D-040).
+
+## D-088 Autosave and Continue — DELEGATED (2026-10-01)
+The engine saves the game to an "autosave" slot after every turn; the title screen offers
+CONTINUE whenever that slot exists, so a crash or an accidental quit costs at most one
+turn. Named saves (Esc → Save) are unchanged. The title backdrop now centres on whichever
+map is loaded (it pointed at East Asia even when the Europe map was shown).

@@ -62,15 +62,22 @@ func _ready() -> void:
 		return
 	# Title screen over a slowly drifting view of the real map, then the civilisation picker.
 	_ensure_earth(str(real[0]["map"]))
-	rig.look_at_point(earth.ground_at(33.0, 112.0), 1100.0)
+	rig.look_at_point(earth.ground_at_pixel(earth.size() / 2.0), 1100.0)  # whichever map it is
 	menus = Menus.new()
 	menus.catalog = real
 	add_child(menus)
 	menus.start_requested.connect(_start_game)
 	menus.quit_requested.connect(func(): get_tree().quit())
+	menus.continue_requested.connect(_continue_game)
+	var saves: Variant = bridge.request("saves")
+	if saves != null:
+		menus.can_continue = saves["saves"].any(func(s): return s["name"] == "autosave")
 	menus.show_title()
 	if options.get("screen", "") == "picker" or options.has("smoke"):
 		menus.show_picker("", str(options.get("pick", "")))
+	if options.has("continue"):  # --continue: resume the autosave, as the title button does
+		_continue_game()
+		return
 	if options.has("smoke"):  # CI self-test: title, picker, then the game itself
 		await get_tree().process_frame
 		_start_game(str(real[0]["id"]), "")
@@ -91,7 +98,15 @@ func _start_game(scenario_id: String, civ_id: String) -> void:
 	var args := {"scenario": scenario_id, "seed": int(options.get("seed", "1"))}
 	if civ_id != "":
 		args["civ"] = civ_id
-	var result: Variant = bridge.request("new_game", args)
+	_enter_game(bridge.request("new_game", args))
+
+
+## Resume the game saved automatically after the last turn played.
+func _continue_game() -> void:
+	_enter_game(bridge.request("load", {"name": "autosave"}))
+
+
+func _enter_game(result: Variant) -> void:
 	if result == null:
 		_fail(_notice(""))
 		return

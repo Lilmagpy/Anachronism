@@ -31,6 +31,10 @@ from anachronism.tools.voices import adviser_voice, opening_voices, speak, voice
 ACTION = TypeAdapter[Action](Action)
 
 
+AUTOSAVE = "autosave"
+"""The save slot written after every turn."""
+
+
 class RequestError(Exception):
     """A request the server understood but cannot carry out; sent back as an error reply."""
 
@@ -115,6 +119,7 @@ class Session:
                 for action in self.rivals[civ_id].decide(state, civ_id):
                     state, _ = apply_action(state, action)
         self.state, self.events = end_turn(state)
+        self._autosave()
         view = self._view(self.events)
         view["voices"] = voices_for_turn(self.content, self.state, self.events)
         return view
@@ -284,6 +289,14 @@ class Session:
         if not name.replace("_", "").replace("-", "").isalnum():
             raise RequestError("save names may use letters, digits, - and _ only")
         return self.saves_dir / f"{name}.json"
+
+    def _autosave(self) -> None:
+        """Keep the latest turn in the "autosave" slot, for Continue on the title screen."""
+        try:
+            self.saves_dir.mkdir(parents=True, exist_ok=True)
+            (self.saves_dir / f"{AUTOSAVE}.json").write_text(dumps(self.game()), encoding="utf-8")
+        except OSError:
+            pass  # a full or read-only disk must not stop the game
 
     def save(self, args: dict[str, Any]) -> dict[str, Any]:
         """Save to the saves folder: ``{"name": "mygame"}``."""
