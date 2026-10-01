@@ -125,7 +125,9 @@ def adopt(state: GameState, civ: CivState, node_id: str, events: EventLog) -> No
     tech.stage = Stage.ADOPTED
     tech.goal = False
     tech.spread_bp = max(tech.spread_bp, state.world.rules.projects.initial_spread_bp)
-    events.add(civ.id, "adopted", f"{civ.name} adopts {node.name}.", node.name)
+    events.add(
+        civ.id, "adopted", f"{node.name} is adopted in the {civ.adjective} lands.", node.name
+    )
     for effect in node.effects:
         if effect.type is EffectType.UNLOCKS_RESOURCE and effect.target is not None:
             _discover(state, civ, effect.target, events)

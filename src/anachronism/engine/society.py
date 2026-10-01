@@ -104,4 +104,8 @@ def _check_collapse(state: GameState, civ: CivState, events: EventLog) -> None:
     # collapse is breaking apart from within: provinces lost in war do not count
     if civ.revolts * BP >= civ.starting_provinces * state.world.rules.society.collapse_share_bp:
         civ.collapsed = True
-        events.add(civ.id, "collapse", f"{civ.name} has collapsed, its provinces in open revolt.")
+        events.add(
+            civ.id,
+            "collapse",
+            f"The {civ.adjective} state has collapsed, its provinces in open revolt.",
+        )

@@ -127,7 +127,9 @@ def check_outcome(state: GameState, events: EventLog) -> None:
         state.outcome = Outcome(
             result="defeat", path="collapse", tier="regional", turn=state.turn, year=state.year
         )
-        events.add(me.id, "defeat", f"{me.name} has fallen. The age moves on without you.")
+        events.add(
+            me.id, "defeat", f"The {me.adjective} state has fallen. The age moves on without you."
+        )
         return
     paths = progress(state)
     won = ""

@@ -303,7 +303,7 @@ def deliver_news(state: GameState, events: EventLog) -> None:
             if item.garbled:
                 text = f"Rumours reach {civ.name} of strange doings in {about.name}."
             else:
-                text = f"{civ.name} has learned of {about.name}'s {node.name}."
+                text = f"The {civ.adjective} court has heard of the {about.adjective} {node.name}."
             events.add(state.player_civ, "news", text, civ.name)
     state.news = waiting
 
@@ -338,7 +338,7 @@ def _imitate(state: GameState, civ_id: str, rng: GameRng, events: EventLog) -> N
                 events.add(
                     state.player_civ,
                     "imitation",
-                    f"{civ.name} is trying to copy your {name}.",
+                    f"The {civ.adjective} court is trying to copy your {name}.",
                     civ.name,
                 )
             return
@@ -491,7 +491,12 @@ def rival_decrees(state: GameState, events: EventLog) -> None:
             if civ.stockpiles.wealth >= price * 2:
                 civ.stockpiles.wealth -= price
                 civ.mercenaries = rules.mercenary_turns
-                events.add(civ_id, "decree", f"{civ.name} hires swords for its war.", civ.name)
+                events.add(
+                    civ_id,
+                    "decree",
+                    f"The {civ.adjective} court hires swords for its war.",
+                    civ.name,
+                )
                 continue
         if civ.stats.unrest_bp >= 3000:
             price = cost(state, civ_id, rules.festival_wealth_per_1000)
