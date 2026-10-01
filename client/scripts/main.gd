@@ -245,6 +245,10 @@ func _build_hud() -> void:
 		game_menu.call("open_menu" if screen == "menu" else "open_" + screen)
 	if options.has("dev"):
 		hud.toggle_dev()
+	if options.has("outcome"):  # --outcome=victory|defeat: preview the end screen (screenshots)
+		var won := str(options["outcome"]) != "defeat"
+		hud.call("_show_outcome", {"result": "victory" if won else "defeat",
+			"path": "economic" if won else "collapse", "year": view["year"]})
 	if options.has("visit"):
 		_visit_capital()
 	if options.has("tour") or (not Tutorial.seen() and not options.has("smoke") and not options.has("screenshot")):

@@ -124,6 +124,30 @@ func _show_outcome(outcome: Dictionary) -> void:
 	var words := UiStyle.wrapped(line, 22, UiStyle.INK, 620)
 	words.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	column.add_child(words)
+	# the reign in numbers, and its boldest anachronism
+	var in_use := 0
+	var boldest := ""
+	var boldest_ahead := 0
+	var started := int(view["year"]) - (int(view["turn"]) - 1) * int(view["years_per_turn"])
+	for idea in view["ideas"]:
+		if idea["stage"] in ["adopted", "widespread"]:
+			in_use += 1
+			if int(idea["year"]) - started > boldest_ahead:
+				boldest_ahead = int(idea["year"]) - started
+				boldest = str(idea["name"])
+	var owned := 0
+	for p in view["provinces"]:
+		if p["owner"] == view["player"]:
+			owned += 1
+	var summary := "%d years · %d ideas in use · %d provinces · %s people" % [
+		int(outcome["year"]) - started, in_use, owned, people(view["status"]["population"])]
+	var facts := _label(summary, 16, INK)
+	facts.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	column.add_child(facts)
+	if boldest != "":
+		var feat := _label("Boldest anachronism: %s, %d years before its time" % [boldest, boldest_ahead], 15, GOLD)
+		feat.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		column.add_child(feat)
 	if won:
 		column.add_child(_label("A regional victory. Greater tiers - a hemisphere, the world - await more regions.", 13, DIM))
 	var keep := UiStyle.big_button("KEEP PLAYING", 24)
