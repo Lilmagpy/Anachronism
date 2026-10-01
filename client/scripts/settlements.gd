@@ -16,6 +16,7 @@ class_name Settlements
 extends RefCounted
 
 const SHOW_WITHIN := 320.0          ## camera distance at which settlements appear
+const FAR_UNTIL := 1400.0           ## city icons stand in for them out to here
 ## The map is cut into tiles, each its own batch: Godot hides a batch by the camera's distance
 ## to the batch's centre, so one batch for the whole map vanished on large maps.
 const TILE := 120.0
@@ -23,6 +24,8 @@ const S := 4.0                      ## settlements are drawn larger than life so
 const PEOPLE_PER_TOWN := 160000
 const PEOPLE_PER_VILLAGE := 40000
 const MAX_VILLAGES := 40
+const ICON := 9.0                   ## a far-off city icon's height in map units
+const CELL := 0.11 * S              ## one kit grid cell (a house's width) in map units
 
 var map: ProvinceMap
 var earth: EarthBuilder
@@ -43,8 +46,6 @@ func _init(province_map: ProvinceMap) -> void:
 	earth = province_map.earth
 	var house := BoxMesh.new()
 	house.size = Vector3(0.16, 0.09, 0.11) * S
-	var roof := PrismMesh.new()
-	roof.size = Vector3(0.2, 0.07, 0.14) * S
 	var wall := BoxMesh.new()
 	wall.size = Vector3(1.0, 0.16, 0.07) * S
 	var tower := BoxMesh.new()
@@ -66,8 +67,6 @@ func _init(province_map: ProvinceMap) -> void:
 	banner.size = Vector3(0.3, 0.2, 0.012) * S
 	var flat_roof := BoxMesh.new()
 	flat_roof.size = Vector3(0.18, 0.02, 0.13) * S
-	var steep_roof := PrismMesh.new()
-	steep_roof.size = Vector3(0.19, 0.13, 0.13) * S
 	var low_roof := PrismMesh.new()
 	low_roof.size = Vector3(0.2, 0.045, 0.14) * S
 	var yurt := CylinderMesh.new()
@@ -106,9 +105,9 @@ func _init(province_map: ProvinceMap) -> void:
 	dome.is_hemisphere = true
 	dome.radial_segments = 16
 	dome.rings = 6
-	for entry in [["dome", dome], ["house", house], ["roof", roof], ["wall", wall], ["tower", tower],
+	for entry in [["dome", dome], ["house", house], ["wall", wall], ["tower", tower],
 			["hall", hall], ["hall_roof", hall_roof], ["terrace", terrace], ["field", field],
-			["pole", pole], ["banner", banner], ["flat_roof", flat_roof], ["steep_roof", steep_roof],
+			["pole", pole], ["banner", banner], ["flat_roof", flat_roof],
 			["low_roof", low_roof], ["yurt", yurt], ["yurt_roof", yurt_roof],
 			["round_tower", round_tower], ["spire", spire], ["column", column], ["pyramid", pyramid]]:
 		_parts[entry[0]] = {"mesh": entry[1], "transforms": [], "colours": []}
@@ -129,8 +128,19 @@ func _init(province_map: ProvinceMap) -> void:
 			["k_keep", KenneyKit.stack(["castle/tower-square-base", "castle/tower-square-mid-windows",
 				"castle/tower-square-mid", "castle/tower-square-top-roof-high"], 1.05 * S)],
 			["k_gate", KenneyKit.mesh("castle/gate", 0.36 * S)],
-			["k_flag", KenneyKit.mesh("castle/flag-banner-long", 0.75 * S)]]:
+			["k_flag", KenneyKit.mesh("castle/flag-banner-long", 0.75 * S)],
+			# houses of plaster or timber from the fantasy-town kit: their roofs take the
+			# instance colour (terracotta, slate, thatch or the owner's)
+			["k_cottage", Buildings.house(1, 1, 1, false, "point", 1.5 * CELL)],
+			["k_house", Buildings.house(2, 1, 1, false, "gable", 1.57 * CELL)],
+			["k_hall", Buildings.house(2, 1, 2, false, "gable", 2.57 * CELL)],
+			["k_timber", Buildings.house(1, 1, 2, true, "high", 3.15 * CELL)],
+			["k_longhouse", Buildings.house(2, 1, 1, true, "high", 2.15 * CELL)]]:
 		_parts[entry[0]] = {"mesh": entry[1], "transforms": [], "colours": [], "kit": true}
+	# seen from far off, when the towns themselves are hidden, each chief city stands as one
+	# larger-than-life icon in its owner's colours, as cities do on Rise of Kingdoms' map
+	for entry in [["i_castle", Buildings.castle_icon(ICON * 1.5)], ["i_town", Buildings.town_icon(ICON)]]:
+		_parts[entry[0]] = {"mesh": entry[1], "transforms": [], "colours": [], "kit": true, "far": true}
 
 
 func build(parent: Node3D) -> void:
@@ -183,7 +193,7 @@ func recolour() -> void:
 		var colour := base
 		if owner != null and map.civ_colours.has(owner):
 			colour = base.lerp(map.civ_colours[owner], item[3])
-		elif item[0] in ["banner", "k_flag"]:
+		elif item[0] in ["banner", "k_flag", "i_castle", "i_town"]:
 			colour = Color(0.85, 0.82, 0.75)  # a masterless city flies a plain flag
 		mm.set_instance_color(where[1], colour)
 
@@ -243,8 +253,8 @@ func _add(part: String, pixel: Vector2, lift: float, turn: float, scale: Vector3
 		site := -1, mix := 0.0) -> void:
 	var ground := earth.ground_at_pixel(pixel)
 	var basis := Basis(Vector3.UP, turn).scaled(scale)
-	var height: float = _parts[part]["mesh"].get_aabb().size.y * scale.y
-	_parts[part]["transforms"].append(Transform3D(basis, ground + Vector3(0, lift + height / 2.0, 0)))
+	var foot: float = -_parts[part]["mesh"].get_aabb().position.y * scale.y   # stand it on the ground
+	_parts[part]["transforms"].append(Transform3D(basis, ground + Vector3(0, lift + foot, 0)))
 	_parts[part]["colours"].append(colour)
 	if site >= 0 and (mix > 0.0 or part in ["banner", "k_flag"]):
 		_owned.append([part, _parts[part]["colours"].size() - 1, site, mix])
@@ -273,20 +283,20 @@ func _house(pixel: Vector2, turn: float, size := 1.0, site := -1, mix := 0.0) ->
 			_add("house", pixel, 0.0, turn, Vector3(1.0, 1.15, 1.0) * size, walls)
 			_add("flat_roof", pixel, 0.105 * S * size, turn, Vector3.ONE * size, walls.darkened(0.2), site, tint * 0.5)
 		"classical":
-			var white := Color(0.93, 0.91, 0.85).darkened(rng.randf() * 0.08)
-			var tile := Color(0.74, 0.38, 0.24).lerp(Color(0.62, 0.30, 0.20), rng.randf())
-			_add("house", pixel, 0.0, turn, Vector3.ONE * size, white)
-			_add("low_roof", pixel, 0.09 * S * size, turn, Vector3.ONE * size, tile, site, tint * 0.6)
+			# limewashed houses under terracotta, a few of two storeys
+			var tile := Color(0.90, 0.56, 0.38).lerp(Color(0.80, 0.44, 0.32), rng.randf())
+			var part := "k_cottage" if rng.randf() < 0.35 else ("k_hall" if rng.randf() < 0.25 else "k_house")
+			_add(part, pixel, 0.0, turn, Vector3.ONE * size, tile, site, tint * 0.35)
 		"northern":
-			var timber := Color(0.86, 0.80, 0.66).lerp(Color(0.55, 0.40, 0.26), rng.randf() * 0.6)
-			var thatch := Color(0.52, 0.42, 0.26).lerp(Color(0.32, 0.30, 0.30), rng.randf() * 0.5)
-			_add("house", pixel, 0.0, turn, Vector3.ONE * size, timber)
-			_add("steep_roof", pixel, 0.09 * S * size, turn, Vector3.ONE * size, thatch, site, tint)
+			# timber-framed houses under steep thatch or slate
+			var thatch := Color(0.70, 0.56, 0.34).lerp(Color(0.38, 0.38, 0.42), rng.randf() * 0.6)
+			var part := "k_timber" if rng.randf() < 0.4 else "k_longhouse"
+			_add(part, pixel, 0.0, turn, Vector3.ONE * size, thatch, site, tint)
 		_:
-			var walls := Color(0.78, 0.72, 0.60).darkened(rng.randf() * 0.15)
-			var roof := Color(0.26, 0.27, 0.30).lerp(Color(0.40, 0.30, 0.22), rng.randf() * 0.5)
-			_add("house", pixel, 0.0, turn, Vector3.ONE * size, walls)
-			_add("roof", pixel, 0.09 * S * size, turn, Vector3.ONE * size, roof, site, tint)
+			# plastered houses under dark tiled roofs
+			var roof := Color(0.28, 0.30, 0.34).lerp(Color(0.42, 0.32, 0.26), rng.randf() * 0.5)
+			var part := "k_house" if rng.randf() < 0.6 else ("k_hall" if rng.randf() < 0.3 else "k_cottage")
+			_add(part, pixel, 0.0, turn, Vector3.ONE * size, roof, site, tint)
 
 
 ## A town or village: houses around a centre, with fields around it.
@@ -316,11 +326,13 @@ func _city(site: Dictionary, population: int, index: int) -> void:
 		houses *= 2  # a khan's camp sprawls: many tents for few people
 	for i in houses:
 		var p := centre + Vector2(rng.randf_range(-half, half) * 0.85, rng.randf_range(-half, half) * 0.85)
-		_house(p, turn + (PI / 2.0 if rng.randf() < 0.5 else 0.0), rng.randf_range(0.9, 1.3), index, 0.7)
+		_house(p, turn + (PI / 2.0 if rng.randf() < 0.5 else 0.0), rng.randf_range(0.9, 1.3), index, 0.4)
 	# the owner's banner flies over every chief city; a capital's is twice the size
 	var flag := 1.6 if site["capital"] else 1.0
 	var mast := centre + Vector2(half * 0.55, -half * 0.55) if site["capital"] else centre
 	_add("k_flag", mast, 0.0, 0.0, Vector3.ONE * flag, Color.WHITE, index, 1.0)
+	var size := clampf(0.8 + population / 2000000.0, 0.8, 1.4)
+	_add("i_castle" if site["capital"] else "i_town", centre, 0.0, PI / 5.0, Vector3.ONE * size, Color.WHITE, index, 1.0)
 	if site["capital"]:
 		if style != "steppe":
 			_walls(centre, half, index)
@@ -376,13 +388,19 @@ func _palace(centre: Vector2, index: int) -> void:
 				_add("terrace", centre, k * 0.08 * S, 0.0, Vector3(step, 1.0, step * 1.3), Color(0.72, 0.58, 0.40).darkened(k * 0.05))
 			_add("hall", centre, 0.24 * S, 0.0, Vector3(0.4, 0.8, 0.5), Color(0.30, 0.42, 0.62), index, 0.4)
 		"classical":
-			# a temple of columns under a low pediment
-			_add("terrace", centre, 0.0, 0.0, Vector3(1.0, 0.8, 0.8), Color(0.86, 0.84, 0.78))
-			for k in 6:
+			# a temple on a stepped platform, columns all round, under a tiled pediment roof
+			var marble := Color(0.95, 0.93, 0.87)
+			for k in 3:
+				_add("terrace", centre, k * 0.03 * S, 0.0, Vector3(1.05 - k * 0.06, 0.38, 0.86 - k * 0.06), marble.darkened(0.12 - k * 0.04))
+			_add("hall", centre, 0.09 * S, 0.0, Vector3(0.82, 0.95, 0.75), Color(0.80, 0.70, 0.58))   # the cella
+			for k in 8:
 				for row in [-1, 1]:
-					var at := centre + Vector2((k - 2.5) * 0.1 * S, row * 0.16 * S)
-					_add("column", at, 0.064 * S, 0.0, Vector3.ONE, Color(0.96, 0.95, 0.90))
-			_add("low_roof", centre, 0.264 * S, 0.0, Vector3(3.3, 2.0, 2.6), Color(0.92, 0.90, 0.84), index, 0.35)
+					_add("column", centre + Vector2((k - 3.5) * 0.085 * S, row * 0.17 * S), 0.09 * S, 0.0, Vector3.ONE, marble)
+			for k in [-1, 1]:
+				for row in [-0.085, 0.0, 0.085]:
+					_add("column", centre + Vector2(k * 3.5 * 0.085 * S, row * S), 0.09 * S, 0.0, Vector3.ONE, marble)
+			_add("terrace", centre, 0.29 * S, 0.0, Vector3(1.0, 0.45, 0.8), marble)   # the entablature
+			_add("low_roof", centre, 0.33 * S, 0.0, Vector3(3.6, 1.1, 2.9), Color(0.86, 0.52, 0.36), index, 0.2)
 		"south_asian":
 			# a pillared hall with a curved roof, and a white stupa beside it
 			_add("terrace", centre, 0.0, 0.0, Vector3.ONE, Color(0.72, 0.50, 0.36))
@@ -422,13 +440,22 @@ func _multimesh(entry: Dictionary, indices: Array) -> MultiMeshInstance3D:
 		instance.material_override = entry["material"]
 	elif not entry.get("kit", false):
 		instance.material_override = _material
-	instance.visibility_range_end = SHOW_WITHIN
+	if entry.get("far", false):
+		instance.visibility_range_begin = SHOW_WITHIN
+		instance.visibility_range_end = FAR_UNTIL
+	else:
+		instance.visibility_range_end = SHOW_WITHIN
 	instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON   # soft shadows under buildings (G1)
 	return instance
 
 
 ## Hearth smoke drifting up from a city (G1): soft grey puffs that rise, swell and fade.
 func _smoke(pixel: Vector2) -> CPUParticles3D:
+	return smoke_at(earth.ground_at_pixel(pixel) + Vector3(0, 0.35 * S, 0), Color(0.9, 0.9, 0.92, 0.32))
+
+
+## Smoke rising from `at` (hearths, forges); `colour`'s alpha is how thick it is.
+static func smoke_at(at: Vector3, colour: Color) -> CPUParticles3D:
 	var smoke := CPUParticles3D.new()
 	var puff := SphereMesh.new()
 	puff.radius = 0.06 * S
@@ -436,7 +463,7 @@ func _smoke(pixel: Vector2) -> CPUParticles3D:
 	puff.radial_segments = 8
 	puff.rings = 4
 	var material := StandardMaterial3D.new()
-	material.albedo_color = Color(0.9, 0.9, 0.92, 0.32)
+	material.albedo_color = colour
 	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	material.vertex_color_use_as_albedo = true
@@ -460,7 +487,7 @@ func _smoke(pixel: Vector2) -> CPUParticles3D:
 	fade.set_color(0, Color(1, 1, 1, 0.45))
 	fade.set_color(1, Color(1, 1, 1, 0.0))
 	smoke.color_ramp = fade
-	smoke.position = earth.ground_at_pixel(pixel) + Vector3(0, 0.35 * S, 0)
+	smoke.position = at
 	smoke.visibility_range_end = SHOW_WITHIN
 	smoke.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	return smoke

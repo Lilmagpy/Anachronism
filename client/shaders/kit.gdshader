@@ -7,7 +7,7 @@ shader_type spatial;
 uniform sampler2D tex : source_color, filter_linear_mipmap;
 uniform vec4 base_colour : source_color = vec4(1.0);
 uniform bool textured = true;
-uniform int recolour = 1;   // 0: keep, 1: blue accents, 2: the whole surface
+uniform int recolour = 1;   // 0: keep, 1: blue accents, 2: the whole surface, 3: roofs
 
 varying float local_y;
 
@@ -23,6 +23,15 @@ void fragment() {
 		w = smoothstep(0.05, 0.16, s.b - max(s.r, s.g));
 	} else if (recolour == 2) {
 		w = 1.0;
+	} else if (recolour == 3) {
+		// the fantasy-town colour map: its roof and awning swatches (red, green) take the
+		// instance colour; its cold blue-grey plaster is warmed to limewash
+		w = (UV.x < 0.25 && UV.y > 0.75) ? 1.0 : 0.0;
+		if (UV.x >= 0.125 && UV.x < 0.25 && UV.y >= 0.5 && UV.y < 0.75) {
+			float l = dot(s, vec3(0.3, 0.59, 0.11));
+			c = pow(l * vec3(1.08, 1.0, 0.86), vec3(2.2));
+			s = pow(c, vec3(1.0 / 2.2));
+		}
 	}
 	float lum = dot(s, vec3(0.3, 0.59, 0.11));
 	vec3 target = COLOR.rgb * (recolour == 2 ? 1.0 : clamp(0.55 + lum * 0.7, 0.6, 1.15));

@@ -36,6 +36,11 @@ const KINDS := {
 	"photography": "workshop", "dynamite": "powder_tower",
 }
 
+## how tall each kit-built landmark stands, in settlement units
+const KIT_HEIGHT := {"windmill": 1.0, "water_wheel": 0.5, "clock_tower": 1.0, "watchtower": 0.8,
+	"powder_tower": 0.8, "observatory": 0.8, "school": 0.6, "workshop": 0.42, "press": 0.42,
+	"kiln": 0.42, "forge": 0.45, "furnace": 0.45, "mint": 0.6, "harbour": 0.55}
+
 var map: ProvinceMap
 var earth: EarthBuilder
 var _built := {}   ## kind -> true
@@ -104,14 +109,30 @@ func _make(kind: String, colour: Color, spot: Vector2, centre: Vector2) -> Node3
 	var stone := Color(0.80, 0.76, 0.66)
 	var wood := Color(0.50, 0.33, 0.18)
 	var roof := colour.darkened(0.25)
+	# buildings from the Kenney kits where there is one (G1); the rest from simple shapes
+	var built := Buildings.landmark(kind, KIT_HEIGHT.get(kind, 1.0) * S)
+	if built != null:
+		_kit(node, built, colour.lerp(Color(0.88, 0.55, 0.38), 0.45))   # softened toward terracotta
+		if kind in ["forge", "furnace", "workshop", "kiln"]:
+			node.add_child(Settlements.smoke_at(Vector3(0, KIT_HEIGHT[kind] * S, 0), Color(0.45, 0.45, 0.48, 0.4)))
+		if kind == "harbour":
+			node.position.y = earth.ground_at_pixel(spot).y + 0.1
+		node.rotation.y = -(centre - spot).angle() + PI / 2.0   # facing the city
+		for child in node.get_children():
+			if child is GeometryInstance3D:
+				(child as GeometryInstance3D).visibility_range_end = SHOW_WITHIN
+		return node
 	match kind:
 		"aqueduct":
-			# a line of arches from the hills into the city
+			# a line of stone arches from the hills into the city
 			var dir := (centre - spot).normalized()
 			node.rotation.y = -dir.angle()
-			for k in 6:
-				_box(node, Vector3(k * 0.32 * S, 0.22 * S, 0), Vector3(0.08, 0.44, 0.12) * S, stone)
-			_box(node, Vector3(0.8 * S, 0.47 * S, 0), Vector3(1.9, 0.07, 0.14) * S, stone.darkened(0.1))
+			for k in 9:
+				_box(node, Vector3(k * 0.2 * S, 0.15 * S, 0), Vector3(0.07, 0.3, 0.1) * S, stone)
+				if k < 8:
+					_box(node, Vector3((k + 0.5) * 0.2 * S, 0.27 * S, 0), Vector3(0.14, 0.06, 0.1) * S, stone.darkened(0.06))
+			_box(node, Vector3(0.8 * S, 0.33 * S, 0), Vector3(1.72, 0.06, 0.12) * S, stone.darkened(0.12))
+			_box(node, Vector3(0.8 * S, 0.365 * S, 0), Vector3(1.72, 0.012, 0.06) * S, Color(0.35, 0.62, 0.85))
 		"windmill":
 			_cylinder(node, Vector3(0, 0.3 * S, 0), 0.12 * S, 0.6 * S, stone)
 			_cone(node, Vector3(0, 0.66 * S, 0), 0.15 * S, 0.14 * S, roof)
@@ -149,9 +170,12 @@ func _make(kind: String, colour: Color, spot: Vector2, centre: Vector2) -> Node3
 			_box(node, Vector3(0, 0.3 * S, 0), Vector3(0.18, 0.6, 0.18) * S, stone.darkened(0.1))
 			_cone(node, Vector3(0, 0.68 * S, 0), 0.16 * S, 0.16 * S, roof)
 		"canal":
+			# a cut of water between stone banks, toward the city
 			var dir := (centre - spot).normalized()
 			node.rotation.y = -dir.angle()
-			_box(node, Vector3(0.6 * S, 0.01 * S, 0), Vector3(1.4, 0.02, 0.12) * S, Color(0.25, 0.55, 0.85))
+			_box(node, Vector3(0.6 * S, 0.012 * S, 0), Vector3(1.4, 0.02, 0.07) * S, Color(0.22, 0.52, 0.78))
+			for side in [-1, 1]:
+				_box(node, Vector3(0.6 * S, 0.02 * S, side * 0.045 * S), Vector3(1.4, 0.04, 0.02) * S, stone)
 		"milestone":
 			_box(node, Vector3(0, 0.08 * S, 0), Vector3(0.08, 0.16, 0.08) * S, stone)
 			_box(node, Vector3(0.3 * S, 0.12 * S, 0), Vector3(0.16, 0.24, 0.12) * S, roof)
@@ -168,6 +192,20 @@ func _make(kind: String, colour: Color, spot: Vector2, centre: Vector2) -> Node3
 		if child is GeometryInstance3D:
 			(child as GeometryInstance3D).visibility_range_end = SHOW_WITHIN
 	return node
+
+
+## A kit building in the owner's colour (a one-instance batch, so the kit shader gets it).
+func _kit(node: Node3D, mesh: ArrayMesh, colour: Color) -> void:
+	var batch := MultiMesh.new()
+	batch.transform_format = MultiMesh.TRANSFORM_3D
+	batch.use_colors = true
+	batch.mesh = mesh
+	batch.instance_count = 1
+	batch.set_instance_transform(0, Transform3D())
+	batch.set_instance_color(0, colour)
+	var instance := MultiMeshInstance3D.new()
+	instance.multimesh = batch
+	node.add_child(instance)
 
 
 func _material(colour: Color) -> StandardMaterial3D:

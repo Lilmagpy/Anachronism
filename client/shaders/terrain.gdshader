@@ -108,7 +108,7 @@ void fragment() {
 		}
 	}
 	edge *= owner.a;
-	vec3 owned = mix(colour, owner.rgb, owner.a * tint);
+	vec3 owned = mix(colour, mix(owner.rgb, vec3(1.0), 0.3), owner.a * tint);   // a pale wash: red over green turns rosy, not muddy
 	owned = mix(owned, mix(owner.rgb, vec3(1.0), 0.15), edge * edge_tint);
 	colour = mix(colour, owned, land);
 

@@ -445,14 +445,17 @@ func show_ties(view: Dictionary) -> void:
 		for k in 25:
 			var t := k / 24.0
 			line.append(earth.ground_at_pixel(a.lerp(b, t)) + Vector3(0, sin(t * PI) * rise, 0))
-		EarthBuilder.add_line(st, line, 0.0024, colours[relation])
+		EarthBuilder.add_line(st, line, 0.0016, colours[relation])
 		drawn += 1
 	if drawn == 0:
 		return
 	_ties = MeshInstance3D.new()
 	_ties.name = "Ties"
 	_ties.mesh = st.commit()
-	_ties.material_override = EarthBuilder.line_material(0.002)
+	var material := EarthBuilder.line_material(0.002)
+	material.set_shader_parameter("dash", 40.0)   # dashes flowing out from your capital
+	material.set_shader_parameter("near_fade", 260.0)   # not across the city streets
+	_ties.material_override = material
 	_ties.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	_war_marks.get_parent().add_child(_ties)
 

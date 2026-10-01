@@ -342,10 +342,13 @@ static func add_line(st: SurfaceTool, points: Array[Vector3], width: float, colo
 		var a := pts[maxi(i - 1, 0)]
 		var b := pts[mini(i + 1, pts.size() - 1)]
 		sides.append(Vector2(b.x - a.x, b.z - a.z).normalized().orthogonal())
+	var along: Array[float] = [0.0]
+	for i in range(1, pts.size()):
+		along.append(along[-1] + pts[i].distance_to(pts[i - 1]))
 	st.set_color(colour)
-	st.set_uv(Vector2(width, 0))
 	for i in pts.size() - 1:
 		for corner in [[i, 1.0], [i + 1, 1.0], [i, -1.0], [i, -1.0], [i + 1, 1.0], [i + 1, -1.0]]:
+			st.set_uv(Vector2(width, along[corner[0]]))
 			st.set_uv2(sides[corner[0]] * corner[1])
 			st.set_normal(Vector3.UP)
 			st.add_vertex(pts[corner[0]])

@@ -891,6 +891,17 @@ picker, the top bar and over its lands; art from game-icons.net (CC BY 3.0, cred
 the title screen). The Mac renderer's global illumination washed colours out, so it is off
 and colours are graded instead. Labels of armies and fleets give way to more important
 names. Clouds only appear over the whole-world view.
+Second round: towns are now real little houses put together from Kenney fantasy-town pieces
+(plaster or timber walls with doors and shuttered windows, gabled, steep or pointed roofs in
+terracotta, slate or thatch, with a touch of the owner's colour). The landmarks your ideas
+raise round your capital are kit buildings too: a stone windmill with turning sails, a water
+mill, a clock tower, an observatory, a school hall, smoking forges, a market with stalls, a
+harbour sailboat. A Roman-style temple has a stepped platform and columns all round. Seen
+from far off, where the towns are hidden, each chief city stands as one larger-than-life
+icon (a walled castle for a capital, a cluster of houses for a town) in its owner's
+colours, as cities do on Rise of Kingdoms' map. Trade, alliance and tribute ties are
+dashed lines flowing out from your capital, and fade out as you zoom into a city. The
+owner wash is paler, so red over green land turns rosy rather than muddy.
 
 ## D-110 CI uses far fewer free minutes — DELEGATED (2026-10-01)
 GitHub Actions stopped running because the repository's free monthly minutes ran out (the
