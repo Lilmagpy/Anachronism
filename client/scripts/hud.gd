@@ -421,6 +421,8 @@ func _fill_top_bar() -> void:
 	var reign := ""
 	if str(status.get("ruler", "")) != "":
 		reign = " · %s (%d)" % [status["ruler"], int(status["ruler_age"])]
+	elif int(status.get("ruler_age", 0)) > 0:
+		reign = " · a new ruler (%d)" % int(status["ruler_age"])
 	titles.add_child(UiStyle.label("%s · turn %d%s" % [year_text(view["year"]), view["turn"], reign], 15, DIM, "body", 700))
 	_top.add_child(titles)
 	_top.add_child(VSeparator.new())
