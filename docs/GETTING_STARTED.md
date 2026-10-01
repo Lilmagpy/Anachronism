@@ -20,9 +20,24 @@ Every time new work is pushed, GitHub builds a Mac app automatically.
 4. The first launch shows *Starting the game engine…* for about a minute while it downloads
    Python (it needs the internet this once). After that it starts in a few seconds.
 
-How to play: drag the map to move, scroll (or pinch) to zoom, click a province to see it.
-Pick ideas in the **Ideas** panel and press **Begin**; press **End turn** to let ten years
-pass. Your games and the engine live in
+How to play: pick a **moment** on the timeline (seven, from Egypt and the Hittites in
+1275 BC to Japan's Warring States in 1560) and any of its states. A short guided tour
+walks you through the screen the first time (Settings can replay it). Then:
+
+- **Map**: drag to move, scroll (or pinch) to zoom, click a province to see who holds it,
+  how hard it is to take, and what you can do about its owner. Click your emblem (top
+  left) to fly to your capital, where your ideas appear as buildings.
+- **Ideas**: whisper any idea in the box, or **Begin** one from the list ("ahead of their
+  time" first). Each costs labour, materials, knowledge and wealth every turn until it
+  works; ideas far ahead of their time cost more and make neighbours suspicious.
+- **World**: the paths to victory (by the sword, through trade, by the pen) with what each
+  still needs; royal decrees (a festival, mercenaries); and every state you know, with
+  envoys, alliances, missionaries, war and peace.
+- **End turn** lets ten years pass. Characters pop up to tell you what happened; the
+  chronicle at the bottom lists the rest.
+- **Esc** opens the menu: save, load, the full chronicle, charts, the tech tree and
+  settings (sound, music, offline mode).
+ Your games and the engine live in
 `~/Library/Application Support/Godot/app_userdata/Anachronism` (delete that folder to
 start completely fresh).
 
