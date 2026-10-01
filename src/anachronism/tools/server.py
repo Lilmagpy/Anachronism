@@ -289,7 +289,16 @@ class Session:
     def chronicle(self, args: dict[str, Any]) -> dict[str, Any]:
         """Everything that has happened to the player and the great events of the world."""
         state = self.game()
-        major = {"war", "peace", "conquest", "destroyed", "alliance", "revolt", "collapse"}
+        major = {
+            "war",
+            "peace",
+            "conquest",
+            "destroyed",
+            "alliance",
+            "revolt",
+            "collapse",
+            "battle_won",
+        }
         entries: list[dict[str, Any]] = []
         seen: set[tuple[int, str]] = set()  # a peace is logged for each side: show it once
         for e in state.events:

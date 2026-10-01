@@ -165,6 +165,28 @@ dialogue:
       - "The streets mutter and the priests whisper. {subject} would calm them - before they find a reason to rise."
       - "People fear what they do not understand, and lately they fear the court. {subject} would win them back."
 
+  - id: battle_won
+    speaker: general
+    lines:
+      - "Victory at {subject}! They broke on our line like a wave on rock. The men are singing."
+      - "{subject} is ours. Bury the dead, feed the living, and let us march before they recover."
+      - "They will tell stories about {subject} for a hundred years. I intend to be in them."
+  - id: battle_lost
+    speaker: general
+    lines:
+      - "We were beaten at {subject}. I take the blame - and I ask for more men."
+      - "{subject}... a black day. We fell back in good order, mostly. Give me time to rebuild."
+      - "They had the ground, the numbers and the luck at {subject}. Next time we choose the field."
+  - id: siege
+    speaker: general
+    lines:
+      - "They have ringed {subject} with trenches. The walls will hold a while - but only a while. Send an army."
+      - "{subject} is under siege. Every season we wait, the walls grow weaker and the people hungrier."
+  - id: army_lost
+    speaker: general
+    lines:
+      - "The {subject} is gone - surrounded and forced to yield. I have no words. Only a request for vengeance."
+
   - id: quiet
     speaker: steward
     lines:

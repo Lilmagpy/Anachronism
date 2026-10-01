@@ -119,7 +119,7 @@ rules:
     war_unrest_bp: 300
     weariness_per_turn_bp: 1200
     weariness_per_loss_bp: 1500
-    peace_weariness_bp: 5000
+    peace_weariness_bp: 8000
     war_grievance_bp: 3000
     grievance_fade_bp: 1000
     aggressive_war_chance_bp: 2500

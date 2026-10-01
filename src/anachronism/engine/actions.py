@@ -177,6 +177,45 @@ class SpreadRumours(Frozen):
     civ: str
 
 
+class RaiseArmy(Frozen):
+    """Call up men from one of your provinces into an army (D-099)."""
+
+    kind: Literal["raise"] = "raise"
+    civ: str
+    province: str
+    size: Literal["small", "medium", "large"] = "medium"
+    style: Literal["balanced", "infantry", "missile", "mounted", "siege"] = "balanced"
+
+
+class MarchArmy(Frozen):
+    """Order an army to march to a province (and fight or besiege what it finds)."""
+
+    kind: Literal["march"] = "march"
+    civ: str
+    army: str
+    target: str
+
+
+class ArmyStance(Frozen):
+    """Halt an army: ``defend`` meets invaders of your land, ``hold`` stays put."""
+
+    kind: Literal["stance"] = "stance"
+    civ: str
+    army: str
+    stance: Literal["defend", "hold"] = "hold"
+
+
+class DisbandArmy(Frozen):
+    """Send an army home; its men return to the fields."""
+
+    kind: Literal["disband"] = "disband"
+    civ: str
+    army: str
+
+
+Orders = RaiseArmy | MarchArmy | ArmyStance | DisbandArmy
+
+
 Decree = HoldFestival | HireMercenaries | Explain | SealBorders | SpreadRumours
 
 
@@ -201,7 +240,11 @@ Action = Annotated[
     | HireMercenaries
     | Explain
     | SealBorders
-    | SpreadRumours,
+    | SpreadRumours
+    | RaiseArmy
+    | MarchArmy
+    | ArmyStance
+    | DisbandArmy,
     Field(discriminator="kind"),
 ]
 

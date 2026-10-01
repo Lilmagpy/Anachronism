@@ -737,3 +737,20 @@ legitimacy and calm), and the one whose worry is pressing - thin granaries, a wa
 stronger hostile neighbour, restless streets or wild rumours - speaks first and urgently.
 Advisers think within their age: an idea a little ahead of its time pleases them, but what
 lies centuries away is the ruler's own strange knowledge, not theirs to suggest.
+
+## D-099 A war of armies — owner request (2026-10-01)
+The owner asked for far richer fighting and strategy. War was abstract: each turn the
+stronger side had a chance to take one border province. Now wars are fought by armies
+(DESIGN §10b): raised from a province's people with costs and upkeep, made of the kinds of
+soldier the state's advancements and resources allow (13 kinds in core/units.yaml - data,
+so a new kind needs no code), marching across the map, fighting battles weighed by unit
+match-ups, terrain, walls, morale, generals and fortune, besieging provinces until the
+walls fall, and wasting away to supply and attrition. Every rival court raises and directs
+its armies by simple rules (mass at the capital, march on the nearest reachable enemy
+province only with good odds, defend its land, go home at peace); the player's armies
+defend their land unless told otherwise. Wars last longer than before (peace at 8,000
+weariness, a winning side tires at half speed) because campaigns take several turns.
+Battles, sieges and lost armies are spoken of by the general and recorded in the chronicle
+and its chapters. Tested: twelve engine tests; sims across scenarios show campaigns,
+battles, sieges and conquests, and deterministic replays. This replaces the "tactical
+battles out of scope" line of DESIGN §16 at the owner's request.

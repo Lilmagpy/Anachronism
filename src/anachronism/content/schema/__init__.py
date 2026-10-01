@@ -40,6 +40,7 @@ from anachronism.content.schema.tech import (
     Stage,
     TechNode,
 )
+from anachronism.content.schema.units import Unit, UnitKind
 from anachronism.content.schema.world import (
     Access,
     Era,
@@ -94,4 +95,6 @@ __all__ = [
     "Successor",
     "TechNode",
     "Terrain",
+    "Unit",
+    "UnitKind",
 ]

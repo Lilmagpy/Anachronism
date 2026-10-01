@@ -89,6 +89,7 @@ def build_state(
         map=scenario.map,
         cost_scale=scenario.cost_scale,
         happenings=dict(sorted(content.happenings.items())),
+        units=dict(content.units),
         faiths={f.id: f for f in scenario.faiths},
         successors={
             c: start.successors for c, start in sorted(scenario.civs.items()) if start.successors

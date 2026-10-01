@@ -11,10 +11,13 @@ from dataclasses import dataclass, field
 from typing import Protocol
 
 from anachronism.content.schema import Category
-from anachronism.engine.actions import Action, StartProject
+from anachronism.engine.actions import Action, RaiseArmy, StartProject
+from anachronism.engine.armies import under_arms
 from anachronism.engine.economy import project_costs
+from anachronism.engine.fixed import apply_bp
 from anachronism.engine.game import apply_action, end_turn
 from anachronism.engine.reports import capacity
+from anachronism.engine.rivals import at_war
 from anachronism.engine.state import Event, GameState
 from anachronism.engine.tech import feasibility
 
@@ -78,10 +81,14 @@ class PlannerBot:
         self.rank = {category: index for index, category in enumerate(self.preferred)}
 
     def decide(self, state: GameState, civ_id: str) -> list[Action]:
-        """Start the best affordable idea, if there is room for another project."""
+        """Raise troops in wartime; start the best affordable idea if there is room."""
         civ = state.civs[civ_id]
+        levy = call_up(state, civ_id) if civ_id == state.player_civ else []
         if len(civ.projects) >= self.max_projects:
-            return []
+            return levy
+        return levy + self._idea(state, civ_id)
+
+    def _idea(self, state: GameState, civ_id: str) -> list[Action]:
         room = capacity(state, civ_id)
         spare_knowledge = room.knowledge - room.committed.knowledge * self.knowledge_turns
 
@@ -98,6 +105,21 @@ class PlannerBot:
             ):
                 return [StartProject(civ=civ_id, node_id=node_id)]
         return []
+
+
+def call_up(state: GameState, civ_id: str) -> list[Action]:
+    """A sensible ruler at war raises a levy at the capital until the army is large enough.
+
+    (Rival courts do this in ``armies.command``; this is for bots playing the player.)
+    """
+    if not at_war(state, civ_id):
+        return []
+    civ = state.civs[civ_id]
+    rules = state.world.rules.armies
+    want = apply_bp(apply_bp(state.population(civ_id), rules.war_army_bp), civ.martial_bp)
+    if under_arms(state, civ_id) >= want or civ.capital not in state.provinces:
+        return []
+    return [RaiseArmy(civ=civ_id, province=civ.capital, size="medium")]
 
 
 def growth_bot() -> PlannerBot:

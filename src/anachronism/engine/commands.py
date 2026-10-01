@@ -5,17 +5,21 @@ from __future__ import annotations
 from anachronism.content.schema import Stage
 from anachronism.engine.actions import (
     Action,
+    ArmyStance,
     CancelProject,
     DeclareWar,
     DemandTribute,
+    DisbandArmy,
     Explain,
     HireMercenaries,
     HoldFestival,
     LoggedAction,
     MakePeace,
+    MarchArmy,
     PauseProject,
     ProposeAlliance,
     ProposeIdea,
+    RaiseArmy,
     ResumeProject,
     RuleOnIdea,
     SealBorders,
@@ -25,6 +29,7 @@ from anachronism.engine.actions import (
     SpreadRumours,
     StartProject,
 )
+from anachronism.engine.armies import apply_orders
 from anachronism.engine.decrees import apply_decree
 from anachronism.engine.diplomacy import apply_diplomacy
 from anachronism.engine.judge import apply_ruling
@@ -70,6 +75,8 @@ def _apply(state: GameState, action: Action) -> tuple[bool, str]:
         return False, f"unknown civilisation {action.civ!r}"
     if isinstance(action, HoldFestival | HireMercenaries | Explain | SealBorders | SpreadRumours):
         return apply_decree(state, action)
+    if isinstance(action, RaiseArmy | MarchArmy | ArmyStance | DisbandArmy):
+        return apply_orders(state, action)
     if isinstance(action, RuleOnIdea):
         return apply_ruling(state, civ.id, action.ruling)
     if isinstance(

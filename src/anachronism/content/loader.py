@@ -33,6 +33,7 @@ from anachronism.content.schema import (
     Speaker,
     TechNode,
     Terrain,
+    Unit,
 )
 
 PACKS_DIR = Path(__file__).parent / "packs"
@@ -59,6 +60,7 @@ class Content:
     digest: str
     """SHA-256 of every loaded file, recorded in saves to identify the content version."""
     happenings: Mapping[str, Happening] = field(default_factory=dict)
+    units: Mapping[str, Unit] = field(default_factory=dict)
     """Chance events (plague, flood, bumper harvests...)."""
 
 
@@ -137,6 +139,7 @@ def load_content(pack_ids: Sequence[str] | None = None, root: Path = PACKS_DIR) 
         speakers=registry.speakers,
         dialogue=registry.dialogue,
         happenings=registry.happenings,
+        units=registry.units,
         digest=digest.hexdigest(),
     )
 

@@ -306,6 +306,68 @@ class RivalRules(Frozen):
     """Share of the scenario's total culture (people x literacy and influence) needed."""
 
 
+class ArmyRules(Frozen):
+    """Armies, battles, sieges and supply (D-099).
+
+    Shares are of a state's people, scaled by its mobilisation (``martial_bp``);
+    percentages are basis points.
+    """
+
+    standing_army_bp: NonNegative = 80
+    """Men under arms at the start of a scenario (80 = 0.8% of the people)."""
+    peace_army_bp: NonNegative = 80
+    """How large a rival court keeps its army in peacetime."""
+    war_army_bp: NonNegative = 250
+    """How large a rival court raises its army in wartime."""
+    max_under_arms_bp: NonNegative = 1000
+    """No state can keep more than this share of its people under arms."""
+    raise_small_bp: NonNegative = 100
+    """Share of a province's people called up by a small, medium or large levy."""
+    raise_medium_bp: NonNegative = 250
+    raise_large_bp: NonNegative = 500
+    battle_luck_bp: Rate = 2000
+    """Each side's power in a battle varies by up to this much (fortune, weather, nerve)."""
+    loser_losses_bp: Rate = 2000
+    """Share of the losing side killed or scattered, plus up to as much again in a rout."""
+    winner_losses_bp: Rate = 1200
+    """Share of the winning side lost in a close fight (less in a rout)."""
+    morale_loss_bp: Rate = 3000
+    """Morale a beaten army loses."""
+    morale_recovery_bp: Rate = 1500
+    """Morale an army regains each turn at home."""
+    general_skill_bp: NonNegative = 800
+    """Extra power per point of a general's skill (1-5)."""
+    general_death_bp: Rate = 1500
+    """Chance that a beaten army's general falls."""
+    field_defence_share_bp: Rate = 5000
+    """How much of a province's defence (hills, walls) helps its owner in a field battle."""
+    attrition_home_bp: Rate = 100
+    """Men lost each turn to sickness and desertion at home."""
+    attrition_abroad_bp: Rate = 400
+    """... and on campaign, before the land's own hardships."""
+    attrition_terrain_bp: dict[Identifier, Rate] = Field(
+        default_factory=lambda: {"desert": 800, "mountains": 500, "marsh": 500, "steppe": 200}
+    )
+    supply_people_per_man: Positive = 20
+    """A province feeds one soldier per this many people; beyond that, men starve."""
+    starving_attrition_bp: Rate = 2000
+    """Extra loss for an army wholly beyond its province's supply."""
+    unpaid_morale_bp: Rate = 2000
+    """Morale lost in a turn the treasury or granaries cannot pay the army."""
+    unpaid_desertion_bp: Rate = 1000
+    siege_base_bp: NonNegative = 5000
+    """Siege progress a turn by an army large enough to invest the walls (a normal province
+    needs 10_000; hills, capitals and last strongholds need more)."""
+    siege_point_bp: NonNegative = 100
+    """Extra progress a turn per siege point (siege engines, cannon) per 1,000 men."""
+    garrison_people_per_man: Positive = 100
+    """An army must number at least a province's people / this to besiege it properly."""
+    weariness_per_battle_bp: NonNegative = 700
+    """War weariness for losing a battle."""
+    min_army: Positive = 200
+    """An army reduced below this many men melts away."""
+
+
 class Rules(Frozen):
     """All engine rules, grouped by system."""
 
@@ -320,6 +382,7 @@ class Rules(Frozen):
     suspicion: SuspicionRules
     rulings: RulingRules
     rivals: RivalRules
+    armies: ArmyRules = Field(default_factory=ArmyRules)
     difficulty: dict[Identifier, dict[str, int]] = Field(default_factory=dict)
     """Named difficulty levels (``easy``, ``hard``...), each a set of overrides to the
     rival rules; ``normal`` is the rules as written. Unknown rule names are errors."""

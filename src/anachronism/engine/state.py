@@ -7,6 +7,7 @@ frozen and shared between copies; everything else is copied when the engine adva
 from __future__ import annotations
 
 from enum import StrEnum
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -29,6 +30,7 @@ from anachronism.content.schema import (
     Successor,
     TechNode,
     Terrain,
+    Unit,
 )
 from anachronism.engine.actions import LoggedAction, Priority
 from anachronism.engine.rng import RngState
@@ -74,6 +76,8 @@ class World(Frozen):
     cost_scale: int = 1
     """Multiplier on every project cost (see ``Scenario.cost_scale``)."""
     happenings: dict[str, Happening] = Field(default_factory=dict)
+    units: dict[str, Unit] = Field(default_factory=dict)
+    """The kinds of soldier that exist (raising them needs their advancements)."""
     """Chance events that can strike (plague, flood, bumper harvests...)."""
     scripts: dict[str, tuple[Script, ...]] = Field(default_factory=dict)
     successors: dict[str, tuple[Successor, ...]] = Field(default_factory=dict)
@@ -208,6 +212,36 @@ class Outcome(Mutable):
     year: int
 
 
+class Army(Mutable):
+    """A force in the field (D-099): where it stands, who is in it, and its orders."""
+
+    id: str
+    owner: str
+    name: str
+    province: str
+    troops: dict[str, int]
+    """Unit id -> men."""
+    morale_bp: int = 8000
+    general: str = ""
+    """Who commands it (empty: no named general)."""
+    skill: int = 1
+    """The general's skill, 1-5."""
+    target: str | None = None
+    """The province it is marching to, if any."""
+    stance: Literal["defend", "hold"] = "defend"
+    """Without a march order: ``defend`` meets invaders of its own land, ``hold`` stays put."""
+    came_from: str = ""
+    """Where it marched from last (a beaten army falls back that way)."""
+    siege_bp: int = 0
+    """Progress of its siege of the province it stands in (10_000 = a normal province)."""
+    raised_turn: int = 0
+
+    @property
+    def men(self) -> int:
+        """Everyone in the army."""
+        return sum(self.troops.values())
+
+
 class CivState(Mutable):
     """A civilisation in play."""
 
@@ -239,11 +273,13 @@ class CivState(Mutable):
     revolts: int = 0  # provinces lost to revolt: half the starting ones is collapse
     envoy_turn: int = -1  # the turn the last embassy left: one a turn
     mercenaries: int = 0
+    """Turns of hired soldiers left."""
     explained_turn: int = -99
+    """The turn the court last explained its new arts (see ``Explain``)."""
     sealed: int = 0
     """Turns the borders stay sealed (no trade; news of the court's arts travels slowly)."""
-    """The turn the court last explained its new arts (see ``Explain``)."""
-    """Turns of hired soldiers left."""
+    armies_raised: int = 0
+    """How many armies the state has raised (numbers new ones)."""
     ruler_age: int = 40
     rulers: int = 1
     """How many rulers the state has had in this game (1 = the one it started with)."""
@@ -279,6 +315,8 @@ class GameState(Mutable):
     civs: dict[str, CivState]
     action_log: list[LoggedAction] = Field(default_factory=list)
     events: list[Event] = Field(default_factory=list)
+    armies: dict[str, Army] = Field(default_factory=dict)
+    """Every army in the field, keyed by id."""
     relations: dict[str, Relation] = Field(default_factory=dict)
     """Keyed ``"a|b"`` with the ids sorted; only pairs that can reach each other."""
     news: list[NewsInTransit] = Field(default_factory=list)

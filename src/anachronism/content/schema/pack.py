@@ -13,6 +13,7 @@ from anachronism.content.schema.happenings import Happening
 from anachronism.content.schema.rules import Rules
 from anachronism.content.schema.scenario import Scenario
 from anachronism.content.schema.tech import EffectType, TechNode
+from anachronism.content.schema.units import Unit
 from anachronism.content.schema.world import (
     Era,
     MapResource,
@@ -50,6 +51,7 @@ LIST_KINDS: dict[str, type[Frozen]] = {
     "speakers": Speaker,
     "dialogue": Dialogue,
     "happenings": Happening,
+    "units": Unit,
 }
 """Kinds holding a list of items with ids; each item is validated on its own."""
 

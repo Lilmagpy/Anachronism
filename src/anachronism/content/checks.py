@@ -28,6 +28,7 @@ def cross_reference_issues(registry: Registry) -> list[ContentIssue]:
         *_sea_issues(registry),
         *_scenario_issues(registry),
         *_happening_issues(registry),
+        *_unit_issues(registry),
         *_dialogue_issues(registry),
     ]
 
@@ -312,4 +313,21 @@ def _happening_issues(registry: Registry) -> list[ContentIssue]:
             happening.message.format(civ="", province="")
         except (KeyError, IndexError, ValueError):
             issues.append(ContentIssue(where, label, "message may only use {civ} and {province}"))
+    return issues
+
+
+def _unit_issues(registry: Registry) -> list[ContentIssue]:
+    issues: list[ContentIssue] = []
+    for unit in registry.units.values():
+        where = registry.origin("units", unit.id)
+        label = f"units ({unit.id})"
+        for tech in unit.needs_techs:
+            if registry.is_unknown("techs", tech):
+                issues.append(ContentIssue(where, label, f"unknown tech {tech!r}"))
+        for resource in unit.needs_resources:
+            if registry.is_unknown("resources", resource):
+                issues.append(ContentIssue(where, label, f"unknown resource {resource!r}"))
+        for terrain in unit.terrain:
+            if registry.is_unknown("terrain", terrain):
+                issues.append(ContentIssue(where, label, f"unknown terrain {terrain!r}"))
     return issues

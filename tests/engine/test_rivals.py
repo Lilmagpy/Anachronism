@@ -24,7 +24,7 @@ from anachronism.engine.rivals import (
 from anachronism.engine.rng import GameRng
 from anachronism.engine.state import Awareness, Event, GameState
 from anachronism.engine.victory import check_outcome, progress
-from anachronism.engine.war import capture, resolve_wars
+from anachronism.engine.war import capture
 
 
 @pytest.fixture
@@ -138,15 +138,15 @@ def test_free_agents_leave_their_scripts(warring: GameState) -> None:
 
 
 def test_war_takes_provinces_and_ends_in_peace(warring: GameState) -> None:
-    events = EventLog(turn=0, year=warring.year)
-    rng = GameRng(warring.rng)
-    apply = apply_action(warring, DeclareWar(civ="chu", target="yue"))[0]
-    state = apply
+    from anachronism.engine.armies import raise_army
+
+    state = apply_action(warring, DeclareWar(civ="chu", target="yue"))[0]
     assert status(state, "chu", "yue") is RelationStatus.WAR
-    strengths = {"chu": 1_000_000, "yue": 1}
+    state.civs["chu"].martial_bp = 60_000  # a great host
+    raise_army(state, "chu", state.civs["chu"].capital, 400_000, free=True)
     start = len(state.owned_provinces("yue"))
-    for _ in range(8):
-        resolve_wars(state, strengths, rng, events)
+    for _ in range(15):
+        state, _ = end_turn(state)
         if status(state, "chu", "yue") is not RelationStatus.WAR:
             break
     assert len(state.owned_provinces("yue")) < start
@@ -283,12 +283,13 @@ def test_a_last_province_holds_out_and_the_player_has_grace(warring: GameState) 
         if pid != capital:
             warring.provinces[pid].owner = "qin"
     assert defence_bp(warring, "chu", capital) > walled  # the last stand
-    # in the opening turns an overwhelming enemy takes nothing from the player
+    # in the opening turns an enemy court does not march on the player
+    from anachronism.engine.armies import command
+
     state, _ = apply_action(warring, DeclareWar(civ="chu", target="qin"))
-    before = set(state.owned_provinces("qin"))
-    strengths = dict.fromkeys(state.civs, 1) | {"chu": 1_000_000}
-    resolve_wars(state, strengths, GameRng(state.rng), EventLog(state.turn, state.year))
-    assert set(state.owned_provinces("qin")) == before
+    command(state, {})
+    qin_land = set(state.owned_provinces("qin"))
+    assert not any(a.target in qin_land for a in state.armies.values() if a.owner == "chu")
 
 
 def test_faiths_start_from_the_scenario_and_spread(content: Content) -> None:

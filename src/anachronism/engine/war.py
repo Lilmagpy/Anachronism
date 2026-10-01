@@ -1,19 +1,17 @@
-"""Abstract war between civilisations (DESIGN §10).
+"""War between civilisations (DESIGN §10): captures, defences, weariness and peace.
 
-Armies are not moved piece by piece: each turn of a war, the stronger side may take one of
-the weaker side's frontier provinces, with a chance that grows with its advantage. Both
-sides lose people along the front, grow restless and grow weary; the side that tires first
-sues for peace and remembers the defeat. Losing a capital moves the court and shakes the
-ruler's legitimacy.
+The fighting is done by armies (``armies.py``, D-099): battles, sieges and supply. This
+module holds what war means for states: a province changing hands (losing a capital moves
+the court and shakes the ruler), how hard a province is to take, the weariness and unrest
+of a long war, and peace, which the side that lost more carries away as a grievance.
 """
 
 from __future__ import annotations
 
 from anachronism.content.schema import RelationStatus
 from anachronism.engine.events import EventLog
-from anachronism.engine.fixed import BP, apply_bp, clamp
+from anachronism.engine.fixed import BP, clamp
 from anachronism.engine.rivals import add_grievance, alive, frontier, province_links, set_status
-from anachronism.engine.rng import GameRng
 from anachronism.engine.state import Awareness, GameState
 from anachronism.engine.timeflow import per_turn
 
@@ -121,10 +119,11 @@ def side_strength(state: GameState, civ: str, enemy: str, strengths: dict[str, i
     return total
 
 
-def resolve_wars(
-    state: GameState, strengths: dict[str, int], rng: GameRng, events: EventLog
-) -> None:
-    """One turn of every war, pairs in id order."""
+def wear_wars(state: GameState, events: EventLog) -> None:
+    """Every war grinds on: both sides grow restless and weary; the first to tire sues for peace.
+
+    The fighting itself is done by armies (``armies.py``); this is the cost of being at war.
+    """
     rules = state.world.rules.rivals
     for pair, rel in sorted(state.relations.items()):
         if rel.status is not RelationStatus.WAR:
@@ -133,34 +132,15 @@ def resolve_wars(
         if not alive(state, a) or not alive(state, b):
             set_status(state, a, b, RelationStatus.HOSTILE)
             continue
-        sa, sb = side_strength(state, a, b, strengths), side_strength(state, b, a, strengths)
-        strong, weak = (a, b) if (sa, b) >= (sb, a) else (b, a)
-        s_strong, s_weak = max(sa, sb), min(sa, sb)
-        targets = frontier(state, strong, weak)
-        # the player gets a couple of turns to answer an opening war before losing ground
-        grace = weak == state.player_civ and state.turn < rules.player_grace_turns
-        if targets and s_strong > s_weak and not grace:
-            advantage_bp = (s_strong - s_weak) * BP // max(1, s_weak)
-            chance = min(rules.max_capture_bp, apply_bp(advantage_bp, rules.capture_per_excess_bp))
-            prize = min(targets, key=lambda p: (state.provinces[p].population, p))
-            chance = chance * BP // defence_bp(state, weak, prize)
-            if rng.chance(chance):
-                capture(state, strong, prize, events)
-                rel.losses[weak] = rel.losses.get(weak, 0) + 1
-                rel.weariness[weak] = rel.weariness.get(weak, 0) + rules.weariness_per_loss_bp
         for side, other in ((a, b), (b, a)):
-            for pid in frontier(state, other, side):
-                province = state.provinces[pid]
-                province.population = max(
-                    0, province.population - apply_bp(province.population, rules.war_losses_bp)
-                )
             civ = state.civs[side]
             civ.stats.unrest_bp = clamp(
                 civ.stats.unrest_bp + per_turn(state, rules.war_unrest_bp), 0, BP
             )
-            rel.weariness[side] = rel.weariness.get(side, 0) + per_turn(
-                state, rules.weariness_per_turn_bp
-            )
+            tiring = per_turn(state, rules.weariness_per_turn_bp)
+            if rel.losses.get(side, 0) < rel.losses.get(other, 0):
+                tiring //= 2  # a winning war is easier to bear
+            rel.weariness[side] = rel.weariness.get(side, 0) + tiring
         tired = [c for c in (a, b) if rel.weariness.get(c, 0) >= rules.peace_weariness_bp]
         if tired:
             make_peace(state, a, b, events)
@@ -173,6 +153,12 @@ def make_peace(state: GameState, a: str, b: str, events: EventLog) -> None:
         return
     losses = dict(rel.losses)
     set_status(state, a, b, RelationStatus.HOSTILE)
+    for army in state.armies.values():  # armies in the other's land march home
+        other = b if army.owner == a else a if army.owner == b else None
+        if other is not None and state.provinces[army.province].owner == other:
+            army.province = state.civs[army.owner].capital
+            army.target = None
+            army.siege_bp = 0
     loser = (
         a
         if losses.get(a, 0) > losses.get(b, 0)

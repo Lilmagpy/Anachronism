@@ -145,6 +145,30 @@ marsh), coastal flag, river flag, climate band, map resources with access level
 (`accessible` / `limited` / `unexplored`), population, owner, culture/religion shares,
 buildings. Edges: land, river, sea lane, mountain pass (with movement costs).
 
+## 10b. War: armies, battles, sieges and supply (D-099)
+- **Armies** stand in provinces: men of several kinds (levies, spearmen, heavy infantry,
+  archers, crossbowmen, chariots, cavalry, horse archers, armoured horsemen, war elephants,
+  siege engines, cannon, musketeers - content in `core/units.yaml`), each needing its
+  advancements and map resources (no horses, no cavalry; elephants only where they live).
+  Raised from a province's people (costing food, materials and wealth, and labour lost to
+  the fields), kept at a cost each turn, and capped by the state's mobilisation.
+- **Orders**: march to a province (one to four provinces a turn, faster with roads, a sea
+  crossing with sailing ends the march), hold, defend (meet invaders of your own land),
+  disband.
+- **Battles** when enemies meet: each kind's attack or defence, match-ups (spears stop
+  horse, horse rides down archers and siege trains, archers shred infantry, elephants
+  terrify), the ground (chariots founder in hills, horse archers rule the steppe), the
+  defender's hills and walls, morale, the general's skill, and fortune. The beaten army
+  falls back the way it came; a surrounded one surrenders. Named battles go in the
+  chronicle; generals can fall.
+- **Sieges**: an army alone in an enemy province besieges it; walls (terrain, capital,
+  last stand) take turns to fall, faster with siege engines and cannon; then it changes
+  hands.
+- **Supply**: armies waste away a little at home, more abroad, more in desert, mountains
+  and marsh, and fast when a province cannot feed them; unpaid armies lose heart and desert.
+- **Weariness**: wars grind on until one side tires; the side losing battles and provinces
+  tires faster, and carries the grievance away.
+
 ## 11. Rival civilisations
 - **Scripts** are conditional intentions with preconditions and triggers, not dated events.
 - **Awareness states**: on-script (engine only, no API cost) → aware (LLM consults ruler
@@ -180,4 +204,4 @@ Tiered region → hemisphere → world; military, economic or cultural paths, me
 of population or trade.
 
 ## 16. Out of scope until later phases
-Tactical battles, multiplayer, sound, final art, non-East-Asian content before Phase 6.
+Multiplayer, sound, final art, non-East-Asian content before Phase 6.

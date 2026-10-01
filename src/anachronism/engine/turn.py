@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from anachronism.content.schema import EffectType
+from anachronism.engine.armies import command, march, sieges, upkeep
 from anachronism.engine.culture import spread_faiths, trade
 from anachronism.engine.economy import run_economy
 from anachronism.engine.effects import Effects, civ_effects
@@ -21,7 +22,7 @@ from anachronism.engine.suspicion import update_suspicion
 from anachronism.engine.tech import spread_step
 from anachronism.engine.timeflow import per_turn, rate_per_turn
 from anachronism.engine.victory import check_outcome
-from anachronism.engine.war import resolve_wars
+from anachronism.engine.war import wear_wars
 
 
 def end_turn(state: GameState) -> tuple[GameState, list[Event]]:
@@ -55,7 +56,12 @@ def end_turn(state: GameState) -> tuple[GameState, list[Event]]:
         effects_by_civ[civ_id] = effects
     # rivals: news, awareness, scripts, free agents; then the wars (brief §7)
     strengths = rivals_turn(new, effects_by_civ, list(events.items), rng, events)
-    resolve_wars(new, strengths, rng, events)
+    # the campaigns: orders, marches and battles, sieges, supply; then the toll of war
+    command(new, strengths)
+    march(new, rng, events)
+    sieges(new, events)
+    upkeep(new, events)
+    wear_wars(new, events)
     for civ_id in sorted(new.civs):
         new.civs[civ_id].mercenaries = max(0, new.civs[civ_id].mercenaries - 1)
         new.civs[civ_id].sealed = max(0, new.civs[civ_id].sealed - 1)
