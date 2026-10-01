@@ -219,6 +219,7 @@ class Session:
             "calls_this_month": self.pipeline.ledger.calls(),
             "monthly_tokens": config.monthly_tokens,
             "env_file": str((config.data_dir / ".env").resolve()),
+            "difficulty": self.state.world.difficulty if self.state else "",
         }
 
     def saves(self, args: dict[str, Any]) -> dict[str, Any]:

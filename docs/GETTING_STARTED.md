@@ -21,7 +21,8 @@ Every time new work is pushed, GitHub builds a Mac app automatically.
    Python (it needs the internet this once). After that it starts in a few seconds.
 
 How to play: pick a **moment** on the timeline (seven, from Egypt and the Hittites in
-1275 BC to Japan's Warring States in 1560) and any of its states. A short guided tour
+1275 BC to Japan's Warring States in 1560), any of its states, and a difficulty (Easy is
+gentler on a first game). A short guided tour
 walks you through the screen the first time (Settings can replay it). Then:
 
 - **Map**: drag to move, scroll (or pinch) to zoom, click a province to see who holds it,

@@ -107,6 +107,9 @@ func open_settings() -> void:
 		body.add_child(UiStyle.label(bridge.last_error, 16, UiStyle.RED))
 		_open("Settings", body, Vector2(620, 0))
 		return
+	if str(reply.get("difficulty", "")) != "":
+		body.add_child(UiStyle.label("This game", 20, UiStyle.RED, "title", 800))
+		body.add_child(UiStyle.wrapped("Difficulty: %s (chosen when the game began)" % str(reply["difficulty"]).capitalize(), 15, UiStyle.INK_SOFT, 580))
 	var court := "Free Thought: a language model rules on your ideas" if reply["online"] else "Historical Advisors: your ideas are matched against the library"
 	body.add_child(UiStyle.label("The court", 20, UiStyle.RED, "title", 800))
 	body.add_child(UiStyle.wrapped(court, 17, UiStyle.INK, 580))
