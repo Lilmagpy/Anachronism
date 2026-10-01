@@ -163,7 +163,21 @@ class Explain(Frozen):
     story: Literal["divine", "sages"] = "divine"
 
 
-Decree = HoldFestival | HireMercenaries | Explain
+class SealBorders(Frozen):
+    """Close the borders for a few turns: no trade, and news of your arts travels slowly."""
+
+    kind: Literal["seal"] = "seal"
+    civ: str
+
+
+class SpreadRumours(Frozen):
+    """Pay storytellers: news of your arts already on the road arrives garbled."""
+
+    kind: Literal["rumours"] = "rumours"
+    civ: str
+
+
+Decree = HoldFestival | HireMercenaries | Explain | SealBorders | SpreadRumours
 
 
 Diplomacy = DeclareWar | MakePeace | SendEnvoy | ProposeAlliance | SendMissionaries | DemandTribute
@@ -185,7 +199,9 @@ Action = Annotated[
     | DemandTribute
     | HoldFestival
     | HireMercenaries
-    | Explain,
+    | Explain
+    | SealBorders
+    | SpreadRumours,
     Field(discriminator="kind"),
 ]
 

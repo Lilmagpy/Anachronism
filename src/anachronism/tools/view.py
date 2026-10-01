@@ -7,7 +7,7 @@ from typing import Any
 from anachronism.content.loader import Content
 from anachronism.content.schema import Stage
 from anachronism.engine.commands import describe_blockers
-from anachronism.engine.decrees import cost, explain_costs, explain_ready_in
+from anachronism.engine.decrees import cost, explain_costs, explain_ready_in, news_on_the_road
 from anachronism.engine.economy import project_costs
 from anachronism.engine.projects import project_turns
 from anachronism.engine.reports import capacity
@@ -59,6 +59,10 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
             ),
             "explain_costs": list(explain_costs(state, civ_id)),
             "explain_ready_in": explain_ready_in(state, civ_id),
+            "sealed": civ.sealed,
+            "seal_turns": state.world.rules.rivals.seal_turns,
+            "news_on_the_road": news_on_the_road(state, civ_id),
+            "rumour_cost": cost(state, civ_id, state.world.rules.rivals.rumour_wealth_per_1000),
             "population": state.population(civ_id),
             "provinces": len(state.owned_provinces(civ_id)),
             **civ.stats.model_dump(),

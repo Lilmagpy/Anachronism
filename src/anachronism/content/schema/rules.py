@@ -265,6 +265,12 @@ class RivalRules(Frozen):
     mercenary_strength_bp: NonNegative
     """Extra strength while mercenaries serve (5_000 = +50%)."""
     mercenary_turns: Positive
+    seal_turns: Positive = 3
+    """How long sealed borders last: no trade, and news of your arts crawls (brief §7.3)."""
+    seal_news_bp: NonNegative = 10000
+    """Extra travel time for news leaving a sealed realm (10_000 = twice as slow)."""
+    rumour_wealth_per_1000: NonNegative = 80
+    """Wealth false rumours cost per 1,000 people: news on the road arrives garbled."""
     envoy_wealth: NonNegative
     """Wealth an envoy costs."""
     tribute_strength_ratio_bp: Positive = 25000

@@ -136,6 +136,9 @@ rules:
     mercenary_wealth_per_1000: 150
     mercenary_strength_bp: 3000
     mercenary_turns: 2
+    seal_turns: 3
+    seal_news_bp: 10000
+    rumour_wealth_per_1000: 80
     envoy_wealth: 60
     capital_loss_legitimacy_bp: 1500
     military_victory_share_bp: 5000

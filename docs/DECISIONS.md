@@ -666,3 +666,14 @@ the "inspired" framing). **Foreign sages**: credit wise strangers from distant l
 knowledge; suspicion -35%; but the story travels, and rivals learn of your inventions at
 once). A story told too often is doubted: once every three turns. All numbers are in
 rules.yaml. The buttons appear under Royal decrees only while people are asking.
+
+## D-093 Keeping inventions secret — DELEGATED (2026-10-01)
+The brief (§7.3) says information is a strategic resource: the player can keep inventions
+secret, seal borders or feed disinformation. Advancements with a "secrecy" effect already
+slowed news; two royal decrees now make it a choice. **Seal the borders** (free, three
+turns): news of your inventions travels half as fast, but all trade with you stops - your
+partners lose it too, and your economic path stalls while the gates are shut. **Spread
+false rumours** (wealth): every true report of your arts already on the road arrives as a
+muddle instead (rivals do not copy what they have only half heard), and the truth follows
+much later. Only offered while there is news on the road; the panel says how many courts
+it is heading to. Numbers in rules.yaml.

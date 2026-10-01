@@ -240,6 +240,8 @@ class CivState(Mutable):
     envoy_turn: int = -1  # the turn the last embassy left: one a turn
     mercenaries: int = 0
     explained_turn: int = -99
+    sealed: int = 0
+    """Turns the borders stay sealed (no trade; news of the court's arts travels slowly)."""
     """The turn the court last explained its new arts (see ``Explain``)."""
     """Turns of hired soldiers left."""
     ruler_age: int = 40

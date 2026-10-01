@@ -140,5 +140,6 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] Confidence tiers and a source-review checklist (D-083)
 - [x] Rival rulers voiced by the model: war, peace, tribute and boasts (D-091)
 - [x] Suspicion: the court can explain its new arts - a divine gift or foreign sages (D-092)
+- [x] Secrets (brief §7.3): seal the borders; spread false rumours (D-093)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

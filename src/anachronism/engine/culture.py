@@ -32,6 +32,8 @@ def _live_ties(state: GameState) -> list[tuple[str, str]]:
     ties = []
     for pair, rel in sorted(state.relations.items()):
         a, b = pair.split("|")
+        if state.civs[a].sealed or state.civs[b].sealed:
+            continue  # sealed borders: the caravans stop
         if rel.status.friendly and alive(state, a) and alive(state, b):
             ties.append((a, b))
     return ties

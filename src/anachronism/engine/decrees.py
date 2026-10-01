@@ -6,9 +6,16 @@ state's size, so a festival in a great empire costs more than in a small kingdom
 
 from __future__ import annotations
 
-from anachronism.engine.actions import Decree, Explain, HireMercenaries, HoldFestival
-from anachronism.engine.fixed import BP, clamp
-from anachronism.engine.state import Framing, GameState
+from anachronism.engine.actions import (
+    Decree,
+    Explain,
+    HireMercenaries,
+    HoldFestival,
+    SealBorders,
+    SpreadRumours,
+)
+from anachronism.engine.fixed import BP, clamp, div_round
+from anachronism.engine.state import Framing, GameState, NewsInTransit
 
 
 def cost(state: GameState, civ_id: str, per_1000: int) -> int:
@@ -41,6 +48,16 @@ def apply_decree(state: GameState, action: Decree) -> tuple[bool, str]:
         return True, f"Hired swords join {civ.name}'s army for {rules.mercenary_turns} turns."
     if isinstance(action, Explain):
         return _explain(state, action)
+    if isinstance(action, SealBorders):
+        if civ.sealed:
+            return False, "the borders are already sealed"
+        civ.sealed = rules.seal_turns
+        return True, (
+            f"{civ.name} seals its borders for {rules.seal_turns} turns: the caravans stop, "
+            "and word of our arts will crawl."
+        )
+    if isinstance(action, SpreadRumours):
+        return _rumours(state, action)
     raise AssertionError(f"unhandled decree {action!r}")
 
 
@@ -103,4 +120,33 @@ def _explain(state: GameState, action: Explain) -> tuple[bool, str]:
     return (
         True,
         f"Scholars of {civ.name} credit wise men from distant lands. Strangers' arts, not sorcery.",
+    )
+
+
+def news_on_the_road(state: GameState, civ_id: str) -> int:
+    """How many courts have true word of ``civ_id``'s arts on its way to them."""
+    return len({n.to_civ for n in state.news if n.about == civ_id and not n.garbled})
+
+
+def _rumours(state: GameState, action: SpreadRumours) -> tuple[bool, str]:
+    civ = state.civs[action.civ]
+    rules = state.world.rules.rivals
+    if not news_on_the_road(state, civ.id):
+        return False, "no word of our arts is on the road to garble"
+    price = cost(state, civ.id, rules.rumour_wealth_per_1000)
+    if civ.stockpiles.wealth < price:
+        return False, f"storytellers want {price} wealth"
+    civ.stockpiles.wealth -= price
+    clarify = max(1, div_round(rules.clarify_years, state.world.years_per_turn))
+    truths: list[NewsInTransit] = []
+    for news in state.news:
+        if news.about == civ.id and not news.garbled:
+            later = news.arrives_turn + clarify  # a muddle first, and the truth much later
+            truths.append(news.model_copy(update={"arrives_turn": later}))
+            news.garbled = True
+    state.news.extend(truths)
+    courts = len({n.to_civ for n in truths})
+    return (
+        True,
+        f"Storytellers muddle the tales of {civ.name}'s arts on the road to {courts} court(s).",
     )

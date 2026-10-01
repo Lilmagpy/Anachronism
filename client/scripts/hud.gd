@@ -832,6 +832,23 @@ func _fill_world() -> void:
 		_side_body.add_child(decrees)
 		if int(status["mercenaries"]) > 0:
 			_side_body.add_child(_label("Mercenaries serve for %d more turn(s)" % int(status["mercenaries"]), 12, DIM))
+		if status.has("sealed"):
+			var secrets := HBoxContainer.new()
+			secrets.add_theme_constant_override("separation", 6)
+			var seal := _small_button("Seal the borders", {"kind": "seal"})
+			seal.disabled = int(status["sealed"]) > 0
+			seal.tooltip_text = "For %d turns: no trade with anyone, but news of your inventions travels half as fast" % int(status["seal_turns"])
+			secrets.add_child(seal)
+			var on_road: int = int(status["news_on_the_road"])
+			var rumours := _small_button("Spread false rumours (%s)" % number(int(status["rumour_cost"])), {"kind": "rumours"})
+			rumours.disabled = on_road == 0 or rich < int(status["rumour_cost"])
+			rumours.tooltip_text = "Storytellers muddle the news of your inventions already on the road: rivals hear nonsense first and the truth much later"
+			secrets.add_child(rumours)
+			_side_body.add_child(secrets)
+			if int(status["sealed"]) > 0:
+				_side_body.add_child(_label("Borders sealed for %d more turn(s): no trade" % int(status["sealed"]), 12, DIM))
+			if on_road > 0:
+				_side_body.add_child(_label("Word of your inventions is on the road to %d court(s)" % on_road, 12, DIM))
 		if status.has("explain_costs") and int(status["suspicion_bp"]) > 0:
 			var costs: Array = status["explain_costs"]
 			var wait: int = int(status["explain_ready_in"])

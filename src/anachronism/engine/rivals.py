@@ -254,6 +254,8 @@ def spread_news(
                 years //= 2
             years = apply_bp(years, BP - inventor.stats.suspicion_bp // 2)  # people talk
             years = apply_bp(years, BP + effects[EffectType.SECRECY])
+            if inventor.sealed:
+                years = apply_bp(years, BP + rules.seal_news_bp)
             turns = max(1, div_round(years, state.world.years_per_turn))
             garbled_bp = clamp(max(0, distance - 1) * rules.garble_per_hop_bp, 0, 9000)
             garbled = rng.chance(garbled_bp)

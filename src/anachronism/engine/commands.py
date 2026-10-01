@@ -18,9 +18,11 @@ from anachronism.engine.actions import (
     ProposeIdea,
     ResumeProject,
     RuleOnIdea,
+    SealBorders,
     SendEnvoy,
     SendMissionaries,
     SetPriority,
+    SpreadRumours,
     StartProject,
 )
 from anachronism.engine.decrees import apply_decree
@@ -66,7 +68,7 @@ def _apply(state: GameState, action: Action) -> tuple[bool, str]:
     civ = state.civs.get(action.civ)
     if civ is None:
         return False, f"unknown civilisation {action.civ!r}"
-    if isinstance(action, HoldFestival | HireMercenaries | Explain):
+    if isinstance(action, HoldFestival | HireMercenaries | Explain | SealBorders | SpreadRumours):
         return apply_decree(state, action)
     if isinstance(action, RuleOnIdea):
         return apply_ruling(state, civ.id, action.ruling)
