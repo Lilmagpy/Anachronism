@@ -581,3 +581,15 @@ civilisations and scenarios now carry `sources` and `confidence` (high / medium 
 low by default). `anachronism-lint --review` prints the checklist. Today everything is
 honestly "low, no source": it was drafted from general history, so the Phase 5 source
 review (D-040) starts from a complete list instead of a guess.
+
+## D-084 A seventh moment: the Great Khan, 1206 — DELEGATED (2026-10-01)
+On the East Asia map: play Genghis Khan at the kurultai of 1206, among the Tangut Xia, the
+Jurchen Jin, the Southern Song, Goryeo, Kamakura Japan, the Qara Khitai, the Uyghurs of
+Qocho, the Ongut and Dali (10 states, 54 provinces; history notes in
+docs/history/great_khan.md). To make the steppe's real strength possible, scenarios can now
+set a state's mobilisation (`martial_bp`: the Mongols put fifteen times the usual share of
+their people under arms; the Jin and Song less). Tested: a passive Mongol player takes
+nothing; one who goes to war takes Xia and much of the Jin over about two centuries.
+Where the map's province growth leaves gaps across the Gobi, the steppe and the Tibetan
+plateau, a few historical routes are linked by hand. Steppe capitals are camps of felt
+tents around the khan's great yurt.

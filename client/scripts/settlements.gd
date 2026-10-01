@@ -225,8 +225,9 @@ func _house(pixel: Vector2, turn: float, size := 1.0, site := -1, mix := 0.0) ->
 	match style:
 		"steppe":
 			var felt := Color(0.90, 0.86, 0.76).darkened(rng.randf() * 0.12)
-			_add("yurt", pixel, 0.0, turn, Vector3.ONE * size, felt)
-			_add("yurt_roof", pixel, 0.06 * S * size, turn, Vector3.ONE * size, felt.darkened(0.2), site, tint)
+			var big := size * 1.35  # tents read better a little larger than houses
+			_add("yurt", pixel, 0.0, turn, Vector3.ONE * big, felt)
+			_add("yurt_roof", pixel, 0.06 * S * big, turn, Vector3.ONE * big, felt.darkened(0.12), site, tint * 0.35)
 		"nile", "near_east":
 			# flat-roofed mud brick, a little taller; the roof terrace takes the owner's colour
 			var brick := Color(0.70, 0.55, 0.38) if style == "near_east" else Color(0.78, 0.63, 0.42)
@@ -273,6 +274,8 @@ func _city(site: Dictionary, population: int, index: int) -> void:
 	var turn := 0.0  # cities were laid out on the cardinal directions
 	clearings.append([centre, half * 1.25])
 	var houses := clampi(population / 30000, 8, 60)
+	if style == "steppe":
+		houses *= 2  # a khan's camp sprawls: many tents for few people
 	for i in houses:
 		var p := centre + Vector2(rng.randf_range(-half, half) * 0.85, rng.randf_range(-half, half) * 0.85)
 		_house(p, turn + (PI / 2.0 if rng.randf() < 0.5 else 0.0), rng.randf_range(0.9, 1.3), index, 0.7)

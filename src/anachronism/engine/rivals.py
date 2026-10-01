@@ -138,6 +138,7 @@ def strength(state: GameState, civ_id: str, effects: Effects | None = None) -> i
     effects = effects if effects is not None else civ_effects(state, civ_id)
     workers = labour(state, civ_id, effects).workforce
     base = apply_bp(workers, state.world.rules.rivals.strength_per_worker_bp)
+    base = apply_bp(base, state.civs[civ_id].martial_bp)
     if state.civs[civ_id].mercenaries > 0:
         base = apply_bp(base, BP + state.world.rules.rivals.mercenary_strength_bp)
     base = apply_bp(base, BP + effects[EffectType.MILITARY_STRENGTH])

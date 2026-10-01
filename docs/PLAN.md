@@ -72,7 +72,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
       [x] Egypt and the Hittites, 1275 BC (11 states, 50 provinces); [x] Europe in the Year 1000
       (29 states, 96 provinces); [x] The Three Kingdoms of Korea, AD 400 (11 states, 38
       provinces, Korea and Japan in detail; D-069); [x] Japan's Warring States, 1560 (18 states,
-      41 provinces; D-074)
+      41 provinces; D-074); [x] The Great Khan, 1206 (10 states, 54 provinces; D-084)
 - [x] 2.15a Screens (brief §11): pre-play disclaimer; a timeline of starting moments in the
       picker; in-game menu (Esc) with save, load, chronicle, tech tree (goal stubs, your
       own ideas marked) and settings (model status, offline switch); developer overlay (F3)

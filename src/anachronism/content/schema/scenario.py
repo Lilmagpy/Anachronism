@@ -69,6 +69,9 @@ class ScenarioCiv(Frozen):
     """Who follows, in order, when rulers die (after that, unnamed heirs)."""
     disposition: Disposition = Disposition.CAUTIOUS
     """The ruler's temperament, which steers the civilisation once it leaves its script."""
+    martial_bp: Annotated[int, Field(ge=1000, le=200_000)] = 10_000
+    """How much of its people a state can put under arms, against the usual 10_000: steppe
+    peoples, where every adult man rode and shot, raise far more; a demilitarised court less."""
     scripts: tuple[Script, ...] = ()
     """What this civilisation means to do, if conditions allow (brief §7.1)."""
 

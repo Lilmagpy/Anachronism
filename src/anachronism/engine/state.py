@@ -233,6 +233,7 @@ class CivState(Mutable):
     """Who rules now (empty: unnamed)."""
     faith: str = ""
     """The court's religion or school of belief (a faith id, or empty)."""
+    martial_bp: int = 10_000  # share of the people under arms, against the usual (steppe: more)
     revolts: int = 0  # provinces lost to revolt: half the starting ones is collapse
     envoy_turn: int = -1  # the turn the last embassy left: one a turn
     mercenaries: int = 0

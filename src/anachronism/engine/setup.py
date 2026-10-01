@@ -99,6 +99,7 @@ def build_state(
         civs[civ_id].disposition = start.disposition
         civs[civ_id].ruler = start.leader
         civs[civ_id].ruler_age = start.leader_age
+        civs[civ_id].martial_bp = start.martial_bp
     for faith in scenario.faiths:
         for follower in faith.followers:
             civs[follower].faith = faith.id
