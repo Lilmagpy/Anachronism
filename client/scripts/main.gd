@@ -157,6 +157,7 @@ func _build_earth(holder: Node3D, region: String) -> void:
 	settlements.build(holder)
 	scenery.clear(settlements.clearings)
 	provinces.show_wars(view.get("wars", []))
+	provinces.show_ties(view)
 	landmarks = Landmarks.new()
 	landmarks.setup(provinces)
 	holder.add_child(landmarks)
@@ -352,6 +353,7 @@ func _on_end_turn() -> void:
 		if provinces.update(view) and settlements != null:
 			settlements.recolour()
 		provinces.show_wars(view.get("wars", []))
+		provinces.show_ties(view)
 		landmarks.update(view)
 		var kinds: Array = view.get("events", []).map(func(e): return e["kind"])
 		if "victory" in kinds:

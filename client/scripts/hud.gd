@@ -824,6 +824,7 @@ func _fill_world() -> void:
 		if int(status["mercenaries"]) > 0:
 			_side_body.add_child(_label("Mercenaries serve for %d more turn(s)" % int(status["mercenaries"]), 12, DIM))
 	_side_body.add_child(_label("The powers of the world", 17, GOLD))
+	_side_body.add_child(_wrapped("On the map, lines from your capital: gold to trading partners, green to allies, purple to tributaries.", 12, DIM))
 	var me: Dictionary = {}
 	for civ in view["civs"]:
 		if civ["id"] == view["player"]:

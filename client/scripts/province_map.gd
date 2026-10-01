@@ -407,6 +407,47 @@ func _ribbon(st: SurfaceTool, cells: Array, width: float, colour: Color) -> void
 		line.append(earth.ground_at_pixel(p))
 	EarthBuilder.add_line(st, line, width, colour)
 
+## Your friendly ties as arcs from your capital to each partner's: gold for trade, green
+## for allies, purple for tributaries - your network, at a glance.
+func show_ties(view: Dictionary) -> void:
+	if _ties != null:
+		_ties.queue_free()
+		_ties = null
+	var capitals := {}
+	for site in sites:
+		if site["capital"] and site["owner"] != null:
+			capitals[site["owner"]] = site["pixel"]
+	var home: Variant = capitals.get(view["player"])
+	if home == null:
+		return
+	var colours := {"trading": Color(1.0, 0.82, 0.2), "allied": Color(0.30, 0.90, 0.40),
+		"tributary": Color(0.75, 0.50, 0.95)}
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var drawn := 0
+	for civ in view["civs"]:
+		var relation: Variant = civ.get("relation")
+		if not colours.has(relation) or not capitals.has(civ["id"]) or not civ["alive"]:
+			continue
+		var a: Vector2 = home
+		var b: Vector2 = capitals[civ["id"]]
+		var rise := a.distance_to(b) * 0.12
+		var line: Array[Vector3] = []
+		for k in 25:
+			var t := k / 24.0
+			line.append(earth.ground_at_pixel(a.lerp(b, t)) + Vector3(0, sin(t * PI) * rise, 0))
+		EarthBuilder.add_line(st, line, 0.0024, colours[relation])
+		drawn += 1
+	if drawn == 0:
+		return
+	_ties = MeshInstance3D.new()
+	_ties.name = "Ties"
+	_ties.mesh = st.commit()
+	_ties.material_override = EarthBuilder.line_material(0.002)
+	_ties.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	_war_marks.get_parent().add_child(_ties)
+
+
 ## Where states are at war: an army of each side on each side of the border, with
 ## crossed swords between them (the view's "wars").
 func show_wars(wars: Array) -> void:
@@ -443,6 +484,7 @@ func show_wars(wars: Array) -> void:
 			_war_marks.add_child(mark)
 
 
+var _ties: MeshInstance3D = null   ## the arcs of show_ties
 var player := ""   ## the player's civ: its name is never hidden by another's
 var _region_cells := {}   ## site index -> Array of its cells (built once)
 var _labels: Array = []   ## [label, priority], most important first, for decluttering
