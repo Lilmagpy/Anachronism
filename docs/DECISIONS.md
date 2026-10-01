@@ -891,3 +891,12 @@ picker, the top bar and over its lands; art from game-icons.net (CC BY 3.0, cred
 the title screen). The Mac renderer's global illumination washed colours out, so it is off
 and colours are graded instead. Labels of armies and fleets give way to more important
 names. Clouds only appear over the whole-world view.
+
+## D-110 CI uses far fewer free minutes — DELEGATED (2026-10-01)
+GitHub Actions stopped running because the repository's free monthly minutes ran out (the
+owner confirmed). Every push had run the whole workflow twice (once as a push, once for the
+open pull request), each time with the Mac app build, and the macOS checks whose minutes
+count tenfold. Now the Linux checks run once per pull request update (and on pushes to
+main); the macOS checks and the Mac app build run only when started by hand from the
+Actions tab. The checks and the app are run and built in the cloud session anyway before
+each commit. Roughly a tenth of the minutes per push.
