@@ -223,6 +223,8 @@ def _scenario_issues(registry: Registry) -> list[ContentIssue]:
                 if province in claimed:
                     report(f"province {province!r} is held by {claimed[province]} and {civ_id}")
                 claimed[province] = civ_id
+            needs = {n: set(t.prerequisites) for n, t in registry.techs.items()}
+            starting = scenario.starting_techs(civ_id, needs)  # with the age's common ideas
             for tech_id, stage in start.techs.items():
                 node = registry.techs.get(tech_id)
                 if node is None:
@@ -233,7 +235,7 @@ def _scenario_issues(registry: Registry) -> list[ContentIssue]:
                     report(f"{civ_id}: {tech_id!r} is a stub and cannot be a starting tech")
                 if stage.is_adopted:
                     for prerequisite in node.prerequisites:
-                        known = start.techs.get(prerequisite)
+                        known = starting.get(prerequisite)
                         if known is None or not known.is_adopted:
                             report(
                                 f"{civ_id}: {tech_id!r} is {stage} but its prerequisite "

@@ -358,6 +358,28 @@ techs:
     effects: [{type: legitimacy, bp: 200}, {type: unrest, bp: -100}]
     flavour: "The same law for the farmer and the lord - in theory."
 
+  - id: republic
+    name: Elected magistrates
+    keywords: [republic, elected, election, consuls, magistrates, senate, term limits]
+    category: governance
+    year: -509
+    complexity: 3
+    prerequisites: [written_law]
+    resistance: [{group: nobility, level: 2}]
+    effects: [{type: legitimacy, bp: 150}, {type: unrest, bp: -100}]
+    flavour: "Rulers chosen for a year, and answerable when it ends."
+
+  - id: citizen_assembly
+    name: Citizens' assembly
+    keywords: [democracy, democratic, vote, voting, assembly, citizens, ballot, parliament, people rule]
+    category: governance
+    year: -508
+    complexity: 3
+    prerequisites: [republic, alphabet]
+    resistance: [{group: nobility, level: 3}]
+    effects: [{type: unrest, bp: -200}, {type: cultural_influence, bp: 400}, {type: legitimacy, bp: 100}]
+    flavour: "Every citizen may speak in the assembly - and must live with what it decides."
+
   - id: windpump_polders
     name: Polders and pumps
     keywords: [polder, dykes, drain the marsh, reclaim land, land from the sea]

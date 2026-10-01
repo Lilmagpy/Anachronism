@@ -29,6 +29,11 @@ _STOP = frozenset(
 )  # fmt: skip
 
 
+_GENERIC = frozenset({"machine", "thing", "system", "tool", "method", "device", "great", "good"})
+"""Words too general to point at one advancement on their own ("flying machines" is not
+"spinning machines"); they still count inside a whole matching phrase."""
+
+
 def words(text: str) -> list[str]:
     """Lower-case words of a text without the filler, singular where that is obvious."""
     found = []
@@ -45,6 +50,7 @@ def match_score(node: TechNode, text: str) -> int:
     """How strongly a text points at a node: whole keyword phrases count most."""
     lowered = " " + " ".join(_WORD.findall(text.lower())) + " "
     idea = set(words(text))
+    whole = " ".join(words(text))
     score = 0
     for phrase in (node.name, *node.keywords, node.id.replace("_", " ")):
         phrase_words = words(phrase)
@@ -52,8 +58,12 @@ def match_score(node: TechNode, text: str) -> int:
             continue
         if f" {phrase.lower()} " in lowered and len(phrase_words) > 1:
             score += 6 * len(phrase_words)
+        elif whole and whole == " ".join(phrase_words):
+            score += 6  # the idea is exactly this keyword ("democracy")
         else:
-            score += sum(3 if len(w) > 5 else 2 for w in phrase_words if w in idea)
+            score += sum(
+                3 if len(w) > 5 else 2 for w in phrase_words if w in idea and w not in _GENERIC
+            )
     return score
 
 

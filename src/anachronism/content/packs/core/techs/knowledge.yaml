@@ -65,7 +65,7 @@ techs:
 
   - id: schools
     name: Public schools
-    keywords: [schools, school, education, teaching, academy, university, teachers]
+    keywords: [schools, school, education, teaching, teach, academy, teachers, read, reading, literacy, learn to read]
     category: knowledge
     year: -500
     complexity: 3

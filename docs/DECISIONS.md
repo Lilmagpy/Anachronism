@@ -564,3 +564,13 @@ left is destroyed). (2) Faiths converted courts of other world faiths as easily 
 ones: the Fatimid caliphate and the Zirids turned Latin Christian within decades. A court
 holding another spreading faith now converts at a tenth of the chance, and missionaries
 sent to one succeed at 30% of theirs.
+
+## D-082 Democracy and the republic; a more careful offline court — DELEGATED (2026-10-01)
+Players will type "democracy", and the offline court called it implausible - for Rome,
+with Athens next door. The library gains Elected magistrates (the republic, Rome 509 BC)
+and Citizens' assembly (democracy, Athens 508 BC); Rome and Carthage start with the
+first, Athens and Rhodes with both. The offline court now takes a one-word idea that is
+exactly a keyword as a match, ignores generic words alone ("flying machines" is not
+"spinning machines"), suggests the nearest ideas ahead of their time, and says when it is
+offline that it only knows its library. The content linter now checks each civ's
+starting ideas together with the age's common ones.

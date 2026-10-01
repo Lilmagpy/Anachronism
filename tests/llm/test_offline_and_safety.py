@@ -45,11 +45,19 @@ def game(content: Content) -> GameState:
         ("rotate crops with clover", "crop_rotation"),
         ("the number zero", "place_value_numerals"),
         ("stirrups for our riders", "stirrup"),
+        ("democracy", "citizen_assembly"),
+        ("teach everyone to read", "schools"),
     ],
 )
 def test_offline_matches_the_library(game: GameState, text: str, expected: str) -> None:
     reply = offline.interpret(game, "qin", text)
     assert reply.ideas[0].matches == expected
+
+
+def test_generic_words_alone_do_not_match(game: GameState) -> None:
+    reply = offline.interpret(game, "qin", "flying machines")
+    assert not reply.ideas[0].matches  # not "spinning machines"
+    assert "library" in (reply.ideas[0].reason or "")  # says why, offline
 
 
 def test_offline_splits_several_ideas(game: GameState) -> None:

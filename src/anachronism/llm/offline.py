@@ -33,14 +33,18 @@ def _best(state: GameState, text: str) -> tuple[int, str] | None:
 
 
 def _within_reach(state: GameState, civ_id: str, count: int = 2) -> list[str]:
-    """Names of advancements the civilisation could start now, cheapest first."""
+    """Advancements the civilisation could start now, nearest ahead of their time first.
+
+    Then the most recent known abroad: never the oldest basics first.
+    """
     civ = state.civs[civ_id]
     options = []
     for node_id, node in sorted(state.tech_nodes.items()):
         if node.stub or is_adopted(civ, node_id) or node_id in civ.projects:
             continue
         if not feasibility(state, civ_id, node_id).blocked:
-            options.append((node.complexity, node.year, node.name))
+            ahead = node.year > state.year
+            options.append((not ahead, abs(node.year - state.year), node.name))
     return [name for _, _, name in sorted(options)[:count]]
 
 
@@ -80,7 +84,11 @@ def interpret(state: GameState, civ_id: str, text: str) -> ModelReply:
             ModelIdea(
                 text=part[:300],
                 verdict=Verdict.IMPLAUSIBLE,
-                reason="The scholars pored over your words but found nothing they could build on.",
+                reason=(
+                    "The scholars pored over your words but found nothing they could build"
+                    " on. (Offline, the court knows only its library of ideas; with the model"
+                    " connected it can rule on anything.)"
+                ),
                 hint=hint,
             )
         )

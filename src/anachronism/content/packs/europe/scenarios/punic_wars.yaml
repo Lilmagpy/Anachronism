@@ -39,6 +39,7 @@ scenarios:
         stats: {literacy_bp: 500, unrest_bp: 800, legitimacy_bp: 7000}
         influence: {clergy: 2500, nobility: 5500, guilds: 2000}
         techs:
+          republic: widespread
           agriculture: widespread
           irrigation: widespread
           ox_plough: widespread
@@ -86,6 +87,7 @@ scenarios:
         stats: {literacy_bp: 800, unrest_bp: 900, legitimacy_bp: 6000}
         influence: {clergy: 2500, nobility: 4000, guilds: 3500}
         techs:
+          republic: widespread
           agriculture: widespread
           irrigation: widespread
           ox_plough: widespread
@@ -215,6 +217,8 @@ scenarios:
         stats: {literacy_bp: 1500, unrest_bp: 1100, legitimacy_bp: 5500}
         influence: {clergy: 2500, nobility: 3000, guilds: 4500}
         techs:
+          republic: widespread
+          citizen_assembly: adopted
           agriculture: widespread
           irrigation: widespread
           ox_plough: widespread
@@ -404,6 +408,8 @@ scenarios:
         stats: {literacy_bp: 1200, unrest_bp: 800, legitimacy_bp: 6500}
         influence: {clergy: 2000, nobility: 3000, guilds: 5000}
         techs:
+          republic: adopted
+          citizen_assembly: adopted
           agriculture: widespread
           irrigation: widespread
           ox_plough: widespread
@@ -663,6 +669,7 @@ scenarios:
         stats: {literacy_bp: 1200, unrest_bp: 900, legitimacy_bp: 6000}
         influence: {clergy: 2500, nobility: 3500, guilds: 4000}
         techs:
+          republic: adopted
           agriculture: widespread
           irrigation: widespread
           ox_plough: widespread
