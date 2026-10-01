@@ -65,13 +65,34 @@ func update(view: Dictionary) -> void:
 				kinds.append(kind)
 	kinds.sort()
 	var centre: Vector2 = capital["pixel"]
+	var taken: Array[Vector2] = []
 	for i in kinds.size():
 		var angle := TAU * i / maxf(kinds.size(), 1.0) + 0.4
 		var radius := (2.6 + (i % 2) * 0.9) * S
-		var spot := centre + Vector2(cos(angle), sin(angle)) * radius
+		var spot := _find_spot(centre, angle, radius, kinds[i] == "harbour", taken)
+		taken.append(spot)
 		var piece := _make(kinds[i], colour, spot, centre)
 		if piece != null:
 			add_child(piece)
+
+
+## A place for a landmark near the capital: on land (a harbour wants the water's edge),
+## turning around the city from its own angle until one is found, and not on another.
+func _find_spot(centre: Vector2, angle: float, radius: float, wet: bool, taken: Array[Vector2]) -> Vector2:
+	var fallback := centre + Vector2(cos(angle), sin(angle)) * radius
+	for step in 24:
+		var a := angle + step * TAU / 24.0 * (1.0 if step % 2 == 0 else -1.0) * 0.5
+		for r in [radius, radius * 1.4, radius * 0.75]:
+			var spot: Vector2 = centre + Vector2(cos(a), sin(a)) * float(r)
+			if earth.is_ocean_at(spot) != wet:
+				continue
+			var clear := true
+			for other in taken:
+				if other.distance_to(spot) < 1.2 * S:
+					clear = false
+			if clear:
+				return spot
+	return fallback
 
 
 func _make(kind: String, colour: Color, spot: Vector2, centre: Vector2) -> Node3D:
