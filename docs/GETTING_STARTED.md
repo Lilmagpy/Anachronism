@@ -37,7 +37,8 @@ walks you through the screen the first time (Settings can replay it). Then:
   chronicle at the bottom lists the rest.
 - **Esc** opens the menu: save, load, the full chronicle, charts, the tech tree and
   settings (sound, music, offline mode).
- Your games and the engine live in
+
+Your games and the engine live in
 `~/Library/Application Support/Godot/app_userdata/Anachronism` (delete that folder to
 start completely fresh).
 
