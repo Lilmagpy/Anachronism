@@ -6,6 +6,15 @@ from typing import Any
 
 from anachronism.content.loader import Content
 from anachronism.content.schema import Stage
+from anachronism.engine.armies import (
+    STYLES,
+    available_units,
+    composition,
+    mobilisation_cap,
+    raise_cost,
+    route,
+    under_arms,
+)
 from anachronism.engine.commands import describe_blockers
 from anachronism.engine.decrees import cost, explain_costs, explain_ready_in, news_on_the_road
 from anachronism.engine.economy import project_costs
@@ -83,6 +92,7 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
                 "unrest_bp": other.stats.unrest_bp,
                 "advances": sum(t.stage.is_adopted for t in other.tech.values()),
                 "alive": bool(state.owned_provinces(other_id)),
+                "adjective": other.adjective,
                 "disposition": other.disposition.value,
                 "ruler": other.ruler,
                 "ruler_age": other.ruler_age,
@@ -95,6 +105,9 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
             for other_id, other in sorted(state.civs.items())
         ],
         "wars": fronts(state),
+        "armies": _armies(state),
+        "levy": _levy(state, civ_id),
+        "battles": _battle_sites(state, events or []),
         "victory": {
             "paths": progress(state),
             "outcome": state.outcome.model_dump() if state.outcome else None,
@@ -227,6 +240,75 @@ def _ideas(state: GameState, civ_id: str) -> list[dict[str, Any]]:
             }
         )
     return ideas
+
+
+def _armies(state: GameState) -> list[dict[str, Any]]:
+    """Every army in the field: where, who, how many, and where it is going."""
+    out = []
+    for army_id, army in sorted(state.armies.items()):
+        owner = state.provinces[army.province].owner
+        besieged = owner is not None and army.siege_bp > 0
+        out.append(
+            {
+                "id": army_id,
+                "owner": army.owner,
+                "name": army.name,
+                "province": army.province,
+                "men": army.men,
+                "troops": [
+                    {"unit": u, "name": state.world.units[u].name, "men": n}
+                    for u, n in sorted(army.troops.items(), key=lambda item: -item[1])
+                ],
+                "morale_bp": army.morale_bp,
+                "general": army.general,
+                "skill": army.skill,
+                "target": army.target,
+                "route": route(state, army.owner, army.province, army.target)
+                if army.target
+                else [],
+                "stance": army.stance,
+                "siege_bp": army.siege_bp,
+                "siege_needed": defence_bp(state, owner, army.province)
+                if besieged and owner
+                else 0,
+            }
+        )
+    return out
+
+
+def _levy(state: GameState, civ_id: str) -> dict[str, Any]:
+    """What raising troops would give and cost: shares, styles and costs per 10,000 men."""
+    rules = state.world.rules.armies
+    styles = {}
+    for style in STYLES:
+        troops = composition(state, civ_id, 10_000, style)
+        food, materials, wealth = raise_cost(state, troops)
+        styles[style] = {
+            "units": [state.world.units[u].name for u in troops],
+            "food": food,
+            "materials": materials,
+            "wealth": wealth,
+        }
+    return {
+        "martial_bp": state.civs[civ_id].martial_bp,
+        "sizes": {
+            "small": rules.raise_small_bp,
+            "medium": rules.raise_medium_bp,
+            "large": rules.raise_large_bp,
+        },
+        "styles": styles,
+        "under_arms": under_arms(state, civ_id),
+        "cap": mobilisation_cap(state, civ_id),
+        "kinds": [u.name for u in available_units(state, civ_id)],
+    }
+
+
+def _battle_sites(state: GameState, events: list[Event]) -> list[str]:
+    """Provinces where battles were fought in the last turn (for the crossed swords)."""
+    by_name = {g.name.split(" (")[0]: pid for pid, g in state.world.geography.items()}
+    return sorted(
+        {by_name[e.subject] for e in events if e.kind == "battle_won" and e.subject in by_name}
+    )
 
 
 def _faith_name(state: GameState, faith_id: str) -> str:

@@ -28,6 +28,14 @@ walks you through the screen the first time (Settings can replay it). Then:
 - **Map**: drag to move, scroll (or pinch) to zoom, click a province to see who holds it,
   how hard it is to take, and what you can do about its owner. Click your emblem (top
   left) to fly to your capital, where your ideas appear as buildings.
+- **War**: every state has armies, drawn on the map in its colours with their strength
+  above them. Click one of your provinces to see the armies there: **March…** then click
+  the province to march to (they fight any enemy army they meet and besiege enemy cities
+  until the walls fall), **Hold**, **Defend** (march on any invader of your land), or
+  **Disband**. **Raise a levy here** calls up a small, medium or large levy with the mix of
+  soldiers you choose: spears stop horsemen, horsemen ride down archers, archers shred
+  infantry, chariots are deadly on plains and useless in hills. Armies cost food and wealth
+  every turn and waste away far from home, fastest in deserts and mountains.
 - **Ideas**: whisper any idea in the box, or **Begin** one from the list ("ahead of their
   time" first). Each costs labour, materials, knowledge and wealth every turn until it
   works; ideas far ahead of their time cost more and make neighbours suspicious.

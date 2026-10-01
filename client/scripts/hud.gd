@@ -13,6 +13,7 @@ signal idea_submitted(text: String, answer: String)
 signal menu_requested
 signal capital_requested
 signal spoke                    ## a character has started speaking (for the chime)
+signal armies_changed           ## the army selection changed: redraw the armies
 
 const GOLD := Color(0.62, 0.20, 0.12)     ## headings: deep red on cream (UiStyle, D-059)
 const INK := UiStyle.INK
@@ -35,6 +36,9 @@ var deliberating := false       ## waiting for the court's ruling on the player'
 var question := ""              ## the court's clarifying question, if it asked one
 var rulings: Array = []         ## the latest rulings, shown at the top of the Ideas tab
 var court_mode := "offline"
+var selected_army := ""        ## the army the player picked (drawn with a gold ring)
+var marching_army := ""        ## waiting for the player to click where this army should march
+var levy_style := "balanced"   ## the mix of soldiers the next levy will have
 var _outcome_shown := false
 var dev_info: Dictionary = {}   ## filled by main: engine and model details for F3
 var _dev := Label.new()     ## "online" when a language model rules, from settings
@@ -1095,11 +1099,126 @@ func _fill_card() -> void:
 	var hard := "easy" if defence < 11000 else ("hard" if defence < 25000 else "very hard")
 	_card_body.add_child(_wrapped("To take in war: %s (%.1f×%s)" % [hard, defence / 10000.0,
 		(", " + ", ".join(why)) if not why.is_empty() else ""], 13, DIM))
+	var here: Array = view.get("armies", []).filter(func(a): return a["province"] == p["id"])
+	if not here.is_empty():
+		_card_body.add_child(_label("Armies here", 15, GOLD))
+		for army in here:
+			_card_body.add_child(_army_box(army))
+	if p["owner"] == view["player"] and view.has("levy"):
+		_card_body.add_child(_levy_box(p))
 	# a rival's province: where you stand with its holder, and what you can do
 	for civ in view["civs"]:
 		if civ["id"] == p["owner"] and civ["id"] != view["player"] and civ.get("relation") != null:
 			_card_body.add_child(_label("Relations: %s" % str(civ["relation"]), 13, BAD if civ["relation"] == "war" else INK))
 			_card_body.add_child(_diplomacy_buttons(civ))
+
+
+# --- armies ------------------------------------------------------------------------------
+
+const STYLE_NAMES := {"balanced": "A balanced host", "infantry": "Mostly foot", "missile": "Mostly archers",
+	"mounted": "Mostly horse", "siege": "A siege train"}
+
+
+## One army: its colours, strength, soldiers, morale, general and doings; orders if yours.
+func _army_box(army: Dictionary) -> Control:
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 1)
+	var mine: bool = army["owner"] == view["player"]
+	var head := HBoxContainer.new()
+	var swatch := ColorRect.new()
+	swatch.color = civ_colours.get(army["owner"], Color.GRAY)
+	swatch.custom_minimum_size = Vector2(12, 12)
+	swatch.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	head.add_child(swatch)
+	var title := "%s · %s men" % [str(army["name"]), number(int(army["men"]))]
+	if not mine:
+		title = "%s %s" % [_civ_adjective(str(army["owner"])), title]
+	var name := _label(title, 14, GOLD if army["id"] == selected_army else INK)
+	name.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	head.add_child(name)
+	box.add_child(head)
+	var parts: Array = []
+	for t in army["troops"].slice(0, 4):
+		parts.append("%s %s" % [str(t["name"]), number(int(t["men"]))])
+	box.add_child(_wrapped(", ".join(parts), 12, DIM))
+	var notes: Array = ["morale %d%%" % (int(army["morale_bp"]) / 100)]
+	if str(army["general"]) != "":
+		notes.append("led by %s %s" % [str(army["general"]), "★".repeat(int(army["skill"]))])
+	if int(army.get("siege_needed", 0)) > 0:
+		notes.append("besieging: %d%% of the walls down" % mini(99, int(army["siege_bp"]) * 100 / int(army["siege_needed"])))
+	elif army["target"] != null:
+		notes.append("marching on %s" % str(_find_place(str(army["target"])).get("name", army["target"])))
+	elif mine:
+		notes.append("defending our land" if army["stance"] == "defend" else "holding")
+	box.add_child(_wrapped(" · ".join(notes), 12, DIM))
+	if mine:
+		var orders := HBoxContainer.new()
+		orders.add_theme_constant_override("separation", 4)
+		var go := _button("March…", func():
+			selected_army = str(army["id"])
+			marching_army = str(army["id"])
+			message = "Click the province the %s should march to." % str(army["name"])
+			armies_changed.emit()
+			show_view(view))
+		go.add_theme_font_size_override("font_size", 13)
+		go.tooltip_text = "Then click a province: it marches there (two or three provinces a turn), fighting any enemy it meets and besieging enemy cities"
+		orders.add_child(go)
+		var hold := _small_button("Hold", {"kind": "stance", "army": army["id"], "stance": "hold"})
+		hold.tooltip_text = "Stop and stay here"
+		orders.add_child(hold)
+		var guard := _small_button("Defend", {"kind": "stance", "army": army["id"], "stance": "defend"})
+		guard.tooltip_text = "Stop, and march on any invader of our land"
+		orders.add_child(guard)
+		var home := _small_button("Disband", {"kind": "disband", "army": army["id"]})
+		home.tooltip_text = "Send the men home to their fields (they work again, and cost nothing)"
+		orders.add_child(home)
+		box.add_child(orders)
+	return box
+
+
+## Raising a levy in one of your provinces: size, mix, and what it costs.
+func _levy_box(p: Dictionary) -> Control:
+	var levy: Dictionary = view["levy"]
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 2)
+	box.add_child(_label("Raise a levy here", 15, GOLD))
+	box.add_child(_wrapped("Under arms: %s of at most %s. Can raise: %s." % [number(int(levy["under_arms"])),
+		number(int(levy["cap"])), ", ".join(levy["kinds"])], 12, DIM))
+	var mix := OptionButton.new()
+	var keys := STYLE_NAMES.keys()
+	for i in keys.size():
+		mix.add_item(STYLE_NAMES[keys[i]], i)
+		if keys[i] == levy_style:
+			mix.select(i)
+	mix.add_theme_font_size_override("font_size", 13)
+	mix.item_selected.connect(func(i):
+		levy_style = keys[i]
+		show_view(view))
+	box.add_child(mix)
+	var style: Dictionary = levy["styles"].get(levy_style, {})
+	box.add_child(_wrapped(", ".join(style.get("units", [])), 12, DIM))
+	var sizes := HBoxContainer.new()
+	sizes.add_theme_constant_override("separation", 4)
+	var stores: Dictionary = view["status"]["stores"]
+	for size in ["small", "medium", "large"]:
+		var men := int(p["population"]) * int(levy["sizes"][size]) / 10000 * int(levy["martial_bp"]) / 10000
+		var food := int(style.get("food", 0)) * men / 10000
+		var wealth := int(style.get("wealth", 0)) * men / 10000
+		var materials := int(style.get("materials", 0)) * men / 10000
+		var button := _small_button("%s %s" % [size.capitalize(), number(men)],
+			{"kind": "raise", "province": p["id"], "size": size, "style": levy_style})
+		button.tooltip_text = "%s men from %s: costs %d food, %d materials, %d wealth, and their labour in the fields" % [number(men), str(p["name"]), food, materials, wealth]
+		button.disabled = men < 200 or int(stores["food"]) < food or int(stores["wealth"]) < wealth or int(stores["materials"]) < materials
+		sizes.add_child(button)
+	box.add_child(sizes)
+	return box
+
+
+func _civ_adjective(civ_id: String) -> String:
+	for civ in view["civs"]:
+		if civ["id"] == civ_id:
+			return str(civ.get("adjective", civ["name"]))
+	return civ_id.capitalize()
 
 
 # --- chronicle and end turn -------------------------------------------------------------

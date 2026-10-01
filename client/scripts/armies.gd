@@ -5,7 +5,7 @@ class_name Armies
 extends RefCounted
 
 const S := 8.0
-const SHOW_WITHIN := 700.0
+const SHOW_WITHIN := 1400.0
 
 
 ## One army: a block of soldiers with spears around a banner, facing `facing` (radians).

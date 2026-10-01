@@ -172,7 +172,7 @@ func _build_earth(holder: Node3D, region: String) -> void:
 	settlements = Settlements.new(provinces)
 	settlements.build(holder)
 	scenery.clear(settlements.clearings)
-	provinces.show_wars(view.get("wars", []))
+	_draw_armies()
 	provinces.show_ties(view)
 	landmarks = Landmarks.new()
 	landmarks.setup(provinces)
@@ -242,6 +242,7 @@ func _build_hud() -> void:
 		bridge.stop()
 		get_tree().reload_current_scene())
 	hud.action_requested.connect(_on_action)
+	hud.armies_changed.connect(_draw_armies)
 	hud.end_turn_requested.connect(_on_end_turn)
 	hud.idea_submitted.connect(_on_idea)
 	_refresh_dev()
@@ -353,6 +354,11 @@ func _on_action(action: Dictionary) -> void:
 		view = reply["view"]
 		if reply["accepted"] and action["kind"] == "start":
 			hud.tab = "projects"
+		if action["kind"] in ["raise", "march", "stance", "disband"]:
+			hud.message = str(reply["message"])
+			if reply["accepted"] and action["kind"] == "disband":
+				hud.selected_army = ""
+		_draw_armies()
 	hud.show_view(view)
 	if reply != null:
 		hud.speak(reply.get("voices", []))
@@ -371,7 +377,7 @@ func _on_end_turn() -> void:
 		view = reply
 		if provinces.update(view) and settlements != null:
 			settlements.recolour()
-		provinces.show_wars(view.get("wars", []))
+		_draw_armies()
 		provinces.show_ties(view)
 		landmarks.update(view)
 		var kinds: Array = view.get("events", []).map(func(e): return e["kind"])
@@ -383,7 +389,16 @@ func _on_end_turn() -> void:
 	hud.speak(view.get("voices", []), true)
 
 
+func _draw_armies() -> void:
+	if provinces != null:
+		var chosen := hud.selected_army if hud != null else ""
+		provinces.show_armies(view.get("armies", []), view.get("battles", []), chosen)
+
+
 func _select(place_id: String) -> void:
+	var mine: Array = view.get("armies", []).filter(func(a): return a["province"] == place_id and a["owner"] == view["player"])
+	hud.selected_army = str(mine[0]["id"]) if not mine.is_empty() else ""
+	_draw_armies()
 	hud.select(place_id)
 	for index in provinces.sites.size():
 		if provinces.sites[index]["id"] == place_id:
@@ -468,7 +483,13 @@ func _unhandled_input(event: InputEvent) -> void:
 			_press_at = event.position
 		elif event.position.distance_to(_press_at) < 6.0:  # a click, not a drag
 			var index := _pick(event.position)
-			_select("" if index < 0 else str(provinces.sites[index]["id"]))
+			var place := "" if index < 0 else str(provinces.sites[index]["id"])
+			if hud.marching_army != "" and place != "":
+				var army := hud.marching_army
+				hud.marching_army = ""
+				_on_action({"kind": "march", "army": army, "target": place})
+				return
+			_select(place)
 	elif event is InputEventMouseMotion and not event.button_mask:
 		var index := _pick(event.position)
 		var text := ""

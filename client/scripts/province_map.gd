@@ -448,40 +448,119 @@ func show_ties(view: Dictionary) -> void:
 	_war_marks.get_parent().add_child(_ties)
 
 
-## Where states are at war: an army of each side on each side of the border, with
-## crossed swords between them (the view's "wars").
-func show_wars(wars: Array) -> void:
+## Armies in the field (D-099): soldiers in their owner's colours, larger for larger hosts,
+## with their strength above them; a marching army's road drawn ahead of it; crossed swords
+## where battles were fought last turn. `selected_army` is drawn with a gold ring.
+func show_armies(armies: Array, battles: Array, selected_army := "") -> void:
 	for child in _war_marks.get_children():
 		child.queue_free()
 	var by_id := {}
 	for site in sites:
 		by_id[site["id"]] = site
-	for war in wars:
-		for clash in war.get("clashes", []):
-			if not by_id.has(clash[0]) or not by_id.has(clash[1]):
-				continue
-			var a: Vector2 = by_id[clash[0]]["pixel"]
-			var b: Vector2 = by_id[clash[1]]["pixel"]
-			var towards := (b - a).angle()
-			# the armies face each other across the border, clear of both cities
-			var mid := a.lerp(b, 0.5)
-			var gap := (b - a).normalized() * minf(10.0, a.distance_to(b) * 0.2)
-			for side in [[war["a"], mid - gap, -towards - PI / 2.0], [war["b"], mid + gap, -towards + PI / 2.0]]:
-				var army := Armies.make(civ_colours.get(side[0], Color.GRAY), side[2])
-				army.position = earth.ground_at_pixel(side[1])
-				_war_marks.add_child(army)
-			var mark := Label3D.new()
-			mark.text = "⚔"
-			mark.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-			mark.fixed_size = true
-			mark.pixel_size = 0.0007
-			mark.font_size = 40
-			mark.outline_size = 14
-			mark.modulate = Color(1.0, 0.92, 0.75)
-			mark.outline_modulate = Color(0.65, 0.08, 0.05)
-			mark.no_depth_test = true
-			mark.position = earth.ground_at_pixel(a.lerp(b, 0.5)) + Vector3(0, 10.0, 0)
-			_war_marks.add_child(mark)
+	var count := {}
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var roads := 0
+	for army in armies:
+		var here: String = army["province"]
+		if not by_id.has(here):
+			continue
+		var k: int = count.get(here, 0)
+		count[here] = k + 1
+		# beside the city, not on it; a second army in the same place stands across from it
+		var spot := _army_spot(by_id[here], k)
+		var facing := 0.0
+		var route: Array = army.get("route", [])
+		if not route.is_empty() and by_id.has(route[0]):
+			facing = -(by_id[route[0]]["pixel"] - spot).angle() - PI / 2.0
+		var colour: Color = civ_colours.get(army["owner"], Color.GRAY)
+		var piece := Armies.make(colour, facing)
+		var men := float(army["men"])
+		piece.scale = Vector3.ONE * clampf(1.4 + log(maxf(men, 1000.0) / 1000.0) / log(10.0) * 0.7, 1.4, 3.4)
+		piece.position = earth.ground_at_pixel(spot)
+		_war_marks.add_child(piece)
+		var label := Label3D.new()
+		var text := _men_text(int(army["men"]))
+		if int(army.get("siege_needed", 0)) > 0:
+			text += " · siege %d%%" % mini(99, int(army["siege_bp"]) * 100 / int(army["siege_needed"]))
+		label.text = text
+		label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+		label.fixed_size = true
+		label.pixel_size = 0.0006
+		label.font_size = 34
+		label.outline_size = 12
+		var mine: bool = army["owner"] == player
+		label.modulate = Color(1.0, 0.86, 0.35) if mine else Color(1, 1, 1)
+		label.outline_modulate = colour.darkened(0.5)
+		label.no_depth_test = true
+		label.render_priority = 13  # an army's strength reads over place names
+		label.outline_render_priority = 12
+		label.position = earth.ground_at_pixel(spot) + Vector3(0, 8.0 * piece.scale.y, 0)
+		_war_marks.add_child(label)
+		if army["id"] == selected_army:
+			var ring := MeshInstance3D.new()
+			var torus := TorusMesh.new()
+			torus.inner_radius = 6.0
+			torus.outer_radius = 7.2
+			ring.mesh = torus
+			var gold := StandardMaterial3D.new()
+			gold.albedo_color = Color(1.0, 0.82, 0.2)
+			gold.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+			ring.material_override = gold
+			ring.position = earth.ground_at_pixel(spot) + Vector3(0, 0.4, 0)
+			_war_marks.add_child(ring)
+		if not route.is_empty():
+			var line: Array[Vector3] = [earth.ground_at_pixel(spot) + Vector3(0, 0.8, 0)]
+			for step in route:
+				if by_id.has(step):
+					line.append(earth.ground_at_pixel(by_id[step]["pixel"]) + Vector3(0, 0.8, 0))
+			EarthBuilder.add_line(st, line, 0.0022, colour.lightened(0.35) if not mine else Color(1.0, 0.86, 0.35))
+			roads += 1
+	if roads > 0:
+		var paths := MeshInstance3D.new()
+		paths.mesh = st.commit()
+		paths.material_override = EarthBuilder.line_material(0.002)
+		paths.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		_war_marks.add_child(paths)
+	for place in battles:
+		if not by_id.has(place):
+			continue
+		var mark := Label3D.new()
+		mark.text = "⚔"
+		mark.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+		mark.fixed_size = true
+		mark.pixel_size = 0.0007
+		mark.font_size = 44
+		mark.outline_size = 14
+		mark.modulate = Color(1.0, 0.92, 0.75)
+		mark.outline_modulate = Color(0.65, 0.08, 0.05)
+		mark.no_depth_test = true
+		mark.position = earth.ground_at_pixel(by_id[place]["pixel"]) + Vector3(0, 14.0, 0)
+		_war_marks.add_child(mark)
+
+
+## Where an army stands in a province: beside the city, on dry land inside the province
+## (a second army in the same place stands elsewhere around the city).
+func _army_spot(site: Dictionary, k: int) -> Vector2:
+	var city: Vector2 = site["pixel"]
+	var index := sites.find(site)
+	for radius in [16.0, 11.0, 7.0]:
+		for turn in 8:
+			var spot: Vector2 = city + Vector2(radius, 0).rotated(k * 2.1 + turn * PI / 4.0 + 0.6)
+			var cell := _cell_of(spot)
+			if not earth.is_wet(spot) and cell >= 0 and cell < region.size() and region[cell] == index:
+				return spot
+	return city + Vector2(6.0, 4.0)
+
+
+static func _men_text(men: int) -> String:
+	if men >= 1000000:
+		return "%.1fM" % (men / 1000000.0)
+	if men >= 10000:
+		return "%dk" % (men / 1000)
+	if men >= 1000:
+		return "%.1fk" % (men / 1000.0)
+	return str(men)
 
 
 var _ties: MeshInstance3D = null   ## the arcs of show_ties

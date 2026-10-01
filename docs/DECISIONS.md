@@ -754,3 +754,12 @@ Battles, sieges and lost armies are spoken of by the general and recorded in the
 and its chapters. Tested: twelve engine tests; sims across scenarios show campaigns,
 battles, sieges and conquests, and deterministic replays. This replaces the "tactical
 battles out of scope" line of DESIGN §16 at the owner's request.
+
+## D-100 Armies on the map — DELEGATED (2026-10-01)
+Every army stands beside its province's city in its owner's colours, larger for larger
+hosts, with its strength above it (and siege progress while it besieges); a marching army's
+road is drawn ahead of it; crossed swords mark last turn's battlefields. Clicking a province
+lists the armies there (soldiers, morale, general, what they are doing) and, for your own,
+the orders March… (then click the destination), Hold, Defend and Disband; your provinces
+also offer "Raise a levy here" in three sizes and five mixes, with the cost shown. Orders
+are ordinary recorded actions, so replays stay exact.
