@@ -11,10 +11,10 @@ const SETTINGS := "user://settings.cfg"
 const STEPS := [
 	["Welcome, ruler", "You guide a real state at a real moment in history. You have one advantage: you know what comes next. Every idea you give your court can change the world.", Vector2(-1, -1), Vector2(560, 300)],
 	["Your state", "The top bar shows your people, stores of food, materials, wealth and knowledge, and your society: literacy, unrest, legitimacy, and suspicion - how uncanny your progress looks. Arrows show which way things are moving.", Vector2(620, 40), Vector2(420, 120)],
-	["Whisper an idea", "Type any idea here - \"make the river work for us\", \"a printing press\", \"germs cause disease\". Your court judges it: within reach, needs groundwork first, or beyond this age.", Vector2(1320, 174), Vector2(700, 150)],
+	["Whisper an idea", "Type any idea here - \"make the river work for us\", \"a printing press\", \"germs cause disease\". Your court judges it: within reach, needs groundwork first (with the first steps to begin), or beyond this age.", Vector2(1320, 174), Vector2(700, 150)],
 	["Begin the work", "Ideas within reach can be tried. Press Begin: it costs labour, materials, knowledge and wealth every turn until it works. Take on too much and the people suffer.", Vector2(1520, 395), Vector2(830, 330)],
-	["The world", "The World tab shows the paths to victory, the wars, and every state you can reach: send envoys, make alliances, send missionaries - or declare war.", Vector2(1510, 120), Vector2(830, 170)],
-	["Time moves on", "Each press of End Turn is a decade. Rivals follow their own history - until news of your ideas reaches them.", Vector2(1478, 855), Vector2(900, 600)],
+	["The world", "The World tab shows the paths to victory and what each still needs, royal decrees, and every state you can reach: envoys, alliances, tribute, missionaries - or war. Gold lines on the map are your trade.", Vector2(1510, 120), Vector2(830, 170)],
+	["Time moves on", "Each press of End Turn (or Enter) is a decade, and the game saves itself. Rivals follow their own history - until news of your ideas reaches them.", Vector2(1478, 855), Vector2(900, 600)],
 	["Your capital", "Click your emblem to fly down to your capital; your adopted ideas appear there as buildings. Esc opens the menu: save, load, the chronicle, charts and the tech tree.", Vector2(50, 40), Vector2(90, 150)],
 ]
 
