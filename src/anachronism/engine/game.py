@@ -18,13 +18,18 @@ __all__ = ["apply_action", "end_turn", "new_game", "replay"]
 
 
 def new_game(
-    content: Content, scenario_id: str, seed: int, player_civ: str | None = None
+    content: Content,
+    scenario_id: str,
+    seed: int,
+    player_civ: str | None = None,
+    difficulty: str = "normal",
 ) -> GameState:
     """Start a scenario with a seed; the same inputs always give the same game.
 
-    ``player_civ`` picks which civilisation the player guides (default: the scenario's).
+    ``player_civ`` picks which civilisation the player guides (default: the scenario's);
+    ``difficulty`` a level from the rules (``easy``, ``normal``, ``hard``).
     """
-    state = build_state(content, scenario_id, seed, player_civ)
+    state = build_state(content, scenario_id, seed, player_civ, difficulty)
     for civ_id in sorted(state.civs):
         state.civs[civ_id].history.append(snapshot(state, civ_id))
     record_start(state)

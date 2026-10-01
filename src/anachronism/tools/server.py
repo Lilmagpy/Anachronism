@@ -70,6 +70,7 @@ class Session:
                 str(args.get("scenario", "bronze_dawn")),
                 int(args.get("seed", 1)),
                 None if civ is None else str(civ),
+                str(args.get("difficulty", "normal")),
             )
             rivals = str(args.get("rivals", "growth"))
             self.rivals = {

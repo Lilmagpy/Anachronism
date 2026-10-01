@@ -623,3 +623,10 @@ The engine saves the game to an "autosave" slot after every turn; the title scre
 CONTINUE whenever that slot exists, so a crash or an accidental quit costs at most one
 turn. Named saves (Esc → Save) are unchanged. The title backdrop now centres on whichever
 map is loaded (it pointed at East Asia even when the Europe map was shown).
+
+## D-089 Difficulty levels — DELEGATED (2026-10-01)
+Easy, Normal and Hard, chosen in the civilisation picker. Each level is a set of overrides
+to the rival rules in rules.yaml (data, not code): Easy halves how often aggressive rulers
+start wars, slows conquest and gives five quiet opening turns; Hard does the opposite with
+one grace turn. Normal is the rules as written. The chosen rules are stored in the save,
+so a game and its replay stay exactly the same.

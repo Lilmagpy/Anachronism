@@ -121,3 +121,15 @@ def test_common_techs_reach_only_states_with_the_prerequisites(content: Content)
             if known.stage.is_adopted:
                 for needed in content.techs[node_id].prerequisites:
                     assert civ.tech[needed].stage.is_adopted, (civ.id, node_id, needed)
+
+
+def test_difficulty_levels_change_the_rival_rules_and_are_saved(content: Content) -> None:
+    easy = build_state(content, "punic_wars", seed=1, difficulty="easy")
+    hard = build_state(content, "punic_wars", seed=1, difficulty="hard")
+    normal = build_state(content, "punic_wars", seed=1)
+    rules = normal.world.rules.rivals
+    assert easy.world.rules.rivals.player_grace_turns > rules.player_grace_turns
+    assert hard.world.rules.rivals.capture_per_excess_bp > rules.capture_per_excess_bp
+    assert loads(dumps(hard)).world.difficulty == "hard"
+    with pytest.raises(ValueError, match="unknown difficulty"):
+        build_state(content, "punic_wars", seed=1, difficulty="nightmare")

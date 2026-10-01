@@ -6,7 +6,11 @@ All rates are basis points: 10_000 bp = 100%.
 
 from __future__ import annotations
 
-from anachronism.content.schema.base import Frozen, NonNegative, Positive, Rate
+from typing import Self
+
+from pydantic import Field, model_validator
+
+from anachronism.content.schema.base import Frozen, Identifier, NonNegative, Positive, Rate
 from anachronism.content.schema.tech import Category
 
 PerComplexity = tuple[NonNegative, NonNegative, NonNegative, NonNegative, NonNegative]
@@ -298,3 +302,14 @@ class Rules(Frozen):
     suspicion: SuspicionRules
     rulings: RulingRules
     rivals: RivalRules
+    difficulty: dict[Identifier, dict[str, int]] = Field(default_factory=dict)
+    """Named difficulty levels (``easy``, ``hard``...), each a set of overrides to the
+    rival rules; ``normal`` is the rules as written. Unknown rule names are errors."""
+
+    @model_validator(mode="after")
+    def _known_overrides(self) -> Self:
+        for level, overrides in self.difficulty.items():
+            unknown = set(overrides) - set(RivalRules.model_fields)
+            if unknown:
+                raise ValueError(f"difficulty {level}: unknown rival rules {sorted(unknown)}")
+        return self

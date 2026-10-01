@@ -59,6 +59,8 @@ class World(Frozen):
     content_digest: str
     years_per_turn: int
     rules: Rules
+    difficulty: str = "normal"
+    """The difficulty level whose overrides are already in ``rules``."""
     eras: tuple[Era, ...]
     effect_caps: dict[EffectType, dict[str, int]]
     terrain: dict[str, Terrain]

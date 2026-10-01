@@ -8,6 +8,7 @@ from anachronism.content.schema import (
     CivDefinition,
     ProvinceGeography,
     RelationStatus,
+    Rules,
     ScenarioCiv,
     SocialGroup,
     Stage,
@@ -28,12 +29,20 @@ from anachronism.engine.state import (
 
 
 def build_state(
-    content: Content, scenario_id: str, seed: int, player_civ: str | None = None
+    content: Content,
+    scenario_id: str,
+    seed: int,
+    player_civ: str | None = None,
+    difficulty: str = "normal",
 ) -> GameState:
     """Create the state at the start of a scenario (before any turn is played).
 
+    ``difficulty`` names a level in the rules (``easy``, ``hard``); ``normal`` is the rules
+    as written. The chosen rules are stored in the state, so saves and replays keep them.
+
     Raises:
-        ValueError: if the scenario does not exist, or ``player_civ`` is not in it.
+        ValueError: if the scenario does not exist, ``player_civ`` is not in it, or the
+            difficulty is unknown.
     """
     scenario = content.scenarios.get(scenario_id)
     if scenario is None:
@@ -65,7 +74,8 @@ def build_state(
         scenario_name=scenario.name,
         content_digest=content.digest,
         years_per_turn=scenario.years_per_turn,
-        rules=content.rules,
+        rules=_rules_for(content, difficulty),
+        difficulty=difficulty,
         eras=content.eras,
         effect_caps={effect: dict(caps) for effect, caps in content.effect_caps.items()},
         terrain=dict(content.terrain),
@@ -125,6 +135,18 @@ def build_state(
         provinces=provinces,
         civs=civs,
     )
+
+
+def _rules_for(content: Content, difficulty: str) -> Rules:
+    """The rules with a difficulty level's overrides to the rival rules applied."""
+    rules = content.rules
+    if difficulty == "normal":
+        return rules
+    if difficulty not in rules.difficulty:
+        known = ", ".join(["normal", *sorted(rules.difficulty)])
+        raise ValueError(f"unknown difficulty {difficulty!r} (choose: {known})")
+    rivals = rules.rivals.model_copy(update=rules.difficulty[difficulty])
+    return rules.model_copy(update={"rivals": rivals})
 
 
 def _trim_neighbours(geography: ProvinceGeography, in_play: set[str]) -> ProvinceGeography:

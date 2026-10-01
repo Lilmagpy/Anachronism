@@ -144,3 +144,7 @@ rules:
     cultural_victory_share_bp: 4000
     cultural_influence_needed_bp: 1000
     victory_margin_bp: 2000
+  # Difficulty levels: overrides to the rival rules above ("normal" is the rules as written).
+  difficulty:
+    easy: {aggressive_war_chance_bp: 1200, capture_per_excess_bp: 2500, player_grace_turns: 5, coalition_chance_bp: 700}
+    hard: {aggressive_war_chance_bp: 3500, capture_per_excess_bp: 5000, player_grace_turns: 1, coalition_chance_bp: 2500}

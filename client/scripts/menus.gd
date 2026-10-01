@@ -6,7 +6,7 @@
 class_name Menus
 extends CanvasLayer
 
-signal start_requested(scenario_id: String, civ_id: String)
+signal start_requested(scenario_id: String, civ_id: String, difficulty: String)
 signal quit_requested
 signal continue_requested   ## resume the autosaved game
 
@@ -24,6 +24,7 @@ func _ready() -> void:
 
 
 var can_continue := false   ## an autosaved game exists
+var difficulty := "normal"  ## chosen in the picker; kept while browsing moments
 
 
 func show_title() -> void:
@@ -192,9 +193,28 @@ func _draw_picker() -> void:
 	var push := Control.new()
 	push.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	row.add_child(push)
+	# difficulty: how bold the rivals are and how forgiving the opening turns
+	var levels := HBoxContainer.new()
+	levels.add_theme_constant_override("separation", 6)
+	levels.alignment = BoxContainer.ALIGNMENT_CENTER
+	var tips := {"easy": "Gentler rivals, slower conquests, five quiet turns to start",
+		"normal": "The game as designed", "hard": "Bolder rivals, faster conquests, no grace"}
+	for level in ["easy", "normal", "hard"]:
+		var chosen: bool = level == difficulty
+		var pick := UiStyle.big_button(level.to_upper(), 16, UiStyle.GOLD if chosen else Color(0.85, 0.80, 0.70))
+		pick.custom_minimum_size = Vector2(96, 44)
+		pick.tooltip_text = tips[level]
+		pick.pressed.connect(func():
+			difficulty = level
+			_draw_picker())
+		levels.add_child(pick)
+	row.add_child(levels)
+	var push2 := Control.new()
+	push2.custom_minimum_size.x = 24
+	row.add_child(push2)
 	var confirm := UiStyle.big_button("CONFIRM", 32)
 	confirm.custom_minimum_size = Vector2(300, 72)
-	confirm.pressed.connect(func(): start_requested.emit(str(scenario["id"]), str(civ["id"])))
+	confirm.pressed.connect(func(): start_requested.emit(str(scenario["id"]), str(civ["id"]), difficulty))
 	row.add_child(confirm)
 	body.add_child(row)
 	_root.add_child(card)

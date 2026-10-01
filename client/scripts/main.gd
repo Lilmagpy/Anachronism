@@ -94,8 +94,9 @@ func _fail(notice: CanvasLayer) -> void:
 		label.text = "The game engine could not start:\n%s\n\nCheck your internet connection for the first launch, then open the game again." % bridge.last_error
 
 
-func _start_game(scenario_id: String, civ_id: String) -> void:
-	var args := {"scenario": scenario_id, "seed": int(options.get("seed", "1"))}
+func _start_game(scenario_id: String, civ_id: String, difficulty := "normal") -> void:
+	var args := {"scenario": scenario_id, "seed": int(options.get("seed", "1")),
+		"difficulty": str(options.get("difficulty", difficulty))}
 	if civ_id != "":
 		args["civ"] = civ_id
 	_enter_game(bridge.request("new_game", args))
