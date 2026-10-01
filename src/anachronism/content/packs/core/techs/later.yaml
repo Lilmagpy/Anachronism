@@ -226,7 +226,7 @@ techs:
 
   - id: musket
     name: Muskets
-    keywords: [musket, arquebus, matchlock, firearms, guns, rifle, harquebus, tanegashima]
+    keywords: [musket, arquebus, matchlock, firearms, guns, rifle, harquebus, tanegashima, volley, volleys]
     category: military
     year: 1450
     complexity: 3

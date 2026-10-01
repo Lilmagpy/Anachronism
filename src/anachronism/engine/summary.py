@@ -24,7 +24,8 @@ _STOP = frozenset(
         "me", "make", "let", "build", "use", "using", "get", "have", "more", "better", "new",
         "way", "ways", "people", "them", "it", "its", "that", "this", "some", "into", "from", "by",
         "at", "be", "can", "should", "could", "would", "like", "want", "idea", "ideas", "start",
-        "try",
+        "try", "work", "works", "everyone", "everywhere", "all", "every", "whole", "really",
+        "much", "lot",
     }
 )  # fmt: skip
 
@@ -52,6 +53,7 @@ def match_score(node: TechNode, text: str) -> int:
     idea = set(words(text))
     whole = " ".join(words(text))
     score = 0
+    loose: set[str] = set()  # single words shared with the idea, each counted once
     for phrase in (node.name, *node.keywords, node.id.replace("_", " ")):
         phrase_words = words(phrase)
         if not phrase_words:
@@ -61,9 +63,12 @@ def match_score(node: TechNode, text: str) -> int:
         elif whole and whole == " ".join(phrase_words):
             score += 6  # the idea is exactly this keyword ("democracy")
         else:
-            score += sum(
-                3 if len(w) > 5 else 2 for w in phrase_words if w in idea and w not in _GENERIC
-            )
+            loose.update(w for w in phrase_words if w in idea and w not in _GENERIC)
+    # (a word repeated across many keywords - "iron" - must not outweigh the idea's others);
+    # long words are distinctive, and naming every word of a short idea counts extra
+    score += sum(4 if len(w) > 5 else 3 if len(w) > 3 else 2 for w in loose)
+    if idea and loose >= idea - _GENERIC:
+        score += 2
     return score
 
 

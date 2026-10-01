@@ -14,7 +14,7 @@ techs:
 
   - id: irrigation
     name: Irrigation canals
-    keywords: [irrigate, irrigation, canals, ditches, watering, river water, river, rivers, floodwater, channels, dykes]
+    keywords: [irrigate, irrigation, canals, ditches, watering, river water, river, rivers, floodwater, channels, dykes, rice paddies, paddy, paddies]
     category: agriculture
     year: -6000
     complexity: 2

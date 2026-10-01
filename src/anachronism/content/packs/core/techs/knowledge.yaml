@@ -43,7 +43,7 @@ techs:
 
   - id: place_value_numerals
     name: Place-value numerals with zero
-    keywords: [numerals, zero, decimal, place value, arabic numerals, arithmetic, maths, math]
+    keywords: [numerals, zero, number zero, numbers, decimal, place value, arabic numerals, arithmetic, maths, math]
     category: knowledge
     year: 500
     complexity: 2

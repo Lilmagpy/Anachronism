@@ -23,7 +23,7 @@ techs:
 
   - id: ore_prospecting
     name: Ore prospecting
-    keywords: [prospecting, ore, mining, mines, surveying ore, geology]
+    keywords: [prospecting, ore, mining, mines, surveying ore, geology, gold, silver, gold mining, silver mines]
     category: metallurgy
     year: -2000
     complexity: 2
@@ -66,7 +66,7 @@ techs:
 
   - id: crucible_steel
     name: Crucible steel
-    keywords: [steel, crucible steel, damascus, hardened steel]
+    keywords: [steel, crucible steel, damascus, hardened steel, swords, sword, blades, better swords, sharper blades]
     category: metallurgy
     year: -300
     complexity: 4
