@@ -138,6 +138,13 @@ def build(state: GameState, civ_id: str, idea: str) -> str:
     coastal = any(state.world.geography[pid].coastal for pid in state.owned_provinces(civ_id))
     resources = ", ".join(state.world.resources[r].name.lower() for r in sorted(usable))
     lines.append(f"MAP: {'coastal' if coastal else 'landlocked'}; resources: {resources or 'none'}")
+    built: dict[str, int] = {}
+    for pid in state.owned_provinces(civ_id):
+        for b in state.provinces[pid].buildings:
+            name = state.world.buildings[b].name if b in state.world.buildings else b
+            built[name] = built.get(name, 0) + 1
+    listed = ", ".join(f"{n} x{k}" if k > 1 else n for n, k in sorted(built.items()))
+    lines.append(f"BUILDINGS: {listed or 'none'}")  # infrastructure (D-114)
     projects = []
     for node_id, project in sorted(civ.projects.items()):
         cost = project_costs(state, node_id)

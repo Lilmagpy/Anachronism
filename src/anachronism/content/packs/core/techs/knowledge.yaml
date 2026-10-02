@@ -96,7 +96,7 @@ techs:
     complexity: 4
     visibility: 3
     prerequisites: [woodblock_printing, bronze_working]
-    requires: {literacy_bp: 800, widespread: [paper]}
+    requires: {literacy_bp: 800, widespread: [paper], buildings: [workshop]}
     resistance: [{group: clergy, level: 2}, {group: guilds, level: 1}]
     effects:
       - {type: literacy_growth, bp: 80}

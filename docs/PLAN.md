@@ -162,5 +162,6 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] Province buildings, and cities that grow and fill with them on the map (D-111)
 - [x] Rival courts no longer starve themselves; low priority is steady work (D-112)
 - [x] The fall is not the end: new dynasties after collapse, restored states (D-113)
+- [x] Infrastructure: some ideas need buildings standing in the realm (D-114)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

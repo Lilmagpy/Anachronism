@@ -33,6 +33,7 @@ def cross_reference_issues(registry: Registry) -> list[ContentIssue]:
         *_dilemma_issues(registry),
         *_ship_issues(registry),
         *_building_issues(registry),
+        *_tech_building_issues(registry),
         *_tactic_issues(registry),
         *_symbol_issues(registry),
         *_dialogue_issues(registry),
@@ -428,6 +429,18 @@ def _ship_issues(registry: Registry) -> list[ContentIssue]:
             if registry.is_unknown("techs", tech):
                 where = registry.origin("ships", ship.id)
                 issues.append(ContentIssue(where, f"ships ({ship.id})", f"unknown tech {tech!r}"))
+    return issues
+
+
+def _tech_building_issues(registry: Registry) -> list[ContentIssue]:
+    issues: list[ContentIssue] = []
+    for node in registry.techs.values():
+        for building in node.requires.buildings:
+            if registry.is_unknown("buildings", building):
+                where = registry.origin("techs", node.id)
+                issues.append(
+                    ContentIssue(where, f"techs ({node.id})", f"unknown building {building!r}")
+                )
     return issues
 
 

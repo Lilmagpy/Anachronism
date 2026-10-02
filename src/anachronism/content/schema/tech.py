@@ -133,6 +133,9 @@ class Requirements(Frozen):
     """Soft: below this, experimentation suffers more setbacks."""
     widespread: tuple[Identifier, ...] = ()
     """Infrastructure: advancements that must already be widespread."""
+    buildings: tuple[Identifier, ...] = ()
+    """Infrastructure (D-114): buildings that must each stand somewhere in the realm (a
+    building that replaced one, e.g. a bank for a market, counts for it)."""
 
 
 class TechNode(Frozen):

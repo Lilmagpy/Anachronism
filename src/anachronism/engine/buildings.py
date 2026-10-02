@@ -15,7 +15,7 @@ from anachronism.content.schema import Access, Building
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import BP, apply_bp
 from anachronism.engine.state import Construction, GameState
-from anachronism.engine.tech import is_adopted
+from anachronism.engine.tech import is_adopted, standing_buildings
 from anachronism.engine.timeflow import per_turn, turns_for
 
 
@@ -210,6 +210,7 @@ def best_choice(state: GameState, civ_id: str, reserve: int) -> tuple[str, str] 
     """
     stores = state.civs[civ_id].stockpiles
     unrest = state.civs[civ_id].stats.unrest_bp
+    wanted = wanted_buildings(state, civ_id)
     choices: list[tuple[int, int, str, str]] = []
     for pid in state.owned_provinces(civ_id):
         people = state.provinces[pid].population
@@ -220,11 +221,26 @@ def best_choice(state: GameState, civ_id: str, reserve: int) -> tuple[str, str] 
             if stores.materials < materials * reserve or stores.wealth < wealth * reserve:
                 continue
             value = apply_bp(people // 1000, worth(kind, unrest))
+            if bid in wanted:  # it opens the way to an idea the court is waiting on
+                value *= 3
             choices.append((-value, materials + wealth, pid, bid))
     if not choices:
         return None
     _, _, pid, bid = min(choices)
     return pid, bid
+
+
+def wanted_buildings(state: GameState, civ_id: str) -> set[str]:
+    """Buildings that ideas the civilisation knows of but has not adopted are waiting for."""
+    civ = state.civs[civ_id]
+    have = standing_buildings(state, civ_id)
+    wanted: set[str] = set()
+    for node_id, tech in civ.tech.items():
+        node = state.tech_nodes.get(node_id)
+        if node is None or tech.stage.is_adopted:
+            continue
+        wanted.update(b for b in node.requires.buildings if b not in have)
+    return wanted
 
 
 def rival_builders(state: GameState, events: EventLog) -> None:

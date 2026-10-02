@@ -49,6 +49,7 @@ techs:
       materials: [iron]         # map resources accessible in an owned province
       literacy_bp: 0            # soft: below it, more setbacks
       widespread: []            # infrastructure that must already be widespread
+      buildings: []             # buildings that must stand somewhere in the realm (D-114)
     resistance: [{group: clergy, level: 1}]   # clergy / nobility / guilds, level 1-3
     effects:
       - {type: materials_output, bp: 800}     # +8%

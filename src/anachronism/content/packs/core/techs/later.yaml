@@ -114,7 +114,7 @@ techs:
     year: 1450
     complexity: 4
     prerequisites: [movable_type, paper]
-    requires: {literacy_bp: 500}
+    requires: {literacy_bp: 500, buildings: [workshop]}
     resistance: [{group: clergy, level: 1}]
     effects: [{type: literacy_growth, bp: 100}, {type: knowledge_gain, bp: 1500}, {type: cultural_influence, bp: 1000}]
     flavour: "A screw press, metal type and oily ink - a thousand pages a day."
@@ -149,6 +149,7 @@ techs:
     year: 1088
     complexity: 3
     prerequisites: [schools, writing]
+    requires: {buildings: [school]}
     effects: [{type: knowledge_gain, bp: 1000}, {type: literacy_growth, bp: 50}, {type: cultural_influence, bp: 500}]
     flavour: "Scholars gather where there are books and freedom to argue."
 
@@ -179,6 +180,7 @@ techs:
     year: 1150
     complexity: 3
     prerequisites: [coinage, bookkeeping]
+    requires: {buildings: [market]}
     resistance: [{group: clergy, level: 1}]
     effects: [{type: trade_income, bp: 1200}, {type: wealth_output, bp: 600}]
     flavour: "Gold stays safe at home; a piece of paper travels instead."
@@ -200,7 +202,7 @@ techs:
     year: 1440
     complexity: 3
     prerequisites: [sternpost_rudder, compass]
-    requires: {materials: [timber]}
+    requires: {materials: [timber], buildings: [harbour]}
     effects: [{type: naval_strength, bp: 1200}, {type: trade_income, bp: 1000}, {type: mobility, bp: 600}]
     flavour: "A ship that can sail against the wind and come home from beyond the edge of the map."
 
@@ -221,6 +223,7 @@ techs:
     year: 1326
     complexity: 3
     prerequisites: [gunpowder, bronze_working]
+    requires: {buildings: [forge]}
     effects: [{type: military_strength, bp: 1200}]
     flavour: "No wall stands for long against a gun that throws stone balls."
 
@@ -281,6 +284,7 @@ techs:
     year: 1765
     complexity: 4
     prerequisites: [spinning_wheel, water_wheel]
+    requires: {buildings: [workshop]}
     resistance: [{group: guilds, level: 2}]
     effects: [{type: wealth_output, bp: 1500}, {type: labour_output, bp: 1000}]
     flavour: "One machine, eight spindles - and the spinners riot."
@@ -292,7 +296,7 @@ techs:
     year: 1709
     complexity: 3
     prerequisites: [coal_mining, blast_furnace]
-    requires: {materials: [coal]}
+    requires: {materials: [coal], buildings: [forge, mine]}
     effects: [{type: materials_output, bp: 1500}]
     flavour: "Iron from coal, not forests - and suddenly iron is cheap."
 
@@ -303,7 +307,7 @@ techs:
     year: 1712
     complexity: 5
     prerequisites: [coke_smelting, piston_bellows]
-    requires: {materials: [iron, coal], literacy_bp: 1500}
+    requires: {materials: [iron, coal], literacy_bp: 1500, buildings: [mine]}
     effects: [{type: labour_output, bp: 1500}, {type: materials_output, bp: 1000}]
     flavour: "Fire makes water into a giant that never sleeps."
 
@@ -314,7 +318,7 @@ techs:
     year: 1825
     complexity: 5
     prerequisites: [steam_engine, roads]
-    requires: {materials: [iron, coal]}
+    requires: {materials: [iron, coal], buildings: [mine]}
     effects: [{type: mobility, bp: 2000}, {type: trade_income, bp: 1500}, {type: military_strength, bp: 500}]
     flavour: "Iron roads and fire horses: a month's journey in a day."
 
@@ -335,6 +339,7 @@ techs:
     year: 400
     complexity: 2
     prerequisites: [herbal_medicine, masonry]
+    requires: {buildings: [temple]}
     effects: [{type: health, bp: 800}, {type: legitimacy, bp: 100}]
     flavour: "A house where the sick are cared for, not merely prayed over."
 
@@ -450,7 +455,7 @@ techs:
     year: 1807
     complexity: 5
     prerequisites: [steam_engine, caravel]
-    requires: {materials: [iron, coal]}
+    requires: {materials: [iron, coal], buildings: [harbour]}
     effects: [{type: naval_strength, bp: 2000}, {type: trade_income, bp: 1500}, {type: mobility, bp: 800}]
     flavour: "Against the wind and against the current, on time."
 

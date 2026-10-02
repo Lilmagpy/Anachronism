@@ -26,6 +26,7 @@ class Feasibility:
     literacy_shortfall_bp: int
     """Soft requirement: how far literacy is below what the node wants (raises setbacks)."""
     stub: bool
+    missing_buildings: tuple[str, ...] = ()
 
     @property
     def blocked(self) -> bool:
@@ -34,6 +35,7 @@ class Feasibility:
             self.missing_prerequisites
             or self.missing_materials
             or self.missing_widespread
+            or self.missing_buildings
             or self.stub
         )
 
@@ -73,7 +75,23 @@ def feasibility(state: GameState, civ_id: str, node_id: str) -> Feasibility:
         ),
         literacy_shortfall_bp=max(0, node.requires.literacy_bp - civ.stats.literacy_bp),
         stub=node.stub,
+        missing_buildings=tuple(
+            b for b in node.requires.buildings if b not in standing_buildings(state, civ_id)
+        ),
     )
+
+
+def standing_buildings(state: GameState, civ_id: str) -> set[str]:
+    """Every kind of building standing in the realm, counting what upgrades replaced."""
+    kinds = state.world.buildings
+    found: set[str] = set()
+    for pid in state.owned_provinces(civ_id):
+        for building in state.provinces[pid].buildings:
+            while building and building not in found:
+                found.add(building)
+                kind = kinds.get(building)
+                building = kind.replaces if kind is not None and kind.replaces else ""
+    return found
 
 
 def propose(state: GameState, civ_id: str, node_id: str) -> Feasibility:

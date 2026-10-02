@@ -16,6 +16,7 @@ techs:
     year: 100
     complexity: 2
     prerequisites: [sailing]
+    requires: {buildings: [harbour]}
     effects: [{type: naval_strength, bp: 800}, {type: trade_income, bp: 500}]
     flavour: One hinged board steers a ship far bigger than any oar could.
 

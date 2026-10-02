@@ -71,6 +71,10 @@ Every stat keeps a short history so the UI shows **trends**, not just values.
 ## 6. Feasibility: what makes an idea buildable
 Tech nodes carry **structured requirements**, checked by code:
 - `materials`: map-resource access flags (e.g. `saltpetre: accessible`).
+- `buildings` (D-114): infrastructure that must stand somewhere in the realm (printing
+  needs workshops, blast furnaces and cannon need forges, steam engines and railways need
+  mines, universities a school, banking a market, hospitals a temple, ocean ships a
+  harbour). An upgrade counts for what it replaced.
 - `skills`: literacy thresholds, specialist pools (smiths, masons, scribes, engineers).
 - `infrastructure`: other adopted nodes/buildings (roads, workshops, standard measures).
 - `acceptance`: groups that resist (clergy, nobles, guilds) and how strongly.

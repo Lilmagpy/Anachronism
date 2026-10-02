@@ -969,3 +969,16 @@ only when no province still remembers their state. This applies to rival states 
 history keeps its restorations. New spoken moments: `dynasty`, `restoration`; the collapse
 line no longer says "it is over". The side panel tells an exiled player where their people
 still remember them.
+
+## D-114 Infrastructure: some ideas need buildings standing in the realm — DELEGATED (2026-10-02)
+Brief §5.4 lists infrastructure (roads, workshops, mills...) among what makes an idea
+buildable. Until now that meant only other advancements. Tech requirements now include
+`buildings`: printing press, movable type and spinning machines need workshops; blast
+furnaces, crucible steel and cannon need forges; coke smelting needs forges and mines; the
+steam engine and railways need mines (historically, engines first pumped mines);
+universities need a school; banking a market; hospitals a temple; caravels, sternpost
+rudders and steamships a harbour. An upgrade counts for what it replaced (a bank is still a
+market). Blocked ideas say what is missing ("needs forges built somewhere in the realm").
+Courts building for themselves favour what unlocks an idea they are waiting on, and the
+language model's state summary lists the realm's buildings. This makes the bootstrapping
+puzzle concrete: to print, first build the workshops.

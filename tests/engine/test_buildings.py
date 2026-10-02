@@ -15,6 +15,7 @@ from anachronism.engine.events import EventLog
 from anachronism.engine.game import apply_action, end_turn, new_game
 from anachronism.engine.save import dumps, loads
 from anachronism.engine.state import Army, GameState, TechState
+from anachronism.engine.tech import feasibility, standing_buildings
 from anachronism.engine.timeflow import turns_for
 
 LATIUM = "rom_latium"
@@ -168,3 +169,21 @@ def test_rival_courts_build_and_saves_keep_buildings(punic: GameState) -> None:
     ]
     assert rival_built, "rival courts with full stores should build"
     assert dumps(loads(dumps(punic))) == dumps(punic)
+
+
+def test_some_ideas_need_buildings_standing_in_the_realm(punic: GameState) -> None:
+    # D-114: infrastructure as a requirement - universities need a school somewhere
+    rome = punic.civs["rome"]
+    for node in punic.tech_nodes["universities"].prerequisites:
+        rome.tech[node] = TechState(stage=Stage.ADOPTED)
+    blocked = feasibility(punic, "rome", "universities")
+    assert blocked.missing_buildings == ("school",)
+    rome.tech["universities"] = TechState(stage=Stage.CONCEPT)
+    assert "school" in buildings.wanted_buildings(punic, "rome")
+    finish(punic, LATIUM, "school")
+    assert not feasibility(punic, "rome", "universities").missing_buildings
+
+
+def test_an_upgrade_counts_for_what_it_replaced(punic: GameState) -> None:
+    finish(punic, LATIUM, "bank")
+    assert {"bank", "market"} <= standing_buildings(punic, "rome")

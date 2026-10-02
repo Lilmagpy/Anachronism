@@ -60,7 +60,7 @@ techs:
     year: -400
     complexity: 4
     prerequisites: [iron_working, piston_bellows]
-    requires: {materials: [iron], widespread: [charcoal_burning]}
+    requires: {materials: [iron], widespread: [charcoal_burning], buildings: [forge]}
     effects: [{type: materials_output, bp: 1500}, {type: military_strength, bp: 600}]
     flavour: Iron poured like water instead of beaten like dough.
 
@@ -71,6 +71,6 @@ techs:
     year: -300
     complexity: 4
     prerequisites: [iron_working, pottery_kiln]
-    requires: {materials: [iron]}
+    requires: {materials: [iron], buildings: [forge]}
     effects: [{type: military_strength, bp: 1200}, {type: materials_output, bp: 500}]
     flavour: Sealed in clay and fired for days, the steel comes out patterned like water.
