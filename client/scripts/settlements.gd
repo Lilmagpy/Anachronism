@@ -325,10 +325,11 @@ func _cluster(centre: Vector2, houses: int, radius: float, fields: bool, site: i
 ## The province's chief city; a capital gets walls, gate towers and a palace hall.
 func _city(site: Dictionary, population: int, index: int) -> void:
 	var centre: Vector2 = site["pixel"]
-	var half := clampf(0.5 + sqrt(population / 100000.0) * 0.28, 0.6, 1.8) * S
+	var tier := int(site.get("tier", 0))   # village, town, city, great city, metropolis (D-127)
+	var half := clampf(0.5 + sqrt(population / 100000.0) * 0.28, 0.6, 1.8) * S * (1.0 + 0.12 * tier)
 	var turn := 0.0  # cities were laid out on the cardinal directions
 	clearings.append([centre, half * 1.25])
-	var houses := clampi(population / 30000, 8, 60)
+	var houses := clampi(population / 30000, 8, 60) + tier * 8
 	if style == "steppe":
 		houses *= 2  # a khan's camp sprawls: many tents for few people
 	for i in houses:
@@ -343,9 +344,17 @@ func _city(site: Dictionary, population: int, index: int) -> void:
 	var size := clampf(0.8 + population / 2000000.0, 0.8, 1.4)
 	_add("i_castle" if site["capital"] else "i_town", centre, 0.0, PI / 5.0, Vector3.ONE * size, Color.WHITE, index, 1.0)
 	_city_buildings(site, centre, half, index)
+	if str(site.get("works", "")) != "":
+		_scaffold(site, centre, half, index)
+	# a city of rank gets walls of its own; a great city spills out beyond them
+	if (site["capital"] or tier >= 2) and style != "steppe":
+		_walls(centre, half, index)
+	if tier >= 3:
+		var ring := half * 1.45
+		for k in 6 + (tier - 3) * 4:
+			var angle := TAU * k / (6.0 + (tier - 3) * 4) + 0.3
+			_cluster(centre + Vector2(cos(angle), sin(angle)) * ring, 4 + tier, half * 0.32, false, index, 0.4)
 	if site["capital"]:
-		if style != "steppe":
-			_walls(centre, half, index)
 		_palace(centre, index)
 		for k in 3:
 			_chimneys.append(centre + Vector2(rng.randf_range(-half, half), rng.randf_range(-half, half)) * 0.6)
@@ -378,6 +387,37 @@ func _city_buildings(site: Dictionary, centre: Vector2, half: float, index: int)
 			continue
 		var roof := Color(0.88, 0.55, 0.38)
 		_add(part, spot, 0.0, -angle + PI / 2.0, Vector3.ONE, roof, index, 0.4)
+
+
+## Building work in a city (D-127): the new building half-risen in its place, wrapped in
+## timber scaffolding, with a crane over it.
+func _scaffold(site: Dictionary, centre: Vector2, half: float, index: int) -> void:
+	var look := str(site["works"])
+	var count: int = site.get("buildings", []).size()
+	var place := RandomNumberGenerator.new()
+	place.seed = hash(str(site["id"]) + "buildings")
+	var start := place.randf() * TAU
+	var angle := start + TAU * count / maxf(count + 1.0, 1.0)
+	var spot := centre + Vector2(cos(angle), sin(angle)) * half * (0.45 + 0.25 * (count % 2))
+	if earth.is_wet(spot):
+		spot = centre + (spot - centre) * 0.6
+	var part := "b_" + look
+	if not _parts.has(part):
+		var entry: Array = Buildings.CITY_LOOKS.get(look, Buildings.CITY_LOOKS["hall"])
+		_parts[part] = {"mesh": Buildings.city_building(look, float(entry[1]) * S), "transforms": [],
+			"colours": [], "kit": true}
+	# the walls half-way up
+	_add(part, spot, 0.0, -angle + PI / 2.0, Vector3(1.0, 0.55, 1.0), Color(0.88, 0.55, 0.38), index, 0.4)
+	var timber := Color(0.62, 0.44, 0.26)
+	var r := 0.22 * S
+	for corner in [Vector2(-r, -r), Vector2(r, -r), Vector2(r, r), Vector2(-r, r), Vector2(0, -r), Vector2(0, r)]:
+		_add("pole", spot + corner, 0.0, 0.0, Vector3(1.6, 0.9, 1.6), timber)
+	for height in [0.18, 0.4]:   # walkways of planks
+		_add("terrace", spot, height * S, 0.0, Vector3(0.66, 0.2, 0.9), timber.lightened(0.1))
+	# the crane: a mast and a long arm
+	var mast := spot + Vector2(r * 1.6, 0)
+	_add("pole", mast, 0.0, 0.0, Vector3(2.0, 1.8, 2.0), timber.darkened(0.1))
+	_add("terrace", mast + Vector2(-r * 1.1, 0), 1.2 * S, 0.0, Vector3(1.1, 0.8, 0.1), timber.darkened(0.1))
 
 
 ## A capital's walls with corner towers and a gatehouse on each side (Kenney castle kit);

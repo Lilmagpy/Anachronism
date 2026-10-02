@@ -20,16 +20,19 @@ from anachronism.engine.armies import (
 )
 from anachronism.engine.buildings import cost as building_cost
 from anachronism.engine.buildings import options as building_options
-from anachronism.engine.buildings import slots
+from anachronism.engine.buildings import slots, worth
 from anachronism.engine.commands import describe_blockers
 from anachronism.engine.decrees import cost, explain_costs, explain_ready_in, news_on_the_road
 from anachronism.engine.dilemmas import effects_text, fill
 from anachronism.engine.dynasty import remembered_in
-from anachronism.engine.economy import project_costs
+from anachronism.engine.economy import project_costs, province_output
+from anachronism.engine.effects import civ_effects
+from anachronism.engine.fixed import BP
 from anachronism.engine.navies import SIZES, best_ship, sea_links, sea_route, seas_of
 from anachronism.engine.navies import power as sea_power
 from anachronism.engine.occupation import garrisoned, restless
 from anachronism.engine.offers import describe
+from anachronism.engine.population import province_capacity
 from anachronism.engine.projects import hasten_cost, project_turns
 from anachronism.engine.reports import capacity
 from anachronism.engine.rivals import relation, strength
@@ -37,7 +40,7 @@ from anachronism.engine.state import Army, Event, GameState
 from anachronism.engine.suspicion import adoption_suspicion_bp
 from anachronism.engine.tactics import AUTO, final, natural, needs_text, short_of_men
 from anachronism.engine.tech import feasibility, is_adopted
-from anachronism.engine.timeflow import turns_for
+from anachronism.engine.timeflow import per_turn, turns_for
 from anachronism.engine.victory import progress
 from anachronism.engine.war import defence_bp, fronts
 from anachronism.tools.console import describe_effect
@@ -405,13 +408,60 @@ def building_effects(kind: Building) -> str:
     return ", ".join(parts)
 
 
+TIERS = ("Village", "Town", "City", "Great city", "Metropolis")
+_TIER_POINTS = (0, 2, 4, 7, 10)
+
+
+def city_tier(population: int, buildings: int) -> int:
+    """How grown a province's chief city is (D-127): its people and its buildings."""
+    points = buildings + population // 250_000
+    return max(i for i, need in enumerate(_TIER_POINTS) if points >= need)
+
+
+def _gains(state: GameState, province_id: str, kind: Building, now: Any, then: Any) -> list[str]:
+    """What a building would add here, in plain numbers."""
+    out = [
+        f"+{then_value - now_value:,} {word} a turn"
+        for word, now_value, then_value in (
+            ("food", now.food, then.food),
+            ("materials", now.materials, then.materials),
+            ("wealth", now.wealth, then.wealth),
+            ("knowledge", now.knowledge, then.knowledge),
+        )
+        if then_value > now_value
+    ]
+    if kind.growth_bp:
+        out.append(f"its people grow {kind.growth_bp // 100}% faster")
+    if kind.capacity_bp:
+        room = province_capacity(state, province_id, None) * kind.capacity_bp // BP
+        out.append(f"room for {room:,} more people")
+    if kind.calm_bp:
+        out.append("calms the realm")
+    if kind.literacy_bp:
+        out.append("teaches reading")
+    if kind.veterans_bp:
+        out.append(f"soldiers raised here start {kind.veterans_bp // 100}% seasoned")
+    return out
+
+
 def _buildings(state: GameState, province_id: str) -> dict[str, Any]:
-    """What stands in a province, what is going up, and (for yours) what could be built."""
+    """What stands in a province, what is going up, and (for yours) what could be built.
+
+    For the player's own provinces (D-127): how grown the city is, what it makes each turn,
+    when its next building plot opens, and for each building it could raise what it would
+    add here in plain numbers, what it costs to keep, and which is the best value.
+    """
     province = state.provinces[province_id]
     kinds = state.world.buildings
+    tier = city_tier(province.population, len(province.buildings))
     out: dict[str, Any] = {
         "buildings": [
-            {"id": b, "name": kinds[b].name, "look": kinds[b].look}
+            {
+                "id": b,
+                "name": kinds[b].name,
+                "look": kinds[b].look,
+                "does": building_effects(kinds[b]),
+            }
             for b in province.buildings
             if b in kinds
         ],
@@ -424,27 +474,46 @@ def _buildings(state: GameState, province_id: str) -> dict[str, Any]:
         if province.works is not None and province.works.building in kinds
         else None,
         "slots": slots(state, province_id),
+        "tier": tier,
+        "tier_name": TIERS[tier],
     }
     if province.owner == state.player_civ:
+        me = state.player_civ
+        effects = civ_effects(state, me)
+        now = province_output(state, me, province_id, effects)
+        out["output"] = asdict(now)
+        rules = state.world.rules.buildings
+        if out["slots"] < rules.max_slots:
+            out["next_slot_at"] = (out["slots"] - rules.base_slots + 1) * rules.people_per_slot
+        unrest = state.civs[me].stats.unrest_bp
         options: list[dict[str, Any]] = []
-        for kind, reason in building_options(state, state.player_civ, province_id):
+        for kind, reason in building_options(state, me, province_id):
             if reason == "already built here" or reason == "a better one already stands here":
                 continue
             materials, wealth = building_cost(state, province_id, kind.id)
+            then = province_output(state, me, province_id, effects, kind.id)
             options.append(
                 {
                     "id": kind.id,
                     "name": kind.name,
+                    "look": kind.look,
                     "note": kind.note,
                     "does": building_effects(kind),
+                    "gains": _gains(state, province_id, kind, now, then),
+                    "upkeep": per_turn(state, kind.upkeep * state.world.cost_scale),
+                    "replaces": kinds[kind.replaces].name if kind.replaces in kinds else "",
                     "materials": materials,
                     "wealth": wealth,
                     "turns": turns_for(state, kind.decades),
                     "why_not": reason,
+                    "value": worth(kind, unrest) * 1000 // max(1, materials + wealth),
                 }
             )
-        # what can be built first, then what is nearly in reach
-        options.sort(key=lambda o: (o["why_not"] is not None, o["materials"] + o["wealth"]))
+        # what can be built first, best value first; then what is nearly in reach
+        options.sort(key=lambda o: (o["why_not"] is not None, -o["value"], o["name"]))
+        ready = [o for o in options if o["why_not"] is None]
+        for o in options:
+            o["recommended"] = bool(ready) and o is ready[0]
         out["can_build"] = options
     return out
 

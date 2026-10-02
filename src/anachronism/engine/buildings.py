@@ -47,6 +47,15 @@ def bonus(state: GameState, province_id: str) -> Bonus:
     return Bonus(**{name: sum(getattr(k, name) for k in kinds) for name in _FIELDS})
 
 
+def with_building(built: Bonus, kind: Building, replaced: Building | None = None) -> Bonus:
+    """A province's bonus with one more building (taking out the one it replaces)."""
+    values = {name: getattr(built, name) + getattr(kind, name) for name in _FIELDS}
+    if replaced is not None:
+        for name in _FIELDS:
+            values[name] -= getattr(replaced, name)
+    return Bonus(**values)
+
+
 def slots(state: GameState, province_id: str) -> int:
     """How many buildings the province can hold: more as its people grow."""
     rules = state.world.rules.buildings

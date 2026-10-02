@@ -237,6 +237,11 @@ func _build_hud() -> void:
 	add_child(game_menu)
 	hud.menu_requested.connect(game_menu.open_menu)
 	hud.capital_requested.connect(_visit_capital)
+	hud.city_requested.connect(func(id: String):  # fly down to a city to see it (D-127)
+		for p in view["provinces"]:
+			if p["id"] == id and p.get("latlon") != null:
+				rig.fly_to(earth.ground_at(p["latlon"][0], p["latlon"][1]), 80.0)
+				_select(id))
 	hud.spoke.connect(func(): audio.play("speak"))
 	game_menu.message.connect(func(text: String):
 		hud.message = text
@@ -272,6 +277,8 @@ func _build_hud() -> void:
 		for idea in view.get("ideas", []):
 			if str(idea["id"]) == str(options["breakthrough-demo"]):
 				hud.show_breakthroughs([{"id": idea["id"], "name": idea["name"], "ahead": idea["ahead"], "history": idea["history"]}])
+	if options.has("cities"):  # --cities[=province]: open the Cities screen (screenshots)
+		hud.open_cities("" if str(options["cities"]) == "true" else str(options["cities"]))
 	if options.has("notebook"):  # --notebook[=idea]: open the notebook (screenshots)
 		hud.open_notebook("" if str(options["notebook"]) == "true" else str(options["notebook"]))
 	if options.has("fold"):  # --fold: fold the waiting chapter away (screenshots)
@@ -289,6 +296,9 @@ func _build_hud() -> void:
 	for i in int(options.get("play", "0")):
 		_on_end_turn()
 	_quick_turns = false
+	if options.has("queue"):  # --queue=province:building: start one without ending the turn
+		var bits := str(options["queue"]).split(":")
+		_on_action({"kind": "build", "province": bits[0], "building": bits[1]})
 	if options.has("war"):  # --war=civ: declare war (testing the turn replay)
 		_on_action({"kind": "declare_war", "target": str(options["war"])})
 	if options.has("raise"):  # --raise=province: raise an army there
@@ -579,6 +589,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			return
 		if event.keycode == KEY_N:  # the notebook from the future (D-126)
 			hud.open_notebook()
+			return
+		if event.keycode == KEY_C:  # your cities (D-127)
+			hud.open_cities()
 			return
 		var tabs := {KEY_1: "ideas", KEY_2: "projects", KEY_3: "world"}
 		if tabs.has(event.keycode):

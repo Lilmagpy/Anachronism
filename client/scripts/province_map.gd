@@ -52,6 +52,8 @@ func _init(earth_builder: EarthBuilder, view: Dictionary) -> void:
 			"pixel": earth.pixel_of(p["latlon"][0], p["latlon"][1]),
 			"resources": p.get("resources", {}),
 			"buildings": _looks(p),
+			"tier": int(p.get("tier", 0)),
+			"works": _works_look(p),
 		})
 	for s in view["seas"]:
 		if s["latlon"] == null:
@@ -203,6 +205,8 @@ func update(view: Dictionary) -> bool:
 		if by_id.has(site["id"]):   # cities grow, and raise new buildings (D-111)
 			site["population"] = by_id[site["id"]]["population"]
 			site["buildings"] = _looks(by_id[site["id"]])
+			site["tier"] = int(by_id[site["id"]].get("tier", 0))   # how grown (D-127)
+			site["works"] = _works_look(by_id[site["id"]])
 		if owners.has(site["id"]) and (site["owner"] != owners[site["id"]] or site["capital"] != capitals[site["id"]]):
 			site["owner"] = owners[site["id"]]
 			site["capital"] = capitals[site["id"]]
@@ -217,6 +221,12 @@ static func _looks(p: Dictionary) -> Array:
 	return p.get("buildings", []).map(func(b): return str(b["look"]))
 
 
+## The look of what is going up in a province ("" if nothing).
+static func _works_look(p: Dictionary) -> String:
+	var works = p.get("works")
+	return str(works["look"]) if works != null else ""
+
+
 ## A fingerprint of every city's size and buildings: when it changes, the cities are
 ## rebuilt. Sizes count in steps of a quarter, so a city does not rebuild every turn.
 func growth_signature() -> String:
@@ -225,7 +235,8 @@ func growth_signature() -> String:
 		if site["sea"]:
 			continue
 		var step := int(log(maxf(float(site["population"]), 1000.0)) / log(1.25))
-		parts.append("%s:%d:%s" % [site["id"], step, ",".join(site.get("buildings", []))])
+		parts.append("%s:%d:%d:%s:%s" % [site["id"], step, int(site.get("tier", 0)),
+			",".join(site.get("buildings", [])), site.get("works", "")])
 	return "|".join(parts)
 
 
@@ -923,7 +934,8 @@ func _province_label(site: Dictionary) -> Label3D:
 	label.outline_render_priority = 10
 	# small provinces are named only when the camera is close, so labels never pile up
 	label.visibility_range_end = clampf(160.0 + sqrt(float(_cells_of(site))) * 30.0, 220.0, 700.0)
-	label.position = earth.ground_at_pixel(site["pixel"]) + Vector3(0, 6.0, 0)
+	# above the city rather than on it, so its buildings show beneath the name up close
+	label.position = earth.ground_at_pixel(site["pixel"]) + Vector3(0, 22.0, 0)
 	# on a plate in its owner's colours, like a city's name banner
 	label.outline_size = 6
 	var font: Font = label.font if label.font != null else ThemeDB.fallback_font

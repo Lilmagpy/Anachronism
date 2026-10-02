@@ -12,7 +12,7 @@ from itertools import groupby
 
 from anachronism.content.schema import Access, EffectType
 from anachronism.engine.actions import Priority
-from anachronism.engine.buildings import bonus
+from anachronism.engine.buildings import Bonus, bonus, with_building
 from anachronism.engine.buildings import upkeep as building_upkeep
 from anachronism.engine.effects import Effects
 from anachronism.engine.fixed import BP, apply_bp, div_round, ratio_bp, with_bonus
@@ -177,37 +177,47 @@ def allocate(
     return Allocation(funding, requested, used)
 
 
-def production(state: GameState, civ_id: str, effects: Effects, production_bp: int) -> Production:
-    """What owned provinces produce this turn, after effects and labour diversion."""
+def _province_raw(
+    state: GameState, civ_id: str, province_id: str, built: Bonus
+) -> tuple[int, int, int, int, int, int]:
+    """One province's raw yield (food, materials, taxes, trade, knowledge, flat materials)."""
     economy = state.world.rules.economy
     literacy = state.civs[civ_id].stats.literacy_bp
-    food = materials = taxes = trade = knowledge = flat_materials = 0
-    for province_id in state.owned_provinces(civ_id):
-        province = state.provinces[province_id]
-        geography = state.world.geography[province_id]
-        terrain = state.world.terrain[geography.terrain]
-        people = province.population
-        ruin = 2 if province.ravaged else 1  # pillaged fields and burned workshops
-        built = bonus(state, province_id)  # its markets, workshops, granaries (D-111)
-        food += with_bonus(people * terrain.food_bp // ruin, built.food_bp)
-        materials += with_bonus(people * terrain.materials_bp // ruin, built.materials_bp)
-        taxes += with_bonus(people * economy.wealth_per_1000_bp // ruin, built.wealth_bp)
-        trade_bp = economy.base_trade_bp
-        trade_bp += economy.coastal_trade_bp if geography.coastal else 0
-        trade_bp += economy.river_trade_bp if geography.river else 0
-        if province.blockaded:  # enemy warships close the harbours (D-107)
-            blockade = state.world.rules.armies.blockade_trade_bp
-            trade_bp -= economy.coastal_trade_bp if geography.coastal else 0
-            trade_bp -= apply_bp(trade_bp, blockade)
-        trade += with_bonus(people * economy.wealth_per_1000_bp * trade_bp // BP, built.wealth_bp)
-        learned = people * economy.knowledge_per_1000_bp
-        learned += people * literacy // BP * economy.knowledge_per_1000_literate_bp
-        knowledge += with_bonus(learned, built.knowledge_bp)
-        for access in province.resources.values():
-            if access is Access.ACCESSIBLE:
-                flat_materials += economy.resource_materials_accessible
-            elif access is Access.LIMITED:
-                flat_materials += economy.resource_materials_limited
+    province = state.provinces[province_id]
+    geography = state.world.geography[province_id]
+    terrain = state.world.terrain[geography.terrain]
+    people = province.population
+    ruin = 2 if province.ravaged else 1  # pillaged fields and burned workshops
+    food = with_bonus(people * terrain.food_bp // ruin, built.food_bp)
+    materials = with_bonus(people * terrain.materials_bp // ruin, built.materials_bp)
+    taxes = with_bonus(people * economy.wealth_per_1000_bp // ruin, built.wealth_bp)
+    trade_bp = economy.base_trade_bp
+    trade_bp += economy.coastal_trade_bp if geography.coastal else 0
+    trade_bp += economy.river_trade_bp if geography.river else 0
+    if province.blockaded:  # enemy warships close the harbours (D-107)
+        blockade = state.world.rules.armies.blockade_trade_bp
+        trade_bp -= economy.coastal_trade_bp if geography.coastal else 0
+        trade_bp -= apply_bp(trade_bp, blockade)
+    trade = with_bonus(people * economy.wealth_per_1000_bp * trade_bp // BP, built.wealth_bp)
+    learned = people * economy.knowledge_per_1000_bp
+    learned += people * literacy // BP * economy.knowledge_per_1000_literate_bp
+    knowledge = with_bonus(learned, built.knowledge_bp)
+    flat = 0
+    for access in province.resources.values():
+        if access is Access.ACCESSIBLE:
+            flat += economy.resource_materials_accessible
+        elif access is Access.LIMITED:
+            flat += economy.resource_materials_limited
+    return food, materials, taxes, trade, knowledge, flat
+
+
+def _finish(
+    state: GameState,
+    raw: tuple[int, int, int, int, int, int],
+    effects: Effects,
+    production_bp: int,
+) -> Production:
+    food, materials, taxes, trade, knowledge, flat_materials = raw
 
     def finish(total: int, effect: EffectType, diverted: bool = True) -> int:
         amount = with_bonus(div_round(total, _PER_1000), effects[effect])
@@ -227,6 +237,35 @@ def production(state: GameState, civ_id: str, effects: Effects, production_bp: i
         wealth=per_turn(state, apply_bp(wealth, production_bp)),
         knowledge=finish(knowledge, EffectType.KNOWLEDGE_GAIN, diverted=False),
     )
+
+
+def production(state: GameState, civ_id: str, effects: Effects, production_bp: int) -> Production:
+    """What owned provinces produce this turn, after effects and labour diversion."""
+    totals = [0, 0, 0, 0, 0, 0]
+    for province_id in state.owned_provinces(civ_id):
+        # its markets, workshops, granaries (D-111)
+        raw = _province_raw(state, civ_id, province_id, bonus(state, province_id))
+        totals = [a + b for a, b in zip(totals, raw, strict=True)]
+    food, materials, taxes, trade, knowledge, flat = totals
+    return _finish(state, (food, materials, taxes, trade, knowledge, flat), effects, production_bp)
+
+
+def province_output(
+    state: GameState, civ_id: str, province_id: str, effects: Effects, extra: str = ""
+) -> Production:
+    """What one province makes in a turn, before work is diverted to projects.
+
+    With the building ``extra`` added, what it would make: so the player can see what a
+    building is worth here, in plain numbers (D-127).
+    """
+    built = bonus(state, province_id)
+    if extra and extra in state.world.buildings:
+        kind = state.world.buildings[extra]
+        replaced = kind.replaces if kind.replaces in state.provinces[province_id].buildings else ""
+        built = with_building(
+            built, kind, state.world.buildings.get(replaced) if replaced else None
+        )
+    return _finish(state, _province_raw(state, civ_id, province_id, built), effects, BP)
 
 
 def granary_capacity(state: GameState, civ_id: str, effects: Effects) -> int:

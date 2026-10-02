@@ -12,6 +12,7 @@ signal end_turn_requested
 signal idea_submitted(text: String, answer: String)
 signal menu_requested
 signal capital_requested
+signal city_requested(province_id: String)   ## fly to a city (from the Cities screen)
 signal spoke                    ## a character has started speaking (for the chime)
 signal armies_changed           ## the army selection changed: redraw the armies
 
@@ -57,6 +58,8 @@ var _chronicle := VBoxContainer.new()
 var _end_turn := Button.new()
 var _skip_hint: Label
 var notebook := Notebook.new()   ## the notebook from the future (D-126)
+var cities := CityScreen.new()   ## your cities and what to build in them (D-127)
+var _screens := Control.new()    ## full screens, drawn above the rest of the HUD
 var _notebook_button: Button
 var _replaying := false
 var _hover := Label.new()
@@ -76,6 +79,15 @@ func _ready() -> void:
 	_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_root.theme = _theme()
 	add_child(_root)
+	# full screens (the notebook, the cities, breakthrough cards) above everything else,
+	# speech and dilemmas included
+	var above := CanvasLayer.new()
+	above.layer = layer + 1
+	add_child(above)
+	_screens.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_screens.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_screens.theme = _root.theme
+	above.add_child(_screens)
 	_build_top_bar()
 	_build_side_panel()
 	_build_card()
@@ -123,8 +135,10 @@ func show_view(new_view: Dictionary) -> void:
 		_root.add_child(_story)   # above everything else
 	_story.show_chronicle(view.get("chronicle"))
 	if notebook.get_parent() == null:
-		_root.add_child(notebook)   # above everything but the chapter card
+		_screens.add_child(cities)
+		_screens.add_child(notebook)
 	notebook.refresh(view)
+	cities.refresh(view)
 	var waiting: Variant = view.get("chronicle")
 	_end_turn.disabled = waiting != null and waiting.get("chapter") != null
 	var outcome: Variant = view.get("victory", {}).get("outcome")
@@ -1333,9 +1347,8 @@ func _fill_card() -> void:
 				open_box = "" if open_box == "levy" else "levy"
 				_fill_card()))
 		if p.has("can_build"):
-			tools.add_child(_button(("▾ " if open_box == "build" else "▸ ") + "Build", func():
-				open_box = "" if open_box == "build" else "build"
-				_fill_card()))
+			var city_id := str(p["id"])
+			tools.add_child(_button("🏛 Develop the city", func(): open_cities(city_id)))
 		if p.get("port") != null and view.has("navy"):
 			tools.add_child(_button(("▾ " if open_box == "fleet" else "▸ ") + "Build a fleet", func():
 				open_box = "" if open_box == "fleet" else "fleet"
@@ -1864,9 +1877,14 @@ func show_breakthroughs(items: Array) -> void:
 		veil.queue_free()
 		show_breakthroughs(rest))
 	column.add_child(go)
-	_root.add_child(veil)
+	_screens.add_child(veil)
 	veil.modulate.a = 0.0
 	create_tween().tween_property(veil, "modulate:a", 1.0, 0.3)
+
+
+## Open the Cities screen (at a city, if given).
+func open_cities(province_id := "") -> void:
+	cities.open(view, province_id)
 
 
 ## Open the notebook from the future (at an idea's page, if given).
@@ -1886,6 +1904,18 @@ func _build_notebook() -> void:
 	_root.add_child(_notebook_button)
 	notebook.start_requested.connect(func(id: String):
 		action_requested.emit({"kind": "start", "node_id": id}))
+	var develop := UiStyle.big_button("🏛 CITIES", 22, Color(0.98, 0.86, 0.45))
+	develop.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
+	develop.offset_left = -620
+	develop.offset_top = -80
+	develop.offset_right = -444
+	develop.offset_bottom = -8
+	develop.tooltip_text = "Your cities: what each makes, its building plots, and what to build next (C)"
+	develop.pressed.connect(func(): open_cities())
+	_root.add_child(develop)
+	cities.build_requested.connect(func(province: String, building: String):
+		action_requested.emit({"kind": "build", "province": province, "building": building}))
+	cities.show_requested.connect(func(province: String): city_requested.emit(province))
 
 
 func _build_end_turn() -> void:

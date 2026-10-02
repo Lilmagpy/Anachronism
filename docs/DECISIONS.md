@@ -1174,3 +1174,22 @@ feel significant enough, and choosing advancements was awkward. Now:
   before its time", and a card tells what really happened in our history and what changes.
 - **The mark on history**: the game remembers the year each idea came into use, and counts
   how many were brought early and by how many years in all.
+
+## D-127 Developing your cities: real numbers, ranks you can see, one screen for it all — owner's direction (2026-10-02)
+The owner: building was awkward, it was unclear what a building actually gives, and cities
+should visibly expand and develop so that one can stop and develop one's base. Now:
+- **The Cities screen** (🏛 CITIES beside the notebook, C, or "Develop the city" on a
+  province card) lists every city with its rank and whether it has room to build; the open
+  city shows what it makes each turn, what it could build - each with what it would add
+  **there**, in plain numbers ("+119 food a turn, its people grow 10% faster, room for
+  61,000 more people"), what it costs, how long it takes and what it costs to keep, with the
+  best value marked - and its building plots: built, going up, empty, and when the next one
+  opens. One building goes up at a time in each city, so building more means building in
+  more cities, all from one screen. The engine computes one province's output with or
+  without a building (`economy.province_output`); production itself is unchanged.
+- **Ranks**: a city is a Village, Town, City, Great city or Metropolis by its buildings and
+  people (a point a building, a point per 250,000 people). On the map a city spreads wider
+  and fills with houses as it rises; a City gets walls of its own, a Great city spills out
+  into suburbs beyond them. Building work stands on the map as the new building half-risen
+  in timber scaffolding, with a crane.
+- Place names now float above their cities, so a city's buildings show beneath its name.
