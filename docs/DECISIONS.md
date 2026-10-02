@@ -1193,3 +1193,10 @@ should visibly expand and develop so that one can stop and develop one's base. N
   into suburbs beyond them. Building work stands on the map as the new building half-risen
   in timber scaffolding, with a crane.
 - Place names now float above their cities, so a city's buildings show beneath its name.
+
+## D-128 A building queue in every city — DELEGATED (2026-10-02)
+Follow-on to D-127 ("ergonomically smoother to build more"): while builders are at work
+in a city, BUILD becomes QUEUE, and up to three buildings wait their turn there. Each is
+paid for only when it starts; if the stores cannot pay yet it waits; if it can no longer
+go up (no plot, the city lost) it is dropped. A queue belongs to whoever made it and lapses
+when the city changes hands. Queued buildings can be taken off the plans (✕).

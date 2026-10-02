@@ -72,8 +72,18 @@ def cost(state: GameState, province_id: str, building_id: str) -> tuple[int, int
     return kind.materials * scale // BP, kind.wealth * scale // BP
 
 
-def why_not(state: GameState, civ_id: str, province_id: str, building_id: str) -> str | None:
-    """Why the building cannot go up here now (None: it can, if the stores allow)."""
+QUEUE_LENGTH = 3
+"""How many buildings a province can have waiting to start (D-128)."""
+
+
+def why_not(
+    state: GameState, civ_id: str, province_id: str, building_id: str, *, planning: bool = False
+) -> str | None:
+    """Why the building cannot go up here now (None: it can, if the stores allow).
+
+    ``planning``: could it be queued behind the building going up, counting the plots that
+    the works and the queue will take.
+    """
     province = state.provinces.get(province_id)
     kind = state.world.buildings.get(building_id)
     if province is None or kind is None:
@@ -82,7 +92,12 @@ def why_not(state: GameState, civ_id: str, province_id: str, building_id: str) -
         return "you build only in your own provinces"
     if building_id in province.buildings:
         return "already built here"
-    if province.works is not None:
+    planned = province.queue + ([province.works.building] if province.works else [])
+    if planning and building_id in planned:
+        return "already planned here"
+    if planning and len(province.queue) >= QUEUE_LENGTH:
+        return f"the queue holds {QUEUE_LENGTH} at most"
+    if province.works is not None and not planning:
         return "builders are already at work here"
     if any(_replaces(state, b) == building_id for b in province.buildings):
         return "a better one already stands here"
@@ -90,7 +105,8 @@ def why_not(state: GameState, civ_id: str, province_id: str, building_id: str) -
     missing = [t for t in kind.needs_techs if t in state.tech_nodes and not is_adopted(civ, t)]
     if missing:
         return "needs " + ", ".join(state.tech_nodes[t].name for t in missing)
-    if kind.replaces is not None and kind.replaces not in province.buildings:
+    upgrading = kind.replaces in province.buildings or (planning and kind.replaces in planned)
+    if kind.replaces is not None and not upgrading:
         return f"needs a {state.world.buildings[kind.replaces].name.lower()} here first"
     geography = state.world.geography[province_id]
     if kind.coastal and not geography.coastal:
@@ -105,7 +121,14 @@ def why_not(state: GameState, civ_id: str, province_id: str, building_id: str) -
             state.world.resources[r].name for r in kind.needs_resource if r in state.world.resources
         )
         return f"needs {names}"
-    if kind.replaces is None and len(province.buildings) >= slots(state, province_id):
+    taken = len(province.buildings)
+    if planning:  # plots the works and the queue will take (upgrades take none)
+        taken += sum(
+            1
+            for b in planned
+            if b in state.world.buildings and not state.world.buildings[b].replaces
+        )
+    if kind.replaces is None and taken >= slots(state, province_id):
         return "no room: the city must grow first"
     return None
 
@@ -113,6 +136,32 @@ def why_not(state: GameState, civ_id: str, province_id: str, building_id: str) -
 def _replaces(state: GameState, building_id: str) -> str | None:
     kind = state.world.buildings.get(building_id)
     return kind.replaces if kind is not None else None
+
+
+def queue(state: GameState, civ_id: str, province_id: str, building_id: str) -> tuple[bool, str]:
+    """Build now if the builders are free; otherwise queue it to start next (D-128)."""
+    province = state.provinces.get(province_id)
+    if province is None or province.works is None:
+        return start(state, civ_id, province_id, building_id)
+    reason = why_not(state, civ_id, province_id, building_id, planning=True)
+    if reason is not None:
+        return False, reason
+    if province.queued_by != civ_id:
+        province.queue = []
+    province.queue.append(building_id)
+    province.queued_by = civ_id
+    name = state.world.buildings[building_id].name.lower()
+    place = state.world.geography[province_id].name
+    return True, f"The {name} will start in {place} when the builders are free."
+
+
+def unqueue(state: GameState, civ_id: str, province_id: str, building_id: str) -> tuple[bool, str]:
+    """Take a building off a province's queue."""
+    province = state.provinces.get(province_id)
+    if province is None or province.owner != civ_id or building_id not in province.queue:
+        return False, "that is not planned there"
+    province.queue.remove(building_id)
+    return True, f"The {state.world.buildings[building_id].name.lower()} is taken off the plans."
 
 
 def start(state: GameState, civ_id: str, province_id: str, building_id: str) -> tuple[bool, str]:
@@ -134,11 +183,17 @@ def start(state: GameState, civ_id: str, province_id: str, building_id: str) -> 
 
 
 def advance_works(state: GameState, events: EventLog) -> None:
-    """Building sites move on a turn; finished buildings open (replacing older ones)."""
+    """Building sites move on a turn; finished buildings open (replacing older ones).
+
+    Then the next one queued starts, if the stores can pay for it (D-128).
+    """
     for province_id in sorted(state.provinces):
         province = state.provinces[province_id]
+        if province.queue and province.queued_by != province.owner:
+            province.queue = []  # the plans of the old owners
         works = province.works
         if works is None:
+            _next_queued(state, province_id, events)
             continue
         if province.owner is None:
             province.works = None
@@ -158,6 +213,26 @@ def advance_works(state: GameState, events: EventLog) -> None:
             f"Builders finish the {kind.name.lower()} in {place}.",
             subject=kind.name,
         )
+        _next_queued(state, province_id, events)
+
+
+def _next_queued(state: GameState, province_id: str, events: EventLog) -> None:
+    """Start the next queued building, if it still can go up and the stores can pay."""
+    province = state.provinces[province_id]
+    owner = province.owner
+    while province.queue and owner is not None and province.works is None:
+        building_id = province.queue[0]
+        if why_not(state, owner, province_id, building_id) is not None:
+            province.queue.pop(0)  # no longer possible here: dropped from the plans
+            continue
+        materials, wealth = cost(state, province_id, building_id)
+        stores = state.civs[owner].stockpiles
+        if stores.materials < materials or stores.wealth < wealth:
+            return  # it waits until the stores can pay
+        province.queue.pop(0)
+        ok, message = start(state, owner, province_id, building_id)
+        if ok:
+            events.add(owner, "building", message, subject=state.world.buildings[building_id].name)
 
 
 def upkeep(state: GameState, civ_id: str) -> int:
@@ -263,9 +338,14 @@ def rival_builders(state: GameState, events: EventLog) -> None:
             start(state, civ_id, *choice)
 
 
-def options(state: GameState, civ_id: str, province_id: str) -> list[tuple[Building, str | None]]:
-    """Every kind of building with why it cannot go up here (None if it can), in order."""
+def options(
+    state: GameState, civ_id: str, province_id: str, *, planning: bool = False
+) -> list[tuple[Building, str | None]]:
+    """Every kind of building with why it cannot go up here (None if it can), in order.
+
+    ``planning``: whether it could be queued behind the building going up (D-128).
+    """
     return [
-        (kind, why_not(state, civ_id, province_id, kind.id))
+        (kind, why_not(state, civ_id, province_id, kind.id, planning=planning))
         for kind in state.world.buildings.values()
     ]

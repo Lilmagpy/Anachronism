@@ -39,9 +39,11 @@ from anachronism.engine.actions import (
     SetPriority,
     SpreadRumours,
     StartProject,
+    Unqueue,
 )
 from anachronism.engine.armies import apply_orders
-from anachronism.engine.buildings import start as start_building
+from anachronism.engine.buildings import queue as queue_building
+from anachronism.engine.buildings import unqueue as unqueue_building
 from anachronism.engine.campaign import choose as choose_chapter
 from anachronism.engine.decrees import apply_decree
 from anachronism.engine.dilemmas import answer
@@ -116,7 +118,9 @@ def _apply(state: GameState, action: Action) -> tuple[bool, str]:
     ):
         return apply_orders(state, action)
     if isinstance(action, Build):
-        return start_building(state, action.civ, action.province, action.building)
+        return queue_building(state, action.civ, action.province, action.building)
+    if isinstance(action, Unqueue):
+        return unqueue_building(state, action.civ, action.province, action.building)
     if isinstance(action, AnswerEnvoy):
         if state.offer is None or civ.id != state.player_civ:
             return False, "no envoys are waiting"

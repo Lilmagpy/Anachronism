@@ -296,9 +296,10 @@ func _build_hud() -> void:
 	for i in int(options.get("play", "0")):
 		_on_end_turn()
 	_quick_turns = false
-	if options.has("queue"):  # --queue=province:building: start one without ending the turn
-		var bits := str(options["queue"]).split(":")
-		_on_action({"kind": "build", "province": bits[0], "building": bits[1]})
+	if options.has("queue"):  # --queue=province:building,...: build or queue, no turn ends
+		for order in str(options["queue"]).split(","):
+			var bits := order.split(":")
+			_on_action({"kind": "build", "province": bits[0], "building": bits[1]})
 	if options.has("war"):  # --war=civ: declare war (testing the turn replay)
 		_on_action({"kind": "declare_war", "target": str(options["war"])})
 	if options.has("raise"):  # --raise=province: raise an army there

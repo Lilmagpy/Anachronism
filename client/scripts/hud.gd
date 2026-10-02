@@ -1916,6 +1916,8 @@ func _build_notebook() -> void:
 	cities.build_requested.connect(func(province: String, building: String):
 		action_requested.emit({"kind": "build", "province": province, "building": building}))
 	cities.show_requested.connect(func(province: String): city_requested.emit(province))
+	cities.unqueue_requested.connect(func(province: String, building: String):
+		action_requested.emit({"kind": "unqueue", "province": province, "building": building}))
 
 
 func _build_end_turn() -> void:

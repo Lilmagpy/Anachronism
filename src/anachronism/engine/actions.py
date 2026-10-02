@@ -294,9 +294,21 @@ class BuildFleet(Frozen):
 
 
 class Build(Frozen):
-    """Raise a building in one of your provinces (D-111)."""
+    """Raise a building in one of your provinces (D-111).
+
+    If builders are already at work there, it is queued to start next (D-128).
+    """
 
     kind: Literal["build"] = "build"
+    civ: str
+    province: str
+    building: str
+
+
+class Unqueue(Frozen):
+    """Take a building off a province's queue (D-128)."""
+
+    kind: Literal["unqueue"] = "unqueue"
     civ: str
     province: str
     building: str
@@ -369,6 +381,7 @@ Action = Annotated[
     | SailFleet
     | ScuttleFleet
     | Build
+    | Unqueue
     | ChooseDilemma
     | ChooseChapter
     | AnswerEnvoy,

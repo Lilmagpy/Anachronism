@@ -187,3 +187,48 @@ def test_some_ideas_need_buildings_standing_in_the_realm(punic: GameState) -> No
 def test_an_upgrade_counts_for_what_it_replaced(punic: GameState) -> None:
     finish(punic, LATIUM, "bank")
     assert {"bank", "market"} <= standing_buildings(punic, "rome")
+
+
+def test_a_queued_building_starts_when_the_builders_are_free(punic: GameState) -> None:
+    # D-128: build while builders are busy, and it waits its turn, paid for when it starts
+    state = rich(punic)
+    state, first = apply_action(state, Build(civ="rome", province="rom_latium", building="mine"))
+    assert first.ok
+    state, second = apply_action(state, Build(civ="rome", province="rom_latium", building="school"))
+    assert second.ok
+    assert state.provinces["rom_latium"].queue == ["school"]
+    wealth = state.civs["rome"].stockpiles.wealth
+    state.provinces["rom_latium"].works.turns_left = 1  # type: ignore[union-attr]
+    buildings.advance_works(state, log(state))
+    latium = state.provinces["rom_latium"]
+    assert "mine" in latium.buildings
+    assert latium.works is not None
+    assert latium.works.building == "school"
+    assert latium.queue == []
+    assert state.civs["rome"].stockpiles.wealth < wealth  # paid only now
+
+
+def test_the_queue_can_be_cancelled_and_lapses_with_the_city(punic: GameState) -> None:
+    from anachronism.engine.actions import Unqueue
+
+    state = rich(punic)
+    state, _ = apply_action(state, Build(civ="rome", province="rom_latium", building="mine"))
+    state, _ = apply_action(state, Build(civ="rome", province="rom_latium", building="school"))
+    state, _ = apply_action(state, Build(civ="rome", province="rom_latium", building="granary"))
+    state, done = apply_action(state, Unqueue(civ="rome", province="rom_latium", building="school"))
+    assert done.ok
+    assert state.provinces["rom_latium"].queue == ["granary"]
+    state.provinces["rom_latium"].owner = "carthage"  # taken: Rome's plans are not theirs
+    buildings.advance_works(state, log(state))
+    assert state.provinces["rom_latium"].queue == []
+
+
+def test_a_queued_building_waits_for_the_stores(punic: GameState) -> None:
+    state = rich(punic)
+    state, _ = apply_action(state, Build(civ="rome", province="rom_latium", building="mine"))
+    state, _ = apply_action(state, Build(civ="rome", province="rom_latium", building="school"))
+    state.civs["rome"].stockpiles.wealth = 0
+    state.provinces["rom_latium"].works.turns_left = 1  # type: ignore[union-attr]
+    buildings.advance_works(state, log(state))
+    assert state.provinces["rom_latium"].works is None
+    assert state.provinces["rom_latium"].queue == ["school"]

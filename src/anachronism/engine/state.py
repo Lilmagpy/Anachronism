@@ -136,6 +136,10 @@ class ProvinceState(Mutable):
     """Buildings standing here, oldest first (D-111)."""
     works: Construction | None = None
     """A building going up here."""
+    queue: list[str] = Field(default_factory=list)
+    """Buildings to start here next, in order (D-128); each is paid for when it starts."""
+    queued_by: str | None = None
+    """Whose plans the queue is: dropped if the province changes hands."""
 
 
 class Stockpiles(Mutable):

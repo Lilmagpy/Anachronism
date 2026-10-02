@@ -474,6 +474,7 @@ def _buildings(state: GameState, province_id: str) -> dict[str, Any]:
         if province.works is not None and province.works.building in kinds
         else None,
         "slots": slots(state, province_id),
+        "queue": [{"id": b, "name": kinds[b].name} for b in province.queue if b in kinds],
         "tier": tier,
         "tier_name": TIERS[tier],
     }
@@ -487,8 +488,10 @@ def _buildings(state: GameState, province_id: str) -> dict[str, Any]:
             out["next_slot_at"] = (out["slots"] - rules.base_slots + 1) * rules.people_per_slot
         unrest = state.civs[me].stats.unrest_bp
         options: list[dict[str, Any]] = []
-        for kind, reason in building_options(state, me, province_id):
-            if reason == "already built here" or reason == "a better one already stands here":
+        busy = province.works is not None  # then the options are for the queue (D-128)
+        skip = ("already built here", "a better one already stands here", "already planned here")
+        for kind, reason in building_options(state, me, province_id, planning=busy):
+            if reason in skip:
                 continue
             materials, wealth = building_cost(state, province_id, kind.id)
             then = province_output(state, me, province_id, effects, kind.id)

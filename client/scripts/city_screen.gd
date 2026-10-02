@@ -6,6 +6,7 @@ class_name CityScreen
 extends Control
 
 signal build_requested(province_id: String, building_id: String)
+signal unqueue_requested(province_id: String, building_id: String)
 signal show_requested(province_id: String)
 
 const INK := UiStyle.INK
@@ -151,11 +152,12 @@ func _find(id: String) -> Dictionary:
 
 
 func _free_plots(city: Dictionary) -> int:
-	return int(city.get("slots", 0)) - (city.get("buildings", []) as Array).size() - (1 if city.get("works") != null else 0)
+	return int(city.get("slots", 0)) - (city.get("buildings", []) as Array).size() - (1 if city.get("works") != null else 0) \
+		- (city.get("queue", []) as Array).size()
 
 
 func _can_build_now(city: Dictionary) -> bool:
-	return city.get("works") == null and _free_plots(city) > 0 and (city.get("can_build", []) as Array).any(
+	return (city.get("queue", []) as Array).size() < 3 and (city.get("can_build", []) as Array).any(
 		func(o: Dictionary) -> bool: return o.get("why_not") == null)
 
 
@@ -195,6 +197,9 @@ func _fill_list(cities: Array) -> void:
 		var colour := DIM
 		if city.get("works") != null:
 			line = "⚒ building %s · %d turn%s" % [city["works"]["name"], int(city["works"]["turns"]), "" if int(city["works"]["turns"]) == 1 else "s"]
+			var waiting := (city.get("queue", []) as Array).size()
+			if waiting > 0:
+				line += " · %d queued" % waiting
 			colour = UiStyle.GOLD_DARK
 		elif _can_build_now(city):
 			line = "＋ room to build (%d free plot%s)" % [_free_plots(city), "" if _free_plots(city) == 1 else "s"]
@@ -250,7 +255,7 @@ func _fill_page(city: Dictionary) -> void:
 	var options: Array = city.get("can_build", [])
 	_section("BUILD HERE")
 	if city.get("works") != null:
-		_page.add_child(UiStyle.wrapped("One building at a time: the %s is going up. Choose the next when it is done - or build in another city." % str(city["works"]["name"]).to_lower(), 15, UiStyle.GOLD_DARK, 820))
+		_page.add_child(UiStyle.wrapped("Builders are at work on the %s. What you choose now joins the queue (up to 3) and starts when they are free - paid for then." % str(city["works"]["name"]).to_lower(), 15, UiStyle.GOLD_DARK, 820))
 	elif _free_plots(city) <= 0:
 		_page.add_child(UiStyle.wrapped("Every plot is built on. The city gains plots as its people grow.", 15, DIM, 820))
 	if options.is_empty():
@@ -259,9 +264,9 @@ func _fill_page(city: Dictionary) -> void:
 	grid.columns = 2
 	grid.add_theme_constant_override("h_separation", 12)
 	grid.add_theme_constant_override("v_separation", 12)
-	var open := city.get("works") == null and _free_plots(city) > 0
+	var queueing := city.get("works") != null
 	for option in options:
-		grid.add_child(_option(id, option, open))
+		grid.add_child(_option(id, option, queueing))
 	_page.add_child(grid)
 	# the plots
 	var built: Array = city.get("buildings", [])
@@ -275,7 +280,16 @@ func _fill_page(city: Dictionary) -> void:
 	if city.get("works") != null:
 		var w: Dictionary = city["works"]
 		plots.add_child(_plot(str(w["name"]), "going up · %d turn%s left" % [int(w["turns"]), "" if int(w["turns"]) == 1 else "s"], Color(0.98, 0.88, 0.6), "⚒"))
-	for k in maxi(0, total - built.size() - (1 if city.get("works") != null else 0)):
+	for q in city.get("queue", []):
+		var tile := _plot(str(q["name"]), "queued: starts when the builders are free", Color(0.93, 0.90, 0.98), "⏳")
+		var drop := UiStyle.big_button("✕", 13, Color(0.86, 0.81, 0.71))
+		drop.custom_minimum_size = Vector2(30, 28)
+		drop.tooltip_text = "Take it off the plans"
+		var building := str(q["id"])
+		drop.pressed.connect(func(): unqueue_requested.emit(id, building))
+		tile.get_child(0).add_child(drop)
+		plots.add_child(tile)
+	for k in maxi(0, total - built.size() - (1 if city.get("works") != null else 0) - (city.get("queue", []) as Array).size()):
 		plots.add_child(_plot("Empty plot", "ready for a building", Color(0.95, 0.92, 0.84), "＋"))
 	if city.has("next_slot_at"):
 		plots.add_child(_plot("Locked plot", "opens at %s people" % GameHud.number(int(city["next_slot_at"])), Color(0.82, 0.80, 0.76), "🔒"))
@@ -318,7 +332,7 @@ func _plot(name: String, note: String, colour: Color, mark: String) -> Control:
 	return tile
 
 
-func _option(province_id: String, option: Dictionary, open: bool) -> Control:
+func _option(province_id: String, option: Dictionary, queueing: bool) -> Control:
 	var card := PanelContainer.new()
 	var recommended := bool(option.get("recommended", false))
 	card.add_theme_stylebox_override("panel", UiStyle.panel(Color(0.99, 0.96, 0.88) if option.get("why_not") == null else Color(0.92, 0.89, 0.83),
@@ -345,12 +359,11 @@ func _option(province_id: String, option: Dictionary, open: bool) -> Control:
 	if why != null:
 		column.add_child(UiStyle.wrapped(str(why).substr(0, 1).to_upper() + str(why).substr(1) + ".", 13, BAD, 400))
 	else:
-		var go := UiStyle.big_button("BUILD", 17)
+		var go := UiStyle.big_button("QUEUE" if queueing else "BUILD", 17)
 		go.custom_minimum_size = Vector2(140, 40)
 		go.size_flags_horizontal = Control.SIZE_SHRINK_END
-		go.disabled = not open
-		if not open:
-			go.tooltip_text = "Wait for a free plot, or for the building going up to finish"
+		if queueing:
+			go.tooltip_text = "Starts when the builders are free (paid for then)"
 		var building := str(option["id"])
 		go.pressed.connect(func(): build_requested.emit(province_id, building))
 		column.add_child(go)
