@@ -497,6 +497,7 @@ def _chapter_issues(registry: Registry) -> list[ContentIssue]:
             *chapter.needs_alive,
             *chapter.needs_war_with,
             *chapter.needs_peace_with,
+            *chapter.needs_stronger_than,
             *(o for o in (*chapter.needs_owner.values(), *chapter.needs_not_owner.values())),
         ]
         named_places = [*chapter.needs_owner, *chapter.needs_not_owner]
@@ -510,6 +511,7 @@ def _chapter_issues(registry: Registry) -> list[ContentIssue]:
                 *deeds.peace_with,
                 *deeds.ally_with,
                 *deeds.tributaries,
+                *deeds.conquer,
                 *deeds.grudges,
             ]
             if deeds.give_to:

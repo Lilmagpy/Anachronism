@@ -10,6 +10,7 @@ scenarios:
       war. Qin moves its capital to Xianyang this year.
     start_year: -350
     years_per_turn: 10
+    campaign_years_per_turn: 2
     player_civ: qin
     map: east_asia
     cost_scale: 10

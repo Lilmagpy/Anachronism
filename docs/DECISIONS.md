@@ -1076,3 +1076,28 @@ owner's settings file and every link for no visible gain); the bundle identifier
 folder that holds saves and settings (a custom user folder keeps it at "Anachronism", so
 nothing is lost). The word "anachronism" still names the in-game idea of an advancement
 ahead of its time.
+
+## D-122 The second chronicle: Qin unifies China (350-221 BC) — DELEGATED (2026-10-02)
+28 chapters from Shang Yang's second reform to the First Emperor, after Sima Qian's Shiji
+and the Zhanguo ce, plus 18 almanac entries (Mencius, Alexander in India, Ashoka, Euclid,
+Eratosthenes...). Three ideas carry over from the brief: the great figures speak in their
+own names (a chapter may name its speaker: "Shang Yang", "Bai Qi", "Li Si"); dark history is
+told plainly (Changping's prisoners) but a choice history did not take can spare them; and
+ideas brought in early open new paths (stirrups at Changping, gunpowder at Handan, examined
+officials in 237 BC, printing the one script in 221 BC).
+Playtesting with the simulation bot showed what the chapters needed to be playable:
+- **Decisive battles end, they don't linger.** A historical victory (Danyang, Yique, Ying)
+  now takes its land and leaves a grudge instead of an open war; open wars had left Shu
+  bare for Chu to take.
+- **Reforms last.** A chapter's choice may change how many of the people the state can arm
+  (`martial_bp`): carrying Shang Yang's reform through makes Qin the war machine it was;
+  repealing it does the opposite.
+- **Land taken in a chapter comes with a garrison.** The conquering army stays (half again
+  as many men as the province needs, at no cost, holding its ground), and a garrison told to
+  hold no longer merges into a passing army and marches off with it - a fix for every
+  player and court, not only chronicles.
+- **Great conquests need the strength to make them.** A chapter can require the player to
+  outmatch a state (`needs_stronger_than`): Han falls only to a Qin half as strong again;
+  otherwise history turns, and the chronicle says so. A choice may `conquer` a whole state.
+In the same simulation Qin now stays level with history to 300 BC and unifies China in
+220-218 BC, a few years after the real one.

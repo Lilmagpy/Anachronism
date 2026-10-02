@@ -40,6 +40,8 @@ class Deeds(Frozen):
     """States that submit and send you tribute."""
     take: tuple[Identifier, ...] = ()
     """Provinces that become yours (from whoever holds them, or nobody)."""
+    conquer: tuple[Identifier, ...] = ()
+    """States whose every remaining province becomes yours (the state falls)."""
     give: tuple[Identifier, ...] = ()
     """Your provinces that pass to ``give_to`` (or to nobody)."""
     give_to: Identifier | None = None
@@ -47,6 +49,9 @@ class Deeds(Frozen):
     """Warships built at once, off your capital's coast (or your first coastal province)."""
     men: Annotated[int, Field(ge=0, le=200_000)] = 0
     """Soldiers raised at once at the capital, unpaid for by the stores."""
+    martial_bp: Annotated[int, Field(ge=-10_000, le=10_000)] = 0
+    """A lasting change to how many of the people the state can put under arms (bp; 10000
+    doubles the usual share): reforms like Shang Yang's that make a state a war machine."""
     grudges: dict[Identifier, Annotated[int, Field(ge=0, le=10_000)]] = Field(default_factory=dict)
     """Grievance other states now bear you (bp)."""
 
@@ -81,11 +86,19 @@ class Chapter(Frozen):
     speaker: Identifier = "ruler"
     """Who brings the moment to you: ``ruler``, an adviser's id (``general``...), or a
     civilisation's id (its ruler speaks)."""
+    speaker_name: Annotated[str, Field(max_length=60)] = ""
+    """The speaker's own name, when it matters (Shang Yang rather than "Grand Steward")."""
+    speaker_title: Annotated[str, Field(max_length=60)] = ""
     story: Story
     """The scene, in a few short paragraphs (separated by blank lines)."""
     needs_alive: tuple[Identifier, ...] = ()
     needs_war_with: tuple[Identifier, ...] = ()
     needs_peace_with: tuple[Identifier, ...] = ()
+    needs_stronger_than: dict[Identifier, Annotated[int, Field(ge=0, le=100_000)]] = Field(
+        default_factory=dict
+    )
+    """State -> how strong the player must be against it (bp: 15000 = half as strong again):
+    a turning point the player's state must be able to bring about."""
     needs_owner: dict[Identifier, Identifier] = Field(default_factory=dict)
     """Province -> who must hold it (``nobody`` for no one)."""
     needs_not_owner: dict[Identifier, Identifier] = Field(default_factory=dict)

@@ -106,3 +106,38 @@ def chronicle_block_for(state: GameState) -> dict:  # type: ignore[type-arg]
 def test_chronicle_games_save_and_replay(chronicle: GameState) -> None:
     state, _ = end_turn(chronicle)
     assert dumps(loads(dumps(state))) == dumps(state)
+
+
+@pytest.fixture
+def qin(content: Content) -> GameState:
+    return new_game(content, "warring_states", seed=1, player_civ="qin", chronicle=True)
+
+
+def test_reforms_last_and_conquered_land_comes_with_a_garrison(qin: GameState) -> None:
+    from anachronism.engine.occupation import garrisoned
+
+    assert qin.chapter == "qin_xianyang"
+    before = qin.civs["qin"].martial_bp
+    state, _ = apply_action(qin, ChooseChapter(civ="qin", chapter="qin_xianyang", choice=0))
+    assert state.civs["qin"].martial_bp > before
+    # jump to Sima Cuo's march on Shu: Ba falls whole, Chengdu is taken and held
+    state.chapter = "qin_shu_or_han"
+    state, _ = apply_action(state, ChooseChapter(civ="qin", chapter="qin_shu_or_han", choice=0))
+    assert state.civs["ba"].collapsed
+    for pid in ("ba_jiangzhou", "shu_chengdu"):
+        assert state.provinces[pid].owner == "qin"
+        assert garrisoned(state, pid)
+    # a garrison keeps apart from a host passing through
+    state, _ = end_turn(state)
+    assert garrisoned(state, "shu_chengdu")
+
+
+def test_a_conquest_waits_until_the_state_is_strong_enough(qin: GameState) -> None:
+    from anachronism.engine.campaign import fits
+
+    han_falls = qin.world.chapters["qin_han_falls"]
+    assert not fits(qin, han_falls)  # Qin is nowhere near half as strong again as Han
+    qin.civs["han"].stockpiles.food = 0
+    for pid in qin.owned_provinces("han"):
+        qin.provinces[pid].population = 1_000
+    assert fits(qin, han_falls)

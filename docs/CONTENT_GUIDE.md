@@ -227,6 +227,10 @@ the choice), `benchmark_provinces` (how many provinces the real state held then)
 `sources`. History must be defensible: romance in the telling, never in the facts.
 `almanac` files hold what happened elsewhere: `scenario`, `year`, `text` and
 `needs_alive`. Set `campaign_years_per_turn` in the scenario for a chronicle's pace.
+A chapter may name its speaker (`speaker_name`, `speaker_title`: "Shang Yang") and require
+the player to outmatch a state (`needs_stronger_than: {han: 15000}`, half as strong again).
+Deeds may also `conquer` whole states and change `martial_bp` for good (a reform that arms
+the people). Provinces a chapter takes come with a garrison (D-122).
 `anachronism-lint` checks every reference.
 
 ## Buildings

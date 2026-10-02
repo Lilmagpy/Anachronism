@@ -169,6 +169,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] Wars end on terms: the side that tires first cedes what is besieged (D-118)
 - [x] Spend the stores: hastening work; hoards waste away (D-119)
 - [x] Chronicle mode: chapters along real history, Rome against Carthage first (D-120)
-- [ ] More chronicles (Qin's unification, the Sengoku, Korea's Three Kingdoms)
+- [x] The second chronicle: Qin unifies China, 350-221 BC (D-122)
+- [ ] More chronicles (the Sengoku, Korea's Three Kingdoms)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

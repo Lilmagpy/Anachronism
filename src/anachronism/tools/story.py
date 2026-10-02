@@ -59,7 +59,11 @@ def chronicle_block(content: Content, state: GameState) -> dict[str, Any] | None
             "title": chapter.title,
             "year": year_text(chapter.year),
             "place": chapter.place,
-            "speaker": speaker_card(content, state, chapter.speaker),
+            "speaker": {
+                **speaker_card(content, state, chapter.speaker),
+                **({"name": chapter.speaker_name} if chapter.speaker_name else {}),
+                **({"title": chapter.speaker_title} if chapter.speaker_title else {}),
+            },
             "story": fill(state, chapter.story).split("\n\n"),
             "choices": [
                 {
@@ -153,6 +157,8 @@ def _deeds_text(state: GameState, deeds: Any) -> str:
             state.world.geography[p].name for p in deeds.take if p in state.world.geography
         )
         parts.append(f"gain {places}")
+    if deeds.conquer:
+        parts.append(f"{names(deeds.conquer)} falls to you")
     if deeds.give:
         places = ", ".join(
             state.world.geography[p].name for p in deeds.give if p in state.world.geography
@@ -162,4 +168,7 @@ def _deeds_text(state: GameState, deeds: Any) -> str:
         parts.append(f"{deeds.ships} warships")
     if deeds.men:
         parts.append(f"{deeds.men:,} men")
+    if deeds.martial_bp:
+        more = "more" if deeds.martial_bp > 0 else "fewer"
+        parts.append(f"for good, {abs(deeds.martial_bp) // 100}% {more} men can be called to arms")
     return ("; " if parts else "") + "; ".join(parts)

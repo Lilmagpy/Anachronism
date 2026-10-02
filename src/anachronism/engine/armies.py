@@ -806,11 +806,15 @@ RAIDER_MARTIAL_BP = 30_000
 
 
 def merge(state: GameState) -> None:
-    """Idle armies of one state standing in the same province join into one host."""
-    groups: dict[tuple[str, str], list[Army]] = {}
+    """Idle armies of one state standing in the same province join into one host.
+
+    An army told to hold its ground (a garrison) keeps apart from a passing host.
+    """
+    groups: dict[tuple[str, str, bool], list[Army]] = {}
     for army in sorted(state.armies.values(), key=lambda a: a.id):
         if army.target is None and not army.contract:
-            groups.setdefault((army.owner, army.province), []).append(army)
+            key = (army.owner, army.province, army.stance == "hold")
+            groups.setdefault(key, []).append(army)
     for armies in groups.values():
         if len(armies) < 2:
             continue
