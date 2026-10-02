@@ -147,8 +147,46 @@ def wear_wars(state: GameState, events: EventLog) -> None:
                 tiring //= 2  # a winning war is easier to bear
             rel.weariness[side] = rel.weariness.get(side, 0) + tiring
         tired = [c for c in (a, b) if rel.weariness.get(c, 0) >= rules.peace_weariness_bp]
-        if tired:
+        if len(tired) == 1:
+            # the side that tires first must pay for peace with the cities under siege (D-118)
+            settle(state, tired[0], b if tired[0] == a else a, events)
+        elif tired:
             make_peace(state, a, b, events)
+
+
+def settle(state: GameState, tired: str, other: str, events: EventLog) -> None:
+    """The side worn out first sues for peace, giving up what the other's armies besiege.
+
+    If that is all it has left, it bows as the other's tributary instead of vanishing. If
+    nothing of its land is under siege, it is plain peace.
+    """
+    besieged = sorted(
+        {
+            army.province
+            for army in state.armies.values()
+            if army.owner == other and state.provinces[army.province].owner == tired
+        }
+    )
+    if not besieged:
+        make_peace(state, tired, other, events)
+        return
+    them, victor = state.civs[tired], state.civs[other]
+    if len(besieged) >= len(state.owned_provinces(tired)):
+        make_peace(state, tired, other, events)
+        set_status(state, tired, other, RelationStatus.TRIBUTARY)
+        add_grievance(state, tired, other, 1000)
+        text = f"Worn out by war, {them.name} bows to {victor.name} and sends tribute."
+        events.add(tired, "tribute", text, victor.name)
+        events.add(other, "tribute", text, them.name)
+        return
+    for pid in besieged:
+        capture(state, other, pid, events)
+    make_peace(state, tired, other, events)
+    add_grievance(state, tired, other, 1500)
+    names = ", ".join(state.world.geography[p].name for p in besieged)
+    text = f"Worn out by war, {them.name} cedes {names} to {victor.name} for peace."
+    events.add(tired, "ceded", text, names)
+    events.add(other, "ceded", text, names)
 
 
 def make_peace(state: GameState, a: str, b: str, events: EventLog) -> None:

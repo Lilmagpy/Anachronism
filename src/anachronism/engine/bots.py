@@ -10,12 +10,15 @@ from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, field
 from typing import Protocol
 
-from anachronism.content.schema import Category
+from anachronism.content.schema import Category, RelationStatus
 from anachronism.engine.actions import (
     Action,
     Build,
+    DeclareWar,
     Explain,
     HoldFestival,
+    MakePeace,
+    MarchArmy,
     RaiseArmy,
     StartProject,
 )
@@ -26,9 +29,10 @@ from anachronism.engine.economy import project_costs
 from anachronism.engine.fixed import apply_bp
 from anachronism.engine.game import apply_action, end_turn
 from anachronism.engine.reports import capacity
-from anachronism.engine.rivals import at_war
+from anachronism.engine.rivals import at_war, frontier, relation, strength
 from anachronism.engine.state import Event, GameState
 from anachronism.engine.tech import feasibility
+from anachronism.engine.war import defence_bp
 
 
 class Bot(Protocol):
@@ -86,6 +90,8 @@ class PlannerBot:
     """Keep enough knowledge to fund a new project for this many turns."""
     calm_first_bp: int = 5_000
     """Start nothing new while unrest is this high."""
+    conquer: bool = False
+    """Go to war against clearly weaker neighbours and campaign to take their land."""
     rank: dict[Category, int] = field(init=False)
 
     def __post_init__(self) -> None:
@@ -96,10 +102,53 @@ class PlannerBot:
         civ = state.civs[civ_id]
         levy = call_up(state, civ_id) if civ_id == state.player_civ else []
         levy += self._build(state, civ_id) + self._steady(state, civ_id)
+        if self.conquer:
+            levy += self._campaign(state, civ_id)
         # a realm in turmoil consolidates before it reaches for anything new
         if len(civ.projects) >= self.max_projects or civ.stats.unrest_bp >= self.calm_first_bp:
             return levy
         return levy + self._idea(state, civ_id)
+
+    def _campaign(self, state: GameState, civ_id: str) -> list[Action]:
+        """A conqueror's war: march on a much weaker neighbour's weakest border province.
+
+        After a few years of war it sues for peace on the land its armies hold.
+        """
+        civ = state.civs[civ_id]
+        enemies = at_war(state, civ_id)
+        if not enemies:
+            if civ.stats.unrest_bp >= 3000 or state.turn < 2:
+                return []
+            mine = strength(state, civ_id)
+            options = sorted(
+                (strength(state, other), other)
+                for pair, rel in sorted(state.relations.items())
+                if civ_id in pair.split("|")
+                and rel.status not in (RelationStatus.ALLIED, RelationStatus.TRIBUTARY)
+                for other in pair.split("|")
+                if other != civ_id and frontier(state, civ_id, other)
+            )
+            for theirs, other in options:
+                if mine * 10 >= theirs * 14:
+                    return [DeclareWar(civ=civ_id, target=other)]
+            return []
+        enemy = enemies[0]
+        targets = frontier(state, civ_id, enemy)
+        orders: list[Action] = []
+        if targets:
+            goal = min(targets, key=lambda p: (defence_bp(state, enemy, p), p))
+            for army in sorted(state.armies.values(), key=lambda a: a.id):
+                if army.owner == civ_id and army.target is None and army.province != goal:
+                    orders.append(MarchArmy(civ=civ_id, army=army.id, target=goal))
+        rel = relation(state, civ_id, enemy)
+        besieging = any(
+            a.owner == civ_id and a.siege_bp > 0 and state.provinces[a.province].owner == enemy
+            for a in state.armies.values()
+        )
+        # sue for peace once nothing is left under siege and the war has dragged on
+        if rel is not None and state.turn - rel.since_turn >= 8 and not besieging:
+            orders.append(MakePeace(civ=civ_id, target=enemy, terms="cede"))
+        return orders
 
     def _steady(self, state: GameState, civ_id: str) -> list[Action]:
         """Quiet suspicion with a divine proclamation; win back a doubting people with feasts."""
@@ -179,6 +228,7 @@ def military_bot() -> PlannerBot:
     return PlannerBot(
         name="military",
         preferred=(Category.MILITARY, Category.METALLURGY, Category.CONSTRUCTION, Category.CRAFT),
+        conquer=True,
     )
 
 

@@ -1016,3 +1016,16 @@ could explain the court's arts, and rival courts feasted only in unrest. Now riv
 40% (if the treasury holds twice the price and the people have not heard the story too
 recently), and hold festivals when legitimacy falls below 20% as well as in unrest. In the
 same simulation Rome ends at 92% legitimacy and the Seleucids at 67%.
+
+## D-118 Wars end on terms: the side that tires first pays — DELEGATED (2026-10-02)
+Testing a conquering player showed armies winning battle after battle and besieging a
+capital, only for the war to end in a plain peace the moment the losing side grew weary:
+whoever tired first, the war simply stopped and every siege was lifted. Now, when one side
+is worn out first, it sues for peace and cedes every province the other's armies stand in;
+if that is all it has left, it becomes the other's tributary instead of vanishing. If none
+of its land is held, or both sides tire together, it is a plain peace. The same for a player
+demanding land when the enemy's only province is occupied (it used to "cede" nothing):
+the enemy submits as a tributary. The simulation's military bot now really campaigns
+(declares war on a neighbour it outmatches by 40%, marches on its weakest border province,
+sues for peace only once nothing is under siege and the war is eight turns old), so the
+balance tests exercise conquest: as Qin it grows from 3 to 5 provinces in 60 turns.

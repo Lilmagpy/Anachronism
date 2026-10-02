@@ -171,6 +171,8 @@ three times the cost. This is where the "boring" force multipliers of brief §5.
 province by province, and the cities on the map grow and show what stands in them.
 
 ## 10b. War: armies, battles, sieges and supply (D-099)
+Wars end on terms (D-118): the side that tires first cedes the provinces the enemy's
+armies stand in, or becomes its tributary if that is all it has left.
 - **Armies** stand in provinces: men of several kinds (levies, spearmen, heavy infantry,
   archers, crossbowmen, chariots, cavalry, horse archers, armoured horsemen, war elephants,
   siege engines, cannon, musketeers - content in `core/units.yaml`), each needing its

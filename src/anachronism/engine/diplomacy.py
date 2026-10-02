@@ -95,6 +95,13 @@ def _apply(
                 return False, f"{them} will not give up land while they think they can win"
             if len(occupied) >= len(state.owned_provinces(target)):
                 occupied = occupied[:-1]  # a state does not sign itself out of existence
+            if not occupied:
+                # its last land in your hands: it bows as your tributary rather than vanish
+                make_peace(state, me, target, events)
+                set_status(state, me, target, RelationStatus.TRIBUTARY)
+                add_grievance(state, target, me, 1000)
+                events.add(me, "tribute", f"{them} bows and sends tribute.", them)
+                return True, f"Rather than give up its last land, {them} submits as your tributary."
             for pid in occupied:
                 capture(state, me, pid, events)
             add_grievance(state, target, me, 1500)
