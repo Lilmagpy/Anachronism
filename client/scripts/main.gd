@@ -22,6 +22,8 @@ var scenery: Scenery
 var _last_pose := Transform3D()
 var game_menu: GameMenu
 var landmarks: Landmarks
+var _earth_holder: Node3D   ## where the map's cities are built
+var _growth := ""   ## the cities' sizes and buildings when they were last built
 var audio: GameAudio
 var hud: GameHud
 var menus: Menus
@@ -172,6 +174,8 @@ func _build_earth(holder: Node3D, region: String) -> void:
 	settlements = Settlements.new(provinces)
 	settlements.build(holder)
 	scenery.clear(settlements.clearings)
+	_earth_holder = holder
+	_growth = provinces.growth_signature()
 	provinces.show_roads(view, holder)
 	_draw_armies()
 	provinces.show_ties(view)
@@ -255,10 +259,17 @@ func _build_hud() -> void:
 	hud.speak(view.get("voices", []), true)
 	if options.has("start"):
 		_on_action({"kind": "start", "node_id": str(options["start"])})
+	if options.has("build"):  # --build=province:building,... one a turn (screenshots)
+		for order in str(options["build"]).split(","):
+			var bits := order.split(":")
+			_on_action({"kind": "build", "province": bits[0], "building": bits[1]})
+			_on_end_turn()
 	for i in int(options.get("play", "0")):
 		_on_end_turn()
 	if options.has("tab"):
 		hud.set_tab(str(options["tab"]))
+	if options.has("open"):  # --open=build|levy|fleet: unfold part of the province card
+		hud.open_box = str(options["open"])
 	if options.has("select"):
 		_select(str(options["select"]))
 	if options.has("menu"):  # --menu=menu|save|load|chronicle|tree|settings (screenshots)
@@ -380,6 +391,7 @@ func _on_end_turn() -> void:
 		view = reply
 		if provinces.update(view) and settlements != null:
 			settlements.recolour()
+		_grow_cities()
 		_draw_armies()
 		provinces.show_ties(view)
 		landmarks.update(view)
@@ -390,6 +402,20 @@ func _on_end_turn() -> void:
 			audio.play("war")
 	hud.show_view(view)
 	hud.speak(view.get("voices", []), true)
+
+
+## Cities that have grown, or raised new buildings, are built again, larger (D-111).
+func _grow_cities() -> void:
+	if settlements == null or _earth_holder == null:
+		return
+	var signature := provinces.growth_signature()
+	if signature == _growth:
+		return
+	_growth = signature
+	settlements.remove()
+	settlements = Settlements.new(provinces)
+	settlements.build(_earth_holder)
+	scenery.clear(settlements.clearings)
 
 
 func _draw_armies() -> void:

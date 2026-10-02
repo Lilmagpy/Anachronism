@@ -51,6 +51,7 @@ func _init(earth_builder: EarthBuilder, view: Dictionary) -> void:
 			"capital": p["capital"], "population": p["population"],
 			"pixel": earth.pixel_of(p["latlon"][0], p["latlon"][1]),
 			"resources": p.get("resources", {}),
+			"buildings": _looks(p),
 		})
 	for s in view["seas"]:
 		if s["latlon"] == null:
@@ -195,7 +196,13 @@ func update(view: Dictionary) -> bool:
 		owners[p["id"]] = p["owner"]
 		capitals[p["id"]] = p["capital"]
 	var changed := false
+	var by_id := {}
+	for p in view["provinces"]:
+		by_id[p["id"]] = p
 	for site in sites:
+		if by_id.has(site["id"]):   # cities grow, and raise new buildings (D-111)
+			site["population"] = by_id[site["id"]]["population"]
+			site["buildings"] = _looks(by_id[site["id"]])
 		if owners.has(site["id"]) and (site["owner"] != owners[site["id"]] or site["capital"] != capitals[site["id"]]):
 			site["owner"] = owners[site["id"]]
 			site["capital"] = capitals[site["id"]]
@@ -203,6 +210,23 @@ func update(view: Dictionary) -> bool:
 	if changed:
 		_redraw()
 	return changed
+
+
+## The looks of a province's standing buildings, in the order they were built.
+static func _looks(p: Dictionary) -> Array:
+	return p.get("buildings", []).map(func(b): return str(b["look"]))
+
+
+## A fingerprint of every city's size and buildings: when it changes, the cities are
+## rebuilt. Sizes count in steps of a quarter, so a city does not rebuild every turn.
+func growth_signature() -> String:
+	var parts: PackedStringArray = []
+	for site in sites:
+		if site["sea"]:
+			continue
+		var step := int(log(maxf(float(site["population"]), 1000.0)) / log(1.25))
+		parts.append("%s:%d:%s" % [site["id"], step, ",".join(site.get("buildings", []))])
+	return "|".join(parts)
 
 
 func _redraw() -> void:

@@ -921,3 +921,22 @@ each commit. Roughly a tenth of the minutes per push.
 Later the same day the owner made the repository public (free, unlimited minutes for
 public repositories); the macOS checks and the Mac app build run on every pull request
 update again, and each update still runs only once.
+
+## D-111 Province buildings; cities that grow on the map — DELEGATED (2026-10-02)
+The owner asked to stop polishing graphics and perfect the gameplay against the brief, and
+for cities to visibly spread out and fill with buildings as a civilisation develops. The
+brief's effect menu (§5.10) named `unlocks_building`, but there were no buildings: every
+improvement was realm-wide. Now each province holds buildings (content
+`core/buildings.yaml`; schema `content/schema/buildings.py`; engine
+`engine/buildings.py`), gated by advancements, coast, river or ore, paid up front, built
+over one or two decades and kept with upkeep. They raise the province's own output, growth
+and room for people, or calm the realm, teach reading and train soldiers; upgrades take the
+place of older buildings. A province holds two plus one per 250,000 people (up to eight),
+and each standing building makes the next a quarter dearer, so growth and building feed
+each other without one city taking everything. Pillage burns the newest building, which
+gives raiding a lasting cost. Rival courts (and the simulation bots) build one a turn in
+their biggest city when their stores hold three times the price, so rivals develop too.
+On the map, each building appears in its city (a round temple, market stalls, a granary
+barn, forges with smoke, a water mill, an aqueduct's arches...), the middle of the city is
+kept for them, and cities are rebuilt larger whenever they have grown by a quarter or
+raised something new. The numbers are a first pass, to be tuned with play.

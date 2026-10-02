@@ -145,6 +145,22 @@ marsh), coastal flag, river flag, climate band, map resources with access level
 (`accessible` / `limited` / `unexplored`), population, owner, culture/religion shares,
 buildings. Edges: land, river, sea lane, mountain pass (with movement costs).
 
+### Buildings (D-111)
+Each province holds a few buildings: two, plus one for every 250,000 people, up to eight,
+so growing cities hold more. Kinds are content (`core/buildings.yaml`): a granary, market,
+temple, workshops, barracks, mines, harbour, irrigation works, school, observatory, forges,
+water mill, windmills, courthouse, aqueduct, printing house, hospital, and upgrades that
+take an older building's place (bank for market, academy for school, manufactory for
+workshops), up to the railway station. Each needs its advancements and sometimes a coast,
+a river or ore; it costs materials and wealth up front (a quarter more for each building
+already standing), takes one or two decades, and costs wealth to keep. It raises its
+province's food, materials, wealth or knowledge, its growth or the people it can hold;
+temples and courts calm the realm and schools teach reading (weighted by the province's
+share of the people); barracks train the soldiers raised there. Pillage burns the newest
+building. Rival courts build one a turn in their largest cities when their stores hold
+three times the cost. This is where the "boring" force multipliers of brief §5.5 pay off
+province by province, and the cities on the map grow and show what stands in them.
+
 ## 10b. War: armies, battles, sieges and supply (D-099)
 - **Armies** stand in provinces: men of several kinds (levies, spearmen, heavy infantry,
   archers, crossbowmen, chariots, cavalry, horse archers, armoured horsemen, war elephants,

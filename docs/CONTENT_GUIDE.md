@@ -209,6 +209,20 @@ soldier that won, the terrain and a rout or a hard fight, and its lines may use 
 it may require the winners' `ships` instead of soldiers and terrain. Any tale may name
 `civs`: it is then told only when one of them wins (Greek fire for Byzantium).
 
+## Buildings
+`buildings.yaml` (core, or any pack) lists what provinces can build (D-111): `needs_techs`
+(all must be in use), optionally `coastal`, `river`, `needs_resource` (any one of them, at
+least limited access) and `replaces` (an older building it improves on). Costs:
+`materials`, `wealth` (both times the scenario's `cost_scale`), `decades` to build and
+`upkeep` wealth per decade. Bonuses for the province, in basis points: `food_bp`,
+`materials_bp`, `wealth_bp`, `knowledge_bp`, `growth_bp`, `capacity_bp`; realm-wide,
+weighted by the province's people: `calm_bp`, `literacy_bp`; and `veterans_bp` for
+soldiers raised there. `look` names how the client draws it in the city (market, temple,
+granary, workshop, factory, barracks, mine, school, academy, observatory, forge,
+watermill, windmill, courthouse, aqueduct, press, hospital, station; anything else is a
+hall). How many fit in a province, and how much dearer each makes the next, are in
+`rules.yaml` under `buildings`.
+
 ## Rules
 `core/rules.yaml` holds every tunable number, grouped by system and documented field by field
 in `content/schema/rules.py`. Balance changes go here, never into code. After changing

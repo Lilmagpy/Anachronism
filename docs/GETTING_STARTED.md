@@ -44,6 +44,11 @@ walks you through the screen the first time (Settings can replay it). Then:
   province for the sea on its shore) and fights enemy fleets it meets. An army can only
   cross a sea where no stronger enemy fleet holds it, and enemy fleets that command the
   seas around a province blockade it, cutting its trade.
+- **Buildings**: click one of your provinces and open **Build** to raise a market,
+  granary, temple, school, harbour and more (hover each for its cost and what it does).
+  Each needs its ideas, takes a turn or two, and makes that province richer, better fed,
+  more learned or calmer. Bigger cities hold more buildings, and you can watch your cities
+  spread out and fill with them as they grow.
 - **Ideas**: whisper any idea in the box, or **Begin** one from the list ("ahead of their
   time" first). Each costs labour, materials, knowledge and wealth every turn until it
   works; ideas far ahead of their time cost more and make neighbours suspicious.

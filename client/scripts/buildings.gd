@@ -128,3 +128,58 @@ static func town_icon(height: float) -> ArrayMesh:
 	for piece in [["tower-square-base", 0.0], ["tower-square-mid", 1.01], ["tower-square-top-roof-high", 2.02]]:
 		pieces.append([CASTLE + piece[0], Transform3D(Basis().scaled(Vector3(0.8, 0.8, 0.8)), Vector3(2.4, piece[1] * 0.8, -0.6)), "accents"])
 	return KenneyKit.compose("town_icon|%s" % height, pieces, height)
+
+
+## What each province building (engine content `buildings.yaml`, its `look`) is drawn as in
+## the city (D-111): [mesh kind, height in settlement units]. Unknown looks get a hall.
+const CITY_LOOKS := {
+	"market": ["mint", 0.55], "bank": ["bank", 0.7], "temple": ["temple", 0.75],
+	"granary": ["granary", 0.45], "workshop": ["workshop", 0.42], "factory": ["factory", 0.6],
+	"barracks": ["watchtower", 0.75], "mine": ["mine", 0.45], "school": ["school", 0.55],
+	"academy": ["academy", 0.75], "observatory": ["observatory", 0.75], "forge": ["forge", 0.45],
+	"watermill": ["water_wheel", 0.5], "windmill": ["windmill", 0.85], "courthouse": ["clock_tower", 0.9],
+	"aqueduct": ["aqueduct", 0.45], "press": ["workshop", 0.5], "hospital": ["hospital", 0.55],
+	"station": ["station", 0.55], "hall": ["hall", 0.5],
+}
+
+
+## A province building as drawn in its city, by its content `look`.
+static func city_building(look: String, height: float) -> ArrayMesh:
+	var entry: Array = CITY_LOOKS.get(look, CITY_LOOKS["hall"])
+	var kind: String = entry[0]
+	var built := landmark(kind, height)
+	if built != null:
+		return built
+	var key := "city|%s|%s" % [kind, height]
+	var pieces: Array = []
+	match kind:
+		"temple":
+			# a round shrine under a tall roof, on a stepped base
+			for piece in [["tower-hexagon-base", 0.0], ["tower-hexagon-roof", 1.31]]:
+				pieces.append([CASTLE + piece[0], Transform3D(Basis().scaled(Vector3(1.6, 1.0, 1.6)), Vector3(0, piece[1], 0)), "accents"])
+		"granary":
+			pieces = _house_pieces(2, 1, 1, true, "high")
+		"bank":
+			pieces = _house_pieces(2, 1, 2, false, "gable")
+			pieces.append([TOWN + "stall-red", Transform3D(Basis(), Vector3(0.5, 0, 1.2)), "roofs"])
+		"factory":
+			pieces = _house_pieces(3, 2, 1, false, "gable")
+			for x in 3:
+				pieces.append([TOWN + "chimney", _at(x, 0, 0, 0), "roofs"])
+		"mine":
+			pieces = _house_pieces(1, 1, 1, true, "point")
+			pieces.append(["nature/rock_largeC", Transform3D(Basis().scaled(Vector3.ONE * 1.2), Vector3(1.3, 0, 0)), "none"])
+			pieces.append([TOWN + "cart", Transform3D(Basis(), Vector3(0.6, 0, 1.1)), "roofs"])
+		"academy":
+			pieces = _house_pieces(3, 2, 2, false, "high")
+			pieces.append([TOWN + "banner-green", _at(1, 1, 1, 3), "roofs"])
+		"hospital", "station", "hall":
+			pieces = _house_pieces(3, 1, 1, false, "gable")
+		"aqueduct":
+			# a run of stone arches
+			for k in 4:
+				pieces.append([TOWN + "wall-arch-top", Transform3D(Basis(Vector3.UP, PI / 2.0), Vector3(k, 0, 0)), "roofs"])
+				pieces.append([TOWN + "pillar-stone", Transform3D(Basis(), Vector3(k - 0.5, 0, 0.45)), "roofs"])
+		_:
+			pieces = _house_pieces(2, 1, 1, false, "gable")
+	return KenneyKit.compose(key, pieces, height)

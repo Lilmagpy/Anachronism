@@ -15,6 +15,9 @@ func _initialize() -> void:
 	colours.append(Color(0.2, 0.4, 0.8))
 	meshes.append(Buildings.town_icon(1.6))
 	colours.append(Color(0.2, 0.4, 0.8))
+	for look in ["temple", "granary", "bank", "factory", "mine", "academy", "hospital", "aqueduct"]:
+		meshes.append(Buildings.city_building(look, 1.6))
+		colours.append(Color(0.85, 0.5, 0.35))
 	for kind in ["windmill", "water_wheel", "clock_tower", "watchtower", "observatory", "school", "workshop", "forge", "mint", "harbour"]:
 		meshes.append(Buildings.landmark(kind, 2.0))
 		colours.append(Color(0.8, 0.2, 0.2))
@@ -38,7 +41,7 @@ func _initialize() -> void:
 		mi.queue_free()
 	var cam := Camera3D.new()
 	root.add_child(cam)
-	cam.look_at_from_position(Vector3(6, 4.5, 11), Vector3(6, 0, 3.5))
+	cam.look_at_from_position(Vector3(6, 9, 20), Vector3(6, 0, 7))
 	var sun := DirectionalLight3D.new()
 	sun.rotation = Vector3(-0.9, 0.7, 0)
 	sun.shadow_enabled = true

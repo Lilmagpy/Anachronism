@@ -1265,29 +1265,44 @@ func _buildings_lines(p: Dictionary) -> void:
 		_card_body.add_child(_wrapped("Builders at work: %s (%d turn%s left)" % [str(works["name"]), turns, "" if turns == 1 else "s"], 13, GOLD))
 
 
-## The builders' list: what can go up here now (with its cost and what it does), then what
-## is nearly in reach and why not yet.
+## The builders' list (two columns, so the card fits): what can go up here now - hover for
+## its cost and what it does - then a few of what is nearly in reach and why not yet.
 func _builders_box(p: Dictionary) -> Control:
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 3)
+	var grid := GridContainer.new()
+	grid.columns = 2
+	grid.add_theme_constant_override("h_separation", 4)
+	grid.add_theme_constant_override("v_separation", 3)
+	box.add_child(grid)
 	var stores: Dictionary = view["status"]["stores"]
-	var shown_blocked := 0
+	var blocked: Array = []
 	for option in p["can_build"]:
 		var reason: Variant = option["why_not"]
-		var label := "%s (%s materials, %s wealth, %d turn%s)" % [str(option["name"]), number(int(option["materials"])),
-			number(int(option["wealth"])), int(option["turns"]), "" if int(option["turns"]) == 1 else "s"]
-		if reason == null:
-			var button := _small_button(label, {"kind": "build", "province": p["id"], "building": option["id"]})
-			button.disabled = int(stores["materials"]) < int(option["materials"]) or int(stores["wealth"]) < int(option["wealth"])
-			button.tooltip_text = "%s\n%s" % [str(option["note"]), str(option["does"])]
-			box.add_child(button)
-			box.add_child(_wrapped("   " + str(option["does"]), 12, DIM))
-		elif shown_blocked < 4 and not str(reason).begins_with("builders"):
-			shown_blocked += 1
-			box.add_child(_wrapped("%s: %s" % [str(option["name"]), str(reason)], 12, DIM))
-	if box.get_child_count() == 0:
+		if reason != null:
+			if not str(reason).begins_with("builders"):
+				blocked.append("%s: %s" % [str(option["name"]), str(reason)])
+			continue
+		var turns := int(option["turns"])
+		var button := _small_button("%s  %s/%s" % [str(option["name"]), _short(int(option["materials"])), _short(int(option["wealth"]))],
+			{"kind": "build", "province": p["id"], "building": option["id"]})
+		button.custom_minimum_size.x = 172
+		button.disabled = int(stores["materials"]) < int(option["materials"]) or int(stores["wealth"]) < int(option["wealth"])
+		button.tooltip_text = "%s\n%s\nCosts %s materials and %s wealth; ready in %d turn%s." % [str(option["note"]),
+			str(option["does"]), number(int(option["materials"])), number(int(option["wealth"])), turns, "" if turns == 1 else "s"]
+		grid.add_child(button)
+	if grid.get_child_count() == 0:
 		box.add_child(_wrapped("Nothing more can be built here yet.", 12, DIM))
+	else:
+		box.add_child(_wrapped("Costs are materials/wealth; hover for what each does.", 11, DIM))
+	for line in blocked.slice(0, 3):
+		box.add_child(_wrapped(line, 12, DIM))
 	return box
+
+
+## A number in a few characters (1,500 -> 1.5k).
+func _short(n: int) -> String:
+	return str(n) if n < 1000 else ("%.1fk" % (n / 1000.0)).replace(".0k", "k")
 
 
 # --- armies ------------------------------------------------------------------------------

@@ -36,6 +36,13 @@ var _chimneys: Array = []   ## where hearth smoke rises over capitals
 var _owned: Array = []   ## [part, instance index, site index, how much owner colour]
 var _material := StandardMaterial3D.new()   ## shared by every batch: colour comes per instance
 var style := "east"   ## the building style of the province being built
+var holder: Node3D   ## everything built, so the cities can be rebuilt as they grow
+
+
+## Take every city off the map (before building them again, larger).
+func remove() -> void:
+	if holder != null and is_instance_valid(holder):
+		holder.queue_free()
 
 
 func _init(province_map: ProvinceMap) -> void:
@@ -161,7 +168,7 @@ func build(parent: Node3D) -> void:
 			_cluster(_pick(cells), rng.randi_range(7, 14), 0.55, true, index, 0.45)
 		for i in villages:
 			_cluster(_pick(cells), rng.randi_range(2, 5), 0.3, rng.randf() < 0.6, index, 0.0)
-	var holder := Node3D.new()
+	holder = Node3D.new()
 	holder.name = "Settlements"
 	parent.add_child(holder)
 	for spot in _chimneys:
@@ -326,6 +333,8 @@ func _city(site: Dictionary, population: int, index: int) -> void:
 		houses *= 2  # a khan's camp sprawls: many tents for few people
 	for i in houses:
 		var p := centre + Vector2(rng.randf_range(-half, half) * 0.85, rng.randf_range(-half, half) * 0.85)
+		if site.get("buildings", []).size() > 0 and p.distance_to(centre) < half * 0.3:
+			continue   # the middle is kept for the city's public buildings
 		_house(p, turn + (PI / 2.0 if rng.randf() < 0.5 else 0.0), rng.randf_range(0.9, 1.3), index, 0.4)
 	# the owner's banner flies over every chief city; a capital's is twice the size
 	var flag := 1.6 if site["capital"] else 1.0
@@ -333,12 +342,42 @@ func _city(site: Dictionary, population: int, index: int) -> void:
 	_add("k_flag", mast, 0.0, 0.0, Vector3.ONE * flag, Color.WHITE, index, 1.0)
 	var size := clampf(0.8 + population / 2000000.0, 0.8, 1.4)
 	_add("i_castle" if site["capital"] else "i_town", centre, 0.0, PI / 5.0, Vector3.ONE * size, Color.WHITE, index, 1.0)
+	_city_buildings(site, centre, half, index)
 	if site["capital"]:
 		if style != "steppe":
 			_walls(centre, half, index)
 		_palace(centre, index)
 		for k in 3:
 			_chimneys.append(centre + Vector2(rng.randf_range(-half, half), rng.randf_range(-half, half)) * 0.6)
+
+
+## The province's buildings (D-111), each where the city has room for it: a ring around the
+## centre, inside the walls, turned to face the middle. Seeded apart from the houses, so a new
+## building never moves the old ones.
+func _city_buildings(site: Dictionary, centre: Vector2, half: float, index: int) -> void:
+	var looks: Array = site.get("buildings", [])
+	if looks.is_empty():
+		return
+	var place := RandomNumberGenerator.new()
+	place.seed = hash(str(site["id"]) + "buildings")
+	var start := place.randf() * TAU
+	for k in looks.size():
+		var look: String = looks[k]
+		var part := "b_" + look
+		if not _parts.has(part):
+			var entry: Array = Buildings.CITY_LOOKS.get(look, Buildings.CITY_LOOKS["hall"])
+			_parts[part] = {"mesh": Buildings.city_building(look, float(entry[1]) * S), "transforms": [],
+				"colours": [], "kit": true}
+		var angle := start + TAU * k / maxf(looks.size(), 1.0)
+		var spot := centre + Vector2(cos(angle), sin(angle)) * half * (0.45 + 0.25 * (k % 2))
+		for tries in 6:   # stay on dry land
+			if not earth.is_wet(spot):
+				break
+			spot = centre + (spot - centre) * 0.7
+		if earth.is_wet(spot):
+			continue
+		var roof := Color(0.88, 0.55, 0.38)
+		_add(part, spot, 0.0, -angle + PI / 2.0, Vector3.ONE, roof, index, 0.4)
 
 
 ## A capital's walls with corner towers and a gatehouse on each side (Kenney castle kit);

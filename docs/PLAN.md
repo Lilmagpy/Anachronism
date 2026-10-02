@@ -1,8 +1,9 @@
 # Anachronism — Plan
 
 **Current phase:** Phase 2 — 3D world (Godot) on the Phase 1 engine (branch `claude/phase-2-3d`).
-**Next action:** the owner plays the build (gate 2.16). Meanwhile, depth from Phase 7 is
-being added ahead of schedule (see "Phase 7, early" below), and polish continues.
+**Next action:** the owner plays the build (gate 2.16). Meanwhile, gameplay depth from the
+brief is being added (owner, 2026-10-02: "stop working on the graphics, and perfect the
+gameplay"): province buildings first (D-111), then a review of the brief for gaps.
 
 Each phase ends at a **gate**: Claude stops, summarises, shows how to run it, lists known
 problems, and waits for approval (D-002: approval = merging the phase PR).
@@ -156,6 +157,8 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] Holding conquered land: peoples remember, rise without garrisons, assimilate in time (D-106)
 - [x] Navies: fleets, sea battles told as stories, command of the sea, blockades (D-107)
 - [x] Battle plans that beat each other, great generals who read the enemy, veterans (D-108)
-- [ ] Graphics toward Rise of Kingdoms: coasts, water, models, heraldic symbols (D-109, in progress)
+- [x] Graphics toward Rise of Kingdoms: coasts, water, models, heraldic symbols, kit-built
+      towns and landmarks, city icons, name plates (D-109; paused at the owner's request)
+- [x] Province buildings, and cities that grow and fill with them on the map (D-111)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging
