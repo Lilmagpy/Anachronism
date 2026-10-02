@@ -14,7 +14,7 @@ from anachronism.engine.effects import Effects, civ_effects
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import BP, apply_bp, clamp
 from anachronism.engine.happenings import strike
-from anachronism.engine.intelligence import gather
+from anachronism.engine.intelligence import gather, rival_spies
 from anachronism.engine.navies import admiralty, blockades, fleet_upkeep, sail
 from anachronism.engine.occupation import occupation
 from anachronism.engine.offers import envoys
@@ -85,6 +85,7 @@ def end_turn(state: GameState) -> tuple[GameState, list[Event]]:
     ask(new, rng, events)
     envoys(new, rng, events)
     gather(new, rng, events)  # what the player's envoys, merchants and spies report (D-115)
+    rival_spies(new, rng, events)  # courts try to steal the player's ideas from the future (D-125)
     trade(new)
     spread_faiths(new, effects_by_civ, rng, events)
     grow_population(new, effects_by_civ, starving)

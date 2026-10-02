@@ -27,6 +27,9 @@ class Feasibility:
     """Soft requirement: how far literacy is below what the node wants (raises setbacks)."""
     stub: bool
     missing_buildings: tuple[str, ...] = ()
+    beyond_age: bool = False
+    """A rival court's view of an advancement from beyond its age (D-125): out of reach
+    unless stolen."""
 
     @property
     def blocked(self) -> bool:
@@ -37,6 +40,7 @@ class Feasibility:
             or self.missing_widespread
             or self.missing_buildings
             or self.stub
+            or self.beyond_age
         )
 
 
@@ -78,7 +82,26 @@ def feasibility(state: GameState, civ_id: str, node_id: str) -> Feasibility:
         missing_buildings=tuple(
             b for b in node.requires.buildings if b not in standing_buildings(state, civ_id)
         ),
+        beyond_age=beyond_age(state, civ_id, node_id),
     )
+
+
+def beyond_age(state: GameState, civ_id: str, node_id: str) -> bool:
+    """True if an advancement lies beyond a rival court's age and it has no stolen secret.
+
+    Only the player brings ideas from the future (D-125): every other court keeps to
+    history's pace, unless its spies stole an idea from a court that has it. Whatever a
+    court already knows or uses (from the scenario) is its own.
+    """
+    if civ_id == state.player_civ:
+        return False
+    tech = state.civs[civ_id].tech.get(node_id)
+    if tech is not None and (
+        tech.stolen or tech.stage.is_adopted or tech.stage is not Stage.CONCEPT
+    ):
+        return False
+    horizon = state.year + state.world.rules.rivals.foresight_years
+    return state.tech_nodes[node_id].year > horizon
 
 
 def standing_buildings(state: GameState, civ_id: str) -> set[str]:

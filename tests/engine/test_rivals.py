@@ -5,7 +5,7 @@ from __future__ import annotations
 import pytest
 
 from anachronism.content.loader import Content
-from anachronism.content.schema import Preconditions, RelationStatus, Script, ScriptGoal
+from anachronism.content.schema import Preconditions, RelationStatus, Script, ScriptGoal, Stage
 from anachronism.engine.actions import DeclareWar, MakePeace, Priority, ProposeAlliance, SendEnvoy
 from anachronism.engine.dynasty import renew
 from anachronism.engine.economy import project_costs
@@ -28,7 +28,7 @@ from anachronism.engine.rivals import (
     strength,
 )
 from anachronism.engine.rng import GameRng
-from anachronism.engine.state import Awareness, Event, GameState
+from anachronism.engine.state import Awareness, Event, GameState, TechState
 from anachronism.engine.victory import check_outcome, progress
 from anachronism.engine.war import capture, wear_wars
 
@@ -485,6 +485,8 @@ def test_rival_courts_never_start_work_they_cannot_staff(content: Content) -> No
     # rival starves itself chasing an idea it heard of
     state = new_game(content, "punic_wars", seed=1, player_civ="rome")
     node = "crop_rotation"
+    for secret in (node, "quarantine"):  # stolen, so beyond-the-age is not what stops them
+        state.civs["pergamon"].tech[secret] = TechState(stage=Stage.CONCEPT, stolen=True)
     assert project_costs(state, node).labour > capacity(state, "pergamon").free_labour
     assert start_project(state, "pergamon", node)
     assert state.civs["pergamon"].projects[node].priority is Priority.LOW

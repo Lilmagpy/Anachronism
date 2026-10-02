@@ -86,6 +86,8 @@ def describe_blockers(state: GameState, result: Feasibility) -> str:
             kinds[b].name.lower() if b in kinds else b for b in result.missing_buildings
         )
         parts.append(f"needs {built} built somewhere in the realm")
+    if result.beyond_age:
+        parts.append("lies beyond this age")
     if result.missing_materials:
         materials = ", ".join(state.world.resources[m].name for m in result.missing_materials)
         parts.append(f"needs access to {materials}")

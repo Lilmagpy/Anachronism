@@ -167,6 +167,9 @@ class TechState(Mutable):
     """Marked because an idea the civilisation wanted needs it."""
     head_start_bp: int = 0
     """Work already done when a project starts: methods stolen by spies (D-115)."""
+    stolen: bool = False
+    """Learned by spies from a court that has it: a rival may then work on it even before its
+    time (D-125)."""
 
 
 class Project(Mutable):

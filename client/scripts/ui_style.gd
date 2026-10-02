@@ -23,19 +23,28 @@ static func font(role: String, weight := 400) -> Font:
 		return _fonts[key]
 	var path: String = {"title": "res://fonts/Cinzel.ttf", "body": "res://fonts/Nunito.ttf",
 		"emblem": "res://fonts/emblems.ttf"}[role]
-	var base := FontFile.new()
-	base.data = FileAccess.get_file_as_bytes(path)
+	var base := _font_file(path)
 	var variation := FontVariation.new()
 	variation.base_font = base
 	if role != "emblem":
 		variation.variation_opentype = {TextServerManager.get_primary_interface().name_to_tag("wght"): weight}
 	# Characters missing from a font (e.g. 秦 in Nunito) fall back to the emblem font.
 	if role != "emblem":
-		var emblem := FontFile.new()
-		emblem.data = FileAccess.get_file_as_bytes("res://fonts/emblems.ttf")
-		variation.fallbacks = [emblem]
+		variation.fallbacks = [_font_file("res://fonts/emblems.ttf")]
 	_fonts[key] = variation
 	return variation
+
+
+## A font file: the raw file if the build carries it, else Godot's imported copy. (A build
+## without either measured text as taking no room while drawing it in a fallback font, so
+## panels shrank to slivers under their own words.)
+static func _font_file(path: String) -> FontFile:
+	var bytes := FileAccess.get_file_as_bytes(path)
+	if not bytes.is_empty():
+		var file := FontFile.new()
+		file.data = bytes
+		return file
+	return load(path) as FontFile
 
 
 ## Drops the cached fonts (call when the game closes, so nothing is left allocated).

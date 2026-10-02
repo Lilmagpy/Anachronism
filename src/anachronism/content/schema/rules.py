@@ -294,6 +294,14 @@ class RivalRules(Frozen):
     """How much of the work a stolen advancement saves."""
     spy_grievance_bp: Rate = 1_500
     """The grudge a court bears when it catches spies."""
+    foresight_years: NonNegative = 25
+    """The future is the player's alone (D-125): a rival court can work only on advancements
+    whose time has come (at most this many years before history had them), unless its spies
+    stole the secret from a court that has it."""
+    rival_spy_bp: Rate = 1_800
+    """Chance per decade that a court that has heard of your arts sends spies to steal one."""
+    rival_spy_caught_bp: Rate = 4_000
+    """Chance that your people catch such spies before they get away with the secret."""
     rumour_wealth_per_1000: NonNegative = 80
     """Wealth false rumours cost per 1,000 people: news on the road arrives garbled."""
     envoy_wealth: NonNegative

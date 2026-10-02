@@ -8,6 +8,12 @@ reports are not marked as bad: a court said to be planning war on one neighbour 
 truth have its eye on another. Spies also steal: now and then they bring back the methods
 of an advancement the court has and you lack, which gives its project a head start. And
 spies are sometimes caught, and courts remember it.
+
+The other way round (D-125): the player's ideas from the future cannot be copied from
+hearsay. A court that has heard of them may send spies to steal one; the player's people
+catch some of them (more often when the borders are sealed), and the player hears of the
+thefts that succeed. A stolen idea is the only way a rival gets an advancement before its
+time.
 """
 
 from __future__ import annotations
@@ -19,7 +25,7 @@ from anachronism.engine.fixed import BP, clamp
 from anachronism.engine.rivals import add_grievance, alive, hops, pending_scripts, relation
 from anachronism.engine.rng import GameRng
 from anachronism.engine.state import GameState, Intel, TechState
-from anachronism.engine.tech import is_adopted
+from anachronism.engine.tech import beyond_age, is_adopted
 from anachronism.engine.timeflow import rate_per_turn
 
 _SOURCE_BP = {
@@ -175,3 +181,61 @@ def _steal(state: GameState, me: str, court: str, events: EventLog) -> None:
         f"Our spies bring home the secrets of {theirs.adjective} {name}.",
         name,
     )
+
+
+def rival_spies(state: GameState, rng: GameRng, events: EventLog) -> None:
+    """Courts that have heard of the player's arts from the future try to steal them."""
+    me = state.player_civ
+    if me not in state.civs or not alive(state, me):
+        return
+    rules = state.world.rules.rivals
+    player = state.civs[me]
+    for court in sorted(state.civs):
+        civ = state.civs[court]
+        if court == me or not alive(state, court) or relation(state, court, me) is None:
+            continue
+        heard = {h.node_id for h in civ.heard if h.about == me and not h.garbled}
+        # what it could use: the player's arts it has heard of, from beyond its own age,
+        # whose foundations it already has (the earliest first)
+        wanted = sorted(
+            (
+                n
+                for n in heard
+                if n in state.tech_nodes
+                and is_adopted(player, n)
+                and not is_adopted(civ, n)
+                and beyond_age(state, court, n)
+                and all(is_adopted(civ, p) for p in state.tech_nodes[n].prerequisites)
+            ),
+            key=lambda n: (state.tech_nodes[n].year, n),
+        )
+        if not wanted:
+            continue
+        chance = rate_per_turn(state, rules.rival_spy_bp)
+        if player.sealed:
+            chance //= 2
+        if not rng.chance(chance):
+            continue
+        node_id = wanted[0]
+        name = state.tech_nodes[node_id].name
+        caught = rules.rival_spy_caught_bp * (2 if player.sealed else 1)
+        if rng.chance(min(caught, 9_000)):
+            add_grievance(state, me, court, rules.spy_grievance_bp)
+            events.add(
+                me,
+                "spies_foiled",
+                f"{civ.adjective} spies are caught trying to learn the secret of our {name}."
+                " They will not carry it home.",
+                civ.name,
+            )
+            continue
+        known = civ.tech.setdefault(node_id, TechState(stage=Stage.CONCEPT))
+        known.stolen = True
+        known.head_start_bp = max(known.head_start_bp, rules.spy_head_start_bp)
+        events.add(
+            me,
+            "secrets_lost",
+            f"{civ.adjective} spies have stolen the secret of our {name}. Their scholars"
+            " will try to make it work.",
+            civ.name,
+        )

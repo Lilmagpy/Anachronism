@@ -363,7 +363,7 @@ def _imitate(state: GameState, civ_id: str, rng: GameRng, events: EventLog) -> N
                 events.add(
                     state.player_civ,
                     "imitation",
-                    f"The {civ.adjective} court is trying to copy your {name}.",
+                    f"The {civ.adjective} court's scholars are working on your stolen {name}.",
                     civ.name,
                 )
             return

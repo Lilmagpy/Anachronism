@@ -258,6 +258,12 @@ func _build_hud() -> void:
 		hud.court_mode = "a language model rules" if court["online"] else "offline: the library of ideas rules"
 	if options.has("tab"):
 		hud.tab = str(options["tab"])
+	if options.has("dilemma-demo"):  # --dilemma-demo: show a made-up dilemma (screenshots)
+		view["dilemma"] = {"id": "demo", "title": "The sickness in the poor quarter",
+			"text": "A fever spreads through the poorest streets of the capital. The physicians disagree about everything.",
+			"choices": [{"label": "Close the quarter", "hint": "food -3%, unrest +6"},
+				{"label": "Pray at the temples", "hint": "unrest +3, clergy +6"},
+				{"label": "Let the physicians try", "hint": "wealth -4%, knowledge +8%"}]}
 	hud.show_view(view)
 	hud.speak(view.get("voices", []), true)
 	if options.has("start"):

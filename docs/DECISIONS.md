@@ -1136,3 +1136,23 @@ or key skips to the end, and Settings can turn it off. The engine is untouched: 
 compares the map before and after the turn (`tools/replay.py`). New synthesised sounds:
 marching drums, a battle clash, a victory horn and a defeat horn. Painted "moment" cards
 for disasters and the like will follow when the art from docs/ART_PROMPTS.md comes in.
+
+## D-125 The future is yours alone; rivals get it only by spying on you — owner's direction (2026-10-02)
+The owner: "you as the person playing should be the only person who has these technologies
+unless other places come and spy on you to steal the technologies". Until now rival courts
+(run by the same planner as the test bots) started any advancement whose prerequisites
+they had, however far ahead of its time, and copied the player's ideas from mere hearsay.
+Now a rival court can only work on advancements whose time has come (at most 25 years
+before history had them, `foresight_years`) or whose secret it stole: history keeps its
+own pace for everyone but the player. A court that has heard of the player's arts sends
+spies to steal one (1.8 chances in 10 a decade per court, the earliest it could use);
+the player's people catch 4 in 10 of them (twice as many while the borders are sealed,
+which also halves the attempts), and the player hears of every theft and every foiled
+attempt. A stolen secret starts the thief's work with a head start. In a 15-turn test as
+Rome the player held 8 ideas from the future and the rivals one between them, while five
+thefts and three foiled attempts were reported.
+
+Also fixed: the Mac build never carried the game's font files, so every screen used
+Godot's plain default font, and panels such as the dilemma box measured their text with
+an empty font and shrank to slivers under their own words. The export now carries the
+fonts, and the font loader falls back to the imported copy if the raw file is missing.
