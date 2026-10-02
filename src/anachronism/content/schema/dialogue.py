@@ -35,7 +35,7 @@ MOMENTS = frozenset(
         "victory", "defeat", "ally_attacked", "disaster", "blessing", "faith", "coalition",
         "consequence", "battle_won", "battle_lost", "siege", "army_lost", "pillage", "pillaged",
         "uprising", "uprising_won", "sea_battle_won", "sea_battle_lost", "blockade",
-        "crossing_barred",
+        "crossing_barred", "dynasty", "restoration",
         "advise_steward", "advise_steward_urgent", "advise_general",
         "advise_general_urgent", "advise_scholar", "advise_diviner", "advise_diviner_urgent",
     }

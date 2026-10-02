@@ -220,9 +220,17 @@ states, and the player civ's ruler, resources and threats. A disclaimer screen p
 this is a good-faith simulation, not a re-enactment. Contested facts are not flagged in game;
 source notes and confidence live in data files only.
 
-## 13. Dynasties (D-011)
-Polities are separate entries linked by lineage. The player's hand follows the lineage across
-dynastic change; the player picks the successor to continue with when their polity falls.
+## 13. Dynasties (D-011, D-113)
+Polities are separate entries linked by lineage. In play, the fall is not the end:
+- A state that **collapses** from within (half its starting provinces lost to revolt) but
+  still holds land passes to a **new dynasty**: revolts are counted afresh, half the unrest
+  is released, and the new house starts with an untested mandate (40% legitimacy).
+- A state **destroyed** by conquest lives on while its people remember it (the conquered
+  provinces' `people`). Where they rise against an unguarded conqueror (twice as eagerly as
+  other peoples), the state is **restored** with that province as its capital.
+- The player is defeated only when no province anywhere still remembers their state
+  (assimilation erases the memory after some generations). Meanwhile the game shows where
+  the people remember it, and the player waits for them to rise.
 
 ## 14. Offline "Historical Advisors" mode
 Each turn scholars offer 3–6 curated ideas suited to the civ's situation, drawn from the

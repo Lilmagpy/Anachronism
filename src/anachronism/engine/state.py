@@ -342,6 +342,8 @@ class CivState(Mutable):
     martial_bp: int = 10_000  # share of the people under arms, against the usual (steppe: more)
     navy_bp: int = 10_000  # seafaring, against the usual: the size of its starting fleet
     revolts: int = 0  # provinces lost to revolt: half the starting ones is collapse
+    dynasties: int = 1
+    """How many dynasties have ruled the state in this game (D-113)."""
     envoy_turn: int = -1  # the turn the last embassy left: one a turn
     mercenaries: int = 0
     """Turns of hired soldiers left."""

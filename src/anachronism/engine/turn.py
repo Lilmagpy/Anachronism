@@ -7,6 +7,7 @@ from anachronism.engine.armies import command, march, sieges, upkeep
 from anachronism.engine.buildings import advance_works, rival_builders, weighted
 from anachronism.engine.culture import spread_faiths, trade
 from anachronism.engine.dilemmas import ask
+from anachronism.engine.dynasty import renew
 from anachronism.engine.economy import run_economy
 from anachronism.engine.effects import Effects, civ_effects
 from anachronism.engine.events import EventLog
@@ -74,6 +75,7 @@ def end_turn(state: GameState) -> tuple[GameState, list[Event]]:
     upkeep(new, events)
     fleet_upkeep(new)
     occupation(new, rng, events)
+    renew(new, events)  # collapsed states pass to new dynasties (D-113)
     wear_wars(new, events)
     for civ_id in sorted(new.civs):
         new.civs[civ_id].mercenaries = max(0, new.civs[civ_id].mercenaries - 1)

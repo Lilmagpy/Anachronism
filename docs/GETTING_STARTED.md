@@ -59,6 +59,9 @@ walks you through the screen the first time (Settings can replay it). Then:
   envoys, alliances, missionaries, war and peace.
 - **End turn** (or Enter) lets ten years pass. Characters pop up to tell you what happened; the
   chronicle at the bottom lists the rest.
+- **If your state falls**, it is not the end: a collapse brings a new dynasty to the throne,
+  and if conquerors take everything, your people may rise where no garrison holds them and
+  restore your state. You lose only when no one remembers it any more.
 - **Esc** opens the menu: save, load, the full chronicle, charts, the tech tree and
   settings (sound, music, offline mode).
 

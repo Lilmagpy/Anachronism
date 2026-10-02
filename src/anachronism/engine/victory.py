@@ -22,6 +22,7 @@ from typing import Any
 
 from anachronism.content.schema import EffectType, Faith, RelationStatus
 from anachronism.engine.culture import shares_faith, trade_income
+from anachronism.engine.dynasty import remembered_in
 from anachronism.engine.economy import production
 from anachronism.engine.effects import civ_effects
 from anachronism.engine.events import EventLog
@@ -123,7 +124,8 @@ def check_outcome(state: GameState, events: EventLog) -> None:
     if state.outcome is not None:
         return
     me = state.civs[state.player_civ]
-    if me.collapsed or not alive(state, me.id):
+    # a fallen state lives on while its people remember it (D-113)
+    if not alive(state, me.id) and not remembered_in(state, me.id):
         state.outcome = Outcome(
             result="defeat", path="collapse", tier="regional", turn=state.turn, year=state.year
         )

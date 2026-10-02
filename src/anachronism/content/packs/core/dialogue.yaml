@@ -92,7 +92,18 @@ dialogue:
   - id: collapse
     speaker: general
     lines:
-      - "It is over. The {adjective} realm has fallen apart. Perhaps history will judge our ambition more kindly than the people did."
+      - "The old order is finished: half the provinces have thrown off the court. Whoever sits on the throne next must begin again, and more carefully."
+
+  - id: dynasty
+    speaker: ruler
+    lines:
+      - "The old house fell because it reached for everything at once. Mine will not. Let the people see that order has returned to {civ}."
+      - "A new dynasty, a new mandate. The people will forgive the past once the granaries are full again."
+
+  - id: restoration
+    speaker: general
+    lines:
+      - "They never forgot us. {subject} has risen, and the {adjective} banner flies again. Now we must hold it."
 
   - id: rival_adopted
     speaker: rival

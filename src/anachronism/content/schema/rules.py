@@ -136,6 +136,12 @@ class SocietyRules(Frozen):
     revolt_legitimacy_bp: NonNegative
     collapse_share_bp: Rate
     """Losing this share of the starting provinces counts as collapse."""
+    dynasty_legitimacy_bp: Rate = 4_000
+    """A new dynasty's legitimacy after a collapse (D-113): a fresh but untested mandate."""
+    dynasty_unrest_relief_bp: Rate = 5_000
+    """Share of unrest the fall of the old dynasty releases."""
+    restoration_uprising_x: Positive = 2
+    """A fallen state's own people rise this many times as often to restore it."""
 
 
 class PopulationRules(Frozen):

@@ -956,3 +956,16 @@ small states still adopt a few ideas. The player gains the same choice: push an 
 ones more as unrest rises, and the simulation bots start nothing new while unrest is above
 half (the balance test "careful growth stays stable" caught a growth bot that built five
 schools and no temple while unrest climbed).
+
+## D-113 The fall is not the end: new dynasties and restored states — DELEGATED (2026-10-02)
+D-011 said the player's guiding hand follows the lineage across dynastic change and the game
+ends only when no successor survives; in practice every scenario gives each lineage a single
+state, so a collapse or conquest simply ended the game. Now: a state that collapses from
+within but still holds land passes to a new dynasty (revolts counted afresh, half the unrest
+released, legitimacy reset to an untested 40%); a state destroyed by conquest is restored
+where its remembering people rise against an unguarded conqueror (they rise twice as eagerly
+as other peoples, and the state takes that province as its capital); the player is defeated
+only when no province still remembers their state. This applies to rival states too, so
+history keeps its restorations. New spoken moments: `dynasty`, `restoration`; the collapse
+line no longer says "it is over". The side panel tells an exiled player where their people
+still remember them.

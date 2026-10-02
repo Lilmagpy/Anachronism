@@ -2,13 +2,14 @@
 
 Every province has a people. A province taken in war keeps its people, who may rise when
 it has no garrison (an army of its rulers at least one man per hundred people), more often
-when the realm is restless: they go back to their old state if it still stands, or break
-free if it does not. After some generations (``assimilation_years``) a conquered people
-thinks of itself as its rulers' own.
+when the realm is restless: they go back to their old state if it still stands, restore it
+if it has fallen (twice as eagerly, D-113), or break free if it never existed. After some
+generations (``assimilation_years``) a conquered people thinks of itself as its rulers' own.
 """
 
 from __future__ import annotations
 
+from anachronism.engine.dynasty import restore
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import BP, apply_bp
 from anachronism.engine.rivals import add_grievance, alive
@@ -61,11 +62,22 @@ def occupation(state: GameState, rng: GameRng, events: EventLog) -> None:
             continue  # held down by soldiers, or by the court and its guards
         unrest = state.civs[owner].stats.unrest_bp
         chance = per_turn(state, rules.uprising_bp) * (BP + unrest) // BP
+        fallen = old in state.civs and not alive(state, old)
+        if fallen:  # a people rising to restore its own state (D-113)
+            chance *= state.world.rules.society.restoration_uprising_x
         if not rng.chance(chance):
             continue
         rebel_name = state.civs[old].adjective if old in state.civs else "its own"
         province.population -= apply_bp(province.population, 300)  # the fighting
-        if old in state.civs and alive(state, old):
+        if fallen:
+            restore(state, old, province_id)
+            add_grievance(state, old, owner, 1000)
+            text = (
+                f"{place} rises against {state.civs[owner].name}:"
+                f" the {rebel_name} state is restored, its court seated there."
+            )
+            events.add(old, "restoration", text, place)
+        elif old in state.civs and alive(state, old):
             province.owner = old
             province.held_since = state.turn
             add_grievance(state, old, owner, 1000)

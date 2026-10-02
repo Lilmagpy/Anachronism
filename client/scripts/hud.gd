@@ -615,6 +615,9 @@ func _fill_side() -> void:
 		button.add_child(holder)
 		_tabs.add_child(button)
 	_clear(_side_body)
+	var exile: Array = view["status"].get("exile", [])
+	if not exile.is_empty():   # fallen, but remembered (D-113)
+		_side_body.add_child(_wrapped("Your state has fallen. Its people still remember it in %s: while no garrison holds them down they may rise and restore it. Wait, and end the turn." % ", ".join(exile), 14, BAD))
 	if message != "":
 		_side_body.add_child(_wrapped(message, 14, GOLD))
 	match tab:

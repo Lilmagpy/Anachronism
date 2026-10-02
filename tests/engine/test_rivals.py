@@ -7,9 +7,11 @@ import pytest
 from anachronism.content.loader import Content
 from anachronism.content.schema import Preconditions, RelationStatus, Script, ScriptGoal
 from anachronism.engine.actions import DeclareWar, MakePeace, Priority, ProposeAlliance, SendEnvoy
+from anachronism.engine.dynasty import renew
 from anachronism.engine.economy import project_costs
 from anachronism.engine.events import EventLog
 from anachronism.engine.game import apply_action, end_turn, new_game
+from anachronism.engine.occupation import occupation
 from anachronism.engine.reports import capacity
 from anachronism.engine.rivals import (
     contact_pairs,
@@ -240,12 +242,53 @@ def test_economic_victory_needs_allies_and_a_great_economy(warring: GameState) -
         assert warring.outcome is None
 
 
-def test_losing_everything_is_defeat(warring: GameState) -> None:
-    for pid in warring.owned_provinces("qin"):
+def test_losing_everything_is_defeat_only_once_no_one_remembers(warring: GameState) -> None:
+    lost = warring.owned_provinces("qin")
+    for pid in lost:
         warring.provinces[pid].owner = "wei"
+        warring.provinces[pid].people = "qin"
+    check_outcome(warring, EventLog(turn=0, year=warring.year))
+    assert warring.outcome is None  # the Qin people may yet rise again (D-113)
+    for pid in lost:
+        warring.provinces[pid].people = "wei"  # assimilated: Qin is forgotten
     check_outcome(warring, EventLog(turn=0, year=warring.year))
     assert warring.outcome is not None
     assert warring.outcome.result == "defeat"
+
+
+def test_a_fallen_state_is_restored_where_its_people_rise(warring: GameState) -> None:
+    lost = warring.owned_provinces("qin")
+    for pid in lost:
+        warring.provinces[pid].owner = "wei"
+        warring.provinces[pid].people = "qin"
+        warring.provinces[pid].held_since = warring.turn
+    for army in [a for a in warring.armies.values() if a.owner in ("wei", "qin")]:
+        del warring.armies[army.id]  # no garrisons to hold them down
+    override = warring.world.rules.armies.model_copy(update={"uprising_bp": 10_000})
+    warring.world = warring.world.model_copy(
+        update={"rules": warring.world.rules.model_copy(update={"armies": override})}
+    )
+    events = EventLog(turn=0, year=warring.year)
+    occupation(warring, GameRng(warring.rng), events)
+    assert warring.owned_provinces("qin")
+    assert warring.civs["qin"].capital in warring.owned_provinces("qin")
+    assert any(e.kind == "restoration" for e in events.items)
+
+
+def test_a_collapsed_state_passes_to_a_new_dynasty(warring: GameState) -> None:
+    qin = warring.civs["qin"]
+    qin.collapsed = True
+    qin.revolts = 3
+    qin.stats.unrest_bp = 8_000
+    events = EventLog(turn=0, year=warring.year)
+    renew(warring, events)
+    assert not qin.collapsed
+    assert qin.dynasties == 2
+    assert qin.revolts == 0
+    assert qin.stats.unrest_bp < 8_000
+    assert [e.kind for e in events.items] == ["dynasty"]
+    check_outcome(warring, events)
+    assert warring.outcome is None
 
 
 def test_turns_with_rivals_stay_deterministic(content: Content) -> None:

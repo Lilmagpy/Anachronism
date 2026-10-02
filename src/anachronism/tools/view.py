@@ -23,6 +23,7 @@ from anachronism.engine.buildings import slots
 from anachronism.engine.commands import describe_blockers
 from anachronism.engine.decrees import cost, explain_costs, explain_ready_in, news_on_the_road
 from anachronism.engine.dilemmas import effects_text, fill
+from anachronism.engine.dynasty import remembered_in
 from anachronism.engine.economy import project_costs
 from anachronism.engine.navies import SIZES, best_ship, sea_links, sea_route, seas_of
 from anachronism.engine.navies import power as sea_power
@@ -90,6 +91,11 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
             **civ.stats.model_dump(),
             "framing": civ.framing.value,
             "collapsed": civ.collapsed,
+            "dynasties": civ.dynasties,
+            # fallen, but remembered: where the people may yet rise to restore the state
+            "exile": [state.world.geography[p].name for p in remembered_in(state, civ_id)]
+            if not state.owned_provinces(civ_id)
+            else [],
             "stores": civ.stockpiles.model_dump(),
             "workforce": room.workforce,
             "free_labour": room.free_labour,
