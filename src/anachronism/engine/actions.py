@@ -258,6 +258,15 @@ class DisbandArmy(Frozen):
     army: str
 
 
+class ChooseChapter(Frozen):
+    """Answer the chapter of history before the court (chronicle mode, D-120)."""
+
+    kind: Literal["chapter"] = "chapter"
+    civ: str
+    chapter: str
+    choice: int
+
+
 class ChooseDilemma(Frozen):
     """Answer the dilemma put to the court (D-104)."""
 
@@ -361,6 +370,7 @@ Action = Annotated[
     | ScuttleFleet
     | Build
     | ChooseDilemma
+    | ChooseChapter
     | AnswerEnvoy,
     Field(discriminator="kind"),
 ]

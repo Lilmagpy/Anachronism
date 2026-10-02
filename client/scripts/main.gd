@@ -96,9 +96,10 @@ func _fail(notice: CanvasLayer) -> void:
 		label.text = "The game engine could not start:\n%s\n\nCheck your internet connection for the first launch, then open the game again." % bridge.last_error
 
 
-func _start_game(scenario_id: String, civ_id: String, difficulty := "normal") -> void:
+func _start_game(scenario_id: String, civ_id: String, difficulty := "normal", chronicle := false) -> void:
 	var args := {"scenario": scenario_id, "seed": int(options.get("seed", "1")),
-		"difficulty": str(options.get("difficulty", difficulty))}
+		"difficulty": str(options.get("difficulty", difficulty)),
+		"chronicle": chronicle or options.has("chronicle")}
 	if civ_id != "":
 		args["civ"] = civ_id
 	_enter_game(bridge.request("new_game", args))
@@ -259,6 +260,10 @@ func _build_hud() -> void:
 	hud.speak(view.get("voices", []), true)
 	if options.has("start"):
 		_on_action({"kind": "start", "node_id": str(options["start"])})
+	if options.has("choose"):  # --choose=N: answer the waiting chapter (screenshots)
+		var block: Variant = view.get("chronicle")
+		if block != null and block.get("chapter") != null:
+			_on_action({"kind": "chapter", "chapter": str(block["chapter"]["id"]), "choice": int(options["choose"])})
 	if options.has("build"):  # --build=province:building,... one a turn (screenshots)
 		for order in str(options["build"]).split(","):
 			var bits := order.split(":")
@@ -365,6 +370,10 @@ func _on_action(action: Dictionary) -> void:
 		view = reply["view"]
 		if reply["accepted"] and action["kind"] == "start":
 			hud.tab = "projects"
+		if reply["accepted"] and action["kind"] == "chapter":   # history may move borders (D-120)
+			if provinces.update(view) and settlements != null:
+				settlements.recolour()
+			provinces.show_ties(view)
 		if action["kind"] in ["raise", "march", "stance", "disband", "fortify", "dilemma", "envoy_answer",
 				"build_fleet", "sail", "scuttle", "plan", "build", "spies", "hasten"]:
 			hud.message = str(reply["message"])

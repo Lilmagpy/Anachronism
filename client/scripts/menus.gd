@@ -6,7 +6,7 @@
 class_name Menus
 extends CanvasLayer
 
-signal start_requested(scenario_id: String, civ_id: String, difficulty: String)
+signal start_requested(scenario_id: String, civ_id: String, difficulty: String, chronicle: bool)
 signal quit_requested
 signal continue_requested   ## resume the autosaved game
 
@@ -25,6 +25,7 @@ func _ready() -> void:
 
 var can_continue := false   ## an autosaved game exists
 var difficulty := "normal"  ## chosen in the picker; kept while browsing moments
+var chronicle := true   ## follow history in chapters (D-120), where the state has them
 
 
 func show_title() -> void:
@@ -196,6 +197,22 @@ func _draw_picker() -> void:
 	body.add_child(stats)
 	var story := UiStyle.wrapped(str(scenario["description"]), 13, UiStyle.INK_SOFT, 860)
 	body.add_child(story)
+	var chapters := int(civ.get("chronicle", 0))
+	if chapters > 0:
+		# chronicle mode: live through the real history, chapter by chapter, and try to outdo it
+		var ways := HBoxContainer.new()
+		ways.add_theme_constant_override("separation", 8)
+		for follow in [true, false]:
+			var label := ("FOLLOW HISTORY · %d chapters" % chapters) if follow else "FREE PLAY"
+			var way := UiStyle.big_button(label, 16, UiStyle.GOLD if chronicle == follow else Color(0.85, 0.80, 0.70))
+			way.custom_minimum_size = Vector2(260, 44)
+			way.tooltip_text = ("Live through what really happened, chapter by chapter. Your goal is not to win but to outdo history." if follow
+				else "The same moment with no chapters: history is only what you and the rivals make it.")
+			way.pressed.connect(func():
+				chronicle = follow
+				_draw_picker())
+			ways.add_child(way)
+		body.add_child(ways)
 	var fill := Control.new()
 	fill.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	body.add_child(fill)
@@ -227,7 +244,8 @@ func _draw_picker() -> void:
 	row.add_child(push2)
 	var confirm := UiStyle.big_button("CONFIRM", 32)
 	confirm.custom_minimum_size = Vector2(300, 72)
-	confirm.pressed.connect(func(): start_requested.emit(str(scenario["id"]), str(civ["id"]), difficulty))
+	confirm.pressed.connect(func(): start_requested.emit(str(scenario["id"]), str(civ["id"]), difficulty,
+		chronicle and int(civ.get("chronicle", 0)) > 0))
 	row.add_child(confirm)
 	body.add_child(row)
 	_root.add_child(card)

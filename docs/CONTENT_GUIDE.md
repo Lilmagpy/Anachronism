@@ -210,6 +210,25 @@ soldier that won, the terrain and a rout or a hard fight, and its lines may use 
 it may require the winners' `ships` instead of soldiers and terrain. Any tale may name
 `civs`: it is then told only when one of them wins (Greek fire for Byzantium).
 
+## Chronicles: chapters and the almanac
+A chronicle (D-120) is a scenario's `chapters` for one civilisation, in a file of kind
+`chapters` (one kind per file). Each chapter has a `scenario`, a `civ`, the `year` it opens
+and optionally `until_year` (if its conditions still fail by then, it is passed over and
+its `diverged` note tells how history turned); a `title`, `place`, a `speaker` (`ruler`,
+an adviser's id, or a civilisation's id, whose ruler speaks); the `story` (paragraphs
+separated by blank lines, at most 2,400 characters); conditions (`needs_alive`,
+`needs_war_with`, `needs_peace_with`, `needs_owner` / `needs_not_owner` as province: civ,
+`after` earlier chapters, `after_choice` chapter: index); and two to four `choices`. A
+choice is a dilemma's choice (label, outcome and effects) plus `historical: true` for what
+really happened, `needs_adopted` ideas (the choice is locked until they are in use) and
+`deeds`: `war_with`, `peace_with`, `ally_with`, `tributaries`, `take`, `give` and
+`give_to`, `ships`, `men`, `grudges`. Then `history` (what really happened, shown after
+the choice), `benchmark_provinces` (how many provinces the real state held then) and
+`sources`. History must be defensible: romance in the telling, never in the facts.
+`almanac` files hold what happened elsewhere: `scenario`, `year`, `text` and
+`needs_alive`. Set `campaign_years_per_turn` in the scenario for a chronicle's pace.
+`anachronism-lint` checks every reference.
+
 ## Buildings
 `buildings.yaml` (core, or any pack) lists what provinces can build (D-111): `needs_techs`
 (all must be in use), optionally `coastal`, `river`, `needs_resource` (any one of them, at

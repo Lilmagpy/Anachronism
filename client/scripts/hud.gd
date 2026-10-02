@@ -64,6 +64,7 @@ var _asked := ""                ## the words the question was about
 var _dots := 0.0
 var _speech_queue: Array = []
 var _speech: Control
+var _story := StoryCard.new()   ## chronicle mode's chapters (D-120)
 
 
 func _ready() -> void:
@@ -82,6 +83,8 @@ func _ready() -> void:
 	_dilemma.custom_minimum_size = Vector2(620, 0)
 	_dilemma.visible = false
 	_root.add_child(_dilemma)
+	_story.chosen.connect(func(id: String, index: int):
+		action_requested.emit({"kind": "chapter", "chapter": id, "choice": index}))
 	_hover.add_theme_color_override("font_color", UiStyle.CREAM)
 	_hover.add_theme_color_override("font_outline_color", Color(0.1, 0.06, 0.03, 0.95))
 	_hover.add_theme_constant_override("outline_size", 7)
@@ -111,6 +114,11 @@ func show_view(new_view: Dictionary) -> void:
 	_fill_card()
 	_fill_chronicle()
 	_fill_dilemma()
+	if _story.get_parent() == null:
+		_root.add_child(_story)   # above everything else
+	_story.show_chronicle(view.get("chronicle"))
+	var waiting: Variant = view.get("chronicle")
+	_end_turn.disabled = waiting != null and waiting.get("chapter") != null
 	var outcome: Variant = view.get("victory", {}).get("outcome")
 	if outcome != null and not _outcome_shown:
 		_outcome_shown = true
@@ -315,6 +323,8 @@ func _show_next_voice() -> void:
 	box.add_child(portrait)
 	_root.add_child(box)
 	_speech = box
+	if _story.visible:
+		_story.move_to_front()   # a chapter of history comes first
 	# slide in from the left
 	box.modulate.a = 0.0
 	var start := box.position
@@ -618,6 +628,16 @@ func _fill_side() -> void:
 	var exile: Array = view["status"].get("exile", [])
 	if not exile.is_empty():   # fallen, but remembered (D-113)
 		_side_body.add_child(_wrapped("Your state has fallen. Its people still remember it in %s: while no garrison holds them down they may rise and restore it. Wait, and end the turn." % ", ".join(exile), 14, BAD))
+	var chronicle: Variant = view.get("chronicle")
+	if chronicle != null:   # how the chronicle goes, and how the state stands against history
+		var line := "Chronicle: %d of %d chapters" % [int(chronicle["done"]) + int(chronicle["passed"]), int(chronicle["total"])]
+		if chronicle.get("next") != null:
+			line += " · next: %s (%s)" % [str(chronicle["next"]["title"]), str(chronicle["next"]["year"])]
+		_side_body.add_child(_wrapped(line, 13, GOLD))
+		if str(chronicle["versus"]) != "":
+			_side_body.add_child(_wrapped(str(chronicle["versus"]), 13, INK))
+		if chronicle.get("verdict") != null:
+			_side_body.add_child(_wrapped(str(chronicle["verdict"]), 15, BAD if "did better" in str(chronicle["verdict"]) else GOOD))
 	if message != "":
 		_side_body.add_child(_wrapped(message, 14, GOLD))
 	match tab:

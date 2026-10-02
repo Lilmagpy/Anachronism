@@ -241,6 +241,15 @@ states, and the player civ's ruler, resources and threats. A disclaimer screen p
 this is a good-faith simulation, not a re-enactment. Contested facts are not flagged in game;
 source notes and confidence live in data files only.
 
+### Chronicle mode (D-120)
+A scenario may also be played as a chronicle: chapters along what really happened, told at
+some length, each a turning point with a choice history made and others it did not. History
+bends, then catches up: the turning points still come while their conditions hold, and are
+passed over (with a note of how history turned) once the player's world has left them
+behind. After each choice the player reads what really happened and how their state stands
+against the real one; the aim is not to win but to outdo history. Ideas ahead of their time
+open choices history never had. Turns are two years long.
+
 ## 13. Dynasties (D-011, D-113)
 Polities are separate entries linked by lineage. In play, the fall is not the end:
 - A state that **collapses** from within (half its starting provinces lost to revolt) but

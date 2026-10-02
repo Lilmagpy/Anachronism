@@ -115,6 +115,8 @@ class Scenario(Frozen):
     """Religions and schools of belief, and who holds them at the start."""
     relations: tuple[StartingRelation, ...] = ()
     """Alliances, wars and grudges at the start; other reachable pairs begin neutral."""
+    campaign_years_per_turn: Annotated[int, Field(ge=1, le=50)] | None = None
+    """Turn length in chronicle mode (D-120), shorter so chapters fall in their years."""
     cost_scale: Annotated[int, Field(ge=1, le=1000)] = 1
     """Multiplies every project cost. Scenarios with real historical populations (millions,
     not tens of thousands) raise it so inventions cost the same share of a state's effort."""

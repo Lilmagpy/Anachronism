@@ -5,7 +5,9 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 from anachronism.content.schema import (
+    AlmanacEntry,
     Building,
+    Chapter,
     CivDefinition,
     Dialogue,
     Dilemma,
@@ -52,6 +54,8 @@ class Registry:
     dilemmas: dict[str, Dilemma] = field(default_factory=dict)
     ships: dict[str, Ship] = field(default_factory=dict)
     buildings: dict[str, Building] = field(default_factory=dict)
+    chapters: dict[str, Chapter] = field(default_factory=dict)
+    almanac: dict[str, AlmanacEntry] = field(default_factory=dict)
     tactics: dict[str, Tactic] = field(default_factory=dict)
     symbols: dict[str, Symbol] = field(default_factory=dict)
     origins: dict[tuple[str, str], str] = field(default_factory=dict)

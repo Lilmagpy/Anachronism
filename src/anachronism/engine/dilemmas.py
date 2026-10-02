@@ -103,7 +103,11 @@ def ask(state: GameState, rng: GameRng, events: EventLog) -> None:
 
 def answer(state: GameState, dilemma: Dilemma, index: int) -> str:
     """Apply one choice's consequences; returns what happened."""
-    choice: Choice = dilemma.choices[index]
+    return apply_choice(state, dilemma.choices[index])
+
+
+def apply_choice(state: GameState, choice: Choice) -> str:
+    """A choice's consequences for the player's court (dilemmas and chapters alike)."""
     civ = state.civs[state.player_civ]
     stores = civ.stockpiles
     stores.food = max(0, stores.food + apply_bp(stores.food, choice.food_bp))

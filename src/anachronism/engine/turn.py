@@ -5,6 +5,7 @@ from __future__ import annotations
 from anachronism.content.schema import EffectType
 from anachronism.engine.armies import command, march, sieges, upkeep
 from anachronism.engine.buildings import advance_works, rival_builders, weighted
+from anachronism.engine.campaign import advance, almanac
 from anachronism.engine.culture import spread_faiths, trade
 from anachronism.engine.dilemmas import ask
 from anachronism.engine.dynasty import renew
@@ -89,6 +90,9 @@ def end_turn(state: GameState) -> tuple[GameState, list[Event]]:
     grow_population(new, effects_by_civ, starving)
     new.turn += 1
     new.year += new.world.years_per_turn
+    # chronicle mode (D-120): the world's news, then the next chapter of history
+    almanac(new, new.year - new.world.years_per_turn, events)
+    advance(new, events)
     for civ_id in sorted(new.civs):
         new.civs[civ_id].history.append(snapshot(new, civ_id))
     check_outcome(new, events)

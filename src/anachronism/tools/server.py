@@ -34,6 +34,7 @@ from anachronism.llm.counsel import who_counsels
 from anachronism.llm.pipeline import IdeaPipeline, make_pipeline
 from anachronism.tools.advisers import counsel
 from anachronism.tools.chronicle import chapters
+from anachronism.tools.story import chronicle_block
 from anachronism.tools.view import build_catalog, build_view, next_steps
 from anachronism.tools.voices import (
     adviser_voice,
@@ -86,6 +87,7 @@ class Session:
                 int(args.get("seed", 1)),
                 None if civ is None else str(civ),
                 str(args.get("difficulty", "normal")),
+                chronicle=bool(args.get("chronicle", False)),
             )
             rivals = str(args.get("rivals", "growth"))
             self.rivals = {
@@ -93,8 +95,8 @@ class Session:
             }
         except ValueError as error:
             raise RequestError(str(error)) from error
-        self.events = []
-        view = self._view([])
+        self.events = list(self.state.events)  # chronicle mode opens with the world's news
+        view = self._view(self.events)
         view["voices"] = opening_voices(self.content, self.state)
         return view
 
@@ -184,6 +186,7 @@ class Session:
         game = state or self.game()
         view = build_view(game, events)
         view["advice"] = counsel(self.content, game)
+        view["chronicle"] = chronicle_block(self.content, game)
         for civ in view["civs"]:
             definition = self.content.civs.get(civ["id"])
             civ["emblem"] = (definition.emblem or definition.adjective[:1]) if definition else "?"

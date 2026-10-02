@@ -661,6 +661,12 @@ def build_catalog(content: Content) -> list[dict[str, Any]]:
                     "capital": content.provinces[start.capital].name,
                     "advances": sum(stage.is_adopted for stage in start.techs.values()),
                     "literacy_bp": start.stats.literacy_bp,
+                    # chronicle mode (D-120): how many chapters of history this state has
+                    "chronicle": sum(
+                        1
+                        for c in content.chapters.values()
+                        if c.scenario == scenario_id and c.civ == civ_id
+                    ),
                 }
             )
         civs.sort(key=lambda c: -sum(scenario.civs[c["id"]].provinces.values()))

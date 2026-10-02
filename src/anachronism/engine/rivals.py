@@ -191,6 +191,17 @@ def declare_war(
         return
     set_status(state, attacker, defender, RelationStatus.WAR)
     add_grievance(state, defender, attacker, 1000)
+    # the player's own historical intention against this state has now come to pass, so
+    # the plans of others that waited on it (Hannibal's war on the First Punic War) can follow
+    for script in state.world.scripts.get(attacker, ()):
+        if (
+            attacker == state.player_civ
+            and script.goal is ScriptGoal.CONQUER
+            and script.target == defender
+            and script.id not in state.scripts_fired
+            and script.id not in state.scripts_lapsed
+        ):
+            state.scripts_fired[script.id] = state.turn
     a, d = state.civs[attacker], state.civs[defender]
     events.add(
         attacker, "war", f"War: the {a.adjective} court marches against {d.name}.{why}", d.name

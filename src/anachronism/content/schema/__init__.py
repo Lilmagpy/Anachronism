@@ -8,6 +8,7 @@ from anachronism.content.schema.base import (
     Rate,
 )
 from anachronism.content.schema.buildings import Building
+from anachronism.content.schema.chapters import AlmanacEntry, Chapter, ChapterChoice, Deeds
 from anachronism.content.schema.civ import CivDefinition
 from anachronism.content.schema.dialogue import MOMENTS, SPECIAL_SPEAKERS, Dialogue, Speaker
 from anachronism.content.schema.dilemmas import Choice, Dilemma
@@ -67,11 +68,15 @@ __all__ = [
     "SINGLE_KINDS",
     "SPECIAL_SPEAKERS",
     "Access",
+    "AlmanacEntry",
     "Building",
     "Category",
+    "Chapter",
+    "ChapterChoice",
     "Choice",
     "CivDefinition",
     "Confidence",
+    "Deeds",
     "Dialogue",
     "Dilemma",
     "Disposition",

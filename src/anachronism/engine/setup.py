@@ -34,6 +34,7 @@ def build_state(
     seed: int,
     player_civ: str | None = None,
     difficulty: str = "normal",
+    chronicle: bool = False,
 ) -> GameState:
     """Create the state at the start of a scenario (before any turn is played).
 
@@ -74,7 +75,9 @@ def build_state(
         scenario_id=scenario.id,
         scenario_name=scenario.name,
         content_digest=content.digest,
-        years_per_turn=scenario.years_per_turn,
+        years_per_turn=(scenario.campaign_years_per_turn or scenario.years_per_turn)
+        if chronicle
+        else scenario.years_per_turn,
         rules=_rules_for(content, difficulty),
         difficulty=difficulty,
         eras=content.eras,
@@ -95,6 +98,16 @@ def build_state(
         dilemmas=dict(sorted(content.dilemmas.items())),
         ships=dict(sorted(content.ships.items())),
         buildings=dict(sorted(content.buildings.items())),
+        chapters={
+            c.id: c
+            for c in sorted(content.chapters.values(), key=lambda c: (c.year, c.id))
+            if chronicle and c.scenario == scenario.id and c.civ == player
+        },
+        almanac={
+            a.id: a
+            for a in sorted(content.almanac.values(), key=lambda a: (a.year, a.id))
+            if a.scenario == scenario.id
+        },
         tactics=dict(sorted(content.tactics.items())),
         faiths={f.id: f for f in scenario.faiths},
         successors={
@@ -143,6 +156,7 @@ def build_state(
         tech_nodes=dict(sorted(content.techs.items())),
         provinces=provinces,
         civs=civs,
+        chronicle_mode=chronicle,
     )
 
 

@@ -1040,3 +1040,24 @@ bots hasten when their stores hold five times the price. (2) Stores of materials
 and wealth beyond ten turns' production waste away, a fifth of the excess each decade
 (timber rots, scrolls are lost, treasure is embezzled), like the granary's spoilage. In the
 same simulation Rome's wealth now ends near 26,000 and it adopts 74 ideas instead of 68.
+
+## D-120 Chronicle mode: live through history and try to outdo it — owner's direction (2026-10-02)
+The owner asked for a more scaffolded playthrough along history as it really happened, with
+better storytelling, lightly romanticised but never at the cost of the history, keeping the
+ideas ahead of their time and everything already built. Asked four questions, the owner
+chose: **history bends, then catches up** (your choices change the world, but the great
+turning points still come while their conditions hold; a turning point whose world no
+longer exists is passed over, and the chronicle tells how history turned); **compare with
+real history** (each chapter's aftermath tells what really happened and how your state
+stands against the real one at that date; the goal is not to win but to outdo history);
+**Rome against Carthage first** (19 chapters, Messana in 264 BC to the fall of Carthage in
+146 BC, and 20 almanac entries of what happened elsewhere); **short turns** (two years a
+turn in a chronicle; `campaign_years_per_turn` in the scenario).
+How it works: chapters and almanac entries are content (`chapters`, `almanac` pack kinds).
+One chapter waits at a time and the turn cannot end while it does (in the client); answering
+is a recorded action, so replays stay exact; a chapter left unanswered is settled as history
+did. Choices carry a dilemma's effects plus deeds in the world (war, peace, alliances,
+tributaries, land taken or given, fleets, men). A choice may need an idea in use: these are
+the anachronisms of the player's own making (a crossbow line at Cannae, a rudder-steered
+fleet), shown locked with what they need until then, so the core idea game feeds the story.
+Free play stays as it was; the picker offers "Follow history" where a scenario has chapters.

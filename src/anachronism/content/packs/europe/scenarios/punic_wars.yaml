@@ -10,6 +10,7 @@ scenarios:
       freedom. In Syracuse, a young man named Archimedes is beginning to think.
     start_year: -264
     years_per_turn: 10
+    campaign_years_per_turn: 2
     player_civ: rome
     map: europe
     cost_scale: 10

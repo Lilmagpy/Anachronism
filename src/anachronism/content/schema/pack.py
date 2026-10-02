@@ -8,6 +8,7 @@ from pydantic import TypeAdapter
 
 from anachronism.content.schema.base import Frozen, Identifier, Positive
 from anachronism.content.schema.buildings import Building
+from anachronism.content.schema.chapters import AlmanacEntry, Chapter
 from anachronism.content.schema.civ import CivDefinition
 from anachronism.content.schema.dialogue import Dialogue, Speaker
 from anachronism.content.schema.dilemmas import Dilemma
@@ -62,6 +63,8 @@ LIST_KINDS: dict[str, type[Frozen]] = {
     "dilemmas": Dilemma,
     "ships": Ship,
     "buildings": Building,
+    "chapters": Chapter,
+    "almanac": AlmanacEntry,
     "tactics": Tactic,
     "symbols": Symbol,
 }

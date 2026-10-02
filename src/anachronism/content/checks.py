@@ -34,6 +34,7 @@ def cross_reference_issues(registry: Registry) -> list[ContentIssue]:
         *_ship_issues(registry),
         *_building_issues(registry),
         *_tech_building_issues(registry),
+        *_chapter_issues(registry),
         *_tactic_issues(registry),
         *_symbol_issues(registry),
         *_dialogue_issues(registry),
@@ -460,4 +461,77 @@ def _building_issues(registry: Registry) -> list[ContentIssue]:
                 issues.append(ContentIssue(where, label, f"unknown building {building.replaces!r}"))
             elif building.replaces == building.id:
                 issues.append(ContentIssue(where, label, "a building cannot replace itself"))
+    return issues
+
+
+SPEAKER_KINDS = ("ruler",)
+
+
+def _chapter_issues(registry: Registry) -> list[ContentIssue]:
+    """Chronicle chapters (D-120) must name real scenarios, states, places and ideas."""
+    issues: list[ContentIssue] = []
+    for chapter in registry.chapters.values():
+        where = registry.origin("chapters", chapter.id)
+        label = f"chapters ({chapter.id})"
+
+        def bad(message: str, where: str = where, label: str = label) -> None:
+            issues.append(ContentIssue(where, label, message))
+
+        scenario = registry.scenarios.get(chapter.scenario)
+        if scenario is None:
+            if registry.is_unknown("scenarios", chapter.scenario):
+                bad(f"unknown scenario {chapter.scenario!r}")
+            continue
+        states = set(scenario.civs)
+        places = {p for start in scenario.civs.values() for p in start.provinces}
+        places |= set(scenario.unowned)
+        if chapter.civ not in states:
+            bad(f"{chapter.civ!r} is not a state in {chapter.scenario}")
+        if not (
+            chapter.speaker in SPEAKER_KINDS
+            or chapter.speaker in registry.speakers
+            or chapter.speaker in states
+        ):
+            bad(f"unknown speaker {chapter.speaker!r}")
+        named_states = [
+            *chapter.needs_alive,
+            *chapter.needs_war_with,
+            *chapter.needs_peace_with,
+            *(o for o in (*chapter.needs_owner.values(), *chapter.needs_not_owner.values())),
+        ]
+        named_places = [*chapter.needs_owner, *chapter.needs_not_owner]
+        for other in chapter.after + tuple(chapter.after_choice):
+            if registry.is_unknown("chapters", other):
+                bad(f"unknown chapter {other!r}")
+        for choice in chapter.choices:
+            deeds = choice.deeds
+            named_states += [
+                *deeds.war_with,
+                *deeds.peace_with,
+                *deeds.ally_with,
+                *deeds.tributaries,
+                *deeds.grudges,
+            ]
+            if deeds.give_to:
+                named_states.append(deeds.give_to)
+            named_places += [*deeds.take, *deeds.give]
+            for tech in (*choice.needs_adopted, *([choice.idea] if choice.idea else [])):
+                if registry.is_unknown("techs", tech):
+                    bad(f"unknown tech {tech!r}")
+        for state in named_states:
+            if state not in states and state != "nobody":
+                bad(f"{state!r} is not a state in {chapter.scenario}")
+        for place in named_places:
+            if place not in places:
+                bad(f"{place!r} is not a province in {chapter.scenario}")
+    for entry in registry.almanac.values():
+        scenario = registry.scenarios.get(entry.scenario)
+        if scenario is None:
+            continue
+        for state in entry.needs_alive:
+            if state not in scenario.civs:
+                where = registry.origin("almanac", entry.id)
+                issues.append(
+                    ContentIssue(where, f"almanac ({entry.id})", f"{state!r} is not a state")
+                )
     return issues

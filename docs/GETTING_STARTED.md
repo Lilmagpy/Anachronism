@@ -22,7 +22,11 @@ Every time new work is pushed, GitHub builds a Mac app automatically.
 
 How to play: pick a **moment** on the timeline (nine, from Egypt and the Hittites in
 1275 BC to Japan's Warring States in 1560), any of its states, and a difficulty (Easy is
-gentler on a first game). A short guided tour
+gentler on a first game). Where a moment has a chronicle (Rome against Carthage, from
+264 BC), choose **Follow history** to live through it chapter by chapter: each turning
+point is told as it happened, you choose (history's way, another, or a way only your
+ideas make possible), then read what really happened and whether you are ahead of history
+or behind it. **Free play** is the open game. A short guided tour
 walks you through the screen the first time (Settings can replay it). Then:
 
 - **Map**: drag to move, scroll (or pinch) to zoom, click a province to see who holds it,

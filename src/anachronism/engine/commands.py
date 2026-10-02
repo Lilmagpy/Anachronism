@@ -11,6 +11,7 @@ from anachronism.engine.actions import (
     Build,
     BuildFleet,
     CancelProject,
+    ChooseChapter,
     ChooseDilemma,
     DeclareWar,
     DemandTribute,
@@ -41,6 +42,7 @@ from anachronism.engine.actions import (
 )
 from anachronism.engine.armies import apply_orders
 from anachronism.engine.buildings import start as start_building
+from anachronism.engine.campaign import choose as choose_chapter
 from anachronism.engine.decrees import apply_decree
 from anachronism.engine.dilemmas import answer
 from anachronism.engine.diplomacy import apply_diplomacy
@@ -120,6 +122,10 @@ def _apply(state: GameState, action: Action) -> tuple[bool, str]:
         message = respond(state, accept=action.accept, events=events)
         state.events.extend(events.items)
         return True, message
+    if isinstance(action, ChooseChapter):
+        if civ.id != state.player_civ:
+            return False, "only the player's court plays the chronicle"
+        return choose_chapter(state, action.chapter, action.choice)
     if isinstance(action, ChooseDilemma):
         dilemma = state.world.dilemmas.get(action.dilemma)
         if dilemma is None or state.dilemma != action.dilemma or civ.id != state.player_civ:

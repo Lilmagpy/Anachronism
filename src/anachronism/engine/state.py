@@ -13,7 +13,9 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from anachronism.content.schema import (
     Access,
+    AlmanacEntry,
     Building,
+    Chapter,
     Dilemma,
     Disposition,
     EffectType,
@@ -93,6 +95,10 @@ class World(Frozen):
     """The kinds of warship that exist."""
     buildings: dict[str, Building] = Field(default_factory=dict)
     """The kinds of building provinces can raise (D-111)."""
+    chapters: dict[str, Chapter] = Field(default_factory=dict)
+    """The player's campaign in chronicle mode (D-120), by id; empty in free play."""
+    almanac: dict[str, AlmanacEntry] = Field(default_factory=dict)
+    """What happens elsewhere in the world, year by year (this scenario's entries)."""
     tactics: dict[str, Tactic] = Field(default_factory=dict)
     """The battle plans armies may fight with."""
     scripts: dict[str, tuple[Script, ...]] = Field(default_factory=dict)
@@ -392,6 +398,17 @@ class Event(Mutable):
     """What it is about, by name (an idea, a province or a resource); used by dialogue."""
 
 
+class ChapterResult(Mutable):
+    """What the player's last chapter choice led to, kept for the client to tell (D-120)."""
+
+    chapter: str
+    choice: int
+    outcome: str
+    history: str
+    historical: bool
+    benchmark: str = ""
+
+
 class GameState(Mutable):
     """A complete game at one moment: saving this is saving the game."""
 
@@ -414,6 +431,13 @@ class GameState(Mutable):
     dilemma: str | None = None
     """The dilemma waiting for the player's answer, if any."""
     dilemmas_seen: list[str] = Field(default_factory=list)
+    chronicle_mode: bool = False
+    """Playing along history in chapters (D-120)."""
+    chapter: str | None = None
+    """The chapter waiting for the player's choice, if any."""
+    chapters_done: dict[str, int] = Field(default_factory=dict)
+    """Chapter id -> the choice made (-1: passed over, history having turned)."""
+    chapter_result: ChapterResult | None = None
     armies: dict[str, Army] = Field(default_factory=dict)
     """Every army in the field, keyed by id."""
     fleets: dict[str, Fleet] = Field(default_factory=dict)
