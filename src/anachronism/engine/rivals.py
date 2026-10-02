@@ -26,8 +26,8 @@ from anachronism.content.schema import (
     ScriptGoal,
     Stage,
 )
-from anachronism.engine.actions import Priority
-from anachronism.engine.decrees import cost
+from anachronism.engine.actions import Explain, Priority
+from anachronism.engine.decrees import apply_decree, cost, explain_costs, explain_ready_in
 from anachronism.engine.economy import labour, project_costs
 from anachronism.engine.effects import Effects, civ_effects
 from anachronism.engine.events import EventLog
@@ -550,7 +550,12 @@ def rival_decrees(state: GameState, events: EventLog) -> None:
                     civ.name,
                 )
                 continue
-        if civ.stats.unrest_bp >= 3000:
+        if civ.stats.suspicion_bp >= 4000 and not explain_ready_in(state, civ_id):
+            wealth, _ = explain_costs(state, civ_id)
+            if civ.stockpiles.wealth >= wealth * 2:  # priests proclaim the new arts divine
+                apply_decree(state, Explain(civ=civ_id, story="divine"))
+                continue
+        if civ.stats.unrest_bp >= 3000 or civ.stats.legitimacy_bp < 2000:
             price = cost(state, civ_id, rules.festival_wealth_per_1000)
             if civ.stockpiles.wealth >= price * 2:
                 civ.stockpiles.wealth -= price

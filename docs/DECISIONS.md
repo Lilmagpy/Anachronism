@@ -1007,3 +1007,12 @@ again; cautious, scholarly and pious rulers also go to war, a fifth as often, an
 against a neighbour they bear a deep grudge (30%+) and outmatch twice over; mercantile
 courts open trade. In the same simulation wars now continue throughout the game (53 wars,
 15 conquests, one state swallowed), while uprisings and peace keep it from snowballing.
+
+## D-117 Rival courts quiet suspicion and win back doubting peoples — DELEGATED (2026-10-02)
+In a 60-turn simulation the strongest states (Rome, the Seleucids, Macedon) sat near 0%
+legitimacy for centuries, branded frauds by suspicion they never answered: only the player
+could explain the court's arts, and rival courts feasted only in unrest. Now rival courts
+(and the simulation bots) have priests proclaim their new arts divine when suspicion passes
+40% (if the treasury holds twice the price and the people have not heard the story too
+recently), and hold festivals when legitimacy falls below 20% as well as in unrest. In the
+same simulation Rome ends at 92% legitimacy and the Seleucids at 67%.

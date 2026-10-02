@@ -165,5 +165,6 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] Infrastructure: some ideas need buildings standing in the realm (D-114)
 - [x] Spies and intelligence: rival plans, stolen secrets, caught spies (D-115)
 - [x] Rival courts make their own history once their scripts run out (D-116)
+- [x] Rival courts quiet suspicion and win back doubting peoples (D-117)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

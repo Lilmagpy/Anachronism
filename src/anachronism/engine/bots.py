@@ -11,9 +11,17 @@ from dataclasses import dataclass, field
 from typing import Protocol
 
 from anachronism.content.schema import Category
-from anachronism.engine.actions import Action, Build, RaiseArmy, StartProject
+from anachronism.engine.actions import (
+    Action,
+    Build,
+    Explain,
+    HoldFestival,
+    RaiseArmy,
+    StartProject,
+)
 from anachronism.engine.armies import under_arms
 from anachronism.engine.buildings import best_choice
+from anachronism.engine.decrees import cost, explain_costs, explain_ready_in
 from anachronism.engine.economy import project_costs
 from anachronism.engine.fixed import apply_bp
 from anachronism.engine.game import apply_action, end_turn
@@ -87,11 +95,27 @@ class PlannerBot:
         """Raise troops in wartime; start the best affordable idea if there is room."""
         civ = state.civs[civ_id]
         levy = call_up(state, civ_id) if civ_id == state.player_civ else []
-        levy += self._build(state, civ_id)
+        levy += self._build(state, civ_id) + self._steady(state, civ_id)
         # a realm in turmoil consolidates before it reaches for anything new
         if len(civ.projects) >= self.max_projects or civ.stats.unrest_bp >= self.calm_first_bp:
             return levy
         return levy + self._idea(state, civ_id)
+
+    def _steady(self, state: GameState, civ_id: str) -> list[Action]:
+        """Quiet suspicion with a divine proclamation; win back a doubting people with feasts."""
+        civ = state.civs[civ_id]
+        rules = state.world.rules.rivals
+        wealth = civ.stockpiles.wealth
+        if (
+            civ.stats.suspicion_bp >= 4000
+            and not explain_ready_in(state, civ_id)
+            and wealth >= explain_costs(state, civ_id)[0] * 2
+        ):
+            return [Explain(civ=civ_id, story="divine")]
+        doubted = civ.stats.legitimacy_bp < 2000 or civ.stats.unrest_bp >= 3000
+        if doubted and wealth >= cost(state, civ_id, rules.festival_wealth_per_1000) * 2:
+            return [HoldFestival(civ=civ_id)]
+        return []
 
     def _build(self, state: GameState, civ_id: str) -> list[Action]:
         """Raise the most worthwhile building the stores can comfortably pay for (D-111)."""
