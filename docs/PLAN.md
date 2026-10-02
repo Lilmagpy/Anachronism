@@ -176,6 +176,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] The notebook from the future, with our history for every idea (D-126)
 - [x] Developing your cities: real numbers, ranks you can see, scaffolding (D-127)
 - [ ] Fit in the painted art from docs/ART_PROMPTS.md as it arrives
-- [ ] More chronicles (the Sengoku, Korea's Three Kingdoms)
+- [x] The third chronicle: Oda Nobunaga, Okehazama to Honno-ji, 1560-1582 (D-130)
+- [ ] More chronicles (Korea's Three Kingdoms)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

@@ -81,10 +81,13 @@ class ScenarioCiv(Frozen):
     """One or two sentences for the civilisation picker: why play this state now."""
     leader_age: Annotated[int, Field(ge=1, le=90)] = 40
     """The ruler's age at the start."""
+    leader_until: int | None = None
+    """The year the first ruler's reign really ended. In a chronicle the player's ruler does
+    not die of old age before then: how the reign ends is the chronicle's to tell."""
     successors: tuple[Successor, ...] = ()
+    """Who follows, in order, when rulers die (after that, unnamed heirs)."""
     generals: tuple[General, ...] = ()
     """Commanders, best first: new armies take the next free one."""
-    """Who follows, in order, when rulers die (after that, unnamed heirs)."""
     disposition: Disposition = Disposition.CAUTIOUS
     """The ruler's temperament, which steers the civilisation once it leaves its script."""
     martial_bp: Annotated[int, Field(ge=1000, le=200_000)] = 10_000

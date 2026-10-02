@@ -26,7 +26,7 @@ Every time new work is pushed, GitHub builds a Mac app automatically.
 How to play: pick a **moment** on the timeline (nine, from Egypt and the Hittites in
 1275 BC to Japan's Warring States in 1560), any of its states, and a difficulty (Easy is
 gentler on a first game). Where a moment has a chronicle (Rome against Carthage, from
-264 BC; Qin's unification of China, from 350 BC), choose **Follow history** to live through it chapter by chapter: each turning
+264 BC; Qin's unification of China, from 350 BC; Oda Nobunaga's Japan, from 1560), choose **Follow history** to live through it chapter by chapter: each turning
 point is told as it happened, you choose (history's way, another, or a way only your
 ideas make possible), then read what really happened and whether you are ahead of history
 or behind it. **Free play** is the open game. A short guided tour

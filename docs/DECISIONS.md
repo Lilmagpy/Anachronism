@@ -1206,3 +1206,28 @@ Follow-on to D-126: landmarks around the capital that were built from an idea br
 before its time now carry a slowly turning golden halo, a soft glow and rising sparkles,
 and up close their name and how early they came ("✦ Paper · 144 yrs early"), so the
 player's mark on history can be seen at a glance.
+
+## D-130 The third chronicle: Oda Nobunaga, 1560-1582 — DELEGATED (2026-10-02)
+Follows the owner's "keep building" and the plan's "more chronicles". Sixteen chapters
+from Okehazama to Honno-ji and Yamazaki, with a Sengoku almanac (Lepanto, Manila, Tycho's
+new star, Yasuke, the Gregorian calendar). Decisions:
+- **One year a turn.** Nobunaga's career is 22 years of crowded events; at two years a
+  turn the chapters queued up and lapsed.
+- **Muskets at the start.** Matchlocks were everywhere in Japan by 1560 (Tanegashima,
+  1543), so every daimyo and the Ming now start with them; Joseon (none until the 1590s)
+  and Ryukyu do not. This also affects free play of the scenario, which is more accurate.
+- **A chapter can end a reign** (`ruler_falls` in a choice's deeds): the ruler dies as the
+  chapter tells it and the next in line takes over, with the usual cost to legitimacy.
+  Honno-ji's historical choice kills Nobunaga and loses Kyoto to Mitsuhide.
+- **The chronicle's leader is spared old age** until the year their reign really ended
+  (`leader_until` on a scenario state; only in chronicle mode, only the first ruler of the
+  player's state). In tests Nobunaga kept dying of old age in the 1570s.
+- **No Tokugawa state on this map**, so Ieyasu's Mikawa counts as Oda land once the
+  Kiyosu alliance is made; the chapters say so plainly.
+- Choices only the player's future ideas open: coke-smelted gun barrels, a joint-stock
+  company at Sakai, printed broadsheets against Mount Hiei, spyglasses at Nagashino and
+  Honno-ji, an academy at Azuchi, steamships in Osaka bay, tinned rations over the winter
+  passes into Kai.
+- With a passive test player (no wars of its own) all 16 chapters are played on every
+  seed tried, ending with 5 to 7 provinces against history's 12. A player who fights does
+  better.

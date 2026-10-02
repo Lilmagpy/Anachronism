@@ -102,10 +102,13 @@ class World(Frozen):
     tactics: dict[str, Tactic] = Field(default_factory=dict)
     """The battle plans armies may fight with."""
     scripts: dict[str, tuple[Script, ...]] = Field(default_factory=dict)
-    successors: dict[str, tuple[Successor, ...]] = Field(default_factory=dict)
-    faiths: dict[str, Faith] = Field(default_factory=dict)
-    """Each civilisation's historical successors, in order."""
     """Each civilisation's intentions (brief §7.1), from the scenario."""
+    successors: dict[str, tuple[Successor, ...]] = Field(default_factory=dict)
+    """Each civilisation's historical successors, in order."""
+    faiths: dict[str, Faith] = Field(default_factory=dict)
+    """The faiths of this world, by id."""
+    reign_until: dict[str, int] = Field(default_factory=dict)
+    """The year each first ruler's reign really ended (spared old age before it in a chronicle)."""
 
 
 class Construction(Mutable):

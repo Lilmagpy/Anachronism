@@ -114,6 +114,11 @@ def build_state(
             c: start.successors for c, start in sorted(scenario.civs.items()) if start.successors
         },
         scripts={c: start.scripts for c, start in sorted(scenario.civs.items()) if start.scripts},
+        reign_until={
+            c: start.leader_until
+            for c, start in sorted(scenario.civs.items())
+            if start.leader_until is not None
+        },
     )
     needs = {node_id: set(node.prerequisites) for node_id, node in content.techs.items()}
     civs = {

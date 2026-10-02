@@ -14,6 +14,7 @@ const SEA_REACH := 70.0
 const MIN_SHARED_EDGE := 2     ## cell edges two regions must share to count as neighbours
 
 var earth: EarthBuilder
+var hushed := false  ## while a turn plays out, place names step back so its captions read clearly
 var cols := 0
 var rows := 0
 var sites: Array[Dictionary] = []   ## {id, name, pixel, sea, owner, capital, population}
@@ -276,6 +277,9 @@ func declutter(camera: Camera3D) -> void:
 		_take_over_range(label)
 		var at := label.global_position
 		var shown := _range_alpha(label, camera.global_position.distance_to(at))
+		var place: bool = entry[1] < 1400000 or entry[1] >= 2000000  # not an army's or fleet's
+		if hushed and place:
+			shown *= 0.3
 		if shown <= 0.0 or camera.is_position_behind(at):
 			_fade_to(label, 0.0)
 			continue

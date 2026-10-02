@@ -442,12 +442,16 @@ func _on_end_turn() -> void:
 		if TurnReplay.enabled() and TurnReplay.worth_showing(replay) and rig != null and not _quick_turns and not options.has("smoke"):
 			# the turn plays out on the map before its results are shown (D-124)
 			hud.set_replaying(true, int(view["year"]) - int(view.get("years_per_turn", 10)), int(view["year"]))
+			provinces.hushed = true
+			_last_pose = Transform3D()  # names look again
 			rig.set_process_unhandled_input(false)
 			_replay = TurnReplay.new()
 			_earth_holder.add_child(_replay)
 			await _replay.play(replay, provinces, rig, audio, _apply_turn_map)
 			_replay = null
 			rig.set_process_unhandled_input(true)
+			provinces.hushed = false
+			_last_pose = Transform3D()  # names look again
 			hud.set_replaying(false)
 		else:
 			_apply_turn_map()
@@ -692,10 +696,14 @@ func _demo_replay(target: String) -> void:
 		"taken": [{"at": target, "from": owner, "to": view["player"], "mine": true}],
 	}
 	hud.set_replaying(true, int(view["year"]), int(view["year"]) + 10)
+	provinces.hushed = true
+	_last_pose = Transform3D()  # names look again
 	_replay = TurnReplay.new()
 	_earth_holder.add_child(_replay)
 	await _replay.play(replay, provinces, rig, audio, func() -> void: pass)
 	_replay = null
+	provinces.hushed = false
+	_last_pose = Transform3D()  # names look again
 	hud.set_replaying(false)
 
 

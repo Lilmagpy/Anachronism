@@ -24,10 +24,35 @@ def death_chance_bp(state: GameState, civ: CivState) -> int:
 
 def age_and_succeed(state: GameState, civ: CivState, rng: GameRng, events: EventLog) -> None:
     """Age the ruler by a turn; perhaps they die and are succeeded."""
-    rules = state.world.rules.society
     civ.ruler_age += state.world.years_per_turn
+    if spared(state, civ):
+        return
     if not rng.chance(death_chance_bp(state, civ)):
         return
+    named_heir = civ.rulers - 1 < len(state.world.successors.get(civ.id, ()))
+    succeed(state, civ, events, heir_age=30 if named_heir else 20 + rng.below(21))
+
+
+def spared(state: GameState, civ: CivState) -> bool:
+    """True if the chronicle keeps the player's first ruler from old age (D-130).
+
+    That lasts until the year their reign really ended: how it ends is the chronicle's to tell.
+    """
+    until = state.world.reign_until.get(civ.id)
+    return (
+        state.chronicle_mode
+        and civ.id == state.player_civ
+        and civ.rulers == 1
+        and until is not None
+        and state.year < until
+    )
+
+
+def succeed(
+    state: GameState, civ: CivState, events: EventLog, heir_age: int = 30, how: str = "has died"
+) -> None:
+    """The ruler's reign ends (``how`` says how); the next in line takes the throne."""
+    rules = state.world.rules.society
     old = civ.ruler or f"the ruler of {civ.name}"
     old_desc = old  # a named ruler needs no state name ("Genghis Khan has died")
     line = state.world.successors.get(civ.id, ())
@@ -40,7 +65,7 @@ def age_and_succeed(state: GameState, civ: CivState, rng: GameRng, events: Event
             civ.disposition = heir.disposition
     else:
         civ.ruler = ""
-        civ.ruler_age = 20 + rng.below(21)
+        civ.ruler_age = heir_age
     civ.rulers += 1
     new = civ.ruler or "a new ruler"
     shaky = civ.stats.legitimacy_bp < rules.succession_crisis_below_bp
@@ -48,7 +73,7 @@ def age_and_succeed(state: GameState, civ: CivState, rng: GameRng, events: Event
     events.add(
         civ.id,
         "ruler_died",
-        f"{_cap(old_desc)} has died. {_cap(new)} takes the throne.",
+        f"{_cap(old_desc)} {how}. {_cap(new)} takes the throne.",
         old,
     )
     if shaky:

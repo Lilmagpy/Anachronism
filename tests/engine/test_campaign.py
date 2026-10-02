@@ -141,3 +141,35 @@ def test_a_conquest_waits_until_the_state_is_strong_enough(qin: GameState) -> No
     for pid in qin.owned_provinces("han"):
         qin.provinces[pid].population = 1_000
     assert fits(qin, han_falls)
+
+
+@pytest.fixture
+def oda(content: Content) -> GameState:
+    return new_game(content, "sengoku", seed=1, player_civ="oda", chronicle=True)
+
+
+def test_nobunaga_is_spared_old_age_until_honnoji(oda: GameState, content: Content) -> None:
+    """The chronicle, not the dice, ends Nobunaga's reign (D-130)."""
+    from anachronism.engine.rulers import spared
+
+    assert oda.world.years_per_turn == 1
+    assert oda.chapter == "oda_okehazama"
+    civ = oda.civs["oda"]
+    civ.ruler_age = 80  # old enough to die any year
+    assert spared(oda, civ)
+    oda.year = 1583
+    assert not spared(oda, civ)
+    free = new_game(content, "sengoku", seed=1, player_civ="oda")
+    assert not spared(free, free.civs["oda"])  # in free play the dice decide
+
+
+def test_a_chapter_can_end_the_reign(oda: GameState) -> None:
+    """At Honno-ji the historical choice kills Nobunaga and loses Kyoto."""
+    oda.provinces["j_kyoto"].owner = "oda"
+    oda.chapter = "oda_honnoji"
+    state, _ = apply_action(oda, ChooseChapter(civ="oda", chapter="oda_honnoji", choice=0))
+    civ = state.civs["oda"]
+    assert civ.ruler == "Oda Nobutada"
+    assert civ.rulers == 2
+    assert state.provinces["j_kyoto"].owner is None
+    assert state.chapter_result is not None

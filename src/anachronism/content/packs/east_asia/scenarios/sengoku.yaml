@@ -10,6 +10,7 @@ scenarios:
       Ming emperor has not held court in years.
     start_year: 1560
     years_per_turn: 10
+    campaign_years_per_turn: 1
     player_civ: oda
     map: east_asia
     cost_scale: 10
@@ -21,6 +22,7 @@ scenarios:
         capital: j_owari
         leader: Oda Nobunaga
         leader_age: 26
+        leader_until: 1583
         generals: [{name: "Shibata Katsuie", skill: 4, trait: bold, note: "'Oni Shibata', Nobunaga's fiercest general."}, {name: "Kinoshita Tokichiro", skill: 4, trait: siege, note: "A peasant's son: the future Toyotomi Hideyoshi."}, {name: "Niwa Nagahide", skill: 3, trait: quartermaster, note: "Builder of Azuchi castle."}, {name: "Akechi Mitsuhide", skill: 3, trait: shield, note: "Cultured, able - and the man who will betray Nobunaga in 1582."}]
         successors: [{name: "Oda Nobutada", age: 25}]
         pitch: "Imagawa Yoshimoto marches on Kyoto with 25,000 men, and Owari is in his way. You have 3,000. History says you win - and then unite Japan. Do it sooner."
@@ -69,6 +71,7 @@ scenarios:
           alchemy: adopted
           postal_relay: concept
           gunpowder: adopted
+          musket: adopted
       imagawa:
         disposition: aggressive
         scripts:
@@ -125,6 +128,7 @@ scenarios:
           alchemy: adopted
           postal_relay: concept
           gunpowder: adopted
+          musket: adopted
       takeda:
         navy_bp: 0
         disposition: aggressive
@@ -183,6 +187,7 @@ scenarios:
           alchemy: adopted
           postal_relay: concept
           gunpowder: adopted
+          musket: adopted
       uesugi:
         disposition: aggressive
         scripts:
@@ -238,6 +243,7 @@ scenarios:
           alchemy: adopted
           postal_relay: concept
           gunpowder: adopted
+          musket: adopted
       hojo:
         disposition: cautious
         capital: j_sagami
@@ -292,6 +298,7 @@ scenarios:
           alchemy: adopted
           postal_relay: concept
           gunpowder: adopted
+          musket: adopted
       date:
         disposition: cautious
         capital: j_oshu
@@ -344,6 +351,7 @@ scenarios:
           alchemy: adopted
           postal_relay: concept
           gunpowder: adopted
+          musket: adopted
       asakura:
         disposition: cautious
         capital: j_echizen
@@ -395,6 +403,7 @@ scenarios:
           alchemy: adopted
           postal_relay: concept
           gunpowder: adopted
+          musket: adopted
       saito:
         disposition: cautious
         scripts:
@@ -449,6 +458,7 @@ scenarios:
           alchemy: adopted
           postal_relay: concept
           gunpowder: adopted
+          musket: adopted
       miyoshi:
         disposition: aggressive
         scripts:
@@ -503,6 +513,7 @@ scenarios:
           alchemy: adopted
           postal_relay: concept
           gunpowder: adopted
+          musket: adopted
       ashikaga:
         disposition: cautious
         capital: j_kyoto
@@ -555,6 +566,7 @@ scenarios:
           alchemy: adopted
           postal_relay: concept
           gunpowder: adopted
+          musket: adopted
       mori:
         navy_bp: 20000
         disposition: aggressive
@@ -612,6 +624,7 @@ scenarios:
           alchemy: adopted
           postal_relay: concept
           gunpowder: adopted
+          musket: adopted
       amago:
         disposition: cautious
         capital: j_izumo
@@ -664,6 +677,7 @@ scenarios:
           alchemy: adopted
           postal_relay: concept
           gunpowder: adopted
+          musket: adopted
       otomo:
         disposition: mercantile
         scripts:
@@ -718,6 +732,7 @@ scenarios:
           alchemy: adopted
           postal_relay: concept
           gunpowder: adopted
+          musket: adopted
       shimazu:
         disposition: aggressive
         scripts:
@@ -773,6 +788,7 @@ scenarios:
           alchemy: adopted
           postal_relay: concept
           gunpowder: adopted
+          musket: adopted
       chosokabe:
         disposition: aggressive
         scripts:
@@ -827,6 +843,7 @@ scenarios:
           alchemy: adopted
           postal_relay: concept
           gunpowder: adopted
+          musket: adopted
       joseon:
         disposition: scholarly
         capital: c_hanyang
@@ -945,6 +962,7 @@ scenarios:
           movable_type: adopted
           civil_service: widespread
           gunpowder: widespread
+          musket: adopted
           canals: widespread
           blast_furnace: adopted
           paper_money: adopted

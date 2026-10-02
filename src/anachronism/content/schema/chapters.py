@@ -52,6 +52,9 @@ class Deeds(Frozen):
     martial_bp: Annotated[int, Field(ge=-10_000, le=10_000)] = 0
     """A lasting change to how many of the people the state can put under arms (bp; 10000
     doubles the usual share): reforms like Shang Yang's that make a state a war machine."""
+    ruler_falls: Annotated[str, Field(max_length=60)] = ""
+    """If set, the ruler's reign ends here, told this way ("is killed at Honno-ji"), and the
+    next in line takes the throne."""
     grudges: dict[Identifier, Annotated[int, Field(ge=0, le=10_000)]] = Field(default_factory=dict)
     """Grievance other states now bear you (bp)."""
 

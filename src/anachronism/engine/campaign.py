@@ -217,6 +217,10 @@ def _deeds(state: GameState, chapter: Chapter, choice: ChapterChoice, events: Ev
         raise_army(state, me, civ.capital, deeds.men, free=True)
     if deeds.martial_bp:
         civ.martial_bp = max(1_000, civ.martial_bp + deeds.martial_bp)
+    if deeds.ruler_falls:
+        from anachronism.engine.rulers import succeed
+
+        succeed(state, civ, events, how=deeds.ruler_falls)
     for other, grudge in sorted(deeds.grudges.items()):
         if other in state.civs:
             add_grievance(state, other, me, grudge)
