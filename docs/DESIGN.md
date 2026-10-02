@@ -214,7 +214,14 @@ province by province, and the cities on the map grow and show what stands in the
 - **Relations**: pairwise, only for plausible contact pairs; statuses (unknown, contact,
   trading, allied, tributary, hostile, at war) plus grievance/legitimacy memory entries with
   decay rates. Religion, script and trade flows are first-class.
-- **Intelligence** about rivals is imperfect (D-013).
+- **Intelligence** about rivals is imperfect (D-013, D-115): each turn the player hears
+  what each court in touch intends (its pending scripts), from allied envoys, tribute
+  bearers, merchants or captured soldiers - the closer the tie and the nearer the court,
+  the likelier each line is true; wrong lines are not marked, but the panel says how
+  reliable the source tends to be. **Spies** (a decree, wealth, five turns) make reports
+  near-certain and add the court's current projects and its men under arms; now and then
+  they steal an advancement's methods (a 30% head start), and sometimes they are caught
+  (a lasting grudge).
 - Rivals can learn your inventions once news reaches them (D-024).
 
 ## 12. Scenarios and timeline

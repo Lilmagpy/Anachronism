@@ -12,6 +12,7 @@ from anachronism.engine.actions import (
     HireMercenaries,
     HoldFestival,
     SealBorders,
+    SendSpies,
     SpreadRumours,
 )
 from anachronism.engine.fixed import BP, clamp, div_round
@@ -62,6 +63,10 @@ def apply_decree(state: GameState, action: Decree) -> tuple[bool, str]:
         )
     if isinstance(action, SpreadRumours):
         return _rumours(state, action)
+    if isinstance(action, SendSpies):
+        from anachronism.engine.intelligence import send_spies  # it builds on the decrees
+
+        return send_spies(state, civ.id, action.target)
     raise AssertionError(f"unhandled decree {action!r}")
 
 

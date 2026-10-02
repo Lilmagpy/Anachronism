@@ -175,6 +175,14 @@ class SealBorders(Frozen):
     civ: str
 
 
+class SendSpies(Frozen):
+    """Pay for a spy network in a rival court (D-115): its plans, its work, its secrets."""
+
+    kind: Literal["spies"] = "spies"
+    civ: str
+    target: str
+
+
 class SpreadRumours(Frozen):
     """Pay storytellers: news of your arts already on the road arrives garbled."""
 
@@ -307,7 +315,7 @@ Orders = (
 )
 
 
-Decree = HoldFestival | HireMercenaries | Explain | SealBorders | SpreadRumours
+Decree = HoldFestival | HireMercenaries | Explain | SealBorders | SpreadRumours | SendSpies
 
 
 Diplomacy = DeclareWar | MakePeace | SendEnvoy | ProposeAlliance | SendMissionaries | DemandTribute
@@ -332,6 +340,7 @@ Action = Annotated[
     | Explain
     | SealBorders
     | SpreadRumours
+    | SendSpies
     | RaiseArmy
     | MarchArmy
     | ArmyStance

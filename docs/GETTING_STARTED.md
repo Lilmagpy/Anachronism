@@ -54,6 +54,9 @@ walks you through the screen the first time (Settings can replay it). Then:
   works; ideas far ahead of their time cost more and make neighbours suspicious. Set a
   project to **Low** priority to make it steady work: it uses only spare hands, so it goes
   slower but can never starve your people.
+- **Spies**: on the World tab each court shows what is said of its plans, and how reliable
+  that is. **Send spies** to learn its true plans, its scholars' work and its armies, and
+  perhaps steal one of its secrets; spies may be caught.
 - **World**: the paths to victory (by the sword, through trade, by the pen) with what each
   still needs; royal decrees (a festival, mercenaries); and every state you know, with
   envoys, alliances, missionaries, war and peace.

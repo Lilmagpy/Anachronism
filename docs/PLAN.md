@@ -163,5 +163,6 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] Rival courts no longer starve themselves; low priority is steady work (D-112)
 - [x] The fall is not the end: new dynasties after collapse, restored states (D-113)
 - [x] Infrastructure: some ideas need buildings standing in the realm (D-114)
+- [x] Spies and intelligence: rival plans, stolen secrets, caught spies (D-115)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

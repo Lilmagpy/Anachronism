@@ -33,6 +33,7 @@ from anachronism.engine.actions import (
     SealBorders,
     SendEnvoy,
     SendMissionaries,
+    SendSpies,
     SetPriority,
     SpreadRumours,
     StartProject,
@@ -91,7 +92,9 @@ def _apply(state: GameState, action: Action) -> tuple[bool, str]:
     civ = state.civs.get(action.civ)
     if civ is None:
         return False, f"unknown civilisation {action.civ!r}"
-    if isinstance(action, HoldFestival | HireMercenaries | Explain | SealBorders | SpreadRumours):
+    if isinstance(
+        action, HoldFestival | HireMercenaries | Explain | SealBorders | SpreadRumours | SendSpies
+    ):
         return apply_decree(state, action)
     if isinstance(
         action,
@@ -156,7 +159,10 @@ def _apply(state: GameState, action: Action) -> tuple[bool, str]:
         civ.tech[node.id].stage = Stage.EXPERIMENTING
         civ.tech[node.id].goal = False
         civ.projects[node.id] = Project(
-            node_id=node.id, started_turn=state.turn, priority=action.priority
+            node_id=node.id,
+            started_turn=state.turn,
+            priority=action.priority,
+            progress_bp=civ.tech[node.id].head_start_bp,  # stolen methods (D-115)
         )
         return True, f"Work begins on {node.name}."
 

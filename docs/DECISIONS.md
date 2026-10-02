@@ -982,3 +982,17 @@ market). Blocked ideas say what is missing ("needs forges built somewhere in the
 Courts building for themselves favour what unlocks an idea they are waiting on, and the
 language model's state summary lists the realm's buildings. This makes the bootstrapping
 puzzle concrete: to print, first build the workshops.
+
+## D-115 Spies and intelligence: rival plans you can learn (and misread) — DELEGATED (2026-10-02)
+D-013 decided rival scripts are seen through intelligence reports that can be wrong, their
+quality set by relations, trade, distance and spies; brief §7.3 lists spies among the ways
+news travels. Nothing showed the player a rival's intentions. Now each turn the player
+gets a report on every court in touch whose source is good enough: allied envoys (60%
+reliable), tribute bearers (50%), merchants (40%), captured soldiers in wartime (30%),
+less 10 points per border beyond the first. Each of up to two pending intentions is told
+truly with that chance, otherwise with the wrong target (a planted or garbled story). A new
+decree, **Send spies** (25 wealth hundredths per 1,000 people, five turns), adds 40 points,
+the court's current projects and its men under arms; each decade spies have a 20% chance to
+steal the methods of the court's oldest advancement you lack (30% of the work done when you
+start it) and a 12% chance to be caught (they are lost and the court bears a grudge).
+Rivals do not spy yet. Warnings that a court "means to make war on us" are shown in red.

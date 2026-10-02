@@ -159,6 +159,8 @@ class TechState(Mutable):
     """How widely an adopted advancement is used, 0-100%."""
     goal: bool = False
     """Marked because an idea the civilisation wanted needs it."""
+    head_start_bp: int = 0
+    """Work already done when a project starts: methods stolen by spies (D-115)."""
 
 
 class Project(Mutable):
@@ -312,6 +314,17 @@ class Offer(Mutable):
     turn: int = 0
 
 
+class Intel(Mutable):
+    """The latest intelligence about a court (D-115): may be wrong."""
+
+    turn: int
+    source: str
+    """Who told us: spies, allied envoys, merchants, captured soldiers."""
+    lines: list[str] = Field(default_factory=list)
+    trust_bp: int = 0
+    """How likely each line is to be true."""
+
+
 class CivState(Mutable):
     """A civilisation in play."""
 
@@ -344,6 +357,10 @@ class CivState(Mutable):
     revolts: int = 0  # provinces lost to revolt: half the starting ones is collapse
     dynasties: int = 1
     """How many dynasties have ruled the state in this game (D-113)."""
+    spies: dict[str, int] = Field(default_factory=dict)
+    """Spy networks this state keeps in other courts: court -> turns left (D-115)."""
+    intel: dict[str, Intel] = Field(default_factory=dict)
+    """The latest intelligence about each court."""
     envoy_turn: int = -1  # the turn the last embassy left: one a turn
     mercenaries: int = 0
     """Turns of hired soldiers left."""

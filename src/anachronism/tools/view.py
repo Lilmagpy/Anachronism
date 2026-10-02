@@ -86,6 +86,8 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
             "seal_turns": state.world.rules.rivals.seal_turns,
             "news_on_the_road": news_on_the_road(state, civ_id),
             "rumour_cost": cost(state, civ_id, state.world.rules.rivals.rumour_wealth_per_1000),
+            "spy_cost": cost(state, civ_id, state.world.rules.rivals.spy_wealth_per_1000),
+            "spy_turns": state.world.rules.rivals.spy_turns,
             "population": state.population(civ_id),
             "provinces": len(state.owned_provinces(civ_id)),
             **civ.stats.model_dump(),
@@ -120,6 +122,7 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
                 "awareness": other.awareness.value,
                 "strength": strengths[other_id],
                 **_relation_to_player(state, other_id),
+                **_intel(state, civ_id, other_id),
             }
             for other_id, other in sorted(state.civs.items())
         ],
@@ -200,6 +203,22 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
             for e in (events or [])
             if e.civ == civ_id or e.kind in ("revolt", "collapse", "destroyed")
         ],
+    }
+
+
+def _intel(state: GameState, me: str, court: str) -> dict[str, Any]:
+    """What the player knows of a court's plans, who says so, and the spies there (D-115)."""
+    report = state.civs[me].intel.get(court)
+    return {
+        "intel": {
+            "turn": report.turn,
+            "source": report.source,
+            "lines": list(report.lines),
+            "trust_bp": report.trust_bp,
+        }
+        if report is not None and court != me
+        else None,
+        "spies": state.civs[me].spies.get(court, 0),
     }
 
 

@@ -1092,6 +1092,17 @@ func _rival_card(civ: Dictionary, me: Dictionary) -> Control:
 		body.add_child(_wrapped("Has heard of your %s" % ", ".join(heard), 12, Color(0.6, 0.3, 0.1)))
 	if int(civ["grievance_bp"]) >= 2000:
 		body.add_child(_label("Bears you a grudge", 12, BAD))
+	var intel: Variant = civ.get("intel")
+	if intel != null:   # what envoys, merchants or spies say of its plans (D-115)
+		var trust := int(intel["trust_bp"])
+		var sure := "reliable" if trust >= 7000 else ("often wrong" if trust < 5000 else "fairly reliable")
+		var said := "%s say (%s):" % [str(intel["source"]).capitalize(), sure]
+		body.add_child(_label(said, 12, GOLD))
+		for line in intel["lines"]:
+			var warn: bool = "on us" in str(line)
+			body.add_child(_wrapped("  " + str(line), 12, BAD if warn else INK))
+	if int(civ.get("spies", 0)) > 0:
+		body.add_child(_label("Our spies are there (%d more turns)" % int(civ["spies"]), 12, DIM))
 	if relation != null:
 		body.add_child(_diplomacy_buttons(civ))
 	box.add_child(body)
@@ -1123,6 +1134,12 @@ func _diplomacy_buttons(civ: Dictionary) -> Control:
 		buttons.add_child(_small_button("Declare war", {"kind": "declare_war", "target": target}))
 		if not civ.get("same_faith", false) and bool(view["status"].get("faith_spreads", false)):
 			buttons.add_child(_small_button("Missionaries", {"kind": "missionaries", "target": target}))
+	if int(civ.get("spies", 0)) == 0:
+		var cost := int(view["status"].get("spy_cost", 0))
+		var spy := _small_button("Send spies (%s)" % number(cost), {"kind": "spies", "target": target})
+		spy.disabled = int(view["status"]["stores"]["wealth"]) < cost
+		spy.tooltip_text = "For %d turns: true word of its plans, its scholars' work and its armies;\nperhaps the secret of one of its advancements. Spies may be caught." % int(view["status"].get("spy_turns", 5))
+		buttons.add_child(spy)
 	return buttons
 
 

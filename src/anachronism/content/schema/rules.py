@@ -277,6 +277,18 @@ class RivalRules(Frozen):
     """How long sealed borders last: no trade, and news of your arts crawls (brief §7.3)."""
     seal_news_bp: NonNegative = 10000
     """Extra travel time for news leaving a sealed realm (10_000 = twice as slow)."""
+    spy_wealth_per_1000: NonNegative = 25
+    """Wealth a spy network in a rival court costs per 1,000 of your people (D-115)."""
+    spy_turns: Positive = 5
+    """How long a spy network lasts."""
+    spy_caught_bp: Rate = 1_200
+    """Chance per decade that a court catches your spies (they go, and it bears a grudge)."""
+    spy_steal_bp: Rate = 2_000
+    """Chance per decade that spies steal one of the court's advancements you lack."""
+    spy_head_start_bp: Rate = 3_000
+    """How much of the work a stolen advancement saves."""
+    spy_grievance_bp: Rate = 1_500
+    """The grudge a court bears when it catches spies."""
     rumour_wealth_per_1000: NonNegative = 80
     """Wealth false rumours cost per 1,000 people: news on the road arrives garbled."""
     envoy_wealth: NonNegative
