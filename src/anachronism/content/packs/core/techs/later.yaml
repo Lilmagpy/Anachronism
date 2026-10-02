@@ -12,6 +12,7 @@ techs:
     prerequisites: [glassmaking]
     effects: [{type: knowledge_gain, bp: 500}, {type: literacy_growth, bp: 20}]
     flavour: "Old scholars read again; old craftsmen see their work."
+    history: "Eyeglasses were invented in Pisa around 1286."
 
   - id: glassmaking
     name: Clear glass
@@ -23,6 +24,7 @@ techs:
     requires: {materials: [clay]}
     effects: [{type: wealth_output, bp: 400}, {type: health, bp: 200}]
     flavour: "Sand and ash made into something you can see through."
+    history: "Clear glass was made in Alexandria in the 1st century BC; glassblowing was invented in Syria at about the same time."
 
   - id: lenses
     name: Ground lenses
@@ -33,6 +35,7 @@ techs:
     prerequisites: [glassmaking]
     effects: [{type: knowledge_gain, bp: 500}]
     flavour: "A curved glass that makes the small large."
+    history: "Ibn al-Haytham's 'Book of Optics' (around 1021) explained how lenses and the eye work."
 
   - id: telescope
     name: Telescope
@@ -43,6 +46,7 @@ techs:
     prerequisites: [lenses, astronomy_calendar]
     effects: [{type: knowledge_gain, bp: 800}, {type: naval_strength, bp: 500}]
     flavour: "The moon has mountains, and the enemy's sails are seen an hour sooner."
+    history: "Hans Lipperhey applied for a patent on the telescope in 1608; Galileo turned one on the heavens in 1609."
 
   - id: microscope
     name: Microscope
@@ -53,6 +57,7 @@ techs:
     prerequisites: [lenses]
     effects: [{type: knowledge_gain, bp: 600}, {type: health, bp: 400}]
     flavour: "A drop of pond water holds a city of tiny beasts."
+    history: "Antonie van Leeuwenhoek saw bacteria through his own lenses in 1676."
 
   - id: germ_theory
     name: Germ theory
@@ -65,6 +70,7 @@ techs:
     resistance: [{group: clergy, level: 1}]
     effects: [{type: health, bp: 1500}, {type: population_cap, bp: 600}]
     flavour: "Sickness is not a curse or a bad air. It is alive, and it can be killed."
+    history: "Louis Pasteur showed in the 1860s that microbes cause rot and disease; Robert Koch proved it germ by germ."
 
   - id: vaccination
     name: Vaccination
@@ -76,6 +82,7 @@ techs:
     effects: [{type: health, bp: 1200}]
     resistance: [{group: clergy, level: 1}]
     flavour: "The milkmaids never caught smallpox. Now no one has to."
+    history: "Edward Jenner vaccinated a boy with cowpox in 1796, protecting him from smallpox."
 
   - id: soap
     name: Soap
@@ -86,6 +93,7 @@ techs:
     prerequisites: [pottery_kiln]
     effects: [{type: health, bp: 400}]
     flavour: "Fat, ash and water - and fewer fevers."
+    history: "A Babylonian clay tablet of about 2800 BC records soap made from fat and wood ash."
 
   - id: distillation
     name: Distillation
@@ -96,6 +104,7 @@ techs:
     prerequisites: [alchemy]
     effects: [{type: wealth_output, bp: 400}, {type: health, bp: 300}]
     flavour: "Wine boiled, its spirit caught - for medicine, and for merriment."
+    history: "Arab chemists such as Jabir ibn Hayyan refined distillation around AD 800; strong spirits came later."
 
   - id: mechanical_clock
     name: Mechanical clock
@@ -106,6 +115,7 @@ techs:
     prerequisites: [wheel, iron_working, astronomy_calendar]
     effects: [{type: labour_output, bp: 500}, {type: knowledge_gain, bp: 400}]
     flavour: "The bell in the tower tells the whole town when to work and when to pray."
+    history: "Weight-driven clocks with escapements appeared in European church towers around 1280."
 
   - id: printing_press
     name: Printing press
@@ -118,6 +128,7 @@ techs:
     resistance: [{group: clergy, level: 1}]
     effects: [{type: literacy_growth, bp: 100}, {type: knowledge_gain, bp: 1500}, {type: cultural_influence, bp: 1000}]
     flavour: "A screw press, metal type and oily ink - a thousand pages a day."
+    history: "Johannes Gutenberg printed with metal type on a screw press in Mainz around 1450; his Bible appeared in 1455."
 
   - id: newspapers
     name: Newspapers
@@ -129,6 +140,7 @@ techs:
     resistance: [{group: nobility, level: 1}]
     effects: [{type: information_speed, bp: 1500}, {type: literacy_growth, bp: 50}, {type: unrest, bp: 100}]
     flavour: "Everyone knows everything by Thursday - including what the court would rather hide."
+    history: "The first printed newspaper, the 'Relation', was published in Strasbourg in 1605."
 
   - id: scientific_method
     name: The scientific method
@@ -141,6 +153,7 @@ techs:
     resistance: [{group: clergy, level: 2}]
     effects: [{type: knowledge_gain, bp: 2000}]
     flavour: "Do not argue about how many teeth a horse has. Open its mouth and count."
+    history: "Francis Bacon's 'Novum Organum' (1620) set out reasoning from careful experiment."
 
   - id: universities
     name: Universities
@@ -152,6 +165,7 @@ techs:
     requires: {buildings: [school]}
     effects: [{type: knowledge_gain, bp: 1000}, {type: literacy_growth, bp: 50}, {type: cultural_influence, bp: 500}]
     flavour: "Scholars gather where there are books and freedom to argue."
+    history: "The University of Bologna, from 1088, was the first in Europe; older schools of learning stood in Fez, Cairo and Nalanda."
 
   - id: algebra
     name: Algebra
@@ -162,6 +176,7 @@ techs:
     prerequisites: [place_value_numerals]
     effects: [{type: knowledge_gain, bp: 800}, {type: wealth_output, bp: 300}]
     flavour: "Name the unknown x, and it gives itself up."
+    history: "Al-Khwarizmi wrote 'The Compendious Book on Calculation by Completion and Balancing' in Baghdad around AD 820."
 
   - id: double_entry
     name: Double-entry bookkeeping
@@ -172,6 +187,7 @@ techs:
     prerequisites: [bookkeeping]
     effects: [{type: wealth_output, bp: 800}, {type: trade_income, bp: 500}]
     flavour: "Every coin is written twice, and the books always balance - or someone is stealing."
+    history: "Double-entry books were kept by Italian merchants by 1300; Luca Pacioli described the method in 1494."
 
   - id: banking
     name: Banks and bills of exchange
@@ -184,6 +200,7 @@ techs:
     resistance: [{group: clergy, level: 1}]
     effects: [{type: trade_income, bp: 1200}, {type: wealth_output, bp: 600}]
     flavour: "Gold stays safe at home; a piece of paper travels instead."
+    history: "Italian merchants of Genoa and Florence developed banks and bills of exchange in the 12th century."
 
   - id: joint_stock_company
     name: Joint-stock company
@@ -194,6 +211,7 @@ techs:
     prerequisites: [banking, double_entry]
     effects: [{type: trade_income, bp: 1500}, {type: naval_strength, bp: 500}]
     flavour: "Many purses, one ship, and the risk shared by all."
+    history: "The Dutch East India Company (1602) was the first company whose shares anyone could buy."
 
   - id: caravel
     name: Ocean-going ships
@@ -205,6 +223,7 @@ techs:
     requires: {materials: [timber], buildings: [harbour]}
     effects: [{type: naval_strength, bp: 1200}, {type: trade_income, bp: 1000}, {type: mobility, bp: 600}]
     flavour: "A ship that can sail against the wind and come home from beyond the edge of the map."
+    history: "Portuguese caravels, able to sail into the wind, explored the African coast from the 1440s."
 
   - id: astrolabe
     name: Navigation by the stars
@@ -215,6 +234,7 @@ techs:
     prerequisites: [astronomy_calendar, sailing]
     effects: [{type: naval_strength, bp: 400}, {type: mobility, bp: 400}]
     flavour: "The pole star's height tells the sailor how far north he is."
+    history: "Astrolabes came from Greek astronomers; Arab navigators and scholars perfected them by about AD 800."
 
   - id: cannon
     name: Cannon
@@ -226,6 +246,7 @@ techs:
     requires: {buildings: [forge]}
     effects: [{type: military_strength, bp: 1200}]
     flavour: "No wall stands for long against a gun that throws stone balls."
+    history: "The first European picture of a cannon is from 1326; Chinese bronze guns are older."
 
   - id: musket
     name: Muskets
@@ -236,6 +257,7 @@ techs:
     prerequisites: [gunpowder, iron_working]
     effects: [{type: military_strength, bp: 1500}]
     flavour: "A farmer with a month's drill and a gun can stop a knight."
+    history: "Handguns spread through Europe and the Ottoman empire in the 1400s; the matchlock musket came around 1450."
 
   - id: star_fort
     name: Star forts
@@ -246,6 +268,7 @@ techs:
     prerequisites: [cannon, fortification, surveying]
     effects: [{type: military_strength, bp: 800}, {type: legitimacy, bp: 100}]
     flavour: "Low, thick, angled walls that cannon cannot break and every gun can cover."
+    history: "Italian engineers built angled 'star' bastions against cannon from about 1500."
 
   - id: seed_drill
     name: Seed drill
@@ -256,6 +279,7 @@ techs:
     prerequisites: [ox_plough, iron_working]
     effects: [{type: food_output, bp: 700}]
     flavour: "Seeds in neat rows, not scattered to the birds."
+    history: "The Chinese used multi-tube iron seed drills by the 2nd century BC; Europe adopted them only in the 1700s."
 
   - id: new_world_crops
     name: New crops (maize, potatoes)
@@ -266,6 +290,7 @@ techs:
     prerequisites: [agriculture]
     effects: [{type: food_output, bp: 1200}, {type: population_cap, bp: 800}]
     flavour: "A crop that grows where wheat will not, and feeds twice as many."
+    history: "Maize and potatoes, grown in the Americas for thousands of years, reached Europe and Asia after 1492."
 
   - id: spinning_wheel
     name: Spinning wheel
@@ -276,6 +301,7 @@ techs:
     prerequisites: [wheel]
     effects: [{type: wealth_output, bp: 500}, {type: labour_output, bp: 300}]
     flavour: "A wheel turns, and a day's thread is spun in an hour."
+    history: "The spinning wheel came from India around AD 1000 and reached Europe in the 13th century."
 
   - id: spinning_machine
     name: Spinning machines
@@ -288,6 +314,7 @@ techs:
     resistance: [{group: guilds, level: 2}]
     effects: [{type: wealth_output, bp: 1500}, {type: labour_output, bp: 1000}]
     flavour: "One machine, eight spindles - and the spinners riot."
+    history: "James Hargreaves' spinning jenny (about 1765) and Arkwright's water frame (1769) began the factory age."
 
   - id: coke_smelting
     name: Coke smelting
@@ -299,6 +326,7 @@ techs:
     requires: {materials: [coal], buildings: [forge, mine]}
     effects: [{type: materials_output, bp: 1500}]
     flavour: "Iron from coal, not forests - and suddenly iron is cheap."
+    history: "Abraham Darby smelted iron with coke at Coalbrookdale in 1709."
 
   - id: steam_engine
     name: Steam engine
@@ -310,6 +338,7 @@ techs:
     requires: {materials: [iron, coal], literacy_bp: 1500, buildings: [mine]}
     effects: [{type: labour_output, bp: 1500}, {type: materials_output, bp: 1000}]
     flavour: "Fire makes water into a giant that never sleeps."
+    history: "Thomas Newcomen's steam engine pumped water from a mine in 1712; James Watt improved it from 1769."
 
   - id: railways
     name: Railways
@@ -321,6 +350,7 @@ techs:
     requires: {materials: [iron, coal], buildings: [mine]}
     effects: [{type: mobility, bp: 2000}, {type: trade_income, bp: 1500}, {type: military_strength, bp: 500}]
     flavour: "Iron roads and fire horses: a month's journey in a day."
+    history: "The Stockton and Darlington Railway opened in 1825, the first public railway worked by steam."
 
   - id: lightning_rod
     name: Lightning rod
@@ -331,6 +361,7 @@ techs:
     prerequisites: [scientific_method, iron_working]
     effects: [{type: knowledge_gain, bp: 400}, {type: legitimacy, bp: 100}]
     flavour: "Heaven's fire, led politely into the ground."
+    history: "Benjamin Franklin proved lightning was electricity with his kite in 1752 and invented the lightning rod."
 
   - id: hospitals
     name: Hospitals
@@ -342,6 +373,7 @@ techs:
     requires: {buildings: [temple]}
     effects: [{type: health, bp: 800}, {type: legitimacy, bp: 100}]
     flavour: "A house where the sick are cared for, not merely prayed over."
+    history: "Hospitals for all comers were founded by Christian bishops in the 4th century, and by Islamic rulers from the 8th; Buddhist India had them earlier."
 
   - id: census
     name: The census
@@ -352,6 +384,7 @@ techs:
     prerequisites: [writing, standard_measures]
     effects: [{type: wealth_output, bp: 600}, {type: labour_output, bp: 300}]
     flavour: "Count every household, and the tax collector cannot be cheated."
+    history: "Censuses were taken in ancient Egypt, Persia and China; Rome counted its citizens every five years from about 500 BC."
 
   - id: written_law
     name: Written law code
@@ -362,6 +395,7 @@ techs:
     prerequisites: [writing]
     effects: [{type: legitimacy, bp: 200}, {type: unrest, bp: -100}]
     flavour: "The same law for the farmer and the lord - in theory."
+    history: "Hammurabi of Babylon had his laws carved on a stone stele around 1754 BC; Ur-Nammu's code is older still."
 
   - id: republic
     name: Elected magistrates
@@ -373,6 +407,7 @@ techs:
     resistance: [{group: nobility, level: 2}]
     effects: [{type: legitimacy, bp: 150}, {type: unrest, bp: -100}]
     flavour: "Rulers chosen for a year, and answerable when it ends."
+    history: "Rome expelled its last king in 509 BC and chose two consuls each year instead."
 
   - id: citizen_assembly
     name: Citizens' assembly
@@ -384,6 +419,7 @@ techs:
     resistance: [{group: nobility, level: 3}]
     effects: [{type: unrest, bp: -200}, {type: cultural_influence, bp: 400}, {type: legitimacy, bp: 100}]
     flavour: "Every citizen may speak in the assembly - and must live with what it decides."
+    history: "Cleisthenes' reforms in Athens (508 BC) gave every citizen a voice in the assembly."
 
   - id: windpump_polders
     name: Polders and pumps
@@ -394,6 +430,7 @@ techs:
     prerequisites: [windmill, canals]
     effects: [{type: food_output, bp: 800}, {type: population_cap, bp: 600}]
     flavour: "God made the world; the Dutch made Holland."
+    history: "Dutch windmills pumped water out of the polders from about 1400, making new land from the sea."
 
   - id: battery
     name: Electric battery
@@ -405,6 +442,7 @@ techs:
     requires: {materials: [copper], literacy_bp: 1500}
     effects: [{type: knowledge_gain, bp: 800}]
     flavour: "Copper, zinc and brine: a spark that never runs out."
+    history: "Alessandro Volta built the first electric battery in 1800."
 
   - id: telegraph
     name: Electric telegraph
@@ -416,6 +454,7 @@ techs:
     requires: {materials: [copper]}
     effects: [{type: information_speed, bp: 3000}, {type: legitimacy, bp: 200}, {type: trade_income, bp: 500}]
     flavour: "News that once took a month arrives before the messenger has saddled his horse."
+    history: "Cooke and Wheatstone (1837) and Samuel Morse (1838-44) built the first working electric telegraphs."
 
   - id: telephone
     name: Telephone
@@ -427,6 +466,7 @@ techs:
     requires: {materials: [copper]}
     effects: [{type: information_speed, bp: 2000}, {type: trade_income, bp: 500}]
     flavour: "A voice from a hundred miles away, as if in the next room."
+    history: "Alexander Graham Bell patented the telephone in 1876."
 
   - id: photography
     name: Photography
@@ -437,6 +477,7 @@ techs:
     prerequisites: [lenses, alchemy]
     effects: [{type: cultural_influence, bp: 400}, {type: knowledge_gain, bp: 300}]
     flavour: "Light itself paints the picture, and it never lies - or so they say."
+    history: "Louis Daguerre announced his photographs in 1839; Niépce had made the first in 1826."
 
   - id: anaesthesia
     name: Anaesthesia
@@ -447,6 +488,7 @@ techs:
     prerequisites: [distillation, herbal_medicine]
     effects: [{type: health, bp: 800}]
     flavour: "The surgeon may take his time: the patient sleeps through the knife."
+    history: "William Morton showed surgery under ether in Boston in 1846."
 
   - id: steamship
     name: Steamships
@@ -458,6 +500,7 @@ techs:
     requires: {materials: [iron, coal], buildings: [harbour]}
     effects: [{type: naval_strength, bp: 2000}, {type: trade_income, bp: 1500}, {type: mobility, bp: 800}]
     flavour: "Against the wind and against the current, on time."
+    history: "Robert Fulton's 'Clermont' carried passengers up the Hudson by steam in 1807."
 
   - id: canning
     name: Canned food
@@ -468,6 +511,7 @@ techs:
     prerequisites: [glassmaking, iron_working]
     effects: [{type: storage, bp: 2000}, {type: military_strength, bp: 300}]
     flavour: "Summer's harvest, sealed and boiled, still good next winter."
+    history: "Nicolas Appert sealed food in jars and boiled it in 1810, winning Napoleon's prize; tin cans followed."
 
   - id: fertiliser
     name: Chemical fertiliser
@@ -478,6 +522,7 @@ techs:
     prerequisites: [alchemy, crop_rotation]
     effects: [{type: food_output, bp: 2000}, {type: population_cap, bp: 1000}]
     flavour: "What the soil lacks, the chemist can put back."
+    history: "John Bennet Lawes patented superphosphate fertiliser in 1842."
 
   - id: bessemer_steel
     name: Cheap steel
@@ -489,6 +534,7 @@ techs:
     requires: {materials: [iron, coal]}
     effects: [{type: materials_output, bp: 1500}, {type: military_strength, bp: 800}]
     flavour: "Blow air through molten iron and steel pours out by the ton."
+    history: "Henry Bessemer blew air through molten iron to make cheap steel in 1856."
 
   - id: dynamite
     name: Dynamite
@@ -499,3 +545,4 @@ techs:
     prerequisites: [gunpowder, distillation]
     effects: [{type: materials_output, bp: 800}, {type: military_strength, bp: 800}]
     flavour: "Mountains move aside; so, sadly, do armies."
+    history: "Alfred Nobel patented dynamite in 1867."

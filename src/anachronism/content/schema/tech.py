@@ -153,6 +153,9 @@ class TechNode(Frozen):
     resistance: tuple[Resistance, ...] = ()
     effects: tuple[Effect, ...] = ()
     flavour: str = ""
+    history: Annotated[str, Field(max_length=400)] = ""
+    """In our history: who first made it, where and when (D-126), shown to the player as
+    the measure of how far ahead of its time they are bringing it."""
     provenance: Provenance = Provenance.LIBRARY
     stub: bool = False
     """A placeholder named by a ruling; must be ruled on before it can be started."""

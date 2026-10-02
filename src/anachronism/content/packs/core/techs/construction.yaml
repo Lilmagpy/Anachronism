@@ -9,6 +9,7 @@ techs:
     requires: {materials: [stone]}
     effects: [{type: population_cap, bp: 400}, {type: military_strength, bp: 300}]
     flavour: Dressed stone, fitted tight, outlasts its builders.
+    history: "Dressed-stone building flourished in Egypt from about 2700 BC; the Great Pyramid was finished around 2560 BC."
 
   - id: roads
     name: Paved roads
@@ -22,6 +23,7 @@ techs:
       - {type: trade_income, bp: 600}
       - {type: information_speed, bp: 800}
     flavour: A road is an order from the capital that never stops being obeyed.
+    history: "Persia's Royal Road ran 2,500 km by 500 BC; Rome paved its first great highway, the Via Appia, in 312 BC."
 
   - id: concrete
     name: Hydraulic concrete
@@ -33,6 +35,7 @@ techs:
     requires: {materials: [stone]}
     effects: [{type: population_cap, bp: 600}, {type: military_strength, bp: 300}]
     flavour: Lime and ash that harden even under the sea.
+    history: "Roman builders made concrete with volcanic ash that set even under the sea, from about 200 BC; the Pantheon dome still stands."
 
   - id: aqueduct
     name: Aqueducts
@@ -44,6 +47,7 @@ techs:
     requires: {widespread: [masonry]}
     effects: [{type: population_cap, bp: 1000}, {type: health, bp: 1000}]
     flavour: Clean water carried across valleys on arches of stone.
+    history: "Sennacherib of Assyria built an aqueduct to Nineveh around 690 BC; Rome's first, the Aqua Appia, came in 312 BC."
 
   - id: canals
     name: Canals and locks
@@ -54,3 +58,4 @@ techs:
     prerequisites: [irrigation, surveying]
     effects: [{type: trade_income, bp: 1000}, {type: mobility, bp: 600}]
     flavour: Barges carry in a day what carts carry in a month.
+    history: "China's Hong Gou canal linked rivers by the 4th century BC; the first true lock gates appeared on Chinese canals in AD 984."

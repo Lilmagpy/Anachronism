@@ -165,6 +165,7 @@ def adopt(state: GameState, civ: CivState, node_id: str, events: EventLog) -> No
     tech = civ.tech.setdefault(node_id, TechState(stage=Stage.CONCEPT))
     tech.stage = Stage.ADOPTED
     tech.goal = False
+    tech.adopted_year = state.year
     tech.spread_bp = max(tech.spread_bp, state.world.rules.projects.initial_spread_bp)
     events.add(
         civ.id, "adopted", f"{node.name} is adopted in the {civ.adjective} lands.", node.name

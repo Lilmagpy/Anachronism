@@ -11,6 +11,7 @@ techs:
     visibility: 1
     effects: [{type: food_output, bp: 1000}]
     flavour: Seed saved is a harvest promised.
+    history: "First in the Fertile Crescent, around 9500 BC: wheat, barley and lentils sown by villagers along the Levant and upper Euphrates."
 
   - id: irrigation
     name: Irrigation canals
@@ -21,6 +22,7 @@ techs:
     prerequisites: [agriculture]
     effects: [{type: food_output, bp: 1000}, {type: population_cap, bp: 500}]
     flavour: The river is taught to walk into the fields.
+    history: "In Mesopotamia by about 6000 BC, farmers led the Tigris and Euphrates into their fields through dug channels."
 
   - id: ox_plough
     name: Ox-drawn plough
@@ -31,6 +33,7 @@ techs:
     prerequisites: [agriculture]
     effects: [{type: food_output, bp: 800}, {type: labour_output, bp: 400}]
     flavour: One ox does the digging of ten men.
+    history: "Ox-drawn ploughs were turning the soil of Mesopotamia by about 4000 BC."
 
   - id: iron_plough
     name: Iron-tipped plough
@@ -42,6 +45,7 @@ techs:
     requires: {materials: [iron]}
     effects: [{type: food_output, bp: 1000}, {type: labour_output, bp: 500}]
     flavour: An iron share bites where wood only scratches.
+    history: "Iron ploughshares were common in China and the Mediterranean by about 500 BC."
 
   - id: heavy_plough
     name: Heavy mouldboard plough
@@ -53,6 +57,7 @@ techs:
     requires: {materials: [iron]}
     effects: [{type: food_output, bp: 1200}]
     flavour: It turns the heavy wet soils nobody could farm before.
+    history: "The heavy wheeled mouldboard plough opened the wet clay soils of northern Europe from about AD 600."
 
   - id: horse_collar
     name: Horse collar
@@ -64,6 +69,7 @@ techs:
     requires: {materials: [horses]}
     effects: [{type: labour_output, bp: 600}, {type: food_output, bp: 600}, {type: mobility, bp: 500}]
     flavour: A padded collar, and suddenly the horse can pull without choking.
+    history: "The padded horse collar was developed in China by the 5th century AD and reached Europe around AD 900."
 
   - id: crop_rotation
     name: Three-field crop rotation
@@ -75,3 +81,4 @@ techs:
     prerequisites: [ox_plough]
     effects: [{type: food_output, bp: 1200}, {type: population_cap, bp: 600}]
     flavour: Beans one year, grain the next, rest the third. The soil remembers.
+    history: "Three-field rotation spread across Frankish Europe from about AD 800."

@@ -34,6 +34,7 @@ from anachronism.engine.projects import hasten_cost, project_turns
 from anachronism.engine.reports import capacity
 from anachronism.engine.rivals import relation, strength
 from anachronism.engine.state import Army, Event, GameState
+from anachronism.engine.suspicion import adoption_suspicion_bp
 from anachronism.engine.tactics import AUTO, final, natural, needs_text, short_of_men
 from anachronism.engine.tech import feasibility, is_adopted
 from anachronism.engine.timeflow import turns_for
@@ -91,6 +92,9 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
             "spy_turns": state.world.rules.rivals.spy_turns,
             "population": state.population(civ_id),
             "provinces": len(state.owned_provinces(civ_id)),
+            # the time traveller's mark on history (D-126)
+            "anachronisms": ahead_of_history(state, civ_id)[0],
+            "years_ahead": ahead_of_history(state, civ_id)[1],
             **civ.stats.model_dump(),
             "framing": civ.framing.value,
             "collapsed": civ.collapsed,
@@ -259,37 +263,77 @@ def next_steps(state: GameState, civ_id: str, node_id: str, limit: int = 3) -> l
     return found
 
 
+def ahead_of_history(state: GameState, civ_id: str) -> tuple[int, int]:
+    """Ideas brought in before their time, and by how many years in all (D-126)."""
+    count = years = 0
+    for node_id, tech in sorted(state.civs[civ_id].tech.items()):
+        node = state.tech_nodes.get(node_id)
+        if node is None or tech.adopted_year is None or not tech.stage.is_adopted:
+            continue
+        if node.year > tech.adopted_year:
+            count += 1
+            years += node.year - tech.adopted_year
+    return count, years
+
+
 def _ideas(state: GameState, civ_id: str) -> list[dict[str, Any]]:
-    """Every idea the player could see: known ones and those ready to start."""
+    """Every idea the player could see, with what each needs.
+
+    Known ones, those ready to start, and everything from the future the player remembers
+    (the notebook, D-126).
+    """
     civ = state.civs[civ_id]
+    free = max(1, capacity(state, civ_id).free_labour)
     ideas = []
     for node_id, node in sorted(state.tech_nodes.items(), key=lambda item: item[1].name):
         known = civ.tech.get(node_id)
         result = feasibility(state, civ_id, node_id)
-        if known is None and result.blocked:
+        future = node.year > state.year
+        if known is None and result.blocked and not future:
             continue
         cost = project_costs(state, node_id)
+        thieves = sorted(
+            state.civs[other].name
+            for other in state.civs
+            if other != civ_id
+            and node_id in state.civs[other].tech
+            and state.civs[other].tech[node_id].stolen
+        )
         ideas.append(
             {
                 "id": node_id,
                 "name": node.name,
                 "category": node.category.value,
                 "year": node.year,
+                "ahead": node.year - state.year,
                 "complexity": node.complexity,
                 "flavour": node.flavour,
+                "history": node.history,
                 "stage": known.stage.value if known else None,
+                "adopted_year": known.adopted_year if known else None,
                 "goal": bool(known and known.goal),
                 "stub": node.stub,
                 "provenance": node.provenance.value,
                 "spread_bp": known.spread_bp if known else 0,
                 "ready": not result.blocked and not (known and known.stage is not Stage.CONCEPT),
                 "blockers": describe_blockers(state, result) if result.blocked else "",
+                "needs": [
+                    {
+                        "id": p,
+                        "name": state.tech_nodes[p].name if p in state.tech_nodes else p,
+                        "have": is_adopted(civ, p),
+                    }
+                    for p in node.prerequisites
+                ],
                 "cost": {
                     "labour": cost.labour,
                     "materials": cost.materials,
                     "knowledge": cost.knowledge,
                     "wealth": cost.wealth,
                 },
+                "labour_share": min(999, cost.labour * 100 // free),
+                "suspicion": adoption_suspicion_bp(state, node) // 100,
+                "stolen_by": thieves,
                 "turns": project_turns(state, node_id),
                 "effects": [
                     {

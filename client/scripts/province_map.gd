@@ -359,6 +359,14 @@ func province_point(province_id: String) -> Vector3:
 	return Vector3.INF
 
 
+## Where a civilisation's capital city stands (Vector3.INF if it has none on the map).
+func capital_point(civ_id: String) -> Vector3:
+	for site in sites:
+		if site.get("capital", false) and site.get("owner", "") == civ_id:
+			return earth.ground_at_pixel(site["pixel"])
+	return Vector3.INF
+
+
 ## Where an army stands in a province, beside its city (the `k`th army there).
 func army_point(province_id: String, k := 0) -> Vector3:
 	for site in sites:

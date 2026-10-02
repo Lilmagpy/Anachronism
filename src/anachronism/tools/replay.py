@@ -28,6 +28,8 @@ class Before:
     armies: dict[str, dict[str, Any]]
     fleets: dict[str, dict[str, Any]]
     owners: dict[str, str | None]
+    known: frozenset[str] = frozenset()
+    """The player's advancements already in use."""
 
 
 def snapshot(state: GameState) -> Before:
@@ -50,7 +52,9 @@ def snapshot(state: GameState) -> Before:
         for fleet_id, fleet in sorted(state.fleets.items())
     }
     owners = {pid: p.owner for pid, p in sorted(state.provinces.items())}
-    return Before(armies=armies, fleets=fleets, owners=owners)
+    player = state.civs[state.player_civ]
+    known = frozenset(n for n, t in player.tech.items() if t.stage.is_adopted)
+    return Before(armies=armies, fleets=fleets, owners=owners, known=known)
 
 
 def _way(before: dict[str, Any], to: str) -> list[str]:
@@ -150,7 +154,21 @@ def build(before: Before, after: GameState, events: list[Event]) -> dict[str, An
         for pid, province in sorted(after.provinces.items())
         if before.owners.get(pid) != province.owner
     ]
+    # the player's ideas from the future that came to life this turn (D-126)
+    player = after.civs[me]
+    breakthroughs: list[dict[str, Any]] = []
+    for node_id, tech in sorted(player.tech.items()):
+        node = after.tech_nodes.get(node_id)
+        if node is None or node_id in before.known or not tech.stage.is_adopted:
+            continue
+        ahead = node.year - (tech.adopted_year if tech.adopted_year is not None else after.year)
+        if ahead > 0:
+            breakthroughs.append(
+                {"id": node_id, "name": node.name, "ahead": ahead, "history": node.history}
+            )
+    breakthroughs.sort(key=lambda b: -int(b["ahead"]))
     return {
+        "breakthroughs": breakthroughs,
         "marches": marches,
         "sails": sails,
         "sieges": sieges,

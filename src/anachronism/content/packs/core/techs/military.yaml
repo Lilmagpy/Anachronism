@@ -9,6 +9,7 @@ techs:
     requires: {materials: [horses]}
     effects: [{type: mobility, bp: 800}, {type: military_strength, bp: 500}]
     flavour: On horseback, a day's walk becomes an hour's ride.
+    history: "Horses were tamed on the Eurasian steppes, perhaps by 3500 BC; mounted warriors came much later, around 900 BC."
 
   - id: composite_bow
     name: Composite bow
@@ -18,6 +19,7 @@ techs:
     complexity: 2
     effects: [{type: military_strength, bp: 800}]
     flavour: Horn, wood and sinew glued into a bow small enough to shoot from the saddle.
+    history: "Bows of horn, wood and sinew were in use on the steppes and in Mesopotamia by 2000 BC."
 
   - id: chariot
     name: War chariot
@@ -29,6 +31,7 @@ techs:
     requires: {materials: [horses]}
     effects: [{type: military_strength, bp: 1000}]
     flavour: Two horses, two wheels, one archer and a terrified enemy.
+    history: "Light spoked chariots appeared around 2000 BC near the Urals (the Sintashta culture) and swept across the Near East."
 
   - id: fortification
     name: Stone fortifications
@@ -39,6 +42,7 @@ techs:
     prerequisites: [masonry]
     effects: [{type: military_strength, bp: 600}]
     flavour: Walls turn a raid into a siege, and a siege into a gamble.
+    history: "Jericho had a stone wall and tower by 8000 BC; walled cities were common across the Near East by 3000 BC."
 
   - id: crossbow
     name: Crossbow
@@ -49,6 +53,7 @@ techs:
     prerequisites: [bronze_working]
     effects: [{type: military_strength, bp: 1200}]
     flavour: A peasant with a month's drill can kill a noble with a lifetime's.
+    history: "Crossbows were in use in China by the 5th century BC; Europe only took them up widely in the Middle Ages."
 
   - id: stirrup
     name: Stirrups
@@ -60,6 +65,7 @@ techs:
     requires: {materials: [horses]}
     effects: [{type: military_strength, bp: 1000}, {type: mobility, bp: 400}]
     flavour: Two loops of leather, and the rider stops falling off.
+    history: "Paired stirrups were used in China by about AD 300 and reached Europe in the 700s."
 
   - id: gunpowder
     name: Gunpowder
@@ -73,3 +79,4 @@ techs:
     resistance: [{group: clergy, level: 1}]
     effects: [{type: military_strength, bp: 1500}]
     flavour: Saltpetre, sulphur and charcoal. The alchemists wanted eternal life.
+    history: "Chinese alchemists searching for an elixir of life found gunpowder around AD 850; weapons followed by 1000."

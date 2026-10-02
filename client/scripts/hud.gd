@@ -56,6 +56,8 @@ var _card_body := VBoxContainer.new()
 var _chronicle := VBoxContainer.new()
 var _end_turn := Button.new()
 var _skip_hint: Label
+var notebook := Notebook.new()   ## the notebook from the future (D-126)
+var _notebook_button: Button
 var _replaying := false
 var _hover := Label.new()
 var _idea_box := VBoxContainer.new()
@@ -79,6 +81,7 @@ func _ready() -> void:
 	_build_card()
 	_build_chronicle()
 	_build_end_turn()
+	_build_notebook()
 	_dilemma.set_anchors_preset(Control.PRESET_CENTER_TOP)
 	_dilemma.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	_dilemma.offset_top = 110
@@ -119,6 +122,9 @@ func show_view(new_view: Dictionary) -> void:
 	if _story.get_parent() == null:
 		_root.add_child(_story)   # above everything else
 	_story.show_chronicle(view.get("chronicle"))
+	if notebook.get_parent() == null:
+		_root.add_child(notebook)   # above everything but the chapter card
+	notebook.refresh(view)
 	var waiting: Variant = view.get("chronicle")
 	_end_turn.disabled = waiting != null and waiting.get("chapter") != null
 	var outcome: Variant = view.get("victory", {}).get("outcome")
@@ -815,26 +821,73 @@ func _fill_ideas() -> void:
 		_side_body.add_child(_label("Your court's counsel", 17, GOLD))
 		for item in advice:
 			_side_body.add_child(_advice_card(item))
-	_side_body.add_child(_label("Ideas ahead of their time", 17, GOLD))
-	_side_body.add_child(_wrapped("Each costs labour, materials, knowledge and wealth every turn until it works. The further ahead of its time, the more it costs and the more suspicion it draws."))
-	if ahead_ideas.is_empty():
-		_side_body.add_child(_wrapped("None within reach yet: whisper your own, or learn what the world already knows.", 13, DIM))
-	for idea in ahead_ideas:
-		_side_body.add_child(_idea_card(idea))
+	_side_body.add_child(_notebook_banner(ahead_ideas.size()))
+	if not ahead_ideas.is_empty():
+		_side_body.add_child(_label("Ready to bring in", 17, GOLD))
+		for idea in ahead_ideas:
+			_side_body.add_child(_idea_line(idea))
 	if not abroad.is_empty():
 		_side_body.add_child(_label("Known abroad: catch up", 17, GOLD))
-		for idea in abroad:
-			_side_body.add_child(_idea_card(idea))
+		for idea in abroad.slice(0, 6):
+			_side_body.add_child(_idea_line(idea))
 	if not blocked.is_empty():
-		_side_body.add_child(_label("Out of reach for now", 17, GOLD))
-		for idea in blocked:
-			_side_body.add_child(_idea_card(idea))
-	if not known.is_empty():
-		_side_body.add_child(_label("Already known", 17, GOLD))
-		var names: Array = []
-		for idea in known:
-			names.append(str(idea["name"]))
-		_side_body.add_child(_wrapped(", ".join(names)))
+		_side_body.add_child(_wrapped("%d more in your notebook need groundwork first." % blocked.filter(func(i): return int(i["year"]) > now).size(), 13, DIM))
+
+
+## The way into the notebook from the future, at the top of the Ideas tab (D-126).
+func _notebook_banner(ready_count: int) -> Control:
+	var button := Button.new()
+	button.custom_minimum_size = Vector2(0, 92)
+	button.focus_mode = Control.FOCUS_NONE
+	button.pressed.connect(func(): open_notebook())
+	var style := UiStyle.panel(Color(0.30, 0.17, 0.10), UiStyle.GOLD, 12)
+	button.add_theme_stylebox_override("normal", style)
+	var hover := style.duplicate() as StyleBoxFlat
+	hover.bg_color = Color(0.40, 0.22, 0.12)
+	button.add_theme_stylebox_override("hover", hover)
+	button.add_theme_stylebox_override("pressed", hover)
+	var column := VBoxContainer.new()
+	column.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	column.offset_left = 14
+	column.offset_top = 8
+	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	column.add_theme_constant_override("separation", 0)
+	var title := UiStyle.label("✦ YOUR NOTEBOOK", 20, UiStyle.GOLD, "title", 900)
+	title.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	column.add_child(title)
+	var status: Dictionary = view["status"]
+	var line := "from the future · %d ideas ready to bring in" % ready_count
+	if int(status.get("anachronisms", 0)) > 0:
+		line += " · history pushed %s years ahead" % number(int(status["years_ahead"]))
+	var words := UiStyle.label(line, 14, UiStyle.CREAM, "body", 700)
+	words.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	column.add_child(words)
+	var open := UiStyle.label("Open it  ▸", 14, UiStyle.GOLD, "body", 800)
+	open.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	column.add_child(open)
+	button.add_child(column)
+	return button
+
+
+## One idea on a line: its name (opens its page in the notebook), how early, and Begin.
+func _idea_line(idea: Dictionary) -> Control:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 6)
+	var name := LinkButton.new()
+	name.text = str(idea["name"])
+	name.underline = LinkButton.UNDERLINE_MODE_ON_HOVER
+	name.add_theme_color_override("font_color", INK)
+	name.add_theme_font_size_override("font_size", 15)
+	name.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	name.tooltip_text = "Open its page in your notebook"
+	var id := str(idea["id"])
+	name.pressed.connect(func(): open_notebook(id))
+	row.add_child(name)
+	var ahead := int(idea["year"]) - int(view["year"])
+	if ahead > 0:
+		row.add_child(_label("+%s yrs" % number(ahead), 13, BAD if ahead > 300 else GOLD))
+	row.add_child(_small_button("Begin", {"kind": "start", "node_id": id}))
+	return row
 
 
 ## One adviser's recommendation: who speaks, their reason, and a button to begin.
@@ -1758,6 +1811,81 @@ func _years_title(from_year: int, to_year: int) -> void:
 	tween.tween_interval(1.6)
 	tween.tween_property(column, "modulate:a", 0.0, 0.6)
 	tween.tween_callback(column.queue_free)
+
+
+## Ideas from the future that came to life this turn, one card each (D-126): how early,
+## what really happened in our history, and what changes now.
+func show_breakthroughs(items: Array) -> void:
+	if items.is_empty():
+		return
+	var item: Dictionary = items[0]
+	var rest := items.slice(1)
+	var veil := Control.new()
+	veil.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	veil.mouse_filter = Control.MOUSE_FILTER_STOP
+	var shade := ColorRect.new()
+	shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	shade.color = Color(0.05, 0.03, 0.02, 0.55)
+	veil.add_child(shade)
+	var centre := CenterContainer.new()
+	centre.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	veil.add_child(centre)
+	var card := PanelContainer.new()
+	card.add_theme_stylebox_override("panel", UiStyle.ornate_panel())
+	card.custom_minimum_size = Vector2(760, 0)
+	centre.add_child(card)
+	var column := VBoxContainer.new()
+	column.add_theme_constant_override("separation", 10)
+	card.add_child(column)
+	var top := UiStyle.label("✦  A BREAKTHROUGH FROM THE FUTURE  ✦", 16, UiStyle.GOLD_DARK, "body", 900)
+	top.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	column.add_child(top)
+	var name := UiStyle.label(str(item["name"]), 44, UiStyle.RED, "title", 900)
+	name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	column.add_child(name)
+	var early := UiStyle.label("works in %s - %s years before its time" % [str(view["status"]["name"]), number(int(item["ahead"]))], 20, Color(0.55, 0.12, 0.45), "title", 800)
+	early.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	column.add_child(early)
+	if str(item.get("history", "")) != "":
+		column.add_child(UiStyle.label("IN OUR HISTORY", 14, UiStyle.GOLD_DARK, "body", 900))
+		column.add_child(UiStyle.wrapped(str(item["history"]), 17, INK, 720))
+	for idea in view.get("ideas", []):
+		if str(idea["id"]) == str(item["id"]) and not (idea["effects"] as Array).is_empty():
+			column.add_child(UiStyle.label("WHAT CHANGES NOW", 14, UiStyle.GOLD_DARK, "body", 900))
+			var changes: Array = []
+			for e in idea["effects"]:
+				changes.append(str(e["text"]))
+			column.add_child(UiStyle.wrapped(" · ".join(changes), 17, GOOD, 720))
+	column.add_child(UiStyle.wrapped("Word of it will spread. Courts that hear of it may send spies to steal it.", 14, DIM, 720))
+	var go := UiStyle.big_button("CONTINUE" if rest.is_empty() else "NEXT  ▸", 22)
+	go.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	go.custom_minimum_size = Vector2(240, 54)
+	go.pressed.connect(func():
+		veil.queue_free()
+		show_breakthroughs(rest))
+	column.add_child(go)
+	_root.add_child(veil)
+	veil.modulate.a = 0.0
+	create_tween().tween_property(veil, "modulate:a", 1.0, 0.3)
+
+
+## Open the notebook from the future (at an idea's page, if given).
+func open_notebook(idea_id := "") -> void:
+	notebook.open(view, idea_id)
+
+
+func _build_notebook() -> void:
+	_notebook_button = UiStyle.big_button("✦ NOTEBOOK", 22, Color(0.98, 0.86, 0.45))
+	_notebook_button.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
+	_notebook_button.offset_left = -436
+	_notebook_button.offset_top = -80
+	_notebook_button.offset_right = -244
+	_notebook_button.offset_bottom = -8
+	_notebook_button.tooltip_text = "Your notebook from the future: everything you remember, and what it would take to bring it into this world (N)"
+	_notebook_button.pressed.connect(func(): open_notebook())
+	_root.add_child(_notebook_button)
+	notebook.start_requested.connect(func(id: String):
+		action_requested.emit({"kind": "start", "node_id": id}))
 
 
 func _build_end_turn() -> void:

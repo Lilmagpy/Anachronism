@@ -1156,3 +1156,21 @@ Also fixed: the Mac build never carried the game's font files, so every screen u
 Godot's plain default font, and panels such as the dilemma box measured their text with
 an empty font and shrank to slivers under their own words. The export now carries the
 fonts, and the font loader falls back to the imported copy if the raw file is missing.
+
+## D-126 The time traveller's notebook — owner's direction (2026-10-02)
+The owner: the premise ("what if you went back in time with today's knowledge") did not
+feel significant enough, and choosing advancements was awkward. Now:
+- **The notebook from the future** (N, or the gold NOTEBOOK button beside End Turn, or the
+  banner atop the Ideas tab) is a two-page journal of everything the player remembers of
+  the world to come - every idea from the future, not only those within reach, sorted into
+  Ready now, Needs groundwork, Being made, In use (brought from the future) and Of this
+  age. Each page gives how many years before its time it is, the player's note, **In our
+  history** (who first made it, where and when - written for all 102 advancements), what
+  it will do, what it takes (per turn, and as a share of free hands), the risks (suspicion,
+  spies) and what it builds on (click to turn to that page), with one big button: Bring it
+  into the world.
+- **Breakthroughs are an event.** When an idea from the future works, the turn's replay
+  flies to the capital, where a pillar of golden light rises with its name and "N years
+  before its time", and a card tells what really happened in our history and what changes.
+- **The mark on history**: the game remembers the year each idea came into use, and counts
+  how many were brought early and by how many years in all.

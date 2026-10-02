@@ -268,6 +268,12 @@ func _build_hud() -> void:
 	hud.speak(view.get("voices", []), true)
 	if options.has("start"):
 		_on_action({"kind": "start", "node_id": str(options["start"])})
+	if options.has("breakthrough-demo"):  # --breakthrough-demo=idea: its card (screenshots)
+		for idea in view.get("ideas", []):
+			if str(idea["id"]) == str(options["breakthrough-demo"]):
+				hud.show_breakthroughs([{"id": idea["id"], "name": idea["name"], "ahead": idea["ahead"], "history": idea["history"]}])
+	if options.has("notebook"):  # --notebook[=idea]: open the notebook (screenshots)
+		hud.open_notebook("" if str(options["notebook"]) == "true" else str(options["notebook"]))
 	if options.has("fold"):  # --fold: fold the waiting chapter away (screenshots)
 		hud.fold_chapter()
 	if options.has("choose"):  # --choose=N: answer the waiting chapter (screenshots)
@@ -441,6 +447,8 @@ func _on_end_turn() -> void:
 			audio.play("war")
 	hud.show_view(view)
 	hud.speak(view.get("voices", []), true)
+	if reply != null and not _quick_turns:
+		hud.show_breakthroughs(view.get("replay", {}).get("breakthroughs", []))
 
 
 ## The map as the turn left it: colours, cities, armies, ties and landmarks.
@@ -568,6 +576,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		# shortcuts (typing in the idea box never reaches here: the box takes its keys)
 		if event.keycode in [KEY_ENTER, KEY_KP_ENTER] and not hud.deliberating and hud.can_end_turn():
 			_on_end_turn()
+			return
+		if event.keycode == KEY_N:  # the notebook from the future (D-126)
+			hud.open_notebook()
 			return
 		var tabs := {KEY_1: "ideas", KEY_2: "projects", KEY_3: "world"}
 		if tabs.has(event.keycode):

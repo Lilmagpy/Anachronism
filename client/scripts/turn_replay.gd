@@ -39,7 +39,7 @@ static func set_enabled(on: bool) -> void:
 
 ## True if there is anything worth showing in this replay.
 static func worth_showing(replay: Dictionary) -> bool:
-	for key in ["marches", "sails", "battles", "sieges", "taken", "raised", "lost"]:
+	for key in ["breakthroughs", "marches", "sails", "battles", "sieges", "taken", "raised", "lost"]:
 		if not (replay.get(key, []) as Array).is_empty():
 			return true
 	return false
@@ -65,6 +65,7 @@ func play(replay: Dictionary, map: ProvinceMap, rig: CameraRig, audio: GameAudio
 		await _wait(0.3)
 	apply_new_map.call()
 	await _taken(replay.get("taken", []))
+	await _breakthroughs(replay.get("breakthroughs", []))
 	_raised(replay.get("raised", []))
 	if not _skip:
 		await _wait(0.8)
@@ -601,6 +602,77 @@ func _banner(change: Dictionary, at: Vector3, mine: bool) -> void:
 	_caption(at + Vector3(0, 46, 0), line, 44 if mine else 30, tint, colour.darkened(0.6))
 	if mine:
 		_audio.play("horn" if to == me else "defeat")
+
+
+# --- ideas from the future come to life (D-126) ---------------------------------------------
+
+
+## The camera goes to the capital, where a pillar of golden light rises: an idea from the
+## future works, centuries early.
+func _breakthroughs(items: Array) -> void:
+	var at := _map.capital_point(_map.player)
+	if items.is_empty() or at == Vector3.INF or _skip:
+		return
+	await _fly(at, 230.0, 1.0)
+	for item in items.slice(0, 2):
+		if _skip:
+			return
+		_audio.play("victory")
+		_pillar(at)
+		_caption(at + Vector3(0, 40, 0), "✦ %s ✦" % str(item["name"]).to_upper(), 54, Color(1.0, 0.86, 0.35), Color(0.25, 0.12, 0.02), 0.2, 64.0)
+		_caption(at + Vector3(0, 40, 0), "%s years before its time" % GameHud.number(int(item["ahead"])), 30, Color(1.0, 0.97, 0.9), Color(0.25, 0.12, 0.02), 0.5)
+		await _wait(2.6)
+
+
+func _pillar(at: Vector3) -> void:
+	var beam := MeshInstance3D.new()
+	var cylinder := CylinderMesh.new()
+	cylinder.top_radius = 3.0
+	cylinder.bottom_radius = 7.0
+	cylinder.height = 140.0
+	beam.mesh = cylinder
+	var light := StandardMaterial3D.new()
+	light.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	light.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	light.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
+	light.albedo_color = Color(1.0, 0.8, 0.35, 0.0)
+	light.cull_mode = BaseMaterial3D.CULL_DISABLED
+	beam.material_override = light
+	beam.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	beam.position = at + Vector3(0, 70, 0)
+	beam.scale = Vector3(0.2, 1, 0.2)
+	add_child(beam)
+	var grow := _tween().set_parallel()
+	grow.tween_property(beam, "scale", Vector3.ONE, 0.6).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	grow.tween_property(light, "albedo_color:a", 0.55, 0.4)
+	grow.set_parallel(false)
+	grow.tween_interval(1.6)
+	grow.tween_property(light, "albedo_color:a", 0.0, 1.0)
+	var sparkles := _puffs(Color(1.0, 0.88, 0.45), 0.6 * FX, 0.05)
+	sparkles.amount = 60
+	sparkles.lifetime = 2.2
+	sparkles.direction = Vector3(0, 1, 0)
+	sparkles.spread = 20.0
+	sparkles.initial_velocity_min = 10.0 * FX
+	sparkles.initial_velocity_max = 18.0 * FX
+	sparkles.gravity = Vector3.ZERO
+	sparkles.emission_shape = CPUParticles3D.EMISSION_SHAPE_SPHERE
+	sparkles.emission_sphere_radius = 6.0
+	sparkles.position = at + Vector3(0, 2, 0)
+	add_child(sparkles)
+	sparkles.emitting = true
+	var stop := _tween()
+	stop.tween_interval(2.0)
+	stop.tween_callback(func() -> void: sparkles.emitting = false)
+	var glow := OmniLight3D.new()
+	glow.light_color = Color(1.0, 0.82, 0.4)
+	glow.omni_range = 60.0 * FX
+	glow.position = at + Vector3(0, 12, 0)
+	add_child(glow)
+	var shine := _tween()
+	shine.tween_property(glow, "light_energy", 4.0, 0.4)
+	shine.tween_interval(1.4)
+	shine.tween_property(glow, "light_energy", 0.0, 1.0)
 
 
 # --- new armies --------------------------------------------------------------------------
