@@ -940,3 +940,19 @@ On the map, each building appears in its city (a round temple, market stalls, a 
 barn, forges with smoke, a water mill, an aqueduct's arches...), the middle of the city is
 kept for them, and cities are rebuilt larger whenever they have grown by a quarter or
 raised something new. The numbers are a first pass, to be tuned with play.
+
+## D-112 Rival courts no longer starve themselves; low priority is steady work — DELEGATED (2026-10-02)
+Playing the Punic Wars with the simulation tool showed small rival states (Pergamon,
+Rhodes, Sparta, Syracuse, Pontus) in famine and riots for most of the first 30 turns. The
+cause: when a rival court heard of an idea, or a script told it to adopt one, it started the
+project without checking whether it could staff it; one idea needed more labour than its
+whole workforce, so farmers were pulled from the fields. Now (1) low-priority projects are
+"steady work": funded only from spare hands (the surplus left after higher tiers), they
+never divert farmers, never count as a shortfall, and do not decay while they keep moving;
+(2) rival courts start a project at full pace only if their spare hands cover it, otherwise
+as steady work, one at a time. In the same 30 turns there is no famine or riot anywhere and
+small states still adopt a few ideas. The player gains the same choice: push an idea hard
+(and risk hunger) or let it ripen slowly. Also, courts choosing buildings value calming
+ones more as unrest rises, and the simulation bots start nothing new while unrest is above
+half (the balance test "careful growth stays stable" caught a growth bot that built five
+schools and no temple while unrest climbed).

@@ -7,7 +7,10 @@ from collections.abc import Callable
 from anachronism.engine.actions import Priority
 from anachronism.engine.economy import Costs, allocate, labour, project_costs, run_economy
 from anachronism.engine.effects import civ_effects
+from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import apply_bp
+from anachronism.engine.projects import advance_projects
+from anachronism.engine.rng import GameRng
 from anachronism.engine.state import GameState, Project
 
 from .conftest import RuleOverride
@@ -93,3 +96,33 @@ def test_granary_caps_food_and_stocks_never_go_negative(game: GameState) -> None
     run_economy(game, "veyra", civ_effects(game, "veyra"))
     assert civ.stockpiles.food <= 1_000
     assert min(civ.stockpiles.model_dump().values()) >= 0
+
+
+def test_steady_work_takes_only_spare_hands(
+    game: GameState, start: Start, rules: RuleOverride
+) -> None:
+    # D-112: a low-priority project never pulls farmers off the fields
+    zero = (0, 0, 0, 0, 0)
+    rules(
+        game,
+        projects={"labour": (1_000,) * 5, "materials": zero, "knowledge": zero, "wealth": zero},
+    )
+    start(game, "veyra", "masonry").priority = Priority.LOW
+    effects = civ_effects(game, "veyra")
+    work = labour(game, "veyra", effects)
+    outcome = run_economy(game.model_copy(deep=True), "veyra", effects)
+    assert outcome.allocation.used.labour == work.surplus
+    assert outcome.production_bp == 10_000
+    assert outcome.shortfall_bp == 0  # going slowly strains no one
+
+
+def test_steady_work_that_moves_does_not_decay(
+    game: GameState, start: Start, rules: RuleOverride
+) -> None:
+    project = start(game, "veyra", "masonry", progress=3_000)
+    project.priority = Priority.LOW
+    civ = game.civs["veyra"]
+    for _ in range(6):
+        advance_projects(game, civ, {"masonry": 1_000}, GameRng(game.rng), EventLog(0, 0))
+    assert civ.projects["masonry"].stalled_turns == 0
+    assert civ.projects["masonry"].progress_bp > 3_000

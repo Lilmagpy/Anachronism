@@ -160,5 +160,6 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] Graphics toward Rise of Kingdoms: coasts, water, models, heraldic symbols, kit-built
       towns and landmarks, city icons, name plates (D-109; paused at the owner's request)
 - [x] Province buildings, and cities that grow and fill with them on the map (D-111)
+- [x] Rival courts no longer starve themselves; low priority is steady work (D-112)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

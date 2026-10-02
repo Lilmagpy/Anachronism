@@ -51,7 +51,9 @@ walks you through the screen the first time (Settings can replay it). Then:
   spread out and fill with them as they grow.
 - **Ideas**: whisper any idea in the box, or **Begin** one from the list ("ahead of their
   time" first). Each costs labour, materials, knowledge and wealth every turn until it
-  works; ideas far ahead of their time cost more and make neighbours suspicious.
+  works; ideas far ahead of their time cost more and make neighbours suspicious. Set a
+  project to **Low** priority to make it steady work: it uses only spare hands, so it goes
+  slower but can never starve your people.
 - **World**: the paths to victory (by the sword, through trade, by the pen) with what each
   still needs; royal decrees (a festival, mercenaries); and every state you know, with
   envoys, alliances, missionaries, war and peace.

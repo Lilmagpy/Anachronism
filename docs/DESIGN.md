@@ -60,6 +60,11 @@ Every stat keeps a short history so the UI shows **trends**, not just values.
   riots, then revolts (a province breaks away; the capital never does). Losing half the
   starting provinces is collapse. None of this is a special rule: it emerges.
 - Underfunded projects progress slower; projects starved for 3+ turns begin to decay.
+- **Low priority is steady work** (D-112): it takes only the spare hands left after other
+  projects (the surplus), never farmers, so it cannot cause diversion, famine or strain;
+  and while it keeps moving, however slowly, it does not decay. A small state can still
+  pursue a great idea, slowly. Rival courts start what they cannot staff at full pace as
+  steady work, one at a time, instead of starving themselves.
 - Tested: a player who starts everything at once collapses within about 30 turns; a
   player who respects free capacity stays stable and keeps advancing.
 

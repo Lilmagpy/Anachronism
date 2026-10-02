@@ -26,11 +26,13 @@ from anachronism.content.schema import (
     ScriptGoal,
     Stage,
 )
+from anachronism.engine.actions import Priority
 from anachronism.engine.decrees import cost
-from anachronism.engine.economy import labour
+from anachronism.engine.economy import labour, project_costs
 from anachronism.engine.effects import Effects, civ_effects
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import BP, apply_bp, clamp, div_round
+from anachronism.engine.reports import capacity
 from anachronism.engine.rng import GameRng
 from anachronism.engine.state import (
     Awareness,
@@ -314,15 +316,24 @@ def deliver_news(state: GameState, events: EventLog) -> None:
 
 
 def start_project(state: GameState, civ_id: str, node_id: str) -> bool:
-    """A rival begins experimenting with an advancement, if it can."""
+    """A rival begins experimenting with an advancement, if it can and can afford the work."""
     civ = state.civs[civ_id]
     if node_id in civ.projects or is_adopted(civ, node_id) or node_id not in state.tech_nodes:
         return False
     if feasibility(state, civ_id, node_id).blocked:
         return False
+    # a sensible court takes on only what its spare hands can carry: work beyond the surplus
+    # pulls farmers off the fields, and famine and riots follow. What it cannot carry at
+    # full pace it does as steady work (low priority: spare hands only, D-112), one at a time.
+    priority = Priority.NORMAL
+    if project_costs(state, node_id).labour > capacity(state, civ_id).free_labour:
+        steady = [p for p in civ.projects.values() if p.priority is Priority.LOW]
+        if steady or capacity(state, civ_id).free_labour <= 0:
+            return False
+        priority = Priority.LOW
     propose(state, civ_id, node_id)
     civ.tech[node_id] = TechState(stage=Stage.EXPERIMENTING)
-    civ.projects[node_id] = Project(node_id=node_id, started_turn=state.turn)
+    civ.projects[node_id] = Project(node_id=node_id, started_turn=state.turn, priority=priority)
     return True
 
 

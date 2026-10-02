@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from anachronism.engine.actions import Priority
 from anachronism.engine.events import EventLog, list_names
 from anachronism.engine.fixed import BP, apply_bp, clamp
 from anachronism.engine.rng import GameRng
@@ -56,7 +57,10 @@ def advance_projects(
         elif share > 0 and breakthrough:
             gain += rules.breakthrough_gain_bp
             events.add(civ.id, "breakthrough", f"A breakthrough with {name} in {civ.name}!", name)
-        project.stalled_turns = project.stalled_turns + 1 if share < rules.stall_funding_bp else 0
+        # steady (low-priority) work that keeps moving never decays, however slowly it goes
+        steady = project.priority is Priority.LOW and share > 0
+        starved = share < rules.stall_funding_bp and not steady
+        project.stalled_turns = project.stalled_turns + 1 if starved else 0
         if project.stalled_turns >= rules.stall_turns:
             gain -= apply_bp(project.progress_bp, decay)
             if project.stalled_turns == rules.stall_turns:

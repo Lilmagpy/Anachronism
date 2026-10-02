@@ -897,7 +897,11 @@ func _fill_projects() -> void:
 			row.add_child(_button("Pause", func(): action_requested.emit({"kind": "pause", "node_id": id})))
 		for level in ["high", "normal", "low"]:
 			if level != project["priority"]:
-				row.add_child(_button(level.capitalize(), func(): action_requested.emit({"kind": "priority", "node_id": id, "priority": level})))
+				var pick := _button(level.capitalize(), func(): action_requested.emit({"kind": "priority", "node_id": id, "priority": level}))
+				pick.tooltip_text = {"high": "Funded first, even if it pulls farmers from the fields",
+					"normal": "Funded after high-priority work",
+					"low": "Steady work: only spare hands, never farmers. Slower, but it cannot cause\na famine and does not decay while it keeps moving"}[level]
+				row.add_child(pick)
 		row.add_child(_button("Abandon", func(): action_requested.emit({"kind": "cancel", "node_id": id})))
 		box.add_child(row)
 		box.add_child(HSeparator.new())

@@ -76,6 +76,8 @@ class PlannerBot:
     max_projects: int = 2
     knowledge_turns: int = 3
     """Keep enough knowledge to fund a new project for this many turns."""
+    calm_first_bp: int = 5_000
+    """Start nothing new while unrest is this high."""
     rank: dict[Category, int] = field(init=False)
 
     def __post_init__(self) -> None:
@@ -86,7 +88,8 @@ class PlannerBot:
         civ = state.civs[civ_id]
         levy = call_up(state, civ_id) if civ_id == state.player_civ else []
         levy += self._build(state, civ_id)
-        if len(civ.projects) >= self.max_projects:
+        # a realm in turmoil consolidates before it reaches for anything new
+        if len(civ.projects) >= self.max_projects or civ.stats.unrest_bp >= self.calm_first_bp:
             return levy
         return levy + self._idea(state, civ_id)
 

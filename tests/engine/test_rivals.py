@@ -6,9 +6,11 @@ import pytest
 
 from anachronism.content.loader import Content
 from anachronism.content.schema import Preconditions, RelationStatus, Script, ScriptGoal
-from anachronism.engine.actions import DeclareWar, MakePeace, ProposeAlliance, SendEnvoy
+from anachronism.engine.actions import DeclareWar, MakePeace, Priority, ProposeAlliance, SendEnvoy
+from anachronism.engine.economy import project_costs
 from anachronism.engine.events import EventLog
 from anachronism.engine.game import apply_action, end_turn, new_game
+from anachronism.engine.reports import capacity
 from anachronism.engine.rivals import (
     contact_pairs,
     deliver_news,
@@ -18,6 +20,7 @@ from anachronism.engine.rivals import (
     rival_decrees,
     run_scripts,
     spread_news,
+    start_project,
     status,
     strength,
 )
@@ -431,3 +434,14 @@ def test_rival_courts_issue_decrees(warring: GameState) -> None:
     assert state.civs["chu"].stats.unrest_bp < 5000
     assert state.civs["yan"].stats.unrest_bp == 5000  # cannot afford it
     assert state.civs["qin"].mercenaries == 0  # the player decides for themselves
+
+
+def test_rival_courts_never_start_work_they_cannot_staff(content: Content) -> None:
+    # D-112: work beyond the surplus is taken on only as steady (low-priority) work, so no
+    # rival starves itself chasing an idea it heard of
+    state = new_game(content, "punic_wars", seed=1, player_civ="rome")
+    node = "crop_rotation"
+    assert project_costs(state, node).labour > capacity(state, "pergamon").free_labour
+    assert start_project(state, "pergamon", node)
+    assert state.civs["pergamon"].projects[node].priority is Priority.LOW
+    assert not start_project(state, "pergamon", "quarantine")  # one steady task at a time

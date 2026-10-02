@@ -185,16 +185,19 @@ def ruin_newest(state: GameState, province_id: str) -> str | None:
     return kind.name if kind is not None else burned
 
 
-def worth(kind: Building) -> int:
-    """A rough measure of what a building gives, for rival courts choosing what to build."""
-    return (
+def worth(kind: Building, unrest_bp: int = 0) -> int:
+    """A rough measure of what a building gives, for courts choosing what to build.
+
+    Calm counts for more the more restless the realm is.
+    """
+    calm = kind.calm_bp * (4 + unrest_bp // 500)
+    return calm + (
         kind.food_bp
         + kind.materials_bp
         + kind.wealth_bp
         + kind.knowledge_bp
         + kind.growth_bp // 2
         + kind.capacity_bp // 2
-        + kind.calm_bp * 4
         + kind.literacy_bp * 4
         + kind.veterans_bp // 4
     )
@@ -206,6 +209,7 @@ def best_choice(state: GameState, civ_id: str, reserve: int) -> tuple[str, str] 
     Worth is what the building gives, times the province's people: big cities first.
     """
     stores = state.civs[civ_id].stockpiles
+    unrest = state.civs[civ_id].stats.unrest_bp
     choices: list[tuple[int, int, str, str]] = []
     for pid in state.owned_provinces(civ_id):
         people = state.provinces[pid].population
@@ -215,7 +219,7 @@ def best_choice(state: GameState, civ_id: str, reserve: int) -> tuple[str, str] 
             materials, wealth = cost(state, pid, bid)
             if stores.materials < materials * reserve or stores.wealth < wealth * reserve:
                 continue
-            value = apply_bp(people // 1000, worth(kind))
+            value = apply_bp(people // 1000, worth(kind, unrest))
             choices.append((-value, materials + wealth, pid, bid))
     if not choices:
         return None

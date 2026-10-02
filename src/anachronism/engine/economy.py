@@ -11,6 +11,7 @@ from dataclasses import dataclass
 from itertools import groupby
 
 from anachronism.content.schema import Access, EffectType
+from anachronism.engine.actions import Priority
 from anachronism.engine.buildings import bonus
 from anachronism.engine.buildings import upkeep as building_upkeep
 from anachronism.engine.effects import Effects
@@ -133,8 +134,14 @@ def active_projects(state: GameState, civ_id: str) -> list[Project]:
     return sorted(projects, key=lambda p: (p.priority.rank, p.started_turn, p.node_id))
 
 
-def allocate(state: GameState, civ_id: str, workforce: int, stock: Stockpiles) -> Allocation:
-    """Fund active projects from the workforce and start-of-turn stockpiles (no mutation)."""
+def allocate(
+    state: GameState, civ_id: str, workforce: int, stock: Stockpiles, surplus: int | None = None
+) -> Allocation:
+    """Fund active projects from the workforce and start-of-turn stockpiles (no mutation).
+
+    Low-priority projects are steady work (D-112): they take only spare hands, the
+    ``surplus`` left after higher tiers, never farmers from the fields.
+    """
     available = {
         "labour": workforce,
         "materials": stock.materials,
@@ -144,8 +151,12 @@ def allocate(state: GameState, civ_id: str, workforce: int, stock: Stockpiles) -
     funding: dict[str, int] = {}
     requested = Costs()
     used = Costs()
-    for _, tier_projects in groupby(active_projects(state, civ_id), key=lambda p: p.priority):
+    tiers = groupby(active_projects(state, civ_id), key=lambda p: p.priority)
+    for priority, tier_projects in tiers:
         tier = list(tier_projects)
+        steady = priority is Priority.LOW and surplus is not None
+        if steady and surplus is not None:
+            available["labour"] = min(available["labour"], max(0, surplus - used.labour))
         requests = {p.node_id: project_costs(state, p.node_id) for p in tier}
         totals = sum(requests.values(), Costs())
         fraction = {
@@ -160,7 +171,8 @@ def allocate(state: GameState, civ_id: str, workforce: int, stock: Stockpiles) -
             for resource in RESOURCES:
                 available[resource] -= spent.get(resource)
             funding[project.node_id] = share
-            requested += request
+            # steady work asks only for what spare hands give: going slowly strains no one
+            requested += spent if steady else request
             used += spent
     return Allocation(funding, requested, used)
 
@@ -230,7 +242,7 @@ def run_economy(state: GameState, civ_id: str, effects: Effects) -> EconomyOutco
     civ = state.civs[civ_id]
     stock = civ.stockpiles
     work = labour(state, civ_id, effects)
-    allocation = allocate(state, civ_id, work.workforce, stock)
+    allocation = allocate(state, civ_id, work.workforce, stock, work.surplus)
     stock.materials -= allocation.used.materials
     stock.knowledge -= allocation.used.knowledge
     stock.wealth -= allocation.used.wealth
