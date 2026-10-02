@@ -21,6 +21,7 @@ from anachronism.engine.rivals import (
     relation,
     rival_decrees,
     run_scripts,
+    set_status,
     spread_news,
     start_project,
     status,
@@ -29,7 +30,7 @@ from anachronism.engine.rivals import (
 from anachronism.engine.rng import GameRng
 from anachronism.engine.state import Awareness, Event, GameState
 from anachronism.engine.victory import check_outcome, progress
-from anachronism.engine.war import capture
+from anachronism.engine.war import capture, wear_wars
 
 
 @pytest.fixture
@@ -488,3 +489,34 @@ def test_rival_courts_never_start_work_they_cannot_staff(content: Content) -> No
     assert start_project(state, "pergamon", node)
     assert state.civs["pergamon"].projects[node].priority is Priority.LOW
     assert not start_project(state, "pergamon", "quarantine")  # one steady task at a time
+
+
+def test_the_side_that_tires_first_cedes_what_is_besieged(warring: GameState) -> None:
+    # D-118: Wei is worn out while Qin's army stands in one of its provinces
+    set_status(warring, "qin", "wei", RelationStatus.WAR)
+    wei_lands = warring.owned_provinces("wei")
+    assert len(wei_lands) >= 2
+    target = wei_lands[0]
+    army = next(a for a in warring.armies.values() if a.owner == "qin")
+    army.province = target
+    rel = relation(warring, "qin", "wei")
+    assert rel is not None
+    rel.weariness["wei"] = warring.world.rules.rivals.peace_weariness_bp
+    events = EventLog(turn=0, year=warring.year)
+    wear_wars(warring, events)
+    assert warring.provinces[target].owner == "qin"
+    assert status(warring, "qin", "wei") is not RelationStatus.WAR
+    assert any(e.kind == "ceded" for e in events.items)
+
+
+def test_a_state_with_only_besieged_land_left_becomes_a_tributary(warring: GameState) -> None:
+    set_status(warring, "qin", "yiqu", RelationStatus.WAR)
+    (home,) = warring.owned_provinces("yiqu")
+    army = next(a for a in warring.armies.values() if a.owner == "qin")
+    army.province = home
+    rel = relation(warring, "qin", "yiqu")
+    assert rel is not None
+    rel.weariness["yiqu"] = warring.world.rules.rivals.peace_weariness_bp
+    wear_wars(warring, EventLog(turn=0, year=warring.year))
+    assert warring.provinces[home].owner == "yiqu"
+    assert status(warring, "qin", "yiqu") is RelationStatus.TRIBUTARY
