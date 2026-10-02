@@ -249,7 +249,9 @@ func _redraw() -> void:
 
 
 ## Hide any name that would overlap a more important one on screen: state names first, then
-## capitals, then larger provinces. Called as the camera moves.
+## capitals, then larger provinces. Called as the camera moves. Names do not blink on and
+## off: each gets a target opacity here, and `fade_labels` eases it there (D-123). Near the
+## ends of its distance range a name is already fading.
 func declutter(camera: Camera3D) -> void:
 	var view_height := camera.get_viewport().get_visible_rect().size.y
 	var scale := view_height / (2.0 * tan(deg_to_rad(camera.fov) / 2.0))
@@ -260,12 +262,11 @@ func declutter(camera: Camera3D) -> void:
 		var label: Label3D = entry[0]
 		if not is_instance_valid(label):
 			continue
+		_take_over_range(label)
 		var at := label.global_position
-		var distance := camera.global_position.distance_to(at)
-		var in_range := distance >= label.visibility_range_begin and (
-			label.visibility_range_end <= 0.0 or distance < label.visibility_range_end)
-		if not in_range or camera.is_position_behind(at):
-			label.visible = true  # its visibility range decides
+		var shown := _range_alpha(label, camera.global_position.distance_to(at))
+		if shown <= 0.0 or camera.is_position_behind(at):
+			_fade_to(label, 0.0)
 			continue
 		# measured from screenshots: a line is about 1.3 font sizes tall with its outline
 		var height := label.font_size * label.pixel_size * scale * 1.3
@@ -282,9 +283,116 @@ func declutter(camera: Camera3D) -> void:
 			if other.intersects(rect):
 				clear = false
 				break
-		label.visible = clear
+		_fade_to(label, shown if clear else 0.0)
 		if clear:
 			placed.append(rect)
+
+
+## Eases every name toward its opacity (call every frame).
+func fade_labels(delta: float) -> void:
+	for entry in _labels + _war_labels:
+		var label: Label3D = entry[0]
+		if not is_instance_valid(label) or not label.has_meta("alpha"):
+			continue
+		var alpha: float = label.get_meta("alpha")
+		var target: float = label.get_meta("target")
+		if is_equal_approx(alpha, target):
+			continue
+		alpha = move_toward(alpha, target, delta * 3.5)
+		_show_alpha(label, alpha)
+
+
+## The name's own distance range, moved into metadata so its fade can be ours.
+func _take_over_range(label: Label3D) -> void:
+	if label.has_meta("range"):
+		return
+	label.set_meta("range", Vector2(label.visibility_range_begin, label.visibility_range_end))
+	label.set_meta("base", Vector2(label.modulate.a, label.outline_modulate.a))
+	label.visibility_range_begin = 0.0
+	label.visibility_range_end = 0.0
+	for child in label.get_children():
+		if child is Sprite3D:
+			(child as Sprite3D).visibility_range_begin = 0.0
+			(child as Sprite3D).visibility_range_end = 0.0
+		elif child is Label3D:
+			child.set_meta("base", Vector2(child.modulate.a, child.outline_modulate.a))
+
+
+## How visible a name should be at this camera distance: whole inside its range, fading
+## over the last part of it, gone outside.
+func _range_alpha(label: Label3D, distance: float) -> float:
+	var span: Vector2 = label.get_meta("range")
+	var alpha := 1.0
+	if span.x > 0.0:
+		alpha *= smoothstep(span.x, span.x * 1.18, distance)
+	if span.y > 0.0:
+		alpha *= 1.0 - smoothstep(span.y * 0.84, span.y, distance)
+	return alpha
+
+
+func _fade_to(label: Label3D, target: float) -> void:
+	label.set_meta("target", target)
+	if not label.has_meta("alpha"):  # a name just drawn starts where it should be
+		_show_alpha(label, target)
+
+
+func _show_alpha(label: Label3D, alpha: float) -> void:
+	label.set_meta("alpha", alpha)
+	label.visible = alpha > 0.004
+	var base: Vector2 = label.get_meta("base")
+	label.modulate.a = base.x * alpha
+	label.outline_modulate.a = base.y * alpha
+	for child in label.get_children():
+		if child is Sprite3D:
+			(child as Sprite3D).modulate.a = alpha
+		elif child is Label3D and child.has_meta("base"):
+			var own: Vector2 = child.get_meta("base")
+			child.modulate.a = own.x * alpha
+			child.outline_modulate.a = own.y * alpha
+
+
+## Where a province's chief city stands on the ground (Vector3.INF if unknown).
+func province_point(province_id: String) -> Vector3:
+	for site in sites:
+		if site["id"] == province_id:
+			return earth.ground_at_pixel(site["pixel"])
+	return Vector3.INF
+
+
+## Where an army stands in a province, beside its city (the `k`th army there).
+func army_point(province_id: String, k := 0) -> Vector3:
+	for site in sites:
+		if site["id"] == province_id:
+			return earth.ground_at_pixel(_army_spot(site, k))
+	return Vector3.INF
+
+
+## A province's name ("" if unknown).
+func province_name(province_id: String) -> String:
+	for site in sites:
+		if site["id"] == province_id:
+			return str(site["name"]).split(" (")[0]
+	return ""
+
+
+## An army piece stops bobbing on the spot (the turn replay walks it instead).
+func stop_bobbing(piece: Node3D) -> void:
+	_marching = _marching.filter(func(item: Array) -> bool: return item[0] != piece)
+
+
+## Where a fleet rides on a sea (the `k`th fleet there), at the water's surface.
+func fleet_point(sea_id: String, k := 0) -> Vector3:
+	for site in sites:
+		if site["id"] == sea_id:
+			var at := earth.ground_at_pixel(_fleet_spot(site, k))
+			at.y = maxf(at.y, 0.0) + 0.3
+			return at
+	return Vector3.INF
+
+
+## Armies and fleets drawn last are hidden or shown (the turn replay draws its own).
+func show_war_marks(on: bool) -> void:
+	_war_marks.visible = on
 
 
 ## The province or sea at a height-map pixel, or -1.
@@ -545,7 +653,7 @@ func show_roads(view: Dictionary, parent: Node3D) -> void:
 	roads.name = "Roads"
 	roads.mesh = st.commit()
 	roads.material_override = EarthBuilder.line_material(0.0015)
-	roads.visibility_range_end = 420.0
+	Lod.near(roads, 420.0)
 	roads.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	parent.add_child(roads)
 
@@ -562,6 +670,8 @@ func show_armies(armies: Array, battles: Array, selected_army := "", fleets: Arr
 	_afloat.clear()
 	_marching.clear()
 	_sized.clear()
+	army_nodes.clear()
+	fleet_nodes.clear()
 	var by_id := {}
 	for site in sites:
 		by_id[site["id"]] = site
@@ -611,6 +721,7 @@ func show_armies(armies: Array, battles: Array, selected_army := "", fleets: Arr
 		label.visibility_range_end = 1300.0   # not over the whole-world view
 		_war_marks.add_child(label)
 		_war_labels.append([label, 1500000 + (500000 if mine else 0) + int(men / 1000)])
+		army_nodes[army["id"]] = {"piece": piece, "label": label, "spot": spot, "province": here}
 		if army["id"] == selected_army:
 			var ring := MeshInstance3D.new()
 			var torus := TorusMesh.new()
@@ -697,6 +808,7 @@ func _draw_fleets(st: SurfaceTool, by_id: Dictionary, fleets: Array, selected_fl
 		label.visibility_range_end = 1300.0
 		_war_marks.add_child(label)
 		_war_labels.append([label, 1400000 + (500000 if mine else 0) + ships])
+		fleet_nodes[fleet["id"]] = {"piece": piece, "label": label, "spot": spot, "province": sea}
 		if fleet["id"] == selected_fleet:
 			var ring := MeshInstance3D.new()
 			var torus := TorusMesh.new()
@@ -762,6 +874,8 @@ var _ties: MeshInstance3D = null   ## the arcs of show_ties
 var player := ""   ## the player's civ: its name is never hidden by another's
 var _region_cells := {}   ## site index -> Array of its cells (built once)
 var _labels: Array = []   ## [label, priority], most important first, for decluttering
+var army_nodes := {}   ## army id -> {piece, label, spot, province}: drawn armies, for the turn replay
+var fleet_nodes := {}  ## fleet id -> {piece, label, spot, province (its sea)}: likewise for fleets
 var _war_labels: Array = []   ## [label, priority] of armies' and fleets' strengths
 var _afloat: Array = []   ## [fleet piece, its resting height, a phase] to rock on the waves
 var _marching: Array = []   ## [army piece, its resting height, a phase] bobbing on the march
@@ -835,7 +949,7 @@ func _province_label(site: Dictionary) -> Label3D:
 		tag.modulate = Color(1.0, 0.88, 0.55)
 		tag.outline_modulate = Color(0.06, 0.05, 0.05, 0.85)
 		tag.no_depth_test = true
-		tag.visibility_range_end = 300.0
+		Lod.near(tag, 300.0)
 		tag.position = Vector3(0, -0.03, 0)
 		tag.offset = Vector2(0, -46)
 		label.add_child(tag)

@@ -1,6 +1,10 @@
 ## Map camera in the style of Rise of Kingdoms: a fixed heading, drag or WASD to pan, wheel or
 ## pinch to zoom. Zoomed out it looks almost straight down at the strategic map; zooming in
 ## tilts it towards the horizon so towns and forests stand up (D-052).
+##
+## Movement is eased so the map never jumps (D-123): zoom glides in equal steps of scale
+## (log space) and keeps the point under the mouse where it is; a drag carries on and slows
+## when let go; `fly_to` arcs out and back down over long distances, like a globe.
 class_name CameraRig
 extends Node3D
 
@@ -8,12 +12,19 @@ var near := 60.0       ## closest zoom; the map sets this
 var far := 1100.0      ## farthest zoom; the map sets this to fit
 const PITCH_NEAR := 0.72  ## radians above the horizon when fully zoomed in (about 41°)
 const PITCH_FAR := 1.30   ## when fully zoomed out (about 75°)
+const ZOOM_STEP := 0.82   ## one wheel notch
+const ZOOM_EASE := 9.0    ## how quickly zoom catches up with the wheel (per second)
+const GLIDE_DECAY := 5.0  ## how quickly a flung map slows down (per second)
 
 var distance := 760.0
 var target_distance := 760.0
 var bounds := Rect2(-400, -400, 800, 800)  ## where the camera may look, on the ground plane
 var camera := Camera3D.new()
 var _dragging := false
+var _anchor := Vector2(-1, -1)   ## the screen point zoom keeps still (-1: the centre)
+var _glide := Vector2.ZERO       ## pan velocity after a drag, ground units per second
+var _drag_velocity := Vector2.ZERO
+var _flight: Tween
 
 
 func _ready() -> void:
@@ -29,11 +40,53 @@ func zoom_level() -> float:
 	return 1.0 - inverse_lerp(log(near), log(far), log(distance))
 
 
+## Jump straight to a point (no animation).
 func look_at_point(point: Vector3, new_distance: float) -> void:
+	_stop_flight()
 	position = Vector3(point.x, 0, point.z)
 	distance = new_distance
 	target_distance = new_distance
+	_glide = Vector2.ZERO
 	_apply()
+
+
+## Glide to a point and distance over `seconds` (by default, longer for longer journeys).
+## A long way off, the camera rises on the way, so the map slides by at a readable pace,
+## and comes back down at the far end.
+func fly_to(point: Vector3, new_distance: float, seconds := -1.0) -> Tween:
+	_stop_flight()
+	_glide = Vector2.ZERO
+	var from := Vector2(position.x, position.z)
+	var to := Vector2(point.x, point.z)
+	var span := from.distance_to(to)
+	var start_d := distance
+	var end_d := clampf(new_distance, near, far)
+	var peak := clampf(maxf(maxf(start_d, end_d), span * 1.1), near, far)
+	if seconds < 0.0:
+		seconds = clampf(0.6 + log(1.0 + span / 60.0) * 0.45, 0.6, 2.2)
+	_flight = create_tween()
+	_flight.tween_method(func(t: float) -> void:
+		var e := t * t * (3.0 - 2.0 * t)   # smoothstep: eased at both ends
+		var at := from.lerp(to, e)
+		position = Vector3(at.x, 0, at.y)
+		# distance in log space, with a hump in the middle when the journey is long
+		var base := lerpf(log(start_d), log(end_d), e)
+		var hump := maxf(0.0, log(peak) - maxf(log(start_d), log(end_d))) * sin(PI * e)
+		distance = exp(base + hump)
+		target_distance = distance
+		_apply(), 0.0, 1.0, seconds)
+	_flight.finished.connect(func() -> void: target_distance = end_d)
+	return _flight
+
+
+func _stop_flight() -> void:
+	if _flight != null and _flight.is_valid():
+		_flight.kill()
+	_flight = null
+
+
+func is_flying() -> bool:
+	return _flight != null and _flight.is_valid() and _flight.is_running()
 
 
 func _apply() -> void:
@@ -46,28 +99,75 @@ func _apply() -> void:
 	camera.look_at(global_position, Vector3.UP)
 
 
+## Where a screen point meets the ground plane (or the rig's own point, looking at the sky).
+func _ground_under(screen: Vector2) -> Vector3:
+	var origin := camera.project_ray_origin(screen)
+	var direction := camera.project_ray_normal(screen)
+	if direction.y > -0.01:
+		return global_position
+	return origin + direction * (-origin.y / direction.y)
+
+
+func _zoom(factor: float, at: Vector2) -> void:
+	_stop_flight()
+	target_distance = clampf(target_distance * factor, near, far)
+	_anchor = at
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
-			target_distance = clampf(target_distance * 0.85, near, far)
+			_zoom(ZOOM_STEP, event.position)
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
-			target_distance = clampf(target_distance / 0.85, near, far)
+			_zoom(1.0 / ZOOM_STEP, event.position)
 		elif event.button_index == MOUSE_BUTTON_LEFT:
 			_dragging = event.pressed
+			if event.pressed:
+				_stop_flight()
+				_glide = Vector2.ZERO
+				_drag_velocity = Vector2.ZERO
+			else:
+				_glide = _drag_velocity  # let go: the map carries on and slows
 	elif event is InputEventMagnifyGesture:
-		target_distance = clampf(target_distance / event.factor, near, far)
+		_zoom(1.0 / event.factor, event.position)
 	elif event is InputEventPanGesture:
+		_stop_flight()
 		_pan(event.delta * distance * 0.01)
 	elif event is InputEventMouseMotion and _dragging:
-		_pan(-event.relative * distance * 0.0015)
+		var amount: Vector2 = -event.relative * distance * 0.0015
+		_pan(amount)
+		var step := maxf(get_process_delta_time(), 1.0 / 240.0)
+		_drag_velocity = _drag_velocity.lerp(amount / step, 0.5)
 
 
 func _process(delta: float) -> void:
+	if is_flying():
+		return
 	var move := Vector2(Input.get_axis("ui_left", "ui_right"), Input.get_axis("ui_up", "ui_down"))
 	if move != Vector2.ZERO:
-		_pan(move * distance * delta)
-	if absf(distance - target_distance) > 0.1:
-		distance = lerpf(distance, target_distance, minf(1.0, delta * 8.0))
+		_glide = _glide.lerp(move * distance * 1.1, minf(1.0, delta * 6.0))  # ease into it
+	elif _dragging:
+		_glide = Vector2.ZERO
+		_drag_velocity *= exp(-12.0 * delta)  # holding still while dragging: no fling
+	if _glide.length() > distance * 0.01:
+		_pan(_glide * delta)
+		if move == Vector2.ZERO:
+			_glide *= exp(-GLIDE_DECAY * delta)
+	else:
+		_glide = Vector2.ZERO
+	if absf(log(distance) - log(target_distance)) > 0.0005:
+		var screen := _anchor if _anchor.x >= 0.0 else get_viewport().get_visible_rect().size / 2.0
+		var before := _ground_under(screen)
+		var k := 1.0 - exp(-ZOOM_EASE * delta)
+		distance = exp(lerpf(log(distance), log(target_distance), k))
+		_apply()
+		# keep the point under the mouse where it was, as maps do
+		var after := _ground_under(screen)
+		position += Vector3(before.x - after.x, 0, before.z - after.z)
+		_apply()
+	elif distance != target_distance:
+		distance = target_distance
+		_anchor = Vector2(-1, -1)
 		_apply()
 
 

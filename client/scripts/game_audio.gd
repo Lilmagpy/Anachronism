@@ -5,7 +5,7 @@ class_name GameAudio
 extends Node
 
 const SETTINGS := "user://settings.cfg"
-const SOUNDS := ["click", "end_turn", "speak", "idea", "war", "victory"]
+const SOUNDS := ["click", "end_turn", "speak", "idea", "war", "victory", "march", "clash", "horn", "defeat"]
 
 var music_on := true
 var effects_on := true

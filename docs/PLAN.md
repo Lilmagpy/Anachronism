@@ -170,6 +170,9 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] Spend the stores: hastening work; hoards waste away (D-119)
 - [x] Chronicle mode: chapters along real history, Rome against Carthage first (D-120)
 - [x] The second chronicle: Qin unifies China, 350-221 BC (D-122)
+- [x] Seamless zoom: fades instead of pops, names that fade, a gliding camera (D-123)
+- [x] Each turn plays out on the map: marches, battles, conquests (D-124)
+- [ ] Fit in the painted art from docs/ART_PROMPTS.md as it arrives
 - [ ] More chronicles (the Sengoku, Korea's Three Kingdoms)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

@@ -55,6 +55,8 @@ var _card := PanelContainer.new()
 var _card_body := VBoxContainer.new()
 var _chronicle := VBoxContainer.new()
 var _end_turn := Button.new()
+var _skip_hint: Label
+var _replaying := false
 var _hover := Label.new()
 var _idea_box := VBoxContainer.new()
 var _idea_input := LineEdit.new()
@@ -1682,6 +1684,68 @@ func _fill_chronicle() -> void:
 		_chronicle.add_child(line)
 	if events.size() > 6:
 		_chronicle.add_child(_label("… and %d more" % (events.size() - 6), 12, DIM))
+
+
+## While the turn plays out on the map (D-124): the panels slide aside so the map shows,
+## End Turn waits, a title tells the years passing, and a hint says how to skip.
+func set_replaying(on: bool, from_year := 0, to_year := 0) -> void:
+	_end_turn.disabled = on
+	_end_turn.text = "UNFOLDING…" if on else "END TURN  ▸"
+	var bar := _top.get_parent()
+	for child in _root.get_children():
+		if child == _end_turn or child == bar or child == _skip_hint or not (child is CanvasItem):
+			continue
+		var item := child as CanvasItem
+		if on:
+			item.set_meta("replay_was_visible", item.visible)
+			if item.visible:
+				create_tween().tween_property(item, "modulate:a", 0.0, 0.25).finished.connect(func() -> void:
+					if _replaying:
+						item.visible = false)
+		elif item.has_meta("replay_was_visible"):
+			item.visible = bool(item.get_meta("replay_was_visible"))
+			item.remove_meta("replay_was_visible")
+			create_tween().tween_property(item, "modulate:a", 1.0, 0.3)
+	_replaying = on
+	if on and _skip_hint == null:
+		_skip_hint = UiStyle.label("Click or press any key to skip  ▸▸", 18, UiStyle.CREAM, "body", 800)
+		_skip_hint.add_theme_color_override("font_outline_color", Color(0.08, 0.05, 0.03))
+		_skip_hint.add_theme_constant_override("outline_size", 8)
+		_skip_hint.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
+		_skip_hint.offset_top = -64
+		_skip_hint.offset_bottom = -36
+		_skip_hint.grow_horizontal = Control.GROW_DIRECTION_BOTH
+		_skip_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_skip_hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_root.add_child(_skip_hint)
+		if from_year != to_year:
+			_years_title(from_year, to_year)
+	elif not on and _skip_hint != null:
+		_skip_hint.queue_free()
+		_skip_hint = null
+
+
+## "350 BC → 340 BC": the years passing, large across the top of the map, then fading.
+func _years_title(from_year: int, to_year: int) -> void:
+	var column := VBoxContainer.new()
+	column.set_anchors_preset(Control.PRESET_CENTER_TOP)
+	column.offset_top = 96
+	column.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	column.alignment = BoxContainer.ALIGNMENT_CENTER
+	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var years := UiStyle.headline("%s  →  %s" % [year_text(from_year), year_text(to_year)], 40, UiStyle.GOLD)
+	years.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	column.add_child(years)
+	var words := UiStyle.headline("The years pass", 20, UiStyle.CREAM)
+	words.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	column.add_child(words)
+	column.modulate.a = 0.0
+	_root.add_child(column)
+	var tween := create_tween()
+	tween.tween_property(column, "modulate:a", 1.0, 0.4)
+	tween.tween_interval(1.6)
+	tween.tween_property(column, "modulate:a", 0.0, 0.6)
+	tween.tween_callback(column.queue_free)
 
 
 func _build_end_turn() -> void:

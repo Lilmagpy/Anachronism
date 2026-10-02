@@ -34,7 +34,11 @@ walks you through the screen the first time (Settings can replay it). Then:
 
 - **Map**: drag to move, scroll (or pinch) to zoom, click a province to see who holds it,
   how hard it is to take, and what you can do about its owner. Click your emblem (top
-  left) to fly to your capital, where your ideas appear as buildings.
+  left) to fly to your capital, where your ideas appear as buildings. Zooming aims at the
+  mouse pointer, and towns and names fade in as you come down.
+- **Each turn plays out**: after **End Turn** you watch what happened: armies marching,
+  your battles up close, provinces changing hands under new banners. Click or press any key
+  to skip; Settings can turn it off.
 - **War**: every state has armies, drawn on the map in its colours with their strength
   above them. Click one of your provinces to see the armies there: **March…** then click
   the province to march to (they fight any enemy army they meet and besiege enemy cities

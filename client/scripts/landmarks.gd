@@ -122,7 +122,7 @@ func _make(kind: String, colour: Color, spot: Vector2, centre: Vector2) -> Node3
 		node.rotation.y = -(centre - spot).angle() + PI / 2.0   # facing the city
 		for child in node.get_children():
 			if child is GeometryInstance3D:
-				(child as GeometryInstance3D).visibility_range_end = SHOW_WITHIN
+				Lod.near(child as GeometryInstance3D, SHOW_WITHIN)
 		return node
 	match kind:
 		"aqueduct":
@@ -192,7 +192,7 @@ func _make(kind: String, colour: Color, spot: Vector2, centre: Vector2) -> Node3
 	_box(node, Vector3(-0.17 * S, 0.62 * S, 0), Vector3(0.16, 0.1, 0.01) * S, colour)
 	for child in node.get_children():
 		if child is GeometryInstance3D:
-			(child as GeometryInstance3D).visibility_range_end = SHOW_WITHIN
+			Lod.near(child as GeometryInstance3D, SHOW_WITHIN)
 	return node
 
 

@@ -1101,3 +1101,38 @@ Playtesting with the simulation bot showed what the chapters needed to be playab
   otherwise history turns, and the chronicle says so. A choice may `conquer` a whole state.
 In the same simulation Qin now stays level with history to 300 BC and unifies China in
 220-218 BC, a few years after the real one.
+
+## D-123 Seamless zoom: nothing pops, the camera glides — owner's direction (2026-10-02)
+The owner asked for smoother transitions when zooming and moving around. What popped:
+towns, trees, peaks, landmarks, armies and roads each appeared or vanished at a hard camera
+distance (some in square map tiles at once), names blinked on and off as they made room
+for each other, the camera zoomed toward the middle of the screen in uneven steps, and
+"visit the capital" jumped. Now:
+- **Fades, not pops.** Every distance cutoff fades over the last fifth of its range
+  (`scripts/lod.gd`); near towns crossfade with their far-away icons. Godot's own fade
+  hides our custom-shaded models (Kenney kit buildings, mountain peaks) outright, so those
+  dissolve themselves with a fine dither, each building by its own distance
+  (`shaders/lod.gdshaderinc`) - which also works on the simpler renderer. Per-object shader
+  values ran out of room (thousands of buildings), so the fade distances sit in a few
+  copies of each material instead.
+- **Names fade.** Map names ease in and out, both at the ends of their distance range and
+  when one gives way to another, instead of blinking.
+- **The camera.** Zoom glides in equal steps of scale and keeps the point under the mouse
+  still, as maps do; a dragged map carries on and slows when let go; keyboard panning
+  eases in; flying to a place arcs up and back down over long journeys.
+
+## D-124 Each turn plays out on the map — owner's direction (2026-10-02)
+The owner asked for animations of what happens between turns, the marches and attacks, to
+make it feel epic. After End Turn the map now shows the turn before its results ("350 BC →
+340 BC, the years pass"; the panels slide aside): armies march along their roads with dust
+and drums and fleets sail their courses trailing spray (the camera follows the player's);
+the player's battles on land and sea are visited one by one (the hosts lunge at each other, dust, sparks and
+flashes, the battle's name, VICTORY or DEFEAT and a horn), other battles flare where they
+were fought; destroyed armies and fleets sink away; besieged cities burn while stones arc
+into them from the siege lines ("Siege of Hexi · 45%"); the map recolours and every province that changed
+hands raises its new owner's banner and arms, with a ring sweeping over the land and a
+line ("Etruria is ours!"); new armies rise from the ground; the camera returns. Any click
+or key skips to the end, and Settings can turn it off. The engine is untouched: the server
+compares the map before and after the turn (`tools/replay.py`). New synthesised sounds:
+marching drums, a battle clash, a victory horn and a defeat horn. Painted "moment" cards
+for disasters and the like will follow when the art from docs/ART_PROMPTS.md comes in.

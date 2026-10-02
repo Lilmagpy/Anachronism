@@ -116,6 +116,43 @@ def click() -> list[float]:
     ]
 
 
+def clang(freq: float, seconds: float = 0.5) -> list[float]:
+    """Iron on iron: a few inharmonic partials that ring briefly."""
+    partials = [(1.0, 1.0), (2.41, 0.7), (3.93, 0.5), (5.67, 0.3)]
+    return [
+        sum(a * math.sin(2 * math.pi * freq * f * i / RATE) for f, a in partials)
+        * math.exp(-i / RATE * 14)
+        for i in range(int(seconds * RATE))
+    ]
+
+
+def roar(seconds: float, rng: GameRng) -> list[float]:
+    """Many voices shouting at once: low-passed noise swelling and dying away."""
+    out = []
+    low = 0.0
+    for i in range(int(seconds * RATE)):
+        t = i / seconds / RATE
+        low += 0.08 * (noise(rng) - low)
+        out.append(low * math.sin(math.pi * t) ** 0.7)
+    return out
+
+
+def horn(notes: list[tuple[float, float]], vibrato: float = 5.0) -> list[float]:
+    """A war horn: brassy harmonics with a soft attack, each (frequency, seconds) in turn."""
+    out: list[float] = []
+    for freq, seconds in notes:
+        n = int(seconds * RATE)
+        for i in range(n):
+            t = i / RATE
+            wobble = 1 + 0.006 * math.sin(2 * math.pi * vibrato * t)
+            env = min(1.0, t * 18) * min(1.0, (n - i) / (0.08 * RATE))
+            out.append(
+                env
+                * sum(math.sin(2 * math.pi * freq * k * wobble * t) / k**1.3 for k in range(1, 7))
+            )
+    return out
+
+
 def theme(seconds: float = 64.0) -> list[float]:
     """A calm loop: a pentatonic melody on plucked strings over a soft drone."""
     rng = GameRng.from_seed(11)
@@ -171,6 +208,20 @@ def main() -> None:
     for k, at in enumerate([0.0, 0.35, 0.7, 1.2, 1.4]):
         mix(war, drum(0.8, 60.0 if k % 2 == 0 else 75.0), int(at * RATE))
     write("war", war, 0.85)
+    march = [0.0] * int(2.6 * RATE)
+    for k in range(6):  # left, right, left, right... the drums of an army on the road
+        mix(march, drum(0.5, 82.0 if k % 2 == 0 else 96.0), int(k * 0.42 * RATE), 0.7)
+    write("march", march, 0.6)
+    rng = GameRng.from_seed(17)
+    clash = roar(1.8, rng)
+    for k, (at, f) in enumerate(
+        [(0.15, 820.0), (0.32, 1040.0), (0.5, 760.0), (0.66, 930.0), (0.9, 1110.0), (1.1, 870.0)]
+    ):
+        mix(clash, clang(f), int(at * RATE), 0.35 if k % 2 else 0.45)
+    mix(clash, drum(0.8, 55.0), 0, 0.9)
+    write("clash", clash, 0.85)
+    write("horn", horn([(196.0, 0.35), (261.6, 0.35), (329.6, 0.9)]), 0.7)
+    write("defeat", horn([(220.0, 0.5), (196.0, 0.5), (164.8, 1.2)], 3.0), 0.6)
     write("victory", chime([587.3, 740.0, 880.0, 1174.7, 1480.0], 0.16, 2.0), 0.7)
     write("theme", theme(), 0.5)
     print("sounds written to", OUT)

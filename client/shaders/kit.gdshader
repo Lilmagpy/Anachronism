@@ -4,6 +4,8 @@
 // Soft light bands like the rest of the map.
 shader_type spatial;
 
+#include "res://shaders/lod.gdshaderinc"
+
 uniform sampler2D tex : source_color, filter_linear_mipmap;
 uniform vec4 base_colour : source_color = vec4(1.0);
 uniform bool textured = true;
@@ -12,10 +14,14 @@ uniform int recolour = 1;   // 0: keep, 1: blue accents, 2: the whole surface, 3
 varying float local_y;
 
 void vertex() {
+	lod_distance = length(CAMERA_POSITION_WORLD - (MODEL_MATRIX * vec4(0.0, 0.0, 0.0, 1.0)).xyz);
 	local_y = VERTEX.y;
 }
 
 void fragment() {
+	if (lod_keep(lod_distance) <= lod_dither(FRAGCOORD.xy)) {
+		discard;
+	}
 	vec3 c = textured ? texture(tex, UV).rgb : base_colour.rgb;
 	vec3 s = pow(c, vec3(1.0 / 2.2));
 	float w = 0.0;

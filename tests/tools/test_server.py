@@ -47,6 +47,7 @@ def test_a_game_through_the_bridge(tmp_path: Path) -> None:
     assert not replies[2]["result"]["accepted"]
     assert "Iron ore" in replies[2]["result"]["message"]
     assert replies[3]["result"]["year"] == -1190
+    assert set(replies[3]["result"]["replay"]) >= {"marches", "battles", "taken"}  # D-124
     assert replies[4]["result"]["projects"][0]["id"] == "alphabet"
 
 

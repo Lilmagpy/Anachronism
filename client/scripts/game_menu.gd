@@ -130,6 +130,13 @@ func open_settings() -> void:
 		close()
 		get_parent().add_child(Tutorial.new()))
 	body.add_child(tour)
+	body.add_child(UiStyle.label("The map", 20, UiStyle.RED, "title", 800))
+	var replay := CheckBox.new()
+	replay.text = "Play each turn out on the map (marches, battles, conquests)"
+	replay.button_pressed = TurnReplay.enabled()
+	replay.add_theme_font_size_override("font_size", 16)
+	replay.toggled.connect(TurnReplay.set_enabled)
+	body.add_child(replay)
 	if audio != null:
 		body.add_child(UiStyle.label("Sound", 20, UiStyle.RED, "title", 800))
 		var music := CheckBox.new()

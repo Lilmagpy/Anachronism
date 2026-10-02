@@ -486,10 +486,9 @@ func _multimesh(entry: Dictionary, indices: Array) -> MultiMeshInstance3D:
 	elif not entry.get("kit", false):
 		instance.material_override = _material
 	if entry.get("far", false):
-		instance.visibility_range_begin = SHOW_WITHIN
-		instance.visibility_range_end = FAR_UNTIL
+		Lod.between(instance, SHOW_WITHIN, FAR_UNTIL)  # crossfades with the town itself
 	else:
-		instance.visibility_range_end = SHOW_WITHIN
+		Lod.near(instance, SHOW_WITHIN)
 	instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON   # soft shadows under buildings (G1)
 	return instance
 
@@ -533,7 +532,7 @@ static func smoke_at(at: Vector3, colour: Color) -> CPUParticles3D:
 	fade.set_color(1, Color(1, 1, 1, 0.0))
 	smoke.color_ramp = fade
 	smoke.position = at
-	smoke.visibility_range_end = SHOW_WITHIN
+	Lod.near(smoke, SHOW_WITHIN)
 	smoke.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	return smoke
 

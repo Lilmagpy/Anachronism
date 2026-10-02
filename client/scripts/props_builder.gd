@@ -269,5 +269,5 @@ func _banner(parent: Node3D, province: Dictionary, centre: Vector2) -> void:
 		mesh_instance.material_override = m
 		mesh_instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		mesh_instance.position = ground + part[2]
-		mesh_instance.visibility_range_begin = BANNER_FROM
+		Lod.far(mesh_instance, BANNER_FROM)
 		node.add_child(mesh_instance)

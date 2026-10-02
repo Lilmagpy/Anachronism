@@ -3,12 +3,15 @@
 // lower hills as the camera comes down, so they never wall off the towns beneath them.
 shader_type spatial;
 
+#include "res://shaders/lod.gdshaderinc"
+
 uniform float near = 40.0;    // camera distance at which peaks are lowest
 uniform float far = 180.0;    // and from which they stand full height
 
 varying vec3 colour;
 
 void vertex() {
+	lod_distance = length(CAMERA_POSITION_WORLD - (MODEL_MATRIX * vec4(0.0, 0.0, 0.0, 1.0)).xyz);
 	vec3 base = MODEL_MATRIX[3].xyz;
 	float d = length(CAMERA_POSITION_WORLD - base);
 	VERTEX.y *= mix(0.55, 1.0, smoothstep(near, far, d));
@@ -16,6 +19,9 @@ void vertex() {
 }
 
 void fragment() {
+	if (lod_keep(lod_distance) <= lod_dither(FRAGCOORD.xy)) {
+		discard;
+	}
 	ALBEDO = colour;
 	ROUGHNESS = 0.95;
 	SPECULAR = 0.1;

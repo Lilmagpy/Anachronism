@@ -107,7 +107,7 @@ static func make(colour: Color, facing: float, siege := false) -> Node3D:
 		engine.position = Vector3(0.62 * S, 0, 0.3 * S)
 		army.add_child(engine)
 	for child in army.get_children():
-		(child as GeometryInstance3D).visibility_range_end = SHOW_WITHIN
+		Lod.near(child as GeometryInstance3D, SHOW_WITHIN)
 		(child as GeometryInstance3D).cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
 	return army
 
@@ -132,7 +132,7 @@ static func make_fleet(colour: Color, facing: float, hulls: int) -> Node3D:
 		flag.position = spots[h] * S + Vector3(0.11 * S, (0.98 if h == 0 else 0.78) * S, 0)
 		fleet.add_child(flag)
 	for child in fleet.get_children():
-		(child as GeometryInstance3D).visibility_range_end = SHOW_WITHIN
+		Lod.near(child as GeometryInstance3D, SHOW_WITHIN)
 		(child as GeometryInstance3D).cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
 	return fleet
 

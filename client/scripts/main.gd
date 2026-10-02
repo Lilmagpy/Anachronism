@@ -23,6 +23,8 @@ var _last_pose := Transform3D()
 var game_menu: GameMenu
 var landmarks: Landmarks
 var _earth_holder: Node3D   ## where the map's cities are built
+var _replay: TurnReplay   ## the turn playing out on the map, if one is (D-124)
+var _quick_turns := false   ## turns from the command line skip the replay
 var _growth := ""   ## the cities' sizes and buildings when they were last built
 var audio: GameAudio
 var hud: GameHud
@@ -264,6 +266,7 @@ func _build_hud() -> void:
 		var block: Variant = view.get("chronicle")
 		if block != null and block.get("chapter") != null:
 			_on_action({"kind": "chapter", "chapter": str(block["chapter"]["id"]), "choice": int(options["choose"])})
+	_quick_turns = true   # turns run from the command line are not played out on the map
 	if options.has("build"):  # --build=province:building,... one a turn (screenshots)
 		for order in str(options["build"]).split(","):
 			var bits := order.split(":")
@@ -271,6 +274,18 @@ func _build_hud() -> void:
 			_on_end_turn()
 	for i in int(options.get("play", "0")):
 		_on_end_turn()
+	_quick_turns = false
+	if options.has("war"):  # --war=civ: declare war (testing the turn replay)
+		_on_action({"kind": "declare_war", "target": str(options["war"])})
+	if options.has("raise"):  # --raise=province: raise an army there
+		_on_action({"kind": "raise", "province": str(options["raise"]), "size": "large"})
+	if options.has("march"):  # --march=province: the player's largest army marches there
+		var best: Dictionary = {}
+		for army in view.get("armies", []):
+			if army["owner"] == view["player"] and (best.is_empty() or int(army["men"]) > int(best["men"])):
+				best = army
+		if not best.is_empty():
+			_on_action({"kind": "march", "army": str(best["id"]), "target": str(options["march"])})
 	if options.has("tab"):
 		hud.set_tab(str(options["tab"]))
 	if options.has("open"):  # --open=build|levy|fleet: unfold part of the province card
@@ -332,7 +347,7 @@ func _on_idea(text: String, answer: String) -> void:
 func _visit_capital() -> void:
 	for p in view["provinces"]:
 		if p["owner"] == view["player"] and p["capital"] and p["latlon"] != null:
-			rig.look_at_point(earth.ground_at(p["latlon"][0], p["latlon"][1]), 70.0)
+			rig.fly_to(earth.ground_at(p["latlon"][0], p["latlon"][1]), 70.0)
 
 
 ## A saved game was loaded: redraw the map for it (a different region if need be).
@@ -388,7 +403,7 @@ func _on_action(action: Dictionary) -> void:
 
 
 func _on_end_turn() -> void:
-	if bridge.busy:
+	if bridge.busy or _replay != null:
 		return
 	audio.play("end_turn")
 	hud.rulings = []
@@ -398,19 +413,36 @@ func _on_end_turn() -> void:
 	else:
 		hud.message = ""
 		view = reply
-		if provinces.update(view) and settlements != null:
-			settlements.recolour()
-		_grow_cities()
-		_draw_armies()
-		provinces.show_ties(view)
-		landmarks.update(view)
+		var replay: Dictionary = view.get("replay", {})
+		if TurnReplay.enabled() and TurnReplay.worth_showing(replay) and rig != null and not _quick_turns and not options.has("smoke"):
+			# the turn plays out on the map before its results are shown (D-124)
+			hud.set_replaying(true, int(view["year"]) - int(view.get("years_per_turn", 10)), int(view["year"]))
+			rig.set_process_unhandled_input(false)
+			_replay = TurnReplay.new()
+			_earth_holder.add_child(_replay)
+			await _replay.play(replay, provinces, rig, audio, _apply_turn_map)
+			_replay = null
+			rig.set_process_unhandled_input(true)
+			hud.set_replaying(false)
+		else:
+			_apply_turn_map()
 		var kinds: Array = view.get("events", []).map(func(e): return e["kind"])
 		if "victory" in kinds:
 			audio.play("victory")
-		elif "war" in kinds or "conquest" in kinds or "province_lost" in kinds:
+		elif "war" in kinds:
 			audio.play("war")
 	hud.show_view(view)
 	hud.speak(view.get("voices", []), true)
+
+
+## The map as the turn left it: colours, cities, armies, ties and landmarks.
+func _apply_turn_map() -> void:
+	if provinces.update(view) and settlements != null:
+		settlements.recolour()
+	_grow_cities()
+	_draw_armies()
+	provinces.show_ties(view)
+	landmarks.update(view)
 
 
 ## Cities that have grown, or raised new buildings, are built again, larger (D-111).
@@ -492,6 +524,7 @@ func _process(delta: float) -> void:
 		rig.position.x += delta * 6.0
 	if provinces != null:
 		provinces.animate(Time.get_ticks_msec() / 1000.0, rig.distance)
+		provinces.fade_labels(delta)
 	if earth != null and rig != null:  # shadows sharp near the camera, wherever it is
 		sun.directional_shadow_max_distance = clampf(rig.distance * 2.5, 60.0, 900.0)
 	if earth != null:  # territory colours fade as you zoom in, so the land itself shows
@@ -506,6 +539,11 @@ func _process(delta: float) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if provinces == null:
+		return
+	if _replay != null:  # a click or key skips the turn's replay
+		if (event is InputEventMouseButton or event is InputEventKey) and event.pressed:
+			_replay.skip()
+			get_viewport().set_input_as_handled()
 		return
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode == KEY_ESCAPE:
@@ -601,9 +639,61 @@ func _setup_environment() -> void:
 	add_child(sun)
 
 
+## A made-up turn for screenshots: the player's largest army marches into `target`, wins a
+## battle against its owner there and takes it.
+func _demo_replay(target: String) -> void:
+	var best: Dictionary = {}
+	for army in view.get("armies", []):
+		if army["owner"] == view["player"] and (best.is_empty() or int(army["men"]) > int(best["men"])):
+			best = army
+	var owner := ""
+	for p in view["provinces"]:
+		if p["id"] == target:
+			owner = str(p["owner"])
+	var name := provinces.province_name(target)
+	var replay := {
+		"marches": [{"id": best["id"], "owner": view["player"], "from": best["province"], "road": [target], "mine": true}],
+		"battles": [{"at": target, "name": "Battle of " + name, "winner": view["player"], "loser": owner, "mine": true, "won": true}],
+		"skirmishes": [], "lost": [], "raised": [],
+		"sieges": [{"at": target, "by": view["player"], "held_by": owner, "progress": 45, "mine": true}],
+		"taken": [{"at": target, "from": owner, "to": view["player"], "mine": true}],
+	}
+	hud.set_replaying(true, int(view["year"]), int(view["year"]) + 10)
+	_replay = TurnReplay.new()
+	_earth_holder.add_child(_replay)
+	await _replay.play(replay, provinces, rig, audio, func() -> void: pass)
+	_replay = null
+	hud.set_replaying(false)
+
+
 func _take_screenshot(path: String) -> void:
 	for i in 4:
 		await get_tree().process_frame
+	if options.has("replay-shots"):  # --replay-shots=t1,t2,...: pictures as the next turn plays
+		if options.has("replay-demo"):  # --replay-demo=province: a made-up turn there (screenshots)
+			_demo_replay(str(options["replay-demo"]))
+		else:
+			_on_end_turn()   # (game time, so run with --fixed-fps where frames are slow)
+		var elapsed := 0.0
+		for t in str(options["replay-shots"]).split(","):
+			while elapsed < float(t):
+				await get_tree().process_frame
+				elapsed += get_process_delta_time()
+			get_viewport().get_texture().get_image().save_png(path.replace(".png", "_t%s.png" % t))
+		bridge.stop()
+		get_tree().quit()
+		return
+	if options.has("filmstrip"):  # --filmstrip=d1,d2,...: one picture per camera distance
+		var centre := rig.position
+		for d in str(options["filmstrip"]).split(","):
+			rig.look_at_point(centre, float(d))
+			provinces.declutter(rig.camera)
+			for i in 30:  # long enough for names to finish fading
+				await get_tree().process_frame
+			get_viewport().get_texture().get_image().save_png(path.replace(".png", "_%s.png" % d))
+		bridge.stop()
+		get_tree().quit()
+		return
 	get_viewport().get_texture().get_image().save_png(path)
 	bridge.stop()
 	get_tree().quit()
@@ -612,3 +702,4 @@ func _take_screenshot(path: String) -> void:
 func _exit_tree() -> void:
 	bridge.stop()
 	UiStyle.release()
+	Lod.release()

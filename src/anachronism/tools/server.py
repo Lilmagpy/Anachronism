@@ -34,6 +34,8 @@ from anachronism.llm.counsel import who_counsels
 from anachronism.llm.pipeline import IdeaPipeline, make_pipeline
 from anachronism.tools.advisers import counsel
 from anachronism.tools.chronicle import chapters
+from anachronism.tools.replay import build as build_replay
+from anachronism.tools.replay import snapshot
 from anachronism.tools.story import chronicle_block
 from anachronism.tools.view import build_catalog, build_view, next_steps
 from anachronism.tools.voices import (
@@ -143,9 +145,11 @@ class Session:
             if state.owned_provinces(civ_id):
                 for action in self.rivals[civ_id].decide(state, civ_id):
                     state, _ = apply_action(state, action)
+        before = snapshot(state)
         self.state, self.events = end_turn(state)
         self._autosave()
         view = self._view(self.events)
+        view["replay"] = build_replay(before, self.state, self.events)
         voices = [self._voiced(v) for v in voices_for_turn(self.content, self.state, self.events)]
         if counsel:  # the court that decided speaks for itself, once
             voices = [counsel] + [v for v in voices if v.get("civ") != counsel["civ"]]

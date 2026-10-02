@@ -166,6 +166,6 @@ func _multimesh(mesh: Mesh, transforms: Array, colours: Array) -> MultiMeshInsta
 		mm.set_instance_color(i, colours[i])
 	var instance := MultiMeshInstance3D.new()
 	instance.multimesh = mm
-	instance.visibility_range_end = SHOW_WITHIN
+	Lod.near(instance, SHOW_WITHIN)
 	instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
 	return instance
