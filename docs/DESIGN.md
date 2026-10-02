@@ -224,6 +224,10 @@ province by province, and the cities on the map grow and show what stands in the
   (a lasting grudge).
 - Rivals can learn your inventions once news reaches them (D-024).
 
+Once a court's scripted intentions are spent it acts on its ruler's temperament, as a
+free agent does (D-116): aggressive rulers attack weaker neighbours, others only over a
+deep grudge against a far weaker one, mercantile ones open trade.
+
 ## 12. Scenarios and timeline
 Scrollable timeline of named moments. Each moment is assembled from layered timeline data
 (D-025): polities, borders, tech baselines for **all** civs, relations, live tensions, script

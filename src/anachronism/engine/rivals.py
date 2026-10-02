@@ -448,18 +448,29 @@ def run_scripts(state: GameState, strengths: dict[str, int], events: EventLog) -
                 state.scripts_fired[script.id] = state.turn
 
 
+def pending_scripts(state: GameState, civ_id: str) -> list[Script]:
+    """A court's intentions that have neither come to pass nor lapsed."""
+    return [
+        s
+        for s in state.world.scripts.get(civ_id, ())
+        if s.id not in state.scripts_fired and s.id not in state.scripts_lapsed
+    ]
+
+
 def free_agents(
     state: GameState, strengths: dict[str, int], rng: GameRng, events: EventLog
 ) -> None:
-    """Civilisations off their scripts act on their temperament (brief §7.2)."""
+    """Civilisations off their scripts act on their temperament (brief §7.2).
+
+    So do courts whose scripted plans are all spent (D-116): history has run out of
+    instructions for them, and they make their own.
+    """
     rules = state.world.rules.rivals
     for civ_id in sorted(state.civs):
         civ = state.civs[civ_id]
-        if (
-            civ_id == state.player_civ
-            or civ.awareness is not Awareness.FREE_AGENT
-            or not alive(state, civ_id)
-        ):
+        if civ_id == state.player_civ or not alive(state, civ_id):
+            continue
+        if civ.awareness is not Awareness.FREE_AGENT and pending_scripts(state, civ_id):
             continue
         neighbours = sorted(
             other
@@ -467,29 +478,37 @@ def free_agents(
             for other in pair.split("|")
             if civ_id in pair.split("|") and other != civ_id and alive(state, other)
         )
-        if civ.disposition is Disposition.AGGRESSIVE and not at_war(state, civ_id):
-            if civ.stats.unrest_bp < 4000 and rng.chance(rules.aggressive_war_chance_bp):
-                # the weakest neighbour it clearly outmatches; the player's court first if wronged
-                targets = [
-                    n
-                    for n in neighbours
-                    if status(state, civ_id, n) is not RelationStatus.ALLIED
-                    and strengths.get(civ_id, 0) * 2 >= strengths.get(n, 0) * 3
-                ]
-                targets.sort(key=lambda n: (-grievance(state, civ_id, n), strengths.get(n, 0), n))
-                if targets:
-                    target = targets[0]
-                    # a court far stronger often takes tribute instead of war (never from
-                    # the player, whose submission is the player's own choice)
-                    overawed = strengths.get(civ_id, 0) * BP >= (
-                        strengths.get(target, 0) * rules.tribute_strength_ratio_bp
-                    )
-                    if overawed and target != state.player_civ and rng.chance(BP // 2):
-                        set_status(state, civ_id, target, RelationStatus.TRIBUTARY)
-                        add_grievance(state, target, civ_id, 1000)
-                    else:
-                        declare_war(state, civ_id, target, events)
-        elif civ.disposition is Disposition.MERCANTILE:
+        warlike = civ.disposition is Disposition.AGGRESSIVE
+        # other temperaments fight too, rarely: over an old grudge, against a far weaker foe
+        chance = rules.aggressive_war_chance_bp if warlike else rules.aggressive_war_chance_bp // 5
+        if (
+            civ.disposition is not Disposition.MERCANTILE
+            and not at_war(state, civ_id)
+            and civ.stats.unrest_bp < 4000
+            and rng.chance(chance)
+        ):
+            # the weakest neighbour it clearly outmatches; the player's court first if wronged
+            targets = [
+                n
+                for n in neighbours
+                if status(state, civ_id, n) is not RelationStatus.ALLIED
+                and strengths.get(civ_id, 0) * 2 >= strengths.get(n, 0) * (3 if warlike else 4)
+                and (warlike or grievance(state, civ_id, n) >= 3000)
+            ]
+            targets.sort(key=lambda n: (-grievance(state, civ_id, n), strengths.get(n, 0), n))
+            if targets:
+                target = targets[0]
+                # a court far stronger often takes tribute instead of war (never from
+                # the player, whose submission is the player's own choice)
+                overawed = strengths.get(civ_id, 0) * BP >= (
+                    strengths.get(target, 0) * rules.tribute_strength_ratio_bp
+                )
+                if overawed and target != state.player_civ and rng.chance(BP // 2):
+                    set_status(state, civ_id, target, RelationStatus.TRIBUTARY)
+                    add_grievance(state, target, civ_id, 1000)
+                else:
+                    declare_war(state, civ_id, target, events)
+        if civ.disposition is Disposition.MERCANTILE:
             for other in neighbours:
                 if (
                     status(state, civ_id, other) is RelationStatus.NEUTRAL

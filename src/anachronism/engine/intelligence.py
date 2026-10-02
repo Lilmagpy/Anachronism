@@ -16,7 +16,7 @@ from anachronism.content.schema import RelationStatus, Script, ScriptGoal, Stage
 from anachronism.engine.decrees import cost
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import BP, clamp
-from anachronism.engine.rivals import add_grievance, alive, hops, relation
+from anachronism.engine.rivals import add_grievance, alive, hops, pending_scripts, relation
 from anachronism.engine.rng import GameRng
 from anachronism.engine.state import GameState, Intel, TechState
 from anachronism.engine.tech import is_adopted
@@ -73,11 +73,7 @@ def send_spies(state: GameState, civ_id: str, target: str) -> tuple[bool, str]:
 
 def pending(state: GameState, court: str) -> list[Script]:
     """A court's intentions that have neither come to pass nor lapsed."""
-    return [
-        s
-        for s in state.world.scripts.get(court, ())
-        if s.id not in state.scripts_fired and s.id not in state.scripts_lapsed
-    ]
+    return pending_scripts(state, court)
 
 
 def _intent(state: GameState, watcher: str, goal: ScriptGoal, target: str) -> str:

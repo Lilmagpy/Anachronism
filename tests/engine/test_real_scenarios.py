@@ -15,6 +15,7 @@ from anachronism.engine.economy import project_costs
 from anachronism.engine.game import new_game, replay
 from anachronism.engine.save import dumps, loads
 from anachronism.engine.state import GameState
+from tests.engine.conftest import override_rules
 from tests.engine.test_simulation import check_invariants
 
 SCENARIO = "warring_states"
@@ -77,6 +78,8 @@ def test_careful_qin_is_stable_and_advances(content: Content) -> None:
 def peaceful(state: GameState) -> GameState:
     """The same world with no scripts, no wars and no chance events."""
     state.world = state.world.model_copy(update={"scripts": {}, "happenings": {}})
+    # with no scripts every court acts on its temperament (D-116): no wars of ambition
+    override_rules(state, rivals={"aggressive_war_chance_bp": 0})
     for rel in state.relations.values():
         if rel.status is RelationStatus.WAR:
             rel.status = RelationStatus.HOSTILE

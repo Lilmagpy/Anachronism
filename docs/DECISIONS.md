@@ -996,3 +996,14 @@ the court's current projects and its men under arms; each decade spies have a 20
 steal the methods of the court's oldest advancement you lack (30% of the work done when you
 start it) and a 12% chance to be caught (they are lost and the court bears a grudge).
 Rivals do not spy yet. Warnings that a court "means to make war on us" are shown in red.
+
+## D-116 Rival courts make their own history once their scripts run out — DELEGATED (2026-10-02)
+A 60-turn simulation of the Punic Wars showed every rival war came from the historical
+scripts in the first 17 turns; after that the world went quiet for 400 years and borders
+froze. Courts only acted on their temperament once they became "free agents" (by being
+affected by the player). Now a court whose scripted intentions have all fired or lapsed
+acts on its temperament too: aggressive rulers attack a neighbour they outmatch by half
+again; cautious, scholarly and pious rulers also go to war, a fifth as often, and only
+against a neighbour they bear a deep grudge (30%+) and outmatch twice over; mercantile
+courts open trade. In the same simulation wars now continue throughout the game (53 wars,
+15 conquests, one state swallowed), while uprisings and peace keep it from snowballing.
