@@ -262,6 +262,8 @@ func _build_hud() -> void:
 	hud.speak(view.get("voices", []), true)
 	if options.has("start"):
 		_on_action({"kind": "start", "node_id": str(options["start"])})
+	if options.has("fold"):  # --fold: fold the waiting chapter away (screenshots)
+		hud.fold_chapter()
 	if options.has("choose"):  # --choose=N: answer the waiting chapter (screenshots)
 		var block: Variant = view.get("chronicle")
 		if block != null and block.get("chapter") != null:
@@ -558,7 +560,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if game_menu.is_open():
 			return
 		# shortcuts (typing in the idea box never reaches here: the box takes its keys)
-		if event.keycode in [KEY_ENTER, KEY_KP_ENTER] and not hud.deliberating:
+		if event.keycode in [KEY_ENTER, KEY_KP_ENTER] and not hud.deliberating and hud.can_end_turn():
 			_on_end_turn()
 			return
 		var tabs := {KEY_1: "ideas", KEY_2: "projects", KEY_3: "world"}

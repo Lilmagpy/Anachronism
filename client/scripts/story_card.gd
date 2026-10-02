@@ -9,11 +9,13 @@ class_name StoryCard
 extends Control
 
 signal chosen(chapter_id: String, index: int)
+signal _reopen   ## redraw from the last chronicle block (after folding or unfolding)
 
 const INK := UiStyle.INK
 const DIM := UiStyle.INK_SOFT
 
 var _shown_result := ""   ## the aftermath already read (so it is not shown twice)
+var _folded := ""   ## a chapter folded away while the player looks at the map first
 var _panel: PanelContainer
 
 
@@ -24,20 +26,73 @@ func _ready() -> void:
 
 
 ## Show whatever the chronicle has for the player now (or nothing).
+var _last_block: Variant = null
+
+
+func _ready_reopen() -> void:
+	if not _reopen.is_connected(_redraw):
+		_reopen.connect(_redraw)
+
+
+func _redraw() -> void:
+	show_chronicle(_last_block)
+
+
 func show_chronicle(block: Variant) -> void:
+	_ready_reopen()
+	_last_block = block
 	for child in get_children():
 		child.queue_free()
 	visible = false
 	if block == null:
 		return
 	if block.get("chapter") != null:
-		_chapter(block["chapter"], block)
+		if str(block["chapter"]["id"]) == _folded:
+			_banner(block["chapter"])
+		else:
+			_chapter(block["chapter"], block)
 	elif block.get("result") != null and _key(block["result"]) != _shown_result:
 		_aftermath(block["result"])
 
 
 func is_open() -> bool:
-	return visible
+	return visible and _folded == ""
+
+
+## The chapter waits as a banner at the top while the player looks around the map, reads
+## the panels and checks their armies; one click brings the decision back.
+func _banner(chapter: Dictionary) -> void:
+	visible = true
+	mouse_filter = Control.MOUSE_FILTER_IGNORE   # the map and panels stay usable
+	var holder := CenterContainer.new()
+	holder.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
+	holder.offset_top = 92
+	holder.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	holder.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(holder)
+	var panel := PanelContainer.new()
+	panel.add_theme_stylebox_override("panel", UiStyle.ornate_panel())
+	holder.add_child(panel)
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 14)
+	panel.add_child(row)
+	var words := VBoxContainer.new()
+	words.add_theme_constant_override("separation", 0)
+	words.add_child(UiStyle.label("A DECISION AWAITS  ·  %s" % str(chapter["year"]), 13, UiStyle.GOLD_DARK, "body", 800))
+	words.add_child(UiStyle.label(str(chapter["title"]), 22, UiStyle.RED, "title", 900))
+	row.add_child(words)
+	var back := UiStyle.big_button("DECIDE  ▸", 18)
+	back.custom_minimum_size = Vector2(150, 44)
+	back.pressed.connect(func():
+		_folded = ""
+		_reopen.emit())
+	row.add_child(back)
+
+
+## Fold the chapter away to look at the map first.
+func _fold(chapter_id: String) -> void:
+	_folded = chapter_id
+	_reopen.emit()
 
 
 func _key(result: Dictionary) -> String:
@@ -105,7 +160,17 @@ func _chapter(chapter: Dictionary, block: Dictionary) -> void:
 	for paragraph in chapter["story"]:
 		text.add_child(UiStyle.wrapped(str(paragraph), 17, INK, 760))
 	column.add_child(HSeparator.new())
-	column.add_child(UiStyle.label("What will you do?", 16, UiStyle.GOLD_DARK, "body", 800))
+	var ask := HBoxContainer.new()
+	ask.add_child(UiStyle.label("What will you do?", 16, UiStyle.GOLD_DARK, "body", 800))
+	var gap := Control.new()
+	gap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	ask.add_child(gap)
+	var look := UiStyle.big_button("Look at the map first  ▾", 15, Color(0.85, 0.80, 0.70))
+	look.tooltip_text = "Fold this away to study the map, your armies and your rivals; it waits at the top of the screen"
+	var chapter_id := str(chapter["id"])
+	look.pressed.connect(func(): _fold(chapter_id))
+	ask.add_child(look)
+	column.add_child(ask)
 	for i in chapter["choices"].size():
 		var choice: Dictionary = chapter["choices"][i]
 		var locked := str(choice["locked"]) != ""

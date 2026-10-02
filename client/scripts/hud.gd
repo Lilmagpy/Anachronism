@@ -1686,6 +1686,18 @@ func _fill_chronicle() -> void:
 		_chronicle.add_child(_label("… and %d more" % (events.size() - 6), 12, DIM))
 
 
+## False while a chapter waits for the player's decision (or a turn is playing out).
+func can_end_turn() -> bool:
+	return not _end_turn.disabled
+
+
+## Fold the waiting chapter away (to look at the map first).
+func fold_chapter() -> void:
+	var block: Variant = view.get("chronicle")
+	if block != null and block.get("chapter") != null:
+		_story.call("_fold", str(block["chapter"]["id"]))
+
+
 ## While the turn plays out on the map (D-124): the panels slide aside so the map shows,
 ## End Turn waits, a title tells the years passing, and a hint says how to skip.
 func set_replaying(on: bool, from_year := 0, to_year := 0) -> void:
