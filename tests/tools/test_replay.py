@@ -51,3 +51,19 @@ def test_a_sunk_fleet_is_among_the_losses(content: Content) -> None:
     del after.fleets[fleet_id]
     replay = build(before, after, [])
     assert [x["id"] for x in replay["lost"] if x.get("fleet")] == [fleet_id]
+
+
+def test_your_cities_show_what_each_building_would_add(content: Content) -> None:
+    # D-127: plain numbers for every building the player could raise, and the city's rank
+    from anachronism.tools.view import build_view, city_tier
+
+    state = new_game(content, "punic_wars", seed=1, player_civ="rome")
+    latium = next(p for p in build_view(state)["provinces"] if p["id"] == "rom_latium")
+    assert latium["tier_name"] == "Town"
+    assert latium["output"]["food"] > 0
+    options = latium["can_build"]
+    assert sum(1 for o in options if o["recommended"]) == 1
+    granary = next(o for o in options if o["id"] == "granary")
+    assert any("food a turn" in gain for gain in granary["gains"])
+    assert city_tier(100_000, 0) == 0
+    assert city_tier(3_000_000, 7) == 4

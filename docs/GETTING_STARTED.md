@@ -55,11 +55,16 @@ walks you through the screen the first time (Settings can replay it). Then:
   province for the sea on its shore) and fights enemy fleets it meets. An army can only
   cross a sea where no stronger enemy fleet holds it, and enemy fleets that command the
   seas around a province blockade it, cutting its trade.
-- **Buildings**: click one of your provinces and open **Build** to raise a market,
-  granary, temple, school, harbour and more (hover each for its cost and what it does).
-  Each needs its ideas, takes a turn or two, and makes that province richer, better fed,
-  more learned or calmer. Bigger cities hold more buildings, and you can watch your cities
-  spread out and fill with them as they grow.
+- **Your cities**: press **CITIES** (or C) to see every city you hold, what it makes each
+  turn, and what it could build - each building says exactly what it would add there
+  ("+119 food a turn"), what it costs and what it costs to keep, with the best value
+  marked. One building goes up at a time in each city. Cities rise from Village to
+  Metropolis as they gain buildings and people, and you can see it on the map: they spread,
+  get walls, then suburbs, and scaffolding stands wherever building is under way.
+- **Your notebook from the future**: press **NOTEBOOK** (or N) for everything you remember
+  of the world to come: how far ahead of its time each idea is, what really happened in our
+  history, what it would do and take, and a button to bring it into this world. Only you
+  have these ideas - other courts can only get them by sending spies to steal them.
 - **Ideas**: whisper any idea in the box, or **Begin** one from the list ("ahead of their
   time" first). Each costs labour, materials, knowledge and wealth every turn until it
   works; ideas far ahead of their time cost more and make neighbours suspicious. Set a

@@ -172,6 +172,9 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] The second chronicle: Qin unifies China, 350-221 BC (D-122)
 - [x] Seamless zoom: fades instead of pops, names that fade, a gliding camera (D-123)
 - [x] Each turn plays out on the map: marches, battles, conquests (D-124)
+- [x] Chapters wait while you look at the map; only you know the future (D-125)
+- [x] The notebook from the future, with our history for every idea (D-126)
+- [x] Developing your cities: real numbers, ranks you can see, scaffolding (D-127)
 - [ ] Fit in the painted art from docs/ART_PROMPTS.md as it arrives
 - [ ] More chronicles (the Sengoku, Korea's Three Kingdoms)
 - [ ] Phase 7 gate
