@@ -147,7 +147,8 @@ def benchmark(state: GameState, chapter: Chapter) -> str:
     when = year_text(chapter.year)
     verdict = "ahead of" if held > real else "behind" if held < real else "level with"
     return (
-        f"In {when} the real {me.name} held {real} provinces; yours holds {held} -"
+        f"In {when} the real {me.name} held {real} province{'s' if real != 1 else ''};"
+        f" yours holds {held} -"
         f" {verdict} history."
     )
 
@@ -174,6 +175,12 @@ def _deeds(state: GameState, chapter: Chapter, choice: ChapterChoice, events: Ev
             make_peace(state, me, other, events)
         bond = RelationStatus.ALLIED if other in deeds.ally_with else RelationStatus.TRIBUTARY
         set_status(state, me, other, bond)
+    for other in deeds.break_away:
+        if other in state.civs and status(state, me, other) in (
+            RelationStatus.ALLIED,
+            RelationStatus.TRIBUTARY,
+        ):
+            set_status(state, me, other, RelationStatus.HOSTILE)
     taken: list[str] = []
     for pid in deeds.take:
         province = state.provinces.get(pid)
@@ -217,6 +224,9 @@ def _deeds(state: GameState, chapter: Chapter, choice: ChapterChoice, events: Ev
         raise_army(state, me, civ.capital, deeds.men, free=True)
     if deeds.martial_bp:
         civ.martial_bp = max(1_000, civ.martial_bp + deeds.martial_bp)
+    new_seat = state.provinces.get(deeds.capital or "")
+    if deeds.capital and new_seat is not None and new_seat.owner == me:
+        civ.capital = deeds.capital
     if deeds.ruler_falls:
         from anachronism.engine.rulers import succeed
 

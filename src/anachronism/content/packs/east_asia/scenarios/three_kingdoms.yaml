@@ -10,6 +10,7 @@ scenarios:
       Qin - while the Jin court rules the south from Jiankang, and Buddhism spreads everywhere.
     start_year: 400
     years_per_turn: 10
+    campaign_years_per_turn: 2
     player_civ: goguryeo
     map: east_asia
     cost_scale: 10
@@ -24,6 +25,7 @@ scenarios:
         capital: k4_gungnae
         leader: King Gwanggaeto
         leader_age: 26
+        leader_until: 416
         successors: [{name: "King Jangsu", age: 19, disposition: "aggressive"}]
         pitch: "Gwanggaeto the Great has just come to the throne. Push the frontiers to the Liao and the Han - and give Goguryeo ideas no one else has."
         provinces:

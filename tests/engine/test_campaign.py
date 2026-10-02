@@ -173,3 +173,15 @@ def test_a_chapter_can_end_the_reign(oda: GameState) -> None:
     assert civ.rulers == 2
     assert state.provinces["j_kyoto"].owner is None
     assert state.chapter_result is not None
+
+
+def test_the_court_can_move_and_a_tributary_can_break_away(content: Content) -> None:
+    """Jangsu moves to Pyongyang (427); Silla slips out of Goguryeo's orbit (433)."""
+    state = new_game(content, "three_kingdoms", seed=1, player_civ="goguryeo", chronicle=True)
+    assert status(state, "goguryeo", "silla") is RelationStatus.TRIBUTARY
+    state.chapter = "gog_pyongyang"
+    state, _ = apply_action(state, ChooseChapter(civ="goguryeo", chapter="gog_pyongyang", choice=0))
+    assert state.civs["goguryeo"].capital == "k4_pyongyang"
+    state.chapter = "gog_naje"
+    state, _ = apply_action(state, ChooseChapter(civ="goguryeo", chapter="gog_naje", choice=0))
+    assert status(state, "goguryeo", "silla") is RelationStatus.HOSTILE

@@ -52,6 +52,10 @@ class Deeds(Frozen):
     martial_bp: Annotated[int, Field(ge=-10_000, le=10_000)] = 0
     """A lasting change to how many of the people the state can put under arms (bp; 10000
     doubles the usual share): reforms like Shang Yang's that make a state a war machine."""
+    capital: Identifier | None = None
+    """The court moves to this province of yours (Jangsu's move to Pyongyang)."""
+    break_away: tuple[Identifier, ...] = ()
+    """Allies and tributaries that slip out of your orbit (to cool, wary terms)."""
     ruler_falls: Annotated[str, Field(max_length=60)] = ""
     """If set, the ruler's reign ends here, told this way ("is killed at Honno-ji"), and the
     next in line takes the throne."""

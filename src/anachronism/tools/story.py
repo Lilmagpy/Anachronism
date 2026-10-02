@@ -164,6 +164,10 @@ def _deeds_text(state: GameState, deeds: Any) -> str:
             state.world.geography[p].name for p in deeds.give if p in state.world.geography
         )
         parts.append(f"lose {places}")
+    if deeds.break_away:
+        parts.append(f"{names(deeds.break_away)} breaks away")
+    if deeds.capital and deeds.capital in state.world.geography:
+        parts.append(f"the court moves to {state.world.geography[deeds.capital].name}")
     if deeds.ships:
         parts.append(f"{deeds.ships} warships")
     if deeds.men:

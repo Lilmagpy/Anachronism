@@ -1231,3 +1231,19 @@ new star, Yasuke, the Gregorian calendar). Decisions:
 - With a passive test player (no wars of its own) all 16 chapters are played on every
   seed tried, ending with 5 to 7 provinces against history's 12. A player who fights does
   better.
+
+## D-131 The fourth chronicle: Goguryeo, AD 400-475 — DELEGATED (2026-10-02)
+Fourteen chapters from Gwanggaeto's rescue of Silla to Jangsu's capture of Hanseong (the
+monk Dorim and his game of baduk), with an almanac (Faxian, the sack of Rome, Zu
+Chongzhi's pi, the Yungang Buddhas). Decisions:
+- **Two years a turn**, and Gwanggaeto is spared old age until 416 (D-130's rule), so his
+  death is the chapter 'The Great King Dies' (412): every choice in it ends his reign,
+  because the choice is what he tells his son, not whether he dies.
+- **Two new deeds for chapters:** `capital` (the court moves; Jangsu to Pyongyang in 427)
+  and `break_away` (an ally or tributary turns wary; Silla leaving Goguryeo's orbit in
+  433). Both show in the choice's summary.
+- Where the map has no state for something (Eastern Buyeo, the Ye of the east coast) the
+  chapter takes an unclaimed province (the Mohe forests, the eastern mountains).
+- The Feng Hong chapter opens while Yan still stands and Wei is at its gates, since Wei
+  does not reliably take Longcheng on its own in play; one choice lets you take it first.
+- A passive test player plays all 14 chapters on the seeds tried.
