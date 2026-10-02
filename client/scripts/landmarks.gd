@@ -44,6 +44,7 @@ const KIT_HEIGHT := {"windmill": 1.0, "water_wheel": 0.5, "clock_tower": 1.0, "w
 var map: ProvinceMap
 var earth: EarthBuilder
 var _built := {}   ## kind -> true
+var _halos: Array[Node3D] = []   ## golden rings under landmarks from the future, turning
 
 
 func setup(province_map: ProvinceMap) -> void:
@@ -57,6 +58,7 @@ func update(view: Dictionary) -> void:
 	for child in get_children():
 		child.queue_free()
 	_built.clear()
+	_halos.clear()
 	var capital: Dictionary = {}
 	for site in map.sites:
 		if site["owner"] == view["player"] and site["capital"]:
@@ -65,11 +67,17 @@ func update(view: Dictionary) -> void:
 		return
 	var colour := Color(map.civ_colours.get(view["player"], Color(0.6, 0.2, 0.15)))
 	var kinds: Array[String] = []
+	var future := {}   ## kind -> [idea name, years early]: built from an idea brought early (D-126)
 	for idea in view["ideas"]:
 		if idea["stage"] in ["adopted", "widespread"] and KINDS.has(idea["id"]):
 			var kind: String = KINDS[idea["id"]]
 			if not kind in kinds:
 				kinds.append(kind)
+			var since = idea.get("adopted_year")
+			if since != null and int(idea["year"]) > int(since):
+				var early := int(idea["year"]) - int(since)
+				if not future.has(kind) or early > int(future[kind][1]):
+					future[kind] = [str(idea["name"]), early]
 	kinds.sort()
 	var centre: Vector2 = capital["pixel"]
 	var taken: Array[Vector2] = []
@@ -83,6 +91,67 @@ func update(view: Dictionary) -> void:
 		var piece := _make(kinds[i], colour, spot, centre)
 		if piece != null:
 			add_child(piece)
+			if future.has(kinds[i]):
+				_from_the_future(earth.ground_at_pixel(spot), str(future[kinds[i]][0]), int(future[kinds[i]][1]))
+
+
+## A landmark built from an idea brought from the future: a golden halo turns on the ground
+## beneath it, a soft light and rising sparkles mark it, and up close its name says how
+## early it came.
+func _from_the_future(at: Vector3, idea: String, early: int) -> void:
+	var halo := MeshInstance3D.new()
+	var ring := TorusMesh.new()
+	ring.inner_radius = 0.62 * S
+	ring.outer_radius = 0.72 * S
+	ring.rings = 32
+	halo.mesh = ring
+	var gold := StandardMaterial3D.new()
+	gold.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	gold.albedo_color = Color(1.0, 0.82, 0.3)
+	gold.emission_enabled = true
+	gold.emission = Color(1.0, 0.75, 0.25)
+	halo.material_override = gold
+	halo.position = at + Vector3(0, 0.08 * S, 0)
+	halo.scale = Vector3(1, 0.15, 1)
+	halo.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	Lod.near(halo, SHOW_WITHIN)
+	add_child(halo)
+	_halos.append(halo)
+	var sparkle := Settlements.smoke_at(at + Vector3(0, 0.2 * S, 0), Color(1.0, 0.86, 0.4, 0.8))
+	sparkle.amount = 10
+	sparkle.lifetime = 2.5
+	sparkle.scale_amount_min = 0.3
+	sparkle.scale_amount_max = 0.5
+	add_child(sparkle)
+	var glow := OmniLight3D.new()
+	glow.light_color = Color(1.0, 0.8, 0.4)
+	glow.light_energy = 1.2
+	glow.omni_range = 1.6 * S
+	glow.position = at + Vector3(0, 0.6 * S, 0)
+	glow.distance_fade_enabled = true
+	glow.distance_fade_begin = SHOW_WITHIN * 0.7
+	glow.distance_fade_length = SHOW_WITHIN * 0.3
+	add_child(glow)
+	var label := Label3D.new()
+	label.text = "✦ %s · %s yrs early" % [idea, GameHud.number(early)]
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.fixed_size = true
+	label.pixel_size = 0.0006
+	label.font_size = 24
+	label.outline_size = 10
+	label.modulate = Color(1.0, 0.88, 0.45)
+	label.outline_modulate = Color(0.25, 0.12, 0.02, 0.9)
+	label.no_depth_test = true
+	label.render_priority = 12
+	label.position = at + Vector3(0, 1.4 * S, 0)
+	Lod.near(label, 160.0)
+	add_child(label)
+
+
+func _process(delta: float) -> void:
+	for halo in _halos:
+		if is_instance_valid(halo):
+			halo.rotate_y(delta * 0.6)
 
 
 ## A place for a landmark near the capital: on land (a harbour wants the water's edge),

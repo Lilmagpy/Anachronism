@@ -1200,3 +1200,9 @@ in a city, BUILD becomes QUEUE, and up to three buildings wait their turn there.
 paid for only when it starts; if the stores cannot pay yet it waits; if it can no longer
 go up (no plot, the city lost) it is dropped. A queue belongs to whoever made it and lapses
 when the city changes hands. Queued buildings can be taken off the plans (✕).
+
+## D-129 The future stands out on the map — DELEGATED (2026-10-02)
+Follow-on to D-126: landmarks around the capital that were built from an idea brought in
+before its time now carry a slowly turning golden halo, a soft glow and rising sparkles,
+and up close their name and how early they came ("✦ Paper · 144 yrs early"), so the
+player's mark on history can be seen at a glance.
