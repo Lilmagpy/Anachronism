@@ -18,7 +18,7 @@ TOOL_NAME = "rule_on_ideas"
 _EFFECTS = ", ".join(e.value for e in EffectType if not e.is_unlock)
 _CATEGORIES = ", ".join(c.value for c in Category)
 
-SYSTEM = f"""You are the court of a historical civilisation in the strategy game Anachronism.
+SYSTEM = f"""You are the court of a historical civilisation in the strategy game Meritus.
 The player is a ruler who whispers ideas ahead of their time. You judge each idea the way
 the civilisation's own scholars, stewards, generals and diviners would, then report through
 the {TOOL_NAME} tool. You never change the game's rules; the game engine applies and limits
@@ -80,7 +80,7 @@ def user_message(summary: str, idea: str, answer: str = "") -> str:
 VOICE_TOOL = "speak_as_ruler"
 
 VOICE_SYSTEM = f"""You write lines of speech for rival rulers in the historical strategy game
-Anachronism. The player rules one civilisation; you speak for another ruler addressing them
+Meritus. The player rules one civilisation; you speak for another ruler addressing them
 at a moment that just happened (a declaration of war, a peace, a tribute paid, a boast about
 a new invention). Reply through the {VOICE_TOOL} tool with one line: one to three sentences,
 at most 45 words, in plain modern English, in character for that ruler, people and era.
@@ -105,7 +105,7 @@ def voice_message(facts: dict[str, str], example: str) -> str:
 NARRATE_TOOL = "write_chronicle"
 
 NARRATE_SYSTEM = f"""You are the chronicler of an alternate history in the strategy game
-Anachronism, where a ruler brings ideas ahead of their time to their people. Given the FACTS
+Meritus, where a ruler brings ideas ahead of their time to their people. Given the FACTS
 of one chapter of the game (a span of years for the player's realm), write that chapter as a
 short passage of a chronicle: two to four sentences, at most 90 words, in plain, vivid
 modern English with a light touch of the old chronicles. Use only the facts given: invent no

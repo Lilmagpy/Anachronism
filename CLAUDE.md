@@ -1,4 +1,7 @@
-# CLAUDE.md — Anachronism
+# CLAUDE.md — Meritus (code name: anachronism)
+
+The game is called **Meritus** wherever players see it (D-121); the Python package, commands,
+repository and environment variables keep the code name `anachronism`.
 
 Turn-based historical strategy game (Python + pygame-ce). The player feeds a civilisation
 ideas ahead of their time; an LLM interprets and narrates, a deterministic engine decides.

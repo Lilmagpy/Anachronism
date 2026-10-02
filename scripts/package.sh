@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Builds the downloadable app (D-050):
 #
-#   scripts/package.sh mac [GODOT_BINARY]     -> build/Anachronism-mac.zip
+#   scripts/package.sh mac [GODOT_BINARY]     -> build/Meritus-mac.zip
 #   scripts/package.sh linux [GODOT_BINARY]   -> build/linux/ (used by CI to test the
 #                                                packaged app end to end: unpack, fetch
 #                                                Python, answer, quit)
@@ -51,7 +51,7 @@ echo "==> Importing and testing the client (from source)"
 echo "==> Exporting"
 mkdir -p "$ROOT/build"
 if [ "$PLATFORM" = mac ]; then
-  OUT="$ROOT/build/Anachronism-mac.zip"
+  OUT="$ROOT/build/Meritus-mac.zip"
   rm -f "$OUT"
   "$GODOT" --headless --path "$ROOT/client" --export-release "macOS" "$OUT"
 else

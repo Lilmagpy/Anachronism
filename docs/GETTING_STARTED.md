@@ -3,19 +3,22 @@
 You don't have to run anything to follow the project: Claude attaches screenshots at each
 milestone. This page is for when you want to try the game yourself.
 
+The game is now called **Meritus** (it was Anachronism). If you have an older
+**Anachronism.app**, you can drag it to the Bin: the new app keeps your saves and settings.
+
 ## Playing the 3D game on your Mac (no setup)
 
 Every time new work is pushed, GitHub builds a Mac app automatically.
 
 1. Open the project's **Actions** page on GitHub:
    <https://github.com/Lilmagpy/Anachronism/actions>, click the newest run with a green
-   tick, scroll to **Artifacts** and click **Anachronism-mac** to download it.
-2. Double-click the downloaded file to unzip it; inside is **Anachronism-mac.zip** —
-   double-click that too. You now have **Anachronism.app**. Drag it into **Applications**.
+   tick, scroll to **Artifacts** and click **Meritus-mac** to download it.
+2. Double-click the downloaded file to unzip it; inside is **Meritus-mac.zip** —
+   double-click that too. You now have **Meritus.app**. Drag it into **Applications**.
 3. **The first time only**, macOS will refuse to open it because it is not from the App
    Store or a registered developer (the app isn't signed with a paid Apple account yet).
    Double-click it once and press **Done** when the warning appears. Then open
-   **System Settings → Privacy & Security**, scroll down to the line saying Anachronism was
+   **System Settings → Privacy & Security**, scroll down to the line saying Meritus was
    blocked, and click **Open Anyway** (enter your Mac password if asked).
 4. The first launch shows *Starting the game engine…* for about a minute while it downloads
    Python (it needs the internet this once). After that it starts in a few seconds.

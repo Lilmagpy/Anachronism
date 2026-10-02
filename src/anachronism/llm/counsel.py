@@ -24,7 +24,7 @@ Move = Literal["war", "envoy", "wait"]
 
 COUNSEL_TOOL = "decide_as_ruler"
 
-COUNSEL_SYSTEM = f"""You play a rival ruler in the historical strategy game Anachronism.
+COUNSEL_SYSTEM = f"""You play a rival ruler in the historical strategy game Meritus.
 The player rules another civilisation and has been doing strange, ahead-of-their-time things
 that your court has heard about. Decide how your ruler responds this turn, in character for
 their temperament, people, era and grudges, and reply through the {COUNSEL_TOOL} tool:

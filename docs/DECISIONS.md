@@ -1061,3 +1061,18 @@ tributaries, land taken or given, fleets, men). A choice may need an idea in use
 the anachronisms of the player's own making (a crossbow line at Cannae, a rudder-steered
 fleet), shown locked with what they need until then, so the core idea game feeds the story.
 Free play stays as it was; the picker offers "Follow history" where a scenario has chapters.
+
+## D-121 The game is called Meritus; a new app icon — owner's direction (2026-10-02)
+The owner renamed the game **Meritus** and asked for an icon about "the asymmetry of you
+changing history with today's advancements". The icon is a tile split by a jagged seam of
+light: on the left, the ancient world (parchment, a gold laurel wreath, a light bulb of
+cracked stone with a bronze base); on the right, today (a night-blue blueprint grid, glowing
+circuit traces finishing the wreath, the same bulb lit in glass and steel). Its source is
+`client/icon.svg`. Renamed wherever players see the name: the title screen, the disclaimer,
+the app (Meritus.app), the download (Meritus-mac), and how the AI's prompts name the game.
+Kept, deliberately (DELEGATED): the code name `anachronism` for the Python package, the
+commands, the repository and the environment variables (renaming them would break the
+owner's settings file and every link for no visible gain); the bundle identifier; and the
+folder that holds saves and settings (a custom user folder keeps it at "Anachronism", so
+nothing is lost). The word "anachronism" still names the in-game idea of an advancement
+ahead of its time.

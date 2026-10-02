@@ -81,6 +81,6 @@ jobs:
         run: scripts/package.sh mac ~/godot/godot
       - uses: actions/upload-artifact@v7
         with:
-          name: Anachronism-mac
-          path: build/Anachronism-mac.zip
+          name: Meritus-mac
+          path: build/Meritus-mac.zip
           retention-days: 30

@@ -1,10 +1,14 @@
-; Godot 4 project for the Anachronism 3D client (D-047).
+; Godot 4 project for the Meritus 3D client (once called Anachronism) (D-047).
 config_version=5
 
 [application]
-config/name="Anachronism"
+config/name="Meritus"
+; saves and settings stay in the folder they had under the old name (D-121)
+config/use_custom_user_dir=true
+config/custom_user_dir_name="Anachronism"
 run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.5")
+config/icon="res://icon.png"
 
 [display]
 window/size/viewport_width=1600

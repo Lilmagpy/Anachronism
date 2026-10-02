@@ -30,7 +30,7 @@ from anachronism.llm.schemas import ModelEffect
 
 DRAFT_NOTE = "DRAFT: proposed by a language model; check the date and add a real source"
 
-SYSTEM = f"""You help write the library of advancements for Anachronism, a historical strategy
+SYSTEM = f"""You help write the library of advancements for Meritus, a historical strategy
 game. Propose real advancements (techniques, institutions, tools) that appeared in the given
 region and era, that are not in the list of existing ones. For each give: name, category
 ({", ".join(c.value for c in Category)}), complexity 1-5, the year it first appeared

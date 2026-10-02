@@ -41,7 +41,7 @@ func show_title() -> void:
 	column.grow_vertical = Control.GROW_DIRECTION_BOTH
 	column.alignment = BoxContainer.ALIGNMENT_CENTER
 	column.add_theme_constant_override("separation", 14)
-	var title := UiStyle.headline("ANACHRONISM", 96, UiStyle.GOLD)
+	var title := UiStyle.headline("MERITUS", 96, UiStyle.GOLD)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	column.add_child(title)
 	var tagline := UiStyle.headline("Guide a civilisation with ideas ahead of their time", 26, UiStyle.CREAM)
@@ -88,7 +88,7 @@ func show_disclaimer() -> void:
 	column.add_theme_constant_override("separation", 16)
 	column.add_child(UiStyle.label("A word before you begin", 36, UiStyle.RED, "title", 900))
 	for text in [
-		"Anachronism is a good-faith simulation of history, not an exact re-enactment. Its peoples, places and rulers are real, but borders, populations, dates and temperaments are simplified from general sources, and some are informed guesses.",
+		"Meritus is a good-faith simulation of history, not an exact re-enactment. Its peoples, places and rulers are real, but borders, populations, dates and temperaments are simplified from general sources, and some are informed guesses.",
 		"From the moment you start, history is yours to change. The rival states follow what they really intended - until your ideas reach them. What happens after that is invention.",
 		"When a language model helps judge your ideas, its words are fiction written for the game; the game's own rules decide what is possible.",
 	]:
