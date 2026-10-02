@@ -173,6 +173,8 @@ class Project(Mutable):
     paused: bool = False
     stalled_turns: int = 0
     last_funding_bp: int = 0
+    hastened_turn: int = -1
+    """The last turn the court paid to hasten the work (once a turn, D-119)."""
 
 
 class Snapshot(Mutable):

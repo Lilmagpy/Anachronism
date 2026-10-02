@@ -28,10 +28,11 @@ from anachronism.content.schema import (
 )
 from anachronism.engine.actions import Explain, Priority
 from anachronism.engine.decrees import apply_decree, cost, explain_costs, explain_ready_in
-from anachronism.engine.economy import labour, project_costs
+from anachronism.engine.economy import Costs, labour, project_costs
 from anachronism.engine.effects import Effects, civ_effects
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import BP, apply_bp, clamp, div_round
+from anachronism.engine.projects import hasten, hasten_cost
 from anachronism.engine.reports import capacity
 from anachronism.engine.rng import GameRng
 from anachronism.engine.state import (
@@ -565,6 +566,27 @@ def rival_decrees(state: GameState, events: EventLog) -> None:
                 civ.stats.unrest_bp = clamp(civ.stats.unrest_bp - rules.festival_unrest_bp, 0, BP)
 
 
+def rich_enough(state: GameState, civ_id: str, price: Costs, times: int = 5) -> bool:
+    """True when the stores hold ``times`` the price in every resource it asks for."""
+    stores = state.civs[civ_id].stockpiles
+    return (
+        stores.materials >= price.materials * times
+        and stores.knowledge >= price.knowledge * times
+        and stores.wealth >= price.wealth * times
+    )
+
+
+def rival_hastening(state: GameState) -> None:
+    """Rich rival courts pay to hasten their work rather than let their stores pile up."""
+    for civ_id in sorted(state.civs):
+        civ = state.civs[civ_id]
+        if civ_id == state.player_civ or not alive(state, civ_id):
+            continue
+        for node_id in sorted(civ.projects):
+            if rich_enough(state, civ_id, hasten_cost(state, node_id)):
+                hasten(state, civ, node_id)
+
+
 def coalitions(state: GameState, rng: GameRng, events: EventLog) -> None:
     """A player grown too great frightens the others into leagues (the balance of power).
 
@@ -631,6 +653,7 @@ def rivals_turn(
     deliver_news(state, events)
     update_awareness(state)
     rival_decrees(state, events)
+    rival_hastening(state)
     strengths = {c: strength(state, c, effects_by_civ.get(c)) for c in sorted(state.civs)}
     for civ_id in sorted(state.civs):
         civ = state.civs[civ_id]

@@ -16,6 +16,7 @@ from anachronism.engine.actions import (
     Build,
     DeclareWar,
     Explain,
+    HastenProject,
     HoldFestival,
     MakePeace,
     MarchArmy,
@@ -28,8 +29,9 @@ from anachronism.engine.decrees import cost, explain_costs, explain_ready_in
 from anachronism.engine.economy import project_costs
 from anachronism.engine.fixed import apply_bp
 from anachronism.engine.game import apply_action, end_turn
+from anachronism.engine.projects import hasten_cost
 from anachronism.engine.reports import capacity
-from anachronism.engine.rivals import at_war, frontier, relation, strength
+from anachronism.engine.rivals import at_war, frontier, relation, rich_enough, strength
 from anachronism.engine.state import Event, GameState
 from anachronism.engine.tech import feasibility
 from anachronism.engine.war import defence_bp
@@ -102,6 +104,11 @@ class PlannerBot:
         civ = state.civs[civ_id]
         levy = call_up(state, civ_id) if civ_id == state.player_civ else []
         levy += self._build(state, civ_id) + self._steady(state, civ_id)
+        levy += [
+            HastenProject(civ=civ_id, node_id=node_id)
+            for node_id in sorted(civ.projects)
+            if rich_enough(state, civ_id, hasten_cost(state, node_id))
+        ]
         if self.conquer:
             levy += self._campaign(state, civ_id)
         # a realm in turmoil consolidates before it reaches for anything new

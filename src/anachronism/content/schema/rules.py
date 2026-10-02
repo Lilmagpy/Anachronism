@@ -45,6 +45,11 @@ class EconomyRules(Frozen):
     resource_materials_accessible: NonNegative
     """Flat materials per decade from each accessible map resource in a province."""
     resource_materials_limited: NonNegative
+    hoard_turns: Positive = 10
+    """Materials, knowledge and wealth beyond this many turns of production waste away
+    (D-119): timber rots, scrolls are lost, treasure is embezzled."""
+    hoard_loss_bp: Rate = 2_000
+    """Share of the excess lost each decade."""
 
 
 class ProjectRules(Frozen):

@@ -366,7 +366,7 @@ func _on_action(action: Dictionary) -> void:
 		if reply["accepted"] and action["kind"] == "start":
 			hud.tab = "projects"
 		if action["kind"] in ["raise", "march", "stance", "disband", "fortify", "dilemma", "envoy_answer",
-				"build_fleet", "sail", "scuttle", "plan", "build", "spies"]:
+				"build_fleet", "sail", "scuttle", "plan", "build", "spies", "hasten"]:
 			hud.message = str(reply["message"])
 			if reply["accepted"] and action["kind"] == "disband":
 				hud.selected_army = ""

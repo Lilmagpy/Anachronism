@@ -167,5 +167,6 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] Rival courts make their own history once their scripts run out (D-116)
 - [x] Rival courts quiet suspicion and win back doubting peoples (D-117)
 - [x] Wars end on terms: the side that tires first cedes what is besieged (D-118)
+- [x] Spend the stores: hastening work; hoards waste away (D-119)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

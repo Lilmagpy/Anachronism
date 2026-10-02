@@ -53,7 +53,9 @@ walks you through the screen the first time (Settings can replay it). Then:
   time" first). Each costs labour, materials, knowledge and wealth every turn until it
   works; ideas far ahead of their time cost more and make neighbours suspicious. Set a
   project to **Low** priority to make it steady work: it uses only spare hands, so it goes
-  slower but can never starve your people.
+  slower but can never starve your people. A rich realm can **Hasten** a project once a
+  turn, paying from its stores to push the work on; stores far beyond what you use
+  slowly waste away, so spend them.
 - **Spies**: on the World tab each court shows what is said of its plans, and how reliable
   that is. **Send spies** to learn its true plans, its scholars' work and its armies, and
   perhaps steal one of its secrets; spies may be caught.

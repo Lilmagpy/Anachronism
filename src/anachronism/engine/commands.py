@@ -17,6 +17,7 @@ from anachronism.engine.actions import (
     DisbandArmy,
     Explain,
     Fortify,
+    HastenProject,
     HireMercenaries,
     HoldFestival,
     LoggedAction,
@@ -46,6 +47,7 @@ from anachronism.engine.diplomacy import apply_diplomacy
 from anachronism.engine.events import EventLog
 from anachronism.engine.judge import apply_ruling
 from anachronism.engine.offers import respond
+from anachronism.engine.projects import hasten
 from anachronism.engine.state import GameState, Project
 from anachronism.engine.tech import Feasibility, feasibility, propose
 
@@ -168,6 +170,8 @@ def _apply(state: GameState, action: Action) -> tuple[bool, str]:
 
     if project is None:
         return False, f"there is no project for {node.name}"
+    if isinstance(action, HastenProject):
+        return hasten(state, civ, node.id)
     if isinstance(action, PauseProject):
         if project.paused:
             return False, f"{node.name} is already paused"

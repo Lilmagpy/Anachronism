@@ -274,6 +274,7 @@ def run_economy(state: GameState, civ_id: str, effects: Effects) -> EconomyOutco
         deaths = min(state.population(civ_id), missing * rules.population.deaths_per_missing_food)
         _apply_deaths(state, civ_id, deaths)
 
+    _waste_hoards(state, stock, produced)
     capacity = granary_capacity(state, civ_id, effects)
     half = capacity // 2
     if stock.food > half:
@@ -291,6 +292,17 @@ def run_economy(state: GameState, civ_id: str, effects: Effects) -> EconomyOutco
         deaths=deaths,
         wealth_shortfall_bp=min(BP, wealth_shortfall_bp),
     )
+
+
+def _waste_hoards(state: GameState, stock: Stockpiles, produced: Production) -> None:
+    """Stores far beyond what a realm uses waste away: a share of the excess each decade."""
+    rules = state.world.rules.economy
+    loss = rate_per_turn(state, rules.hoard_loss_bp)
+    for name in ("materials", "knowledge", "wealth"):
+        keep = getattr(produced, name) * rules.hoard_turns
+        held: int = getattr(stock, name)
+        if held > keep > 0:
+            setattr(stock, name, held - apply_bp(held - keep, loss))
 
 
 def _apply_deaths(state: GameState, civ_id: str, deaths: int) -> None:

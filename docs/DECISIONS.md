@@ -1029,3 +1029,14 @@ the enemy submits as a tributary. The simulation's military bot now really campa
 (declares war on a neighbour it outmatches by 40%, marches on its weakest border province,
 sues for peace only once nothing is under siege and the war is eight turns old), so the
 balance tests exercise conquest: as Qin it grows from 3 to 5 provinces in 60 turns.
+
+## D-119 Spend the stores: hastening work, and hoards that waste away — DELEGATED (2026-10-02)
+Over 60 simulated turns Rome piled up 115,000 materials, 108,000 wealth and a million
+knowledge while producing about 4,000 a turn: labour is what limits projects, so stores
+became meaningless numbers. Two changes: (1) **Hasten**: once a turn a project can be
+pushed on by a full turn's work, paid from the stores (wealth for hired craftsmen at three
+times the turn's labour and wealth, and twice its materials and knowledge); rival courts and
+bots hasten when their stores hold five times the price. (2) Stores of materials, knowledge
+and wealth beyond ten turns' production waste away, a fifth of the excess each decade
+(timber rots, scrolls are lost, treasure is embezzled), like the granary's spoilage. In the
+same simulation Rome's wealth now ends near 26,000 and it adopts 74 ideas instead of 68.

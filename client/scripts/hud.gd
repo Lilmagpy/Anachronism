@@ -905,6 +905,13 @@ func _fill_projects() -> void:
 					"normal": "Funded after high-priority work",
 					"low": "Steady work: only spare hands, never farmers. Slower, but it cannot cause\na famine and does not decay while it keeps moving"}[level]
 				row.add_child(pick)
+		if not project["paused"] and not bool(project.get("hastened", false)) and project.has("hasten"):
+			var price: Dictionary = project["hasten"]
+			var stores: Dictionary = view["status"]["stores"]
+			var rush := _button("Hasten", func(): action_requested.emit({"kind": "hasten", "node_id": id}))
+			rush.disabled = int(stores["materials"]) < int(price["materials"]) or int(stores["wealth"]) < int(price["wealth"]) or int(stores["knowledge"]) < int(price["knowledge"])
+			rush.tooltip_text = "Hire craftsmen to push the work on by a turn's worth (once a turn):\n%s materials, %s knowledge, %s wealth" % [number(int(price["materials"])), number(int(price["knowledge"])), number(int(price["wealth"]))]
+			row.add_child(rush)
 		row.add_child(_button("Abandon", func(): action_requested.emit({"kind": "cancel", "node_id": id})))
 		box.add_child(row)
 		box.add_child(HSeparator.new())

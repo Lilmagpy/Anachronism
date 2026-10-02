@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from dataclasses import asdict
 from typing import Any
 
 from anachronism.content.loader import Content
@@ -29,7 +30,7 @@ from anachronism.engine.navies import SIZES, best_ship, sea_links, sea_route, se
 from anachronism.engine.navies import power as sea_power
 from anachronism.engine.occupation import garrisoned, restless
 from anachronism.engine.offers import describe
-from anachronism.engine.projects import project_turns
+from anachronism.engine.projects import hasten_cost, project_turns
 from anachronism.engine.reports import capacity
 from anachronism.engine.rivals import relation, strength
 from anachronism.engine.state import Army, Event, GameState
@@ -194,6 +195,8 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
                 "priority": project.priority.value,
                 "paused": project.paused,
                 "turns": project_turns(state, node_id),
+                "hasten": asdict(hasten_cost(state, node_id)),
+                "hastened": project.hastened_turn == state.turn,
             }
             for node_id, project in sorted(civ.projects.items())
         ],

@@ -9,7 +9,7 @@ from anachronism.engine.economy import Costs, allocate, labour, project_costs, r
 from anachronism.engine.effects import civ_effects
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import apply_bp
-from anachronism.engine.projects import advance_projects
+from anachronism.engine.projects import advance_projects, hasten, hasten_cost
 from anachronism.engine.rng import GameRng
 from anachronism.engine.state import GameState, Project
 
@@ -126,3 +126,24 @@ def test_steady_work_that_moves_does_not_decay(
         advance_projects(game, civ, {"masonry": 1_000}, GameRng(game.rng), EventLog(0, 0))
     assert civ.projects["masonry"].stalled_turns == 0
     assert civ.projects["masonry"].progress_bp > 3_000
+
+
+def test_hastening_buys_a_turns_progress_once_a_turn(game: GameState, start: Start) -> None:
+    # D-119: stores that would pile up become progress
+    civ = game.civs["veyra"]
+    civ.stockpiles.materials = civ.stockpiles.knowledge = civ.stockpiles.wealth = 100_000
+    project = start(game, "veyra", "masonry")
+    price = hasten_cost(game, "masonry")
+    ok, message = hasten(game, civ, "masonry")
+    assert ok, message
+    assert project.progress_bp > 0
+    assert civ.stockpiles.wealth == 100_000 - price.wealth
+    ok, _ = hasten(game, civ, "masonry")
+    assert not ok  # once a turn
+
+
+def test_stores_far_beyond_use_waste_away(game: GameState) -> None:
+    civ = game.civs["veyra"]
+    civ.stockpiles.materials = 10_000_000
+    run_economy(game, "veyra", civ_effects(game, "veyra"))
+    assert civ.stockpiles.materials < 10_000_000

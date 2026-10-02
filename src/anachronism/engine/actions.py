@@ -49,6 +49,14 @@ class PauseProject(Frozen):
     node_id: str
 
 
+class HastenProject(Frozen):
+    """Pay craftsmen and supplies to push a project on by a turn's work (D-119)."""
+
+    kind: Literal["hasten"] = "hasten"
+    civ: str
+    node_id: str
+
+
 class ResumeProject(Frozen):
     """Fund a paused project again."""
 
@@ -325,6 +333,7 @@ Action = Annotated[
     ProposeIdea
     | StartProject
     | PauseProject
+    | HastenProject
     | ResumeProject
     | CancelProject
     | SetPriority

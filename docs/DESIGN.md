@@ -60,6 +60,10 @@ Every stat keeps a short history so the UI shows **trends**, not just values.
   riots, then revolts (a province breaks away; the capital never does). Losing half the
   starting provinces is collapse. None of this is a special rule: it emerges.
 - Underfunded projects progress slower; projects starved for 3+ turns begin to decay.
+- **Hasten** (D-119): once a turn a project can be pushed on by a turn's work, paid from
+  the stores (wealth for hired craftsmen at three times the labour and wealth of a turn's
+  work, and twice its materials and knowledge). Stores beyond ten turns' production waste
+  away (a fifth of the excess each decade), so hoards are worth spending.
 - **Low priority is steady work** (D-112): it takes only the spare hands left after other
   projects (the surplus), never farmers, so it cannot cause diversion, famine or strain;
   and while it keeps moving, however slowly, it does not decay. A small state can still
