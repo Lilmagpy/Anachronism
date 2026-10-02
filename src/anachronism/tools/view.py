@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Any
 
 from anachronism.content.loader import Content
-from anachronism.content.schema import Stage
+from anachronism.content.schema import Building, Stage
 from anachronism.engine.armies import (
     STYLES,
     available_units,
@@ -17,6 +17,9 @@ from anachronism.engine.armies import (
     wall_cost,
     wall_tech,
 )
+from anachronism.engine.buildings import cost as building_cost
+from anachronism.engine.buildings import options as building_options
+from anachronism.engine.buildings import slots
 from anachronism.engine.commands import describe_blockers
 from anachronism.engine.decrees import cost, explain_costs, explain_ready_in, news_on_the_road
 from anachronism.engine.dilemmas import effects_text, fill
@@ -31,6 +34,7 @@ from anachronism.engine.rivals import relation, strength
 from anachronism.engine.state import Army, Event, GameState
 from anachronism.engine.tactics import AUTO, final, natural, needs_text, short_of_men
 from anachronism.engine.tech import feasibility, is_adopted
+from anachronism.engine.timeflow import turns_for
 from anachronism.engine.victory import progress
 from anachronism.engine.war import defence_bp, fronts
 from anachronism.tools.console import describe_effect
@@ -156,6 +160,7 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
                 "port": next(iter(seas_of(state, pid)), None),
                 "blockaded": state.provinces[pid].blockaded,
                 **_walls_next(state, pid),
+                **_buildings(state, pid),
             }
             for pid, geography in sorted(state.world.geography.items())
         ],
@@ -300,6 +305,76 @@ def _dilemma(state: GameState) -> dict[str, Any] | None:
         "text": fill(state, dilemma.text),
         "choices": [{"label": c.label, "hint": effects_text(c)} for c in dilemma.choices],
     }
+
+
+_BONUS_WORDS = (
+    ("food_bp", "food"),
+    ("materials_bp", "materials"),
+    ("wealth_bp", "wealth"),
+    ("knowledge_bp", "knowledge"),
+    ("growth_bp", "growth"),
+    ("capacity_bp", "room for people"),
+)
+
+
+def building_effects(kind: Building) -> str:
+    """What a building does, in a few words (e.g. "+15% wealth, calms the realm")."""
+    parts = [
+        f"+{getattr(kind, name) // 100}% {word}"
+        for name, word in _BONUS_WORDS
+        if getattr(kind, name)
+    ]
+    if kind.calm_bp:
+        parts.append("calms the realm")
+    if kind.literacy_bp:
+        parts.append("teaches reading")
+    if kind.veterans_bp:
+        parts.append("trains soldiers")
+    return ", ".join(parts)
+
+
+def _buildings(state: GameState, province_id: str) -> dict[str, Any]:
+    """What stands in a province, what is going up, and (for yours) what could be built."""
+    province = state.provinces[province_id]
+    kinds = state.world.buildings
+    out: dict[str, Any] = {
+        "buildings": [
+            {"id": b, "name": kinds[b].name, "look": kinds[b].look}
+            for b in province.buildings
+            if b in kinds
+        ],
+        "works": {
+            "id": province.works.building,
+            "name": kinds[province.works.building].name,
+            "look": kinds[province.works.building].look,
+            "turns": province.works.turns_left,
+        }
+        if province.works is not None and province.works.building in kinds
+        else None,
+        "slots": slots(state, province_id),
+    }
+    if province.owner == state.player_civ:
+        options: list[dict[str, Any]] = []
+        for kind, reason in building_options(state, state.player_civ, province_id):
+            if reason == "already built here" or reason == "a better one already stands here":
+                continue
+            materials, wealth = building_cost(state, province_id, kind.id)
+            options.append(
+                {
+                    "id": kind.id,
+                    "name": kind.name,
+                    "note": kind.note,
+                    "does": building_effects(kind),
+                    "materials": materials,
+                    "wealth": wealth,
+                    "turns": turns_for(state, kind.decades),
+                    "why_not": reason,
+                }
+            )
+        # what can be built first, then what is nearly in reach
+        options.sort(key=lambda o: (o["why_not"] is not None, o["materials"] + o["wealth"]))
+        out["can_build"] = options
+    return out
 
 
 def _walls_next(state: GameState, province_id: str) -> dict[str, Any]:

@@ -27,6 +27,8 @@ from anachronism.engine.actions import (
     SailFleet,
     ScuttleFleet,
 )
+from anachronism.engine.buildings import bonus as building_bonus
+from anachronism.engine.buildings import ruin_newest
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import BP, apply_bp, clamp
 from anachronism.engine.navies import SIZES, build_fleet, can_cross, sea_route
@@ -178,7 +180,8 @@ def raise_army(
         old = army.men
         for unit_id, n in troops.items():
             army.troops[unit_id] = army.troops.get(unit_id, 0) + n
-        army.veterancy_bp = army.veterancy_bp * old // max(1, army.men)  # raw recruits
+        trained = building_bonus(state, province_id).veterans_bp  # raw recruits, or drilled
+        army.veterancy_bp = (army.veterancy_bp * old + trained * men) // max(1, army.men)
         return army, f"{men:,} men join the {army.name}."
     civ.armies_raised += 1
     place = state.world.geography[province_id].name.split(" (")[0]
@@ -197,6 +200,7 @@ def raise_army(
         skill=skill,
         trait=trait,
         raised_turn=state.turn,
+        veterancy_bp=building_bonus(state, province_id).veterans_bp,  # trained in barracks
     )
     state.armies[army.id] = army
     return army, f"The {name} musters {men:,} men in {place}."
@@ -703,6 +707,7 @@ def pillage(state: GameState, army: Army, owner: str, events: EventLog) -> None:
     state.civs[owner].stockpiles.wealth -= loot
     state.civs[army.owner].stockpiles.wealth += loot
     province.ravaged = rules.ravaged_turns
+    burned = ruin_newest(state, army.province)
     rel = relation(state, army.owner, owner)
     if rel is not None:
         rel.grievance[owner] = rel.grievance.get(owner, 0) + rules.pillage_grievance_bp // 3
@@ -711,6 +716,8 @@ def pillage(state: GameState, army: Army, owner: str, events: EventLog) -> None:
     place = state.world.geography[army.province].name
     adjective = state.civs[army.owner].adjective
     text = f"{adjective} armies ravage {place}: {lost:,} dead or fled, {loot:,} wealth carried off."
+    if burned:
+        text = text[:-1] + f", its {burned.lower()} burned."
     events.add(owner, "pillaged", text, place)
     events.add(army.owner, "pillage", text, place)
 

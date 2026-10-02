@@ -428,6 +428,20 @@ class ArmyRules(Frozen):
     """An army reduced below this many men melts away."""
 
 
+class BuildingRules(Frozen):
+    """How many buildings a province holds and what more of them cost (D-111)."""
+
+    base_slots: NonNegative = 2
+    """Buildings any province can hold."""
+    people_per_slot: Positive = 250_000
+    """One more for each this many people (cities grow, and hold more)."""
+    max_slots: NonNegative = 8
+    extra_cost_bp: Rate = 2_500
+    """Each building already standing makes the next cost this much more."""
+    rival_reserve: Positive = 3
+    """Rival courts build only while their stores hold this many times the cost."""
+
+
 class Rules(Frozen):
     """All engine rules, grouped by system."""
 
@@ -443,6 +457,7 @@ class Rules(Frozen):
     rulings: RulingRules
     rivals: RivalRules
     armies: ArmyRules = Field(default_factory=ArmyRules)
+    buildings: BuildingRules = Field(default_factory=BuildingRules)
     difficulty: dict[Identifier, dict[str, int]] = Field(default_factory=dict)
     """Named difficulty levels (``easy``, ``hard``...), each a set of overrides to the
     rival rules; ``normal`` is the rules as written. Unknown rule names are errors."""

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from anachronism.content.schema import EffectType
 from anachronism.engine.armies import command, march, sieges, upkeep
+from anachronism.engine.buildings import advance_works, rival_builders, weighted
 from anachronism.engine.culture import spread_faiths, trade
 from anachronism.engine.dilemmas import ask
 from anachronism.engine.economy import run_economy
@@ -54,12 +55,15 @@ def end_turn(state: GameState) -> tuple[GameState, list[Event]]:
         update_society(new, civ, outcome, effects, rng, events)
         spread_step(new, civ, effects, events)
         update_suspicion(new, civ, rng, events)
-        _update_literacy(new, civ.stats, effects)
+        _update_literacy(new, civ.stats, effects, weighted(new, civ_id, "literacy_bp"))
         strike(new, civ, effects, rng, events)
         age_and_succeed(new, civ, rng, events)
         effects_by_civ[civ_id] = effects
     # rivals: news, awareness, scripts, free agents; then the wars (brief §7)
     strengths = rivals_turn(new, effects_by_civ, list(events.items), rng, events)
+    # builders: sites move on, and rival courts with full stores raise new buildings (D-111)
+    advance_works(new, events)
+    rival_builders(new, events)
     # the campaigns: orders, marches and battles, sieges, supply; then the toll of war
     command(new, strengths)
     admiralty(new)
@@ -88,9 +92,12 @@ def end_turn(state: GameState) -> tuple[GameState, list[Event]]:
     return new, events.items
 
 
-def _update_literacy(state: GameState, stats: Stats, effects: Effects) -> None:
-    """Teaching adds literacy; attrition removes a share, so effects set a sustainable level."""
-    gain = per_turn(state, effects[EffectType.LITERACY_GROWTH])
+def _update_literacy(state: GameState, stats: Stats, effects: Effects, schools: int = 0) -> None:
+    """Teaching adds literacy; attrition removes a share, so effects set a sustainable level.
+
+    ``schools`` is what the realm's school buildings add each decade (D-111).
+    """
+    gain = per_turn(state, effects[EffectType.LITERACY_GROWTH] + schools)
     attrition_bp = rate_per_turn(state, state.world.rules.society.literacy_attrition_bp)
     loss = apply_bp(stats.literacy_bp, attrition_bp)
     stats.literacy_bp = clamp(stats.literacy_bp + gain - loss, 0, BP)

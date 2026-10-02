@@ -268,6 +268,15 @@ class BuildFleet(Frozen):
     size: Literal["small", "medium", "large"] = "medium"
 
 
+class Build(Frozen):
+    """Raise a building in one of your provinces (D-111)."""
+
+    kind: Literal["build"] = "build"
+    civ: str
+    province: str
+    building: str
+
+
 class SailFleet(Frozen):
     """Order a fleet to sail to a sea."""
 
@@ -332,6 +341,7 @@ Action = Annotated[
     | BuildFleet
     | SailFleet
     | ScuttleFleet
+    | Build
     | ChooseDilemma
     | AnswerEnvoy,
     Field(discriminator="kind"),

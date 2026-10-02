@@ -13,6 +13,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from anachronism.content.schema import (
     Access,
+    Building,
     Dilemma,
     Disposition,
     EffectType,
@@ -90,6 +91,8 @@ class World(Frozen):
     """Choices that may be put to the ruler."""
     ships: dict[str, Ship] = Field(default_factory=dict)
     """The kinds of warship that exist."""
+    buildings: dict[str, Building] = Field(default_factory=dict)
+    """The kinds of building provinces can raise (D-111)."""
     tactics: dict[str, Tactic] = Field(default_factory=dict)
     """The battle plans armies may fight with."""
     scripts: dict[str, tuple[Script, ...]] = Field(default_factory=dict)
@@ -97,6 +100,13 @@ class World(Frozen):
     faiths: dict[str, Faith] = Field(default_factory=dict)
     """Each civilisation's historical successors, in order."""
     """Each civilisation's intentions (brief §7.1), from the scenario."""
+
+
+class Construction(Mutable):
+    """A building going up in a province."""
+
+    building: str
+    turns_left: int
 
 
 class ProvinceState(Mutable):
@@ -116,6 +126,10 @@ class ProvinceState(Mutable):
     """Turns of ruin left from pillage: fewer crops and goods until it recovers."""
     blockaded: bool = False
     """Enemy warships command every sea on its shore: its harbours are closed."""
+    buildings: list[str] = Field(default_factory=list)
+    """Buildings standing here, oldest first (D-111)."""
+    works: Construction | None = None
+    """A building going up here."""
 
 
 class Stockpiles(Mutable):

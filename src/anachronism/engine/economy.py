@@ -11,6 +11,8 @@ from dataclasses import dataclass
 from itertools import groupby
 
 from anachronism.content.schema import Access, EffectType
+from anachronism.engine.buildings import bonus
+from anachronism.engine.buildings import upkeep as building_upkeep
 from anachronism.engine.effects import Effects
 from anachronism.engine.fixed import BP, apply_bp, div_round, ratio_bp, with_bonus
 from anachronism.engine.state import GameState, Project, Stockpiles
@@ -174,9 +176,10 @@ def production(state: GameState, civ_id: str, effects: Effects, production_bp: i
         terrain = state.world.terrain[geography.terrain]
         people = province.population
         ruin = 2 if province.ravaged else 1  # pillaged fields and burned workshops
-        food += people * terrain.food_bp // ruin
-        materials += people * terrain.materials_bp // ruin
-        taxes += people * economy.wealth_per_1000_bp // ruin
+        built = bonus(state, province_id)  # its markets, workshops, granaries (D-111)
+        food += with_bonus(people * terrain.food_bp // ruin, built.food_bp)
+        materials += with_bonus(people * terrain.materials_bp // ruin, built.materials_bp)
+        taxes += with_bonus(people * economy.wealth_per_1000_bp // ruin, built.wealth_bp)
         trade_bp = economy.base_trade_bp
         trade_bp += economy.coastal_trade_bp if geography.coastal else 0
         trade_bp += economy.river_trade_bp if geography.river else 0
@@ -184,9 +187,10 @@ def production(state: GameState, civ_id: str, effects: Effects, production_bp: i
             blockade = state.world.rules.armies.blockade_trade_bp
             trade_bp -= economy.coastal_trade_bp if geography.coastal else 0
             trade_bp -= apply_bp(trade_bp, blockade)
-        trade += people * economy.wealth_per_1000_bp * trade_bp // BP
-        knowledge += people * economy.knowledge_per_1000_bp
-        knowledge += people * literacy // BP * economy.knowledge_per_1000_literate_bp
+        trade += with_bonus(people * economy.wealth_per_1000_bp * trade_bp // BP, built.wealth_bp)
+        learned = people * economy.knowledge_per_1000_bp
+        learned += people * literacy // BP * economy.knowledge_per_1000_literate_bp
+        knowledge += with_bonus(learned, built.knowledge_bp)
         for access in province.resources.values():
             if access is Access.ACCESSIBLE:
                 flat_materials += economy.resource_materials_accessible
@@ -242,6 +246,7 @@ def run_economy(state: GameState, civ_id: str, effects: Effects) -> EconomyOutco
     upkeep = per_turn(
         state, rules.economy.admin_upkeep_per_province * len(state.owned_provinces(civ_id))
     )
+    upkeep += building_upkeep(state, civ_id)
     wealth_balance = stock.wealth + produced.wealth - upkeep
     wealth_shortfall_bp = ratio_bp(-wealth_balance, upkeep) if wealth_balance < 0 else 0
     stock.wealth = max(0, wealth_balance)

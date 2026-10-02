@@ -41,7 +41,7 @@ var marching_army := ""        ## waiting for the player to click where this arm
 var levy_style := "balanced"   ## the mix of soldiers the next levy will have
 var selected_fleet := ""       ## the fleet the player picked (drawn with a gold ring)
 var sailing_fleet := ""        ## waiting for the player to click where this fleet should sail
-var open_box := ""             ## the unfolded section of the province card: "levy", "fleet" or ""
+var open_box := ""             ## the unfolded section of the province card: "levy", "fleet", "build" or ""
 var _outcome_shown := false
 var dev_info: Dictionary = {}   ## filled by main: engine and model details for F3
 var _dev := Label.new()     ## "online" when a language model rules, from settings
@@ -1201,6 +1201,7 @@ func _fill_card() -> void:
 	var hard := "easy" if defence < 11000 else ("hard" if defence < 25000 else "very hard")
 	_card_body.add_child(_wrapped("To take in war: %s (%.1f×%s)" % [hard, defence / 10000.0,
 		(", " + ", ".join(why)) if not why.is_empty() else ""], 13, DIM))
+	_buildings_lines(p)
 	var here: Array = view.get("armies", []).filter(func(a): return a["province"] == p["id"])
 	if not here.is_empty():
 		_card_body.add_child(_label("Armies here", 15, GOLD))
@@ -1225,6 +1226,10 @@ func _fill_card() -> void:
 			tools.add_child(_button(("▾ " if open_box == "levy" else "▸ ") + "Raise a levy", func():
 				open_box = "" if open_box == "levy" else "levy"
 				_fill_card()))
+		if p.has("can_build"):
+			tools.add_child(_button(("▾ " if open_box == "build" else "▸ ") + "Build", func():
+				open_box = "" if open_box == "build" else "build"
+				_fill_card()))
 		if p.get("port") != null and view.has("navy"):
 			tools.add_child(_button(("▾ " if open_box == "fleet" else "▸ ") + "Build a fleet", func():
 				open_box = "" if open_box == "fleet" else "fleet"
@@ -1236,11 +1241,53 @@ func _fill_card() -> void:
 			_card_body.add_child(_levy_box(p))
 		if open_box == "fleet" and p.get("port") != null and view.has("navy"):
 			_card_body.add_child(_shipyard_box(p))
+		if open_box == "build" and p.has("can_build"):
+			_card_body.add_child(_builders_box(p))
 	# a rival's province: where you stand with its holder, and what you can do
 	for civ in view["civs"]:
 		if civ["id"] == p["owner"] and civ["id"] != view["player"] and civ.get("relation") != null:
 			_card_body.add_child(_label("Relations: %s" % str(civ["relation"]), 13, BAD if civ["relation"] == "war" else INK))
 			_card_body.add_child(_diplomacy_buttons(civ))
+
+
+# --- buildings (D-111) ------------------------------------------------------------------
+
+
+## What stands in a province and what is going up.
+func _buildings_lines(p: Dictionary) -> void:
+	var standing: Array = p.get("buildings", [])
+	var names: Array = standing.map(func(b): return str(b["name"]))
+	var head := "Buildings (%d of %d): " % [standing.size(), int(p.get("slots", 0))]
+	_card_body.add_child(_wrapped(head + (", ".join(names) if not names.is_empty() else "none yet"), 13, INK))
+	var works: Variant = p.get("works")
+	if works != null:
+		var turns := int(works["turns"])
+		_card_body.add_child(_wrapped("Builders at work: %s (%d turn%s left)" % [str(works["name"]), turns, "" if turns == 1 else "s"], 13, GOLD))
+
+
+## The builders' list: what can go up here now (with its cost and what it does), then what
+## is nearly in reach and why not yet.
+func _builders_box(p: Dictionary) -> Control:
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 3)
+	var stores: Dictionary = view["status"]["stores"]
+	var shown_blocked := 0
+	for option in p["can_build"]:
+		var reason: Variant = option["why_not"]
+		var label := "%s (%s materials, %s wealth, %d turn%s)" % [str(option["name"]), number(int(option["materials"])),
+			number(int(option["wealth"])), int(option["turns"]), "" if int(option["turns"]) == 1 else "s"]
+		if reason == null:
+			var button := _small_button(label, {"kind": "build", "province": p["id"], "building": option["id"]})
+			button.disabled = int(stores["materials"]) < int(option["materials"]) or int(stores["wealth"]) < int(option["wealth"])
+			button.tooltip_text = "%s\n%s" % [str(option["note"]), str(option["does"])]
+			box.add_child(button)
+			box.add_child(_wrapped("   " + str(option["does"]), 12, DIM))
+		elif shown_blocked < 4 and not str(reason).begins_with("builders"):
+			shown_blocked += 1
+			box.add_child(_wrapped("%s: %s" % [str(option["name"]), str(reason)], 12, DIM))
+	if box.get_child_count() == 0:
+		box.add_child(_wrapped("Nothing more can be built here yet.", 12, DIM))
+	return box
 
 
 # --- armies ------------------------------------------------------------------------------

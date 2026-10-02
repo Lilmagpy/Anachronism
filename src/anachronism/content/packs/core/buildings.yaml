@@ -1,0 +1,221 @@
+schema_version: 1
+# Buildings raised in provinces (content/schema/buildings.py, D-111).
+# materials, wealth: to build (times the scenario's cost_scale; each building already in the
+# province adds a quarter more). decades: how long. upkeep: wealth per decade (times
+# cost_scale). Bonuses are for the province, in basis points (1500 = +15%); calm_bp and
+# literacy_bp work realm-wide, weighted by the province's share of the people.
+# look: what the client draws in the city.
+buildings:
+  - id: granary
+    name: Granary
+    note: "Grain stored against bad years lets more children live to grow up."
+    materials: 20
+    wealth: 10
+    upkeep: 1
+    food_bp: 800
+    growth_bp: 1000
+    capacity_bp: 500
+    look: granary
+  - id: market
+    name: Market
+    note: "A market square where farmers, potters and merchants meet: busier trade, fuller tax rolls."
+    materials: 15
+    wealth: 25
+    upkeep: 2
+    wealth_bp: 1500
+    look: market
+  - id: temple
+    name: Temple
+    note: "Festivals, sacrifices and a priesthood that tells the people the gods are content."
+    materials: 25
+    wealth: 20
+    upkeep: 2
+    calm_bp: 300
+    look: temple
+  - id: workshop
+    name: Workshops
+    note: "Potters' kilns, weavers and carpenters gathered in one quarter."
+    needs_techs: [pottery_kiln]
+    materials: 20
+    wealth: 15
+    upkeep: 1
+    materials_bp: 1500
+    look: workshop
+  - id: barracks
+    name: Barracks
+    note: "A drill ground and quarters: soldiers raised here start out trained."
+    materials: 25
+    wealth: 15
+    upkeep: 3
+    veterans_bp: 1000
+    look: barracks
+  - id: mine
+    name: Mines
+    note: "Shafts and adits into the province's ore and stone."
+    needs_techs: [bronze_working]
+    needs_resource: [copper, tin, iron, gold, silver, coal, stone]
+    materials: 30
+    wealth: 10
+    upkeep: 1
+    materials_bp: 2000
+    wealth_bp: 500
+    look: mine
+  - id: harbour
+    name: Harbour
+    note: "Quays, a breakwater and fishing boats: the sea's trade and the sea's food."
+    needs_techs: [sailing]
+    coastal: true
+    materials: 30
+    wealth: 20
+    upkeep: 2
+    wealth_bp: 1500
+    food_bp: 500
+    look: harbour
+  - id: irrigation_works
+    name: Irrigation works
+    note: "Dykes, sluices and channels that carry the river onto the fields."
+    needs_techs: [irrigation]
+    river: true
+    materials: 30
+    wealth: 10
+    upkeep: 1
+    food_bp: 1500
+    capacity_bp: 1000
+    look: canal
+  - id: school
+    name: School
+    note: "Scribes teaching the sons of the well-to-do to read, write and reckon."
+    needs_techs: [writing]
+    materials: 15
+    wealth: 25
+    upkeep: 2
+    knowledge_bp: 2000
+    literacy_bp: 100
+    look: school
+  - id: observatory
+    name: Observatory
+    note: "Astronomers who keep the calendar true, and the court's rituals on time."
+    needs_techs: [astronomy_calendar]
+    materials: 20
+    wealth: 25
+    upkeep: 2
+    knowledge_bp: 1200
+    calm_bp: 100
+    look: observatory
+  - id: forge
+    name: Forges
+    note: "Bloomeries and smithies hammering out tools and weapons."
+    needs_techs: [iron_working]
+    needs_resource: [iron, coal]
+    materials: 30
+    wealth: 15
+    upkeep: 2
+    materials_bp: 1500
+    veterans_bp: 300
+    look: forge
+  - id: watermill
+    name: Water mill
+    note: "A wheel in the river grinds grain and drives hammers and bellows."
+    needs_techs: [water_wheel]
+    river: true
+    materials: 25
+    wealth: 15
+    upkeep: 1
+    food_bp: 1000
+    materials_bp: 1000
+    look: watermill
+  - id: windmill
+    name: Windmills
+    note: "Sails on the hills grinding grain where no river runs."
+    needs_techs: [windmill]
+    materials: 25
+    wealth: 15
+    upkeep: 1
+    food_bp: 1200
+    look: windmill
+  - id: courthouse
+    name: Courthouse
+    note: "Written law, read out and judged: fewer feuds, steadier taxes."
+    needs_techs: [written_law]
+    materials: 20
+    wealth: 30
+    upkeep: 2
+    calm_bp: 300
+    wealth_bp: 500
+    look: courthouse
+  - id: aqueduct
+    name: Aqueduct
+    note: "Clean water carried from the hills: a city can grow far beyond its wells."
+    needs_techs: [aqueduct]
+    materials: 50
+    wealth: 30
+    decades: 2
+    upkeep: 2
+    growth_bp: 1500
+    capacity_bp: 1500
+    look: aqueduct
+  - id: printing_house
+    name: Printing house
+    note: "Presses turning out books, almanacs and broadsheets by the thousand."
+    needs_techs: [printing_press]
+    materials: 20
+    wealth: 30
+    upkeep: 2
+    knowledge_bp: 1500
+    literacy_bp: 250
+    look: press
+  - id: hospital
+    name: Hospital
+    note: "Physicians, clean beds and a quarantine house."
+    needs_techs: [hospitals]
+    materials: 30
+    wealth: 40
+    upkeep: 3
+    growth_bp: 1500
+    capacity_bp: 1000
+    calm_bp: 100
+    look: hospital
+  - id: academy
+    name: Academy
+    note: "A university: masters, libraries and disputations, in place of the old school."
+    needs_techs: [universities]
+    replaces: school
+    materials: 30
+    wealth: 50
+    decades: 2
+    upkeep: 4
+    knowledge_bp: 4500
+    literacy_bp: 250
+    look: academy
+  - id: bank
+    name: Bank
+    note: "Money-changers become bankers: credit, bills of exchange, a merchant quarter."
+    needs_techs: [banking]
+    replaces: market
+    materials: 25
+    wealth: 60
+    upkeep: 3
+    wealth_bp: 3500
+    look: bank
+  - id: manufactory
+    name: Manufactory
+    note: "Steam-driven mills where the workshops stood, working day and night."
+    needs_techs: [steam_engine]
+    replaces: workshop
+    materials: 60
+    wealth: 40
+    decades: 2
+    upkeep: 4
+    materials_bp: 4000
+    look: factory
+  - id: railway_station
+    name: Railway station
+    note: "Iron rails bring the whole country's goods to the city's door."
+    needs_techs: [railways]
+    materials: 80
+    wealth: 50
+    decades: 2
+    upkeep: 4
+    wealth_bp: 2000
+    materials_bp: 1500
+    look: station

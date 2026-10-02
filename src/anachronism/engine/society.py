@@ -7,6 +7,7 @@ unrest, unrest cuts the workforce (see ``economy.labour``), which deepens the sh
 from __future__ import annotations
 
 from anachronism.content.schema import EffectType
+from anachronism.engine.buildings import weighted
 from anachronism.engine.economy import EconomyOutcome
 from anachronism.engine.effects import Effects
 from anachronism.engine.events import EventLog
@@ -53,6 +54,7 @@ def update_society(
     growth = per_turn(state, pressure) + apply_bp(outcome.famine_bp, rules.unrest_from_famine_bp)
     recovery = apply_bp(stats.unrest_bp, rate_per_turn(state, rules.unrest_recovery_bp))
     recovery += per_turn(state, apply_bp(rules.unrest_recovery_legitimacy_bp, stats.legitimacy_bp))
+    recovery += per_turn(state, weighted(state, civ.id, "calm_bp"))  # temples, courts (D-111)
     stats.unrest_bp = clamp(stats.unrest_bp + growth - recovery, 0, BP)
 
     drift = apply_bp(

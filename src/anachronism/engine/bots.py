@@ -11,8 +11,9 @@ from dataclasses import dataclass, field
 from typing import Protocol
 
 from anachronism.content.schema import Category
-from anachronism.engine.actions import Action, RaiseArmy, StartProject
+from anachronism.engine.actions import Action, Build, RaiseArmy, StartProject
 from anachronism.engine.armies import under_arms
+from anachronism.engine.buildings import best_choice
 from anachronism.engine.economy import project_costs
 from anachronism.engine.fixed import apply_bp
 from anachronism.engine.game import apply_action, end_turn
@@ -84,9 +85,17 @@ class PlannerBot:
         """Raise troops in wartime; start the best affordable idea if there is room."""
         civ = state.civs[civ_id]
         levy = call_up(state, civ_id) if civ_id == state.player_civ else []
+        levy += self._build(state, civ_id)
         if len(civ.projects) >= self.max_projects:
             return levy
         return levy + self._idea(state, civ_id)
+
+    def _build(self, state: GameState, civ_id: str) -> list[Action]:
+        """Raise the most worthwhile building the stores can comfortably pay for (D-111)."""
+        choice = best_choice(state, civ_id, state.world.rules.buildings.rival_reserve)
+        if choice is None:
+            return []
+        return [Build(civ=civ_id, province=choice[0], building=choice[1])]
 
     def _idea(self, state: GameState, civ_id: str) -> list[Action]:
         room = capacity(state, civ_id)

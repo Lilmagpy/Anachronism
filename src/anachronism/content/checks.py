@@ -32,6 +32,7 @@ def cross_reference_issues(registry: Registry) -> list[ContentIssue]:
         *_tale_issues(registry),
         *_dilemma_issues(registry),
         *_ship_issues(registry),
+        *_building_issues(registry),
         *_tactic_issues(registry),
         *_symbol_issues(registry),
         *_dialogue_issues(registry),
@@ -427,4 +428,23 @@ def _ship_issues(registry: Registry) -> list[ContentIssue]:
             if registry.is_unknown("techs", tech):
                 where = registry.origin("ships", ship.id)
                 issues.append(ContentIssue(where, f"ships ({ship.id})", f"unknown tech {tech!r}"))
+    return issues
+
+
+def _building_issues(registry: Registry) -> list[ContentIssue]:
+    issues: list[ContentIssue] = []
+    for building in registry.buildings.values():
+        where = registry.origin("buildings", building.id)
+        label = f"buildings ({building.id})"
+        for tech in building.needs_techs:
+            if registry.is_unknown("techs", tech):
+                issues.append(ContentIssue(where, label, f"unknown tech {tech!r}"))
+        for resource in building.needs_resource:
+            if registry.is_unknown("resources", resource):
+                issues.append(ContentIssue(where, label, f"unknown resource {resource!r}"))
+        if building.replaces is not None:
+            if registry.is_unknown("buildings", building.replaces):
+                issues.append(ContentIssue(where, label, f"unknown building {building.replaces!r}"))
+            elif building.replaces == building.id:
+                issues.append(ContentIssue(where, label, "a building cannot replace itself"))
     return issues

@@ -8,6 +8,7 @@ from anachronism.engine.actions import (
     AnswerEnvoy,
     ArmyPlan,
     ArmyStance,
+    Build,
     BuildFleet,
     CancelProject,
     ChooseDilemma,
@@ -37,6 +38,7 @@ from anachronism.engine.actions import (
     StartProject,
 )
 from anachronism.engine.armies import apply_orders
+from anachronism.engine.buildings import start as start_building
 from anachronism.engine.decrees import apply_decree
 from anachronism.engine.dilemmas import answer
 from anachronism.engine.diplomacy import apply_diplomacy
@@ -98,6 +100,8 @@ def _apply(state: GameState, action: Action) -> tuple[bool, str]:
         | ScuttleFleet,
     ):
         return apply_orders(state, action)
+    if isinstance(action, Build):
+        return start_building(state, action.civ, action.province, action.building)
     if isinstance(action, AnswerEnvoy):
         if state.offer is None or civ.id != state.player_civ:
             return False, "no envoys are waiting"
