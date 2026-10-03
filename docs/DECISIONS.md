@@ -1474,3 +1474,10 @@ the surrender of Geumgwan Gaya (ancestors of Kim Yu-sin), the seizure of the Han
 and the hwarang Sadaham at Daegaya. Eight kings in their real years, Silseong killed in
 Nulji's plot as history says. The 'chapters within their moment' test now allows 170 years.
 All nine chapters play.
+
+## D-155 A sixth chronicle for AD 1000: the Fatimids of Cairo — DELEGATED (2026-10-03)
+Seven chapters: al-Hakim and the regent in the garden, the House of Knowledge and Ibn
+al-Haytham's feigned madness, the destruction of the Holy Sepulchre, al-Hakim's
+disappearance in the Muqattam hills (a chapter ends his reign; the Druze still await him),
+Nasir-i Khusraw's Cairo, the Great Calamity, and Badr al-Jamali. Al-Hakim, al-Zahir and
+al-Mustansir in their real years. All seven chapters play.

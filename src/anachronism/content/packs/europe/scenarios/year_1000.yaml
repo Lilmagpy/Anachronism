@@ -1054,6 +1054,9 @@ scenarios:
         disposition: pious
         capital: m_cairo
         leader: al-Hakim
+        leader_age: 15
+        leader_until: 1022
+        successors: [{name: "al-Zahir", age: 16, died: 1036}, {name: "al-Mustansir", age: 7, disposition: "pious", died: 1094}]
         pitch: "Cairo, al-Azhar and the trade of the Red Sea. Build a House of Knowledge the world will envy."
         provinces:
           m_cairo: 2500000
