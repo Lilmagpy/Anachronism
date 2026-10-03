@@ -1304,3 +1304,15 @@ news from Hungary, Dali, Diaoyu, Xiangyang, the kamikaze and Yamen. Genghis, Oge
 Guyuk, Mongke and Kublai die in their real years (D-132). Khwarazm, Russia and Hungary are
 off this map, so those campaigns are told from the khan's camp. With a passive test player
 20 of 21 chapters play; Xiangyang steps aside when the player has taken it already.
+
+## D-137 The ninth chronicle: England, 1002-1066 — DELEGATED (2026-10-03)
+Every moment on the timeline now has a chronicle for its leading state. England's has
+fifteen chapters at two years a turn: Emma of Normandy, St Brice's Day, Danegeld, the
+lost fleet, Archbishop Ælfheah, Sweyn Forkbeard, the king over the water, Assandun,
+Cnut's North Sea empire, the waves, Alfred the Ætheling, Edward the Confessor, Harold's
+oath, Stamford Bridge and Hastings. The chronicle follows the crown, not a family: the
+English successors are now the real line (Edmund Ironside, Cnut, Harold Harefoot,
+Harthacnut, Edward, Harold Godwinson, then Edgar the Ætheling), which also makes free play
+more accurate. Where two reigns ended in the same two-year turn, the earlier death is
+dated a year early so each king appears at his chapter. Hastings's historical choice
+kills Harold and gives Wessex and East Anglia to Normandy; England lives on in the north.

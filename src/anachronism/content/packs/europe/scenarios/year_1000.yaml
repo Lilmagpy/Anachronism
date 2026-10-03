@@ -10,6 +10,7 @@ scenarios:
       of the Fatimid caliphs. Europe's great age is about to begin - or is it?
     start_year: 1000
     years_per_turn: 10
+    campaign_years_per_turn: 2
     player_civ: england
     map: europe
     cost_scale: 10
@@ -21,7 +22,10 @@ scenarios:
         capital: m_wessex
         leader: Æthelred II
         leader_age: 34
-        successors: [{name: "Edmund Ironside", age: 26, disposition: "aggressive"}, {name: "Edward the Confessor", age: 40, disposition: "pious"}]
+        leader_died: 1015
+        # the crown's real line to 1066: Æthelred died in April 1016, Edmund in November, and
+        # the dates are a year early where two reigns ended in one turn (D-137)
+        successors: [{name: "Edmund Ironside", age: 26, disposition: "aggressive", died: 1016}, {name: "Cnut the Great", age: 21, disposition: "aggressive", died: 1035}, {name: "Harold Harefoot", age: 19, died: 1040}, {name: "Harthacnut", age: 22, died: 1042}, {name: "Edward the Confessor", age: 39, disposition: "pious", died: 1065}, {name: "Harold Godwinson", age: 44, disposition: "aggressive", until: 1068}, {name: "Edgar the Ætheling", age: 14, disposition: "cautious"}]
         pitch: "The Danes are raiding again and Æthelred pays them to leave. Find a better idea than silver."
         provinces:
           m_wessex: 700000
