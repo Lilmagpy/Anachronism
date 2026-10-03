@@ -120,6 +120,7 @@ func _enter_game(result: Variant) -> void:
 		menus.queue_free()
 		menus = null
 	view = result
+	audio.set_era(str(view.get("music", "")))
 	for i in int(options.get("turns", "0")):
 		view = bridge.request("end_turn")
 	if view.get("map") != null:

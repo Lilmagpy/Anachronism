@@ -13,6 +13,7 @@ scenarios:
     campaign_years_per_turn: 2
     player_civ: qin
     map: east_asia
+    music: asian  # the client plays client/music/<name>.mp3 (D-208)
     cost_scale: 10
     # what every state of the age knows, where it has the prerequisites (Zichan's cast law codes (536 BC), Li Kui's Canon of Laws, household registers)
     common_techs: {written_law: adopted, census: adopted}

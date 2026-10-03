@@ -13,6 +13,7 @@ scenarios:
     campaign_years_per_turn: 3
     player_civ: egypt
     map: europe
+    music: near_east  # the client plays client/music/<name>.mp3 (D-208)
     cost_scale: 10
     # what every state of the age knows, where it has the prerequisites (Law codes from Ur-Nammu and Hammurabi to the Hittite laws; soap-like cleansers in Babylon and the Ebers papyrus)
     common_techs: {written_law: widespread, soap: adopted}
@@ -260,6 +261,7 @@ scenarios:
         scripts:
           - {id: "war_for_wilusa", goal: "conquer", target: "wilusa", preconditions: {after_year: -1260}, note: "The war remembered as the Trojan War (traditionally c. 1250-1180 BC)."}
         capital: myc_argolid
+        music: roman
         pitch: "Palaces, ships and ambition across the Aegean. Keep your age of heroes from ending in ruin."
         provinces:
           myc_argolid: 150000
@@ -295,6 +297,7 @@ scenarios:
       wilusa:
         disposition: cautious
         capital: wil_wilusa
+        music: roman
         leader: Alaksandu
         pitch: "Rich, walled and envied by the Greeks across the sea. Change the ending of the story."
         provinces:

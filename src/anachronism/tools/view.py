@@ -72,6 +72,7 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
         "difficulty": state.world.difficulty,
         "scenario": state.world.scenario_name,
         "map": state.world.map,
+        "music": state.world.music,
         "seed": state.seed,
         "player": civ_id,
         "status": {

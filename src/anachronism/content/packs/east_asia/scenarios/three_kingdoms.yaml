@@ -13,6 +13,7 @@ scenarios:
     campaign_years_per_turn: 2
     player_civ: goguryeo
     map: east_asia
+    music: asian  # the client plays client/music/<name>.mp3 (D-208)
     cost_scale: 10
     # what every state of the age knows, where it has the prerequisites (The Jin Taishi code (268); Goguryeo's law code (373); household registers)
     common_techs: {written_law: widespread, census: adopted}

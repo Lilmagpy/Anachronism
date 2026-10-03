@@ -13,6 +13,7 @@ scenarios:
     campaign_years_per_turn: 2
     player_civ: england
     map: europe
+    music: medieval  # the client plays client/music/<name>.mp3 (D-208)
     cost_scale: 10
     # what every state of the age knows, where it has the prerequisites (Justinian's code and Germanic law codes; Islamic and Byzantine soap, glass and hospitals)
     common_techs: {written_law: widespread, soap: adopted, glassmaking: adopted, hospitals: adopted, census: adopted}
@@ -888,6 +889,7 @@ scenarios:
       cordoba:
         disposition: aggressive
         capital: m_cordoba
+        music: near_east
         leader: al-Mansur
         leader_age: 62
         leader_died: 1002
@@ -1095,6 +1097,7 @@ scenarios:
         navy_bp: 15000
         disposition: pious
         capital: m_cairo
+        music: near_east
         leader: al-Hakim
         leader_age: 15
         leader_until: 1022
@@ -1153,6 +1156,7 @@ scenarios:
       zirids:
         disposition: cautious
         capital: m_ifriqiya
+        music: near_east
         leader: Badis ibn Mansur
         pitch: "Rich Ifriqiya, a distant overlord. Will you stay loyal?"
         provinces:
@@ -1206,6 +1210,7 @@ scenarios:
       sicily_emirate:
         disposition: mercantile
         capital: m_sicily
+        music: near_east
         leader: Ja'far al-Kalbi
         pitch: "Lemons, sugar cane and silk in Palermo's gardens. An island of plenty between three worlds."
         provinces:
@@ -1258,6 +1263,7 @@ scenarios:
       buyids:
         disposition: cautious
         capital: m_baghdad
+        music: near_east
         leader: Baha al-Dawla
         leader_age: 29
         leader_died: 1012
@@ -1423,6 +1429,7 @@ scenarios:
         scripts:
           - {id: "mahmud_takes_rayy", goal: "conquer", target: "buyids", preconditions: {after_year: 1025}, note: "Mahmud of Ghazni takes Rayy from the Buyids (1029)."}
         capital: m_khorasan
+        music: near_east
         leader: Mahmud of Ghazni
         leader_age: 29
         leader_died: 1030
@@ -1479,6 +1486,7 @@ scenarios:
       makuria:
         disposition: pious
         capital: m_dongola
+        music: near_east
         pitch: "The Christian kingdom of the Nile. Hold Egypt at arm's length."
         provinces:
           m_dongola: 300000

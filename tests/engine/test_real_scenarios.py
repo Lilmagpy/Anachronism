@@ -6,6 +6,8 @@ that sits on a real map, so new starting moments are tested as soon as they are 
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
 
 from anachronism.content.loader import Content, load_content
@@ -30,6 +32,22 @@ def test_scenario_sits_on_the_real_map(content: Content) -> None:
     assert all(g.latlon is not None for g in state.world.geography.values())
     assert state.world.seas, "seas touching the scenario's coasts are in play"
     assert 20_000_000 < sum(p.population for p in state.provinces.values()) < 40_000_000
+
+
+def test_music_follows_the_scenario_and_the_civilisation(content: Content) -> None:
+    assert new_game(content, "punic_wars", seed=1, player_civ="rome").world.music == "roman"
+    carthage = new_game(content, "punic_wars", seed=1, player_civ="carthage")
+    assert carthage.world.music == "near_east"
+
+
+@pytest.mark.parametrize("scenario", REAL)
+def test_every_music_track_exists(content: Content, scenario: str) -> None:
+    music = Path(__file__).parents[2] / "client" / "music"
+    start = content.scenarios[scenario]
+    tracks = {start.music} | {civ.music for civ in start.civs.values()}
+    assert start.music is not None, "real-map scenarios name their music"
+    for track in sorted(t for t in tracks if t is not None):
+        assert (music / f"{track}.mp3").is_file(), f"{scenario}: no client/music/{track}.mp3"
 
 
 def test_cost_scale_multiplies_project_costs(content: Content) -> None:

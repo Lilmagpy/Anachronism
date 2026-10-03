@@ -84,6 +84,8 @@ class ScenarioCiv(Frozen):
     """How much weight each social group carries (0-100%)."""
     techs: dict[Identifier, Stage] = Field(default_factory=dict)
     """Advancements already known at the start (the era baseline)."""
+    music: Identifier | None = None
+    """Music track for a game as this civilisation, overriding the scenario's (D-208)."""
     leader: str = ""
     """Who rules at the start, e.g. ``Duke Xiao``; empty when the sources are unclear."""
     pitch: str = ""
@@ -126,6 +128,9 @@ class Scenario(Frozen):
     map: Identifier | None = None
     """Real-Earth map region the client draws (e.g. ``east_asia``); ``None`` means a map
     generated from province positions. On a real map every province needs a ``latlon``."""
+    music: Identifier | None = None
+    """Music track the client plays in this scenario (``roman``, ``asian``, ``medieval``,
+    ``near_east``: files in ``client/music``); ``None`` keeps the title theme (D-208)."""
     faiths: tuple[Faith, ...] = ()
     """Religions and schools of belief, and who holds them at the start."""
     relations: tuple[StartingRelation, ...] = ()

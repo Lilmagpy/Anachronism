@@ -6,3 +6,9 @@
 | `symbols/*.svg` | Civilisations' heraldic symbols | game-icons.net (github.com/game-icons/icons): icons by Lorc, Delapouite, Caro Asercion, Cathelineau, Carl Olsen, Skoll; the background square removed and the fill set to white | CC BY 3.0: attribution required (shown on the title screen) |
 
 `content/packs/core/symbols.yaml` names the original icon behind each symbol.
+
+## Music
+
+| Folder | What | Source | Licence |
+|---|---|---|---|
+| `music/roman.mp3`, `music/asian.mp3`, `music/medieval.mp3`, `music/near_east.mp3` | Era music played during games (D-208) | Supplied by the owner; original source not yet recorded | **Unconfirmed.** Private testing only until the owner confirms the rights; must be cleared or replaced before any public release |

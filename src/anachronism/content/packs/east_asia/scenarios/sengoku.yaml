@@ -13,6 +13,7 @@ scenarios:
     campaign_years_per_turn: 1
     player_civ: oda
     map: east_asia
+    music: asian  # the client plays client/music/<name>.mp3 (D-208)
     cost_scale: 10
     # what every state of the age knows, where it has the prerequisites (Ritsuryo codes and the Goseibai Shikimoku; Ming yellow registers; koseki)
     common_techs: {written_law: widespread, census: adopted}

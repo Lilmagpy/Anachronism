@@ -1873,3 +1873,16 @@ chapters with the right ruler on the throne; dates the agents could not pin down
   epilogue.
 - D-207 Miyoshi (8, 1560-1573): Nagayoshi to Wakae; the Eiroku incident conquers the
   Ashikaga (matching D-187), and the cause of the Todai-ji fire is left open.
+
+## D-208 Era music from the owner (2026-10-03)
+The owner supplied four music tracks (Roman, Asian, medieval, Egyptian/Arabic), about
+twenty-five minutes each, committed to `main` as MP3s. They now live in `client/music/` as
+`roman.mp3`, `asian.mp3`, `medieval.mp3` and `near_east.mp3`, and loop during play; the
+title screen keeps the old synthesised theme. Which track plays is content, not code: a
+scenario names its `music`, and a civilisation can override it (Carthage, the Ptolemies and
+Seleucids, Persia, Kush, Numidia and the Islamic states of AD 1000 play `near_east`;
+Mycenae and Troy at Kadesh play `roman`). Each game stores its track in the state, so a
+loaded game plays the right one. A test checks every named track has a file. DELEGATED:
+the mapping above. Rights: the owner's tracks, source not yet confirmed; recorded in
+`client/assets/LICENSES.md` and must be cleared before any public release. Also removed a
+stray `year_1000.yaml.orig` patch leftover that an earlier commit had picked up.

@@ -13,6 +13,7 @@ scenarios:
     campaign_years_per_turn: 1
     player_civ: macedon
     map: europe
+    music: roman  # the client plays client/music/<name>.mp3 (D-208)
     cost_scale: 10
     # what every state of the age knows, where it has the prerequisites
     common_techs: {written_law: widespread}
@@ -72,6 +73,7 @@ scenarios:
         scripts:
           - {id: "persian_counteroffensive", goal: "conquer", target: "macedon", preconditions: {after_year: -335}, note: "Memnon of Rhodes and the Persian fleet carry the war to the Aegean (333 BC)."}
         capital: a3_susiana
+        music: near_east
         leader: "Darius III"
         leader_age: 44
         leader_until: -329
@@ -406,6 +408,7 @@ scenarios:
         scripts:
           - {id: "sicilian_wars", goal: "conquer", target: "syracuse", preconditions: {after_year: -337}, note: "Carthage and Syracuse fight on for Sicily, as they have for a century."}
         capital: a3_carthage
+        music: near_east
         leader_age: 45
         martial_bp: 8000
         pitch: "Your ships rule the western sea and your treasury the western world. Syracuse is the only rival left in Sicily."

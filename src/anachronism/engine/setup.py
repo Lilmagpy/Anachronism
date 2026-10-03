@@ -91,6 +91,7 @@ def build_state(
             if any(p in geography for p in sea.neighbours)
         },
         map=scenario.map,
+        music=scenario.civs[player].music or scenario.music or "",
         cost_scale=scenario.cost_scale,
         happenings=dict(sorted(content.happenings.items())),
         units=dict(content.units),

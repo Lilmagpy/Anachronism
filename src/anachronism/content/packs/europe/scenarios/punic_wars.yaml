@@ -13,6 +13,7 @@ scenarios:
     campaign_years_per_turn: 2
     player_civ: rome
     map: europe
+    music: roman  # the client plays client/music/<name>.mp3 (D-208)
     cost_scale: 10
     # what every state of the age knows, where it has the prerequisites (Rome's Twelve Tables, Greek city laws, Carthage's constitution)
     common_techs: {written_law: widespread}
@@ -79,6 +80,7 @@ scenarios:
         scripts:
           - {id: "hannibals_war", goal: "conquer", target: "rome", preconditions: {after_year: -222}, depends_on: ["first_punic_war"], note: "Hannibal crosses the Alps (218 BC)."}
         capital: car_carthage
+        music: near_east
         generals: [{name: "Hamilcar Barca", skill: 5, trait: bold, note: "Undefeated in Sicily; father of Hannibal."}, {name: "Xanthippus", skill: 4, trait: horse, note: "Spartan mercenary who crushed Regulus in 255 BC."}, {name: "Hanno the Great", skill: 2, trait: quartermaster, note: "Leader of Carthage's landed party; conquered in Africa."}]
         pitch: "The richest city in the west, and its sea. But Rome is looking at Sicily. Buy, build and out-think them."
         provinces:
@@ -584,6 +586,7 @@ scenarios:
         scripts:
           - {id: "third_syrian_war", goal: "conquer", target: "seleucid", preconditions: {after_year: -248}, depends_on: ["second_syrian_war"], note: "Ptolemy III marches to Babylon to avenge his sister (246 BC)."}
         capital: pto_delta
+        music: near_east
         leader: Ptolemy II Philadelphus
         leader_age: 45
         leader_died: -247
@@ -637,6 +640,7 @@ scenarios:
           - {id: "second_syrian_war", goal: "conquer", target: "ptolemaic", preconditions: {after_year: -262}, note: "Antiochus II fights Ptolemy II for Syria (260-253 BC)."}
           - {id: "seleucids_vs_pergamon", goal: "conquer", target: "pergamon", preconditions: {after_year: -240}, note: "Attalus I defeats the Seleucids and Galatians (c. 230 BC)."}
         capital: sel_syria
+        music: near_east
         leader: Antiochus I Soter
         leader_age: 60
         leader_died: -261
@@ -731,6 +735,7 @@ scenarios:
         scripts:
           - {id: "masinissa_vs_carthage", goal: "conquer", target: "carthage", preconditions: {after_year: -170}, note: "Masinissa's Numidia nibbles at Carthage's lands (from 160 BC)."}
         capital: num_massyli
+        music: near_east
         pitch: "The best horsemen in the world, between Carthage and the desert."
         provinces:
           num_massyli: 400000
@@ -786,6 +791,7 @@ scenarios:
       kush:
         disposition: pious
         capital: kus_meroe
+        music: near_east
         pitch: "Iron, gold and your own script on the upper Nile, far from the Greek quarrels."
         provinces:
           kus_meroe: 400000

@@ -81,6 +81,8 @@ class World(Frozen):
     """Sea zones touching provinces in play."""
     map: str | None = None
     """Real-Earth map region, or ``None`` for a generated map."""
+    music: str = ""
+    """Music track the client plays (D-208); empty keeps the title theme."""
     cost_scale: int = 1
     """Multiplier on every project cost (see ``Scenario.cost_scale``)."""
     happenings: dict[str, Happening] = Field(default_factory=dict)
