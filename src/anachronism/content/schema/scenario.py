@@ -51,6 +51,9 @@ class Successor(Frozen):
     died: int | None = None
     """The year they really died of age, illness or accident: in a chronicle, the player's
     ruler lives until then and dies then (D-132)."""
+    ends: Annotated[str, Field(max_length=60)] = ""
+    """How that reign ended, if not by death ("is forced to abdicate"): the chronicle's
+    words for it (D-145)."""
 
 
 GeneralTrait = Literal["horse", "siege", "shield", "bold", "quartermaster", "beloved"]

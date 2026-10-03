@@ -28,8 +28,11 @@ def age_and_succeed(state: GameState, civ: CivState, rng: GameRng, events: Event
     until, dies = history_of_reign(state, civ)
     if spared(state, civ):
         return  # history has not reached the end of this reign
-    if until is not None and dies:
-        succeed(state, civ, events, heir_age=30)  # the chronicle keeps to history (D-132)
+    if until is not None and dies:  # the chronicle keeps to history (D-132)
+        line = state.world.successors.get(civ.id, ())
+        index = civ.rulers - 2
+        how = line[index].ends if 0 <= index < len(line) and line[index].ends else "has died"
+        succeed(state, civ, events, heir_age=30, how=how)
         return
     if not rng.chance(death_chance_bp(state, civ)):
         return
@@ -90,7 +93,7 @@ def succeed(
     civ.stats.legitimacy_bp = clamp(civ.stats.legitimacy_bp - rules.succession_legitimacy_bp, 0, BP)
     events.add(
         civ.id,
-        "ruler_died",
+        "ruler_died" if how == "has died" else "ruler_fell",  # a eulogy only for a death
         f"{_cap(old_desc)} {how}. {_cap(new)} takes the throne.",
         old,
     )

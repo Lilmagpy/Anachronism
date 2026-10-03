@@ -1383,3 +1383,15 @@ Wuling's abdication (a chapter ends his reign), the jade returned intact, Lian P
 the bag, Li Mu on the frontier and Li Mu betrayed. Many of these are still Chinese proverbs.
 Zhao now has its real line of rulers, from Marquis Cheng to King Youmiu and Jia of Dai. The
 first chapter is in 307 BC, so the chronicle opens with some forty years of free play.
+
+## D-145 A second chronicle for AD 1000: Byzantium; how reigns end — DELEGATED (2026-10-03)
+Ten chapters: Basil II's annual campaigns, Kleidion and the blinded army, the keys of
+Ohrid, Basil's lack of an heir, Romanos III's bath, Maniakes in Sicily (with Harald
+Hardrada), the people rising for Zoe, the bull on the altar in 1054, Manzikert and the
+Venetian golden bull. 'You' are whoever holds the throne: the chronicle follows thirteen
+emperors and empresses in their real years. Two engine details:
+- A scenario's heir can say how the reign really ended (`ends`: "abdicates, ill, and
+  becomes a monk"), used when the chronicle ends it on time instead of "has died".
+- Such ends, and reigns ended by chapters, are recorded as `ruler_fell`, not `ruler_died`,
+  so the court's eulogy (added earlier this night) is kept for real deaths.
+All ten chapters play with a passive test player.

@@ -748,8 +748,9 @@ scenarios:
         capital: m_constantinople
         leader: Basil II
         leader_age: 42
+        leader_died: 1025
         generals: [{name: "Nikephoros Ouranos", skill: 4, trait: shield, note: "Victor over Samuel at the Spercheios, 997."}]
-        successors: [{name: "Constantine VIII", age: 65, disposition: "cautious"}, {name: "Romanos III", age: 60}]
+        successors: [{name: "Constantine VIII", age: 65, disposition: "cautious", died: 1028}, {name: "Romanos III", age: 60, until: 1035}, {name: "Michael IV", age: 24, died: 1041}, {name: "Michael V", age: 27, until: 1043}, {name: "Constantine IX Monomachos", age: 42, died: 1055}, {name: "Theodora", age: 75, died: 1056}, {name: "Michael VI", age: 60, died: 1057, ends: "is overthrown by the generals and sent to a monastery"}, {name: "Isaac I Komnenos", age: 50, died: 1059, ends: "abdicates, ill, and becomes a monk"}, {name: "Constantine X Doukas", age: 53, died: 1067}, {name: "Romanos IV Diogenes", age: 37, disposition: "aggressive", until: 1072}, {name: "Michael VII Doukas", age: 21, died: 1078, ends: "is deposed and becomes a monk"}, {name: "Nikephoros III Botaneiates", age: 76, died: 1081, ends: "is deposed by Alexios Komnenos"}, {name: "Alexios I Komnenos", age: 24, disposition: "aggressive", died: 1118}]
         pitch: "The richest state in Europe and the heir of Rome. Basil II is at war with Bulgaria; win it with more than swords."
         provinces:
           m_apulia: 600000

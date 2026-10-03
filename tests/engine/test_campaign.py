@@ -200,3 +200,21 @@ def test_heirs_are_spared_until_their_reigns_really_ended(content: Content) -> N
     assert spared(state, civ)
     state.year = 491
     assert not spared(state, civ)
+
+
+def test_a_reign_can_end_as_history_says_not_only_by_death(content: Content) -> None:
+    """Isaac Komnenos abdicated in 1059; the chronicle says so, and the court gives no eulogy."""
+    from anachronism.engine.events import EventLog
+    from anachronism.engine.rng import GameRng
+    from anachronism.engine.rulers import age_and_succeed
+
+    state = new_game(content, "year_1000", seed=1, player_civ="byzantium", chronicle=True)
+    civ = state.civs["byzantium"]
+    civ.rulers = 9  # Isaac I Komnenos, eighth in the line after Basil
+    civ.ruler = "Isaac I Komnenos"
+    state.year = 1060
+    events = EventLog(state.turn, state.year)
+    age_and_succeed(state, civ, GameRng(state.rng), events)
+    assert civ.ruler == "Constantine X Doukas"
+    assert [e.kind for e in events.items] == ["ruler_fell"]
+    assert "abdicates" in events.items[0].message

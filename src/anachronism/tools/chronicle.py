@@ -94,7 +94,7 @@ def chapters(state: GameState) -> list[Chapter]:
             "sea battles lost": _join(_names(mine, "sea_battle_lost")),
             "lands won": _join(_names(mine, "conquest")),
             "lands lost": _join(_names(mine, "province_lost")),
-            "rulers": " ".join(e.message for e in mine if e.kind == "ruler_died"),
+            "rulers": " ".join(e.message for e in mine if e.kind in ("ruler_died", "ruler_fell")),
             "how the people saw the court": " ".join(
                 e.message for e in mine if e.kind == "framing"
             ),
