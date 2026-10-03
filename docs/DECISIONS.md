@@ -1602,3 +1602,16 @@ choices, so the benchmark rises from three provinces to eight as the real Wei's 
 conquest of Shandong in 469 is not modelled). Seven emperors in their real years; the
 short-lived Prince of Nan'an (452) is skipped. All thirteen chapters play on two seeds;
 a passive Wei loses a province to a late uprising, as passive players do elsewhere.
+
+## D-168 An eighth chronicle for AD 1000: Denmark — DELEGATED (2026-10-03)
+Ten chapters, 1000-1035, from the Danish side of the England chronicle: Svolder, revenge
+for St Brice's Day, Sweyn's forty days as King of England, Harald II's fleet for his
+brother, Olaf the Saint taking Norway, Cnut's letter to the English, the Holy River and
+Ulf's murder, Cnut walking beside the emperor in Rome, Norway bought with English silver,
+and "Aelfgifu's time". Norway is a tributary from Svolder to Nesjar and again from 1028 to
+1035. Cnut's England is modelled as an ally, not a tributary: in testing, a tributary
+England with an old grudge declared war on Denmark in 1030, which is the opposite of
+Cnut's reign; as one king's two realms, an alliance holds. Sweyn's death (3 February 1014)
+is set to 1013 so that Harald is king at the 1014 chapter; Harald II's death is uncertain
+(c. 1018) and set to 1017 so that Cnut is king at the 1019 chapter. All ten chapters play
+on three seeds.

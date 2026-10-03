@@ -413,7 +413,9 @@ scenarios:
         capital: m_jutland
         leader: Sweyn Forkbeard
         leader_age: 37
-        successors: [{name: "Harald II", age: 20}, {name: "Cnut the Great", age: 23, disposition: "aggressive"}]
+        # Sweyn really died on 3 February 1014: 1013 keeps him alive for the 1012 chapter only
+        leader_died: 1013
+        successors: [{name: "Harald II", age: 20, died: 1017}, {name: "Cnut the Great", age: 23, disposition: "aggressive", died: 1035}, {name: "Hardecnut", age: 17, died: 1042}, {name: "Magnus the Good", age: 18, died: 1047}, {name: "Sweyn Estridsen", age: 28}]
         pitch: "Longships, raiders and a king who wants England. Conquer with ideas as well as axes."
         provinces:
           m_jutland: 300000
