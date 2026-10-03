@@ -230,7 +230,7 @@ def test_every_chronicle_starts_and_its_chapters_are_in_its_age(content: Content
         years = [c.year for c in state.world.chapters.values()]
         assert years, (scenario_id, civ)
         assert start <= min(years), (scenario_id, civ)
-        assert max(years) <= start + 160, (scenario_id, civ)
+        assert max(years) <= start + 170, (scenario_id, civ)
         for chapter in state.world.chapters.values():
             for choice in chapter.choices:
                 for node in choice.needs_adopted:

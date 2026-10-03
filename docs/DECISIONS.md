@@ -1465,3 +1465,12 @@ or deposition (`ends`) is only ended on schedule while the player's most recent 
 answer was history's. Once the player has turned history aside, those violent ends no
 longer happen by themselves and the ruler lives on with the usual odds; natural deaths
 keep their dates either way.
+
+## D-154 A third chronicle for AD 400: Silla — DELEGATED (2026-10-03)
+The weakest kingdom of AD 400, which would unite Korea in 668, across 160 years in nine
+chapters: Goguryeo's rescue, Bak Je-sang, the alliance with Baekje, the name 'Silla' and the
+title of king, the wooden lions of Usan, Ichadon's white blood and the coming of Buddhism,
+the surrender of Geumgwan Gaya (ancestors of Kim Yu-sin), the seizure of the Han river,
+and the hwarang Sadaham at Daegaya. Eight kings in their real years, Silseong killed in
+Nulji's plot as history says. The 'chapters within their moment' test now allows 170 years.
+All nine chapters play.

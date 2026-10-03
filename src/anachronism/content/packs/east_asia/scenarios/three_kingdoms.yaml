@@ -119,7 +119,8 @@ scenarios:
         capital: k4_gyeongju
         leader: King Naemul
         leader_age: 60
-        successors: [{name: "King Silseong", age: 30}, {name: "King Nulji", age: 30, disposition: "cautious"}]
+        leader_died: 402
+        successors: [{name: "King Silseong", age: 30, died: 417, ends: "is killed in a plot by his cousin Nulji"}, {name: "King Nulji", age: 30, disposition: "cautious", died: 458}, {name: "King Jabi", age: 20, died: 479}, {name: "King Soji", age: 15, died: 500}, {name: "King Jijeung", age: 64, died: 514}, {name: "King Beopheung", age: 30, died: 540}, {name: "King Jinheung", age: 7, disposition: "aggressive", died: 576}]
         pitch: "The weakest kingdom today - the one that will unite Korea in 668. Get there first."
         provinces:
           k4_gyeongju: 350000
