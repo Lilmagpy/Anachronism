@@ -1578,3 +1578,15 @@ his execution in 322, Phocion until his hemlock in 318, then Demetrius of Phaler
 Lamian War is told with grudges and men, not an open-ended war, so a one-province Athens is
 not swallowed by the Macedon AI (the lesson of D-149/D-150). All nine chapters play on two
 seeds.
+
+## D-166 A fourth chronicle for 336 BC: Epirus and Pyrrhus — DELEGATED (2026-10-03)
+Twelve chapters across 64 years, 336-272 BC: Philip murdered at Alexander of Epirus's
+wedding, the call from Tarentum and the oracle of Acheron and Pandosia, the first Greek
+treaty with Rome, the death at the river, the infant Pyrrhus at the Illyrian king's knees,
+Ipsus, Cineas's "why not rest now?", Heraclea and the Senate "of kings", Asculum (the
+Pyrrhic victory), Sicily, Beneventum and the roof tile at Argos. Magna Graecia and western
+Sicily are taken and lost in the historical choices, so the benchmark tracks both Italian
+adventures. Five kings: Alexander I and Aeacides end in chapters, Alcetas II is murdered
+in 307, and Pyrrhus rules from 306 to his death. Pyrrhus's five years of exile (302-297)
+are folded into the Ipsus chapter's outcome rather than modelled as a second reign. All
+twelve chapters play on two seeds.

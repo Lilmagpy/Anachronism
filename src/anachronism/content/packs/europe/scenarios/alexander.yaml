@@ -269,7 +269,8 @@ scenarios:
         capital: a3_epirus
         leader: "Alexander I of Epirus"
         leader_age: 34
-        successors: [{name: "Aeacides", age: 30}, {name: "Pyrrhus", age: 18, disposition: aggressive}]
+        leader_until: -331
+        successors: [{name: "Aeacides", age: 35, until: -317}, {name: "Alcetas II", age: 45, died: -307, ends: "is murdered by his own people"}, {name: "Pyrrhus", age: 12, disposition: aggressive, until: -272}, {name: "Alexander II", age: 22}]
         martial_bp: 15000
         pitch: "Uncle and brother-in-law of the new king of Macedon, with Italy across the water calling for a champion."
         provinces:
