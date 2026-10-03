@@ -1668,3 +1668,12 @@ the "rulers" (an "Otto Orseolo ... takes the throne" message is a small stretch 
 elected office). Alliances with Byzantium were left out of the deeds: a two-province
 Venice allied to Byzantium would be dragged into Basil II's Bulgarian war (the lesson of
 D-149/D-150). All seven chapters play on two seeds.
+
+## D-174 A fifth chronicle for 1560: the late Ming — DELEGATED (2026-10-03)
+Ten chapters, 1561-1619: Qi Jiguang's Yiwu army against the wokou, Hai Rui's memorial
+and his coffin, Moon Harbour and the silver trade, the Altan Khan peace, Zhang Juzheng's
+land survey and his posthumous disgrace, Wanli's thirty-year "strike", the Korean war,
+Matteo Ricci's clocks, and Sarhu (Liaodong is lost in the historical choice). Three
+emperors in their real years: Jiajing (died January 1567, set to 1566, the Chinese year),
+Longqing and Wanli; Taichang's month on the throne follows. Ray Huang's "1587" is the
+guiding modern source for Wanli's reign. All ten chapters play on two seeds.

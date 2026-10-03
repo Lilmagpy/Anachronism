@@ -912,7 +912,9 @@ scenarios:
         capital: m_beijing
         leader: Jiajing Emperor
         leader_age: 53
-        successors: [{name: "Longqing Emperor", age: 30}, {name: "Wanli Emperor", age: 9, disposition: cautious}]
+        # Jiajing died in January 1567 (late 1566 by the Chinese calendar)
+        leader_died: 1566
+        successors: [{name: "Longqing Emperor", age: 30, died: 1572}, {name: "Wanli Emperor", age: 9, disposition: cautious, died: 1620}, {name: "Taichang Emperor", age: 38, died: 1620}, {name: "Tianqi Emperor", age: 15}]
         pitch: "The greatest empire in the world is starting to rot from the top. Reform it."
         provinces:
           m_liaodong: 2000000
