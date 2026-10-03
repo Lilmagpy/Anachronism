@@ -384,6 +384,11 @@ scenarios:
       ugarit:
         disposition: mercantile
         capital: uga_ugarit
+        leader: King Niqmepa
+        leader_age: 50
+        leader_died: -1260
+        # reign dates are approximate (Singer)
+        successors: [{name: "King Ammistamru II", age: 25, died: -1235}, {name: "King Ibiranu", age: 25, died: -1225}, {name: "King Niqmaddu III", age: 25, died: -1215}, {name: "King Ammurapi", age: 20, until: -1185}]
         pitch: "A merchant city with a revolutionary idea: an alphabet. Spread it before anyone else."
         provinces:
           uga_ugarit: 100000

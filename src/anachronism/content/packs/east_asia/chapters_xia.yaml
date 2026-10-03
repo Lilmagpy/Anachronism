@@ -77,7 +77,7 @@ chapters:
           Your daughter Chaqa goes to the Khan's tents with a dowry of camels, falcons and
           woollen cloth. You promise to be his right hand in war. The Mongols ride away, and
           you will remember who refused to help you.
-        deeds: {peace_with: [mongols], grudges: {jurchen_jin: 1000}}
+        deeds: {peace_with: [mongols]}
       - label: "The flood has saved us; fight on"
         legitimacy_bp: 500
         food_bp: -2000

@@ -1720,3 +1720,17 @@ unrest stays above 2000, so the restoration also calms the country; and `grudges
 who resents the player, not whom the player resents (a misdirected grudge made Qi hate
 Yan; removed). All ten chapters play on three seeds, two of them level with history
 throughout.
+
+## D-179 A sixth chronicle for 1275 BC: Ugarit — DELEGATED (2026-10-03)
+Six chapters, c. 1275-1185 BC, built from Ugarit's own archives: chariots for Kadesh,
+the thirty-sign alphabet (in the a-b-g-d order still used), Ammistamru II's divorce case
+judged by the Hittite court, fifty minas of gold to be excused from the war on Assyria,
+the Great King's famine letter ("a matter of life or death"), and Ammurapi's last letter
+to Cyprus as the enemy's ships came. Ugarit had no rulers in the scenario; it now has
+five kings, Niqmepa to Ammurapi, in Singer's approximate dates. The popular story of
+letters "still in the kiln" is left out, as excavators now doubt it. All six chapters
+play on two seeds.
+
+Also fixed: the Western Xia flood chapter (D-162) gave the Jin a grudge against Xia,
+where the story meant the reverse; `grudges` names who resents the player (see D-178),
+so it was removed.
