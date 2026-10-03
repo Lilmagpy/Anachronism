@@ -1258,3 +1258,14 @@ Honno-ji: spared until then, and if the player changes history the ruler lives o
 the usual odds). Free play is unchanged. Qin now has its real line through Xiaowen and
 Zhuangxiang to King Zheng (the future First Emperor), who takes the throne just as his
 chapter opens in 246 BC; Jangsu of Goguryeo reigns to 491.
+
+## D-133 The fifth chronicle: Ramesses II's Egypt, 1275-1208 BC — DELEGATED (2026-10-03)
+The owner asked (going to sleep) for storylines for every civilisation and age, to be built
+until they wake. Egypt comes first because the Kadesh moment had none. Twelve chapters:
+the march north, Kadesh (the planted Shasu spies), the Sherden bodyguard, carving the Kadesh
+poem, Amurru lost, the fugitive Hittite king, the silver-tablet treaty, Abu Simbel and
+Nefertari, the Hittite bride, Prince Khaemwaset, the Libyan forts, and Merneptah at Perire
+(the stela that first names Israel). Three years a turn; Ramesses dies in 1213 BC as he
+did (D-132), followed by Merneptah and Seti II. The ideas that open choices history never
+had: iron weapons, relay riders at Kadesh, the alphabet, concrete, schools. All twelve
+chapters play with a passive test player.

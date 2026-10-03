@@ -178,5 +178,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [ ] Fit in the painted art from docs/ART_PROMPTS.md as it arrives
 - [x] The third chronicle: Oda Nobunaga, Okehazama to Honno-ji, 1560-1582 (D-130)
 - [x] The fourth chronicle: Goguryeo under Gwanggaeto and Jangsu, AD 400-475 (D-131)
+- [x] The fifth chronicle: Egypt under Ramesses II, Kadesh to the Sea Peoples, 1275-1208 BC (D-133)
+- [ ] Chronicles for every moment: Alexander, the Mauryas, Genghis Khan, England in 1000
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

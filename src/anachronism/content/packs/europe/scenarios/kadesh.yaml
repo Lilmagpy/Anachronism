@@ -10,6 +10,7 @@ scenarios:
       In Ugarit, scribes have just invented an alphabet.
     start_year: -1275
     years_per_turn: 10
+    campaign_years_per_turn: 3
     player_civ: egypt
     map: europe
     cost_scale: 10
@@ -24,7 +25,8 @@ scenarios:
         capital: egy_delta
         leader: Ramesses II
         leader_age: 28
-        successors: [{name: "Merneptah", age: 55, disposition: "cautious"}, {name: "Seti II", age: 40}]
+        leader_died: -1213
+        successors: [{name: "Merneptah", age: 55, disposition: "cautious", died: -1203}, {name: "Seti II", age: 40, died: -1197}]
         pitch: "Ramesses II is young and hungry for glory, and Kadesh is in Hittite hands. Win with ideas what chariots cannot."
         provinces:
           egy_delta: 1300000
