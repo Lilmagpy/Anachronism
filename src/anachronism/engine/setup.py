@@ -100,7 +100,8 @@ def build_state(
         buildings=dict(sorted(content.buildings.items())),
         chapters={
             c.id: c
-            for c in sorted(content.chapters.values(), key=lambda c: (c.year, c.id))
+            # chapters of the same year keep the order they are written in (D-134)
+            for c in sorted(content.chapters.values(), key=lambda c: c.year)
             if chronicle and c.scenario == scenario.id and c.civ == player
         },
         almanac={

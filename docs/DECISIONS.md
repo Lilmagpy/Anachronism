@@ -1269,3 +1269,17 @@ Nefertari, the Hittite bride, Prince Khaemwaset, the Libyan forts, and Merneptah
 did (D-132), followed by Merneptah and Seti II. The ideas that open choices history never
 had: iron weapons, relay riders at Kadesh, the alphabet, concrete, schools. All twelve
 chapters play with a passive test player.
+
+## D-134 The sixth chronicle: Alexander, 336-323 BC; crowded years — DELEGATED (2026-10-03)
+Sixteen chapters at one year a turn: Philip's murder, Diogenes, Thebes, the Granicus,
+the Gordian knot, Issus, Darius's offer ("if I were Parmenion"), Tyre, Alexandria and Siwa,
+Gaugamela, Persepolis, Darius's death, Cleitus, the Hyphasis mutiny, the Susa weddings,
+and Babylon, where every historical choice ends the reign and one anachronism (germ theory)
+lets Alexander live. Two engine changes, because Alexander's years are crowded:
+- **Several chapters a year.** Answering a chapter now opens the next one whose year has
+  come, instead of waiting a turn; the client shows "what really happened" first and the
+  next chapter after it. Before, chapters fell behind their years and some lapsed.
+- **Same-year chapters keep the order they are written in** (they were sorted by id,
+  which put Darius's death before Persepolis and made Persepolis lapse).
+Conquering Persia brings a regional victory mid-chronicle; "keep playing" carries on.
+All five earlier chronicles still play through.

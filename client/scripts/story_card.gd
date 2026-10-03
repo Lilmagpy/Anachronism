@@ -46,13 +46,14 @@ func show_chronicle(block: Variant) -> void:
 	visible = false
 	if block == null:
 		return
-	if block.get("chapter") != null:
+	# what followed the last choice comes first; a chapter of the same year waits behind it
+	if block.get("result") != null and _key(block["result"]) != _shown_result:
+		_aftermath(block["result"])
+	elif block.get("chapter") != null:
 		if str(block["chapter"]["id"]) == _folded:
 			_banner(block["chapter"])
 		else:
 			_chapter(block["chapter"], block)
-	elif block.get("result") != null and _key(block["result"]) != _shown_result:
-		_aftermath(block["result"])
 
 
 func is_open() -> bool:
@@ -218,5 +219,6 @@ func _aftermath(result: Dictionary) -> void:
 		for child in get_children():
 			child.queue_free()
 		visible = false
-		mouse_filter = Control.MOUSE_FILTER_IGNORE)
+		mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_reopen.emit())   # the next chapter of the year, if one is waiting
 	column.add_child(go)

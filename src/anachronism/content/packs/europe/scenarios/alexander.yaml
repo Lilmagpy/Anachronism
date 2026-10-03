@@ -10,6 +10,7 @@ scenarios:
       Syracuse fight over Sicily, and a city called Rome is at war in the Samnite hills.
     start_year: -336
     years_per_turn: 10
+    campaign_years_per_turn: 1
     player_civ: macedon
     map: europe
     cost_scale: 10
@@ -22,8 +23,9 @@ scenarios:
         capital: a3_pella
         leader: "Alexander"
         leader_age: 20
+        leader_until: -322
         generals: [{name: "Parmenion", skill: 4, trait: shield, note: "Philip's old general, master of the left wing at Chaeronea."}, {name: "Craterus", skill: 3, trait: bold, note: "Commander of the phalanx; the soldiers' favourite."}, {name: "Antipater", skill: 3, trait: quartermaster, note: "Regent of Macedon while the king campaigns."}, {name: "Ptolemy", skill: 2, trait: beloved, note: "Boyhood friend of Alexander; one day Pharaoh."}]
-        successors: [{name: "Philip III Arrhidaeus", age: 36, disposition: cautious}, {name: "Cassander", age: 50, disposition: aggressive}]
+        successors: [{name: "Philip III Arrhidaeus", age: 36, disposition: cautious, died: -317}, {name: "Cassander", age: 50, disposition: aggressive, died: -297}]
         martial_bp: 40000
         pitch: "Your father Philip has been murdered at his daughter's wedding. You are twenty, Greece is restless, and Persia is waiting. History says you conquer it all; make it last longer than you do."
         provinces:

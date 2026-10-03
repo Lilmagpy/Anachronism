@@ -80,6 +80,15 @@ def advance(state: GameState, events: EventLog) -> None:
     if state.chapter is not None:
         chapter = state.world.chapters[state.chapter]
         _settle(state, chapter, historical_index(chapter), events, by_court=True)
+    open_next(state, events)
+
+
+def open_next(state: GameState, events: EventLog) -> None:
+    """Open the next chapter whose year has come; pass over those whose moment has gone.
+
+    Answering a chapter calls this too, so that two moments of the same year are both met
+    in that year (D-134).
+    """
     for chapter in state.world.chapters.values():  # in year order
         if chapter.id in state.chapters_done:
             continue
@@ -111,6 +120,7 @@ def choose(state: GameState, chapter_id: str, index: int) -> tuple[bool, str]:
         return False, f"that path needs {names} in use"
     events = EventLog(turn=state.turn, year=state.year)
     message = _settle(state, chapter, index, events, by_court=False)
+    open_next(state, events)
     state.events.extend(events.items)
     return True, message
 
