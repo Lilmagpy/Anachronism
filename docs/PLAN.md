@@ -231,6 +231,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] A seventh chronicle for 1560: the Shimazu of Satsuma, to the invasion of Ryukyu (D-184)
 - [x] An eighth chronicle for 1560: the Hojo of Odawara, from Kenshin's siege to Hideyoshi's (D-185)
 - [x] A ninth chronicle for 1560: the Date and Masamune, the One-Eyed Dragon (D-186)
+- [x] Three more chronicles for 1560 by helper agent: Ashikaga, Otomo, Chosokabe (D-187, D-188, D-189)
 - [ ] More chronicles for other states (Babylon, Wa, Poland, Macedon of 264...)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

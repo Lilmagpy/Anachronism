@@ -1799,3 +1799,30 @@ white robe at Odawara, the pierced eye of the wagtail seal, the founding of Send
 Hasekura's embassy across the Pacific to Spain and the Pope. The white robe, the golden
 cross and the wagtail are later chronicle stories and are told as such. Three Date lords,
 each reign ending in its chapter. All seven chapters play on two seeds.
+
+## D-187 Chronicles are now written by six helper agents in parallel — DELEGATED (2026-10-03)
+At the owner's request, six helper agents (Sonnet) now draft chronicles at once, each for
+its own states, following a written guide (format, turn-grid timing, grudge direction, no
+open-ended wars, accuracy rules) and testing in a private copy of the code. They never touch
+the repository; the manager reviews each chronicle, spot-checks facts, merges the chapter
+file and the ruler-line patch, runs the full checks and ships. The first batch, for 1560:
+the Ashikaga shoguns (5 chapters, 1560-1573; based on the manager's draft, corrected by the
+agent: Kenshin became Kanto deputy in 1561, not 1559; no alliance with Nobunaga in the
+deeds, only peace with the Miyoshi).
+
+## D-188 A chronicle for 1560: Otomo Sorin — DELEGATED (2026-10-03)
+Eight chapters, 1560-1593: the Funai hospital and Portuguese trade, risings behind the
+Mori, Ichijo Kanesada, Sorin's baptism and Mimigawa (matching the Shimazu chronicle), the
+Tensho embassy to Rome, the appeal to Hideyoshi, Sorin's death, and Yoshimune's disgrace
+at Hosan in Korea. Sorin rules until 1587 (his formal retirement in 1562 is ignored, since
+he remained the house's will); Yoshimune's fall in 1593 ends the line, as Bungo, the last
+province, cannot be given away. Yoshimune's age corrected to 29 (born 1558). Both seeds
+clean.
+
+## D-189 A chronicle for 1560: the Chosokabe of Tosa — DELEGATED (2026-10-03)
+Ten chapters, 1560-1614: Motochika's first battle (the "Princess boy", told as a later
+story), the Shimanto, Nobunaga's order and Honno-ji, the conquest of Shikoku (Iyo-and-
+Sanuki is taken in 1584 and goes to the Mori's Kobayakawa in 1585), Hetsugigawa and the
+choice of Morichika as heir, the San Felipe at Urado, the hundred-article code, Sekigahara
+and Osaka. Kunichika dies in 1560, Motochika in 1599, Morichika falls at Osaka. The loss of
+Tosa in 1600 is told but not enacted (last province). Both seeds clean.

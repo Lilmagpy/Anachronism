@@ -523,7 +523,8 @@ scenarios:
         capital: j_kyoto
         leader: Ashikaga Yoshiteru
         leader_age: 24
-        successors: [{name: "Ashikaga Yoshiaki", age: 29, disposition: cautious}]
+        leader_until: 1565
+        successors: [{name: "Ashikaga Yoshiaki", age: 28, disposition: cautious, until: 1573}]
         pitch: "The shogun's title still means something. Make it mean everything again."
         provinces:
           j_kyoto: 500000
@@ -690,7 +691,8 @@ scenarios:
         capital: j_bungo
         leader: Otomo Sorin
         leader_age: 30
-        successors: [{name: "Otomo Yoshimune", age: 20}]
+        leader_died: 1587
+        successors: [{name: "Otomo Yoshimune", age: 29, until: 1593}]
         pitch: "The Portuguese bring guns, ships and a new god. Use all three."
         provinces:
           j_bungo: 400000
@@ -802,7 +804,8 @@ scenarios:
         capital: j_tosa
         leader: Chosokabe Kunichika
         leader_age: 56
-        successors: [{name: "Chosokabe Motochika", age: 22, disposition: aggressive}]
+        leader_died: 1560
+        successors: [{name: "Chosokabe Motochika", age: 22, disposition: aggressive, died: 1599}, {name: "Chosokabe Morichika", age: 24, disposition: cautious, until: 1614}]
         pitch: "One province today; all Shikoku tomorrow."
         provinces:
           j_tosa: 200000
