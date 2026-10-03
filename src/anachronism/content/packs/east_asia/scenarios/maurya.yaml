@@ -10,6 +10,7 @@ scenarios:
       trade pepper and pearls with the world.
     start_year: -321
     years_per_turn: 10
+    campaign_years_per_turn: 3
     player_civ: maurya
     map: east_asia
     cost_scale: 10
@@ -21,7 +22,8 @@ scenarios:
         capital: in_punjab
         leader: "Chandragupta"
         leader_age: 19
-        successors: [{name: "Bindusara", age: 20, disposition: aggressive}, {name: "Ashoka", age: 30, disposition: aggressive}]
+        leader_until: -296
+        successors: [{name: "Bindusara", age: 20, disposition: aggressive, died: -273}, {name: "Ashoka", age: 30, disposition: aggressive, died: -232}]
         martial_bp: 40000
         pitch: "Chanakya swore to destroy the Nanda king who insulted him, and he chose you to do it. You have the Punjab and a hungry army. Pataliputra is a month's march away."
         provinces:

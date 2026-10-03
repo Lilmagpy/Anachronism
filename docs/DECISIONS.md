@@ -1283,3 +1283,14 @@ lets Alexander live. Two engine changes, because Alexander's years are crowded:
   which put Darius's death before Persepolis and made Persepolis lapse).
 Conquering Persia brings a regional victory mid-chronicle; "keep playing" carries on.
 All five earlier chronicles still play through.
+
+## D-135 The seventh chronicle: the Mauryas, 321-232 BC — DELEGATED (2026-10-03)
+Seventeen chapters across three reigns, at three years a turn: Chanakya and the porridge,
+the fall of the Nandas, Rakshasa's ring, the Greeks leaving the Indus, Seleucus's 500
+elephants, Megasthenes, the Arthashastra, the Girnar lake, Chandragupta becoming a Jain
+monk (a chapter ends his reign; staying king is allowed), Bindusara's Deccan, the letter
+asking Antiochus for figs and a philosopher, Ashoka's disputed throne, Kalinga, the
+conquest by dhamma, the edicts, Mahinda in Lanka and the half-fruit. Bindusara and Ashoka
+die in their real years (D-132). Many of these stories come from legends written down
+centuries later; each history note says which. All 17 chapters play with a passive test
+player.
