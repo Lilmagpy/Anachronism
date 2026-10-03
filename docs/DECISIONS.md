@@ -1445,3 +1445,9 @@ and Tukulti-Ninurta murdered by his son (a chapter ends that reign). Assyria now
 real line: Adad-nirari I, Shalmaneser I, Tukulti-Ninurta I. Nihriya is a battle won, not an
 open war, because a lasting war with Hatti brought in Hatti's ally Egypt (which never fought
 Assyria). All six chapters play.
+
+## D-152 A third chronicle for 1560: Uesugi Kenshin — DELEGATED (2026-10-03)
+Six chapters: the siege of Odawara and the Uesugi name, Kawanakajima from Kenshin's side,
+the salt sent to an enemy, the road west against Nobunaga, the Tedori river, and Kenshin's
+sudden death and the war between his adopted sons. Kenshin dies at the turn of 1577-78 so
+that the last chapter is played as Kagekatsu. All six chapters play.

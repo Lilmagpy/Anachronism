@@ -196,8 +196,9 @@ scenarios:
         capital: j_echigo
         leader: Uesugi Kenshin
         leader_age: 30
+        leader_died: 1577  # he died in the spring of 1578, at the turn of the year
         generals: [{name: "Kakizaki Kageie", skill: 4, trait: bold, note: "Kenshin's vanguard at Kawanakajima."}, {name: "Naoe Kagetsuna", skill: 3, trait: quartermaster, note: "Kenshin's steward and general."}]
-        successors: [{name: "Uesugi Kagekatsu", age: 23}]
+        successors: [{name: "Uesugi Kagekatsu", age: 23, died: 1623}]
         pitch: "A warrior-monk and his loyal north. Beat the Tiger of Kai, then look to the Kanto."
         provinces:
           j_echigo: 750000
