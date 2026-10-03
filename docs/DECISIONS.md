@@ -1316,3 +1316,15 @@ Harthacnut, Edward, Harold Godwinson, then Edgar the Ætheling), which also make
 more accurate. Where two reigns ended in the same two-year turn, the earlier death is
 dated a year early so each king appears at his chapter. Hastings's historical choice
 kills Harold and gives Wessex and East Anglia to Normandy; England lives on in the north.
+
+## D-138 A second chronicle for 264 BC: Carthage — DELEGATED (2026-10-03)
+Following the owner's "storylines for each civilisation and empire", moments now get
+chronicles for their other great states, starting with Carthage: fifteen chapters from
+the garrison at Messana through Xanthippus, Drepana, Hamilcar 'the lightning', the
+Aegates, the Truceless War, Sardinia, the oath at the altar, Saguntum, the Alps, Cannae,
+the Metaurus, Zama and Hannibal as suffete, to "Carthage must be destroyed". Carthage
+was a republic, so it has no named ruler and the chapters speak to its council. Two
+tuning notes: Messana's historical choice hires 30,000 mercenaries and Xanthippus brings
+20,000, because without them Rome's AI took the city of Carthage itself by 250 BC; and the
+court no longer gives a eulogy when an unnamed ruler 'dies' (it read "the seal passes to
+the ruler of Carthage"). With a passive test player 12-14 of 15 chapters play.

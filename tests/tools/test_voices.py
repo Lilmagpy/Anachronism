@@ -114,3 +114,11 @@ def test_the_court_mourns_the_old_ruler_and_turns_to_the_new(content: Content) -
     assert voices[0]["moment"] == "ruler_died"
     assert "Duke Xiao" in voices[0]["text"]
     assert "King Huiwen" in voices[0]["text"]
+
+
+def test_no_eulogy_for_an_unnamed_ruler(content: Content) -> None:
+    state = new_game(content, "punic_wars", seed=1, player_civ="carthage")
+    assert state.civs["carthage"].ruler == ""
+    death = event("ruler_died", "carthage", "the ruler of Carthage")
+    voices = voices_for_turn(content, state, [death])
+    assert all(v["moment"] != "ruler_died" for v in voices)

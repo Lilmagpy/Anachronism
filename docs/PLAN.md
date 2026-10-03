@@ -183,6 +183,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] The seventh chronicle: the Mauryas, Chandragupta to Ashoka, 321-232 BC (D-135)
 - [x] The eighth chronicle: the Mongols, Genghis Khan to the fall of the Song, 1206-1279 (D-136)
 - [x] The ninth chronicle: England from Æthelred to Hastings, 1002-1066 (D-137)
-- [ ] Second chronicles for other states of each moment (Carthage, Hatti, Persia, Song...)
+- [x] A second chronicle for 264 BC: Carthage, from Messana to its destruction (D-138)
+- [ ] Second chronicles for other states of each moment (Hatti, Persia, Song, Normandy...)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

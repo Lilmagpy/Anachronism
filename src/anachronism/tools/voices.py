@@ -196,6 +196,8 @@ def voices_for_turn(
     player = state.player_civ
     mine = {e.kind: e for e in events if e.civ == player}
     said: list[dict[str, Any]] = []
+    if not state.civs[player].ruler:  # an unnamed ruler (a republic's magistrates): no eulogy
+        mine.pop("ruler_died", None)
     for moment in PRIORITY:
         if moment in mine and len(said) < MAX_VOICES:
             voice = speak(content, state, moment, mine[moment].subject)
