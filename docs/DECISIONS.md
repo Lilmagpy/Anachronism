@@ -1437,3 +1437,11 @@ Qu Yuan's death in the Miluo (the Dragon Boat festival), Lord Chunshen smuggling
 out of Qin, Lu and Xunzi, and Xiang Yan against Wang Jian. Chu's line runs from King Xuan to
 Fuchu. The 'six li' war is a lost campaign that ends, not an open war, because a permanent
 war let Qin's AI swallow a passive Chu decades early. All eight chapters play.
+
+## D-151 A third chronicle for 1275 BC: Middle Assyria — DELEGATED (2026-10-03)
+Six chapters across three kings: the claim to be a 'brother' of the great kings, the end of
+Mitanni, Nihriya, Marduk carried off from Babylon, the new city of Kar-Tukulti-Ninurta,
+and Tukulti-Ninurta murdered by his son (a chapter ends that reign). Assyria now has its
+real line: Adad-nirari I, Shalmaneser I, Tukulti-Ninurta I. Nihriya is a battle won, not an
+open war, because a lasting war with Hatti brought in Hatti's ally Egypt (which never fought
+Assyria). All six chapters play.

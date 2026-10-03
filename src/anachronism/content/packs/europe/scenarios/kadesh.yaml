@@ -114,7 +114,8 @@ scenarios:
         capital: ass_assur
         leader: Adad-nirari I
         leader_age: 35
-        successors: [{name: "Tukulti-Ninurta I", age: 30, disposition: "aggressive"}]
+        leader_died: -1264
+        successors: [{name: "Shalmaneser I", age: 30, disposition: "aggressive", died: -1234}, {name: "Tukulti-Ninurta I", age: 30, disposition: "aggressive", until: -1206}, {name: "Ashur-nadin-apli", age: 30}]
         pitch: "Young, ambitious and surrounded. Assyria's great age is still ahead - bring it forward."
         provinces:
           ass_assur: 300000
