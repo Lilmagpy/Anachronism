@@ -293,7 +293,8 @@ scenarios:
         capital: k4_pingcheng
         leader: Emperor Daowu
         leader_age: 29
-        successors: [{name: "Emperor Mingyuan", age: 17, disposition: "cautious"}, {name: "Emperor Taiwu", age: 15, disposition: "aggressive"}]
+        leader_until: 409
+        successors: [{name: "Emperor Mingyuan", age: 17, disposition: "cautious", died: 423}, {name: "Emperor Taiwu", age: 15, disposition: "aggressive", died: 452, ends: "is murdered by the eunuch Zong Ai"}, {name: "Emperor Wencheng", age: 12, died: 465}, {name: "Emperor Xianwen", age: 11, died: 471, ends: "gives up the throne to his four-year-old son"}, {name: "Emperor Xiaowen", age: 4, died: 499}, {name: "Emperor Xuanwu", age: 16}]
         pitch: "You have just conquered the north China plain. Rule farmers as well as you ride horses."
         provinces:
           k4_pingcheng: 500000

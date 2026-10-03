@@ -1590,3 +1590,15 @@ adventures. Five kings: Alexander I and Aeacides end in chapters, Alcetas II is 
 in 307, and Pyrrhus rules from 306 to his death. Pyrrhus's five years of exile (302-297)
 are folded into the Ipsus chapter's outcome rather than modelled as a second reign. All
 twelve chapters play on two seeds.
+
+## D-167 A fourth chronicle for AD 400: Northern Wei — DELEGATED (2026-10-03)
+Thirteen chapters over 92 years, 402-494, of the Xianbei emperors who reunited the north
+and then made themselves Chinese: Chaibi, the custom of killing the heir's mother (and
+Daowu's murder), Liu Yu's crescent formation, the siege of Hulao, the boy emperor at
+Shengle, the White City, the Gobi campaign, Northern Yan's fall, the persecution of
+Buddhism, Cui Hao's history in stone, the Yungang Buddhas, the equal-field law and the move
+to Luoyang. Luoyang, the Ordos, Chang'an, Longcheng and Youzhou are taken in historical
+choices, so the benchmark rises from three provinces to eight as the real Wei's did (the
+conquest of Shandong in 469 is not modelled). Seven emperors in their real years; the
+short-lived Prince of Nan'an (452) is skipped. All thirteen chapters play on two seeds;
+a passive Wei loses a province to a late uprising, as passive players do elsewhere.
