@@ -483,8 +483,9 @@ scenarios:
         capital: chu_ying
         leader: King Xuan
         leader_age: 45
+        leader_died: -340
         generals: [{name: "Zhuang Qiao", skill: 3, trait: quartermaster, note: "Will lead a Chu army to far Yunnan."}]
-        successors: [{name: "King Wei of Chu", age: 35, disposition: "aggressive"}, {name: "King Huai", age: 30, disposition: "cautious"}]
+        successors: [{name: "King Wei of Chu", age: 35, disposition: "aggressive", died: -329}, {name: "King Huai", age: 30, disposition: "cautious", until: -298}, {name: "King Qingxiang", age: 25, died: -262}, {name: "King Kaolie", age: 28, died: -238}, {name: "King You of Chu", age: 10, died: -228}, {name: "Fuchu, last King of Chu", age: 30, until: -222}]
         pitch: "The vast southern kingdom of lakes, forests and shamans, the largest state of all."
         provinces:
           chu_ying: 1300000

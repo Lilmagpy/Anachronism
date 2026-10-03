@@ -195,6 +195,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] A third chronicle for 1206: Kamakura Japan and the Mongol invasions (D-147)
 - [x] A third chronicle for AD 1000: the Western Empire, Otto III to Canossa (D-148)
 - [x] A fourth chronicle for AD 1000: Kievan Rus, Vladimir to Yaroslav the Wise (D-149)
-- [ ] More chronicles for other states (Assyria, Uesugi, Cordoba, Chu...)
+- [x] A third chronicle for 350 BC: Chu, from Yue to Xiang Yan, with Qu Yuan (D-150)
+- [ ] More chronicles for other states (Assyria, Uesugi, Cordoba, Silla...)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

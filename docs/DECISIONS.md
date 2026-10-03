@@ -1429,3 +1429,11 @@ ends Sviatopolk's reign), the Russkaya Pravda, the Pechenegs and St Sophia, the 
 raid on Constantinople, Anna Yaroslavna's marriage to the King of France, and Yaroslav's
 testament. The 1043 raid no longer declares a lasting war (peace came in 1046; an
 open-ended war let Byzantium's AI take Kiev). All nine chapters play.
+
+## D-150 A third chronicle for 350 BC: Chu — DELEGATED (2026-10-03)
+Eight chapters: the conquest of Yue, Zhang Yi's 'six hundred li', King Huai seized at the
+Wu pass (a chapter ends his reign), Qu Yuan's exile and the Li Sao, the fall of Ying and
+Qu Yuan's death in the Miluo (the Dragon Boat festival), Lord Chunshen smuggling the prince
+out of Qin, Lu and Xunzi, and Xiang Yan against Wang Jian. Chu's line runs from King Xuan to
+Fuchu. The 'six li' war is a lost campaign that ends, not an open war, because a permanent
+war let Qin's AI swallow a passive Chu decades early. All eight chapters play.
