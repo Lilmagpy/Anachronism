@@ -1734,3 +1734,13 @@ play on two seeds.
 Also fixed: the Western Xia flood chapter (D-162) gave the Jin a grudge against Xia,
 where the story meant the reverse; `grudges` names who resents the player (see D-178),
 so it was removed.
+
+## D-180 A seventh chronicle for 1275 BC: Middle Elam — DELEGATED (2026-10-03)
+Seven chapters across 165 years, c. 1272-1110 BC, the Elamite side of the Babylon
+chronicle (D-163): the ziggurat city of Chogha Zanbil, the two-ton bronze statue of Queen
+Napir-Asu, Kidin-Hutran's raids on Nippur, Shutruk-Nakhunte's trophies (Babylon is taken),
+Marduk carried to Susa, Shilhak-Inshushinak's bricks naming earlier kings, and
+Nebuchadnezzar's summer march to the Ulai (Babylon is given back). Eight kings in
+approximate reign dates; the last vanishes after the Ulai, as he does from history. The
+chronicle runs to the edge of the 170-year limit for a chronicle's span. All seven
+chapters play on two seeds.

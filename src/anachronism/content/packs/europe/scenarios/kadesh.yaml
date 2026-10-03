@@ -223,6 +223,10 @@ scenarios:
           - {id: "elam_sacks_babylon", goal: "conquer", target: "babylon", preconditions: {after_year: -1165}, note: "Shutruk-Nakhunte of Elam sacks Babylon (1158 BC)."}
         capital: ela_susa
         leader: Untash-Napirisha
+        leader_age: 35
+        leader_died: -1240
+        # Middle Elamite reign dates are approximate
+        successors: [{name: "Unpahash-Napirisha", age: 40, died: -1235}, {name: "Kidin-Hutran III", age: 35, died: -1210}, {name: "Hallutush-Inshushinak", age: 40, died: -1185}, {name: "Shutruk-Nakhunte", age: 35, died: -1155}, {name: "Kutir-Nahhunte", age: 40, died: -1150}, {name: "Shilhak-Inshushinak", age: 35, died: -1120}, {name: "Hutelutush-Inshushinak", age: 25, until: -1110}]
         pitch: "Mountains behind you, Mesopotamia before you. Build greater than Babylon."
         provinces:
           ela_susa: 200000

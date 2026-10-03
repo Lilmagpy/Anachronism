@@ -224,6 +224,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] A fourth chronicle for 350 BC: Qi, from Maling to the last surrender (D-177)
 - [x] A fifth chronicle for 350 BC: Yan, from Zizhi to Jing Ke (D-178)
 - [x] A sixth chronicle for 1275 BC: Ugarit, the alphabet city, to its burning (D-179)
+- [x] A seventh chronicle for 1275 BC: Middle Elam, from Chogha Zanbil to the Ulai (D-180)
 - [ ] More chronicles for other states (Babylon, Wa, Poland, Macedon of 264...)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging
