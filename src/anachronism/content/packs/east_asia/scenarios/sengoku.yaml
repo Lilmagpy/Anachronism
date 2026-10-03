@@ -307,7 +307,8 @@ scenarios:
         capital: j_oshu
         leader: Date Harumune
         leader_age: 41
-        successors: [{name: "Date Terumune", age: 17}, {name: "Date Masamune", age: 18, disposition: aggressive}]
+        leader_until: 1564
+        successors: [{name: "Date Terumune", age: 20, until: 1584}, {name: "Date Masamune", age: 17, disposition: aggressive, died: 1636}, {name: "Date Tadamune", age: 37}]
         pitch: "The north is far from the wars - for now. Masamune, the one-eyed dragon, is coming."
         provinces:
           j_oshu: 450000

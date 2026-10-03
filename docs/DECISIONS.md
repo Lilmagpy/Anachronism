@@ -1791,3 +1791,11 @@ to make peace with the Takeda, the Otate disturbance in which Saburo died, and t
 up). Ujiyasu dies in 1571; Ujimasa's rule ends at Odawara. Its chapters meet the Uesugi
 and Takeda chronicles at the same events from the other side. All five chapters play on
 two seeds.
+
+## D-186 A ninth chronicle for 1560: the Date — DELEGATED (2026-10-03)
+Seven chapters, 1564-1613: Harumune stepping aside, Terumune handing the house to his
+one-eyed son, the shooting on the Abukuma that killed Terumune with his kidnappers, the
+white robe at Odawara, the pierced eye of the wagtail seal, the founding of Sendai, and
+Hasekura's embassy across the Pacific to Spain and the Pope. The white robe, the golden
+cross and the wagtail are later chronicle stories and are told as such. Three Date lords,
+each reign ending in its chapter. All seven chapters play on two seeds.
