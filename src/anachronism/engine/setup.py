@@ -119,6 +119,11 @@ def build_state(
             for c, start in sorted(scenario.civs.items())
             if start.leader_until is not None
         },
+        reign_died={
+            c: start.leader_died
+            for c, start in sorted(scenario.civs.items())
+            if start.leader_died is not None
+        },
     )
     needs = {node_id: set(node.prerequisites) for node_id, node in content.techs.items()}
     civs = {

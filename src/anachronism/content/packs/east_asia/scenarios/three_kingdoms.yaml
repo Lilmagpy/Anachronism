@@ -26,7 +26,7 @@ scenarios:
         leader: King Gwanggaeto
         leader_age: 26
         leader_until: 416
-        successors: [{name: "King Jangsu", age: 19, disposition: "aggressive"}]
+        successors: [{name: "King Jangsu", age: 19, disposition: "aggressive", died: 491}]
         pitch: "Gwanggaeto the Great has just come to the throne. Push the frontiers to the Liao and the Han - and give Goguryeo ideas no one else has."
         provinces:
           k4_gungnae: 400000

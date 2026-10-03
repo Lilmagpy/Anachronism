@@ -45,6 +45,12 @@ class Successor(Frozen):
     """Age on taking the throne."""
     disposition: Disposition | None = None
     """Their temperament; empty keeps the state's."""
+    until: int | None = None
+    """The year their reign really ended by violence or a chronicle's chapter: in a
+    chronicle, the player's ruler is spared old age before then (D-130)."""
+    died: int | None = None
+    """The year they really died of age, illness or accident: in a chronicle, the player's
+    ruler lives until then and dies then (D-132)."""
 
 
 GeneralTrait = Literal["horse", "siege", "shield", "bold", "quartermaster", "beloved"]
@@ -84,6 +90,9 @@ class ScenarioCiv(Frozen):
     leader_until: int | None = None
     """The year the first ruler's reign really ended. In a chronicle the player's ruler does
     not die of old age before then: how the reign ends is the chronicle's to tell."""
+    leader_died: int | None = None
+    """The year the first ruler really died of age, illness or accident: in a chronicle the
+    player's ruler lives until then and dies then (D-132)."""
     successors: tuple[Successor, ...] = ()
     """Who follows, in order, when rulers die (after that, unnamed heirs)."""
     generals: tuple[General, ...] = ()

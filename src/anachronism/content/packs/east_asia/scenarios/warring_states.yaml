@@ -30,8 +30,9 @@ scenarios:
         capital: qin_guanzhong
         leader: Duke Xiao
         leader_age: 31
+        leader_died: -338
         generals: [{name: "Sima Cuo", skill: 4, trait: siege, note: "Will conquer Shu and Ba in 316 BC."}, {name: "Bai Qi", skill: 5, trait: bold, note: "Born about 332 BC: the victor of Changping, Qin's most feared general."}]
-        successors: [{name: "King Huiwen", age: 19, disposition: "aggressive"}, {name: "King Wu", age: 19, disposition: "aggressive"}, {name: "King Zhaoxiang", age: 19, disposition: "aggressive"}]
+        successors: [{name: "King Huiwen", age: 19, disposition: "aggressive", died: -311}, {name: "King Wu", age: 19, disposition: "aggressive", died: -307}, {name: "King Zhaoxiang", age: 19, disposition: "aggressive", died: -251}, {name: "King Xiaowen", age: 53, died: -250}, {name: "King Zhuangxiang", age: 31, died: -247}, {name: "King Zheng", age: 13, disposition: "aggressive", died: -210}]
         pitch: "A poor, tough frontier state in the middle of radical reform. Turn Shang Yang's farmers and soldiers into the first empire - decades early."
         provinces:
           qin_guanzhong: 1600000

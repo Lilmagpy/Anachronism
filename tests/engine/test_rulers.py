@@ -32,14 +32,16 @@ def test_succession_follows_history_then_heirs(content: Content) -> None:
     qin.stats.legitimacy_bp = 3000
     events = EventLog(0, state.year)
     rng = GameRng(state.rng)
-    names = []
-    for _ in range(5):
+    names: list[str] = []
+    for _ in range(16):
         qin.ruler_age = 80
         age_and_succeed(state, qin, rng, events)
-        names.append(qin.ruler)
-    assert names[:3] == ["King Huiwen", "King Wu", "King Zhaoxiang"]
-    assert names[3] == ""
-    assert qin.rulers >= 5  # the chance is capped at 90%, so one may survive
+        if not names or names[-1] != qin.ruler or qin.ruler == "":
+            names.append(qin.ruler)  # the chance is capped at 90%, so one may survive a turn
+    line = ["King Huiwen", "King Wu", "King Zhaoxiang", "King Xiaowen", "King Zhuangxiang"]
+    assert names[:6] == [*line, "King Zheng"]
+    assert names[6] == ""  # then unnamed heirs
+    assert qin.rulers >= 8
     kinds = [e.kind for e in events.items]
     assert "ruler_died" in kinds
     assert "succession_crisis" in kinds

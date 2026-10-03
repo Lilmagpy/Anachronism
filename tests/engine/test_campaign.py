@@ -185,3 +185,18 @@ def test_the_court_can_move_and_a_tributary_can_break_away(content: Content) -> 
     state.chapter = "gog_naje"
     state, _ = apply_action(state, ChooseChapter(civ="goguryeo", chapter="gog_naje", choice=0))
     assert status(state, "goguryeo", "silla") is RelationStatus.HOSTILE
+
+
+def test_heirs_are_spared_until_their_reigns_really_ended(content: Content) -> None:
+    """Jangsu died in 491; in the chronicle old age does not take him first."""
+    from anachronism.engine.events import EventLog
+    from anachronism.engine.rulers import spared, succeed
+
+    state = new_game(content, "three_kingdoms", seed=1, player_civ="goguryeo", chronicle=True)
+    civ = state.civs["goguryeo"]
+    succeed(state, civ, EventLog(state.turn, state.year), how="dies")
+    assert civ.ruler == "King Jangsu"
+    state.year = 480
+    assert spared(state, civ)
+    state.year = 491
+    assert not spared(state, civ)

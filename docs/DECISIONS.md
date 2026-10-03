@@ -1247,3 +1247,14 @@ Chongzhi's pi, the Yungang Buddhas). Decisions:
 - The Feng Hong chapter opens while Yan still stands and Wei is at its gates, since Wei
   does not reliably take Longcheng on its own in play; one choice lets you take it first.
 - A passive test player plays all 14 chapters on the seeds tried.
+
+## D-132 Chronicle rulers keep history's calendar — DELEGATED (2026-10-03)
+Follow-on to D-130. Sparing a ruler until their reign's real end was not enough: after
+that, old age was left to the dice, and in testing Duke Xiao of Qin lived until 294 BC
+(he died in 338). A scenario now says, for its first ruler and each named heir, either
+`died` (a natural death: in a chronicle the player's ruler lives until that year and dies
+in the turn that contains it) or `until` (a violent end a chapter tells, like Nobunaga at
+Honno-ji: spared until then, and if the player changes history the ruler lives on with
+the usual odds). Free play is unchanged. Qin now has its real line through Xiaowen and
+Zhuangxiang to King Zheng (the future First Emperor), who takes the throne just as his
+chapter opens in 246 BC; Jangsu of Goguryeo reigns to 491.

@@ -109,6 +109,8 @@ class World(Frozen):
     """The faiths of this world, by id."""
     reign_until: dict[str, int] = Field(default_factory=dict)
     """The year each first ruler's reign really ended (spared old age before it in a chronicle)."""
+    reign_died: dict[str, int] = Field(default_factory=dict)
+    """The year each first ruler really died a natural death (and dies, in a chronicle)."""
 
 
 class Construction(Mutable):
