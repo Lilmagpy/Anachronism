@@ -217,6 +217,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] A tenth chronicle for AD 1000: Hungary, from Stephen's crown to Tihany (D-170)
 - [x] An eleventh chronicle for AD 1000: the Ghaznavids, Mahmud and Masud (D-171)
 - [x] A twelfth chronicle for AD 1000: Ireland, Brian Boru and his heirs (D-172)
+- [x] A thirteenth chronicle for AD 1000: Venice, the doges from Orseolo to the Golden Bull (D-173)
 - [ ] More chronicles for other states (Babylon, Wa, Poland, Macedon of 264...)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

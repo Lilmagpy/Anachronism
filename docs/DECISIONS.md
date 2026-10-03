@@ -1658,3 +1658,13 @@ road to Rome. The Cogad and Njal's saga are a century later and partisan, so the
 stories (the chess game, Brodir) are told as the saga's, beside what the annals say.
 Brian is spared old age until Clontarf; Donnchad until his fall in 1063-64. All eight
 chapters play on three seeds.
+
+## D-173 A thirteenth chronicle for AD 1000: Venice — DELEGATED (2026-10-03)
+Seven chapters, 1000-1084: Pietro II Orseolo's Ascension Day voyage down the Dalmatian
+coast, the Byzantine princess with the golden fork, the fall of the Orseolo, the law
+against co-doges, the new St Mark's on the model of the Holy Apostles, Alexios I's Golden
+Bull, and the defeat off Corfu. Seven doges in their real years; the elected doges are
+the "rulers" (an "Otto Orseolo ... takes the throne" message is a small stretch for an
+elected office). Alliances with Byzantium were left out of the deeds: a two-province
+Venice allied to Byzantium would be dragged into Basil II's Bulgarian war (the lesson of
+D-149/D-150). All seven chapters play on two seeds.

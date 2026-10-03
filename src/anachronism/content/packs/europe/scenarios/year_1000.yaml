@@ -367,6 +367,10 @@ scenarios:
         disposition: mercantile
         capital: m_venice
         leader: Pietro II Orseolo
+        leader_age: 39
+        leader_died: 1009
+        # doges were elected; the line follows them in turn
+        successors: [{name: "Doge Otto Orseolo", age: 17, died: 1026, ends: "is deposed, shaved and exiled to Constantinople"}, {name: "Doge Pietro Centranico", age: 40, died: 1032, ends: "is deposed and sent to a monastery"}, {name: "Doge Domenico Flabanico", age: 60, died: 1043}, {name: "Doge Domenico Contarini", age: 40, died: 1071}, {name: "Doge Domenico Selvo", age: 45, until: 1084}, {name: "Doge Vitale Falier", age: 50, died: 1096}]
         pitch: "Salt, ships and a lagoon no army can cross. Trade your way to an empire."
         provinces:
           m_venice: 120000
