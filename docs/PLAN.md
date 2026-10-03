@@ -207,6 +207,8 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] A fourth chronicle for 1206: Goryeo under the Choe and the Mongols (D-160)
 - [x] A fifth chronicle for 1206: the fall of the Jurchen Jin (D-161)
 - [x] A sixth chronicle for 1206: Western Xia, the Tangut kingdom (D-162)
+- [x] A fourth chronicle for 1275 BC: Kassite Babylon, from Kadesh to Elam (D-163)
+- [x] A fifth chronicle for 1275 BC: Mycenae, the Ahhiyawa of the Hittite letters (D-164)
 - [ ] More chronicles for other states (Babylon, Wa, Poland, Macedon of 264...)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

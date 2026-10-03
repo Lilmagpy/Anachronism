@@ -185,7 +185,8 @@ scenarios:
         capital: bab_babylon
         leader: Kadashman-Turgu
         leader_age: 40
-        successors: [{name: "Kadashman-Enlil II", age: 20}]
+        leader_died: -1264
+        successors: [{name: "Kadashman-Enlil II", age: 15, died: -1255}, {name: "Kudur-Enlil", age: 25, died: -1246}, {name: "Shagarakti-Shuriash", age: 30, died: -1233}, {name: "Kashtiliash IV", age: 30, until: -1225}, {name: "Enlil-nadin-shumi", age: 40, died: -1224, ends: "is driven from the throne by Elamite raiders"}, {name: "Kadashman-Harbe II", age: 40, died: -1223, ends: "is set aside by the Assyrians"}, {name: "Adad-shuma-iddina", age: 40, died: -1217, ends: "is overthrown by the nobles of Babylonia"}, {name: "Adad-shuma-usur", age: 30, died: -1187}, {name: "Meli-Shipak", age: 35, died: -1172}, {name: "Marduk-apla-iddina I", age: 35, died: -1159}, {name: "Zababa-shuma-iddin", age: 40, until: -1158}, {name: "Enlil-nadin-ahi", age: 35, until: -1155}]
         pitch: "The oldest schools and the finest astronomers on earth. Turn learning into power."
         provinces:
           bab_babylon: 500000

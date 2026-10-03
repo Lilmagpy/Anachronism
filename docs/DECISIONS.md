@@ -1543,3 +1543,26 @@ the month's grace at Zhongxing, while the Khan lay dead. Five rulers in their re
 the reigns end by coup, coup, abdication, death and execution, each in the year it did.
 The Hexi corridor and the Ordos pass to the Mongols in the historical choice at Lingzhou.
 All seven chapters play on two seeds.
+
+## D-163 A fourth chronicle for 1275 BC: Kassite Babylon — DELEGATED (2026-10-03)
+Nine chapters over 110 years, 1266-1155 BC: Kadashman-Turgu's offer to Hattusili, the
+vizier who froze the Hittites out, Sin-leqi-unninni's standard Gilgamesh, the foundation
+inscription Nabonidus would dig up seven centuries later, Tukulti-Ninurta's sack of
+Babylon (the capital goes to Assyria in the historical choice), the nobles' revolt that
+put Adad-shuma-usur on the throne (Babylon taken back), Meli-Shipak's daughter sent to
+Susa, Shutruk-Nakhunte carrying Hammurabi's stele to Susa, and Marduk taken to Elam.
+Thirteen kings in their real years (Brinkman's dates), including the three Assyrian-era
+puppets who each fall in turn; where a death fell between turns, the turn grid already
+put the right king on the throne, so no date needed shifting. Gilgamesh's editor is
+dated only "Kassite period"; the history note says so. All nine chapters play on two seeds.
+
+## D-164 A fifth chronicle for 1275 BC: Mycenae — DELEGATED (2026-10-03)
+Six chapters, 1251-1180 BC, built only on what documents and digs show, not on Homer:
+the Tawagalawa letter about Piyamaradu (the one time a Greek king was a Hittite 'brother'),
+the Lion Gate, Linear B accounts (preserved only because the palaces burned), Millawanda
+lost to Tudhaliya IV (and 'Ahhiyawa' rubbed out of the Sausgamuwa treaty), the hidden
+cistern and the Isthmus wall as Thebes burns, and the Pylos tablets' 'watchers guarding
+the coast' before the palace fell. No Mycenaean king's name survives from his own time,
+so the ruler stays unnamed ('the wanax'). Where a historical answer is unknown (how the
+king answered Hattusili), the choice taken is the one the later letters imply, and the
+history note says that the answer is unknown. All six chapters play on two seeds.
