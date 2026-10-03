@@ -1687,3 +1687,12 @@ and the fall of the city. Hiero dies at ninety-one in 215, Hieronymus is killed 
 Leontini in 214, and the general Epicydes leads until the fall; the "burning mirrors" are
 left out as a later story. Its chapters point at the Carthage, Rome and Ptolemy
 chronicles. All nine chapters play on two seeds.
+
+## D-176 A sixth chronicle for 264 BC: the Antigonids — DELEGATED (2026-10-03)
+Eight chapters over a century, 262-168 BC: Athens garrisoned after the Chremonidean War,
+the flagship dedicated at Delos after Cos, Aratus's night climb up Acrocorinth (Corinth
+goes to the Achaeans), Doson's price for saving Aratus and Sellasia (Corinth comes back),
+Philip V's treaty with Hannibal caught by the Roman fleet, Cynoscephalae (Thessaly and
+Corinth are lost; Greece "freed"), the forged letter and Demetrius's death, and Pydna.
+Five kings in their real years. The chronicle complements the Alexander chronicle (D-134)
+for the same kingdom a century later. All eight chapters play on two seeds.

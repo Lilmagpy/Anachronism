@@ -175,7 +175,8 @@ scenarios:
         capital: mac_macedonia
         leader: Antigonus II Gonatas
         leader_age: 55
-        successors: [{name: "Demetrius II", age: 38}, {name: "Antigonus III Doson", age: 36, disposition: "cautious"}]
+        leader_died: -239
+        successors: [{name: "Demetrius II", age: 38, died: -229}, {name: "Antigonus III Doson", age: 36, disposition: "cautious", died: -221}, {name: "Philip V", age: 17, disposition: "aggressive", died: -179}, {name: "Perseus", age: 33, until: -168}]
         pitch: "Hold Greece, rebuild Alexander's kingdom, and keep the Ptolemies out of the Aegean."
         provinces:
           mac_macedonia: 700000
