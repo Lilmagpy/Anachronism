@@ -851,7 +851,8 @@ scenarios:
         capital: c_hanyang
         leader: King Myeongjong
         leader_age: 26
-        successors: [{name: "King Seonjo", age: 15, disposition: cautious}]
+        leader_died: 1566
+        successors: [{name: "King Seonjo", age: 15, disposition: cautious, died: 1608}]
         pitch: "Hangul, metal type, turtle ships to come - and a Japanese invasion in 1592. Be ready."
         provinces:
           c_hanyang: 2500000

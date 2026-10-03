@@ -203,6 +203,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] A sixth chronicle for AD 1000: the Fatimid caliphs of Cairo (D-155)
 - [x] A third chronicle for 264 BC: the Seleucids and Antiochus the Great (D-156)
 - [x] A fourth chronicle for 264 BC: the Ptolemies of Alexandria (D-157)
+- [x] A fourth chronicle for 1560: Joseon and the Imjin War (D-159)
 - [ ] More chronicles for other states (Babylon, Wa, Poland, Macedon of 264...)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

@@ -1502,3 +1502,12 @@ play.
 With 29 chronicles, a player could only discover one by clicking each state. Now every
 state with a chronicle wears a small gold seal on its shield showing its number of
 chapters (and its tooltip says so), and those states come first in the row of shields.
+
+## D-159 A fourth chronicle for 1560: Joseon and the Imjin War — DELEGATED (2026-10-03)
+Ten chapters from King Seonjo's accession (1567) to Noryang (1598): the sarim scholars and
+Yi Hwang, the split into Easterners and Westerners, Yi I's plea for a hundred thousand
+soldiers, the envoys who came back from Japan disagreeing, Yi Sun-sin's turtle ships, the
+fall of Busan and the flight from Hanyang, Hansan Island, the Ming relief army, the twelve
+ships at Myeongnyang and Yi's death at Noryang. Myeongjong dies in 1566 and Seonjo rules to
+1608, as in history. The invasion strips Joseon to two provinces and the Ming return them,
+so the benchmark follows the real war; all ten chapters play on two seeds.
