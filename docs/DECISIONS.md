@@ -1772,3 +1772,13 @@ Kizugawaguchi, Takamatsu castle in its lake as Nobunaga dies, thirty thousand me
 Korea, and Terumoto staying in Osaka while Sekigahara was lost (Aki and Izumo are given
 up). Motonari dies in 1571 and Terumoto reigns on. The Mori chronicle meets the Oda and
 Joseon chronicles at Takamatsu and in Korea. All eight chapters play on two seeds.
+
+## D-184 A seventh chronicle for 1560: the Shimazu — DELEGATED (2026-10-03)
+Ten chapters, 1560-1609: the matchlocks of Tanegashima, Takahisa's retirement in favour of
+his four sons, Kizaki's three hundred against three thousand, Mimigawa against the
+Christian lord Otomo (Hyuga taken), Okitanawate (Hizen), Hetsugigawa and Funai (Bungo),
+the submission to Hideyoshi (all three given up), Sacheon, the retreat through the
+Tokugawa army at Sekigahara, and the invasion of Ryukyu (taken). The benchmark follows
+the Shimazu's rise and fall exactly: 1, 2, 3, 4, 1, 2. Four lords in their real years:
+Takahisa retires in 1566, Yoshihisa submits in 1587, Yoshihiro hands over in 1602. All ten
+chapters play on two seeds, level with history throughout.

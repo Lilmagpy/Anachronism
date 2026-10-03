@@ -743,8 +743,9 @@ scenarios:
         capital: j_satsuma
         leader: Shimazu Takahisa
         leader_age: 46
+        leader_until: 1566
         generals: [{name: "Shimazu Yoshihiro", skill: 4, trait: bold, note: "Will win at Kizaki against odds of ten to one."}]
-        successors: [{name: "Shimazu Yoshihisa", age: 27, disposition: aggressive}]
+        successors: [{name: "Shimazu Yoshihisa", age: 33, disposition: aggressive, until: 1587}, {name: "Shimazu Yoshihiro", age: 52, disposition: aggressive, died: 1602, ends: "hands the domain to his son Tadatsune"}, {name: "Shimazu Tadatsune", age: 26, died: 1638}]
         pitch: "Satsuma made Japan's first muskets. Make its last word in war."
         provinces:
           j_satsuma: 300000
