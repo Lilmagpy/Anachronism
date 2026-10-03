@@ -1294,3 +1294,13 @@ conquest by dhamma, the edicts, Mahinda in Lanka and the half-fruit. Bindusara a
 die in their real years (D-132). Many of these stories come from legends written down
 centuries later; each history note says which. All 17 chapters play with a passive test
 player.
+
+## D-136 The eighth chronicle: the Mongols, 1206-1279 — DELEGATED (2026-10-03)
+Twenty-one chapters across five Great Khans, at three years a turn: the assembly on the
+Onon, the shaman Teb Tengri, the forest peoples, the dyke at Zhongxing, the Uyghurs' letter,
+the Badger's Mouth, Zhongdu, Yelu Chucai, Jebe and Kuchlug, Otrar, the last campaign,
+'pasture or taxes', Goryeo's island court, the fall of the Jin, Karakorum and the yam,
+news from Hungary, Dali, Diaoyu, Xiangyang, the kamikaze and Yamen. Genghis, Ogedei,
+Guyuk, Mongke and Kublai die in their real years (D-132). Khwarazm, Russia and Hungary are
+off this map, so those campaigns are told from the khan's camp. With a passive test player
+20 of 21 chapters play; Xiangyang steps aside when the player has taken it already.

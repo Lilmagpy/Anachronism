@@ -10,6 +10,7 @@ scenarios:
       tribute to the fading Qara Khitai.
     start_year: 1206
     years_per_turn: 10
+    campaign_years_per_turn: 3
     player_civ: mongols
     map: east_asia
     cost_scale: 10
@@ -29,8 +30,9 @@ scenarios:
         capital: g_onon
         leader: "Genghis Khan"
         leader_age: 44
+        leader_died: 1227
         generals: [{name: "Subutai", skill: 5, trait: horse, note: "The greatest of the Mongol generals: from China to Hungary."}, {name: "Jebe", skill: 4, trait: horse, note: "'The Arrow': once shot Temujin's horse, then served him."}, {name: "Muqali", skill: 4, trait: siege, note: "Viceroy of the war on the Jin in north China."}, {name: "Jochi", skill: 3, trait: horse, note: "Genghis Khan's eldest son."}]
-        successors: [{name: "Ogedei Khan", age: 43, disposition: aggressive}, {name: "Guyuk Khan", age: 40, disposition: aggressive}, {name: "Mongke Khan", age: 42, disposition: aggressive}, {name: "Kublai Khan", age: 45, disposition: cautious}]
+        successors: [{name: "Ogedei Khan", age: 43, disposition: aggressive, died: 1241}, {name: "Guyuk Khan", age: 40, disposition: aggressive, died: 1248}, {name: "Mongke Khan", age: 42, disposition: aggressive, died: 1259}, {name: "Kublai Khan", age: 45, disposition: cautious, died: 1294}]
         martial_bp: 150000
         pitch: "At the kurultai of 1206 the tribes have named you Genghis Khan. You have the finest horsemen on earth and almost nothing else. History says you conquer half the world; build something that lasts."
         provinces:
