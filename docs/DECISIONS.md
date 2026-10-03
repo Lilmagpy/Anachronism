@@ -1984,3 +1984,47 @@ invented.
 - D-245 Cisalpine Gauls (7, 232-190 BC): Telamon to the Boii's defeat. Rome's own script takes
   the Boii land early, so the benchmark reads "behind history" from 224 to 200; left so rather
   than change Rome's play. The Telamon chapter's change of leaders is a game device.
+
+## D-246 to D-263 Eighteen more chronicles from the helper agents — DELEGATED (2026-10-03)
+Fourth round of the six helpers (D-187). With it, every state in every real-map scenario has a
+chronicle except the Seleucid-era "satraps" of the Maurya scenario. Each was tested on seeds
+1 and 2 by its helper and replayed on seed 3 by the manager after merging; every chapter
+played. The helpers had no network: facts are from memory, hedged in the text and marked
+approximate where unsure, so a source check before release is advisable. Thin sources mean
+several are deliberately short (Chera, Nanda, Ba: three chapters each).
+- D-246 Kalinga (4, 318-261 BC): to Ashoka's war, with Rock Edict XIII's own figures.
+- D-247 Chola (5, 291-159 BC) and D-248 Pandya (5, 300-168 BC): Ashoka's edicts naming them
+  as neighbours, Megasthenes' Pandyan queen (a Greek story), Elara (consistent with the Lanka
+  chronicle), and Kharavela's inscription on its disputed early date. Sangam poetry is used
+  only as later, undated tradition. The edict chapters need the Mauryas alive, so a game where
+  the AI destroys them skips one chapter, with a note.
+- D-249 Nanda (3, 321-315 BC): the fall to Chandragupta from late, contradictory sources;
+  Dhana Nanda kept alive to the last chapter with leader_until.
+- D-250 Chera (3, 321-255 BC): pepper, the "Mauryan chariots" poems, Ashoka's Keralaputras.
+- D-251 Scythians (3, 336-325 BC): the Danube campaign, the Jaxartes Saka (named as a
+  different people) and Zopyrion at Olbia; the Thatis battle left out (a Bosporan war).
+- D-252 Thebes (6, 336-316 BC): the revolt and destruction of 335, four chained chapters in
+  one year, then Cassander's refounding.
+- D-253 Odrysians (6, 336-313 BC): Seuthes III, Zopyrion, Lysimachus and Seuthopolis.
+- D-254 Illyrians (5, 335-307 BC): Pelium, Glaucias and the infant Pyrrhus (consistent with
+  the Epirus chronicle); Cleitus's unrecorded end handled by ruler_falls.
+- D-255 Syracuse under Agathocles (9, 336-289 BC, file chapters_syracuse_agathocles.yaml):
+  the first historical choice makes peace with Carthage, because Carthage's script otherwise
+  took Syracuse by 325. The poisoning is told as Diodorus's story.
+- D-256 Carthage in Agathocles' war (7, 317-277 BC, chapters_carthage_agathocles.yaml): the 310
+  sacrifice reported by Diodorus alone, told soberly with that caveat.
+- D-257 Sparta from Agis III to Pyrrhus (8, 336-272 BC, chapters_sparta_agis.yaml): the player
+  follows the Eurypontid kings, then Areus I (an Agiad) from 275, a simplification of Sparta's
+  double kingship.
+- D-258 Shu (4, 337-316 BC) and D-259 Ba (3, 320-316 BC): to Qin's conquest; Huayang guo zhi
+  stories labelled as late tradition.
+- D-260 Yiqu (5, 326-272 BC): to the killing at Ganquan; a 306 chapter adds soldiers so Qin's
+  script does not take Yiqu before history did.
+- D-261 Donghu (5, 306-208 BC): Qin Kai to Modu's famous demands (Shiji 110, labelled). The
+  Li Mu chapter's pact with Zhao and army boost is the game's invention, as the text says.
+- D-262 Gojoseon (6, 322-194 BC): to Wiman's coup; Dangun called a 13th-century tradition.
+  The historical choice against Yan adds an alliance with Qi and soldiers to stop Yan's
+  script swallowing Joseon; the manager added a line to the outcome saying no source records
+  the Qi pact.
+- D-263 Onggut (6, 1206-1296): Alaqush to Prince George; Alaqai Beki's regency and Rabban
+  Sauma; rulers between Alaqai and George are unnamed placeholders.

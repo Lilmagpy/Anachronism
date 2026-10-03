@@ -232,7 +232,11 @@ scenarios:
         capital: a3_laconia
         leader: "King Agis III"
         leader_age: 32
-        successors: [{name: "King Eudamidas I", age: 40}]
+        leader_until: -331
+        # Agis III dies at Megalopolis (331); the chronicle's chapter ends his reign. Then the
+        # Eurypontid kings Eudamidas I (to about 305) and Archidamus IV (to about 275), then
+        # Areus I (Agiad, king from 309 but taken as the ruler from 275); reign dates approximate.
+        successors: [{name: "King Eudamidas I", age: 40, died: -305}, {name: "King Archidamus IV", age: 25, died: -275}, {name: "King Areus I", age: 45, until: -265}]
         martial_bp: 25000
         pitch: "Sparta alone refused to bow to Philip. It has few men left, and all of them are Spartans."
         provinces:
@@ -315,6 +319,8 @@ scenarios:
         capital: a3_illyria
         leader: "King Cleitus"
         leader_age: 35
+        leader_until: -335  # ill_flight (Pelium, 335) ends his reign; his fate is not recorded
+        successors: [{name: "Glaucias", age: 40, disposition: aggressive, until: -300}]  # king of the Taulantii; his death date is unknown, he is alive in 307
         martial_bp: 15000
         pitch: "Macedon's new king is a boy. The hills remember Philip's victories; they mean to reverse them."
         provinces:
@@ -345,6 +351,7 @@ scenarios:
         capital: a3_odrysia
         leader: "Seuthes III"
         leader_age: 30
+        leader_died: -300  # approximate: Seuthes III's death is not firmly dated (about 300 BC)
         martial_bp: 20000
         pitch: "Your gold goes to Pella as tribute. Wait for your moment - or make it."
         provinces:
@@ -409,7 +416,10 @@ scenarios:
           - {id: "sicilian_wars", goal: "conquer", target: "syracuse", preconditions: {after_year: -337}, note: "Carthage and Syracuse fight on for Sicily, as they have for a century."}
         capital: a3_carthage
         music: near_east
+        # a republic: the ruler is the council of elders with the two suffetes
+        leader: The Suffetes and Senate of Carthage
         leader_age: 45
+        leader_until: -150
         martial_bp: 8000
         pitch: "Your ships rule the western sea and your treasury the western world. Syracuse is the only rival left in Sicily."
         provinces:
@@ -453,7 +463,11 @@ scenarios:
       syracuse:
         disposition: cautious
         capital: a3_syracuse
+        # the Six Hundred of Timoleon's settlement until Agathocles' coup (317), then Agathocles
+        leader: The Six Hundred of Syracuse
         leader_age: 45
+        leader_until: -317
+        successors: [{name: "Agathocles", age: 44, disposition: aggressive, died: -289, ends: "dies, poisoned, the story goes"}, {name: "Hicetas", age: 45, until: -278}]
         generals: [{name: "Agathocles", skill: 3, trait: bold, note: "A potter's son who will seize Syracuse in 317 BC."}]
         pitch: "Timoleon freed you from tyrants and Carthage alike, then died. Who will lead Syracuse now?"
         provinces:

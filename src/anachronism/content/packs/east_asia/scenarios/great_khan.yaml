@@ -66,6 +66,9 @@ scenarios:
         capital: g_ongut
         leader: "Alaqush Digit Quri"
         leader_age: 50
+        leader_until: 1209
+        # reign dates after Alaqush are approximate and the rulers between Alaqai Beki and George are placeholders (D-XXX)
+        successors: [{name: "Boyaohe", age: 22, died: 1226}, {name: "Alaqai Beki", age: 30, died: 1245}, {name: "A prince of the Onggut house", age: 25, died: 1270}, {name: "A prince of the Onggut house", age: 30, died: 1290}, {name: "Prince George", age: 17, died: 1298, ends: "is killed fighting Duwa of the Chagatai"}]
         martial_bp: 80000
         pitch: "A small people on the edge of two worlds. Pick the winner - you already have."
         provinces:

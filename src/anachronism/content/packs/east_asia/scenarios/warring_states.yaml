@@ -597,6 +597,9 @@ scenarios:
       shu:
         disposition: cautious
         capital: shu_chengdu
+        leader: A Kaiming king of Shu
+        leader_age: 40
+        leader_until: -316
         pitch: "The Kaiming kings of the Chengdu plain, walled off by mountains with their own script."
         provinces:
           shu_chengdu: 800000
@@ -624,6 +627,9 @@ scenarios:
       ba:
         disposition: cautious
         capital: ba_jiangzhou
+        leader: King of Ba (name unknown)
+        leader_age: 40
+        leader_until: -316
         pitch: "Warriors of the Yangtze gorges, rich in salt."
         provinces:
           ba_jiangzhou: 500000
@@ -649,6 +655,10 @@ scenarios:
       yiqu:
         disposition: aggressive
         capital: yiqu_rong
+        leader: Lord of Yiqu (name unknown)
+        leader_age: 35
+        leader_died: -312
+        successors: [{name: "King of Yiqu (name unknown)", age: 30, until: -272}]
         pitch: "A Rong kingdom of walled towns and herds on Qin's northern flank."
         provinces:
           yiqu_rong: 250000
@@ -672,6 +682,11 @@ scenarios:
       donghu:
         disposition: aggressive
         capital: donghu_xilamulun
+        leader: "The Donghu king"
+        leader_age: 35
+        leader_died: -280
+        # no Donghu king's name survives; reign lengths are invented placeholders (D-XXX)
+        successors: [{name: "The Donghu king", age: 30, died: -240}, {name: "The last Donghu king", age: 25, until: -208}]
         pitch: "Horse peoples of the eastern steppe. Few, fast and free."
         provinces:
           donghu_xilamulun: 300000
@@ -693,6 +708,11 @@ scenarios:
       gojoseon:
         disposition: cautious
         capital: joseon_liaodong
+        leader: "The Hou of Joseon"
+        leader_age: 40
+        leader_died: -316
+        # reign lengths are placeholders: only Bu (Weilue) and Jun (Wiman's coup, 194 BC) are known (D-XXX)
+        successors: [{name: "King of Joseon", age: 30, died: -250}, {name: "King Bu", age: 28, died: -212}, {name: "King Jun", age: 25, until: -194}]
         pitch: "Korea's first kingdom: bronze daggers, walled towns and a people between the steppe and the sea."
         provinces:
           joseon_liaodong: 300000
