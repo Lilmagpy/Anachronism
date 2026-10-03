@@ -1511,3 +1511,13 @@ fall of Busan and the flight from Hanyang, Hansan Island, the Ming relief army, 
 ships at Myeongnyang and Yi's death at Noryang. Myeongjong dies in 1566 and Seonjo rules to
 1608, as in history. The invasion strips Joseon to two provinces and the Ming return them,
 so the benchmark follows the real war; all ten chapters play on two seeds.
+
+## D-160 A fourth chronicle for 1206: Goryeo — DELEGATED (2026-10-03)
+Ten chapters from 1211 to 1274, told to the kings while the Choe dictators rule: Huijong's
+failed palace plot against Choe Chung-heon (Choe hid behind a paper screen; the king was deposed),
+the brotherhood with the Mongols at Gangdong, Pak Seo's defence of Guju, the flight to
+Ganghwa Island, the first book printed with cast metal type, the carving of the Tripitaka
+Koreana, the fall of the last Choe, the crown prince's meeting with Kublai, the
+Sambyeolcho revolt (and the northwest lost to the Mongols, as in history), and the fleet
+built for the invasion of Japan. Five kings in their real years (Huijong's reign ends in
+the chapter; the others die when they did). All ten chapters play on two seeds.

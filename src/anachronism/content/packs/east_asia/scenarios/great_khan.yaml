@@ -281,7 +281,8 @@ scenarios:
         capital: g_kaegyong
         leader: "King Huijong"
         leader_age: 25
-        successors: [{name: "King Gangjong", age: 59, disposition: cautious}, {name: "King Gojong", age: 21, disposition: cautious}]
+        leader_until: 1211
+        successors: [{name: "King Gangjong", age: 59, disposition: cautious, died: 1213}, {name: "King Gojong", age: 21, disposition: cautious, died: 1259}, {name: "King Wonjong", age: 40, disposition: cautious, died: 1274}, {name: "King Chungnyeol", age: 38, died: 1308}]
         pitch: "Your printers carve the whole Buddhist canon in wood; soon they will cast type in metal. Survive what comes over the Yalu."
         provinces:
           g_kaegyong: 1000000
