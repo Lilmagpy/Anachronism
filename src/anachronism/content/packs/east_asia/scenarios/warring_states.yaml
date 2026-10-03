@@ -253,8 +253,9 @@ scenarios:
         capital: qi_linzi
         leader: King Wei
         leader_age: 40
+        leader_died: -320
         generals: [{name: "Sun Bin", skill: 5, trait: bold, note: "The crippled strategist of Guiling and Maling."}, {name: "Tian Ji", skill: 3, trait: horse, note: "Sun Bin's patron, famous for a horse race he won by cunning."}]
-        successors: [{name: "King Xuan", age: 35, disposition: "scholarly"}, {name: "King Min", age: 35, disposition: "aggressive"}]
+        successors: [{name: "King Xuan", age: 35, disposition: "scholarly", died: -301}, {name: "King Min", age: 35, disposition: "aggressive", until: -284}, {name: "King Xiang", age: 25, died: -265}, {name: "King Jian", age: 15, until: -220}]
         pitch: "Salt, silk and the Jixia Academy: the richest and most learned court in the east."
         provinces:
           qi_linzi: 1800000

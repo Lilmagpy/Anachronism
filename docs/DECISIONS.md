@@ -1696,3 +1696,13 @@ Philip V's treaty with Hannibal caught by the Roman fleet, Cynoscephalae (Thessa
 Corinth are lost; Greece "freed"), the forged letter and Demetrius's death, and Pydna.
 Five kings in their real years. The chronicle complements the Alexander chronicle (D-134)
 for the same kingdom a century later. All eight chapters play on two seeds.
+
+## D-177 A fourth chronicle for 350 BC: Qi — DELEGATED (2026-10-03)
+Eight chapters, 342-221 BC: Sun Bin's cooking fires and "Pang Juan dies under this tree",
+the Jixia Academy, Mencius and the occupation of Yan, the annexation of Song, Yue Yi's
+seventy cities (Linzi, Pingyuan and Song go to Yan; King Min is killed at Ju), Tian Dan's
+fire oxen (Linzi and Pingyuan come back), the Queen Dowager's jade rings and the refusal
+of grain to Zhao before Changping, and the surrender to Qin. The benchmark follows Qi's
+real fortunes: 4, 5, 2, 4, then 1. Five kings in their real years; King Jian is spared
+until -220, the turn on which the 221 BC chapter opens on the two-year grid. All eight
+chapters play on two seeds.
