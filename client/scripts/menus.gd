@@ -25,6 +25,7 @@ func _ready() -> void:
 
 var can_continue := false   ## an autosaved game exists
 var difficulty := "normal"  ## chosen in the picker; kept while browsing moments
+var _moments_scroll := 0  ## where the timeline of moments was last scrolled to
 var chronicle := true   ## follow history in chapters (D-120), where the state has them
 
 
@@ -146,6 +147,17 @@ func _draw_picker() -> void:
 	timeline.chosen.connect(func(id: String): show_picker(id))
 	moments.add_child(timeline)
 	_root.add_child(moments)
+	# keep the chosen moment in view, gliding there from where the timeline was
+	var index := maxi(0, catalog.find(scenario))
+	var goal := maxi(0, int(timeline.step * (index + 0.5) - moments.size.x / 2.0))
+	var from := _moments_scroll
+	get_tree().process_frame.connect(func() -> void:
+		if not is_instance_valid(moments):
+			return
+		moments.scroll_horizontal = from
+		var glide := moments.create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		glide.tween_property(moments, "scroll_horizontal", goal, 0.35)
+		_moments_scroll = goal, CONNECT_ONE_SHOT)
 	# portrait
 	var portrait := Portrait.new()
 	portrait.position = Vector2(40, 124)
