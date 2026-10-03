@@ -1521,3 +1521,15 @@ Koreana, the fall of the last Choe, the crown prince's meeting with Kublai, the
 Sambyeolcho revolt (and the northwest lost to the Mongols, as in history), and the fleet
 built for the invasion of Japan. Five kings in their real years (Huijong's reign ends in
 the chapter; the others die when they did). All ten chapters play on two seeds.
+
+## D-161 A fifth chronicle for 1206: the fall of the Jurchen Jin — DELEGATED (2026-10-03)
+Ten chapters, 1206-1234, from the other side of the Mongol conquest: Han Tuozhou's head
+and the peace of 1208, Genghis Khan spitting at the news of Yongji's accession and the
+Badger's Mouth, Hushahu the kingmaker, the princess paid to the Khan and the flight to
+Kaifeng (Zhongdu and Liaoxi go to the Mongols in the historical choice), Puxian Wannu's
+breakaway kingdom (Liaodong and the Jurchen homeland pass to nobody), the war on the Song
+for lost revenue, Aizong's peace on two fronts, the Loyal and Filial Army, the gunpowder
+bombs of Kaifeng, and Caizhou. Six emperors in their real years; Xuanzong's death (January
+1224) is set a year early so that Aizong is on the throne at the 1224 chapter on the
+three-year turn grid. All ten chapters play on three seeds; a passive Jin outlasts history,
+because the Mongol AI does not press as hard as the real Mongols did.

@@ -144,8 +144,10 @@ scenarios:
         capital: g_zhongdu
         leader: "Emperor Zhangzong"
         leader_age: 38
+        leader_died: 1208
         generals: [{name: "Wanyan Chenghui", skill: 3, trait: shield, note: "Defender of the Tongguan pass."}]
-        successors: [{name: "Wanyan Yongji", age: 40, disposition: cautious}, {name: "Emperor Xuanzong", age: 50, disposition: cautious}, {name: "Emperor Aizong", age: 26}]
+        # Xuanzong really died in January 1224: 1223 puts Aizong on the throne for the 1224 chapter
+        successors: [{name: "Wanyan Yongji", age: 40, disposition: cautious, died: 1213, ends: "is murdered by the general Hushahu"}, {name: "Emperor Xuanzong", age: 50, disposition: cautious, died: 1223}, {name: "Emperor Aizong", age: 26, until: 1234}, {name: "Emperor Mozong", age: 40, died: 1234, ends: "is killed in the street fighting at Caizhou"}]
         martial_bp: 5000
         pitch: "Forty million subjects and the walls of Zhongdu. The northern barbarians your fathers once were are coming. Do not be surprised."
         provinces:

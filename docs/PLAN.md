@@ -205,6 +205,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] A fourth chronicle for 264 BC: the Ptolemies of Alexandria (D-157)
 - [x] A fourth chronicle for 1560: Joseon and the Imjin War (D-159)
 - [x] A fourth chronicle for 1206: Goryeo under the Choe and the Mongols (D-160)
+- [x] A fifth chronicle for 1206: the fall of the Jurchen Jin (D-161)
 - [ ] More chronicles for other states (Babylon, Wa, Poland, Macedon of 264...)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging
