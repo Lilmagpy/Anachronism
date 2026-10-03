@@ -68,7 +68,8 @@ scenarios:
         capital: hat_hattusa
         leader: Muwatalli II
         leader_age: 40
-        successors: [{name: "Mursili III", age: 25}, {name: "Hattusili III", age: 50, disposition: "cautious"}, {name: "Tudhaliya IV", age: 30}]
+        leader_died: -1272
+        successors: [{name: "Mursili III", age: 25, until: -1266}, {name: "Hattusili III", age: 50, disposition: "cautious", died: -1237}, {name: "Tudhaliya IV", age: 30, died: -1209}, {name: "Arnuwanda III", age: 30, died: -1207}, {name: "Suppiluliuma II", age: 28}]
         pitch: "Hold Syria against Egypt and watch Assyria rise. The iron you barely understand could change everything."
         provinces:
           hat_hattusa: 500000

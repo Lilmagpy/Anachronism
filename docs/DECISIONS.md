@@ -1338,3 +1338,13 @@ historical choices are the Greek writers' version, and the other choices are mos
 advice Darius's own commanders gave him (Memnon, Amyntas, Patron) - this is the chronicle
 in which the player can make Persia listen. Darius is spared old age until the end a chapter
 tells (D-130); Bessus until his execution. All nine chapters play with a passive test player.
+
+## D-140 A second chronicle for 1275 BC: the Hittites — DELEGATED (2026-10-03)
+Eleven chapters at three years a turn: the planted Shasu spies at Kadesh, Amurru, the
+scornful letter to Assyria ("were you and I born of the same mother?"), Hattusili's coup
+against his nephew (a chapter ends that reign), the silver treaty, Puduhepa's dowry letter,
+the first trade embargo after Nihriya, Yazilikaya, the grain letters ("a matter of life or
+death"), the first recorded sea battle off Cyprus, and the abandonment of Hattusa. Hatti's
+line is now Muwatalli II, Mursili III, Hattusili III, Tudhaliya IV, Arnuwanda III and
+Suppiluliuma II, each dying (or deposed) in his real years. All eleven chapters play with a
+passive test player.

@@ -185,6 +185,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] The ninth chronicle: England from Æthelred to Hastings, 1002-1066 (D-137)
 - [x] A second chronicle for 264 BC: Carthage, from Messana to its destruction (D-138)
 - [x] A second chronicle for 336 BC: Persia under Darius III (D-139)
-- [ ] Second chronicles for other states of each moment (Hatti, Song, Normandy...)
+- [x] A second chronicle for 1275 BC: the Hittites, Kadesh to the fall of Hattusa (D-140)
+- [ ] Second chronicles for other states of each moment (Song, Normandy, Takeda...)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging
