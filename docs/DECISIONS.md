@@ -1488,3 +1488,12 @@ young king against Molon, Raphia's elephants, the eastern anabasis, Panium, Hann
 court, Magnesia, and the death at the temple of Bel (a chapter ends that reign). Six kings
 in their real years, with Seleucus II's fall from his horse and Seleucus III's murder as
 history records. All nine chapters play.
+
+## D-157 A fourth chronicle for 264 BC: the Ptolemies — DELEGATED (2026-10-03)
+Five chapters of Alexandria's golden age: the Library's seized books, Ptolemy III's march
+to avenge his sister (and the Lock of Berenice), Eratosthenes measuring the Earth, the
+Egyptian phalanx at Raphia (and the revolts it led to), and the Memphis decree that became
+the Rosetta Stone. Four Ptolemies in their real years. The Syrian expedition takes the coast
+without an open-ended war (peace came in 241); the Seleucid AI still fights its scripted
+Syrian Wars, so a passive Egypt loses ground, as an active one need not. All five chapters
+play.

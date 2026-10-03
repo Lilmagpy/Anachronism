@@ -569,7 +569,8 @@ scenarios:
         capital: pto_delta
         leader: Ptolemy II Philadelphus
         leader_age: 45
-        successors: [{name: "Ptolemy III", age: 38, disposition: "aggressive"}, {name: "Ptolemy IV", age: 23, disposition: "cautious"}]
+        leader_died: -247
+        successors: [{name: "Ptolemy III", age: 38, disposition: "aggressive", died: -222}, {name: "Ptolemy IV", age: 23, disposition: "cautious", died: -204}, {name: "Ptolemy V", age: 6, died: -180}]
         pitch: "The Library of Alexandria, the grain of the Nile and the best scholars alive. What could they build ahead of time?"
         provinces:
           pto_delta: 1800000
