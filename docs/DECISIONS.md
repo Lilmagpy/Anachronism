@@ -1348,3 +1348,13 @@ death"), the first recorded sea battle off Cyprus, and the abandonment of Hattus
 line is now Muwatalli II, Mursili III, Hattusili III, Tudhaliya IV, Arnuwanda III and
 Suppiluliuma II, each dying (or deposed) in his real years. All eleven chapters play with a
 passive test player.
+
+## D-141 A second chronicle for AD 1000: the dukes of Normandy — DELEGATED (2026-10-03)
+Twelve chapters from Emma's marriage to William the Conqueror's death: the English exiles,
+Herleva the tanner's daughter, Robert's pilgrimage, Val-ès-Dunes, Matilda of Flanders,
+Mortemer, the fleet at Dives, Hastings from the Norman side, the Harrying of the North,
+Domesday and the fall at Mantes. Normandy's dukes now follow the real line (Richard II,
+Richard III, Robert, William, Robert Curthose). One tuning note: Mortemer's historical
+choice no longer declares war on France - the French were beaten and went home - because
+an open-ended war let France's AI swallow the one-province duchy before 1066. All twelve
+chapters play with a passive test player.

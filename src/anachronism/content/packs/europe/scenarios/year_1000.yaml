@@ -216,6 +216,9 @@ scenarios:
           - {id: "norman_conquest", goal: "conquer", target: "england", preconditions: {after_year: 1060}, note: "William of Normandy conquers England (1066)."}
         capital: m_normandy
         leader: Richard II
+        leader_age: 37
+        leader_died: 1025
+        successors: [{name: "Richard III", age: 25, died: 1027}, {name: "Robert the Magnificent", age: 27, died: 1035}, {name: "William the Bastard", age: 7, disposition: "aggressive", died: 1087}, {name: "Robert Curthose", age: 34}]
         pitch: "Northmen who became Frenchmen. The world does not yet know what Normans can do."
         provinces:
           m_normandy: 600000

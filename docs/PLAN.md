@@ -186,6 +186,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] A second chronicle for 264 BC: Carthage, from Messana to its destruction (D-138)
 - [x] A second chronicle for 336 BC: Persia under Darius III (D-139)
 - [x] A second chronicle for 1275 BC: the Hittites, Kadesh to the fall of Hattusa (D-140)
-- [ ] Second chronicles for other states of each moment (Song, Normandy, Takeda...)
+- [x] A second chronicle for AD 1000: the dukes of Normandy to William the Conqueror (D-141)
+- [ ] Second chronicles for other states of each moment (Song, Takeda, Zhao...)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging
