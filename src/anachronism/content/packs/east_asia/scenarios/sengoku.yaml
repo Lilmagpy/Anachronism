@@ -138,8 +138,9 @@ scenarios:
         capital: j_kai
         leader: Takeda Shingen
         leader_age: 39
+        leader_died: 1573
         generals: [{name: "Yamagata Masakage", skill: 4, trait: horse, note: "Commander of the red-armoured cavalry."}, {name: "Baba Nobuharu", skill: 4, trait: shield, note: "Fought seventy battles without a wound."}, {name: "Yamamoto Kansuke", skill: 4, trait: bold, note: "Shingen's one-eyed strategist."}]
-        successors: [{name: "Takeda Katsuyori", age: 27, disposition: aggressive}]
+        successors: [{name: "Takeda Katsuyori", age: 27, disposition: aggressive, until: 1583}]
         pitch: "The finest cavalry in Japan and a genius general. Win the mountains; then win the plains."
         provinces:
           j_kai: 250000

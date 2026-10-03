@@ -1367,3 +1367,11 @@ Jia Sidao's secret truce, Xiangyang, the surrender of Lin'an and Yamen. The Song
 their real line of emperors, from Ningzong to the boy Zhao Bing; Emperor Gong is taken
 north and Zhao Bing drowns in chapters, so the player can change both. All eleven chapters
 play with a passive test player.
+
+## D-143 A second chronicle for 1560: the Takeda of Kai — DELEGATED (2026-10-03)
+Nine chapters: the woodpecker plan at the fourth Kawanakajima, Shingen's rebel heir,
+Suruga and the sea, Kenshin's salt, the shogun's call and Mikatagahara (Shingen dies on
+the way home in his real year), Katsuyori at Takatenjin, the fence at Nagashino (the old
+generals' advice to retreat is the choice history did not take), the new castle at Shinpu,
+and Tenmokuzan. Katsuyori is spared old age until the chapter that ends the house. All nine
+play with a passive test player.
