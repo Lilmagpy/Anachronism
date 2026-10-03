@@ -554,7 +554,8 @@ scenarios:
         capital: m_greater_poland
         leader: Bolesław I the Brave
         leader_age: 33
-        successors: [{name: "Mieszko II", age: 35, disposition: "cautious"}]
+        leader_died: 1025
+        successors: [{name: "Mieszko II", age: 35, disposition: "cautious", until: 1031}, {name: "Bezprym", age: 45, died: 1032, ends: "is murdered by his own men"}, {name: "Mieszko II", age: 42, disposition: "cautious", died: 1034}, {name: "Casimir the Restorer", age: 18, died: 1058}, {name: "Bolesław II the Bold", age: 16}]
         pitch: "The emperor has just crowned your ambitions. Build a kingdom to match them."
         provinces:
           m_greater_poland: 400000

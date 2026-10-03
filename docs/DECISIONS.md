@@ -1615,3 +1615,14 @@ Cnut's reign; as one king's two realms, an alliance holds. Sweyn's death (3 Febr
 is set to 1013 so that Harald is king at the 1014 chapter; Harald II's death is uncertain
 (c. 1018) and set to 1017 so that Cnut is king at the 1019 chapter. All ten chapters play
 on three seeds.
+
+## D-169 A ninth chronicle for AD 1000: Piast Poland — DELEGATED (2026-10-03)
+Nine chapters, 1000-1054: the Congress of Gniezno, the blinded duke of Bohemia, the Peace
+of Bautzen, the Golden Gate of Kiev (the Cherven towns, Volhynia on this map, are taken),
+Bolesław's coronation, the double invasion of 1031 that broke Mieszko II (Volhynia goes
+back to Rus), Bretislav carrying off St Adalbert's body (Silesia goes to Bohemia; Kraków
+becomes the capital), Masław of Masovia, and Silesia regained at Quedlinburg for a
+tribute. Mieszko II appears twice in the line of rulers, either side of Bezprym's year,
+as he really reigned. Masław's Masovia stays on the Polish map, because one choice can
+pass provinces to only one state; the story says it was his. All nine chapters play on
+two seeds. This is the Polish side of the Rus chronicle's 1018 (D-149).
