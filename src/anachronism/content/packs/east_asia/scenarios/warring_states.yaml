@@ -440,8 +440,9 @@ scenarios:
         capital: yan_ji
         leader: Duke Wen
         leader_age: 40
+        leader_died: -333
         generals: [{name: "Yue Yi", skill: 4, trait: siege, note: "Will take seventy cities of Qi in 284 BC."}]
-        successors: [{name: "King Yi", age: 30}, {name: "King Kuai", age: 30, disposition: "pious"}, {name: "King Zhao of Yan", age: 25, disposition: "aggressive"}]
+        successors: [{name: "King Yi", age: 30, died: -321}, {name: "King Kuai", age: 30, disposition: "pious", until: -316}, {name: "Zizhi", age: 50, died: -314, ends: "is killed when Qi takes the capital"}, {name: "King Zhao of Yan", age: 25, disposition: "aggressive", died: -279}, {name: "King Hui of Yan", age: 30, died: -272, ends: "is murdered by his minister Gongsun Cao"}, {name: "King Wucheng", age: 25, died: -258}, {name: "King Xiao of Yan", age: 30, died: -255}, {name: "King Xi of Yan", age: 20, until: -222}]
         pitch: "The remote north-east, facing the Donghu and the lands beyond the Liao."
         provinces:
           yan_ji: 800000

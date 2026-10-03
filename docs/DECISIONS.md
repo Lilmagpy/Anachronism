@@ -1706,3 +1706,17 @@ of grain to Zhao before Changping, and the surrender to Qin. The benchmark follo
 real fortunes: 4, 5, 2, 4, then 1. Five kings in their real years; King Jian is spared
 until -220, the turn on which the 221 BC chapter opens on the two-year grid. All eight
 chapters play on two seeds.
+
+## D-178 A fifth chronicle for 350 BC: Yan — DELEGATED (2026-10-03)
+Ten chapters, 316-222 BC: King Kuai giving his throne to Zizhi, the Qi invasion, Guo
+Wei's "start with me" and the Golden Terrace, Qin Kai's thousand li beyond the wall
+(the Xilamulun steppe and Liaodong are taken), Yue Yi's seventy cities (Linzi and
+Pingyuan taken), the recall of Yue Yi and Tian Dan's revenge (given back, with peace),
+the attack on Zhao at Hao, Jing Ke's dagger in the map, Prince Dan's head, and the end in
+Liaodong. Ten rulers in their real years, Zizhi included. Three lessons from testing: Qi's
+AI invasion of 314 kept Yan's provinces, so the Golden Terrace chapter restores them with
+peace, as the Yan rising did; Qi's "occupy Yan in turmoil" script re-fires while Yan's
+unrest stays above 2000, so the restoration also calms the country; and `grudges` names
+who resents the player, not whom the player resents (a misdirected grudge made Qi hate
+Yan; removed). All ten chapters play on three seeds, two of them level with history
+throughout.
