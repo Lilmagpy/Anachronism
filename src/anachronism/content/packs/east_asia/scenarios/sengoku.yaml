@@ -251,8 +251,9 @@ scenarios:
         capital: j_sagami
         leader: Hojo Ujiyasu
         leader_age: 45
+        leader_died: 1571
         generals: [{name: "Hojo Tsunashige", skill: 4, trait: shield, note: "'Yellow Banner Tsunashige', defender of Kawagoe."}]
-        successors: [{name: "Hojo Ujimasa", age: 22, disposition: cautious}]
+        successors: [{name: "Hojo Ujimasa", age: 33, disposition: cautious, until: 1590}, {name: "Hojo Ujinao", age: 28, died: 1591}]
         pitch: "Odawara has never fallen. Govern well, tax fairly - and build something the others cannot match."
         provinces:
           j_sagami: 300000

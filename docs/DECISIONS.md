@@ -1782,3 +1782,12 @@ Tokugawa army at Sekigahara, and the invasion of Ryukyu (taken). The benchmark f
 the Shimazu's rise and fall exactly: 1, 2, 3, 4, 1, 2. Four lords in their real years:
 Takahisa retires in 1566, Yoshihisa submits in 1587, Yoshihiro hands over in 1602. All ten
 chapters play on two seeds, level with history throughout.
+
+## D-185 An eighth chronicle for 1560: the Hojo — DELEGATED (2026-10-03)
+Five chapters, 1561-1590, of the masters of the Kanto: Kenshin's hundred thousand at the
+gates of Odawara, Hojo Saburo sent to Kenshin as his adopted son, Ujiyasu's dying advice
+to make peace with the Takeda, the Otate disturbance in which Saburo died, and the
+"Odawara council" that debated until Hideyoshi's siege ended the house (Musashi is given
+up). Ujiyasu dies in 1571; Ujimasa's rule ends at Odawara. Its chapters meet the Uesugi
+and Takeda chronicles at the same events from the other side. All five chapters play on
+two seeds.
