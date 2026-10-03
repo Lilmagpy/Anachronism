@@ -264,7 +264,8 @@ scenarios:
         capital: m_lotharingia
         leader: Otto III
         leader_age: 20
-        successors: [{name: "Henry II", age: 27, disposition: "pious"}, {name: "Conrad II", age: 34, disposition: "aggressive"}]
+        leader_died: 1002
+        successors: [{name: "Henry II", age: 29, disposition: "pious", died: 1024}, {name: "Conrad II", age: 34, disposition: "aggressive", died: 1039}, {name: "Henry III", age: 22, disposition: "pious", died: 1056}, {name: "Henry IV", age: 6, disposition: "aggressive", died: 1106}]
         pitch: "A young emperor with a dream of Rome renewed. Make the dream real."
         provinces:
           m_saxony: 800000

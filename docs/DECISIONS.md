@@ -1413,3 +1413,11 @@ shogunate. After Sanetomo the chronicle follows the real rulers, the Hojo regent
 his real years. No chapter declares war on the Mongols: the invasions are told from the
 beach, and the player's ideas (a printed law code, steamships) change how they go. All ten
 chapters play with a passive test player.
+
+## D-148 A third chronicle for AD 1000: the Western Empire — DELEGATED (2026-10-03)
+Eight chapters from Otto III to Henry IV: the Congress of Gniezno and Charlemagne's tomb,
+"are you not my Romans?", Henry II's war with Bolesław beside the pagan Liutizi, Conrad
+II's coronation between Cnut and Rudolf of Burgundy, the three popes deposed at Sutri,
+the boy king's leap from Anno's boat, the letter to "Hildebrand, now not pope but false
+monk", and Canossa. The crown passes through Ottonians and Salians in their real years.
+All eight chapters play with a passive test player.

@@ -193,6 +193,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] A second chronicle for AD 1000: Byzantium, Basil II to Alexios Komnenos (D-145)
 - [x] A second chronicle for AD 400: Baekje, the hostage prince to the bear ford (D-146)
 - [x] A third chronicle for 1206: Kamakura Japan and the Mongol invasions (D-147)
-- [ ] More chronicles for other states (Holy Roman Empire, Rus, Assyria, Uesugi...)
+- [x] A third chronicle for AD 1000: the Western Empire, Otto III to Canossa (D-148)
+- [ ] More chronicles for other states (Rus, Assyria, Uesugi, Cordoba...)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging
