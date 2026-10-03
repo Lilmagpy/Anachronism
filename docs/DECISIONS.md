@@ -1677,3 +1677,13 @@ Matteo Ricci's clocks, and Sarhu (Liaodong is lost in the historical choice). Th
 emperors in their real years: Jiajing (died January 1567, set to 1566, the Chinese year),
 Longqing and Wanli; Taichang's month on the throne follows. Ray Huang's "1587" is the
 guiding modern source for Wanli's reign. All ten chapters play on two seeds.
+
+## D-175 A fifth chronicle for 264 BC: Syracuse — DELEGATED (2026-10-03)
+Nine chapters, 263-212 BC: Hiero changing sides to Rome, his tithe law (which Rome kept),
+Archimedes and the crown (told as Vitruvius's story), grain for Carthage in the Mercenary
+War (Polybius's balance-of-power remark), the Syracusia sent to Ptolemy, the golden
+Victory sent to Rome after Cannae, Hieronymus going over to Carthage, Archimedes' claws,
+and the fall of the city. Hiero dies at ninety-one in 215, Hieronymus is killed at
+Leontini in 214, and the general Epicydes leads until the fall; the "burning mirrors" are
+left out as a later story. Its chapters point at the Carthage, Rome and Ptolemy
+chronicles. All nine chapters play on two seeds.

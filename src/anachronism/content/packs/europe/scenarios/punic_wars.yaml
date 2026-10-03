@@ -129,7 +129,8 @@ scenarios:
         capital: syr_syracuse
         leader: Hiero II
         leader_age: 43
-        successors: [{name: "Hieronymus", age: 15, disposition: "aggressive"}]
+        leader_died: -215
+        successors: [{name: "Hieronymus", age: 15, disposition: "aggressive", died: -214, ends: "is assassinated at Leontini"}, {name: "General Epicydes", age: 40, until: -212}]
         pitch: "One city, two giants, and Archimedes. Survive by ingenuity alone."
         provinces:
           syr_syracuse: 400000

@@ -219,6 +219,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] A twelfth chronicle for AD 1000: Ireland, Brian Boru and his heirs (D-172)
 - [x] A thirteenth chronicle for AD 1000: Venice, the doges from Orseolo to the Golden Bull (D-173)
 - [x] A fifth chronicle for 1560: the late Ming, from the wokou to Sarhu (D-174)
+- [x] A fifth chronicle for 264 BC: Syracuse, Hiero II and Archimedes (D-175)
 - [ ] More chronicles for other states (Babylon, Wa, Poland, Macedon of 264...)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging
