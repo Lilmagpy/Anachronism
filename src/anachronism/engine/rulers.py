@@ -32,8 +32,12 @@ def age_and_succeed(state: GameState, civ: CivState, rng: GameRng, events: Event
         line = state.world.successors.get(civ.id, ())
         index = civ.rulers - 2
         how = line[index].ends if 0 <= index < len(line) and line[index].ends else "has died"
-        succeed(state, civ, events, heir_age=30, how=how)
-        return
+        result = state.chapter_result
+        if how == "has died" or result is None or result.historical:
+            succeed(state, civ, events, heir_age=30, how=how)
+            return
+        # a coup or murder belongs to the history the player has just turned away from (D-153):
+        # the ruler lives on with the usual odds
     if not rng.chance(death_chance_bp(state, civ)):
         return
     named_heir = civ.rulers - 1 < len(state.world.successors.get(civ.id, ()))

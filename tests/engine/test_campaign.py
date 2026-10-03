@@ -235,3 +235,22 @@ def test_every_chronicle_starts_and_its_chapters_are_in_its_age(content: Content
             for choice in chapter.choices:
                 for node in choice.needs_adopted:
                     assert node in state.tech_nodes, (chapter.id, node)
+
+
+def test_a_coup_does_not_happen_once_history_has_turned(content: Content) -> None:
+    """If the player's last answer turned from history, a scheduled murder or deposition
+    does not follow; natural deaths still keep their dates (D-153)."""
+    from anachronism.engine.events import EventLog
+    from anachronism.engine.rng import GameRng
+    from anachronism.engine.rulers import age_and_succeed
+    from anachronism.engine.state import ChapterResult
+
+    state = new_game(content, "year_1000", seed=1, player_civ="byzantium", chronicle=True)
+    civ = state.civs["byzantium"]
+    civ.rulers, civ.ruler, civ.ruler_age = 9, "Isaac I Komnenos", 30
+    state.year = 1060
+    state.chapter_result = ChapterResult(
+        chapter="byz_schism", choice=1, outcome="", history="", historical=False, benchmark=""
+    )
+    age_and_succeed(state, civ, GameRng(state.rng), EventLog(state.turn, state.year))
+    assert civ.ruler == "Isaac I Komnenos"

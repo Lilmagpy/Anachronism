@@ -1457,6 +1457,11 @@ A short, tragic chronicle in five chapters: al-Mansur's last campaign, Sanchuelo
 fatal winter march, the sack of Madinat al-Zahra, Ibn Hazm's Ring of the Dove, and the
 abolition of the caliphate in 1031. The 'ruler' is whoever really held power: al-Mansur's
 sons, then six caliphs of the civil war, each removed in his real year in the way history
-records (killed in the fighting, executed, murdered in his bath, poisoned, deposed). The
-player's ideas cannot change the first three deaths, but every choice can avert the civil
-war that follows them. All five chapters play.
+records (killed in the fighting, executed, murdered in his bath, poisoned, deposed). All
+five chapters play.
+
+Follow-up rule (applies to every chronicle): a reign that history ended by murder, coup
+or deposition (`ends`) is only ended on schedule while the player's most recent chapter
+answer was history's. Once the player has turned history aside, those violent ends no
+longer happen by themselves and the ruler lives on with the usual odds; natural deaths
+keep their dates either way.
