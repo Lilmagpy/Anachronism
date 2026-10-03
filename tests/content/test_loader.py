@@ -36,7 +36,7 @@ def problems(root: Path) -> list[str]:
 def test_real_packs_load_cleanly() -> None:
     content = load_content()
     assert isinstance(content, Content)
-    assert [pack.id for pack in content.packs] == ["core", "testworld"]
+    assert [pack.id for pack in content.packs] == ["core", "east_asia", "europe", "testworld"]
     assert content.scenarios["bronze_dawn"].player_civ == "veyra"
     assert content.techs["iron_working"].prerequisites == ("bronze_working", "charcoal_burning")
     assert content.scenarios["bronze_dawn"].civs["veyra"].techs["writing"] is Stage.ADOPTED
@@ -138,8 +138,8 @@ def test_scenario_consistency(packs: Path) -> None:
 
 
 def test_unknown_dependency_pack(packs: Path) -> None:
-    edit(packs / "testworld" / "pack.yaml", "depends_on: [core]", "depends_on: [core, europe]")
-    assert any("unknown pack 'europe'" in p for p in problems(packs))
+    edit(packs / "testworld" / "pack.yaml", "depends_on: [core]", "depends_on: [core, atlantis]")
+    assert any("unknown pack 'atlantis'" in p for p in problems(packs))
 
 
 def test_all_problems_are_reported_together(packs: Path) -> None:
@@ -154,9 +154,56 @@ def test_lint_cli_reports_success_and_failure(
     packs: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
     assert lint_main([]) == 0
-    assert "OK: core v1, testworld v1" in capsys.readouterr().out
+    assert "OK: core v1, east_asia v1, europe v1, testworld v1" in capsys.readouterr().out
     edit(packs / "core" / "eras.yaml", "ends: 500}", "ends: -600}")
     assert lint_main(["--root", str(packs)]) == 1
     output = capsys.readouterr().out
     assert "1 problem(s) found" in output
     assert "era end years must strictly increase" in output
+
+
+def test_lint_review_lists_what_needs_a_source(capsys: pytest.CaptureFixture[str]) -> None:
+    assert lint_main(["--review"]) == 0
+    output = capsys.readouterr().out
+    assert "advancements:" in output
+    assert "without a source" in output
+
+
+def test_coastal_provinces_must_touch_a_sea(packs: Path) -> None:
+    edit(
+        packs / "testworld" / "seas.yaml",
+        "neighbours: [southern_isles]\n",
+        "neighbours: [southern_isles, veyra_heartland]\n",
+    )
+    assert any("(veyra_heartland): touches a sea but is not coastal" in p for p in problems(packs))
+
+
+def test_scenario_provinces_need_map_positions(packs: Path) -> None:
+    edit(packs / "testworld" / "provinces.yaml", "    position: [300, 340]\n", "")
+    assert any("province 'veyra_heartland' has no map position" in p for p in problems(packs))
+
+
+def test_real_map_provinces_need_a_latlon(packs: Path) -> None:
+    edit(packs / "east_asia" / "provinces.yaml", "    latlon: [34.4, 108.9]\n", "")
+    assert any(
+        "province 'qin_guanzhong' has no latlon for the east_asia map" in p for p in problems(packs)
+    )
+
+
+def test_latlon_must_be_on_earth(packs: Path) -> None:
+    edit(packs / "east_asia" / "provinces.yaml", "latlon: [34.4, 108.9]", "latlon: [108.9, 34.4]")
+    assert any("is not a place on Earth" in p for p in problems(packs))
+
+
+def test_sea_zone_needs_a_place(packs: Path) -> None:
+    edit(packs / "east_asia" / "seas.yaml", " latlon: [38.8, 119.8],", "")
+    assert any("a sea zone needs a position or a latlon" in p for p in problems(packs))
+
+
+def test_emblem_font_has_every_emblem_character() -> None:
+    font_characters = (PACKS_DIR.parents[3] / "client" / "fonts" / "emblems.txt").read_text(
+        encoding="utf-8"
+    )
+    for civ in load_content().civs.values():
+        missing = {ch for ch in civ.emblem if not ch.isascii() and ch not in font_characters}
+        assert not missing, f"{civ.id}: run scripts/build_emblem_font.py (missing {missing})"

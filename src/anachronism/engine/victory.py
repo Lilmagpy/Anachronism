@@ -1,0 +1,161 @@
+"""Tiered victory (brief §5.11, DESIGN §11): military, economic or cultural dominance.
+
+A scenario is one region, so for now every victory is *regional*; hemispheric and world
+tiers need several regions in one game (Phase 8). The three paths:
+
+- **Military**: rule over half of all the people in the scenario.
+- **Economic**: your trade network reaches most of everyone else's people (trading
+  partners count half, allies and tributaries in full) and at least half the other states,
+  and your economy rivals the largest: wealth earned per turn, from your own lands and your
+  trade, of at least half the biggest rival's (what you have spent does not count).
+- **Cultural**: your share of the region's culture (people weighted by literacy and
+  cultural influence, plus half the culture of every court won to the faith you started
+  with) passes the threshold, no one's culture is larger, and your own advancements give
+  you real cultural influence.
+
+Defeat comes with collapse, or the loss of every province.
+"""
+
+from __future__ import annotations
+
+from typing import Any
+
+from anachronism.content.schema import EffectType, Faith, RelationStatus
+from anachronism.engine.culture import shares_faith, trade_income
+from anachronism.engine.dynasty import remembered_in
+from anachronism.engine.economy import production
+from anachronism.engine.effects import civ_effects
+from anachronism.engine.events import EventLog
+from anachronism.engine.fixed import BP
+from anachronism.engine.rivals import alive, status
+from anachronism.engine.state import GameState, Outcome
+
+
+def culture(state: GameState, civ_id: str) -> int:
+    """People weighted by literacy and cultural influence (in thousands)."""
+    if not alive(state, civ_id):
+        return 0
+    influence = civ_effects(state, civ_id)[EffectType.CULTURAL_INFLUENCE]
+    weight = 1000 + state.civs[civ_id].stats.literacy_bp + influence
+    return state.population(civ_id) // 1000 * weight // BP
+
+
+def progress(state: GameState) -> dict[str, Any]:
+    """How close the player is on each path, as shares in basis points with the targets."""
+    rules = state.world.rules.rivals
+    me = state.player_civ
+    everyone = sum(state.population(c) for c in state.civs)
+    mine = state.population(me)
+    others = everyone - mine
+    # trading partners count in part, allies and tributaries in full
+    reached = sum(
+        state.population(c)
+        * (BP if s is not RelationStatus.TRADING else rules.economic_trading_weight_bp)
+        // BP
+        for c in sorted(state.civs)
+        if c != me and alive(state, c) and (s := status(state, me, c)) is not None and s.friendly
+    )
+    cultures = {c: culture(state, c) for c in sorted(state.civs)}
+    total_culture = sum(cultures.values())
+    # courts won to your own faith (one you held from the start) carry half their culture
+    # into your sphere (brief §5.11); converting to another's faith does not
+    mine_from_start = (
+        state.civs[me].faith
+        and me
+        in state.world.faiths.get(state.civs[me].faith, Faith(id="none", name="none")).followers
+    )
+    my_sphere = cultures[me] + sum(
+        cultures[c] // 2
+        for c in sorted(state.civs)
+        if mine_from_start and c != me and shares_faith(state, me, c)
+    )
+    influence = civ_effects(state, me)[EffectType.CULTURAL_INFLUENCE]
+    margin = rules.victory_margin_bp
+    start = state.victory_start
+
+    def target(path: str, base: int) -> int:
+        return min(BP, max(base, start.get(path, 0) + margin))
+
+    rivals_alive = [c for c in sorted(state.civs) if c != me and alive(state, c)]
+    partners = sum(
+        1 for c in rivals_alive if (s := status(state, me, c)) is not None and s.friendly
+    )
+    my_income = income(state, me)
+    top_rival = max(
+        (income(state, c) for c in sorted(state.civs) if c != me and alive(state, c)), default=0
+    )
+    return {
+        "military": {
+            "share_bp": mine * BP // max(1, everyone),
+            "target_bp": target("military", rules.military_victory_share_bp),
+        },
+        "economic": {
+            "share_bp": reached * BP // max(1, others),
+            "target_bp": target("economic", rules.economic_victory_share_bp),
+            "richest": my_income * BP >= top_rival * rules.economic_income_share_bp,
+            "income": my_income,
+            "partners": partners,
+            "partners_needed": -(-len(rivals_alive) * rules.economic_partners_share_bp // BP),
+            "income_target": top_rival * rules.economic_income_share_bp // BP,
+        },
+        "cultural": {
+            "share_bp": min(BP, my_sphere * BP // max(1, total_culture)),
+            "target_bp": target("cultural", rules.cultural_victory_share_bp),
+            "leading": my_sphere >= max(cultures.values()),
+            "influence_bp": influence,
+            "influence_target_bp": rules.cultural_influence_needed_bp,
+        },
+    }
+
+
+def income(state: GameState, civ_id: str) -> int:
+    """Wealth earned per turn: the civilisation's own lands plus its trade ties."""
+    own = production(state, civ_id, civ_effects(state, civ_id), BP).wealth
+    return own + trade_income(state, civ_id)
+
+
+def record_start(state: GameState) -> None:
+    """Remember the player's starting share on each path (called by ``new_game``)."""
+    state.victory_start = {path: values["share_bp"] for path, values in progress(state).items()}
+
+
+def check_outcome(state: GameState, events: EventLog) -> None:
+    """Decide whether the game has been won or lost (once)."""
+    if state.outcome is not None:
+        return
+    me = state.civs[state.player_civ]
+    # a fallen state lives on while its people remember it (D-113)
+    if not alive(state, me.id) and not remembered_in(state, me.id):
+        state.outcome = Outcome(
+            result="defeat", path="collapse", tier="regional", turn=state.turn, year=state.year
+        )
+        events.add(
+            me.id, "defeat", f"The {me.adjective} state has fallen. The age moves on without you."
+        )
+        return
+    paths = progress(state)
+    won = ""
+    if paths["military"]["share_bp"] >= paths["military"]["target_bp"]:
+        won = "military"
+    elif (
+        paths["economic"]["share_bp"] >= paths["economic"]["target_bp"]
+        and paths["economic"]["richest"]
+        and paths["economic"]["partners"] >= paths["economic"]["partners_needed"]
+    ):
+        won = "economic"
+    elif (
+        paths["cultural"]["share_bp"] >= paths["cultural"]["target_bp"]
+        and paths["cultural"]["leading"]
+        and paths["cultural"]["influence_bp"] >= paths["cultural"]["influence_target_bp"]
+    ):
+        won = "cultural"
+    if won:
+        state.outcome = Outcome(
+            result="victory", path=won, tier="regional", turn=state.turn, year=state.year
+        )
+        words = {
+            "military": "by the sword",
+            "economic": "through trade",
+            "cultural": "by the pen and the word",
+        }
+        events.add(me.id, "victory", f"{me.name} dominates the region {words[won]}!")

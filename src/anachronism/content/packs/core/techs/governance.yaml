@@ -2,6 +2,7 @@ schema_version: 1
 techs:
   - id: standard_measures
     name: Standard weights and measures
+    keywords: [standard weights, measures, units, standardise, standardize, weights and measures, metric]
     category: governance
     year: -2500
     complexity: 2
@@ -11,27 +12,33 @@ techs:
       - {type: wealth_output, bp: 500}
       - {type: labour_output, bp: 200}
     flavour: One measure of grain means the same in every market.
+    history: "The cities of the Indus valley used standard cube weights by 2500 BC; Mesopotamian kings fixed measures by decree."
 
   - id: coinage
     name: Coinage
+    keywords: [coins, coinage, money, currency, mint, minting]
     category: trade
     year: -600
     complexity: 2
     prerequisites: [bronze_working, standard_measures]
     effects: [{type: trade_income, bp: 1000}, {type: wealth_output, bp: 800}]
     flavour: Metal of known weight, stamped with the king's promise.
+    history: "The first coins were struck in Lydia, in western Anatolia, around 600 BC, from electrum."
 
   - id: postal_relay
     name: Postal relay stations
+    keywords: [post, postal, messengers, relay stations, courier, mail]
     category: governance
     year: -550
     complexity: 2
     prerequisites: [roads, horse_riding]
     effects: [{type: information_speed, bp: 1200}, {type: legitimacy, bp: 100}]
     flavour: Fresh horses every day's ride, and the king's word outruns rumour.
+    history: "Persia's Royal Road had relay stations a day's ride apart from about 500 BC; China's dynasties kept similar posts."
 
   - id: civil_service
     name: Merit-based civil service
+    keywords: [civil service, exams, examinations, bureaucracy, officials, merit]
     category: governance
     year: -130
     complexity: 3
@@ -43,9 +50,11 @@ techs:
       - {type: legitimacy, bp: 150}
       - {type: unrest, bp: -100}
     flavour: Offices won by examination, not by birth.
+    history: "Han China began choosing officials by examination in 165 BC; the full imperial exams date from AD 605."
 
   - id: paper_money
     name: Paper money
+    keywords: [paper money, banknotes, notes, credit, bills]
     category: trade
     year: 1024
     complexity: 3
@@ -54,9 +63,11 @@ techs:
     resistance: [{group: guilds, level: 1}]
     effects: [{type: trade_income, bp: 1200}, {type: wealth_output, bp: 800}]
     flavour: A printed promise, worth as much as the state that backs it.
+    history: "Song China issued the first government paper money in Sichuan in 1024."
 
   - id: bookkeeping
     name: Double-entry bookkeeping
+    keywords: [bookkeeping, accounting, ledgers, double entry, accounts, audit]
     category: trade
     year: 1300
     complexity: 2
@@ -65,3 +76,4 @@ techs:
     requires: {literacy_bp: 500}
     effects: [{type: wealth_output, bp: 1000}, {type: trade_income, bp: 500}]
     flavour: Every debit has its credit, and every theft leaves a trace.
+    history: "Double-entry books were kept by Italian merchants by 1300; Luca Pacioli described the method in 1494."

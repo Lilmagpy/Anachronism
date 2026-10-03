@@ -13,10 +13,17 @@ class EventLog:
         self.year = year
         self.items: list[Event] = []
 
-    def add(self, civ: str | None, kind: str, message: str) -> None:
-        """Record an event."""
+    def add(self, civ: str | None, kind: str, message: str, subject: str = "") -> None:
+        """Record an event; ``subject`` names what it is about (an idea, a place)."""
         self.items.append(
-            Event(turn=self.turn, year=self.year, civ=civ, kind=kind, message=message)
+            Event(
+                turn=self.turn,
+                year=self.year,
+                civ=civ,
+                kind=kind,
+                message=message,
+                subject=subject,
+            )
         )
 
 

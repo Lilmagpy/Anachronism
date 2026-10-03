@@ -2,32 +2,39 @@ schema_version: 1
 techs:
   - id: writing
     name: Writing
+    keywords: [writing, script, scribes, records, letters, written]
     category: knowledge
     year: -3200
     complexity: 2
     effects: [{type: knowledge_gain, bp: 1000}, {type: literacy_growth, bp: 30}]
     flavour: Words that outlive the breath that spoke them.
+    history: "Writing was invented in Sumer around 3200 BC, as tallies of grain and beer on clay; separately in Egypt soon after, in China by 1200 BC, and in Mesoamerica."
 
   - id: surveying
     name: Surveying and geometry
+    keywords: [surveying, maps, mapping, measuring land, geometry, cartography]
     category: knowledge
     year: -2500
     complexity: 2
     prerequisites: [writing]
     effects: [{type: labour_output, bp: 300}, {type: knowledge_gain, bp: 300}]
     flavour: Rope, stakes and a right angle measure a kingdom.
+    history: "Egyptian 'rope-stretchers' re-measured the fields after every Nile flood, from around 2500 BC."
 
   - id: astronomy_calendar
     name: Astronomical calendar
+    keywords: [astronomy, calendar, stars, observatory, planets, seasons]
     category: knowledge
     year: -2000
     complexity: 2
     prerequisites: [writing]
     effects: [{type: food_output, bp: 400}, {type: legitimacy, bp: 100}]
     flavour: The court that predicts the floods commands the fields.
+    history: "The Egyptians fixed a 365-day calendar by the rising of Sirius; Babylonian astronomers kept records of the heavens from about 2000 BC."
 
   - id: alphabet
     name: Phonetic alphabet
+    keywords: [alphabet, phonetic, letters, spelling, simple script, hangul]
     category: knowledge
     year: -1050
     complexity: 2
@@ -36,9 +43,11 @@ techs:
     resistance: [{group: clergy, level: 1}]
     effects: [{type: literacy_growth, bp: 40}, {type: knowledge_gain, bp: 800}]
     flavour: Two dozen signs instead of thousands. Any merchant's child can learn it.
+    history: "The Phoenicians' alphabet of 22 letters (about 1050 BC) is the ancestor of Greek, Latin, Arabic and Hebrew script."
 
   - id: place_value_numerals
     name: Place-value numerals with zero
+    keywords: [numerals, zero, number zero, numbers, decimal, place value, arabic numerals, arithmetic, maths, math]
     category: knowledge
     year: 500
     complexity: 2
@@ -46,9 +55,11 @@ techs:
     prerequisites: [writing]
     effects: [{type: knowledge_gain, bp: 1200}, {type: wealth_output, bp: 500}]
     flavour: Ten signs and a circle for nothing, and arithmetic becomes easy.
+    history: "Indian mathematicians wrote numbers with place value and a zero by about AD 500; Brahmagupta set out its rules in 628."
 
   - id: alchemy
     name: Alchemy
+    keywords: [alchemy, chemistry, elements, distillation, experiments]
     category: knowledge
     year: -300
     complexity: 2
@@ -56,9 +67,11 @@ techs:
     resistance: [{group: clergy, level: 1}]
     effects: [{type: knowledge_gain, bp: 400}, {type: health, bp: 300}]
     flavour: Furnaces, flasks and patient notes on what changes into what.
+    history: "Alchemy grew in Hellenistic Egypt and in China around 300 BC, and flourished in the Islamic world after AD 800."
 
   - id: schools
     name: Public schools
+    keywords: [schools, school, education, teaching, teach, academy, teachers, read, reading, literacy, learn to read]
     category: knowledge
     year: -500
     complexity: 3
@@ -66,9 +79,11 @@ techs:
     requires: {literacy_bp: 300}
     effects: [{type: literacy_growth, bp: 60}]
     flavour: Letters taught to many, not handed down to a few.
+    history: "Schools for scribes existed in Sumer; schooling for many citizens came to Greece and China around 500 BC."
 
   - id: woodblock_printing
     name: Woodblock printing
+    keywords: [woodblock, block printing, printing, prints]
     category: knowledge
     year: 650
     complexity: 3
@@ -79,18 +94,21 @@ techs:
       - {type: knowledge_gain, bp: 800}
       - {type: cultural_influence, bp: 600}
     flavour: Carve a page once, print it a thousand times.
+    history: "China printed with carved woodblocks by about AD 650; the Diamond Sutra of 868 is the oldest dated printed book."
 
   - id: movable_type
     name: Movable-type printing
+    keywords: [movable type, printing press, press, printing, books, gutenberg]
     category: knowledge
     year: 1040
     complexity: 4
     visibility: 3
     prerequisites: [woodblock_printing, bronze_working]
-    requires: {literacy_bp: 800, widespread: [paper]}
+    requires: {literacy_bp: 800, widespread: [paper], buildings: [workshop]}
     resistance: [{group: clergy, level: 2}, {group: guilds, level: 1}]
     effects:
       - {type: literacy_growth, bp: 80}
       - {type: knowledge_gain, bp: 1500}
       - {type: cultural_influence, bp: 1000}
     flavour: Letters cast one by one, set in any order, used again tomorrow.
+    history: "Bi Sheng made movable type of baked clay in China around 1040; Korea cast metal type by 1234."

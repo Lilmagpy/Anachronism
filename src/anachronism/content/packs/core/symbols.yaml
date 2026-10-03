@@ -1,0 +1,62 @@
+schema_version: 1
+# Heraldic symbols for the civilisations (G1): the client draws `client/assets/symbols/<id>.svg`.
+# Art: game-icons.net (CC BY 3.0; see client/assets/LICENSES.md); `source` names the icon used.
+symbols:
+  - {id: eagle, name: Eagle, source: lorc/eagle-emblem}
+  - {id: lion, name: Lion, source: lorc/lion}
+  - {id: dragon, name: Dragon, source: lorc/dragon-head}
+  - {id: wolf, name: Wolf, source: lorc/wolf-head}
+  - {id: bear, name: Bear, source: delapouite/bear-head}
+  - {id: boar, name: Boar, source: cathelineau/boar-ensign}
+  - {id: bull, name: Bull, source: delapouite/charging-bull}
+  - {id: stag, name: Stag, source: lorc/stag-head}
+  - {id: horse, name: Horse, source: lorc/horse-head}
+  - {id: elephant, name: Elephant, source: delapouite/elephant-head}
+  - {id: camel, name: Camel, source: delapouite/camel-head}
+  - {id: tiger, name: Tiger, source: delapouite/tiger-head}
+  - {id: owl, name: Owl, source: lorc/owl}
+  - {id: raven, name: Raven, source: lorc/raven}
+  - {id: hawk, name: Hawk, source: lorc/hawk-emblem}
+  - {id: falcon, name: Falcon and moon, source: delapouite/falcon-moon}
+  - {id: swan, name: Swan, source: lorc/swan}
+  - {id: turtle, name: Turtle, source: lorc/turtle}
+  - {id: snake, name: Serpent, source: lorc/snake}
+  - {id: ram, name: Ram, source: delapouite/ram-profile}
+  - {id: griffin, name: Griffin, source: delapouite/griffin-symbol}
+  - {id: lotus, name: Lotus, source: lorc/lotus}
+  - {id: lily, name: Fleur-de-lys, source: delapouite/fleur-de-lys}
+  - {id: rose, name: Rose, source: lorc/rose}
+  - {id: oak, name: Oak, source: lorc/oak}
+  - {id: pine, name: Pine, source: lorc/pine-tree}
+  - {id: bamboo, name: Bamboo, source: delapouite/bamboo}
+  - {id: ginkgo, name: Leaf, source: delapouite/ginkgo-leaf}
+  - {id: flower, name: Flower crest, source: delapouite/flower-emblem}
+  - {id: sun, name: Sun, source: caro-asercion/heraldic-sun}
+  - {id: moon, name: Crescent, source: lorc/moon}
+  - {id: star, name: Star, source: lorc/law-star}
+  - {id: eye, name: Eye of Horus, source: delapouite/eye-of-horus}
+  - {id: crown, name: Crown, source: lorc/crown}
+  - {id: laurel, name: Laurel, source: lorc/laurel-crown}
+  - {id: trident, name: Trident, source: lorc/trident}
+  - {id: trireme, name: Galley, source: delapouite/trireme}
+  - {id: longship, name: Longship, source: delapouite/drakkar-dragon}
+  - {id: anchor, name: Anchor, source: lorc/anchor}
+  - {id: wave, name: Wave, source: lorc/wave-crest}
+  - {id: tower, name: Tower, source: lorc/stone-tower}
+  - {id: column, name: Columns, source: delapouite/ancient-columns}
+  - {id: cross, name: Cross, source: delapouite/cross-shield}
+  - {id: yin_yang, name: Taegeuk, source: delapouite/yin-yang}
+  - {id: triple_comma, name: Mitsudomoe, source: lorc/triple-yin}
+  - {id: diamond, name: Diamond crest, source: lorc/checkered-diamond}
+  - {id: scales, name: Scales crest, source: lorc/striking-diamonds}
+  - {id: helm, name: Crested helm, source: lorc/crested-helmet}
+  - {id: carnyx, name: Carnyx, source: cathelineau/carnyx}
+  - {id: torc, name: Torc, source: cathelineau/torc}
+  - {id: bow, name: Bow, source: lorc/bowman}
+  - {id: crossbow, name: Crossbow, source: carl-olsen/crossbow}
+  - {id: lyre, name: Lyre, source: lorc/lyre}
+  - {id: harp, name: Harp, source: delapouite/harp}
+  - {id: fire, name: Sacred fire, source: delapouite/fire-shrine}
+  - {id: winged, name: Winged disc, source: lorc/winged-emblem}
+  - {id: fish, name: Twin fish, source: delapouite/double-fish}
+  - {id: dolphin, name: Dolphin, source: delapouite/dolphin}

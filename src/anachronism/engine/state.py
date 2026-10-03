@@ -7,21 +7,38 @@ frozen and shared between copies; everything else is copied when the engine adva
 from __future__ import annotations
 
 from enum import StrEnum
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
 from anachronism.content.schema import (
     Access,
+    AlmanacEntry,
+    Building,
+    Chapter,
+    Dilemma,
+    Disposition,
     EffectType,
     Era,
+    Faith,
     Frozen,
+    General,
+    Happening,
     MapResource,
     ProvinceGeography,
+    RelationStatus,
     Rules,
+    Script,
+    SeaZone,
+    Ship,
     SocialGroup,
     Stage,
+    Successor,
+    Tactic,
+    Tale,
     TechNode,
     Terrain,
+    Unit,
 )
 from anachronism.engine.actions import LoggedAction, Priority
 from anachronism.engine.rng import RngState
@@ -52,12 +69,57 @@ class World(Frozen):
     content_digest: str
     years_per_turn: int
     rules: Rules
+    difficulty: str = "normal"
+    """The difficulty level whose overrides are already in ``rules``."""
     eras: tuple[Era, ...]
     effect_caps: dict[EffectType, dict[str, int]]
     terrain: dict[str, Terrain]
     resources: dict[str, MapResource]
     geography: dict[str, ProvinceGeography]
     """Provinces in play; neighbours outside the scenario are removed."""
+    seas: dict[str, SeaZone] = Field(default_factory=dict)
+    """Sea zones touching provinces in play."""
+    map: str | None = None
+    """Real-Earth map region, or ``None`` for a generated map."""
+    music: str = ""
+    """Music track the client plays (D-208); empty keeps the title theme."""
+    cost_scale: int = 1
+    """Multiplier on every project cost (see ``Scenario.cost_scale``)."""
+    happenings: dict[str, Happening] = Field(default_factory=dict)
+    """Chance events that can strike (plague, flood, bumper harvests...)."""
+    units: dict[str, Unit] = Field(default_factory=dict)
+    """The kinds of soldier that exist (raising them needs their advancements)."""
+    tales: dict[str, Tale] = Field(default_factory=dict)
+    """How battles are told."""
+    dilemmas: dict[str, Dilemma] = Field(default_factory=dict)
+    """Choices that may be put to the ruler."""
+    ships: dict[str, Ship] = Field(default_factory=dict)
+    """The kinds of warship that exist."""
+    buildings: dict[str, Building] = Field(default_factory=dict)
+    """The kinds of building provinces can raise (D-111)."""
+    chapters: dict[str, Chapter] = Field(default_factory=dict)
+    """The player's campaign in chronicle mode (D-120), by id; empty in free play."""
+    almanac: dict[str, AlmanacEntry] = Field(default_factory=dict)
+    """What happens elsewhere in the world, year by year (this scenario's entries)."""
+    tactics: dict[str, Tactic] = Field(default_factory=dict)
+    """The battle plans armies may fight with."""
+    scripts: dict[str, tuple[Script, ...]] = Field(default_factory=dict)
+    """Each civilisation's intentions (brief §7.1), from the scenario."""
+    successors: dict[str, tuple[Successor, ...]] = Field(default_factory=dict)
+    """Each civilisation's historical successors, in order."""
+    faiths: dict[str, Faith] = Field(default_factory=dict)
+    """The faiths of this world, by id."""
+    reign_until: dict[str, int] = Field(default_factory=dict)
+    """The year each first ruler's reign really ended (spared old age before it in a chronicle)."""
+    reign_died: dict[str, int] = Field(default_factory=dict)
+    """The year each first ruler really died a natural death (and dies, in a chronicle)."""
+
+
+class Construction(Mutable):
+    """A building going up in a province."""
+
+    building: str
+    turns_left: int
 
 
 class ProvinceState(Mutable):
@@ -67,6 +129,24 @@ class ProvinceState(Mutable):
     population: int
     resources: dict[str, Access]
     """Current access to each map resource (discoveries change it)."""
+    people: str | None = None
+    """Whose people live here (a civ id): conquered peoples remember their old lords."""
+    held_since: int = 0
+    """The turn the present owner took it."""
+    walls: int = 0
+    """Fortifications built here, 0-3 (each makes the province harder to take)."""
+    ravaged: int = 0
+    """Turns of ruin left from pillage: fewer crops and goods until it recovers."""
+    blockaded: bool = False
+    """Enemy warships command every sea on its shore: its harbours are closed."""
+    buildings: list[str] = Field(default_factory=list)
+    """Buildings standing here, oldest first (D-111)."""
+    works: Construction | None = None
+    """A building going up here."""
+    queue: list[str] = Field(default_factory=list)
+    """Buildings to start here next, in order (D-128); each is paid for when it starts."""
+    queued_by: str | None = None
+    """Whose plans the queue is: dropped if the province changes hands."""
 
 
 class Stockpiles(Mutable):
@@ -96,6 +176,13 @@ class TechState(Mutable):
     """How widely an adopted advancement is used, 0-100%."""
     goal: bool = False
     """Marked because an idea the civilisation wanted needs it."""
+    head_start_bp: int = 0
+    """Work already done when a project starts: methods stolen by spies (D-115)."""
+    adopted_year: int | None = None
+    """The year it came into use (D-126): how far ahead of history it came."""
+    stolen: bool = False
+    """Learned by spies from a court that has it: a rival may then work on it even before its
+    time (D-125)."""
 
 
 class Project(Mutable):
@@ -108,6 +195,8 @@ class Project(Mutable):
     paused: bool = False
     stalled_turns: int = 0
     last_funding_bp: int = 0
+    hastened_turn: int = -1
+    """The last turn the court paid to hasten the work (once a turn, D-119)."""
 
 
 class Snapshot(Mutable):
@@ -127,6 +216,137 @@ class Snapshot(Mutable):
     legitimacy_bp: int
     suspicion_bp: int
     strain_bp: int
+
+
+class Awareness(StrEnum):
+    """How far a rival has noticed the player's meddling (brief §7.2)."""
+
+    ON_SCRIPT = "on_script"
+    """Untouched: plays out its own history."""
+    AWARE = "aware"
+    """Has heard something; still follows its plans, but reacts (copies, grows wary)."""
+    FREE_AGENT = "free_agent"
+    """Knocked off its script: acts on its ruler's temperament and its situation."""
+
+
+class Heard(Mutable):
+    """News a civilisation has received about another's advancement (brief §7.3)."""
+
+    about: str
+    node_id: str
+    turn: int
+    garbled: bool
+    """Garbled news ("strange fire weapons") makes a rival wary but gives nothing to copy."""
+
+
+class NewsInTransit(Mutable):
+    """News on its way along trade routes, envoys, refugees and soldiers."""
+
+    to_civ: str
+    about: str
+    node_id: str
+    arrives_turn: int
+    garbled: bool
+
+
+class Relation(Mutable):
+    """How two civilisations stand, with the memory of what passed between them (§7.5)."""
+
+    status: RelationStatus
+    since_turn: int = 0
+    grievance: dict[str, int] = Field(default_factory=dict)
+    """Each side's grudge against the other, in basis points."""
+    weariness: dict[str, int] = Field(default_factory=dict)
+    """During a war: how tired of it each side is."""
+    losses: dict[str, int] = Field(default_factory=dict)
+    """During a war: provinces each side has lost."""
+
+
+class Outcome(Mutable):
+    """How the game ended for the player (DESIGN §11)."""
+
+    result: str
+    """``victory`` or ``defeat``."""
+    path: str
+    """``military``, ``economic``, ``cultural`` or ``collapse``."""
+    tier: str
+    """``regional`` for now; hemispheric and world need several regions (Phase 8)."""
+    turn: int
+    year: int
+
+
+class Army(Mutable):
+    """A force in the field (D-099): where it stands, who is in it, and its orders."""
+
+    id: str
+    owner: str
+    name: str
+    province: str
+    troops: dict[str, int]
+    """Unit id -> men."""
+    morale_bp: int = 8000
+    general: str = ""
+    """Who commands it (empty: no named general)."""
+    skill: int = 1
+    """The general's skill, 1-5."""
+    trait: str = ""
+    """The general's gift (see ``content.schema.General``), if any."""
+    target: str | None = None
+    """The province it is marching to, if any."""
+    stance: Literal["defend", "hold", "pillage"] = "defend"
+    """Without a march order: ``defend`` meets invaders of its own land, ``hold`` stays put,
+    ``pillage`` ravages the enemy province it stands in instead of besieging it."""
+    came_from: str = ""
+    """Where it marched from last (a beaten army falls back that way)."""
+    siege_bp: int = 0
+    """Progress of its siege of the province it stands in (10_000 = a normal province)."""
+    raised_turn: int = 0
+    contract: int = 0
+    """Turns a mercenary company still serves (0: the state's own men)."""
+    plan: str = "auto"
+    """The battle plan its ruler ordered (a tactic id), or ``auto``: its general decides."""
+    veterancy_bp: int = 0
+    """Extra fighting power its men have learned in battle (D-108)."""
+
+    @property
+    def men(self) -> int:
+        """Everyone in the army."""
+        return sum(self.troops.values())
+
+
+class Fleet(Mutable):
+    """Warships at sea (D-107): where they sail, how many, and their orders."""
+
+    id: str
+    owner: str
+    name: str
+    sea: str
+    ship: str
+    """The kind of ship (all of one kind)."""
+    ships: int
+    target: str | None = None
+    """The sea it is sailing to, if any."""
+
+
+class Offer(Mutable):
+    """A rival court's proposal waiting for the player's answer (D-105)."""
+
+    kind: Literal["peace", "ultimatum", "alliance", "trade"]
+    from_civ: str
+    against: str = ""
+    """For an alliance: the common enemy."""
+    turn: int = 0
+
+
+class Intel(Mutable):
+    """The latest intelligence about a court (D-115): may be wrong."""
+
+    turn: int
+    source: str
+    """Who told us: spies, allied envoys, merchants, captured soldiers."""
+    lines: list[str] = Field(default_factory=list)
+    trust_bp: int = 0
+    """How likely each line is to be true."""
 
 
 class CivState(Mutable):
@@ -150,6 +370,36 @@ class CivState(Mutable):
     """Buildings and units unlocked by advancements (used from later phases)."""
     history: list[Snapshot] = Field(default_factory=list)
     collapsed: bool = False
+    disposition: Disposition = Disposition.CAUTIOUS
+    awareness: Awareness = Awareness.ON_SCRIPT
+    ruler: str = ""
+    """Who rules now (empty: unnamed)."""
+    faith: str = ""
+    """The court's religion or school of belief (a faith id, or empty)."""
+    martial_bp: int = 10_000  # share of the people under arms, against the usual (steppe: more)
+    navy_bp: int = 10_000  # seafaring, against the usual: the size of its starting fleet
+    revolts: int = 0  # provinces lost to revolt: half the starting ones is collapse
+    dynasties: int = 1
+    """How many dynasties have ruled the state in this game (D-113)."""
+    spies: dict[str, int] = Field(default_factory=dict)
+    """Spy networks this state keeps in other courts: court -> turns left (D-115)."""
+    intel: dict[str, Intel] = Field(default_factory=dict)
+    """The latest intelligence about each court."""
+    envoy_turn: int = -1  # the turn the last embassy left: one a turn
+    mercenaries: int = 0
+    """Turns of hired soldiers left."""
+    explained_turn: int = -99
+    """The turn the court last explained its new arts (see ``Explain``)."""
+    sealed: int = 0
+    """Turns the borders stay sealed (no trade; news of the court's arts travels slowly)."""
+    generals: list[General] = Field(default_factory=list)
+    """Commanders not yet leading an army (best first)."""
+    armies_raised: int = 0
+    """How many armies the state has raised (numbers new ones)."""
+    ruler_age: int = 40
+    rulers: int = 1
+    """How many rulers the state has had in this game (1 = the one it started with)."""
+    heard: list[Heard] = Field(default_factory=list)
 
 
 class Event(Mutable):
@@ -160,6 +410,19 @@ class Event(Mutable):
     civ: str | None
     kind: str
     message: str
+    subject: str = ""
+    """What it is about, by name (an idea, a province or a resource); used by dialogue."""
+
+
+class ChapterResult(Mutable):
+    """What the player's last chapter choice led to, kept for the client to tell (D-120)."""
+
+    chapter: str
+    choice: int
+    outcome: str
+    history: str
+    historical: bool
+    benchmark: str = ""
 
 
 class GameState(Mutable):
@@ -179,6 +442,32 @@ class GameState(Mutable):
     civs: dict[str, CivState]
     action_log: list[LoggedAction] = Field(default_factory=list)
     events: list[Event] = Field(default_factory=list)
+    offer: Offer | None = None
+    """A rival court's proposal waiting for the player's answer, if any."""
+    dilemma: str | None = None
+    """The dilemma waiting for the player's answer, if any."""
+    dilemmas_seen: list[str] = Field(default_factory=list)
+    chronicle_mode: bool = False
+    """Playing along history in chapters (D-120)."""
+    chapter: str | None = None
+    """The chapter waiting for the player's choice, if any."""
+    chapters_done: dict[str, int] = Field(default_factory=dict)
+    """Chapter id -> the choice made (-1: passed over, history having turned)."""
+    chapter_result: ChapterResult | None = None
+    armies: dict[str, Army] = Field(default_factory=dict)
+    """Every army in the field, keyed by id."""
+    fleets: dict[str, Fleet] = Field(default_factory=dict)
+    """Every fleet at sea, keyed by id."""
+    relations: dict[str, Relation] = Field(default_factory=dict)
+    """Keyed ``"a|b"`` with the ids sorted; only pairs that can reach each other."""
+    news: list[NewsInTransit] = Field(default_factory=list)
+    scripts_fired: dict[str, int] = Field(default_factory=dict)
+    """Script id -> turn it fired."""
+    scripts_lapsed: dict[str, int] = Field(default_factory=dict)
+    """Script id -> turn it lapsed (its moment passed or what it needed failed)."""
+    outcome: Outcome | None = None
+    victory_start: dict[str, int] = Field(default_factory=dict)
+    """The player's share on each victory path at the start: victory means gaining ground."""
 
     def owned_provinces(self, civ_id: str) -> list[str]:
         """Ids of the provinces a civilisation owns, sorted."""

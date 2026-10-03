@@ -5,14 +5,53 @@ from __future__ import annotations
 from anachronism.content.schema import Stage
 from anachronism.engine.actions import (
     Action,
+    AnswerEnvoy,
+    ArmyPlan,
+    ArmyStance,
+    Build,
+    BuildFleet,
     CancelProject,
+    ChooseChapter,
+    ChooseDilemma,
+    DeclareWar,
+    DemandTribute,
+    DisbandArmy,
+    Explain,
+    Fortify,
+    HastenProject,
+    HireMercenaries,
+    HoldFestival,
     LoggedAction,
+    MakePeace,
+    MarchArmy,
     PauseProject,
+    ProposeAlliance,
     ProposeIdea,
+    RaiseArmy,
     ResumeProject,
+    RuleOnIdea,
+    SailFleet,
+    ScuttleFleet,
+    SealBorders,
+    SendEnvoy,
+    SendMissionaries,
+    SendSpies,
     SetPriority,
+    SpreadRumours,
     StartProject,
+    Unqueue,
 )
+from anachronism.engine.armies import apply_orders
+from anachronism.engine.buildings import queue as queue_building
+from anachronism.engine.buildings import unqueue as unqueue_building
+from anachronism.engine.campaign import choose as choose_chapter
+from anachronism.engine.decrees import apply_decree
+from anachronism.engine.dilemmas import answer
+from anachronism.engine.diplomacy import apply_diplomacy
+from anachronism.engine.events import EventLog
+from anachronism.engine.judge import apply_ruling
+from anachronism.engine.offers import respond
+from anachronism.engine.projects import hasten
 from anachronism.engine.state import GameState, Project
 from anachronism.engine.tech import Feasibility, feasibility, propose
 
@@ -43,6 +82,14 @@ def describe_blockers(state: GameState, result: Feasibility) -> str:
         parts.append(f"needs {names(result.missing_prerequisites)} first")
     if result.missing_widespread:
         parts.append(f"needs {names(result.missing_widespread)} to be widespread")
+    if result.missing_buildings:
+        kinds = state.world.buildings
+        built = ", ".join(
+            kinds[b].name.lower() if b in kinds else b for b in result.missing_buildings
+        )
+        parts.append(f"needs {built} built somewhere in the realm")
+    if result.beyond_age:
+        parts.append("lies beyond this age")
     if result.missing_materials:
         materials = ", ".join(state.world.resources[m].name for m in result.missing_materials)
         parts.append(f"needs access to {materials}")
@@ -53,6 +100,53 @@ def _apply(state: GameState, action: Action) -> tuple[bool, str]:
     civ = state.civs.get(action.civ)
     if civ is None:
         return False, f"unknown civilisation {action.civ!r}"
+    if isinstance(
+        action, HoldFestival | HireMercenaries | Explain | SealBorders | SpreadRumours | SendSpies
+    ):
+        return apply_decree(state, action)
+    if isinstance(
+        action,
+        RaiseArmy
+        | MarchArmy
+        | ArmyStance
+        | ArmyPlan
+        | DisbandArmy
+        | Fortify
+        | BuildFleet
+        | SailFleet
+        | ScuttleFleet,
+    ):
+        return apply_orders(state, action)
+    if isinstance(action, Build):
+        return queue_building(state, action.civ, action.province, action.building)
+    if isinstance(action, Unqueue):
+        return unqueue_building(state, action.civ, action.province, action.building)
+    if isinstance(action, AnswerEnvoy):
+        if state.offer is None or civ.id != state.player_civ:
+            return False, "no envoys are waiting"
+        events = EventLog(turn=state.turn, year=state.year)
+        message = respond(state, accept=action.accept, events=events)
+        state.events.extend(events.items)
+        return True, message
+    if isinstance(action, ChooseChapter):
+        if civ.id != state.player_civ:
+            return False, "only the player's court plays the chronicle"
+        return choose_chapter(state, action.chapter, action.choice)
+    if isinstance(action, ChooseDilemma):
+        dilemma = state.world.dilemmas.get(action.dilemma)
+        if dilemma is None or state.dilemma != action.dilemma or civ.id != state.player_civ:
+            return False, "that question is not before the court"
+        if not 0 <= action.choice < len(dilemma.choices):
+            return False, "no such answer"
+        state.dilemma = None
+        return True, answer(state, dilemma, action.choice)
+    if isinstance(action, RuleOnIdea):
+        return apply_ruling(state, civ.id, action.ruling)
+    if isinstance(
+        action,
+        DeclareWar | MakePeace | SendEnvoy | ProposeAlliance | SendMissionaries | DemandTribute,
+    ):
+        return apply_diplomacy(state, action)
     node = state.tech_nodes.get(action.node_id)
     if node is None:
         return False, f"unknown idea {action.node_id!r}"
@@ -79,12 +173,17 @@ def _apply(state: GameState, action: Action) -> tuple[bool, str]:
         civ.tech[node.id].stage = Stage.EXPERIMENTING
         civ.tech[node.id].goal = False
         civ.projects[node.id] = Project(
-            node_id=node.id, started_turn=state.turn, priority=action.priority
+            node_id=node.id,
+            started_turn=state.turn,
+            priority=action.priority,
+            progress_bp=civ.tech[node.id].head_start_bp,  # stolen methods (D-115)
         )
         return True, f"Work begins on {node.name}."
 
     if project is None:
         return False, f"there is no project for {node.name}"
+    if isinstance(action, HastenProject):
+        return hasten(state, civ, node.id)
     if isinstance(action, PauseProject):
         if project.paused:
             return False, f"{node.name} is already paused"

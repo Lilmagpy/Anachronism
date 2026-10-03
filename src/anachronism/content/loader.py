@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import hashlib
 from collections.abc import Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
@@ -19,16 +19,29 @@ from anachronism.content.schema import (
     CURRENT_SCHEMA_VERSION,
     LIST_KINDS,
     SINGLE_KINDS,
+    AlmanacEntry,
+    Building,
+    Chapter,
     CivDefinition,
+    Dialogue,
+    Dilemma,
     EffectType,
     Era,
+    Happening,
     MapResource,
     PackManifest,
     ProvinceGeography,
     Rules,
     Scenario,
+    SeaZone,
+    Ship,
+    Speaker,
+    Symbol,
+    Tactic,
+    Tale,
     TechNode,
     Terrain,
+    Unit,
 )
 
 PACKS_DIR = Path(__file__).parent / "packs"
@@ -47,10 +60,24 @@ class Content:
     resources: Mapping[str, MapResource]
     techs: Mapping[str, TechNode]
     provinces: Mapping[str, ProvinceGeography]
+    seas: Mapping[str, SeaZone]
     civs: Mapping[str, CivDefinition]
     scenarios: Mapping[str, Scenario]
+    speakers: Mapping[str, Speaker]
+    dialogue: Mapping[str, Dialogue]
     digest: str
     """SHA-256 of every loaded file, recorded in saves to identify the content version."""
+    happenings: Mapping[str, Happening] = field(default_factory=dict)
+    units: Mapping[str, Unit] = field(default_factory=dict)
+    tales: Mapping[str, Tale] = field(default_factory=dict)
+    dilemmas: Mapping[str, Dilemma] = field(default_factory=dict)
+    ships: Mapping[str, Ship] = field(default_factory=dict)
+    buildings: Mapping[str, Building] = field(default_factory=dict)
+    chapters: Mapping[str, Chapter] = field(default_factory=dict)
+    almanac: Mapping[str, AlmanacEntry] = field(default_factory=dict)
+    tactics: Mapping[str, Tactic] = field(default_factory=dict)
+    symbols: Mapping[str, Symbol] = field(default_factory=dict)
+    """Chance events (plague, flood, bumper harvests...)."""
 
 
 @dataclass(frozen=True)
@@ -122,8 +149,21 @@ def load_content(pack_ids: Sequence[str] | None = None, root: Path = PACKS_DIR) 
         resources=registry.resources,
         techs=registry.techs,
         provinces=registry.provinces,
+        seas=registry.seas,
         civs=registry.civs,
         scenarios=registry.scenarios,
+        speakers=registry.speakers,
+        dialogue=registry.dialogue,
+        happenings=registry.happenings,
+        units=registry.units,
+        tales=registry.tales,
+        dilemmas=registry.dilemmas,
+        ships=registry.ships,
+        buildings=registry.buildings,
+        chapters=registry.chapters,
+        almanac=registry.almanac,
+        tactics=registry.tactics,
+        symbols=registry.symbols,
         digest=digest.hexdigest(),
     )
 

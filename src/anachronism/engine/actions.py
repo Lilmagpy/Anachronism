@@ -8,6 +8,7 @@ from typing import Annotated, Literal
 from pydantic import Field
 
 from anachronism.content.schema import Frozen
+from anachronism.engine.rulings import Ruling
 
 
 class Priority(StrEnum):
@@ -48,6 +49,14 @@ class PauseProject(Frozen):
     node_id: str
 
 
+class HastenProject(Frozen):
+    """Pay craftsmen and supplies to push a project on by a turn's work (D-119)."""
+
+    kind: Literal["hasten"] = "hasten"
+    civ: str
+    node_id: str
+
+
 class ResumeProject(Frozen):
     """Fund a paused project again."""
 
@@ -73,8 +82,309 @@ class SetPriority(Frozen):
     priority: Priority
 
 
+class RuleOnIdea(Frozen):
+    """Apply the court's ruling on one of the player's own ideas (DESIGN §8).
+
+    The whole ruling is stored, so replays apply it again without asking any model.
+    """
+
+    kind: Literal["ruling"] = "ruling"
+    civ: str
+    ruling: Ruling
+
+
+class DeclareWar(Frozen):
+    """Go to war with another civilisation."""
+
+    kind: Literal["declare_war"] = "declare_war"
+    civ: str
+    target: str
+
+
+class MakePeace(Frozen):
+    """Offer peace; accepted if the other side is weary, losing or outmatched.
+
+    ``cede`` also demands every province your armies stand in (D-101): only a side that is
+    losing gives up land.
+    """
+
+    kind: Literal["peace"] = "peace"
+    civ: str
+    target: str
+    terms: Literal["white", "cede"] = "white"
+
+
+class SendEnvoy(Frozen):
+    """Send an embassy with gifts: eases grudges and warms relations a step."""
+
+    kind: Literal["envoy"] = "envoy"
+    civ: str
+    target: str
+
+
+class ProposeAlliance(Frozen):
+    """Ask for an alliance: allies join each other's defensive wars."""
+
+    kind: Literal["alliance"] = "alliance"
+    civ: str
+    target: str
+
+
+class SendMissionaries(Frozen):
+    """Send missionaries of your faith to another court."""
+
+    kind: Literal["missionaries"] = "missionaries"
+    civ: str
+    target: str
+
+
+class DemandTribute(Frozen):
+    """Demand that a much weaker (or beaten) court become your tributary.
+
+    At war, submission is the price of peace. Tributaries count fully in your trade
+    network and stand with you in war.
+    """
+
+    kind: Literal["tribute"] = "tribute"
+    civ: str
+    target: str
+
+
+class HoldFestival(Frozen):
+    """Spend wealth on games and feasts: legitimacy up, unrest down."""
+
+    kind: Literal["festival"] = "festival"
+    civ: str
+
+
+class HireMercenaries(Frozen):
+    """Spend wealth on hired soldiers: more military strength for a few turns."""
+
+    kind: Literal["mercenaries"] = "mercenaries"
+    civ: str
+
+
+class Explain(Frozen):
+    """Explain the court's new arts to quiet suspicion (DESIGN §7).
+
+    ``divine``: proclaim them a gift of the gods (wealth; believed if legitimacy is high).
+    ``sages``: credit foreign sages (knowledge; quiets more, but rivals hear sooner).
+    """
+
+    kind: Literal["explain"] = "explain"
+    civ: str
+    story: Literal["divine", "sages"] = "divine"
+
+
+class SealBorders(Frozen):
+    """Close the borders for a few turns: no trade, and news of your arts travels slowly."""
+
+    kind: Literal["seal"] = "seal"
+    civ: str
+
+
+class SendSpies(Frozen):
+    """Pay for a spy network in a rival court (D-115): its plans, its work, its secrets."""
+
+    kind: Literal["spies"] = "spies"
+    civ: str
+    target: str
+
+
+class SpreadRumours(Frozen):
+    """Pay storytellers: news of your arts already on the road arrives garbled."""
+
+    kind: Literal["rumours"] = "rumours"
+    civ: str
+
+
+class RaiseArmy(Frozen):
+    """Call up men from one of your provinces into an army (D-099)."""
+
+    kind: Literal["raise"] = "raise"
+    civ: str
+    province: str
+    size: Literal["small", "medium", "large"] = "medium"
+    style: Literal["balanced", "infantry", "missile", "mounted", "siege"] = "balanced"
+
+
+class MarchArmy(Frozen):
+    """Order an army to march to a province (and fight or besiege what it finds)."""
+
+    kind: Literal["march"] = "march"
+    civ: str
+    army: str
+    target: str
+
+
+class ArmyStance(Frozen):
+    """Halt an army in one of three stances.
+
+    ``defend`` meets invaders of your land, ``hold`` stays put, ``pillage`` ravages the enemy
+    province it stands in.
+    """
+
+    kind: Literal["stance"] = "stance"
+    civ: str
+    army: str
+    stance: Literal["defend", "hold", "pillage"] = "hold"
+
+
+class ArmyPlan(Frozen):
+    """Order the battle plan an army fights with (D-108).
+
+    ``plan`` is a tactic id, or ``auto``: its general chooses.
+    """
+
+    kind: Literal["plan"] = "plan"
+    civ: str
+    army: str
+    plan: str = "auto"
+
+
+class Fortify(Frozen):
+    """Build (or raise higher) the walls of one of your provinces."""
+
+    kind: Literal["fortify"] = "fortify"
+    civ: str
+    province: str
+
+
+class DisbandArmy(Frozen):
+    """Send an army home; its men return to the fields."""
+
+    kind: Literal["disband"] = "disband"
+    civ: str
+    army: str
+
+
+class ChooseChapter(Frozen):
+    """Answer the chapter of history before the court (chronicle mode, D-120)."""
+
+    kind: Literal["chapter"] = "chapter"
+    civ: str
+    chapter: str
+    choice: int
+
+
+class ChooseDilemma(Frozen):
+    """Answer the dilemma put to the court (D-104)."""
+
+    kind: Literal["dilemma"] = "dilemma"
+    civ: str
+    dilemma: str
+    choice: int
+
+
+class AnswerEnvoy(Frozen):
+    """Accept or refuse a rival court's proposal (D-105)."""
+
+    kind: Literal["envoy_answer"] = "envoy_answer"
+    civ: str
+    accept: bool
+
+
+class BuildFleet(Frozen):
+    """Build warships in a coastal province (D-107)."""
+
+    kind: Literal["build_fleet"] = "build_fleet"
+    civ: str
+    province: str
+    size: Literal["small", "medium", "large"] = "medium"
+
+
+class Build(Frozen):
+    """Raise a building in one of your provinces (D-111).
+
+    If builders are already at work there, it is queued to start next (D-128).
+    """
+
+    kind: Literal["build"] = "build"
+    civ: str
+    province: str
+    building: str
+
+
+class Unqueue(Frozen):
+    """Take a building off a province's queue (D-128)."""
+
+    kind: Literal["unqueue"] = "unqueue"
+    civ: str
+    province: str
+    building: str
+
+
+class SailFleet(Frozen):
+    """Order a fleet to sail to a sea."""
+
+    kind: Literal["sail"] = "sail"
+    civ: str
+    fleet: str
+    sea: str
+
+
+class ScuttleFleet(Frozen):
+    """Lay up a fleet: its ships are broken up and cost nothing more."""
+
+    kind: Literal["scuttle"] = "scuttle"
+    civ: str
+    fleet: str
+
+
+Orders = (
+    RaiseArmy
+    | MarchArmy
+    | ArmyStance
+    | ArmyPlan
+    | DisbandArmy
+    | Fortify
+    | BuildFleet
+    | SailFleet
+    | ScuttleFleet
+)
+
+
+Decree = HoldFestival | HireMercenaries | Explain | SealBorders | SpreadRumours | SendSpies
+
+
+Diplomacy = DeclareWar | MakePeace | SendEnvoy | ProposeAlliance | SendMissionaries | DemandTribute
+
+
 Action = Annotated[
-    ProposeIdea | StartProject | PauseProject | ResumeProject | CancelProject | SetPriority,
+    ProposeIdea
+    | StartProject
+    | PauseProject
+    | HastenProject
+    | ResumeProject
+    | CancelProject
+    | SetPriority
+    | RuleOnIdea
+    | DeclareWar
+    | MakePeace
+    | SendEnvoy
+    | ProposeAlliance
+    | SendMissionaries
+    | DemandTribute
+    | HoldFestival
+    | HireMercenaries
+    | Explain
+    | SealBorders
+    | SpreadRumours
+    | SendSpies
+    | RaiseArmy
+    | MarchArmy
+    | ArmyStance
+    | ArmyPlan
+    | DisbandArmy
+    | Fortify
+    | BuildFleet
+    | SailFleet
+    | ScuttleFleet
+    | Build
+    | Unqueue
+    | ChooseDilemma
+    | ChooseChapter
+    | AnswerEnvoy,
     Field(discriminator="kind"),
 ]
 

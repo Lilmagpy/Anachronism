@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from anachronism.content.schema.base import Frozen, HexColour, Identifier
+from anachronism.content.schema.base import Confidence, Frozen, HexColour, Identifier
 
 
 class CivDefinition(Frozen):
@@ -15,3 +15,16 @@ class CivDefinition(Frozen):
     """Cultural line the player's guiding hand follows across dynasties (D-011)."""
     colour: HexColour
     description: str = ""
+    symbol: Identifier | None = None
+    """Its heraldic symbol (an id in ``symbols.yaml``): an eagle, a lotus, a wave..."""
+    emblem: str = ""
+    """One or two characters on the civilisation's badge (e.g. 秦); the adjective's first
+    letter when empty. Characters outside Latin must be in the client's emblem font
+    (scripts/build_emblem_font.py)."""
+    portrait: str = ""
+    """Placeholder portrait style drawn by the client (e.g. ``court``, ``steppe``,
+    ``southern``, ``hills``); real portraits replace these later (D-060)."""
+    sources: tuple[str, ...] = ()
+    """Internal research notes; never shown to players."""
+    confidence: Confidence = Confidence.LOW
+    """How sure the profile is; internal only."""

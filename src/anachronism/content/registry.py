@@ -5,16 +5,29 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 from anachronism.content.schema import (
+    AlmanacEntry,
+    Building,
+    Chapter,
     CivDefinition,
+    Dialogue,
+    Dilemma,
     EffectType,
     Era,
+    Happening,
     MapResource,
     PackManifest,
     ProvinceGeography,
     Rules,
     Scenario,
+    SeaZone,
+    Ship,
+    Speaker,
+    Symbol,
+    Tactic,
+    Tale,
     TechNode,
     Terrain,
+    Unit,
 )
 
 
@@ -30,8 +43,21 @@ class Registry:
     resources: dict[str, MapResource] = field(default_factory=dict)
     techs: dict[str, TechNode] = field(default_factory=dict)
     provinces: dict[str, ProvinceGeography] = field(default_factory=dict)
+    seas: dict[str, SeaZone] = field(default_factory=dict)
     civs: dict[str, CivDefinition] = field(default_factory=dict)
     scenarios: dict[str, Scenario] = field(default_factory=dict)
+    speakers: dict[str, Speaker] = field(default_factory=dict)
+    dialogue: dict[str, Dialogue] = field(default_factory=dict)
+    happenings: dict[str, Happening] = field(default_factory=dict)
+    units: dict[str, Unit] = field(default_factory=dict)
+    tales: dict[str, Tale] = field(default_factory=dict)
+    dilemmas: dict[str, Dilemma] = field(default_factory=dict)
+    ships: dict[str, Ship] = field(default_factory=dict)
+    buildings: dict[str, Building] = field(default_factory=dict)
+    chapters: dict[str, Chapter] = field(default_factory=dict)
+    almanac: dict[str, AlmanacEntry] = field(default_factory=dict)
+    tactics: dict[str, Tactic] = field(default_factory=dict)
+    symbols: dict[str, Symbol] = field(default_factory=dict)
     origins: dict[tuple[str, str], str] = field(default_factory=dict)
     invalid: dict[str, set[str]] = field(default_factory=dict)
     """Ids of items that exist but failed validation (already reported), per kind."""

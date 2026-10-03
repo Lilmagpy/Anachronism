@@ -2,15 +2,18 @@ schema_version: 1
 techs:
   - id: pottery_kiln
     name: Kiln-fired pottery
+    keywords: [kiln, pottery, ceramics, porcelain, firing, glaze]
     category: craft
     year: -6000
     complexity: 1
     visibility: 1
     effects: [{type: storage, bp: 1000}]
     flavour: Sealed jars keep grain from damp and mice.
+    history: "Kilns that fired pottery hard were in use in the Near East by about 6000 BC."
 
   - id: charcoal_burning
     name: Charcoal burning
+    keywords: [charcoal, charcoal burning, fuel, coke]
     category: craft
     year: -4000
     complexity: 1
@@ -18,44 +21,54 @@ techs:
     requires: {materials: [timber]}
     effects: [{type: materials_output, bp: 300}]
     flavour: Wood smothered in earth becomes a fuel fit for metal.
+    history: "Charcoal, made by smothering wood as it burns, fuelled the first metalworkers' furnaces from about 4000 BC."
 
   - id: wheel
     name: The wheel
+    keywords: [wheel, wheels, cart, carts, wagon]
     category: craft
     year: -3500
     complexity: 1
     effects: [{type: mobility, bp: 500}, {type: labour_output, bp: 300}]
     flavour: A round slab and an axle, and loads roll instead of drag.
+    history: "The wheel appears around 3500 BC in Mesopotamia and on the steppes north of the Black Sea - first for pottery, then for carts."
 
   - id: piston_bellows
     name: Piston bellows
+    keywords: [bellows, piston bellows, forced air, blowing air]
     category: craft
     year: -450
     complexity: 2
     prerequisites: [charcoal_burning]
     effects: [{type: materials_output, bp: 400}]
     flavour: A steady blast of air on the push and on the pull.
+    history: "Chinese smiths used double-acting piston bellows by the 4th century BC."
 
   - id: water_wheel
     name: Water wheel
+    keywords: [water wheel, watermill, water mill, mill, water power, trip hammer]
     category: craft
     year: -250
     complexity: 3
     prerequisites: [wheel, masonry]
     effects: [{type: labour_output, bp: 800}, {type: materials_output, bp: 500}]
     flavour: The river grinds the grain while the miller sleeps.
+    history: "Water wheels grinding grain are described by Philo of Byzantium around 250 BC; China had them by the 1st century BC."
 
   - id: windmill
     name: Windmill
+    keywords: [windmill, wind power, wind mill, sails]
     category: craft
     year: 900
     complexity: 3
     prerequisites: [water_wheel]
     effects: [{type: labour_output, bp: 600}, {type: food_output, bp: 300}]
     flavour: Where no river runs, the wind will do.
+    history: "Windmills ground grain in Persia by the 9th century; Europe's post mills appeared around 1180."
 
   - id: paper
     name: Paper
+    keywords: [paper, papermaking, pulp, writing material]
     category: craft
     year: -100
     complexity: 2
@@ -63,3 +76,4 @@ techs:
     requires: {materials: [timber]}
     effects: [{type: knowledge_gain, bp: 800}, {type: literacy_growth, bp: 20}]
     flavour: Bark and rags beaten to pulp, dried into sheets lighter than any tablet.
+    history: "Paper was made in China by about 100 BC; Cai Lun improved it in AD 105. Europe began making it around 1150."

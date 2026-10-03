@@ -1,0 +1,6 @@
+schema_version: 1
+pack:
+  id: east_asia
+  name: East Asia on the real map
+  version: 1
+  depends_on: [core]

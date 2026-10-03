@@ -7,6 +7,7 @@ unrest, unrest cuts the workforce (see ``economy.labour``), which deepens the sh
 from __future__ import annotations
 
 from anachronism.content.schema import EffectType
+from anachronism.engine.buildings import weighted
 from anachronism.engine.economy import EconomyOutcome
 from anachronism.engine.effects import Effects
 from anachronism.engine.events import EventLog
@@ -53,6 +54,7 @@ def update_society(
     growth = per_turn(state, pressure) + apply_bp(outcome.famine_bp, rules.unrest_from_famine_bp)
     recovery = apply_bp(stats.unrest_bp, rate_per_turn(state, rules.unrest_recovery_bp))
     recovery += per_turn(state, apply_bp(rules.unrest_recovery_legitimacy_bp, stats.legitimacy_bp))
+    recovery += per_turn(state, weighted(state, civ.id, "calm_bp"))  # temples, courts (D-111)
     stats.unrest_bp = clamp(stats.unrest_bp + growth - recovery, 0, BP)
 
     drift = apply_bp(
@@ -90,17 +92,22 @@ def _revolt(state: GameState, civ: CivState, rng: GameRng, events: EventLog) -> 
         return
     province_id = rng.pick(candidates)
     state.provinces[province_id].owner = None
+    civ.revolts += 1
     stats = civ.stats
     stats.unrest_bp = clamp(stats.unrest_bp - rules.revolt_unrest_release_bp, 0, BP)
     stats.legitimacy_bp = clamp(stats.legitimacy_bp - rules.revolt_legitimacy_bp, 0, BP)
     place = state.world.geography[province_id].name
-    events.add(civ.id, "revolt", f"{place} rises in revolt and breaks away from {civ.name}.")
+    events.add(civ.id, "revolt", f"{place} rises in revolt and breaks away from {civ.name}.", place)
 
 
 def _check_collapse(state: GameState, civ: CivState, events: EventLog) -> None:
     if civ.collapsed or civ.starting_provinces == 0:
         return
-    lost = civ.starting_provinces - len(state.owned_provinces(civ.id))
-    if lost * BP >= civ.starting_provinces * state.world.rules.society.collapse_share_bp:
+    # collapse is breaking apart from within: provinces lost in war do not count
+    if civ.revolts * BP >= civ.starting_provinces * state.world.rules.society.collapse_share_bp:
         civ.collapsed = True
-        events.add(civ.id, "collapse", f"{civ.name} has collapsed, its provinces in open revolt.")
+        events.add(
+            civ.id,
+            "collapse",
+            f"The {civ.adjective} state has collapsed, its provinces in open revolt.",
+        )
