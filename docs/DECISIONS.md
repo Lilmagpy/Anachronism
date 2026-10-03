@@ -1744,3 +1744,12 @@ Nebuchadnezzar's summer march to the Ulai (Babylon is given back). Eight kings i
 approximate reign dates; the last vanishes after the Ulai, as he does from history. The
 chronicle runs to the edge of the 170-year limit for a chronicle's span. All seven
 chapters play on two seeds.
+
+## D-181 A sixth chronicle for 350 BC: Wei — DELEGATED (2026-10-03)
+Eight chapters, 344-225 BC, of the strongest state of the age in decline: King Hui's crown
+at Fengze, Maling from the losing side, Shang Yang's feast and the loss of Hexi and Shang,
+Mencius's "why speak of profit?", Anyi given up, Lord Xinling's stolen tiger tally, the
+prince too popular to keep, and Daliang flooded. Wei's line of kings follows the Bamboo
+Annals (Hui, Xiang, Zhao, Anxi, Jingmin, Jia), replacing the scenario's "King Ai", which
+came from the Shiji's known error. The benchmark falls 5, 3, 2, 1 as Wei's lands passed to
+Qin. All eight chapters play on two seeds.

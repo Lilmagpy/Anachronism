@@ -77,8 +77,10 @@ scenarios:
         capital: wei_daliang
         leader: Marquis Hui
         leader_age: 50
+        leader_died: -319
         generals: [{name: "Pang Juan", skill: 4, trait: bold, note: "Sun Bin's jealous rival; killed at Maling in 342 BC."}, {name: "Gongsun Yan", skill: 3, trait: horse, note: "Wei general who later served Qin."}]
-        successors: [{name: "King Xiang", age: 40}, {name: "King Ai", age: 40, disposition: "cautious"}]
+        # the kings in the Bamboo Annals' order, which corrects the Shiji's 'King Ai'
+        successors: [{name: "King Xiang of Wei", age: 40, died: -296}, {name: "King Zhao of Wei", age: 25, died: -277}, {name: "King Anxi", age: 25, disposition: "cautious", died: -243}, {name: "King Jingmin", age: 25, died: -228}, {name: "King Jia", age: 25, until: -224}]
         pitch: "The strongest state under Heaven, rich and well drilled, but ringed by jealous rivals on every side."
         provinces:
           wei_daliang: 1300000
