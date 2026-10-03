@@ -692,8 +692,9 @@ scenarios:
         capital: m_kiev
         leader: Vladimir the Great
         leader_age: 42
+        leader_died: 1015
         generals: [{name: "Dobrynya", skill: 3, trait: beloved, note: "Vladimir's uncle and voivode, hero of the byliny."}]
-        successors: [{name: "Sviatopolk the Accursed", age: 35, disposition: "aggressive"}, {name: "Yaroslav the Wise", age: 38, disposition: "scholarly"}]
+        successors: [{name: "Sviatopolk the Accursed", age: 35, disposition: "aggressive", until: 1020}, {name: "Yaroslav the Wise", age: 40, disposition: "scholarly", died: 1054}, {name: "Iziaslav", age: 29, disposition: "cautious"}]
         pitch: "The largest realm in Europe, stitched together by rivers. Make it hold."
         provinces:
           m_kiev: 1200000

@@ -1421,3 +1421,11 @@ II's coronation between Cnut and Rudolf of Burgundy, the three popes deposed at 
 the boy king's leap from Anno's boat, the letter to "Hildebrand, now not pope but false
 monk", and Canossa. The crown passes through Ottonians and Salians in their real years.
 All eight chapters play with a passive test player.
+
+## D-149 A fourth chronicle for AD 1000: Kievan Rus — DELEGATED (2026-10-03)
+Nine chapters: Vladimir's feasts for the poor, Novgorod refusing tribute, the murder of
+Boris and Gleb (played as Sviatopolk), Bolesław at the Golden Gate and the Alta (a chapter
+ends Sviatopolk's reign), the Russkaya Pravda, the Pechenegs and St Sophia, the last sea
+raid on Constantinople, Anna Yaroslavna's marriage to the King of France, and Yaroslav's
+testament. The 1043 raid no longer declares a lasting war (peace came in 1046; an
+open-ended war let Byzantium's AI take Kiev). All nine chapters play.
