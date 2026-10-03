@@ -187,6 +187,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] A second chronicle for 336 BC: Persia under Darius III (D-139)
 - [x] A second chronicle for 1275 BC: the Hittites, Kadesh to the fall of Hattusa (D-140)
 - [x] A second chronicle for AD 1000: the dukes of Normandy to William the Conqueror (D-141)
-- [ ] Second chronicles for other states of each moment (Song, Takeda, Zhao...)
+- [x] A second chronicle for 1206: the Southern Song, from the Kaixi war to Yamen (D-142)
+- [ ] Second chronicles for other states of each moment (Takeda, Zhao, Silla, Nanda...)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

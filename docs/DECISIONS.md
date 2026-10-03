@@ -1358,3 +1358,12 @@ Richard III, Robert, William, Robert Curthose). One tuning note: Mortemer's hist
 choice no longer declares war on France - the French were beaten and went home - because
 an open-ended war let France's AI swallow the one-province duchy before 1066. All twelve
 chapters play with a passive test player.
+
+## D-142 A second chronicle for 1206: the Southern Song — DELEGATED (2026-10-03)
+The Mongol century from Hangzhou, in eleven chapters: Han Tuozhou's head, stopping the
+tribute to the Jin, Zhao Gong's report on the Mongols, Shi Miyuan's chosen emperor, the
+march on the three capitals, Song Ci's forensic handbook, Diaoyu and the gift of fish,
+Jia Sidao's secret truce, Xiangyang, the surrender of Lin'an and Yamen. The Song now have
+their real line of emperors, from Ningzong to the boy Zhao Bing; Emperor Gong is taken
+north and Zhao Bing drowns in chapters, so the player can change both. All eleven chapters
+play with a passive test player.

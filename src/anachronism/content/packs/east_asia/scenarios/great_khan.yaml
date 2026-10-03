@@ -213,8 +213,9 @@ scenarios:
         capital: g_linan
         leader: "Emperor Ningzong"
         leader_age: 38
+        leader_died: 1224
         generals: [{name: "Bi Zaiyu", skill: 3, trait: bold, note: "The one hero of the failed Kaixi war of 1206."}, {name: "Meng Gong", skill: 4, trait: shield, note: "Will hold the Yangzi against the Mongols in the 1230s."}]
-        successors: [{name: "Emperor Lizong", age: 19, disposition: cautious}, {name: "Emperor Duzong", age: 24}]
+        successors: [{name: "Emperor Lizong", age: 19, disposition: cautious, died: 1264}, {name: "Emperor Duzong", age: 24, died: 1274}, {name: "Emperor Gong", age: 4, until: 1277}, {name: "Emperor Duanzong", age: 7, died: 1278}, {name: "Zhao Bing", age: 6, until: 1280}]
         martial_bp: 4000
         pitch: "You already have gunpowder, the compass and paper money. Your generals have just attacked the Jin. Turn genius into power."
         provinces:
