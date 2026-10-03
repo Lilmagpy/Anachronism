@@ -14,6 +14,8 @@ func setup(civ_data: Dictionary) -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	tooltip_text = str(civ["name"])
+	if int(civ.get("chronicle", 0)) > 0:
+		tooltip_text += "\nA chronicle: %d chapters of real history to follow" % int(civ["chronicle"])
 
 
 func _gui_input(event: InputEvent) -> void:
@@ -64,3 +66,19 @@ func _draw_name(is_selected: bool) -> void:
 	var name_at := Vector2((size.x - nw) / 2, size.y - 6)
 	draw_string_outline(name_font, name_at, name, HORIZONTAL_ALIGNMENT_LEFT, -1, name_size, 5, Color(0.1, 0.06, 0.03))
 	draw_string(name_font, name_at, name, HORIZONTAL_ALIGNMENT_LEFT, -1, name_size, UiStyle.CREAM if not is_selected else UiStyle.GOLD)
+	_draw_chronicle_seal()
+
+
+## A gold seal on the shield's shoulder for a state with a chronicle, showing its chapters.
+func _draw_chronicle_seal() -> void:
+	var chapters := int(civ.get("chronicle", 0))
+	if chapters <= 0:
+		return
+	var centre := Vector2(size.x / 2.0 + 44, 18)
+	draw_circle(centre, 15, Color(0.25, 0.12, 0.05))
+	draw_circle(centre, 13, UiStyle.GOLD)
+	draw_arc(centre, 10, 0, TAU, 24, UiStyle.GOLD_DARK, 1.5)
+	var font := UiStyle.font("body", 900)
+	var text := str(chapters)
+	var tw := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, 13).x
+	draw_string(font, centre + Vector2(-tw / 2.0, 5), text, HORIZONTAL_ALIGNMENT_LEFT, -1, 13, Color(0.25, 0.12, 0.05))

@@ -271,7 +271,10 @@ func _draw_picker() -> void:
 	scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	var badges := HBoxContainer.new()
 	badges.add_theme_constant_override("separation", 4)
-	for c in scenario["civs"]:
+	# states with a chronicle first (gold seal: its chapters), each group in the moment's order
+	var ordered: Array = scenario["civs"].filter(func(c): return int(c.get("chronicle", 0)) > 0)
+	ordered += scenario["civs"].filter(func(c): return int(c.get("chronicle", 0)) == 0)
+	for c in ordered:
 		var badge := CivBadge.new()
 		badge.setup(c)
 		badge.selected = c["id"] == civ["id"]

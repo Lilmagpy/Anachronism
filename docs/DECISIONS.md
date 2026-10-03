@@ -1497,3 +1497,8 @@ the Rosetta Stone. Four Ptolemies in their real years. The Syrian expedition tak
 without an open-ended war (peace came in 241); the Seleucid AI still fights its scripted
 Syrian Wars, so a passive Egypt loses ground, as an active one need not. All five chapters
 play.
+
+## D-158 Chronicles are easy to find in the picker — DELEGATED (2026-10-03)
+With 29 chronicles, a player could only discover one by clicking each state. Now every
+state with a chronicle wears a small gold seal on its shield showing its number of
+chapters (and its tooltip says so), and those states come first in the row of shields.
