@@ -198,6 +198,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] A third chronicle for 350 BC: Chu, from Yue to Xiang Yan, with Qu Yuan (D-150)
 - [x] A third chronicle for 1275 BC: Middle Assyria, Adad-nirari to Tukulti-Ninurta (D-151)
 - [x] A third chronicle for 1560: Uesugi Kenshin, the Dragon of Echigo (D-152)
-- [ ] More chronicles for other states (Cordoba, Silla, Babylon, Seleucids...)
+- [x] A fifth chronicle for AD 1000: the fall of the Caliphate of Córdoba (D-153)
+- [ ] More chronicles for other states (Silla, Babylon, Seleucids, Fatimids...)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

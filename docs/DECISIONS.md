@@ -1451,3 +1451,12 @@ Six chapters: the siege of Odawara and the Uesugi name, Kawanakajima from Kenshi
 the salt sent to an enemy, the road west against Nobunaga, the Tedori river, and Kenshin's
 sudden death and the war between his adopted sons. Kenshin dies at the turn of 1577-78 so
 that the last chapter is played as Kagekatsu. All six chapters play.
+
+## D-153 A fifth chronicle for AD 1000: the fall of Córdoba — DELEGATED (2026-10-03)
+A short, tragic chronicle in five chapters: al-Mansur's last campaign, Sanchuelo's
+fatal winter march, the sack of Madinat al-Zahra, Ibn Hazm's Ring of the Dove, and the
+abolition of the caliphate in 1031. The 'ruler' is whoever really held power: al-Mansur's
+sons, then six caliphs of the civil war, each removed in his real year in the way history
+records (killed in the fighting, executed, murdered in his bath, poisoned, deposed). The
+player's ideas cannot change the first three deaths, but every choice can avert the civil
+war that follows them. All five chapters play.
