@@ -291,6 +291,13 @@ dialogue:
     lines:
       - "They have taken {subject}, the seat of our ancestors. We move the court - and we remember."
 
+  - id: ruler_died
+    speaker: steward
+    lines:
+      - "{subject} is dead. The mourning drums will sound for a month. And now, {ruler}, the court looks to you."
+      - "We have buried {subject}. The great families are already measuring you, {ruler}. Let them see a ruler."
+      - "{subject} has gone to the ancestors. The seal passes to {ruler}. Everything we began goes on - if you will it."
+
   - id: peace
     speaker: steward
     lines:

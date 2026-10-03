@@ -105,3 +105,12 @@ def test_a_rival_makes_peace(content: Content) -> None:
     state = new_game(content, "warring_states", seed=1)
     voices = voices_for_turn(content, state, [event("peace", "qin", state.civs["zhao"].name)])
     assert any(v["moment"] == "rival_peace" and v["civ"] == "zhao" for v in voices)
+
+
+def test_the_court_mourns_the_old_ruler_and_turns_to_the_new(content: Content) -> None:
+    state = new_game(content, "warring_states", seed=1)
+    state.civs["qin"].ruler = "King Huiwen"
+    voices = voices_for_turn(content, state, [event("ruler_died", "qin", "Duke Xiao")])
+    assert voices[0]["moment"] == "ruler_died"
+    assert "Duke Xiao" in voices[0]["text"]
+    assert "King Huiwen" in voices[0]["text"]
