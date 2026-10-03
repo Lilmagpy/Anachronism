@@ -126,8 +126,9 @@ scenarios:
         capital: zhao_handan
         leader: Marquis Cheng
         leader_age: 40
+        leader_died: -350
         generals: [{name: "Lian Po", skill: 4, trait: shield, note: "Zhao's great defender (active in the next century)."}]
-        successors: [{name: "Marquis Su", age: 35}, {name: "King Wuling", age: 15, disposition: "aggressive"}, {name: "King Huiwen of Zhao", age: 15}]
+        successors: [{name: "Marquis Su", age: 35, died: -326}, {name: "King Wuling", age: 15, disposition: "aggressive", until: -298}, {name: "King Huiwen of Zhao", age: 11, died: -266}, {name: "King Xiaocheng", age: 19, died: -245}, {name: "King Daoxiang", age: 30, died: -236}, {name: "King Youmiu", age: 20, until: -227}, {name: "Jia, King of Dai", age: 25}]
         pitch: "Plains, iron and the horse frontier: learn from the steppe riders before they learn from you."
         provinces:
           zhao_handan: 1400000

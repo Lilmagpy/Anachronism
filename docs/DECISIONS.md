@@ -1375,3 +1375,11 @@ the way home in his real year), Katsuyori at Takatenjin, the fence at Nagashino 
 generals' advice to retreat is the choice history did not take), the new castle at Shinpu,
 and Tenmokuzan. Katsuyori is spared old age until the chapter that ends the house. All nine
 play with a passive test player.
+
+## D-144 A second chronicle for 350 BC: Zhao — DELEGATED (2026-10-03)
+Qin's great rival, in eleven chapters: King Wuling's trousers and horse archers, Zhongshan,
+Wuling's abdication (a chapter ends his reign), the jade returned intact, Lian Po's thorns,
+'two rats in a hole' at Yuyu, the gift of Shangdang, Zhao Kuo at Changping, Mao Sui's awl in
+the bag, Li Mu on the frontier and Li Mu betrayed. Many of these are still Chinese proverbs.
+Zhao now has its real line of rulers, from Marquis Cheng to King Youmiu and Jia of Dai. The
+first chapter is in 307 BC, so the chronicle opens with some forty years of free play.
