@@ -1886,3 +1886,53 @@ loaded game plays the right one. A test checks every named track has a file. DEL
 the mapping above. Rights: the owner's tracks, source not yet confirmed; recorded in
 `client/assets/LICENSES.md` and must be cleared before any public release. Also removed a
 stray `year_1000.yaml.orig` patch leftover that an earlier commit had picked up.
+
+## D-209 to D-226 Eighteen more chronicles from the helper agents — DELEGATED (2026-10-03)
+Second round of the six helpers (D-187), for states that had no chronicle. Each was tested
+on seeds 1 and 2 in a private copy; after merging, the manager replayed every one with all
+changes combined (seed 1, and seed 3 for seven of them) and all chapters played. Doubtful
+dates are marked "approximate" in file headers or scenario comments; hostile or late
+sources and legends are labelled in the text. A source check before release is advisable,
+as the helpers wrote from memory without the network.
+- D-209 Sweden (9, 1000-1160): Svolder to Eric IX; saga scenes labelled; two death years
+  moved a little onto the two-year turn grid, with comments.
+- D-210 Bohemia (8, 1002-1158): Boleslaus III's blinding to Vladislaus II's crown; Silesia
+  taken at Gniezno 1038 and given back at Quedlinburg 1054.
+- D-211 Navarre (8, 1010-1134): Sancho the Great to García Ramírez's restoration; Navarre
+  gets its kings (it had no leader); Zaragoza goes to Barcelona in 1134 as a stand-in for
+  Aragon, which is not a state on this map.
+- D-212 Barcelona (8, 1010-1148): Córdoba to Tortosa. The 1010 historical choice makes peace
+  and alliance with Córdoba (the paid expedition), because otherwise Córdoba's AI took
+  Barcelona by 1020 in every test.
+- D-213 Zirids (7, 1016-1148): al-Mu'izz to Mahdia's fall to Roger II; the 1016 riots told
+  soberly; no benchmark after 1148, when the real Zirids held nothing on this map.
+- D-214 Emirate of Sicily (7, 1019-1090): the Kalbids to Noto; later rulers named by office
+  where the sources do not name them. The weakest-sourced of the round: check against
+  Metcalfe and Amari.
+- D-215 Numidia (9, 206-105 BC): Masinissa to Bocchus's betrayal of Jugurtha; the two
+  Numidian provinces change hands with Syphax and Bocchus.
+- D-216 Pontus (8, 220-108 BC): Sinope to the Bosporus; regnal dates approximate.
+- D-217 Epirus (8, 240-167 BC, file chapters_epirus_punic.yaml): the last Aeacids, then the
+  league as "the Epirote Assembly", to the Roman sack of seventy towns in 167.
+- D-218 Athens (8, 264-146 BC, file chapters_athens_hellenistic.yaml): the Chremonidean
+  surrender to staying out of the Achaean War; "the Assembly" rules where no leading man
+  can be named with confidence.
+- D-219 Achaea (9, 251-146 BC): Aratus to Corinth's destruction. The Acrocorinth chapter
+  grants a large army (40,000 men) because Macedon's AI otherwise retook Corinth on about one
+  seed in six; generous, but only on the historical path. Peace with Aetolia is given where
+  history ended that war.
+- D-220 Aetolia (9, 238-189 BC): to the treaty of 189; the leading general of each year
+  rules, the first unnamed.
+- D-221 Zhongshan (6, 322-298 BC): the kingship to Zhao's conquest; peace with Zhao in 306
+  and 304 matches the real truce.
+- D-222 Song (6, 330-286 BC, file chapters_songstate.yaml): King Yan, from the hostile
+  Shiji portrait, labelled as such.
+- D-223 Lu (5, 334-260 BC): the last chapter opens in 260 rather than 256 because Chu's
+  existing script takes Qufu in 258; the text gives the true date. Left so rather than
+  change how Chu plays in every game.
+- D-224 Saito (6, 1560-1573): Yoshitatsu to Tatsuoki's death at Ichijodani; consistent with
+  the Oda chronicle.
+- D-225 Amago (7, 1560-1578): Gassan-Toda to Kozuki; Yamanaka Yukimori's vow marked as a
+  later story; consistent with the Mori chronicle.
+- D-226 Ryukyu (7, 1560-1728): Sho Gen to Sai On, with the full line of kings; the 1609
+  invasion consistent with the Shimazu chronicle.

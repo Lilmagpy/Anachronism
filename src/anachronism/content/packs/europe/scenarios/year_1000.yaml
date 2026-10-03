@@ -533,6 +533,16 @@ scenarios:
         disposition: cautious
         capital: m_svealand
         leader: Olof Skötkonung
+        leader_age: 20
+        leader_died: 1022
+        # Olof died about 1022 (sources say 1021 or 1022); Anund Jacob about 1050; Emund the Old
+        # in about 1060 (put at 1058 so that Stenkil reigns when his 1060 chapter opens on the
+        # grid); Stenkil about 1066; Inge the Elder reigned until about 1105 (his exile of about
+        # three years under Blot-Sweyn, c.1080-83, is told in a chapter, not as a separate reign);
+        # Inge the Younger died about 1125 (put at 1128, folding in the short interregnum before
+        # Sverker the Elder); Sverker was murdered on Christmas Day 1156 and Eric IX killed in
+        # 1160 (both in chapters). All these dates are approximate (see D-XXX).
+        successors: [{name: "Anund Jacob", age: 14, died: 1050}, {name: "Emund the Old", age: 50, died: 1058}, {name: "Stenkil", age: 45, disposition: "pious", died: 1066}, {name: "Inge the Elder", age: 25, disposition: "pious", died: 1105}, {name: "Inge the Younger", age: 30, died: 1128}, {name: "Sverker the Elder", age: 32, disposition: "pious", until: 1158}, {name: "Eric IX", age: 40, disposition: "pious", until: 1162}, {name: "Charles Sverkersson", age: 20}]
         pitch: "The eastern Vikings: rivers to Constantinople and iron in the hills."
         provinces:
           m_svealand: 200000
@@ -631,6 +641,15 @@ scenarios:
         disposition: cautious
         capital: m_bohemia
         leader: Boleslaus III
+        leader_age: 35
+        leader_until: 1006
+        # Bohemia's line: Boleslaus III is blinded in Poland (chapter boh_ginger, 1002-03);
+        # Jaromír is restored by Henry II in 1004 and thrown out by Oldřich in 1012 (put at 1010
+        # on the grid); Oldřich ruled to 1034 (Jaromír's brief return in 1033 is folded in);
+        # Bretislav I died in January 1055; Spytihněv II in 1061; Vratislaus II in January 1092;
+        # then Bretislav II, Bořivoj II, Svatopluk, Vladislaus I, Soběslav I (d.1140) and
+        # Vladislaus II (to 1172)
+        successors: [{name: "Jaromír", age: 25, died: 1010, ends: "is driven out by his brother Oldřich"}, {name: "Oldřich", age: 30, disposition: "aggressive", died: 1034}, {name: "Bretislav I", age: 32, disposition: "aggressive", died: 1055}, {name: "Spytihněv II", age: 22, died: 1061}, {name: "Vratislaus II", age: 25, disposition: "aggressive", died: 1092}, {name: "Bretislav II", age: 30, died: 1100}, {name: "Bořivoj II", age: 30, died: 1107}, {name: "Svatopluk", age: 40, died: 1109}, {name: "Vladislaus I", age: 40, died: 1125}, {name: "Soběslav I", age: 40, disposition: "aggressive", died: 1140}, {name: "Vladislaus II", age: 30, disposition: "aggressive"}]
         pitch: "Silver, castles and powerful neighbours. Hold the heart of Europe."
         provinces:
           m_bohemia: 400000
@@ -1007,6 +1026,16 @@ scenarios:
         scripts:
           - {id: "sancho_the_great", goal: "conquer", target: "leon", preconditions: {after_year: 1025}, note: "Sancho III of Navarre dominates Christian Spain (1030s)."}
         capital: m_navarre
+        leader: García Sánchez II
+        leader_age: 36
+        leader_died: 1004
+        # Navarre's line (Aragon and Navarre share kings 1076-1134): García Sánchez II died in
+        # 1004; Sancho III the Great in October 1035; García III fell at Atapuerca in September
+        # 1054; Sancho IV was thrown from the cliff at Peñalén in June 1076 (chapter nav_penalen);
+        # Sancho Ramírez died 1094, Peter I 1104, Alfonso I the Battler in September 1134 (put a
+        # year early so García Ramírez reigns when the 1134 chapter opens on the grid); García
+        # Ramírez died in 1150, Sancho VI in 1194
+        successors: [{name: "Sancho III the Great", age: 14, disposition: "aggressive", died: 1035}, {name: "García Sánchez III", age: 16, disposition: "aggressive", died: 1054, ends: "is killed at Atapuerca"}, {name: "Sancho IV", age: 14, until: 1078}, {name: "Sancho Ramírez", age: 33, disposition: "aggressive", died: 1094}, {name: "Peter I", age: 26, disposition: "aggressive", died: 1104}, {name: "Alfonso I the Battler", age: 31, disposition: "aggressive", died: 1133}, {name: "García Ramírez", age: 34, died: 1150}, {name: "Sancho VI the Wise", age: 18, died: 1194}]
         pitch: "Mountains, Basque pride and a great king coming. Get there sooner."
         provinces:
           m_navarre: 200000
@@ -1053,6 +1082,12 @@ scenarios:
           - {id: "catalans_sack_cordoba", goal: "conquer", target: "cordoba", preconditions: {after_year: 1009, target_min_unrest_bp: 2500}, note: "Catalan troops join the Cordoban civil war and sack the city (1010)."}
         capital: m_barcelona
         leader: Ramon Borrell
+        leader_age: 28
+        leader_died: 1018
+        # the counts of Barcelona to 1170 (D-XXX). Ramon Berenguer II and his twin Berenguer
+        # Ramon II ruled jointly 1076-82; the player's line follows the one each chapter is about.
+        # Death years are as the sources give them; the turn grid is two years.
+        successors: [{name: "Berenguer Ramon I", age: 13, died: 1035}, {name: "Ramon Berenguer I the Old", age: 12, disposition: "cautious", died: 1076}, {name: "Ramon Berenguer II Towhead", age: 23, died: 1082, ends: "is murdered while hunting near Gualba"}, {name: "Berenguer Ramon II", age: 29, died: 1097, ends: "is forced to give up the counties"}, {name: "Ramon Berenguer III the Great", age: 15, disposition: "mercantile", died: 1131}, {name: "Ramon Berenguer IV", age: 18, died: 1162}, {name: "Alfonso II", age: 5}]
         pitch: "A port, a march and a sea full of opportunity."
         provinces:
           m_barcelona: 200000
@@ -1158,6 +1193,11 @@ scenarios:
         capital: m_ifriqiya
         music: near_east
         leader: Badis ibn Mansur
+        leader_age: 16
+        leader_died: 1015
+        # the Zirid emirs of Ifriqiya to 1148 (D-XXX). Badis died in 1016; the date is a year
+        # early so that al-Mu'izz is emir at the 1016 chapter (two-year turn grid).
+        successors: [{name: "al-Mu'izz ibn Badis", age: 8, died: 1062}, {name: "Tamim ibn al-Mu'izz", age: 30, died: 1108}, {name: "Yahya ibn Tamim", age: 34, died: 1116}, {name: "Ali ibn Yahya", age: 16, died: 1121}, {name: "al-Hasan ibn Ali", age: 14}]
         pitch: "Rich Ifriqiya, a distant overlord. Will you stay loyal?"
         provinces:
           m_ifriqiya: 900000
@@ -1212,6 +1252,11 @@ scenarios:
         capital: m_sicily
         music: near_east
         leader: Ja'far al-Kalbi
+        leader_age: 30
+        leader_until: 1019
+        # the rulers of Muslim Sicily to its end (D-XXX). Reigns between 1036 and 1040, and
+        # after 1053, are uncertain in the sources and simplified to one man per chapter.
+        successors: [{name: "Ahmad al-Akhal", age: 30, died: 1037}, {name: "Hasan al-Samsam", age: 40, until: 1053}, {name: "Ibn al-Thumna", age: 45, died: 1062}, {name: "the emir of Palermo", age: 40, until: 1072}, {name: "Ibn Abbad (Benavert)", age: 50, until: 1086}, {name: "the emir of Noto", age: 45}]
         pitch: "Lemons, sugar cane and silk in Palermo's gardens. An island of plenty between three worlds."
         provinces:
           m_sicily: 500000

@@ -302,6 +302,9 @@ scenarios:
         disposition: scholarly
         capital: lu_qufu
         leader: Duke Kang
+        leader_age: 40
+        leader_died: -344
+        successors: [{name: "Duke Jing of Lu", age: 25, died: -316}, {name: "Duke Ping of Lu", age: 25, died: -296}, {name: "Duke Wen of Lu", age: 25, died: -273}, {name: "Duke Qing of Lu", age: 25, until: -256}]
         pitch: "Confucius's homeland: tiny, cultured and surrounded. Survive by wisdom alone."
         provinces:
           lu_qufu: 500000
@@ -336,6 +339,10 @@ scenarios:
       song:
         disposition: cautious
         capital: song_shangqiu
+        leader: Ticheng
+        leader_age: 45
+        leader_until: -330
+        successors: [{name: "King Yan of Song", age: 30, disposition: "aggressive", until: -286}]
         pitch: "An ancient merchant state on the central plain, heir to the Shang kings."
         provinces:
           song_shangqiu: 900000
@@ -404,6 +411,10 @@ scenarios:
       zhongshan:
         disposition: cautious
         capital: zhongshan_lingshou
+        leader: Duke Cheng
+        leader_age: 45
+        leader_died: -328
+        successors: [{name: "King Cuo of Zhongshan", age: 30, died: -310}, {name: "King Shang of Zhongshan", age: 25, until: -298}]
         pitch: "A hill kingdom of the Di people, fortified between Zhao and Yan."
         provinces:
           zhongshan_lingshou: 500000

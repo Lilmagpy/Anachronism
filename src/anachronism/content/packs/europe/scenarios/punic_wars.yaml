@@ -219,6 +219,13 @@ scenarios:
       athens:
         disposition: scholarly
         capital: ath_attica
+        leader: Chremonides
+        leader_age: 45
+        leader_until: -260
+        # Athens had no king: the ruler is the leading man of each period (as for early Rome). Chremonides
+        # (the war of 267-261), then the assembly under the Macedonian garrison until it is bought out in
+        # 229, Eurycleides and Micion (approximate: their influence waned by about 205), then the Assembly.
+        successors: [{name: "The Assembly under the garrison", age: 50, died: -230}, {name: "Eurycleides", age: 40, disposition: "cautious", died: -206}, {name: "The Assembly of Athens", age: 50, until: -100}]
         pitch: "The schools of Plato and Aristotle, the silver of Laurion - and a Macedonian army outside the walls."
         provinces:
           ath_attica: 300000
@@ -302,6 +309,13 @@ scenarios:
           roads: adopted
       aetolia:
         disposition: aggressive
+        leader: The General of the Aetolians
+        leader_age: 45
+        leader_died: -222
+        # The League chose a general (strategos) each year, so the ruler is the leading man of each
+        # chapter. Before 222 no single name is safe, hence the unnamed general; the dates of the others
+        # are the chapter years, and each leaves office in his chapter.
+        successors: [{name: "Scopas", age: 40, disposition: "aggressive", until: -218}, {name: "Agelaus of Naupactus", age: 45, disposition: "cautious", until: -216}, {name: "Scopas", age: 46, disposition: "aggressive", until: -210}, {name: "Pyrrhias", age: 40, until: -206}, {name: "Phaeneas", age: 45, until: -198}, {name: "Thoas", age: 45, disposition: "aggressive", until: -192}, {name: "Phaeneas", age: 52, disposition: "cautious", until: -150}]
         scripts:
           - {id: "aetolian_raids", goal: "conquer", target: "achaea", preconditions: {after_year: -230}, note: "The Aetolian League raids the Peloponnese (220s BC)."}
         capital: aet_aetolia
@@ -340,6 +354,12 @@ scenarios:
           piston_bellows: adopted
       achaea:
         disposition: cautious
+        leader: Margos of Caryneia
+        leader_age: 40
+        leader_died: -254
+        # The League chose a general (strategos) each year; the ruler is its leading man in each chapter.
+        # Margos, the first sole general (255), is a stand-in until Aratus; his death date is not recorded.
+        successors: [{name: "Aratus of Sicyon", age: 21, disposition: "cautious", died: -213, ends: "is poisoned, the story goes, on Philip's orders"}, {name: "Philopoemen", age: 40, disposition: "aggressive", until: -206}, {name: "Aristaenus of Megalopolis", age: 50, until: -198}, {name: "Philopoemen", age: 60, disposition: "aggressive", died: -184, ends: "is made to drink poison at Messene"}, {name: "Callicrates of Leontion", age: 40, until: -166}, {name: "Diaeus of Megalopolis", age: 45, disposition: "aggressive", until: -140}]
         capital: ach_achaea
         pitch: "A small federation with big ambitions: unite the Peloponnese."
         provinces:
@@ -380,6 +400,13 @@ scenarios:
         disposition: aggressive
         capital: epi_epirus
         leader: Alexander II
+        leader_age: 30
+        leader_died: -242
+        # Dates approximate (D-XXX). Olympias II ruled as regent for her sons Pyrrhus II (r. c. 242-238)
+        # and Ptolemy (c. 238-235); Pyrrhus II is passed over, as no chapter falls in his years. Deidameia
+        # (c. 235-232) is the last Aeacid; the League then rules through its annual strategos and
+        # assembly, here "The Epirote Assembly".
+        successors: [{name: "Olympias II (regent)", age: 45, died: -237}, {name: "Ptolemy", age: 20, died: -235}, {name: "Deidameia", age: 25, until: -230}, {name: "The Epirote Assembly", age: 45, until: -94}]
         pitch: "Pyrrhus won battles and lost wars. Win the peace this time."
         provinces:
           epi_epirus: 300000
@@ -545,6 +572,12 @@ scenarios:
         disposition: cautious
         capital: pon_pontus
         leader: Ariobarzanes
+        leader_age: 45
+        leader_died: -250
+        # Reign dates approximate (D-XXX): Ariobarzanes c. 266-250, Mithridates II c. 250-220,
+        # Mithridates III c. 220-185, Pharnaces I c. 185-170, Mithridates IV c. 170-150,
+        # Mithridates V c. 150-120 (murdered at Sinope), Mithridates VI 120-63 (a boy until he seized power c. 113-112).
+        successors: [{name: "Mithridates II", age: 25, died: -220}, {name: "Mithridates III", age: 30, died: -186}, {name: "Pharnaces I", age: 35, disposition: "aggressive", died: -170}, {name: "Mithridates IV Philopator", age: 30, died: -151}, {name: "Mithridates V Euergetes", age: 40, died: -120, ends: "is murdered at a banquet in Sinope"}, {name: "Mithridates VI Eupator", age: 14, disposition: "aggressive", until: -94}]
         pitch: "Iron, timber and Persian royal blood on the Black Sea."
         provinces:
           pon_pontus: 300000
@@ -736,6 +769,13 @@ scenarios:
           - {id: "masinissa_vs_carthage", goal: "conquer", target: "carthage", preconditions: {after_year: -170}, note: "Masinissa's Numidia nibbles at Carthage's lands (from 160 BC)."}
         capital: num_massyli
         music: near_east
+        leader: Gala
+        leader_age: 45
+        leader_died: -207
+        # Dates approximate (D-XXX). Gala (king of the Massyli) d. c. 207; his brother Oezalces and
+        # Oezalces' son Capussa are passed over before Masinissa (c. 238-148) wins the kingdom. Micipsa
+        # reigned 148-118; Jugurtha seized power 118-117 and fell in 105; Gauda (Mastanabal's son) followed.
+        successors: [{name: "Masinissa", age: 32, disposition: "aggressive", died: -148}, {name: "Micipsa", age: 37, died: -118}, {name: "Jugurtha", age: 42, disposition: "aggressive", until: -104}, {name: "Gauda", age: 45, until: -94}]
         pitch: "The best horsemen in the world, between Carthage and the desert."
         provinces:
           num_massyli: 400000

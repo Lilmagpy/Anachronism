@@ -234,6 +234,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] Three more chronicles for 1560 by helper agent: Ashikaga, Otomo, Chosokabe (D-187, D-188, D-189)
 - [x] Eighteen more chronicles by the helper agents: France, Norway, Scotland, the Papacy, Bulgaria, León, Georgia, Armenia, the Buyids (AD 1000); Rhodes, Pergamon, Sparta (264 BC); early Rome (336 BC); Eastern Jin (AD 400); Lanka (321 BC); Imagawa, Asakura, Miyoshi (1560) (D-190 to D-207)
 - [x] Era music: the owner's Roman, Asian, medieval and Egyptian/Arabic tracks play by scenario and civilisation (D-208)
+- [x] Eighteen more by the helper agents: Sweden, Bohemia, Navarre, Barcelona, the Zirids, Sicily (AD 1000); Numidia, Pontus, Epirus, Athens, Achaea, Aetolia (264 BC); Zhongshan, Song, Lu (350 BC); Saito, Amago, Ryukyu (1560) (D-209 to D-226)
 - [ ] More chronicles for other states (Babylon, Wa, Poland, Macedon of 264...)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

@@ -418,7 +418,8 @@ scenarios:
         capital: j_mino
         leader: Saito Yoshitatsu
         leader_age: 33
-        successors: [{name: "Saito Tatsuoki", age: 13}]
+        leader_until: 1561
+        successors: [{name: "Saito Tatsuoki", age: 13, until: 1573}]
         pitch: "Mino is the key to Kyoto, and everyone knows it."
         provinces:
           j_mino: 500000
@@ -640,7 +641,8 @@ scenarios:
         capital: j_izumo
         leader: Amago Haruhisa
         leader_age: 46
-        successors: [{name: "Amago Yoshihisa", age: 20}]
+        leader_until: 1561
+        successors: [{name: "Amago Yoshihisa", age: 20, until: 1566}, {name: "Amago Katsuhisa", age: 14, until: 1578}]
         pitch: "The world's silver flows from your hills. Can it buy you survival against the Mori?"
         provinces:
           j_izumo: 350000
@@ -994,6 +996,8 @@ scenarios:
         capital: j_ryukyu
         leader: Sho Gen
         leader_age: 32
+        leader_died: 1572
+        successors: [{name: "Sho Ei", age: 14, died: 1588}, {name: "Sho Nei", age: 25, died: 1620}, {name: "Sho Hou", age: 31, died: 1640}, {name: "Sho Ken", age: 16, died: 1647}, {name: "Sho Shitsu", age: 19, died: 1668}, {name: "Sho Tei", age: 24, died: 1709}, {name: "Sho Eki", age: 32, died: 1712}, {name: "Sho Kei", age: 13}]
         pitch: "A small kingdom that lives by trade between giants. Get rich; stay free."
         provinces:
           j_ryukyu: 150000
