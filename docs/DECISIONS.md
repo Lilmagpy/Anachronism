@@ -1328,3 +1328,13 @@ tuning notes: Messana's historical choice hires 30,000 mercenaries and Xanthippu
 20,000, because without them Rome's AI took the city of Carthage itself by 250 BC; and the
 court no longer gives a eulogy when an unnamed ruler 'dies' (it read "the seal passes to
 the ruler of Carthage"). With a passive test player 12-14 of 15 chapters play.
+
+## D-139 A second chronicle for 336 BC: Darius III of Persia — DELEGATED (2026-10-03)
+Alexander's war from the other side, in nine chapters: Bagoas's poisoned cup, Memnon's
+scorched-earth plan at Zeleia, Memnon's death, leaving the open plain for Issus, the offer
+of half the empire, Batis at Gaza, the night before Gaugamela, the Persian Gates, and
+Patron's warning before Bessus's betrayal. Persia left no account of these years, so the
+historical choices are the Greek writers' version, and the other choices are mostly the
+advice Darius's own commanders gave him (Memnon, Amyntas, Patron) - this is the chronicle
+in which the player can make Persia listen. Darius is spared old age until the end a chapter
+tells (D-130); Bessus until his execution. All nine chapters play with a passive test player.

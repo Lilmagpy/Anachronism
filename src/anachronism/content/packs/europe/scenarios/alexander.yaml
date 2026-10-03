@@ -74,8 +74,9 @@ scenarios:
         capital: a3_susiana
         leader: "Darius III"
         leader_age: 44
+        leader_until: -329
         generals: [{name: "Memnon of Rhodes", skill: 4, trait: bold, note: "Greek mercenary captain: the only Persian commander Alexander feared."}, {name: "Mazaeus", skill: 3, trait: horse, note: "Satrap of Babylon; led the right wing at Gaugamela."}, {name: "Bessus", skill: 2, trait: horse, note: "Satrap of Bactria, with the eastern horsemen."}]
-        successors: [{name: "Bessus", age: 40, disposition: aggressive}]
+        successors: [{name: "Bessus", age: 40, disposition: aggressive, until: -328}]
         martial_bp: 4500
         pitch: "You have just taken the throne of the greatest empire on earth. A boy king in Macedon thinks he can take it from you. Prove him wrong."
         provinces:
