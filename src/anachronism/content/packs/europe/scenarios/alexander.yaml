@@ -142,6 +142,8 @@ scenarios:
         capital: a3_attica
         leader: "Demosthenes"
         leader_age: 48
+        leader_until: -324
+        successors: [{name: "Hyperides", age: 66, until: -322}, {name: "Phocion", age: 80, died: -318, ends: "is condemned by the Assembly and made to drink hemlock"}, {name: "Demetrius of Phalerum", age: 33, until: -307}]
         generals: [{name: "Phocion", skill: 3, trait: shield, note: "Elected general forty-five times; a cautious man."}]
         pitch: "Chaeronea is lost and Philip is dead. Athens still has its fleet, its silver and its voice. Use them."
         provinces:

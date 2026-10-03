@@ -1566,3 +1566,15 @@ the coast' before the palace fell. No Mycenaean king's name survives from his ow
 so the ruler stays unnamed ('the wanax'). Where a historical answer is unknown (how the
 king answered Hattusili), the choice taken is the one the later letters imply, and the
 history note says that the answer is unknown. All six chapters play on two seeds.
+
+## D-165 A third chronicle for 336 BC: Athens — DELEGATED (2026-10-03)
+Nine chapters, 336-322 BC, of the last free years of the democracy: Demosthenes's garland
+for Philip's murder, Thebes left to its fate, Alexander's demand for the orators (and
+Demades's fee), Lycurgus's stone theatre and the official texts of the tragedians (the
+ones Ptolemy III later kept: the two chronicles point at each other), Agis's war, On the
+Crown, Harpalus's gold, the Lamian War and Antipater's terms. Athens had no king, so the
+"ruler" is the leading statesman: Demosthenes until his conviction in 324, Hyperides until
+his execution in 322, Phocion until his hemlock in 318, then Demetrius of Phalerum. The
+Lamian War is told with grudges and men, not an open-ended war, so a one-province Athens is
+not swallowed by the Macedon AI (the lesson of D-149/D-150). All nine chapters play on two
+seeds.
