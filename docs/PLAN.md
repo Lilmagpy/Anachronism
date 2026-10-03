@@ -201,6 +201,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] A fifth chronicle for AD 1000: the fall of the Caliphate of Córdoba (D-153)
 - [x] A third chronicle for AD 400: Silla, from little brother to conqueror of Gaya (D-154)
 - [x] A sixth chronicle for AD 1000: the Fatimid caliphs of Cairo (D-155)
-- [ ] More chronicles for other states (Seleucids, Babylon, Wa, Poland...)
+- [x] A third chronicle for 264 BC: the Seleucids and Antiochus the Great (D-156)
+- [ ] More chronicles for other states (Ptolemies, Babylon, Wa, Poland...)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

@@ -1481,3 +1481,10 @@ al-Haytham's feigned madness, the destruction of the Holy Sepulchre, al-Hakim's
 disappearance in the Muqattam hills (a chapter ends his reign; the Druze still await him),
 Nasir-i Khusraw's Cairo, the Great Calamity, and Badr al-Jamali. Al-Hakim, al-Zahir and
 al-Mustansir in their real years. All seven chapters play.
+
+## D-156 A third chronicle for 264 BC: the Seleucids — DELEGATED (2026-10-03)
+Nine chapters from Antiochus II to Antiochus III: Berenice's dowry, the Laodicean war, the
+young king against Molon, Raphia's elephants, the eastern anabasis, Panium, Hannibal at
+court, Magnesia, and the death at the temple of Bel (a chapter ends that reign). Six kings
+in their real years, with Seleucus II's fall from his horse and Seleucus III's murder as
+history records. All nine chapters play.

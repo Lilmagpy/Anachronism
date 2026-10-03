@@ -621,7 +621,8 @@ scenarios:
         capital: sel_syria
         leader: Antiochus I Soter
         leader_age: 60
-        successors: [{name: "Antiochus II", age: 25, disposition: "aggressive"}, {name: "Seleucus II", age: 20}]
+        leader_died: -261
+        successors: [{name: "Antiochus II", age: 25, disposition: "aggressive", died: -247}, {name: "Seleucus II", age: 20, died: -225, ends: "is killed in a fall from his horse"}, {name: "Seleucus III", age: 20, died: -223, ends: "is murdered by his own officers"}, {name: "Antiochus III", age: 18, disposition: "aggressive", until: -186}, {name: "Seleucus IV", age: 30, died: -175, ends: "is murdered by his minister Heliodorus"}]
         pitch: "The biggest empire in the west, stretched thin from Sardis to Persia. Hold it together."
         provinces:
           sel_syria: 1200000
