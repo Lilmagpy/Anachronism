@@ -331,7 +331,9 @@ scenarios:
         capital: g_kanto
         leader: "Shogun Minamoto no Sanetomo"
         leader_age: 14
-        successors: [{name: "Regent Hojo Yoshitoki", age: 43, disposition: cautious}]
+        leader_until: 1220
+        # after Sanetomo, the real rulers were the Hojo regents (shikken)
+        successors: [{name: "Regent Hojo Yoshitoki", age: 56, disposition: cautious, died: 1224}, {name: "Regent Hojo Yasutoki", age: 41, disposition: cautious, died: 1242}, {name: "Regent Hojo Tsunetoki", age: 19, died: 1246}, {name: "Regent Hojo Tokiyori", age: 19, disposition: cautious, died: 1263}, {name: "Regent Hojo Masamura", age: 59, died: 1268, ends: "steps aside for the young Tokimune"}, {name: "Regent Hojo Tokimune", age: 17, disposition: aggressive, died: 1284}, {name: "Regent Hojo Sadatoki", age: 13}]
         martial_bp: 12000
         pitch: "The samurai rule Japan for the first time. The sea has always kept you safe - in 1274 it will be tested."
         provinces:

@@ -192,6 +192,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] A second chronicle for 350 BC: Zhao, from Hu clothing to the fall of Handan (D-144)
 - [x] A second chronicle for AD 1000: Byzantium, Basil II to Alexios Komnenos (D-145)
 - [x] A second chronicle for AD 400: Baekje, the hostage prince to the bear ford (D-146)
-- [ ] More chronicles for other states (Silla, Nanda, Uesugi, Assyria...)
+- [x] A third chronicle for 1206: Kamakura Japan and the Mongol invasions (D-147)
+- [ ] More chronicles for other states (Holy Roman Empire, Rus, Assyria, Uesugi...)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

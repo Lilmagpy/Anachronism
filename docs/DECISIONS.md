@@ -1403,3 +1403,13 @@ learning passed on to Japan), white falcons for Silla, the prince born on Kakara
 (King Muryeong), the letter to Wei, Dorim's game of baduk, and the court's flight to
 Ungjin. Baekje's line now runs from Asin to Muryeong, with Munju and Dongseong murdered as
 history says (D-145's `ends`). All eight chapters play with a passive test player.
+
+## D-147 A third chronicle for 1206: Kamakura Japan — DELEGATED (2026-10-03)
+Ten chapters: the Wada rising, Sanetomo murdered on the shrine steps (a chapter ends his
+reign), Masako's speech and the Jokyu war, the Goseibai Shikimoku, Nichiren's prophecy,
+Kublai's letter, the Bun'ei invasion, the beheaded envoys and the stone wall at Hakata,
+the Koan invasion and the 'divine wind', and the warriors' unpaid rewards that doomed the
+shogunate. After Sanetomo the chronicle follows the real rulers, the Hojo regents, each in
+his real years. No chapter declares war on the Mongols: the invasions are told from the
+beach, and the player's ideas (a printed law code, steamships) change how they go. All ten
+chapters play with a passive test player.
