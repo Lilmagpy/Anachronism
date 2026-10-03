@@ -1259,10 +1259,6 @@ scenarios:
         disposition: cautious
         capital: m_baghdad
         leader: Baha al-Dawla
-        leader_age: 29
-        leader_died: 1012
-        # Sultan al-Dawla d.1024 and Musharrif al-Dawla d.1025 (both approximate); Jalal d.1044; Abu Kalijar d.1048; al-Malik al-Rahim deposed by Tughril Beg in 1055
-        successors: [{name: "Sultan al-Dawla", age: 19, died: 1024}, {name: "Musharrif al-Dawla", age: 20, died: 1025}, {name: "Jalal al-Dawla", age: 34, died: 1044}, {name: "Abu Kalijar", age: 44, disposition: "aggressive", died: 1048}, {name: "al-Malik al-Rahim", age: 24, until: 1056}]
         pitch: "Baghdad, the House of Wisdom's heirs, and Persian ambition."
         provinces:
           m_baghdad: 1300000
@@ -1318,10 +1314,6 @@ scenarios:
         disposition: cautious
         capital: m_ani
         leader: Gagik I
-        leader_age: 40
-        leader_died: 1019
-        # Gagik I d.1020 (1017 in some sources; 1019 here so Hovhannes is on the throne at the 1020 chapter); Hovhannes-Smbat d.1041; Gagik II lost Ani in 1045
-        successors: [{name: "Hovhannes-Smbat", age: 30, disposition: "pious", died: 1041}, {name: "Gagik II", age: 17, until: 1046}]
         pitch: "Ani is booming. Keep it free between Byzantium and the Muslim emirs."
         provinces:
           m_ani: 800000
@@ -1370,10 +1362,6 @@ scenarios:
         disposition: cautious
         capital: m_kutaisi
         leader: Bagrat III
-        leader_age: 40
-        leader_died: 1014
-        # George I d.1027, Bagrat IV d.1072; George II stepped down for David IV in 1089 (and lived to 1112)
-        successors: [{name: "George I", age: 16, died: 1027}, {name: "Bagrat IV", age: 9, died: 1072}, {name: "George II", age: 18, died: 1089, ends: "abdicates in favour of his son David"}, {name: "David IV the Builder", age: 16, disposition: "aggressive", died: 1125}, {name: "Demetrius I", age: 32, died: 1156}, {name: "George III", age: 23}]
         pitch: "Unite Georgia and hold the passes of the Caucasus."
         provinces:
           m_kutaisi: 500000

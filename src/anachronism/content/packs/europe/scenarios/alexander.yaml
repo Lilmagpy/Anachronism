@@ -492,7 +492,12 @@ scenarios:
         scripts:
           - {id: "samnite_wars", goal: "conquer", target: "syracuse", preconditions: {after_year: -300}, note: "Rome, master of Italy, looks across the strait to Sicily."}
         capital: a3_latium
+        # Rome had no king: the "ruler" is the leading magistrate of each crisis (see
+        # chapters_rome_early.yaml), each leaving office in his chapter.
+        leader: "Lucius Furius Camillus"
         leader_age: 40
+        leader_until: -335
+        successors: [{name: "Spurius Postumius Albinus", age: 45, until: -320}, {name: "Appius Claudius Caecus", age: 35, until: -311}, {name: "Marcus Valerius Corvus", age: 60, until: -299}, {name: "Quintus Fabius Maximus Rullianus", age: 65, until: -294}, {name: "Quintus Hortensius", age: 50, until: -286}, {name: "Publius Valerius Laevinus", age: 50, until: -279}, {name: "Appius Claudius Caecus", age: 70, until: -278}, {name: "Manius Curius Dentatus", age: 55, until: -274}, {name: "Lucius Papirius Cursor", age: 45, disposition: aggressive}]
         generals: [{name: "Lucius Papirius Cursor", skill: 3, trait: bold, note: "Hero of the Samnite wars."}, {name: "Marcus Valerius Corvus", skill: 3, trait: beloved, note: "Six times consul; his men adored him."}]
         martial_bp: 20000
         pitch: "A city of Latium at war with the Samnites in the hills. Nobody in Pella or Persepolis has heard of you. Yet."

@@ -1826,3 +1826,50 @@ Sanuki is taken in 1584 and goes to the Mori's Kobayakawa in 1585), Hetsugigawa 
 choice of Morichika as heir, the San Felipe at Urado, the hundred-article code, Sekigahara
 and Osaka. Kunichika dies in 1560, Motochika in 1599, Morichika falls at Osaka. The loss of
 Tosa in 1600 is told but not enacted (last province). Both seeds clean.
+
+## D-190 to D-207 Eighteen chronicles from the helper agents — DELEGATED (2026-10-03)
+Written in parallel by the six helper agents (D-187), each tested on two seeds in a private
+copy, then reviewed, spot-checked and merged by the manager. Every one plays all its
+chapters with the right ruler on the throne; dates the agents could not pin down are marked
+"approximate" in the file headers, and legends are labelled as such.
+- D-190 France (8 chapters, 1000-1096): Bertha and the excommunication, the Orléans
+  burnings, Burgundy, Anne of Kiev, Varaville, Baldwin's regency, Bertrade, Clermont. The
+  benchmark reads "ahead of history" throughout, honestly: the map gives France six
+  provinces, the real Capetians governed one or two.
+- D-191 Norway (9, 1000-1066): Svolder to Stamford Bridge, consistent with the Denmark
+  chronicle; Viken is lost and retaken as in history, with peace deeds where AI rivals
+  would otherwise keep it.
+- D-192 Scotland (9, 1004-1092): Monzievaird to Alnwick; three chapters say plainly that
+  Shakespeare's Macbeth is fiction.
+- D-193 The Papacy (10, 1000-1084): Gniezno to Gregory VII's exile; eighteen popes as the
+  ruler line; Benedict IX and Gregory VI end in their chapters.
+- D-194 Bulgaria (7, 1000-1018): Samuel's war with Basil II to Kleidion and the surrender.
+  (An agent queried the Byzantium chronicle's "dies two days later": Skylitzes counts from
+  the blinded army's arrival, so the existing text stands.)
+- D-195 León (10, 1017-1086): the Fuero to Sagrajas. The Córdoba AI otherwise conquered
+  León, which never happened, so the historical choices carry peace with Córdoba and take
+  back the provinces the real kings held.
+- D-196 Georgia (9, 1000-1122): Bagrat III to Didgori and Tbilisi.
+- D-197 Armenia (6, 1000-1044): the Ani cathedral to the Byzantine annexation; the Seljuk
+  sack and Manzikert are the epilogue. Gagik I's death set to 1019 (1017-1020 in sources).
+- D-198 The Buyids (9, 1000-1055): the House of Learning to Tughril in Baghdad; Ibn Sina at
+  Hamadan; Jibal goes to the Ghaznavids in 1029 with peace, matching D-171.
+- D-199 Rhodes (8, 226-164 BC): the Colossus to Delos the free port; the ruler is the
+  republic's magistracy.
+- D-200 Pergamon (10, 264-134 BC): Philetaerus to the bequest to Rome. The Seleucid AI
+  conquered Pergamon early in testing; peace deeds at the Galatian chapters prevent it.
+- D-201 Sparta (9, 264-188 BC): Areus to Philopoemen's demolition of the walls; the line
+  follows whichever king each chapter is about; four end years moved by a year or two to
+  fit the turn grid (noted in the YAML).
+- D-202 Early Rome (10, 336-272 BC, file chapters_rome_early.yaml): the Latin settlement to
+  Tarentum's surrender; the "ruler" is the leading magistrate of each crisis.
+- D-203 Eastern Jin (9, 400-420): Sun En to Liu Yu's Song; the court in Emperor An's name,
+  then Liu Yu as ruler.
+- D-204 Lanka (8, 321-153 BC): Pandukabhaya to Dutugemunu, all labelled Mahavamsa
+  tradition with disputed chronology.
+- D-205 Imagawa (6, 1560-1575): Okehazama to Ujizane at kemari; Kenshin's "salt to the
+  enemy" marked as a later legend.
+- D-206 Asakura (6, 1560-1573): Yoshiaki's host to Ichijodani; the lacquered skulls in the
+  epilogue.
+- D-207 Miyoshi (8, 1560-1573): Nagayoshi to Wakae; the Eiroku incident conquers the
+  Ashikaga (matching D-187), and the cause of the Todai-ji fire is left open.

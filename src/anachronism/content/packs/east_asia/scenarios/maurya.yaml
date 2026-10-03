@@ -298,9 +298,12 @@ scenarios:
       lanka:
         disposition: cautious
         capital: in_lanka
-        leader: "Mutasiva"
-        leader_age: 50
-        successors: [{name: "Devanampiya Tissa", age: 25, disposition: cautious}]
+        # Reigns are the Mahavamsa's, adjusted and approximate (see chapters_lanka.yaml). The
+        # first king is Pandukabhaya (traditionally 377-307), whom the chronicle gives seventy years.
+        leader: "Pandukabhaya"
+        leader_age: 90
+        leader_died: -307
+        successors: [{name: "Mutasiva", age: 40, disposition: cautious, died: -255}, {name: "Devanampiya Tissa", age: 30, disposition: cautious, died: -211}, {name: "Asela", age: 40, until: -203}, {name: "Elara", age: 36, until: -158}, {name: "Dutugemunu", age: 32, disposition: aggressive, died: -137}]
         pitch: "Your island is green and your tanks are filling. Ships bring word from the mainland: a new power is rising."
         provinces:
           in_lanka: 400000

@@ -446,7 +446,13 @@ scenarios:
           - {id: "liu_yu_takes_guanggu", goal: "conquer", target: "southern_yan", preconditions: {after_year: 408}, note: "Liu Yu destroys Southern Yan (410)."}
           - {id: "liu_yu_takes_changan", goal: "conquer", target: "later_qin", preconditions: {after_year: 414}, depends_on: ["liu_yu_takes_guanggu"], note: "Liu Yu takes Luoyang and Chang'an (416-417)."}
         capital: k4_jiankang
+        # Emperor An was a puppet: the court acts in his name; the ruler line passes to Liu Yu,
+        # the real holder of Jin power, in chapter jin_huan_xuan (402), see
+        # chapters_eastern_jin.yaml.
         leader: Emperor An
+        leader_age: 18
+        leader_until: 403
+        successors: [{name: "Liu Yu", age: 39, disposition: aggressive, died: 422}]
         pitch: "The south is rich and the north is lost. Your generals want it back; your ideas could win it."
         provinces:
           k4_jiankang: 2000000

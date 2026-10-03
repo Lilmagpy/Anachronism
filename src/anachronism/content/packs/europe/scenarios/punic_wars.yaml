@@ -257,7 +257,14 @@ scenarios:
       sparta:
         disposition: aggressive
         capital: spa_laconia
-        leader: Acrotatus
+        leader: Acrotatus II
+        leader_age: 35
+        leader_died: -262
+        # Sparta had two kings at once; the ruler here is the king whose story each chapter tells
+        # (Eurypontid Eudamidas II and Agis IV, then Agiad Leonidas II and Cleomenes III).
+        # Dates adjusted a year or two to the turn grid (Eudamidas II, Agis IV, Cleomenes, Nabis) and approximate: Acrotatus' death at Megalopolis c. 262, Lycurgus c. 211, the ephors
+        # (rule under Macedonian protection) to Lycurgus's accession in 219.
+        successors: [{name: "Eudamidas II", age: 40, died: -246}, {name: "Agis IV", age: 20, disposition: "cautious", died: -240, ends: "is strangled in prison by the ephors"}, {name: "Leonidas II", age: 60, died: -235}, {name: "Cleomenes III", age: 25, disposition: "aggressive", until: -220}, {name: "The Ephors", age: 45, died: -219}, {name: "King Lycurgus", age: 30, died: -211}, {name: "Machanidas", age: 40, disposition: "aggressive", died: -207, ends: "is killed by Philopoemen at Mantinea"}, {name: "Nabis", age: 45, disposition: "aggressive", died: -191, ends: "is murdered by an Aetolian guest at Sparta"}, {name: "The Ephors", age: 45, until: -186}]
         pitch: "Few citizens, iron discipline. Can Sparta reform before it withers away?"
         provinces:
           spa_laconia: 180000
@@ -409,6 +416,10 @@ scenarios:
         navy_bp: 30000
         disposition: mercantile
         capital: rho_rhodes
+        # Rhodes was a republic: the ruler is the board of prytaneis, who changed every six months.
+        leader: The Prytaneis of Rhodes
+        leader_age: 45
+        leader_until: -100
         pitch: "The richest harbour of the east and its best sailors. Rule by trade, not conquest."
         provinces:
           rho_rhodes: 150000
@@ -450,6 +461,10 @@ scenarios:
         disposition: scholarly
         capital: per_pergamon
         leader: Philetaerus
+        leader_age: 79
+        leader_died: -263
+        # Ages are at accession and approximate for Eumenes I (b. c. 300?) and Attalus III.
+        successors: [{name: "Eumenes I", age: 40, died: -241}, {name: "Attalus I Soter", age: 28, disposition: "aggressive", died: -197}, {name: "Eumenes II", age: 24, disposition: "scholarly", died: -159}, {name: "Attalus II Philadelphus", age: 61, died: -138}, {name: "Attalus III", age: 33, died: -133}]
         pitch: "A fortress, a fortune and a founding dynasty. Build a great library, and more."
         provinces:
           per_pergamon: 200000

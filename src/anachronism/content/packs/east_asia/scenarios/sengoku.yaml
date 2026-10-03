@@ -80,7 +80,8 @@ scenarios:
         leader: Imagawa Yoshimoto
         leader_age: 41
         generals: [{name: "Matsudaira Motoyasu", skill: 3, trait: shield, note: "A hostage-vassal of the Imagawa: the future Tokugawa Ieyasu."}]
-        successors: [{name: "Imagawa Ujizane", age: 22, disposition: cautious}]
+        leader_until: 1560
+        successors: [{name: "Imagawa Ujizane", age: 22, disposition: cautious, until: 1575}]
         pitch: "Your army is the greatest in the east. Kyoto is within reach - if nothing goes wrong at Okehazama."
         provinces:
           j_mikawa: 350000
@@ -361,6 +362,7 @@ scenarios:
         capital: j_echizen
         leader: Asakura Yoshikage
         leader_age: 27
+        leader_until: 1573
         pitch: "Rich, cultured and cautious. Caution will not save you from what is coming."
         provinces:
           j_echizen: 350000
@@ -470,7 +472,8 @@ scenarios:
         capital: j_settsu
         leader: Miyoshi Nagayoshi
         leader_age: 38
-        successors: [{name: "Miyoshi Yoshitsugu", age: 15}]
+        leader_died: 1564
+        successors: [{name: "Miyoshi Yoshitsugu", age: 15, until: 1573}]
         pitch: "You hold Kyoto's purse strings. Hold the city itself."
         provinces:
           j_settsu: 800000
