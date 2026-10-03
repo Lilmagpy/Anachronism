@@ -94,7 +94,7 @@ scenarios:
         capital: g_xingqing
         leader: "Emperor Huanzong"
         leader_age: 29
-        successors: [{name: "Emperor Xiangzong", age: 36, disposition: cautious}, {name: "Emperor Shenzong", age: 48, disposition: cautious}, {name: "Emperor Xianzong", age: 42}]
+        successors: [{name: "Emperor Xiangzong", age: 36, disposition: cautious, died: 1211, ends: "is deposed by his kinsman Li Zunxu"}, {name: "Emperor Shenzong", age: 48, disposition: cautious, died: 1223, ends: "gives up the throne to his son"}, {name: "Emperor Xianzong", age: 42, died: 1226}, {name: "Li Xian", age: 30, until: 1227}]
         martial_bp: 15000
         pitch: "The Mongols raid your frontier and your court is in turmoil. You hold the Silk Road; hold it against the storm."
         provinces:

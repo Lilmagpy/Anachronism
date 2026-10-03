@@ -1533,3 +1533,13 @@ bombs of Kaifeng, and Caizhou. Six emperors in their real years; Xuanzong's deat
 1224) is set a year early so that Aizong is on the throne at the 1224 chapter on the
 three-year turn grid. All ten chapters play on three seeds; a passive Jin outlasts history,
 because the Mongol AI does not press as hard as the real Mongols did.
+
+## D-162 A sixth chronicle for 1206: Western Xia — DELEGATED (2026-10-03)
+Seven chapters, 1206-1227, of the kingdom the Mongols erased: Huanzong deposed by his
+cousin and his own mother, the Yellow River dyke that flooded Genghis Khan's camp, the
+examination champion who became emperor and turned on the Jin, Asha Gambu's "if he has
+not enough soldiers", the peace of brothers with the Jin, the frozen river at Lingzhou and
+the month's grace at Zhongxing, while the Khan lay dead. Five rulers in their real years:
+the reigns end by coup, coup, abdication, death and execution, each in the year it did.
+The Hexi corridor and the Ordos pass to the Mongols in the historical choice at Lingzhou.
+All seven chapters play on two seeds.
