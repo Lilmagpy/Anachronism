@@ -1753,3 +1753,13 @@ prince too popular to keep, and Daliang flooded. Wei's line of kings follows the
 Annals (Hui, Xiang, Zhao, Anxi, Jingmin, Jia), replacing the scenario's "King Ai", which
 came from the Shiji's known error. The benchmark falls 5, 3, 2, 1 as Wei's lands passed to
 Qin. All eight chapters play on two seeds.
+
+## D-182 A seventh chronicle for 350 BC: Han — DELEGATED (2026-10-03)
+Eight chapters, 350-230 BC, of the smallest of the seven: Shen Buhai's "technique", Wei's
+invasion and Qi's late rescue at Maling (peace with Wei), Su Qin's "head of a chicken",
+Yiyang lost to Qin (and King Wu's cauldron), Shangdang handed to Zhao (the spark of
+Changping), Zheng Guo's canal plot that fed Qin instead, Han Fei sent to his death, and
+the first fall. Testing showed the Wei AI's attack of 342 taking Xinzheng outright, so the
+Maling chapter ends that war as history did. The chronicles of Qin, Zhao, Chu, Qi, Yan,
+Wei and Han now cover all seven warring states. All eight chapters play on three seeds,
+level with history throughout.

@@ -173,7 +173,8 @@ scenarios:
         capital: han_xinzheng
         leader: Marquis Zhao
         leader_age: 35
-        successors: [{name: "King Xuanhui", age: 30}]
+        leader_died: -333
+        successors: [{name: "King Xuanhui", age: 30, died: -312}, {name: "King Xiang of Han", age: 25, died: -296}, {name: "King Xi of Han", age: 25, died: -273}, {name: "King Huanhui", age: 25, died: -239}, {name: "King An of Han", age: 25, until: -230}]
         pitch: "Small and squeezed at the centre, with the best iron and crossbows in the world. Out-think your neighbours."
         provinces:
           han_xinzheng: 1100000
