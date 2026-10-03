@@ -1395,3 +1395,11 @@ emperors and empresses in their real years. Two engine details:
 - Such ends, and reigns ended by chapters, are recorded as `ruler_fell`, not `ruler_died`,
   so the court's eulogy (added earlier this night) is kept for real deaths.
 All ten chapters play with a passive test player.
+
+## D-146 A second chronicle for AD 400: Baekje — DELEGATED (2026-10-03)
+Goguryeo's chronicle seen from the south, in eight chapters: the hostage prince in Yamato
+and the Wa alliance, Jeonji waiting on the island, ships to the Jin court (and Baekje's
+learning passed on to Japan), white falcons for Silla, the prince born on Kakara island
+(King Muryeong), the letter to Wei, Dorim's game of baduk, and the court's flight to
+Ungjin. Baekje's line now runs from Asin to Muryeong, with Munju and Dongseong murdered as
+history says (D-145's `ends`). All eight chapters play with a passive test player.

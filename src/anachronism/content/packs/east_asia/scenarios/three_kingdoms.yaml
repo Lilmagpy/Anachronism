@@ -72,7 +72,8 @@ scenarios:
         capital: k4_hanseong
         leader: King Asin
         leader_age: 35
-        successors: [{name: "King Jeonji", age: 25}]
+        leader_died: 405
+        successors: [{name: "King Jeonji", age: 25, died: 420}, {name: "King Guisin", age: 15, died: 427}, {name: "King Biyu", age: 20, died: 455}, {name: "King Gaero", age: 40, until: 476}, {name: "King Munju", age: 40, died: 477, ends: "is murdered by his guard commander Hae Gu"}, {name: "King Samgeun", age: 13, died: 479}, {name: "King Dongseong", age: 15, died: 501, ends: "is murdered while hunting"}, {name: "King Muryeong", age: 40, died: 523}]
         pitch: "Goguryeo humbled you in 396. Your ships reach Japan and China; your ideas could reach further."
         provinces:
           k4_hanseong: 500000
