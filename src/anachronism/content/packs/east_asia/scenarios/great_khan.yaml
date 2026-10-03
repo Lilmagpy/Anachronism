@@ -389,7 +389,8 @@ scenarios:
         capital: g_balasagun
         leader: "Gurkhan Yelu Zhilugu"
         leader_age: 45
-        successors: [{name: "Kuchlug", age: 30, disposition: aggressive}]
+        leader_until: 1212  # seized by Kuchlug in a hunting ambush, 1211 (the chapter at 1212 ends his reign)
+        successors: [{name: "Kuchlug", age: 30, disposition: aggressive, until: 1219}]
         martial_bp: 30000
         pitch: "Your grandfathers fled China and built an empire in the west. The Naiman prince Kuchlug is at your court. Do not trust him."
         provinces:
@@ -430,6 +431,7 @@ scenarios:
         capital: g_qocho
         leader: "Idiqut Barchuq"
         leader_age: 30
+        leader_until: 1225  # Barchuq Art Tegin lived into the 1230s; kept alive through the chronicle
         martial_bp: 20000
         pitch: "Your scribes write for the Mongols now. Make yourselves indispensable to the new masters of the steppe."
         provinces:
@@ -463,7 +465,10 @@ scenarios:
       dali:
         disposition: cautious
         capital: g_dali
+        leader: "King Duan Zhixiang"
         leader_age: 40
+        leader_died: 1238
+        successors: [{name: "King Duan Xiangxing", age: 25, disposition: cautious, died: 1251}, {name: "King Duan Xingzhi", age: 20, disposition: cautious, until: 1262}]
         pitch: "Mountains guard you; trade feeds you. Until 1253, when the Mongols come through them."
         provinces:
           g_dali: 800000

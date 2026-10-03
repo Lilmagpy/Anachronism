@@ -1936,3 +1936,51 @@ as the helpers wrote from memory without the network.
   later story; consistent with the Mori chronicle.
 - D-226 Ryukyu (7, 1560-1728): Sho Gen to Sai On, with the full line of kings; the 1609
   invasion consistent with the Shimazu chronicle.
+
+## D-227 to D-245 Nineteen more chronicles from the helper agents — DELEGATED (2026-10-03)
+Third round of the six helpers (D-187), again for states with no chronicle. Four helpers
+were cut off by the usage limit and resumed after it reset. Each chronicle was tested on
+seeds 1 and 2 in a private copy; after merging, the manager replayed all nineteen together
+on seed 3, and every chapter played. The helpers had no network, so facts are from memory,
+hedged in the text and marked approximate where unsure: a source check before release is
+advisable. Thin Bronze Age and early sources mean some chronicles are short rather than
+invented.
+- D-227 Kara Khitai (5, 1206-1218): Kuchlug's arrival to his death at Jebe's hands.
+- D-228 Uyghurs of Qocho (5, 1206-1219, file chapters_uyghurs_qocho.yaml): Barchuq kills the
+  Khitan resident and becomes Genghis's "fifth son". Barchuq is given leader_until 1225 (he
+  lived into the 1230s): on seed 3 he otherwise died of age in 1212.
+- D-229 Dali (4, 1206-1256): the Gao chancellors to Duan Xingzhi as maharaja under the
+  Mongols; Dali gets its Duan kings. Peace with the Mongols after the conquest.
+- D-230 Wa (8, 400-552): the Gwanggaeto stele, the five kings of the Song shu, Iwai, the
+  Baekje Buddha; the scenario leader "Nintoku (legendary)" becomes "the king of Wa (name
+  unknown)", and identifications with Nihon shoki emperors are called disputed.
+- D-231 Gaya (8, 400-562): from Goguryeo's 400 attack to Daegaya's fall; reigns from the late
+  Samguk yusa, marked traditional.
+- D-232 Later Yan and Northern Yan (8, 400-436): Murong Xi and Lady Fu to the burning of
+  Longcheng; Xi's death put at 409 (really 407) so his last chapter sees him, with a comment.
+- D-233 Later Qin (7, 400-416): Kumarajiva to Liu Yu; Gao seng zhuan stories marked as such.
+  Also corrects the Eastern Jin chronicle's "Wang Zhenwu" to Wang Zhen'e.
+- D-234 Southern Yan (5, 400-410): Murong De to the fall of Guanggu.
+- D-235 Rouran (7, 402-552): Shelun's title to the Türk revolt; peace with Northern Wei where
+  history made it, so Wei's scripts do not swallow the khaganate.
+- D-236 Amurru (5, 1275-1179 BC): Benteshina deposed and restored, Shaushgamuwa's embargo
+  clause (consistent with the Hittite chronicle).
+- D-237 Alashiya (5, 1275-1170 BC): copper, the Hittite claims, the letters about enemy ships;
+  kings whose names are lost are called so.
+- D-238 Wilusa (6, 1275-1182 BC): the Alaksandu treaty, Walmu, Troy VIIa; the Homeric link
+  is tradition only. Peace with Mycenae at the settlement stops its script swallowing Wilusa.
+- D-239 Hanigalbat (2, 1275-1263 BC): only Assyrian sources survive, so only two chapters;
+  the 14,400 blinded is Shalmaneser's own boast.
+- D-240 Zhou (6, 343-249 BC): the last kings to Lu Buwei; follows the Shiji's Duke of West Zhou
+  for 256, where the Qin chronicle names the king (noted in the header).
+- D-241 Wey (6, 346-209 BC, the small state, not Wei): outlasts every other state until the
+  Second Emperor. The historical choice of one chapter allies it with Zhao and Song and adds
+  soldiers, because the one-province state was otherwise swallowed; generous, but six of six
+  seeds then played cleanly.
+- D-242 Yue (6, 336-202 BC): Wujiang's defeat to Wuzhu, King of Minyue.
+- D-243 Massalia (5, 218-118 BC): Rome's ally from Hannibal's march to the Ligurian wars.
+- D-244 Kush (6, 264-204 BC): Arkamani and the priests (Diodorus, a Greek-told story) and the
+  Ptolemaic frontier; king order after Arkamani I is a scholarly reconstruction.
+- D-245 Cisalpine Gauls (7, 232-190 BC): Telamon to the Boii's defeat. Rome's own script takes
+  the Boii land early, so the benchmark reads "behind history" from 224 to 200; left so rather
+  than change Rome's play. The Telamon chapter's change of leaders is a game device.

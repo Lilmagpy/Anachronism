@@ -726,6 +726,10 @@ scenarios:
         navy_bp: 20000
         disposition: mercantile
         capital: mas_massalia
+        # Massalia was ruled by the Six Hundred (timouchoi), who served for life (Strabo 4.1.5).
+        leader: The Six Hundred of Massalia
+        leader_age: 45
+        leader_until: -90
         pitch: "A small Greek city on the edge of the Celtic world: trade your way to greatness."
         provinces:
           mas_massalia: 100000
@@ -804,6 +808,12 @@ scenarios:
         navy_bp: 0
         disposition: aggressive
         capital: gau_insubria
+        # No Gaulish ruler is known by name before 222 BC (D-XXX): a council of chiefs, then the Insubrian king Viridomarus
+        # (killed by Marcellus at Clastidium, 222), then the chiefs again until the Boii chapter of 190.
+        leader: The Council of the Insubres and Boii
+        leader_age: 45
+        leader_until: -226
+        successors: [{name: "Viridomarus", age: 35, until: -222, ends: "is killed by Marcellus at Clastidium"}, {name: "The Chiefs of the Insubres and Boii", age: 45, until: -180}]
         pitch: "Your grandfathers sacked Rome. The Romans have not forgotten."
         provinces:
           gau_insubria: 400000
@@ -831,6 +841,11 @@ scenarios:
       kush:
         disposition: pious
         capital: kus_meroe
+        # Kings of Kush, dates approximate (D-XXX): Arkamani I (Ergamenes), Amanislo, Arnekhamani, Arqamani II, Adikhalamani.
+        leader: Arkamani I (Ergamenes)
+        leader_age: 45
+        leader_died: -258
+        successors: [{name: "Amanislo", age: 35, died: -236}, {name: "Arnekhamani", age: 35, died: -218}, {name: "Arqamani II", age: 30, died: -206}, {name: "Adikhalamani", age: 30, died: -186}]
         music: near_east
         pitch: "Iron, gold and your own script on the upper Nile, far from the Greek quarrels."
         provinces:

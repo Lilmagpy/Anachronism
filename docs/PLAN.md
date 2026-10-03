@@ -235,6 +235,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] Eighteen more chronicles by the helper agents: France, Norway, Scotland, the Papacy, Bulgaria, León, Georgia, Armenia, the Buyids (AD 1000); Rhodes, Pergamon, Sparta (264 BC); early Rome (336 BC); Eastern Jin (AD 400); Lanka (321 BC); Imagawa, Asakura, Miyoshi (1560) (D-190 to D-207)
 - [x] Era music: the owner's Roman, Asian, medieval and Egyptian/Arabic tracks play by scenario and civilisation (D-208)
 - [x] Eighteen more by the helper agents: Sweden, Bohemia, Navarre, Barcelona, the Zirids, Sicily (AD 1000); Numidia, Pontus, Epirus, Athens, Achaea, Aetolia (264 BC); Zhongshan, Song, Lu (350 BC); Saito, Amago, Ryukyu (1560) (D-209 to D-226)
+- [x] Nineteen more by the helper agents: Kara Khitai, Uyghurs, Dali (1206); Wa, Gaya, Later Yan, Later Qin, Southern Yan, Rouran (AD 400); Amurru, Alashiya, Wilusa, Hanigalbat (1275 BC); Zhou, Wey, Yue (350 BC); Massalia, Kush, Cisalpine Gauls (264 BC) (D-227 to D-245)
 - [ ] More chronicles for other states (Babylon, Wa, Poland, Macedon of 264...)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

@@ -161,6 +161,11 @@ scenarios:
       gaya:
         disposition: mercantile
         capital: k4_gimhae
+        # Samguk yusa reigns (late, traditional); Daegaya kings before Doseolji are not named.
+        leader: King Isipum
+        leader_age: 70
+        leader_died: 407
+        successors: [{name: "King Jwaji", age: 40, died: 421}, {name: "King Chwihui", age: 40, died: 451}, {name: "King Jilji", age: 40, died: 492}, {name: "King Gyeomji", age: 40, died: 521}, {name: "King Guhyeong", age: 30, died: 534}, {name: "The king of Daegaya", age: 40, died: 550}, {name: "King Doseolji", age: 35, died: 566, ends: "loses his kingdom to Silla"}]
         pitch: "Iron makes you rich; disunity makes you prey. Forge a kingdom before your neighbours forge you into theirs."
         provinces:
           k4_gimhae: 250000
@@ -202,7 +207,12 @@ scenarios:
         scripts:
           - {id: "wa_invades_silla", goal: "conquer", target: "silla", preconditions: {after_year: 395}, note: "Wa soldiers besiege Silla (399-400) until Goguryeo drives them out."}
         capital: k4_kinai
-        leader: Nintoku (legendary)
+        # Wa kings: none is named before San (421); ages and death years are placeholders, see
+        # chapters_wa.yaml. Keitai and Kinmei by the Nihon shoki's approximate dates.
+        leader: The king of Wa (name unknown)
+        leader_age: 40
+        leader_died: 416
+        successors: [{name: "King San", age: 35, died: 432}, {name: "King Chin", age: 40, died: 442}, {name: "King Sai", age: 35, died: 460}, {name: "King Ko", age: 35, died: 476}, {name: "King Bu", age: 35, died: 506}, {name: "King Keitai", age: 57, died: 531}, {name: "King Kinmei", age: 30, died: 571}]
         pitch: "The great tombs rise; Korean iron and ideas flow in. Build the Japan that history will take centuries to make."
         provinces:
           k4_kinai: 700000
@@ -238,7 +248,9 @@ scenarios:
         capital: k4_longcheng
         leader: Murong Sheng
         leader_age: 27
-        successors: [{name: "Murong Xi", age: 15, disposition: "aggressive"}]
+        leader_died: 401
+        # Xi really died in 407; set to 409 so the funeral chapter (grid year 408) sees him.
+        successors: [{name: "Murong Xi", age: 15, disposition: "aggressive", died: 409, ends: "is caught and killed in a coup led by Feng Ba"}, {name: "Gao Yun", age: 35, died: 409, ends: "is murdered by his favourites"}, {name: "Feng Ba", age: 40, died: 430}, {name: "Feng Hong", age: 35, died: 438}]
         pitch: "Wei has taken your heartland. Hold the north-east - or take Goguryeo's lands instead."
         provinces:
           k4_liaodong: 400000
@@ -347,7 +359,8 @@ scenarios:
         capital: k4_changan
         leader: Yao Xing
         leader_age: 34
-        successors: [{name: "Yao Hong", age: 28}]
+        leader_died: 416
+        successors: [{name: "Yao Hong", age: 28, died: 417, ends: "surrenders to the Jin and is executed"}]
         pitch: "Kumarajiva is translating the sutras in your capital. Make Chang'an the city of learning it once was."
         provinces:
           k4_changan: 1500000
@@ -397,6 +410,9 @@ scenarios:
         disposition: cautious
         capital: k4_qingzhou
         leader: Murong De
+        leader_age: 64
+        leader_died: 405
+        successors: [{name: "Murong Chao", age: 20, died: 411, ends: "is captured at Guanggu and executed"}]
         pitch: "A small kingdom between two giants. Be clever, or be gone."
         provinces:
           k4_qingzhou: 900000
@@ -507,6 +523,9 @@ scenarios:
           - {id: "rouran_raids", goal: "conquer", target: "northern_wei", preconditions: {after_year: 402}, note: "The Rouran khagans raid the Wei frontier year after year."}
         capital: k4_rouran
         leader: Shelun
+        leader_age: 35
+        leader_died: 410
+        successors: [{name: "Hulu Khagan", age: 30, died: 414}, {name: "Datan Khagan", age: 30, died: 429}, {name: "Wuti Khagan", age: 25, died: 444}, {name: "Tuhezhen Khagan", age: 25, died: 464}, {name: "Yucheng Khagan", age: 25, died: 485}, {name: "Doulun Khagan", age: 28, died: 492, ends: "is killed by his nobles"}, {name: "Nagai Khagan", age: 40, died: 506}, {name: "Futu Khagan", age: 30, died: 508, ends: "is killed in battle by the Gaoche"}, {name: "Chounu Khagan", age: 25, died: 519, ends: "is killed by his mother and ministers"}, {name: "Anagui Khagan", age: 30, died: 553, ends: "is beaten by Tumen and takes his own life"}, {name: "Tiefa Khagan", age: 30}]
         pitch: "The steppe is yours. The farms of the south are tempting."
         provinces:
           k4_rouran: 300000

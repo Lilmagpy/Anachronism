@@ -151,6 +151,10 @@ scenarios:
         disposition: cautious
         capital: han_washukanni
         leader: Wasashatta
+        leader_age: 40
+        leader_died: -1268
+        # Wasashatta's fate is unrecorded (han_gifts ends his reign); Shattuara II is probably his son
+        successors: [{name: "Shattuara II", age: 30, until: -1262}]
         pitch: "The chariot empire of Mitanni is a memory. Revive it before Assyria swallows you."
         provinces:
           han_washukanni: 250000
@@ -299,6 +303,10 @@ scenarios:
         capital: wil_wilusa
         music: roman
         leader: Alaksandu
+        leader_age: 40
+        leader_died: -1252
+        # Alaksandu's, the unnamed king's and Walmu's dates are approximate or placeholders (the Milawata letter is c. 1235-1225)
+        successors: [{name: "A king of Wilusa (name lost)", age: 35, died: -1243}, {name: "Walmu", age: 35, until: -1235}, {name: "An usurper of Wilusa (name lost)", age: 40, died: -1232, ends: "is turned out when Tudhaliya IV sends Walmu home"}, {name: "Walmu", age: 50, died: -1215}, {name: "A king of Wilusa (name lost)", age: 30}]
         pitch: "Rich, walled and envied by the Greeks across the sea. Change the ending of the story."
         provinces:
           wil_wilusa: 80000
@@ -329,6 +337,11 @@ scenarios:
       alashiya:
         disposition: mercantile
         capital: ala_alashiya
+        leader: A king of Alashiya (name lost)
+        leader_age: 45
+        leader_died: -1235
+        # no king of Alashiya in this period is known by name; reign dates are placeholders
+        successors: [{name: "A later king of Alashiya (name lost)", age: 30, died: -1195}, {name: "The last king of Alashiya's Bronze Age (name lost)", age: 30}]
         pitch: "The copper everyone needs. Be the island every empire must court."
         provinces:
           ala_alashiya: 150000
@@ -360,6 +373,10 @@ scenarios:
         disposition: cautious
         capital: amu_amurru
         leader: Benteshina
+        leader_age: 45
+        leader_until: -1270
+        # Benteshina is deposed by Muwatalli (amu_deposed) and restored by Hattusili III; Shapili's place in the royal house is unknown; Benteshina's death and Sausgamuwa's reign are approximate; Amurru's last king is unnamed
+        successors: [{name: "Shapili", age: 40, died: -1267, ends: "is set aside when Hattusili III restores Benteshina"}, {name: "Benteshina", age: 55, died: -1250}, {name: "Sausgamuwa", age: 30, died: -1215}, {name: "The last king of Amurru (name lost)", age: 30}]
         pitch: "Caught between the two great powers. Choose wisely, or choose ideas."
         provinces:
           amu_amurru: 100000

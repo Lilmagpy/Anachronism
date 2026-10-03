@@ -217,6 +217,11 @@ scenarios:
         disposition: pious
         capital: zhou_luoyang
         leader: King Xian
+        leader_age: 45
+        leader_died: -321
+        # Zhou kings (Shiji 4; reign dates approximate): Xian to 321, Shenjing 320-315, Nan 314-256.
+        # The last successor is the Duke of East Zhou, whom Qin removes in 249 (chapters_zhou).
+        successors: [{name: "King Shenjing of Zhou", age: 30, died: -315}, {name: "King Nan of Zhou", age: 25, until: -256}, {name: "The Duke of East Zhou", age: 40, until: -249}]
         pitch: "The Son of Heaven, honoured by all and obeyed by none. Can ideas restore what armies lost?"
         provinces:
           zhou_luoyang: 400000
@@ -377,6 +382,13 @@ scenarios:
       wey:
         disposition: cautious
         capital: wey_puyang
+        leader: Lord Cheng of Wey
+        leader_age: 45
+        leader_died: -332
+        # Wey's lords (Shiji 37; reign dates approximate and differ between the Shiji and later
+        # reckonings): Cheng to 332, Ping to 325, Si to 283, Huai to 252 (killed by Wei), Yuan to 230,
+        # Jue to 209 (made a commoner by the Second Emperor; see chapters_wey).
+        successors: [{name: "Marquis Ping of Wey", age: 30, died: -325}, {name: "Lord Si of Wey", age: 25, died: -283}, {name: "Lord Huai of Wey", age: 25, until: -252}, {name: "Lord Yuan of Wey", age: 30, died: -230}, {name: "Lord Jue of Wey", age: 25, until: -209}]
         pitch: "An old river state in Wei's shadow. A hard start for a patient player."
         provinces:
           wey_puyang: 300000
@@ -548,6 +560,13 @@ scenarios:
       yue:
         disposition: mercantile
         capital: yue_wu
+        leader: King Wujiang
+        leader_age: 40
+        leader_until: -334
+        # Yue (Shiji 41; dates debated): Wujiang is killed by Chu about 334/333. His heirs are
+        # recorded only as 'the sons of the clan'. Wuzhu, a descendant of Goujian, is the
+        # lord of Min under Qin and king of Minyue under Han (Shiji 114); see chapters_yue.
+        successors: [{name: "A prince of the house of Goujian", age: 30, until: -222}, {name: "Wuzhu", age: 20}]
         pitch: "Heirs of Goujian: rivers, sea and the finest bronze swords in the world."
         provinces:
           yue_wu: 600000
