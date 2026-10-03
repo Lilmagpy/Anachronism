@@ -1626,3 +1626,13 @@ tribute. Mieszko II appears twice in the line of rulers, either side of Bezprym'
 as he really reigned. Masław's Masovia stays on the Polish map, because one choice can
 pass provinces to only one state; the story says it was his. All nine chapters play on
 two seeds. This is the Polish side of the Rus chronicle's 1018 (D-149).
+
+## D-170 A tenth chronicle for AD 1000: Hungary — DELEGATED (2026-10-03)
+Ten chapters, 1000-1055: the crown from Rome rather than Constantinople, Gyula's
+Transylvania, the pilgrims' road to Jerusalem, Ajtony's salt tolls and Bishop Gerard,
+Conrad II starved out, Prince Imre's death and the blinding of Vazul, Peter "the
+Venetian" driven out, Ménfő, the Vata rising and Gerard's martyrdom, and the Tihany
+charter with the oldest written Hungarian sentence. Six reigns in eleven years after
+Stephen: Peter Orseolo appears twice in the line (1038-41, 1044-46), either side of Samuel
+Aba, and each reign ends in its chapter. Legends (Kund the diver, Vazul's plot) are told
+as "it is said". All ten chapters play on two seeds.

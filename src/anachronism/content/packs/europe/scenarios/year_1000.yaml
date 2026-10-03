@@ -648,7 +648,8 @@ scenarios:
         capital: m_esztergom
         leader: Stephen I
         leader_age: 25
-        successors: [{name: "Peter Orseolo", age: 27}]
+        leader_died: 1038
+        successors: [{name: "Peter Orseolo", age: 27, until: 1041}, {name: "Samuel Aba", age: 40, until: 1044}, {name: "Peter Orseolo", age: 33, until: 1046}, {name: "Andrew I", age: 30, died: 1060}, {name: "Béla I", age: 45}]
         pitch: "Stephen is about to be crowned. Turn the raiders' grandchildren into builders."
         provinces:
           m_esztergom: 500000
