@@ -1763,3 +1763,12 @@ the first fall. Testing showed the Wei AI's attack of 342 taking Xinzheng outrig
 Maling chapter ends that war as history did. The chronicles of Qin, Zhao, Chu, Qi, Yan,
 Wei and Han now cover all seven warring states. All eight chapters play on three seeds,
 level with history throughout.
+
+## D-183 A sixth chronicle for 1560: the Mori — DELEGATED (2026-10-03)
+Eight chapters, 1560-1600: Motonari's letter to his three sons (the "three arrows" told
+as the later embellishment it is), the Iwami silver mine, the starving of Gassan-Toda
+(the Amago are conquered), Motonari's deathbed "do not seek the realm", the fire pots at
+Kizugawaguchi, Takamatsu castle in its lake as Nobunaga dies, thirty thousand men for
+Korea, and Terumoto staying in Osaka while Sekigahara was lost (Aki and Izumo are given
+up). Motonari dies in 1571 and Terumoto reigns on. The Mori chronicle meets the Oda and
+Joseon chronicles at Takamatsu and in Korea. All eight chapters play on two seeds.

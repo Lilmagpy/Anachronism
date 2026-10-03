@@ -227,6 +227,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] A seventh chronicle for 1275 BC: Middle Elam, from Chogha Zanbil to the Ulai (D-180)
 - [x] A sixth chronicle for 350 BC: Wei, from King Hui to the flooding of Daliang (D-181)
 - [x] A seventh chronicle for 350 BC: Han, from Shen Buhai to the first fall (D-182)
+- [x] A sixth chronicle for 1560: the Mori of Aki, from the three arrows to Sekigahara (D-183)
 - [ ] More chronicles for other states (Babylon, Wa, Poland, Macedon of 264...)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

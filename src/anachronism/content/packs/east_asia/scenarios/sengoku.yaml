@@ -577,8 +577,9 @@ scenarios:
         capital: j_aki
         leader: Mori Motonari
         leader_age: 63
+        leader_died: 1571
         generals: [{name: "Kikkawa Motoharu", skill: 4, trait: bold, note: "Motonari's second son, fifty battles undefeated."}, {name: "Kobayakawa Takakage", skill: 4, trait: quartermaster, note: "Motonari's third son; commander of the Mori fleet."}]
-        successors: [{name: "Mori Terumoto", age: 11, disposition: cautious}]
+        successors: [{name: "Mori Terumoto", age: 18, disposition: cautious, died: 1625}, {name: "Mori Hidenari", age: 26}]
         pitch: "An old fox who took the west by cunning. Take the Amago's silver mines next."
         provinces:
           j_aki: 350000
