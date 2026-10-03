@@ -122,6 +122,9 @@ scenarios:
         capital: in_gandhara
         leader: "Eudemus"
         leader_age: 40
+        # Eudemus lives until the Gabiene chapter, whose choice ends his reign (316/315 BC);
+        # (-314, one year later than the event, to be safe on the turn grid.)
+        leader_until: -314
         successors: [{name: "Seleucus Nicator", age: 37, disposition: aggressive}]
         martial_bp: 16000
         pitch: "Alexander is dead and his generals carve up the world. You hold the Indus for whoever wins - or for yourself."

@@ -2028,3 +2028,14 @@ several are deliberately short (Chera, Nanda, Ba: three chapters each).
   the Qi pact.
 - D-263 Onggut (6, 1206-1296): Alaqush to Prince George; Alaqai Beki's regency and Rabban
   Sauma; rulers between Alaqai and George are unnamed placeholders.
+
+## D-264 The Macedonian Satraps — the last chronicle — DELEGATED (2026-10-03)
+Eight chapters, 321-301 BC (file chapters_satraps.yaml): Triparadisus, Eudemus's murder of
+Porus and his march west with 120 elephants, his execution after Gabiene, then Seleucus
+(the story says plainly that it now speaks for him in Babylon): crossing the Indus, the
+treaty and 500 elephants (terms debated, marked so), Megasthenes, Ipsus. Eudemus gets
+leader_until -314. Tested on seeds 1-4; the Maurya chronicle still plays all 17 chapters
+alongside it. This chronicle loses Gandhara when Eudemus marches west (Taxila lies east of
+the Indus), where the Maurya chronicle has it pass at the treaty; the province straddles
+the river, so both readings are defensible, and they are left as they are. With this,
+every state in the nine real-map scenarios has a chronicle.

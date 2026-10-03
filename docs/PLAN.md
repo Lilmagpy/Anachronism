@@ -237,6 +237,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] Eighteen more by the helper agents: Sweden, Bohemia, Navarre, Barcelona, the Zirids, Sicily (AD 1000); Numidia, Pontus, Epirus, Athens, Achaea, Aetolia (264 BC); Zhongshan, Song, Lu (350 BC); Saito, Amago, Ryukyu (1560) (D-209 to D-226)
 - [x] Nineteen more by the helper agents: Kara Khitai, Uyghurs, Dali (1206); Wa, Gaya, Later Yan, Later Qin, Southern Yan, Rouran (AD 400); Amurru, Alashiya, Wilusa, Hanigalbat (1275 BC); Zhou, Wey, Yue (350 BC); Massalia, Kush, Cisalpine Gauls (264 BC) (D-227 to D-245)
 - [x] Eighteen more by the helper agents: Kalinga, Chola, Pandya, Nanda, Chera (321 BC); Scythians, Thebes, Odrysians, Illyrians, Syracuse, Carthage, Sparta (336 BC); Shu, Ba, Yiqu, Donghu, Gojoseon (350 BC); Onggut (1206) (D-246 to D-263)
-- [ ] More chronicles for other states (Babylon, Wa, Poland, Macedon of 264...)
+- [x] The Macedonian Satraps (D-264): every state in the nine real-map scenarios now has a chronicle
+- [ ] Source-check pass over the helper-written chronicles (written without network access) before any public release
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging
