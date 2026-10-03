@@ -1374,6 +1374,10 @@ scenarios:
           - {id: "mahmud_takes_rayy", goal: "conquer", target: "buyids", preconditions: {after_year: 1025}, note: "Mahmud of Ghazni takes Rayy from the Buyids (1029)."}
         capital: m_khorasan
         leader: Mahmud of Ghazni
+        leader_age: 29
+        leader_died: 1030
+        # Masud's brother Muhammad reigned a few months in 1030 and is left out
+        successors: [{name: "Masud I", age: 32, until: 1040}, {name: "Mawdud", age: 20, died: 1048}, {name: "Abd al-Rashid", age: 35}]
         pitch: "A sultan with an army and a hunger for India. Point it somewhere wiser."
         provinces:
           m_khorasan: 1000000

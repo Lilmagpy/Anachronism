@@ -215,6 +215,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] An eighth chronicle for AD 1000: Denmark, Sweyn Forkbeard and Cnut (D-168)
 - [x] A ninth chronicle for AD 1000: Piast Poland, Bolesław the Brave to Casimir (D-169)
 - [x] A tenth chronicle for AD 1000: Hungary, from Stephen's crown to Tihany (D-170)
+- [x] An eleventh chronicle for AD 1000: the Ghaznavids, Mahmud and Masud (D-171)
 - [ ] More chronicles for other states (Babylon, Wa, Poland, Macedon of 264...)
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

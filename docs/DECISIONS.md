@@ -1636,3 +1636,15 @@ charter with the oldest written Hungarian sentence. Six reigns in eleven years a
 Stephen: Peter Orseolo appears twice in the line (1038-41, 1044-46), either side of Samuel
 Aba, and each reign ends in its chapter. Legends (Kund the diver, Vazul's plot) are told
 as "it is said". All ten chapters play on two seeds.
+
+## D-171 An eleventh chronicle for AD 1000: the Ghaznavids — DELEGATED (2026-10-03)
+Nine chapters, 1000-1040: Jayapala's pyre, Firdawsi paid in silver (told as the later
+tradition it is), al-Biruni carried off from Khwarazm, Mathura and Kannauj, Somnath, the
+Turkmen let into Khorasan, the library of Rayy (Jibal is taken), al-Biruni refusing an
+elephant-load of silver for the Masudic Canon, and Dandanaqan. The map has no India, so
+the raids are told in outcomes as wealth and legitimacy; Khorasan stands for the
+Ghaznavid heartland. The raids on Hindu temples are told plainly, as the sources and
+their modern critics (Thapar) tell them, with the rebuilding and the long memory, neither
+celebrated nor softened. Mahmud dies in 1030 and Masud's reign ends at Dandanaqan; his
+brother Muhammad's months on the throne in 1030 are left out. All nine chapters play on
+two seeds.
