@@ -1648,3 +1648,13 @@ their modern critics (Thapar) tell them, with the rebuilding and the long memory
 celebrated nor softened. Mahmud dies in 1030 and Masud's reign ends at Dandanaqan; his
 brother Muhammad's months on the throne in 1030 are left out. All nine chapters play on
 two seeds.
+
+## D-172 A twelfth chronicle for AD 1000: Ireland — DELEGATED (2026-10-03)
+Eight chapters, 1000-1064: Christmas in Dublin after Glenmama, Máel Sechnaill's
+submission, "Imperator Scottorum" in the Book of Armagh, the hostages of the north, the
+chess game at Kincora and the failed siege of Dublin, Clontarf (Brian dies in his tent;
+the north, Ulster on this map, slips away), Donnchad's law of 1040, and Donnchad's last
+road to Rome. The Cogad and Njal's saga are a century later and partisan, so their
+stories (the chess game, Brodir) are told as the saga's, beside what the annals say.
+Brian is spared old age until Clontarf; Donnchad until his fall in 1063-64. All eight
+chapters play on three seeds.

@@ -118,6 +118,9 @@ scenarios:
           - {id: "brian_boru", goal: "conquer", target: "scotland", preconditions: {after_year: 1005}, note: "Brian Boru, High King of Ireland, claims tribute from across the sea."}
         capital: m_munster
         leader: Brian Boru
+        leader_age: 59
+        leader_until: 1014
+        successors: [{name: "Donnchad mac Briain", age: 35, until: 1064}, {name: "Toirdelbach Ua Briain", age: 54, died: 1086}, {name: "Muirchertach Ua Briain", age: 36}]
         pitch: "Brian Boru is uniting Ireland. The monasteries hold the learning of Europe; use it."
         provinces:
           m_munster: 300000
