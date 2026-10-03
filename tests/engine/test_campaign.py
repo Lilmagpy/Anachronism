@@ -218,3 +218,20 @@ def test_a_reign_can_end_as_history_says_not_only_by_death(content: Content) -> 
     assert civ.ruler == "Constantine X Doukas"
     assert [e.kind for e in events.items] == ["ruler_fell"]
     assert "abdicates" in events.items[0].message
+
+
+def test_every_chronicle_starts_and_its_chapters_are_in_its_age(content: Content) -> None:
+    """Each state with a chronicle can start one; its chapters fall within its moment."""
+    chronicles = sorted({(c.scenario, c.civ) for c in content.chapters.values()})
+    assert len(chronicles) >= 20
+    for scenario_id, civ in chronicles:
+        state = new_game(content, scenario_id, seed=1, player_civ=civ, chronicle=True)
+        start = content.scenarios[scenario_id].start_year
+        years = [c.year for c in state.world.chapters.values()]
+        assert years, (scenario_id, civ)
+        assert start <= min(years), (scenario_id, civ)
+        assert max(years) <= start + 160, (scenario_id, civ)
+        for chapter in state.world.chapters.values():
+            for choice in chapter.choices:
+                for node in choice.needs_adopted:
+                    assert node in state.tech_nodes, (chapter.id, node)
