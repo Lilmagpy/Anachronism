@@ -215,6 +215,8 @@ class MarchArmy(Frozen):
     civ: str
     army: str
     target: str
+    forced: bool = False
+    """A forced march: one extra province a turn, at a cost in morale and men."""
 
 
 class ArmyStance(Frozen):
@@ -240,6 +242,31 @@ class ArmyPlan(Frozen):
     civ: str
     army: str
     plan: str = "auto"
+
+
+class ArmyFormation(Frozen):
+    """Order the formation an army draws up in (D-267).
+
+    ``formation`` is a formation id, or ``auto``: its general chooses.
+    """
+
+    kind: Literal["formation"] = "formation"
+    civ: str
+    army: str
+    formation: str = "auto"
+
+
+class ArmyEngage(Frozen):
+    """Set an army's rules of engagement (D-267).
+
+    ``fight`` as usual; ``cautious`` withdraws from a battle it expects to lose;
+    ``last_man`` never yields.
+    """
+
+    kind: Literal["engage"] = "engage"
+    civ: str
+    army: str
+    engage: Literal["fight", "cautious", "last_man"] = "fight"
 
 
 class Fortify(Frozen):
@@ -336,6 +363,8 @@ Orders = (
     | MarchArmy
     | ArmyStance
     | ArmyPlan
+    | ArmyFormation
+    | ArmyEngage
     | DisbandArmy
     | Fortify
     | BuildFleet
@@ -375,6 +404,8 @@ Action = Annotated[
     | MarchArmy
     | ArmyStance
     | ArmyPlan
+    | ArmyFormation
+    | ArmyEngage
     | DisbandArmy
     | Fortify
     | BuildFleet

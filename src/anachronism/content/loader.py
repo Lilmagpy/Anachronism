@@ -27,6 +27,7 @@ from anachronism.content.schema import (
     Dilemma,
     EffectType,
     Era,
+    Formation,
     Happening,
     MapResource,
     PackManifest,
@@ -76,6 +77,7 @@ class Content:
     chapters: Mapping[str, Chapter] = field(default_factory=dict)
     almanac: Mapping[str, AlmanacEntry] = field(default_factory=dict)
     tactics: Mapping[str, Tactic] = field(default_factory=dict)
+    formations: Mapping[str, Formation] = field(default_factory=dict)
     symbols: Mapping[str, Symbol] = field(default_factory=dict)
     """Chance events (plague, flood, bumper harvests...)."""
 
@@ -163,6 +165,7 @@ def load_content(pack_ids: Sequence[str] | None = None, root: Path = PACKS_DIR) 
         chapters=registry.chapters,
         almanac=registry.almanac,
         tactics=registry.tactics,
+        formations=registry.formations,
         symbols=registry.symbols,
         digest=digest.hexdigest(),
     )

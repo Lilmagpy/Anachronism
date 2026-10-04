@@ -2077,3 +2077,41 @@ Caveats: many new options are plausible courses rather than recorded proposals (
 text does not claim they happened); a few chapter titles were changed; where history's own
 numbers are extreme (a reign ending in disaster), a careful player may still guess. A
 spot-play of sample chronicles on seed 2 matched the pre-rewrite results exactly.
+
+## D-267 Combat v2: formations, three-phase battles, rules of engagement — DELEGATED (2026-10-04)
+The owner asked for combat that is "more strategic and tactical". A battle was one roll
+(numbers x soldiers x ground x general x veterancy x the D-108 plan x luck). Everything that
+existed stays (plans, veterans, morale, sieges, supply, navies, generals, tales); this adds
+real decisions before and during a battle.
+- **Formations** (content, `core/formations.yaml`): balanced line, strong centre, strong left,
+  strong right, deep reserve, wide line. Each beats some and loses to others, in words the
+  player can read: a strong wing turns the flank of a balanced line or a strong centre; the
+  opposite strong wings meet as equals and the better general wins (Leuctra); a deep reserve
+  beats a strong centre or a wing (it plugs the breach) but is wasted against a steady line;
+  a wide line overlaps a balanced line or a reserve but needs 1.2 times the enemy's men (or it
+  is thin: -20% and no edge) and a strong centre punches through it. The winning matchup is
+  worth +20% power in the clash. A ruler may order one; left alone a general draws up against
+  what he expects, and a great general (3 stars) reads the enemy's real formation, exactly as
+  with plans. New order `ArmyFormation`.
+- **Three phases**: (1) the skirmish, where missile troops trade shots - few die, morale is
+  shaken, and the plan matters (skirmishing and ambush help, a headlong charge hurts); (2) the
+  clash, the old power contest with plan and formation edges, where a deep reserve commits;
+  morale falls with each side's share of the dead; (3) the pursuit, where the winner's horse
+  run down the beaten (this replaces part of the old "crush"; an envelopment still adds). A
+  side whose morale falls below the break threshold (3,000) runs, in the skirmish or the clash
+  (a short battle), and a side that holds together but loses gets away in good order (half
+  the pursuit). Each battle report carries the three phases (text, losses, morale).
+  Casualties are tuned to the old ballpark (winner about 8% lost, loser about 19%).
+- **Rules of engagement** (`ArmyEngage`): fight (as before); cautious (withdraws, with a 3%
+  rear-guard loss and its morale intact, from a battle where it would hold under 35% of the two
+  sides' strength; defenders behind walls and armies with nowhere to go never withdraw); last
+  man (never breaks, hits 10% harder, loses 50% more if beaten). Rival courts set cautious
+  (or fight, if aggressive) themselves and will not march a cautious army on a stronger host.
+- **Strategic touches**: an army that stood a whole turn without marching is dug in (+15%
+  defence, lost when it moves or is beaten); a forced march (`MarchArmy.forced`) goes one
+  province further at 8% morale and 3% of the men a turn; rival armies the player cannot see
+  closely (not on or beside his land, nor beside his armies) are shown in the view rounded to
+  5,000 men (the engine keeps exact numbers).
+- Everything is integers from the saved random stream; every tuning number is in the core
+  rules (`ArmyRules`); new fields have defaults, so old saves load. Tests: matchups, phases,
+  early breaks, cautious, last man, camps, forced march, view fields.

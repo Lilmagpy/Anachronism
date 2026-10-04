@@ -1,0 +1,49 @@
+schema_version: 1
+# Battle formations (content/schema/formations.py, D-267). Before a battle each army draws up
+# in a formation: its own general's choice (auto), or the one its ruler ordered. A formation
+# that "beats" the enemy's gives its side that formation's edge_bp in the clash. Matchups:
+#   strong wing > balanced, strong centre   (it turns the flank)
+#   the opposite strong wing meets a strong wing as an equal: the better general wins (Leuctra)
+#   deep reserve > strong centre, strong wings   (the reserve plugs the breach)
+#   wide line > balanced, deep reserve   (overlap and envelop - but only with the numbers)
+#   strong centre > wide line   (punched through)
+#   balanced > deep reserve   (a reserve idle in the rear is wasted against a steady front)
+formations:
+  - id: balanced
+    name: Balanced line
+    description: "Every part of the line equal: nothing to exploit, nothing to fear, and a steady front against a reserve kept idle in the rear."
+    beats: [deep_reserve]
+    loses_to: [strong_left, strong_right, wide_line]
+    natural_bp: 1000
+  - id: strong_centre
+    name: Strong centre
+    description: "Pile the best men in the middle and punch through - it splits a stretched wide line, but a strong wing turns its flank."
+    beats: [wide_line]
+    loses_to: [strong_left, strong_right, deep_reserve]
+    power_bp: 400
+  - id: strong_left
+    name: Strong left, refused right
+    description: "Mass the left and hold the right back: it turns the flank of a balanced line or a strong centre, and meets a strong right as an equal - the better general wins (Leuctra)."
+    beats: [balanced, strong_centre]
+    loses_to: [deep_reserve]
+    duel: [strong_right]
+  - id: strong_right
+    name: Strong right, refused left
+    description: "Mass the right and hold the left back: it turns the flank of a balanced line or a strong centre, and meets a strong left as an equal - the better general wins."
+    beats: [balanced, strong_centre]
+    loses_to: [deep_reserve]
+    duel: [strong_left]
+  - id: deep_reserve
+    name: Deep reserve
+    description: "Hold a fifth of the army back to plug the breach and strike late: it beats a strong centre or a strong wing, but a wide line overlaps it and a steady line wastes it."
+    beats: [strong_centre, strong_left, strong_right]
+    loses_to: [balanced, wide_line]
+    power_bp: -1200
+    reserve_bp: 1700
+  - id: wide_line
+    name: Wide line
+    description: "Stretch the line to overlap their flanks and envelop them - it beats a balanced line or a deep reserve, but needs at least 1.2 times the enemy's men, or it is thin, and a strong centre punches through it."
+    beats: [balanced, deep_reserve]
+    loses_to: [strong_centre]
+    needs_ratio_bp: 12000
+    thin_bp: 2000

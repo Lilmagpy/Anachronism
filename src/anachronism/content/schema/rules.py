@@ -457,6 +457,41 @@ class ArmyRules(Frozen):
     progress, defence, attack (and a tenth as much off defence), less attrition, faster
     morale recovery and gentler morale loss."""
     """An army reduced below this many men melts away."""
+    break_morale_bp: Rate = 3000
+    """A side whose morale falls below this in a battle breaks and runs (Combat v2, D-267)."""
+    skirmish_losses_bp: Rate = 400
+    """Opening skirmish: share of the enemy's men killed when one side's missile power equals
+    the other side's whole strength (less when it is less)."""
+    skirmish_morale_bp: Rate = 1800
+    """... and the morale the enemy loses in the same case."""
+    clash_losses_bp: Rate = 1850
+    """The clash: share of the loser's men killed in an even fight (more in a rout)."""
+    clash_win_losses_bp: Rate = 1150
+    """The clash: share of the winner's men lost in a close fight (less in a rout)."""
+    clash_morale_bp: Rate = 2200
+    """Morale a side loses in the clash, in proportion to its share of the dead."""
+    pursuit_base_bp: Rate = 500
+    """Pursuit: share of the beaten killed or scattered by any winner's foot soldiers ..."""
+    pursuit_horse_bp: Rate = 2400
+    """... plus this much when the winner's army is all horse (in proportion to its horse)."""
+    orderly_retreat_bp: Rate = 5000
+    """A beaten side that did not break gets away in good order: pursuit takes this share."""
+    cautious_win_share_bp: Rate = 3500
+    """A cautious army withdraws when its share of the two sides' strength is below this."""
+    rearguard_losses_bp: Rate = 300
+    """Men a withdrawing army loses to the enemy's pursuit."""
+    last_man_power_bp: NonNegative = 1000
+    """An army fighting to the last man hits this much harder ..."""
+    last_man_losses_bp: NonNegative = 5000
+    """... and, if beaten, loses this much more."""
+    dug_in_bp: NonNegative = 1500
+    """Extra defence for an army that has stood a full turn in a province (a fortified camp)."""
+    forced_march_morale_bp: Rate = 800
+    """Morale a forced march costs an army each turn ..."""
+    forced_march_attrition_bp: Rate = 300
+    """... and the men lost to exhaustion."""
+    fog_round_men: Positive = 5000
+    """Rival armies out of sight are reported rounded to this many men."""
 
 
 class BuildingRules(Frozen):

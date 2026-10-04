@@ -239,6 +239,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] Eighteen more by the helper agents: Kalinga, Chola, Pandya, Nanda, Chera (321 BC); Scythians, Thebes, Odrysians, Illyrians, Syracuse, Carthage, Sparta (336 BC); Shu, Ba, Yiqu, Donghu, Gojoseon (350 BC); Onggut (1206) (D-246 to D-263)
 - [x] The Macedonian Satraps (D-264): every state in the nine real-map scenarios now has a chronicle
 - [x] History's choice listed in a shuffled order (D-265); every chapter's choices rewritten so it is not obvious (D-266)
+- [x] Combat v2 engine (D-267): formations, three-phase battles, rules of engagement, camps, forced marches, scouting fog in the view (client UI still to do)
 - [ ] Source-check pass over the helper-written chronicles (written without network access) before any public release
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

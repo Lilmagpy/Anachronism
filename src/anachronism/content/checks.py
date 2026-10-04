@@ -36,6 +36,7 @@ def cross_reference_issues(registry: Registry) -> list[ContentIssue]:
         *_tech_building_issues(registry),
         *_chapter_issues(registry),
         *_tactic_issues(registry),
+        *_formation_issues(registry),
         *_symbol_issues(registry),
         *_dialogue_issues(registry),
     ]
@@ -420,6 +421,27 @@ def _tactic_issues(registry: Registry) -> list[ContentIssue]:
             beaten = registry.tactics.get(other)
             if beaten is not None and tactic.id in beaten.beats:
                 issues.append(ContentIssue(where, label, f"{other!r} and it beat each other"))
+    return issues
+
+
+def _formation_issues(registry: Registry) -> list[ContentIssue]:
+    issues: list[ContentIssue] = []
+    for form in registry.formations.values():
+        where = registry.origin("formations", form.id)
+        label = f"formations ({form.id})"
+        for other in (*form.beats, *form.loses_to, *form.duel):
+            if registry.is_unknown("formations", other):
+                issues.append(ContentIssue(where, label, f"unknown formation {other!r}"))
+        for other in form.beats:
+            beaten = registry.formations.get(other)
+            if beaten is not None and form.id in beaten.beats:
+                issues.append(ContentIssue(where, label, f"{other!r} and it beat each other"))
+        for other in form.loses_to:
+            winner = registry.formations.get(other)
+            if winner is not None and form.id not in winner.beats:
+                issues.append(
+                    ContentIssue(where, label, f"{other!r} is said to beat it but does not")
+                )
     return issues
 
 
