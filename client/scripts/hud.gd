@@ -49,11 +49,13 @@ var _dev := Label.new()     ## "online" when a language model rules, from settin
 
 var _root := Control.new()
 var _top := HBoxContainer.new()
+var _stats := HBoxContainer.new()  ## the figures in the top bar, inside a clipping strip
 var _side_body := VBoxContainer.new()
 var _tabs := HBoxContainer.new()
 var _dilemma := PanelContainer.new()
 var _card := PanelContainer.new()
 var _card_body := VBoxContainer.new()
+var _card_scroll := ScrollContainer.new()
 var _chronicle := VBoxContainer.new()
 var _end_turn := Button.new()
 var _skip_hint: Label
@@ -464,6 +466,19 @@ static func number(value: int) -> String:
 	return ("-" if value < 0 else "") + text + out
 
 
+## Short form for the top bar: 9,870 · 37.1k · 371k · 6.2M (the exact figure is in the tooltip).
+static func compact(value: int) -> String:
+	var size := absi(value)
+	var sign := "-" if value < 0 else ""
+	if size >= 1_000_000:
+		return sign + "%.1fM" % (size / 1_000_000.0)
+	if size >= 100_000:
+		return sign + "%dk" % (size / 1000)
+	if size >= 10_000:
+		return sign + "%.1fk" % (size / 1000.0)
+	return number(value)
+
+
 static func people(value: int) -> String:
 	if value >= 1_000_000:
 		return "%.2fM" % (value / 1_000_000.0)
@@ -545,22 +560,30 @@ func _fill_top_bar() -> void:
 		reign = " · a new ruler (%d)" % int(status["ruler_age"])
 	titles.add_child(UiStyle.label("%s · turn %d%s" % [year_text(view["year"]), view["turn"], reign], 15, DIM, "body", 700))
 	_top.add_child(titles)
-	_top.add_child(VSeparator.new())
+	var strip := Control.new()  # the figures; clipped, never pushing the menu off the screen
+	strip.clip_contents = true
+	strip.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	strip.mouse_filter = Control.MOUSE_FILTER_PASS
+	_top.add_child(strip)
+	_stats = HBoxContainer.new()
+	_stats.add_theme_constant_override("separation", 10 if get_viewport().get_visible_rect().size.x < 1800 else 14)
+	_stats.set_anchors_and_offsets_preset(Control.PRESET_LEFT_WIDE)
+	_stats.alignment = BoxContainer.ALIGNMENT_BEGIN
+	strip.add_child(_stats)
+	strip.custom_minimum_size.y = 52
+	_stats.add_child(VSeparator.new())
 	var stores: Dictionary = status["stores"]
 	_stat("people", "People: more people means more workers and more taxes", people(status["population"]), trends["population"], true)
-	_stat("food", "Food in store: if it runs out, people starve", number(stores["food"]), trends["food"], true)
-	_stat("materials", "Materials: stone, timber and metal for building and experiments", number(stores["materials"]), 0, true)
-	_stat("wealth", "Wealth: pays for experiments, embassies, missionaries and decrees", number(stores["wealth"]), 0, true)
-	_stat("knowledge", "Knowledge: your scholars' learning, spent on every new idea", number(stores["knowledge"]), 0, true)
-	_stat("labour", "Labour: your workforce, and in brackets how many are free for experiments", "%s (%s)" % [number(status["workforce"]), number(status["free_labour"])], 0, true)
-	_top.add_child(VSeparator.new())
+	_stat("food", "Food in store: if it runs out, people starve (%s)" % number(stores["food"]), compact(stores["food"]), trends["food"], true)
+	_stat("materials", "Materials: stone, timber and metal for building and experiments (%s)" % number(stores["materials"]), compact(stores["materials"]), 0, true)
+	_stat("wealth", "Wealth: pays for experiments, embassies, missionaries and decrees (%s)" % number(stores["wealth"]), compact(stores["wealth"]), 0, true)
+	_stat("knowledge", "Knowledge: your scholars' learning, spent on every new idea (%s)" % number(stores["knowledge"]), compact(stores["knowledge"]), 0, true)
+	_stat("labour", "Labour: your workforce, and in brackets how many are free for experiments (%s, %s free)" % [number(status["workforce"]), number(status["free_labour"])], "%s (%s)" % [compact(status["workforce"]), compact(status["free_labour"])], 0, true)
+	_stats.add_child(VSeparator.new())
 	_stat("literacy", "Literacy: who can read; it speeds learning, and some ideas need it", pct(status["literacy_bp"]), trends["literacy_bp"], true)
 	_stat("unrest", "Unrest: when it runs high come riots, then revolts", pct(status["unrest_bp"]), trends["unrest_bp"], false)
 	_stat("legitimacy", "Legitimacy: the people's trust in the throne; it holds the realm and its armies together", pct(status["legitimacy_bp"]), trends["legitimacy_bp"], true)
 	_stat("suspicion", "Suspicion: how uncanny your progress looks to the world; it draws spies and enemies", pct(status["suspicion_bp"]), trends["suspicion_bp"], false)
-	var push := Control.new()
-	push.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	_top.add_child(push)
 	var menu := Button.new()
 	menu.tooltip_text = "Menu: save, load, chronicle, tech tree, settings (Esc)"
 	menu.focus_mode = Control.FOCUS_NONE
@@ -583,9 +606,10 @@ func _stat(icon: String, name: String, value: String, trend: int, up_is_good: bo
 	row.add_theme_constant_override("separation", 5)
 	row.tooltip_text = name
 	row.mouse_filter = Control.MOUSE_FILTER_STOP
-	var picture := GameIcon.make(icon, 30)
+	var narrow := get_viewport().get_visible_rect().size.x < 1800  # a laptop screen: tighter bar
+	var picture := GameIcon.make(icon, 24 if narrow else 30)
 	row.add_child(picture)
-	var figure := UiStyle.label(value, 19, INK, "body", 800)
+	var figure := UiStyle.label(value, 16 if narrow else 19, INK, "body", 800)
 	figure.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.add_child(figure)
 	if trend != 0:
@@ -593,7 +617,7 @@ func _stat(icon: String, name: String, value: String, trend: int, up_is_good: bo
 		var arrow := UiStyle.label("▲" if trend > 0 else "▼", 14, GOOD if good else BAD)
 		arrow.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		row.add_child(arrow)
-	_top.add_child(row)
+	_stats.add_child(row)
 
 
 # --- side panel: ideas, projects, world -------------------------------------------------
@@ -1254,12 +1278,24 @@ func _build_card() -> void:
 	_card.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	_card.custom_minimum_size = Vector2(360, 0)
 	_card_body.add_theme_constant_override("separation", 3)
-	_card.add_child(_card_body)
+	_card_body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_card_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_card_scroll.add_child(_card_body)
+	_card.add_child(_card_scroll)
 	_root.add_child(_card)
+
+
+## However long the card grows (many armies, open boxes), it never runs off the screen: past
+## the room below the top bar it scrolls.
+func _fit_card() -> void:
+	var room := get_viewport().get_visible_rect().size.y - 96.0 - 24.0
+	var wanted := _card_body.get_combined_minimum_size().y
+	_card_scroll.custom_minimum_size = Vector2(344, minf(wanted, room))
 
 
 func _fill_card() -> void:
 	_clear(_card_body)
+	_fit_card.call_deferred()
 	if selected.is_empty():
 		_card_body.add_child(_wrapped("Click a province to see who holds it and what it has. Drag to move, scroll to zoom.", 13))
 		return
@@ -1340,8 +1376,9 @@ func _fill_card() -> void:
 			_card_body.add_child(build)
 	if p["owner"] == view["player"]:
 		# raising troops and building ships fold away so the card fits the screen
-		var tools := HBoxContainer.new()
-		tools.add_theme_constant_override("separation", 4)
+		var tools := HFlowContainer.new()  # wraps on a narrow card
+		tools.add_theme_constant_override("h_separation", 4)
+		tools.add_theme_constant_override("v_separation", 4)
 		if view.has("levy"):
 			tools.add_child(_button(("▾ " if open_box == "levy" else "▸ ") + "Raise a levy", func():
 				open_box = "" if open_box == "levy" else "levy"
@@ -1725,7 +1762,7 @@ func _build_chronicle() -> void:
 	var panel := PanelContainer.new()
 	panel.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
 	panel.offset_left = 380   # beside the province card (speeches hide it while they show)
-	panel.offset_right = -470  # clear of the side panel at any window width
+	panel.offset_right = -636  # clear of the Cities, Notebook and End Turn buttons
 	panel.offset_bottom = -8
 	panel.offset_top = -8
 	panel.grow_vertical = Control.GROW_DIRECTION_BEGIN
@@ -1743,13 +1780,22 @@ func _fill_chronicle() -> void:
 	if events.is_empty():
 		_chronicle.add_child(_label("Quiet years: nothing of note happened.", 13, DIM))
 		return
-	for e in events.slice(0, 6):
+	# one line each, cut short with "…"; however busy the decade, the box stays small, and
+	# hovering it shows everything
+	var all_lines := PackedStringArray()
+	for e in events:
+		all_lines.append("• " + str(e["message"]))
+	_chronicle.get_parent().tooltip_text = "\n".join(all_lines)
+	for e in events.slice(0, 4):
 		var colour := BAD if e["kind"] in ["riot", "revolt", "famine", "collapse", "setback", "stalled"] else INK
-		var line := _wrapped("• " + str(e["message"]), 13, colour)
-		line.custom_minimum_size.x = 0  # wrap to the space between card and side panel
+		var line := _label("• " + str(e["message"]), 13, colour)
+		line.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		line.clip_text = true
+		line.custom_minimum_size.x = 0
+		line.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_chronicle.add_child(line)
-	if events.size() > 6:
-		_chronicle.add_child(_label("… and %d more" % (events.size() - 6), 12, DIM))
+	if events.size() > 4:
+		_chronicle.add_child(_label("… and %d more (hover to read)" % (events.size() - 4), 12, DIM))
 
 
 ## False while a chapter waits for the player's decision (or a turn is playing out).

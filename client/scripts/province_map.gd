@@ -743,6 +743,7 @@ func show_armies(armies: Array, battles: Array, selected_army := "", fleets: Arr
 		label.position = earth.ground_at_pixel(spot) + Vector3(0, 10.0 * piece.scale.y, 0)
 		label.visibility_range_end = 1300.0   # not over the whole-world view
 		_war_marks.add_child(label)
+		label.add_child(_pill(text, colour, mine))
 		_war_labels.append([label, 1500000 + (500000 if mine else 0) + int(men / 1000)])
 		army_nodes[army["id"]] = {"piece": piece, "label": label, "spot": spot, "province": here}
 		if army["id"] == selected_army:
@@ -830,6 +831,7 @@ func _draw_fleets(st: SurfaceTool, by_id: Dictionary, fleets: Array, selected_fl
 		label.position = at + Vector3(0, 9.0 * piece.scale.y, 0)
 		label.visibility_range_end = 1300.0
 		_war_marks.add_child(label)
+		label.add_child(_pill(label.text, colour, mine))
 		_war_labels.append([label, 1400000 + (500000 if mine else 0) + ships])
 		fleet_nodes[fleet["id"]] = {"piece": piece, "label": label, "spot": spot, "province": sea}
 		if fleet["id"] == selected_fleet:
@@ -1072,3 +1074,36 @@ class _Heap:
 		var v := values[a]
 		values[a] = values[b]
 		values[b] = v
+
+
+static var _pill_image: Texture2D
+
+## A rounded banner behind an army's or fleet's figure, in its owner's colour (gold-edged for
+## the player), so numbers read cleanly over busy ground and sea.
+func _pill(text: String, colour: Color, mine: bool) -> Sprite3D:
+	if _pill_image == null:
+		var w := 96
+		var h := 40
+		var image := Image.create(w, h, false, Image.FORMAT_RGBA8)
+		var r := 17.0
+		for y in h:
+			for x in w:
+				var dx := maxf(absf(x + 0.5 - w / 2.0) - (w / 2.0 - r), 0.0)
+				var dy := maxf(absf(y + 0.5 - h / 2.0) - (h / 2.0 - r), 0.0)
+				var d := sqrt(dx * dx + dy * dy) - r   # signed distance to the rim
+				var alpha := clampf(0.5 - d, 0.0, 1.0)
+				var rim := clampf(d + 3.5, 0.0, 1.0)   # 3-pixel edge
+				image.set_pixel(x, y, Color(1.0, 1.0, 1.0, alpha).lerp(Color(0.85, 0.85, 0.85, alpha), rim))
+		_pill_image = ImageTexture.create_from_image(image)
+	var pill := Sprite3D.new()
+	pill.texture = _pill_image
+	pill.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	pill.fixed_size = true
+	pill.pixel_size = 0.0006
+	pill.no_depth_test = true
+	pill.render_priority = 11   # under the figure's text
+	pill.modulate = (Color(0.55, 0.36, 0.08) if mine else colour.darkened(0.45))
+	pill.modulate.a = 0.82
+	pill.scale = Vector3((text.length() * 19.0 + 34.0) / 96.0, 1.25, 1.0)
+	pill.visibility_range_end = 1300.0
+	return pill

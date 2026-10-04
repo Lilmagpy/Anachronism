@@ -2077,3 +2077,20 @@ Caveats: many new options are plausible courses rather than recorded proposals (
 text does not claim they happened); a few chapter titles were changed; where history's own
 numbers are extreme (a reign ending in disaster), a careful player may still guess. A
 spot-play of sample chronicles on seed 2 matched the pre-rewrite results exactly.
+
+## D-268 Screens that do not overflow, and a calmer, richer map (2026-10-04)
+The owner reported that after a long game "the tabs get so much text they start covering the
+screen". Screenshots of a 60-turn game at laptop size found three causes, now fixed:
+- The top bar grew with the numbers (6,974 (1,395); 37,079) until the menu button was pushed
+  off the screen. Figures now use a compact form (37.1k, 6.2M; the exact number is in the
+  tooltip), sit in a strip that clips instead of pushing, and shrink on screens narrower than
+  1,800 pixels; the menu button always stays on screen.
+- The province card grew with every army and open box until it ran under the top bar and off
+  the bottom. It now stops below the top bar and scrolls; its buttons wrap.
+- The news box ran under the Cities/Notebook/End Turn buttons and its long lines spilled. It
+  now ends before those buttons and shows four one-line items, the rest on hover.
+Graphics: the map read neon green everywhere. The terrain palette is warmer and more natural,
+drier lands (Spain, Anatolia, the steppe) show their tan, hill country turns olive, steep
+ground is shaded so relief reads, and the global saturation boost is lower (1.32 -> 1.12 on
+the Mac's renderer). Army and fleet figures on the map now sit on rounded banners in their
+owner's colour (gold-brown for the player) instead of floating as bare text.

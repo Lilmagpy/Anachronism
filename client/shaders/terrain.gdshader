@@ -17,10 +17,11 @@ uniform float metres_per_unit = 350.0;
 uniform float land_lift = 0.5;
 uniform float sea_depth_scale = 0.25;
 
-const vec3 GRASS = vec3(0.38, 0.64, 0.26);
-const vec3 MEADOW = vec3(0.52, 0.72, 0.31);
-const vec3 FOREST = vec3(0.24, 0.53, 0.24);
-const vec3 STEPPE = vec3(0.70, 0.71, 0.42);
+const vec3 GRASS = vec3(0.40, 0.58, 0.27);
+const vec3 MEADOW = vec3(0.56, 0.66, 0.33);
+const vec3 FOREST = vec3(0.21, 0.43, 0.22);
+const vec3 STEPPE = vec3(0.72, 0.68, 0.43);
+const vec3 UPLAND = vec3(0.52, 0.53, 0.33);   // olive hill country
 const vec3 DESERT = vec3(0.93, 0.80, 0.55);
 const vec3 ROCK = vec3(0.60, 0.55, 0.50);
 const vec3 SNOW = vec3(0.97, 0.98, 1.00);
@@ -71,7 +72,7 @@ void fragment() {
 	float metres = max(height - land_lift, 0.0) * metres_per_unit;
 	float lum = dot(sat, vec3(0.3, 0.59, 0.11));
 	// lush like an illustrated map: anything not plainly desert reads as green country
-	float veg = clamp((sat.g - sat.r) * 7.0 + 0.85, 0.0, 1.0);
+	float veg = clamp((sat.g - sat.r) * 5.0 + 0.7, 0.0, 1.0);   // drier lands show their tan
 	float dark = 1.0 - smoothstep(0.14, 0.28, lum);
 	vec4 w = vec4(
 		veg * dark,                                         // forest
@@ -82,6 +83,7 @@ void fragment() {
 	vec3 grass = mix(GRASS, MEADOW, smoothstep(0.25, 0.4, lum) * 0.7 + wobble * 0.3);
 	vec3 colour = FOREST * w.x + grass * w.y + STEPPE * w.z + DESERT * w.w;
 	colour *= 0.92 + wobble * 0.16;   // painterly variation
+	colour = mix(colour, UPLAND, smoothstep(350.0, 1400.0, metres) * 0.55 * (w.x + w.y));   // hills go olive
 	// close up, the grass gets texture: darker tufts, sunlit patches and a few flowers
 	float near = 1.0 - smoothstep(60.0, 180.0, length(CAMERA_POSITION_WORLD - world_pos));
 	if (near > 0.0) {
@@ -95,6 +97,7 @@ void fragment() {
 		colour = mix(colour, detailed, near);
 	}
 	float slope = 1.0 - world_normal.y;
+	colour *= 1.0 - smoothstep(0.08, 0.4, slope) * 0.18;   // steep ground a shade darker: relief reads
 	colour = mix(colour, ROCK, smoothstep(1800.0, 3200.0, metres) * 0.8 + smoothstep(0.25, 0.5, slope) * 0.45);
 	colour = mix(colour, vec3(0.66, 0.60, 0.44), smoothstep(3300.0, 4200.0, metres) * 0.6);
 	float snow = smoothstep(4600.0, 5400.0, metres) + smoothstep(3800.0, 4600.0, metres) * smoothstep(0.55, 0.75, lum);

@@ -652,12 +652,12 @@ func _setup_environment() -> void:
 	# colour grading for a bright storybook map (G1); global illumination (SDFGI) washed the
 	# colours out on the Mac, so the light stays simple
 	environment.adjustment_enabled = true
-	environment.adjustment_saturation = 1.18
+	environment.adjustment_saturation = 1.06
 	environment.adjustment_contrast = 1.06
 	if RenderingServer.get_current_rendering_method() == "forward_plus":
 		environment.tonemap_mode = Environment.TONE_MAPPER_FILMIC
 		environment.tonemap_exposure = 0.92
-		environment.adjustment_saturation = 1.32
+		environment.adjustment_saturation = 1.12
 		environment.ssao_enabled = true
 		environment.ssao_intensity = 1.2
 		environment.ssao_radius = 2.0
