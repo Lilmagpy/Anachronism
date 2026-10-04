@@ -2039,3 +2039,19 @@ alongside it. This chronicle loses Gandhara when Eudemus marches west (Taxila li
 the Indus), where the Maurya chronicle has it pass at the treaty; the province straddles
 the river, so both readings are defensible, and they are left as they are. With this,
 every state in the nine real-map scenarios has a chronicle.
+
+## D-265 History's choice is no longer easy to spot (2026-10-04)
+The owner play-tested the chronicles: history's choice was always listed first (1,097 of 1,100
+chapters), and usually obvious anyway. A count found why: 892 chapters offered only two
+choices; in 302 only history's choice showed any effect on the world in its hint; in 241 it
+showed far more effects than the alternatives; in 180 its label was much the longest.
+Two fixes:
+- Code (this entry): the client lists a chapter's ordinary choices in a shuffled order, fixed
+  for a given game and chapter (a hash of the game's seed and the chapter id), so it does not
+  jump about between frames but differs between chapters and games; choices needing an idea
+  ahead of its time stay last. It is display only: actions still name the choice by its index
+  in the file, so saves and replays are untouched. A test checks history is shown first in
+  only about a third to a half of chapters.
+- Content (D-266): every chapter gets at least three real, tempting options with comparable
+  visible costs and benefits, rewritten by the helper agents under a checker script
+  (balance.py) and a guard that history's choice keeps its tested mechanics.

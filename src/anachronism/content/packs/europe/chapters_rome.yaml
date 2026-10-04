@@ -36,15 +36,20 @@ chapters:
           by his own people for it. Rome has a foothold in Sicily, and two enemies at once:
           Carthage and Syracuse.
         deeds: {war_with: [carthage, syracuse], take: [messana], men: 20000}
-      - label: "Refuse: Rome does not shelter murderers"
+      - label: "Decline the appeal and garrison Rhegium"
         legitimacy_bp: 300
+        materials_bp: -500
         influence: {clergy: 300}
         outcome: >-
-          The envoys go home empty-handed. Within the year a Punic garrison holds Messana,
-          and Carthaginian warships ride at anchor in sight of Rhegium.
+          The envoys go home empty-handed and six thousand men are posted at Rhegium instead.
+          Within the year a Punic garrison holds Messana, and Carthaginian warships ride at anchor
+          in sight of the Italian shore.
+        deeds: {men: 6000}
       - label: "Send envoys to settle it between Syracuse and Carthage"
         wealth_bp: -1000
         legitimacy_bp: 200
+        unrest_bp: 300
+        influence: {nobility: -300}
         outcome: >-
           Roman envoys are heard politely in Syracuse and in Carthage, and nothing is agreed.
           The Mamertines, left alone, open their gates to Carthage.
@@ -73,7 +78,7 @@ chapters:
 
       Carthage, his ally of a year, has sent him no help worth the name.
     choices:
-      - label: "Accept: a king who feeds our legions is worth more than a sack"
+      - label: "Grant Hiero peace and take his grain"
         historical: true
         wealth_bp: 1500
         food_bp: 1000
@@ -81,12 +86,21 @@ chapters:
           The treaty is sworn. Syracuse becomes Rome's friend, and Sicilian grain begins to
           flow to the legions. The war is now Rome and Syracuse against Carthage.
         deeds: {ally_with: [syracuse]}
-      - label: "Refuse: Syracuse must fall"
+      - label: "Press the siege of Syracuse"
+        legitimacy_bp: -200
+        materials_bp: -1000
+        outcome: >-
+          Hiero shuts his gates. Eight thousand more men go to the lines. Syracuse has the
+          strongest walls in the Greek world, and Carthage now has a reason to defend them.
+        deeds: {men: 8000, grudges: {syracuse: 3000}}
+      - label: "Grant peace for the silver, but no alliance"
+        wealth_bp: 1500
+        food_bp: -500
         legitimacy_bp: -200
         outcome: >-
-          Hiero shuts his gates. Syracuse has the strongest walls in the Greek world, and
-          Carthage now has a reason to defend them.
-        deeds: {grudges: {syracuse: 3000}}
+          Hiero pays his hundred talents and keeps out of the war. His granaries stay closed to
+          your armies, and your quartermasters must find their grain elsewhere.
+        deeds: {peace_with: [syracuse]}
     history: >-
       In 263 BC Hiero II made peace and alliance with Rome for an indemnity of a hundred
       talents. He kept the treaty faithfully for the rest of his long life - he died in 215 BC,
@@ -113,7 +127,7 @@ chapters:
       her apart plank by plank. They say they can copy her - a hundred of her - if the
       rowers learn their stroke on benches set up on dry land, while the hulls are built.
     choices:
-      - label: "Build the fleet, and fit every ship with a boarding bridge"
+      - label: "Copy the wreck and build a great fleet, with boarding bridges"
         historical: true
         materials_bp: -3000
         wealth_bp: -2000
@@ -123,11 +137,13 @@ chapters:
           hinged bridge with an iron spike that drops onto an enemy deck and holds it fast,
           so that legionaries can fight at sea as they fight on land.
         deeds: {ships: 100}
-      - label: "Fight on land only, and leave the sea to Carthage"
+      - label: "Keep to the land war with more legions"
         legitimacy_bp: -300
+        wealth_bp: -500
         outcome: >-
-          The legions grind on in Sicily. The coastal towns, fed from the sea, laugh at them,
-          and Punic raiders burn villages from Etruria to Bruttium.
+          Fifteen thousand more men go to Sicily and the legions grind on. The coastal towns, fed
+          from the sea, laugh at them, and Punic raiders burn villages from Etruria to Bruttium.
+        deeds: {men: 15000}
       - label: "Build ships to our own new design"
         needs_adopted: [sternpost_rudder]
         materials_bp: -3000
@@ -137,6 +153,13 @@ chapters:
           the new ships turn tighter than any Carthaginian, and their captains need no
           raven to win.
         deeds: {ships: 140}
+      - label: "Build twenty triremes to guard the coast"
+        materials_bp: -800
+        wealth_bp: -500
+        outcome: >-
+          A small squadron is built to escort the grain ships and drive off raiders. It cannot
+          challenge the Punic main fleet, and Carthage keeps the sea.
+        deeds: {ships: 20}
     history: >-
       Polybius says Rome built a hundred quinqueremes and twenty triremes in sixty days,
       copying a stranded Carthaginian ship. Gaius Duilius led the new fleet to victory at
@@ -163,7 +186,7 @@ chapters:
       Carthage has sent envoys to ask what peace would cost. Regulus, wanting the glory of
       ending the war before his command runs out, writes to ask how hard he may press them.
     choices:
-      - label: "Terms fit for the beaten: all Sicily, Sardinia, the fleet, tribute"
+      - label: "Demand all Sicily, Sardinia, the fleet and tribute"
         historical: true
         legitimacy_bp: -800
         unrest_bp: 600
@@ -173,13 +196,20 @@ chapters:
           drills it, and in the spring of 255 BC crushes Regulus on the open plain with
           elephants and cavalry. Regulus is taken prisoner. The fleet that rescues the
           survivors is wrecked by a storm off Camarina.
-      - label: "Moderate terms: western Sicily, and peace"
+      - label: "Offer moderate terms: western Sicily, and peace"
         legitimacy_bp: 600
         outcome: >-
           With Roman soldiers at Tunis and their fields burning, the Carthaginians accept.
           Their garrisons sail away from Lilybaeum. A war that might have lasted a
           generation is over in eight years.
         deeds: {peace_with: [carthage], take: [car_lilybaeum], grudges: {carthage: 2500}}
+      - label: "Reinforce Regulus and keep Carthage besieged"
+        wealth_bp: -1000
+        legitimacy_bp: 200
+        outcome: >-
+          The Senate sends reinforcements and bids Regulus hold Tunis through the winter without
+          treating. Carthage, seeing the war will go on, begins to look for a general.
+        deeds: {men: 10000}
     history: >-
       Regulus offered terms so harsh that Carthage preferred to fight on. Xanthippus defeated
       him at the Bagradas in 255 BC; of some fifteen thousand Romans perhaps two thousand
@@ -207,7 +237,7 @@ chapters:
 
       Claudius is proud, young and in a hurry. The fleet is already rowing.
     choices:
-      - label: "\"If they will not eat, let them drink!\" Throw them overboard and attack"
+      - label: "Dismiss the omen and attack at first light"
         historical: true
         legitimacy_bp: -600
         influence: {clergy: -400}
@@ -215,12 +245,19 @@ chapters:
           The chickens go over the side and the fleet goes in, strung out in a long line.
           The Carthaginian admiral Adherbal slips out of the harbour, turns, and pins the
           Romans against the shore. Ninety-three of a hundred and twenty ships are lost.
-      - label: "Respect the omens: the fleet waits"
+      - label: "Wait a day and take the auspices again"
         legitimacy_bp: 300
+        wealth_bp: -400
         influence: {clergy: 300}
         outcome: >-
           The fleet backs water. Surprise is lost, but so is nothing else; the blockade of
-          Lilybaeum goes on.
+          Lilybaeum goes on at the cost of another day's pay and provisions.
+      - label: "Attack with half the fleet and hold the rest back"
+        legitimacy_bp: -200
+        materials_bp: -500
+        outcome: >-
+          A squadron goes in at dawn while the main body waits beyond the harbour mouth. Adherbal
+          is not caught napping, but neither can he trap the whole fleet.
     history: >-
       Claudius had the chickens thrown into the sea - "let them drink, since they will not
       eat" - and attacked. Drepana (249 BC) was Carthage's one great sea victory of the war.
@@ -250,7 +287,7 @@ chapters:
       lines of the fastest Punic ship ever captured. The state will repay them only if the
       fleet wins.
     choices:
-      - label: "Accept the loan: let Rome's rich men build Rome's fleet"
+      - label: "Take the rich citizens' offer of ships"
         historical: true
         influence: {nobility: 400, guilds: 200}
         legitimacy_bp: 300
@@ -259,7 +296,7 @@ chapters:
           single summer. The consul Gaius Lutatius Catulus trains their crews hard through
           the winter off Sicily.
         deeds: {ships: 200}
-      - label: "Raise a war tax for the fleet"
+      - label: "Raise a war tax for a state fleet"
         wealth_bp: 1500
         unrest_bp: 800
         outcome: >-
@@ -293,7 +330,7 @@ chapters:
       give back your prisoners without ransom, and pay two thousand two hundred talents of
       silver over twenty years. His men will march out under arms.
     choices:
-      - label: "Accept, but let the people raise the price: 3,200 talents in ten years"
+      - label: "Accept the peace, but fix a heavier indemnity"
         historical: true
         wealth_bp: 4000
         legitimacy_bp: 600
@@ -301,15 +338,16 @@ chapters:
           The assembly sends ten commissioners to Sicily, who harden the terms. Carthage pays.
           Sicily - all but Hiero's kingdom - is Rome's: her first province beyond the sea.
         deeds: {peace_with: [carthage], take: [car_lilybaeum], grudges: {carthage: 3000}}
-      - label: "Demand Sardinia as well"
+      - label: "Demand Sicily and Sardinia both"
         wealth_bp: 2500
         legitimacy_bp: 300
         outcome: >-
           Hamilcar's face darkens, but Carthage has no fleet left. Sicily and Sardinia both
           pass to Rome, and in Carthage a grudge takes root that will outlive everyone here.
         deeds: {peace_with: [carthage], take: [car_lilybaeum, car_sardinia], grudges: {carthage: 6000}}
-      - label: "No peace: carry the war to Carthage itself"
+      - label: "Refuse terms and carry the war to Africa"
         unrest_bp: 800
+        materials_bp: -1000
         outcome: >-
           The war goes on. Your people, bled for a generation, grumble in the streets.
     history: >-
@@ -341,7 +379,7 @@ chapters:
       Now the mutineers who hold Sardinia offer the island to Rome. Carthage, half-dead, is
       gathering ships to take it back.
     choices:
-      - label: "Take Sardinia - and if Carthage objects, threaten war"
+      - label: "Accept the island and answer any protest with war"
         historical: true
         wealth_bp: 2000
         legitimacy_bp: -300
@@ -350,12 +388,20 @@ chapters:
           twelve hundred talents for peace. Carthage, with nothing left, gives both. In Spain,
           Hamilcar Barca begins to build a new empire - and a new army.
         deeds: {take: [car_sardinia, corsica], grudges: {carthage: 5000}}
-      - label: "Keep faith with the treaty"
+      - label: "Refuse the island and keep the treaty"
         legitimacy_bp: 500
         influence: {clergy: 200}
         outcome: >-
           Rome refuses the island. Carthage crushes the mutineers and keeps Sardinia; its
           envoys thank the Senate, and mean it.
+        deeds: {peace_with: [carthage]}
+      - label: "Send envoys to judge between Carthage and the mutineers"
+        wealth_bp: -500
+        legitimacy_bp: 300
+        outcome: >-
+          Rome offers to arbitrate. The mutineers will not hear it and Carthage will not wait; the
+          island is retaken by force, and the Senate is thanked for its patience.
+        deeds: {peace_with: [carthage]}
     history: >-
       In 238/237 BC Rome accepted the mutineers' offer and, when Carthage prepared to recover
       Sardinia, threatened war unless Carthage gave up the island and paid 1,200 talents
@@ -383,17 +429,23 @@ chapters:
       And in the north of Italy the Gauls are gathering. Hasdrubal's envoys suggest a line:
       Carthage will not cross the river Ebro in arms.
     choices:
-      - label: "Agree the Ebro as the line"
+      - label: "Agree that Carthage stays south of the Ebro"
         historical: true
         legitimacy_bp: 200
         outcome: >-
           The treaty is made. Rome turns to face the Gauls with quiet at her back.
-      - label: "Demand that Carthage halt its conquests in Spain"
+      - label: "Demand that Carthage halt its Spanish conquests"
         legitimacy_bp: 300
         outcome: >-
           Hasdrubal answers with smooth words and goes on as before. In Carthage, the Barcid
           party grows stronger with every insult.
         deeds: {grudges: {carthage: 2000}}
+      - label: "Offer Saguntum Rome's friendship and ask no treaty"
+        legitimacy_bp: 300
+        wealth_bp: -300
+        outcome: >-
+          Rome sends gifts and friendly words to the town south of the river, and signs nothing
+          with Hasdrubal. The Gauls remain Rome's first concern.
     history: >-
       Around 226 BC Hasdrubal agreed not to cross the Ebro in arms. Rome, facing a great
       Gallic invasion, was content. Saguntum, a town south of the river, later put itself
@@ -419,7 +471,7 @@ chapters:
       By chance one consular army is coming up behind them; the other, back from Sardinia,
       has just landed at Pisa in front of them.
     choices:
-      - label: "Trap them between both armies, then carry the war into the Po valley"
+      - label: "Close both armies on them, then march on the Po"
         historical: true
         legitimacy_bp: 800
         outcome: >-
@@ -427,12 +479,20 @@ chapters:
           war-trumpets and horns making a din the Romans never forget. Forty thousand are
           killed. Over the next three years Roman armies cross the Po.
         deeds: {war_with: [cisalpine_gauls], men: 15000}
-      - label: "Let them go home with their plunder, and fortify the passes"
+      - label: "Let them go home with their plunder and fortify the passes"
         unrest_bp: 500
         wealth_bp: -1000
         outcome: >-
-          The Gauls go home rich. Rome builds forts on the roads north and waits for them to
-          come again.
+          The Gauls go home rich. Eight thousand men are posted to forts on the roads north, and
+          Rome waits for the Gauls to come again.
+        deeds: {men: 8000}
+      - label: "Close both armies on them, then offer the Boii terms"
+        legitimacy_bp: 600
+        wealth_bp: 500
+        outcome: >-
+          The Gauls are cut down at Telamon, but when the Boii send to ask for terms you grant
+          them, keeping the Insubres isolated. The Po valley is left for another year.
+        deeds: {men: 12000}
     history: >-
       At Telamon in 225 BC the Gauls were caught between two consular armies; one consul,
       Atilius, was killed, but some forty thousand Gauls fell. Rome then conquered the Po
@@ -461,19 +521,27 @@ chapters:
       gathers a fold of his toga in his hand. "Here," he says, "we carry peace and war. Choose
       which you will." The presiding magistrate answers: "Give us whichever you please."
     choices:
-      - label: "Let the fold fall: \"Then we give you war\""
+      - label: "Declare war on Carthage"
         historical: true
         legitimacy_bp: 600
         outcome: >-
           "We accept it," the council shouts back, "and we shall fight it as we accept it." The
           Senate plans to fight in Spain and in Africa, far from Italy.
         deeds: {war_with: [carthage]}
-      - label: "Hold your hand: Saguntum is not worth a war"
+      - label: "Accept the loss of Saguntum and keep the peace"
         legitimacy_bp: -800
         unrest_bp: 400
         outcome: >-
           The envoys come home. Rome's allies notice that Rome's friendship did not save
           Saguntum.
+        deeds: {peace_with: [carthage]}
+      - label: "Demand Hannibal's surrender before any war"
+        legitimacy_bp: 400
+        wealth_bp: -500
+        outcome: >-
+          The council refuses to give up its general. Rome holds the high ground in the world's
+          eyes, and the legions are called out.
+        deeds: {men: 8000}
     history: >-
       Livy tells the scene of the toga; Polybius records only that war was declared. Rome
       expected to fight in Spain and Africa. Hannibal had other plans: in the summer of 218 BC
@@ -501,14 +569,15 @@ chapters:
       This year the consuls Varro and Paullus command eight legions, the greatest army Rome
       has ever raised. Hannibal has seized the grain depot at Cannae.
     choices:
-      - label: "Follow Fabius: shadow him, give no battle, let him starve"
+      - label: "Shadow Hannibal from the hills and refuse battle"
         food_bp: -2000
         unrest_bp: 600
         legitimacy_bp: -200
         outcome: >-
-          Rome bears the jeers and the burning farms. Hannibal ravages Apulia but cannot take
-          a walled town without siege engines, and no Roman army offers itself up. Slowly his
-          army thins.
+          Rome bears the jeers and the burning farms, and ten thousand more men are levied to dog
+          Hannibal's march. Hannibal ravages Apulia but cannot take a walled town without siege
+          engines, and no Roman army offers itself up. Slowly his army thins.
+        deeds: {men: 10000}
       - label: "Give battle with the great army and end it"
         historical: true
         legitimacy_bp: -1500
@@ -526,6 +595,14 @@ chapters:
         outcome: >-
           Hannibal's veterans run into a wall of stakes and bolts that strike through shield
           and mail. His cavalry cannot close. For the first time in Italy, he withdraws.
+      - label: "Offer battle only on rough ground, away from the plain"
+        legitimacy_bp: -300
+        unrest_bp: 300
+        food_bp: -500
+        outcome: >-
+          The consuls march into the hills and offer battle where cavalry cannot ride. Hannibal
+          will not be drawn, and the army grumbles at the delay.
+        deeds: {men: 15000}
     history: >-
       Cannae (216 BC) was the worst defeat in Rome's history, studied by generals ever since.
       Yet Rome refused to ransom its captured soldiers or to talk of peace, armed even slaves,
@@ -603,7 +680,7 @@ chapters:
 
       The Senate must decide: recall the legions from Capua, or trust the walls.
     choices:
-      - label: "Keep the siege of Capua: Rome's walls will hold"
+      - label: "Keep the legions at Capua and trust the walls"
         historical: true
         legitimacy_bp: 800
         unrest_bp: -400
@@ -612,9 +689,17 @@ chapters:
           inside them, and marches away. Capua falls; its leaders are put to death.
       - label: "Recall the legions to defend the city"
         legitimacy_bp: 200
+        wealth_bp: -500
         outcome: >-
           The legions hurry home and Hannibal slips away south. Capua is relieved and the war
           drags on.
+      - label: "Offer Hannibal battle before the walls with the city levy"
+        legitimacy_bp: 400
+        unrest_bp: 400
+        outcome: >-
+          The consuls draw up every man the city can muster. Hannibal also draws up his army, but
+          wind and rain make fighting impossible; the siege of Capua goes on meanwhile.
+        deeds: {men: 12000}
     history: >-
       In 211 BC Hannibal marched on Rome to relieve Capua; the Senate held its nerve and
       Capua fell. Livy tells that the field where Hannibal camped was sold in Rome at that
@@ -652,10 +737,19 @@ chapters:
           behind - and takes Carthage's Spanish capital in a single day. Four years later Spain
           is Roman.
         deeds: {take: [car_gades, east_iberia], grudges: {carthage: 2000}}
-      - label: "Send an experienced consul instead"
+      - label: "Send an experienced consul with fresh legions"
+        legitimacy_bp: 300
         outcome: >-
-          A safe man goes to Spain and wins a few towns. Hannibal's brothers keep their armies,
-          their silver mines and their road to Italy.
+          A safe man goes to Spain with twelve thousand men and wins a few towns. Hannibal's
+          brothers keep their armies, their silver mines and their road to Italy.
+        deeds: {men: 12000}
+      - label: "Hold the Ebro line and send no more men"
+        wealth_bp: 1000
+        legitimacy_bp: -300
+        outcome: >-
+          Rome keeps to the Ebro and spends nothing in Spain. The treasury breathes, but the
+          Barcid armies grow.
+        deeds: {ships: 10}
     history: >-
       Scipio took New Carthage in 209 BC by wading the drained lagoon, and destroyed Carthage's
       power in Spain at Ilipa in 206. Hannibal's brother Hasdrubal escaped to Italy, only to be
@@ -681,7 +775,7 @@ chapters:
       The Senate gives Scipio Sicily, and leave to cross "if it is in the interest of the
       state" - but no new army. He will have to raise volunteers himself.
     choices:
-      - label: "Let Scipio go, with the volunteers he can find"
+      - label: "Let Scipio cross with the volunteers he can raise"
         historical: true
         outcome: >-
           Seven thousand volunteers flock to him, and the disgraced survivors of Cannae, who
@@ -689,11 +783,20 @@ chapters:
           the enemy's winter camps, and wins over the Numidian prince Masinissa. Carthage
           recalls Hannibal.
         deeds: {men: 25000}
-      - label: "Listen to Fabius: defend Italy first"
+      - label: "Hold the legions in Italy and finish Hannibal first"
         unrest_bp: 300
+        wealth_bp: -500
         outcome: >-
-          The legions stay in Italy. Hannibal, in the toe of Bruttium, cannot win and will not
-          leave.
+          Eight thousand more men go to the legions in Italy. Hannibal, in the toe of Bruttium,
+          cannot win and will not leave.
+        deeds: {men: 8000}
+      - label: "Send Scipio to Sicily to prepare, and decide later"
+        wealth_bp: -800
+        legitimacy_bp: 200
+        outcome: >-
+          Scipio builds ships and drills his men in Sicily while the Senate waits. The crossing is
+          put off a year.
+        deeds: {ships: 30}
     history: >-
       Scipio landed in Africa in 204 BC. In 203 Carthage recalled Hannibal from Italy, where he
       had fought for fifteen years without losing a battle of importance. Livy says he left
@@ -719,7 +822,7 @@ chapters:
 
       Behind Hannibal stand eighty elephants. Behind Scipio, Masinissa's Numidian horsemen.
     choices:
-      - label: "Fight: leave lanes in the ranks for the elephants to run through"
+      - label: "Break off the parley and fight on the plain"
         historical: true
         legitimacy_bp: 1500
         wealth_bp: 3000
@@ -728,12 +831,20 @@ chapters:
           The infantry lines grind together until Masinissa's cavalry falls on Hannibal's rear.
           Hannibal himself tells Carthage it has lost not a battle but the war.
         deeds: {peace_with: [carthage], tributaries: [carthage], take: [car_gades], grudges: {carthage: 4000}}
-      - label: "Accept Hannibal's offer"
+      - label: "Accept Hannibal's offer of Sicily, Sardinia and Spain"
         legitimacy_bp: 300
+        wealth_bp: 1000
         outcome: >-
           Peace is sworn on the field. Carthage keeps her fleet and her pride, and Hannibal
           goes home to rule her.
         deeds: {peace_with: [carthage], take: [car_gades]}
+      - label: "Offer firm terms: Spain, the fleet and an indemnity"
+        wealth_bp: 2500
+        legitimacy_bp: 500
+        outcome: >-
+          Scipio names his price: Carthage gives up Spain and her fleet and pays a large sum over
+          many years. Hannibal considers, and the council sends to Rome.
+        deeds: {peace_with: [carthage], tributaries: [carthage], take: [car_gades]}
     history: >-
       At Zama (202 BC) Scipio won the decisive battle and took the name Africanus. The peace
       of 201: Carthage gave up Spain and all but ten warships, paid ten thousand talents over
@@ -763,7 +874,7 @@ chapters:
       a breach of the treaty. Scipio Nasica answers Cato every time: Rome needs a rival to
       keep her honest.
     choices:
-      - label: "Carthage must be destroyed"
+      - label: "Declare war and raise a great army"
         historical: true
         unrest_bp: -300
         legitimacy_bp: 300
@@ -773,11 +884,20 @@ chapters:
           Carthaginians to leave their city and live ten miles from the sea. They refuse,
           and forge new weapons day and night, the women cutting their hair for bowstrings.
         deeds: {war_with: [carthage], men: 40000}
-      - label: "Nasica is right: let Carthage stand"
+      - label: "Let Carthage stand and curb Masinissa"
         legitimacy_bp: -200
+        wealth_bp: 1000
         outcome: >-
           Carthage stands, rich and harmless. Cato dies the next year, still ending his
           speeches the same way.
+        deeds: {peace_with: [carthage]}
+      - label: "Demand hostages and arms, and promise Carthage its city"
+        legitimacy_bp: 200
+        unrest_bp: -200
+        outcome: >-
+          The Senate promises that Carthage shall keep its city and its laws if it gives hostages
+          and disarms. The armament is handed over, and the next demand is not yet made.
+        deeds: {men: 20000}
     history: >-
       The Third Punic War began in 149 BC. Carthage, disarmed, held out for three years.
       Polybius, who was there, thought Rome's demands deliberately impossible to accept.
@@ -802,7 +922,7 @@ chapters:
       He is quoting Homer: "A day will come when sacred Troy shall perish." Asked why, he
       says he fears that one day someone will speak those words of Rome.
     choices:
-      - label: "Raze the city and curse the ground where it stood"
+      - label: "Raze Carthage to the ground"
         historical: true
         legitimacy_bp: 500
         outcome: >-
@@ -814,6 +934,12 @@ chapters:
         outcome: >-
           Roman colonists move into the cleared streets, and the great harbour fills with
           ships again - under a different flag.
+      - label: "Level the walls but keep the harbour garrisoned"
+        wealth_bp: 1000
+        unrest_bp: 300
+        outcome: >-
+          Walls and towers are pulled down, the citadel is held by a garrison, and the harbour is
+          kept open for Roman ships.
     history: >-
       Carthage fell in 146 BC, the same year Rome destroyed Corinth. The story that the ground
       was sown with salt appears in no ancient source; it is a modern legend. A century later

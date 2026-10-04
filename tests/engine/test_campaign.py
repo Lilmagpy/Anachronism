@@ -88,7 +88,8 @@ def test_ideas_ahead_of_their_time_open_choices_history_never_had(
     for tech in fleet.choices[locked].needs_adopted:
         chronicle.civs["rome"].tech[tech] = TechState(stage=Stage.ADOPTED)
     block = chronicle_block_for(chronicle)
-    assert block["chapter"]["choices"][locked]["locked"] == ""
+    shown = next(c for c in block["chapter"]["choices"] if c["index"] == locked)
+    assert shown["locked"] == ""
     _, logged = apply_action(
         chronicle, ChooseChapter(civ="rome", chapter="rome_fleet", choice=locked)
     )

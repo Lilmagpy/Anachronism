@@ -184,7 +184,8 @@ func _chapter(chapter: Dictionary, block: Dictionary) -> void:
 		pick.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		pick.disabled = locked
 		var id := str(chapter["id"])
-		pick.pressed.connect(func(): chosen.emit(id, i))
+		var index := int(choice.get("index", i))  # listed shuffled (D-265); act on the real one
+		pick.pressed.connect(func(): chosen.emit(id, index))
 		option.add_child(pick)
 		var hint := str(choice["hint"])
 		if locked:

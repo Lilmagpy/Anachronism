@@ -6,12 +6,30 @@ history so far.
 
 from __future__ import annotations
 
+import zlib
 from typing import Any
 
 from anachronism.content.loader import Content
+from anachronism.content.schema import Chapter
 from anachronism.engine.campaign import PASSED_OVER, available, benchmark, year_text
 from anachronism.engine.dilemmas import effects_text, fill
 from anachronism.engine.state import GameState
+
+
+def choice_order(state: GameState, chapter: Chapter) -> list[int]:
+    """The order the client lists a chapter's choices in (D-265).
+
+    History's choice is not always first: ordinary choices are shuffled by a hash of the
+    game's seed and the chapter, so the order is the same every time this chapter is shown
+    in this game but differs between chapters and games. Choices that need an idea ahead of
+    its time stay last. Display only: actions still name a choice by its index in the file.
+    """
+
+    def key(i: int) -> tuple[bool, int]:
+        mixed = zlib.crc32(f"{state.seed}:{chapter.id}:{i}".encode())
+        return bool(chapter.choices[i].needs_adopted), mixed
+
+    return sorted(range(len(chapter.choices)), key=key)
 
 
 def speaker_card(content: Content, state: GameState, speaker: str) -> dict[str, Any]:
@@ -67,6 +85,7 @@ def chronicle_block(content: Content, state: GameState) -> dict[str, Any] | None
             "story": fill(state, chapter.story).split("\n\n"),
             "choices": [
                 {
+                    "index": i,
                     "label": c.label,
                     "hint": effects_text(c) + _deeds_text(state, c.deeds),
                     "locked": ""
@@ -77,7 +96,7 @@ def chronicle_block(content: Content, state: GameState) -> dict[str, Any] | None
                     ),
                     "anachronism": bool(c.needs_adopted),
                 }
-                for c in chapter.choices
+                for i, c in ((i, chapter.choices[i]) for i in choice_order(state, chapter))
             ],
         }
     result = state.chapter_result
