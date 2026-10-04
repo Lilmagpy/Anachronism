@@ -41,6 +41,13 @@ chapters:
         unrest_bp: 1500
         outcome: >-
           Your samurai ride out into a hundred thousand men, and few ride back.
+      - label: "Buy off Kenshin's allies with gold and promises"
+        legitimacy_bp: 1700
+        wealth_bp: -1500
+        outcome: >-
+          Your agents ride out of the postern by night with gold and the promise of land.
+          Several of the Kanto lords find that their harvests need them, and Kenshin finds
+          himself with fewer men and less to say.
     history: >-
       Uesugi Kenshin besieged Odawara in 1561 with a coalition of Kanto lords but withdrew
       after about a month; the Hojo recovered their losses.
@@ -81,6 +88,13 @@ chapters:
         outcome: >-
           Your envoys go to Kofu with gifts. Shingen accepts them, and keeps Suruga.
         deeds: {peace_with: [takeda]}
+      - label: "Keep your sons, and fortify the passes"
+        legitimacy_bp: 1200
+        wealth_bp: -500
+        outcome: >-
+          You send neither son anywhere. The passes are strengthened and your vassals are
+          called to castle-guard, and you wait to see who moves first.
+        deeds: {men: 6000}
     history: >-
       After Shingen's invasion of Suruga (1568) and attack on Odawara (1569), the Hojo allied
       with Kenshin and sent Hojo Saburo, who became Uesugi Kagetora.
@@ -107,7 +121,7 @@ chapters:
 
       You tell him what to do about Shingen.
     choices:
-      - label: "Make peace with the Takeda"
+      - label: "Renew the Takeda alliance"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
@@ -116,10 +130,18 @@ chapters:
           hostage to an alliance that no longer exists.
         deeds: {peace_with: [takeda]}
       - label: "Keep fighting Shingen"
-        unrest_bp: 1000
+        legitimacy_bp: 500
+        wealth_bp: 500
         outcome: >-
-          Ujimasa keeps your enemies and your allies as they are. The war in the mountains goes
-          on.
+          Ujimasa keeps your enemies and your allies as they are. The war in the mountains
+          goes on, with its raids, its plunder and its losses.
+        deeds: {martial_bp: 600, men: 6000}
+      - label: "Hold the castles, and sign with neither"
+        legitimacy_bp: 700
+        outcome: >-
+          Ujimasa is told to keep the castles in good order, and to trust neither Shingen nor
+          Kenshin. It is a safe plan, and a slow one.
+        deeds: {men: 5000, martial_bp: 500}
     history: >-
       Hojo Ujiyasu died in 1571, reportedly advising reconciliation with the Takeda; Ujimasa
       renewed the Takeda alliance that year.
@@ -147,7 +169,7 @@ chapters:
       Your ally Takeda Katsuyori is nearer, and you have asked him to help Kagetora. You hear
       that Kagekatsu has offered Katsuyori gold and a marriage.
     choices:
-      - label: "Rely on Katsuyori"
+      - label: "Rely on your ally Katsuyori to act"
         historical: true
         legitimacy_bp: -1500
         outcome: >-
@@ -161,6 +183,12 @@ chapters:
         outcome: >-
           Your army crosses the passes before the snow. Kagekatsu is caught between two
           armies.
+      - label: "Send a small force with letters to Kagetora's men"
+        legitimacy_bp: -500
+        outcome: >-
+          A small column crosses the passes with letters for Kagetora's supporters. It is too
+          small to turn the war and too large to be disowned.
+        deeds: {men: 5000}
     history: >-
       In the Otate disturbance (1578-1579) Uesugi Kagetora, born Hojo Saburo, lost to Uesugi
       Kagekatsu, who was backed by Takeda Katsuyori; Kagetora killed himself.
@@ -189,7 +217,7 @@ chapters:
       overnight. He holds tea ceremonies and has brought his concubine. Your councillors meet
       every day to decide whether to fight or surrender, and decide nothing.
     choices:
-      - label: "Go on debating"
+      - label: "Let the council go on debating"
         historical: true
         legitimacy_bp: -3000
         outcome: >-
@@ -204,6 +232,13 @@ chapters:
           You go out in plain clothes and kneel. Hideyoshi lets the Hojo keep Sagami, and moves
           on to the north.
         deeds: {give: [j_musashi]}
+      - label: "Fight on to the last, with every retainer"
+        legitimacy_bp: -2000
+        unrest_bp: 500
+        outcome: >-
+          You order every castle held and every retainer to the walls. Odawara stands for
+          months, and when it falls it falls with its lord.
+        deeds: {ruler_falls: "dies in the last stand at Odawara", give: ["j_musashi"]}
     history: >-
       Hideyoshi besieged Odawara in 1590; the Hojo, after long indecisive councils,
       surrendered. Ujimasa and his brother were ordered to commit seppuku and the Kanto went

@@ -92,13 +92,15 @@ chapters:
           Nine hundred years early, a dam closes the Nile at the first cataract. The flood is
           tamed; Egypt has two harvests a year.
       - label: "Open it to Ismaili scholars only"
-        knowledge_bp: 1000
-        legitimacy_bp: 500
+        wealth_bp: 800
+        knowledge_bp: 2400
+        unrest_bp: 700
+        legitimacy_bp: 800
         influence: {clergy: 500}
         outcome: >-
-          You open the library to the missionaries and scholars of the Ismaili faith and bar
-          the others. The collection is well used by those it serves, and it is not a place
-          where Christians and Sunnis can work.
+          You open the library to the missionaries and scholars of the Ismaili faith and bar the
+          others. The collection is well used by those it serves, and its learning deepens in its own
+          channels; Christians and Sunnis, shut out, grow resentful.
     history: >-
       Al-Hakim founded the Dar al-'Ilm in Cairo in 1005. Ibn al-Haytham's story of feigned
       madness after failing to dam the Nile comes from Ibn al-Qifti.
@@ -231,12 +233,13 @@ chapters:
         outcome: >-
           Nasir-i Khusraw goes home with stories, and no mission.
       - label: "Give him a post at the library"
-        knowledge_bp: 800
         wealth_bp: -300
-        legitimacy_bp: 300
+        knowledge_bp: 1800
+        legitimacy_bp: 600
         outcome: >-
-          You offer him a pension and a desk at the House of Knowledge, to write and read as
-          he pleases. He stays, and writes for himself.
+          You offer him a pension and a desk at the House of Knowledge, to write and read as he
+          pleases. He stays, writes a good deal, and teaches several of your young scribes; he does
+          not preach.
     history: >-
       Nasir-i Khusraw visited Cairo in 1047-1050 under al-Mustansir and described its wealth in
       his Safarnama; he became the Fatimid da'i of Khorasan.
@@ -329,12 +332,14 @@ chapters:
         outcome: >-
           Badr commands the army and sulks in its camp. The Turks are quieter, but not gone.
       - label: "Make him vizier, keep the army"
-        legitimacy_bp: 500
-        unrest_bp: -1500
-        deeds: {men: 2000}
+        wealth_bp: -200
+        unrest_bp: -2800
+        legitimacy_bp: 900
         outcome: >-
-          You make him vizier and hold the command of the army under your own eye. Badr takes
-          the government and looks for ways to the army.
+          You make him vizier and hold the command of the army under your own eye. Badr takes the
+          government and brings the Turkish captains to heel with his own officers; the treasury is
+          spared, though he takes his own share of it.
+        deeds: {men: 2000}
     history: >-
       Badr al-Jamali arrived in Egypt in 1074, killed the Turkish commanders and took full
       powers as 'commander of the armies'. He rebuilt Cairo's walls and gates (1087-92).

@@ -42,12 +42,19 @@ chapters:
           a generation or two before, and in the Aegean. You are rich, and nobody at Kadesh asks you for
           men.
       - label: "Sell only to Egypt, for gold"
-        wealth_bp: 3000
-        legitimacy_bp: -500
+        wealth_bp: 2800
         outcome: >-
           Egypt pays handsomely. Hatti's merchants find the ingots dearer elsewhere, and its
           king remembers.
         deeds: {grudges: {hatti: 2000}}
+      - label: "Sell to Hatti only, for troops against the raiders"
+        wealth_bp: 1500
+        legitimacy_bp: 500
+        outcome: >-
+          The Great King's officers load your ingots at the quay and leave you fifteen
+          hundred spearmen to garrison the coast against the raiders. Egypt hears of it, and
+          its scribes are cooler in their letters.
+        deeds: {men: 1500, grudges: {egypt: 2000}}
     history: >-
       Late Cypriot copper was traded across the eastern Mediterranean in the 13th century BC;
       the letters of an earlier king of Alashiya to Egypt (Amarna letters EA 33-40) show the
@@ -90,6 +97,13 @@ chapters:
         outcome: >-
           Your coast towns fight off the first landing. Hatti has more ships to send.
         deeds: {ships: 10, grudges: {hatti: 3000}}
+      - label: "Appeal to Egypt for ships and silver"
+        wealth_bp: -1000
+        legitimacy_bp: -300
+        outcome: >-
+          Your envoys sail south with copper and a long letter, and Pharaoh's court sends
+          back a few ships and a good deal of advice. Hatti notes whose side you have named.
+        deeds: {ships: 5}
     history: >-
       An inscription of Suppiluliuma II says his father (Tudhaliya IV) conquered Alashiya and
       made it pay tribute. The conquest, if it happened as stated, was brief and left no trace
@@ -132,6 +146,14 @@ chapters:
         outcome: >-
           The Hittite ships raid the coast and leave. The raiders of the sea notice that
           Alashiya has no navy.
+      - label: "Sail to join Ugarit's ships, and fight beside them"
+        materials_bp: -1500
+        legitimacy_bp: -200
+        outcome: >-
+          Ugarit's ships are fewer than you hoped, many of them far away in the south, and the
+          two fleets do not know one another's signals. The fight is hard and confused, and
+          nobody afterwards can say whose plan it was.
+        deeds: {ships: 5}
     history: >-
       Suppiluliuma II claims three sea victories over the ships of Alashiya and a fight on
       the shore, c. 1200 BC. His account is the only one.
@@ -172,6 +194,12 @@ chapters:
         outcome: >-
           Your ships reach the harbour and find smoke. They sail home with the news.
         deeds: {men: 1500}
+      - label: "Offer Ugarit's people shelter on the island"
+        legitimacy_bp: 500
+        wealth_bp: -300
+        outcome: >-
+          Your harbour masters are told to take in any ship that comes from the coast, and
+          to feed the refugees. Some boats arrive; the sea has already taken many more.
     history: >-
       The letters from Ugarit include an answer from Eshuwara, chief prefect of Alashiya,
       about twenty enemy ships, and Ammurapi's reply that the enemy's ships had come and his
@@ -199,7 +227,7 @@ chapters:
       nothing says that they are the same people who burned the towns. The copper still has
       to be mined.
     choices:
-      - label: "Rebuild in stone, and make room for the newcomers"
+      - label: "Rebuild in stone and welcome the newcomers"
         historical: true
         materials_bp: -1500
         legitimacy_bp: 1000
@@ -216,6 +244,14 @@ chapters:
         outcome: >-
           Your garrison clears the quarters by the harbour. Some of the strangers go inland to
           the hills, and some take to their ships.
+      - label: "Take the newcomers into your pay as soldiers"
+        legitimacy_bp: 600
+        materials_bp: -500
+        outcome: >-
+          The strangers with Aegean spears are taken into the garrisons and paid in copper.
+          The walls are mended more slowly, but the coast has defenders again, and the
+          newcomers have a reason to stay.
+        deeds: {men: 2000}
     history: >-
       Enkomi and Kition were rebuilt after destructions c. 1200 BC with ashlar masonry; new
       Aegean-style pottery and settlers appear in the early 12th century; Cypriot copper

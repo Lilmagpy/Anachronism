@@ -95,10 +95,11 @@ chapters:
         outcome: >-
           The Song buy fewer horses from you, and look for them in Tibet and the south.
       - label: "Ask the Song court for a formal alliance"
-        legitimacy_bp: 300
+        wealth_bp: 200
+        legitimacy_bp: 500
         outcome: >-
-          Your envoys are received politely, and the Song court sends nothing but good
-          wishes.
+          Your envoys are received politely, and the Song court sends gifts of silk and books and
+          nothing else.
     history: >-
       Dali supplied horses to the Song through the border markets of Guangnan through the
       twelfth and thirteenth centuries; the Song treated it as a distant frontier kingdom, not
@@ -196,12 +197,13 @@ chapters:
           You follow the tradition of your fathers. The Mongols give the post to your son, or to
           someone else, and Yunnan goes on without you.
       - label: "Take the title, and send your son to the Khan"
-        legitimacy_bp: 700
-        wealth_bp: -300
+        wealth_bp: -200
+        legitimacy_bp: 1900
         outcome: >-
-          Your son makes the journey in your place and is received kindly. The Mongols are
-          satisfied that Dali's house will cooperate, and you remain in Dali in name.
-        deeds: {"peace_with": ["mongols"]}
+          Your son makes the journey in your place and is received kindly. The Mongols are satisfied
+          that Dali's house will cooperate, and you remain in Dali in name, with your people's respect
+          for sparing the throne.
+        deeds: {peace_with: [mongols]}
     history: >-
       After his capture Duan Xingzhi was received by Mongke, was made maharaja of Dali, and his
       descendants governed Yunnan for the Mongols until the Ming conquest in 1382.

@@ -46,11 +46,23 @@ chapters:
           generation the title will fall again.
         deeds: {martial_bp: 1500, men: 3000}
       - label: "Send to the Zhou king to protest"
-        legitimacy_bp: -300
+        legitimacy_bp: -500
+        wealth_bp: -300
+        influence: {nobility: 300}
         outcome: >-
-          Your envoy goes to Luoyang, where the Son of Heaven expresses his sympathy. Nobody in
-          the Zhou court has an army to enforce his sympathy, and nobody at Daliang cares.
+          Your envoy goes to Luoyang with gifts, where the Son of Heaven expresses his
+          sympathy. Nobody in the Zhou court has an army to enforce his sympathy, and nobody
+          at Daliang cares, but your nobles are pleased that Wey's rank was spoken for.
         deeds: {grudges: {wei: 800}}
+      - label: "Strengthen Puyang's walls instead"
+        legitimacy_bp: -700
+        unrest_bp: 300
+        wealth_bp: -400
+        outcome: >-
+          You say nothing about the title and set the farmers of the district to rebuild the
+          walls and drill with spears. Wei notices the new brick and the new levies, and
+          your people notice the cost.
+        deeds: {martial_bp: 1200, men: 2500}
     history: >-
       The Shiji says that in the sixteenth year of Marquis Cheng (346 BC) Wey's title was
       lowered to marquis. Gongsun Yang, a scion of Wey's ruling house, had gone to Qin in 361.
@@ -74,10 +86,11 @@ chapters:
 
 
       Your minister says that a lord can still be a ruler, and that a ruler of one city who
-      keeps his head can outlast the king of ten. There is a Wey saying that people go to
-      Puyang for the river, not for the lord.
+      keeps his head can outlast the king of ten. Others on the council want friends abroad,
+      or more spears at home. There is a Wey saying that people go to Puyang for the river,
+      not for the lord.
     choices:
-      - label: "Accept the title of lord and keep Puyang"
+      - label: "Accept the lower title and keep Puyang"
         historical: true
         legitimacy_bp: -500
         outcome: >-
@@ -89,10 +102,19 @@ chapters:
       - label: "Seek protection from Wei's enemies"
         legitimacy_bp: 300
         unrest_bp: 300
+        wealth_bp: -400
         outcome: >-
-          You send a messenger to the far-off courts that hate Wei. They are polite; they are
-          far away; and Wei notes who wrote.
-        deeds: {grudges: {wei: 1500}}
+          You send gifts and a messenger to the far-off courts that hate Wei. They are polite
+          and they promise a truce on Qi's side; they are far away; and Wei notes who wrote.
+        deeds: {peace_with: [qi], men: 2000, grudges: {wei: 1500}}
+      - label: "Raise a militia to hold Puyang"
+        legitimacy_bp: -200
+        unrest_bp: 400
+        outcome: >-
+          You call up every able farmer in the district, and the walls are manned all summer.
+          The harvest is thin and the grumbling is loud, but no one in the neighbourhood
+          thinks Puyang an easy prize.
+        deeds: {martial_bp: 2000, men: 4000}
     history: >-
       About 320 BC Wey's title was lowered again, to lord (jun), and it held only Puyang
       (Shiji 37).
@@ -118,7 +140,7 @@ chapters:
       A message comes from Wei's king at Daliang. You are summoned to court. It is
       worded as an honour. Your minister says that Wei keeps Wey as a gate keeps its hinge,
       and that nobody refuses the summons of the power on three sides. But he also says
-      that the courts of the east do not always send their guests home.
+      that a lord who stays away is remembered in Daliang for a long time.
     choices:
       - label: "Go to Wei's court"
         historical: true
@@ -134,6 +156,12 @@ chapters:
           Your chief minister goes with gifts. Wei receives him, hears out his excuses, and
           lets him go home. It remembers that Wey's lord sent his servant.
         deeds: {grudges: {wei: 600}}
+      - label: "Plead illness and send gifts"
+        wealth_bp: -300
+        legitimacy_bp: -200
+        outcome: >-
+          Wei's envoy leaves with a chest of silk and a doubtful look. The king accepts the
+          gifts, and the excuse, and does not forget either.
     history: >-
       The Shiji says that Lord Huai of Wey was summoned to Wei's court and killed there, about
       252 BC, and that Wei set up his brother as Lord Yuan, who was married into the Wei royal
@@ -164,7 +192,7 @@ chapters:
       are to move, with your household and your rites, to Yewang, a county town on the Yellow
       River's northern shore. Puyang will be absorbed.
     choices:
-      - label: "Move to Yewang as a dependant of Qin"
+      - label: "Move your household to Yewang"
         historical: true
         legitimacy_bp: -1000
         unrest_bp: 500
@@ -180,6 +208,13 @@ chapters:
           You say that Wey was founded at the Yellow River and that the lord will remain on
           it. The Qin officer says that it will be made easier for you to leave.
         deeds: {grudges: {qin: 1500}}
+      - label: "Offer Qin tribute to stay in Puyang"
+        legitimacy_bp: -700
+        wealth_bp: -500
+        unrest_bp: 300
+        outcome: >-
+          You send silk and grain to the Qin officer and ask that the lord and the temple stay
+          where they are. He takes the gifts, thanks you, and repeats the order.
     history: >-
       In 242 BC Qin took Wei's lands east of the Yellow River and set up Dong commandery; it
       absorbed Puyang and moved the lord of Wey to Yewang (Shiji 37 and 6).
@@ -204,7 +239,8 @@ chapters:
 
 
       Your minister says Qin has not asked for your submission. Nobody has told Wey to arm,
-      to ally, or to resign. He suggests: do nothing, so long as nothing is demanded.
+      to ally, or to resign. Some at court say to keep quiet while nothing is demanded;
+      others say that Wey should speak first, before Qin remembers it.
     choices:
       - label: "Say nothing and stay in Yewang"
         historical: true
@@ -215,11 +251,18 @@ chapters:
           conquest of the east was complete. Wey is not on any list. The Shiji does not say
           why, only that the lord of Wey remained in Yewang for another twelve years.
       - label: "Send a gift to Qin's court"
-        legitimacy_bp: 200
+        legitimacy_bp: 700
         outcome: >-
           You send tribute with a respectful letter. It is received without comment, and you
           are told nothing. You wonder whether you have helped yourself or only reminded Qin
           that you exist.
+      - label: "Send a kinsman to serve at Qin's court"
+        legitimacy_bp: 300
+        wealth_bp: -200
+        outcome: >-
+          A young man of the Wey house goes west with a letter, in the footsteps of Gongsun
+          Yang. He is given a small post and a place to sleep, and he is told nothing about
+          Wey.
     history: >-
       Qin destroyed Han (230), Zhao (228), Wei (225), Chu (223), Yan (222) and Qi (221). The
       lord of Wey was left in Yewang and outlived all of them, until 209 BC (Shiji 37).
@@ -243,10 +286,10 @@ chapters:
 
 
       An order arrives from Xianyang. The rule of the Qin empire is that there shall be
-      no more lords with their own names and temples. Your minister says only that you
-      have no choice.
+      no more lords with their own names and temples. Your minister says that every answer
+      you can give will cost you something.
     choices:
-      - label: "Obey the order"
+      - label: "Submit to the Emperor's order"
         historical: true
         legitimacy_bp: -3000
         outcome: >-
@@ -261,6 +304,12 @@ chapters:
         outcome: >-
           You send word east to the men who are rising, but Yewang is a county town with
           a Qin garrison, and the letter goes into the river.
+      - label: "Petition the throne to spare the temple"
+        legitimacy_bp: -2500
+        wealth_bp: -300
+        outcome: >-
+          Your petition goes west with gifts for the officials who can read it. The answer is
+          slow, and the garrison is not.
     history: >-
       In the first year of the Second Emperor (209 BC) the lord of Wey was reduced to a commoner and
       the sacrifices ended. Wey, the oldest of the Zhou states, outlived the others (Shiji 37).

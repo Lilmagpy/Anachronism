@@ -34,7 +34,7 @@ chapters:
       Seleucus, not your own. Your nephew Eumenes asks how long you will keep up this
       pretence, and what to do about the king's patience when you are gone.
     choices:
-      - label: "Keep the mask, and leave Eumenes the money"
+      - label: "Keep the Seleucid mask a little longer"
         historical: true
         wealth_bp: 1500
         legitimacy_bp: 1500
@@ -50,6 +50,14 @@ chapters:
           The king's governors write letters. The coins are a bold boast, but the Seleucid army
           is two weeks away and your walls are not yet finished.
         deeds: {grudges: {seleucid: 1500}}
+      - label: "Hire a garrison of mercenaries for the rock"
+        wealth_bp: 500
+        legitimacy_bp: 2700
+        outcome: >-
+          Thracians and Greek soldiers of fortune man the walls of Pergamon, paid out of the
+          treasure. The roads are safe, the tolls rise and the Greek cities are glad of a
+          protector. The king's governors notice the new spears and say nothing, for now.
+        deeds: {men: 4000}
     history: >-
       Philetaerus (c. 343-263 BC) held Pergamon and its treasure for nearly twenty years
       under a Seleucid mask, and left it to his nephew Eumenes I in 263.
@@ -90,6 +98,14 @@ chapters:
         outcome: >-
           Antiochus accepts the money and a governor's oath. It buys you a year, but it
           teaches every Seleucid officer the price of Pergamon.
+      - label: "Appeal to Ptolemy for money and ships"
+        legitimacy_bp: 1500
+        wealth_bp: -500
+        outcome: >-
+          Ptolemy of Egypt, who is at war with Antiochus in Syria, sends a little silver and a
+          few ships, and promises more. Antiochus's army ravages the countryside while you wait
+          behind the walls, and you survive the summer.
+        deeds: {ships: 15, grudges: {seleucid: 1500}}
     history: >-
       Eumenes I defeated Antiochus I near Sardis (about 262-261 BC) and ruled Pergamon as an
       independent dynast until 241.
@@ -115,7 +131,7 @@ chapters:
       Your treasury could pay again. Your army is the best that Philetaerus's money could
       buy, led by men who have not yet lost to anyone.
     choices:
-      - label: "Refuse, and fight them at the sources of the Caicus"
+      - label: "Refuse the tribute, and march out against them"
         historical: true
         legitimacy_bp: 3000
         unrest_bp: -500
@@ -132,6 +148,14 @@ chapters:
         outcome: >-
           The Galatians take the silver and are back next spring with more demands. The
           Greek cities in Asia remember who paid and who fought.
+      - label: "Hire Galatian bands and turn them on your rivals"
+        wealth_bp: 1000
+        legitimacy_bp: 2500
+        outcome: >-
+          The chiefs are glad of a paymaster who asks them to fight someone else. Their bands
+          march in your pay and bring back plunder and a name for success. The Greek cities of
+          the coast remember whose spearmen burned their villages.
+        deeds: {men: 8000, martial_bp: 500}
     history: >-
       Attalus I (reigned 241-197 BC) refused to pay the Galatians' tribute and defeated them
       (about 238 BC); Polybius says he took the royal title afterwards.
@@ -157,7 +181,7 @@ chapters:
       showing the Galatians not as monsters but as brave men dying hard, so the victory
       is worth something. Greeks have never made enemies look like that before.
     choices:
-      - label: "Build the monument, and make the Gauls human"
+      - label: "Commission a great victory monument on the hill"
         historical: true
         legitimacy_bp: 1500
         knowledge_bp: 1000
@@ -168,11 +192,19 @@ chapters:
           and his wife, are still admired two thousand years on. They show the enemy
           with respect, which Greek victory monuments rarely did.
         deeds: {peace_with: [seleucid]}
-      - label: "Have it made in the usual way, with the Gauls as beasts"
+      - label: "Raise a simple trophy in the old way"
         legitimacy_bp: 500
         outcome: >-
           The monument is soon like all the others on the Greek mainland. It is correct and
           forgotten.
+      - label: "Spend the spoils on walls and warships"
+        wealth_bp: -300
+        legitimacy_bp: 1500
+        outcome: >-
+          The sculptors are sent home with a small fee. Your engineers add towers to the
+          city walls and your captains lay down new ships in the harbour. The fleet is the
+          envy of the coast, and nobody comes to look at it.
+        deeds: {ships: 25, men: 4000}
     history: >-
       Attalus I defeated Antiochus Hierax (c. 229-228 BC) and ruled most of Seleucid Asia Minor
       until Achaeus took it back in 223. The Pergamene monuments to the Gauls survive in Roman
@@ -201,7 +233,7 @@ chapters:
       Her sacred black stone lies in the hills inland, in the temple at Pessinus, in a land
       the Galatians hold. They ask your help in bringing it to the sea.
     choices:
-      - label: "Help the Romans, and send the stone to Rome"
+      - label: "Escort the senators to Pessinus yourself"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -211,11 +243,19 @@ chapters:
           at the Tiber's mouth was a miracle; whatever the truth, Rome now remembers
           Pergamon as a friend.
         deeds: {peace_with: [rome]}
-      - label: "Refuse, saying it is not yours to give"
+      - label: "Refuse, saying the stone is not yours to give"
         legitimacy_bp: -500
         outcome: >-
           Rome finds the stone another way, or finds another friend. Pergamon has made
           itself small.
+      - label: "Offer Rome ships and grain instead"
+        wealth_bp: -500
+        legitimacy_bp: 1500
+        outcome: >-
+          The senators take the ships and grain gladly, and go away unsatisfied about the
+          stone. Rome finds another way to fetch it, and remembers that you were generous
+          but would not help with the thing it most wanted.
+        deeds: {ships: 20}
     history: >-
       In 205-204 BC the Senate sent envoys to Attalus I, who gave them the stone of the Great
       Mother from Pessinus; it was installed in Rome in 204.
@@ -245,7 +285,7 @@ chapters:
       sheets out of prepared skins instead. The cost is large, and the glory of it will
       come long after you.
     choices:
-      - label: "Found the library, and make the skins"
+      - label: "Build halls for a great library"
         historical: true
         knowledge_bp: 3000
         wealth_bp: -1500
@@ -256,12 +296,21 @@ chapters:
           been written on before, but Pergamon made it a trade, and the Latin word
           for parchment, pergamena, is named for your city. Later Romans tell of two hundred
           thousand rolls, a figure to be taken with care.
-      - label: "Spend the money on the army instead"
-        wealth_bp: 500
+      - label: "Raise a standing corps of mercenaries"
+        wealth_bp: -500
         legitimacy_bp: -300
         outcome: >-
           Your army is larger. The library is a shelf of scrolls in a corner of the temple,
           and your scholars drift to Rhodes and Alexandria.
+        deeds: {men: 8000}
+      - label: "Spend the money on temples and a great altar"
+        wealth_bp: -500
+        legitimacy_bp: 1500
+        knowledge_bp: 1000
+        outcome: >-
+          Masons and sculptors fill the hill with marble. Pilgrims and ambassadors come to see
+          it, and the city's name is carried across the Greek world. Your books remain few, and
+          Alexandria stays the home of learning.
     history: >-
       Eumenes II (reigned 197-159 BC) turned Pergamon into a centre of scholarship; the
       library was one of the largest of the Greek world, and parchment was first made there
@@ -289,7 +338,7 @@ chapters:
       You are the only Greek king who has been Rome's friend all along, and the Seleucid king
       is camped within a day's march of Pergamon, which he threatens to burn.
     choices:
-      - label: "Fight beside Rome, and take the right wing"
+      - label: "Join the Roman army with your cavalry and archers"
         historical: true
         legitimacy_bp: 3000
         wealth_bp: 1000
@@ -307,6 +356,15 @@ chapters:
           The Roman army wins without you. Antiochus turns his back on a king who changed
           sides, and Rome, which does not forget who stood where, treats you as one of the
           conquered.
+      - label: "Supply the Roman army and hold your own walls"
+        legitimacy_bp: 2500
+        wealth_bp: 1000
+        outcome: >-
+          Your granaries feed the Roman army and your garrison keeps the Seleucid raiders off
+          Pergamon. Rome wins within sight of your hills and pays you handsomely, but when the
+          lands are shared out, the king who stayed behind his walls gets less than the one
+          who fought.
+        deeds: {men: 6000}
     history: >-
       Eumenes II fought for Rome at Magnesia (winter 190/189 BC); at Apamea (188) he received the
       Chersonese, Lydia, Phrygia, Mysia and other lands in Asia Minor.
@@ -335,7 +393,7 @@ chapters:
       In the hills behind you, the Galatians are on the move, and your own brother Attalus is
       in Rome, where the senators receive him far more warmly than you.
     choices:
-      - label: "Stay loyal and send your fleet to Rome"
+      - label: "Stay loyal to Rome and send ships"
         historical: true
         legitimacy_bp: 500
         wealth_bp: -500
@@ -348,12 +406,21 @@ chapters:
           they are no longer your subjects.
         deeds: {peace_with: [rome]}
       - label: "Take Perseus's money and keep out of it"
-        legitimacy_bp: -1500
+        legitimacy_bp: -800
         wealth_bp: 1000
         outcome: >-
-          Rome wins at Pydna without you, and a king who took the enemy's gold is not
-          forgiven. The Senate writes a new friend into the book.
-        deeds: {grudges: {rome: 2500}}
+          You use the gold to raise a mercenary guard. Rome wins at Pydna without you, and a
+          king who took the enemy's gold is not forgiven. The Senate writes a new friend into
+          the book.
+        deeds: {men: 6000, grudges: {rome: 2500}}
+      - label: "Send Attalus to the Senate with gifts to clear your name"
+        wealth_bp: -1000
+        legitimacy_bp: 300
+        outcome: >-
+          Your brother pleads for you in Rome, and the Senate listens with polite doubt. He is
+          liked rather more than you are, and the senators drop hints about him. Your fleet
+          stays home, and the gifts are accepted without thanks.
+        deeds: {ships: 15}
     history: >-
       Eumenes II stayed formally loyal in the Third Macedonian War, but Rome suspected him of
       secret dealings with Perseus (Livy 44.13); in 167 the Senate refused to receive him, and
@@ -381,7 +448,7 @@ chapters:
 
       The Senate is slow. You have some soldiers, not many, and a lot of gold.
     choices:
-      - label: "Hold the city and appeal to Rome"
+      - label: "Shut the gates and appeal to Rome"
         historical: true
         legitimacy_bp: 1000
         wealth_bp: -500
@@ -391,12 +458,20 @@ chapters:
           and Prusias, a refugee in a temple, is murdered. Your reign also sees the founding of Attaleia and
           a new Philadelphia.
         deeds: {grudges: {bithynia: 1500}}
-      - label: "Pay Prusias to leave"
+      - label: "Pay Prusias to go home"
         legitimacy_bp: -1000
         wealth_bp: -1500
         outcome: >-
           The Bithynian army goes home richer. Pergamon is shown to be a rich city that
           can be bought, and the Senate treats your appeal as an embarrassment.
+      - label: "Hire an army and meet him in the field"
+        wealth_bp: -1000
+        legitimacy_bp: 1000
+        outcome: >-
+          Your hired soldiers meet the Bithynians and are beaten once and then hold. Prusias is
+          not driven out, but he is checked, and the Senate sees a king who will fight for
+          himself. The treasury is lighter.
+        deeds: {men: 10000}
     history: >-
       Attalus II (reigned 159-138 BC) was attacked by Prusias II of Bithynia in 156; Roman
       commissioners forced a settlement in 154, and Attalus helped to replace Prusias with his
@@ -425,7 +500,7 @@ chapters:
       the bastard son of Eumenes the Second. Your people are rich, and the cities of the coast
       love their freedom. Roman officials ask whom the kingdom will go to.
     choices:
-      - label: "Make the Roman people your heir"
+      - label: "Write a will in Rome's favour"
         historical: true
         legitimacy_bp: -500
         outcome: >-
@@ -434,12 +509,19 @@ chapters:
           mother, you die of a stroke, or sunstroke. Aristonicus raises a revolt, with the
           poor and the slaves at his side; it is put down by 129, and the kingdom becomes the
           Roman province of Asia.
-      - label: "Leave your kingdom to Aristonicus"
+      - label: "Name Aristonicus, Eumenes's reputed son, as heir"
         legitimacy_bp: -1000
         unrest_bp: 1500
         outcome: >-
           Aristonicus is a bastard and a stranger; the Greek cities will not have him,
           and Rome will not either. The kingdom is torn apart before you are buried.
+      - label: "Leave the kingdom to a league of the free cities"
+        legitimacy_bp: -500
+        unrest_bp: 500
+        outcome: >-
+          You write that Pergamon, Ephesus, Smyrna and the other cities shall govern themselves
+          in common. The cities cannot agree who commands the army, and the countryside, which
+          was never asked, starts to murmur.
     history: >-
       Attalus III died in 133 BC, leaving his kingdom to the Roman people by will; Rome accepted,
       put down Aristonicus's revolt by 129, and made the Roman province of Asia.

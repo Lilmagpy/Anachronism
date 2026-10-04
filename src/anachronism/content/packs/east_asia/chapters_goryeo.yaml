@@ -96,7 +96,7 @@ chapters:
           held back.
         deeds: {grudges: {mongols: 1000}}
       - label: "Send a small force with the rice"
-        legitimacy_bp: 500
+        legitimacy_bp: 1200
         food_bp: -1000
         outcome: >-
           Two or three thousand of your soldiers march north with the rice. They share the
@@ -245,6 +245,7 @@ chapters:
           postscript to say how it was done: the first record of printing with metal type,
           two centuries before Gutenberg. The book does not survive; the postscript does.
       - label: "Carve it in wooden blocks"
+        legitimacy_bp: 600
         knowledge_bp: 3400
         materials_bp: -800
         outcome: >-

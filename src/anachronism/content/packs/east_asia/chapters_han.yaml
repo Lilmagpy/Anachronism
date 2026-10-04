@@ -27,7 +27,7 @@ chapters:
       compare what each man achieves with what he promised, rewarding and punishing without
       exception. He asks to be made chancellor.
     choices:
-      - label: "Make him chancellor"
+      - label: "Make him your chancellor"
         historical: true
         legitimacy_bp: 1500
         wealth_bp: 1000
@@ -37,9 +37,21 @@ chapters:
           state dared attack it. His ideas, with Shang Yang's, will be gathered up a century
           later by a prince of your house, Han Fei, into the doctrine of the Legalists.
       - label: "Keep the old families in office"
+        legitimacy_bp: 1000
+        unrest_bp: 500
         influence: {nobility: 1500}
         outcome: >-
-          The noble houses keep their offices, and their habit of quarrelling over them.
+          The noble houses keep their offices, and their habit of quarrelling over them. They
+          are grateful, and they are not hurried.
+      - label: "Take the arsenals into royal hands"
+        materials_bp: 1500
+        wealth_bp: 1000
+        legitimacy_bp: 1000
+        unrest_bp: 500
+        outcome: >-
+          Royal officials now count every crossbow lock and every ingot at the ironworks of
+          Han. The arsenals prosper and the old owners sulk, and the court learns who is
+          to be obeyed.
     history: >-
       Shen Buhai was chancellor of Han under Marquis Zhao (from c. 351 BC until his death in
       337), and developed the idea of administrative 'technique' (shu).
@@ -63,9 +75,10 @@ chapters:
       Bin advised.
 
 
-      Now Qi's army is finally marching, not to Han, but straight at the Wei capital.
+      Now word comes that Qi's army has finally marched, and nobody at your court is sure
+      where it is going.
     choices:
-      - label: "Hold out, and trust Qi"
+      - label: "Hold out until Qi acts"
         historical: true
         legitimacy_bp: 500
         unrest_bp: 1000
@@ -80,6 +93,13 @@ chapters:
         outcome: >-
           You pay Wei and give hostages. Qi's army goes home, and remembers.
         deeds: {peace_with: [wei]}
+      - label: "Raise every levy to hold Xinzheng"
+        legitimacy_bp: 900
+        unrest_bp: 1200
+        outcome: >-
+          Farmers and craftsmen are handed spears and sent to the walls. The capital is
+          manned, the fields are not, and the court is not sure that Qi will ever arrive.
+        deeds: {men: 6000, martial_bp: 1000}
     history: >-
       Wei's invasion of Han (342 BC) was defeated when Qi, after delaying, intervened and
       destroyed the Wei army at Maling.
@@ -102,7 +122,8 @@ chapters:
       You are King Xuanhui. A persuader has come with a plan: all the states east of the
       mountains to join in a 'vertical' alliance, north to south, against Qin. He says the
       strongest bows and crossbows under heaven come from Han, that your soldiers can shoot
-      six hundred paces, and that to serve Qin would be shameful.
+      six hundred paces, and that to serve Qin would be shameful. Others at court point out
+      that Han is Qin's nearest neighbour and will be the first to feel its anger.
 
 
       "Better to be the head of a chicken than the tail of an ox," he says.
@@ -120,6 +141,14 @@ chapters:
         legitimacy_bp: -1000
         outcome: >-
           Qin sends you its thanks, and an ambassador who watches everything.
+        deeds: {peace_with: [qin]}
+      - label: "Join, but send only a token force"
+        legitimacy_bp: 800
+        outcome: >-
+          Your crossbowmen march with the allies, a few thousand of the best, and the rest stay
+          at home. The other kings note that Han has promised less than it could, and the
+          campaign goes much as it would have anyway.
+        deeds: {men: 4000}
     history: >-
       Han joined the alliance of five states that attacked Qin in 318 BC; Qin defeated Han and
       Zhao at Xiuyu in 317. The chicken-and-ox saying is Su Qin's in the Shiji.
@@ -159,7 +188,16 @@ chapters:
         materials_bp: -2000
         unrest_bp: 1500
         outcome: >-
-          Your last reserves march west. Yiyang holds a little longer.
+          Your last reserves and last levies march west. Yiyang holds a little longer.
+        deeds: {men: 8000}
+      - label: "Buy off Qin with silk and iron"
+        wealth_bp: -1000
+        legitimacy_bp: -300
+        materials_bp: -500
+        outcome: >-
+          Wagons of silk and iron ingots go west to Qin's camp. Gan Mao accepts them politely
+          and does not lift the siege.
+        deeds: {peace_with: [qin]}
     history: >-
       Qin took Yiyang from Han in 307 BC; King Wu of Qin died after trying to lift a cauldron
       at Luoyang.
@@ -201,6 +239,14 @@ chapters:
         outcome: >-
           Qin takes Shangdang, and its armies stand on the plateau above your capital.
         deeds: {give: [han_shangdang], give_to: qin}
+      - label: "Fortify the passes and hold on"
+        legitimacy_bp: -500
+        unrest_bp: 1200
+        outcome: >-
+          Feng Ting is ordered to hold the plateau by himself, with what soldiers can be
+          sent. The garrison digs in and the Qin army, which has been told that the province
+          is already theirs, is angry.
+        deeds: {men: 4000, martial_bp: 1500}
     history: >-
       In 262 BC the Han governor of Shangdang, Feng Ting, handed the province to Zhao rather
       than Qin, provoking the Changping campaign.
@@ -238,6 +284,12 @@ chapters:
         knowledge_bp: 500
         outcome: >-
           Zheng Guo builds canals in Han instead, and Han's fields are better watered.
+      - label: "Send gifts and an envoy to Qin"
+        wealth_bp: -600
+        legitimacy_bp: 200
+        outcome: >-
+          Your envoy carries silk and polite words to the Qin court, and is thanked for both.
+          Qin's ministers do not ask what else Han might be doing.
     history: >-
       The Han engineer Zheng Guo persuaded Qin to build a great canal (begun c. 246 BC) as a
       plan to exhaust it; the Zhengguo canal greatly enriched the Qin heartland.
@@ -274,13 +326,19 @@ chapters:
           Fei under Xunzi and knows he is the better mind, warns that a prince of Han will
           always serve Han. Han Fei is thrown into prison, where Li Si sends him poison. The
           king changes his mind too late. His book survives, and Qin rules by it.
-      - label: "Keep him, and make him your chancellor"
+      - label: "Make him your chancellor instead"
         legitimacy_bp: 1000
         influence: {nobility: -1000}
         outcome: >-
           Han Fei takes office, writes new laws, and stammers at the officials, who are
           terrified of him.
         deeds: {grudges: {qin: 2000}}
+      - label: "Send gifts and another envoy"
+        wealth_bp: -500
+        legitimacy_bp: -300
+        outcome: >-
+          A senior minister goes to Xianyang with silk and an apology. The King of Qin takes
+          the silk and repeats his request for the prince.
     history: >-
       Han Fei went to Qin as an envoy in 234-233 BC and died in prison there, poisoned at Li
       Si's instigation.
@@ -301,9 +359,10 @@ chapters:
     benchmark_provinces: 1
     story: >-
       The Qin general Teng, who was once a Han official and went over to Qin, is outside
-      Xinzheng with an army. He knows every road and every wall.
+      Xinzheng with an army. He knows every road and every wall. Your ministers say there
+      are three ways open: to yield, to fight, or to bargain.
     choices:
-      - label: "Surrender"
+      - label: "Open the gates to Teng"
         historical: true
         legitimacy_bp: -3000
         outcome: >-
@@ -311,10 +370,16 @@ chapters:
           conquered by Qin. In nine years there will be none left.
         deeds: {ruler_falls: "is taken prisoner by Qin"}
       - label: "Fight in the streets"
-        legitimacy_bp: 500
+        legitimacy_bp: -500
         unrest_bp: 2500
         outcome: >-
           The crossbowmen of Han, the best in the world, hold the walls for a season.
+      - label: "Ask Teng for terms as a vassal"
+        legitimacy_bp: -1800
+        wealth_bp: -1000
+        outcome: >-
+          Your envoy goes out with the royal seals and a list of gifts. Teng listens, and
+          sends the list on to Xianyang.
     history: >-
       Qin conquered Han in 230 BC under the general Teng (Neishi Teng) and captured King An.
     diverged: >-

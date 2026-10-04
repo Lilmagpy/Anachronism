@@ -39,10 +39,12 @@ chapters:
           Iberians, Celts, Ligurians and Numidians by the tens of thousands.
         deeds: {war_with: [rome], men: 30000, grudges: {rome: 2000}}
       - label: "Let Rome have Messana, and keep the rest of Sicily"
-        legitimacy_bp: -800
+        legitimacy_bp: -300
+        wealth_bp: 500
         outcome: >-
-          Rome takes the town and signs a treaty. Your merchants in Sicily watch the legions
-          on the other side of the strait and wonder how long it will hold.
+          Rome takes the town and signs a treaty, and the trade of Sicily goes on as before.
+          Your merchants watch the legions on the other side of the strait and wonder how
+          long it will hold.
         deeds: {grudges: {rome: 1000}}
       - label: "Buy Messana back from the Mamertines"
         wealth_bp: -2000
@@ -79,7 +81,7 @@ chapters:
       your generals lost because they fought in the hills, where elephants and cavalry are
       useless. Give him the army, he says, and fight on the plain.
     choices:
-      - label: "Give the Spartan the army"
+      - label: "Put Xanthippus in command on the plain"
         historical: true
         legitimacy_bp: 2000
         outcome: >-
@@ -96,6 +98,14 @@ chapters:
           You give up Sicily and Sardinia, pay Rome's war costs and promise to have no navy.
           Rome has won.
         deeds: {peace_with: [rome], give: [car_lilybaeum, car_sardinia], give_to: rome}
+      - label: "Recall the army from Sicily to defend Africa"
+        legitimacy_bp: 1800
+        wealth_bp: -300
+        outcome: >-
+          Hasdrubal's veterans and their elephants come home across the sea to cheers from the
+          walls, and you hold the city under your own generals. Regulus's army stays in the field outside, and the
+          war drags on with Sicily left to its garrisons.
+        deeds: {men: 15000}
     history: >-
       In 255 BC the Spartan Xanthippus reorganised Carthage's army and destroyed Regulus's
       army at the Bagradas; Regulus was captured.
@@ -125,7 +135,7 @@ chapters:
       His ships are straggling in a long line round the headland into the harbour mouth.
       Your ships are in the harbour.
     choices:
-      - label: "Slip out past the island and pin them against the shore"
+      - label: "Sail out by the far side of the harbour mouth"
         historical: true
         legitimacy_bp: 2000
         outcome: >-
@@ -139,6 +149,14 @@ chapters:
         outcome: >-
           The Romans blockade the harbour. Two months later a storm wrecks their whole fleet
           off the south coast, without any help from you.
+      - label: "Land the crews and hold the harbour from the shore"
+        wealth_bp: -500
+        legitimacy_bp: 2700
+        outcome: >-
+          Your oarsmen man the quays with slings and javelins while the Romans nose into the
+          harbour mouth. They cannot land under your fire, and they cannot bring the ships in
+          one by one. After a day of it they draw off, and neither side has won anything.
+        deeds: {men: 6000}
     history: >-
       At Drepana in 249 BC Adherbal destroyed the fleet of Claudius Pulcher, the only great
       Carthaginian naval victory of the war. The chicken story is in Cicero and Suetonius.
@@ -168,7 +186,7 @@ chapters:
 
       His wife has just given birth to their first son. They have named him Hannibal.
     choices:
-      - label: "Give Hamilcar the command"
+      - label: "Give Hamilcar the Sicilian command"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -181,6 +199,15 @@ chapters:
         outcome: >-
           Hamilcar sulks in Carthage. The Sicilian war goes on, slowly, without him.
         deeds: {ships: 40}
+      - label: "Send Hanno to push the frontier in Africa"
+        food_bp: 800
+        legitimacy_bp: 1000
+        outcome: >-
+          The council, which would rather conquer farmland than fight Romans, sends Hanno and
+          an army against the Libyan towns. The harvests improve and the landowners are
+          delighted. In Sicily your garrisons
+          hold what they have and are given nothing to do more.
+        deeds: {men: 10000}
     history: >-
       Hamilcar Barca held Heirkte (247-244 BC) and then Eryx until the end of the war,
       undefeated in Sicily.
@@ -210,7 +237,7 @@ chapters:
       The Romans are waiting off the Aegates islands. The wind is behind you, and against
       them. Hanno wants to unload at Eryx first and take on Hamilcar's veterans as marines.
     choices:
-      - label: "Run for Eryx with the wind, heavy as you are"
+      - label: "Sail on for Eryx with the wind behind you"
         historical: true
         legitimacy_bp: -3000
         wealth_bp: -3000
@@ -221,10 +248,21 @@ chapters:
           ten years. He signs, and marches his army down from Eryx with its weapons, unbeaten.
         deeds: {peace_with: [rome], give: [car_lilybaeum], give_to: rome}
       - label: "Turn back, and come with a trained fleet next year"
-        legitimacy_bp: -500
+        legitimacy_bp: -1000
+        wealth_bp: -2000
         outcome: >-
-          The supply fleet turns back. On Eryx, Hamilcar's men tighten their belts. The war
-          goes on.
+          The supply fleet turns back, and the council pays for oarsmen to be drilled through
+          the winter. On Eryx, Hamilcar's men tighten their belts. The Romans keep the sea
+          meanwhile, and the war goes on.
+        deeds: {ships: 40}
+      - label: "Slip the grain in by night in small boats"
+        legitimacy_bp: -1000
+        wealth_bp: -1500
+        outcome: >-
+          Fishing boats and light craft run the Roman cordon in the dark, a few at a time. Some
+          are caught, but enough get through to feed Hamilcar's men for a while. The silver
+          drains away and the Romans keep the sea.
+        deeds: {ships: 15}
     history: >-
       On 10 March 241 BC the Roman fleet of Lutatius Catulus destroyed Hanno's fleet off the
       Aegates islands, ending the First Punic War. Warship rams from the battle have been
@@ -253,7 +291,7 @@ chapters:
       runaway Campanian slave, and Matho, a Libyan - are telling them that Carthage means to
       cheat them.
     choices:
-      - label: "Tell them to take less"
+      - label: "Tell them Carthage must pay them less"
         historical: true
         legitimacy_bp: -2000
         unrest_bp: 3000
@@ -263,7 +301,7 @@ chapters:
           hands cut off, envoys buried alive. Hamilcar ends it by trapping the rebels in a
           gorge called the Saw, where they eat each other before surrendering.
         deeds: {martial_bp: -1000}
-      - label: "Pay them in full, whatever it costs"
+      - label: "Pay every man in full now"
         wealth_bp: -4000
         legitimacy_bp: 500
         outcome: >-
@@ -277,6 +315,14 @@ chapters:
           Each man gets a sealed note promising his full pay, with interest, over five years,
           payable at any Carthaginian trading post from Gades to Tyre. The mercenaries
           disperse grumbling - and keep coming back to spend the money in Carthage.
+      - label: "Take the best of them into a standing army"
+        wealth_bp: -2500
+        unrest_bp: 1000
+        outcome: >-
+          The Libyans and Iberians who will serve are paid up and enrolled; the rest are shipped
+          home with half their arrears and a good deal of anger. You now have a hard core of
+          professionals, and a council that does not like paying them.
+        deeds: {men: 10000}
     history: >-
       The Mercenary War (241-237 BC) nearly destroyed Carthage. Hamilcar won it at the Saw.
       Gustave Flaubert's novel Salammbo is set in it.
@@ -303,7 +349,7 @@ chapters:
 
       You have no fleet and no money. Everyone in the room knows this is robbery.
     choices:
-      - label: "Give up Sardinia and pay"
+      - label: "Yield the island and pay the talents"
         historical: true
         legitimacy_bp: -1500
         wealth_bp: -1500
@@ -312,12 +358,19 @@ chapters:
           it was the true cause of the next war: the anger of Hamilcar and every Carthaginian
           who watched it.
         deeds: {give: [car_sardinia], give_to: rome, grudges: {rome: 4000}}
-      - label: "Refuse, and fight"
+      - label: "Refuse, and take your chances at sea"
         legitimacy_bp: 1000
         unrest_bp: 1500
         outcome: >-
           The Roman legions land in Sardinia. You have no fleet to stop them.
         deeds: {war_with: [rome]}
+      - label: "Offer the silver but keep the island"
+        wealth_bp: -2500
+        legitimacy_bp: -800
+        outcome: >-
+          Rome takes the money, says that the island is hers anyway, and lands a legion on it. Your
+          garrison, which you raised and paid for, can only watch.
+        deeds: {men: 6000, grudges: {rome: 2000}}
     history: >-
       In 238/237 BC Rome seized Sardinia and demanded an extra 1,200 talents, which Carthage,
       exhausted, accepted. Polybius saw this as a chief cause of the Second Punic War.
@@ -346,7 +399,7 @@ chapters:
       begs to go with him. Hamilcar takes the boy to the altar and tells him to lay his hand
       on the victim and swear.
     choices:
-      - label: "Hannibal swears never to be a friend of Rome"
+      - label: "Let Hannibal go with his father and swear at the altar"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
@@ -354,12 +407,20 @@ chapters:
           king. Hamilcar sails for Gades with his son, and in nine years makes southern Spain
           Carthaginian.
         deeds: {take: [east_iberia], grudges: {rome: 2000}}
-      - label: "Send Hamilcar to Spain, but leave the boy at home"
+      - label: "Send Hamilcar to Spain, and leave the boy at home"
         legitimacy_bp: 500
         outcome: >-
           Hamilcar goes to Spain alone. Hannibal grows up in Carthage, reading Greek with his
           tutor.
         deeds: {take: [east_iberia]}
+      - label: "Keep the army in Africa and settle the veterans"
+        food_bp: 2000
+        legitimacy_bp: -500
+        outcome: >-
+          Hanno the Great's party carries the day: the veterans are given land in the African
+          interior and Spain is left to the merchants of Gades. Hamilcar goes quietly, as a
+          private man, with his sons.
+        deeds: {men: 10000}
     history: >-
       Hamilcar went to Spain in 237 BC; Polybius has Hannibal tell Antiochus III of the oath
       he swore as a boy. Hamilcar drowned in 228 BC; his son-in-law Hasdrubal founded New
@@ -387,7 +448,7 @@ chapters:
 
       'Here we bring you peace and war,' he says. 'Choose which you please.'
     choices:
-      - label: "'Give whichever you like'"
+      - label: "Defend Hannibal and let Rome choose"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
@@ -400,7 +461,17 @@ chapters:
         unrest_bp: 2000
         outcome: >-
           The council votes to give up its own general. In Spain, the army will not hear of
-          it. Hannibal stays where he is, and Carthage has made itself small for nothing.
+          it, and its loyalty to the council is shaken. Hannibal stays where he is, and
+          Carthage has made itself small for nothing.
+        deeds: {martial_bp: -1500}
+      - label: "Offer to submit Saguntum to arbitration"
+        wealth_bp: -200
+        legitimacy_bp: 700
+        outcome: >-
+          Your envoys argue that the old treaty with Hasdrubal never named Saguntum, and offer
+          to let neutral cities judge. Rome will not hear it. You have spent a winter and built
+          some ships against the day it fails.
+        deeds: {ships: 20}
     history: >-
       After Hannibal took Saguntum (219 BC), a Roman embassy demanded his surrender; Fabius's
       gesture with his toga is in Livy and Polybius. War was declared in 218.
@@ -430,7 +501,7 @@ chapters:
       Your men are starving and frozen. But from the top of the pass you can show them the
       plain of the Po, where the Gauls are waiting to join you against Rome.
     choices:
-      - label: "Break the rock with fire and vinegar, and go down"
+      - label: "Cut a path through the slide and press on"
         historical: true
         legitimacy_bp: 2500
         outcome: >-
@@ -441,8 +512,11 @@ chapters:
         deeds: {ally_with: [cisalpine_gauls], take: [rom_umbria]}
       - label: "Go back, and come by sea next year"
         legitimacy_bp: -2000
+        wealth_bp: -2000
         outcome: >-
-          The army goes back down to Gaul. The Romans have a year to prepare.
+          The army goes back down to Gaul, and the council pays for the transports that will
+          take it by sea. The Romans have a year to prepare.
+        deeds: {ships: 40}
       - label: "✦ Blast the path with black powder"
         needs_adopted: [gunpowder]
         legitimacy_bp: 3000
@@ -450,6 +524,15 @@ chapters:
           Kegs of black powder shatter the fallen rock in an afternoon. The army comes down
           into Italy a week sooner and twice as strong, and the Gauls rise everywhere.
         deeds: {ally_with: [cisalpine_gauls], take: [rom_umbria, rom_etruria]}
+      - label: "Winter in the valley and go down in the spring"
+        food_bp: -200
+        legitimacy_bp: 2200
+        outcome: >-
+          You camp among the friendly tribes of the high valleys and feed the army on what they
+          will sell, and the rested men think well of the general who did not throw them at the
+          snow. Gauls who were waiting for you on the Po lose heart, and the Romans use the
+          winter to raise new legions.
+        deeds: {men: 8000}
     history: >-
       Hannibal crossed the Alps in autumn 218 BC, arriving with about 26,000 men, and won at
       the Trebia that December. Livy's story of breaking the rock with fire and vinegar is
@@ -478,9 +561,9 @@ chapters:
 
       Your plan: put your weakest troops in the centre, in a bulge towards the Romans, and
       let it give way slowly. Your African veterans on the wings. Your cavalry to drive off
-      theirs and come round behind.
+      theirs and come round behind. Win this, and you must still decide what the victory is for.
     choices:
-      - label: "Let the centre bend - and close the trap"
+      - label: "Win, then turn south and bring the allies over"
         historical: true
         legitimacy_bp: 3000
         outcome: >-
@@ -491,7 +574,7 @@ chapters:
           will dine on the Capitol.' You do not. 'You know how to win a victory, Hannibal,'
           he says, 'but not how to use one.'
         deeds: {take: [rom_campania, rom_apulia, rom_bruttium]}
-      - label: "Win - and march straight on Rome"
+      - label: "Win, and march straight on Rome"
         legitimacy_bp: 2500
         unrest_bp: 1000
         outcome: >-
@@ -506,6 +589,14 @@ chapters:
           meets you in the Forum to ask for terms. Rome survives - as a small city in Latium,
           an ally of Carthage.
         deeds: {take: [rom_campania, rom_apulia, rom_bruttium, rom_samnium], peace_with: [rome]}
+      - label: "Win, then send envoys offering Rome terms"
+        legitimacy_bp: 2200
+        wealth_bp: 1000
+        outcome: >-
+          The Romans have lost fifty thousand men and will not hear of terms. The Senate refuses
+          to ransom its prisoners and will not even receive your envoy inside the city limits.
+          The winter goes by in talk while the Romans raise new legions from boys and slaves.
+        deeds: {take: [rom_apulia]}
     history: >-
       At Cannae on 2 August 216 BC Hannibal's double envelopment annihilated a Roman army of
       some 80,000. Maharbal's reproach is in Livy. Hannibal stayed in Italy fifteen more
@@ -535,7 +626,7 @@ chapters:
       Now your brother Hasdrubal has crossed the Alps with a second army to join you. His
       messengers have been captured on the way, and you do not know where he is.
     choices:
-      - label: "Wait in the south for word of him"
+      - label: "Hold your ground and wait for word"
         historical: true
         legitimacy_bp: -2000
         unrest_bp: 1000
@@ -545,13 +636,22 @@ chapters:
           throws your brother's head into your camp. 'I see there the fate of Carthage,' you
           say.
         deeds: {give: [rom_apulia], give_to: rome}
-      - label: "March north to meet him, whatever the risk"
+      - label: "March north at once to meet him"
         legitimacy_bp: 1000
         food_bp: -2000
         outcome: >-
           You march north, shaking off the consuls, and meet Hasdrubal in Umbria. Two armies
-          of Barcids are in Italy together. Rome begins to be afraid again.
-        deeds: {men: 20000}
+          of Barcids are in Italy together. Rome begins to be afraid again, but the garrisons
+          you left behind in the south are overrun by the legions you have slipped past.
+        deeds: {men: 20000, give: [rom_apulia], give_to: rome}
+      - label: "Offer battle to the consul in front of you"
+        legitimacy_bp: -500
+        food_bp: -1000
+        outcome: >-
+          You march out against the Roman army in the south and force it to stand. It does not
+          lose, and you cannot break it, but it is held there. Your brother, somewhere to the
+          north, learns nothing of this.
+        deeds: {men: 8000}
     history: >-
       In 207 BC Hasdrubal Barca was defeated and killed at the Metaurus; his head was thrown
       into Hannibal's camp.
@@ -595,8 +695,9 @@ chapters:
         legitimacy_bp: -500
         food_bp: -3000
         outcome: >-
-          Scipio cannot take Carthage, and you cannot drive him out. The war drags on into
-          another year.
+          Scipio cannot take Carthage, and you cannot drive him out. Africa is stripped bare to
+          feed the city. The war drags on into another year.
+        deeds: {men: 10000}
       - label: "✦ Muskets in the front rank"
         needs_adopted: [musket]
         legitimacy_bp: 3500
@@ -604,6 +705,14 @@ chapters:
           Your front rank fires; the Roman maniples vanish in smoke and noise. Masinissa's
           horses bolt. Scipio, wounded, is carried from the field. Rome sues for peace.
         deeds: {peace_with: [rome], grudges: {rome: 4000}}
+      - label: "Make peace on Scipio's terms before the battle"
+        legitimacy_bp: -2000
+        wealth_bp: -2500
+        outcome: >-
+          You send to Scipio, who offers you the terms of the year before: Spain given up, the
+          fleet surrendered, and an indemnity. The council grumbles and agrees. The army goes
+          home without fighting, and Hannibal with it.
+        deeds: {peace_with: [rome], give: [car_gades, east_iberia], give_to: rome}
     history: >-
       At Zama in 202 BC Scipio defeated Hannibal, ending the Second Punic War. Carthage gave
       up Spain, its fleet and its independence in foreign policy.
@@ -631,7 +740,7 @@ chapters:
 
       The great families are writing to Rome that Hannibal is plotting a new war.
     choices:
-      - label: "Back Hannibal's reforms"
+      - label: "Back Hannibal's reform of the judges"
         historical: true
         wealth_bp: 3000
         legitimacy_bp: 1500
@@ -641,11 +750,19 @@ chapters:
           debt years early. Then Roman envoys arrive to 'settle a border dispute', and
           Hannibal, who knows why they have really come, rides out of the city that night
           and sails east to the court of Antiochus. He will never see Carthage again.
-      - label: "Let the great families keep their seats"
+      - label: "Leave the great families their seats"
         influence: {nobility: 1500}
         wealth_bp: -1000
         outcome: >-
           The reforms are voted down. Hannibal goes back to his estates. Rome is satisfied.
+      - label: "Audit the taxes, but leave the judges' tenure alone"
+        wealth_bp: 3000
+        legitimacy_bp: 1700
+        influence: {nobility: -500}
+        outcome: >-
+          The great families accept honest tax collection so long as their seats are safe. Most
+          of the money comes back, and the judges quietly see that not all of it does. Hannibal is
+          not satisfied, and Rome is not reassured.
     history: >-
       As suffete in 196 BC Hannibal reformed the judges' tenure and the finances; accused
       to Rome by his enemies, he fled to Antiochus III in 195. He killed himself in Bithynia
@@ -677,7 +794,7 @@ chapters:
       and two thousand catapults. And the consuls have given their final demand: leave the
       city, and build a new one ten miles from the sea.
     choices:
-      - label: "Refuse, and fight with bare hands"
+      - label: "Refuse, and arm the city from its workshops"
         historical: true
         legitimacy_bp: 2000
         unrest_bp: -2000
@@ -688,12 +805,22 @@ chapters:
           Scipio Aemilianus, watching the city burn, weeps and quotes Homer: 'A day will come
           when sacred Troy shall perish.' Carthage burns for seventeen days.
         deeds: {war_with: [rome]}
-      - label: "Leave the city, as Rome demands"
+      - label: "Leave the city as Rome demands"
         legitimacy_bp: -4000
         outcome: >-
           The people of Carthage walk out of the city their ancestors built six hundred years
           ago. The Romans tear it down behind them.
         deeds: {give: [car_carthage], give_to: rome}
+      - label: "Offer gold, more hostages and the coast of Emporia"
+        wealth_bp: -500
+        legitimacy_bp: 2700
+        unrest_bp: -2000
+        outcome: >-
+          Your envoys go to the consuls once more with everything that is left, and with the
+          trading coast to the east. They listen and give no answer. The assembly, moved by
+          the offer, swears to hold whatever comes. A week later the demand comes again, word
+          for word.
+        deeds: {give: [car_emporia], give_to: rome}
     history: >-
       Rome declared war in 149 BC, disarmed Carthage, then demanded it abandon the city. The
       Carthaginians resisted until 146 BC, when the city was destroyed. The story of salting

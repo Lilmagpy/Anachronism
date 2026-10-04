@@ -183,7 +183,7 @@ chapters:
         deeds: {take: [bab_babylon]}
       - label: "Take tribute and leave the monuments"
         wealth_bp: 3000
-        legitimacy_bp: 2000
+        legitimacy_bp: 2700
         outcome: >-
           Babylon pays. The steles stay in Sippar, and are lost when the temple falls, as most
           things are. The restraint is admired as the act of a great king. Babylon's tribute is

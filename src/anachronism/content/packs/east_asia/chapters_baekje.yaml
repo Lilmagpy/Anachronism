@@ -43,7 +43,7 @@ chapters:
         deeds: {peace_with: [goguryeo]}
       - label: "Send the Wa supplies but not soldiers"
         wealth_bp: 100
-        legitimacy_bp: 300
+        legitimacy_bp: 900
         outcome: >-
           Baekje ships carry rice and iron to the Wa, and no Baekje man joins the fighting.
           The Wa are glad of the help and sorry there is not more of it.

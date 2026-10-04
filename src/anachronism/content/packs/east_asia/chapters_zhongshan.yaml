@@ -33,7 +33,7 @@ chapters:
       great power of the east, let it be known that it was ashamed to stand as an equal
       beside little Zhongshan.
     choices:
-      - label: "Take the title of king"
+      - label: "Proclaim yourself King of Zhongshan"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: -300
@@ -42,11 +42,18 @@ chapters:
           angry, as it said it would be; Zhao is cool, and does not take the title itself.
           But your bronze-casters begin to put the word king on every vessel in the royal
           workshops, and your court speaks of itself as the equal of the Zhou heirs.
-      - label: "Keep the title of lord"
-        legitimacy_bp: -500
+      - label: "Keep the title of lord and court Qi"
+        legitimacy_bp: 1000
+        wealth_bp: 500
         outcome: >-
-          You wait. Qi is satisfied, for now. In the council there are those who say that the
+          You wait, and Qi rewards you with trade and warm words. Qi is satisfied, for now. In the council there are those who say that the
           neighbours who have crowned themselves will not forget that you did not.
+      - label: "Take the title, and send gifts to Qi"
+        legitimacy_bp: 1000
+        wealth_bp: -800
+        outcome: >-
+          You sign the pact and send Qi horses and bronzes with a polite letter. Qi accepts the
+          gifts, and says nothing about the title. It does not forget it either.
     history: >-
       Zhongshan's ruler took the title of king in 323 BC, as one of five states that
       recognised each other's kingship (Zhanguo ce, Zhongshan 1). Qi objected.
@@ -90,6 +97,14 @@ chapters:
         outcome: >-
           Qi plunders Yan and goes home. Prince Zhi comes back from Han to be king. A weak
           Yan would have been a gift to you, and you leave it unwrapped.
+      - label: "Send a raiding force across the border"
+        legitimacy_bp: 1500
+        wealth_bp: 500
+        outcome: >-
+          A few thousand horse and foot cross the border, burn villages and drive off herds,
+          and are back inside your walls before Yan can gather an army. You take no towns, and
+          you keep the plunder.
+        deeds: {men: 6000}
     history: >-
       In 314 BC, during the civil war in Yan, Zhongshan under King Cuo attacked and took land
       and towns, recorded in the king's bronze tripod inscription (found at Pingshan, 1977).
@@ -129,12 +144,21 @@ chapters:
           be kept and that any who change it be punished. Dragons, tigers and deer are cast
           in your bronzes for the afterlife, and a
           generation of Zhongshan's craftsmen work in a style that no other court has.
-      - label: "Spend the metal on weapons"
-        legitimacy_bp: -300
+      - label: "Spend the metal on weapons for the army"
+        legitimacy_bp: 800
+        wealth_bp: -200
         outcome: >-
-          The arsenals fill, and the workshops go quiet. The court wonders if the king
-          expects to need his army more than his tomb.
+          The arsenals fill, and the workshops go quiet. The soldiers are glad of it, and the
+          court wonders if the king expects to need his army more than his tomb.
         deeds: {martial_bp: 200}
+      - label: "Cast the plan plainly, without gold or silver"
+        knowledge_bp: 500
+        legitimacy_bp: 1000
+        wealth_bp: -300
+        outcome: >-
+          A plain bronze plate is cast with the plan and the king's command. It is a good
+          plate and no wonder. Some of the metal goes to the arsenals, and some of the
+          craftsmen's art goes unspent.
     history: >-
       The royal tomb plan on a gold-and-silver inlaid bronze plate (the Zhaoyu tu), with the
       king's command, was found in Cuo's tomb at Pingshan, Hebei, in 1977.
@@ -178,6 +202,14 @@ chapters:
           You risk everything on your cavalry in the plain. It does not go as you hoped, and
           many of your best are lost.
         deeds: {martial_bp: 600}
+      - label: "Train your own horse archers at once"
+        legitimacy_bp: 300
+        wealth_bp: -500
+        outcome: >-
+          Your captains copy the Hu saddle and bow, and a few thousand young men are put on
+          horses. They are brave and badly drilled, and they will not be ready for a campaign
+          this year.
+        deeds: {martial_bp: 500, men: 6000}
     history: >-
       King Wuling of Zhao adopted nomad dress and mounted archery in 307 BC, and from about
       306 he attacked Zhongshan repeatedly.
@@ -218,6 +250,13 @@ chapters:
         outcome: >-
           You keep your towns for now. But your army is no match for Zhao's, and you know it.
         deeds: {martial_bp: 300}
+      - label: "Offer Zhao gold, horses and a royal marriage"
+        legitimacy_bp: -300
+        wealth_bp: -1500
+        outcome: >-
+          A princess goes to Zhao with a train of horses and bronzes. Wuling takes the gifts
+          and the marriage and keeps the army where it is, in case it is needed again.
+        deeds: {peace_with: [zhao]}
     history: >-
       After heavy Zhao attacks in 306-305 BC, Zhongshan ceded four towns to Zhao to make
       peace (Shiji 43). The terms are given in the Shiji; the towns are not named here.
@@ -260,6 +299,13 @@ chapters:
         legitimacy_bp: -1000
         outcome: >-
           You shut the gates. The siege is hard and the army is tired.
+      - label: "Send the court to Qi and leave a garrison at the gate"
+        legitimacy_bp: -1500
+        outcome: >-
+          The royal family leaves by the southern road with the treasure and a small escort,
+          and a garrison is left in the gate to hold it for the king who is not there. It does
+          not hold long.
+        deeds: {men: 4000}
     history: >-
       Zhao conquered Zhongshan about 296 BC (Shiji 43 gives Huiwen's 3rd year, 296). The
       last king, Shang, was moved to Fushi, by the Shiji's account; another tradition says

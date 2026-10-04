@@ -98,7 +98,6 @@ chapters:
         deeds: {men: 6000, grudges: {macedon: 4000}}
       - label: "Send a small force to the Isthmus"
         legitimacy_bp: 300
-        unrest_bp: 500
         outcome: >-
           A few thousand men go as far as the Isthmus and stay there, watching the roads,
           while the Assembly argues about the rest. Alexander's army is quicker than the debate.
@@ -206,10 +205,10 @@ chapters:
           three is ever lost.
       - label: "Spend the money on triremes"
         wealth_bp: -800
-        legitimacy_bp: 500
+        legitimacy_bp: 1000
         outcome: >-
-          The ship-sheds fill with new hulls, and the rowers have work. The theatre waits, and
-          the actors go on improving the classics.
+          The ship-sheds fill with new hulls, and the rowers have work, and the citizens take
+          pride in the fleet. The theatre waits, and the actors go on improving the classics.
         deeds: {ships: 10}
     history: >-
       Lycurgus (in charge of Athenian finances c. 336-324 BC) completed the stone theatre of
@@ -299,12 +298,14 @@ chapters:
         outcome: >-
           Ctesiphon is acquitted, narrowly. Nobody remembers the speech.
       - label: "Turn on Aeschines's own record"
-        legitimacy_bp: 1200
+        knowledge_bp: 1000
+        legitimacy_bp: 2200
         unrest_bp: 500
         outcome: >-
           You go through Aeschines's embassies and his dealings with Philip one by one. The jury
-          is moved and amused, and your enemy is made to look small. The question of the crown
-          itself is hardly argued.
+          is moved and amused, and your enemy is made to look small. The speech is copied and
+          studied as a model of invective, though the question of the crown itself is hardly
+          argued.
     history: >-
       In the trial of 330 BC Demosthenes's On the Crown defeated Aeschines's Against
       Ctesiphon; Aeschines left Athens.
@@ -391,11 +392,12 @@ chapters:
           The Macedonian generals quarrel over the empire. Athens keeps its money and its
           ships, and its orators keep talking.
       - label: "Hire the mercenaries, but declare no war"
-        legitimacy_bp: 500
+        legitimacy_bp: 1500
         wealth_bp: -800
         outcome: >-
           Leosthenes keeps his men at Taenarum on Athens's pay, and the Assembly votes nothing.
-          Every other city sees that Athens is ready and nobody can say that she has declared herself.
+          Every other city sees that Athens is ready and nobody can say that she has declared
+          herself; the orators who wanted war are quieted by the show of strength.
         deeds: {men: 4000}
     history: >-
       On Alexander's death (June 323 BC) Athens led a Greek revolt, the Lamian War;

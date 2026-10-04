@@ -44,7 +44,7 @@ chapters:
           summer's waiting, which saves you silver.
       - label: "Settle with Olaf over your sister's dower"
         wealth_bp: -500
-        legitimacy_bp: 2000
+        legitimacy_bp: 2700
         outcome: >-
           You send word that Thyri's dower lands will be paid. Olaf is satisfied for the present,
           and your allies mutter that you have let the chance go. Denmark's chiefs honour a king
@@ -240,7 +240,7 @@ chapters:
         deeds: {ships: 30}
       - label: "Send the jarl silver and ten ships, nothing more"
         wealth_bp: -1000
-        legitimacy_bp: -300
+        legitimacy_bp: 200
         outcome: >-
           The jarl sails back with a small squadron. It is too few to beat Olaf, and too many to
           be forgotten.

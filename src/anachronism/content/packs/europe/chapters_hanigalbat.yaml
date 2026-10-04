@@ -99,7 +99,7 @@ chapters:
           quiet.
         deeds: {peace_with: [assyria]}
       - label: "Fortify the wells and passes, and break no oath"
-        legitimacy_bp: 500
+        legitimacy_bp: 1200
         outcome: >-
           You keep your oath to Assyria and make your country hard to cross: forts at the wells,
           guards on the passes. Shalmaneser is not told why.

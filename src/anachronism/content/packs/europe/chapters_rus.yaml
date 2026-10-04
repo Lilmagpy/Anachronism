@@ -10,7 +10,7 @@ chapters:
     scenario: year_1000
     civ: rus
     year: 1000
-    title: "Bread for the Poor"
+    title: "A Christian Prince"
     place: "Kiev"
     speaker: diviner
     speaker_name: "Anastas of Cherson"
@@ -38,9 +38,20 @@ chapters:
           can get silver and gold.'
       - label: "Feed your warriors first"
         influence: {nobility: 1000}
+        food_bp: -800
+        legitimacy_bp: 300
         outcome: >-
-          Your retinue eats well. The beggars of Kiev pray for someone else.
+          Your retinue eats well, and the feasts at the palace are the talk of the city. The
+          beggars of Kiev pray for someone else.
         deeds: {martial_bp: 500}
+      - label: "Take noble children for schooling in books"
+        knowledge_bp: 1000
+        legitimacy_bp: 1200
+        unrest_bp: 500
+        outcome: >-
+          Boyars' sons are taken from their homes and set to learn their letters with the
+          priests. Their mothers weep for them as for the dead, but the first generation of
+          Rus who can read begins to grow up in Kiev.
     history: >-
       The Primary Chronicle describes Vladimir's charity and his feasts for his retinue after
       the conversion of 988, including the silver spoons.
@@ -76,9 +87,18 @@ chapters:
           will not hear of it too soon. He hears.
       - label: "Forgive Yaroslav, and name your heir"
         legitimacy_bp: 800
+        unrest_bp: 500
         outcome: >-
           You name Boris your heir before the boyars. Yaroslav pays his tribute. Sviatopolk, in
           his prison, makes plans.
+      - label: "Send Boris north with an army"
+        legitimacy_bp: -300
+        unrest_bp: 800
+        outcome: >-
+          Boris is given command of a column and told to bring his brother to heel. He is
+          loyal and reluctant, and the army is slow to gather; the old prince wonders whether
+          he has chosen well.
+        deeds: {men: 6000}
     history: >-
       In 1014 Yaroslav refused Novgorod's tribute; Vladimir prepared war but died on 15 July
       1015.
@@ -114,10 +134,21 @@ chapters:
           Yaroslav in Novgorod is gathering his Varangians.
         deeds: {martial_bp: -500}
       - label: "Make peace with your brothers and share the land"
-        legitimacy_bp: 1000
+        legitimacy_bp: 300
+        unrest_bp: 800
         outcome: >-
-          Boris swears loyalty; Gleb keeps Murom. Yaroslav in Novgorod is the only brother
-          still against you.
+          Boris swears loyalty; Gleb keeps Rostov, and his men with it. Yaroslav in Novgorod
+          is the only brother still against you, and your boyars say you have given away
+          your father's land for nothing.
+        deeds: {give: [m_rostov]}
+      - label: "Send Boris with the army against the Pechenegs"
+        legitimacy_bp: -500
+        unrest_bp: 1000
+        outcome: >-
+          You send your half-brother and his men far to the south, to the steppe frontier,
+          where he cannot raise the army against you. The soldiers think that he has been
+          sent away, and the story spreads to every drinking-hall in Kiev.
+        deeds: {men: 4000}
     history: >-
       In 1015 Sviatopolk had Boris and Gleb murdered; they were canonised as the first saints
       of Rus. Yaroslav defeated Sviatopolk at Lyubech in 1016.
@@ -155,12 +186,19 @@ chapters:
           somewhere in the wilderness. Yaroslav is Prince of Kiev.
         deeds: {ruler_falls: "flees into the wilderness and dies"}
       - label: "Keep the Poles, and make Bolesław your shield"
-        legitimacy_bp: -500
-        unrest_bp: 1500
+        legitimacy_bp: -800
+        unrest_bp: 1000
         outcome: >-
           Polish garrisons stay in Kiev. Yaroslav's army meets them on the Alta, and the battle
           is long and hard.
         deeds: {ally_with: [poland]}
+      - label: "Pay Bolesław to go home, and face Yaroslav"
+        legitimacy_bp: -1000
+        wealth_bp: -800
+        outcome: >-
+          The Polish army marches west with the treasure that was already in its hands and
+          the silver you add to it. The townspeople are glad to see the back of it; but you
+          have less than you did, and Yaroslav is close.
     history: >-
       Bolesław I took Kiev for Sviatopolk in 1018; Sviatopolk soon turned on his Polish allies.
       Yaroslav defeated him on the Alta in 1019; Sviatopolk died in flight.
@@ -172,7 +210,7 @@ chapters:
     scenario: year_1000
     civ: rus
     year: 1020
-    title: "The Truth of Rus"
+    title: "The Customs of Novgorod"
     place: "Novgorod"
     speaker: scholar
     speaker_name: "A Novgorod clerk"
@@ -187,7 +225,7 @@ chapters:
       Novgorod wants its customs written down so that no prince can change them: the fine for
       killing a man, for pulling a man's beard, for riding another man's horse without asking.
     choices:
-      - label: "Write down the Pravda"
+      - label: "Write down the customs of Novgorod"
         historical: true
         legitimacy_bp: 1500
         knowledge_bp: 1000
@@ -200,6 +238,16 @@ chapters:
         influence: {nobility: 1000}
         outcome: >-
           Your judgements are wise, and nobody can predict them.
+      - label: "Issue a code from the Greek church law"
+        legitimacy_bp: 2200
+        knowledge_bp: 1000
+        unrest_bp: -500
+        influence: {clergy: 800}
+        outcome: >-
+          Greek priests translate the church's rulings on marriage, theft and oaths, and the
+          bishop's court takes the cases they cover. The code is learned and orderly, and
+          rather foreign to the men of Novgorod, who go on settling their feuds in their
+          own way.
     history: >-
       The Short Pravda, attributed to Yaroslav (c. 1016-1054), is the oldest East Slavic law
       code.
@@ -229,10 +277,19 @@ chapters:
           build a great cathedral, St Sophia, with golden domes and mosaics by Greek masters,
           and a Golden Gate for the city.
         deeds: {take: [m_pecheneg]}
-      - label: "Hold the walls"
+      - label: "Hold the walls and wait them out"
         legitimacy_bp: 300
+        wealth_bp: -500
         outcome: >-
           The Pechenegs burn the suburbs and ride away with captives.
+      - label: "Wait for Novgorod's men, then give battle"
+        legitimacy_bp: 1800
+        wealth_bp: -300
+        outcome: >-
+          Messengers ride north, and in a few days the Novgorod levy and Varangians come down
+          the river. With the whole army in the field you march out, and the Pechenegs, who
+          do not like a fight on even terms, are beaten back from the city.
+        deeds: {men: 6000}
     history: >-
       In 1036 Yaroslav defeated the Pechenegs at Kiev; he built St Sophia's Cathedral on the
       battlefield (consecrated 1040s).
@@ -274,6 +331,15 @@ chapters:
         outcome: >-
           The emperor pays, after a year of letters. Rus merchants go on trading in
           Constantinople.
+        deeds: {peace_with: [byzantium]}
+      - label: "Close Kiev to Greek merchants until they pay"
+        legitimacy_bp: 600
+        wealth_bp: -400
+        unrest_bp: 300
+        outcome: >-
+          The Greek traders at Kiev are sent home, and the quays are empty of their silks and
+          wine. The emperor sulks, and so do your own merchants, who lose their best
+          customers for as long as the quarrel lasts.
     history: >-
       The Rus-Byzantine war of 1043 ended in a disastrous defeat for the Rus fleet; peace
       followed in 1046 with a dynastic marriage.
@@ -312,6 +378,14 @@ chapters:
         influence: {nobility: 1000}
         outcome: >-
           Anna marries a boyar's son. France looks for a bride elsewhere.
+      - label: "Send Anna to the German emperor's court"
+        legitimacy_bp: 1200
+        wealth_bp: 500
+        outcome: >-
+          Anna goes west to a German court, where Latin is spoken and the bishops are
+          powerful. The marriage is honourable, and ties you to the Emperor's quarrels with
+          the Pope.
+        deeds: {ally_with: [hre]}
     history: >-
       Anna Yaroslavna married Henry I of France in 1051; a charter of 1063 bears her signature
       in Cyrillic. Yaroslav's children married into the royal houses of much of Europe.
@@ -321,7 +395,7 @@ chapters:
     scenario: year_1000
     civ: rus
     year: 1054
-    title: "Love One Another"
+    title: "The Dying Prince"
     place: "Vyshgorod"
     speaker: steward
     speaker_name: "Iziaslav"
@@ -336,7 +410,7 @@ chapters:
       will have his own city - Chernigov, Pereyaslavl, Smolensk, Vladimir - and when the
       eldest dies, each will move up a seat, like men at a table.
     choices:
-      - label: "Divide the cities by seniority, and tell them to love one another"
+      - label: "Divide the cities by seniority"
         historical: true
         legitimacy_bp: 500
         unrest_bp: 1000
@@ -346,9 +420,16 @@ chapters:
           dozen principalities, and too divided to stand when the Mongols come.
       - label: "Leave everything to the eldest"
         legitimacy_bp: 800
-        unrest_bp: 2000
+        unrest_bp: 1500
         outcome: >-
           Iziaslav takes everything. His brothers go to their father-in-law kings for armies.
+      - label: "Give each son a city, and no more"
+        legitimacy_bp: 300
+        unrest_bp: 1800
+        outcome: >-
+          Each son has his own city and his own boyars, and nothing is said of who is first.
+          The brothers part as equals, and the quarrels begin over the borders and the
+          tribute from the north.
     history: >-
       Yaroslav died in 1054, dividing Rus among his sons under a rule of seniority; the system
       led to generations of conflict.

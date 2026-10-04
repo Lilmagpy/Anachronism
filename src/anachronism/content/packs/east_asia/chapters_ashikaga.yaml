@@ -37,9 +37,17 @@ chapters:
           also come to pay his respects, with a handful of men, and you have hardly noticed
           him.
       - label: "Ask him to stay and guard Kyoto"
-        legitimacy_bp: 500
+        legitimacy_bp: 1000
+        wealth_bp: 500
         outcome: >-
           Kagetora stays a month, then goes home, because Echigo will not govern itself.
+      - label: "Ask him for troops against the Miyoshi"
+        legitimacy_bp: 500
+        wealth_bp: 500
+        outcome: >-
+          Kagetora leaves two thousand men in the capital, and goes home to Echigo. They
+          are paid from your own purse, and the Miyoshi watch them.
+        deeds: {men: 2000}
     history: >-
       Nagao Kagetora (Kenshin) visited Kyoto in 1559 and received honours and favour from
       Yoshiteru, who was a noted swordsman; he became Kanto Kanrei in 1561.
@@ -64,7 +72,7 @@ chapters:
 
       You have a few hundred guards. They are already fighting in the gardens.
     choices:
-      - label: "Fight to the last"
+      - label: "Make a stand in the palace"
         historical: true
         legitimacy_bp: -1500
         outcome: >-
@@ -79,6 +87,12 @@ chapters:
         outcome: >-
           You get out through the kitchens with a few men, and ride for Omi, as you have done
           before.
+      - label: "Open the gates and hear their petition"
+        legitimacy_bp: -1500
+        unrest_bp: 500
+        outcome: >-
+          The petition turns out to be a demand that you yield your authority. You are kept in
+          your own palace under guard, a shogun in name only.
     history: >-
       In the Eiroku incident (1565) Miyoshi forces and Matsunaga Hisamichi attacked the Nijo
       palace and killed the shogun Yoshiteru, who fought to the end.
@@ -115,10 +129,20 @@ chapters:
           wants. He asks only for the right to govern the towns of Sakai, Otsu and Kusatsu.
           You begin to understand.
         deeds: {peace_with: [miyoshi]}
-      - label: "Wait for a lord of older family"
-        legitimacy_bp: -1000
+      - label: "Wait for Kenshin to escort you"
+        legitimacy_bp: -500
+        unrest_bp: 500
         outcome: >-
           You stay in Echizen with the Asakura, who are kind to you, and in no hurry.
+        deeds: {men: 1000}
+      - label: "Go to Kyoto with Nobunaga and Asakura men"
+        legitimacy_bp: 2000
+        wealth_bp: 500
+        unrest_bp: 500
+        outcome: >-
+          A few hundred Asakura spearmen ride beside Nobunaga's army, and you enter Kyoto
+          with both. Nobunaga says nothing, and remembers.
+        deeds: {men: 3000, peace_with: [miyoshi]}
     history: >-
       Oda Nobunaga escorted Ashikaga Yoshiaki to Kyoto in 1568, and he was made the fifteenth
       shogun.
@@ -159,6 +183,12 @@ chapters:
         legitimacy_bp: -1500
         outcome: >-
           You reply humbly, agree to everything, and go back to writing poems.
+      - label: "Appeal to the Emperor to mediate"
+        legitimacy_bp: 500
+        wealth_bp: -500
+        outcome: >-
+          The court sends a polite message to both sides. Nobunaga receives it politely and
+          goes on as before.
     history: >-
       Nobunaga's seventeen-article remonstrance (1572) rebuked Yoshiaki, who encouraged the
       coalition against Nobunaga, including Takeda Shingen's march west.
@@ -198,6 +228,13 @@ chapters:
         unrest_bp: 2000
         outcome: >-
           Your guards fight on the walls of Makishima. The river is full of Nobunaga's men.
+        deeds: {men: 2000}
+      - label: "Slip out and flee west"
+        legitimacy_bp: -1500
+        wealth_bp: -500
+        outcome: >-
+          You leave in the night with a few retainers, and the garrison, finding itself
+          alone, opens the gate in the morning.
     history: >-
       Yoshiaki rose against Nobunaga in 1573, surrendered Makishima and was expelled from
       Kyoto, conventionally ending the Ashikaga shogunate; he resigned the title in 1588.

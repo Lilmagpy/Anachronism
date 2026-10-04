@@ -50,7 +50,7 @@ chapters:
           Your treasury runs dry in a year, and the new gunners have not seen a battle.
       - label: "Offer the Mori a settlement over Iwami"
         wealth_bp: 300
-        legitimacy_bp: -600
+        legitimacy_bp: -100
         deeds: {peace_with: [mori]}
         outcome: >-
           You send a priest to Motonari with an offer to share the Iwami silver and to cease
@@ -97,12 +97,12 @@ chapters:
           Shiraga and the other forts are lost by the autumn of 1563. Your people crowd into the
           mountain castle, and the Mori army settles down to starve you.
       - label: "Raid the Mori supply lines with light troops"
-        legitimacy_bp: -300
         unrest_bp: 300
-        deeds: {men: 4000, martial_bp: 200}
+        legitimacy_bp: 200
         outcome: >-
-          You send light troops into the hills to cut the Mori baggage trains on the river
-          roads. The Mori lose men and time, but the castles are still besieged.
+          You send light troops into the hills to cut the Mori baggage trains on the river roads. The
+          Mori lose men and time and your garrisons take heart, but the castles are still besieged.
+        deeds: {men: 4000, martial_bp: 200}
     history: >-
       Between 1562 and 1565 the Mori took the outer castles of Izumo, and the Amago withdrew to
       Gassan-Toda.
@@ -240,12 +240,14 @@ chapters:
         outcome: >-
           Shikanosuke bows, and is back in a month. He is not a man who is easily put off.
       - label: "Ask the shogun for troops before sailing"
-        legitimacy_bp: 300
         wealth_bp: -300
-        deeds: {men: 2000}
+        unrest_bp: 200
+        legitimacy_bp: 1000
         outcome: >-
-          You go to the court of the shogun Yoshiaki and ask for spearmen. He receives you
-          kindly and gives you a letter and a few men, no more.
+          You go to the court of the shogun Yoshiaki and ask for spearmen. He receives you kindly and
+          gives you a letter that carries weight with the western lords, and a few men, no more; the
+          delay costs you a season.
+        deeds: {men: 2000}
     history: >-
       In 1569 Yamanaka Yukimori (Shikanosuke) brought Amago Katsuhisa from a Kyoto temple to
       Izumo and revived the Amago for a few months; the Mori, recalled from Kyushu, defeated
@@ -285,12 +287,13 @@ chapters:
           Hideyoshi laughs politely. The only castle he is willing to give you is the one
           he has offered.
       - label: "Ask to serve in Hideyoshi's field army"
-        legitimacy_bp: 300
-        deeds: {men: 2000}
+        unrest_bp: 200
+        legitimacy_bp: 1200
         outcome: >-
-          You ask for a place beside Hideyoshi in the field instead of a castle. He gives you
-          a command in his own army and a share of its fortunes, but nothing that is yours to
-          hold.
+          You ask for a place beside Hideyoshi in the field instead of a castle. He gives you a
+          command in his own army and a share of its fortunes, and your men respect the choice; but
+          there is nothing here that is yours to hold, and your old retainers grumble.
+        deeds: {men: 2000}
     history: >-
       In December 1577 Hideyoshi took Kozuki and entrusted it to Amago Katsuhisa and Yamanaka
       Yukimori.

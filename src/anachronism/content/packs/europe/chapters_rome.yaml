@@ -38,7 +38,7 @@ chapters:
         deeds: {war_with: [carthage, syracuse], take: [messana], men: 20000}
       - label: "Decline the appeal and garrison Rhegium"
         wealth_bp: 300
-        legitimacy_bp: 300
+        legitimacy_bp: 900
         materials_bp: -500
         influence: {clergy: 300}
         outcome: >-
@@ -393,7 +393,7 @@ chapters:
         deeds: {take: [car_sardinia, corsica], grudges: {carthage: 5000}}
       - label: "Refuse the island and keep the treaty"
         wealth_bp: 800
-        legitimacy_bp: 500
+        legitimacy_bp: 1100
         influence: {clergy: 200}
         outcome: >-
           Rome refuses the island. Carthage crushes the mutineers and keeps Sardinia; its envoys
@@ -540,7 +540,7 @@ chapters:
           Saguntum.
         deeds: {peace_with: [carthage]}
       - label: "Demand Hannibal's surrender before any war"
-        legitimacy_bp: 600
+        legitimacy_bp: 1300
         wealth_bp: -500
         outcome: >-
           The council refuses to give up its general. Rome holds the high ground in the world's
@@ -699,7 +699,7 @@ chapters:
           The legions hurry home and Hannibal slips away south. Capua is relieved and the war
           drags on.
       - label: "Offer Hannibal battle before the walls with the city levy"
-        legitimacy_bp: 800
+        legitimacy_bp: 1500
         unrest_bp: 100
         outcome: >-
           The consuls draw up every man the city can muster. Hannibal also draws up his army, but
@@ -790,14 +790,13 @@ chapters:
           recalls Hannibal.
         deeds: {men: 25000}
       - label: "Hold the legions in Italy and finish Hannibal first"
-        unrest_bp: 300
         wealth_bp: -500
         outcome: >-
           Eight thousand more men go to the legions in Italy. Hannibal, in the toe of Bruttium,
           cannot win and will not leave.
         deeds: {men: 8000}
       - label: "Send Scipio to Sicily to prepare, and decide later"
-        wealth_bp: -500
+        legitimacy_bp: 700
         outcome: >-
           Scipio builds ships and drills his men in Sicily while the Senate waits. The crossing is
           put off a year.

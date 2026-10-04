@@ -46,11 +46,11 @@ chapters:
           garbled report of a goddess, a queen, or of the Tamil habit of tracing descent through
           the mother. Pearls and pepper go north, and Madurai gets rich on both.
       - label: "Send an envoy to Pataliputra with the true story"
-        wealth_bp: -500
-        legitimacy_bp: 300
+        wealth_bp: -300
+        legitimacy_bp: 600
         outcome: >-
           Your envoy is received kindly, and the Greek writes down what he has been told, as he
-          did before.
+          did before. The courtesy shown to your envoy does you credit.
       - label: "Send fine pearls to Chandragupta's court"
         wealth_bp: -900
         legitimacy_bp: 500
@@ -149,11 +149,11 @@ chapters:
         outcome: >-
           The poet eats, thanks you politely and sings elsewhere.
       - label: "Keep him at court on a stipend"
-        legitimacy_bp: 400
-        wealth_bp: -600
+        legitimacy_bp: 1300
+        wealth_bp: -500
         outcome: >-
-          The poet stays and others follow him, and the court grows lively and costly. Whatever
-          he sings of you is not written down.
+          The poet stays and others follow him, and the court grows lively and costly, and its
+          fame spreads along the roads. Whatever he sings of you is not written down.
     history: >-
       The Sangam poems are dated by most scholars to the first centuries AD. The tale of three
       academies at Madurai is first written down about the 8th century AD. The poems do show that
@@ -195,12 +195,14 @@ chapters:
         outcome: >-
           The monks go to another hill, and another king.
       - label: "Offer a hall in Madurai instead"
-        legitimacy_bp: 300
+        knowledge_bp: 800
+        legitimacy_bp: 700
         wealth_bp: -400
         influence: {clergy: 300}
         outcome: >-
           The monks accept a hall of timber and thatch within the city, which does not last the
-          way a cave would. No one cuts a line in stone.
+          way a cave would, but they teach there and the city's scribes learn from them. No one
+          cuts a line in stone.
     history: >-
       Tamil-Brahmi cave inscriptions near Madurai, such as those at Mangulam, record gifts of
       stone beds to Jain monks, one under a king who is generally read as a Pandya

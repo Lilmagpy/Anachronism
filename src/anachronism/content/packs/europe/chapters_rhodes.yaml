@@ -52,12 +52,14 @@ chapters:
           The kings' gifts go into bronze and scaffolding; the harbour works wait. Priests
           say the god has turned his face from the plan, and the dockyards are a year late.
       - label: "Share the gifts among the citizens who lost homes"
-        legitimacy_bp: 800
-        wealth_bp: 800
-        unrest_bp: -800
+        food_bp: 600
+        wealth_bp: 1800
+        unrest_bp: -500
+        legitimacy_bp: 1600
         outcome: >-
-          The kings' grain and gold go to the families whose houses fell. The people are
-          grateful. The walls and the harbour wait their turn, and the god lies where he fell.
+          The kings' grain and gold go to the families whose houses fell, and they rebuild with it.
+          The people are grateful, and the markets revive. The walls and the harbour wait their turn,
+          and the god lies where he fell.
     history: >-
       Rhodes was shaken by an earthquake about 226 BC which broke the Colossus; the Hellenistic
       kings sent great gifts to rebuild the city, and the statue was never put up again.
@@ -100,12 +102,13 @@ chapters:
           Rhodian grain ships go on paying, and every captain from Egypt to Crete sees that
           Rhodes will not defend the freedom of the sea.
       - label: "Call the trading cities to a congress"
-        legitimacy_bp: 600
         wealth_bp: -300
-        influence: {"guilds": 500}
+        legitimacy_bp: 1500
+        influence: {guilds: 500}
         outcome: >-
-          Delegates from a dozen cities meet at Rhodes and sign a protest. Byzantium reads it,
-          and cuts the toll a little while it waits to see what you will do.
+          Delegates from a dozen cities meet at Rhodes and sign a protest. Byzantium reads it, and
+          cuts the toll a little while it waits to see what you will do; the trading cities remember
+          who called them.
     history: >-
       About 220 BC Rhodes fought a short war against Byzantium over its tolls on the Black Sea
       trade, and the Byzantines agreed to end the toll on shipping.
@@ -150,12 +153,13 @@ chapters:
           and Pergamon, nobody is left to help.
         deeds: {"peace_with": ["macedon"]}
       - label: "Build more ships and fight Philip alone"
-        legitimacy_bp: 500
-        wealth_bp: -1500
+        wealth_bp: -500
+        legitimacy_bp: 1700
         outcome: >-
-          Your yards work through the winter and a larger fleet puts to sea in the spring.
-          Philip's ships avoid it and his troops stay in Caria.
-        deeds: {"ships": 30, "men": 3000}
+          Your yards work through the winter and a larger fleet puts to sea in the spring. Philip's
+          ships avoid it and his troops stay in Caria; the whole island is proud, and the cost is only
+          half what you feared.
+        deeds: {ships: 30, men: 3000}
     history: >-
       In 201-200 BC Rhodes and Pergamon fought Philip V at Chios and Lade and appealed to
       Rome, which declared war on Philip in 200.
@@ -203,12 +207,12 @@ chapters:
           forget which ships were not there.
         deeds: {"ships": 10, "grudges": {"rome": 2500}}
       - label: "Join Rome, but keep your fleet near home"
-        legitimacy_bp: 1200
-        wealth_bp: 300
+        unrest_bp: 300
+        legitimacy_bp: 2500
         outcome: >-
-          Rhodes sends a squadron to the Romans and keeps its main fleet in its own waters.
-          Rome takes the help, and notes the rest.
-        deeds: {"peace_with": ["rome"], "ships": 10}
+          Rhodes sends a squadron to the Romans and keeps its main fleet in its own waters. Rome takes
+          the help and notes the rest; your captains grumble at the half measure.
+        deeds: {peace_with: [rome], ships: 10}
     history: >-
       In 190 BC the Rhodians under Eudamus defeated a fleet commanded by Hannibal at the
       Eurymedon, and fought with the Romans at Myonessos where Polyxenidas was beaten.
@@ -253,12 +257,13 @@ chapters:
         outcome: >-
           The Senate admires your principles and keeps its gifts for others.
       - label: "Take Caria, and leave Lycia free"
-        legitimacy_bp: 600
-        wealth_bp: 1000
+        wealth_bp: 1200
         unrest_bp: 200
+        legitimacy_bp: 600
         outcome: >-
-          You take the harbours of Caria and ask the Senate to leave the Lycian league alone.
-          The Senate is surprised, and a little amused.
+          You take the harbours of Caria and ask the Senate to leave the Lycian league alone. The
+          Senate is surprised, and a little amused; the Carian harbours pay well, and the Lycians are
+          not grateful.
     history: >-
       By the Treaty of Apamea (188 BC) Rhodes received Lycia and southern Caria; the Lycians
       resented Rhodian rule and Rome later took the lands away.
@@ -407,12 +412,12 @@ chapters:
           you for ever.
         deeds: {"ships": 10, "grudges": {"rome": 2000}}
       - label: "Ask for a friendship without obligations"
-        legitimacy_bp: 600
-        wealth_bp: 300
+        wealth_bp: 400
+        legitimacy_bp: 1800
         outcome: >-
-          Rome says it values Rhodian friendship and writes nothing down. You are neither safe
-          nor threatened.
-        deeds: {"peace_with": ["rome"]}
+          Rome says it values Rhodian friendship and writes nothing down, but sends its envoys to your
+          festivals and its merchants to your harbour. You are neither safe nor threatened.
+        deeds: {peace_with: [rome]}
     history: >-
       About 164 BC Rhodes made a treaty of alliance with Rome, ending its time as a free
       naval power.

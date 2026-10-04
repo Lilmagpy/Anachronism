@@ -29,7 +29,7 @@ chapters:
       Orontes. Now you need Ramesses to think you are far away. Your brother Hattusili has
       two Shasu nomads who are willing to walk into the Egyptian camp and lie.
     choices:
-      - label: "Send the Shasu, and spring the ambush"
+      - label: "Feed Ramesses a false report"
         historical: true
         legitimacy_bp: 2000
         outcome: >-
@@ -41,13 +41,22 @@ chapters:
           takes the land of Upe, around Damascus.
         deeds: {war_with: [egypt], take: [egy_upe], grudges: {egypt: 2000}}
       - label: "Meet him in open battle north of the city"
-        legitimacy_bp: 800
+        legitimacy_bp: 1500
         food_bp: -1500
         outcome: >-
           The two armies meet in a great battle on the plain. Both are badly hurt. Ramesses
           goes home to carve a victory on his temples; you go home to Hattusa to count the
           dead.
         deeds: {war_with: [egypt], grudges: {egypt: 2000}}
+      - label: "Hold the fords of the Orontes"
+        legitimacy_bp: 2200
+        materials_bp: -500
+        wealth_bp: 500
+        outcome: >-
+          You dig in behind the river with the whole army and let Ramesses come to you.
+          He is slow to attack, and the campaign ends in a standoff. Your treasury is
+          lighter and your army whole.
+        deeds: {men: 6000}
     history: >-
       At Kadesh in 1274 BC Muwatalli II's ambush nearly destroyed Ramesses II's army; the
       battle ended without a decisive result, but the Hittites kept Kadesh and took Upe.
@@ -69,7 +78,7 @@ chapters:
       in his kingdom. Your brother Hattusili, who has a soft spot for him, asks you to spare
       his life: send him to Hattusa, he says, and I will keep him in my own house.
     choices:
-      - label: "Depose him, and let Hattusili keep him"
+      - label: "Take Amurru and send Benteshina away"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -77,12 +86,19 @@ chapters:
           Amurru. One day Hattusili will put Benteshina back on it - and marry his daughter
           to Benteshina's son.
         deeds: {war_with: [amurru], conquer: [amurru]}
-      - label: "Make Amurru a vassal again, with Benteshina on the throne"
-        legitimacy_bp: 500
+      - label: "Keep Benteshina as your vassal"
+        legitimacy_bp: 1000
         outcome: >-
           Benteshina swears loyalty to Hatti for the second time. He will keep it about as well
           as the first.
         deeds: {tributaries: [amurru]}
+      - label: "Fine Amurru and withdraw"
+        wealth_bp: 1000
+        legitimacy_bp: 500
+        unrest_bp: 500
+        outcome: >-
+          Benteshina pays a heavy fine in silver and swears to behave. Your army goes home
+          with the money, and Amurru is left to itself.
     history: >-
       After Kadesh, Muwatalli deposed Benteshina and took him to Hatti, where Hattusili kept
       him; Hattusili later restored him as king of Amurru.
@@ -109,7 +125,7 @@ chapters:
 
       Assyria was a vassal of Mitanni within living memory. Your scribes await your answer.
     choices:
-      - label: "'Were you and I born of the same mother?'"
+      - label: "Rebuke him for claiming brotherhood"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
@@ -119,11 +135,17 @@ chapters:
           forget it.
         deeds: {grudges: {assyria: 2500}}
       - label: "Call him brother: you have enough enemies"
-        legitimacy_bp: -500
+        legitimacy_bp: 1200
         outcome: >-
           Adad-nirari is delighted. His merchants come to Hattusa, and his armies go on eating
           Mitanni.
         deeds: {peace_with: [assyria]}
+      - label: "Say nothing and reinforce Carchemish"
+        legitimacy_bp: 500
+        outcome: >-
+          Your scribes leave the letter unanswered, and your chariots move to the Euphrates
+          crossing. Assyria notes the silence.
+        deeds: {men: 3000}
     history: >-
       A Hittite king, probably Urhi-Teshub, rebuffed an Assyrian king's claim to brotherhood
       in a letter found at Hattusa (KUB 23.102).
@@ -149,7 +171,7 @@ chapters:
       Now you have taken his last fortress, Hakpissa. Hattusili has written to you, very
       formally, declaring war. He says the goddess Ishtar of Samuha will judge between you.
     choices:
-      - label: "Fight him"
+      - label: "Take the field against your uncle"
         historical: true
         legitimacy_bp: -2000
         unrest_bp: 2000
@@ -159,12 +181,22 @@ chapters:
           Hattusili III and sends you into exile in Syria - from which you will escape to
           Egypt.
         deeds: {ruler_falls: "is overthrown by his uncle Hattusili"}
-      - label: "Give him back his lands and make him your chief minister"
-        legitimacy_bp: 1000
+      - label: "Restore his lands and make him chief minister"
+        legitimacy_bp: 500
+        unrest_bp: 500
         influence: {nobility: 1500}
         outcome: >-
           Hattusili accepts with dignity. The kingdom is spared a civil war. You will spend
-          your reign in your uncle's shadow, but you will spend it on the throne.
+          your reign in your uncle's shadow, but you will spend it on the throne, and the
+          nobles of the north grow stronger.
+      - label: "Besiege him before his lords gather"
+        legitimacy_bp: -1000
+        unrest_bp: 1000
+        outcome: >-
+          You send the army north at once. The siege drags on through the summer, the nobles
+          sit on their hands, and a good part of your army is lost in the hills before the
+          matter is settled.
+        deeds: {men: 6000}
     history: >-
       Hattusili III overthrew his nephew Urhi-Teshub (Mursili III) around 1267 BC and
       justified it in his 'Apology', the first royal autobiography.
@@ -175,7 +207,7 @@ chapters:
     civ: hatti
     year: -1259
     until_year: -1245
-    title: "Eternal Peace"
+    title: "Two Frontiers"
     place: "Hattusa"
     speaker: steward
     speaker_name: "Puduhepa"
@@ -189,10 +221,10 @@ chapters:
 
 
       Your queen, Puduhepa - a priestess's daughter from Kizzuwatna, cleverer than anyone at
-      court - proposes something new: not a truce, but a treaty of eternal peace and
-      alliance with Egypt, written in silver, with your seals on it and hers.
+      court - has her own view of what to do. Your generals have theirs, and the two do not
+      agree.
     choices:
-      - label: "Send the silver tablet to Ramesses"
+      - label: "Make a sworn treaty with Egypt"
         historical: true
         legitimacy_bp: 1500
         wealth_bp: 1000
@@ -202,12 +234,20 @@ chapters:
           the peace between Egypt and Hatti for as long as Hatti lasts. Puduhepa writes to
           Ramesses's queen as her sister.
         deeds: {peace_with: [egypt], ally_with: [egypt]}
-      - label: "Stay at war for Kadesh and Upe"
-        legitimacy_bp: -500
-        unrest_bp: 1000
+      - label: "Fight on for Kadesh and Upe"
+        legitimacy_bp: 500
+        unrest_bp: 500
         outcome: >-
-          The war on the Orontes goes on, and Assyrian scouts cross the Euphrates.
-        deeds: {war_with: [egypt], grudges: {assyria: 1500}}
+          The war on the Orontes goes on, and Assyrian scouts cross the Euphrates. Your
+          chariots win some skirmishes and lose others.
+        deeds: {war_with: [egypt], men: 8000, grudges: {assyria: 1500}}
+      - label: "Strike Assyria across the Euphrates"
+        legitimacy_bp: 1500
+        wealth_bp: 500
+        outcome: >-
+          You turn east before Assyria grows any stronger. Your army crosses the river and
+          ravages the lands beyond it. The Assyrians do not forget it.
+        deeds: {war_with: [assyria], men: 8000}
     history: >-
       Hattusili III and Ramesses II made the first known parity treaty in 1259 BC; Puduhepa
       corresponded with Ramesses and his queen and co-sealed state documents.
@@ -237,7 +277,7 @@ chapters:
       was left. The question is what the Great Queen of Hatti should say to the Pharaoh of
       Egypt about it.
     choices:
-      - label: "Tell him plainly, and tell him off"
+      - label: "Write back frankly about the fire"
         historical: true
         legitimacy_bp: 1500
         wealth_bp: -1000
@@ -253,6 +293,13 @@ chapters:
         outcome: >-
           The princess goes south with a dowry worthy of an empire. Your treasury is empty
           until next harvest.
+        deeds: {ally_with: [egypt]}
+      - label: "Send half now and the rest in autumn"
+        wealth_bp: -1000
+        legitimacy_bp: 1000
+        outcome: >-
+          The princess goes south with a smaller dowry and a promise of more. Ramesses accepts
+          the promise, and does not let the matter be forgotten.
         deeds: {ally_with: [egypt]}
     history: >-
       Puduhepa's letter to Ramesses (KUB 21.38) about the delayed dowry survives. Her daughter
@@ -281,9 +328,10 @@ chapters:
 
       You cannot beat Assyria in the field. But Assyria needs things it cannot make: tin,
       fine goods from the sea. Your scribes are drafting a treaty with your vassal of Amurru,
-      on the coast, and you are thinking of adding a clause.
+      on the coast, and your counsellors disagree about what it should say, and what else
+      to do about Assyria.
     choices:
-      - label: "Forbid all trade with Assyria - and keep Ahhiyawa's ships away"
+      - label: "Bar Assyrian trade from your vassals"
         historical: true
         legitimacy_bp: 800
         wealth_bp: -800
@@ -293,12 +341,20 @@ chapters:
           land. No ship of Ahhiyawa may go to him.' It is the first trade embargo on record.
         deeds: {grudges: {assyria: 2000}}
       - label: "Make peace with Assyria"
-        legitimacy_bp: -800
+        legitimacy_bp: -500
         wealth_bp: 1000
         outcome: >-
           Your envoys go to Assur with gifts. Tukulti-Ninurta turns south and sacks Babylon
           instead.
         deeds: {peace_with: [assyria]}
+      - label: "Raise a new army and march again"
+        legitimacy_bp: 500
+        wealth_bp: -1000
+        unrest_bp: 500
+        outcome: >-
+          You summon the vassals again and spend what is left of the treasury on chariots.
+          The army is large, and its commanders are not eager.
+        deeds: {men: 10000}
     history: >-
       Tudhaliya IV was defeated by Tukulti-Ninurta I of Assyria at Nihriya (c. 1230 BC). His
       treaty with Sausgamuwa of Amurru contains the earliest known trade embargo, aimed at
@@ -318,16 +374,16 @@ chapters:
     speaker_title: "Of the Storm God of Hatti"
     benchmark_provinces: 9
     story: >-
-      Outside the walls of Hattusa there is an open-air sanctuary among the rocks. You want it
-      carved: the gods of Hatti in procession along the rock walls, sixty-four of them, the
-      Storm God meeting the Sun Goddess of Arinna, and yourself, Tudhaliya, in the embrace of
-      your protecting god.
+      Outside the walls of Hattusa there is an open-air sanctuary among the rocks, where the
+      gods of Hatti are honoured: sixty-four of them, the Storm God meeting the Sun Goddess of
+      Arinna. Your priests say it should be made worthy of them, and of yourself, Tudhaliya,
+      in the embrace of your protecting god.
 
 
       Meanwhile, the harvests have been poor for three years running, and your priests are
       counting every temple's grain.
     choices:
-      - label: "Carve the thousand gods"
+      - label: "Carve the gods of Hatti in the rock"
         historical: true
         legitimacy_bp: 2000
         materials_bp: -1500
@@ -338,10 +394,18 @@ chapters:
           all the cults of your kingdom, temple by temple, so that no god is forgotten.
       - label: "Feed the people first"
         food_bp: 2000
+        legitimacy_bp: 500
         influence: {clergy: -1000}
         outcome: >-
           The temples' grain goes to the hungry towns. The priests say the gods will
           remember.
+      - label: "Hold a great festival of all the gods"
+        legitimacy_bp: 1500
+        wealth_bp: -1000
+        influence: {clergy: 1000}
+        outcome: >-
+          Priests from every city bring their gods to Hattusa for the greatest festival in
+          memory. The people eat well for a week. The treasury does not.
     history: >-
       The reliefs of Yazilikaya, with the procession of gods and the figure of Tudhaliya IV
       embraced by the god Sharruma, date to the late 13th century BC. Tudhaliya also
@@ -364,9 +428,10 @@ chapters:
       ships; Egypt, your ally, has grain.
 
 
-      The king of Ugarit has been slow to send his ship. Your scribe is drafting a letter.
+      The king of Ugarit has been slow to send his ship, and your counsellors disagree about
+      what to do.
     choices:
-      - label: "Write that it is a matter of life or death"
+      - label: "Send a stern demand to Ugarit"
         historical: true
         food_bp: 2500
         legitimacy_bp: -500
@@ -374,9 +439,9 @@ chapters:
           'It is a matter of life or death!' The letter goes to Ugarit with a royal seal. The
           grain ship sails to Ura on the Cilician coast, and wagons carry the grain up into
           the mountains. Egypt sends grain too, for its old enemy. It is not enough for long.
-      - label: "Move the people of the plateau down to the coast"
-        unrest_bp: 1500
-        food_bp: 1500
+      - label: "Send the people of the plateau down to the coast"
+        unrest_bp: 1000
+        food_bp: 2000
         outcome: >-
           Long columns of families come down from the plateau to Cilicia and Syria, where there
           is food. Hattusa feels empty.
@@ -387,6 +452,12 @@ chapters:
         outcome: >-
           For years your workshops have been sealing cooked grain and meat in tin-lined jars.
           The stores open; no one starves.
+      - label: "Buy grain from Egypt with silver"
+        food_bp: 2500
+        wealth_bp: -1000
+        outcome: >-
+          Your ally in Egypt sells you what it can spare. The price is high, and the grain
+          comes slowly up the long road.
     history: >-
       Late-13th-century letters from Hatti to Ugarit demand grain shipments, one calling it
       'a matter of life or death'; Merneptah of Egypt also sent grain to Hatti.
@@ -411,7 +482,7 @@ chapters:
       The Hittites have never fought at sea. You have ordered ships built in Ugarit and
       Cilicia, and you mean to command them yourself.
     choices:
-      - label: "Sail out and fight them at sea"
+      - label: "Take command of the new fleet yourself"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -419,11 +490,21 @@ chapters:
           them at sea. Then you land and fight them on the shore. You carve it on a stone at
           Hattusa: the first sea battle in history whose victor tells us about it.
         deeds: {ships: 40, war_with: [alashiya]}
-      - label: "Hold the coast with forts, and keep the army at home"
-        legitimacy_bp: 300
+      - label: "Wall and garrison the coast"
+        legitimacy_bp: 500
+        materials_bp: -500
         outcome: >-
           The coastal towns are walled and garrisoned. The raiders go elsewhere - to Ugarit,
           to Amurru, to Egypt.
+        deeds: {men: 6000}
+      - label: "Place the Ugarit fleet under your admiral"
+        legitimacy_bp: 1000
+        wealth_bp: 500
+        outcome: >-
+          The ships of Ugarit and the new Hittite ships sail together under one admiral. The
+          ships of Ugarit are glad of the protection, and the king of Ugarit is less glad
+          to lose his command.
+        deeds: {ships: 25}
     history: >-
       Suppiluliuma II recorded three sea victories over the ships of Alashiya and a landing on
       the coast, around 1200 BC, on an inscription found at Hattusa.
@@ -448,7 +529,7 @@ chapters:
 
       Hattusa has walls, and the gods on the rock. But it has no food.
     choices:
-      - label: "Take the court and the archives, and leave Hattusa"
+      - label: "Withdraw the court and archives"
         historical: true
         legitimacy_bp: -2000
         outcome: >-
@@ -458,13 +539,21 @@ chapters:
           Czech linguist to read them in the twentieth century. In Carchemish and the cities of
           Syria, kings will call themselves Hittite for another five hundred years.
         deeds: {capital: hat_carchemish}
-      - label: "Stay, whatever comes"
+      - label: "Hold Hattusa to the end"
         legitimacy_bp: 1500
-        food_bp: -3000
-        unrest_bp: 2000
+        food_bp: -2000
+        unrest_bp: 1500
         outcome: >-
           The Great King stays in his city. The granaries are scraped clean. Whatever comes
           will find the King of Hatti on his throne.
+        deeds: {men: 4000}
+      - label: "Move the court to the Lower Land"
+        legitimacy_bp: -1000
+        unrest_bp: 500
+        outcome: >-
+          The court goes south to join your cousins in the Lower Land, and the king of Hatti
+          rules from there. Hattusa is left to its garrison and its gods.
+        deeds: {capital: hat_lower_land}
     history: >-
       Hattusa was abandoned around 1185 BC - apparently in an orderly way - and later burned.
       The Hittite language was deciphered by Bedřich Hrozný in 1915; Neo-Hittite kingdoms

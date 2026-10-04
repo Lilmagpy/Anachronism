@@ -48,13 +48,13 @@ chapters:
           You remain close to the court and the money. The Hatakeyama, in the south, take
           note of your caution.
       - label: "Take up residence in Kyoto by the court"
-        legitimacy_bp: 700
+        legitimacy_bp: 1100
         wealth_bp: 500
         unrest_bp: 400
         outcome: >-
-          You move into the capital itself, among the courtiers and the money-lenders. The
-          court is flattered and the shogun uneasy, and your brothers, left in the provinces,
-          must look after themselves.
+          You move into the capital itself, among the courtiers and the money-lenders. The court
+          is flattered and praises the lord who lives among it, the shogun is uneasy, and your
+          brothers, left in the provinces, must look after themselves.
     history: >-
       By 1560 Miyoshi Nagayoshi ruled Settsu, Kawachi and Yamato with his steward Matsunaga
       Hisahide, held Kyoto in practice, and had moved to Iimoriyama castle.
@@ -94,13 +94,13 @@ chapters:
         outcome: >-
           They take Izumi for their peace. The shogun is delighted.
       - label: "Send Hisahide to the field, and hold the castle"
-        legitimacy_bp: 400
+        legitimacy_bp: 1000
         wealth_bp: -500
-        unrest_bp: 500
+        unrest_bp: 300
         outcome: >-
-          Hisahide takes the army south and does what is needed, at a price. The Hatakeyama
-          fall back, and the retainers murmur that the lord of the house sat behind his walls
-          while a steward won the war.
+          Hisahide takes the army south and does what is needed, at a price. The Hatakeyama fall
+          back, and your retainers, relieved, accept that the lord of the house must guard its
+          heart; a few murmur that a steward won the war.
         deeds: {men: 1500}
     history: >-
       The Miyoshi lost Jikkyu (1561) and Sogo Kazumasa (1562) fighting the Hatakeyama and the

@@ -51,12 +51,12 @@ chapters:
           The kingdom is left to the priests' choice of your heir. The Greeks will never hear of
           you again.
       - label: "Buy the priests off with land and treasure"
-        wealth_bp: -2000
+        wealth_bp: -1000
+        legitimacy_bp: 1500
         influence: {clergy: 1000}
-        legitimacy_bp: 300
         outcome: >-
-          The priests take the offering and keep the right to speak in the god's name. The next
-          king will have to fight the same quarrel.
+          The priests take the offering and proclaim you the god's beloved, and keep the right to
+          speak in the god's name. The next king will have to fight the same quarrel.
     history: >-
       According to Diodorus (3.6), who draws on the Greek writer Agatharchides, Ergamenes, a king
       of Meroe in the time of Ptolemy II, broke the priests' power by force. The tale is a
@@ -97,10 +97,12 @@ chapters:
           before long, Greek stories about you.
         deeds: {peace_with: [ptolemaic]}
       - label: "Dispute the strip, and send soldiers north"
-        unrest_bp: 800
+        wealth_bp: 800
+        unrest_bp: 300
+        legitimacy_bp: 1000
         outcome: >-
-          Your army can hold the river but not the Egyptian grain behind it. The Ptolemies
-          send mercenaries and ships, and your gold fills their treasury anyway.
+          Your army holds the river, and the border tolls pour into your treasury for a season. The
+          Ptolemies send mercenaries and ships, and your people live on a hard war footing.
         deeds: {martial_bp: 300, grudges: {ptolemaic: 2000}}
       - label: "Close the roads to Egypt"
         wealth_bp: -1000
@@ -192,10 +194,11 @@ chapters:
           Meroe will build him other temples, at Naqa and elsewhere.
       - label: "Spend the money on Amun at Napata"
         wealth_bp: -800
+        legitimacy_bp: 800
         influence: {clergy: 1500}
-        legitimacy_bp: 300
         outcome: >-
-          Napata's priests are delighted and the southern herdsmen are not.
+          Napata's priests are delighted and the southern herdsmen are not; the crowds at the Amun
+          festival are the largest in years.
       - label: "Dig canals and a reservoir for the herds"
         food_bp: 1500
         wealth_bp: -800
@@ -298,8 +301,10 @@ chapters:
         deeds: {martial_bp: 300, grudges: {ptolemaic: 3000}}
       - label: "Keep the peace with Alexandria"
         wealth_bp: 500
+        legitimacy_bp: 300
         outcome: >-
-          Alexandria is grateful, and the rebel pharaohs in Thebes do not forget it.
+          Alexandria is grateful and sends gifts, and the court at Napata approves the prudence. The
+          rebel pharaohs in Thebes do not forget it.
         deeds: {peace_with: [ptolemaic]}
     history: >-
       During the Theban revolt (205-186 BC) the Ptolemies lost control of the south. The

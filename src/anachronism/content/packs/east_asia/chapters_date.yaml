@@ -26,17 +26,24 @@ chapters:
       Your son Terumune has grown up and is impatient. You can keep the house, and perhaps
       fight him as you fought your father, or step aside.
     choices:
-      - label: "Step aside, and retire to Marumori"
+      - label: "Step aside for Terumune"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
           You hand the house to Terumune and retire to the castle of Marumori, where you live
           another fourteen years and quarrel with him only in letters.
         deeds: {ruler_falls: "retires, and leaves the house to his son Terumune"}
-      - label: "Keep the house"
+      - label: "Keep the house in your own hands"
         unrest_bp: 1500
         outcome: >-
           Terumune waits. His retainers begin to count who would follow whom.
+      - label: "Share the governing, and keep the seal"
+        legitimacy_bp: 900
+        unrest_bp: 300
+        outcome: >-
+          Terumune is given the daily work of the house, and you keep the seal and the last
+          word. The retainers learn to carry petitions to one of you or to the other, and
+          some of them learn to play you against each other.
     history: >-
       Date Harumune, victor of the Tenbun war against his father, retired in favour of
       Terumune in the mid-1560s and died in 1578.
@@ -61,18 +68,26 @@ chapters:
 
       You want to hand him the house while you are still alive to guide him.
     choices:
-      - label: "Give Masamune the house"
+      - label: "Give the house to Masamune"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
           Masamune becomes lord of the Date at seventeen, and begins at once to pick fights
           with his neighbours. You retire to a nearby castle to advise him.
         deeds: {ruler_falls: "hands the house to his son Masamune"}
-      - label: "Make him wait"
+      - label: "Make him wait some years more"
         unrest_bp: 1000
         outcome: >-
           Masamune waits, and sharpens his sword, and his father's retainers start to watch
           him.
+      - label: "Give him the army, and keep the seal"
+        legitimacy_bp: 1500
+        unrest_bp: 300
+        outcome: >-
+          Masamune is made captain of your armies, and he is delighted. You keep the seal and
+          the household accounts, and the old retainers wonder aloud who will really rule at
+          Yonezawa.
+        deeds: {men: 3000}
     history: >-
       Date Terumune retired in favour of Masamune in 1584, when Masamune was seventeen.
     sources: ["Date chika kiroku", "Kobayashi Seiji, Date Masamune (1959)"]
@@ -96,7 +111,7 @@ chapters:
       You were out hunting. You have caught up with them at the river crossing. Your father
       is in their midst, a sword at his throat. Your men have their guns raised.
     choices:
-      - label: "Open fire"
+      - label: "Order your musketeers to fire"
         historical: true
         legitimacy_bp: -1000
         unrest_bp: 1000
@@ -106,11 +121,22 @@ chapters:
           house in the region marches against you, thirty thousand to your seven, and at
           Hitotoribashi you barely survive.
         deeds: {martial_bp: 1000}
-      - label: "Let them cross, and negotiate"
-        legitimacy_bp: -500
+      - label: "Let them cross, and bargain for him"
+        legitimacy_bp: -800
+        unrest_bp: 600
         outcome: >-
           The Hatakeyama take your father across the river. The price of his return is every
-          castle you took from them.
+          castle you took from them, and your garrisons march out.
+        deeds: {martial_bp: -500}
+      - label: "Race ahead and bar the next ford"
+        legitimacy_bp: -700
+        unrest_bp: 700
+        outcome: >-
+          Your horsemen reach the next ford before the kidnappers and block it. With a sword
+          at your father's throat you cannot attack, and the standoff drags on until
+          Yoshitsugu's friends arrive. The bargain at the end of it is harder than the one
+          you could have made at the first river.
+        deeds: {men: 2000}
     history: >-
       In 1585 Hatakeyama Yoshitsugu abducted Date Terumune; Masamune's men attacked at the
       Abukuma river and Terumune was killed along with his captors.
@@ -120,7 +146,7 @@ chapters:
     scenario: sengoku
     civ: date
     year: 1590
-    title: "A White Robe for Odawara"
+    title: "Summons to Odawara"
     place: "Hideyoshi's camp before Odawara"
     speaker: oda
     speaker_name: "Toyotomi Hideyoshi"
@@ -135,7 +161,7 @@ chapters:
 
       You have arrived very late. Your retainers think you may be ordered to cut your belly.
     choices:
-      - label: "Come before him dressed for death"
+      - label: "Go to Hideyoshi's camp in person"
         historical: true
         legitimacy_bp: 500
         outcome: >-
@@ -147,6 +173,14 @@ chapters:
         outcome: >-
           When Odawara falls, Hideyoshi's army turns north. Your gifts are returned.
         deeds: {grudges: {oda: 3000}}
+      - label: "Bring an army and stores to the siege"
+        legitimacy_bp: 600
+        wealth_bp: -500
+        outcome: >-
+          You march to Odawara with spearmen and carts of rice, and offer both to Hideyoshi.
+          He takes them and your oath, and he does not forget how late you came. Aizu is taken
+          from you all the same.
+        deeds: {men: 3000}
     history: >-
       Masamune submitted to Hideyoshi at Odawara in 1590 after arriving late; he lost Aizu.
       The white robe is a famous later story.
@@ -156,7 +190,7 @@ chapters:
     scenario: sengoku
     civ: date
     year: 1591
-    title: "The Wagtail's Eye"
+    title: "A Summons to Kyoto"
     place: "Kyoto"
     speaker: steward
     speaker_name: "Gamo Ujisato"
@@ -170,7 +204,7 @@ chapters:
 
       You have been summoned to Kyoto to explain yourself.
     choices:
-      - label: "Explain the wagtail"
+      - label: "Go to Kyoto and answer the charge in person"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -179,10 +213,17 @@ chapters:
           yours has a tiny hole pierced through the wagtail's eye, and that this one has none.
           Hideyoshi checks your other letters, and lets you go - with your lands moved
           further north.
-      - label: "Admit it, and beg for mercy"
+      - label: "Admit the letter, and beg for mercy"
         legitimacy_bp: -2500
         outcome: >-
           Hideyoshi is not merciful to men who admit things.
+      - label: "Send your heir and gold to Kyoto as a pledge"
+        legitimacy_bp: 2200
+        wealth_bp: -500
+        outcome: >-
+          Your heir goes to Kyoto as a hostage, with chests of gold for Hideyoshi's court.
+          Hideyoshi accepts them and lets the matter drop, but he moves you from your old
+          lands all the same, and your enemies in the north take note of your price.
     history: >-
       Masamune was suspected of encouraging the Kasai-Osaki rising (1590-1591) and cleared
       himself before Hideyoshi; the pierced-wagtail and golden-cross stories are told in later
@@ -208,7 +249,7 @@ chapters:
       You want a new capital: a castle on Aoba hill above the river Hirose, and a town
       planned below it, wide streets and canals, with a port for ships.
     choices:
-      - label: "Build Sendai"
+      - label: "Move your court to a new castle on Aoba hill"
         historical: true
         legitimacy_bp: 1500
         wealth_bp: -1500
@@ -216,10 +257,18 @@ chapters:
           Sendai castle rises on its hill, and a city of tens of thousands grows beneath it.
           You drain the marshes, dig canals and plant rice, and your domain becomes one of the
           richest in Japan. Your statue still rides on the castle hill.
-      - label: "Stay in Iwadeyama"
+      - label: "Keep your court at Iwadeyama"
         wealth_bp: 1000
         outcome: >-
           You stay in your old castle in the hills, and the new port is built by someone else.
+      - label: "Spend on border castles and the army"
+        legitimacy_bp: 1100
+        wealth_bp: -1200
+        outcome: >-
+          The money goes into stone walls on the frontier and into spearmen, and the court
+          stays where it is. Your retainers are proud, and the domain is safe, but there is
+          no new port and no new town.
+        deeds: {martial_bp: 500}
     history: >-
       Masamune founded Sendai and began Sendai castle in 1600-1601, after supporting Ieyasu.
     sources: ["Date chika kiroku", "Kobayashi Seiji, Date Masamune (1959)"]
@@ -243,7 +292,7 @@ chapters:
       Your shipwrights, helped by Spanish sailors, have built a great Western-style galleon.
       Your retainer Hasekura Tsunenaga will lead the embassy.
     choices:
-      - label: "Send Hasekura across the world"
+      - label: "Send an embassy to Spain and the Pope"
         historical: true
         knowledge_bp: 2500
         legitimacy_bp: 500
@@ -252,10 +301,19 @@ chapters:
           the Atlantic, meets King Philip III, is baptised in Madrid, and is made a citizen of
           Rome by the Pope. He comes home seven years later, to a Japan where the shogun has
           banned Christianity. He never speaks of it again. His portrait hangs in Rome.
-      - label: "Trade through Nagasaki like everyone else"
+      - label: "Trade through Nagasaki and the Portuguese"
         wealth_bp: 1000
         outcome: >-
           The galleon is sold, and your merchants buy Spanish goods from the Portuguese.
+      - label: "Keep the galleon, and hire Spanish shipwrights"
+        knowledge_bp: 2400
+        legitimacy_bp: 1100
+        wealth_bp: -300
+        outcome: >-
+          Sotelo's friends and a few Spanish craftsmen stay at Tsukinoura to teach your men to
+          build and sail ocean ships, and to work silver. The ships, though, go no further than
+          the Pacific coast, and the king and the Pope hear nothing of Date.
+        deeds: {ships: 2}
     history: >-
       Masamune's Keicho embassy under Hasekura Tsunenaga (1613-1620) reached Mexico, Spain and
       Rome; on his return Christianity had been banned in Japan.

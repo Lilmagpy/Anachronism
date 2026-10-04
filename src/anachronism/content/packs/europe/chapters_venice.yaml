@@ -11,7 +11,7 @@ chapters:
     scenario: year_1000
     civ: venice
     year: 1000
-    title: "Ascension Day"
+    title: "The Narentine Tribute"
     place: "The lagoon, off the Lido"
     speaker: scholar
     speaker_name: "John the Deacon"
@@ -27,7 +27,7 @@ chapters:
       It is Ascension Day. Your fleet is ready at the Lido, and the bishop of Olivolo is
       waiting to bless it.
     choices:
-      - label: "Sail down the coast"
+      - label: "Lead the fleet down the coast"
         historical: true
         legitimacy_bp: 2000
         wealth_bp: 1500
@@ -38,9 +38,17 @@ chapters:
           out to the Lido; in later centuries he will throw a ring into the sea and marry it.
       - label: "Pay the pirates' tribute, as usual"
         wealth_bp: -1000
+        legitimacy_bp: -500
         outcome: >-
           The ships sail safely, at a price, and the Dalmatian towns look elsewhere for
           protection.
+      - label: "Escort the merchant convoys"
+        wealth_bp: 1500
+        legitimacy_bp: 1500
+        deeds: {ships: 3}
+        outcome: >-
+          Armed galleys sail beside the merchantmen, and fewer ships are robbed, and the dues of safe trade fill the treasury. The pirates'
+          island strongholds stay where they are, and the Dalmatian towns look to the Croats.
     history: >-
       In 1000 Pietro II Orseolo led a fleet down the Dalmatian coast, received the
       submission of its towns and took the title Duke of the Dalmatians; the Ascension Day
@@ -81,6 +89,13 @@ chapters:
         legitimacy_bp: 500
         outcome: >-
           Basil is a little offended. Your citizens are a little reassured.
+      - label: "Decline the bride, and ask for lower tolls"
+        wealth_bp: 1500
+        legitimacy_bp: 1700
+        unrest_bp: 500
+        outcome: >-
+          Basil grants a small reduction in what Venetian ships pay, and does not hide that he
+          is disappointed. In Venice, your family seems less like a royal house.
     history: >-
       After Venice relieved Bari (1002-1003), Giovanni Orseolo married Maria Argyropoulina in
       Constantinople (c. 1004); both died of plague in about 1006. Peter Damian told the
@@ -109,7 +124,7 @@ chapters:
       The citizens want you to give up the Orseolo bishoprics, and to swear that no doge will
       ever again name his son as co-doge.
     choices:
-      - label: "Refuse; your family has served Venice well"
+      - label: "Refuse the demands outright"
         historical: true
         legitimacy_bp: -1500
         unrest_bp: 1500
@@ -118,11 +133,19 @@ chapters:
           and you are sent into exile in Constantinople, where you die. Venice never again
           allows a dynasty of doges.
       - label: "Agree, and give up the bishoprics"
-        legitimacy_bp: 500
-        influence: {clergy: -1000}
+        legitimacy_bp: 300
+        unrest_bp: 500
+        influence: {clergy: -1000, nobility: -800}
         outcome: >-
-          Your brothers resign their sees. You stay doge, and the Orseolo become one family
-          among others.
+          Your brothers resign their sees, and your kin and their friends do not forgive it.
+          You stay doge, and the Orseolo become one family among others.
+      - label: "Give up Torcello but keep Grado"
+        legitimacy_bp: -300
+        unrest_bp: 800
+        influence: {clergy: -500}
+        outcome: >-
+          One brother resigns his see; the other stays. The Gradenigo call it a trick, and
+          your own kinsmen call it weakness.
     history: >-
       Otto Orseolo (doge 1008-1026) was deposed in 1026, shaved and exiled to Constantinople;
       the Orseolo were finally excluded in 1032.
@@ -132,7 +155,7 @@ chapters:
     scenario: year_1000
     civ: venice
     year: 1033
-    title: "No More Sons"
+    title: "A Silk Merchant Doge"
     place: "The general assembly of Venice"
     speaker: steward
     speaker_name: "The assembly"
@@ -147,7 +170,7 @@ chapters:
       The assembly proposes a law: no doge may ever again appoint a co-doge or successor,
       and the doge must govern with two councillors beside him.
     choices:
-      - label: "Accept the law"
+      - label: "Bind the doge to two councillors"
         historical: true
         legitimacy_bp: 2000
         influence: {guilds: 1500, nobility: -500}
@@ -155,10 +178,17 @@ chapters:
           The law is passed. The doge of Venice becomes the elected head of a republic, bound
           by councils. In time the councils will become the Great Council, and Venice will be
           governed this way for seven hundred and sixty years.
-      - label: "Keep the doge's old powers"
+      - label: "Keep the doge's powers as they are"
         legitimacy_bp: -1000
+        influence: {nobility: 1000}
         outcome: >-
           The assembly gives way, for now, and watches you.
+      - label: "Take the councillors, but keep your heir"
+        legitimacy_bp: 1500
+        influence: {guilds: 500, nobility: 500}
+        outcome: >-
+          The assembly grumbles but agrees: the councillors are appointed and you may name an
+          heir, though the old families watch you closely.
     history: >-
       Under Domenico Flabanico (1032-1043) Venice forbade co-doges and set two ducal
       councillors beside the doge.
@@ -168,7 +198,7 @@ chapters:
     scenario: year_1000
     civ: venice
     year: 1063
-    title: "A Church Like the Apostles'"
+    title: "The Chapel of St Mark"
     place: "The doge's chapel of St Mark"
     speaker: scholar
     speaker_name: "Your master builder"
@@ -180,11 +210,12 @@ chapters:
       and too plain for the patron of a sea power.
 
 
-      Your builder proposes a new church copied from the Church of the Holy Apostles in
-      Constantinople, where the emperors are buried: a Greek cross with five domes, to be
-      covered one day in gold mosaic.
+      Your builder, trained in Constantinople, would copy the Church of the Holy Apostles
+      there, where the emperors are buried: a Greek cross with five domes, to be covered one
+      day in gold mosaic. Churchmen from the mainland would rather see a church like those of
+      Lombardy, and some of your councillors would sooner spend the money on ships.
     choices:
-      - label: "Build it, in the Greek style"
+      - label: "Rebuild on a Constantinople model"
         historical: true
         legitimacy_bp: 2000
         wealth_bp: -2000
@@ -194,11 +225,18 @@ chapters:
           expected to bring a marble column or a carving for it. When the Holy Apostles in
           Constantinople is pulled down by the Ottomans, St Mark's will be the best picture of
           what it looked like.
-      - label: "Build it in the Lombard style, like the mainland churches"
-        legitimacy_bp: 1000
+      - label: "Rebuild in the mainland Lombard manner"
+        legitimacy_bp: 1500
         wealth_bp: -1500
         outcome: >-
           A handsome brick church rises, and nobody from Constantinople is impressed.
+      - label: "Mend the old chapel and refit the fleet"
+        legitimacy_bp: 300
+        wealth_bp: -500
+        deeds: {ships: 2}
+        outcome: >-
+          The chapel is patched and the money goes to new galleys. Visitors from the east
+          notice that the patron of a sea power still has a plain house.
     history: >-
       Rebuilding of St Mark's Basilica began under Doge Domenico Contarini in 1063, on the
       model of the Holy Apostles in Constantinople.
@@ -208,7 +246,7 @@ chapters:
     scenario: year_1000
     civ: venice
     year: 1082
-    title: "The Golden Bull"
+    title: "Alexios Asks for Ships"
     place: "Constantinople"
     speaker: byzantium
     speaker_name: "Alexios I Komnenos"
@@ -222,7 +260,8 @@ chapters:
       name. Your fleet has already beaten the Normans at sea off Durazzo.
 
 
-      Alexios offers a reward for your help: a golden bull, a charter sealed in gold.
+      Alexios asks for your help again and offers a reward. Your own councillors are divided
+      about what to ask for.
     choices:
       - label: "Take the emperor's terms"
         historical: true
@@ -239,6 +278,12 @@ chapters:
         outcome: >-
           Venice takes a modest reduction in customs, and Greek merchants do not learn to hate
           you.
+      - label: "Take a yearly sum of gold instead"
+        wealth_bp: 4000
+        legitimacy_bp: 1000
+        outcome: >-
+          Alexios agrees to pay a yearly sum to the doge and his church. It is a good price, but
+          it is paid at the emperor's pleasure, and your merchants gain nothing from it.
     history: >-
       Alexios I's chrysobull (probably 1082) granted Venice tax-free trade across most of the
       empire and a quarter in Constantinople, in return for naval help against the Normans.
@@ -274,8 +319,17 @@ chapters:
         deeds: {ruler_falls: "is deposed and becomes a monk"}
       - label: "Face them down"
         unrest_bp: 2000
+        legitimacy_bp: -1500
         outcome: >-
-          You stay in the palace. The crowd stays in the Piazza.
+          You stay in the palace. The crowd stays in the Piazza, and the mood grows uglier
+          with every day.
+      - label: "Promise a new fleet at once"
+        wealth_bp: -1500
+        legitimacy_bp: -1000
+        deeds: {ships: 8}
+        outcome: >-
+          You open the treasury and the shipyards. The crowd breaks up, but no one forgets who
+          led the fleet to Corfu.
     history: >-
       After the Venetian defeat off Corfu (1084), Domenico Selvo was deposed and replaced by
       Vitale Falier.

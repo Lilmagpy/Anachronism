@@ -46,11 +46,11 @@ chapters:
           the Ebro valley are weak and divided.
         deeds: {peace_with: [cordoba]}
       - label: "Wed a princess of Gascony"
-        legitimacy_bp: 800
+        legitimacy_bp: 1700
         influence: {nobility: 500}
         outcome: >-
-          The Gascon dukes are glad of you, but Castile is left to quarrel on your western
-          border.
+          The Gascon dukes are glad of you, and the match is praised across the Pyrenees, but
+          Castile is left to quarrel on your western border.
         deeds: {martial_bp: 300}
       - label: "Guard the border, and wed no one yet"
         unrest_bp: 500
@@ -101,12 +101,12 @@ chapters:
           barons murmur at your weakness.
         deeds: {peace_with: [leon]}
       - label: "Take only Castile's eastern marches"
-        legitimacy_bp: 1000
+        legitimacy_bp: 1600
         influence: {nobility: 400}
         outcome: >-
           You take the lands along the Ebro and the Rioja road, which are closest to your own,
-          and leave the western counties to Vermudo. The Castilian lords there are not pleased to
-          be divided.
+          and leave the western counties to Vermudo. The Castilian lords there are not pleased
+          to be divided, but what you hold is secure and your title is widely accepted.
         deeds: {martial_bp: 200}
     history: >-
       After the murder of Count García in 1029 Sancho III took Castile through his wife
@@ -143,10 +143,11 @@ chapters:
           last no longer than you do. Your sons, who cannot hold it together, will share it.
         deeds: {take: [m_leon], peace_with: [cordoba]}
       - label: "Take his border lands, spare his crown"
-        legitimacy_bp: 1000
+        legitimacy_bp: 2500
         influence: {nobility: 500}
         outcome: >-
-          Vermudo keeps León, a vassal in all but name, and you keep what you have.
+          Vermudo keeps León, a vassal in all but name, and you keep what you have. The
+          Christian world hears that you spared an anointed king, and your name rises.
         deeds: {martial_bp: 300, peace_with: [leon]}
       - label: "Hold what you have, go no further"
         legitimacy_bp: -800
@@ -196,11 +197,11 @@ chapters:
           They will not obey you, and each of them has his own army.
         deeds: {give: [m_leon], give_to: leon}
       - label: "Keep León too, and fight Vermudo for it"
-        legitimacy_bp: -500
-        unrest_bp: 800
+        legitimacy_bp: 1000
+        unrest_bp: 300
         outcome: >-
-          The Leonese will not have a boy as their king, and Ferdinand will make good use of the
-          chance.
+          The Leonese accept a boy as their king for the sake of peace, and the barons are quiet
+          for now. Ferdinand, watching, will make good use of the first chance.
     history: >-
       Sancho III died in October 1035, and his kingdom passed to his sons in the traditional
       division: García in Pamplona, Ferdinand in Castile, Gonzalo and Ramiro in the Pyrenean
@@ -337,12 +338,13 @@ chapters:
           have taken Tudela and Calatayud as well.
         deeds: {take: [m_zaragoza]}
       - label: "Take tribute from Zaragoza's king instead"
-        wealth_bp: 1000
-        legitimacy_bp: 300
+        wealth_bp: 2500
+        legitimacy_bp: 1500
         unrest_bp: 500
         outcome: >-
-          The Muslim city stays rich and weak, but your knights, and the French crusaders, are
-          disappointed.
+          Zaragoza's king pays you a heavy tribute and stays rich and weak. Your knights, and
+          the French crusaders, are disappointed to leave the walls unscaled, but the gold is
+          real and your name is respected.
         deeds: {peace_with: [cordoba]}
       - label: "Turn instead against Castile and Urraca"
         legitimacy_bp: -500
@@ -395,9 +397,11 @@ chapters:
           The Templars are far away, and the Navarrese nobles are angry at being given away.
         deeds: {give: [m_zaragoza], give_to: barcelona}
       - label: "Submit to the king of León and Castile as your overlord"
-        legitimacy_bp: -1000
+        influence: {nobility: -800}
+        legitimacy_bp: 2700
         outcome: >-
-          Alfonso VII is pleased, and your own people less so.
+          Alfonso VII is pleased, and as his vassal you have his protection and the recognition
+          of the courts of Spain. Your own nobles, who wanted a free Navarre, take it badly.
         deeds: {give: [m_zaragoza], give_to: barcelona}
     history: >-
       After Alfonso the Battler's death in September 1134, the Navarrese elected García Ramírez

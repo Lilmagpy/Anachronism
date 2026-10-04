@@ -48,13 +48,14 @@ chapters:
           Chanakya says nothing, which is worse than anything he could say.
         deeds: {war_with: [nanda]}
       - label: "Sow discord among the Nanda ministers first"
-        legitimacy_bp: 700
-        wealth_bp: -600
+        wealth_bp: -400
+        legitimacy_bp: 1000
         outcome: >-
-          Chanakya's agents spend a year buying officers and spreading rumours at Pataliputra.
-          Several of the Nanda commanders begin to answer your letters, and you raise a modest
-          band from the men who defect.
-        deeds: {"men": 12000, "martial_bp": 300}
+          Chanakya's agents spend a year buying officers and spreading rumours at Pataliputra. Several
+          of the Nanda commanders begin to answer your letters, and you raise a modest band from the
+          men who defect. The frontier clans hear of it and your name is respected, but the year of
+          waiting empties your purse.
+        deeds: {men: 12000, martial_bp: 300}
     history: >-
       The porridge story is told in the Buddhist Mahavamsa commentary and the Jain
       Parishishtaparvan. Chandragupta rose against the Nandas in about 322-321 BC; the Greek
@@ -95,18 +96,18 @@ chapters:
           you - and his half of the kingdom is yours. Chanakya ties up his hair.
         deeds: {conquer: [nanda]}
       - label: "Ally with Parvataka and truly divide the realm"
-        legitimacy_bp: 1000
+        legitimacy_bp: 1400
         outcome: >-
           Parvataka takes the hill country and the north of the plain. You take Magadha and
           the river. It is not an empire, but it is a kingdom with friends.
         deeds: {take: [in_magadha, in_anga, in_kashi, in_vatsa, in_kosala]}
       - label: "Besiege Pataliputra alone, and keep the prize"
-        legitimacy_bp: 1200
         food_bp: -1500
+        legitimacy_bp: 1700
         outcome: >-
-          Your own army sits before the wooden walls through a hard winter. The city is
-          starved out in the spring, but the cost is heavy and your men are worn.
-        deeds: {"men": 20000, "war_with": ["nanda"]}
+          Your own army sits before the wooden walls through a hard winter. The city is starved out in
+          the spring, and the prize is wholly yours; but the cost is heavy and your men are worn.
+        deeds: {men: 20000, war_with: [nanda]}
     history: >-
       Chandragupta overthrew the Nandas and took Pataliputra around 321 BC. The tales of
       Parvataka and the poison maiden come from the play Mudrarakshasa (perhaps 4th-8th
@@ -152,13 +153,13 @@ chapters:
           Rakshasa dies in a hill fort. His clerks do not forgive you, and Pataliputra's
           offices run slowly for years.
       - label: "Pardon him and offer a lesser post"
-        legitimacy_bp: 700
-        wealth_bp: -300
-        influence: {"nobility": 800}
+        wealth_bp: -400
+        legitimacy_bp: 1400
+        influence: {nobility: 800}
         outcome: >-
-          Rakshasa refuses a minor post from the men who destroyed his masters. He goes on
-          plotting from exile, though with fewer friends each year, and the Nanda clerks serve
-          you grudgingly.
+          Rakshasa refuses a minor post from the men who destroyed his masters. He goes on plotting
+          from exile, though with fewer friends each year; your clemency is praised in the markets,
+          and the Nanda clerks serve you with less grudge.
     history: >-
       Rakshasa and the signet ring come from Vishakhadatta's play Mudrarakshasa ('Rakshasa's
       Ring'). Whatever the truth of it, the Mauryas took over and expanded the Nanda
@@ -194,7 +195,7 @@ chapters:
           Persia within the year. The Indus is yours down to the sea.
         deeds: {take: [in_sindh]}
       - label: "Fall on his column as it marches"
-        legitimacy_bp: 1500
+        legitimacy_bp: 1900
         unrest_bp: 500
         outcome: >-
           Your horsemen cut up his rearguard in the Swat valley. He gets away with most of the
@@ -253,12 +254,13 @@ chapters:
           promising to come back.
         deeds: {war_with: [satraps], grudges: {satraps: 3000}}
       - label: "Pay him in gold, and keep your own lands"
-        legitimacy_bp: 500
-        wealth_bp: -1500
+        wealth_bp: -500
+        legitimacy_bp: 2700
         outcome: >-
-          Seleucus takes a heavy payment and a promise of friendship, and goes home to face
-          Antigonus without any new province. The western lands stay in dispute.
-        deeds: {"peace_with": ["satraps"]}
+          Seleucus takes a payment and a promise of friendship, and goes home to face Antigonus
+          without any new province. Your court praises a cheap peace, though the western lands stay in
+          dispute.
+        deeds: {peace_with: [satraps]}
     history: >-
       Around 305-303 BC Seleucus I and Chandragupta made a treaty: Seleucus ceded the eastern
       satrapies for 500 elephants, with a marriage alliance; the elephants helped win Ipsus
@@ -314,9 +316,10 @@ chapters:
       - label: "Seat him among the philosophers only"
         knowledge_bp: 1000
         unrest_bp: -300
+        legitimacy_bp: 600
         outcome: >-
-          Megasthenes spends his days with brahmins and ascetics and writes a pious, rather
-          dreamy book. The markets and the army stay out of his notes.
+          Megasthenes spends his days with brahmins and ascetics and writes a pious, rather dreamy
+          book that is much read at home. The markets and the army stay out of his notes.
     history: >-
       Megasthenes was Seleucus's ambassador to Chandragupta around 300 BC. His Indica is lost
       but quoted at length by Arrian, Strabo and Diodorus. Wooden walls of Pataliputra have
@@ -356,7 +359,7 @@ chapters:
       - label: "Take the good parts, and leave out the spies"
         wealth_bp: 1000
         unrest_bp: -500
-        legitimacy_bp: 400
+        legitimacy_bp: 700
         outcome: >-
           Weights and measures are fixed and roads are built. The secret service is quietly
           disbanded. Chanakya says you will regret it.
@@ -519,12 +522,14 @@ chapters:
           The Deccan chiefs pay a little tribute and go on as before.
         deeds: {"men": 15000}
       - label: "Take only the gold-bearing Karnata hills"
-        legitimacy_bp: 700
-        wealth_bp: 1200
+        wealth_bp: 800
+        unrest_bp: 600
+        legitimacy_bp: 1000
         outcome: >-
-          A smaller campaign into the south-west takes the hill country and its gold workings,
-          and no more. The Tamil kings are left to themselves.
-        deeds: {"take": ["in_karnata"], "men": 8000}
+          A smaller campaign into the south-west takes the hill country and its gold workings, and no
+          more. The Tamil kings are left to themselves; the hill chiefs are not so easily quieted, and
+          the new province is restless.
+        deeds: {take: [in_karnata], men: 8000}
     history: >-
       Bindusara (r. c. 297-273 BC) seems to have extended the empire into the Deccan; Taranatha
       (17th century) credits Chanakya with conquering sixteen cities 'between the eastern and
@@ -662,13 +667,12 @@ chapters:
           Kalinga sends elephants and pearls. Its kings watch you warily.
         deeds: {tributaries: [kalinga]}
       - label: "Blockade its ports and demand its elephants"
-        legitimacy_bp: 400
         wealth_bp: 800
+        legitimacy_bp: 500
         outcome: >-
-          Your fleets and your horse close Kalinga's ports and roads. After a bitter season
-          its council hands over elephants and pearls, but its army stays unbroken behind the
-          hills.
-        deeds: {"men": 20000}
+          Your fleets and your horse close Kalinga's ports and roads. After a bitter season its
+          council hands over elephants and pearls, but its army stays unbroken behind the hills.
+        deeds: {men: 20000}
     history: >-
       Ashoka conquered Kalinga around 261 BC. His own Rock Edict XIII gives the figures: 150,000
       deported, 100,000 killed, 'and many times that number died'.
@@ -716,13 +720,15 @@ chapters:
           kings.
         deeds: {"men": 30000, "war_with": ["chola"]}
       - label: "Keep the army, but fight only if attacked"
-        legitimacy_bp: 800
-        unrest_bp: -800
-        influence: {"clergy": 1000}
+        wealth_bp: -200
+        unrest_bp: -1300
+        legitimacy_bp: 1400
+        influence: {clergy: 1000}
         outcome: >-
-          You keep your soldiers in their camps and send your officers out to preach. The
-          Tamil kings are not threatened and you are not tempted.
-        deeds: {"martial_bp": -500}
+          You keep your soldiers in their camps and send your officers out to preach. The Tamil kings
+          are not threatened and you are not tempted; the officers' preaching is well received, if the
+          treasury pays for the pilgrimages.
+        deeds: {martial_bp: -500}
     history: >-
       Ashoka's Rock Edict XIII records his remorse for Kalinga and his turn to 'conquest by
       dhamma'. He became a Buddhist lay follower, though his dhamma was a broad moral code,
@@ -774,12 +780,12 @@ chapters:
           whoever can read. Within a generation, more people can read in your empire than in
           the rest of the world together.
       - label: "Appoint officers to teach the dhamma in person"
-        legitimacy_bp: 1200
-        unrest_bp: -400
         wealth_bp: -500
+        unrest_bp: -400
+        legitimacy_bp: 1500
         outcome: >-
-          Your officers of dhamma tour the districts, settling quarrels and preaching. People
-          remember the faces, not the words.
+          Your officers of dhamma tour the districts, settling quarrels and preaching. People remember
+          the faces, not the words, and the officers' justice is praised across the districts.
     history: >-
       Ashoka's edicts, in Prakrit in the Brahmi and Kharosthi scripts and in Greek and Aramaic
       in the north-west, survive at some 30 sites. James Prinsep deciphered Brahmi in 1837.
@@ -818,9 +824,12 @@ chapters:
           person whose date is known.
         deeds: {ally_with: [lanka]}
       - label: "Send missionaries, but keep your children home"
-        legitimacy_bp: 800
+        wealth_bp: 200
+        unrest_bp: 200
+        legitimacy_bp: 1700
         outcome: >-
-          Monks sail to Lanka and preach. The king is polite and keeps his old gods.
+          Monks sail to Lanka and preach. The king is polite and keeps his old gods; some of the monks
+          complain that they were sent without royal blood to carry weight.
         deeds: {ally_with: [lanka]}
       - label: "Send gifts and a fleet escort, but no monks"
         legitimacy_bp: 400
@@ -870,11 +879,11 @@ chapters:
         outcome: >-
           The ministers bow and pay. The crown prince remembers.
       - label: "Retire quietly and let the prince rule"
-        legitimacy_bp: 300
-        unrest_bp: -500
+        unrest_bp: -300
+        legitimacy_bp: 500
         outcome: >-
-          You stop giving orders and let your grandson run the treasury. The court breathes
-          more easily, and the monks have to find another patron.
+          You stop giving orders and let your grandson run the treasury. The court breathes more
+          easily, and the monks have to find another patron.
     history: >-
       The half-amalaka story comes from the Ashokavadana. Ashoka died about 232 BC; within
       fifty years the empire had broken up, and in 185 BC the last Maurya was murdered by his

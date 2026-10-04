@@ -90,9 +90,10 @@ chapters:
           starved into surrender, and the emperor marches south to hunt you down.
         deeds: {martial_bp: 500}
       - label: "March to relieve the siege of Vidin"
-        legitimacy_bp: -500
+        wealth_bp: 2200
         outcome: >-
-          Your army meets the emperor's, and is driven back. Vidin falls anyway.
+          Your army meets the emperor's in a bloody battle. You take his baggage train, with its
+          stores and silver, but lose heavily, and Vidin falls anyway.
         deeds: {martial_bp: -1000}
       - label: "Offer Basil a truce through the bishops"
         legitimacy_bp: -1500

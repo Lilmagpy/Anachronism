@@ -105,9 +105,10 @@ chapters:
           who came to be paid, melt away.
         deeds: {grudges: {rome: 1500}}
       - label: "Surrender your captives and sue for terms"
-        legitimacy_bp: -2000
+        legitimacy_bp: -300
         outcome: >-
-          Rome takes the captives and your chiefs go home in disgrace.
+          Rome takes the captives and grants terms, and your chiefs go home chastened but alive,
+          to a people who had expected worse.
         deeds: {peace_with: [rome]}
     history: >-
       At Telamon in 225 BC the Gauls were caught between two consular armies and destroyed;
@@ -207,11 +208,13 @@ chapters:
           Hannibal's army, starved and sick, finds your valley hostile. Rome's colonies take root.
         deeds: {peace_with: [rome]}
       - label: "Take Hannibal's gold, but keep your men at home"
-        wealth_bp: 1000
-        legitimacy_bp: -500
+        wealth_bp: 1200
+        legitimacy_bp: 800
         unrest_bp: 300
         outcome: >-
-          You are pleased. Neither side trusts you afterwards.
+          Hannibal's gold is generous and the chiefs who hold it are satisfied. You keep your
+          army at home and the Roman settlers unmolested. Neither side trusts you, but nobody
+          can call you a traitor.
     history: >-
       In 218 BC, as Rome planted Placentia and Cremona, the Boii rose and Hannibal reached the
       Po. Gauls from both peoples joined his army, and his victories at the Ticinus and Trebia
@@ -257,9 +260,13 @@ chapters:
           The Romans march home with nothing to show but burnt farms. Your people say you were
           afraid.
       - label: "Send all the men south to join Hannibal"
+        legitimacy_bp: 1800
+        wealth_bp: 1200
         unrest_bp: 800
         outcome: >-
-          Your country is left unguarded. Rome returns the next summer.
+          Your army marches south and shares in Hannibal's victories and plunder, and the chiefs
+          come home rich and proud. Your country is left unguarded, and Rome returns the next
+          summer.
         deeds: {martial_bp: 300}
     history: >-
       In 216 BC the Boii destroyed the army of Lucius Postumius Albinus in the Litana Forest;
@@ -302,9 +309,12 @@ chapters:
           exaggerated, but the army was destroyed.
         deeds: {men: 6000, grudges: {rome: 2500}}
       - label: "Stay out of it, and let Hamilcar go on alone"
-        legitimacy_bp: -500
+        unrest_bp: 300
+        wealth_bp: 300
         outcome: >-
-          Hamilcar's rising comes to nothing without you. Rome thinks you too clever.
+          Hamilcar's rising comes to nothing without you, but you keep your army and your herds,
+          and Roman traders, glad of the quiet, come to your markets. Hotter heads think you too
+          clever.
       - label: "Make a separate peace and give hostages"
         wealth_bp: -500
         legitimacy_bp: -800

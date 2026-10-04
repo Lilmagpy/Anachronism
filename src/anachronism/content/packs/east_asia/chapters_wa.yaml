@@ -163,11 +163,12 @@ chapters:
           with a man of Chinese name to carry your letter. You are the first king of the Wa
           the Chinese histories name.
       - label: "Send your letter by Baekje's ships"
-        legitimacy_bp: 500
-        knowledge_bp: 500
+        legitimacy_bp: 1000
+        knowledge_bp: 800
         outcome: >-
-          The Baekje king sends your gifts to Jiankang with his own. Your name is on his
-          list, and nowhere else.
+          The Baekje king sends your gifts to Jiankang with his own, and speaks well of you
+          there. Your name is on his list, and nowhere else, but your standing at Baekje's court
+          rises.
       - label: "Send nothing; your chiefs need no seal"
         legitimacy_bp: -500
         influence: {nobility: 1000}
@@ -213,7 +214,7 @@ chapters:
           of the west, of the expeditions and of the guard, he gives those too. Your
           captains now have Chinese titles to show their men.
       - label: "Ask only for confirmation as king of Wa"
-        legitimacy_bp: 500
+        legitimacy_bp: 1200
         outcome: >-
           The emperor confirms you, and no one in Silla or Baekje reads anything into your
           title.
@@ -266,11 +267,12 @@ chapters:
           and the king of Baekje hears that you have tried.
         deeds: {grudges: {baekje: 1500}}
       - label: "Send an army to Silla to give the title some weight"
-        legitimacy_bp: 500
-        unrest_bp: 1200
+        legitimacy_bp: 1200
+        unrest_bp: 600
         outcome: >-
-          Your fleet raids Silla's coast and returns. Silla and Baekje, which are allies by
-          now, tighten their alliance.
+          Your fleet raids Silla's coast and returns with plunder, and your chiefs approve of a
+          king who gives his title some teeth. Silla and Baekje, which are allies by now,
+          tighten their alliance.
         deeds: {grudges: {silla: 3000}, men: 2000}
     history: >-
       The Song shu records that Sai sent tribute in 443 and was made General Who Pacifies the
@@ -322,10 +324,12 @@ chapters:
           does not attack. Your people pay for the ships.
         deeds: {martial_bp: 300, men: 3000, grudges: {goguryeo: 2500}}
       - label: "Make peace with Goguryeo and ask for the road"
-        legitimacy_bp: -500
+        knowledge_bp: 300
+        legitimacy_bp: 1900
         outcome: >-
-          Goguryeo's king is courteous, and sends no escort. Your embassies reach Jiankang
-          by another way, and slowly.
+          Goguryeo's king is courteous, and gives your envoys an escort and the road. Your
+          embassies reach Jiankang that way, slowly but well received, and a likely enemy has
+          become a neighbour.
         deeds: {peace_with: [goguryeo]}
     history: >-
       The Song shu records Bu's memorial of 478 (Shengming 2), in which he claims conquests
@@ -372,9 +376,10 @@ chapters:
           court now directly holds the lands of Tsukushi.
         deeds: {men: 4000, grudges: {silla: 1500}}
       - label: "Ship the army to Mimana by another route"
-        legitimacy_bp: -500
+        legitimacy_bp: 1000
         outcome: >-
-          Your army finds no other way. Iwai's men and Silla's together hold the straits.
+          Your army finds another way, by the long northern coast, and reaches Mimana at last,
+          worn by the voyage. Iwai's men and Silla's, busy watching one another, let it pass.
         deeds: {martial_bp: -500}
       - label: "Pardon Iwai if he opens the straits"
         legitimacy_bp: -1000
@@ -427,10 +432,12 @@ chapters:
           The Mononobe and Nakatomi leave the council. When plague comes, the court has no
           answer.
       - label: "Return the gift with thanks to Seong"
-        legitimacy_bp: 500
+        unrest_bp: -300
+        legitimacy_bp: 800
         influence: {clergy: -500}
         outcome: >-
-          Baekje takes the refusal coldly. Your priests of the old rites are glad.
+          Baekje takes the refusal coldly. Your priests of the old rites are glad, and the great
+          houses are at ease with a throne that keeps the old way.
         deeds: {grudges: {baekje: 1500}}
     history: >-
       The Nihon shoki dates the gift of a Buddha image from King Seong of Baekje to 552 (Kinmei

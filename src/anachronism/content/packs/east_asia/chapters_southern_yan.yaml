@@ -49,12 +49,14 @@ chapters:
           Sheng thanks you from his capital, a long way off, and can do nothing to help you.
           Your counsellors are not pleased.
       - label: "Ask Jin to confirm you as Qingzhou's governor"
-        legitimacy_bp: -300
-        wealth_bp: 400
+        unrest_bp: 400
+        legitimacy_bp: 700
+        wealth_bp: 300
         outcome: >-
-          Your envoys go south with gifts. Jiankang, glad to have the border quiet, may or may
-          not answer; the roads reopen for a while and the merchants of Guanggu do well out of
-          them, but your own people wonder what has become of the house of Yan.
+          Your envoys go south with gifts. Jiankang, glad to have the border quiet, confirms
+          you; the roads reopen and the merchants of Guanggu do well out of them. The old Yan
+          loyalists, who wanted an emperor, mutter that the house of Yan has become a Jin
+          governor.
     history: >-
       Murong De moved from Huatai to Guanggu in 399 and took the imperial title of Yan there
       in 400. The later chroniclers call his state Southern Yan.

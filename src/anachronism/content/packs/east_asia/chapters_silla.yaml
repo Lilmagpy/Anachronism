@@ -10,7 +10,7 @@ chapters:
     scenario: three_kingdoms
     civ: silla
     year: 400
-    title: "Fifty Thousand from the North"
+    title: "The Wa in Your Land"
     place: "Gyeongju (Seorabeol)"
     speaker: goguryeo
     speaker_name: "A messenger of Gwanggaeto"
@@ -26,7 +26,7 @@ chapters:
       His answer has come. Fifty thousand horse and foot are marching south to drive out the
       Wa. He will want something in return.
     choices:
-      - label: "Accept the Goguryeo army, and send a prince north"
+      - label: "Accept the army from the north"
         historical: true
         legitimacy_bp: -500
         outcome: >-
@@ -34,13 +34,20 @@ chapters:
           nephew Silseong, and later your own son, go north to Goguryeo as hostages. Goguryeo
           soldiers stay in your capital for half a century. You are safe - and a little brother.
         deeds: {war_with: [wa]}
-      - label: "Fight the Wa alone"
+      - label: "Fight the Wa on your own"
         legitimacy_bp: 1000
         food_bp: -2500
         outcome: >-
           Silla's warriors fight the Wa from fort to fort for a year. They burn half the
           country before they sail away.
         deeds: {war_with: [wa], break_away: [goguryeo]}
+      - label: "Buy the Wa off with silver"
+        wealth_bp: -1000
+        deeds: {peace_with: [wa]}
+        outcome: >-
+          Your envoys carry silver and silk across the water, and the Wa captains take it and
+          sail home. Goguryeo's army arrives to find nothing to fight, and asks why you did not
+          wait for it.
     history: >-
       The Gwanggaeto stele records that in 400 Goguryeo sent 50,000 men to rescue Silla from
       the Wa. Silla sent princes as hostages to Goguryeo and Wa, and Goguryeo troops stayed in
@@ -53,7 +60,7 @@ chapters:
     scenario: three_kingdoms
     civ: silla
     year: 418
-    title: "Bak Je-sang"
+    title: "Two Brothers Abroad"
     place: "Gyeongju"
     speaker: steward
     speaker_name: "Bak Je-sang"
@@ -84,6 +91,12 @@ chapters:
         outcome: >-
           The Wa take the gold and send Misaheun home, eventually. Bak Je-sang goes back to his
           county and his wife.
+      - label: "Send an envoy with gifts to the Wa"
+        legitimacy_bp: 1800
+        wealth_bp: -300
+        outcome: >-
+          Your envoy crosses the sea with gifts and a courteous letter. The Wa king receives him
+          kindly and talks through a long season, and your brother is no nearer home.
     history: >-
       Bak Je-sang (Kim Je-sang in the Samguk yusa) rescued Nulji's brothers from Goguryeo and
       Wa around 418 and was executed by the Wa; his loyalty became legendary.
@@ -94,7 +107,7 @@ chapters:
     civ: silla
     year: 433
     until_year: 440
-    title: "Little Brother No More"
+    title: "Envoys from Baekje"
     place: "Gyeongju"
     speaker: baekje
     speaker_name: "Envoys of King Biyu"
@@ -118,9 +131,18 @@ chapters:
           soldiers are fighting beside Baekje's against Goguryeo. Little brother has grown up.
         deeds: {ally_with: [baekje], break_away: [goguryeo]}
       - label: "Stay loyal to Goguryeo"
-        legitimacy_bp: -500
+        legitimacy_bp: 2200
+        wealth_bp: -500
+        deeds: {men: 1000}
         outcome: >-
-          Baekje's envoys go home. Goguryeo's officials stay.
+          Baekje's envoys go home with a refusal. Goguryeo's king is pleased with his loyal
+          little brother, who sends a levy to his wars and pays for the honour.
+      - label: "Take Baekje's gifts, but promise nothing"
+        legitimacy_bp: 300
+        wealth_bp: 500
+        outcome: >-
+          The horses are good and the envoys leave with a polite answer. Goguryeo's officials
+          want to know what was said.
     history: >-
       Silla and Baekje made peace in 433 (the Naje alliance) and gradually freed Silla from
       Goguryeo's domination.
@@ -132,7 +154,7 @@ chapters:
     scenario: three_kingdoms
     civ: silla
     year: 503
-    title: "A Name and a Title"
+    title: "What to Call the Kingdom"
     place: "Gyeongju"
     speaker: steward
     speaker_name: "Your chief minister"
@@ -158,8 +180,16 @@ chapters:
         deeds: {martial_bp: 500}
       - label: "Keep the old names"
         influence: {nobility: 1000}
+        deeds: {martial_bp: 300}
         outcome: >-
-          Saro keeps its maripgan and its old ways. The great families are comfortable.
+          Saro keeps its maripgan and its old ways. The great families are comfortable, and
+          their war-bands stay as they were.
+      - label: "Take the title, keep the old name"
+        legitimacy_bp: 2200
+        influence: {nobility: 500}
+        outcome: >-
+          You are called wang, and the kingdom stays Saro. The court of the great families
+          is pleased that the old name stands, and foreign courts are puzzled.
     history: >-
       In 503 Jijeung fixed the name Silla and the title wang; he also banned human sacrifice
       at royal burials and promoted ox-ploughing.
@@ -169,7 +199,7 @@ chapters:
     scenario: three_kingdoms
     civ: silla
     year: 512
-    title: "Wooden Lions"
+    title: "The Island of Usan"
     place: "The east coast"
     speaker: general
     speaker_name: "Isabu"
@@ -182,9 +212,10 @@ chapters:
 
 
       He has had his carpenters make lions of wood, with painted manes and teeth, and wants to
-      put them on the bows of his warships.
+      put them on the bows of his warships. Others at court would sooner send an army, or
+      open talks with the islanders.
     choices:
-      - label: "Let Isabu try his lions"
+      - label: "Let Isabu sail with his plan"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
@@ -192,11 +223,18 @@ chapters:
           he shouts, 'or I will let these beasts loose to eat you all.' The islanders submit at
           once and pay tribute to Silla ever after. The island is called Ulleungdo today.
         deeds: {ships: 10}
-      - label: "Send soldiers, not lions"
+      - label: "Send an army across the sea"
         legitimacy_bp: 300
         food_bp: -1000
+        deeds: {men: 2000}
         outcome: >-
           The islanders fight from their cliffs for a season, and then submit.
+      - label: "Offer the islanders a treaty and gifts"
+        legitimacy_bp: 1500
+        wealth_bp: -300
+        outcome: >-
+          Isabu's ships carry gifts to Usan. The islanders hear the envoys and agree to pay a
+          tribute, and keep their own chiefs.
     history: >-
       In 512 Isabu took Usan-guk (Ulleungdo) by frightening its people with wooden lions,
       according to the Samguk sagi.
@@ -206,7 +244,7 @@ chapters:
     scenario: three_kingdoms
     civ: silla
     year: 527
-    title: "White Blood"
+    title: "The Temple Builder"
     place: "Gyeongju"
     speaker: diviner
     speaker_name: "Ichadon"
@@ -219,10 +257,10 @@ chapters:
 
 
       Your young official Ichadon has a plan. He will start building the temple without your
-      permission. When the nobles demand his punishment, you will order his execution. He
-      says there will be a sign.
+      permission. When the nobles demand his punishment, you will have to decide his
+      fate. He says there will be a sign.
     choices:
-      - label: "Let Ichadon die"
+      - label: "Order Ichadon's execution"
         historical: true
         legitimacy_bp: 1500
         influence: {clergy: 2500, nobility: -1500}
@@ -232,9 +270,17 @@ chapters:
           The terrified nobles no longer oppose the Buddha. Silla's first great temple,
           Heungnyunsa, is built, and you will end your life as a monk.
       - label: "Spare him, and wait"
+        legitimacy_bp: 1000
         influence: {nobility: 1000}
         outcome: >-
           Ichadon is demoted and sent to the provinces. Buddhism waits another generation.
+      - label: "Call the nobles to a council"
+        legitimacy_bp: 500
+        unrest_bp: 500
+        influence: {clergy: 500}
+        outcome: >-
+          The council argues for three days. Some great families turn, and the rest harden. The
+          temple is neither raised nor forbidden.
     history: >-
       The martyrdom of Ichadon in 527 led to Silla's official acceptance of Buddhism, according
       to the Samguk sagi and Samguk yusa; a carved stone pillar of 818 depicts it.
@@ -245,7 +291,7 @@ chapters:
     civ: silla
     year: 532
     until_year: 545
-    title: "The Iron Kingdom Surrenders"
+    title: "An Offer from Gimhae"
     place: "Gimhae"
     speaker: gaya
     speaker_name: "King Guhae of Geumgwan Gaya"
@@ -276,6 +322,13 @@ chapters:
           Gimhae is yours. Guhae's sons go to Baekje, and tell everyone what Silla's word is
           worth.
         deeds: {take: [k4_gimhae], grudges: {gaya: 2000}}
+      - label: "Accept, and make his ironworks the king's"
+        legitimacy_bp: 1000
+        wealth_bp: 500
+        deeds: {take: [k4_gimhae]}
+        outcome: >-
+          Guhae is honoured and the iron of Gimhae now fills the king's storehouses. His
+          household is given rank, but the Gaya lords who shared the trade feel cheated.
     history: >-
       King Guhae of Geumgwan Gaya surrendered to Silla in 532 and was given high rank; Kim
       Yu-sin, Silla's great general of the 7th century, was his great-grandson.
@@ -316,8 +369,16 @@ chapters:
         deeds: {take: [k4_hanseong], war_with: [baekje], grudges: {baekje: 5000}}
       - label: "Keep faith with Baekje"
         legitimacy_bp: 500
+        wealth_bp: 500
+        deeds: {peace_with: [baekje]}
         outcome: >-
           The alliance holds. Silla's merchants must go through Baekje's ports to reach China.
+      - label: "Fortify the upper Han and wait"
+        legitimacy_bp: 300
+        wealth_bp: -300
+        deeds: {men: 2000}
+        outcome: >-
+          Garrisons go up on the upper river. Baekje is wary, and your generals are impatient.
     history: >-
       In 553 Jinheung seized the lower Han from Baekje; Baekje's King Seong was killed at
       Gwansan in 554. Jinheung's border stele on Mount Bukhan survives.
@@ -330,7 +391,7 @@ chapters:
     civ: silla
     year: 562
     until_year: 570
-    title: "Sadaham's Reward"
+    title: "The Rebellion of Daegaya"
     place: "Goryeong"
     speaker: general
     speaker_name: "Sadaham"
@@ -343,7 +404,7 @@ chapters:
       youths', young aristocrats trained in war, poetry and loyalty - has begged to lead the
       vanguard.
     choices:
-      - label: "Give Sadaham the vanguard"
+      - label: "Let the sixteen-year-old lead"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -354,11 +415,17 @@ chapters:
           its musician Ureuk has come to Silla with his twelve-string zither, the gayageum.
         deeds: {war_with: [gaya], conquer: [gaya]}
       - label: "Let Isabu do it the slow way"
-        legitimacy_bp: 800
-        food_bp: -1500
+        legitimacy_bp: 2200
+        food_bp: -500
         outcome: >-
           Isabu besieges the city for a season. It surrenders. The hwarang go home grumbling.
         deeds: {war_with: [gaya], conquer: [gaya]}
+      - label: "Delay a year and raise more men"
+        legitimacy_bp: 300
+        wealth_bp: -300
+        deeds: {men: 3000}
+        outcome: >-
+          The campaign waits for a larger army. Daegaya has a year more to prepare its walls.
     history: >-
       In 562 Silla conquered Daegaya, the last Gaya state; the hwarang Sadaham led the vanguard.
       The gayageum, Korea's zither, was brought to Silla by the Gaya musician Ureuk.

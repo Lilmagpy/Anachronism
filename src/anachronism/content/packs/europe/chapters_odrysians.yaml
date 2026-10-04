@@ -98,12 +98,11 @@ chapters:
         deeds: {men: 500, grudges: {macedon: 2500}}
       - label: "Send gifts to the king, but no men"
         wealth_bp: -400
-        legitimacy_bp: 200
-        unrest_bp: 200
+        legitimacy_bp: 500
         outcome: >-
-          Your envoys meet the king's column with horses, wine and gold. He accepts them and
-          asks again, more politely, for your men; you plead the tribute you already pay, and he
-          lets it pass for now.
+          Your envoys meet the king's column with horses, wine and gold. He accepts them with
+          thanks and asks again, more politely, for your men; you plead the tribute you already
+          pay, and he lets it pass for now.
     history: >-
       In 335 BC Alexander forced the pass of the Haemus against free Thracians, then went on
       to defeat the Triballi on the Danube. Thracian cavalry then served in his army in Asia.
@@ -151,11 +150,11 @@ chapters:
         deeds: {men: 1500}
       - label: "Garrison the passes and watch the Macedonians"
         wealth_bp: -300
-        legitimacy_bp: 200
+        legitimacy_bp: 1000
         outcome: >-
           Your warriors take up the high passes and the river fords and let the Macedonian
-          officers see them there. Nothing is said by either side, and each waits for the other
-          to speak first.
+          officers see them there. The clans are heartened by the show of strength. Nothing is
+          said by either side, and each waits for the other to speak first.
         deeds: {martial_bp: 600}
     history: >-
       After Zopyrion's army was destroyed in the north, about 325 BC, Seuthes rose in revolt and
@@ -203,7 +202,7 @@ chapters:
           Lysimachus takes your gold and is free to go south. The chiefs remember it.
       - label: "Fight from the hills, with the clans"
         unrest_bp: 400
-        legitimacy_bp: 500
+        legitimacy_bp: 1100
         outcome: >-
           You draw the hill clans in and give him no field to fight on. His column crosses a
           country of ambushes and burnt grain, and neither of you has the better of it for
@@ -256,12 +255,14 @@ chapters:
         outcome: >-
           Your hall remains a hall. The Greeks keep their walls.
       - label: "Raise a plain hill fortress by the tombs"
+        materials_bp: 500
         wealth_bp: -500
-        legitimacy_bp: 500
+        legitimacy_bp: 1200
         knowledge_bp: 300
         outcome: >-
-          Your own masons raise a wall of rough stone about the royal tombs and a hall for the
-          court. It is a fortress and not a city: strong, familiar, with no Greek mint or council in it.
+          Your own masons raise a wall of rough stone from local quarries about the royal tombs,
+          and a hall for the court. It is a fortress and not a city: strong, familiar, and
+          approved by the chiefs, with no Greek mint or council in it.
         deeds: {martial_bp: 300}
     history: >-
       Seuthes III founded Seuthopolis, a walled town built in Greek style in the valley of
@@ -304,11 +305,12 @@ chapters:
           The rebel towns fall alone, and Lysimachus remembers who did not help them. Thrace
           is quiet.
       - label: "Offer Lysimachus horsemen against the towns"
-        wealth_bp: 500
-        legitimacy_bp: -500
+        wealth_bp: 300
+        legitimacy_bp: 900
         outcome: >-
-          Lysimachus takes your horse and is glad of them. The coastal towns are put down
-          with Thracian help, and your chiefs ask what became of the free kingdom.
+          Lysimachus takes your horse and is glad of them. The coastal towns are put down with
+          Thracian help, and your chiefs, though they ask what became of the free kingdom, share
+          in the rewards.
         deeds: {men: 1500}
     history: >-
       In 313 BC the Greek towns of the western Black Sea, with Seuthes and help from Antigonus,

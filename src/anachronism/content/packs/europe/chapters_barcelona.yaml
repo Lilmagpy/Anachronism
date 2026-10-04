@@ -44,16 +44,22 @@ chapters:
           within months with more gold than any count of Barcelona has seen. The Berbers will
           take their revenge on the city itself before the end of the year.
         deeds: {peace_with: [cordoba], ally_with: [cordoba], men: 500}
-      - label: "Refuse; Córdoba's quarrels are not yours"
-        legitimacy_bp: 300
+      - label: "Refuse and raid the border yourself"
+        legitimacy_bp: 800
+        wealth_bp: 2500
         outcome: >-
-          You keep your knights at home and your frontier quiet. The envoy goes on to the
-          counts of Castile.
-      - label: "Ask for frontier castles instead of gold"
-        wealth_bp: 800
+          You keep your knights at home but not idle: they ride into the border country of the
+          Muslim kings and come back with cattle, captives and tribute. The envoy goes on to
+          the counts of Castile.
+        deeds: {men: 1000, martial_bp: 1000}
+      - label: "Ask for castles and gold together"
+        wealth_bp: 3500
+        legitimacy_bp: 1000
         outcome: >-
-          The envoy promises, but a pretender with no throne has no castles to give, and the
-          bargaining drags on until his cause is lost.
+          The envoy promises, and some gold comes at once. A pretender with no throne has few
+          castles to give, though, and the bargaining over them drags on until his cause is
+          lost.
+        deeds: {peace_with: [cordoba], men: 1500}
     history: >-
       In 1010 Ramon Borrell and his brother Ermengol I of Urgell led a Catalan army to
       Córdoba in the pay of Muhammad II al-Mahdi, helped defeat the Berbers and plundered the
@@ -93,16 +99,18 @@ chapters:
           more days of the week and to the great feasts, and the church's peace becomes the
           model for the counts' own. Violence goes on, but now it has a rule to break.
       - label: "Leave it to the bishops; keep your own law"
+        wealth_bp: 400
         influence: {clergy: -500, nobility: 500}
         outcome: >-
-          Your knights are glad. The bishops, less so. Oliba's truce stays a church matter,
-          and the castellans learn that the count will not hold them to it.
+          Your knights are glad, and pay their dues. The bishops, less so. Oliba's truce stays
+          a church matter, and the castellans learn that the count will not hold them to it.
       - label: "Proclaim your own count's peace as well"
-        legitimacy_bp: 500
-        influence: {nobility: -800}
+        legitimacy_bp: 1800
+        influence: {clergy: 500, nobility: -800}
         outcome: >-
           The lords call it meddling. Your judges find that nobody will bring a case to a
-          count who cannot enforce his sentences.
+          count who cannot enforce his sentences, though the people are glad of the
+          proclamation.
     history: >-
       The assembly of Toluges in 1027, presided over by Abbot-Bishop Oliba, made the first
       known Truce of God, and the Catalan counties spread and extended it in the following
@@ -150,6 +158,14 @@ chapters:
         unrest_bp: 800
         outcome: >-
           Nobody believes you, least of all the men who meant to test you.
+      - label: "Put yourself under Oliba's guardianship"
+        legitimacy_bp: 600
+        wealth_bp: -300
+        influence: {clergy: 600}
+        outcome: >-
+          The old bishop takes you into his household at Vic and lends you the church's
+          authority. The great lords hesitate to cross him, and the church is paid for its
+          trouble.
     history: >-
       After Berenguer Ramon I died in 1035, his mother Ermesinde of Carcassonne governed
       Catalonia in the name of the boy Ramon Berenguer I for some years, until about 1041.
@@ -177,7 +193,7 @@ chapters:
       the old Gothic law and the practices of the courts, be set down: what the count may
       demand, what the castellans owe him, what a knight may and may not take from a peasant.
     choices:
-      - label: "Hold the assembly and write the customs down"
+      - label: "Call an assembly and set down the customs"
         historical: true
         legitimacy_bp: 2000
         unrest_bp: -800
@@ -200,6 +216,14 @@ chapters:
         outcome: >-
           It works every time, and every time costs more. Your treasury, which has begun to
           fill with the gold of the Muslim kings of Lleida and Zaragoza, empties again.
+      - label: "Judge them by the old Gothic law"
+        legitimacy_bp: 2700
+        wealth_bp: 300
+        influence: {nobility: -500}
+        outcome: >-
+          Your judges revive the old Gothic code in the count's court and summon the castle
+          holders to answer in it, one case at a time. The lords grumble at every sentence, and
+          every sentence is one more precedent.
     history: >-
       Around 1058 Ramon Berenguer I and Almodis held an assembly in Barcelona, which later
       tradition and the Usatges' own prologue name as the origin of that law code; modern
@@ -291,14 +315,20 @@ chapters:
           stay in Christian hands: within a few years the Almoravids return.
         deeds: {ships: 2, men: 500}
       - label: "Stay home and fortify the frontier"
-        legitimacy_bp: 200
+        legitimacy_bp: 1000
+        wealth_bp: -500
         outcome: >-
-          The Pisans sail without you. Your coast is quiet, and your name is not on the poem.
-      - label: "Let the Pisans go; offer only ships and provisions"
-        wealth_bp: 500
+          The Pisans sail without you. Your coast is quiet, your border castles are rebuilt,
+          and your name is not on the poem.
+        deeds: {men: 1500, martial_bp: 1500}
+      - label: "Send only ships and provisions"
+        legitimacy_bp: 1000
+        wealth_bp: -200
+        influence: {clergy: 300}
         outcome: >-
           They sail with your ships and your stores and take the islands for themselves, and
           there is no place for you at the banquet.
+        deeds: {ships: 3}
     history: >-
       In 1113-1115 Ramon Berenguer III and a Pisan fleet, with the pope's blessing, attacked
       the Balearics, taking Ibiza and, in April 1115, Palma on Majorca; the Almoravids soon
@@ -328,7 +358,7 @@ chapters:
       will return to his monastery. The Aragonese lords will not see you as king, only as
       their prince.
     choices:
-      - label: "Betroth the infant and take the government"
+      - label: "Betroth Petronilla and take the government"
         historical: true
         legitimacy_bp: 2000
         influence: {nobility: 800}
@@ -339,14 +369,19 @@ chapters:
           two lands now have one lord, and it will be centuries before they part.
         deeds: {take: [m_zaragoza], grudges: {navarre: 1500, leon: 1000}}
       - label: "Refuse; stay a count of Barcelona"
+        legitimacy_bp: 1500
+        wealth_bp: 500
         outcome: >-
           Ramiro's offer goes to another suitor, and the long border behind your county is
-          held by someone else.
+          held by someone else. You spend the years on your own castles and your own coast.
+        deeds: {men: 2000, martial_bp: 1000}
       - label: "Demand the crown and not just the government"
         legitimacy_bp: -800
         unrest_bp: 1000
         outcome: >-
-          The Aragonese lords walk out. Ramiro, the monk, will not hear of it.
+          The Aragonese lords walk out. Ramiro, the monk, will not hear of it, and you send
+          for more of your own knights to press the point.
+        deeds: {men: 2000, martial_bp: 1000}
     history: >-
       In 1137 Ramiro II of Aragon betrothed his baby daughter Petronilla to Ramon Berenguer IV
       and handed him the government of the kingdom; the wedding was in 1150, and their son
@@ -374,7 +409,7 @@ chapters:
       Tortosa, at the mouth of the Ebro, has resisted the counts of Barcelona for decades.
       The Genoese will help you take it. They ask a third of the city, as their pay.
     choices:
-      - label: "Take the crusaders and the Genoese on their terms"
+      - label: "Besiege Tortosa with the Genoese"
         historical: true
         legitimacy_bp: 1500
         wealth_bp: -500
@@ -386,9 +421,11 @@ chapters:
           doubled in a lifetime.
         deeds: {ships: 2, men: 800}
       - label: "Wait for the Aragonese lords"
-        legitimacy_bp: 300
+        legitimacy_bp: 1000
+        wealth_bp: 300
         outcome: >-
-          They come in the spring, but the Genoese fleet has sailed home.
+          They come in the spring, in force, but the Genoese fleet has sailed home.
+        deeds: {men: 2500, martial_bp: 1000}
       - label: "Make a truce with Tortosa and the Almohads"
         wealth_bp: 1000
         legitimacy_bp: -500

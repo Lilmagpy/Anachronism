@@ -47,7 +47,7 @@ chapters:
         deeds: {tributaries: [poland]}
       - label: "Honour the saint's shrine, but grant nothing"
         wealth_bp: 300
-        legitimacy_bp: 1000
+        legitimacy_bp: 1400
         influence: {clergy: 500}
         outcome: >-
           You pray at Adalbert's tomb, accept the relic and thank the duke warmly. No crown, no

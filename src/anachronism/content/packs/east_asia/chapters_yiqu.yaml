@@ -91,12 +91,13 @@ chapters:
           defeated Qin again, at the Luo.
         deeds: {martial_bp: 200, men: 8000}
       - label: "Take the gifts and keep the peace"
-        deeds: {men: 2000}
         wealth_bp: 500
-        legitimacy_bp: -300
+        unrest_bp: 400
+        legitimacy_bp: 300
         outcome: >-
-          Qin's silk is well spent. The war you did not fight will be fought in a year or
-          two on worse terms.
+          Qin's silk is well spent. Your war-chiefs mutter that you have taken silk and done nothing
+          for it, and the war you did not fight will be fought in a year or two on worse terms.
+        deeds: {men: 2000}
       - label: "Take the gifts and fortify the border"
         wealth_bp: 300
         unrest_bp: 200
@@ -144,12 +145,12 @@ chapters:
           The walls hold for a season, and many of your best fighters die on them.
         deeds: {martial_bp: 300, men: 4000}
       - label: "Buy a truce with a payment of herds"
-        wealth_bp: -500
-        legitimacy_bp: -500
-        deeds: {peace_with: [qin]}
+        legitimacy_bp: -800
         outcome: >-
-          Your envoys drive a great herd to the Qin camp and ask for terms. The Qin generals
-          take the herd, and give you a pause in the fighting, but not the towns back.
+          Your envoys drive a great herd to the Qin camp and ask for terms. The Qin generals take the
+          herd, and give you a pause in the fighting, but not the towns back; your chiefs say the
+          price was too high.
+        deeds: {peace_with: [qin]}
     history: >-
       The Shiji (Qin annals) says that Qin took twenty-five towns of Yiqu in the 310s BC
       (about 315 or 314). The Hou Han shu names Yuzhi among the places Qin took.

@@ -37,10 +37,19 @@ chapters:
           chronicler writes: 'Almanzor died, and was buried in hell.'
         deeds: {grudges: {leon: 2000, navarre: 1500}}
       - label: "Send your son, and rest"
-        legitimacy_bp: 500
+        legitimacy_bp: 1200
+        wealth_bp: 300
         outcome: >-
           Abd al-Malik leads the army north and comes home victorious. You live another two
           years, and teach him how to manage the caliph.
+          The campaign is a success, and the army sees the heir at its head.
+      - label: "Lead a short raid on the border with a small force"
+        legitimacy_bp: 800
+        wealth_bp: 600
+        outcome: >-
+          You ride out with a small column, raid the border country and come home in a few
+          weeks. The army is spared the long march, and so are you.
+        deeds: {men: 4000}
     history: >-
       Al-Mansur died at Medinaceli in August 1002 returning from his last campaign. His
       sons ruled after him as chamberlains.
@@ -78,10 +87,18 @@ chapters:
           killed on the road. Al-Andalus has begun twenty years of civil war.
         deeds: {ruler_falls: "is killed on the road to Córdoba"}
       - label: "Stay in Córdoba and give up the succession"
-        legitimacy_bp: 500
+        legitimacy_bp: -1500
+        unrest_bp: 1500
         outcome: >-
           You announce that you never wanted to be caliph. The Umayyad princes are suspicious,
-          but quiet.
+          and your own supporters, who staked their careers on you, are bitter.
+      - label: "Send a general north, and stay in Córdoba"
+        legitimacy_bp: -800
+        wealth_bp: -1500
+        outcome: >-
+          A general takes the army north in your name while you stay in the city. He wins
+          little, the cost is heavy, and the Umayyad princes see that the heir does not lead.
+        deeds: {men: 8000}
     history: >-
       Sanchuelo had himself named heir by Hisham II in 1008-9; while he campaigned in winter,
       Muhammad II al-Mahdi seized Córdoba and destroyed Madinat al-Zahira. Sanchuelo was
@@ -123,6 +140,13 @@ chapters:
           The Berbers are paid and settled in the south. Córdoba and al-Zahra are spared. The
           Castilian count goes home rich.
         deeds: {grudges: {leon: 1000}}
+      - label: "Hire Catalan knights from Barcelona"
+        legitimacy_bp: -500
+        wealth_bp: -2000
+        outcome: >-
+          A Catalan count's knights are hired for silver and come to Córdoba. They break up
+          the Berber lines for a while, and then ask for their pay.
+        deeds: {men: 3000}
     history: >-
       In 1010-13 Berber troops sacked Madinat al-Zahra and then Córdoba during the fitna (civil
       war) of al-Andalus.
@@ -159,9 +183,19 @@ chapters:
           tenderest book of medieval Spain.
       - label: "Tell him to write law instead"
         influence: {clergy: 1000}
+        knowledge_bp: 1200
+        unrest_bp: -800
         outcome: >-
           Ibn Hazm writes on law, quarrels with every jurist in al-Andalus, and his books are
           burned in Seville.
+          The jurists applaud the patronage, even as he quarrels with them.
+      - label: "Make him a teacher at the mosque school"
+        knowledge_bp: 1000
+        legitimacy_bp: 500
+        influence: {clergy: 500}
+        outcome: >-
+          Ibn Hazm teaches at the school beside the Great Mosque. His pupils learn a great
+          deal, and the jurists are pleased with the arrangement.
     history: >-
       Ibn Hazm (994-1064) wrote Tawq al-Hamama, 'The Ring of the Dove', around 1022 in Xàtiva.
     sources: ["Ibn Hazm, The Ring of the Dove (tr. Arberry, 1953)"]
@@ -197,9 +231,18 @@ chapters:
         deeds: {ruler_falls: "is deposed, and the caliphate abolished", give: [m_toledo, m_zaragoza, m_valencia]}
       - label: "Call on the Berbers to defend you"
         legitimacy_bp: -1000
-        unrest_bp: 3000
+        unrest_bp: 2000
         outcome: >-
-          The Berber captains come - and set their own man on the throne.
+          The Berber captains come, set their own man on the throne, and take Toledo as their
+          price.
+        deeds: {give: ["m_toledo"]}
+      - label: "Offer the notables a council, with yourself at its head"
+        legitimacy_bp: -1500
+        unrest_bp: 500
+        outcome: >-
+          You offer to rule with the notables as a council, with a place for you at its head.
+          They take the council and give you the palace, and the outlying cities leave.
+        deeds: {give: ["m_zaragoza"]}
     history: >-
       In 1031 the notables of Córdoba deposed Hisham III and abolished the Umayyad caliphate;
       al-Andalus fragmented into the taifa kingdoms.

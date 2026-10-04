@@ -28,7 +28,7 @@ chapters:
       cause, if you will drive out the Hojo. The lords of the Kanto are waiting to see what you
       do.
     choices:
-      - label: "Lead the Kanto lords against Odawara"
+      - label: "Lead the Kanto lords to Odawara"
         historical: true
         legitimacy_bp: 2000
         outcome: >-
@@ -37,10 +37,20 @@ chapters:
           shrine of Tsurugaoka Hachiman in Kamakura you are adopted into the Uesugi house and
           made Kanto deputy. From now on your name is Uesugi Masatora - and later, Kenshin.
         deeds: {war_with: [hojo], grudges: {hojo: 2500}}
-      - label: "Stay in Echigo"
+      - label: "Shelter Norimasa and keep to Echigo"
         legitimacy_bp: -500
         outcome: >-
-          Norimasa lives on in your guest house. The Hojo grow stronger in the Kanto.
+          Norimasa lives on in your guest house, and you send word to Odawara that Echigo
+          wants no quarrel. The Hojo grow stronger in the Kanto.
+        deeds: {peace_with: [hojo]}
+      - label: "Take Norimasa's lost castles one by one"
+        legitimacy_bp: 2500
+        wealth_bp: -300
+        outcome: >-
+          You cross the passes with ten thousand men and take the border castles of Kozuke
+          that the Hojo seized, and winter among them. The lords of the Kanto come to your
+          camp to pay their respects, though Odawara itself is left alone.
+        deeds: {men: 10000}
     history: >-
       In 1560-61 Kagetora led a great army into the Kanto and besieged Odawara; he was adopted
       as heir by Uesugi Norimasa and appointed Kanto kanrei.
@@ -69,7 +79,7 @@ chapters:
       He means to attack you from behind and drive you down the mountain onto his waiting
       army.
     choices:
-      - label: "Slip down the mountain in the dark, and hit his main army at dawn"
+      - label: "Come down in the dark and strike his main army"
         historical: true
         legitimacy_bp: 2000
         outcome: >-
@@ -86,6 +96,14 @@ chapters:
           Shingen's night attack climbs the mountain and finds your fortified camp ready. It is
           a long, bloody day. Both of you go home.
         deeds: {war_with: [takeda]}
+      - label: "Meet his night march on the slopes with your vanguard"
+        legitimacy_bp: 1800
+        unrest_bp: 300
+        outcome: >-
+          Kakizaki's men wait in the dark on the paths of the mountain. Shingen's column
+          stumbles into them in the fog, and the fighting is fierce and confused. The army
+          of Kai turns back down the slope at dawn, and your main body has not moved.
+        deeds: {men: 5000}
     history: >-
       At the fourth battle of Kawanakajima (1561) Kenshin anticipated Shingen's 'woodpecker'
       plan. The single combat is told in the Koyo gunkan and may be legend.
@@ -113,7 +131,7 @@ chapters:
       Echigo is on the Sea of Japan. Its salt merchants could reach Kai through the mountains.
       Your retainers say: let Shingen's people starve, and Shingen with them.
     choices:
-      - label: "Let the salt go through, at a fair price"
+      - label: "Let the salt through at a fair price"
         historical: true
         legitimacy_bp: 2000
         influence: {guilds: 1000}
@@ -121,11 +139,19 @@ chapters:
           'I fight with swords, not with salt,' you say. The salt goes over the mountains to
           Kai. Shingen sends you a fine sword in thanks. 'To send salt to your enemy' will become
           a Japanese proverb for honourable generosity.
-      - label: "Close the passes too"
+      - label: "Close the passes and let Kai starve"
         legitimacy_bp: -500
         outcome: >-
           Kai goes hungry. Shingen's men do not forget whose salt they did not get.
         deeds: {grudges: {takeda: 2000}}
+      - label: "Sell salt to Kai only for a truce"
+        legitimacy_bp: 1500
+        wealth_bp: 400
+        outcome: >-
+          Your envoys name the price: salt for a pledge that Shingen's men stay out of
+          northern Shinano for a time. Shingen agrees, grudgingly, and the sacks go over the
+          mountains. Some of your retainers think you have been too clever by half.
+        deeds: {peace_with: [takeda]}
     history: >-
       The story that Kenshin let salt reach Kai during the 1568 embargo is traditional and may
       be embellished; it gave Japanese the idiom 'teki ni shio wo okuru'.
@@ -161,7 +187,16 @@ chapters:
       - label: "Stay in the east and fight the Hojo"
         legitimacy_bp: -300
         outcome: >-
-          You turn east again. Nobunaga is grateful.
+          You turn east again and raise fresh men for the Kanto. Nobunaga is grateful.
+        deeds: {men: 4000}
+      - label: "Seize Noto's coast, and leave Kaga to the monks"
+        legitimacy_bp: 1200
+        unrest_bp: 200
+        outcome: >-
+          You take the harbours of Noto and its great castle at Nanao, and let the monks
+          keep Kaga as a buffer against Oda. The shogun is disappointed, but the coast road is
+          yours.
+        deeds: {men: 6000}
     history: >-
       From 1576 Kenshin allied with the Ikko-ikki and the exiled shogun against Nobunaga and
       took Nanao castle in Noto (1577).
@@ -201,6 +236,14 @@ chapters:
         outcome: >-
           Katsuie gets back across the river in good order. Both armies winter at home.
         deeds: {war_with: [oda]}
+      - label: "Offer Katsuie safe passage for a truce"
+        legitimacy_bp: 2200
+        wealth_bp: -200
+        outcome: >-
+          A herald crosses the lines at dawn with your offer: the Oda army may go home
+          unharmed, and the war pauses for a season. Katsuie accepts, and the army marches
+          back through the shallows, and men talk of your courtesy.
+        deeds: {peace_with: [oda]}
     history: >-
       At the Tedorigawa (1577) Kenshin defeated Shibata Katsuie's Oda army, which lost many men
       in the flooded river.
@@ -239,10 +282,23 @@ chapters:
           warriors are dead. Nobunaga's generals take Kaga and Noto back.
         deeds: {give: [j_kaga]}
       - label: "Divide the inheritance with Kagetora"
-        legitimacy_bp: 500
+        legitimacy_bp: -300
+        unrest_bp: 1500
         outcome: >-
           You keep Echigo; Kagetora takes the Kanto title and the lands near the Hojo. The two
-          brothers are polite to each other, and the Uesugi stay strong.
+          brothers are polite to each other, but the warriors of Echigo are split in two, and
+          the Uesugi are weaker for it.
+        deeds: {martial_bp: -1000}
+      - label: "Submit the quarrel to Kenshin's old retainers"
+        legitimacy_bp: -800
+        unrest_bp: 2000
+        wealth_bp: -500
+        outcome: >-
+          Kenshin's veterans sit in council for months while the two towers glare at each
+          other. When they at last name a winner, half of the losing side's men do not
+          accept it, and the Hojo and the Takeda have had time to take their pick of the
+          spoils.
+        deeds: {martial_bp: -1500}
     history: >-
       Kenshin died suddenly on 19 April 1578, probably of a stroke. His adopted sons fought the
       Otate disturbance (1578-79); Kagekatsu won and Kagetora killed himself.

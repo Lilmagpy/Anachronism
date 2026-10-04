@@ -91,10 +91,12 @@ chapters:
           still divided.
         deeds: {peace_with: [byzantium]}
       - label: "Throw everything at the retreating Greeks"
-        legitimacy_bp: 500
-        unrest_bp: 1000
+        legitimacy_bp: 2000
+        wealth_bp: 500
+        unrest_bp: 500
         outcome: >-
-          You win a battle and lose most of your cavalry, which you cannot replace.
+          You win a battle and take the Greek baggage train, and lose most of your cavalry,
+          which you cannot replace.
         deeds: {peace_with: [byzantium]}
       - label: "Pay the Normans to change sides"
         wealth_bp: -2000
@@ -276,7 +278,7 @@ chapters:
           Noto is left with the last emir.
         deeds: {ruler_falls: "dies in the sea fight off Syracuse"}
       - label: "Hold the walls and wait for Africa"
-        legitimacy_bp: 300
+        legitimacy_bp: 600
         unrest_bp: 1000
         outcome: >-
           The ships from Africa do not come. You eat the last of the grain.

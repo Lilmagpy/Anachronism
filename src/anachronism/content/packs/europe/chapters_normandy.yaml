@@ -36,12 +36,21 @@ chapters:
           of the time. Her son Edward will grow up in your court, and her great-nephew will
           one day claim England through her.
         deeds: {ally_with: [england]}
-      - label: "Keep the Danish trade"
+      - label: "Keep the Danish trade, and build ships"
         wealth_bp: 1500
+        legitimacy_bp: 500
         outcome: >-
-          The Danish ships keep coming to Rouen to sell English silver and slaves. England
-          remembers.
-        deeds: {grudges: {england: 2000}}
+          The Danish ships keep coming to Rouen to sell English silver and slaves, and you
+          use the profits to lay down five ships of your own. England remembers.
+        deeds: {ships: 5, grudges: {england: 2000}}
+      - label: "Offer England a treaty, but keep your sister"
+        legitimacy_bp: 600
+        wealth_bp: 500
+        outcome: >-
+          Your envoys swear, as your father's did, not to shelter England's enemies, and
+          Emma stays at Rouen. Æthelred is not satisfied, and the Danes are not turned away
+          from your quays quite as firmly as he would like.
+        deeds: {peace_with: [england]}
     history: >-
       Emma, daughter of Richard I and sister of Richard II of Normandy, married Æthelred II in
       1002. Through her, William claimed kinship with Edward the Confessor.
@@ -76,9 +85,17 @@ chapters:
           Sweyn dies; the boys Edward and Alfred stay with you, and grow up Normans.
         deeds: {grudges: {denmark: 1500}}
       - label: "Send them on to Flanders"
-        legitimacy_bp: -500
+        legitimacy_bp: 400
+        wealth_bp: 800
         outcome: >-
           Emma never forgives you. The Danes send gifts.
+      - label: "Shelter the queen and her sons, but not the king"
+        legitimacy_bp: 700
+        unrest_bp: 200
+        outcome: >-
+          Emma and the boys are given rooms at Rouen. Æthelred is lodged at the monastery of
+          Fécamp, out of the way, and treated with courtesy and no great warmth. The Danes
+          note that the exiled king is only half welcome.
     history: >-
       In 1013 Emma, her sons and then Æthelred took refuge with Richard II in Normandy.
       Edward the Confessor spent most of the next 28 years in Normandy.
@@ -118,6 +135,13 @@ chapters:
         outcome: >-
           You marry a sister of the King of the English, Cnut. It does not last. You have no
           son.
+      - label: "Keep Herleva quietly at Falaise, and marry later"
+        legitimacy_bp: 200
+        unrest_bp: 300
+        outcome: >-
+          Herleva is lodged in a house below the castle, and the court pretends not to know
+          her name. A noble marriage is promised for later, and the barons, who like promises,
+          wait.
     history: >-
       Robert I became duke in 1027 after the sudden death of Richard III. His son William was
       born at Falaise around 1028 to Herleva, a tanner's (or embalmer's) daughter.
@@ -150,9 +174,17 @@ chapters:
           Nicaea, in the summer of 1035. Normandy has a seven-year-old bastard for a duke,
           and the barons begin to build castles.
       - label: "Stay at home, and marry"
-        legitimacy_bp: 800
+        legitimacy_bp: 600
+        unrest_bp: 400
         outcome: >-
           The pilgrimage is put off. Your barons are relieved; your confessor is not.
+      - label: "Send a bishop to Jerusalem in your place"
+        legitimacy_bp: 400
+        wealth_bp: -600
+        outcome: >-
+          A bishop and a train of monks set out for the Holy Sepulchre with your gifts and a
+          great store of candles. Your barons are glad that you have stayed, and your
+          confessor is not wholly satisfied.
     history: >-
       Robert I named William his heir before going on pilgrimage in 1034/5 and died at Nicaea
       in July 1035. William's minority was violent: three of his guardians were murdered.
@@ -195,6 +227,15 @@ chapters:
         legitimacy_bp: -500
         outcome: >-
           The rebels take your silver and go home. They will be back.
+      - label: "Meet them with the loyal barons, without the king"
+        legitimacy_bp: 2500
+        unrest_bp: -1800
+        wealth_bp: -300
+        outcome: >-
+          You gather the barons of eastern Normandy and the levy of the Bessin. The fight
+          is hard, and the king, who has come to help you, is left to watch. You win it
+          yourself, but you cannot say that Normandy owes France nothing.
+        deeds: {men: 8000}
     history: >-
       In 1047 William and Henry I of France defeated the Norman rebels at Val-ès-Dunes,
       William's first battle, which established his rule.
@@ -233,11 +274,21 @@ chapters:
           lifts the ban in 1059 on condition that you each found an abbey: the Abbaye aux
           Hommes and the Abbaye aux Dames at Caen.
         deeds: {martial_bp: 500}
-      - label: "Obey the Pope"
+      - label: "Obey the Pope, and seek a bride in France"
         influence: {clergy: 1500}
-        legitimacy_bp: -500
+        legitimacy_bp: 500
         outcome: >-
-          You look elsewhere for a wife. Flanders makes its alliance with France instead.
+          You look elsewhere for a wife, and write to the French court. Flanders makes its
+          alliance with France instead.
+        deeds: {peace_with: [france]}
+      - label: "Marry her, and send gifts to Rome to ask pardon"
+        legitimacy_bp: 900
+        influence: {clergy: -500}
+        wealth_bp: -600
+        outcome: >-
+          You marry Matilda at Eu and send silver and relics to the Pope with a humble letter.
+          Rome's answer is slow, and the bishops who dislike the match are only half
+          appeased.
     history: >-
       William married Matilda of Flanders around 1050-51 despite a papal prohibition; it was
       lifted in 1059, and the couple founded the two great abbeys at Caen in penance.
@@ -278,6 +329,14 @@ chapters:
         outcome: >-
           You give up a border castle and kneel. The king goes home pleased with himself.
         deeds: {grudges: {france: 500}}
+      - label: "Hold the fords and wait for the king to cross"
+        legitimacy_bp: 1800
+        wealth_bp: -200
+        outcome: >-
+          You leave the northern army to its drinking and hold the crossings of the Seine in
+          strength. The king's southern army is stopped, and his northern one goes home
+          without the glory of a fight.
+        deeds: {men: 4000}
     history: >-
       In 1054 William's men destroyed a French army at Mortemer; in 1057 he beat Henry I again
       at Varaville. Normandy became effectively independent of the French crown.
@@ -323,6 +382,14 @@ chapters:
         outcome: >-
           Your envoys go to Westminster. Harold sends them back with gifts and a refusal.
         deeds: {grudges: {england: 2000}}
+      - label: "Ask the Danes to share the venture"
+        legitimacy_bp: 1200
+        wealth_bp: -1500
+        outcome: >-
+          Your envoys go to Denmark, where King Sweyn has his own quarrel with England. He
+          promises ships, though not as many as you hoped and not for nothing; the Norman
+          shipwrights build a smaller fleet of their own.
+        deeds: {ships: 60, men: 5000}
     history: >-
       William assembled his invasion fleet at Dives-sur-Mer in summer 1066, moved to
       Saint-Valery-sur-Somme, and landed at Pevensey on 28 September. The 'both hands' story is
@@ -353,7 +420,7 @@ chapters:
       A rumour has run through your Breton troops on the left that you are dead, and they are
       running.
     choices:
-      - label: "Push back your helmet, and show them your face"
+      - label: "Ride to the wavering left and rally it"
         historical: true
         legitimacy_bp: 3000
         outcome: >-
@@ -367,6 +434,14 @@ chapters:
         legitimacy_bp: -1500
         outcome: >-
           The army retreats to Hastings. Harold's levies keep arriving.
+      - label: "Order a feigned retreat on the right"
+        legitimacy_bp: 2800
+        unrest_bp: 200
+        outcome: >-
+          Your knights on the right turn their horses and gallop back in seeming flight. The
+          English break ranks to chase them, and the knights wheel and cut them down on the
+          open slope. The shield wall is thinner after it.
+        deeds: {martial_bp: 300}
     history: >-
       At Hastings on 14 October 1066 the Normans broke the English shield wall after a day of
       fighting, helped by real or feigned flights. Harold was killed. William was crowned on
@@ -410,6 +485,15 @@ chapters:
         outcome: >-
           The northern earls swear to you again. They have sworn before.
         deeds: {take: [m_northumbria]}
+      - label: "Garrison the north with castles and Norman lords"
+        legitimacy_bp: 700
+        wealth_bp: -800
+        unrest_bp: 1000
+        outcome: >-
+          Castles go up at York, Lincoln and Nottingham, and Norman knights are given the
+          lands of the northern lords who have fallen. The north is held, at a cost, by
+          strangers who do not speak its language.
+        deeds: {take: [m_northumbria], men: 4000}
     history: >-
       In the winter of 1069-70 William's 'Harrying of the North' devastated Yorkshire; Domesday
       Book records much of it as waste in 1086.
@@ -446,6 +530,8 @@ chapters:
           bitterly. The English call it Domesday Book, because there is no appeal against it,
           as at the Last Judgement. It will be consulted in law courts for nine hundred years.
       - label: "Trust the sheriffs' old lists"
+        wealth_bp: 300
+        legitimacy_bp: -300
         outcome: >-
           The sheriffs send in what they always send. Nobody really knows what England is
           worth.
@@ -458,6 +544,14 @@ chapters:
           The survey is set in type and printed. Every landholder receives a copy of what he
           owes; every dispute is settled from the same page. Your clerks are astonished at how
           quickly the taxes come in.
+      - label: "Make every landholder swear fealty, and list only the greatest"
+        knowledge_bp: 1200
+        wealth_bp: 1500
+        legitimacy_bp: 600
+        outcome: >-
+          Every man of any consequence is called to Salisbury to swear to be faithful to you
+          against all other men, and your clerks write down the tenants-in-chief and what
+          they hold. The lesser tenants and their ploughs go unwritten.
     history: >-
       William ordered the Domesday survey at Gloucester at Christmas 1085; it was compiled in
       1086. It remains the most complete record of any medieval European kingdom.
@@ -484,7 +578,7 @@ chapters:
       rebelled against you twice. Your second son William Rufus is loyal, loud and clever.
       Your youngest, Henry, is twenty.
     choices:
-      - label: "Normandy to Robert, England to William, silver to Henry"
+      - label: "Divide Normandy, England and the silver"
         historical: true
         legitimacy_bp: -500
         unrest_bp: 1500
@@ -493,12 +587,19 @@ chapters:
           your letter to Lanfranc before you are dead. Henry weighs his five thousand pounds of
           silver. At your funeral at Caen, a man claims the grave was dug on land you stole
           from his father; the body is too large for the stone coffin, and bursts.
-      - label: "Everything to William Rufus"
+      - label: "Everything to William Rufus, who is loyal"
         legitimacy_bp: 500
         unrest_bp: 2500
         outcome: >-
           Robert Curthose raises the Norman barons the day after the funeral. Your sons will
           fight over your bones.
+      - label: "Everything to Robert, as the eldest son"
+        legitimacy_bp: 600
+        unrest_bp: 1200
+        outcome: >-
+          Robert, the eldest, is named heir of Normandy and England together, as custom
+          would have it. William Rufus is bitter, and the English barons doubt a duke who
+          has rebelled so often, but nobody has broken the custom.
     history: >-
       William was injured at Mantes in July 1087 and died at Rouen on 9 September. He left
       Normandy to Robert and England to William II Rufus; Henry later took both.

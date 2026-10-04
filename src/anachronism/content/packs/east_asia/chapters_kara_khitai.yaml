@@ -38,6 +38,8 @@ chapters:
           he is watching. The Muslim chroniclers, who write about all this a generation later,
           say he spent these years learning how your kingdom was held together.
       - label: "Send him on, and keep your own counsel"
+        legitimacy_bp: 1100
+        unrest_bp: 400
         outcome: >-
           Kuchlug goes off to wander among the Merkits and the Kirghiz. You have one less
           problem at court, and one more at the border.
@@ -88,6 +90,13 @@ chapters:
           other tribute-payers take note. The Karluk lord of Almaliq will soon go to the
           Mongols as well.
         deeds: {grudges: {uyghurs: 1500}}
+      - label: "Send envoys to demand the killers"
+        wealth_bp: -300
+        legitimacy_bp: 300
+        outcome: >-
+          Your envoys cross the mountains to ask for the men who killed your resident and a fine
+          in horses. The Idiqut receives them politely and sends them home with excuses. The
+          silver you spent on their journey is the whole of what Turfan costs him.
     history: >-
       In 1209 the Uyghur Idiqut Barchuq had the Qara Khitai resident killed and submitted to
       Chinggis Khan. The Gurkhan took no recorded action, and the Karluk ruler of Almaliq
@@ -132,7 +141,7 @@ chapters:
         outcome: >-
           Kuchlug thanks you with a smile. You raise what troops you can from your own
           lands, and they are not enough for the Khwarazmshah.
-      - label: "Have him arrested"
+      - label: "Have him arrested before he rides"
         legitimacy_bp: -500
         unrest_bp: 1500
         outcome: >-
@@ -181,6 +190,12 @@ chapters:
         outcome: >-
           The Muslim notables send you thanks and the Khitan priests send you reproaches. The
           towns are quiet, for the moment.
+      - label: "Ban the call to prayer, but leave the imams alone"
+        legitimacy_bp: -1000
+        unrest_bp: 1500
+        outcome: >-
+          The muezzins fall silent and the imams are told to keep to their houses. The towns
+          do not rise. They grow quiet in the way that a town grows quiet when it is waiting.
     history: >-
       Kuchlug, converted to Buddhism by his wife, persecuted the Muslims of Kashgar, Khotan
       and Yarkand from about 1213 to 1218, crucifying the imam of Khotan, and so earned the
@@ -224,6 +239,14 @@ chapters:
           Your men do not fight. The Muslim townsfolk close the gates behind you and open them
           for the Mongols.
         deeds: {give: [g_kashgar, g_almaliq], give_to: mongols}
+      - label: "Offer Jebe submission and tribute"
+        legitimacy_bp: -1500
+        unrest_bp: 1000
+        outcome: >-
+          Your envoy goes out with a hostage and a gift of horses. Jebe sends him back with
+          the same proclamation that has been read in every town, and an order to open
+          Kashgar. He has not come to bargain with a man whom his own people have turned out.
+        deeds: {give: [g_kashgar], give_to: mongols}
     history: >-
       In 1218 Jebe's army entered the Qara Khitai lands, proclaimed freedom of religion and was
       welcomed by the Muslim towns. Kuchlug fled south and was caught and killed by local

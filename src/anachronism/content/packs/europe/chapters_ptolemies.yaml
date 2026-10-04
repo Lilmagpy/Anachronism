@@ -50,13 +50,13 @@ chapters:
           The Library becomes a press. Copies of every book go out to Antioch, Pergamon, Rome and
           Carthage by the thousand. When the Library burns, centuries later, nothing is lost.
       - label: "Send agents abroad to buy libraries"
-        knowledge_bp: 2000
-        wealth_bp: -2000
-        legitimacy_bp: 300
+        knowledge_bp: 3200
+        wealth_bp: -700
+        legitimacy_bp: 1200
         outcome: >-
           Your agents comb Rhodes, Athens and the Ionian cities and return with whole shelves of
-          rolls, some of them rare. The treasury pays heavily, and the catalogue grows more slowly
-          than Callimachus had hoped.
+          rolls, some of them rare, and a few private libraries bought entire. The treasury
+          pays, but the catalogue grows faster than Callimachus had hoped.
     history: >-
       The Library of Alexandria flourished under Ptolemy II; Callimachus compiled the Pinakes.
       Galen tells the stories of the 'ships' books' and the Athenian tragedians' texts.
@@ -95,9 +95,11 @@ chapters:
           and names the constellation Coma Berenices.
         deeds: {take: [sel_cilicia], grudges: {seleucid: 3000}}
       - label: "Seize the Syrian coast, then halt"
-        legitimacy_bp: 1000
+        wealth_bp: 1800
+        legitimacy_bp: 2300
         outcome: >-
-          Seleucia, the port of Antioch, is yours. The rest of the Seleucid empire stays
+          Seleucia, the port of Antioch, is yours, and its harbour dues and plunder come home to
+          Alexandria with a victory the priests celebrate. The rest of the Seleucid empire stays
           Seleucid.
         deeds: {take: [sel_cilicia], grudges: {seleucid: 2000}}
       - label: "Demand silver and hostages by treaty"
@@ -146,11 +148,12 @@ chapters:
           within a few per cent of the truth, depending on the stade. He also draws a map of the
           world with lines of latitude, and finds a sieve for prime numbers.
       - label: "Put the surveyors to the tax roll"
-        wealth_bp: 1500
+        legitimacy_bp: 700
+        wealth_bp: 2000
         unrest_bp: -500
         outcome: >-
-          The surveyors finish the land register for the tax collectors, and Eratosthenes
-          writes a book on comedy instead.
+          The surveyors finish the land register for the tax collectors, and the revenue grows.
+          Eratosthenes writes a book on comedy instead.
       - label: "Fund his star-charts and armillary"
         knowledge_bp: 1500
         wealth_bp: -500
@@ -202,12 +205,14 @@ chapters:
           and Antiochus keeps part of Coele-Syria.
         deeds: {men: 12000}
       - label: "Stall with envoys, hold the border forts"
-        wealth_bp: -1000
+        legitimacy_bp: 1500
+        wealth_bp: -1500
         unrest_bp: -500
         outcome: >-
           Embassies drag on through the winter while the forts of Pelusium are stocked and
-          garrisoned. Antiochus loses patience and attacks anyway, and you meet him with too few
-          men.
+          garrisoned at great expense. Antiochus loses patience and attacks anyway, and you meet
+          him behind the walls with the men you have; the court, seeing the frontier held,
+          praises your foresight.
         deeds: {men: 6000}
     history: >-
       At Raphia (217 BC) Ptolemy IV defeated Antiochus III with the help of 20,000 Egyptians
@@ -252,12 +257,13 @@ chapters:
         outcome: >-
           The priests crown you and say nothing. The temples of Upper Egypt pray for the rebels.
       - label: "Confirm their rights, keep the taxes"
-        legitimacy_bp: 800
-        wealth_bp: -500
+        legitimacy_bp: 1500
+        wealth_bp: -1000
         influence: {clergy: 1000}
         outcome: >-
-          The priests accept the half-measure, and the decree goes up in fewer temples with
-          fewer words. Memphis is quiet, but Thebes does not take your hand.
+          The priests accept the half-measure with grace, and the decree goes up in most temples
+          with a good many words. Memphis is quiet and Thebes less hostile, though the
+          concession costs you more than you planned.
     history: >-
       The Memphis decree of 27 March 196 BC, issued by the priests for Ptolemy V, survives in
       several copies, including the Rosetta Stone (British Museum).

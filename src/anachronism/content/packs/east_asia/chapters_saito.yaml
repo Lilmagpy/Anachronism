@@ -40,7 +40,7 @@ chapters:
           new year the fighting reaches Moribe, inside your border. Neither side can break the
           other, but Mino's captains begin to count the cost.
       - label: "Make peace with Nobunaga, your sister's husband"
-        legitimacy_bp: -500
+        legitimacy_bp: 200
         wealth_bp: 500
         outcome: >-
           Nobunaga sends a polite answer. Your own men mutter that you have let the man who

@@ -28,19 +28,26 @@ chapters:
       People are already whispering that your sister had a hand in it. Her son, your nephew
       and now brother-in-law, is twenty, and the army has just proclaimed him king.
     choices:
-      - label: "Stand by your nephew"
+      - label: "Stand with your nephew at the funeral"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
           You stand beside the young Alexander at the funeral, and go home to Dodona with your
           bride. Olympias has Philip's last wife and her baby killed. Your nephew will soon be
           on his way to Asia, and you begin to wonder what lies to the west.
-      - label: "Make the most of the confusion"
-        legitimacy_bp: -500
+      - label: "Press old claims on the border valleys"
+        legitimacy_bp: 500
+        materials_bp: 500
         outcome: >-
-          You take your bride home and seize a few border valleys while Macedon mourns. Your
-          nephew notices.
+          You take your bride home and revive old Molossian claims on the upland valleys while
+          Macedon mourns. Your nephew notices.
         deeds: {grudges: {macedon: 2000}}
+      - label: "Go home to Dodona and watch Macedon"
+        knowledge_bp: 500
+        unrest_bp: 500
+        outcome: >-
+          You leave the funeral early and keep your army at home. Your nobles grumble that a
+          king of the Molossians should have more to say in the affairs of his neighbours.
     history: >-
       Philip II was assassinated in 336 BC at the wedding of his daughter Cleopatra to her
       uncle Alexander I of Epirus.
@@ -68,7 +75,7 @@ chapters:
       The oak of Dodona has spoken: beware of the water of Acheron, and of Pandosia. There is
       a river Acheron and a town Pandosia here in Epirus. You will keep away from both.
     choices:
-      - label: "Sail for Italy"
+      - label: "Answer Tarentum's call with an army"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -76,10 +83,20 @@ chapters:
           Bruttians and the Samnites. Town after town on the coast is yours. You begin to
           think of a kingdom in the west, and Tarentum begins to wonder whom it has hired.
         deeds: {take: [a3_magna_graecia], men: 15000}
-      - label: "Stay at home"
-        knowledge_bp: 500
+      - label: "Turn the army against the Illyrians"
+        legitimacy_bp: 1000
+        materials_bp: 500
         outcome: >-
-          Tarentum hires someone else. The oracle is pleased with you.
+          The Illyrian tribes have raided your northern valleys for years. You march against
+          them and drive them back into the hills. Tarentum hires someone else.
+        deeds: {men: 6000}
+      - label: "Lend Tarentum a general and some men"
+        wealth_bp: 1000
+        unrest_bp: 500
+        outcome: >-
+          You send one of your captains with a column, and the Tarentines pay well for it. The
+          oracle is uneasy, and your soldiers grumble at fighting in a war that is not theirs.
+        deeds: {men: 8000}
     history: >-
       Alexander I of Epirus campaigned in southern Italy for Tarentum from 334 BC, taking
       Heraclea, Consentia, Terina and Sipontum.
@@ -111,11 +128,17 @@ chapters:
           You make peace and friendship with the Romans. It is the first time a king of the
           Greeks has made a treaty with them. It will not be the last time a king of Epirus
           deals with them.
-      - label: "Send them home; Italy is yours"
+      - label: "Refuse any friendship in Italy"
         legitimacy_bp: 500
         outcome: >-
           The Roman envoys go home. They will remember the name of Epirus.
         deeds: {grudges: {rome: 2000}}
+      - label: "Ask Rome for hostages and gold"
+        wealth_bp: 1000
+        legitimacy_bp: -500
+        outcome: >-
+          The envoys listen coldly, pay a little, and go. Your soldiers are pleased with the
+          money. The Romans find the terms insulting.
     history: >-
       Livy records a peace made between Rome and Alexander of Epirus in 332 BC.
     diverged: >-
@@ -141,7 +164,7 @@ chapters:
       As you ride into the swollen water, one of your Lucanian guides calls out the river's
       name. It is called Acheron. The town on the hill behind you is called Pandosia.
     choices:
-      - label: "Cross"
+      - label: "Ford the river with your best men"
         historical: true
         legitimacy_bp: -2000
         outcome: >-
@@ -149,12 +172,20 @@ chapters:
           the enemy, and the halves are sent home to Epirus, to your sister and your wife. Your
           conquests in Italy fall apart in a season.
         deeds: {ruler_falls: "is killed crossing the river Acheron", give: [a3_magna_graecia]}
-      - label: "Turn back, and fight on the hill"
-        legitimacy_bp: -500
+      - label: "Hold the hill until spring"
+        legitimacy_bp: -1000
+        unrest_bp: 500
         outcome: >-
           You turn your horse. The army holds the hill until spring, half starved, and gets
           out by sea. You never cross a river again without asking its name.
         deeds: {give: [a3_magna_graecia]}
+      - label: "Buy off the Lucanian chiefs"
+        wealth_bp: -2000
+        legitimacy_bp: -500
+        outcome: >-
+          Your gold finds some of the Lucanian leaders, and the circle around the hills opens
+          enough for the army to slip away. It is the last coin the Tarentines will see from
+          you, and your own treasury is empty when you reach the coast.
     history: >-
       Alexander I of Epirus was killed near Pandosia, at a river called Acheron, in 331 BC,
       fulfilling the oracle of Dodona.
@@ -178,10 +209,10 @@ chapters:
       your army.
 
 
-      Your soldiers do not want to go. They say Olympias's wars are not theirs. You have a
-      son of two, Pyrrhus.
+      Some of your soldiers murmur that Olympias's wars are not theirs; others say a king
+      should keep faith with his kin. You have a son of two, Pyrrhus.
     choices:
-      - label: "March to help Olympias"
+      - label: "Lead the army to Olympias"
         historical: true
         legitimacy_bp: -2000
         unrest_bp: 2000
@@ -192,11 +223,26 @@ chapters:
           pulls himself up by the king's robe and stands at his knees. Glaucias keeps him.
           Olympias is stoned to death the next year.
         deeds: {ruler_falls: "is deposed by his own soldiers"}
-      - label: "Stay at home"
-        legitimacy_bp: 500
+      - label: "Send her your regrets and stay"
+        legitimacy_bp: -500
+        unrest_bp: 500
         outcome: >-
-          Olympias fights alone, and loses. Cassander takes Macedon, and looks at Epirus.
+          Olympias fights alone, and loses. Cassander takes Macedon, and looks at Epirus. Some
+          of your nobles think you have abandoned a kinswoman.
         deeds: {grudges: {macedon: 1000}}
+      - label: "Send a small force under a captain"
+        legitimacy_bp: -1000
+        unrest_bp: 1000
+        outcome: >-
+          Two thousand men go north without you. They are caught between Cassander's armies and
+          your own people's anger, and come home in pieces.
+        deeds: {men: 2000}
+      - label: "Pay Cassander to leave Epirus alone"
+        wealth_bp: -1000
+        legitimacy_bp: -500
+        outcome: >-
+          Cassander takes your gold, and your promise to stay out of Macedon. Olympias is
+          beaten without you, and the Molossians pay for the peace.
     history: >-
       In 317 BC the Epirotes deposed Aeacides when he tried to help Olympias; the infant
       Pyrrhus was taken to Glaucias of the Taulantii.
@@ -223,7 +269,7 @@ chapters:
       At Ipsus, in Asia, they face all the other kings together, and four hundred war
       elephants. Demetrius commands the cavalry; he gives you a squadron.
     choices:
-      - label: "Ride with Demetrius"
+      - label: "Command a squadron of horse"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
@@ -233,10 +279,20 @@ chapters:
           you charm the queen, marry her daughter, and come home with Ptolemy's money and
           soldiers to take back your throne.
         deeds: {martial_bp: 1000}
-      - label: "Stay with the infantry"
-        legitimacy_bp: -500
+      - label: "Stand with the phalanx"
+        legitimacy_bp: 500
+        unrest_bp: 500
         outcome: >-
-          Your squadron holds its place in the line while the battle is lost on the wings.
+          You hold your place in the heavy infantry while the battle is lost on the wings, and
+          leave the field with the beaten army.
+        deeds: {martial_bp: 500}
+      - label: "Guard the elephants on the flank"
+        materials_bp: 500
+        legitimacy_bp: 500
+        outcome: >-
+          You are given a post beside the elephants and keep it steadily. When the day is
+          lost you bring your men away in good order.
+        deeds: {men: 2000}
     history: >-
       Pyrrhus fought for Antigonus and Demetrius at Ipsus (301 BC), went to Egypt as a
       hostage, married Antigone and was restored in Epirus with Ptolemy I's help in 297.
@@ -263,7 +319,7 @@ chapters:
       And then? Carthage, and Africa. And then? Then, you say, we shall rest, and drink, and
       talk. "Then why not rest now?" says Cineas.
     choices:
-      - label: "Go to Italy"
+      - label: "Answer the Tarentines' call"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -272,11 +328,21 @@ chapters:
           gymnasia and put the Tarentines in your army, and they discover they have hired a
           master.
         deeds: {take: [a3_magna_graecia], men: 25000}
-      - label: "Rest now"
-        unrest_bp: -500
-        knowledge_bp: 500
+      - label: "Press your claim to Macedon"
+        legitimacy_bp: 1000
+        materials_bp: 500
+        unrest_bp: 500
         outcome: >-
-          Cineas is delighted. Your soldiers are not. Tarentum fights Rome alone.
+          The throne of Macedon has just passed to a murderer, and Greeks everywhere are
+          unsettled. You gather an army for the north, and Tarentum fights Rome alone.
+        deeds: {men: 10000}
+      - label: "Send a vanguard under Milon first"
+        legitimacy_bp: 500
+        wealth_bp: 500
+        outcome: >-
+          Three thousand men cross to Tarentum under your general, to hold the city until you
+          can follow. The Tarentines are glad of them, and you keep your own kingdom in hand.
+        deeds: {men: 3000}
     history: >-
       Pyrrhus crossed to Italy in 280 BC at Tarentum's invitation; Plutarch tells the
       conversation with Cineas.
@@ -303,7 +369,7 @@ chapters:
       to Rome with gifts and a peace: Rome to leave the Greeks of Italy alone, and be your
       friend.
     choices:
-      - label: "Send Cineas to Rome"
+      - label: "Offer terms through Cineas"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
@@ -318,6 +384,13 @@ chapters:
           You march to within forty miles of the city. Every Roman town on the way shuts its
           gates, and a second consular army is waiting.
         deeds: {grudges: {rome: 3000}}
+      - label: "Winter in Tarentum and gather allies"
+        wealth_bp: 500
+        legitimacy_bp: 500
+        outcome: >-
+          You fall back to Tarentum, and the Samnites and Lucanians send fresh men. The Romans
+          raise two new legions over the winter.
+        deeds: {men: 5000}
     history: >-
       Pyrrhus defeated the Romans at Heraclea (280 BC) and sent Cineas to Rome; Appius
       Claudius Caecus's speech persuaded the Senate to refuse peace.
@@ -345,20 +418,24 @@ chapters:
 
       An officer comes to congratulate you on the victory.
     choices:
-      - label: "'Another such victory, and we are undone'"
+      - label: "Tell the officer to count the dead"
         historical: true
         legitimacy_bp: -500
         outcome: >-
           You say it, and the world has called a victory that costs too much a 'Pyrrhic
           victory' ever since. You look for a way out of Italy with honour. The Greeks of
           Sicily are about to offer you one.
-      - label: "Raise new troops from the Italians"
-        wealth_bp: -2000
-        unrest_bp: 1500
+      - label: "Raise fresh levies among the Italians"
+        wealth_bp: -500
         outcome: >-
           The Samnites and Lucanians send you their young men. They are brave, and they are
           not Epirotes.
-        deeds: {men: 10000}
+        deeds: {men: 6000}
+      - label: "Ask Tarentum to pay for more men"
+        wealth_bp: 500
+        unrest_bp: 500
+        outcome: >-
+          The Tarentines grumble, and pay. They pay again less willingly the next year.
     history: >-
       Pyrrhus won at Asculum (279 BC) at great cost; Plutarch reports his remark that
       another such victory would ruin him.
@@ -383,7 +460,7 @@ chapters:
       you will drive out Carthage. Your son by the daughter of their last king, Agathocles,
       could inherit it all.
     choices:
-      - label: "Sail to Sicily"
+      - label: "Answer the Syracusans' call"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -392,11 +469,20 @@ chapters:
           rock by the sea. That one you cannot take. Then you start treating the Sicilian
           Greeks as subjects, and they start talking to Carthage.
         deeds: {take: [a3_west_sicily], grudges: {carthage: 3000}}
-      - label: "Stay and finish the Romans"
-        legitimacy_bp: -500
+      - label: "Strike the Romans once more first"
+        legitimacy_bp: 1000
+        wealth_bp: 500
         outcome: >-
-          Syracuse makes terms with Carthage. You stay in Italy, among allies who are tiring of
-          you.
+          You march against the consul before the campaigning season is over. The fighting is
+          hard and settles nothing. Syracuse makes terms with Carthage.
+        deeds: {men: 5000}
+      - label: "Send your son with a fleet"
+        legitimacy_bp: 500
+        wealth_bp: -500
+        outcome: >-
+          Your son sails for Syracuse with a squadron and a few thousand men, and the siege is
+          eased. You stay in Italy, among allies who are tiring of you.
+        deeds: {ships: 10, men: 4000}
     history: >-
       Pyrrhus campaigned in Sicily (278-276 BC), taking almost all of Carthaginian Sicily
       except Lilybaeum, before the Sicilian Greeks turned against him.
@@ -425,7 +511,7 @@ chapters:
       to fall on his camp at night, across the hills. Your son says the night is long and
       the paths are bad.
     choices:
-      - label: "Attack in the night"
+      - label: "Surprise the consul's camp by night"
         historical: true
         legitimacy_bp: -1500
         outcome: >-
@@ -434,12 +520,20 @@ chapters:
           panics its mother, and the herd tramples your own line. You go home to Epirus with
           eight thousand men. The Romans rename the town Beneventum: 'good outcome'.
         deeds: {give: [a3_magna_graecia, a3_west_sicily]}
-      - label: "Go home without a battle"
+      - label: "Sail home without a battle"
         legitimacy_bp: -1000
+        unrest_bp: 500
         outcome: >-
           You leave a garrison in Tarentum and sail home. The Romans take the Greek cities of
           the south one by one.
         deeds: {give: [a3_magna_graecia, a3_west_sicily]}
+      - label: "Hold the coast and send for help"
+        legitimacy_bp: -500
+        wealth_bp: -1000
+        outcome: >-
+          You fall back on Tarentum and send to Macedon for men. The help is slow and small,
+          the Romans come on, and the cities of Sicily are lost in the meantime.
+        deeds: {give: [a3_west_sicily], men: 3000}
     history: >-
       Pyrrhus left Sicily in 276 BC and was defeated by Manius Curius Dentatus near
       Maleventum (renamed Beneventum) in 275, ending his Italian war.
@@ -466,7 +560,7 @@ chapters:
       Your son is outside the walls with the rest of the army. You send word for him to break
       down a section of the wall to let you out. He misunderstands, and comes in.
     choices:
-      - label: "Fight your way through the streets"
+      - label: "Fight on in the dark streets"
         historical: true
         legitimacy_bp: -1500
         outcome: >-
@@ -481,6 +575,12 @@ chapters:
         outcome: >-
           You cut your way back to the gate, leaving two elephants and a lot of good men in
           Argos. There is always another war.
+      - label: "Ask Antigonus for a truce"
+        legitimacy_bp: -1000
+        wealth_bp: -500
+        outcome: >-
+          Antigonus's men let your column through for gold and a promise to leave Argos
+          alone. Your own men are ashamed of the terms.
     history: >-
       Pyrrhus was killed in street fighting at Argos in 272 BC, struck by a roof tile thrown
       by an old woman; Plutarch and Livy record Hannibal's ranking of him.

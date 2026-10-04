@@ -26,7 +26,7 @@ chapters:
       The Jin will make peace, their envoys say. They want more tribute. And they want the
       head of the man who started the war.
     choices:
-      - label: "Let Shi Miyuan deal with Han Tuozhou"
+      - label: "Let Shi Miyuan settle it with the Jin"
         historical: true
         legitimacy_bp: -1000
         wealth_bp: -2000
@@ -42,6 +42,14 @@ chapters:
         outcome: >-
           The war on the Huai grinds on for another year. Neither side can break the other.
         deeds: {war_with: [jurchen_jin]}
+      - label: "Hold the Huai with Bi Zaiyu's army and bargain"
+        legitimacy_bp: 300
+        wealth_bp: -1000
+        outcome: >-
+          Bi Zaiyu's veterans hold the river while your envoys haggle. The Jin find the Huai
+          harder to cross than they hoped and lower their price, but the war party at court
+          never forgives you for the lost north.
+        deeds: {men: 20000, martial_bp: 800}
     history: >-
       The Kaixi war (1206-1207) failed; Han Tuozhou was murdered at Shi Miyuan's instigation and
       his head sent to the Jin as part of the peace of Jiading (1208).
@@ -68,7 +76,7 @@ chapters:
       the tribute. Others warn that a wounded tiger bites hardest, and that the Mongols may be
       worse neighbours than the Jin.
     choices:
-      - label: "Stop paying"
+      - label: "Stop the silver to the Jin"
         historical: true
         wealth_bp: 2000
         legitimacy_bp: 800
@@ -77,10 +85,26 @@ chapters:
           by force, and for seven years the two old enemies wear each other out - while the
           Mongols watch.
         deeds: {war_with: [jurchen_jin]}
-      - label: "Keep paying, and keep the Jin as a wall against the steppe"
+      - label: "Keep paying, to keep the Jin as a wall"
+        legitimacy_bp: -500
         wealth_bp: -1500
         outcome: >-
-          The silver goes north. The Jin, grateful and broke, hold the Mongols a little longer.
+          The silver goes north. The Jin, grateful and broke, hold the Mongols a little
+          longer. Your scholars grumble that you are feeding a beast that will not live out
+          the decade.
+        deeds: {peace_with: ["jurchen_jin"]}
+      - label: "Pay half, and strengthen the Huai garrisons"
+        wealth_bp: 1000
+        legitimacy_bp: 700
+        food_bp: 1000
+        unrest_bp: 400
+        outcome: >-
+          You send half the silver and put the rest into forts and soldiers along the Huai.
+          The Jin complain but accept it; your treasury is lighter and your frontier is better
+          manned.
+          Their farms along the Huai marshes feed the frontier, and the Jin, still receiving
+          half, say little.
+        deeds: {men: 15000, martial_bp: 500}
     history: >-
       From 1214 the Song stopped paying tribute to the weakened Jin, who attacked Song in 1217;
       the war lasted until 1224.
@@ -118,6 +142,14 @@ chapters:
           Song and Mongol envoys exchange gifts. Muqali's men seem very interested in the roads
           south.
         deeds: {ally_with: [mongols]}
+      - label: "Send gifts and a second embassy, with no promises"
+        legitimacy_bp: 700
+        wealth_bp: -400
+        knowledge_bp: 1400
+        outcome: >-
+          A second embassy goes north with silk and tea and a polite letter that commits you
+          to nothing. Muqali's officers write down everything your envoys let slip about the
+          roads south.
     history: >-
       Zhao Gong's Mengda beilu (1221) is the earliest surviving Chinese account of the
       Mongols.
@@ -143,7 +175,7 @@ chapters:
       Now some Huzhou men have tried to proclaim Zhao Hong emperor, against his will. The
       rebellion is already over. Shi Miyuan asks what is to be done with the prince.
     choices:
-      - label: "Let Shi Miyuan 'deal with' the prince"
+      - label: "Leave the prince's fate to Shi Miyuan"
         historical: true
         legitimacy_bp: -1000
         unrest_bp: 800
@@ -157,6 +189,13 @@ chapters:
         outcome: >-
           Zhao Hong lives quietly in Huzhou. The scholars praise your humanity; Shi Miyuan
           sulks.
+      - label: "Send Zhao Hong to a remote county under guard"
+        legitimacy_bp: 300
+        wealth_bp: -500
+        outcome: >-
+          The prince is sent to a far county with a guard and a small household. The scholars
+          are uneasy that he is neither pardoned nor tried, and Shi Miyuan keeps the guards
+          loyal to himself.
     history: >-
       Shi Miyuan engineered Lizong's succession in 1224 and forced Zhao Hong's death after the
       Huzhou incident of 1225, provoking protests from the scholar-officials.
@@ -194,9 +233,18 @@ chapters:
         deeds: {war_with: [mongols]}
       - label: "Hold the Huai, and send envoys north"
         legitimacy_bp: -300
+        wealth_bp: -500
         outcome: >-
-          Your envoys congratulate the Great Khan on his victory. The border stays quiet for
-          now. The Mongols, however, have not forgotten the south.
+          Your envoys congratulate the Great Khan on his victory, with silk for his officers.
+          The border stays quiet for now. The Mongols, however, have not forgotten the south.
+        deeds: {peace_with: ["mongols"]}
+      - label: "Garrison Kaifeng alone, and fortify the road"
+        legitimacy_bp: 500
+        food_bp: -1000
+        outcome: >-
+          A small column occupies Kaifeng and holds the road behind it. The empty countryside
+          cannot feed it, and the Mongols see Song soldiers on land they think of as theirs.
+        deeds: {men: 10000, grudges: {mongols: 1500}}
     history: >-
       In 1234 Song forces occupied Kaifeng and Luoyang after the fall of the Jin; the Mongols
       repulsed them, and the Mongol-Song war began in 1235.
@@ -233,9 +281,12 @@ chapters:
           'The Washing Away of Wrongs' goes out to every magistrate. It will still be used in
           Chinese courts six hundred years later, and be translated into Dutch, French and
           English as the first book of forensic medicine.
-      - label: "Leave it to the coroners' traditions"
+      - label: "Keep coroners to their old practice"
+        wealth_bp: 800
+        knowledge_bp: -300
         outcome: >-
-          The coroners go on doing what their fathers did.
+          The coroners go on doing what their fathers did. The treasury is spared the cost of
+          printing, and the old methods remain unchallenged.
       - label: "✦ Add a lens to every coroner's kit"
         needs_adopted: [microscope]
         knowledge_bp: 3000
@@ -243,6 +294,14 @@ chapters:
         outcome: >-
           Through their magnifying lenses your coroners see the fibres under fingernails and
           the grains of poison in the stomach. Murderers learn to fear the coroner.
+      - label: "Give it to the judicial commissioner of each circuit"
+        knowledge_bp: 1500
+        legitimacy_bp: 600
+        wealth_bp: -300
+        unrest_bp: -500
+        outcome: >-
+          Each circuit's commissioner receives a copy, and the best of them use it. In the
+          counties it is slow to spread, and many coroners never see it.
     history: >-
       Song Ci's Collected Cases of Injustice Rectified (Xi yuan ji lu, 1247) is the oldest
       surviving book on forensic medicine.
@@ -271,7 +330,7 @@ chapters:
       message: two fresh fish and a hundred pancakes, with a note saying the fortress can
       hold out for ten more years.
     choices:
-      - label: "Send the fish"
+      - label: "Send the khan a message of defiance"
         historical: true
         legitimacy_bp: 2500
         outcome: >-
@@ -280,11 +339,20 @@ chapters:
           fight over the throne. Diaoyu will hold for twenty more years.
         deeds: {grudges: {mongols: 2000}}
       - label: "Sally out against the camp"
-        legitimacy_bp: 1000
-        food_bp: -1000
+        legitimacy_bp: 2200
+        food_bp: -700
+        wealth_bp: 600
         outcome: >-
           Your sortie burns some siege engines and loses many men. The siege goes on until the
           khan's death.
+          The sortie is the talk of the camp, and the stores taken make up for some of the men
+          lost.
+      - label: "Send an envoy to ask the khan's terms"
+        wealth_bp: -1000
+        legitimacy_bp: -500
+        outcome: >-
+          Mongke's answer is the old one: surrender, and your lives will be spared. Wang Jian
+          will not accept it, but the court hears of the offer and does not forget it.
     history: >-
       Diaoyucheng withstood Mongke's siege in 1259; Mongke died there in August, possibly of
       illness, possibly of wounds. The fortress held until 1279.
@@ -327,6 +395,15 @@ chapters:
         outcome: >-
           The court is ashamed and the silver goes north. Kublai keeps his word - for now.
         deeds: {peace_with: [mongols]}
+      - label: "Report an honest truce on your own terms, and rearm"
+        legitimacy_bp: 1300
+        wealth_bp: -300
+        outcome: >-
+          The court hears that a truce has been made and learns its price. Jia Sidao uses the
+          quiet to raise new levies for the Yangzi garrisons; the court is relieved, but the
+          tribute is hard to explain.
+          The court, relieved, thinks well of him for it.
+        deeds: {peace_with: ["mongols"], martial_bp: 800}
     history: >-
       Jia Sidao negotiated with Kublai at Ezhou in 1259, reported a victory, and detained
       Kublai's envoy Hao Jing for sixteen years.
@@ -380,6 +457,13 @@ chapters:
           Bronze guns on the walls outrange the Persian catapults and smash them before they
           can be wound. The siege is lifted, and Kublai has to look for another road south.
         deeds: {war_with: [mongols], grudges: {mongols: 3000}}
+      - label: "Burn the stores and withdraw the garrison by river"
+        legitimacy_bp: -1200
+        unrest_bp: 500
+        outcome: >-
+          Lü Wenhuan's men burn the granaries and take to the boats. The Mongols take an empty
+          Xiangyang, and the road to the Yangzi is open without a surrender being signed.
+        deeds: {give: ["g_xiangyang"], give_to: "mongols"}
     history: >-
       The Mongols besieged Xiangyang from 1268; Muslim counterweight trebuchets forced its
       surrender in 1273, and Lü Wenhuan joined the Mongols.
@@ -410,7 +494,7 @@ chapters:
       sixty-seven. The minister Wen Tianxiang wants to fight in the streets. Bayan has
       promised that if the city surrenders, it will not be sacked.
     choices:
-      - label: "Surrender the city to spare its people"
+      - label: "Open the gates to spare the people"
         historical: true
         legitimacy_bp: -2000
         outcome: >-
@@ -419,14 +503,19 @@ chapters:
           they are treated with courtesy. But two younger princes have been smuggled out of the
           city, and loyal ministers carry them south to the coast.
         deeds: {ruler_falls: "is taken north as a prisoner of the Mongols", give: [g_linan, g_jiankang, g_huainan], give_to: mongols}
-      - label: "Fight for every street"
+      - label: "Fight for every street of the city"
         legitimacy_bp: 1500
-        unrest_bp: 2000
         food_bp: -3000
         outcome: >-
           The city fights. For a month the Mongols cannot get beyond the walls. Then the walls
           go, and Lin'an burns.
-        deeds: {give: [g_jiankang, g_huainan], give_to: mongols}
+        deeds: {give: ["g_jiankang", "g_huainan"], give_to: "mongols"}
+      - label: "Take the court by sea to Fujian"
+        legitimacy_bp: -800
+        outcome: >-
+          The court boards ships at the quays of Lin'an and sails south, leaving the city and
+          the lower Yangzi to the Mongols. The people of Lin'an are left to Bayan's promise.
+        deeds: {give: ["g_linan", "g_jiankang"], give_to: "mongols", capital: "g_fujian"}
     history: >-
       Lin'an surrendered without a fight in February 1276; Emperor Gong and the Grand Empress
       Dowager Xie were taken to Dadu. Loyalists fled south with the princes Zhao Shi and Zhao
@@ -470,11 +559,19 @@ chapters:
           schoolchildren will learn by heart.
         deeds: {ruler_falls: "drowns at Yamen in Lu Xiufu's arms"}
       - label: "Break the chains, and sail for Champa"
-        legitimacy_bp: 500
-        unrest_bp: 1500
+        legitimacy_bp: 2100
+        unrest_bp: 400
         outcome: >-
           In the night the ships cut their chains and run for the open sea. Some are caught;
           some reach Champa and Vietnam, where the boy emperor's court lives on in exile.
+          The escape is told as a bold stroke that kept the line alive.
+      - label: "Surrender the fleet to save those aboard"
+        legitimacy_bp: -1500
+        unrest_bp: -500
+        outcome: >-
+          Your officers send to the Mongol admiral with the fleet's surrender. The ships are
+          taken and the people aboard are spared, but the dynasty ends in a signature rather
+          than a battle.
     history: >-
       At Yamen in March 1279 the last Song fleet was destroyed; Lu Xiufu drowned himself with
       the child emperor Zhao Bing. Wen Tianxiang was executed in 1283.

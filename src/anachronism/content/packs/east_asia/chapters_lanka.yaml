@@ -47,7 +47,7 @@ chapters:
       shrines for the yakkha spirits, a cemetery, quarters for the outcast, a house for each of the
       holy men of other faiths. And that the heart of the country will be a great tank.
     choices:
-      - label: "Make a permanent city, with a place for every people and every god"
+      - label: "Found a city with a place for every people"
         historical: true
         legitimacy_bp: 1500
         wealth_bp: -500
@@ -62,6 +62,13 @@ chapters:
         legitimacy_bp: -500
         outcome: >-
           Your headmen like it. The island has no capital, and the next king has to start again.
+      - label: "Share the land among your chief headmen"
+        legitimacy_bp: 1000
+        unrest_bp: 500
+        influence: {nobility: 800}
+        outcome: >-
+          You give each of the great headmen a district to hold in your name. They are loyal
+          while you live, and the island is as strong as your hand on them.
     history: >-
       The Mahavamsa credits Pandukabhaya with founding Anuradhapura (traditionally c. 377
       BC); archaeology shows the site was already settled and grew into a city in the
@@ -100,9 +107,18 @@ chapters:
           'Devanampiya' that Ashoka uses himself. The island has not had a friend so large before.
           You do not yet say whether you will take refuge in the Buddha.
       - label: "Send gifts back, and keep your own coronation"
-        legitimacy_bp: 200
+        legitimacy_bp: 1200
+        wealth_bp: -200
         outcome: >-
           Ashoka's envoys are polite. Lanka stays small.
+          The gifts are generous, and the court is seen to be a friend of Ashoka's on its own
+          terms.
+      - label: "Answer with gifts, and ask for a trade treaty"
+        wealth_bp: 1000
+        legitimacy_bp: 500
+        outcome: >-
+          Your envoys go back with pearls and a request for an agreement on trade. Ashoka's
+          court grants it, and Lanka's pearls and elephants find a market on the Ganges.
     history: >-
       The Mahavamsa says that Tissa sent gifts to Ashoka, that Ashoka's embassy brought a second
       consecration, and that the title 'Devanampiya' was shared with Ashoka; Ashoka's Rock Edicts
@@ -144,10 +160,20 @@ chapters:
           Lanka will be a Buddhist country for the next two thousand years. The Sinhalese
           remember the day, the Poson full moon, as the coming of the teaching.
       - label: "Honour the monks, but keep your ancestral gods"
-        legitimacy_bp: 500
+        legitimacy_bp: 1000
+        influence: {'nobility': 500}
         outcome: >-
           Mahinda is a courteous guest and preaches in the villages. It takes a generation for
           the new teaching to spread.
+          The monks are given a place at the court, and the people see a king who has lost
+          nothing of his own.
+      - label: "Invite the monks to the capital, and keep your own rites"
+        legitimacy_bp: 1200
+        knowledge_bp: 600
+        influence: {clergy: 500}
+        outcome: >-
+          You bring Mahinda and his companions to the city and hear them over many days,
+          without yet giving up the old rites. The court learns a great deal from them.
     history: >-
       Sri Lankan tradition (Dipavamsa, Mahavamsa) says that Mahinda, son of Ashoka, brought
       Buddhism to Lanka c. 250 BC and converted Devanampiya Tissa at Mihintale; the story is
@@ -190,6 +216,12 @@ chapters:
         legitimacy_bp: -500
         outcome: >-
           The monks object. The tree is not a possession of kings, they say, but of the order.
+      - label: "Plant the branch on Mount Missaka among the hermitages"
+        legitimacy_bp: 1200
+        influence: {clergy: 500}
+        outcome: >-
+          The branch goes to the hills where the first monks lived. It is honoured by the
+          hermits, and visited by pilgrims, but is far from the people of the city.
     history: >-
       The Mahavamsa says the nun Sanghamitta brought a branch of the Bodhi tree to Anuradhapura,
       where the Sri Maha Bodhi still grows; the Thuparama is the island's oldest traditional
@@ -235,6 +267,14 @@ chapters:
           Elara is polite and takes it. In a few years, there is no difference between his place
           and yours.
         deeds: {ruler_falls: "is pushed aside by Elara"}
+      - label: "Retreat to the hill country and wait"
+        wealth_bp: -1000
+        legitimacy_bp: -800
+        outcome: >-
+          You leave the capital to Elara and withdraw to the hills of Ruhuna with your
+          household and what army will follow. Elara takes the plains, and the south begins to
+          gather around you.
+        deeds: {ruler_falls: "is driven out to the hills of Ruhuna"}
     history: >-
       According to the Mahavamsa, a Tamil prince, Elara, defeated Asela and ruled at Anuradhapura
       for forty-four years (traditionally c. 205-161 BC).
@@ -276,6 +316,14 @@ chapters:
         unrest_bp: 1000
         outcome: >-
           The bell hangs unrung afterwards. Nobody trusts it.
+      - label: "Put the matter to a council of ministers and elders"
+        legitimacy_bp: 2700
+        unrest_bp: -1000
+        influence: {nobility: -800}
+        outcome: >-
+          You call the elders and ministers and let them judge the case, and abide by what
+          they say. The people hear that even the king's son is tried like any other, and the
+          nobles do not like the precedent.
     history: >-
       The Mahavamsa tells of Elara's bell of justice and of his rigorous judgement of his own
       son as a story of a just king; whatever its truth, the chroniclers' respect for him was
@@ -320,6 +368,13 @@ chapters:
         outcome: >-
           The siege is long, and your allies in the north begin to wonder whom to follow.
         deeds: {ruler_falls: "dies while the city is besieged"}
+      - label: "Withdraw to the north and keep the Rajarata"
+        legitimacy_bp: 500
+        wealth_bp: -300
+        outcome: >-
+          You leave the capital and take your army north. Dutugemunu has the island's heart;
+          you keep a smaller kingdom and a name for prudence, for a little while.
+        deeds: {ruler_falls: "withdraws to the northern hills"}
     history: >-
       The Mahavamsa tells that Dutugemunu killed Elara in single combat in c. 161 BC and became
       king of all Lanka; the account is one-sided and later in date.
@@ -367,6 +422,15 @@ chapters:
         outcome: >-
           The stupa goes up, and the Tamils of the north, and the Sinhalese who admired Elara,
           remember the tomb.
+      - label: "Honour Elara's tomb, and build the stupa slowly"
+        legitimacy_bp: 2000
+        unrest_bp: -1500
+        food_bp: 300
+        influence: {clergy: -500}
+        outcome: >-
+          You keep the tomb and spread the building of the stupa over many years, with paid
+          labour and leave for the harvest. The people prosper, and the elders complain that
+          the great work crawls.
     history: >-
       Dutugemunu ruled c. 161-137 BC in the Mahavamsa's reckoning; it tells of his honours to
       Elara's tomb and of the Maha Thupa (Ruwanweli) at Anuradhapura, begun in his reign and

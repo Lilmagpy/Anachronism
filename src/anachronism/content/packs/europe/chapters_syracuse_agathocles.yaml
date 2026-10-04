@@ -55,12 +55,13 @@ chapters:
           Corinthians say nothing, which is not the same as agreeing.
         deeds: {"men": 5000}
       - label: "Raise a citizen army and keep the mercenaries"
-        legitimacy_bp: 600
-        wealth_bp: -800
+        wealth_bp: -400
+        legitimacy_bp: 1400
         outcome: >-
           The city enrols its young men and keeps Timoleon's hired captains on a retainer. The
-          army is large and loyal to nobody in particular.
-        deeds: {"men": 6000, "martial_bp": 800}
+          citizens are proud of their new army and the army is large, but it is loyal to nobody in
+          particular and the treasury feels the pay.
+        deeds: {men: 6000, martial_bp: 800}
     history: >-
       Timoleon died in about 337 BC and was buried at public expense. Syracuse kept his laws
       and, in Plutarch's account, voted to ask Corinth for its foreign-war generals.
@@ -218,12 +219,13 @@ chapters:
           The ships are ready for flight, and your men know it. They fight less hard.
         deeds: {"men": 4000}
       - label: "Fortify a camp near Tunis and wait"
-        legitimacy_bp: 400
         unrest_bp: 300
+        legitimacy_bp: 1000
         outcome: >-
-          Your men dig in on a hill with the ships drawn up behind. Carthage raises an army
-          and comes out to look at you, and does not at once attack.
-        deeds: {"martial_bp": 500, "men": 2000}
+          Your men dig in on a hill with the ships drawn up behind. Carthage raises an army and comes
+          out to look at you, and does not at once attack; your steadiness is noticed at home and
+          abroad.
+        deeds: {martial_bp: 500, men: 2000}
     history: >-
       Agathocles sailed in August 310 BC, landed in Africa after an eclipse (15 August), and
       defeated the Carthaginians in the field; Diodorus and Justin say he burned his ships.
@@ -368,12 +370,12 @@ chapters:
           The treasury is empty, and the soldiers' pay is late. Your enemies can wait.
         deeds: {"men": 8000, "ships": 20}
       - label: "Return to Africa with a fresh army"
-        legitimacy_bp: 300
-        wealth_bp: -800
+        wealth_bp: -300
+        legitimacy_bp: 1500
         outcome: >-
-          A new army sails for Africa while Carthage is still sorting out its fleets. The
-          country and the climate are as hard on it as before.
-        deeds: {"men": 12000, "ships": 15}
+          A new army sails for Africa while Carthage is still sorting out its fleets. The country and
+          the climate are as hard on it as before, though the first plunder pays for part of the cost.
+        deeds: {men: 12000, ships: 15}
     history: >-
       Agathocles made peace with Carthage in 306 BC on the old frontier, and came to terms with the
       exile leader Deinocrates soon after.
@@ -465,12 +467,13 @@ chapters:
           Archagathus is a murderer, and the city knows it. Syracuse is not ready for a boy
           king who started by killing his uncle.
       - label: "Leave Syracuse to a council of generals"
-        legitimacy_bp: 200
-        unrest_bp: 600
-        influence: {"nobility": 500}
+        unrest_bp: -500
+        legitimacy_bp: 1500
+        influence: {nobility: 500}
         outcome: >-
-          Your old officers take the keys of the citadel and promise to rule together. They do
-          so, with growing difficulty, for a few months.
+          Your old officers take the keys of the citadel and promise to rule together. At first the
+          city is easier for it, and the nobles are content; but they do so with growing difficulty,
+          for only a few months.
     history: >-
       Agathocles died in 289 BC, after Diodorus and Justin say he was poisoned, having reportedly
       restored the freedom of Syracuse. Hicetas ruled the city a few years later.

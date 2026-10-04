@@ -42,12 +42,13 @@ chapters:
         outcome: >-
           Dublin burns. The Norse go elsewhere to trade, and Ireland is poorer for it.
       - label: "Garrison Dublin with your own men"
-        legitimacy_bp: 500
         wealth_bp: 800
-        deeds: {men: 2000}
+        legitimacy_bp: 1000
         outcome: >-
-          You put a Munster garrison in the town and let Sitric live in it as your guest. The
-          Norse markets keep trading, but the townsmen know who holds the gates.
+          You put a Munster garrison in the town and let Sitric live in it as your guest. The Norse
+          markets keep trading, and the townsmen know who holds the gates; the kings of Ireland note
+          that Munster now holds a port.
+        deeds: {men: 2000}
     history: >-
       After Glenmama (December 999) Brian occupied Dublin, restored Sitric Silkbeard as a
       tributary, and married Gormflaith, Sitric's mother.
@@ -84,11 +85,13 @@ chapters:
         outcome: >-
           The old order stands, with a stronger Munster beside it.
       - label: "Take hostages and tribute, leave him Tara"
-        legitimacy_bp: 1000
         wealth_bp: 800
+        unrest_bp: 500
+        legitimacy_bp: 2000
         outcome: >-
-          You take hostages and a heavy tribute from Máel Sechnaill, and leave him the high
-          kingship in name. The Uí Néill are shamed, but they are still kings at Tara.
+          You take hostages and a heavy tribute from Máel Sechnaill, and leave him the high kingship
+          in name. The Uí Néill are shamed, but they are still kings at Tara; Munster's kings praise
+          your firmness and the midland kings grow wary.
     history: >-
       Máel Sechnaill II submitted to Brian in 1002, making Brian high king.
     sources: ["Annals of Ulster 1002", "Annals of Inisfallen 1002"]
@@ -129,12 +132,13 @@ chapters:
         outcome: >-
           The monks of Armagh pray for you without enthusiasm.
       - label: "Give less gold and confirm fewer rights"
-        legitimacy_bp: 800
-        wealth_bp: -400
+        wealth_bp: -600
+        legitimacy_bp: 1500
         influence: {clergy: 800}
         outcome: >-
-          You lay a smaller gift on the altar and confirm Armagh's rights over its own
-          churches only. The monks are polite, and Armagh's scribes write nothing grand.
+          You lay a smaller gift on the altar and confirm Armagh's rights over its own churches, with
+          a great ceremony. The monks are warm, and Armagh's scribes write well of you, if not
+          grandly.
     history: >-
       In 1005 Brian visited Armagh, gave twenty ounces of gold and confirmed its primacy; the
       Book of Armagh records him as 'Imperator Scotorum'.
@@ -174,11 +178,13 @@ chapters:
         outcome: >-
           The north keeps its own kings, and laughs at Kincora.
       - label: "Send Murchad north for one campaign"
-        legitimacy_bp: 800
-        deeds: {men: 4000, martial_bp: 200}
+        unrest_bp: 400
+        legitimacy_bp: 1500
         outcome: >-
-          Murchad takes a strong army north for a single season and comes back with what he
-          can win. The northern kings hear what he did and wait to see what you do next.
+          Murchad takes a strong army north for a single season and comes back with hostages from two
+          of the northern kings. The others hear what he did and wait to see what you do next; the
+          levies are weary.
+        deeds: {men: 4000, martial_bp: 200}
     history: >-
       Between 1005 and 1011 Brian forced the northern kingdoms to give hostages, completing
       his high kingship.
@@ -314,12 +320,14 @@ chapters:
         outcome: >-
           Your war-band rides out after the raiders, and finds them, and the feuds go on.
       - label: "Proclaim a law against raiders only"
-        legitimacy_bp: 600
-        unrest_bp: -600
+        wealth_bp: 300
+        unrest_bp: -1200
+        legitimacy_bp: 1000
         influence: {clergy: 300}
         outcome: >-
-          You proclaim the double penalty for raiders and leave the Sunday rules out. The
-          clergy are half content, and the raiders are afraid.
+          You proclaim the double penalty for raiders and leave the Sunday rules out. The clergy are
+          half content, the raiders are afraid, and the roads grow quiet; but the abbot's party says
+          you have taken only the half of the law that suits you.
     history: >-
       In 1040 Donnchad mac Briain made a law against theft, violence and Sunday work in
       Munster, recorded in the Annals of Inisfallen.
@@ -360,7 +368,7 @@ chapters:
         outcome: >-
           You march out with what men you have left. Toirdelbach and the Leinstermen wait.
       - label: "Treat with your nephew for terms"
-        legitimacy_bp: -500
+        legitimacy_bp: 0
         wealth_bp: -800
         outcome: >-
           You send to Toirdelbach with an offer of a share of Munster's tribute if he will

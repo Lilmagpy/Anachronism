@@ -52,12 +52,12 @@ chapters:
           The siege drags on. When you die that summer your son takes over without having once heard
           a battle, and the retainers whisper.
       - label: "Give Motochika a small guard to command"
-        legitimacy_bp: 500
+        legitimacy_bp: 2000
         wealth_bp: -300
         outcome: >-
           The boy leads a handful of retainers at the edge of the fighting and does what he is
-          told. Tonomoto falls, and when you die that summer the men say he is a careful young
-          man, which is not the same as a brave one.
+          told, coolly, and the men notice it. Tonomoto falls, and when you die that summer they
+          say he is a careful young man, which the older retainers think no bad thing.
     history: >-
       Chosokabe Motochika's first battle was at Tonomoto in 1560; his father Kunichika died
       the same year and he became head of the house.
@@ -99,13 +99,13 @@ chapters:
         outcome: >-
           You keep the Ichijo name as a figurehead, and Tosa is never quite yours.
       - label: "Buy the Ichijo vassals with new lands"
-        wealth_bp: -1000
-        legitimacy_bp: 800
+        wealth_bp: -500
+        legitimacy_bp: 2200
         unrest_bp: -300
         outcome: >-
-          Many of the old Ichijo vassals take your lands and your promises and go home. Kanesada
-          is left with his Otomo soldiers and a smaller following, and the matter is not yet
-          settled.
+          Most of the old Ichijo vassals take your lands and your promises and go home, and the
+          province sees that you can win without a battle. Kanesada is left with his Otomo
+          soldiers and a thin following, and the matter is nearly settled.
     history: >-
       Motochika defeated Ichijo Kanesada, restored with Otomo help, at the Shimanto river in
       1575 and became master of all Tosa.
@@ -152,13 +152,14 @@ chapters:
           You give up what you have won. The island is cut into two and you have nothing to show
           for the war but wounds. A few weeks later Nobunaga is dead.
       - label: "Send hostages and gifts, keep your gains"
-        wealth_bp: -1000
-        legitimacy_bp: 200
-        unrest_bp: 300
+        wealth_bp: -500
+        legitimacy_bp: 1200
+        unrest_bp: 200
         outcome: >-
           Envoys carry gifts and hostages to Kyoto and plead that Shikoku was won by the sword
           Nobunaga himself allowed. The answer is slow in coming, and then it is overtaken by
-          events in the capital.
+          events in the capital; meanwhile your retainers admire the lord who bought time
+          without giving up land.
     history: >-
       Nobunaga turned against Chosokabe's conquests in 1582 and prepared an invasion of
       Shikoku, which was cancelled by his death at Honno-ji; Chosokabe then defeated the
@@ -198,10 +199,13 @@ chapters:
           and are the first man to hold the island.
         deeds: {take: [j_iyo], grudges: {mori: 1500}}
       - label: "Halt at the Iyo border"
-        legitimacy_bp: -500
-        unrest_bp: -300
+        wealth_bp: 300
+        legitimacy_bp: 1400
+        unrest_bp: -500
         outcome: >-
-          You hold what you have, and the Kono remain in their castles, waiting for Hideyoshi.
+          You hold what you have, and the peace with the Mori brings a little silver. The Kono
+          remain in their castles, waiting for Hideyoshi, and your retainers are glad of peace
+          after twenty years of war.
         deeds: {peace_with: [mori]}
       - label: "Garrison Awa and raise more levies"
         wealth_bp: -500
@@ -400,12 +404,13 @@ chapters:
         outcome: >-
           The retainers continue to quarrel. You die in 1599 without a clear line.
       - label: "Settle the succession before any laws"
-        legitimacy_bp: 800
+        legitimacy_bp: 1300
         influence: {nobility: 500}
-        unrest_bp: 300
+        unrest_bp: -300
         outcome: >-
           You gather the retainers and swear them to your heir Morichika before you write a line
-          of law. The quarrels grow quieter, but the house has no written rules to hold them to.
+          of law. The oath is taken in earnest and the quarrels grow quiet, but the house has no
+          written rules to hold them to.
     history: >-
       In 1597 Chosokabe Motochika and his heir Morichika issued the Chosokabe-shi okite
       hyakkajo, a house code of one hundred articles; Motochika died in 1599.
@@ -494,12 +499,13 @@ chapters:
           You do not go. Osaka falls in the summer, without you, and you spend your last years
           teaching in a back street.
       - label: "Offer your service to Ieyasu"
-        legitimacy_bp: 300
-        wealth_bp: 500
+        legitimacy_bp: 500
+        wealth_bp: 200
         unrest_bp: -300
         outcome: >-
-          Ieyasu's retainers have not forgotten Sekigahara and do not answer you. Osaka falls in
-          the summer, and you are left to teach in a back street.
+          Ieyasu's retainers have not forgotten Sekigahara and do not answer you, though the
+          townsmen of Kyoto think your offer a wise one. Osaka falls in the summer, and you are
+          left to teach in a back street.
     history: >-
       Chosokabe Morichika joined Hideyori in Osaka in 1614; he was captured after the battle of
       Yao in 1615 and executed.

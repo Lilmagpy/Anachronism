@@ -40,11 +40,13 @@ chapters:
           Esztergom and order every ten villages to build a church. Hungary will be a Latin
           kingdom, facing west, for the next thousand years.
       - label: "Accept the crown Constantinople offers"
-        legitimacy_bp: 2000
-        knowledge_bp: 1000
+        knowledge_bp: 800
+        unrest_bp: 500
+        legitimacy_bp: 2500
         outcome: >-
-          A crown of Greek enamels arrives, with a Greek archbishop. The Germans regard you
-          with suspicion, and the Byzantines regard you as their vassal.
+          A crown of Greek enamels arrives, with a Greek archbishop. The Germans regard you with
+          suspicion, and the Byzantines regard you as their vassal; the Latin clergy at home murmur,
+          though the court is dazzled.
       - label: "Crown yourself before your own lords"
         legitimacy_bp: 1500
         influence: {"nobility": 1000}
@@ -93,12 +95,13 @@ chapters:
           Gyula sends gifts and a troop of horsemen, and keeps his salt.
         deeds: {"men": 3000, "martial_bp": 200}
       - label: "Demand tribute and hostages from Gyula"
-        legitimacy_bp: 600
-        wealth_bp: 800
+        wealth_bp: 1600
+        unrest_bp: 300
+        legitimacy_bp: 1200
         outcome: >-
-          Gyula sends his son and a share of the salt, with a hard look. He keeps his
-          fortresses and his court.
-        deeds: {"men": 2000}
+          Gyula sends his son and a rich share of the salt, with a hard look. He keeps his fortresses
+          and his court, and the Transylvanian lords, watching, are slow to forgive the demand.
+        deeds: {men: 2000}
     history: >-
       In about 1003 Stephen conquered Transylvania from his maternal uncle Gyula.
     sources: ["Annals of Hildesheim 1003", "Illuminated Chronicle 66", "Engel, The Realm of St Stephen (2001)"]
@@ -139,12 +142,12 @@ chapters:
         outcome: >-
           The pilgrims pay, grumbling, and some of them go by sea again.
       - label: "Open the road and charge for lodging"
-        wealth_bp: 800
-        legitimacy_bp: 600
+        wealth_bp: 1000
         knowledge_bp: 500
+        legitimacy_bp: 1700
         outcome: >-
-          The road is free but the hostels are not. The pilgrims pay a small price for a bed
-          and a loaf, and your abbeys grow rich on it.
+          The road is free but the hostels are not. The pilgrims pay a small price for a bed and a
+          loaf, your abbeys grow rich on it, and the pilgrims carry word of your kingdom home.
     history: >-
       After about 1016-1018 Stephen opened an overland pilgrim route through Hungary to the
       Byzantine Balkans; Hungarian troops helped Basil II's final campaigns in Bulgaria.
@@ -184,12 +187,13 @@ chapters:
         outcome: >-
           The salt moves again, at Ajtony's price.
       - label: "Lead the royal army against him yourself"
-        legitimacy_bp: 1200
-        wealth_bp: 500
+        wealth_bp: 800
+        unrest_bp: 200
+        legitimacy_bp: 2100
         outcome: >-
-          You take the field in the south and defeat Ajtony. The campaign keeps you from your
-          court for a season, and Csanád takes the credit in the camp.
-        deeds: {"men": 10000, "martial_bp": 300}
+          You take the field in the south and defeat Ajtony. The campaign keeps you from your court
+          for a season and the home counties grow restless, while Csanád takes the credit in the camp.
+        deeds: {men: 10000, martial_bp: 300}
     history: >-
       Csanád defeated Ajtony around 1028 (dates vary), and the see of Csanád was founded for
       Bishop Gerard (Gellért).
@@ -228,12 +232,13 @@ chapters:
           The German knights ride down your archers on the Rába, and the emperor demands
           tribute.
       - label: "Buy a truce with silver"
-        legitimacy_bp: -300
         wealth_bp: -1200
         unrest_bp: 300
+        legitimacy_bp: 1700
         outcome: >-
-          Your envoys meet Conrad's marshals with chests of silver. The emperor takes the
-          money and goes home, but he does not forget that you paid.
+          Your envoys meet Conrad's marshals with chests of silver. The emperor takes the money and
+          goes home, and your lords call it a shrewd bargain, though the people grumble at the tax; he
+          does not forget that you paid.
     history: >-
       Conrad II's invasion of Hungary in 1030 failed for lack of supplies; the Hungarians
       took Vienna, and the peace of 1031 ceded the Leitha-Fischa land.
@@ -459,11 +464,12 @@ chapters:
         outcome: >-
           The charter is correct and elegant, and nobody can find the fields it gives away.
       - label: "Put the Hungarian names in a separate list"
-        knowledge_bp: 1000
-        legitimacy_bp: 200
+        knowledge_bp: 1600
+        legitimacy_bp: 400
         outcome: >-
-          A clerk copies the names onto a leaf at the end of the charter. It is read, once,
-          and then mislaid.
+          A clerk copies the names onto a leaf at the end of the charter. It is read, once, more
+          carefully than he expected, and kept; your scribes learn to write the language a little
+          better for it.
     history: >-
       The founding charter of the Tihany Abbey (1055) contains the earliest surviving
       fragments of written Hungarian; Andrew I is buried there.

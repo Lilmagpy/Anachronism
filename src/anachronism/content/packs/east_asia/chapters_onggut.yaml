@@ -160,12 +160,13 @@ chapters:
           the husband of his daughter.
         deeds: {men: 1500, grudges: {mongols: 2000}}
       - label: "Shut the gates to both armies"
-        legitimacy_bp: -300
-        wealth_bp: -400
-        unrest_bp: 500
+        legitimacy_bp: 800
+        wealth_bp: -200
+        unrest_bp: 200
         outcome: >-
-          Your wardens bar the wall to Jin and Mongol alike, and send gifts to your wife's father.
-          Both armies have other business, and neither is pleased with you.
+          Your wardens bar the wall to Jin and Mongol alike, and send gifts to your wife's
+          father. Both armies have other business, and your cool head earns respect among the
+          clans, though neither army is pleased with you.
         deeds: {martial_bp: 300}
     history: >-
       In 1211 Genghis's army invaded the Jin; the Onggut, who had guarded the Jin frontier
@@ -210,12 +211,13 @@ chapters:
           The old man is respected and slow, and your chiefs argue at his elbow. The Khan's
           court sends envoys to ask who really leads the Onggut.
       - label: "Ask the Great Khan to name a guardian"
-        legitimacy_bp: 200
-        unrest_bp: -200
+        legitimacy_bp: 1100
+        unrest_bp: -500
         influence: {nobility: -400}
         outcome: >-
-          Your envoys ride to the Khan's court. A Mongol guardian is named, and the chiefs find
-          that their old rights depend on his goodwill. The Onggut are quiet, and rather less their own masters.
+          Your envoys ride to the Khan's court and are well received. A Mongol guardian is
+          named, the Onggut are quiet and the Khan's favour is on you, but the chiefs find that
+          their old rights depend on his goodwill.
     history: >-
       After Boyaohe's death (perhaps about 1226; the date is not certain) Alaqai Beki, Genghis
       Khan's daughter, governed the Onggut as regent. The Yuan shi credits her with
@@ -261,11 +263,12 @@ chapters:
           They stay a year, teach, and then leave anyway. Monks go where they are called.
       - label: "Give them letters, but no horses"
         wealth_bp: 300
-        knowledge_bp: 200
-        legitimacy_bp: 100
+        knowledge_bp: 400
+        legitimacy_bp: 300
         outcome: >-
-          They set out on foot with your letters and trust to the kindness of the road. The way
-          is slower and the monks arrive thin and tired, but they arrive.
+          They set out on foot with your letters and trust to the kindness of the road, and your
+          thrift is noticed. The way is slower and the monks arrive thin and tired, but they
+          arrive, and your letters open doors.
     history: >-
       Rabban Sauma and Markos, Christians of the Church of the East from the Mongol-ruled
       north (Markos from an Onggut or Uighur family, as tradition has it), set out for

@@ -110,13 +110,14 @@ chapters:
           Leonidas and the rich are quite happy to wait. Your supporters think you have lost
           your nerve.
       - label: "Restore the common meals and old training first"
-        legitimacy_bp: 600
-        unrest_bp: 300
+        food_bp: 500
+        legitimacy_bp: 1300
+        unrest_bp: 200
         influence: {nobility: -300}
         outcome: >-
           The young men are put back to the old exercises and the dining-messes are filled
-          again. Many are pleased, and the rich say that you have begun at the bottom and mean
-          to go on.
+          again, with grain from the king's own estates. Many are pleased, and the rich say that
+          you have begun at the bottom and mean to go on.
         deeds: {martial_bp: 500}
     history: >-
       Agis IV (reigned about 244-241 BC) cancelled debts but did not divide the land; Leonidas II
@@ -165,13 +166,13 @@ chapters:
           The ephors give way a little, and then not at all. A reform that needs the
           consent of those who lose by it is a reform that does not happen.
       - label: "Exile the leading ephors, and keep the office"
-        legitimacy_bp: 600
-        unrest_bp: 800
+        legitimacy_bp: 1100
+        unrest_bp: 600
         influence: {nobility: -800}
         outcome: >-
-          Your mercenaries seize the chief ephors and send them out of the city, and the rest
-          of the board is left in office. The ephorate stands, quieter, and much of the old
-          order is left in place.
+          Your mercenaries seize the chief ephors and send them out of the city, and the rest of
+          the board is left in office. The city, tired of the ephors' quarrels, mostly approves.
+          The ephorate stands, quieter, and much of the old order is left in place.
         deeds: {men: 2000}
     history: >-
       Cleomenes III (reigned about 235-222 BC) overthrew the ephorate in 227, cancelled debts,
@@ -327,11 +328,12 @@ chapters:
           reason to be kind.
       - label: "Refuse Argos, and treat with Rome at once"
         legitimacy_bp: 500
-        wealth_bp: 500
+        wealth_bp: 1000
         outcome: >-
           You turn down Philip's gift and meet Flamininus on the coast. He is pleased by your
-          politeness, and the Achaeans, who wanted Argos, are pleased by it too. Philip is
-          beaten and you have nothing to show for it.
+          politeness, the Achaeans, who wanted Argos, are pleased by it too, and Roman and
+          Achaean traders return to your markets. Philip is beaten and you have little else to
+          show for it.
         deeds: {peace_with: [rome]}
     history: >-
       In 198-197 BC Nabis took Argos from Philip V, then changed sides to Rome; after the

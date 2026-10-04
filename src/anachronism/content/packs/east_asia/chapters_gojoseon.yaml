@@ -44,11 +44,11 @@ chapters:
           Li goes to Yan, argues his case, and Yan gives up the plan to fight you. The Weilue
           says the war was stopped. Your court is grateful, and a little disappointed.
       - label: "March on Yan to answer its king's title"
-        legitimacy_bp: 500
         unrest_bp: 600
+        legitimacy_bp: 1400
         outcome: >-
-          Your army goes west with its bronze daggers and its fine crossbows, and meets an army
-          with iron swords. It is not a short war, and it is not your last.
+          Your army goes west with its bronze daggers and its fine crossbows, and meets an army with
+          iron swords. It is not a short war, and it is not your last.
       - label: "Fortify the Liao border and wait"
         legitimacy_bp: 300
         wealth_bp: -500
@@ -252,7 +252,7 @@ chapters:
         outcome: >-
           Wiman goes. He is a clever man, and he does not go far.
       - label: "Let him camp at the Pae river, under watch"
-        legitimacy_bp: 200
+        legitimacy_bp: 500
         outcome: >-
           Wiman and his men camp on the bank for a season under your officers' eyes. He is
           polite, patient and not at all hurried.

@@ -11,7 +11,7 @@ chapters:
     scenario: sengoku
     civ: ming
     year: 1561
-    title: "The Mandarin Duck Formation"
+    title: "Pirates on the Coast"
     place: "Taizhou, Zhejiang"
     speaker: general
     speaker_name: "Qi Jiguang"
@@ -27,7 +27,7 @@ chapters:
       Your commander Qi Jiguang says the regular garrisons are useless. He wants to recruit
       four thousand miners and peasants from Yiwu, tough men who have fought each other over
       the silver mines, and drill them in squads of twelve, each with long bamboo spears,
-      shields, tridents and swords working together: the 'mandarin duck' formation.
+      shields, tridents and swords working together: a new kind of drill.
     choices:
       - label: "Let Qi raise his own army"
         historical: true
@@ -40,8 +40,20 @@ chapters:
         deeds: {men: 4000, martial_bp: 1000}
       - label: "Send more of the regular army"
         wealth_bp: -2000
+        legitimacy_bp: 300
         outcome: >-
-          The garrison troops march to the coast, and the pirates sail away until they leave.
+          Fifteen thousand garrison troops march to the coast, and the pirates sail away until
+          they leave.
+        deeds: {men: 15000}
+      - label: "Pardon the pirates who lay down arms"
+        legitimacy_bp: 1200
+        unrest_bp: -800
+        wealth_bp: 200
+        outcome: >-
+          Smugglers and pirate captains who come in are pardoned and given a place on the
+          coast guard, and many do. Others, who do not trust the pardon, sail on, and the
+          hardest bands are still burning towns for years to come.
+        deeds: {men: 2000}
     history: >-
       Qi Jiguang's Yiwu army destroyed the wokou at Taizhou in 1561 and in Fujian in 1562-1565.
     sources: ["Qi Jiguang, Jixiao xinshu", "Ming shi 212 (Qi Jiguang)", "Huang, 1587, A Year of No Significance (1981)"]
@@ -66,7 +78,7 @@ chapters:
       Your eunuchs tell you that Hai Rui has already bought his coffin, said goodbye to his
       family and sent away his servants. He is waiting to be arrested.
     choices:
-      - label: "Throw him in prison, but do not kill him"
+      - label: "Imprison him, and spare his life"
         historical: true
         legitimacy_bp: -500
         influence: {nobility: 500}
@@ -76,11 +88,19 @@ chapters:
           in prison, waiting for death. You die before you sign the order, and the new emperor
           releases him. He becomes the most famous honest official in Chinese history.
       - label: "Read it again, and change your ways"
-        legitimacy_bp: 1500
+        legitimacy_bp: 600
         influence: {clergy: -1500}
         outcome: >-
           The Daoist priests are dismissed and you hold court for the first time in years. Your
           ministers do not know what to do.
+      - label: "Have him flogged and dismissed"
+        legitimacy_bp: 200
+        unrest_bp: 800
+        influence: {nobility: 700}
+        outcome: >-
+          Hai Rui is beaten at the palace gate in front of the officials and sent home in
+          disgrace. Your ministers are relieved, and the story of his coffin is told in every
+          tea-house in the capital.
     history: >-
       Hai Rui's memorial of 1565 rebuked the Jiajing Emperor; Hai was imprisoned and released
       on the emperor's death in early 1567.
@@ -90,7 +110,7 @@ chapters:
     scenario: sengoku
     civ: ming
     year: 1567
-    title: "Moon Harbour"
+    title: "The Sea Ban"
     place: "The Forbidden City"
     speaker: steward
     speaker_name: "Tu Zemin"
@@ -106,7 +126,7 @@ chapters:
       licensed merchant ships sailing to the southern seas, with customs duties paid to the
       treasury. Not to Japan, though: never Japan.
     choices:
-      - label: "Open Moon Harbour"
+      - label: "Open one Fujian port to licensed ships"
         historical: true
         wealth_bp: 4000
         unrest_bp: -1000
@@ -115,10 +135,18 @@ chapters:
           Spanish galleons bring it to Manila from the mines of Potosí and Mexico, to buy silk
           and porcelain. By the end of the century perhaps a third of the world's silver ends
           up in China.
-      - label: "Keep the sea ban"
+      - label: "Keep the sea ban, and guard the coast harder"
         legitimacy_bp: 500
         outcome: >-
           The coast stays closed. The smugglers go on smuggling.
+      - label: "Licence the Portuguese at Macao, and keep Fujian shut"
+        wealth_bp: 3500
+        knowledge_bp: 1500
+        unrest_bp: 500
+        outcome: >-
+          The Portuguese at Macao are allowed to trade at Canton's fairs under licence, and
+          pay rent and duties for the privilege. Silver and new learning come in through one
+          narrow door, while the Fujian smugglers, still outlaws, sail on as before.
     history: >-
       In 1567 the Longqing court partly lifted the sea ban, licensing trade from Yuegang
       (Moon Harbour) in Fujian, except to Japan.
@@ -128,7 +156,7 @@ chapters:
     scenario: sengoku
     civ: ming
     year: 1571
-    title: "The Obedient and Loyal King"
+    title: "Altan's Grandson"
     place: "The Forbidden City"
     speaker: steward
     speaker_name: "Gao Gong"
@@ -144,7 +172,7 @@ chapters:
       Altan to be named a Ming prince, the 'Obedient and Loyal King', and horse markets to be
       opened on the frontier where the Mongols can trade their horses for silk and tea.
     choices:
-      - label: "Make peace, and open the markets"
+      - label: "Make peace, and open the frontier markets"
         historical: true
         legitimacy_bp: 1500
         wealth_bp: 1000
@@ -160,6 +188,15 @@ chapters:
         unrest_bp: 1000
         outcome: >-
           Altan's horsemen come over the wall in the autumn, as every autumn.
+      - label: "Send the grandson home, and take only tribute horses"
+        legitimacy_bp: 1900
+        wealth_bp: 1500
+        food_bp: 500
+        unrest_bp: 200
+        outcome: >-
+          The grandson goes home with honour, and Altan sends tribute horses to Beijing in
+          return, as the old rules require. There are no markets and no princely title, and
+          some of the frontier lords grumble that the Mongols are still unsatisfied.
     history: >-
       The peace of 1571 made Altan Khan 'Shunyi Wang' and opened border horse markets; in
       1578 Altan gave Sonam Gyatso the title Dalai Lama.
@@ -169,7 +206,7 @@ chapters:
     scenario: sengoku
     civ: ming
     year: 1580
-    title: "Measuring Every Field"
+    title: "The Grand Secretary's Plan"
     place: "The Forbidden City"
     speaker: steward
     speaker_name: "Zhang Juzheng"
@@ -186,7 +223,7 @@ chapters:
       hide their land from the tax registers pay their share, and to collect all the taxes
       and labour services as one payment in silver: the 'single whip'.
     choices:
-      - label: "Measure the fields"
+      - label: "Order a survey of all the land"
         historical: true
         wealth_bp: 3000
         unrest_bp: 1000
@@ -200,6 +237,14 @@ chapters:
         influence: {nobility: 1500}
         outcome: >-
           The registers stay as they are, and the burden stays on those who cannot hide.
+      - label: "Raise a surcharge on the great estates"
+        wealth_bp: 2000
+        unrest_bp: 500
+        influence: {nobility: -500}
+        outcome: >-
+          The great houses pay a surcharge on their known lands, and grumble. The fields are
+          not measured, so what they hide stays hidden, and the burden on the poor is lighter
+          than it was but not by much.
     history: >-
       Zhang Juzheng ordered a national land survey (1580-1582) and extended the single-whip
       tax reform.
@@ -209,7 +254,7 @@ chapters:
     scenario: sengoku
     civ: ming
     year: 1582
-    title: "The Teacher's Disgrace"
+    title: "Zhang Juzheng Is Dead"
     place: "The Forbidden City"
     speaker: steward
     speaker_name: "Feng Bao"
@@ -224,7 +269,7 @@ chapters:
 
       You can protect his memory, or let them have him.
     choices:
-      - label: "Let them have him"
+      - label: "Allow his enemies to prosecute him"
         historical: true
         legitimacy_bp: -1000
         wealth_bp: 1500
@@ -238,6 +283,14 @@ chapters:
         outcome: >-
           Zhang is buried with honour, and his men stay in office. The reforms go on, without
           their author.
+      - label: "Strip his titles, but spare his family"
+        legitimacy_bp: -300
+        wealth_bp: 500
+        influence: {nobility: 300}
+        outcome: >-
+          Zhang's honours are taken away and his name is struck from the rolls, but his sons
+          keep their house and their rank. His enemies are only half satisfied, and his
+          friends in the ministries wait to see where the next blow falls.
     history: >-
       After Zhang Juzheng's death (1582), Wanli had him posthumously disgraced and his
       family's property confiscated (1584).
@@ -247,7 +300,7 @@ chapters:
     scenario: sengoku
     civ: ming
     year: 1589
-    title: "The Emperor Stays in the Palace"
+    title: "Which Son?"
     place: "The Forbidden City"
     speaker: scholar
     speaker_name: "Shen Shixing"
@@ -272,9 +325,24 @@ chapters:
           1601, after fifteen years of argument. Historians will date the fall of the Ming from
           your reign.
       - label: "Name the eldest son, now"
-        legitimacy_bp: 1500
+        legitimacy_bp: 500
+        unrest_bp: 600
         outcome: >-
           The bureaucracy is delighted. Your favourite consort is not, and neither are you.
+      - label: "Put the question off for some years"
+        legitimacy_bp: -900
+        unrest_bp: 800
+        outcome: >-
+          You tell the Grand Secretaries that the empress may yet bear a son, and that you
+          will decide then. The memorials do not stop, and your ministers read the delay as
+          what it is.
+      - label: "Dismiss the officials who press you"
+        legitimacy_bp: -2200
+        unrest_bp: 1200
+        influence: {nobility: -800}
+        outcome: >-
+          The loudest of the remonstrators are flogged and sent home, and their posts are left
+          empty. The rest of the court goes quiet, and keeps its opinion.
     history: >-
       The 'contest over the root of the state' (guoben) lasted from 1586 to 1601; Wanli
       withdrew from court audiences and left many posts unfilled for decades.
@@ -312,8 +380,18 @@ chapters:
         deeds: {martial_bp: 500}
       - label: "Guard the Yalu, and wait"
         legitimacy_bp: -2000
+        wealth_bp: -500
         outcome: >-
-          Your army holds the river. Across it, Korea burns.
+          Your army holds the river, and the garrisons are doubled. Across it, Korea burns.
+        deeds: {men: 10000}
+      - label: "Send envoys to the Japanese captains, and a small force"
+        legitimacy_bp: 1800
+        wealth_bp: -1500
+        outcome: >-
+          Five thousand men cross the Yalu, and an envoy rides after them to see what the
+          Japanese will take to go home. The talks drag on, and the generals in Korea and the
+          envoys in Beijing tell different stories to the court.
+        deeds: {men: 5000}
     history: >-
       Ming armies intervened in Korea from 1592; Li Rusong retook Pyongyang in February 1593.
       The Imjin War ended in 1598.
@@ -341,7 +419,7 @@ chapters:
       He also has a map of the whole world, with China near the middle, and asks to be
       allowed to stay in Beijing.
     choices:
-      - label: "Let him stay"
+      - label: "Let him settle in Beijing"
         historical: true
         knowledge_bp: 2500
         outcome: >-
@@ -352,6 +430,14 @@ chapters:
         knowledge_bp: 500
         outcome: >-
           The clocks stop a month later. Nobody in Beijing can start them.
+      - label: "Set him to work on the calendar at the Astronomical Bureau"
+        knowledge_bp: 2300
+        legitimacy_bp: 300
+        wealth_bp: -300
+        outcome: >-
+          Ricci and his companions are given rooms near the Bureau and asked what they know of
+          eclipses and the movements of the stars. The Bureau's own men resent them, and the
+          calendar is not changed, but the work on it goes on for a generation.
     history: >-
       Matteo Ricci reached Beijing in 1601 and was allowed to stay; he and Xu Guangqi
       translated the first six books of Euclid (1607).
@@ -389,8 +475,19 @@ chapters:
         deeds: {give: [m_liaodong]}
       - label: "Hold the forts, and starve Nurhaci of trade"
         wealth_bp: -2000
+        unrest_bp: 500
         outcome: >-
-          The armies stay behind the walls of Liaodong. Nurhaci raids, and waits.
+          The armies stay behind the walls of Liaodong, fifteen thousand more men are called up
+          to man them. Nurhaci raids, and waits.
+        deeds: {men: 15000}
+      - label: "March in two strong columns, not four"
+        legitimacy_bp: -1800
+        unrest_bp: 1200
+        outcome: >-
+          Yang Hao's council shrinks the plan. Two heavy columns go into the hills, closer
+          together, with the allies held back. Nurhaci still meets them one at a time, and
+          they are smaller than he feared but not strong enough to hold.
+        deeds: {martial_bp: -1000}
     history: >-
       At Sarhu (April 1619) Nurhaci destroyed the Ming columns in turn; Liaodong was largely
       lost by 1621. The Wanli Emperor died in 1620.

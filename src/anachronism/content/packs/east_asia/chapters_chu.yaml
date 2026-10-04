@@ -37,11 +37,12 @@ chapters:
           himself king.
         deeds: {war_with: [yue], conquer: [yue]}
       - label: "Hold your forts and let Yue tire"
-        legitimacy_bp: 300
-        wealth_bp: -400
+        wealth_bp: -300
+        legitimacy_bp: 1400
         outcome: >-
-          Yue's army wears itself out on your forts and goes home.
-        deeds: {"men": 20000, "grudges": {"yue": 1500}}
+          Yue's army wears itself out on your forts and goes home. Your court calls it a wise war,
+          though the garrisons are long under arms.
+        deeds: {men: 20000, grudges: {yue: 1500}}
       - label: "Buy peace with Yue by marriage and treaty"
         legitimacy_bp: 500
         wealth_bp: -600
@@ -289,11 +290,11 @@ chapters:
         outcome: >-
           The old king dies. Chu's princes quarrel over the empty throne while Qin decides.
       - label: "Offer Qin gold for his release"
-        legitimacy_bp: 300
-        wealth_bp: -800
+        wealth_bp: -500
+        legitimacy_bp: 1600
         outcome: >-
-          Qin accepts the gold and keeps the prince. The old king dies waiting, and Chu is
-          left with a gap on the throne.
+          Qin takes the gold and, after much haggling, lets the prince go home under escort, though
+          the old king does not live to see it. Chu's court is relieved and the treasury lighter.
     history: >-
       In 263 BC Huang Xie smuggled the crown prince out of Qin; the prince became King Kaolie
       and Huang Xie, as Lord Chunshen, ran Chu for 25 years.
@@ -334,12 +335,12 @@ chapters:
           Lu keeps its duke and its temples. Xunzi goes to Qi instead.
         deeds: {"tributaries": ["lu"]}
       - label: "Annex Lu, but leave Xunzi to teach in Qi"
+        wealth_bp: 1000
         legitimacy_bp: 800
-        wealth_bp: 600
         outcome: >-
-          Chu garrisons Lu and takes its revenues. Xunzi, who was not asked, stays in Qi;
-          Chu's scholars have to be content without him.
-        deeds: {"conquer": ["lu"], "men": 6000}
+          Chu garrisons Lu and takes its revenues and the treasuries of its temples. Xunzi, who was
+          not asked, stays in Qi; Chu's scholars have to be content without him.
+        deeds: {conquer: [lu], men: 6000}
     history: >-
       Chu annexed Lu in 256 BC; Xunzi was magistrate of Lanling under Lord Chunshen. Han Fei and
       Li Si were his students.

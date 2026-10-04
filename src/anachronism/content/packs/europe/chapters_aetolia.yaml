@@ -44,10 +44,12 @@ chapters:
           war against the Dardanians in the north. The two leagues drift apart afterwards,
           and their old quarrel is never far below the surface.
         deeds: {grudges: {macedon: 1500}}
-      - label: "Stay with Macedon"
-        legitimacy_bp: -500
+      - label: "Stay in alliance with Macedon"
+        legitimacy_bp: 1000
+        wealth_bp: 500
         outcome: >-
-          Demetrius takes your help and gives you nothing for it.
+          Demetrius takes your help and pays you in gold, but gives you no land. The
+          Achaeans do not forget whose side you chose.
       - label: "Keep out of it, and raid whom you please"
         unrest_bp: 500
         wealth_bp: 1000
@@ -92,16 +94,19 @@ chapters:
           Dodona, and Philip is coming. So begins the Social War.
         deeds: {grudges: {macedon: 2000, achaea: 2000}, ruler_falls: "completes his term as general"}
       - label: "Punish Dorimachus and make restitution"
-        legitimacy_bp: -1000
+        legitimacy_bp: 500
+        wealth_bp: -1000
         outcome: >-
           The Assembly is furious. The Messenians are not impressed, and they were looking
           for an excuse in any case.
         deeds: {ruler_falls: "completes his term as general"}
-      - label: "Make a formal alliance with Sparta first"
-        wealth_bp: -500
+      - label: "Bring Sparta and Elis into a raiding league"
+        legitimacy_bp: 1000
+        wealth_bp: 1000
         outcome: >-
-          Sparta is in no condition to be anyone's ally, but it is a gesture.
-        deeds: {ruler_falls: "completes his term as general"}
+          Sparta is in no condition to be anyone's ally, but Elis is willing, and the three of
+          you share what the raiders bring home.
+        deeds: {men: 2000, ruler_falls: "completes his term as general"}
     history: >-
       Dorimachus' raid in Messenia in 220 BC, which the Aetolian assembly (under the general
       Scopas) refused to punish, began the Social War (220-217 BC) against Philip V and the
@@ -132,7 +137,7 @@ chapters:
       you think, and some of the men round you would hold out. They are not the ones who have
       seen what the war costs.
     choices:
-      - label: "Make peace, and tell the Greeks to unite against the West"
+      - label: "Make peace, and ask the Greeks to unite"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -142,15 +147,20 @@ chapters:
           each side keeping what it holds. Philip goes home, and thinks of Italy.
         deeds: {peace_with: [macedon, achaea], ruler_falls: "completes his term as general"}
       - label: "Fight on, and wait for Philip to tire"
-        unrest_bp: 1500
+        legitimacy_bp: 1000
+        wealth_bp: 1000
+        unrest_bp: 1000
         outcome: >-
-          Philip has the larger army and the Achaeans behind him. Thermum burns again.
-        deeds: {ruler_falls: "completes his term as general"}
-      - label: "Ask Rome for help"
-        legitimacy_bp: -500
+          Philip has the larger army and the Achaeans behind him. Thermum burns again, though
+          your raiders bring home plunder from Epirus.
+        deeds: {men: 5000, ruler_falls: "completes his term as general"}
+      - label: "Ask Rome for help against Philip"
+        legitimacy_bp: 1000
+        wealth_bp: -500
         outcome: >-
-          Rome has just lost an army at Lake Trasimene and has nothing to spare for Greece.
-        deeds: {ruler_falls: "completes his term as general"}
+          Rome has just lost an army at Lake Trasimene and has little to spare for Greece,
+          but a few ships come, and the news of them travels.
+        deeds: {ships: 5, ruler_falls: "completes his term as general"}
     history: >-
       The Peace of Naupactus (217 BC) ended the Social War; Polybius gives Agelaus of Naupactus
       the speech about the war clouds in the west.
@@ -179,7 +189,7 @@ chapters:
 
       The Aetolians have never been Rome's allies before. Rome keeps its word to its friends, but its idea of friendship is its own.
     choices:
-      - label: "Make the alliance"
+      - label: "Ally with Rome against Philip"
         historical: true
         legitimacy_bp: 1000
         wealth_bp: 1500
@@ -190,15 +200,19 @@ chapters:
           Rome and against its allies.
         deeds: {grudges: {macedon: 3000}, ruler_falls: "completes his term as general"}
       - label: "Stay at peace with Philip"
-        legitimacy_bp: -500
+        legitimacy_bp: 500
+        wealth_bp: 1500
         outcome: >-
-          Rome fights without you. Philip, who has made peace twice, does not repay your
-          loyalty in any currency you can spend.
+          Rome fights without you. Philip, who has made peace twice, pays you well to
+          stay out, and does not forget how close you came.
         deeds: {ruler_falls: "completes his term as general"}
-      - label: "Ask Rome for more"
-        wealth_bp: 500
+      - label: "Bargain with Rome for more of the spoils"
+        wealth_bp: 1000
+        legitimacy_bp: 500
+        unrest_bp: 500
         outcome: >-
-          Laevinus has already offered what he can offer.
+          Laevinus gives a little ground on the booty, and the assembly grumbles that it is
+          still too little. The talks drag on through the winter.
         deeds: {ruler_falls: "completes his term as general"}
     history: >-
       In 211 BC the Aetolian League, under Scopas, allied with Rome against Philip V: Aetolia
@@ -238,15 +252,18 @@ chapters:
           left without a friend. Rome calls it desertion, and will remember it.
         deeds: {peace_with: [macedon, achaea], grudges: {rome: 2000}, ruler_falls: "completes his term as general"}
       - label: "Hold out with Rome"
-        unrest_bp: 1500
+        legitimacy_bp: 1000
+        unrest_bp: 1000
         outcome: >-
-          Philip's army is in your hills, and the Romans' fleet is not.
-        deeds: {ruler_falls: "completes his term as general"}
-      - label: "Ask Rome for a new army"
-        wealth_bp: -500
+          Philip's army is in your hills, and the Romans' fleet is not. Your raiders strike
+          back as best they can.
+        deeds: {men: 4000, ruler_falls: "completes his term as general"}
+      - label: "Ask Rome for ships and a new general"
+        legitimacy_bp: 500
+        wealth_bp: 500
         outcome: >-
-          Rome is busy in Spain and Africa, and has little to send you.
-        deeds: {ruler_falls: "completes his term as general"}
+          Rome is busy in Spain and Africa, and sends only a small squadron.
+        deeds: {ships: 10, ruler_falls: "completes his term as general"}
     history: >-
       In 206 BC the Aetolians made a separate peace with Philip V, through the mediation of
       Egypt, Rhodes, Chios and Athens. Rome made its own at Phoenice in 205.
@@ -286,7 +303,7 @@ chapters:
           Aetolians claim they won it, and the Romans say that their legions did. The Greek
           cities ask who is the bigger boaster. Flamininus will not give you Thessaly.
         deeds: {grudges: {macedon: 2500, rome: 500}, ruler_falls: "completes his term as general"}
-      - label: "Accept Philip's offer"
+      - label: "Accept Philip's offer of peace now"
         legitimacy_bp: -1000
         outcome: >-
           The war ends, and the Roman consul is angry. A Roman general who has
@@ -379,7 +396,7 @@ chapters:
       under the consul, goes up the mountain at night against two of them. The king's front line
       is struck, and breaks.
     choices:
-      - label: "Ask the consul for terms, trusting in Roman good faith"
+      - label: "Ask the consul for terms"
         historical: true
         legitimacy_bp: -1000
         outcome: >-
@@ -442,12 +459,19 @@ chapters:
           live.
         deeds: {peace_with: [rome]}
       - label: "Go on fighting in the mountains"
+        legitimacy_bp: -500
         unrest_bp: 2500
         outcome: >-
-          The consul's patience is short and the mountain forts are many.
-      - label: "Ask Philip for help against Rome"
+          The consul's patience is short and the mountain forts are many. The League bleeds,
+          and the winter finds you in the hills with what men you have left.
+        deeds: {men: 4000}
+      - label: "Bargain over the indemnity and hostages"
+        legitimacy_bp: -1500
+        wealth_bp: -3000
         outcome: >-
-          Philip has done well from Rome, and means to keep doing so.
+          The Senate listens, trims a little, and demands hostages from the best families
+          of the League. The peace is signed on those terms.
+        deeds: {peace_with: [rome]}
     history: >-
       The treaty of 189 BC ended Aetolia's war with Rome: an indemnity of five hundred talents,
       the loss of Ambracia and Cephallenia, and the clause to uphold the majesty of Rome. Aetolia

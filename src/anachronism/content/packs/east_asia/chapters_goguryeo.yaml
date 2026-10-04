@@ -30,7 +30,7 @@ chapters:
       counting in a Chinese emperor's years. You have already taken fifty-eight walled towns
       from Baekje and made its king swear to be your slave forever.
     choices:
-      - label: "Send fifty thousand horse and foot to save Silla"
+      - label: "Send an army to Silla's rescue"
         historical: true
         legitimacy_bp: 1500
         food_bp: -1500
@@ -47,7 +47,7 @@ chapters:
           protection is a word, not an army.
         deeds: {break_away: [silla]}
       - label: "Send an army, and keep it there"
-        legitimacy_bp: 800
+        legitimacy_bp: 1200
         unrest_bp: 800
         outcome: >-
           Your soldiers drive out the Wa - and stay, in a fort beside the Silla king's
@@ -97,9 +97,11 @@ chapters:
       - label: "Raid across the river, and come home rich"
         wealth_bp: 2000
         food_bp: 1000
+        legitimacy_bp: 1000
         outcome: >-
           Your horsemen burn the Yan farms to the walls of Liaodong city and drive the herds
           home. The Yan are poorer; you are richer; the border is where it was.
+          The court praises the haul, though the Liao frontier stays where it was.
         deeds: {grudges: {later_yan: 2000}}
       - label: "✦ Haul siege towers on horse-collar teams, and take Longcheng too"
         needs_adopted: [horse_collar]
@@ -109,6 +111,14 @@ chapters:
           drags twice what it did. Siege towers roll across the Liao behind your army and on
           over the hills. Liaodong falls, then Longcheng itself. Murong Xi flees west.
         deeds: {take: [k4_liaodong, k4_longcheng], grudges: {later_yan: 5000}}
+      - label: "Hold the Liao line and call up more horsemen"
+        legitimacy_bp: 300
+        materials_bp: -1000
+        outcome: >-
+          You strengthen the river forts, summon the northern lords and double the horse-
+          herds. The Yan find the crossings guarded; your own men grumble at the cost of
+          waiting.
+        deeds: {men: 4000, martial_bp: 800}
     history: >-
       Goguryeo attacked Later Yan's Sukgun fortress in 402 and took Liaodong around 404-405.
       It held the region until the Tang conquest of 668.
@@ -137,7 +147,7 @@ chapters:
 
       Your marshal asks whether you will come yourself.
     choices:
-      - label: "Lead the army yourself, and throw them into the sea"
+      - label: "Lead the army yourself against the landing"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -145,14 +155,14 @@ chapters:
           the shore. The stele will say that they were cut down in countless numbers. No
           Wa army will land in Goguryeo again.
         deeds: {grudges: {wa: 2000, baekje: 2000}}
-      - label: "Hold the walls and let them go home with their loot"
+      - label: "Hold the walls and let the raiders wear themselves out"
         legitimacy_bp: -800
         food_bp: -1000
         outcome: >-
           The Wa plunder the coast for a summer and sail away. Your marshal does not look
           you in the eye.
       - label: "Offer the Wa peace, and trade for their iron"
-        legitimacy_bp: -300
+        legitimacy_bp: 1100
         wealth_bp: 1500
         outcome: >-
           The Wa captains are surprised, then interested. They sail home with Goguryeo
@@ -215,6 +225,14 @@ chapters:
           noise like the end of the world. Their horses bolt; their army runs. Your
           horsemen follow them all the way to Longcheng.
         deeds: {take: [k4_longcheng], grudges: {later_yan: 4000}}
+      - label: "Buy the Yan off with silk and iron"
+        legitimacy_bp: -300
+        wealth_bp: -1500
+        outcome: >-
+          Your envoy goes out through the breach with carts of silk and iron. Murong Xi
+          accepts the gifts, and his army marches home in good order. Liaodong is yours, but
+          your own people have seen how close it came.
+        deeds: {peace_with: ["later_yan"]}
     history: >-
       In 405 Murong Xi besieged Liaodong; according to the Jin shu, when the wall was about
       to fall he ordered his men not to go in until the way was levelled so that he and
@@ -256,10 +274,15 @@ chapters:
         deeds: {peace_with: [later_yan]}
       - label: "Strike now, while Longcheng is in turmoil"
         legitimacy_bp: 500
-        unrest_bp: 800
         outcome: >-
           Your army crosses the Liao while Yan's generals are still murdering each other.
-        deeds: {war_with: [later_yan], take: [k4_longcheng], grudges: {later_yan: 4000}}
+        deeds: {war_with: ["later_yan"], take: ["k4_longcheng"], grudges: {later_yan: 4000}}
+      - label: "Guard the frontier and wait to see who holds Longcheng"
+        materials_bp: -800
+        outcome: >-
+          You keep the Liao forts manned and your horsemen close, and answer Gao Yun's envoy
+          with nothing but courtesy. The turmoil in Longcheng goes on without you.
+        deeds: {men: 3000, martial_bp: 800}
     history: >-
       In 407 Feng Ba killed Murong Xi and put Gao Yun (Murong Yun), a descendant of
       Goguryeo's royal house, on the throne of Yan. In 408 Gwanggaeto sent an envoy to
@@ -296,13 +319,17 @@ chapters:
           lands, and the forest peoples beyond, send tribute to Gungnae again.
         deeds: {take: [k4_mohe]}
       - label: "Send a general, and stay home"
-        legitimacy_bp: 500
+        legitimacy_bp: 1200
         outcome: >-
           Your general does the work. The chiefs submit, a little less humbly.
         deeds: {take: [k4_mohe]}
       - label: "Let the forest keep its chiefs"
+        legitimacy_bp: -500
+        wealth_bp: 800
         outcome: >-
-          Eastern Buyeo sends no tribute and receives no army.
+          Eastern Buyeo sends no tribute and receives no army. You save the cost of the march,
+          and the court wonders whether a king who has not gone to the forests is still the
+          king of the north.
     history: >-
       In 410 Gwanggaeto marched against Eastern Buyeo, which submitted. The stele lists
       the towns and villages his reign brought under Goguryeo.
@@ -401,6 +428,15 @@ chapters:
           The scribes carve the text on wooden blocks and print it a thousand times on
           paper. Every walled town in the kingdom has a copy; children learn to read from
           the deeds of the Great King. The stone is raised too.
+      - label: "Build a temple to his memory beside the tomb"
+        legitimacy_bp: 1800
+        materials_bp: -1000
+        influence: {clergy: 1000}
+        outcome: >-
+          A hall with monks to pray for the great king's spirit rises beside the tomb. It is
+          handsome, and the clergy are grateful; but his deeds are remembered only by those
+          who go there.
+          The monks make it a place of pilgrimage, and the king is praised for his piety.
     history: >-
       The Gwanggaeto stele was raised in 414 near his tomb at Ji'an (Gungnae) and
       rediscovered around 1875-1880. It is the longest early Korean inscription, and its
@@ -440,10 +476,22 @@ chapters:
           it. The old families grumble in Gungnae, and many of them come anyway.
         deeds: {capital: k4_pyongyang}
       - label: "Stay in the mountains"
+        materials_bp: -800
         influence: {nobility: 1000}
         outcome: >-
-          The court stays where it has always been. Pyongyang remains a provincial city,
-          and the south stays far away.
+          The court stays where it has always been, and you pour stone and men into the
+          mountain forts instead. The great families are pleased. Pyongyang remains a
+          provincial city, and the south stays far away.
+        deeds: {men: 4000}
+      - label: "Make Pyongyang a second seat, court stays"
+        legitimacy_bp: 500
+        materials_bp: -1000
+        influence: {nobility: -500}
+        outcome: >-
+          A palace rises at Pyongyang and officials go south to run it, but the king and the
+          great families stay in Gungnae. The south is watched; neither city is quite the
+          capital.
+        deeds: {men: 3000}
     history: >-
       Jangsu moved the capital from Gungnae to Pyongyang in 427, signalling Goguryeo's
       turn south against Baekje and Silla.
@@ -485,9 +533,9 @@ chapters:
         legitimacy_bp: 500
         unrest_bp: 500
         outcome: >-
-          Your horsemen ride through Silla's western valleys. Nulji apologises, sends a
-          prince to Pyongyang, and goes on talking to Baekje in secret.
-        deeds: {grudges: {silla: 3000, baekje: 1500}}
+          Six thousand of your horsemen ride through Silla's western valleys. Nulji
+          apologises, sends a prince to Pyongyang, and goes on talking to Baekje in secret.
+        deeds: {men: 6000, grudges: {silla: 3000, baekje: 1500}}
       - label: "Offer Silla a marriage and a share of Baekje"
         legitimacy_bp: 300
         wealth_bp: -1500
@@ -524,7 +572,7 @@ chapters:
       will want him back. And Feng Hong, your envoys warn, is not an easy guest: he still
       thinks he is a king, and he has friends at the southern Chinese court.
     choices:
-      - label: "Bring him out, refuse Wei - and later rid yourself of him"
+      - label: "Bring him out, and refuse Wei's demand"
         historical: true
         legitimacy_bp: 800
         outcome: >-
@@ -543,7 +591,8 @@ chapters:
         deeds: {ally_with: [northern_wei]}
       - label: "Take Longcheng yourself before Wei can"
         legitimacy_bp: 1000
-        unrest_bp: 800
+        unrest_bp: 600
+        wealth_bp: 1000
         outcome: >-
           Your horsemen ride into Longcheng as Feng Hong rides out to meet them. The Wei
           army arrives to find Goguryeo banners on the walls - and an angry emperor begins
@@ -578,7 +627,7 @@ chapters:
       would rather send an army, and says the eastern mountains between the two kingdoms
       are thinly held.
     choices:
-      - label: "Send the army into Silla's west, then accept the apology"
+      - label: "Raid the border, then accept the apology"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
@@ -586,13 +635,14 @@ chapters:
           your marshal comes home with captives. Over the next twenty years Goguryeo's hold
           on the east coast creeps south, deep into Silla's old lands.
         deeds: {take: [k4_gangwon], grudges: {silla: 2000}}
-      - label: "Accept the apology and the gifts"
+      - label: "Accept the apology, the gold and a hostage"
         wealth_bp: 1000
-        legitimacy_bp: -300
+        legitimacy_bp: 200
         outcome: >-
           Silla sends gold and a hostage. Your marshal is not happy.
-      - label: "Make war on Silla in earnest"
+      - label: "Make full war on Silla, and finish it"
         unrest_bp: 1000
+        legitimacy_bp: 700
         outcome: >-
           Your horsemen pour across the mountains. Baekje, true to its treaty, sends an army
           to help Silla.
@@ -627,7 +677,7 @@ chapters:
       what all this is about, and whether the envoy might pass through your land to reach
       Baekje.
     choices:
-      - label: "Feast the envoy - and lose his road to Baekje"
+      - label: "Receive the envoy with full honours at Pyongyang"
         historical: true
         legitimacy_bp: 800
         outcome: >-
@@ -641,6 +691,12 @@ chapters:
         outcome: >-
           Your letter is longer than Gaero's, and better written. The emperor says that both
           kings are his loyal vassals and should stop quarrelling.
+      - label: "Send the envoy on, and muster the army"
+        legitimacy_bp: 1000
+        outcome: >-
+          The envoy passes south unhindered and finds Gaero's court nervous. Your army gathers
+          on the Han frontier, and Baekje's king begins to wonder whether his letter was wise.
+        deeds: {men: 10000, martial_bp: 800, grudges: {baekje: 2000}}
     history: >-
       In 472 Gaero of Baekje asked Northern Wei for an army against Goguryeo. Wei refused
       and sent envoys, whom Goguryeo prevented from reaching Baekje. The letter survives in
@@ -673,7 +729,7 @@ chapters:
       all. Dorim is back in Pyongyang now. Baekje's granaries, he says, are empty, its
       people worn out, its king friendless.
     choices:
-      - label: "Thirty thousand men to Hanseong"
+      - label: "Send the army to take Hanseong"
         historical: true
         legitimacy_bp: 2000
         outcome: >-
@@ -683,8 +739,12 @@ chapters:
           son escapes south to Ungjin with the remnant of the court. The Han river is yours.
         deeds: {war_with: [baekje], take: [k4_hanseong], grudges: {baekje: 6000, silla: 2000}}
       - label: "Let Baekje rot a little longer"
+        legitimacy_bp: -500
+        wealth_bp: 1000
+        unrest_bp: -500
         outcome: >-
-          Dorim smiles and goes back to his temple. Baekje mends its granaries.
+          Dorim smiles and goes back to his temple. Baekje mends its granaries, while your own
+          treasury and your people enjoy a quiet year.
       - label: "✦ Bring bronze cannon to Hanseong's earthen walls"
         needs_adopted: [cannon]
         legitimacy_bp: 2500
@@ -692,6 +752,14 @@ chapters:
           Your guns open the walls of Hanseong in an afternoon, and the roads south are open
           before the Baekje court can flee. Ungjin falls before it can be fortified.
         deeds: {war_with: [baekje], take: [k4_hanseong, k4_ungjin], grudges: {baekje: 6000, silla: 2500}}
+      - label: "Raid the Han valley with light horse"
+        legitimacy_bp: 1600
+        wealth_bp: 1500
+        outcome: >-
+          Ten thousand riders sweep through Baekje's fields below the Han, burn what they
+          cannot carry and come home loaded. Hanseong's walls are not touched, and Baekje now
+          knows what is coming.
+        deeds: {men: 10000, grudges: {baekje: 3000}}
     history: >-
       In 475 Jangsu took Hanseong, Baekje's capital, and killed King Gaero; Baekje's court
       moved south to Ungjin (Gongju). The tale of the monk Dorim comes from the Samguk sagi.

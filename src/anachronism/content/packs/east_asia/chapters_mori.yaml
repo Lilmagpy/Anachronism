@@ -44,7 +44,7 @@ chapters:
         outcome: >-
           Takamoto gives orders, and his brothers obey, with long faces.
       - label: "Bind them with oaths sworn at a shrine"
-        legitimacy_bp: 1500
+        legitimacy_bp: 2200
         unrest_bp: -500
         influence: {clergy: 300}
         outcome: >-

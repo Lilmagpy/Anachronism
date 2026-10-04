@@ -41,9 +41,11 @@ chapters:
         deeds: {war_with: [hatti]}
       - label: "Hold Amurru and the coast; let Hatti come to you"
         legitimacy_bp: -300
+        wealth_bp: -500
         outcome: >-
-          You fortify the coast road and wait. Muwatalli does not come. Benteshina wonders
-          what kind of protector he has chosen.
+          You fortify the coast road and wait, with five thousand more men in the garrisons.
+          Muwatalli does not come. Benteshina wonders what kind of protector he has chosen.
+        deeds: {men: 5000}
       - label: "✦ Arm the chariot corps with iron"
         needs_adopted: [iron_working]
         legitimacy_bp: 1000
@@ -53,6 +55,14 @@ chapters:
           thought to know: blades that bend and do not break, and arrowheads that go through
           bronze scale. You march north with a weapon your enemy believed was his alone.
         deeds: {war_with: [hatti], martial_bp: 2500}
+      - label: "Send two divisions ahead by the coast road"
+        legitimacy_bp: 500
+        food_bp: -800
+        outcome: >-
+          Amun and Re go up the coast to show Amurru the banner, with Ptah and Seth to
+          follow. You cross into Syria in two pieces, a few days apart, and the enemy has
+          time to watch you come.
+        deeds: {war_with: [hatti]}
     history: >-
       In 1274 BC (year 5 of his reign), Ramesses II marched on Kadesh with four divisions
       after Amurru defected to Egypt. Pi-Ramesses, his new capital at Qantir, has yielded
@@ -115,6 +125,14 @@ chapters:
           Ptah and Seth are already wheeling round the city. The Hittite army is caught
           between them and the river. Kadesh opens its gates.
         deeds: {take: [hat_kadesh], grudges: {hatti: 5000}}
+      - label: "Question the Shasu again, and advance with Amun and Re"
+        legitimacy_bp: 1200
+        unrest_bp: 300
+        outcome: >-
+          The Shasu are questioned a second time and tell the same tale. You move up with two
+          divisions together, and the Hittite chariots strike a stronger body than they
+          hoped. The fighting is hard and close, the rout is less complete, and Kadesh is
+          not taken.
     history: >-
       At Kadesh in 1274 BC the Hittites ambushed Ramesses' divided army after planting false
       informants. Ramesses' counter-attack and the arrival of the Ne'arin saved him; the
@@ -162,7 +180,9 @@ chapters:
         wealth_bp: 800
         outcome: >-
           The Sherden captains teach your scribes the islands and harbours of the west: Crete,
-          the big island of copper, the land of the Libyans' cousins. Your merchants follow.
+          the big island of copper, the land of the Libyans' cousins. Three of their
+          warships are taken into your own fleet, and your merchants follow.
+        deeds: {ships: 3}
     history: >-
       In his second year Ramesses II defeated Sherden sea-raiders in the Delta and took many
       into his service; Sherden guardsmen appear in the Kadesh reliefs. A century later the
@@ -174,7 +194,7 @@ chapters:
     civ: egypt
     year: -1270
     after: [egy_kadesh]
-    title: "Carve It in Stone"
+    title: "The Poem of Kadesh"
     place: "Thebes"
     speaker: diviner
     speaker_name: "Nebwenenef"
@@ -202,8 +222,8 @@ chapters:
           the empire, the gods and the language. Three thousand years later visitors will
           still walk past you, alone in your chariot, at Abu Simbel.
       - label: "Carve it - and honour the Ne'arin who saved you"
-        legitimacy_bp: 1200
-        materials_bp: -1500
+        legitimacy_bp: 1600
+        materials_bp: -1000
         influence: {nobility: 800}
         outcome: >-
           The reliefs show the young men of Amurru arriving in the nick of time. Your
@@ -218,6 +238,14 @@ chapters:
           two dozen letters of sound, the way the scribes of Ugarit have begun to write. Boat
           captains and stone-cutters read it aloud to each other. The priests are not
           pleased to share their craft.
+      - label: "Carve a short account, and copy the poem on papyrus"
+        legitimacy_bp: 1600
+        materials_bp: -500
+        knowledge_bp: 500
+        outcome: >-
+          A short record goes up at Karnak, and the scribes copy the full poem on rolls for
+          the temple libraries and the courts of your vassals. Fewer people see it, and
+          more of those who do can read it.
     history: >-
       Ramesses had his version of Kadesh carved on at least five temples - the most widely
       published royal propaganda of the ancient world. The Hittite records treat the battle
@@ -297,7 +325,7 @@ chapters:
       Hattusili's envoy is courteous and very firm. The Great King of Hatti asks his
       brother of Egypt to send the fugitive home.
     choices:
-      - label: "Keep Urhi-Teshub, and tell Hatti you know nothing of him"
+      - label: "Shelter him, and tell Hatti nothing"
         historical: true
         legitimacy_bp: 500
         outcome: >-
@@ -306,9 +334,9 @@ chapters:
           have a valuable guest - a rival king you can send north whenever you like.
         deeds: {grudges: {hatti: 2000}}
       - label: "Send him back in chains"
-        legitimacy_bp: -500
+        legitimacy_bp: 300
         outcome: >-
-          Hattusili thanks you warmly. Urhi-Teshub is never heard of again.
+          Hattusili thanks you warmly, and sends gifts. Urhi-Teshub is never heard of again.
         deeds: {peace_with: [hatti]}
       - label: "Give him an army, and set him on the throne of Hatti"
         legitimacy_bp: 800
@@ -361,9 +389,12 @@ chapters:
           Nations in New York.
         deeds: {peace_with: [hatti], ally_with: [hatti]}
       - label: "Accept peace, but no alliance"
-        legitimacy_bp: 800
+        legitimacy_bp: 2200
+        wealth_bp: 1300
+        unrest_bp: -500
         outcome: >-
-          The fighting stops. The two courts remain coldly polite.
+          The fighting stops, and the border towns trade again. The two courts remain coldly
+          polite.
         deeds: {peace_with: [hatti]}
       - label: "Refuse: Kadesh must be Egyptian"
         legitimacy_bp: -500
@@ -399,7 +430,7 @@ chapters:
 
       Nefertari is ill. Your vizier asks whether the dedication should wait.
     choices:
-      - label: "Sail to Abu Simbel with Nefertari, and dedicate them now"
+      - label: "Dedicate the temples now, with Nefertari"
         historical: true
         legitimacy_bp: 1500
         influence: {clergy: 1000}
@@ -422,6 +453,13 @@ chapters:
           raise a temple-fortress on an island in the cataract that the Nile's floods cannot
           touch. The chiefs of Kush send their sons to be schooled there.
         deeds: {martial_bp: 1000}
+      - label: "Dedicate the great temple now, and the queen's later"
+        legitimacy_bp: 1200
+        influence: {clergy: 500}
+        outcome: >-
+          Your own temple is dedicated with all the pomp of the court, and the queen's is
+          left for a day when she is stronger. The priests of Amun are satisfied and the
+          court is thin on joy.
     history: >-
       The Abu Simbel temples were completed around 1255 BC. Nefertari probably died soon
       after their dedication. In the 1960s the temples were cut into blocks and moved 65
@@ -433,7 +471,7 @@ chapters:
     civ: egypt
     year: -1246
     until_year: -1235
-    title: "A Bride from Hatti"
+    title: "The Princess on the Road"
     place: "The road through Canaan"
     speaker: hatti
     speaker_name: "Queen Puduhepa"
@@ -453,7 +491,7 @@ chapters:
       season to cross the mountains. Your priests say you can ask the god Seth for good
       weather.
     choices:
-      - label: "Pray to Seth for summer weather, and welcome her as a queen"
+      - label: "Welcome her as a queen, praying for fair weather"
         historical: true
         legitimacy_bp: 1500
         wealth_bp: 2000
@@ -468,8 +506,17 @@ chapters:
         legitimacy_bp: 300
         outcome: >-
           The princess disappears into the harem at Mi-Wer. Puduhepa's next letters are
-          very cold.
-        deeds: {grudges: {hatti: 1500}}
+          very cold, though the peace holds.
+        deeds: {peace_with: [hatti], grudges: {hatti: 1500}}
+      - label: "Welcome her with honour, and keep her Hittite escort"
+        legitimacy_bp: 2200
+        wealth_bp: 1800
+        unrest_bp: 300
+        outcome: >-
+          The princess is received with every honour, and the Hittite horsemen who brought
+          her are asked to stay and teach your charioteers. Egyptian officers complain at
+          being taught by foreigners, and the dowry is counted twice.
+        deeds: {men: 2000}
     history: >-
       Around 1245 BC Ramesses married Hattusili and Puduhepa's daughter, renamed
       Maathorneferure, after a long correspondence over the dowry. The Marriage Stela at
@@ -513,6 +560,8 @@ chapters:
           Egyptologist.
       - label: "Tell him the living need temples more than the dead"
         materials_bp: 500
+        legitimacy_bp: 600
+        unrest_bp: -300
         outcome: >-
           Khaemwaset bows and goes back to Memphis. The old pyramids crumble a little more.
       - label: "✦ Found a school beside the Serapeum for anyone who can learn"
@@ -523,6 +572,14 @@ chapters:
         outcome: >-
           The prince opens his workshop of copyists to the sons of craftsmen. Within ten
           years Memphis has more people who can read than all the rest of Egypt.
+      - label: "Give him the gallery, but not the old tombs"
+        legitimacy_bp: 1000
+        knowledge_bp: 800
+        materials_bp: -700
+        outcome: >-
+          The Serapeum is begun, and the stone for it comes from the quarries. The pyramids
+          are left as they are, and Khaemwaset spends his leisure copying their inscriptions
+          instead.
     history: >-
       Khaemwaset (died c. 1225 BC), high priest of Ptah, restored and labelled Old Kingdom
       monuments at Saqqara and Giza, and began the Serapeum galleries for the Apis bulls.
@@ -622,6 +679,13 @@ chapters:
           The Libyan chiefs swear to you and spread across the western Delta. Your officials
           count new taxpayers. Your generals count new rivals.
         deeds: {men: 8000}
+      - label: "Strike their camp at night, before the sea peoples join it"
+        legitimacy_bp: 1800
+        food_bp: -300
+        outcome: >-
+          Your chariots and archers fall on the Libyan camp in the dark, and the allies who
+          were still arriving find a battle already half lost. Meryey escapes, but fewer of
+          his people do.
     history: >-
       Ramesses II died in 1213 BC aged about ninety. In 1208 BC his son Merneptah defeated a
       Libyan invasion joined by 'Sea Peoples' at Perire. His victory stela contains the

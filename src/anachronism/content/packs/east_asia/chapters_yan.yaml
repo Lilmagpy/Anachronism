@@ -25,7 +25,7 @@ chapters:
 
       Your son, Prince Ping, and the old nobility are not consulted.
     choices:
-      - label: "Give the throne to Zizhi"
+      - label: "Pass the kingship to Zizhi"
         historical: true
         legitimacy_bp: -2500
         unrest_bp: 2500
@@ -35,10 +35,18 @@ chapters:
           fighting in the capital kills tens of thousands, and the people stop trusting
           anyone.
         deeds: {ruler_falls: "gives his throne to his minister Zizhi"}
-      - label: "Keep the throne for your son"
-        legitimacy_bp: 500
+      - label: "Name Prince Ping your heir"
+        legitimacy_bp: -500
+        unrest_bp: 500
         outcome: >-
           Zizhi is disappointed, and the persuaders go to another court with the same speech.
+          His friends among the ministers do not forget it.
+      - label: "Give Zizhi the army and the treasury"
+        legitimacy_bp: -1500
+        unrest_bp: 1500
+        outcome: >-
+          Zizhi takes charge of the army and the granaries, and you keep the throne in name.
+          The old nobility grumble, and the prince's friends begin to arm.
     history: >-
       King Kuai of Yan abdicated in favour of his minister Zizhi (c. 316 BC), provoking civil
       war.
@@ -60,7 +68,7 @@ chapters:
       the capital. King Xuan of Qi has sent to say that he will help restore order in Yan,
       as a good neighbour should, and his army is already over the border.
     choices:
-      - label: "Fight the rebels, and trust Qi"
+      - label: "Accept Qi's help against the rebels"
         historical: true
         legitimacy_bp: -2000
         unrest_bp: 1500
@@ -69,10 +77,17 @@ chapters:
           Yan. The people of Yan rise against Qi, and Qi withdraws. The prince Zhi comes home
           from Han, where he was a hostage, to be king. He will be called King Zhao, and he will
           never forget.
-      - label: "Make peace with Prince Ping"
-        legitimacy_bp: 1000
+      - label: "Share power with Prince Ping"
+        legitimacy_bp: 500
+        unrest_bp: 500
         outcome: >-
           You and the prince share the capital uneasily. Qi's army waits at the border.
+      - label: "Send gifts to Qi and ask it to turn back"
+        wealth_bp: -1500
+        legitimacy_bp: -500
+        outcome: >-
+          King Xuan accepts the gifts and keeps his army where it is. The rebels in your
+          streets take it as a sign of weakness.
     history: >-
       Qi invaded Yan in 314 BC during the civil war; Zizhi was killed. The Qi occupation
       provoked a rising and King Zhao was installed.
@@ -102,7 +117,7 @@ chapters:
       one, bought for five hundred. The king was furious; but within a year three such
       horses were brought to him. "If you want worthy men," says Guo Wei, "start with me."
     choices:
-      - label: "Start with Guo Wei"
+      - label: "Make Guo Wei your teacher"
         historical: true
         legitimacy_bp: 1500
         knowledge_bp: 1500
@@ -115,10 +130,22 @@ chapters:
           Golden Terrace.
         deeds: {peace_with: [qi], take: [yan_ji, yan_yi, yan_coast], martial_bp: 500}
       - label: "Send heralds to every court"
-        knowledge_bp: 500
+        legitimacy_bp: 1000
+        knowledge_bp: 1500
+        wealth_bp: -500
+        unrest_bp: -1500
         outcome: >-
-          A few clever men come, and look at the burnt-out capital, and leave.
-        deeds: {peace_with: [qi], take: [yan_ji, yan_yi, yan_coast]}
+          Heralds carry the offer of rank and land to every court. A few clever men come, and
+          look at the burnt-out capital, and some of them stay.
+        deeds: {peace_with: [qi], take: [yan_ji, yan_yi, yan_coast], martial_bp: 500}
+      - label: "Rebuild the army and granaries first"
+        food_bp: 1000
+        materials_bp: -500
+        unrest_bp: -500
+        outcome: >-
+          You spend three years refilling the granaries, repairing the walls and drilling the
+          army. The kingdom grows quieter, and able men are in no hurry to come.
+        deeds: {peace_with: [qi], take: [yan_ji, yan_yi, yan_coast], men: 6000}
     history: >-
       King Zhao of Yan (r. 311-279 BC) honoured Guo Wei and attracted Yue Yi, Zou Yan and Ju
       Xin to his court; the Golden Terrace is a later name.
@@ -145,7 +172,7 @@ chapters:
       a wall to keep them there, with new commanderies all the way to the Liao river and
       beyond.
     choices:
-      - label: "Send Qin Kai north"
+      - label: "Give Qin Kai the northern army"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -153,11 +180,21 @@ chapters:
           of the capital to beyond the Liao, and sets up five commanderies, Liaodong among
           them. Qin Kai's grandson will ride with the assassin Jing Ke.
         deeds: {take: [donghu_xilamulun, joseon_liaodong]}
-      - label: "Hold the old frontier"
-        legitimacy_bp: -500
+      - label: "Build a frontier wall and hold it"
+        legitimacy_bp: 1000
+        materials_bp: -500
+        wealth_bp: 500
         outcome: >-
-          The Donghu keep raiding, and Qin Kai keeps telling everyone how easy it would have
-          been.
+          Your engineers raise a wall along the old frontier, and the garrisons behind it keep
+          the Donghu out. Qin Kai keeps telling everyone how easy it would have been.
+        deeds: {men: 5000}
+      - label: "Buy the Donghu's peace with trade"
+        legitimacy_bp: 1000
+        wealth_bp: -500
+        outcome: >-
+          Qin Kai goes north as an envoy instead of a general, with silk, bronze and grain.
+          The chiefs accept, for a while.
+        deeds: {peace_with: [donghu]}
     history: >-
       Around 300 BC the Yan general Qin Kai drove the Donghu back a thousand li; Yan built
       walls and five commanderies, including Liaodong, and pushed into Gojoseon's lands.
@@ -185,7 +222,7 @@ chapters:
       The allies have beaten the Qi army west of the Ji river. They want to go home with
       their plunder. Yue Yi wants to march on Linzi alone, with the army of Yan.
     choices:
-      - label: "Let Yue Yi march on Linzi"
+      - label: "Let Yue Yi pursue Qi alone"
         historical: true
         legitimacy_bp: 3000
         wealth_bp: 3000
@@ -195,10 +232,19 @@ chapters:
           cities; only Ju and Jimo hold out. He governs the conquered lands mildly, lowers
           their taxes, and honours their worthies. You make him Lord of Changguo.
         deeds: {take: [qi_linzi, qi_pingyuan]}
-      - label: "Take the plunder, and come home"
-        wealth_bp: 2000
+      - label: "Take the plunder and a few border towns"
+        legitimacy_bp: 2000
+        wealth_bp: 3000
         outcome: >-
           Yan has its revenge, and Qi is left bleeding but whole.
+        deeds: {take: [qi_pingyuan]}
+      - label: "Keep the allies in the field to the end"
+        legitimacy_bp: 3000
+        wealth_bp: 2500
+        outcome: >-
+          You pay the allied generals well to stay, and the combined armies press on across Qi
+          together. The campaign is long, and the share of the spoils is argued over.
+        deeds: {take: [qi_pingyuan], men: 10000}
     history: >-
       Yue Yi's coalition broke Qi in 284 BC; the Yan army took Linzi and more than seventy
       cities.
@@ -226,7 +272,7 @@ chapters:
 
       You have already sent Qi Jie to replace him. Yue Yi has fled to Zhao.
     choices:
-      - label: "Keep Qi Jie in command"
+      - label: "Let Qi Jie finish the siege"
         historical: true
         legitimacy_bp: -2500
         outcome: >-
@@ -236,9 +282,17 @@ chapters:
           thousand years.
         deeds: {give: [qi_linzi, qi_pingyuan], give_to: qi, peace_with: [qi]}
       - label: "Beg Yue Yi to come back"
-        legitimacy_bp: -500
+        legitimacy_bp: -1000
+        unrest_bp: 500
         outcome: >-
-          Yue Yi comes back, warily. Jimo goes on holding out.
+          Yue Yi comes back, warily, with fresh men from Yan. Jimo goes on holding out.
+        deeds: {men: 4000}
+      - label: "Offer Qi peace and give back some towns"
+        legitimacy_bp: -1500
+        outcome: >-
+          Your envoys go to Jimo with terms. Qi takes the towns and the peace, and Yue Yi,
+          in Zhao, hears of it with a bitter smile.
+        deeds: {give: [qi_pingyuan], give_to: qi, peace_with: [qi]}
     history: >-
       King Hui of Yan replaced Yue Yi with Qi Jie in 279 BC; Tian Dan then destroyed the Yan
       army and recovered Qi. Yue Yi's letter to King Hui survives.
@@ -266,7 +320,7 @@ chapters:
       Yue Jian, Yue Yi's son, who lives in Zhao, sends word: Zhao is a country of soldiers,
       and its people are used to war.
     choices:
-      - label: "Attack Zhao"
+      - label: "Attack Zhao while it is weak"
         historical: true
         legitimacy_bp: -2000
         unrest_bp: 1500
@@ -275,10 +329,18 @@ chapters:
           Lian Po pursues your army five hundred li and besieges your capital, and you have to
           give up five cities for peace.
         deeds: {grudges: {zhao: 2500}}
-      - label: "Send Zhao condolences"
+      - label: "Send gifts to Zhao's court"
         legitimacy_bp: 500
+        wealth_bp: -500
         outcome: >-
           Zhao thanks you, and remembers who was kind.
+      - label: "Strengthen the southern border"
+        wealth_bp: -500
+        unrest_bp: 500
+        outcome: >-
+          You keep out of Zhao's affairs and put more men on the frontier instead. Your
+          ministers say you have wasted the opportunity.
+        deeds: {men: 4000}
     history: >-
       Yan attacked Zhao in 251 BC on Li Fu's advice; Lian Po defeated and killed him at Hao
       and besieged the Yan capital.
@@ -307,7 +369,7 @@ chapters:
       farmland, rolled around a dagger poisoned so that a scratch will kill. The friends who
       see Jing Ke off at the Yi river wear white, the colour of mourning.
     choices:
-      - label: "Let Jing Ke go"
+      - label: "Send Jing Ke to the King of Qin"
         historical: true
         legitimacy_bp: -1500
         outcome: >-
@@ -318,10 +380,17 @@ chapters:
           it round onto his back. Jing Ke dies laughing. Qin's armies march on Yan.
         deeds: {grudges: {qin: 4000}}
       - label: "Send the King of Qin tribute instead"
-        wealth_bp: -2500
+        wealth_bp: -2000
         outcome: >-
           The King of Qin accepts the tribute and the map of the farmland, and comes to take
           the rest.
+      - label: "Join Prince Jia of Dai against Qin"
+        legitimacy_bp: -500
+        unrest_bp: 1000
+        outcome: >-
+          Your armies march west to Dai and fight beside the last men of Zhao. Qin's generals
+          beat them both, one after another.
+        deeds: {men: 6000}
     history: >-
       Jing Ke's attempt on the life of King Zheng of Qin (227 BC), sent by Crown Prince Dan of
       Yan, failed; Qin attacked Yan and took its capital in 226.
@@ -349,17 +418,24 @@ chapters:
       Prince Dan. Send his head,
       and Qin will let Yan live.
     choices:
-      - label: "Send Dan's head"
+      - label: "Have Prince Dan killed"
         historical: true
         legitimacy_bp: -2500
         outcome: >-
           You have your son killed and send his head to Qin. Qin takes it, and stops for a
           while, to deal with Wei and Chu. Then it comes back.
         deeds: {give: [yan_ji, yan_yi, yan_coast, donghu_xilamulun], give_to: qin}
-      - label: "Refuse"
+      - label: "Hide Dan and refuse Qin"
         legitimacy_bp: 500
+        unrest_bp: 1000
         outcome: >-
           You keep your son. The Qin generals keep coming.
+        deeds: {give: [yan_ji, yan_yi, yan_coast, donghu_xilamulun], give_to: qin}
+      - label: "Send Dan to Jia in Dai"
+        legitimacy_bp: -1000
+        outcome: >-
+          Dan goes west to join Jia's last stand, and your own men take it as a sign that you
+          mean to save yourself. Qin goes on hunting them both.
         deeds: {give: [yan_ji, yan_yi, yan_coast, donghu_xilamulun], give_to: qin}
     history: >-
       After Ji fell in 226 BC, King Xi of Yan fled to Liaodong and had Crown Prince Dan killed,
@@ -383,7 +459,7 @@ chapters:
       Wei has fallen, and Chu. Wang Ben, son of the Qin general Wang Jian, has crossed the Liao
       river with his army. You are the king of a few towns at the end of the world.
     choices:
-      - label: "Surrender"
+      - label: "Surrender to Wang Ben"
         historical: true
         legitimacy_bp: -2500
         outcome: >-
@@ -396,6 +472,13 @@ chapters:
         outcome: >-
           You and a few hundred followers cross into the lands of Joseon. Yan lives on, in a
           valley, for a while.
+      - label: "Make a last stand on the Liao"
+        legitimacy_bp: -1500
+        unrest_bp: 1000
+        outcome: >-
+          You hold the river crossings with the men you have left. They hold for a season,
+          and are overrun.
+        deeds: {men: 3000}
     history: >-
       Wang Ben conquered Liaodong and captured King Xi in 222 BC, ending Yan.
     diverged: >-

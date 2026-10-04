@@ -36,7 +36,7 @@ chapters:
       to an agreement about Wilusa, over which we were at war," he writes, "let there be no
       bad feeling between us."
     choices:
-      - label: "Reply politely, and do nothing"
+      - label: "Reply politely and take no action"
         historical: true
         wealth_bp: 1000
         outcome: >-
@@ -46,9 +46,16 @@ chapters:
         deeds: {grudges: {hatti: 1500}}
       - label: "Hand Piyamaradu over"
         legitimacy_bp: -500
+        wealth_bp: 1000
         outcome: >-
           Piyamaradu is sent to Hattusa in chains. The Great King sends you a gift of fine
           linen, and your nobles mutter that you take orders from Anatolians.
+      - label: "Send Piyamaradu away from Millawanda"
+        legitimacy_bp: 500
+        unrest_bp: 500
+        outcome: >-
+          He is sent off to the islands with a ship and a small household. Hattusili has his
+          answer of a kind, and Piyamaradu has other friends.
     history: >-
       The 'Tawagalawa letter' (c. 1250 BC), probably from Hattusili III to the king of
       Ahhiyawa, asks for the surrender of Piyamaradu and mentions an earlier dispute over
@@ -79,7 +86,7 @@ chapters:
       a triangle of stone carved with two lions standing on either side of a column. Every
       visitor will walk under them.
     choices:
-      - label: "Build the Lion Gate"
+      - label: "Raise the new gate and walls"
         historical: true
         legitimacy_bp: 1500
         materials_bp: -1500
@@ -90,10 +97,18 @@ chapters:
           Schliemann digs them up and finds a gold mask, and telegraphs that he has gazed on
           the face of Agamemnon. He has not: it is three hundred years too old.
       - label: "Spend it on ships"
-        wealth_bp: -1000
+        legitimacy_bp: 1000
+        wealth_bp: -1500
         outcome: >-
           Twenty new ships are built at Nauplion. The old gate does well enough.
         deeds: {ships: 20}
+      - label: "Build roads and bridges to the palaces"
+        legitimacy_bp: 1000
+        materials_bp: -500
+        food_bp: 500
+        outcome: >-
+          Causeways and bridges link Mycenae with Tiryns, Argos and the ports. Carts and
+          messengers move faster, and the old gate stays as it was.
     history: >-
       The Lion Gate and the western extension of Mycenae's walls, enclosing Grave Circle A,
       date to about 1250 BC.
@@ -141,6 +156,13 @@ chapters:
         outcome: >-
           Twenty-odd signs instead of ninety. Within a generation merchants, potters and
           sailors can write, and the bards write their songs down.
+      - label: "Train more scribes for the workshops"
+        knowledge_bp: 1000
+        wealth_bp: 500
+        unrest_bp: 500
+        outcome: >-
+          Twice as many boys are sent to the scribes' schools. The accounts grow longer, and
+          the palace knows more about itself than ever.
     history: >-
       Linear B, used by Mycenaean palace scribes for administrative records, survives on clay
       tablets baked when the palaces burned; Michael Ventris deciphered it as Greek in 1952.
@@ -175,12 +197,20 @@ chapters:
           Egypt, Babylon, Assyria, and Ahhiyawa - and then rubs out Ahhiyawa.
         deeds: {give: [myc_millawanda], give_to: hatti}
       - label: "Send ships and men to hold it"
-        materials_bp: -1500
-        unrest_bp: 1000
+        materials_bp: -1000
+        legitimacy_bp: 500
+        unrest_bp: 500
         outcome: >-
           Your ships reach Millawanda. The Hittites stop at the hills behind it, and the Great
           King writes to his vassals that Ahhiyawa is now his enemy.
         deeds: {men: 2000, grudges: {hatti: 3000}}
+      - label: "Buy the Hittites off with tribute"
+        wealth_bp: -1000
+        legitimacy_bp: -500
+        outcome: >-
+          The Great King takes the silver, and your governor keeps his town under Hittite
+          eyes, with new borders drawn round it.
+        deeds: {peace_with: [hatti]}
     history: >-
       The Milawata letter (c. 1235 BC) shows Millawanda under Hittite control and Walmu of
       Wilusa being restored; in the Sausgamuwa treaty (c. 1225) the 'king of Ahhiyawa' is
@@ -210,7 +240,7 @@ chapters:
       citadel will never run out of water. At Corinth, the other palaces are talking about a
       wall across the Isthmus, to stop whatever is coming from the north.
     choices:
-      - label: "Cut the tunnel, and build the Isthmus wall"
+      - label: "Cut the tunnel and wall the Isthmus"
         historical: true
         materials_bp: -2000
         unrest_bp: 1000
@@ -223,10 +253,18 @@ chapters:
       - label: "Send to the east for grain and copper instead"
         wealth_bp: -2000
         food_bp: 1500
+        unrest_bp: 500
         outcome: >-
           Your ships come back with Cypriot copper and Egyptian grain, and fewer of them come
           back each voyage.
         deeds: {give: [myc_thebes]}
+      - label: "Muster the palaces' levies at the passes"
+        legitimacy_bp: 500
+        materials_bp: -1000
+        outcome: >-
+          Every palace sends its spearmen north to the passes. The fields are short of hands
+          that year, and Thebes is left to its fate.
+        deeds: {men: 4000, martial_bp: 500, give: [myc_thebes]}
     history: >-
       Around 1200 BC Mycenae, Tiryns and Athens secured hidden water supplies; a wall may have
       been built across the Isthmus. Thebes's palace was destroyed in the later 13th century.
@@ -266,6 +304,14 @@ chapters:
         outcome: >-
           Your ships find the raiders' fleet off the Messenian coast. Pylos holds, this year.
         deeds: {men: 3000}
+      - label: "Call a council of all the palaces"
+        legitimacy_bp: -500
+        wealth_bp: -500
+        unrest_bp: 500
+        outcome: >-
+          The wanaktes come to Mycenae and argue for a month, and each goes home with promises
+          and no plan. The raiders do not wait.
+        deeds: {men: 2000}
     history: >-
       The last Linear B tablets from Pylos record rowers, 'watchers guarding the coast' and
       the collection of temple bronze for weapons; the palace was destroyed by fire around

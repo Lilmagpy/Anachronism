@@ -42,6 +42,15 @@ chapters:
         outcome: >-
           The Wada fight their way to the palace and proclaim that they have freed the shogun.
           The Hojo hold their mansions. Kamakura has two governments for a summer.
+      - label: "Call up the eastern vassals"
+        legitimacy_bp: 1100
+        unrest_bp: -300
+        wealth_bp: -300
+        deeds: {men: 3000}
+        outcome: >-
+          Messengers ride out, and the eastern vassals gather at Kamakura at their own cost
+          and yours. They crush the Wada after two days of fighting, and the Hojo have a new
+          claim on their gratitude.
     history: >-
       The Wada rebellion of 1213 was crushed by the Hojo, who took the leadership of the
       samurai board (samurai-dokoro) and dominated the shogunate.
@@ -51,7 +60,7 @@ chapters:
     scenario: great_khan
     civ: kamakura
     year: 1219
-    title: "The Ginkgo Tree"
+    title: "The Shrine Ceremony"
     place: "The steps of Tsurugaoka Hachiman shrine, Kamakura"
     speaker: diviner
     speaker_name: "A shrine priest"
@@ -64,8 +73,8 @@ chapters:
 
 
       At the top of the great stone steps stands a huge ginkgo tree. Your nephew Kugyo, the
-      young head priest of the shrine, whose father was shogun before you and who believes
-      you killed him, has been seen near it.
+      young head priest of the shrine, whose father was shogun before you, is among those who
+      will receive you.
     choices:
       - label: "Go up the steps as planned"
         historical: true
@@ -79,9 +88,17 @@ chapters:
         deeds: {ruler_falls: "is murdered by his nephew on the shrine steps"}
       - label: "Have the shrine searched first"
         legitimacy_bp: 500
+        unrest_bp: 500
         outcome: >-
           Kugyo is found with a sword under his robe. He is sent to a temple far away. You go up
           the steps, and come down them again.
+      - label: "Go up with an armed guard"
+        legitimacy_bp: -500
+        wealth_bp: -300
+        deeds: {men: 500}
+        outcome: >-
+          Armed retainers march up the steps beside you, to the displeasure of the priests. The
+          ceremony is held in a tense and joyless way.
     history: >-
       Sanetomo was assassinated by his nephew Kugyo at Tsurugaoka Hachimangu on 13 February
       1219, ending the Minamoto shoguns. The legend of the ginkgo is later; the tree fell in a
@@ -92,7 +109,7 @@ chapters:
     scenario: great_khan
     civ: kamakura
     year: 1221
-    title: "Higher Than the Mountains"
+    title: "Go-Toba's Summons"
     place: "Kamakura"
     speaker: steward
     speaker_name: "Hojo Masako"
@@ -105,9 +122,11 @@ chapters:
       vassals gathered in Kamakura are frightened. Who fights an emperor?
 
 
-      Your sister Masako, widow of the first shogun Yoritomo, has asked to speak to them.
+      Your sister Masako, widow of the first shogun Yoritomo, has asked to speak to them. Your
+      council is divided between marching at once and waiting for the court's army at the
+      passes of Hakone.
     choices:
-      - label: "Let Masako speak, and march on Kyoto"
+      - label: "Let Masako speak, then march"
         historical: true
         legitimacy_bp: 2500
         outcome: >-
@@ -121,6 +140,12 @@ chapters:
         legitimacy_bp: -1500
         outcome: >-
           You wait in the east. Go-Toba's army grows. Some of your vassals begin to slip away.
+      - label: "Hold the Hakone passes and wait"
+        legitimacy_bp: 2000
+        deeds: {men: 2000, martial_bp: 500}
+        outcome: >-
+          Your vassals are posted along the mountain roads and told to wait for the court's
+          army. Go-Toba's summons is answered by nobody, but neither is the war ended.
     history: >-
       In the Jokyu war of 1221, after Masako's famous speech, the shogunate defeated Go-Toba's
       forces within a month and exiled three retired emperors. Kamakura's power reached Kyoto.
@@ -130,7 +155,7 @@ chapters:
     scenario: great_khan
     civ: kamakura
     year: 1232
-    title: "Fifty-One Articles"
+    title: "Quarrels in the Courts"
     place: "Kamakura"
     speaker: scholar
     speaker_name: "Miyoshi Yasutsura"
@@ -142,10 +167,12 @@ chapters:
       laws that no warrior can read.
 
 
-      You want a law for warriors, written in plain language: fifty-one articles, one for each
-      thing that keeps going wrong. And a council of thirteen to judge by it.
+      Miyoshi Yasutsura proposes a law for warriors, written in plain language: fifty-one
+      articles, one for each thing that keeps going wrong, and a council of thirteen to judge
+      by it. Your judges say precedent is enough, and some would simply collect the decisions
+      already given.
     choices:
-      - label: "Issue the Goseibai Shikimoku"
+      - label: "Write a law for warriors"
         historical: true
         legitimacy_bp: 2000
         knowledge_bp: 1000
@@ -156,6 +183,8 @@ chapters:
           brother in Kyoto that it is only meant for people who cannot read Chinese. It will be
           the basis of Japanese warrior law for three hundred years.
       - label: "Leave it to the judges and precedent"
+        wealth_bp: -300
+        unrest_bp: 500
         outcome: >-
           The courts go on as before, slowly and expensively.
       - label: "✦ Print it, so that every steward has a copy"
@@ -166,6 +195,13 @@ chapters:
         outcome: >-
           The fifty-one articles are printed and sent to every estate in the country. Your
           stewards settle disputes on the spot, citing article and line.
+      - label: "Have the judges collect past rulings"
+        legitimacy_bp: 2000
+        knowledge_bp: 1000
+        unrest_bp: -500
+        outcome: >-
+          A clerk's book of earlier rulings is compiled and copied for the judges. It helps,
+          but each case still turns on which ruling the judge prefers.
     history: >-
       The Goseibai Shikimoku (1232) was the first legal code written for the warrior class.
     sources: ["Goseibai Shikimoku", "Yasutoki's letter to Hojo Shigetoki (1232)"]
@@ -174,7 +210,7 @@ chapters:
     scenario: great_khan
     civ: kamakura
     year: 1260
-    title: "The Prophet of the Lotus"
+    title: "A Monk in the Streets"
     place: "Kamakura"
     speaker: diviner
     speaker_name: "Nichiren"
@@ -205,6 +241,12 @@ chapters:
           Nichiren preaches at court. The other monks are furious. The regent listens
           politely, and begins to think about the coast of Kyushu.
         deeds: {martial_bp: 500}
+      - label: "Let the monks of Kamakura judge him"
+        legitimacy_bp: 200
+        influence: {clergy: 500}
+        outcome: >-
+          The senior monks hold a hearing, and find that Nichiren is a trouble-maker. He goes
+          on preaching, and the quarrel between the sects goes on.
     history: >-
       Nichiren presented his Rissho ankoku ron to Hojo Tokiyori in 1260, prophesying foreign
       invasion; he was exiled to Izu (1261) and Sado (1271).
@@ -229,9 +271,9 @@ chapters:
 
 
       You are Hojo Tokimune, seventeen years old, regent since this spring. The court in
-      Kyoto has drafted a polite reply. Your councillors in Kamakura say: no reply at all.
+      Kyoto has drafted a polite reply. Your councillors in Kamakura say: no reply at all, or a short refusal in your own name.
     choices:
-      - label: "Send no reply"
+      - label: "Leave the letter unanswered"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
@@ -243,6 +285,13 @@ chapters:
         outcome: >-
           The court's letter goes to Kublai. It is polite, and it does not say yes. Kublai
           sends another envoy.
+      - label: "Send a short refusal in your own name"
+        legitimacy_bp: 1000
+        wealth_bp: -300
+        deeds: {men: 1000}
+        outcome: >-
+          A short letter goes back to Korea, refusing to be addressed in such terms. Your
+          vassals in Kyushu are told to look to their coast.
     history: >-
       Kublai's letter reached Japan in 1268; on the shogunate's insistence it went unanswered,
       as did several later embassies.
@@ -271,7 +320,7 @@ chapters:
 
       A young warrior called Takezaki Suenaga, with five followers, wants to charge.
     choices:
-      - label: "Let every man win glory where he can"
+      - label: "Let each warrior seek his own glory"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
@@ -281,12 +330,19 @@ chapters:
           and in the morning the bay is empty.
         deeds: {martial_bp: 500}
       - label: "Hold the line together at the beach"
-        legitimacy_bp: 800
+        legitimacy_bp: 1200
         outcome: >-
           Your samurai stand shoulder to shoulder behind their shields, and the bombs do less
           damage. The invaders take the beach but not the town. That night they go back to their
           ships, and the storm comes.
         deeds: {martial_bp: 1000}
+      - label: "Fall back to the fortress at Mizuki"
+        legitimacy_bp: 300
+        wealth_bp: -300
+        deeds: {men: 2000}
+        outcome: >-
+          The beach is given up and the army waits behind the old walls. The invaders burn the
+          town of Hakata and look for a way inland.
     history: >-
       The first Mongol invasion (Bun'ei, November 1274) landed at Hakata; after a day's fighting
       the invaders re-embarked and withdrew, with heavy losses in a storm. Takezaki Suenaga's
@@ -315,7 +371,7 @@ chapters:
 
       And they want an answer sent to Kublai that he will understand.
     choices:
-      - label: "Behead the envoys, and build the wall"
+      - label: "Execute the envoys, and build the wall"
         historical: true
         legitimacy_bp: 1500
         materials_bp: -2500
@@ -325,7 +381,7 @@ chapters:
           find it.
         deeds: {martial_bp: 2000, grudges: {mongols: 3000}}
       - label: "Send the envoys home, and build the wall"
-        legitimacy_bp: 500
+        legitimacy_bp: 1000
         materials_bp: -2500
         outcome: >-
           The envoys go home with a refusal. The wall goes up.
@@ -338,6 +394,13 @@ chapters:
           Your steamships cross to Korea against the wind and burn the half-built invasion fleet
           in its harbours. Kublai's admirals will need years to start again.
         deeds: {ships: 60, grudges: {mongols: 3000}}
+      - label: "Hold the envoys, and build a shorter wall"
+        legitimacy_bp: 1000
+        materials_bp: -1500
+        deeds: {martial_bp: 1500}
+        outcome: >-
+          The envoys are kept in Kamakura and a shorter wall goes up around the best harbours.
+          Kublai will want to know what became of his men.
     history: >-
       In 1275 the shogunate executed Mongol envoys at Tatsunokuchi and began the stone wall
       (genko borui) along Hakata bay, parts of which still stand.
@@ -365,7 +428,7 @@ chapters:
 
       Your warriors want to row out at night in small boats and attack the great ships.
     choices:
-      - label: "Raid them by night"
+      - label: "Raid the ships at night"
         historical: true
         legitimacy_bp: 2500
         outcome: >-
@@ -379,6 +442,13 @@ chapters:
         legitimacy_bp: 1000
         outcome: >-
           The invaders sit in their ships, and sicken, and the typhoon comes.
+      - label: "Attack the anchorage with fire-boats"
+        legitimacy_bp: 3000
+        wealth_bp: -300
+        deeds: {martial_bp: 500}
+        outcome: >-
+          Boats packed with brushwood are sent drifting into the crowded fleet. A few ships burn,
+          and the rest string themselves out in a longer line.
     history: >-
       The second invasion (Koan, 1281) was held at the stone wall; Japanese night raids harried
       the fleet before a typhoon destroyed much of it. Its wrecks have been found off Takashima.
@@ -415,11 +485,19 @@ chapters:
           thirty years at their own cost. They begin to borrow, and to resent Kamakura.
       - label: "Cancel the warriors' debts by decree"
         wealth_bp: -2000
-        legitimacy_bp: 1000
+        legitimacy_bp: 500
+        unrest_bp: 500
         influence: {guilds: -1500}
         outcome: >-
           The moneylenders lose their loans; the warriors keep their lands. The moneylenders
           stop lending to warriors.
+      - label: "Pay the warriors in rice from the granaries"
+        food_bp: -1500
+        legitimacy_bp: 500
+        unrest_bp: 500
+        outcome: >-
+          Rice goes out to the families of the Kyushu warriors in thin measure. It lasts a
+          season, and the granaries are empty for the next famine.
     history: >-
       Tokimune died in 1284. Unable to reward the defenders with land, the shogunate faced
       growing discontent; its debt-cancellation decree of 1297 failed, and the Hojo fell in

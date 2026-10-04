@@ -52,11 +52,12 @@ chapters:
           does not. You are eight years old and have just made an enemy of Egypt.
         deeds: {grudges: {fatimids: 2500}}
       - label: "Let the Sanhaja chiefs crush the riots"
-        legitimacy_bp: 300
-        unrest_bp: -500
+        legitimacy_bp: 1000
+        unrest_bp: 200
         outcome: >-
-          The chiefs ride into Kairouan and the riots end in blood. The Maliki jurists hold
-          you responsible, and the elders learn that they need not ask you.
+          The chiefs ride into Kairouan and the riots end in blood. Order returns quickly and
+          the court is steadied, but the Maliki jurists hold you responsible, and the elders
+          learn that they need not ask you.
         deeds: {martial_bp: 300}
     history: >-
       Badis died in 1016 and his son al-Mu'izz, aged about eight, succeeded him as Fatimid
@@ -107,9 +108,12 @@ chapters:
           pleased, and the gold keeps coming.
         deeds: {peace_with: [fatimids]}
       - label: "Keep both: Cairo's coins, Baghdad's blessing"
-        legitimacy_bp: 200
+        unrest_bp: -800
+        legitimacy_bp: 2200
         outcome: >-
-          Nobody is fooled. By next year your jurists have decided for you.
+          Nobody is fooled, but nobody is angered either: the Fatimids go on sending their wheat
+          and the jurists are soothed by Baghdad's blessing. By next year your jurists have
+          decided for you.
     history: >-
       Around 1048-49 al-Mu'izz cut the Fatimid caliph's name from the coinage and the Friday
       sermon and acknowledged the Abbasid caliph of Baghdad.
@@ -208,10 +212,12 @@ chapters:
         outcome: >-
           You spend the treasure on a field army that cannot win and cannot retire.
       - label: "Make terms with the Arab chiefs"
-        wealth_bp: -2500
-        legitimacy_bp: -800
+        wealth_bp: 1500
+        legitimacy_bp: 500
         outcome: >-
-          They accept your gold, and a month later demand more.
+          The Arab chiefs hold the plains, and you keep the harbours and the tolls of the coast
+          road. The terms cost you your inland pride, but the merchants of the ports are quiet
+          and the coin keeps coming.
     history: >-
       The Banu Hilal took Kairouan in 1057; al-Mu'izz had retreated to Mahdia, where the
       Zirids held the coastal towns for another century.
@@ -296,10 +302,12 @@ chapters:
           The Sicilians besiege the city in the summer heat, and fever and thirst do the rest.
           Roger withdraws and loses much of his force. Until 1135 your coast will be left alone, but you know the next fleet will be larger.
       - label: "Sail out and meet them at sea"
-        legitimacy_bp: 300
-        wealth_bp: -800
+        legitimacy_bp: 1500
+        wealth_bp: -200
         outcome: >-
-          Your fleet is smaller than theirs, and so is your luck.
+          Your fleet is smaller than theirs, but you catch their transports off the shoals and
+          sink several. Roger turns back, and the sailors of Mahdia are the heroes of the
+          season, though the fleet is worn.
         deeds: {ships: 2}
       - label: "Offer Roger a treaty and a tribute"
         wealth_bp: -1500

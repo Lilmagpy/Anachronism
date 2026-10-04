@@ -37,10 +37,18 @@ chapters:
           of Korean Confucian learning - and of a court that will spend more time arguing about
           ritual than about armies.
       - label: "Keep the experienced old ministers"
+        legitimacy_bp: 1000
+        wealth_bp: 1000
         influence: {nobility: 1000}
         outcome: >-
-          The old ministers keep their seats. The scholars go back to their academies and write
-          memorials against them.
+          The old ministers keep their seats, and the treasury is run by men who know it. The
+          scholars go back to their academies and write memorials against them.
+      - label: "Share the ministries between old hands and scholars"
+        legitimacy_bp: 1000
+        knowledge_bp: 500
+        outcome: >-
+          A few of the scholars are given posts, and the old ministers keep the rest. Neither
+          side is content, and each says so in memorials.
     history: >-
       Seonjo became king in 1567; under him the sarim scholars took over the government. Yi
       Hwang presented the Ten Diagrams of Sage Learning in 1568.
@@ -78,6 +86,14 @@ chapters:
         influence: {nobility: -1500}
         outcome: >-
           The decree is posted. The factions meet in private houses instead.
+      - label: "Give each faction half the posts in turn"
+        legitimacy_bp: 300
+        unrest_bp: 500
+        influence: {nobility: 500}
+        outcome: >-
+          Posts are shared out by a rule, one to the Easterners and one to the Westerners. The
+          rule is argued over, and each side counts the posts to see that it has not been
+          cheated.
     history: >-
       The split into Easterners and Westerners in 1575 began the factional struggles that
       dominated Joseon politics until the 19th century.
@@ -103,7 +119,7 @@ chapters:
       and in each province - a hundred thousand in all - before trouble comes. The court says
       there is no money, and no trouble.
     choices:
-      - label: "Thank him, and do nothing"
+      - label: "File the proposal for a better year"
         historical: true
         wealth_bp: 500
         outcome: >-
@@ -124,6 +140,12 @@ chapters:
           Korean smiths make long rifles of hard steel that kill at four hundred paces. The
           drill-masters train the provinces in volleys.
         deeds: {martial_bp: 5000, men: 20000}
+      - label: "Train a guard of ten thousand at the capital"
+        legitimacy_bp: 600
+        outcome: >-
+          The capital guard is drilled and paid, and the court calls it prudent. The provinces
+          are left as they were.
+        deeds: {men: 8000}
     history: >-
       Yi I's proposal (c. 1583) to train 100,000 soldiers was not adopted; he died in 1584.
       Yu Seong-ryong recorded the regret in his Jingbirok.
@@ -164,6 +186,13 @@ chapters:
           Walls are rebuilt, the southern garrisons reinforced, and the Ming warned. The people
           are frightened. When the Japanese come, they find the gates shut.
         deeds: {martial_bp: 2000}
+      - label: "Ask the Ming court what to do"
+        wealth_bp: -500
+        legitimacy_bp: 500
+        outcome: >-
+          Your envoys carry both reports to Beijing. The Ming ministers thank you for the news,
+          say little, and wait to see what Hideyoshi does. You have a friend's attention, and
+          no new walls.
     history: >-
       The envoys of 1590-91 gave contradictory reports; the court, dominated by Easterners,
       accepted Kim Seong-il's reassurance.
@@ -197,7 +226,7 @@ chapters:
           The first turtle ship fires its cannon in a trial on the twelfth day of the fourth
           month of 1592. The next day, the Japanese fleet appears off Busan.
         deeds: {ships: 30}
-      - label: "Tell him to stop wasting money"
+      - label: "Tell him to drill with the ships he has"
         wealth_bp: 500
         outcome: >-
           Yi obeys, and keeps drilling his men on the ships he has.
@@ -210,6 +239,13 @@ chapters:
           Yi's turtle ships move without oars or wind, against any tide. No Japanese ship will be
           able to escape them.
         deeds: {ships: 50}
+      - label: "Fund a bigger fleet of ordinary warships"
+        materials_bp: -800
+        legitimacy_bp: 400
+        outcome: >-
+          The shipyards of Jeolla turn out more of the usual panokseon, the high-sided Korean
+          warship with its cannon. There is no turtle ship in the fleet when the Japanese come.
+        deeds: {ships: 25}
     history: >-
       Yi Sun-sin took command of the Jeolla Left Navy in 1591 and built the first turtle ships
       (geobukseon); his diary records a gunnery trial on 12 April 1592 (lunar), one day before
@@ -236,7 +272,7 @@ chapters:
       Japanese on the open plain at Chungju, with the river behind him, so that his men cannot
       run away.
     choices:
-      - label: "Let Sin Rip fight at Chungju - and leave Hanyang"
+      - label: "Let Sin Rip fight on the plain at Chungju"
         historical: true
         legitimacy_bp: -3000
         unrest_bp: 3000
@@ -254,6 +290,14 @@ chapters:
           Your army blocks the Bird Pass in the mountains, where muskets are less use than
           rocks. The Japanese take Gyeongsang, but not Hanyang - not this summer.
         deeds: {give: [c_gyeongsang]}
+      - label: "Hold the walls of Hanyang with its garrison"
+        legitimacy_bp: -1000
+        unrest_bp: 1000
+        outcome: >-
+          The capital garrison is mostly clerks, boys and levies who have never drawn a bow in
+          anger. Officers slip away at night, the Japanese close in, and the walls are in the
+          wrong place to stop muskets. The countryside south of the river is already lost.
+        deeds: {men: 10000, give: [c_gyeongsang]}
     history: >-
       The Japanese invasion began on 23 May 1592 (14th day, 4th month); Sin Rip was defeated
       at Chungju, and Seonjo fled Hanyang, eventually to Uiju. Hanyang fell on 12 June.
@@ -279,7 +323,7 @@ chapters:
 
       Yi wants to draw them out into open water off Hansan island.
     choices:
-      - label: "Lure them out, and close the crane's wing"
+      - label: "Lure them out into open water"
         historical: true
         legitimacy_bp: 3000
         outcome: >-
@@ -289,10 +333,20 @@ chapters:
           supplies by sea up the western coast. The invasion stalls at Pyongyang.
         deeds: {ships: 20, martial_bp: 1000}
       - label: "Fight them in the strait"
-        legitimacy_bp: 1000
+        legitimacy_bp: 1500
+        unrest_bp: 500
         outcome: >-
           It is a hard fight in close water, and the turtle ships are the stars of it. Both
-          fleets limp home.
+          fleets limp home, and you need new ships.
+        deeds: {ships: 10}
+      - label: "Seal the strait and starve them out"
+        legitimacy_bp: 3000
+        food_bp: -500
+        outcome: >-
+          Yi's ships hold the mouth of the strait and the Japanese sit inside it for weeks,
+          eating their stores. Some break out at night and the blockade is thin in places, but
+          the Japanese fleet has been shut in and does not sail up the coast.
+        deeds: {men: 3000}
     history: >-
       At Hansan island (14 August 1592) Yi Sun-sin's 'crane wing' formation destroyed Wakisaka's
       fleet, cutting the Japanese sea supply line along the west coast.
@@ -319,7 +373,7 @@ chapters:
 
       Li Rusong wants Korean guides and Korean grain. His soldiers are taking it anyway.
     choices:
-      - label: "Give the Ming everything they ask"
+      - label: "Open the granaries to the Ming army"
         historical: true
         food_bp: -3000
         legitimacy_bp: 1500
@@ -335,6 +389,14 @@ chapters:
         outcome: >-
           The Ming army waits at Pyongyang. The righteous armies fight on.
         deeds: {take: [c_pyongan]}
+      - label: "Share the grain and put Korean officers beside Li Rusong"
+        food_bp: -2000
+        legitimacy_bp: 1000
+        outcome: >-
+          Li Rusong takes the grain and tolerates the Korean officers at his elbow, and they
+          learn his guns. The Ming march south more slowly and less happily than they would
+          have done. The righteous armies are glad of friends in the headquarters.
+        deeds: {men: 8000}
     history: >-
       Ming troops under Li Rusong retook Pyongyang in February 1593; after Byeokjegwan and
       Gwon Yul's victory at Haengju, the Japanese evacuated Hanyang in May 1593.
@@ -377,6 +439,13 @@ chapters:
         outcome: >-
           Yi obeys. The Japanese fleet sails up the west coast unopposed.
         deeds: {give: [c_jeolla]}
+      - label: "Add every fishing boat on the coast to his fleet"
+        legitimacy_bp: 2500
+        outcome: >-
+          Boats of every size are sent to Yi, with their fishermen to row them. They look like a
+          great fleet from the shore. In the strait the untrained crews break at the first
+          volley and Yi's warships carry the fight with heavy losses.
+        deeds: {ships: 15}
     history: >-
       At Myeongnyang (26 October 1597) Yi Sun-sin's 13 ships defeated a Japanese fleet of over
       a hundred in a narrow tidal strait.
@@ -397,7 +466,7 @@ chapters:
       at Suncheon and has bribed the Ming admiral to let him sail away. Yi Sun-sin will not let
       him. A great Japanese fleet is coming to rescue him through the Noryang strait.
     choices:
-      - label: "Fight the last battle"
+      - label: "Meet the relief fleet in the strait"
         historical: true
         legitimacy_bp: 2500
         outcome: >-
@@ -407,12 +476,21 @@ chapters:
           until the battle is won. The Japanese are gone from Korea. Hanyang's palaces are ashes,
           and a third of the farmland lies waste.
         deeds: {take: [c_gyeongsang, c_jeolla]}
-      - label: "Let them go home"
-        legitimacy_bp: 500
+      - label: "Let Konishi's fleet sail home"
+        legitimacy_bp: 2700
         outcome: >-
-          The Japanese sail home, and Yi Sun-sin lives. He is still alive when the court next
+          The war is ended without another battle and the people are glad of it. The Japanese
+          sail home, and Yi Sun-sin lives. He is still alive when the court next
           decides it is jealous of him.
         deeds: {take: [c_gyeongsang]}
+      - label: "Besiege Suncheon from land and sea"
+        legitimacy_bp: 1000
+        food_bp: -1000
+        outcome: >-
+          Yi and the Ming land force press Konishi's camp at Suncheon while the rescue fleet
+          is still at sea. The siege is slow and costly, and the relief force arrives before it
+          is finished.
+        deeds: {men: 8000}
     history: >-
       At Noryang (16 December 1598) Yi Sun-sin destroyed much of the withdrawing Japanese fleet
       and was killed by a bullet; his last words are recorded by his nephew.

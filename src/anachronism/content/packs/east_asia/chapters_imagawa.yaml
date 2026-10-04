@@ -29,9 +29,9 @@ chapters:
       Your vanguard has taken the border forts of Marune and Washizu, with your young hostage
       vassal Matsudaira Motoyasu in the van. Now you are camped in a narrow, wooded gorge
       called Okehazama, where the local people have brought you gifts of sake and the heads of
-      the enemy have been laid out for your inspection. The sky to the west is turning black.
+      the enemy have been laid out for your inspection. The afternoon is hot and heavy.
     choices:
-      - label: "Rest the army in the gorge, and enjoy the victory"
+      - label: "Rest the army in the gorge"
         historical: true
         legitimacy_bp: -3000
         outcome: >-
@@ -41,11 +41,18 @@ chapters:
           your head. Your army, ten times as large, turns and runs for home. Your son Ujizane
           inherits a house that has lost its best generals in one afternoon.
         deeds: {ruler_falls: "is killed at Okehazama"}
-      - label: "Move on at once, and leave the gorge before dark"
+      - label: "Press on past the gorge before dark"
         legitimacy_bp: 500
+        unrest_bp: 500
         outcome: >-
           Your army is clear of the gorge when the rain begins. Nobunaga's attack falls on empty
           ground, and the road to Kyoto stays open.
+      - label: "Entrench the camp and send out scouts"
+        legitimacy_bp: 500
+        materials_bp: -500
+        outcome: >-
+          Your scouts find Nobunaga's men moving in the hills, and the camp is ready when the
+          storm breaks. The march to Kyoto is delayed, and the army grows restless.
     history: >-
       On 12 June 1560 (Eiroku 3) Oda Nobunaga surprised Imagawa Yoshimoto's camp at Okehazama
       in a storm and killed him; his son Ujizane succeeded.
@@ -72,7 +79,7 @@ chapters:
       father-in-law Sekiguchi Chikanaga, who has not been heard to condemn him. Your elders
       say that they should be made an example.
     choices:
-      - label: "Punish the family, and keep the hostages"
+      - label: "Make an example of the family"
         historical: true
         legitimacy_bp: -1500
         unrest_bp: 500
@@ -82,13 +89,21 @@ chapters:
           children, who go home. In 1562 he and Nobunaga swear an alliance at Kiyosu, and
           Mikawa is lost to you for good. He takes a new name: Ieyasu.
         deeds: {give: [j_mikawa], grudges: {oda: 500}}
-      - label: "Send the army to Mikawa"
+      - label: "Send the army to retake Mikawa"
         legitimacy_bp: 500
         unrest_bp: 1000
         food_bp: -1000
         outcome: >-
           Your army fights through a hard summer, and in the end Mikawa remains as before, and
           so does Motoyasu.
+        deeds: {men: 8000}
+      - label: "Trade the hostages for terms"
+        legitimacy_bp: -1000
+        wealth_bp: -500
+        outcome: >-
+          You send the family home to Okazaki in exchange for a truce. Motoyasu keeps Mikawa,
+          and your elders say you have given away what the sword could have kept.
+        deeds: {give: [j_mikawa]}
     history: >-
       Matsudaira Motoyasu (Ieyasu) broke from the Imagawa in 1561, retook Mikawa and allied
       with Nobunaga in 1562; Ujizane punished his wife's family and later exchanged the
@@ -127,9 +142,16 @@ chapters:
           found other roads, and a reason for his own invasion.
         deeds: {grudges: {takeda: 2000}}
       - label: "Keep the salt roads open"
-        legitimacy_bp: -500
+        wealth_bp: 500
         outcome: >-
-          Shingen thanks you, and his agents go on mapping your passes.
+          Shingen thanks you, and his agents go on mapping your passes. The salt merchants
+          of Suruga grow rich.
+      - label: "Ask the Hojo to mediate"
+        legitimacy_bp: 500
+        wealth_bp: -500
+        outcome: >-
+          Odawara sends envoys to Kai, and Shingen receives them politely and answers with
+          delays. Your Hojo kinsmen are not pleased to be used as messengers.
     history: >-
       In 1567 the Imagawa (and Hojo) cut off salt to the Takeda, after the break between
       Shingen and Ujizane; the story of Kenshin sending salt to his enemy is a later tale.
@@ -157,7 +179,7 @@ chapters:
       On the morning of the fight, twenty-one of your commanders, long bribed by Shingen's
       letters, lead their men away from you. You have too few to hold the pass.
     choices:
-      - label: "Fall back on Sunpu, and then flee to Kakegawa"
+      - label: "Fall back on Sunpu"
         historical: true
         legitimacy_bp: -2500
         unrest_bp: 2000
@@ -168,8 +190,16 @@ chapters:
         deeds: {grudges: {takeda: 1000}}
       - label: "Ask Shingen for terms"
         legitimacy_bp: -1500
+        wealth_bp: -500
         outcome: >-
           Shingen's envoy takes your message and sends back a demand for your lands.
+      - label: "Stand at the pass with the men who remain"
+        legitimacy_bp: -1000
+        unrest_bp: 1000
+        outcome: >-
+          Your loyal men hold the pass for a morning against twice their number, and are
+          swept away by noon.
+        deeds: {men: 3000}
     history: >-
       In December 1568 Shingen invaded Suruga; more than twenty Imagawa retainers defected and
       Ujizane fled to Kakegawa.
@@ -211,6 +241,12 @@ chapters:
         unrest_bp: 2000
         outcome: >-
           Your garrison starves for another month, and the end comes anyway.
+      - label: "Treat with Ieyasu for a pension"
+        legitimacy_bp: -1500
+        wealth_bp: 500
+        outcome: >-
+          Ieyasu is willing to let you live on a small stipend. Your father-in-law is not
+          pleased, and your captains say you have sold the castle.
     history: >-
       Ujizane surrendered Kakegawa in 1569 and went to the Hojo; Totomi went to Ieyasu and
       Suruga to Shingen.
@@ -238,7 +274,7 @@ chapters:
       Oda Nobunaga, the man whose victory at Okehazama began your fall, is in the capital. He
       has asked whether you would play in front of his guests.
     choices:
-      - label: "Play"
+      - label: "Play before his guests"
         historical: true
         legitimacy_bp: -1000
         outcome: >-
@@ -246,10 +282,16 @@ chapters:
           skilled courtier, and nothing more. In time Ieyasu will give you a pension, and your
           sons will serve the Tokugawa as masters of ceremony. You die in 1615.
         deeds: {ruler_falls: "becomes a courtier and a master of the ball"}
-      - label: "Decline"
+      - label: "Decline politely"
         legitimacy_bp: 500
         outcome: >-
           You excuse yourself on grounds of age, and Nobunaga does not ask again.
+      - label: "Ask him for a small domain"
+        legitimacy_bp: -500
+        wealth_bp: 500
+        outcome: >-
+          Nobunaga listens, smiles, and gives you a courteous refusal and a gift. The
+          court notes that you asked.
     history: >-
       Imagawa Ujizane, landless after 1569, performed kemari before Nobunaga in Kyoto in 1575,
       and later served the Tokugawa; he died in 1615.

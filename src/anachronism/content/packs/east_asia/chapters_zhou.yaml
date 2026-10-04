@@ -36,7 +36,7 @@ chapters:
       the title costs you nothing. But it is also true that once it is given you cannot
       take it back.
     choices:
-      - label: "Confer the title of overlord on Duke Xiao of Qin"
+      - label: "Grant Duke Xiao the overlord's title"
         historical: true
         legitimacy_bp: 300
         influence: {nobility: 300}
@@ -47,11 +47,19 @@ chapters:
           old order looks alive, and the Zhou king has made it so. Whether it has made Qin
           safer or only stronger, nobody at court can tell.
       - label: "Withhold the title"
-        legitimacy_bp: -300
+        legitimacy_bp: 300
+        influence: {nobility: -300}
         outcome: >-
           You let the envoys wait, and they go home with courteous words. Qin does not ask
           twice. Its duke does not forget which courts gave him honour and which did not.
         deeds: {grudges: {qin: 800}}
+      - label: "Send Qin sacrificial meat, and no title"
+        legitimacy_bp: 100
+        wealth_bp: -200
+        outcome: >-
+          The meat from the ancestral sacrifice is a real honour, and Duke Xiao's envoys take it
+          home with polite faces. It is not what they came for, and Qin's court notes the
+          difference.
     history: >-
       In 343 BC King Xian conferred the title of overlord (bo) on Duke Xiao of Qin, and the
       lords sent congratulations (Shiji 4 and 5).
@@ -81,7 +89,7 @@ chapters:
       his roof. The Duke of East Zhou says the king belongs at the heart of the Zhou lands,
       and would be pleased to have the honour at Gong.
     choices:
-      - label: "Live at Wangcheng, in the house of the Duke of West Zhou"
+      - label: "Live at Wangcheng under West Zhou"
         historical: true
         legitimacy_bp: 200
         outcome: >-
@@ -96,6 +104,12 @@ chapters:
           You go to Gong. The Duke of West Zhou keeps his grain, and the quarrel between the
           two houses becomes a quarrel about you. A king without a household of his own
           is welcome nowhere for very long.
+      - label: "Stay in the royal city on both dukes' gifts"
+        legitimacy_bp: -100
+        wealth_bp: -400
+        outcome: >-
+          You keep your own poor house, and each duke sends a little to show he is not the
+          other's servant. Winter comes, and the gifts come late.
     history: >-
       The Shiji says that in King Nan's time East and West Zhou governed separately and that
       the king moved his seat to West Zhou (Wangcheng), the lord of whom he depended on.
@@ -106,7 +120,7 @@ chapters:
     civ: zhou
     year: -308
     until_year: -300
-    title: "The King Who Wished to See the Cauldrons"
+    title: "Qin at Yiyang"
     place: "Luoyang"
     speaker: steward
     speaker_name: "Your chamberlain"
@@ -125,7 +139,7 @@ chapters:
       Yiyang, the great Han fortress, not a day's march from your gates, and it is said that
       once he has taken it he will come to Luoyang to see the cauldrons for himself.
     choices:
-      - label: "Receive the King of Qin as a guest of the Zhou house"
+      - label: "Receive the King of Qin at Luoyang"
         historical: true
         legitimacy_bp: -200
         outcome: >-
@@ -140,6 +154,12 @@ chapters:
           of Qin will come anyway, and that Yiyang has just fallen to his army. He does not
           take the cauldrons, this time, but he takes note of who refused him.
         deeds: {grudges: {qin: 1200}}
+      - label: "Send gifts to Qin's king instead of a welcome"
+        wealth_bp: -500
+        legitimacy_bp: -100
+        outcome: >-
+          Your envoys carry silk and bronze to Yiyang. Qin's king takes them, and comes to
+          Luoyang all the same.
     history: >-
       Qin took Han's Yiyang in 307 BC, and King Wu of Qin went to Luoyang, where, the Shiji
       says, he tried to lift one of the cauldrons, broke his kneecap and died the same year.
@@ -184,6 +204,13 @@ chapters:
         outcome: >-
           You write to Qin and decline, and the Duke of West Zhou goes ahead without you.
           Qin does not take the difference into account.
+      - label: "Lend the Duke your guard, not your name"
+        legitimacy_bp: 200
+        unrest_bp: 300
+        deeds: {men: 500}
+        outcome: >-
+          The Duke has your household troops and no royal banner. The lords see a small band and
+          a duke, not the Son of Heaven, and Qin hears of it all the same.
     history: >-
       In 256 BC the Duke of West Zhou joined the lords' league, to be used against Qin
       (Shiji 4). Qin's general Jiu attacked West Zhou at once.
@@ -194,7 +221,7 @@ chapters:
     civ: zhou
     year: -256
     until_year: -250
-    title: "The Last Kowtow"
+    title: "Qin at Wangcheng"
     place: "Xianyang"
     speaker: steward
     speaker_name: "The Duke of West Zhou"
@@ -210,7 +237,7 @@ chapters:
       Zhou. The house that conquered Shang eight and a half centuries ago will go to the
       King of Qin with its hands empty. The Nine Cauldrons are in the treasury and Qin knows it.
     choices:
-      - label: "Surrender the towns and the people, and go to Xianyang"
+      - label: "Give up the towns and go to Xianyang"
         historical: true
         legitimacy_bp: -3000
         unrest_bp: 1000
@@ -229,6 +256,12 @@ chapters:
           You hold Wangcheng for the days it takes the lords to refuse. The wall is old, and
           Qin's engineers are not.
         deeds: {grudges: {qin: 1500}}
+      - label: "Offer the towns, and keep the Cauldrons"
+        legitimacy_bp: -2000
+        unrest_bp: 500
+        outcome: >-
+          Your envoy offers the towns and people and says nothing of the treasure-house. Qin's
+          general answers that he will take the whole of it.
     history: >-
       In 256 BC Qin took West Zhou: its duke gave up thirty-six towns and thirty thousand
       people, King Nan died that year, and Qin carried off the Nine Cauldrons. The Zhou
@@ -256,7 +289,7 @@ chapters:
       East Zhou, which has the ancestral temples, should be at their table. Others say that
       a house that has lost its king and its treasure should keep quiet and keep its temples.
     choices:
-      - label: "Join the lords in their plots against Qin"
+      - label: "Join the lords against Qin"
         historical: true
         legitimacy_bp: 300
         outcome: >-
@@ -270,6 +303,12 @@ chapters:
         legitimacy_bp: -300
         outcome: >-
           You write to nobody. The rites go on at Gong in a thin way, as before.
+      - label: "Send gifts and an envoy to Qin's new king"
+        legitimacy_bp: 100
+        wealth_bp: -300
+        outcome: >-
+          Qin's court receives the envoy and the gifts without warmth. Gong is watched, and the
+          lords' plots go on without you.
     history: >-
       In 249 BC East Zhou plotted with the lords, and Qin's chancellor Lu Buwei destroyed it
       and took all its land; Qin kept the sacrifices going on a small estate at Yangren, and

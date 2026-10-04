@@ -41,11 +41,18 @@ chapters:
           and attacked Chu instead. King Wei of Chu rises to meet you.
         deeds: {grudges: {chu: 1500}}
       - label: "Attack Qi as you had planned"
-        legitimacy_bp: 100
+        legitimacy_bp: 300
         outcome: >-
-          You send the envoy home. Qi's king is not pleased, and the road to the north is
-          long. Chu watches the quarrel with interest.
-        deeds: {grudges: {qi: 800}}
+          You send the envoy home and send eight thousand men north. Qi's king is not pleased,
+          and the road to the north is long. Chu watches the quarrel with interest.
+        deeds: {men: 8000, grudges: {qi: 800}}
+      - label: "Keep out, and build the fleet"
+        legitimacy_bp: 300
+        wealth_bp: -600
+        outcome: >-
+          You thank the envoy, give him gifts, and go back to your shipyards. Qi and Chu are
+          left to their own quarrels, and your ships grow more numerous.
+        deeds: {ships: 20}
     history: >-
       King Wujiang of Yue was persuaded by an envoy of King Wei of Qi to attack Chu rather
       than Qi (Shiji 41; the exact year is debated).
@@ -84,6 +91,15 @@ chapters:
           You pull back to Kuaiji and send gifts. Chu takes the lands of Wu and does not
           pursue you into the south.
         deeds: {give: [yue_wu], give_to: chu, peace_with: [chu]}
+      - label: "Fight from the rivers and marshes"
+        legitimacy_bp: -1000
+        unrest_bp: 800
+        wealth_bp: -1500
+        outcome: >-
+          You pull the army back into the water country, where Chu's heavy columns cannot
+          follow easily, and fight from your boats. It is a long and costly war and the fields
+          of Wu are burned.
+        deeds: {martial_bp: -800}
     history: >-
       King Wei of Chu defeated Yue and killed King Wujiang, seizing the old land of Wu
       (Shiji 41). The date is traditionally about 334-333 BC; some historians put it later.
@@ -123,6 +139,14 @@ chapters:
         outcome: >-
           You keep the title, and the title brings a Chu army to ask for it.
         deeds: {grudges: {chu: 1500}}
+      - label: "Sail south with the clan to the Min coast"
+        legitimacy_bp: -300
+        wealth_bp: -500
+        outcome: >-
+          You load the clan's household, shrine vessels and ships and sail south, far from
+          Chu. The Min coast is poor and its tribes are strangers, but nobody follows you
+          there.
+        deeds: {ships: 15}
     history: >-
       After Wujiang's death the clan of Yue split; the Shiji says that some took the title of
       king and some of lord, along the Yangtze's south and the sea coast, and paid court to
@@ -158,12 +182,18 @@ chapters:
           allowed to stand. The clan's lords withdraw to the south, among the mountains.
         deeds: {ruler_falls: "submits to Qin"}
       - label: "Retreat into the mountains"
-        legitimacy_bp: -500
-        unrest_bp: 500
+        legitimacy_bp: -1200
+        wealth_bp: -500
         outcome: >-
           You leave the coast to the Qin army and go south with the clan, to the mountains of
-          Min. The Qin army does not follow far.
+          Min. The Qin army does not follow far, and the coast's wealth is left behind.
         deeds: {ruler_falls: "withdraws to the mountains of Min"}
+      - label: "Give battle at the river crossing"
+        legitimacy_bp: -1800
+        outcome: >-
+          Your boats and archers hold the crossing for a few days. Qin's crossbows and numbers
+          tell, and the clan's lords pay for the stand.
+        deeds: {men: 12000}
     history: >-
       In 222 BC Wang Jian settled Chu's lands south of the Yangtze, received the surrender of
       the lord of Yue and set up Kuaiji commandery (Shiji 6).
@@ -191,7 +221,7 @@ chapters:
       Xiang Yu is the real master of the rebellion, and your kinsman says that Xiang Yu is
       not a man who shares his titles.
     choices:
-      - label: "Lead the Yue to join the Lord of Po against Qin"
+      - label: "Join the Lord of Po against Qin"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
@@ -203,6 +233,14 @@ chapters:
         outcome: >-
           You keep your people home. The war goes on without you, and when it is over nobody
           owes you a title.
+      - label: "Raise the Yue for yourself, and take the coast"
+        legitimacy_bp: 1000
+        wealth_bp: 600
+        unrest_bp: 800
+        outcome: >-
+          You raise the clans of the coast under your own banner and drive out the Qin
+          officials. You have a little kingdom and a large number of rivals.
+        deeds: {men: 8000}
     history: >-
       Wuzhu and Yao, descended from Goujian, were demoted by Qin to chiefs and joined the Lord
       of Po in the rebellion against Qin. Xiang Yu, in charge of the new titles, did not make
@@ -241,6 +279,13 @@ chapters:
           emperor does not reply. You are given the same Minzhong in the end, but the clan has
           lost a little of its favour.
         deeds: {take: [min_yue]}
+      - label: "Take Minzhong and call yourself king before Han names you"
+        legitimacy_bp: 1800
+        wealth_bp: 300
+        outcome: >-
+          You take the old land of Minzhong, declare yourself its king and send word to Han
+          afterwards. Han's court is not pleased, but is not in a position to argue.
+        deeds: {take: ["min_yue"], men: 6000, grudges: {han: 1500}}
     history: >-
       In 202 BC (the fifth year of the Han reign) Gaozu restored Wuzhu as King of Minyue,
       ruling the old Minzhong country from Ye (Shiji 114). Minyue lasted until Han Wudi ended

@@ -35,7 +35,7 @@ chapters:
       Yanqi in the west to Korea in the east, and from the Gobi in the south to the Han Sea in
       the north. You have been a chief among chiefs. Your men say it is time to be more.
     choices:
-      - label: "Take the title of khagan, and drill the army in thousands and hundreds"
+      - label: "Take the title of khagan, and drill the army"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: -500
@@ -49,8 +49,28 @@ chapters:
         deeds: {martial_bp: 1000}
       - label: "Stay a chief, and send tribute to the Wei"
         legitimacy_bp: -500
+        wealth_bp: -800
         outcome: >-
-          Tuoba Gui accepts your gifts. You have bought a few years, and you are his dog.
+          Tuoba Gui accepts your gifts. You have bought a few years of quiet, and the other
+          chiefs wonder whom you serve.
+        deeds: {peace_with: ["northern_wei"]}
+      - label: "Take the title, and raid the Wei frontier"
+        legitimacy_bp: 1200
+        wealth_bp: 1000
+        unrest_bp: 300
+        outcome: >-
+          You are acclaimed khagan on the grass and send your riders down on the Wei's border
+          towns. They come home with herds and silk, and the Wei begin to count the cost of
+          leaving you alone.
+        deeds: {men: 10000}
+      - label: "Rule through a council of tribal chiefs"
+        legitimacy_bp: 1000
+        wealth_bp: 600
+        influence: {nobility: 800}
+        outcome: >-
+          You keep the name of chief but sit at the head of a council of the tribal leaders,
+          who pay in men and horses. The arrangement is strong while they agree.
+        deeds: {martial_bp: 500}
     history: >-
       Yujiulü Shelun united the tribes of the northern steppe and took the title Qiudoufa
       Khagan in 402, organising his army by thousands and hundreds; he died in 410.
@@ -90,9 +110,18 @@ chapters:
           with what he has found.
         deeds: {peace_with: [northern_wei], grudges: {northern_wei: 800}}
       - label: "Storm the camp"
-        legitimacy_bp: 300
+        legitimacy_bp: -500
+        unrest_bp: 1000
         outcome: >-
           Your riders break against a camp that is ready for them, and many do not come back.
+        deeds: {men: 10000, martial_bp: 500}
+      - label: "Offer the boy emperor terms, and ride home"
+        legitimacy_bp: -300
+        wealth_bp: -1200
+        outcome: >-
+          You send an envoy into the ring with an offer of terms and ride home with whatever
+          gifts the Wei will give you. The Wei remember that you let them go.
+        deeds: {peace_with: ["northern_wei"]}
     history: >-
       In 424 the Rouran surrounded the young Emperor Taiwu of Wei at Shengle; their commander
       was killed by an archer and they withdrew. Taiwu attacked them across the Gobi in 425.
@@ -130,9 +159,21 @@ chapters:
           submitted. You burn your own tents and flee west, and soon after you are dead, the sources say, from rage. Your son Wuti takes the title.
         deeds: {peace_with: [northern_wei]}
       - label: "Stand and fight"
-        legitimacy_bp: -1500
+        legitimacy_bp: -2500
+        wealth_bp: -1000
         outcome: >-
-          You fight, and you lose. The Wei have more horses than you thought.
+          You fight, and you lose. The Wei have more horses than you thought, and your own
+          best riders are lost.
+        deeds: {martial_bp: -1500}
+      - label: "Scatter the tribes in small bands across the north"
+        legitimacy_bp: -2000
+        wealth_bp: -1500
+        unrest_bp: 1000
+        outcome: >-
+          You send the tribes off in small bands in every direction, to meet again later. The
+          Wei can catch few of them, but you have no army left, and the khagan's name means
+          little to bands that do not see him.
+        deeds: {martial_bp: -800}
     history: >-
       In the summer of 429 Taiwu led two armies across the Gobi against the Rouran, who were
       caught unprepared. Datan fled and died soon after; his son Wuti succeeded him.
@@ -161,7 +202,7 @@ chapters:
       Your herds are in the shelter of the hills. A hard winter is a good time for a
       hunter, and a bad time for a hunted man.
     choices:
-      - label: "Slip away north, and refuse battle"
+      - label: "Slip away north without battle"
         historical: true
         legitimacy_bp: -300
         outcome: >-
@@ -169,10 +210,19 @@ chapters:
           saved the herds, but in the autumn of 449 a Wei general, Tuoba Na, falls on your
           camps, and does you heavy harm. For some years you do not raid the border.
         deeds: {peace_with: [northern_wei]}
-      - label: "Stand and give battle"
+      - label: "Stand and give the Wei battle"
         legitimacy_bp: -1000
+        food_bp: -1500
         outcome: >-
           You fight the Wei emperor on his own terms, and the herds pay for it.
+        deeds: {martial_bp: -800}
+      - label: "Buy the emperor off with tribute"
+        legitimacy_bp: 300
+        wealth_bp: -400
+        outcome: >-
+          Your envoys ride south through the snow with horses and furs. Taiwu takes them and
+          turns for home, but your own men see how it was done.
+        deeds: {peace_with: ["northern_wei"]}
     history: >-
       In the winter of 448 and spring of 449 Taiwu and Crown Prince Huang attacked the Rouran,
       but Tuhezhen eluded them; in the autumn of 449 the Wei general Tuoba Na inflicted heavy
@@ -203,17 +253,24 @@ chapters:
       about to make a dynasty of his own. Xiao Daocheng proposes that you and he attack the
       Wei together, from north and south.
     choices:
-      - label: "Make the alliance with Xiao Daocheng"
+      - label: "Ally with Xiao Daocheng against Wei"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
           You agree, and the Qi shu says that you sent a great army against the Wei. In
           fact nothing much comes of it, and the Wei hold. In 485 you will have one of the envoys of Southern Qi, as Xiao Daocheng's dynasty is called, killed for not kneeling to you. A khaganate can be proud.
         deeds: {grudges: {northern_wei: 500}}
-      - label: "Keep out of it"
-        legitimacy_bp: 200
+      - label: "Stay out of the southern quarrel"
+        legitimacy_bp: 700
         outcome: >-
-          The envoy goes home. The Wei have an easier time of it.
+          The envoy goes home. The Wei have an easier time of it, and you keep your strength
+          for the steppe.
+      - label: "Turn west, and take tribute from the oasis cities"
+        legitimacy_bp: 900
+        wealth_bp: 1200
+        outcome: >-
+          Your riders ride west to the oasis cities, whose kings send horses, jade and silk.
+          The Wei are not troubled for the moment, and the road west is yours.
     history: >-
       Yucheng agreed to an alliance with Xiao Daocheng, the future Emperor Gao of Southern
       Qi, against Northern Wei (late 470s); little came of it. In 485 he died and was
@@ -241,7 +298,7 @@ chapters:
       The Wei, over the Gobi, are no friends of yours. But the Wei court at Luoyang will
       take in a refugee khagan, and may find it useful to have one who owes them his life.
     choices:
-      - label: "Ride south to the Wei emperor, and ask for help"
+      - label: "Ride south, and ask the Wei for help"
         historical: true
         legitimacy_bp: -500
         outcome: >-
@@ -251,9 +308,16 @@ chapters:
           you hold the north. You will rule for thirty years, and the Wei will be glad of you
           when their own garrisons rise in the north.
       - label: "Flee west to the Gaoche"
-        legitimacy_bp: -1000
+        legitimacy_bp: -300
         outcome: >-
           The Gaoche give you shelter, and a price. You will be a long time getting home.
+      - label: "Gather your retainers in the hills, and fight on"
+        legitimacy_bp: -700
+        unrest_bp: 500
+        outcome: >-
+          You gather the men who are still loyal in the hills and raid your cousin's camps.
+          You win some small fights and lose others, and the winter is hard.
+        deeds: {men: 5000}
     history: >-
       After Chounu was killed in 520, Anagui was defeated by a cousin within ten days and fled
       to Northern Wei; with Wei help he returned in 521 and ruled the Rouran until 552.
@@ -280,7 +344,7 @@ chapters:
 
       The Zhou shu says that you gave this answer. You can still change it.
     choices:
-      - label: "Refuse: \"You are my blacksmith slave\""
+      - label: "Refuse the marriage with scorn"
         historical: true
         legitimacy_bp: -2500
         unrest_bp: 2000
@@ -291,10 +355,19 @@ chapters:
           Tumen takes the title Illig Khagan, and the Türk khaganate, which will be bigger than
           yours, begins. Tiefa tries to hold the east, and Dengshuzi the west, but in a few years the Rouran will be gone from the steppe.
         deeds: {ruler_falls: "is beaten by Tumen and takes his own life"}
-      - label: "Grant the marriage"
-        legitimacy_bp: -800
+      - label: "Grant him the marriage and a dowry"
+        legitimacy_bp: -1500
+        wealth_bp: -1500
         outcome: >-
-          Tumen has a princess and a claim. He will want something more, and not long after.
+          Tumen has a princess, a dowry and a claim. He will want something more, and not long
+          after.
+      - label: "Strike first, before the Türks grow"
+        legitimacy_bp: -1200
+        unrest_bp: 1500
+        outcome: >-
+          You send your best horsemen against Tumen's camps in the Altai. They fight well, but
+          Tumen has the Tiele households and his smiths, and the war is no easy one.
+        deeds: {men: 20000}
     history: >-
       Tumen of the Türks, refused a Rouran bride with insults, allied with Western Wei, defeated
       Anagui in early 552 and took the title Illig Khagan; Anagui killed himself.

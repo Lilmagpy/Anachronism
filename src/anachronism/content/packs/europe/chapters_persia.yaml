@@ -28,18 +28,25 @@ chapters:
       Now Bagoas has brought you a cup of wine with his own hands, and is watching you very
       closely. Your physician, standing behind him, has gone pale.
     choices:
-      - label: "Hand Bagoas the cup, and make him drink it"
+      - label: "Make Bagoas drink the cup first"
         historical: true
         legitimacy_bp: 2500
         influence: {nobility: 1500}
         outcome: >-
           You thank Bagoas warmly for his loyalty, and insist that he drink first, as an
           honour. He drinks, and dies. The court learns that the new king is no one's puppet.
-      - label: "Pour it out, and keep Bagoas close"
+      - label: "Pour it out and keep Bagoas close"
         legitimacy_bp: 500
         outcome: >-
           Bagoas watches the wine soak into the carpet and smiles. You will have to watch every
           cup for the rest of your reign.
+      - label: "Exile Bagoas by royal decree"
+        legitimacy_bp: 2000
+        influence: {nobility: -1000}
+        outcome: >-
+          You summon the court and read the decree yourself: Bagoas goes to a distant estate.
+          The court sees a king who rules, and his friends among the nobles are bitter. You
+          will have to watch the roads for the next knife.
     history: >-
       Diodorus says the eunuch Bagoas poisoned Artaxerxes III (338 BC) and Arses (336), made
       Darius III king, and tried to poison him in turn, but was forced by Darius to drink the
@@ -74,7 +81,7 @@ chapters:
       people be burned. The other satraps agree: they suspect Memnon wants the war to last
       so that he stays important.
     choices:
-      - label: "Let the satraps fight at the Granicus"
+      - label: "Let the satraps meet him at the river"
         historical: true
         legitimacy_bp: -2000
         outcome: >-
@@ -92,6 +99,13 @@ chapters:
           with nothing to eat, and turns back to the Hellespont before the summer is out.
           Memnon's ships sail for Greece with Persian gold.
         deeds: {war_with: [macedon], grudges: {macedon: 1000}}
+      - label: "Fall back inland to Sardis and hold the cities"
+        legitimacy_bp: -1000
+        outcome: >-
+          The satraps draw back from the coast and garrison the walled cities. Alexander takes
+          the open country of Ionia without a battle and settles down to besiege the towns one
+          by one. Every city that holds out for him costs a month.
+        deeds: {men: 8000, give: [a3_ionia], give_to: macedon}
     history: >-
       At Zeleia in 334 BC the satraps rejected Memnon's scorched-earth plan and fought at the
       Granicus, where they were defeated. Arrian reports the debate.
@@ -119,19 +133,29 @@ chapters:
       on the war at sea. Your generals want the Greek mercenaries brought back to join the
       royal army, which you will lead yourself.
     choices:
-      - label: "Recall the mercenaries; the king will fight himself"
+      - label: "Recall the mercenaries to the royal army"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
           The mercenaries march east to join the great army gathering at Babylon. The war at
           sea fizzles out. Everything now depends on one battle.
         deeds: {men: 30000}
-      - label: "Give Pharnabazus the fleet and the gold, and carry the war to Greece"
-        wealth_bp: -3000
+      - label: "Give Pharnabazus the fleet and the gold"
+        wealth_bp: -1000
+        legitimacy_bp: 1500
         outcome: >-
-          Persian ships land Spartan and Athenian exiles in the Peloponnese. Antipater, ruling
-          Macedon while Alexander is away, has a war at home.
+          Persian ships land Spartan and Athenian exiles in the Peloponnese, and the gold you
+          spend there is soon missed. Antipater, ruling Macedon while Alexander is away, has a
+          war at home.
         deeds: {grudges: {macedon: 2000}}
+      - label: "Send half the mercenaries east and keep half with the fleet"
+        legitimacy_bp: 800
+        wealth_bp: -300
+        outcome: >-
+          Fifteen thousand Greeks march to Babylon and the rest stay with Pharnabazus's ships.
+          Neither force is as strong as it was, and the coast of Greece is raided on a smaller
+          scale than Memnon planned.
+        deeds: {men: 15000}
     history: >-
       Memnon died in 333 BC while besieging Mytilene. Darius recalled the Greek mercenaries to
       the royal army; the naval counter-offensive faded.
@@ -160,7 +184,7 @@ chapters:
       Amyntas, a Macedonian exile who knows Alexander, begs you to wait. He will come, he
       says. And when he does, he will want to fight you here, where the ground suits you.
     choices:
-      - label: "March to find him, through the mountains to Issus"
+      - label: "March through the mountains to find him"
         historical: true
         legitimacy_bp: -2500
         unrest_bp: 1500
@@ -185,6 +209,14 @@ chapters:
           When the Companions charge, your guns fire grape shot at a hundred paces. The charge
           dissolves; Alexander is carried from the field. His army falls back to Cilicia.
         deeds: {grudges: {macedon: 3000}}
+      - label: "Withdraw behind the Euphrates and let him come"
+        legitimacy_bp: -1000
+        unrest_bp: 500
+        outcome: >-
+          You give up Cilicia and draw the army back into Syria and Mesopotamia, where the
+          roads are long and the grain is yours. Your courtiers call it flight. Alexander takes
+          the passes, and must follow you.
+        deeds: {give: [a3_cilicia], give_to: macedon}
     history: >-
       Darius left the open plain at Sochoi against Amyntas's advice and met Alexander at Issus
       in November 333 BC, where he was defeated and his family captured.
@@ -214,7 +246,7 @@ chapters:
       Now your council proposes a greater offer: ten thousand talents, your daughter's hand,
       and everything west of the Euphrates. Half the empire.
     choices:
-      - label: "Make the offer"
+      - label: "Offer the lands west of the Euphrates"
         historical: true
         legitimacy_bp: -1000
         outcome: >-
@@ -228,6 +260,14 @@ chapters:
           The horsemen of Bactria, Sogdia and the Saka steppe are called to Babylon. You order
           scythed chariots and send to India for elephants.
         deeds: {men: 50000}
+      - label: "Offer ten thousand talents for the prisoners alone"
+        wealth_bp: -1500
+        legitimacy_bp: 300
+        outcome: >-
+          Alexander takes the ransom as an insult, since it asks for nothing but his mercy.
+          The prisoners stay where they are, and you pay nothing. Your army, which has begun to
+          gather east of the Tigris, is a little larger for the delay.
+        deeds: {men: 20000}
     history: >-
       Darius made at least two peace offers after Issus, including the lands west of the
       Euphrates; Alexander refused them.
@@ -267,12 +307,19 @@ chapters:
           Hector. Egypt opens its gates to Alexander without a fight.
         deeds: {give: [a3_phoenicia, a3_judea, a3_egypt, a3_upper_egypt], give_to: macedon}
       - label: "Send the satrap of Egypt's army to relieve Gaza"
-        food_bp: -1500
-        legitimacy_bp: 500
+        food_bp: -500
+        legitimacy_bp: 1000
         outcome: >-
           Mazaces marches out of Egypt with every man he has. Gaza holds; Egypt is left empty,
           and its people, who hate Persian rule, rise.
         deeds: {give: [a3_phoenicia, a3_egypt], give_to: macedon}
+      - label: "Pull the garrison back to Pelusium and hold Egypt's gate"
+        legitimacy_bp: 500
+        outcome: >-
+          Batis is ordered back across the desert with what he can carry. Gaza falls quickly to
+          Alexander. At Pelusium you hold a fortified line, and the Phoenician coast is left to
+          its fate.
+        deeds: {men: 8000, give: [a3_phoenicia, a3_judea], give_to: macedon}
     history: >-
       Gaza resisted Alexander for two months in 332 BC; the story of Batis being dragged behind
       a chariot is in Curtius. Egypt's satrap Mazaces then surrendered without fighting.
@@ -328,6 +375,14 @@ chapters:
           come, they fire. The Macedonian charge breaks against smoke and lead, and the
           Macedonians retreat over the Tigris.
         deeds: {grudges: {macedon: 4000}}
+      - label: "Fall back into the hills and refuse battle"
+        legitimacy_bp: -1500
+        outcome: >-
+          Your army breaks camp before dawn and marches for the hills of Media. Alexander walks
+          into the plain you levelled and takes it for himself, and rides on to Babylon with
+          nothing to stop him. The levelled ground, the chariots and the king's name are all
+          wasted.
+        deeds: {men: 10000, give: [a3_assyria, a3_babylonia], give_to: macedon}
     history: >-
       At Gaugamela on 1 October 331 BC Darius's army, kept under arms all night, was broken
       by Alexander's oblique attack; Darius fled to Ecbatana.
@@ -358,7 +413,7 @@ chapters:
       But prisoners say there may be another way round, by a shepherd's path through the
       forest. Ariobarzanes has too few men to guard both.
     choices:
-      - label: "Hold the gates; trust the snow to guard the path"
+      - label: "Hold the gates with every man you have"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -367,11 +422,21 @@ chapters:
           treasury of Persepolis falls, and the palace of your fathers is burned.
         deeds: {give: [a3_persis], give_to: macedon}
       - label: "Send men to guard the shepherd's path"
-        legitimacy_bp: 2000
+        legitimacy_bp: 1500
+        food_bp: -500
         outcome: >-
-          The Macedonians come along the path at night and meet spears in the dark. Alexander
-          has to turn back to the plains. Persepolis is safe this winter.
-        deeds: {grudges: {macedon: 2000}}
+          The Macedonians come along the path at night and meet spears in the dark. The men
+          you took from the gates have left them thin, and Alexander has to turn back to the
+          plains. Persepolis is safe this winter.
+        deeds: {men: 3000, grudges: {macedon: 2000}}
+      - label: "Raise the herdsmen of Persis to watch every path"
+        legitimacy_bp: 1500
+        food_bp: -1000
+        outcome: >-
+          Shepherds and farmers are sent up to the passes with horns and slings. They know the
+          mountains, and some of them know the Lycian shepherd as well. Alexander is slowed
+          but not stopped, and the harvest suffers.
+        deeds: {men: 8000}
     history: >-
       In January 330 BC Ariobarzanes held the Persian Gates until Alexander was guided round
       by a herdsman; Persepolis fell and its palace was burned that spring.
@@ -402,7 +467,7 @@ chapters:
       to your tent in the night. Bessus and Nabarzanes mean to seize you, he says. Come and
       sleep among the Greeks.
     choices:
-      - label: "'I will not trust foreigners over my own Persians'"
+      - label: "Refuse the Greeks and keep to your Persians"
         historical: true
         legitimacy_bp: -1000
         unrest_bp: 2000
@@ -419,6 +484,13 @@ chapters:
           your Greeks and the Bactrian horsemen, and in the mountains of Bactria you begin to
           raise another army. Alexander will have to come a very long way to find you.
         deeds: {men: 15000}
+      - label: "Share the command with Bessus for a while"
+        legitimacy_bp: 500
+        unrest_bp: 500
+        outcome: >-
+          You give Bessus the title of commander in Bactria, and keep the army and the seal.
+          He thanks you warmly and says that he will be your sword. The court wonders how long
+          two men can hold one sword.
     history: >-
       In July 330 BC Bessus and Nabarzanes seized Darius, after he had refused Patron's offer
       of protection, and killed him as Alexander closed in. Bessus was executed in 329.

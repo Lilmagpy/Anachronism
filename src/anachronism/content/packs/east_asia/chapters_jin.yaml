@@ -45,6 +45,15 @@ chapters:
         outcome: >-
           The Song are surprised and grateful, for a while.
         deeds: {peace_with: [southern_song]}
+      - label: "Accept Wu Xi's offer, and take Sichuan"
+        legitimacy_bp: 1200
+        wealth_bp: 2800
+        unrest_bp: 500
+        outcome: >-
+          Wu Xi brings his Sichuan garrisons over to you and the Song are forced to fight in
+          the west as well as on the Huai. Silver and silk follow the peace, though the new
+          province is restless.
+        deeds: {men: 8000, grudges: {southern_song: 2500}}
     history: >-
       The Song's Kaixi war (1206-1208) failed. Han Tuozhou was murdered and his head sent to
       the Jin under the Treaty of Jiading (1208), which raised the Song's annual payments.
@@ -90,6 +99,14 @@ chapters:
         outcome: >-
           Gifts go north to the Onggut, and the armies stay behind city walls. The Mongols ride
           through the countryside unopposed, burning, but the cities hold.
+      - label: "Pull the frontier armies back to the Yellow River"
+        legitimacy_bp: -1500
+        wealth_bp: -500
+        outcome: >-
+          Your frontier garrisons withdraw south and the passes are left to the Mongols. The
+          army is saved for the defence of the river, but the people of the north see their
+          emperor give up the outer wall.
+        deeds: {men: 15000}
     history: >-
       Genghis Khan refused homage to Wanyan Yongji (r. 1208-1213) and invaded in 1211; the
       Jin field army was destroyed at Yehuling (the Badger's Mouth).
@@ -130,6 +147,12 @@ chapters:
         outcome: >-
           Hushahu dies at a banquet. His soldiers riot for three days, and then the Mongols
           come.
+      - label: "Make him commander of the guards only"
+        legitimacy_bp: -300
+        outcome: >-
+          Hushahu takes the palace guard and a share of the Zhongdu garrison, and no more. He
+          accepts it, for the moment, and watches you.
+        deeds: {men: 5000, martial_bp: 300}
     history: >-
       Hushahu (Heshilie Zhizhong) murdered Wanyan Yongji in 1213 and enthroned Xuanzong, who
       made him marshal; he was killed by Zhuhu Gaoqi later that year.
@@ -171,7 +194,16 @@ chapters:
         wealth_bp: -3000
         legitimacy_bp: 500
         outcome: >-
-          The court stays, and fills the granaries while the Mongols are away.
+          The court stays, with a larger garrison, and fills the granaries while the Mongols
+          are away.
+        deeds: {men: 10000}
+      - label: "Refuse the Khan, and hold Zhongdu to the end"
+        legitimacy_bp: 800
+        food_bp: -2500
+        outcome: >-
+          You send the Khan's envoys away and call the garrisons in. Zhongdu is crowded and
+          hungry, but the court is seen to have stood its ground.
+        deeds: {men: 20000, martial_bp: 500}
     history: >-
       In 1214 Xuanzong paid off Genghis Khan with a princess and tribute, then moved his court
       to Kaifeng. The Mongols returned and took Zhongdu in 1215.
@@ -211,7 +243,15 @@ chapters:
         wealth_bp: -1000
         outcome: >-
           Wannu accepts the title of Prince of Liaodong, sends a letter of thanks, and keeps
-          doing as he pleases.
+          the province as his own, doing as he pleases.
+        deeds: {give: ["g_liaodong"]}
+      - label: "Send a second army against him"
+        legitimacy_bp: 300
+        food_bp: -1500
+        outcome: >-
+          A second army marches into Liaodong, short of grain and short of friends. It cannot
+          reach Wannu through the Khitan country, and comes home thinner than it set out.
+        deeds: {men: 12000, martial_bp: 500}
     history: >-
       Puxian Wannu, a Jin commander, declared his own state (Great Zhen, or Eastern Xia) in
       Liaodong in 1215; it survived until 1233.
@@ -249,9 +289,18 @@ chapters:
         deeds: {martial_bp: 500, grudges: {southern_song: 3000}}
       - label: "Ask the Song for an alliance against the Mongols"
         legitimacy_bp: -1000
+        wealth_bp: -1500
         outcome: >-
-          Your envoys go to Hangzhou with a proposal that 'lips and teeth' stand together. The
-          Song ministers argue about it for a year.
+          Your envoys go to Hangzhou with a proposal that 'lips and teeth' stand together, and
+          a gift of silver. The Song ministers argue about it for a year.
+        deeds: {peace_with: ["southern_song"]}
+      - label: "Raise a peasant army for the Mongol front"
+        legitimacy_bp: -300
+        unrest_bp: 800
+        outcome: >-
+          You levy the Hebei and Shandong peasants for the northern passes and leave the Song
+          alone. The army is large, ragged and resented, and the Red Coats grow bolder.
+        deeds: {men: 15000}
     history: >-
       Xuanzong attacked the Song in 1217 to recover lost revenue; the war dragged on until
       1224 with no gain.
@@ -288,11 +337,21 @@ chapters:
           'brothers'. Two years later Xia is destroyed by the Mongols, and Genghis Khan dies.
           His sons will come for you next.
         deeds: {peace_with: [southern_song, western_xia]}
-      - label: "Fight on everywhere"
-        unrest_bp: 1500
+      - label: "Keep fighting on every frontier"
+        unrest_bp: 500
+        legitimacy_bp: 1000
+        wealth_bp: 1500
         outcome: >-
           The raids go on. The Song keep a list of them.
+          The raids bring plunder and prestige, and the Song keep a list of them.
         deeds: {martial_bp: 500}
+      - label: "Make peace with the Song, and send Xia an army"
+        legitimacy_bp: 1900
+        unrest_bp: -800
+        outcome: >-
+          The Song raids stop, and you send horsemen west to help Xia against the Mongols.
+          Xia's court is grateful, and your own people feel the lightening of one front.
+        deeds: {peace_with: ["southern_song"], men: 10000}
     history: >-
       Aizong (r. 1224-1234) made peace with the Song in 1224 and with Xia in 1225.
     sources: ["Jin shi 17 (Aizong)", "Jin shi 112 (Wanyan Heda)"]
@@ -333,6 +392,16 @@ chapters:
         wealth_bp: -2000
         outcome: >-
           Every fortress gets a few more bowmen. None of them can take the field.
+        deeds: {men: 4000}
+      - label: "Raise a conscript levy from the Hebei peasants"
+        legitimacy_bp: 1200
+        unrest_bp: 500
+        wealth_bp: -1500
+        outcome: >-
+          Thousands of peasants are marched to the passes with spears and a few weeks of
+          drill. They fill the lines, but not the places where good soldiers are needed.
+          The levy is welcomed in the towns that were being raided, and the passes are manned.
+        deeds: {men: 15000}
     history: >-
       Wanyan Chen Heshang's Loyal and Filial Army (zhongxiaojun) beat the Mongols at
       Dachangyuan (1228-1229). The Jin field army was destroyed at Sanfengshan in 1232.
@@ -384,6 +453,14 @@ chapters:
           siege towers are knocked down one by one, and Subutai, who has never been stopped by
           a wall, draws back to think.
         deeds: {martial_bp: 1500}
+      - label: "Open talks with Subutai from inside the walls"
+        legitimacy_bp: -1000
+        wealth_bp: -2000
+        outcome: >-
+          Your envoys go out with silk and horses and bring back a truce on harsh terms.
+          Kaifeng can feed its people for a while, but the plague is not impressed by
+          treaties.
+        deeds: {peace_with: ["mongols"]}
     history: >-
       During the siege of Kaifeng (1232-1233) the Jin used iron gunpowder bombs (zhentianlei)
       and fire lances. Aizong left the city; Cui Li surrendered it in 1233.
@@ -413,7 +490,7 @@ chapters:
       last emperor of the Jin. Your kinsman Wanyan Chenglin, a soldier who can ride and
       shoot, might be.
     choices:
-      - label: "Give the throne to Chenglin, and end your life"
+      - label: "Hand the throne to Chenglin"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
@@ -429,6 +506,13 @@ chapters:
         outcome: >-
           At night the last guards cut a way through the Song lines. In the hills of the far
           west, a Jin governor still holds out, and still uses your reign name.
+      - label: "Make a last stand on the walls of Caizhou"
+        legitimacy_bp: 1000
+        unrest_bp: 500
+        outcome: >-
+          You put on armour and go up to the south wall with the last of the guards. The Song
+          attack is thrown back for a day, and the garrison remembers that its emperor stood
+          with it.
     history: >-
       Aizong abdicated to Wanyan Chenglin (Mozong) and hanged himself as Caizhou fell to a
       Mongol and Song army in February 1234; Chenglin was killed the same day, ending the Jin.

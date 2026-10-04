@@ -11,7 +11,7 @@ chapters:
     scenario: year_1000
     civ: poland
     year: 1000
-    title: "A Crown at the Martyr's Tomb"
+    title: "Otto at Gniezno"
     place: "The cathedral of Gniezno"
     speaker: hre
     speaker_name: "Otto III"
@@ -29,7 +29,7 @@ chapters:
       and 'Sclavinia' - and you could be its eastern pillar. He has brought an archbishop for
       Gniezno, so that your church answers to Rome and not to the Germans.
     choices:
-      - label: "Give him the saint's arm, and three hundred knights"
+      - label: "Give Otto relics and knights"
         historical: true
         legitimacy_bp: 2500
         influence: {clergy: 2000}
@@ -39,10 +39,18 @@ chapters:
           its own archbishop. A German bishop, Thietmar, will write: "God forgive the emperor
           for making a tributary into a lord."
       - label: "Feast him, and keep the relics"
-        legitimacy_bp: 1000
+        legitimacy_bp: 2300
+        wealth_bp: -300
         outcome: >-
-          Otto goes home with fine furs. The archbishopric is granted, but the emperor's
-          friendship cools.
+          Otto is pleased with the feasting and goes home with fine furs. The archbishopric is
+          granted, and your own people keep the saint's body. The feast costs a great deal.
+      - label: "Offer tribute and ask for a royal crown"
+        legitimacy_bp: 1000
+        wealth_bp: -1000
+        influence: {clergy: 500}
+        outcome: >-
+          Otto hears you graciously and does not refuse. The crown, he says, belongs to the
+          great plan he has in mind, and for that there is time. Your gold is gone.
     history: >-
       At the Congress of Gniezno (March 1000) Otto III honoured Bolesław as 'brother and
       partner of the empire' and founded the archbishopric of Gniezno.
@@ -54,7 +62,7 @@ chapters:
     scenario: year_1000
     civ: poland
     year: 1003
-    title: "The Blinded Duke"
+    title: "Prague Is in Your Hands"
     place: "Prague"
     speaker: steward
     speaker_name: "One of your Bohemian partisans"
@@ -69,7 +77,7 @@ chapters:
 
       Now the Bohemians are begging you to rid them of him, and Prague is in your hands.
     choices:
-      - label: "Blind your cousin, and rule Bohemia yourself"
+      - label: "Depose your cousin and rule Bohemia"
         historical: true
         legitimacy_bp: -1000
         outcome: >-
@@ -83,6 +91,12 @@ chapters:
         outcome: >-
           A Premyslid prince takes the throne, and owes it to you. Henry is suspicious, but has
           no excuse for war.
+      - label: "Keep Boleslaus on his throne, under guard"
+        legitimacy_bp: -500
+        deeds: {men: 1000}
+        outcome: >-
+          A Polish garrison stays in Prague castle behind your cousin. The Bohemian nobles who
+          wrote to you feel betrayed, and Henry watches the garrison.
     history: >-
       In 1003 Bolesław restored, then blinded, Boleslaus III of Bohemia and ruled Prague until
       Henry II drove him out in 1004.
@@ -119,10 +133,18 @@ chapters:
           margrave of Meissen, your fourth wife. In the summer you march on Kiev.
         deeds: {peace_with: [hre]}
       - label: "Fight on for Meissen"
+        legitimacy_bp: 500
         unrest_bp: 1500
         outcome: >-
           The war goes on into its sixteenth year. Your nobles are tired of it.
-        deeds: {grudges: {hre: 2000}}
+        deeds: {martial_bp: 500, grudges: {hre: 2000}}
+      - label: "Make peace, and hold the west"
+        legitimacy_bp: 2700
+        wealth_bp: -500
+        deeds: {peace_with: [hre], men: 2000}
+        outcome: >-
+          The peace is sworn and your garrisons go up in Lusatia and on the Oder. They are
+          expensive, and Kiev stays out of your sights.
     history: >-
       The Peace of Bautzen (30 January 1018) ended Bolesław's wars with Henry II, leaving him
       Lusatia and Milsko.
@@ -134,7 +156,7 @@ chapters:
     scenario: year_1000
     civ: poland
     year: 1018
-    title: "The Golden Gate"
+    title: "The Road to Kiev"
     place: "Before Kiev"
     speaker: steward
     speaker_name: "Sviatopolk"
@@ -161,10 +183,21 @@ chapters:
           and go home with Kiev's treasure and the Cherven towns on the frontier. Sviatopolk
           lasts a year.
         deeds: {take: [m_volhynia]}
-      - label: "Restore Sviatopolk, and go home"
-        legitimacy_bp: 1000
+      - label: "Restore Sviatopolk and take tribute"
+        legitimacy_bp: 1500
+        wealth_bp: 3000
+        deeds: {men: 2000}
         outcome: >-
-          Sviatopolk is grateful, for a season. Yaroslav is not.
+          Sviatopolk is put back on his throne, and pays a heavy tribute in silver. Part of his
+          men join your army, and you take no towns. He is grateful, for a season. Yaroslav is
+          not.
+      - label: "Garrison Kiev for Sviatopolk"
+        legitimacy_bp: 1000
+        wealth_bp: 1000
+        deeds: {men: 3000}
+        outcome: >-
+          Your knights hold Kiev for Sviatopolk and eat its stores. The Rus resent them, and
+          the gold goes to feed the garrison.
     history: >-
       Bolesław took Kiev on 14 August 1018 for Sviatopolk and annexed the Cherven towns; the
       story of the notched sword (Szczerbiec) is a later legend.
@@ -176,7 +209,7 @@ chapters:
     scenario: year_1000
     civ: poland
     year: 1024
-    title: "The King of the Poles"
+    title: "Henry's Death"
     place: "Gniezno"
     speaker: diviner
     speaker_name: "The Archbishop of Gniezno"
@@ -191,7 +224,7 @@ chapters:
 
       You are nearly sixty. Your archbishop is ready.
     choices:
-      - label: "Be crowned, now"
+      - label: "Have the archbishop crown you"
         historical: true
         legitimacy_bp: 3000
         outcome: >-
@@ -203,6 +236,12 @@ chapters:
         outcome: >-
           The new emperor, Conrad, says he will think about it. He is still thinking about it
           when you die.
+      - label: "Ask the pope for a crown"
+        legitimacy_bp: 3000
+        wealth_bp: -500
+        outcome: >-
+          Your envoys cross the Alps with gold and the pope receives them well. The crown is
+          promised for the next year, and the pope's answer is still on the road.
     history: >-
       Bolesław was crowned king at Easter 1025, after Henry II's death, and died on 17 June
       1025; Mieszko II was crowned the same year.
@@ -239,10 +278,17 @@ chapters:
           Casimir.
         deeds: {ruler_falls: "flees to Bohemia", give: [m_volhynia], give_to: rus}
       - label: "Stand and fight in the east"
+        legitimacy_bp: -1000
         unrest_bp: 1500
         outcome: >-
-          You march against Yaroslav. Conrad takes Lusatia behind you.
-        deeds: {grudges: {rus: 2000}}
+          You muster the army and march against Yaroslav. Conrad takes Lusatia behind you.
+        deeds: {men: 2500, grudges: {rus: 2000}}
+      - label: "Give up the Cherven towns, fight Conrad"
+        legitimacy_bp: -1500
+        deeds: {give: [m_volhynia], give_to: rus, men: 2000}
+        outcome: >-
+          Your envoy offers Yaroslav the Cherven towns for a truce, and the army turns west.
+          Your nobles say the king gives away what his father won.
     history: >-
       In 1031 Conrad II and Yaroslav attacked Poland together; Mieszko II fled to Bohemia and
       his brother Bezprym took power, sending the crown to Conrad. Bezprym was murdered in
@@ -271,7 +317,7 @@ chapters:
       The emperor's son offers you five hundred knights, if you will hold Poland as his
       man.
     choices:
-      - label: "Accept, and go home"
+      - label: "Accept Henry's knights"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -285,6 +331,13 @@ chapters:
           You ride back to Poland with a few friends, and find the castles held by whoever
           seized them.
         deeds: {give: [m_silesia], give_to: bohemia}
+      - label: "Accept, and rebuild Gniezno"
+        legitimacy_bp: 1500
+        wealth_bp: -500
+        deeds: {give: [m_silesia], give_to: bohemia}
+        outcome: >-
+          You come home with German knights and set the masons to work on the ruined cathedral.
+          Gniezno is far from the frontier and slow to mend, and the money runs out.
     history: >-
       Bretislav I of Bohemia sacked Gniezno in 1038 and took St Adalbert's relics to Prague;
       Casimir I returned with imperial support in 1039 and made Kraków his seat.
@@ -306,7 +359,7 @@ chapters:
       promised, to help you against Masław, the former cupbearer who rules Masovia with
       Prussian and Pomeranian allies.
     choices:
-      - label: "Attack Masław together"
+      - label: "Join Yaroslav in battle"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -315,8 +368,16 @@ chapters:
         deeds: {martial_bp: 500}
       - label: "Offer Masław terms"
         legitimacy_bp: -500
+        wealth_bp: 500
         outcome: >-
           Masław keeps Masovia as your vassal, and pays when he feels like it.
+      - label: "Crush Masław with your own army"
+        legitimacy_bp: 1500
+        unrest_bp: 500
+        deeds: {martial_bp: 300}
+        outcome: >-
+          Your levies march alone. Masław's army is beaten after a hard campaign, and the
+          nobles who served grumble about the burden.
     history: >-
       Casimir I, with Yaroslav's help, defeated Masław of Masovia in 1047.
     diverged: >-
@@ -356,6 +417,14 @@ chapters:
         outcome: >-
           You keep Silesia without paying, and the emperor and the Bohemians remember.
         deeds: {take: [m_silesia], grudges: {bohemia: 2000, hre: 2000}}
+      - label: "Offer a smaller yearly sum"
+        legitimacy_bp: 500
+        wealth_bp: -800
+        unrest_bp: 300
+        deeds: {take: [m_silesia]}
+        outcome: >-
+          Your envoys haggle in front of the emperor. Bohemia says it is an insult, and Henry
+          orders you to pay what he has set.
     history: >-
       Henry III's judgement at Quedlinburg (1054) confirmed Silesia to Casimir I in return for
       an annual tribute to Bohemia.

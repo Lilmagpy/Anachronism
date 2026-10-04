@@ -2055,3 +2055,25 @@ Two fixes:
 - Content (D-266): every chapter gets at least three real, tempting options with comparable
   visible costs and benefits, rewritten by the helper agents under a checker script
   (balance.py) and a guard that history's choice keeps its tested mechanics.
+
+## D-266 Every chapter's choices rewritten so history is not obvious — DELEGATED (2026-10-04)
+Following D-265, the six helper agents rewrote the choices of all 1,100 chapters in twelve
+batches, under a checker (balance.py) and a guard that history's choice keeps its tested
+mechanics and every chapter keeps its facts (both run by the manager on every merged file,
+against the last commit). Rules: at least three real options, each a course argued at the
+time or open to a ruler then (never silly or doomed); labels of similar length and voice,
+with famous phrases and hindsight words removed; comparable visible costs and benefits;
+stories and titles that foreshadowed the answer reworded; new choices only appended, so
+saved games and `after_choice` references keep their meaning. Rules were added as the work
+revealed new tells (alternatives must cost something when history was a disaster; history
+must not show far fewer effects; history must not usually have the best numbers).
+Result, before -> after: chapters with only two choices 892 -> 0; chapters where only history
+showed a deed 302 -> 0; history's label much the longest 180 -> about 155 (now rarely by
+much); history with the best net numbers 59% -> 32% (a third is fair). The last step was a
+seeded nudge: in about a third of the chapters where history's numbers were still strictly
+best, the closest alternative's legitimacy was raised just past it. Three tests now hold
+these lines (three choices, never only history with deeds, best numbers under 40%).
+Caveats: many new options are plausible courses rather than recorded proposals (their outcome
+text does not claim they happened); a few chapter titles were changed; where history's own
+numbers are extreme (a reign ending in disaster), a careful player may still guess. A
+spot-play of sample chronicles on seed 2 matched the pre-rewrite results exactly.

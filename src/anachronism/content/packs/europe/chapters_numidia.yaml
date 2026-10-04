@@ -34,7 +34,7 @@ chapters:
       throne, and the Massyli are not sure whom they will follow. A Roman officer has
       made it known that he would like to talk.
     choices:
-      - label: "Talk to the Romans, then go home to claim your throne"
+      - label: "Meet the Roman officer, then go home"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -43,13 +43,15 @@ chapters:
           by a rival, Mazetullus, who sets up a boy king; you gather the Massyli, win with the
           help of King Bocchar of the Moors, and take your father's throne.
         deeds: {give: [num_masaesyli]}
-      - label: "Stay loyal to Carthage and sail home as its ally"
-        legitimacy_bp: 500
+      - label: "Sail home as Carthage's ally"
+        legitimacy_bp: 1200
         wealth_bp: 500
         outcome: >-
-          Carthage welcomes you and promises its help at home. Hasdrubal, son of Gisgo, is
-          already courting Syphax, your rival in the west, with the offer of his daughter.
-      - label: "Go to Scipio at once and ask for Roman help"
+          Carthage welcomes you and lends you three thousand of its Numidian horse. Hasdrubal,
+          son of Gisgo, is already courting Syphax, your rival in the west, with the offer of
+          his daughter.
+        deeds: {men: 3000}
+      - label: "Go to Scipio and ask for Roman help"
         legitimacy_bp: -500
         unrest_bp: 1000
         outcome: >-
@@ -106,6 +108,13 @@ chapters:
         outcome: >-
           Syphax's price is low in gold and high in humiliation: you hold what he lets you
           hold. Your own nobles never forgive you, and Carthage never stops watching you.
+      - label: "Raid Syphax's flanks with your horsemen"
+        legitimacy_bp: 400
+        unrest_bp: 500
+        outcome: >-
+          You gather the horsemen who still follow you and strike at Syphax's herds and
+          baggage trains. It is hard living, and it keeps your name alive among the Massyli.
+        deeds: {men: 3000}
     history: >-
       In 204 BC Syphax drove Masinissa from the Massyli kingdom; Masinissa joined Scipio
       after the Roman landing in Africa and served as his cavalry commander.
@@ -149,8 +158,10 @@ chapters:
       - label: "Hand her over to Scipio"
         legitimacy_bp: -1000
         outcome: >-
-          Sophonisba is taken to the Roman camp. You have kept your honour with Scipio and lost
-          her. Your own men think the less of a king who cannot protect his wife.
+          Sophonisba is taken to the Roman camp. You have kept your honour with Scipio and
+          lost her. You keep Cirta and Syphax's lands as Rome's ally, but your own men think
+          the less of a king who cannot protect his wife.
+        deeds: {take: ["num_masaesyli"]}
       - label: "Refuse, and keep her"
         legitimacy_bp: 500
         unrest_bp: 1000
@@ -200,10 +211,13 @@ chapters:
           war in Africa only with Rome's leave, which means that your neighbour cannot defend
           itself against you.
       - label: "Keep chasing the routed cavalry to destroy it"
-        legitimacy_bp: 500
+        legitimacy_bp: 3200
+        wealth_bp: 1000
         outcome: >-
           Your horse run the Carthaginians down for miles. When you finally return, the infantry
           fight is already decided, and Scipio's victory owes less to you than it might have.
+          Hannibal's horse is destroyed to the last squadron, and your name is on every
+          tongue. Scipio is less pleased that his infantry were left alone.
       - label: "Keep your horse back to protect the Roman camp"
         legitimacy_bp: -1500
         outcome: >-
@@ -256,9 +270,11 @@ chapters:
       - label: "Ignore the commission and take more"
         wealth_bp: 1500
         unrest_bp: 500
+        legitimacy_bp: 500
         outcome: >-
           Your riders take more of the coast before the commissioners have left. The Senate
           frowns but does nothing, as usual.
+          The coast is yours for the taking.
         deeds: {grudges: {carthage: 1500}}
     history: >-
       In 193 BC a Roman commission headed by Scipio Africanus heard the quarrel over Emporia
@@ -311,6 +327,14 @@ chapters:
         unrest_bp: 500
         outcome: >-
           Waiting costs you the field. Hasdrubal enters Oroscopa and the Senate does not hurry.
+      - label: "Cut off Hasdrubal's supplies instead of fighting"
+        legitimacy_bp: 1800
+        wealth_bp: 1200
+        unrest_bp: 500
+        outcome: >-
+          Your horsemen ride round the Carthaginian army and take its convoys and its watering
+          places. Hasdrubal has to fight or starve, and Scipio sees it all from his hill.
+        deeds: {men: 5000}
     history: >-
       Around 150 BC Carthage's army under Hasdrubal fought Masinissa near Oroscopa and was
       destroyed. Since Carthage had broken the treaty of 201, Rome declared the Third Punic
@@ -342,7 +366,7 @@ chapters:
       nephews fight. You have asked Scipio Aemilianus to come to Cirta and settle the
       kingdom.
     choices:
-      - label: "Leave the kingdom to three sons, and let Scipio arrange it"
+      - label: "Share the kingdom among three sons"
         historical: true
         legitimacy_bp: 1500
         influence: {nobility: 1000}
@@ -352,10 +376,12 @@ chapters:
           justice. For a time it works. Gulussa and Mastanabal die within a few years, and
           Micipsa rules alone.
       - label: "Name Micipsa alone, and tell the others to obey"
-        legitimacy_bp: 500
-        unrest_bp: 1000
+        legitimacy_bp: 1000
+        unrest_bp: 500
+        wealth_bp: 1000
         outcome: >-
           Gulussa, who commands the army, doubts that he will obey a brother. Rome steps in anyway.
+          A single king can keep the treasury and the army together while he lives.
       - label: "Divide the kingdom into three halves"
         legitimacy_bp: -1500
         unrest_bp: 1500
@@ -460,14 +486,16 @@ chapters:
         legitimacy_bp: -2000
         unrest_bp: 1000
         outcome: >-
-          The desert is large, but you cannot live in it for long. Your own men are starting to
-          bargain with Bocchus for your life.
+          The desert is large, but you cannot live in it for long. Your army melts away on the
+          march, and your own men are starting to bargain with Bocchus for your life.
+        deeds: {martial_bp: -800}
       - label: "Fight on with Gaetulian horse"
         legitimacy_bp: -1000
         unrest_bp: 1500
         outcome: >-
-          The Gaetulians are brave, but they will not follow a king without a kingdom or a
-          chance.
+          Eight thousand Gaetulian horsemen follow you for a season. They are brave, but they
+          will not follow a king without a kingdom or a chance.
+        deeds: {men: 8000}
     history: >-
       In 105 BC Bocchus, Jugurtha's father-in-law, betrayed him to Sulla. Jugurtha was led in
       Marius's triumph on 1 January 104 and died in the Tullianum. Bocchus got western Numidia;

@@ -45,13 +45,14 @@ chapters:
           The legions dig in around Syracuse. The Carthaginian fleet promises to come.
         deeds: {men: 6000, grudges: {rome: 2000}}
       - label: "Ask Rome for a truce, not an alliance"
-        legitimacy_bp: 400
         wealth_bp: -1000
-        deeds: {peace_with: [rome]}
+        unrest_bp: 500
+        legitimacy_bp: 1700
         outcome: >-
-          You send envoys to the consul with a hundred talents and ask only for a truce. The
-          consul is willing to listen, and Carthage does not know how to read it; the legions
-          remain on your frontier while the talks go on.
+          You send envoys to the consul with a hundred talents and ask only for a truce. The consul is
+          willing to listen and Carthage does not know how to read it; the legions remain on your
+          frontier while the talks go on, and the citizens grumble at paying so much for so little.
+        deeds: {peace_with: [rome]}
     history: >-
       In 263 BC Hiero II made peace with Rome, paying an indemnity, and remained Rome's loyal
       ally for nearly fifty years.
@@ -90,12 +91,14 @@ chapters:
         outcome: >-
           The farmers are grateful. The granaries are emptier.
       - label: "Apply it to the great estates only"
-        food_bp: 800
-        wealth_bp: 800
-        legitimacy_bp: 300
+        food_bp: 2000
+        wealth_bp: 1800
+        unrest_bp: 600
+        legitimacy_bp: 400
         outcome: >-
-          You tax the great estates by the new tenth and leave the small farmers to the old
-          customs. The royal treasury gains, and the small farmers have no complaint.
+          You tax the great estates by the new tenth and leave the small farmers to the old customs.
+          The royal granaries and treasury fill, and the small farmers have no complaint; the great
+          landowners complain loudly and some close their gates to your officers.
     history: >-
       Hiero's tithe law (lex Hieronica) regulated grain taxation in his kingdom and was kept
       by the Romans in their province of Sicily.
@@ -129,10 +132,12 @@ chapters:
           the same weight of gold - and runs home naked, shouting 'Eureka!': I have found it!
           The goldsmith is caught. Archimedes goes on to work out how bodies float, and why.
       - label: "Have the goldsmith questioned by force"
-        unrest_bp: 200
-        legitimacy_bp: 500
+        unrest_bp: 300
+        legitimacy_bp: 2400
         outcome: >-
-          The goldsmith confesses. Everyone is satisfied except Archimedes.
+          The goldsmith confesses under torture and is put to death, and the gods are honoured with a
+          wreath of full weight. The court praises your swift justice; Archimedes is the only one who
+          is not satisfied, and a few at court whisper about the confession.
       - label: "Order a new wreath from another smith"
         wealth_bp: -800
         legitimacy_bp: 200
@@ -221,10 +226,13 @@ chapters:
           'Alexandris', and she is laid up in Alexandria as a wonder, because no other port can
           take her. Archimedes' screw pumps out her bilge.
       - label: "Keep her as your flagship"
-        wealth_bp: -300
-        legitimacy_bp: 500
+        wealth_bp: -600
+        unrest_bp: 300
+        legitimacy_bp: 1500
         outcome: >-
-          The Syracusia rides at anchor in your harbour, too big to go anywhere useful.
+          The Syracusia rides at anchor in your harbour, the wonder of the Greek world, and visitors
+          come from far to see her. Her upkeep is heavy, and the crews' pay and the dockyard bills are
+          not popular.
       - label: "Build ten lesser warships instead"
         wealth_bp: -600
         legitimacy_bp: 300
@@ -276,10 +284,10 @@ chapters:
       - label: "Send a small gift and keep neutral"
         food_bp: -800
         wealth_bp: -500
-        legitimacy_bp: 300
+        legitimacy_bp: 500
         outcome: >-
-          You send Rome a modest gift of grain and the regrets of an old friend, and tell both
-          sides that Syracuse will stand apart. Rome notes the size of the gift.
+          You send Rome a modest gift of grain and the regrets of an old friend, and tell both sides
+          that Syracuse will stand apart. Rome notes the size of the gift.
     history: >-
       After Trasimene and Cannae, Hiero sent Rome a gold Victory, grain and troops; his son
       Gelon favoured Carthage. Hiero died in 215 BC.
@@ -372,12 +380,14 @@ chapters:
         outcome: >-
           The sambucas reach the walls, and the fighting is hand to hand.
       - label: "Raid the Roman camp by night"
-        legitimacy_bp: 500
+        wealth_bp: 300
         unrest_bp: 300
-        deeds: {martial_bp: 300}
+        legitimacy_bp: 2200
         outcome: >-
-          You send picked men out of the gate in the dark to burn the Roman siege-works. They
-          do some damage and are driven back by dawn.
+          You send picked men out of the gate in the dark to burn the Roman siege-works. They burn two
+          engines, bring home captured arms, and are driven back by dawn. The city cheers its raiders;
+          the Romans double their guard.
+        deeds: {martial_bp: 300}
     history: >-
       Archimedes' machines defeated Marcellus's assault on Syracuse in 213 BC; the siege
       became a blockade. The 'burning mirrors' are a much later story.

@@ -41,11 +41,11 @@ chapters:
           furious, and the war between the two kingdoms is open.
         deeds: {martial_bp: 200, men: 6000, grudges: {shu: 1500}}
       - label: "Send the Marquis on, and garrison the border"
-        deeds: {men: 3000}
-        legitimacy_bp: -300
+        legitimacy_bp: -200
         outcome: >-
-          The Marquis rides on, and the quarrel goes on without you. The King of Shu
-          is pleased for the moment. He will not be so pleased when your turn comes.
+          The Marquis rides on, and the quarrel goes on without you. The King of Shu is pleased for
+          the moment. He will not be so pleased when your turn comes.
+        deeds: {men: 3000}
       - label: "Trade the Marquis for terms with Shu"
         wealth_bp: 600
         legitimacy_bp: -500

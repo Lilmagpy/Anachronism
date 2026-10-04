@@ -47,7 +47,7 @@ chapters:
         outcome: >-
           The old nobles respect you for it. Attalus writes secretly to Athens.
       - label: "Win Attalus and Amyntas with office and gifts"
-        legitimacy_bp: 1100
+        legitimacy_bp: 1700
         wealth_bp: 500
         influence: {nobility: 500}
         outcome: >-
@@ -489,7 +489,7 @@ chapters:
           every city in your empire has Homer and Aristotle on its shelves.
         deeds: {take: [a3_egypt, a3_upper_egypt]}
       - label: "Found only a harbour, and leave the priests in charge"
-        legitimacy_bp: 2100
+        legitimacy_bp: 2700
         wealth_bp: 1000
         outcome: >-
           A small port and a garrison are enough for the fleet, and the priests of Egypt keep
@@ -541,7 +541,7 @@ chapters:
           dark. Darius escapes. Men say you won like a thief, but you won.
         deeds: {take: [a3_assyria, a3_babylonia]}
       - label: "Form a hollow square and let him attack"
-        legitimacy_bp: 2600
+        legitimacy_bp: 3200
         outcome: >-
           Your army forms a great square with the baggage in the middle, and takes the charge of
           the scythed chariots and the horse. It holds, but you cannot pursue Darius, who rides

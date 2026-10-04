@@ -174,15 +174,15 @@ chapters:
           and more careful. The great families do not forgive you, and they have long
           memories.
       - label: "Kill him and repeal his laws"
-        legitimacy_bp: 600
-        food_bp: -1500
+        food_bp: -500
         unrest_bp: -600
+        legitimacy_bp: 800
         influence: {nobility: 2500}
-        deeds: {martial_bp: -3000}
         outcome: >-
-          Lord Shang dies, and his counties are handed back to the great families. The
-          people are glad to be free of the mutual-responsibility groups; the granaries are
-          less glad.
+          Lord Shang dies, and his counties are handed back to the great families. The people are glad
+          to be free of the mutual-responsibility groups, and the granaries are only a little the
+          lighter for it; the nobles thank you loudly.
+        deeds: {martial_bp: -3000}
     history: >-
       In 338 BC the new ruler, later King Huiwen, had Shang Yang executed by being torn
       apart by chariots and his family exterminated - but kept every one of his laws. It is
@@ -340,13 +340,15 @@ chapters:
           cross.
         deeds: {war_with: [shu], conquer: [ba], take: [shu_chengdu], men: 20000}
       - label: "Zhang Yi: east to Luoyang and the Nine Cauldrons"
-        wealth_bp: -500
-        unrest_bp: 300
-        materials_bp: 500
-        legitimacy_bp: 800
+        food_bp: 600
+        materials_bp: 1000
+        wealth_bp: 1200
+        unrest_bp: 400
+        legitimacy_bp: 1600
         outcome: >-
-          The army marches east on Yiyang. Every court in the east hears that Qin means to
-          lay hands on the vessels of Heaven, and their envoys begin riding to one another.
+          The army marches east on Yiyang and takes it. The road to Luoyang lies open, and the plunder
+          is rich; but every court in the east hears that Qin means to lay hands on the vessels of
+          Heaven, and their envoys begin riding to one another.
         deeds: {war_with: [han], men: 20000, grudges: {wei: 1500, zhao: 1500, qi: 1500, chu: 1500}}
       - label: "Help neither: let the southern kings fight it out"
         legitimacy_bp: -300
@@ -573,7 +575,7 @@ chapters:
           with their armies intact.
         deeds: {war_with: [han, wei], men: 15000}
       - label: "Give the army to Wei Ran, the chancellor"
-        legitimacy_bp: 300
+        legitimacy_bp: 800
         influence: {nobility: 300}
         deeds: {men: 18000, martial_bp: 200}
         outcome: >-
@@ -662,9 +664,13 @@ chapters:
           great rival in the east, is broken.
         deeds: {grudges: {qi: 3000}}
       - label: "Stay out: let them weaken one another"
-        food_bp: 500
+        food_bp: 1200
+        wealth_bp: 500
+        legitimacy_bp: 400
         outcome: >-
-          Qin watches. Qi is broken without it, and the spoils go to Yan and Zhao.
+          Qin watches. Qi is broken without it, and the spoils go to Yan and Zhao; meanwhile grain and
+          salt change hands at good prices in the war-starved east. Some at court call you a
+          bystander.
       - label: "Warn Qi, and win a friend in the east"
         legitimacy_bp: 300
         outcome: >-
@@ -714,11 +720,12 @@ chapters:
           river, the poet Qu Yuan fills his robe with stones and walks into the water.
         deeds: {take: [chu_ying, chu_qianzhong], men: 15000, grudges: {chu: 5000}}
       - label: "Take the frontier towns, but spare Ying and the tombs"
-        materials_bp: 500
-        legitimacy_bp: 400
+        materials_bp: 1000
+        wealth_bp: 300
+        legitimacy_bp: 600
         outcome: >-
-          Qin takes a string of towns on the Han river and stops. Chu loses land but not
-          its heart.
+          Qin takes a string of towns on the Han river and stops, sparing Ying and the tombs. The
+          towns bring grain, tolls and iron. Chu loses land but not its heart.
         deeds: {take: [chu_nanyang], men: 8000, grudges: {chu: 2000}}
       - label: "Peace with Chu"
         wealth_bp: 500
@@ -835,7 +842,7 @@ chapters:
           Fan Ju is given a house and a pension. The Marquis of Rang goes on planning wars
           against Qi.
       - label: "Give him a small post and test his plan"
-        legitimacy_bp: 300
+        legitimacy_bp: 800
         influence: {nobility: -200}
         deeds: {peace_with: [yan]}
         outcome: >-
@@ -948,13 +955,13 @@ chapters:
           later.
         deeds: {take: [han_shangdang], grudges: {zhao: 8000, wei: 1500, han: 1500, chu: 1500}}
       - label: "Spread the rumour, and plan for mercy"
-        legitimacy_bp: 800
-        food_bp: -2500
+        food_bp: -800
+        legitimacy_bp: 1300
         outcome: >-
-          The ring closes as before, and the army of Zhao surrenders. You order the
-          prisoners marched west and settled on new land in Shu and the Wei valley.
-          Feeding them empties the granaries, and a few generals mutter that you are
-          raising the next army of Zhao. But in the east, men say Qin can be merciful.
+          The ring closes as before, and the army of Zhao surrenders. You order the prisoners marched
+          west and settled on new land in Shu and the Wei valley. Feeding them strains the granaries,
+          and a few generals mutter that you are raising the next army of Zhao. But in the east, men
+          say Qin can be merciful.
         deeds: {take: [han_shangdang], men: 20000, grudges: {zhao: 3000}}
       - label: "✦ Send armoured horsemen round them on stirrups"
         needs_adopted: [stirrup]
@@ -1167,13 +1174,14 @@ chapters:
         outcome: >-
           The levees hold in a dry year, and break in a wet one.
       - label: "Settle farmers on higher ground"
-        food_bp: 1200
+        legitimacy_bp: 700
+        food_bp: 2200
         materials_bp: -500
         unrest_bp: 300
         outcome: >-
-          You send settlers to the dry hills above the flood line and give them seed and
-          tools. They farm, but not as many as the plain would feed, and the river floods in
-          the lower fields.
+          You send settlers to the dry hills above the flood line and give them seed and tools. They
+          farm better than you feared, and the new villages are productive; but the river still floods
+          the lower fields, and the settlers are restless.
     history: >-
       Li Bing, governor of Shu from about 256 BC, built the Dujiangyan irrigation system.
       It still waters some 5,000 square kilometres of the Chengdu plain today, after more
@@ -1291,13 +1299,14 @@ chapters:
           serve. Qin's offices fill with the able, and the great families find their sons
           must study.
       - label: "Keep them, under Qin overseers"
-        knowledge_bp: 500
-        legitimacy_bp: 100
+        knowledge_bp: 1200
+        unrest_bp: 200
+        legitimacy_bp: 400
         influence: {nobility: 300}
         outcome: >-
-          You withdraw the order, but set Qin officers over each foreign minister and require
-          their letters to be read. The foreigners stay, and some of the best of them are not
-          at ease.
+          You withdraw the order, but set Qin officers over each foreign minister and require their
+          letters to be read. The foreigners stay and the work of government goes on, though some of
+          the best are not at ease and the learning of the court grows more slowly.
     history: >-
       In 237 BC, after the Zheng Guo affair and the fall of Lü Buwei, Qin ordered all
       foreign officials expelled. Li Si's "Memorial against the expulsion of guest
@@ -1335,11 +1344,11 @@ chapters:
           the commandery of Yingchuan. The first of the six states is gone.
         deeds: {war_with: [han], conquer: [han], grudges: {wei: 1500, zhao: 1500, chu: 1500, qi: 1000, yan: 1000}}
       - label: "Accept Han as a vassal"
-        wealth_bp: 1000
+        wealth_bp: 1400
         legitimacy_bp: 400
         outcome: >-
-          King An keeps his title and pays tribute. The other courts wonder what Qin
-          is waiting for.
+          King An keeps his title and pays a heavy tribute. The other courts wonder what Qin is
+          waiting for.
         deeds: {tributaries: [han]}
       - label: "Take hostages and garrison Han's towns"
         wealth_bp: 500
@@ -1555,10 +1564,10 @@ chapters:
         deeds: {war_with: [chu], conquer: [chu], men: 60000, grudges: {qi: 2000, yan: 2000}}
       - label: "Send Li Xin again, with more men"
         food_bp: -1000
-        legitimacy_bp: 300
+        legitimacy_bp: 400
         outcome: >-
-          Li Xin goes back with three hundred thousand. Chu holds the line of the Huai
-          for another year.
+          Li Xin goes back with three hundred thousand. Chu holds the line of the Huai for another
+          year.
         deeds: {war_with: [chu], men: 30000}
       - label: "Wait a season and levy more men"
         legitimacy_bp: 200

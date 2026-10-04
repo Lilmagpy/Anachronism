@@ -49,13 +49,13 @@ chapters:
           scaffolding for years. Your bishops are not pleased.
         deeds: {martial_bp: 500}
       - label: "Buy peace with gifts to your neighbours"
-        wealth_bp: -1500
-        legitimacy_bp: 300
-        unrest_bp: -400
+        wealth_bp: -1000
+        legitimacy_bp: 1800
+        unrest_bp: -500
         outcome: >-
           Silver and fine cloth go to Constantinople and to the emirs of Dvin and Ganja. The
-          borders stay quiet for a time, the scaffolding stays up, and the treasury is thinner
-          than before.
+          borders stay quiet, and your court is praised for buying peace for its people. The
+          scaffolding stays up, and the treasury is thinner than before.
     history: >-
       Smbat II began the cathedral of Ani, designed by Trdat, and it was finished under Gagik I
       about 1001.
@@ -253,11 +253,13 @@ chapters:
           The emperor's men are polite, and take you as an honoured guest. Your own lords
           and the common people of Ani do not forgive it.
       - label: "Call on the Georgian king for troops"
-        legitimacy_bp: 500
-        wealth_bp: -700
+        unrest_bp: -500
+        legitimacy_bp: 2700
+        wealth_bp: -500
         outcome: >-
-          Georgian horsemen ride to Ani, but the price is high and the king of Georgia expects
-          to be heard in your counsels. Pahlavuni is not pleased to share the command.
+          Georgian horsemen ride to Ani and the combined army beats the Byzantines in the field,
+          but the price is high and the king of Georgia expects to be heard in your counsels.
+          Pahlavuni is not pleased to share the command.
         deeds: {men: 6000}
     history: >-
       Gagik II was crowned in 1042; Vahram Pahlavuni defeated a Byzantine army sent to claim

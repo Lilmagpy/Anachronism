@@ -47,13 +47,15 @@ chapters:
           his family's castle at Okazaki - and watches you.
         deeds: {grudges: {imagawa: 6000}}
       - label: "Hold Kiyosu and wear him out on the walls"
-        legitimacy_bp: -1000
-        food_bp: -2000
+        wealth_bp: 800
+        legitimacy_bp: 1500
+        food_bp: -300
         influence: {nobility: 800}
         outcome: >-
-          Yoshimoto takes the border forts one by one and ravages the rice fields of Owari.
-          Kiyosu holds, and at the end of the summer he moves on towards Kyoto, leaving a
-          garrison behind. Your retainers say nothing, but they have begun to wonder.
+          Yoshimoto takes the border forts one by one and burns some of the rice fields of
+          Owari, but Kiyosu holds, and the merchants who supply the garrison grow rich. At the
+          end of the summer he moves on towards Kyoto, leaving a garrison behind. Your
+          retainers, who feared a rout, begin to think better of the Fool of Owari.
         deeds: {war_with: [imagawa]}
       - label: "Offer Yoshimoto submission and a hostage"
         legitimacy_bp: -2500
@@ -230,11 +232,11 @@ chapters:
           under arms'. Tokichiro's fort at Sunomata becomes a legend.
         deeds: {conquer: [saito]}
       - label: "Storm Inabayama with all your men"
-        legitimacy_bp: 800
+        legitimacy_bp: 1000
         food_bp: -1500
         outcome: >-
-          Your men claw their way up Mount Kinka under fire. They take the castle, at a
-          price your widows will remember.
+          Your men claw their way up Mount Kinka under fire. They take the castle, at a price
+          your widows will remember, and the whole region hears that the Oda do not turn back.
         deeds: {conquer: [saito], grudges: {asakura: 1500}}
       - label: "Wait while Tatsuoki's best men drift away"
         legitimacy_bp: -500
@@ -311,13 +313,14 @@ chapters:
           and its loyalty with it. Yoshiaki becomes shogun on your silver.
         deeds: {tributaries: [ashikaga], take: [j_omi, j_ise], war_with: [miyoshi], men: 20000}
       - label: "Send Yoshiaki on with a small escort"
-        legitimacy_bp: 800
-        wealth_bp: -500
+        legitimacy_bp: 2500
+        wealth_bp: 1000
         influence: {nobility: 500}
         outcome: >-
-          Yoshiaki goes ahead with a few hundred of your men and is checked in Omi by the Rokkaku.
-          He is made shogun in the end, but he owes you less than he might, and your own army has
-          not gone into the city.
+          Yoshiaki goes ahead with a few hundred of your men and is checked in Omi by the
+          Rokkaku; your army follows to break them, and the court, relieved, credits you for the
+          peace. Sakai buys your goodwill with silver. He is made shogun, but he owes you less
+          than he might, and your own army has not gone into the city.
         deeds: {tributaries: [ashikaga], men: 5000}
     history: >-
       In 1568 Nobunaga escorted Ashikaga Yoshiaki into Kyoto and had him made shogun. He
@@ -655,11 +658,12 @@ chapters:
           over.
         deeds: {war_with: [takeda], grudges: {takeda: 3000}}
       - label: "Relieve the castle by a night march"
-        legitimacy_bp: 800
-        food_bp: -500
+        legitimacy_bp: 2300
+        food_bp: -300
         outcome: >-
-          Katsuyori lifts the siege rather than be caught between you. Nagashino is saved;
-          the Takeda army is not destroyed.
+          Katsuyori lifts the siege rather than be caught between you. Nagashino is saved, and
+          the garrison's survival is celebrated across the Tokai; the Takeda army is not
+          destroyed, and your own men are worn out by the night march.
         deeds: {war_with: [takeda]}
       - label: "✦ Watch the Takeda through spyglasses, and spring a trap"
         needs_adopted: [telescope]
@@ -736,13 +740,14 @@ chapters:
           approve.
       - label: "Build a modest castle and a market town"
         materials_bp: -1500
-        wealth_bp: 500
-        legitimacy_bp: 1000
+        wealth_bp: -1500
+        legitimacy_bp: 2500
         influence: {guilds: 800}
         outcome: >-
           A smaller castle rises over the lake, and merchants are given leave to trade below it
-          without tolls. The town prospers, and no one sails across the lake to marvel at your
-          tower.
+          without tolls, at a heavy cost to your revenue. The town prospers and travellers speak
+          of you as the lord who made the roads safe; no one sails across the lake to marvel at
+          your tower.
     history: >-
       Azuchi castle, begun in 1576 and finished in 1579, was the first great tenshu castle
       and the model for all that followed. It burned in 1582, days after Nobunaga's death.
@@ -803,10 +808,11 @@ chapters:
       - label: "Build twice as many ordinary ships"
         materials_bp: -2000
         wealth_bp: -1500
-        legitimacy_bp: 500
+        legitimacy_bp: 1000
         outcome: >-
-          The fleet that goes out is larger than the Mori's, and its crews are not as good. The
-          Mori fire-pots take their toll again, and the bay is not yet closed.
+          The fleet that goes out is larger than the Mori's, and its crews are not as good, but
+          weight of numbers wins the first clash and your name for resolve rises. The Mori fire-
+          pots take their toll again, and the bay is not yet closed.
         deeds: {ships: 30, war_with: [miyoshi]}
     history: >-
       In 1576 the Mori navy beat Oda's fleet at Kizugawaguchi and supplied Ishiyama
@@ -862,11 +868,12 @@ chapters:
           fish while the Takeda wait for spring. Katsuyori wakes to find you in his capital.
         deeds: {conquer: [takeda, hojo]}
       - label: "Leave Kai to Ieyasu and the Hojo"
-        legitimacy_bp: 800
+        legitimacy_bp: 1900
         unrest_bp: -300
         outcome: >-
           Ieyasu and the Hojo go in without you, and share the spoils between themselves. You
-          hold the army in Owari, and keep the right to say what you think of the result.
+          hold the army in Owari; the court credits you with the Takeda's fall, since Nagashino
+          made it possible, and you keep the right to say what you think of the result.
         deeds: {men: 10000}
     history: >-
       In March and April 1582 Oda and Tokugawa armies overran Takeda lands in a few weeks.
@@ -988,12 +995,12 @@ chapters:
           Emperor's ear for a whole season.
         deeds: {men: 4000}
       - label: "Give the command to Niwa and Nobutaka"
-        legitimacy_bp: 1000
-        unrest_bp: -300
+        legitimacy_bp: 1700
+        unrest_bp: -800
         outcome: >-
-          The army gathered at Sakai for the Shikoku crossing begins to melt away when the news
-          spreads. Niwa Nagahide and Nobutaka move slowly, and Hideyoshi's men are first on the
-          road.
+          The army gathered at Sakai for the Shikoku crossing rallies to the Oda name, with
+          Nobutaka at its head, and Niwa Nagahide leads it to Kyoto. Hideyoshi's men are first
+          on the road, but the Oda house keeps the command, and its retainers hold together.
         deeds: {men: 10000}
     history: >-
       Hideyoshi made peace with the Mori, marched his army back in about ten days and

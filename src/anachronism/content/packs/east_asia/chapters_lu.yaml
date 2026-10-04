@@ -29,7 +29,7 @@ chapters:
       To the south, King Wei of Chu has just broken the old kingdom of Yue and killed its king,
       and in the north he has beaten Qi at Xu. The Shiji says nothing of Lu in all this. But Chu is now a great power on your southern road, with Qi on your northern, and Lu lies between them.
     choices:
-      - label: "Send gifts to Chu and to Qi alike"
+      - label: "Send gifts to both courts"
         historical: true
         legitimacy_bp: 300
         wealth_bp: -300
@@ -43,6 +43,13 @@ chapters:
           The towns are fortified. Everyone knows they cannot hold against a real army, and
           both neighbours send questions.
         deeds: {martial_bp: 300}
+      - label: "Seek Chu's protection against Qi"
+        wealth_bp: -200
+        influence: {nobility: 300}
+        legitimacy_bp: -300
+        outcome: >-
+          Chu's envoys accept the compliment and promise nothing. Qi hears that Lu is leaning
+          south, and the old courtesy between the two courts cools.
     history: >-
       Chu defeated Yue and Qi about 333 BC (Shiji 41, 40). Lu is not recorded as involved and
       kept its independence.
@@ -52,7 +59,7 @@ chapters:
     scenario: warring_states
     civ: lu
     year: -312
-    title: "The Duke Who Did Not Come"
+    title: "The Teacher from Zou"
     place: "Qufu"
     speaker: scholar
     speaker_name: "Yue Zheng"
@@ -85,6 +92,13 @@ chapters:
           You are driven through Qufu to the teacher's lodging. He talks to you; the
           nobles murmur. Yue Zheng takes part of the government, and Lu is, for a few years,
           a little better run.
+      - label: "Send Yue Zheng to him with gifts"
+        wealth_bp: -200
+        knowledge_bp: 400
+        outcome: >-
+          Mencius receives the gifts courteously, and Yue Zheng takes a part in the government.
+          The teacher, who looked for the duke's own visit, stays only a short while before he
+          goes home to Zou.
     history: >-
       The Mencius (1B.16, 6B.13) records that Duke Ping of Lu was about to visit Mencius but
       turned back on the advice of Zang Cang, and that Yue Zheng was proposed to govern Lu.
@@ -113,7 +127,7 @@ chapters:
       would cut the border with Qi and make friends with Chu. Others would send a mission to
       the Qi court at once.
     choices:
-      - label: "Say nothing, and send gifts to Linzi"
+      - label: "Send gifts to Qi's court"
         historical: true
         wealth_bp: -300
         legitimacy_bp: 100
@@ -126,6 +140,12 @@ chapters:
           Chu sends a polite answer. Qi notes it.
         deeds: {grudges: {qi: 500}}
 
+      - label: "Garrison the Song border"
+        wealth_bp: -500
+        deeds: {men: 1500}
+        outcome: >-
+          You muster the levy and put it in the border towns. Qi's king does not test them, but
+          the harvest is thin for a year with so many men from the fields.
     history: >-
       Qi annexed Song in 286 BC, sharing parts with Wei and Chu (Shiji 38). Lu is not recorded
       as acting against Qi at this time.
@@ -137,7 +157,7 @@ chapters:
     scenario: warring_states
     civ: lu
     year: -284
-    title: "The Closed Gate"
+    title: "The Fugitive King"
     place: "The gate of Qufu"
     speaker: steward
     speaker_name: "The captain of the gate"
@@ -148,17 +168,17 @@ chapters:
       You are Duke Wen of Lu. The five-kingdom army of Yan's Yue Yi has broken Qi, and King
       Min, who frightened every state two years ago, has run from his capital. The Shiji says
       he went first to Wey, where the lord gave up his own palace to him and served him as a
-      subject, and the king treated the Wey lord with contempt. It adds that he then came to
-      Zou and Lu with an arrogant air, and that Zou and Lu would not let him in.
+      subject, and the king treated the Wey lord with contempt. It adds that he then came towards Zou and Lu with an arrogant air.
 
 
       A later story, told in the Zhanguo ce, makes it a scene: the king's retinue demanding
       that Lu receive him with the greatest sacrifice, and that the duke give up his own
-      palace and stand attendance on him. In this story, the people of Lu bolt the gate and
-      refuse. The story flatters Lu, and the Shiji's own version is shorter. But on one thing
-      all agree: Lu did not take the fugitive in.
+      palace and stand attendance on him. The Zhanguo ce is a
+      later work, and its scene is a story; the Shiji's own version is shorter. Whatever the
+      truth of it, the king's party is now on the road to Qufu, and the gatekeepers wait for
+      your word.
     choices:
-      - label: "Shut the gate"
+      - label: "Refuse the king entry"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: -300
@@ -168,9 +188,19 @@ chapters:
           and in later generations Confucians will remember the gate.
         deeds: {peace_with: [chu], grudges: {qi: 300}}
       - label: "Receive him as a guest"
-        legitimacy_bp: -500
+        legitimacy_bp: -800
+        wealth_bp: -600
+        unrest_bp: 500
         outcome: >-
-          You give him lodging in the guest-hall. The Yan army wants to know why.
+          You give him lodging in the guest-hall and his retinue takes the rest. The people
+          of Qufu grumble at the cost, and the Yan army wants to know why.
+      - label: "Lodge him outside the walls"
+        wealth_bp: -200
+        legitimacy_bp: 2200
+        deeds: {men: 500}
+        outcome: >-
+          A guard-post is set up in a lodge beyond the city, and food is sent out. The king's
+          party takes offence at the shabby welcome and moves on; the Yan army hears of it.
     history: >-
       In 284 BC King Min of Qi fled his capital and was refused entry by Zou and Lu (Shiji 46);
       the king was killed at Ju by the Chu general Nao Chi. The detailed scene of the gate
@@ -196,8 +226,8 @@ chapters:
       and Confucius's family is in Qufu.
 
 
-      Chu's army is at your border. You have a few thousand men. There is nobody left to ask
-      for help. Your master of ceremonies says only that the temple must be saved.
+      Chu's army is at your border. You have a few thousand men. Qin is far away and busy
+      against Zhao. Your master of ceremonies says only that the temple must be saved.
     choices:
       - label: "Submit to Chu"
         historical: true
@@ -212,6 +242,12 @@ chapters:
         legitimacy_bp: -1000
         outcome: >-
           Your army is a few thousand strong. The Chu army is not.
+      - label: "Appeal to Qin for help"
+        legitimacy_bp: -1500
+        wealth_bp: -500
+        outcome: >-
+          Your envoys go west with the temple's bronzes. Qin is busy against Zhao and sends
+          nothing, and the Chu army arrives before they return.
     history: >-
       Chu annexed Lu (256 BC by the usual count; the Shiji's Lu chapter gives 249). Duke Qing
       became a commoner and the sacrifices ended. Chu's Lord Chunshen made Xunzi magistrate of

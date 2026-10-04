@@ -246,7 +246,7 @@ chapters:
           Three thousand troops go west under a deputy. The Khan reads the difference.
         deeds: {men: 3000}
       - label: "Send guides and scouts, not an army"
-        legitimacy_bp: 1000
+        legitimacy_bp: 1400
         wealth_bp: 500
         outcome: >-
           A small company of horsemen who know the roads goes with the Mongol army, and your oasis

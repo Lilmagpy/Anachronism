@@ -48,7 +48,7 @@ chapters:
           You greet Alexander with words of loyalty and gifts. He is pleased. Your own people
           are not, and the garrison does not leave.
       - label: "Arm the citizens and wait for Athens to move"
-        legitimacy_bp: 300
+        legitimacy_bp: 1000
         unrest_bp: 500
         outcome: >-
           The armouries are opened and the young men drill in the agora. You vote nothing, and
@@ -96,7 +96,7 @@ chapters:
           marches.
         deeds: {men: 3000, grudges: {macedon: 3000}}
       - label: "Wait for proof, but arm the walls"
-        legitimacy_bp: 1000
+        legitimacy_bp: 1700
         unrest_bp: 1000
         outcome: >-
           The assembly puts off its vote, and fifteen hundred men are put on the walls while you

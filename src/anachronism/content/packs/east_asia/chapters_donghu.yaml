@@ -35,18 +35,26 @@ chapters:
       learned your pastures, your chiefs and their quarrels, and your people like him. Now he
       asks leave to go home: his father is old, he says, and the king of Yan is asking for him.
     choices:
-      - label: "Let him go home as a friend"
+      - label: "Send Qin Kai home with gifts"
         historical: true
         legitimacy_bp: 500
         outcome: >-
           You send him off with gifts and a horse. The Shiji says the Hu trusted him greatly.
           He remembers every camp he passed.
-      - label: "Keep the hostage a little longer"
+      - label: "Keep the hostage until Yan sends another"
         unrest_bp: 300
         legitimacy_bp: -200
         outcome: >-
           Yan sends polite letters and more silk. A year later the answer is the same, and Qin
           Kai's smile grows a little thinner.
+      - label: "Release him, but for a ransom in silk"
+        wealth_bp: 400
+        legitimacy_bp: 400
+        unrest_bp: 300
+        outcome: >-
+          Yan pays, with some grumbling, and Qin Kai rides south with your chiefs' blessing
+          and the knowledge of every well on the road. Some of your people think you have
+          sold a friend; others think you have driven a hard bargain.
     history: >-
       Qin Kai, a Yan nobleman, was a hostage among the Hu (the Donghu), who trusted him
       greatly; on his return he led Yan's army against them (about 300 BC).
@@ -71,9 +79,10 @@ chapters:
 
       Your riders can strike and vanish, but they cannot stand against a Yan army that has
       come to stay. Your chiefs say fight at the passes. Others say take the herds and the
-      people north, and let the grass decide how far Yan can follow.
+      people north, and let the grass decide how far Yan can follow. A few of the older
+      men would send horses to the Yan camp and ask what price they want.
     choices:
-      - label: "Draw the people and herds back, far to the north"
+      - label: "Take the herds and people north"
         historical: true
         legitimacy_bp: -800
         unrest_bp: 600
@@ -83,13 +92,22 @@ chapters:
           builds a long wall, with commanderies from Shanggu to Liaodong, to keep the grass
           from the plough and the plough from the grass. You are weaker, and alive.
         deeds: {peace_with: [yan], grudges: {yan: 500}, martial_bp: 2000, men: 6000}
-      - label: "Fight at the passes"
+      - label: "Fight them at the mountain passes"
         legitimacy_bp: 300
         unrest_bp: 800
         outcome: >-
           Your riders ambush the Yan columns twice and are caught on the third day by an army
           that knew where to wait. You lose many men, and Yan keeps coming.
-        deeds: {martial_bp: 300}
+        deeds: {martial_bp: 1000, men: 3000}
+      - label: "Buy peace with horses and tribute"
+        wealth_bp: -800
+        legitimacy_bp: -500
+        unrest_bp: 300
+        outcome: >-
+          Your envoys drive a string of horses to the Yan camp and return with a truce, for
+          now. Your chiefs mutter that a people who pays once will be asked again, and Qin
+          Kai knows exactly what your herds are worth.
+        deeds: {peace_with: [yan]}
     history: >-
       Around 300 BC the Yan general Qin Kai drove the Donghu back "a thousand li"; Yan then
       built a wall from Zaoyang to Xiangping and set up the commanderies of Shanggu, Yuyang,
@@ -117,7 +135,7 @@ chapters:
       Then, the Shiji says, he changed. Your chiefs say that a Zhao army, fresh and full of
       cavalry and crossbowmen, is heading north. It has beaten the Xiongnu already.
     choices:
-      - label: "Give way before him, and keep the herds safe"
+      - label: "Fall back and keep the herds safe"
         historical: true
         legitimacy_bp: -300
         outcome: >-
@@ -135,8 +153,16 @@ chapters:
         unrest_bp: 400
         outcome: >-
           A raid brings home sheep and silk, and brings Li Mu's whole army down on you a year
-          sooner.
-        deeds: {martial_bp: 300}
+          sooner. Your chiefs call up every rider they can find.
+        deeds: {martial_bp: 1500, men: 4000}
+      - label: "Offer Zhao horses for a truce"
+        wealth_bp: -500
+        legitimacy_bp: -300
+        outcome: >-
+          Zhao has always bought horses from the steppe, and its envoys do not refuse yours.
+          The truce is kept while Li Mu watches, and you are left to wonder what he is
+          counting.
+        deeds: {peace_with: [zhao], martial_bp: 1500, men: 8000}
     history: >-
       The Shiji says that Zhao's general Li Mu defeated the Xiongnu, destroyed the Dan Lan,
       crushed the Donghu and received the Linhu's surrender. It gives no year; historians place
@@ -213,9 +239,9 @@ chapters:
       The story says that Modu asked his lords. Some said: it is wasteland, give it. Modu
       shouted that land is the root of the state, and had the ones who said "give it" put to
       death. Then he mounted and gave the order: anyone who lags behind is to be beheaded.
-      His army rode east, and you had not set a guard.
+      His army rode east.
     choices:
-      - label: "Ask for the land"
+      - label: "Ask Modu for the empty land"
         historical: true
         legitimacy_bp: -3000
         unrest_bp: 3000
@@ -226,11 +252,21 @@ chapters:
           Xianbei, who will have histories of their own.
         deeds: {ruler_falls: "is killed when Modu's riders overrun the camps"}
       - label: "Do not ask: set a guard on the western border"
-        legitimacy_bp: 800
+        legitimacy_bp: -1200
+        unrest_bp: 1200
         outcome: >-
-          You choose to be careful. The Xiongnu are still coming. Your riders are awake when
-          they arrive, and the fight is long, and not certain.
-        deeds: {martial_bp: 2000, men: 6000}
+          You choose to be careful, and the camps grumble at the cost of riders kept awake
+          all summer. The Xiongnu are still coming. Your riders are awake when they arrive,
+          and the fight is long, and not certain.
+        deeds: {martial_bp: 1500, men: 4000}
+      - label: "Pull the herds back from the border"
+        legitimacy_bp: -1500
+        unrest_bp: 1500
+        wealth_bp: -800
+        outcome: >-
+          The herds are moved east, away from the empty land, and your chiefs complain of
+          lost pasture and lost face. The Xiongnu are still coming, and they find a people
+          that is thinner on the ground but harder to catch.
     history: >-
       By the story in the Shiji, Modu answered the Donghu demand for the border wasteland by
       attacking, destroyed the Donghu king and took his people and herds (about 209-208 BC).

@@ -46,10 +46,11 @@ chapters:
           citizens without the vote. Latium does not rise against Rome again.
         deeds: {ruler_falls: "lays down his office at the end of his term", take: [a3_campania]}
       - label: "Keep the Latin League, with Rome at its head"
+        legitimacy_bp: 1000
         unrest_bp: 500
         outcome: >-
-          The League is allowed to go on meeting. Its cities go on thinking that they, and not
-          Rome, ought to be the equals of one another.
+          The League is allowed to go on meeting, and its cities are glad to be spared. They go
+          on thinking that they, and not Rome, ought to be the equals of one another.
         deeds: {ruler_falls: "lays down his office at the end of his term"}
       - label: "Break every Latin city that rose against you"
         unrest_bp: 1000
@@ -88,7 +89,7 @@ chapters:
       these: the Romans will leave their arms, go under the yoke, withdraw their colonies and
       make peace.
     choices:
-      - label: "Accept the terms, and make the treaty"
+      - label: "Swear the treaty at the pass"
         historical: true
         legitimacy_bp: -1500
         unrest_bp: 1000
@@ -102,9 +103,19 @@ chapters:
         deeds: {ruler_falls: "lays down his office at the end of his term", martial_bp: 1000}
       - label: "Break out and fight"
         legitimacy_bp: -1000
+        unrest_bp: 1500
         outcome: >-
           Your men are packed in a ravine with nowhere to form a line. You fight until
           you cannot, and the Samnites put the survivors to the sword.
+        deeds: {ruler_falls: "lays down his office at the end of his term", martial_bp: 500}
+      - label: "Ask for a truce, not a treaty"
+        legitimacy_bp: -1000
+        unrest_bp: 500
+        wealth_bp: -500
+        outcome: >-
+          You tell Pontius that consuls cannot bind Rome and ask only for a truce while the
+          Senate decides. He answers that he did not trap an army to be put off, and the terms
+          stand as he first gave them.
         deeds: {ruler_falls: "lays down his office at the end of his term"}
     history: >-
       In 321 BC (Livy's date) two Roman armies were trapped by the Samnites at the Caudine
@@ -115,7 +126,7 @@ chapters:
     scenario: alexander
     civ: rome
     year: -312
-    title: "The Road and the Water"
+    title: "The Censor's Term"
     place: "The Forum, Rome"
     speaker: steward
     speaker_name: "Gaius Plautius"
@@ -146,9 +157,19 @@ chapters:
         deeds: {ruler_falls: "lays down his office at the end of his term", martial_bp: 500}
       - label: "Resign with Plautius after eighteen months"
         legitimacy_bp: 500
+        influence: {nobility: 500}
         outcome: >-
-          You obey the law, and the work is left to censors who may or may not want it.
+          You obey the law, and the nobles are pleased. The work is left to censors who may or
+          may not want it.
         deeds: {ruler_falls: "lays down his office at the end of his term"}
+      - label: "Build the road alone, then resign"
+        wealth_bp: -1000
+        legitimacy_bp: 500
+        outcome: >-
+          You build the road south to Capua in your eighteen months and leave the water for a
+          later censor. The legions soon use the road, and the city goes on drinking from its
+          wells and the Tiber.
+        deeds: {ruler_falls: "lays down his office at the end of his term", martial_bp: 500}
     history: >-
       The censor Appius Claudius Caecus, in 312 BC, began the Via Appia and the Aqua Appia, and
       kept his office beyond the legal eighteen months.
@@ -158,7 +179,7 @@ chapters:
     scenario: alexander
     civ: rome
     year: -300
-    title: "Priests for the People"
+    title: "The Tribunes Ogulnii"
     place: "The Forum"
     speaker: steward
     speaker_name: "The tribunes Quintus and Gnaeus Ogulnius"
@@ -191,6 +212,15 @@ chapters:
         unrest_bp: 1500
         outcome: >-
           The tribunes wait. The plebeians remember.
+        deeds: {ruler_falls: "lays down his office at the end of his term"}
+      - label: "Admit plebeian pontiffs, not augurs"
+        legitimacy_bp: 1500
+        unrest_bp: -500
+        influence: {clergy: -300}
+        outcome: >-
+          The pontiffs' college is opened and the augurs' is not. The plebeians take the first
+          as a victory and a promise, and the augurs keep their old exclusive right to say what
+          the gods approve.
         deeds: {ruler_falls: "lays down his office at the end of his term"}
     history: >-
       The Ogulnian law (300 BC) opened the colleges of pontiffs and augurs to plebeians, and
@@ -237,6 +267,14 @@ chapters:
           Your men, tired by the march, meet an enemy ready for them, and the battle swings
           back and forth until nightfall without a decision.
         deeds: {ruler_falls: "lays down his office at the end of his term"}
+      - label: "Draw the allies off by raiding Etruria"
+        legitimacy_bp: 2000
+        unrest_bp: 500
+        deeds: {men: 2000, ruler_falls: "lays down his office at the end of his term"}
+        outcome: >-
+          You send a force to ravage Etruria, and the Etruscans and Umbrians march home to
+          defend their fields. The enemy army is smaller when the battle is joined, and your
+          raiders are far from the main force.
     history: >-
       The Romans under Fabius Rullianus and Decius Mus beat the Samnites and Gauls at Sentinum
       (295 BC); Decius died after devoting himself to the gods below.
@@ -279,6 +317,14 @@ chapters:
         outcome: >-
           Some debts are eased. The plebeians return, and are back within a few years.
         deeds: {ruler_falls: "lays down his office at the end of his term", take: [a3_samnium]}
+      - label: "Cancel the debts, and leave the laws alone"
+        legitimacy_bp: 2200
+        unrest_bp: -1500
+        influence: {guilds: -500}
+        deeds: {take: [a3_samnium], ruler_falls: "lays down his office at the end of his term"}
+        outcome: >-
+          The debts are written off and the plebeians return. The moneylenders are angry, and
+          the question of whose votes bind the Senate is left for another secession.
     history: >-
       Around 287 BC a secession of the plebs over debt ended with the dictator Quintus Hortensius
       passing the lex Hortensia, making plebiscites binding on all citizens. Later writers say
@@ -322,6 +368,13 @@ chapters:
           You fall back, joined by the other consul, and make Pyrrhus come to you. He is
           pleased to.
         deeds: {ruler_falls: "lays down his office at the end of his term"}
+      - label: "Hear Pyrrhus's offer to arbitrate"
+        legitimacy_bp: -500
+        wealth_bp: -300
+        outcome: >-
+          You meet the king's envoy and listen to his offer to judge between Rome and Tarentum.
+          Rome has not asked for an arbiter, and the Senate is not pleased that you listened.
+        deeds: {ruler_falls: "lays down his office at the end of his term"}
     history: >-
       Pyrrhus beat the consul Laevinus at Heraclea in 280 BC, in his first battle in Italy, using
       elephants; his own losses were heavy.
@@ -333,7 +386,7 @@ chapters:
     scenario: alexander
     civ: rome
     year: -279
-    title: "A Blind Man in the Senate"
+    title: "Cineas in Rome"
     place: "The Senate house"
     speaker: epirus
     speaker_name: "Cineas"
@@ -351,7 +404,7 @@ chapters:
 
       The Senate is close to agreeing. Your sons carry you in on a chair.
     choices:
-      - label: "Say that Rome makes no peace while Pyrrhus is in Italy"
+      - label: "Refuse peace while he is in Italy"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -367,6 +420,12 @@ chapters:
           The Greeks of Italy keep their king, and Rome keeps what she held before. In every
           Italian town, people ask whether Rome was ever the master.
         deeds: {ruler_falls: "lays down his office at the end of his term"}
+      - label: "Talk, but give up no Samnite land"
+        legitimacy_bp: 1000
+        deeds: {peace_with: [epirus], ruler_falls: "lays down his office at the end of his term"}
+        outcome: >-
+          The Senate agrees to talk and refuses to restore what Rome has taken from the Samnites.
+          Cineas carries the answer back, and the king is not satisfied.
     history: >-
       After Heraclea Pyrrhus's envoy Cineas offered terms in Rome (winter of 280-279 BC); the
       aged Appius Claudius Caecus persuaded the Senate to refuse while Pyrrhus remained in Italy.
@@ -378,7 +437,7 @@ chapters:
     scenario: alexander
     civ: rome
     year: -275
-    title: "Beneventum"
+    title: "Pyrrhus Returns"
     place: "A hill camp near Maleventum, in Samnium"
     speaker: general
     speaker_name: "Your tribunes"
@@ -394,7 +453,7 @@ chapters:
       Your other consul, Lentulus, is far away in Lucania. You have the hills, and a camp on
       ground the elephants find hard to reach.
     choices:
-      - label: "Stay on the hills and fight where he finds you"
+      - label: "Hold the hills and let him come"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -406,12 +465,19 @@ chapters:
           are given a triumph in which, later writers say, elephants are seen in Rome for the
           first time.
         deeds: {ruler_falls: "lays down his office at the end of his term", martial_bp: 500}
-      - label: "Refuse battle, and wait behind your ramparts"
+      - label: "Stay behind the ramparts"
         legitimacy_bp: -500
         outcome: >-
           Pyrrhus waits, then moves on, and tells the world that the Romans would not meet
           him.
         deeds: {ruler_falls: "lays down his office at the end of his term"}
+      - label: "Meet him on open ground"
+        legitimacy_bp: 1500
+        unrest_bp: 500
+        deeds: {men: 2000, ruler_falls: "lays down his office at the end of his term"}
+        outcome: >-
+          You march your legion down the hill to meet the king before he can use the night. The
+          elephants are in their element on the plain, and the battle is hard.
     history: >-
       Manius Curius Dentatus beat Pyrrhus near Maleventum (Beneventum) in 275 BC; Pyrrhus left
       Italy soon afterwards, leaving a garrison in Tarentum.
@@ -439,7 +505,7 @@ chapters:
       The richest city of the Greek west is yours to deal with. The Tarentines have
       called a foreign king into Italy and caused you ten years of trouble.
     choices:
-      - label: "Let them keep their freedom, but take their arms and ships"
+      - label: "Spare the city, but disarm it"
         historical: true
         legitimacy_bp: 1500
         wealth_bp: 1000
@@ -457,6 +523,13 @@ chapters:
           The treasures of Tarentum come to Rome, and every Greek city of the south sees
           what to fear. They fight on.
         deeds: {take: [a3_magna_graecia]}
+      - label: "Make Tarentum an ally on easy terms"
+        legitimacy_bp: 1500
+        wealth_bp: 500
+        deeds: {take: [a3_magna_graecia], ruler_falls: "lays down his office at the end of his term"}
+        outcome: >-
+          Tarentum keeps its walls and its ships and swears friendship. It pays little, and
+          the Tarentines remember that Rome treated them lightly.
     history: >-
       Tarentum surrendered to Rome in 272 BC after Pyrrhus's death, on terms: it kept self-rule
       but gave up its arms and fleet and had its walls pulled down. Rome was then master of the Italian

@@ -27,7 +27,7 @@ chapters:
       Your son Yoshihiro wants to arm a third of the army with guns, and drill them to fire
       in volleys.
     choices:
-      - label: "Arm them"
+      - label: "Arm a third of the army"
         historical: true
         wealth_bp: -1500
         legitimacy_bp: 500
@@ -38,8 +38,20 @@ chapters:
         deeds: {martial_bp: 1500}
       - label: "Keep to bows and spears"
         legitimacy_bp: 500
+        wealth_bp: 500
         outcome: >-
-          Your old warriors are pleased. The smiths sell their guns to other lords.
+          Your old warriors are pleased, and drill harder with the weapons they know. The
+          smiths sell their guns to other lords.
+        deeds: {men: 2000}
+      - label: "Send smiths to Tanegashima to learn"
+        knowledge_bp: 800
+        wealth_bp: -800
+        legitimacy_bp: 300
+        outcome: >-
+          Your best smiths spend a year in the island's forges, learning how the barrels are
+          bored and the screws are cut. Guns come later, and better made, and the army does
+          not wait for them.
+        deeds: {martial_bp: 500}
     history: >-
       Portuguese firearms reached Tanegashima in 1543; the Shimazu used guns in battle by 1549
       and became noted for the 'tsuri-nobuse' ambush tactic.
@@ -61,10 +73,10 @@ chapters:
       strategist, Iehisa the tactician, as the family will remember them.
 
 
-      Your grandfather said the four should be one. You can stay in power, or step aside now,
-      while you can still advise them.
+      Your grandfather said the four should be one. You can stay in power, step aside now
+      while you can still advise them, or share the rule with the eldest.
     choices:
-      - label: "Hand the house to Yoshihisa, and become a monk"
+      - label: "Retire in favour of Yoshihisa"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
@@ -72,9 +84,17 @@ chapters:
           together. You live five more years.
         deeds: {ruler_falls: "retires, and shaves his head as a monk"}
       - label: "Keep the reins a while longer"
-        unrest_bp: 500
+        legitimacy_bp: 800
+        unrest_bp: 300
         outcome: >-
-          Your sons wait, and their retainers begin to pick sides.
+          Your sons wait, and their retainers begin to pick sides. The old lord's name still
+          carries weight in every hall of Satsuma.
+      - label: "Share the rule with Yoshihisa"
+        legitimacy_bp: 700
+        wealth_bp: 200
+        outcome: >-
+          Yoshihisa sits beside you and signs beside you. The retainers learn to bring each
+          matter to both, and some learn to bring it to whichever of you will say yes.
     history: >-
       Shimazu Takahisa retired in favour of his son Yoshihisa in 1566 and died in 1571.
     sources: ["Shimazu-ke monjo", "Turnbull, The Samurai Sourcebook (1998)"]
@@ -98,17 +118,26 @@ chapters:
       He proposes not to wait for help: to attack the Ito camp at once, with part of his men
       showing themselves and running, and the rest hidden in the grass with guns.
     choices:
-      - label: "Let him fight"
+      - label: "Let him spring the ambush"
         historical: true
         legitimacy_bp: 2000
         outcome: >-
           The Ito chase the bait into the trap. Their commanders are killed and their army is
           broken. Kizaki becomes 'the Okehazama of Kyushu', and the Ito never recover.
         deeds: {martial_bp: 500}
-      - label: "Order him to hold the castle"
-        legitimacy_bp: -500
+      - label: "Order him to hold Kakuto"
+        legitimacy_bp: 1500
         outcome: >-
-          Kakuto holds. The Ito ravage the farmland around it and go home.
+          Kakuto holds. The Ito ravage the farmland around it and go home, and your name is
+          honoured for patience.
+        deeds: {men: 1000}
+      - label: "Send a relief column to Kakuto"
+        legitimacy_bp: 1200
+        wealth_bp: -300
+        outcome: >-
+          Your own column marches through the night to join the castle. The Ito find two
+          armies in front of them, and withdraw at a cost on both sides.
+        deeds: {men: 1500, martial_bp: 500}
     history: >-
       At Kizakibaru (1572) Shimazu Yoshihiro, with some 300 men, defeated an Ito army of about
       3,000.
@@ -133,7 +162,7 @@ chapters:
 
       The Otomo army is camped on the Mimi river, divided, its generals quarrelling.
     choices:
-      - label: "Draw them across the river into the trap"
+      - label: "Lure their vanguard across the river"
         historical: true
         legitimacy_bp: 2500
         outcome: >-
@@ -141,10 +170,20 @@ chapters:
           both sides. Thousands drown in the Mimi. Hyuga is yours, and Sorin goes home and
           never leads an army again.
         deeds: {take: [j_hyuga], grudges: {otomo: 2500}}
-      - label: "Hold the castles, and let them starve"
-        food_bp: -1500
+      - label: "Hold the castles and let them starve"
+        legitimacy_bp: 2500
+        food_bp: -500
         outcome: >-
-          The Otomo army sits in Hyuga through the summer, and goes home in the autumn.
+          The Otomo army sits in Hyuga through the summer, burning what it can reach, and goes
+          home in the autumn. Your castles have held and the people of the south praise you.
+        deeds: {men: 2000, martial_bp: 500}
+      - label: "Offer Sorin a truce on the border"
+        legitimacy_bp: 1000
+        wealth_bp: -500
+        outcome: >-
+          Your envoys cross the river under a white flag with silk and a proposal. Sorin
+          listens, because his generals are quarrelling, but the Ito will not be forgotten.
+        deeds: {peace_with: [otomo]}
     history: >-
       The Shimazu destroyed the Otomo army at Mimigawa (1578), taking Hyuga.
     diverged: >-
@@ -170,7 +209,7 @@ chapters:
       Between the sea and the marshes at Okitanawate there is a narrow road. Iehisa says the
       bear will not be able to use his numbers there.
     choices:
-      - label: "Send Iehisa"
+      - label: "Send Iehisa with five thousand men"
         historical: true
         legitimacy_bp: 2500
         outcome: >-
@@ -178,10 +217,18 @@ chapters:
           cannon fire from the ships into its flank. A Shimazu warrior reaches the bear's
           palanquin and cuts off his head. Hizen is yours to command.
         deeds: {take: [j_hizen]}
-      - label: "Let Arima fend for himself"
+      - label: "Wait on the border and watch"
         legitimacy_bp: -1000
         outcome: >-
           Arima surrenders. The bear of Hizen turns south.
+        deeds: {men: 1500}
+      - label: "Relieve Shimabara by sea"
+        legitimacy_bp: 2500
+        wealth_bp: -300
+        outcome: >-
+          A small fleet carries Iehisa's men across the bay and lands them under Arima's guns.
+          The bear's army, hemmed by the marshes, loses its numbers' worth.
+        deeds: {ships: 3, men: 2000}
     history: >-
       Shimazu Iehisa and Arima Harunobu defeated and killed Ryuzoji Takanobu at Okitanawate
       (1584).
@@ -206,7 +253,7 @@ chapters:
 
       Hideyoshi's vanguard has already landed, with Chosokabe of Shikoku.
     choices:
-      - label: "Take Bungo anyway"
+      - label: "Press on and take Bungo"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
@@ -215,10 +262,18 @@ chapters:
           merchants. All Kyushu is yours. Hideyoshi is assembling two hundred thousand men.
         deeds: {take: [j_bungo]}
       - label: "Obey Hideyoshi's order"
-        legitimacy_bp: -1000
+        legitimacy_bp: 500
+        wealth_bp: 500
         outcome: >-
-          You stop at the border of Bungo. Hideyoshi's envoys thank you, and draw a new map of
-          Kyushu that leaves you less than you hold.
+          You stop at the border of Bungo. Hideyoshi's envoys thank you, send gifts, and draw
+          a new map of Kyushu that leaves you less than you hold.
+        deeds: {peace_with: [otomo]}
+      - label: "Take only the border castles"
+        legitimacy_bp: 800
+        outcome: >-
+          You seize the castles on the Bungo border and stop there, and write to Hideyoshi
+          that the rest is a matter for the Otomo to settle with you. He is not satisfied.
+        deeds: {men: 3000, martial_bp: 1000}
     history: >-
       The Shimazu ignored Hideyoshi's order of truce, destroyed his vanguard at Hetsugigawa
       (1586) and took Funai, provoking his invasion of Kyushu.
@@ -249,11 +304,19 @@ chapters:
           He keeps his word: Satsuma and Osumi stay Shimazu. Your brother Yoshihiro will lead
           the clan. Everything else you took is given to others.
         deeds: {ruler_falls: "shaves his head and submits to Hideyoshi", give: [j_hyuga, j_hizen, j_bungo]}
-      - label: "Fight in the mountains"
+      - label: "Fight on from the mountains"
         unrest_bp: 2500
         outcome: >-
           Your men take to the hills of Satsuma. Hideyoshi's army settles in to burn the rice
           fields.
+        deeds: {men: 4000, martial_bp: 1500}
+      - label: "Send a hostage and ask for terms"
+        legitimacy_bp: -1500
+        wealth_bp: -500
+        outcome: >-
+          A close kinsman goes to Hideyoshi's camp as a pledge, and your envoys
+          bargain over what will be left. Hideyoshi is in no hurry.
+        deeds: {peace_with: [oda]}
     history: >-
       Hideyoshi's Kyushu campaign (1587) forced Shimazu Yoshihisa to submit; the Shimazu kept
       Satsuma and Osumi.
@@ -276,7 +339,7 @@ chapters:
       A Ming and Korean army, perhaps thirty or forty thousand strong, is coming to take the
       castle. You have about seven thousand.
     choices:
-      - label: "Let them reach the walls, then charge"
+      - label: "Let them close, then sally out"
         historical: true
         legitimacy_bp: 2500
         outcome: >-
@@ -284,10 +347,16 @@ chapters:
           sally out and rout them. The Koreans and Chinese call you 'Demon Shimazu'. Then
           Hideyoshi dies, and the army goes home; on the way, the Shimazu ships are caught by
           Admiral Yi Sun-sin at Noryang, and Yi dies winning.
-      - label: "Abandon the castle"
+      - label: "Fall back to the coast"
         legitimacy_bp: -1500
         outcome: >-
           You withdraw to the coast. The Ming army takes Sacheon without a fight.
+      - label: "Sally out before they form up"
+        legitimacy_bp: 2300
+        outcome: >-
+          You strike their columns as they come off the road, and for an hour the day is
+          yours. Then the Ming reserves come up, and you pull back to the walls with heavy
+          losses.
     history: >-
       At Sacheon (1598) Shimazu Yoshihiro defeated a much larger Ming-Korean army; the Shimazu
       fleet fought at Noryang during the withdrawal.
@@ -311,7 +380,7 @@ chapters:
       around you. Your nephew Toyohisa says there is only one way home that no one will
       expect: straight forward, through the middle of the enemy.
     choices:
-      - label: "Charge through the Tokugawa army"
+      - label: "Ride through the Tokugawa lines"
         historical: true
         legitimacy_bp: 2500
         outcome: >-
@@ -320,10 +389,17 @@ chapters:
           killed; a Tokugawa general is badly wounded. About eighty men reach Satsuma with you.
           Ieyasu decides that the Shimazu are not worth fighting again, and leaves them their
           lands.
-      - label: "Surrender to Ieyasu"
+      - label: "Yield to Ieyasu and ask for terms"
         legitimacy_bp: -2500
         outcome: >-
           You give up your sword to the Tokugawa. Ieyasu sends you home without your domain.
+      - label: "Slip away over the mountain tracks"
+        legitimacy_bp: 2300
+        unrest_bp: 300
+        outcome: >-
+          Your men go up into the hills by night, leaving their banners standing, and
+          scatter into small parties. Many are caught by Tokugawa patrols and by farmers
+          hunting for the reward, and the few who reach the coast do so a long way from home.
     history: >-
       At Sekigahara (1600) the Shimazu broke out through the Eastern army ('the Shimazu
       retreat'), losing most of their men; the domain survived intact.
@@ -361,9 +437,20 @@ chapters:
           for two and a half centuries secretly pays Satsuma too.
         deeds: {take: [j_ryukyu]}
       - label: "Trade with Ryukyu instead"
-        wealth_bp: 1000
+        wealth_bp: 3000
+        legitimacy_bp: 500
         outcome: >-
-          Your merchants go to Naha and haggle like everyone else.
+          Your merchants go to Naha and haggle like everyone else, and the profits come in
+          more slowly than a war's plunder but just as surely.
+        deeds: {ships: 5}
+      - label: "Demand tribute with ships off Naha"
+        wealth_bp: 3000
+        legitimacy_bp: 1000
+        unrest_bp: 500
+        outcome: >-
+          Your fleet anchors off Naha and sends ashore a demand for tribute and a Shimazu
+          envoy. The king pays some of it, and sends his envoys home with excuses.
+        deeds: {ships: 8}
     history: >-
       Satsuma invaded Ryukyu in 1609, capturing King Sho Nei; Ryukyu became a vassal of
       Satsuma while continuing its tribute to China.

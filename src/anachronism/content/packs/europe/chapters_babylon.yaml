@@ -446,7 +446,7 @@ chapters:
           The statue goes south on a reed boat by night. Kutir-Nahhunte takes the gold and the
           city and searches the temple, and finds nothing.
       - label: "Take the army to the marshes and fight on"
-        legitimacy_bp: -1500
+        legitimacy_bp: -800
         food_bp: -1000
         outcome: >-
           The army leaves Babylon by night, with the god's statue. In the Sealand's reed-beds the

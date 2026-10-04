@@ -45,6 +45,13 @@ chapters:
           Ramesses finds the gates shut and marches past. Muwatalli thanks you, and sends no
           reward.
         deeds: {peace_with: [hatti], grudges: {egypt: 2000}}
+      - label: "Trade with both and take no side"
+        wealth_bp: 1000
+        legitimacy_bp: 1000
+        unrest_bp: 300
+        outcome: >-
+          Your ports sell grain and timber to the Egyptian army and to the Hittite one. Both
+          pay, and neither trusts you, and each notes that you have not yet chosen.
     history: >-
       Benteshina of Amurru went over from Hatti to Egypt shortly before the battle of Kadesh
       (1274 BC); Ramesses II's army passed through Amurru, and Amurrite troops are shown
@@ -87,7 +94,7 @@ chapters:
           Ramesses finds you a house. The Hittites put their own man on your throne, and
           Amurru is a province of Hatti in all but name.
         deeds: {peace_with: [hatti], ruler_falls: "flees to Egypt"}
-      - label: "Hold the hill forts"
+      - label: "Hold the hill forts against him"
         unrest_bp: 1500
         outcome: >-
           Your fortresses hold for a season. Then Egypt does not come, and the Great King
@@ -133,11 +140,22 @@ chapters:
           for longer than the empire.
         deeds: {peace_with: [hatti]}
       - label: "Swear, but write privately to Ramesses"
-        legitimacy_bp: 500
+        legitimacy_bp: 2000
+        wealth_bp: 1500
+        unrest_bp: 500
         outcome: >-
-          Ramesses is at war with Hatti and glad to hear from you. Hattusili, who has spies
-          everywhere, will hear of it too, in time.
-        deeds: {grudges: {hatti: 2000}}
+          You swear, and Ramesses, who is still at war with Hatti, is glad to hear from you
+          and sends gifts. Hattusili, who has spies everywhere, will hear of it too, in
+          time.
+        deeds: {peace_with: [hatti], grudges: {hatti: 2000}}
+      - label: "Swear, and ask for a Hittite garrison"
+        legitimacy_bp: 2000
+        unrest_bp: 300
+        outcome: >-
+          Hattusili agrees at once: a Hittite company will hold your border fortresses, and
+          your own people will feed it. It makes Amurru safe against Egypt, and it makes the
+          Great King's wishes very plain in your own hill country.
+        deeds: {men: 3000, martial_bp: 1500}
     history: >-
       Hattusili III, after taking the throne (c. 1267 BC), restored Benteshina to Amurru and
       bound him by treaty. The prologue recounts the family's history from Aziru onwards.
@@ -177,12 +195,19 @@ chapters:
           the rising power of the age. Your merchants lose a market and your house keeps the
           Great King's favour.
         deeds: {grudges: {assyria: 1500}}
-      - label: "Plead for exemption for the coastal trade"
+      - label: "Plead for a coastal exemption"
         wealth_bp: 500
         legitimacy_bp: -1000
         outcome: >-
           Tudhaliya replies that a vassal does not bargain with his lord. He sends the treaty
           again, unchanged, and adds a line about your loyalty.
+      - label: "Accept, but ask for silver in return"
+        legitimacy_bp: 700
+        wealth_bp: -300
+        outcome: >-
+          Tudhaliya, who needs the coast, agrees to a payment in silver for your lost
+          markets. It is smaller than the markets were worth, and it comes with the
+          reminder that the treaty is not a bargain between equals.
     history: >-
       Tudhaliya IV's treaty with Sausgamuwa of Amurru (c. 1230 BC) forbids trade with Assyria
       and forbids ships of Ahhiyawa to carry goods there; the name Ahhiyawa was later erased
@@ -211,7 +236,7 @@ chapters:
       with their families on ox-carts. Egypt, which you once served, has an army on its
       northern frontier. You can see the smoke from your walls.
     choices:
-      - label: "Hold your towns and trust the walls"
+      - label: "Hold the towns behind their walls"
         historical: true
         legitimacy_bp: -2000
         unrest_bp: 2000
@@ -221,11 +246,20 @@ chapters:
           invaders set up a camp in Amurru, and the land was laid waste. The coast falls to
           the Canaanites and the Arameans, and later to the Phoenician cities.
         deeds: {ruler_falls: "is lost with his kingdom"}
-      - label: "Send the royal family to Egypt"
+      - label: "Send your family to Egypt"
         legitimacy_bp: -1500
+        wealth_bp: -1000
         outcome: >-
-          Ramesses receives your family at Pi-Ramesses. The coast is left to the raiders.
+          Ramesses receives your family at Pi-Ramesses, and the treasure goes with it. The
+          coast is left to the raiders.
         deeds: {ruler_falls: "leaves his kingdom"}
+      - label: "Pay the raiders to pass by"
+        wealth_bp: -1500
+        legitimacy_bp: -1000
+        unrest_bp: 800
+        outcome: >-
+          Grain, oil and silver go out to the camps on ox-carts. The columns take them and
+          move on down the coast, and there is much less left in your storehouses than before.
     history: >-
       Ramesses III's record of his year 8 (c. 1177 BC) lists Amurru among the lands the Sea
       Peoples ravaged and says they set up a camp there; Amurru does not appear again as a

@@ -94,7 +94,7 @@ chapters:
           is no nearer to Kyoto.
       - label: "Lend him gold, and write to other lords for him"
         wealth_bp: -800
-        legitimacy_bp: 800
+        legitimacy_bp: 1500
         outcome: >-
           Your letters go out to the lords of the west and of Mino, under the shogun's seal and
           your own. Yoshiaki is grateful and still wants an army.
@@ -142,7 +142,7 @@ chapters:
           Nobunaga takes your envoy's words as a surrender, and turns on the Azai alone.
         deeds: {peace_with: [oda]}
       - label: "Man the border castles and wait"
-        legitimacy_bp: 1100
+        legitimacy_bp: 1500
         wealth_bp: -300
         outcome: >-
           Your garrisons stand to their walls while the two armies shift about to the south.

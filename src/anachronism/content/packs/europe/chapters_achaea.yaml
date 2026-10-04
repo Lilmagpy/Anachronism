@@ -34,7 +34,7 @@ chapters:
       the Gulf. The people have come out to cheer. The exiles want their old houses back, and
       the men who have the houses now do not want to give them up.
     choices:
-      - label: "Make Sicyon a member of the Achaean League"
+      - label: "Bring Sicyon into the Achaean League"
         historical: true
         legitimacy_bp: 2000
         outcome: >-
@@ -43,14 +43,18 @@ chapters:
           start to matter. You go to Egypt for money to settle the exiles' claims, and Ptolemy II
           gives you a large sum for it.
       - label: "Keep Sicyon alone and free"
-        legitimacy_bp: 500
+        legitimacy_bp: 2000
+        wealth_bp: -300
         outcome: >-
-          Nicocles is still across the water, and the king of Macedon is still nearby. Sicyon
-          is small to stand alone.
-      - label: "Seek the friendship of Antigonus Gonatas"
+          The citizens are proud to be free of tyrants and of kings, and they pay for walls and
+          a watch. Nicocles is still across the water, and the king of Macedon is still nearby.
+          Sicyon is small to stand alone.
+      - label: "Seek Antigonus Gonatas's friendship"
         legitimacy_bp: -1000
+        wealth_bp: 800
         outcome: >-
-          The king is glad to have you. He does not do it for nothing.
+          The king is glad to have you, and sends money to settle the exiles' claims. He does
+          not do it for nothing.
     history: >-
       Aratus freed Sicyon from the tyrant Nicocles in 251 BC and brought it into the Achaean
       League, then a small union of towns. He went to Ptolemy II for money to settle the
@@ -80,7 +84,7 @@ chapters:
       moonless night, if you will pay him. If you fail, there will be no second chance, and
       no pardon for you or for them.
     choices:
-      - label: "Take it at night"
+      - label: "Climb the cliff path by night"
         historical: true
         legitimacy_bp: 3000
         outcome: >-
@@ -89,14 +93,28 @@ chapters:
           the Isthmus, and Megara, Troezen and Epidaurus join. The Macedonian king, who spent
           half his life holding the rock, has lost it in a night.
         deeds: {take: [mac_corinth], peace_with: [macedon], men: 40000, martial_bp: 5000, grudges: {macedon: 2500}}
-      - label: "Accept King Antigonus's offer of friendship"
+      - label: "Accept Antigonus's friendship"
         legitimacy_bp: -1000
+        wealth_bp: 1000
         outcome: >-
           Antigonus has been sending you friendly letters and gifts. You turn a good moment
           into a comfortable one, and the rock stays in Macedonian hands.
-      - label: "Wait for a better moment"
+        deeds: {peace_with: [macedon]}
+      - label: "Wait for a larger force"
+        legitimacy_bp: 500
         outcome: >-
-          Persaeus changes the watch and the path is closed. Few chances like this return.
+          You wait, and call up more men and train them through the winter. Persaeus changes
+          the watch and the path is closed. Few chances like this return, but your army is
+          larger.
+        deeds: {men: 10000, martial_bp: 1500}
+      - label: "Seize the lower town first"
+        legitimacy_bp: 2500
+        wealth_bp: 500
+        outcome: >-
+          Your men take the walls of the town below the rock by day, with Corinth's citizens
+          behind them, and the Macedonians draw back into the Acrocorinth. The rock holds, and
+          the siege begins.
+        deeds: {men: 15000, martial_bp: 2000}
     history: >-
       Aratus seized Acrocorinth by night in 243 BC with four hundred men; Corinth, Megara,
       Troezen and Epidaurus joined the League.
@@ -140,12 +158,17 @@ chapters:
         legitimacy_bp: -1000
         unrest_bp: 1500
         outcome: >-
-          The Spartan king takes the League's army. The rich of the Peloponnese, who feared
-          his cancelled debts, bar their doors to him. Doson watches from the north.
-      - label: "Fight on alone"
+          The Spartan king takes the League's army and makes his peace with you. The rich of
+          the Peloponnese, who feared his cancelled debts, bar their doors to him. Doson
+          watches from the north.
+        deeds: {peace_with: [sparta], martial_bp: 1500}
+      - label: "Fight on without allies"
+        legitimacy_bp: -500
         unrest_bp: 2000
         outcome: >-
-          Every year Cleomenes is stronger and you are weaker.
+          You raise every man and every mercenary the League can pay for. Every year
+          Cleomenes is stronger and you are weaker.
+        deeds: {men: 5000, martial_bp: 1500}
     history: >-
       After Cleomenes' victories (227-225 BC) Aratus negotiated with Antigonus III Doson,
       promising him Acrocorinth; Doson beat Cleomenes at Sellasia in 222 BC.
@@ -182,17 +205,22 @@ chapters:
           says that Philip later grew cold, and that he wronged your household. Aratus was
           to die within the year.
         deeds: {peace_with: [aetolia], grudges: {macedon: 500}}
-      - label: "Support Demetrius, and take the fortress"
+      - label: "Support Demetrius and seize Ithome"
         legitimacy_bp: -1500
         unrest_bp: 1500
         outcome: >-
           Philip's men take Ithome. The Messenians lose their freedom, and Greece sees what it
           means to be Philip's friend.
-        deeds: {grudges: {macedon: 1000}}
-      - label: "Say nothing"
-        legitimacy_bp: -500
+        deeds: {men: 4000, grudges: {macedon: 1000}}
+      - label: "Advise a garrison, but free laws"
+        legitimacy_bp: 1000
+        wealth_bp: 500
+        unrest_bp: 300
         outcome: >-
-          Philip decides alone, and not in the way you would have wished.
+          Philip leaves a small garrison on Ithome and lets Messene keep its laws. The nobles
+          and the people both grumble, and both put up with it. Neither side thinks the
+          bargain permanent.
+        deeds: {men: 3000}
     history: >-
       Polybius (7.11-14) says Philip V at Ithome (214 BC) took Aratus's advice and spared
       Messene against Demetrius of Pharos. Aratus died in 213 BC; Plutarch says that Philip
@@ -232,16 +260,20 @@ chapters:
           the Greeks stand and cheer you.
         deeds: {martial_bp: 500, peace_with: [aetolia], grudges: {sparta: 1500}, ruler_falls: "completes his term as general"}
       - label: "Hold the walls"
-        legitimacy_bp: -500
+        legitimacy_bp: 300
+        unrest_bp: 600
         outcome: >-
           Machanidas burns the fields. The farmers who followed you to Mantinea go home
           unpaid, and your drilled pikemen see no battle.
-        deeds: {ruler_falls: "completes his term as general"}
+        deeds: {martial_bp: 800, men: 2000, ruler_falls: "completes his term as general"}
       - label: "Hire another army"
-        wealth_bp: -2000
+        legitimacy_bp: 3200
+        wealth_bp: -500
         outcome: >-
-          Mercenaries fight well when they are paid on time.
-        deeds: {men: 3000, ruler_falls: "completes his term as general"}
+          Mercenaries fight well when they are paid on time. Your hired captains hold the
+          centre and the day is won, though the victory is as much theirs as yours, and the
+          Cretans in the line expect to be paid again.
+        deeds: {men: 6000, martial_bp: 1500, ruler_falls: "completes his term as general"}
     history: >-
       Philopoemen, as general (208/7 BC), reorganised the League's army with pike and heavy
       shield, then defeated and killed Machanidas at Mantinea in 207.
@@ -283,15 +315,19 @@ chapters:
           (197) breaks Macedon, and at the Isthmian Games in 196 Flamininus declares Greece
           free and gives Corinth to the League.
         deeds: {grudges: {macedon: 2500}, ruler_falls: "completes his term as general"}
-      - label: "Stay with Philip"
+      - label: "Keep faith with Philip"
         legitimacy_bp: -1000
+        wealth_bp: -500
         outcome: >-
           Rome and Attalus ravage your coast. You are on the side that loses.
         deeds: {ruler_falls: "completes his term as general"}
-      - label: "Declare neutrality"
-        legitimacy_bp: -500
+      - label: "Stay out of the war"
+        legitimacy_bp: 1500
+        wealth_bp: -500
+        unrest_bp: 500
         outcome: >-
-          Neither side forgives it.
+          The cities that wanted to stay out are pleased, and the cities that wanted war are
+          not. Neither Rome nor Philip forgives it.
         deeds: {ruler_falls: "completes his term as general"}
     history: >-
       The Achaean League voted at Sicyon in autumn 198 BC to join Rome against Philip V,
@@ -338,11 +374,20 @@ chapters:
           Sparta puts up another tyrant, or lets the Romans in. You will fight it again later,
           on worse terms.
         deeds: {take: [mac_corinth]}
-      - label: "Hand Sparta to the Romans to judge"
+      - label: "Ask Rome to judge Sparta"
         legitimacy_bp: -500
         outcome: >-
           Rome likes being asked, and likes it more each year.
         deeds: {take: [mac_corinth]}
+      - label: "Offer Sparta an equal alliance"
+        legitimacy_bp: 2300
+        wealth_bp: -300
+        unrest_bp: 300
+        outcome: >-
+          You send your envoys to Sparta with an offer of friendship and a seat at the table.
+          The Spartans, who have not been offered one in your lifetime, consider it with
+          suspicion, and in the end sign.
+        deeds: {take: [mac_corinth], peace_with: [sparta]}
     history: >-
       In 192 BC Philopoemen forced Sparta into the Achaean League after Nabis' murder; in 188
       he razed its walls and abolished the laws of Lycurgus after it seceded.

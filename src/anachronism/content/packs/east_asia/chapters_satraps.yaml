@@ -41,7 +41,7 @@ chapters:
       you. The soldiers of your garrison, who have been paid late, want to know whom they
       obey.
     choices:
-      - label: "Keep your garrisons and accept the settlement"
+      - label: "Accept it, and keep your garrisons"
         historical: true
         legitimacy_bp: 800
         outcome: >-
@@ -54,6 +54,12 @@ chapters:
         outcome: >-
           Your men cheer, and for a season you are king in all but name. The marshals in the
           west remember who did not ask them.
+      - label: "Swear to Antipater and ask for pay"
+        legitimacy_bp: 1300
+        wealth_bp: -300
+        outcome: >-
+          Your envoys cross Asia with an oath of obedience and a bill for the garrison's arrears.
+          Antipater is pleased with the oath, and the money for the men arrives, slowly.
     history: >-
       At Triparadisus (321 BC) Antipater confirmed Porus and Taxiles in their kingdoms and
       named Peithon son of Agenor over the Greek colonies on the Indus. Eudemus had been left
@@ -64,7 +70,7 @@ chapters:
     scenario: maurya
     civ: satraps
     year: -318
-    title: "The King Who Was Your Guest"
+    title: "Eumenes Needs Elephants"
     place: "Your camp on the Indus"
     speaker: general
     speaker_name: "Eumenes' envoys"
@@ -78,11 +84,11 @@ chapters:
       Hydaspes.
 
 
-      Your envoys say the king can be had. He trusts the Greeks, and you are a Greek he knows.
+      Your envoys say the king can be reached. He trusts the Greeks, and you are a Greek he knows.
       Meanwhile in the Punjab a young man called Chandragupta is gathering an army of his
       own, and sooner or later he will come to the Indus.
     choices:
-      - label: "Kill Porus, take his elephants, and march west to Eumenes"
+      - label: "Seize Porus's elephants and march west"
         historical: true
         legitimacy_bp: -1500
         unrest_bp: 1500
@@ -91,11 +97,22 @@ chapters:
           twenty of them, with your soldiers. The Indus posts are left to whoever wants them. Within a
           few years they will be Chandragupta's. Your column marches out of India for ever.
         deeds: {give: [in_gandhara, in_sindh], give_to: maurya, capital: in_kabul}
-      - label: "Stay on the Indus, and let Eumenes find his elephants elsewhere"
-        legitimacy_bp: 500
+      - label: "Stay on the Indus"
+        legitimacy_bp: -300
+        wealth_bp: -500
+        deeds: {men: 1500}
         outcome: >-
-          Eumenes sends again, and then he stops sending. Porus is your neighbour still, and
-          the young man in the Punjab is another year stronger.
+          You turn Eumenes away and strengthen your posts, which costs money. Eumenes sends
+          again, and then he stops sending. Porus is your neighbour still, and the young man in
+          the Punjab is another year stronger.
+      - label: "Ask Porus to lend Eumenes his elephants"
+        legitimacy_bp: 500
+        unrest_bp: 500
+        wealth_bp: -500
+        deeds: {men: 1000}
+        outcome: >-
+          Porus, who trusts you, sends some elephants with your escort, but he keeps his herd.
+          Eumenes is disappointed, and the posts on the Indus are thin with so many men gone.
     history: >-
       Eudemus killed Porus by treachery and went west to Eumenes with 120 elephants and his
       troops (c. 318-317 BC, Diodorus 19.14). The Greek posts on the Indus then passed to
@@ -123,7 +140,7 @@ chapters:
       may lose heart. They are the hardest men in Asia, but they are sixty or seventy years
       old.
     choices:
-      - label: "Hold your place in the line with the elephants"
+      - label: "Hold the line with the elephants"
         historical: true
         legitimacy_bp: 300
         unrest_bp: 500
@@ -137,6 +154,14 @@ chapters:
         outcome: >-
           Antigonus takes your elephants and thanks you. Whether he would have spared a man
           who changed sides twice, nobody learns.
+      - label: "Move the baggage camp beyond the field"
+        legitimacy_bp: 800
+        wealth_bp: -300
+        unrest_bp: 500
+        outcome: >-
+          The wagons and families are sent back before the battle. The Silver Shields grumble
+          at being parted from their families, and the baggage is no longer a hostage in the
+          camp.
     history: >-
       After Paraitakene (317) and Gabiene (winter 316/315) Eumenes was handed over and killed;
       Antigonus also put Eudemus to death.
@@ -146,7 +171,7 @@ chapters:
     scenario: maurya
     civ: satraps
     year: -312
-    title: "A Thousand Men for Babylon"
+    title: "Babylon After Gaza"
     place: "Gaza, then the road east"
     speaker: ruler
     speaker_name: "Ptolemy"
@@ -163,7 +188,7 @@ chapters:
       give you a small force to go home with. Babylon remembers you kindly, but Antigonus'
       men hold the citadel.
     choices:
-      - label: "Ride for Babylon with what Ptolemy gives you"
+      - label: "Ride for Babylon with Ptolemy's men"
         historical: true
         legitimacy_bp: 2000
         outcome: >-
@@ -176,6 +201,12 @@ chapters:
         outcome: >-
           You grow old in a good house at Alexandria. Babylonia is Antigonus' for as long as he
           lasts.
+      - label: "Wait for a larger army from Ptolemy"
+        legitimacy_bp: 2200
+        deeds: {men: 2000}
+        outcome: >-
+          Ptolemy promises a stronger column. You gain a season, and so does Antigonus, who
+          has time to bring up his own men.
     history: >-
       After the Battle of Gaza (312 BC) Seleucus returned to Babylon with a small force from
       Ptolemy and recovered Babylonia; later reckoning, the Seleucid era, starts from this return (311 BC).
@@ -228,7 +259,7 @@ chapters:
     scenario: maurya
     civ: satraps
     year: -303
-    title: "Five Hundred Elephants"
+    title: "Chandragupta's Offer"
     place: "The border of the two empires"
     speaker: maurya
     speaker_name: "Envoys of Chandragupta"
@@ -245,7 +276,7 @@ chapters:
       marriage was, and what exactly was ceded, is not clear in any source: Strabo is the
       fullest, and he writes two centuries later.
     choices:
-      - label: "Cede the eastern lands for five hundred elephants and a marriage tie"
+      - label: "Trade the Hindu Kush for elephants"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -261,6 +292,13 @@ chapters:
         outcome: >-
           You keep the passes, but you keep a war against a state far bigger than yours too,
           while Antigonus comes.
+      - label: "Offer a marriage tie, keep the passes"
+        legitimacy_bp: 2000
+        unrest_bp: 300
+        deeds: {peace_with: [maurya]}
+        outcome: >-
+          Chandragupta's envoys take the proposal back to Pataliputra. Their answer is that a
+          marriage is a fine thing, and that the mountains are a better one.
     history: >-
       About 303 BC Seleucus and Chandragupta made a treaty: Seleucus ceded Arachosia, Gedrosia
       and the Paropamisadae for 500 elephants, with a marriage agreement; the elephants fought
@@ -273,7 +311,7 @@ chapters:
     scenario: maurya
     civ: satraps
     year: -302
-    title: "An Envoy to Pataliputra"
+    title: "A Greek Who Knows the Road"
     place: "Arachosia, on the road to India"
     speaker: scholar
     speaker_name: "Megasthenes"
@@ -285,7 +323,7 @@ chapters:
       a Greek who has lived in Arachosia with Sibyrtius, the satrap there, offers to go as
       your ambassador to Pataliputra and to write what he sees.
     choices:
-      - label: "Send him as ambassador to Chandragupta's court"
+      - label: "Send Megasthenes to Pataliputra"
         historical: true
         knowledge_bp: 3000
         legitimacy_bp: 500
@@ -295,8 +333,17 @@ chapters:
           India, and he says that the city is surrounded by a timber palisade with five
           hundred and seventy towers.
       - label: "Send a soldier, not a scholar"
+        knowledge_bp: 500
+        legitimacy_bp: 300
         outcome: >-
           Your officer reports on the roads and the elephants. Nobody ever reads it.
+      - label: "Send an officer with rich gifts"
+        knowledge_bp: 2800
+        legitimacy_bp: 500
+        wealth_bp: -300
+        outcome: >-
+          Your officer goes with the gifts and writes a long report on the roads, the cities and
+          the army. A few Greeks copy it, and the court at Pataliputra is polite.
     history: >-
       Megasthenes was sent by Seleucus as an envoy to Chandragupta, and his Indica was used by
       Diodorus, Strabo and Arrian; the date is approximate (c. 302-298 BC).
@@ -308,7 +355,7 @@ chapters:
     scenario: maurya
     civ: satraps
     year: -301
-    title: "Ipsus"
+    title: "The Marshals Against Antigonus"
     place: "Phrygia"
     speaker: general
     speaker_name: "Lysimachus' envoy"
@@ -323,7 +370,7 @@ chapters:
       Antigonus' son Demetrius has the finest cavalry in the world. If he can be cut off
       from his father's phalanx, the day is won.
     choices:
-      - label: "Take the elephants to Phrygia and fight Antigonus"
+      - label: "March to Phrygia with the elephants"
         historical: true
         legitimacy_bp: 2500
         outcome: >-
@@ -336,6 +383,12 @@ chapters:
         outcome: >-
           Without elephants, Lysimachus and Cassander have no hope. Antigonus hears of your
           absence and is glad.
+      - label: "Send the elephants under a general"
+        legitimacy_bp: 2700
+        deeds: {men: 1000}
+        outcome: >-
+          Your lieutenant leads the elephants to Phrygia while you hold Babylon against
+          trouble in the east. He arrives late, and the allies take less notice of you.
     history: >-
       At Ipsus (301 BC) Seleucus' elephants kept Demetrius' cavalry from the phalanx; Antigonus
       was killed and the empire divided among Seleucus, Lysimachus, Cassander and Ptolemy.

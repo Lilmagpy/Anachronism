@@ -141,7 +141,7 @@ chapters:
       - label: "Invite them to Ghazni with honours and pay"
         knowledge_bp: 3100
         wealth_bp: -800
-        legitimacy_bp: 300
+        legitimacy_bp: 900
         outcome: >-
           Some accept the offer and some find reasons to stay where they are. Al-Biruni, who has
           little choice in the matter, goes with the first group.
@@ -187,7 +187,7 @@ chapters:
           idolaters to leave their idols alone.
       - label: "Take a ransom and march on Kannauj"
         wealth_bp: 3900
-        legitimacy_bp: 500
+        legitimacy_bp: 1100
         unrest_bp: 300
         outcome: >-
           Mathura pays to be left alone, and your army goes on to Kannauj with the gold in its
@@ -276,7 +276,7 @@ chapters:
           someone else's country.
         deeds: {men: 2000}
       - label: "Admit them in small groups, under guard"
-        legitimacy_bp: 300
+        legitimacy_bp: 700
         outcome: >-
           The tents are split among your governors, each under watch. The Turkmen accept it for a
           season, and find their chiefs have ways of meeting in secret.

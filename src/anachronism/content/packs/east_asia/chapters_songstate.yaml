@@ -146,12 +146,12 @@ chapters:
           Your ministers whisper that Song is the only state of any size whose ruler is
           content to be called less.
       - label: "Ask Zhou to rank you senior lord"
-        legitimacy_bp: 500
         wealth_bp: -300
+        legitimacy_bp: 1600
         outcome: >-
-          You send an embassy to the Zhou king at Luoyang with gifts, and ask him to set Song
-          above the lesser lords. The Zhou king is glad to be asked, but he has no power to
-          enforce his answer.
+          You send an embassy to the Zhou king at Luoyang with gifts, and ask him to set Song above
+          the lesser lords. The Zhou king is glad to be asked and writes a fine letter, and your
+          ministers rejoice; but he has no power to enforce his answer, and the gifts are gone.
     history: >-
       Yan declared himself king of Song in his 11th year (about 318 BC, Shiji 38).
     sources: ["Shiji 38 (Song)"]
@@ -289,18 +289,16 @@ chapters:
           are kept now only by scholars.
         deeds: {ruler_falls: "flees west and dies at Wen"}
       - label: "Hold Shangqiu to the last"
-        deeds: {men: 5000, martial_bp: 200}
         legitimacy_bp: -1500
         outcome: >-
           The walls of the old capital hold for a few days. Then they do not.
+        deeds: {men: 5000, martial_bp: 200}
       - label: "Offer Qi terms and tribute"
-        wealth_bp: -800
         legitimacy_bp: -1200
-        deeds: {peace_with: [qi, wei, chu]}
         outcome: >-
-          You send envoys to King Min with gold and with the offer of a yearly tribute. Qi and
-          the others take the gold and answer slowly; your captains watch the border while
-          they wait.
+          You send envoys to King Min with gold and with the offer of a yearly tribute. Qi and the
+          others take the gold and answer slowly; your captains watch the border while they wait.
+        deeds: {peace_with: [qi, wei, chu]}
     history: >-
       Qi, Wei and Chu attacked Song and divided it. King Yan fled to Wen and died there
       (Shiji 38, about 286 BC). The Shiji counts 47 years of his reign; Qi's conquest alarmed

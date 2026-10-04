@@ -52,8 +52,8 @@ chapters:
           Your gifts are accepted. No ruler of the north is known to have taken tribute from the
           Cholas, but the gifts did not make them any wiser about you.
       - label: "Call the Pandyas and Cheras to meet them together"
-        legitimacy_bp: 300
-        unrest_bp: 300
+        legitimacy_bp: 1000
+        unrest_bp: 200
         outcome: >-
           The Pandyas, with whom you have fought for the Kaveri lands for years, think about it,
           and send an answer that means nothing.
@@ -87,7 +87,7 @@ chapters:
       animals, medicinal herbs, wells and shade trees provided. He is also sending
       teachers of his Dhamma, a way of living in which every religion should be respected.
     choices:
-      - label: "Receive the physicians and the teachers, as a free king"
+      - label: "Receive the physicians and the teachers"
         historical: true
         legitimacy_bp: 500
         unrest_bp: -300
@@ -96,12 +96,20 @@ chapters:
           They dig their wells, and plant their herbs, and go home. We do not know how long
           they stayed, or what you thought of them: no Tamil source mentions it. Ashoka does not
           claim you as subjects, even when he boasts of his 'conquest by Dhamma' in Rock Edict XIII.
-      - label: "Turn them back at the border"
+      - label: "Turn the envoys back at the border"
         legitimacy_bp: 300
         outcome: >-
           Your court does not like foreign advisers, even helpful ones. The envoys go home, and
           Pataliputra is told the Cholas are proud.
         deeds: {grudges: {maurya: 1500}}
+      - label: "Take the physicians, and send the teachers home"
+        knowledge_bp: 400
+        legitimacy_bp: 300
+        unrest_bp: -200
+        outcome: >-
+          The doctors are welcome: your people value their herbs, and the wells they dig. The
+          teachers of the Dhamma are thanked and sent on their way, and your own priests are
+          not asked to share the temple steps.
     history: >-
       Ashoka's Rock Edicts II and XIII (about 258-256 BC) name the Cholas (Choda) and
       Pandyas as peoples beyond his borders, where he says he provided medical care and
@@ -233,12 +241,12 @@ chapters:
       - label: "Send an army to avenge him"
         unrest_bp: 500
         outcome: >-
-          Your fleet is ready in a season, and the army is paid. Lanka is a long way off, and
-          Dutugemunu has all the island now.
-        deeds: {ships: 4, men: 5000, grudges: {lanka: 3000}}
+          Your army is raised in a season, and the ships are hired on the quay. Lanka is a
+          long way off, and Dutugemunu has all the island now.
+        deeds: {men: 5000, grudges: {lanka: 3000}}
       - label: "Send an envoy to the new king"
         wealth_bp: -300
-        legitimacy_bp: 200
+        legitimacy_bp: 700
         outcome: >-
           Dutugemunu receives him with honour. The trade goes on.
         deeds: {peace_with: [lanka]}

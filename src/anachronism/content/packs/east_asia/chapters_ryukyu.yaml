@@ -33,7 +33,7 @@ chapters:
       years, and your southern voyages grow rarer. The Ming emperor still receives your
       tribute ships at Fuzhou.
     choices:
-      - label: "Keep the tribute trade with China and turn more to Japan"
+      - label: "Hold to the China trade and turn to Japan"
         historical: true
         wealth_bp: 500
         legitimacy_bp: 500
@@ -41,11 +41,19 @@ chapters:
           Your ships go less often to Siam and Malacca; the last Ryukyuan ship recorded in Siam
           sails in 1570. China and Japan become your two worlds. The Satsuma lords across the
           water begin to ask for more.
-      - label: "Spend the royal treasury on a fleet to the south"
-        wealth_bp: -2000
+      - label: "Spend the treasury on a fleet for the south"
+        wealth_bp: -500
+        legitimacy_bp: 1000
         outcome: >-
-          The ships go south, and come back poorer than they left. The Portuguese hold the
-          ports.
+          The ships go south, and Naha is proud of them. They come back poorer than they left,
+          and the Portuguese hold the ports.
+        deeds: {ships: 20}
+      - label: "Keep only the Siam run and cut the rest"
+        wealth_bp: 700
+        legitimacy_bp: 300
+        outcome: >-
+          A few ships go each year to Ayutthaya and Patani, and the rest stay in port. The
+          trade is smaller, and steadier, and there is less to lose in a storm.
     history: >-
       Ryukyu's southern voyages dwindled in the later sixteenth century, the last recorded
       ship to Siam going in 1570; the kingdom kept its Chinese tribute trade and traded more
@@ -134,6 +142,13 @@ chapters:
         food_bp: 300
         outcome: >-
           The root is curious in a lord's garden. The farmers continue as before.
+      - label: "Plant it on royal estates and sell the surplus"
+        food_bp: 1500
+        wealth_bp: 1500
+        outcome: >-
+          The royal stewards plant the vines on the king's land, and the root feeds his
+          tenants and is sold in Naha. The farmers watch and see it grow, and copy. It is
+          slower to spread than if it had been given away, and it spreads all the same.
     history: >-
       Noguni Sokan brought sweet potatoes from Fujian in 1605; they spread through Ryukyu and
       later to Satsuma and Japan.
@@ -177,6 +192,12 @@ chapters:
         outcome: >-
           Your army cannot stand against the muskets. The castle falls anyway, with the
           fighting costlier on both sides.
+      - label: "Send gifts and ask Satsuma for terms"
+        legitimacy_bp: -1000
+        wealth_bp: -1500
+        outcome: >-
+          Your envoys meet the fleet at sea with silver and fine cloth and ask what Satsuma
+          wants. The answer is the surrender of Shuri. The gifts are kept.
     history: >-
       In 1609 the Shimazu invaded Ryukyu with the Tokugawa shogunate's leave. King Sho Nei
       surrendered Shuri and was taken to Kagoshima.
@@ -222,6 +243,12 @@ chapters:
         outcome: >-
           The Shimazu are patient. You remain at Kagoshima, and your ministers wait at home for
           a king who does not come.
+      - label: "Offer a larger rice tax in place of the oath"
+        wealth_bp: -2000
+        legitimacy_bp: 300
+        outcome: >-
+          Satsuma takes the offer and the oath too. Jana Teido is not spared, and you are not
+          asked again.
     history: >-
       Sho Nei and his ministers signed a Satsuma oath in 1611; Jana Teido refused and was
       executed. Satsuma took the Amami islands and from then on controlled Ryukyu's trade,
@@ -251,7 +278,7 @@ chapters:
       habits are everywhere in Shuri. Your ministers know what Satsuma wants: that China should
       learn nothing of it.
     choices:
-      - label: "Hide every sign of Satsuma while the envoys stay"
+      - label: "Hide every sign of Satsuma from the envoys"
         historical: true
         legitimacy_bp: 500
         wealth_bp: -500
@@ -260,11 +287,17 @@ chapters:
           the envoys go home with a good report. This is the pattern for two centuries: Ryukyu
           serves two masters and shows each only one face.
       - label: "Tell the Qing envoys the truth"
-        legitimacy_bp: -1000
-        unrest_bp: 800
+        legitimacy_bp: 1200
+        unrest_bp: 1000
         outcome: >-
           The envoys are polite and keep silent. In Kagoshima the news is received in a very
           different way.
+      - label: "Shorten the mission's stay with lavish gifts"
+        wealth_bp: -1000
+        legitimacy_bp: 500
+        outcome: >-
+          The mission is entertained for weeks instead of months and sent home with silk and
+          lacquer. The officers spend less time looking around, and the treasury spends more.
     history: >-
       Ryukyu was invested by the Qing in 1663 (Kangxi 2) while hiding Satsuma's influence from
       the Chinese mission, a practice repeated at each investiture.
@@ -292,7 +325,7 @@ chapters:
       He tells you that a state which is small must be well ruled, and offers a plan: to
       plant forests, protect rivers, mend the irrigation and make the officials honest.
     choices:
-      - label: "Make Sai On a member of the Sanshikan, the council of three"
+      - label: "Seat Sai On on the council of three"
         historical: true
         legitimacy_bp: 1500
         food_bp: 1500
@@ -307,6 +340,15 @@ chapters:
         legitimacy_bp: -500
         outcome: >-
           The old lords thank you. The rivers go on flooding.
+      - label: "Give Sai On the forests and rivers only"
+        legitimacy_bp: 1500
+        food_bp: 1500
+        materials_bp: 1000
+        unrest_bp: -500
+        outcome: >-
+          Sai On is put in charge of replanting the hills and embanking the rivers, and does
+          it well. The old lords keep the council, and the officials stay slack. The islands'
+          trees and rice are better for it, and the government is the same.
     history: >-
       Sai On became a member of the Sanshikan in 1728 and held office until 1752; he is
       remembered for forestry, river and irrigation works and for a reform of administration.

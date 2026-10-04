@@ -42,6 +42,14 @@ chapters:
         outcome: >-
           Li Anquan is taken in his house, and your mother retires to a nunnery. The generals
           who backed them are watching you.
+      - label: "Make your cousin commander of the army"
+        legitimacy_bp: -300
+        unrest_bp: 300
+        deeds: {martial_bp: 300}
+        outcome: >-
+          Li Anquan takes the baton and the guard stays loyal to him. Your mother says it is a
+          fair division of the burdens, and the court waits to see which of you gives the
+          orders.
     history: >-
       Li Anquan (Xiangzong) deposed his cousin Huanzong in 1206, with the support of the
       Empress Dowager Luo; Huanzong died in confinement.
@@ -84,6 +92,14 @@ chapters:
         outcome: >-
           The Mongols drain their camp and wait. The city eats its horses.
         deeds: {grudges: {mongols: 2000}}
+      - label: "Send camels and gold, but no daughter"
+        wealth_bp: -2500
+        legitimacy_bp: -500
+        deeds: {peace_with: [mongols]}
+        outcome: >-
+          Your envoys carry out camels, falcons and gold. The Khan, whose army is soaked and has
+          no walls to climb, takes them and rides away. The treasury is empty, and nobody in
+          the court forgets what the Jin said.
     history: >-
       Genghis Khan besieged Zhongxing in 1209 and tried to flood it; the dyke broke and
       flooded his own camp. Xiangzong submitted and gave him a daughter. The Jin refused to
@@ -122,11 +138,19 @@ chapters:
           turns up late, and goes home. The war ruins both of you, and the Mongols watch.
         deeds: {martial_bp: 500, grudges: {jurchen_jin: 3000}}
       - label: "Help the Jin against the Mongols"
-        legitimacy_bp: -500
+        legitimacy_bp: -200
+        wealth_bp: -500
         outcome: >-
-          Your envoys go to the Jin court. The Jin are surprised, and accept. The Mongols are
-          told.
-        deeds: {grudges: {mongols: 2000}}
+          Your envoys go to the Jin court and a Tangut army marches east to stand beside them.
+          The Jin are surprised, and accept. The Mongols are told.
+        deeds: {men: 1500, grudges: {mongols: 2000}}
+      - label: "Hold the frontier and wait on events"
+        legitimacy_bp: 1000
+        wealth_bp: -300
+        deeds: {men: 2000}
+        outcome: >-
+          Your army camps along the eastern border and does nothing for a season. The Jin do not
+          trust you, the Mongols do not thank you, and the generals mutter about lost chances.
     history: >-
       Shenzong (r. 1211-1223), the only zhuangyuan to become emperor, attacked the Jin from
       1214; the Xia-Jin war lasted a decade and exhausted both states.
@@ -163,12 +187,17 @@ chapters:
           Khwarazm.
         deeds: {grudges: {mongols: 4000}}
       - label: "Apologise, and send the soldiers"
-        food_bp: -1500
-        materials_bp: -1500
+        food_bp: -2500
         legitimacy_bp: -1000
         outcome: >-
           Your horsemen ride west with the Mongols, to Samarkand and beyond. Few come back, but
           the Khan says the Tangut kept their word.
+      - label: "Send a token force, with excuses"
+        legitimacy_bp: 800
+        deeds: {men: 1000}
+        outcome: >-
+          A thousand horse ride west under a minor commander, with a letter of regrets. The
+          Khan notes the smallness of the gift.
     history: >-
       In 1219 Xia refused to send troops for Genghis Khan's campaign against Khwarazm; the
       Secret History puts the insolent reply in the mouth of Asha Gambu.
@@ -197,7 +226,7 @@ chapters:
       in the old days, but as brothers. He is the elder brother; you will be the younger. And
       the Mongols have sent to say that your son must come to the Khan's court as a hostage.
     choices:
-      - label: "Make peace with the Jin, and keep your son"
+      - label: "Make peace with the Jin as brothers"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: -1000
@@ -211,6 +240,14 @@ chapters:
         outcome: >-
           The prince rides north with a small household. The Khan takes him in and sends word
           that the Tangut have remembered their duty, for now.
+      - label: "Make peace, and send gifts not your son"
+        legitimacy_bp: 1500
+        unrest_bp: -1000
+        wealth_bp: -500
+        deeds: {peace_with: [jurchen_jin]}
+        outcome: >-
+          The treaty is signed, and a caravan of silk and horses goes north to the Khan in
+          your son's place. Whether he thinks it enough, nobody can tell you.
     history: >-
       Shenzong abdicated in 1223. His son Xianzong made peace with the Jin in 1225 and refused
       to send a hostage to the Mongols.
@@ -255,6 +292,13 @@ chapters:
           Lingzhou falls. The army reaches the capital intact, and the Mongols ride up to its
           walls behind it.
         deeds: {give: [g_hexi, g_shazhou], give_to: mongols}
+      - label: "Ask the Khan for terms at Lingzhou"
+        legitimacy_bp: -1500
+        wealth_bp: -800
+        deeds: {give: [g_hexi], give_to: mongols}
+        outcome: >-
+          Your envoys ride out over the ice. The Khan answers that terms mean surrender, and
+          his horsemen are already moving.
     history: >-
       In 1226 Genghis Khan conquered the Hexi corridor and destroyed the Xia army near
       Lingzhou on the frozen Yellow River. Xianzong had died that summer.
@@ -298,6 +342,12 @@ chapters:
         outcome: >-
           The month passes. You hear that the Mongols are mourning someone. Then they break
           camp, and ride north with a covered cart.
+      - label: "Break out with your household"
+        legitimacy_bp: -1500
+        unrest_bp: 1000
+        outcome: >-
+          A guard of horsemen cuts a way through the camp at night. The Mongol patrols are many,
+          and the road south is long.
     history: >-
       Li Xian surrendered Zhongxing in 1227 and was executed; Genghis Khan had died during
       the siege. The Mongols massacred the city and ended the Xia state.

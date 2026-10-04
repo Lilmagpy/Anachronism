@@ -49,13 +49,14 @@ chapters:
           call - most of them, most of the time.
         deeds: {martial_bp: 1000}
       - label: "Set your own captains over each tribe"
-        legitimacy_bp: 1000
+        legitimacy_bp: 2500
         wealth_bp: -300
         influence: {nobility: -500}
         outcome: >-
           Each tribe keeps its name, its herds and its old customs, and a captain of your own
           choosing rides at its head. It is quicker than rebuilding the whole army, and the
-          tribes obey you for as long as the captains do.
+          elders, glad of an order that leaves their camps alone, accept your word. The tribes
+          obey you for as long as the captains do.
         deeds: {martial_bp: 2000}
     history: >-
       At the quriltai of 1206 Temujin was proclaimed Chinggis Khan. He organised the steppe
@@ -99,13 +100,13 @@ chapters:
           Teb Tengri rides north with his family to the forest peoples, still talking to
           Heaven. Heaven, some of your men suspect, may still be listening.
       - label: "Call the shaman before the assembly"
-        legitimacy_bp: 800
-        unrest_bp: 500
+        legitimacy_bp: 1800
+        unrest_bp: 300
         influence: {clergy: -500}
         outcome: >-
-          Teb Tengri and your brothers are summoned before the chiefs to answer in the open.
-          He speaks well and holds a good part of the room, and you are left to judge between
-          a holy man and your own kin.
+          Teb Tengri and your brothers are summoned before the chiefs to answer in the open. He
+          speaks well, but your brothers answer him point by point, and the assembly turns
+          against the man who beat a prince. His followers, humiliated, will not forget it.
     history: >-
       The Secret History tells how Chinggis Khan let Temuge kill the shaman Kokochu (Teb
       Tengri) after he tried to divide the royal family, ending the shamans' political power.
@@ -148,12 +149,12 @@ chapters:
           and send tribute, and the others say that they will think about it.
         deeds: {take: [g_baikal]}
       - label: "Send a general with a small force"
-        legitimacy_bp: 400
-        wealth_bp: 300
+        legitimacy_bp: 500
+        wealth_bp: 800
         outcome: >-
-          A few thousand horsemen ride into the trees under an experienced captain. They
-          bring back furs and some chiefs' sons as hostages, and the forest's deeper valleys
-          are left alone.
+          A few thousand horsemen ride into the trees under an experienced captain. They bring
+          back furs worth more than the whole expedition cost, and some chiefs' sons as
+          hostages; the forest's deeper valleys are left alone.
         deeds: {men: 2000, take: [g_tuva]}
     history: >-
       In 1207 Jochi led the campaign that brought the Oirats, Buryats, Kirghiz and other forest
@@ -204,12 +205,12 @@ chapters:
           down a whole gatehouse. Zhongxing surrenders that afternoon.
         deeds: {war_with: [western_xia], conquer: [western_xia]}
       - label: "Starve the city with a long blockade"
-        legitimacy_bp: 500
+        legitimacy_bp: 800
         wealth_bp: -500
         outcome: >-
           Your horsemen ring Zhongxing and cut every road to it. It is slow, cold work for
           steppe riders, and the Tangut have granaries, but by the second winter the city is
-          sending envoys.
+          sending envoys, and the camps talk of your patience.
         deeds: {men: 3000}
     history: >-
       In 1209 the Mongols besieged Zhongxing (Yinchuan); their attempt to flood the city
@@ -256,12 +257,12 @@ chapters:
           Barchuq submits, stiffly. His scribes work for you, and take their time about it.
         deeds: {tributaries: [uyghurs]}
       - label: "Take his gifts, and call his men to your army"
-        legitimacy_bp: 600
-        knowledge_bp: 500
+        legitimacy_bp: 1500
+        knowledge_bp: 1200
         outcome: >-
-          Barchuq's gold and his horsemen come to your camp, and you give him a place among
-          your commanders. He serves well, and his scribes stay in Qocho and are not asked
-          to come with him.
+          Barchuq's gold and his horsemen come to your camp, with a company of his scribes, and
+          you give him a place among your commanders. He serves well, and his clerks begin to
+          teach yours their letters.
         deeds: {men: 2000}
     history: >-
       In 1209 the Uyghur Idiqut Barchuq Art Tegin threw off Qara Khitai and submitted
@@ -309,12 +310,13 @@ chapters:
           stays in its pass, wondering where you went.
         deeds: {war_with: [jurchen_jin]}
       - label: "Take the border forts one at a time"
-        legitimacy_bp: 1000
-        wealth_bp: 800
+        legitimacy_bp: 2000
+        wealth_bp: 400
         outcome: >-
           You leave the great army alone and take the walled posts of the frontier one by one,
-          with the Khitan as your guides. It is slow, and the Jin emperor has time to call
-          up his reserves.
+          with the Khitan as your guides. Every fallen fort brings more Khitan to your side and
+          shows the Jin that you cannot be stopped, but it is slow, and the Jin emperor has time
+          to call up his reserves.
         deeds: {war_with: [jurchen_jin], men: 10000}
     history: >-
       At Yehuling (the 'Badger's Mouth') in 1211 the Mongols destroyed the main Jin army.
@@ -409,13 +411,13 @@ chapters:
         outcome: >-
           He governs Zhongdu well, and writes poems about the snow.
       - label: "Send him to speak for you in the Chinese towns"
-        knowledge_bp: 1000
-        wealth_bp: 500
+        knowledge_bp: 1300
+        wealth_bp: 600
         legitimacy_bp: 300
         outcome: >-
           Yelu Chucai rides south with your letters to the scholars and magistrates of the
-          conquered towns. They are surprised to find a Khitan prince speaking for the khan,
-          and many of them listen.
+          conquered towns. They are surprised to find a Khitan prince speaking for the khan, and
+          many of them listen; the tax rolls begin to fill.
     history: >-
       Yelu Chucai (1190-1244) entered Chinggis Khan's service in 1218 and became the leading
       Chinese-style administrator under Ogedei.
@@ -458,11 +460,11 @@ chapters:
         outcome: >-
           Kuchlug rules on, hated. The road west stays closed.
       - label: "Send Jebe with twenty thousand men, no promises"
-        legitimacy_bp: 800
+        legitimacy_bp: 2200
         outcome: >-
-          Jebe rides west with his army and makes no speeches. Kuchlug's men fight where they
-          must and fall back where they can, and the Muslim towns watch both sides with some
-          suspicion.
+          Jebe rides west with his army and makes no speeches. Kuchlug's army is beaten quickly,
+          and the Muslim towns, tired of the usurper, open their gates to the victor without
+          waiting for promises.
         deeds: {war_with: [kara_khitai], men: 5000}
     history: >-
       In 1218 Jebe conquered Qara Khitai; proclaiming religious freedom, he was welcomed by its
@@ -509,13 +511,14 @@ chapters:
         outcome: >-
           The Shah sends nothing. Merchants stop coming from the west.
       - label: "Send a punitive army against Otrar"
-        legitimacy_bp: 800
-        wealth_bp: 1000
+        legitimacy_bp: 1200
+        wealth_bp: 2500
         unrest_bp: 300
         outcome: >-
           A strong army goes west to take Otrar and its governor, and no further. The town
-          falls, the governor is taken, and the Shah, who has lost his border fortress and
-          nothing else, must decide whether he has been warned or insulted.
+          falls, the governor is taken, and the caravan goods and ransoms of the border city
+          fill your treasury. The Shah, who has lost his border fortress and nothing else, must
+          decide whether he has been warned or insulted.
         deeds: {men: 10000}
     history: >-
       The Otrar massacre (1218) provoked the Mongol invasion of the Khwarazmian empire
@@ -555,10 +558,10 @@ chapters:
           the road is killed so that no one will know where you lie. No one ever has.
         deeds: {conquer: [western_xia]}
       - label: "Go home to rest, and let your sons finish it"
-        legitimacy_bp: 500
+        legitimacy_bp: 1000
         outcome: >-
-          Your sons besiege the Tangut capital while you lie in your tent. The fever does not
-          break.
+          Your sons besiege the Tangut capital while you lie in your tent, and the army is glad
+          to see them command in your name. The fever does not break.
         deeds: {conquer: [western_xia]}
       - label: "Demand hostages and tribute from Xia"
         wealth_bp: 1500
@@ -620,14 +623,13 @@ chapters:
           Every tax office keeps two ledgers that must balance. Embezzlers are caught within a
           season. The silver comes in at twice Long Beard's estimate.
       - label: "Tax the towns, and graze the open fields"
-        wealth_bp: 1000
-        unrest_bp: 1000
-        food_bp: -500
+        legitimacy_bp: 1200
+        wealth_bp: 3500
+        unrest_bp: 500
         outcome: >-
-          The walled towns pay silver and the open farmland is turned to pasture. The tax-gatherers
-          and the herdsmen quarrel over every boundary, and the revenue is a good deal less than
-          Yelu Chucai promised.
-        deeds: {martial_bp: 500}
+          The walled towns pay heavily in silver and the open farmland is turned to pasture. The
+          tax-gatherers and the herdsmen quarrel over every boundary, but the treasury fills and
+          the great houses are pleased with the grazing.
     history: >-
       Ogedei became Great Khan in 1229. According to his biography, Yelu Chucai persuaded
       him not to depopulate north China but to tax it, delivering the promised revenue by
@@ -836,7 +838,6 @@ chapters:
         outcome: >-
           Batu decides to stay the winter and let the news from Karakorum settle. The army eats
           the Hungarian plain bare, and goes east in the spring.
-        deeds: {martial_bp: 300}
     history: >-
       In April 1241 the Mongols won at Liegnitz and Mohi. Ogedei died in December 1241, and
       the armies withdrew from central Europe in 1242, perhaps because of the succession,
@@ -880,12 +881,12 @@ chapters:
           generation.
         deeds: {war_with: [dali], conquer: [dali]}
       - label: "Take tribute and leave a garrison"
-        legitimacy_bp: 600
-        wealth_bp: 800
+        legitimacy_bp: 1000
+        wealth_bp: 400
         outcome: >-
-          Your envoys offer the king a place as a tributary, with a Mongol garrison on the
-          hills overlooking the city. The Duan court thinks about it and
-          keeps its gates shut.
+          Your envoys offer the king a place as a tributary, with a Mongol garrison on the hills
+          overlooking the city. The Duan court weighs it, accepts, and your mild terms are
+          talked of across the south-west.
         deeds: {tributaries: [dali]}
     history: >-
       Kublai conquered Dali in 1253-1254; the Duan royal family became hereditary Mongol
@@ -932,12 +933,13 @@ chapters:
           You may win the south and lose the steppe.
         deeds: {war_with: [southern_song]}
       - label: "Send envoys north, and hold the Yangzi"
-        legitimacy_bp: 800
+        legitimacy_bp: 1000
         unrest_bp: 1200
         outcome: >-
-          Your envoys ride to the princes and to Ariq Boke, and your army stays at Ezhou.
-          The answers come back slowly, each more doubtful than the last, and the Song,
-          watching your camp, wait to see which way you will turn.
+          Your envoys ride to the princes and to Ariq Boke, and your army stays at Ezhou. The
+          answers come back slowly, each more doubtful than the last, and the Song, watching
+          your camp, wait to see which way you will turn. The princes respect a khan who tries
+          to settle matters before he moves.
         deeds: {men: 5000}
     history: >-
       Mongke died at Diaoyucheng in August 1259. Kublai accepted a truce from Jia Sidao and
@@ -992,12 +994,13 @@ chapters:
           Xiangyang in a month. The Song generals have never seen anything like it.
         deeds: {war_with: [southern_song], take: [g_xiangyang, g_hanzhong]}
       - label: "Starve them with a ring of forts"
-        legitimacy_bp: 800
-        materials_bp: -1000
+        legitimacy_bp: 1500
+        materials_bp: -1500
         outcome: >-
           A chain of forts goes up around both cities, cutting each from the other and from the
-          country. It is slower than any assault and cheaper than most, and the garrison
-          holds on, expecting a relief army that is slow to come.
+          country. It is slower than any assault and cheaper in men, though the forts eat timber
+          and iron, and the garrison holds on, expecting a relief army that is slow to come.
+          Your patience is noted with approval at court.
         deeds: {war_with: [southern_song], men: 8000}
     history: >-
       The siege of Xiangyang lasted from 1268 to 1273 and ended when Muslim engineers from the
@@ -1060,7 +1063,7 @@ chapters:
           Half the army sleeps on the beach and half in the ships, so that neither is
           caught alone. The night is wet and the Korean captains grow louder about the
           weather.
-        deeds: {war_with: [kamakura], men: 2000}
+        deeds: {men: 2000}
     history: >-
       Mongol-Korean invasions of Japan in 1274 and 1281 were both wrecked by storms after
       landing at Hakata. Underwater archaeology at Takashima has found their ships and the
@@ -1099,10 +1102,12 @@ chapters:
           from beyond the Wall.
         deeds: {war_with: [southern_song], conquer: [southern_song]}
       - label: "Offer the loyalists honourable terms"
-        legitimacy_bp: 1500
+        unrest_bp: 300
+        legitimacy_bp: 3000
         outcome: >-
-          Some accept. Many fight on. Wen Tianxiang, captured, refuses to serve and writes the
-          Song of the Righteous Spirit in prison before he is executed.
+          Some accept, and the honour of the terms is remembered. Many fight on, and the
+          loyalists' refusals cost you peace at home. Wen Tianxiang, captured, refuses to serve
+          and writes the Song of the Righteous Spirit in prison before he is executed.
         deeds: {war_with: [southern_song], conquer: [southern_song]}
       - label: "Cut the fleet off from fresh water"
         legitimacy_bp: 1200

@@ -12,7 +12,7 @@ chapters:
     scenario: year_1000
     civ: england
     year: 1002
-    title: "A Bride from Normandy"
+    title: "Where the Danes Winter"
     place: "Winchester"
     speaker: steward
     speaker_name: "Eadric Streona"
@@ -36,10 +36,19 @@ chapters:
           name, which she will ignore all her life. Her son Edward will be half Norman - and
           one day a Norman duke will claim England through her.
         deeds: {ally_with: [normandy]}
-      - label: "Marry an English noblewoman, and keep England English"
+      - label: "Marry an English noblewoman"
+        legitimacy_bp: 500
         influence: {nobility: 1500}
+        deeds: {men: 1000}
         outcome: >-
-          The great families are pleased. The Norman harbours stay open to the Danes.
+          The great families are pleased, and bring their thegns to your muster. The Norman
+          harbours stay open to the Danes.
+      - label: "Pay Duke Richard to close his harbours"
+        wealth_bp: -1000
+        legitimacy_bp: 300
+        outcome: >-
+          Richard takes the silver and promises to turn the Danes away. His promise lasts as
+          long as the silver.
     history: >-
       Æthelred married Emma, sister of Duke Richard II of Normandy, in 1002. Through her, her
       great-nephew William would later claim the English throne.
@@ -112,7 +121,7 @@ chapters:
       Danes are God's punishment for England's sins, and that paying them is like feeding a
       wolf.
     choices:
-      - label: "Pay the thirty-six thousand pounds"
+      - label: "Pay the Danes to leave"
         historical: true
         wealth_bp: -4000
         unrest_bp: 800
@@ -134,6 +143,13 @@ chapters:
         outcome: >-
           The Danes are paid in printed notes promising silver at your mints. They spend them
           in English markets, and the silver never leaves England.
+      - label: "Pay half now and half after they sail"
+        wealth_bp: -2500
+        unrest_bp: 500
+        legitimacy_bp: -300
+        outcome: >-
+          The Danes take the first half and, after some argument, wait for the second. They
+          leave only when it is paid, and meanwhile they eat the shire.
     history: >-
       In 1006-7 a Danish army ravaged Wessex; in 1007 Æthelred paid 36,000 pounds. Huge
       numbers of Æthelred's silver pennies have been found in Scandinavia.
@@ -170,11 +186,13 @@ chapters:
           biggest Danish army yet.
         deeds: {ships: 30}
       - label: "Keep the fleet together, and leave Wulfnoth"
-        legitimacy_bp: 800
+        legitimacy_bp: 500
         materials_bp: -2000
+        unrest_bp: 500
         outcome: >-
-          The fleet stays at Sandwich all summer. When Thorkell's army appears off the coast,
-          it finds England's ships waiting, and goes to France instead.
+          The fleet stays at Sandwich all summer, and the crews grow sick of waiting. When
+          Thorkell's army appears off the coast, it finds England's ships waiting, and goes to
+          France instead.
         deeds: {ships: 120}
       - label: "✦ Build caravels that can beat to windward"
         needs_adopted: [caravel]
@@ -185,6 +203,14 @@ chapters:
           wind. The Danish longships, which must row against it, are caught off the coast and
           sunk one after another.
         deeds: {ships: 150, grudges: {denmark: 2000}}
+      - label: "Pardon Wulfnoth and call him back"
+        legitimacy_bp: 500
+        wealth_bp: -500
+        unrest_bp: 500
+        deeds: {ships: 70}
+        outcome: >-
+          Wulfnoth comes back with his twenty ships, and Brihtric's friends say you have made a
+          pirate a captain. The fleet sails, with some bad feeling in the ranks.
     history: >-
       In 1008 Æthelred ordered a national fleet; in 1009 Brihtric's quarrel with Wulfnoth
       (father of Earl Godwin) and a storm destroyed much of it, and Thorkell's great army
@@ -195,7 +221,7 @@ chapters:
     scenario: year_1000
     civ: england
     year: 1012
-    title: "The Archbishop and the Ox Bones"
+    title: "Ælfheah's Ransom"
     place: "Greenwich"
     speaker: diviner
     speaker_name: "Ælfheah"
@@ -222,10 +248,18 @@ chapters:
         deeds: {ships: 45, men: 4000}
       - label: "Pay the ransom anyway"
         wealth_bp: -2000
-        legitimacy_bp: 300
+        legitimacy_bp: 800
+        influence: {clergy: 500}
         outcome: >-
           Ælfheah comes home, furious and alive, and preaches against you for buying him like
           a slave.
+      - label: "Send a party to seize him back"
+        legitimacy_bp: 1500
+        unrest_bp: 500
+        deeds: {men: 1500}
+        outcome: >-
+          Your thegns ride for Greenwich by night. They arrive too late, and find the Danes
+          already drunk and the archbishop dead.
     history: >-
       Archbishop Ælfheah (St Alphege) was killed by Danes at Greenwich on 19 April 1012
       after refusing to be ransomed. Thorkell the Tall then entered Æthelred's service with
@@ -270,6 +304,13 @@ chapters:
           London's walls hold all winter. The north is Sweyn's; the south still yours. England
           is two kingdoms.
         deeds: {war_with: [denmark], give: [m_northumbria, m_east_anglia], give_to: denmark}
+      - label: "Offer Sweyn tribute and keep Wessex"
+        legitimacy_bp: -1500
+        wealth_bp: -1500
+        deeds: {give: [m_northumbria], give_to: denmark}
+        outcome: >-
+          Your envoys carry gold and a promise of homage for the north. Sweyn answers that he
+          will take the whole kingdom, and that your gold may pay for the part he leaves you.
     history: >-
       In 1013 Sweyn Forkbeard conquered England and Æthelred fled to Normandy. Sweyn died on
       3 February 1014, after barely five weeks as king.
@@ -299,7 +340,7 @@ chapters:
       promise: they want you to forgive everyone who went over to the Danes, and to correct
       everything that was done wrong.
     choices:
-      - label: "Promise everything, and come home"
+      - label: "Accept the councillors' terms"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -314,6 +355,13 @@ chapters:
         outcome: >-
           You land with Norman knights and take back Wessex. The north waits for Cnut.
         deeds: {take: [m_mercia]}
+      - label: "Come home with Norman knights and a limited pardon"
+        legitimacy_bp: 1500
+        unrest_bp: 500
+        deeds: {men: 3000}
+        outcome: >-
+          Duke Richard lends knights, and you promise to pardon only those who stood by you. The
+          councillors accept, but whisper that the pardon is thin.
     history: >-
       In 1014 the English invited Æthelred back on condition that he rule more justly; he
       returned and drove Cnut out. The agreement is sometimes called the first constitutional
@@ -341,7 +389,7 @@ chapters:
       Now the armies face each other at Assandun in Essex. Ealdorman Eadric Streona, who has
       already changed sides twice, is commanding your right wing.
     choices:
-      - label: "Fight - and trust Eadric"
+      - label: "Fight with Eadric on the right"
         historical: true
         legitimacy_bp: -1000
         unrest_bp: 1000
@@ -351,12 +399,14 @@ chapters:
           the Severn at Alney and divide the kingdom: you keep Wessex, he takes the north. Six
           weeks later you are dead - of wounds, of illness or, some will say, of murder.
         deeds: {give: [m_northumbria, m_mercia], give_to: denmark}
-      - label: "Relieve Eadric of his command before the battle"
-        legitimacy_bp: 1500
+      - label: "Dismiss Eadric before the battle"
+        legitimacy_bp: 500
+        unrest_bp: 1000
         outcome: >-
-          Eadric is sent away in disgrace. Without him, the English line holds; Cnut's army
-          falls back to its ships. You are still young, and you have time.
-        deeds: {war_with: [denmark], grudges: {denmark: 2000}}
+          Eadric is sent away in disgrace and takes his men home. The thinned English line holds
+          for a day and then gives way, and Cnut takes the north. You are still young, and you
+          have time.
+        deeds: {give: [m_northumbria], give_to: denmark, grudges: {denmark: 2000}}
       - label: "✦ Fight with crossbows from behind a wall of stakes"
         needs_adopted: [crossbow]
         legitimacy_bp: 2500
@@ -365,6 +415,13 @@ chapters:
           before it reaches your shield wall. Cnut gets away with a few ships. Eadric, seeing
           which way it went, stays loyal.
         deeds: {war_with: [denmark], grudges: {denmark: 3000}}
+      - label: "Withdraw behind London's walls"
+        legitimacy_bp: -500
+        food_bp: -1000
+        deeds: {give: [m_northumbria], give_to: denmark}
+        outcome: >-
+          You refuse battle and retire to London, leaving the north to Cnut. The city's walls
+          hold, and your levies melt away over the winter.
     history: >-
       Æthelred died in April 1016. Edmund Ironside fought Cnut repeatedly and lost at Assandun
       on 18 October after Eadric Streona deserted; the kingdoms were divided at Alney, and
@@ -377,7 +434,7 @@ chapters:
     scenario: year_1000
     civ: england
     year: 1018
-    title: "King of the North Sea"
+    title: "Cnut Takes Stock"
     place: "Oxford"
     speaker: steward
     speaker_name: "Earl Godwin"
@@ -394,7 +451,7 @@ chapters:
       kingdoms, with the North Sea between them as a road. An Englishman called Godwin, whose
       father was the pirate Wulfnoth, has become his most trusted adviser.
     choices:
-      - label: "Rule England by English law, and Denmark from England"
+      - label: "Rule England by Edgar's laws"
         historical: true
         legitimacy_bp: 2000
         unrest_bp: -1500
@@ -411,6 +468,13 @@ chapters:
           Danish earls take the English lands. The English nobility sulk on their estates and
           wait for an Æthelred's son to come back from Normandy.
         deeds: {take: [m_northumbria, m_mercia]}
+      - label: "Share the earldoms among both peoples"
+        legitimacy_bp: 2700
+        unrest_bp: -1000
+        deeds: {take: [m_northumbria, m_mercia], peace_with: [denmark]}
+        outcome: >-
+          Danes and English hold earldoms side by side, and each suspects the other of being
+          favoured. The country is quieter than it has been in years.
     history: >-
       Cnut (r. 1016-1035) married Emma in 1017, paid off his fleet with a huge geld in 1018
       and agreed at Oxford to rule by Edgar's laws. He became king of Denmark in 1019 and of
@@ -421,7 +485,7 @@ chapters:
     scenario: year_1000
     civ: england
     year: 1027
-    title: "The Waves"
+    title: "A Flatterer's Remark"
     place: "The shore at Southampton"
     speaker: steward
     speaker_name: "One of your courtiers"
@@ -436,7 +500,7 @@ chapters:
       Your courtiers are saying that even the sea would obey you. You have had your chair
       carried down to the shore as the tide is coming in.
     choices:
-      - label: "Command the tide to stop - and let it wet your feet"
+      - label: "Let the tide come in, then speak"
         historical: true
         legitimacy_bp: 1500
         influence: {clergy: 800}
@@ -448,6 +512,12 @@ chapters:
         legitimacy_bp: 300
         outcome: >-
           The courtiers laugh, and the tide comes in over nothing in particular.
+      - label: "Dismiss the flatterers from court"
+        legitimacy_bp: 1200
+        influence: {nobility: -500}
+        outcome: >-
+          You send the loudest of your courtiers away. The rest are careful about what they say,
+          and the nobles resent the lesson.
     history: >-
       Cnut went to Rome in 1027 for Conrad II's coronation and negotiated lower tolls for
       pilgrims. The story of Cnut and the waves is first told by Henry of Huntingdon (c.
@@ -484,10 +554,16 @@ chapters:
           had nothing to do with it. Alfred's brother Edward never believes him.
       - label: "Protect the ætheling"
         legitimacy_bp: 800
-        unrest_bp: 800
+        unrest_bp: 1500
         outcome: >-
           Godwin escorts Alfred to Winchester, to his mother. England has two claimants and a
           civil war brewing.
+      - label: "Send Alfred back to Normandy"
+        legitimacy_bp: -500
+        wealth_bp: -300
+        outcome: >-
+          Alfred is escorted back to the coast and set on a ship. His mother is angry, and
+          so is half of Wessex.
     history: >-
       Alfred the Ætheling was captured at Guildford in 1036 while in Godwin's company and
       died after being blinded. Godwin's part in it was never cleared up.
@@ -513,7 +589,7 @@ chapters:
       twenty-five years and is more Norman than English. Earl Godwin has made himself
       kingmaker. His price: Edward marries Godwin's daughter Edith.
     choices:
-      - label: "Accept Godwin's terms"
+      - label: "Crown Edward on Godwin's terms"
         historical: true
         legitimacy_bp: 1500
         influence: {nobility: 1500}
@@ -529,6 +605,13 @@ chapters:
           Edward appoints a Norman as archbishop and a Norman as earl. The Godwins go home to
           Wessex and begin to plan.
         deeds: {ally_with: [normandy]}
+      - label: "Crown Edward, and keep Godwin at bay"
+        legitimacy_bp: 1500
+        unrest_bp: 500
+        influence: {nobility: 500}
+        outcome: >-
+          Edward is crowned, and Godwin's price is not paid. The earl goes home to Wessex, and
+          the Norman courtiers are pleased.
     history: >-
       Harthacnut died in June 1042; Edward the Confessor was crowned in 1043 and married
       Godwin's daughter Edith in 1045. The marriage was childless.
@@ -538,7 +621,7 @@ chapters:
     scenario: year_1000
     civ: england
     year: 1064
-    title: "The Oath on the Relics"
+    title: "William's Guest"
     place: "Bayeux, Normandy"
     speaker: normandy
     speaker_name: "William, Duke of Normandy"
@@ -555,7 +638,7 @@ chapters:
       Now William asks Harold for something in return: an oath, sworn on holy relics, to
       support William's claim to the English throne when old King Edward dies.
     choices:
-      - label: "Harold swears"
+      - label: "Harold gives William his oath"
         historical: true
         legitimacy_bp: -500
         outcome: >-
@@ -567,6 +650,12 @@ chapters:
         outcome: >-
           William keeps Harold in Rouen as a 'guest'. England sends envoys to ransom its earl.
         deeds: {grudges: {normandy: 2000}}
+      - label: "Harold offers silver instead of an oath"
+        wealth_bp: -800
+        legitimacy_bp: 300
+        outcome: >-
+          William takes the silver, and says that a guest who is rescued does not offer coin.
+          Harold is kept at Rouen until he agrees to something.
     history: >-
       The Bayeux Tapestry and Norman writers say Harold swore an oath to William around 1064;
       English sources are silent. What Harold promised, and whether under duress, is unknown.
@@ -578,7 +667,7 @@ chapters:
     scenario: year_1000
     civ: england
     year: 1066
-    title: "Stamford Bridge"
+    title: "Hardrada at York"
     place: "York"
     speaker: general
     speaker_name: "Harold Godwinson"
@@ -596,7 +685,7 @@ chapters:
       have beaten the northern earls at Fulford and taken York. You have marched two hundred
       miles north in four days.
     choices:
-      - label: "Fall on them at Stamford Bridge"
+      - label: "Attack the Norwegians at once"
         historical: true
         legitimacy_bp: 2500
         outcome: >-
@@ -608,10 +697,18 @@ chapters:
         deeds: {men: 5000}
       - label: "Offer Tostig his earldom back if he changes sides"
         legitimacy_bp: 800
+        deeds: {men: 1500}
         outcome: >-
-          Tostig asks what Hardrada will get. 'Seven feet of English ground,' you answer, 'or
+          Your envoy carries the offer and a few hundred of your northern men are sent to cover
+          the talks. Tostig asks what Hardrada will get. 'Seven feet of English ground,' you answer, 'or
           as much more as he is taller than other men.' Tostig stays with Hardrada. The battle
           is fought anyway, and won.
+      - label: "Wait for the northern earls first"
+        legitimacy_bp: 2000
+        deeds: {men: 3000}
+        outcome: >-
+          The northern earls bring in their men, and the army marches larger. The Norwegians
+          have another day to form up before you reach them.
     history: >-
       Edward the Confessor died on 5 January 1066; Harold was crowned the next day. On 25
       September he destroyed Harald Hardrada's army at Stamford Bridge. William landed at
@@ -639,7 +736,7 @@ chapters:
       William has knights, archers and crossbowmen. You have a shield wall of housecarls and
       farmers, on a ridge.
     choices:
-      - label: "Fight at once, at the head of the shield wall"
+      - label: "Fight at once, on the ridge"
         historical: true
         legitimacy_bp: -2500
         unrest_bp: 3000
@@ -650,13 +747,14 @@ chapters:
           beside you. On Christmas Day William is crowned in Westminster Abbey. The young
           ætheling Edgar, the last of the old royal line, is all that is left.
         deeds: {ruler_falls: "is killed at Hastings", give: [m_wessex, m_east_anglia], give_to: normandy}
-      - label: "Wait in London for the whole army, and let William starve"
-        legitimacy_bp: 1000
+      - label: "Wait in London for the whole army"
+        legitimacy_bp: 300
         food_bp: -2000
+        unrest_bp: 1500
         outcome: >-
-          You stay in London. William's army burns the south coast and runs short of food as
-          autumn turns to winter. When you march out in November, you have twice as many men.
-          William re-embarks.
+          You stay in London. William's army burns the south coast and takes the towns of Kent
+          while the south wonders where its king is. When you march out in November, you have
+          twice as many men.
         deeds: {war_with: [normandy], grudges: {normandy: 3000}}
       - label: "✦ Line the ridge with musketeers"
         needs_adopted: [musket]
@@ -666,6 +764,13 @@ chapters:
           horses will not face the noise. By noon Duke William is dead and his army is
           fleeing to its ships. England will not be Norman.
         deeds: {war_with: [normandy], grudges: {normandy: 4000}}
+      - label: "Let Gyrth lead the fight"
+        legitimacy_bp: -1000
+        unrest_bp: 1500
+        deeds: {give: [m_wessex], give_to: normandy}
+        outcome: >-
+          Gyrth takes the army south and you stay in London. The battle is lost, though the king
+          is alive, and the south is William's.
     history: >-
       On 14 October 1066 William defeated and killed Harold at Hastings, after a battle that
       lasted most of the day. William was crowned on 25 December. Edgar Ætheling submitted, and

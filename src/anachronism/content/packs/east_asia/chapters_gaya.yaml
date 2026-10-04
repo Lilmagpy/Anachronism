@@ -95,7 +95,7 @@ chapters:
       some Wa craftsmen come to learn the kilns. Silla and Baekje want your iron too. Your
       master of the quay asks who should have it.
     choices:
-      - label: "Sell iron to anyone who brings goods or soldiers"
+      - label: "Sell iron to all who come to the quay"
         historical: true
         wealth_bp: 1500
         knowledge_bp: 500
@@ -105,10 +105,10 @@ chapters:
           mirrors from China. In Japan, the Sue stoneware that will carry your kiln-craft
           across the strait is copied from the Gaya.
       - label: "Make it the king's iron: sell it only to the Wa"
-        wealth_bp: 1000
-        unrest_bp: 500
+        wealth_bp: 1800
+        unrest_bp: 300
         outcome: >-
-          The Wa pay well. Silla and Baekje turn their eyes to the hills, and to the Gaya
+          The Wa pay a monopoly price, and well. Silla and Baekje turn their eyes to the hills, and to the Gaya
           towns that will sell them iron for less.
         deeds: {grudges: {silla: 1500, baekje: 1000}}
       - label: "Keep the iron for your own armies"
@@ -155,11 +155,12 @@ chapters:
           stronger with Daegaya at its head.
         deeds: {capital: k4_goryeong}
       - label: "Send a Geumgwan embassy of your own to the Qi court"
-        legitimacy_bp: -500
         knowledge_bp: 500
+        wealth_bp: -300
         outcome: >-
-          Your ship reaches the south. The court cannot tell which of two Gara kings to
+          Your two ships reach the south. The court cannot tell which of two Gara kings to
           honour, and honours neither.
+        deeds: {ships: 2}
       - label: "Press the hill kings to come under Geumgwan's name"
         legitimacy_bp: -1000
         unrest_bp: 1000
@@ -213,7 +214,8 @@ chapters:
           western lands, and the Wa court is far away.
         deeds: {grudges: {baekje: 500}}
       - label: "Stay independent of all three"
-        legitimacy_bp: 500
+        legitimacy_bp: 600
+        wealth_bp: 400
         unrest_bp: 500
         outcome: >-
           Your envoys go to all three courts and sign nothing. Each of them knows how small you are.
@@ -249,7 +251,7 @@ chapters:
       Silla's envoy has said that if you come out with your family, your treasures and your
       people, the king will treat you as a lord and not as a captive.
     choices:
-      - label: "Go out with the queen, three sons and the treasury, and give up Geumgwan"
+      - label: "Go out with your family and surrender Geumgwan"
         historical: true
         legitimacy_bp: -2000
         outcome: >-
@@ -312,12 +314,12 @@ chapters:
           halls; some are afraid of Baekje. The league does not drive out a single Silla
           garrison.
       - label: "Join Baekje wholeheartedly, and expel Silla's men"
-        legitimacy_bp: -500
-        unrest_bp: 800
+        legitimacy_bp: 1200
+        unrest_bp: 500
         outcome: >-
-          Silla's garrisons go. So does the peace you had with Silla, and Baekje's king is
-          now your patron and your master.
-        deeds: {grudges: {silla: 3000}}
+          Silla's garrisons go, and three thousand of your men march with Baekje's. So does
+          the peace you had with Silla, and Baekje's king is now your patron and your master.
+        deeds: {men: 3000, grudges: {silla: 3000}}
       - label: "Seek Silla's protection against both"
         legitimacy_bp: -1000
         outcome: >-
@@ -353,7 +355,7 @@ chapters:
       You know what Silla's king Jinheung wants. If Baekje is beaten, you have no friend left
       in the peninsula. If it wins, it will own you.
     choices:
-      - label: "Send your soldiers to march with Seong"
+      - label: "Send your soldiers with Seong's army"
         historical: true
         legitimacy_bp: -500
         outcome: >-
@@ -361,12 +363,12 @@ chapters:
           night, Silla's men ambush the Baekje king and his small guard, and Seong is killed.
           Baekje's army is broken, and Silla is master of the peninsula's north and centre.
         deeds: {martial_bp: 300, grudges: {silla: 3000}}
-      - label: "Hold your army at home"
+      - label: "Keep your army at home to guard Goryeong"
         legitimacy_bp: 500
         outcome: >-
-          Baekje marches without you. When Seong dies, you are the only one left to
-          face Silla, with no friend.
-        deeds: {grudges: {baekje: 1500}}
+          Baekje marches without you, and you spend the year drilling your own men on the
+          walls. When Seong dies, you are the only one left to face Silla, with no friend.
+        deeds: {martial_bp: 200, grudges: {baekje: 1500}}
       - label: "Send word to Jinheung of Seong's plans"
         legitimacy_bp: -1500
         outcome: >-

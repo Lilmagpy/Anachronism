@@ -35,7 +35,7 @@ chapters:
       confirm him as leader against Persia. Almost every state of Greece has sent envoys, and Sparta has not.
       Your elders say that Sparta has always led and never followed.
     choices:
-      - label: "Send no envoys, and keep Sparta out of the League"
+      - label: "Stay out of the League of Corinth"
         historical: true
         legitimacy_bp: 1000
         unrest_bp: 300
@@ -46,12 +46,20 @@ chapters:
           leaves you alone for now, since he has Persia to deal with. But Sparta is poor,
           has few citizens, and is isolated.
         deeds: {grudges: {macedon: 500}}
-      - label: "Send envoys to Corinth and join the League"
+      - label: "Join the League of Corinth"
         legitimacy_bp: -1500
         unrest_bp: 1000
         outcome: >-
           You are one voice among the Greek states and the borderlands will not come back. The
           old men say that Lycurgus never meant Spartans to do as they were told.
+      - label: "Send an envoy to Alexander alone"
+        legitimacy_bp: 1200
+        wealth_bp: -300
+        outcome: >-
+          Your envoy goes to Alexander with gifts and a polite message that Sparta treats with
+          kings, not with assemblies. Alexander is too busy to take offence, and the League is
+          told that Sparta has been courteous.
+        deeds: {peace_with: ["macedon"]}
     history: >-
       Sparta alone refused to take part in the League of Corinth, first under Philip in
       338-337 BC, and then under Alexander in 336.
@@ -81,7 +89,7 @@ chapters:
       who were willing a day ago, are now afraid. Eight thousand Greek mercenaries who got
       out of the battle are making their way to Crete.
     choices:
-      - label: "Take what Persia will give, and prepare a war"
+      - label: "Take Persia's ships and gold"
         historical: true
         legitimacy_bp: 500
         wealth_bp: 500
@@ -91,11 +99,18 @@ chapters:
           says that you then took command of the mercenaries from Issus, and made Crete yours. It is not much. But it is
           more than anyone else in Greece has.
         deeds: {men: 2000, martial_bp: 500}
-      - label: "Refuse Persian gold, and wait"
-        legitimacy_bp: 500
+      - label: "Refuse the gold, and muster Sparta's levy"
+        legitimacy_bp: 1000
         outcome: >-
-          Sparta does not take money from the Great King, whom Agesilaus once fought. You
-          are poorer and safer, for a while.
+          Sparta does not take money from the Great King, whom Agesilaus once fought. You call
+          out the Spartan levy and train it hard, and wait for a better moment.
+        deeds: {martial_bp: 500, men: 1500}
+      - label: "Take the ships, but no gold"
+        legitimacy_bp: 700
+        outcome: >-
+          You accept ten triremes from the admirals but refuse their money, and send the ships
+          to your brother in Crete. Sparta owes the Great King less, and has less to spend.
+        deeds: {ships: 10, men: 2000, martial_bp: 300}
     history: >-
       In 333 BC Agis III asked the Persian admirals for help; they gave him money and ships
       after Issus, and he took Crete and the mercenaries.
@@ -136,9 +151,20 @@ chapters:
           he called it a battle of mice. Sparta's rising is over.
         deeds: {ruler_falls: "is killed at Megalopolis", martial_bp: -1500}
       - label: "Withdraw to Laconia and let Antipater come to you"
-        legitimacy_bp: -500
+        legitimacy_bp: -1500
+        unrest_bp: 800
+        wealth_bp: -500
         outcome: >-
-          The siege is lifted. Your allies drift home, and the Macedonians ravage what they like.
+          The siege is lifted. Your allies drift home, the Macedonians ravage what they like,
+          and the army you built up over two years is no longer the same.
+        deeds: {martial_bp: -500}
+      - label: "Offer terms to Antipater while the siege goes on"
+        legitimacy_bp: -1800
+        wealth_bp: -1000
+        outcome: >-
+          Your envoys go to Antipater's camp with an offer to leave Megalopolis alone if he
+          will spare Laconia. He takes the offer as a sign of weakness, and demands more.
+        deeds: {peace_with: ["macedon"]}
     history: >-
       Agis III was defeated and killed at Megalopolis in 331 BC (or 330), fighting Antipater.
     diverged: >-
@@ -166,7 +192,7 @@ chapters:
       The elders cannot say no. Some of them say that nobody can dictate to Sparta. The only man
       who can really decide is Alexander himself, far off in Asia.
     choices:
-      - label: "Send envoys to Alexander and the League, and yield what they ask"
+      - label: "Send envoys to Alexander and the League"
         historical: true
         legitimacy_bp: -500
         outcome: >-
@@ -175,11 +201,17 @@ chapters:
           was a mild one. Sparta keeps its land and its laws.
         deeds: {grudges: {macedon: 500}}
       - label: "Refuse any terms, and defend the passes"
-        legitimacy_bp: 500
-        unrest_bp: 2000
+        legitimacy_bp: 1200
+        unrest_bp: 1500
         outcome: >-
           The elders say that Spartans do not give hostages. The Macedonians have forty
           thousand men.
+      - label: "Offer Antipater silver, not hostages"
+        wealth_bp: -1000
+        outcome: >-
+          Your envoys offer silver in place of the boys. Antipater is willing to talk; the
+          elders remember the price and grumble at the cost.
+        deeds: {peace_with: ["macedon"]}
     history: >-
       After Agis' defeat, Sparta sent envoys to Alexander, who referred the matter to the League
       of Corinth. The settlement was mild, and Sparta kept its land.
@@ -218,6 +250,12 @@ chapters:
         legitimacy_bp: 500
         outcome: >-
           Acrotatus stays at home, and sulks. Acragas finds some other general.
+      - label: "Let him go, with a small escort and the city's leave"
+        legitimacy_bp: 300
+        outcome: >-
+          The ephors give their consent and five hundred men go with him, with orders to come
+          home after the season. Acragas gets a general; Sparta loses some of its few spears.
+        deeds: {men: 500}
     history: >-
       In about 314 BC Acrotatus, son of Cleomenes II, went to Acragas against the wishes of the
       ephors, behaved badly, and came home.
@@ -256,6 +294,12 @@ chapters:
         outcome: >-
           Cleonymus is a good soldier, and the elders are sure of it. Sparta has a king it does
           not quite trust.
+      - label: "Make Areus king, with Cleonymus as his regent"
+        legitimacy_bp: 700
+        influence: {nobility: 500}
+        outcome: >-
+          Cleonymus is made guardian of the boy king. He serves, and he does not like it, and
+          the elders watch him closely.
     history: >-
       On the death of Cleomenes II in 309 BC, Areus I, his grandson, became king and Cleonymus was
       passed over.
@@ -293,6 +337,12 @@ chapters:
         legitimacy_bp: 500
         outcome: >-
           Tarentum finds another general, and Cleonymus finds another cause. Sparta has few men.
+      - label: "Let him sail, with a Spartan officer as his colleague"
+        legitimacy_bp: 100
+        wealth_bp: -300
+        outcome: >-
+          Cleonymus goes with his mercenaries and a Spartan officer to keep an eye on him.
+          Tarentum is grateful; Sparta has only a little more control over him than before.
     history: >-
       In about 303 BC Cleonymus took mercenaries to Italy for Tarentum, later raiding the
       Adriatic coast and holding Corcyra.
@@ -337,6 +387,14 @@ chapters:
         outcome: >-
           Your son and the women hold the ditch until dawn, and then without you it will be
           hard to hold any longer.
+      - label: "Sail to Corinth for more men first"
+        legitimacy_bp: 2000
+        unrest_bp: -1000
+        wealth_bp: -500
+        outcome: >-
+          You turn the ships to Corinth and bring back Antigonus Gonatas's mercenaries. It
+          costs time and silver, but your column that marches into Sparta is stronger.
+        deeds: {men: 3000}
     history: >-
       In 272 BC Pyrrhus attacked Sparta with Cleonymus; the Spartans held a trench through the night
       under Acrotatus, with Archidamia and the women helping, until Areus, and mercenaries from Corinth, relieved

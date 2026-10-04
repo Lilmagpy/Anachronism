@@ -55,14 +55,14 @@ chapters:
           emirs.
         deeds: {martial_bp: 300}
       - label: "Pay the soldiers first, the scholars after"
-        knowledge_bp: 500
         wealth_bp: -400
+        knowledge_bp: 1500
         unrest_bp: -200
-        legitimacy_bp: 200
+        legitimacy_bp: 800
         outcome: >-
-          You order the soldiers paid in full, and the library paid from what is left. The
-          copyists work more slowly, and the scholars grumble, but the books stay on their
-          shelves.
+          You order the soldiers paid in full, and the library paid from what is left. The copyists
+          work more slowly and the scholars grumble, but the books stay on their shelves and the House
+          of Learning keeps most of its good name.
     history: >-
       Under Baha al-Dawla (988-1012) Baghdad remained a great city of learning, with libraries
       such as the House of Learning founded by the vizier Shapur ibn Ardashir.
@@ -109,13 +109,14 @@ chapters:
           The caliph finds the signatures without you, and does not forget that his protector
           stood aside.
       - label: "Let the caliph issue it alone"
-        legitimacy_bp: 500
-        unrest_bp: 300
+        wealth_bp: 300
+        unrest_bp: 400
+        legitimacy_bp: 1800
         influence: {clergy: 500}
         outcome: >-
-          You tell the caliph he may publish his own statement with the signatures of the
-          Sunni judges alone, and that the Alid families will not be asked. It is a weaker
-          paper than he hoped for.
+          You tell the caliph he may publish his own statement with the signatures of the Sunni judges
+          alone, and that the Alid families will not be asked. It is a weaker paper than he hoped for,
+          but it reads well in the mosques and the caliph is grateful; the Alid quarter is sullen.
     history: >-
       In 1011 the Abbasid caliph al-Qadir had a manifesto signed in Baghdad by judges and Alid
       notables denying the Fatimid caliphs' descent from Ali; Baha al-Dawla died in 1012.
@@ -160,13 +161,13 @@ chapters:
           The crowds are angry, and the street fights between Sunni and Shia quarters, which the
           Buyids have been trying to prevent, grow worse than before.
       - label: "Allow it, but ban preaching in the streets"
-        legitimacy_bp: 200
         unrest_bp: 300
+        legitimacy_bp: 1000
         influence: {clergy: 300}
         outcome: >-
           You tell the caliph the creed may be read in the palace and the mosques, but that no
-          preacher may take it into the streets. The Sunni crowds are not pleased, and the
-          Shia are only half satisfied.
+          preacher may take it into the streets. The Sunni crowds are not pleased, and the Shia are
+          only half satisfied, but the quarters stay quiet.
     history: >-
       Around 1017-1018 the caliph al-Qadir issued the Qadiri creed, a Sunni statement of belief,
       reissued in 1029; the Buyids did not stop him.

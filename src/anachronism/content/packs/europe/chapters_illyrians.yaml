@@ -40,12 +40,19 @@ chapters:
           shout and a clash of spears on shields. Your men have never seen the like of it. They
           give up the hills and run into Pelium. Glaucias has still not come.
       - label: "Charge down before his army is ready"
-        legitimacy_bp: -300
+        legitimacy_bp: 800
         unrest_bp: 500
         outcome: >-
-          You come down on the plain in a rush. The Macedonians are not in the loose order you
+          Your men cheer the charge. You come down on the plain in a rush. The Macedonians are not in the loose order you
           hoped, and you lose men before you reach them. You return to the town.
         deeds: {martial_bp: -300}
+      - label: "Withdraw into Pelium to wait for Glaucias"
+        legitimacy_bp: 500
+        outcome: >-
+          You draw your men back behind the walls of Pelium and wait for the Taulantii. The
+          town fills with soldiers, the grain runs short, and Alexander makes camp below the
+          walls with all the time he needs.
+        deeds: {men: 3000}
     history: >-
       Alexander marched against Cleitus and Glaucias in 335 BC. At Pelium he drilled his army in
       full view of the Illyrians, who abandoned the hills for the town.
@@ -91,7 +98,7 @@ chapters:
           You close the gates. A siege with Glaucias's army still outside is a long affair, and
           Alexander's patience is short.
         deeds: {ruler_falls: "is killed at Pelium", grudges: {macedon: 3000}}
-      - label: "Ask for terms"
+      - label: "Send a herald to ask for terms"
         legitimacy_bp: -1500
         outcome: >-
           Alexander's herald offers none. Pelium falls with the camp.
@@ -124,20 +131,25 @@ chapters:
       They have come into your hall and laid the child, Pyrrhus, on the hearth. Cassander, who
       is now strongest in Macedon, would like him dead.
     choices:
-      - label: "Take the child in"
+      - label: "Take the child in and raise him as your own"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
           Your queen and you raise him with your own sons. Plutarch says Cassander offered you
           two hundred talents to hand him over, and you refused.
         deeds: {grudges: {macedon: 2000}}
-      - label: "Hand him to Cassander"
-        wealth_bp: 1500
-        legitimacy_bp: -1500
+      - label: "Hand the child to Cassander's envoys"
+        wealth_bp: 2000
+        legitimacy_bp: -1000
         influence: {clergy: -500}
         outcome: >-
           You take the silver. Your people say that the hearth has been defiled, and the priests
           agree.
+      - label: "Send the child on to the Aetolians"
+        legitimacy_bp: 600
+        outcome: >-
+          You give the party a guide, food and a horse, and send them south into Aetolia, which
+          has no love for Cassander. The child is out of your hands, and out of your quarrel.
     history: >-
       After Aeacides was deposed in 317 BC the infant Pyrrhus was taken to Glaucias, who
       sheltered him and refused Cassander's offer of money for him.
@@ -174,9 +186,20 @@ chapters:
           Neither side wins it clearly. You do not give up Pyrrhus.
         deeds: {martial_bp: 500, grudges: {macedon: 1500}}
       - label: "Make peace with Cassander"
-        legitimacy_bp: -500
+        legitimacy_bp: 200
+        wealth_bp: 500
         outcome: >-
-          He is pleased. He is the stronger, and you may regret the peace.
+          He is pleased, and the coast trade goes on. He is the stronger, and you may regret
+          the peace.
+        deeds: {peace_with: [macedon]}
+      - label: "Offer the coast towns your protection"
+        legitimacy_bp: 500
+        wealth_bp: -500
+        outcome: >-
+          Your envoys tell Apollonia and Epidamnus that the Illyrians, not Macedon, are their
+          friends against the pirates. The Greeks listen politely, hold on to both sides,
+          and pay you something for the garrisons.
+        deeds: {men: 4000}
     history: >-
       Cassander and Glaucias fought over Apollonia and Epidamnus around 314-312 BC; the sources
       are brief and the dates uncertain.
@@ -211,14 +234,16 @@ chapters:
           him guardians. He has a throne at twelve and you have a friend on your southern
           border. Pyrrhus will remember who sheltered him.
         deeds: {men: 4000, grudges: {macedon: 1000}}
-      - label: "Send him alone with a small escort"
-        legitimacy_bp: 200
+      - label: "Send him with a small escort and your envoys"
+        legitimacy_bp: 1000
         outcome: >-
-          The boy goes, and the Molossians have a child to rule them with no army behind him.
-          It is not clear he will keep his seat.
-      - label: "Keep him as a pawn"
+          The boy goes with a few spearmen and two of your counsellors, and the Molossians
+          have a child to rule them with no army behind him. It is not clear he will keep his
+          seat.
+        deeds: {men: 1000}
+      - label: "Keep him until Epirus is settled"
         wealth_bp: 500
-        legitimacy_bp: -1000
+        legitimacy_bp: -500
         outcome: >-
           He is useful to you where he is. Epirus has other kings, and they are not friendly.
     history: >-

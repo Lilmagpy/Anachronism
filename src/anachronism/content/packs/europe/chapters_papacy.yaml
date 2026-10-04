@@ -304,7 +304,7 @@ chapters:
           they have divided Christendom for ever.
         deeds: {grudges: {byzantium: 1500}}
       - label: "Write to Cerularius and propose a council"
-        legitimacy_bp: 500
+        legitimacy_bp: 900
         unrest_bp: -300
         outcome: >-
           Cerularius, who does not mean to have Rome meddling in the east, ignores the letter.
@@ -363,7 +363,7 @@ chapters:
           reformers fear the next pope will be another count's son.
       - label: "Return it to the clergy and people of Rome"
         wealth_bp: 500
-        legitimacy_bp: 1100
+        legitimacy_bp: 1700
         unrest_bp: 500
         influence: {nobility: 500}
         outcome: >-

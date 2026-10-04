@@ -50,11 +50,12 @@ chapters:
           went to Tao are scattered or taken. Basil remembers who held the walls against him.
         deeds: {men: 4000, grudges: {byzantium: 1500}}
       - label: "Call the Armenian princes to a joint stand"
-        legitimacy_bp: 300
-        unrest_bp: 500
+        legitimacy_bp: 800
+        unrest_bp: 200
         outcome: >-
-          The Armenian lords answer politely and send little, since each has his own quarrel with
-          the emperor's agents. Basil takes David's lands, and you have made yourself known to him.
+          The Armenian lords answer politely and send some men, since each has his own quarrel
+          with the emperor's agents. Basil takes David's lands, but your boldness has made you
+          known among the princes of the Caucasus.
         deeds: {men: 3000}
     history: >-
       David III of Tao died in 1000; Basil II took his lands, and by 1001 had made terms with
@@ -101,13 +102,14 @@ chapters:
           The two lands keep their own councils and customs, and neither feels its king is
           really its own. Your heir will find the crowns harder to hold together than you did.
       - label: "Move your court to Kartli's old towns"
-        legitimacy_bp: 1000
+        legitimacy_bp: 2300
         influence: {nobility: 800}
         unrest_bp: 300
         outcome: >-
-          The Kartli lords are flattered and the western nobles are not. The sea road and the
-          cathedral at Kutaisi are left to lesser men, and you are a stranger in your father's
-          fortresses.
+          The Kartli lords are flattered, and the old river towns prosper under a king who lives
+          among them, while the western nobles grumble. The sea road and the cathedral at
+          Kutaisi are left to lesser men, and you are a stranger in your father's fortresses,
+          but your court sits in the seat of ancient kings.
     history: >-
       On the death of his father Gurgen in 1008, Bagrat III became the first king of a united
       Georgian kingdom, ruling from Kutaisi, where the Bagrati cathedral had been built.
@@ -304,12 +306,12 @@ chapters:
           king is too careful, and the Turks grow no weaker.
         deeds: {martial_bp: 500}
       - label: "Pay half, and build border forts"
-        legitimacy_bp: 300
-        wealth_bp: -500
+        legitimacy_bp: 2300
+        wealth_bp: -300
         outcome: >-
           The sultan's collector takes half and grumbles, and the new forts rise along the
-          passes. Your lords find the king neither brave nor cowardly, and wait to see which he
-          will turn out to be.
+          passes. Your lords, seeing a king who both pays and arms, approve his prudence, and
+          the valleys feel safer behind the walls.
         deeds: {martial_bp: 500, men: 2000}
     history: >-
       About 1099 David IV stopped paying tribute to the Seljuks and began to clear the Turks
@@ -356,12 +358,13 @@ chapters:
           for a quieter year, and the scholars go elsewhere.
         deeds: {martial_bp: 500}
       - label: "Send scholars to study abroad"
-        knowledge_bp: 1500
+        knowledge_bp: 2000
         wealth_bp: -800
-        legitimacy_bp: 300
+        legitimacy_bp: 1500
         outcome: >-
-          Young Georgians go to Constantinople, Antioch and the Georgian houses on Mount Athos and
-          return with their learning in Greek. The kingdom has no school of its own to hold them.
+          Young Georgians go to Constantinople, Antioch and the Georgian houses on Mount Athos
+          and return with their learning in Greek, and the translations they bring home are
+          copied across the kingdom. The kingdom has no school of its own to hold them.
     history: >-
       David IV founded the monastery of Gelati in 1106, with an academy that became a centre
       of Georgian learning; he is buried at its gate.
@@ -459,11 +462,12 @@ chapters:
           wall-keepers, grow restless. The lords of the east keep Tbilisi for now.
         deeds: {martial_bp: 300}
       - label: "Offer battle on the plains of Kartli"
-        legitimacy_bp: 300
-        unrest_bp: 500
+        legitimacy_bp: 3500
+        unrest_bp: 300
         outcome: >-
-          The great host overlaps your line, and the Kipchak horse cannot make up the difference.
-          The day ends in a bloody withdrawal, and Tbilisi remains in Muslim hands.
+          The battle on the open plain is hard, and the Kipchak horse close the gap in your
+          line. The Muslim host breaks after a long day, and the kingdom hails the victory, but
+          Tbilisi, strongly held, does not open its gates.
         deeds: {martial_bp: 800}
     history: >-
       David IV beat the Muslim coalition at Didgori on 12 August 1121 and took Tbilisi in 1122,

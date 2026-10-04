@@ -49,11 +49,13 @@ chapters:
           you were on.
         deeds: {grudges: {carthage: 1500}}
       - label: "Help Rome in secret, and keep a seat at Carthage's table"
-        wealth_bp: 500
-        legitimacy_bp: -500
+        wealth_bp: 300
+        legitimacy_bp: 900
+        unrest_bp: 500
         outcome: >-
           Your council tells the consul where the river tribes are, but sends no guides. Rome
-          takes it as coolness, and Carthage as a mere pretence.
+          is grateful for the information, and the merchants who hear of it grumble that the
+          council is playing a double game.
       - label: "Plead neutrality, and trade with both"
         wealth_bp: 1000
         legitimacy_bp: -1500
@@ -91,7 +93,7 @@ chapters:
       Gnaeus Scipio now asks you for more ships of Massalia, for scouting and for the line of
       battle. A fleet is expensive, and Massalia does not own a navy to lose.
     choices:
-      - label: "Send the fleet, and fight beside the Romans"
+      - label: "Send ships to join the line"
         historical: true
         wealth_bp: -1000
         legitimacy_bp: 1000
@@ -101,9 +103,12 @@ chapters:
           beach; the Romans took twenty-five of them. For a long time afterwards the Romans hold
           the sea off Spain, and your own coastal trade is safe.
       - label: "Send only the scouts"
-        wealth_bp: -300
+        wealth_bp: -500
+        legitimacy_bp: 500
+        deeds: {ships: 2}
         outcome: >-
-          Your scouts bring the news and nothing more. Rome notices who risked what.
+          A few of your swift scouting ships bring the news and keep out of the line. Rome
+          is grateful for it, and notes who risked what.
       - label: "Keep the fleet at home"
         wealth_bp: 500
         legitimacy_bp: -1000
@@ -151,11 +156,12 @@ chapters:
           legions and Rome will stay.
         deeds: {men: 3000}
       - label: "Hire Gaulish mercenaries and drive the Ligurians off yourselves"
-        wealth_bp: -2000
+        wealth_bp: -600
+        legitimacy_bp: 800
         outcome: >-
-          A summer's war empties the treasury. The Ligurians retire to the hills and return
+          A summer's war strains the treasury, but the city is proud of itself. The Ligurians retire to the hills and return
           the next year.
-        deeds: {martial_bp: 500}
+        deeds: {martial_bp: 500, men: 1500}
       - label: "Pay the Ligurians to leave Antipolis and Nicaea alone"
         wealth_bp: -1500
         legitimacy_bp: -500
@@ -198,10 +204,13 @@ chapters:
           he founds a Roman fort and baths at Aquae Sextiae, among the springs north of you. The
           Salluvii are broken, and Rome has a foothold in Gaul.
         deeds: {men: 2000}
-      - label: "Try to buy the Salluvian chiefs with trade"
-        wealth_bp: -1500
+      - label: "Hire Gaulish spears and buy off the chiefs"
+        wealth_bp: -300
+        legitimacy_bp: 600
         outcome: >-
-          Salluvian chiefs enjoy the wine and the silver and keep raiding.
+          Hired Gaulish spears man your walls and the roads near the city, and the chiefs enjoy
+          the wine and the silver. When the money runs short, the Salluvii keep raiding.
+        deeds: {men: 1500}
       - label: "Make peace with the tribes and tell Rome to stay at home"
         legitimacy_bp: -500
         unrest_bp: 500
@@ -253,6 +262,14 @@ chapters:
         outcome: >-
           The Senate listens politely and does what it wishes.
         deeds: {grudges: {rome: 500}}
+      - label: "Fortify your harbours and guard the tin trade"
+        wealth_bp: -800
+        legitimacy_bp: 300
+        outcome: >-
+          Your council votes money for ships and harbour chains, and the Greek colonies on the
+          coast strengthen their walls. It does not stop the Romans: Narbo is founded all the
+          same, and part of the trade of the Aude valley begins to leave your quays for hers.
+        deeds: {ships: 3}
     history: >-
       The Roman colony at Narbo Martius was founded in 118 BC, making the province of Gaul
       beyond the Alps. Massalia remained a free ally of Rome within it.

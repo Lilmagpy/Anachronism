@@ -42,12 +42,14 @@ chapters:
           The Athenians thank you, put up a statue, and start writing to Ptolemy again.
         deeds: {peace_with: [athens, sparta]}
       - label: "Make peace, but fine Athens heavily"
-        legitimacy_bp: 600
-        wealth_bp: 1500
+        wealth_bp: 800
+        unrest_bp: 300
+        legitimacy_bp: 1500
         outcome: >-
-          Athens pays a large indemnity in silver and keeps its assembly and its walls. The
-          citizens are poorer and no less proud.
-        deeds: {"peace_with": ["athens"]}
+          Athens pays a large indemnity in silver and keeps its assembly and its walls. The citizens
+          are poorer and no less proud, your allies praise your firmness, and the men of Piraeus are
+          sullen.
+        deeds: {peace_with: [athens]}
     history: >-
       Athens surrendered to Antigonus Gonatas in 262/1 BC, ending the Chremonidean War, and
       received a Macedonian garrison.
@@ -92,12 +94,14 @@ chapters:
           yards go on building.
         deeds: {"ships": 10}
       - label: "Raid Ptolemy's island allies instead"
-        legitimacy_bp: 500
-        wealth_bp: 800
+        wealth_bp: 600
+        unrest_bp: 300
+        legitimacy_bp: 1900
         outcome: >-
-          Your light ships strike at the islands that pay Ptolemy and come away with plunder.
-          The Egyptian fleet goes on sailing where it pleases.
-        deeds: {"ships": 8}
+          Your light ships strike at the islands that pay Ptolemy and come away with plunder and
+          prisoners, and your sailors are proud of it. The Egyptian fleet goes on sailing where it
+          pleases, and the raids wear on your captains.
+        deeds: {ships: 8}
     history: >-
       Antigonus Gonatas defeated the Ptolemaic fleet off Cos (c. 261-255 BC) and dedicated his
       flagship at Delos.
@@ -188,12 +192,13 @@ chapters:
           time in a century.
         deeds: {"men": 5000}
       - label: "Offer to mediate between the two"
-        legitimacy_bp: 300
-        wealth_bp: -400
+        wealth_bp: -300
+        legitimacy_bp: 1800
         outcome: >-
-          Your envoys carry offers to Sparta and to the League. Cleomenes takes the courtesy
-          as an insult, and Aratus is cool.
-        deeds: {"peace_with": ["sparta", "achaea"]}
+          Your envoys carry offers to Sparta and to the League. Aratus is grateful and the Greek
+          cities praise your even hand; Cleomenes takes the courtesy as an insult, and the embassy is
+          expensive.
+        deeds: {peace_with: [sparta, achaea]}
     history: >-
       Antigonus Doson helped the Achaeans in return for Acrocorinth (224 BC), defeated
       Cleomenes III at Sellasia (222) and entered Sparta; he died in 221.
@@ -235,12 +240,12 @@ chapters:
           You watch from Pella as Rome and Carthage destroy each other's armies, and wait to
           see who is left.
       - label: "Build a fleet and guard the Illyrian coast"
-        legitimacy_bp: 200
-        wealth_bp: -600
+        wealth_bp: -400
+        legitimacy_bp: 400
         outcome: >-
-          A hundred light ships are laid down at Pella's harbours, and your garrisons watch
-          the western frontier. Rome looks on, and does nothing yet.
-        deeds: {"men": 6000, "ships": 20}
+          A hundred light ships are laid down at Pella's harbours, and your garrisons watch the
+          western frontier. Rome looks on, and does nothing yet; the cost is less than you feared.
+        deeds: {men: 6000, ships: 20}
     history: >-
       Philip V's treaty with Hannibal (215 BC) was discovered when the Romans captured his
       envoys, leading to the First Macedonian War (214-205).

@@ -94,10 +94,10 @@ chapters:
         outcome: >-
           Samuel pays in gold and gets his army back. The war goes on.
       - label: "Enlist them in your own army"
-        legitimacy_bp: 500
+        legitimacy_bp: 1000
         outcome: >-
-          Fifteen thousand Bulgarians are sent east to garrison Armenia. Bulgaria has lost its
-          army without gaining a martyr.
+          Fifteen thousand Bulgarians are sent east to garrison Armenia, and men praise your
+          mercy to beaten soldiers. Bulgaria has lost its army without gaining a martyr.
         deeds: {men: 15000}
     history: >-
       After Kleidion (1014) Basil II blinded the prisoners - 15,000 according to Skylitzes,
@@ -137,12 +137,13 @@ chapters:
           the Virgin.
         deeds: {conquer: [bulgaria]}
       - label: "Rule Bulgaria as Roman land, with Roman taxes"
-        legitimacy_bp: 1000
-        unrest_bp: 1500
-        wealth_bp: 1500
+        legitimacy_bp: 2200
+        unrest_bp: 1000
+        wealth_bp: 2000
         outcome: >-
-          Imperial tax collectors arrive in Ohrid with their lists. The Bulgarians remember
-          their tsars.
+          Imperial tax collectors arrive in Ohrid with their lists, and silver flows to
+          Constantinople at once. The Bulgarians remember their tsars, but their great families
+          are given Roman titles and keep the peace.
         deeds: {conquer: [bulgaria]}
       - label: "Move the nobles east, and rule by governors"
         legitimacy_bp: 500

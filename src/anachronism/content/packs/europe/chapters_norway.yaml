@@ -168,12 +168,12 @@ chapters:
           The chiefs accept your gifts and your priests. It takes a generation, but fewer
           of them are your enemies when the Danes come.
       - label: "Take the chiefs' sons into your household"
-        legitimacy_bp: 600
         unrest_bp: 500
+        legitimacy_bp: 1100
         outcome: >-
-          The young men of the great families come to your court as foster-sons and hostages.
-          They learn your ways, and their fathers think twice before crossing you.
-        deeds: {"men": 3000, "martial_bp": 400}
+          The young men of the great families come to your court as foster-sons and hostages. They
+          learn your ways, and their fathers think twice before crossing you.
+        deeds: {men: 3000, martial_bp: 400}
     history: >-
       About 1024 Olaf Haraldsson, with Bishop Grimkell, proclaimed a Christian law at the
       Moster Thing; his forced conversions made him many enemies among the chiefs.
@@ -269,11 +269,13 @@ chapters:
           The chiefs hear that you have turned back. Svein and Aelfgifu keep Norway for another
           winter.
       - label: "Fall back into the uplands and raise more men"
-        legitimacy_bp: -300
+        unrest_bp: 200
+        legitimacy_bp: 2200
         outcome: >-
-          You turn into the mountain valleys and call up the hill farmers. Few come, and the
-          chiefs follow at your heels.
-        deeds: {"men": 4000}
+          You turn into the mountain valleys and call up the hill farmers. Many answer, and your
+          steadiness is respected; but the chiefs follow at your heels, and the delay costs you a
+          season's strength.
+        deeds: {men: 4000}
     history: >-
       Olaf Haraldsson fell at Stiklestad on 29 August 1030 (the date is traditional) against
       the farmers' army; he was declared a saint in 1031 and became Norway's patron.
@@ -320,14 +322,14 @@ chapters:
           that they have more to fear from you than from the Danes.
         deeds: {"men": 5000}
       - label: "Fine the chiefs but spare their lives"
-        legitimacy_bp: 500
-        wealth_bp: 1500
-        unrest_bp: 500
-        influence: {"nobility": -500}
+        wealth_bp: 2000
+        legitimacy_bp: 3200
+        influence: {nobility: -500}
         outcome: >-
-          The chiefs who fought at Stiklestad pay a heavy fine in silver and cattle. They
-          grumble, and pay.
-        deeds: {"men": 3000}
+          The chiefs who fought at Stiklestad pay a heavy fine in silver and cattle, and your treasury
+          fills. They grumble, and pay; the law-abiding praise your justice, and the great houses keep
+          their distance.
+        deeds: {men: 3000}
     history: >-
       Magnus Olafsson became king of Norway in 1035 and, following the advice of Sigvatr,
       ruled mildly; in 1042 he became king of Denmark by the pact of 1038.
@@ -373,12 +375,12 @@ chapters:
           have lost a year, and the wars are not over.
         deeds: {"men": 8000, "martial_bp": 500}
       - label: "Give Harald lands in Denmark as your jarl"
+        wealth_bp: 2700
         legitimacy_bp: 300
-        wealth_bp: 1500
         outcome: >-
-          Harald takes the lands and a smaller share of the gold, and promises loyalty to the
-          face of his nephew. He will remember.
-        deeds: {"men": 4000}
+          Harald takes the lands and a generous share of the gold, and promises loyalty to the face of
+          his nephew. The treasury is kept fuller than it might have been, and he will remember.
+        deeds: {men: 4000}
     history: >-
       Harald Sigurdsson returned from Byzantium and Kiev and in 1046 was made co-king of
       Norway by Magnus, who died in 1047.
@@ -424,12 +426,13 @@ chapters:
           Another summer, another burnt harbour, and Sweyn is still on his throne.
         deeds: {"men": 8000, "ships": 30}
       - label: "Agree a short truce and rebuild the fleet"
-        legitimacy_bp: 600
-        unrest_bp: -500
+        unrest_bp: -1000
+        legitimacy_bp: 1700
         outcome: >-
-          Sweyn accepts a few years of quiet. You spend them rebuilding your ships and
-          rewarding your captains.
-        deeds: {"peace_with": ["denmark"], "ships": 20}
+          Sweyn accepts a few years of quiet. You spend them rebuilding your ships and rewarding your
+          captains, and the coasts breathe easier; no one is sure the truce will outlast the new
+          fleet.
+        deeds: {peace_with: [denmark], ships: 20}
     history: >-
       After about fifteen years of war Harald Hardrada and Sweyn Estridsson made peace in about
       1064-1065, each keeping his own kingdom.

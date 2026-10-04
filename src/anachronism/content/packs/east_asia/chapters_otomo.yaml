@@ -54,13 +54,14 @@ chapters:
           Your monks are delighted. The Portuguese captains take their ships to your rivals' ports,
           and your treasury notices.
       - label: "Let the Jesuits stay, confined to the harbour"
-        wealth_bp: 600
-        legitimacy_bp: 200
+        wealth_bp: 1400
+        unrest_bp: 200
+        legitimacy_bp: 300
         influence: {clergy: 300}
         outcome: >-
-          You allow the priests to keep a house in the port, but forbid them to preach in the
-          town or to build a church at Funai. The Portuguese ships keep coming, but in smaller
-          numbers, and neither the priests nor the monks are satisfied.
+          You allow the priests to keep a house in the port, but forbid them to preach in the town or
+          to build a church at Funai. The Portuguese ships keep coming and the treasury gains well;
+          neither the priests nor the monks are satisfied, and the townsmen mutter.
     history: >-
       Otomo Yoshishige (Sorin) protected the Jesuit mission at Funai, where Luis de Almeida had
       opened a hospital in 1557, and drew Portuguese trade to his harbour.
@@ -104,12 +105,13 @@ chapters:
           The Mori accept, and keep Hakata. Your generals say what they think of the bargain.
       - label: "Fight on for Buzen with all your men"
         wealth_bp: -800
-        legitimacy_bp: 300
-        deeds: {men: 8000}
+        unrest_bp: 300
+        legitimacy_bp: 1000
         outcome: >-
-          You call out every retainer and throw the whole army against the Mori in Buzen. The
-          Mori have the straits, and the fighting is long and costly, but your men hold
-          ground.
+          You call out every retainer and throw the whole army against the Mori in Buzen. The Mori
+          have the straits, and the fighting is long and costly, but your men hold ground, and the
+          clans rally to a lord who fights. The levies are tired.
+        deeds: {men: 8000}
     history: >-
       In 1569 Otomo Sorin backed the Amago remnants and an Ouchi claimant against the Mori;
       Mori forces withdrew from northern Kyushu and Motonari died in 1571.
@@ -312,12 +314,13 @@ chapters:
           You become a vassal of the lords you have fought for twenty years. Hideyoshi's envoys
           are told that Bungo has no need of help.
       - label: "Hold Bungo with the vassals who remain"
-        legitimacy_bp: -300
-        unrest_bp: 800
-        deeds: {men: 5000, martial_bp: 200}
+        unrest_bp: 600
+        legitimacy_bp: 300
         outcome: >-
-          You call up the vassals who have not deserted, and ask each of them for a last oath.
-          They give it, and the Shimazu continue to advance.
+          You call up the vassals who have not deserted, and ask each of them for a last oath. They
+          give it, and the Shimazu continue to advance; your retainers' wives start to leave for the
+          hills.
+        deeds: {men: 5000, martial_bp: 200}
     history: >-
       In 1586 Otomo Sorin went to Osaka to ask Hideyoshi for help; the Shimazu invaded Bungo
       in the winter, taking Funai, and Hideyoshi's army relieved Bungo in 1587.
@@ -361,12 +364,12 @@ chapters:
           Hideyoshi's secretaries are polite, and nothing is returned. The regent's patience
           is not long.
       - label: "Ask Hideyoshi for Chikugo as well"
-        legitimacy_bp: -500
-        unrest_bp: 300
+        unrest_bp: 200
+        legitimacy_bp: 300
         outcome: >-
-          You send a respectful request through the regent's secretaries for Chikugo to be
-          added to your son's grant. They hear it, and write it down, and say that the matter
-          will be considered.
+          You send a respectful request through the regent's secretaries for Chikugo to be added to
+          your son's grant. They write it down and say that the matter will be considered; your
+          retainers take it as a sign that you have not given up.
     history: >-
       Otomo Sorin died at Tsukumi in June 1587; Hideyoshi confirmed his son Yoshimune in Bungo
       only, and a few weeks later issued his first edict against the Jesuits.

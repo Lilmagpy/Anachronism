@@ -29,7 +29,7 @@ chapters:
       hill at Chaibi, against the river. Yao Xing is coming to relieve them, from the other
       bank.
     choices:
-      - label: "Hold the river, and starve them out"
+      - label: "Hold the river and starve them"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -37,11 +37,20 @@ chapters:
           brother. Yao Ping tries to break out, fails, and drowns himself in the Fen with his
           officers; his army surrenders. The Qin will never threaten you again.
         deeds: {martial_bp: 1000, grudges: {later_qin: 2000}}
-      - label: "Storm the hill"
-        legitimacy_bp: 500
+      - label: "Storm the hill at once"
+        legitimacy_bp: 1500
+        unrest_bp: 500
         outcome: >-
           Your horsemen ride up the hill into Qin spears, and win, at a price.
         deeds: {martial_bp: 500}
+      - label: "Strike Yao Xing across the river"
+        legitimacy_bp: 1200
+        wealth_bp: 300
+        outcome: >-
+          You leave a ring of horsemen round the hill and cross upstream to meet Yao Xing in
+          the open. His army is not ready for it, and falls back, and the hill is left alone to
+          the cold.
+        deeds: {men: 4000}
     history: >-
       Emperor Daowu destroyed a Later Qin army at Chaibi in 402; its commander Yao Ping
       drowned himself while Yao Xing watched from across the river.
@@ -82,10 +91,19 @@ chapters:
           must die - will last nearly a hundred years.
         deeds: {ruler_falls: "is murdered in his palace by his son Tuoba Shao"}
       - label: "Name the heir, and spare his mother"
-        legitimacy_bp: 500
+        legitimacy_bp: 200
+        unrest_bp: 600
         influence: {nobility: -1000}
         outcome: >-
           Lady Liu lives, and your Xianbei nobles start to cultivate her.
+      - label: "Name the heir, and send her away"
+        legitimacy_bp: -500
+        unrest_bp: 500
+        influence: {nobility: -500}
+        outcome: >-
+          Lady Liu is sent to a distant house with a pension and a guard, and forbidden to
+          write. The heir mourns her as if she were dead, and the court is not sure that
+          she is not.
     history: >-
       Emperor Daowu introduced the custom of killing the heir's mother (zi gui mu si) and was
       murdered by his son Tuoba Shao in 409; Tuoba Si became Emperor Mingyuan.
@@ -129,6 +147,12 @@ chapters:
           Your cavalry cannot reach boats in midstream. Liu Yu takes Chang'an anyway, and now
           the Jin are your enemies.
         deeds: {grudges: {eastern_jin: 2000}}
+      - label: "Let him pass and ask a share"
+        legitimacy_bp: 300
+        wealth_bp: 500
+        outcome: >-
+          Liu Yu agrees to send you horses and silk from the spoils of the Qin, and keeps his
+          fleet on its own side of the river. Your Qin wife weeps, and your court is divided.
     history: >-
       In 416-417 Liu Yu sailed up the Yellow River against Later Qin; Wei, advised by Cui Hao,
       did not oppose him seriously, and its cavalry was beaten by his 'crescent formation'.
@@ -154,7 +178,7 @@ chapters:
 
       Your commanders say: now, while the south mourns.
     choices:
-      - label: "Take Luoyang"
+      - label: "March on Luoyang now"
         historical: true
         legitimacy_bp: 1500
         food_bp: -1500
@@ -165,9 +189,19 @@ chapters:
           the next year, at thirty-one.
         deeds: {take: [k4_luoyang]}
       - label: "Keep the peace with Song"
-        legitimacy_bp: -500
+        legitimacy_bp: 1000
+        wealth_bp: 500
+        unrest_bp: -300
         outcome: >-
-          The Song envoys thank you. Luoyang stays Chinese, and southern.
+          The Song envoys thank you. Luoyang stays Chinese, and southern, and the border
+          towns trade quietly.
+      - label: "Raid the border and withdraw"
+        legitimacy_bp: 1200
+        food_bp: -500
+        outcome: >-
+          Your horsemen ride through the Song countryside, burn what they cannot carry, and
+          are home before the garrisons can answer. Luoyang and Hulao stand as they were.
+        deeds: {men: 3000, martial_bp: 800}
     history: >-
       After Liu Yu's death (422), Mingyuan took Luoyang and, after a long siege, Hulao
       (423), defended by Mao Dezu.
@@ -204,8 +238,16 @@ chapters:
         deeds: {martial_bp: 1000, grudges: {rouran: 2000}}
       - label: "Break out in the night"
         legitimacy_bp: -1500
+        unrest_bp: 500
         outcome: >-
           You get out, and lose half the guard. The Rouran sack Shengle and go home rich.
+      - label: "Charge out with the guard"
+        legitimacy_bp: 2200
+        outcome: >-
+          You lead the guard out against the thinnest ring and cut a way through it, losing
+          many good men on the way. The Rouran are surprised, and for a day nobody knows who has
+          won.
+        deeds: {men: 2000, martial_bp: 500}
     history: >-
       In 424 the Rouran surrounded the young Taiwu at Shengle; he stood firm and they withdrew
       after their commander was killed.
@@ -230,8 +272,8 @@ chapters:
       driven into each section; if it went in an inch, the builders were killed.
 
 
-      You cannot take it by storm. Your general suggests a trick: pretend to retreat, as if
-      short of supplies, and draw the Xia army out.
+      Your officers are divided. Some say the walls can only be starved, some that the
+      Xia army can be tempted out of them, some that a bold assault might yet succeed.
     choices:
       - label: "Feign a retreat"
         historical: true
@@ -244,9 +286,20 @@ chapters:
           take its treasure, its horses and its women. Chang'an is yours within a few years.
         deeds: {take: [k4_ordos, k4_changan]}
       - label: "Starve it out"
-        food_bp: -2000
+        legitimacy_bp: 2000
+        wealth_bp: 2000
+        food_bp: -500
         outcome: >-
-          The siege lasts a year. The White City's granaries are deeper than yours.
+          The siege lasts through the winter, and your own army is hungry too. In the end the
+          White City opens, its treasure is yours, and you have lost a year.
+        deeds: {men: 3000}
+      - label: "Storm it with ladders and towers"
+        legitimacy_bp: 800
+        unrest_bp: 800
+        outcome: >-
+          Your men go up the walls under a rain of arrows, and the rammed earth is as hard as
+          Bobo meant it to be. You lose thousands for a few yards of rampart.
+        deeds: {men: 5000, martial_bp: 1500}
     history: >-
       Taiwu took Tongwan, the Xia capital, in 427 after a feigned retreat; Wei took Chang'an
       from Xia between 426 and 431.
@@ -272,7 +325,7 @@ chapters:
       Cui Hao says the stars are on your side, the Song are too slow to matter, and that in
       summer the Rouran graze their herds in the north and do not expect you.
     choices:
-      - label: "Ride north"
+      - label: "Ride north across the Gobi"
         historical: true
         legitimacy_bp: 2000
         wealth_bp: 2000
@@ -281,10 +334,20 @@ chapters:
           tents and flees west, and dies of rage, it is said. You come home with hundreds of
           thousands of horses, cattle and captives. Cui Hao is the man of the hour.
         deeds: {grudges: {rouran: 2000}}
-      - label: "Listen to the astrologers"
+      - label: "Wait for a favourable year"
         legitimacy_bp: -500
+        deeds: {men: 2000}
         outcome: >-
           You wait. The Rouran raid the border in the autumn, as they do every year.
+      - label: "Ride north in the autumn"
+        legitimacy_bp: 2000
+        wealth_bp: 2000
+        unrest_bp: 500
+        outcome: >-
+          You wait out the summer and cross the Gobi with the first frosts. The Rouran have
+          gone to winter pastures, and the army returns with less than it hoped, and with
+          grumbling about the cold.
+        deeds: {men: 2000}
     history: >-
       In 429, on Cui Hao's advice and against the court's, Taiwu led a great campaign against
       the Rouran and took vast numbers of captives and animals.
@@ -311,7 +374,7 @@ chapters:
 
       Your army is ready to storm the city.
     choices:
-      - label: "Take Longcheng"
+      - label: "Storm Longcheng now"
         historical: true
         legitimacy_bp: 2000
         outcome: >-
@@ -321,10 +384,18 @@ chapters:
           refuses, and two years later has Feng Hong killed himself. In 439 you take Northern
           Liang, and the whole of the north is yours.
         deeds: {take: [k4_longcheng, k4_youzhou]}
-      - label: "Let Feng Hong go, and keep the peace with Goguryeo"
-        legitimacy_bp: -500
+      - label: "Let Feng Hong go and keep peace"
+        legitimacy_bp: 1500
+        wealth_bp: 500
         outcome: >-
           Feng Hong rules a shrinking kingdom from Longcheng, paying tribute to both of you.
+        deeds: {peace_with: [goguryeo]}
+      - label: "Meet the Goguryeo army in the field"
+        legitimacy_bp: 1800
+        outcome: >-
+          You leave a screen before the walls and ride out against the Goguryeo relief
+          column. It is a hard day, and a long way from home for both armies.
+        deeds: {men: 4000, martial_bp: 1000}
     history: >-
       Northern Yan fell to Wei in 436; its king Feng Hong fled to Goguryeo, whose troops
       burned Longcheng. Wei conquered Northern Liang in 439, uniting northern China.
@@ -353,7 +424,7 @@ chapters:
       wants every monk in the empire killed and every image and scripture destroyed. Your son
       the crown prince, a devout Buddhist, begs you not to.
     choices:
-      - label: "Destroy the Buddhists"
+      - label: "Outlaw Buddhism throughout the empire"
         historical: true
         influence: {clergy: -3000}
         legitimacy_bp: -1000
@@ -364,9 +435,18 @@ chapters:
           you will regret it, and your grandson will make it up in stone.
       - label: "Punish the monastery, and no more"
         legitimacy_bp: 500
+        influence: {clergy: -800}
         outcome: >-
           The monks of Chang'an are executed. The others are told to keep their monasteries
           clean.
+      - label: "Register every monastery and monk"
+        legitimacy_bp: 300
+        wealth_bp: 800
+        unrest_bp: 500
+        influence: {clergy: -1500}
+        outcome: >-
+          Officials count every monk, every acre and every bronze bell. Those who cannot
+          show a licence are sent home to the plough, and the treasury is the better for it.
     history: >-
       Taiwu's persecution of Buddhism (446), urged by Cui Hao and associated with Kou
       Qianzhi's Daoism, followed the discovery of arms in a Chang'an monastery; the crown
@@ -394,7 +474,7 @@ chapters:
       and have long hated Cui Hao, the Chinese gentleman who has run your empire for twenty
       years. They are at the door.
     choices:
-      - label: "Give them Cui Hao"
+      - label: "Hand Cui Hao to the nobles"
         historical: true
         legitimacy_bp: 500
         influence: {nobility: 2000}
@@ -405,12 +485,20 @@ chapters:
           relatives by marriage, the greatest Chinese families of the north. The same year
           your armies ride to the Yangtze, and look across at the southern capital, and turn
           back.
-      - label: "Take the steles down, and keep Cui Hao"
+      - label: "Bury the steles, and keep Cui Hao"
         legitimacy_bp: -500
         influence: {nobility: -1500}
         outcome: >-
           The steles are buried. Cui Hao keeps his office and his head, and the Xianbei nobles
           keep their grudge.
+      - label: "Send Cui Hao away to his estates"
+        legitimacy_bp: 0
+        knowledge_bp: -500
+        influence: {nobility: 500}
+        outcome: >-
+          Cui Hao is dismissed and sent home in disgrace, and the steles are pulled down. The
+          nobles are partly satisfied, and the Chinese families of the north look at the way
+          a minister falls.
     history: >-
       Cui Hao was executed in 450 with his clan and allied families after his state history,
       carved on steles, offended the Tuoba; the same year Wei armies reached the Yangtze at
@@ -437,7 +525,7 @@ chapters:
       holding a Buddha fifty feet high, one for each of the emperors of Wei from Daowu to
       you, so that the emperor is the Buddha and the Buddha is the emperor.
     choices:
-      - label: "Carve the five caves"
+      - label: "Cut five caves into the cliff"
         historical: true
         legitimacy_bp: 2000
         wealth_bp: -2000
@@ -447,11 +535,21 @@ chapters:
           the river valley, their faces Xianbei and Indian and Chinese at once. Fifty more
           caves follow, with fifty thousand carved figures. They are still there.
       - label: "Rebuild the temples in the capital"
-        legitimacy_bp: 1000
+        legitimacy_bp: 1500
+        wealth_bp: -800
         influence: {clergy: 1500}
         outcome: >-
           New temples rise in Pingcheng, in wood and tile, and in a century they have all
           burned down.
+      - label: "Fund a bureau to copy the scriptures"
+        knowledge_bp: 1500
+        wealth_bp: -500
+        legitimacy_bp: 1000
+        influence: {clergy: 800}
+        outcome: >-
+          Scribes and translators are lodged in the capital's temples, and sutras are copied
+          by the thousand and sent out to the provinces. The books last better than the
+          buildings.
     history: >-
       The first five 'Tanyao caves' at Yungang (c. 460-465) were begun under Wencheng; their
       colossal Buddhas are traditionally linked to the Wei emperors.
@@ -479,7 +577,7 @@ chapters:
       villages from the tax collectors; under this law every farmer would be counted, and
       every farmer would have land.
     choices:
-      - label: "Share out the fields"
+      - label: "Proclaim equal fields for all"
         historical: true
         food_bp: 2500
         wealth_bp: 1500
@@ -490,9 +588,20 @@ chapters:
           It will be the land law of China for three hundred years, under the Sui and the Tang,
           and Japan and Korea will copy it.
       - label: "Leave the land as it is"
+        legitimacy_bp: 500
+        wealth_bp: 300
         influence: {nobility: 1000}
         outcome: >-
           The great families keep their hidden villages. The tax registers stay short.
+      - label: "Tax every registered household"
+        food_bp: 2000
+        wealth_bp: 2500
+        unrest_bp: -500
+        influence: {nobility: 500}
+        outcome: >-
+          Officials count every household and fix its tax by its size. The great families
+          keep their land, and are told to bring their hidden dependants onto the registers.
+          The treasury fills, and the poor are not much better off.
     history: >-
       The equal-field system (juntian) was proclaimed in 485 under Xiaowen and the Dowager
       Feng, on Li Anshi's proposal, and lasted into the Tang.
@@ -532,10 +641,19 @@ chapters:
           to death. In thirty years the frontier garrisons left behind will rise, and the Wei
           will break in two.
         deeds: {capital: k4_luoyang}
-      - label: "Go on to the south"
-        food_bp: -2000
+      - label: "March on south in the rain"
+        legitimacy_bp: 1000
+        food_bp: -500
         outcome: >-
           The army marches on into the rain. The nobles go with you, and they are not happy.
+        deeds: {men: 5000, martial_bp: 1500}
+      - label: "Turn back, and keep Pingcheng"
+        legitimacy_bp: 1000
+        wealth_bp: 300
+        influence: {nobility: 500}
+        outcome: >-
+          You announce that the heavens have turned against the campaign, and the army marches
+          home. The nobles are glad, and the old capital stays where it was.
     history: >-
       Xiaowen moved the Wei capital to Luoyang in 493-494 under cover of a southern campaign,
       then banned Xianbei dress and language at court and changed the imperial surname to

@@ -52,13 +52,14 @@ chapters:
           Your bishops, abbots and even your barons are uneasy. A king who has no heir and no
           peace with the Church is a king whom the great counts need not obey.
       - label: "Ask a council of bishops for a dispensation"
-        legitimacy_bp: 300
+        legitimacy_bp: 1500
         wealth_bp: -500
         influence: {clergy: 500}
         outcome: >-
-          Your bishops write to Rome and a council is called to hear the case. It takes
-          months, and gifts to the churches that must be fed along the way, and the pope
-          does not say what he will decide.
+          Your bishops write to Rome and a council is called to hear the case. It takes months,
+          and gifts to the churches that must be fed along the way, but the bishops of France,
+          flattered at being consulted, think well of you, and the pope does not say what he
+          will decide.
     history: >-
       Robert married his cousin Bertha of Burgundy in about 996 and was excommunicated in 998;
       about 1001-1003 he put her away and married Constance of Arles.
@@ -159,12 +160,13 @@ chapters:
           and the castles sell themselves to whoever pays.
         deeds: {men: 1500}
       - label: "Buy the castle-lords and fight alone"
-        wealth_bp: -1500
-        unrest_bp: 500
-        legitimacy_bp: 300
+        wealth_bp: -1000
+        unrest_bp: -700
+        legitimacy_bp: 2500
         outcome: >-
-          You send out your money instead of asking help of the Normans. Some castles open to
-          you and some wait for the highest bidder, and the war drags on at your own expense.
+          You send out your money instead of asking help of the Normans. Castle after castle
+          opens to you, and since you owe nothing to Norman swords the settlement is yours
+          alone. Your treasury is empty and your brother's claim is left unsettled.
         deeds: {men: 2000}
     history: >-
       Robert II died on 20 July 1031. Henry I, with help from Duke Robert of Normandy
@@ -213,12 +215,12 @@ chapters:
           The bishops give a reluctant dispensation. Your marriage lasts, but the great
           princes see little reason to treat it as a royal one.
       - label: "Seek a bride at the emperor's court"
-        legitimacy_bp: 500
+        legitimacy_bp: 1000
         wealth_bp: -300
         outcome: >-
-          Your envoys go east to the German court. The emperor's kin are many, but the
-          Church's counting is strict, and the search takes a long time and ends without a
-          bride.
+          Your envoys go east to the German court, and after a long search a bride of the
+          emperor's kin is found whom the Church's counting allows. The princes think well of
+          the match, though the journey and the dowry are costly.
     history: >-
       Henry I married Anne of Kiev, daughter of Yaroslav the Wise, in 1051; she bore Philip
       (b. 1052), the first Frankish king named Philip.
@@ -317,12 +319,13 @@ chapters:
           Baldwin goes back to Lille in a rage. The
           barons divide, and the court is full of quarrelling.
       - label: "Set up a council of bishops and counts"
-        legitimacy_bp: 300
-        unrest_bp: 500
+        legitimacy_bp: 1500
+        unrest_bp: -500
         influence: {nobility: 500}
         outcome: >-
-          A council of the chief bishops and counts is named to rule in your name. It is
-          slow, each member watches the others, and nobody is trusted as Baldwin would be.
+          A council of the chief bishops and counts is named to rule in your name. It is slow
+          and each member watches the others, but every great house has a share in the
+          government, and the realm is quiet. Nobody is trusted as Baldwin would have been.
     history: >-
       Henry I died on 4 August 1060 and the child Philip I was placed under the guardianship of
       Baldwin V of Flanders, who ruled as regent until his death in 1067.
@@ -413,14 +416,12 @@ chapters:
           your son Louis at your side, who will be a stronger king than you.
       - label: "Go yourself, as king and pilgrim"
         legitimacy_bp: 1000
-        unrest_bp: 1000
         wealth_bp: -2000
         outcome: >-
           No Pope will bless an excommunicate at the head of a crusade, and you leave the
           kingdom in the hands of your young son Louis and a quarrelsome court.
       - label: "Send a small royal force and your blessing"
-        legitimacy_bp: 300
-        wealth_bp: -800
+        legitimacy_bp: 500
         outcome: >-
           A few of your household knights ride east under your banner, with money from the
           treasury. The Pope notes it and the barons notice that the king himself stayed behind.

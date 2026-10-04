@@ -38,7 +38,7 @@ chapters:
       Indian scriptures into good Chinese but him. To fetch him, you must send an army
       against the Later Liang.
     choices:
-      - label: "Send the army west to bring him back"
+      - label: "Send the army west for the monk"
         historical: true
         legitimacy_bp: 1000
         knowledge_bp: 1500
@@ -52,11 +52,23 @@ chapters:
           own hands while he explained it. Over the next years he and his helpers put into
           Chinese the Lotus Sutra, the Vimalakirti, the Amitabha Sutra and the great treatises
           of the Middle Way. Many of his translations are still read today.
-      - label: "Keep the army at home against Wei and Jin"
-        legitimacy_bp: 300
+      - label: "Hold the army for Wei and Jin"
+        legitimacy_bp: 600
+        influence: {clergy: -300}
         outcome: >-
-          Wei and Jin are the dangers of the day, and the monk stays in Liangzhou. The monks of
-          Chang'an, in time, go to other courts.
+          Wei and Jin are the dangers of the day, and the monk stays in Liangzhou. The army
+          drills on your frontiers and your generals are content. The monks of Chang'an, in
+          time, go to other courts.
+        deeds: {martial_bp: 1500, men: 5000}
+      - label: "Fund the monks already in Chang'an"
+        knowledge_bp: 1200
+        legitimacy_bp: 800
+        wealth_bp: -400
+        influence: {clergy: 1000}
+        outcome: >-
+          You pay for halls, lamps and copyists for the foreign and Chinese monks who are
+          already in your capital. They translate what they can, and your court is praised
+          for its piety. The great scholar in Liangzhou remains out of reach.
     history: >-
       Yao Xing sent armies against the Later Liang in 400-401 and Kumarajiva arrived in
       Chang'an at the end of 401, where Yao Xing made him a national teacher and supported
@@ -86,7 +98,7 @@ chapters:
       the Wei lines. Your officers say you cannot force the river without losing the army
       too. Yao Ping is your own blood.
     choices:
-      - label: "Try to break the siege and relieve him"
+      - label: "Attack to relieve Yao Ping"
         historical: true
         legitimacy_bp: -1500
         unrest_bp: 800
@@ -96,11 +108,20 @@ chapters:
           tries to break out, fails, and throws himself into the river, the Wei shu says; his
           army is taken. You go home beaten, and in the next years make your peace with the Wei and look west instead.
         deeds: {peace_with: [northern_wei]}
-      - label: "Retreat, and write Yao Ping off"
+      - label: "Pull back and save the main army"
         legitimacy_bp: -800
         outcome: >-
           You pull back with the army whole, and Yao Ping and his men are taken on the hill.
           Many of your Qiang chiefs say you should have tried.
+        deeds: {peace_with: [northern_wei], martial_bp: 800}
+      - label: "Offer Wei a ransom for Yao Ping"
+        legitimacy_bp: -600
+        wealth_bp: -700
+        unrest_bp: 400
+        outcome: >-
+          Your envoys cross the river under a flag with silk and horses. The Wei emperor
+          takes his time, and the hill is starved while he does. In the end you go home
+          without the vanguard and with a lighter treasury.
         deeds: {peace_with: [northern_wei]}
     history: >-
       In 402 Yao Xing led an army against Northern Wei; his vanguard under Yao Ping was
@@ -142,11 +163,19 @@ chapters:
           were tempted to follow his example, and he showed them a bowl of needles, and said
           that whoever could eat them as he did might take wives. He ate the needles. The
           story is a monk's story: but all agree that he went on translating.
-      - label: "Honour his vows, and leave him to his books"
+      - label: "Leave him to his vows and books"
         legitimacy_bp: 300
         influence: {clergy: 500}
         outcome: >-
           Kumarajiva thanks you. The work goes on in the garden, and no more is said.
+      - label: "Select pupils to inherit his work"
+        knowledge_bp: 800
+        wealth_bp: -300
+        influence: {clergy: 300}
+        outcome: >-
+          You choose the best of the young monks to be trained in his method, Sengzhao and
+          Sengrui among them, and you pay for their books and their keep. The master seems
+          pleased. Nobody can say what his own sons might have been.
     history: >-
       According to the Gao seng zhuan, Yao Xing, wishing to have heirs of Kumarajiva's genius,
       gave him women to live with; he went on with his translation of the scriptures until
@@ -173,10 +202,9 @@ chapters:
 
 
       Meanwhile the war with Wei has cost you dear since Chaibi. Wei would now make peace.
-      Your officers tell you that if you make it, Bobo will lose his enemy; and a
-      man like that has to have one.
+      Your officers are divided on what Bobo will do once the war is over.
     choices:
-      - label: "Make peace with the Wei, and keep Bobo where he is"
+      - label: "Make peace with Wei and leave Bobo in place"
         historical: true
         legitimacy_bp: 500
         unrest_bp: 800
@@ -187,11 +215,22 @@ chapters:
           King and Great Chanyu. Your armies chase him through the Ordos for years and never
           catch him. He raids your northern towns each autumn, as long as you reign.
         deeds: {peace_with: [northern_wei]}
-      - label: "Break up Bobo's command and refuse the peace"
+      - label: "Break up Bobo's command, refuse peace"
         legitimacy_bp: -300
+        unrest_bp: 400
         outcome: >-
-          You take the tribes away from him. The Wei war goes on, and Bobo goes with it.
-        deeds: {martial_bp: 300}
+          You take the tribes away from him and share them among your own officers. The Wei
+          war goes on, and Bobo goes with it.
+        deeds: {martial_bp: 1000, men: 3000}
+      - label: "Make peace, but recall Bobo to Chang'an"
+        legitimacy_bp: 600
+        unrest_bp: 500
+        wealth_bp: -200
+        outcome: >-
+          The peace is made and Bobo is called to the capital with honours and a title, while
+          other officers take over the Ordos garrisons. He comes, with a face you cannot read,
+          and the tribes he led are restless without him.
+        deeds: {peace_with: [northern_wei]}
     history: >-
       In 407 Liu Bobo, angered by Yao Xing's peace with the Wei, killed his father-in-law
       Moyigan, took his troops and founded Great Xia as Helian Bobo, Heavenly King and Great
@@ -216,18 +255,26 @@ chapters:
 
       Traditionally he dies in 413, though the sources disagree about the year.
     choices:
-      - label: "Honour him, and burn his body as he asked"
+      - label: "Grant his last wishes"
         historical: true
         legitimacy_bp: 500
         influence: {clergy: 1000}
         outcome: >-
           When he is cremated in the Xiaoyao garden, the story goes, the body is consumed but
           the tongue is left whole. Whatever happened at the fire, it was believed, and his pupils Sengzhao, Sengrui and others carry his teaching on.
-      - label: "Keep him alive at all costs, by every doctor in Chang'an"
+      - label: "Summon every doctor in Chang'an"
         legitimacy_bp: 100
         wealth_bp: -300
         outcome: >-
           The doctors can do nothing, and the old man smiles at you.
+      - label: "Have his pupils record his teachings"
+        knowledge_bp: 500
+        legitimacy_bp: 200
+        influence: {clergy: 300}
+        outcome: >-
+          Scribes sit by his bed through the last weeks and take down what he says about the
+          texts he has translated and the ones he has not. The notes are copied and kept in
+          the garden.
     history: >-
       Kumarajiva died in Chang'an, traditionally in 413, and the Gao seng zhuan reports that
       his tongue survived cremation.
@@ -251,9 +298,9 @@ chapters:
 
 
       Your ministers Liang Xi and Yin Zhao say: execute Yao Bi, or at least strip him of his
-      command. Yao Hong, who is soft-hearted, has pleaded for his brother in the past.
+      command. Yao Hong has pleaded for his brother in the past, and the court is divided.
     choices:
-      - label: "Strip Yao Bi of his offices, and spare him"
+      - label: "Dismiss Yao Bi from his offices"
         historical: true
         legitimacy_bp: -300
         unrest_bp: 500
@@ -261,11 +308,18 @@ chapters:
           Yao Bi is dismissed, and your other sons stand down. The family quarrel is
           quiet, but it does not end. Your sons and nephews hold the armies of Qin in
           their hands, and none of them forgets it. When you die in 416, the sons who rebelled and were spared are still there to trouble Yao Hong.
-      - label: "Execute Yao Bi"
+      - label: "Have Yao Bi put to death"
         legitimacy_bp: -800
         unrest_bp: 800
         outcome: >-
           Yao Bi dies, and your other sons see what you will do. The court is afraid.
+      - label: "Make the princes swear to the crown prince"
+        legitimacy_bp: 200
+        wealth_bp: -300
+        unrest_bp: 400
+        outcome: >-
+          Your sons are called to the palace and swear oaths before the ancestral shrine, each
+          with a gift from your treasury. The oaths are loud; the plotting goes on quietly.
     history: >-
       Yao Xing fell seriously ill in 414; Yao Bi plotted to replace the crown prince Yao Hong,
       but was stripped of his posts and spared. Yao Xing died in the second month of 416.
@@ -294,7 +348,7 @@ chapters:
       Qin princes stand together and fight Liu Yu at the Tong pass. The princes do not
       trust each other.
     choices:
-      - label: "Fight on at Chang'an with what you have"
+      - label: "Defend Chang'an with what you have"
         historical: true
         legitimacy_bp: -2500
         unrest_bp: 1500
@@ -305,10 +359,20 @@ chapters:
           executed. A great Jin general holds Chang'an for the first time since 316, but
           not for long.
         deeds: {ruler_falls: "surrenders to the Jin general Wang Zhen'e"}
-      - label: "Flee west to Anding before the Jin come"
+      - label: "Withdraw west to Anding"
         legitimacy_bp: -3000
+        wealth_bp: -800
+        unrest_bp: 800
         outcome: >-
-          You leave Chang'an to its fate and ride for the Qiang country, where nobody wants you.
+          You leave Chang'an to its fate with what the wagons will carry, and ride for the
+          Qiang country, where nobody wants you.
+      - label: "Hold the Tong pass with the princes"
+        legitimacy_bp: -2000
+        unrest_bp: 1500
+        outcome: >-
+          Yao Shao draws the princes' armies to the pass. They come late and quarrel over who
+          is to command, and the Jin fleet does not wait for them.
+        deeds: {martial_bp: 1500, men: 5000}
     history: >-
       Liu Yu's armies took Luoyang in 416 and Chang'an in the ninth month of 417; Yao Hong
       surrendered and was sent to Jiankang and executed.

@@ -42,10 +42,12 @@ chapters:
           can say. Wilusa is a Hittite vassal for as long as there is a Hatti.
         deeds: {peace_with: [hatti]}
       - label: "Write to Ahhiyawa as well as Hatti"
-        legitimacy_bp: 500
-        wealth_bp: 500
+        wealth_bp: 300
+        unrest_bp: 300
+        legitimacy_bp: 2200
         outcome: >-
-          Ships come to your quay from across the water with gifts. Hatti notes it.
+          Ships come to your quay from across the water with gifts. The lords of the coast praise your
+          independence, and your people are uneasy; Hatti notes it.
         deeds: {grudges: {hatti: 2000}}
       - label: "Send gifts and troops, but no oath"
         legitimacy_bp: 600
@@ -95,12 +97,12 @@ chapters:
           The wanax receives them politely. Hatti hears of it within the month.
         deeds: {grudges: {hatti: 1500}}
       - label: "Ask Hatti for troops against Piyamaradu"
-        legitimacy_bp: 500
-        wealth_bp: -300
+        wealth_bp: -200
+        legitimacy_bp: 700
         outcome: >-
-          A Hittite detachment comes west and drives Piyamaradu's raiders from the plain. It
-          stays rather longer than you would like.
-        deeds: {"men": 2000}
+          A Hittite detachment comes west and drives Piyamaradu's raiders from the plain, and the
+          harvest is gathered in peace. It stays rather longer than you would like.
+        deeds: {men: 2000}
     history: >-
       In the Tawagalawa letter, a Hittite Great King (probably Hattusili III) tells the king
       of Ahhiyawa that the quarrel over Wilusa had been settled. Piyamaradu's attacks on
@@ -188,12 +190,13 @@ chapters:
           Tarkasnawa does not like it, and the Great King likes it less. The letter is
           repeated.
       - label: "Return, but ask for new terms first"
-        legitimacy_bp: 1200
-        unrest_bp: 300
+        unrest_bp: 200
+        legitimacy_bp: 1700
         outcome: >-
-          Tudhaliya sends a new treaty, little changed from the old, and you go home with it.
-          You are the same vassal as before, only a little wiser.
-        deeds: {"peace_with": ["hatti"], "men": 1000}
+          Tudhaliya sends a new treaty, little changed from the old, and you go home with it; the
+          lords of Wilusa honour you for having asked. You are the same vassal as before, only a
+          little wiser, and some say you were bold.
+        deeds: {peace_with: [hatti], men: 1000}
     history: >-
       In the Milawata letter (c. 1235-1225 BC) Tudhaliya IV tells Tarkasnawa of Mira to restore
       Walmu to Wilusa. The Hittite king claims Wilusa as his vassal.
@@ -236,12 +239,12 @@ chapters:
         outcome: >-
           The ships come back with a little grain and a lot of news, none of it good.
       - label: "Ration the stores, send the weak inland"
-        food_bp: 1200
+        food_bp: 1500
         unrest_bp: 500
         legitimacy_bp: -300
         outcome: >-
-          The elderly and the children are sent to villages in the hills, where kin will take
-          them. The city holds a harder, lighter winter.
+          The elderly and the children are sent to villages in the hills, where kin will take them.
+          The city holds a harder, lighter winter, and the stores last well into spring.
     history: >-
       The citadel of Troy VIIa (late 13th-early 12th century BC) is crowded, with large storage
       jars sunk into the floors; its excavator, Carl Blegen, read this as preparation for a

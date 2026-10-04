@@ -45,11 +45,13 @@ chapters:
           you.
         deeds: {peace_with: [cordoba]}
       - label: "Rule by your court's old customs"
-        legitimacy_bp: 500
-        unrest_bp: 300
+        legitimacy_bp: 1800
+        unrest_bp: -500
         influence: {nobility: 800}
         outcome: >-
-          The nobles are pleased. The townsmen, who had been promised order, are not.
+          The nobles are pleased and keep the peace between themselves, and the old customs are
+          well known to everyone. The townsmen, who had been promised order, get less of it, but
+          the realm is quiet.
         deeds: {peace_with: [cordoba]}
       - label: "Raid the divided south for plunder"
         wealth_bp: 1500
@@ -202,13 +204,13 @@ chapters:
           worn out in front of them.
         deeds: {martial_bp: -500, grudges: {cordoba: 2500}}
       - label: "Raid the taifas' fields for plunder"
-        wealth_bp: 1500
-        legitimacy_bp: 300
-        unrest_bp: 500
+        wealth_bp: 3500
+        legitimacy_bp: 600
+        unrest_bp: 600
         outcome: >-
-          Your horsemen come back laden with cattle, captives and cloth. The kings of the taifas
-          remember it and strengthen their walls, and the gold you might have had in tribute does
-          not come.
+          Your horsemen come back year after year laden with cattle, captives and cloth, and the
+          plunder is rich. The kings of the taifas remember it and strengthen their walls, and
+          the gold you might have had in tribute does not come.
         deeds: {martial_bp: 500, grudges: {cordoba: 1500}}
     history: >-
       In the 1050s and early 1060s Ferdinand I took Viseu, Lamego and Coimbra, and made the
@@ -255,12 +257,13 @@ chapters:
           The king of Seville is pleased, and your bishops are not.
         deeds: {peace_with: [cordoba]}
       - label: "Ask for Seville's Christian captives"
-        legitimacy_bp: 1000
+        legitimacy_bp: 2700
         wealth_bp: 500
         influence: {clergy: 500}
         outcome: >-
-          Al-Mutadid frees a number of Christian captives and sends them north with gifts. Your
-          bishops say it is a good deed, and wonder what became of Isidore.
+          Al-Mutadid frees a great number of Christian captives and sends them north with gifts,
+          and the freed men are met on the roads with joy. Your bishops say it is a good deed,
+          and wonder what became of Isidore.
         deeds: {peace_with: [cordoba]}
     history: >-
       In December 1063 the body of Isidore of Seville was brought from Seville to León, in
@@ -367,12 +370,13 @@ chapters:
           Castile and León look for another king, and your brother García is waiting.
         deeds: {peace_with: [cordoba]}
       - label: "Swear, and share the realm with García"
-        legitimacy_bp: 500
-        unrest_bp: 500
+        legitimacy_bp: 1900
+        unrest_bp: -300
         influence: {nobility: 500}
         outcome: >-
-          You swear, and offer your brother Galicia as his own. García is wary, and the Castilian
-          nobles who wanted a single king are not pleased to see the realm divided again.
+          You swear, and offer your brother Galicia as his own. García accepts it warily, and
+          the Castilian nobles who wanted a single king are not all pleased, but the realm is
+          quiet and the peace between the brothers is widely praised.
         deeds: {martial_bp: 300}
     history: >-
       After Sancho II's death at Zamora in October 1072 Alfonso VI returned from exile in
@@ -411,11 +415,11 @@ chapters:
           in your kingdom.
         deeds: {peace_with: [cordoba], take: [m_leon, m_galicia]}
       - label: "Pardon Rodrigo and keep him at court"
-        legitimacy_bp: -500
+        legitimacy_bp: 1000
         unrest_bp: 300
         outcome: >-
-          The rivalries of your court go on. Rodrigo stays, and the lords who hated him now hate
-          you.
+          Rodrigo stays, and the lords who hated him grumble, but his victories shame them, and
+          the court admires a king who keeps a great soldier.
         deeds: {martial_bp: 300}
       - label: "Imprison Rodrigo until he submits"
         legitimacy_bp: -500
@@ -471,13 +475,16 @@ chapters:
           south are terrified, and look for help from Africa.
         deeds: {take: [m_toledo], grudges: {cordoba: 2000}}
       - label: "Keep al-Qadir on his throne as a tributary"
-        wealth_bp: 1000
-        legitimacy_bp: 300
-        knowledge_bp: 500
+        wealth_bp: 1700
+        legitimacy_bp: 3200
+        knowledge_bp: 1000
         unrest_bp: -300
         outcome: >-
-          Al-Qadir keeps his city and pays you a yearly sum for your protection. His subjects grow
-          no fonder of him, and your bishops ask why the great mosque is still a mosque.
+          Al-Qadir keeps his city and pays you a yearly sum for your protection, and the
+          scholars of Toledo work for your court as they did for his. The Christian kings of
+          Spain acclaim a ruler who has won the greatest of the taifas without a siege. His
+          subjects grow no fonder of him, and your bishops ask why the great mosque is still a
+          mosque.
         deeds: {peace_with: [cordoba]}
     history: >-
       Toledo surrendered to Alfonso VI on 25 May 1085, with guarantees for its Muslim inhabitants
