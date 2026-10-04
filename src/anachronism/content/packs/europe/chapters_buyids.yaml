@@ -35,7 +35,7 @@ chapters:
       copy more, and to pay the scholars who come. The Daylami and Turkish soldiers have not
       been paid on time.
     choices:
-      - label: "Keep paying for the House of Learning"
+      - label: "Keep funding the House of Learning"
         historical: true
         knowledge_bp: 2000
         legitimacy_bp: 500
@@ -46,13 +46,23 @@ chapters:
           poets, philosophers, physicians and mathematicians, Sunni and Shia, Christian and
           Jewish, and the emirs of the age are known for their libraries. The soldiers grumble,
           and the library will be burned when the Seljuks come, according to the later writers.
-      - label: "Pay the soldiers and let the library fend for itself"
+      - label: "Pay the soldiers, and cut the library"
+        wealth_bp: 500
         unrest_bp: -300
         knowledge_bp: -500
         outcome: >-
           The soldiers are satisfied for a season, and the scholars go to the courts of other
           emirs.
         deeds: {martial_bp: 300}
+      - label: "Pay the soldiers first, the scholars after"
+        knowledge_bp: 500
+        wealth_bp: -400
+        unrest_bp: -200
+        legitimacy_bp: 200
+        outcome: >-
+          You order the soldiers paid in full, and the library paid from what is left. The
+          copyists work more slowly, and the scholars grumble, but the books stay on their
+          shelves.
     history: >-
       Under Baha al-Dawla (988-1012) Baghdad remained a great city of learning, with libraries
       such as the House of Learning founded by the vizier Shapur ibn Ardashir.
@@ -81,7 +91,7 @@ chapters:
       your own coreligionists, and some of them are reluctant. The statement would make
       the caliph a leader again, after years of being a pensioner.
     choices:
-      - label: "Let the Alids sign and support the caliph"
+      - label: "Let the Alid nobles sign the statement"
         historical: true
         legitimacy_bp: 1500
         influence: {clergy: 1000}
@@ -92,12 +102,20 @@ chapters:
           his own voice again. A Shia emir has made a Sunni caliph a champion of the faith,
           which will matter after you.
         deeds: {grudges: {fatimids: 1000}}
-      - label: "Stay out of it"
+      - label: "Take no part in the statement"
         legitimacy_bp: -500
         unrest_bp: 500
         outcome: >-
           The caliph finds the signatures without you, and does not forget that his protector
           stood aside.
+      - label: "Let the caliph issue it alone"
+        legitimacy_bp: 500
+        unrest_bp: 300
+        influence: {clergy: 500}
+        outcome: >-
+          You tell the caliph he may publish his own statement with the signatures of the
+          Sunni judges alone, and that the Alid families will not be asked. It is a weaker
+          paper than he hoped for.
     history: >-
       In 1011 the Abbasid caliph al-Qadir had a manifesto signed in Baghdad by judges and Alid
       notables denying the Fatimid caliphs' descent from Ali; Baha al-Dawla died in 1012.
@@ -134,13 +152,21 @@ chapters:
           The creed is read, and the scholars of the rationalist schools lose their places.
           The caliph is a leader of the Sunnis again, and you keep the soldiers and the money.
           The Baghdad of the next generation will be more Sunni than your father's was.
-      - label: "Forbid it to keep the peace between sects"
+      - label: "Forbid it, to keep the peace"
         legitimacy_bp: -1000
         unrest_bp: 1000
         influence: {clergy: -500}
         outcome: >-
           The crowds are angry, and the street fights between Sunni and Shia quarters, which the
           Buyids have been trying to prevent, grow worse than before.
+      - label: "Allow it, but ban preaching in the streets"
+        legitimacy_bp: 200
+        unrest_bp: 300
+        influence: {clergy: 300}
+        outcome: >-
+          You tell the caliph the creed may be read in the palace and the mosques, but that no
+          preacher may take it into the streets. The Sunni crowds are not pleased, and the
+          Shia are only half satisfied.
     history: >-
       Around 1017-1018 the caliph al-Qadir issued the Qadiri creed, a Sunni statement of belief,
       reissued in 1029; the Buyids did not stop him.
@@ -167,7 +193,7 @@ chapters:
       physician is writing the book on medicine that Europeans will call the Canon. Shams
       sends to ask you what a prince should do.
     choices:
-      - label: "Tell Shams to dismiss him and let him hide"
+      - label: "Tell Shams to let the vizier go"
         historical: true
         legitimacy_bp: -300
         knowledge_bp: -500
@@ -184,6 +210,15 @@ chapters:
           Shams stands by his vizier, and the soldiers riot. In the end the physician is
           sent away in any case, and the prince's authority with him.
         deeds: {martial_bp: -300}
+      - label: "Offer him a place at your own court"
+        knowledge_bp: 800
+        wealth_bp: -400
+        unrest_bp: 300
+        legitimacy_bp: -200
+        outcome: >-
+          You send word to Hamadan that Ibn Sina is welcome in Baghdad, where you can protect
+          him. He is a famous guest, and the soldiers of Baghdad do not like him any better
+          than those of Hamadan.
     history: >-
       Ibn Sina served Shams al-Dawla of Hamadan as physician and vizier; soldiers' anger forced
       his dismissal, and he left after the prince's death in 1021 for Isfahan.
@@ -210,7 +245,7 @@ chapters:
       You can try to make yourself master of the whole family and take Fars, or you can
       keep your own lands, let each prince keep his, and pay the soldiers from what you have.
     choices:
-      - label: "Keep Iraq, and let each prince keep his own land"
+      - label: "Keep Iraq, and let each prince keep his own"
         historical: true
         legitimacy_bp: -500
         unrest_bp: 500
@@ -220,13 +255,21 @@ chapters:
           for one purpose, and the Turkish soldiers, who are paid by whoever pays, learn their
           value. Quarrels will go on for twenty years, to the benefit of every outside
           power.
-      - label: "Try to make yourself master of the whole family"
+      - label: "Make yourself master of the family"
         unrest_bp: 1500
         wealth_bp: -1500
         outcome: >-
           The war eats the money, the soldiers revolt for want of pay, and your kinsmen call in
           neighbours. You gain nothing but the debt.
         deeds: {martial_bp: 500}
+      - label: "Ally with your kinsmen against the soldiers"
+        legitimacy_bp: 300
+        wealth_bp: -500
+        deeds: {men: 3000}
+        outcome: >-
+          You send envoys to Fars and Rayy proposing that the family stand together against
+          the unruly soldiers. The princes agree to some things and not to others, and a loose
+          alliance is formed.
     history: >-
       After the deaths of Sultan al-Dawla (1024) and Musharrif al-Dawla (1025), Jalal al-Dawla
       held Baghdad from 1027; the Buyid house stayed divided between Jalal, Abu Kalijar in Fars
@@ -255,7 +298,7 @@ chapters:
       Daylami princes cannot agree on who should stand against him. Baghdad is far, and the
       caliph, who likes Mahmud's Sunni zeal, is not asking you to defend a Shia kinsman.
     choices:
-      - label: "Let Mahmud have Rayy"
+      - label: "Let Mahmud take Rayy unopposed"
         historical: true
         legitimacy_bp: -1500
         unrest_bp: 800
@@ -266,13 +309,21 @@ chapters:
           sons' hands within a year. You still hold Baghdad, Basra and Fars, and the caliph
           does not object.
         deeds: {peace_with: [ghaznavids], give: [m_jibal], give_to: ghaznavids}
-      - label: "March to Rayy with your Daylami troops"
+      - label: "March to Rayy with the Daylami"
         unrest_bp: 1500
         legitimacy_bp: -500
         outcome: >-
           Your army is paid late and marches slowly, and Mahmud's army is
           the richer and the stronger. You reach Rayy after it has fallen.
         deeds: {martial_bp: 500, peace_with: [ghaznavids], give: [m_jibal], give_to: ghaznavids}
+      - label: "Bring the Rayy library to Baghdad"
+        knowledge_bp: 400
+        legitimacy_bp: -800
+        unrest_bp: 500
+        deeds: {peace_with: [ghaznavids], give: [m_jibal], give_to: ghaznavids}
+        outcome: >-
+          You send carts and clerks to Rayy to take as much as they can carry before Mahmud
+          arrives. Some of the books arrive in Baghdad; the rest are left to his judges.
     history: >-
       Mahmud of Ghazni took Rayy from the Buyid Majd al-Dawla in 1029, burned books he judged
       heretical, and the western hill country became Ghaznavid land.
@@ -301,7 +352,7 @@ chapters:
       Muslim may take it. Others say the caliph can allow it. The caliph al-Qa'im does not like
       it, but you control his income.
     choices:
-      - label: "Press the caliph until he grants the title"
+      - label: "Insist that the caliph grant the title"
         historical: true
         legitimacy_bp: 1000
         influence: {clergy: -500}
@@ -311,11 +362,19 @@ chapters:
           permitted, though many of them do not like it. You are King of Kings, as your fathers
           were not, and the caliph has shown that he cannot refuse his protector.
       - label: "Drop the title to keep the peace"
+        unrest_bp: -200
         legitimacy_bp: -300
         influence: {clergy: 500}
         outcome: >-
           The jurists are pleased, the soldiers are puzzled, and the title is used on coins
           anyway.
+      - label: "Use the title without the caliph's leave"
+        legitimacy_bp: 500
+        unrest_bp: 200
+        influence: {clergy: -300}
+        outcome: >-
+          You have the title cut on your coins and read in the sermons without waiting for the
+          caliph. The jurists are divided, and he sends no answer.
     history: >-
       About 1037 Jalal al-Dawla had the caliph al-Qa'im grant him the title Malik al-Muluk
       (King of Kings) after a dispute among the jurists of Baghdad.
@@ -352,11 +411,19 @@ chapters:
           own way.
         deeds: {martial_bp: 500}
       - label: "Curb him and rely on the Daylami"
+        deeds: {men: 4000}
         unrest_bp: 1500
         legitimacy_bp: -500
         outcome: >-
           The Turkish soldiers sulk and desert, and the Daylami are too few to keep order. When
           the Seljuks come there is nobody to meet them.
+      - label: "Share the command between both"
+        legitimacy_bp: 100
+        unrest_bp: 300
+        deeds: {men: 3000, martial_bp: 200}
+        outcome: >-
+          You divide the command of Baghdad between al-Basasiri and a Daylami captain, and
+          tell each to watch the other. The soldiers see what you mean by it.
     history: >-
       In the 1050s the Turkish commander al-Basasiri held great power in Baghdad under
       al-Malik al-Rahim (1048-1055), while the Seljuk sultan Tughril Beg approached Iraq.
@@ -382,7 +449,7 @@ chapters:
       prisoner of their goodwill, now have the choice of fighting a hopeless battle, fleeing
       to Basra, or giving the city up.
     choices:
-      - label: "Give Baghdad up to Tughril Beg"
+      - label: "Open the gates to Tughril Beg"
         historical: true
         legitimacy_bp: -3000
         unrest_bp: 1000
@@ -393,13 +460,20 @@ chapters:
           the caliph has a new master, who is at least a Sunni. The Buyids of Fars hold on
           until the Seljuks reach them.
         deeds: {give: [m_baghdad], ruler_falls: "is arrested by Tughril Beg"}
-      - label: "Fight in the streets"
+      - label: "Fight Tughril in the streets"
         legitimacy_bp: -2000
         unrest_bp: 2000
         outcome: >-
           Your Daylami fight and are beaten, and the Turkish troops of Baghdad open the gates to
           the sultan. The city suffers for it.
         deeds: {give: [m_baghdad], ruler_falls: "is arrested by Tughril Beg"}
+      - label: "Withdraw with the court to Basra"
+        legitimacy_bp: -1500
+        unrest_bp: 500
+        deeds: {give: [m_baghdad], men: 2000}
+        outcome: >-
+          You leave Baghdad with the court and the treasury and take the road to Basra. The
+          caliph receives the sultan, and the city is no longer yours.
     history: >-
       Tughril Beg entered Baghdad in December 1055, ending Buyid rule there; al-Malik al-Rahim was
       arrested and died in prison in 1058. Buyid Fars fell to the Seljuks within a few years.

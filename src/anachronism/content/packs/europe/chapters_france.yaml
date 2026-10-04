@@ -45,12 +45,20 @@ chapters:
           brings you a proud and sharp-tongued court from the south, and who will give you
           four sons. The bishops of France are well pleased, and your reputation for piety
           grows.
-      - label: "Keep Bertha and defy the pope"
+      - label: "Keep Bertha and hold your ground"
         legitimacy_bp: -1500
         unrest_bp: 800
         outcome: >-
           Your bishops, abbots and even your barons are uneasy. A king who has no heir and no
           peace with the Church is a king whom the great counts need not obey.
+      - label: "Ask a council of bishops for a dispensation"
+        legitimacy_bp: 300
+        wealth_bp: -500
+        influence: {clergy: 500}
+        outcome: >-
+          Your bishops write to Rome and a council is called to hear the case. It takes
+          months, and gifts to the churches that must be fed along the way, and the pope
+          does not say what he will decide.
     history: >-
       Robert married his cousin Bertha of Burgundy in about 996 and was excommunicated in 998;
       about 1001-1003 he put her away and married Constance of Arles.
@@ -80,7 +88,7 @@ chapters:
       what they have said. Nothing like this has been done in France in your lifetime. The
       people in the square want fire.
     choices:
-      - label: "Let the Church degrade them, and hand them over to be burned"
+      - label: "Let the Church condemn them to the fire"
         historical: true
         legitimacy_bp: 800
         unrest_bp: 800
@@ -91,11 +99,21 @@ chapters:
           had known Stephen, struck out one of his eyes with her staff as he was led past.
           Some chroniclers will remember it as a pious deed, and some as the first burning
           of heretics in the Latin West for many centuries.
-      - label: "Shut them in monasteries and spare their lives"
+      - label: "Shut them in monasteries for life"
         legitimacy_bp: -500
+        unrest_bp: 300
+        influence: {clergy: -300}
         outcome: >-
           The bishop shakes his head. The men are shut away. The doctrine they were accused
           of is whispered in other towns, and the next bishop will have to deal with it.
+      - label: "Send them to a council of bishops"
+        legitimacy_bp: 300
+        wealth_bp: -300
+        influence: {clergy: 400}
+        outcome: >-
+          The bishops of the province are called together and the thirteen are heard again
+          before them. The council takes its time, the crowd in the square grows restless, and
+          the matter is still unsettled when you leave the town.
     history: >-
       In December 1022, in the presence of King Robert, thirteen canons and laymen of Orleans
       were condemned for heresy and burned.
@@ -122,7 +140,7 @@ chapters:
       against your mother, in return for the Vexin, the border country on the river Epte. Or
       you can give your brother something and make peace.
     choices:
-      - label: "Take Duke Robert's army, and leave Burgundy to your brother"
+      - label: "Take Duke Robert's army against your mother"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: -500
@@ -133,12 +151,21 @@ chapters:
           there for three hundred years, as dukes under your own. You pay the Normans with
           the Norman Vexin, to your later regret.
         deeds: {give: [m_burgundy]}
-      - label: "Share the kingdom with Robert, and keep Burgundy"
+      - label: "Share the kingdom with your brother"
         legitimacy_bp: -1000
         unrest_bp: 1200
         outcome: >-
           Your mother's party does not want half of a king. The war goes on for another year,
           and the castles sell themselves to whoever pays.
+        deeds: {men: 1500}
+      - label: "Buy the castle-lords and fight alone"
+        wealth_bp: -1500
+        unrest_bp: 500
+        legitimacy_bp: 300
+        outcome: >-
+          You send out your money instead of asking help of the Normans. Some castles open to
+          you and some wait for the highest bidder, and the war drags on at your own expense.
+        deeds: {men: 2000}
     history: >-
       Robert II died on 20 July 1031. Henry I, with help from Duke Robert of Normandy
       (in return for the Vexin), overcame his mother Constance and his brother Robert, who
@@ -168,9 +195,9 @@ chapters:
       Your bishops know of one, far away. Yaroslav, Prince of Kiev, has many daughters, and
       his family is linked by marriage to Norway, Hungary and Poland. His daughter Anna is
       young and said to be clever. Kiev is a long way off, and your court is poor beside
-      his. Bishop Roger of Chalons is ready to go.
+      his. A bishop could carry your offer.
     choices:
-      - label: "Send Bishop Roger to Kiev to ask for Anna"
+      - label: "Send a bishop to Kiev for a bride"
         historical: true
         legitimacy_bp: 1500
         wealth_bp: -500
@@ -179,11 +206,19 @@ chapters:
           rough your court is, and she can write when you cannot. A charter of 1063 has her
           name signed in Cyrillic letters. She gives you three sons, and a prince named
           Philip, a Greek name that no Frankish king has ever borne.
-      - label: "Marry a lady of your own realm, with a dispensation"
+      - label: "Marry a lady of your realm by dispensation"
         legitimacy_bp: -500
+        wealth_bp: 300
         outcome: >-
           The bishops give a reluctant dispensation. Your marriage lasts, but the great
           princes see little reason to treat it as a royal one.
+      - label: "Seek a bride at the emperor's court"
+        legitimacy_bp: 500
+        wealth_bp: -300
+        outcome: >-
+          Your envoys go east to the German court. The emperor's kin are many, but the
+          Church's counting is strict, and the search takes a long time and ends without a
+          bride.
     history: >-
       Henry I married Anne of Kiev, daughter of Yaroslav the Wise, in 1051; she bore Philip
       (b. 1052), the first Frankish king named Philip.
@@ -213,7 +248,7 @@ chapters:
       Half your army is across the river, and the other half is waiting on the bank.
       Scouts say that Duke William has been watching from the trees, and that he has men.
     choices:
-      - label: "Press on across the ford, and trust the rearguard to follow"
+      - label: "Press on across the ford"
         historical: true
         legitimacy_bp: -1500
         unrest_bp: 500
@@ -223,11 +258,21 @@ chapters:
           and you never come back. You and the Duke will make peace, but he has beaten the
           king, and everyone knows it.
         deeds: {martial_bp: -500}
-      - label: "Halt the van, and bring the whole army over before going on"
+      - label: "Halt the van and bring the army over"
         legitimacy_bp: 500
+        wealth_bp: -300
         outcome: >-
           The delay costs you a day. William is forced to meet the whole army or none, and his
           men stay in the woods.
+        deeds: {martial_bp: 300}
+      - label: "Turn aside and ravage the Norman fields"
+        legitimacy_bp: 300
+        wealth_bp: 500
+        unrest_bp: 500
+        outcome: >-
+          You swing the army inland and burn farms and barns, and drive off cattle. The
+          countryside suffers; William, who needed a battle, has to follow you.
+        deeds: {martial_bp: 200}
     history: >-
       In August 1057 Henry and Geoffrey Martel invaded Normandy; as the French crossed the
       Dives, William of Normandy destroyed their rearguard at Varaville, and Henry withdrew.
@@ -271,6 +316,13 @@ chapters:
         outcome: >-
           Baldwin goes back to Lille in a rage. The
           barons divide, and the court is full of quarrelling.
+      - label: "Set up a council of bishops and counts"
+        legitimacy_bp: 300
+        unrest_bp: 500
+        influence: {nobility: 500}
+        outcome: >-
+          A council of the chief bishops and counts is named to rule in your name. It is
+          slow, each member watches the others, and nobody is trusted as Baldwin would be.
     history: >-
       Henry I died on 4 August 1060 and the child Philip I was placed under the guardianship of
       Baldwin V of Flanders, who ruled as regent until his death in 1067.
@@ -311,9 +363,18 @@ chapters:
           until you promise to give her up in 1104.
       - label: "Keep Bertha, and leave Bertrade at Anjou"
         legitimacy_bp: 500
+        influence: {clergy: 500}
         outcome: >-
           The Church is pleased with you, and Bertha is not happy. Your people say you are
           a dull king, and Count Fulk keeps his wife.
+      - label: "Ask a council to annul the marriage first"
+        legitimacy_bp: -500
+        wealth_bp: -400
+        influence: {clergy: -300}
+        outcome: >-
+          A council is called and bishops are asked their views. They are slow, and many
+          of them say the king has no ground for it; the case is still being argued when
+          Bertrade moves into your household.
     history: >-
       About 1092 Philip I repudiated Bertha of Holland and married Bertrade de Montfort,
       wife of Fulk IV of Anjou; Ivo of Chartres protested and was imprisoned.
@@ -342,7 +403,7 @@ chapters:
       Council, in the same week, renews it. The barons of France may go to war, and you
       can send a little of your own, and your blessing.
     choices:
-      - label: "Stay at home, and let your brother and the barons go"
+      - label: "Stay at home; your brother may go"
         historical: true
         legitimacy_bp: -500
         outcome: >-
@@ -350,13 +411,20 @@ chapters:
           of Bouillon, a Lotharingian, march east; Jerusalem is taken in 1099. You stay in
           France, watching your barons gone and your own power growing in their absence, with
           your son Louis at your side, who will be a stronger king than you.
-      - label: "Go yourself, as a pilgrim and king"
+      - label: "Go yourself, as king and pilgrim"
         legitimacy_bp: 1000
         unrest_bp: 1000
         wealth_bp: -2000
         outcome: >-
           No Pope will bless an excommunicate at the head of a crusade, and you leave the
           kingdom in the hands of your young son Louis and a quarrelsome court.
+      - label: "Send a small royal force and your blessing"
+        legitimacy_bp: 300
+        wealth_bp: -800
+        outcome: >-
+          A few of your household knights ride east under your banner, with money from the
+          treasury. The Pope notes it and the barons notice that the king himself stayed behind.
+        deeds: {men: 1000}
     history: >-
       Philip I, under excommunication, did not take part in the First Crusade, which Urban II
       proclaimed at Clermont in November 1095; his brother Hugh of Vermandois did.

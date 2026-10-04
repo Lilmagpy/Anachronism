@@ -43,7 +43,7 @@ chapters:
       thrown out of your dining hall, and that he has sworn not to tie up his hair until you
       are gone. Nobody will say whether the story is true.
     choices:
-      - label: "Keep the taxes, the treasure and the great army"
+      - label: "Keep the levies, the hoard and the army"
         historical: true
         wealth_bp: 1500
         unrest_bp: 800
@@ -61,6 +61,14 @@ chapters:
           The merchants of Pataliputra bless you for a season, and the treasurers
           do not. The grain flows in more slowly, and the army must be paid from the
           hoard.
+      - label: "Spend the hoard on the army's pay"
+        wealth_bp: -1000
+        unrest_bp: 300
+        outcome: >-
+          Your treasurers open the vaults, and the captains are paid for years ahead. The
+          troops are content and the army is better drilled than ever, but the villages
+          see no change in the tax-gatherers, and the hoard is much lighter.
+        deeds: {martial_bp: 800}
     history: >-
       Greek writers of Alexander's time (Diodorus 17.93, Curtius 9.2, Plutarch, Alexander
       62) describe a hated king of the Prasii and Gangaridae, with a great army, whose father,
@@ -93,7 +101,7 @@ chapters:
       by raising the people against a hated king. Your generals say that the boy must be crushed
       before he is strong.
     choices:
-      - label: "Send the army west to crush the upstart"
+      - label: "Send the army west against the upstart"
         historical: true
         unrest_bp: 500
         outcome: >-
@@ -106,6 +114,15 @@ chapters:
         outcome: >-
           You keep your strength at Pataliputra. The Punjab is lost to you in the meantime, and
           the boy grows bolder.
+        deeds: {martial_bp: 500}
+      - label: "Buy the clans and hire swords"
+        wealth_bp: -1200
+        unrest_bp: 200
+        outcome: >-
+          Your agents carry gold to the clan chiefs of the north-west, and mercenaries come
+          east to your standard. Some clans listen and many take the gold and stay with the
+          boy; the hired men are loyal only as long as the pay lasts.
+        deeds: {men: 3000}
     history: >-
       Chandragupta Maurya rose against the Nandas from the north-west; the Buddhist commentary
       gives the story of the failed first attack and of Bhaddasala. The Greek writers
@@ -136,7 +153,7 @@ chapters:
       play Mudrarakshasa, the latest of these, has Chanakya win over your loyal chief minister Rakshasa by a
       trick, so that he serves the Mauryas. The Greeks do not say.
     choices:
-      - label: "Leave the city with what one chariot can carry"
+      - label: "Open the gates and depart with your treasure"
         historical: true
         legitimacy_bp: -2000
         unrest_bp: 1500
@@ -145,13 +162,22 @@ chapters:
           chariot, and that you are allowed to go. Chanakya, the tales say, ties up his hair at last.
           Your ministers, in the play, go to work for the new king.
         deeds: {ruler_falls: "leaves Pataliputra with one chariot", give: [in_magadha, in_anga, in_kashi, in_vatsa, in_kosala, in_panchala, in_kuru, in_surasena, in_vanga, in_pundra, in_chedi], give_to: maurya}
-      - label: "Hold the walls to the last man"
+      - label: "Hold the walls with the guard"
         legitimacy_bp: 500
         unrest_bp: 500
         outcome: >-
           This is the Buddhist ending, in which you are killed in the fall of the city. Your
           captains die with you, and the house of Nanda has no one left to rally.
         deeds: {ruler_falls: "is killed when Pataliputra falls"}
+      - label: "Treat for terms, giving up the east"
+        legitimacy_bp: -800
+        unrest_bp: 300
+        outcome: >-
+          Your envoys go out to the Mauryan camp and offer the eastern provinces for the
+          safety of the capital. The besiegers take what is offered, and the walls are
+          still before you; nothing the old writers say shows that any such bargain was
+          struck.
+        deeds: {give: [in_vanga, in_pundra], give_to: maurya}
     history: >-
       Chandragupta Maurya took Pataliputra and ended the Nanda dynasty, about 321 BC by the
       usual reckoning, perhaps later. Sources disagree: Buddhist tradition has Dhana Nanda

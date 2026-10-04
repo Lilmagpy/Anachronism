@@ -31,7 +31,7 @@ chapters:
       The Asakura have never marched on Kyoto. Your fathers kept to Echizen and held it well.
       Your uncles say it is time to look further.
     choices:
-      - label: "Keep to Echizen, and be the patron of exiles"
+      - label: "Stay in Echizen and patronise the exiles"
         historical: true
         wealth_bp: 500
         knowledge_bp: 800
@@ -40,11 +40,18 @@ chapters:
           The wanderers keep coming. You give them houses and pensions, and they give you poems,
           tea and an exact knowledge of what is happening in the capital. Echizen is rich and
           at peace, and has no army to speak of.
-      - label: "March for the capital"
+      - label: "March on Kyoto through Omi"
         legitimacy_bp: 1000
         food_bp: -1500
         outcome: >-
           Your army crosses into Omi and comes home with nothing, having lost its harvest.
+      - label: "Raise a larger army and wait for a pretext"
+        wealth_bp: 1100
+        legitimacy_bp: 300
+        outcome: >-
+          Your levies drill through the summer and the exiles complain of the noise. No one
+          gives you a reason to march, and the treasury is lighter by the winter.
+        deeds: {men: 3000}
     history: >-
       Under Yoshikage, Ichijodani flourished as a refuge for nobles and monks from Kyoto; the
       Asakura did not attempt to march to the capital.
@@ -70,7 +77,7 @@ chapters:
       Yoshiaki wants an army to march to Kyoto. Your elders will not send one: you have no quarrel
       with the Miyoshi, and the roads are long.
     choices:
-      - label: "Shelter him, but send no army"
+      - label: "Shelter him and keep your army home"
         historical: true
         legitimacy_bp: 500
         outcome: >-
@@ -85,6 +92,12 @@ chapters:
         outcome: >-
           Your men get as far as the Omi border, and the Rokkaku block the road. Yoshiaki
           is no nearer to Kyoto.
+      - label: "Lend him gold, and write to other lords for him"
+        wealth_bp: -800
+        legitimacy_bp: 800
+        outcome: >-
+          Your letters go out to the lords of the west and of Mino, under the shogun's seal and
+          your own. Yoshiaki is grateful and still wants an army.
     history: >-
       Ashikaga Yoshiaki lived under Asakura protection in Echizen from 1566 until 1568, when he
       went to Nobunaga; Yoshikage did not send an army.
@@ -122,10 +135,19 @@ chapters:
           Mount Hiei with the Azai, and the monks shelter you, and Nobunaga cannot reach you. In
           December the Emperor himself orders a truce and you go home.
         deeds: {war_with: [oda], grudges: {oda: 2000}}
-      - label: "Keep the peace and send an envoy"
+      - label: "Send an envoy to Nobunaga with gifts"
         legitimacy_bp: -1500
+        wealth_bp: -400
         outcome: >-
           Nobunaga takes your envoy's words as a surrender, and turns on the Azai alone.
+        deeds: {peace_with: [oda]}
+      - label: "Man the border castles and wait"
+        legitimacy_bp: 1100
+        wealth_bp: -300
+        outcome: >-
+          Your garrisons stand to their walls while the two armies shift about to the south.
+          Nobody asks you what you intend, and nobody thanks you for it.
+        deeds: {men: 3000}
     history: >-
       After Azai Nagamasa turned on Nobunaga at Kanegasaki (April 1570), the Asakura joined the
       Azai; they were beaten at the Ane river (Anegawa, July) and then sheltered on Mount Hiei
@@ -166,6 +188,13 @@ chapters:
         outcome: >-
           Your men are caught by snow, and the army that comes back is half the size of the army
           that left.
+      - label: "Send a small force to the Honganji's army"
+        legitimacy_bp: 300
+        wealth_bp: -500
+        outcome: >-
+          A few thousand of your men go over the passes to the Honganji's lines, and the rest
+          stay in Echizen. The Honganji's priests are grateful, and Nobunaga makes a note of it.
+        deeds: {men: 2000}
     history: >-
       Nobunaga destroyed the Enryaku-ji on Mount Hiei in September 1571. The Asakura remained
       in Echizen that winter while Nobunaga strengthened his hold on Omi.
@@ -195,7 +224,7 @@ chapters:
       Asakura captains would like to go home, which is where their supply lines end. Nobunaga
       has sent a messenger to say that he is ready to treat for peace.
     choices:
-      - label: "Take the army home for the winter"
+      - label: "Withdraw the army for the winter"
         historical: true
         legitimacy_bp: -2000
         unrest_bp: 1000
@@ -210,6 +239,13 @@ chapters:
         food_bp: -1000
         outcome: >-
           Your men freeze in the north of Omi. Nobunaga has to keep his own army there.
+      - label: "Treat for peace with Nobunaga"
+        legitimacy_bp: -800
+        wealth_bp: 400
+        outcome: >-
+          Your envoys meet Nobunaga's men under a flag. Terms are agreed that leave both of you
+          where you stand, and Shingen, in Totomi, takes the news badly.
+        deeds: {peace_with: [oda]}
     history: >-
       In December 1572 Asakura Yoshikage withdrew from the north of Omi, against Shingen's urging;
       Nobunaga took the chance to break the coalition.
@@ -254,6 +290,12 @@ chapters:
         unrest_bp: 2000
         outcome: >-
           Your hundreds of men die in the valley, and the town burns around them.
+      - label: "Seek shelter with the Ikko-ikki of Kaga"
+        legitimacy_bp: -1800
+        unrest_bp: 1500
+        outcome: >-
+          You turn north towards the Kaga border with the few retainers who still follow you,
+          hoping that the Honganji's people will take you in as an ally.
     history: >-
       Nobunaga destroyed the Asakura in August 1573; Yoshikage was betrayed by his cousin
       Kageakira and killed himself at Rokubo, and Ichijodani was burned. His skull, with those

@@ -27,7 +27,7 @@ chapters:
       Now Muwatalli is gathering every vassal he has against Pharaoh Ramesses, who is
       marching north to retake Kadesh. He wants your chariots.
     choices:
-      - label: "Send your chariots to Kadesh"
+      - label: "Send your chariots north to Kadesh"
         historical: true
         legitimacy_bp: 1000
         materials_bp: -800
@@ -35,10 +35,19 @@ chapters:
           The men of Ugarit fight at Kadesh among the Great King's allies, and Pharaoh's
           scribes list them by name in the temple inscriptions that claim his victory. Both
           sides claim to have won. Your chariots come home, most of them.
-      - label: "Send gold instead of men"
-        wealth_bp: -1000
+      - label: "Send gold in place of men"
+        legitimacy_bp: 600
+        wealth_bp: -800
         outcome: >-
           The Great King takes the gold, and notes that Ugarit's chariots stayed at home.
+      - label: "Send ships and provisions, keep the chariots"
+        food_bp: -800
+        wealth_bp: -400
+        outcome: >-
+          Your ships carry grain and oil up the coast to the Great King's camp, and your
+          chariots stay on the harbour road. Muwatalli takes the supplies, and notes that
+          Ugarit has sent no fighting men.
+        deeds: {ships: 3}
     history: >-
       Ugarit's troops fought on the Hittite side at Kadesh (1274 BC) and appear in Ramesses
       II's list of the Hittite allies.
@@ -66,7 +75,7 @@ chapters:
       h, d...'. With them, a merchant or a priest can write anything. The master scribe asks
       whether the school should teach only the new signs.
     choices:
-      - label: "Keep both scripts"
+      - label: "Teach both scripts side by side"
         historical: true
         knowledge_bp: 2000
         outcome: >-
@@ -74,12 +83,18 @@ chapters:
           prayers, the poems of Baal and of King Kirta - is written in your thirty signs. A
           schoolboy's tablet with the whole alphabet in order will be dug up in 1949, and the
           order is the one you learned at school: a, b, g, d.
-      - label: "Write everything in the thirty signs"
+      - label: "Teach only the thirty signs"
         knowledge_bp: 3000
         legitimacy_bp: -500
         outcome: >-
           The foreign envoys complain they cannot read your letters. The merchants learn to
           write in a month.
+      - label: "Teach only Babylonian cuneiform"
+        knowledge_bp: 500
+        legitimacy_bp: 500
+        outcome: >-
+          The school keeps to the old signs that every royal court can read. Your envoys write
+          as well as any in the East, and the alphabet stays a habit of a few clever merchants.
     history: >-
       The Ugaritic cuneiform alphabet of thirty signs was used for local texts, including the
       Baal Cycle, alongside Akkadian; abecedary tablets show the same letter order as later
@@ -106,7 +121,7 @@ chapters:
       You want her back - to punish her. Amurru will not give her up. The Hittite Great King
       is the judge of all his vassals, and has agreed to hear the case.
     choices:
-      - label: "Pay the Great King to have her sent back"
+      - label: "Ask the Great King to send her back"
         historical: true
         wealth_bp: -2000
         legitimacy_bp: 500
@@ -115,11 +130,18 @@ chapters:
           her, and your soldiers fetch her. The tablets do not say what happened next, and do
           not need to. Her sons by you are disinherited and sent away from Ugarit.
         deeds: {grudges: {amurru: 2000}}
-      - label: "Let her stay in Amurru"
-        legitimacy_bp: -1000
+      - label: "Leave her with her brother in Amurru"
+        legitimacy_bp: 100
         outcome: >-
           She stays with her brother. The other kings of the coast say the King of Ugarit
           cannot keep order in his own house.
+      - label: "Make terms with Benteshina yourself"
+        wealth_bp: -1000
+        legitimacy_bp: -300
+        outcome: >-
+          Your envoys bargain with Amurru without calling in the Great King. Benteshina accepts
+          gold and a quiet settlement, though the tablets of the time show he will not give up
+          his daughter.
     history: >-
       Ammistamru II divorced the 'daughter of the great lady' of Amurru for a 'great sin'; Hittite
       edicts settled the case, and Ugarit paid 1,400 shekels of gold to have her extradited.
@@ -146,7 +168,7 @@ chapters:
       Your soldiers are needed at home, and your merchants are needed at sea. The Great
       King's officials hint that a payment might excuse you.
     choices:
-      - label: "Pay fifty minas of gold"
+      - label: "Buy exemption with gold"
         historical: true
         wealth_bp: -2500
         legitimacy_bp: 500
@@ -154,11 +176,18 @@ chapters:
           The Great King accepts. Ugarit is excused from his war with Assyria for as long as it
           lasts. He loses the battle at Nihriya, and his letters to you grow shorter and
           sharper.
-      - label: "Send the army"
+      - label: "Send the army east"
         materials_bp: -1500
         unrest_bp: 1000
         outcome: >-
           Your chariots march east. Your merchants wonder who will guard the harbour.
+      - label: "Send a small force and some ships"
+        wealth_bp: -800
+        unrest_bp: 400
+        outcome: >-
+          A few hundred men and a squadron of your ships go east in your name. The Great King
+          says it is less than he asked for, but he has other vassals to count on.
+        deeds: {men: 1000, ships: 2}
     history: >-
       A Hittite edict records that Ugarit paid fifty minas of gold to be released from
       military service in the Hittite war against Assyria, in Tudhaliya IV's reign.
@@ -184,7 +213,7 @@ chapters:
       the Hittite port in Cilicia, in one or at most two voyages. "It is a matter of life or
       death!"
     choices:
-      - label: "Send the grain"
+      - label: "Send all the grain to Ura"
         historical: true
         food_bp: -2000
         legitimacy_bp: 1000
@@ -193,11 +222,17 @@ chapters:
           still standing. It is eating its seed corn.
       - label: "Keep the grain for Ugarit"
         food_bp: 1000
-        legitimacy_bp: -1500
+        legitimacy_bp: 600
         outcome: >-
           You write back that there are no ships to spare. The next letter from Hattusa calls
           you 'my servant', and threatens.
         deeds: {grudges: {hatti: 2000}}
+      - label: "Send half the grain and promise more"
+        food_bp: -1000
+        legitimacy_bp: 300
+        outcome: >-
+          One ship goes to Ura at once, and a second is promised when the harvest allows. The
+          Great King's reply does not thank you.
     history: >-
       Late Hittite letters to Ugarit demand urgent grain shipments to Ura during famine,
       calling it 'a matter of life or death' (RS 20.212).
@@ -216,7 +251,7 @@ chapters:
     speaker_title: "Chief prefect of Alashiya (Cyprus)"
     benchmark_provinces: 1
     story: >-
-      You are Ammurapi, the last king of Ugarit, though you do not know it. Your army and
+      You are Ammurapi, King of Ugarit. Your army and
       chariots are in the land of Hatti, where the Great King called them. Your ships are in
       the land of Lukka, on the south coast of Anatolia, where he sent them. Raiders from the
       sea have been seen up and down the coast.
@@ -242,6 +277,12 @@ chapters:
         outcome: >-
           Every merchant's son is given a spear. When the ships come, the harbour is full of
           men, and they sail on to an easier town.
+      - label: "Send to the Great King to recall your army"
+        legitimacy_bp: -800
+        wealth_bp: -500
+        outcome: >-
+          A messenger goes north to Hatti with a plea for your troops and chariots to come
+          home. It is a long road, and the Great King has his own troubles.
     history: >-
       Ugarit was destroyed around 1185 BC during the collapse of the Late Bronze Age; its
       last letters describe enemy ships while its army and fleet were away in Hittite service.

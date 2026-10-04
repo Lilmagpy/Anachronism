@@ -30,11 +30,10 @@ chapters:
 
 
       This year a Roman tribune, Gaius Flaminius, has carried a law dividing the old Gallic
-      land on the Adriatic among the poor citizens of Rome, against the Senate's wishes. Greek
-      writers will later call this the beginning of the war. Your young men want to fight at
-      once. Your elders say wait.
+      land on the Adriatic among the poor citizens of Rome, against the Senate's wishes.
+      Your young men want to fight at once. Your elders say wait.
     choices:
-      - label: "Send for the Gaesatae, the mercenaries from beyond the Alps"
+      - label: "Hire the Gaesatae from beyond the Alps"
         historical: true
         wealth_bp: -1500
         legitimacy_bp: 500
@@ -43,17 +42,21 @@ chapters:
           Rhône valley, the hired spearmen called Gaesatae. It takes years to prepare, and
           Rome watches. Meanwhile you make allies of the Taurisci and the Alpine tribes.
         deeds: {peace_with: [rome], martial_bp: 500, men: 5000}
-      - label: "Make a firm treaty with Rome, and give up the Adriatic road"
+      - label: "Make a treaty with Rome, and give up the road"
         wealth_bp: 500
         legitimacy_bp: -1000
+        unrest_bp: 600
         outcome: >-
           Rome accepts and, in time, builds a road through your country.
         deeds: {peace_with: [rome]}
-      - label: "Keep the peace, and arm nobody"
-        legitimacy_bp: -500
+      - label: "Arm your own men, and wait"
+        wealth_bp: -500
         unrest_bp: 500
         outcome: >-
-          Your young men do not wait. Some raid south on their own.
+          You call out the home levy and drill it through the winters. It is a smaller
+          force than a hired army would be, and your young men do not wait; some raid south
+          on their own.
+        deeds: {martial_bp: 800, men: 2000}
     history: >-
       The land law of Gaius Flaminius (232 BC) alarmed the Gauls. Polybius says the Boii and
       Insubres then sent to the Gaesatae of the Rhône valley and spent years preparing the war,
@@ -151,12 +154,12 @@ chapters:
         unrest_bp: 800
         outcome: >-
           Marcellus finds your camp divided by a river. It goes badly either way.
-        deeds: {ruler_falls: "is killed in the river camp", grudges: {rome: 1500}}
+        deeds: {men: 2000, ruler_falls: "is killed in the river camp", grudges: {rome: 1500}}
       - label: "Withdraw across the Alps with the Gaesatae"
         legitimacy_bp: -1000
         outcome: >-
           Your mercenaries want their pay and go home. The Insubres are left alone.
-        deeds: {ruler_falls: "is deserted by his Gaesatae", grudges: {rome: 1000}}
+        deeds: {men: 4000, ruler_falls: "is deserted by his Gaesatae", grudges: {rome: 1000}}
     history: >-
       In 222 BC, at Clastidium, the consul Marcus Claudius Marcellus killed the Insubrian king
       Viridomarus in single combat and took the spolia opima. Rome then took Mediolanum, and
@@ -196,14 +199,17 @@ chapters:
           Gauls join him in thousands. He wins his first great victories on your land at the
           Ticinus and the Trebia. Many of your men march south with him.
         deeds: {martial_bp: 300, men: 12000, grudges: {rome: 3000}}
-      - label: "Honour your peace with Rome"
+      - label: "Keep your peace with Rome, and guard the Po"
         legitimacy_bp: -1000
+        wealth_bp: 300
+        unrest_bp: -300
         outcome: >-
           Hannibal's army, starved and sick, finds your valley hostile. Rome's colonies take root.
         deeds: {peace_with: [rome]}
       - label: "Take Hannibal's gold, but keep your men at home"
         wealth_bp: 1000
         legitimacy_bp: -500
+        unrest_bp: 300
         outcome: >-
           You are pleased. Neither side trusts you afterwards.
     history: >-
@@ -233,7 +239,7 @@ chapters:
       You know the forest and the Romans do not. You could ambush them, or avoid battle and
       withdraw behind the Po.
     choices:
-      - label: "Cut the trees half through, and fall on the Romans as they enter the forest"
+      - label: "Ambush the Romans in the Litana forest"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: -500
@@ -246,6 +252,7 @@ chapters:
         deeds: {grudges: {rome: 2500}}
       - label: "Retreat behind the Po and let the army pass"
         legitimacy_bp: -1000
+        wealth_bp: 300
         outcome: >-
           The Romans march home with nothing to show but burnt farms. Your people say you were
           afraid.

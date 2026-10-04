@@ -28,10 +28,10 @@ chapters:
 
 
       Basil II has stopped fighting the Fatimids and turned on you. His generals have marched
-      through the passes with a great army. Your son says that if the old cities are to be
-      held, you must send the whole army east, and risk it against the emperor's best.
+      through the passes with a great army. Your son and your captains argue over where the
+      army should stand: in the east, before the old cities, or in the western hills.
     choices:
-      - label: "Give up the east and hold the western mountains"
+      - label: "Hold the west, give up the old cities"
         historical: true
         legitimacy_bp: -500
         outcome: >-
@@ -40,13 +40,20 @@ chapters:
           hundred years, are lost, and Greek garrisons settle in the old palaces. Your army is
           whole, and it is in the hills, where the emperor's heavy horsemen are worth less.
         deeds: {give: [m_moesia], give_to: byzantium, martial_bp: 500}
-      - label: "Stake everything on defending Preslav"
+      - label: "Meet Basil's army before Preslav"
         legitimacy_bp: 500
         unrest_bp: 1500
         outcome: >-
           The great army of Bulgaria meets Basil's veterans in the open. Samuel's best men
           are lost, and with them the hope of winning a pitched battle.
         deeds: {martial_bp: -1500}
+      - label: "Garrison Preslav, keep the army west"
+        unrest_bp: 300
+        legitimacy_bp: 200
+        outcome: >-
+          A strong garrison shuts itself inside Preslav while the rest of the army stays in the
+          hills. The garrison holds for a season, but nobody can come to its help.
+        deeds: {men: 4000, martial_bp: -500}
     history: >-
       In 1000-1001 Basil II's generals Theodorokanos and Nikephoros Xiphias recaptured Great
       Preslav, Pliska and Little Preslav; Samuel's power remained in the west.
@@ -73,7 +80,7 @@ chapters:
       The emperor has left his own cities poorly defended. There is a great fair at Adrianople
       at Pentecost, and your scouts say it is poorly guarded.
     choices:
-      - label: "Strike deep into Thrace, and raid Adrianople"
+      - label: "Raid the Adrianople Pentecost fair"
         historical: true
         wealth_bp: 2000
         legitimacy_bp: 500
@@ -82,12 +89,12 @@ chapters:
           of captives and carts. Basil does not turn back. Vidin holds for eight months and is
           starved into surrender, and the emperor marches south to hunt you down.
         deeds: {martial_bp: 500}
-      - label: "March to relieve Vidin"
+      - label: "March to relieve the siege of Vidin"
         legitimacy_bp: -500
         outcome: >-
           Your army meets the emperor's, and is driven back. Vidin falls anyway.
         deeds: {martial_bp: -1000}
-      - label: "Ask Basil for terms"
+      - label: "Offer Basil a truce through the bishops"
         legitimacy_bp: -1500
         unrest_bp: 1000
         outcome: >-
@@ -116,10 +123,10 @@ chapters:
       and, you are sure, too deep for the emperor's heavy cavalry to ford.
 
 
-      Your son thinks the army should not rest so close. The Greek emperor is a man who goes
-      where he is told he cannot.
+      Your son wants a stronger watch on the river. Your captains say the flood is guard
+      enough, and the men need rest.
     choices:
-      - label: "Stay in the camp across the river"
+      - label: "Keep the camp across the river"
         historical: true
         legitimacy_bp: -1500
         unrest_bp: 800
@@ -129,11 +136,20 @@ chapters:
           carries you from the field. Skopje surrenders, and the Greeks take a great deal of
           booty, including your treasure. Basil then marches off with the stronghold's
           commander made a patrician.
-      - label: "Withdraw into the mountains before the emperor arrives"
+      - label: "Withdraw to the mountains at once"
         legitimacy_bp: -500
+        unrest_bp: 300
         outcome: >-
           Skopje falls anyway, but your army is whole and Basil has nobody to fight in the
           hills.
+      - label: "Post pickets at every ford"
+        legitimacy_bp: -800
+        unrest_bp: 300
+        outcome: >-
+          Pickets watch every ford for miles, and your army is strung out along the bank. When
+          the emperor crosses, no one has the whole force in hand. Skopje falls, but you and your
+          son escape unhurt.
+        deeds: {martial_bp: 300}
     history: >-
       In 1004 Basil II crossed the swollen Vardar and surprised Samuel's army outside Skopje;
       Samuel and his son were wounded, and the city surrendered.
@@ -158,9 +174,9 @@ chapters:
 
 
       Ashot says he is loyal to you now. Dyrrachium, on the Adriatic, is the finest port you
-      still hold, and it needs a governor.
+      still hold, and it needs a governor you can trust.
     choices:
-      - label: "Marry them, and make Ashot governor of Dyrrachium"
+      - label: "Wed them and give Ashot Dyrrachium"
         historical: true
         legitimacy_bp: 500
         outcome: >-
@@ -168,12 +184,18 @@ chapters:
           Dyrrachium is handed to the emperor. The story goes that Ashot only pretended to be
           loyal. You have lost your only port on the Adriatic.
         deeds: {grudges: {byzantium: 500}}
-      - label: "Keep him in Prespa, under guard"
+      - label: "Hold Ashot under guard at Prespa"
         legitimacy_bp: -500
         unrest_bp: 500
         outcome: >-
           Your daughter will not forgive you. Dyrrachium has a Bulgarian governor, but he is
           not a clever one.
+      - label: "Ransom Ashot to his father"
+        wealth_bp: 2000
+        legitimacy_bp: 200
+        outcome: >-
+          Gregory Taronites pays a heavy ransom and takes his son home. Miroslava weeps and will
+          not speak to you. Dyrrachium still needs a governor, and you choose a local man.
     history: >-
       In 1005 Ashot Taronites, Samuel's Armenian son-in-law, fled with his wife Miroslava to
       Constantinople and delivered Dyrrachium to Basil II.
@@ -201,7 +223,7 @@ chapters:
       The Greeks have sent a column to find a way around. Their commander, Nikephoros Xiphias,
       is said to be looking for a goat track over the Belasitsa mountains.
     choices:
-      - label: "Hold the wall, and trust the mountain"
+      - label: "Hold the wall and watch the heights"
         historical: true
         legitimacy_bp: -3000
         unrest_bp: 2000
@@ -214,12 +236,14 @@ chapters:
           will call Basil 'the Bulgar-slayer'.
         deeds: {martial_bp: -3000}
       - label: "Abandon the pass, and fall back on your fortresses"
-        legitimacy_bp: -1000
+        legitimacy_bp: -2000
+        unrest_bp: 1000
         outcome: >-
           The emperor takes the pass, and nobody is blinded. You are tracked through the
           mountains for another winter.
       - label: "Attack Basil's camp before he finds a way round"
-        legitimacy_bp: -1500
+        legitimacy_bp: -2000
+        unrest_bp: 800
         outcome: >-
           Your men cannot take the fortified camp, and you are beaten at the pass.
         deeds: {martial_bp: -1500}
@@ -252,7 +276,7 @@ chapters:
       has been seen talking to Greeks. He has invited you to hunt in the forests near Lake
       Ostrovo.
     choices:
-      - label: "Go hunting with him; he owes you his life"
+      - label: "Accept Ivan's invitation to the hunt"
         historical: true
         legitimacy_bp: 500
         outcome: >-
@@ -307,7 +331,7 @@ chapters:
           Roman titles. Bulgaria, which had been a state for three hundred years, is part of the
           empire again.
         deeds: {martial_bp: -1500}
-      - label: "Offer submission to Basil, as a vassal"
+      - label: "Offer Basil homage as his vassal"
         legitimacy_bp: -1000
         unrest_bp: 800
         outcome: >-
@@ -315,9 +339,11 @@ chapters:
           to look for the emperor's favour themselves.
       - label: "Hold the mountains around Ohrid"
         legitimacy_bp: -500
+        unrest_bp: 300
         outcome: >-
           The Greeks starve the mountain forts one by one. The nobles of Bulgaria are tired of
           war.
+        deeds: {martial_bp: 500}
     history: >-
       Ivan Vladislav was killed in February 1018 besieging Dyrrachium; in the following months
       his widow and the nobles surrendered, and Bulgaria became a Byzantine theme.

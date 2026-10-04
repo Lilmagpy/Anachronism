@@ -33,7 +33,7 @@ chapters:
       says that a man named Temujin has been proclaimed Genghis Khan, and the steppe is
       tidying itself up.
     choices:
-      - label: "Pay the tribute, and bide your time"
+      - label: "Keep paying and watch the north"
         historical: true
         legitimacy_bp: 300
         outcome: >-
@@ -46,6 +46,12 @@ chapters:
         outcome: >-
           The Gurkhan's resident writes to his master. Nobody comes at once, but the oasis
           merchants who travel west are quietly turned back at the passes.
+      - label: "Ask the Gurkhan to recall his resident"
+        wealth_bp: -500
+        legitimacy_bp: 300
+        outcome: >-
+          You send gifts to the Gurkhan's court with a polite complaint about the resident's
+          manners. The Gurkhan thanks you for the gifts and keeps his man in Qocho.
     history: >-
       The Uyghurs of Qocho were tributaries of the Qara Khitai; their Idiqut Barchuq
       endured the Khitan resident (shaukem) until about 1209.
@@ -69,9 +75,9 @@ chapters:
 
 
       The resident is in your city, with a small escort. The Gurkhan's army is a long
-      way off. This is the only chance you will have.
+      way off, though nobody can say how long it will stay so.
     choices:
-      - label: "Have the resident killed, and send to Genghis Khan"
+      - label: "Kill the resident and send to the Khan"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: 500
@@ -80,11 +86,21 @@ chapters:
           a message saying that the Idiqut will be the khan's servant and his fifth son,
           if the khan will look favourably upon him. The Khitan do not come.
         deeds: {peace_with: [kara_khitai], grudges: {kara_khitai: 1500}}
-      - label: "Send the resident home with gifts, and wait longer"
+      - label: "Send the resident home with gifts"
         legitimacy_bp: -500
+        wealth_bp: -500
         outcome: >-
           The resident goes back to Balasagun and tells the Gurkhan that the Uyghurs are
           loyal. The Mongols go on growing.
+        deeds: {peace_with: [kara_khitai]}
+      - label: "Watch the resident and send envoys in secret"
+        legitimacy_bp: 1200
+        unrest_bp: 300
+        wealth_bp: -300
+        outcome: >-
+          The resident is shadowed in his own lodgings while your envoys ride north by the back
+          roads. You hear what the Khan will give, and you do not yet pay for it. The patience is
+          admired at court.
     history: >-
       In 1209 Barchuq had the Khitan resident put to death and sent envoys to Chinggis Khan,
       offering submission and asking to be his fifth son.
@@ -111,7 +127,7 @@ chapters:
       If you go into his camp, you place yourself in his hands. If you stop short, you
       insult the man who is breaking the Gurkhan for you.
     choices:
-      - label: "Go in person and kneel before him"
+      - label: "Go north in person with your gifts"
         historical: true
         legitimacy_bp: 1500
         knowledge_bp: 1000
@@ -121,11 +137,20 @@ chapters:
           You return home an adopted member of the royal house, a position no other ruler
           outside the steppe holds.
         deeds: {ally_with: [mongols]}
-      - label: "Send your sons and your gifts, and stay at home"
+      - label: "Send your sons and gifts, and stay at home"
         legitimacy_bp: 300
+        wealth_bp: -500
         outcome: >-
           The Khan accepts the tribute. He remembers who came and who did not.
         deeds: {tributaries: [mongols]}
+      - label: "Send an envoy first to learn his mind"
+        legitimacy_bp: 1000
+        knowledge_bp: 1500
+        wealth_bp: -300
+        outcome: >-
+          A trusted minister rides ahead to the Khan's camp. He returns with courteous words, and
+          the Idiqut is left to decide on them. The envoy returns with a great deal of useful
+          news.
     history: >-
       In 1211 Barchuq came in person to Chinggis Khan on the Kherlen, was called his fifth
       son, and was promised the khan's daughter Il-Altun. Qocho kept its own ruler and
@@ -157,7 +182,7 @@ chapters:
       secretaries for the army, tax-counters for the conquered cities. The best of your
       young men will be gone for years.
     choices:
-      - label: "Send your best scribes"
+      - label: "Send your best scribes to the Khan"
         historical: true
         knowledge_bp: 1500
         legitimacy_bp: 800
@@ -167,10 +192,17 @@ chapters:
           the empire, from Persia to China. The Mongol language will be written in your script
           for centuries after.
       - label: "Send a few, and keep your best at home"
-        legitimacy_bp: 200
+        legitimacy_bp: 300
+        knowledge_bp: 300
         outcome: >-
           A handful of clerks go north. The Khan finds Uyghurs for his needs from elsewhere.
           You are less indispensable than you would have liked to be.
+      - label: "Send scribes and ask for trade privileges"
+        knowledge_bp: 1000
+        wealth_bp: 800
+        outcome: >-
+          The clerks go north, and your merchants are promised lighter tolls on the roads the Khan
+          commands. The Khan reads this as a sign that you know your value.
     history: >-
       The Mongols adopted the Uyghur script in the early years of Chinggis Khan's reign, and
       Uyghur scribes and officials staffed the chancery of the empire and its successor
@@ -209,8 +241,17 @@ chapters:
         deeds: {martial_bp: 800}
       - label: "Send a general in your place"
         legitimacy_bp: 300
+        wealth_bp: -300
         outcome: >-
-          Your troops go west under a deputy. The Khan reads the difference.
+          Three thousand troops go west under a deputy. The Khan reads the difference.
+        deeds: {men: 3000}
+      - label: "Send guides and scouts, not an army"
+        legitimacy_bp: 1000
+        wealth_bp: 500
+        outcome: >-
+          A small company of horsemen who know the roads goes with the Mongol army, and your oasis
+          keeps its fighting men. The guides are praised, and the Khan sends gifts.
+        deeds: {men: 1000}
     history: >-
       Barchuq took part with Uyghur troops in Chinggis Khan's wars; the Yuan shi lists his
       services against the western states. Qocho was treated as a privileged ally of the

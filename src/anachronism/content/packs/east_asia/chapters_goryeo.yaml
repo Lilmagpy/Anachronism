@@ -38,12 +38,19 @@ chapters:
           exiled. So are you: to Ganghwa Island, and then to smaller islands still. Choe puts
           your cousin, the old prince who will be King Gangjong, on the throne.
         deeds: {ruler_falls: "is deposed by Choe Chung-heon and exiled"}
-      - label: "Let it go; Choe is too strong"
+      - label: "Send the armed men home and wait"
         legitimacy_bp: -500
         influence: {nobility: 1000}
         outcome: >-
           The armed men are sent home. Choe brings his petition, bows, and leaves. You keep
           your throne, and he keeps the kingdom.
+      - label: "Strengthen the palace guard first"
+        legitimacy_bp: 300
+        wealth_bp: -500
+        outcome: >-
+          You quietly enlarge the guard about the palace and give its captains your trust. Choe
+          sees the new faces at the gates and the next petition is carried by his own men.
+        deeds: {men: 1500}
     history: >-
       In 1211 King Huijong's plot to kill Choe Chung-heon in the palace failed; Choe hid,
       was rescued, and deposed Huijong in favour of Gangjong (r. 1211-1213).
@@ -53,7 +60,7 @@ chapters:
     scenario: great_khan
     civ: goryeo
     year: 1218
-    title: "Brothers at Gangdong"
+    title: "The Fortress of Gangdong"
     place: "Before the fortress of Gangdong"
     speaker: general
     speaker_name: "Kim Chwi-ryeo"
@@ -71,7 +78,7 @@ chapters:
       Mongols and Goryeo will be brothers for ever. Your general Kim Chwi-ryeo, who has
       fought the Khitans for two years, would like to see these Mongols for himself.
     choices:
-      - label: "Join the siege, and swear brotherhood"
+      - label: "Join the Mongols in the siege"
         historical: true
         legitimacy_bp: 1000
         food_bp: -1000
@@ -83,10 +90,19 @@ chapters:
         deeds: {martial_bp: 300}
       - label: "Send rice, but no soldiers"
         food_bp: -1500
+        legitimacy_bp: -300
         outcome: >-
           The Mongols take the rice and Gangdong on their own. Their envoys remember that you
           held back.
         deeds: {grudges: {mongols: 1000}}
+      - label: "Send a small force with the rice"
+        legitimacy_bp: 500
+        food_bp: -1000
+        outcome: >-
+          Two or three thousand of your soldiers march north with the rice. They share the
+          hardships of the siege and do not share in the planning, and the Mongols say you have
+          done something but not enough.
+        deeds: {men: 2000}
     history: >-
       In 1218-1219 Goryeo joined a Mongol and Eastern Xia army in taking Gangdong from the
       Khitan invaders, and swore a treaty of brotherhood with the Mongols, who then demanded
@@ -115,7 +131,7 @@ chapters:
       and not surrender. But the rest of the north has fallen, and the Mongols are at the
       gates of Kaegyong. Their envoys offer peace, for a price.
     choices:
-      - label: "Make peace and pay"
+      - label: "Make peace and pay the Mongols"
         historical: true
         wealth_bp: -3000
         legitimacy_bp: -800
@@ -131,6 +147,13 @@ chapters:
           Guju holds. The countryside around it does not: the Mongols burn it and drive its
           people north.
         deeds: {martial_bp: 500}
+      - label: "Pay a lesser sum and keep your garrisons"
+        wealth_bp: -1500
+        legitimacy_bp: -300
+        outcome: >-
+          Your envoys offer silver and horses, though not enough, and refuse to hand over the
+          northern forts. The Mongols take the gifts and say the matter is not closed.
+        deeds: {men: 2000}
     history: >-
       The first Mongol invasion (1231-1232) ended with Goryeo's submission. Pak Seo's defence
       of Guju became famous; the Mongols left darughachi in the northwest.
@@ -171,13 +194,20 @@ chapters:
           come back, again and again, for twenty-five years: Ganghwa is never taken, and the
           mainland is burned from end to end.
         deeds: {grudges: {mongols: 3000}}
-      - label: "Stay in Kaegyong and obey the overseers"
+      - label: "Stay in Kaegyong and live with the overseers"
         legitimacy_bp: -1500
         wealth_bp: -2000
         influence: {nobility: -1500}
         outcome: >-
           The Choe house will not forgive you. The Mongols take their tribute every year, and
           ask for more.
+      - label: "Hold Kaegyong and fortify the north road"
+        legitimacy_bp: 300
+        materials_bp: -1000
+        outcome: >-
+          Walls are repaired and the passes north of the capital are manned. Choe U
+          is not convinced, and the Mongol horsemen come round the walls.
+        deeds: {men: 3000}
     history: >-
       In 1232 Choe U moved the Goryeo court to Ganghwa Island, where it stayed until 1270.
       Saritai was killed at Cheoin by the monk Kim Yun-hu late in 1232.
@@ -214,8 +244,8 @@ chapters:
           Twenty-eight copies are printed and sent to the ministries. Yi Gyu-bo writes a
           postscript to say how it was done: the first record of printing with metal type,
           two centuries before Gutenberg. The book does not survive; the postscript does.
-      - label: "Carve it in wood, as always"
-        knowledge_bp: 800
+      - label: "Carve it in wooden blocks"
+        knowledge_bp: 3400
         materials_bp: -800
         outcome: >-
           The carvers take three years. The ceremonies wait.
@@ -227,6 +257,12 @@ chapters:
           The bronze letters and a screw press together turn out a page a minute. Every
           magistrate's office on the islands has its own copy within the year, and the
           printers start on the classics.
+      - label: "Have scribes copy it out by hand"
+        knowledge_bp: 400
+        wealth_bp: -400
+        outcome: >-
+          A hundred scribes copy the one book, a leaf at a time. It is slow and every copy is a
+          little different from the next.
     history: >-
       Yi Gyu-bo's collected works record that the Sangjeong gogeum yemun was printed in 28
       copies with cast metal type on Ganghwa, in the 1230s.
@@ -236,7 +272,7 @@ chapters:
     scenario: great_khan
     civ: goryeo
     year: 1236
-    title: "Eighty Thousand Blocks"
+    title: "The Burned Blocks"
     place: "Ganghwa Island"
     speaker: diviner
     speaker_name: "The monk Sugi"
@@ -252,7 +288,7 @@ chapters:
       Song and Khitan editions, every error corrected. It will take tens of thousands of
       blocks of seasoned birch and cherry, carved on both sides, and fifteen years.
     choices:
-      - label: "Carve the canon again"
+      - label: "Carve the whole canon again"
         historical: true
         knowledge_bp: 1500
         legitimacy_bp: 1500
@@ -263,12 +299,23 @@ chapters:
           three times before every letter, the story goes. In 1251 the work is finished: 81,258
           blocks, some fifty-two million characters, with hardly an error. They are still
           there, at Haein temple, and you can still print from them.
-      - label: "Spend it on soldiers"
+      - label: "Put the money into arms for the fortresses"
         materials_bp: -1500
+        legitimacy_bp: 500
+        unrest_bp: -300
         outcome: >-
           The money buys armour and bows for the mountain fortresses, and some of it reaches
           them.
         deeds: {men: 5000}
+      - label: "Carve only the most needed sutras"
+        knowledge_bp: 800
+        legitimacy_bp: 1100
+        wealth_bp: -800
+        influence: {clergy: 800}
+        outcome: >-
+          A shorter canon of the essential texts is carved on a few thousand blocks. It is quick
+          and cheap, and the monks say that a half-canon is no match for the one the Khitans
+          feared.
     history: >-
       The second Tripitaka Koreana was carved between 1236 and 1251 under Sugi's editorship;
       its 81,258 blocks are kept at Haeinsa.
@@ -294,7 +341,7 @@ chapters:
       Kim Jun, who rose from slavery in the Choe house, and the officials Yu Gyeong and Pak
       Hui-sil ask your blessing. They will kill Choe Ui and give the kingdom back to its king.
     choices:
-      - label: "Give your blessing"
+      - label: "Give them your blessing"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: -1000
@@ -303,10 +350,19 @@ chapters:
           In the spring of 1258 Choe Ui is cut down, and the Choe granaries are opened to the
           people. Sixty years of Choe rule are over. The rule of the generals is not: within a
           few years Kim Jun himself is the strongman, until he too is killed.
-      - label: "Refuse; the Choe have kept us alive"
+      - label: "Refuse, and keep faith with the Choe"
         legitimacy_bp: -1000
+        unrest_bp: 500
+        influence: {nobility: 1000}
         outcome: >-
           Kim Jun bows and leaves. Choe Ui does not learn of it, this year.
+      - label: "Press Choe Ui to open his granaries"
+        legitimacy_bp: 1100
+        food_bp: 1000
+        influence: {nobility: -500}
+        outcome: >-
+          A royal messenger carries your wish to Choe Ui. He opens a few storehouses to the
+          officials and keeps the rest shut, and his guards are doubled.
     history: >-
       Choe Ui was killed in 1258 by Kim Jun, Yu Gyeong and others, ending the Choe house's
       rule; Kim Jun dominated the court until he was killed in 1268.
@@ -316,7 +372,7 @@ chapters:
     scenario: great_khan
     civ: goryeo
     year: 1259
-    title: "The Prince Who Came of Himself"
+    title: "A Prince on the Northern Road"
     place: "On the road north of Kaifeng"
     speaker: mongols
     speaker_name: "Kublai"
@@ -334,7 +390,7 @@ chapters:
       is the kingdom that even Tang Taizong could not conquer, and now its crown prince has
       come to him of his own accord. He offers to send you home as king, with his favour.
     choices:
-      - label: "Accept Kublai's terms"
+      - label: "Take Kublai's offer and go home as king"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -343,13 +399,20 @@ chapters:
           return your sons will marry Mongol princesses and grow up at the Khan's court, and
           the court must leave its island.
         deeds: {peace_with: [mongols]}
-      - label: "Go home, and fight on from the island"
+      - label: "Go home and hold the island against him"
         legitimacy_bp: 500
         unrest_bp: 2000
         outcome: >-
           You slip away from Kublai's camp. Whoever wins the Mongol throne will remember the
           prince who came of himself and left without asking.
-        deeds: {grudges: {mongols: 3000}}
+        deeds: {men: 3000, grudges: {mongols: 3000}}
+      - label: "Send gifts to both brothers and wait"
+        legitimacy_bp: 1100
+        wealth_bp: 0
+        outcome: >-
+          You give gifts to Kublai and to his brother Ariq Boke, who also claims the throne,
+          and wait to see which of them is stronger. Both thank you, and neither is quite
+          pleased.
     history: >-
       Crown Prince Wang Jeon met Kublai in 1259; Gojong died that summer, and Kublai sent the
       prince home as King Wonjong, promising that Goryeo could keep its customs.
@@ -379,7 +442,7 @@ chapters:
       to be ruled by the Mongols. If you go, he will make another prince king and fight on
       without you.
     choices:
-      - label: "Go back to Kaegyong, and disband the patrols"
+      - label: "Return to Kaegyong and disband the patrols"
         historical: true
         legitimacy_bp: 1000
         unrest_bp: 2000
@@ -394,7 +457,14 @@ chapters:
         outcome: >-
           You refuse to cross. Kublai's envoys leave Ganghwa without bowing, and the patrols
           drill on the beaches.
-        deeds: {grudges: {mongols: 4000}}
+        deeds: {men: 4000, grudges: {mongols: 4000}}
+      - label: "Return and make the patrols your royal guard"
+        legitimacy_bp: 500
+        unrest_bp: 1000
+        outcome: >-
+          Your offer reaches Bae Jung-son at the harbour. He remembers the Mongol envoys, and
+          the oaths that were sworn to the Choe, and the men of the patrols are divided.
+        deeds: {men: 3000}
     history: >-
       In 1270 the court returned to Kaegyong. The Sambyeolcho rebelled under Bae Jung-son and
       held out on Jindo and Jeju until 1273. The northwest was ruled by the Mongols as
@@ -424,7 +494,7 @@ chapters:
       thousand soldiers and six thousand sailors with them. Thirty thousand of your people are
       cutting timber in the southern hills, and the harvest is rotting in the fields.
     choices:
-      - label: "Build the fleet, and sail"
+      - label: "Build the fleet and send the army"
         historical: true
         materials_bp: -3000
         food_bp: -1500
@@ -436,12 +506,22 @@ chapters:
           night a storm comes up. More than thirteen thousand men do not come home. Kublai
           orders more ships.
         deeds: {grudges: {kamakura: 2000}}
-      - label: "Plead famine, and build slowly"
+      - label: "Plead famine and build slowly"
         legitimacy_bp: -1000
+        materials_bp: -1500
+        food_bp: 500
         outcome: >-
           Kublai's envoys count the ships on the slipways and send the numbers to the Khan.
           Your wife writes to her father too.
         deeds: {grudges: {mongols: 1500}}
+      - label: "Build half the fleet and send fewer men"
+        materials_bp: -1800
+        food_bp: -700
+        unrest_bp: 800
+        legitimacy_bp: 200
+        outcome: >-
+          Four hundred and fifty ships and a smaller army go to the muster. The Mongol officers
+          count them and write down the shortfall.
     history: >-
       Goryeo built the fleet for the first Mongol invasion of Japan (1274), which reached
       Hakata Bay and withdrew after a storm with heavy losses. Kim Bang-gyeong led the Goryeo

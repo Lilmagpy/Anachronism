@@ -37,18 +37,25 @@ chapters:
       house", a good excuse for taking a king's title yourself. One of your great officers,
       Li, begs you not to. A war with a state that size could cost you your towns.
     choices:
-      - label: "Send Li to Yan to talk instead of marching"
+      - label: "Send your officer Li to Yan with terms"
         historical: true
         legitimacy_bp: 600
         outcome: >-
           Li goes to Yan, argues his case, and Yan gives up the plan to fight you. The Weilue
           says the war was stopped. Your court is grateful, and a little disappointed.
-      - label: "March on Yan to punish its king"
+      - label: "March on Yan to answer its king's title"
         legitimacy_bp: 500
         unrest_bp: 600
         outcome: >-
           Your army goes west with its bronze daggers and its fine crossbows, and meets an army
           with iron swords. It is not a short war, and it is not your last.
+      - label: "Fortify the Liao border and wait"
+        legitimacy_bp: 300
+        wealth_bp: -500
+        outcome: >-
+          Your engineers raise earthworks and watch-towers along the western river. Yan's king
+          takes his title and does nothing for the moment; your court grumbles at the cost.
+        deeds: {"men": 4000}
     history: >-
       The Weilue says that when Yan took the title of king, the Hou of Joseon planned to
       attack it in order to uphold the Zhou house, but a great officer, Li, dissuaded him
@@ -79,7 +86,7 @@ chapters:
       and the fighting at the border is going badly. They ask whether to hold the Liaodong
       plain or to give it up and keep the hills and rivers to the east.
     choices:
-      - label: "Give up the west and fall back to the Taedong"
+      - label: "Retreat to the Taedong and regroup"
         historical: true
         legitimacy_bp: -1500
         unrest_bp: 800
@@ -88,13 +95,22 @@ chapters:
           Manfanhan, which then marks the new border. Joseon becomes weaker. Your court moves
           east, behind rivers that Yan will not cross. (In the game you also gain a friend in Qi, Yan's rival across the sea; no source records such a pact.)
         deeds: {give: [joseon_liaodong], give_to: yan, capital: joseon_taedong, peace_with: [yan], ally_with: [qi], grudges: {yan: 300}, martial_bp: 6000, men: 15000}
-      - label: "Hold Liaodong at any cost"
+      - label: "Stand and fight for the Liaodong plain"
         legitimacy_bp: -400
         unrest_bp: 1500
+        influence: {"nobility": -800}
         outcome: >-
           Your army fights for the plain and loses most of its best men, and Yan still ends
           the year in Liaodong.
         deeds: {give: [joseon_liaodong], give_to: yan, capital: joseon_taedong, peace_with: [yan], martial_bp: -500}
+      - label: "Pay Yan tribute to keep the plain"
+        legitimacy_bp: -1000
+        wealth_bp: -1500
+        unrest_bp: 400
+        outcome: >-
+          Your envoys carry bronze, furs and hostages to Qin Kai's camp. He takes them, and
+          the army stays on your border to watch you.
+        deeds: {"peace_with": ["yan"], "men": 8000, "martial_bp": 1000}
     history: >-
       The Weilue says that Yan sent Qin Kai to attack Joseon's western lands and took more
       than two thousand li, up to Manfanhan, which became the border; Joseon grew weak.
@@ -120,7 +136,7 @@ chapters:
       Your people are afraid that Qin's army will walk over the river. Qin's officers have asked
       you to come to the court and bow, and to send your sons.
     choices:
-      - label: "Submit in words, but do not go to court"
+      - label: "Send gifts and an envoy, not yourself"
         historical: true
         legitimacy_bp: -300
         outcome: >-
@@ -128,7 +144,7 @@ chapters:
           says you were afraid of a Qin attack, so you made a rough submission, and still you
           would not come yourself. The emperor has other things to worry about.
         deeds: {peace_with: [qin], grudges: {qin: 300}}
-      - label: "Go to the court of the emperor"
+      - label: "Make the journey and bow before the emperor"
         legitimacy_bp: -1000
         wealth_bp: -400
         outcome: >-
@@ -136,6 +152,13 @@ chapters:
           and a debt. Your court does not forgive you, and your nobles ask what Qin will want
           next.
         deeds: {peace_with: [qin]}
+      - label: "Fortify the Pae river and send an envoy"
+        legitimacy_bp: 200
+        wealth_bp: -500
+        outcome: >-
+          You raise the garrisons along the river and let your envoy argue the border. Qin's
+          officers note it and report to the capital.
+        deeds: {"men": 6000, "martial_bp": 500}
     history: >-
       The Weilue says that when Qin united the world and had Meng Tian build the wall to
       Liaodong, King Bu of Joseon, afraid of a Qin attack, made a nominal submission but
@@ -162,7 +185,7 @@ chapters:
       Some of your lords say let them in: they are farmers and craftsmen, many with iron tools.
       Others say that so many strangers will want more than a field.
     choices:
-      - label: "Settle them in the west"
+      - label: "Admit them and settle the western border"
         historical: true
         legitimacy_bp: 500
         knowledge_bp: 600
@@ -175,9 +198,19 @@ chapters:
       - label: "Turn them back at the Pae river"
         legitimacy_bp: 300
         unrest_bp: 300
+        wealth_bp: 400
         outcome: >-
           The border towns close their gates and the refugees go elsewhere. Your land stays
           quiet and poor, and you wonder, a few years later, if it was wise.
+        deeds: {"men": 4000}
+      - label: "Admit only craftsmen and farmers with tools"
+        legitimacy_bp: 400
+        knowledge_bp: 300
+        food_bp: 300
+        wealth_bp: 300
+        outcome: >-
+          Your officers at the river sort the newcomers and let through those with iron tools
+          and a trade. The rest wander on. Your western villages grow, more slowly.
     history: >-
       The Weilue says that after Chen Sheng and Xiang Yu rose (209 BC), the people of Yan, Qi
       and Zhao, worn out by the wars, gradually fled to Jun, who settled them in his western
@@ -206,7 +239,7 @@ chapters:
       you trusted him and made him a "doctor", gave him a jade tablet and a hundred li of land,
       and told him to guard your western border.
     choices:
-      - label: "Take him in, make him a lord of the border"
+      - label: "Give Wiman land to guard the western border"
         historical: true
         legitimacy_bp: 300
         outcome: >-
@@ -218,6 +251,12 @@ chapters:
         unrest_bp: 200
         outcome: >-
           Wiman goes. He is a clever man, and he does not go far.
+      - label: "Let him camp at the Pae river, under watch"
+        legitimacy_bp: 200
+        outcome: >-
+          Wiman and his men camp on the bank for a season under your officers' eyes. He is
+          polite, patient and not at all hurried.
+        deeds: {"men": 2000}
     history: >-
       The Weilue says that after Lu Wan fled to the Xiongnu (195 BC), Wiman, a man of Yan, in
       Hu dress, crossed the Pae river with some thousand followers and submitted to Jun, who
@@ -244,7 +283,7 @@ chapters:
 
       Nobody else has seen Han's armies. The Weilue says the message was a lie.
     choices:
-      - label: "Let him bring his men to guard the palace"
+      - label: "Accept Wiman's offer of an escort for the capital"
         historical: true
         legitimacy_bp: -3000
         unrest_bp: 3000
@@ -254,12 +293,19 @@ chapters:
           called yourself King of Han there. Wiman made himself king of Joseon, with his capital
           at Wanggeom.
         deeds: {ruler_falls: "is driven out by Wiman, and flees by sea"}
-      - label: "Send out scouts first, and keep the capital's gates shut"
+      - label: "Send out scouts first, and keep the gates shut"
         legitimacy_bp: 500
         outcome: >-
           The scouts find no Han army. Wiman says that the roads are many and the scouts are
           few. The gates stay shut, and a long, uneasy wait begins.
         deeds: {men: 3000}
+      - label: "Let him come with a small guard under your officers"
+        legitimacy_bp: 200
+        unrest_bp: 400
+        outcome: >-
+          Wiman arrives with a few hundred men and is quartered outside the palace walls,
+          under your officers. He bows low and bides his time.
+        deeds: {"men": 2000}
     history: >-
       The Weilue says that Wiman falsely reported that Han armies were coming by ten roads and
       asked to guard the palace, then attacked Jun; Jun lost, and fled by sea to the Han people

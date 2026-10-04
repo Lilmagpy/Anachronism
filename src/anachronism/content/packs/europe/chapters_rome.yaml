@@ -37,15 +37,16 @@ chapters:
           Carthage and Syracuse.
         deeds: {war_with: [carthage, syracuse], take: [messana], men: 20000}
       - label: "Decline the appeal and garrison Rhegium"
+        wealth_bp: 300
         legitimacy_bp: 300
         materials_bp: -500
         influence: {clergy: 300}
         outcome: >-
           The envoys go home empty-handed and six thousand men are posted at Rhegium instead.
           Within the year a Punic garrison holds Messana, and Carthaginian warships ride at anchor
-          in sight of the Italian shore.
+          in sight of the Italian shore. The legions' pay is saved for the year.
         deeds: {men: 6000}
-      - label: "Send envoys to settle it between Syracuse and Carthage"
+      - label: "Send envoys to Syracuse and Carthage"
         wealth_bp: -1000
         legitimacy_bp: 200
         unrest_bp: 300
@@ -94,12 +95,13 @@ chapters:
           strongest walls in the Greek world, and Carthage now has a reason to defend them.
         deeds: {men: 8000, grudges: {syracuse: 3000}}
       - label: "Grant peace for the silver, but no alliance"
-        wealth_bp: 1500
+        wealth_bp: 2800
         food_bp: -500
         legitimacy_bp: -200
         outcome: >-
           Hiero pays his hundred talents and keeps out of the war. His granaries stay closed to
-          your armies, and your quartermasters must find their grain elsewhere.
+          your armies, and your quartermasters must find their grain elsewhere. Since you offer no
+          alliance, Hiero pays a heavier indemnity in silver.
         deeds: {peace_with: [syracuse]}
     history: >-
       In 263 BC Hiero II made peace and alliance with Rome for an indemnity of a hundred
@@ -127,7 +129,7 @@ chapters:
       her apart plank by plank. They say they can copy her - a hundred of her - if the
       rowers learn their stroke on benches set up on dry land, while the hulls are built.
     choices:
-      - label: "Copy the wreck and build a great fleet, with boarding bridges"
+      - label: "Copy the wreck and build a fleet"
         historical: true
         materials_bp: -3000
         wealth_bp: -2000
@@ -186,7 +188,7 @@ chapters:
       Carthage has sent envoys to ask what peace would cost. Regulus, wanting the glory of
       ending the war before his command runs out, writes to ask how hard he may press them.
     choices:
-      - label: "Demand all Sicily, Sardinia, the fleet and tribute"
+      - label: "Demand Sicily, Sardinia and a heavy tribute"
         historical: true
         legitimacy_bp: -800
         unrest_bp: 600
@@ -287,7 +289,7 @@ chapters:
       lines of the fastest Punic ship ever captured. The state will repay them only if the
       fleet wins.
     choices:
-      - label: "Take the rich citizens' offer of ships"
+      - label: "Take the citizens' offer of ships"
         historical: true
         influence: {nobility: 400, guilds: 200}
         legitimacy_bp: 300
@@ -296,7 +298,7 @@ chapters:
           single summer. The consul Gaius Lutatius Catulus trains their crews hard through
           the winter off Sicily.
         deeds: {ships: 200}
-      - label: "Raise a war tax for a state fleet"
+      - label: "Raise a war tax to build a state fleet"
         wealth_bp: 1500
         unrest_bp: 800
         outcome: >-
@@ -330,7 +332,7 @@ chapters:
       give back your prisoners without ransom, and pay two thousand two hundred talents of
       silver over twenty years. His men will march out under arms.
     choices:
-      - label: "Accept the peace, but fix a heavier indemnity"
+      - label: "Accept peace, with a heavier indemnity"
         historical: true
         wealth_bp: 4000
         legitimacy_bp: 600
@@ -339,11 +341,12 @@ chapters:
           Sicily - all but Hiero's kingdom - is Rome's: her first province beyond the sea.
         deeds: {peace_with: [carthage], take: [car_lilybaeum], grudges: {carthage: 3000}}
       - label: "Demand Sicily and Sardinia both"
-        wealth_bp: 2500
-        legitimacy_bp: 300
+        wealth_bp: 3800
+        legitimacy_bp: 600
         outcome: >-
-          Hamilcar's face darkens, but Carthage has no fleet left. Sicily and Sardinia both
-          pass to Rome, and in Carthage a grudge takes root that will outlive everyone here.
+          Hamilcar's face darkens, but Carthage has no fleet left. Sicily and Sardinia both pass
+          to Rome, and in Carthage a grudge takes root that will outlive everyone here. The
+          indemnity is raised to match the larger demand.
         deeds: {peace_with: [carthage], take: [car_lilybaeum, car_sardinia], grudges: {carthage: 6000}}
       - label: "Refuse terms and carry the war to Africa"
         unrest_bp: 800
@@ -389,11 +392,12 @@ chapters:
           Hamilcar Barca begins to build a new empire - and a new army.
         deeds: {take: [car_sardinia, corsica], grudges: {carthage: 5000}}
       - label: "Refuse the island and keep the treaty"
+        wealth_bp: 800
         legitimacy_bp: 500
         influence: {clergy: 200}
         outcome: >-
-          Rome refuses the island. Carthage crushes the mutineers and keeps Sardinia; its
-          envoys thank the Senate, and mean it.
+          Rome refuses the island. Carthage crushes the mutineers and keeps Sardinia; its envoys
+          thank the Senate, and mean it. Carthage repays your good faith with grain and silver.
         deeds: {peace_with: [carthage]}
       - label: "Send envoys to judge between Carthage and the mutineers"
         wealth_bp: -500
@@ -521,7 +525,7 @@ chapters:
       gathers a fold of his toga in his hand. "Here," he says, "we carry peace and war. Choose
       which you will." The presiding magistrate answers: "Give us whichever you please."
     choices:
-      - label: "Declare war on Carthage"
+      - label: "Declare war and call out the legions"
         historical: true
         legitimacy_bp: 600
         outcome: >-
@@ -536,11 +540,12 @@ chapters:
           Saguntum.
         deeds: {peace_with: [carthage]}
       - label: "Demand Hannibal's surrender before any war"
-        legitimacy_bp: 400
+        legitimacy_bp: 600
         wealth_bp: -500
         outcome: >-
           The council refuses to give up its general. Rome holds the high ground in the world's
-          eyes, and the legions are called out.
+          eyes, and the legions are called out. Rome is seen to have asked for justice before
+          drawing the sword.
         deeds: {men: 8000}
     history: >-
       Livy tells the scene of the toga; Polybius records only that war was declared. Rome
@@ -694,11 +699,12 @@ chapters:
           The legions hurry home and Hannibal slips away south. Capua is relieved and the war
           drags on.
       - label: "Offer Hannibal battle before the walls with the city levy"
-        legitimacy_bp: 400
-        unrest_bp: 400
+        legitimacy_bp: 800
+        unrest_bp: 100
         outcome: >-
           The consuls draw up every man the city can muster. Hannibal also draws up his army, but
-          wind and rain make fighting impossible; the siege of Capua goes on meanwhile.
+          wind and rain make fighting impossible; the siege of Capua goes on meanwhile. The city
+          sees its consuls stand and fight, and takes heart.
         deeds: {men: 12000}
     history: >-
       In 211 BC Hannibal marched on Rome to relieve Capua; the Senate held its nerve and
@@ -791,8 +797,7 @@ chapters:
           cannot win and will not leave.
         deeds: {men: 8000}
       - label: "Send Scipio to Sicily to prepare, and decide later"
-        wealth_bp: -800
-        legitimacy_bp: 200
+        wealth_bp: -500
         outcome: >-
           Scipio builds ships and drills his men in Sicily while the Senate waits. The crossing is
           put off a year.
@@ -839,11 +844,12 @@ chapters:
           goes home to rule her.
         deeds: {peace_with: [carthage], take: [car_gades]}
       - label: "Offer firm terms: Spain, the fleet and an indemnity"
-        wealth_bp: 2500
-        legitimacy_bp: 500
+        wealth_bp: 3000
+        legitimacy_bp: 1000
         outcome: >-
           Scipio names his price: Carthage gives up Spain and her fleet and pays a large sum over
-          many years. Hannibal considers, and the council sends to Rome.
+          many years. Hannibal considers, and the council sends to Rome. Scipio's terms are firm,
+          and the Roman people approve.
         deeds: {peace_with: [carthage], tributaries: [carthage], take: [car_gades]}
     history: >-
       At Zama (202 BC) Scipio won the decisive battle and took the name Africanus. The peace

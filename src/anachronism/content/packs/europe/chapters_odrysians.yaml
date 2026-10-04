@@ -30,20 +30,28 @@ chapters:
       Now Philip has been murdered at a wedding. His son is twenty. The tribute chest is half
       full, and your chiefs want to know whether to send it to Pella.
     choices:
-      - label: "Keep paying, and watch"
+      - label: "Keep paying the tribute to Pella"
         historical: true
         legitimacy_bp: 300
         wealth_bp: -500
         outcome: >-
           You pay, and the chiefs grumble. In the spring the young king appears north of the
           mountains with an army. Those who rose in Thrace that year learn what he can do.
-      - label: "Keep the tribute and rebuild your army"
+      - label: "Withhold the tribute and rebuild the army"
         wealth_bp: 500
         unrest_bp: 500
         outcome: >-
           The chiefs cheer. Your army is the better for it, but Alexander's attention turns
           your way sooner.
         deeds: {men: 2000, grudges: {macedon: 1500}}
+      - label: "Pay half the tribute and ask for terms"
+        wealth_bp: -250
+        unrest_bp: 300
+        legitimacy_bp: 100
+        outcome: >-
+          Your envoys take half the chest to Pella with fair words about hard years. The
+          young king's officers count it and say little, and your chiefs cannot decide whether
+          to be pleased.
     history: >-
       After Philip's campaigns of the 340s the Odrysian kings paid tribute to Macedon. When
       Philip died in 336 BC, his son Alexander made the Thracian lands safe before going to Asia.
@@ -73,7 +81,7 @@ chapters:
       and let the wagons bounce over them. You are watching from the south. If the free
       Thracians are beaten, he will come to you for men.
     choices:
-      - label: "Send horsemen to ride with him"
+      - label: "Send horsemen to ride with Alexander"
         historical: true
         legitimacy_bp: 500
         outcome: >-
@@ -81,13 +89,21 @@ chapters:
           driven off the pass. Thracian horsemen ride east with Alexander's army in the spring,
           and your spears are carried to Asia. You keep your throne, and your tribute.
         deeds: {men: 1000}
-      - label: "Send help to the free Thracians"
+      - label: "Send horsemen to hold the pass"
         legitimacy_bp: -500
         unrest_bp: 800
         outcome: >-
           A few hundred of your men reach the Haemus too late. Alexander notices whose spears
           were found there.
-        deeds: {grudges: {macedon: 2500}}
+        deeds: {men: 500, grudges: {macedon: 2500}}
+      - label: "Send gifts to the king, but no men"
+        wealth_bp: -400
+        legitimacy_bp: 200
+        unrest_bp: 200
+        outcome: >-
+          Your envoys meet the king's column with horses, wine and gold. He accepts them and
+          asks again, more politely, for your men; you plead the tribute you already pay, and he
+          lets it pass for now.
     history: >-
       In 335 BC Alexander forced the pass of the Haemus against free Thracians, then went on
       to defeat the Triballi on the Danube. Thracian cavalry then served in his army in Asia.
@@ -126,11 +142,21 @@ chapters:
           the Getae and the Greek towns of the coast that the Odrysian kingdom is back.
           Alexander is too far away to answer, and his regent Antipater has his hands full.
         deeds: {martial_bp: 1000, grudges: {macedon: 2500}}
-      - label: "Stay quiet and bury the dead"
-        legitimacy_bp: -800
-        unrest_bp: 800
+      - label: "Pay the tribute and offer horse to the regent"
+        legitimacy_bp: -500
+        unrest_bp: 600
         outcome: >-
-          The chiefs say Seuthes has missed his moment. The tribute goes on.
+          Your envoys go to the Macedonian officers with horsemen and the tribute. The
+          chiefs say Seuthes has missed his moment. The tribute goes on.
+        deeds: {men: 1500}
+      - label: "Garrison the passes and watch the Macedonians"
+        wealth_bp: -300
+        legitimacy_bp: 200
+        outcome: >-
+          Your warriors take up the high passes and the river fords and let the Macedonian
+          officers see them there. Nothing is said by either side, and each waits for the other
+          to speak first.
+        deeds: {martial_bp: 600}
     history: >-
       After Zopyrion's army was destroyed in the north, about 325 BC, Seuthes rose in revolt and
       asserted the Odrysian kingship against Macedon. The exact date and cause are uncertain.
@@ -160,7 +186,7 @@ chapters:
       are far away. The Greeks, meanwhile, are in revolt against Antipater, and
       Lysimachus is needed elsewhere.
     choices:
-      - label: "Meet him in the field"
+      - label: "Meet him with the whole army"
         historical: true
         legitimacy_bp: 1000
         unrest_bp: 500
@@ -170,11 +196,19 @@ chapters:
           destroy him. His army stays in Thrace, busy with you, while the Greeks rise against
           Antipater in the Lamian War.
         deeds: {men: 3000, grudges: {macedon: 2000}}
-      - label: "Pay him and become his tributary"
+      - label: "Pay him and accept his lordship"
         wealth_bp: -1500
         legitimacy_bp: -1500
         outcome: >-
           Lysimachus takes your gold and is free to go south. The chiefs remember it.
+      - label: "Fight from the hills, with the clans"
+        unrest_bp: 400
+        legitimacy_bp: 500
+        outcome: >-
+          You draw the hill clans in and give him no field to fight on. His column crosses a
+          country of ambushes and burnt grain, and neither of you has the better of it for
+          a long time.
+        deeds: {men: 1500, martial_bp: 800}
     history: >-
       Lysimachus was given Thrace in 323 BC. Seuthes, with a larger army, fought him in two hard
       battles, and Lysimachus could not impose his rule then.
@@ -203,7 +237,7 @@ chapters:
       on a grid, a palace, a hearth of the Great Gods and a mint, in the valley beside the
       royal tombs.
     choices:
-      - label: "Build the city and call it Seuthopolis"
+      - label: "Build a Greek-style city by the tombs"
         historical: true
         legitimacy_bp: 1500
         wealth_bp: -1000
@@ -216,8 +250,19 @@ chapters:
         deeds: {martial_bp: 500}
       - label: "Keep the old ways, and the moving court"
         legitimacy_bp: -300
+        wealth_bp: 500
+        unrest_bp: -300
+        deeds: {martial_bp: 500}
         outcome: >-
           Your hall remains a hall. The Greeks keep their walls.
+      - label: "Raise a plain hill fortress by the tombs"
+        wealth_bp: -500
+        legitimacy_bp: 500
+        knowledge_bp: 300
+        outcome: >-
+          Your own masons raise a wall of rough stone about the royal tombs and a hall for the
+          court. It is a fortress and not a city: strong, familiar, with no Greek mint or council in it.
+        deeds: {martial_bp: 300}
     history: >-
       Seuthes III founded Seuthopolis, a walled town built in Greek style in the valley of
       Kazanlak, in the late fourth century BC (a precise date is not known), and issued coins
@@ -254,9 +299,17 @@ chapters:
         deeds: {martial_bp: 500, grudges: {macedon: 2000}}
       - label: "Stay out of it"
         legitimacy_bp: -300
+        wealth_bp: 300
         outcome: >-
           The rebel towns fall alone, and Lysimachus remembers who did not help them. Thrace
           is quiet.
+      - label: "Offer Lysimachus horsemen against the towns"
+        wealth_bp: 500
+        legitimacy_bp: -500
+        outcome: >-
+          Lysimachus takes your horse and is glad of them. The coastal towns are put down
+          with Thracian help, and your chiefs ask what became of the free kingdom.
+        deeds: {men: 1500}
     history: >-
       In 313 BC the Greek towns of the western Black Sea, with Seuthes and help from Antigonus,
       rose against Lysimachus. Seuthes stayed on his throne until his death, about 300.

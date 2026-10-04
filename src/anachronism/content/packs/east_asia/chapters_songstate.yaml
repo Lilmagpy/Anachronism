@@ -28,9 +28,9 @@ chapters:
 
 
       Your younger brother Yan is at court, with his own men about him. He is a soldier and
-      popular with the guard. The Shiji does not say what moved him. It says only what he did.
+      popular with the guard. Some at court say he is ambitious, and others that he is only loyal and impatient; no one can say for certain.
     choices:
-      - label: "Trust your brother"
+      - label: "Keep Yan at court, in command of the guard"
         historical: true
         legitimacy_bp: -1000
         unrest_bp: 800
@@ -40,10 +40,20 @@ chapters:
           and he will have no more brothers to fear.
         deeds: {ruler_falls: "is overthrown by his brother Yan and flees to Qi"}
       - label: "Send your brother to a distant fief"
+        wealth_bp: -300
+        unrest_bp: 300
         legitimacy_bp: 500
         outcome: >-
           You remove him from the guard and from the court. He is sulking, and so are his
           friends; Song is quieter for a time.
+      - label: "Keep Yan close and watch him"
+        legitimacy_bp: -200
+        unrest_bp: 200
+        deeds: {men: 2000}
+        outcome: >-
+          You keep your brother at court, but set your own men beside his, and have your sons
+          trained to the sword. The household grows tense, and your officers gossip about who
+          is watching whom.
     history: >-
       Ticheng, lord of Song, was overthrown by his brother Yan, and fled to Qi (about 329 BC,
       Shiji 38, in Ticheng's 41st year). The Shiji gives no reason.
@@ -87,6 +97,12 @@ chapters:
           You remit taxes and give audiences. The merchants approve. Qi's agents write home that
           Song is turning soft.
         deeds: {martial_bp: -300}
+      - label: "Employ him as an adviser on the schools"
+        knowledge_bp: 500
+        wealth_bp: -200
+        outcome: >-
+          You give him a post and a hall, and ask him to advise the minister Dai Bu Sheng on
+          teaching the sons of the court. The scholars are pleased; the army is not consulted.
     history: >-
       Mencius visited Song (the date is unknown; about the 320s BC). The Mencius records his
       advice to the Song minister Dai Bu Sheng, and his reception, but does not say that Song
@@ -123,11 +139,19 @@ chapters:
           note it.
         deeds: {grudges: {qi: 400}}
 
-      - label: "Stay a lord"
+      - label: "Remain a lord of Song"
+        wealth_bp: 300
         legitimacy_bp: -400
         outcome: >-
           Your ministers whisper that Song is the only state of any size whose ruler is
           content to be called less.
+      - label: "Ask Zhou to rank you senior lord"
+        legitimacy_bp: 500
+        wealth_bp: -300
+        outcome: >-
+          You send an embassy to the Zhou king at Luoyang with gifts, and ask him to set Song
+          above the lesser lords. The Zhou king is glad to be asked, but he has no power to
+          enforce his answer.
     history: >-
       Yan declared himself king of Song in his 11th year (about 318 BC, Shiji 38).
     sources: ["Shiji 38 (Song)"]
@@ -154,7 +178,7 @@ chapters:
       cheap now, and that every neighbour is grinding its teeth. Qi's king Min, in particular,
       is not a man who forgets.
     choices:
-      - label: "Press every advantage"
+      - label: "Press on against all three"
         historical: true
         legitimacy_bp: 800
         unrest_bp: 800
@@ -163,10 +187,18 @@ chapters:
           to look at Song together. The people of Song pay the tax, and are weary.
         deeds: {martial_bp: 500, grudges: {qi: 700, chu: 500, wei: 500}}
       - label: "Hold what you have and make peace"
+        deeds: {peace_with: [qi, chu, wei]}
         legitimacy_bp: 200
         unrest_bp: -400
         outcome: >-
           You count your gains and stop. Your neighbours are not sure whether to trust you.
+      - label: "Strike at Qi alone"
+        legitimacy_bp: 400
+        unrest_bp: 400
+        deeds: {men: 5000}
+        outcome: >-
+          You put the whole army against Qi and leave the other fronts quiet. Qi gives ground
+          in the east, but King Min is not a man to forget it.
     history: >-
       The Shiji (38) says King Yan defeated Qi, Chu and Wei and became their equal. Its
       claims are brief and cannot be checked from other sources.
@@ -195,7 +227,7 @@ chapters:
       wicked. Your diviner says that people are saying it anyhow, and that this is as much a
       danger as an army.
     choices:
-      - label: "Ignore the talk and keep your policy"
+      - label: "Hold your course and answer no one"
         historical: true
         legitimacy_bp: -1500
         unrest_bp: 1200
@@ -205,12 +237,21 @@ chapters:
           alone.
         deeds: {grudges: {qi: 600}}
 
-      - label: "Hold a great sacrifice and seek the lords' friendship"
+      - label: "Hold a sacrifice and send gifts to the lords"
+        wealth_bp: -300
         legitimacy_bp: 800
         unrest_bp: -300
         outcome: >-
           You make offerings at the Shang altars, you send envoys with gifts to the courts,
           and Song's name is better in the markets than it was. Qi is not persuaded.
+      - label: "Fortify Shangqiu and call up the levy"
+        legitimacy_bp: -300
+        unrest_bp: 400
+        deeds: {men: 6000, martial_bp: 200}
+        outcome: >-
+          You tell the lords nothing, but you have the walls of Shangqiu repaired and the levy
+          called up. The people see the work and the soldiers, and some of them say that it is
+          a poor answer to a rumour.
     history: >-
       The Shiji (ch. 38) tells of the 'shooting at Heaven' and the king's cruelty, and says the
       lords called him Jie of Song. Later writers add more. These accounts come from sources
@@ -238,7 +279,7 @@ chapters:
       man. Your captain says the towns will not hold, and that the army has gone over town
       by town. There is nobody to send to, for nobody in the world is on your side.
     choices:
-      - label: "Flee"
+      - label: "Leave Shangqiu for the west"
         historical: true
         legitimacy_bp: -3000
         outcome: >-
@@ -247,10 +288,19 @@ chapters:
           kings' heirs is gone. The Shang rites, which were kept here for seven hundred years,
           are kept now only by scholars.
         deeds: {ruler_falls: "flees west and dies at Wen"}
-      - label: "Stand and fight in Shangqiu"
+      - label: "Hold Shangqiu to the last"
+        deeds: {men: 5000, martial_bp: 200}
         legitimacy_bp: -1500
         outcome: >-
           The walls of the old capital hold for a few days. Then they do not.
+      - label: "Offer Qi terms and tribute"
+        wealth_bp: -800
+        legitimacy_bp: -1200
+        deeds: {peace_with: [qi, wei, chu]}
+        outcome: >-
+          You send envoys to King Min with gold and with the offer of a yearly tribute. Qi and
+          the others take the gold and answer slowly; your captains watch the border while
+          they wait.
     history: >-
       Qi, Wei and Chu attacked Song and divided it. King Yan fled to Wen and died there
       (Shiji 38, about 286 BC). The Shiji counts 47 years of his reign; Qi's conquest alarmed

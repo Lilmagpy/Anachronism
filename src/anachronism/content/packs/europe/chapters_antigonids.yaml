@@ -28,7 +28,7 @@ chapters:
       been besieged for two years and is eating its last grain. Its envoys have come to
       surrender.
     choices:
-      - label: "Take the city, and garrison it"
+      - label: "Occupy Athens and appoint its magistrates"
         historical: true
         legitimacy_bp: 2000
         outcome: >-
@@ -36,11 +36,18 @@ chapters:
           and remove Chremonides's party. Athens will not be free of Macedonian soldiers for
           thirty years. You leave the philosophers alone.
         deeds: {peace_with: [athens, sparta], tributaries: [athens]}
-      - label: "Make peace, and leave Athens free"
+      - label: "Make peace and leave Athens its freedom"
         legitimacy_bp: 500
         outcome: >-
           The Athenians thank you, put up a statue, and start writing to Ptolemy again.
         deeds: {peace_with: [athens, sparta]}
+      - label: "Make peace, but fine Athens heavily"
+        legitimacy_bp: 600
+        wealth_bp: 1500
+        outcome: >-
+          Athens pays a large indemnity in silver and keeps its assembly and its walls. The
+          citizens are poorer and no less proud.
+        deeds: {"peace_with": ["athens"]}
     history: >-
       Athens surrendered to Antigonus Gonatas in 262/1 BC, ending the Chremonidean War, and
       received a Macedonian garrison.
@@ -69,7 +76,7 @@ chapters:
       and asks whether to fight. You answer, it is said: "And how many ships do you count me
       for?"
     choices:
-      - label: "Fight"
+      - label: "Give battle off Cos"
         historical: true
         legitimacy_bp: 2000
         outcome: >-
@@ -77,10 +84,20 @@ chapters:
           island of Delos, and found festivals there in your own name. For a generation the
           Aegean is no longer Ptolemy's lake.
         deeds: {ships: 20, grudges: {ptolemaic: 1500}}
-      - label: "Stay in harbour"
+      - label: "Wait in harbour and build more ships"
         legitimacy_bp: -500
+        wealth_bp: -500
         outcome: >-
-          The Egyptians sail past Euboea, and the islands keep paying Ptolemy.
+          The Egyptians sail past Euboea, and the islands keep paying Ptolemy, while your
+          yards go on building.
+        deeds: {"ships": 10}
+      - label: "Raid Ptolemy's island allies instead"
+        legitimacy_bp: 500
+        wealth_bp: 800
+        outcome: >-
+          Your light ships strike at the islands that pay Ptolemy and come away with plunder.
+          The Egyptian fleet goes on sailing where it pleases.
+        deeds: {"ships": 8}
     history: >-
       Antigonus Gonatas defeated the Ptolemaic fleet off Cos (c. 261-255 BC) and dedicated his
       flagship at Delos.
@@ -108,19 +125,25 @@ chapters:
       four hundred men by a path a traitor showed him, and took it at dawn. Corinth has joined
       the Achaeans.
     choices:
-      - label: "Let it go, and set the Aetolians on Achaea"
+      - label: "Concede Corinth and use the Aetolians"
         historical: true
         legitimacy_bp: -1500
         outcome: >-
           You make a pact with the Aetolian League to share out Achaea between you. Nothing
           comes of it. You die four years later, at eighty, and Acrocorinth stays Achaean.
         deeds: {give: [mac_corinth], give_to: achaea, grudges: {achaea: 2000}}
-      - label: "March to retake it"
+      - label: "March at once to retake the rock"
         unrest_bp: 1500
         outcome: >-
           Your army reaches the Isthmus and looks up at the rock, which has never been taken by
           storm.
         deeds: {give: [mac_corinth], give_to: achaea}
+      - label: "Offer Aratus a treaty and keep the rest"
+        legitimacy_bp: -800
+        outcome: >-
+          Aratus accepts the peace and keeps Corinth, with your other garrisons left in your
+          hands. The Achaeans gain a great fortress and a quieter border.
+        deeds: {"give": ["mac_corinth"], "give_to": "achaea", "peace_with": ["achaea"]}
     history: >-
       Aratus seized Acrocorinth from its Macedonian garrison in 243 BC; Corinth joined the
       Achaean League.
@@ -148,7 +171,7 @@ chapters:
 
       Your price: Acrocorinth, back in Macedonian hands.
     choices:
-      - label: "Name your price, and march"
+      - label: "Demand Acrocorinth and march south"
         historical: true
         legitimacy_bp: 2000
         outcome: >-
@@ -159,9 +182,18 @@ chapters:
         deeds: {take: [mac_corinth], grudges: {sparta: 2000}}
       - label: "Let the Greeks fight it out"
         legitimacy_bp: -500
+        wealth_bp: -300
         outcome: >-
           Cleomenes takes Argos and Corinth. The Peloponnese is Spartan again, for the first
           time in a century.
+        deeds: {"men": 5000}
+      - label: "Offer to mediate between the two"
+        legitimacy_bp: 300
+        wealth_bp: -400
+        outcome: >-
+          Your envoys carry offers to Sparta and to the League. Cleomenes takes the courtesy
+          as an insult, and Aratus is cool.
+        deeds: {"peace_with": ["sparta", "achaea"]}
     history: >-
       Antigonus Doson helped the Achaeans in return for Acrocorinth (224 BC), defeated
       Cleomenes III at Sellasia (222) and entered Sparta; he died in 221.
@@ -189,7 +221,7 @@ chapters:
       Your envoy Xenophanes has reached Hannibal's camp. A treaty is ready: Carthage and
       Macedon will be friends and allies, and when Rome is beaten, Rome will give up Illyria.
     choices:
-      - label: "Make the treaty"
+      - label: "Make a treaty with Carthage"
         historical: true
         legitimacy_bp: 500
         outcome: >-
@@ -197,11 +229,18 @@ chapters:
           is read out in the Senate. Rome sends a fleet to the Adriatic and makes friends with
           your enemies in Greece. You fight Rome for nine years without ever meeting Hannibal.
         deeds: {grudges: {rome: 2500}}
-      - label: "Stay out of it"
+      - label: "Stay out and watch"
         legitimacy_bp: -500
         outcome: >-
           You watch from Pella as Rome and Carthage destroy each other's armies, and wait to
           see who is left.
+      - label: "Build a fleet and guard the Illyrian coast"
+        legitimacy_bp: 200
+        wealth_bp: -600
+        outcome: >-
+          A hundred light ships are laid down at Pella's harbours, and your garrisons watch
+          the western frontier. Rome looks on, and does nothing yet.
+        deeds: {"men": 6000, "ships": 20}
     history: >-
       Philip V's treaty with Hannibal (215 BC) was discovered when the Romans captured his
       envoys, leading to the First Macedonian War (214-205).
@@ -229,7 +268,7 @@ chapters:
       each other. Your right wing has charged downhill and is driving the Romans back. Your
       left wing is still forming up in column on the ridge.
     choices:
-      - label: "Fight on"
+      - label: "Throw the whole army into the fight"
         historical: true
         legitimacy_bp: -2500
         outcome: >-
@@ -239,11 +278,18 @@ chapters:
           Isthmian Games next year, Flamininus announces that the Greeks are free, and the
           crowd shout so loud that birds fall out of the sky.
         deeds: {give: [mac_thessaly, mac_corinth]}
-      - label: "Pull the right wing back, and fight another day"
+      - label: "Pull the right wing back into the fog"
         legitimacy_bp: -1000
         outcome: >-
           Your army withdraws through the fog in good order. Flamininus writes to Rome that the
           war will be longer than he thought.
+      - label: "Break off and open talks with Flamininus"
+        legitimacy_bp: -1200
+        wealth_bp: -500
+        outcome: >-
+          You send a herald under a branch and call your men from the hill. Flamininus gives
+          you a truce, and his terms are not light.
+        deeds: {"peace_with": ["rome"]}
     history: >-
       Flamininus defeated Philip V at Cynoscephalae (197 BC); Macedon gave up Greece, whose
       freedom Flamininus proclaimed at the Isthmian Games of 196.
@@ -270,17 +316,23 @@ chapters:
       Perseus has brought you a letter, in Flamininus's name, which says Demetrius has been
       plotting with Rome. Demetrius swears it is a lie.
     choices:
-      - label: "Believe Perseus"
+      - label: "Act on Perseus's letter"
         historical: true
         legitimacy_bp: -1500
         outcome: >-
           Demetrius is poisoned on your orders. Then you learn that the letter was forged. You
           spend your last year wanting to disinherit Perseus, and die before you can.
-      - label: "Believe Demetrius"
+      - label: "Take Demetrius's word instead"
         unrest_bp: 1500
         outcome: >-
           Perseus is sent to a frontier command, sulking. Rome is pleased with your choice of
           friends.
+      - label: "Hold an inquiry before the council"
+        legitimacy_bp: 300
+        unrest_bp: 400
+        outcome: >-
+          The council hears both sons for days. The letter's seals look genuine to some and
+          false to others, and nothing is settled.
     history: >-
       Philip V had his son Demetrius killed in 180 BC on the strength of a letter, later
       thought to be forged, and died in 179.
@@ -307,7 +359,7 @@ chapters:
       been told in advance by an officer who knew astronomy. This afternoon a horse got loose
       by the stream, and the skirmishing over it is turning into a battle.
     choices:
-      - label: "Let the phalanx charge"
+      - label: "Order the whole line forward"
         historical: true
         legitimacy_bp: -3000
         outcome: >-
@@ -317,11 +369,17 @@ chapters:
           are taken, and walk in Aemilius's triumph in Rome. Macedon is cut into four
           republics. The Antigonid kingdom is over.
         deeds: {ruler_falls: "is taken to Rome in chains"}
-      - label: "Hold the line on the river"
+      - label: "Keep the line on its own ground"
         legitimacy_bp: -500
         outcome: >-
           Your officers pull the skirmishers back. The phalanx stays on its own ground, and
           Aemilius waits.
+      - label: "Withdraw toward the mountains and wait"
+        legitimacy_bp: -300
+        outcome: >-
+          The army breaks camp in the night and withdraws to the foothills. Aemilius follows
+          slowly, and your Greek allies begin to ask questions.
+        deeds: {"men": 4000}
     history: >-
       Aemilius Paullus defeated Perseus at Pydna (22 June 168 BC, after a lunar eclipse);
       Perseus was led in Aemilius's triumph and Macedon was divided into four republics.

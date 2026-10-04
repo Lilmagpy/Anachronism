@@ -26,11 +26,11 @@ chapters:
       in the east. Now you mean to finish Bulgaria.
 
 
-      Your general Ouranos says that Samuel will not fight a pitched battle. Bulgaria will
-      have to be taken fortress by fortress, valley by valley, every summer, for as long as
-      it takes.
+      Your general Ouranos says that Samuel will not fight a pitched battle, and that his
+      fortresses and mountain valleys will make any war on Bulgaria a long one. Others at
+      court say the gold would be better kept.
     choices:
-      - label: "Campaign every summer until it is done"
+      - label: "Send the army out every spring"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
@@ -43,6 +43,14 @@ chapters:
         outcome: >-
           Samuel accepts gifts and a border. He uses the peace to rebuild his army.
         deeds: {peace_with: [bulgaria]}
+      - label: "Raise one great army for a single blow"
+        legitimacy_bp: 500
+        wealth_bp: -1000
+        outcome: >-
+          You gather every regiment of the east and west into one army and march on Samuel's
+          heartland in a single season. He retreats into the hills and refuses battle, and
+          you find that a great army eats a great deal and cannot be everywhere.
+        deeds: {men: 8000}
     history: >-
       From 1001 Basil II campaigned against Samuel's Bulgaria almost every year, taking it
       fortress by fortress over nearly two decades.
@@ -72,7 +80,7 @@ chapters:
 
       What will you do with them?
     choices:
-      - label: "Blind them, and send them home to Samuel"
+      - label: "Blind them, and send them home"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: 500
@@ -81,7 +89,7 @@ chapters:
           the rest. When the long lines of blind men reach Samuel at Prespa, he collapses and
           dies two days later. You will be remembered as Boulgaroktonos, the Bulgar-slayer.
         deeds: {martial_bp: 1000, grudges: {bulgaria: 5000}}
-      - label: "Ransom them"
+      - label: "Sell them back to Samuel for gold"
         wealth_bp: 2500
         outcome: >-
           Samuel pays in gold and gets his army back. The war goes on.
@@ -118,7 +126,7 @@ chapters:
 
       Bulgaria is yours. The question is how to rule it.
     choices:
-      - label: "Rule it gently: their own taxes, their own church"
+      - label: "Let Bulgaria keep its own taxes and church"
         historical: true
         legitimacy_bp: 2000
         unrest_bp: -1000
@@ -128,13 +136,22 @@ chapters:
           make a pilgrimage to Athens and give thanks in the Parthenon, which is a church of
           the Virgin.
         deeds: {conquer: [bulgaria]}
-      - label: "Rule it as Roman land, Roman taxes, Roman bishops"
+      - label: "Rule Bulgaria as Roman land, with Roman taxes"
         legitimacy_bp: 1000
         unrest_bp: 1500
         wealth_bp: 1500
         outcome: >-
           Imperial tax collectors arrive in Ohrid with their lists. The Bulgarians remember
           their tsars.
+        deeds: {conquer: [bulgaria]}
+      - label: "Move the nobles east, and rule by governors"
+        legitimacy_bp: 500
+        unrest_bp: 700
+        wealth_bp: 800
+        outcome: >-
+          The Bulgarian great families are given estates in Armenia and Anatolia, far from
+          their old followers, and imperial governors take their places. The country is quiet
+          and its leaders are gone, and it remembers them.
         deeds: {conquer: [bulgaria]}
     history: >-
       Bulgaria submitted in 1018. Basil II let it keep taxes in kind and an autocephalous
@@ -164,19 +181,27 @@ chapters:
       Zoe and Theodora, are in their forties and unmarried, because you never let anyone
       marry them.
     choices:
-      - label: "Leave it to Constantine, and to God"
+      - label: "Leave the throne to your brother Constantine"
         historical: true
         legitimacy_bp: -500
         outcome: >-
           You die the next year, preparing the expedition to Sicily. You are buried, at your own
           request, outside the city among your soldiers. Constantine spends three years at the
           races, and on his deathbed marries Zoe to the first suitable senator.
-      - label: "Marry Zoe to a general now, and make him your heir"
+      - label: "Marry Zoe to a general, and name him heir"
         legitimacy_bp: 800
         influence: {nobility: 1000}
         outcome: >-
           Zoe marries Constantine Dalassenos, a hard soldier from the eastern frontier. The
           army is pleased; the court is not.
+      - label: "Set a council of senators to guide Constantine"
+        legitimacy_bp: 300
+        wealth_bp: -300
+        influence: {nobility: 500}
+        outcome: >-
+          A council of old senators and ministers is named to stand behind your brother. They
+          are able men and they quarrel, and your brother, who likes his races, is pleased to
+          let them.
     history: >-
       Basil II died on 15 December 1025, leaving no heir and a vast treasury. Constantine
       VIII reigned until 1028. The next half-century saw the empire's strength squandered.
@@ -199,8 +224,8 @@ chapters:
       young man called Michael, brother of John the eunuch.
 
 
-      Your physicians say you look ill. Your sister has warned you about Zoe and Michael. You
-      are going to take your bath.
+      Your physicians say you look ill. Your sister has warned you about Zoe and Michael. Tonight
+      you are expected at the palace baths.
     choices:
       - label: "Take your bath as usual"
         historical: true
@@ -210,12 +235,19 @@ chapters:
           pull you out still breathing; you die before morning. That same night Zoe marries
           Michael, and the patriarch, paid fifty pounds of gold, crowns him emperor.
         deeds: {ruler_falls: "is drowned in his bath"}
-      - label: "Have Michael exiled, and set a guard on the baths"
+      - label: "Have Michael exiled, and double the guard"
         legitimacy_bp: 500
         unrest_bp: 1500
         outcome: >-
           Michael is sent to a monastery in Paphlagonia. Zoe stops speaking to you. The eunuch
           John begins to plan something else.
+      - label: "Confront Zoe, and keep Michael in sight"
+        legitimacy_bp: 300
+        unrest_bp: 600
+        outcome: >-
+          You speak to Zoe plainly and summon Michael to attend you, so that he is never out of
+          your sight. Zoe is angry and Michael is polite, and the eunuch John watches
+          you both with great interest.
     history: >-
       Romanos III died in his bath on 11 April 1034, almost certainly murdered; Zoe married
       Michael IV the same day. Psellos describes the scene.
@@ -244,7 +276,7 @@ chapters:
       Arab emir escape by sea. Maniakes beat him with a whip, calling him a fat useless
       eunuch. Stephen has written to you.
     choices:
-      - label: "Recall Maniakes in chains"
+      - label: "Recall Maniakes to answer for it"
         historical: true
         legitimacy_bp: -1000
         outcome: >-
@@ -252,13 +284,21 @@ chapters:
           apart; the Arabs retake everything but Messina. The Normans, unpaid and insulted, go
           home to Apulia and start conquering it for themselves.
         deeds: {war_with: [sicily_emirate]}
-      - label: "Recall Stephen instead, and give Maniakes everything he asks"
+      - label: "Recall Stephen, and back Maniakes fully"
         legitimacy_bp: 1500
         materials_bp: -1500
         outcome: >-
           Stephen goes home in disgrace. Maniakes takes Palermo the next spring. Sicily is Roman
           for the first time in two hundred years.
         deeds: {war_with: [sicily_emirate], conquer: [sicily_emirate]}
+      - label: "Recall both, and send a new commander"
+        legitimacy_bp: -500
+        wealth_bp: -800
+        outcome: >-
+          Maniakes and Stephen are both ordered home, and a new general is sent with fresh
+          troops. He finds the army sullen and the Normans nowhere to be seen, and the
+          Arabs have had time to gather their strength.
+        deeds: {men: 4000}
     history: >-
       Maniakes's Sicilian expedition (1038-1040) took much of eastern Sicily; he was recalled
       after striking the admiral Stephen, Michael IV's brother-in-law, and the gains were lost.
@@ -287,7 +327,7 @@ chapters:
       marching on the palace, shouting for Zoe, 'our mother', and for her sister Theodora,
       whom they have fetched from her convent.
     choices:
-      - label: "Hold the palace"
+      - label: "Hold the palace with the guard"
         historical: true
         legitimacy_bp: -3000
         unrest_bp: 3000
@@ -297,12 +337,19 @@ chapters:
           who sees it, will write the story down. Zoe and Theodora rule together, the first
           time two women have reigned in their own right.
         deeds: {ruler_falls: "is dragged from sanctuary and blinded"}
-      - label: "Bring Zoe back at once, and beg her forgiveness"
+      - label: "Bring Zoe back at once"
         legitimacy_bp: -1000
         outcome: >-
           Zoe is brought back from the island and shown to the crowd from the balcony of the
           Hippodrome, with you kneeling at her feet. The crowd goes home. Zoe does not forgive
           you.
+      - label: "Open the treasury, and promise Zoe's return"
+        wealth_bp: -1500
+        legitimacy_bp: -500
+        unrest_bp: 1000
+        outcome: >-
+          Your heralds throw gold to the crowd in the street and cry that Zoe is to come home.
+          The gold is taken and the cry is not believed, and the mob goes on to the palace gates.
     history: >-
       In April 1042 Michael V exiled Zoe; the people of Constantinople rose, he was deposed
       and blinded, and Zoe and Theodora reigned jointly before Zoe married Constantine IX.
@@ -330,7 +377,7 @@ chapters:
       excommunication against the patriarch on the high altar, shook the dust from his feet,
       and walked out.
     choices:
-      - label: "Let the patriarch excommunicate the legates back"
+      - label: "Let the synod anathematise the legates"
         historical: true
         influence: {clergy: 1500}
         legitimacy_bp: 500
@@ -338,13 +385,21 @@ chapters:
           Keroularios's synod anathematises the legates. Nobody thinks of it as the end of
           anything: popes and patriarchs have quarrelled before. But the churches of Rome and
           Constantinople will not be reconciled for nine hundred years.
-      - label: "Silence the patriarch, and keep the Pope as your ally"
+      - label: "Silence the patriarch, and keep the Pope's friendship"
         influence: {clergy: -2000}
         legitimacy_bp: -500
         outcome: >-
           The patriarch is ordered to keep quiet. He stirs up the city against you instead.
           The Pope's men go home pleased.
         deeds: {ally_with: [papacy]}
+      - label: "Call a council to hear both sides"
+        legitimacy_bp: 300
+        wealth_bp: -300
+        influence: {clergy: 500}
+        outcome: >-
+          Bishops from both churches are summoned and the matter is argued at length. Nobody is
+          satisfied, and Keroularios makes it known that he will not sit in judgement
+          on a bull laid on his own altar.
     history: >-
       On 16 July 1054 Cardinal Humbert excommunicated Patriarch Michael Keroularios in Hagia
       Sophia; the patriarch's synod replied in kind. The mutual excommunications were lifted
@@ -384,11 +439,20 @@ chapters:
           for a ransom. At home, the Doukas family has made itself emperor; they blind you.
           Within ten years the Turks are on the shores of the Aegean.
         deeds: {ruler_falls: "is captured at Manzikert, and blinded by his rivals", give: [m_armeniakon]}
-      - label: "Accept the Sultan's peace"
+      - label: "Accept the Sultan's peace and march home"
         legitimacy_bp: -500
+        unrest_bp: 800
         outcome: >-
           You make peace and march home with the army whole. The Doukas family says you were
           afraid. The Sultan turns south against the Fatimids.
+      - label: "Camp on the hills and let the Sultan come"
+        legitimacy_bp: -300
+        wealth_bp: -300
+        outcome: >-
+          You fortify a camp on the high ground and call up the Armenian levies to strengthen it.
+          The Sultan's horse archers circle it and drive off your foragers, and the army begins
+          to go hungry.
+        deeds: {men: 3000}
     history: >-
       At Manzikert (26 August 1071) Romanos IV was defeated and captured by Alp Arslan, after
       Andronikos Doukas withdrew the reserve. Released, he was deposed and blinded, and died
@@ -417,7 +481,7 @@ chapters:
       the right to trade in every port of the empire without paying any taxes at all, and a
       quarter of Constantinople for its merchants.
     choices:
-      - label: "Grant Venice everything"
+      - label: "Accept Venice's price"
         historical: true
         legitimacy_bp: 500
         wealth_bp: -1500
@@ -429,9 +493,18 @@ chapters:
       - label: "Fight the Normans alone"
         legitimacy_bp: 1000
         food_bp: -2000
+        deeds: {men: 5000}
         outcome: >-
           Your army, with its Varangian Guard of English exiles from Hastings, meets the
           Normans at Dyrrachium. It is a hard fight, and a long war.
+      - label: "Pay Henry IV and hire Turkish troops"
+        wealth_bp: -800
+        legitimacy_bp: 300
+        outcome: >-
+          Your envoys carry gold to the German king, so that he may trouble the Normans at
+          home, and others go to the Turkish emirs of Anatolia for horsemen. It is expensive
+          and it is slow, and Dyrrachium cannot wait for either.
+        deeds: {men: 3000}
     history: >-
       Alexios I Komnenos took the throne in 1081, fought Robert Guiscard at Dyrrachium, and
       granted Venice sweeping trading privileges (the chrysobull of 1082). Many Varangians

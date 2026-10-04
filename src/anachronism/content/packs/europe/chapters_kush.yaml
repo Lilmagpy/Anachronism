@@ -34,7 +34,7 @@ chapters:
       kings, and the god's oracle at Napata and the great shrine of Meroe stand on their side.
       A message has come: the god has spoken.
     choices:
-      - label: "Walk into the Golden Shrine with your soldiers and end the priests' hold"
+      - label: "Break the priests' power by force"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: 500
@@ -44,15 +44,16 @@ chapters:
           band, killed the priests and abolished the custom. Modern scholars doubt every detail
           of it, but think it tells something true: the kings of Kush stopped taking orders from
           the old priesthood of Amun, and Meroe began to outrank Napata.
-      - label: "Obey the priests' will"
+      - label: "Submit to the priests' verdict"
         legitimacy_bp: -2000
         influence: {clergy: 2000}
         outcome: >-
           The kingdom is left to the priests' choice of your heir. The Greeks will never hear of
           you again.
-      - label: "Give the priests land and treasure to leave the throne alone"
+      - label: "Buy the priests off with land and treasure"
         wealth_bp: -2000
         influence: {clergy: 1000}
+        legitimacy_bp: 300
         outcome: >-
           The priests take the offering and keep the right to speak in the god's name. The next
           king will have to fight the same quarrel.
@@ -86,7 +87,7 @@ chapters:
       ivory, and a settled border. Your own forces could dispute the strip. They could also
       stay at home.
     choices:
-      - label: "Accept the border and trade gold, ivory and elephants for peace"
+      - label: "Accept the border and trade for peace"
         historical: true
         wealth_bp: 1500
         legitimacy_bp: 500
@@ -149,6 +150,8 @@ chapters:
           Your tomb joins the old pyramids at Nuri, and the court's power remains tied to the
           priests of Napata.
       - label: "Be buried at Gebel Barkal, in the god's own temple"
+        legitimacy_bp: -300
+        influence: {"clergy": 800}
         outcome: >-
           The temple is old and sacred, and holds no room for a king's tomb.
     history: >-
@@ -178,7 +181,7 @@ chapters:
       your own cattle-breeders and hunters, rather than to Egypt. You can give him a temple in your
       stone-building style, beside the old Egyptian gods, or let the old gods have the money.
     choices:
-      - label: "Build a temple to Apedemak, and show yourself before him"
+      - label: "Raise a temple to Apedemak at Musawwarat"
         historical: true
         legitimacy_bp: 1200
         wealth_bp: -800
@@ -190,11 +193,13 @@ chapters:
       - label: "Spend the money on Amun at Napata"
         wealth_bp: -800
         influence: {clergy: 1500}
+        legitimacy_bp: 300
         outcome: >-
           Napata's priests are delighted and the southern herdsmen are not.
-      - label: "Spend it on canals and a reservoir for the herds"
+      - label: "Dig canals and a reservoir for the herds"
         food_bp: 1500
         wealth_bp: -800
+        unrest_bp: -500
         outcome: >-
           Cattle drink in dry years, but nobody builds you a temple.
     history: >-
@@ -225,7 +230,7 @@ chapters:
       friends. It also shows Egypt's priests, and Egypt's soldiers, how far south a Pharaoh
       reaches.
     choices:
-      - label: "Build with the Ptolemies, and put both your names on it"
+      - label: "Build the temple jointly with the Ptolemies"
         historical: true
         legitimacy_bp: 800
         wealth_bp: -500
@@ -236,13 +241,16 @@ chapters:
       - label: "Build alone, and claim the strip for Kush"
         legitimacy_bp: 600
         unrest_bp: 300
+        wealth_bp: -500
         outcome: >-
           The Ptolemaic governor of the Thebaid protests loudly and sends more soldiers to
           Philae.
-        deeds: {grudges: {ptolemaic: 1500}}
-      - label: "Spend the money elsewhere"
+        deeds: {"men": 2000, "grudges": {"ptolemaic": 1500}}
+      - label: "Spend the money on granaries instead"
+        legitimacy_bp: -200
+        food_bp: 600
         outcome: >-
-          Dakka remains a small chapel.
+          Dakka remains a small chapel, and the granaries at Meroe fill.
     history: >-
       The oldest part of the temple at Dakka was built by the Kushite king Arqamani (Ergamenes
       II), who reigned c. 218-206 BC (approximate), and Ptolemy IV added to it. The Greeks called
@@ -272,7 +280,7 @@ chapters:
       The rebels need friends in the south, and a quiet southern frontier. The governors of
       the Dodekaschoinos have far fewer soldiers than before.
     choices:
-      - label: "Stay out of the fighting, but let your own men take the river temples"
+      - label: "Occupy the river temples, avoid the war"
         historical: true
         legitimacy_bp: 800
         wealth_bp: 300

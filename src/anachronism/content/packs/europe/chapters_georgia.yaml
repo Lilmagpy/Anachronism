@@ -29,7 +29,8 @@ chapters:
 
       Years ago David borrowed Basil II's help against a rebel and promised his lands to the
       emperor after his death. Now Basil is coming to claim them, and your Georgian nobles say
-      Tao belongs to the Georgian crown. Basil has the strongest army in the world.
+      Tao belongs to the Georgian crown. Basil has the strongest army in the world, but the
+      fortresses are strong too.
     choices:
       - label: "Treat with Basil and keep your own lands"
         historical: true
@@ -41,13 +42,20 @@ chapters:
           Georgian army fights the Romans. Tao, the cradle of Georgian monasteries, is a
           Byzantine province, and it will be a quarrel between your house and Constantinople
           for another generation.
-      - label: "Send the Georgian nobles to hold Tao's fortresses"
+      - label: "Send nobles to hold Tao's fortresses"
         unrest_bp: 800
         legitimacy_bp: 500
         outcome: >-
           The garrisons will not stand when the emperor's army arrives, and the nobles who
           went to Tao are scattered or taken. Basil remembers who held the walls against him.
-        deeds: {grudges: {byzantium: 1500}}
+        deeds: {men: 4000, grudges: {byzantium: 1500}}
+      - label: "Call the Armenian princes to a joint stand"
+        legitimacy_bp: 300
+        unrest_bp: 500
+        outcome: >-
+          The Armenian lords answer politely and send little, since each has his own quarrel with
+          the emperor's agents. Basil takes David's lands, and you have made yourself known to him.
+        deeds: {men: 3000}
     history: >-
       David III of Tao died in 1000; Basil II took his lands, and by 1001 had made terms with
       Gurgen and Bagrat of the Bagratid house.
@@ -77,7 +85,7 @@ chapters:
       sit: at Kutaisi, where you built the great cathedral, or among the old Kartli lords who
       are not sure they want an Abkhazian king.
     choices:
-      - label: "Keep your court at Kutaisi and take the one crown"
+      - label: "Take one crown and rule from Kutaisi"
         historical: true
         legitimacy_bp: 2500
         influence: {clergy: 1000, nobility: 500}
@@ -86,12 +94,20 @@ chapters:
           it, submit one by one. The cathedral you built there, which the Georgians will call
           Bagrati, is the church of the whole kingdom. Georgia begins its long life as one
           country, though the eastern valleys still look their own way.
-      - label: "Rule Abkhazia and Kartli as two crowns"
+      - label: "Keep Abkhazia and Kartli as two crowns"
         legitimacy_bp: 500
         unrest_bp: 500
         outcome: >-
           The two lands keep their own councils and customs, and neither feels its king is
           really its own. Your heir will find the crowns harder to hold together than you did.
+      - label: "Move your court to Kartli's old towns"
+        legitimacy_bp: 1000
+        influence: {nobility: 800}
+        unrest_bp: 300
+        outcome: >-
+          The Kartli lords are flattered and the western nobles are not. The sea road and the
+          cathedral at Kutaisi are left to lesser men, and you are a stranger in your father's
+          fortresses.
     history: >-
       On the death of his father Gurgen in 1008, Bagrat III became the first king of a united
       Georgian kingdom, ruling from Kutaisi, where the Bagrati cathedral had been built.
@@ -120,7 +136,7 @@ chapters:
       His terms are heavy: Tao and the border fortresses for the empire, and your son, a
       little boy, as a hostage in Constantinople.
     choices:
-      - label: "Accept the emperor's terms and send your son"
+      - label: "Accept Basil's terms and send your son"
         historical: true
         legitimacy_bp: -1500
         unrest_bp: 500
@@ -129,13 +145,20 @@ chapters:
           Bagrat is sent to Constantinople, where he will grow up at the emperor's court. Basil
           withdraws and never reaches Kutaisi. You keep your kingdom, and the Georgians do not
           forget the loss of the lands of Tao.
-      - label: "Retreat into the mountains and fight on"
+      - label: "Withdraw to the mountains and fight on"
         legitimacy_bp: -500
         unrest_bp: 1500
         outcome: >-
           The emperor burns the valleys of Javakheti and Kartli before the winter, and your
           villages pay for the pride of the king. You make peace in the end, on worse terms.
         deeds: {grudges: {byzantium: 1500}}
+      - label: "Cede the border forts, keep your son"
+        legitimacy_bp: -1000
+        unrest_bp: 800
+        outcome: >-
+          Basil takes Kola, Artaan and the border lands, but he wants his hostage too. The war
+          drags on through a hard winter, and in the end you give way.
+        deeds: {martial_bp: -300}
     history: >-
       Basil II's campaigns of 1021-1022 beat George I at Shirimni (1021) and Svindax (1022).
       George gave up Tao, Phasiane, Kola and Artaan and sent his small son Bagrat to
@@ -165,7 +188,7 @@ chapters:
       Armenians and of the emperor's troops. The sultan wants submission, and tribute, and will
       take the cities in the east if he does not get them.
     choices:
-      - label: "Submit, pay the tribute, and keep the throne"
+      - label: "Submit and pay the sultan's tribute"
         historical: true
         legitimacy_bp: -500
         wealth_bp: -1000
@@ -174,13 +197,20 @@ chapters:
           Georgians are the Sultan's tribute-payers for the time being, and Tbilisi, with the
           rest of the east, lies under Muslim rule. Your kingdom survives by bending, and by
           waiting for a better day.
-      - label: "Fight in the passes"
+      - label: "Hold the passes against his army"
         unrest_bp: 1500
         wealth_bp: -500
         outcome: >-
           Your highlanders hold one pass and lose the next. The Turks burn Kartli and carry off
           thousands before you ask for terms at last, and the terms are no better.
         deeds: {martial_bp: 500}
+      - label: "Send hostages and gifts, not tribute"
+        legitimacy_bp: -300
+        wealth_bp: -600
+        unrest_bp: 500
+        outcome: >-
+          The sultan's envoys weigh your gifts and are not satisfied. They take your hostages home
+          and the raiders stay a season longer before the terms are settled.
     history: >-
       Bagrat IV reigned 1027-1072. Alp Arslan raided Georgia in 1064 and again in 1068, and
       Bagrat accepted the sultan's suzerainty and paid tribute.
@@ -206,7 +236,7 @@ chapters:
       You can submit to the sultan and pay him what he asks, or withdraw into the mountains
       and wait for the Turks to move on, as the Georgians have done in every war.
     choices:
-      - label: "Submit to the sultan and endure the Turks in the plains"
+      - label: "Submit to the sultan and keep your crown"
         historical: true
         legitimacy_bp: -1500
         unrest_bp: 1500
@@ -215,12 +245,20 @@ chapters:
           The sultan accepts and gives you back your crown, and the Turkish nomads settle for
           the winters in the Kartli plains. The countryside is half empty, whole villages have
           fled to the hills, and the kingdom you rule is smaller and poorer every year.
-      - label: "Hold the hills and let the sultan take the plains"
+      - label: "Withdraw to the hills and wait"
         unrest_bp: 2000
         legitimacy_bp: -1000
         outcome: >-
           The Turks do not stay in the hills. They take the lowlands for good, with every town
           that pays them, and the Georgian monarchy is left to the mountains.
+      - label: "Strip the plains and hold Kutaisi"
+        food_bp: -1500
+        unrest_bp: 800
+        legitimacy_bp: 300
+        outcome: >-
+          The granaries of Kartli are emptied and the herds driven west. The Turks find little to
+          eat and move on, but the peasants have lost their harvest and blame their king.
+        deeds: {martial_bp: 300}
     history: >-
       George II (1072-1089) faced the Great Turkish Invasion of the 1080s, under Malik-Shah,
       and paid tribute to the Seljuks; the Kartli countryside was ravaged. The details of the
@@ -249,7 +287,7 @@ chapters:
       are not strong enough, and that a Turkish army would find your people no readier than it
       did twenty years ago.
     choices:
-      - label: "Stop paying tribute and begin clearing the Turks out"
+      - label: "Withhold the tribute and raise the levies"
         historical: true
         legitimacy_bp: 2500
         influence: {nobility: 500}
@@ -258,12 +296,21 @@ chapters:
           taking back fortress after fortress in Kartli. Georgia has stopped being a tributary,
           and the Turkish nomads have to go.
         deeds: {martial_bp: 1000}
-      - label: "Pay once more and wait for a stronger army"
+      - label: "Pay once more, and train your army"
         wealth_bp: -800
         legitimacy_bp: -500
         outcome: >-
           The tribute goes east again, and your army grows a little. Your lords murmur that the
           king is too careful, and the Turks grow no weaker.
+        deeds: {martial_bp: 500}
+      - label: "Pay half, and build border forts"
+        legitimacy_bp: 300
+        wealth_bp: -500
+        outcome: >-
+          The sultan's collector takes half and grumbles, and the new forts rise along the
+          passes. Your lords find the king neither brave nor cowardly, and wait to see which he
+          will turn out to be.
+        deeds: {martial_bp: 500, men: 2000}
     history: >-
       About 1099 David IV stopped paying tribute to the Seljuks and began to clear the Turks
       from Georgia, taking the fortresses of Kartli in the following years.
@@ -289,7 +336,7 @@ chapters:
       fill it with the scholars of the Greek and Georgian world. The cost would be huge, and the
       army still needs paying.
     choices:
-      - label: "Found Gelati, with a school of philosophy"
+      - label: "Found a great monastery at Gelati"
         historical: true
         knowledge_bp: 2500
         legitimacy_bp: 1500
@@ -302,10 +349,19 @@ chapters:
           gate.
       - label: "Spend the money on the army first"
         wealth_bp: -500
+        legitimacy_bp: 300
+        unrest_bp: -300
         outcome: >-
           The soldiers are paid and the mountains are garrisoned. The school will have to wait
           for a quieter year, and the scholars go elsewhere.
         deeds: {martial_bp: 500}
+      - label: "Send scholars to study abroad"
+        knowledge_bp: 1500
+        wealth_bp: -800
+        legitimacy_bp: 300
+        outcome: >-
+          Young Georgians go to Constantinople, Antioch and the Georgian houses on Mount Athos and
+          return with their learning in Greek. The kingdom has no school of its own to hold them.
     history: >-
       David IV founded the monastery of Gelati in 1106, with an academy that became a centre
       of Georgian learning; he is buried at its gate.
@@ -331,7 +387,7 @@ chapters:
       Your marshal proposes to bring them over the mountains: give them land in return for
       soldiers who serve the king, and not the nobles.
     choices:
-      - label: "Settle the Kipchaks and make a standing army"
+      - label: "Settle the Kipchaks on royal lands"
         historical: true
         legitimacy_bp: 1000
         influence: {nobility: -500}
@@ -345,9 +401,19 @@ chapters:
         deeds: {martial_bp: 2000, men: 5000}
       - label: "Rely on the nobles' levies"
         legitimacy_bp: 500
+        influence: {nobility: 500}
+        unrest_bp: -300
         outcome: >-
           The levies are loyal and untrained, and the nobles grow bolder. When the sultans come
           in force, the field will be harder.
+        deeds: {martial_bp: 500}
+      - label: "Hire Alan and Frankish mercenaries"
+        wealth_bp: -1500
+        legitimacy_bp: 300
+        outcome: >-
+          Alan horsemen and a few Frankish knights take the king's pay and serve well, while it
+          lasts. The treasury cannot bear a larger army for long.
+        deeds: {men: 3000, martial_bp: 500}
     history: >-
       About 1118 David IV settled many thousands of Kipchak families in Georgia in exchange for
       military service and built a standing army around them and the royal guard, the Monaspa.
@@ -370,10 +436,11 @@ chapters:
       fifty thousand men, among them the Kipchaks, a few Frankish knights and Alans.
 
 
-      You can wait behind walls and let the sultan come to you, or meet him in the broken
-      valleys at Didgori, where a large army cannot spread out, and attack from the hills.
+      You can wait behind walls and let the sultan come to you; offer battle on the open
+      plains of Kartli, where your horsemen can ride; or meet him in the broken valleys at
+      Didgori, where a large army cannot spread out, and attack from the hills.
     choices:
-      - label: "Ambush the host in the Didgori valleys"
+      - label: "Strike the host from the hills"
         historical: true
         legitimacy_bp: 3000
         influence: {nobility: 500}
@@ -390,6 +457,14 @@ chapters:
         outcome: >-
           The Muslim host plunders for a season and the Kipchaks, who are horsemen and not
           wall-keepers, grow restless. The lords of the east keep Tbilisi for now.
+        deeds: {martial_bp: 300}
+      - label: "Offer battle on the plains of Kartli"
+        legitimacy_bp: 300
+        unrest_bp: 500
+        outcome: >-
+          The great host overlaps your line, and the Kipchak horse cannot make up the difference.
+          The day ends in a bloody withdrawal, and Tbilisi remains in Muslim hands.
+        deeds: {martial_bp: 800}
     history: >-
       David IV beat the Muslim coalition at Didgori on 12 August 1121 and took Tbilisi in 1122,
       making it his capital; he took Ani in 1124 and died in 1125.

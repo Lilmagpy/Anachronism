@@ -29,7 +29,7 @@ chapters:
       His army is in your land and your cities are falling one at a time. You can send to the Great King of Hatti, your old protector
       across the Euphrates, with gifts and a plea for help. Or you can swear to Assyria again.
     choices:
-      - label: "Send gifts to the Hittite king and ask for his army"
+      - label: "Send gifts to Hatti and ask for help"
         historical: true
         legitimacy_bp: 500
         wealth_bp: -1000
@@ -38,13 +38,20 @@ chapters:
           takes your cities one by one, and puts a record of it on his own inscriptions: Taidu,
           Washukanni, Irridu and others. Your family is carried off to Assur.
         deeds: {peace_with: [assyria], ruler_falls: "is swept aside as Assyria takes his cities"}
-      - label: "Swear again to Assyria and pay tribute"
+      - label: "Swear to Assyria again and pay tribute"
         legitimacy_bp: -1000
         wealth_bp: -500
         outcome: >-
           You keep your throne, and Adad-nirari keeps your sons as hostages. Assyria's
           governors take their seats beside yours.
         deeds: {peace_with: [assyria]}
+      - label: "Call up every man and defend the Khabur towns"
+        legitimacy_bp: 500
+        food_bp: -1000
+        outcome: >-
+          You summon the levies of the cities and the chariots of the steppe to the river. Your
+          commanders say they will hold the fords as long as the bread lasts.
+        deeds: {men: 6000}
     history: >-
       Adad-nirari I of Assyria crushed Wasashatta and annexed Hanigalbat's main cities, making
       the rest a tributary kingdom. Hatti did not come to Wasashatta's help in time.
@@ -74,7 +81,7 @@ chapters:
       fight. But Assyria's army is larger than yours, and Shalmaneser is a king who writes
       down what he does.
     choices:
-      - label: "Rebel: hire the Hittites and the Arameans and hold the water"
+      - label: "Rebel, hiring Hittite and Aramean help"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
@@ -84,13 +91,19 @@ chapters:
           are Shalmaneser's own boast, and nobody else has recorded them. What is certain is
           that Hanigalbat does not rise again, and that Assyria has become a neighbour of Hatti.
         deeds: {grudges: {assyria: 3000}}
-      - label: "Send your tribute and swear loyalty to the new king"
+      - label: "Send tribute and swear loyalty to the new king"
         legitimacy_bp: -1000
         wealth_bp: -1000
         outcome: >-
           Shalmaneser accepts the tribute and keeps your sons. For the moment the passes are
           quiet.
         deeds: {peace_with: [assyria]}
+      - label: "Fortify the wells and passes, and break no oath"
+        legitimacy_bp: 500
+        outcome: >-
+          You keep your oath to Assyria and make your country hard to cross: forts at the wells,
+          guards on the passes. Shalmaneser is not told why.
+        deeds: {men: 4000}
     history: >-
       Shalmaneser I (c. 1263 BC) crushed Shattuara of Hanigalbat, who had rebelled with
       Hittite and Ahlamu help, and annexed his land. Shalmaneser's inscription says he blinded

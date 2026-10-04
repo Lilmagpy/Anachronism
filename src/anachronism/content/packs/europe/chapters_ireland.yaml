@@ -29,7 +29,7 @@ chapters:
       once the wife of the King of Dublin and then of the High King Máel Sechnaill. She is a
       widow again.
     choices:
-      - label: "Give Sitric back his town, as your man"
+      - label: "Return Dublin to Sitric as your man"
         historical: true
         legitimacy_bp: 1500
         wealth_bp: 1500
@@ -41,6 +41,13 @@ chapters:
         legitimacy_bp: -500
         outcome: >-
           Dublin burns. The Norse go elsewhere to trade, and Ireland is poorer for it.
+      - label: "Garrison Dublin with your own men"
+        legitimacy_bp: 500
+        wealth_bp: 800
+        deeds: {men: 2000}
+        outcome: >-
+          You put a Munster garrison in the town and let Sitric live in it as your guest. The
+          Norse markets keep trading, but the townsmen know who holds the gates.
     history: >-
       After Glenmama (December 999) Brian occupied Dublin, restored Sitric Silkbeard as a
       tributary, and married Gormflaith, Sitric's mother.
@@ -65,7 +72,7 @@ chapters:
 
       He has come to your camp to make his submission.
     choices:
-      - label: "Accept it, and take the high kingship"
+      - label: "Take his hostages and the high kingship"
         historical: true
         legitimacy_bp: 2500
         outcome: >-
@@ -76,6 +83,12 @@ chapters:
         legitimacy_bp: 500
         outcome: >-
           The old order stands, with a stronger Munster beside it.
+      - label: "Take hostages and tribute, leave him Tara"
+        legitimacy_bp: 1000
+        wealth_bp: 800
+        outcome: >-
+          You take hostages and a heavy tribute from Máel Sechnaill, and leave him the high
+          kingship in name. The Uí Néill are shamed, but they are still kings at Tara.
     history: >-
       Máel Sechnaill II submitted to Brian in 1002, making Brian high king.
     sources: ["Annals of Ulster 1002", "Annals of Inisfallen 1002"]
@@ -100,7 +113,7 @@ chapters:
       confirm Armagh's rights over all the churches of Ireland, and let him write that in
       the Book.
     choices:
-      - label: "Lay the gold, and confirm Armagh's rights"
+      - label: "Give the gold and confirm Armagh's rights"
         historical: true
         legitimacy_bp: 2000
         wealth_bp: -1000
@@ -109,11 +122,19 @@ chapters:
           In the Book of Armagh, Máel Suthain writes in Latin that he has done this 'in the
           sight of Brian, Imperator Scottorum': Emperor of the Irish. The page is still there,
           in Trinity College, Dublin.
-      - label: "Keep your gold for the army"
+      - label: "Keep the gold for your army's pay"
+        deeds: {men: 3000}
         wealth_bp: 1000
         influence: {clergy: -1000}
         outcome: >-
           The monks of Armagh pray for you without enthusiasm.
+      - label: "Give less gold and confirm fewer rights"
+        legitimacy_bp: 800
+        wealth_bp: -400
+        influence: {clergy: 800}
+        outcome: >-
+          You lay a smaller gift on the altar and confirm Armagh's rights over its own
+          churches only. The monks are polite, and Armagh's scribes write nothing grand.
     history: >-
       In 1005 Brian visited Armagh, gave twenty ounces of gold and confirmed its primacy; the
       Book of Armagh records him as 'Imperator Scotorum'.
@@ -147,9 +168,17 @@ chapters:
           last, and the King of Ireland is king of all of it.
         deeds: {martial_bp: 500}
       - label: "Leave the north alone"
+        unrest_bp: -300
+        wealth_bp: 500
         legitimacy_bp: -500
         outcome: >-
           The north keeps its own kings, and laughs at Kincora.
+      - label: "Send Murchad north for one campaign"
+        legitimacy_bp: 800
+        deeds: {men: 4000, martial_bp: 200}
+        outcome: >-
+          Murchad takes a strong army north for a single season and comes back with what he
+          can win. The northern kings hear what he did and wait to see what you do next.
     history: >-
       Between 1005 and 1011 Brian forced the northern kingdoms to give hostages, completing
       his high kingship.
@@ -176,7 +205,7 @@ chapters:
       Sitric of Dublin and Máel Mórda are sending to the Norse of the islands for help. Your
       army is ready to march on Dublin.
     choices:
-      - label: "Besiege Dublin"
+      - label: "March on Dublin and besiege it"
         historical: true
         food_bp: -1500
         legitimacy_bp: -500
@@ -189,6 +218,13 @@ chapters:
         wealth_bp: -1000
         outcome: >-
           Máel Mórda accepts gifts and keeps his kingdom. Dublin pays its tribute again, late.
+      - label: "Ravage Leinster, and leave Dublin"
+        legitimacy_bp: 200
+        food_bp: -500
+        deeds: {men: 5000}
+        outcome: >-
+          You send Murchad to burn the farms of Leinster and drive off its cattle, and leave
+          Dublin to its walls. Máel Mórda is hurt, and Sitric is not.
     history: >-
       Leinster and Dublin rebelled in 1013; Brian's siege of Dublin failed, and Sitric sought
       allies from Orkney and Man.
@@ -210,10 +246,9 @@ chapters:
       Clontarf. Máel Sechnaill and the men of Meath stand aside, waiting.
 
 
-      It is Good Friday. You are past seventy. Your son Murchad will lead the army; your
-      guards want you to stay in your tent and pray.
+      It is Good Friday. You are past seventy. Your son Murchad will lead the army; your guards want you to keep clear of the fighting, and some of your chiefs want you at the head of the army.
     choices:
-      - label: "Pray in your tent, and let Murchad fight"
+      - label: "Let Murchad lead while you pray"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
@@ -223,12 +258,20 @@ chapters:
           and kills you. Ireland mourns its emperor. Máel Sechnaill is High King again, and
           Brian's sons go home to quarrel over Munster.
         deeds: {ruler_falls: "is killed in his tent at Clontarf", give: [m_ulster]}
-      - label: "Lead the army yourself"
+      - label: "Ride at the head of the army"
+        deeds: {men: 4000, martial_bp: 300}
         legitimacy_bp: 1500
         unrest_bp: 1000
         outcome: >-
           You ride out in front of the army on Good Friday, an old man on a white horse. The
           Norse are broken, and you come back to Kincora alive.
+      - label: "Fall back to the Shannon line"
+        legitimacy_bp: -800
+        deeds: {men: 5000}
+        outcome: >-
+          You tell Murchad to break camp and hold the Shannon, and to meet the Norse where the
+          ground is better. The army grumbles at the retreat, and Máel Sechnaill watches it
+          go.
     history: >-
       At Clontarf (23 April 1014) Brian's army defeated Leinster and the Norse, but Brian,
       his son Murchad and his grandson were killed.
@@ -254,7 +297,7 @@ chapters:
       penalties: that no one shall steal, or carry arms, or work, on Sundays, and that
       raiders shall pay twice over.
     choices:
-      - label: "Proclaim the law"
+      - label: "Proclaim the abbot's law in full"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: -1500
@@ -264,9 +307,19 @@ chapters:
           to steal or to do violence. It is the first time an Irish king has tried to make
           peace by law rather than by hostages.
       - label: "Keep order by the sword"
+        deeds: {men: 3000}
+        wealth_bp: -300
+        legitimacy_bp: -300
         unrest_bp: 500
         outcome: >-
           Your war-band rides out after the raiders, and finds them, and the feuds go on.
+      - label: "Proclaim a law against raiders only"
+        legitimacy_bp: 600
+        unrest_bp: -600
+        influence: {clergy: 300}
+        outcome: >-
+          You proclaim the double penalty for raiders and leave the Sunday rules out. The
+          clergy are half content, and the raiders are afraid.
     history: >-
       In 1040 Donnchad mac Briain made a law against theft, violence and Sunday work in
       Munster, recorded in the Annals of Inisfallen.
@@ -291,7 +344,7 @@ chapters:
       Now Tadc's son Toirdelbach has come back with the King of Leinster's army, and your
       own men are leaving you.
     choices:
-      - label: "Give up the kingship, and go to Rome"
+      - label: "Give up the kingship for a pilgrimage"
         historical: true
         legitimacy_bp: -1000
         outcome: >-
@@ -300,10 +353,18 @@ chapters:
           father's crown. Toirdelbach becomes the strongest king in Ireland, and his son
           Muirchertach will give the Rock of Cashel to the Church.
         deeds: {ruler_falls: "goes on pilgrimage to Rome, and dies there"}
-      - label: "Fight your nephew"
+      - label: "Fight Toirdelbach for the kingship"
+        deeds: {men: 4000}
+        legitimacy_bp: -500
         unrest_bp: 2000
         outcome: >-
           You march out with what men you have left. Toirdelbach and the Leinstermen wait.
+      - label: "Treat with your nephew for terms"
+        legitimacy_bp: -500
+        wealth_bp: -800
+        outcome: >-
+          You send to Toirdelbach with an offer of a share of Munster's tribute if he will
+          leave you the kingship. He listens, and takes the tribute and not the offer.
     history: >-
       Donnchad mac Briain was deposed by his nephew Toirdelbach in 1063 and died in Rome in
       1064.

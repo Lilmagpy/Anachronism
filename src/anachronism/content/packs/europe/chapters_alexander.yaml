@@ -31,7 +31,7 @@ chapters:
       Amyntas has a better claim than you by blood. And your mother Olympias is already
       on her way from Epirus.
     choices:
-      - label: "Make yourself safe: let no rival live"
+      - label: "Remove the rivals who could claim the throne"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: -500
@@ -40,12 +40,19 @@ chapters:
           Amyntas is executed for plotting. An agent goes to Asia, and Attalus is dead within
           weeks. Olympias, behind your back, has Cleopatra's baby killed and drives its
           mother to hang herself. You are angry with her, men say. You do not undo it.
-      - label: "Spare the child and the cousin; rule by law"
+      - label: "Spare the child and the cousin"
         legitimacy_bp: -500
         unrest_bp: 800
         influence: {nobility: 1000}
         outcome: >-
           The old nobles respect you for it. Attalus writes secretly to Athens.
+      - label: "Win Attalus and Amyntas with office and gifts"
+        legitimacy_bp: 1100
+        wealth_bp: 500
+        influence: {nobility: 500}
+        outcome: >-
+          Attalus is confirmed in his command and Amyntas is given a place at court. Both take
+          the gifts, and you cannot tell what each of them is thinking.
     history: >-
       Philip II was murdered at Aegae in 336 BC. Alexander, acclaimed by the army with
       Antipater's backing, eliminated Amyntas IV and Attalus; Olympias killed Cleopatra
@@ -75,7 +82,7 @@ chapters:
       towers they shouted back that anyone who wants to free Greece from the tyrant should
       join them.
     choices:
-      - label: "Storm the city, and let the Greeks decide its fate"
+      - label: "Storm Thebes and leave its fate to your allies"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: 500
@@ -86,7 +93,7 @@ chapters:
           temples and the house of the poet Pindar are left standing. Thirty thousand are
           sold as slaves. Athens sends congratulations.
         deeds: {conquer: [thebes], grudges: {athens: 2000, sparta: 1000}}
-      - label: "Take the city and spare it"
+      - label: "Take Thebes, garrison it and spare its people"
         legitimacy_bp: 800
         outcome: >-
           Thebes is taken and garrisoned, and its people kept in their homes. The Greeks
@@ -94,7 +101,7 @@ chapters:
         deeds: {conquer: [thebes], grudges: {athens: 500}}
       - label: "Accept a fine and hostages, and march on"
         wealth_bp: 1500
-        legitimacy_bp: -500
+        legitimacy_bp: 1100
         outcome: >-
           Thebes pays, and hates you for it. You have Asia to think of.
         deeds: {tributaries: [thebes]}
@@ -110,7 +117,7 @@ chapters:
     scenario: alexander
     civ: macedon
     year: -336
-    title: "Stand Out of My Sun"
+    title: "The Philosopher in the Jar"
     place: "Corinth"
     speaker: scholar
     speaker_name: "Diogenes of Sinope"
@@ -126,7 +133,7 @@ chapters:
       So you have gone to him. He is lying in the sun. You ask whether there is anything
       he wants from you. 'Yes,' he says. 'Stand out of my sun.'
     choices:
-      - label: "Laugh: 'If I were not Alexander, I would be Diogenes'"
+      - label: "Laugh, and tell him you envy him"
         historical: true
         legitimacy_bp: 600
         knowledge_bp: 800
@@ -140,6 +147,7 @@ chapters:
           Two soldiers carry the jar, with Diogenes in it, to the other end of the square. He
           does not seem to mind. The Greeks do.
       - label: "Invite him to Asia with you"
+        legitimacy_bp: 200
         knowledge_bp: 1500
         outcome: >-
           Diogenes says he has seen Asia, and it is just like Greece but with more Persians.
@@ -174,7 +182,7 @@ chapters:
       dawn. You have thirty-two thousand foot and five thousand horse - and seventy talents
       in your treasury.
     choices:
-      - label: "Cross now, at the head of the Companions"
+      - label: "Cross at once with the Companions"
         historical: true
         legitimacy_bp: 2000
         outcome: >-
@@ -184,12 +192,19 @@ chapters:
           to you without a fight, and the cities of Ionia follow.
         deeds: {war_with: [persia], take: [a3_ionia, a3_lydia, a3_caria]}
       - label: "Wait for dawn, as Parmenion says"
-        legitimacy_bp: 1000
+        legitimacy_bp: 1600
         outcome: >-
           At dawn you cross upstream, unopposed, and the Persians, outflanked, fall back.
           The victory is cheaper and less glorious. Memnon withdraws to the coast and starts
           raising a fleet.
         deeds: {war_with: [persia], take: [a3_ionia, a3_lydia]}
+      - label: "March down the coast and let them follow"
+        legitimacy_bp: 600
+        food_bp: -500
+        outcome: >-
+          You leave the river behind and march south for the cities of the coast. The satraps
+          follow, and the Greek cities see an army that does not seek a battle.
+        deeds: {war_with: [persia], take: [a3_ionia]}
     history: >-
       In May 334 BC Alexander forced the crossing of the Granicus against the satraps; Cleitus
       saved his life. Sardis surrendered and the Ionian cities were 'liberated'. Miletus and
@@ -233,11 +248,12 @@ chapters:
           You find the peg that holds the yoke and draw it out; the knot slides free. The
           clever ones are impressed. The soldiers are a little disappointed.
         deeds: {take: [a3_phrygia]}
-      - label: "Leave it; you need no omens"
-        legitimacy_bp: -500
+      - label: "Sacrifice to Zeus and leave the knot"
+        legitimacy_bp: 500
+        wealth_bp: -300
         outcome: >-
-          The cart stays in its temple. Somewhere in the army, men start to say that the
-          prophecy was not for you.
+          The cart stays in its temple, and the smoke of your sacrifice goes up. Somewhere in
+          the army, men start to say that the prophecy was not for you.
         deeds: {take: [a3_phrygia]}
     history: >-
       At Gordium in 333 BC Alexander undid the Gordian knot - by cutting it, says most of the
@@ -280,7 +296,7 @@ chapters:
           Hephaestion, thinking him the king, you lift her up: 'You were not wrong, mother.
           He too is Alexander.'
         deeds: {take: [a3_cilicia, a3_cappadocia]}
-      - label: "Hold the river line and let him break himself on the phalanx"
+      - label: "Hold the river line with the phalanx"
         legitimacy_bp: 1200
         outcome: >-
           Darius's Greek mercenaries cross and are slaughtered at the river. He withdraws in
@@ -294,6 +310,13 @@ chapters:
           go straight through it. Darius is taken alive in his chariot, and the King of Kings
           sits in your tent as a prisoner. His satraps begin to wonder whom they serve.
         deeds: {take: [a3_cilicia, a3_cappadocia, a3_syria], grudges: {persia: 2000}}
+      - label: "Break the Greek mercenaries in his centre"
+        legitimacy_bp: 2100
+        outcome: >-
+          Your phalanx and the Companions go for Darius's Greek infantry, the best troops he has.
+          They hold longer than the Asian levies on either side, and Darius, seeing them die,
+          leaves the field.
+        deeds: {take: [a3_cilicia]}
     history: >-
       At Issus in November 333 BC Alexander broke Darius's army; Darius fled, leaving his
       family, whom Alexander treated with royal honour. The Alexander Mosaic from Pompeii
@@ -307,7 +330,7 @@ chapters:
     civ: macedon
     year: -332
     until_year: -330
-    title: "If I Were Parmenion"
+    title: "The Great King's Offer"
     place: "The camp before Tyre"
     speaker: persia
     speaker_name: "Envoys of Darius"
@@ -323,7 +346,7 @@ chapters:
 
       Parmenion, in council, says: 'If I were Alexander, I would accept.'
     choices:
-      - label: "'So would I, if I were Parmenion'"
+      - label: "Refuse the offer and fight on"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -331,8 +354,8 @@ chapters:
           want her, and that if Darius wants anything else he can come and ask for it in
           person. The war goes on, to the end.
         deeds: {grudges: {persia: 2000}}
-      - label: "Accept the Euphrates border, and half the empire"
-        legitimacy_bp: 500
+      - label: "Accept the Euphrates as the border"
+        legitimacy_bp: 1100
         wealth_bp: 4000
         unrest_bp: -500
         outcome: >-
@@ -340,6 +363,13 @@ chapters:
           king of the west at twenty-four. Your soldiers can go home rich - and the older ones
           do.
         deeds: {peace_with: [persia], take: [a3_syria, a3_phoenicia, a3_judea, a3_egypt]}
+      - label: "Take the silver and fight on"
+        legitimacy_bp: 500
+        wealth_bp: 2500
+        outcome: >-
+          You accept the ransom and nothing else, and send Darius his mother and daughters. The
+          silver pays your men, and the Great King, who has given up so much already, sees that
+          you are not satisfied.
     history: >-
       Darius made at least two peace offers; the famous exchange with Parmenion is reported
       by Arrian and Plutarch, and the offer of the land west of the Euphrates probably came
@@ -370,7 +400,7 @@ chapters:
       Your engineer says you can build a causeway across the strait to the walls, if the
       army will carry the stones.
     choices:
-      - label: "Build the mole, whatever it takes"
+      - label: "Build a causeway to the walls"
         historical: true
         legitimacy_bp: 2000
         materials_bp: -2500
@@ -381,8 +411,8 @@ chapters:
           Tyrians die; two thousand are crucified along the shore; thirty thousand are sold.
           The causeway will turn Tyre into a peninsula forever.
         deeds: {take: [a3_phoenicia, a3_judea, a3_cyprus]}
-      - label: "Leave Tyre blockaded and march on Egypt"
-        legitimacy_bp: 300
+      - label: "Blockade Tyre and march on Egypt"
+        legitimacy_bp: 1600
         outcome: >-
           You leave a force to watch the island and march south. The Tyrian fleet raids your
           supply ships for a year.
@@ -396,6 +426,14 @@ chapters:
           ash and rubble that sets hard under the sea. The causeway reaches the walls in
           seven weeks instead of seven months. Tyre surrenders before its fleet can come home.
         deeds: {take: [a3_phoenicia, a3_judea, a3_cyprus, a3_syria]}
+      - label: "Attack from the sea with the allied fleets"
+        legitimacy_bp: 1200
+        materials_bp: -1200
+        outcome: >-
+          The Cypriot and Sidonian ships that have joined you gather in the harbours of the
+          mainland and attack Tyre from the water. It is a close fight against the best fleet
+          in the east, and the walls on the seaward side are not weak.
+        deeds: {take: [a3_phoenicia, a3_cyprus]}
     history: >-
       The siege of Tyre lasted from January to July 332 BC. Alexander's mole, widened by
       silt, still joins the old island to the mainland.
@@ -426,7 +464,7 @@ chapters:
       the world. Then there is the oracle of Ammon at Siwa, three weeks into the desert,
       who is said to know whether you are the son of a god.
     choices:
-      - label: "Found the city, and ride to Siwa"
+      - label: "Found a city and ride to Siwa"
         historical: true
         legitimacy_bp: 2500
         knowledge_bp: 1000
@@ -449,6 +487,13 @@ chapters:
           At the heart of the new city you build a hall where scribes carve the books of the
           Greeks onto wooden blocks and print them by the thousand. Within twenty years
           every city in your empire has Homer and Aristotle on its shelves.
+        deeds: {take: [a3_egypt, a3_upper_egypt]}
+      - label: "Found only a harbour, and leave the priests in charge"
+        legitimacy_bp: 2100
+        wealth_bp: 1000
+        outcome: >-
+          A small port and a garrison are enough for the fleet, and the priests of Egypt keep
+          their temples and their revenues. It is a quiet settlement, with no grid of streets.
         deeds: {take: [a3_egypt, a3_upper_egypt]}
     history: >-
       Egypt surrendered to Alexander in 332 BC; in early 331 he founded Alexandria and
@@ -480,7 +525,7 @@ chapters:
       Parmenion, looking at the campfires that fill the plain, begs you to attack in the
       dark. You have forty-seven thousand men.
     choices:
-      - label: "'I will not steal a victory': fight by daylight"
+      - label: "Wait for daylight and fight on the plain"
         historical: true
         legitimacy_bp: 3000
         outcome: >-
@@ -494,6 +539,13 @@ chapters:
         outcome: >-
           Your night attack throws the Persian camp into chaos; thousands are killed in the
           dark. Darius escapes. Men say you won like a thief, but you won.
+        deeds: {take: [a3_assyria, a3_babylonia]}
+      - label: "Form a hollow square and let him attack"
+        legitimacy_bp: 2600
+        outcome: >-
+          Your army forms a great square with the baggage in the middle, and takes the charge of
+          the scythed chariots and the horse. It holds, but you cannot pursue Darius, who rides
+          off with his army whole.
         deeds: {take: [a3_assyria, a3_babylonia]}
     history: >-
       At Gaugamela on 1 October 331 BC Alexander defeated Darius decisively. Arrian reports
@@ -525,7 +577,7 @@ chapters:
       fitting for a woman of Athens to set fire to it. Parmenion says it is your own property
       now, and a king does not burn his own house.
     choices:
-      - label: "Take a torch and burn it"
+      - label: "Set the palace of Xerxes alight"
         historical: true
         legitimacy_bp: 500
         wealth_bp: 3000
@@ -535,7 +587,7 @@ chapters:
           cheer: Athens is avenged. In the morning, sober, you are said to regret it. The
           Persians will not forget it.
         deeds: {take: [a3_persis, a3_susiana]}
-      - label: "Spare it, and hold court there as the new Great King"
+      - label: "Spare it and hold court as Great King"
         legitimacy_bp: 1500
         wealth_bp: 3000
         influence: {nobility: 1000}
@@ -543,6 +595,13 @@ chapters:
           You sit on Darius's throne, under a golden canopy, as the nobles of Persia file
           past. Your Macedonians mutter. The Persians begin to think you might be a king they
           can serve.
+        deeds: {take: [a3_persis, a3_susiana]}
+      - label: "Take the treasury and garrison the palace"
+        legitimacy_bp: 800
+        wealth_bp: 3500
+        outcome: >-
+          The silver goes out on ten thousand mule pairs, and a Macedonian garrison stays in the
+          hall of a hundred columns. The Persian nobles stay away.
         deeds: {take: [a3_persis, a3_susiana]}
     history: >-
       Alexander took Persepolis in early 330 BC and burned the palace that spring, either as
@@ -573,7 +632,7 @@ chapters:
 
       Darius died before you reached him. His body lies in the wagon.
     choices:
-      - label: "Cover him with your cloak, bury him as a king, and hunt Bessus"
+      - label: "Bury Darius as a king and hunt Bessus"
         historical: true
         legitimacy_bp: 2500
         influence: {nobility: 1500}
@@ -590,6 +649,14 @@ chapters:
           Your veterans cheer. Bessus holds the east, and his horsemen will raid your
           provinces for years.
         deeds: {take: [a3_media]}
+      - label: "Bury him with honour and consolidate Media"
+        legitimacy_bp: 2100
+        influence: {nobility: 800}
+        outcome: >-
+          You send the body to Persepolis with honour and settle your garrisons in the mountain
+          country before going after Bessus. The pursuit is slow, and Bessus has time to gather
+          a following in the east.
+        deeds: {take: [a3_media, a3_parthia]}
     history: >-
       In July 330 BC Darius III was murdered by Bessus and his fellow satraps as Alexander
       closed in. Alexander gave him a royal burial and executed Bessus in 329.
@@ -619,7 +686,7 @@ chapters:
       Your friends drag him out. He comes back in, still shouting. A guard's spear is
       within your reach.
     choices:
-      - label: "Snatch the spear"
+      - label: "Take the spear from the guard"
         historical: true
         legitimacy_bp: -1500
         unrest_bp: 1500
@@ -635,6 +702,13 @@ chapters:
         outcome: >-
           You leave without a word. In the morning a sober Cleitus comes to apologise. He
           will die old, in Macedon, still telling the story of the Granicus.
+      - label: "Have your guards seize and bind him"
+        legitimacy_bp: 200
+        unrest_bp: 500
+        influence: {nobility: -500}
+        outcome: >-
+          The guards take Cleitus by the arms and bind him. In the morning you let him go, with
+          a reprimand. He keeps his post, and his temper.
     history: >-
       In 328 BC Alexander killed Cleitus in a drunken quarrel at Maracanda, and was
       overcome with remorse. The quarrel turned on Alexander's adoption of Persian customs.
@@ -663,7 +737,7 @@ chapters:
       general, speaks for them all: 'Sir, if there is one thing a man should know when to
       do, it is to stop.'
     choices:
-      - label: "Sulk for three days - then turn back"
+      - label: "Give way to the army and turn back"
         historical: true
         legitimacy_bp: -500
         unrest_bp: -1500
@@ -678,7 +752,7 @@ chapters:
         outcome: >-
           Barely a third of the army follows you across. The rest stay on the bank, and
           their officers begin to talk about who should lead them home.
-      - label: "Promise them home - by sea, in ships built here"
+      - label: "Promise them a voyage home by sea"
         legitimacy_bp: 500
         unrest_bp: -1000
         knowledge_bp: 1000
@@ -712,7 +786,7 @@ chapters:
       And you have thirty thousand Persian boys, trained in Macedonian drill and armed with
       the sarissa. You call them the Successors.
     choices:
-      - label: "Hold the weddings, and bring in the Successors"
+      - label: "Hold the weddings and enrol the Persians"
         historical: true
         legitimacy_bp: 1500
         influence: {nobility: 1000}
@@ -723,12 +797,23 @@ chapters:
           of you!' you shout, and give their titles to Persians, until they come to your
           tent, weeping, and beg to be called your kinsmen again. You kiss them all.
         deeds: {men: 30000}
-      - label: "Keep the army Macedonian"
+      - label: "Keep the army Macedonian and send for recruits"
         influence: {nobility: -1000}
         unrest_bp: -500
+        wealth_bp: -1000
         outcome: >-
-          The Persian boys are sent home. Your veterans are happy. The Persian nobles watch
+          The Persian boys are sent home, and recruiters ride to Macedon. Your veterans are
+          happy. The Persian nobles watch
           the doors to power close, and remember.
+        deeds: {men: 10000}
+      - label: "Hold the weddings and enrol a few thousand Persians"
+        legitimacy_bp: 1000
+        influence: {nobility: 800}
+        unrest_bp: 600
+        outcome: >-
+          The weddings go ahead, and only a picked few thousand of the Persian boys are drilled
+          and armed. The veterans mutter less, and the Persian nobles mutter more.
+        deeds: {men: 8000}
     history: >-
       The mass wedding at Susa in 324 BC joined Macedonian officers to Persian noblewomen;
       the mutiny at Opis followed. Most of the marriages were abandoned after Alexander's
@@ -739,7 +824,7 @@ chapters:
     scenario: alexander
     civ: macedon
     year: -323
-    title: "To the Strongest"
+    title: "The Fever at Babylon"
     place: "The palace of Nebuchadnezzar, Babylon"
     speaker: general
     speaker_name: "Perdiccas"
@@ -756,7 +841,7 @@ chapters:
       Your wife Roxana is pregnant. Your half-brother Arrhidaeus is simple-minded. Perdiccas
       bends over you and asks: to whom do you leave your kingdom?
     choices:
-      - label: "Whisper: 'To the strongest'"
+      - label: "Give Perdiccas your ring and name no heir"
         historical: true
         legitimacy_bp: -2500
         unrest_bp: 3000
@@ -781,6 +866,13 @@ chapters:
           notebooks from the future say; they bring down the fever with bark and cold baths.
           On the twelfth day you sit up and ask for the reports from the fleet. History has
           lost the Hellenistic age. You have thirty years to do something else with it.
+      - label: "Name your half-brother Arrhidaeus as heir"
+        legitimacy_bp: -1500
+        unrest_bp: 1800
+        outcome: >-
+          You whisper his name. The cavalry officers say that a simple man cannot rule, and the
+          infantry say that he is Philip's son. You die before the quarrel is settled.
+        deeds: {ruler_falls: "dies of fever in Babylon, aged thirty-two"}
     history: >-
       Alexander died at Babylon on 10 or 11 June 323 BC, aged 32, probably of a fever
       (malaria, typhoid and poison have all been suggested). The wars of his successors

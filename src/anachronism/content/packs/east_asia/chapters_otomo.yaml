@@ -35,7 +35,7 @@ chapters:
       say the foreigners will bring your house bad luck. The Jesuits say that if you protect
       them, more ships will come.
     choices:
-      - label: "Protect the Jesuits and the Portuguese trade"
+      - label: "Protect the Jesuits and their hospital"
         historical: true
         wealth_bp: 1500
         legitimacy_bp: 500
@@ -47,11 +47,20 @@ chapters:
           will think of it as something more.
         deeds: {}
       - label: "Send the foreign priests away"
+        wealth_bp: -700
         legitimacy_bp: 500
         influence: {clergy: 1000}
         outcome: >-
           Your monks are delighted. The Portuguese captains take their ships to your rivals' ports,
           and your treasury notices.
+      - label: "Let the Jesuits stay, confined to the harbour"
+        wealth_bp: 600
+        legitimacy_bp: 200
+        influence: {clergy: 300}
+        outcome: >-
+          You allow the priests to keep a house in the port, but forbid them to preach in the
+          town or to build a church at Funai. The Portuguese ships keep coming, but in smaller
+          numbers, and neither the priests nor the monks are satisfied.
     history: >-
       Otomo Yoshishige (Sorin) protected the Jesuit mission at Funai, where Luis de Almeida had
       opened a hospital in 1557, and drew Portuguese trade to his harbour.
@@ -88,10 +97,19 @@ chapters:
           your hands.
         deeds: {grudges: {mori: 1500}}
       - label: "Buy peace with a share of the north"
+        deeds: {peace_with: [mori]}
         wealth_bp: -1000
         legitimacy_bp: -500
         outcome: >-
           The Mori accept, and keep Hakata. Your generals say what they think of the bargain.
+      - label: "Fight on for Buzen with all your men"
+        wealth_bp: -800
+        legitimacy_bp: 300
+        deeds: {men: 8000}
+        outcome: >-
+          You call out every retainer and throw the whole army against the Mori in Buzen. The
+          Mori have the straits, and the fighting is long and costly, but your men hold
+          ground.
     history: >-
       In 1569 Otomo Sorin backed the Amago remnants and an Ouchi claimant against the Mori;
       Mori forces withdrew from northern Kyushu and Motonari died in 1571.
@@ -129,8 +147,17 @@ chapters:
           pensioner of other men. Tosa is Chosokabe's.
         deeds: {grudges: {chosokabe: 1000}}
       - label: "Keep him at Funai and send letters"
+        legitimacy_bp: -300
+        wealth_bp: -200
         outcome: >-
           Kanesada lives as your guest, and writes to his old friends, who do not write back.
+      - label: "Send him home with silver and a small escort"
+        wealth_bp: -300
+        legitimacy_bp: 200
+        deeds: {men: 1000}
+        outcome: >-
+          You give Kanesada silver and a small escort, and your blessing, and he sails alone
+          for Tosa. His old vassals are more interested in the Chosokabe than in him.
     history: >-
       Ichijo Kanesada, Sorin's son-in-law, was driven from Tosa in 1574 and tried to return with
       Otomo support in 1575; he was defeated by Chosokabe Motochika at the Shimanto river.
@@ -160,7 +187,7 @@ chapters:
       a dream: a realm in Hyuga where there will be no Buddhist temple, and the laws will be
       those of Christ. Your generals say that the Shimazu are many and their guns are good.
     choices:
-      - label: "Be baptised, and march south to found a Christian kingdom"
+      - label: "Be baptised, and march south into Hyuga"
         historical: true
         legitimacy_bp: -1000
         unrest_bp: 1500
@@ -173,10 +200,20 @@ chapters:
           look at their neighbours.
         deeds: {martial_bp: -1000, grudges: {shimazu: 2000}}
       - label: "Be baptised, but keep your army at home"
+        deeds: {men: 2000}
+        influence: {clergy: -500}
         legitimacy_bp: 500
         outcome: >-
           You are baptised, and rule Bungo as a quiet and thoughtful Christian prince. The Ito
           leave your court in disgust, and the Shimazu keep Hyuga.
+      - label: "Aid the Ito with a small force, baptism later"
+        wealth_bp: -500
+        legitimacy_bp: 200
+        unrest_bp: 500
+        deeds: {men: 4000, martial_bp: 200}
+        outcome: >-
+          You send a small force with the Ito lords and put off your baptism until the spring.
+          The Jesuits are patient with you, and your generals are relieved.
     history: >-
       Otomo Sorin was baptised as Francisco in 1578; his army, sent into Hyuga against the
       Shimazu, was destroyed at Mimigawa (Tensho 6).
@@ -224,6 +261,13 @@ chapters:
           Your gunsmiths are pleased. Valignano finds other Christian lords to send his boys,
           and your kinsman Mancio goes to Rome without your name.
         deeds: {martial_bp: 500}
+      - label: "Build a college for the Jesuits at Funai"
+        knowledge_bp: 600
+        wealth_bp: -400
+        legitimacy_bp: 200
+        outcome: >-
+          You give the Jesuits land and money for a college and a printing house at Funai, and
+          Valignano is pleased. The money goes into teaching and books.
     history: >-
       The Tensho embassy of four Japanese youths, among them Ito Mancio for Otomo Sorin, left
       Nagasaki in 1582 and met Philip II and Pope Gregory XIII in 1584-85, returning in 1590.
@@ -249,7 +293,7 @@ chapters:
       Toyotomi Hideyoshi, who rules from Osaka, has said that he will help any lord who submits.
       Your Jesuits tell you it is a long journey, and that he is not a friend of the Church.
     choices:
-      - label: "Go to Osaka and submit to Hideyoshi"
+      - label: "Go to Osaka to seek Hideyoshi's help"
         historical: true
         legitimacy_bp: -500
         influence: {nobility: -500}
@@ -262,10 +306,18 @@ chapters:
           in the spring.
         deeds: {grudges: {shimazu: 1500}}
       - label: "Make terms with the Shimazu"
+        deeds: {peace_with: [shimazu]}
         legitimacy_bp: -1500
         outcome: >-
           You become a vassal of the lords you have fought for twenty years. Hideyoshi's envoys
           are told that Bungo has no need of help.
+      - label: "Hold Bungo with the vassals who remain"
+        legitimacy_bp: -300
+        unrest_bp: 800
+        deeds: {men: 5000, martial_bp: 200}
+        outcome: >-
+          You call up the vassals who have not deserted, and ask each of them for a last oath.
+          They give it, and the Shimazu continue to advance.
     history: >-
       In 1586 Otomo Sorin went to Osaka to ask Hideyoshi for help; the Shimazu invaded Bungo
       in the winter, taking Funai, and Hideyoshi's army relieved Bungo in 1587.
@@ -294,7 +346,7 @@ chapters:
       Your son wants you to ask for more. The Jesuits say only that Hideyoshi's mood towards
       the Church is uncertain.
     choices:
-      - label: "Take Bungo, and counsel loyalty to Hideyoshi"
+      - label: "Accept Bungo and counsel loyalty"
         historical: true
         legitimacy_bp: 500
         outcome: >-
@@ -308,6 +360,13 @@ chapters:
         outcome: >-
           Hideyoshi's secretaries are polite, and nothing is returned. The regent's patience
           is not long.
+      - label: "Ask Hideyoshi for Chikugo as well"
+        legitimacy_bp: -500
+        unrest_bp: 300
+        outcome: >-
+          You send a respectful request through the regent's secretaries for Chikugo to be
+          added to your son's grant. They hear it, and write it down, and say that the matter
+          will be considered.
     history: >-
       Otomo Sorin died at Tsukumi in June 1587; Hideyoshi confirmed his son Yoshimune in Bungo
       only, and a few weeks later issued his first edict against the Jesuits.
@@ -336,7 +395,7 @@ chapters:
       The commander has told you that Pyongyang has fallen. You have a few thousand men, and
       the Ming and Korean armies are marching your way.
     choices:
-      - label: "Retreat south from Hosan"
+      - label: "Fall back from Hosan to the main army"
         historical: true
         legitimacy_bp: -3000
         outcome: >-
@@ -345,11 +404,18 @@ chapters:
           the Mori. The lands that Sorin built with trade and ships and the Jesuits' god pass to
           other hands. The house of Otomo ends its time as a great family.
         deeds: {ruler_falls: "is stripped of Bungo for cowardice in Korea"}
-      - label: "Hold Hosan to the last man"
+      - label: "Hold the fort at Hosan"
         legitimacy_bp: 1000
         unrest_bp: 1000
         outcome: >-
           Your garrison dies on the walls. Your name is remembered among Hideyoshi's loyal men.
+      - label: "Wait at Hosan for the commander's orders"
+        legitimacy_bp: -800
+        unrest_bp: 300
+        deeds: {men: 2000}
+        outcome: >-
+          You send riders to the main force and hold the gate while you wait. The answer is
+          slow, and the Ming and Korean armies are not.
     history: >-
       In 1593 Otomo Yoshimune withdrew from his post in Korea; Hideyoshi accused him of
       cowardice and confiscated Bungo, and Yoshimune was placed in the custody of the Mori.

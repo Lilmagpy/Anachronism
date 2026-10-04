@@ -30,7 +30,7 @@ chapters:
       the emirs of Dvin and Ganja watch your borders, and your treasury cannot pay both
       for stone and for soldiers.
     choices:
-      - label: "Finish the cathedral"
+      - label: "Complete the great church"
         historical: true
         legitimacy_bp: 2000
         knowledge_bp: 800
@@ -41,12 +41,21 @@ chapters:
           with tall blind arcades. People of the east call Ani the city of a thousand and one
           churches, though that is later boasting. Your kingdom has the finest building
           in Armenia, and a treasury nearly empty.
-      - label: "Spend the money on the border garrisons"
+      - label: "Double the border garrisons"
         legitimacy_bp: -500
+        unrest_bp: -300
         outcome: >-
           The garrisons are doubled and the half-built walls of the great church stand under
           scaffolding for years. Your bishops are not pleased.
         deeds: {martial_bp: 500}
+      - label: "Buy peace with gifts to your neighbours"
+        wealth_bp: -1500
+        legitimacy_bp: 300
+        unrest_bp: -400
+        outcome: >-
+          Silver and fine cloth go to Constantinople and to the emirs of Dvin and Ganja. The
+          borders stay quiet for a time, the scaffolding stays up, and the treasury is thinner
+          than before.
     history: >-
       Smbat II began the cathedral of Ani, designed by Trdat, and it was finished under Gagik I
       about 1001.
@@ -73,7 +82,7 @@ chapters:
       and some of the nobles agree. The Georgians have an army to spare, and the emperor's
       agents are watching how you rule.
     choices:
-      - label: "Keep Ani and let Ashot keep the field army"
+      - label: "Keep Ani, leave Ashot the army"
         historical: true
         unrest_bp: 800
         legitimacy_bp: -500
@@ -81,12 +90,19 @@ chapters:
           The brothers divide the realm in all but name. You keep the crown, and the title, and the
           churches, and Ashot has the soldiers and the eastern lands. A civil war begins, and
           your enemies take note.
-      - label: "Give Ashot a share and share the crown"
+      - label: "Crown Ashot as your co-king"
         legitimacy_bp: 500
         influence: {nobility: 500}
         outcome: >-
           Ashot accepts for a season, and then does as he likes. The nobles learn that the king's
           word is a bargain, and bargains can be broken.
+      - label: "Name Ashot your heir, keep the crown"
+        legitimacy_bp: 400
+        unrest_bp: -400
+        influence: {nobility: 300}
+        outcome: >-
+          Ashot is named heir, and the catholicos blesses the arrangement. Ashot bides his time
+          for a season, and some of the nobles wonder how long you will be allowed to reign.
     history: >-
       Gagik I died in 1020 (some sources say 1017). His sons Hovhannes-Smbat and Ashot IV
       divided the kingdom between them, and war between them followed.
@@ -113,7 +129,7 @@ chapters:
       is a simple one: he will protect you in your old age, and all he asks in return is
       your kingdom, after your death.
     choices:
-      - label: "Promise Ani to the emperor after your death"
+      - label: "Name Basil heir to Ani"
         historical: true
         legitimacy_bp: -1500
         unrest_bp: 1000
@@ -124,7 +140,7 @@ chapters:
           the Georgians call it a betrayal. Basil is satisfied, and he never needs to
           fight for Ani, only to wait. The kingdom now has an end date, whatever its king does.
         deeds: {grudges: {georgia: 1000}}
-      - label: "Refuse, and stay free"
+      - label: "Decline his offer, stay free"
         legitimacy_bp: 1000
         unrest_bp: 300
         outcome: >-
@@ -132,6 +148,14 @@ chapters:
           and your quarrel with your brother. The emperor will find another way to remind
           you that he has the larger army.
         deeds: {grudges: {byzantium: 1500}}
+      - label: "Pay Basil tribute and do homage"
+        wealth_bp: -1500
+        legitimacy_bp: -300
+        influence: {nobility: 300}
+        outcome: >-
+          You kneel, swear homage and promise a yearly gift. Basil accepts and goes home, and the
+          kingdom remains yours and your heirs'. Your treasury and your pride are poorer for it.
+        deeds: {peace_with: [byzantium]}
     history: >-
       In 1022 Hovhannes-Smbat met Basil II and agreed to leave Ani to Byzantium on his death;
       the Armenian lords and Ashot IV refused to accept it.
@@ -161,7 +185,7 @@ chapters:
       the new Seljuk Turks are already in Persia. Others, led by the general Vahram
       Pahlavuni, say the will was never the nation's to give.
     choices:
-      - label: "Say nothing and let your heir decide"
+      - label: "Leave the will unconfirmed"
         historical: true
         legitimacy_bp: -500
         unrest_bp: 800
@@ -169,12 +193,20 @@ chapters:
           You die in 1041 without confirming or cancelling the will. Your young nephew Gagik
           is named king by the Pahlavuni party, and the emperor's envoys say the throne is theirs.
           The kingdom is left as a quarrel.
-      - label: "Give the emperor a formal pledge now"
+      - label: "Seal a formal pledge to the emperor"
         legitimacy_bp: -1500
         unrest_bp: 1500
         outcome: >-
           The pledge is signed and sealed, and the nobles of Ani, who never agreed, begin to
           choose between Constantinople and rebellion.
+      - label: "Annul the will before your lords"
+        legitimacy_bp: 1000
+        unrest_bp: 300
+        influence: {nobility: 800}
+        outcome: >-
+          Before the assembled lords you declare that the kingdom was never yours to give. The
+          nobles cheer, and the emperor's envoys leave in silence. Constantinople does not forget.
+        deeds: {grudges: {byzantium: 2000}}
     history: >-
       Ashot IV died about 1040 and Hovhannes-Smbat in 1041. The will of 1022 left the Byzantines
       with a claim on Ani, which his successor refused to honour.
@@ -203,7 +235,7 @@ chapters:
       Vahram Pahlavuni, your commander, has the soldiers and the nobles behind him. He
       says Ani can be held, and that the Greeks can be beaten from behind the walls.
     choices:
-      - label: "Rely on Pahlavuni and fight for the city"
+      - label: "Trust Pahlavuni to hold the walls"
         historical: true
         legitimacy_bp: 2000
         unrest_bp: -500
@@ -213,12 +245,20 @@ chapters:
           other wars, and for three years you rule a free kingdom. But the emperor still has
           the will, and he does not need to win battles.
         deeds: {martial_bp: 500}
-      - label: "Open the gates and bargain with the emperor"
+      - label: "Treat with the emperor for terms"
         legitimacy_bp: -1500
         unrest_bp: 1500
+        wealth_bp: 1500
         outcome: >-
           The emperor's men are polite, and take you as an honoured guest. Your own lords
           and the common people of Ani do not forgive it.
+      - label: "Call on the Georgian king for troops"
+        legitimacy_bp: 500
+        wealth_bp: -700
+        outcome: >-
+          Georgian horsemen ride to Ani, but the price is high and the king of Georgia expects
+          to be heard in your counsels. Pahlavuni is not pleased to share the command.
+        deeds: {men: 6000}
     history: >-
       Gagik II was crowned in 1042; Vahram Pahlavuni defeated a Byzantine army sent to claim
       Ani, and Gagik reigned as an independent king until 1045.
@@ -245,10 +285,10 @@ chapters:
 
 
       The emperor wants one thing, and it is Ani. In return he offers you rich estates in
-      Cappadocia and the title of a Byzantine lord. You can refuse and go back to a city
-      you cannot defend, or sign.
+      Cappadocia and the title of a Byzantine lord. You can refuse, hear his terms, or
+      look for another bargain.
     choices:
-      - label: "Hand over Ani for estates and a Byzantine title"
+      - label: "Cede Ani for Cappadocian estates"
         historical: true
         legitimacy_bp: -3000
         unrest_bp: 2000
@@ -259,12 +299,20 @@ chapters:
           storms and sacks the undefended city (1064), and in 1071 he beats the emperor at
           Manzikert, ending the Greek rule in the east. The Bagratid kingdom is gone.
         deeds: {ruler_falls: "gives up Ani and is sent to Cappadocia"}
-      - label: "Refuse to give up the city"
+      - label: "Refuse and return to Ani"
         legitimacy_bp: -500
         unrest_bp: 1500
         outcome: >-
           You return to a city whose lords no longer follow you, while the emperor's army
           waits at the border. The city is lost anyway.
+      - label: "Offer tribute and keep your crown"
+        legitimacy_bp: 500
+        wealth_bp: -2000
+        unrest_bp: 500
+        outcome: >-
+          The emperor hears your envoys politely and sets your yearly price high. Ani remains
+          yours on paper, and the emperor's patience is not unlimited.
+        deeds: {peace_with: [byzantium]}
     history: >-
       In 1045 Gagik II surrendered Ani to Constantine IX and took estates in Cappadocia. Ani
       was sacked by Alp Arslan's Seljuks in 1064, and Manzikert (1071) opened Armenia and

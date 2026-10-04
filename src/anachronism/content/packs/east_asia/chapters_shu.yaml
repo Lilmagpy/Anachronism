@@ -42,12 +42,20 @@ chapters:
           Your envoys make the long journey north by the mountain tracks, are received with
           honour, and come home with a good report of Qin's wealth and bad news of its
           ambitions. The road has been walked once, and it can be walked again.
-      - label: "Send nothing: the mountains need no friends"
+      - label: "Send no one: the mountains are wall enough"
+        wealth_bp: 200
         legitimacy_bp: 200
         outcome: >-
           Shu keeps its silence. Qin takes note, and has long memories of who greets it and
           who does not.
         deeds: {grudges: {qin: 500}}
+      - label: "Send your gifts to Chu instead"
+        wealth_bp: -300
+        legitimacy_bp: 200
+        deeds: {grudges: {qin: 300}}
+        outcome: >-
+          Your envoys go down the river to the court of Chu, and are well received. Qin hears
+          of it, and does not count it a courtesy to itself.
     history: >-
       The Shiji records that in 337 BC, in the first year of King Huiwen of Qin, envoys of
       Chu, Han, Zhao and Shu came to his court. The annals say nothing of what was said.
@@ -77,7 +85,7 @@ chapters:
       ministers are divided. Some say a king who keeps his mountains does not open them to
       gifts.
     choices:
-      - label: "Accept the oxen, and cut the road"
+      - label: "Accept the oxen as a gift of Qin"
         historical: true
         wealth_bp: 400
         legitimacy_bp: -500
@@ -86,11 +94,18 @@ chapters:
           road they made was called the Road of the Stone Oxen. Whether or not any gold was ever
           under their tails, the road is real, and the Qin army will not be slow to use it.
         deeds: {grudges: {qin: 300}}
-      - label: "Send the envoy home with the oxen"
+      - label: "Refuse the oxen at the border"
+        wealth_bp: -200
         legitimacy_bp: 600
         outcome: >-
           Your ministers breathe again. Qin will have to find another way over the mountains.
           Gifts that cost a road are dear.
+      - label: "Receive the oxen at the border and send gifts"
+        wealth_bp: -400
+        legitimacy_bp: 300
+        outcome: >-
+          You meet the Qin envoy at the foot of the mountains, take the oxen no further than
+          your own border, and send back gifts of your own. The road is not cut.
     history: >-
       The stone-ox story is told in the Huayang guo zhi and its Shu wang benji, centuries
       after the event, and is a legend; the Zhanguo ce does not know it. What is certain is
@@ -129,12 +144,21 @@ chapters:
           into the arms of Ba. You are master of Hanzhong again. The marquis and the King of
           Ba then send, each in their own way, to Qin for help.
         deeds: {martial_bp: 200, men: 8000, grudges: {ba: 1500}}
-      - label: "Make a settlement with your brother"
+      - label: "Settle with your brother at Jiameng"
+        deeds: {men: 2000}
         legitimacy_bp: 300
         unrest_bp: -200
         outcome: >-
           The Marquis keeps his title and his town. It is an uneasy peace, but nobody has
           sent a letter over the mountains.
+      - label: "Send a minister to demand his homage"
+        wealth_bp: -200
+        legitimacy_bp: 200
+        deeds: {martial_bp: 100}
+        outcome: >-
+          Your minister goes to Jiameng and the Marquis sends polite words and small gifts,
+          but no oath. The quarrel is neither healed nor fought out, and Ju looks more and
+          more to Ba.
     history: >-
       The Shiji (Zhang Yi) says that Shu and Ba attacked each other and each appealed to
       Qin for aid, which is firm. That the cause was Shu's attack on the Marquis of Ju, who fled
@@ -171,11 +195,20 @@ chapters:
           south and were killed at Wuyang, on the plain. Qin takes Shu in the same campaign
           and the next king, in Qin's grant, is called a marquis. Your house is gone.
         deeds: {ruler_falls: "is killed fleeing from Qin"}
-      - label: "Hold the Chengdu plain and treat for peace"
+      - label: "Pull back to the plain and treat for peace"
+        deeds: {peace_with: [qin]}
         legitimacy_bp: -500
         outcome: >-
           You pull back to the plain and send gifts to Sima Cuo. He thanks you, and keeps
           marching.
+      - label: "Break the mountain road and wait behind it"
+        legitimacy_bp: -800
+        wealth_bp: -400
+        deeds: {men: 3000}
+        outcome: >-
+          Your engineers drop the cliff path into the gorge, and your men dig in at the plain.
+          Qin has to rebuild the road before it can bring up supplies, and it has a great many
+          men to do it.
     history: >-
       Qin under Sima Cuo conquered Shu in 316 BC. Qin first demoted the king to marquis
       and made Chen Zhuang chancellor of Shu (Shiji 70). The Shiji says Shu's chancellor Zhuang killed the Marquis

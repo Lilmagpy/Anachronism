@@ -41,7 +41,7 @@ chapters:
       and the Mongols have just proclaimed him Genghis Khan. His envoy now stands in your tent
       and asks what you will give him, and what you will not.
     choices:
-      - label: "Stand with the Khan, openly"
+      - label: "Swear to the Khan, and ride with him"
         historical: true
         legitimacy_bp: 800
         unrest_bp: 500
@@ -54,10 +54,19 @@ chapters:
       - label: "Serve the Jin and keep the Khan at a distance"
         legitimacy_bp: 300
         wealth_bp: 500
+        influence: {nobility: 300}
         outcome: >-
           The Jin are pleased and the Mongol envoy goes away with polite thanks and a long
           memory. The Jin wall is quiet for now.
-        deeds: {grudges: {mongols: 800}}
+        deeds: {martial_bp: 500, grudges: {mongols: 800}}
+      - label: "Trade with both and join neither"
+        wealth_bp: 400
+        unrest_bp: 300
+        outcome: >-
+          Your herds go to the Jin markets and your horses to the Mongol camps, and your chiefs
+          grow fat. The envoy is told that the Onggut keep the wall for whoever holds it, and he
+          goes away without a promise and without a quarrel.
+        deeds: {men: 800}
     history: >-
       In 1204 Tayang Khan of the Naimans asked Alaqush Digit Quri to join him against
       Genghis; he told Genghis instead and the Naimans were beaten. The Onggut became the
@@ -84,7 +93,7 @@ chapters:
       Your son Boyaohe is at your side. The sources say very little about who your enemies
       were or why, only that they were your own people, and that you do not have long.
     choices:
-      - label: "Send Boyaohe away to the Khan for safety"
+      - label: "Send Boyaohe to the Khan's camp"
         historical: true
         legitimacy_bp: -2000
         unrest_bp: 2500
@@ -99,6 +108,13 @@ chapters:
         outcome: >-
           You face them at the head of your guard. A few are put in chains, and the rest
           go home and wait.
+      - label: "Call the chiefs to council and share gifts"
+        wealth_bp: -500
+        legitimacy_bp: 200
+        unrest_bp: 800
+        outcome: >-
+          You summon the chiefs to your tent and give out horses and silk. Some take them with
+          good grace, and the sons of the murmuring ones sit watching your guard.
     history: >-
       The Yuan shi says that Alaqush was murdered by Onggut who opposed the Mongol alliance
       (about 1207; sources differ on the date); his son Boyaohe escaped to Genghis, who gave
@@ -142,7 +158,15 @@ chapters:
         outcome: >-
           The Khan's army is far larger than your garrison, and you are
           the husband of his daughter.
-        deeds: {grudges: {mongols: 2000}}
+        deeds: {men: 1500, grudges: {mongols: 2000}}
+      - label: "Shut the gates to both armies"
+        legitimacy_bp: -300
+        wealth_bp: -400
+        unrest_bp: 500
+        outcome: >-
+          Your wardens bar the wall to Jin and Mongol alike, and send gifts to your wife's father.
+          Both armies have other business, and neither is pleased with you.
+        deeds: {martial_bp: 300}
     history: >-
       In 1211 Genghis's army invaded the Jin; the Onggut, who had guarded the Jin frontier
       wall, were by then allies of the Mongols, and the Jin frontier gave way. The Jin army
@@ -179,12 +203,19 @@ chapters:
           Yuan shi says that when a plot among the chiefs came to light, you dealt with it
           sternly, and kept the peace, and the Mongol sovereigns trusted you to do it. Later
           generations remember Alaqai Beki as the lady of the Onggut.
-      - label: "Let an Onggut elder take the lead"
+      - label: "Let an Onggut elder lead in your name"
         legitimacy_bp: -500
         unrest_bp: 800
         outcome: >-
           The old man is respected and slow, and your chiefs argue at his elbow. The Khan's
           court sends envoys to ask who really leads the Onggut.
+      - label: "Ask the Great Khan to name a guardian"
+        legitimacy_bp: 200
+        unrest_bp: -200
+        influence: {nobility: -400}
+        outcome: >-
+          Your envoys ride to the Khan's court. A Mongol guardian is named, and the chiefs find
+          that their old rights depend on his goodwill. The Onggut are quiet, and rather less their own masters.
     history: >-
       After Boyaohe's death (perhaps about 1226; the date is not certain) Alaqai Beki, Genghis
       Khan's daughter, governed the Onggut as regent. The Yuan shi credits her with
@@ -228,6 +259,13 @@ chapters:
         legitimacy_bp: -200
         outcome: >-
           They stay a year, teach, and then leave anyway. Monks go where they are called.
+      - label: "Give them letters, but no horses"
+        wealth_bp: 300
+        knowledge_bp: 200
+        legitimacy_bp: 100
+        outcome: >-
+          They set out on foot with your letters and trust to the kindness of the road. The way
+          is slower and the monks arrive thin and tired, but they arrive.
     history: >-
       Rabban Sauma and Markos, Christians of the Church of the East from the Mongol-ruled
       north (Markos from an Onggut or Uighur family, as tradition has it), set out for
@@ -258,7 +296,7 @@ chapters:
       were converted, and came to the Roman rite. Your people are divided. Over the grass to
       the west, Duwa, the khan of the Chagatai, is raising an army against the Khan's lands.
     choices:
-      - label: "Follow the friar to Rome's church, and keep the border"
+      - label: "Join the friar's church, and keep the border"
         historical: true
         legitimacy_bp: -300
         unrest_bp: 800
@@ -269,9 +307,17 @@ chapters:
           you are killed in the fighting. Your people go on, Christians of whichever sort.
       - label: "Stay with the church of your fathers"
         legitimacy_bp: 400
+        influence: {clergy: 300}
         outcome: >-
           Your people are glad, and the friar goes on to the capital to build his church there.
           The Chagatai army is still on the border.
+      - label: "Let both churches stand at your court"
+        legitimacy_bp: 200
+        knowledge_bp: 300
+        influence: {clergy: 400}
+        outcome: >-
+          The friar is given a church and your own priests keep theirs. Your court argues
+          in two liturgies, and the border waits.
     history: >-
       Prince George (Körgüz), the Onggut ruler, married into Kublai's house, was converted
       by John of Montecorvino to the Roman church (as the friar wrote in 1305) and was killed

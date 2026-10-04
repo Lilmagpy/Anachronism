@@ -30,7 +30,7 @@ chapters:
       and a bishop who answers to Constantinople. The pope in Rome, the scholar Gerbert,
       would give you one too, with the blessing of his friend the emperor Otto III.
     choices:
-      - label: "Take the crown from Rome"
+      - label: "Accept the crown the pope offers"
         historical: true
         legitimacy_bp: 3000
         influence: {clergy: 2000}
@@ -39,12 +39,20 @@ chapters:
           Year's Day 1001, you are anointed King of Hungary. You found an archbishopric at
           Esztergom and order every ten villages to build a church. Hungary will be a Latin
           kingdom, facing west, for the next thousand years.
-      - label: "Take the crown from Constantinople"
+      - label: "Accept the crown Constantinople offers"
         legitimacy_bp: 2000
         knowledge_bp: 1000
         outcome: >-
           A crown of Greek enamels arrives, with a Greek archbishop. The Germans regard you
           with suspicion, and the Byzantines regard you as their vassal.
+      - label: "Crown yourself before your own lords"
+        legitimacy_bp: 1500
+        influence: {"nobility": 1000}
+        unrest_bp: 500
+        outcome: >-
+          Your bishops and magnates acclaim you at Esztergom. Rome and Constantinople both
+          send polite replies and neither sends a crown; for some years you are a king in your
+          own eyes only.
     history: >-
       Stephen I was crowned around 1000-1001 with a crown sent by Pope Sylvester II, with
       Otto III's consent, and founded the archbishopric of Esztergom.
@@ -70,7 +78,7 @@ chapters:
 
       Your knights say a kingdom cannot have two princes.
     choices:
-      - label: "March on Transylvania"
+      - label: "Send the royal army into Transylvania"
         historical: true
         legitimacy_bp: 1500
         wealth_bp: 1500
@@ -78,10 +86,19 @@ chapters:
           Gyula is captured with his wife and sons, and Transylvania becomes a province of the
           kingdom under a royal governor. The salt mines are the king's.
         deeds: {martial_bp: 500}
-      - label: "Leave him his principality"
+      - label: "Leave Gyula his lands, for homage"
         legitimacy_bp: -1000
+        wealth_bp: 500
         outcome: >-
-          Gyula sends gifts, and keeps his salt.
+          Gyula sends gifts and a troop of horsemen, and keeps his salt.
+        deeds: {"men": 3000, "martial_bp": 200}
+      - label: "Demand tribute and hostages from Gyula"
+        legitimacy_bp: 600
+        wealth_bp: 800
+        outcome: >-
+          Gyula sends his son and a share of the salt, with a hard look. He keeps his
+          fortresses and his court.
+        deeds: {"men": 2000}
     history: >-
       In about 1003 Stephen conquered Transylvania from his maternal uncle Gyula.
     sources: ["Annals of Hildesheim 1003", "Illuminated Chronicle 66", "Engel, The Realm of St Stephen (2001)"]
@@ -106,7 +123,7 @@ chapters:
       The road is clear, if you will keep it safe, build hostels, and let the pilgrims pass
       without tolls.
     choices:
-      - label: "Open the road"
+      - label: "Open the Danube road to pilgrims"
         historical: true
         legitimacy_bp: 1500
         wealth_bp: 500
@@ -115,10 +132,19 @@ chapters:
           Pilgrims pour down the Danube: Abbot Odilo writes to thank you, and you found hostels
           for Hungarian pilgrims in Jerusalem, Rome and Constantinople. In seventy years the
           crusaders will take the same road.
-      - label: "Charge them a toll"
+      - label: "Charge the pilgrims a toll"
         wealth_bp: 1500
+        legitimacy_bp: -300
+        unrest_bp: 300
         outcome: >-
           The pilgrims pay, grumbling, and some of them go by sea again.
+      - label: "Open the road and charge for lodging"
+        wealth_bp: 800
+        legitimacy_bp: 600
+        knowledge_bp: 500
+        outcome: >-
+          The road is free but the hostels are not. The pilgrims pay a small price for a bed
+          and a loaf, and your abbeys grow rich on it.
     history: >-
       After about 1016-1018 Stephen opened an overland pilgrim route through Hungary to the
       Byzantine Balkans; Hungarian troops helped Basil II's final campaigns in Bulgaria.
@@ -143,7 +169,7 @@ chapters:
       His own commander, Csanád, has deserted to you. He offers to lead your army against
       him, if you will give him Ajtony's land.
     choices:
-      - label: "Send Csanád"
+      - label: "Send Csanád with a royal army"
         historical: true
         legitimacy_bp: 1500
         wealth_bp: 1000
@@ -152,10 +178,18 @@ chapters:
           found a bishopric there for the Venetian monk Gerard, who will teach the princes and
           write a strange, learned book about the Song of the Three Children.
         deeds: {martial_bp: 500}
-      - label: "Pay Ajtony's toll"
+      - label: "Pay Ajtony's toll for the salt barges"
         wealth_bp: -1500
+        legitimacy_bp: -400
         outcome: >-
           The salt moves again, at Ajtony's price.
+      - label: "Lead the royal army against him yourself"
+        legitimacy_bp: 1200
+        wealth_bp: 500
+        outcome: >-
+          You take the field in the south and defeat Ajtony. The campaign keeps you from your
+          court for a season, and Csanád takes the credit in the camp.
+        deeds: {"men": 10000, "martial_bp": 300}
     history: >-
       Csanád defeated Ajtony around 1028 (dates vary), and the see of Csanád was founded for
       Bishop Gerard (Gellért).
@@ -177,7 +211,7 @@ chapters:
       border and is marching down the Danube toward the Rába river. Your army is smaller, and
       the Germans want a battle.
     choices:
-      - label: "Give no battle; empty the land in front of them"
+      - label: "Withdraw and strip the land bare"
         historical: true
         food_bp: -1500
         legitimacy_bp: 1500
@@ -187,12 +221,19 @@ chapters:
           take Vienna. In the peace, the emperor gives you the land between the Leitha and the
           Fischa.
         deeds: {grudges: {hre: 1000}}
-      - label: "Meet them in battle"
+      - label: "Give battle on the Rába"
         legitimacy_bp: -500
         unrest_bp: 1000
         outcome: >-
           The German knights ride down your archers on the Rába, and the emperor demands
           tribute.
+      - label: "Buy a truce with silver"
+        legitimacy_bp: -300
+        wealth_bp: -1200
+        unrest_bp: 300
+        outcome: >-
+          Your envoys meet Conrad's marshals with chests of silver. The emperor takes the
+          money and goes home, but he does not forget that you paid.
     history: >-
       Conrad II's invasion of Hungary in 1030 failed for lack of supplies; the Hungarians
       took Vienna, and the peace of 1031 ceded the Leitha-Fischa land.
@@ -220,7 +261,7 @@ chapters:
       Doge of Venice, has grown up at your court and is a Christian, and a foreigner. The
       queen favours Peter.
     choices:
-      - label: "Name Peter your heir"
+      - label: "Name Peter Orseolo your heir"
         historical: true
         legitimacy_bp: -1000
         unrest_bp: 1000
@@ -228,12 +269,19 @@ chapters:
           Vazul tries to have you killed, it is said, and is blinded, and molten lead poured
           into his ears. His sons Levente, Andrew and Béla flee to Bohemia and Poland and Kiev.
           They will be back.
-      - label: "Name Vazul, and trust him"
+      - label: "Name Vazul your heir"
         legitimacy_bp: 500
         influence: {clergy: -1500}
         outcome: >-
           Vazul is brought to court and sworn to keep the faith. The bishops pray for the
           kingdom.
+      - label: "Call the great lords to choose among the kin"
+        legitimacy_bp: -300
+        unrest_bp: 500
+        influence: {"nobility": 1000}
+        outcome: >-
+          The magnates gather and argue for weeks. Each faction hears what it hopes to hear,
+          and none is satisfied.
     history: >-
       After the death of Prince Imre (1031), Stephen chose Peter Orseolo as heir; Vazul was
       blinded and his sons fled abroad.
@@ -258,19 +306,26 @@ chapters:
       Your palatine, Samuel Aba, of the old Kabar nobility, has come with the bishops to tell
       you to send your foreigners home.
     choices:
-      - label: "Keep your own men"
+      - label: "Keep your foreign officers in office"
         historical: true
         legitimacy_bp: -2000
         outcome: >-
           The nobles rise. You flee to the court of the German king Henry III. Samuel Aba is
           crowned in your place.
         deeds: {ruler_falls: "is driven out by his nobles"}
-      - label: "Send the foreigners home"
+      - label: "Send the foreign officers away"
         legitimacy_bp: 500
         influence: {nobility: 1500}
         outcome: >-
           Your German knights ride home, and the Hungarian lords take their castles, and make
           you their king, on their terms.
+      - label: "Dismiss only the worst offenders"
+        legitimacy_bp: 200
+        unrest_bp: 400
+        influence: {"nobility": 600}
+        outcome: >-
+          A few of the most hated stewards are sent home. The nobles take it as a sign of
+          weakness, and the foreigners take it as a betrayal.
     history: >-
       Peter Orseolo (r. 1038-1041) was overthrown by the nobility in 1041 and replaced by
       Samuel Aba.
@@ -296,7 +351,7 @@ chapters:
 
       Your army is at Ménfő. The Germans are across the marsh.
     choices:
-      - label: "Fight"
+      - label: "Stand and fight at Ménfő"
         historical: true
         legitimacy_bp: -2000
         outcome: >-
@@ -305,11 +360,17 @@ chapters:
           throne, and Peter does homage to Henry for Hungary, as his vassal. He gives Henry a
           golden lance.
         deeds: {ruler_falls: "is killed fleeing the battle of Ménfő"}
-      - label: "Offer terms"
+      - label: "Offer Henry gold and terms"
         legitimacy_bp: -1000
         wealth_bp: -2000
         outcome: >-
           You pay, and Henry goes home with your gold and without Peter, this time.
+      - label: "Retreat east of the Tisza"
+        legitimacy_bp: -400
+        unrest_bp: 600
+        outcome: >-
+          You abandon the marsh and draw your army back behind the great river. Henry follows
+          slowly, and many of your lords begin to think about their own safety.
     history: >-
       Henry III defeated Samuel Aba at Ménfő in 1044 and restored Peter Orseolo as his
       vassal; Aba was killed in flight.
@@ -338,7 +399,7 @@ chapters:
       the road to meet Andrew and beg him to save the church. Gerard asks whether you will
       fight.
     choices:
-      - label: "Try to reach the German border"
+      - label: "Ride for the German border"
         historical: true
         legitimacy_bp: -2500
         unrest_bp: 2000
@@ -352,6 +413,13 @@ chapters:
         outcome: >-
           Your German knights cut through the rebels. Andrew and Levente wait in the east for
           a better day.
+      - label: "Hold Fehérvár and call on Henry III"
+        legitimacy_bp: -300
+        wealth_bp: -500
+        outcome: >-
+          You shut yourself in the royal city and send riders to Germany. The rebels do not
+          wait for them.
+        deeds: {"men": 8000}
     history: >-
       The Vata pagan uprising (1046) brought down Peter Orseolo, who was blinded; Bishop
       Gerard was martyred; Andrew I was crowned and restored Christian order.
@@ -377,7 +445,7 @@ chapters:
       given it. Nobody in Latin knows the names of Hungarian fields, roads and streams. He
       asks whether he may write them in Hungarian.
     choices:
-      - label: "Write them in Hungarian"
+      - label: "Allow the Hungarian names"
         historical: true
         knowledge_bp: 2000
         legitimacy_bp: 500
@@ -385,10 +453,17 @@ chapters:
           Among the Latin, the abbot writes 'feheruuaru rea meneh hodu utu rea': 'on the
           military road that goes to Fehérvár'. It is the oldest written Hungarian sentence to
           survive. You are buried in the abbey's crypt, where you still lie.
-      - label: "Latin only"
+      - label: "Keep the charter wholly in Latin"
         knowledge_bp: 500
+        legitimacy_bp: 300
         outcome: >-
           The charter is correct and elegant, and nobody can find the fields it gives away.
+      - label: "Put the Hungarian names in a separate list"
+        knowledge_bp: 1000
+        legitimacy_bp: 200
+        outcome: >-
+          A clerk copies the names onto a leaf at the end of the charter. It is read, once,
+          and then mislaid.
     history: >-
       The founding charter of the Tihany Abbey (1055) contains the earliest surviving
       fragments of written Hungarian; Andrew I is buried there.

@@ -31,10 +31,9 @@ chapters:
 
 
       In the night you have sung the old verse from the play Atsumori: "Man's life is fifty
-      years; compared with the world below heaven, it is but a dream." Now your horse is
-      saddled.
+      years; compared with the world below heaven, it is but a dream."
     choices:
-      - label: "Ride for the gorge in the storm, and strike his camp"
+      - label: "Ride out and strike Yoshimoto's camp"
         historical: true
         legitimacy_bp: 2000
         unrest_bp: -500
@@ -47,17 +46,19 @@ chapters:
           Mikawa, a young hostage-lord of the Imagawa called Matsudaira Motoyasu takes back
           his family's castle at Okazaki - and watches you.
         deeds: {grudges: {imagawa: 6000}}
-      - label: "Hold Kiyosu and let him wear himself out on the walls"
+      - label: "Hold Kiyosu and wear him out on the walls"
         legitimacy_bp: -1000
         food_bp: -2000
+        influence: {nobility: 800}
         outcome: >-
           Yoshimoto takes the border forts one by one and ravages the rice fields of Owari.
           Kiyosu holds, and at the end of the summer he moves on towards Kyoto, leaving a
           garrison behind. Your retainers say nothing, but they have begun to wonder.
         deeds: {war_with: [imagawa]}
-      - label: "Offer Yoshimoto your submission and a hostage"
+      - label: "Offer Yoshimoto submission and a hostage"
         legitimacy_bp: -2500
         influence: {nobility: -2000}
+        wealth_bp: 1000
         outcome: >-
           Yoshimoto accepts graciously, as befits the man who expects to rule Japan. Owari
           becomes a road for his armies. The fool of Owari, men say, has proved them right.
@@ -94,9 +95,9 @@ chapters:
       marry your daughter.
 
 
-      He is nineteen. He is cautious. He has never yet broken his word.
+      He is nineteen, and he has spent his life among stronger men.
     choices:
-      - label: "Make the alliance; let Mikawa guard your back"
+      - label: "Swear an alliance with Motoyasu"
         historical: true
         legitimacy_bp: 800
         outcome: >-
@@ -105,13 +106,21 @@ chapters:
           completely and takes a new name: Ieyasu. Mikawa's soldiers march under their own
           banners, but where you point.
         deeds: {take: [j_mikawa], grudges: {imagawa: 2000}}
-      - label: "Demand that Mikawa submit as a vassal"
+      - label: "Demand Mikawa's submission as vassal"
         legitimacy_bp: 300
         unrest_bp: 800
         outcome: >-
           Motoyasu's envoy goes home without a word. Mikawa makes its own peace with the
           Imagawa, and its musketeers watch your border instead of guarding it.
-        deeds: {grudges: {imagawa: 1500}}
+        deeds: {men: 3000, grudges: {imagawa: 1500}}
+      - label: "Ignore Mikawa and turn north on Mino"
+        legitimacy_bp: 300
+        wealth_bp: 500
+        unrest_bp: 300
+        outcome: >-
+          You leave Motoyasu to his quarrels and send your army north. Mino is not so easily
+          taken, and your eastern border is left to chance.
+        deeds: {martial_bp: 500}
     history: >-
       In 1562 Nobunaga and Matsudaira Motoyasu (Tokugawa Ieyasu from 1566) made the Kiyosu
       alliance. It lasted until Nobunaga's death, freeing him to turn on Mino and Kyoto.
@@ -142,9 +151,10 @@ chapters:
 
 
       Your father bought five hundred guns when you were fifteen. Your elders thought it
-      was another of your follies.
+      was another of your follies, and say that no farmer will stand against a charge of
+      horsemen.
     choices:
-      - label: "Buy every gun Kunitomo and Sakai can make"
+      - label: "Arm the foot soldiers with matchlocks"
         historical: true
         wealth_bp: -2500
         influence: {guilds: 1500, nobility: -500}
@@ -153,7 +163,7 @@ chapters:
           'light feet', farmers' sons - drill with matchlocks in ranks while the samurai
           watch. You buy saltpetre from the Portuguese, who are glad to sell it.
         deeds: {martial_bp: 2500}
-      - label: "Spend the silver on horses and bowmen, as your father's fathers did"
+      - label: "Spend the silver on horses and bowmen"
         wealth_bp: -1500
         influence: {nobility: 1000}
         outcome: >-
@@ -170,6 +180,13 @@ chapters:
           like water. Within two years your armouries hold more guns than all the other
           lords of Japan together - and iron plates for your ships, if you want them.
         deeds: {martial_bp: 5000}
+      - label: "Raise a small corps of gunners only"
+        wealth_bp: -800
+        influence: {guilds: 500, nobility: 300}
+        outcome: >-
+          A few hundred matchlocks go to picked men, who drill apart from the rest of the army.
+          The gunners do well enough, and the old retainers say nothing against them.
+        deeds: {martial_bp: 500}
     history: >-
       Matchlocks reached Japan on Tanegashima in 1543. By the 1560s Kunitomo, Sakai and
       Negoro were making them in thousands, and Nobunaga - who ordered 500 as a youth -
@@ -202,7 +219,7 @@ chapters:
       Mino, in a single night, and that he has been talking quietly to the Three of West
       Mino - the lords who guard Tatsuoki's flank.
     choices:
-      - label: "Let the monkey build his fort, and buy the Three of West Mino"
+      - label: "Back Tokichiro's fort and buy West Mino"
         historical: true
         wealth_bp: -1500
         legitimacy_bp: 1500
@@ -212,16 +229,20 @@ chapters:
           dynasty began to unite China, and you take a new seal: Tenka fubu - 'the realm
           under arms'. Tokichiro's fort at Sunomata becomes a legend.
         deeds: {conquer: [saito]}
-      - label: "Storm Inabayama with everything you have"
+      - label: "Storm Inabayama with all your men"
         legitimacy_bp: 800
         food_bp: -1500
         outcome: >-
           Your men claw their way up Mount Kinka under fire. They take the castle, at a
           price your widows will remember.
         deeds: {conquer: [saito], grudges: {asakura: 1500}}
-      - label: "Leave Mino to its fool of a lord for now"
+      - label: "Wait while Tatsuoki's best men drift away"
+        legitimacy_bp: -500
+        wealth_bp: 500
+        unrest_bp: -300
         outcome: >-
           Tatsuoki drinks on. Mino will keep.
+        deeds: {peace_with: [saito]}
     history: >-
       Nobunaga took Inabayama in 1567 after the Three of West Mino deserted Saito Tatsuoki,
       renamed it Gifu and began to use the seal 'Tenka fubu'. The story of Hideyoshi's
@@ -258,7 +279,7 @@ chapters:
       Whoever holds Kyoto speaks for the Emperor and the shogun - and so, in a sense, for
       Japan.
     choices:
-      - label: "March on Kyoto and make Yoshiaki shogun"
+      - label: "Escort Yoshiaki to Kyoto as shogun"
         historical: true
         legitimacy_bp: 2500
         wealth_bp: 1500
@@ -270,7 +291,7 @@ chapters:
           of Sakai, Otsu and Kusatsu, and to levy their tolls. Sakai's merchants pay twenty
           thousand kan in silver.
         deeds: {tributaries: [ashikaga], take: [j_omi, j_ise], war_with: [miyoshi], men: 20000}
-      - label: "Take Kyoto for yourself, and leave the shogun's title empty"
+      - label: "Take Kyoto for yourself, no shogun"
         legitimacy_bp: -1000
         unrest_bp: 1500
         influence: {nobility: -1500, clergy: -1000}
@@ -289,6 +310,15 @@ chapters:
           holds the paper. The richest port in Japan pours its silver into your venture
           and its loyalty with it. Yoshiaki becomes shogun on your silver.
         deeds: {tributaries: [ashikaga], take: [j_omi, j_ise], war_with: [miyoshi], men: 20000}
+      - label: "Send Yoshiaki on with a small escort"
+        legitimacy_bp: 800
+        wealth_bp: -500
+        influence: {nobility: 500}
+        outcome: >-
+          Yoshiaki goes ahead with a few hundred of your men and is checked in Omi by the Rokkaku.
+          He is made shogun in the end, but he owes you less than he might, and your own army has
+          not gone into the city.
+        deeds: {tributaries: [ashikaga], men: 5000}
     history: >-
       In 1568 Nobunaga escorted Ashikaga Yoshiaki into Kyoto and had him made shogun. He
       declined high office, asking instead for control of Sakai, Otsu and Kusatsu, and took
@@ -323,7 +353,7 @@ chapters:
       Your army is in a long valley. Ahead of you are the Asakura. Behind you is Omi.
       Tokichiro is looking at the bag.
     choices:
-      - label: "Understand the beans: run for Kyoto now"
+      - label: "Withdraw to Kyoto at once"
         historical: true
         legitimacy_bp: -500
         outcome: >-
@@ -333,14 +363,22 @@ chapters:
           with Ieyasu at your side, you meet the Azai and the Asakura on the Ane river
           and beat them, though not badly enough. The war with the Asakura has begun.
         deeds: {war_with: [asakura], grudges: {asakura: 2000}}
-      - label: "Press on into Echizen: beans are only beans"
+      - label: "Press on into Echizen"
         legitimacy_bp: -2000
         unrest_bp: 1500
         food_bp: -2500
+        wealth_bp: 1000
         outcome: >-
           The Azai come down behind you and close the valley. You fight your way out at
           last, but you leave half your army in Echizen.
         deeds: {war_with: [asakura], give: [j_omi], grudges: {asakura: 3000}}
+      - label: "Hold Kanegasaki and send for aid"
+        legitimacy_bp: -300
+        unrest_bp: 500
+        outcome: >-
+          You dig in at the castle and send riders to Gifu and Kyoto. The Azai close the valley
+          before help can arrive, and in the end you break out with heavy losses.
+        deeds: {men: 5000}
     history: >-
       In May 1570 Azai Nagamasa betrayed Nobunaga during his attack on the Asakura. The
       bag of beans is a later legend, but the 'Kanegasaki retreat', with Hideyoshi in the
@@ -372,7 +410,7 @@ chapters:
       prepare the attack. He is a learned man, a poet. He has written to his friends that
       he will do as he is told.
     choices:
-      - label: "Burn the mountain, and kill everyone on it"
+      - label: "Storm Mount Hiei and burn the temples"
         historical: true
         legitimacy_bp: 500
         unrest_bp: 2000
@@ -383,8 +421,10 @@ chapters:
           four thousand died. Frois writes that the most famous university of Japan is ash.
           No temple in the land will defy you again - but none will forgive you either.
         deeds: {grudges: {takeda: 2000, ashikaga: 2000}}
-      - label: "Surround the mountain and starve it into neutrality"
+      - label: "Besiege the mountain until the monks yield"
         food_bp: -1500
+        legitimacy_bp: 300
+        unrest_bp: 500
         influence: {clergy: -1000}
         outcome: >-
           Your lines close round Hiei for a season. The monks send down an embassy at last
@@ -399,6 +439,13 @@ chapters:
           at ruinous interest, their mistresses, their armouries. The city that once feared
           Hiei begins to jeer at it. When you ride up with a few hundred men, the abbots
           hand over their weapons without a fight.
+      - label: "Offer the monks their estates for neutrality"
+        wealth_bp: -1000
+        legitimacy_bp: 300
+        influence: {clergy: 800}
+        outcome: >-
+          The monks hear your offer and do not answer it. The Asakura and Azai armies are still
+          on the slopes, and your envoys come back with nothing.
     history: >-
       On 29 September 1571 Nobunaga's army burned the Enryaku-ji complex on Mount Hiei and
       massacred its inhabitants. Mitsuhide was given Sakamoto, at its foot, as his reward.
@@ -429,7 +476,7 @@ chapters:
       fought him five times at Kawanakajima, has never beaten him.
 
 
-      Shingen is fifty-one. Your spies say he coughs.
+      Shingen is fifty-one.
     choices:
       - label: "Send Ieyasu three thousand men, and keep the rest at home"
         historical: true
@@ -483,7 +530,7 @@ chapters:
       Shingen has gone home, and Yoshiaki has not heard yet. He has a few hundred men, and
       the shogunate of the Ashikaga has lasted two hundred and thirty-five years.
     choices:
-      - label: "Burn upper Kyoto, take him, and send him into exile"
+      - label: "Besiege Yoshiaki and send him away"
         historical: true
         legitimacy_bp: 1000
         unrest_bp: 1000
@@ -495,10 +542,19 @@ chapters:
           shogun left to fight for, sue for peace; so does Hojo Ujimasa, far away in the east,
           who sees nothing to gain from a war with the man who holds Kyoto.
         deeds: {conquer: [ashikaga], peace_with: [miyoshi, hojo]}
-      - label: "Forgive him, and keep him as a figurehead"
+      - label: "Forgive him, keep him as figurehead"
         legitimacy_bp: 500
+        unrest_bp: 500
         outcome: >-
           Yoshiaki weeps, apologises and goes on writing letters.
+        deeds: {tributaries: [ashikaga]}
+      - label: "Ask the Emperor to mediate a truce"
+        legitimacy_bp: 800
+        unrest_bp: -300
+        outcome: >-
+          An imperial envoy brings the shogun and you to terms. Yoshiaki gives his word again,
+          and means it for as long as it suits him.
+        deeds: {peace_with: [ashikaga]}
     history: >-
       In 1573 Nobunaga drove Yoshiaki out of Kyoto, ending the Ashikaga shogunate. Yoshiaki
       lived on in exile under the Mori's protection and kept the title until 1588.
@@ -530,7 +586,7 @@ chapters:
       Shibata Katsuie wants to follow him all the way. Your sister Oichi and her three
       little daughters are inside Odani castle with the Azai.
     choices:
-      - label: "Pursue to Ichijodani, then finish the Azai"
+      - label: "Pursue the Asakura to Ichijodani"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -540,13 +596,21 @@ chapters:
           and his father's and Yoshikage's, are lacquered in gold and set before your guests
           at the New Year feast.
         deeds: {conquer: [asakura]}
-      - label: "Take Echizen, but offer the Asakura a pardon"
+      - label: "Take Echizen but pardon the Asakura"
         legitimacy_bp: 800
         influence: {nobility: 800}
         outcome: >-
           Yoshikage accepts and becomes a vassal on a small fief in the mountains. The poets
           go back to Kyoto.
         deeds: {conquer: [asakura]}
+      - label: "Strike the Azai at Odani first"
+        legitimacy_bp: 1000
+        unrest_bp: -300
+        outcome: >-
+          Odani falls, and Nagamasa sends Oichi and her daughters out before he dies. Yoshikage
+          has meanwhile reached Ichijodani and shut himself in, and you must go after him at
+          last.
+        deeds: {men: 5000}
     history: >-
       In September 1573 Nobunaga destroyed the Asakura at Ichijodani and the Azai at
       Odani. The excavated ruins of Ichijodani are one of the finest Sengoku sites in Japan.
@@ -577,8 +641,10 @@ chapters:
       You and Ieyasu have come with thirty-eight thousand. The Takeda horsemen are the most
       feared in Japan. Your master gunner says: build a fence of logs along the little
       stream at Shitaragahara, put three thousand guns behind it, and let them come.
+      Ieyasu's captains say a night march could relieve the castle before the Takeda can
+      turn. Your envoys say Katsuyori might take a ransom.
     choices:
-      - label: "Build the fence, and let them come"
+      - label: "Stand behind a palisade at Shitaragahara"
         historical: true
         legitimacy_bp: 2500
         influence: {nobility: 500}
@@ -588,8 +654,9 @@ chapters:
           them most of Shingen's famous generals. The age of the mounted warrior in Japan is
           over.
         deeds: {war_with: [takeda], grudges: {takeda: 3000}}
-      - label: "Relieve the castle by a night march, and avoid a battle"
+      - label: "Relieve the castle by a night march"
         legitimacy_bp: 800
+        food_bp: -500
         outcome: >-
           Katsuyori lifts the siege rather than be caught between you. Nagashino is saved;
           the Takeda army is not destroyed.
@@ -602,6 +669,13 @@ chapters:
           glasses. You know where Katsuyori is before he moves. When he charges, guns open
           on him from three sides at once. He is taken alive.
         deeds: {war_with: [takeda], take: [j_shinano], grudges: {takeda: 3000}}
+      - label: "Offer Katsuyori a truce and a ransom"
+        wealth_bp: -1000
+        legitimacy_bp: -300
+        outcome: >-
+          Katsuyori, who smells victory, hears your envoys out and sends them away. Nagashino
+          falls to him, and the garrison is put to the sword.
+        deeds: {peace_with: [takeda]}
     history: >-
       On 28 June 1575 Oda and Tokugawa troops behind palisades shattered Takeda Katsuyori's
       army at Nagashino. The famous 'three-rank volley' is probably a later embellishment,
@@ -628,10 +702,11 @@ chapters:
       disciples, Confucius and his followers.
 
 
-      It will cost more than anything you have built. It will tell every lord on the road
-      to Kyoto who rules Japan.
+      It will cost more than anything you have built, and some of your captains say the army
+      needs the money more. It will also tell every lord on the road to Kyoto who rules
+      Japan.
     choices:
-      - label: "Build Azuchi, the castle of heaven's lord"
+      - label: "Build the great tower at Azuchi"
         historical: true
         materials_bp: -3000
         wealth_bp: -2000
@@ -641,9 +716,11 @@ chapters:
           Tens of thousands of men drag stones up the hill; one stone, men say, needs ten
           thousand haulers. Three years later Frois climbs the tower and writes that it
           rivals anything in Europe. You open it to the public, for a fee.
-      - label: "Build something smaller and spend the rest on soldiers"
+      - label: "Build a plain castle, spend on soldiers"
         materials_bp: -1000
         legitimacy_bp: 800
+        wealth_bp: -500
+        influence: {nobility: 500}
         outcome: >-
           A solid, grey, practical castle rises over the lake. Nobody writes about it.
         deeds: {men: 8000}
@@ -657,6 +734,15 @@ chapters:
           Buddhist physicians must prove what they claim, before witnesses, by experiment.
           Visitors come from Kyushu and Korea to watch. The Jesuits are not sure they
           approve.
+      - label: "Build a modest castle and a market town"
+        materials_bp: -1500
+        wealth_bp: 500
+        legitimacy_bp: 1000
+        influence: {guilds: 800}
+        outcome: >-
+          A smaller castle rises over the lake, and merchants are given leave to trade below it
+          without tolls. The town prospers, and no one sails across the lake to marvel at your
+          tower.
     history: >-
       Azuchi castle, begun in 1576 and finished in 1579, was the first great tenshu castle
       and the model for all that followed. It burned in 1582, days after Nobunaga's death.
@@ -686,7 +772,7 @@ chapters:
       Japan, their sides plated with iron so fire-pots slide off them, each carrying
       cannon.
     choices:
-      - label: "Build the six iron ships"
+      - label: "Plate six great ships with iron"
         historical: true
         materials_bp: -2500
         wealth_bp: -1500
@@ -696,12 +782,15 @@ chapters:
           bounce off Kuki's iron sides; his cannon sink the Mori flagships. The bay is
           closed. Two years later the starving temple surrenders, and burns.
         deeds: {ships: 40, war_with: [miyoshi, mori], take: [j_settsu]}
-      - label: "Block the bay with a boom and sunken ships"
+      - label: "Close the bay with a boom of ships"
         materials_bp: -1000
+        wealth_bp: -500
+        legitimacy_bp: 300
+        unrest_bp: 300
         outcome: >-
           The boom holds for a season and then breaks in a storm. The siege of Osaka goes
           on.
-        deeds: {war_with: [miyoshi]}
+        deeds: {ships: 10, war_with: [miyoshi]}
       - label: "✦ Build steamships the wind cannot stop"
         needs_adopted: [steamship]
         materials_bp: -3000
@@ -711,6 +800,14 @@ chapters:
           tide. The Mori captains have never seen a ship move without oars or sail; most of
           them turn and run. You follow them all the way to Aki.
         deeds: {ships: 80, war_with: [miyoshi, mori], take: [j_settsu, j_harima]}
+      - label: "Build twice as many ordinary ships"
+        materials_bp: -2000
+        wealth_bp: -1500
+        legitimacy_bp: 500
+        outcome: >-
+          The fleet that goes out is larger than the Mori's, and its crews are not as good. The
+          Mori fire-pots take their toll again, and the bay is not yet closed.
+        deeds: {ships: 30, war_with: [miyoshi]}
     history: >-
       In 1576 the Mori navy beat Oda's fleet at Kizugawaguchi and supplied Ishiyama
       Hongan-ji; in 1578 Kuki Yoshitaka's six large 'iron ships' (how much iron they carried
@@ -742,7 +839,7 @@ chapters:
       Your son Nobutada, twenty-five and eager, asks to lead the army into Kai. Ieyasu
       will come from the south, the Hojo from the east.
     choices:
-      - label: "Send Nobutada into Kai"
+      - label: "Send Nobutada to lead the army into Kai"
         historical: true
         legitimacy_bp: 2000
         outcome: >-
@@ -751,7 +848,7 @@ chapters:
           with his son. Nobutada brings his head to you. The house of Shingen is gone,
           and the Hojo, who marched with you, are your friends.
         deeds: {conquer: [takeda], ally_with: [hojo]}
-      - label: "Offer Katsuyori a small fief, and his life"
+      - label: "Offer Katsuyori a fief and his life"
         legitimacy_bp: 1000
         outcome: >-
           Katsuyori bows. The Takeda keep a valley in Kai and nothing else.
@@ -764,6 +861,13 @@ chapters:
           Your army crosses the snowbound passes in midwinter, living on tinned rice and
           fish while the Takeda wait for spring. Katsuyori wakes to find you in his capital.
         deeds: {conquer: [takeda, hojo]}
+      - label: "Leave Kai to Ieyasu and the Hojo"
+        legitimacy_bp: 800
+        unrest_bp: -300
+        outcome: >-
+          Ieyasu and the Hojo go in without you, and share the spoils between themselves. You
+          hold the army in Owari, and keep the right to say what you think of the result.
+        deeds: {men: 10000}
     history: >-
       In March and April 1582 Oda and Tokugawa armies overran Takeda lands in a few weeks.
       Katsuyori killed himself at Tenmokuzan on 3 April.
@@ -798,7 +902,7 @@ chapters:
       the eastern road. The western road goes to Hideyoshi. The eastern road goes to
       Kyoto.
     choices:
-      - label: "It is nothing: sleep, and leave for the west tomorrow"
+      - label: "Keep to your plans and rest"
         historical: true
         legitimacy_bp: -2500
         unrest_bp: 2500
@@ -809,7 +913,7 @@ chapters:
           to the temple and cut open your belly. Your body is never found. Nobutada dies the
           same morning at Nijo. Mitsuhide holds Kyoto.
         deeds: {ruler_falls: "is killed at Honno-ji by Akechi Mitsuhide", give: [j_kyoto]}
-      - label: "Send Ranmaru to see where Mitsuhide really is"
+      - label: "Send Ranmaru to scout Mitsuhide's road"
         legitimacy_bp: -500
         outcome: >-
           Ranmaru comes back at a gallop: the bellflower banners are crossing the Katsura
@@ -825,6 +929,14 @@ chapters:
           from Nijo and the city gates are shut against him. He kills himself at Sakamoto
           the next day.
         deeds: {men: 15000}
+      - label: "Call Nobutada's guard to the temple"
+        legitimacy_bp: -300
+        unrest_bp: 500
+        outcome: >-
+          Riders go to Nijo for Nobutada's men, and the night passes in a flurry of orders. When
+          the Akechi arrive at dawn, the guard is still on the road, and the temple is held by
+          a hundred men and your page.
+        deeds: {men: 3000}
     history: >-
       Before dawn on 21 June 1582 (the 2nd day of the sixth month, Tensho 10) Akechi
       Mitsuhide attacked Nobunaga at Honno-ji. Nobunaga died in the burning temple, and
@@ -857,7 +969,7 @@ chapters:
       had days to win friends; none have come. Hideyoshi asks the house of Oda for its
       blessing - and for its armies.
     choices:
-      - label: "Let Hideyoshi run east and avenge his lord"
+      - label: "Give Hideyoshi the army to march east"
         historical: true
         legitimacy_bp: 2000
         unrest_bp: -1000
@@ -867,12 +979,22 @@ chapters:
           Mitsuhide is killed by peasants as he flees. Hideyoshi has avenged Nobunaga - and
           everyone now knows who will rule the realm Nobunaga made.
         deeds: {take: [j_kyoto], men: 20000}
-      - label: "Wait for the Oda heirs to agree on a commander"
+      - label: "Wait for the Oda heirs to choose a commander"
         legitimacy_bp: -1500
         unrest_bp: 1500
+        wealth_bp: 500
         outcome: >-
           The Oda sons and generals argue at Kiyosu. Mitsuhide holds Kyoto and has the
           Emperor's ear for a whole season.
+        deeds: {men: 4000}
+      - label: "Give the command to Niwa and Nobutaka"
+        legitimacy_bp: 1000
+        unrest_bp: -300
+        outcome: >-
+          The army gathered at Sakai for the Shikoku crossing begins to melt away when the news
+          spreads. Niwa Nagahide and Nobutaka move slowly, and Hideyoshi's men are first on the
+          road.
+        deeds: {men: 10000}
     history: >-
       Hideyoshi made peace with the Mori, marched his army back in about ten days and
       beat Mitsuhide at Yamazaki on 2 July 1582. Within eight years he had united Japan.

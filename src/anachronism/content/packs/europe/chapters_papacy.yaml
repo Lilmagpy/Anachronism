@@ -42,10 +42,17 @@ chapters:
           own, and Magdeburg loses a mission field. Together with the crown you will send to
           Hungary, it is the making of two new Latin kingdoms.
       - label: "Keep the Poles under Magdeburg"
-        legitimacy_bp: 500
+        legitimacy_bp: 1100
+        wealth_bp: 400
         outcome: >-
           The German archbishop is pleased and the emperor is not. Boleslaw gets his missionary
           bishops from the west, and keeps his own counsel.
+      - label: "Put the Polish mission under a legate"
+        legitimacy_bp: 800
+        wealth_bp: -400
+        outcome: >-
+          A legate of yours goes to Gniezno to oversee the new churches directly, with no
+          archbishop of its own. Magdeburg is not pleased, nor is Boleslaw, who wanted more.
     history: >-
       In March 1000 Otto III, with the consent of Pope Sylvester II, founded the archbishopric
       of Gniezno, independent of the German church.
@@ -76,7 +83,7 @@ chapters:
       The Romans answered that their church has never strayed into heresy and does not need
       to chant it.
     choices:
-      - label: "Crown Henry, and sing the Creed"
+      - label: "Crown Henry and grant his requests"
         historical: true
         legitimacy_bp: 1500
         influence: {nobility: 800}
@@ -85,12 +92,19 @@ chapters:
           request the Creed is sung at Mass. His soldiers keep your family's rivals quiet, and
           he leaves you to govern Rome and its estates, while your brother and your relatives
           hold the offices of the city.
-      - label: "Refuse to crown him until he deals with the Crescentii"
+      - label: "Make him settle with the Crescentii first"
         legitimacy_bp: 500
         unrest_bp: 800
         outcome: >-
           Henry is not a man to be dictated to. He waits across the Alps, and your rivals use
           the delay to rouse the city against you.
+      - label: "Crown him if he confirms Rome's estates"
+        legitimacy_bp: 1000
+        wealth_bp: 500
+        unrest_bp: 300
+        outcome: >-
+          Henry confirms the lands and rights of the Roman church in writing before the crown is
+          set on his head. It costs him little, and he is a careful man.
     history: >-
       Benedict VIII (1012-1024) crowned Henry II emperor on 14 February 1014, and ruled Rome
       with the support of his Tusculan family.
@@ -102,7 +116,7 @@ chapters:
     scenario: year_1000
     civ: papacy
     year: 1044
-    title: "The Price of the Chair"
+    title: "A Godfather's Offer"
     place: "Rome"
     speaker: steward
     speaker_name: "Archpriest John Gratian"
@@ -118,9 +132,9 @@ chapters:
 
       Your godfather John Gratian, archpriest of San Giovanni at the Latin Gate, is a pious
       and respected man. He has come to you with an offer. Later writers say you wished to
-      marry; whatever the reason, he will pay you to go.
+      marry. He has come to you with an offer about the chair.
     choices:
-      - label: "Resign, and take his money"
+      - label: "Resign in favour of your godfather"
         historical: true
         wealth_bp: 2000
         legitimacy_bp: -2500
@@ -134,14 +148,24 @@ chapters:
         deeds: {ruler_falls: "sells the papacy to his godfather"}
       - label: "Fight on against Sylvester"
         unrest_bp: 1500
+        wealth_bp: -500
         outcome: >-
           Rome is a city of towers and gangs. The fighting goes on for months, and the Church
           has two popes, and then a third.
-      - label: "Resign for nothing"
+        deeds: {men: 2000}
+      - label: "Resign and ask nothing"
         legitimacy_bp: 500
+        unrest_bp: -300
         outcome: >-
           John Gratian refuses to be paid for what he never asked to be given, and begs you to
           stay. You decide that you are tired of the whole business.
+      - label: "Appeal to Henry III to judge between the popes"
+        legitimacy_bp: 500
+        unrest_bp: 500
+        wealth_bp: -300
+        outcome: >-
+          A messenger goes north with your case. Henry is busy in Hungary and the Alps lie
+          between you and his answer, and meanwhile the towers of Rome stay armed.
     history: >-
       In 1045 Benedict IX resigned in favour of John Gratian (Gregory VI) for a payment, which
       was later condemned as simony.
@@ -186,6 +210,8 @@ chapters:
           You point out that the money bought no office, only your godfather's exit. The king
           does not agree, and neither do the German bishops.
       - label: "Slip away to Rome and shut the gates"
+        wealth_bp: 1500
+        legitimacy_bp: 600
         unrest_bp: 1500
         outcome: >-
           Henry's army camps outside the walls. The Romans have no wish to starve for a pope
@@ -201,7 +227,7 @@ chapters:
     scenario: year_1000
     civ: papacy
     year: 1052
-    title: "The Pope Takes the Field"
+    title: "The Normans in the South"
     place: "Benevento"
     speaker: general
     speaker_name: "Humphrey of Hauteville"
@@ -219,7 +245,7 @@ chapters:
       The Normans ravage the land. You have asked Henry III for an army, and he has sent only a
       small body of German troops.
     choices:
-      - label: "March out with what you have"
+      - label: "Lead out the troops you have"
         historical: true
         legitimacy_bp: -1500
         outcome: >-
@@ -228,16 +254,18 @@ chapters:
           then keep you prisoner at Benevento for nine months. The pope has shown that the
           Church cannot fight with swords, and has begun to wonder what it may fight with.
         deeds: {martial_bp: -500}
-      - label: "Make terms with the Normans and bless their conquests"
+      - label: "Make terms with the Normans"
         legitimacy_bp: 500
         outcome: >-
           The Normans keep what they have, and you keep your freedom. The Lombards of Benevento
           and Capua do not forgive you.
-      - label: "Wait for the emperor's army"
+      - label: "Raise a levy and wait for the emperor"
         unrest_bp: 500
+        wealth_bp: -400
         outcome: >-
           Henry III has the Hungarians to deal with and does not come. The Normans grow
           bolder.
+        deeds: {men: 2000}
     history: >-
       Leo IX led an army against the Normans and was defeated and captured at Civitate on 18
       June 1053. Within five years the popes had made the Normans their allies.
@@ -247,7 +275,7 @@ chapters:
     scenario: year_1000
     civ: papacy
     year: 1053
-    title: "A Bull on the Altar"
+    title: "A Letter from Constantinople"
     place: "Rome"
     speaker: byzantium
     speaker_name: "Michael Cerularius"
@@ -265,7 +293,7 @@ chapters:
       threaten his holdings in Italy. Your adviser Humbert of Silva Candida is eager to go and
       speak for you in Constantinople. He is a learned man with a hot temper.
     choices:
-      - label: "Send Humbert, with a letter claiming Rome's primacy"
+      - label: "Send Humbert to answer in your name"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
@@ -275,11 +303,18 @@ chapters:
           not the Greek church. Cerularius condemns the legates in turn. Neither side imagines
           they have divided Christendom for ever.
         deeds: {grudges: {byzantium: 1500}}
-      - label: "Write gently and propose a council"
+      - label: "Write to Cerularius and propose a council"
         legitimacy_bp: 500
+        unrest_bp: -300
         outcome: >-
           Cerularius, who does not mean to have Rome meddling in the east, ignores the letter.
           The Normans stay.
+      - label: "Answer through the emperor and seek his alliance"
+        legitimacy_bp: 800
+        wealth_bp: -300
+        outcome: >-
+          Your letter goes to Constantine IX and not to the patriarch. The emperor is friendly
+          and the Normans are a real danger to him, but he cannot make the patriarch obey.
     history: >-
       Leo IX's legates laid a bull of excommunication against Cerularius on the altar of
       Hagia Sophia on 16 July 1054, three months after Leo died. The mutual excommunications
@@ -308,7 +343,7 @@ chapters:
       You do not want it to happen again. A pope chosen by the Roman nobility is one man's
       trick; a pope chosen by the emperor is another's. The reformers have a plan.
     choices:
-      - label: "Let the cardinal-bishops choose, and the others agree"
+      - label: "Give the first voice to the cardinal-bishops"
         historical: true
         legitimacy_bp: 1500
         influence: {clergy: 1500}
@@ -322,9 +357,18 @@ chapters:
         deeds: {grudges: {hre: 800}}
       - label: "Leave the choice to the empress-regent"
         legitimacy_bp: -500
+        influence: {nobility: 500}
         outcome: >-
           Your friend Agnes holds the young king's seal, but not the Roman nobles' loyalty. The
           reformers fear the next pope will be another count's son.
+      - label: "Return it to the clergy and people of Rome"
+        wealth_bp: 500
+        legitimacy_bp: 1100
+        unrest_bp: 500
+        influence: {nobility: 500}
+        outcome: >-
+          The old form is kept, in which the clergy and people of Rome acclaim their bishop. It
+          is open to every count with a street gang, and the reformers are not pleased.
     history: >-
       Nicholas II's synod of April 1059 gave the election of popes to the cardinals, and in
       August he invested Robert Guiscard with Apulia, Calabria and Sicily at Melfi.
@@ -356,7 +400,7 @@ chapters:
       synod at Worms declares that you are no pope but a false monk, and orders you to come
       down from the chair.
     choices:
-      - label: "Excommunicate the king and release his subjects from their oaths"
+      - label: "Excommunicate the king and free his subjects"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: 800
@@ -368,14 +412,18 @@ chapters:
           unless he is absolved within a year, they will choose another king.
         deeds: {grudges: {hre: 3000}}
       - label: "Warn him again and call a council"
-        legitimacy_bp: 500
+        legitimacy_bp: 1100
+        influence: {clergy: 500}
         outcome: >-
           Henry reads your patience as weakness, and the bishops of Lombardy declare themselves
           for him.
-      - label: "Resign"
-        legitimacy_bp: -2000
+      - label: "Offer Henry a compromise on investiture"
+        legitimacy_bp: -500
+        influence: {clergy: -500}
         outcome: >-
-          The reform movement collapses. The king's bishops give thanks.
+          Your legates offer that Henry's bishops keep their rings and staves if the Church names
+          the candidates. Henry will accept nothing that limits his choice, and the reformers
+          think you have given too much.
     history: >-
       In February 1076 Gregory VII excommunicated and deposed Henry IV, the first time a pope
       had done this to a king. The 'Dictatus papae' (March 1075) survives in his register.
@@ -404,7 +452,7 @@ chapters:
       king's godfather, plead for him. Your own men say that he will promise anything.
       But a priest who is asked for penance has no right to refuse it.
     choices:
-      - label: "Absolve him"
+      - label: "Absolve him and lift the ban"
         historical: true
         legitimacy_bp: 1000
         unrest_bp: 800
@@ -420,6 +468,12 @@ chapters:
         outcome: >-
           Henry rides off to Lombardy, where the bishops who hate you are waiting with an army.
           The king's enemies in Germany are left to fight alone.
+      - label: "Absolve him on written promises"
+        legitimacy_bp: 800
+        unrest_bp: 500
+        outcome: >-
+          Henry puts his promises in writing and swears to them before Matilda and Abbot Hugh.
+          You lift the ban, and the princes of Germany ask what such oaths are worth.
     history: >-
       Henry IV did penance at Canossa from 25 to 28 January 1077 and was absolved by Gregory
       VII. The princes elected Rudolf of Rheinfelden as king in March.

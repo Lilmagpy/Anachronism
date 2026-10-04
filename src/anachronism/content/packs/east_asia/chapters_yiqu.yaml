@@ -33,7 +33,7 @@ chapters:
       land and let you rule it as his subject. Your elders say a lord who bows keeps his
       towns and his sons for another year, and those who refuse will have to fight.
     choices:
-      - label: "Accept, and call yourself Qin's subject"
+      - label: "Accept, and become Qin's subject"
         historical: true
         legitimacy_bp: -800
         unrest_bp: 500
@@ -41,11 +41,18 @@ chapters:
           Qin writes in its annals that it has made Yiqu a county and that the lord of Yiqu is its subject.
           Your people do not feel subject to anyone, and the towns say so, in their own way,
           the next year.
-      - label: "Refuse, and keep your border"
+      - label: "Refuse, and hold your border"
         legitimacy_bp: 600
         outcome: >-
           The envoy leaves. The Qin garrisons on the border are doubled, and so are yours.
         deeds: {martial_bp: 300, grudges: {qin: 800}}
+      - label: "Pay Qin a yearly tribute, but stay a lord"
+        wealth_bp: -400
+        legitimacy_bp: -200
+        outcome: >-
+          The envoy takes the offer back to Xianyang. Qin accepts silk and horses for the
+          year, and the border is quiet for now, though no one in Yiqu thinks the matter is
+          closed.
     history: >-
       The Shiji (Qin annals) says that in 327 BC Qin "made Yiqu a county" and the lord of
       Yiqu became its subject. What this meant on the ground is unclear: Yiqu was soon at
@@ -74,7 +81,7 @@ chapters:
       has advised them. If Gongsun Yan was right, Qin has trouble in the east and wants your
       peace to be quiet. Qin may also be fooling you.
     choices:
-      - label: "Take the gifts, and strike Qin while it is troubled"
+      - label: "Take the gifts and march on Qin"
         historical: true
         legitimacy_bp: 800
         outcome: >-
@@ -84,11 +91,20 @@ chapters:
           defeated Qin again, at the Luo.
         deeds: {martial_bp: 200, men: 8000}
       - label: "Take the gifts and keep the peace"
+        deeds: {men: 2000}
         wealth_bp: 500
         legitimacy_bp: -300
         outcome: >-
           Qin's silk is well spent. The war you did not fight will be fought in a year or
           two on worse terms.
+      - label: "Take the gifts and fortify the border"
+        wealth_bp: 300
+        unrest_bp: 200
+        deeds: {men: 3000, martial_bp: 100}
+        outcome: >-
+          You take the silk and the women, and set your elders to repairing the walls and
+          watch-towers along the Qin frontier. Qin sees a neighbour who is not fooled, and is
+          in no hurry to change its policy.
     history: >-
       The Zhanguo ce (Qin 2) tells the Chen Zhen and Gongsun Yan story and says Yiqu defeated Qin
       at Libo; the Hou Han shu has Yiqu beaten at Yuzhi and winning at the Luo. Dates in the
@@ -116,17 +132,24 @@ chapters:
       every town is to lose every town in the end; to give up the frontier is to be pushed
       back onto the steppe.
     choices:
-      - label: "Give up the frontier towns, and hold the heartland"
+      - label: "Yield the frontier, hold the heartland"
         historical: true
         legitimacy_bp: -1000
         outcome: >-
           Qin takes twenty-five of your towns, and the Shiji records it in a single line. You
           keep your capital, your herds and your hills, and the Qin border moves north.
-      - label: "Defend every wall"
+      - label: "Hold every frontier town and wall"
         legitimacy_bp: -400
         outcome: >-
           The walls hold for a season, and many of your best fighters die on them.
         deeds: {martial_bp: 300, men: 4000}
+      - label: "Buy a truce with a payment of herds"
+        wealth_bp: -500
+        legitimacy_bp: -500
+        deeds: {peace_with: [qin]}
+        outcome: >-
+          Your envoys drive a great herd to the Qin camp and ask for terms. The Qin generals
+          take the herd, and give you a pause in the fighting, but not the towns back.
     history: >-
       The Shiji (Qin annals) says that Qin took twenty-five towns of Yiqu in the 310s BC
       (about 315 or 314). The Hou Han shu names Yuzhi among the places Qin took.
@@ -155,18 +178,25 @@ chapters:
       Yiqu the truce is worth having, and the queen mother is said to be a person
       who likes to be pleased.
     choices:
-      - label: "Go to the Qin court"
+      - label: "Go to the Qin court yourself"
         historical: true
         legitimacy_bp: 500
         outcome: >-
           You are received with honour. The Shiji and the Hou Han shu both say that you and
           the Queen Dowager Xuan became lovers, and had two sons. Your visits to Qin go on for years.
         deeds: {peace_with: [qin], men: 10000, martial_bp: 600}
-      - label: "Send gifts and stay home"
+      - label: "Send gifts and stay at home"
+        deeds: {men: 4000, martial_bp: 200}
         legitimacy_bp: -200
         outcome: >-
           The queen mother accepts the gifts with a cool note. Qin's border officers
           write more often.
+      - label: "Send a son to Qin as a pledge"
+        legitimacy_bp: 300
+        deeds: {peace_with: [qin], men: 3000}
+        outcome: >-
+          Your son goes to Xianyang with gifts and an escort. Qin receives him civilly and
+          keeps him; the truce holds, but on its terms.
     history: >-
       The Hou Han shu (ch. 87) says that the King of Yiqu came to the Qin court when King
       Zhaoxiang was set up (306 BC), and became the Queen Dowager's lover. The Shiji
@@ -192,11 +222,9 @@ chapters:
       lover. She has borne you two sons. The Shiji and the Hou Han shu both say so.
 
 
-      Now she invites you again to the palace at Ganquan, among the pines on the hill. Your
-      captains say you should not go: Qin has not forgiven the Luo, or the years of fighting
-      before it. The queen has been kind to you, and has always been.
+      Now she invites you again to the palace at Ganquan, among the pines on the hill. Some of your captains say you should not go, for Qin has not forgiven the Luo, or the years of fighting before it. Others say that the queen has always been kind to you, and that a king who stays away from her table gives offence.
     choices:
-      - label: "Go to Ganquan"
+      - label: "Go to Ganquan at her invitation"
         historical: true
         legitimacy_bp: -3000
         outcome: >-
@@ -206,10 +234,17 @@ chapters:
           scattered across the hills, and Qin makes its commanderies where your towns stood.
         deeds: {ruler_falls: "is killed at Ganquan by the Queen Dowager of Qin"}
       - label: "Stay home, and send gifts instead"
+        wealth_bp: -300
         legitimacy_bp: 500
         outcome: >-
           The queen mother is gracious. In a year or two she sends again. Your captains
           watch the border more closely.
+      - label: "Refuse the invitation and fortify the border"
+        legitimacy_bp: -1500
+        deeds: {men: 6000, martial_bp: 300}
+        outcome: >-
+          You send word that the border needs you, and set your men to the walls. The queen
+          mother is offended, and the Qin court talks of an ungrateful ally.
     history: >-
       The Shiji (Xiongnu, ch. 110) says Queen Dowager Xuan lured the King of Yiqu to the
       Ganquan palace and killed him, and Qin then destroyed Yiqu and set up the commanderies

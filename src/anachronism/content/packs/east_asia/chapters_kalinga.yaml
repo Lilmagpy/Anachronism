@@ -37,7 +37,7 @@ chapters:
       Jina from your land. Your priests ask if this is the time to go to Pataliputra and bring
       it home.
     choices:
-      - label: "Keep to your own country and let the image go"
+      - label: "Keep to your country and let the image go"
         historical: true
         unrest_bp: 300
         outcome: >-
@@ -53,7 +53,6 @@ chapters:
           and neither wants a third. Whatever you win, it is not the image.
         deeds: {men: 6000, grudges: {nanda: 1500, maurya: 1000}}
       - label: "Send envoys to the young man from the Punjab"
-        wealth_bp: -500
         legitimacy_bp: 200
         outcome: >-
           Your envoys go to Chandragupta with gifts. He thanks you and promises nothing.
@@ -98,13 +97,16 @@ chapters:
         wealth_bp: 1800
         legitimacy_bp: -300
         outcome: >-
-          The treasury is richer; the herd is smaller. Pataliputra pays well, and now knows
-          what you have to lose.
-      - label: "Send gifts to the Mauryan court, and ask to be left alone"
+          The treasury is richer; the herd is smaller, and your army a little weaker for it.
+          Pataliputra pays well, and now knows what you have to lose.
+        deeds: {martial_bp: -300}
+      - label: "Send gifts to the Mauryan court and ask to be left alone"
+        legitimacy_bp: 200
         wealth_bp: -800
         unrest_bp: -300
         outcome: >-
           The gifts are accepted. Nothing is written, nothing is promised.
+        deeds: {peace_with: [maurya]}
     history: >-
       Pliny (from Megasthenes) describes Kalinga as an independent kingdom with a large army and
       many elephants. Nothing shows that Chandragupta or Bindusara conquered it: Ashoka's own
@@ -148,10 +150,12 @@ chapters:
           quarrelling and look at you instead.
         deeds: {men: 8000, grudges: {maurya: 2500}}
       - label: "Offer one of the princes help against the others"
+        legitimacy_bp: 400
         wealth_bp: -600
         outcome: >-
           Your gold goes to one prince, and he writes a letter of thanks. He may win. If he does,
-          he will remember who his friends were, and who his neighbours.
+          he will remember who his friends were, and who his neighbours. The prince thanks you
+          generously.
     history: >-
       Bindusara died about 273 BC and Ashoka was consecrated about 269/268 BC, which has led to
       the belief that there was a fight for the throne. The ninety-nine murdered brothers are
@@ -178,7 +182,7 @@ chapters:
       Your commander tells you that you can fight, and perhaps hold the hills. Your priests say
       that there is another way: to open the gates and pay.
     choices:
-      - label: "Fight for Kalinga"
+      - label: "Meet Ashoka's army in the field"
         historical: true
         unrest_bp: 1500
         legitimacy_bp: -1500
@@ -195,6 +199,13 @@ chapters:
           Ashoka accepts your submission. Your people live, and Kalinga becomes a province, as it
           would have been anyway.
         deeds: {ruler_falls: "submits to Ashoka and is set aside", grudges: {maurya: 500}}
+      - label: "Offer terms and keep your throne"
+        legitimacy_bp: -500
+        wealth_bp: -800
+        outcome: >-
+          Your envoys ride out under green branches with the offer. Ashoka's army does not halt,
+          and your commander uses the days it buys to call out more men.
+        deeds: {men: 5000}
     history: >-
       Ashoka conquered Kalinga about 261 BC. His Rock Edict XIII says the suffering of the war
       moved him to regret, and the separate edicts cut in the Kalingan towns of Tosali (Dhauli) and

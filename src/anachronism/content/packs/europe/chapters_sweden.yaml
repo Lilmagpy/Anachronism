@@ -33,7 +33,7 @@ chapters:
       Sweyn and the Norwegian earl Eric of Lade, whom Olaf drove out, are gathering ships.
       They ask you to join them, and to share in the spoils when Norway is divided.
     choices:
-      - label: "Join Sweyn and Eric against Olaf Tryggvason"
+      - label: "Join Sweyn and Eric against Olaf"
         historical: true
         legitimacy_bp: 1500
         wealth_bp: 500
@@ -45,16 +45,21 @@ chapters:
           Norway is shared between Sweyn, Eric and you. The sagas give you a share in the south
           of Norway, but they were written two centuries later and are no sure guide to it.
         deeds: {peace_with: [norway, rus]}
-      - label: "Stay out of it, and watch"
+      - label: "Stay out of it and watch"
+        wealth_bp: 1000
+        legitimacy_bp: 1000
+        unrest_bp: 500
         outcome: >-
           The fleets sail without you. Olaf falls all the same, and you gain nothing from his
-          death while your rivals divide his kingdom.
-      - label: "Send help to Olaf Tryggvason"
+          death while your rivals divide his kingdom. Sweden's merchants trade with all sides, and
+          your nobles approve a king who spends nothing.
+      - label: "Offer Olaf Tryggvason your ships"
         legitimacy_bp: -500
+        unrest_bp: 500
         outcome: >-
-          The Swedes would be fighting beside a king who has made the old ways his enemy, and
-          your own nobles will not follow you far.
-        deeds: {grudges: {denmark: 1500}}
+          Six thousand Swedes are mustered to fight beside a king who has made the old ways his
+          enemy, and your own nobles will not follow you far.
+        deeds: {men: 6000, grudges: {denmark: 1500}}
     history: >-
       About September 1000 Olaf Tryggvason of Norway was defeated and killed at Svolder by the
       fleets of Sweyn Forkbeard, Olof Skötkonung and Eric of Lade, who shared Norway between
@@ -135,7 +140,7 @@ chapters:
       and will not listen to your people. If you refuse them, the farmers will deal with you as
       they dealt with kings before you who would not listen.
     choices:
-      - label: "Yield to the thing and make peace with Norway"
+      - label: "Give way to the thing and treat with Olaf"
         historical: true
         legitimacy_bp: -500
         unrest_bp: -800
@@ -146,17 +151,20 @@ chapters:
           to Russia rather than Norway; your illegitimate daughter Astrid marries Olaf instead.
           So say the sagas.
         deeds: {peace_with: [norway]}
-      - label: "Defy the thing and go to war"
+      - label: "Overrule the thing and fight Olaf"
         legitimacy_bp: -2000
         unrest_bp: 1500
         outcome: >-
-          Your own people hold their spears against you. You are left without an army, and the
-          Norwegians watch you with scorn.
-      - label: "Send Ingegerd to be Olaf's queen at once, and hold the peace by marriage"
+          Ten thousand men are called out, but your own people hold their spears against you. You
+          are left without an army, and the Norwegians watch you with scorn.
+        deeds: {men: 10000}
+      - label: "Hold the peace by marrying Ingegerd to Olaf"
         legitimacy_bp: 500
+        wealth_bp: -300
         outcome: >-
           Olaf is satisfied, and so are the farmers. Yaroslav, who had hoped for her himself,
           is not.
+        deeds: {peace_with: [norway]}
     history: >-
       About 1018 the Swedish thing is said to have forced Olof Skötkonung to make peace with
       Olaf Haraldsson of Norway; in 1019 Olof's daughter Ingegerd married Yaroslav of Kiev. The
@@ -183,7 +191,7 @@ chapters:
       Your counsellors say you are young and Olaf is rash. But Norway and Sweden both have
       reason to fear that Denmark's king is gathering the whole north into his hand.
     choices:
-      - label: "Join Olaf of Norway, and meet Cnut at the Helgeå"
+      - label: "Join Olaf of Norway against Cnut"
         historical: true
         legitimacy_bp: 1000
         influence: {nobility: 800}
@@ -195,13 +203,17 @@ chapters:
           which Cnut rules, and the three northern kingdoms are no longer quite equals.
         deeds: {grudges: {denmark: 1500}}
       - label: "Make a separate peace with Cnut"
+        wealth_bp: 500
         legitimacy_bp: 500
         outcome: >-
-          You keep your lands and your ships. Olaf, left alone, is driven out of Norway within
-          two years.
+          You keep your lands and your ships. Olaf, left alone, is driven out of Norway within two
+          years. Cnut's peace brings the Baltic trade back.
+        deeds: {peace_with: [denmark]}
       - label: "Stay out of the quarrel altogether"
+        legitimacy_bp: -300
+        wealth_bp: 500
         outcome: >-
-          Sweden watches, and learns that Cnut's patience is long.
+          Sweden keeps its silver and its ships at home, and learns that Cnut's patience is long.
     history: >-
       About 1026 Anund Jacob of Sweden and Olaf Haraldsson of Norway fought Cnut the Great
       at the Helgeå in Scania; the outcome was disputed, but Cnut won Norway in 1028.
@@ -230,7 +242,7 @@ chapters:
       the choice fell on you, a powerful man and a friend of the Church. Bishop Adalward the
       Younger is in the north, working to turn the Svear.
     choices:
-      - label: "Accept the crown, and support the bishops"
+      - label: "Accept the crown and favour the Church"
         historical: true
         legitimacy_bp: 1500
         influence: {clergy: 1500, nobility: 500}
@@ -239,11 +251,20 @@ chapters:
           says Sweden was never so well governed as under him. After his death, about 1066, his
           sons and kinsmen fight each other, and the old gods have one more season.
         deeds: {peace_with: [rus, norway, denmark]}
-      - label: "Insist on a prince of the old line, whoever can be found"
+      - label: "Look for a prince of the old line"
         legitimacy_bp: 500
         unrest_bp: 800
+        influence: {nobility: 500}
         outcome: >-
           No one can be certain who he is, and the quarrel is long.
+      - label: "Take the crown and keep faith with both temple and Church"
+        legitimacy_bp: 1000
+        unrest_bp: -300
+        influence: {clergy: 500, nobility: 500}
+        outcome: >-
+          You make no move against the Svear's temple and no move against the bishops. Both sides
+          hold their peace, for the time being, and each believes it has a friend.
+        deeds: {peace_with: [denmark]}
     history: >-
       After Emund the Old's death in about 1060 the Swedes chose Stenkil, a Götar nobleman, as
       king; he ruled until about 1066, and the old royal line was ended.
@@ -270,7 +291,7 @@ chapters:
       The Svear are many and fierce, and you have only the Götar and a few bishops behind you.
       The Hervarar saga tells what follows, some two centuries after the event.
     choices:
-      - label: "Refuse to sacrifice, and go into exile in Västergötland"
+      - label: "Refuse to sacrifice and go to the Götar"
         historical: true
         legitimacy_bp: -1500
         unrest_bp: 1500
@@ -281,7 +302,7 @@ chapters:
           you ride back and fall upon him by night in his hall. In the saga's tale Sweyn is
           burned or slain. You are king again, the old temple is cast down and the Svear are
           taught that a Christian king will rule them.
-      - label: "Sacrifice, and keep the throne"
+      - label: "Make the sacrifice and keep the throne"
         legitimacy_bp: 500
         unrest_bp: -500
         influence: {nobility: 800}
@@ -321,7 +342,7 @@ chapters:
       lonely places across Europe. Your queen, Ulvhild, is eager that you should invite them, on
       the shores of Lake Vättern.
     choices:
-      - label: "Found a Cistercian abbey at Alvastra, and endow it"
+      - label: "Found a Cistercian abbey and endow it"
         historical: true
         legitimacy_bp: 1500
         knowledge_bp: 1000
@@ -331,10 +352,13 @@ chapters:
           with lands. The order will found Nydala, Varnhem and others, and plough up wastes
           of the Swedish forest for the Church, for the king, and for its own farms. The Church
           in Sweden gains an order that answers to Rome, not to its local lords.
-      - label: "Leave the Church to the bishops, and the lords' own foundations"
+      - label: "Leave the Church to the bishops and the lords"
+        legitimacy_bp: 1000
+        wealth_bp: 1000
+        influence: {clergy: 500}
         outcome: >-
           The bishops are pleased. The country's wastes stay wild, and Rome sees little reason to
-          make Sweden an archdiocese.
+          make Sweden an archdiocese. You keep your lands, and the bishops' goodwill.
       - label: "Seize church lands to pay for a larger army"
         wealth_bp: 1500
         legitimacy_bp: -1500
@@ -367,9 +391,9 @@ chapters:
 
 
       It is Christmas Day. You rise before the dawn to go to church, as every morning, along the
-      road and past your own stable.
+      road to the church.
     choices:
-      - label: "Ride to church as usual"
+      - label: "Go to church at dawn as always"
         historical: true
         legitimacy_bp: -500
         outcome: >-
@@ -378,10 +402,17 @@ chapters:
           to nobody at all. Eric Jedvardsson is raised on a shield at the thing of the Svear,
           and your son Charles is for a time left alone.
         deeds: {ruler_falls: "is murdered on the way to church"}
-      - label: "Keep a guard about you, and a tight watch on the stable"
+      - label: "Keep a guard about you on the road"
         legitimacy_bp: 500
+        wealth_bp: -300
         outcome: >-
           Nothing happens that morning, but nobody can guard against every enemy for ever.
+      - label: "Settle the feud with Eric's kin first"
+        legitimacy_bp: 300
+        wealth_bp: -500
+        outcome: >-
+          Eric's kinsmen are asked to come to a meeting at Alvastra. They come, wary, and the
+          feast passes in an uneasy peace.
     history: >-
       Sverker the Elder was murdered on Christmas Day, 1156 (some dates give 1155 or 1157), on
       his way to church; Eric Jedvardsson succeeded him.
@@ -422,11 +453,12 @@ chapters:
           until Charles Sverkersson's party defeats him.
         deeds: {ruler_falls: "is killed after Mass at Uppsala"}
       - label: "Leave the church at once and gather the Svear host"
-        legitimacy_bp: -500
-        unrest_bp: 800
+        legitimacy_bp: 1200
+        unrest_bp: 200
         outcome: >-
-          You might hold the town. You will not have the blessing of the Church for the
-          battle you offer.
+          You might hold the town. You will not have the blessing of the Church for the battle you
+          offer. The Svear rally to a king who fights at once, though the Church will not bless
+          the fight.
       - label: "Flee north to the Svear lands"
         legitimacy_bp: -1500
         outcome: >-

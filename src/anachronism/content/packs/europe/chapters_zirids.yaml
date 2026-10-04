@@ -32,7 +32,7 @@ chapters:
       authority and has fought your father. Now there are riots in Kairouan against the Shi'a
       living there. Your guardians ask what the boy emir will do.
     choices:
-      - label: "Stay faithful to Cairo, and restore order"
+      - label: "Keep Cairo's name, restore order"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: 800
@@ -44,16 +44,20 @@ chapters:
           under you Ifriqiya will be rich: Mahdia's harbour and the markets of Kairouan are
           full.
         deeds: {peace_with: [fatimids]}
-      - label: "Declare for the Abbasids at once"
+      - label: "Declare for Baghdad's caliph at once"
         legitimacy_bp: 500
         unrest_bp: 1500
         outcome: >-
           The mob cheers. The Fatimid caliph, whose gold and wheat shipments pay your army,
           does not. You are eight years old and have just made an enemy of Egypt.
         deeds: {grudges: {fatimids: 2500}}
-      - label: "Leave everything to the regents"
+      - label: "Let the Sanhaja chiefs crush the riots"
+        legitimacy_bp: 300
+        unrest_bp: -500
         outcome: >-
-          They rule well enough, but the elders learn they need not ask you.
+          The chiefs ride into Kairouan and the riots end in blood. The Maliki jurists hold
+          you responsible, and the elders learn that they need not ask you.
+        deeds: {martial_bp: 300}
     history: >-
       Badis died in 1016 and his son al-Mu'izz, aged about eight, succeeded him as Fatimid
       governor of Ifriqiya; anti-Shi'a riots broke out in Kairouan and elsewhere at about
@@ -84,7 +88,7 @@ chapters:
       The jurists of Kairouan urge you to stop. The caliph of Baghdad, the Abbasid, is
       willing to send you a robe of honour and a banner. Egypt is far away, and has other means than armies.
     choices:
-      - label: "Break with Cairo; name the Abbasid caliph"
+      - label: "Name the Abbasid caliph at prayer"
         historical: true
         legitimacy_bp: 2000
         unrest_bp: -800
@@ -94,7 +98,7 @@ chapters:
           caliph's robe and black banner, and the Shi'a of Ifriqiya are in great danger. The
           crowds are with you. In Cairo, the Fatimids decide to send you not an army but a plague of nomads.
         deeds: {grudges: {fatimids: 3000}}
-      - label: "Stay loyal to Cairo"
+      - label: "Keep Cairo's name in the sermon"
         legitimacy_bp: -800
         unrest_bp: 1500
         influence: {clergy: -1500}
@@ -187,7 +191,7 @@ chapters:
       peninsula on the sea and live off trade. The Arab chiefs, who are not foolish, are
       willing to take your gold.
     choices:
-      - label: "Hold the coast from Mahdia, and live by the sea"
+      - label: "Trade from behind Mahdia's walls"
         historical: true
         legitimacy_bp: 500
         wealth_bp: 1500
@@ -254,6 +258,7 @@ chapters:
         deeds: {ships: 3}
       - label: "Ask Egypt, or the tribes, for help"
         legitimacy_bp: -800
+        wealth_bp: -500
         outcome: >-
           Nobody answers. You are neither a friend of Cairo nor of the nomads.
     history: >-
@@ -283,7 +288,7 @@ chapters:
       envoys. This summer a Sicilian fleet appears off Mahdia and an army lands near the
       fortress of al-Dimas. Your advisers say Roger wants not plunder but the harbour.
     choices:
-      - label: "Hold the walls and wait for the heat"
+      - label: "Hold the walls against the landing"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: -300
@@ -324,9 +329,9 @@ chapters:
 
       Now the Sicilian fleet, said to be two hundred and fifty ships, comes to Mahdia. Your
       own people have been struck by famine, and the Arab tribes of the interior will not
-      help. Your counsellors say you can fight, or leave.
+      help. Your counsellors say you can fight, leave, or treat.
     choices:
-      - label: "Leave the city, and spare it"
+      - label: "Withdraw from Mahdia"
         historical: true
         legitimacy_bp: -2500
         unrest_bp: 1500

@@ -31,7 +31,7 @@ chapters:
       plunging them into the middle. 'You fool,' she scolded, 'you are like Chandragupta.
       Eat from the edges, where it has cooled.' Chanakya is smiling.
     choices:
-      - label: "Eat from the edges: win the borderlands first"
+      - label: "Raise the frontier clans before the plain"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
@@ -40,13 +40,21 @@ chapters:
           the border towns open to you. The Nanda kingdom begins to look smaller from the
           outside than it did from within.
         deeds: {men: 30000, war_with: [nanda]}
-      - label: "Strike at the heart again, harder"
+      - label: "Attack Magadha again with a larger army"
         legitimacy_bp: -500
         food_bp: -2000
         outcome: >-
           Your second attack on Magadha bleeds out on the Ganges plain like the first.
           Chanakya says nothing, which is worse than anything he could say.
         deeds: {war_with: [nanda]}
+      - label: "Sow discord among the Nanda ministers first"
+        legitimacy_bp: 700
+        wealth_bp: -600
+        outcome: >-
+          Chanakya's agents spend a year buying officers and spreading rumours at Pataliputra.
+          Several of the Nanda commanders begin to answer your letters, and you raise a modest
+          band from the men who defect.
+        deeds: {"men": 12000, "martial_bp": 300}
     history: >-
       The porridge story is told in the Buddhist Mahavamsa commentary and the Jain
       Parishishtaparvan. Chandragupta rose against the Nandas in about 322-321 BC; the Greek
@@ -77,7 +85,7 @@ chapters:
       kingdom. And Chanakya has agents inside the palace: a poisoned girl, he hints, can
       be sent to whomever he chooses.
     choices:
-      - label: "Take Parvataka's army - and let Chanakya deal with him after"
+      - label: "Accept Parvataka's hill army for half the spoils"
         historical: true
         legitimacy_bp: 2000
         unrest_bp: 800
@@ -86,12 +94,19 @@ chapters:
           carry. Parvataka, the legend says, dies soon after, poisoned by the girl meant for
           you - and his half of the kingdom is yours. Chanakya ties up his hair.
         deeds: {conquer: [nanda]}
-      - label: "Win the city with an honest alliance, and share the kingdom"
+      - label: "Ally with Parvataka and truly divide the realm"
         legitimacy_bp: 1000
         outcome: >-
           Parvataka takes the hill country and the north of the plain. You take Magadha and
           the river. It is not an empire, but it is a kingdom with friends.
         deeds: {take: [in_magadha, in_anga, in_kashi, in_vatsa, in_kosala]}
+      - label: "Besiege Pataliputra alone, and keep the prize"
+        legitimacy_bp: 1200
+        food_bp: -1500
+        outcome: >-
+          Your own army sits before the wooden walls through a hard winter. The city is
+          starved out in the spring, but the cost is heavy and your men are worn.
+        deeds: {"men": 20000, "war_with": ["nanda"]}
     history: >-
       Chandragupta overthrew the Nandas and took Pataliputra around 321 BC. The tales of
       Parvataka and the poison maiden come from the play Mudrarakshasa (perhaps 4th-8th
@@ -121,7 +136,7 @@ chapters:
       Rakshasa's signet ring, and he has a plan involving a forged letter, a friend of
       Rakshasa's about to be executed, and a great deal of patience.
     choices:
-      - label: "Let Chanakya win him over, however long it takes"
+      - label: "Let Chanakya turn him to your side"
         historical: true
         legitimacy_bp: 1500
         influence: {nobility: 1500}
@@ -130,12 +145,20 @@ chapters:
           to save his friend from the stake, he gives himself up - and is offered the post
           of chief minister. He accepts. The officials of the Nandas follow him into your
           service.
-      - label: "Put a price on his head"
+      - label: "Hunt him down and have him killed"
         unrest_bp: 800
         influence: {nobility: -1000}
         outcome: >-
           Rakshasa dies in a hill fort. His clerks do not forgive you, and Pataliputra's
           offices run slowly for years.
+      - label: "Pardon him and offer a lesser post"
+        legitimacy_bp: 700
+        wealth_bp: -300
+        influence: {"nobility": 800}
+        outcome: >-
+          Rakshasa refuses a minor post from the men who destroyed his masters. He goes on
+          plotting from exile, though with fewer friends each year, and the Nanda clerks serve
+          you grudgingly.
     history: >-
       Rakshasa and the signet ring come from Vishakhadatta's play Mudrarakshasa ('Rakshasa's
       Ring'). Whatever the truth of it, the Mauryas took over and expanded the Nanda
@@ -163,7 +186,7 @@ chapters:
       He is offering to leave you the Indus country - Sindh and the lower river - in peace
       if you let him march out unhindered.
     choices:
-      - label: "Let him go, and take the Indus"
+      - label: "Let his army march out and claim the Indus"
         historical: true
         legitimacy_bp: 1200
         outcome: >-
@@ -177,6 +200,13 @@ chapters:
           Your horsemen cut up his rearguard in the Swat valley. He gets away with most of the
           elephants. Every Greek in Asia now knows your name.
         deeds: {take: [in_sindh], war_with: [satraps], grudges: {satraps: 3000}}
+      - label: "Let him go, and recruit the Greek veterans who stay"
+        legitimacy_bp: 600
+        wealth_bp: -400
+        outcome: >-
+          Eudemus marches west with his elephants. Several hundred of his Greek and Thracian
+          soldiers prefer to stay and take your pay, and your army learns Macedonian drill.
+        deeds: {"men": 8000}
     history: >-
       Eudemus left India around 317 BC with 120 elephants to fight for Eumenes. The Punjab
       and Indus passed into Chandragupta's hands.
@@ -205,7 +235,7 @@ chapters:
       destroy him, and he cannot fight two wars at once. His envoys ask what you would give
       for peace.
     choices:
-      - label: "Five hundred elephants for the lands beyond the Indus"
+      - label: "Give elephants for the western lands"
         historical: true
         legitimacy_bp: 2000
         outcome: >-
@@ -214,7 +244,7 @@ chapters:
           win him the battle that makes him the greatest of Alexander's heirs. He sends you
           an ambassador.
         deeds: {conquer: [satraps]}
-      - label: "Fight him at the river"
+      - label: "Hold the Indus crossings by force"
         legitimacy_bp: 1000
         unrest_bp: 1000
         food_bp: -2000
@@ -222,6 +252,13 @@ chapters:
           Your army holds the crossings for a summer. Seleucus goes home to fight Antigonus,
           promising to come back.
         deeds: {war_with: [satraps], grudges: {satraps: 3000}}
+      - label: "Pay him in gold, and keep your own lands"
+        legitimacy_bp: 500
+        wealth_bp: -1500
+        outcome: >-
+          Seleucus takes a heavy payment and a promise of friendship, and goes home to face
+          Antigonus without any new province. The western lands stay in dispute.
+        deeds: {"peace_with": ["satraps"]}
     history: >-
       Around 305-303 BC Seleucus I and Chandragupta made a treaty: Seleucus ceded the eastern
       satrapies for 500 elephants, with a marriage alliance; the elephants helped win Ipsus
@@ -251,7 +288,7 @@ chapters:
       He is writing a book about India for the Greeks. Chanakya says ambassadors are spies
       with manners.
     choices:
-      - label: "Show him everything"
+      - label: "Give him free run of the city and the court"
         historical: true
         knowledge_bp: 1500
         legitimacy_bp: 800
@@ -260,7 +297,7 @@ chapters:
           the people are divided into seven classes, and that there are ants which dig gold.
           He gets some of it right. His book will be the West's picture of India for a
           thousand years.
-      - label: "Show him what Chanakya wants him to see"
+      - label: "Show him the parade grounds and armouries"
         legitimacy_bp: 500
         outcome: >-
           Megasthenes sees the armouries, the elephants and the parade grounds, and writes
@@ -274,6 +311,12 @@ chapters:
           Your clerks hand him a book printed from carved blocks: every province, road and
           market of the empire, with its taxes. Megasthenes is speechless. Greek merchants
           begin to arrive within the year.
+      - label: "Seat him among the philosophers only"
+        knowledge_bp: 1000
+        unrest_bp: -300
+        outcome: >-
+          Megasthenes spends his days with brahmins and ascetics and writes a pious, rather
+          dreamy book. The markets and the army stay out of his notes.
     history: >-
       Megasthenes was Seleucus's ambassador to Chandragupta around 300 BC. His Indica is lost
       but quoted at length by Arrian, Strabo and Diodorus. Wooden walls of Pataliputra have
@@ -301,7 +344,7 @@ chapters:
 
       He wants you to make it the law of the empire.
     choices:
-      - label: "Make it the law of the empire"
+      - label: "Adopt it as the rule of the empire"
         historical: true
         wealth_bp: 2000
         unrest_bp: 800
@@ -313,9 +356,11 @@ chapters:
       - label: "Take the good parts, and leave out the spies"
         wealth_bp: 1000
         unrest_bp: -500
+        legitimacy_bp: 400
         outcome: >-
           Weights and measures are fixed and roads are built. The secret service is quietly
           disbanded. Chanakya says you will regret it.
+        deeds: {"martial_bp": 300}
       - label: "✦ Copy it on paper for every official"
         needs_adopted: [paper]
         wealth_bp: 2500
@@ -324,6 +369,14 @@ chapters:
           Every district officer receives a copy of the rules on cheap, light paper instead of
           bundles of palm leaves. For the first time the empire is run by the same rules from
           the Hindu Kush to Bengal.
+      - label: "Let the brahmin ministers draft a gentler code"
+        legitimacy_bp: 1000
+        unrest_bp: -300
+        influence: {"clergy": 1200}
+        outcome: >-
+          The brahmins write a code of duty and penance in place of fines and spies. It is
+          loved by the priests and respected by the people, and the levy is a little lighter.
+        deeds: {"martial_bp": -300}
     history: >-
       The Arthashastra is traditionally attributed to Chanakya (Kautilya); most scholars now
       think it reached its present form between the 2nd century BC and the 3rd century AD,
@@ -346,7 +399,7 @@ chapters:
       leaves it dry. He wants to dam the river and build a lake: Sudarshana, 'the beautiful
       to look at', to water the fields all year.
     choices:
-      - label: "Build the dam"
+      - label: "Dam the river to water the fields"
         historical: true
         materials_bp: -2000
         food_bp: 2500
@@ -357,8 +410,10 @@ chapters:
           building, naming you and your governor, on the rock where your grandson's edicts
           already stand.
         deeds: {take: [in_saurashtra, in_marwar]}
-      - label: "Take the land, and leave the river alone"
+      - label: "Take the land and leave the river alone"
         legitimacy_bp: 300
+        wealth_bp: 800
+        unrest_bp: 400
         outcome: >-
           Saurashtra is yours. Its farmers go on praying for rain.
         deeds: {take: [in_saurashtra, in_marwar]}
@@ -371,6 +426,14 @@ chapters:
           A dam of lime concrete with wooden sluices lets the engineers feed the fields
           through the dry season. It never breaks.
         deeds: {take: [in_saurashtra, in_marwar]}
+      - label: "Dig wells and granaries instead of a lake"
+        materials_bp: -1000
+        food_bp: 1200
+        legitimacy_bp: 300
+        outcome: >-
+          Cheaper works go in across Saurashtra: deep wells, stone granaries, small channels.
+          They soften the dry years without taming the monsoon.
+        deeds: {"take": ["in_saurashtra", "in_marwar"]}
     history: >-
       Rudradaman's Junagadh inscription (AD 150) records that Chandragupta's governor
       Pushyagupta built the Sudarshana lake, which Ashoka's officials improved with channels.
@@ -396,7 +459,7 @@ chapters:
       He has told you that the only victory that lasts is the victory over oneself. Your
       son Bindusara is a grown man.
     choices:
-      - label: "Give the throne to Bindusara, and go south with Bhadrabahu"
+      - label: "Hand the throne to Bindusara and follow Bhadrabahu"
         historical: true
         legitimacy_bp: 500
         outcome: >-
@@ -404,11 +467,17 @@ chapters:
           the south, you live as a monk, and at the end, the Jains say, you starve yourself
           to death by the ancient vow of sallekhana. The hill is still called after you.
         deeds: {ruler_falls: "renounces the throne and goes south as a Jain monk"}
-      - label: "Stay king; the empire still needs you"
+      - label: "Stay on the throne and rule on"
         legitimacy_bp: 300
         outcome: >-
           Bhadrabahu goes south without you. You go on ruling, and from time to time you
           wonder about the hill in the south.
+      - label: "Make Bindusara regent in the north and keep the throne"
+        legitimacy_bp: 500
+        influence: {"nobility": 600}
+        outcome: >-
+          Bindusara takes up the work of the north-west under your eye. Bhadrabahu goes south
+          alone with his monks; you stay, a little less alone than before.
     history: >-
       Jain tradition says Chandragupta abdicated, became a disciple of Bhadrabahu and died
       by ritual fasting at Shravanabelagola, Karnataka, around 297 BC. Greek and Buddhist
@@ -434,7 +503,7 @@ chapters:
       Your commander wants to march south as far as the Tamil lands. The Tamil kings
       themselves, he admits, would be a war too far.
     choices:
-      - label: "Take the Deccan, and stop at the Tamil country"
+      - label: "March south across the Narmada"
         historical: true
         legitimacy_bp: 1500
         food_bp: -1500
@@ -443,10 +512,19 @@ chapters:
           two thousand years later, fall between the two seas. The Tamil kings send gifts
           and keep their independence.
         deeds: {take: [in_vidarbha, in_asmaka, in_andhra, in_karnata, in_konkan]}
-      - label: "Rule what you have"
+      - label: "Fortify the southern frontier and rule what you hold"
         unrest_bp: -500
+        wealth_bp: -500
         outcome: >-
           The Deccan chiefs pay a little tribute and go on as before.
+        deeds: {"men": 15000}
+      - label: "Take only the gold-bearing Karnata hills"
+        legitimacy_bp: 700
+        wealth_bp: 1200
+        outcome: >-
+          A smaller campaign into the south-west takes the hill country and its gold workings,
+          and no more. The Tamil kings are left to themselves.
+        deeds: {"take": ["in_karnata"], "men": 8000}
     history: >-
       Bindusara (r. c. 297-273 BC) seems to have extended the empire into the Deccan; Taranatha
       (17th century) credits Chanakya with conquering sixteen cities 'between the eastern and
@@ -517,7 +595,7 @@ chapters:
 
       Susima is marching on the capital with an army.
     choices:
-      - label: "Ashoka holds the city by any means"
+      - label: "Ashoka shuts the gates against Susima"
         historical: true
         legitimacy_bp: 500
         unrest_bp: 1500
@@ -526,12 +604,20 @@ chapters:
           pit of burning coals behind it, and that Ashoka killed ninety-nine brothers to take
           the throne. It is four years before he is crowned. They will call him Chandashoka,
           'Ashoka the fierce'.
-      - label: "Ashoka negotiates with his brother"
+      - label: "Ashoka agrees to share power with his brother"
         legitimacy_bp: -500
         unrest_bp: 500
         outcome: >-
           The brothers divide the duties: Susima the north-west, Ashoka the throne. It holds,
           uneasily.
+      - label: "Let the ministers' council judge the claims"
+        legitimacy_bp: 600
+        unrest_bp: 300
+        influence: {"nobility": 800}
+        outcome: >-
+          The council sits for days while Susima's army waits outside. Ashoka accepts whatever
+          it decides, and the ministers are glad to have been asked, though the losing brother
+          will not be.
     history: >-
       Ashoka succeeded Bindusara around 268 BC after a disputed succession; the stories of the
       fratricide come from the much later Buddhist Ashokavadana and Sri Lankan chronicles.
@@ -559,7 +645,7 @@ chapters:
 
       Eight years into your reign, you have decided that it will be yours.
     choices:
-      - label: "Conquer Kalinga"
+      - label: "March on Kalinga with the whole army"
         historical: true
         legitimacy_bp: 1000
         unrest_bp: 1000
@@ -575,6 +661,14 @@ chapters:
         outcome: >-
           Kalinga sends elephants and pearls. Its kings watch you warily.
         deeds: {tributaries: [kalinga]}
+      - label: "Blockade its ports and demand its elephants"
+        legitimacy_bp: 400
+        wealth_bp: 800
+        outcome: >-
+          Your fleets and your horse close Kalinga's ports and roads. After a bitter season
+          its council hands over elephants and pearls, but its army stays unbroken behind the
+          hills.
+        deeds: {"men": 20000}
     history: >-
       Ashoka conquered Kalinga around 261 BC. His own Rock Edict XIII gives the figures: 150,000
       deported, 100,000 killed, 'and many times that number died'.
@@ -602,7 +696,7 @@ chapters:
       Your generals are worried. The south is still unconquered. The empire's enemies have
       not changed their minds just because you have.
     choices:
-      - label: "Renounce conquest by the sword"
+      - label: "Rule by right conduct, not by arms"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: -1500
@@ -613,13 +707,22 @@ chapters:
           to make sure people are treated kindly. The army is kept - but it does not march
           again in your lifetime.
         deeds: {martial_bp: -2000}
-      - label: "Be sorry, and keep conquering"
+      - label: "Regret Kalinga, and march on the Tamil kings"
         legitimacy_bp: 300
         unrest_bp: 800
+        influence: {"nobility": 1000}
         outcome: >-
           You build a monastery for the monks and send the army south against the Tamil
           kings.
-        deeds: {war_with: [chola]}
+        deeds: {"men": 30000, "war_with": ["chola"]}
+      - label: "Keep the army, but fight only if attacked"
+        legitimacy_bp: 800
+        unrest_bp: -800
+        influence: {"clergy": 1000}
+        outcome: >-
+          You keep your soldiers in their camps and send your officers out to preach. The
+          Tamil kings are not threatened and you are not tempted.
+        deeds: {"martial_bp": -500}
     history: >-
       Ashoka's Rock Edict XIII records his remorse for Kalinga and his turn to 'conquest by
       dhamma'. He became a Buddhist lay follower, though his dhamma was a broad moral code,
@@ -670,6 +773,13 @@ chapters:
           Printed sheets of the dhamma are pasted up in every village and read aloud by
           whoever can read. Within a generation, more people can read in your empire than in
           the rest of the world together.
+      - label: "Appoint officers to teach the dhamma in person"
+        legitimacy_bp: 1200
+        unrest_bp: -400
+        wealth_bp: -500
+        outcome: >-
+          Your officers of dhamma tour the districts, settling quarrels and preaching. People
+          remember the faces, not the words.
     history: >-
       Ashoka's edicts, in Prakrit in the Brahmi and Kharosthi scripts and in Greek and Aramaic
       in the north-west, survive at some 30 sites. James Prinsep deciphered Brahmi in 1837.
@@ -712,6 +822,13 @@ chapters:
         outcome: >-
           Monks sail to Lanka and preach. The king is polite and keeps his old gods.
         deeds: {ally_with: [lanka]}
+      - label: "Send gifts and a fleet escort, but no monks"
+        legitimacy_bp: 400
+        wealth_bp: -400
+        outcome: >-
+          Your envoys return the gifts of pearls with elephants and cloth. The two kings
+          exchange courtesies, and the new faith does not go with them.
+        deeds: {"ships": 6}
     history: >-
       The Sri Lankan chronicles say Ashoka's son Mahinda brought Buddhism to Lanka around 250
       BC and his daughter Sanghamitta brought a cutting of the Bodhi tree. The Jaya Sri Maha
@@ -739,7 +856,7 @@ chapters:
       This morning they brought you your meal on a gold plate, then a silver one, then
       clay. Now all you have left to give is half an amalaka fruit in your hand.
     choices:
-      - label: "Send the half-fruit to the monks as your last gift"
+      - label: "Give the half-fruit to the monks"
         historical: true
         legitimacy_bp: 1000
         influence: {clergy: 1000}
@@ -752,6 +869,12 @@ chapters:
         unrest_bp: 1000
         outcome: >-
           The ministers bow and pay. The crown prince remembers.
+      - label: "Retire quietly and let the prince rule"
+        legitimacy_bp: 300
+        unrest_bp: -500
+        outcome: >-
+          You stop giving orders and let your grandson run the treasury. The court breathes
+          more easily, and the monks have to find another patron.
     history: >-
       The half-amalaka story comes from the Ashokavadana. Ashoka died about 232 BC; within
       fifty years the empire had broken up, and in 185 BC the last Maurya was murdered by his

@@ -26,7 +26,7 @@ chapters:
       volumes. Now the Library wants more: every ship that comes into Alexandria to have its
       books seized and copied, the copies returned and the originals kept.
     choices:
-      - label: "Seize the books"
+      - label: "Copy every ship's books, keep originals"
         historical: true
         knowledge_bp: 3000
         legitimacy_bp: 500
@@ -36,7 +36,7 @@ chapters:
           copies of Aeschylus, Sophocles and Euripides from Athens, against a deposit of fifteen
           talents, and keep them, forfeiting the money. The legend says you also have the
           Hebrew scriptures translated into Greek by seventy-two scholars: the Septuagint.
-      - label: "Buy the books honestly"
+      - label: "Buy rolls from the book dealers"
         knowledge_bp: 1500
         wealth_bp: -1500
         outcome: >-
@@ -49,6 +49,14 @@ chapters:
         outcome: >-
           The Library becomes a press. Copies of every book go out to Antioch, Pergamon, Rome and
           Carthage by the thousand. When the Library burns, centuries later, nothing is lost.
+      - label: "Send agents abroad to buy libraries"
+        knowledge_bp: 2000
+        wealth_bp: -2000
+        legitimacy_bp: 300
+        outcome: >-
+          Your agents comb Rhodes, Athens and the Ionian cities and return with whole shelves of
+          rolls, some of them rare. The treasury pays heavily, and the catalogue grows more slowly
+          than Callimachus had hoped.
     history: >-
       The Library of Alexandria flourished under Ptolemy II; Callimachus compiled the Pinakes.
       Galen tells the stories of the 'ships' books' and the Athenian tragedians' texts.
@@ -75,7 +83,7 @@ chapters:
       Your army and fleet are ready. Your wife, Berenice of Cyrene, has vowed a lock of her
       hair to the gods if you come home safely.
     choices:
-      - label: "March into Syria, and beyond"
+      - label: "March on Antioch with army and fleet"
         historical: true
         legitimacy_bp: 2500
         wealth_bp: 2000
@@ -86,12 +94,20 @@ chapters:
           lock of hair vanishes from the temple; the court astronomer Conon finds it in the sky,
           and names the constellation Coma Berenices.
         deeds: {take: [sel_cilicia], grudges: {seleucid: 3000}}
-      - label: "Take the Syrian coast, and stop there"
+      - label: "Seize the Syrian coast, then halt"
         legitimacy_bp: 1000
         outcome: >-
           Seleucia, the port of Antioch, is yours. The rest of the Seleucid empire stays
           Seleucid.
         deeds: {take: [sel_cilicia], grudges: {seleucid: 2000}}
+      - label: "Demand silver and hostages by treaty"
+        legitimacy_bp: -500
+        wealth_bp: 1000
+        outcome: >-
+          Seleucus II, Laodice's son, cannot afford a war with you and pays in silver and
+          hostages. Your army stays home. At Alexandria the priests murmur that your sister
+          is unavenged, and the court is cooler towards you.
+        deeds: {peace_with: [seleucid], grudges: {seleucid: 500}}
     history: >-
       Ptolemy III invaded the Seleucid empire in 246 BC (the Third Syrian War), recovering
       Egyptian cult statues. The story of the Lock of Berenice is told by Callimachus and
@@ -120,7 +136,7 @@ chapters:
       He wants the royal surveyors who pace out the distances between towns to tell him exactly
       how far Syene is from Alexandria.
     choices:
-      - label: "Lend him the surveyors"
+      - label: "Lend him the royal surveyors"
         historical: true
         knowledge_bp: 2500
         legitimacy_bp: 500
@@ -129,10 +145,19 @@ chapters:
           So the Earth, Eratosthenes announces, is two hundred and fifty thousand stades round -
           within a few per cent of the truth, depending on the stade. He also draws a map of the
           world with lines of latitude, and finds a sieve for prime numbers.
-      - label: "The surveyors are busy with taxes"
-        wealth_bp: 500
+      - label: "Put the surveyors to the tax roll"
+        wealth_bp: 1500
+        unrest_bp: -500
         outcome: >-
-          Eratosthenes writes a book on comedy instead.
+          The surveyors finish the land register for the tax collectors, and Eratosthenes
+          writes a book on comedy instead.
+      - label: "Fund his star-charts and armillary"
+        knowledge_bp: 1500
+        wealth_bp: -500
+        outcome: >-
+          The bronze rings of an armillary are cast in the Museum workshops, and Eratosthenes
+          fixes the slant of the sun's path with great care. The size of the Earth waits for
+          another year.
     history: >-
       Eratosthenes (c. 276-194 BC), librarian at Alexandria, measured the Earth's
       circumference from the sun's angle at Syene and Alexandria.
@@ -159,7 +184,7 @@ chapters:
       thousand native Egyptians as a Macedonian-style phalanx. Some of your Greek officers say
       that once the Egyptians have learned how to fight, they will not forget it.
     choices:
-      - label: "Train the Egyptian phalanx"
+      - label: "Arm native Egyptians as phalangites"
         historical: true
         legitimacy_bp: 2000
         unrest_bp: 1500
@@ -169,11 +194,21 @@ chapters:
           celebrates you as a pharaoh. Twelve years later, Upper Egypt rises in revolt, led by
           men who learned to fight at Raphia, and Thebes has its own pharaohs for twenty years.
         deeds: {men: 20000, take: [pto_coele_syria]}
-      - label: "Hire more mercenaries"
+      - label: "Hire Cretans, Thracians and Gauls"
         wealth_bp: -3000
+        legitimacy_bp: 500
         outcome: >-
           Cretans, Thracians and Gauls are hired at great cost. At Raphia the battle is close,
           and Antiochus keeps part of Coele-Syria.
+        deeds: {men: 12000}
+      - label: "Stall with envoys, hold the border forts"
+        wealth_bp: -1000
+        unrest_bp: -500
+        outcome: >-
+          Embassies drag on through the winter while the forts of Pelusium are stocked and
+          garrisoned. Antiochus loses patience and attacks anyway, and you meet him with too few
+          men.
+        deeds: {men: 6000}
     history: >-
       At Raphia (217 BC) Ptolemy IV defeated Antiochus III with the help of 20,000 Egyptians
       trained as phalangites. The Great Theban Revolt followed (206-186 BC).
@@ -201,7 +236,7 @@ chapters:
       their privileges confirmed. They will publish a decree praising you on stone, in every
       temple of Egypt.
     choices:
-      - label: "Grant the priests what they ask"
+      - label: "Confirm the temples' demands in full"
         historical: true
         legitimacy_bp: 2000
         wealth_bp: -1500
@@ -211,11 +246,18 @@ chapters:
           the court, and set up in temples across Egypt. One copy will be found in 1799 by French
           soldiers digging a fort at Rosetta, and with it, a young Frenchman called Champollion
           will learn to read the hieroglyphs.
-      - label: "Refuse; the crown needs the money"
+      - label: "Keep the taxes; the crown needs coin"
         wealth_bp: 1500
         unrest_bp: 2000
         outcome: >-
           The priests crown you and say nothing. The temples of Upper Egypt pray for the rebels.
+      - label: "Confirm their rights, keep the taxes"
+        legitimacy_bp: 800
+        wealth_bp: -500
+        influence: {clergy: 1000}
+        outcome: >-
+          The priests accept the half-measure, and the decree goes up in fewer temples with
+          fewer words. Memphis is quiet, but Thebes does not take your hand.
     history: >-
       The Memphis decree of 27 March 196 BC, issued by the priests for Ptolemy V, survives in
       several copies, including the Rosetta Stone (British Museum).

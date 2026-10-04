@@ -33,18 +33,27 @@ chapters:
       burn. If you give him up, you cannot be sure that anyone will ever shelter a Ba
       lord in the same trouble.
     choices:
-      - label: "Shelter the Marquis, and fight Shu"
+      - label: "Shelter the Marquis behind your river forts"
         historical: true
         legitimacy_bp: 300
         outcome: >-
           Your river forts are manned and your boats are drawn up. The King of Shu is
           furious, and the war between the two kingdoms is open.
         deeds: {martial_bp: 200, men: 6000, grudges: {shu: 1500}}
-      - label: "Turn the Marquis away"
+      - label: "Send the Marquis on, and garrison the border"
+        deeds: {men: 3000}
         legitimacy_bp: -300
         outcome: >-
           The Marquis rides on, and the quarrel goes on without you. The King of Shu
           is pleased for the moment. He will not be so pleased when your turn comes.
+      - label: "Trade the Marquis for terms with Shu"
+        wealth_bp: 600
+        legitimacy_bp: -500
+        deeds: {peace_with: [shu]}
+        outcome: >-
+          You send word to Shu that the Marquis will not be sheltered if the salt road is
+          opened to your boats. The King of Shu agrees, and the Marquis is sent away. Some of
+          your chiefs call it a poor way to treat a guest.
     history: >-
       The Shiji (Zhang Yi, ch. 70) says that Shu and Ba attacked each other. The cause, in
       the later Huayang guo zhi, was Shu's attack on its own Marquis of Ju, who fled to Ba;
@@ -69,10 +78,9 @@ chapters:
 
 
       Your minister names two. To the east is Chu, a great kingdom with its own claims in
-      your valleys; to the north is Qin, whose lords have not long had a taste for
-      southern land. Either would come, and either would stay.
+      your valleys; to the north is Qin, strong since its reforms and no friend of Shu. Either would come, and either would stay.
     choices:
-      - label: "Send to Qin for help against Shu"
+      - label: "Ask the lord of Qin for an army"
         historical: true
         legitimacy_bp: 200
         outcome: >-
@@ -80,11 +88,14 @@ chapters:
           that the matter was argued out before the lord of Qin. Qin sends an army, and it is
           Qin that you must now live beside.
         deeds: {men: 4000}
-      - label: "Send to Chu"
+      - label: "Ask the King of Chu for an army"
+        deeds: {men: 3000}
+        wealth_bp: -500
         legitimacy_bp: -200
         outcome: >-
           Chu is slow to answer, and when it does it asks for more than you can give.
-      - label: "Make peace with Shu, and send the Marquis away"
+      - label: "Treat with Shu and send the Marquis on"
+        deeds: {peace_with: [shu]}
         unrest_bp: -300
         legitimacy_bp: -400
         outcome: >-
@@ -131,6 +142,13 @@ chapters:
           The Qin general accepts, as he accepted every town that did not shut its gates. Your
           chiefs are left their lands, for a price.
         deeds: {peace_with: [qin]}
+      - label: "Fall back into the gorges and fight there"
+        legitimacy_bp: -600
+        deeds: {men: 3000, martial_bp: 200}
+        outcome: >-
+          You send the women and the salt stores up into the hills, and your captains hold the
+          gorges. The Qin army is slowed, but it is not turned, and you are cut off from the
+          river towns.
     history: >-
       Qin under Sima Cuo and Zhang Yi conquered Ba with Shu in 316 BC, and the Ba king was
       taken. Later the Hou Han shu (ch. 86) says Qin left the Ba chiefs their rank, let them marry

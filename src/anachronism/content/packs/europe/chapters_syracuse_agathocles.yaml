@@ -35,7 +35,7 @@ chapters:
       to come. Carthage still holds the west of the island, and nobody doubts that it will
       come back.
     choices:
-      - label: "Give him a public funeral, and send to Corinth for generals in time of war"
+      - label: "Bury him in state, and ask Corinth for generals"
         historical: true
         legitimacy_bp: 1500
         influence: {nobility: 500}
@@ -46,13 +46,21 @@ chapters:
           whenever Syracuse had to fight foreigners it would send to Corinth, its mother city,
           for a general. The law was meant to keep the city safe from its own ambitious men.
         deeds: {peace_with: [carthage], martial_bp: 1500}
-      - label: "Elect a Syracusan general with full powers, for as long as the war lasts"
+      - label: "Elect a Syracusan general with full powers"
         legitimacy_bp: -500
         unrest_bp: 800
         influence: {nobility: 1000}
         outcome: >-
           The city has a strong man at once, and the old ghosts of tyranny walk again. The
           Corinthians say nothing, which is not the same as agreeing.
+        deeds: {"men": 5000}
+      - label: "Raise a citizen army and keep the mercenaries"
+        legitimacy_bp: 600
+        wealth_bp: -800
+        outcome: >-
+          The city enrols its young men and keeps Timoleon's hired captains on a retainer. The
+          army is large and loyal to nobody in particular.
+        deeds: {"men": 6000, "martial_bp": 800}
     history: >-
       Timoleon died in about 337 BC and was buried at public expense. Syracuse kept his laws
       and, in Plutarch's account, voted to ask Corinth for its foreign-war generals.
@@ -83,7 +91,7 @@ chapters:
       constitution, and will be guardian of the peace for two years. Hamilcar vouches for him.
       Some of you remember that Hamilcar is his friend.
     choices:
-      - label: "Accept the oath, and give him the army"
+      - label: "Accept Agathocles' oath and admit his men"
         historical: true
         legitimacy_bp: -2500
         unrest_bp: 2500
@@ -94,12 +102,19 @@ chapters:
           with full powers, cancels debts, and promises land to the poor. Syracuse has a
           tyrant again, and he will rule for twenty-eight years.
         deeds: {ruler_falls: "is destroyed by Agathocles' soldiers", grudges: {carthage: 500}}
-      - label: "Refuse him, and shut the gates"
+      - label: "Refuse the oath and bar the gates"
         legitimacy_bp: 500
         unrest_bp: 2000
         outcome: >-
           The oath is refused, and Hamilcar's soldiers stand beside Agathocles' outside the
           walls. The poor of the lower town open a gate for him on the third night.
+      - label: "Take the oath, but keep command yourselves"
+        legitimacy_bp: -500
+        unrest_bp: 1000
+        outcome: >-
+          Agathocles swears, and your own generals keep the walls and the citadel. His
+          soldiers camp in the lower town and grow sullen. He says he is content.
+        deeds: {"men": 5000}
     history: >-
       In 317 BC Agathocles, sworn to keep the constitution, used the army to massacre the
       oligarchs of Syracuse and took power as general with full powers.
@@ -129,7 +144,7 @@ chapters:
       are the strongest in Greece, but the Syracusans do not love you, and you cannot beat an
       army in the field. Antander says you could ask for terms.
     choices:
-      - label: "Shut yourself in Syracuse, and think of something else"
+      - label: "Hold Syracuse behind its walls"
         historical: true
         legitimacy_bp: -500
         unrest_bp: 1000
@@ -139,12 +154,21 @@ chapters:
           blockades its harbours. Diodorus says that you were secretly making ready for
           something no one expected.
         deeds: {martial_bp: 500}
-      - label: "Ask Carthage for terms"
+      - label: "Sue Hamilcar for terms"
         legitimacy_bp: -1500
+        wealth_bp: -1500
         outcome: >-
           Hamilcar is gracious, and it is the sort of grace that costs everything. Your
           allies see that your word is worth nothing, and the poor of Syracuse begin to ask
           who the tyrant is working for.
+        deeds: {"peace_with": ["carthage"]}
+      - label: "Raise the countryside and harry Hamilcar"
+        legitimacy_bp: 300
+        food_bp: -600
+        outcome: >-
+          Your horsemen cut at Hamilcar's foragers and your agents hold the hill towns that
+          are still yours. It slows him but does not stop him.
+        deeds: {"men": 8000}
     history: >-
       Hamilcar defeated Agathocles at the Himera in 311 BC, many cities of Sicily came over
       to Carthage, and Agathocles was blockaded in Syracuse.
@@ -174,7 +198,7 @@ chapters:
       has no army in the field. But you cannot guard a hundred ships and an army as well, and
       you cannot go home.
     choices:
-      - label: "Burn the ships, and march on Carthage"
+      - label: "Stake everything on a march inland"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: 500
@@ -186,10 +210,20 @@ chapters:
           coast, and Tunis. Carthage is shut inside its walls. Some modern scholars think the
           burning was exaggerated, and that you burned only some of them.
         deeds: {martial_bp: 1500}
-      - label: "Keep the fleet, and plunder the coast"
+      - label: "Keep the fleet ready and plunder the coast"
         legitimacy_bp: 500
+        wealth_bp: 1000
+        food_bp: 800
         outcome: >-
           The ships are ready for flight, and your men know it. They fight less hard.
+        deeds: {"men": 4000}
+      - label: "Fortify a camp near Tunis and wait"
+        legitimacy_bp: 400
+        unrest_bp: 300
+        outcome: >-
+          Your men dig in on a hill with the ships drawn up behind. Carthage raises an army
+          and comes out to look at you, and does not at once attack.
+        deeds: {"martial_bp": 500, "men": 2000}
     history: >-
       Agathocles sailed in August 310 BC, landed in Africa after an eclipse (15 August), and
       defeated the Carthaginians in the field; Diodorus and Justin say he burned his ships.
@@ -218,7 +252,7 @@ chapters:
       He is in your camp, and he trusts you. His army is larger than yours. Without him you
       cannot hold Africa, and with him you will not own it.
     choices:
-      - label: "Murder him and take his army"
+      - label: "Absorb his army into your own"
         historical: true
         legitimacy_bp: -1500
         outcome: >-
@@ -233,6 +267,14 @@ chapters:
         outcome: >-
           Ophellas takes a province for himself, and the Carthaginians, who would very much like
           to split your enemies, send gold to him as well.
+        deeds: {"men": 5000}
+      - label: "Keep him as a partner in the war only"
+        legitimacy_bp: 400
+        wealth_bp: -500
+        outcome: >-
+          Ophellas agrees to fight beside you for pay and a share of the plunder, and no more.
+          He keeps his own camp and his own captains.
+        deeds: {"men": 3000}
     history: >-
       Agathocles killed Ophellas in 308 BC and took over his army, Diodorus says by treachery.
       Later Cyrene came back under Ptolemy.
@@ -259,7 +301,7 @@ chapters:
       You have a single ship ready to go. You are the only man the Sicilians will follow, and
       your sons and your soldiers are on the shore.
     choices:
-      - label: "Slip away at night, and save Sicily"
+      - label: "Sail for Sicily with a few friends"
         historical: true
         legitimacy_bp: -2000
         unrest_bp: 1500
@@ -270,10 +312,19 @@ chapters:
           massacre the people of Segesta and treat the rest with a cruelty which no excuse
           covers.
         deeds: {grudges: {carthage: 500}}
-      - label: "Stay with the army, and fight at the gates"
+      - label: "Stay with the army and fight on"
         legitimacy_bp: 1000
+        unrest_bp: 500
+        wealth_bp: -400
         outcome: >-
           You stand with your men; they fight, and are beaten.
+      - label: "Negotiate your army's way out with Carthage"
+        legitimacy_bp: -500
+        wealth_bp: -1500
+        outcome: >-
+          Your envoys ask for terms for the army and its safe passage. Carthage names a price
+          that you cannot easily pay.
+        deeds: {"peace_with": ["carthage"]}
     history: >-
       In 307 BC Agathocles left his army in Africa to its fate; his sons were killed and the
       army surrendered. He returned to Sicily.
@@ -315,6 +366,14 @@ chapters:
         wealth_bp: -1000
         outcome: >-
           The treasury is empty, and the soldiers' pay is late. Your enemies can wait.
+        deeds: {"men": 8000, "ships": 20}
+      - label: "Return to Africa with a fresh army"
+        legitimacy_bp: 300
+        wealth_bp: -800
+        outcome: >-
+          A new army sails for Africa while Carthage is still sorting out its fleets. The
+          country and the climate are as hard on it as before.
+        deeds: {"men": 12000, "ships": 15}
     history: >-
       Agathocles made peace with Carthage in 306 BC on the old frontier, and came to terms with the
       exile leader Deinocrates soon after.
@@ -356,6 +415,12 @@ chapters:
         legitimacy_bp: 500
         outcome: >-
           The people like the old title. The kings in the east do not notice either way.
+      - label: "Take the title of leader of the Sicilian Greeks"
+        legitimacy_bp: 1000
+        influence: {"nobility": 500}
+        outcome: >-
+          You take the style of Timoleon and the old tyrants: hegemon of the Greeks of Sicily.
+          It pleases the cities and impresses nobody in Asia.
     history: >-
       Agathocles took the title of king, in the manner of the successors of Alexander, in about
       304 BC.
@@ -382,7 +447,7 @@ chapters:
       a Segestan who had been among your favourites, gave you a poisoned quill to clean your teeth; others
       say it was a disease. You must decide what becomes of Syracuse.
     choices:
-      - label: "Give the city its freedom, and the democracy back"
+      - label: "Hand the city back to its assembly"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: -1000
@@ -393,12 +458,19 @@ chapters:
           city is free, and unquiet. Hicetas becomes its master within a few years, and Carthage is in Sicily
           again.
         deeds: {ruler_falls: "dies, poisoned, the story goes"}
-      - label: "Leave the kingdom to your grandson Archagathus"
+      - label: "Name your grandson Archagathus your heir"
         legitimacy_bp: -1500
         unrest_bp: 1500
         outcome: >-
           Archagathus is a murderer, and the city knows it. Syracuse is not ready for a boy
           king who started by killing his uncle.
+      - label: "Leave Syracuse to a council of generals"
+        legitimacy_bp: 200
+        unrest_bp: 600
+        influence: {"nobility": 500}
+        outcome: >-
+          Your old officers take the keys of the citadel and promise to rule together. They do
+          so, with growing difficulty, for a few months.
     history: >-
       Agathocles died in 289 BC, after Diodorus and Justin say he was poisoned, having reportedly
       restored the freedom of Syracuse. Hicetas ruled the city a few years later.

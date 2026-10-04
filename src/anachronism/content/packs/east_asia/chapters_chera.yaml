@@ -36,7 +36,7 @@ chapters:
       is making a great state on the Ganges. Whether he will want the pepper coast, nobody
       can say.
     choices:
-      - label: "Keep the pepper trade open to all who come"
+      - label: "Leave the pepper trade open to all comers"
         historical: true
         wealth_bp: 1500
         influence: {guilds: 800}
@@ -46,12 +46,19 @@ chapters:
           horses come in. Archaeology has found the coast busy in the centuries ahead, but it
           cannot give a king's name or a date for any of it.
       - label: "Make the king's house the only buyer"
-        wealth_bp: 800
+        wealth_bp: 1500
         influence: {guilds: -800}
         unrest_bp: 400
         outcome: >-
           Your treasury grows, and the merchants of the coast grumble and look at the other
           ports.
+      - label: "Fortify Muciri and garrison the harbour"
+        materials_bp: -600
+        wealth_bp: 600
+        outcome: >-
+          Walls and a standing guard go up around the port. Merchants feel safer, though the
+          dues you levy to pay for them send some of them to other harbours.
+        deeds: {men: 800}
     history: >-
       Pepper from the Malabar coast reached the Mediterranean world in this age
       (Theophrastus, Enquiry into Plants 9.20); the Chera ports and the Greek ('Yavana') ships are
@@ -80,7 +87,7 @@ chapters:
       means, whether it recalls a real march in this age, or one of Ashoka's, or only a
       name. Nothing from your own time confirms it.
     choices:
-      - label: "Send gifts and a messenger north, and keep the gap guarded"
+      - label: "Send gifts north and watch the gap"
         historical: true
         influence: {nobility: 500}
         legitimacy_bp: 500
@@ -94,6 +101,13 @@ chapters:
           The hill chiefs come, in exchange for gifts. It costs you much, and nothing comes
           through the gap.
         deeds: {men: 2000}
+      - label: "Seek marriage ties with the Tamil kings of the east"
+        legitimacy_bp: 400
+        wealth_bp: -400
+        influence: {nobility: 500}
+        outcome: >-
+          Brides and gifts go east and a few come back. The courts of the Cholas and Pandyas
+          are friendlier, though a bond made on paper will not turn back a northern army.
     history: >-
       Later Tamil poems speak of the Moriyar and their chariots in the south; scholars debate
       whether they describe a Mauryan advance, which is not otherwise attested. Ashoka's
@@ -132,12 +146,20 @@ chapters:
           name, the Keralaputra, on rocks far away, among the lands where his Dhamma has
           been 'victorious', and no Mauryan army marches south. You remain independent;
           the edicts say you were a neighbour, and nothing else.
-      - label: "Send them away; you want no northern teaching"
+      - label: "Receive them coolly and promise nothing"
         legitimacy_bp: -300
         outcome: >-
           The envoys go home. The edicts do not record any answer from the Cheras, so
           the rest is yours to write.
         deeds: {grudges: {maurya: 1500}}
+      - label: "Take the physicians and wells, but not the preaching"
+        legitimacy_bp: 400
+        knowledge_bp: 700
+        wealth_bp: -300
+        outcome: >-
+          You accept the doctors, the medicinal plants and the well-diggers, and let the
+          teachers of the Dhamma go home with polite thanks. The envoys are content with half a
+          welcome.
     history: >-
       Ashoka's Rock Edicts II and XIII (about 257-256 BC) name the Keralaputra among his
       neighbours, with the Cholas, Pandyas, Satiyaputra and Tambapanni; they are not

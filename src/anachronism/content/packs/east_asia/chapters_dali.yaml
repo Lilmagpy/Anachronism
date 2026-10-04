@@ -35,7 +35,7 @@ chapters:
       ended their lives as monks. Your scholar suggests this is a good moment to think
       about whose kingdom this is.
     choices:
-      - label: "Leave the Gao in office, and tend the temples"
+      - label: "Confirm the Gao in the chancellorship"
         historical: true
         legitimacy_bp: 200
         influence: {clergy: 500, nobility: 500}
@@ -43,13 +43,20 @@ chapters:
           The Gao family rule the court, and the Duan kings stay on the throne, pious and
           powerless. It is a quiet arrangement and it works well enough, while nothing
           threatens the kingdom.
-      - label: "Take the chancellorship into the royal house"
+      - label: "Take the chancellorship back for the Duan"
         legitimacy_bp: -800
         unrest_bp: 1500
         influence: {nobility: -800}
         outcome: >-
           The Gao take it badly. Their cousins command the garrisons of the lakeside towns,
           and your own officers wait to see who will win.
+      - label: "Name a Gao and a Duan joint chancellors"
+        legitimacy_bp: 300
+        unrest_bp: 300
+        influence: {"nobility": 300}
+        outcome: >-
+          The Gao accept a Duan colleague beside them and obstruct him quietly. The garrisons
+          are neither pleased nor angry.
     history: >-
       After the coup of Gao Shengtai (1094-96), the Gao family held the chancellorship of Dali
       in a line, and controlled most real power; many Duan kings abdicated into monasteries.
@@ -120,7 +127,7 @@ chapters:
       his family have been for generations. He tells you that the Mongols are barbarians,
       that your mountains are strong, and that his soldiers will be enough to hold them.
     choices:
-      - label: "Let Gao Taixiang execute the envoys"
+      - label: "Let Gao Taixiang kill the envoys"
         historical: true
         legitimacy_bp: -2000
         unrest_bp: 2000
@@ -131,12 +138,19 @@ chapters:
           You yourself escape east to Shanchan (the city of Kunming), where you are captured
           the following year.
         deeds: {peace_with: [mongols], give: [g_dali], give_to: mongols, capital: g_yunnan}
-      - label: "Accept Kublai's terms"
+      - label: "Accept Kublai's terms of submission"
         legitimacy_bp: -500
         outcome: >-
           The Mongols march into Dali under banners promising that no one will be harmed.
           You keep your life, and your chancellor keeps his head, for now.
         deeds: {peace_with: [mongols], give: [g_dali], give_to: mongols, capital: g_yunnan}
+      - label: "Hold the passes and delay the envoys"
+        legitimacy_bp: -300
+        unrest_bp: 500
+        outcome: >-
+          The envoys are kept at the border while your soldiers gather in the passes. The
+          Mongols do not wait long.
+        deeds: {"men": 15000, "martial_bp": 500}
     history: >-
       In 1253 Kublai's army crossed the Jinsha and entered Dali; Gao Taixiang killed the Mongol
       envoys, was defeated, and was caught and executed. King Duan Xingzhi was captured in 1254.
@@ -166,7 +180,7 @@ chapters:
       what you know of the country: the roads, the hill tribes and the lands to the
       south, for the Mongol plan is to surround the Song empire from the west.
     choices:
-      - label: "Go to the Khan, and offer your help against the Song"
+      - label: "Go to the Khan and ask for the post"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -177,9 +191,17 @@ chapters:
         deeds: {peace_with: [mongols]}
       - label: "Refuse the title, and retire to a monastery"
         legitimacy_bp: -500
+        influence: {"clergy": 500}
         outcome: >-
           You follow the tradition of your fathers. The Mongols give the post to your son, or to
           someone else, and Yunnan goes on without you.
+      - label: "Take the title, and send your son to the Khan"
+        legitimacy_bp: 700
+        wealth_bp: -300
+        outcome: >-
+          Your son makes the journey in your place and is received kindly. The Mongols are
+          satisfied that Dali's house will cooperate, and you remain in Dali in name.
+        deeds: {"peace_with": ["mongols"]}
     history: >-
       After his capture Duan Xingzhi was received by Mongke, was made maharaja of Dali, and his
       descendants governed Yunnan for the Mongols until the Ming conquest in 1382.

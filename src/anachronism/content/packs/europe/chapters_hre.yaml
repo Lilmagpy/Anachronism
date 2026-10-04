@@ -28,7 +28,7 @@ chapters:
       gold, has received you with a magnificence you did not expect. On the way home you mean
       to open Charlemagne's tomb at Aachen.
     choices:
-      - label: "Crown Bolesław a friend and partner of the empire"
+      - label: "Honour Bolesław as an equal partner"
         historical: true
         legitimacy_bp: 1500
         influence: {clergy: 1500}
@@ -45,6 +45,14 @@ chapters:
           Bolesław kneels, smiling. Poland's church stays under the archbishop of Magdeburg.
           Bolesław remembers.
         deeds: {tributaries: [poland]}
+      - label: "Honour the saint's shrine, but grant nothing"
+        wealth_bp: 300
+        legitimacy_bp: 1000
+        influence: {clergy: 500}
+        outcome: >-
+          You pray at Adalbert's tomb, accept the relic and thank the duke warmly. No crown, no
+          archbishopric, no promises. Bolesław sees you off with exact courtesy. Pilgrims and
+          clergy praise an emperor who comes as a penitent.
     history: >-
       At the Congress of Gniezno in March 1000, Otto III honoured Bolesław I and founded the
       archbishopric of Gniezno; he then opened Charlemagne's tomb at Aachen.
@@ -84,6 +92,13 @@ chapters:
         unrest_bp: 1500
         outcome: >-
           The German army storms Rome. You hold the city, and the Romans hate you for it.
+      - label: "Punish Tivoli for the Romans and stay"
+        legitimacy_bp: 300
+        unrest_bp: -800
+        wealth_bp: -500
+        outcome: >-
+          You agree to the Romans' demand and punish the rebellious town. The mob is quieted and
+          the Aventine palace is safe, for a time.
     history: >-
       Rome revolted against Otto III in 1001; Thangmar records his speech from a tower. Otto
       died near Rome in January 1002, aged 21.
@@ -111,7 +126,7 @@ chapters:
       made an alliance with the pagan Liutizi tribes against Christian Poland, and your
       bishops are scandalised.
     choices:
-      - label: "War with Poland, with the pagans beside you"
+      - label: "Fight Poland, with the Liutizi as allies"
         historical: true
         legitimacy_bp: 500
         influence: {clergy: -1500}
@@ -120,11 +135,18 @@ chapters:
           with the pagan idols carried in front of the Liutizi. In 1018, at Bautzen, you make
           peace: Bolesław keeps Lusatia. He goes on to take Kiev.
         deeds: {war_with: [poland]}
-      - label: "Make peace with Bolesław, and leave him Bohemia"
+      - label: "Make peace and leave Bohemia to Bolesław"
         legitimacy_bp: -800
         outcome: >-
           Bolesław keeps his gains. The eastern frontier is quiet, and Poland grows.
         deeds: {peace_with: [poland]}
+      - label: "Fight Poland alone, and break with the Liutizi"
+        legitimacy_bp: 800
+        influence: {clergy: 500}
+        outcome: >-
+          You give up the pagan alliance to please your bishops, and send the Saxon and Bavarian
+          levies east. The war is slower, and the bishops are content.
+        deeds: {men: 12000}
     history: >-
       Henry II fought Bolesław I in 1002-1018, scandalously allied with the pagan Liutizi;
       the peace of Bautzen (1018) left Bolesław Lusatia.
@@ -152,7 +174,7 @@ chapters:
       Rudolf would like to make you his heir. Cnut would like lower tolls for English pilgrims,
       and a German bride for his son.
     choices:
-      - label: "Make both of them happy"
+      - label: "Court both kings and promise each something"
         historical: true
         legitimacy_bp: 1500
         wealth_bp: -500
@@ -161,11 +183,19 @@ chapters:
           daughter will marry your son. Rudolf makes you his heir, and in 1032 Burgundy - the
           kingdom of the Rhone, from Basel to Arles - comes into the empire.
         deeds: {take: [m_burgundy], ally_with: [denmark]}
-      - label: "Make Rudolf's inheritance your only aim"
-        legitimacy_bp: 800
+      - label: "Court Rudolf alone and take his inheritance"
+        legitimacy_bp: 1000
         outcome: >-
-          Burgundy will be yours. Cnut goes home with full tolls to pay.
+          Burgundy will be yours. Cnut goes home with full tolls to pay. The princes admire the
+          single clear aim.
         deeds: {take: [m_burgundy]}
+      - label: "Court Cnut alone, and make him a friend"
+        legitimacy_bp: 800
+        wealth_bp: 500
+        outcome: >-
+          You agree to a marriage between your son and Cnut's daughter, and let Burgundy's old
+          king think what he likes. Rudolf is not pleased.
+        deeds: {ally_with: [denmark]}
     history: >-
       Conrad II was crowned emperor in Rome on 26 March 1027 in the presence of Cnut and Rudolf
       III of Burgundy, whose kingdom passed to Conrad in 1032-1034.
@@ -192,7 +222,7 @@ chapters:
       The reformers of Cluny want a clean Church: no buying of offices, no married priests.
       You can make it happen.
     choices:
-      - label: "Depose all three, and choose a German reformer"
+      - label: "Depose all three and name a German reformer"
         historical: true
         legitimacy_bp: 1500
         influence: {clergy: 2000}
@@ -201,10 +231,20 @@ chapters:
           Bamberg, crowns you emperor on Christmas Day. You will choose four popes in ten years,
           all reformers. One day, the reformed papacy will turn on your son.
         deeds: {ally_with: [papacy]}
-      - label: "Recognise Gregory VI, and stay out of it"
+      - label: "Recognise Gregory VI and stay out of it"
+        legitimacy_bp: -300
         influence: {clergy: -500}
         outcome: >-
           Gregory crowns you. Rome's factions go on fighting over the papacy.
+        deeds: {peace_with: [papacy]}
+      - label: "Let a council judge them and the Romans elect"
+        legitimacy_bp: 1500
+        unrest_bp: 500
+        influence: {clergy: 1000}
+        outcome: >-
+          You call the clergy of Rome to a council. They are slow and quarrelsome, and the new
+          pope is a Roman of their own choosing. Rome's own clergy are honoured, and the choice
+          carries weight.
     history: >-
       At the Synod of Sutri (1046) Henry III deposed three rival popes and installed Clement
       II; the reform papacy he sponsored later clashed with his son.
@@ -230,18 +270,24 @@ chapters:
       Archbishop Anno of Cologne has invited you to see his magnificent new ship on the Rhine.
       As soon as you step aboard, the rowers pull away from the bank.
     choices:
-      - label: "Jump into the river"
+      - label: "Leap overboard into the Rhine"
         historical: true
         legitimacy_bp: 500
         outcome: >-
           You leap overboard and nearly drown before Count Ekbert dives in after you. Anno
           takes you, the regalia and the government to Cologne. Your mother retires to a
           convent. You will never trust a bishop again.
-      - label: "Sit down, and wait"
+      - label: "Sit down and wait"
         legitimacy_bp: -500
+        unrest_bp: -300
         outcome: >-
           Anno takes you, the regalia and the government to Cologne. You learn to smile at
           archbishops.
+      - label: "Order the rowers back to the bank"
+        legitimacy_bp: 200
+        outcome: >-
+          The oarsmen glance at the archbishop and go on rowing. You are a boy of twelve, and
+          nobody has been told to obey you.
     history: >-
       In 1062 Archbishop Anno of Cologne kidnapped the young Henry IV at Kaiserswerth; Henry
       jumped into the Rhine and was rescued. Anno took over the regency.
@@ -267,7 +313,7 @@ chapters:
       Gregory has written to you threatening excommunication. Your German bishops, meeting at
       Worms, are ready to declare that he is no pope at all.
     choices:
-      - label: "Depose him: 'Come down, come down!'"
+      - label: "Declare Gregory no longer pope"
         historical: true
         legitimacy_bp: -1500
         unrest_bp: 2500
@@ -277,11 +323,19 @@ chapters:
           releases your subjects from their oaths. The Saxons and the southern dukes begin to
           talk of electing another king. They give you a year.
         deeds: {war_with: [papacy]}
-      - label: "Give up Milan, and negotiate"
+      - label: "Give up Milan and negotiate"
         legitimacy_bp: -800
         influence: {clergy: 1500}
         outcome: >-
           You write to Gregory as a son. He replies as a father. The quarrel goes underground.
+        deeds: {peace_with: [papacy]}
+      - label: "Summon a council of princes and bishops"
+        legitimacy_bp: 500
+        unrest_bp: 500
+        influence: {nobility: 1000}
+        outcome: >-
+          You summon the great men of the realm to hear Gregory's letter before you answer. Some
+          come, and some stay away, and the answer is a long time in coming.
     history: >-
       At the Synod of Worms (January 1076) Henry IV and his bishops repudiated Gregory VII;
       Gregory excommunicated Henry in February, starting the Investiture Contest.
@@ -310,7 +364,7 @@ chapters:
 
       The gates are shut.
     choices:
-      - label: "Stand barefoot in the snow, and beg"
+      - label: "Go to the gate and ask for absolution"
         historical: true
         legitimacy_bp: 1000
         influence: {clergy: 1500}
@@ -320,11 +374,17 @@ chapters:
           saved your throne; the princes elect a rival anyway, but have lost their best excuse.
           Seven years later you take Rome, have your own pope crown you, and Gregory dies in
           exile: 'I have loved justice and hated iniquity; therefore I die in exile.'
-      - label: "Go back to Germany and fight"
+      - label: "Go back to Germany and fight the princes"
         legitimacy_bp: -1000
         unrest_bp: 2500
         outcome: >-
           The princes elect Rudolf of Swabia king. Germany goes to war with itself.
+      - label: "Rally the Lombard bishops to your side"
+        legitimacy_bp: 500
+        outcome: >-
+          The Lombard bishops, who dislike Gregory's reforms, gather to you in strength. Gregory
+          remains shut up in Canossa, and the princes' deadline passes.
+        deeds: {men: 8000}
     history: >-
       In January 1077 Henry IV waited three days in the snow at Canossa until Gregory VII
       absolved him. 'Going to Canossa' still means humbling oneself.

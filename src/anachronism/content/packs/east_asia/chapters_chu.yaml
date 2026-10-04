@@ -28,7 +28,7 @@ chapters:
       Your generals say the men of Yue - who tattoo their bodies and cut their hair short,
       who fight from boats among the lakes and rivers of the east - are brave but disorganised.
     choices:
-      - label: "Crush Yue and take its heartland"
+      - label: "Meet Yue in the field and finish the war"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -36,11 +36,19 @@ chapters:
           down to the sea. The princes of Yue scatter along the southern coast, each calling
           himself king.
         deeds: {war_with: [yue], conquer: [yue]}
-      - label: "Defend your borders and let Yue tire"
+      - label: "Hold your forts and let Yue tire"
         legitimacy_bp: 300
+        wealth_bp: -400
         outcome: >-
           Yue's army wears itself out on your forts and goes home.
-        deeds: {grudges: {yue: 1500}}
+        deeds: {"men": 20000, "grudges": {"yue": 1500}}
+      - label: "Buy peace with Yue by marriage and treaty"
+        legitimacy_bp: 500
+        wealth_bp: -600
+        outcome: >-
+          A Chu princess goes east with gifts, and Yue's king, who has no great liking for Qi,
+          takes the treaty and turns for home. The old quarrel is only put off.
+        deeds: {"peace_with": ["yue"]}
     history: >-
       Chu defeated Yue and killed its king Wujiang, traditionally in 334 BC (some historians
       date it to the 300s), and took its homeland.
@@ -69,7 +77,7 @@ chapters:
       Your ministers are delighted. One of them, your kinsman Qu Yuan - poet, diplomat, a man
       of stiff and solitary virtue - says that Zhang Yi is lying.
     choices:
-      - label: "Break with Qi, and claim the land"
+      - label: "Cut your ties with Qi for Qin's land"
         historical: true
         legitimacy_bp: -1500
         outcome: >-
@@ -78,12 +86,20 @@ chapters:
           three months, receives him at last: 'I promised six li, from my own estate.' In fury
           you attack Qin, and lose eighty thousand men at Danyang and the Hanzhong.
         deeds: {grudges: {qi: 3000, qin: 3000}, martial_bp: -1500}
-      - label: "Listen to Qu Yuan: keep faith with Qi"
+      - label: "Keep the alliance with Qi"
         legitimacy_bp: 800
         outcome: >-
           Zhang Yi goes home empty-handed. The alliance of Chu and Qi holds a little longer,
           and Qin looks for another way in.
         deeds: {ally_with: [qi]}
+      - label: "Send an envoy to see the land first"
+        legitimacy_bp: 300
+        wealth_bp: -300
+        outcome: >-
+          Your envoy travels to Qin and is received with fine words and no land. Zhang Yi
+          pleads illness and the court talks for months; you gain time but no trust from
+          either side.
+        deeds: {"men": 10000}
     history: >-
       In 313 BC Zhang Yi persuaded King Huai to break with Qi in return for 600 li of land,
       then offered six. Chu attacked Qin and was defeated at Danyang (312), losing Hanzhong.
@@ -111,7 +127,7 @@ chapters:
       Your son Zilan says it would be rude to refuse. Qu Yuan says that Qin is a country of
       tigers and wolves, and cannot be trusted.
     choices:
-      - label: "Go to the Wu pass"
+      - label: "Meet King Zhaoxiang at the Wu pass"
         historical: true
         legitimacy_bp: -2000
         unrest_bp: 1500
@@ -126,6 +142,13 @@ chapters:
         outcome: >-
           Your envoy goes to the pass and is treated politely. King Zhaoxiang, disappointed,
           says nothing.
+      - label: "Go, with a strong army at your back"
+        legitimacy_bp: 400
+        wealth_bp: -400
+        outcome: >-
+          You ride to the border with twenty thousand men. Zhaoxiang, seeing them, finds that
+          he is unwell and sends his minister to talk. The meeting comes to nothing.
+        deeds: {"men": 20000}
     history: >-
       In 299 BC King Huai went to meet the King of Qin at the Wu pass, was seized and held in
       Qin, and died there in 296.
@@ -167,6 +190,12 @@ chapters:
           Qu Yuan takes office and stops writing poems. He makes many enemies, and some
           reforms.
         deeds: {martial_bp: 1000}
+      - label: "Send Qu Yuan as envoy to Qi"
+        legitimacy_bp: 600
+        influence: {"nobility": 300}
+        outcome: >-
+          Qu Yuan goes to Linzi to mend the broken friendship. Qi is cool, but polite, and
+          your brother is glad to have him out of the capital.
     history: >-
       Qu Yuan was exiled under King Qingxiang, traditionally after offending Zilan; the Li
       Sao and other poems of the Chu ci are attributed to him.
@@ -194,7 +223,7 @@ chapters:
       Your general Zhuang Qiao, with Chu's best army, is far away in the southwest, conquering
       the kingdom of Dian by the great lake. He cannot come back in time.
     choices:
-      - label: "Abandon Ying and move the court east to Chen"
+      - label: "Move the court east to Chen"
         historical: true
         legitimacy_bp: -2000
         unrest_bp: 1500
@@ -205,12 +234,20 @@ chapters:
           and throw rice into the water so the fish will not eat his body. They will do it every
           year, on the fifth day of the fifth month, for two thousand three hundred years.
         deeds: {give: [chu_ying], give_to: qin, capital: chu_chen}
-      - label: "Defend Ying to the last"
+      - label: "Hold Ying's walls against Bai Qi"
         legitimacy_bp: 1000
         food_bp: -3000
         outcome: >-
           Ying holds for a season with its walls and its lake. Bai Qi brings up more men.
         deeds: {war_with: [qin]}
+      - label: "Buy peace from Qin with tribute"
+        legitimacy_bp: -1000
+        wealth_bp: -2000
+        unrest_bp: 600
+        outcome: >-
+          Your envoys carry gold and silk to Bai Qi's camp. Qin takes it, and your terms, and
+          does not stay its hand for long.
+        deeds: {"peace_with": ["qin"]}
     history: >-
       In 278 BC Bai Qi took Ying and burned the Chu royal tombs; Chu moved its capital to Chen.
       Qu Yuan's suicide in the Miluo is commemorated by the Dragon Boat festival (Duanwu).
@@ -238,7 +275,7 @@ chapters:
       carriage driver and drive out of Xianyang with the Chu envoys, while Huang Xie stays
       behind, pretends the prince is ill, and takes the blame.
     choices:
-      - label: "Let the prince escape in disguise"
+      - label: "Smuggle the prince out of Qin"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -246,11 +283,17 @@ chapters:
           what he has done and asks to die. The Qin minister Fan Ju persuades the king that it
           would be wiser to let such a loyal man go home. The prince becomes King Kaolie, and
           makes Huang Xie his chief minister, Lord Chunshen, with three thousand retainers.
-      - label: "Wait for Qin to release him"
+      - label: "Wait for Qin to let him go"
         legitimacy_bp: -800
         unrest_bp: 1500
         outcome: >-
           The old king dies. Chu's princes quarrel over the empty throne while Qin decides.
+      - label: "Offer Qin gold for his release"
+        legitimacy_bp: 300
+        wealth_bp: -800
+        outcome: >-
+          Qin accepts the gold and keeps the prince. The old king dies waiting, and Chu is
+          left with a gap on the throne.
     history: >-
       In 263 BC Huang Xie smuggled the crown prince out of Qin; the prince became King Kaolie
       and Huang Xie, as Lord Chunshen, ran Chu for 25 years.
@@ -274,7 +317,7 @@ chapters:
       greatest teacher of his age, who argues that human nature is bad and only education and
       ritual make men good.
     choices:
-      - label: "Annex Lu, and make Xunzi magistrate of Lanling"
+      - label: "Annex Lu and make Xunzi a magistrate"
         historical: true
         legitimacy_bp: 800
         knowledge_bp: 1500
@@ -283,10 +326,20 @@ chapters:
           of his students will change the world: Han Fei, who will write the bible of
           Legalism, and Li Si, who will be chancellor of Qin.
         deeds: {war_with: [lu], conquer: [lu]}
-      - label: "Leave Lu alone, as a shrine to Confucius"
+      - label: "Spare Lu and keep it as a shrine"
         influence: {clergy: 1000}
+        legitimacy_bp: 400
+        knowledge_bp: 600
         outcome: >-
           Lu keeps its duke and its temples. Xunzi goes to Qi instead.
+        deeds: {"tributaries": ["lu"]}
+      - label: "Annex Lu, but leave Xunzi to teach in Qi"
+        legitimacy_bp: 800
+        wealth_bp: 600
+        outcome: >-
+          Chu garrisons Lu and takes its revenues. Xunzi, who was not asked, stays in Qi;
+          Chu's scholars have to be content without him.
+        deeds: {"conquer": ["lu"], "men": 6000}
     history: >-
       Chu annexed Lu in 256 BC; Xunzi was magistrate of Lanling under Lord Chunshen. Han Fei and
       Li Si were his students.
@@ -315,7 +368,7 @@ chapters:
       every man Qin has. He has built a fortified camp and sits in it. His soldiers spend their
       days throwing stones and long-jumping. For a year he has refused to fight.
     choices:
-      - label: "Draw the army off east; he will not attack"
+      - label: "Pull the army back east to the Huai"
         historical: true
         legitimacy_bp: -3000
         unrest_bp: 3000
@@ -325,13 +378,20 @@ chapters:
           Xiang Yan's grandson, Xiang Yu, will burn Qin's capital and the people will sing that
           even if only three households were left in Chu, Chu would destroy Qin.
         deeds: {ruler_falls: "is captured by Qin", give: [chu_chen, chu_huainan, chu_nanyang], give_to: qin}
-      - label: "Stay in front of his camp, however long it takes"
+      - label: "Hold your position before his camp"
         food_bp: -3000
         legitimacy_bp: 1000
         outcome: >-
           Your army waits; so does his. Six hundred thousand men eat Qin's grain. A year later
           Qin's granaries are empty, and Wang Jian goes home.
-        deeds: {grudges: {qin: 3000}}
+        deeds: {"men": 40000, "grudges": {"qin": 3000}}
+      - label: "Raid his supply lines with fast columns"
+        legitimacy_bp: 600
+        food_bp: -1500
+        outcome: >-
+          Your horsemen and boatmen strike at Qin's grain trains along the Han and the Huai.
+          Wang Jian's camp is not starved, but it is made anxious.
+        deeds: {"men": 25000}
     history: >-
       Xiang Yan defeated Li Xin in 225 BC but was destroyed by Wang Jian in 224-223, and Chu
       fell. The Chu saying about three households, and Xiang Yu's revenge, are in the Shiji.

@@ -51,6 +51,7 @@ chapters:
           nose of his guardian. After that, no one in Qin doubts that the law reaches
           everyone. The nobles bide their time.
       - label: "Reform the fields, but spare the great families"
+        unrest_bp: 200
         food_bp: 800
         legitimacy_bp: 200
         influence: {nobility: 300}
@@ -215,7 +216,7 @@ chapters:
       let Wei give up the Upper Commandery and the rest of its lands west of the river, and
       Qin will call it a friend.
     choices:
-      - label: "Make him chancellor and squeeze Wei until it yields"
+      - label: "Make him chancellor and press Wei"
         historical: true
         legitimacy_bp: 500
         influence: {nobility: 200}
@@ -225,11 +226,21 @@ chapters:
           Yellow River becomes Qin's moat. Ruler of a state that has doubled, the lord of
           Qin will soon call himself king.
         deeds: {take: [wei_hexi, wei_shang], peace_with: [wei], grudges: {wei: 2500}}
-      - label: "Send him away: Qin wins with swords, not tongues"
+      - label: "Send him away and trust the army"
+        influence: {nobility: 300}
+        legitimacy_bp: 200
         outcome: >-
           Zhang Yi shrugs and goes east. Within months he is telling the court of Chu how
           dangerous Qin is.
-        deeds: {grudges: {chu: 800}}
+        deeds: {men: 10000, grudges: {chu: 800}}
+      - label: "Send him to Wei as an envoy only"
+        legitimacy_bp: 300
+        wealth_bp: -400
+        deeds: {men: 8000}
+        outcome: >-
+          Zhang Yi goes to Wei with Qin's letters and a small escort, but without the
+          chancellor's seal. Wei listens politely and gives ground slowly, and Qin's court is
+          divided on whether the envoy is being used or is using them.
     history: >-
       Wei ceded its lands west of the Yellow River in 330 BC and the Upper Commandery in
       328. Zhang Yi became chancellor of Qin in 328, and in 325 Qin's ruler took the title
@@ -263,7 +274,7 @@ chapters:
       their supplies run out and they start to blame each other, Qin can come down out of
       the mountains and fall on whichever of them is closest.
     choices:
-      - label: "Hold the pass, then strike Han and Zhao as they fall apart"
+      - label: "Hold the pass, then counter-attack"
         historical: true
         legitimacy_bp: 600
         outcome: >-
@@ -329,12 +340,18 @@ chapters:
           cross.
         deeds: {war_with: [shu], conquer: [ba], take: [shu_chengdu], men: 20000}
       - label: "Zhang Yi: east to Luoyang and the Nine Cauldrons"
+        wealth_bp: -500
+        unrest_bp: 300
+        materials_bp: 500
         legitimacy_bp: 800
         outcome: >-
           The army marches east on Yiyang. Every court in the east hears that Qin means to
           lay hands on the vessels of Heaven, and their envoys begin riding to one another.
         deeds: {war_with: [han], men: 20000, grudges: {wei: 1500, zhao: 1500, qi: 1500, chu: 1500}}
       - label: "Help neither: let the southern kings fight it out"
+        legitimacy_bp: -300
+        wealth_bp: 500
+        food_bp: 500
         outcome: >-
           The envoys of Shu and Ba go home. In the end Shu swallows Ba, and has a long
           border with Qin.
@@ -395,6 +412,8 @@ chapters:
           alone in the east.
         deeds: {ally_with: [chu]}
       - label: "Leave Chu and Qi alone"
+        legitimacy_bp: -200
+        wealth_bp: 500
         outcome: >-
           The alliance of Chu and Qi holds, and Qin's eastern road stays blocked.
     history: >-
@@ -426,7 +445,7 @@ chapters:
       grumble, and Han will appeal to every state in the east. Before he marches, he wants
       the king's oath that he will not be recalled however long the siege lasts.
     choices:
-      - label: "Swear the oath. Take Yiyang."
+      - label: "Swear the oath and besiege Yiyang"
         historical: true
         legitimacy_bp: 500
         outcome: >-
@@ -435,10 +454,20 @@ chapters:
           road to Luoyang lies open. In the Zhou capital the king of Qin asks to see the
           Nine Cauldrons.
         deeds: {take: [han_yiyang], men: 10000, grudges: {han: 3000}}
-      - label: "No sieges: Qin cannot afford to stand still for months"
+      - label: "No sieges: Qin cannot wait for months"
+        legitimacy_bp: -200
+        deeds: {men: 5000}
         food_bp: 500
         outcome: >-
           Gan Mao does not march. The king sulks; Han breathes.
+      - label: "Offer Han peace in return for Yiyang"
+        legitimacy_bp: 200
+        wealth_bp: -500
+        deeds: {peace_with: [han]}
+        outcome: >-
+          You send an envoy to Han with the offer of peace in exchange for the fortress. Han
+          is tempted, but the king will not give the walls of his strongest city without a
+          fight, and the talks drag on.
     history: >-
       Gan Mao took Yiyang in 307 BC after a five-month siege. King Wu went on to Luoyang
       and, the Shiji says, tried to lift one of the Nine Cauldrons in a contest of strength,
@@ -484,12 +513,19 @@ chapters:
           brought back, and dies a prisoner in Qin. Chu sends his body home, and the
           people of Chu weep for him "as for a lost kinsman".
         deeds: {grudges: {chu: 6000, qi: 1000, wei: 1000}}
-      - label: "Swear the covenant honestly"
+      - label: "Swear the covenant, and let him go"
         legitimacy_bp: 600
         outcome: >-
           The two kings drink blood from the same cup. King Huai goes home amazed, and
           Chu and Qin are at peace.
         deeds: {peace_with: [chu]}
+      - label: "Let him go home with a demand for land"
+        legitimacy_bp: -200
+        deeds: {men: 5000, grudges: {chu: 2500}}
+        outcome: >-
+          You receive King Huai with honour, then name your price: the commanderies of Wu and
+          Qianzhong. He refuses, and goes home; Chu does not forget the demand, and neither
+          does he.
     history: >-
       In 299 BC King Huai of Chu came to a meeting at the Wu Pass and was seized and taken
       to Xianyang. Chu refused to cede land and enthroned his son. He died a captive in
@@ -520,7 +556,7 @@ chapters:
 
       The great families find it insulting that such a man should command a royal army.
     choices:
-      - label: "Give Bai Qi the army"
+      - label: "Give Bai Qi command of the army"
         historical: true
         legitimacy_bp: 600
         influence: {nobility: -300}
@@ -530,12 +566,19 @@ chapters:
           allied army ceases to exist: the Shiji says 240,000 heads were taken, and Bai Qi
           captured the enemy commander. No one at court calls him a commoner again.
         deeds: {take: [wei_hedong], men: 20000, grudges: {han: 3000, wei: 3000}}
-      - label: "Give the army to a prince of the blood"
+      - label: "Give the army to a royal prince"
         influence: {nobility: 600}
         outcome: >-
           A prince takes command. He fights bravely and honourably, and Han and Wei go home
           with their armies intact.
         deeds: {war_with: [han, wei], men: 15000}
+      - label: "Give the army to Wei Ran, the chancellor"
+        legitimacy_bp: 300
+        influence: {nobility: 300}
+        deeds: {men: 18000, martial_bp: 200}
+        outcome: >-
+          Wei Ran takes the field himself, with Bai Qi in a lower place under him. The army is
+          large and the command is divided, and the allies are not blind to it.
     history: >-
       In 293 BC Bai Qi destroyed the armies of Han and Wei at Yique. It was the first great
       victory of the man who became the most feared general of the age; over his career
@@ -563,7 +606,7 @@ chapters:
 
       Qi has agreed. The envoys are ready.
     choices:
-      - label: "Take the title - and drop it when the world objects"
+      - label: "Take the title, and judge the reaction"
         historical: true
         legitimacy_bp: 200
         outcome: >-
@@ -671,12 +714,14 @@ chapters:
           river, the poet Qu Yuan fills his robe with stones and walks into the water.
         deeds: {take: [chu_ying, chu_qianzhong], men: 15000, grudges: {chu: 5000}}
       - label: "Take the frontier towns, but spare Ying and the tombs"
+        materials_bp: 500
         legitimacy_bp: 400
         outcome: >-
           Qin takes a string of towns on the Han river and stops. Chu loses land but not
           its heart.
-        deeds: {take: [chu_nanyang], grudges: {chu: 2000}}
+        deeds: {take: [chu_nanyang], men: 8000, grudges: {chu: 2000}}
       - label: "Peace with Chu"
+        wealth_bp: 500
         outcome: >-
           Bai Qi goes home and waits for another king's war.
         deeds: {peace_with: [chu]}
@@ -713,7 +758,7 @@ chapters:
       are leaderless without him. The army is ready on the border. She asks only for the
       word.
     choices:
-      - label: "Give her the word"
+      - label: "Let the Queen Dowager have her way"
         historical: true
         legitimacy_bp: 300
         outcome: >-
@@ -722,12 +767,20 @@ chapters:
           commanderies of Longxi, Beidi and Shang. The Queen Dowager is not asked about the
           two sons, and does not say.
         deeds: {conquer: [yiqu], grudges: {donghu: 1000}}
-      - label: "Refuse: Qin does not murder guests"
+      - label: "Send the king home unharmed"
+        deeds: {men: 5000}
         legitimacy_bp: 400
         influence: {clergy: 300}
         outcome: >-
           The King of Yiqu rides home, never knowing. Qin will have to beat his people in
           the field.
+      - label: "Bind the king to you as a vassal"
+        legitimacy_bp: 300
+        deeds: {tributaries: [yiqu]}
+        outcome: >-
+          You keep the King of Yiqu at Ganquan as a guest and put it to him that his people
+          should be Qin's vassals. He agrees in the palace, and his people do not all agree on
+          the border.
     history: >-
       According to the Hou Hanshu, Queen Dowager Xuan had a long affair with the king of
       the Yiqu Rong and bore him two sons; in 272 BC she lured him to the Ganquan palace and
@@ -764,7 +817,7 @@ chapters:
       states. Devour the near ones, one inch at a time, and every inch you take is yours
       forever.
     choices:
-      - label: "Make him your counsellor; turn on the near states"
+      - label: "Make Fan Ju your counsellor"
         historical: true
         legitimacy_bp: 600
         influence: {nobility: -800}
@@ -775,10 +828,19 @@ chapters:
           with Qi and Yan and eats Han and Wei, county by county.
         deeds: {peace_with: [qi, yan, chu], grudges: {han: 1500, wei: 1500}}
       - label: "Thank him, and keep to the old ways"
+        deeds: {men: 15000}
+        legitimacy_bp: 200
         influence: {nobility: 500}
         outcome: >-
           Fan Ju is given a house and a pension. The Marquis of Rang goes on planning wars
           against Qi.
+      - label: "Give him a small post and test his plan"
+        legitimacy_bp: 300
+        influence: {nobility: -200}
+        deeds: {peace_with: [yan]}
+        outcome: >-
+          You give Fan Ju a minor office and watch him. He advises, and you try the plan
+          against Han alone before you commit to it.
     history: >-
       Fan Ju reached Qin in about 270 BC and argued for the policy of "befriending the
       distant and attacking the near". He became chancellor in 266, displacing the Marquis
@@ -813,7 +875,7 @@ chapters:
 
       Zhao has the best soldiers in the east, and an old fox of a general, Lian Po.
     choices:
-      - label: "War with Zhao for Shangdang"
+      - label: "Go to war with Zhao over Shangdang"
         historical: true
         legitimacy_bp: 400
         outcome: >-
@@ -822,10 +884,18 @@ chapters:
           come out. Month after month, then year after year, two great armies face each
           other on the plateau.
         deeds: {war_with: [zhao], men: 40000}
-      - label: "Let Zhao have it: we will take Han instead"
+      - label: "Leave Shangdang, and press Han instead"
+        legitimacy_bp: 200
         outcome: >-
           Zhao takes Shangdang and fortifies it. Qin's armies turn on what is left of Han.
-        deeds: {war_with: [han]}
+        deeds: {war_with: [han], men: 15000}
+      - label: "Buy Shangdang's towns from Zhao"
+        wealth_bp: -2000
+        legitimacy_bp: 300
+        deeds: {peace_with: [zhao]}
+        outcome: >-
+          You send gold and envoys to Handan. Zhao's ministers weigh the offer against the
+          gift they have already taken. The king hesitates, and does not sell.
     history: >-
       In 262 BC Han's commandery of Shangdang, cut off by Qin, gave itself to Zhao rather
       than Qin. Qin attacked, and Lian Po held it off for nearly three years from fortified
@@ -877,7 +947,7 @@ chapters:
           tell Zhao. Mass graves will still be found in the valley twenty-two centuries
           later.
         deeds: {take: [han_shangdang], grudges: {zhao: 8000, wei: 1500, han: 1500, chu: 1500}}
-      - label: "Spread the rumour, and spare the prisoners"
+      - label: "Spread the rumour, and plan for mercy"
         legitimacy_bp: 800
         food_bp: -2500
         outcome: >-
@@ -896,6 +966,15 @@ chapters:
           spared and sent home without weapons. Zhao has lost its army and Shangdang -
           and has no grudge of blood to nurse.
         deeds: {take: [han_shangdang, zhao_jinyang], grudges: {zhao: 2000}}
+      - label: "Levy every man at home and press the siege"
+        legitimacy_bp: 200
+        unrest_bp: 800
+        food_bp: -1000
+        deeds: {men: 30000}
+        outcome: >-
+          Qin's king calls up every man of the home counties old enough to bear arms and sends
+          them to the plateau. The lines grow thick, and the granaries thin, and Zhao hears of
+          it.
     history: >-
       In 260 BC Zhao replaced Lian Po with Zhao Kuo after Qin spread rumours in Handan.
       Bai Qi surrounded his army; after 46 days it surrendered, and the Shiji says 400,000
@@ -937,7 +1016,7 @@ chapters:
       tiger tally stolen from the king's bedchamber, the token that commands Wei's army,
       and to be marching on Handan with eighty thousand men. Chu is coming too.
     choices:
-      - label: "Order Bai Qi to obey - and to die if he will not"
+      - label: "Order Bai Qi to take command"
         historical: true
         legitimacy_bp: -500
         unrest_bp: 500
@@ -948,7 +1027,8 @@ chapters:
           thousands of men who had surrendered." Lord Xinling and the men of Chu break the
           siege; Qin's army is driven back from Handan with great losses.
         deeds: {peace_with: [zhao], grudges: {zhao: 2000, wei: 2000}}
-      - label: "Listen to Bai Qi: lift the siege now"
+      - label: "Lift the siege, as Bai Qi advises"
+        unrest_bp: -200
         legitimacy_bp: 200
         outcome: >-
           The army comes home from Handan in good order. Bai Qi keeps his head, and Qin
@@ -963,6 +1043,13 @@ chapters:
           the ditch. The city is taken before Lord Xinling's army is three days out of Wei;
           he turns back.
         deeds: {take: [zhao_handan], grudges: {zhao: 4000}}
+      - label: "Send a new commander and press the siege"
+        legitimacy_bp: 300
+        wealth_bp: -800
+        deeds: {men: 50000}
+        outcome: >-
+          You recall the army's old commander and send another to press the siege with fresh
+          men. The new levies are brave, and the soldiers of Zhao and its helpers are fresher.
     history: >-
       Qin besieged Handan from 259 BC. Bai Qi refused the command and was ordered to kill
       himself in 257. That year Lord Xinling of Wei, using a tally stolen for him by the
@@ -998,7 +1085,7 @@ chapters:
 
       The Nine Cauldrons of Yu are in Luoyang.
     choices:
-      - label: "Accept his surrender and take the cauldrons"
+      - label: "Take Zhou's towns and the cauldrons"
         historical: true
         legitimacy_bp: 1500
         suspicion_bp: 300
@@ -1015,6 +1102,12 @@ chapters:
           You send King Nan gifts and a promise of protection. The other kings are
           astonished; some are almost grateful.
         deeds: {peace_with: [zhou]}
+      - label: "Take the cauldrons, but leave Zhou its towns"
+        legitimacy_bp: 1000
+        deeds: {tributaries: [zhou]}
+        outcome: >-
+          You send an officer to carry the Nine Cauldrons west and tell King Nan that he may
+          keep his towns and his title. The other courts watch to see whether Qin means it.
     history: >-
       In 256 BC King Nan surrendered to Qin and died; the Zhou dynasty, founded about 1046
       BC, came to an end. Qin destroyed the last Eastern Zhou remnant in 249.
@@ -1067,10 +1160,20 @@ chapters:
         outcome: >-
           The weir is built, and along its channels great wheels turn day and night,
           grinding the grain of Shu and working the bellows of its iron foundries.
-      - label: "Too costly: build levees and hope"
+      - label: "Raise levees along the river"
+        legitimacy_bp: -200
+        materials_bp: 300
         food_bp: 500
         outcome: >-
           The levees hold in a dry year, and break in a wet one.
+      - label: "Settle farmers on higher ground"
+        food_bp: 1200
+        materials_bp: -500
+        unrest_bp: 300
+        outcome: >-
+          You send settlers to the dry hills above the flood line and give them seed and
+          tools. They farm, but not as many as the plain would feed, and the river floods in
+          the lower fields.
     history: >-
       Li Bing, governor of Shu from about 256 BC, built the Dujiangyan irrigation system.
       It still waters some 5,000 square kilometres of the Chengdu plain today, after more
@@ -1120,6 +1223,14 @@ chapters:
         outcome: >-
           Zheng Guo is executed and the half-dug canal is left to silt up. The labourers
           go home.
+      - label: "Shorten the canal and hold Zheng Guo in chains"
+        food_bp: 1500
+        materials_bp: -700
+        unrest_bp: 200
+        outcome: >-
+          You keep Zheng Guo in chains and set Qin's own engineers to shorten the canal to
+          what the labour can bear. It brings water to part of the Wei valley and not the
+          whole of it.
     history: >-
       The Zheng Guo canal, begun about 246 BC, was proposed by a Han engineer to drain
       Qin's strength. The plot was discovered, but the canal was finished; the Shiji says
@@ -1179,6 +1290,14 @@ chapters:
           from anywhere, may sit the tests on law, accounts and writing, and the best will
           serve. Qin's offices fill with the able, and the great families find their sons
           must study.
+      - label: "Keep them, under Qin overseers"
+        knowledge_bp: 500
+        legitimacy_bp: 100
+        influence: {nobility: 300}
+        outcome: >-
+          You withdraw the order, but set Qin officers over each foreign minister and require
+          their letters to be read. The foreigners stay, and some of the best of them are not
+          at ease.
     history: >-
       In 237 BC, after the Zheng Guo affair and the fall of Lü Buwei, Qin ordered all
       foreign officials expelled. Li Si's "Memorial against the expulsion of guest
@@ -1222,6 +1341,13 @@ chapters:
           King An keeps his title and pays tribute. The other courts wonder what Qin
           is waiting for.
         deeds: {tributaries: [han]}
+      - label: "Take hostages and garrison Han's towns"
+        wealth_bp: 500
+        legitimacy_bp: 300
+        deeds: {men: 8000}
+        outcome: >-
+          Teng takes the king's sons and heirs as hostages and puts Qin garrisons in Han's
+          frontier towns. Han keeps its king and its court, and not much else.
     history: >-
       In 230 BC Qin's general Teng conquered Han and captured King An - the first of the
       six states to fall. Han Fei, whose writings became the bible of the Legalist school,
@@ -1264,11 +1390,18 @@ chapters:
           later Wang Jian breaks the Zhao army and takes Handan. King Qian is captured.
           A prince flees north to Dai, and calls himself king there.
         deeds: {war_with: [zhao], take: [zhao_handan, zhao_jinyang], grudges: {zhao: 4000}}
-      - label: "Beat Li Mu in the field, or not at all"
+      - label: "Meet Li Mu in the field"
         legitimacy_bp: 300
         outcome: >-
           Wang Jian goes on with the war. Li Mu holds the passes, and the war drags on.
         deeds: {war_with: [zhao], men: 30000}
+      - label: "Offer Li Mu a high post in Qin"
+        wealth_bp: -800
+        legitimacy_bp: 200
+        deeds: {men: 10000}
+        outcome: >-
+          Wang Jian's envoy brings Li Mu an offer of rank and lands in Qin. Li Mu sends the
+          envoy back with a refusal, and Zhao's court hears that he has been approached.
     history: >-
       In 229 BC Qin bribed the Zhao minister Guo Kai to slander Li Mu, who was executed.
       In 228 Wang Jian took Handan and captured King Qian; Prince Jia ruled a rump state at
@@ -1306,7 +1439,7 @@ chapters:
       He sits against the pillar, laughing, and says he failed only because he wanted to
       take you alive. Prince Dan of Yan sent him.
     choices:
-      - label: "Destroy Yan"
+      - label: "Send Wang Jian against Yan"
         historical: true
         legitimacy_bp: 800
         outcome: >-
@@ -1314,11 +1447,17 @@ chapters:
           of Yan flees to Liaodong, and to appease Qin he has his own son, Prince Dan,
           beheaded and sends the head to Xianyang. It does not save him.
         deeds: {war_with: [yan], take: [yan_ji, yan_yi], grudges: {yan: 6000}}
-      - label: "Demand Prince Dan's head, and nothing more"
+      - label: "Demand Prince Dan's head from Yan"
         legitimacy_bp: 400
         outcome: >-
           The King of Yan sends the head of his son, and kneels to Qin from afar.
         deeds: {tributaries: [yan]}
+      - label: "Strike the Yan border towns, then halt"
+        legitimacy_bp: 500
+        deeds: {men: 10000, martial_bp: 200}
+        outcome: >-
+          You send a strong force to take the border towns of Yan and stop. Yan knows what it
+          has done, and expects more.
     history: >-
       In 227 BC Jing Ke, sent by Prince Dan of Yan, tried to kill the king of Qin in his
       own hall with a dagger hidden in a map. He failed. Qin took Ji in 226, the King of Yan
@@ -1347,7 +1486,7 @@ chapters:
 
       He proposes to cut the dikes and turn the river into the city.
     choices:
-      - label: "Cut the dikes"
+      - label: "Turn the river on the walls"
         historical: true
         legitimacy_bp: 500
         unrest_bp: 300
@@ -1356,11 +1495,19 @@ chapters:
           fall. King Jia of Wei surrenders, and Wei - once the strongest state under Heaven
           - becomes three commanderies of Qin.
         deeds: {war_with: [wei], conquer: [wei], grudges: {chu: 1500, qi: 1500}}
-      - label: "Starve them out"
+      - label: "Besiege Daliang until it starves"
+        legitimacy_bp: 200
         food_bp: -1500
         outcome: >-
           The siege drags on into the winter. Daliang does not fall this year.
-        deeds: {war_with: [wei]}
+        deeds: {war_with: [wei], men: 20000}
+      - label: "Offer King Jia terms and tribute"
+        legitimacy_bp: 400
+        wealth_bp: 800
+        deeds: {tributaries: [wei]}
+        outcome: >-
+          You send Wang Ben's heralds to Daliang with an offer: the king may keep his title
+          and his temples, and Wei will pay tribute to Qin. The king takes his council.
     history: >-
       In 225 BC Wang Ben flooded Daliang by diverting the Yellow River and its canals;
       after three months the walls collapsed and King Jia of Wei surrendered.
@@ -1396,7 +1543,7 @@ chapters:
       many times, on the march. (His friends tell you why: a king who has given a general
       every soldier he owns must be sure the general wants nothing more than land.)
     choices:
-      - label: "Give Wang Jian his six hundred thousand, and his fields"
+      - label: "Give Wang Jian the army he asks for"
         historical: true
         legitimacy_bp: 900
         food_bp: -2000
@@ -1407,11 +1554,20 @@ chapters:
           captured. The largest state in the world is gone.
         deeds: {war_with: [chu], conquer: [chu], men: 60000, grudges: {qi: 2000, yan: 2000}}
       - label: "Send Li Xin again, with more men"
+        food_bp: -1000
         legitimacy_bp: 300
         outcome: >-
           Li Xin goes back with three hundred thousand. Chu holds the line of the Huai
           for another year.
         deeds: {war_with: [chu], men: 30000}
+      - label: "Wait a season and levy more men"
+        legitimacy_bp: 200
+        wealth_bp: -500
+        food_bp: -1000
+        deeds: {men: 40000}
+        outcome: >-
+          You send Wang Jian home and keep the army at the Chu border while new levies are
+          raised. Chu watches and uses the pause well.
     history: >-
       In 225 BC Li Xin invaded Chu with 200,000 men and was defeated. The king went to Wang
       Jian, who took 600,000; he waited a year in a fortified camp, then destroyed the Chu
@@ -1457,7 +1613,7 @@ chapters:
       empire into commanderies under governors you appoint, one law, one script, one
       measure, one axle-width for every cart.
     choices:
-      - label: "Li Si: commanderies, one law, one script"
+      - label: "Li Si: commanderies under governors"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: 800
@@ -1487,6 +1643,15 @@ chapters:
           elder can read the same characters. A thousand years before history, China
           becomes a land of printed books.
         deeds: {war_with: [qi], conquer: [qi, yan, zhao, yue]}
+      - label: "Compromise: commanderies, and kings in the far east"
+        legitimacy_bp: 1200
+        unrest_bp: 300
+        influence: {nobility: 300}
+        deeds: {war_with: [qi], conquer: [qi, yan, zhao, yue]}
+        outcome: >-
+          You divide the heartland into commanderies and give the emperor's sons the far
+          provinces of Yan, Qi and Chu as kingdoms. The empire is half one thing and half the
+          other.
     history: >-
       In 221 BC Qi surrendered without a fight and Ying Zheng became Qin Shi Huangdi, the
       First Emperor. On Li Si's advice he divided the empire into 36 commanderies and

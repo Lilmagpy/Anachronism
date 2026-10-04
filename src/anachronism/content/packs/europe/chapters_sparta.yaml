@@ -34,7 +34,7 @@ chapters:
       There are not even four thousand Spartiates left in your city. The elders ask whether
       Sparta should try to relieve Athens or make Laconia safe first.
     choices:
-      - label: "Bring the army home and defend Laconia"
+      - label: "Bring the army home to Laconia"
         historical: true
         legitimacy_bp: -500
         unrest_bp: 500
@@ -44,13 +44,21 @@ chapters:
           going into fewer and fewer hands, Sparta is a small and quarrelsome power. You
           yourself will fall in a battle at Megalopolis in the next few years.
         deeds: {peace_with: [macedon]}
-      - label: "Try to relieve Athens"
+      - label: "March north to relieve Athens"
         legitimacy_bp: 500
         unrest_bp: 500
         outcome: >-
           The march north is a gamble with nobody to back it. The Macedonian garrisons in
           Corinth and Megara block the isthmus, and your men are far from home.
         deeds: {martial_bp: -300, grudges: {macedon: 2000}}
+      - label: "Send a picked force to the Isthmus"
+        legitimacy_bp: 200
+        wealth_bp: -300
+        outcome: >-
+          A few thousand of the best men go north to watch the isthmus and see what Ptolemy's
+          fleet will do. It does nothing, and the force stands there until the cold weather and
+          then comes home.
+        deeds: {men: 1500}
     history: >-
       King Areus I fell at Corinth in 265 BC, and Sparta left the Chremonidean War, which ended
       with the surrender of Athens (about 262-261). His son Acrotatus II was killed fighting the
@@ -94,11 +102,22 @@ chapters:
           Leonidas comes home. The ephor Amphares has you dragged out of the temple, tried
           and strangled in prison, and your mother and grandmother are strangled as well.
         deeds: {ruler_falls: "is strangled in prison by the ephors"}
-      - label: "Move slowly, reform nothing until both kings agree"
+      - label: "Go slowly, reform nothing until both kings agree"
         legitimacy_bp: -500
+        influence: {nobility: 500}
+        wealth_bp: 300
         outcome: >-
           Leonidas and the rich are quite happy to wait. Your supporters think you have lost
           your nerve.
+      - label: "Restore the common meals and old training first"
+        legitimacy_bp: 600
+        unrest_bp: 300
+        influence: {nobility: -300}
+        outcome: >-
+          The young men are put back to the old exercises and the dining-messes are filled
+          again. Many are pleased, and the rich say that you have begun at the bottom and mean
+          to go on.
+        deeds: {martial_bp: 500}
     history: >-
       Agis IV (reigned about 244-241 BC) cancelled debts but did not divide the land; Leonidas II
       was restored in 241 and Agis was tried and strangled.
@@ -125,7 +144,7 @@ chapters:
       the city and a brother who is willing. Sphaerus says that nothing short of making
       the old laws live again will save Sparta.
     choices:
-      - label: "Kill the ephors and re-found Lycurgus's Sparta"
+      - label: "Kill the ephors, then remake the laws"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: 500
@@ -138,11 +157,22 @@ chapters:
           spear. Later you will let helots buy their freedom for five minas each. The Achaeans
           call you a tyrant, but the poor of Sparta call you a king.
         deeds: {martial_bp: 1000}
-      - label: "Win the ephors over"
+      - label: "Win the ephors over with gifts"
         legitimacy_bp: -300
+        influence: {nobility: 500}
+        wealth_bp: -300
         outcome: >-
           The ephors give way a little, and then not at all. A reform that needs the
           consent of those who lose by it is a reform that does not happen.
+      - label: "Exile the leading ephors, and keep the office"
+        legitimacy_bp: 600
+        unrest_bp: 800
+        influence: {nobility: -800}
+        outcome: >-
+          Your mercenaries seize the chief ephors and send them out of the city, and the rest
+          of the board is left in office. The ephorate stands, quieter, and much of the old
+          order is left in place.
+        deeds: {men: 2000}
     history: >-
       Cleomenes III (reigned about 235-222 BC) overthrew the ephorate in 227, cancelled debts,
       shared out land and rebuilt the army on Macedonian lines.
@@ -170,7 +200,7 @@ chapters:
       between. Your brother commands the one, you the other. Behind you, there are no
       walls, and no more army.
     choices:
-      - label: "Hold the hills and fight at Sellasia"
+      - label: "Hold the two ridges and give battle"
         historical: true
         legitimacy_bp: -2500
         unrest_bp: 1000
@@ -181,12 +211,21 @@ chapters:
           the old constitution and the ephors before he goes home to fight the Illyrians. You
           die in Alexandria in 219, after an attempted rising against Ptolemy IV fails.
         deeds: {peace_with: [macedon], ruler_falls: "flees to Egypt after Sellasia"}
-      - label: "Fall back on Sparta and make Antigonus come to you"
+      - label: "Fall back on Sparta and wait for Antigonus"
         legitimacy_bp: -500
         unrest_bp: 1500
+        deeds: {men: 4000}
         outcome: >-
           The city has no walls. Antigonus camps in the Eurotas valley and the Peloponnesian cities
           that rose for you turn back to him one by one.
+      - label: "Treat with Antigonus before the battle"
+        legitimacy_bp: -1500
+        wealth_bp: -800
+        outcome: >-
+          Your envoys go to the Macedonian camp with an offer of money and the Arcadian towns.
+          Antigonus listens, for an army of thirty thousand has expenses, and the talks go on
+          while both armies sit in the hills.
+        deeds: {peace_with: [macedon]}
     history: >-
       Antigonus Doson defeated Cleomenes III at Sellasia in 222 BC; Cleomenes fled to Egypt, where
       he died in 219. Sparta was occupied by an enemy for the first time.
@@ -214,7 +253,7 @@ chapters:
       Sparta needs money, soldiers and a leader. The sources on you are Polybius, who hated
       tyrants, and the Achaeans, who feared you. Polybius says that you ruled by terror.
     choices:
-      - label: "Take power, free the slaves and seize the land of the rich"
+      - label: "Take power, and share out the land of the rich"
         historical: true
         legitimacy_bp: 500
         unrest_bp: 500
@@ -228,9 +267,20 @@ chapters:
         deeds: {martial_bp: 1000}
       - label: "Rule with the old families and the ephors"
         legitimacy_bp: 500
+        influence: {nobility: 800}
+        wealth_bp: 300
+        unrest_bp: -300
         outcome: >-
           The old families accept you, and nothing changes. The poor keep waiting for a
           leader who never comes.
+      - label: "Rule as guardian of the child king Pelops"
+        legitimacy_bp: 700
+        unrest_bp: 300
+        outcome: >-
+          You keep the boy on the throne and rule in his name, as Machanidas did. The army
+          stays loyal and the city stays as it is; the poor and the rich both watch to see
+          what you will do when the boy is grown.
+        deeds: {martial_bp: 500, men: 1500}
     history: >-
       Nabis (reigned 207-192 BC) seized power after the death of Machanidas, freed slaves and
       redistributed property, and built a strong army and fleet.
@@ -257,7 +307,7 @@ chapters:
       Rome's commander Flamininus invites you to meet him on the coast. If you hold Argos and
       talk to both sides, you can name your price twice.
     choices:
-      - label: "Take Argos, then sell your friendship to Rome"
+      - label: "Take Argos, then bargain with Rome"
         historical: true
         wealth_bp: 1000
         legitimacy_bp: 1000
@@ -268,12 +318,21 @@ chapters:
           does not ask you to give Argos back, but Flamininus tells Greece that Argos is a
           Greek city and must be free.
         deeds: {grudges: {achaea: 2500}}
-      - label: "Stay with Philip"
+      - label: "Join Philip against Rome"
         legitimacy_bp: -500
+        wealth_bp: 500
+        deeds: {men: 1500, grudges: {rome: 2500}}
         outcome: >-
           Philip is beaten without you, and you are the last of his friends. Rome has no
           reason to be kind.
-        deeds: {grudges: {rome: 2500}}
+      - label: "Refuse Argos, and treat with Rome at once"
+        legitimacy_bp: 500
+        wealth_bp: 500
+        outcome: >-
+          You turn down Philip's gift and meet Flamininus on the coast. He is pleased by your
+          politeness, and the Achaeans, who wanted Argos, are pleased by it too. Philip is
+          beaten and you have nothing to show for it.
+        deeds: {peace_with: [rome]}
     history: >-
       In 198-197 BC Nabis took Argos from Philip V, then changed sides to Rome; after the
       war Flamininus's declaration of Greek freedom left Argos unresolved.
@@ -303,7 +362,7 @@ chapters:
       Flamininus offers terms. He hopes that your ruin will bring peace; many of the allies
       want your head.
     choices:
-      - label: "Give up Argos and the coast, and accept Rome's terms"
+      - label: "Give up Argos and the coast for peace"
         historical: true
         legitimacy_bp: -1500
         wealth_bp: -1500
@@ -318,7 +377,14 @@ chapters:
         unrest_bp: 1500
         outcome: >-
           The siege is long and costly. Flamininus can afford it and you cannot.
-        deeds: {grudges: {rome: 2000, achaea: 2000}}
+        deeds: {men: 3000, grudges: {rome: 2000, achaea: 2000}}
+      - label: "Offer Argos alone in exchange for peace"
+        legitimacy_bp: -700
+        wealth_bp: -800
+        outcome: >-
+          Your envoys offer Argos, and no more, and Flamininus hears them out. He has
+          the allies to think of, and some of them want much more than Argos.
+        deeds: {peace_with: [rome]}
     history: >-
       In 195 BC Flamininus and his allies besieged Nabis, who lost Argos, the coastal towns and
       his fleet by treaty, and kept only Sparta itself.
@@ -362,6 +428,13 @@ chapters:
         outcome: >-
           Your friends are pleased. The Aetolians go away and Sparta stands alone against the
           Achaeans and Rome.
+      - label: "Send to Flamininus to renew the peace"
+        legitimacy_bp: -500
+        wealth_bp: -600
+        outcome: >-
+          Your envoys carry gifts to the Roman camp. The Romans receive them politely, and say
+          that the matter must wait on Antiochus, and the Aetolians stay in Sparta.
+        deeds: {peace_with: [rome]}
     history: >-
       In 192 BC Nabis was murdered by Aetolians whom he had invited as allies; Philopoemen then
       brought Sparta into the Achaean League.
@@ -406,7 +479,15 @@ chapters:
         outcome: >-
           The Senate listens, as it usually does, to both sides and decides nothing for years,
           while the Achaean army camps in your fields.
-        deeds: {grudges: {achaea: 2500}}
+        deeds: {men: 2000, grudges: {achaea: 2500}}
+      - label: "Take back the exiles, but keep the walls"
+        legitimacy_bp: -1500
+        unrest_bp: 800
+        outcome: >-
+          You open the gates to the exiles and refuse the rest. Philopoemen says that the League
+          will not bargain for the laws of Lycurgus, and the argument goes on in the Achaean
+          council.
+        deeds: {peace_with: [achaea]}
     history: >-
       In 188 BC Philopoemen forced Sparta to give up its laws and tear down its walls, and brought
       the exiles back. Rome reduced the Achaeans' power over Sparta only later.

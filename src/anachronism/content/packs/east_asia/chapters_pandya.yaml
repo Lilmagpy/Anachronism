@@ -84,7 +84,7 @@ chapters:
       the Satiyaputras and Tambapanni, as neighbours outside his empire where he has had doctors
       for men and animals, herbs, wells and trees provided. He also sends teachers of his Dhamma.
     choices:
-      - label: "Receive them, as a king who is free"
+      - label: "Receive the officers and their doctors"
         historical: true
         legitimacy_bp: 500
         unrest_bp: -300
@@ -93,11 +93,18 @@ chapters:
           They dig their wells and plant their herbs, and go home. No Pandya source mentions
           it. In Rock Edict XIII Ashoka will list you among the lands where his 'conquest by
           Dhamma' has been won, and not one of them is a subject.
-      - label: "Send them back with thanks"
+      - label: "Thank them and send them home"
         legitimacy_bp: 300
         outcome: >-
           Pataliputra is told that the Pandyas are proud, and that their pearls are for sale.
         deeds: {grudges: {maurya: 1000}}
+      - label: "Take the physicians, not the teachers"
+        legitimacy_bp: 400
+        unrest_bp: -300
+        influence: {clergy: -300}
+        outcome: >-
+          The wells are dug and the herbs planted, and the teachers of the Dhamma go home
+          unheard. Your own priests and monks approve, and Pataliputra notes the distinction.
     history: >-
       Ashoka's Rock Edicts II and XIII (about 258-256 BC) name the Pandyas and Cholas as peoples
       beyond his borders. The Tamil lands never belonged to the Mauryan empire.
@@ -126,7 +133,7 @@ chapters:
       real, but they are later than your time, and no one can say now which of them recall
       you.
     choices:
-      - label: "Welcome the poet and give him a gift"
+      - label: "Receive the poet with a gift"
         historical: true
         legitimacy_bp: 600
         unrest_bp: -300
@@ -136,11 +143,17 @@ chapters:
           Eight Anthologies and the Ten Idylls, will be gathered much later and are mostly
           about later kings, but they say that the Pandya court was a place where poets
           were paid.
-      - label: "Send him away"
+      - label: "Feed him a meal, no more"
         wealth_bp: 300
         legitimacy_bp: -300
         outcome: >-
-          A poet who is sent away makes a poor enemy. He sings elsewhere.
+          The poet eats, thanks you politely and sings elsewhere.
+      - label: "Keep him at court on a stipend"
+        legitimacy_bp: 400
+        wealth_bp: -600
+        outcome: >-
+          The poet stays and others follow him, and the court grows lively and costly. Whatever
+          he sings of you is not written down.
     history: >-
       The Sangam poems are dated by most scholars to the first centuries AD. The tale of three
       academies at Madurai is first written down about the 8th century AD. The poems do show that
@@ -166,7 +179,7 @@ chapters:
       They want to write down who gave it. In the north, they use an alphabet called Brahmi. It
       was made for another language, but with a few extra letters it can write Tamil.
     choices:
-      - label: "Give the cave, and let them record it in Tamil"
+      - label: "Grant the hill cave and the writing"
         historical: true
         legitimacy_bp: 600
         influence: {clergy: 500}
@@ -177,10 +190,17 @@ chapters:
           scholars take to be a Pandya, a few officials, and the donors of the beds. Their
           dating, between the third and first centuries BC, is debated; so is whether the
           Tamils wrote earlier on other materials.
-      - label: "Refuse: the monks must find their own shelter"
+      - label: "Refuse; they must find shelter elsewhere"
         legitimacy_bp: -200
         outcome: >-
           The monks go to another hill, and another king.
+      - label: "Offer a hall in Madurai instead"
+        legitimacy_bp: 300
+        wealth_bp: -400
+        influence: {clergy: 300}
+        outcome: >-
+          The monks accept a hall of timber and thatch within the city, which does not last the
+          way a cave would. No one cuts a line in stone.
     history: >-
       Tamil-Brahmi cave inscriptions near Madurai, such as those at Mangulam, record gifts of
       stone beds to Jain monks, one under a king who is generally read as a Pandya

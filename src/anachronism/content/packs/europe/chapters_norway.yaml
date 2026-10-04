@@ -41,7 +41,7 @@ chapters:
       Your scouts say that a large fleet is waiting behind an island ahead. Your men say
       there are only a few, and are eager to fight.
     choices:
-      - label: "Sail on, and fight them"
+      - label: "Sail on with the whole fleet"
         historical: true
         legitimacy_bp: -2500
         unrest_bp: 1000
@@ -54,11 +54,19 @@ chapters:
           divided: the Danes and Swedes take the south, and Eric and Sweyn Hakonarson hold the
           north as jarls under Sweyn Forkbeard.
         deeds: {ruler_falls: "is lost at Svolder", give: [m_viken], give_to: denmark}
-      - label: "Turn back, and take the long way home"
+      - label: "Sail home by a longer route"
         legitimacy_bp: -500
+        wealth_bp: -500
         outcome: >-
           Your men grumble, and the Danes hear that you have run. You reach Norway safely,
           but the same enemies will be waiting next year.
+      - label: "Wait offshore for ships from Norway"
+        legitimacy_bp: -300
+        unrest_bp: 300
+        outcome: >-
+          You send fast boats home and lie off the coast. Some ships come, but not enough, and
+          every day the Danes grow in number as well.
+        deeds: {"ships": 8, "men": 3000}
     history: >-
       In September 1000 Olaf Tryggvason was defeated at Svolder by Sweyn Forkbeard, Olof of
       Sweden and Eric Hakonarson; he was lost in the sea, and Norway was divided.
@@ -87,7 +95,7 @@ chapters:
       farmers and chiefs of the south are going over to the young man, and the sagas say
       that you lashed your ships together in a narrow sound to wait for him.
     choices:
-      - label: "Fight Olaf at Nesjar"
+      - label: "Meet Olaf's fleet in the sound"
         historical: true
         legitimacy_bp: -2500
         unrest_bp: 1500
@@ -98,9 +106,19 @@ chapters:
         deeds: {peace_with: [denmark, sweden, hre, scotland], take: [m_viken]}
       - label: "Make terms with Olaf and keep your lands"
         legitimacy_bp: -1000
+        unrest_bp: 500
+        wealth_bp: -600
         outcome: >-
           Olaf says he will take no oath from a Hakonarson, and no jarl will be left in
           Norway who can raise the farmers against him.
+        deeds: {"men": 4000}
+      - label: "Sail to Denmark for Cnut's ships"
+        legitimacy_bp: -1000
+        wealth_bp: -500
+        outcome: >-
+          You leave your lands in your officers' hands and sail for help. By the time you
+          return with Danish ships Olaf is in the south and the farmers are his.
+        deeds: {"ships": 15, "men": 3000}
     history: >-
       On Palm Sunday 1016 Olaf Haraldsson defeated Jarl Sweyn Hakonarson at Nesjar;
       Sweyn fled to Sweden and Olaf became king of all Norway.
@@ -129,7 +147,7 @@ chapters:
       little choice. Many of them hate you already: you have forced gifts of food from them,
       seized their silver, and mutilated or blinded the petty kings who would not bow.
     choices:
-      - label: "Proclaim the Christian law, and enforce it"
+      - label: "Proclaim a Christian law for the whole country"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: 2000
@@ -145,9 +163,17 @@ chapters:
         legitimacy_bp: 500
         unrest_bp: -500
         wealth_bp: -2000
+        influence: {"clergy": 800}
         outcome: >-
           The chiefs accept your gifts and your priests. It takes a generation, but fewer
           of them are your enemies when the Danes come.
+      - label: "Take the chiefs' sons into your household"
+        legitimacy_bp: 600
+        unrest_bp: 500
+        outcome: >-
+          The young men of the great families come to your court as foster-sons and hostages.
+          They learn your ways, and their fathers think twice before crossing you.
+        deeds: {"men": 3000, "martial_bp": 400}
     history: >-
       About 1024 Olaf Haraldsson, with Bishop Grimkell, proclaimed a Christian law at the
       Moster Thing; his forced conversions made him many enemies among the chiefs.
@@ -174,7 +200,7 @@ chapters:
       chiefs are gathering at the Thing to take him as their king. You still have a few
       loyal ships and men, your queen, and your young son Magnus.
     choices:
-      - label: "Leave Norway, and go east by way of Sweden to Kiev"
+      - label: "Leave Norway and seek a haven abroad"
         historical: true
         legitimacy_bp: -3000
         unrest_bp: 1000
@@ -184,11 +210,19 @@ chapters:
           proclaimed king at Nidaros, and leaves his nephew Hakon Eiriksson as jarl. In
           the south of Norway the Danes are now the masters.
         deeds: {give: [m_viken], give_to: denmark}
-      - label: "Stay and fight in the mountains"
+      - label: "Stay and make a stand in the north"
         legitimacy_bp: -1500
         unrest_bp: 1500
         outcome: >-
           Your few ships are caught in the fjord. The chiefs who hated you are glad.
+        deeds: {"men": 3000, "ships": 5}
+      - label: "Ask King Anund of Sweden for an army"
+        legitimacy_bp: -2000
+        unrest_bp: 800
+        outcome: >-
+          Anund is cool, though friendly, and gives you a bodyguard and a place to stay. He
+          does not send an army against Cnut.
+        deeds: {"men": 3000}
     history: >-
       In 1028 Cnut sailed to Norway and was accepted as king; Olaf Haraldsson fled to Sweden
       and then to Kievan Rus.
@@ -218,7 +252,7 @@ chapters:
       and the chiefs, Kalf Arnesson and Thorir Hund among them, have come out against you,
       with many more men than you have. The sagas say they had four times as many.
     choices:
-      - label: "Fight them at Stiklestad"
+      - label: "Give battle in Verdal"
         historical: true
         legitimacy_bp: 2500
         outcome: >-
@@ -229,11 +263,17 @@ chapters:
           miracles at your grave. In 1031 Bishop Grimkell has you declared a saint, at Nidaros,
           and Norway becomes Christian in earnest. As St Olaf you will be the king of Norway
           for ever.
-      - label: "Stay in Sweden, and wait for a better season"
+      - label: "Wait in Sweden for a better season"
         legitimacy_bp: -1000
         outcome: >-
           The chiefs hear that you have turned back. Svein and Aelfgifu keep Norway for another
           winter.
+      - label: "Fall back into the uplands and raise more men"
+        legitimacy_bp: -300
+        outcome: >-
+          You turn into the mountain valleys and call up the hill farmers. Few come, and the
+          chiefs follow at your heels.
+        deeds: {"men": 4000}
     history: >-
       Olaf Haraldsson fell at Stiklestad on 29 August 1030 (the date is traditional) against
       the farmers' army; he was declared a saint in 1031 and became Norway's patron.
@@ -261,7 +301,7 @@ chapters:
       there, and burn their farms. Sigvatr, who was your father's poet, offers you a poem: that a king who burns
       the farms of his subjects will not keep them.
     choices:
-      - label: "Heed the poet, and forgive"
+      - label: "Pardon the chiefs who fought at Stiklestad"
         historical: true
         legitimacy_bp: 3000
         unrest_bp: -2000
@@ -271,12 +311,23 @@ chapters:
           lives longer shall inherit the other's lands, and in 1042, when Harthacnut dies, you
           become King of Denmark.
         deeds: {peace_with: [denmark, sweden, hre, scotland], take: [m_viken]}
-      - label: "Take vengeance on the farmers"
+      - label: "Punish the farms that stood against Olaf"
         legitimacy_bp: -1500
         unrest_bp: 2000
+        influence: {"nobility": 800}
         outcome: >-
           Farms are burned in Trondelag, and the chiefs who fought against your father find
           that they have more to fear from you than from the Danes.
+        deeds: {"men": 5000}
+      - label: "Fine the chiefs but spare their lives"
+        legitimacy_bp: 500
+        wealth_bp: 1500
+        unrest_bp: 500
+        influence: {"nobility": -500}
+        outcome: >-
+          The chiefs who fought at Stiklestad pay a heavy fine in silver and cattle. They
+          grumble, and pay.
+        deeds: {"men": 3000}
     history: >-
       Magnus Olafsson became king of Norway in 1035 and, following the advice of Sigvatr,
       ruled mildly; in 1042 he became king of Denmark by the pact of 1038.
@@ -304,7 +355,7 @@ chapters:
       of Prince Yaroslav of Kiev. And he has made friends with Sweyn. He asks to share your
       kingdom, with half of his treasure.
     choices:
-      - label: "Share the kingdom with Harald, for half his gold"
+      - label: "Accept Harald as co-king for half his treasure"
         historical: true
         legitimacy_bp: 500
         wealth_bp: 3000
@@ -314,12 +365,20 @@ chapters:
           not get on, but the quarrel is patched up. A year later, in the autumn of 1047, you die in Denmark,
           still a young man. Harald is left as sole king, and he will be a very different
           sort of king from you.
-      - label: "Refuse, and fight him with the army you have"
+      - label: "Refuse Harald and gather the levy against him"
         unrest_bp: 2000
         legitimacy_bp: -1000
         outcome: >-
           Harald has Sweyn's help and the Danish fleet. You win him over in the end, but you
           have lost a year, and the wars are not over.
+        deeds: {"men": 8000, "martial_bp": 500}
+      - label: "Give Harald lands in Denmark as your jarl"
+        legitimacy_bp: 300
+        wealth_bp: 1500
+        outcome: >-
+          Harald takes the lands and a smaller share of the gold, and promises loyalty to the
+          face of his nephew. He will remember.
+        deeds: {"men": 4000}
     history: >-
       Harald Sigurdsson returned from Byzantium and Kiev and in 1046 was made co-king of
       Norway by Magnus, who died in 1047.
@@ -348,7 +407,7 @@ chapters:
       at the Nis river in 1062. But he is still king, and the farmers on both sides are
       weary of the war.
     choices:
-      - label: "Make peace, and let each keep his own kingdom"
+      - label: "Make a lasting peace with Sweyn"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: -1000
@@ -358,11 +417,19 @@ chapters:
           another throne across the sea: the English, where your claim as Magnus's heir is
           as good as anyone's.
         deeds: {peace_with: [denmark, hre], take: [m_viken]}
-      - label: "Fight on for the Danish crown"
+      - label: "Fight another summer against Sweyn"
         legitimacy_bp: -1000
         materials_bp: -2000
         outcome: >-
           Another summer, another burnt harbour, and Sweyn is still on his throne.
+        deeds: {"men": 8000, "ships": 30}
+      - label: "Agree a short truce and rebuild the fleet"
+        legitimacy_bp: 600
+        unrest_bp: -500
+        outcome: >-
+          Sweyn accepts a few years of quiet. You spend them rebuilding your ships and
+          rewarding your captains.
+        deeds: {"peace_with": ["denmark"], "ships": 20}
     history: >-
       After about fifteen years of war Harald Hardrada and Sweyn Estridsson made peace in about
       1064-1065, each keeping his own kingdom.
@@ -393,7 +460,7 @@ chapters:
       cannot hold both coasts at once. If you sail now, with all the ships you can raise,
       you could be master of England by the autumn.
     choices:
-      - label: "Sail for England with three hundred ships"
+      - label: "Sail for England in the late summer"
         historical: true
         legitimacy_bp: -500
         outcome: >-
@@ -405,11 +472,18 @@ chapters:
           to carry the survivors home. Three weeks later, at Hastings, King Harold meets
           Duke William.
         deeds: {grudges: {england: 1500}}
-      - label: "Stay at home, and keep the peace"
+      - label: "Keep the levy at home and the peace"
         legitimacy_bp: 500
         outcome: >-
           Tostig sails away, offended, to find another king. Norway is at peace, and England's
           crown goes to another.
+      - label: "Send Tostig with a smaller fleet to raid"
+        legitimacy_bp: 200
+        wealth_bp: 400
+        outcome: >-
+          Tostig sails with sixty ships and a few hundred of your men. He plunders the coast
+          and falls back, having stirred nothing up.
+        deeds: {"ships": 40, "men": 6000}
     history: >-
       Harald Hardrada invaded England with Tostig in September 1066, won at Fulford (20
       September) and was killed at Stamford Bridge (25 September).

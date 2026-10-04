@@ -27,7 +27,7 @@ chapters:
       the gods of highland and lowland are worshipped together, around a great stepped tower
       higher than any in Babylon.
     choices:
-      - label: "Build the city and its tower"
+      - label: "Build the new city and its tower"
         historical: true
         legitimacy_bp: 2000
         materials_bp: -2000
@@ -37,11 +37,19 @@ chapters:
           stamped with your name and the gods', inside three rings of walls. When you die,
           building stops, and the city is left half-empty. The ziggurat is still standing,
           the best preserved in the world; we call it Chogha Zanbil.
-      - label: "Rebuild the old temples of Susa instead"
+      - label: "Rebuild the old temples of Susa"
         legitimacy_bp: 1000
+        materials_bp: -500
         influence: {clergy: 1000}
         outcome: >-
           The priests of Susa are delighted. The priests of the highlands are not.
+      - label: "Raise new shrines in the highlands of Anshan"
+        legitimacy_bp: 1500
+        unrest_bp: 500
+        influence: {clergy: 800}
+        outcome: >-
+          The mountain priests are honoured and the highland chiefs approve. In Susa the priests
+          of the lowland gods feel overlooked. The highland chiefs are warmly pleased.
     history: >-
       Untash-Napirisha founded Al-Untash-Napirisha (Chogha Zanbil), with its great ziggurat,
       in the 13th century BC.
@@ -66,7 +74,7 @@ chapters:
       and the core itself filled with solid bronze, so that it weighs as much as twenty men.
       No one in the world has cast so large a figure.
     choices:
-      - label: "Cast the queen"
+      - label: "Cast the queen in solid bronze"
         historical: true
         knowledge_bp: 2000
         legitimacy_bp: 1000
@@ -77,8 +85,17 @@ chapters:
           of her stands in the Louvre.
       - label: "Carve her in stone, as usual"
         knowledge_bp: 500
+        legitimacy_bp: 500
         outcome: >-
           A fine stone statue is set up in the temple, and broken in the next war.
+      - label: "Cast a smaller figure in solid copper"
+        knowledge_bp: 1500
+        legitimacy_bp: 500
+        wealth_bp: -500
+        outcome: >-
+          The founder pours a half-size figure in one casting, which is much easier. It is a fine
+          work, though nobody in the world is amazed by it. The workshop learns a good deal from
+          the attempt.
     history: >-
       The bronze statue of Queen Napir-Asu (c. 1250 BC), found at Susa, weighs about 1,750 kg
       and was cast with a solid core.
@@ -104,7 +121,7 @@ chapters:
       Your commanders say the moment is perfect: cross the Tigris, strike Nippur and Der,
       and show the Assyrians that Babylonia is not theirs alone.
     choices:
-      - label: "Raid Babylonia"
+      - label: "Cross the Tigris and raid Babylonia"
         historical: true
         wealth_bp: 2500
         legitimacy_bp: 1000
@@ -116,8 +133,16 @@ chapters:
         deeds: {grudges: {assyria: 2000}}
       - label: "Stay behind the mountains"
         legitimacy_bp: -500
+        wealth_bp: 500
         outcome: >-
           The Assyrians tighten their grip on Babylonia, and look east.
+      - label: "Offer the Babylonian nobles your aid for gold"
+        wealth_bp: 2500
+        legitimacy_bp: 500
+        outcome: >-
+          Your envoys go to the Kassite houses, offering Elamite spears against Assyria. The
+          nobles take the offer, and your gold, and are in no hurry to act. The nobles pay in
+          advance.
     history: >-
       Kidin-Hutran III raided Babylonia in the time of the Assyrian puppet kings (c. 1224-1217
       BC), attacking Nippur, Der and Isin.
@@ -146,7 +171,7 @@ chapters:
       of Naram-Sin of Akkad, a thousand years old, and the law stele of Hammurabi. Your son
       says Inshushinak deserves trophies.
     choices:
-      - label: "Carry them to Susa"
+      - label: "Take the old steles to Susa"
         historical: true
         legitimacy_bp: 2500
         wealth_bp: 3000
@@ -156,11 +181,21 @@ chapters:
           have a few laws chiselled away for an inscription that is never written. In 1901
           French archaeologists dig them both up in Susa.
         deeds: {take: [bab_babylon]}
-      - label: "Take tribute, and leave the monuments"
-        wealth_bp: 2000
+      - label: "Take tribute and leave the monuments"
+        wealth_bp: 3000
+        legitimacy_bp: 2000
         outcome: >-
           Babylon pays. The steles stay in Sippar, and are lost when the temple falls, as most
-          things are.
+          things are. The restraint is admired as the act of a great king. Babylon's tribute is
+          generous.
+        deeds: {peace_with: [babylon]}
+      - label: "Take the temple treasure and hostages, and withdraw"
+        wealth_bp: 2500
+        legitimacy_bp: 500
+        unrest_bp: 300
+        outcome: >-
+          The great monuments stay where they are. Your army goes home with gold, silver and the
+          sons of Babylon's nobles.
     history: >-
       Shutruk-Nakhunte invaded Babylonia (c. 1158 BC) and carried the steles of Naram-Sin and
       Hammurabi to Susa, adding his own inscription to Naram-Sin's.
@@ -186,7 +221,7 @@ chapters:
 
       Your son wants to carry Marduk to Susa, so that Babylon has no god-king but yours.
     choices:
-      - label: "Bring Marduk to Susa"
+      - label: "Carry Marduk's statue off to Susa"
         historical: true
         legitimacy_bp: 2000
         influence: {clergy: 1500}
@@ -195,11 +230,21 @@ chapters:
           that Marduk went of his own will, to punish his city. In Susa you build on and on;
           you die soon after, an old man, the greatest king Elam has had.
         deeds: {grudges: {babylon: 3000}}
-      - label: "Leave Marduk in his temple"
-        legitimacy_bp: -500
-        influence: {clergy: -1000}
+      - label: "Take the temple treasure and go home"
+        legitimacy_bp: 1500
+        wealth_bp: 500
+        influence: {clergy: -500}
         outcome: >-
-          The priests of Babylon offer sacrifices for your health, and plot.
+          Elam carries off the gold of Babylon, and Marduk stays in his temple. The priests of
+          Babylon offer sacrifices for your health, and plot. The priests of Susa praise your
+          restraint toward the god.
+      - label: "Garrison Babylon, leave the god alone"
+        legitimacy_bp: 500
+        unrest_bp: 500
+        outcome: >-
+          A strong Elamite garrison holds the city, and the priests go on with their rites under
+          its eye. Babylon is quiet, but it does not forget who holds it.
+        deeds: {men: 5000}
     history: >-
       Kutir-Nahhunte ended the Kassite dynasty (c. 1155 BC) and took Marduk's statue to Elam.
     sources: ["Marduk Prophecy", "Chronicle of Nebuchadnezzar I", "Potts, The Archaeology of Elam (2016)"]
@@ -224,17 +269,25 @@ chapters:
       inscribed not only with your name, but with the names of every king who built here
       before you, back for centuries, so that the gods remember them all.
     choices:
-      - label: "Inscribe the old kings' names"
+      - label: "Name the old kings on the bricks"
         historical: true
         knowledge_bp: 2000
         legitimacy_bp: 1500
         outcome: >-
           Thousands of bricks list your predecessors and their works. They are one of the main
           ways we know the history of Elam at all.
-      - label: "Only your own name"
+      - label: "Put only your own name on them"
         legitimacy_bp: 1000
         outcome: >-
           The bricks praise you alone. The kings before you are forgotten a little faster.
+      - label: "Record your own campaigns on the bricks"
+        knowledge_bp: 1500
+        legitimacy_bp: 2000
+        materials_bp: -500
+        outcome: >-
+          The bricks tell of your marches up the Tigris and the tribute you brought home, in
+          solid, proud lines. They are less loved by later scholars than the lists would have
+          been. The bricks are admired as a record of a great reign.
     history: >-
       Shilhak-Inshushinak (c. 1150-1120 BC) campaigned in the Tigris region and rebuilt
       temples at Susa with inscribed bricks commemorating earlier kings' work.
@@ -260,7 +313,7 @@ chapters:
 
       His army has reached the Ulai river. Yours is waiting.
     choices:
-      - label: "Fight at the Ulai"
+      - label: "Meet the Babylonians at the Ulai"
         historical: true
         legitimacy_bp: -3000
         outcome: >-
@@ -275,6 +328,13 @@ chapters:
           Marduk goes home on a barge, and Nebuchadnezzar goes home with him, without a
           battle.
         deeds: {give: [bab_babylon], give_to: babylon}
+      - label: "Hold the passes and wear him down"
+        legitimacy_bp: -1000
+        unrest_bp: 500
+        outcome: >-
+          Your army takes the high ground and waits. The Babylonians are dying of thirst by day,
+          but their chariots are fresher than yours, and you cannot hold the passes for ever.
+        deeds: {men: 6000}
     history: >-
       Nebuchadnezzar I defeated Hutelutush-Inshushinak at the Ulai river (c. 1110 BC) and
       recovered Marduk's statue; Elam's history goes dark until the 8th century.

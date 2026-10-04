@@ -33,7 +33,7 @@ chapters:
       with your army. He thinks you should move from Settsu to a great new castle at Iimoriyama,
       above the plain of Kawachi, and put your brothers in charge of the lands round it.
     choices:
-      - label: "Move to Iimoriyama, and put your brothers on the border"
+      - label: "Make Iimoriyama your seat and post your brothers"
         historical: true
         legitimacy_bp: 1500
         influence: {nobility: 1000}
@@ -43,9 +43,18 @@ chapters:
           have not got is an heir who is strong, or a family without a quarrel in it.
       - label: "Stay in Settsu and rule through the shogun"
         legitimacy_bp: 500
+        wealth_bp: 400
         outcome: >-
           You remain close to the court and the money. The Hatakeyama, in the south, take
           note of your caution.
+      - label: "Take up residence in Kyoto by the court"
+        legitimacy_bp: 700
+        wealth_bp: 500
+        unrest_bp: 400
+        outcome: >-
+          You move into the capital itself, among the courtiers and the money-lenders. The
+          court is flattered and the shogun uneasy, and your brothers, left in the provinces,
+          must look after themselves.
     history: >-
       By 1560 Miyoshi Nagayoshi ruled Settsu, Kawachi and Yamato with his steward Matsunaga
       Hisahide, held Kyoto in practice, and had moved to Iimoriyama castle.
@@ -71,7 +80,7 @@ chapters:
       Your best generals are gone, and you are afraid the Hatakeyama will be at the gates of
       Iimoriyama before the summer ends.
     choices:
-      - label: "Gather every man you have, and fight them yourself"
+      - label: "Call out every man, and lead them yourself"
         historical: true
         legitimacy_bp: 1500
         wealth_bp: -1000
@@ -79,10 +88,20 @@ chapters:
           Your army, with Hisahide's, defeats the Hatakeyama in a summer campaign. They fall back
           to the south for good. But you have lost two brothers, and are tired.
         deeds: {}
-      - label: "Make peace with the Hatakeyama"
+      - label: "Treat with the Hatakeyama"
         legitimacy_bp: -1500
+        unrest_bp: 400
         outcome: >-
           They take Izumi for their peace. The shogun is delighted.
+      - label: "Send Hisahide to the field, and hold the castle"
+        legitimacy_bp: 400
+        wealth_bp: -500
+        unrest_bp: 500
+        outcome: >-
+          Hisahide takes the army south and does what is needed, at a price. The Hatakeyama
+          fall back, and the retainers murmur that the lord of the house sat behind his walls
+          while a steward won the war.
+        deeds: {men: 1500}
     history: >-
       The Miyoshi lost Jikkyu (1561) and Sogo Kazumasa (1562) fighting the Hatakeyama and the
       Negoro monks; Nagayoshi then defeated the Hatakeyama and kept the south.
@@ -107,7 +126,7 @@ chapters:
 
       You have a nephew, Jikkyu's son Juro, a boy of fourteen or so. You have no other heir.
     choices:
-      - label: "Adopt your nephew, and trust Hisahide a little less"
+      - label: "Adopt your nephew Juro as your heir"
         historical: true
         legitimacy_bp: -1500
         influence: {nobility: -500}
@@ -115,10 +134,19 @@ chapters:
           The boy is renamed Miyoshi Yoshitsugu. Your wits are going. Nobody in the house knows
           whether Hisahide killed your son or not, and nobody is able to prove that he did.
       - label: "Make Hisahide your regent"
-        legitimacy_bp: -2500
+        legitimacy_bp: -2000
+        influence: {nobility: -600}
         outcome: >-
-          Your brothers' men and your own old retainers rise in fury. The Miyoshi are halved
-          before the year is out.
+          Your brothers' men and your own old retainers are furious, and some of them leave
+          the house before the year is out.
+      - label: "Name your brother Fuyuyasu your heir"
+        legitimacy_bp: -300
+        unrest_bp: 300
+        influence: {nobility: 500}
+        outcome: >-
+          Fuyuyasu is a grown man and an able one, and the older retainers are pleased. The
+          boy Juro, left out, has friends who are not, and the court says that a brother's line
+          is not a son's.
     history: >-
       Nagayoshi's son Yoshioki died in 1563, and the family later said Hisahide had poisoned him;
       Nagayoshi adopted his nephew Yoshitsugu.
@@ -142,9 +170,9 @@ chapters:
 
       In the summer, if you die, your adoptive son Yoshitsugu will be left with a half-wrecked
       house, the shogun waiting to take a revenge, and Hisahide. Your senior retainers are
-      already asking what to do with the news.
+      already asking what is to be done.
     choices:
-      - label: "Have Fuyuyasu put to death, and let your death be hidden"
+      - label: "Have Fuyuyasu put to death"
         historical: true
         legitimacy_bp: -2000
         unrest_bp: 1500
@@ -156,9 +184,17 @@ chapters:
         deeds: {}
       - label: "Hear Fuyuyasu out"
         legitimacy_bp: 500
+        unrest_bp: -300
         outcome: >-
           Your brother is shown to be innocent. You die all the same, in the summer, and your
           house has one less enemy within it.
+      - label: "Confine Fuyuyasu in a temple, and inquire"
+        legitimacy_bp: -300
+        unrest_bp: 600
+        influence: {clergy: 300}
+        outcome: >-
+          Fuyuyasu is shut up in a temple while your clerks ask questions. The inquiry is
+          slow, you are not, and the house is left with an unsettled quarrel and a sick lord.
     history: >-
       Nagayoshi had his brother Atagi Fuyuyasu killed in 1564 and died himself that summer; his
       death was concealed for about two years.
@@ -184,7 +220,7 @@ chapters:
       They propose to go to the palace with ten thousand men, as petitioners, and ask the shogun
       to replace his advisers.
     choices:
-      - label: "Send the petitioners with ten thousand men"
+      - label: "Send ten thousand men to petition him"
         historical: true
         legitimacy_bp: -2000
         unrest_bp: 1000
@@ -194,11 +230,20 @@ chapters:
           for cover. You make Yoshiteru's cousin Yoshihide shogun. The wise men of Kyoto say
           that a man who has killed a shogun is a lord of nothing but time.
         deeds: {conquer: [ashikaga]}
-      - label: "Keep the shogun, and offer him new advisers"
+      - label: "Send envoys with a new set of advisers"
         legitimacy_bp: 500
+        wealth_bp: -500
+        deeds: {men: 2000}
         outcome: >-
           Yoshiteru refuses and your retainers murmur. Kakukei of Nara, his younger brother, is
           let alone.
+      - label: "Arrest the shogun's advisers, and leave him be"
+        legitimacy_bp: -500
+        unrest_bp: 700
+        outcome: >-
+          Your men seize the shogun's chief advisers in the city and hold them. Yoshiteru
+          writes to the provinces more eagerly than before, and the lords read his letters.
+        deeds: {men: 3000}
     history: >-
       On 19 June 1565 Miyoshi Yoshitsugu's men and Matsunaga Hisamichi attacked the Nijo palace
       and killed the shogun Ashikaga Yoshiteru; his brother Kakukei (Yoshiaki) escaped.
@@ -225,7 +270,7 @@ chapters:
       They say Hisahide will not be taken while he has his castle. Hisahide's men creep
       close at night.
     choices:
-      - label: "Fight Hisahide's men at Todai-ji"
+      - label: "Fight Hisahide's men in the temple"
         historical: true
         legitimacy_bp: -2500
         unrest_bp: 2000
@@ -237,11 +282,19 @@ chapters:
           historians doubt it. Either way, it happened in your camp. Soon after, you leave the Three
           and go over to Hisahide.
         deeds: {}
-      - label: "Withdraw from Nara"
-        legitimacy_bp: -500
+      - label: "Withdraw your camp from Nara"
+        legitimacy_bp: -1000
+        unrest_bp: 800
         outcome: >-
           Hisahide remains in Tamon, the monks keep their Buddha, and your retainers begin to wonder
           whose side you are on.
+      - label: "Besiege Tamon, keeping out of the temple"
+        legitimacy_bp: -300
+        unrest_bp: 500
+        outcome: >-
+          The Three set their lines round Tamon castle and keep their men out of the temple
+          grounds. The siege is slow and costly, and Hisahide's men look for another way.
+        deeds: {men: 1500}
     history: >-
       In October 1567 fighting between Hisahide and the Miyoshi Three at Todai-ji burned the Great
       Buddha Hall; Yoshitsugu went over to Hisahide soon afterwards.
@@ -267,7 +320,7 @@ chapters:
 
       Nobunaga's letter to you is short: those who submit keep their lands.
     choices:
-      - label: "Submit to Nobunaga, and keep part of Kawachi"
+      - label: "Submit to Nobunaga, keeping Kawachi"
         historical: true
         legitimacy_bp: -1500
         outcome: >-
@@ -280,6 +333,14 @@ chapters:
         unrest_bp: 1500
         outcome: >-
           Your army holds Settsu for a month and loses it all in two.
+        deeds: {men: 3000}
+      - label: "Abandon Kyoto, and hold the Kawachi castles"
+        legitimacy_bp: -500
+        outcome: >-
+          You draw your men back from the capital into the castles of Kawachi, and Nobunaga
+          rides into Kyoto without a fight. Settsu is lost soon after, and each castle is left
+          to stand or fall on its own.
+        deeds: {men: 2500, give: [j_kyoto]}
     history: >-
       Nobunaga escorted Ashikaga Yoshiaki to Kyoto in 1568, drove the Miyoshi Three from Settsu;
       Yoshitsugu and Hisahide submitted.
@@ -308,7 +369,7 @@ chapters:
       Nobunaga's army has come to Kawachi. Your retainers have deserted. At Wakae castle you
       have a few hundred loyal men.
     choices:
-      - label: "Die in the castle"
+      - label: "Make a last stand in the keep"
         historical: true
         legitimacy_bp: -3500
         unrest_bp: 3000
@@ -318,10 +379,18 @@ chapters:
           1577 and, when his castle at Shigisan is stormed, blows himself up with the
           famous Hiragumo tea kettle that Nobunaga wanted.
         deeds: {ruler_falls: "dies in the burning of Wakae castle"}
-      - label: "Flee to the Mori"
+      - label: "Flee to the Mori by sea"
         legitimacy_bp: -1500
+        unrest_bp: 800
         outcome: >-
           You escape by sea, and live out your days in a western castle as a refugee.
+      - label: "Surrender the keep and ask for mercy"
+        legitimacy_bp: -2000
+        unrest_bp: 500
+        outcome: >-
+          You open the gate and send out your retainers to ask Nobunaga for your life.
+          He is not known for his mercy to men who have broken faith, and no one in the keep
+          can say what he will answer.
     history: >-
       Miyoshi Yoshitsugu was defeated by Nobunaga's army at Wakae castle in 1573 and killed
       himself; Matsunaga Hisahide, who rebelled in 1577, died at Shigisan.

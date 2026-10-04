@@ -27,7 +27,7 @@ chapters:
       into the Kobayakawa, so that both great houses are yours. What will hold your three sons
       together when you are gone?
     choices:
-      - label: "Write them a letter"
+      - label: "Write them a letter of advice"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: -1000
@@ -38,9 +38,19 @@ chapters:
           into three arrows: one breaks easily, three together do not. The brothers never
           quarrel.
       - label: "Make the eldest master of the others"
+        legitimacy_bp: 500
+        unrest_bp: 500
         influence: {nobility: -1000}
         outcome: >-
           Takamoto gives orders, and his brothers obey, with long faces.
+      - label: "Bind them with oaths sworn at a shrine"
+        legitimacy_bp: 1500
+        unrest_bp: -500
+        influence: {clergy: 300}
+        outcome: >-
+          The three brothers swear before the gods to stand together, and are married into houses
+          that will hold them to it. The oaths are solemn, and rather less detailed than a written
+          rule would be. The oaths are widely admired, and the house is calm.
     history: >-
       Motonari's admonition to his three sons (1557) urged them to stand together for the
       Mori; the 'three arrows' story is a later embellishment.
@@ -66,7 +76,7 @@ chapters:
 
       Amago Haruhisa has died suddenly. His son is young.
     choices:
-      - label: "Take the silver mountain"
+      - label: "Seize the silver mountain from the Amago"
         historical: true
         wealth_bp: 3500
         legitimacy_bp: 500
@@ -74,10 +84,20 @@ chapters:
           Iwami Ginzan is yours, and its silver pays for every war you fight from now on.
           Portuguese maps begin to mark the 'silver mines' of the kingdom of Japan.
         deeds: {grudges: {amago: 2000}}
-      - label: "Make peace with the Amago, and share it"
-        wealth_bp: 1500
+      - label: "Make peace with the Amago and share the mine"
+        wealth_bp: 3200
+        legitimacy_bp: 300
         outcome: >-
-          The silver is shared, and the Amago rebuild their strength.
+          The silver is shared, and the Amago rebuild their strength. The Amago's share is smaller
+          than they hoped, and the silver flows.
+      - label: "Strike at Izumo while the Amago are weak"
+        legitimacy_bp: 500
+        unrest_bp: 500
+        wealth_bp: -500
+        outcome: >-
+          The army marches into the Amago heartland instead of the mine. The silver can wait, you
+          say; a broken enemy can be dealt with at leisure.
+        deeds: {men: 8000}
     history: >-
       After Amago Haruhisa's death (1561), Mori Motonari secured the Iwami silver mine
       (1562), one of the largest silver sources of the age.
@@ -106,7 +126,7 @@ chapters:
       The castle is starving. A young Amago retainer, Yamanaka Shikanosuke, has fought one of
       your champions in single combat at the river, and won.
     choices:
-      - label: "Accept the Amago surrender"
+      - label: "Take the castle on terms of surrender"
         historical: true
         legitimacy_bp: 2000
         outcome: >-
@@ -115,11 +135,21 @@ chapters:
           spends twelve years trying to bring the Amago back, until he is murdered on the way
           to a Mori prison.
         deeds: {conquer: [amago]}
-      - label: "Storm the castle"
+      - label: "Storm the castle at once"
         materials_bp: -2000
         unrest_bp: 1500
         outcome: >-
-          Your men climb the mountain and die on its walls. The castle holds another winter.
+          Six thousand more men are sent up the mountain, and die on its walls. The castle holds
+          another winter.
+        deeds: {men: 6000}
+      - label: "Tighten the siege through another winter"
+        legitimacy_bp: 2000
+        food_bp: -500
+        outcome: >-
+          Your lines are strengthened and the blockade is made close. The Amago are starved, but
+          it takes time, and the army needs feeding too. Your captains admire the discipline, and
+          the Amago starve out in time.
+        deeds: {men: 3000}
     history: >-
       Gassan-Toda surrendered to Motonari in 1566, ending the Amago as a power; Yamanaka
       Shikanosuke led attempts to restore them until his death in 1578.
@@ -145,7 +175,7 @@ chapters:
 
       Terumoto asks for your last advice.
     choices:
-      - label: "Tell him never to reach for the realm"
+      - label: "Tell him to keep what the Mori hold"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
@@ -156,8 +186,15 @@ chapters:
         legitimacy_bp: 500
         unrest_bp: 1000
         outcome: >-
-          Terumoto's uncles exchange looks. The army begins to prepare for the road east.
-        deeds: {grudges: {oda: 2000}}
+          Terumoto's uncles exchange looks. Eight thousand men are mustered, and the army begins
+          to prepare for the road east.
+        deeds: {men: 8000, grudges: {oda: 2000}}
+      - label: "Tell him to make terms with Nobunaga"
+        legitimacy_bp: 500
+        outcome: >-
+          You advise paying court to the new master of Kyoto and keeping the peace with him.
+          Terumoto's uncles approve, and think he need not hurry.
+        deeds: {peace_with: [oda]}
     history: >-
       Motonari died in 1571, having told his heirs to preserve the house rather than seek
       national power.
@@ -194,8 +231,19 @@ chapters:
         deeds: {ships: 20, grudges: {oda: 2500}}
       - label: "Stay out of Nobunaga's quarrel"
         legitimacy_bp: -1000
+        food_bp: 500
         outcome: >-
-          The monks hold out without your rice, for a while. Nobunaga notes who helped him.
+          The monks hold out without your rice, for a while. Nobunaga notes who did not help him,
+          and the Mori rice stays in the granaries.
+        deeds: {peace_with: [oda]}
+      - label: "Send the rice in merchant boats alone"
+        legitimacy_bp: 1000
+        food_bp: -1000
+        wealth_bp: -500
+        outcome: >-
+          The rice goes by quiet routes in many small boats, without the fleet. Some of it
+          arrives, and Nobunaga's ships take much of the rest. Your captains approve of the quiet
+          help.
     history: >-
       In 1576 the Mori fleet, with the Murakami, defeated the Oda blockade at the first battle
       of Kizugawaguchi; Oda's armoured ships won the second (1578).
@@ -224,7 +272,7 @@ chapters:
       commander, Shimizu Muneharu. Muneharu says he will gladly die to save his men. Then a
       strange thing: Hideyoshi suddenly wants peace at once, and asks less.
     choices:
-      - label: "Make peace, and let Muneharu die"
+      - label: "Make peace on Hideyoshi's terms"
         historical: true
         legitimacy_bp: -1000
         outcome: >-
@@ -235,10 +283,18 @@ chapters:
           Japan, and you are his loyal vassal.
         deeds: {peace_with: [oda]}
       - label: "Hold out for better terms"
+        legitimacy_bp: 300
         food_bp: -1500
         outcome: >-
           The water keeps rising. Hideyoshi's envoys come back every day, more nervous each
           time.
+      - label: "Break the dyke with a night attack"
+        legitimacy_bp: 500
+        unrest_bp: 500
+        outcome: >-
+          Your men creep down from the hills in the rain to cut the long dyke and let the water
+          out. The attempt is bold, and Hideyoshi's guards are watchful.
+        deeds: {men: 8000}
     history: >-
       Hideyoshi's flooding of Takamatsu castle (1582) ended with Shimizu Muneharu's suicide and
       a peace concluded as news of Nobunaga's death arrived.
@@ -264,7 +320,7 @@ chapters:
 
       Your uncle Takakage, who has never lost a battle, will command them.
     choices:
-      - label: "Send the army"
+      - label: "Send the full levy under your uncle"
         historical: true
         wealth_bp: -2500
         legitimacy_bp: 500
@@ -273,11 +329,19 @@ chapters:
           The Mori army holds the south-west of Korea. At Byeokjegwan in 1593 Takakage beats a
           Ming army sent to retake Seoul. In the end the war achieves nothing, and the men who
           come home are fewer than the men who went.
-      - label: "Plead poverty, and send fewer"
+      - label: "Plead poverty and send fewer men"
         legitimacy_bp: -1500
+        wealth_bp: 1000
         outcome: >-
           Hideyoshi's inspectors count your soldiers on the beach at Nagoya, and write down the
           number.
+      - label: "Send silver and rice instead of men"
+        legitimacy_bp: 200
+        wealth_bp: -2000
+        food_bp: -1000
+        outcome: >-
+          Supply ships go to Nagoya instead of troops. Hideyoshi accepts the grain, and notes the
+          missing soldiers. Hideyoshi is satisfied with the supplies.
     history: >-
       The Mori sent some 30,000 men to Korea in 1592; Kobayakawa Takakage won at Byeokjegwan
       in 1593.
@@ -302,7 +366,7 @@ chapters:
       Your cousin Hiroie has quietly told Ieyasu that the Mori army will not fight, if Ieyasu
       leaves the Mori their lands. He asks you to stay in Osaka.
     choices:
-      - label: "Stay in Osaka"
+      - label: "Remain in Osaka and keep the army still"
         historical: true
         legitimacy_bp: -3000
         outcome: >-
@@ -318,6 +382,14 @@ chapters:
         outcome: >-
           You ride out of Osaka with Hideyoshi's son's standard. When it appears above the
           field, half the eastern lords waver.
+        deeds: {men: 10000}
+      - label: "Declare neutrality and take the army home to Aki"
+        legitimacy_bp: -1500
+        wealth_bp: -500
+        unrest_bp: 300
+        outcome: >-
+          You recall the army from Nangu and write to both sides that the Mori take no part.
+          Neither side is pleased to be refused.
     history: >-
       Mori Terumoto, nominal commander of the Western Army, remained in Osaka during
       Sekigahara (1600); Kikkawa Hiroie kept the Mori troops out of the battle. The Mori lost

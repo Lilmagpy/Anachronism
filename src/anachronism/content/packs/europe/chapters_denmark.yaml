@@ -28,7 +28,7 @@ chapters:
       Your stepson Olof, King of the Swedes, and Eric, the exiled Norwegian jarl, have joined
       you. Your fleets are hidden behind an island on Olaf's route.
     choices:
-      - label: "Ambush him, and share out Norway"
+      - label: "Ambush Olaf's fleet with your allies"
         historical: true
         legitimacy_bp: 2000
         outcome: >-
@@ -36,10 +36,20 @@ chapters:
           cleared, Olaf leaps overboard in his armour, and is never seen again. Norway is
           divided: you take the south, and Eric and his brother rule the rest as your jarls.
         deeds: {peace_with: [norway], tributaries: [norway]}
-      - label: "Let him pass, and wait for a better chance"
+      - label: "Let him pass and wait for a better chance"
         legitimacy_bp: -500
+        wealth_bp: 500
         outcome: >-
-          Olaf sails home. Your allies go home grumbling.
+          Olaf sails home. Your allies go home grumbling, and the ships are not paid for a
+          summer's waiting, which saves you silver.
+      - label: "Settle with Olaf over your sister's dower"
+        wealth_bp: -500
+        legitimacy_bp: 2000
+        outcome: >-
+          You send word that Thyri's dower lands will be paid. Olaf is satisfied for the present,
+          and your allies mutter that you have let the chance go. Denmark's chiefs honour a king
+          who keeps the peace by paying what is owed.
+        deeds: {peace_with: [norway]}
     history: >-
       In 1000 Sweyn Forkbeard, Olof of Sweden and Eric Hakonarson defeated Olaf Tryggvason
       at Svolder; Olaf leapt into the sea, and Norway was divided under Danish overlordship.
@@ -67,7 +77,7 @@ chapters:
 
       Your warriors want revenge, and the silver that comes with it.
     choices:
-      - label: "Take revenge on England"
+      - label: "Sail for England with your own fleet"
         historical: true
         wealth_bp: 2500
         legitimacy_bp: 1000
@@ -77,10 +87,20 @@ chapters:
           say they have never met worse handplay in England. From now on the English pay more
           every few years: 24,000 pounds of silver, then 36,000, then 48,000.
         deeds: {grudges: {england: 1500}}
-      - label: "Demand blood money"
+      - label: "Demand blood money through envoys"
         wealth_bp: 1500
+        legitimacy_bp: -300
         outcome: >-
-          Aethelred pays, and says nothing about the massacre. You both know it is not over.
+          Aethelred pays, and says nothing about the massacre. Your warriors think you weak, and
+          you both know it is not over.
+      - label: "Send a jarl's raiding fleet and stay at home"
+        wealth_bp: 2200
+        legitimacy_bp: 800
+        outcome: >-
+          A fleet of thirty ships goes under a trusted jarl, while you deal with troubles nearer
+          home. It brings back silver, but less than you would have taken yourself. The jarl's
+          fleet does well, and your name is honoured for it.
+        deeds: {ships: 30}
     history: >-
       Aethelred ordered the St Brice's Day massacre of Danes in England (13 November 1002);
       Sweyn raided England in 1003-1004, sacking Exeter and Norwich.
@@ -109,7 +129,7 @@ chapters:
       The English are exhausted, and they hate their king. Your son Cnut says: not raids this
       time. The kingdom.
     choices:
-      - label: "Sail to take the kingdom"
+      - label: "Invade England to take the crown"
         historical: true
         legitimacy_bp: 2000
         outcome: >-
@@ -118,11 +138,20 @@ chapters:
           and follows them. At Christmas the English take you for their king. Five weeks later
           you are dead, at Gainsborough. The fleet chooses Cnut as king.
         deeds: {tributaries: [england]}
-      - label: "Take Thorkell back with a bigger bribe"
+      - label: "Outbid Aethelred for Thorkell's ships"
         wealth_bp: -2500
         outcome: >-
-          Thorkell takes your silver and Aethelred's, and stays in England, waiting to see who
-          pays more.
+          Thorkell takes your silver and brings thirty ships over to you, but Aethelred's pay
+          keeps the rest of his men in England, waiting to see who pays more.
+        deeds: {ships: 30}
+      - label: "Raid England again for silver, as before"
+        wealth_bp: 1000
+        legitimacy_bp: 1500
+        outcome: >-
+          A fleet goes out for the summer's plunder, and comes home with silver and with men who
+          have seen how weak the English are. The kingdom is left for another year. Your warriors
+          are pleased to be on the old road to silver.
+        deeds: {men: 6000}
     history: >-
       Sweyn conquered England in 1013 and was accepted as king at Christmas; he died at
       Gainsborough on 3 February 1014.
@@ -150,7 +179,7 @@ chapters:
       Now he is here. He asks you to share the kingdom of Denmark with him, until he can win
       England back.
     choices:
-      - label: "Refuse him Denmark, but lend him ships"
+      - label: "Keep Denmark, but lend him ships"
         historical: true
         legitimacy_bp: 500
         materials_bp: -1500
@@ -160,11 +189,17 @@ chapters:
           England. He pays his army with the largest tax England has ever raised, and marries
           Aethelred's widow, Emma of Normandy.
         deeds: {ally_with: [england]}
-      - label: "Share the kingdom with him"
+      - label: "Share the kingdom with him for now"
         legitimacy_bp: -1000
         outcome: >-
           Cnut stays in Denmark, and the brothers rule together, until they quarrel.
         deeds: {break_away: [england]}
+      - label: "Lend him silver but no ships"
+        wealth_bp: -1500
+        legitimacy_bp: 200
+        outcome: >-
+          You pay for Cnut's hired men and send him on his way. He sails for England with fewer
+          men than he hoped, and does not forget who gave him less than he asked.
     history: >-
       After Sweyn's death the English recalled Aethelred (1014). Harald II refused to share
       Denmark with Cnut but supported his invasion of 1015-1016, which made Cnut king of
@@ -198,11 +233,18 @@ chapters:
           Jarl Sweyn flees to Sweden and dies there. Olaf makes himself king of all Norway, and
           sets about making it Christian with the sword.
         deeds: {break_away: [norway]}
-      - label: "Send ships to Norway"
+      - label: "Send a fleet to win Norway back"
         materials_bp: -2000
         outcome: >-
           The jarl sails back with Danish ships, and Norway has two kings fighting for it.
         deeds: {ships: 30}
+      - label: "Send the jarl silver and ten ships, nothing more"
+        wealth_bp: -1000
+        legitimacy_bp: -300
+        outcome: >-
+          The jarl sails back with a small squadron. It is too few to beat Olaf, and too many to
+          be forgotten.
+        deeds: {ships: 10}
     history: >-
       Olaf Haraldsson defeated Jarl Sweyn Hakonarson at Nesjar (1016) and became king of all
       Norway.
@@ -230,7 +272,7 @@ chapters:
       come to England, that you will keep the laws of King Edgar, and that the English should
       obey your earls. And the fleet that won England for you is eating its head off.
     choices:
-      - label: "Write to the English, and send the fleet home"
+      - label: "Write to the English and pay off the fleet"
         historical: true
         legitimacy_bp: 2000
         wealth_bp: -2000
@@ -240,11 +282,18 @@ chapters:
           tax and sails home, apart from forty ships. You rule England as an English king, with
           English bishops and Danish earls, and the English are, on the whole, glad of the
           peace.
-      - label: "Keep the fleet, and rule by the sword"
+      - label: "Keep the whole fleet in English pay"
         unrest_bp: 2000
         outcome: >-
           The fleet stays. The English pay for it every year, and hate it every year.
         deeds: {ships: 40}
+      - label: "Pay off the fleet and rule through Danish earls"
+        legitimacy_bp: 1500
+        wealth_bp: -2000
+        outcome: >-
+          The fleet goes home, and the shires hear your will from your earls rather than from a
+          letter. The English find it harder to believe in your good intentions. The English fear
+          the earls, and the Danes respect a king who does not need a fleet.
     history: >-
       Cnut's letter to the English (1019-1020), written from Denmark, promised good law and
       claimed he had removed the Danish threat; most of his fleet was paid off in 1018.
@@ -270,7 +319,7 @@ chapters:
       they opened a dam and flooded your ships. Ulf's ships came to your rescue. Now he wants
       your thanks.
     choices:
-      - label: "Have Ulf killed"
+      - label: "Have Ulf put to death at Roskilde"
         historical: true
         legitimacy_bp: 1000
         unrest_bp: 1000
@@ -278,11 +327,18 @@ chapters:
           At Christmas, the story goes, after a quarrel over a game of chess, your housecarls
           kill Ulf in the church of the Holy Trinity at Roskilde. You give the church great
           estates in penance. Ulf's son Sweyn will one day be King of Denmark himself.
-      - label: "Forgive him, and keep him as regent"
+      - label: "Thank him and keep him as regent"
         legitimacy_bp: -500
+        unrest_bp: -500
         outcome: >-
           Ulf keeps his place and his ambitions. Hardecnut learns that kings can be made by
           other people.
+      - label: "Strip him of the regency and send him abroad"
+        legitimacy_bp: 500
+        unrest_bp: 500
+        outcome: >-
+          Ulf loses his office and his lands near the court, and goes into exile. His wife, your
+          sister, pleads for him in vain.
     history: >-
       Cnut fought Olaf of Norway and Anund Jacob of Sweden at the Holy River (Helgeå) in
       about 1026, and had his regent Ulf killed at Roskilde soon after.
@@ -308,19 +364,26 @@ chapters:
       pay fewer tolls on the road to Rome, that your archbishops pay less for their pallium,
       and that the emperor gives you the land north of the river Eider.
     choices:
-      - label: "Ask for all three"
+      - label: "Press all three of your requests"
         historical: true
         legitimacy_bp: 2500
         outcome: >-
           You get them all. You write a letter home to the English telling them so, and
           promising to rule justly. Your daughter will marry Conrad's son. The border of
           Denmark is set at the Eider, where it stays for eight hundred years.
-      - label: "Pray, and go home"
+      - label: "Pray in Rome and ask for nothing"
         legitimacy_bp: 1000
         influence: {clergy: 1000}
         outcome: >-
           You light candles at every altar in Rome, and go home a little poorer and much
           admired.
+      - label: "Ask for the tolls and the pallium only"
+        wealth_bp: 500
+        legitimacy_bp: 2000
+        outcome: >-
+          You ask for what your pilgrims and bishops need, and nothing for the crown. The emperor
+          grants it readily. The emperor receives your modest request graciously, and your name is
+          remembered.
     history: >-
       Cnut attended Conrad II's imperial coronation in Rome at Easter 1027 and won
       concessions for pilgrims and archbishops, described in his letter of 1027.
@@ -356,10 +419,20 @@ chapters:
           jarl. You call yourself 'King of all England and Denmark, of the Norwegians and part
           of the Swedes'.
         deeds: {tributaries: [norway]}
-      - label: "Leave Norway to Olaf"
+      - label: "Leave Norway to King Olaf for now"
         legitimacy_bp: -500
+        wealth_bp: 1000
         outcome: >-
-          The silver goes back into the chests, and Olaf goes on making enemies.
+          The silver goes back into the chests, and three thousand men are kept in Danish pay on
+          the border. Olaf goes on making enemies.
+        deeds: {men: 3000}
+      - label: "Invade Norway with the fleet and fight Olaf"
+        legitimacy_bp: 1500
+        unrest_bp: 800
+        outcome: >-
+          You land in force and force Olaf to fight where he is strongest. The chiefs watch and
+          wait, and the cost is high.
+        deeds: {men: 20000, ships: 30}
     history: >-
       In 1028 Cnut took Norway, largely by bribing its chiefs; Olaf Haraldsson fled to
       Kievan Rus.
@@ -389,7 +462,7 @@ chapters:
       catch. Now the chiefs have gone to Kiev to fetch Olaf's young son Magnus. Aelfgifu asks
       for an army.
     choices:
-      - label: "No army; let her and Svein come home"
+      - label: "Recall Svein and his mother to Denmark"
         historical: true
         legitimacy_bp: -1000
         outcome: >-
@@ -403,7 +476,13 @@ chapters:
         outcome: >-
           Danish and English ships sail for Nidaros. The Norwegians, with St Olaf's son at
           their head, wait for them.
-        deeds: {grudges: {norway: 3000}}
+        deeds: {ships: 40, grudges: {norway: 3000}}
+      - label: "Send envoys and silver to the Norwegian chiefs"
+        wealth_bp: -1500
+        legitimacy_bp: 300
+        outcome: >-
+          A bishop goes to the chiefs with silver and promises of milder taxes. Whether they
+          believe him is another matter.
     history: >-
       The harsh rule of Svein Knutsson and Aelfgifu in Norway ended in 1035 when Magnus
       Olafsson was recalled; Cnut died on 12 November 1035.

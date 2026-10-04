@@ -38,10 +38,10 @@ chapters:
 
       Now your captain sends word from the siege: Goguryeo, which Silla begged for help, is
       coming south with fifty thousand horse and foot. They are in armour and they do not
-      stop. He asks whether to hold the walls or fall back to the coast of Gaya, where your
-      ships lie.
+      stop. He asks whether to hold the walls, fall back to the coast of Gaya where your ships
+      lie, or sail home.
     choices:
-      - label: "Fall back to Imna Gara and hold the fortress there"
+      - label: "Fall back to the Gaya coast and Imna Gara"
         historical: true
         legitimacy_bp: -500
         outcome: >-
@@ -51,7 +51,7 @@ chapters:
           Goguryeo's subject, is Goguryeo's again. The strait is still open. Your captains
           have learned what an armoured cavalry charge is.
         deeds: {grudges: {goguryeo: 1500, silla: 1500}}
-      - label: "Stand at Silla's walls and fight the Goguryeo army"
+      - label: "Stand and fight before Silla's walls"
         legitimacy_bp: -1500
         unrest_bp: 800
         outcome: >-
@@ -151,7 +151,7 @@ chapters:
       empire of the south thinks of you as a king. Your scribes can write the letter. It
       costs the gifts, and a ship, and a lot of luck at sea.
     choices:
-      - label: "Send ships with a letter and gifts to the Song court"
+      - label: "Send an embassy to the Song court"
         historical: true
         knowledge_bp: 1000
         legitimacy_bp: 1500
@@ -162,12 +162,14 @@ chapters:
           you be rewarded with an appointment. Four years later you send another embassy,
           with a man of Chinese name to carry your letter. You are the first king of the Wa
           the Chinese histories name.
-      - label: "Send word through Baekje, who already know the road"
+      - label: "Send your letter by Baekje's ships"
         legitimacy_bp: 500
+        knowledge_bp: 500
         outcome: >-
           The Baekje king sends your gifts to Jiankang with his own. Your name is on his
           list, and nowhere else.
-      - label: "Send nothing; your chiefs follow you without a Chinese seal"
+      - label: "Send nothing; your chiefs need no seal"
+        legitimacy_bp: -500
         influence: {nobility: 1000}
         outcome: >-
           Your great houses are pleased that you need no seal from the empire. The Chinese
@@ -199,7 +201,7 @@ chapters:
       could call yourself commander of the armies of all the countries across the strait, and
       ask for the seal of a great general. You have never commanded in most of those countries.
     choices:
-      - label: "Claim command of six countries, Baekje among them, and ask to be confirmed"
+      - label: "Ask for command of the lands across the strait"
         historical: true
         legitimacy_bp: 1000
         influence: {nobility: 800}
@@ -210,7 +212,7 @@ chapters:
           is rank enough, and when you ask for ranks for thirteen of your own men, as generals
           of the west, of the expeditions and of the guard, he gives those too. Your
           captains now have Chinese titles to show their men.
-      - label: "Ask only to be confirmed as king of Wa"
+      - label: "Ask only for confirmation as king of Wa"
         legitimacy_bp: 500
         outcome: >-
           The emperor confirms you, and no one in Silla or Baekje reads anything into your
@@ -300,7 +302,7 @@ chapters:
       Kyushu. In your letter you want to say so, and to ask the emperor to allow you to march
       on Goguryeo.
     choices:
-      - label: "Write the memorial, and ask for the emperor's blessing on a war against Goguryeo"
+      - label: "Memorialise the emperor for a war on Goguryeo"
         historical: true
         legitimacy_bp: 1500
         knowledge_bp: 500
@@ -313,7 +315,7 @@ chapters:
           Wa and commander of the armies of six countries. No Chinese soldier comes. The
           dynasty is overthrown within the year.
         deeds: {grudges: {goguryeo: 1500}}
-      - label: "Raise an army and send it to Baekje without waiting for China"
+      - label: "Send an army to Baekje without China's leave"
         unrest_bp: 1000
         outcome: >-
           You send ships to Baekje with soldiers for its young king. They arrive, and Goguryeo
@@ -359,7 +361,7 @@ chapters:
       has shut the straits to your ships. The story told later at court is that Silla has
       bribed him. Iwai has been a vassal of your house, and he has an army of his own.
     choices:
-      - label: "Send the Mononobe general Arakahi against Iwai first"
+      - label: "Send Arakahi's army against Iwai first"
         historical: true
         legitimacy_bp: 1500
         influence: {nobility: 800}
@@ -369,10 +371,11 @@ chapters:
           expedition for Mimana never sails. Silla is left to do as it likes in Gaya, and your
           court now directly holds the lands of Tsukushi.
         deeds: {men: 4000, grudges: {silla: 1500}}
-      - label: "Send the army on to Mimana by another road, and leave Iwai"
+      - label: "Ship the army to Mimana by another route"
         legitimacy_bp: -500
         outcome: >-
           Your army finds no other way. Iwai's men and Silla's together hold the straits.
+        deeds: {martial_bp: -500}
       - label: "Pardon Iwai if he opens the straits"
         legitimacy_bp: -1000
         unrest_bp: 800
@@ -406,7 +409,7 @@ chapters:
       honour the Buddha, and that Wa alone should not refuse. Mononobe no Okoshi and Nakatomi
       no Kamako say that the spirits of the land will be angry if a foreign god is worshipped.
     choices:
-      - label: "Give the image to Soga no Iname to worship, as a trial"
+      - label: "Lend the image to Soga no Iname"
         historical: true
         legitimacy_bp: 500
         knowledge_bp: 1000
@@ -416,14 +419,14 @@ chapters:
           Kamako say it is the spirits' anger, and the image is thrown into the Naniwa canal and
           the temple burned. Buddhism will be back, and the Soga will make it the faith of the
           court.
-      - label: "Accept the Buddha as the faith of the court"
+      - label: "Enshrine the image in the palace"
         legitimacy_bp: -500
         unrest_bp: 1500
         influence: {clergy: 1500, nobility: -1000}
         outcome: >-
           The Mononobe and Nakatomi leave the council. When plague comes, the court has no
           answer.
-      - label: "Refuse the gift, and send the envoy home"
+      - label: "Return the gift with thanks to Seong"
         legitimacy_bp: 500
         influence: {clergy: -500}
         outcome: >-

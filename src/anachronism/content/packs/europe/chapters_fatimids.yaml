@@ -38,6 +38,13 @@ chapters:
         outcome: >-
           Barjawan retires to his estates, surprised to be alive. The court learns that the
           caliph can be merciful.
+      - label: "Send him away as a governor"
+        legitimacy_bp: 400
+        wealth_bp: -200
+        unrest_bp: 300
+        outcome: >-
+          You appoint Barjawan to a governorship far from Cairo, with a title and a small
+          household. The court is quieter, and you are not sure that his friends are.
     history: >-
       Al-Hakim had his regent Barjawan killed in 1000 and began to rule personally.
     sources: ["al-Maqrizi, Itti'az al-hunafa", "Halm, Die Kalifen von Kairo (2003)"]
@@ -61,7 +68,7 @@ chapters:
       A scholar from Basra, Ibn al-Haytham, has come to Cairo claiming he can regulate the
       Nile flood with a dam at Aswan. He has gone to look, and come back very quiet.
     choices:
-      - label: "Open the House of Knowledge"
+      - label: "Open the House of Knowledge to all"
         historical: true
         knowledge_bp: 3000
         legitimacy_bp: 800
@@ -70,7 +77,8 @@ chapters:
           al-Haytham, afraid to tell you his dam is impossible, pretends to be mad and is
           confined to his house for ten years, where he writes the Book of Optics: the first
           proof that we see because light enters the eye, tested by experiment.
-      - label: "Let the scholars study, and send Ibn al-Haytham back to Aswan"
+      - label: "Open it, and send Ibn al-Haytham back to Aswan"
+        legitimacy_bp: 300
         knowledge_bp: 1500
         outcome: >-
           The House of Knowledge opens. Ibn al-Haytham comes back from Aswan and tells you the
@@ -83,6 +91,14 @@ chapters:
         outcome: >-
           Nine hundred years early, a dam closes the Nile at the first cataract. The flood is
           tamed; Egypt has two harvests a year.
+      - label: "Open it to Ismaili scholars only"
+        knowledge_bp: 1000
+        legitimacy_bp: 500
+        influence: {clergy: 500}
+        outcome: >-
+          You open the library to the missionaries and scholars of the Ismaili faith and bar
+          the others. The collection is well used by those it serves, and it is not a place
+          where Christians and Sunnis can work.
     history: >-
       Al-Hakim founded the Dar al-'Ilm in Cairo in 1005. Ibn al-Haytham's story of feigned
       madness after failing to dam the Nile comes from Ibn al-Qifti.
@@ -116,9 +132,17 @@ chapters:
           your mind about many things and let Christians rebuild their churches.
         deeds: {grudges: {byzantium: 3000, papacy: 2000}}
       - label: "Leave the church alone"
+        wealth_bp: 300
         legitimacy_bp: 500
         outcome: >-
           The pilgrims keep coming, and paying. The holy fire keeps lighting itself.
+      - label: "Tax the Easter pilgrims heavily"
+        wealth_bp: 1500
+        unrest_bp: 300
+        legitimacy_bp: -200
+        outcome: >-
+          You keep the church and put a heavy toll on every pilgrim who enters Jerusalem at
+          Easter. The gold comes in, and the pilgrims, and some of them grumble.
     history: >-
       In 1009 al-Hakim ordered the destruction of the Church of the Holy Sepulchre; it was
       rebuilt by agreement with Byzantium from the 1030s. The event was remembered in Europe
@@ -157,10 +181,17 @@ chapters:
           Druze, who still wait in the mountains of Lebanon.
         deeds: {ruler_falls: "rides into the hills one night and is never seen again"}
       - label: "Take a guard"
+        unrest_bp: -300
         legitimacy_bp: 300
         outcome: >-
           Your guards follow at a distance. You watch the stars, and come home. Your sister
           finds another way to worry.
+      - label: "Stay in the palace and rule"
+        legitimacy_bp: 100
+        unrest_bp: -300
+        outcome: >-
+          You give up the night rides for a time and hold court by day. Your sister is less
+          anxious, and the people of Cairo see less of their caliph.
     history: >-
       On 13 February 1021 al-Hakim rode into the Muqattam hills and disappeared; his sister
       Sitt al-Mulk was widely suspected. The Druze faith holds that he went into occultation.
@@ -185,7 +216,7 @@ chapters:
 
       He would like to stay, and study the faith of the Fatimids.
     choices:
-      - label: "Welcome him, and make him a missionary"
+      - label: "Welcome him and teach him the faith"
         historical: true
         knowledge_bp: 1500
         legitimacy_bp: 1000
@@ -195,9 +226,17 @@ chapters:
           'I saw such wealth that if I should describe it, the people of Persia would not
           believe me.'
       - label: "Show him the city, and send him home"
+        legitimacy_bp: 200
         wealth_bp: 500
         outcome: >-
           Nasir-i Khusraw goes home with stories, and no mission.
+      - label: "Give him a post at the library"
+        knowledge_bp: 800
+        wealth_bp: -300
+        legitimacy_bp: 300
+        outcome: >-
+          You offer him a pension and a desk at the House of Knowledge, to write and read as
+          he pleases. He stays, and writes for himself.
     history: >-
       Nasir-i Khusraw visited Cairo in 1047-1050 under al-Mustansir and described its wealth in
       his Safarnama; he became the Fatimid da'i of Khorasan.
@@ -222,7 +261,7 @@ chapters:
 
       People in Cairo are eating cats and dogs. Some, it is said, are eating each other.
     choices:
-      - label: "Sell everything in the palace to feed the city"
+      - label: "Sell the palace treasures for grain"
         historical: true
         wealth_bp: -4000
         food_bp: 2000
@@ -234,10 +273,20 @@ chapters:
           brings you, and send for the governor of Acre, Badr al-Jamali, to save you.
         deeds: {martial_bp: -1000}
       - label: "Pay the Turks first, to keep order"
+        deeds: {men: 6000}
+        legitimacy_bp: 300
         wealth_bp: -3000
         unrest_bp: 1500
         outcome: >-
           The Turks are paid and keep order for a season. The bread lines grow longer.
+      - label: "Send to Syria for grain and troops"
+        food_bp: 1500
+        wealth_bp: -1000
+        legitimacy_bp: -300
+        deeds: {men: 4000}
+        outcome: >-
+          You send riders to your governors in Syria and on the coast for grain, ships and
+          soldiers. What they send is late and is not enough, but some of it reaches Cairo.
     history: >-
       The 'Great Calamity' (al-shidda al-'uzma, c. 1065-1072) combined low Nile floods,
       famine and army mutinies; the Fatimid treasures were dispersed. Al-Mustansir called in
@@ -263,7 +312,7 @@ chapters:
       He asks you for full powers: 'commander of the armies', vizier, chief judge and chief
       missionary all in one.
     choices:
-      - label: "Give him everything"
+      - label: "Grant him all the offices he asks"
         historical: true
         legitimacy_bp: 1000
         unrest_bp: -3000
@@ -273,11 +322,19 @@ chapters:
           Bab al-Futuh, Bab al-Nasr, Bab Zuwayla - that still stand. From now on the viziers
           rule and the caliphs reign.
         deeds: {men: 7000}
-      - label: "Make him general, but keep the government"
+      - label: "Make him general, keep the government"
+        deeds: {men: 3000}
         legitimacy_bp: 500
         unrest_bp: -1000
         outcome: >-
           Badr commands the army and sulks in its camp. The Turks are quieter, but not gone.
+      - label: "Make him vizier, keep the army"
+        legitimacy_bp: 500
+        unrest_bp: -1500
+        deeds: {men: 2000}
+        outcome: >-
+          You make him vizier and hold the command of the army under your own eye. Badr takes
+          the government and looks for ways to the army.
     history: >-
       Badr al-Jamali arrived in Egypt in 1074, killed the Turkish commanders and took full
       powers as 'commander of the armies'. He rebuilt Cairo's walls and gates (1087-92).

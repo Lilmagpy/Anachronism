@@ -28,10 +28,11 @@ chapters:
 
 
       Your city is half in ruins. You want it rebuilt, resettled and safe for merchants and
-      pilgrims alike. Your bishops say that you should hold a great council, with the lords and
-      the clergy and the townsmen, and give them laws that last.
+      pilgrims alike. Your bishops want a great council of lords, clergy and townsmen, to give
+      the kingdom laws that last. Your barons want your friendship and their old customs
+      left alone. Your horsemen want plunder from the divided south.
     choices:
-      - label: "Hold a council, and issue a code of laws"
+      - label: "Summon a council and issue laws"
         historical: true
         legitimacy_bp: 2000
         unrest_bp: -800
@@ -43,16 +44,20 @@ chapters:
           begins to fill again. Córdoba, tearing itself apart, has no strength left to trouble
           you.
         deeds: {peace_with: [cordoba]}
-      - label: "Rule by your court's customs"
+      - label: "Rule by your court's old customs"
         legitimacy_bp: 500
+        unrest_bp: 300
+        influence: {nobility: 800}
         outcome: >-
           The nobles are pleased. The townsmen, who had been promised order, are not.
+        deeds: {peace_with: [cordoba]}
       - label: "Raid the divided south for plunder"
         wealth_bp: 1500
         unrest_bp: 800
+        legitimacy_bp: -300
         outcome: >-
           Your horsemen come back with captives and cattle, but León remains a ruin.
-        deeds: {grudges: {cordoba: 1500}}
+        deeds: {men: 3000, grudges: {cordoba: 1500}}
     history: >-
       Alfonso V held a council at León in 1017 which issued the Fuero of León: laws for the
       kingdom and for the city's market and justice.
@@ -75,10 +80,10 @@ chapters:
 
 
       In the west, in what is now Portugal, the Moorish town of Viseu is still in Muslim hands.
-      You have laid siege to it. The story goes that you rode round the walls to look at them,
-      and archers were watching from the battlements.
+      You have laid siege to it, and it goes slowly. Some of your captains urge you to take
+      command of the assault yourself. Others say a king should not risk his person.
     choices:
-      - label: "Press the siege in person"
+      - label: "Direct the assault in person"
         historical: true
         legitimacy_bp: -1500
         unrest_bp: 800
@@ -90,9 +95,17 @@ chapters:
         deeds: {ruler_falls: "is killed by an arrow before Viseu"}
       - label: "Leave the siege to your captains"
         legitimacy_bp: 500
+        wealth_bp: -500
+        unrest_bp: -300
         outcome: >-
           Viseu holds out another year, but you live to see your daughter wed to the count of
           Castile.
+      - label: "Offer the garrison terms to surrender"
+        legitimacy_bp: 300
+        wealth_bp: 500
+        outcome: >-
+          The garrison haggles for weeks, and in the end the siege is lifted for a payment and a
+          truce. You live to see your daughter wed to the count of Castile.
     history: >-
       Alfonso V was killed by an arrow while besieging Viseu in 1028, leaving a boy king,
       Bermudo III. García Sánchez of Castile was murdered at León in 1029.
@@ -118,7 +131,7 @@ chapters:
       Ferdinand's brother García, the king of Navarre, has marched with him. Their army stands
       at Tamarón, near Burgos.
     choices:
-      - label: "Give battle, and trust your horse"
+      - label: "Give battle at Tamarón"
         historical: true
         legitimacy_bp: -2000
         outcome: >-
@@ -127,18 +140,20 @@ chapters:
           accepted by the lords of León, and crowned king there in 1038. For the first time
           Castile and León have one king. The old Leonese line is at an end.
         deeds: {peace_with: [cordoba], take: [m_leon, m_galicia], ruler_falls: "falls at Tamarón"}
-      - label: "Make peace and acknowledge Ferdinand's rights"
+      - label: "Make peace, acknowledge Ferdinand's rights"
         legitimacy_bp: -1000
         unrest_bp: 800
         outcome: >-
           Ferdinand accepts your homage and leaves you your crown, for a while. You are a king
           without heirs, with an ambitious brother-in-law, and the Leonese lords are looking
           around.
-      - label: "Retreat to Galicia and wait"
+        deeds: {peace_with: [navarre]}
+      - label: "Fall back to Galicia and gather levies"
         legitimacy_bp: -500
         outcome: >-
           The brothers march on León without you. The lords of the city have no reason to die
           for a king who is not there.
+        deeds: {men: 4000}
     history: >-
       Bermudo III was killed at Tamarón on 4 September 1037; Ferdinand I, count of Castile and
       husband of Bermudo's sister Sancha, was crowned king of León in 1038.
@@ -162,11 +177,11 @@ chapters:
       army.
 
 
-      Your knights say you should take the cities one by one. The monks of Cluny, whom you and
-      Sancha favour, would be glad of gifts, and your treasurers say that gold is a better
-      servant than land, and that the kings will pay for peace.
+      Your knights say you should take the cities one by one. Your treasurers say that gold
+      is a better servant than land. Your marshals say a few good raids will bring the
+      kings to terms. The monks of Cluny, whom you and Sancha favour, would be glad of gifts.
     choices:
-      - label: "Make the taifa kings pay parias, tribute, for peace"
+      - label: "Make the taifa kings pay for peace"
         historical: true
         wealth_bp: 3000
         legitimacy_bp: 1000
@@ -181,10 +196,20 @@ chapters:
       - label: "Besiege Toledo and take it"
         legitimacy_bp: -500
         unrest_bp: 1500
+        wealth_bp: -1000
         outcome: >-
           The walls of Toledo, on its rock in the bend of the Tagus, defy you, and your army is
           worn out in front of them.
-        deeds: {grudges: {cordoba: 2500}}
+        deeds: {martial_bp: -500, grudges: {cordoba: 2500}}
+      - label: "Raid the taifas' fields for plunder"
+        wealth_bp: 1500
+        legitimacy_bp: 300
+        unrest_bp: 500
+        outcome: >-
+          Your horsemen come back laden with cattle, captives and cloth. The kings of the taifas
+          remember it and strengthen their walls, and the gold you might have had in tribute does
+          not come.
+        deeds: {martial_bp: 500, grudges: {cordoba: 1500}}
     history: >-
       In the 1050s and early 1060s Ferdinand I took Viseu, Lamego and Coimbra, and made the
       taifas of Zaragoza, Toledo, Seville and Badajoz pay parias.
@@ -202,16 +227,16 @@ chapters:
     benchmark_provinces: 2
     story: >-
       You are Ferdinand. Your army has ridden into the lands of Seville, and al-Mutadid, its
-      king, has agreed to pay you tribute. You have made another demand. Isidore, the great
+      king, has agreed to pay you tribute. You can make another demand. Isidore, the great
       bishop of Seville, who wrote the encyclopedia the Etymologies and died in 636, lies in his
       city, among Muslims. You want his bones to rest with the Christians of the north.
 
 
-      Bishop Alvito of León and Bishop Ordoño of Astorga have gone to find them. The Historia
+      Bishop Alvito of León and Bishop Ordoño of Astorga are ready to go and find them. The Historia
       Silense says that they first sought the body of the martyr Justa, and that a miracle led
       them to Isidore instead.
     choices:
-      - label: "Bring the relics of Isidore to León"
+      - label: "Demand Isidore's relics for León"
         historical: true
         legitimacy_bp: 2500
         knowledge_bp: 500
@@ -222,10 +247,21 @@ chapters:
           Isidoro, the burial place of the kings of León. A kingdom that claims to be the heir of
           the Goths now has the most learned of Gothic bishops in its capital.
         deeds: {peace_with: [cordoba], take: [m_leon, m_galicia]}
-      - label: "Take tribute only, and leave the dead where they are"
+      - label: "Take tribute only, leave the dead"
         wealth_bp: 1000
+        legitimacy_bp: -300
+        influence: {clergy: -500}
         outcome: >-
           The king of Seville is pleased, and your bishops are not.
+        deeds: {peace_with: [cordoba]}
+      - label: "Ask for Seville's Christian captives"
+        legitimacy_bp: 1000
+        wealth_bp: 500
+        influence: {clergy: 500}
+        outcome: >-
+          Al-Mutadid frees a number of Christian captives and sends them north with gifts. Your
+          bishops say it is a good deed, and wonder what became of Isidore.
+        deeds: {peace_with: [cordoba]}
     history: >-
       In December 1063 the body of Isidore of Seville was brought from Seville to León, in
       Ferdinand I's time, and placed in the church that became San Isidoro.
@@ -252,7 +288,7 @@ chapters:
       the youngest. Urraca and Elvira will need places, too. Your wife says that a divided
       kingdom will need strong hands.
     choices:
-      - label: "Divide the kingdom among them"
+      - label: "Divide the realm among your children"
         historical: true
         legitimacy_bp: -1500
         unrest_bp: 800
@@ -262,17 +298,30 @@ chapters:
           parias from a different taifa. You die on 27 December 1065. Within seven years the
           brothers are at war, and only one will keep a throne.
         deeds: {peace_with: [cordoba], take: [m_leon, m_galicia], give: [m_galicia]}
-      - label: "Leave everything to Sancho, the eldest"
+      - label: "Leave all to Sancho, the eldest"
         legitimacy_bp: 500
         unrest_bp: 800
+        influence: {nobility: 500}
         outcome: >-
           The younger sons are outraged, and your wife with them. León does not like being a
           province of Castile.
+        deeds: {peace_with: [cordoba]}
       - label: "Leave everything to Alfonso"
         legitimacy_bp: -500
         unrest_bp: 1500
+        influence: {nobility: -500}
         outcome: >-
           Sancho, a soldier with a good army, has no intention of sitting at home.
+        deeds: {peace_with: [cordoba]}
+      - label: "Divide it between the two elder sons"
+        legitimacy_bp: -800
+        unrest_bp: 1000
+        influence: {nobility: 300}
+        outcome: >-
+          Sancho takes Castile and Alfonso León, and García, who is left a county and a grudge,
+          looks to his sisters for friends. Your wife says that the youngest will not be content
+          for long.
+        deeds: {peace_with: [cordoba]}
     history: >-
       Ferdinand I died in León on 27 December 1065 and divided his lands between his sons
       Sancho (Castile), Alfonso (León) and García (Galicia).
@@ -301,7 +350,7 @@ chapters:
       the young Rodrigo Díaz, the Cid, makes you swear in the church of Santa Gadea that you had
       no part in it.
     choices:
-      - label: "Swear the oath and take the crowns of León, Castile and Galicia"
+      - label: "Swear the oath and take the crowns"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: -500
@@ -311,10 +360,20 @@ chapters:
           kept in the castle of Luna until he dies. For the first time since your father died,
           one king rules the whole kingdom.
         deeds: {peace_with: [cordoba], take: [m_leon, m_galicia]}
-      - label: "Refuse to swear, and go back to Toledo"
+      - label: "Refuse the oath, return to Toledo"
         legitimacy_bp: -1500
+        unrest_bp: 500
         outcome: >-
           Castile and León look for another king, and your brother García is waiting.
+        deeds: {peace_with: [cordoba]}
+      - label: "Swear, and share the realm with García"
+        legitimacy_bp: 500
+        unrest_bp: 500
+        influence: {nobility: 500}
+        outcome: >-
+          You swear, and offer your brother Galicia as his own. García is wary, and the Castilian
+          nobles who wanted a single king are not pleased to see the realm divided again.
+        deeds: {martial_bp: 300}
     history: >-
       After Sancho II's death at Zamora in October 1072 Alfonso VI returned from exile in
       Toledo and took the crowns of León, Castile and Galicia; he imprisoned his brother
@@ -342,7 +401,7 @@ chapters:
       leave. Count García Ordóñez, whom Rodrigo beat in battle at Cabra, says it was done to
       shame you.
     choices:
-      - label: "Exile Rodrigo from your lands"
+      - label: "Banish Rodrigo from the realm"
         historical: true
         legitimacy_bp: 500
         outcome: >-
@@ -351,16 +410,19 @@ chapters:
           slander of envious courtiers. You will be accused for ever of wasting the best soldier
           in your kingdom.
         deeds: {peace_with: [cordoba], take: [m_leon, m_galicia]}
-      - label: "Forgive him"
+      - label: "Pardon Rodrigo and keep him at court"
         legitimacy_bp: -500
+        unrest_bp: 300
         outcome: >-
           The rivalries of your court go on. Rodrigo stays, and the lords who hated him now hate
           you.
-      - label: "Imprison him"
+        deeds: {martial_bp: 300}
+      - label: "Imprison Rodrigo until he submits"
         legitimacy_bp: -500
         unrest_bp: 800
         outcome: >-
           Rodrigo's friends and his Castilian knights rise on his behalf.
+        deeds: {martial_bp: -300}
     history: >-
       Alfonso VI exiled Rodrigo Díaz, the Cid, in 1081 after he raided Toledo's lands without
       permission; Rodrigo then served the king of Zaragoza.
@@ -399,14 +461,24 @@ chapters:
           terms. For the first time since the Moors came, the Christians hold the old
           Visigothic capital, and with it the books and scholars of Toledo.
         deeds: {peace_with: [cordoba], take: [m_leon, m_galicia, m_toledo]}
-      - label: "Storm the city"
+      - label: "Storm the city before winter"
         wealth_bp: 2000
         unrest_bp: 2000
         legitimacy_bp: -1000
+        knowledge_bp: -1000
         outcome: >-
           The city defends itself bitterly and the damage is great. The Muslim kings of the
           south are terrified, and look for help from Africa.
         deeds: {take: [m_toledo], grudges: {cordoba: 2000}}
+      - label: "Keep al-Qadir on his throne as a tributary"
+        wealth_bp: 1000
+        legitimacy_bp: 300
+        knowledge_bp: 500
+        unrest_bp: -300
+        outcome: >-
+          Al-Qadir keeps his city and pays you a yearly sum for your protection. His subjects grow
+          no fonder of him, and your bishops ask why the great mosque is still a mosque.
+        deeds: {peace_with: [cordoba]}
     history: >-
       Toledo surrendered to Alfonso VI on 25 May 1085, with guarantees for its Muslim inhabitants
       that were soon broken.
@@ -430,7 +502,8 @@ chapters:
 
 
       Your captains say you should lift the siege and meet them before they have time to
-      assemble. You have sent to France and Aragon for knights, but they have not yet come.
+      assemble. Others say to wait for the knights you have sent for to France and Aragon,
+      or to fall back on Toledo and let the Almoravids come to you.
     choices:
       - label: "Meet them at once, with what you have"
         historical: true
@@ -443,14 +516,20 @@ chapters:
           and goes home. The taifa kings pay him less than he hoped, and he will come back.
         deeds: {peace_with: [cordoba], take: [m_leon, m_galicia, m_toledo], martial_bp: -1000}
       - label: "Wait for the knights from France"
-        legitimacy_bp: -500
+        legitimacy_bp: -1000
+        wealth_bp: -1000
+        unrest_bp: 300
         outcome: >-
           Yusuf takes Badajoz and the road to Toledo. The French knights arrive, too late.
+        deeds: {men: 3000, martial_bp: -300}
       - label: "Withdraw to Toledo and wait behind the walls"
-        legitimacy_bp: -500
+        legitimacy_bp: -1000
+        unrest_bp: 800
+        food_bp: -500
         outcome: >-
           The Almoravids besiege Toledo as the summer ends. Your own towns are plundered in the
           meantime.
+        deeds: {martial_bp: 300}
     history: >-
       On 23 October 1086 the Almoravids under Yusuf ibn Tashfin defeated Alfonso VI at Sagrajas
       (Zallaqa); Yusuf went back to Africa but returned in 1090.

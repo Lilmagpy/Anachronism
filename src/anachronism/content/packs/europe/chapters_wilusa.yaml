@@ -33,7 +33,7 @@ chapters:
       called Apaliunas, whose name some scholars hear as Apollo's. The Great King is about to
       march to Kadesh and wants his western vassals sworn.
     choices:
-      - label: "Swear to Hatti"
+      - label: "Swear the oath Muwatalli asks"
         historical: true
         legitimacy_bp: 2000
         outcome: >-
@@ -41,12 +41,19 @@ chapters:
           Alexandros, a name like yours: the story goes, as a memory or a coincidence, nobody
           can say. Wilusa is a Hittite vassal for as long as there is a Hatti.
         deeds: {peace_with: [hatti]}
-      - label: "Keep your hands free: write to Ahhiyawa as well"
+      - label: "Write to Ahhiyawa as well as Hatti"
         legitimacy_bp: 500
         wealth_bp: 500
         outcome: >-
           Ships come to your quay from across the water with gifts. Hatti notes it.
         deeds: {grudges: {hatti: 2000}}
+      - label: "Send gifts and troops, but no oath"
+        legitimacy_bp: 600
+        wealth_bp: -400
+        outcome: >-
+          A small company of Wilusan spearmen goes east with gifts, and you swear nothing.
+          Muwatalli accepts the men and keeps asking about the oath.
+        deeds: {"men": 2000, "peace_with": ["hatti"]}
     history: >-
       The treaty of Muwatalli II with Alaksandu of Wilusa (c. 1280 BC) makes Wilusa a vassal of
       Hatti. It names the gods of Wilusa, including Apaliunas, among its witnesses.
@@ -74,7 +81,7 @@ chapters:
       will say that Wilusa is the matter over which the two of them had been hostile. You
       are told that the quarrel is to be settled, and not told how.
     choices:
-      - label: "Accept what the Great Kings agree"
+      - label: "Wait for the Great Kings' settlement"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
@@ -87,6 +94,13 @@ chapters:
         outcome: >-
           The wanax receives them politely. Hatti hears of it within the month.
         deeds: {grudges: {hatti: 1500}}
+      - label: "Ask Hatti for troops against Piyamaradu"
+        legitimacy_bp: 500
+        wealth_bp: -300
+        outcome: >-
+          A Hittite detachment comes west and drives Piyamaradu's raiders from the plain. It
+          stays rather longer than you would like.
+        deeds: {"men": 2000}
     history: >-
       In the Tawagalawa letter, a Hittite Great King (probably Hattusili III) tells the king
       of Ahhiyawa that the quarrel over Wilusa had been settled. Piyamaradu's attacks on
@@ -115,7 +129,7 @@ chapters:
       The Great King Tudhaliya sits in Hattusa; his treaty protects you, if you can reach him.
       The coast road and the sea are both open.
     choices:
-      - label: "Flee to the Great King"
+      - label: "Take ship for Hattusa"
         historical: true
         legitimacy_bp: -2500
         outcome: >-
@@ -123,12 +137,18 @@ chapters:
           receives you as a vassal who has been wronged. Your rival sits on your throne, and
           you wait to be sent back.
         deeds: {ruler_falls: "is driven from his throne"}
-      - label: "Fight in the streets"
+      - label: "Hold the citadel with your guard"
         unrest_bp: 2000
         outcome: >-
           Your guards hold the citadel gate for one night. By morning your rival has the
           lower town.
         deeds: {ruler_falls: "is driven from his throne"}
+      - label: "Take ship for Ahhiyawa and ask for help"
+        legitimacy_bp: -2000
+        outcome: >-
+          You cross the water to a wanax who is polite and cautious. He gives you a house and
+          a promise, and Wilusa goes on without you.
+        deeds: {"ruler_falls": "is driven from his throne"}
     history: >-
       The Milawata letter of Tudhaliya IV says that Walmu, king of Wilusa, was driven from his
       throne and came to the Great King as a refugee. The letter does not say by whom.
@@ -154,7 +174,7 @@ chapters:
       The letter also argues over the border of Millawanda, where the Ahhiyawans have a foothold.
       You are the pawn in a larger game, and you know it. But the road home is open.
     choices:
-      - label: "Go home as the Great King's man"
+      - label: "Return to Wilusa under Hatti's escort"
         historical: true
         legitimacy_bp: 2000
         outcome: >-
@@ -167,6 +187,13 @@ chapters:
         outcome: >-
           Tarkasnawa does not like it, and the Great King likes it less. The letter is
           repeated.
+      - label: "Return, but ask for new terms first"
+        legitimacy_bp: 1200
+        unrest_bp: 300
+        outcome: >-
+          Tudhaliya sends a new treaty, little changed from the old, and you go home with it.
+          You are the same vassal as before, only a little wiser.
+        deeds: {"peace_with": ["hatti"], "men": 1000}
     history: >-
       In the Milawata letter (c. 1235-1225 BC) Tudhaliya IV tells Tarkasnawa of Mira to restore
       Walmu to Wilusa. The Hittite king claims Wilusa as his vassal.
@@ -194,7 +221,7 @@ chapters:
       floors of the rooms. There is room for one more row, if the market square goes. The
       captains say the walls are good enough if the stores are full.
     choices:
-      - label: "Fill every house with jars, and repair the walls"
+      - label: "Fill the houses with grain jars"
         historical: true
         food_bp: 2000
         materials_bp: -1500
@@ -208,6 +235,13 @@ chapters:
         food_bp: 1500
         outcome: >-
           The ships come back with a little grain and a lot of news, none of it good.
+      - label: "Ration the stores, send the weak inland"
+        food_bp: 1200
+        unrest_bp: 500
+        legitimacy_bp: -300
+        outcome: >-
+          The elderly and the children are sent to villages in the hills, where kin will take
+          them. The city holds a harder, lighter winter.
     history: >-
       The citadel of Troy VIIa (late 13th-early 12th century BC) is crowded, with large storage
       jars sunk into the floors; its excavator, Carl Blegen, read this as preparation for a
@@ -234,7 +268,7 @@ chapters:
       horse, and will fix the year at about 1184 BC. That is the tradition. Your captain can only
       tell you what he sees: the lower town on fire, and the citadel gate not yet.
     choices:
-      - label: "Hold the citadel"
+      - label: "Hold the citadel gate"
         historical: true
         legitimacy_bp: -2000
         unrest_bp: 2000
@@ -244,11 +278,17 @@ chapters:
           raiders from the sea, from the north, from across the water or an enemy from the
           next valley, the ground does not say. A smaller town grows over the ashes.
         deeds: {ruler_falls: "is lost when the citadel burns"}
-      - label: "Take the people and leave by sea"
+      - label: "Put the people on the ships"
         legitimacy_bp: -1500
         outcome: >-
           Your ships take the families away before the fire. The city burns empty.
         deeds: {ruler_falls: "leaves with his people"}
+      - label: "Take the people into the hills"
+        legitimacy_bp: -1800
+        outcome: >-
+          A long column leaves by the back gate in the smoke and climbs inland. Behind you the
+          city burns, and ahead there is little to eat.
+        deeds: {"ruler_falls": "withdraws to the hills"}
     history: >-
       The citadel of Troy VIIa (Blegen's term; Korfmann's Troy VIi) was destroyed by fire around
       1180 BC. It was resettled in a poorer form. The cause is unknown, and any link between this

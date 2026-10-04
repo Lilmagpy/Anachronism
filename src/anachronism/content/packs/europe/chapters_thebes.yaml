@@ -47,6 +47,13 @@ chapters:
         outcome: >-
           You greet Alexander with words of loyalty and gifts. He is pleased. Your own people
           are not, and the garrison does not leave.
+      - label: "Arm the citizens and wait for Athens to move"
+        legitimacy_bp: 300
+        unrest_bp: 500
+        outcome: >-
+          The armouries are opened and the young men drill in the agora. You vote nothing, and
+          wait to see whether Athens will really rise.
+        deeds: {men: 2000}
     history: >-
       After Chaeronea (338 BC) Philip garrisoned the Cadmea. When he died in 336 the Thebans
       voted to expel the garrison, but Alexander's rapid march south brought the Greek cities
@@ -88,14 +95,18 @@ chapters:
           armed. Athens votes you its support, and its orators send arms; no Athenian army
           marches.
         deeds: {men: 3000, grudges: {macedon: 3000}}
-      - label: "Wait for proof that he is dead"
-        legitimacy_bp: -500
+      - label: "Wait for proof, but arm the walls"
+        legitimacy_bp: 1000
+        unrest_bp: 1000
         outcome: >-
-          The assembly puts off its vote, and the exiles grow impatient. Before the rumour
-          can be tested, Alexander himself arrives.
-        deeds: {grudges: {macedon: 500}}
+          The assembly puts off its vote, and fifteen hundred men are put on the walls while you
+          wait. The exiles grow impatient. Before the rumour can be tested, Alexander himself
+          arrives. Cautious citizens approve, though the exiles are bitter.
+        deeds: {men: 1500, grudges: {macedon: 500}}
       - label: "Send word to Alexander that Thebes is loyal"
         legitimacy_bp: -1000
+        unrest_bp: 800
+        wealth_bp: -300
         outcome: >-
           The exiles call you cowards, and your assembly splits. Your letter will find
           Alexander a long way from his throne.
@@ -129,7 +140,7 @@ chapters:
       the rest, and a place in the League of Corinth. Your citizens crowd the walls. Everyone
       has heard how fast he marched.
     choices:
-      - label: "Refuse, and call on all Greeks to join you"
+      - label: "Refuse, and call on the Greeks to rise"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
@@ -138,18 +149,19 @@ chapters:
           Greece from the tyrant may come over. Alexander says that you have brought
           whatever follows on yourselves, and moves his camp up to the city.
         deeds: {grudges: {macedon: 2000}}
-      - label: "Give up the two leaders"
+      - label: "Give up the two leaders and accept a garrison"
         legitimacy_bp: -1500
         unrest_bp: 1500
         outcome: >-
           The two men are handed over, and the assembly shakes with shame. You are spared for
           now, with a garrison, and a name for betrayal.
         deeds: {grudges: {macedon: 500}}
-      - label: "Ask for terms of your own"
-        legitimacy_bp: -300
+      - label: "Offer to treat on terms of your own"
+        legitimacy_bp: 1000
+        wealth_bp: -500
         outcome: >-
           Alexander does not bargain with a city that has a garrison under siege. His heralds
-          return with the same two names.
+          return with the same two names. The Greeks admire a city that does not bow at once.
     history: >-
       Alexander camped at Onchestus and gave Thebes time to give in; it refused, asked in return
       for two of his generals and proclaimed a call to freedom. He then moved up to the city.
@@ -179,7 +191,7 @@ chapters:
       orders. He gets inside the first palisade, and another battalion follows. Alexander sends
       more men in after them, and the Macedonians in the citadel come down.
     choices:
-      - label: "Fight in the streets"
+      - label: "Fight on in the streets and squares"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: 2000
@@ -190,9 +202,12 @@ chapters:
           Arrian says the Boeotian allies of Alexander were among the cruellest.
         deeds: {peace_with: [macedon]}
       - label: "Break out by the gates with all who can run"
+        legitimacy_bp: 1000
+        unrest_bp: 1500
         outcome: >-
-          Some of your fighting men get out, and some fall at the gates. Behind them the city
-          is lost without a fight in the streets.
+          Some of your fighting men get out, and some fall at the gates. Behind them the city is
+          lost without a fight in the streets. Those who get away are honoured as the last
+          defenders of the city.
         deeds: {peace_with: [macedon]}
       - label: "Open the gates and plead for mercy"
         legitimacy_bp: -1500
@@ -227,7 +242,7 @@ chapters:
 
       Cleadas, one of the prisoners, asks to speak for the city.
     choices:
-      - label: "Plead for the city"
+      - label: "Plead the city's case before the allies"
         historical: true
         legitimacy_bp: 1000
         outcome: >-
@@ -243,6 +258,14 @@ chapters:
         legitimacy_bp: 300
         outcome: >-
           The allies are not listening. They remember what Thebes did to them.
+        deeds: {peace_with: [macedon]}
+      - label: "Offer the allies your land for your lives"
+        legitimacy_bp: 1000
+        wealth_bp: -500
+        outcome: >-
+          You offer your fields to the allies who have most wanted them, if they will let the
+          citizens live free. The allies are tempted, but the council has already made up its
+          mind. The offer is admired as a generous one.
         deeds: {peace_with: [macedon]}
     history: >-
       Alexander left the fate of Thebes to his Greek allies, who voted to destroy the city. Only
@@ -288,10 +311,12 @@ chapters:
         outcome: >-
           You stay in exile, owing him nothing. The rubble stays too.
       - label: "Rebuild in secret without him"
-        legitimacy_bp: 300
+        legitimacy_bp: 2000
+        wealth_bp: 2000
         unrest_bp: 500
         outcome: >-
-          A few families return to the ruins. Cassander's soldiers notice.
+          A few families return to the ruins. Cassander's soldiers notice. Athens and other Greeks
+          send money for a city that will owe nobody.
     history: >-
       In 316 BC Cassander had Thebes rebuilt, with money and labour from Athens and from other
       Greek cities, twenty years after its destruction.

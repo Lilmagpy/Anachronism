@@ -32,18 +32,26 @@ chapters:
       before he died, wrote a testament leaving the province to him. Modern scholars doubt the
       letter. Your captains want to know what you will do about the border.
     choices:
-      - label: "Keep the pressure on Owari along the rivers"
+      - label: "Keep raiding Owari along the rivers"
         historical: true
         legitimacy_bp: 500
         outcome: >-
           Raids and counter-raids go back and forth across the Kiso and the Nagara, and in the
           new year the fighting reaches Moribe, inside your border. Neither side can break the
           other, but Mino's captains begin to count the cost.
-      - label: "Make peace with Nobunaga, for the sake of his wife"
+      - label: "Make peace with Nobunaga, your sister's husband"
         legitimacy_bp: -500
+        wealth_bp: 500
         outcome: >-
           Nobunaga sends a polite answer. Your own men mutter that you have let the man who
           shamed Imagawa grow in peace.
+      - label: "Fortify the border castles and wait"
+        legitimacy_bp: 300
+        materials_bp: -500
+        outcome: >-
+          You strengthen the castles on the Kiso and the Nagara and let Nobunaga come to you. The
+          border is quiet, and your captains wonder what they are waiting for.
+        deeds: {men: 3000}
     history: >-
       After Okehazama (1560) Oda Nobunaga and Saito Yoshitatsu fought on the border of Owari and
       Mino; Dosan's supposed testament leaving Mino to Nobunaga is of doubtful authenticity.
@@ -69,7 +77,7 @@ chapters:
       the Three of West Mino - say they will serve him. They ask what you wish to say to the
       house.
     choices:
-      - label: "Name Tatsuoki your heir, and bid the elders guard him"
+      - label: "Name Tatsuoki heir and trust the elders"
         historical: true
         legitimacy_bp: 500
         outcome: >-
@@ -77,11 +85,19 @@ chapters:
           wait to see what kind of lord he will be. Nobunaga, who has just heard of your death,
           is watching the border.
         deeds: {ruler_falls: "dies of his illness"}
-      - label: "Bring in an experienced regent from the Saito kin"
+      - label: "Appoint a regent from the Saito kin"
+        legitimacy_bp: 300
         influence: {nobility: 1000}
         outcome: >-
           A regent is chosen from among the old men of the house. Tatsuoki is told to learn
           from him, and the Three begin to wonder who is really lord.
+      - label: "Bind the Three to him with grants of land"
+        wealth_bp: -800
+        legitimacy_bp: 300
+        influence: {nobility: 800}
+        outcome: >-
+          You give Inaba, Ujiie and Ando fresh estates and ask each to swear to your son. They
+          swear gladly, and are richer for it.
     history: >-
       Saito Yoshitatsu died on 2 June 1561 (Eiroku 4) of illness, aged thirty-four, and was
       succeeded by his thirteen-year-old son Tatsuoki.
@@ -110,7 +126,7 @@ chapters:
       driven out of your own castle, and the Three of West Mino, Hanbei's own kinsmen among
       them, are not coming at once to put it right.
     choices:
-      - label: "Wait, treat with Hanbei, and take back your castle on his word"
+      - label: "Wait, and treat with Hanbei for the castle"
         historical: true
         legitimacy_bp: -1500
         unrest_bp: 500
@@ -119,13 +135,20 @@ chapters:
           half of Mino for the castle; Hanbei refuses. After about half a year he gives
           Inabayama back and retires to the mountain of Bodai with his books. You are once
           more lord of Mino, and the whole country has laughed at you.
-      - label: "Raise the whole province and storm the castle"
+      - label: "Raise the province and storm the castle"
         legitimacy_bp: 500
         food_bp: -800
         unrest_bp: 500
         outcome: >-
           Your retainers come out in grudging numbers. The siege of your own castle is brief
           but disorderly, and Hanbei slips away with his men and his reputation.
+      - label: "Offer Hanbei gifts and a pardon for the castle"
+        wealth_bp: -1000
+        legitimacy_bp: -300
+        influence: {nobility: 300}
+        outcome: >-
+          Envoys carry silver and a promise of pardon up to the walls of your own castle. Hanbei
+          hears them out politely, and does not seem to want silver.
     history: >-
       In 1564 Takenaka Hanbei (Shigeharu) seized Inabayama with a small band to shame Saito
       Tatsuoki, held it for about half a year, then returned it; the details, including the
@@ -167,6 +190,13 @@ chapters:
         legitimacy_bp: -300
         outcome: >-
           The fort goes up unopposed. Your captains say you have given the enemy a foothold.
+      - label: "Send raiders to burn the builders' timber"
+        legitimacy_bp: 300
+        materials_bp: -300
+        outcome: >-
+          A small band goes by night to fire the stacks of cut timber and the rafts. The fort is
+          delayed, not stopped.
+        deeds: {men: 2000}
     history: >-
       In 1566 Oda forces built a fort at Sunomata against Saito opposition; the famous story of
       Hideyoshi building it in a single night appears only in much later sources.
@@ -195,7 +225,7 @@ chapters:
       Nobunaga's men have surrounded the foot of the mountain. A boat could take you downriver
       to Nagashima in Ise, where friends of Mino's enemies might shelter a lord with no land.
     choices:
-      - label: "Leave Inabayama by night and take the boat down the river"
+      - label: "Slip away by night down the river"
         historical: true
         legitimacy_bp: -2500
         unrest_bp: 1000
@@ -209,6 +239,13 @@ chapters:
         outcome: >-
           Your garrison fights for three days. At the end you are alive, which you are not
           sure is better.
+      - label: "Ask Nobunaga for terms through a priest"
+        legitimacy_bp: -1500
+        wealth_bp: -500
+        outcome: >-
+          A priest goes down the mountain under a white banner. Nobunaga receives him, and the
+          talk goes on late.
+        deeds: {peace_with: [oda]}
     history: >-
       In September 1567 (Eiroku 10) the Three of West Mino defected and Nobunaga took Inabayama;
       Tatsuoki fled by boat to Nagashima, the Saito losing Mino. Nobunaga renamed the place Gifu.
@@ -248,8 +285,15 @@ chapters:
         deeds: {ruler_falls: "is killed at Ichijodani"}
       - label: "Slip away to the mountains with a few retainers"
         legitimacy_bp: -500
+        unrest_bp: 300
         outcome: >-
           You get as far as the first pass. Nobunaga's riders are already waiting there.
+      - label: "Ask Nobunaga's captains for terms"
+        legitimacy_bp: -1500
+        outcome: >-
+          You send word to the captains of the Oda that Saito Tatsuoki will lay down his arms if
+          his life is spared. They say they will ask their lord.
+        deeds: {peace_with: [oda]}
     history: >-
       Saito Tatsuoki, in exile at the Asakura court, was killed during Nobunaga's attack on
       Echizen in 1573, when Ichijodani was destroyed.

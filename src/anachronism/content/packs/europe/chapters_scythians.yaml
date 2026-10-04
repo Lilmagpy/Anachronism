@@ -40,20 +40,29 @@ chapters:
       nobles say the Macedonians are weak and the Danube is only a river. Your elders say that
       the Greeks go to war about gold, and that there is no gold in a Scythian camp.
     choices:
-      - label: "Keep to the north bank and let the Macedonians fight their own wars"
+      - label: "Stay north of the Danube and let Macedon be"
         historical: true
         legitimacy_bp: 500
         outcome: >-
           Alexander crosses the Danube in 335 and burns a Getic town, but Arrian names the
           Getae and the Triballi as his enemies, and no Scythians. He goes south again.
           For several years nothing is heard of a Scythian war with Macedon.
-      - label: "Raid the Thracian lands across the river, while Macedon is unsettled"
+      - label: "Raid the Thracian villages across the river"
         unrest_bp: 300
+        wealth_bp: 600
         outcome: >-
           Your horsemen do well in the Thracian villages and return rich. But Alexander
           is not Philip, and you have taught his officers where the river
           can be crossed.
         deeds: {grudges: {macedon: 1500}}
+      - label: "Post riders at the Danube fords"
+        wealth_bp: -300
+        legitimacy_bp: 300
+        outcome: >-
+          Your horsemen take turns to watch the crossings, and the Thracians on the far bank see
+          them there. The watch is dull and costs you the summer's grazing, but no army can
+          cross unseen.
+        deeds: {men: 1500}
     history: >-
       Philip II defeated and killed the aged Scythian king Ateas in 339 BC (Justin 9.2,
       Strabo 7.3.18). Alexander's Danube campaign in 335 BC was fought against the Getae
@@ -85,7 +94,7 @@ chapters:
       raiders had been outlaws, not his people. The Greeks call you the Scythians of Europe, and
       Alexander's court is curious how large your realm is.
     choices:
-      - label: "Send envoys to Alexander, offering a marriage and friendship"
+      - label: "Send envoys to Alexander with gifts"
         historical: true
         legitimacy_bp: 600
         knowledge_bp: 300
@@ -95,9 +104,19 @@ chapters:
           daughter in marriage. Alexander is said to have declined the marriage, accepted
           friendship, and sent men of his own back with the envoys to see your country. Nothing
           more comes of it in the sources.
-      - label: "Send nobody; the Saka are not your people and Alexander is not your neighbour"
+      - label: "Stay out of it; the Saka are another people"
+        wealth_bp: 300
+        legitimacy_bp: -200
         outcome: >-
           Nothing happens. Alexander's army is far away, and the Danube stays quiet.
+      - label: "Send envoys to the Saka kings across the steppe"
+        knowledge_bp: 400
+        legitimacy_bp: 200
+        wealth_bp: -200
+        outcome: >-
+          Your envoys ride a long road to the eastern steppe and come back with news of the
+          Saka, their horse-herds and their quarrels with the Greeks. It is a friendship of
+          distance, and neither side can help the other much.
     history: >-
       Alexander fought the Saka (Asian Scythians) on the Jaxartes in 329 BC and founded
       Alexandria Eschate (Arrian 4.1-4). Arrian and Curtius also report an embassy from the
@@ -128,19 +147,28 @@ chapters:
       Your horsemen are on every road. Your elders say that the Greeks cannot live on the
       steppe and need only be left to starve in the open. Your young men want a battle.
     choices:
-      - label: "Let him come into the open grass, and harry him until he breaks"
+      - label: "Draw him onto the open grass and harry him"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
           Curtius says that Zopyrion's whole army was destroyed, by sudden storms and by the
           enemy. Justin says the same, that he fell with every man. The Greek writers do not describe the fighting.
         deeds: {men: 3000}
-      - label: "Strike the camp at Olbia in the open field"
+      - label: "Strike his camp at Olbia in the field"
         legitimacy_bp: 500
         unrest_bp: 400
+        deeds: {men: 4000}
         outcome: >-
           It is a hard fight. Many of your men fall before the Macedonian pikes, but the
           camp breaks. Alexander's governor does not live to write home.
+      - label: "Drive the herds beyond the Dnieper and leave Olbia to itself"
+        legitimacy_bp: 1100
+        wealth_bp: 500
+        outcome: >-
+          The herds and tents move east out of his reach and the grass is burned behind
+          them, as your fathers did against the Persians. Olbia must hold alone, and its Greeks
+          do not forget that you were not there.
+        deeds: {men: 2000}
     history: >-
       Zopyrion, Alexander's governor, led about thirty thousand men against the Scythians and
       was destroyed with his army (Curtius 10.1.43-45, Justin 12.1-2), by a date put

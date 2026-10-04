@@ -44,6 +44,7 @@ chapters:
           kingdom still has no harbour of its own. The city stays free for about forty years.
       - label: "Lift the siege and offer a trading treaty"
         wealth_bp: 500
+        legitimacy_bp: 100
         outcome: >-
           Sinope grants you a trading charter and refuses all else. Your mountain barons grumble
           that the sea is not for kings.
@@ -93,10 +94,13 @@ chapters:
           see in you a threat, and join against you. You make Sinope the royal city of Pontus;
           its harbour, shipyards and Greek merchants will give your descendants a navy.
         deeds: {grudges: {pergamon: 1500, rhodes: 1500}}
-      - label: "Leave Sinope alone and fight your neighbours"
-        legitimacy_bp: -500
+      - label: "Leave Sinope and fight your neighbours"
+        legitimacy_bp: 1100
+        wealth_bp: 1500
         outcome: >-
-          The city survives for another generation, and so does your lack of a sea-gate.
+          The city survives for another generation, and so does your lack of a sea-gate. Your
+          army takes some villages from the Galatians and Cappadocians instead.
+        deeds: {men: 3000}
       - label: "Offer Sinope an alliance instead of a siege"
         legitimacy_bp: -1000
         wealth_bp: 500
@@ -139,7 +143,7 @@ chapters:
           You give up your conquests and pay your enemies. Rome's commissioners cross the
           sea satisfied, and you keep Sinope. Eumenes will watch Pontus warily for the rest of
           his reign.
-      - label: "Fight on, and hope Rome loses interest"
+      - label: "Fight on and press your claims"
         legitimacy_bp: 500
         unrest_bp: 1500
         wealth_bp: -1000
@@ -147,7 +151,7 @@ chapters:
           The war drags on another year, and the Senate's patience runs out.
         deeds: {grudges: {pergamon: 1500}}
       - label: "Give Sinope back to appease Rhodes and Rome"
-        legitimacy_bp: -2500
+        legitimacy_bp: -1500
         wealth_bp: -1000
         unrest_bp: 1000
         outcome: >-
@@ -181,7 +185,7 @@ chapters:
       You may not be anxious about Carthage, but you are anxious about Rome. A king who
       helps Rome in its need can ask Rome for help in his own.
     choices:
-      - label: "Send a few ships and your good wishes"
+      - label: "Send a small squadron to Rome"
         historical: true
         legitimacy_bp: 1000
         wealth_bp: -500
@@ -190,10 +194,10 @@ chapters:
           cheap gesture, and Rome likes cheap gestures from kings it hopes to rely on.
       - label: "Send a large fleet and troops"
         legitimacy_bp: 1500
-        wealth_bp: -2000
+        wealth_bp: -1400
         outcome: >-
           Rome is warmly grateful, and your treasury is empty.
-      - label: "Stay out of it"
+      - label: "Keep your fleet at home"
         legitimacy_bp: -500
         outcome: >-
           Rome notes the absence.
@@ -208,7 +212,7 @@ chapters:
     scenario: punic_wars
     civ: pontus
     year: -128
-    title: "Phrygia for a Bribe"
+    title: "The Gift of Phrygia"
     place: "Asia Minor"
     speaker: rome
     speaker_name: "Manius Aquillius"
@@ -227,7 +231,7 @@ chapters:
       to a friend who has been useful, and it is whispered that a great gift of money would make him
       more willing.
     choices:
-      - label: "Pay Aquillius, and take Greater Phrygia"
+      - label: "Win Aquillius with gold, and take Phrygia"
         historical: true
         wealth_bp: -1000
         legitimacy_bp: 1500
@@ -237,12 +241,14 @@ chapters:
           murdered in 120, the Senate will say that the grant was bought with a bribe, and
           take it back.
         deeds: {grudges: {pergamon: 1000}}
-      - label: "Ask the Senate to grant it to you honestly"
-        legitimacy_bp: 500
+      - label: "Ask the Senate to grant it to you"
+        legitimacy_bp: 1100
+        influence: {nobility: 500}
         outcome: >-
           The Senate listens and hesitates, then keeps Phrygia for the new province.
-      - label: "Refuse the land, and stay a poor friend of Rome"
+      - label: "Decline Phrygia and stay Rome's quiet friend"
         legitimacy_bp: -500
+        wealth_bp: 500
         outcome: >-
           Nobody thanks you for modesty, and Phrygia goes to someone else.
     history: >-
@@ -272,14 +278,14 @@ chapters:
 
       Tonight you are to hold a banquet at Sinope.
     choices:
-      - label: "Go to the banquet, and trust your friends"
+      - label: "Hold the banquet as planned, among your court"
         historical: true
         legitimacy_bp: -3000
         outcome: >-
           Conspirators murder you at the banquet; poison is the usual story. You leave two
           sons, the elder about fourteen, and a widow who will rule for them. The elder son,
           the boy Mithridates, will not be a boy for long.
-      - label: "Cancel the banquet, and arrest those you suspect"
+      - label: "Cancel the banquet and arrest suspects"
         legitimacy_bp: -500
         unrest_bp: 1000
         outcome: >-
@@ -317,7 +323,7 @@ chapters:
       many are ready to follow his son. In the palace Laodice has her guards, and your
       younger brother, Mithridates Chrestus, whom she prefers.
     choices:
-      - label: "Take the throne, and put your mother and brother away"
+      - label: "Take the throne from your mother and brother"
         historical: true
         legitimacy_bp: 2000
         influence: {nobility: 1000}
@@ -326,14 +332,15 @@ chapters:
           death too. You are now alone on the throne, and you have never been in the
           habit of sharing.
       - label: "Share the throne with your brother"
-        legitimacy_bp: -1000
-        unrest_bp: 1500
+        wealth_bp: 1000
+        legitimacy_bp: 1600
+        unrest_bp: 1000
         outcome: >-
           Two kings in one palace has never worked in Pontus. A year later it is the same
           court plot and the same quarrel again.
-      - label: "Go into exile at Rome"
-        legitimacy_bp: -2500
-        unrest_bp: 1000
+      - label: "Seek Rome's backing from exile"
+        legitimacy_bp: -1000
+        unrest_bp: 500
         outcome: >-
           Rome has no use for a pretender with no army. The senators wait to see which of
           you lasts.
@@ -373,15 +380,18 @@ chapters:
           murdered by a rebel; Diophantus puts the revolt down, and the Bosporan kingdom
           comes to you. Your fleet and army now have more food and more men than ever.
         deeds: {martial_bp: 500}
-      - label: "Send gold, and tell them to hold on"
+      - label: "Send gold and a small squadron"
         wealth_bp: -500
         legitimacy_bp: -500
         outcome: >-
-          Gold doesn't turn back a Scythian cavalry charge.
-      - label: "Refuse, and turn to Asia Minor"
-        legitimacy_bp: -500
+          Gold and a few ships do not turn back a Scythian cavalry charge.
+        deeds: {ships: 3}
+      - label: "Decline, and raise men for Asia Minor"
+        wealth_bp: 1500
+        legitimacy_bp: 1100
         outcome: >-
           Chersonesus will find another protector, perhaps a Scythian one.
+        deeds: {men: 2000}
     history: >-
       About 110-107 BC Mithridates' general Diophantus defeated the Scythians under Palacus,
       and the Bosporan kingdom passed to Pontus. The grain and recruits of the north shore

@@ -30,7 +30,7 @@ chapters:
       thanksgiving and a crown for the assassin. Aeschines says it is indecent: a father in
       mourning, celebrating a murder. The new king of Macedon is twenty.
     choices:
-      - label: "Celebrate, and call the Greeks to arms"
+      - label: "Celebrate openly and write to the Greeks"
         historical: true
         legitimacy_bp: 500
         unrest_bp: 1000
@@ -45,6 +45,14 @@ chapters:
         outcome: >-
           You stay at home. The Assembly sends the young king its congratulations, which he
           does not believe.
+      - label: "Write to the Persians, and say nothing"
+        wealth_bp: 500
+        unrest_bp: 300
+        legitimacy_bp: 200
+        outcome: >-
+          You wear no garland and make no speech. Your letters go east to the Persian
+          generals, and the Assembly hears nothing of it. The money that comes back is used
+          quietly, and the young king is not told.
     history: >-
       Demosthenes appeared garlanded in the Assembly on hearing of Philip's murder (336 BC),
       seven days after his daughter's death; Aeschines attacked him for it in 330.
@@ -73,7 +81,7 @@ chapters:
       outside Thebes. The Theban envoys ask Athens to march. The Assembly has voted to help
       Thebes; it has not yet voted to send anyone.
     choices:
-      - label: "Wait and see"
+      - label: "Hold the army back and wait"
         historical: true
         legitimacy_bp: -1000
         outcome: >-
@@ -81,13 +89,20 @@ chapters:
           and razes the city, sparing only the temples and the house of the poet Pindar. The
           Athenians are celebrating the Mysteries when the refugees arrive; they stop the
           festival.
-      - label: "March to Thebes"
+      - label: "March to Thebes with the hoplites"
         legitimacy_bp: 1000
         unrest_bp: 1500
         outcome: >-
           The Athenian hoplites reach the passes of Cithaeron. The Macedonians turn to meet
           them.
         deeds: {men: 6000, grudges: {macedon: 4000}}
+      - label: "Send a small force to the Isthmus"
+        legitimacy_bp: 300
+        unrest_bp: 500
+        outcome: >-
+          A few thousand men go as far as the Isthmus and stay there, watching the roads,
+          while the Assembly argues about the rest. Alexander's army is quicker than the debate.
+        deeds: {men: 2000}
     history: >-
       Thebes revolted in 335 BC on a false report of Alexander's death; Athens voted support
       but sent no army, and Thebes was destroyed.
@@ -116,7 +131,7 @@ chapters:
       Demades, an orator who is said to be in Macedon's pay, offers to go to the king and
       talk him out of it - for a fee.
     choices:
-      - label: "Send Demades, and pay him"
+      - label: "Send Demades to plead with the king"
         historical: true
         wealth_bp: -1000
         legitimacy_bp: 500
@@ -124,12 +139,20 @@ chapters:
           Demades goes, with five talents in his pocket, and Alexander, who wants to get to
           Persia, lets the matter drop: only the general Charidemus is exiled. You tell the
           Assembly the story of the sheep who gave up their dogs to the wolves.
-      - label: "Hand the men over"
+      - label: "Hand the eight men over"
         legitimacy_bp: -2500
         unrest_bp: 2000
         outcome: >-
           The Assembly votes to surrender them. You are taken north under guard.
         deeds: {ruler_falls: "is handed over to Alexander"}
+      - label: "Refuse the demand and arm the walls"
+        legitimacy_bp: 800
+        unrest_bp: 1000
+        outcome: >-
+          You tell the king's envoys that Athens does not give up her citizens. The walls are
+          manned and the young men sent to their posts, and the Assembly waits to see whether
+          the king has time to spare.
+        deeds: {men: 3000, grudges: {macedon: 3000}}
     history: >-
       In 335 BC Alexander demanded the surrender of Athenian orators and generals, including
       Demosthenes; Demades persuaded him to withdraw the demand.
@@ -170,6 +193,7 @@ chapters:
           descends from them.
       - label: "Put the money in the war chest"
         wealth_bp: 2000
+        legitimacy_bp: 400
         outcome: >-
           The silver goes into the treasury on the Acropolis. The actors go on improving the
           classics.
@@ -180,6 +204,13 @@ chapters:
         outcome: >-
           Every Athenian household that wants one has its Sophocles. Not a play of the great
           three is ever lost.
+      - label: "Spend the money on triremes"
+        wealth_bp: -800
+        legitimacy_bp: 500
+        outcome: >-
+          The ship-sheds fill with new hulls, and the rowers have work. The theatre waits, and
+          the actors go on improving the classics.
+        deeds: {ships: 10}
     history: >-
       Lycurgus (in charge of Athenian finances c. 336-324 BC) completed the stone theatre of
       Dionysus and had official texts of the three tragedians deposited in the archive.
@@ -206,20 +237,28 @@ chapters:
       His envoys ask Athens to join. Your fleet would make the difference. The young men who
       have just done Lycurgus's military training are eager. You are not sure.
     choices:
-      - label: "Stay out of it"
+      - label: "Keep the fleet in the Piraeus"
         historical: true
         legitimacy_bp: -500
         outcome: >-
           Athens stays at home. Antipater marches south with forty thousand men and crushes
           Agis at Megalopolis; Agis, wounded, fights on his knees until he is killed. When
           Alexander hears, he calls it a battle of mice.
-      - label: "Send the fleet"
+      - label: "Send the fleet to the Peloponnese"
         legitimacy_bp: 1000
         unrest_bp: 1000
         outcome: >-
           The triremes sail round to the Peloponnese. Antipater, who had only Agis to fight,
           now has two enemies.
         deeds: {grudges: {macedon: 3000}}
+      - label: "Send Agis gold and arms in secret"
+        wealth_bp: -800
+        legitimacy_bp: 200
+        unrest_bp: 300
+        outcome: >-
+          A few shiploads of shields and silver go south by night, and the Assembly pretends not to
+          know. Agis is grateful, and Antipater, when he hears, is not.
+        deeds: {men: 1000}
     history: >-
       Agis III's war against Macedon (331-330 BC) ended with his death at Megalopolis.
       Athens, led by Demosthenes, stayed neutral.
@@ -246,7 +285,7 @@ chapters:
 
       All Greece has come to listen. Aeschines has spoken all morning. Now it is your turn.
     choices:
-      - label: "Defend your whole life"
+      - label: "Defend your whole career"
         historical: true
         legitimacy_bp: 2500
         knowledge_bp: 500
@@ -259,6 +298,13 @@ chapters:
         legitimacy_bp: 500
         outcome: >-
           Ctesiphon is acquitted, narrowly. Nobody remembers the speech.
+      - label: "Turn on Aeschines's own record"
+        legitimacy_bp: 1200
+        unrest_bp: 500
+        outcome: >-
+          You go through Aeschines's embassies and his dealings with Philip one by one. The jury
+          is moved and amused, and your enemy is made to look small. The question of the crown
+          itself is hardly argued.
     history: >-
       In the trial of 330 BC Demosthenes's On the Crown defeated Aeschines's Against
       Ctesiphon; Aeschines left Athens.
@@ -283,7 +329,7 @@ chapters:
       Alexander has just ordered every Greek city to take back its exiles, which for Athens
       means giving up the island of Samos. His envoys will soon be here demanding Harpalus.
     choices:
-      - label: "Arrest him, and lock his gold on the Acropolis"
+      - label: "Arrest him, and hold his gold"
         historical: true
         legitimacy_bp: -2000
         outcome: >-
@@ -299,6 +345,7 @@ chapters:
         deeds: {men: 6000, grudges: {macedon: 4000}}
       - label: "Hand him over to Alexander"
         legitimacy_bp: -500
+        wealth_bp: 300
         outcome: >-
           Harpalus is taken to Alexander, who has him executed. The gold goes back to Babylon.
     history: >-
@@ -326,7 +373,7 @@ chapters:
       with the money Harpalus left. The Aetolians and Thessalians will join. You can recall
       Demosthenes from exile, and free Greece.
     choices:
-      - label: "Declare war on Macedon"
+      - label: "Go to war with Macedon"
         historical: true
         legitimacy_bp: 2000
         unrest_bp: 1000
@@ -339,9 +386,17 @@ chapters:
         deeds: {men: 8000, grudges: {macedon: 5000}}
       - label: "Wait to see who rules Macedon"
         legitimacy_bp: -1000
+        wealth_bp: 500
         outcome: >-
           The Macedonian generals quarrel over the empire. Athens keeps its money and its
           ships, and its orators keep talking.
+      - label: "Hire the mercenaries, but declare no war"
+        legitimacy_bp: 500
+        wealth_bp: -800
+        outcome: >-
+          Leosthenes keeps his men at Taenarum on Athens's pay, and the Assembly votes nothing.
+          Every other city sees that Athens is ready and nobody can say that she has declared herself.
+        deeds: {men: 4000}
     history: >-
       On Alexander's death (June 323 BC) Athens led a Greek revolt, the Lamian War;
       Leosthenes besieged Antipater at Lamia but was killed, and Athens lost at sea (Amorgos)
@@ -390,6 +445,13 @@ chapters:
           The citizens man the walls. Antipater blockades the Piraeus and waits for Athens to
           get hungry.
         deeds: {grudges: {macedon: 3000}}
+      - label: "Send Phocion back to bargain harder"
+        legitimacy_bp: -1500
+        wealth_bp: -1000
+        unrest_bp: 1000
+        outcome: >-
+          Phocion goes back to the camp with an offer of money and a smaller garrison. Antipater
+          listens, and then repeats his terms.
     history: >-
       After Crannon (322 BC) Antipater imposed a garrison at Munychia and a property
       qualification on the Athenian citizenship. Hyperides was executed; Demosthenes took

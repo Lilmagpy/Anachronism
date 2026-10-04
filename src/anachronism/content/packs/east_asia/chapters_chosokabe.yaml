@@ -35,7 +35,7 @@ chapters:
       besieging Tonomoto, a castle of the Motoyama, one of the seven houses, and the young man
       has asked you for a command.
     choices:
-      - label: "Give Motochika the vanguard"
+      - label: "Let Motochika fight in the front rank"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
@@ -45,11 +45,19 @@ chapters:
           Motochika is head of the house. His enemies call him a girl; they will not do so
           for much longer.
         deeds: {}
-      - label: "Keep him at home"
+      - label: "Keep Motochika behind the lines"
         legitimacy_bp: -500
+        unrest_bp: 300
         outcome: >-
           The siege drags on. When you die that summer your son takes over without having once heard
           a battle, and the retainers whisper.
+      - label: "Give Motochika a small guard to command"
+        legitimacy_bp: 500
+        wealth_bp: -300
+        outcome: >-
+          The boy leads a handful of retainers at the edge of the fighting and does what he is
+          told. Tonomoto falls, and when you die that summer the men say he is a careful young
+          man, which is not the same as a brave one.
     history: >-
       Chosokabe Motochika's first battle was at Tonomoto in 1560; his father Kunichika died
       the same year and he became head of the house.
@@ -77,7 +85,7 @@ chapters:
       Now Kanesada has come back with Otomo ships and soldiers, and the old Ichijo vassals are
       gathering to him at the Shimanto river.
     choices:
-      - label: "Meet him at the river and destroy his army"
+      - label: "Give battle at the Shimanto"
         historical: true
         legitimacy_bp: 2500
         outcome: >-
@@ -85,10 +93,19 @@ chapters:
           nobles of Tosa. He is sent into exile for life. You are lord of the whole province,
           and every man in it has seen you win. You turn to the sea.
         deeds: {grudges: {otomo: 500}}
-      - label: "Keep Kanesada's son as lord of Nakamura"
+      - label: "Make Kanesada's son lord of Nakamura"
         legitimacy_bp: 500
+        unrest_bp: 500
         outcome: >-
           You keep the Ichijo name as a figurehead, and Tosa is never quite yours.
+      - label: "Buy the Ichijo vassals with new lands"
+        wealth_bp: -1000
+        legitimacy_bp: 800
+        unrest_bp: -300
+        outcome: >-
+          Many of the old Ichijo vassals take your lands and your promises and go home. Kanesada
+          is left with his Otomo soldiers and a smaller following, and the matter is not yet
+          settled.
     history: >-
       Motochika defeated Ichijo Kanesada, restored with Otomo help, at the Shimanto river in
       1575 and became master of all Tosa.
@@ -118,7 +135,7 @@ chapters:
       Your retainers say Nobunaga has sixty provinces and an army that destroyed the Takeda in
       a month. He is said to be sending his son Nobutaka with an army across the sea.
     choices:
-      - label: "Refuse"
+      - label: "Refuse the letter, prepare for war"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: 500
@@ -128,11 +145,20 @@ chapters:
           and the army melts away. That summer you smash the Miyoshi at the Nakatomi river and
           hold almost all Shikoku.
         deeds: {}
-      - label: "Obey, and give up Awa and Sanuki"
+      - label: "Give up Awa and Sanuki as ordered"
         legitimacy_bp: -1500
+        unrest_bp: -300
         outcome: >-
           You give up what you have won. The island is cut into two and you have nothing to show
           for the war but wounds. A few weeks later Nobunaga is dead.
+      - label: "Send hostages and gifts, keep your gains"
+        wealth_bp: -1000
+        legitimacy_bp: 200
+        unrest_bp: 300
+        outcome: >-
+          Envoys carry gifts and hostages to Kyoto and plead that Shikoku was won by the sword
+          Nobunaga himself allowed. The answer is slow in coming, and then it is overtaken by
+          events in the capital.
     history: >-
       Nobunaga turned against Chosokabe's conquests in 1582 and prepared an invasion of
       Shikoku, which was cancelled by his death at Honno-ji; Chosokabe then defeated the
@@ -162,7 +188,7 @@ chapters:
       and you are Ieyasu's ally. If Hideyoshi wins, he will want to share Shikoku with his
       friends.
     choices:
-      - label: "Take Iyo"
+      - label: "Press on into Iyo"
         historical: true
         legitimacy_bp: 1500
         wealth_bp: 500
@@ -171,10 +197,19 @@ chapters:
           all four provinces of Shikoku. You have gone from one province to four in twenty years,
           and are the first man to hold the island.
         deeds: {take: [j_iyo], grudges: {mori: 1500}}
-      - label: "Stop at the Iyo border"
+      - label: "Halt at the Iyo border"
         legitimacy_bp: -500
+        unrest_bp: -300
         outcome: >-
           You hold what you have, and the Kono remain in their castles, waiting for Hideyoshi.
+        deeds: {peace_with: [mori]}
+      - label: "Garrison Awa and raise more levies"
+        wealth_bp: -500
+        legitimacy_bp: 300
+        outcome: >-
+          The one-field soldiers are called up for a second season, and the castles of Awa and
+          Sanuki are strengthened. Iyo waits, and so does the regent.
+        deeds: {men: 3000, martial_bp: 500}
     history: >-
       By 1585 Chosokabe Motochika had conquered all four provinces of Shikoku, defying
       Hideyoshi's demands to give some of them up.
@@ -200,7 +235,7 @@ chapters:
       Hideyoshi's terms are simple: you keep Tosa, and give up the rest, and fight for him
       where he says.
     choices:
-      - label: "Submit, and give up Iyo, Sanuki and Awa"
+      - label: "Submit to the regent, keep Tosa only"
         historical: true
         legitimacy_bp: -2000
         outcome: >-
@@ -208,11 +243,19 @@ chapters:
           rest is given to the regent's own men. Your 'one-field soldiers' are to be sent to
           fight Hideyoshi's wars.
         deeds: {give: [j_iyo], give_to: mori}
-      - label: "Fight in the mountains"
+      - label: "Withdraw to the high valleys and fight on"
         unrest_bp: 2500
         legitimacy_bp: 500
         outcome: >-
           Your army retreats into the high valleys. The regent's men are in no hurry.
+        deeds: {martial_bp: 500}
+      - label: "Bargain: hostages for Awa and Tosa"
+        legitimacy_bp: -1000
+        unrest_bp: 500
+        outcome: >-
+          Hideyoshi accepts the hostages and refuses the bargain. Iyo and Sanuki go to his men,
+          and in the end Awa follows them, and you have given your word twice.
+        deeds: {give: [j_iyo], give_to: mori}
     history: >-
       Hideyoshi's army invaded Shikoku in 1585; Chosokabe Motochika submitted and was left
       with Tosa alone.
@@ -240,7 +283,7 @@ chapters:
 
       Hidehisa is a Hideyoshi man, and does not like being taught.
     choices:
-      - label: "Go with him across the river"
+      - label: "Cross the river with Sengoku"
         historical: true
         legitimacy_bp: -1500
         outcome: >-
@@ -250,11 +293,19 @@ chapters:
           name your fourth son Morichika as heir, over the objections of several loyal
           retainers; one, the stories say, is made to die for it.
         deeds: {}
-      - label: "Withdraw alone"
+      - label: "Withdraw your own men alone"
         legitimacy_bp: -2000
+        unrest_bp: 300
         outcome: >-
           You keep your son alive and lose Hideyoshi's goodwill. The Shimazu destroy the
           vanguard without you.
+      - label: "Scout the Shimazu line before crossing"
+        legitimacy_bp: -500
+        knowledge_bp: 300
+        outcome: >-
+          Your scouts come back with word of Shimazu banners that are too few for an army that
+          means to fight, and Sengoku waves it away. He crosses at dawn, and you and your son
+          follow with the rear of the column.
     history: >-
       At Hetsugigawa (December 1586) the Shimazu destroyed Hideyoshi's vanguard; Chosokabe
       Nobuchika was killed, and Motochika's choice of his fourth son Morichika as heir split
@@ -282,7 +333,7 @@ chapters:
       Your own officers say that the cargo is a gift of the sea. The regent in Kyoto does not
       think so, and has sent Masuda Nagamori with a long list of questions.
     choices:
-      - label: "Report to Hideyoshi, and open the ship to his envoy"
+      - label: "Report the wreck and open the ship"
         historical: true
         legitimacy_bp: -500
         wealth_bp: -500
@@ -292,12 +343,20 @@ chapters:
           armies after; Hideyoshi, who has long been wary of the Church, orders twenty-six
           Christians crucified at Nagasaki in the new year. You are thanked for your help.
         deeds: {}
-      - label: "Help the Spaniards repair the ship and leave"
+      - label: "Help the Spaniards repair and sail"
         legitimacy_bp: 500
         unrest_bp: 1000
+        wealth_bp: -300
         outcome: >-
           Hideyoshi's wrath falls on Tosa as well as the foreigners, and you spend a year
           justifying yourself.
+      - label: "Keep part of the cargo, report the rest"
+        wealth_bp: 1500
+        legitimacy_bp: -1000
+        unrest_bp: 500
+        outcome: >-
+          Masuda's clerks count the bales and chests and find that the lists do not agree.
+          Hideyoshi forgives nothing he can prove, and you pay for the difference in goodwill.
     history: >-
       The San Felipe was wrecked at Urado in Tosa in October 1596; Hideyoshi's agent Masuda
       Nagamori confiscated its cargo, and the incident helped lead to the execution of twenty-
@@ -325,7 +384,7 @@ chapters:
       province, so that it will outlast you: how retainers must behave, how the farmers must
       be ruled, how a castle town must be kept.
     choices:
-      - label: "Issue a code of one hundred articles"
+      - label: "Issue a written code for your house"
         historical: true
         legitimacy_bp: 1500
         unrest_bp: -500
@@ -335,11 +394,18 @@ chapters:
           of the best-known 'house laws' of the warring-states age, and it does not save the
           Chosokabe.
         deeds: {}
-      - label: "Trust the old customs"
+      - label: "Rule by the old customs"
         legitimacy_bp: -500
         unrest_bp: 500
         outcome: >-
           The retainers continue to quarrel. You die in 1599 without a clear line.
+      - label: "Settle the succession before any laws"
+        legitimacy_bp: 800
+        influence: {nobility: 500}
+        unrest_bp: 300
+        outcome: >-
+          You gather the retainers and swear them to your heir Morichika before you write a line
+          of law. The quarrels grow quieter, but the house has no written rules to hold them to.
     history: >-
       In 1597 Chosokabe Motochika and his heir Morichika issued the Chosokabe-shi okite
       hyakkajo, a house code of one hundred articles; Motochika died in 1599.
@@ -382,6 +448,13 @@ chapters:
         outcome: >-
           Your six thousand charge down the slope into the Eastern line, and are cut to pieces
           within the hour.
+      - label: "Slip away toward Tosa now"
+        legitimacy_bp: -1500
+        unrest_bp: 1000
+        wealth_bp: 500
+        outcome: >-
+          You march your six thousand south before the battle is decided, and arrive home with
+          your army whole. The East will remember that you did not wait to see who won.
     history: >-
       The Chosokabe force at Sekigahara (1600) did not fight; Ieyasu confiscated Tosa and gave
       it to Yamauchi Kazutoyo.
@@ -415,11 +488,18 @@ chapters:
           campaign of 1615 your men fight at Yao and lose; you are taken, brought to the shogun's
           camp and beheaded in June. Your sons are put to death. The Chosokabe are no more.
         deeds: {ruler_falls: "is captured at Osaka and beheaded"}
-      - label: "Stay in Kyoto"
+      - label: "Keep your head down in Kyoto"
         legitimacy_bp: -1000
         outcome: >-
           You do not go. Osaka falls in the summer, without you, and you spend your last years
           teaching in a back street.
+      - label: "Offer your service to Ieyasu"
+        legitimacy_bp: 300
+        wealth_bp: 500
+        unrest_bp: -300
+        outcome: >-
+          Ieyasu's retainers have not forgotten Sekigahara and do not answer you. Osaka falls in
+          the summer, and you are left to teach in a back street.
     history: >-
       Chosokabe Morichika joined Hideyori in Osaka in 1614; he was captured after the battle of
       Yao in 1615 and executed.

@@ -27,7 +27,7 @@ chapters:
       marching south with fifty thousand men to defend it. Your ministers ask whether Baekje
       will fight beside the Wa.
     choices:
-      - label: "Fight beside the Wa"
+      - label: "Join the Wa against Goguryeo"
         historical: true
         legitimacy_bp: 800
         outcome: >-
@@ -35,10 +35,19 @@ chapters:
           the Wa out of Silla and into Gaya. Four years later, Baekje and Wa ships land an army
           on Goguryeo's own coast - and it, too, is destroyed.
         deeds: {ally_with: [wa], war_with: [goguryeo], grudges: {goguryeo: 2000}}
-      - label: "Keep your oath to Goguryeo, for now"
+      - label: "Keep your oath to Goguryeo"
         legitimacy_bp: -800
+        wealth_bp: 500
         outcome: >-
           The Wa fight alone. Your son in Yamato is treated more coldly.
+        deeds: {peace_with: [goguryeo]}
+      - label: "Send the Wa supplies but not soldiers"
+        wealth_bp: 100
+        legitimacy_bp: 300
+        outcome: >-
+          Baekje ships carry rice and iron to the Wa, and no Baekje man joins the fighting.
+          The Wa are glad of the help and sorry there is not more of it.
+        deeds: {ships: 3}
     history: >-
       In 397 King Asin sent Prince Jeonji as a hostage to Wa. Baekje and Wa fought Goguryeo
       and Silla around 400-404, according to the Gwanggaeto stele and the Samguk sagi.
@@ -60,20 +69,26 @@ chapters:
       you: your uncle Hunhae, who was keeping the throne for you, has been murdered by your
       youngest uncle Seollye, who has made himself king.
     choices:
-      - label: "Wait on the island until the people decide"
+      - label: "Wait offshore until the people decide"
         historical: true
         legitimacy_bp: 1500
         outcome: >-
           You wait on an island, with your Wa guards, while the people of Hanseong hear that
           their rightful king is offshore. They kill Seollye themselves and send for you. You
           are crowned, and you make Haechung your chief minister.
-      - label: "Land with the Wa, and take the throne by force"
+      - label: "Land with your Wa guards and seize the throne"
         legitimacy_bp: 500
         unrest_bp: 1500
         outcome: >-
           Your Wa escort storms the palace. You are king - with foreign soldiers in your
           capital, and every noble family counting the dead.
         deeds: {men: 3000}
+      - label: "Send Haechung ahead to win over the nobles"
+        legitimacy_bp: 1100
+        influence: {nobility: 800}
+        outcome: >-
+          Haechung goes ashore with your name and a purse for the great families. Some of them
+          receive him warmly, and some are not yet sure which uncle will last.
     history: >-
       On Asin's death in 405, Jeonji returned from Wa; his uncle Seollye had seized power.
       Warned by Haechung, Jeonji waited on an island until the people killed Seollye.
@@ -100,7 +115,7 @@ chapters:
       Your scholars want more: teachers of the classics, physicians, astronomers, and more
       monks. Some of your nobles say Baekje is turning into a copy of China.
     choices:
-      - label: "Send more ships, and bring back the learning"
+      - label: "Send more ships for teachers and books"
         historical: true
         knowledge_bp: 2000
         legitimacy_bp: 800
@@ -110,10 +125,19 @@ chapters:
           Wang In brought them the Analects and the Thousand Character Classic, and with them,
           writing.
         deeds: {ally_with: [eastern_jin]}
-      - label: "Keep Baekje's own ways"
+      - label: "Keep to Baekje's own ways and arms"
         influence: {nobility: 1000}
         outcome: >-
           The ships still sail, but carry only trade.
+        deeds: {men: 1500}
+      - label: "Send only trading ships and a few monks"
+        legitimacy_bp: 400
+        knowledge_bp: 800
+        wealth_bp: 1200
+        outcome: >-
+          Furs and ginseng go out, silk and a handful of monks come back. It is a quieter
+          road than your scholars wished for.
+        deeds: {ships: 2}
     history: >-
       Eastern Jin granted Jeonji a title in 416. Baekje was the main channel of Chinese learning
       and Buddhism to Japan; the Nihon shoki credits the Baekje scholar Wani (Wang In) with
@@ -150,12 +174,18 @@ chapters:
           You send Silla white falcons; Silla sends you a bright pearl. The alliance between
           Baekje and Silla will last a hundred and twenty years - until Silla breaks it.
         deeds: {ally_with: [silla]}
-      - label: "Take the chance to raid Silla's border"
+      - label: "Strike Silla's border before it turns"
         wealth_bp: 1000
-        legitimacy_bp: -500
+        legitimacy_bp: 600
         outcome: >-
           Your raiders bring home cattle. Silla goes back to Goguryeo for protection.
-        deeds: {grudges: {silla: 2000}}
+        deeds: {men: 2000, grudges: {silla: 2000}}
+      - label: "Take the gifts but sign nothing"
+        wealth_bp: 500
+        legitimacy_bp: -200
+        outcome: >-
+          The envoys go home with warm words and no pact. Silla notes that you took the horses
+          and gave only courtesy in return.
     history: >-
       In 433 Baekje's King Biyu and Silla's King Nulji made peace, the start of the Naje
       alliance against Goguryeo that lasted until 553.
@@ -192,9 +222,17 @@ chapters:
           Muryeong, and his tomb, found by accident in 1971, will be the only royal tomb of the
           Three Kingdoms whose owner is known for certain.
         deeds: {ally_with: [wa]}
-      - label: "Send Gonji alone"
+      - label: "Send Gonji with an escort of your own men"
+        legitimacy_bp: 300
         outcome: >-
-          Gonji goes alone to the Wa court and stays fifteen years.
+          Gonji goes to the Wa court with his own men, and without a wife of your giving, and stays fifteen years.
+        deeds: {ally_with: [wa]}
+      - label: "Send Gonji with a lady of the court"
+        legitimacy_bp: 300
+        wealth_bp: -300
+        outcome: >-
+          Gonji sails with a young woman of a good family as his wife, and the Wa court receives
+          the match with pleasure.
         deeds: {ally_with: [wa]}
     history: >-
       The Nihon shoki tells how Gaero's brother Gonji went to Wa in 461 and King Muryeong was
@@ -221,7 +259,7 @@ chapters:
       all of north China: Goguryeo, it says, is cruel and rotten, its king a 'wild dog'. Let
       Wei send an army, and Baekje will help destroy it.
     choices:
-      - label: "Send the letter"
+      - label: "Send the letter to Northern Wei"
         historical: true
         legitimacy_bp: -500
         outcome: >-
@@ -229,11 +267,18 @@ chapters:
           Jangsu makes sure the envoy never reaches you, and Wei tells you to make your own
           peace. Jangsu now knows exactly what you think of him.
         deeds: {grudges: {goguryeo: 2500}}
-      - label: "Send it to the Song court in the south instead"
+      - label: "Send it to the Song court in the south"
         legitimacy_bp: 300
         outcome: >-
           The Song are far away and friendly. They send you a title, a robe and their best
           wishes.
+      - label: "Send gifts to Jangsu and ask for peace"
+        wealth_bp: -800
+        legitimacy_bp: -300
+        outcome: >-
+          Your envoys carry gold and fine cloth north. Jangsu receives them courteously, and
+          keeps his army where it is.
+        deeds: {peace_with: [goguryeo]}
     history: >-
       In 472 King Gaero asked Northern Wei for help against Goguryeo; his letter survives in
       the Wei shu. Wei refused.
@@ -291,6 +336,13 @@ chapters:
           docks - where, it turns out, he has been meeting Goguryeo merchants. Dorim is
           arrested. The building stops. Jangsu's army finds Hanseong full and waiting.
         deeds: {martial_bp: 1500}
+      - label: "Finish the walls only, and halve the rest"
+        materials_bp: -1500
+        legitimacy_bp: 300
+        unrest_bp: 800
+        outcome: >-
+          The walls are finished, the palace and the tombs wait, and Dorim says a king's house
+          should not be half built. You answer that the treasury is half empty.
     history: >-
       The Samguk sagi tells how Jangsu sent the monk Dorim to exhaust Baekje with building
       projects; in 475 Goguryeo took Hanseong and killed King Gaero. Baekje moved its capital
@@ -321,7 +373,7 @@ chapters:
       Geum river behind the mountains. The great families who came with you are quarrelling
       over who is to blame.
     choices:
-      - label: "Rebuild Baekje at Ungjin"
+      - label: "Make Ungjin your capital"
         historical: true
         legitimacy_bp: 1000
         unrest_bp: 1500
@@ -330,13 +382,20 @@ chapters:
           Hae Gu has you murdered. But Baekje survives, and in fifty years, under King
           Muryeong - the boy born on Kakara island - and his son Seong, it will be rich and brilliant again.
         deeds: {capital: k4_ungjin}
-      - label: "Go back north and retake Hanseong"
+      - label: "March north to retake Hanseong"
         legitimacy_bp: 1500
         food_bp: -3000
         outcome: >-
           Baekje's army, with Silla's soldiers, marches on the burned city. Goguryeo's
           garrison is waiting.
         deeds: {war_with: [goguryeo]}
+      - label: "Hold the Geum with Silla's soldiers"
+        legitimacy_bp: 500
+        wealth_bp: -500
+        outcome: >-
+          The Silla troops stay through the winter and keep the river crossings. They are
+          a guest army, and the great families do not like owing Silla.
+        deeds: {men: 4000}
     history: >-
       Munju moved the capital to Ungjin in 475 and was assassinated in 477 by Hae Gu. Baekje
       recovered under Muryeong (r. 501-523) and moved its capital again to Sabi in 538.
