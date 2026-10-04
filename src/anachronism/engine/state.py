@@ -7,7 +7,7 @@ frozen and shared between copies; everything else is copied when the engine adva
 from __future__ import annotations
 
 from enum import StrEnum
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -21,6 +21,7 @@ from anachronism.content.schema import (
     EffectType,
     Era,
     Faith,
+    Formation,
     Frozen,
     General,
     Happening,
@@ -103,6 +104,8 @@ class World(Frozen):
     """What happens elsewhere in the world, year by year (this scenario's entries)."""
     tactics: dict[str, Tactic] = Field(default_factory=dict)
     """The battle plans armies may fight with."""
+    formations: dict[str, Formation] = Field(default_factory=dict)
+    """The formations armies may draw up in (D-267)."""
     scripts: dict[str, tuple[Script, ...]] = Field(default_factory=dict)
     """Each civilisation's intentions (brief §7.1), from the scenario."""
     successors: dict[str, tuple[Successor, ...]] = Field(default_factory=dict)
@@ -307,6 +310,14 @@ class Army(Mutable):
     """The battle plan its ruler ordered (a tactic id), or ``auto``: its general decides."""
     veterancy_bp: int = 0
     """Extra fighting power its men have learned in battle (D-108)."""
+    formation: str = "auto"
+    """The formation its ruler ordered (a formation id), or ``auto``: its general decides."""
+    engage: Literal["fight", "cautious", "last_man"] = "fight"
+    """Rules of engagement: fight as usual, withdraw from a hopeless battle, or never yield."""
+    dug_in: bool = False
+    """Stood a full turn in this province without marching: a fortified camp (D-267)."""
+    forced: bool = False
+    """Marching at a forced pace this turn: one more province, at a cost in morale and men."""
 
     @property
     def men(self) -> int:
@@ -412,6 +423,11 @@ class Event(Mutable):
     message: str
     subject: str = ""
     """What it is about, by name (an idea, a province or a resource); used by dialogue."""
+    phases: list[dict[str, Any]] = Field(default_factory=list)
+    """A battle's three phases (D-267): name, text, losses {a, d} and morale {a, d} after."""
+    sides: dict[str, str] = Field(default_factory=dict)
+    """A battle's sides: ``a`` (attackers) and ``d`` (defenders) as adjectives, and the
+    ``winner`` (``a`` or ``d``)."""
 
 
 class ChapterResult(Mutable):

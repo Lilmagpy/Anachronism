@@ -12,6 +12,7 @@ from anachronism.content.schema.chapters import AlmanacEntry, Chapter, ChapterCh
 from anachronism.content.schema.civ import CivDefinition
 from anachronism.content.schema.dialogue import MOMENTS, SPECIAL_SPEAKERS, Dialogue, Speaker
 from anachronism.content.schema.dilemmas import Choice, Dilemma
+from anachronism.content.schema.formations import Formation
 from anachronism.content.schema.happenings import Happening
 from anachronism.content.schema.pack import CONTENT_KINDS, LIST_KINDS, SINGLE_KINDS, PackManifest
 from anachronism.content.schema.rivals import (
@@ -84,6 +85,7 @@ __all__ = [
     "EffectType",
     "Era",
     "Faith",
+    "Formation",
     "Frozen",
     "General",
     "GeneralTrait",

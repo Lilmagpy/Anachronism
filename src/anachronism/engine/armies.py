@@ -14,9 +14,13 @@ Every rival court commands its armies with simple, readable rules; the player gi
 from __future__ import annotations
 
 from collections import deque
+from dataclasses import dataclass
+from typing import Any, Literal
 
-from anachronism.content.schema import General, RelationStatus, Tactic, Unit
+from anachronism.content.schema import Formation, General, RelationStatus, Tactic, Unit
 from anachronism.engine.actions import (
+    ArmyEngage,
+    ArmyFormation,
     ArmyPlan,
     ArmyStance,
     BuildFleet,
@@ -31,6 +35,10 @@ from anachronism.engine.buildings import bonus as building_bonus
 from anachronism.engine.buildings import ruin_newest
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import BP, apply_bp, clamp
+from anachronism.engine.formations import AUTO as FORMATION_AUTO
+from anachronism.engine.formations import edge as formation_edge
+from anachronism.engine.formations import formations as pick_formations
+from anachronism.engine.formations import power as formation_power
 from anachronism.engine.navies import SIZES, build_fleet, can_cross, sea_route
 from anachronism.engine.rivals import alive, at_war, frontier, province_links, relation, status
 from anachronism.engine.rng import GameRng
@@ -332,6 +340,8 @@ def mobility(state: GameState, army: Army) -> int:
     slowest = min((state.world.units[u].mobility for u in army.troops), default=2)
     if is_adopted(state.civs[army.owner], "roads"):
         slowest += 1
+    if army.forced and army.target is not None:  # a forced march: one more province (D-267)
+        slowest += 1
     return max(1, slowest)
 
 
@@ -354,6 +364,13 @@ def _enemies_here(state: GameState, army: Army) -> list[Army]:
 
 def march(state: GameState, rng: GameRng, events: EventLog) -> None:
     """Move every army along its route, a step at a time; armies that meet fight."""
+    rules = state.world.rules.armies
+    for army_id in sorted(state.armies):  # the toll of a forced march, once a turn
+        tired = state.armies[army_id]
+        if tired.forced and tired.target is not None:
+            tired.morale_bp = clamp(tired.morale_bp - rules.forced_march_morale_bp, 1000, BP)
+            _casualties(tired, rules.forced_march_attrition_bp)
+    start = {a.id: a.province for a in state.armies.values()}
     steps = {a.id: mobility(state, a) for a in state.armies.values()}
     for _ in range(max(steps.values(), default=0)):
         for army_id in sorted(state.armies):
@@ -382,9 +399,16 @@ def march(state: GameState, rng: GameRng, events: EventLog) -> None:
             army.came_from = army.province
             army.province = nxt
             army.siege_bp = 0
+            army.dug_in = False
             if nxt == army.target:
                 army.target = None
         fight_battles(state, rng, events)
+    for camp in state.armies.values():
+        if camp.target is None:
+            camp.forced = False
+        # an army that stood a whole turn without marching has dug a fortified camp
+        stood = start.get(camp.id) == camp.province and camp.target is None
+        camp.dug_in = stood and camp.raised_turn < state.turn
 
 
 # --- battles -------------------------------------------------------------------------------
@@ -437,6 +461,8 @@ def side_power(
             power = power * (BP + trait_bp(state, army, "bold")) // BP
         else:
             gift = trait_bp(state, army, "shield") - trait_bp(state, army, "bold") // 2
+            if army.dug_in:  # a fortified camp (D-267)
+                gift += rules.dug_in_bp
             power = power * (BP + gift) // BP
         total += power
     if not attacking:  # defenders hold the high ground (walls matter in sieges, not here)
@@ -495,15 +521,33 @@ def fight_battles(state: GameState, rng: GameRng, events: EventLog) -> None:
             battle(state, province_id, sides[0], sides[1], rng, events)
 
 
-def battle(
-    state: GameState,
-    province_id: str,
-    attackers: list[Army],
-    defenders: list[Army],
-    rng: GameRng,
-    events: EventLog,
-) -> str:
-    """Fight it out. Returns the winning state's id."""
+@dataclass
+class _Lines:
+    """Two sides drawn up for battle: their power (before luck), plans and formations."""
+
+    pa: int
+    pd: int
+    units_a: dict[str, int]
+    units_d: dict[str, int]
+    plan_a: Tactic | None
+    plan_d: Tactic | None
+    form_a: Formation | None
+    form_d: Formation | None
+    reserve_a: int
+    reserve_d: int
+
+    def expected(self) -> tuple[int, int]:
+        """Each side's power with its reserve committed (for odds and for cautious generals)."""
+        return (
+            self.pa * (BP + self.reserve_a) // BP,
+            self.pd * (BP + self.reserve_d) // BP,
+        )
+
+
+def _lines(
+    state: GameState, province_id: str, attackers: list[Army], defenders: list[Army]
+) -> _Lines:
+    """Weigh both sides: their soldiers, plans (D-108), formations and rules of engagement."""
     rules = state.world.rules.armies
     terrain = state.world.geography[province_id].terrain
     pa, units_a = side_power(state, attackers, defenders, True, province_id)
@@ -518,23 +562,236 @@ def battle(
         pa = pa * max(2000, BP + bonus(plan_a, terrain) + edge_a) // BP
     if plan_d is not None:
         pd = pd * max(2000, BP + bonus(plan_d, terrain) + edge_d) // BP
-    luck = rules.battle_luck_bp
-    pa = pa * (BP - luck + rng.below(2 * luck + 1)) // BP
-    pd = pd * (BP - luck + rng.below(2 * luck + 1)) // BP
-    won_a = pa > pd
+    # the formations (D-267): the first clash's worth, and the edge of the better line
+    form_a, form_d = pick_formations(state, attackers, defenders)
+    fedge_a = fedge_d = 0
+    if form_a is not None and form_d is not None:
+        fedge_a = formation_edge(form_a, form_d, attackers, defenders)
+        fedge_d = formation_edge(form_d, form_a, defenders, attackers)
+    if form_a is not None:
+        worth = formation_power(form_a, attackers, defenders) + fedge_a
+        pa = pa * max(2000, BP + worth) // BP
+    if form_d is not None:
+        worth = formation_power(form_d, defenders, attackers) + fedge_d
+        pd = pd * max(2000, BP + worth) // BP
+    if commander(attackers).engage == "last_man":
+        pa = pa * (BP + rules.last_man_power_bp) // BP
+    if commander(defenders).engage == "last_man":
+        pd = pd * (BP + rules.last_man_power_bp) // BP
+    return _Lines(
+        pa,
+        pd,
+        units_a,
+        units_d,
+        plan_a,
+        plan_d,
+        form_a,
+        form_d,
+        form_a.reserve_bp if form_a else 0,
+        form_d.reserve_bp if form_d else 0,
+    )
+
+
+def win_share(
+    state: GameState, side: list[Army], other: list[Army], province_id: str, attacking: bool
+) -> int:
+    """A side's expected share (bp, 5_000 = even) of the two sides' strength in a battle."""
+    if attacking:
+        lines = _lines(state, province_id, side, other)
+        mine, theirs = lines.expected()
+    else:
+        lines = _lines(state, province_id, other, side)
+        theirs, mine = lines.expected()
+    return mine * BP // max(1, mine + theirs)
+
+
+def _morale(side: list[Army]) -> int:
+    """A side's battle morale: its armies' morale, weighted by men."""
+    return sum(a.morale_bp * a.men for a in side) // max(1, sum(a.men for a in side))
+
+
+def _adjective(state: GameState, side: list[Army]) -> str:
+    return state.civs[side[0].owner].adjective
+
+
+def _missile_power(state: GameState, units: dict[str, int], total: int) -> int:
+    """The part of a side's power (after plan and formation) that is missile troops."""
+    mass = sum(units.values())
+    shot = sum(p for u, p in units.items() if state.world.units[u].kind == "missile")
+    return total * shot // max(1, mass)
+
+
+def _skirmish(
+    state: GameState,
+    lines: _Lines,
+) -> tuple[list[int], list[int]]:
+    """Phase 1: missile troops trade shots; few die, but morale is shaken.
+
+    Returns each side's losses (bp of its men) and morale drop.
+    """
+    rules = state.world.rules.armies
+    power = (lines.pa, lines.pd)
+    units = (lines.units_a, lines.units_d)
+    plans_ = (lines.plan_a, lines.plan_d)
+    shots = []
+    for i in (0, 1):
+        shot = _missile_power(state, units[i], power[i])
+        plan = plans_[i]
+        shots.append(shot * max(0, BP + (plan.skirmish_bp if plan else 0)) // BP)
+    losses, drops = [0, 0], [0, 0]
+    for i in (0, 1):  # side i shoots at side 1 - i
+        hit = min(2 * BP, shots[i] * BP // max(1, power[1 - i]))
+        losses[1 - i] = rules.skirmish_losses_bp * hit // BP
+        drops[1 - i] = rules.skirmish_morale_bp * hit // BP
+    return losses, drops
+
+
+def _broke(state: GameState, side: list[Army], morale: int) -> bool:
+    """A side breaks when its morale is gone - unless it fights to the last man."""
+    if commander(side).engage == "last_man":
+        return False
+    return morale < state.world.rules.armies.break_morale_bp
+
+
+def battle(
+    state: GameState,
+    province_id: str,
+    attackers: list[Army],
+    defenders: list[Army],
+    rng: GameRng,
+    events: EventLog,
+) -> str:
+    """Fight it out in three phases (skirmish, clash, pursuit). Returns the winning state's id."""
+    rules = state.world.rules.armies
+    terrain = state.world.geography[province_id].terrain
+    lines = _lines(state, province_id, attackers, defenders)
+    withdrew = _withdrawal(state, province_id, attackers, defenders, lines, events)
+    if withdrew is not None:
+        return withdrew
+    plan_a, plan_d = lines.plan_a, lines.plan_d
+    sides = (attackers, defenders)
+    adj = (_adjective(state, attackers), _adjective(state, defenders))
+    morale = [_morale(attackers), _morale(defenders)]
+    phases: list[dict[str, Any]] = []
+    totals = [0, 0]  # men each side has lost so far
+
+    def record(name: str, text: str, lost: list[int]) -> None:
+        phases.append(
+            {
+                "name": name,
+                "text": text,
+                "losses": {"a": lost[0], "d": lost[1]},
+                "morale": {"a": morale[0], "d": morale[1]},
+            }
+        )
+
+    # --- phase 1: the skirmish
+    loss1, drop1 = _skirmish(state, lines)
+    dead1 = [sum(_casualties(a, loss1[i]) for a in sides[i]) for i in (0, 1)]
+    for i in (0, 1):
+        morale[i] = max(0, morale[i] - drop1[i])
+        totals[i] += dead1[i]
+    shooters = any(state.world.units[u].kind == "missile" for u in (*lines.units_a, *lines.units_d))
+    record(
+        "Skirmish",
+        (
+            f"Archers and skirmishers trade fire: {adj[0]} lose {dead1[0]:,}, "
+            f"{adj[1]} {dead1[1]:,}; the lines are shaken."
+            if shooters
+            else "Neither army has many shooters; the lines close at once."
+        ),
+        dead1,
+    )
+    broke = [_broke(state, sides[i], morale[i]) for i in (0, 1)]
+    early = broke[0] or broke[1]
+    pa, pd = lines.pa, lines.pd
+    # what the skirmish cost each side in men and nerve weakens it in the clash
+    pa = pa * (BP - loss1[0]) // BP * (BP - drop1[0] // 4) // BP
+    pd = pd * (BP - loss1[1]) // BP * (BP - drop1[1] // 4) // BP
+    margin = 5000
+    if early:
+        won_a = broke[1] if broke[0] != broke[1] else morale[0] >= morale[1]
+        lose_c = [0, 0]
+    else:
+        # --- phase 2: the clash (the reserve, if any, commits now)
+        pa = pa * (BP + lines.reserve_a) // BP
+        pd = pd * (BP + lines.reserve_d) // BP
+        luck = rules.battle_luck_bp
+        pa = pa * (BP - luck + rng.below(2 * luck + 1)) // BP
+        pd = pd * (BP - luck + rng.below(2 * luck + 1)) // BP
+        won_a = pa > pd
+        pw, pl = (pa, pd) if won_a else (pd, pa)
+        margin = (pw - pl) * BP // max(1, pw + pl)  # 0 (even) .. 10_000 (rout)
+        blood = BP + sum(p.losses_bp for p in (plan_a, plan_d) if p is not None)
+        blood = clamp(blood, 2000, 20_000)  # a charge is bloody, skirmishing is not
+        lose = rules.clash_losses_bp + apply_bp(rules.clash_losses_bp, margin)
+        lose = clamp(lose * blood // BP, 0, 9000)
+        win = rules.clash_win_losses_bp - apply_bp(rules.clash_win_losses_bp, margin)
+        win = clamp(win * blood // BP, 300, 9000)
+        lose_c = [win, lose] if won_a else [lose, win]
+        beaten = 1 if won_a else 0
+        if commander(sides[beaten]).engage == "last_man":  # they fight on to the end
+            lose_c[beaten] = lose_c[beaten] * (BP + rules.last_man_losses_bp) // BP
+        dead2 = [sum(_casualties(a, lose_c[i]) for a in sides[i]) for i in (0, 1)]
+        ref = rules.clash_losses_bp + rules.clash_win_losses_bp
+        share = max(1, lose_c[0] + lose_c[1])
+        scale = clamp(share * BP // max(1, ref), 5000, 20_000)
+        for i in (0, 1):
+            relative = 2 * lose_c[i] * BP // share  # 10_000 = an equal share of the dead
+            drop = rules.clash_morale_bp * relative // BP * scale // BP
+            morale[i] = max(0, morale[i] - drop)
+            totals[i] += dead2[i]
+        forms = _forms_told(adj, lines.form_a, lines.form_d, lines.reserve_a, lines.reserve_d)
+        record(
+            "Clash",
+            f"{forms}{adj[0]} lose {dead2[0]:,}, {adj[1]} {dead2[1]:,}.".lstrip(),
+            dead2,
+        )
+        broke = [_broke(state, sides[i], morale[i]) for i in (0, 1)]
+        if broke[0] != broke[1]:  # a side whose line gives way loses, whatever the odds
+            won_a = broke[1]
     winners, losers = (attackers, defenders) if won_a else (defenders, attackers)
-    pw, pl = (pa, pd) if won_a else (pd, pa)
+    w, l_ = (0, 1) if won_a else (1, 0)
     plan_w, plan_l = (plan_a, plan_d) if won_a else (plan_d, plan_a)
-    margin = (pw - pl) * BP // max(1, pw + pl)  # 0 (even) .. 10_000 (rout)
-    crush = margin + (plan_w.rout_bp if plan_w else 0)  # an envelopment destroys the beaten
-    blood = BP + sum(p.losses_bp for p in (plan_a, plan_d) if p is not None)
-    blood = clamp(blood, 2000, 20_000)  # a charge is bloody, skirmishing is not
-    lose_bp = rules.loser_losses_bp + apply_bp(rules.loser_losses_bp, crush * 2)
-    lose_bp = clamp(lose_bp * blood // BP, 0, 9000)
-    win_bp = rules.winner_losses_bp - apply_bp(rules.winner_losses_bp, margin)
-    win_bp = clamp(win_bp * blood // BP, 300, 9000)
-    dead_w = sum(_casualties(army, win_bp) for army in winners)
-    dead_l = sum(_casualties(army, lose_bp) for army in losers)
+    # --- phase 3: the pursuit - the winner's horse run down the beaten
+    horse = (
+        sum(
+            n
+            for a in winners
+            for u, n in a.troops.items()
+            if state.world.units[u].kind == "mounted"
+        )
+        * BP
+        // max(1, sum(a.men for a in winners))
+    )
+    chase = rules.pursuit_base_bp + apply_bp(rules.pursuit_horse_bp, horse)
+    chase = chase * (BP + margin) // BP
+    if not broke[l_] and commander(losers).engage != "last_man":
+        chase = chase * rules.orderly_retreat_bp // BP  # they got away in good order
+    if commander(losers).engage == "last_man":
+        chase = chase * (BP + rules.last_man_losses_bp) // BP
+    rout_bp = plan_w.rout_bp if plan_w else 0
+    chase += apply_bp(rules.clash_losses_bp, 2 * rout_bp)  # an envelopment destroys the beaten
+    chase = clamp(chase, 0, 9000)
+    dead3 = [0, 0]
+    dead3[l_] = sum(_casualties(a, chase) for a in losers)
+    totals[l_] += dead3[l_]
+    crush = margin + rout_bp
+    rout = crush >= 4000 or early
+    if broke[l_]:
+        text3 = (
+            f"The {adj[l_]} line breaks and the {adj[w]} "
+            f"{'horse ride them down' if horse >= 2500 else 'pursue them'}: "
+            f"{dead3[l_]:,} {adj[l_]} fall."
+        )
+    else:
+        text3 = (
+            f"The {adj[l_]} withdraw in good order; {dead3[l_]:,} are cut off."
+            if dead3[l_]
+            else f"The {adj[l_]} withdraw in good order."
+        )
+    record("Pursuit", text3, dead3)
+    dead_w, dead_l = totals[w], totals[l_]
     for army in winners:
         army.morale_bp = clamp(army.morale_bp - rules.morale_loss_bp // 6, 1000, BP)
         army.veterancy_bp = min(rules.max_veterancy_bp, army.veterancy_bp + rules.veterancy_win_bp)
@@ -542,10 +799,12 @@ def battle(
         loss = rules.morale_loss_bp * BP // (BP + trait_bp(state, army, "beloved"))
         army.morale_bp = clamp(army.morale_bp - loss, 1000, BP)
         army.veterancy_bp = min(rules.max_veterancy_bp, army.veterancy_bp + rules.veterancy_loss_bp)
+        army.dug_in = False
     winner, loser = winners[0].owner, losers[0].owner
     w_civ, l_civ = state.civs[winner], state.civs[loser]
     place = state.world.geography[province_id].name.split(" (")[0]
-    hero = max(units_a if won_a else units_d, key=lambda u: (units_a if won_a else units_d)[u])
+    units_w = lines.units_a if won_a else lines.units_d
+    hero = max(units_w, key=lambda u: units_w[u])
     hero_name = state.world.units[hero].name.lower()
     fallen = ""
     general = next((a.general for a in losers if a.general), "")
@@ -555,7 +814,6 @@ def battle(
             if army.general == general:
                 army.general = ""
                 army.skill = 1
-    rout = crush >= 4000
     named = "the " + place[4:] if place.startswith("The ") else place  # "of the Punjab"
     kind = state.world.units[hero].kind
     told = tell(state, kind, terrain, rout, rng, winner=winner, plan=plan_w.id if plan_w else "")
@@ -566,8 +824,9 @@ def battle(
         f"Battle of {named}. {story}{fallen}{schemes}"
         f" {w_civ.adjective} losses {dead_w:,}, {l_civ.adjective} {dead_l:,}."
     )
-    events.add(winner, "battle_won", text, place)
-    events.add(loser, "battle_lost", text, place)
+    sides_told = {"a": adj[0], "d": adj[1], "winner": "a" if won_a else "d"}
+    events.add(winner, "battle_won", text, place, phases=phases, sides=sides_told)
+    events.add(loser, "battle_lost", text, place, phases=phases, sides=sides_told)
     rel = relation(state, winner, loser)
     if rel is not None:
         rel.weariness[loser] = rel.weariness.get(loser, 0) + rules.weariness_per_battle_bp
@@ -576,6 +835,65 @@ def battle(
         _retreat(state, army, events)
     _prune(state)
     return winner
+
+
+def _forms_told(
+    adj: tuple[str, str], form_a: Formation | None, form_d: Formation | None, ra: int, rd: int
+) -> str:
+    """The two formations in a sentence, for the clash (empty if there are none)."""
+    if form_a is None or form_d is None:
+        return ""
+    if form_d.id in form_a.beats or (form_d.id in form_a.duel and form_a.edge_bp):
+        verdict = f"The {adj[0]} {form_a.name.lower()} turns the {adj[1]} {form_d.name.lower()}."
+    elif form_a.id in form_d.beats:
+        verdict = f"The {adj[1]} {form_d.name.lower()} turns the {adj[0]} {form_a.name.lower()}."
+    else:
+        verdict = f"{adj[0]} {form_a.name.lower()} meets {adj[1]} {form_d.name.lower()}."
+    reserve = ""
+    if ra or rd:
+        who = adj[0] if ra and not rd else adj[1] if rd and not ra else "Both"
+        reserve = f" The {who} reserve is committed." if who != "Both" else " Both reserves go in."
+    return f"{verdict}{reserve} "
+
+
+def _withdrawal(
+    state: GameState,
+    province_id: str,
+    attackers: list[Army],
+    defenders: list[Army],
+    lines: _Lines,
+    events: EventLog,
+) -> str | None:
+    """A cautious army that expects to be beaten falls back instead of fighting.
+
+    Returns the other side's state id if one withdrew (defenders behind walls never do).
+    """
+    rules = state.world.rules.armies
+    pa, pd = lines.expected()
+    walled = state.provinces[province_id].walls > 0
+    for side, other, mine, theirs, defending in (
+        (attackers, defenders, pa, pd, False),
+        (defenders, attackers, pd, pa, True),
+    ):
+        if commander(side).engage != "cautious" or (defending and walled):
+            continue
+        if mine * BP // max(1, mine + theirs) >= rules.cautious_win_share_bp:
+            continue
+        if any(_fall_back_to(state, a) is None for a in side):
+            continue
+        place = state.world.geography[province_id].name.split(" (")[0]
+        for army in side:
+            _casualties(army, rules.rearguard_losses_bp)
+            _retreat(state, army, events)
+        _prune(state)
+        text = (
+            f"The {state.civs[side[0].owner].adjective} withdraw from {place} rather than "
+            f"fight at long odds, leaving a rear-guard behind."
+        )
+        events.add(side[0].owner, "withdrawal", text, place)
+        events.add(other[0].owner, "withdrawal", text, place)
+        return other[0].owner
+    return None
 
 
 def _plans_told(won: str, plan_w: Tactic | None, lost: str, plan_l: Tactic | None) -> str:
@@ -599,15 +917,11 @@ def _casualties(army: Army, loss_bp: int) -> int:
     return dead
 
 
-def _retreat(state: GameState, army: Army, events: EventLog) -> None:
-    """A beaten army falls back the way it came, or to any safe neighbouring province.
+def _fall_back_to(state: GameState, army: Army) -> str | None:
+    """Where a beaten (or withdrawing) army would go: the way it came, or a safe neighbour.
 
-    Only an army with nowhere to go - surrounded in enemy land - lays down its arms.
+    None if it has nowhere to go.
     """
-    if army.id not in state.armies:
-        return
-    army.target = None
-    army.siege_bp = 0
 
     def safe(pid: str) -> bool:
         return pid in state.provinces and not any(
@@ -621,14 +935,28 @@ def _retreat(state: GameState, army: Army, events: EventLog) -> None:
 
     near = sorted(p for p in state.world.geography[army.province].neighbours if safe(p))
     if army.came_from and army.came_from != army.province and safe(army.came_from):
-        army.province = army.came_from
-        return
+        return army.came_from
     for options in ([p for p in near if friendly(p)], near):
         if options:
-            army.province = max(
-                options, key=lambda p: (friendly(p), state.provinces[p].population, p)
-            )
-            return
+            return max(options, key=lambda p: (friendly(p), state.provinces[p].population, p))
+    return None
+
+
+def _retreat(state: GameState, army: Army, events: EventLog) -> None:
+    """A beaten army falls back the way it came, or to any safe neighbouring province.
+
+    Only an army with nowhere to go - surrounded in enemy land - lays down its arms.
+    """
+    if army.id not in state.armies:
+        return
+    army.target = None
+    army.siege_bp = 0
+    army.dug_in = False
+    army.forced = False
+    refuge = _fall_back_to(state, army)
+    if refuge is not None:
+        army.province = refuge
+        return
     if state.provinces[army.province].owner == army.owner:
         return  # nowhere to run: it stands and holds its own ground
     state.armies.pop(army.id)
@@ -798,6 +1126,11 @@ def defend(state: GameState, civ_id: str) -> None:
                 key=lambda t: (len(route(state, civ_id, army.province, t.province)) or 99, t.id),
             )
             if nearest.province != army.province:
+                if army.engage == "cautious" and (
+                    win_share(state, [army], [nearest], nearest.province, False)
+                    < state.world.rules.armies.cautious_win_share_bp
+                ):
+                    continue  # it will not march on a host it cannot beat
                 army.target = nearest.province
 
 
@@ -841,11 +1174,13 @@ def merge(state: GameState) -> None:
 
 
 def odds(state: GameState, mine: list[Army], theirs: list[Army], province_id: str) -> int:
-    """How strongly ``mine`` would attack ``theirs`` at a province (bp; 10_000 = even)."""
+    """How strongly ``mine`` would attack ``theirs`` at a province (bp; 10_000 = even).
+
+    Counts the plans, formations, rules of engagement and fortified camps on both sides.
+    """
     if not theirs:
         return 10 * BP
-    attack, _ = side_power(state, mine, theirs, True, province_id)
-    defend_power, _ = side_power(state, theirs, mine, False, province_id)
+    attack, defend_power = _lines(state, province_id, mine, theirs).expected()
     return attack * BP // max(1, defend_power)
 
 
@@ -861,6 +1196,12 @@ def command(state: GameState, strengths: dict[str, int]) -> None:
             defend(state, civ_id)
             continue
         civ = state.civs[civ_id]
+        engage: Literal["fight", "cautious"] = (
+            "fight" if civ.disposition.value == "aggressive" else "cautious"
+        )
+        for army in state.armies.values():  # rival generals choose their own rules of engagement
+            if army.owner == civ_id and army.engage != "last_man":
+                army.engage = engage
         enemies = at_war(state, civ_id)
         want_bp = rules.war_army_bp if enemies else rules.peace_army_bp
         want = apply_bp(apply_bp(state.population(civ_id), want_bp), civ.martial_bp)
@@ -1004,6 +1345,22 @@ def apply_orders(state: GameState, action: Orders) -> tuple[bool, str]:
         if chosen is None:
             return True, f"The {army.name}'s general will choose how to fight."
         return True, f"The {army.name} will fight with a {chosen.name.lower()}."
+    if isinstance(action, ArmyFormation):
+        chosen_f = state.world.formations.get(action.formation)
+        if chosen_f is None and action.formation != FORMATION_AUTO:
+            return False, f"unknown formation {action.formation!r}"
+        army.formation = action.formation
+        if chosen_f is None:
+            return True, f"The {army.name}'s general will choose how to draw up the line."
+        return True, f"The {army.name} will fight in a {chosen_f.name.lower()}."
+    if isinstance(action, ArmyEngage):
+        army.engage = action.engage
+        said = {
+            "fight": "will fight whatever comes",
+            "cautious": "will withdraw from a battle it expects to lose",
+            "last_man": "will fight to the last man",
+        }[action.engage]
+        return True, f"The {army.name} {said}."
     if isinstance(action, ArmyStance):
         army.target = None
         army.stance = action.stance
@@ -1026,5 +1383,7 @@ def apply_orders(state: GameState, action: Orders) -> tuple[bool, str]:
         )
         return False, f"the {army.name} cannot march there: {why}"
     army.target = action.target
+    army.forced = action.forced
     place = state.world.geography[action.target].name
-    return True, f"The {army.name} marches on {place}."
+    pace = " at a forced pace" if action.forced else ""
+    return True, f"The {army.name} marches on {place}{pace}."

@@ -12,6 +12,7 @@ from anachronism.content.schema.chapters import AlmanacEntry, Chapter
 from anachronism.content.schema.civ import CivDefinition
 from anachronism.content.schema.dialogue import Dialogue, Speaker
 from anachronism.content.schema.dilemmas import Dilemma
+from anachronism.content.schema.formations import Formation
 from anachronism.content.schema.happenings import Happening
 from anachronism.content.schema.rules import Rules
 from anachronism.content.schema.scenario import Scenario
@@ -66,6 +67,7 @@ LIST_KINDS: dict[str, type[Frozen]] = {
     "chapters": Chapter,
     "almanac": AlmanacEntry,
     "tactics": Tactic,
+    "formations": Formation,
     "symbols": Symbol,
 }
 """Kinds holding a list of items with ids; each item is validated on its own."""

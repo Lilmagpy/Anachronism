@@ -15,6 +15,7 @@ tactics:
     power_bp: 1000
     losses_bp: 4000
     terrain_bp: {marsh: -2000, forest: -1500, mountains: -1500}
+    skirmish_bp: -3000
     beats: [line, skirmish]
     trait: bold
   - id: hold
@@ -31,6 +32,7 @@ tactics:
     note: "Never close: shoot, fall back, shoot again. Few die on either side; it wears down a line that stands still - but a charge catches the archers."
     needs_units: [archers, crossbowmen, horse_archers, musketeers]
     needs_share_bp: 3000
+    skirmish_bp: 6000
     losses_bp: -3500
     terrain_bp: {steppe: 1500, desert: 1500, plains: 500, forest: -2000}
     beats: [hold, ambush]
@@ -59,5 +61,6 @@ tactics:
     needs_terrain: [forest, hills, mountains, marsh]
     power_bp: 1500
     rout_bp: 2000
+    skirmish_bp: 3000
     beats: [line, charge, flank]
     trait: quartermaster

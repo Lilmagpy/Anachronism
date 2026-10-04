@@ -13,6 +13,7 @@ from anachronism.content.schema import (
     Dilemma,
     EffectType,
     Era,
+    Formation,
     Happening,
     MapResource,
     PackManifest,
@@ -57,6 +58,7 @@ class Registry:
     chapters: dict[str, Chapter] = field(default_factory=dict)
     almanac: dict[str, AlmanacEntry] = field(default_factory=dict)
     tactics: dict[str, Tactic] = field(default_factory=dict)
+    formations: dict[str, Formation] = field(default_factory=dict)
     symbols: dict[str, Symbol] = field(default_factory=dict)
     origins: dict[tuple[str, str], str] = field(default_factory=dict)
     invalid: dict[str, set[str]] = field(default_factory=dict)

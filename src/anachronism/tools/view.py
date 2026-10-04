@@ -6,9 +6,10 @@ from dataclasses import asdict
 from typing import Any
 
 from anachronism.content.loader import Content
-from anachronism.content.schema import Building, Stage
+from anachronism.content.schema import Building, RelationStatus, Stage
 from anachronism.engine.armies import (
     STYLES,
+    at_war_with,
     available_units,
     composition,
     mobilisation_cap,
@@ -17,6 +18,7 @@ from anachronism.engine.armies import (
     under_arms,
     wall_cost,
     wall_tech,
+    win_share,
 )
 from anachronism.engine.buildings import cost as building_cost
 from anachronism.engine.buildings import options as building_options
@@ -28,6 +30,8 @@ from anachronism.engine.dynasty import remembered_in
 from anachronism.engine.economy import project_costs, province_output
 from anachronism.engine.effects import civ_effects
 from anachronism.engine.fixed import BP
+from anachronism.engine.formations import final as final_formation
+from anachronism.engine.formations import lacks as formation_lacks
 from anachronism.engine.navies import SIZES, best_ship, sea_links, sea_route, seas_of
 from anachronism.engine.navies import power as sea_power
 from anachronism.engine.occupation import garrisoned, restless
@@ -35,7 +39,7 @@ from anachronism.engine.offers import describe
 from anachronism.engine.population import province_capacity
 from anachronism.engine.projects import hasten_cost, project_turns
 from anachronism.engine.reports import capacity
-from anachronism.engine.rivals import relation, strength
+from anachronism.engine.rivals import relation, status, strength
 from anachronism.engine.state import Army, Event, GameState
 from anachronism.engine.suspicion import adoption_suspicion_bp
 from anachronism.engine.tactics import AUTO, final, natural, needs_text, short_of_men
@@ -138,6 +142,9 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
         "wars": fronts(state),
         "armies": _armies(state),
         "tactics": _tactics(state),
+        "formations": _formations(state),
+        "engage_rules": ENGAGE_RULES,
+        "odds": _odds(state),
         "fleets": _fleets(state),
         "navy": _navy(state, civ_id),
         "dilemma": _dilemma(state),
@@ -210,7 +217,12 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
         ],
         "ideas": _ideas(state, civ_id),
         "events": [
-            {"civ": e.civ, "kind": e.kind, "message": e.message}
+            {
+                "civ": e.civ,
+                "kind": e.kind,
+                "message": e.message,
+                **({"phases": e.phases, "sides": e.sides} if e.phases else {}),
+            }
             for e in (events or [])
             if e.civ == civ_id or e.kind in ("revolt", "collapse", "destroyed")
         ],
@@ -541,21 +553,67 @@ def _walls_next(state: GameState, province_id: str) -> dict[str, Any]:
     }
 
 
+ENGAGE_RULES = [
+    {"id": "fight", "name": "Fight", "note": "Meet the enemy and fight it out."},
+    {
+        "id": "cautious",
+        "name": "Cautious",
+        "note": "Fall back from a battle it expects to lose (never from behind walls).",
+    },
+    {
+        "id": "last_man",
+        "name": "To the last man",
+        "note": "Never gives way: hits harder, but loses far more if beaten.",
+    },
+]
+"""The rules of engagement an army may be given."""
+
+
+def _visible(state: GameState, army: Army) -> bool:
+    """True when the player can see an army closely.
+
+    It is the player's own (or an ally's), on or beside the player's land, or beside one of
+    the player's armies.
+    """
+    me = state.player_civ
+    if army.owner == me:
+        return True
+    if status(state, me, army.owner) is RelationStatus.ALLIED:
+        return True
+    here = {army.province, *state.world.geography[army.province].neighbours}
+    if any(state.provinces[p].owner == me for p in here if p in state.provinces):
+        return True
+    return any(a.owner == me and a.province in here for a in state.armies.values())
+
+
+def _fogged(state: GameState, men: int) -> int:
+    """Men as a distant scout reports them: to the nearest few thousand."""
+    unit = state.world.rules.armies.fog_round_men
+    return max(unit, (men + unit // 2) // unit * unit)
+
+
 def _armies(state: GameState) -> list[dict[str, Any]]:
-    """Every army in the field: where, who, how many, and where it is going."""
+    """Every army in the field: where, who, how many, and where it is going.
+
+    Rival armies the player cannot see closely are reported rounded (``men_exact`` false).
+    """
     out = []
     for army_id, army in sorted(state.armies.items()):
         owner = state.provinces[army.province].owner
         besieged = owner is not None and army.siege_bp > 0
+        men = army.men
+        seen = _visible(state, army)
+        shown = men if seen else _fogged(state, men)
         out.append(
             {
                 "id": army_id,
                 "owner": army.owner,
                 "name": army.name,
                 "province": army.province,
-                "men": army.men,
+                "men": shown,
+                "men_exact": seen,
                 "troops": [
-                    {"unit": u, "name": state.world.units[u].name, "men": n}
+                    {"unit": u, "name": state.world.units[u].name, "men": n * shown // max(1, men)}
                     for u, n in sorted(army.troops.items(), key=lambda item: -item[1])
                 ],
                 "morale_bp": army.morale_bp,
@@ -569,6 +627,10 @@ def _armies(state: GameState) -> list[dict[str, Any]]:
                 else [],
                 "stance": army.stance,
                 **_plan(state, army),
+                **_formation(state, army),
+                "engage": army.engage,
+                "dug_in": army.dug_in,
+                "forced": army.forced,
                 "veterancy_bp": army.veterancy_bp,
                 "siege_bp": army.siege_bp,
                 "siege_needed": defence_bp(state, owner, army.province)
@@ -576,6 +638,89 @@ def _armies(state: GameState) -> list[dict[str, Any]]:
                 else 0,
             }
         )
+    return out
+
+
+def _foe(state: GameState, army: Army) -> Army | None:
+    """The enemy army this one would most likely meet (the player's, for a rival army)."""
+    if army.owner != state.player_civ:
+        return _nearest(state, army)
+    near = {army.province, *state.world.geography[army.province].neighbours}
+    foes = [a for a in state.armies.values() if at_war_with(state, army.owner, a.owner)]
+    return min(
+        foes,
+        key=lambda a: (a.province != army.province, a.province not in near, -a.men, a.id),
+        default=None,
+    )
+
+
+def _formation(state: GameState, army: Army) -> dict[str, Any]:
+    """An army's formation: ordered, likely against its foe and (if yours) what is possible."""
+    foe = _foe(state, army)
+    out: dict[str, Any] = {
+        "formation": army.formation,
+        "formation_reads": army.formation == AUTO
+        and army.skill >= state.world.rules.armies.reads_enemy_skill,
+    }
+    likely = final_formation(state, [army], [foe]) if foe is not None else None
+    out["formation_likely"] = {"id": likely.id, "name": likely.name} if likely else None
+    if army.owner == state.player_civ:
+        against = [foe] if foe is not None else []
+        out["formation_options"] = [
+            {
+                "id": fid,
+                "name": f.name,
+                "description": f.description,
+                "ok": not (why := formation_lacks(f, [army], against)),
+                "lacking": why,
+            }
+            for fid, f in sorted(state.world.formations.items())
+        ]
+    return out
+
+
+def _formations(state: GameState) -> list[dict[str, Any]]:
+    """The formations, what each beats and what beats it, for the formation picker."""
+    forms = state.world.formations
+    return [
+        {
+            "id": fid,
+            "name": f.name,
+            "description": f.description,
+            "beats": [forms[b].name for b in f.beats if b in forms],
+            "beaten_by": [o.name for _, o in sorted(forms.items()) if fid in o.beats],
+            "equal_to": [forms[d].name for d in f.duel if d in forms],
+            "edge_bp": f.edge_bp,
+            "needs_ratio_bp": f.needs_ratio_bp,
+        }
+        for fid, f in sorted(forms.items())
+    ]
+
+
+def _odds(state: GameState) -> list[dict[str, Any]]:
+    """The player's armies against enemy armies in or beside their province.
+
+    ``win_bp`` is their share of the two sides' strength (5_000 even), counting plans,
+    formations, camps and rules of engagement.
+    """
+    out = []
+    for mine in sorted(state.armies.values(), key=lambda a: a.id):
+        if mine.owner != state.player_civ:
+            continue
+        near = {mine.province, *state.world.geography[mine.province].neighbours}
+        for foe in sorted(state.armies.values(), key=lambda a: a.id):
+            if foe.province not in near or not at_war_with(state, mine.owner, foe.owner):
+                continue
+            holder = state.provinces[foe.province].owner
+            attacking = holder != mine.owner
+            if foe.province != mine.province:
+                attacking = True
+            share = win_share(state, [mine], [foe], foe.province, attacking)
+            if not _visible(state, foe):
+                share = (share + 250) // 500 * 500
+            out.append(
+                {"mine": mine.id, "theirs": foe.id, "province": foe.province, "win_bp": share}
+            )
     return out
 
 

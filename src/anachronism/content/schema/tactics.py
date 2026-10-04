@@ -43,3 +43,5 @@ class Tactic(Frozen):
     """More (or fewer) dead on both sides."""
     rout_bp: int = Field(default=0, ge=0, le=5000)
     """If it wins, the beaten side loses as if the defeat were this much worse."""
+    skirmish_bp: int = Field(default=0, ge=-5000, le=10_000)
+    """More (or less) harm done by the army's missile troops in the opening skirmish (D-267)."""

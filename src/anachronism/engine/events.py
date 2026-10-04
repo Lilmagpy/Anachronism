@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from anachronism.engine.state import Event
 
 
@@ -13,7 +15,16 @@ class EventLog:
         self.year = year
         self.items: list[Event] = []
 
-    def add(self, civ: str | None, kind: str, message: str, subject: str = "") -> None:
+    def add(
+        self,
+        civ: str | None,
+        kind: str,
+        message: str,
+        subject: str = "",
+        *,
+        phases: list[dict[str, Any]] | None = None,
+        sides: dict[str, str] | None = None,
+    ) -> None:
         """Record an event; ``subject`` names what it is about (an idea, a place)."""
         self.items.append(
             Event(
@@ -23,6 +34,8 @@ class EventLog:
                 kind=kind,
                 message=message,
                 subject=subject,
+                phases=phases or [],
+                sides=sides or {},
             )
         )
 
