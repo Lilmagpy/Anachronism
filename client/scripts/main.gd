@@ -288,6 +288,17 @@ func _build_hud() -> void:
 		var block: Variant = view.get("chronicle")
 		if block != null and block.get("chapter") != null:
 			_on_action({"kind": "chapter", "chapter": str(block["chapter"]["id"]), "choice": int(options["choose"])})
+	if options.has("war"):  # --war=civ: declare war (testing the turn replay)
+		_on_action({"kind": "declare_war", "target": str(options["war"])})
+	if options.has("raise"):  # --raise=province: raise an army there
+		_on_action({"kind": "raise", "province": str(options["raise"]), "size": "large"})
+	if options.has("march"):  # --march=province: the player's largest army marches there
+		var best: Dictionary = {}
+		for army in view.get("armies", []):
+			if army["owner"] == view["player"] and (best.is_empty() or int(army["men"]) > int(best["men"])):
+				best = army
+		if not best.is_empty():
+			_on_action({"kind": "march", "army": str(best["id"]), "target": str(options["march"])})
 	_quick_turns = true   # turns run from the command line are not played out on the map
 	if options.has("build"):  # --build=province:building,... one a turn (screenshots)
 		for order in str(options["build"]).split(","):
@@ -301,17 +312,6 @@ func _build_hud() -> void:
 		for order in str(options["queue"]).split(","):
 			var bits := order.split(":")
 			_on_action({"kind": "build", "province": bits[0], "building": bits[1]})
-	if options.has("war"):  # --war=civ: declare war (testing the turn replay)
-		_on_action({"kind": "declare_war", "target": str(options["war"])})
-	if options.has("raise"):  # --raise=province: raise an army there
-		_on_action({"kind": "raise", "province": str(options["raise"]), "size": "large"})
-	if options.has("march"):  # --march=province: the player's largest army marches there
-		var best: Dictionary = {}
-		for army in view.get("armies", []):
-			if army["owner"] == view["player"] and (best.is_empty() or int(army["men"]) > int(best["men"])):
-				best = army
-		if not best.is_empty():
-			_on_action({"kind": "march", "army": str(best["id"]), "target": str(options["march"])})
 	if options.has("tab"):
 		hud.set_tab(str(options["tab"]))
 	if options.has("open"):  # --open=build|levy|fleet: unfold part of the province card
@@ -323,6 +323,14 @@ func _build_hud() -> void:
 		game_menu.call("open_menu" if screen == "menu" else "open_" + screen)
 	if options.has("dev"):
 		hud.toggle_dev()
+	if options.has("battles"):  # --battles: open the last turn's battle reports (screenshots)
+		var fought: Array = []
+		for e in view.get("events", []):
+			if str(e["kind"]) in ["battle_won", "battle_lost"] and e.has("phases"):
+				fought.append(e)
+		print("battles: ", fought.size())
+		if not fought.is_empty():
+			hud.call("_show_battles", fought)
 	if options.has("outcome"):  # --outcome=victory|defeat: preview the end screen (screenshots)
 		var won := str(options["outcome"]) != "defeat"
 		hud.call("_show_outcome", {"result": "victory" if won else "defeat",
@@ -612,7 +620,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			if hud.marching_army != "" and place != "":
 				var army := hud.marching_army
 				hud.marching_army = ""
-				_on_action({"kind": "march", "army": army, "target": place})
+				_on_action({"kind": "march", "army": army, "target": place, "forced": hud.forced_march})
+				hud.forced_march = false
 				return
 			if hud.sailing_fleet != "" and place != "":
 				var fleet := hud.sailing_fleet

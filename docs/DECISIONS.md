@@ -2131,3 +2131,16 @@ drier lands (Spain, Anatolia, the steppe) show their tan, hill country turns oli
 ground is shaded so relief reads, and the global saturation boost is lower (1.32 -> 1.12 on
 the Mac's renderer). Army and fleet figures on the map now sit on rounded banners in their
 owner's colour (gold-brown for the player) instead of floating as bare text.
+
+## D-269 Combat v2 on screen, and a gentler formation edge (2026-10-04)
+The client now shows D-267: each of your armies has a Formation picker (with what each beats
+and needs, and why a wide line would be thin), an "If attacked" picker (fight, cautious,
+last man), a Forced march button beside March, a live odds line against nearby enemy
+armies (your share of the fighting strength, green, even or red), and notes for camps
+("dug in"), forced marches and enemy strength guessed out of sight. Rival armies show their
+likely formation. After a turn with battles, the news box offers "Battle reports": each
+battle phase by phase (skirmish, clash, pursuit), with both sides' losses and morale bars,
+so the player can see why it was won or lost. The formation edge is lowered from +20% to
++15% (the helper found +20% close to decisive at even numbers; numbers, ground and
+generals should still count). The test options now give war and march orders before the
+played turns, so screenshots can show real battles.

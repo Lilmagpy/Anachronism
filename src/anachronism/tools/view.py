@@ -221,7 +221,7 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
                 "civ": e.civ,
                 "kind": e.kind,
                 "message": e.message,
-                **({"phases": e.phases, "sides": e.sides} if e.phases else {}),
+                **({"phases": e.phases, "sides": e.sides, "target": e.subject} if e.phases else {}),
             }
             for e in (events or [])
             if e.civ == civ_id or e.kind in ("revolt", "collapse", "destroyed")

@@ -25,7 +25,7 @@ class Formation(Frozen):
     """Formations that beat this one (for the player's picker; checked against ``beats``)."""
     duel: tuple[Identifier, ...] = ()
     """Formations it meets as an equal: the better general (higher skill) has the edge."""
-    edge_bp: Rate = 2000
+    edge_bp: Rate = 1500
     """Extra fighting power in the clash when it beats the enemy's formation."""
     power_bp: int = Field(default=0, ge=-5000, le=5000)
     """Extra (or less) fighting power in the first clash."""

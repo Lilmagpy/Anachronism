@@ -39,6 +39,7 @@ var rulings: Array = []         ## the latest rulings, shown at the top of the I
 var court_mode := "offline"
 var selected_army := ""        ## the army the player picked (drawn with a gold ring)
 var marching_army := ""        ## waiting for the player to click where this army should march
+var forced_march := false      ## the next march is a forced march (D-267)
 var levy_style := "balanced"   ## the mix of soldiers the next levy will have
 var selected_fleet := ""       ## the fleet the player picked (drawn with a gold ring)
 var sailing_fleet := ""        ## waiting for the player to click where this fleet should sail
@@ -1514,7 +1515,18 @@ func _army_box(army: Dictionary) -> Control:
 		notes.append("pillaging the land")
 	elif mine:
 		notes.append("defending our land" if army["stance"] == "defend" else "holding")
+	if army.get("dug_in", false):
+		notes.append("dug in (+15% in defence)")
+	if army.get("forced", false):
+		notes.append("on a forced march")
+	if not mine and not army.get("men_exact", true):
+		notes.append("strength guessed: out of sight")
 	box.add_child(_wrapped(" · ".join(notes), 12, DIM))
+	if not mine and army.get("formation_likely") != null:
+		var shape := _wrapped("Likely formation: %s" % str(army["formation_likely"]["name"]).to_lower(), 12, INK)
+		shape.tooltip_text = _formation_tip(str(army["formation_likely"]["id"]))
+		shape.mouse_filter = Control.MOUSE_FILTER_PASS
+		box.add_child(shape)
 	if not mine and army.get("likely") != null:
 		var plan := _wrapped("Likely battle plan: %s%s" % [str(army["likely"]["name"]).to_lower(),
 			" - and its general reads his enemy's plan" if army.get("reads", false) else ""], 12, INK)
@@ -1523,17 +1535,34 @@ func _army_box(army: Dictionary) -> Control:
 		box.add_child(plan)
 	if mine:
 		box.add_child(_plan_picker(army))
-		var orders := HBoxContainer.new()
-		orders.add_theme_constant_override("separation", 4)
+		box.add_child(_formation_picker(army))
+		box.add_child(_engage_picker(army))
+		for chance in view.get("odds", []):
+			if str(chance["mine"]) == str(army["id"]):
+				box.add_child(_odds_line(chance))
+		var orders := HFlowContainer.new()
+		orders.add_theme_constant_override("h_separation", 4)
+		orders.add_theme_constant_override("v_separation", 4)
 		var go := _button("March…", func():
 			selected_army = str(army["id"])
 			marching_army = str(army["id"])
+			forced_march = false
 			message = "Click the province the %s should march to." % str(army["name"])
 			armies_changed.emit()
 			show_view(view))
 		go.add_theme_font_size_override("font_size", 13)
 		go.tooltip_text = "Then click a province: it marches there (two or three provinces a turn), fighting any enemy it meets and besieging enemy cities"
 		orders.add_child(go)
+		var rush := _button("Forced march…", func():
+			selected_army = str(army["id"])
+			marching_army = str(army["id"])
+			forced_march = true
+			message = "Forced march: click where the %s should hurry to (a province further each turn; the men tire and some fall out)." % str(army["name"])
+			armies_changed.emit()
+			show_view(view))
+		rush.add_theme_font_size_override("font_size", 13)
+		rush.tooltip_text = "March one province further each turn, at a cost in morale and stragglers"
+		orders.add_child(rush)
 		var hold := _small_button("Hold", {"kind": "stance", "army": army["id"], "stance": "hold"})
 		hold.tooltip_text = "Stop and stay here"
 		orders.add_child(hold)
@@ -1586,6 +1615,91 @@ func _plan_picker(army: Dictionary) -> Control:
 	pick.tooltip_text = "How the army means to fight. Each plan beats some plans and loses to others."
 	row.add_child(pick)
 	return row
+
+
+## Your chance against an enemy army in or beside this province (D-267).
+func _odds_line(chance: Dictionary) -> Control:
+	var share := int(chance["win_bp"])
+	var foe: Dictionary = {}
+	for other in view.get("armies", []):
+		if str(other["id"]) == str(chance["theirs"]):
+			foe = other
+	var said := "even" if absi(share - 5000) < 600 else ("in our favour" if share > 5000 else "against us")
+	var line := _wrapped("Against the %s %s at %s: %d%% of the strength - %s" % [
+		_civ_adjective(str(foe.get("owner", ""))), str(foe.get("name", "army")),
+		str(_find_place(str(chance["province"])).get("name", chance["province"])), share / 100, said],
+		12, GOOD if share > 5600 else (BAD if share < 4400 else INK))
+	line.tooltip_text = "Your share of the two sides' fighting strength: men, soldiers, ground, plans, formations, camps and veterans. Luck still plays its part."
+	line.mouse_filter = Control.MOUSE_FILTER_PASS
+	return line
+
+
+## The formation an army of yours stands in (D-267): the general's choice, or yours.
+func _formation_picker(army: Dictionary) -> Control:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 6)
+	var caption := _label("Formation", 12, DIM)
+	caption.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	row.add_child(caption)
+	var pick := OptionButton.new()
+	pick.add_theme_font_size_override("font_size", 12)
+	pick.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var ids: Array = ["auto"]
+	pick.add_item("The general decides")
+	pick.set_item_tooltip(0, "He chooses how to draw up the line" + (
+		"; a great general reads the enemy's formation and answers it" if army.get("formation_reads", false) else ""))
+	for option in army.get("formation_options", []):
+		ids.append(option["id"])
+		pick.add_item(str(option["name"]))
+		var i := pick.item_count - 1
+		var tip := _formation_tip(str(option["id"]))
+		if not bool(option["ok"]):
+			tip += "\nNot now: it " + str(option["lacking"]) + " - it would be a thin line."
+		pick.set_item_tooltip(i, tip)
+		if str(army.get("formation", "auto")) == str(option["id"]):
+			pick.select(i)
+	if str(army.get("formation", "auto")) == "auto":
+		pick.select(0)
+	pick.item_selected.connect(func(i): action_requested.emit({"kind": "formation", "army": army["id"], "formation": ids[i]}))
+	pick.tooltip_text = "How the line is drawn up: a strong wing turns a flank, a deep reserve plugs a breach, a wide line envelops if you have the men."
+	row.add_child(pick)
+	return row
+
+
+## When an army of yours fights (D-267): always, only with a fair chance, or to the last man.
+func _engage_picker(army: Dictionary) -> Control:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 6)
+	var caption := _label("If attacked", 12, DIM)
+	caption.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	row.add_child(caption)
+	var pick := OptionButton.new()
+	pick.add_theme_font_size_override("font_size", 12)
+	pick.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var ids: Array = []
+	for rule in view.get("engage_rules", []):
+		ids.append(rule["id"])
+		pick.add_item(str(rule["name"]))
+		pick.set_item_tooltip(pick.item_count - 1, str(rule["note"]))
+		if str(army.get("engage", "fight")) == str(rule["id"]):
+			pick.select(pick.item_count - 1)
+	pick.item_selected.connect(func(i): action_requested.emit({"kind": "engage", "army": army["id"], "engage": ids[i]}))
+	pick.tooltip_text = "Whether the army stands and fights, slips away from a battle it would lose, or never yields"
+	row.add_child(pick)
+	return row
+
+
+## A formation explained: what it is, what it beats, what it needs.
+func _formation_tip(formation_id: String) -> String:
+	for f in view.get("formations", []):
+		if f["id"] == formation_id:
+			var tip := "%s\nBeats: %s. Beaten by: %s." % [str(f["description"]), _list_or_none(f["beats"]), _list_or_none(f["beaten_by"])]
+			if not (f.get("equal_to", []) as Array).is_empty():
+				tip += " Against %s, the better general wins." % _list_or_none(f["equal_to"])
+			if int(f.get("needs_ratio_bp", 0)) > 0:
+				tip += "\nNeeds %.1f times the enemy's men." % (int(f["needs_ratio_bp"]) / 10000.0)
+			return tip
+	return ""
 
 
 static func _list_or_none(items: Array) -> String:
@@ -1796,6 +1910,78 @@ func _fill_chronicle() -> void:
 		_chronicle.add_child(line)
 	if events.size() > 4:
 		_chronicle.add_child(_label("… and %d more (hover to read)" % (events.size() - 4), 12, DIM))
+	var fought: Array = []
+	for e in events:
+		if str(e["kind"]) in ["battle_won", "battle_lost"] and not (e.get("phases", []) as Array).is_empty():
+			fought.append(e)
+	if not fought.is_empty():
+		var open := _button("⚔ Battle report%s (%d)" % ["s" if fought.size() > 1 else "", fought.size()], func(): _show_battles(fought))
+		open.add_theme_font_size_override("font_size", 13)
+		open.tooltip_text = "How each battle went: the skirmish, the clash and the pursuit"
+		_chronicle.add_child(open)
+
+
+## The battle reports of the last turn (D-267): each battle phase by phase, with both sides'
+## losses and morale, so the player sees why it was won or lost.
+func _show_battles(fought: Array) -> void:
+	var shade := ColorRect.new()
+	shade.color = Color(0, 0, 0, 0.45)
+	shade.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_root.add_child(shade)
+	var panel := PanelContainer.new()
+	panel.add_theme_stylebox_override("panel", UiStyle.ornate_panel())
+	var room := shade.get_parent_area_size() if shade.is_inside_tree() else get_viewport().get_visible_rect().size
+	var want := Vector2(minf(760.0, room.x - 80.0), minf(620.0, room.y - 140.0))
+	panel.set_anchors_preset(Control.PRESET_FULL_RECT)
+	panel.offset_left = (room.x - want.x) / 2.0
+	panel.offset_right = -(room.x - want.x) / 2.0
+	panel.offset_top = (room.y - want.y) / 2.0
+	panel.offset_bottom = -(room.y - want.y) / 2.0
+	shade.add_child(panel)
+	var column := VBoxContainer.new()
+	column.add_theme_constant_override("separation", 8)
+	panel.add_child(column)
+	column.add_child(_label("BATTLE REPORTS", 22, UiStyle.RED))
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	var body := VBoxContainer.new()
+	body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	body.add_theme_constant_override("separation", 6)
+	scroll.add_child(body)
+	column.add_child(scroll)
+	for e in fought:
+		var won := str(e["kind"]) == "battle_won"
+		var sides: Dictionary = e.get("sides", {})
+		body.add_child(_label(("Victory" if won else "Defeat") + (" at %s" % str(e.get("target", ""))  if str(e.get("target", "")) != "" else ""), 18, GOOD if won else BAD))
+		body.add_child(_wrapped(str(e["message"]), 13, INK))
+		for phase in e["phases"]:
+			body.add_child(_label(str(phase["name"]).to_upper(), 14, GOLD))
+			body.add_child(_wrapped(str(phase["text"]), 13, INK))
+			for side in ["a", "d"]:
+				var row := HBoxContainer.new()
+				row.add_theme_constant_override("separation", 8)
+				var who := _label("%s%s" % [str(sides.get(side, side)).capitalize(), " ★" if str(sides.get("winner", "")) == side else ""], 12, INK)
+				who.custom_minimum_size.x = 150
+				row.add_child(who)
+				var lost := _label("lost %s" % number(int(phase["losses"][side])), 12, DIM)
+				lost.custom_minimum_size.x = 90
+				row.add_child(lost)
+				var bar := ProgressBar.new()
+				bar.max_value = 10000
+				bar.value = int(phase["morale"][side])
+				bar.show_percentage = false
+				bar.custom_minimum_size = Vector2(160, 10)
+				bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+				bar.tooltip_text = "Morale after this phase: below 30% a side breaks and runs"
+				row.add_child(bar)
+				row.add_child(_label("morale %d%%" % (int(phase["morale"][side]) / 100), 12, BAD if int(phase["morale"][side]) < 3000 else DIM))
+				body.add_child(row)
+		body.add_child(HSeparator.new())
+	var close := UiStyle.big_button("CLOSE", 18)
+	close.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	close.pressed.connect(func(): shade.queue_free())
+	column.add_child(close)
 
 
 ## False while a chapter waits for the player's decision (or a turn is playing out).
