@@ -65,7 +65,41 @@ static func theme() -> Theme:
 	t.set_color("font_pressed_color", "Button", INK)
 	t.set_color("font_disabled_color", "Button", Color(INK, 0.4))
 	t.set_font("font", "Button", font("body", 800))
+	# hover explanations: a dark, gold-edged card with large cream text, easy to read over
+	# the bright map and the cream panels alike
+	var tip := StyleBoxFlat.new()
+	tip.bg_color = Color(0.13, 0.10, 0.07, 0.97)
+	tip.border_color = GOLD
+	tip.set_border_width_all(2)
+	tip.set_corner_radius_all(8)
+	tip.content_margin_left = 14
+	tip.content_margin_right = 14
+	tip.content_margin_top = 10
+	tip.content_margin_bottom = 10
+	tip.shadow_color = Color(0, 0, 0, 0.45)
+	tip.shadow_size = 6
+	t.set_stylebox("panel", "TooltipPanel", tip)
+	t.set_color("font_color", "TooltipLabel", Color(1.0, 0.95, 0.84))
+	t.set_font("font", "TooltipLabel", font("body", 600))
+	t.set_font_size("font_size", "TooltipLabel", 18)
+	t.set_constant("line_spacing", "TooltipLabel", 3)
 	return t
+
+
+## Long hover texts broken into lines of about `width` characters, so a tooltip is a
+## readable card rather than one line across the screen.
+static func wrap_tip(text: String, width := 60) -> String:
+	var out := PackedStringArray()
+	for paragraph in text.split("\n"):
+		var line := ""
+		for word in paragraph.split(" "):
+			if line != "" and line.length() + 1 + word.length() > width:
+				out.append(line)
+				line = word
+			else:
+				line = word if line == "" else line + " " + word
+		out.append(line)
+	return "\n".join(out)
 
 
 static var _ornate: StyleBoxTexture

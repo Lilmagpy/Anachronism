@@ -38,6 +38,11 @@ var sun := DirectionalLight3D.new()
 
 
 func _ready() -> void:
+	# every hover text in the game is wrapped into a readable card (see UiStyle.wrap_tip)
+	get_tree().node_added.connect(func(node: Node):
+		if node is Control:
+			_wrap_tip.call_deferred(node))
+	ProjectSettings.set_setting("gui/timers/tooltip_delay_sec", 0.25)
 	for arg in OS.get_cmdline_user_args():
 		var parts := arg.trim_prefix("--").split("=", true, 1)
 		options[parts[0]] = parts[1] if parts.size() > 1 else "true"
@@ -299,6 +304,14 @@ func _build_hud() -> void:
 				best = army
 		if not best.is_empty():
 			_on_action({"kind": "march", "army": str(best["id"]), "target": str(options["march"])})
+	for order in ["formation", "plan"]:  # --formation=id / --plan=id for the largest army (screenshots)
+		if options.has(order):
+			var biggest: Dictionary = {}
+			for army in view.get("armies", []):
+				if army["owner"] == view["player"] and (biggest.is_empty() or int(army["men"]) > int(biggest["men"])):
+					biggest = army
+			if not biggest.is_empty():
+				_on_action({"kind": order, "army": str(biggest["id"]), order: str(options[order])})
 	_quick_turns = true   # turns run from the command line are not played out on the map
 	if options.has("build"):  # --build=province:building,... one a turn (screenshots)
 		for order in str(options["build"]).split(","):
@@ -720,6 +733,16 @@ func _demo_replay(target: String) -> void:
 func _take_screenshot(path: String) -> void:
 	for i in 4:
 		await get_tree().process_frame
+	if options.has("hover"):  # --hover=x,y: rest the mouse there so its tooltip shows (screenshots)
+		var xy: PackedStringArray = str(options["hover"]).split(",")
+		var at := Vector2(float(xy[0]), float(xy[1]))
+		for step in 6:
+			Input.warp_mouse(at + Vector2(step, 0))
+			await get_tree().process_frame
+		var waited := 0.0
+		while waited < 1.2:
+			await get_tree().process_frame
+			waited += get_process_delta_time()
 	if options.has("replay-shots"):  # --replay-shots=t1,t2,...: pictures as the next turn plays
 		if options.has("replay-demo"):  # --replay-demo=province: a made-up turn there (screenshots)
 			_demo_replay(str(options["replay-demo"]))
@@ -754,3 +777,10 @@ func _exit_tree() -> void:
 	bridge.stop()
 	UiStyle.release()
 	Lod.release()
+
+
+func _wrap_tip(node: Node) -> void:
+	if is_instance_valid(node):
+		var control := node as Control
+		if control.tooltip_text.length() > 60:
+			control.tooltip_text = UiStyle.wrap_tip(control.tooltip_text)

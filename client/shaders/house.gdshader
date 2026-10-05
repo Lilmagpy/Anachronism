@@ -2,15 +2,21 @@
 // and a door on the long sides, so boxes read as buildings. Soft light bands.
 shader_type spatial;
 
+#include "res://shaders/lod.gdshaderinc"
+
 varying vec3 wall;
 varying vec3 local_normal;
 
 void vertex() {
 	wall = COLOR.rgb;
+	lod_distance = length(CAMERA_POSITION_WORLD - (MODEL_MATRIX * vec4(0.0, 0.0, 0.0, 1.0)).xyz);
 	local_normal = NORMAL;
 }
 
 void fragment() {
+	if (lod_keep(lod_distance) <= lod_dither(FRAGCOORD.xy)) {
+		discard;   // dissolve with distance (D-123): the built-in fade hides custom shaders
+	}
 	vec3 c = pow(wall, vec3(2.2));
 	vec2 uv = fract(UV * vec2(3.0, 2.0));   // BoxMesh faces share the atlas: 3 x 2
 	bool side = abs(local_normal.y) < 0.5;

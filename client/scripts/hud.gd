@@ -7,6 +7,8 @@
 class_name GameHud
 extends CanvasLayer
 
+const BattleSketch := preload("res://scripts/battle_sketch.gd")
+
 signal action_requested(action: Dictionary)
 signal end_turn_requested
 signal idea_submitted(text: String, answer: String)
@@ -1537,9 +1539,16 @@ func _army_box(army: Dictionary) -> Control:
 		box.add_child(_plan_picker(army))
 		box.add_child(_formation_picker(army))
 		box.add_child(_engage_picker(army))
+		box.add_child(_deploy_pickers(army))
+		var facing: Dictionary = {}
 		for chance in view.get("odds", []):
-			if str(chance["mine"]) == str(army["id"]):
-				box.add_child(_odds_line(chance))
+			if str(chance["mine"]) == str(army["id"]) and facing.is_empty():
+				facing = chance
+		box.add_child(_army_sketch(army, facing))
+		if not facing.is_empty():
+			box.add_child(_odds_line(facing))
+			if str(facing.get("ground", "")) != "":
+				box.add_child(_wrapped(str(facing["ground"]), 12, DIM))
 		var orders := HFlowContainer.new()
 		orders.add_theme_constant_override("h_separation", 4)
 		orders.add_theme_constant_override("v_separation", 4)
@@ -1615,6 +1624,78 @@ func _plan_picker(army: Dictionary) -> Control:
 	pick.tooltip_text = "How the army means to fight. Each plan beats some plans and loses to others."
 	row.add_child(pick)
 	return row
+
+
+## The plan drawn (D-272): your wings, the enemy's, red dashed arrows for the formation and
+## plan; against a nearby enemy each wing is marked as likely to win, hold or give way.
+func _army_sketch(army: Dictionary, chance: Dictionary) -> Control:
+	var sketch := BattleSketch.new()
+	sketch.from_army(army)
+	sketch.my_label = "%s: %s" % [str(army["name"]), _formation_name(sketch.formation)]
+	sketch.plan_note = "Plan: " + _plan_name(sketch.plan)
+	sketch.tooltip_text = "Seen from above: your army at the bottom, the enemy at the top. Red dashed arrows show how your formation and battle plan mean to fight; ✓ marks a wing likely to win, ✗ one likely to give way."
+	if not chance.is_empty():
+		for other in view.get("armies", []):
+			if str(other["id"]) == str(chance["theirs"]):
+				var each := int(other["men"]) / 3
+				sketch.foe_men = {"left": each, "centre": each, "right": each}
+				sketch.foe_label = "%s %s" % [_civ_adjective(str(other["owner"])), str(other["name"])]
+		for w in chance.get("wings", []):
+			var outlook := str(w["outcome"])
+			sketch.outcomes[str(w["wing"])] = "won" if outlook == "strong" else ("lost" if outlook == "weak" else "even")
+	else:
+		sketch.foe_label = "An enemy (none in reach)"
+		var each := int(army["men"]) / 3
+		sketch.foe_men = {"left": each, "centre": each, "right": each}
+	return sketch
+
+
+func _plan_name(plan_id: String) -> String:
+	for t in view.get("tactics", []):
+		if str(t["id"]) == plan_id:
+			return str(t["name"]).to_lower()
+	return plan_id.replace("_", " ")
+
+
+func _formation_name(formation_id: String) -> String:
+	for f in view.get("formations", []):
+		if str(f["id"]) == formation_id:
+			return str(f["name"]).to_lower()
+	return formation_id.replace("_", " ")
+
+
+## Where each kind of soldier stands (D-270): left by the formation, or placed by you.
+func _deploy_pickers(army: Dictionary) -> Control:
+	var grid := GridContainer.new()
+	grid.columns = 2
+	grid.add_theme_constant_override("h_separation", 6)
+	var deployment: Dictionary = army.get("deployment", {})
+	var places: Array = view.get("deploy_places", [])
+	for k in army.get("kinds", []):
+		var kind := str(k["kind"])
+		if not deployment.has(kind) or places.is_empty():
+			continue
+		var order: Dictionary = deployment[kind]
+		var caption := _label("%s (%s)" % [str(k["name"]), number(int(k["men"]))], 12, DIM)
+		caption.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		grid.add_child(caption)
+		var pick := OptionButton.new()
+		pick.add_theme_font_size_override("font_size", 12)
+		pick.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		var ids: Array = []
+		for place in places:
+			ids.append(str(place["id"]))
+			var name := str(place["name"])
+			if str(place["id"]) == "auto":
+				name += " (%s)" % str(order.get("place", "")).replace("_", " ")
+			pick.add_item(name)
+			pick.set_item_tooltip(pick.item_count - 1, str(place.get("note", "")))
+		var chosen := "auto" if order.get("auto", true) else str(order.get("place", "auto"))
+		pick.select(maxi(0, ids.find(chosen)))
+		pick.tooltip_text = "Where the %s stand in battle. Left to the formation, or placed by you: mass them on one wing to break it, keep them back as a reserve." % str(k["name"]).to_lower()
+		pick.item_selected.connect(func(i): action_requested.emit({"kind": "deploy", "army": army["id"], "unit_kind": kind, "place": ids[i]}))
+		grid.add_child(pick)
+	return grid
 
 
 ## Your chance against an enemy army in or beside this province (D-267).
@@ -1955,9 +2036,22 @@ func _show_battles(fought: Array) -> void:
 		var sides: Dictionary = e.get("sides", {})
 		body.add_child(_label(("Victory" if won else "Defeat") + (" at %s" % str(e.get("target", ""))  if str(e.get("target", "")) != "" else ""), 18, GOOD if won else BAD))
 		body.add_child(_wrapped(str(e["message"]), 13, INK))
+		if str(e.get("ground", "")) != "":
+			body.add_child(_wrapped(str(e["ground"]), 12, DIM))
+		var my_side := "a" if str(sides.get("a", "")) == _civ_adjective(str(view["player"])) else "d"
 		for phase in e["phases"]:
 			body.add_child(_label(str(phase["name"]).to_upper(), 14, GOLD))
 			body.add_child(_wrapped(str(phase["text"]), 13, INK))
+			if not (phase.get("wings", []) as Array).is_empty():
+				var sketch := BattleSketch.new()
+				sketch.from_clash(phase, my_side)
+				sketch.my_label = str(sides.get(my_side, "Us"))
+				sketch.foe_label = str(sides.get("d" if my_side == "a" else "a", "Enemy"))
+				sketch.custom_minimum_size = Vector2(420, 200)
+				sketch.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+				body.add_child(sketch)
+				for w in phase["wings"]:
+					body.add_child(_wrapped("· " + str(w["text"]), 12, INK))
 			for side in ["a", "d"]:
 				var row := HBoxContainer.new()
 				row.add_theme_constant_override("separation", 8)

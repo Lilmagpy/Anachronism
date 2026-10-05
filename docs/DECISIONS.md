@@ -2194,3 +2194,38 @@ matters. Engine only: the client screens for it come in a later step.
   has `wings` and `ground`. Old saves load (new fields default). Tests: wing contests,
   reserves, refused wings, horse riding round, flank blows, river/hills/forest/plains, deploy
   order, formation presets, great-general adaptation, view fields.
+
+## D-271 Cities with streets, and the invisible houses fixed — DELEGATED (2026-10-05)
+- **What.** Settled cities (all styles but the steppe camps) are now laid out on a street grid:
+  a central square (larger for a capital or a city with buildings), main streets crossing it,
+  side streets every few blocks, houses filling the lots and facing the nearer street, a few
+  lots left as gardens. The ground is paved in a stone colour by region (sandy for Egypt and
+  the Near East, reddish for India, grey-brown in the north), kept a shade darker than the
+  sunlit land so it reads as stone, not snow.
+- **Why.** The owner asked for better-looking cities; the old cities were a scatter of houses.
+- **Bug fixed on the way.** Egyptian, Near Eastern and Indian houses, and all farm fields, were
+  invisible on the Mac renderer (only their shadows drew): Godot's built-in distance fade hides
+  custom-shader meshes. The house, field and new paving shaders now fade themselves out with
+  distance (the same trick the army and mountain shaders already used).
+
+## D-272 Readable tooltips and the battle sketch — DELEGATED (2026-10-05)
+- **Tooltips.** Hover help is now a dark card with a gold border, cream text at 18 px, wrapped
+  to about 60 characters a line, and appears after a quarter second (it was small pale text in
+  one very long line). Every control's tooltip is wrapped automatically when it is created.
+- **Battle sketch.** Each of your army cards shows a small top-down sketch: your three wings
+  and reserve at the bottom (wider blocks for more men, from the deployment), the enemy's at
+  the top (their right faces your left), and **red dashed arrows** for what you mean to do: a
+  strong left curves round the enemy's right flank, a strong centre punches through the middle,
+  a wide line wraps both ends, a deep reserve moves up. The battle plan adds its own marks
+  (a charge's solid arrows, a skirmish's arrows loosed, a hold line, flanking curves, a feigned
+  flight, a hidden ambush) and its name in red. Against a nearby enemy each wing gets a green
+  tick, grey bars or a red cross for "likely to win / even / likely to give way".
+- **Deployment pickers.** Under the formation, one picker per kind of soldier (infantry,
+  spearmen, missile troops, horse, elephants): leave it to the formation or put them on the
+  left, centre, right, in reserve or split along the line (the engine side is D-270). The
+  battle ground sentence (river, hills...) shows under the odds.
+- **Battle reports.** The Clash phase of each report draws the same sketch from your side, with
+  each wing's fate (beaten wings hatched red), a blue arrow where a second army fell on the
+  enemy's flank, and one line per wing saying what happened.
+- The sketch script is loaded with `preload` rather than a global class name, because the
+  class-name cache is not committed and a fresh checkout would fail to parse.

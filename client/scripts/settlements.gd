@@ -65,6 +65,8 @@ func _init(province_map: ProvinceMap) -> void:
 	terrace.size = Vector3(0.7, 0.08, 0.5) * S
 	var field := BoxMesh.new()
 	field.size = Vector3(0.34, 0.012, 0.24) * S
+	var paving := BoxMesh.new()   # one tile of a city's ground: lot, street or square
+	paving.size = Vector3(1.0, 0.01, 1.0)
 	var pole := CylinderMesh.new()
 	pole.top_radius = 0.012 * S
 	pole.bottom_radius = 0.016 * S
@@ -114,13 +116,17 @@ func _init(province_map: ProvinceMap) -> void:
 	dome.rings = 6
 	for entry in [["dome", dome], ["house", house], ["wall", wall], ["tower", tower],
 			["hall", hall], ["hall_roof", hall_roof], ["terrace", terrace], ["field", field],
-			["pole", pole], ["banner", banner], ["flat_roof", flat_roof],
+			["paving", paving], ["pole", pole], ["banner", banner], ["flat_roof", flat_roof],
 			["low_roof", low_roof], ["yurt", yurt], ["yurt_roof", yurt_roof],
 			["round_tower", round_tower], ["spire", spire], ["column", column], ["pyramid", pyramid]]:
 		_parts[entry[0]] = {"mesh": entry[1], "transforms": [], "colours": []}
 	var furrows := ShaderMaterial.new()
 	furrows.shader = load("res://shaders/field.gdshader")
 	_parts["field"]["material"] = furrows
+	# city ground lit flat, like the storybook terrain around it (a lit box reads too dark)
+	var ground := ShaderMaterial.new()
+	ground.shader = load("res://shaders/paving.gdshader")
+	_parts["paving"]["material"] = ground
 	var walls := ShaderMaterial.new()
 	walls.shader = load("res://shaders/house.gdshader")
 	_parts["house"]["material"] = walls
@@ -332,11 +338,12 @@ func _city(site: Dictionary, population: int, index: int) -> void:
 	var houses := clampi(population / 30000, 8, 60) + tier * 8
 	if style == "steppe":
 		houses *= 2  # a khan's camp sprawls: many tents for few people
-	for i in houses:
-		var p := centre + Vector2(rng.randf_range(-half, half) * 0.85, rng.randf_range(-half, half) * 0.85)
-		if site.get("buildings", []).size() > 0 and p.distance_to(centre) < half * 0.3:
-			continue   # the middle is kept for the city's public buildings
-		_house(p, turn + (PI / 2.0 if rng.randf() < 0.5 else 0.0), rng.randf_range(0.9, 1.3), index, 0.4)
+	if style == "steppe":
+		for i in houses:
+			var p := centre + Vector2(rng.randf_range(-half, half) * 0.85, rng.randf_range(-half, half) * 0.85)
+			_house(p, turn + (PI / 2.0 if rng.randf() < 0.5 else 0.0), rng.randf_range(0.9, 1.3), index, 0.4)
+	else:
+		_streets(site, centre, half, houses, index)
 	# the owner's banner flies over every chief city; a capital's is twice the size
 	var flag := 1.6 if site["capital"] else 1.0
 	var mast := centre + Vector2(half * 0.55, -half * 0.55) if site["capital"] else centre
@@ -358,6 +365,47 @@ func _city(site: Dictionary, population: int, index: int) -> void:
 		_palace(centre, index)
 		for k in 3:
 			_chimneys.append(centre + Vector2(rng.randf_range(-half, half), rng.randf_range(-half, half)) * 0.6)
+
+
+## A city laid out like a town (city graphics, D-271): a cross of main streets from the gates,
+## side streets every few blocks, a paved square in the middle for the public buildings, and
+## houses packed in blocks along the streets - close and large near the centre, sparse and
+## small at the edge. The ground inside is beaten earth and paving, not grass.
+func _streets(site: Dictionary, centre: Vector2, half: float, houses: int, index: int) -> void:
+	var lot := CELL * 1.55
+	var n := int(half * 0.9 / lot)
+	var square := 1 if site.get("buildings", []).size() == 0 and not site["capital"] else 2
+	var ground: Color = {"near_east": Color(0.82, 0.70, 0.50), "nile": Color(0.85, 0.74, 0.54),
+		"south_asian": Color(0.76, 0.60, 0.44), "northern": Color(0.56, 0.52, 0.42)}.get(style, Color(0.74, 0.66, 0.50))
+	var street: Color = ground.lerp(Color(0.80, 0.74, 0.64), 0.45)   # pale dust and stone: streets read at a glance
+	var paved: Color = ground.lerp(Color(0.84, 0.80, 0.70), 0.6)
+	var lots := 0
+	for gi in range(-n, n + 1):
+		for gj in range(-n, n + 1):
+			if absi(gi) > square or absi(gj) > square:
+				lots += 1
+	var want := clampf(houses * 2.4 / maxf(lots, 1.0), 0.55, 1.0)   # how full the blocks are
+	for gi in range(-n, n + 1):
+		for gj in range(-n, n + 1):
+			var at := centre + Vector2(gi, gj) * lot
+			if earth.is_wet(at):
+				continue
+			var main := gi == 0 or gj == 0
+			var side := posmod(gi, 4) == 2 or posmod(gj, 4) == 2
+			var in_square := absi(gi) <= square and absi(gj) <= square
+			var colour: Color = paved if in_square else (street if main or side else ground.darkened(rng.randf() * 0.08))
+			_add("paving", at, -0.55, 0.0, Vector3(lot * 1.02, 90.0, lot * 1.02), colour)
+			if in_square or main or side:
+				continue
+			var out := clampf(Vector2(gi, gj).length() / maxf(n, 1.0), 0.0, 1.0)   # 0 centre .. 1 edge
+			if rng.randf() > want * lerpf(1.15, 0.6, out):
+				if rng.randf() < 0.1:   # an empty lot is a garden
+					_add("field", at, 0.0, 0.0, Vector3(0.6, 1.0, 0.6), Color(0.46, 0.60, 0.30))
+				continue
+			# houses face the nearer street
+			var face := 0.0 if absi(posmod(gi, 4) - 2) < absi(posmod(gj, 4) - 2) else PI / 2.0
+			var jitter := Vector2(rng.randf_range(-0.08, 0.08), rng.randf_range(-0.08, 0.08)) * lot
+			_house(at + jitter, face, lerpf(1.35, 0.85, out) * rng.randf_range(0.92, 1.08), index, 0.4)
 
 
 ## The province's buildings (D-111), each where the city has room for it: a ring around the
