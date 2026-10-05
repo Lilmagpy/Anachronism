@@ -13,18 +13,23 @@ from anachronism.engine.armies import (
     available_units,
     composition,
     mobilisation_cap,
+    preview,
     raise_cost,
     route,
     under_arms,
     wall_cost,
     wall_tech,
-    win_share,
 )
 from anachronism.engine.buildings import cost as building_cost
 from anachronism.engine.buildings import options as building_options
 from anachronism.engine.buildings import slots, worth
 from anachronism.engine.commands import describe_blockers
 from anachronism.engine.decrees import cost, explain_costs, explain_ready_in, news_on_the_road
+from anachronism.engine.deployment import AUTO as DEPLOY_AUTO
+from anachronism.engine.deployment import PLACE_NAMES, PLACE_NOTES, PLACES, SPLIT
+from anachronism.engine.deployment import ordered as deploy_order
+from anachronism.engine.deployment import resolved as deploy_resolved
+from anachronism.engine.deployment import shares as deploy_shares
 from anachronism.engine.dilemmas import effects_text, fill
 from anachronism.engine.dynasty import remembered_in
 from anachronism.engine.economy import project_costs, province_output
@@ -143,6 +148,7 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
         "armies": _armies(state),
         "tactics": _tactics(state),
         "formations": _formations(state),
+        "deploy_places": _deploy_places(),
         "engage_rules": ENGAGE_RULES,
         "odds": _odds(state),
         "fleets": _fleets(state),
@@ -221,7 +227,16 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
                 "civ": e.civ,
                 "kind": e.kind,
                 "message": e.message,
-                **({"phases": e.phases, "sides": e.sides, "target": e.subject} if e.phases else {}),
+                **(
+                    {
+                        "phases": e.phases,
+                        "sides": e.sides,
+                        "ground": e.ground,
+                        "target": e.subject,
+                    }
+                    if e.phases
+                    else {}
+                ),
             }
             for e in (events or [])
             if e.civ == civ_id or e.kind in ("revolt", "collapse", "destroyed")
@@ -628,6 +643,7 @@ def _armies(state: GameState) -> list[dict[str, Any]]:
                 "stance": army.stance,
                 **_plan(state, army),
                 **_formation(state, army),
+                **_deployment(state, army),
                 "engage": army.engage,
                 "dug_in": army.dug_in,
                 "forced": army.forced,
@@ -662,7 +678,8 @@ def _formation(state: GameState, army: Army) -> dict[str, Any]:
         "formation_reads": army.formation == AUTO
         and army.skill >= state.world.rules.armies.reads_enemy_skill,
     }
-    likely = final_formation(state, [army], [foe]) if foe is not None else None
+    terrain = state.world.geography[army.province].terrain
+    likely = final_formation(state, [army], [foe], terrain) if foe is not None else None
     out["formation_likely"] = {"id": likely.id, "name": likely.name} if likely else None
     if army.owner == state.player_civ:
         against = [foe] if foe is not None else []
@@ -671,11 +688,63 @@ def _formation(state: GameState, army: Army) -> dict[str, Any]:
                 "id": fid,
                 "name": f.name,
                 "description": f.description,
-                "ok": not (why := formation_lacks(f, [army], against)),
+                "ok": not (why := formation_lacks(f, [army], against, terrain)),
                 "lacking": why,
             }
             for fid, f in sorted(state.world.formations.items())
         ]
+    return out
+
+
+KIND_NAMES = {
+    "infantry": "Infantry",
+    "spear": "Spearmen",
+    "missile": "Missile troops",
+    "mounted": "Horse",
+    "elephant": "Elephants",
+    "siege": "Siege engines",
+}
+
+
+def _deploy_places() -> list[dict[str, str]]:
+    """The places a kind of soldier can be ordered to (for the deployment picker)."""
+    return [
+        {"id": pid, "name": PLACE_NAMES[pid], "note": PLACE_NOTES[pid]}
+        for pid in (DEPLOY_AUTO, *PLACES, SPLIT)
+    ]
+
+
+def _deployment(state: GameState, army: Army) -> dict[str, Any]:
+    """How an army's kinds of soldier stand (D-270): yours show where, with auto resolved.
+
+    ``deployment`` maps each kind present to ``place`` (left, centre, right, reserve, split,
+    or camp for siege engines), ``auto`` (the formation decides) and ``shares`` (bp by place).
+    """
+    men: dict[str, int] = {}
+    for unit_id, n in army.troops.items():
+        found: str = state.world.units[unit_id].kind
+        men[found] = men.get(found, 0) + n
+    out: dict[str, Any] = {
+        "kinds": [
+            {"kind": k, "name": KIND_NAMES.get(k, k.title()), "men": n}
+            for k, n in sorted(men.items(), key=lambda item: (-item[1], item[0]))
+        ]
+    }
+    if army.owner != state.player_civ:
+        return out
+    foe = _foe(state, army)
+    terrain = state.world.geography[army.province].terrain
+    form = final_formation(state, [army], [foe] if foe is not None else [], terrain)
+    deployment: dict[str, Any] = {}
+    for kind in sorted(men):
+        order = deploy_order(army, kind)
+        want = deploy_shares(form, kind, order)
+        deployment[kind] = {
+            "place": deploy_resolved(want),
+            "auto": order == DEPLOY_AUTO,
+            "shares": want,
+        }
+    out["deployment"] = deployment
     return out
 
 
@@ -715,11 +784,19 @@ def _odds(state: GameState) -> list[dict[str, Any]]:
             attacking = holder != mine.owner
             if foe.province != mine.province:
                 attacking = True
-            share = win_share(state, [mine], [foe], foe.province, attacking)
+            outlook = preview(state, [mine], [foe], foe.province, attacking)
+            share = int(outlook["win_bp"])
             if not _visible(state, foe):
                 share = (share + 250) // 500 * 500
             out.append(
-                {"mine": mine.id, "theirs": foe.id, "province": foe.province, "win_bp": share}
+                {
+                    "mine": mine.id,
+                    "theirs": foe.id,
+                    "province": foe.province,
+                    "win_bp": share,
+                    "wings": outlook["wings"],
+                    "ground": outlook["ground"],
+                }
             )
     return out
 

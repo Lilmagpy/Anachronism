@@ -492,6 +492,61 @@ class ArmyRules(Frozen):
     """... and the men lost to exhaustion."""
     fog_round_men: Positive = 5000
     """Rival armies out of sight are reported rounded to this many men."""
+    wing_break_bp: NonNegative = 15_000
+    """Combat v3 (D-270): a wing whose power is this much (10_000 = even) times that of the wing
+    facing it breaks it, and wheels on the enemy centre."""
+    flank_penalty_bp: Rate = 2000
+    """Power the enemy centre loses for each wing of ours that broke the wing opposite ..."""
+    broken_wing_bp: Rate = 6000
+    """... and a broken wing fights on at only this share of its power."""
+    refused_bp: Rate = 5000
+    """A wing holding less than this share of its fair third of the line is refused: held back
+    out of the fight, neither broken nor won ..."""
+    free_wing_bp: Rate = 800
+    """... but the enemy wing facing it is free to harry the centre: the centre loses this."""
+    wing_luck_bp: Rate = 1500
+    """Each wing's own fortune, on top of the day's: varies its power by up to this much."""
+    wheel_bp: Rate = 3000
+    """The wing that broke its opposite wheels on the enemy centre with this share of its power."""
+    horse_round_bp: Rate = 1000
+    """Horse on a wing that faces no horse ride round: the enemy centre loses this as well."""
+    horse_round_min_bp: Rate = 2000
+    """Share of a wing's men that must be mounted to ride round ..."""
+    horse_round_free_bp: Rate = 500
+    """... and the most horse the opposite wing may have for it to be free to ride."""
+    reserve_fresh_bp: NonNegative = 1000
+    """Fresh men committing from the reserve hit this much harder (a formation may give more)."""
+    wing_morale_bp: Rate = 600
+    """Morale a side loses for each of its wings that broke."""
+    flank_arrival_bp: NonNegative = 2500
+    """A second army arriving from another direction falls on the flank: extra power ..."""
+    flank_hit_bp: Rate = 1500
+    """... and the enemy wing it hits loses this much."""
+    river_attack_bp: Rate = 1200
+    """Attackers crossing a river lose this much power in the first exchange ..."""
+    river_horse_bp: Rate = 2500
+    """... and horse lose this much more."""
+    river_later_bp: Rate = 4000
+    """Share of the river's penalty still felt after the first exchange."""
+    river_held_bp: NonNegative = 5000
+    """Defenders dug in on the river line make the crossing this much costlier."""
+    hill_missile_bp: NonNegative = 2000
+    """Missile troops of the side holding high ground shoot this much better ..."""
+    hill_charge_bp: Rate = 2000
+    """... and horse charging uphill lose this much."""
+    rough_horse_bp: Rate = 2500
+    """Horse and elephants lose this much in forest and marsh."""
+    open_horse_bp: NonNegative = 1500
+    """Horse on the wings gain this much on open ground."""
+    high_terrain: tuple[Identifier, ...] = ("hills", "mountains")
+    """Terrain that counts as high ground in a field battle."""
+    rough_terrain: tuple[Identifier, ...] = ("forest", "marsh")
+    """Terrain where horse and elephants fight badly (and a wide line cannot form)."""
+    open_terrain: tuple[Identifier, ...] = ("plains", "river_plains", "steppe")
+    """Open ground, where horse are strong on the wings."""
+    wing_strong_bp: Positive = 12_000
+    """A wing at this much (10_000 = even) times its opposite or more is 'strong' in the odds
+    preview; at its inverse or less it is 'weak'."""
 
 
 class BuildingRules(Frozen):

@@ -256,6 +256,21 @@ class ArmyFormation(Frozen):
     formation: str = "auto"
 
 
+class ArmyDeploy(Frozen):
+    """Order where one kind of soldier stands in an army's line (D-270).
+
+    ``unit_kind`` is a soldier kind (infantry, spear, missile, mounted, elephant);
+    ``place`` is ``left``, ``centre``, ``right``, ``reserve``, ``split`` (spread across the
+    line) or ``auto`` (the army's formation decides).
+    """
+
+    kind: Literal["deploy"] = "deploy"
+    civ: str
+    army: str
+    unit_kind: str
+    place: str = "auto"
+
+
 class ArmyEngage(Frozen):
     """Set an army's rules of engagement (D-267).
 
@@ -364,6 +379,7 @@ Orders = (
     | ArmyStance
     | ArmyPlan
     | ArmyFormation
+    | ArmyDeploy
     | ArmyEngage
     | DisbandArmy
     | Fortify
@@ -405,6 +421,7 @@ Action = Annotated[
     | ArmyStance
     | ArmyPlan
     | ArmyFormation
+    | ArmyDeploy
     | ArmyEngage
     | DisbandArmy
     | Fortify

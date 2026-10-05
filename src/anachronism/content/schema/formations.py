@@ -7,7 +7,7 @@ gets that formation's edge in the clash. Content, not code: a new formation is a
 
 from __future__ import annotations
 
-from pydantic import Field
+from pydantic import Field, model_validator
 
 from anachronism.content.schema.base import Frozen, Identifier, Rate
 
@@ -37,3 +37,18 @@ class Formation(Frozen):
     """It needs at least this many men for every 10,000 of the enemy's (12_000 = 1.2 to 1) ..."""
     thin_bp: int = Field(default=0, ge=0, le=5000)
     """... and without them the line is thin: this much less power, and no edge."""
+    blocked_terrain: tuple[Identifier, ...] = ()
+    """Terrain where this line cannot form (a wide line in forest or marsh is thin)."""
+    layout: dict[Identifier, dict[Identifier, int]] = Field(default_factory=dict)
+    """Where each kind of soldier stands when its deployment is left to the general (D-270):
+    kind -> {left, centre, right, reserve: weight}. The key ``default`` covers kinds not named;
+    a formation with no layout spreads every kind evenly over the line."""
+
+    @model_validator(mode="after")
+    def _check_layout(self) -> Formation:
+        for kind, weights in self.layout.items():
+            if not set(weights) <= {"left", "centre", "right", "reserve"}:
+                raise ValueError(f"layout {kind!r}: places are left, centre, right and reserve")
+            if any(w < 0 for w in weights.values()) or sum(weights.values()) <= 0:
+                raise ValueError(f"layout {kind!r}: weights must be positive")
+        return self

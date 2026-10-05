@@ -18,7 +18,9 @@ from dataclasses import dataclass
 from typing import Any, Literal
 
 from anachronism.content.schema import Formation, General, RelationStatus, Tactic, Unit
+from anachronism.content.schema.rules import ArmyRules
 from anachronism.engine.actions import (
+    ArmyDeploy,
     ArmyEngage,
     ArmyFormation,
     ArmyPlan,
@@ -33,13 +35,26 @@ from anachronism.engine.actions import (
 )
 from anachronism.engine.buildings import bonus as building_bonus
 from anachronism.engine.buildings import ruin_newest
+from anachronism.engine.deployment import CHOICES as DEPLOY_CHOICES
+from anachronism.engine.deployment import (
+    LINE,
+    PLACE_NAMES,
+    SIEGE,
+    place_side,
+)
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import BP, apply_bp, clamp
 from anachronism.engine.formations import AUTO as FORMATION_AUTO
 from anachronism.engine.formations import edge as formation_edge
 from anachronism.engine.formations import formations as pick_formations
 from anachronism.engine.formations import power as formation_power
+from anachronism.engine.ground import Ground, ground_of, river_held
+from anachronism.engine.ground import text as ground_text
 from anachronism.engine.navies import SIZES, build_fleet, can_cross, sea_route
+from anachronism.engine.power import Parts, kinds_in, men_in, wing_powers
+from anachronism.engine.power import side_power as side_power
+from anachronism.engine.power import trait_bp as trait_bp
+from anachronism.engine.power import unit_power as unit_power
 from anachronism.engine.rivals import alive, at_war, frontier, province_links, relation, status
 from anachronism.engine.rng import GameRng
 from anachronism.engine.state import Army, GameState
@@ -47,6 +62,7 @@ from anachronism.engine.tactics import AUTO, bonus, commander, edge, plans
 from anachronism.engine.tales import tell
 from anachronism.engine.tech import is_adopted, usable_resources
 from anachronism.engine.war import capture, defence_bp
+from anachronism.engine.wings import Clash, Line, WingResult, contest
 
 STYLES = ("balanced", "infantry", "missile", "mounted", "siege")
 """How a levy is made up: an even mix, or weighted toward one kind of soldier."""
@@ -264,11 +280,6 @@ def release(state: GameState, army: Army) -> None:
 TRAITS = ("horse", "siege", "shield", "bold", "quartermaster", "beloved")
 
 
-def trait_bp(state: GameState, army: Army, trait: str) -> int:
-    """The strength of a general's gift for this army (0 if its general lacks it)."""
-    return state.world.rules.armies.trait_bp.get(trait, 0) if army.trait == trait else 0
-
-
 def standing_armies(state: GameState) -> None:
     """Give every state the army it kept at the start of the scenario."""
     rules = state.world.rules.armies
@@ -397,6 +408,7 @@ def march(state: GameState, rng: GameRng, events: EventLog) -> None:
                 continue
             steps[army_id] = 0 if by_sea else steps[army_id] - 1
             army.came_from = army.province
+            army.arrived_turn = state.turn
             army.province = nxt
             army.siege_bp = 0
             army.dug_in = False
@@ -412,66 +424,6 @@ def march(state: GameState, rng: GameRng, events: EventLog) -> None:
 
 
 # --- battles -------------------------------------------------------------------------------
-
-
-def _kinds(state: GameState, armies: list[Army]) -> dict[str, int]:
-    """Share of each kind of soldier among these armies (bp)."""
-    total = sum(a.men for a in armies) or 1
-    kinds: dict[str, int] = {}
-    for army in armies:
-        for unit_id, men in army.troops.items():
-            kind = state.world.units[unit_id].kind
-            kinds[kind] = kinds.get(kind, 0) + men * BP // total
-    return kinds
-
-
-def unit_power(
-    unit: Unit, men: int, attacking: bool, enemy_kinds: dict[str, int], terrain: str
-) -> int:
-    """The fighting power of ``men`` soldiers of one kind in a battle (before morale)."""
-    base = (unit.attack if attacking else unit.defence) * men
-    bonus = sum(apply_bp(swing, enemy_kinds.get(kind, 0)) for kind, swing in unit.bonus_vs.items())
-    bonus += unit.terrain.get(terrain, 0)
-    return max(0, base * (BP + bonus) // BP)
-
-
-def side_power(
-    state: GameState, armies: list[Army], enemies: list[Army], attacking: bool, province_id: str
-) -> tuple[int, dict[str, int]]:
-    """A side's total power in a battle, and each unit type's share of it."""
-    rules = state.world.rules.armies
-    terrain = state.world.geography[province_id].terrain
-    enemy_kinds = _kinds(state, enemies)
-    total = 0
-    by_unit: dict[str, int] = {}
-    for army in armies:
-        power = 0
-        horse = trait_bp(state, army, "horse")
-        for unit_id, men in sorted(army.troops.items()):
-            unit = state.world.units[unit_id]
-            p = unit_power(unit, men, attacking, enemy_kinds, terrain)
-            if horse and unit.kind == "mounted":
-                p = p * (BP + horse) // BP
-            by_unit[unit_id] = by_unit.get(unit_id, 0) + p
-            power += p
-        power = power * (5000 + army.morale_bp // 2) // BP
-        power = power * (BP + army.skill * rules.general_skill_bp) // BP
-        power = power * (BP + army.veterancy_bp) // BP
-        if attacking:
-            power = power * (BP + trait_bp(state, army, "bold")) // BP
-        else:
-            gift = trait_bp(state, army, "shield") - trait_bp(state, army, "bold") // 2
-            if army.dug_in:  # a fortified camp (D-267)
-                gift += rules.dug_in_bp
-            power = power * (BP + gift) // BP
-        total += power
-    if not attacking:  # defenders hold the high ground (walls matter in sieges, not here)
-        owner = state.provinces[province_id].owner
-        if owner is not None and armies and armies[0].owner == owner:
-            ground = state.world.terrain[state.world.geography[province_id].terrain]
-            extra = ground.defence_bp - BP
-            total = total * (BP + apply_bp(max(0, extra), rules.field_defence_share_bp)) // BP
-    return total, by_unit
 
 
 def _sides(state: GameState, province_id: str) -> tuple[list[Army], list[Army]] | None:
@@ -523,7 +475,7 @@ def fight_battles(state: GameState, rng: GameRng, events: EventLog) -> None:
 
 @dataclass
 class _Lines:
-    """Two sides drawn up for battle: their power (before luck), plans and formations."""
+    """Two sides drawn up for battle: their power (before luck), plans, formations and wings."""
 
     pa: int
     pd: int
@@ -533,15 +485,82 @@ class _Lines:
     plan_d: Tactic | None
     form_a: Formation | None
     form_d: Formation | None
-    reserve_a: int
-    reserve_d: int
+    line_a: Line
+    line_d: Line
+    ground: Ground
+    held: bool
+    """Defenders dug in on the ground (the river line, if there is a river)."""
+    rules: ArmyRules
+
+    def clash(
+        self,
+        scale: tuple[int, int] = (BP, BP),
+        luck: tuple[dict[str, int], dict[str, int]] | None = None,
+    ) -> Clash:
+        """The wing contests, with what the skirmish left each side and fortune's turn."""
+        return contest(self.rules, self.line_a, self.line_d, scale, luck)
 
     def expected(self) -> tuple[int, int]:
-        """Each side's power with its reserve committed (for odds and for cautious generals)."""
-        return (
-            self.pa * (BP + self.reserve_a) // BP,
-            self.pd * (BP + self.reserve_d) // BP,
+        """Each side's power in the clash without luck (for odds and for cautious generals)."""
+        out = self.clash()
+        return out.power_a, out.power_d
+
+
+def _split(state: GameState, side: list[Army]) -> tuple[list[Army], list[Army]]:
+    """A side's line, and any army that came to the field from another direction this turn."""
+
+    def way(army: Army) -> str:
+        return army.came_from if army.arrived_turn == state.turn else ""
+
+    held = way(commander(side))
+    return [a for a in side if way(a) == held], [a for a in side if way(a) != held]
+
+
+def _line(
+    state: GameState,
+    province_id: str,
+    ground: Ground,
+    side: list[Army],
+    other: list[Army],
+    attacking: bool,
+    parts: Parts,
+    enemy: Parts,
+    fleet: tuple[int, int],
+    dug_in: bool,
+    flank: list[Army],
+    reserve_bp: int,
+) -> Line:
+    """One side's powers wing by wing, scaled so that together they match its whole power."""
+    rules = state.world.rules.armies
+    final, raw = fleet
+    river = river_held(rules, dug_in) if ground.river and attacking else 0
+    first = wing_powers(state, side, parts, enemy, attacking, province_id, ground, river)
+    later = first
+    if river:
+        later = wing_powers(
+            state,
+            side,
+            parts,
+            enemy,
+            attacking,
+            province_id,
+            ground,
+            river * rules.river_later_bp // BP,
         )
+    scale = max(1, raw)
+    out = Line(
+        first={p: v * final // scale for p, v in first.items()},
+        later={p: v * final // scale for p, v in later.items()},
+        men={p: men_in(parts, p) for p in parts},
+        horse={p: kinds_in(state, parts, (p,)).get("mounted", 0) for p in parts},
+        reserve_bp=reserve_bp,
+        great=commander(side).skill >= rules.reads_enemy_skill,
+    )
+    if flank:
+        power = side_power(state, flank, other, attacking, province_id)[0]
+        out.flank = power * final // scale
+        out.flank_men = sum(a.men for a in flank)
+    return out
 
 
 def _lines(
@@ -549,9 +568,11 @@ def _lines(
 ) -> _Lines:
     """Weigh both sides: their soldiers, plans (D-108), formations and rules of engagement."""
     rules = state.world.rules.armies
-    terrain = state.world.geography[province_id].terrain
+    ground = ground_of(state, province_id)
+    terrain = ground.terrain
     pa, units_a = side_power(state, attackers, defenders, True, province_id)
     pd, units_d = side_power(state, defenders, attackers, False, province_id)
+    raw_a, raw_d = pa, pd
     # the plans (D-108): each side's own worth on this ground, and the edge of the better one
     plan_a, plan_d = plans(state, attackers, defenders, terrain)
     edge_a = edge_d = 0
@@ -563,21 +584,72 @@ def _lines(
     if plan_d is not None:
         pd = pd * max(2000, BP + bonus(plan_d, terrain) + edge_d) // BP
     # the formations (D-267): the first clash's worth, and the edge of the better line
-    form_a, form_d = pick_formations(state, attackers, defenders)
+    form_a, form_d = pick_formations(state, attackers, defenders, terrain)
     fedge_a = fedge_d = 0
     if form_a is not None and form_d is not None:
-        fedge_a = formation_edge(form_a, form_d, attackers, defenders)
-        fedge_d = formation_edge(form_d, form_a, defenders, attackers)
+        fedge_a = formation_edge(form_a, form_d, attackers, defenders, terrain)
+        fedge_d = formation_edge(form_d, form_a, defenders, attackers, terrain)
     if form_a is not None:
-        worth = formation_power(form_a, attackers, defenders) + fedge_a
+        worth = formation_power(form_a, attackers, defenders, terrain) + fedge_a
         pa = pa * max(2000, BP + worth) // BP
     if form_d is not None:
-        worth = formation_power(form_d, defenders, attackers) + fedge_d
+        worth = formation_power(form_d, defenders, attackers, terrain) + fedge_d
         pd = pd * max(2000, BP + worth) // BP
     if commander(attackers).engage == "last_man":
         pa = pa * (BP + rules.last_man_power_bp) // BP
     if commander(defenders).engage == "last_man":
         pd = pd * (BP + rules.last_man_power_bp) // BP
+    # the deployment (D-270): who stands where, and a second army on the flank
+    main_a, flank_a = _split(state, attackers)
+    main_d, flank_d = _split(state, defenders)
+    dug_in = any(a.dug_in for a in defenders)
+
+    def draw(mirror_a: bool, mirror_d: bool) -> tuple[Line, Line]:
+        parts_a = place_side(state, main_a, form_a, mirror_a)
+        parts_d = place_side(state, main_d, form_d, mirror_d)
+        line_a = _line(
+            state,
+            province_id,
+            ground,
+            main_a,
+            defenders,
+            True,
+            parts_a,
+            parts_d,
+            (pa, raw_a),
+            dug_in,
+            flank_a,
+            form_a.reserve_bp if form_a else 0,
+        )
+        line_d = _line(
+            state,
+            province_id,
+            ground,
+            main_d,
+            attackers,
+            False,
+            parts_d,
+            parts_a,
+            (pd, raw_d),
+            dug_in,
+            flank_d,
+            form_d.reserve_bp if form_d else 0,
+        )
+        return line_a, line_d
+
+    def share(mirror_a: bool, mirror_d: bool) -> int:
+        line_a, line_d = draw(mirror_a, mirror_d)
+        won = contest(rules, line_a, line_d)
+        return won.power_a * BP // max(1, won.power_a + won.power_d)
+
+    mirror_a = mirror_d = False
+    great_a = commander(attackers).skill >= rules.reads_enemy_skill
+    great_d = commander(defenders).skill >= rules.reads_enemy_skill
+    if great_a or great_d:  # a great general sets his strong wing against the enemy's weak one
+        base = share(False, False)
+        mirror_a = great_a and share(True, False) > base
+        mirror_d = great_d and share(mirror_a, True) < share(mirror_a, False)
+    line_a, line_d = draw(mirror_a, mirror_d)
     return _Lines(
         pa,
         pd,
@@ -587,8 +659,11 @@ def _lines(
         plan_d,
         form_a,
         form_d,
-        form_a.reserve_bp if form_a else 0,
-        form_d.reserve_bp if form_d else 0,
+        line_a,
+        line_d,
+        ground,
+        dug_in,
+        rules,
     )
 
 
@@ -596,13 +671,44 @@ def win_share(
     state: GameState, side: list[Army], other: list[Army], province_id: str, attacking: bool
 ) -> int:
     """A side's expected share (bp, 5_000 = even) of the two sides' strength in a battle."""
-    if attacking:
-        lines = _lines(state, province_id, side, other)
-        mine, theirs = lines.expected()
-    else:
-        lines = _lines(state, province_id, other, side)
-        theirs, mine = lines.expected()
-    return mine * BP // max(1, mine + theirs)
+    return int(preview(state, side, other, province_id, attacking)["win_bp"])
+
+
+def preview(
+    state: GameState, side: list[Army], other: list[Army], province_id: str, attacking: bool
+) -> dict[str, Any]:
+    """How a battle would go for ``side`` (D-270): its share, each wing's outlook, the ground.
+
+    ``wings`` lists the side's own left, centre and right: the wing it faces, and whether
+    it looks ``strong``, ``even`` or ``weak`` against it (``ratio_bp`` 10_000 = even).
+    """
+    rules = state.world.rules.armies
+    lines = (
+        _lines(state, province_id, side, other)
+        if attacking
+        else _lines(state, province_id, other, side)
+    )
+    clash = lines.clash()
+    mine, theirs = (clash.power_a, clash.power_d) if attacking else (clash.power_d, clash.power_a)
+    wings = []
+    for w in clash.wings:
+        own, facing = (w.wing, w.d_wing) if attacking else (w.d_wing, w.wing)
+        pm, pt = (w.a_power, w.d_power) if attacking else (w.d_power, w.a_power)
+        ratio = pm * BP // max(1, pt) if pt or pm else BP
+        outcome = (
+            "strong"
+            if ratio >= rules.wing_strong_bp
+            else "weak"
+            if ratio * rules.wing_strong_bp <= BP * BP
+            else "even"
+        )
+        wings.append({"wing": own, "vs": facing, "outcome": outcome, "ratio_bp": ratio})
+    wings.sort(key=lambda x: LINE.index(x["wing"]))
+    return {
+        "win_bp": mine * BP // max(1, mine + theirs),
+        "wings": wings,
+        "ground": ground_text(state, lines.ground, lines.held),
+    }
 
 
 def _morale(side: list[Army]) -> int:
@@ -637,7 +743,10 @@ def _skirmish(
     for i in (0, 1):
         shot = _missile_power(state, units[i], power[i])
         plan = plans_[i]
-        shots.append(shot * max(0, BP + (plan.skirmish_bp if plan else 0)) // BP)
+        shot = shot * max(0, BP + (plan.skirmish_bp if plan else 0)) // BP
+        if i == 1 and lines.ground.high:  # the defenders' archers on the high ground
+            shot = shot * (BP + rules.hill_missile_bp) // BP
+        shots.append(shot)
     losses, drops = [0, 0], [0, 0]
     for i in (0, 1):  # side i shoots at side 1 - i
         hit = min(2 * BP, shots[i] * BP // max(1, power[1 - i]))
@@ -675,13 +784,14 @@ def battle(
     phases: list[dict[str, Any]] = []
     totals = [0, 0]  # men each side has lost so far
 
-    def record(name: str, text: str, lost: list[int]) -> None:
+    def record(name: str, text: str, lost: list[int], **more: Any) -> None:
         phases.append(
             {
                 "name": name,
                 "text": text,
                 "losses": {"a": lost[0], "d": lost[1]},
                 "morale": {"a": morale[0], "d": morale[1]},
+                **more,
             }
         )
 
@@ -704,24 +814,22 @@ def battle(
     )
     broke = [_broke(state, sides[i], morale[i]) for i in (0, 1)]
     early = broke[0] or broke[1]
-    pa, pd = lines.pa, lines.pd
-    # what the skirmish cost each side in men and nerve weakens it in the clash
-    pa = pa * (BP - loss1[0]) // BP * (BP - drop1[0] // 4) // BP
-    pd = pd * (BP - loss1[1]) // BP * (BP - drop1[1] // 4) // BP
     margin = 5000
     if early:
         won_a = broke[1] if broke[0] != broke[1] else morale[0] >= morale[1]
         lose_c = [0, 0]
     else:
-        # --- phase 2: the clash (the reserve, if any, commits now)
-        pa = pa * (BP + lines.reserve_a) // BP
-        pd = pd * (BP + lines.reserve_d) // BP
+        # --- phase 2: the clash, wing by wing (the reserve commits after the first exchange)
         luck = rules.battle_luck_bp
-        pa = pa * (BP - luck + rng.below(2 * luck + 1)) // BP
-        pd = pd * (BP - luck + rng.below(2 * luck + 1)) // BP
-        won_a = pa > pd
-        pw, pl = (pa, pd) if won_a else (pd, pa)
-        margin = (pw - pl) * BP // max(1, pw + pl)  # 0 (even) .. 10_000 (rout)
+        left_after = (
+            (BP - loss1[0]) * (BP - drop1[0] // 4) // BP,
+            (BP - loss1[1]) * (BP - drop1[1] // 4) // BP,
+        )
+        fortune = _fortune(rng, luck, rules.wing_luck_bp)
+        clash = lines.clash(left_after, fortune)
+        won_a = clash.winner == "a"
+        pw, pl = (clash.power_a, clash.power_d) if won_a else (clash.power_d, clash.power_a)
+        margin = max(0, pw - pl) * BP // max(1, pw + pl)  # 0 (even) .. 10_000 (rout)
         blood = BP + sum(p.losses_bp for p in (plan_a, plan_d) if p is not None)
         blood = clamp(blood, 2000, 20_000)  # a charge is bloody, skirmishing is not
         lose = rules.clash_losses_bp + apply_bp(rules.clash_losses_bp, margin)
@@ -741,11 +849,17 @@ def battle(
             drop = rules.clash_morale_bp * relative // BP * scale // BP
             morale[i] = max(0, morale[i] - drop)
             totals[i] += dead2[i]
-        forms = _forms_told(adj, lines.form_a, lines.form_d, lines.reserve_a, lines.reserve_d)
+        for i, broken in ((0, clash.broken_a), (1, clash.broken_d)):  # a wing that broke
+            morale[i] = max(0, morale[i] - rules.wing_morale_bp * broken)
+        forms = _forms_told(adj, lines.form_a, lines.form_d)
         record(
             "Clash",
-            f"{forms}{adj[0]} lose {dead2[0]:,}, {adj[1]} {dead2[1]:,}.".lstrip(),
+            f"{forms}{_clash_told(adj, clash)}{adj[0]} lose {dead2[0]:,}, "
+            f"{adj[1]} {dead2[1]:,}.".lstrip(),
             dead2,
+            wings=_wings_record(adj, clash),
+            reserve=dict(clash.reserve),
+            flank=dict(clash.flank),
         )
         broke = [_broke(state, sides[i], morale[i]) for i in (0, 1)]
         if broke[0] != broke[1]:  # a side whose line gives way loses, whatever the odds
@@ -825,8 +939,9 @@ def battle(
         f" {w_civ.adjective} losses {dead_w:,}, {l_civ.adjective} {dead_l:,}."
     )
     sides_told = {"a": adj[0], "d": adj[1], "winner": "a" if won_a else "d"}
-    events.add(winner, "battle_won", text, place, phases=phases, sides=sides_told)
-    events.add(loser, "battle_lost", text, place, phases=phases, sides=sides_told)
+    where = ground_text(state, lines.ground, lines.held)
+    events.add(winner, "battle_won", text, place, phases=phases, sides=sides_told, ground=where)
+    events.add(loser, "battle_lost", text, place, phases=phases, sides=sides_told, ground=where)
     rel = relation(state, winner, loser)
     if rel is not None:
         rel.weariness[loser] = rel.weariness.get(loser, 0) + rules.weariness_per_battle_bp
@@ -837,9 +952,17 @@ def battle(
     return winner
 
 
-def _forms_told(
-    adj: tuple[str, str], form_a: Formation | None, form_d: Formation | None, ra: int, rd: int
-) -> str:
+def _fortune(rng: GameRng, luck: int, wing: int) -> tuple[dict[str, int], dict[str, int]]:
+    """Each side's fortune (bp) in each place: one roll for the day, and one for each wing."""
+    out: tuple[dict[str, int], dict[str, int]] = ({}, {})
+    for side in out:
+        day = BP - luck + rng.below(2 * luck + 1)
+        for place in LINE:
+            side[place] = day * (BP - wing + rng.below(2 * wing + 1)) // BP
+    return out
+
+
+def _forms_told(adj: tuple[str, str], form_a: Formation | None, form_d: Formation | None) -> str:
     """The two formations in a sentence, for the clash (empty if there are none)."""
     if form_a is None or form_d is None:
         return ""
@@ -849,11 +972,54 @@ def _forms_told(
         verdict = f"The {adj[1]} {form_d.name.lower()} turns the {adj[0]} {form_a.name.lower()}."
     else:
         verdict = f"{adj[0]} {form_a.name.lower()} meets {adj[1]} {form_d.name.lower()}."
-    reserve = ""
-    if ra or rd:
-        who = adj[0] if ra and not rd else adj[1] if rd and not ra else "Both"
-        reserve = f" The {who} reserve is committed." if who != "Both" else " Both reserves go in."
-    return f"{verdict}{reserve} "
+    return f"{verdict} "
+
+
+def _wing_told(adj: tuple[str, str], w: WingResult) -> str:
+    """One contest in a sentence: the attackers' wing against the defenders' facing wing."""
+    left = f"The {adj[0]} {w.wing} ({w.a_men:,}) meets the {adj[1]} {w.d_wing} ({w.d_men:,})"
+    if w.broke == "d":
+        return f"{left} and breaks it, then wheels on the centre."
+    if w.broke == "a":
+        return f"{left} but is broken, and the {adj[1]} wheel on the centre."
+    if w.winner == "a":
+        return f"{left} and gets the better of it."
+    if w.winner == "d":
+        return f"{left} and gives ground."
+    return f"{left} and neither gives way."
+
+
+def _wings_record(adj: tuple[str, str], clash: Clash) -> list[dict[str, Any]]:
+    """The three contests for the battle report (``wing`` is the attackers' own name)."""
+    return [
+        {
+            "wing": w.wing,
+            "d_wing": w.d_wing,
+            "a_men": w.a_men,
+            "d_men": w.d_men,
+            "winner": w.winner,
+            "text": _wing_told(adj, w),
+        }
+        for w in clash.wings
+    ]
+
+
+def _clash_told(adj: tuple[str, str], clash: Clash) -> str:
+    """What decided the clash, in a few sentences (flank, broken wings, horse, reserves)."""
+    parts: list[str] = []
+    if clash.flank:
+        i = 0 if clash.flank["side"] == "a" else 1
+        parts.append(f"The {adj[i]} second army fell on the {adj[1 - i]} {clash.flank['against']}.")
+    for w in clash.wings:
+        if w.broke:
+            parts.append(_wing_told(adj, w))
+    for i, tag in ((0, "a"), (1, "d")):
+        if clash.horse_round[tag]:
+            parts.append(f"The {adj[i]} horse ride round the flank.")
+    for i, tag in ((0, "a"), (1, "d")):
+        if clash.reserve[tag]:
+            parts.append(f"The {adj[i]} reserve goes in on the {clash.reserve[tag]}.")
+    return " ".join(parts) + " " if parts else ""
 
 
 def _withdrawal(
@@ -1306,6 +1472,26 @@ def fortify(state: GameState, civ_id: str, province_id: str) -> tuple[bool, str]
     return True, f"Masons raise {kind} around {place}."
 
 
+def _deploy(state: GameState, army: Army, action: ArmyDeploy) -> tuple[bool, str]:
+    """Order where one kind of soldier stands in the line (D-270)."""
+    kinds = {u.kind for u in state.world.units.values()}
+    if action.unit_kind not in kinds:
+        return False, f"there are no {action.unit_kind!r} soldiers"
+    if action.place not in DEPLOY_CHOICES:
+        return False, f"unknown place in the line {action.place!r}"
+    if action.unit_kind == SIEGE:
+        return False, "siege engines stay in camp; they take no place in the line"
+    if action.place == "auto":
+        army.deployment.pop(action.unit_kind, None)
+        return (
+            True,
+            f"The {army.name}'s {action.unit_kind} troops stand where the formation puts them.",
+        )
+    army.deployment[action.unit_kind] = action.place
+    where = PLACE_NAMES[action.place].lower()
+    return True, f"The {army.name}'s {action.unit_kind} troops will stand: {where}."
+
+
 def apply_orders(state: GameState, action: Orders) -> tuple[bool, str]:
     """Carry out an order to raise, march, halt or disband an army, or to build walls."""
     if isinstance(action, Fortify):
@@ -1353,6 +1539,8 @@ def apply_orders(state: GameState, action: Orders) -> tuple[bool, str]:
         if chosen_f is None:
             return True, f"The {army.name}'s general will choose how to draw up the line."
         return True, f"The {army.name} will fight in a {chosen_f.name.lower()}."
+    if isinstance(action, ArmyDeploy):
+        return _deploy(state, army, action)
     if isinstance(action, ArmyEngage):
         army.engage = action.engage
         said = {

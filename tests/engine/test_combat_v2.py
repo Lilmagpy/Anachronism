@@ -163,7 +163,10 @@ def test_a_battle_has_three_phases(warring: GameState) -> None:
     won = next(e for e in events if e.kind == "battle_won")
     assert [p["name"] for p in won.phases] == ["Skirmish", "Clash", "Pursuit"]
     for phase in won.phases:
-        assert set(phase) == {"name", "text", "losses", "morale"}
+        core = {"name", "text", "losses", "morale"}
+        # the clash also carries the wing contests, the reserves and any flank blow (D-270)
+        extra = {"wings", "reserve", "flank"} if phase["name"] == "Clash" else set()
+        assert set(phase) == core | extra
         assert set(phase["losses"]) == set(phase["morale"]) == {"a", "d"}
         assert phase["text"]
     assert won.sides["winner"] in ("a", "d")

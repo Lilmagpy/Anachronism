@@ -24,6 +24,7 @@ class EventLog:
         *,
         phases: list[dict[str, Any]] | None = None,
         sides: dict[str, str] | None = None,
+        ground: str = "",
     ) -> None:
         """Record an event; ``subject`` names what it is about (an idea, a place)."""
         self.items.append(
@@ -36,6 +37,7 @@ class EventLog:
                 subject=subject,
                 phases=phases or [],
                 sides=sides or {},
+                ground=ground,
             )
         )
 

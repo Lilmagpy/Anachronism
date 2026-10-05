@@ -2144,3 +2144,53 @@ so the player can see why it was won or lost. The formation edge is lowered from
 +15% (the helper found +20% close to decisive at even numbers; numbers, ground and
 generals should still count). The test options now give war and march orders before the
 played turns, so screenshots can show real battles.
+## D-270 Combat v3: wings, deployment and battle ground — DELEGATED (2026-10-05)
+The owner asked to "make the battles even more tactical". Everything from Combat v2 (D-267)
+stays; the clash is now a real fight between wings of troops the player places, on ground that
+matters. Engine only: the client screens for it come in a later step.
+- **Deployment.** Each army places its troops by kind (infantry, spear, missile, mounted,
+  elephant) on the left wing, centre, right wing or in reserve, or "split" across the line.
+  A kind left alone is "auto": the army's formation puts it where it belongs. The six
+  formations are now presets of a deployment (a `layout` in `core/formations.yaml`: strong left
+  masses the horse and best foot on the left, strong centre masses heavy foot in the middle with
+  horse on the wings, deep reserve holds back a fifth, wide line spreads). Siege engines never
+  stand in the line. New order `ArmyDeploy`; new army fields `deployment` and `arrived_turn`.
+- **The clash, wing by wing.** Left meets the enemy's right, centre meets centre. Each wing's
+  power uses the same unit maths as before but against only the kinds standing opposite it, so
+  spears opposite horse count their bonus and spears opposite foot do not. A first exchange
+  (no luck of the day, only each wing's own fortune) shows how it goes: a wing at 1.5 times its
+  opposite BREAKS it, which then fights on at 60%, and the winner wheels on the enemy centre
+  (that centre loses 20% and takes 30% of the winning wing's power on top). Reserves then go in
+  where the line is weakest (a great general, with nothing in danger, presses the best wing
+  instead), so a deep reserve plugs a breach before it becomes one. A wing held far back (under
+  half its fair third) is "refused": it is neither broken nor won, and the enemy wing facing it
+  is free to wheel on the centre. Horse on a wing that faces no horse ride round (enemy centre
+  -10%). The side that wins two of the three contests wins the clash (power breaks a tie); each
+  broken wing also costs its side morale, which feeds the existing break rules. The formation
+  edge (+15%) stays, so the old matchups still hold; the wing maths adds to it rather than
+  replacing it. A deep reserve no longer pays a -12% power cost (its men really are held back).
+- **Ground.** All numbers are in the rules. River (the province's geography flag): attackers
+  lose 12% (horse 37%) in the first exchange and 40% of that afterwards; defenders dug in on the
+  bank ("holding the river line") make it 50% worse. Hills and mountains: the defenders'
+  missile troops shoot 20% better (skirmish too) and horse charging uphill lose 20%. Forest and
+  marsh: horse and elephants lose 25%, and a wide line cannot form (it is thin). Open ground
+  (plains, river plains, steppe): horse on the wings gain 15%. Battle reports and the odds
+  preview carry a `ground` sentence. Rivers are on most provinces of the real maps, so the
+  river penalty was kept small.
+- **Two armies, two directions.** Armies of one side that march into the battle province in
+  the same turn from different neighbours: the largest army (and any that came the same way)
+  forms the line; the others are an extra force that falls on the enemy's weaker wing
+  (+25% power; that wing -15%). The report says "the Roman second army fell on the
+  Carthaginian left".
+- **Rivals.** Rival courts deploy "auto". A general of 3+ stars also tries the line turned
+  round (left and right swapped) against what the enemy will show and takes it if better.
+- **Balance.** Measured before and after on eight standard matchups at 60 seeds each: winner's
+  losses stay 7-12%, loser's 20-35% (as v2); win rates stay in the same bands (for example, an
+  even mixed host: attacker wins 23% in v2, 26% now; the formation matrix keeps its shape:
+  strong wings beat a balanced line or strong centre, a deep reserve beats a strong wing or
+  centre, a balanced line beats a deep reserve). Each wing has its own luck on top of the day's
+  (15%), so a 10% lead wins less surely than before (91% to 73%).
+- The view now has `deploy_places`, each army's `kinds` and `deployment`, and the odds preview
+  has `wings` and `ground`. Old saves load (new fields default). Tests: wing contests,
+  reserves, refused wings, horse riding round, flank blows, river/hills/forest/plains, deploy
+  order, formation presets, great-general adaptation, view fields.

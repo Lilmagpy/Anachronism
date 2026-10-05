@@ -318,6 +318,12 @@ class Army(Mutable):
     """Stood a full turn in this province without marching: a fortified camp (D-267)."""
     forced: bool = False
     """Marching at a forced pace this turn: one more province, at a cost in morale and men."""
+    deployment: dict[str, str] = Field(default_factory=dict)
+    """Where each kind of soldier stands in the line (D-270): kind -> ``left``, ``centre``,
+    ``right``, ``reserve`` or ``split``. A kind not named is ``auto``: the formation decides."""
+    arrived_turn: int = -1
+    """The turn it last marched into the province it stands in (a second army arriving from
+    another direction falls on the enemy's flank)."""
 
     @property
     def men(self) -> int:
@@ -428,6 +434,8 @@ class Event(Mutable):
     sides: dict[str, str] = Field(default_factory=dict)
     """A battle's sides: ``a`` (attackers) and ``d`` (defenders) as adjectives, and the
     ``winner`` (``a`` or ``d``)."""
+    ground: str = ""
+    """A battle's ground in a sentence (river, hills, forest ...), D-270."""
 
 
 class ChapterResult(Mutable):

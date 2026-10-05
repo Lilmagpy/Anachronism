@@ -241,6 +241,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] History's choice listed in a shuffled order (D-265); every chapter's choices rewritten so it is not obvious (D-266)
 - [x] Combat v2 engine (D-267): formations, three-phase battles, rules of engagement, camps, forced marches, scouting fog in the view (on screen: D-269)
 - [x] Screens that do not overflow after long games; calmer map colours; army banners (D-268)
+- [x] Combat v3 engine (D-270): deployment by kind (left, centre, right, reserve), the clash fought wing by wing, battle ground (river, hills, forest, plains), a second army on the flank; client screens still to do
 - [ ] Source-check pass over the helper-written chronicles (written without network access) before any public release
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging
