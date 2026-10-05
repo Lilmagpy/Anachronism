@@ -16,6 +16,7 @@ const BAD := Color(0.62, 0.12, 0.08)
 const TIER_POINTS := [0, 2, 4, 7, 10]
 const TIERS := ["Village", "Town", "City", "Great city", "Metropolis"]
 
+var _narrow := false   ## a screen narrower than the book was designed for
 var view: Dictionary = {}
 var _selected := ""
 var _list: VBoxContainer
@@ -40,7 +41,9 @@ func _ready() -> void:
 	add_child(centre)
 	var book := PanelContainer.new()
 	book.add_theme_stylebox_override("panel", UiStyle.ornate_panel())
-	book.custom_minimum_size = Vector2(1360, 790)
+	var room := get_viewport().get_visible_rect().size   # fit narrow and short screens (D-276)
+	book.custom_minimum_size = Vector2(minf(1360.0, room.x - 30.0), minf(790.0, room.y - 70.0))
+	_narrow = room.x < 1380.0
 	centre.add_child(book)
 	var margin := MarginContainer.new()
 	for side in ["left", "right", "top", "bottom"]:
@@ -68,7 +71,7 @@ func _ready() -> void:
 	pages.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	column.add_child(pages)
 	var left := ScrollContainer.new()
-	left.custom_minimum_size = Vector2(400, 0)
+	left.custom_minimum_size = Vector2(320 if _narrow else 400, 0)
 	left.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	pages.add_child(left)
 	_list = VBoxContainer.new()
@@ -261,7 +264,7 @@ func _fill_page(city: Dictionary) -> void:
 	if options.is_empty():
 		_page.add_child(UiStyle.wrapped("Nothing can be built here yet: buildings need ideas in use (see your notebook).", 15, DIM, 820))
 	var grid := GridContainer.new()
-	grid.columns = 2
+	grid.columns = 1 if _narrow else 2   # one column of choices on a narrow screen (D-276)
 	grid.add_theme_constant_override("h_separation", 12)
 	grid.add_theme_constant_override("v_separation", 12)
 	var queueing := city.get("works") != null
@@ -337,7 +340,7 @@ func _option(province_id: String, option: Dictionary, queueing: bool) -> Control
 	var recommended := bool(option.get("recommended", false))
 	card.add_theme_stylebox_override("panel", UiStyle.panel(Color(0.99, 0.96, 0.88) if option.get("why_not") == null else Color(0.92, 0.89, 0.83),
 		UiStyle.GOLD if recommended else UiStyle.GOLD_DARK, 10))
-	card.custom_minimum_size = Vector2(430, 0)
+	card.custom_minimum_size = Vector2(0 if _narrow else 430, 0)
 	var column := VBoxContainer.new()
 	column.add_theme_constant_override("separation", 4)
 	var top := HBoxContainer.new()

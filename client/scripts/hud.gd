@@ -8,6 +8,7 @@ class_name GameHud
 extends CanvasLayer
 
 const BattleSketch := preload("res://scripts/battle_sketch.gd")
+const Triumph := preload("res://scripts/triumph.gd")
 
 signal action_requested(action: Dictionary)
 signal end_turn_requested
@@ -61,6 +62,9 @@ var _card_body := VBoxContainer.new()
 var _card_scroll := ScrollContainer.new()
 var _chronicle := VBoxContainer.new()
 var _end_turn := Button.new()
+var _council: Control = null            ## the council of war before battles (D-273)
+var _council_body: VBoxContainer = null
+var _council_turn := -1                 ## the turn the council last sat
 var _skip_hint: Label
 var notebook := Notebook.new()   ## the notebook from the future (D-126)
 var cities := CityScreen.new()   ## your cities and what to build in them (D-127)
@@ -136,6 +140,8 @@ func show_view(new_view: Dictionary) -> void:
 	_fill_card()
 	_fill_chronicle()
 	_fill_dilemma()
+	if _council != null and is_instance_valid(_council):
+		_fill_council()
 	if _story.get_parent() == null:
 		_root.add_child(_story)   # above everything else
 	_story.show_chronicle(view.get("chronicle"))
@@ -157,6 +163,8 @@ func show_view(new_view: Dictionary) -> void:
 func _fill_dilemma() -> void:
 	for child in _dilemma.get_children():
 		child.queue_free()
+	_dilemma.custom_minimum_size = Vector2(_dilemma_width(), 0)
+	_dilemma.size = Vector2.ZERO
 	var question: Variant = view.get("dilemma")
 	var offer: Variant = view.get("offer")
 	_dilemma.visible = question != null or offer != null
@@ -169,7 +177,7 @@ func _fill_dilemma() -> void:
 	body.add_theme_constant_override("separation", 6)
 	body.add_child(UiStyle.label(str(question["title"]), 24, UiStyle.RED, "title", 800))
 	var text := _wrapped(str(question["text"]), 16, INK)
-	text.custom_minimum_size = Vector2(580, 0)
+	text.custom_minimum_size = Vector2(_dilemma_width() - 40.0, 0)
 	body.add_child(text)
 	for i in question["choices"].size():
 		var choice: Dictionary = question["choices"][i]
@@ -185,6 +193,11 @@ func _fill_dilemma() -> void:
 	_dilemma.add_child(body)
 
 
+## The question card fits between the side panels on narrow screens (D-276).
+func _dilemma_width() -> float:
+	return clampf(get_viewport().get_visible_rect().size.x - 860.0, 420.0, 620.0)
+
+
 ## Envoys from a rival court (D-105): their proposal, and accept or refuse.
 func _fill_offer(offer: Dictionary) -> void:
 	var body := VBoxContainer.new()
@@ -198,7 +211,7 @@ func _fill_offer(offer: Dictionary) -> void:
 	head.add_child(UiStyle.label(str(offer["title"]), 24, UiStyle.RED, "title", 800))
 	body.add_child(head)
 	var text := _wrapped(str(offer["text"]), 16, INK)
-	text.custom_minimum_size = Vector2(580, 0)
+	text.custom_minimum_size = Vector2(_dilemma_width() - 40.0, 0)
 	body.add_child(text)
 	body.add_child(_wrapped(str(offer["hint"]), 13, DIM))
 	var row := HBoxContainer.new()
@@ -1358,8 +1371,19 @@ func _fill_card() -> void:
 	if bool(p.get("blockaded", false)):
 		_card_body.add_child(_wrapped("Blockaded: enemy warships close its harbours, and most of its trade is lost. Win the sea to lift it.", 13, BAD))
 	var hard := "easy" if defence < 11000 else ("hard" if defence < 25000 else "very hard")
-	_card_body.add_child(_wrapped("To take in war: %s (%.1f×%s)" % [hard, defence / 10000.0,
-		(", " + ", ".join(why)) if not why.is_empty() else ""], 13, DIM))
+	var walls_line := _wrapped("Walls: %s to batter down (%.1f×%s)" % [hard, defence / 10000.0,
+		(", " + ", ".join(why)) if not why.is_empty() else ""], 13, DIM)
+	walls_line.tooltip_text = "How long a siege takes to breach the walls: terrain, a capital's walls and built walls all add to it."
+	walls_line.mouse_filter = Control.MOUSE_FILTER_PASS
+	_card_body.add_child(walls_line)
+	if p["owner"] != null and int(p.get("garrison_full", 0)) > 0:
+		var men := int(p.get("garrison", 0))
+		var full := int(p["garrison_full"])
+		var state := "" if men * 10 >= full * 9 else (" - starving or bled white" if men * 2 < full else " - weakened")
+		var guard := _wrapped("Garrison: %s men behind the walls%s" % [number(men), state], 13, INK)
+		guard.tooltip_text = "To take this city an army must storm it (a battle against the garrison, who fight from walls and streets) or starve it out. Garrisons rebuild in peace."
+		guard.mouse_filter = Control.MOUSE_FILTER_PASS
+		_card_body.add_child(guard)
 	_buildings_lines(p)
 	var here: Array = view.get("armies", []).filter(func(a): return a["province"] == p["id"])
 	if not here.is_empty():
@@ -1544,6 +1568,8 @@ func _army_box(army: Dictionary) -> Control:
 		for chance in view.get("odds", []):
 			if str(chance["mine"]) == str(army["id"]) and facing.is_empty():
 				facing = chance
+		if army.get("storm") != null:
+			box.add_child(_siege_box(army))
 		box.add_child(_army_sketch(army, facing))
 		if not facing.is_empty():
 			box.add_child(_odds_line(facing))
@@ -1626,6 +1652,51 @@ func _plan_picker(army: Dictionary) -> Control:
 	return row
 
 
+## Before an enemy city (D-273): its garrison and walls, how the army means to take it, and
+## how a storm would go today.
+func _siege_box(army: Dictionary) -> Control:
+	var storm: Dictionary = army["storm"]
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 2)
+	var panel := PanelContainer.new()
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.45, 0.12, 0.08, 0.10)
+	style.border_color = Color(0.62, 0.18, 0.12, 0.7)
+	style.set_border_width_all(1)
+	style.set_corner_radius_all(6)
+	style.set_content_margin_all(6)
+	panel.add_theme_stylebox_override("panel", style)
+	panel.add_child(box)
+	box.add_child(_label("⚔ THE SIEGE", 13, UiStyle.RED))
+	var walls := int(storm["walls_bp"])
+	var said := "the walls are breached!" if walls == 0 else "walls %d%% standing, breached in about %d turn%s" % [
+		walls / 100, int(storm["breach_turns"]), "" if int(storm["breach_turns"]) == 1 else "s"]
+	box.add_child(_wrapped("Garrison %s of %s men; %s" % [number(int(storm["garrison"])), number(int(storm["full"])), said], 12, INK))
+	var share := int(storm["win_bp"])
+	var odds := _wrapped("A storm today: %d%% of the strength - %s" % [share / 100,
+		"the walls will fall" if share > 6500 else ("a bloody gamble" if share > 4500 else "the assault would be thrown back")],
+		12, GOOD if share > 6500 else (BAD if share < 4500 else INK))
+	odds.tooltip_text = "Your army against the garrison fighting from its walls. Wait for the breach, bring siege engines, a second army or more men, and choose a plan and formation for the storm."
+	odds.mouse_filter = Control.MOUSE_FILTER_PASS
+	box.add_child(odds)
+	box.add_child(_wrapped("Starved out in about %d turn%s if you wait (your men sicken in the siege lines meanwhile)." % [
+		int(storm["starve_turns"]), "" if int(storm["starve_turns"]) == 1 else "s"], 12, DIM))
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 4)
+	for choice in [["breach", "Storm at the breach", "Storm once the walls are down: the usual way"],
+			["now", "Storm now!", "Go over the walls this turn, whatever stands: far bloodier"],
+			["starve", "Starve them out", "Never storm: wait for hunger to open the gates. Slower, but no assault"]]:
+		var b := _button(str(choice[1]), func(): action_requested.emit({"kind": "assault", "army": army["id"], "assault": choice[0]}))
+		b.add_theme_font_size_override("font_size", 12)
+		b.tooltip_text = str(choice[2])
+		b.toggle_mode = true
+		b.button_pressed = str(army.get("assault", "breach")) == str(choice[0])
+		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_child(b)
+	box.add_child(row)
+	return panel
+
+
 ## The plan drawn (D-272): your wings, the enemy's, red dashed arrows for the formation and
 ## plan; against a nearby enemy each wing is marked as likely to win, hold or give way.
 func _army_sketch(army: Dictionary, chance: Dictionary) -> Control:
@@ -1634,7 +1705,17 @@ func _army_sketch(army: Dictionary, chance: Dictionary) -> Control:
 	sketch.my_label = "%s: %s" % [str(army["name"]), _formation_name(sketch.formation)]
 	sketch.plan_note = "Plan: " + _plan_name(sketch.plan)
 	sketch.tooltip_text = "Seen from above: your army at the bottom, the enemy at the top. Red dashed arrows show how your formation and battle plan mean to fight; ✓ marks a wing likely to win, ✗ one likely to give way."
-	if not chance.is_empty():
+	if army.get("storm") != null and chance.is_empty():
+		var storm: Dictionary = army["storm"]
+		var each := int(storm["garrison"]) / 3
+		sketch.foe_men = {"left": each, "centre": each, "right": each}
+		sketch.foe_label = "The garrison, behind its walls"
+		sketch.walls_bp = int(storm["walls_bp"])
+		sketch.walled = true
+		for w in storm.get("wings", []):
+			var look := str(w["outcome"])
+			sketch.outcomes[str(w["wing"])] = "won" if look == "strong" else ("lost" if look == "weak" else "even")
+	elif not chance.is_empty():
 		for other in view.get("armies", []):
 			if str(other["id"]) == str(chance["theirs"]):
 				var each := int(other["men"]) / 3
@@ -2208,6 +2289,229 @@ func show_breakthroughs(items: Array) -> void:
 	create_tween().tween_property(veil, "modulate:a", 1.0, 0.3)
 
 
+# --- the council of war and the spoils of conquest (D-273) ---------------------------------
+
+
+## End the turn, unless battles are coming that the player has not yet looked at: then the
+## council of war sits first (once a turn).
+func request_end_turn() -> void:
+	if _council != null and is_instance_valid(_council):
+		return
+	if _council_turn != int(view.get("turn", 0)) and not imminent_battles().is_empty():
+		_council_turn = int(view.get("turn", 0))
+		show_council()
+		return
+	end_turn_requested.emit()
+
+
+## The fights the player's armies will likely meet this turn: storms of besieged cities, and
+## battles with enemy armies where they stand or are marching.
+func imminent_battles() -> Array:
+	var out: Array = []
+	for army in view.get("armies", []):
+		if army["owner"] != view["player"]:
+			continue
+		var storm: Variant = army.get("storm")
+		if storm != null and int(storm["garrison"]) > 0:
+			var due := str(army.get("assault", "breach")) == "now" or (
+				str(army.get("assault", "breach")) == "breach" and int(storm["breach_turns"]) <= 1)
+			if due:
+				out.append({"kind": "storm", "army": army, "province": str(army["province"])})
+		var next := str(army["province"])
+		if not (army.get("route", []) as Array).is_empty():
+			next = str(army["route"][0])
+		for chance in view.get("odds", []):
+			if str(chance["mine"]) != str(army["id"]):
+				continue
+			var foe := _army_by_id(str(chance["theirs"]))
+			if not foe.is_empty() and (str(foe["province"]) == str(army["province"]) or str(foe["province"]) == next):
+				out.append({"kind": "battle", "army": army, "chance": chance, "foe": foe, "province": str(foe["province"])})
+				break
+	return out
+
+
+func _army_by_id(army_id: String) -> Dictionary:
+	for army in view.get("armies", []):
+		if str(army["id"]) == army_id:
+			return army
+	return {}
+
+
+## The council: each coming fight drawn as a sketch with its odds, and the plan, formation and
+## (for a storm) how to take the city, all to be settled before the turn is ended.
+func show_council() -> void:
+	_council = Control.new()
+	_council.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_council.mouse_filter = Control.MOUSE_FILTER_STOP
+	var shade := ColorRect.new()
+	shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	shade.color = Color(0.05, 0.02, 0.01, 0.6)
+	_council.add_child(shade)
+	var room := get_viewport().get_visible_rect().size
+	var panel := PanelContainer.new()
+	panel.add_theme_stylebox_override("panel", UiStyle.ornate_panel())
+	var want := Vector2(minf(820.0, room.x - 60.0), minf(720.0, room.y - 120.0))
+	panel.set_anchors_preset(Control.PRESET_FULL_RECT)
+	panel.offset_left = (room.x - want.x) / 2.0
+	panel.offset_right = -(room.x - want.x) / 2.0
+	panel.offset_top = (room.y - want.y) / 2.0
+	panel.offset_bottom = -(room.y - want.y) / 2.0
+	_council.add_child(panel)
+	var column := VBoxContainer.new()
+	column.add_theme_constant_override("separation", 8)
+	panel.add_child(column)
+	var title := UiStyle.label("⚔  COUNCIL OF WAR  ⚔", 30, UiStyle.RED, "title", 900)
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	column.add_child(title)
+	var sub := UiStyle.label("Blood will be spilled this turn. Settle your plans before you give the order.", 15, DIM)
+	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	column.add_child(sub)
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_council_body = VBoxContainer.new()
+	_council_body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_council_body.add_theme_constant_override("separation", 10)
+	scroll.add_child(_council_body)
+	column.add_child(scroll)
+	var buttons := HBoxContainer.new()
+	buttons.alignment = BoxContainer.ALIGNMENT_CENTER
+	buttons.add_theme_constant_override("separation", 16)
+	var wait := UiStyle.big_button("NOT YET", 18, Color(0.85, 0.80, 0.70))
+	wait.custom_minimum_size = Vector2(170, 48)
+	wait.tooltip_text = "Close the council and look at the map first; End Turn will not ask again this turn"
+	wait.pressed.connect(func(): _close_council())
+	buttons.add_child(wait)
+	var go := UiStyle.big_button("TO BATTLE!  ▸", 22, Color(0.95, 0.45, 0.32))
+	go.custom_minimum_size = Vector2(240, 54)
+	go.pressed.connect(func():
+		_close_council()
+		end_turn_requested.emit())
+	buttons.add_child(go)
+	column.add_child(buttons)
+	_screens.add_child(_council)
+	_fill_council()
+	_council.modulate.a = 0.0
+	panel.pivot_offset = want / 2.0
+	panel.scale = Vector2(0.92, 0.92)
+	var tween := create_tween().set_parallel()
+	tween.tween_property(_council, "modulate:a", 1.0, 0.25)
+	tween.tween_property(panel, "scale", Vector2.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+
+func _close_council() -> void:
+	if _council != null and is_instance_valid(_council):
+		_council.queue_free()
+	_council = null
+
+
+func _fill_council() -> void:
+	for child in _council_body.get_children():
+		child.queue_free()
+	var fights := imminent_battles()
+	if fights.is_empty():
+		_council_body.add_child(_wrapped("No battle is coming after all.", 15, INK))
+	for fight in fights:
+		var army: Dictionary = fight["army"]
+		var place := str(_find_place(str(fight["province"])).get("name", fight["province"]))
+		var card := VBoxContainer.new()
+		card.add_theme_constant_override("separation", 3)
+		if fight["kind"] == "storm":
+			card.add_child(_label("The storming of %s" % place, 20, UiStyle.RED))
+			card.add_child(_wrapped("The %s goes over the walls against the garrison." % str(army["name"]), 13, INK))
+		else:
+			var foe: Dictionary = fight["foe"]
+			card.add_child(_label("Battle at %s" % place, 20, UiStyle.RED))
+			card.add_child(_wrapped("The %s meets the %s %s (%s men)." % [str(army["name"]),
+				_civ_adjective(str(foe["owner"])), str(foe["name"]), number(int(foe["men"]))], 13, INK))
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 12)
+		var sketch: Control = _army_sketch(army, fight.get("chance", {}))
+		sketch.custom_minimum_size = Vector2(340, 210)
+		row.add_child(sketch)
+		var orders := VBoxContainer.new()
+		orders.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		orders.add_child(_plan_picker(army))
+		orders.add_child(_formation_picker(army))
+		orders.add_child(_engage_picker(army))
+		if fight["kind"] == "storm":
+			orders.add_child(_siege_box(army))
+		else:
+			orders.add_child(_odds_line(fight["chance"]))
+			if str(fight["chance"].get("ground", "")) != "":
+				orders.add_child(_wrapped(str(fight["chance"]["ground"]), 12, DIM))
+		row.add_child(orders)
+		card.add_child(row)
+		card.add_child(HSeparator.new())
+		_council_body.add_child(card)
+
+
+## A city taken (D-273): a triumph card with the spoils, one city at a time.
+func show_conquests(items: Array) -> void:
+	if items.is_empty():
+		return
+	var item: Dictionary = items[0]
+	var rest := items.slice(1)
+	var spoils: Dictionary = item.get("spoils", {})
+	var veil := Control.new()
+	veil.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	veil.mouse_filter = Control.MOUSE_FILTER_STOP
+	var shade := ColorRect.new()
+	shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	shade.color = Color(0.06, 0.03, 0.01, 0.6)
+	veil.add_child(shade)
+	var rays := Triumph.new()
+	rays.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	rays.colour = civ_colours.get(view["player"], UiStyle.GOLD)
+	veil.add_child(rays)
+	var centre := CenterContainer.new()
+	centre.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	veil.add_child(centre)
+	var card := PanelContainer.new()
+	card.add_theme_stylebox_override("panel", UiStyle.ornate_panel())
+	card.custom_minimum_size = Vector2(minf(700.0, get_viewport().get_visible_rect().size.x - 60.0), 0)
+	centre.add_child(card)
+	var column := VBoxContainer.new()
+	column.add_theme_constant_override("separation", 8)
+	card.add_child(column)
+	var stormed := bool(spoils.get("stormed", false))
+	var top := UiStyle.label("⚑  %s  ⚑" % ("A CAPITAL FALLS" if spoils.get("capital", false) else "CONQUEST"), 18, UiStyle.GOLD_DARK, "body", 900)
+	top.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	column.add_child(top)
+	var place := str(_find_place(str(spoils.get("province", ""))).get("name", item.get("target", "")))
+	var name := UiStyle.label(place.split(" (")[0].to_upper() + " IS OURS!", 46, UiStyle.RED, "title", 900)
+	name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	column.add_child(name)
+	var how := UiStyle.label("Stormed and sacked by the %s" % str(spoils.get("army", "army")) if stormed else "Starved into surrender before the %s" % str(spoils.get("army", "army")), 20, Color(0.55, 0.12, 0.10), "title", 800)
+	how.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	column.add_child(how)
+	column.add_child(UiStyle.label("THE SPOILS", 14, UiStyle.GOLD_DARK, "body", 900))
+	var lines: Array = ["+%s wealth carried off from the enemy treasury" % number(int(spoils.get("wealth", 0))),
+		"+%d%% prestige at court%s" % [int(spoils.get("prestige_bp", 0)) / 100, " (an enemy capital!)" if spoils.get("capital", false) else ""],
+		"The %s grows in renown: +%d%% veterancy, morale restored" % [str(spoils.get("army", "army")), int(spoils.get("veterancy_bp", 0)) / 100],
+		"The province, its people, fields and buildings are yours"]
+	if int(spoils.get("sacked", 0)) > 0:
+		lines.append("%s of its people were killed or carried off in the sack - they will remember" % number(int(spoils["sacked"])))
+	for text in lines:
+		column.add_child(UiStyle.wrapped("•  " + text, 17, INK if not text.contains("remember") else BAD, 640))
+	column.add_child(UiStyle.wrapped("Its new garrison is small: hold it against a counter-attack while it is rebuilt.", 14, DIM, 640))
+	var go := UiStyle.big_button("GLORY!" if rest.is_empty() else "NEXT  ▸", 22)
+	go.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	go.custom_minimum_size = Vector2(220, 54)
+	go.pressed.connect(func():
+		veil.queue_free()
+		show_conquests(rest))
+	column.add_child(go)
+	_screens.add_child(veil)
+	veil.modulate.a = 0.0
+	card.pivot_offset = card.custom_minimum_size / 2.0
+	card.scale = Vector2(0.6, 0.6)
+	var tween := create_tween().set_parallel()
+	tween.tween_property(veil, "modulate:a", 1.0, 0.3)
+	tween.tween_property(card, "scale", Vector2.ONE, 0.6).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+	spoke.emit()
+
+
 ## Open the Cities screen (at a city, if given).
 func open_cities(province_id := "") -> void:
 	cities.open(view, province_id)
@@ -2253,6 +2557,6 @@ func _build_end_turn() -> void:
 	_end_turn.offset_top = -80
 	_end_turn.offset_right = -8
 	_end_turn.offset_bottom = -8
-	_end_turn.pressed.connect(func(): end_turn_requested.emit())
+	_end_turn.pressed.connect(request_end_turn)
 	_end_turn.tooltip_text = "Let ten years pass (Enter). Tabs: 1 Ideas, 2 Projects, 3 World"
 	_root.add_child(_end_turn)

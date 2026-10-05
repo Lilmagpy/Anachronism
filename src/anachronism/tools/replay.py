@@ -110,6 +110,8 @@ def _battles(
                 "mine": me in (e.civ, loser),
                 "won": e.civ == me,
                 "sea": sea,
+                "storm": e.message.startswith("The storming"),
+                "dead": sum(int(p["losses"]["a"]) + int(p["losses"]["d"]) for p in e.phases),
             }
         )
     return battles
@@ -144,12 +146,18 @@ def build(before: Before, after: GameState, events: list[Event]) -> dict[str, An
                 "mine": me in (army.owner, held_by),
             }
         )
+    how = {
+        e.spoils.get("province", ""): "stormed" if e.spoils.get("stormed") else "starved"
+        for e in events
+        if e.kind == "spoils"
+    }
     taken = [
         {
             "at": pid,
             "from": before.owners.get(pid),
             "to": province.owner,
             "mine": me in (before.owners.get(pid), province.owner),
+            "how": how.get(pid, ""),
         }
         for pid, province in sorted(after.provinces.items())
         if before.owners.get(pid) != province.owner

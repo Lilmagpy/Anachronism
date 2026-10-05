@@ -13,9 +13,9 @@ from anachronism.engine.armies import (
     raise_army,
     route,
     siege_progress,
-    sieges,
     unit_power,
 )
+from anachronism.engine.conquest import sieges
 from anachronism.engine.events import EventLog
 from anachronism.engine.game import apply_action, end_turn, new_game
 from anachronism.engine.rivals import status

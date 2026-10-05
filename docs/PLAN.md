@@ -244,6 +244,10 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] Combat v3 engine (D-270): deployment by kind (left, centre, right, reserve), the clash fought wing by wing, battle ground (river, hills, forest, plains), a second army on the flank; on screen: D-272
 - [x] City streets and paving, invisible houses and fields fixed on the Mac renderer (D-271)
 - [x] Readable tooltips; battle sketch with red dashed plan arrows, deployment pickers, wing-by-wing battle reports (D-272)
+- [x] Conquest is hard-won (D-273): garrisons, storm at the breach / storm now / starve out, storms fought as battles, spoils, prestige and veterancy; council of war before battles; triumph card
+- [x] Battles and conquests played out on the map; livelier buttons (D-274)
+- [x] Houses in each civilisation's own style, pagodas and obelisks (D-275)
+- [x] Menus checked and fixed on different screen sizes; interface size setting (D-276)
 - [ ] Source-check pass over the helper-written chronicles (written without network access) before any public release
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

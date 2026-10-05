@@ -23,7 +23,9 @@ var flank := ""            ## "left" | "right": a second army's blow lands on th
 var foe_label := "Enemy"
 var my_label := "Your line"
 var plan_note := ""        ## the plan in words, written in red at the top right
-var show_plan := true      ## false in a battle report: the blocks and outcomes tell it
+var show_plan := true
+var walled := false        ## the enemy holds a city's walls (a storm, D-273)
+var walls_bp := 10000      ## how much of the walls still stand      ## false in a battle report: the blocks and outcomes tell it
 
 
 func _init() -> void:
@@ -121,6 +123,8 @@ func _draw() -> void:
 	if mine_men["reserve"] > 0:
 		_block(Vector2(w / 2.0, h * 0.84), mine_men["reserve"] / my_total, MINE.lightened(0.25), false)
 		draw_string(font, Vector2(w / 2.0 + 30, h * 0.86), "reserve", HORIZONTAL_ALIGNMENT_LEFT, -1, 11, INK)
+	if walled:
+		_walls(foe_y + 16.0)
 	if show_plan:
 		_plan_arrows(lane, foe_y, my_y)
 	if plan_note != "":
@@ -130,6 +134,26 @@ func _draw() -> void:
 		var fx := 8.0 if flank == "right" else w - 8.0   # their right wing is on my left
 		_arrow(Vector2(fx, h * 0.95), Vector2(lane * (0.5 if flank == "right" else 2.5), foe_y + 8), Color(0.15, 0.45, 0.75), true)
 		draw_string(font, Vector2(fx - (0.0 if flank == "right" else 90.0), h * 0.92), "second army", HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color(0.15, 0.45, 0.75))
+
+
+## A city wall in front of the enemy line, its breaches as gaps.
+func _walls(y: float) -> void:
+	var stone := Color(0.55, 0.50, 0.44)
+	var x := 10.0
+	var gaps := 0 if walls_bp >= 9000 else (1 if walls_bp > 4000 else (2 if walls_bp > 0 else 3))
+	var gap_at := [size.x * 0.5, size.x * 0.2, size.x * 0.8].slice(0, gaps)
+	while x < size.x - 10.0:
+		var open := false
+		for g in gap_at:
+			if absf(x + 6.0 - g) < 16.0:
+				open = true
+		if not open:
+			draw_rect(Rect2(x, y, 12.0, 7.0), stone)
+			draw_rect(Rect2(x + 1.0, y - 4.0, 5.0, 4.0), stone)   # crenellations
+			draw_rect(Rect2(x, y, 12.0, 7.0), stone.darkened(0.4), false, 1.0)
+		else:
+			draw_rect(Rect2(x + 2.0, y + 4.0, 8.0, 3.0), stone.darkened(0.2))   # rubble
+		x += 12.0
 
 
 ## A wing's outlook or fate, drawn (fonts may lack tick glyphs): green tick, red cross, grey bars.

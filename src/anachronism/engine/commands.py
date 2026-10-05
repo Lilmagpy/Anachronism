@@ -6,6 +6,7 @@ from anachronism.content.schema import Stage
 from anachronism.engine.actions import (
     Action,
     AnswerEnvoy,
+    ArmyAssault,
     ArmyDeploy,
     ArmyEngage,
     ArmyFormation,
@@ -115,6 +116,7 @@ def _apply(state: GameState, action: Action) -> tuple[bool, str]:
         | ArmyPlan
         | ArmyFormation
         | ArmyDeploy
+        | ArmyAssault
         | ArmyEngage
         | DisbandArmy
         | Fortify

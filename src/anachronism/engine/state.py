@@ -150,6 +150,9 @@ class ProvinceState(Mutable):
     """Buildings to start here next, in order (D-128); each is paid for when it starts."""
     queued_by: str | None = None
     """Whose plans the queue is: dropped if the province changes hands."""
+    garrison_bp: int = 10_000
+    """Strength of the owner's garrison (D-273), 10_000 = full: storms and hunger wear it down,
+    and it is rebuilt in peace."""
 
 
 class Stockpiles(Mutable):
@@ -324,6 +327,13 @@ class Army(Mutable):
     arrived_turn: int = -1
     """The turn it last marched into the province it stands in (a second army arriving from
     another direction falls on the enemy's flank)."""
+    assault: Literal["breach", "now", "starve"] = "breach"
+    """How it takes a besieged city (D-273): storm it once the walls are breached, storm it at
+    once whatever the walls, or never storm and starve the garrison out."""
+    garrison: bool = False
+    """A city's garrison, drawn up only for the turn it is stormed (never kept in the state)."""
+    walls_bp: int = 0
+    """A garrison's walls and streets: extra power (bp) when it is stormed."""
 
     @property
     def men(self) -> int:
@@ -436,6 +446,9 @@ class Event(Mutable):
     ``winner`` (``a`` or ``d``)."""
     ground: str = ""
     """A battle's ground in a sentence (river, hills, forest ...), D-270."""
+    spoils: dict[str, Any] = Field(default_factory=dict)
+    """A city taken (D-273): ``wealth``, ``sacked`` (people), ``stormed``, ``capital``,
+    ``prestige_bp``, ``veterancy_bp``, ``army`` (its name) and ``province`` (its id)."""
 
 
 class ChapterResult(Mutable):

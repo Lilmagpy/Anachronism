@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 from anachronism.content.schema import EffectType
-from anachronism.engine.armies import command, march, sieges, upkeep
+from anachronism.engine.armies import command, march, upkeep
 from anachronism.engine.buildings import advance_works, rival_builders, weighted
 from anachronism.engine.campaign import advance, almanac
+from anachronism.engine.conquest import sieges
 from anachronism.engine.culture import spread_faiths, trade
 from anachronism.engine.dilemmas import ask
 from anachronism.engine.dynasty import renew
@@ -73,7 +74,7 @@ def end_turn(state: GameState) -> tuple[GameState, list[Event]]:
     sail(new, rng, events)
     blockades(new, events)
     march(new, rng, events)
-    sieges(new, events)
+    sieges(new, events, rng)
     upkeep(new, events)
     fleet_upkeep(new)
     occupation(new, rng, events)

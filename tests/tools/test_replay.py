@@ -39,7 +39,9 @@ def test_changes_of_ownership_are_flagged(content: Content) -> None:
     pid = after.owned_provinces("carthage")[0]
     after.provinces[pid].owner = "rome"
     replay = build(before, after, [])
-    assert replay["taken"] == [{"at": pid, "from": "carthage", "to": "rome", "mine": True}]
+    assert replay["taken"] == [
+        {"at": pid, "from": "carthage", "to": "rome", "mine": True, "how": ""}
+    ]
 
 
 def test_a_sunk_fleet_is_among_the_losses(content: Content) -> None:

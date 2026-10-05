@@ -544,6 +544,42 @@ class ArmyRules(Frozen):
     """Terrain where horse and elephants fight badly (and a wide line cannot form)."""
     open_terrain: tuple[Identifier, ...] = ("plains", "river_plains", "steppe")
     """Open ground, where horse are strong on the wings."""
+    garrison_share_bp: Rate = 7500
+    """Taking a province (D-273): its garrison is this share of people / garrison_people_per_man
+    men ..."""
+    garrison_wall_men: NonNegative = 400
+    """... plus this many for each level of walls built ..."""
+    garrison_capital_bp: Positive = 20_000
+    """... and a capital's is this much (10_000 = the same) larger."""
+    storm_defence_bp: NonNegative = 8000
+    """A garrison fights from walls and streets: this much extra power when stormed ..."""
+    storm_unbreached_bp: NonNegative = 25_000
+    """... and up to this much more while its walls still stand (storming before the breach)."""
+    storm_wall_level_bp: NonNegative = 2000
+    """Extra power for the stormed garrison for each level of walls built."""
+    garrison_starve_bp: Rate = 3500
+    """A besieged garrison loses this share of its full strength a turn to hunger and
+    desertion; at nothing left the city surrenders."""
+    garrison_recover_bp: Rate = 2000
+    """An unbesieged garrison rebuilds this share of its full strength a turn."""
+    conquered_garrison_bp: Rate = 2500
+    """A newly taken city's garrison: the conqueror's few men left to hold it."""
+    siege_sickness_bp: Rate = 200
+    """Besiegers lose this share of their men a turn to sickness in the siege lines."""
+    spoils_per_1000: NonNegative = 6
+    """Wealth taken from the loser's treasury per 1,000 people of a city taken ..."""
+    sack_spoils_bp: NonNegative = 20_000
+    """... this much (10_000 = the same) more when it was stormed and sacked ..."""
+    sack_people_bp: Rate = 500
+    """... at the cost of this share of its people."""
+    conquest_legitimacy_bp: NonNegative = 300
+    """Prestige a court gains for taking a province (three times for a capital) ..."""
+    conquest_veterancy_bp: NonNegative = 400
+    """... the veterancy its army gains ..."""
+    conquest_morale_bp: NonNegative = 1500
+    """... and the morale its men regain."""
+    victory_legitimacy_bp: NonNegative = 100
+    """Prestige a court gains for a victory in the field (the loser loses as much)."""
     wing_strong_bp: Positive = 12_000
     """A wing at this much (10_000 = even) times its opposite or more is 'strong' in the odds
     preview; at its inverse or less it is 'weak'."""

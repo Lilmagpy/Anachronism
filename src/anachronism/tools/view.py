@@ -24,6 +24,7 @@ from anachronism.engine.buildings import cost as building_cost
 from anachronism.engine.buildings import options as building_options
 from anachronism.engine.buildings import slots, worth
 from anachronism.engine.commands import describe_blockers
+from anachronism.engine.conquest import full_garrison, garrison_men, storm_outlook
 from anachronism.engine.decrees import cost, explain_costs, explain_ready_in, news_on_the_road
 from anachronism.engine.deployment import AUTO as DEPLOY_AUTO
 from anachronism.engine.deployment import PLACE_NAMES, PLACE_NOTES, PLACES, SPLIT
@@ -186,6 +187,8 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
                 "capital": any(c.capital == pid for c in state.civs.values()),
                 "defence_bp": _defence(state, pid),
                 "walls": state.provinces[pid].walls,
+                "garrison": garrison_men(state, pid),
+                "garrison_full": full_garrison(state, pid),
                 **_people(state, pid),
                 "ravaged": state.provinces[pid].ravaged,
                 "port": next(iter(seas_of(state, pid)), None),
@@ -237,6 +240,7 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
                     if e.phases
                     else {}
                 ),
+                **({"spoils": e.spoils} if e.spoils else {}),
             }
             for e in (events or [])
             if e.civ == civ_id or e.kind in ("revolt", "collapse", "destroyed")
@@ -652,9 +656,21 @@ def _armies(state: GameState) -> list[dict[str, Any]]:
                 "siege_needed": defence_bp(state, owner, army.province)
                 if besieged and owner
                 else 0,
+                "assault": army.assault,
+                "storm": _storm(state, army),
             }
         )
     return out
+
+
+def _storm(state: GameState, army: Army) -> dict[str, Any] | None:
+    """For the player's army before an enemy city (D-273): its garrison and a storm's odds."""
+    owner = state.provinces[army.province].owner
+    if army.owner != state.player_civ or owner is None or owner == army.owner:
+        return None
+    if not at_war_with(state, army.owner, owner):
+        return None
+    return storm_outlook(state, army)
 
 
 def _foe(state: GameState, army: Army) -> Army | None:

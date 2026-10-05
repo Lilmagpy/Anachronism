@@ -20,6 +20,7 @@ from typing import Any, Literal
 from anachronism.content.schema import Formation, General, RelationStatus, Tactic, Unit
 from anachronism.content.schema.rules import ArmyRules
 from anachronism.engine.actions import (
+    ArmyAssault,
     ArmyDeploy,
     ArmyEngage,
     ArmyFormation,
@@ -61,7 +62,7 @@ from anachronism.engine.state import Army, GameState
 from anachronism.engine.tactics import AUTO, bonus, commander, edge, plans
 from anachronism.engine.tales import tell
 from anachronism.engine.tech import is_adopted, usable_resources
-from anachronism.engine.war import capture, defence_bp
+from anachronism.engine.war import defence_bp
 from anachronism.engine.wings import Clash, Line, WingResult, contest
 
 STYLES = ("balanced", "infantry", "missile", "mounted", "siege")
@@ -769,8 +770,13 @@ def battle(
     defenders: list[Army],
     rng: GameRng,
     events: EventLog,
+    storm: str = "",
 ) -> str:
-    """Fight it out in three phases (skirmish, clash, pursuit). Returns the winning state's id."""
+    """Fight it out in three phases (skirmish, clash, pursuit). Returns the winning state's id.
+
+    ``storm`` (D-273): the defenders are a city's garrison being stormed, and this sentence
+    says how they stand (it replaces the ground's in the report).
+    """
     rules = state.world.rules.armies
     terrain = state.world.geography[province_id].terrain
     lines = _lines(state, province_id, attackers, defenders)
@@ -934,14 +940,18 @@ def battle(
     story = told.format(place=named, winner=w_civ.adjective, loser=l_civ.adjective, unit=hero_name)
     story = story[:1].upper() + story[1:]
     schemes = _plans_told(w_civ.adjective, plan_w, l_civ.adjective, plan_l)
+    title = "The storming of" if storm else "Battle of"
     text = (
-        f"Battle of {named}. {story}{fallen}{schemes}"
+        f"{title} {named}. {story}{fallen}{schemes}"
         f" {w_civ.adjective} losses {dead_w:,}, {l_civ.adjective} {dead_l:,}."
     )
     sides_told = {"a": adj[0], "d": adj[1], "winner": "a" if won_a else "d"}
-    where = ground_text(state, lines.ground, lines.held)
+    where = storm or ground_text(state, lines.ground, lines.held)
     events.add(winner, "battle_won", text, place, phases=phases, sides=sides_told, ground=where)
     events.add(loser, "battle_lost", text, place, phases=phases, sides=sides_told, ground=where)
+    glory = rules.victory_legitimacy_bp  # a victory is the talk of the court; a defeat, too
+    w_civ.stats.legitimacy_bp = clamp(w_civ.stats.legitimacy_bp + glory, 0, BP)
+    l_civ.stats.legitimacy_bp = clamp(l_civ.stats.legitimacy_bp - glory, 0, BP)
     rel = relation(state, winner, loser)
     if rel is not None:
         rel.weariness[loser] = rel.weariness.get(loser, 0) + rules.weariness_per_battle_bp
@@ -1113,8 +1123,8 @@ def _retreat(state: GameState, army: Army, events: EventLog) -> None:
 
     Only an army with nowhere to go - surrounded in enemy land - lays down its arms.
     """
-    if army.id not in state.armies:
-        return
+    if army.id not in state.armies or army.garrison:
+        return  # a beaten garrison has nowhere to go: its city falls (D-273)
     army.target = None
     army.siege_bp = 0
     army.dug_in = False
@@ -1137,7 +1147,7 @@ def _prune(state: GameState) -> None:
     for army_id in sorted(state.armies):
         army = state.armies[army_id]
         army.troops = {u: n for u, n in army.troops.items() if n > 0}
-        if army.men < floor:
+        if army.men < floor and not army.garrison:
             disband(state, army_id)
 
 
@@ -1155,37 +1165,6 @@ def siege_progress(state: GameState, army: Army) -> int:
         for u, men in army.troops.items()
     )
     return (base + engines) * (BP + trait_bp(state, army, "siege")) // BP
-
-
-def sieges(state: GameState, events: EventLog) -> None:
-    """Armies alone in enemy provinces besiege them; walls that fall change the map."""
-    for army_id in sorted(state.armies):
-        army = state.armies.get(army_id)
-        if army is None:
-            continue
-        owner = state.provinces[army.province].owner
-        if owner is None or owner == army.owner or not at_war_with(state, army.owner, owner):
-            army.siege_bp = 0
-            continue
-        if _enemies_here(state, army):
-            continue
-        place = state.world.geography[army.province].name
-        if army.stance == "pillage":
-            pillage(state, army, owner, events)
-            continue
-        if army.siege_bp == 0:
-            events.add(
-                owner, "siege", f"{state.civs[army.owner].adjective} armies besiege {place}.", place
-            )
-        army.siege_bp += siege_progress(state, army)
-        if army.siege_bp >= defence_bp(state, owner, army.province):
-            army.siege_bp = 0
-            capture(state, army.owner, army.province, events)
-            rel = relation(state, army.owner, owner)
-            if rel is not None:
-                rules = state.world.rules.rivals
-                rel.losses[owner] = rel.losses.get(owner, 0) + 1
-                rel.weariness[owner] = rel.weariness.get(owner, 0) + rules.weariness_per_loss_bp
 
 
 def pillage(state: GameState, army: Army, owner: str, events: EventLog) -> None:
@@ -1541,6 +1520,14 @@ def apply_orders(state: GameState, action: Orders) -> tuple[bool, str]:
         return True, f"The {army.name} will fight in a {chosen_f.name.lower()}."
     if isinstance(action, ArmyDeploy):
         return _deploy(state, army, action)
+    if isinstance(action, ArmyAssault):
+        army.assault = action.assault
+        said = {
+            "breach": "will storm the city once its walls are breached",
+            "now": "will storm the city at once, whatever the walls",
+            "starve": "will not storm, but starve the city into surrender",
+        }[action.assault]
+        return True, f"The {army.name} {said}."
     if isinstance(action, ArmyEngage):
         army.engage = action.engage
         said = {

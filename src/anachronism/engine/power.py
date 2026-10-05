@@ -89,6 +89,9 @@ def field_factor(state: GameState, armies: list[Army], province_id: str, attacki
     """The defenders' hold on the ground (hills, mountains, marsh) as a bp multiplier."""
     if attacking:
         return BP
+    walls = max((a.walls_bp for a in armies), default=0)  # a garrison behind its walls (D-273)
+    if walls:
+        return BP + walls
     owner = state.provinces[province_id].owner
     if owner is None or not armies or armies[0].owner != owner:
         return BP

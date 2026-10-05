@@ -271,6 +271,19 @@ class ArmyDeploy(Frozen):
     place: str = "auto"
 
 
+class ArmyAssault(Frozen):
+    """Order how an army takes the city it besieges (D-273).
+
+    ``breach``: storm once the walls are down; ``now``: storm at once, against standing
+    walls; ``starve``: never storm, wait for hunger to open the gates.
+    """
+
+    kind: Literal["assault"] = "assault"
+    civ: str
+    army: str
+    assault: Literal["breach", "now", "starve"] = "breach"
+
+
 class ArmyEngage(Frozen):
     """Set an army's rules of engagement (D-267).
 
@@ -380,6 +393,7 @@ Orders = (
     | ArmyPlan
     | ArmyFormation
     | ArmyDeploy
+    | ArmyAssault
     | ArmyEngage
     | DisbandArmy
     | Fortify
@@ -422,6 +436,7 @@ Action = Annotated[
     | ArmyPlan
     | ArmyFormation
     | ArmyDeploy
+    | ArmyAssault
     | ArmyEngage
     | DisbandArmy
     | Fortify

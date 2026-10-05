@@ -15,6 +15,8 @@
 class_name Settlements
 extends RefCounted
 
+const FolkHouses := preload("res://scripts/folk_houses.gd")
+
 const SHOW_WITHIN := 320.0          ## camera distance at which settlements appear
 const FAR_UNTIL := 1400.0           ## city icons stand in for them out to here
 ## The map is cut into tiles, each its own batch: Godot hides a batch by the camera's distance
@@ -150,6 +152,16 @@ func _init(province_map: ProvinceMap) -> void:
 			["k_timber", Buildings.house(1, 1, 2, true, "high", 3.15 * CELL)],
 			["k_longhouse", Buildings.house(2, 1, 1, true, "high", 2.15 * CELL)]]:
 		_parts[entry[0]] = {"mesh": entry[1], "transforms": [], "colours": [], "kit": true}
+	# houses in each civilisation's own style (D-275): roofs take the instance colour
+	var folk := ShaderMaterial.new()
+	folk.shader = load("res://shaders/folk.gdshader")
+	for kind in FolkHouses.VARIANTS:
+		for v in FolkHouses.VARIANTS[kind]:
+			_parts["f_%s_%d" % [kind, v]] = {"mesh": FolkHouses.house(kind, v, CELL * 1.75), "transforms": [],
+				"colours": [], "folk": true, "material": folk}
+	for kind in ["pagoda", "obelisk"]:
+		_parts["f_" + kind] = {"mesh": FolkHouses.house(kind, 0, CELL * 1.75), "transforms": [],
+			"colours": [], "folk": true, "material": folk}
 	# seen from far off, when the towns themselves are hidden, each chief city stands as one
 	# larger-than-life icon in its owner's colours, as cities do on Rise of Kingdoms' map
 	for entry in [["i_castle", Buildings.castle_icon(ICON * 1.5)], ["i_town", Buildings.town_icon(ICON)]]:
@@ -208,7 +220,10 @@ func recolour() -> void:
 			colour = base.lerp(map.civ_colours[owner], item[3])
 		elif item[0] in ["banner", "k_flag", "i_castle", "i_town"]:
 			colour = Color(0.85, 0.82, 0.75)  # a masterless city flies a plain flag
-		mm.set_instance_color(where[1], colour)
+		if entry.get("folk", false):
+			mm.set_instance_custom_data(where[1], colour)
+		else:
+			mm.set_instance_color(where[1], colour)
 
 ## A portrait style's building style: east, nile, near_east, classical, northern, steppe or
 ## south_asian.
@@ -283,33 +298,24 @@ func _house(pixel: Vector2, turn: float, size := 1.0, site := -1, mix := 0.0) ->
 			var big := size * 1.35  # tents read better a little larger than houses
 			_add("yurt", pixel, 0.0, turn, Vector3.ONE * big, felt)
 			_add("yurt_roof", pixel, 0.06 * S * big, turn, Vector3.ONE * big, felt.darkened(0.12), site, tint * 0.35)
-		"nile", "near_east":
-			# flat-roofed mud brick, a little taller; the roof terrace takes the owner's colour
-			var brick := Color(0.70, 0.55, 0.38) if style == "near_east" else Color(0.78, 0.63, 0.42)
-			brick = brick.darkened(rng.randf() * 0.12)
-			_add("house", pixel, 0.0, turn, Vector3(1.0, 1.25, 1.0) * size, brick)
-			_add("flat_roof", pixel, 0.11 * S * size, turn, Vector3.ONE * size, brick.lerp(Color(0.55, 0.40, 0.26), 0.4), site, tint * 0.3)
-		"south_asian":
-			# whitewash or fired brick under flat roofs, the roof terrace in the owner's colour
-			var walls := Color(0.94, 0.90, 0.80) if rng.randf() < 0.5 else Color(0.76, 0.46, 0.32)
-			walls = walls.darkened(rng.randf() * 0.1)
-			_add("house", pixel, 0.0, turn, Vector3(1.0, 1.15, 1.0) * size, walls)
-			_add("flat_roof", pixel, 0.105 * S * size, turn, Vector3.ONE * size, walls.darkened(0.2), site, tint * 0.5)
+		"nile", "near_east", "south_asian":
+			# mud brick, plaster or whitewash under flat roofs, parapets, domes and pavilions
+			var top: Color = {"nile": Color(0.58, 0.44, 0.28), "near_east": Color(0.56, 0.44, 0.32),
+				"south_asian": Color(0.62, 0.46, 0.34)}[style]
+			_add("f_%s_%d" % [style, rng.randi() % 3], pixel, 0.0, turn, Vector3.ONE * size, top.darkened(rng.randf() * 0.1), site, tint * 0.35)
 		"classical":
 			# limewashed houses under terracotta, a few of two storeys
 			var tile := Color(0.90, 0.56, 0.38).lerp(Color(0.80, 0.44, 0.32), rng.randf())
-			var part := "k_cottage" if rng.randf() < 0.35 else ("k_hall" if rng.randf() < 0.25 else "k_house")
-			_add(part, pixel, 0.0, turn, Vector3.ONE * size, tile, site, tint * 0.35)
+			_add("f_classical_%d" % (rng.randi() % 3), pixel, 0.0, turn, Vector3.ONE * size, tile, site, tint * 0.35)
 		"northern":
 			# timber-framed houses under steep thatch or slate
 			var thatch := Color(0.70, 0.56, 0.34).lerp(Color(0.38, 0.38, 0.42), rng.randf() * 0.6)
 			var part := "k_timber" if rng.randf() < 0.4 else "k_longhouse"
 			_add(part, pixel, 0.0, turn, Vector3.ONE * size, thatch, site, tint)
 		_:
-			# plastered houses under dark tiled roofs
-			var roof := Color(0.50, 0.53, 0.58).lerp(Color(0.56, 0.44, 0.36), rng.randf() * 0.5)
-			var part := "k_house" if rng.randf() < 0.6 else ("k_hall" if rng.randf() < 0.3 else "k_cottage")
-			_add(part, pixel, 0.0, turn, Vector3.ONE * size, roof, site, tint)
+			# plaster and timber under dark tiled roofs with curling eaves
+			var roof := Color(0.42, 0.45, 0.50).lerp(Color(0.52, 0.40, 0.34), rng.randf() * 0.5)
+			_add("f_east_%d" % (rng.randi() % 3), pixel, 0.0, turn, Vector3.ONE * size, roof, site, tint * 0.6)
 
 
 ## A town or village: houses around a centre, with fields around it.
@@ -361,6 +367,8 @@ func _city(site: Dictionary, population: int, index: int) -> void:
 		for k in 6 + (tier - 3) * 4:
 			var angle := TAU * k / (6.0 + (tier - 3) * 4) + 0.3
 			_cluster(centre + Vector2(cos(angle), sin(angle)) * ring, 4 + tier, half * 0.32, false, index, 0.4)
+	if style == "east" and (site["capital"] or tier >= 2):   # a pagoda over the roofs (D-275)
+		_add("f_pagoda", centre + Vector2(0.5, -0.5) * CELL * 1.55 * 2.0, 0.0, 0.0, Vector3.ONE * 1.3, Color(0.36, 0.38, 0.42), index, 0.3)
 	if site["capital"]:
 		_palace(centre, index)
 		for k in 3:
@@ -508,6 +516,8 @@ func _palace(centre: Vector2, index: int) -> void:
 			for k in 4:  # painted columns along the temple front
 				_add("column", centre + Vector2((k - 1.5) * 0.12 * S, 0.2 * S), 0.08 * S, 0.0, Vector3.ONE, Color(0.30, 0.45, 0.62))
 			_add("pyramid", centre + Vector2(-2.2, 1.6) * S, 0.0, PI / 4.0, Vector3.ONE, Color(0.84, 0.70, 0.46))
+			for side in [-1.0, 1.0]:   # obelisks flank the temple gate (D-275)
+				_add("f_obelisk", centre + Vector2(side * 0.32, 0.42) * S, 0.0, 0.0, Vector3.ONE * 0.8, Color(0.9, 0.75, 0.35))
 		"near_east":
 			# a stepped temple tower over the palace
 			for k in 3:
@@ -559,13 +569,18 @@ func _palace(centre: Vector2, index: int) -> void:
 func _multimesh(entry: Dictionary, indices: Array) -> MultiMeshInstance3D:
 	var mm := MultiMesh.new()
 	mm.transform_format = MultiMesh.TRANSFORM_3D
-	mm.use_colors = true
+	var folk: bool = entry.get("folk", false)
+	mm.use_colors = not folk   # folk houses keep their wall colours: the roof colour goes as custom data
+	mm.use_custom_data = folk
 	mm.mesh = entry["mesh"]
 	mm.instance_count = indices.size()
 	for local in indices.size():
 		var i: int = indices[local]
 		mm.set_instance_transform(local, entry["transforms"][i])
-		mm.set_instance_color(local, entry["colours"][i])
+		if folk:
+			mm.set_instance_custom_data(local, entry["colours"][i])
+		else:
+			mm.set_instance_color(local, entry["colours"][i])
 		entry["where"][i] = [mm, local]
 	var instance := MultiMeshInstance3D.new()
 	instance.multimesh = mm

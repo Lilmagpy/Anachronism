@@ -2229,3 +2229,84 @@ matters. Engine only: the client screens for it come in a later step.
   enemy's flank, and one line per wing saying what happened.
 - The sketch script is loaded with `preload` rather than a global class name, because the
   class-name cache is not committed and a fresh checkout would fail to parse.
+
+## D-273 Taking a province is a real undertaking: garrisons, storms, starving out, spoils — DELEGATED (2026-10-05)
+- **What the owner asked.** Battles should feel a big deal; taking a territory should need
+  planning and good execution, not be easy, and feel rewarding when it works.
+- **Before.** An army alone in an enemy province simply wore the walls down (two turns for an
+  ordinary province) and the province changed hands. Nothing defended the city itself.
+- **Garrisons.** Every owned province keeps a garrison: 0.75% of its people under arms (rules
+  `garrison_share_bp`), 400 more men for each level of built walls, twice as many in a capital.
+  A garrison bled by a failed storm or by hunger rebuilds 20% a turn once the siege lifts; a
+  newly taken city's garrison starts at a quarter (hold it against a counter-attack).
+- **Taking the city: three ways (the new "assault" order).** *Storm at the breach* (the
+  default): batter the walls, then storm once they are down. *Storm now*: go over the walls at
+  once, against walls still standing (up to +250% for the defenders). *Starve them out*: never
+  storm; the garrison loses 35% a turn to hunger and desertion and the city opens its gates
+  after about three turns. Meanwhile besiegers lose 2% of their men a turn to sickness (halved
+  by a quartermaster general), and enemy field armies can still come to relieve the city.
+- **A storm is a real battle.** The garrison is drawn up as an army of the owner's soldiers
+  and fought with the same three phases, plans, formations, wings and reports as a field
+  battle (titled "The storming of ..."), fighting from walls and streets with +80% power, more
+  for built walls and for walls not yet breached. Lose, and the attackers fall back and the
+  siege starts again; a cautious general will not throw his men at walls he expects to hold.
+- **The reward.** A city taken pays spoils from the loser's treasury (6 wealth per 1,000
+  people; doubled by a sack, which also kills or carries off 5% of its people), prestige at
+  court (+3% legitimacy, +9% for a capital), +4% veterancy and +15% morale for the army. Any
+  field victory now also brings +1% legitimacy (and the loser loses as much).
+- **Measured on real maps** (main starting army against a fresh city, storm now / at breach):
+  Rome 31k vs Carthaginian provinces 70-91% / 86-96%, vs Carthage itself 27% / 49%; Qin 18k vs
+  Wei provinces 11-60% / 31-86%, vs the Wei capital 8% / 24%; Egypt 30k vs Hattusa 29% / 60%.
+  Ordinary provinces fall to a proper siege; capitals need a larger army, siege engines, a
+  second army or starvation. The full test suite (503 tests, including the multi-seed
+  simulations) passes unchanged.
+- **On screen.** The province card shows the garrison; an army before an enemy city shows a
+  siege panel (garrison, walls standing, turns to the breach or to starvation, today's storm
+  odds) with the three orders; its battle sketch draws the city wall with its breaches. Before
+  the turn ends, a **Council of War** lists every storm and battle coming this turn with its
+  sketch, odds, ground and the plan, formation, rules of engagement and assault pickers ("Not
+  yet" / "To battle!"; once a turn). A city taken opens a **triumph card** (rays of light in
+  your colours, falling gold) listing the spoils.
+- Old saves load: new fields default (full garrisons, "breach").
+
+## D-274 Battles and conquests played out on the map; livelier buttons — DELEGATED (2026-10-05)
+- **Your battles in full.** When the turn plays out, each battle your armies fight is staged
+  where it happens: two blocks of soldiers in their states' colours rise up with standards at
+  their head; arrows arc between them ("The skirmish"); the lines charge and crash together
+  with dust, sparks and a camera shake ("The clash"); they heave back and forth; then the
+  beaten side breaks, some falling, the rest running, its standard toppling, while the
+  victors' standard rises and the line advances ("The rout"). At a storm the defenders stand
+  on a wall and stones fly in from the siege lines.
+- **A city taken.** Fireworks in gold and your colours burst over it under a shaft of light;
+  the caption says how it fell ("Hexi is stormed!", "... opens its gates!").
+- **Buttons** swell slightly under the mouse and give when pressed (every button, by one hook).
+
+## D-275 Houses in each civilisation's own style — DELEGATED (2026-10-05)
+- **What the owner asked.** Buildings more intricate and customised to the civilisations.
+- **What changed.** Instead of the same fantasy-kit cottages everywhere, houses are now built
+  in code from simple solids with their details modelled, three kinds per region: East Asia:
+  white plaster between dark timber posts, lattice windows, hipped tile roofs with curling
+  eaves and ridge ends, two-storey houses with a skirt roof, long townhouses with slatted shop
+  fronts; and a five-tier pagoda in capitals and great cities. The Nile: mud brick with
+  parapets, rooftop palm-thatch shelters, outside stairs, walled yards with palms; obelisks at
+  the temple gate. The Near East: whitewashed cubes with blue doors, domed houses, wind towers.
+  India: whitewash and brick with crenellated parapets and ochre bands, red door frames,
+  rooftop pavilions (chhatris) and domed balconies. The Mediterranean: atrium houses with
+  columned porches under terracotta, three-storey tenements with shops and a wooden balcony,
+  small houses with vine pergolas. Northern towns keep their timber houses, the steppe its
+  tents.
+- Roofs (and flat roof terraces) still take a little of the owner's colour, so a conquered
+  city's roofs change with it. One new shader, which fades itself out with distance like the
+  others (the built-in fade hides custom shaders, D-123).
+
+## D-276 Menus checked on different screens — DELEGATED (2026-10-05)
+- **Checked.** The game screen, province card, council of war, Cities, Settings, Chronicle and
+  tech tree at 1024x768 (4:3), 1280x720, 1440x900 (16:10), 1600x900 and 2560x1080 (ultrawide).
+- **Fixed.** The Cities screen ran off the right edge below 1380 px wide: it now fits the
+  window, with a narrower city list and one column of building choices on narrow screens.
+  Menus (Settings and the rest) ran off the bottom of short screens: they now scroll inside
+  the window. The question card (dilemmas, envoys) narrows to fit between the side panels.
+- **Interface size.** On small windows the whole interface shrank with the window and text
+  got tiny; "Auto" now keeps it at least 90% of its designed size. Settings has a new
+  **Interface size** choice (Auto, Larger, Largest) for a big or high-resolution screen; it
+  never enlarges so far that panels would collide.

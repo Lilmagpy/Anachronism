@@ -130,6 +130,21 @@ func open_settings() -> void:
 		close()
 		get_parent().add_child(Tutorial.new()))
 	body.add_child(tour)
+	body.add_child(UiStyle.label("The screen", 20, UiStyle.RED, "title", 800))
+	var sizes := HBoxContainer.new()
+	sizes.add_theme_constant_override("separation", 8)
+	var caption := UiStyle.label("Interface size", 16, UiStyle.INK)
+	sizes.add_child(caption)
+	var scale_script := preload("res://scripts/ui_scale.gd")
+	for picked in scale_script.CHOICES:
+		var b := UiStyle.big_button(str(scale_script.NAMES[picked]), 15, UiStyle.GOLD if scale_script.choice() == picked else Color(0.85, 0.8, 0.7))
+		b.tooltip_text = "Auto keeps text readable on small windows; Larger and Largest make the whole interface bigger."
+		b.pressed.connect(func():
+			scale_script.set_choice(picked, get_tree().root)
+			close()
+			open_settings())
+		sizes.add_child(b)
+	body.add_child(sizes)
 	body.add_child(UiStyle.label("The map", 20, UiStyle.RED, "title", 800))
 	var replay := CheckBox.new()
 	replay.text = "Play each turn out on the map (marches, battles, conquests)"
@@ -267,14 +282,21 @@ func _open(title: String, content: Control, width: Vector2, scrolls := false) ->
 	shut.pressed.connect(close)
 	head.add_child(shut)
 	column.add_child(head)
+	var room := get_viewport().get_visible_rect().size
+	panel.custom_minimum_size.x = minf(width.x, room.x - 40.0)
+	var scroll := ScrollContainer.new()   # anything taller than the screen scrolls (D-276)
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.add_child(content)
+	content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	column.add_child(scroll)
+	var tallest := room.y - 170.0
 	if scrolls:
-		var scroll := ScrollContainer.new()
-		scroll.custom_minimum_size = Vector2(width.x - 40, 560)
-		scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-		scroll.add_child(content)
-		column.add_child(scroll)
+		scroll.custom_minimum_size = Vector2(panel.custom_minimum_size.x - 40, minf(560.0, tallest))
 	else:
-		column.add_child(content)
+		var fit := func() -> void:
+			if is_instance_valid(scroll) and is_instance_valid(content):
+				scroll.custom_minimum_size = Vector2(0, minf(content.get_combined_minimum_size().y, tallest))
+		fit.call_deferred()
 	panel.add_child(column)
 	shade.add_child(panel)
 	_root.add_child(shade)

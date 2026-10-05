@@ -12,6 +12,8 @@
 ## `--civ=ID` starts straight away as that civilisation.
 extends Node3D
 
+const UiScale := preload("res://scripts/ui_scale.gd")
+
 var bridge := EngineBridge.new()
 var rig := CameraRig.new()
 var world: WorldBuilder
@@ -41,8 +43,12 @@ func _ready() -> void:
 	# every hover text in the game is wrapped into a readable card (see UiStyle.wrap_tip)
 	get_tree().node_added.connect(func(node: Node):
 		if node is Control:
-			_wrap_tip.call_deferred(node))
+			_wrap_tip.call_deferred(node)
+		if node is Button and not node is OptionButton:
+			_lively(node as Button))
 	ProjectSettings.set_setting("gui/timers/tooltip_delay_sec", 0.25)
+	UiScale.apply(get_tree().root)   # readable on small windows (D-276)
+	get_tree().root.size_changed.connect(func() -> void: UiScale.apply(get_tree().root))
 	for arg in OS.get_cmdline_user_args():
 		var parts := arg.trim_prefix("--").split("=", true, 1)
 		options[parts[0]] = parts[1] if parts.size() > 1 else "true"
@@ -304,7 +310,7 @@ func _build_hud() -> void:
 				best = army
 		if not best.is_empty():
 			_on_action({"kind": "march", "army": str(best["id"]), "target": str(options["march"])})
-	for order in ["formation", "plan"]:  # --formation=id / --plan=id for the largest army (screenshots)
+	for order in ["formation", "plan", "assault"]:  # --formation=id / --plan=id for the largest army (screenshots)
 		if options.has(order):
 			var biggest: Dictionary = {}
 			for army in view.get("armies", []):
@@ -344,6 +350,14 @@ func _build_hud() -> void:
 		print("battles: ", fought.size())
 		if not fought.is_empty():
 			hud.call("_show_battles", fought)
+	if options.has("council"):  # --council: the council of war before the coming battles (screenshots)
+		hud.show_council()
+	if options.has("conquest"):  # --conquest: the triumph card for the last city taken (screenshots)
+		var taken: Array = view.get("events", []).filter(func(e): return str(e["kind"]) == "spoils" and e.get("civ") == view["player"])
+		if taken.is_empty():
+			taken = [{"kind": "spoils", "spoils": {"wealth": 1840, "sacked": 12000, "stormed": true, "capital": false,
+				"prestige_bp": 300, "veterancy_bp": 400, "army": "Eastern Army", "province": str(options["conquest"])}}]
+		hud.show_conquests(taken)
 	if options.has("outcome"):  # --outcome=victory|defeat: preview the end screen (screenshots)
 		var won := str(options["outcome"]) != "defeat"
 		hud.call("_show_outcome", {"result": "victory" if won else "defeat",
@@ -486,6 +500,7 @@ func _on_end_turn() -> void:
 	hud.speak(view.get("voices", []), true)
 	if reply != null and not _quick_turns:
 		hud.show_breakthroughs(view.get("replay", {}).get("breakthroughs", []))
+		hud.show_conquests(view.get("events", []).filter(func(e): return str(e["kind"]) == "spoils" and e.get("civ") == view["player"]))
 
 
 ## The map as the turn left it: colours, cities, armies, ties and landmarks.
@@ -612,7 +627,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			return
 		# shortcuts (typing in the idea box never reaches here: the box takes its keys)
 		if event.keycode in [KEY_ENTER, KEY_KP_ENTER] and not hud.deliberating and hud.can_end_turn():
-			_on_end_turn()
+			hud.request_end_turn()   # a council of war first, if battles are coming (D-273)
 			return
 		if event.keycode == KEY_N:  # the notebook from the future (D-126)
 			hud.open_notebook()
@@ -713,10 +728,11 @@ func _demo_replay(target: String) -> void:
 	var name := provinces.province_name(target)
 	var replay := {
 		"marches": [{"id": best["id"], "owner": view["player"], "from": best["province"], "road": [target], "mine": true}],
-		"battles": [{"at": target, "name": "Battle of " + name, "winner": view["player"], "loser": owner, "mine": true, "won": true}],
+		"battles": [{"at": target, "name": "Battle of " + name, "winner": view["player"], "loser": owner, "mine": true, "won": true,
+			"storm": options.has("replay-storm")}],
 		"skirmishes": [], "lost": [], "raised": [],
 		"sieges": [{"at": target, "by": view["player"], "held_by": owner, "progress": 45, "mine": true}],
-		"taken": [{"at": target, "from": owner, "to": view["player"], "mine": true}],
+		"taken": [{"at": target, "from": owner, "to": view["player"], "mine": true, "how": "stormed" if options.has("replay-storm") else ""}],
 	}
 	hud.set_replaying(true, int(view["year"]), int(view["year"]) + 10)
 	provinces.hushed = true
@@ -777,6 +793,27 @@ func _exit_tree() -> void:
 	bridge.stop()
 	UiStyle.release()
 	Lod.release()
+
+
+## Buttons swell a little under the mouse and give when pressed (D-274), from their middle.
+func _lively(button: Button) -> void:
+	if button.has_meta("lively"):
+		return
+	button.set_meta("lively", true)
+	var centre := func() -> void: button.pivot_offset = button.size / 2.0
+	button.resized.connect(centre)
+	var to := func(scale: float, seconds: float) -> void:
+		if not is_instance_valid(button) or not button.is_inside_tree():
+			return
+		centre.call()
+		var tween := button.create_tween()
+		tween.tween_property(button, "scale", Vector2.ONE * scale, seconds).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	button.mouse_entered.connect(func() -> void:
+		if not button.disabled:
+			to.call(1.04, 0.15))
+	button.mouse_exited.connect(func() -> void: to.call(1.0, 0.15))
+	button.button_down.connect(func() -> void: to.call(0.95, 0.08))
+	button.button_up.connect(func() -> void: to.call(1.04 if button.is_hovered() else 1.0, 0.18))
 
 
 func _wrap_tip(node: Node) -> void:
