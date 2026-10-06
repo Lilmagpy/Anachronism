@@ -2310,3 +2310,26 @@ matters. Engine only: the client screens for it come in a later step.
   got tiny; "Auto" now keeps it at least 90% of its designed size. Settings has a new
   **Interface size** choice (Auto, Larger, Largest) for a big or high-resolution screen; it
   never enlarges so far that panels would collide.
+
+## D-277 Coming to the aid of a state under attack — DELEGATED (2026-10-06)
+- **What the owner asked.** "March to help other people getting attacked, to build alliances."
+- **The order.** In the World tab, any state at war shows "Under attack by ..." and a button
+  "Come to their aid against X". You go to war with the attacker (an ally of the attacker
+  is betrayed, as with any declaration of war). When a neighbour of yours is attacked, the
+  news says so and points to the button.
+- **Your armies may go there.** While you fight for a friend, your armies may march through
+  its land (normally only allies' land is open) and they defend its provinces as its allies
+  would: an enemy army that comes there fights you as the defender.
+- **Gratitude** (shown as a bar on the friend's card) is earned by joining (15%), each victory
+  over the attacker (15%, double on the friend's soil), each of its cities you take back
+  (40%), and each turn an army of yours stands on its soil (3%). It eases the friend's grudges
+  against you; at 25% it warms to neutral, at 50% it opens trade, and at 100% its envoys come
+  offering an alliance (or "Propose alliance" succeeds at once from 50%).
+- **Liberation, not conquest.** A city of the friend's people that the attacker had taken,
+  stormed or starved by you, goes back to the friend instead of to you: no spoils, but
+  prestige, veterancy and a large debt of gratitude. The triumph card says "... IS FREE!".
+- **Betrayal.** Making a separate peace with the attacker while the friend still fights
+  gives the friend a lasting grudge (30%). The pledge ends with the friend's war; the warmer
+  relation and eased grudges remain.
+- Rival courts do not (yet) come to others' aid this way; allies still join automatically.
+  Old saves load (no pledges).

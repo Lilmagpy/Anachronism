@@ -17,6 +17,7 @@ from anachronism.engine.actions import (
     CancelProject,
     ChooseChapter,
     ChooseDilemma,
+    ComeToAid,
     DeclareWar,
     DemandTribute,
     DisbandArmy,
@@ -152,7 +153,13 @@ def _apply(state: GameState, action: Action) -> tuple[bool, str]:
         return apply_ruling(state, civ.id, action.ruling)
     if isinstance(
         action,
-        DeclareWar | MakePeace | SendEnvoy | ProposeAlliance | SendMissionaries | DemandTribute,
+        DeclareWar
+        | MakePeace
+        | SendEnvoy
+        | ProposeAlliance
+        | ComeToAid
+        | SendMissionaries
+        | DemandTribute,
     ):
         return apply_diplomacy(state, action)
     node = state.tech_nodes.get(action.node_id)

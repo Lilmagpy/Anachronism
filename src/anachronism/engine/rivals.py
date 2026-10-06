@@ -207,6 +207,21 @@ def declare_war(
         attacker, "war", f"War: the {a.adjective} court marches against {d.name}.{why}", d.name
     )
     events.add(defender, "war", f"The {a.adjective} court has declared war on {d.name}.", a.name)
+    me = state.player_civ
+    if me not in (attacker, defender):  # a neighbour in need: the player may come to its aid
+        rel_me = relation(state, me, defender)
+        if (
+            rel_me is not None
+            and rel_me.status not in (RelationStatus.WAR, RelationStatus.ALLIED)
+            and (hops(state, me, defender) or 0) <= 1
+        ):
+            events.add(
+                me,
+                "aid_call",
+                f"The {a.adjective} court has attacked {d.name}. Come to its aid (World tab)"
+                " and win a friend.",
+                d.name,
+            )
     for pair, rel in sorted(state.relations.items()):
         protects = rel.status in (RelationStatus.ALLIED, RelationStatus.TRIBUTARY)
         if not protects or defender not in pair.split("|"):

@@ -34,6 +34,7 @@ from anachronism.engine.actions import (
     SailFleet,
     ScuttleFleet,
 )
+from anachronism.engine.aid import aiding, on_battle
 from anachronism.engine.buildings import bonus as building_bonus
 from anachronism.engine.buildings import ruin_newest
 from anachronism.engine.deployment import CHOICES as DEPLOY_CHOICES
@@ -314,7 +315,7 @@ def can_enter(state: GameState, civ_id: str, province_id: str) -> bool:
     if owner is None or owner == civ_id:
         return True
     found = status(state, civ_id, owner)
-    return found in (RelationStatus.WAR, RelationStatus.ALLIED)
+    return found in (RelationStatus.WAR, RelationStatus.ALLIED) or aiding(state, civ_id, owner)
 
 
 def route(state: GameState, civ_id: str, start: str, goal: str) -> list[str]:
@@ -439,7 +440,11 @@ def _sides(state: GameState, province_id: str) -> tuple[list[Army], list[Army]] 
                 first, second = a.owner, b.owner
                 # the province's owner (or its ally) defends; otherwise whoever came first
                 if owner == first or (
-                    owner and status(state, owner, first) is RelationStatus.ALLIED
+                    owner
+                    and (
+                        status(state, owner, first) is RelationStatus.ALLIED
+                        or aiding(state, first, owner)
+                    )
                 ):
                     first, second = second, first
                 attackers = [
@@ -459,7 +464,7 @@ def _sides(state: GameState, province_id: str) -> tuple[list[Army], list[Army]] 
 def _allied_against(state: GameState, civ: str, friend: str, foe: str) -> bool:
     return (
         civ not in (friend, foe)
-        and status(state, civ, friend) is RelationStatus.ALLIED
+        and (status(state, civ, friend) is RelationStatus.ALLIED or aiding(state, civ, friend))
         and at_war_with(state, civ, foe)
     )
 
@@ -949,6 +954,7 @@ def battle(
     where = storm or ground_text(state, lines.ground, lines.held)
     events.add(winner, "battle_won", text, place, phases=phases, sides=sides_told, ground=where)
     events.add(loser, "battle_lost", text, place, phases=phases, sides=sides_told, ground=where)
+    on_battle(state, province_id, winner, loser, events)  # a friend's gratitude (D-277)
     glory = rules.victory_legitimacy_bp  # a victory is the talk of the court; a defeat, too
     w_civ.stats.legitimacy_bp = clamp(w_civ.stats.legitimacy_bp + glory, 0, BP)
     l_civ.stats.legitimacy_bp = clamp(l_civ.stats.legitimacy_bp - glory, 0, BP)

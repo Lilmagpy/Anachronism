@@ -23,6 +23,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from anachronism.engine.aid import grateful, liberator
 from anachronism.engine.armies import (
     _casualties,
     _enemies_here,
@@ -38,7 +39,7 @@ from anachronism.engine.fixed import BP, apply_bp, clamp
 from anachronism.engine.power import trait_bp
 from anachronism.engine.rivals import relation
 from anachronism.engine.rng import GameRng
-from anachronism.engine.state import Army, GameState
+from anachronism.engine.state import Army, GameState, Pledge
 from anachronism.engine.tactics import commander
 from anachronism.engine.war import capture, defence_bp
 
@@ -239,6 +240,10 @@ def _surrender(state: GameState, army: Army, owner: str, events: EventLog) -> No
 
 def _take(state: GameState, army: Army, owner: str, events: EventLog, stormed: bool) -> None:
     """The city falls: it changes hands, and the conquerors take their spoils."""
+    friend = liberator(state, army.owner, army.province)
+    if friend is not None:
+        _liberate(state, army, owner, friend, events, stormed)
+        return
     rules = state.world.rules.armies
     province_id = army.province
     province = state.provinces[province_id]
@@ -293,5 +298,56 @@ def _take(state: GameState, army: Army, owner: str, events: EventLog, stormed: b
             "veterancy_bp": rules.conquest_veterancy_bp,
             "army": army.name,
             "province": province_id,
+        },
+    )
+
+
+def _liberate(
+    state: GameState, army: Army, owner: str, pledge: Pledge, events: EventLog, stormed: bool
+) -> None:
+    """A friend's city taken back from its attacker goes home to the friend (D-277)."""
+    rules = state.world.rules.armies
+    province_id = army.province
+    province = state.provinces[province_id]
+    friend = state.civs[pledge.friend]
+    capture(state, pledge.friend, province_id, events)
+    province.garrison_bp = rules.conquered_garrison_bp
+    for camp in _attackers(state, army):
+        camp.siege_bp = 0
+        camp.veterancy_bp = min(
+            rules.max_veterancy_bp, camp.veterancy_bp + rules.conquest_veterancy_bp
+        )
+        camp.morale_bp = min(BP, camp.morale_bp + rules.conquest_morale_bp)
+    taker = state.civs[army.owner]
+    glory = rules.conquest_legitimacy_bp
+    taker.stats.legitimacy_bp = clamp(taker.stats.legitimacy_bp + glory, 0, BP)
+    rel = relation(state, army.owner, owner)
+    if rel is not None:
+        rival_rules = state.world.rules.rivals
+        rel.losses[owner] = rel.losses.get(owner, 0) + 1
+        rel.weariness[owner] = rel.weariness.get(owner, 0) + rival_rules.weariness_per_loss_bp
+    grateful(state, pledge, state.world.rules.rivals.aid_liberation_bp, events)
+    place = state.world.geography[province_id].name
+    how = "stormed" if stormed else "starved into surrender"
+    text = (
+        f"{place} is {how} and handed back to {friend.name}: a liberation, not a conquest."
+        f" {friend.name} will remember it, and the {army.name} grows in renown."
+    )
+    events.add(
+        army.owner,
+        "spoils",
+        text,
+        place,
+        spoils={
+            "wealth": 0,
+            "sacked": 0,
+            "stormed": stormed,
+            "capital": False,
+            "prestige_bp": glory,
+            "veterancy_bp": rules.conquest_veterancy_bp,
+            "army": army.name,
+            "province": province_id,
+            "liberated": friend.name,
+            "gratitude_bp": pledge.gratitude_bp,
         },
     )

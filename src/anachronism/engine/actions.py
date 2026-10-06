@@ -122,6 +122,19 @@ class SendEnvoy(Frozen):
     target: str
 
 
+class ComeToAid(Frozen):
+    """Join a state's defensive war against its attacker (D-277).
+
+    You go to war with ``against``; your armies may march through ``target``'s land and fight
+    beside it, and what you do for it earns its gratitude - and in the end its alliance.
+    """
+
+    kind: Literal["aid"] = "aid"
+    civ: str
+    target: str
+    against: str
+
+
 class ProposeAlliance(Frozen):
     """Ask for an alliance: allies join each other's defensive wars."""
 
@@ -406,7 +419,15 @@ Orders = (
 Decree = HoldFestival | HireMercenaries | Explain | SealBorders | SpreadRumours | SendSpies
 
 
-Diplomacy = DeclareWar | MakePeace | SendEnvoy | ProposeAlliance | SendMissionaries | DemandTribute
+Diplomacy = (
+    DeclareWar
+    | MakePeace
+    | SendEnvoy
+    | ProposeAlliance
+    | ComeToAid
+    | SendMissionaries
+    | DemandTribute
+)
 
 
 Action = Annotated[
@@ -422,6 +443,7 @@ Action = Annotated[
     | MakePeace
     | SendEnvoy
     | ProposeAlliance
+    | ComeToAid
     | SendMissionaries
     | DemandTribute
     | HoldFestival

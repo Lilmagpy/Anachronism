@@ -365,6 +365,21 @@ class Offer(Mutable):
     turn: int = 0
 
 
+class Pledge(Mutable):
+    """A state that came to another's aid in its war (D-277), and the gratitude it earned."""
+
+    by: str
+    friend: str
+    against: str
+    since_turn: int = 0
+    gratitude_bp: int = 0
+    """10_000 = an alliance offered; half of it opens trade."""
+    warmed: int = 0
+    """How many steps the friend's relation has already warmed for this pledge."""
+    offered: bool = False
+    """The friend has offered its alliance."""
+
+
 class Intel(Mutable):
     """The latest intelligence about a court (D-115): may be wrong."""
 
@@ -497,6 +512,8 @@ class GameState(Mutable):
     """Every fleet at sea, keyed by id."""
     relations: dict[str, Relation] = Field(default_factory=dict)
     """Keyed ``"a|b"`` with the ids sorted; only pairs that can reach each other."""
+    pledges: dict[str, Pledge] = Field(default_factory=dict)
+    """Keyed ``"by|friend|against"``: who came to whose aid against whom (D-277)."""
     news: list[NewsInTransit] = Field(default_factory=list)
     scripts_fired: dict[str, int] = Field(default_factory=dict)
     """Script id -> turn it fired."""

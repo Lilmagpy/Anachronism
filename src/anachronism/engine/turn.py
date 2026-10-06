@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from anachronism.content.schema import EffectType
+from anachronism.engine.aid import aid_turn
 from anachronism.engine.armies import command, march, upkeep
 from anachronism.engine.buildings import advance_works, rival_builders, weighted
 from anachronism.engine.campaign import advance, almanac
@@ -85,6 +86,7 @@ def end_turn(state: GameState) -> tuple[GameState, list[Event]]:
         new.civs[civ_id].sealed = max(0, new.civs[civ_id].sealed - 1)
     ask(new, rng, events)
     envoys(new, rng, events)
+    aid_turn(new, events)  # after the envoys: a grateful friend's offer waits for the player
     gather(new, rng, events)  # what the player's envoys, merchants and spies report (D-115)
     rival_spies(new, rng, events)  # courts try to steal the player's ideas from the future (D-125)
     trade(new)

@@ -331,8 +331,16 @@ func _build_hud() -> void:
 		for order in str(options["queue"]).split(","):
 			var bits := order.split(":")
 			_on_action({"kind": "build", "province": bits[0], "building": bits[1]})
+	if options.has("aid"):  # --aid=friend:attacker: come to a friend's aid (screenshots)
+		var bits := str(options["aid"]).split(":")
+		_on_action({"kind": "aid", "target": bits[0], "against": bits[1]})
 	if options.has("tab"):
 		hud.set_tab(str(options["tab"]))
+	if options.has("side-scroll"):  # --side-scroll=px: scroll the side panel (screenshots)
+		var body: Control = hud.get("_side_body")
+		var scroller := body.get_parent().get_parent() as ScrollContainer
+		if scroller != null:
+			scroller.set_deferred("scroll_vertical", int(options["side-scroll"]))
 	if options.has("open"):  # --open=build|levy|fleet: unfold part of the province card
 		hud.open_box = str(options["open"])
 	if options.has("select"):

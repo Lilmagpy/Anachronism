@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from anachronism.content.schema import RelationStatus
 from anachronism.engine.actions import (
+    ComeToAid,
     DeclareWar,
     DemandTribute,
     Diplomacy,
@@ -16,6 +17,7 @@ from anachronism.engine.actions import (
     SendEnvoy,
     SendMissionaries,
 )
+from anachronism.engine.aid import come_to_aid, gratitude
 from anachronism.engine.culture import convert
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import BP, apply_bp
@@ -132,9 +134,15 @@ def _apply(
             set_status(state, me, target, _WARMER[current])
             return True, f"Your envoy returns: {them} is now {_WARMER[current].value}."
         return True, f"Your envoy is received coolly by {them}, but old wounds soften."
+    if isinstance(action, ComeToAid):
+        return come_to_aid(state, me, target, action.against, events)
     if isinstance(action, ProposeAlliance):
         if current not in (RelationStatus.TRADING, RelationStatus.NEUTRAL):
             return False, f"{them} will not ally with you now"
+        if gratitude(state, me, target) >= rules.aid_warm_bp:  # you fought for them (D-277)
+            set_status(state, me, target, RelationStatus.ALLIED)
+            events.add(me, "alliance", f"An alliance with {them}.", them)
+            return True, f"{them}, grateful for your help in its war, agrees to an alliance."
         if grievance(state, target, me) >= 1000:
             return False, f"{them} does not trust you enough"
         # a common enemy, or friendship already, makes an alliance appealing

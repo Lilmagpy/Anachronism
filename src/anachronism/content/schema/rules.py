@@ -306,6 +306,20 @@ class RivalRules(Frozen):
     """Wealth false rumours cost per 1,000 people: news on the road arrives garbled."""
     envoy_wealth: NonNegative
     """Wealth an envoy costs."""
+    aid_join_bp: NonNegative = 1500
+    """Coming to the aid of a state at war (D-277): the gratitude it earns at once ..."""
+    aid_battle_bp: NonNegative = 1500
+    """... for each battle won against its attacker (twice as much on its own soil) ..."""
+    aid_liberation_bp: NonNegative = 4000
+    """... for each of its cities taken back from the attacker and handed back to it ..."""
+    aid_presence_bp: NonNegative = 300
+    """... and for each turn an army stands on its soil while the war goes on."""
+    aid_warm_bp: NonNegative = 5000
+    """Gratitude at which its relation warms a step (to trading) ..."""
+    aid_alliance_bp: NonNegative = 10_000
+    """... and at which it offers its alliance."""
+    aid_abandon_bp: NonNegative = 3000
+    """Grievance it holds against a helper who makes a separate peace with the attacker."""
     tribute_strength_ratio_bp: Positive = 25000
     """A court submits as a tributary to a state this much stronger (25_000 = 2.5 times),
     or when beaten in a war."""

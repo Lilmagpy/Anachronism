@@ -1240,8 +1240,59 @@ func _rival_card(civ: Dictionary, me: Dictionary) -> Control:
 	if int(civ.get("spies", 0)) > 0:
 		body.add_child(_label("Our spies are there (%d more turns)" % int(civ["spies"]), 12, DIM))
 	if relation != null:
+		body.add_child(_aid_box(civ))
 		body.add_child(_diplomacy_buttons(civ))
 	box.add_child(body)
+	return box
+
+
+## A state under attack (D-277): who attacks it, a button to march to its aid, and once you
+## fight for it, how grateful it is (trade at half way, its alliance at the end).
+func _aid_box(civ: Dictionary) -> Control:
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 2)
+	var attackers: Array = civ.get("attacked_by", [])
+	var pledged: Array = civ.get("aid", [])
+	if attackers.is_empty() and pledged.is_empty():
+		return box
+	var helping := {}
+	for p in pledged:
+		helping[str(p["against"])] = true
+	var names: Array = []
+	for foe in attackers:
+		names.append(str(foe["name"]))
+	if not names.is_empty():
+		box.add_child(_wrapped("⚔ Under attack by %s" % ", ".join(names), 12, BAD))
+	if not pledged.is_empty():
+		var thanks := int(civ.get("gratitude_bp", 0))
+		var full := maxi(1, int(civ.get("gratitude_alliance_bp", 10000)))
+		var warm := int(civ.get("gratitude_warm_bp", 5000))
+		var against: Array = []
+		for p in pledged:
+			against.append(str(p["against_name"]))
+		box.add_child(_wrapped("You fight for them against %s." % ", ".join(against), 12, GOOD))
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 6)
+		row.add_child(_label("Gratitude", 12, DIM))
+		var bar := ProgressBar.new()
+		bar.max_value = full
+		bar.value = mini(thanks, full)
+		bar.show_percentage = false
+		bar.custom_minimum_size = Vector2(120, 10)
+		bar.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		bar.tooltip_text = "Joining their war, every victory over their attacker (double on their soil), every city of theirs you take back for them, and every turn your armies stand on their soil. At %d%% they open their markets; at 100%% they offer an alliance." % (warm * 100 / full)
+		row.add_child(bar)
+		row.add_child(_label("%d%%" % mini(100, thanks * 100 / full), 12, GOOD))
+		box.add_child(row)
+	if str(civ.get("relation", "")) != "war":
+		for foe in attackers:
+			if helping.has(str(foe["id"])) or str(foe["id"]) == str(view["player"]):
+				continue
+			var help := _small_button("Come to their aid against %s" % str(foe["name"]),
+				{"kind": "aid", "target": civ["id"], "against": foe["id"]})
+			help.tooltip_text = "Declare war on %s in defence of %s. Your armies may then march through %s's land and fight beside them; every victory wins their gratitude, cities you retake are handed back to them, and in the end they will offer you an alliance. Making a separate peace while they still fight is remembered as betrayal." % [str(foe["name"]), str(civ["name"]), str(civ["name"])]
+			box.add_child(help)
 	return box
 
 
@@ -2479,22 +2530,30 @@ func show_conquests(items: Array) -> void:
 	top.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	column.add_child(top)
 	var place := str(_find_place(str(spoils.get("province", ""))).get("name", item.get("target", "")))
-	var name := UiStyle.label(place.split(" (")[0].to_upper() + " IS OURS!", 46, UiStyle.RED, "title", 900)
+	var freed := str(spoils.get("liberated", ""))
+	var name := UiStyle.label(place.split(" (")[0].to_upper() + (" IS FREE!" if freed != "" else " IS OURS!"), 46, UiStyle.RED, "title", 900)
 	name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	column.add_child(name)
 	var how := UiStyle.label("Stormed and sacked by the %s" % str(spoils.get("army", "army")) if stormed else "Starved into surrender before the %s" % str(spoils.get("army", "army")), 20, Color(0.55, 0.12, 0.10), "title", 800)
 	how.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	column.add_child(how)
 	column.add_child(UiStyle.label("THE SPOILS", 14, UiStyle.GOLD_DARK, "body", 900))
-	var lines: Array = ["+%s wealth carried off from the enemy treasury" % number(int(spoils.get("wealth", 0))),
+	var lines: Array = []
+	if freed != "":
+		lines.append("Handed back to %s, whom you came to aid: their gratitude grows (%d%% towards an alliance)" % [freed, mini(100, int(spoils.get("gratitude_bp", 0)) / 100)])
+	else:
+		lines.append("+%s wealth carried off from the enemy treasury" % number(int(spoils.get("wealth", 0))))
+	lines += [
 		"+%d%% prestige at court%s" % [int(spoils.get("prestige_bp", 0)) / 100, " (an enemy capital!)" if spoils.get("capital", false) else ""],
 		"The %s grows in renown: +%d%% veterancy, morale restored" % [str(spoils.get("army", "army")), int(spoils.get("veterancy_bp", 0)) / 100],
-		"The province, its people, fields and buildings are yours"]
+		"The province, its people, fields and buildings are yours" if freed == "" else "Its people cheer their liberators"]
 	if int(spoils.get("sacked", 0)) > 0:
 		lines.append("%s of its people were killed or carried off in the sack - they will remember" % number(int(spoils["sacked"])))
 	for text in lines:
 		column.add_child(UiStyle.wrapped("•  " + text, 17, INK if not text.contains("remember") else BAD, 640))
 	column.add_child(UiStyle.wrapped("Its new garrison is small: hold it against a counter-attack while it is rebuilt.", 14, DIM, 640))
+	if freed != "":
+		top.text = "⚑  LIBERATION  ⚑"
 	var go := UiStyle.big_button("GLORY!" if rest.is_empty() else "NEXT  ▸", 22)
 	go.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	go.custom_minimum_size = Vector2(220, 54)

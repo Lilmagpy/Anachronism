@@ -16,6 +16,7 @@ actions, so replays stay exact.
 from __future__ import annotations
 
 from anachronism.content.schema import Disposition, RelationStatus
+from anachronism.engine.aid import key
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import apply_bp
 from anachronism.engine.rivals import (
@@ -129,6 +130,16 @@ def describe(state: GameState, offer: Offer) -> dict[str, str]:
         }
     if offer.kind == "alliance":
         enemy = state.civs[offer.against].name
+        if key(state.player_civ, offer.from_civ, offer.against) in state.pledges:
+            return {
+                "title": f"{them.name} offers its alliance",
+                "text": f"Envoys from {who} come bearing gifts. You came to their aid when "
+                f"{enemy} attacked them, and your soldiers bled for them. They offer an "
+                "alliance: their armies and yours, in every war to come.",
+                "accept": "Ally with them",
+                "decline": "Not now",
+                "hint": "Allies defend each other when attacked and trade freely.",
+            }
         return {
             "title": f"{them.name} proposes an alliance",
             "text": f"Envoys from {who} propose an alliance against {enemy}, your common enemy: "

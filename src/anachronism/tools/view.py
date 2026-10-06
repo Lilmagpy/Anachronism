@@ -7,6 +7,7 @@ from typing import Any
 
 from anachronism.content.loader import Content
 from anachronism.content.schema import Building, RelationStatus, Stage
+from anachronism.engine.aid import gratitude, pledges_of
 from anachronism.engine.armies import (
     STYLES,
     at_war_with,
@@ -45,7 +46,7 @@ from anachronism.engine.offers import describe
 from anachronism.engine.population import province_capacity
 from anachronism.engine.projects import hasten_cost, project_turns
 from anachronism.engine.reports import capacity
-from anachronism.engine.rivals import relation, status, strength
+from anachronism.engine.rivals import at_war, relation, status, strength
 from anachronism.engine.state import Army, Event, GameState
 from anachronism.engine.suspicion import adoption_suspicion_bp
 from anachronism.engine.tactics import AUTO, final, natural, needs_text, short_of_men
@@ -985,10 +986,25 @@ def _relation_to_player(state: GameState, other_id: str) -> dict[str, Any]:
         for h in state.civs[other_id].heard
         if h.about == state.player_civ
     ]
+    me = state.player_civ
+    rules = state.world.rules.rivals
     return {
         "relation": rel.status.value if rel else None,
         "grievance_bp": rel.grievance.get(other_id, 0) if rel else 0,
         "heard_of_you": sorted(set(heard)),
+        # D-277: who attacks it (the player may come to its aid), and the player's pledges
+        "attacked_by": [
+            {"id": foe, "name": state.civs[foe].name}
+            for foe in at_war(state, other_id)
+            if foe != me
+        ],
+        "aid": [
+            {"against": p.against, "against_name": state.civs[p.against].name}
+            for p in pledges_of(state, me, other_id)
+        ],
+        "gratitude_bp": gratitude(state, me, other_id),
+        "gratitude_warm_bp": rules.aid_warm_bp,
+        "gratitude_alliance_bp": rules.aid_alliance_bp,
     }
 
 
