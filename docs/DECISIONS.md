@@ -2356,3 +2356,30 @@ matters. Engine only: the client screens for it come in a later step.
   costs (the trade lost each turn) and is only offered while word of your inventions is on
   the road; festival, mercenaries, alliance, war, missionaries and abandoning a project all
   say in numbers what they do and when to use them.
+
+## D-279 Cities planned on their ground — DELEGATED (2026-10-06)
+- **What the owner asked.** Buildings were placed unnaturally, often overlapping, sometimes
+  in the sea. Cities should each be unique, thoughtfully laid out for the terrain around
+  them. Later: "I liked the buildings just on the grass; combine that depending on how
+  developed each city is."
+- **Nothing overlaps.** Every building claims its ground, and nothing is built where another
+  stands; houses shrink to fit their lot. Every footprint must be dry all round, so nothing
+  stands in the water.
+- **Each city its own shape.** The outline follows the land: a coastal city is laid out to
+  face the sea, keeps to the shore and sends a road down to its piers; lots across a bay or
+  up a mountainside (220 m above the centre) are left out, and only lots that can be reached
+  from the centre are built on. Planned cities (Rome, China) are near-square grids with
+  regular streets; elsewhere the roads fan out from the centre in their own directions and
+  the houses sit a little askew; northern towns have a ring road.
+- **A square at the heart** sized to the palace; public buildings take the lots next to the
+  square and the main streets, facing it; the pagoda of an eastern city stands among them.
+- **Walls follow the outline**, are built before the houses (so nothing breaks them), stop
+  where the water guards the city, and open in a gatehouse wherever a road leaves.
+- **Paving grows with the city:** a town's houses stand on the grass round a small paved
+  square; a city paves its streets too; only a great city or a metropolis paves everything.
+  Suburbs of a great city grow along the roads out of the gates.
+- **Towns and villages** are a lane of houses facing each other with their fields beyond,
+  placed on good farmland after every chief city is planned, so they never land inside one.
+- The Nile capital's pyramid stands on dry desert ground beyond the city. Plain painted parts
+  (palaces, columns, terraces, tents) now fade with distance like the rest (they were left
+  half see-through).

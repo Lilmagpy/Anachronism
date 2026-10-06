@@ -36,7 +36,8 @@ var _parts := {}   ## part name -> {mesh, transforms, colours, multimesh}
 var clearings: Array = []   ## [pixel, radius] of each chief city, kept free of trees
 var _chimneys: Array = []   ## where hearth smoke rises over capitals
 var _owned: Array = []   ## [part, instance index, site index, how much owner colour]
-var _material := StandardMaterial3D.new()   ## shared by every batch: colour comes per instance
+var _material := StandardMaterial3D.new()   ## (kept for reference; parts now use _plain)
+var _plain := ShaderMaterial.new()   ## shared by plain parts: colour per instance, dissolves itself
 var style := "east"   ## the building style of the province being built
 var holder: Node3D   ## everything built, so the cities can be rebuilt as they grow
 
@@ -53,6 +54,7 @@ func _init(province_map: ProvinceMap) -> void:
 	_material.roughness = 0.9
 	map = province_map
 	earth = province_map.earth
+	_plain.shader = load("res://shaders/plain.gdshader")
 	var house := BoxMesh.new()
 	house.size = Vector3(0.16, 0.09, 0.11) * S
 	var wall := BoxMesh.new()
@@ -169,23 +171,28 @@ func _init(province_map: ProvinceMap) -> void:
 
 
 func build(parent: Node3D) -> void:
-	for index in map.sites.size():
-		var site: Dictionary = map.sites[index]
-		if site["sea"]:
-			continue
-		rng.seed = hash(site["id"])
-		style = style_of(map.civ_portraits.get(site["owner"], ""))
-		var population: int = site["population"]
-		var cells := _good_land(index)
-		if cells.is_empty():
-			continue
-		_city(site, population, index)
-		var towns := clampi(population / PEOPLE_PER_TOWN, 0, 12)
-		var villages := clampi(population / PEOPLE_PER_VILLAGE, 1, MAX_VILLAGES)
-		for i in towns:
-			_cluster(_pick(cells), rng.randi_range(7, 14), 0.55, true, index, 0.45)
-		for i in villages:
-			_cluster(_pick(cells), rng.randi_range(2, 5), 0.3, rng.randf() < 0.6, index, 0.0)
+	# every chief city is planned first, so the towns and villages of a neighbouring
+	# province never land inside one (D-279)
+	for pass_no in 2:
+		for index in map.sites.size():
+			var site: Dictionary = map.sites[index]
+			if site["sea"]:
+				continue
+			rng.seed = hash(site["id"]) + pass_no * 7919
+			style = style_of(map.civ_portraits.get(site["owner"], ""))
+			var population: int = site["population"]
+			var cells := _good_land(index)
+			if cells.is_empty():
+				continue
+			if pass_no == 0:
+				_city(site, population, index)
+				continue
+			var towns := clampi(population / PEOPLE_PER_TOWN, 0, 12)
+			var villages := clampi(population / PEOPLE_PER_VILLAGE, 1, MAX_VILLAGES)
+			for i in towns:
+				_village(cells, rng.randi_range(7, 14), true, index, 0.45)
+			for i in villages:
+				_village(cells, rng.randi_range(2, 5), rng.randf() < 0.6, index, 0.0)
 	holder = Node3D.new()
 	holder.name = "Settlements"
 	parent.add_child(holder)
@@ -288,221 +295,522 @@ func _add(part: String, pixel: Vector2, lift: float, turn: float, scale: Vector3
 		_owned.append([part, _parts[part]["colours"].size() - 1, site, mix])
 
 
-func _house(pixel: Vector2, turn: float, size := 1.0, site := -1, mix := 0.0) -> void:
+func _house(pixel: Vector2, turn: float, size := 1.0, site := -1, mix := 0.0, fit := 0.0) -> void:
 	if earth.is_wet(pixel):
 		return  # a coastal city stops at the shore
 	var tint := mix * rng.randf_range(0.8, 1.1)
+	var shrink := func(part: String, big: float) -> float:   # never wider than its lot (D-279)
+		return minf(big, fit / maxf(_foot(part), 0.001)) if fit > 0.0 else big
 	match style:
 		"steppe":
 			var felt := Color(0.90, 0.86, 0.76).darkened(rng.randf() * 0.12)
-			var big := size * 1.35  # tents read better a little larger than houses
+			var big: float = shrink.call("yurt_roof", size * 1.35)  # tents read better a little larger
 			_add("yurt", pixel, 0.0, turn, Vector3.ONE * big, felt)
 			_add("yurt_roof", pixel, 0.06 * S * big, turn, Vector3.ONE * big, felt.darkened(0.12), site, tint * 0.35)
 		"nile", "near_east", "south_asian":
 			# mud brick, plaster or whitewash under flat roofs, parapets, domes and pavilions
 			var top: Color = {"nile": Color(0.58, 0.44, 0.28), "near_east": Color(0.56, 0.44, 0.32),
 				"south_asian": Color(0.62, 0.46, 0.34)}[style]
-			_add("f_%s_%d" % [style, rng.randi() % 3], pixel, 0.0, turn, Vector3.ONE * size, top.darkened(rng.randf() * 0.1), site, tint * 0.35)
+			var part := "f_%s_%d" % [style, rng.randi() % 3]
+			_add(part, pixel, 0.0, turn, Vector3.ONE * shrink.call(part, size), top.darkened(rng.randf() * 0.1), site, tint * 0.35)
 		"classical":
 			# limewashed houses under terracotta, a few of two storeys
 			var tile := Color(0.90, 0.56, 0.38).lerp(Color(0.80, 0.44, 0.32), rng.randf())
-			_add("f_classical_%d" % (rng.randi() % 3), pixel, 0.0, turn, Vector3.ONE * size, tile, site, tint * 0.35)
+			var part := "f_classical_%d" % (rng.randi() % 3)
+			_add(part, pixel, 0.0, turn, Vector3.ONE * shrink.call(part, size), tile, site, tint * 0.35)
 		"northern":
 			# timber-framed houses under steep thatch or slate
 			var thatch := Color(0.70, 0.56, 0.34).lerp(Color(0.38, 0.38, 0.42), rng.randf() * 0.6)
 			var part := "k_timber" if rng.randf() < 0.4 else "k_longhouse"
-			_add(part, pixel, 0.0, turn, Vector3.ONE * size, thatch, site, tint)
+			_add(part, pixel, 0.0, turn, Vector3.ONE * shrink.call(part, size), thatch, site, tint)
 		_:
 			# plaster and timber under dark tiled roofs with curling eaves
 			var roof := Color(0.42, 0.45, 0.50).lerp(Color(0.52, 0.40, 0.34), rng.randf() * 0.5)
-			_add("f_east_%d" % (rng.randi() % 3), pixel, 0.0, turn, Vector3.ONE * size, roof, site, tint * 0.6)
+			var part := "f_east_%d" % (rng.randi() % 3)
+			_add(part, pixel, 0.0, turn, Vector3.ONE * shrink.call(part, size), roof, site, tint * 0.6)
 
 
-## A town or village: houses around a centre, with fields around it.
-func _cluster(centre: Vector2, houses: int, radius: float, fields: bool, site: int, mix: float) -> void:
-	var turn := rng.randf() * PI
-	for i in houses:
-		var offset := Vector2(rng.randf_range(-radius, radius), rng.randf_range(-radius, radius) * 0.7).rotated(turn)
-		_house(centre + offset * S, turn + (PI / 2.0 if rng.randf() < 0.3 else 0.0), rng.randf_range(0.8, 1.2), site, mix)
-	if fields:
-		var crops := [Color(0.86, 0.72, 0.30), Color(0.55, 0.70, 0.28), Color(0.74, 0.64, 0.30), Color(0.45, 0.62, 0.26)]
-		for i in houses + 2:
-			var angle := rng.randf() * TAU
-			var at := centre + Vector2(cos(angle), sin(angle)) * (radius + rng.randf_range(0.3, 0.9)) * S
-			if earth.is_wet(at):
-				continue
-			_add("field", at, 0.0, turn, Vector3.ONE, crops[rng.randi() % crops.size()])
+# --- town planning (D-279) ----------------------------------------------------------------
+#
+# Every building claims its ground: a circle in `_taken` (a grid of buckets), so nothing is
+# built on top of anything else, and every footprint is tested dry all round, so nothing
+# stands in the water. A city is laid out on lots: its outline follows the coast, rivers and
+# hills around it (each city its own shape), its streets follow its people's way of building
+# (a planned grid for Rome and China, lanes running out from the centre elsewhere, a ring road
+# in the north), its public buildings take the best lots around the square, the walls follow
+# the outline, and the suburbs grow along the roads out of the gates. Towns and villages are
+# a street or two of houses with their fields around them, kept clear of the cities.
+
+const LOT := CELL * 1.6                ## a city lot: one house and its yard
+const PALACE_R := {"steppe": 0.35, "nile": 0.45, "near_east": 0.42, "classical": 0.45,
+	"south_asian": 0.7, "northern": 0.45, "east": 0.55}   ## the palace's reach, in S
+const BUCKET := 2.0
+
+var _taken := {}   ## Vector2i bucket -> Array of [centre, radius]: ground already built on
+var _feet := {}    ## part -> footprint radius at scale 1
 
 
-## The province's chief city; a capital gets walls, gate towers and a palace hall.
+## The radius of ground a part covers at scale 1 (from its mesh).
+func _foot(part: String) -> float:
+	if not _feet.has(part):
+		var box: AABB = (_parts[part]["mesh"] as Mesh).get_aabb()
+		_feet[part] = maxf(box.size.x, box.size.z) * 0.5
+	return _feet[part]
+
+
+## True when no building yet stands within `r` of `p`.
+func _free(p: Vector2, r: float) -> bool:
+	var lo := Vector2i(floori((p.x - r - 3.0) / BUCKET), floori((p.y - r - 3.0) / BUCKET))
+	var hi := Vector2i(floori((p.x + r + 3.0) / BUCKET), floori((p.y + r + 3.0) / BUCKET))
+	for bx in range(lo.x, hi.x + 1):
+		for by in range(lo.y, hi.y + 1):
+			for item in _taken.get(Vector2i(bx, by), []):
+				if (item[0] as Vector2).distance_to(p) < float(item[1]) + r:
+					return false
+	return true
+
+
+func _claim(p: Vector2, r: float) -> void:
+	var key := Vector2i(floori(p.x / BUCKET), floori(p.y / BUCKET))
+	if not _taken.has(key):
+		_taken[key] = []
+	_taken[key].append([p, r])
+
+
+## True when the ground is dry all round `p` out to `r` (no footprint over the water).
+func _dry(p: Vector2, r: float) -> bool:
+	if earth.is_wet(p):
+		return false
+	for k in 8:
+		var a := k * TAU / 8.0
+		if earth.is_wet(p + Vector2(cos(a), sin(a)) * r):
+			return false
+	return true
+
+
+## The way to the nearest water within `reach` (a unit vector), or zero inland.
+func _sea_direction(centre: Vector2, reach: float) -> Vector2:
+	for step in 6:
+		var r := reach * (step + 1) / 6.0
+		var sum := Vector2.ZERO
+		for k in 24:
+			var d := Vector2(cos(k * TAU / 24.0), sin(k * TAU / 24.0))
+			if earth.is_wet(centre + d * r):
+				sum += d
+		if sum.length() > 0.01:
+			return sum.normalized()
+	return Vector2.ZERO
+
+
+## Place a house of the local style in a lot of radius `fit`, scaled down to fit it.
+func _fit_house(pixel: Vector2, turn: float, size: float, fit: float, site: int, mix: float) -> bool:
+	if not _dry(pixel, fit) or not _free(pixel, fit):
+		return false
+	_house(pixel, turn, size, site, mix, fit)
+	_claim(pixel, fit)
+	return true
+
+
+## The province's chief city, planned on its ground (D-279).
 func _city(site: Dictionary, population: int, index: int) -> void:
 	var centre: Vector2 = site["pixel"]
 	var tier := int(site.get("tier", 0))   # village, town, city, great city, metropolis (D-127)
 	var half := clampf(0.5 + sqrt(population / 100000.0) * 0.28, 0.6, 1.8) * S * (1.0 + 0.12 * tier)
-	var turn := 0.0  # cities were laid out on the cardinal directions
-	clearings.append([centre, half * 1.25])
 	var houses := clampi(population / 30000, 8, 60) + tier * 8
+	# a city on the water is laid out to face it; inland, on the lie of its own ground
+	var sea := _sea_direction(centre, half * 1.3)
+	var theta := sea.angle() if sea != Vector2.ZERO else rng.randf_range(-0.5, 0.5)
+	if earth.is_wet(centre):   # the province's point is offshore: build on the nearest shore
+		for r in range(1, 12):
+			var found := false
+			for k in 16:
+				var p := centre + Vector2(cos(k * TAU / 16.0), sin(k * TAU / 16.0)) * r * LOT
+				if _dry(p, LOT):
+					centre = p
+					found = true
+					break
+			if found:
+				break
+	clearings.append([centre, half * 1.35])
 	if style == "steppe":
-		houses *= 2  # a khan's camp sprawls: many tents for few people
-	if style == "steppe":
-		for i in houses:
-			var p := centre + Vector2(rng.randf_range(-half, half) * 0.85, rng.randf_range(-half, half) * 0.85)
-			_house(p, turn + (PI / 2.0 if rng.randf() < 0.5 else 0.0), rng.randf_range(0.9, 1.3), index, 0.4)
+		_camp(site, centre, half, houses * 2, index)
+		return
+	var planned := style in ["classical", "east"]
+	var shape := [rng.randf() * TAU, rng.randf() * TAU, rng.randf() * TAU]
+	var reach := func(phi: float) -> float:   # the city's own outline
+		if planned:   # a planned city is near square, corners a little worn
+			var c := maxf(absf(cos(phi)), absf(sin(phi)))
+			return half * (0.92 + 0.06 * sin(3.0 * phi + shape[0])) / c * 0.82
+		return half * (0.86 + 0.12 * sin(2.0 * phi + shape[0]) + 0.07 * sin(3.0 * phi + shape[1])
+			+ 0.04 * sin(5.0 * phi + shape[2]))
+	# the roads out of the city: on the grid's axes when planned, else fanning out
+	var roads: Array = []
+	if planned:
+		roads = [0.0, PI / 2.0, PI, 3.0 * PI / 2.0]
 	else:
-		_streets(site, centre, half, houses, index)
-	# the owner's banner flies over every chief city; a capital's is twice the size
-	var flag := 1.6 if site["capital"] else 1.0
-	var mast := centre + Vector2(half * 0.55, -half * 0.55) if site["capital"] else centre
-	_add("k_flag", mast, 0.0, 0.0, Vector3.ONE * flag, Color.WHITE, index, 1.0)
-	var size := clampf(0.8 + population / 2000000.0, 0.8, 1.4)
-	_add("i_castle" if site["capital"] else "i_town", centre, 0.0, PI / 5.0, Vector3.ONE * size, Color.WHITE, index, 1.0)
-	_city_buildings(site, centre, half, index)
-	if str(site.get("works", "")) != "":
-		_scaffold(site, centre, half, index)
-	# a city of rank gets walls of its own; a great city spills out beyond them
-	if (site["capital"] or tier >= 2) and style != "steppe":
-		_walls(centre, half, index)
-	if tier >= 3:
-		var ring := half * 1.45
-		for k in 6 + (tier - 3) * 4:
-			var angle := TAU * k / (6.0 + (tier - 3) * 4) + 0.3
-			_cluster(centre + Vector2(cos(angle), sin(angle)) * ring, 4 + tier, half * 0.32, false, index, 0.4)
-	if style == "east" and (site["capital"] or tier >= 2):   # a pagoda over the roofs (D-275)
-		_add("f_pagoda", centre + Vector2(0.5, -0.5) * CELL * 1.55 * 2.0, 0.0, 0.0, Vector3.ONE * 1.3, Color(0.36, 0.38, 0.42), index, 0.3)
+		var count := rng.randi_range(3, 5)
+		var start := rng.randf() * TAU
+		for k in count:
+			roads.append(start + TAU * k / count + rng.randf_range(-0.3, 0.3))
+		if sea != Vector2.ZERO:
+			roads[0] = 0.0   # one road runs down to the harbour
+	var base := earth.metres_at(centre)
+	var n := int(ceil(half * 1.7 / LOT))
+	var lots := {}   # Vector2i -> [pixel, local, kind]
+	for i in range(-n, n + 1):
+		for j in range(-n, n + 1):
+			var local := Vector2(i, j) * LOT
+			var phi := local.angle()
+			var edge: float = reach.call(phi)
+			var inside: bool = local.length() <= edge
+			var on_road := false
+			for a in roads:
+				var d := Vector2(cos(a), sin(a))
+				if local.dot(d) > 0.0 and absf(local.cross(d)) < LOT * 0.55:
+					on_road = true
+			var suburb: bool = not inside and tier >= 2 and local.length() < edge * 1.55 and on_road
+			if not inside and not suburb:
+				continue
+			var p := centre + local.rotated(theta)
+			if not _dry(p, LOT * 0.55):
+				continue
+			if absf(earth.metres_at(p) - base) > 220.0:
+				continue   # the city does not climb the mountain
+			lots[Vector2i(i, j)] = [p, local, "suburb" if not inside else "lot", on_road]
+	# keep only lots that can be walked to from the centre (not across a bay)
+	var start_lot := Vector2i.ZERO
+	if not lots.has(start_lot):
+		var best := INF
+		for key in lots:
+			if (lots[key][1] as Vector2).length() < best:
+				best = (lots[key][1] as Vector2).length()
+				start_lot = key
+	var reached := {start_lot: true}
+	var queue: Array = [start_lot]
+	while not queue.is_empty():
+		var at: Vector2i = queue.pop_back()
+		for step in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+			var nxt: Vector2i = at + step
+			if lots.has(nxt) and not reached.has(nxt):
+				reached[nxt] = true
+				queue.append(nxt)
+	for key in lots.keys():
+		if not reached.has(key):
+			lots.erase(key)
+	if lots.is_empty():
+		return
+	if site["capital"]:   # the palace needs dry ground all round: the nearest lot that has it
+		var palace_r := float(PALACE_R.get(style, 0.6)) * S
+		var order := lots.keys()
+		order.sort_custom(func(a: Vector2i, b: Vector2i) -> bool:
+			return (lots[a][1] as Vector2).length() < (lots[b][1] as Vector2).length())
+		for key in order:
+			if _dry(lots[key][0], palace_r):
+				start_lot = key
+				break
+	var heart: Vector2 = lots[start_lot][0]
+	# the square at the heart, large enough for the palace and the public buildings
+	var plaza := LOT * (0.8 if site.get("buildings", []).size() == 0 and not site["capital"] else 1.3)
 	if site["capital"]:
-		_palace(centre, index)
-		for k in 3:
-			_chimneys.append(centre + Vector2(rng.randf_range(-half, half), rng.randf_range(-half, half)) * 0.6)
-
-
-## A city laid out like a town (city graphics, D-271): a cross of main streets from the gates,
-## side streets every few blocks, a paved square in the middle for the public buildings, and
-## houses packed in blocks along the streets - close and large near the centre, sparse and
-## small at the edge. The ground inside is beaten earth and paving, not grass.
-func _streets(site: Dictionary, centre: Vector2, half: float, houses: int, index: int) -> void:
-	var lot := CELL * 1.55
-	var n := int(half * 0.9 / lot)
-	var square := 1 if site.get("buildings", []).size() == 0 and not site["capital"] else 2
+		plaza = maxf(plaza, float(PALACE_R.get(style, 0.6)) * S * 0.85)
+	var heart_local: Vector2 = lots[start_lot][1]
+	var streets := {}
+	for key in lots:
+		var local: Vector2 = lots[key][1]
+		var kind := "lot"
+		if (local - heart_local).length() <= plaza:
+			kind = "plaza"
+		elif lots[key][3]:
+			kind = "street"
+		elif planned and (posmod(key.x, 6) == 3 or posmod(key.y, 5) == 2):
+			kind = "street"
+		elif style == "northern" and absf(local.length() - float(reach.call(local.angle())) * 0.6) < LOT * 0.5:
+			kind = "street"   # the ring road where the old walls stood
+		elif lots[key][2] == "suburb":
+			kind = "yard"
+		streets[key] = kind
 	var ground: Color = {"near_east": Color(0.82, 0.70, 0.50), "nile": Color(0.85, 0.74, 0.54),
 		"south_asian": Color(0.76, 0.60, 0.44), "northern": Color(0.56, 0.52, 0.42)}.get(style, Color(0.74, 0.66, 0.50))
-	var street: Color = ground.lerp(Color(0.80, 0.74, 0.64), 0.45)   # pale dust and stone: streets read at a glance
+	var street: Color = ground.lerp(Color(0.80, 0.74, 0.64), 0.45)
 	var paved: Color = ground.lerp(Color(0.84, 0.80, 0.70), 0.6)
-	var lots := 0
-	for gi in range(-n, n + 1):
-		for gj in range(-n, n + 1):
-			if absi(gi) > square or absi(gj) > square:
-				lots += 1
-	var want := clampf(houses * 2.4 / maxf(lots, 1.0), 0.55, 1.0)   # how full the blocks are
-	for gi in range(-n, n + 1):
-		for gj in range(-n, n + 1):
-			var at := centre + Vector2(gi, gj) * lot
-			if earth.is_wet(at):
-				continue
-			var main := gi == 0 or gj == 0
-			var side := posmod(gi, 4) == 2 or posmod(gj, 4) == 2
-			var in_square := absi(gi) <= square and absi(gj) <= square
-			var colour: Color = paved if in_square else (street if main or side else ground.darkened(rng.randf() * 0.08))
-			_add("paving", at, -0.55, 0.0, Vector3(lot * 1.02, 90.0, lot * 1.02), colour)
-			if in_square or main or side:
-				continue
-			var out := clampf(Vector2(gi, gj).length() / maxf(n, 1.0), 0.0, 1.0)   # 0 centre .. 1 edge
-			if rng.randf() > want * lerpf(1.15, 0.6, out):
-				if rng.randf() < 0.1:   # an empty lot is a garden
-					_add("field", at, 0.0, 0.0, Vector3(0.6, 1.0, 0.6), Color(0.46, 0.60, 0.30))
-				continue
-			# houses face the nearer street
-			var face := 0.0 if absi(posmod(gi, 4) - 2) < absi(posmod(gj, 4) - 2) else PI / 2.0
-			var jitter := Vector2(rng.randf_range(-0.08, 0.08), rng.randf_range(-0.08, 0.08)) * lot
-			_house(at + jitter, face, lerpf(1.35, 0.85, out) * rng.randf_range(0.92, 1.08), index, 0.4)
-
-
-## The province's buildings (D-111), each where the city has room for it: a ring around the
-## centre, inside the walls, turned to face the middle. Seeded apart from the houses, so a new
-## building never moves the old ones.
-func _city_buildings(site: Dictionary, centre: Vector2, half: float, index: int) -> void:
-	var looks: Array = site.get("buildings", [])
-	if looks.is_empty():
-		return
-	var place := RandomNumberGenerator.new()
-	place.seed = hash(str(site["id"]) + "buildings")
-	var start := place.randf() * TAU
-	for k in looks.size():
-		var look: String = looks[k]
-		var part := "b_" + look
-		if not _parts.has(part):
-			var entry: Array = Buildings.CITY_LOOKS.get(look, Buildings.CITY_LOOKS["hall"])
-			_parts[part] = {"mesh": Buildings.city_building(look, float(entry[1]) * S), "transforms": [],
-				"colours": [], "kit": true}
-		var angle := start + TAU * k / maxf(looks.size(), 1.0)
-		var spot := centre + Vector2(cos(angle), sin(angle)) * half * (0.45 + 0.25 * (k % 2))
-		for tries in 6:   # stay on dry land
-			if not earth.is_wet(spot):
-				break
-			spot = centre + (spot - centre) * 0.7
-		if earth.is_wet(spot):
+	for key in lots:
+		var kind: String = streets[key]
+		if kind == "yard" or (lots[key][2] == "suburb" and tier < 4):
+			continue   # suburbs stand on their own fields, not paving
+		# paving grows with the city (owner's wish): a young town's houses stand on the grass
+		# round a small square; a city paves its streets; a great city paves everything
+		if tier <= 1 and kind != "plaza":
 			continue
-		var roof := Color(0.88, 0.55, 0.38)
-		_add(part, spot, 0.0, -angle + PI / 2.0, Vector3.ONE, roof, index, 0.4)
+		if tier == 2 and kind == "lot":
+			continue
+		var colour: Color = paved if kind == "plaza" else (street if kind == "street" else ground.darkened(rng.randf() * 0.08))
+		_add("paving", lots[key][0], -0.55, -theta, Vector3(LOT * 1.03, 90.0, LOT * 1.03), colour)
+	# the palace at the heart, the public buildings around the square
+	if site["capital"]:
+		_palace(heart, index, -theta)
+		_claim(heart, maxf(plaza - LOT * 0.5, LOT * 0.5))   # the square is the palace's ground
+	else:
+		_claim(heart, LOT * 0.5)
+	var mast := heart + Vector2(plaza * 0.75, 0).rotated(theta + PI / 4.0)
+	_add("k_flag", mast, 0.0, 0.0, Vector3.ONE * (1.6 if site["capital"] else 1.0), Color.WHITE, index, 1.0)
+	_claim(mast, LOT * 0.25)
+	var size := clampf(0.8 + population / 2000000.0, 0.8, 1.4)
+	_add("i_castle" if site["capital"] else "i_town", centre, 0.0, PI / 5.0, Vector3.ONE * size, Color.WHITE, index, 1.0)
+	# walls first, so nothing is built across them: along the outline, the outline, broken where the water guards the city and opened by gates
+	if site["capital"] or tier >= 2:
+		_city_walls(centre, theta, lots, streets, roads, index)
+	var spots: Array = []   # building plots: the lots next to the square and the main streets
+	for key in lots:
+		if streets[key] != "lot":
+			continue
+		var next_to := false
+		for step in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+			if streets.get(key + step, "") in ["plaza", "street"]:
+				next_to = true
+		if next_to:
+			spots.append(key)
+	spots.sort_custom(func(a: Vector2i, b: Vector2i) -> bool:
+		return (lots[a][1] as Vector2).distance_to(heart_local) < (lots[b][1] as Vector2).distance_to(heart_local))
+	var looks: Array = (site.get("buildings", []) as Array).duplicate()
+	if str(site.get("works", "")) != "":
+		looks.append("|works|" + str(site["works"]))
+	if style == "east" and (site["capital"] or tier >= 2):
+		looks.append("|pagoda")
+	for look in looks:
+		_public_building(str(look), spots, lots, heart, theta, index)
+	# the houses fill the rest, close at the heart and thinning out to the edge
+	var houses_lots: Array = []
+	for key in lots:
+		if streets[key] in ["lot", "yard"]:
+			houses_lots.append(key)
+	var want := clampf(houses * 3.5 / maxf(houses_lots.size(), 1.0), 0.75, 1.0)
+	var organic := not planned
+	for key in houses_lots:
+		var p: Vector2 = lots[key][0]
+		var local: Vector2 = lots[key][1]
+		var edge_here: float = reach.call(local.angle())
+		var out := clampf(local.length() / maxf(edge_here, 0.1), 0.0, 1.6)
+		if rng.randf() > want * lerpf(1.25, 0.7, minf(out, 1.0)):
+			if rng.randf() < 0.12 and _dry(p, LOT * 0.4) and _free(p, LOT * 0.4):   # a garden
+				_add("field", p, 0.0, -theta, Vector3(0.55, 1.0, 0.55), Color(0.46, 0.60, 0.30))
+				_claim(p, LOT * 0.4)
+			continue
+		# a house faces its street
+		var face := -theta
+		for step in [Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0), Vector2i(0, -1)]:
+			if streets.get(key + step, "") in ["street", "plaza"]:
+				face = -theta - Vector2(step).angle() + PI / 2.0
+				break
+		var jitter := Vector2.ZERO
+		if organic:   # lanes wander; houses sit a little askew
+			jitter = Vector2(rng.randf_range(-0.05, 0.05), rng.randf_range(-0.05, 0.05)) * LOT
+			face += rng.randf_range(-0.25, 0.25)
+		var big := lerpf(1.25, 0.85, minf(out, 1.0)) * rng.randf_range(0.92, 1.08)
+		_fit_house(p + jitter.rotated(theta), face, big, LOT * 0.44, index, 0.4)
+	# by a river or the sea: wooden piers out over the water
+	if sea != Vector2.ZERO:
+		_piers(lots, theta, sea)
+	if style == "nile" and site["capital"]:
+		_pyramid(heart, half, index)
+	if site["capital"]:
+		for k in 3:
+			_chimneys.append(heart + Vector2(rng.randf_range(-half, half), rng.randf_range(-half, half)) * 0.5)
+
+
+## A public building (D-111) on the best free plot by the square or a main street, facing it.
+## "|works|look" is one going up (in scaffolding); "|pagoda" the pagoda of an eastern city.
+func _public_building(look: String, spots: Array, lots: Dictionary, heart: Vector2, theta: float, index: int) -> void:
+	var building := look
+	var part := ""
+	if look == "|pagoda":
+		part = "f_pagoda"
+	else:
+		if look.begins_with("|works|"):
+			building = look.substr(7)
+		part = "b_" + building
+		if not _parts.has(part):
+			var entry: Array = Buildings.CITY_LOOKS.get(building, Buildings.CITY_LOOKS["hall"])
+			_parts[part] = {"mesh": Buildings.city_building(building, float(entry[1]) * S), "transforms": [],
+				"colours": [], "kit": true}
+	var scale := 1.3 if part == "f_pagoda" else 1.0
+	var r := _foot(part) * scale
+	for key in spots:
+		var p: Vector2 = lots[key][0]
+		if not _dry(p, r) or not _free(p, r):
+			continue
+		var face := -(heart - p).angle() + PI / 2.0 if p.distance_to(heart) > 0.1 else -theta
+		if look.begins_with("|works|"):
+			_scaffold_at(part, p, face, r, index)
+		elif part == "f_pagoda":
+			_add(part, p, 0.0, -theta, Vector3.ONE * scale, Color(0.36, 0.38, 0.42), index, 0.3)
+		else:
+			_add(part, p, 0.0, face, Vector3.ONE, Color(0.88, 0.55, 0.38), index, 0.4)
+		_claim(p, r)
+		return
 
 
 ## Building work in a city (D-127): the new building half-risen in its place, wrapped in
 ## timber scaffolding, with a crane over it.
-func _scaffold(site: Dictionary, centre: Vector2, half: float, index: int) -> void:
-	var look := str(site["works"])
-	var count: int = site.get("buildings", []).size()
-	var place := RandomNumberGenerator.new()
-	place.seed = hash(str(site["id"]) + "buildings")
-	var start := place.randf() * TAU
-	var angle := start + TAU * count / maxf(count + 1.0, 1.0)
-	var spot := centre + Vector2(cos(angle), sin(angle)) * half * (0.45 + 0.25 * (count % 2))
-	if earth.is_wet(spot):
-		spot = centre + (spot - centre) * 0.6
-	var part := "b_" + look
-	if not _parts.has(part):
-		var entry: Array = Buildings.CITY_LOOKS.get(look, Buildings.CITY_LOOKS["hall"])
-		_parts[part] = {"mesh": Buildings.city_building(look, float(entry[1]) * S), "transforms": [],
-			"colours": [], "kit": true}
-	# the walls half-way up
-	_add(part, spot, 0.0, -angle + PI / 2.0, Vector3(1.0, 0.55, 1.0), Color(0.88, 0.55, 0.38), index, 0.4)
+func _scaffold_at(part: String, spot: Vector2, face: float, r: float, index: int) -> void:
+	_add(part, spot, 0.0, face, Vector3(1.0, 0.55, 1.0), Color(0.88, 0.55, 0.38), index, 0.4)
 	var timber := Color(0.62, 0.44, 0.26)
-	var r := 0.22 * S
-	for corner in [Vector2(-r, -r), Vector2(r, -r), Vector2(r, r), Vector2(-r, r), Vector2(0, -r), Vector2(0, r)]:
+	var e := r * 0.8
+	for corner in [Vector2(-e, -e), Vector2(e, -e), Vector2(e, e), Vector2(-e, e)]:
 		_add("pole", spot + corner, 0.0, 0.0, Vector3(1.6, 0.9, 1.6), timber)
 	for height in [0.18, 0.4]:   # walkways of planks
-		_add("terrace", spot, height * S, 0.0, Vector3(0.66, 0.2, 0.9), timber.lightened(0.1))
-	# the crane: a mast and a long arm
-	var mast := spot + Vector2(r * 1.6, 0)
+		_add("terrace", spot, height * S, face, Vector3(e * 2.0 / (0.7 * S), 0.2, e * 2.0 / (0.5 * S)), timber.lightened(0.1))
+	var mast := spot + Vector2(e, 0)
 	_add("pole", mast, 0.0, 0.0, Vector3(2.0, 1.8, 2.0), timber.darkened(0.1))
-	_add("terrace", mast + Vector2(-r * 1.1, 0), 1.2 * S, 0.0, Vector3(1.1, 0.8, 0.1), timber.darkened(0.1))
+	_add("terrace", mast + Vector2(-e * 0.7, 0), 1.2 * S, 0.0, Vector3(1.1, 0.8, 0.1), timber.darkened(0.1))
 
 
-## A capital's walls with corner towers and a gatehouse on each side (Kenney castle kit);
-## roofs and banners fly the owner's colours.
-func _walls(centre: Vector2, half: float, index: int) -> void:
-	var stone := Color.WHITE
+## Walls along the city's own outline (Kenney castle kit): towers at the turns, a gatehouse
+## where each road leaves, nothing where the water guards it. Roofs fly the owner's colours.
+func _city_walls(centre: Vector2, theta: float, lots: Dictionary, streets: Dictionary, roads: Array, index: int) -> void:
+	var sectors := 28
+	var radius: Array = []
+	radius.resize(sectors)
+	radius.fill(0.0)
+	for key in lots:
+		if lots[key][2] != "lot":
+			continue
+		var local: Vector2 = lots[key][1]
+		var k := posmod(int(round(local.angle() / TAU * sectors)), sectors)
+		radius[k] = maxf(radius[k], local.length() + LOT * 0.75)
+	var smooth: Array = []
+	for k in sectors:   # an even line, not a saw
+		var a: float = radius[(k + sectors - 1) % sectors]
+		var b: float = radius[k]
+		var c: float = radius[(k + 1) % sectors]
+		smooth.append(maxf(b, (a + b + c) / 3.0) if b > 0.0 else 0.0)
 	var corner_part := "k_round" if style in ["northern", "classical"] else "k_tower"
-	var corners := [Vector2(-half, -half), Vector2(half, -half), Vector2(half, half), Vector2(-half, half)]
-	var piece_width := 0.24 * S / 1.31  # the wall model's width for its height
-	for side in 4:
-		var a: Vector2 = centre + corners[side]
-		var b: Vector2 = centre + corners[(side + 1) % 4]
+	var piece_width := 0.24 * S / 1.31   # the wall model's width for its height
+	var gates := {}
+	for a in roads:
+		gates[posmod(int(round(float(a) / TAU * sectors)), sectors)] = true
+	for k in sectors:
+		var r0: float = smooth[k]
+		var r1: float = smooth[(k + 1) % sectors]
+		if r0 <= 0.0 or r1 <= 0.0:
+			continue   # no city that way: the water is the wall
+		var a := centre + Vector2(cos(k * TAU / sectors), sin(k * TAU / sectors)).rotated(theta) * r0
+		var b := centre + Vector2(cos((k + 1) * TAU / sectors), sin((k + 1) * TAU / sectors)).rotated(theta) * r1
 		var length := a.distance_to(b)
 		var angle := -(b - a).angle()
-		var pieces := int(ceil(length / piece_width))
-		for k in pieces:
-			var p := a.lerp(b, (k + 0.5) / pieces)
-			if earth.is_wet(p) or (k == pieces / 2):
-				continue  # the sea is the wall on that side; the gate stands mid-way
-			_add("k_wall", p, 0.0, angle, Vector3(length / pieces / piece_width * 1.02, 1, 1), stone, index, 1.0)
-		if not earth.is_wet(a):
-			_add(corner_part, a, 0.0, 0.0, Vector3.ONE, stone, index, 1.0)
-		var mid := a.lerp(b, (pieces / 2 + 0.5) / pieces)
-		if not earth.is_wet(mid):
-			_add("k_gate", mid, 0.0, angle, Vector3.ONE, stone, index, 1.0)
+		var pieces := maxi(1, int(ceil(length / piece_width)))
+		for m in pieces:
+			var p := a.lerp(b, (m + 0.5) / pieces)
+			if earth.is_wet(p) or not _free(p, piece_width * 0.3):
+				continue
+			if gates.has(k) and m == pieces / 2:
+				_add("k_gate", p, 0.0, angle, Vector3.ONE, Color.WHITE, index, 1.0)
+				_claim(p, piece_width * 0.8)
+				continue
+			_add("k_wall", p, 0.0, angle, Vector3(length / pieces / piece_width * 1.02, 1, 1), Color.WHITE, index, 1.0)
+		if k % 3 == 0 and _dry(a, piece_width * 0.4) and _free(a, piece_width * 0.4):
+			_add(corner_part, a, 0.0, 0.0, Vector3.ONE, Color.WHITE, index, 1.0)
+			_claim(a, piece_width * 0.5)
+
+
+## Wooden piers from the waterfront out over the water, where the harbour road meets it.
+func _piers(lots: Dictionary, theta: float, sea: Vector2) -> void:
+	var timber := Color(0.50, 0.36, 0.22)
+	var made := 0
+	var keys := lots.keys()
+	keys.sort_custom(func(a: Vector2i, b: Vector2i) -> bool:
+		return absf((lots[a][1] as Vector2).cross(Vector2.RIGHT)) < absf((lots[b][1] as Vector2).cross(Vector2.RIGHT)))
+	for key in keys:
+		if made >= 2:
+			return
+		var p: Vector2 = lots[key][0]
+		var out := p + sea * LOT * 0.9
+		if not earth.is_wet(out) or not earth.is_wet(out + sea * LOT):
+			continue
+		var shore := earth.ground_at_pixel(p).y
+		for m in 3:
+			var q := p + sea * LOT * (0.7 + m * 0.8)
+			var lift := shore - earth.ground_at_pixel(q).y + 0.05
+			_add("terrace", q, lift, -sea.angle(), Vector3(0.35, 0.25, 0.12) * 4.0 / S, timber)
+		made += 1
+
+
+## A pyramid on the desert edge beyond a Nile capital: dry ground, away from the river.
+func _pyramid(heart: Vector2, half: float, index: int) -> void:
+	var r := 0.45 * S
+	for step in 16:
+		var a := step * TAU / 16.0
+		for dist in [half * 1.6, half * 2.0, half * 2.5]:
+			var p := heart + Vector2(cos(a), sin(a)) * float(dist)
+			if _dry(p, r * 1.4) and _free(p, r * 1.2):
+				_add("pyramid", p, 0.0, PI / 4.0, Vector3.ONE, Color(0.84, 0.70, 0.46))
+				_claim(p, r * 1.2)
+				clearings.append([p, r * 1.5])
+				return
+
+
+## A khan's camp: tents in loose rings around the great tent, none touching.
+func _camp(site: Dictionary, centre: Vector2, half: float, tents: int, index: int) -> void:
+	if site["capital"]:
+		_palace(centre, index, 0.0)
+	_claim(centre, float(PALACE_R["steppe"]) * S)
+	_add("k_flag", centre + Vector2(LOT, -LOT), 0.0, 0.0, Vector3.ONE, Color.WHITE, index, 1.0)
+	var placed := 0
+	for attempt in tents * 4:
+		if placed >= tents:
+			break
+		var ring := sqrt(rng.randf()) * half
+		var a := rng.randf() * TAU
+		var p := centre + Vector2(cos(a), sin(a)) * ring
+		if _fit_house(p, rng.randf() * TAU, rng.randf_range(0.9, 1.3), LOT * 0.45, index, 0.4):
+			placed += 1
+
+
+## A town or village: a street or two of houses along a lane, its fields beyond, on the
+## province's best farmland and clear of the cities and of each other.
+func _village(cells: Array, houses: int, fields: bool, site: int, mix: float) -> void:
+	var spacing := LOT * 0.95
+	var reach := spacing * (houses / 2.0 + 1.0)
+	var centre := Vector2.ZERO
+	for attempt in 8:
+		var p := _pick(cells)
+		if _dry(p, spacing) and _free(p, reach * 0.6):
+			centre = p
+			break
+	if centre == Vector2.ZERO:
+		return
+	var lane := rng.randf() * PI
+	var along := Vector2(cos(lane), sin(lane))
+	var across := Vector2(-along.y, along.x)
+	var bend := rng.randf_range(-0.04, 0.04)   # the lane curves gently
+	var placed := 0
+	for k in houses * 2:
+		if placed >= houses:
+			break
+		var t := (k / 2 - houses / 4.0) * spacing
+		var side := 1.0 if k % 2 == 0 else -1.0
+		var p := centre + along * t + across * (side * spacing * 0.62 + bend * t * t)
+		p += Vector2(rng.randf_range(-0.1, 0.1), rng.randf_range(-0.1, 0.1)) * spacing
+		var face := -lane + (PI / 2.0 if side > 0.0 else -PI / 2.0) + rng.randf_range(-0.2, 0.2)
+		if _fit_house(p, face, rng.randf_range(0.85, 1.1), spacing * 0.45, site, mix):
+			placed += 1
+	if placed == 0:
+		return
+	clearings.append([centre, reach * 0.7])
+	if not fields:
+		return
+	var crops := [Color(0.86, 0.72, 0.30), Color(0.55, 0.70, 0.28), Color(0.74, 0.64, 0.30), Color(0.45, 0.62, 0.26)]
+	var field_r := _foot("field") * 1.05
+	for k in houses + 2:
+		var a := rng.randf() * TAU
+		var p := centre + Vector2(cos(a), sin(a)) * (reach * 0.6 + rng.randf_range(0.3, 1.2) * S)
+		if _dry(p, field_r) and _free(p, field_r):
+			_add("field", p, 0.0, -lane, Vector3.ONE, crops[rng.randi() % crops.size()])
+			_claim(p, field_r)
+
 
 
 ## The seat of power at a capital's heart, in the local manner.
-func _palace(centre: Vector2, index: int) -> void:
+func _palace(centre: Vector2, index: int, _turn := 0.0) -> void:
 	match style:
 		"steppe":
 			# the khan's great tent among the camp
@@ -515,7 +823,6 @@ func _palace(centre: Vector2, index: int) -> void:
 			_add("flat_roof", centre, 0.28 * S, 0.0, Vector3(3.0, 1.5, 2.6), Color(0.62, 0.48, 0.32), index, 0.35)
 			for k in 4:  # painted columns along the temple front
 				_add("column", centre + Vector2((k - 1.5) * 0.12 * S, 0.2 * S), 0.08 * S, 0.0, Vector3.ONE, Color(0.30, 0.45, 0.62))
-			_add("pyramid", centre + Vector2(-2.2, 1.6) * S, 0.0, PI / 4.0, Vector3.ONE, Color(0.84, 0.70, 0.46))
 			for side in [-1.0, 1.0]:   # obelisks flank the temple gate (D-275)
 				_add("f_obelisk", centre + Vector2(side * 0.32, 0.42) * S, 0.0, 0.0, Vector3.ONE * 0.8, Color(0.9, 0.75, 0.35))
 		"near_east":
@@ -587,7 +894,7 @@ func _multimesh(entry: Dictionary, indices: Array) -> MultiMeshInstance3D:
 	if entry.has("material"):
 		instance.material_override = entry["material"]
 	elif not entry.get("kit", false):
-		instance.material_override = _material
+		instance.material_override = _plain
 	if entry.get("far", false):
 		Lod.between(instance, SHOW_WITHIN, FAR_UNTIL)  # crossfades with the town itself
 	else:
