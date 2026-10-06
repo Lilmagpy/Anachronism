@@ -26,6 +26,7 @@ from anachronism.engine.rivals import (
     alive,
     declare_war,
     grievance,
+    make_tributary,
     relation,
     set_status,
     status,
@@ -100,7 +101,7 @@ def _apply(
             if not occupied:
                 # its last land in your hands: it bows as your tributary rather than vanish
                 make_peace(state, me, target, events)
-                set_status(state, me, target, RelationStatus.TRIBUTARY)
+                make_tributary(state, me, target)
                 add_grievance(state, target, me, 1000)
                 events.add(me, "tribute", f"{them} bows and sends tribute.", them)
                 return True, f"Rather than give up its last land, {them} submits as your tributary."
@@ -178,7 +179,7 @@ def _apply(
         if beaten or ours * BP >= theirs * rules.tribute_strength_ratio_bp:
             if current is RelationStatus.WAR:
                 make_peace(state, me, target, events)
-            set_status(state, me, target, RelationStatus.TRIBUTARY)
+            make_tributary(state, me, target)
             add_grievance(state, target, me, 1000)  # submission is resented
             events.add(me, "tribute", f"{them} bows and sends tribute.", them)
             return True, f"{them} submits and becomes your tributary."

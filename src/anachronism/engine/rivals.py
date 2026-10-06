@@ -180,7 +180,26 @@ def set_status(state: GameState, a: str, b: str, new: RelationStatus) -> Relatio
     if new is not RelationStatus.WAR:
         rel.weariness.clear()
         rel.losses.clear()
+    if new is not RelationStatus.TRIBUTARY:
+        rel.overlord = ""
     return rel
+
+
+def make_tributary(state: GameState, overlord: str, vassal: str) -> Relation:
+    """``vassal`` submits to ``overlord``: it pays tribute each turn and is protected."""
+    rel = set_status(state, overlord, vassal, RelationStatus.TRIBUTARY)
+    rel.overlord = overlord
+    return rel
+
+
+def overlord_of(state: GameState, a: str, b: str) -> str | None:
+    """Which of a tributary pair takes the tribute (None if they are not tributary)."""
+    rel = relation(state, a, b)
+    if rel is None or rel.status is not RelationStatus.TRIBUTARY:
+        return None
+    if rel.overlord in (a, b):
+        return rel.overlord
+    return max((a, b), key=lambda c: (state.population(c), c))  # older bonds: the larger
 
 
 def declare_war(
@@ -531,7 +550,7 @@ def free_agents(
                     strengths.get(target, 0) * rules.tribute_strength_ratio_bp
                 )
                 if overawed and target != state.player_civ and rng.chance(BP // 2):
-                    set_status(state, civ_id, target, RelationStatus.TRIBUTARY)
+                    make_tributary(state, civ_id, target)
                     add_grievance(state, target, civ_id, 1000)
                 else:
                     declare_war(state, civ_id, target, events)

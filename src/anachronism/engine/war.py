@@ -11,7 +11,14 @@ from __future__ import annotations
 from anachronism.content.schema import RelationStatus
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import BP, clamp
-from anachronism.engine.rivals import add_grievance, alive, frontier, province_links, set_status
+from anachronism.engine.rivals import (
+    add_grievance,
+    alive,
+    frontier,
+    make_tributary,
+    province_links,
+    set_status,
+)
 from anachronism.engine.state import Awareness, GameState
 from anachronism.engine.timeflow import per_turn
 
@@ -173,7 +180,7 @@ def settle(state: GameState, tired: str, other: str, events: EventLog) -> None:
     them, victor = state.civs[tired], state.civs[other]
     if len(besieged) >= len(state.owned_provinces(tired)):
         make_peace(state, tired, other, events)
-        set_status(state, tired, other, RelationStatus.TRIBUTARY)
+        make_tributary(state, other, tired)
         add_grievance(state, tired, other, 1000)
         text = f"Worn out by war, {them.name} bows to {victor.name} and sends tribute."
         events.add(tired, "tribute", text, victor.name)

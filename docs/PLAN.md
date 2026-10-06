@@ -249,6 +249,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] Houses in each civilisation's own style, pagodas and obelisks (D-275)
 - [x] Menus checked and fixed on different screen sizes; interface size setting (D-276)
 - [x] Come to the aid of a state under attack: march through its land, gratitude, liberated cities, alliance offer (D-277)
+- [x] Action audit: tributaries pay tribute, shared faith boosts trade, tie worth shown, redundant buttons removed, clear tooltips (D-278)
 - [ ] Source-check pass over the helper-written chronicles (written without network access) before any public release
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

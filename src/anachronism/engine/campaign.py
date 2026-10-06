@@ -21,6 +21,7 @@ from anachronism.engine.rivals import (
     add_grievance,
     alive,
     declare_war,
+    make_tributary,
     set_status,
     status,
     strength,
@@ -185,6 +186,8 @@ def _deeds(state: GameState, chapter: Chapter, choice: ChapterChoice, events: Ev
             make_peace(state, me, other, events)
         bond = RelationStatus.ALLIED if other in deeds.ally_with else RelationStatus.TRIBUTARY
         set_status(state, me, other, bond)
+        if bond is RelationStatus.TRIBUTARY:
+            make_tributary(state, me, other)
     for other in deeds.break_away:
         if other in state.civs and status(state, me, other) in (
             RelationStatus.ALLIED,

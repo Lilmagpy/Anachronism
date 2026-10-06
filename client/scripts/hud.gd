@@ -1023,10 +1023,8 @@ func _fill_projects() -> void:
 			pct(project["progress_bp"]), state, project["turns"], project["priority"]], 12, DIM))
 		var row := HBoxContainer.new()
 		var id: String = project["id"]
-		if project["paused"]:
+		if project["paused"]:   # (pausing is gone, D-278: low priority does it better)
 			row.add_child(_button("Resume", func(): action_requested.emit({"kind": "resume", "node_id": id})))
-		else:
-			row.add_child(_button("Pause", func(): action_requested.emit({"kind": "pause", "node_id": id})))
 		for level in ["high", "normal", "low"]:
 			if level != project["priority"]:
 				var pick := _button(level.capitalize(), func(): action_requested.emit({"kind": "priority", "node_id": id, "priority": level}))
@@ -1041,7 +1039,9 @@ func _fill_projects() -> void:
 			rush.disabled = int(stores["materials"]) < int(price["materials"]) or int(stores["wealth"]) < int(price["wealth"]) or int(stores["knowledge"]) < int(price["knowledge"])
 			rush.tooltip_text = "Hire craftsmen to push the work on by a turn's worth (once a turn):\n%s materials, %s knowledge, %s wealth" % [number(int(price["materials"])), number(int(price["knowledge"])), number(int(price["wealth"]))]
 			row.add_child(rush)
-		row.add_child(_button("Abandon", func(): action_requested.emit({"kind": "cancel", "node_id": id})))
+		var drop := _button("Abandon", func(): action_requested.emit({"kind": "cancel", "node_id": id}))
+		drop.tooltip_text = "Give the work up and free its workers and stores. The progress is lost; the idea stays in your notebook."
+		row.add_child(drop)
 		box.add_child(row)
 		box.add_child(HSeparator.new())
 		_side_body.add_child(box)
@@ -1074,11 +1074,11 @@ func _fill_world() -> void:
 		var rich: int = int(status["stores"]["wealth"])
 		var feast := _small_button("Hold a festival (%s)" % number(int(status["festival_cost"])), {"kind": "festival"})
 		feast.disabled = rich < int(status["festival_cost"])
-		feast.tooltip_text = "Feasts and games: legitimacy up, unrest down"
+		feast.tooltip_text = "Feasts and games: legitimacy +%d%%, unrest -%d%%. Use it when unrest is high (riots, revolts and lost work) or before a hard war: a trusted throne fields stronger armies and its stories about your strange new arts are believed." % [int(status.get("festival_legitimacy_bp", 0)) / 100, int(status.get("festival_unrest_bp", 0)) / 100]
 		decrees.add_child(feast)
 		var hire := _small_button("Hire mercenaries (%s)" % number(int(status["mercenary_cost"])), {"kind": "mercenaries"})
 		hire.disabled = rich < int(status["mercenary_cost"]) or int(status["mercenaries"]) > 0
-		hire.tooltip_text = "More military strength for two turns"
+		hire.tooltip_text = "A company of %s veteran soldiers musters at your capital for %d turns, ready to march at once: for a war you did not see coming, or to tip a siege. They cost no levies from your fields, and leave when the contract ends." % [number(int(status.get("mercenary_men", 0))), int(status.get("mercenary_turns", 2))]
 		decrees.add_child(hire)
 		_side_body.add_child(decrees)
 		if int(status["mercenaries"]) > 0:
@@ -1088,13 +1088,10 @@ func _fill_world() -> void:
 			secrets.add_theme_constant_override("separation", 6)
 			var seal := _small_button("Seal the borders", {"kind": "seal"})
 			seal.disabled = int(status["sealed"]) > 0
-			seal.tooltip_text = "For %d turns: no trade with anyone, but news of your inventions travels half as fast" % int(status["seal_turns"])
-			secrets.add_child(seal)
 			var on_road: int = int(status["news_on_the_road"])
-			var rumours := _small_button("Spread false rumours (%s)" % number(int(status["rumour_cost"])), {"kind": "rumours"})
-			rumours.disabled = on_road == 0 or rich < int(status["rumour_cost"])
-			rumours.tooltip_text = "Storytellers muddle the news of your inventions already on the road: rivals hear nonsense first and the truth much later"
-			secrets.add_child(rumours)
+			seal.tooltip_text = "For %d turns news of your inventions travels half as fast, so rivals copy them later (and spies steal less). The price: no trade with anyone - %s wealth a turn lost. Worth it right after a great breakthrough, while word of it is on the road." % [int(status["seal_turns"]), number(int(status.get("trade_total", 0)))]
+			seal.disabled = seal.disabled or on_road == 0
+			secrets.add_child(seal)
 			_side_body.add_child(secrets)
 			if int(status["sealed"]) > 0:
 				_side_body.add_child(_label("Borders sealed for %d more turn(s): no trade" % int(status["sealed"]), 12, DIM))
@@ -1239,6 +1236,18 @@ func _rival_card(civ: Dictionary, me: Dictionary) -> Control:
 			body.add_child(_wrapped("  " + str(line), 12, BAD if warn else INK))
 	if int(civ.get("spies", 0)) > 0:
 		body.add_child(_label("Our spies are there (%d more turns)" % int(civ["spies"]), 12, DIM))
+	var worth: Array = []   # what this tie is worth each turn (D-278)
+	if int(civ.get("trade_income", 0)) > 0:
+		worth.append("trade +%s" % number(int(civ["trade_income"])))
+	if int(civ.get("tribute_in", 0)) > 0:
+		worth.append("tribute +%s" % number(int(civ["tribute_in"])))
+	if int(civ.get("tribute_out", 0)) > 0:
+		worth.append("tribute you pay -%s" % number(int(civ["tribute_out"])))
+	if not worth.is_empty():
+		var line := _label("Each turn: %s wealth" % ", ".join(worth), 12, GOOD if int(civ.get("tribute_out", 0)) == 0 else BAD)
+		line.tooltip_text = "Trading partners, allies and tributaries pay both sides wealth every turn (more for a large partner, and half again if you share a faith). A tributary also pays its overlord tribute."
+		line.mouse_filter = Control.MOUSE_FILTER_PASS
+		body.add_child(line)
 	if relation != null:
 		body.add_child(_aid_box(civ))
 		body.add_child(_diplomacy_buttons(civ))
@@ -1296,6 +1305,13 @@ func _aid_box(civ: Dictionary) -> Control:
 	return box
 
 
+func _me_civ() -> Dictionary:
+	for c in view.get("civs", []):
+		if c["id"] == view["player"]:
+			return c
+	return {}
+
+
 ## What you can do about a civilisation you are in touch with.
 func _diplomacy_buttons(civ: Dictionary) -> Control:
 	var relation: Variant = civ["relation"]
@@ -1303,9 +1319,12 @@ func _diplomacy_buttons(civ: Dictionary) -> Control:
 	buttons.add_theme_constant_override("h_separation", 4)
 	buttons.add_theme_constant_override("v_separation", 4)
 	var target: String = civ["id"]
-	if not relation in ["tributary", "allied"]:
+	var mine: int = maxi(1, int(_me_civ().get("strength", 1)))
+	var cowed: bool = float(civ.get("strength", 0)) * 2.5 <= float(mine)
+	if not relation in ["tributary", "allied"] and (cowed or relation == "war"):
+		# only offered when it could work (D-278): a court far weaker, or one you are beating
 		var demand := _small_button("Demand tribute", {"kind": "tribute", "target": target})
-		demand.tooltip_text = "A court far weaker than you (or beaten in war) may submit as your tributary"
+		demand.tooltip_text = "Make them your tributary: each turn they pay you about %s wealth, and they trade with you. A court a third as strong as you (or beaten in war) bows; the humiliation leaves a grudge." % number(int(civ.get("tribute_if", 0)))
 		buttons.add_child(demand)
 	if relation == "war":
 		var white := _small_button("Offer peace", {"kind": "peace", "target": target})
@@ -1315,12 +1334,22 @@ func _diplomacy_buttons(civ: Dictionary) -> Control:
 		cede.tooltip_text = "Peace, if they cede every province your armies stand in - only a side that is losing gives up land"
 		buttons.add_child(cede)
 	else:
-		buttons.add_child(_small_button("Send envoy", {"kind": "envoy", "target": target}))
+		if relation in ["hostile", "neutral"] or int(civ.get("grievance_bp", 0)) > 0:
+			var envoy := _small_button("Send envoy", {"kind": "envoy", "target": target})
+			envoy.tooltip_text = {"hostile": "Gifts and talk: their grudge eases, and if it is small they become neutral (no more raids on a whim).",
+				"neutral": "Gifts and talk: their grudge eases, and if it is small they open trade - wealth for both of you every turn."}.get(str(relation), "Gifts and talk: eases the grudge they hold against you, so they trust you enough to ally.")
+			buttons.add_child(envoy)
 		if relation in ["neutral", "trading"]:
-			buttons.add_child(_small_button("Propose alliance", {"kind": "alliance", "target": target}))
-		buttons.add_child(_small_button("Declare war", {"kind": "declare_war", "target": target}))
+			var ally := _small_button("Propose alliance", {"kind": "alliance", "target": target})
+			ally.tooltip_text = "Allies march to defend each other when attacked, open their lands to each other's armies and trade. They agree if you share an enemy, have traded a while without grudges, or you have fought for them."
+			buttons.add_child(ally)
+		var war := _small_button("Declare war", {"kind": "declare_war", "target": target})
+		war.tooltip_text = "Their land is open to your armies - to besiege, storm and take. Their allies will join them, and they will hold a grudge for generations."
+		buttons.add_child(war)
 		if not civ.get("same_faith", false) and bool(view["status"].get("faith_spreads", false)):
-			buttons.add_child(_small_button("Missionaries", {"kind": "missionaries", "target": target}))
+			var faith := _small_button("Missionaries", {"kind": "missionaries", "target": target})
+			faith.tooltip_text = "Try to convert their court to your faith. Courts of one faith trade half as much again, forgive old grudges faster - and the faith may spread on to their neighbours."
+			buttons.add_child(faith)
 	if int(civ.get("spies", 0)) == 0:
 		var cost := int(view["status"].get("spy_cost", 0))
 		var spy := _small_button("Send spies (%s)" % number(cost), {"kind": "spies", "target": target})

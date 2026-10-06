@@ -266,6 +266,8 @@ class Relation(Mutable):
     """During a war: how tired of it each side is."""
     losses: dict[str, int] = Field(default_factory=dict)
     """During a war: provinces each side has lost."""
+    overlord: str = ""
+    """For a tributary pair: the side that receives the tribute (empty: the larger)."""
 
 
 class Outcome(Mutable):

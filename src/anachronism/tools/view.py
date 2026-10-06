@@ -26,6 +26,7 @@ from anachronism.engine.buildings import options as building_options
 from anachronism.engine.buildings import slots, worth
 from anachronism.engine.commands import describe_blockers
 from anachronism.engine.conquest import full_garrison, garrison_men, storm_outlook
+from anachronism.engine.culture import tie_income, trade_income, tribute
 from anachronism.engine.decrees import cost, explain_costs, explain_ready_in, news_on_the_road
 from anachronism.engine.deployment import AUTO as DEPLOY_AUTO
 from anachronism.engine.deployment import PLACE_NAMES, PLACE_NOTES, PLACES, SPLIT
@@ -46,7 +47,7 @@ from anachronism.engine.offers import describe
 from anachronism.engine.population import province_capacity
 from anachronism.engine.projects import hasten_cost, project_turns
 from anachronism.engine.reports import capacity
-from anachronism.engine.rivals import at_war, relation, status, strength
+from anachronism.engine.rivals import at_war, overlord_of, relation, status, strength
 from anachronism.engine.state import Army, Event, GameState
 from anachronism.engine.suspicion import adoption_suspicion_bp
 from anachronism.engine.tactics import AUTO, final, natural, needs_text, short_of_men
@@ -101,6 +102,14 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
             "explain_ready_in": explain_ready_in(state, civ_id),
             "sealed": civ.sealed,
             "seal_turns": state.world.rules.rivals.seal_turns,
+            # D-278: what the decrees do, in numbers
+            "festival_legitimacy_bp": state.world.rules.rivals.festival_legitimacy_bp,
+            "festival_unrest_bp": state.world.rules.rivals.festival_unrest_bp,
+            "mercenary_turns": state.world.rules.rivals.mercenary_turns,
+            "mercenary_men": state.population(civ_id)
+            * state.world.rules.armies.mercenary_men_bp
+            // BP,
+            "trade_total": trade_income(state, civ_id),
             "news_on_the_road": news_on_the_road(state, civ_id),
             "rumour_cost": cost(state, civ_id, state.world.rules.rivals.rumour_wealth_per_1000),
             "spy_cost": cost(state, civ_id, state.world.rules.rivals.spy_wealth_per_1000),
@@ -1002,6 +1011,11 @@ def _relation_to_player(state: GameState, other_id: str) -> dict[str, Any]:
             {"against": p.against, "against_name": state.civs[p.against].name}
             for p in pledges_of(state, me, other_id)
         ],
+        # D-278: what this tie is worth each turn: trade both ways, tribute one way
+        "trade_income": tie_income(state, me, other_id),
+        "tribute_in": tribute(state, other_id) if overlord_of(state, me, other_id) == me else 0,
+        "tribute_if": tribute(state, other_id),
+        "tribute_out": tribute(state, me) if overlord_of(state, me, other_id) == other_id else 0,
         "gratitude_bp": gratitude(state, me, other_id),
         "gratitude_warm_bp": rules.aid_warm_bp,
         "gratitude_alliance_bp": rules.aid_alliance_bp,

@@ -2333,3 +2333,26 @@ matters. Engine only: the client screens for it come in a later step.
   relation and eased grudges remain.
 - Rival courts do not (yet) come to others' aid this way; allies still join automatically.
   Old saves load (no pledges).
+
+## D-278 Every action earns its place — DELEGATED (2026-10-06)
+- **What the owner asked.** Many actions looked like they were "there for the sake of it":
+  make sure each has a clear, worthwhile use, or improve or remove it.
+- **Audit.** Every player action was checked against what the rules actually do with it.
+- **Fixed: tribute paid nothing.** Making a state your tributary only changed a label. Now a
+  tributary pays its overlord each turn (10% of its treasury, at least 2 wealth per 1,000 of
+  its people, never more than half its treasury) - and so does the player, if they bow to an
+  ultimatum. Who is overlord is now recorded (older saves: the larger state). "Demand
+  tribute" only appears when it could work (a court a third as strong as you, or one you are
+  at war with), and its tooltip says what they would pay.
+- **Improved: missionaries.** Converting a court to your faith now makes trade with it pay
+  half as much again (on top of grudges fading faster and the faith spreading on).
+- **Shown: what each tie is worth.** Each state's card in the World tab shows "Each turn:
+  trade +N, tribute +N wealth" (or the tribute you pay, in red).
+- **Removed: "Spread false rumours"** (it did almost the same as sealing the borders) and the
+  project **"Pause"** button (pausing only let progress decay; low priority slows work
+  without losing it). Both still load in old saves and replays.
+- **Clearer:** "Send envoy" only shows when it would do something (a cool relation or a
+  grudge to ease), and says what it will do; "Seal the borders" says what it protects and
+  costs (the trade lost each turn) and is only offered while word of your inventions is on
+  the road; festival, mercenaries, alliance, war, missionaries and abandoning a project all
+  say in numbers what they do and when to use them.

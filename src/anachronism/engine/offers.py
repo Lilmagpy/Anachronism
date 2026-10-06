@@ -25,6 +25,7 @@ from anachronism.engine.rivals import (
     at_war,
     declare_war,
     grievance,
+    make_tributary,
     relation,
     set_status,
     status,
@@ -179,7 +180,7 @@ def respond(state: GameState, *, accept: bool, events: EventLog) -> str:
             tribute = apply_bp(stores.wealth, TRIBUTE_BP)
             stores.wealth -= tribute
             state.civs[them].stockpiles.wealth += tribute
-            set_status(state, me, them, RelationStatus.TRIBUTARY)
+            make_tributary(state, them, me)
             state.civs[me].stats.legitimacy_bp = max(0, state.civs[me].stats.legitimacy_bp - 500)
             return f"{tribute:,} wealth goes to {name}. Peace, at a price."
         if status(state, me, them) is not RelationStatus.WAR:

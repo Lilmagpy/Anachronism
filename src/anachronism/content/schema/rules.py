@@ -256,6 +256,12 @@ class RivalRules(Frozen):
     aggressive_war_chance_bp: Rate
     """Chance per turn that an aggressive free agent attacks a much weaker neighbour."""
     trade_wealth_per_1000_bp: NonNegative
+    tribute_share_bp: Rate = 1000
+    """A tributary pays its overlord this share of its treasury each turn (D-278) ..."""
+    tribute_per_1000: NonNegative = 2
+    """... but at least this much wealth per 1,000 of its people, if it has it."""
+    faith_trade_bp: NonNegative = 5000
+    """A trade tie between two courts of one faith pays this much more (D-278)."""
     """Wealth each turn from each friendly partner, per 1,000 of the smaller side's people
     (per decade, scaled like every flow)."""
     faith_spread_bp: Rate

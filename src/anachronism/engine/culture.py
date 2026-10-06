@@ -14,7 +14,7 @@ from anachronism.content.schema import EffectType
 from anachronism.engine.effects import Effects
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import BP, apply_bp
-from anachronism.engine.rivals import alive, status
+from anachronism.engine.rivals import alive, overlord_of, status
 from anachronism.engine.rng import GameRng
 from anachronism.engine.state import GameState
 from anachronism.engine.timeflow import per_turn, rate_per_turn
@@ -23,8 +23,24 @@ from anachronism.engine.timeflow import per_turn, rate_per_turn
 def _tie_income(state: GameState, a: str, b: str) -> int:
     """What one friendly tie pays each side per turn, by the smaller side's people."""
     smaller = min(state.population(a), state.population(b))
-    rate = state.world.rules.rivals.trade_wealth_per_1000_bp
-    return per_turn(state, apply_bp(smaller // 1000, rate))
+    rules = state.world.rules.rivals
+    income = per_turn(state, apply_bp(smaller // 1000, rules.trade_wealth_per_1000_bp))
+    if shares_faith(state, a, b):  # pilgrims and merchants go together (D-278)
+        income = apply_bp(income, BP + rules.faith_trade_bp)
+    return income
+
+
+def tie_income(state: GameState, a: str, b: str) -> int:
+    """What the friendly tie between ``a`` and ``b`` pays each side this turn (0: none)."""
+    return _tie_income(state, a, b) if (min(a, b), max(a, b)) in _live_ties(state) else 0
+
+
+def tribute(state: GameState, vassal: str) -> int:
+    """What a tributary pays its overlord this turn (D-278)."""
+    rules = state.world.rules.rivals
+    stores = state.civs[vassal].stockpiles.wealth
+    floor = per_turn(state, state.population(vassal) // 1000 * rules.tribute_per_1000)
+    return min(stores // 2, max(apply_bp(stores, rules.tribute_share_bp), floor))
 
 
 def _live_ties(state: GameState) -> list[tuple[str, str]]:
@@ -50,6 +66,15 @@ def trade(state: GameState) -> None:
         income = _tie_income(state, a, b)
         state.civs[a].stockpiles.wealth += income
         state.civs[b].stockpiles.wealth += income
+    for pair in sorted(state.relations):  # tribute (D-278)
+        a, b = pair.split("|")
+        lord = overlord_of(state, a, b)
+        if lord is None or not alive(state, a) or not alive(state, b):
+            continue
+        vassal = b if lord == a else a
+        paid = tribute(state, vassal)
+        state.civs[vassal].stockpiles.wealth -= paid
+        state.civs[lord].stockpiles.wealth += paid
 
 
 def convert(state: GameState, civ_id: str, faith_id: str, events: EventLog, how: str) -> None:
