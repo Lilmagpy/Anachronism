@@ -2383,3 +2383,27 @@ matters. Engine only: the client screens for it come in a later step.
 - The Nile capital's pyramid stands on dry desert ground beyond the city. Plain painted parts
   (palaces, columns, terraces, tents) now fade with distance like the rest (they were left
   half see-through).
+
+## D-280 Detailed buildings from a model kit — DELEGATED (2026-10-07)
+- **What the owner asked.** "It's still so basic ... make the components less simple blocky
+  things, take your time and do the job properly", using several Sonnet agents in parallel.
+- **A modelling kit** (`client/scripts/models/kit.gd`): real roofs with slab thickness,
+  overhanging and upturned eaves, columns, domes and onion domes, framed, shuttered, latticed
+  and arched windows, doors, chimneys, banners. Each face carries a material, and one shader
+  (`models.gdshader`) draws its surface: roof tiles in rows, stone courses, brick bond,
+  plaster, timber planks, thatch, felt, rammed earth. Roofs and banners take the owner's
+  colour, so who holds a city still shows at a glance. Only gilding is shiny.
+- **Seven modules, built in parallel by agents, one per region**, each with its own
+  houses (four to six genuinely different shapes, so a street looks lived-in), palace and
+  landmarks: East Asia (incl. the Japanese castle keep and pagoda), Classical (temple, forum,
+  arch, insulae and villas), Northern Europe (timber, thatch, longhouse, izba, castle,
+  church), Steppe (yurts, great tent, wagon tent), Nile / Near East / South Asia (pyramid,
+  sphinx, ziggurat, stupa, shikhara), walls (six families of wall, tower and gatehouse) and
+  civic buildings (market, bank, temple, granary, workshop, factory, school, academy,
+  observatory, windmill, water wheel, clock tower, aqueduct, hospital, station, harbour).
+- **Culture picks the house:** samurai, Joseon, Punic, Viking, Rus and Assyrian peoples
+  each get their own mix and palace. Content packs need no change: a culture without its
+  own mapping uses its region's set, and a region without a module keeps the older houses.
+- **Inventions** now raise the matching civic building beside the capital (a windmill, an
+  observatory, an aqueduct) instead of a coloured block.
+- **Paving** is patterned: flagstones, cobbles or beaten earth, by how developed a city is.

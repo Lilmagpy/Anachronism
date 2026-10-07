@@ -383,7 +383,7 @@ const HOUSE_MODELS := {
 	"northern": ["northern", ["house_1", "house_2", "house_3", "house_4", "house_5", "house_6"]],
 	"northern:viking": ["northern", ["house_4", "house_4", "house_2", "house_6"]],
 	"northern:rus": ["northern", ["house_5", "house_5", "house_2", "house_1"]],
-	"steppe": ["steppe", ["yurt_1", "yurt_2", "yurt_3", "yurt_1"]],
+	"steppe": ["steppe", ["yurt_1", "yurt_2", "yurt_3", "yurt_1", "yurt_2", "wagon_tent"]],
 	"nile": ["south", ["nile_house_1", "nile_house_2", "nile_house_3", "nile_house_4"]],
 	"near_east": ["south", ["near_east_house_1", "near_east_house_2", "near_east_house_3", "near_east_house_4"]],
 	"south_asian": ["south", ["south_asian_house_1", "south_asian_house_2", "south_asian_house_3", "south_asian_house_4"]],
@@ -945,10 +945,15 @@ func _pyramid(heart: Vector2, half: float, index: int) -> void:
 
 ## A khan's camp: tents in loose rings around the great tent, none touching.
 func _camp(site: Dictionary, centre: Vector2, half: float, tents: int, index: int) -> void:
-	if site["capital"]:
-		_palace(centre, index, 0.0)
-	_claim(centre, float(PALACE_R["steppe"]) * S)
-	_add("k_flag", centre + Vector2(LOT, -LOT), 0.0, 0.0, Vector3.ONE, Color.WHITE, index, 1.0)
+	var court := _palace_part() if site["capital"] else ""
+	if court != "":   # the khan's court from the model kit, with its own standards (D-280)
+		_add(court, centre, 0.0, rng.randf() * TAU, Vector3.ONE, ROOF_BASE.get(style, Color.WHITE), index, 0.85)
+		_claim(centre, _foot(court))
+	else:
+		if site["capital"]:
+			_palace(centre, index, 0.0)
+		_claim(centre, float(PALACE_R["steppe"]) * S)
+		_add("k_flag", centre + Vector2(LOT, -LOT), 0.0, 0.0, Vector3.ONE, Color.WHITE, index, 1.0)
 	var placed := 0
 	for attempt in tents * 4:
 		if placed >= tents:
