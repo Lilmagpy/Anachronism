@@ -927,13 +927,17 @@ func _piers(lots: Dictionary, theta: float, sea: Vector2) -> void:
 
 ## A pyramid on the desert edge beyond a Nile capital: dry ground, away from the river.
 func _pyramid(heart: Vector2, half: float, index: int) -> void:
-	var r := 0.45 * S
+	var r := 0.45 * S * 2.0
 	for step in 16:
 		var a := step * TAU / 16.0
 		for dist in [half * 1.6, half * 2.0, half * 2.5]:
 			var p := heart + Vector2(cos(a), sin(a)) * float(dist)
 			if _dry(p, r * 1.4) and _free(p, r * 1.2):
-				_add("pyramid", p, 0.0, PI / 4.0, Vector3.ONE, Color(0.84, 0.70, 0.46))
+				var model := _model("south", "pyramid", GRAND_UNIT * 1.2)   # with its causeway (D-280)
+				if model != "":
+					_add(model, p, 0.0, -(heart - p).angle() + PI / 2.0, Vector3.ONE, Color.WHITE, index, 0.0)
+				else:
+					_add("pyramid", p, 0.0, PI / 4.0, Vector3.ONE, Color(0.84, 0.70, 0.46))
 				_claim(p, r * 1.2)
 				clearings.append([p, r * 1.5])
 				return
