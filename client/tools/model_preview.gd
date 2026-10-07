@@ -101,7 +101,9 @@ func _shoot(mid: Vector3, span: float, spacing: float) -> void:
 	for i in _kinds.size():
 		var at := Vector3((i % per_row) * spacing, 0, (i / per_row) * spacing)
 		var size := 1.7
-		_cam.look_at_from_position(at + Vector3(size * 0.9, size * 0.95, size * 1.3), at + Vector3(0, 0.45, 0))
+		var aabb_h: float = (_module.call("build", str(_kinds[i])) as ArrayMesh).get_aabb().size.y
+		size = maxf(size, aabb_h * 1.1)
+		_cam.look_at_from_position(at + Vector3(size * 0.9, size * 0.95, size * 1.3), at + Vector3(0, aabb_h * 0.4, 0))
 		await _settle()
 		get_root().get_viewport().get_texture().get_image().save_png("%s_%s.png" % [_out, _kinds[i]])
 	quit()

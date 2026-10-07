@@ -12,6 +12,7 @@ varying vec3 local_pos;
 varying vec3 local_normal;
 varying vec4 owner;
 varying float scale;
+varying float shiny;
 
 void vertex() {
 	local_pos = VERTEX;
@@ -44,12 +45,20 @@ vec2 face_uv(vec3 p, vec3 n) {
 	return vec2(p.x, p.y);
 }
 
-// Coordinates along a sloping roof: x across the slope, y down the slope.
+// Coordinates on a sloping face: x along the slope's level line (across), y down the slope.
+// Works for roof planes and cones alike (the level direction follows the normal).
 vec2 roof_uv(vec3 p, vec3 n) {
-	vec2 h = normalize(n.xz + vec2(1e-4));
-	float across = dot(p.xz, vec2(-h.y, h.x));
-	float down = dot(p.xz, h) - p.y * 0.0;
-	return vec2(across, down + p.y * length(n.xz) / max(n.y, 0.2));
+	vec2 h = n.xz;
+	float len = length(h);
+	if (len < 1e-3) {
+		return p.xz;
+	}
+	h /= len;
+	vec2 level = vec2(-h.y, h.x);
+	float across = dot(p.xz, level);
+	// distance down the slope: horizontal run along h plus the drop, measured on the surface
+	float down = dot(p.xz, h) * n.y / len * 0.0 + (dot(p.xz, h) - p.y * n.y / len);
+	return vec2(across, down);
 }
 
 // Line weight that stays about a pixel wide whatever the distance (soft, no shimmer).
@@ -64,13 +73,18 @@ vec3 pattern(int id, vec3 base, vec3 p, vec3 n) {
 	vec3 c = base;
 	if (id == 0 || id == 6) {
 		// roof tiles: rows down the slope, staggered joints, a darker lip at each row
-		vec2 r = (n.y > 0.25 && n.y < 0.98) ? roof_uv(p, n) : uv;
-		float row = r.y * 11.0;
-		float col = r.x * 9.0 + floor(row) * 0.5;
-		float lip = smoothstep(0.65, 1.0, fract(row));
-		c *= 1.0 - 0.28 * lip;
-		c *= 1.0 - 0.18 * line(col, 0.44);
-		c *= 0.9 + 0.2 * hash(floor(vec2(col, row)));
+		bool sloped = n.y > 0.2 && n.y < 0.985;
+		vec2 r = sloped ? roof_uv(p, n) : uv;
+		// courses run level across the slope; each course's lower edge casts a shadow lip
+		float row = r.y * 12.0;
+		float col = r.x * 10.0 + floor(row) * 0.5;
+		float lip = smoothstep(0.55, 1.0, fract(row));
+		c *= 1.0 - 0.32 * lip;
+		c *= 1.0 - 0.14 * line(col, 0.44);
+		c *= 0.88 + 0.22 * hash(floor(vec2(col, row)));
+		if (!sloped) {
+			c *= 0.95;   // the edges and undersides keep a plain tone
+		}
 	} else if (id == 1) {
 		// plaster: soft mottling and a little grime near the ground
 		c *= 0.93 + 0.1 * noise(uv * 9.0) + 0.04 * noise(uv * 31.0);
@@ -127,6 +141,7 @@ void fragment() {
 		discard;
 	}
 	int id = int(COLOR.a * 16.0);
+	shiny = id == 9 ? 1.0 : 0.0;
 	vec3 base = COLOR.rgb;
 	if (id == 0 || id == 11) {   // the owner's colour, keeping the modelled light and dark
 		float shade = dot(base, vec3(0.3, 0.59, 0.11));
@@ -146,7 +161,7 @@ void light() {
 	float ndl = dot(NORMAL, LIGHT);
 	float band = 0.40 + 0.35 * smoothstep(-0.05, 0.1, ndl) + 0.22 * smoothstep(0.45, 0.6, ndl);
 	DIFFUSE_LIGHT += band * ATTENUATION * LIGHT_COLOR / PI;
-	if (SPECULAR_AMOUNT > 0.3) {
+	if (shiny > 0.5) {   // gilding glints; everything else stays matte
 		vec3 h = normalize(LIGHT + VIEW);
 		SPECULAR_LIGHT += pow(max(dot(NORMAL, h), 0.0), 24.0) * 0.6 * ATTENUATION * LIGHT_COLOR;
 	}
