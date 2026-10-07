@@ -37,6 +37,14 @@ const KINDS := {
 }
 
 ## how tall each kit-built landmark stands, in settlement units
+## Landmark kinds drawn with the model kit's public buildings (D-280), and their size.
+const CIVIC := {"aqueduct": "aqueduct", "windmill": "windmill", "water_wheel": "water_wheel",
+	"observatory": "observatory", "school": "school", "workshop": "workshop", "press": "workshop",
+	"forge": "forge", "furnace": "factory", "kiln": "workshop", "watchtower": "watchtower",
+	"mint": "bank", "harbour": "harbour", "clock_tower": "clock_tower", "academy": "academy",
+	"hospital": "hospital", "station": "station", "market": "market", "temple": "temple",
+	"granary": "granary", "mine": "mine", "factory": "factory"}
+const CIVIC_UNIT := 0.42 * S
 const KIT_HEIGHT := {"windmill": 1.0, "water_wheel": 0.5, "clock_tower": 1.0, "watchtower": 0.8,
 	"powder_tower": 0.8, "observatory": 0.8, "school": 0.6, "workshop": 0.42, "press": 0.42,
 	"kiln": 0.42, "forge": 0.45, "furnace": 0.45, "mint": 0.6, "harbour": 0.55}
@@ -180,6 +188,31 @@ func _make(kind: String, colour: Color, spot: Vector2, centre: Vector2) -> Node3
 	var stone := Color(0.80, 0.76, 0.66)
 	var wood := Color(0.50, 0.33, 0.18)
 	var roof := colour.darkened(0.25)
+	# the model kit's public buildings first (D-280): detailed, in the owner's colours
+	var civic := str(CIVIC.get(kind, ""))
+	if civic != "" and Settlements.MODULES.has("civic"):
+		var mesh: ArrayMesh = Settlements._scaled_model(Settlements.MODULES["civic"], civic, CIVIC_UNIT)
+		var batch := MultiMesh.new()
+		batch.transform_format = MultiMesh.TRANSFORM_3D
+		batch.use_custom_data = true
+		batch.mesh = mesh
+		batch.instance_count = 1
+		batch.set_instance_transform(0, Transform3D())
+		batch.set_instance_custom_data(0, colour)
+		var instance := MultiMeshInstance3D.new()
+		instance.multimesh = batch
+		var material := ShaderMaterial.new()
+		material.shader = load("res://shaders/models.gdshader")
+		instance.material_override = material
+		instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
+		node.add_child(instance)
+		if kind == "harbour":
+			node.position.y = earth.ground_at_pixel(spot).y + 0.05
+		node.rotation.y = -(centre - spot).angle() + PI / 2.0   # facing the city
+		if kind in ["forge", "furnace", "kiln"]:
+			node.add_child(Settlements.smoke_at(Vector3(0, CIVIC_UNIT * 1.4, 0), Color(0.45, 0.45, 0.48, 0.4)))
+		Lod.near(instance, SHOW_WITHIN)
+		return node
 	# buildings from the Kenney kits where there is one (G1); the rest from simple shapes
 	var built := Buildings.landmark(kind, KIT_HEIGHT.get(kind, 1.0) * S)
 	if built != null:

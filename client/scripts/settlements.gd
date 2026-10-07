@@ -402,6 +402,14 @@ const ROOF_BASE := {"east": Color(0.40, 0.43, 0.48), "classical": Color(0.84, 0.
 	"near_east": Color(0.70, 0.60, 0.46), "south_asian": Color(0.74, 0.52, 0.36)}
 const HOUSE_UNIT := LOT * 0.95   ## map units per model-kit unit for houses
 const GRAND_UNIT := LOT * 1.15   ## ... and for palaces and great buildings
+const CIVIC_UNIT := LOT * 1.05   ## ... and for public buildings (D-111) in the city
+## A province building's look (Buildings.CITY_LOOKS) -> the model kit's public building.
+const CIVIC_OF := {"mint": "market", "bank": "bank", "temple": "temple", "granary": "granary",
+	"workshop": "workshop", "factory": "factory", "watchtower": "watchtower", "mine": "mine",
+	"school": "school", "academy": "academy", "observatory": "observatory", "forge": "forge",
+	"water_wheel": "water_wheel", "windmill": "windmill", "clock_tower": "clock_tower",
+	"aqueduct": "aqueduct", "hospital": "hospital", "station": "station", "hall": "hall"}
+const WALL_UNIT := LOT * 1.3     ## ... and for walls, towers and gates (taller than the houses)
 
 
 ## The model-kit house list for the province being built, or [] for the old houses.
@@ -781,7 +789,11 @@ func _public_building(look: String, spots: Array, lots: Dictionary, heart: Vecto
 	else:
 		if look.begins_with("|works|"):
 			building = look.substr(7)
-		part = "b_" + building
+		var entry_look: Array = Buildings.CITY_LOOKS.get(building, Buildings.CITY_LOOKS["hall"])
+		var civic := str(CIVIC_OF.get(str(entry_look[0]), ""))
+		part = _model("civic", civic, CIVIC_UNIT) if civic != "" else ""
+		if part == "":
+			part = "b_" + building
 		if not _parts.has(part):
 			var entry: Array = Buildings.CITY_LOOKS.get(building, Buildings.CITY_LOOKS["hall"])
 			_parts[part] = {"mesh": Buildings.city_building(building, float(entry[1]) * S), "transforms": [],
@@ -795,6 +807,8 @@ func _public_building(look: String, spots: Array, lots: Dictionary, heart: Vecto
 		var face := -(heart - p).angle() + PI / 2.0 if p.distance_to(heart) > 0.1 else -theta
 		if look.begins_with("|works|"):
 			_scaffold_at(part, p, face, r, index)
+		elif part.begins_with("m_civic_"):
+			_add(part, p, 0.0, face, Vector3.ONE, ROOF_BASE.get(style, Color.WHITE), index, 0.6)
 		elif look.begins_with("|m:"):
 			_add(part, p, 0.0, face, Vector3.ONE, ROOF_BASE.get(style, Color.WHITE), index, 0.6)
 		elif part == "f_pagoda":
@@ -841,6 +855,16 @@ func _city_walls(centre: Vector2, theta: float, lots: Dictionary, streets: Dicti
 		smooth.append(maxf(b, (a + b + c) / 3.0) if b > 0.0 else 0.0)
 	var corner_part := "k_round" if style in ["northern", "classical"] else "k_tower"
 	var piece_width := 0.24 * S / 1.31   # the wall model's width for its height
+	# the model kit's walls (D-280): one family per style, segments one unit long
+	var family: String = {"east": "east", "classical": "classical", "northern": "northern", "nile": "mud",
+		"near_east": "mud", "south_asian": "south_asian", "steppe": "steppe"}.get(style, "northern")
+	var wall_part := _model("walls", "wall_" + family, WALL_UNIT)
+	var tower_part := _model("walls", "tower_" + family, WALL_UNIT)
+	var gate_part := _model("walls", "gate_" + family, WALL_UNIT)
+	var kit := wall_part != "" and tower_part != "" and gate_part != ""
+	if kit:
+		piece_width = WALL_UNIT
+		corner_part = tower_part
 	var gates := {}
 	for a in roads:
 		gates[posmod(int(round(float(a) / TAU * sectors)), sectors)] = true
@@ -858,13 +882,24 @@ func _city_walls(centre: Vector2, theta: float, lots: Dictionary, streets: Dicti
 			var p := a.lerp(b, (m + 0.5) / pieces)
 			if earth.is_wet(p) or not _free(p, piece_width * 0.3):
 				continue
+			var stretch := length / pieces / piece_width
+			if kit:   # the battlements face out of the city (the model's +z), so turn it round
+				if gates.has(k) and m == pieces / 2:
+					_add(gate_part, p, 0.0, angle + PI, Vector3(stretch, 1, 1), ROOF_BASE.get(style, Color.WHITE), index, 0.9)
+					_claim(p, piece_width * 0.6)
+					continue
+				_add(wall_part, p, 0.0, angle + PI, Vector3(stretch * 1.01, 1, 1), ROOF_BASE.get(style, Color.WHITE), index, 0.9)
+				continue
 			if gates.has(k) and m == pieces / 2:
 				_add("k_gate", p, 0.0, angle, Vector3.ONE, Color.WHITE, index, 1.0)
 				_claim(p, piece_width * 0.8)
 				continue
-			_add("k_wall", p, 0.0, angle, Vector3(length / pieces / piece_width * 1.02, 1, 1), Color.WHITE, index, 1.0)
+			_add("k_wall", p, 0.0, angle, Vector3(stretch * 1.02, 1, 1), Color.WHITE, index, 1.0)
 		if k % 3 == 0 and _dry(a, piece_width * 0.4) and _free(a, piece_width * 0.4):
-			_add(corner_part, a, 0.0, 0.0, Vector3.ONE, Color.WHITE, index, 1.0)
+			if kit:
+				_add(corner_part, a, 0.0, angle, Vector3.ONE, ROOF_BASE.get(style, Color.WHITE), index, 0.9)
+			else:
+				_add(corner_part, a, 0.0, 0.0, Vector3.ONE, Color.WHITE, index, 1.0)
 			_claim(a, piece_width * 0.5)
 
 
