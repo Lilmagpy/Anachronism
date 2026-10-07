@@ -20,6 +20,7 @@ static func kinds() -> Array:
 		out.append("wall_" + f)
 		out.append("tower_" + f)
 		out.append("gate_" + f)
+	out.append("gate_nile")   # Egypt's own gatehouse; its walls and towers are the mud family's
 	for f in FAMILIES:
 		out.append("wall_" + f + "_run")
 	return out
@@ -46,6 +47,11 @@ static func build(kind: String) -> ArrayMesh:
 # ---------------------------------------------------------------------------------------------
 # helpers
 # ---------------------------------------------------------------------------------------------
+
+## The depth of a pylon's battered face at height y (front zs = 1, back -1), just proud of it.
+static func _pylon_z(zs: float, y: float) -> float:
+	return zs * (0.3 - 0.1 * (y - 0.04) / 0.88 + 0.006)
+
 
 ## A box between two corners.
 static func _bx(k: Kit, x0: float, x1: float, y0: float, y1: float, z0: float, z1: float, col: Color, mat: int) -> void:
@@ -600,6 +606,66 @@ static func _gate(k: Kit, fam: String) -> void:
 				k.banner(Vector3(x, 1.3, 0), 0.34, 0.22)
 			for i in 5:
 				k.box(Vector3(-0.15 + i * 0.075, 0.96, 0.27), Vector3(0.05, 0.06, 0.06), deep, Kit.PAINT)
+		"nile":
+			# a temple pylon: two battered towers with a cavetto cornice, reliefs painted on the
+			# faces, a tall doorway between them under a winged-disc lintel, flagstaffs in front
+			var sand := Color(0.86, 0.76, 0.56)
+			var ochre := Color(0.80, 0.50, 0.22)
+			var blue := Color(0.16, 0.36, 0.62)
+			var red := Color(0.66, 0.22, 0.16)
+			var gold := Color(0.90, 0.74, 0.30)
+			var wood := Color(0.40, 0.27, 0.16)
+			k.box(Vector3(0, 0, 0), Vector3(1.24, 0.04, 0.72), sand.darkened(0.12), Kit.STONE)
+			for sx: float in [-1.0, 1.0]:
+				var x0 := 0.15 if sx > 0 else -0.6
+				var x1 := 0.6 if sx > 0 else -0.15
+				_slab(k, x0, x1, 0.04, 0.92, 0.3, 0.2, sand, Kit.STONE)
+				# torus moulding up the outer corners and the flaring cornice
+				for zs: float in [-1.0, 1.0]:
+					k.rod(Vector3(sx * 0.6, 0.04, zs * 0.3), Vector3(sx * 0.6, 0.92, zs * 0.2), 0.014, sand.lightened(0.1), Kit.STONE)
+				_bx(k, x0 - 0.01, x1 + 0.01, 0.92, 0.95, -0.21, 0.21, blue, Kit.PAINT)
+				_slab(k, x0 - 0.02, x1 + 0.02, 0.95, 1.03, 0.21, 0.26, sand.lightened(0.06), Kit.STONE)
+				_bx(k, x0 - 0.02, x1 + 0.02, 1.03, 1.05, -0.26, 0.26, sand.darkened(0.08), Kit.STONE)
+				# the painted reliefs: the king, the gods, rows of text, on both faces
+				var cx := sx * 0.375
+				for zs: float in [-1.0, 1.0]:
+					k.box(Vector3(cx - sx * 0.07, 0.34, _pylon_z(zs, 0.34)), Vector3(0.07, 0.3, 0.008), red, Kit.PAINT)    # the king
+					k.box(Vector3(cx - sx * 0.07, 0.64, _pylon_z(zs, 0.64)), Vector3(0.05, 0.07, 0.008), blue, Kit.PAINT)   # his crown
+					k.box(Vector3(cx + sx * 0.08, 0.34, _pylon_z(zs, 0.34)), Vector3(0.06, 0.26, 0.008), blue, Kit.PAINT)  # the god
+					k.box(Vector3(cx + sx * 0.08, 0.6, _pylon_z(zs, 0.6)), Vector3(0.04, 0.06, 0.008), gold, Kit.PAINT)
+					for row in 3:
+						var ry := 0.74 + row * 0.04
+						k.box(Vector3(cx, ry, _pylon_z(zs, ry)), Vector3(0.3, 0.012, 0.008), ochre, Kit.PAINT)
+				# two flagstaffs in recesses on the front, each flying the owner's colour
+				for off: float in [-0.11, 0.11]:
+					var fx := cx + off
+					k.box(Vector3(fx, 0.04, 0.27), Vector3(0.05, 0.8, 0.03), sand.darkened(0.18), Kit.STONE)
+					k.cylinder(Vector3(fx, 0.04, 0.31), 0.012, 1.3, wood, Kit.TIMBER, 5)
+					k.push(Kit.at(Vector3(fx, 1.12, 0.31), 0.0))
+					k.box(Vector3(0.0, 0, 0.0), Vector3(0.025, 0.2, 0.012), Color.WHITE, Kit.OWNER_CLOTH)
+					k.box(Vector3(0.03, 0.1, 0.0), Vector3(0.06, 0.1, 0.01), Color.WHITE, Kit.OWNER_CLOTH)
+					k.pop()
+			# the gateway between the towers: jambs, a lintel with a winged sun, the doors
+			_bx(k, -0.15, 0.15, 0.62, 0.78, -0.22, 0.22, sand, Kit.STONE)
+			_bx(k, -0.17, 0.17, 0.78, 0.83, -0.24, 0.24, sand.lightened(0.06), Kit.STONE)
+			for zs: float in [-1.0, 1.0]:
+				k.box(Vector3(0, 0.67, zs * 0.224), Vector3(0.05, 0.05, 0.008), gold, Kit.PAINT)
+				for sx: float in [-1.0, 1.0]:
+					k.box(Vector3(sx * 0.07, 0.685, zs * 0.224), Vector3(0.09, 0.02, 0.008), blue, Kit.PAINT)
+			for sx: float in [-1.0, 1.0]:
+				_bx(k, sx * 0.15 - 0.02, sx * 0.15 + 0.02, 0.04, 0.62, -0.23, 0.23, sand.lightened(0.04), Kit.STONE)
+			_bx(k, -0.13, 0.13, 0.04, 0.6, -0.01, 0.01, Color(0.12, 0.09, 0.07), Kit.DARK)
+			for sx: float in [-1.0, 1.0]:
+				k.box(Vector3(sx * 0.065, 0.04, 0.02), Vector3(0.12, 0.54, 0.02), wood, Kit.TIMBER)
+				for y: float in [0.16, 0.32, 0.48]:
+					k.box(Vector3(sx * 0.065, y, 0.031), Vector3(0.11, 0.015, 0.006), gold, Kit.GOLD)
+			# a pair of seated colossi guarding the way
+			for sx: float in [-1.0, 1.0]:
+				var x := sx * 0.24
+				k.box(Vector3(x, 0.04, 0.42), Vector3(0.1, 0.08, 0.12), sand.darkened(0.06), Kit.STONE)
+				k.box(Vector3(x, 0.12, 0.40), Vector3(0.08, 0.12, 0.08), sand, Kit.STONE)
+				k.box(Vector3(x, 0.24, 0.40), Vector3(0.06, 0.06, 0.05), sand, Kit.STONE)
+				k.box(Vector3(x, 0.30, 0.40), Vector3(0.05, 0.04, 0.05), blue, Kit.PAINT)
 		"south_asian":
 			var brick := Color(0.70, 0.40, 0.30)
 			var stone := Color(0.86, 0.76, 0.60)

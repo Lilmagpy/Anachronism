@@ -860,7 +860,7 @@ func _city_walls(centre: Vector2, theta: float, lots: Dictionary, streets: Dicti
 		"near_east": "mud", "south_asian": "south_asian", "steppe": "steppe"}.get(style, "northern")
 	var wall_part := _model("walls", "wall_" + family, WALL_UNIT)
 	var tower_part := _model("walls", "tower_" + family, WALL_UNIT)
-	var gate_part := _model("walls", "gate_" + family, WALL_UNIT)
+	var gate_part := _model("walls", "gate_nile" if style == "nile" else "gate_" + family, WALL_UNIT)   # Egypt: a pylon
 	var kit := wall_part != "" and tower_part != "" and gate_part != ""
 	if kit:
 		piece_width = WALL_UNIT
