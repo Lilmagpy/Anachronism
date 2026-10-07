@@ -9,7 +9,7 @@ class_name Lod
 extends RefCounted
 
 const MARGIN := 0.22   ## the fade, as a share of the threshold distance (as in the shader)
-const SELF_FADING := ["kit.gdshader", "peak.gdshader", "house.gdshader", "field.gdshader", "paving.gdshader", "folk.gdshader", "plain.gdshader"]
+const SELF_FADING := ["kit.gdshader", "peak.gdshader", "house.gdshader", "field.gdshader", "paving.gdshader", "folk.gdshader", "plain.gdshader", "models.gdshader"]
 
 
 static var _materials := {}   ## [material, near, far] -> its copy with those distances

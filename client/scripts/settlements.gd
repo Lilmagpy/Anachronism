@@ -16,6 +16,9 @@ class_name Settlements
 extends RefCounted
 
 const FolkHouses := preload("res://scripts/folk_houses.gd")
+## The model-kit modules (D-280) by name: each has kinds() and build(kind).
+const MODULE_NAMES := ["east", "classical", "northern", "steppe", "south", "walls", "civic"]
+static var MODULES := {}
 
 const SHOW_WITHIN := 320.0          ## camera distance at which settlements appear
 const FAR_UNTIL := 1400.0           ## city icons stand in for them out to here
@@ -37,6 +40,7 @@ var clearings: Array = []   ## [pixel, radius] of each chief city, kept free of 
 var _chimneys: Array = []   ## where hearth smoke rises over capitals
 var _owned: Array = []   ## [part, instance index, site index, how much owner colour]
 var _material := StandardMaterial3D.new()   ## (kept for reference; parts now use _plain)
+var _models_material := ShaderMaterial.new()   ## the model kit's buildings (D-280)
 var _plain := ShaderMaterial.new()   ## shared by plain parts: colour per instance, dissolves itself
 var style := "east"   ## the building style of the province being built
 var holder: Node3D   ## everything built, so the cities can be rebuilt as they grow
@@ -55,6 +59,12 @@ func _init(province_map: ProvinceMap) -> void:
 	map = province_map
 	earth = province_map.earth
 	_plain.shader = load("res://shaders/plain.gdshader")
+	_models_material.shader = load("res://shaders/models.gdshader")
+	if MODULES.is_empty():
+		for name in MODULE_NAMES:
+			var path := "res://scripts/models/%s.gd" % name
+			if ResourceLoader.exists(path):
+				MODULES[name] = load(path)
 	var house := BoxMesh.new()
 	house.size = Vector3(0.16, 0.09, 0.11) * S
 	var wall := BoxMesh.new()
@@ -350,6 +360,38 @@ var _taken := {}   ## Vector2i bucket -> Array of [centre, radius]: ground alrea
 var _feet := {}    ## part -> footprint radius at scale 1
 
 
+## A model from a model-kit module (D-280) as a part "m_<module>_<kind>", made once; it shares
+## the kit's material and takes its owner colour as instance custom data (like folk houses).
+## `unit` is how many map units one model unit is. Returns "" if the module lacks the kind.
+func _model(module: String, kind: String, unit: float) -> String:
+	var part := "m_%s_%s" % [module, kind]
+	if _parts.has(part):
+		return part
+	var script: GDScript = MODULES.get(module)
+	if script == null or not (script.call("kinds") as Array).has(kind):
+		return ""
+	var mesh: ArrayMesh = _scaled_model(script, kind, unit)
+	_parts[part] = {"mesh": mesh, "transforms": [], "colours": [], "folk": true, "material": _models_material}
+	return part
+
+
+static var _model_cache := {}
+
+
+static func _scaled_model(script: GDScript, kind: String, unit: float) -> ArrayMesh:
+	var key := "%s|%s|%s" % [script.resource_path, kind, unit]
+	if _model_cache.has(key):
+		return _model_cache[key]
+	var raw: ArrayMesh = script.call("build", kind)
+	var out := ArrayMesh.new()
+	var st := SurfaceTool.new()
+	for i in raw.get_surface_count():
+		st.append_from(raw, i, Transform3D(Basis().scaled(Vector3.ONE * unit), Vector3.ZERO))
+	st.commit(out)
+	_model_cache[key] = out
+	return out
+
+
 ## The radius of ground a part covers at scale 1 (from its mesh).
 func _foot(part: String) -> float:
 	if not _feet.has(part):
@@ -544,6 +586,7 @@ func _city(site: Dictionary, population: int, index: int) -> void:
 		if tier == 2 and kind == "lot":
 			continue
 		var colour: Color = paved if kind == "plaza" else (street if kind == "street" else ground.darkened(rng.randf() * 0.08))
+		colour.a = 1.0 if kind == "plaza" else (0.66 if kind == "street" else 0.33)   # the paving's pattern (D-280)
 		_add("paving", lots[key][0], -0.55, -theta, Vector3(LOT * 1.03, 90.0, LOT * 1.03), colour)
 	# the palace at the heart, the public buildings around the square
 	if site["capital"]:
