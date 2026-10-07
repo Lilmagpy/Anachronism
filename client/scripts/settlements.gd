@@ -43,6 +43,7 @@ var _material := StandardMaterial3D.new()   ## (kept for reference; parts now us
 var _models_material := ShaderMaterial.new()   ## the model kit's buildings (D-280)
 var _plain := ShaderMaterial.new()   ## shared by plain parts: colour per instance, dissolves itself
 var style := "east"   ## the building style of the province being built
+var culture := ""     ## its owner's portrait style (samurai, joseon, punic ...), for local variants
 var holder: Node3D   ## everything built, so the cities can be rebuilt as they grow
 
 
@@ -189,7 +190,8 @@ func build(parent: Node3D) -> void:
 			if site["sea"]:
 				continue
 			rng.seed = hash(site["id"]) + pass_no * 7919
-			style = style_of(map.civ_portraits.get(site["owner"], ""))
+			culture = str(map.civ_portraits.get(site["owner"], ""))
+			style = style_of(culture)
 			var population: int = site["population"]
 			var cells := _good_land(index)
 			if cells.is_empty():
@@ -311,6 +313,15 @@ func _house(pixel: Vector2, turn: float, size := 1.0, site := -1, mix := 0.0, fi
 	var tint := mix * rng.randf_range(0.8, 1.1)
 	var shrink := func(part: String, big: float) -> float:   # never wider than its lot (D-279)
 		return minf(big, fit / maxf(_foot(part), 0.001)) if fit > 0.0 else big
+	var models := _house_list()
+	if not models.is_empty():   # the model kit's houses (D-280)
+		var kinds: Array = models[1]
+		var part := _model(str(models[0]), str(kinds[rng.randi() % kinds.size()]), HOUSE_UNIT)
+		if part != "":
+			var roof: Color = ROOF_BASE.get(style, Color(0.6, 0.5, 0.4))
+			roof = roof.lightened(rng.randf_range(-0.08, 0.08))
+			_add(part, pixel, 0.0, turn, Vector3.ONE * shrink.call(part, size), roof, site, maxf(tint, 0.25) * 0.6)
+			return
 	match style:
 		"steppe":
 			var felt := Color(0.90, 0.86, 0.76).darkened(rng.randf() * 0.12)
@@ -358,6 +369,55 @@ const BUCKET := 2.0
 
 var _taken := {}   ## Vector2i bucket -> Array of [centre, radius]: ground already built on
 var _feet := {}    ## part -> footprint radius at scale 1
+
+
+## Which model-kit houses each style builds (D-280), listed by how common each kind is; a
+## culture may have its own mix. Missing kinds (a module not yet made) fall back to the old ones.
+const HOUSE_MODELS := {
+	"east": ["east", ["house_1", "house_1", "house_2", "house_3", "house_6", "house_2"]],
+	"east:samurai": ["east", ["house_4", "house_4", "house_4", "house_2", "house_6", "house_1"]],
+	"east:joseon": ["east", ["house_5", "house_5", "house_5", "house_6", "house_1", "house_3"]],
+	"east:hills": ["east", ["house_6", "house_6", "house_5", "house_1"]],
+	"classical": ["classical", ["house_1", "house_2", "house_3", "house_4", "house_5", "house_6", "house_2", "house_1"]],
+	"classical:punic": ["classical", ["house_5", "house_5", "house_5", "house_2", "house_6", "house_3"]],
+	"northern": ["northern", ["house_1", "house_2", "house_3", "house_4", "house_5", "house_6"]],
+	"northern:viking": ["northern", ["house_4", "house_4", "house_2", "house_6"]],
+	"northern:rus": ["northern", ["house_5", "house_5", "house_2", "house_1"]],
+	"steppe": ["steppe", ["yurt_1", "yurt_2", "yurt_3", "yurt_1"]],
+	"nile": ["south", ["nile_house_1", "nile_house_2", "nile_house_3", "nile_house_4"]],
+	"near_east": ["south", ["near_east_house_1", "near_east_house_2", "near_east_house_3", "near_east_house_4"]],
+	"south_asian": ["south", ["south_asian_house_1", "south_asian_house_2", "south_asian_house_3", "south_asian_house_4"]],
+}
+## The seat of power at a capital's heart, by style (and culture).
+const PALACE_MODELS := {
+	"east": ["east", "palace"], "east:samurai": ["east", "castle_keep"],
+	"classical": ["classical", "palace"], "northern": ["northern", "palace"],
+	"steppe": ["steppe", "great_tent"], "nile": ["south", "nile_palace"],
+	"near_east": ["south", "near_east_palace"], "near_east:assyrian": ["south", "ziggurat"],
+	"near_east:hittite": ["south", "near_east_palace"], "south_asian": ["south", "south_asian_palace"],
+}
+## The roof colour each style's houses start from (the owner's colour is mixed in).
+const ROOF_BASE := {"east": Color(0.40, 0.43, 0.48), "classical": Color(0.84, 0.47, 0.32),
+	"northern": Color(0.46, 0.42, 0.40), "steppe": Color(0.86, 0.82, 0.74), "nile": Color(0.70, 0.56, 0.38),
+	"near_east": Color(0.70, 0.60, 0.46), "south_asian": Color(0.74, 0.52, 0.36)}
+const HOUSE_UNIT := LOT * 0.95   ## map units per model-kit unit for houses
+const GRAND_UNIT := LOT * 1.15   ## ... and for palaces and great buildings
+
+
+## The model-kit house list for the province being built, or [] for the old houses.
+func _house_list() -> Array:
+	var entry: Array = HOUSE_MODELS.get(style + ":" + culture, HOUSE_MODELS.get(style, []))
+	if entry.is_empty() or not MODULES.has(entry[0]):
+		return []
+	return entry
+
+
+## The palace part for the province being built ("" for the old palace).
+func _palace_part() -> String:
+	var entry: Array = PALACE_MODELS.get(style + ":" + culture, PALACE_MODELS.get(style, []))
+	if entry.is_empty():
+		return ""
+	return _model(str(entry[0]), str(entry[1]), GRAND_UNIT)
 
 
 ## A model from a model-kit module (D-280) as a part "m_<module>_<kind>", made once; it shares
@@ -541,8 +601,10 @@ func _city(site: Dictionary, population: int, index: int) -> void:
 			lots.erase(key)
 	if lots.is_empty():
 		return
+	var palace_part := _palace_part() if site["capital"] else ""
+	var palace_reach: float = _foot(palace_part) if palace_part != "" else float(PALACE_R.get(style, 0.6)) * S
 	if site["capital"]:   # the palace needs dry ground all round: the nearest lot that has it
-		var palace_r := float(PALACE_R.get(style, 0.6)) * S
+		var palace_r := palace_reach
 		var order := lots.keys()
 		order.sort_custom(func(a: Vector2i, b: Vector2i) -> bool:
 			return (lots[a][1] as Vector2).length() < (lots[b][1] as Vector2).length())
@@ -554,7 +616,7 @@ func _city(site: Dictionary, population: int, index: int) -> void:
 	# the square at the heart, large enough for the palace and the public buildings
 	var plaza := LOT * (0.8 if site.get("buildings", []).size() == 0 and not site["capital"] else 1.3)
 	if site["capital"]:
-		plaza = maxf(plaza, float(PALACE_R.get(style, 0.6)) * S * 0.85)
+		plaza = maxf(plaza, palace_reach * 0.95)
 	var heart_local: Vector2 = lots[start_lot][1]
 	var streets := {}
 	for key in lots:
@@ -590,7 +652,12 @@ func _city(site: Dictionary, population: int, index: int) -> void:
 		_add("paving", lots[key][0], -0.55, -theta, Vector3(LOT * 1.03, 90.0, LOT * 1.03), colour)
 	# the palace at the heart, the public buildings around the square
 	if site["capital"]:
-		_palace(heart, index, -theta)
+		if palace_part != "":   # the model kit's palace (D-280), its front to the main road
+			_add(palace_part, heart, 0.0, -theta - PI / 2.0, Vector3.ONE, ROOF_BASE.get(style, Color.WHITE), index, 0.85)
+			if style == "nile":
+				_pyramid(heart, half, index)
+		else:
+			_palace(heart, index, -theta)
 		_claim(heart, maxf(plaza - LOT * 0.5, LOT * 0.5))   # the square is the palace's ground
 	else:
 		_claim(heart, LOT * 0.5)
@@ -617,8 +684,8 @@ func _city(site: Dictionary, population: int, index: int) -> void:
 	var looks: Array = (site.get("buildings", []) as Array).duplicate()
 	if str(site.get("works", "")) != "":
 		looks.append("|works|" + str(site["works"]))
-	if style == "east" and (site["capital"] or tier >= 2):
-		looks.append("|pagoda")
+	for extra in _landmarks(site, tier):
+		looks.append(extra)
 	for look in looks:
 		_public_building(str(look), spots, lots, heart, theta, index)
 	# the houses fill the rest, close at the heart and thinning out to the edge
@@ -660,12 +727,56 @@ func _city(site: Dictionary, population: int, index: int) -> void:
 			_chimneys.append(heart + Vector2(rng.randf_range(-half, half), rng.randf_range(-half, half)) * 0.5)
 
 
+## The great buildings a city of this style and rank raises beside its houses (D-280), as
+## "|m:module:kind" entries for `_public_building`.
+func _landmarks(site: Dictionary, tier: int) -> Array:
+	var out: Array = []
+	var capital: bool = site["capital"]
+	match style:
+		"east":
+			if capital or tier >= 2:
+				out.append("|m:east:pagoda")
+			if tier >= 1:
+				out.append("|m:east:gate")
+		"classical":
+			if tier >= 2 or capital:
+				out.append("|m:classical:forum_hall")
+			if tier >= 3:
+				out.append("|m:classical:triumphal_arch")
+			if tier >= 3 or (capital and tier >= 2):
+				out.append("|m:classical:villa_great")
+		"northern":
+			if tier >= 1 or capital:
+				out.append("|m:northern:church")
+			if tier >= 2:
+				out.append("|m:northern:market_hall")
+		"nile":
+			if capital or tier >= 2:
+				out.append("|m:south:obelisk")
+			if capital and tier >= 2:
+				out.append("|m:south:sphinx")
+		"near_east":
+			if tier >= 2 and not capital:
+				out.append("|m:south:ziggurat")
+		"south_asian":
+			if capital or tier >= 2:
+				out.append("|m:south:stupa")
+			if tier >= 1:
+				out.append("|m:south:temple_shikhara")
+	return out
+
+
 ## A public building (D-111) on the best free plot by the square or a main street, facing it.
 ## "|works|look" is one going up (in scaffolding); "|pagoda" the pagoda of an eastern city.
 func _public_building(look: String, spots: Array, lots: Dictionary, heart: Vector2, theta: float, index: int) -> void:
 	var building := look
 	var part := ""
-	if look == "|pagoda":
+	if look.begins_with("|m:"):
+		var bits := look.split(":")
+		part = _model(bits[1], bits[2], GRAND_UNIT)
+		if part == "":
+			return
+	elif look == "|pagoda":
 		part = "f_pagoda"
 	else:
 		if look.begins_with("|works|"):
@@ -684,6 +795,8 @@ func _public_building(look: String, spots: Array, lots: Dictionary, heart: Vecto
 		var face := -(heart - p).angle() + PI / 2.0 if p.distance_to(heart) > 0.1 else -theta
 		if look.begins_with("|works|"):
 			_scaffold_at(part, p, face, r, index)
+		elif look.begins_with("|m:"):
+			_add(part, p, 0.0, face, Vector3.ONE, ROOF_BASE.get(style, Color.WHITE), index, 0.6)
 		elif part == "f_pagoda":
 			_add(part, p, 0.0, -theta, Vector3.ONE * scale, Color(0.36, 0.38, 0.42), index, 0.3)
 		else:
