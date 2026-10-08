@@ -1058,7 +1058,7 @@ func _fields() -> void:
 		var edge := wr if wr > 0.0 else _reach_at(a) + 0.5
 		var p := c + Vector2(cos(a), sin(a)) * (edge + s.rng.randf_range(1.2, 3.8 + tier * 0.5))
 		if s._dry(p, fr) and s._free(p, fr) and _slope(p) < 0.2 and _street_dist(p, fr) > fr * 0.6:
-			s._add("field", p, 0.0, a + PI / 2.0, Vector3.ONE, crops[s.rng.randi() % crops.size()])
+			s.ground.field(p, a + PI / 2.0, 1.36, 0.96, crops[s.rng.randi() % crops.size()])   # draped (D-281)
 			s._claim(p, fr)
 			made += 1
 

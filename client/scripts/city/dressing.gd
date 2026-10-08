@@ -393,6 +393,7 @@ func _flavour() -> void:
 		"steppe":
 			trees = ["tree_small"]
 			big_trees = ["tree_small"]
+			temple = ["prop_tug"]   # horse-tail standards before the khan's tent, not cypresses
 			shrubs = ["grass_tuft", "grass_tuft", "bush", "rocks", "shrub"]
 			animals = ["sheep", "goat", "horse", "sheep", "camel"]
 		_:   # east
