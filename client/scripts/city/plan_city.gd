@@ -38,6 +38,8 @@ var _seg := {}            ## Vector2i -> [[a, b, half width]]: the street index
 var _dense := 1.0         ## how tight the houses stand (the culture's habit)
 var _lane_gap := 1.2      ## how far a house may be from a street before a lane is cut
 var _big_ok := {}
+var _kinds_cache := {}
+var _base_y := 0.0
 
 
 func _init(settlements: Settlements) -> void:
@@ -61,12 +63,12 @@ func _city(site: Dictionary, population: int, idx: int) -> void:
 	half = clampf(0.5 + sqrt(population / 100000.0) * 0.28, 0.6, 1.8) * s.S * (1.0 + 0.12 * tier)
 	sea = s._sea_direction(c, half * 1.3)
 	theta = sea.angle() if sea != Vector2.ZERO else s.rng.randf_range(-0.5, 0.5)
-	if s.earth.is_wet(c):   # the province's point is offshore: build on the nearest shore
+	if _wet_at(c):   # the province's point is offshore: build on the nearest shore
 		for r in range(1, 12):
 			var found := false
 			for k in 16:
 				var p := c + Vector2(cos(k * TAU / 16.0), sin(k * TAU / 16.0)) * r * s.LOT
-				if s._dry(p, s.LOT):
+				if _dry(p, s.LOT):
 					c = p
 					found = true
 					break
@@ -98,6 +100,7 @@ func _city(site: Dictionary, population: int, idx: int) -> void:
 	if half < need * 1.1:
 		half = need * 1.1
 		s.clearings.append([c, half * 1.35])
+	_import_claims(half * 2.6 + 6.0)
 	match s.style:
 		"classical":
 			_classical(looks)
@@ -132,12 +135,12 @@ func _settle() -> void:
 	for ring in range(0, 7):
 		for k in (1 if ring == 0 else 12):
 			var p := c + Vector2(cos(k * TAU / 12.0), sin(k * TAU / 12.0)) * ring * 1.0
-			if not s._dry(p, 0.5):
+			if not _dry(p, 0.5):
 				continue
 			var score := 0.0
 			for rr in [1.5, 3.0, 4.5]:
 				for d in 12:
-					if s._dry(p + Vector2(cos(d * TAU / 12.0), sin(d * TAU / 12.0)) * float(rr), 0.3):
+					if _dry(p + Vector2(cos(d * TAU / 12.0), sin(d * TAU / 12.0)) * float(rr), 0.3):
 						score += 1.0
 			score -= ring * 0.8
 			if score > best_score:
@@ -173,6 +176,87 @@ func _finish() -> void:
 		_pyramid(heart, half, index)
 
 
+## Wetness is the same all over each map pixel (the colour and ocean images are one sample per
+## pixel), so it is asked once per pixel and remembered.
+var _wet_cache := {}
+
+func _wet_at(p: Vector2) -> bool:
+	var key := (floori(p.x) << 20) | (floori(p.y) & 0xFFFFF)
+	var hit: Variant = _wet_cache.get(key)
+	if hit != null:
+		return hit
+	var w: bool = s.earth.is_wet(p)
+	_wet_cache[key] = w
+	return w
+
+
+## No water at `p` or within `r` of it (as Settlements._dry, cached).
+func _dry(p: Vector2, r: float) -> bool:
+	if _wet_at(p):
+		return false
+	for d in _RING8:
+		if _wet_at(p + d * r):
+			return false
+	return true
+
+
+const _RING8: Array[Vector2] = [Vector2(1, 0), Vector2(0.70710678, 0.70710678), Vector2(0, 1), Vector2(-0.70710678, 0.70710678),
+	Vector2(-1, 0), Vector2(-0.70710678, -0.70710678), Vector2(0, -1), Vector2(0.70710678, -0.70710678)]
+
+
+## Claims, kept in a fine grid of our own: `s._free` scans too many entries for the number of
+## questions a city asks. Every claim goes through `_claim` (which also tells Settlements),
+## and the claims already on this ground (earlier cities') are copied in at the start.
+var _cl := {}         ## Vector2i -> [[pos, r]] for small claims
+var _cl_big: Array = []   ## claims wider than half a unit, scanned in full
+var _slope_cache := {}
+
+func _claim(p: Vector2, r: float) -> void:
+	s._claim(p, r)
+	_note(p, r)
+
+
+func _note(p: Vector2, r: float) -> void:
+	if r > 0.5:
+		_cl_big.append([p, r])
+		return
+	var key := Vector2i(floori(p.x), floori(p.y))
+	if not _cl.has(key):
+		_cl[key] = []
+	_cl[key].append([p, r])
+
+
+## Copy the claims near this city out of Settlements.
+func _import_claims(radius: float) -> void:
+	_cl = {}
+	_cl_big = []
+	_slope_cache = {}
+	_wet_cache = {}
+	_kinds_cache = {}
+	var lo := Vector2i(floori((c.x - radius) / s.BUCKET), floori((c.y - radius) / s.BUCKET))
+	var hi := Vector2i(floori((c.x + radius) / s.BUCKET), floori((c.y + radius) / s.BUCKET))
+	for bx in range(lo.x, hi.x + 1):
+		for by in range(lo.y, hi.y + 1):
+			for item in s._taken.get(Vector2i(bx, by), []):
+				_note(item[0], float(item[1]))
+
+
+## True when nothing is claimed within `r` of `p` (as Settlements._free, but fast).
+func _free(p: Vector2, r: float) -> bool:
+	for gx in range(floori(p.x - r - 0.5), floori(p.x + r + 0.5) + 1):
+		for gy in range(floori(p.y - r - 0.5), floori(p.y + r + 0.5) + 1):
+			var list: Variant = _cl.get(Vector2i(gx, gy))
+			if list == null:
+				continue
+			for item in (list as Array):
+				if (item[0] as Vector2).distance_to(p) < float(item[1]) + r:
+					return false
+	for item in _cl_big:
+		if (item[0] as Vector2).distance_to(p) < float(item[1]) + r:
+			return false
+	return true
+
+
 # =========================================================================================
 # Small tools
 # =========================================================================================
@@ -184,12 +268,19 @@ func _face(dir: Vector2) -> float:
 
 ## How steep the ground is at `p` (rise over run, as drawn).
 func _slope(p: Vector2) -> float:
-	var y0 := s.earth.ground_at_pixel(p).y
-	var worst := 0.0
-	var offs: Array[Vector2] = [Vector2(0.35, 0), Vector2(0, 0.35), Vector2(-0.35, 0), Vector2(0, -0.35)]
-	for d in offs:
-		worst = maxf(worst, absf(s.earth.ground_at_pixel(p + d).y - y0))
-	return worst / 0.35
+	var key := Vector2i(roundi(p.x * 2.0), roundi(p.y * 2.0))
+	var hit: Variant = _slope_cache.get(key)
+	if hit != null:
+		return float(hit)
+	var q := Vector2(key.x, key.y) * 0.5
+	var y0 := s.earth.ground_at_pixel(q).y
+	var worst := maxf(absf(s.earth.ground_at_pixel(q + Vector2(0.35, 0)).y - y0),
+		absf(s.earth.ground_at_pixel(q + Vector2(0, 0.35)).y - y0)) / 0.35
+	_slope_cache[key] = worst
+	return worst
+
+
+const _SLOPE_OFFS: Array[Vector2] = [Vector2(0.35, 0), Vector2(0, 0.35), Vector2(-0.35, 0), Vector2(0, -0.35)]
 
 
 func _reach_at(phi: float) -> float:
@@ -256,6 +347,23 @@ func _at(pts: PackedVector2Array, d: float) -> Array:
 	return [pts[0], Vector2.RIGHT]
 
 
+## Position and direction at distance `d` along a laid street (its lengths are kept).
+func _atc(st: Dictionary, d: float) -> Array:
+	var pts: PackedVector2Array = st["pts"]
+	var cum: PackedFloat32Array = st["cum"]
+	var lo := 0
+	var hi := pts.size() - 2
+	while lo < hi:   # the last segment that starts before d
+		var mid := (lo + hi + 1) / 2
+		if cum[mid] <= d:
+			lo = mid
+		else:
+			hi = mid - 1
+	var seg := cum[lo + 1] - cum[lo]
+	var tt := (pts[lo + 1] - pts[lo]) / seg if seg > 0.0001 else Vector2.RIGHT
+	return [pts[lo] + tt * clampf(d - cum[lo], 0.0, seg), tt]
+
+
 ## A smooth curve through `pts` (Catmull-Rom).
 func _smooth(pts: PackedVector2Array, sub := 3) -> PackedVector2Array:
 	if pts.size() < 3:
@@ -292,7 +400,16 @@ func _index(pts: PackedVector2Array, hw: float) -> void:
 
 ## Distance from `p` to the nearest street edge, up to `maxd`.
 func _street_dist(p: Vector2, maxd: float) -> float:
-	return float(_nearest(p, maxd).get("dist", maxd))
+	var best := maxd
+	for gx in range(floori((p.x - maxd) / CELLG), floori((p.x + maxd) / CELLG) + 1):
+		for gy in range(floori((p.y - maxd) / CELLG), floori((p.y + maxd) / CELLG) + 1):
+			var list: Variant = _seg.get(Vector2i(gx, gy))
+			if list == null:
+				continue
+			for e in (list as Array):
+				var q := Geometry2D.get_closest_point_to_segment(p, e[0], e[1])
+				best = minf(best, p.distance_to(q) - float(e[2]))
+	return best
 
 
 ## The nearest street to `p` within `maxd`: {dist (to its edge), pos (on its centre line)}, or {}.
@@ -321,7 +438,10 @@ func _nearest(p: Vector2, maxd: float) -> Dictionary:
 func _street(pts: PackedVector2Array, w: float, main: bool, side := 0, outside := false, draw := true) -> Dictionary:
 	if pts.size() < 2 or _plen(pts) < 0.4:
 		return {}
-	var st := {"pts": pts, "w": w, "main": main, "side": side, "lead": 0.0}
+	var cum := PackedFloat32Array([0.0])
+	for k in pts.size() - 1:
+		cum.append(cum[k] + pts[k].distance_to(pts[k + 1]))
+	var st := {"pts": pts, "w": w, "main": main, "side": side, "lead": 0.0, "cum": cum}
 	streets.append(st)
 	_index(pts, w * 0.5)
 	if draw:
@@ -388,7 +508,12 @@ func _square(poly: PackedVector2Array, kind: String, centred := false, claim := 
 	var r := 0.0
 	for p in poly:
 		r = maxf(r, p.distance_to(ctr))
-	var sq := {"poly": poly, "kind": kind, "centre": ctr, "r": r, "centred": centred}
+	var lo := poly[0]
+	var hi := poly[0]
+	for q in poly:
+		lo = lo.min(q)
+		hi = hi.max(q)
+	var sq := {"poly": poly, "kind": kind, "centre": ctr, "r": r, "centred": centred, "lo": lo, "hi": hi}
 	squares.append(sq)
 	if claim:
 		_claim_poly(poly)
@@ -409,7 +534,7 @@ func _claim_poly(poly: PackedVector2Array) -> void:
 		while y <= hi.y:
 			var q := Vector2(x, y)
 			if Geometry2D.is_point_in_polygon(q, poly) and _edge_dist(q, poly) >= 0.17:
-				s._claim(q, 0.2)
+				_claim(q, 0.2)
 			y += 0.3
 		x += 0.3
 
@@ -424,6 +549,10 @@ func _rect_inside(ctr: Vector2, u: Vector2, hx: float, hy: float) -> bool:
 
 func _in_square(p: Vector2, pad := 0.0) -> bool:
 	for sq in squares:
+		var lo: Vector2 = sq["lo"]
+		var hi: Vector2 = sq["hi"]
+		if p.x < lo.x - pad or p.y < lo.y - pad or p.x > hi.x + pad or p.y > hi.y + pad:
+			continue
 		var poly: PackedVector2Array = sq["poly"]
 		if Geometry2D.is_point_in_polygon(p, poly) or (pad > 0.0 and _edge_dist(p, poly) < pad):
 			return true
@@ -432,7 +561,7 @@ func _in_square(p: Vector2, pad := 0.0) -> bool:
 
 ## A place to build: dry, not steep, nothing there.
 func _can(p: Vector2, r: float) -> bool:
-	return s._dry(p, r) and s._free(p, r) and _slope(p) < 0.3
+	return _dry(p, r) and _free(p, r) and _slope(p) < 0.3
 
 
 func _highest(centre: Vector2, radius: float) -> Vector2:
@@ -443,7 +572,7 @@ func _highest(centre: Vector2, radius: float) -> Vector2:
 		var y := -radius
 		while y <= radius:
 			var p := centre + Vector2(x, y)
-			if Vector2(x, y).length() <= radius and _inside(p, 1.0) and s._dry(p, 1.0) and _slope(p) < 0.3:
+			if Vector2(x, y).length() <= radius and _inside(p, 1.0) and _dry(p, 1.0) and _slope(p) < 0.3:
 				var h := s.earth.ground_at_pixel(p).y - Vector2(x, y).length() * 0.01
 				if h > best_y:
 					best_y = h
@@ -455,11 +584,11 @@ func _highest(centre: Vector2, radius: float) -> Vector2:
 
 ## A prop (or tree) that also claims its ground; false if the model does not exist yet.
 func _prop(kind: String, p: Vector2, yaw: float, size := 1.0, r := 0.15) -> bool:
-	if not s._dry(p, r * 0.6) or not s._free(p, r):
+	if not _dry(p, r * 0.6) or not _free(p, r):
 		return false
 	if not s.prop(kind, p, yaw, size, -1):
 		return false
-	s._claim(p, r)
+	_claim(p, r)
 	return true
 
 
@@ -473,7 +602,7 @@ func _outline(nominal: Callable) -> void:
 	reach.resize(SECT)
 	_wet = PackedByteArray()
 	_wet.resize(SECT)
-	var base_y := s.earth.ground_at_pixel(c).y
+	_base_y = s.earth.ground_at_pixel(c).y
 	var cut: Array = []
 	cut.resize(SECT)
 	for k in SECT:
@@ -483,13 +612,21 @@ func _outline(nominal: Callable) -> void:
 		var r := 0.0
 		var hit := false
 		var hit_wet := false
-		while r < limit:
-			var q := minf(r + 0.25, limit)
-			var p := c + dir * q
-			var w := not s._dry(p, 0.3)
-			if w or _slope(p) > 0.45 or absf(s.earth.ground_at_pixel(p).y - base_y) > 0.6:
-				hit = true
-				hit_wet = w
+		while r < limit:   # coarse steps, then fine ones where the land gave out
+			var q := minf(r + 0.5, limit)
+			if _blocked(c + dir * q):
+				for fine in 4:
+					var qf := minf(r + 0.125, limit)
+					var pf := c + dir * qf
+					var wf := not _dry(pf, 0.3)
+					if _blocked(pf):
+						hit = true
+						hit_wet = wf
+						break
+					r = qf
+				if not hit:
+					hit = true
+					hit_wet = not _dry(c + dir * minf(r + 0.125, limit), 0.3)
 				break
 			r = q
 		reach[k] = r if r >= 1.2 else 0.0
@@ -513,6 +650,11 @@ func _outline(nominal: Callable) -> void:
 	for k in SECT:
 		sum += reach[k]
 	_mean_r = sum / SECT
+
+
+## Water, a cliff or a climb of more than 200 m from the centre.
+func _blocked(p: Vector2) -> bool:
+	return not _dry(p, 0.3) or _slope(p) > 0.45 or absf(s.earth.ground_at_pixel(p).y - _base_y) > 0.6
 
 
 ## A rounded rectangle's radius in direction `phi` (relative to its axes).
@@ -540,7 +682,7 @@ func _max_reach() -> float:
 # =========================================================================================
 
 func _terrain_cost(q: Vector2, y_ref: float) -> float:
-	if not s._dry(q, 0.25):
+	if not _dry(q, 0.25):
 		return 60.0
 	return absf(s.earth.ground_at_pixel(q).y - y_ref) * 14.0 + _slope(q) * 4.0
 
@@ -592,7 +734,7 @@ func _grow(start: Vector2, dir: Vector2, max_len: float, wob: float, outside := 
 			var hh := h.rotated(turn)
 			var q := p + hh * step
 			var cost := absf(turn) * 0.5 + absf(s.earth.ground_at_pixel(q).y - y0) * 30.0
-			if not s._dry(q, 0.2):
+			if not _dry(q, 0.2):
 				cost += 100.0
 			if cost < best_c:
 				best_c = cost
@@ -605,7 +747,7 @@ func _grow(start: Vector2, dir: Vector2, max_len: float, wob: float, outside := 
 		travelled += step
 		if not outside and not _inside(p, 0.0):
 			break
-		if _in_square(p) or not s._free(p, 0.12):
+		if _in_square(p) or not _free(p, 0.12):
 			break
 		if travelled > 0.8:
 			var near := _nearest(p, 0.45)
@@ -625,7 +767,7 @@ func _line_run(a: Vector2, b: Vector2, w: float, main: bool) -> Array:
 	var cur := PackedVector2Array()
 	for i in steps + 1:
 		var p := a.lerp(b, float(i) / steps)
-		var ok := _inside(p, 0.0) and not _in_square(p, 0.0) and s._free(p, 0.1) and s._dry(p, 0.2)
+		var ok := _inside(p, 0.0) and not _in_square(p, 0.0) and _free(p, 0.1) and _dry(p, 0.2)
 		if ok:
 			cur.append(p)
 		if (not ok or i == steps) and cur.size() >= 2:
@@ -665,7 +807,7 @@ func _fill_gaps(wob: float, w: float, max_lanes: int) -> void:
 	for i in range(-n, n + 1):
 		for j in range(-n, n + 1):
 			var p := c + Vector2(i, j) * 0.8 + Vector2(s.rng.randf_range(-0.2, 0.2), s.rng.randf_range(-0.2, 0.2))
-			if not _inside(p, 0.4) or not s._dry(p, 0.25) or not s._free(p, 0.25):
+			if not _inside(p, 0.4) or not _dry(p, 0.25) or not _free(p, 0.25):
 				continue
 			cands.append([p, _street_dist(p, 5.0)])
 	for lane_no in max_lanes:
@@ -718,7 +860,7 @@ func _pomerium(inset: float) -> void:
 		var phi := (k % segs) * TAU / segs
 		var r := _reach_at(phi) + inset
 		var p := c + Vector2(cos(phi), sin(phi)) * r
-		var ok := r > 1.5 + inset and _wet[int(fposmod(phi, TAU) / TAU * SECT) % SECT] == 0 and s._dry(p, 0.2) and not _in_square(p) and s._free(p, 0.1)
+		var ok := r > 1.5 + inset and _wet[int(fposmod(phi, TAU) / TAU * SECT) % SECT] == 0 and _dry(p, 0.2) and not _in_square(p) and _free(p, 0.1)
 		if ok:
 			run.append(p)
 		if (not ok or k == segs) and run.size() >= 4:
@@ -727,7 +869,7 @@ func _pomerium(inset: float) -> void:
 		elif not ok:
 			run = PackedVector2Array()
 	for r in made:
-		_street(_smooth(r, 2), 0.3, false, 0)
+		_street(_smooth(r, 2), 0.3, false, 1)
 
 
 ## A ring lane at `frac` of the outline's radius, in runs where the ground allows.
@@ -740,7 +882,7 @@ func _ring(frac: float, w: float) -> void:
 		var phi := (k % segs) * TAU / segs
 		var r := _reach_at(phi) * (frac + 0.04 * sin(3.0 * phi + noise))
 		var p := c + Vector2(cos(phi), sin(phi)) * r
-		var ok := r > 1.0 and s._dry(p, 0.2) and not _in_square(p, 0.3) and s._free(p, 0.1) and _slope(p) < 0.3
+		var ok := r > 1.0 and _dry(p, 0.2) and not _in_square(p, 0.3) and _free(p, 0.1) and _slope(p) < 0.3
 		if ok:
 			run.append(p)
 		if (not ok or k == segs) and run.size() >= 4:
@@ -837,10 +979,39 @@ func _zone_ok(p: Vector2, rank: String) -> bool:
 func _house(p: Vector2, yaw: float, f: float, rank: String, size: float, big := false) -> bool:
 	if not _zone_ok(p, rank) or _slope(p) > 0.3:
 		return false
-	if not s._fit_house(p, yaw, size, f, index, 0.4, rank, big):
+	if big and not _can_big(rank):
 		return false
+	if not _free(p, f) or not _dry(p, f):
+		return false
+	_build_house(p, yaw, size, f, rank, big)
+	_claim(p, f)
 	mine.append([p, yaw, f, rank])
 	return true
+
+
+## Settlements._house for the model-kit houses, with the house list of each rank looked up once
+## per city (building it for every house cost more than everything else a house needs). The
+## random draws come in the same order as Settlements._house; anything else (the older house
+## shapes) is left to it.
+func _build_house(p: Vector2, yaw: float, size: float, f: float, rank: String, big: bool) -> void:
+	var key := rank + ("+" if big else "")
+	if not _kinds_cache.has(key):
+		_kinds_cache[key] = s._house_kinds(rank, big)
+	var models: Array = _kinds_cache[key]
+	if models.is_empty():
+		s._house(p, yaw, size, index, 0.4, f, rank, big)
+		return
+	var tint := 0.4 * s.rng.randf_range(0.8, 1.1)
+	var kinds: Array = models[1]
+	var part: String = s._model(str(models[0]), s._pick_kind(kinds), s.HOUSE_UNIT)
+	if part == "":
+		s._house(p, yaw, size, index, 0.4, f, rank, big)
+		return
+	s._what[part] = "tent" if s.style == "steppe" else "house"
+	var roof: Color = s.ROOF_BASE.get(s.style, Color(0.6, 0.5, 0.4))
+	roof = roof.lightened(s.rng.randf_range(-0.08, 0.08))
+	var scale := minf(size, f / maxf(s._foot(part), 0.001))
+	s._add(part, p, 0.0, yaw, Vector3.ONE * scale, roof, index, maxf(tint, 0.25) * 0.6)
 
 
 func _can_big(rank: String) -> bool:
@@ -863,13 +1034,13 @@ func _frontage(st: Dictionary) -> void:
 		var guard := 0
 		while cur < length - 0.2 and guard < 600:
 			guard += 1
-			var probe := _at(pts, minf(cur + 0.3, length))
+			var probe := _atc(st, minf(cur + 0.3, length))
 			var pt: Vector2 = probe[0]
 			var tt: Vector2 = probe[1]
 			var rank := _rank(pt + Vector2(-tt.y, tt.x) * float(side) * 0.6)
 			var plot := _plot(rank)
 			var f: float = plot["f"]
-			var here := _at(pts, minf(cur + f, length))
+			var here := _atc(st, minf(cur + f, length))
 			var t: Vector2 = here[1]
 			var n := Vector2(-t.y, t.x) * float(side)
 			var base: Vector2 = here[0]
@@ -878,16 +1049,16 @@ func _frontage(st: Dictionary) -> void:
 			var yaw := _face(-n) + s.rng.randf_range(-wobble, wobble)
 			# a plot left empty for a garden, now and then at the edge
 			if rank == "edge" and s.rng.randf() < 0.1 and not _in_square(p):
-				if s._dry(p, f) and s._free(p, f) and _street_dist(p, f) > f * 0.8:
+				if _dry(p, f) and _free(p, f) and _street_dist(p, f) > f * 0.8:
 					s.ground.patch(p, f * 1.15, "garden", 0.9)
 					_prop("tree_fruit", p + n * 0.1, s.rng.randf() * TAU, 1.0, 0.2)
-					s._claim(p, f * 0.8)
+					_claim(p, f * 0.8)
 				cur += 2.0 * f + 0.1
 				continue
 			if (rank == "core" and s.rng.randf() < 0.5) or (rank == "city" and s.rng.randf() < 0.12):
 				if _can_big(rank):
 					var fb := 0.66
-					var hb := _at(pts, minf(cur + fb, length))
+					var hb := _atc(st, minf(cur + fb, length))
 					var tb: Vector2 = hb[1]
 					var nb := Vector2(-tb.y, tb.x) * float(side)
 					var pb: Vector2 = (hb[0] as Vector2) + nb * (hw + float(plot["set"]) + 0.42)
@@ -895,11 +1066,14 @@ func _frontage(st: Dictionary) -> void:
 						cur += 2.0 * fb + float(plot["gap"]) + 0.03
 						continue
 			var placed := false
-			if _street_dist(p, f + 0.1) >= f * 0.98 and not _in_square(p, 0.05):
+			var sd := _street_dist(p, f + 0.1)
+			var clear := sd >= f * 0.98 and not _in_square(p, 0.05)
+			if clear:
 				placed = _house(p, yaw, f, rank, size)
-			if not placed and rank != "suburb":   # a narrower house fits where a wide one does not
+			var need := f * 0.98 - sd
+			if not placed and rank != "suburb" and (clear or need < 0.12):   # a narrower house fits where a wide one does not
 				var f2 := f * 0.8
-				var here2 := _at(pts, minf(cur + f2, length))
+				var here2 := _atc(st, minf(cur + f2, length))
 				var t2: Vector2 = here2[1]
 				var n2 := Vector2(-t2.y, t2.x) * float(side)
 				var p2: Vector2 = (here2[0] as Vector2) + n2 * (hw + float(plot["set"]) + f2)
@@ -908,8 +1082,10 @@ func _frontage(st: Dictionary) -> void:
 					continue
 			if placed:
 				cur += 2.0 * f + float(plot["gap"]) + 0.03
+			elif not clear and need > 0.0:
+				cur += clampf(need + 0.03, 0.06, 0.45)   # step clear of the cross street
 			else:
-				cur += 0.1
+				cur += 0.2
 
 
 ## A second row behind the first, filling the blocks.
@@ -924,6 +1100,8 @@ func _infill() -> void:
 				cand.append(p)
 	cand.sort_custom(func(a: Vector2, b: Vector2) -> bool: return a.distance_to(heart) < b.distance_to(heart))
 	for p in cand:
+		if not _free(p, 0.27):
+			continue
 		var rank := _rank(p)
 		var prob := 1.0 if rank == "core" else (0.95 if rank == "city" else 0.7)
 		if s.rng.randf() > prob:
@@ -935,7 +1113,7 @@ func _infill() -> void:
 			continue
 		var plot := _plot(rank)
 		var f: float = float(plot["f"]) * 0.97
-		if _in_square(p, 0.1) or not s._free(p, f):
+		if _in_square(p, 0.1) or not _free(p, f):
 			continue
 		_house(p, _face((near["pos"] as Vector2) - p) + s.rng.randf_range(-0.1, 0.1), f, rank, float(plot["size"]) * 0.95)
 
@@ -948,14 +1126,14 @@ func _clusters(rect: bool) -> void:
 	for i in range(-n, n + 1):
 		for j in range(-n, n + 1):
 			var p := c + Vector2(i, j) * step + Vector2(s.rng.randf_range(-0.35, 0.35), s.rng.randf_range(-0.35, 0.35))
-			if not _inside(p, 1.0) or not s._dry(p, 0.9):
+			if not _inside(p, 1.0) or not _dry(p, 0.9):
 				continue
 			if _street_dist(p, 3.0) < (0.8 if rect else 0.95) or _in_square(p, 0.5):
 				continue
 			cand.append(p)
 	cand.sort_custom(func(a: Vector2, b: Vector2) -> bool: return a.distance_to(heart) < b.distance_to(heart))
 	for p in cand:
-		if not s._free(p, 0.35):
+		if not _free(p, 0.35):
 			continue
 		var near := _nearest(p, 4.0)
 		var toward: Vector2 = ((near["pos"] as Vector2) - p).normalized() if not near.is_empty() else Vector2.RIGHT
@@ -982,7 +1160,7 @@ func _clusters(rect: bool) -> void:
 				count += 1
 		if count >= 3:
 			s.ground.area(_blob(p, 0.42, 0.42, 0.0, 8, 0.1), "earth")
-			s._claim(p, 0.3)
+			_claim(p, 0.3)
 			if s.style == "south_asian" and s.rng.randf() < 0.5:
 				s.prop("prop_tree_platform", p, 0.0, 0.9)
 			elif not s.prop("well", p, 0.0, 0.8):
@@ -1004,7 +1182,7 @@ func _yards() -> void:
 		var front := Vector2(sin(yaw), cos(yaw))
 		var r: float = m[2]
 		var p: Vector2 = (m[0] as Vector2) - front * (r + 0.3)
-		if not s._dry(p, 0.25) or not s._free(p, 0.2) or _street_dist(p, 0.4) < 0.3 or _in_square(p, 0.2):
+		if not _dry(p, 0.25) or not _free(p, 0.2) or _street_dist(p, 0.4) < 0.3 or _in_square(p, 0.2):
 			continue
 		var kind := "garden" if s.rng.randf() < 0.6 else ("grass" if rank != "city" else "earth")
 		s.ground.patch(p, 0.34, kind, 0.9)
@@ -1031,7 +1209,7 @@ func _orchards() -> void:
 		var r := _reach_at(a) * s.rng.randf_range(0.55, 1.05)
 		var p := c + Vector2(cos(a), sin(a)) * r
 		var rad := s.rng.randf_range(0.8, 1.2)
-		if not s._dry(p, rad) or not s._free(p, rad) or _street_dist(p, rad) < rad * 0.7 or _slope(p) > 0.25:
+		if not _dry(p, rad) or not _free(p, rad) or _street_dist(p, rad) < rad * 0.7 or _slope(p) > 0.25:
 			continue
 		s.ground.area(_blob(p, rad, rad * 0.85, s.rng.randf() * PI, 9, 0.1), "grass")
 		var rows := int(rad / 0.45)
@@ -1040,7 +1218,7 @@ func _orchards() -> void:
 				var q := p + Vector2(i, j) * 0.5
 				if q.distance_to(p) < rad * 0.82:
 					_prop(tree, q + Vector2(s.rng.randf_range(-0.05, 0.05), s.rng.randf_range(-0.05, 0.05)), s.rng.randf() * TAU, 0.85, 0.2)
-		s._claim(p, rad * 0.95)
+		_claim(p, rad * 0.95)
 		made += 1
 
 
@@ -1057,9 +1235,9 @@ func _fields() -> void:
 		var wr := _wall_r(a)
 		var edge := wr if wr > 0.0 else _reach_at(a) + 0.5
 		var p := c + Vector2(cos(a), sin(a)) * (edge + s.rng.randf_range(1.2, 3.8 + tier * 0.5))
-		if s._dry(p, fr) and s._free(p, fr) and _slope(p) < 0.2 and _street_dist(p, fr) > fr * 0.6:
+		if _dry(p, fr) and _free(p, fr) and _slope(p) < 0.2 and _street_dist(p, fr) > fr * 0.6:
 			s.ground.field(p, a + PI / 2.0, 1.36, 0.96, crops[s.rng.randi() % crops.size()])   # draped (D-281)
-			s._claim(p, fr)
+			_claim(p, fr)
 			made += 1
 
 
@@ -1162,7 +1340,7 @@ func _place_palace(venues: Array, prefer := Vector2.ZERO) -> Array:
 		s._add(part, p, 0.0, yaw, Vector3.ONE, s.ROOF_BASE.get(s.style, Color.WHITE), index, 0.85)
 	else:
 		s._palace(p, index, yaw)
-	s._claim(p, r)
+	_claim(p, r)
 	return sp
 
 
@@ -1171,7 +1349,7 @@ func _banner(near: Vector2, outward: Vector2) -> void:
 	var p := near + outward
 	if _can(p, 0.2):
 		s._add("k_flag", p, 0.0, 0.0, Vector3.ONE * 0.4, Color.WHITE, index, 1.0)
-		s._claim(p, 0.2)
+		_claim(p, 0.2)
 
 
 ## Put each of `looks` on a venue (a square) of its kind: the sacred ones on `sacred` first.
@@ -1272,7 +1450,7 @@ func _public_building(look: String, venues: Array) -> void:
 		s._add(part, p, 0.0, face, Vector3.ONE * scale, Color(0.36, 0.38, 0.42), index, 0.3)
 	else:
 		s._add(part, p, 0.0, face, Vector3.ONE, Color(0.88, 0.55, 0.38), index, 0.4)
-	s._claim(p, r)
+	_claim(p, r)
 
 
 ## Building work in a city (D-127): the new building half-risen in its place, wrapped in
@@ -1315,7 +1493,7 @@ func _enclose(poly: PackedVector2Array, kind: String, gate: Vector2) -> void:
 			var p := a + t * (len * (j + 0.5) / parts)
 			if p.distance_to(gate) < 0.55:
 				continue
-			if s._dry(p, 0.1) and _street_dist(p, 0.2) > 0.05:
+			if _dry(p, 0.1) and _street_dist(p, 0.2) > 0.05:
 				s.prop(kind, p, _face(Vector2(-t.y, t.x)), 1.0)
 
 
@@ -1381,19 +1559,19 @@ func _walls() -> void:
 			var dir := (b - a).normalized()
 			var yaw := -(b - a).angle() + PI
 			var stretch := a.distance_to(b) / piece
-			if not s.earth.is_wet(mid) and not near_gate.call(mid):
+			if not _wet_at(mid) and not near_gate.call(mid):
 				if kit:
 					s._add(wall_part, mid, 0.0, yaw, Vector3(stretch, 1, 1), tint, index, 0.9)
 				else:
 					s._add("k_wall", mid, 0.0, yaw - PI, Vector3(stretch * 1.02, 1, 1), Color.WHITE, index, 1.0)
-				s._claim(mid, 0.25)
+				_claim(mid, 0.25)
 			var turned := absf(prev_dir.angle_to(dir)) if prev_dir != Vector2.ZERO else 0.0
-			if i > 0 and (turned > 0.28 or i % 5 == 0) and not s.earth.is_wet(a) and not near_gate.call(a):
+			if i > 0 and (turned > 0.28 or i % 5 == 0) and not _wet_at(a) and not near_gate.call(a):
 				if kit:
 					s._add(tower_part, a, 0.0, yaw, Vector3.ONE, tint, index, 0.9)
 				else:
 					s._add("k_round" if s.style in ["northern", "classical"] else "k_tower", a, 0.0, 0.0, Vector3.ONE, Color.WHITE, index, 1.0)
-				s._claim(a, 0.32)
+				_claim(a, 0.32)
 			prev_dir = dir
 	for g in gates:
 		var gp: Vector2 = g["pos"]
@@ -1407,7 +1585,7 @@ func _walls() -> void:
 			s._add(gate_part, gp, 0.0, yaw, Vector3.ONE, tint, index, 0.9)
 		else:
 			s._add("k_gate", gp, 0.0, yaw - PI, Vector3.ONE, Color.WHITE, index, 1.0)
-		s._claim(gp, 0.5)
+		_claim(gp, 0.5)
 
 
 # =========================================================================================
@@ -1431,19 +1609,19 @@ func _piers() -> void:
 		var phi := k * TAU / SECT
 		var dir := Vector2(cos(phi), sin(phi))
 		var p := c + dir * reach[k]
-		if not s._free(p, 0.25):
+		if not _free(p, 0.25):
 			continue
 		var shore := s.earth.ground_at_pixel(p).y
 		var ok := true
 		for m in 3:
-			ok = ok and s.earth.is_wet(p + dir * (0.6 + m * 0.5))
+			ok = ok and _wet_at(p + dir * (0.6 + m * 0.5))
 		if not ok:
 			continue
 		for m in 3:
 			var q := p + dir * (0.45 + m * 0.5)
 			var lift := shore - s.earth.ground_at_pixel(q).y + 0.05
 			s._add("terrace", q, lift, -phi, Vector3(0.35, 0.25, 0.12) * 4.0 / s.S, timber)
-		s._claim(p, 0.3)
+		_claim(p, 0.3)
 		made += 1
 
 
@@ -1454,13 +1632,13 @@ func _pyramid(centre: Vector2, reach_r: float, site_index: int) -> void:
 		var a := step * TAU / 16.0
 		for dist in [reach_r * 1.6, reach_r * 2.0, reach_r * 2.5]:
 			var p := centre + Vector2(cos(a), sin(a)) * float(dist)
-			if s._dry(p, r * 1.4) and s._free(p, r * 1.2):
+			if _dry(p, r * 1.4) and _free(p, r * 1.2):
 				var model := s._model("south", "pyramid", s.GRAND_UNIT * 1.2)
 				if model != "":
 					s._add(model, p, 0.0, -(centre - p).angle() + PI / 2.0, Vector3.ONE, Color.WHITE, site_index, 0.0)
 				else:
 					s._add("pyramid", p, 0.0, PI / 4.0, Vector3.ONE, Color(0.84, 0.70, 0.46))
-				s._claim(p, r * 1.2)
+				_claim(p, r * 1.2)
 				s.clearings.append([p, r * 1.5])
 				return
 
@@ -1507,7 +1685,7 @@ func _classical(looks: Array) -> void:
 				s._add(part, pp, 0.0, _face(v), Vector3.ONE, s.ROOF_BASE.get(s.style, Color.WHITE), index, 0.85)
 			else:
 				s._palace(pp, index, _face(v))
-			s._claim(pp, pr)
+			_claim(pp, pr)
 			_banner(pp, u * (pr + 0.3))
 		else:
 			_place_palace(venues)
@@ -1570,7 +1748,7 @@ func _chinese(looks: Array) -> void:
 			s._add(part, pal_c, 0.0, _face(v), Vector3.ONE, s.ROOF_BASE.get(s.style, Color.WHITE), index, 0.85)
 		else:
 			s._palace(pal_c, index, _face(v))
-		s._claim(pal_c, pr)
+		_claim(pal_c, pr)
 		_banner(court_c, u * (fx + 0.4))
 	# markets east and west
 	var pitch_x := s.rng.randf_range(3.1, 3.5)
@@ -1665,7 +1843,7 @@ func _castle_town(looks: Array, joseon: bool) -> void:
 			s._add(part, seat, 0.0, _face(appr), Vector3.ONE, s.ROOF_BASE.get(s.style, Color.WHITE), index, 0.85)
 		else:
 			s._palace(seat, index, _face(appr))
-		s._claim(seat, pr)
+		_claim(seat, pr)
 		_banner(seat, appr.rotated(1.1) * (pr + 0.3))
 	var venues: Array = [bsq]
 	# the town's crossing, where the approach meets the cross road: the market
@@ -1808,7 +1986,7 @@ func _southern(looks: Array) -> void:
 					s._add(part, pp, 0.0, _face(-pdir), Vector3.ONE, s.ROOF_BASE.get(s.style, Color.WHITE), index, 0.85)
 				else:
 					s._palace(pp, index, _face(-pdir))
-				s._claim(pp, pr)
+				_claim(pp, pr)
 			else:
 				_place_palace(sacred + venues)
 	elif capital:
@@ -1837,7 +2015,7 @@ func _groves() -> void:
 		var dir := Vector2(cos(phi), sin(phi))
 		for m in 2:
 			var p := c + dir * (reach[k] - 0.1 - m * 0.55) + Vector2(-dir.y, dir.x) * s.rng.randf_range(-0.3, 0.3)
-			if s._free(p, 0.3) and _street_dist(p, 0.4) > 0.25:
+			if _free(p, 0.3) and _street_dist(p, 0.4) > 0.25:
 				s.ground.patch(p, 0.4, "garden", 0.8)
 				if _prop(tree, p, s.rng.randf() * TAU, 1.0, 0.25):
 					made += 1
