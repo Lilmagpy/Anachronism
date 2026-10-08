@@ -93,6 +93,11 @@ func _city(site: Dictionary, population: int, idx: int) -> void:
 		looks.append("|works|" + str(site["works"]))
 	for extra in _landmarks(site, tier):
 		looks.append(extra)
+	# room for the grand buildings: a town with a palace and several halls is never tiny
+	var need := 3.2 + (2.4 if capital else 0.0) + 0.75 * looks.size()
+	if half < need * 1.1:
+		half = need * 1.1
+		s.clearings.append([c, half * 1.35])
 	match s.style:
 		"classical":
 			_classical(looks)
@@ -920,13 +925,13 @@ func _infill() -> void:
 	cand.sort_custom(func(a: Vector2, b: Vector2) -> bool: return a.distance_to(heart) < b.distance_to(heart))
 	for p in cand:
 		var rank := _rank(p)
-		var prob := 1.0 if rank == "core" else (0.92 if rank == "city" else 0.55)
+		var prob := 1.0 if rank == "core" else (0.95 if rank == "city" else 0.7)
 		if s.rng.randf() > prob:
 			continue
 		var near := _nearest(p, 2.6)
 		if near.is_empty() or float(near["dist"]) < 0.3:
 			continue
-		if float(near["dist"]) > (3.0 if rank == "core" else 2.4):
+		if float(near["dist"]) > (3.4 if rank == "core" else 3.0):
 			continue
 		var plot := _plot(rank)
 		var f: float = float(plot["f"]) * 0.97
@@ -1619,8 +1624,8 @@ func _castle_town(looks: Array, joseon: bool) -> void:
 	_outline(func(phi: float) -> float: return _blob_reach(phi, base, na, nb, nd))
 	if _mean_r < 1.0:
 		return
-	_dense = 0.5
-	_lane_gap = 0.8
+	_dense = 0.3
+	_lane_gap = 0.65
 	# the castle: the highest dry ground near the middle (Japan); at the head of the town (Korea)
 	var seat := c
 	var v := Vector2(0, 1)
@@ -1709,8 +1714,8 @@ func _northern(looks: Array) -> void:
 	_outline(func(phi: float) -> float: return _blob_reach(phi, base, na, nb, nd))
 	if _mean_r < 1.0:
 		return
-	_dense = 0.5
-	_lane_gap = 0.9
+	_dense = 0.3
+	_lane_gap = 0.7
 	var start := s.rng.randf() * TAU
 	var n := s.rng.randi_range(3, 5)
 	var jc := c + Vector2(s.rng.randf_range(-0.1, 0.1), s.rng.randf_range(-0.1, 0.1)) * _mean_r
@@ -1763,7 +1768,7 @@ func _southern(looks: Array) -> void:
 	if _mean_r < 1.0:
 		return
 	_dense = 0.35
-	_lane_gap = 0.75
+	_lane_gap = 0.65
 	var jc := c
 	heart = jc
 	var start := s.rng.randf() * TAU
