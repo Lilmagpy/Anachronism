@@ -50,9 +50,13 @@ const CLAIMS := ["cart", "well", "boat", "fountain", "statue", "haystack", "mark
 	"willow", "pine", "olive", "palm", "tree_fruit", "cherry", "prop_longboat", "prop_wagon", "prop_reed_boat",
 	"prop_well_roofed", "prop_bullock_cart", "prop_tree_platform", "prop_market_cross", "prop_fountain_basin",
 	"prop_horse_tether", "prop_pergola", "prop_shrine"]
+const SHORE_DISTS := [0.4, 0.8, 1.3]
 const HARD_AREAS := ["flag", "cobble", "sand"]   ## squares: no clutter, but stalls and statues belong there
 
 var s: Settlements   ## the Settlements being built
+var _shore_dirs: Array = []   ## the eight ways to look for water from a house
+var _wet_cache := {}   ## Vector2i (0.05 map unit cells) -> bool: a lookup costs far less than the water test
+var _bq := {}        ## bucket -> buildings a prop there could touch (see _index_buildings)
 var _from := 0       ## the first entry of s.placed not yet dressed
 var _indexed := 0    ## entries of s.placed already in the building hash
 var _bh := {}        ## bucket -> [[pos, r, what, yaw], ...]: every building, for keeping props out
@@ -71,6 +75,18 @@ var _boats := 0
 
 func _init(settlements: Settlements) -> void:
 	s = settlements
+	for k in 8:
+		_shore_dirs.append(Vector2.from_angle(k * TAU / 8.0 + 0.2))
+
+
+## Water at `p`, cached to the nearest 0.05 map units.
+func _iswet(p: Vector2) -> bool:
+	var k := Vector2i(roundi(p.x * 20.0), roundi(p.y * 20.0))
+	var v: Variant = _wet_cache.get(k)
+	if v == null:
+		v = s.earth.is_wet(Vector2(k) * 0.05)
+		_wet_cache[k] = v
+	return v
 
 
 ## Dress the settlement just planned: `kind` is "city", "town", "village" or "camp"; `tier`
@@ -110,6 +126,16 @@ func _index_buildings() -> void:
 				if not _bh.has(kk):
 					_bh[kk] = []
 				_bh[kk].append([p, r, e["what"], e["yaw"]])
+		# the same building again, only in the buckets a prop could touch it from (its radius
+		# plus the widest prop's): the overlap test looks here, so it has far less to scan
+		var touch := r + 0.7
+		var item := [p, r, e["what"], e["yaw"]]
+		for bx in range(floori((p.x - touch) / BUCKET), floori((p.x + touch) / BUCKET) + 1):
+			for by in range(floori((p.y - touch) / BUCKET), floori((p.y + touch) / BUCKET) + 1):
+				var kq := Vector2i(bx, by)
+				if not _bq.has(kq):
+					_bq[kq] = []
+				_bq[kq].append(item)
 	_indexed = s.placed.size()
 
 
@@ -179,7 +205,7 @@ func _in_square(p: Vector2) -> bool:
 
 ## True when a building (walls as thin strips along their length) lies within `rad` of `p`.
 func _in_building(p: Vector2, rad: float) -> bool:
-	for b in _bh.get(_key(p), []):
+	for b in _bq.get(_key(p), []):
 		var bp: Vector2 = b[0]
 		var br: float = b[1]
 		var d := p - bp
@@ -204,28 +230,27 @@ func _crowded(p: Vector2, rad: float) -> bool:
 
 
 func _wet(p: Vector2, rad: float) -> bool:
-	if s.earth.is_wet(p):
+	if _iswet(p):
 		return true
-	for k in 4:
-		if s.earth.is_wet(p + Vector2.from_angle(k * PI / 2.0 + 0.4) * rad):
-			return true
-	return false
+	# two points either side of it are enough to tell a prop that overhangs the water
+	var off := Vector2(0.92, 0.39) * rad
+	return _iswet(p + off) or _iswet(p - off)
 
 
 ## True when a prop of radius `rad` may stand at `p`: dry, off the streets (and the squares
 ## unless `paved`), clear of buildings and of other props; with `open`, also clear of ground the
 ## planners claimed (fields and such); with `shore`, only its own spot must be dry.
 func _ok(p: Vector2, rad: float, paved := false, open := false, shore := false) -> bool:
+	if _in_building(p, rad) or _crowded(p, rad) or _on_road(p, rad * 0.6 + 0.02):
+		return false
 	if shore:
-		if s.earth.is_wet(p):
+		if _iswet(p):
 			return false
 	elif _wet(p, rad):
 		return false
-	if _in_building(p, rad) or _crowded(p, rad) or _on_road(p, rad * 0.6 + 0.02):
-		return false
 	if not paved and _in_square(p):
 		return false
-	if open and not s._free(p, rad * 0.5):
+	if open and not s.rural._clear(p, rad * 0.5):   # (the planners' faster room test)
 		return false
 	return true
 
@@ -614,10 +639,9 @@ func _shore(pos: Vector2, r: float, cl: Dictionary) -> void:
 		return
 	var best := 99.0
 	var best_dir := Vector2.ZERO
-	for k in 8:
-		var dir := Vector2.from_angle(k * TAU / 8.0 + 0.2)
-		for dist in [0.4, 0.8, 1.3]:
-			if s.earth.is_wet(pos + dir * dist):
+	for dir: Vector2 in _shore_dirs:
+		for dist: float in SHORE_DISTS:
+			if _iswet(pos + dir * dist):
 				if dist < best:
 					best = dist
 					best_dir = dir
@@ -629,7 +653,7 @@ func _shore(pos: Vector2, r: float, cl: Dictionary) -> void:
 	var t := r
 	while t < best + 0.3:
 		var q := pos + best_dir * t
-		if s.earth.is_wet(q):
+		if _iswet(q):
 			break
 		shore_p = q
 		t += 0.05
@@ -861,7 +885,7 @@ func _camp_extras(cl: Dictionary) -> void:
 	for k in 12:
 		var p := c + Vector2.from_angle(k * TAU / 12.0) * (reach + 1.0)
 		var h := s.earth.metres_at(p)
-		if h > best_h and not s.earth.is_wet(p):
+		if h > best_h and not _iswet(p):
 			best_h = h
 			best = p
 	if houses >= 6:

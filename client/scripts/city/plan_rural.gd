@@ -9,7 +9,10 @@
 ## to its neighbour, and every field is a lane-aligned patch of a patchwork, never overlapping.
 extends RefCounted
 
+
 const RELIEF_MAX := 0.2     ## how much the ground under a field may vary (world units) before it is skipped
+const SPOTS := [Vector2(0.0, 0.0), Vector2(-1.0, -1.0), Vector2(1.0, 1.0), Vector2(-1.0, 1.0), Vector2(1.0, -1.0),
+	Vector2(0.0, -1.0), Vector2(0.0, 1.0), Vector2(-1.0, 0.0), Vector2(1.0, 0.0), Vector2(0.0, 0.5), Vector2(0.0, -0.5)]
 const HILL_SLOPE := 0.09     ## ground steeper than this (rise per map unit) is farmed along its contours
 
 var s: Settlements   ## the Settlements being built
@@ -20,6 +23,7 @@ var _origin := Vector2.ZERO   ## the settlement being built, and how far out it 
 var _ext := 0.0
 var _lane_pts: Array = []     ## the lane points of the settlement being built (a track starts at one)
 var _water := Vector2.ZERO    ## direction to the nearest water from the settlement (zero inland)
+var _fails := 0               ## places in a row that found no room (the province is full)
 var _site := 0                ## the province index being built
 
 
@@ -37,9 +41,16 @@ func countryside(site: Dictionary, population: int, cells: Array, index: int) ->
 	var villages := clampi(population / s.PEOPLE_PER_VILLAGE, 1, s.MAX_VILLAGES)
 	_site = index
 	_nodes = [site["pixel"]]
+	_fails = 0
+	if not _bigs_ready:
+		_index_bigs()
 	for i in towns:
+		if _fails >= 5:
+			break
 		_place(_town, "town", 1, cells, index)
 	for i in villages:
+		if _fails >= 5:
+			break
 		var form := _village_form()
 		match form:
 			"farm":
@@ -57,7 +68,9 @@ func _place(maker: Callable, kind: String, tier: int, cells: Array, index: int) 
 	_water = Vector2.ZERO
 	var c: Vector2 = maker.call(cells, index)
 	if c == Vector2.ZERO:
+		_fails += 1
 		return
+	_fails = 0
 	s.clearings.append([c, _ext + 0.9])
 	s.dressing.decorate(kind, tier, index)
 	_nodes.append(c)
@@ -84,10 +97,99 @@ func _village_form() -> String:
 	return "street"
 
 
+# --- fast room checks ----------------------------------------------------------------------
+# Settlements._free looks 3 units round every query so that it cannot miss a big claim (a
+# palace, a temple); a lane or a field asks thousands of times. Big claims are kept apart here,
+# so a query need only look at its own neighbourhood for the many small ones.
+
+const BIG := 0.9            ## claims wider than this are indexed apart
+const BIG_BUCKET := 8.0
+var _bigs := {}             ## bucket -> [[centre, radius], ...]
+var _bigs_ready := false
+
+
+func _add_big(p: Vector2, r: float) -> void:
+	var lo := Vector2i(floori((p.x - r) / BIG_BUCKET), floori((p.y - r) / BIG_BUCKET))
+	var hi := Vector2i(floori((p.x + r) / BIG_BUCKET), floori((p.y + r) / BIG_BUCKET))
+	for bx in range(lo.x, hi.x + 1):
+		for by in range(lo.y, hi.y + 1):
+			var k := Vector2i(bx, by)
+			if not _bigs.has(k):
+				_bigs[k] = []
+			_bigs[k].append([p, r])
+
+
+## Learn the big claims the chief cities made (once, before the first province).
+func _index_bigs() -> void:
+	_bigs_ready = true
+	_bigs.clear()
+	for k in s._taken:
+		for item in s._taken[k]:
+			if float(item[1]) > BIG:
+				_add_big(item[0], item[1])
+
+
+## Reserve ground (as Settlements._claim), keeping big claims findable.
+func _claim(p: Vector2, r: float) -> void:
+	s._claim(p, r)
+	if r > BIG:
+		_add_big(p, r)
+
+
+## True when nothing built or claimed lies within `r` of `p` (as Settlements._free, faster).
+func _clear(p: Vector2, r: float) -> bool:
+	if not _bigs_ready:   # while the chief cities are still being laid out
+		return s._free(p, r)
+	var m := r + BIG
+	var b: float = s.BUCKET
+	for bx in range(floori((p.x - m) / b), floori((p.x + m) / b) + 1):
+		for by in range(floori((p.y - m) / b), floori((p.y + m) / b) + 1):
+			var items: Variant = s._taken.get(Vector2i(bx, by))
+			if items != null:
+				for item in items:
+					if (item[0] as Vector2).distance_to(p) < float(item[1]) + r:
+						return false
+	for bx in range(floori((p.x - r) / BIG_BUCKET), floori((p.x + r) / BIG_BUCKET) + 1):
+		for by in range(floori((p.y - r) / BIG_BUCKET), floori((p.y + r) / BIG_BUCKET) + 1):
+			var items: Variant = _bigs.get(Vector2i(bx, by))
+			if items != null:
+				for item in items:
+					if (item[0] as Vector2).distance_to(p) < float(item[1]) + r:
+						return false
+	return true
+
+
 # --- finding ground ------------------------------------------------------------------------
 
+var _wet_cache := {}   ## Vector2i (0.1 map unit cells) -> bool: the water test costs far more than a lookup
+var _h_cache := {}     ## ... -> ground height
+
+
+## Water at `p` (a cached `earth.is_wet`, to the nearest tenth of a map unit).
+func _wet(p: Vector2) -> bool:
+	var k := Vector2i(roundi(p.x * 10.0), roundi(p.y * 10.0))
+	var v: Variant = _wet_cache.get(k)
+	if v == null:
+		v = s.earth.is_wet(Vector2(k) * 0.1)
+		_wet_cache[k] = v
+	return v
+
+
+## No water at `p` or a ring of four points `r` round it (a cached cousin of Settlements._dry).
+func _dry(p: Vector2, r: float) -> bool:
+	if _wet(p):
+		return false
+	return not (_wet(p + Vector2(r, 0.0)) or _wet(p - Vector2(r, 0.0)) or _wet(p + Vector2(0.0, r)) or _wet(p - Vector2(0.0, r)))
+
+
+## The ground's height (world units) at `p`, cached the same way.
 func _h(p: Vector2) -> float:
-	return s.earth.ground_at_pixel(p).y
+	var k := Vector2i(roundi(p.x * 10.0), roundi(p.y * 10.0))
+	var v: Variant = _h_cache.get(k)
+	if v == null:
+		v = s.earth._ground(Vector2(k) * 0.1)
+		_h_cache[k] = v
+	return v
 
 
 ## The uphill direction at `p`, as rise per map unit (zero length on the flat).
@@ -98,10 +200,10 @@ func _gradient(p: Vector2) -> Vector2:
 
 ## How far to the nearest water from `p` (or 99 if none within `reach`).
 func _water_dist(p: Vector2, reach: float) -> float:
-	for step in 12:
-		var r := reach * (step + 1) / 12.0
-		for k in 12:
-			if s.earth.is_wet(p + Vector2(cos(k * TAU / 12.0), sin(k * TAU / 12.0)) * r):
+	for step in 6:
+		var r := reach * (step + 1) / 6.0
+		for k in 8:
+			if _wet(p + Vector2(cos(k * TAU / 8.0), sin(k * TAU / 8.0)) * r):
 				return r
 	return 99.0
 
@@ -111,9 +213,9 @@ func _water_dist(p: Vector2, reach: float) -> float:
 func _find(cells: Array, reach: float, prefer: String) -> Vector2:
 	var best := Vector2.ZERO
 	var best_score := -1.0e9
-	for attempt in 16:
+	for attempt in 9:
 		var p: Vector2 = s._pick(cells)
-		if not s._dry(p, reach * 0.7) or not s._free(p, reach * 0.9):
+		if not _clear(p, 1.0) or not _clear(p, reach * 0.9) or not _dry(p, reach * 0.7):
 			continue
 		var score := -_gradient(p).length() * 6.0 + s.rng.randf() * 0.6
 		match prefer:
@@ -140,9 +242,9 @@ func _bank_point(c: Vector2, back: float) -> Vector2:
 		return c
 	for step in 40:
 		var q := c + _water * step * 0.2
-		if s.earth.is_wet(q):
+		if _wet(q):
 			var at := q - _water * back
-			if s._dry(at, 0.8) and s._free(at, 0.8):
+			if _dry(at, 0.8) and _clear(at, 0.8):
 				return at
 			_water = Vector2.ZERO
 			return c
@@ -152,13 +254,12 @@ func _bank_point(c: Vector2, back: float) -> Vector2:
 
 ## How hard it is to lay a lane or track at `q`: water and built ground bar the way.
 func _cost(q: Vector2) -> float:
-	if s.earth.is_wet(q):
+	if _wet(q):
 		return 100.0
-	var cost := _gradient(q).length() * 7.0
-	if not s._free(q, 0.12):
+	var h := _h(q)
+	var cost := Vector2(_h(q + Vector2(0.3, 0.0)) - h, _h(q + Vector2(0.0, 0.3)) - h).length() / 0.3 * 7.0
+	if not _clear(q, 0.12):
 		cost += 60.0
-	elif not s._dry(q, 0.25):
-		cost += 5.0
 	return cost
 
 
@@ -179,6 +280,8 @@ func _march(start: Vector2, heading: float, length: float, curve := 0.0) -> Pack
 			if c < best:
 				best = c
 				best_h = hh
+			if best < 1.5:   # open, level ground ahead: no need to look further
+				break
 		if best >= 40.0:
 			break
 		h = best_h + s.rng.randf_range(-0.05, 0.05)
@@ -192,20 +295,22 @@ func _route(a: Vector2, b: Vector2) -> PackedVector2Array:
 	var pts := PackedVector2Array([a])
 	var p := a
 	var prev := (b - a).angle()
-	var step := 0.6
+	var step := 0.8
 	for i in int(a.distance_to(b) / step * 1.8):
 		if p.distance_to(b) < step * 1.2:
 			break
 		var want := (b - p).angle()
 		var best := 1.0e9
 		var best_h := want
-		for off: float in [0.0, 0.3, -0.3, 0.6, -0.6, 0.95, -0.95]:
+		for off: float in [0.0, 0.35, -0.35, 0.8, -0.8]:
 			var hh: float = want + off
 			var q := p + Vector2(cos(hh), sin(hh)) * step
 			var c := _cost(q) + absf(off) * 2.0 + q.distance_to(b) * 1.2 + absf(angle_difference(prev, hh)) * 2.0
 			if c < best:
 				best = c
 				best_h = hh
+				if off == 0.0 and c < q.distance_to(b) * 1.2 + 1.5:   # straight on over easy ground
+					break
 		if best >= 60.0 + p.distance_to(b) * 1.2:
 			break
 		prev = best_h
@@ -239,7 +344,7 @@ func _track(c: Vector2) -> void:
 	s.ground.road(pts, 0.13, "dirt")
 	for i in pts.size() - 1:
 		for k in 3:
-			s._claim(pts[i].lerp(pts[i + 1], k / 3.0), 0.12)
+			_claim(pts[i].lerp(pts[i + 1], k / 3.0), 0.12)
 
 
 # --- small geometry ------------------------------------------------------------------------
@@ -316,7 +421,7 @@ func _spine(c: Vector2, heading: float, half_length: float, curve: float) -> Pac
 ## One house of `rank` at `p` facing `face`, fitting radius `fit`. False if it would not fit.
 func _house(p: Vector2, face: float, rank: String, fit: float, mix: float, size := -1.0) -> bool:
 	var sz := _r(0.85, 1.1) if size < 0.0 else size
-	if s._fit_house(p, face, sz, fit, _site, mix, rank):
+	if _fit(p, face, sz, fit, _site, mix, rank):
 		_note(p, fit)
 		return true
 	return false
@@ -350,7 +455,7 @@ func _row(lane: PackedVector2Array, spacing: float, rank: String, mix: float, se
 ## or a hedge, and the ground kept for it.
 func _yard(p: Vector2, back: Vector2, spacing: float) -> void:
 	var yard := p + back * spacing * 0.62
-	if not s._dry(yard, 0.15) or not s._free(yard, 0.2):
+	if not _dry(yard, 0.15) or not _clear(yard, 0.2):
 		return
 	var roll := s.rng.randf()
 	if roll < 0.5:
@@ -360,7 +465,7 @@ func _yard(p: Vector2, back: Vector2, spacing: float) -> void:
 		s.prop(_orchard_tree(), yard, s.rng.randf() * TAU, _r(0.8, 1.1))
 	else:
 		s.prop("hedge", yard, _yaw_along(Vector2(-back.y, back.x)), 1.0)
-	s._claim(yard, 0.2)
+	_claim(yard, 0.2)
 
 
 ## The fruit or shade tree a people plant by their houses.
@@ -410,23 +515,54 @@ func _crop(kind: String) -> Color:
 func _area_ok(c: Vector2, yaw: float, w: float, d: float, relief_max: float) -> Array:
 	var ax := Vector2(cos(yaw), -sin(yaw))
 	var az := Vector2(sin(yaw), cos(yaw))
-	var nx := maxi(2, ceili(w / 0.25))
-	var nz := maxi(2, ceili(d / 0.25))
+	var hw := (w - 0.1) * 0.5
+	var hd := (d - 0.1) * 0.5
 	var lo := 1.0e9
 	var hi := -1.0e9
-	for i in nx + 1:
-		for j in nz + 1:
-			var u := (float(i) / nx - 0.5) * (w - 0.1)
-			var v := (float(j) / nz - 0.5) * (d - 0.1)
-			var p := c + ax * u + az * v
-			if s.earth.is_wet(p) or not s._free(p, 0.02):
-				return [false, 0.0, 0.0]
-			var h := _h(p)
-			lo = minf(lo, h)
-			hi = maxf(hi, h)
-	if hi - lo > relief_max:
+	# water and relief at the corners, the middle of each edge and the middle: most
+	# candidates fail here
+	for q: Vector2 in SPOTS:
+		var e := c + ax * (q.x * hw) + az * (q.y * hd)
+		if _wet(e):
+			return [false, 0.0, 0.0]
+		var h := _h(e)
+		lo = minf(lo, h)
+		hi = maxf(hi, h)
+	if hi - lo > relief_max or not _rect_clear(c, ax, az, hw, hd):
 		return [false, 0.0, 0.0]
 	return [true, lo, hi]
+
+
+## True when no claim (building, field, track, yard) touches the rectangle round `c` with
+## half-sizes `hw` along `ax` and `hd` along `az`: exact, and it looks only at its own buckets.
+func _rect_clear(c: Vector2, ax: Vector2, az: Vector2, hw: float, hd: float) -> bool:
+	var ext := Vector2(absf(ax.x) * hw + absf(az.x) * hd, absf(ax.y) * hw + absf(az.y) * hd)
+	var b: float = s.BUCKET
+	var m := BIG + 0.02
+	for bx in range(floori((c.x - ext.x - m) / b), floori((c.x + ext.x + m) / b) + 1):
+		for by in range(floori((c.y - ext.y - m) / b), floori((c.y + ext.y + m) / b) + 1):
+			var items: Variant = s._taken.get(Vector2i(bx, by))
+			if items != null:
+				for item in items:
+					if _touches(item[0], item[1], c, ax, az, hw, hd):
+						return false
+	for bx in range(floori((c.x - ext.x) / BIG_BUCKET), floori((c.x + ext.x) / BIG_BUCKET) + 1):
+		for by in range(floori((c.y - ext.y) / BIG_BUCKET), floori((c.y + ext.y) / BIG_BUCKET) + 1):
+			var items: Variant = _bigs.get(Vector2i(bx, by))
+			if items != null:
+				for item in items:
+					if _touches(item[0], item[1], c, ax, az, hw, hd):
+						return false
+	return true
+
+
+## Whether a claim (circle `p`, `r`) comes within 0.02 of the oriented rectangle.
+func _touches(p: Vector2, r: float, c: Vector2, ax: Vector2, az: Vector2, hw: float, hd: float) -> bool:
+	var rel := p - c
+	var dx := maxf(absf(rel.dot(ax)) - hw, 0.0)
+	var dy := maxf(absf(rel.dot(az)) - hd, 0.0)
+	var reach := r + 0.02
+	return dx * dx + dy * dy < reach * reach
 
 
 ## Reserve a rectangle as a chain of circles along its length (never past its edges).
@@ -439,7 +575,7 @@ func _claim_rect(c: Vector2, yaw: float, w: float, d: float) -> void:
 	var n := maxi(1, ceili(long_d / (2.0 * r)))
 	for k in n:
 		var t := 0.0 if n == 1 else (float(k) / (n - 1) - 0.5) * (long_d - 2.0 * r)
-		s._claim(c + along * t, r)
+		_claim(c + along * t, r)
 
 
 ## One field w x d across, lying along z when turned by `yaw`, in `crop` colour. It stands
@@ -492,7 +628,7 @@ func _boundary(a: Vector2, b: Vector2, kind: String) -> void:
 	var yaw := _yaw_along(dir)
 	for k in int(a.distance_to(b) / step):
 		var p := a + dir * (k + 0.5) * step
-		if s.earth.is_wet(p) or not s._free(p, 0.0):
+		if _wet(p) or not _clear(p, 0.0):
 			continue
 		s.prop(kind, p, yaw, 1.0)
 
@@ -558,11 +694,11 @@ func _pasture(c: Vector2, yaw: float, w: float, d: float, fence: String, animals
 ## `count` fields. `along` is the way the place's own lane runs (fields line up with it).
 func _farmland(c: Vector2, inner: float, outer: float, count: int, along: Vector2) -> int:
 	var made := 0
-	for attempt in count * 10:
+	for attempt in count * 6:
 		if made >= count:
 			break
 		var p := c + _dir(s.rng.randf() * TAU) * _r(inner, outer)
-		if not s._dry(p, 0.4) or not s._free(p, 0.3):
+		if _wet(p) or not _clear(p, 0.3):
 			continue
 		var grad := _gradient(p)
 		var hill := grad.length() > HILL_SLOPE
@@ -643,7 +779,7 @@ func _town(cells: Array, index: int) -> Vector2:
 	var a0 := s.rng.randf() * TAU
 	var paving := "cobble" if s.style == "northern" else ("earth" if s.style == "east" else "flag")
 	s.ground.area(_blob(c, sq, 12, 0.08), paving)
-	s._claim(c, sq * 0.55)   # the square's heart is kept open for its stalls and well
+	_claim(c, sq * 0.55)   # the square's heart is kept open for its stalls and well
 	_lane_pts.append(c)
 	# three lanes out of the square
 	var lanes: Array = []
@@ -703,10 +839,10 @@ func _temple(p: Vector2, a: float, index: int) -> bool:
 		return false
 	var f: float = s._foot(part)
 	var at := p + _dir(a) * f * 0.5
-	if not s._dry(at, f) or not s._free(at, f):
+	if not _dry(at, f) or not _clear(at, f):
 		return false
 	s._add(part, at, 0.0, _yaw_to(-_dir(a)), Vector3.ONE, s.ROOF_BASE.get(s.style, Color.WHITE), index, 0.3)
-	s._claim(at, f)
+	_claim(at, f)
 	_note(at, f)
 	return true
 
@@ -754,7 +890,7 @@ func _green_village(cells: Array, index: int) -> Vector2:
 		if not s.prop("prop_well_roofed", c, 0.0, 1.0):
 			s.prop("well", c, 0.0, 1.0)
 		s.prop("tree_broadleaf", c + _dir(s.rng.randf() * TAU) * gr * 0.5, 0.0, _r(1.0, 1.3))
-	s._claim(c, gr * 0.5)
+	_claim(c, gr * 0.5)
 	# two lanes out between the houses
 	var a0 := s.rng.randf() * TAU
 	var lanes: Array = []
@@ -771,9 +907,9 @@ func _green_village(cells: Array, index: int) -> Vector2:
 	if church != "":
 		var f: float = s._foot(church)
 		var at := c + _dir(church_a) * (gr + f * 0.75)
-		if s._dry(at, f) and s._free(at, f):
+		if _dry(at, f) and _clear(at, f):
 			s._add(church, at, 0.0, _yaw_to(-_dir(church_a)), Vector3.ONE, s.ROOF_BASE["northern"], index, 0.3)
-			s._claim(at, f)
+			_claim(at, f)
 			_note(at, f)
 			s.prop("tree_small", at + _dir(church_a + 1.2) * f * 1.1, 0.0, 1.0)
 	# houses round the green, leaving gaps at the lanes and the church
@@ -863,9 +999,9 @@ func _street_centre(p: Vector2, tan: Vector2, index: int) -> void:
 		var f: float = s._foot(part)
 		for sd: float in [side, -side]:
 			var at: Vector2 = p + nor * sd * (f + 0.35)
-			if s._dry(at, f) and s._free(at, f):
+			if _dry(at, f) and _clear(at, f):
 				s._add(part, at, 0.0, _yaw_to(-nor * sd), Vector3.ONE, s.ROOF_BASE.get(s.style, Color.WHITE), index, 0.3)
-				s._claim(at, f)
+				_claim(at, f)
 				_note(at, f)
 				break
 	var at := p + nor * side * 0.2
@@ -882,7 +1018,7 @@ func _waterside(c: Vector2, heading: float) -> void:
 	var bank := c
 	for step in 40:
 		var q := c + _water * step * 0.2
-		if s.earth.is_wet(q):
+		if _wet(q):
 			break
 		bank = q
 	var along := _dir(heading)
@@ -890,32 +1026,32 @@ func _waterside(c: Vector2, heading: float) -> void:
 		"nile":
 			for k in 2:
 				var at := bank + along * (k * 1.3 - 0.6)
-				if s._free(at, 0.1):
+				if _clear(at, 0.1):
 					s.prop("prop_shaduf", at, _yaw_to(_water), 1.0)
-					s._claim(at, 0.15)
+					_claim(at, 0.15)
 			for k in 4:
 				var at := bank - _water * _r(0.2, 0.9) + along * _r(-2.0, 2.0)
-				if s._free(at, 0.1) and not s.earth.is_wet(at):
+				if _clear(at, 0.1) and not _wet(at):
 					s.prop("palm", at, s.rng.randf() * TAU, _r(0.9, 1.2))
-					s._claim(at, 0.12)
+					_claim(at, 0.12)
 			if _chance(0.4):
 				s.prop("prop_reed_boat", bank, _yaw_along(along), 1.0)
 		"near_east":
 			for k in 3:
 				var at := bank - _water * _r(0.1, 0.8) + along * _r(-1.8, 1.8)
-				if s._free(at, 0.1) and not s.earth.is_wet(at):
+				if _clear(at, 0.1) and not _wet(at):
 					s.prop("palm", at, s.rng.randf() * TAU, _r(0.9, 1.2))
-					s._claim(at, 0.12)
+					_claim(at, 0.12)
 			var dove := c + along * _r(-1.0, 1.0) - _water * 0.7
-			if s._free(dove, 0.2):
+			if _clear(dove, 0.2):
 				s.prop("prop_dovecote", dove, 0.0, 1.0)
-				s._claim(dove, 0.2)
+				_claim(dove, 0.2)
 		"east":
 			for k in 3:   # a bamboo grove behind the village
 				var at := c - _water * _r(1.0, 1.7) + along * _r(-1.6, 1.6)
-				if s._free(at, 0.15) and not s.earth.is_wet(at):
+				if _clear(at, 0.15) and not _wet(at):
 					s.prop("bamboo", at, s.rng.randf() * TAU, _r(0.9, 1.2))
-					s._claim(at, 0.15)
+					_claim(at, 0.15)
 			if _chance(0.4):
 				s.prop("boat", bank, _yaw_along(along), 1.0)
 			s.prop("reeds", bank, 0.0, 1.0)
@@ -936,7 +1072,7 @@ func _hill_village(cells: Array, index: int) -> Vector2:
 	s.ground.area(_blob(c, sq, 10, 0.1), "flag")
 	s.prop("well" if _chance(0.6) else "prop_fountain_basin", c, 0.0, 1.0, index)
 	s.prop("olive", c + _dir(s.rng.randf() * TAU) * sq * 0.9, 0.0, 1.1)
-	s._claim(c, sq * 0.6)
+	_claim(c, sq * 0.6)
 	_lane_pts.append(c)
 	var grad := _gradient(c)
 	var a0 := Vector2(grad.y, -grad.x).angle() if grad.length() > 0.03 else s.rng.randf() * TAU
@@ -980,17 +1116,17 @@ func _tank_village(cells: Array, index: int) -> Vector2:
 	var yaw := s.rng.randf() * PI
 	s.ground.patch(c, tw * 0.85, "earth", 0.9)
 	_pond(c, tw, td, yaw)
-	s._claim(c, td * 0.5)
+	_claim(c, td * 0.5)
 	_lane_pts.append(c)
 	var tree_a := s.rng.randf() * TAU
 	var tp := c + _dir(tree_a) * (tw * 0.5 + 0.6)
-	if s._free(tp, 0.3) and not s.earth.is_wet(tp):
+	if _clear(tp, 0.3) and not _wet(tp):
 		if not s.prop("prop_tree_platform", tp, 0.0, 1.0, index):
 			s.prop("tree_broadleaf", tp, 0.0, 1.3)
-		s._claim(tp, 0.3)
+		_claim(tp, 0.3)
 	var sp := c + _dir(tree_a + 0.7) * (tw * 0.5 + 0.7)
-	if s._free(sp, 0.2) and s.prop("prop_shrine_india", sp, tree_a, 1.0, index):
-		s._claim(sp, 0.2)
+	if _clear(sp, 0.2) and s.prop("prop_shrine_india", sp, tree_a, 1.0, index):
+		_claim(sp, 0.2)
 	var built := 0
 	var want := s.rng.randi_range(6, 10)
 	for ringno in 2:
@@ -1032,7 +1168,7 @@ func _farmstead(cells: Array, index: int) -> Vector2:
 	_water = s._sea_direction(c, 5.0)
 	var a0 := s.rng.randf() * TAU
 	s.ground.area(_blob(c, yard, 10, 0.1), "earth")
-	s._claim(c, yard * 0.32)
+	_claim(c, yard * 0.32)
 	_lane_pts.append(c + _dir(a0 + PI) * (yard + 0.5))
 	var spacing: float = s.LOT * 0.95
 	# the farmhouse: a two-lot farmhouse if the region has one
@@ -1040,7 +1176,7 @@ func _farmstead(cells: Array, index: int) -> Vector2:
 	var face := _yaw_to(-_dir(a0))
 	var built := 0
 	if villa or _chance(0.5):
-		if s._fit_house(hp, face, 1.0, spacing * 0.7, index, 0.0, "farm", true):
+		if _fit(hp, face, 1.0, spacing * 0.7, index, 0.0, "farm", true):
 			_note(hp, spacing * 0.7)
 			built += 1
 	if built == 0 and _house(hp, face, "farm", spacing * 0.5, 0.0):
@@ -1091,33 +1227,33 @@ func _ger_cluster(cc: Vector2, gers: int, door: float, index: int, mix: float) -
 	var a0 := s.rng.randf() * TAU
 	for k in gers:
 		var p := cc + _dir(a0 + TAU * k / gers) * (0.62 if gers > 1 else 0.0)
-		if s._fit_house(p, door + _r(-0.35, 0.35), _r(0.95, 1.25), s.LOT * 0.46, index, mix, "camp"):
+		if _fit(p, door + _r(-0.35, 0.35), _r(0.95, 1.25), s.LOT * 0.46, index, mix, "camp"):
 			built += 1
 			_note(p, s.LOT * 0.46)
 	if built == 0:
 		return 0
 	s.ground.patch(cc, 0.8, "earth", 0.55)
 	var back := cc + Vector2(0.0, -1.05)   # wagons stand behind, to the north
-	if s._free(back, 0.25) and not s.earth.is_wet(back):
+	if _clear(back, 0.25) and not _wet(back):
 		s.prop("prop_wagon", back, door + PI / 2.0 + _r(-0.4, 0.4), 1.0)
-		s._claim(back, 0.25)
+		_claim(back, 0.25)
 	var line := cc + _dir(a0 + 0.5) * 1.5
-	if s._free(line, 0.25) and not s.earth.is_wet(line):
+	if _clear(line, 0.25) and not _wet(line):
 		s.prop("prop_horse_tether", line, s.rng.randf() * TAU, 1.0)
-		s._claim(line, 0.25)
+		_claim(line, 0.25)
 	return built
 
 
 ## A herd grazing at `p`: a few animals loosely together.
 func _herd(p: Vector2, kinds: Array) -> void:
-	if s.earth.is_wet(p) or not s._free(p, 0.3):
+	if _wet(p) or not _clear(p, 0.3):
 		return
 	var kind := str(kinds[s.rng.randi() % kinds.size()])
 	for k in s.rng.randi_range(2, 3):
 		var q := p + _dir(s.rng.randf() * TAU) * _r(0.0, 0.5)
-		if not s.earth.is_wet(q):
+		if not _wet(q):
 			s.prop(kind, q, s.rng.randf() * TAU, _r(0.9, 1.1))
-	s._claim(p, 0.35)
+	_claim(p, 0.35)
 	_note(p, 0.35)
 
 
@@ -1127,7 +1263,7 @@ func _ovoo(c: Vector2, reach: float) -> void:
 	var best_h := -1.0e9
 	for k in 12:
 		var p := c + _dir(s.rng.randf() * TAU) * _r(reach * 0.5, reach)
-		if s.earth.is_wet(p) or not s._free(p, 0.3):
+		if _wet(p) or not _clear(p, 0.3):
 			continue
 		var h := _h(p)
 		if h > best_h:
@@ -1136,7 +1272,7 @@ func _ovoo(c: Vector2, reach: float) -> void:
 	if best != Vector2.ZERO:
 		if not s.prop("prop_ovoo", best, 0.0, 1.0):
 			s.prop("rocks", best, 0.0, 1.0)
-		s._claim(best, 0.3)
+		_claim(best, 0.3)
 		_note(best, 0.3)
 
 
@@ -1172,11 +1308,11 @@ func _camp(site: Dictionary, centre: Vector2, half: float, tents: int, index: in
 	if court != "":   # the khan's court from the model kit, with its own standards (D-280)
 		s._add(court, centre, 0.0, _r(-0.3, 0.3), Vector3.ONE, s.ROOF_BASE.get(s.style, Color.WHITE), index, 0.85)
 		core = s._foot(court)
-		s._claim(centre, core)
+		_claim(centre, core)
 	elif site["capital"]:
 		s._palace(centre, index, 0.0)
 		core = float(s.PALACE_R["steppe"]) * s.S
-		s._claim(centre, core)
+		_claim(centre, core)
 		s._add("k_flag", centre + Vector2(s.LOT, -s.LOT), 0.0, 0.0, Vector3.ONE, Color.WHITE, index, 1.0)
 	s.prop("prop_tug", centre + Vector2(core * 0.8, core * 0.8), 0.0, 1.0, index)
 	var door := _r(-0.35, 0.35)
@@ -1186,10 +1322,23 @@ func _camp(site: Dictionary, centre: Vector2, half: float, tents: int, index: in
 	while placed < tents and tries < ceili(tents / float(per)) * 12:
 		tries += 1
 		var cc := centre + _dir(s.rng.randf() * TAU) * (core + 0.9 + sqrt(s.rng.randf()) * maxf(half - core, 1.5))
-		if not s._dry(cc, 1.0) or not s._free(cc, 0.9):
+		if not _dry(cc, 1.0) or not _clear(cc, 0.9):
 			continue
 		placed += _ger_cluster(cc, clampi(tents - placed, 1, per), door, index, 0.4)
 	var herds := ["sheep", "goat", "horse", "cow", "camel"]
 	for k in clampi(tents / 3, 3, 12):
 		_herd(centre + _dir(s.rng.randf() * TAU) * (half * _r(1.05, 1.5) + 1.0), herds)
 	_ovoo(centre, half * 1.3 + 1.0)
+
+
+
+## A house through Settlements, after a cheap look at whether it could possibly fit (most
+## failures are caught here, before the slow checks).
+func _fit(pixel: Vector2, turn: float, size: float, fit: float, site: int, mix: float, rank := "city",
+		big := false) -> bool:
+	if _wet(pixel) or not _clear(pixel, fit):
+		return false
+	for k in 4:
+		if _wet(pixel + Vector2(cos(k * PI / 2.0), sin(k * PI / 2.0)) * fit):
+			return false
+	return s._fit_house(pixel, turn, size, fit, site, mix, rank, big)
