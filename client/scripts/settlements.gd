@@ -392,6 +392,16 @@ const REGION_MODULE := {"east": "east", "classical": "classical", "northern": "n
 ## two-lot buildings (`big_house_set`: terraces, courtyard houses, farmsteads, about 2.0 wide
 ## by 1.0 deep), or [] if it has none. Returns [module, kinds] or [].
 func _house_kinds(rank: String, big := false) -> Array:
+	var key := "%s|%s|%s|%s" % [style, culture, rank, big]
+	if not _kinds_cache.has(key):   # the modules rebuild their lists on every call
+		_kinds_cache[key] = _house_kinds_uncached(rank, big)
+	return _kinds_cache[key]
+
+
+var _kinds_cache := {}
+
+
+func _house_kinds_uncached(rank: String, big: bool) -> Array:
 	var entry := _house_list()
 	if entry.is_empty():
 		return []
