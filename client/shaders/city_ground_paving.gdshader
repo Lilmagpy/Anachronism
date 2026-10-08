@@ -67,22 +67,45 @@ vec3 earth_colour(vec3 base, vec2 p, float n1, float n2) {
 	return c;
 }
 
+// fine, irregular cobbles: jittered cells, low contrast, melting to their average far off
 vec3 cobble_colour(vec3 base, vec2 p) {
-	vec2 q = p * 6.0;
-	q.x += floor(q.y) * 0.5;
-	vec2 f = fract(q) - 0.5;
-	float stone = smoothstep(0.5, 0.3, length(f * vec2(1.0, 1.25)));
-	vec3 st = mix(vec3(0.70, 0.66, 0.58), base, 0.22) * (0.9 + 0.2 * hash(floor(q)));
-	vec3 gap = mix(base, vec3(0.3, 0.26, 0.2), 0.5) * 0.8;
-	return mix(gap, st, stone);
+	vec2 q = p * 11.0;
+	vec2 id = floor(q);
+	vec2 f = fract(q);
+	float best = 9.0;
+	float second = 9.0;
+	float tone = 0.5;
+	for (int j = -1; j <= 1; j++) {
+		for (int i = -1; i <= 1; i++) {
+			vec2 g = vec2(float(i), float(j));
+			vec2 o = vec2(hash(id + g), hash(id + g + 17.0));
+			float d = length(g + 0.15 + 0.7 * o - f);
+			if (d < best) {
+				second = best;
+				best = d;
+				tone = hash(id + g + 5.0);
+			} else if (d < second) {
+				second = d;
+			}
+		}
+	}
+	float w = max(fwidth(q.x), 1e-3);
+	float edge = smoothstep(0.0, 0.12 + w, second - best);
+	vec3 st = mix(vec3(0.72, 0.68, 0.60), base, 0.3) * (0.94 + 0.1 * tone);
+	vec3 gap = st * 0.86;
+	vec3 sharp = mix(gap, st, edge);
+	vec3 avg = st * 0.96;
+	return mix(sharp, avg, smoothstep(0.25, 0.6, w));
 }
 
+// flagstones: larger staggered slabs, thin joints, gentle tone changes
 vec3 flag_colour(vec3 base, vec2 p) {
-	vec2 q = p * 2.0;
-	q.x += floor(q.y) * 0.5;
-	float lines = max(joint(q.y, 0.47), joint(q.x, 0.47));
-	vec3 st = mix(vec3(0.82, 0.78, 0.68), base, 0.18) * (0.92 + 0.14 * hash(floor(q)));
-	return mix(st, st * 0.62, lines);
+	vec2 q = p * 3.0;
+	q.x += floor(q.y) * 0.5 + hash(vec2(floor(q.y), 3.0)) * 0.3;
+	float w = max(fwidth(q.x), 1e-3);
+	float lines = max(joint(q.y, 0.485), joint(q.x, 0.485));
+	vec3 st = mix(vec3(0.82, 0.78, 0.68), base, 0.18) * (0.95 + 0.08 * hash(floor(q)));
+	return mix(st * (1.0 - 0.14 * lines), st * 0.97, smoothstep(0.25, 0.6, w));
 }
 
 void fragment() {
@@ -119,6 +142,8 @@ void fragment() {
 	}
 
 	// the surface
+	float dry = smoothstep(0.76, 0.84, base.r);   // sandier peoples keep more bare earth
+	float green_share = mix(0.55, 0.15, dry);
 	vec3 c = earth_colour(base, p, n1, n2);
 	float wall_dist = shape == 3 ? coord.y : 1.0;
 	if (kind == 1) {
@@ -182,14 +207,34 @@ void fragment() {
 	if (kind == 8) {
 		a = pow(1.0 - clamp(t, 0.0, 1.0), 2.0) * 0.34 * (0.7 + 0.6 * n1);
 	}
+	// worn ground is patchy: grass survives in the gaps (not in paved places)
+	float patchy = smoothstep(0.2, 0.55, 0.55 * n1 + 0.3 * n2 + 0.15 * n3 + 0.12 + 0.25 * tint.a);
+	if (kind == 0 && shape != 0) {
+		a *= mix(1.0, patchy, 0.8 * (1.0 - dry * 0.5));
+	}
+	if (kind == 1 && shape == 0) {
+		a *= mix(1.0, patchy, 0.35);
+	}
 	// grass creeping in at the margins of earth: the ragged edge reads as thinning ground
 	if (kind <= 1 || kind == 7) {
 		c = mix(c, c * vec3(0.9, 1.0, 0.7), smoothstep(0.2, 1.0, t) * 0.6);
+		c = mix(c, vec3(0.42, 0.58, 0.27) * (0.9 + 0.2 * n2), green_share * (0.25 + 0.5 * smoothstep(0.0, 1.0, t)));
+	}
+	float own_alpha = tint.a;
+	if (kind == 9) {
+		// a farm field: furrows along its length in the crop colour, a darker bank at the rim
+		float row = step(0.5, fract(coord.x * 8.0));
+		float soft = 0.5 + 0.5 * smoothstep(0.1, 0.9, noise(p * 3.0));
+		c = base * (0.8 + 0.28 * row) * (0.92 + 0.12 * n2) * soft + base * 0.2;
+		float inside = smoothstep(0.35, 0.95, tint.a);
+		c = mix(base * 0.55, c, inside);
+		a = 1.0;
+		own_alpha = smoothstep(0.0, 0.45, tint.a);
 	}
 	ALBEDO = pow(c, vec3(2.2));
 	ROUGHNESS = 0.95;
 	SPECULAR = 0.0;
-	ALPHA = clamp(a * tint.a * keep, 0.0, 1.0);
+	ALPHA = clamp(a * own_alpha * keep, 0.0, 1.0);
 }
 
 // The terrain's soft light bands, so the ground sits in the same light as the land round it.

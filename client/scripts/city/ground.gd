@@ -87,6 +87,7 @@ var s: Settlements   ## the Settlements being built
 var roads: Array = []     ## [points: PackedVector2Array, width: float, kind: String]
 var areas: Array = []     ## [points: PackedVector2Array, kind: String]
 var patches: Array = []   ## [centre: Vector2, radius: float, kind: String]
+var fields: Array = []    ## [centre: Vector2, yaw: float, w: float, d: float] (not streets)
 
 var _jobs: Array = []        ## what the planners described, in order: {t, ..., style}
 var _footings: Array = []    ## explicit footings: {pos, yaw, size, kind, style}
@@ -136,6 +137,13 @@ func area(points: PackedVector2Array, kind: String) -> void:
 		hi = hi.max(p)
 	_area_boxes.append(Rect2(lo, hi - lo))
 	_jobs.append({"t": "area", "p": points, "kind": kind, "style": s.style})
+
+
+## A farm field draped on the terrain: `w` x `d` map units centred on `c`, its long side along
+## z when turned by `yaw`, furrows along its length in the `crop` colour, a soft bank round it.
+func field(c: Vector2, yaw: float, w: float, d: float, crop: Color) -> void:
+	fields.append([c, yaw, w, d])
+	_jobs.append({"t": "field", "c": c, "yaw": yaw, "w": w, "d": d, "crop": crop, "style": s.style})
 
 
 ## True when `p` lies on a road or square (within `margin` of its edge).
@@ -513,6 +521,38 @@ func _inside_by(q: Vector2, poly: PackedVector2Array, margin: float) -> bool:
 	return true
 
 
+# --- fields -------------------------------------------------------------------------------
+
+## The mesh of a field: a grid about 0.5 apart, with an outer ring that fades out.
+func _field(c: Vector2, yaw: float, w: float, d: float, crop: Color) -> void:
+	var tile := _tile(c)
+	var fwd := Vector2(sin(yaw), cos(yaw))
+	var right := Vector2(cos(yaw), -sin(yaw))
+	var nx := maxi(1, ceili(w / 0.5))
+	var nz := maxi(1, ceili(d / 0.5))
+	var bank := 0.1
+	# grid lines from -bank to w + bank, the outermost two at the bank's edge (alpha 0)
+	var xs := [-w / 2.0 - bank]
+	for i in nx + 1:
+		xs.append(-w / 2.0 + w * i / nx)
+	xs.append(w / 2.0 + bank)
+	var zs := [-d / 2.0 - bank]
+	for j in nz + 1:
+		zs.append(-d / 2.0 + d * j / nz)
+	zs.append(d / 2.0 + bank)
+	var rows: Array = []
+	for j in zs.size():
+		var line := []
+		for i in xs.size():
+			var edge := i == 0 or j == 0 or i == xs.size() - 1 or j == zs.size() - 1
+			var q: Vector2 = c + right * float(xs[i]) + fwd * float(zs[j])
+			line.append(_vert(tile, q, Vector2(xs[i], zs[j]), 9, 4, crop, 0.0 if edge else 1.0))
+		rows.append(line)
+	for j in zs.size() - 1:
+		for i in xs.size() - 1:
+			_quad(tile, 0, rows[j][i], rows[j][i + 1], rows[j + 1][i], rows[j + 1][i + 1])
+
+
 # --- patches ------------------------------------------------------------------------------
 
 ## An irregular blob of ground: a fan of rings out to a wobbling edge.
@@ -567,6 +607,8 @@ func build(parent: Node3D) -> void:
 				_ribbon(job["p"], job["w"], job["kind"], job["style"], 1)
 			"area":
 				_polygon(job["p"], job["kind"], job["style"], 2)
+			"field":
+				_field(job["c"], job["yaw"], job["w"], job["d"], job["crop"])
 	# the contact shadow at every wall's foot goes over everything
 	for e in s.placed:
 		if e["what"] != "tent" and not explicit.has(_key(e["pos"])):
@@ -604,10 +646,10 @@ func _building(e: Dictionary) -> void:
 	var yaw: float = e["yaw"]
 	var big := maxf(hx, hz)
 	var scale_up := clampf(sqrt(big / 0.3), 1.0, 2.2)
-	var side := 0.1
-	var back := 0.08
-	var front := 0.3
-	var strength := 0.95
+	var side := 0.06
+	var back := 0.05
+	var front := 0.2
+	var strength := 0.8
 	var kind := "earth"
 	match what:
 		"tent":

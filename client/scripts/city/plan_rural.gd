@@ -452,8 +452,7 @@ func _field(c: Vector2, yaw: float, w: float, d: float, crop: Color, relief_max 
 	var low: float = ok[1]
 	var high: float = ok[2]
 	var base := _h(c)
-	var sy := maxf(1.0, (high - low + 0.03) / 0.048)
-	s._add("field", c, minf(0.0, low - base - 0.01), yaw, Vector3(w / _fw, sy, d / _fd), crop)
+	s.ground.field(c, yaw, w, d, crop)
 	_claim_rect(c, yaw, w, d)
 	_note(c, maxf(w, d) * 0.5)
 	return true
