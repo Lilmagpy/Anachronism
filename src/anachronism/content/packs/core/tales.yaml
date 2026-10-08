@@ -1,0 +1,194 @@
+schema_version: 1
+# How battles are told (content/schema/tales.py, D-103). The engine picks the tale that
+# fits best (the kind of soldier that won, the ground, a rout or a hard fight).
+# Placeholders: {place} {winner} {loser} (adjectives), {unit} (the winners' soldiers).
+tales:
+  - id: horse_on_open_ground
+    kind: mounted
+    terrain: [plains, steppe, desert, river_plains]
+    lines:
+      - "On the open ground at {place} the {winner} {unit} swept round the {loser} flank, and the line dissolved."
+      - "At {place} the {loser} foot never saw the charge coming until the {winner} {unit} were among them."
+      - "Dust, thunder, and then nothing: the {winner} {unit} rode down the {loser} host at {place}."
+  - id: horse_archers_steppe
+    kind: mounted
+    terrain: [steppe, desert]
+    rout: true
+    lines:
+      - "For a whole day at {place} the {winner} {unit} shot and wheeled away, shot and wheeled away, until the {loser} army broke from thirst and despair."
+  - id: spears_hold
+    kind: spear
+    lines:
+      - "At {place} the {loser} attack broke on a hedge of {winner} spears, again and again, until there was no one left to send."
+      - "The {winner} {unit} locked shields at {place} and simply did not move. The {loser} host could not make them."
+  - id: spears_in_hills
+    kind: spear
+    terrain: [hills, mountains]
+    lines:
+      - "Above {place} the {winner} {unit} held the pass, and the {loser} dead filled the road below."
+  - id: archers_rain
+    kind: missile
+    lines:
+      - "The sky over {place} went dark with {winner} arrows. The {loser} ranks thinned before they ever closed."
+      - "At {place} the {winner} {unit} loosed volley after volley; the {loser} charge died in the mud short of their line."
+  - id: infantry_grind
+    kind: infantry
+    rout: false
+    lines:
+      - "{place} was a long, grinding slaughter, shield against shield, until at last the {loser} line gave."
+      - "Neither side would yield at {place} until dusk, when the {winner} {unit} made one more push - and the {loser} host broke."
+  - id: infantry_rout
+    kind: infantry
+    rout: true
+    lines:
+      - "The {winner} {unit} smashed through the {loser} centre at {place}, and the rout ran for miles."
+  - id: elephants
+    kind: elephant
+    lines:
+      - "At {place} the {winner} elephants trumpeted, the {loser} horses bolted, and the battle was over before it began."
+      - "Like moving towers the {winner} elephants waded into the {loser} ranks at {place}. Nothing could stand before them."
+  - id: siege_guns
+    kind: siege
+    lines:
+      - "At {place} the {winner} engines hurled stones into the {loser} ranks until the survivors ran."
+  - id: forest_ambush
+    terrain: [forest, marsh]
+    lines:
+      - "In the trees about {place} the {loser} column was caught strung out on the road and cut to pieces."
+      - "The {loser} host floundered in the wet ground at {place}, and the {winner} fell on them before they could form."
+  - id: river_crossing
+    terrain: [river_plains]
+    rout: true
+    lines:
+      - "The {loser} army was caught crossing the river at {place}; more drowned than fell."
+  - id: plain_fight
+    lines:
+      - "At {place} the {winner} {unit} carried the day against the {loser} host."
+      - "The armies met at {place}, and when the day was done the field belonged to the {winner}."
+
+  # --- at sea (D-107): {place} is the sea, {unit} the winners' ships ----------------------
+  - id: sea_any
+    sea: true
+    lines:
+      - "On the {place} the {winner} {unit} broke the {loser} line, and the sea took the rest."
+      - "The {winner} and {loser} fleets met on the {place}; by evening only {winner} sails were in sight."
+      - "Oars, rams and grappling hooks: a long day on the {place}, and at its end the {winner} fleet held the water."
+  - id: sea_rout
+    sea: true
+    rout: true
+    lines:
+      - "Caught at anchor with their crews ashore, the {loser} fleet burned on the {place} before a single oar was manned."
+      - "A storm scattered the {loser} squadrons across the {place}, and the {winner} {unit} gathered up the wrecks."
+  - id: rams
+    sea: true
+    ships: [galleys, warships]
+    lines:
+      - "On the {place} the {winner} rowers found a gap in the {loser} line, slipped through it, and turned to ram them from behind."
+      - "Crowded into the narrows, the {loser} ships fouled each other's oars, and the {winner} {unit} rammed them one by one."
+      - "The {winner} {unit} feigned flight across the {place}, then wheeled about, rams first, into the scattered {loser} pursuit."
+  - id: boarding
+    sea: true
+    ships: [warships]
+    rout: false
+    lines:
+      - "The {winner} marines grappled the {loser} ships and turned the sea fight into a land battle on their decks - which they won."
+  - id: junks_fire
+    sea: true
+    ships: [war_junks]
+    lines:
+      - "The {winner} {unit} loosed fire-arrows and pots of burning oil; the {loser} fleet burned on the {place}."
+      - "Paddle-wheel ships, driven by men treading wheels inside their hulls, ran down the {loser} squadrons on the {place}."
+      - "Thunderclap bombs flung from the {winner} decks set the {loser} sails alight all across the {place}."
+  - id: carracks_tall
+    sea: true
+    ships: [carracks]
+    lines:
+      - "The tall {winner} {unit} towered over the {loser} ships; crossbowmen in their castles shot down onto open decks."
+  - id: broadsides
+    sea: true
+    ships: [gunships]
+    lines:
+      - "The {winner} {unit} stood off and fired broadside after broadside; the {loser} ships never came close enough to board."
+      - "Smoke covered the {place}. When it lifted, the {loser} galleys were splinters and the {winner} guns were still warm."
+  - id: greek_fire
+    sea: true
+    civs: [byzantium]
+    lines:
+      - "Siphons in the {winner} prows spat a liquid fire that burned on the water itself; the {loser} sailors leapt into a burning sea."
+  - id: corvus
+    sea: true
+    civs: [rome]
+    lines:
+      - "The {winner} ships swung their spiked boarding bridges down onto the {loser} decks, and legionaries poured across: a land battle, fought at sea."
+  - id: carthage_quinqueremes
+    sea: true
+    civs: [carthage]
+    lines:
+      - "Out of the round war harbour of Carthage came the finest ships afloat; the {winner} quinqueremes outrowed and outrammed the {loser} fleet on the {place}."
+  - id: athenian_circle
+    sea: true
+    civs: [athens]
+    lines:
+      - "The {winner} triremes rowed circles round the {loser} fleet on the {place}, closing tighter and tighter, and struck at the first broken oar."
+  - id: turtle_ships
+    sea: true
+    civs: [joseon]
+    lines:
+      - "Iron-spiked turtle ships rowed straight into the {loser} fleet on the {place}, cannon firing from the dragon's mouth at their bows."
+  - id: longships
+    sea: true
+    civs: [denmark, norway, sweden]
+    lines:
+      - "The {winner} longships were lashed together into a floating fortress, and the {loser} crews died trying to climb it."
+  - id: venetian_galleys
+    sea: true
+    civs: [venice]
+    lines:
+      - "The {winner} galleys, built in the city's great shipyards and rowed by its own citizens, swept the {loser} fleet from the {place}."
+
+  # --- battle plans (D-108): told when the winners' plan carried the day -----------------
+  - id: plan_charge
+    tactic: charge
+    lines:
+      - "At {place} the {winner} {unit} came on at a run and crashed into the {loser} ranks before they had dressed their lines."
+      - "Nobody at {place} remembers who gave the order to charge; everyone remembers the {loser} line breaking."
+  - id: plan_hold
+    tactic: hold
+    lines:
+      - "All day at {place} the {winner} {unit} stood shoulder to shoulder and did not give a step. The {loser} host broke itself against them."
+      - "The {loser} attack came up the slope at {place} three times. Three times it rolled back down, fewer each time."
+  - id: plan_skirmish
+    tactic: skirmish
+    lines:
+      - "At {place} the {winner} {unit} never closed: they shot, fell back and shot again, until the {loser} ranks thinned and broke."
+      - "The {loser} host at {place} stood waiting for a fight that never came, while the arrows fell and fell."
+  - id: plan_flank
+    tactic: flank
+    lines:
+      - "At {place} the {winner} centre gave ground on purpose; when the {loser} host pressed in, the {winner} horse closed the ring behind them. Few escaped."
+      - "The {loser} line at {place} looked to its flanks too late: the {winner} horsemen were already there."
+  - id: plan_feint
+    tactic: feint
+    lines:
+      - "At {place} the {winner} horsemen turned and fled - or seemed to. The {loser} army broke ranks to chase them, and rode into the trap."
+      - "Three times the {winner} riders ran from the {loser} host at {place}. The third time they ran until the pursuit was strung out across the plain - and then they turned."
+  - id: plan_ambush
+    tactic: ambush
+    lines:
+      - "The {loser} column was strung out along the road through {place} when the {winner} host rose from cover on every side."
+      - "At {place} the {loser} army marched into a valley that was quiet, and then was not."
+  - id: cannae
+    tactic: flank
+    civs: [carthage]
+    lines:
+      - "At {place} the Carthaginian line bowed back like a drawn bow; the {loser} legions pushed into it, and the African foot and the Numidian horse closed around them until they could not raise their swords."
+  - id: mongol_feint
+    tactic: feint
+    civs: [mongols]
+    lines:
+      - "The Mongol tumens fled before the {loser} host at {place} for a whole day. When the pursuers' horses were blown and their ranks scattered, the drums sounded, and the Mongols turned."
+  - id: teutoburg
+    tactic: ambush
+    terrain: [forest]
+    lines:
+      - "In the forest at {place} the {loser} column, three miles long and slowed by its baggage, was cut to pieces from the trees over three days of rain."

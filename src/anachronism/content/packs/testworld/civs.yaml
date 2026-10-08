@@ -5,16 +5,19 @@ civs:
     adjective: Veyran
     lineage: veyran
     colour: "#b5523b"
+    symbol: griffin
     description: A populous river kingdom of scribes, granaries and temple priests.
   - id: ushkai
     name: Ushkai Confederacy
     adjective: Ushkai
     lineage: ushkai
     colour: "#5b7f3a"
+    symbol: wolf
     description: Horse clans of the western steppe, few in number and quick to move.
   - id: kessrin
     name: Kessrin Highlands
     adjective: Kessrine
     lineage: kessrin
     colour: "#4a6a9b"
+    symbol: pine
     description: Mountain miners and smiths behind strong walls, rich in metal, short of grain.

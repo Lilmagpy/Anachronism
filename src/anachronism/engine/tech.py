@@ -26,6 +26,10 @@ class Feasibility:
     literacy_shortfall_bp: int
     """Soft requirement: how far literacy is below what the node wants (raises setbacks)."""
     stub: bool
+    missing_buildings: tuple[str, ...] = ()
+    beyond_age: bool = False
+    """A rival court's view of an advancement from beyond its age (D-125): out of reach
+    unless stolen."""
 
     @property
     def blocked(self) -> bool:
@@ -34,7 +38,9 @@ class Feasibility:
             self.missing_prerequisites
             or self.missing_materials
             or self.missing_widespread
+            or self.missing_buildings
             or self.stub
+            or self.beyond_age
         )
 
 
@@ -73,7 +79,42 @@ def feasibility(state: GameState, civ_id: str, node_id: str) -> Feasibility:
         ),
         literacy_shortfall_bp=max(0, node.requires.literacy_bp - civ.stats.literacy_bp),
         stub=node.stub,
+        missing_buildings=tuple(
+            b for b in node.requires.buildings if b not in standing_buildings(state, civ_id)
+        ),
+        beyond_age=beyond_age(state, civ_id, node_id),
     )
+
+
+def beyond_age(state: GameState, civ_id: str, node_id: str) -> bool:
+    """True if an advancement lies beyond a rival court's age and it has no stolen secret.
+
+    Only the player brings ideas from the future (D-125): every other court keeps to
+    history's pace, unless its spies stole an idea from a court that has it. Whatever a
+    court already knows or uses (from the scenario) is its own.
+    """
+    if civ_id == state.player_civ:
+        return False
+    tech = state.civs[civ_id].tech.get(node_id)
+    if tech is not None and (
+        tech.stolen or tech.stage.is_adopted or tech.stage is not Stage.CONCEPT
+    ):
+        return False
+    horizon = state.year + state.world.rules.rivals.foresight_years
+    return state.tech_nodes[node_id].year > horizon
+
+
+def standing_buildings(state: GameState, civ_id: str) -> set[str]:
+    """Every kind of building standing in the realm, counting what upgrades replaced."""
+    kinds = state.world.buildings
+    found: set[str] = set()
+    for pid in state.owned_provinces(civ_id):
+        for building in state.provinces[pid].buildings:
+            while building and building not in found:
+                found.add(building)
+                kind = kinds.get(building)
+                building = kind.replaces if kind is not None and kind.replaces else ""
+    return found
 
 
 def propose(state: GameState, civ_id: str, node_id: str) -> Feasibility:
@@ -124,8 +165,11 @@ def adopt(state: GameState, civ: CivState, node_id: str, events: EventLog) -> No
     tech = civ.tech.setdefault(node_id, TechState(stage=Stage.CONCEPT))
     tech.stage = Stage.ADOPTED
     tech.goal = False
+    tech.adopted_year = state.year
     tech.spread_bp = max(tech.spread_bp, state.world.rules.projects.initial_spread_bp)
-    events.add(civ.id, "adopted", f"{civ.name} adopts {node.name}.")
+    events.add(
+        civ.id, "adopted", f"{node.name} is adopted in the {civ.adjective} lands.", node.name
+    )
     for effect in node.effects:
         if effect.type is EffectType.UNLOCKS_RESOURCE and effect.target is not None:
             _discover(state, civ, effect.target, events)
@@ -138,7 +182,9 @@ def adopt(state: GameState, civ: CivState, node_id: str, events: EventLog) -> No
     opposition = resistance_bp(state, civ, node)
     if opposition:
         civ.stats.unrest_bp = clamp(civ.stats.unrest_bp + opposition, 0, BP)
-        events.add(civ.id, "resistance", f"Some in {civ.name} resent the new {node.name}.")
+        events.add(
+            civ.id, "resistance", f"Some in {civ.name} resent the new {node.name}.", node.name
+        )
     on_adoption(state, civ, node, events)
 
 
@@ -149,7 +195,7 @@ def _discover(state: GameState, civ: CivState, resource: str, events: EventLog) 
         if province.resources.get(resource) is Access.UNEXPLORED:
             province.resources[resource] = Access.ACCESSIBLE
             place = state.world.geography[province_id].name
-            events.add(civ.id, "discovery", f"{name} found in {place}.")
+            events.add(civ.id, "discovery", f"{name} found in {place}.", name)
 
 
 def spread_step(state: GameState, civ: CivState, effects: Effects, events: EventLog) -> None:
@@ -171,4 +217,5 @@ def spread_step(state: GameState, civ: CivState, effects: Effects, events: Event
             civ.id,
             "widespread",
             f"{list_names(now_common)} {verb} now common across {civ.name}.",
+            list_names(now_common),
         )
