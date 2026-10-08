@@ -2407,3 +2407,42 @@ matters. Engine only: the client screens for it come in a later step.
 - **Inventions** now raise the matching civic building beside the capital (a windmill, an
   observatory, an aqueduct) instead of a coloured block.
 - **Paving** is patterned: flagstones, cobbles or beaten earth, by how developed a city is.
+
+## D-281 Living cities: grown from the ground, planned by culture, never repeating — DELEGATED (2026-10-08)
+- **What the owner asked.** "The buildings themselves look good but they look like they have
+  just been thrown onto terrain. There needs to be a seamless blend between the ground and the
+  buildings, with smaller things like barrels, shrubbery, paths... Many of the layouts still
+  need work. The same two buildings are often just shoved together for every city... find
+  another way." Done with ten parallel agents, each owning separate files (see below).
+- **Split of the work.** Settlements keeps drawing; planning moved out:
+  `scripts/city/plan_city.gd` (chief cities), `plan_rural.gd` (towns, villages, farms, camps),
+  `ground.gd` (the ground under them), `dressing.gd` (props). Every building placed is recorded
+  in `Settlements.placed`, so the ground and the dressing work from the plan, whoever made it.
+- **Ground grown, not laid.** No more raised paving slabs. Streets, squares, yards and fields
+  are skins draped on the exact terrain with feathered, noisy edges in the map's own palette:
+  dirt lanes with ruts and grass breaking through, fine cobbles, flagged squares. Every
+  building gets a worn apron (wider at its door), a dark contact band at the wall foot, a path
+  from its door to the street and a plinth reaching into sloping ground, so no corner floats.
+  Paving still grows with a city's rank (D-279).
+- **Plans by culture.** Streets first, then blocks: main roads from the gates bend to level
+  ground; lanes fill the blocks; houses front the streets shoulder to shoulder in the core,
+  with yards and gardens behind, thinning to cottages and orchards at the edge and suburbs
+  along the roads outside. Rome a grid round a forum; China walled wards on a ceremonial axis;
+  Japan a castle town on the high ground; the north a market place and churchyard; the Nile,
+  Near East and India winding lanes and courtyard clusters. Villages likewise: greens and
+  ponds, stream and paddy villages, Nile-bank clusters, tank villages, villa farms, herder
+  camps, with lanes, tracks and a patchwork of draped fields, orchards and pastures.
+- **Variety by generation.** Instead of a handful of hand-made houses, each region's module
+  builds houses from parameter tables (storeys, roof form, annexes, porches, materials...):
+  about 37-49 kinds per region plus two-lot terraces, courtyard compounds and farmsteads, chosen
+  per culture and per rank (`house_set`, `big_house_set`). Neighbours never repeat the last few
+  kinds, and each building weathers to its own tint in the shader.
+- **Life between the buildings.** ~35 generic props, ~35 plants and animals and ~40 regional
+  ones (stone lanterns, amphorae, market crosses, shadufs, tree platforms, horse lines...),
+  placed by rule: goods by doors, gardens and animals behind, fenced yards in local materials,
+  stalls on squares, boats on shores, and a ring of shrubs and trees thinning into the land.
+- **Fixes on the way.** Each people's temple in its towns (pagoda, church, shikhara, pylon
+  temple, ziggurat) instead of the Greco-Roman one; idea landmarks at the city's own scale;
+  standards, not cypresses, at the khan's tent; the bare flagpole gone.
+- **Cost.** Building every settlement grew to ~32 s on the (slow) cloud machine; the
+  planners and the ground were then optimised (see PLAN). The log prints the time per phase.
