@@ -17,6 +17,10 @@ const KIND_COLOUR := {"earth": Color(0.66, 0.56, 0.40, 0.33), "dirt": Color(0.70
 	"grass": Color(0.36, 0.52, 0.22, 0.33)}
 
 var s: Settlements   ## the Settlements being built
+## Everything described, for others to read (the dressing keeps props off the streets):
+var roads: Array = []     ## [points: PackedVector2Array, width: float, kind: String]
+var areas: Array = []     ## [points: PackedVector2Array, kind: String]
+var patches: Array = []   ## [centre: Vector2, radius: float, kind: String]
 
 
 func _init(settlements: Settlements) -> void:
@@ -26,12 +30,14 @@ func _init(settlements: Settlements) -> void:
 ## A soft, irregular patch of surface `kind` round `centre`, `radius` map units across;
 ## `strength` (0..1) how worn or complete it is (fades out at its edge).
 func patch(centre: Vector2, radius: float, kind: String, strength := 1.0) -> void:
+	patches.append([centre, radius, kind])
 	var colour: Color = KIND_COLOUR.get(kind, KIND_COLOUR["earth"])
 	s._add("paving", centre, -0.55, 0.0, Vector3(radius * 1.6, 90.0, radius * 1.6), colour)
 
 
 ## A lane, street or road along `points`, `width` map units wide, of surface `kind`.
 func road(points: PackedVector2Array, width: float, kind: String) -> void:
+	roads.append([points, width, kind])
 	var colour: Color = KIND_COLOUR.get(kind, KIND_COLOUR["dirt"])
 	for i in points.size() - 1:
 		var a := points[i]
@@ -44,6 +50,7 @@ func road(points: PackedVector2Array, width: float, kind: String) -> void:
 
 ## A whole area (a square, a court, a yard) inside the polygon `points`, of surface `kind`.
 func area(points: PackedVector2Array, kind: String) -> void:
+	areas.append([points, kind])
 	var colour: Color = KIND_COLOUR.get(kind, KIND_COLOUR["flag"])
 	var lo := points[0]
 	var hi := points[0]
@@ -51,6 +58,20 @@ func area(points: PackedVector2Array, kind: String) -> void:
 		lo = lo.min(p)
 		hi = hi.max(p)
 	s._add("paving", (lo + hi) / 2.0, -0.55, 0.0, Vector3(hi.x - lo.x, 90.0, hi.y - lo.y), colour)
+
+
+## True when `p` lies on a road or square (within `margin` of its edge).
+func on_street(p: Vector2, margin := 0.0) -> bool:
+	for r in roads:
+		var pts: PackedVector2Array = r[0]
+		var half: float = float(r[1]) / 2.0 + margin
+		for i in pts.size() - 1:
+			if p.distance_to(Geometry2D.get_closest_point_to_segment(p, pts[i], pts[i + 1])) < half:
+				return true
+	for a in areas:
+		if Geometry2D.is_point_in_polygon(p, a[0]):
+			return true
+	return false
 
 
 ## Where a building stands: `size` (map units, x across its front, y deep) turned by `yaw`

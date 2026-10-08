@@ -425,9 +425,9 @@ func _house(pixel: Vector2, turn: float, size := 1.0, site := -1, mix := 0.0, fi
 	match style:
 		"steppe":
 			var felt := Color(0.90, 0.86, 0.76).darkened(rng.randf() * 0.12)
-			var big: float = shrink.call("yurt_roof", size * 1.35)  # tents read better a little larger
-			_add("yurt", pixel, 0.0, turn, Vector3.ONE * big, felt)
-			_add("yurt_roof", pixel, 0.06 * S * big, turn, Vector3.ONE * big, felt.darkened(0.12), site, tint * 0.35)
+			var tent: float = shrink.call("yurt_roof", size * 1.35)  # tents read better a little larger
+			_add("yurt", pixel, 0.0, turn, Vector3.ONE * tent, felt)
+			_add("yurt_roof", pixel, 0.06 * S * tent, turn, Vector3.ONE * tent, felt.darkened(0.12), site, tint * 0.35)
 		"nile", "near_east", "south_asian":
 			# mud brick, plaster or whitewash under flat roofs, parapets, domes and pavilions
 			var top: Color = {"nile": Color(0.58, 0.44, 0.28), "near_east": Color(0.56, 0.44, 0.32),
