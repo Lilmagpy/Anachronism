@@ -97,6 +97,12 @@ var _area_boxes: Array = []  ## bounding rect per area, parallel to `areas`
 var _heights := {}           ## terrain grid index -> height
 var _normals := {}           ## terrain grid index -> normal
 var _tiles := {}             ## Vector2i -> Tile
+var _elev := PackedFloat32Array()
+var _ocean := PackedByteArray()
+var _cols := 0
+var _rows := 0
+var _half := Vector2.ZERO    ## half the map's size, cached
+var _wet := {}               ## coarse (0.5 unit) cell -> is it water? cached
 var _site_style := {}        ## site index -> building style
 
 
@@ -205,32 +211,31 @@ func _nearest_road(p: Vector2, reach: float) -> Array:
 
 # --- the terrain, as it is drawn ----------------------------------------------------------
 
+## The terrain's height at a grid point (the same sum as EarthBuilder._height_units, read
+## straight from its arrays).
 func _cell_height(i: int) -> float:
-	if _heights.has(i):
-		return _heights[i]
-	var h: float = s.earth._cell_height(i)
-	_heights[i] = h
-	return h
+	var m: float = _elev[i]
+	if _ocean[i] == 1:
+		return minf(m, 0.0) * EarthBuilder.SEA_DEPTH_SCALE / EarthBuilder.METRES_PER_UNIT - EarthBuilder.LAND_LIFT
+	return maxf(m, 0.0) / EarthBuilder.METRES_PER_UNIT + EarthBuilder.LAND_LIFT
 
 
 ## The terrain's surface height at pixel `p`: the very triangle the mesh draws there (its
 ## quads are cut along the diagonal from their top-right to their bottom-left corner).
 func _h(p: Vector2) -> float:
-	var e := s.earth
-	var stride := float(EarthBuilder.STRIDE)
-	var gx := clampf(p.x / stride, 0.0, e.cols - 1.001)
-	var gy := clampf(p.y / stride, 0.0, e.rows - 1.001)
+	var gx := clampf(p.x * 0.5, 0.0, _cols - 1.001)
+	var gy := clampf(p.y * 0.5, 0.0, _rows - 1.001)
 	var q := int(gx)
 	var r := int(gy)
 	var fx := gx - q
 	var fy := gy - r
-	var i := r * e.cols + q
+	var i := r * _cols + q
 	var a := _cell_height(i)
 	var b := _cell_height(i + 1)
-	var c := _cell_height(i + e.cols)
+	var c := _cell_height(i + _cols)
 	if fx + fy <= 1.0:
 		return a + fx * (b - a) + fy * (c - a)
-	var d := _cell_height(i + e.cols + 1)
+	var d := _cell_height(i + _cols + 1)
 	return d + (1.0 - fx) * (c - d) + (1.0 - fy) * (b - d)
 
 
@@ -263,9 +268,13 @@ func _n(p: Vector2) -> Vector3:
 	return top.lerp(bottom, fy).normalized()
 
 
+## Index of the terrain grid point nearest `p` (as EarthBuilder does).
+func _grid_at(p: Vector2) -> int:
+	return clampi(roundi(p.y * 0.5), 0, _rows - 1) * _cols + clampi(roundi(p.x * 0.5), 0, _cols - 1)
+
+
 func _tile(p: Vector2) -> Tile:
-	var half := s.earth.size() / 2.0
-	var key := Vector2i(floori((p.x - half.x) / s.TILE), floori((p.y - half.y) / s.TILE))
+	var key := Vector2i(floori((p.x - _half.x) / s.TILE), floori((p.y - _half.y) / s.TILE))
 	if not _tiles.has(key):
 		_tiles[key] = Tile.new()
 	return _tiles[key]
@@ -273,11 +282,19 @@ func _tile(p: Vector2) -> Tile:
 
 ## One vertex on the terrain at `p`; `alpha` is its strength (0 over water).
 func _vert(t: Tile, p: Vector2, uv: Vector2, kind: int, shape: int, tint: Color, alpha: float,
-		check_water := true) -> int:
-	var half := s.earth.size() / 2.0
-	var wet := s.earth.is_wet(p) if check_water else s.earth.is_ocean_at(p)
-	t.v.append(Vector3(p.x - half.x, _h(p) + LIFT, p.y - half.y))
-	t.n.append(_n(p))
+		check_water := true, flat := Vector3.ZERO) -> int:
+	var wet: bool
+	if check_water:
+		var cell := Vector2i(floori(p.x * 2.0), floori(p.y * 2.0))
+		if _wet.has(cell):
+			wet = _wet[cell]
+		else:
+			wet = s.earth.is_wet(p)
+			_wet[cell] = wet
+	else:
+		wet = s.earth.is_ocean_at(p)
+	t.v.append(Vector3(p.x - _half.x, _h(p) + LIFT, p.y - _half.y))
+	t.n.append(_n(p) if flat == Vector3.ZERO else flat)
 	t.uv.append(uv)
 	t.uv2.append(Vector2(kind, shape))
 	t.c.append(Color(tint.r, tint.g, tint.b, 0.0 if wet else alpha))
@@ -291,7 +308,9 @@ func _quad(t: Tile, layer: int, a: int, b: int, c: int, d: int) -> void:
 
 ## A deterministic value in 0..1 for a lattice point.
 func _rand01(x: int, y: int) -> float:
-	return float(hash(Vector2i(x, y)) & 0xFFFF) / 65535.0
+	var h := (x * 374761393 + y * 668265263) & 0x7FFFFFFF
+	h = ((h ^ (h >> 13)) * 1274126177) & 0x7FFFFFFF
+	return float((h ^ (h >> 16)) & 0xFFFF) / 65535.0
 
 
 func _vnoise(p: Vector2) -> float:
@@ -361,12 +380,12 @@ func _resample(pts: PackedVector2Array, step: float) -> PackedVector2Array:
 ## A ribbon along `pts`: a surface `width` wide with a verge each side that fades out, rounded
 ## ends, and smooth corners. Split between tiles where it crosses their borders.
 func _ribbon(pts: PackedVector2Array, width: float, kind_name: String, style: String, layer: int,
-		wobble := 0.12, strength := 1.0) -> void:
+		wobble := 0.12, strength := 1.0, fine := true) -> void:
 	if pts.size() < 2:
 		return
 	var kind: int = SURFACE.get(kind_name, 1)
 	var tint := _earth_tint(style)
-	var line := _resample(_smooth(pts, 2 if pts.size() < 8 else 1), 0.4)
+	var line := _resample(_smooth(pts, (2 if pts.size() < 8 else 1) if fine else 0), 0.55 if fine else 0.7)
 	if line.size() < 2:
 		return
 	var half := width * 0.5 * (1.0 + 2.0 * VERGE)
@@ -386,7 +405,7 @@ func _ribbon(pts: PackedVector2Array, width: float, kind_name: String, style: St
 			dir = Vector2.RIGHT
 		tangents.append(dir)
 	# a rounded cap beyond each end
-	var cap_steps := [0.3, 0.6, 0.85, 1.0]
+	var cap_steps := [0.3, 0.6, 0.85, 1.0] if fine else [0.6, 1.0]
 	var ext := width * 0.55
 	for k in range(cap_steps.size() - 1, -1, -1):
 		var t: float = cap_steps[k]
@@ -528,8 +547,8 @@ func _field(c: Vector2, yaw: float, w: float, d: float, crop: Color) -> void:
 	var tile := _tile(c)
 	var fwd := Vector2(sin(yaw), cos(yaw))
 	var right := Vector2(cos(yaw), -sin(yaw))
-	var nx := maxi(1, ceili(w / 0.5))
-	var nz := maxi(1, ceili(d / 0.5))
+	var nx := maxi(1, ceili(w / 1.2))
+	var nz := maxi(1, ceili(d / 1.2))
 	var bank := 0.1
 	# grid lines from -bank to w + bank, the outermost two at the bank's edge (alpha 0)
 	var xs := [-w / 2.0 - bank]
@@ -590,6 +609,11 @@ func _blob(centre: Vector2, radius: float, kind_name: String, style: String, lay
 ## planners described, then the shadows at the walls' feet; plinths join the other parts.
 func build(parent: Node3D) -> void:
 	_tiles.clear()
+	_half = s.earth.size() / 2.0
+	_elev = s.earth.elev
+	_ocean = s.earth.ocean
+	_cols = s.earth.cols
+	_rows = s.earth.rows
 	_register_parts()
 	var explicit := {}
 	for f in _footings:
@@ -611,8 +635,8 @@ func build(parent: Node3D) -> void:
 				_field(job["c"], job["yaw"], job["w"], job["d"], job["crop"])
 	# the contact shadow at every wall's foot goes over everything
 	for e in s.placed:
-		if e["what"] != "tent" and not explicit.has(_key(e["pos"])):
-			_contact(e)
+		if e["what"] in ["palace", "public", "tower", "gate"] and not explicit.has(_key(e["pos"])):
+			_contact(e)   # (houses and walls get theirs from the apron's own shading)
 	_flush(parent)
 
 
@@ -674,15 +698,16 @@ func _building(e: Dictionary) -> void:
 			side = 0.16 * scale_up
 			back = 0.13 * scale_up
 			front = 0.42 * scale_up
-	var subs := 2 if what in ["house", "palace", "public"] else 1
+	var subs := 1
 	if big > 0.5:
-		subs = 3
+		subs = 2
 	_apron(centre, yaw, hx, hz, round_shape, side, back, front, style, SURFACE[kind], 0, strength,
-		[-0.3, 0.0, 0.45, 1.0], subs)
+		[-0.12, 1.0], subs)
 	if what in ["house", "palace", "public"]:
 		_door_path(centre, yaw, hz + front * 0.2, style, what)
 	if what != "tent":
 		_plinth(e, centre, hx, hz, round_shape, style)
+
 
 
 func _explicit_footing(f: Dictionary) -> void:
@@ -700,7 +725,7 @@ func _contact(e: Dictionary) -> void:
 	var what: String = e["what"]
 	var width := 0.09 if what != "wall" else 0.07
 	_apron(fp[0], e["yaw"], fp[1], fp[2], fp[3], width, width, width, "east", SURFACE["ao"], 3, 1.0,
-		[-0.4, 0.0, 1.0], 2 if what != "wall" else 1)
+		[-0.4, 0.0, 1.0], 1)
 
 
 ## The worn ground round a footprint: rows of vertices stepping out from just inside the wall
@@ -709,6 +734,7 @@ func _apron(c: Vector2, yaw: float, hx: float, hz: float, round_shape: bool, sid
 		front: float, style: String, kind: int, layer: int, strength: float, rows: Array, subs: int) -> void:
 	var tint := _earth_tint(style)
 	var tile := _tile(c)
+	var flat := _n(c)
 	var fwd := Vector2(sin(yaw), cos(yaw))
 	var right := Vector2(cos(yaw), -sin(yaw))
 	# the outline: points and outward normals in the building's own frame
@@ -747,8 +773,13 @@ func _apron(c: Vector2, yaw: float, hx: float, hz: float, round_shape: bool, sid
 			var d: float = float(r) * margin
 			var local := at[i] + nl * d
 			var q: Vector2 = c + right * local.x + fwd * local.y
-			var t := maxf(float(r), 0.0)
-			line.append(_vert(tile, q, Vector2(t, maxf(d, 0.0)), kind, APRON, tint, strength, false))
+			var base := tile.v.size()
+			tile.v.append(Vector3(q.x - _half.x, _h(q) + LIFT, q.y - _half.y))
+			tile.n.append(flat)
+			tile.uv.append(Vector2(maxf(float(r), 0.0), maxf(d, 0.0)))
+			tile.uv2.append(Vector2(kind, APRON))
+			tile.c.append(Color(tint.r, tint.g, tint.b, 0.0 if _ocean[_grid_at(q)] == 1 else strength))
+			line.append(base)
 		grid.append(line)
 	for i in count:
 		var r0: Array = grid[i]
@@ -772,7 +803,24 @@ func _door_path(c: Vector2, yaw: float, depth: float, style: String, what: Strin
 		return   # the road runs behind or beside the house
 	var mid := door.lerp(q, 0.5) + (q - door).orthogonal().normalized() * (_vnoise(door * 4.0) - 0.5) * 0.12
 	var edge := q + (door - q).normalized() * float(near[1]) * 0.5
-	_ribbon(PackedVector2Array([door, mid, edge]), 0.12 if what == "house" else 0.2, "dirt", style, 1, 0.2, 0.85)
+	_path(PackedVector2Array([door, mid, edge]), 0.12 if what == "house" else 0.2, style)
+
+
+## A short path through `pts` (three points): a cheap ribbon without smoothing or caps,
+## narrowing at the door end, where the apron hides it.
+func _path(pts: PackedVector2Array, width: float, style: String) -> void:
+	var tint := _earth_tint(style)
+	var tile := _tile(pts[0])
+	var half := width * 0.5 * (1.0 + 2.0 * VERGE)
+	var prev: Array = []
+	for i in pts.size():
+		var dir := (pts[mini(i + 1, pts.size() - 1)] - pts[maxi(i - 1, 0)]).normalized()
+		var hw := half * (0.6 + 0.4 * i / (pts.size() - 1.0))
+		var row := _row(tile, pts[i], dir.orthogonal(), hw, i * 0.5, 1, tint, 0.85)
+		if not prev.is_empty():
+			_quad(tile, 1, prev[0], prev[1], row[0], row[1])
+			_quad(tile, 1, prev[1], prev[2], row[1], row[2])
+		prev = row
 
 
 ## A plinth that reaches down into the ground under a building, so no corner floats.
@@ -781,8 +829,8 @@ func _plinth(e: Dictionary, centre: Vector2, hx: float, hz: float, round_shape: 
 	var fwd := Vector2(sin(yaw), cos(yaw))
 	var right := Vector2(cos(yaw), -sin(yaw))
 	var low := INF
-	for sx in [-1.0, 0.0, 1.0]:
-		for sz in [-1.0, 0.0, 1.0]:
+	for sx in [-1.0, 1.0]:
+		for sz in [-1.0, 1.0]:
 			low = minf(low, _h(centre + right * hx * sx + fwd * hz * sz))
 	var model_at := s.earth.ground_at_pixel(e["pos"]).y   # where the building itself stands
 	var step := 0.03 if e["what"] in ["house", "wall", "tower"] else 0.05
