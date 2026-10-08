@@ -44,7 +44,7 @@ const CIVIC := {"aqueduct": "aqueduct", "windmill": "windmill", "water_wheel": "
 	"mint": "bank", "harbour": "harbour", "clock_tower": "clock_tower", "academy": "academy",
 	"hospital": "hospital", "station": "station", "market": "market", "temple": "temple",
 	"granary": "granary", "mine": "mine", "factory": "factory"}
-const CIVIC_UNIT := 0.42 * S
+const CIVIC_UNIT := Settlements.CIVIC_UNIT * 1.2   ## a touch larger than the city's own, as a showpiece (D-281)
 const KIT_HEIGHT := {"windmill": 1.0, "water_wheel": 0.5, "clock_tower": 1.0, "watchtower": 0.8,
 	"powder_tower": 0.8, "observatory": 0.8, "school": 0.6, "workshop": 0.42, "press": 0.42,
 	"kiln": 0.42, "forge": 0.45, "furnace": 0.45, "mint": 0.6, "harbour": 0.55}
