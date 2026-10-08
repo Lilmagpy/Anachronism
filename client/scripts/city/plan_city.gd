@@ -93,6 +93,11 @@ func _city(site: Dictionary, population: int, idx: int) -> void:
 		looks.append("|works|" + str(site["works"]))
 	for extra in _landmarks(site, tier):
 		looks.append(extra)
+	# room for the grand buildings: a town with a palace and several halls is never tiny
+	var need := 3.2 + (2.4 if capital else 0.0) + 0.75 * looks.size()
+	if half < need * 1.1:
+		half = need * 1.1
+		s.clearings.append([c, half * 1.35])
 	match s.style:
 		"classical":
 			_classical(looks)
@@ -153,12 +158,11 @@ func _finish() -> void:
 	for st in streets:
 		if not st["main"]:
 			_frontage(st)
-	if s.style not in ["classical"] and not (s.style == "east" and s.culture not in ["samurai", "joseon"]):
-		_infill()
 	if s.style in ["nile", "near_east", "south_asian"]:
 		_clusters(false)
-	elif s.culture == "joseon":
-		_clusters(true)
+	elif s.style == "east" and s.culture != "samurai":
+		_clusters(true)   # siheyuan: courtyard compounds fill the ward interiors
+	_infill()
 	_yards()
 	_orchards()
 	if tier >= 1:
@@ -701,7 +705,7 @@ func _fill_gaps(wob: float, w: float, max_lanes: int) -> void:
 
 func _gap_limit(p: Vector2) -> float:
 	var rank := _rank(p)
-	var base := 0.95 if rank == "core" else (1.1 if rank == "city" else 1.45)
+	var base := 0.7 if rank == "core" else (0.8 if rank == "city" else 1.1)
 	return base * _lane_gap
 
 
@@ -810,11 +814,11 @@ func _plot(rank: String) -> Dictionary:
 	var rng := s.rng
 	match rank:
 		"core":
-			return {"f": rng.randf_range(0.30, 0.335), "gap": rng.randf_range(0.0, 0.03), "set": 0.03, "size": 1.12}
+			return {"f": rng.randf_range(0.31, 0.34), "gap": 0.0, "set": 0.03, "size": 1.15}
 		"city":
-			return {"f": rng.randf_range(0.28, 0.33), "gap": rng.randf_range(0.0, 0.12) * _dense, "set": rng.randf_range(0.05, 0.14), "size": 1.05}
+			return {"f": rng.randf_range(0.30, 0.34), "gap": rng.randf_range(0.0, 0.04) * _dense, "set": rng.randf_range(0.04, 0.08), "size": 1.12}
 		"edge":
-			return {"f": rng.randf_range(0.25, 0.30), "gap": rng.randf_range(0.05, 0.35) * _dense, "set": rng.randf_range(0.10, 0.28), "size": 0.92}
+			return {"f": rng.randf_range(0.25, 0.30), "gap": rng.randf_range(0.0, 0.2) * _dense, "set": rng.randf_range(0.06, 0.14), "size": 0.92}
 	return {"f": rng.randf_range(0.26, 0.31), "gap": rng.randf_range(0.5, 1.6), "set": rng.randf_range(0.15, 0.4), "size": 0.95}
 
 
@@ -888,20 +892,29 @@ func _frontage(st: Dictionary) -> void:
 					var nb := Vector2(-tb.y, tb.x) * float(side)
 					var pb: Vector2 = (hb[0] as Vector2) + nb * (hw + float(plot["set"]) + 0.42)
 					if _street_dist(pb, 0.6) > 0.18 and _house(pb, _face(-nb), fb, rank, size, true):
-						cur += 2.0 * fb + float(plot["gap"])
+						cur += 2.0 * fb + float(plot["gap"]) + 0.03
 						continue
 			var placed := false
 			if _street_dist(p, f + 0.1) >= f * 0.98 and not _in_square(p, 0.05):
 				placed = _house(p, yaw, f, rank, size)
+			if not placed and rank != "suburb":   # a narrower house fits where a wide one does not
+				var f2 := f * 0.8
+				var here2 := _at(pts, minf(cur + f2, length))
+				var t2: Vector2 = here2[1]
+				var n2 := Vector2(-t2.y, t2.x) * float(side)
+				var p2: Vector2 = (here2[0] as Vector2) + n2 * (hw + float(plot["set"]) + f2)
+				if _street_dist(p2, f2 + 0.1) >= f2 * 0.98 and not _in_square(p2, 0.05) and _house(p2, _face(-n2), f2, rank, size * 0.85):
+					cur += 2.0 * f2 + 0.03
+					continue
 			if placed:
-				cur += 2.0 * f + float(plot["gap"])
+				cur += 2.0 * f + float(plot["gap"]) + 0.03
 			else:
-				cur += 0.18
+				cur += 0.1
 
 
 ## A second row behind the first, filling the blocks.
 func _infill() -> void:
-	var step := 0.68
+	var step := 0.6
 	var n := int(ceil(_max_reach() / step)) + 1
 	var cand: Array = []
 	for i in range(-n, n + 1):
@@ -912,13 +925,13 @@ func _infill() -> void:
 	cand.sort_custom(func(a: Vector2, b: Vector2) -> bool: return a.distance_to(heart) < b.distance_to(heart))
 	for p in cand:
 		var rank := _rank(p)
-		var prob := 0.95 if rank == "core" else (0.6 if rank == "city" else 0.28)
+		var prob := 1.0 if rank == "core" else (0.95 if rank == "city" else 0.7)
 		if s.rng.randf() > prob:
 			continue
 		var near := _nearest(p, 2.6)
 		if near.is_empty() or float(near["dist"]) < 0.3:
 			continue
-		if float(near["dist"]) > (2.4 if rank == "core" else 1.9):
+		if float(near["dist"]) > (3.4 if rank == "core" else 3.0):
 			continue
 		var plot := _plot(rank)
 		var f: float = float(plot["f"]) * 0.97
@@ -929,7 +942,7 @@ func _infill() -> void:
 
 ## Courtyard clusters (the south's and Korea's way): houses round a small yard.
 func _clusters(rect: bool) -> void:
-	var step := 1.5
+	var step := 1.3
 	var n := int(ceil(_max_reach() / step)) + 1
 	var cand: Array = []
 	for i in range(-n, n + 1):
@@ -937,7 +950,7 @@ func _clusters(rect: bool) -> void:
 			var p := c + Vector2(i, j) * step + Vector2(s.rng.randf_range(-0.35, 0.35), s.rng.randf_range(-0.35, 0.35))
 			if not _inside(p, 1.0) or not s._dry(p, 0.9):
 				continue
-			if _street_dist(p, 3.0) < 0.95 or _in_square(p, 0.5):
+			if _street_dist(p, 3.0) < (0.8 if rect else 0.95) or _in_square(p, 0.5):
 				continue
 			cand.append(p)
 	cand.sort_custom(func(a: Vector2, b: Vector2) -> bool: return a.distance_to(heart) < b.distance_to(heart))
@@ -1468,7 +1481,7 @@ func _classical(looks: Array) -> void:
 	var u := Vector2(cos(theta), sin(theta))
 	var v := Vector2(-u.y, u.x)
 	heart = c
-	var fw := clampf(_mean_r * 0.22, 1.2, 3.0) * s.rng.randf_range(0.9, 1.1)
+	var fw := clampf(_mean_r * 0.17, 1.0, 2.5) * s.rng.randf_range(0.9, 1.1)
 	var fh := fw * s.rng.randf_range(0.5, 0.6)
 	var poly := _rect(c, u, fw, fh, 0.05)
 	var marble := Color(0.95, 0.93, 0.87)
@@ -1505,10 +1518,10 @@ func _classical(looks: Array) -> void:
 		_stalls(market, 6)
 		venues.append(market)
 	_publics(looks, venues)
-	var px := s.rng.randf_range(2.5, 3.1)
-	var py := s.rng.randf_range(2.2, 2.7)
-	var xs := _grid_lines(_max_reach(), px, 0.62)
-	var ys := _grid_lines(_max_reach(), py, 0.62)
+	var px := s.rng.randf_range(2.7, 3.1)
+	var py := s.rng.randf_range(2.5, 2.9)
+	var xs := _grid_lines(_max_reach(), px, 0.72)
+	var ys := _grid_lines(_max_reach(), py, 0.72)
 	var ext := _max_reach() * 1.15
 	for xv in xs:
 		var main := absf(float(xv)) < 0.01
@@ -1547,7 +1560,7 @@ func _chinese(looks: Array) -> void:
 		pr = s._foot(part) if part != "" else float(s.PALACE_R["east"]) * s.S
 	var dp := clampf(maxf(hy * 0.55, 1.4), 1.4, maxf(hy, 1.4))
 	var fh := 0.8 if (capital or tier >= 2) else 0.6
-	var fx := 1.3 if capital else 1.0
+	var fx := clampf(_mean_r * 0.12, 0.9, 1.3)
 	var pal_c := c - v * dp
 	var court_c := pal_c + v * (pr + 0.15 + fh) if capital else c - v * hy * 0.3
 	var court := _square(_rect(court_c, u, fx, fh), _plaza_kind())
@@ -1560,8 +1573,8 @@ func _chinese(looks: Array) -> void:
 		s._claim(pal_c, pr)
 		_banner(court_c, u * (fx + 0.4))
 	# markets east and west
-	var pitch_x := s.rng.randf_range(3.0, 3.5)
-	var pitch_y := s.rng.randf_range(2.7, 3.1)
+	var pitch_x := s.rng.randf_range(3.1, 3.5)
+	var pitch_y := s.rng.randf_range(3.2, 3.6)
 	for sgn in [-1.0, 1.0]:
 		var mc := c + u * (float(sgn) * (pitch_x * 1.1)) + v * (pitch_y * 0.5)
 		if _inside(mc, 1.4) and _can(mc, 1.0):
@@ -1611,8 +1624,8 @@ func _castle_town(looks: Array, joseon: bool) -> void:
 	_outline(func(phi: float) -> float: return _blob_reach(phi, base, na, nb, nd))
 	if _mean_r < 1.0:
 		return
-	_dense = 0.5
-	_lane_gap = 0.8
+	_dense = 0.3
+	_lane_gap = 0.65
 	# the castle: the highest dry ground near the middle (Japan); at the head of the town (Korea)
 	var seat := c
 	var v := Vector2(0, 1)
@@ -1701,8 +1714,8 @@ func _northern(looks: Array) -> void:
 	_outline(func(phi: float) -> float: return _blob_reach(phi, base, na, nb, nd))
 	if _mean_r < 1.0:
 		return
-	_dense = 0.5
-	_lane_gap = 0.9
+	_dense = 0.3
+	_lane_gap = 0.7
 	var start := s.rng.randf() * TAU
 	var n := s.rng.randi_range(3, 5)
 	var jc := c + Vector2(s.rng.randf_range(-0.1, 0.1), s.rng.randf_range(-0.1, 0.1)) * _mean_r
@@ -1719,7 +1732,7 @@ func _northern(looks: Array) -> void:
 	if roads.is_empty():
 		roads.append(start)
 	var axis_a: float = roads[0]
-	var mrx := clampf(_mean_r * 0.15, 0.8, 1.5)
+	var mrx := clampf(_mean_r * 0.12, 0.7, 1.3)
 	var market := _square(_blob(jc, mrx * 1.35, mrx * 0.8, axis_a, 10, 0.1), _plaza_kind())
 	s.prop("prop_market_cross", jc, 0.0, 1.0)
 	_stalls(market, 5)
@@ -1755,7 +1768,7 @@ func _southern(looks: Array) -> void:
 	if _mean_r < 1.0:
 		return
 	_dense = 0.35
-	_lane_gap = 0.75
+	_lane_gap = 0.65
 	var jc := c
 	heart = jc
 	var start := s.rng.randf() * TAU
@@ -1769,7 +1782,7 @@ func _southern(looks: Array) -> void:
 			roads.append(a)
 	if roads.is_empty():
 		roads.append(start)
-	var market := _square(_blob(jc, clampf(_mean_r * 0.14, 0.8, 1.5), clampf(_mean_r * 0.11, 0.7, 1.2), s.rng.randf() * PI, 9, 0.12), _plaza_kind())
+	var market := _square(_blob(jc, clampf(_mean_r * 0.11, 0.7, 1.2), clampf(_mean_r * 0.09, 0.6, 1.0), s.rng.randf() * PI, 9, 0.12), _plaza_kind())
 	if s.style == "near_east":
 		s.prop("prop_rugs", jc, 0.0, 1.0)
 	_stalls(market, 6)
@@ -1780,8 +1793,8 @@ func _southern(looks: Array) -> void:
 	var court_c := jc + pdir * (float(market["r"]) + 2.2 + 0.2 * tier)
 	var sacred: Array = []
 	var cu := pdir.rotated(PI / 2.0)
-	var cw := 1.0 + 0.06 * tier
-	var cl := 1.4 + 0.08 * tier
+	var cw := clampf(_mean_r * 0.1, 0.8, 1.3)
+	var cl := cw * 1.35
 	if (capital or _has_sacred(looks)) and _rect_inside(court_c, cu, cw, cl) and _can(court_c, cl * 0.7):
 		var court := _square(_rect(court_c, cu, cw, cl), _plaza_kind())
 		sacred.append(court)
