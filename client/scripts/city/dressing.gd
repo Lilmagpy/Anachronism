@@ -5,7 +5,7 @@
 ##
 ## After each settlement is planned Settlements.build calls `decorate`, which dresses the
 ## buildings placed since the last call (Settlements.placed). Props are model-kit models from
-## models/props.gd and models/props_regional.gd, placed with Settlements.prop().
+## models/props.gd, models/flora.gd and the region modules ("prop_*" kinds), placed with Settlements.prop().
 ##
 ## THIS IS A STUB (lead, D-281): it places nothing. The dressing agent replaces it, keeping
 ## the signature of `decorate`.

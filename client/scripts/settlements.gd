@@ -18,7 +18,7 @@ extends RefCounted
 const FolkHouses := preload("res://scripts/folk_houses.gd")
 ## The model-kit modules (D-280) by name: each has kinds() and build(kind).
 const MODULE_NAMES := ["east", "classical", "northern", "steppe", "south", "walls", "civic", "props",
-	"props_regional"]
+	"flora"]
 const PlanCity := preload("res://scripts/city/plan_city.gd")
 const PlanRural := preload("res://scripts/city/plan_rural.gd")
 const Ground := preload("res://scripts/city/ground.gd")
@@ -350,11 +350,16 @@ func _category(part: String) -> String:
 	return what
 
 
-## Place a prop (D-281) from models/props.gd or models/props_regional.gd: `kind` as the module
-## names it, `size` a scale on its modelled size (1 unit = a house's width, like the houses),
-## owner colour (banners, awnings) from province `site`. False when no module has the kind.
+## Place a prop (D-281): generic ones from models/props.gd, plants and animals from
+## models/flora.gd, a people's own ("prop_stone_lantern") from its region's module. `kind` as
+## the module names it, `size` a scale on its modelled size (1 unit = a house's width, like
+## the houses), owner colour (banners, awnings) from province `site`. False when no module
+## has the kind (so callers can ask for things that may not exist yet).
 func prop(kind: String, pixel: Vector2, yaw: float, size := 1.0, site := -1, lift := 0.0) -> bool:
-	for module in ["props", "props_regional"]:
+	var region: String = REGION_MODULE.get(style, "")
+	for module in ["props", "flora", region]:
+		if module == "":
+			continue
 		var part := _model(module, kind, HOUSE_UNIT)
 		if part != "":
 			_what[part] = ""
@@ -363,19 +368,28 @@ func prop(kind: String, pixel: Vector2, yaw: float, size := 1.0, site := -1, lif
 	return false
 
 
-## The house kinds of the province being built for a place of rank `rank` ("city", "town",
-## "village", "suburb", "camp" ...): from the region's module if it offers `house_set`, else
-## the fixed lists above. Returns [module, kinds] or [].
-func _house_kinds(rank: String) -> Array:
+## Each style's model module (for house_set and its own props).
+const REGION_MODULE := {"east": "east", "classical": "classical", "northern": "northern", "steppe": "steppe",
+	"nile": "south", "near_east": "south", "south_asian": "south"}
+
+
+## The house kinds of the province being built for a place of rank `rank`: "core" (the rich
+## heart of a great city), "city", "edge" (the poorer streets inside the walls), "suburb"
+## (outside them), "town", "village", "farm" (a lone farmstead) or "camp". From the region's
+## module if it offers `house_set(culture, rank)`, else the fixed lists above. With `big`, its
+## two-lot buildings (`big_house_set`: terraces, courtyard houses, farmsteads, about 2.0 wide
+## by 1.0 deep), or [] if it has none. Returns [module, kinds] or [].
+func _house_kinds(rank: String, big := false) -> Array:
 	var entry := _house_list()
 	if entry.is_empty():
 		return []
 	var script: GDScript = MODULES[entry[0]]
-	if script.has_method("house_set"):
-		var kinds: Array = script.call("house_set", culture, rank)
+	var method := "big_house_set" if big else "house_set"
+	if script.has_method(method):
+		var kinds: Array = script.call(method, culture, rank)
 		if not kinds.is_empty():
 			return [entry[0], kinds]
-	return entry
+	return [] if big else entry
 
 
 ## A kind from `kinds`, not one of the last few placed (so neighbours differ).
@@ -391,13 +405,14 @@ func _pick_kind(kinds: Array) -> String:
 	return kind
 
 
-func _house(pixel: Vector2, turn: float, size := 1.0, site := -1, mix := 0.0, fit := 0.0, rank := "city") -> void:
+func _house(pixel: Vector2, turn: float, size := 1.0, site := -1, mix := 0.0, fit := 0.0, rank := "city",
+		big := false) -> void:
 	if earth.is_wet(pixel):
 		return  # a coastal city stops at the shore
 	var tint := mix * rng.randf_range(0.8, 1.1)
 	var shrink := func(part: String, big: float) -> float:   # never wider than its lot (D-279)
 		return minf(big, fit / maxf(_foot(part), 0.001)) if fit > 0.0 else big
-	var models := _house_kinds(rank)
+	var models := _house_kinds(rank, big)
 	if not models.is_empty():   # the model kit's houses (D-280)
 		var kinds: Array = models[1]
 		var part := _model(str(models[0]), _pick_kind(kinds), HOUSE_UNIT)
@@ -601,10 +616,14 @@ func _sea_direction(centre: Vector2, reach: float) -> Vector2:
 
 
 ## Place a house of the local style in a lot of radius `fit`, scaled down to fit it.
-func _fit_house(pixel: Vector2, turn: float, size: float, fit: float, site: int, mix: float, rank := "city") -> bool:
+## With `big`, a two-lot building (see _house_kinds) if the region has one: false if not.
+func _fit_house(pixel: Vector2, turn: float, size: float, fit: float, site: int, mix: float, rank := "city",
+		big := false) -> bool:
 	if not _dry(pixel, fit) or not _free(pixel, fit):
 		return false
-	_house(pixel, turn, size, site, mix, fit, rank)
+	if big and _house_kinds(rank, true).is_empty():
+		return false
+	_house(pixel, turn, size, site, mix, fit, rank, big)
 	_claim(pixel, fit)
 	return true
 
