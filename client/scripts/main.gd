@@ -792,6 +792,13 @@ func _take_screenshot(path: String) -> void:
 		bridge.stop()
 		get_tree().quit()
 		return
+	if options.has("no-ui"):  # --no-ui: the map alone, every panel and card hidden (screenshots)
+		for layer in get_tree().root.find_children("*", "CanvasLayer", true, false):
+			(layer as CanvasLayer).hide()
+		for control in get_tree().root.find_children("*", "Control", true, false):
+			(control as Control).hide()
+		for i in 3:
+			await get_tree().process_frame
 	get_viewport().get_texture().get_image().save_png(path)
 	bridge.stop()
 	get_tree().quit()

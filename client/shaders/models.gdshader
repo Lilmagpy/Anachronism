@@ -13,12 +13,15 @@ varying vec3 local_normal;
 varying vec4 owner;
 varying float scale;
 varying float shiny;
+varying float vary;   // per building, 0..1: no two identical models weather alike (D-281)
 
 void vertex() {
 	local_pos = VERTEX;
 	local_normal = NORMAL;
 	owner = INSTANCE_CUSTOM;
 	scale = length(MODEL_MATRIX[0].xyz);
+	vec3 origin = (MODEL_MATRIX * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
+	vary = fract(sin(dot(origin.xz, vec2(12.9898, 78.233))) * 43758.5453);
 	lod_distance = length(CAMERA_POSITION_WORLD - (MODEL_MATRIX * vec4(0.0, 0.0, 0.0, 1.0)).xyz);
 }
 
@@ -146,6 +149,13 @@ void fragment() {
 	if (id == 0 || id == 11) {   // the owner's colour, keeping the modelled light and dark
 		float shade = dot(base, vec3(0.3, 0.59, 0.11));
 		base = owner.rgb * clamp(0.35 + shade * 0.75, 0.4, 1.1);
+	}
+	if (id != 0 && id != 11 && id != 9 && id != 15) {
+		// each building its own weathering: lighter or darker, warmer or cooler
+		base *= 0.9 + 0.18 * vary;
+		base = mix(base, base * vec3(1.06, 1.0, 0.9), fract(vary * 7.31) * 0.6);
+	} else if (id == 0) {
+		base *= 0.9 + 0.16 * fract(vary * 3.7);
 	}
 	vec3 c = pattern(id, base, local_pos, normalize(local_normal));
 	c = pow(clamp(c, 0.0, 1.5), vec3(2.2));
