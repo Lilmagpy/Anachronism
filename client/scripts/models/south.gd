@@ -30,11 +30,13 @@ static func kinds() -> Array:
 		"near_east_house_1", "near_east_house_2", "near_east_house_3", "near_east_house_4",
 		"ziggurat", "near_east_palace",
 		"south_asian_house_1", "south_asian_house_2", "south_asian_house_3", "south_asian_house_4",
-		"south_asian_palace", "stupa", "temple_shikhara"]
+		"south_asian_palace", "stupa", "temple_shikhara"] + _generated()
 
 
 static func build(kind: String) -> ArrayMesh:
 	var k := Kit.new()
+	if _build_generated(k, kind):
+		return k.finish()
 	match kind:
 		"nile_house_1": _nile_house_1(k)
 		"nile_house_2": _nile_house_2(k)
@@ -1236,3 +1238,1419 @@ static func _shikhara(k: Kit) -> void:
 	k.box(Vector3(0, 0.14, 0.535), Vector3(0.16, 0.22, 0.012), SHADE, Kit.DARK)
 	k.box(Vector3(0, 0.36, 0.53), Vector3(0.6, 0.025, 0.03), OCHRE, Kit.PAINT)
 	k.banner(Vector3(0.5, 0.1, 0.5), 0.5, 0.16)
+
+
+# =============================================================================================
+# GENERATED HOUSES (D-281): every kind below is an archetype function driven by a parameter
+# row in a table (size, storeys, wall and trim colours, roof treatment, extras). The seeded
+# rng picks the small details (window spacing, which side a yard feature falls on) so the same
+# archetype never gives the same house twice. Houses fit in 1.0 x 1.0; "big_" kinds in 2.0 x 1.0.
+# =============================================================================================
+
+const DUST := Color(0.78, 0.64, 0.45)
+const OCHRE_WALL := Color(0.80, 0.62, 0.38)
+const ROSE := Color(0.76, 0.52, 0.42)
+const CLAY := Color(0.66, 0.36, 0.24)
+const GREEN := Color(0.30, 0.50, 0.24)
+const SAFFRON := Color(0.90, 0.58, 0.16)
+const DEEPRED := Color(0.55, 0.16, 0.12)
+const PALM_TR := Color(0.46, 0.34, 0.20)
+const STONE_DK := Color(0.52, 0.50, 0.46)
+
+const NILE_KINDS := ["house_nile_worker_1", "house_nile_worker_2", "house_nile_worker_3", "house_nile_worker_4",
+	"house_nile_town_1", "house_nile_town_2", "house_nile_town_3", "house_nile_town_4",
+	"house_nile_villa_1", "house_nile_villa_2", "house_nile_farm_1", "house_nile_farm_2",
+	"house_nile_tower_1", "house_nile_tower_2"]
+const NE_KINDS := ["house_ne_court_1", "house_ne_court_2", "house_ne_court_3", "house_ne_court_4",
+	"house_ne_flat_1", "house_ne_flat_2", "house_ne_flat_3",
+	"house_ne_hittite_1", "house_ne_hittite_2", "house_ne_hittite_3",
+	"house_ne_berber_1", "house_ne_berber_2", "house_ne_berber_3",
+	"house_ne_domed_1", "house_ne_domed_2", "house_ne_domed_3"]
+const IND_KINDS := ["house_ind_hut_1", "house_ind_hut_2", "house_ind_hut_3", "house_ind_hut_4",
+	"house_ind_tile_1", "house_ind_tile_2", "house_ind_tile_3", "house_ind_tile_4",
+	"house_ind_haveli_1", "house_ind_haveli_2", "house_ind_haveli_3", "house_ind_haveli_4",
+	"house_ind_merchant_1", "house_ind_merchant_2", "house_ind_merchant_3"]
+const BIG_KINDS := ["big_nile_row", "big_nile_villa", "big_nile_farm", "big_nile_court",
+	"big_ne_court", "big_ne_row", "big_ne_hall", "big_ne_kasbah", "big_ne_khan",
+	"big_ind_haveli", "big_ind_court", "big_ind_row", "big_ind_farm"]
+const PROP_KINDS := ["prop_shaduf", "prop_water_jars", "prop_reed_boat", "prop_rugs", "prop_dovecote",
+	"prop_shrine_india", "prop_bullock_cart", "prop_tree_platform", "prop_mud_wall"]
+
+
+## Every kind this module can build (the original hand-made ones first).
+static func _generated() -> Array:
+	return NILE_KINDS + NE_KINDS + IND_KINDS + BIG_KINDS + PROP_KINDS
+
+
+## Build a generated kind or prop; false if `kind` is not one of them.
+static func _build_generated(k: Kit, kind: String) -> bool:
+	if kind.begins_with("prop_"):
+		_prop(k, kind)
+		return true
+	var rows := _rows()
+	if not rows.has(kind):
+		return false
+	var r := RandomNumberGenerator.new()
+	r.seed = hash(kind)
+	_run(k, r, rows[kind])
+	return true
+
+
+## Run one parameter row: a single archetype, or a "multi" row that places several in a frame.
+static func _run(k: Kit, r: RandomNumberGenerator, P: Dictionary) -> void:
+	match str(P.get("fn", "flat")):
+		"multi":
+			for part: Dictionary in P["parts"]:
+				var at: Vector2 = part.get("at", Vector2.ZERO)
+				k.push(Kit.at(Vector3(at.x, 0, at.y), part.get("yaw", 0.0)))
+				_run(k, r, part)
+				k.pop()
+			for extra: Dictionary in P.get("extras", []):
+				_extra(k, r, extra)
+		"flat": _flat(k, r, P)
+		"court": _court(k, r, P)
+		"kasbah": _kasbah(k, r, P)
+		"hittite": _hittite(k, r, P)
+		"domed": _domed(k, r, P)
+		"hut": _hut(k, r, P)
+		"tiled": _tiled(k, r, P)
+		"haveli": _haveli(k, r, P)
+		"merchant": _merchant(k, r, P)
+
+
+## Loose extras of a multi row: walls, trees, pools and the like, by "t".
+static func _extra(k: Kit, r: RandomNumberGenerator, E: Dictionary) -> void:
+	var p: Vector2 = E.get("at", Vector2.ZERO)
+	var at3 := Vector3(p.x, E.get("y", 0.0), p.y)
+	match str(E["t"]):
+		"wall":   # a low wall of size (w, h, d)
+			var s: Vector3 = E["size"]
+			k.box(at3, s, E.get("col", MUD_LT), E.get("mat", Kit.MUDBRICK))
+		"palm": _palm(k, at3, E.get("h", 0.5), E.get("fronds", 6))
+		"tree": _tree(k, at3, E.get("h", 0.3), E.get("r", 0.12))
+		"pond": _pond(k, at3, E.get("w", 0.3), E.get("d", 0.2))
+		"granary": _granary(k, at3, E.get("r", 0.09), E.get("col", MUD))
+		"pot": _pot(k, at3, E.get("r", 0.035))
+		"beds": _beds(k, at3, E.get("w", 0.4), E.get("d", 0.3), E.get("n", 4))
+		"pen": _pen(k, at3, E.get("w", 0.4), E.get("d", 0.3))
+		"shelter": _roof_shelter(k, at3, E.get("w", 0.3), E.get("d", 0.3), E.get("h", 0.15), E.get("kind", "reed"))
+		"gate": _gatepiers(k, at3, E.get("w", 0.2), E.get("h", 0.2), E.get("col", MUD_LT), E.get("mat", Kit.MUDBRICK))
+
+
+# --- generated-house helpers -------------------------------------------------------------------
+
+
+## A leafy tree: a short trunk and a squashed crown.
+static func _tree(k: Kit, p: Vector3, h: float, r: float, col := GREEN) -> void:
+	k.frustum(p, r * 0.14, r * 0.1, h, WOOD, Kit.TIMBER, 5, false)
+	k.dome(p + Vector3(0, h * 0.7, 0), r, col, Kit.LEAF, 0.75, 3, 8)
+
+
+## A shallow pool in a stone kerb.
+static func _pond(k: Kit, p: Vector3, w: float, d: float) -> void:
+	k.box(p, Vector3(w, 0.03, d), STONE_GR, Kit.STONE)
+	k.box(p + Vector3(0, 0.0, 0), Vector3(w - 0.05, 0.036, d - 0.05), WATER_BLUE, Kit.WATER)
+
+
+## Garden beds: rows of green on dark soil.
+static func _beds(k: Kit, p: Vector3, w: float, d: float, n: int) -> void:
+	k.box(p, Vector3(w, 0.014, d), Color(0.42, 0.30, 0.20), Kit.EARTH)
+	for i in n:
+		var z: float = -d / 2.0 + d * (i + 0.5) / n
+		k.box(p + Vector3(0, 0.014, z), Vector3(w * 0.9, 0.035, d / n * 0.4), GREEN.lightened(0.05), Kit.LEAF)
+
+
+## A reed or wattle animal pen: four low fence runs.
+static func _pen(k: Kit, p: Vector3, w: float, d: float) -> void:
+	for s in [-1.0, 1.0]:
+		k.box(p + Vector3(s * w / 2.0, 0, 0), Vector3(0.02, 0.08, d), REED, Kit.THATCH)
+		k.box(p + Vector3(0, 0, s * d / 2.0), Vector3(w, 0.08, 0.02), REED, Kit.THATCH)
+
+
+## Two gate piers with a gap `w` between them.
+static func _gatepiers(k: Kit, p: Vector3, w: float, h: float, col: Color, mat: int) -> void:
+	for s in [-1.0, 1.0]:
+		k.box(p + Vector3(s * (w / 2.0 + 0.03), 0, 0), Vector3(0.06, h, 0.06), col, mat)
+		k.box(p + Vector3(s * (w / 2.0 + 0.03), h, 0), Vector3(0.08, 0.025, 0.08), col.lightened(0.05), mat)
+
+
+## A palm-trunk column (rough shaft, square abacus) for porches and loggias.
+static func _pcol(k: Kit, p: Vector3, h: float, r: float, col := PALM_TR, mat := Kit.TIMBER) -> void:
+	k.frustum(p, r * 1.1, r, h, col, mat, 6, false)
+	k.box(p + Vector3(0, h, 0), Vector3(r * 3.0, r * 0.9, r * 3.0), col.darkened(0.12), mat)
+
+
+## A sloping cloth or reed awning: back edge at height hb, front edge at hf, centred on p.
+## `posts` adds two front poles.
+static func _awning(k: Kit, p: Vector3, w: float, d: float, hb: float, hf: float, col: Color, mat: int,
+		posts := true) -> void:
+	var a := p + Vector3(-w / 2.0, hb, -d / 2.0)
+	var b := p + Vector3(w / 2.0, hb, -d / 2.0)
+	var c := p + Vector3(w / 2.0, hf, d / 2.0)
+	var e := p + Vector3(-w / 2.0, hf, d / 2.0)
+	k.quad(a, b, c, e, col, mat, p + Vector3(0, hb - 2.0, 0))
+	k.quad(a, b, c, e, col.darkened(0.3), mat, p + Vector3(0, hb + 2.0, 0))
+	k.box(p + Vector3(0, hf - 0.035, d / 2.0), Vector3(w, 0.035, 0.012), col.darkened(0.12), mat)
+	if posts:
+		for s in [-1.0, 1.0]:
+			var q := p + Vector3(s * (w / 2.0 - 0.015), 0, d / 2.0 - 0.015)
+			k.rod(q, q + Vector3(0, hf, 0), 0.011, WOOD, Kit.TIMBER)
+
+
+## A rooftop shelter on four posts: "reed" (hipped thatch) or "cloth" (a sloping owner-coloured awning)
+## or "mat" (a flat reed mat).
+static func _roof_shelter(k: Kit, p: Vector3, w: float, d: float, h: float, kind: String) -> void:
+	if kind == "cloth":
+		for sx in [-1.0, 1.0]:
+			for sz in [-1.0, 1.0]:
+				var q := p + Vector3(sx * (w / 2.0 - 0.015), 0, sz * (d / 2.0 - 0.015))
+				k.rod(q, q + Vector3(0, h - (0.04 if sz < 0 else 0.0) + (0.05 if sz < 0 else 0.0), 0), 0.011, WOOD, Kit.TIMBER)
+		_awning(k, p, w, d, h + 0.05, h, Color.WHITE, Kit.OWNER_CLOTH, false)
+	elif kind == "mat":
+		for sx in [-1.0, 1.0]:
+			for sz in [-1.0, 1.0]:
+				var q := p + Vector3(sx * (w / 2.0 - 0.015), 0, sz * (d / 2.0 - 0.015))
+				k.rod(q, q + Vector3(0, h, 0), 0.011, WOOD, Kit.TIMBER)
+		k.box(p + Vector3(0, h, 0), Vector3(w, 0.02, d), REED, Kit.THATCH)
+		k.rod(p + Vector3(-w / 2.0, h + 0.02, 0), p + Vector3(w / 2.0, h + 0.02, 0), 0.01, WOOD, Kit.TIMBER)
+	else:
+		_shelter(k, p, w, d, h, h * 0.4)
+
+
+## A drum and dome on a roof: radius r, drum height dh.
+static func _roof_dome(k: Kit, p: Vector3, r: float, col: Color, dh := 0.05, mat := Kit.PLASTER, wall := WHITE) -> void:
+	if dh > 0.0:
+		k.frustum(p, r, r, dh, wall, Kit.PLASTER, 10, false)
+	k.dome(p + Vector3(0, dh, 0), r, col, mat, 0.9, 4, 10)
+
+
+## A row of dark window slots on a wall front: n slots over `span`, skipping near `skip_x` (a door).
+static func _front_slots(k: Kit, r: RandomNumberGenerator, x0: float, z: float, y: float, span: float, n: int,
+		skip_x: float, sw: float, sh: float, frame: Color, arched := false, yaw := 0.0) -> void:
+	for i in n:
+		var x: float = x0 - span / 2.0 + span * (i + 0.5) / n + r.randf_range(-0.01, 0.01)
+		if absf(x - skip_x) < 0.12:
+			continue
+		if arched:
+			_arch(k, Vector3(x, y, z + 0.004), yaw, sw, sh)
+		else:
+			_slot(k, Vector3(x, y, z), yaw, sw, sh, frame)
+
+
+## The yard of a house with walls round it, from z0 (the house's front) to 0.5. `P` may hold:
+## yard (1 = walls with a gate, 2 = walls with a gate and a deeper garden), gran, palms, pond, pots,
+## trees, beds, pen. Items fall on a side picked by the rng.
+static func _yard(k: Kit, r: RandomNumberGenerator, P: Dictionary, z0: float) -> void:
+	var zc := (z0 + 0.5) / 2.0
+	var ln := 0.5 - z0
+	var wcol: Color = P.get("ycol", MUD_LT)
+	var wmat: int = P.get("ymat", Kit.MUDBRICK)
+	var wh: float = P.get("ywh", 0.12)
+	for s in [-1.0, 1.0]:
+		var sx: float = s * 0.48
+		k.box(Vector3(sx, 0, zc), Vector3(0.04, wh, ln), wcol, wmat)
+		k.box(Vector3(s * 0.3, 0, 0.48), Vector3(0.36, wh, 0.04), wcol, wmat)
+	_gatepiers(k, Vector3(0, 0, 0.48), 0.2, wh + 0.06, wcol.darkened(0.05), wmat)
+	var side: float = 1.0 if r.randf() < 0.5 else -1.0
+	var slot := 0
+	for i in int(P.get("gran", 0)):
+		var gx: float = side * (0.3 - 0.13 * (i % 2)) - side * 0.0
+		_granary(k, Vector3(gx, 0, z0 + 0.14 + 0.12 * i), 0.09 - 0.01 * (i % 2), MUD if i % 2 == 0 else MUD_LT)
+	for i in int(P.get("palms", 0)):
+		var px: float = -side * 0.34 + (0.0 if i % 2 == 0 else side * 0.7)
+		_palm(k, Vector3(px, 0, z0 + 0.12 + 0.1 * i), 0.5 + 0.08 * i, 6)
+	for i in int(P.get("trees", 0)):
+		var tx: float = (-0.3 if i % 2 == 0 else 0.3) + r.randf_range(-0.04, 0.04)
+		_tree(k, Vector3(tx, 0, z0 + 0.18 + 0.12 * i), 0.22, 0.12)
+	if P.get("pond", false):
+		_pond(k, Vector3(-side * 0.0, 0, (z0 + 0.5) / 2.0 + 0.02), 0.28, 0.18)
+	if P.get("beds", false):
+		_beds(k, Vector3(-side * 0.26, 0, z0 + 0.2), 0.26, 0.22, 4)
+	if P.get("pen", false):
+		_pen(k, Vector3(side * 0.26, 0, z0 + 0.2), 0.3, 0.22)
+	for i in int(P.get("pots", 0)):
+		_pot(k, Vector3(-0.1 + i * 0.1, 0, 0.38), 0.035)
+
+
+# --- ARCHETYPE: flat-roofed block house (Nile town and worker houses, Near East flat houses) ----
+
+
+## A flat-roofed mud or plaster block: optional battered walls, an upper room set back,
+## parapets, an outside stair, a roof shelter or wind-catcher or domes, beam ends, a painted
+## band, a porch on palm columns, a walled yard behind a gate.
+static func _flat(k: Kit, r: RandomNumberGenerator, P: Dictionary) -> void:
+	var w: float = P.get("w", 0.7)
+	var d: float = P.get("d", 0.55)
+	var h: float = P.get("h", 0.4)
+	var wall: Color = P.get("wall", MUD)
+	var trim: Color = P.get("trim", MUD_LT)
+	var mat: int = P.get("mat", Kit.MUDBRICK)
+	var inset: float = 0.04 if P.get("batter", true) else 0.0
+	var stair: int = P.get("stair", 0)
+	var yard: int = P.get("yard", 0)
+	var ox: float = -stair * 0.08 + P.get("ox", 0.0)
+	var oz: float = P.get("oz", 0.0)
+	if yard > 0:
+		oz = -0.5 + d / 2.0 + 0.03
+	var base := Vector3(ox, 0, oz)
+	var front := oz + d / 2.0
+	# body and roof slab
+	if inset > 0.0:
+		k.plinth(base, w, d, h, inset, wall, mat)
+	else:
+		k.box(base, Vector3(w, h, d), wall, mat)
+	var rw := w - inset * 2.0 + 0.06
+	var rd := d - inset * 2.0 + 0.06
+	k.box(base + Vector3(0, h, 0), Vector3(rw, 0.035, rd), trim, mat)
+	var top := h + 0.035
+	_parapet(k, base + Vector3(0, top, 0), rw, rd, P.get("pw", 0.055), 0.03, trim, mat)
+	if P.get("merlons", false):
+		_merlons(k, base + Vector3(0, top + P.get("pw", 0.055), 0), rw, rd, 0.06, 0.04, trim, mat)
+	# upper room, set back
+	var uh: float = P.get("uh", 0.0)
+	var utop := top
+	var ub := base + Vector3(0, top, 0)
+	if uh > 0.0:
+		var uw: float = P.get("uw", w * 0.62)
+		var ud: float = P.get("ud", d * 0.62)
+		var uc: Vector2 = P.get("uat", Vector2(-0.1, -0.05))
+		ub = base + Vector3(uc.x, top, uc.y)
+		var ucol: Color = P.get("ucol", wall.lightened(0.12))
+		if inset > 0.0:
+			k.plinth(ub, uw, ud, uh, 0.03, ucol, mat)
+		else:
+			k.box(ub, Vector3(uw, uh, ud), ucol, mat)
+		k.box(ub + Vector3(0, uh, 0), Vector3(uw - (0.06 if inset > 0 else 0.0) + 0.06, 0.03, ud + (0.0 if inset > 0 else 0.0)), trim, mat)
+		_parapet(k, ub + Vector3(0, uh + 0.03, 0), uw - (0.06 if inset > 0 else 0.0) + 0.06, ud, 0.05, 0.028, trim, mat)
+		utop = top + uh + 0.03
+		var uf := ub.z + ud / 2.0 - (0.03 * 0.3 if inset > 0 else 0.0)
+		_slot(k, Vector3(ub.x - uw * 0.2, top + uh * 0.45, uf), 0.0, 0.05, 0.075, trim)
+		_slot(k, Vector3(ub.x + uw * 0.2, top + uh * 0.45, uf), 0.0, 0.05, 0.075, trim)
+		if P.has("uband"):
+			k.box(Vector3(ub.x, top + uh - 0.05, uf + 0.004), Vector3(uw - 0.04, 0.025, 0.012), P["uband"], Kit.PAINT)
+		if P.get("lattice", false):   # a wooden screened balcony on the upper front
+			k.box(Vector3(ub.x + uw * 0.1, top + uh * 0.2, uf + 0.06), Vector3(uw * 0.55, uh * 0.55, 0.1), WOOD, Kit.TIMBER)
+			k.box(Vector3(ub.x + uw * 0.1, top + uh * 0.2 + uh * 0.55, uf + 0.06), Vector3(uw * 0.62, 0.025, 0.14), WOOD_DK, Kit.TIMBER)
+			k.box(Vector3(ub.x + uw * 0.1, top + uh * 0.3, uf + 0.112), Vector3(uw * 0.42, uh * 0.3, 0.012), SHADE, Kit.DARK)
+	# the front: door, windows, band, beam ends
+	var fz := front - inset * 0.4
+	var dx: float = P.get("dx", -w * 0.2)
+	var dh := minf(h - 0.1, P.get("dh", 0.27))
+	var dcol: Color = P.get("door", BLUE)
+	if P.get("porch", 0) > 0:
+		var n: int = P["porch"]
+		var pd := 0.17
+		var ph := minf(h - 0.02, 0.3)
+		for i in n:
+			var px: float = ox - w / 2.0 + 0.04 + (w - 0.08) * i / maxf(n - 1, 1)
+			_pcol(k, Vector3(px, 0, front + pd - 0.02), ph, 0.017, P.get("pcol", PALM_TR), P.get("pmat", Kit.TIMBER))
+		k.box(Vector3(ox, ph + 0.03, front + pd / 2.0 - 0.02), Vector3(w - 0.0, 0.03, pd + 0.02), trim, mat)
+		k.box(Vector3(ox, 0, front + pd / 2.0 - 0.02), Vector3(w - 0.04, 0.025, pd), Color(0.72, 0.64, 0.5), Kit.STONE)
+	_arch_door(k, Vector3(ox + dx, 0, fz), 0.0, 0.14, dh, trim, dcol, mat)
+	_front_slots(k, r, ox, fz, h * 0.6, w * 0.8, int(P.get("win", 2)), ox + dx, 0.05, 0.065, trim, P.get("arched", false))
+	if P.has("band"):
+		var bz := front - inset * (1.0 - 0.07 / h) + 0.006
+		k.box(Vector3(ox, h - 0.1, bz), Vector3(w - inset * 2.0, 0.03, 0.012), P["band"], Kit.PAINT)
+		if P.has("band2"):
+			k.box(Vector3(ox, h * 0.3, front - inset * 0.7 + 0.006), Vector3(w - inset * 1.4, 0.02, 0.012), P["band2"], Kit.PAINT)
+	if P.has("holes"):   # pigeon holes in a grid up the front of a tower
+		var hc: Vector2i = P["holes"]
+		for ry in hc.y:
+			for cx in hc.x:
+				var hx: float = ox - (w - 0.2) / 2.0 + (w - 0.2) * (cx + 0.5) / hc.x
+				var hy: float = h * 0.55 + ry * (h * 0.3 / hc.y)
+				k.box(Vector3(hx, hy, front - inset * (hy / h) + 0.002), Vector3(0.035, 0.035, 0.012), SHADE, Kit.DARK)
+	if P.get("horns", false):   # horned corner pinnacles
+		for sx3 in [-1.0, 1.0]:
+			for sz3 in [-1.0, 1.0]:
+				k.plinth(base + Vector3(sx3 * (rw / 2.0 - 0.035), top, sz3 * (rd / 2.0 - 0.035)), 0.07, 0.07, 0.08, 0.02, trim, mat)
+	if P.get("beams", 0) > 0:   # palm-trunk beam ends poking out under the parapet
+		var nb: int = P["beams"]
+		for i in nb:
+			var bx: float = ox - w / 2.0 + inset + (w - inset * 2.0) * (i + 0.5) / nb
+			k.rod(Vector3(bx, h - 0.03, fz - 0.01), Vector3(bx, h - 0.03, fz + 0.06), 0.013, PALM_TR, Kit.TIMBER)
+		for s in [-1.0, 1.0]:
+			for j in 2:
+				var bzz: float = oz - d * 0.2 + j * d * 0.4
+				var sx: float = ox + s * (w / 2.0 - inset * 0.6)
+				k.rod(Vector3(sx, h - 0.03, bzz), Vector3(sx + s * 0.06, h - 0.03, bzz), 0.013, PALM_TR, Kit.TIMBER)
+	# outside stair to the first roof
+	if stair != 0:
+		var n := clampi(int(round(top / 0.07)), 3, 8)
+		var sx2: float = ox + stair * (w / 2.0 - inset * 0.5 + 0.06)
+		_stairs(k, Vector3(sx2, 0, front - 0.02), 0.0, 0.11, n, top / n, 0.06, trim, mat)
+	# roof furniture
+	var fy := utop if P.get("high", false) else top
+	var fb := ub if P.get("high", false) else base + Vector3(0, top, 0)
+	fb.y = 0.0
+	var sh: String = P.get("shelter", "")
+	if sh != "":
+		var sp: Vector2 = P.get("sat", Vector2(0.15, -0.05))
+		var ss: Vector2 = P.get("ssize", Vector2(0.3, 0.3))
+		_roof_shelter(k, Vector3(fb.x + sp.x, fy, fb.z + sp.y), ss.x, ss.y, P.get("sh", 0.16), sh)
+	if P.get("malqaf", false):
+		var mp: Vector2 = P.get("mq", Vector2(-0.18, -0.12))
+		_malqaf(k, Vector3(fb.x + mp.x, fy, fb.z + mp.y), 0.2, 0.15, P.get("mh", 0.3), trim)
+	if P.get("badgir", false):
+		var bp: Vector2 = P.get("bat", Vector2(-0.2, -0.12))
+		_badgir(k, Vector3(fb.x + bp.x, fy, fb.z + bp.y), 0.2, P.get("bh", 0.4), wall, mat)
+	for dm: Array in P.get("domes", []):
+		_roof_dome(k, Vector3(fb.x + dm[0], fy, fb.z + dm[1]), dm[2], dm[3] if dm.size() > 3 else WHITE)
+	for i in int(P.get("pots", 1)):
+		_pot(k, Vector3(fb.x + 0.12 + i * 0.1, fy, fb.z + 0.12 - i * 0.05), 0.04 - i * 0.005)
+	if P.get("mats", false):
+		k.box(Vector3(fb.x + 0.1, fy, fb.z - 0.12), Vector3(0.14, 0.03, 0.06), REED, Kit.THATCH)
+	# yard and trees
+	if yard > 0:
+		_yard(k, r, P, oz + d / 2.0)
+	else:
+		for i in int(P.get("palms", 1)):
+			var px2: float = ox + (w / 2.0 + 0.1 if i == 0 else -w / 2.0 - 0.08) * (1.0 if (i + stair) % 2 == 0 else -1.0)
+			px2 = clampf(px2, -0.46, 0.46)
+			_palm(k, Vector3(px2, 0, front - 0.05 + 0.1 * i), 0.5 - 0.06 * i, 6)
+
+
+# --- parameter rows ------------------------------------------------------------------------------
+
+
+static func _rows() -> Dictionary:
+	var rows := {}
+	rows.merge(_nile_rows())
+	rows.merge(_ne_rows())
+	rows.merge(_ind_rows())
+	rows.merge(_big_rows())
+	return rows
+
+
+static func _nile_rows() -> Dictionary:
+	return {
+		"house_nile_worker_1": {"fn": "flat", "w": 0.62, "d": 0.5, "h": 0.36, "stair": 1, "shelter": "reed",
+			"sat": Vector2(-0.05, 0.0), "ssize": Vector2(0.3, 0.3), "win": 1, "palms": 1, "door": BLUE},
+		"house_nile_worker_2": {"fn": "flat", "w": 0.7, "d": 0.4, "h": 0.3, "yard": 1, "gran": 2, "palms": 1,
+			"pen": true, "win": 2, "door": RED, "beams": 4, "pots": 2, "sat": Vector2(0.1, 0.0),
+			"shelter": "mat", "ssize": Vector2(0.26, 0.26), "sh": 0.13},
+		"house_nile_worker_3": {"fn": "flat", "w": 0.5, "d": 0.5, "h": 0.42, "beams": 5, "shelter": "mat",
+			"sat": Vector2(0.0, 0.0), "ssize": Vector2(0.32, 0.32), "sh": 0.14, "band": RED, "door": OCHRE,
+			"win": 0, "palms": 2, "wall": MUD.darkened(0.06), "pots": 2},
+		"house_nile_worker_4": {"fn": "multi", "parts": [
+			{"fn": "flat", "w": 0.5, "d": 0.44, "h": 0.34, "at": Vector2(-0.22, 0.06), "stair": 0, "win": 1,
+				"palms": 0, "pots": 1, "door": BLUE, "shelter": "reed", "sat": Vector2(0.0, -0.02),
+				"ssize": Vector2(0.28, 0.28), "sh": 0.14},
+			{"fn": "flat", "w": 0.34, "d": 0.36, "h": 0.24, "at": Vector2(0.27, -0.1), "wall": MUD_LT,
+				"win": 1, "palms": 0, "pots": 0, "door": RED, "dh": 0.18, "dx": 0.0}],
+			"extras": [{"t": "palm", "at": Vector2(0.3, 0.32), "h": 0.5}, {"t": "granary", "at": Vector2(-0.38, -0.4), "r": 0.08},
+				{"t": "pen", "at": Vector2(0.28, 0.2), "w": 0.26, "d": 0.2}]},
+		"house_nile_town_1": {"fn": "flat", "w": 0.7, "d": 0.6, "h": 0.34, "uh": 0.3, "uw": 0.46, "ud": 0.4,
+			"uat": Vector2(-0.12, -0.08), "stair": 1, "shelter": "reed", "sat": Vector2(0.2, 0.0),
+			"ssize": Vector2(0.24, 0.34), "band": RED, "uband": BLUE, "win": 2, "wall": MUD, "ucol": LIME},
+		"house_nile_town_2": {"fn": "flat", "w": 0.66, "d": 0.56, "h": 0.42, "uh": 0.34, "uw": 0.42, "ud": 0.36,
+			"uat": Vector2(0.1, -0.1), "malqaf": true, "mq": Vector2(-0.18, 0.04), "mh": 0.3,
+			"shelter": "cloth", "high": true, "sat": Vector2(0.0, 0.0), "ssize": Vector2(0.3, 0.28), "sh": 0.15,
+			"wall": LIME, "trim": WHITE, "ucol": WHITE, "band": BLUE, "uband": RED, "door": TURQ, "win": 2,
+			"dx": 0.2, "palms": 1},
+		"house_nile_town_3": {"fn": "flat", "w": 0.72, "d": 0.5, "h": 0.32, "uh": 0.26, "uw": 0.5, "ud": 0.34,
+			"uat": Vector2(-0.08, -0.06), "porch": 4, "shelter": "reed", "high": true, "sat": Vector2(0.0, 0.0),
+			"ssize": Vector2(0.34, 0.26), "sh": 0.14, "wall": OCHRE_WALL, "trim": MUD_LT, "ucol": MUD_LT,
+			"band": BLUE, "win": 0, "dx": 0.0, "door": RED, "palms": 1, "lattice": true},
+		"house_nile_town_4": {"fn": "flat", "w": 0.68, "d": 0.6, "h": 0.5, "batter": false, "mat": Kit.PLASTER,
+			"wall": WHITE, "trim": LIME, "stair": -1, "malqaf": true, "mq": Vector2(0.1, -0.08), "mh": 0.28,
+			"domes": [[-0.16, 0.02, 0.1, MUD_LT]], "band": TURQ, "band2": RED, "win": 3, "door": OCHRE, "dx": 0.18,
+			"beams": 3, "palms": 1},
+		"house_nile_villa_1": {"fn": "flat", "w": 0.84, "d": 0.4, "h": 0.34, "uh": 0.2, "uw": 0.42, "ud": 0.3,
+			"uat": Vector2(0.14, -0.02), "yard": 2, "porch": 4, "wall": LIME, "trim": WHITE, "ucol": WHITE,
+			"band": RED, "win": 0, "door": BLUE, "dx": 0.0, "dh": 0.22, "pond": true, "trees": 2, "palms": 2,
+			"ycol": WHITE, "ymat": Kit.PLASTER, "beams": 0, "pots": 0, "pcol": RED, "pmat": Kit.PAINT, "ywh": 0.14},
+		"house_nile_villa_2": {"fn": "flat", "w": 0.76, "d": 0.44, "h": 0.4, "uh": 0.24, "uw": 0.34, "ud": 0.34,
+			"uat": Vector2(-0.17, -0.03), "yard": 1, "wall": OCHRE_WALL, "trim": MUD_LT, "ucol": LIME,
+			"band": BLUE, "uband": GILD, "win": 2, "door": RED, "beams": 6, "beds": true, "trees": 1, "palms": 2,
+			"shelter": "cloth", "high": true, "sat": Vector2(0.0, 0.0), "ssize": Vector2(0.26, 0.26), "sh": 0.13,
+			"pots": 0, "ycol": OCHRE_WALL, "stair": 0},
+		"house_nile_farm_1": {"fn": "flat", "w": 0.56, "d": 0.38, "h": 0.3, "yard": 1, "gran": 3, "palms": 1,
+			"pen": true, "stair": 1, "shelter": "mat", "sat": Vector2(-0.05, 0.0), "ssize": Vector2(0.22, 0.22),
+			"sh": 0.12, "win": 1, "door": OCHRE, "pots": 2},
+		"house_nile_farm_2": {"fn": "multi", "parts": [
+			{"fn": "flat", "w": 0.52, "d": 0.42, "h": 0.38, "at": Vector2(-0.2, -0.16), "stair": 1, "win": 1, "palms": 0,
+				"shelter": "reed", "sat": Vector2(-0.04, 0.0), "ssize": Vector2(0.26, 0.26), "sh": 0.14, "wall": MUD_LT.darkened(0.05)}],
+			"extras": [{"t": "granary", "at": Vector2(0.3, -0.34), "r": 0.1}, {"t": "granary", "at": Vector2(0.42, -0.16), "r": 0.08, "col": MUD_LT},
+				{"t": "granary", "at": Vector2(0.28, -0.14), "r": 0.075}, {"t": "pen", "at": Vector2(-0.18, 0.28), "w": 0.4, "d": 0.28},
+				{"t": "palm", "at": Vector2(0.38, 0.16), "h": 0.55}, {"t": "palm", "at": Vector2(0.1, 0.38), "h": 0.45, "fronds": 6},
+				{"t": "beds", "at": Vector2(0.22, 0.32), "w": 0.3, "d": 0.24, "n": 3}]},
+		"house_nile_tower_1": {"fn": "flat", "w": 0.52, "d": 0.46, "h": 0.8, "wall": WHITE, "trim": MUD_LT,
+			"holes": Vector2i(4, 3), "horns": true, "band": RED, "band2": BLUE, "win": 0, "door": OCHRE, "dx": 0.0,
+			"stair": 0, "palms": 2, "pots": 0, "mat": Kit.MUDBRICK},
+		"house_nile_tower_2": {"fn": "flat", "w": 0.6, "d": 0.5, "h": 0.46, "uh": 0.34, "uw": 0.3, "ud": 0.3,
+			"uat": Vector2(-0.14, -0.1), "stair": 1, "wall": MUD, "trim": MUD_LT, "ucol": LIME, "beams": 4,
+			"shelter": "mat", "high": true, "sat": Vector2(0.0, 0.0), "ssize": Vector2(0.24, 0.24), "sh": 0.12,
+			"win": 1, "door": BLUE, "palms": 1, "pots": 2, "uband": TURQ},
+	}
+
+
+# --- NEAR EAST archetypes ----------------------------------------------------------------------
+
+
+## One wing of a courtyard house in its own frame: length w along x, depth d, court on the +z side.
+## `roof`: "flat" (parapet), "dome", "reed" (thatch gable) or "vault" (flat with a low dome).
+static func _wing(k: Kit, w: float, d: float, h: float, wall: Color, trim: Color, mat: int, roof: String,
+		dome_col: Color, arches: int, arch_col: Color) -> void:
+	k.box(Vector3.ZERO, Vector3(w, h, d), wall, mat)
+	k.box(Vector3(0, h, 0), Vector3(w + 0.02, 0.035, d + 0.03), trim, mat)
+	match roof:
+		"dome", "vault":
+			var rr := minf(w, d) * (0.42 if roof == "dome" else 0.3)
+			k.frustum(Vector3(0, h + 0.035, 0), rr, rr, 0.05, wall, mat, 10, false)
+			k.dome(Vector3(0, h + 0.085, 0), rr, dome_col, Kit.PAINT if dome_col != wall else mat, 0.9, 4, 12)
+			if roof == "vault":
+				_parapet(k, Vector3(0, h + 0.035, 0), w + 0.02, d + 0.03, 0.05, 0.03, trim, mat)
+		"reed":
+			k.gable_roof(Vector3(0, h + 0.035, 0), w, d, 0.12, 0.05, 0.025, REED, Kit.THATCH, wall, mat)
+		_:
+			_parapet(k, Vector3(0, h + 0.035, 0), w + 0.02, d + 0.03, 0.055, 0.03, trim, mat)
+	for i in arches:
+		var ax: float = -w / 2.0 + w * (i + 0.5) / arches
+		_arch(k, Vector3(ax, 0.0, d / 2.0), 0.0, minf(0.13, w / arches * 0.5), minf(h * 0.8, 0.26))
+	if arches > 0:
+		k.box(Vector3(0, h * 0.8, d / 2.0 + 0.002), Vector3(w * 0.96, 0.02, 0.012), arch_col, Kit.PAINT)
+
+
+## A courtyard house: wings round an open court (a cut-out at the middle), a gate in the front
+## wall, a court with a pool, trees or a well. P: back/left/right (wing heights, 0 = none), roofs,
+## up (an upper storey over the back wing), tree/pool/well, badgir.
+static func _court(k: Kit, r: RandomNumberGenerator, P: Dictionary) -> void:
+	var wall: Color = P.get("wall", WHITE.darkened(0.04))
+	var trim: Color = P.get("trim", LIME)
+	var mat: int = P.get("mat", Kit.PLASTER)
+	var acol: Color = P.get("acol", BLUE)
+	var dcol: Color = P.get("dome", TURQ)
+	var cw: float = P.get("w", 1.0)
+	var cd: float = P.get("d", 1.0)
+	var cx := -cw / 2.0
+	var ground: Color = P.get("ground", Color(0.76, 0.68, 0.52))
+	k.box(Vector3(0, 0, 0), Vector3(cw, 0.03, cd), ground, Kit.EARTH)
+	var hb: float = P.get("back", 0.42)
+	var hl: float = P.get("left", 0.36)
+	var hr: float = P.get("right", 0.3)
+	var wd: float = P.get("wd", 0.22)
+	if hb > 0.0:
+		k.push(Kit.at(Vector3(0, 0.03, -cd / 2.0 + wd / 2.0 + 0.01), 0.0))
+		_wing(k, cw - 0.02, wd, hb, wall, trim, mat, P.get("rback", "flat"), dcol, int(P.get("archb", 2)), acol)
+		if P.get("up", 0.0) > 0.0:
+			var uh: float = P["up"]
+			var uwid: float = P.get("upw", 0.5)
+			k.box(Vector3(P.get("upx", 0.0), hb + 0.035, 0), Vector3(uwid, uh, wd * 0.8), wall.lightened(0.04), mat)
+			k.box(Vector3(P.get("upx", 0.0), hb + 0.035 + uh, 0), Vector3(uwid + 0.04, 0.03, wd * 0.8 + 0.04), trim, mat)
+			var bx: float = P.get("upx", 0.0)
+			if P.get("lattice", true):   # a screened balcony over the court
+				k.box(Vector3(bx, hb + 0.035 + uh * 0.15, wd * 0.4 + 0.045), Vector3(uwid * 0.7, uh * 0.6, 0.09), WOOD, Kit.TIMBER)
+				k.box(Vector3(bx, hb + 0.035 + uh * 0.15 + uh * 0.6, wd * 0.4 + 0.045), Vector3(uwid * 0.76, 0.02, 0.12), WOOD_DK, Kit.TIMBER)
+				k.box(Vector3(bx, hb + 0.035 + uh * 0.28, wd * 0.4 + 0.092), Vector3(uwid * 0.5, uh * 0.3, 0.012), SHADE, Kit.DARK)
+			else:
+				_arch(k, Vector3(bx - 0.1, hb + 0.035 + 0.03, wd * 0.4), 0.0, 0.07, 0.14)
+				_arch(k, Vector3(bx + 0.1, hb + 0.035 + 0.03, wd * 0.4), 0.0, 0.07, 0.14)
+		k.pop()
+	if hl > 0.0:
+		k.push(Kit.at(Vector3(cx + wd / 2.0 + 0.01, 0.03, 0.0), PI / 2.0))
+		_wing(k, cd * 0.56, wd, hl, wall, trim, mat, P.get("rleft", "dome"), dcol, int(P.get("archl", 1)), acol)
+		k.pop()
+	if hr > 0.0:
+		k.push(Kit.at(Vector3(-cx - wd / 2.0 - 0.01, 0.03, 0.0), -PI / 2.0))
+		_wing(k, cd * 0.56, wd, hr, wall, trim, mat, P.get("rright", "flat"), dcol, int(P.get("archr", 1)), acol)
+		k.pop()
+	# front wall with a gate
+	var fz := cd / 2.0 - 0.04
+	var fh: float = P.get("front", 0.3)
+	for s in [-1.0, 1.0]:
+		k.box(Vector3(s * (cw / 2.0 - 0.19), 0.03, fz), Vector3(0.38, fh, 0.07), wall, mat)
+		k.box(Vector3(s * (cw / 2.0 - 0.19), 0.03 + fh, fz), Vector3(0.4, 0.03, 0.09), trim, mat)
+	k.box(Vector3(0, 0.03 + fh * 0.8, fz), Vector3(0.28, fh * 0.45, 0.07), wall, mat)
+	k.box(Vector3(0, 0.03 + fh * 0.8 + fh * 0.45, fz), Vector3(0.32, 0.03, 0.09), trim, mat)
+	_arch_door(k, Vector3(0, 0.03, fz + 0.035), 0.0, 0.17, fh * 0.9, trim, P.get("door", BLUE), mat)
+	if P.get("gate_tower", false):
+		k.box(Vector3(0, 0.03 + fh * 1.25, fz), Vector3(0.34, 0.16, 0.12), wall, mat)
+		k.box(Vector3(0, 0.03 + fh * 1.25 + 0.16, fz), Vector3(0.38, 0.03, 0.15), trim, mat)
+	# the court itself
+	var cc: String = P.get("court", "tree")
+	var ctr := Vector3(0.0, 0.03, 0.06)
+	match cc:
+		"pool":
+			_pond(k, ctr, 0.3, 0.2)
+			_tree(k, Vector3(0.2, 0.03, 0.28), 0.16, 0.1)
+			_tree(k, Vector3(-0.22, 0.03, 0.26), 0.14, 0.09, GREEN.darkened(0.1))
+		"well":
+			k.cylinder(ctr + Vector3(0.0, 0, 0.05), 0.06, 0.07, STONE_GR, Kit.STONE, 8)
+			k.box(ctr + Vector3(0, 0.07, 0.05), Vector3(0.1, 0.004, 0.1), SHADE, Kit.DARK)
+			_pot(k, Vector3(-0.2, 0.03, 0.26), 0.04)
+			_pot(k, Vector3(0.22, 0.03, 0.22), 0.035)
+		"beds":
+			_beds(k, ctr + Vector3(0.0, 0, 0.0), 0.34, 0.28, 4)
+			_tree(k, Vector3(0.25, 0.03, 0.3), 0.18, 0.11)
+		_:
+			_tree(k, Vector3(0.18, 0.03, 0.1), 0.2, 0.13)
+			_tree(k, Vector3(-0.16, 0.03, 0.26), 0.14, 0.09, GREEN.darkened(0.1))
+	if P.get("badgir", false):
+		_badgir(k, Vector3(P.get("bx", 0.3), 0.03 + hb + 0.035, -cd / 2.0 + wd / 2.0), 0.14, 0.2, wall, mat)
+
+
+## A kasbah-like tower house: stepped tapering earth storeys, corner towers with merlons and
+## zigzag bands, small slit windows, a studded gate. P: n (storeys), towers [[x, z, h, w]],
+## wall (a low outer wall with a gate).
+static func _kasbah(k: Kit, r: RandomNumberGenerator, P: Dictionary) -> void:
+	var col: Color = P.get("col", Color(0.70, 0.50, 0.34))
+	var light: Color = P.get("light", Color(0.88, 0.76, 0.58))
+	var bw: float = P.get("bw", 0.56)
+	var bd: float = P.get("bd", 0.46)
+	var n: int = P.get("n", 2)
+	var bz: float = P.get("bz", -0.06)
+	var sh := 0.2
+	var y := 0.0
+	for i in n:
+		var w := bw - i * 0.07
+		var d := bd - i * 0.07
+		k.plinth(Vector3(0, y, bz), w, d, sh, 0.02, col.lightened(0.04 * i), Kit.EARTH)
+		k.box(Vector3(0, y + sh, bz), Vector3(w - 0.03, 0.025, d - 0.03), light, Kit.EARTH)
+		_front_slots(k, r, 0.0, bz + d / 2.0 - 0.008, y + sh * 0.55, w * 0.7, 2 if i == 0 else 3, 99.0, 0.035, 0.06, light)
+		y += sh + 0.025
+	var tw: float = bw - (n - 1) * 0.07
+	var td: float = bd - (n - 1) * 0.07
+	_parapet(k, Vector3(0, y, bz), tw - 0.03, td - 0.03, 0.05, 0.03, light, Kit.EARTH)
+	_arch_door(k, Vector3(P.get("dx", -0.12), 0, bz + bd / 2.0 - 0.015), 0.0, 0.13, 0.25, light, WOOD_DK, Kit.EARTH)
+	for t: Array in P.get("towers", [[-0.3, -0.26, 0.74, 0.2], [0.32, 0.12, 0.5, 0.18]]):
+		var tx: float = t[0]
+		var tz: float = t[1]
+		var th: float = t[2]
+		var twd: float = t[3]
+		k.plinth(Vector3(tx, 0, tz), twd, twd, th, 0.045, col.darkened(0.04), Kit.EARTH)
+		k.box(Vector3(tx, th, tz), Vector3(twd - 0.06, 0.03, twd - 0.06), light, Kit.EARTH)
+		_merlons(k, Vector3(tx, th + 0.03, tz), twd - 0.06, twd - 0.06, 0.05, 0.05, light, Kit.EARTH)
+		for f in 2:   # zigzag diamonds on two faces
+			k.push(Kit.at(Vector3(tx, 0, tz), f * PI / 2.0))
+			for i in 3:
+				var zx: float = (i - 1) * twd * 0.24
+				k.box(Vector3(zx, th * 0.72, twd / 2.0 - 0.045 * 0.72 - 0.005), Vector3(0.04, 0.04, 0.012), light, Kit.PAINT)
+				k.box(Vector3(zx, th * 0.62, twd / 2.0 - 0.045 * 0.62 - 0.005), Vector3(0.02, 0.02, 0.012), SHADE, Kit.DARK)
+			k.pop()
+		_slot(k, Vector3(tx, th * 0.4, tz + twd / 2.0 - 0.045 * 0.4 - 0.004), 0.0, 0.03, 0.07, light)
+	if P.get("wall", false):
+		for s in [-1.0, 1.0]:
+			k.box(Vector3(s * 0.34, 0, 0.44), Vector3(0.3, 0.12, 0.04), col, Kit.EARTH)
+			k.box(Vector3(s * 0.34, 0.12, 0.44), Vector3(0.3, 0.02, 0.06), light, Kit.EARTH)
+		k.box(Vector3(-0.46, 0, 0.0), Vector3(0.04, 0.1, 0.88), col, Kit.EARTH)
+		_gatepiers(k, Vector3(0, 0, 0.44), 0.2, 0.17, light, Kit.EARTH)
+		_pot(k, Vector3(-0.3, 0, 0.3), 0.04)
+	for i in int(P.get("palms", 1)):
+		_palm(k, Vector3(0.36 - 0.72 * i, 0, 0.34), 0.5, 6)
+
+
+## A stone-and-timber house (Hittite/Anatolian): a rough stone base, a timber-framed upper
+## floor with plaster infill and beam ends, a flat earth roof or a steep thatched one.
+## P: roof "flat"/"gable"/"hip", bw/bd, sb (base height), uh, corner (a stone tower), stair.
+static func _hittite(k: Kit, r: RandomNumberGenerator, P: Dictionary) -> void:
+	var bw: float = P.get("bw", 0.7)
+	var bd: float = P.get("bd", 0.56)
+	var sb: float = P.get("sb", 0.26)
+	var uh: float = P.get("uh", 0.26)
+	var ox: float = P.get("ox", -0.04 if P.get("stair", false) else 0.0)
+	var stone: Color = P.get("stone", STONE_GR)
+	var plaster: Color = P.get("plaster", LIME)
+	k.box(Vector3(ox, 0, 0), Vector3(bw, sb, bd), stone, Kit.STONE)
+	for i in 3:   # a few dark-edged stone courses for texture
+		k.box(Vector3(ox, sb * (i + 1) / 4.0, bd / 2.0 + 0.002), Vector3(bw, 0.008, 0.008), stone.darkened(0.25), Kit.STONE)
+	k.box(Vector3(ox, sb, 0), Vector3(bw + 0.04, 0.03, bd + 0.04), WOOD_DK, Kit.TIMBER)   # the floor beam
+	var y1 := sb + 0.03
+	var uw := bw - 0.02
+	var ud := bd - 0.02
+	if uh > 0.0:
+		k.box(Vector3(ox, y1, 0), Vector3(uw, uh, ud), plaster, Kit.PLASTER)
+		for i in 5:   # posts and braces on the front
+			var px: float = ox - uw / 2.0 + uw * i / 4.0
+			k.rod(Vector3(px, y1, ud / 2.0 + 0.004), Vector3(px, y1 + uh, ud / 2.0 + 0.004), 0.011, WOOD_DK, Kit.TIMBER)
+		for i in 4:
+			var px2: float = ox - uw / 2.0 + uw * (i + 0.5) / 4.0
+			if i % 2 == 0:
+				k.rod(Vector3(px2 - uw / 8.0, y1, ud / 2.0 + 0.004), Vector3(px2 + uw / 8.0, y1 + uh, ud / 2.0 + 0.004), 0.008, WOOD, Kit.TIMBER)
+			else:
+				k.rod(Vector3(px2 + uw / 8.0, y1, ud / 2.0 + 0.004), Vector3(px2 - uw / 8.0, y1 + uh, ud / 2.0 + 0.004), 0.008, WOOD, Kit.TIMBER)
+		for j in 3:   # beam ends poking out of the side
+			var bz: float = -ud / 2.0 + ud * (j + 0.5) / 3.0
+			k.rod(Vector3(ox + uw / 2.0, y1 - 0.01, bz), Vector3(ox + uw / 2.0 + 0.07, y1 - 0.01, bz), 0.013, WOOD, Kit.TIMBER)
+			k.rod(Vector3(ox - uw / 2.0, y1 - 0.01, bz), Vector3(ox - uw / 2.0 - 0.07, y1 - 0.01, bz), 0.013, WOOD, Kit.TIMBER)
+		k.window(Vector3(ox + uw * 0.25, y1 + uh * 0.5, ud / 2.0 + 0.012), 0.0, 0.07, 0.08, WOOD_DK, "shutters")
+		k.window(Vector3(ox - uw * 0.25, y1 + uh * 0.5, ud / 2.0 + 0.012), 0.0, 0.07, 0.08, WOOD_DK, "shutters")
+	var ytop := y1 + uh
+	match str(P.get("roof", "flat")):
+		"gable":
+			k.gable_roof(Vector3(ox, ytop, 0), uw if uh > 0 else bw, ud if uh > 0 else bd, P.get("rise", 0.24), 0.07, 0.03,
+				P.get("rcol", REED), P.get("rmat", Kit.THATCH), plaster, Kit.PLASTER, 0.0)
+		"hip":
+			k.hip_roof(Vector3(ox, ytop, 0), uw, ud, P.get("rise", 0.2), 0.07, 0.03, P.get("rcol", REED), P.get("rmat", Kit.THATCH))
+		_:
+			k.box(Vector3(ox, ytop, 0), Vector3(uw + 0.06, 0.04, ud + 0.06), Color(0.62, 0.50, 0.36), Kit.EARTH)
+			_parapet(k, Vector3(ox, ytop + 0.04, 0), uw + 0.06, ud + 0.06, 0.05, 0.03, Color(0.62, 0.50, 0.36), Kit.EARTH)
+			_pot(k, Vector3(ox + 0.15, ytop + 0.04, 0.0), 0.04)
+	k.door(Vector3(ox + P.get("dx", -0.1), 0, bd / 2.0 + 0.006), 0.0, 0.12, 0.2, WOOD_DK)
+	k.window(Vector3(ox + 0.18, sb * 0.6, bd / 2.0 + 0.006), 0.0, 0.05, 0.06, WOOD_DK, "frame")
+	if P.get("stair", false):
+		_stairs(k, Vector3(ox + bw / 2.0 + 0.1, 0, bd / 2.0 - 0.02), 0.0, 0.11, 5, (sb + 0.03) / 5.0, 0.07, stone, Kit.STONE)
+	if P.get("corner", false):   # a stone tower at one corner
+		var tx: float = ox - bw / 2.0 - 0.02
+		k.plinth(Vector3(tx, 0, -bd / 2.0 + 0.04), 0.3, 0.3, 0.6, 0.03, stone.lightened(0.04), Kit.STONE)
+		k.box(Vector3(tx, 0.6, -bd / 2.0 + 0.04), Vector3(0.28, 0.03, 0.28), WOOD_DK, Kit.TIMBER)
+		_merlons(k, Vector3(tx, 0.63, -bd / 2.0 + 0.04), 0.28, 0.28, 0.05, 0.05, stone, Kit.STONE)
+		_slot(k, Vector3(tx, 0.34, -bd / 2.0 + 0.04 + 0.15 - 0.02), 0.0, 0.03, 0.08, stone.lightened(0.2))
+	if P.get("wood", true):
+		for i in 3:
+			k.rod(Vector3(0.38, 0.02 + i * 0.03, 0.34 + 0.0), Vector3(0.38, 0.02 + i * 0.03, 0.46), 0.014, WOOD, Kit.TIMBER)
+			k.rod(Vector3(0.42, 0.02 + i * 0.03, 0.34 + 0.0), Vector3(0.42, 0.02 + i * 0.03, 0.46), 0.014, WOOD, Kit.TIMBER)
+	_palm_or_tree(k, P, ox, bw)
+
+
+## A tree beside a house: a leafy tree for upland styles.
+static func _palm_or_tree(k: Kit, P: Dictionary, ox: float, bw: float) -> void:
+	var t: String = P.get("tree", "tree")
+	if t == "palm":
+		_palm(k, Vector3(-0.42, 0, 0.4), 0.52, 6)
+	elif t == "tree":
+		_tree(k, Vector3(-0.4, 0, 0.36), 0.22, 0.13, Color(0.34, 0.5, 0.24))
+
+
+## A domed house of the Persian/Turkic world: cubic body, a pishtaq (raised arched portal),
+## domes of different sizes on drums, a wind-catcher, a slender tower. P: domes [[x, z, r, col]].
+static func _domed(k: Kit, r: RandomNumberGenerator, P: Dictionary) -> void:
+	var w: float = P.get("w", 0.8)
+	var d: float = P.get("d", 0.6)
+	var h: float = P.get("h", 0.4)
+	var wall: Color = P.get("wall", WHITE)
+	var trim: Color = P.get("trim", LIME)
+	var mat: int = P.get("mat", Kit.PLASTER)
+	var tile: Color = P.get("tile", TURQ)
+	k.box(Vector3(0, 0, 0), Vector3(w + 0.06, 0.04, d + 0.06), STONE_GR, Kit.STONE)
+	k.box(Vector3(0, 0.04, 0), Vector3(w, h, d), wall, mat)
+	k.box(Vector3(0, 0.04 + h, 0), Vector3(w + 0.04, 0.03, d + 0.04), trim, mat)
+	var top := 0.04 + h + 0.03
+	var pw: float = P.get("pw", 0.3)
+	var ph: float = P.get("ph", 0.16)
+	var px: float = P.get("px", 0.0)
+	k.box(Vector3(px, 0.04, d / 2.0 + 0.02), Vector3(pw, h + ph, 0.06), trim, mat)   # the pishtaq
+	k.box(Vector3(px, 0.04 + h + ph, d / 2.0 + 0.02), Vector3(pw + 0.04, 0.03, 0.08), trim.lightened(0.04), mat)
+	_arch(k, Vector3(px, 0.04, d / 2.0 + 0.052), 0.0, pw * 0.5, (h + ph) * 0.8, SHADE, true)
+	_arch_door(k, Vector3(px, 0.04, d / 2.0 + 0.056), 0.0, pw * 0.34, h * 0.6, trim, P.get("door", BLUE), mat)
+	k.box(Vector3(px, 0.04 + h + ph - 0.045, d / 2.0 + 0.056), Vector3(pw * 0.8, 0.03, 0.01), tile, Kit.PAINT)
+	for s in [-1.0, 1.0]:   # arched windows either side of the portal
+		var ax: float = px + s * (pw / 2.0 + 0.12)
+		if absf(ax) < w / 2.0 - 0.06:
+			_arch(k, Vector3(ax, 0.04 + h * 0.3, d / 2.0), 0.0, 0.07, 0.15)
+	k.box(Vector3(0, 0.04 + h - 0.03, d / 2.0 + 0.004), Vector3(w, 0.022, 0.012), tile, Kit.PAINT)
+	_parapet(k, Vector3(0, top, 0), w + 0.04, d + 0.04, 0.045, 0.028, trim, mat)
+	for dm: Array in P.get("domes", [[-0.18, -0.04, 0.2, TURQ]]):
+		var dc: Color = dm[3]
+		k.frustum(Vector3(dm[0], top, dm[1]), dm[2] * 0.95, dm[2] * 0.95, 0.07, wall, mat, 12, false)
+		k.dome(Vector3(dm[0], top + 0.07, dm[1]), dm[2], dc, Kit.PAINT if dc != wall else mat, 0.95, 4, 12, P.get("onion", false))
+		k.cylinder(Vector3(dm[0], top + 0.07 + dm[2] * 0.92, dm[1]), 0.01, 0.07, GILD, Kit.GOLD, 4)
+	if P.get("badgir", false):
+		var bp: Vector2 = P.get("bat", Vector2(0.28, -0.14))
+		_badgir(k, Vector3(bp.x, top, bp.y), 0.17, 0.36, wall, mat)
+	if P.get("tower", false):   # a slender corner tower with a little cap
+		var tp: Vector2 = P.get("tat", Vector2(0.4, -0.2))
+		k.frustum(Vector3(tp.x, top, tp.y), 0.055, 0.045, 0.34, wall, mat, 8, false)
+		k.box(Vector3(tp.x, top + 0.34, tp.y), Vector3(0.14, 0.025, 0.14), trim, mat)
+		k.frustum(Vector3(tp.x, top + 0.365, tp.y), 0.06, 0.0, 0.1, tile, Kit.PAINT, 8, true)
+	if P.get("pool", false):
+		_pond(k, Vector3(0.0, 0, 0.44), 0.3, 0.1)
+	_palm(k, Vector3(P.get("palm", -0.44), 0, 0.42), 0.5, 6)
+
+
+static func _ne_rows() -> Dictionary:
+	var rows := {
+		"house_ne_court_1": {"fn": "court", "back": 0.42, "left": 0.34, "right": 0.28, "rback": "dome", "rleft": "flat",
+			"rright": "flat", "court": "tree", "dome": TURQ},
+		"house_ne_court_2": {"fn": "court", "back": 0.36, "left": 0.0, "right": 0.3, "rback": "flat", "rright": "dome",
+			"court": "pool", "wall": MUD_LT, "trim": SAND, "mat": Kit.MUDBRICK, "dome": MUD_LT, "acol": TURQ,
+			"badgir": true, "bx": -0.3, "door": RED, "ground": Color(0.80, 0.70, 0.52), "gate_tower": true},
+		"house_ne_court_3": {"fn": "court", "back": 0.3, "up": 0.26, "upw": 0.54, "upx": 0.12, "left": 0.3, "right": 0.0,
+			"rback": "flat", "rleft": "vault", "court": "well", "wall": OCHRE_WALL, "trim": MUD_LT, "mat": Kit.MUDBRICK,
+			"acol": RED, "dome": OCHRE_WALL, "door": TURQ, "front": 0.26},
+		"house_ne_court_4": {"fn": "court", "back": 0.26, "left": 0.26, "right": 0.26, "rback": "reed", "rleft": "reed",
+			"rright": "reed", "court": "beds", "wall": ROSE, "trim": LIME, "mat": Kit.PLASTER, "acol": BLUE,
+			"door": OCHRE, "archb": 3},
+		"house_ne_flat_1": {"fn": "flat", "w": 0.8, "d": 0.62, "h": 0.46, "merlons": true, "malqaf": false,
+			"badgir": true, "bat": Vector2(-0.22, -0.1), "bh": 0.4, "door": TURQ, "win": 3, "arched": true,
+			"wall": MUD, "dx": 0.18, "band": TURQ, "stair": 0, "palms": 1, "domes": [[0.22, 0.0, 0.14, MUD_LT]], "pots": 0},
+		"house_ne_flat_2": {"fn": "flat", "w": 0.74, "d": 0.62, "h": 0.36, "uh": 0.3, "uw": 0.5, "ud": 0.42,
+			"uat": Vector2(0.06, -0.08), "batter": false, "mat": Kit.PLASTER, "wall": WHITE, "trim": LIME,
+			"ucol": WHITE, "stair": 1, "domes": [[-0.2, 0.08, 0.1, TURQ]], "door": BLUE, "win": 3, "arched": true,
+			"lattice": true, "palms": 1, "band": BLUE, "pots": 0},
+		"house_ne_flat_3": {"fn": "flat", "w": 0.84, "d": 0.5, "h": 0.5, "batter": true, "wall": DUST, "trim": SAND,
+			"merlons": true, "malqaf": true, "mq": Vector2(0.24, -0.08), "mh": 0.36, "shelter": "cloth",
+			"sat": Vector2(-0.14, 0.0), "ssize": Vector2(0.3, 0.3), "sh": 0.15, "door": RED, "win": 2, "dx": -0.26,
+			"beams": 5, "palms": 1, "arched": true},
+		"house_ne_hittite_1": {"fn": "hittite", "roof": "flat", "stair": true, "bw": 0.68, "bd": 0.56, "sb": 0.26, "uh": 0.26},
+		"house_ne_hittite_2": {"fn": "hittite", "roof": "gable", "bw": 0.62, "bd": 0.5, "sb": 0.2, "uh": 0.24, "rise": 0.3,
+			"plaster": OCHRE_WALL, "stone": STONE_DK},
+		"house_ne_hittite_3": {"fn": "hittite", "roof": "flat", "corner": true, "bw": 0.58, "bd": 0.5, "sb": 0.3, "uh": 0.22,
+			"ox": 0.1, "plaster": SAND, "stone": STONE_LT, "stair": false, "tree": "none"},
+		"house_ne_berber_1": {"fn": "kasbah", "n": 2, "towers": [[-0.3, -0.28, 0.74, 0.2]]},
+		"house_ne_berber_2": {"fn": "kasbah", "n": 1, "bw": 0.5, "bd": 0.4, "bz": -0.14, "wall": true,
+			"towers": [[-0.32, -0.3, 0.6, 0.2], [0.32, -0.3, 0.46, 0.18], [0.0, -0.4, 0.36, 0.16]],
+			"col": Color(0.62, 0.42, 0.3), "light": Color(0.82, 0.68, 0.52)},
+		"house_ne_berber_3": {"fn": "kasbah", "n": 3, "bw": 0.5, "bd": 0.44, "bz": -0.04,
+			"towers": [[0.3, -0.22, 0.92, 0.18], [-0.3, 0.1, 0.5, 0.16]], "col": Color(0.74, 0.54, 0.38),
+			"light": Color(0.9, 0.8, 0.62), "dx": 0.0, "palms": 2},
+		"house_ne_domed_1": {"fn": "domed", "w": 0.8, "d": 0.56, "h": 0.4, "domes": [[-0.18, -0.04, 0.2, TURQ]],
+			"badgir": true, "px": 0.18},
+		"house_ne_domed_2": {"fn": "domed", "w": 0.88, "d": 0.5, "h": 0.34, "wall": SAND, "trim": WHITE,
+			"mat": Kit.PLASTER, "domes": [[-0.28, -0.02, 0.13, SAND], [-0.02, -0.02, 0.15, WHITE], [0.26, -0.02, 0.13, SAND]],
+			"pw": 0.26, "ph": 0.1, "px": 0.0, "tower": true, "tat": Vector2(0.38, -0.16), "tile": BLUE, "door": OCHRE},
+		"house_ne_domed_3": {"fn": "domed", "w": 0.7, "d": 0.62, "h": 0.5, "wall": ROSE, "trim": LIME, "onion": true,
+			"domes": [[0.0, -0.06, 0.24, BLUE]], "pw": 0.32, "ph": 0.12, "px": 0.0, "pool": true, "tile": GILD, "door": TURQ,
+			"palm": 0.44},
+	}
+	return rows
+
+
+# --- SOUTH ASIA archetypes ---------------------------------------------------------------------
+
+
+## A round mud-walled hut with a thatched cone, in its own spot. Optional lean-to porch.
+static func _round_hut(k: Kit, c: Vector3, rad: float, wh: float, ch: float, wall: Color, thatch: Color,
+		porch: bool, band: Color, yaw := 0.0) -> void:
+	k.cylinder(c, rad, wh, wall, Kit.EARTH, 12)
+	if band.a > 0.0:
+		k.cylinder(c + Vector3(0, wh * 0.55, 0), rad + 0.004, 0.035, band, Kit.PAINT, 12)
+	k.frustum(c + Vector3(0, wh, 0), rad * 1.45, rad * 0.8, ch * 0.3, thatch, Kit.THATCH, 12, false)
+	k.frustum(c + Vector3(0, wh + ch * 0.3, 0), rad * 0.8, 0.0, ch * 0.7, thatch.lightened(0.04), Kit.THATCH, 12, true)
+	k.frustum(c + Vector3(0, wh + ch, 0), 0.02, 0.014, 0.06, WOOD, Kit.TIMBER, 5, true)
+	k.box(c + Vector3(0, 0, rad - 0.01), Vector3(0.12, wh * 0.78, 0.03), SHADE, Kit.DARK)
+	k.box(c + Vector3(0, wh * 0.78, rad - 0.005), Vector3(0.17, 0.03, 0.05), WOOD, Kit.TIMBER)
+	if porch:
+		_awning(k, c + Vector3(0, 0, rad + 0.12), rad * 1.3, 0.22, wh * 1.05, wh * 0.8, thatch, Kit.THATCH, true)
+		k.box(c + Vector3(0, 0, rad + 0.1), Vector3(rad * 1.2, 0.04, 0.2), Color(0.72, 0.58, 0.4), Kit.EARTH)
+
+
+## A hut compound: round, rectangular or twin huts with thatch, veranda, granary, fence, tree.
+## P: form, x/z of the main hut, R (radius), band colour, granary, fence, tree, pen, cart, haystack.
+static func _hut(k: Kit, r: RandomNumberGenerator, P: Dictionary) -> void:
+	var wall: Color = P.get("wall", Color(0.66, 0.5, 0.34))
+	var thatch: Color = P.get("thatch", REED)
+	var band: Color = P.get("band", Color(0, 0, 0, 0))
+	match str(P.get("form", "round")):
+		"round":
+			_round_hut(k, Vector3(P.get("x", -0.12), 0, P.get("z", -0.08)), P.get("R", 0.3), P.get("wh", 0.24),
+				P.get("ch", 0.36), wall, thatch, P.get("porch", true), band)
+		"twin":
+			_round_hut(k, Vector3(-0.2, 0, -0.14), 0.26, 0.22, 0.32, wall, thatch, false, band)
+			_round_hut(k, Vector3(0.26, 0, 0.0), 0.19, 0.18, 0.26, wall.lightened(0.06), thatch.darkened(0.06), true, band)
+			k.box(Vector3(0.03, 0, -0.08), Vector3(0.12, 0.1, 0.04), wall.darkened(0.05), Kit.EARTH)
+		"rect":
+			var w: float = P.get("w", 0.6)
+			var d: float = P.get("d", 0.44)
+			var h: float = P.get("h", 0.24)
+			var z: float = P.get("z", -0.12)
+			k.box(Vector3(0, 0, z), Vector3(w, h, d), wall, Kit.EARTH)
+			if band.a > 0.0:
+				k.box(Vector3(0, h * 0.55, z + d / 2.0 + 0.003), Vector3(w, 0.03, 0.01), band, Kit.PAINT)
+			k.gable_roof(Vector3(0, z * 0 + h, z), w, d, P.get("rise", 0.24), 0.1, 0.035, thatch, Kit.THATCH, wall, Kit.EARTH)
+			k.box(Vector3(P.get("dx", -0.1), 0, z + d / 2.0 - 0.005), Vector3(0.13, h * 0.8, 0.03), SHADE, Kit.DARK)
+			k.box(Vector3(0.14, h * 0.5, z + d / 2.0 - 0.005), Vector3(0.07, 0.07, 0.03), SHADE, Kit.DARK)
+			if P.get("veranda", true):
+				k.box(Vector3(0, 0, z + d / 2.0 + 0.1), Vector3(w * 0.9, 0.04, 0.2), Color(0.72, 0.58, 0.4), Kit.EARTH)
+				for i in 4:
+					var vx: float = -w * 0.4 + w * 0.8 * i / 3.0
+					k.rod(Vector3(vx, 0.04, z + d / 2.0 + 0.18), Vector3(vx, h + 0.02, z + d / 2.0 + 0.18), 0.012, WOOD, Kit.TIMBER)
+				k.rod(Vector3(-w * 0.4, h + 0.02, z + d / 2.0 + 0.18), Vector3(w * 0.4, h + 0.02, z + d / 2.0 + 0.18), 0.013, WOOD_DK, Kit.TIMBER)
+				k.box(Vector3(0, h + 0.0, z + d / 2.0 + 0.1), Vector3(w * 0.9, 0.025, 0.2), thatch.darkened(0.1), Kit.THATCH)
+	if P.get("shed", false):
+		k.box(Vector3(0.36, 0, -0.26), Vector3(0.24, 0.18, 0.28), Color(0.72, 0.58, 0.42), Kit.EARTH)
+		k.hip_roof(Vector3(0.36, 0.18, -0.26), 0.24, 0.28, 0.14, 0.05, 0.022, thatch, Kit.THATCH)
+	if P.get("granary", true):
+		var gx: float = P.get("gx", 0.38)
+		for s in [-1.0, 1.0]:
+			for t in [-1.0, 1.0]:
+				k.rod(Vector3(gx + s * 0.05, 0, 0.3 + t * 0.05), Vector3(gx + s * 0.05, 0.1, 0.3 + t * 0.05), 0.01, WOOD, Kit.TIMBER)
+		k.frustum(Vector3(gx, 0.1, 0.3), 0.08, 0.1, 0.15, Color(0.72, 0.55, 0.3), Kit.THATCH, 8, false)
+		k.frustum(Vector3(gx, 0.25, 0.3), 0.11, 0.0, 0.1, thatch, Kit.THATCH, 8, true)
+	if P.get("fence", true):
+		for i in 7:
+			var fz: float = -0.44 + i * 0.13
+			k.rod(Vector3(-0.47, 0, fz), Vector3(-0.47, 0.1, fz), 0.01, WOOD, Kit.TIMBER)
+		k.rod(Vector3(-0.47, 0.08, -0.44), Vector3(-0.47, 0.08, 0.34), 0.008, WOOD, Kit.TIMBER)
+	if P.get("pen", false):
+		_pen(k, Vector3(0.28, 0, 0.3), 0.34, 0.24)
+	if P.get("hay", false):
+		k.frustum(Vector3(-0.34, 0, 0.36), 0.1, 0.09, 0.1, REED.darkened(0.1), Kit.THATCH, 8, false)
+		k.frustum(Vector3(-0.34, 0.1, 0.36), 0.09, 0.0, 0.1, REED, Kit.THATCH, 8, true)
+	if P.get("tree", true):
+		_tree(k, Vector3(P.get("tx", 0.4), 0, P.get("tz", -0.02)), 0.3, 0.16)
+	_pot(k, Vector3(-0.3, 0, 0.3), 0.035)
+
+
+## A tile-roofed house: gable or hip tiles, an optional second wing, a veranda on carved posts,
+## an upper storey with a balcony. P: w/d/h, roof, wing [w, d, h, x, z], veranda, up, well, tree.
+static func _tiled(k: Kit, r: RandomNumberGenerator, P: Dictionary) -> void:
+	var w: float = P.get("w", 0.64)
+	var d: float = P.get("d", 0.4)
+	var h: float = P.get("h", 0.28)
+	var z: float = P.get("z", -0.12)
+	var wall: Color = P.get("wall", WHITE.darkened(0.02))
+	var mat: int = P.get("mat", Kit.PLASTER)
+	var clay: Color = P.get("clay", CLAY)
+	var rise: float = P.get("rise", 0.2)
+	k.box(Vector3(0, 0, z), Vector3(w + 0.04, 0.035, d + 0.04), STONE_GR, Kit.STONE)
+	k.box(Vector3(0, 0.035, z), Vector3(w, h, d), wall, mat)
+	var top := 0.035 + h
+	var up: float = P.get("up", 0.0)
+	if up > 0.0:
+		k.box(Vector3(0, top, z), Vector3(w + 0.03, 0.025, d + 0.03), STONE_LT, Kit.STONE)
+		k.box(Vector3(0, top + 0.025, z), Vector3(w * 0.88, up, d * 0.88), wall.lightened(0.03), mat)
+		k.box(Vector3(P.get("bx", 0.1), top + 0.025 + up * 0.08, z + d * 0.44 + 0.05), Vector3(0.3, up * 0.5, 0.1), WOOD, Kit.TIMBER)
+		k.box(Vector3(P.get("bx", 0.1), top + 0.025 + up * 0.08 + up * 0.5, z + d * 0.44 + 0.05), Vector3(0.34, 0.02, 0.13), WOOD_DK, Kit.TIMBER)
+		k.box(Vector3(P.get("bx", 0.1), top + 0.025 + up * 0.2, z + d * 0.44 + 0.101), Vector3(0.22, up * 0.25, 0.012), SHADE, Kit.DARK)
+		_arch(k, Vector3(-0.2, top + 0.025 + up * 0.12, z + d * 0.44), 0.0, 0.07, up * 0.55)
+		top += 0.025 + up
+	var roof: String = P.get("roof", "gable")
+	if roof == "hip":
+		k.hip_roof(Vector3(0, top, z), w * (0.88 if up > 0 else 1.0), d * (0.88 if up > 0 else 1.0), rise, 0.07, 0.03, clay, Kit.OWNER_ROOF, 0.0, 0.02)
+	else:
+		k.gable_roof(Vector3(0, top, z), w * (0.88 if up > 0 else 1.0), d * (0.88 if up > 0 else 1.0), rise, 0.07, 0.03, clay, Kit.OWNER_ROOF, wall, mat)
+	var fz := z + d / 2.0
+	_arch_door(k, Vector3(P.get("dx", -0.12), 0.035, fz), 0.0, 0.13, 0.22, STONE_LT, P.get("door", OCHRE), Kit.STONE)
+	for wx in P.get("wins", [0.14, 0.26]):
+		_arch(k, Vector3(wx, 0.07, fz + 0.002), 0.0, 0.06, 0.12)
+	if P.has("wing"):
+		var wg: Array = P["wing"]
+		k.box(Vector3(wg[3], 0.035, wg[4]), Vector3(wg[0], wg[2], wg[1]), wall.darkened(0.03), mat)
+		k.gable_roof(Vector3(wg[3], 0.035 + wg[2], wg[4]), wg[1], wg[0], rise * 0.8, 0.06, 0.028, clay.darkened(0.05), Kit.OWNER_ROOF, wall, mat, PI / 2.0)
+		_arch(k, Vector3(wg[3] - wg[0] / 2.0 * 0.0, 0.07, wg[4] + wg[1] / 2.0 + 0.002), 0.0, 0.06, 0.12)
+	if P.get("veranda", 5) > 0:
+		var n: int = P.get("veranda", 5)
+		var vw := w * 0.9
+		k.box(Vector3(0, 0.035, fz + 0.1), Vector3(vw + 0.02, 0.04, 0.2), Color(0.78, 0.7, 0.56), Kit.STONE)
+		for i in n:
+			var px: float = -vw / 2.0 + vw * i / maxf(n - 1, 1)
+			k.frustum(Vector3(px, 0.075, fz + 0.18), 0.016, 0.013, h * 0.84, WOOD, Kit.TIMBER, 5, false)
+		k.box(Vector3(0, 0.075 + h * 0.84, fz + 0.18), Vector3(vw, 0.03, 0.045), WOOD_DK, Kit.TIMBER)
+		k.hip_roof(Vector3(0, 0.075 + h * 0.84, fz + 0.1), vw, 0.2, 0.07, 0.04, 0.022, clay.lightened(0.05), Kit.OWNER_ROOF, 0.0, 0.02)
+	if P.get("well", false):
+		k.cylinder(Vector3(0.38, 0, 0.36), 0.06, 0.07, STONE_GR, Kit.STONE, 8)
+		k.box(Vector3(0.38, 0.07, 0.36), Vector3(0.09, 0.004, 0.09), SHADE, Kit.DARK)
+	for i in int(P.get("trees", 1)):
+		_tree(k, Vector3(-0.4 + i * 0.8, 0, 0.36 + 0.04 * i), 0.3, 0.15)
+	if P.get("palm", false):
+		_palm(k, Vector3(0.42, 0, 0.3), 0.52, 6)
+
+
+## A haveli: brick and plaster storeys, jharokha balconies, arched window rows, a cornice and a
+## crown of chhatris / a bangla roof / a dome. P: floors, w, d, brick (base colour), roof.
+static func _haveli(k: Kit, r: RandomNumberGenerator, P: Dictionary) -> void:
+	var w: float = P.get("w", 0.78)
+	var d: float = P.get("d", 0.6)
+	var n: int = P.get("floors", 2)
+	var fh: float = P.get("fh", 0.28)
+	var base: Color = P.get("brick", BRICKR)
+	var plaster: Color = P.get("plaster", WHITE)
+	var accent: Color = P.get("accent", OCHRE)
+	var bmat: int = P.get("bmat", Kit.BRICK)
+	k.box(Vector3(0, 0, 0), Vector3(w + 0.08, 0.04, d + 0.08), STONE_GR, Kit.STONE)
+	var y := 0.04
+	for i in n:
+		var col: Color = base if i == 0 else plaster
+		var mat: int = bmat if i == 0 else Kit.PLASTER
+		var ww: float = w - i * float(P.get("taper", 0.0))
+		k.box(Vector3(0, y, 0), Vector3(ww, fh, d), col, mat)
+		k.box(Vector3(0, y + fh, 0), Vector3(ww + 0.04, 0.03, d + 0.04), STONE_LT, Kit.STONE)
+		var zf := d / 2.0
+		if i == 0:
+			_arch_door(k, Vector3(P.get("dx", -0.18), y, zf), 0.0, 0.15, 0.24, STONE_LT, accent, Kit.STONE)
+			for ax in [0.08, 0.28]:
+				if absf(ax) < ww / 2.0 - 0.06:
+					_arch(k, Vector3(ax, y + 0.08, zf + 0.002), 0.0, 0.07, 0.14)
+		else:
+			for wi in 3:
+				var ax2: float = -ww * 0.34 + ww * 0.34 * wi
+				if i == 1 and P.get("jharokha", 1) > 0 and wi == 1:
+					_jharokha(k, Vector3(ax2 + 0.02, y + 0.03, zf - 0.03), 0.0, 0.26, fh * 0.7)
+				else:
+					_arch(k, Vector3(ax2, y + 0.08, zf + 0.002), 0.0, 0.07, 0.15)
+					k.box(Vector3(ax2, y + 0.06, zf + 0.02), Vector3(0.12, 0.015, 0.05), WOOD, Kit.TIMBER)
+		k.box(Vector3(0, y + fh - 0.045, zf + 0.004), Vector3(ww, 0.02, 0.012), accent, Kit.PAINT)
+		y += fh + 0.03
+	var top := y
+	var ww2: float = w - (n - 1) * float(P.get("taper", 0.0))
+	_parapet(k, Vector3(0, top, 0), ww2 + 0.04, d + 0.04, 0.05, 0.03, plaster, Kit.PLASTER)
+	match str(P.get("roof", "chhatri")):
+		"chhatri":
+			for sx in [-1.0, 1.0]:
+				_chhatri(k, Vector3(sx * (ww2 / 2.0 - 0.1), top, d / 2.0 - 0.1), 0.16, 0.13, plaster, plaster)
+			_chhatri(k, Vector3(0, top, -0.12), 0.2, 0.16, plaster, P.get("dome", TURQ))
+		"bangla":
+			_bangla(k, Vector3(0, top, 0), ww2 * 0.92, d * 0.9, 0.3, P.get("clay", Color(0.7, 0.4, 0.28)))
+		"dome":
+			k.frustum(Vector3(0, top, 0), 0.2, 0.2, 0.07, plaster, Kit.PLASTER, 12, false)
+			k.dome(Vector3(0, top + 0.07, 0), 0.2, P.get("dome", TURQ), Kit.PAINT, 0.95, 4, 12, true)
+			_chhatri(k, Vector3(ww2 / 2.0 - 0.1, top, d / 2.0 - 0.1), 0.14, 0.12, plaster, plaster)
+			_chhatri(k, Vector3(-ww2 / 2.0 + 0.1, top, d / 2.0 - 0.1), 0.14, 0.12, plaster, plaster)
+		"tile":
+			k.gable_roof(Vector3(0, top, 0), ww2 * 0.9, d * 0.86, 0.2, 0.06, 0.03, P.get("clay", CLAY), Kit.OWNER_ROOF, plaster, Kit.PLASTER)
+	if P.get("court", false):   # a walled yard in front
+		for s in [-1.0, 1.0]:
+			k.box(Vector3(s * 0.3, 0, 0.48), Vector3(0.34, 0.1, 0.04), plaster, Kit.PLASTER)
+		_gatepiers(k, Vector3(0, 0, 0.48), 0.2, 0.16, STONE_LT, Kit.STONE)
+	_palm(k, Vector3(-0.44, 0, 0.4), 0.55, 6)
+	_pot(k, Vector3(0.42, 0, 0.36), 0.035)
+
+
+## A merchant house: an arcade of pillars and arches along the shopfront (cloth awning, sacks,
+## goods), an upper floor with a balcony, and a tiled or flat roof.
+static func _merchant(k: Kit, r: RandomNumberGenerator, P: Dictionary) -> void:
+	var w: float = P.get("w", 0.86)
+	var d: float = P.get("d", 0.62)
+	var h: float = P.get("h", 0.26)
+	var uh: float = P.get("uh", 0.26)
+	var n: int = P.get("arches", 4)
+	var wall: Color = P.get("wall", ROSE)
+	var upper: Color = P.get("upper", WHITE)
+	var z0: float = P.get("z", -0.1)
+	k.box(Vector3(0, 0, z0), Vector3(w + 0.04, 0.035, d + 0.04), STONE_GR, Kit.STONE)
+	k.box(Vector3(0, 0.035, z0), Vector3(w, h, d), wall, Kit.PLASTER)
+	var front := z0 + d / 2.0
+	# the arcade: a recessed dark bay between pillars
+	k.box(Vector3(0, 0.035, front - 0.01), Vector3(w * 0.94, h * 0.78, 0.03), SHADE, Kit.DARK)
+	for i in n + 1:
+		var px: float = -w * 0.47 + w * 0.94 * i / n
+		k.box(Vector3(px, 0.035, front + 0.03), Vector3(0.05, h * 0.82, 0.07), STONE_LT, Kit.STONE)
+	k.box(Vector3(0, 0.035 + h * 0.8, front + 0.03), Vector3(w * 0.98, h * 0.2, 0.08), wall.lightened(0.04), Kit.PLASTER)
+	for i in n:   # little arches between the pillars
+		var ax: float = -w * 0.47 + w * 0.94 * (i + 0.5) / n
+		k.dome(Vector3(ax, 0.035 + h * 0.62, front + 0.05), w * 0.94 / n * 0.32, SHADE, Kit.DARK, 0.45, 2, 6)
+	if P.get("awning", true):
+		_awning(k, Vector3(0, 0, front + 0.14), w * 0.7, 0.18, 0.035 + h * 0.8, 0.035 + h * 0.5, Color.WHITE, Kit.OWNER_CLOTH, true)
+	for i in int(P.get("sacks", 2)):
+		var sx: float = -w * 0.25 + i * 0.3 + r.randf_range(-0.04, 0.04)
+		k.dome(Vector3(sx, 0.035, front + 0.1), 0.045, Color(0.8, 0.7, 0.5), Kit.CLOTH, 0.8, 2, 6)
+	k.box(Vector3(0, 0.035 + h, z0), Vector3(w + 0.03, 0.03, d + 0.03), STONE_LT, Kit.STONE)
+	var y := 0.035 + h + 0.03
+	k.box(Vector3(0, y, z0 - 0.04), Vector3(w * 0.94, uh, d * 0.84), upper, Kit.PLASTER)
+	var uf := z0 - 0.04 + d * 0.42
+	for i in 3:
+		var wx: float = -w * 0.3 + w * 0.3 * i
+		_arch(k, Vector3(wx, y + 0.05, uf + 0.002), 0.0, 0.07, 0.15)
+	if P.get("balcony", true):
+		k.box(Vector3(0, y, uf + 0.05), Vector3(w * 0.7, 0.025, 0.1), WOOD, Kit.TIMBER)
+		_railing(k, Vector3(0, y + 0.025, uf + 0.05), w * 0.7, 0.1, 0.07, WOOD_DK)
+	k.box(Vector3(0, y + uh * 0.85, uf + 0.004), Vector3(w * 0.94, 0.02, 0.012), P.get("accent", TURQ), Kit.PAINT)
+	var top := y + uh
+	match str(P.get("roof", "tile")):
+		"flat":
+			k.box(Vector3(0, top, z0 - 0.04), Vector3(w * 0.98, 0.03, d * 0.88), STONE_LT, Kit.STONE)
+			_parapet(k, Vector3(0, top + 0.03, z0 - 0.04), w * 0.98, d * 0.88, 0.05, 0.03, upper, Kit.PLASTER)
+			_chhatri(k, Vector3(w * 0.28, top + 0.03, z0 - 0.04), 0.18, 0.14, upper, P.get("dome", WHITE))
+			_roof_shelter(k, Vector3(-w * 0.2, top + 0.03, z0 - 0.04), 0.26, 0.26, 0.14, "mat")
+		"hip":
+			k.hip_roof(Vector3(0, top, z0 - 0.04), w * 0.94, d * 0.84, 0.2, 0.07, 0.03, P.get("clay", CLAY), Kit.OWNER_ROOF, 0.0, 0.02)
+		_:
+			k.gable_roof(Vector3(0, top, z0 - 0.04), w * 0.94, d * 0.84, 0.2, 0.07, 0.03, P.get("clay", CLAY), Kit.OWNER_ROOF, upper, Kit.PLASTER)
+	_pot(k, Vector3(w / 2.0 - 0.04, 0, front + 0.14), 0.04)
+	if P.get("tree", true):
+		_tree(k, Vector3(-0.44, 0, 0.42), 0.26, 0.14)
+
+
+static func _ind_rows() -> Dictionary:
+	return {
+		"house_ind_hut_1": {"fn": "hut", "form": "round", "R": 0.3, "porch": true, "shed": true},
+		"house_ind_hut_2": {"fn": "hut", "form": "rect", "w": 0.6, "d": 0.4, "band": RED, "wall": Color(0.74, 0.6, 0.42),
+			"thatch": REED.darkened(0.08), "pen": true, "granary": false, "tx": -0.34, "tz": 0.3},
+		"house_ind_hut_3": {"fn": "hut", "form": "twin", "granary": true, "hay": true, "tree": true, "tx": -0.36, "tz": 0.3,
+			"band": SAFFRON, "wall": Color(0.7, 0.54, 0.38)},
+		"house_ind_hut_4": {"fn": "hut", "form": "round", "R": 0.24, "wh": 0.2, "ch": 0.4, "x": 0.0, "z": -0.1, "wall": Color(0.76, 0.6, 0.42),
+			"thatch": REED.lightened(0.06), "band": TURQ, "porch": false, "granary": false, "hay": true, "fence": false,
+			"tx": 0.38, "tz": 0.1},
+		"house_ind_tile_1": {"fn": "tiled", "w": 0.66, "d": 0.4, "h": 0.28, "roof": "gable", "veranda": 5, "well": true, "trees": 1},
+		"house_ind_tile_2": {"fn": "tiled", "w": 0.5, "d": 0.36, "h": 0.26, "z": -0.18, "roof": "hip", "wing": [0.4, 0.3, 0.24, 0.3, 0.1],
+			"veranda": 0, "wall": OCHRE_WALL, "mat": Kit.MUDBRICK, "clay": Color(0.62, 0.34, 0.22), "dx": -0.05, "wins": [0.12],
+			"trees": 1, "palm": true},
+		"house_ind_tile_3": {"fn": "tiled", "w": 0.6, "d": 0.4, "h": 0.24, "up": 0.24, "z": -0.12, "roof": "gable", "veranda": 4,
+			"wall": WHITE, "door": TURQ, "trees": 1, "well": true},
+		"house_ind_tile_4": {"fn": "tiled", "w": 0.7, "d": 0.34, "h": 0.22, "z": -0.18, "roof": "gable", "rise": 0.26, "veranda": 6,
+			"wall": ROSE, "clay": Color(0.5, 0.3, 0.22), "door": BLUE, "wins": [0.12, 0.24], "trees": 2},
+		"house_ind_haveli_1": {"fn": "haveli", "floors": 2, "roof": "chhatri"},
+		"house_ind_haveli_2": {"fn": "haveli", "floors": 3, "fh": 0.22, "w": 0.66, "d": 0.54, "roof": "dome", "plaster": SAND,
+			"brick": Color(0.62, 0.34, 0.24), "accent": TURQ, "taper": 0.04, "court": true},
+		"house_ind_haveli_3": {"fn": "haveli", "floors": 2, "w": 0.7, "d": 0.62, "roof": "bangla", "plaster": ROSE, "accent": BLUE,
+			"brick": STONE_LT, "bmat": Kit.STONE, "jharokha": 1, "dx": 0.18},
+		"house_ind_haveli_4": {"fn": "haveli", "floors": 3, "fh": 0.2, "w": 0.6, "d": 0.5, "roof": "tile", "plaster": LIME,
+			"brick": BRICKR.darkened(0.1), "accent": GREEN.lightened(0.1), "clay": Color(0.56, 0.3, 0.22), "court": true},
+		"house_ind_merchant_1": {"fn": "merchant", "roof": "tile", "arches": 4},
+		"house_ind_merchant_2": {"fn": "merchant", "w": 0.78, "arches": 3, "wall": OCHRE_WALL, "upper": LIME, "roof": "flat",
+			"accent": RED, "dome": TURQ, "uh": 0.3, "sacks": 3},
+		"house_ind_merchant_3": {"fn": "merchant", "w": 0.9, "d": 0.52, "arches": 5, "wall": STONE_LT, "upper": ROSE, "roof": "hip",
+			"accent": BLUE, "balcony": false, "awning": true, "clay": Color(0.58, 0.32, 0.22), "uh": 0.22, "tree": false},
+	}
+
+
+# --- regional props (low poly, under 200 triangles each; 1.0 = a house width) -------------------
+
+
+static func _prop(k: Kit, kind: String) -> void:
+	match kind:
+		"prop_mud_wall":
+			# a low mudbrick yard wall exactly 1.0 long, plastered coping, tiles end to end
+			k.box(Vector3.ZERO, Vector3(1.0, 0.13, 0.055), MUD, Kit.MUDBRICK)
+			k.box(Vector3(0, 0.13, 0), Vector3(1.0, 0.025, 0.07), MUD_LT, Kit.PLASTER)
+			for x in [-0.5, 0.5]:   # a slight buttress at the joins reads as brick courses
+				k.box(Vector3(x * 0.96, 0, 0), Vector3(0.02, 0.15, 0.065), MUD.darkened(0.08), Kit.MUDBRICK)
+			k.box(Vector3(0, 0.05, 0.029), Vector3(1.0, 0.012, 0.004), MUD.darkened(0.18), Kit.MUDBRICK)
+		"prop_shaduf":
+			# well-sweep: two mud pillars, a pole with a bucket and a clay counterweight, a basin
+			for s in [-1.0, 1.0]:
+				k.plinth(Vector3(s * 0.05, 0, 0), 0.06, 0.06, 0.26, 0.012, MUD, Kit.MUDBRICK)
+			k.rod(Vector3(-0.05, 0.25, 0), Vector3(0.05, 0.25, 0), 0.01, WOOD_DK, Kit.TIMBER)
+			k.rod(Vector3(0, 0.25, -0.2), Vector3(0, 0.3, 0.16), 0.012, WOOD, Kit.TIMBER)
+			k.dome(Vector3(0, 0.29, -0.2), 0.04, MUD_LT, Kit.MUDBRICK, 1.0, 3, 8)
+			k.rod(Vector3(0, 0.3, 0.16), Vector3(0, 0.15, 0.16), 0.004, WOOD_DK, Kit.TIMBER)
+			k.frustum(Vector3(0, 0.08, 0.16), 0.03, 0.04, 0.07, Color(0.5, 0.32, 0.2), Kit.EARTH, 6, false)
+			k.box(Vector3(0, 0, 0.12), Vector3(0.22, 0.04, 0.16), MUD, Kit.MUDBRICK)
+			k.box(Vector3(0, 0.03, 0.12), Vector3(0.18, 0.015, 0.12), WATER_BLUE, Kit.WATER)
+		"prop_water_jars":
+			# big clay jars: three in a ring stand, one tilted rack jar with a lid
+			for i in 3:
+				var a := i * TAU / 3.0 + 0.4
+				var p := Vector3(cos(a) * 0.065, 0, sin(a) * 0.065)
+				k.frustum(p, 0.035, 0.06, 0.1, Color(0.62, 0.36, 0.22), Kit.EARTH, 7, false)
+				k.frustum(p + Vector3(0, 0.1, 0), 0.06, 0.03, 0.06, Color(0.58, 0.32, 0.2), Kit.EARTH, 7, false)
+				k.frustum(p + Vector3(0, 0.16, 0), 0.033, 0.036, 0.015, Color(0.5, 0.28, 0.18), Kit.EARTH, 7, true)
+			k.box(Vector3(0, 0, 0), Vector3(0.2, 0.012, 0.2), MUD_LT, Kit.MUDBRICK)
+			_pot(k, Vector3(0.17, 0, 0.0), 0.04)
+		"prop_reed_boat":
+			# a papyrus skiff: bundled reeds that curve up fore and aft, a cross-thwart and a pole
+			var secs := 7
+			for i in secs:
+				var t0 := float(i) / secs * 2.0 - 1.0
+				var t1 := float(i + 1) / secs * 2.0 - 1.0
+				var y0 := 0.02 + 0.07 * t0 * t0 * t0 * t0 * 2.0
+				var y1 := 0.02 + 0.07 * t1 * t1 * t1 * t1 * 2.0
+				var w0 := 0.07 * (1.0 - 0.7 * absf(t0) * absf(t0))
+				var w1 := 0.07 * (1.0 - 0.7 * absf(t1) * absf(t1))
+				var z0 := t0 * 0.22
+				var z1 := t1 * 0.22
+				var c := Vector3(0, 0.05, (z0 + z1) / 2.0)
+				for s in [-1.0, 1.0]:
+					k.quad(Vector3(s * w0, y0 + 0.035, z0), Vector3(s * w1, y1 + 0.035, z1), Vector3(s * w1 * 0.6, y1, z1), Vector3(s * w0 * 0.6, y0, z0), REED, Kit.THATCH, c)
+				k.quad(Vector3(-w0 * 0.6, y0, z0), Vector3(w0 * 0.6, y0, z0), Vector3(w1 * 0.6, y1, z1), Vector3(-w1 * 0.6, y1, z1), REED.darkened(0.2), Kit.THATCH, c)
+				k.quad(Vector3(-w0, y0 + 0.035, z0), Vector3(w0, y0 + 0.035, z0), Vector3(w1, y1 + 0.035, z1), Vector3(-w1, y1 + 0.035, z1), REED.lightened(0.05), Kit.THATCH, Vector3(0, -1, (z0 + z1) / 2.0))
+			k.box(Vector3(0, 0.05, 0.0), Vector3(0.13, 0.015, 0.025), WOOD, Kit.TIMBER)
+			k.rod(Vector3(0.04, 0.05, -0.1), Vector3(0.1, 0.22, 0.1), 0.006, WOOD_DK, Kit.TIMBER)
+		"prop_rugs":
+			# a market carpet spread: layered woven rugs, a folded stack and a hanging rug on a pole
+			k.box(Vector3(-0.04, 0, 0.0), Vector3(0.3, 0.008, 0.2), RED, Kit.CLOTH)
+			k.box(Vector3(-0.04, 0.008, 0.0), Vector3(0.24, 0.004, 0.14), OCHRE, Kit.CLOTH)
+			k.box(Vector3(-0.04, 0.012, 0.0), Vector3(0.14, 0.004, 0.08), BLUE, Kit.CLOTH)
+			k.box(Vector3(0.1, 0.008, 0.14), Vector3(0.2, 0.008, 0.12), TURQ, Kit.CLOTH)
+			k.box(Vector3(0.1, 0.016, 0.14), Vector3(0.14, 0.004, 0.08), SAFFRON, Kit.CLOTH)
+			for i in 4:
+				k.box(Vector3(-0.18, i * 0.014, -0.14), Vector3(0.14 - i * 0.008, 0.014, 0.1), [RED, BLUE, OCHRE, DEEPRED][i], Kit.CLOTH)
+			for s in [-1.0, 1.0]:
+				k.rod(Vector3(0.18 + s * 0.09, 0, -0.12), Vector3(0.18 + s * 0.09, 0.2, -0.12), 0.007, WOOD, Kit.TIMBER)
+			k.rod(Vector3(0.09, 0.2, -0.12), Vector3(0.27, 0.2, -0.12), 0.007, WOOD, Kit.TIMBER)
+			k.box(Vector3(0.18, 0.05, -0.12), Vector3(0.15, 0.15, 0.008), TEAL_RUG, Kit.CLOTH)
+			k.box(Vector3(0.18, 0.09, -0.115), Vector3(0.1, 0.05, 0.004), SAFFRON, Kit.CLOTH)
+		"prop_dovecote":
+			# a round mud dovecote tower: pigeon holes in rings, a conical cap, perch ledges
+			k.frustum(Vector3.ZERO, 0.11, 0.085, 0.34, WHITE, Kit.MUDBRICK, 10, false)
+			for row in 2:
+				for i in 5:
+					var a := i * TAU / 5.0 + row * 0.6
+					var rr := 0.11 - (0.34 * (0.1 + row * 0.1) / 0.34) * 0.075 - 0.0
+					var yy := 0.17 + row * 0.07
+					var rad := lerpf(0.11, 0.085, yy / 0.34)
+					k.box(Vector3(cos(a) * rad, yy, sin(a) * rad), Vector3(0.022, 0.022, 0.022), SHADE, Kit.DARK, -a + PI / 2.0)
+			k.cylinder(Vector3(0, 0.34, 0), 0.105, 0.03, MUD_LT, Kit.MUDBRICK, 10)
+			k.frustum(Vector3(0, 0.37, 0), 0.1, 0.0, 0.14, MUD, Kit.MUDBRICK, 10, true)
+			k.box(Vector3(0.0, 0, 0.1), Vector3(0.05, 0.08, 0.012), SHADE, Kit.DARK)
+		"prop_shrine_india":
+			# a small stone shrine: stepped platform, a shikhara-topped cella, a lamp and a flag
+			k.plinth(Vector3.ZERO, 0.3, 0.3, 0.05, 0.02, STONE_LT, Kit.STONE)
+			k.box(Vector3(0, 0.05, 0), Vector3(0.18, 0.12, 0.18), SAFFRON.darkened(0.1), Kit.PLASTER)
+			k.box(Vector3(0, 0.05, 0.09), Vector3(0.06, 0.09, 0.012), SHADE, Kit.DARK)
+			k.plinth(Vector3(0, 0.17, 0), 0.2, 0.2, 0.09, 0.04, STONE_LT, Kit.STONE)
+			k.plinth(Vector3(0, 0.26, 0), 0.12, 0.12, 0.09, 0.03, STONE_LT.lightened(0.04), Kit.STONE)
+			k.dome(Vector3(0, 0.35, 0), 0.04, GILD, Kit.GOLD, 0.8, 2, 8)
+			k.rod(Vector3(0, 0.38, 0), Vector3(0, 0.46, 0), 0.004, GILD, Kit.GOLD)
+			k.banner(Vector3(0.12, 0.05, 0.1), 0.26, 0.09)
+			k.box(Vector3(-0.1, 0.05, 0.12), Vector3(0.04, 0.025, 0.04), STONE_GR, Kit.STONE)
+			k.dome(Vector3(-0.1, 0.075, 0.12), 0.015, SAFFRON, Kit.OWNER_CLOTH if false else Kit.PAINT, 1.0, 2, 6)
+		"prop_bullock_cart":
+			# a two-wheeled village cart with a thatched hood and a yoke ending in a pair of oxen
+			for s in [-1.0, 1.0]:
+				k.push(Kit.at(Vector3(s * 0.14, 0.09, 0.0), PI / 2.0))
+				k.cylinder(Vector3(0, -0.013, 0), 0.09, 0.026, WOOD_DK, Kit.TIMBER, 6)
+				k.pop()
+			k.box(Vector3(0, 0.1, 0.0), Vector3(0.26, 0.025, 0.4), WOOD, Kit.TIMBER)
+			k.gable_roof(Vector3(0, 0.2, -0.06), 0.26, 0.26, 0.08, 0.03, 0.02, REED, Kit.THATCH, REED, Kit.THATCH, PI / 2.0)
+			for s in [-1.0, 1.0]:
+				k.rod(Vector3(s * 0.12, 0.125, -0.17), Vector3(s * 0.12, 0.2, -0.17), 0.007, WOOD, Kit.TIMBER)
+			k.rod(Vector3(0, 0.11, 0.2), Vector3(0, 0.1, 0.46), 0.01, WOOD, Kit.TIMBER)
+			for s in [-1.0, 1.0]:
+				var ox: float = s * 0.07
+				k.box(Vector3(ox, 0.07, 0.5), Vector3(0.08, 0.1, 0.22), Color(0.9, 0.86, 0.78), Kit.CLOTH)
+				k.box(Vector3(ox, 0.1, 0.4), Vector3(0.05, 0.05, 0.04), Color(0.82, 0.78, 0.68), Kit.CLOTH)
+				k.box(Vector3(ox, 0, 0.5), Vector3(0.06, 0.07, 0.18), Color(0.7, 0.66, 0.58), Kit.CLOTH)
+			k.rod(Vector3(-0.07, 0.17, 0.5), Vector3(0.07, 0.17, 0.5), 0.007, WOOD_DK, Kit.TIMBER)
+		"prop_tree_platform":
+			# a sacred fig on a round stone platform, with votive stones and a cloth tied round it
+			k.frustum(Vector3.ZERO, 0.24, 0.22, 0.05, STONE_LT, Kit.STONE, 12, false)
+			k.frustum(Vector3(0, 0.05, 0), 0.19, 0.18, 0.04, STONE_LT.lightened(0.04), Kit.STONE, 12, true)
+			k.frustum(Vector3(0, 0.09, 0), 0.03, 0.022, 0.3, WOOD, Kit.TIMBER, 6, false)
+			k.frustum(Vector3(0, 0.2, 0), 0.034, 0.034, 0.025, SAFFRON, Kit.CLOTH, 6, false)
+			k.dome(Vector3(0.0, 0.34, 0.0), 0.24, GREEN, Kit.LEAF, 0.6, 3, 9)
+			k.dome(Vector3(-0.1, 0.3, 0.06), 0.14, GREEN.darkened(0.1), Kit.LEAF, 0.7, 2, 8)
+			for i in 2:
+				var a := 0.6 + i * 1.1
+				k.box(Vector3(cos(a) * 0.12, 0.09, sin(a) * 0.12), Vector3(0.03, 0.04 + 0.01 * i, 0.02), STONE_GR, Kit.STONE, a)
+			k.box(Vector3(0.0, 0.09, 0.14), Vector3(0.04, 0.012, 0.02), SAFFRON, Kit.PAINT)
+
+
+const TEAL_RUG := Color(0.1, 0.4, 0.45)
+
+
+## Two-lot kinds, all 2.0 wide by 1.0 deep (x -1..1, z -0.5..0.5): rows, compounds, havelis, farms.
+static func _big_rows() -> Dictionary:
+	var wall_r := {"t": "wall", "size": Vector3(0.04, 0.12, 1.0), "at": Vector2(0.98, 0.0)}
+	return {
+		"big_nile_row": {"fn": "multi", "parts": [
+			{"fn": "flat", "at": Vector2(-0.67, 0.0), "w": 0.62, "d": 0.8, "h": 0.34, "win": 1, "palms": 0, "pots": 1,
+				"shelter": "reed", "sat": Vector2(0.0, 0.0), "ssize": Vector2(0.3, 0.3), "sh": 0.14, "door": BLUE, "dx": 0.0},
+			{"fn": "flat", "at": Vector2(0.0, 0.0), "w": 0.72, "d": 0.8, "h": 0.4, "uh": 0.26, "uw": 0.44, "ud": 0.44,
+				"uat": Vector2(0.0, -0.1), "win": 1, "palms": 0, "pots": 0, "band": RED, "uband": BLUE, "wall": LIME, "trim": WHITE,
+				"ucol": WHITE, "door": RED, "dx": 0.0, "malqaf": true, "mq": Vector2(0.2, 0.1), "high": false, "beams": 4},
+			{"fn": "flat", "at": Vector2(0.67, 0.0), "w": 0.62, "d": 0.8, "h": 0.28, "win": 1, "palms": 0, "pots": 1,
+				"shelter": "mat", "sat": Vector2(0.0, 0.0), "ssize": Vector2(0.28, 0.3), "sh": 0.12, "door": OCHRE, "dx": 0.0, "beams": 3,
+				"wall": MUD.darkened(0.06)}],
+			"extras": [{"t": "palm", "at": Vector2(0.9, 0.46), "h": 0.5}]},
+		"big_nile_villa": {"fn": "multi", "parts": [
+			{"fn": "flat", "at": Vector2(-0.5, 0.0), "w": 0.8, "d": 0.4, "h": 0.36, "uh": 0.22, "uw": 0.4, "ud": 0.3,
+				"uat": Vector2(0.14, -0.02), "yard": 1, "porch": 4, "wall": LIME, "trim": WHITE, "ucol": WHITE, "band": RED,
+				"win": 0, "door": BLUE, "dx": 0.0, "dh": 0.22, "pond": false, "trees": 1, "palms": 1, "ycol": WHITE,
+				"ymat": Kit.PLASTER, "pots": 0, "pcol": RED, "pmat": Kit.PAINT, "ywh": 0.14}],
+			"extras": [wall_r,
+				{"t": "wall", "size": Vector3(1.0, 0.14, 0.04), "at": Vector2(0.5, -0.48), "col": WHITE, "mat": Kit.PLASTER},
+				{"t": "wall", "size": Vector3(0.36, 0.14, 0.04), "at": Vector2(0.82, 0.48), "col": WHITE, "mat": Kit.PLASTER},
+				{"t": "wall", "size": Vector3(0.3, 0.14, 0.04), "at": Vector2(0.15, 0.48), "col": WHITE, "mat": Kit.PLASTER},
+				{"t": "pond", "at": Vector2(0.5, 0.0), "w": 0.4, "d": 0.26},
+				{"t": "palm", "at": Vector2(0.2, -0.3), "h": 0.6}, {"t": "palm", "at": Vector2(0.8, -0.3), "h": 0.55, "fronds": 6},
+				{"t": "tree", "at": Vector2(0.78, 0.26), "h": 0.22, "r": 0.12}, {"t": "tree", "at": Vector2(0.25, 0.28), "h": 0.2, "r": 0.11},
+				{"t": "beds", "at": Vector2(0.5, 0.3), "w": 0.2, "d": 0.2, "n": 3}]},
+		"big_nile_farm": {"fn": "multi", "parts": [
+			{"fn": "flat", "at": Vector2(-0.5, 0.0), "w": 0.56, "d": 0.38, "h": 0.32, "yard": 1, "gran": 2, "palms": 1, "pen": false,
+				"stair": 1, "shelter": "reed", "sat": Vector2(-0.05, 0.0), "ssize": Vector2(0.24, 0.24), "sh": 0.13, "win": 1,
+				"door": OCHRE, "pots": 1}],
+			"extras": [wall_r, {"t": "wall", "size": Vector3(1.0, 0.12, 0.04), "at": Vector2(0.5, -0.48)},
+				{"t": "granary", "at": Vector2(0.2, -0.3), "r": 0.11}, {"t": "granary", "at": Vector2(0.45, -0.32), "r": 0.09, "col": MUD_LT},
+				{"t": "granary", "at": Vector2(0.72, -0.3), "r": 0.1}, {"t": "granary", "at": Vector2(0.34, -0.1), "r": 0.075},
+				{"t": "pen", "at": Vector2(0.62, 0.16), "w": 0.5, "d": 0.34},
+				{"t": "palm", "at": Vector2(0.88, -0.1), "h": 0.55}, {"t": "beds", "at": Vector2(0.28, 0.24), "w": 0.26, "d": 0.2, "n": 3},
+				{"t": "wall", "size": Vector3(0.3, 0.12, 0.04), "at": Vector2(0.18, 0.48)},
+				{"t": "wall", "size": Vector3(0.34, 0.12, 0.04), "at": Vector2(0.82, 0.48)}]},
+		"big_nile_court": {"fn": "multi", "parts": [
+			{"fn": "court", "at": Vector2(-0.5, 0.0), "back": 0.4, "left": 0.3, "right": 0.3, "rback": "flat", "rleft": "flat",
+				"rright": "flat", "court": "tree", "wall": MUD_LT, "trim": SAND, "mat": Kit.MUDBRICK, "acol": BLUE, "door": RED,
+				"ground": DUST},
+			{"fn": "court", "at": Vector2(0.5, 0.0), "back": 0.3, "left": 0.0, "right": 0.34, "up": 0.22, "upw": 0.5, "upx": -0.15,
+				"rback": "flat", "rright": "dome", "court": "well", "wall": OCHRE_WALL, "trim": MUD_LT, "mat": Kit.MUDBRICK,
+				"acol": TURQ, "dome": MUD_LT, "door": BLUE, "ground": DUST, "front": 0.26}]},
+		"big_ne_court": {"fn": "multi", "parts": [
+			{"fn": "court", "at": Vector2(-0.5, 0.0), "back": 0.42, "left": 0.34, "right": 0.3, "rback": "dome", "rleft": "flat",
+				"rright": "flat", "court": "pool", "dome": TURQ, "badgir": true, "bx": 0.3},
+			{"fn": "court", "at": Vector2(0.5, 0.0), "back": 0.34, "left": 0.0, "right": 0.3, "up": 0.24, "upw": 0.5, "upx": 0.12,
+				"rback": "flat", "rright": "vault", "court": "tree", "wall": SAND, "trim": WHITE, "dome": SAND, "acol": RED,
+				"door": TURQ, "gate_tower": true}]},
+		"big_ne_row": {"fn": "multi", "parts": [
+			{"fn": "flat", "at": Vector2(-0.67, 0.0), "w": 0.64, "d": 0.8, "h": 0.32, "batter": false, "mat": Kit.PLASTER,
+				"wall": WHITE, "trim": LIME, "domes": [[0.0, 0.0, 0.16, TURQ]], "door": BLUE, "dx": 0.0, "win": 1, "arched": true,
+				"palms": 0, "pots": 0},
+			{"fn": "flat", "at": Vector2(0.0, 0.0), "w": 0.7, "d": 0.8, "h": 0.5, "batter": false, "mat": Kit.PLASTER,
+				"wall": SAND, "trim": WHITE, "badgir": true, "bat": Vector2(-0.15, -0.15), "bh": 0.36, "door": TURQ, "dx": 0.0,
+				"win": 2, "arched": true, "palms": 0, "pots": 0, "merlons": true, "band": BLUE},
+			{"fn": "flat", "at": Vector2(0.67, 0.0), "w": 0.64, "d": 0.8, "h": 0.4, "uh": 0.22, "uw": 0.4, "ud": 0.4, "uat": Vector2(0, -0.1),
+				"batter": false, "mat": Kit.PLASTER, "wall": LIME, "trim": WHITE, "ucol": WHITE, "lattice": true, "door": OCHRE,
+				"dx": 0.0, "win": 1, "arched": true, "palms": 0, "pots": 0}]},
+		"big_ne_hall": {"fn": "hittite", "bw": 1.8, "bd": 0.72, "sb": 0.26, "uh": 0.24, "roof": "gable", "rise": 0.34, "dx": -0.5,
+			"wood": false, "tree": "none", "plaster": OCHRE_WALL, "stone": STONE_DK},
+		"big_ne_kasbah": {"fn": "kasbah", "bw": 1.1, "bd": 0.5, "n": 2, "bz": -0.08, "dx": 0.0,
+			"towers": [[-0.86, -0.34, 0.8, 0.22], [0.86, -0.34, 0.66, 0.2], [0.86, 0.3, 0.46, 0.18], [-0.86, 0.3, 0.52, 0.18]],
+			"palms": 0, "col": Color(0.68, 0.48, 0.34)},
+		"big_ne_khan": {"fn": "multi", "parts": [
+			{"fn": "flat", "at": Vector2(0.0, -0.28), "w": 1.8, "d": 0.4, "h": 0.36, "wall": MUD, "merlons": true,
+				"domes": [[-0.5, 0.0, 0.14, MUD_LT], [0.0, 0.0, 0.16, TURQ], [0.5, 0.0, 0.14, MUD_LT]], "door": RED, "dx": 0.0,
+				"win": 6, "arched": true, "palms": 0, "pots": 0, "band": TURQ}],
+			"extras": [{"t": "wall", "size": Vector3(0.7, 0.14, 0.05), "at": Vector2(-0.6, 0.48)},
+				{"t": "wall", "size": Vector3(0.7, 0.14, 0.05), "at": Vector2(0.6, 0.48)},
+				{"t": "gate", "at": Vector2(0.0, 0.48), "w": 0.3, "h": 0.2},
+				{"t": "wall", "size": Vector3(0.05, 0.14, 0.7), "at": Vector2(-0.97, 0.12)},
+				{"t": "wall", "size": Vector3(0.05, 0.14, 0.7), "at": Vector2(0.97, 0.12)},
+				{"t": "pond", "at": Vector2(0.0, 0.16), "w": 0.3, "d": 0.2},
+				{"t": "palm", "at": Vector2(-0.45, 0.2), "h": 0.5}, {"t": "palm", "at": Vector2(0.5, 0.22), "h": 0.55, "fronds": 6},
+				{"t": "pot", "at": Vector2(-0.2, 0.34)}, {"t": "pot", "at": Vector2(0.24, 0.36)}]},
+		"big_ind_haveli": {"fn": "haveli", "w": 1.7, "d": 0.66, "floors": 3, "fh": 0.24, "roof": "chhatri", "taper": 0.1,
+			"dx": -0.5, "plaster": WHITE, "accent": OCHRE, "court": false},
+		"big_ind_court": {"fn": "multi", "parts": [
+			{"fn": "tiled", "at": Vector2(-0.5, 0.0), "w": 0.78, "d": 0.36, "h": 0.26, "z": -0.2, "roof": "gable", "veranda": 5,
+				"trees": 0, "wall": WHITE, "wins": [0.12, 0.26]},
+			{"fn": "tiled", "at": Vector2(0.5, 0.0), "w": 0.7, "d": 0.34, "h": 0.22, "z": -0.2, "roof": "hip", "veranda": 4, "trees": 0,
+				"wall": ROSE, "clay": Color(0.56, 0.3, 0.22), "door": BLUE, "wins": [0.14]}],
+			"extras": [{"t": "tree", "at": Vector2(0.0, 0.3), "h": 0.3, "r": 0.17},
+				{"t": "wall", "size": Vector3(0.7, 0.1, 0.04), "at": Vector2(-0.6, 0.48)}, {"t": "wall", "size": Vector3(0.7, 0.1, 0.04), "at": Vector2(0.6, 0.48)},
+				{"t": "gate", "at": Vector2(0.0, 0.48), "w": 0.26, "h": 0.17, "col": STONE_LT, "mat": Kit.STONE},
+				{"t": "pond", "at": Vector2(0.55, 0.28), "w": 0.2, "d": 0.14}, {"t": "pot", "at": Vector2(-0.5, 0.3)}, {"t": "pot", "at": Vector2(0.28, 0.32)}]},
+		"big_ind_row": {"fn": "multi", "parts": [
+			{"fn": "merchant", "at": Vector2(-0.5, 0.0), "w": 0.92, "d": 0.62, "arches": 3, "roof": "tile", "tree": false},
+			{"fn": "merchant", "at": Vector2(0.5, 0.0), "w": 0.92, "d": 0.62, "arches": 3, "wall": OCHRE_WALL, "upper": LIME,
+				"roof": "flat", "accent": RED, "tree": false, "balcony": false, "sacks": 3}]},
+		"big_ind_farm": {"fn": "multi", "parts": [
+			{"fn": "hut", "at": Vector2(-0.62, 0.0), "form": "round", "R": 0.28, "porch": true, "granary": false, "fence": false, "tree": false},
+			{"fn": "hut", "at": Vector2(0.5, 0.0), "form": "rect", "w": 0.6, "d": 0.4, "z": -0.15, "granary": false, "fence": false,
+				"tree": false, "band": RED, "thatch": REED.darkened(0.08)}],
+			"extras": [{"t": "pen", "at": Vector2(-0.1, 0.1), "w": 0.4, "d": 0.3}, {"t": "tree", "at": Vector2(-0.1, -0.35), "h": 0.32, "r": 0.18},
+				{"t": "granary", "at": Vector2(0.12, -0.3), "r": 0.08}, {"t": "pot", "at": Vector2(-0.1, 0.38)},
+				{"t": "beds", "at": Vector2(0.4, 0.32), "w": 0.4, "d": 0.2, "n": 4}]},
+	}
+
+
+# --- house sets: what each settlement rank draws from (D-281) -------------------------------------
+
+
+## Which of the three styles a culture builds in: "nile" (pharaoh, kushite and other Nile cultures),
+## "near_east" (berber, hittite, assyrian, turban and anything unknown) or "south_asian" (indian).
+static func _style_of(culture: String) -> String:
+	if culture in ["pharaoh", "kushite", "egyptian", "nubian", "nile", "meroitic"]:
+		return "nile"
+	if culture in ["indian", "maurya", "gupta", "south_asian", "hindu"]:
+		return "south_asian"
+	return "near_east"
+
+
+## The ranks, folded to the groups that share a list.
+static func _rank_group(rank: String) -> String:
+	match rank:
+		"core", "city", "edge", "suburb", "town", "village", "farm", "camp":
+			return rank
+	return "city"
+
+
+## House kinds for a rank, weighted by repetition (a kind listed twice is twice as common).
+static func house_set(culture: String, rank: String) -> Array:
+	var rk := _rank_group(rank)
+	match _style_of(culture):
+		"nile":
+			return _nile_set(culture, rk)
+		"south_asian":
+			return _ind_set(rk)
+	return _ne_set(culture, rk)
+
+
+static func _nile_set(culture: String, rk: String) -> Array:
+	var kush := culture == "kushite"
+	match rk:
+		"core":
+			return ["house_nile_villa_1", "house_nile_villa_2", "house_nile_town_3", "house_nile_town_4", "house_nile_town_2",
+				"house_nile_tower_1", "house_nile_villa_1", "house_nile_town_1"]
+		"city":
+			return ["house_nile_town_1", "house_nile_town_2", "house_nile_town_3", "house_nile_town_4", "house_nile_villa_2",
+				"house_nile_worker_1", "house_nile_tower_1", "house_nile_tower_2", "house_nile_town_1"]
+		"edge":
+			return ["house_nile_worker_1", "house_nile_worker_2", "house_nile_worker_3", "house_nile_worker_4", "house_nile_town_1",
+				"house_nile_tower_2", "house_nile_worker_3"]
+		"suburb":
+			return ["house_nile_worker_2", "house_nile_worker_3", "house_nile_farm_1", "house_nile_worker_1", "house_nile_town_1",
+				"house_nile_worker_4", "house_nile_farm_2"]
+		"town":
+			return ["house_nile_worker_1", "house_nile_worker_2", "house_nile_worker_3", "house_nile_worker_4", "house_nile_town_1",
+				"house_nile_town_2", "house_nile_farm_1", "house_nile_tower_2"]
+		"village":
+			return ["house_nile_worker_1", "house_nile_worker_2", "house_nile_worker_3", "house_nile_worker_4", "house_nile_farm_1",
+				"house_nile_farm_2", "house_nile_worker_3"] + (["house_nile_worker_4", "house_nile_worker_2"] if kush else [])
+		"farm":
+			return ["house_nile_farm_1", "house_nile_farm_2", "house_nile_farm_1", "house_nile_worker_2"]
+	return ["house_nile_worker_3", "house_nile_worker_4", "house_nile_worker_1"]
+
+
+static func _ne_set(culture: String, rk: String) -> Array:
+	# a culture leans toward its own look: berber kasbahs, hittite stone-and-timber, turban domes
+	var own: Array = []
+	match culture:
+		"berber": own = ["house_ne_berber_1", "house_ne_berber_2", "house_ne_berber_3"]
+		"hittite": own = ["house_ne_hittite_1", "house_ne_hittite_2", "house_ne_hittite_3"]
+		"turban": own = ["house_ne_domed_1", "house_ne_domed_2", "house_ne_domed_3"]
+		"assyrian": own = ["house_ne_court_1", "house_ne_court_2", "house_ne_court_3"]
+		_: own = ["house_ne_court_1", "house_ne_flat_1", "house_ne_domed_1"]
+	match rk:
+		"core":
+			return own + ["house_ne_court_3", "house_ne_court_1", "house_ne_domed_2", "house_ne_domed_3", "house_ne_flat_2", "house_ne_court_2"]
+		"city":
+			return own + ["house_ne_court_1", "house_ne_court_2", "house_ne_court_3", "house_ne_flat_1", "house_ne_flat_2", "house_ne_domed_1",
+				"house_ne_flat_3"]
+		"edge":
+			return own + ["house_ne_flat_1", "house_ne_flat_3", "house_ne_court_4", "house_ne_flat_2", "house_ne_flat_3"]
+		"suburb":
+			return own + ["house_ne_flat_3", "house_ne_court_4", "house_ne_flat_1", "house_ne_hittite_2"]
+		"town":
+			return own + ["house_ne_flat_1", "house_ne_flat_2", "house_ne_flat_3", "house_ne_court_4", "house_ne_court_1", "house_ne_hittite_2"]
+		"village":
+			return own + ["house_ne_flat_3", "house_ne_court_4", "house_ne_hittite_2", "house_ne_flat_1", "house_ne_flat_3"]
+		"farm":
+			return ["house_ne_court_4", "house_ne_hittite_2", "house_ne_flat_3", "house_ne_court_4", "house_ne_berber_2"]
+	return ["house_ne_flat_3", "house_ne_hittite_2", "house_ne_court_4"]
+
+
+static func _ind_set(rk: String) -> Array:
+	match rk:
+		"core":
+			return ["house_ind_haveli_1", "house_ind_haveli_2", "house_ind_haveli_3", "house_ind_haveli_4", "house_ind_merchant_1",
+				"house_ind_merchant_2", "house_ind_haveli_2"]
+		"city":
+			return ["house_ind_haveli_1", "house_ind_haveli_3", "house_ind_haveli_4", "house_ind_merchant_1", "house_ind_merchant_2",
+				"house_ind_merchant_3", "house_ind_tile_3", "house_ind_tile_1"]
+		"edge":
+			return ["house_ind_tile_1", "house_ind_tile_2", "house_ind_tile_3", "house_ind_tile_4", "house_ind_merchant_3", "house_ind_hut_2",
+				"house_ind_tile_2"]
+		"suburb":
+			return ["house_ind_tile_1", "house_ind_tile_2", "house_ind_tile_4", "house_ind_hut_2", "house_ind_hut_1", "house_ind_hut_3"]
+		"town":
+			return ["house_ind_tile_1", "house_ind_tile_2", "house_ind_tile_3", "house_ind_tile_4", "house_ind_merchant_3",
+				"house_ind_hut_2", "house_ind_haveli_4", "house_ind_merchant_1"]
+		"village":
+			return ["house_ind_hut_1", "house_ind_hut_2", "house_ind_hut_3", "house_ind_hut_4", "house_ind_tile_1", "house_ind_tile_2",
+				"house_ind_hut_1", "house_ind_hut_4"]
+		"farm":
+			return ["house_ind_hut_1", "house_ind_hut_3", "house_ind_hut_2", "house_ind_tile_2"]
+	return ["house_ind_hut_1", "house_ind_hut_4", "house_ind_hut_2"]
+
+
+## Two-lot kinds (2.0 wide by 1.0 deep) for a rank, or [] where a rank has none (camps).
+static func big_house_set(culture: String, rank: String) -> Array:
+	var rk := _rank_group(rank)
+	match _style_of(culture):
+		"nile":
+			match rk:
+				"core": return ["big_nile_villa", "big_nile_court", "big_nile_row"]
+				"city": return ["big_nile_row", "big_nile_court", "big_nile_villa", "big_nile_row"]
+				"edge": return ["big_nile_row", "big_nile_row", "big_nile_court"]
+				"suburb", "town": return ["big_nile_row", "big_nile_farm", "big_nile_court"]
+				"village": return ["big_nile_row", "big_nile_farm"]
+				"farm": return ["big_nile_farm"]
+			return []
+		"south_asian":
+			match rk:
+				"core": return ["big_ind_haveli", "big_ind_row", "big_ind_court"]
+				"city": return ["big_ind_row", "big_ind_haveli", "big_ind_court", "big_ind_row"]
+				"edge": return ["big_ind_court", "big_ind_row"]
+				"suburb", "town": return ["big_ind_court", "big_ind_row", "big_ind_farm"]
+				"village": return ["big_ind_farm", "big_ind_court"]
+				"farm": return ["big_ind_farm"]
+			return []
+	var own: String = {"berber": "big_ne_kasbah", "hittite": "big_ne_hall", "turban": "big_ne_khan"}.get(culture, "big_ne_court")
+	match rk:
+		"core": return [own, "big_ne_court", "big_ne_khan", "big_ne_row"]
+		"city": return [own, "big_ne_row", "big_ne_court", "big_ne_row"]
+		"edge": return ["big_ne_row", "big_ne_row", own]
+		"suburb", "town": return ["big_ne_row", own, "big_ne_hall"]
+		"village": return ["big_ne_hall", own]
+		"farm": return ["big_ne_hall"]
+	return []
