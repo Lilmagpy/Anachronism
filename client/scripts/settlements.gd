@@ -535,6 +535,8 @@ func _palace_part() -> String:
 ## the kit's material and takes its owner colour as instance custom data (like folk houses).
 ## `unit` is how many map units one model unit is. Returns "" if the module lacks the kind.
 func _model(module: String, kind: String, unit: float) -> String:
+	if module == "civic" and kind == "temple" and TEMPLE_OF.has(style):
+		return _temple_part(unit)
 	var part := "m_%s_%s" % [module, kind]
 	if _parts.has(part):
 		return part
@@ -543,6 +545,29 @@ func _model(module: String, kind: String, unit: float) -> String:
 		return ""
 	var mesh: ArrayMesh = _scaled_model(script, kind, unit)
 	_parts[part] = {"mesh": mesh, "transforms": [], "colours": [], "folk": true, "material": _models_material}
+	return part
+
+
+## A temple in each people's own manner (the civic temple is a Greco-Roman one): module,
+## kind, and a scale bringing it to a public building's size (D-281).
+const TEMPLE_OF := {"east": ["east", "pagoda", 0.8], "northern": ["northern", "church", 0.85],
+	"south_asian": ["south", "temple_shikhara", 0.9], "nile": ["south", "nile_palace", 0.5],
+	"near_east": ["south", "ziggurat", 0.55]}
+
+
+## The local temple as a part of its own (its name keeps it apart from the same model used
+## at another size elsewhere, e.g. a pagoda as a landmark).
+func _temple_part(unit: float) -> String:
+	var entry: Array = TEMPLE_OF[style]
+	var part := "m_temple_%s" % style
+	if _parts.has(part):
+		return part
+	var script: GDScript = MODULES.get(str(entry[0]))
+	if script == null or not (script.call("kinds") as Array).has(str(entry[1])):
+		return ""
+	var mesh: ArrayMesh = _scaled_model(script, str(entry[1]), unit * float(entry[2]))
+	_parts[part] = {"mesh": mesh, "transforms": [], "colours": [], "folk": true, "material": _models_material}
+	_what[part] = "public"
 	return part
 
 
