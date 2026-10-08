@@ -610,7 +610,7 @@ func _patch(p: Vector2, o: Vector2, hill: bool, grad: Vector2) -> int:
 				return 1 if _grove(p, _yaw_to(to_water), _r(1.0, 1.5), _r(1.2, 1.8), "palm", 0.62) else 0
 			if s.style == "near_east" and roll < 0.3:
 				return 1 if _pasture(p, _yaw_to(o), _r(1.3, 1.8), _r(1.1, 1.5), "", ["sheep", "goat", "camel"]) else 0
-			made = _strips(p, to_water, s.rng.randi_range(3, 6), _r(0.45, 0.65), _r(1.8, 3.0), s.style)
+			made = _strips(p, to_water, s.rng.randi_range(3, 6), _r(0.5, 0.7), _r(1.3, 2.0), s.style)
 		"south_asian":
 			if roll < 0.22:
 				return 1 if _grove(p, _yaw_to(o), _r(1.2, 1.8), _r(1.2, 1.7), "tree_fruit", 0.7) else 0
