@@ -187,7 +187,9 @@ func _build_earth(holder: Node3D, region: String) -> void:
 	provinces = ProvinceMap.new(earth, view)
 	provinces.build(holder)
 	settlements = Settlements.new(provinces)
+	var started := Time.get_ticks_msec()
 	settlements.build(holder)
+	print("SETTLEMENTS built in %d ms: %d buildings placed" % [Time.get_ticks_msec() - started, settlements.placed.size()])
 	scenery.clear(settlements.clearings)
 	_earth_holder = holder
 	_growth = provinces.growth_signature()

@@ -58,6 +58,7 @@ var dressing: Dressing   ## the barrels, carts, fences and gardens among them
 ## (as given to _add), r: float (footprint radius, map units), part: String, what: String
 ## ("house", "palace", "public", "wall", "tower", "gate", "tent"), site: int}.
 var placed: Array = []
+var _tm := {}
 var _what := {}   ## part -> what it is, for `placed`
 var _recent: Array = []   ## the last few house kinds placed, so neighbours differ
 
@@ -216,14 +217,23 @@ func build(parent: Node3D) -> void:
 			if cells.is_empty():
 				continue
 			if pass_no == 0:
+				var t0 := Time.get_ticks_usec()
 				city.plan(site, population, index)
+				_tm["plan"] = _tm.get("plan", 0) + Time.get_ticks_usec() - t0
+				t0 = Time.get_ticks_usec()
 				dressing.decorate("camp" if style == "steppe" else "city", int(site.get("tier", 0)), index)
+				_tm["dress"] = _tm.get("dress", 0) + Time.get_ticks_usec() - t0
 				continue
-			rural.countryside(site, population, cells, index)   # (it calls dressing.decorate itself)
+			var t1 := Time.get_ticks_usec()
+			rural.countryside(site, population, cells, index)
+			_tm["rural+dress"] = _tm.get("rural+dress", 0) + Time.get_ticks_usec() - t1   # (it calls dressing.decorate itself)
 	holder = Node3D.new()
 	holder.name = "Settlements"
 	parent.add_child(holder)
+	var t2 := Time.get_ticks_usec()
 	ground.build(holder)
+	_tm["ground"] = Time.get_ticks_usec() - t2
+	t2 = Time.get_ticks_usec()
 	for spot in _chimneys:
 		holder.add_child(_smoke(spot))
 	for part in _parts:
@@ -239,6 +249,8 @@ func build(parent: Node3D) -> void:
 		entry["where"].resize(entry["transforms"].size())
 		for key in groups:
 			holder.add_child(_multimesh(entry, groups[key]))
+	_tm["multimesh"] = Time.get_ticks_usec() - t2
+	print("TIMING meshes=", _mesh_us, " ", _tm, " parts=", _parts.size())
 	recolour()
 
 
@@ -572,13 +584,16 @@ func _temple_part(unit: float) -> String:
 
 
 static var _model_cache := {}
+static var _mesh_us := 0
 
 
 static func _scaled_model(script: GDScript, kind: String, unit: float) -> ArrayMesh:
 	var key := "%s|%s|%s" % [script.resource_path, kind, unit]
 	if _model_cache.has(key):
 		return _model_cache[key]
+	var tb := Time.get_ticks_usec()
 	var raw: ArrayMesh = script.call("build", kind)
+	_mesh_us += Time.get_ticks_usec() - tb
 	var out := ArrayMesh.new()
 	var st := SurfaceTool.new()
 	for i in raw.get_surface_count():
