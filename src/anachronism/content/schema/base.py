@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from enum import StrEnum
 from typing import Annotated, Any, Self
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints
@@ -17,6 +18,18 @@ Rate = Annotated[int, Field(ge=0, le=10_000)]
 NonNegative = Annotated[int, Field(ge=0)]
 Positive = Annotated[int, Field(ge=1)]
 HexColour = Annotated[str, StringConstraints(pattern=r"^#[0-9a-fA-F]{6}$")]
+
+
+class Confidence(StrEnum):
+    """How sure the research is (brief §2.14): for developers, never shown to players.
+
+    ``low`` is the default: drafted from general history and not yet checked against a
+    source. The source review (D-040) raises entries to ``medium`` or ``high``.
+    """
+
+    HIGH = "high"
+    MEDIUM = "medium"
+    LOW = "low"
 
 
 class Frozen(BaseModel):

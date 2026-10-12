@@ -1,0 +1,200 @@
+schema_version: 1
+# Kinds of soldier (content/schema/units.py, D-099). attack/defence: fighting power per
+# 1,000 men. Costs are per 1,000 men raised; upkeep per 1,000 men per turn. bonus_vs and
+# terrain are basis points (5000 = +50%). kind drives match-ups:
+#   spear beats mounted; mounted beats missile and siege; missile beats infantry and spear;
+#   infantry beats spear in the press; elephants terrify everyone but marsh and mountains.
+units:
+  - id: levy
+    name: Levies
+    kind: infantry
+    attack: 4
+    defence: 5
+    food: 2
+    upkeep_food: 1
+    note: "Farmers with spears and shields, called from the fields. Many, cheap, and not keen."
+
+  - id: spearmen
+    name: Spearmen
+    kind: spear
+    attack: 6
+    defence: 9
+    needs_techs: [bronze_working]
+    food: 2
+    materials: 1
+    wealth: 1
+    upkeep_food: 1
+    upkeep_wealth: 1
+    bonus_vs: {mounted: 6000, elephant: 3000}
+    terrain: {hills: 1000}
+    note: "A wall of bronze points: horses will not charge into it."
+
+  - id: swordsmen
+    name: Heavy infantry
+    kind: infantry
+    attack: 9
+    defence: 8
+    needs_techs: [iron_working]
+    needs_resources: [iron]
+    food: 2
+    materials: 2
+    wealth: 2
+    upkeep_food: 1
+    upkeep_wealth: 2
+    bonus_vs: {spear: 3000}
+    terrain: {forest: 1000, mountains: 1000}
+    note: "Iron swords and drilled ranks - the legion, the hoplite of the age of iron."
+
+  - id: archers
+    name: Archers
+    kind: missile
+    attack: 6
+    defence: 4
+    needs_techs: [composite_bow]
+    food: 2
+    materials: 1
+    wealth: 1
+    upkeep_food: 1
+    upkeep_wealth: 1
+    bonus_vs: {infantry: 4000, spear: 3000, elephant: 2000}
+    terrain: {hills: 1000, forest: -2000}
+    note: "Horn, wood and sinew: the composite bow throws death beyond the reach of spears."
+
+  - id: crossbowmen
+    name: Crossbowmen
+    kind: missile
+    attack: 9
+    defence: 6
+    needs_techs: [crossbow]
+    food: 2
+    materials: 2
+    wealth: 2
+    upkeep_food: 1
+    upkeep_wealth: 2
+    bonus_vs: {infantry: 4000, spear: 3000, mounted: 2000}
+    note: "A peasant with a crossbow can kill a lord in armour. Lords do not like this."
+
+  - id: chariots
+    name: Chariots
+    kind: mounted
+    attack: 9
+    defence: 4
+    mobility: 3
+    needs_techs: [chariot]
+    needs_resources: [horses]
+    food: 3
+    materials: 2
+    wealth: 3
+    upkeep_food: 2
+    upkeep_wealth: 2
+    bonus_vs: {infantry: 2000, missile: 3000}
+    terrain: {plains: 3000, river_plains: 2000, desert: 1000, steppe: 2000, hills: -4000, mountains: -6000, forest: -5000, marsh: -6000}
+    note: "Kings ride to war on wheels. Terrible on open ground, useless in the hills."
+
+  - id: cavalry
+    name: Cavalry
+    kind: mounted
+    attack: 10
+    defence: 6
+    mobility: 3
+    needs_techs: [horse_riding]
+    needs_resources: [horses]
+    food: 3
+    wealth: 3
+    upkeep_food: 2
+    upkeep_wealth: 2
+    bonus_vs: {missile: 5000, siege: 5000}
+    terrain: {plains: 2000, steppe: 3000, mountains: -5000, forest: -4000, marsh: -5000}
+    note: "Horsemen who strike the flanks and ride down fleeing men."
+
+  - id: horse_archers
+    name: Horse archers
+    kind: mounted
+    attack: 10
+    defence: 5
+    mobility: 4
+    needs_techs: [horse_riding, composite_bow]
+    needs_resources: [horses]
+    food: 3
+    wealth: 3
+    upkeep_food: 2
+    upkeep_wealth: 2
+    bonus_vs: {infantry: 3000, spear: 4000, siege: 4000}
+    terrain: {steppe: 5000, desert: 2000, plains: 2000, forest: -4000, mountains: -5000, marsh: -4000}
+    note: "The terror of the settled world: they shoot, wheel away, and shoot again."
+
+  - id: heavy_cavalry
+    name: Armoured horsemen
+    kind: mounted
+    attack: 15
+    defence: 9
+    mobility: 2
+    needs_techs: [stirrup]
+    needs_resources: [horses, iron]
+    food: 4
+    materials: 3
+    wealth: 6
+    upkeep_food: 2
+    upkeep_wealth: 4
+    bonus_vs: {missile: 4000, infantry: 3000, siege: 4000}
+    terrain: {plains: 2000, mountains: -5000, forest: -4000, marsh: -6000}
+    note: "With stirrups a rider can couch a lance: cataphract, knight, samurai."
+
+  - id: war_elephants
+    name: War elephants
+    kind: elephant
+    attack: 14
+    defence: 10
+    needs_resources: [elephants]
+    food: 6
+    wealth: 6
+    upkeep_food: 4
+    upkeep_wealth: 2
+    bonus_vs: {infantry: 4000, mounted: 3000}
+    terrain: {forest: -2000, marsh: -4000, mountains: -5000, river_plains: 1000}
+    note: "Living towers. Horses bolt at their smell - but a panicked elephant tramples its own side."
+
+  - id: siege_engines
+    name: Siege engines
+    kind: siege
+    attack: 2
+    defence: 3
+    siege: 10
+    mobility: 1
+    needs_techs: [surveying]
+    food: 2
+    materials: 4
+    wealth: 2
+    upkeep_food: 1
+    upkeep_wealth: 1
+    note: "Rams, towers and stone-throwers: walls that held for years fall in a season."
+
+  - id: cannon
+    name: Cannon
+    kind: siege
+    attack: 10
+    defence: 4
+    siege: 30
+    mobility: 1
+    needs_techs: [cannon]
+    food: 2
+    materials: 5
+    wealth: 5
+    upkeep_food: 1
+    upkeep_wealth: 2
+    bonus_vs: {infantry: 2000, spear: 2000, elephant: 4000}
+    note: "Bronze guns that knock down in a day walls built to last a thousand years."
+
+  - id: musketeers
+    name: Musketeers
+    kind: infantry
+    attack: 16
+    defence: 14
+    needs_techs: [musket]
+    food: 2
+    materials: 3
+    wealth: 4
+    upkeep_food: 1
+    upkeep_wealth: 3
+    bonus_vs: {mounted: 3000, elephant: 4000, spear: 2000}
+    note: "Smoke, noise and lead: the end of the age of armour."

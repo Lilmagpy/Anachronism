@@ -2,15 +2,18 @@ schema_version: 1
 techs:
   - id: herbal_medicine
     name: Herbal medicine
+    keywords: [medicine, herbs, herbal, remedies, doctors, healing]
     category: health
     year: -2500
     complexity: 1
     visibility: 1
     effects: [{type: health, bp: 500}]
     flavour: Willow bark for fever, honey for wounds.
+    history: "Egyptian and Mesopotamian healers wrote down hundreds of remedies; the Ebers papyrus (about 1550 BC) lists over 700."
 
   - id: quarantine
     name: Quarantine
+    keywords: [quarantine, isolation, isolate the sick, plague, contagion]
     category: health
     year: 1377
     complexity: 2
@@ -18,9 +21,11 @@ techs:
     resistance: [{group: guilds, level: 1}]
     effects: [{type: health, bp: 1000}]
     flavour: Forty days at anchor before the ship may land.
+    history: "Ragusa (Dubrovnik) ordered ships from plague ports to wait forty days in 1377 - 'quaranta giorni'."
 
   - id: sanitation
     name: Sanitation
+    keywords: [sanitation, sewers, sewage, latrines, hygiene, drains, wash hands, soap]
     category: health
     year: 1850
     complexity: 3
@@ -28,9 +33,11 @@ techs:
     requires: {widespread: [masonry]}
     effects: [{type: health, bp: 1500}, {type: population_cap, bp: 600}]
     flavour: Keep the drains away from the wells, and whole plagues simply stop.
+    history: "After cholera and the 'Great Stink' of 1858, London built sewers that kept waste from drinking water."
 
   - id: inoculation
     name: Inoculation
+    keywords: [inoculation, vaccine, vaccination, variolation, smallpox, immunity]
     category: health
     year: 1500
     complexity: 3
@@ -40,3 +47,4 @@ techs:
     resistance: [{group: clergy, level: 2}]
     effects: [{type: health, bp: 1500}, {type: population_cap, bp: 300}]
     flavour: A scratch of mild pox today spares a child the deadly kind tomorrow.
+    history: "Variolation against smallpox was practised in China and India by the 1500s; Lady Mary Wortley Montagu brought it to England in 1721."

@@ -1,0 +1,24 @@
+schema_version: 1
+# Sea zones: their positions shape the coastline on the 3D map; coastal provinces are
+# exactly those listed as neighbours here.
+seas:
+  - id: reed_bay
+    name: Reed Bay
+    position: [175, 525]
+    neighbours: [veyra_marshes, veyra_delta]
+  - id: southern_sea
+    name: Southern Sea
+    position: [300, 580]
+    neighbours: [veyra_delta, veyra_marshes, southern_isles]
+  - id: isle_strait
+    name: Isle Strait
+    position: [455, 470]
+    neighbours: [veyra_coast, southern_isles, veyra_delta]
+  - id: outer_sea
+    name: Outer Sea
+    position: [430, 610]
+    neighbours: [southern_isles]
+  - id: isles_sound
+    name: Isles Sound
+    position: [350, 488]
+    neighbours: [veyra_delta, southern_isles, veyra_coast]

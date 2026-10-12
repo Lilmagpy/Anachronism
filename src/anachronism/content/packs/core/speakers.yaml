@@ -1,0 +1,7 @@
+schema_version: 1
+# Advisers found at every court. Portrait styles are placeholders drawn by the client (D-060).
+speakers:
+  - {id: scholar, title: Chief Scholar, portrait: scholar}
+  - {id: steward, title: Grand Steward, portrait: steward}
+  - {id: general, title: General, portrait: general}
+  - {id: diviner, title: Court Diviner, portrait: diviner}

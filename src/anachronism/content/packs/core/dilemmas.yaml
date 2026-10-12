@@ -1,0 +1,101 @@
+schema_version: 1
+# Choices put to the ruler (content/schema/dilemmas.py, D-104). chance_bp is per decade once
+# the conditions hold. Stores change by shares (bp); unrest, legitimacy and suspicion by
+# points x100; influence of clergy, nobility and guilds by points x100.
+dilemmas:
+  - id: comet
+    title: A comet in the sky
+    text: "A long-tailed star hangs over {civ} night after night. The diviners wait to hear what {ruler} says it means."
+    chance_bp: 800
+    choices:
+      - {label: "A sign of Heaven's favour", outcome: "The people take heart: Heaven smiles on the throne.", legitimacy_bp: 600, influence: {clergy: -300}}
+      - {label: "Let the diviners decide", outcome: "The priests read it gravely, and their temples fill.", influence: {clergy: 600}, unrest_bp: 200}
+      - {label: "Have it measured", outcome: "Astronomers chart its path night by night - and learn a great deal.", knowledge_bp: 1500, suspicion_bp: 200}
+
+  - id: open_the_granaries
+    title: The people are hungry
+    text: "The granaries of {civ} are low and bread is dear. Crowds gather at the palace gates."
+    chance_bp: 2500
+    min_unrest_bp: 2500
+    choices:
+      - {label: "Open the royal granaries", outcome: "Bread is handed out at the gates. The crowds bless {ruler}'s name.", food_bp: -2500, unrest_bp: -1200, legitimacy_bp: 300}
+      - {label: "Let the markets decide", outcome: "Grain merchants grow rich; the poor grow angry.", wealth_bp: 1000, unrest_bp: 800, influence: {guilds: 500}}
+      - {label: "Send the guards", outcome: "The crowds are scattered. They will remember.", unrest_bp: -400, legitimacy_bp: -600}
+
+  - id: the_preacher
+    title: The wandering preacher
+    text: "A preacher draws great crowds in the markets of {civ}, saying the priests are corrupt and the gods want something new."
+    chance_bp: 900
+    choices:
+      - {label: "Silence him", outcome: "The preacher is seized. The priests are grateful; his followers are not.", influence: {clergy: 800}, unrest_bp: 400}
+      - {label: "Let him preach", outcome: "New ideas run through the markets, and the old temples empty a little.", influence: {clergy: -700}, knowledge_bp: 800}
+      - {label: "Invite him to court", outcome: "He debates the high priest before {ruler}. The whole city talks of it.", legitimacy_bp: 300, suspicion_bp: 300}
+
+  - id: sorcery_rumours
+    title: Whispers of sorcery
+    text: "In the taverns of {civ} they say {ruler}'s new arts come from demons. Some say worse."
+    chance_bp: 3000
+    min_suspicion_bp: 2500
+    choices:
+      - {label: "A great public sacrifice", outcome: "The whole court is seen at the altars. The whispers quieten.", wealth_bp: -1500, suspicion_bp: -1500, influence: {clergy: 400}}
+      - {label: "Punish the rumourmongers", outcome: "A few tongues are cut out. The talk goes underground.", suspicion_bp: -600, unrest_bp: 700}
+      - {label: "Let them talk", outcome: "Talk is only talk. For now.", suspicion_bp: 300}
+
+  - id: merchants_charter
+    title: The merchants ask for a charter
+    text: "The merchants of {civ} ask for a royal charter: their own courts, their own guards, freedom from the nobles' tolls."
+    chance_bp: 700
+    needs_adopted: [coinage]
+    choices:
+      - {label: "Grant the charter", outcome: "Trade booms. The nobles grind their teeth.", wealth_bp: 1500, influence: {guilds: 1200, nobility: -800}}
+      - {label: "Sell it to them", outcome: "The merchants pay handsomely - once.", wealth_bp: 3000, influence: {guilds: 300}}
+      - {label: "Refuse", outcome: "The nobles approve. The merchants take their ships elsewhere.", influence: {nobility: 600, guilds: -600}}
+
+  - id: lost_books
+    title: A library for sale
+    text: "A ruined scholar's family offers {ruler} his whole library: scrolls no one in {civ} has read."
+    chance_bp: 700
+    needs_adopted: [writing]
+    choices:
+      - {label: "Buy every scroll", outcome: "The scribes work by lamplight for a year. What they find!", wealth_bp: -1200, knowledge_bp: 2500}
+      - {label: "Buy only the useful ones", outcome: "Farming, building, medicine: practical books for a practical court.", wealth_bp: -500, knowledge_bp: 1000, food_bp: 500}
+      - {label: "Let them burn", outcome: "Some things are better forgotten. The priests agree.", influence: {clergy: 300}}
+
+  - id: deserters
+    title: Peasants flee the levy
+    text: "Whole villages of {civ} have emptied into the hills rather than send their sons to war."
+    chance_bp: 3000
+    at_war: true
+    min_unrest_bp: 2000
+    choices:
+      - {label: "Hunt them down", outcome: "The soldiers bring them back in chains. Every village is watching.", unrest_bp: 800, legitimacy_bp: -300, volunteers_bp: 40}
+      - {label: "Pardon them", outcome: "They come home to their fields, grateful.", unrest_bp: -800, food_bp: 500}
+
+  - id: veterans_land
+    title: The veterans want land
+    text: "The soldiers who fought for {civ} want farms of their own. The nobles hold the land."
+    chance_bp: 1200
+    at_war: false
+    needs_adopted: [iron_working]
+    choices:
+      - {label: "Give them the nobles' land", outcome: "Veterans settle the frontier, loyal to the throne.", influence: {nobility: -1200}, legitimacy_bp: 800, volunteers_bp: 30}
+      - {label: "Pay them off", outcome: "Silver instead of soil. They grumble, but go home.", wealth_bp: -2000}
+      - {label: "Refuse", outcome: "Angry old soldiers in every tavern. Dangerous.", unrest_bp: 1000, influence: {nobility: 400}}
+
+  - id: foreign_envoys
+    title: Strangers from far away
+    text: "Travellers from a land no one in {civ} has heard of arrive with gifts, strange animals and stranger stories."
+    chance_bp: 500
+    choices:
+      - {label: "Feast them and ask questions", outcome: "They talk for weeks. The scribes fill whole books.", wealth_bp: -500, knowledge_bp: 1500}
+      - {label: "Trade with them", outcome: "Their goods sell for a fortune in the markets.", wealth_bp: 1500, influence: {guilds: 400}}
+      - {label: "Send them away", outcome: "Strangers bring strange ideas. Better not.", influence: {clergy: 300}}
+
+  - id: plague_doctors
+    title: The sickness in the poor quarter
+    text: "A fever spreads through the poorest streets of the capital of {civ}. The physicians disagree about everything."
+    chance_bp: 600
+    choices:
+      - {label: "Close the quarter", outcome: "The sick are shut in. It is cruel - and the fever stops spreading.", unrest_bp: 600, food_bp: -300}
+      - {label: "Pray at the temples", outcome: "Great processions fill the streets. So does the fever.", influence: {clergy: 600}, unrest_bp: 300}
+      - {label: "Let the physicians try", outcome: "Some cures work, most do not, and much is learned.", knowledge_bp: 800, wealth_bp: -400}

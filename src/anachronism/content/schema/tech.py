@@ -7,7 +7,7 @@ from typing import Annotated
 
 from pydantic import Field, model_validator
 
-from anachronism.content.schema.base import Frozen, Identifier, Rate
+from anachronism.content.schema.base import Confidence, Frozen, Identifier, Rate
 
 
 class Category(StrEnum):
@@ -133,6 +133,9 @@ class Requirements(Frozen):
     """Soft: below this, experimentation suffers more setbacks."""
     widespread: tuple[Identifier, ...] = ()
     """Infrastructure: advancements that must already be widespread."""
+    buildings: tuple[Identifier, ...] = ()
+    """Infrastructure (D-114): buildings that must each stand somewhere in the realm (a
+    building that replaced one, e.g. a bank for a market, counts for it)."""
 
 
 class TechNode(Frozen):
@@ -150,11 +153,19 @@ class TechNode(Frozen):
     resistance: tuple[Resistance, ...] = ()
     effects: tuple[Effect, ...] = ()
     flavour: str = ""
+    history: Annotated[str, Field(max_length=400)] = ""
+    """In our history: who first made it, where and when (D-126), shown to the player as
+    the measure of how far ahead of its time they are bringing it."""
     provenance: Provenance = Provenance.LIBRARY
     stub: bool = False
     """A placeholder named by a ruling; must be ruled on before it can be started."""
     sources: tuple[str, ...] = ()
     """Internal research notes; never shown to players."""
+    confidence: Confidence = Confidence.LOW
+    """How sure the date and effects are; internal only."""
+    keywords: tuple[Annotated[str, Field(min_length=2, max_length=40)], ...] = ()
+    """Words a player might use for this idea ("printing", "press"); the offline
+    interpreter and the model's related-node search match on them."""
 
     @model_validator(mode="after")
     def _check_consistency(self) -> TechNode:

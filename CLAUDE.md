@@ -1,4 +1,7 @@
-# CLAUDE.md — Anachronism
+# CLAUDE.md — Meritus (code name: anachronism)
+
+The game is called **Meritus** wherever players see it (D-121); the Python package, commands,
+repository and environment variables keep the code name `anachronism`.
 
 Turn-based historical strategy game (Python + pygame-ce). The player feeds a civilisation
 ideas ahead of their time; an LLM interprets and narrates, a deterministic engine decides.
@@ -11,6 +14,7 @@ updating `docs/PLAN.md` (checkboxes, current step) and logging decisions in `doc
 - `docs/PLAN.md` — roadmap and current step · `docs/DECISIONS.md` — every decision and why
 - `docs/plans/phase-N.md` — the detailed design of each phase
 - `docs/CONTENT_GUIDE.md` — authoring packs · `docs/BRIEF.md` — owner's original master brief
+- `.claude/skills/` — installed skills (find-skills, Godot, shaders, game feel, performance, UI...; D-282, D-283). Godot guides target 4.7; we run 4.5.
 
 ## Owner and working style
 - The owner directs by description and is not an expert programmer: explain decisions in

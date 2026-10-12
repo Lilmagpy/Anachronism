@@ -2,23 +2,29 @@ schema_version: 1
 techs:
   - id: sailing
     name: Sailing boats
+    keywords: [sail, sails, sailing, boats, ships, seafaring]
     category: maritime
     year: -4000
     complexity: 1
     effects: [{type: trade_income, bp: 500}, {type: naval_strength, bp: 500}]
     flavour: A sheet of cloth, and the wind rows for you.
+    history: "The earliest known sails are painted on Egyptian pottery from about 3500 BC; boats on the Nile carried them earlier still."
 
   - id: sternpost_rudder
     name: Sternpost rudder
+    keywords: [rudder, sternpost, steering, helm]
     category: maritime
     year: 100
     complexity: 2
     prerequisites: [sailing]
+    requires: {buildings: [harbour]}
     effects: [{type: naval_strength, bp: 800}, {type: trade_income, bp: 500}]
     flavour: One hinged board steers a ship far bigger than any oar could.
+    history: "Chinese ships had sternpost rudders by the 1st century AD; Europe adopted them around 1180."
 
   - id: compass
     name: Magnetic compass
+    keywords: [compass, magnet, lodestone, navigation, north]
     category: maritime
     year: 1040
     complexity: 3
@@ -29,3 +35,4 @@ techs:
       - {type: trade_income, bp: 800}
       - {type: information_speed, bp: 300}
     flavour: A needle that always points south, even under clouds.
+    history: "Shen Kuo described the magnetic needle compass in 1088; Chinese sailors used it by about 1100."

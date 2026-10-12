@@ -12,7 +12,9 @@ dependencies = [
 [project.scripts]
 anachronism = "anachronism.__main__:main"
 anachronism-console = "anachronism.tools.console:main"
+anachronism-draft = "anachronism.tools.draft:main"
 anachronism-lint = "anachronism.tools.lint_content:main"
+anachronism-server = "anachronism.tools.server:main"
 anachronism-sim = "anachronism.tools.simulate:main"
 
 [dependency-groups]
@@ -30,6 +32,7 @@ build-backend = "uv_build"
 [tool.ruff]
 line-length = 100
 target-version = "py312"
+extend-exclude = [".claude"]  # installed skills are third-party guides, kept as their authors wrote them (D-283)
 
 [tool.ruff.lint]
 select = [

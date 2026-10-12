@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from anachronism.engine.actions import Priority
+from anachronism.engine.economy import Costs, project_costs
 from anachronism.engine.events import EventLog, list_names
 from anachronism.engine.fixed import BP, apply_bp, clamp
 from anachronism.engine.rng import GameRng
@@ -52,11 +54,14 @@ def advance_projects(
         breakthrough = rng.chance(rules.breakthrough_chance_bp)
         if share > 0 and setback:
             gain = -rules.setback_loss_bp
-            events.add(civ.id, "setback", f"Experiments with {name} in {civ.name} go badly.")
+            events.add(civ.id, "setback", f"Experiments with {name} in {civ.name} go badly.", name)
         elif share > 0 and breakthrough:
             gain += rules.breakthrough_gain_bp
-            events.add(civ.id, "breakthrough", f"A breakthrough with {name} in {civ.name}!")
-        project.stalled_turns = project.stalled_turns + 1 if share < rules.stall_funding_bp else 0
+            events.add(civ.id, "breakthrough", f"A breakthrough with {name} in {civ.name}!", name)
+        # steady (low-priority) work that keeps moving never decays, however slowly it goes
+        steady = project.priority is Priority.LOW and share > 0
+        starved = share < rules.stall_funding_bp and not steady
+        project.stalled_turns = project.stalled_turns + 1 if starved else 0
         if project.stalled_turns >= rules.stall_turns:
             gain -= apply_bp(project.progress_bp, decay)
             if project.stalled_turns == rules.stall_turns:
@@ -70,4 +75,54 @@ def advance_projects(
             civ.id,
             "stalled",
             f"Work in {civ.name} has stalled on {list_names(newly_stalled)}; progress is decaying.",
+            list_names(newly_stalled),
         )
+
+
+# --- hastening (D-119) --------------------------------------------------------------------
+
+
+def hasten_cost(state: GameState, node_id: str) -> Costs:
+    """What a turn's extra work on a project costs when bought with the stores.
+
+    Hired craftsmen are paid in wealth (three times the labour and wealth of a turn's work),
+    and they use twice a turn's materials and knowledge: dear, but stores that would
+    otherwise pile up unused become progress.
+    """
+    turn = project_costs(state, node_id)
+    return Costs(
+        labour=0,
+        materials=turn.materials * 2,
+        knowledge=turn.knowledge * 2,
+        wealth=(turn.labour + turn.wealth) * 3,
+    )
+
+
+def hasten(state: GameState, civ: CivState, node_id: str) -> tuple[bool, str]:
+    """Buy a turn's extra progress on a project, once a turn, if the stores allow."""
+    project = civ.projects.get(node_id)
+    name = state.tech_nodes[node_id].name if node_id in state.tech_nodes else node_id
+    if project is None:
+        return False, f"there is no work on {name} to hasten"
+    if project.paused:
+        return False, f"work on {name} is paused"
+    if project.hastened_turn == state.turn:
+        return False, f"{name} has been hastened this turn already"
+    price = hasten_cost(state, node_id)
+    stores = civ.stockpiles
+    if (
+        stores.materials < price.materials
+        or stores.knowledge < price.knowledge
+        or stores.wealth < price.wealth
+    ):
+        return False, (
+            f"hastening {name} needs {price.materials:,} materials, {price.knowledge:,}"
+            f" knowledge and {price.wealth:,} wealth"
+        )
+    stores.materials -= price.materials
+    stores.knowledge -= price.knowledge
+    stores.wealth -= price.wealth
+    project.hastened_turn = state.turn
+    step = -(-BP // project_turns(state, node_id))
+    project.progress_bp = min(BP - 1, project.progress_bp + step)  # it finishes as the turn ends
+    return True, f"Hired craftsmen push the work on {name} ahead."

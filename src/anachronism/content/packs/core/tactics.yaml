@@ -1,0 +1,66 @@
+schema_version: 1
+# Battle plans (content/schema/tactics.py, D-108). Each army goes into battle with a plan:
+# its own general's choice, or the one its ruler ordered. A plan that "beats" the enemy's
+# gives its side the edge (rules.armies.tactic_edge_bp); a general with the plan's gift
+# (trait) doubles that edge. Plans may need soldiers of certain kinds (needs_units, at least
+# needs_share_bp of the side's men), certain ground (needs_terrain) or a side (when).
+tactics:
+  - id: line
+    name: Steady line
+    note: "Meet them line against line, and let the stronger and braver win."
+    beats: []
+  - id: charge
+    name: Headlong charge
+    note: "Close at a run before they are ready. Bloody for both sides; it breaks a steady line and rides through skirmishers - but spears and a feigned retreat punish it."
+    power_bp: 1000
+    losses_bp: 4000
+    terrain_bp: {marsh: -2000, forest: -1500, mountains: -1500}
+    skirmish_bp: -3000
+    beats: [line, skirmish]
+    trait: bold
+  - id: hold
+    name: Shield wall
+    note: "Stand on the best ground and let them come: shields locked, spears out. It breaks a charge and will not chase a feigned retreat - but arrows and a flank attack undo it."
+    when: defending
+    power_bp: 1000
+    losses_bp: -2000
+    terrain_bp: {hills: 1500, mountains: 2000, forest: 500}
+    beats: [charge, feint]
+    trait: shield
+  - id: skirmish
+    name: Skirmishing
+    note: "Never close: shoot, fall back, shoot again. Few die on either side; it wears down a line that stands still - but a charge catches the archers."
+    needs_units: [archers, crossbowmen, horse_archers, musketeers]
+    needs_share_bp: 3000
+    skirmish_bp: 6000
+    losses_bp: -3500
+    terrain_bp: {steppe: 1500, desert: 1500, plains: 500, forest: -2000}
+    beats: [hold, ambush]
+  - id: flank
+    name: Envelopment
+    note: "Thin the centre and send horsemen round both wings. If it works the enemy is surrounded and destroyed (think of Cannae) - but a feigned retreat draws the wings away."
+    needs_units: [cavalry, horse_archers, heavy_cavalry, chariots]
+    needs_share_bp: 2000
+    rout_bp: 2500
+    terrain_bp: {plains: 1000, steppe: 1000, river_plains: 500, hills: -1000, mountains: -2500, forest: -1500, marsh: -1500}
+    beats: [line, hold]
+    trait: horse
+  - id: feint
+    name: Feigned retreat
+    note: "Horsemen turn and flee - or seem to - and draw the enemy into a broken pursuit and a trap. It beats a charge and an envelopment; a host that holds fast does not take the bait."
+    needs_units: [cavalry, horse_archers, heavy_cavalry]
+    needs_share_bp: 4000
+    rout_bp: 1500
+    terrain_bp: {steppe: 1500, plains: 500, forest: -2500, mountains: -2500, marsh: -2000}
+    beats: [charge, flank]
+    trait: horse
+  - id: ambush
+    name: Ambush
+    note: "Hide the army in the woods, hills or marshes and fall on the enemy's column on the march. It beats a line, a charge or an envelopment - unless skirmishers find it first."
+    when: defending
+    needs_terrain: [forest, hills, mountains, marsh]
+    power_bp: 1500
+    rout_bp: 2000
+    skirmish_bp: 3000
+    beats: [line, charge, flank]
+    trait: quartermaster
