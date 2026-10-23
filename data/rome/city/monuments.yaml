@@ -131,9 +131,12 @@ monuments:
   lat: 41.9072
   lon: 12.4968
   precision: rough
-  location: outside the Colline Gate, on the Quirinal slope
-  built: {year: -181, certainty: certain, by: "dedicated 181 by L. Porcius Licinus, vowed 184 (Livy 40.34.4)"}
-  sources: ["Livy 40.34.4", "Platner-Ashby s.v. Venus Erycina"]
+  location: "outside the Porta Collina, probably on the west side of the Via Salaria near the modern Via Belisario (P&A)"
+  built: {year: -181, certainty: certain, by: "vowed by the consul L. Porcius Licinus in the war with the Ligurians in 184; dedicated by his son L. Porcius Licinus as duumvir in 181 (Livy 40.34.4)"}
+  sources: ["Livy 30.38.10", "Livy 40.34.4", "Strabo 6.2.6", "Ovid Fasti 4.871-872", "Appian BC 1.93", "Platner-Ashby s.v. Venus Erucina"]
+  notes: "Not in Pleiades. Verified against Livy 40.34.4 (Latin text) and P&A 'Venus Erucina': vowed by the consul L. Porcius Licinus in the Ligurian war (184 per P&A; Livy calls him L. Porcius Ligustinus there), dedicated by his son L. Porcius Licinus as duumvir in 181 BC. Site: outside the Porta Collina, probably west of the Via Salaria near the modern Via Belisario (P&A); precision rough. Strabo 6.2.6 says it was a copy of the temple at Eryx with a noteworthy portico. Festivals 23 April (Vinalia) and 24 October."
+  pleiades: null
+  verified: platner-ashby
 - id: aedes_fidei
   latin: Aedes Fidei
   english: Temple of Fides (Fides Publica)
@@ -159,15 +162,18 @@ monuments:
   regio: 8
   lat: 41.8925
   lon: 12.4853
-  precision: exact
+  precision: approx
   location: valley between the Capitol and the Palatine/Velia, drained by the Cloaca Maxima
-  built: {year: -600, certainty: traditional, by: "drained and paved under Tarquinius Priscus (Livy 1.38.6); first paving archaeologically c. 600 BC"}
+  built: {year: -600, certainty: traditional, by: "valley drained by sewers (cloacae) under Tarquinius Priscus and plots round the forum assigned for porticoes and shops (Livy 1.38.6); the first open area with a fixed level at 10.60-10.90 m above sea level dates probably to the 6th c. BC (P&A)"}
   events:
-  - {year: -210, what: "great fire destroys the shops around the Forum; rebuilt as tabernae argentariae (Livy 26.27.1-4)"}
-  - {year: -52, what: "Forum disturbed by the funeral of Clodius, Curia burned (Asc. Mil. 29-33; Cic. Mil. 90)"}
-  - {year: -46, what: "Caesar replans the Forum: moves the Rostra and starts Basilica Iulia (Dio 43.49)"}
-  sources: ["Livy 1.38.6", "Livy 26.27.1-4", "Platner-Ashby s.v. Forum Romanum"]
-  pleiades: null
+  - {year: -210, what: "great fire destroys the shops and houses round the Forum; later rebuilt (Livy 26.27.1-4)"}
+  - {year: -174, what: "a new, higher level (c. 174 BC) in the Comitium; the censors of 174 had the Capitoline slope and streets paved (Livy 41.27.5-7; level date from P&A)"}
+  - {year: -52, what: "funeral of Clodius: Curia Hostilia burned (Asc. Mil. 29-33; Cic. Mil. 90; Dio 40.49)"}
+  - {year: -46, what: "Caesar's replanning: Rostra moved and Curia Iulia begun, Basilica Iulia dedicated (partially) 46 BC (Dio 43.22, 44.5; P&A)"}
+  sources: ["Livy 1.38.6", "Livy 26.27.1-4", "Livy 41.27.5", "Cic. Mil. 90", "Cass. Dio 40.49", "Cass. Dio 43.22", "Platner-Ashby s.v. Forum Romanum"]
+  notes: "CORRECTED: Livy 1.38.6 says Tarquinius Priscus DRAINED the low ground round the forum with sewers (cloacis fastigio in Tiberim ductis) and gave out building plots; it does not say he paved it, so 'paved' was removed. P&A: the first open area with fixed limits is marked by cappellaccio pavements at 10.60-10.90 m above sea level (c. 6th c.); a new level c. 174 BC; a level attributed to Sulla (Van Deman, uncertain); the Cloaca Maxima credited to the Tarquins (excavations support a 6th-c. date). Livy 26.27.1-4 is the fire of 210 (verified). The plot of land is Pleiades 502866838 (archaeological site; its representative point is about 120 m ESE of the plaza centre used here)."
+  pleiades: 502866838
+  verified: platner-ashby+pleiades
 - id: comitium
   latin: Comitium
   english: Comitium
@@ -177,37 +183,50 @@ monuments:
   lon: 12.4850
   precision: approx
   location: north-west corner of the Forum, below the Curia; round-ish open space for assemblies
-  built: {year: -509, certainty: traditional, by: "regal origin; place of the tribal and curiate assemblies"}
+  built: {year: null, certainty: traditional, by: "open place of assembly connected with the Curia from the regal period (Livy 1.36.5; Varro LL 5.155); its levels date from the 6th century BC (P&A)"}
   events:
-  - {year: -80, what: "levelled and rebuilt as part of Sulla's reorganisation near the Curia (Platner-Ashby; archaeology)"}
-  - {year: -44, what: "Caesar's plan moves the Rostra and removes the Comitium (Dio 43.49.1)"}
-  form: "open circular space with steps (the Volcanal on its edge); the area retained its political role until Caesar"
-  sources: ["Livy 1.36", "Dio 43.49.1", "Platner-Ashby s.v. Comitium"]
+  - {year: -390, what: "debris of buildings burned in the Gallic fire lies under the second level of the Comitium (P&A)"}
+  - {year: -145, what: "C. Licinius Crassus, tribune, first leads the legislative assembly from the Comitium to the Forum (Cic. Lael. 25; Varro RR 1.2.9)"}
+  - {year: -80, what: "Sulla restores the Curia and Rostra (P&A); Comitium pavement later attributed to Faustus Sulla's rebuilding after the fire of 52"}
+  - {year: -45, what: "Caesar's replanning reduces the Comitium; the Rostra is moved (Dio 43.49.1)"}
+  form: "open templum, orientated to the cardinal points, with the Curia on its north side, the Rostra and Graecostasis on the south and the Carcer and Basilica Porcia on the west; five successive levels excavated"
+  sources: ["Livy 1.36.5", "Livy 5.55", "Livy 45.24.12", "Cic. Rep. 2.11", "Cic. Lael. 25", "Varro LL 5.155", "Dio 43.49.1", "Platner-Ashby s.v. Comitium"]
+  notes: "Not in Pleiades. P&A: the Comitium was an open, inaugurated templum (Cic. Rep. 2.11), oriented to the cardinal points, with the Curia on the north side, the Carcer and Basilica Porcia on the west, the Rostra and Graecostasis on the south; five successive levels from c. 390 (after the Gallic fire) to the Caesarian travertine/marble pavement. It was the political centre until the 2nd c. BC; C. Licinius Crassus (tribune 145) first led the assembly from the Comitium to the Forum (Cic. Lael. 25, 96; Varro RR 1.2.9). Faustus Sulla's travertine pavement (12.63 m) is attributed to his restoration after 52 BC. The earlier claim that Sulla 'levelled and rebuilt' the Comitium in 80 BC is not in P&A (it only says Sulla restored the Curia and Rostra) and has been replaced. Dio 43.49.1 not checked here against Dio."
+  pleiades: null
+  verified: platner-ashby
 - id: lapis_niger
   latin: Lapis Niger
   english: Black Stone (Niger Lapis) with the Volcanal
   type: shrine
   regio: 8
-  lat: 41.8929
-  lon: 12.4852
+  lat: 41.8927
+  lon: 12.485
   precision: exact
   location: Comitium, in front of the Curia
-  built: {year: null, certainty: probable, by: "archaic sanctuary; black marble paving laid probably c. 80 BC or in Caesar's time over the archaic site (Festus 184L; Dion. Hal. 3.? as tomb of Romulus tradition)"}
-  sources: ["Festus 184L", "Platner-Ashby s.v. Niger Lapis"]
+  built: {year: null, certainty: probable, by: "archaic sanctuary with inscribed cippus (c. 500 BC), sacellum probably later 4th c. BC; black marble paving laid over it in the Caesarian reconstruction of the Comitium (c. 45 BC) (P&A); Festus 184L: 'niger lapis in comitio locum funestum significat', variously linked to Romulus's death or burial"}
+  sources: ["Festus 184L (177 Muller)", "Platner-Ashby s.v. Sepulcrum Romuli; Niger Lapis"]
+  form: "black paving of marmor Taenarium about 4 m x 3 m over an archaic cippus, a conical tufa column and a two-base 'sacellum' (P&A)"
+  notes: "CORRECTED: P&A (s.v. Sepulcrum Romuli; 'Niger Lapis: see Sepulcrum Romuli') describes a black pavement of marmor Taenarium about 4 x 3 m, found 1899 in front of the Curia Iulia and lying on the level of the Caesarian pavement of the Comitium, covering an archaic cippus with inscription (dated c. 500 BC), a tufa cone (5th c.) and a 'sacellum' (probably later 4th c.). So the black paving is of Caesar's time (c. 45 BC), not 'c. 80 BC'; the shrine below is archaic. Festus 184L = p. 177 in Muller's pagination (P&A). Dion. Hal. does not give the Lapis Niger passage here; the cited 'Dion. Hal. 3.?' was removed. Pleiades 326532998 (precise)."
+  pleiades: 326532998
+  verified: platner-ashby+pleiades
 - id: rostra_republic
   latin: Rostra
   english: Rostra (speakers' platform)
   type: rostra
   regio: 8
-  lat: 41.8927
-  lon: 12.4848
+  lat: 41.8926
+  lon: 12.4846
   precision: exact
   location: between the Comitium and the Forum, west end of the Forum
-  built: {year: -338, certainty: certain, by: "decorated with the beaks of the ships of Antium captured by C. Maenius (Livy 8.14.12; Pliny NH 34.20)"}
+  built: {year: -338, certainty: certain, by: "platform of the Comitium decorated with the beaks (rostra) of the ships taken from Antium by C. Maenius in 338 (Livy 8.14.12; Pliny NH 34.20); platform itself older (mid 5th c. low platform, rebuilt higher after 390: P&A)"}
   events:
-  - {year: -44, what: "Caesar's plan moves the Rostra to the west end of the Forum; completed by Augustus (Dio 43.49.1)"}
-  form: "tufa platform about 3.5 m high, 12 m long, with ships' rams on its face"
-  sources: ["Livy 8.14.12", "Pliny NH 34.20", "Dio 43.49.1", "Platner-Ashby s.v. Rostra"]
+  - {year: -80, what: "restored by Sulla (P&A)"}
+  - {year: -45, what: "Caesar's plan moves the Rostra to the north-west end of the Forum; completed under Augustus (Dio 43.49.1; Suet. Aug. 100)"}
+  form: "platform with a curved front adorned with the ships' beaks; steps up from the Comitium (P&A); curved steps of Monte Verde tufa on cappellaccio, with a canalis 9 m behind them"
+  sources: ["Livy 8.14.12", "Pliny NH 34.20", "Dio 43.49.1", "Suetonius Aug. 100", "Platner-Ashby s.v. Rostra"]
+  notes: "CORRECTED: the previous 'tufa platform about 3.5 m high, 12 m long' is not in P&A and has been removed. P&A: a low platform in the mid 5th c. separated Comitium and Forum; after the Gallic fire (390) replaced by a higher one reached by steps; later rebuilt on a new curved plan (canalis, two curved steps, suggestus; coin of 45 BC of Lollius Palikanus). Name from the beaks of the Antium ships, 338 BC (Pliny NH 34.20; Livy 8.14.12). Restored by Sulla; moved by Caesar to the north-west end of the Forum (Suet. Aug. 100 'rostra veteres'; Dio 43.49.1). Livy 8.14.12 verified in the Latin text."
+  pleiades: 796942355
+  verified: platner-ashby+pleiades
 - id: graecostasis
   latin: Graecostasis
   english: Graecostasis
@@ -217,8 +236,11 @@ monuments:
   lon: 12.4851
   precision: approx
   location: beside the Rostra, at the Comitium
-  built: {year: -304, certainty: probable, by: "platform for foreign ambassadors; Pliny NH 33.19 mentions it c. 304 BC"}
-  sources: ["Pliny NH 33.19", "Varro LL 5.155", "Platner-Ashby s.v. Graecostasis"]
+  built: {year: null, certainty: uncertain, by: "existed by 304 BC when Cn. Flavius set up a bronze aedicula of Concord on it (Pliny NH 33.19); earlier origin unknown"}
+  sources: ["Pliny NH 33.19", "Pliny NH 7.212", "Varro LL 5.155", "Cic. QFr. 2.1.3", "Platner-Ashby s.v. Graecostasis"]
+  notes: "CORRECTED: the 304 BC date is not a foundation date. Pliny NH 33.19 says Cn. Flavius (304) dedicated a bronze aedicula of Concord 'in Graecostasi, quae tunc supra comitium erat', so the Graecostasis already existed by 304; its origin is unknown. P&A: a raised place at the edge of the Comitium for foreign (esp. Greek) ambassadors (Varro LL 5.155), near the Curia (Cic. QFr. 2.1.3) and west of the Rostra; sun-noon sighting (Plin. NH 7.212). Pleiades 780447855 has only a 'related' location about 130 m ESE of the placement here, so the Pleiades coordinate is not adopted."
+  pleiades: 780447855
+  verified: platner-ashby+pleiades
 - id: senaculum
   latin: Senaculum
   english: Senaculum
@@ -229,7 +251,10 @@ monuments:
   precision: rough
   location: near the Curia and Comitium
   built: {year: null, certainty: uncertain, by: "early; senators assembled before meetings (Varro LL 5.156; Festus 470L)"}
-  sources: ["Varro LL 5.156", "Platner-Ashby s.v. Senacula"]
+  sources: ["Varro LL 5.156", "Valerius Maximus 2.2.6", "Festus 470L", "Platner-Ashby s.v. Senacula"]
+  notes: "Not in Pleiades. P&A: place where senators assembled before entering the Curia; Varro LL 5.156 puts it 'supra Graecostasim ubi aedes Concordiae et basilica Opimia'; Val. Max. 2.2.6; originally an open area, afterwards a hall; the original building must have been removed when Opimius enlarged the temple of Concord (121 BC) or Tiberius (7 BC). Festus 470L is not cited in P&A and was not checked."
+  pleiades: null
+  verified: platner-ashby
 - id: curia_hostilia
   latin: Curia Hostilia
   english: Senate House (Curia Hostilia)
@@ -245,7 +270,10 @@ monuments:
   - {year: -52, what: "burned at the funeral of P. Clodius; Faustus Sulla began rebuilding (Dio 40.49.2, 40.50.2)"}
   - {year: -45, what: "demolished for Caesar's new Curia Iulia (Dio 44.5.2)"}
   ended: {year: -45, what: "demolished"}
-  sources: ["Livy 1.30.2", "Cic. Mil. 90", "Dio 40.49.2", "Platner-Ashby s.v. Curia Hostilia"]
+  sources: ["Livy 1.30.2", "Livy 45.24.12", "Varro LL 5.155", "Cic. Mil. 90", "Dio 40.50.2", "Dio 44.5.2", "Platner-Ashby s.v. Curia Hostilia"]
+  notes: "Not in Pleiades. P&A: on the north side of the Comitium (Liv. 45.24.12); ascribed to Tullus Hostilius (Varro LL 5.155; Livy 1.30.2); restored and somewhat enlarged by Sulla in 80 BC (Plin. NH 34.26); burned 52 BC by Clodius's partisans and rebuilt by Faustus Sulla (Cic. Mil. 90; Asc.; Dio 40.50.2); demolished 44 BC for Caesar's new curia (Dio 44.5). Exact site and orientation uncertain (Faustus Sulla's pavement has a different orientation)."
+  pleiades: null
+  verified: platner-ashby
 - id: curia_iulia
   latin: Curia Iulia
   english: Curia Iulia
