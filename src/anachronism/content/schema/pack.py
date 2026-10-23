@@ -14,6 +14,13 @@ from anachronism.content.schema.dialogue import Dialogue, Speaker
 from anachronism.content.schema.dilemmas import Dilemma
 from anachronism.content.schema.formations import Formation
 from anachronism.content.schema.happenings import Happening
+from anachronism.content.schema.republic import (
+    FastiYear,
+    Gens,
+    HistoricalPerson,
+    Magistracy,
+    RepublicRules,
+)
 from anachronism.content.schema.rules import Rules
 from anachronism.content.schema.scenario import Scenario
 from anachronism.content.schema.ships import Ship
@@ -43,6 +50,7 @@ class PackManifest(Frozen):
 SINGLE_KINDS: dict[str, TypeAdapter[Any]] = {
     "pack": TypeAdapter(PackManifest),
     "rules": TypeAdapter(Rules),
+    "republic_rules": TypeAdapter(RepublicRules),
     "eras": TypeAdapter(tuple[Era, ...]),
     "effect_caps": TypeAdapter(dict[EffectType, dict[Identifier, int]]),
 }
@@ -69,6 +77,10 @@ LIST_KINDS: dict[str, type[Frozen]] = {
     "tactics": Tactic,
     "formations": Formation,
     "symbols": Symbol,
+    "magistracies": Magistracy,
+    "gentes": Gens,
+    "people": HistoricalPerson,
+    "fasti": FastiYear,
 }
 """Kinds holding a list of items with ids; each item is validated on its own."""
 

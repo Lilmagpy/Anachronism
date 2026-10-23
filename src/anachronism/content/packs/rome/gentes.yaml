@@ -1,0 +1,196 @@
+schema_version: 1
+# Families of the Republic. The numbers in standing and stances are GAME BALANCE, not history;
+# names, orders and notes carry sources. Sample pack: the full list comes from data/rome later.
+gentes:
+  - id: iunii
+    name: Iunii
+    nomen: Iunius
+    order: patrician
+    praenomina: ['Lucius', 'Marcus']
+    cognomina: ['Brutus']
+    standing: [{from_year: -509, dignitas_bp: 1500, auctoritas_bp: 1200, wealth: 100, clients: 120}]
+    stances: {war: 3000}
+    popular_lean_bp: 5000
+    notes: "Brutus is the founder of the Republic in tradition; the later Iunii Bruti are plebeian (Livy 2.1.7)."
+    sources: ["Livy 2.1.7"]
+  - id: tarquinii
+    name: Tarquinii
+    nomen: Tarquinius
+    order: patrician
+    praenomina: ['Lucius', 'Sextus']
+    cognomina: ['Collatinus']
+    standing: [{from_year: -509, dignitas_bp: 1200, auctoritas_bp: 800, wealth: 200, clients: 80}]
+    stances: {war: 2000}
+    popular_lean_bp: 3000
+    notes: "Collatinus was forced to give up the consulship because of his name (Livy 2.2.3-11)."
+    sources: ["Livy 2.2.3-11"]
+  - id: valerii
+    name: Valerii
+    nomen: Valerius
+    order: patrician
+    praenomina: ['Publius', 'Marcus', 'Manius']
+    cognomina: ['Publicola', 'Maximus', 'Flaccus', 'Messalla']
+    standing: [{from_year: -509, dignitas_bp: 1400, auctoritas_bp: 1300, wealth: 200, clients: 200}]
+    stances: {land: 3000, debt: 2000}
+    popular_lean_bp: 6500
+    notes: "Publicola's laws favoured the people (Livy 2.8; Plutarch, Publicola 11-12)."
+    sources: ["Livy 2.8", "Plutarch, Publicola 11"]
+  - id: lucretii
+    name: Lucretii
+    nomen: Lucretius
+    order: patrician
+    praenomina: ['Titus', 'Spurius']
+    cognomina: ['Tricipitinus']
+    standing: [{from_year: -509, dignitas_bp: 900, auctoritas_bp: 800, wealth: 100, clients: 80}]
+    popular_lean_bp: 5000
+    sources: ["Livy 2.8.4"]
+  - id: horatii
+    name: Horatii
+    nomen: Horatius
+    order: patrician
+    praenomina: ['Marcus']
+    cognomina: ['Pulvillus']
+    standing: [{from_year: -509, dignitas_bp: 900, auctoritas_bp: 900, wealth: 100, clients: 80}]
+    stances: {building: 3000}
+    popular_lean_bp: 4500
+    notes: "Marcus Horatius dedicated the temple of Jupiter on the Capitol (Livy 2.8.6)."
+    sources: ["Livy 2.8.6"]
+  - id: larcii
+    name: Larcii
+    nomen: Larcius
+    order: patrician
+    praenomina: ['Titus', 'Spurius']
+    cognomina: ['Flavus', 'Rufus']
+    standing: [{from_year: -509, dignitas_bp: 700, auctoritas_bp: 600, wealth: 80, clients: 60}]
+    stances: {war: 3000}
+    popular_lean_bp: 4000
+    sources: ["Livy 2.18.4"]
+  - id: menenii
+    name: Menenii
+    nomen: Menenius
+    order: patrician
+    praenomina: ['Agrippa']
+    cognomina: ['Lanatus']
+    standing: [{from_year: -509, dignitas_bp: 700, auctoritas_bp: 700, wealth: 80, clients: 60}]
+    stances: {debt: 2500}
+    popular_lean_bp: 5500
+    notes: "Agrippa Menenius is named as mediator at the first secession of the plebs (Livy 2.32)."
+    sources: ["Livy 2.32"]
+  - id: postumii
+    name: Postumii
+    nomen: Postumius
+    order: patrician
+    praenomina: ['Publius', 'Lucius']
+    cognomina: ['Tubertus', 'Megellus']
+    standing: [{from_year: -509, dignitas_bp: 800, auctoritas_bp: 700, wealth: 100, clients: 70}]
+    stances: {war: 3500}
+    popular_lean_bp: 3500
+    sources: ["Livy 2.16.1"]
+  - id: verginii
+    name: Verginii
+    nomen: Verginius
+    order: patrician
+    praenomina: ['Opiter']
+    cognomina: ['Tricostus']
+    standing: [{from_year: -509, dignitas_bp: 500, auctoritas_bp: 500, wealth: 60, clients: 40}]
+    popular_lean_bp: 5000
+    sources: ["Livy 2.16.8"]
+  - id: cassii
+    name: Cassii
+    nomen: Cassius
+    order: patrician
+    praenomina: ['Spurius']
+    cognomina: ['Vecellinus']
+    standing: [{from_year: -509, dignitas_bp: 700, auctoritas_bp: 500, wealth: 80, clients: 80}]
+    stances: {land: 6000, citizenship: 3000}
+    popular_lean_bp: 8000
+    notes: "Spurius Cassius later proposed an agrarian law (Livy 2.41), after this period."
+    sources: ["Livy 2.41"]
+  - id: cominii
+    name: Cominii
+    nomen: Cominius
+    order: patrician
+    praenomina: ['Postumus']
+    cognomina: ['Auruncus']
+    standing: [{from_year: -509, dignitas_bp: 500, auctoritas_bp: 400, wealth: 60, clients: 40}]
+    popular_lean_bp: 5000
+    sources: ["Livy 2.18.1"]
+  - id: sulpicii
+    name: Sulpicii
+    nomen: Sulpicius
+    order: patrician
+    praenomina: ['Servius']
+    cognomina: ['Camerinus']
+    standing: [{from_year: -509, dignitas_bp: 600, auctoritas_bp: 500, wealth: 70, clients: 50}]
+    popular_lean_bp: 4500
+    sources: ["Livy 2.19.1"]
+  - id: tullii
+    name: Tullii
+    nomen: Tullius
+    order: patrician
+    praenomina: ['Manius']
+    cognomina: ['Longus']
+    standing: [{from_year: -509, dignitas_bp: 400, auctoritas_bp: 300, wealth: 50, clients: 30}]
+    popular_lean_bp: 5000
+    sources: ["Livy 2.19.1"]
+  - id: claudii
+    name: Claudii
+    nomen: Claudius
+    order: patrician
+    praenomina: ['Appius', 'Publius', 'Gaius']
+    cognomina: ['Caudex', 'Pulcher', 'Nero', 'Caecus']
+    standing: [{from_year: -509, dignitas_bp: 1500, auctoritas_bp: 1400, wealth: 300, clients: 300}]
+    stances: {war: 4000, land: -3000, debt: -2500}
+    popular_lean_bp: 3000
+    notes: "Game-balance stances: the Claudii were proudly conservative towards the plebs (Livy 2.27-29; Suetonius, Tiberius 2)."
+    sources: ["Livy 2.27", "Suetonius, Tiberius 2"]
+  - id: fulvii
+    name: Fulvii
+    nomen: Fulvius
+    order: plebeian
+    praenomina: ['Marcus', 'Quintus', 'Gnaeus']
+    cognomina: ['Flaccus', 'Centumalus']
+    standing: [{from_year: -509, dignitas_bp: 900, auctoritas_bp: 800, wealth: 150, clients: 120}]
+    stances: {war: 3000}
+    popular_lean_bp: 5500
+    sources: ["Fasti Capitolini"]
+  - id: cornelii
+    name: Cornelii
+    nomen: Cornelius
+    order: patrician
+    praenomina: ['Publius', 'Gnaeus', 'Lucius']
+    cognomina: ['Scipio', 'Asina', 'Lentulus', 'Cossus']
+    standing: [{from_year: -509, dignitas_bp: 1500, auctoritas_bp: 1500, wealth: 300, clients: 300}]
+    stances: {war: 3500, building: 2000}
+    popular_lean_bp: 4000
+    sources: ["Fasti Capitolini"]
+  - id: duilii
+    name: Duilii
+    nomen: Duilius
+    order: plebeian
+    praenomina: ['Gaius', 'Marcus']
+    cognomina: ['Nepos']
+    standing: [{from_year: -509, dignitas_bp: 500, auctoritas_bp: 300, wealth: 80, clients: 60}]
+    stances: {war: 4000}
+    popular_lean_bp: 6000
+    notes: "Gaius Duilius won Rome's first naval victory at Mylae in 260 (Polybius 1.22-23)."
+    sources: ["Polybius 1.22-23"]
+  - id: otacilii
+    name: Otacilii
+    nomen: Otacilius
+    order: plebeian
+    praenomina: ['Manius', 'Titus']
+    cognomina: ['Crassus']
+    standing: [{from_year: -509, dignitas_bp: 600, auctoritas_bp: 400, wealth: 80, clients: 60}]
+    stances: {war: 4000}
+    popular_lean_bp: 5500
+    sources: ["Polybius 1.16"]
+  - id: mamilii
+    name: Mamilii
+    nomen: Mamilius
+    order: plebeian
+    praenomina: ['Quintus']
+    cognomina: ['Vitulus']
+    standing: [{from_year: -509, dignitas_bp: 400, auctoritas_bp: 300, wealth: 60, clients: 40}]
+    popular_lean_bp: 5000
+    sources: ["Polybius 1.17"]

@@ -140,6 +140,9 @@ class Scenario(Frozen):
     cost_scale: Annotated[int, Field(ge=1, le=1000)] = 1
     """Multiplies every project cost. Scenarios with real historical populations (millions,
     not tens of thousands) raise it so inventions cost the same share of a state's effort."""
+    republic: bool = False
+    """The player's state is the Roman Republic (R2): magistrates, Senate and families replace
+    the single ruler. Scenarios without it keep the old ruler model."""
     sources: tuple[str, ...] = ()
     """Internal research notes on the moment (populations, borders, rulers)."""
     confidence: Confidence = Confidence.LOW
