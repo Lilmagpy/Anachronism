@@ -752,7 +752,7 @@ scenarios:
         navy_bp: 3000
         disposition: aggressive
         scripts:
-          - {id: "macedon_vs_epirus", goal: "conquer", target: "epirus", preconditions: {after_year: -290}, note: "Demetrius drives Pyrrhus out of Macedonia and the two kings fight over it (Plutarch, Pyrrhus 7-12)."}
+          - {id: "macedon_vs_epirus", goal: "conquer", target: "epirus", preconditions: {after_year: -290}, note: "Demetrius drives Pyrrhus out of Macedonia and the two kings fight over it (Plutarch, Pyrrhus 10-12)."}
         capital: mac_macedonia
         leader: "Philip II"
         leader_age: 42
