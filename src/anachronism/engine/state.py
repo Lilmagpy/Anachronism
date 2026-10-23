@@ -21,13 +21,18 @@ from anachronism.content.schema import (
     EffectType,
     Era,
     Faith,
+    FastiYear,
     Formation,
     Frozen,
     General,
+    Gens,
     Happening,
+    HistoricalPerson,
+    Magistracy,
     MapResource,
     ProvinceGeography,
     RelationStatus,
+    RepublicRules,
     Rules,
     Script,
     SeaZone,
@@ -42,6 +47,7 @@ from anachronism.content.schema import (
     Unit,
 )
 from anachronism.engine.actions import LoggedAction, Priority
+from anachronism.engine.republic_state import RepublicState
 from anachronism.engine.rng import RngState
 
 SAVE_SCHEMA_VERSION = 1
@@ -116,6 +122,14 @@ class World(Frozen):
     """The year each first ruler's reign really ended (spared old age before it in a chronicle)."""
     reign_died: dict[str, int] = Field(default_factory=dict)
     """The year each first ruler really died a natural death (and dies, in a chronicle)."""
+    republic_rules: RepublicRules = Field(default_factory=RepublicRules)
+    magistracies: dict[str, Magistracy] = Field(default_factory=dict)
+    """The offices of the Republic (only in Republic scenarios, R2)."""
+    gentes: dict[str, Gens] = Field(default_factory=dict)
+    people: dict[str, HistoricalPerson] = Field(default_factory=dict)
+    """Real persons who may be seeded."""
+    fasti: dict[int, FastiYear] = Field(default_factory=dict)
+    """The Fasti by year: whom history elected."""
 
 
 class Construction(Mutable):
@@ -522,6 +536,8 @@ class GameState(Mutable):
     scripts_lapsed: dict[str, int] = Field(default_factory=dict)
     """Script id -> turn it lapsed (its moment passed or what it needed failed)."""
     outcome: Outcome | None = None
+    republic: RepublicState | None = None
+    """How Rome governs itself (R2), in scenarios with ``republic: true``; else ``None``."""
     victory_start: dict[str, int] = Field(default_factory=dict)
     """The player's share on each victory path at the start: victory means gaining ground."""
 

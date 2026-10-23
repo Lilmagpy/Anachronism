@@ -126,7 +126,7 @@ class Scenario(Frozen):
     unowned: dict[Identifier, NonNegative] = Field(default_factory=dict)
     """Provinces nobody controls, with their populations."""
     map: Identifier | None = None
-    """Real-Earth map region the client draws (e.g. ``east_asia``); ``None`` means a map
+    """Real-Earth map region the client draws (e.g. ``europe``); ``None`` means a map
     generated from province positions. On a real map every province needs a ``latlon``."""
     music: Identifier | None = None
     """Music track the client plays in this scenario (``roman``, ``asian``, ``medieval``,
@@ -140,6 +140,9 @@ class Scenario(Frozen):
     cost_scale: Annotated[int, Field(ge=1, le=1000)] = 1
     """Multiplies every project cost. Scenarios with real historical populations (millions,
     not tens of thousands) raise it so inventions cost the same share of a state's effort."""
+    republic: bool = False
+    """The player's state is the Roman Republic (R2): magistrates, Senate and families replace
+    the single ruler. Scenarios without it keep the old ruler model."""
     sources: tuple[str, ...] = ()
     """Internal research notes on the moment (populations, borders, rulers)."""
     confidence: Confidence = Confidence.LOW

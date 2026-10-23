@@ -8,12 +8,14 @@ from anachronism.content.schema import (
     CivDefinition,
     ProvinceGeography,
     RelationStatus,
+    RepublicRules,
     Rules,
     ScenarioCiv,
     SocialGroup,
     Stage,
 )
 from anachronism.engine.fixed import BP
+from anachronism.engine.republic import start_republic
 from anachronism.engine.rivals import contact_pairs
 from anachronism.engine.rng import GameRng
 from anachronism.engine.state import (
@@ -122,6 +124,13 @@ def build_state(
             for c, start in sorted(scenario.civs.items())
             if start.leader_until is not None
         },
+        republic_rules=content.republic_rules if scenario.republic else RepublicRules(),
+        magistracies=dict(sorted(content.magistracies.items())) if scenario.republic else {},
+        gentes=dict(sorted(content.gentes.items())) if scenario.republic else {},
+        people=dict(sorted(content.people.items())) if scenario.republic else {},
+        fasti={fy.year: fy for fy in sorted(content.fasti.values(), key=lambda f: f.year)}
+        if scenario.republic
+        else {},
         reign_died={
             c: start.leader_died
             for c, start in sorted(scenario.civs.items())
@@ -158,7 +167,7 @@ def build_state(
         rel.status = listed.status
         if listed.grievance_bp:
             rel.grievance = {a: listed.grievance_bp, b: listed.grievance_bp}
-    return GameState(
+    state = GameState(
         relations=relations,
         engine_version=__version__,
         seed=seed,
@@ -171,6 +180,9 @@ def build_state(
         civs=civs,
         chronicle_mode=chronicle,
     )
+    if scenario.republic:
+        start_republic(state, GameRng(state.rng))
+    return state
 
 
 def _rules_for(content: Content, difficulty: str) -> Rules:
