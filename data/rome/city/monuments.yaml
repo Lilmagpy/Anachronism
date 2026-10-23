@@ -672,13 +672,16 @@ monuments:
   lon: 12.4838
   precision: approx
   location: from the Forum (below the Basilica Aemilia) through the Velabrum to the Tiber near the Pons Aemilius
-  built: {year: -600, certainty: traditional, by: "Tarquinius Priscus (Livy 1.38.6; Dion. Hal. 3.67); Tarquinius Superbus (Livy 1.56.2)"}
+  built: {year: -600, certainty: traditional, by: "tradition: begun by Tarquinius Priscus (Livy 1.38.6, drainage of the forum valley) or built by Tarquinius Superbus (Livy 1.56.2; Dion. Hal. 3.67.5, 4.44.1); the Tarquinian date is supported by the end of the Forum necropolis in the 6th c. (P&A)"}
   events:
-  - {year: -184, what: "Cato and Flaccus as censors contract to build covered sewers (Livy 39.44.5)"}
-  - {year: -33, what: "cleaned by Agrippa, who sailed through it (Dio 49.43.1; Pliny NH 36.104)"}
-  form: "originally an open drain, then a vaulted channel of cappellaccio, later Gabine tufa; about 3 m wide"
+  - {year: -184, what: "the censors M. Porcius Cato and L. Valerius Flaccus let contracts to clean the sewers and build new ones on the Aventine and elsewhere (Livy 39.44.5)"}
+  - {year: -33, what: "Agrippa as aedile inspects and cleans the whole system, sailing through it (Pliny NH 36.104; Dio 49.43.1)"}
+  form: "originally a stream channel regulated with walls, roofed later; the section near the Forum is 4.20 m high and 3.20 m wide, with a vault of republican type later restored in brick-faced concrete"
   route: [[41.8924,12.4850],[41.8919,12.4832],[41.8912,12.4808],[41.8896,12.4797],[41.8890,12.4786]]
-  sources: ["Livy 1.38.6", "Livy 39.44.5", "Pliny NH 36.104", "Platner-Ashby s.v. Cloaca Maxima"]
+  sources: ["Livy 1.38.6", "Livy 1.56.2", "Livy 39.44.5", "Dion. Hal. 3.67.5", "Dion. Hal. 4.44.1", "Strabo 5.3.8", "Pliny NH 36.104", "Platner-Ashby s.v. Cloaca Maxima"]
+  notes: "CORRECTED: Livy 39.44.5 (Latin text): the censors Cato and Flaccus (184) let contracts to clean the sewers and to make NEW sewers on the Aventine and elsewhere; it is not about 'covered sewers'. Livy 1.38.6 (verified in Latin): Tarquinius Priscus drained the low ground round the forum with sewers; P&A: tradition ascribes the Cloaca Maxima to Tarquinius Superbus (Liv. 1.56.2; Dion. Hal. 3.67.5, 4.44.1; Strabo 5.3.8). P&A: it began as a stream regulated by walls, probably not roofed until after the Tarquins (Plaut. Curc. 476 'canalis'); nothing of the original drain survives except perhaps a short cappellaccio section under the Basilica Aemilia; most existing parts date from the 3rd c. BC or later; the channel near the Forum is 4.20 m high and 3.20 m wide. Agrippa inspected it as aedile in 33 BC (Pliny NH 36.104; Dio 49.43.1 not checked). Pleiades 867802692 (precise) is the outfall near S. Giorgio in Velabro."
+  pleiades: 867802692
+  verified: platner-ashby+pleiades
 - id: vicus_tuscus
   latin: Vicus Tuscus
   english: Tuscan Street
@@ -688,8 +691,11 @@ monuments:
   lon: 12.4845
   precision: approx
   location: from the Forum along the Temple of Castor to the Velabrum
-  built: {year: null, certainty: traditional, by: "Etruscan settlers (Livy 2.14.9)"}
-  sources: ["Livy 2.14.9", "Platner-Ashby s.v. Vicus Tuscus"]
+  built: {year: -508, certainty: traditional, by: "name derived from Etruscans given land to live there after Porsenna's war (Livy 2.14.9), or from Caeles Vibenna's followers (P&A); no building date"}
+  sources: ["Livy 2.14.9", "Livy 27.37.15", "Livy 33.26.9", "Dion. Hal. 5.36.4", "Platner-Ashby s.v. Vicus Tuscus"]
+  notes: "P&A: street from the forum between the Basilica Iulia and the temple of Castor, running south along the west side of the Palatine to the Forum Boarium and Circus Maximus (Livy 27.37.15, 33.26.9; Dion. Hal. 5.36.4); eastern boundary of the Velabrum. The name is derived from Etruscans, either fled from Porsenna (Livy 2.14.9, verified: 'locus ad habitandum datus quem deinde Tuscum vicum appellarunt') or from the followers of Caeles Vibenna. Pleiades 380281017."
+  pleiades: 380281017
+  verified: platner-ashby+pleiades
 - id: forum_boarium
   latin: Forum Boarium
   english: Cattle Market
@@ -700,7 +706,10 @@ monuments:
   precision: approx
   location: between the Capitol, Palatine, Aventine and the Tiber, near the Pons Sublicius
   built: {year: null, certainty: traditional, by: "early market by the river port"}
-  sources: ["Platner-Ashby s.v. Forum Boarium"]
+  sources: ["Cic. Scaur. 23", "Dion. Hal. 1.40", "Livy 33.27.4", "Platner-Ashby s.v. Forum Boarium"]
+  notes: "P&A: the cattle market of Rome (Cic. Scaur. 23; Dion. Hal. 1.40, 4.27), extending from the boundary of the Velabrum to the Tiber; monuments include the two fornices of L. Stertinius (196 BC), the Busta Gallica and Doliola (probably primitive tombs). Pleiades 207271756."
+  pleiades: 207271756
+  verified: platner-ashby+pleiades
 - id: ara_maxima_herculis
   latin: Ara Maxima Herculis
   english: Great Altar of Hercules
@@ -713,46 +722,62 @@ monuments:
   built: {year: null, certainty: traditional, by: "Evander, according to tradition (Livy 1.7.3-15)"}
   events:
   - {year: -312, what: "cult given to public slaves after Appius Claudius' reform (Livy 9.29.9-11)"}
-  sources: ["Livy 1.7.3-15", "Livy 9.29.9-11", "Platner-Ashby s.v. Ara Maxima Herculis"]
+  sources: ["Livy 1.7.3-15", "Livy 9.29.9-11", "Dion. Hal. 1.40.6", "Festus 237", "Serv. Aen. 8.269-271", "Platner-Ashby s.v. Hercules Invictus, Ara Maxima"]
+  notes: "P&A: earliest cult centre of Hercules in Rome, raised, by tradition, after Hercules slew Cacus and Evander recognised his divinity (Livy 1.7.10-11; Dion. Hal. 1.40.6; Fest. 237; Serv. Aen. 8.269-271); one tradition ascribes the dedication to Evander (Dion. Hal.; Macrob. 3.11.7). Livy 9.29.9: Appius Claudius's censorship (312) hands the rites to public slaves. Burned in Nero's fire (Tac. Ann. 15.41) but restored. Site north-west of the probable ara; relations between the Hercules shrines 'by no means clear'. Pleiades 207271757 has only a 'related' location, not adopted."
+  pleiades: 207271757
+  verified: platner-ashby+pleiades
 - id: aedes_fortunae_matris_matutae
   latin: Aedes Fortunae et Matris Matutae (Sant'Omobono)
   english: Temples of Fortuna and Mater Matuta
   type: temple
   regio: 11
-  lat: 41.8896
-  lon: 12.4810
+  lat: 41.8907
+  lon: 12.481
   precision: exact
   location: Forum Boarium, Sant'Omobono precinct
-  built: {year: null, certainty: probable, by: "Servius Tullius (Livy 5.19.6; Dion. Hal. 4.27)"}
+  built: {year: null, certainty: traditional, by: "both temples ascribed to Servius Tullius (Livy 33.27.4; Dion. Hal. 4.27); Mater Matuta vowed by Camillus 396 and dedicated 396/395 (Livy 5.19.6, 5.23.7; P&A 395)"}
   events:
-  - {year: -396, what: "temple of Mater Matuta dedicated or restored by Camillus after Veii (Livy 5.19.6, 5.23.7)"}
-  - {year: -213, what: "fire consumes the temples (Livy 24.47.15)"}
-  sources: ["Livy 5.19.6", "Livy 24.47.15", "Dion. Hal. 4.27", "Platner-Ashby s.v. Fortuna, Aedes; Mater Matuta"]
+  - {year: -396, what: "temple of Mater Matuta vowed or dedicated by M. Furius Camillus after the capture of Veii (Livy 5.19.6, 5.23.7); P&A gives 395"}
+  - {year: -213, what: "both temples burned (Livy 24.47.15); restored the next year (Livy 25.7.6)"}
+  - {year: -196, what: "L. Stertinius sets up two arches with gilded statues before the temples (Livy 33.27.4)"}
+  sources: ["Livy 5.19.6", "Livy 5.23.7", "Livy 24.47.15", "Livy 25.7.6", "Livy 33.27.4", "Dion. Hal. 4.27", "Ovid Fasti 6.479-480", "Platner-Ashby s.v. Fortuna, Aedes; Mater Matuta, Aedes"]
+  notes: "P&A treats two temples side by side (Fortuna and Mater Matuta) in the Forum Boarium just inside the Porta Carmentalis (Liv. 25.7.6): both ascribed by tradition to Servius Tullius; Mater Matuta restored and dedicated by Camillus in 395 (P&A; Livy 5.19.6 is the vow of 396 and Livy 5.23.7 the dedication, in the year Livy gives as 396); both burned in 213 (Livy 24.47.15) and restored the next year by commissioners (Livy 25.7.6); in 196 L. Stertinius set up two arches with gilded statues in front of them (Livy 33.27.4); dedication day for both 11 June (Matralia). P&A (1929) identifies the Ionic temple converted into S. Maria Egiziaca with Mater Matuta (far from certain) and knows nothing of the S. Omobono area excavation (1937 on) with its 6th-c. temples, which is the modern basis for the coordinates (Pleiades 103123065). Fortuna's archaic wooden statue (Ov. Fast. 6.569-580; Dion. Hal. 4.40) was undamaged by the fire."
+  pleiades: 103123065
+  verified: platner-ashby+pleiades
 - id: aedes_herculis_victoris
   latin: Aedes Herculis Victoris (Hercules Olivarius)
   english: Round Temple in the Forum Boarium (Hercules Victor)
   type: temple
   regio: 11
-  lat: 41.8884
-  lon: 12.4812
-  precision: exact
+  lat: 41.8887
+  lon: 12.4808
+  precision: approx
   location: Forum Boarium, by the Tiber
-  built: {year: -120, certainty: probable, by: "L. Mummius Achaicus (146) or the banker M. Octavius Herennius; Hermodorus of Salamis the architect"}
+  built: {year: null, certainty: uncertain, by: "a round temple of Hercules in the Forum Boarium existed by 296 (Livy 10.23.3); a temple of Hercules Victor vowed 145 and dedicated 142 by L. Mummius (CIL I2 626 = VI 331, P&A), perhaps the same or a rebuilding"}
   materials: [Pentelic marble, tufa]
-  form: "circular temple, 20 Corinthian columns, Greek marble, earliest marble temple in Rome (c. 120 BC)"
-  sources: ["Platner-Ashby s.v. Hercules Victor, Aedes", "Vitr. 3.2.5 (Hermodorus of Salamis)"]
+  form: "round temple in the Forum Boarium; the surviving marble round temple has 20 Corinthian columns and a cella 10 m in diameter on a 2 m tufa podium with a republican favissa (P&A describes it under Portunus); identification with Hercules Victor is modern, P&A prefers Portunus"
+  sources: ["Livy 10.23.3", "Pliny NH 35.19", "Pliny NH 10.79", "Festus 242", "CIL I2 626", "Platner-Ashby s.v. Hercules Victor, Aedes; Portunium"]
+  events:
+  - {year: -142, what: "Mummius dedicates a temple and statue of Hercules Victor (CIL I2 626 = VI 331; whether this is the round temple is uncertain)"}
+  notes: "CORRECTED: 'Vitr. 3.2.5 (Hermodorus of Salamis)' removed: Vitruvius 3.2.5 names Hermodorus as architect of the temple of Mars in the Circus Flaminius (and the Jupiter Stator temple), not this round temple; the Hermodorus attribution here is a modern guess, not an ancient source. P&A: Hercules Victor, a round temple in the Forum Boarium already standing in 296 BC (Livy 10.23.3 'ad aedem rotundam Herculis'), with frescoes by the poet Pacuvius (Plin. NH 35.19); a temple of Hercules Victor was vowed by L. Mummius in 145 and dedicated in 142 as censor, to judge from CIL I2 626 = VI 331 (found on the Caelian, so the connection to this round temple is not certain); a possible restoration by L. Aemilius Paullus rests on a conjectural emendation of Festus 242 (P&A). P&A also says the remains destroyed under Sixtus IV were a round temple near S. Maria in Cosmedin and that the surviving round temple (S. Maria del Sole) is, 'more probably', the temple of Portunus; modern scholarship reverses this (Hercules Victor = the round temple, Portunus = the rectangular Ionic temple). The marble round temple (c. 120 BC) is a modern dating, not in P&A, and is kept only as a flagged guess. Pleiades 825969667 (Temple of Hercules Victor) adopted for coordinates."
+  pleiades: 825969667
+  verified: platner-ashby+pleiades
 - id: aedes_portuni
   latin: Aedes Portuni
   english: Temple of Portunus
   type: temple
   regio: 11
-  lat: 41.8887
-  lon: 12.4808
-  precision: exact
+  lat: 41.8892
+  lon: 12.4809
+  precision: approx
   location: Forum Boarium, by the Tiber beside the round temple
-  built: {year: -120, certainty: probable, by: "earlier cult of Portunus, god of the harbour; extant rectangular tetrastyle Ionic temple c. 120-80 BC (Varro LL 6.19)"}
+  built: {year: null, certainty: uncertain, by: "temple of Portunus 'in portu Tiberino' near the Pons Aemilius, dedicated on 17 August (Varro LL 6.19; fasti); founding date unknown"}
   materials: [tufa, travertine]
-  sources: ["Varro LL 6.19", "Platner-Ashby s.v. Portunus, Aedes"]
+  sources: ["Varro LL 6.19", "Varro LL 5.146", "Fronto Ep. 1.7", "Platner-Ashby s.v. Portunium; Mater Matuta"]
+  form: "the rectangular Ionic tetrastyle prostyle temple (about 20 x 12 m on a 2.5 m podium) is the modern identification, dated by modern scholars to the late 2nd or early 1st c. BC; P&A prefers the round temple"
+  notes: "CORRECTED: the old '-120 probable, extant tetrastyle Ionic temple' was unsupported. P&A: Varro LL 6.19: 'Portunalia dicta a Portuno, cui eo die aedes in portu Tiberino facta et feriae institutae'; Portunalia on 17 August = dedication day, calendar 'Portuno ad pontem Aemilium'; the portus Tiberinus is a quay near the Pons Aemilius, temple close by; no date. P&A thinks the round temple (S. Maria del Sole) is probably Portunus, far from certain, and identifies the rectangular Ionic tetrastyle prostyle temple (S. Maria Egiziaca, 20 x 12 m, podium 2.5 m) as Mater Matuta, which cannot be reconciled with the modern identification used here for coordinates (Pleiades 494660670: the rectangular temple); the c. 120-80 BC date of that building is modern (not in P&A) and flagged."
+  pleiades: 494660670
+  verified: platner-ashby+pleiades
 - id: porta_trigemina
   latin: Porta Trigemina
   english: Porta Trigemina
@@ -762,8 +787,11 @@ monuments:
   lon: 12.4793
   precision: rough
   location: Servian Wall, between the Capitol/Forum Boarium and the Tiber
-  built: {year: -378, certainty: certain, by: "with the Servian Wall; triple gate (Livy 4.16.2)"}
-  sources: ["Livy 4.16.2", "Livy 35.10.12", "Platner-Ashby s.v. Porta Trigemina"]
+  built: {year: -378, certainty: probable, by: "gate on the line of the Servian Wall (wall completed 378: Livy 6.32.1); the gate is named already in 439 (Livy 4.16.2)"}
+  sources: ["Livy 4.16.2", "Livy 35.10.12", "Livy 41.27.8", "Dion. Hal. 1.32.2", "Platner-Ashby s.v. Porta Trigemina"]
+  notes: "CORRECTED: the gate existed in the story of 439 (Livy 4.16.2: L. Minucius given an ox 'extra portam Trigeminam'), before the wall of 378, so '378 certain' is unsound; the name, if not anachronistic in Livy, implies a gate on the Palatine-Aventine line before the Servian Wall. P&A: important gate in the Servian wall between the Aventine and the Tiber (Region XI), exact site disputed: below S. Sabina, or about 40 m south of S. Maria in Cosmedin (arch of tufa 3.30 m wide found 1886), or at the north corner of the Aventine near S. Anna dei Calzettari. Livy 35.10.12 (193 BC): the aediles paved the Emporium and the porticus extra portam Trigeminam; Livy 41.27.8 (174): the censors built a porticus extra portam. Pleiades 303638861 has only a 'related' location."
+  pleiades: 303638861
+  verified: platner-ashby
 - id: forum_holitorium
   latin: Forum Holitorium
   english: Vegetable Market
