@@ -741,7 +741,7 @@ monuments:
   - {year: -213, what: "both temples burned (Livy 24.47.15); restored the next year (Livy 25.7.6)"}
   - {year: -196, what: "L. Stertinius sets up two arches with gilded statues before the temples (Livy 33.27.4)"}
   sources: ["Livy 5.19.6", "Livy 5.23.7", "Livy 24.47.15", "Livy 25.7.6", "Livy 33.27.4", "Dion. Hal. 4.27", "Ovid Fasti 6.479-480", "Platner-Ashby s.v. Fortuna, Aedes; Mater Matuta, Aedes"]
-  notes: "P&A treats two temples side by side (Fortuna and Mater Matuta) in the Forum Boarium just inside the Porta Carmentalis (Liv. 25.7.6): both ascribed by tradition to Servius Tullius; Mater Matuta restored and dedicated by Camillus in 395 (P&A; Livy 5.19.6 is the vow of 396 and Livy 5.23.7 the dedication, in the year Livy gives as 396); both burned in 213 (Livy 24.47.15) and restored the next year by commissioners (Livy 25.7.6); in 196 L. Stertinius set up two arches with gilded statues in front of them (Livy 33.27.4); dedication day for both 11 June (Matralia). P&A (1929) identifies the Ionic temple converted into S. Maria Egiziaca with Mater Matuta (far from certain) and knows nothing of the S. Omobono area excavation (1937 on) with its 6th-c. temples, which is the modern basis for the coordinates (Pleiades 103123065). Fortuna's archaic wooden statue (Ov. Fast. 6.569-580; Dion. Hal. 4.40) was undamaged by the fire."
+  notes: "P&A treats two temples side by side (Fortuna and Mater Matuta) in the Forum Boarium just inside the Porta Carmentalis (Liv. 25.7.6): both ascribed by tradition to Servius Tullius; Mater Matuta restored and dedicated by Camillus in 395 (P&A; Livy 5.19.6: Camillus vows to dedicate the rebuilt temple of Mater Matuta, 'iam ante ab rege Ser. Tullio dedicatam'; Livy 5.23.7: he dedicates it, in the year Livy gives as 396); both burned in 213 (Livy 24.47.15) and restored the next year by commissioners (Livy 25.7.6); in 196 L. Stertinius set up two arches with gilded statues in front of them (Livy 33.27.4); dedication day for both 11 June (Matralia). P&A (1929) identifies the Ionic temple converted into S. Maria Egiziaca with Mater Matuta (far from certain) and knows nothing of the S. Omobono area excavation (1937 on) with its 6th-c. temples, which is the modern basis for the coordinates (Pleiades 103123065). Fortuna's archaic wooden statue (Ov. Fast. 6.569-580; Dion. Hal. 4.40) was undamaged by the fire."
   pleiades: 103123065
   verified: platner-ashby+pleiades
 - id: aedes_herculis_victoris
@@ -789,7 +789,7 @@ monuments:
   location: Servian Wall, between the Capitol/Forum Boarium and the Tiber
   built: {year: -378, certainty: probable, by: "gate on the line of the Servian Wall (wall completed 378: Livy 6.32.1); the gate is named already in 439 (Livy 4.16.2)"}
   sources: ["Livy 4.16.2", "Livy 35.10.12", "Livy 41.27.8", "Dion. Hal. 1.32.2", "Platner-Ashby s.v. Porta Trigemina"]
-  notes: "CORRECTED: the gate existed in the story of 439 (Livy 4.16.2: L. Minucius given an ox 'extra portam Trigeminam'), before the wall of 378, so '378 certain' is unsound; the name, if not anachronistic in Livy, implies a gate on the Palatine-Aventine line before the Servian Wall. P&A: important gate in the Servian wall between the Aventine and the Tiber (Region XI), exact site disputed: below S. Sabina, or about 40 m south of S. Maria in Cosmedin (arch of tufa 3.30 m wide found 1886), or at the north corner of the Aventine near S. Anna dei Calzettari. Livy 35.10.12 (193 BC): the aediles paved the Emporium and the porticus extra portam Trigeminam; Livy 41.27.8 (174): the censors built a porticus extra portam. Pleiades 303638861 has only a 'related' location."
+  notes: "CORRECTED: the gate existed in the story of 439 (Livy 4.16.2: L. Minucius given an ox 'extra portam Trigeminam'), before the wall of 378, so '378 certain' is unsound; the name, if not anachronistic in Livy, implies a gate on the Palatine-Aventine line before the Servian Wall. P&A: important gate in the Servian wall between the Aventine and the Tiber (Region XI), exact site disputed: below S. Sabina, or about 40 m south of S. Maria in Cosmedin (arch of tufa 3.30 m wide found 1886), or at the north corner of the Aventine near S. Anna dei Calzettari. Livy 35.10.12 (193 BC): the aediles built a portico outside the Porta Trigemina and added the Emporium to it; Livy 41.27.8 (174): the censors paved the Emporium outside the gate, repaired the Porticus Aemilia and paved a portico inside the gate up the Aventine. Pleiades 303638861 has only a 'related' location."
   pleiades: 303638861
   verified: platner-ashby
 - id: forum_holitorium
@@ -797,71 +797,98 @@ monuments:
   english: Vegetable Market
   type: market
   regio: 9
-  lat: 41.8922
-  lon: 12.4782
+  lat: 41.8912
+  lon: 12.48
   precision: approx
   location: below the south slope of the Capitol by the Tiber; later under the Theatre of Marcellus
   built: {year: null, certainty: traditional, by: "early market (Livy 21.62.3)"}
-  sources: ["Livy 21.62.3", "Platner-Ashby s.v. Forum Holitorium"]
+  sources: ["Livy 21.62.3", "Varro LL 5.146", "Platner-Ashby s.v. Forum Holitorium"]
+  form: "open market about 125 x 40-50 m (once enclosed), paved with travertine by the 2nd c. BC; four temples (Pietas, Janus, Spes, Juno Sospita) and later the Theatre of Marcellus around it"
+  notes: "P&A: the vegetable market, just outside the Porta Carmentalis (Varro LL 5.146; 'hoc erat antiquum macellum'), south-east and north-east limits formed by the Servian wall and the Capitoline slope; later enclosed by four temples (Pietas, Janus, Spes, Juno Sospita) and the Theatre of Marcellus; paved by the 2nd c. BC; the built-up forum was about 125 x 40-50 m. Livy 21.62.3 (218 BC prodigy: an ox climbed to the third floor from the Forum Boarium; the vegetable market is named in the same passage) was not verified in detail. Pleiades 72845305."
+  pleiades: 72845305
+  verified: platner-ashby+pleiades
 - id: aedes_ianus_holitorium
   latin: Aedes Iani
   english: Temple of Janus (Forum Holitorium)
   type: temple
   regio: 9
-  lat: 41.8921
-  lon: 12.4784
+  lat: 41.8911
+  lon: 12.4799
   precision: approx
   location: Forum Holitorium, next to Spes and Juno Sospita
-  built: {year: -260, certainty: probable, by: "C. Duilius, consul 260 (Tac. Ann. 2.49)"}
-  sources: ["Tac. Ann. 2.49", "Platner-Ashby s.v. Ianus, Aedes"]
+  built: {year: -260, certainty: probable, by: "C. Duilius, after Mylae (Tac. Ann. 2.49); dedication day 17 August (fasti)"}
+  sources: ["Tacitus Ann. 2.49", "Festus 285", "Pliny NH 36.28", "Platner-Ashby s.v. Ianus, Aedes"]
+  notes: "Not in Pleiades as a separate place. P&A: temple in the forum Holitorium built by C. Duilius after Mylae (Tac. Ann. 2.49), ad theatrum Marcelli (Fast. Allif.), extra portam Carmentalem (Fest. 285); dedication day 17 August; restoration begun by Augustus, completed by Tiberius AD 17 (outside range). Augustus placed a statue of Janus from Egypt in it (Plin. NH 36.28). The three temples under S. Nicola in Carcere (Pleiades church point 41.8911, 12.4799) cannot be assigned individually with certainty: P&A (1929) tentatively follows Delbrueck/Frank (south = Spes; central = about 90 BC; Doric 'smallest' = Juno Sospita), while later scholarship generally calls the northern Doric one Janus and the central Ionic one Juno Sospita; coordinates here are therefore at the church only."
+  pleiades: null
+  verified: platner-ashby
 - id: aedes_spei
   latin: Aedes Spei
   english: Temple of Hope
   type: temple
   regio: 9
-  lat: 41.8919
-  lon: 12.4786
+  lat: 41.891
+  lon: 12.4798
   precision: approx
   location: Forum Holitorium, by the Tiber
-  built: {year: -254, certainty: probable, by: "A. Atilius Calatinus in the First Punic War (Tac. Ann. 2.49; Cic. Leg. 2.28)"}
+  built: {year: -254, certainty: probable, by: "A. Atilius Calatinus in the First Punic War, as consul 258 or 254 (Cic. Leg. 2.28; Tac. Ann. 2.49); dedication day 1 August"}
   events:
-  - {year: -213, what: "burned (Livy 21.62.4; 24.47.15)"}
-  sources: ["Tac. Ann. 2.49", "Livy 21.62.4", "Platner-Ashby s.v. Spes, Aedes"]
+  - {year: -218, what: "struck by lightning (Livy 21.62.4)"}
+  - {year: -213, what: "burned (Livy 24.47.15-16); restored the next year by a special commission (Livy 25.7.6)"}
+  - {year: -31, what: "burned again (Dio 50.10.3)"}
+  sources: ["Cic. Leg. 2.28", "Tacitus Ann. 2.49", "Livy 21.62.4", "Livy 24.47.15", "Livy 25.7.6", "Dio 50.10.3", "Platner-Ashby s.v. Spes, Aedes"]
+  notes: "CORRECTED events: Livy 21.62.4 is the lightning strike of 218, not a fire. P&A: built and dedicated by A. Atilius Calatinus in the First Punic War (Cic. Leg. 2.28; Tac. Ann. 2.49); struck by lightning 218 (Livy 21.62.4); burned 213 and restored next year by a commission (Livy 24.47.15-16, 25.7.6); burned again in 31 (Dio 50.10.3); rebuilt later (Germanicus dedicated AD 17); dedication day 1 August. Existing remains (about 30 x 10 m, Ionic, amphiprostyle hexastyle; three travertine columns 8.70 m high built into S. Nicola) are attributed by Frank to Augustus's rebuilding. Not in Pleiades. The three temples under S. Nicola in Carcere (Pleiades church point 41.8911, 12.4799) cannot be assigned individually with certainty: P&A (1929) tentatively follows Delbrueck/Frank (south = Spes; central = about 90 BC; Doric 'smallest' = Juno Sospita), while later scholarship generally calls the northern Doric one Janus and the central Ionic one Juno Sospita; coordinates here are therefore at the church only."
+  pleiades: null
+  verified: platner-ashby
 - id: aedes_iunonis_sospitae
   latin: Aedes Iunonis Sospitae
   english: Temple of Juno Sospita
   type: temple
   regio: 9
-  lat: 41.8917
-  lon: 12.4788
+  lat: 41.8913
+  lon: 12.4797
   precision: approx
   location: Forum Holitorium
   built: {year: -194, certainty: certain, by: "vowed by C. Cornelius Cethegus 197 against the Insubres; dedicated 194 (Livy 32.30.10, 34.53.3)"}
-  sources: ["Livy 32.30.10", "Livy 34.53.3", "Platner-Ashby s.v. Iuno Sospita"]
+  sources: ["Livy 32.30.10", "Livy 34.53.3", "Cic. Div. 1.4", "Cic. Div. 1.99", "Obsequens 75", "Platner-Ashby s.v. Iuno Sospita, Aedes"]
+  events:
+  - {year: -90, what: "restored by the consul L. Julius Caesar after a dream of Cornelia (Cic. Div. 1.4, 1.99; Obseq. 75)"}
+  notes: "Verified: P&A: vowed 197 by the consul C. Cornelius Cethegus in the Insubrian war (Livy 32.30.10) and dedicated in 194 (Livy 34.53.3; P&A's text prints '104', a misprint) on 1 February; restored by L. Julius (Caesar), consul 90, after Cornelia's dream (Cic. Div. 1.4, 1.99; Obseq. 75). Not in Pleiades. The three temples under S. Nicola in Carcere (Pleiades church point 41.8911, 12.4799) cannot be assigned individually with certainty: P&A (1929) tentatively follows Delbrueck/Frank (south = Spes; central = about 90 BC; Doric 'smallest' = Juno Sospita), while later scholarship generally calls the northern Doric one Janus and the central Ionic one Juno Sospita; coordinates here are therefore at the church only."
+  pleiades: null
+  verified: platner-ashby
 - id: aedes_pietatis
   latin: Aedes Pietatis
   english: Temple of Pietas
   type: temple
   regio: 9
-  lat: 41.8918
-  lon: 12.4780
-  precision: approx
+  lat: 41.892
+  lon: 12.4795
+  precision: rough
   location: Forum Holitorium
-  built: {year: -181, certainty: certain, by: "vowed by M'. Acilius Glabrio 191 at Thermopylae; dedicated 181 by his son (Livy 40.34.4-5)"}
-  sources: ["Livy 40.34.4", "Platner-Ashby s.v. Pietas, Aedes"]
+  built: {year: -181, certainty: certain, by: "vowed by M'. Acilius Glabrio at Thermopylae in 191; dedicated in 181 by his son, duumvir (Livy 40.34.5)"}
+  sources: ["Livy 40.34.4-5", "Pliny NH 7.121", "Platner-Ashby s.v. Pietas, Aedes"]
+  events:
+  - {year: -44, what: "destroyed by Caesar's preparations for the Theatre of Marcellus (Pliny NH 7.121; P&A)"}
+  notes: "Verified: P&A: vowed by M'. Acilius Glabrio at Thermopylae (191), begun by him, dedicated in 181 by his son as duumvir (Livy 40.34.4-5; the Latin text reads 'altera in foro holitorio Pietatis; eam aedem dedicauit M'. Acilius Glabrio duumuir', with the first gilded statue in Italy for his father); at the east end of the area later occupied by the Theatre of Marcellus; destroyed by Caesar in 44 for the theatre (Plin. NH 7.121). Dedication day 1 December per fasti is for the other (Circus Flaminius) temple of Pietas, not this one. Not in Pleiades."
+  pleiades: null
+  verified: platner-ashby
 - id: aedes_apollinis_medici
   latin: Aedes Apollinis (Medici)
   english: Temple of Apollo (Medicus, later Sosianus)
   type: temple
   regio: 9
-  lat: 41.8918
-  lon: 12.4775
-  precision: exact
+  lat: 41.8924
+  lon: 12.4795
+  precision: approx
   location: Prata Flaminia, by the Theatre of Marcellus
   built: {year: -431, certainty: certain, by: "vowed 433 during a plague; dedicated 431 by the consul Cn. Iulius (Livy 4.25.3, 4.29.7)"}
   events:
-  - {year: -34, what: "rebuilt by C. Sosius (triumphed 34) in marble, with the Greek pedimental sculptures (Pliny NH 13.53, 36.28)"}
-  sources: ["Livy 4.25.3", "Livy 4.29.7", "Pliny NH 36.28", "Platner-Ashby s.v. Apollo, Aedes"]
+  - {year: -353, what: "Livy 7.20.9 records a dedication in 353 which may be an earlier restoration"}
+  - {year: -179, what: "censors contract for a portico from the temple to the Tiber behind the temple of Spes (Livy 40.51.6)"}
+  - {year: -32, what: "rebuilt by C. Sosius (consul 32), year not given in the sources read; the 34 BC date was an assumption (Pliny NH 13.53, 36.28)"}
+  sources: ["Livy 4.25.3", "Livy 4.29.7", "Livy 7.20.9", "Livy 40.51.6", "Pliny NH 13.53", "Pliny NH 36.28", "Platner-Ashby s.v. Apollo, Aedes (in Campo Martio)"]
+  notes: "Verified: P&A: first temple of Apollo in Rome, in the Campus Martius, vowed 433 in a plague (Livy 4.25.3), dedicated 431 by the consul Cn. Julius (Livy 4.29.7); earlier cult at the Apollinar; Livy 7.20.9 (353) may refer to a restoration; in 179 the censors let a portico from it to the Tiber, behind the temple of Spes (Livy 40.51.6); later 'Apollo Sosianus' after a restoration by C. Sosius, consul 32 (Pliny NH 13.53, 36.28); dedication day (Augustan) 23 September. The podium wall (13 m long, over 4 high) lies under S. Maria in Campitelli. The year 34 for the rebuilding is not in P&A: C. Sosius triumphed in 34 and was consul in 32; the rebuilding date is unknown (flagged). Pleiades 740034026 (precise) adopted for coordinates."
+  pleiades: 740034026
+  verified: platner-ashby+pleiades
 - id: aedes_bellonae
   latin: Aedes Bellonae
   english: Temple of Bellona
