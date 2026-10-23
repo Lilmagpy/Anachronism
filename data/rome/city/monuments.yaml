@@ -279,41 +279,50 @@ monuments:
   english: Curia Iulia
   type: curia
   regio: 8
-  lat: 41.8929
-  lon: 12.4856
+  lat: 41.893
+  lon: 12.4854
   precision: exact
   location: north-east side of the Forum, now the standing brick Curia (a Diocletianic rebuild)
-  built: {year: -44, certainty: certain, by: "begun by Caesar 44 as part of the new Forum Iulium plan; completed and dedicated 29 BC by Augustus (Dio 44.5.2, 51.22.1; Res Gestae 19)"}
+  built: {year: -44, certainty: certain, by: "begun by Caesar in 44 to replace the Curia Hostilia (Dio 44.5.2), continued by the triumvirs (Dio 45.17, 47.19); completed and dedicated by Octavian in 29 (Dio 51.22.1; Res Gestae 19.1)"}
   events:
   - {year: -29, what: "dedicated by Octavian (Dio 51.22.1)"}
-  sources: ["Dio 44.5.2", "Dio 51.22.1", "Res Gestae 19", "Platner-Ashby s.v. Curia Iulia"]
+  sources: ["Dio 44.5.2", "Dio 45.17", "Dio 51.22.1", "Res Gestae 19", "Platner-Ashby s.v. Curia Iulia"]
+  notes: "Verified: P&A 'begun by Julius Caesar in 44 B.C. ... continued by the triumvirs (Cass. Dio 44.5; 45.17; 47.19), completed and dedicated in 29 B.C. by Augustus (Mon. Anc. 4.1 = RG 19.1; Dio 51.22.1)'; built in comitio. Existing brick building is Diocletianic (c. AD 300); the republican-period plan is not preserved. Coordinates from Pleiades 837078212 (precise); the earlier 'exact' is kept for the site of the Curia."
+  pleiades: 837078212
+  verified: platner-ashby+pleiades
 - id: forum_iulium
   latin: Forum Iulium
   english: Forum of Caesar
   type: forum
   regio: 8
-  lat: 41.8938
-  lon: 12.4863
+  lat: 41.8937
+  lon: 12.4851
   precision: exact
   location: north-east of the Curia, at the foot of the Capitol (Arx slope) - Via dei Fori Imperiali
-  built: {year: -46, certainty: certain, by: "land bought from private owners for 100 million sesterces from 54 BC; dedicated by Caesar 26 Sep 46 BC with the temple of Venus Genetrix (Cic. Att. 4.16.8; Dio 43.22.2; Suet. Iul. 26)"}
+  built: {year: -46, certainty: certain, by: "land bought by Cicero and Oppius for Caesar from 54 BC (60 million sesterces paid by then: Cic. Att. 4.16.8; total reported at over 100 million: Suet. Iul. 26.2); forum and temple of Venus Genetrix dedicated 26 September 46 on the last day of Caesar's triumph (Dio 43.22.2; Appian BC 2.102)"}
   events:
-  - {year: -29, what: "completed by Augustus (Res Gestae 20)"}
-  form: "porticoed forum about 160 x 75 m with the temple of Venus Genetrix at the north-west end"
-  sources: ["Cic. Att. 4.16.8", "Suet. Iul. 26", "Dio 43.22.2", "Platner-Ashby s.v. Forum Iulium"]
+  - {year: -44, what: "unfinished at Caesar's death; completed under Augustus (P&A)"}
+  form: "porticoed rectangular forum, about 160 x 75 m on modern excavations (P&A 1929 estimated 115 x 30 m), with the temple of Venus Genetrix on the north-west axis; a fountain with nymphs (Appiades) before the temple; peperino enclosure wall 12 m high survives"
+  sources: ["Cic. Att. 4.16.8", "Suet. Iul. 26.2", "Dio 43.22.2", "Appian BC 2.102", "Platner-Ashby s.v. Forum Iulium"]
+  notes: "CORRECTED: P&A says land was bought in 54 BC by Cicero and Oppius for Caesar, 60 million sesterces already paid (Cic. Att. 4.16.8; P&A cites 4.16.9), and the final cost was reported as 100 million (Suet. Iul. 26.2); so '100 million from 54' was wrong in the other direction: 60 million by 54, 100 million at the end. Dedicated 26 Sept 46 with the temple of Venus Genetrix at Caesar's Triumph (Dio 43.22.2; Appian BC 2.102). P&A (1929) gives the forum as rectangular c. 115 x 30 m; the 160 x 75 m figure kept in 'form' comes from later excavation (Meneghini), not P&A. P&A: front of the temple had a fountain with nymphs (Appiades); completed after Caesar's death (Res Gestae 20 is not the source for this; RG 20 is the Basilica Iulia / roads; removed). Pleiades 445545537."
+  pleiades: 445545537
+  verified: platner-ashby+pleiades
 - id: aedes_veneris_genetricis
   latin: Aedes Veneris Genetricis
   english: Temple of Venus Genetrix
   type: temple
   regio: 8
   lat: 41.8941
-  lon: 12.4861
+  lon: 12.4848
   precision: exact
   location: head of the Forum of Caesar
   built: {year: -46, certainty: certain, by: "vowed by Caesar before Pharsalus 48 (App. BC 2.68, 2.102); dedicated 46 (Dio 43.22)"}
-  form: "octostyle Corinthian temple on a high podium, marble"
+  form: "octostyle peripteral temple on a high podium (from Renaissance drawings by Palladio and Labacco, cited by P&A), marble (Ov. Ars 3.3.2), facing south-east, in the centre of the Forum Iulium"
   materials: [marble, tufa core]
-  sources: ["App. BC 2.68", "Dio 43.22.2", "Platner-Ashby s.v. Venus Genetrix, Aedes"]
+  sources: ["Appian BC 2.68", "Appian BC 2.102", "Dio 43.22.2", "Ovid Ars Amatoria 3.3.2", "Platner-Ashby s.v. Venus Genetrix, Aedes; Forum Iulium"]
+  notes: "P&A: Caesar vowed the temple at Pharsalus (Appian BC 2.68, 2.102) and built it in the middle of his forum; dedicated 26 Sept 46 (Dio 43.22.2). Octostyle only from Palladio's Renaissance drawing (P&A); 'solid marble' from Ov. Ars 3.3.2; 'Corinthian' not confirmed here. Pleiades 898745908 (precise), about 90 m west of the earlier coordinate; Pleiades value adopted."
+  pleiades: 898745908
+  verified: platner-ashby+pleiades
 - id: basilica_porcia
   latin: Basilica Porcia
   english: Basilica Porcia
@@ -325,23 +334,29 @@ monuments:
   location: Forum, beside the Curia (north-west); exact site lost
   built: {year: -184, certainty: certain, by: "M. Porcius Cato as censor (Livy 39.44.7; Plut. Cato Maior 19)"}
   ended: {year: -52, what: "burned with the Curia at Clodius' funeral (Asc. Mil. 33)"}
-  sources: ["Livy 39.44.7", "Plut. Cato Maior 19", "Platner-Ashby s.v. Basilica Porcia"]
+  sources: ["Livy 39.44.7", "Plut. Cato Maior 19", "Plut. Cato Minor 5", "Asconius Mil. 34", "Platner-Ashby s.v. Basilica Porcia"]
+  notes: "Verified: Livy 39.44.7 (Latin text): the censor Cato bought the atria Maenium and Titium in the Lautumiae and four shops and built a basilica 'quae Porcia appellata est' (184 BC). Also Plut. Cato Maior 19. P&A: the first basilica in Rome, a little west of the Curia, in Lautumiis. Pleiades 547224816 has only a 'related' point (forum centroid), not adopted."
+  pleiades: 547224816
+  verified: platner-ashby
 - id: basilica_aemilia
   latin: Basilica Aemilia (Fulvia)
   english: Basilica Aemilia (Basilica Fulvia)
   type: basilica
   regio: 8
-  lat: 41.8929
-  lon: 12.4863
+  lat: 41.8926
+  lon: 12.4861
   precision: exact
   location: north side of the Forum, between the Curia and the Temple of Divus Iulius
-  built: {year: -179, certainty: certain, by: "M. Aemilius Lepidus and M. Fulvius Nobilior as censors (Livy 40.51.5)"}
+  built: {year: -179, certainty: certain, by: "contracted by the censor M. Fulvius Nobilior in 179, 'basilica post argentarias novas' (Livy 40.51.5); P&A infers his colleague M. Aemilius Lepidus also shared in it (hence 'Aemilia et Fulvia', Varro)"}
   events:
-  - {year: -78, what: "restored by M. Aemilius Lepidus (consul 78) with shields (Pliny NH 35.13)"}
-  - {year: -54, what: "L. Aemilius Paullus rebuilds it with Phrygian marble columns at great cost, financed in part by Caesar's money (Cic. Att. 4.16.8; Plut. Caes. 29)"}
-  - {year: -34, what: "completed by L. Aemilius Paullus (consul 34) (Appian BC 2.26 / Plutarch Caesar 29; Dio 49.42)"}
+  - {year: -78, what: "decorated and probably restored by the consul M. Aemilius Lepidus, who hung shields with his ancestors' portraits (Pliny NH 35.13)"}
+  - {year: -54, what: "L. Aemilius Paullus, aedile, begins a lavish rebuilding with money from Caesar (Plut. Caes. 29; Cic. Att. 4.16.8; App. BC 2.26); P&A dates it 55 or 54"}
+  - {year: -34, what: "finished and dedicated by his son L. Aemilius Lepidus Paullus, consul 34 (Dio 49.42)"}
   form: "two-storey colonnaded hall with shops (tabernae novae) along the Forum side"
-  sources: ["Livy 40.51.5", "Cic. Att. 4.16.8", "Plut. Caes. 29", "Platner-Ashby s.v. Basilica Aemilia"]
+  sources: ["Livy 40.51.5", "Varro LL 6.4", "Pliny NH 35.13", "Cic. Att. 4.16.8", "Plut. Caesar 29", "Appian BC 2.26", "Dio 49.42", "Platner-Ashby s.v. Basilica Aemilia"]
+  notes: "CORRECTED: Livy 40.51.5 (Latin text) credits only M. Fulvius (Nobilior), censor 179, with building a basilica 'post argentarias novas'; P&A argues from the name 'Aemilia et Fulvia' that his colleague M. Aemilius Lepidus shared the work (an inference). Restored/decorated by Lepidus as consul 78 (Pliny NH 35.13); restored by the aedile L. Aemilius Paullus from 55/54 with Caesar's money (Plut. Caes. 29; Cic. Att. 4.16.8; App. BC 2.26); finished and dedicated by his son L. Aemilius Lepidus Paullus as consul 34 (Dio 49.42). Burned 14 BC (outside range). Pleiades 417632343."
+  pleiades: 417632343
+  verified: platner-ashby+pleiades
 - id: basilica_sempronia
   latin: Basilica Sempronia
   english: Basilica Sempronia
@@ -351,9 +366,12 @@ monuments:
   lon: 12.4840
   precision: rough
   location: west end of the Forum, in the Vicus Tuscus area, on the site of the house of Scipio Africanus
-  built: {year: -170, certainty: certain, by: "Ti. Sempronius Gracchus as censor 169, work contracted 170 (Livy 44.16.10)"}
+  built: {year: -169, certainty: certain, by: "built by the censor Ti. Sempronius Gracchus on the site of the house of P. Scipio Africanus behind the Tabernae Veteres, near the statue of Vortumnus (Livy 44.16.9-11); P&A gives 170 BC"}
   ended: {year: -46, what: "cleared for the Basilica Iulia (Platner-Ashby; Cic. Att. 4.16.8)"}
   sources: ["Livy 44.16.10", "Platner-Ashby s.v. Basilica Sempronia"]
+  notes: "CORRECTED: Livy 44.16 (Latin text) puts the work under the censorship of Ti. Sempronius Gracchus in 169 (the censors for 169 were Gracchus and C. Claudius): from the quaestors' allotment he bought the house of P. Africanus 'pone Veteres ad Vortumni signum' with butchers' shops and had a basilica built, 'quae postea Sempronia appellata est'. P&A gives 170, which does not match Livy's year; 169 adopted. P&A: it stood where the Vicus Tuscus entered the Forum; nothing known of its history; destroyed when the Basilica Iulia was built. Not in Pleiades."
+  pleiades: null
+  verified: platner-ashby
 - id: basilica_opimia
   latin: Basilica Opimia
   english: Basilica Opimia
@@ -363,22 +381,28 @@ monuments:
   lon: 12.4863
   precision: rough
   location: Forum, beside the temple of Concord
-  built: {year: -121, certainty: certain, by: "L. Opimius, consul 121 (Varro LL 5.156)"}
-  sources: ["Varro LL 5.156", "Platner-Ashby s.v. Basilica Opimia"]
+  built: {year: -121, certainty: probable, by: "probably built by the consul L. Opimius in 121 when he restored the temple of Concord (Varro LL 5.156; Cic. Sest. 140; P&A)"}
+  sources: ["Varro LL 5.156", "Cic. Sest. 140", "Platner-Ashby s.v. Basilica Opimia"]
+  notes: "P&A: erected 'probably' by the consul L. Opimius in 121 BC when he restored the temple of Concord; stood just north of the temple between it and the Tullianum (Varro LL 5.156); probably removed when Tiberius rebuilt the temple (not mentioned after). The 'celeberrimum monumentum Opimi' of Cic. Sest. 140 probably refers to both temple and basilica. Date 121 is therefore probable, not certain. Pleiades 913111964 is a 'related' point only."
+  pleiades: 913111964
+  verified: platner-ashby
 - id: basilica_iulia
   latin: Basilica Iulia
   english: Basilica Iulia
   type: basilica
   regio: 8
-  lat: 41.8919
-  lon: 12.4851
+  lat: 41.892
+  lon: 12.4848
   precision: exact
   location: south side of the Forum, between the Temple of Castor and the temple of Saturn, over the Basilica Sempronia
-  built: {year: -46, certainty: certain, by: "begun by Julius Caesar 54; partially dedicated 46 (Suet. Iul. 26; Cic. Att. 4.16.8; Dio 43.22)"}
+  built: {year: -46, certainty: certain, by: "possibly begun 54 for Caesar by L. Aemilius Paullus (Cic. Att. 4.16.8, a difficult passage); dedicated unfinished in 46 (Res Gestae 20.3; Suet. Iul. 26.2); completed by Augustus, burned and rebuilt larger, dedicated again AD 12 (RG 20.3)"}
   events:
-  - {year: -12, what: "burned and rebuilt by Augustus (Res Gestae 20)"}
+  - {year: -46, what: "dedicated in an unfinished state (RG 20.3; Hieron. a. Abr. 1971)"}
   form: "about 101 x 49 m; five aisles, tabernae outside; seat of the Centumviral court"
-  sources: ["Cic. Att. 4.16.8", "Suet. Iul. 26", "Res Gestae 20", "Platner-Ashby s.v. Basilica Iulia"]
+  sources: ["Cic. Att. 4.16.8", "Suet. Iul. 26.2", "Res Gestae 20", "Platner-Ashby s.v. Basilica Iulia"]
+  notes: "CORRECTED: the 12 BC burning event was wrong. P&A: perhaps begun by Aemilius Paullus on Caesar's behalf in 54 (Cic. Att. 4.16.8 is difficult), dedicated unfinished in 46 (Mon. Anc. 4.13 = RG 20.3; Hieron. a. Abr. 1971), completed by Augustus, burned soon afterwards and rebuilt larger, dedicated again in AD 12 under the names of Gaius and Lucius Caesar (RG 20.3). Footprint 101 x 49 m; central court 82 x 16 m with two aisles each side and galleries above; originally white marble with Doric engaged columns. Centumviral court: not in the part of P&A checked. Pleiades 173078007."
+  pleiades: 173078007
+  verified: platner-ashby+pleiades
 - id: aedes_saturni
   latin: Aedes Saturni
   english: Temple of Saturn (and Aerarium)
