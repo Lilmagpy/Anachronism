@@ -1,0 +1,6 @@
+schema_version: 1
+pack:
+  id: rome
+  name: The Roman Republic - magistracies, families, people and the Fasti
+  version: 1
+  depends_on: [core]
