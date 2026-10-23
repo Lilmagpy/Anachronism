@@ -546,34 +546,45 @@ monuments:
   english: Lacus Curtius
   type: monument
   regio: 8
-  lat: 41.8921
-  lon: 12.4854
+  lat: 41.8923
+  lon: 12.4851
   precision: exact
   location: middle of the Forum
-  built: {year: -362, certainty: traditional, by: "M. Curtius leaps into the chasm (Livy 7.6)"}
-  sources: ["Livy 7.6", "Varro LL 5.148-150", "Platner-Ashby s.v. Lacus Curtius"]
+  built: {year: -362, certainty: traditional, by: "legend, three versions: M. Curtius leaps into the chasm in 362 (Livy 7.6); Mettius Curtius in the Sabine war (Livy 1.12.10; Varro LL 5.149-150); or the spot enclosed by the consul C. Curtius in 445 (Varro LL 5.150)"}
+  sources: ["Livy 1.12.10", "Livy 7.6", "Varro LL 5.148-150", "Ovid Fasti 6.403", "Pliny NH 15.78", "Platner-Ashby s.v. Lacus Curtius"]
+  form: "irregular trapezoidal paved field about 10 m x 9 m; extant layers of cappellaccio and Monte Verde tufa (Sullan period) with a travertine layer from the Caesarian reconstruction; a dry shrine by Augustus's time"
+  notes: "P&A gives three explanations of the name: (1) the Sabine Mettius Curtius who rode into the marsh in the war of Romulus and Tatius (Livy 1.12.10; Varro LL 5.149); (2) the leap of M. Curtius into a chasm, 362 BC (Livy 7.6.1-6; relief in Palazzo dei Conservatori, a late copy of a c. 2nd-c. original); (3) a spot struck by lightning and enclosed by C. Curtius, consul 445 (Varro LL 5.150). By Augustus it was dry ground (Ov. Fast. 6.403-404). Existing remains: two layers of cappellaccio and Monte Verde tufa attributed to the Sullan period (Van Deman, Frank) with a travertine layer from the Caesarian reconstruction, about 10 m x 9 m. The year 362 is therefore one of three legendary dates, not a historical fact. Pleiades 459049147 (precise)."
+  pleiades: 459049147
+  verified: platner-ashby+pleiades
 - id: lacus_iuturnae
   latin: Lacus Iuturnae
   english: Spring and shrine of Juturna
   type: fountain
   regio: 8
-  lat: 41.8913
-  lon: 12.4862
+  lat: 41.8916
+  lon: 12.486
   precision: exact
   location: by the Temple of Castor
   built: {year: null, certainty: uncertain, by: "early; water where Castor and Pollux watered horses after Lake Regillus (Dion. Hal. 6.13)"}
-  sources: ["Dion. Hal. 6.13", "Platner-Ashby s.v. Iuturnae, Lacus"]
+  sources: ["Dion. Hal. 6.13", "Ovid Fasti 1.706", "Platner-Ashby s.v. Iuturnae, Lacus"]
+  form: "basin about 10 m square at the top, 2.12 m deep, with a central base 1.78 m high that carried statues of the Dioscuri; marble-paved over an earlier tufa pavement"
+  notes: "P&A: spring of Juturna in the south corner of the forum where Castor and Pollux watered their horses after Lake Regillus (496 BC; Ov. Fast. 1.706; Dion. Hal. 6.13) and again after Pydna (168). No building date given: the basin (about 10 m square at the top, 2.12 m deep) is a later structure over an earlier tufa pavement; coins of the gens Postumia (c. 90 BC) show the spring as a puteal with the Dioscuri. The temple of Castor was built on the west side of the spring. Pleiades 707467453 (precise) adopted for coordinates."
+  pleiades: 707467453
+  verified: platner-ashby+pleiades
 - id: carcer
   latin: Carcer (Tullianum)
   english: State prison and Tullianum
   type: prison
   regio: 8
-  lat: 41.8934
-  lon: 12.4841
+  lat: 41.8931
+  lon: 12.4846
   precision: exact
   location: foot of the Capitol, above the Comitium
-  built: {year: null, certainty: traditional, by: "Ancus Marcius (Livy 1.33.8); Servius Tullius the Tullianum (Varro LL 5.151)"}
-  sources: ["Livy 1.33.8", "Sall. Cat. 55", "Platner-Ashby s.v. Carcer"]
+  built: {year: null, certainty: traditional, by: "the Carcer ascribed to Ancus Marcius (Livy 1.33.8); the lower chamber (Tullianum) to Servius Tullius (Varro LL 5.151; Festus 356); T. Frank dates the lower chamber to the 3rd c. BC (P&A, disputed)"}
+  sources: ["Livy 1.33.8", "Varro LL 5.151", "Sallust Cat. 55", "Platner-Ashby s.v. Carcer"]
+  notes: "P&A: Livy 1.33 attributes the Carcer to Ancus Marcius; Varro LL 5.151 and Festus 356 attribute the Tullianum (the lower chamber) to Servius Tullius. Lower chamber nearly 7 m in diameter, originally circular; Sall. Cat. 55 gives 12 feet depth; T. Frank dates the lower chamber to the 3rd century and the stone vault to after 100 BC, but most authorities give it high antiquity (P&A disputes Frank). Pleiades 755655444 (Tullianum, precise) adopted."
+  pleiades: 755655444
+  verified: platner-ashby+pleiades
 - id: fornix_fabianus
   latin: Fornix Fabianus
   english: Arch of Fabius
@@ -583,8 +594,13 @@ monuments:
   lon: 12.4870
   precision: approx
   location: Via Sacra, east end of the Forum
-  built: {year: -121, certainty: probable, by: "Q. Fabius Maximus Allobrogicus after his victory over the Allobroges (Cic. de Orat. 2.267; Cic. Planc. 17)"}
-  sources: ["Cic. de Orat. 2.267", "Platner-Ashby s.v. Fornix Fabianus"]
+  built: {year: -121, certainty: certain, by: "erected by Q. Fabius Maximus Allobrogicus after his victory over the Allobroges (Cic. Planc. 17; Cic. de Or. 2.267)"}
+  sources: ["Cic. de Orat. 2.267", "Cic. Planc. 17", "Cic. Verr. 1.19", "CIL I2 763", "Platner-Ashby s.v. Fornix Fabianus"]
+  events:
+  - {year: -56, what: "restored by Q. Fabius Maximus, grandson of the builder (CIL I2 763 = VI 1304; P&A)"}
+  notes: "Verified: P&A: honorary arch at the east end of the forum over the Sacra Via, erected by Q. Fabius Allobrogicus in 121 after his victory over the Allobroges (Cic. Planc. 17; de Or. 2.267; Verr. 1.19); the first arch of its kind in or near the forum; restored by his grandson in 56 (CIL I2 763 = VI 1304). The surviving voussoirs may be from it. Not in Pleiades."
+  pleiades: null
+  verified: platner-ashby
 - id: columna_rostrata_duilii
   latin: Columna Rostrata C. Duilii
   english: Column of Duilius
@@ -594,8 +610,11 @@ monuments:
   lon: 12.4844
   precision: rough
   location: Forum, near the Rostra
-  built: {year: -260, certainty: certain, by: "C. Duilius after the naval victory at Mylae (Pliny NH 34.20; Quint. 1.7.12)"}
-  sources: ["Pliny NH 34.20", "Platner-Ashby s.v. Columna Rostrata"]
+  built: {year: -260, certainty: certain, by: "erected by the consul C. Duilius after the naval victory over Carthage at Mylae in 260 (Pliny NH 34.20; Quint. 1.7.12; Serv. Georg. 3.29); the surviving inscription is a later restoration (c. 150 BC or imperial)"}
+  sources: ["Pliny NH 34.20", "Quintilian 1.7.12", "Servius Georg. 3.29", "CIL VI 1300", "Platner-Ashby s.v. Columna Rostrata C. Duilii"]
+  notes: "P&A: C. Duilius erected two columnae rostratae after his naval victory over the Carthaginians in 260; one stood 'ante circum a parte ianuarium' (Serv. Georg. 3.29), the second and more famous stood on or near the Rostra; its archaic inscription was restored about 150 BC and again under Augustus (CIL I2 25) or Tiberius/Claudius; part of the inscription (CIL VI 1300 = 31591) is in the Palazzo dei Conservatori. Site only approximate. Not in Pleiades."
+  pleiades: null
+  verified: platner-ashby
 - id: tabularium
   latin: Tabularium
   english: Tabularium (state archive)
@@ -606,9 +625,12 @@ monuments:
   precision: exact
   location: Capitol, between the two summits, facing the Forum
   built: {year: -78, certainty: certain, by: "Q. Lutatius Catulus as consul 78 (CIL VI 1313 inscription)"}
-  form: "huge substructure of Gabine stone (lapis gabinus) with arcade facing the Forum"
+  form: "huge substructure and archive building on the Capitoline slope above the Forum: a 3.43 m thick foundation wall with six window recesses, a first-storey corridor 5 m wide and 10 m high, and an arcade of eleven arches with engaged Doric half-columns of peperino; outer walls of sperone (Gabine stone), inner walls of Anio tufa"
   materials: [tufa (Gabii), peperino]
-  sources: ["CIL VI 1313", "Platner-Ashby s.v. Tabularium"]
+  sources: ["CIL I2 737 = VI 1314", "CIL I2 736 = VI 1133", "Platner-Ashby s.v. Tabularium"]
+  notes: "CORRECTED citation: the inscriptions are CIL I2 737 = VI 1314 (copied by Signorili and Poggio) and CIL I2 736 = VI 1133 = 31597 (P&A); 'CIL VI 1313' was wrong. Q. Lutatius Catulus (consul 78) 'substructionem et tabularium de s(enatus) s(ententia) faciundum coeravit eidemque probavit'. P&A: substructio wall 3.43 m thick with six recesses and narrow windows; first-story corridor 5 m wide, 10 m high; front an arcade of eleven arches (7.50 m high, 3.54-3.60 m wide) with engaged Doric half-columns of peperino; outer walls sperone (Gabine stone), inner walls Anio tufa, bases and imposts travertine. Second story added or rebuilt c. end of the 1st century (AD). Not in Pleiades."
+  pleiades: null
+  verified: platner-ashby
 - id: atrium_libertatis
   latin: Atrium Libertatis
   english: Atrium Libertatis
@@ -618,8 +640,14 @@ monuments:
   lon: 12.4852
   precision: rough
   location: Capitol slope above the Forum of Caesar / Forum of Augustus
-  built: {year: null, certainty: probable, by: "existed by 214 (Livy 24.18.? census records); rebuilt 169 by Ti. Sempronius Gracchus and C. Claudius Pulcher as censors (Livy 43.16.13); rebuilt by Asinius Pollio 39 BC (Suet. Aug. 29)"}
-  sources: ["Livy 43.16.13", "Suet. Aug. 29", "Platner-Ashby s.v. Atrium Libertatis"]
+  built: {year: null, certainty: probable, by: "existed by 212 BC (Livy 25.7.12); restored and enlarged by the censors of 194 (Livy 34.44.5); magnificently rebuilt by C. Asinius Pollio (Suet. Aug. 29; Pliny NH 7.115), probably after 39 BC"}
+  sources: ["Livy 25.7.12", "Livy 34.44.5", "Livy 43.16.13", "Cic. Mil. 59", "Suetonius Aug. 29", "Platner-Ashby s.v. Atrium Libertatis"]
+  events:
+  - {year: -194, what: "restored and enlarged by the censors together with the Villa Publica (Livy 34.44.5)"}
+  - {year: -169, what: "the censors Ti. Sempronius Gracchus and C. Claudius, put on trial, retire into the atrium and seal the records (Livy 43.16.13)"}
+  notes: "CORRECTED: the old text claimed Livy 43.16.13 records a rebuilding in 169 by Gracchus and Claudius; in the Latin text it only has the censors going up into the atrium Libertatis and sealing the tablets and closing the tabularium (169) when put on trial. P&A: building holding the censors' offices and records and some bronze laws (Livy 43.16, 45.15; Festus 241); said to have held the Thurian hostages in 212 (Livy 25.7.12) and slaves tortured at Milo's trial (Cic. Mil. 59); restored and enlarged by the censors of 194 (Livy 34.44.5, 'atrium Libertatis et villa publica ab iisdem refecta amplificataque'); restored magnificently by Asinius Pollio (Suet. Aug. 29; the usual date 39 BC is not in the P&A text read here). The earlier claim 'existed by 214 (Livy 24.18)' is unsupported and was removed. Site unknown (not on the later curia site). Not in Pleiades."
+  pleiades: null
+  verified: platner-ashby
 - id: via_sacra
   latin: Via Sacra
   english: Sacred Way
@@ -631,6 +659,9 @@ monuments:
   location: from the Velia and Regia through the Forum to the Capitol
   built: {year: null, certainty: traditional, by: "early; route of triumphs"}
   sources: ["Platner-Ashby s.v. Sacra Via"]
+  notes: "P&A: oldest and most famous street, only the Sacra and Nova via called 'via' before the empire; after 121 BC it passed through the Fornix Fabianus; after the rebuilding of the Regia (36 BC) and the temple of Divus Iulius it passed north of them and bent to the Castor temple; Augustan pavement 5 m wide. Remains of the Sullan-period street at 11.90 m above sea level. No foundation date in P&A. Pleiades 434423626."
+  pleiades: 434423626
+  verified: platner-ashby+pleiades
 # ---------------------------------------------------------------- VELABRUM / FORUM BOARIUM / FORUM HOLITORIUM
 - id: cloaca_maxima
   latin: Cloaca Maxima
