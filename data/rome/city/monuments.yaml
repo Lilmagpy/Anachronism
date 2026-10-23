@@ -301,10 +301,10 @@ monuments:
   location: north-east of the Curia, at the foot of the Capitol (Arx slope) - Via dei Fori Imperiali
   built: {year: -46, certainty: certain, by: "land bought by Cicero and Oppius for Caesar from 54 BC (60 million sesterces paid by then: Cic. Att. 4.16.8; total reported at over 100 million: Suet. Iul. 26.2); forum and temple of Venus Genetrix dedicated 26 September 46 on the last day of Caesar's triumph (Dio 43.22.2; Appian BC 2.102)"}
   events:
-  - {year: -44, what: "unfinished at Caesar's death; completed under Augustus (P&A)"}
+  - {year: -44, what: "unfinished at Caesar's death (Nic. Dam. Caes. 22; Plin. NH 35.156); completed by Octavian, year not given (RG 20.3; Dio 45.6.4)"}
   form: "porticoed rectangular forum, about 160 x 75 m on modern excavations (P&A 1929 estimated 115 x 30 m), with the temple of Venus Genetrix on the north-west axis; a fountain with nymphs (Appiades) before the temple; peperino enclosure wall 12 m high survives"
   sources: ["Cic. Att. 4.16.8", "Suet. Iul. 26.2", "Dio 43.22.2", "Appian BC 2.102", "Platner-Ashby s.v. Forum Iulium"]
-  notes: "CORRECTED: P&A says land was bought in 54 BC by Cicero and Oppius for Caesar, 60 million sesterces already paid (Cic. Att. 4.16.8; P&A cites 4.16.9), and the final cost was reported as 100 million (Suet. Iul. 26.2); so '100 million from 54' was wrong in the other direction: 60 million by 54, 100 million at the end. Dedicated 26 Sept 46 with the temple of Venus Genetrix at Caesar's Triumph (Dio 43.22.2; Appian BC 2.102). P&A (1929) gives the forum as rectangular c. 115 x 30 m; the 160 x 75 m figure kept in 'form' comes from later excavation (Meneghini), not P&A. P&A: front of the temple had a fountain with nymphs (Appiades); completed after Caesar's death (Res Gestae 20 is not the source for this; RG 20 is the Basilica Iulia / roads; removed). Pleiades 445545537."
+  notes: "CORRECTED: P&A says land was bought in 54 BC by Cicero and Oppius for Caesar, 60 million sesterces already paid (Cic. Att. 4.16.8; P&A cites 4.16.9), and the final cost was reported as 100 million (Suet. Iul. 26.2); so '100 million from 54' was wrong in the other direction: 60 million by 54, 100 million at the end. Dedicated 26 Sept 46 with the temple of Venus Genetrix at Caesar's Triumph (Dio 43.22.2; Appian BC 2.102). P&A (1929) gives the forum as rectangular c. 115 x 30 m; the 160 x 75 m figure kept in 'form' comes from later excavation (Meneghini), not P&A. P&A: not finished by Caesar (Nic. Dam. Caes. 22; Plin. NH 35.156) but by Octavian (Mon. Anc. 4.12 = RG 20.3; Dio 45.6.4); a fountain with nymphs (Appiades) stood before the temple. Pleiades 445545537."
   pleiades: 445545537
   verified: platner-ashby+pleiades
 - id: aedes_veneris_genetricis
@@ -408,114 +408,139 @@ monuments:
   english: Temple of Saturn (and Aerarium)
   type: temple
   regio: 8
-  lat: 41.8921
-  lon: 12.4838
+  lat: 41.892
+  lon: 12.484
   precision: exact
   location: west end of the Forum, at the foot of the Capitol (Clivus Capitolinus); the Aerarium was in its podium
-  built: {year: -497, certainty: certain, by: "vowed by T. Larcius as dictator or by Postumius; dedicated 497 (Livy 2.21.2; Dion. Hal. 6.1.4; Macrobius Sat. 1.8.1-2)"}
+  built: {year: -497, certainty: traditional, by: "dedication ascribed to the first years of the Republic: T. Larcius as dictator (501, Macrob. Sat. 1.8.1), begun 498 (Dion. Hal. 6.1.4), dedicated 497 (Livy 2.21.2); other traditions credit Tullus Hostilius or the last Tarquin (Varro)"}
   events:
-  - {year: -42, what: "rebuilt by L. Munatius Plancus (consul 42), as the inscription recorded"}
-  form: "hexastyle temple on a high podium of concrete and travertine; the rebuilt temple is the standing eight columns"
-  sources: ["Livy 2.21.2", "Dion. Hal. 6.1.4", "Macrob. Sat. 1.8.1-2", "Platner-Ashby s.v. Saturnus, Aedes"]
+  - {year: -174, what: "porticus built from the temple along the Clivus Capitolinus to the Capitol (Livy 41.27.7)"}
+  - {year: -42, what: "rebuilt by L. Munatius Plancus (Suet. Aug. 29)"}
+  form: "temple at the foot of the Capitoline hill on the Clivus Capitolinus, housing the state treasury (aerarium); blocks of the original podium and an early stone-arched drain survive; the eight standing columns (11 m high, granite) belong to the 4th-century AD restoration"
+  sources: ["Livy 2.21.2", "Livy 41.27.7", "Dion. Hal. 6.1.4", "Macrobius Sat. 1.8.1-2", "Varro LL 5.42", "Suet. Aug. 29", "Platner-Ashby s.v. Saturnus, Aedes"]
+  notes: "No Pleiades place for the Temple of Saturn found in the Pleiades dump. P&A: dedication tradition varies: Tullus Hostilius, begun by the last Tarquin, or dedicated by T. Larcius as dictator in 501 (Macrob. 1.8.1; Dion. Hal. 6.1.4 says begun 498 in Larcius's second consulship); P&A says the dedication 'may safely be assigned to the beginning of the republic'. Livy 2.21.2 (497 BC, consuls A. Sempronius and M. Minucius) is the usual year. Dedication day: Saturnalia, 17 December. 174 BC: porticus built from the temple up the Clivus Capitolinus (Liv. 41.27.7). Rebuilt by L. Munatius Plancus in 42 (Suet. Aug. 29). Standing columns (8, granite) are a 4th-c. AD restoration. The state treasury (aerarium) was in it; the Tabularium (78) took over some records. Original podium blocks survive."
+  pleiades: null
+  verified: platner-ashby
 - id: aedes_castoris
   latin: Aedes Castoris
   english: Temple of Castor and Pollux
   type: temple
   regio: 8
-  lat: 41.8915
-  lon: 12.4858
+  lat: 41.8917
+  lon: 12.4856
   precision: exact
   location: south side of the Forum, beside the Vicus Tuscus
-  built: {year: -484, certainty: certain, by: "vowed by the dictator A. Postumius at Lake Regillus 499; dedicated 15 July 484 by his son (Livy 2.20.12, 2.42.5; Dion. Hal. 6.13)"}
+  built: {year: -484, certainty: traditional, by: "vowed by the dictator A. Postumius at Lake Regillus in 499; dedicated by his son, duumvir, in 484 (Livy 2.20.12, 2.42.5); dedication day 27 January (fasti, per P&A)"}
   events:
-  - {year: -117, what: "rebuilt by L. Caecilius Metellus Dalmaticus (Cic. Verr. 2.1.129-154)"}
-  - {year: -73, what: "repair contract of C. Verres (Cic. Verr. 2.1.129-154)"}
-  - {year: -14, what: "burned and rebuilt by Tiberius (outside our dating)"}
-  form: "octostyle peripteral temple on a high podium (about 7 m) used as a speakers' platform and as a place for the weights standard"
-  sources: ["Livy 2.20.12", "Livy 2.42.5", "Cic. Verr. 2.1.129", "Platner-Ashby s.v. Castor, Aedes"]
+  - {year: -117, what: "restored by L. Caecilius Metellus (Dalmaticus) (Cic. Scaur. 46; Cic. Verr. 2.1.129-154)"}
+  - {year: -73, what: "Verres, as urban praetor, contracts for repairs (Cic. Verr. 2.1.129-154)"}
+  form: "temple on a very lofty podium (concrete core in tufa walls with chambers); the Augustan-period temple (AD 6) was Corinthian, octastyle and peripteral, 11 columns on the flanks; its platform served as a speakers' rostrum (Cic. QFr. 2.3.6; Plut. Sulla 33); standards of weights and measures kept in it"
+  sources: ["Livy 2.20.12", "Livy 2.42.5", "Dion. Hal. 6.13", "Cic. Scaur. 46", "Cic. Verr. 2.1.129", "Plut. Sulla 33", "Platner-Ashby s.v. Castor, Aedes"]
+  notes: "CORRECTED: the dedication day was 27 January (calendar), not 15 July (15 July is the transvectio equitum linked to the Lake Regillus apparition, Dion. Hal. 6.13) (P&A: 'The day of dedication is given in the calendar as 27th January'). P&A: vowed 499 by the dictator A. Postumius, dedicated 484 by his son as duumvir (Liv. 2.20.12, 2.42.5); restored 117 by L. Caecilius Metellus (Cic. Scaur. 46; Verr. 2.1.129-154); completely rebuilt by Tiberius in AD 6 (outside our range). The octastyle peripteral temple (11 columns on the flanks, podium floor about 7 m above the Sacra Via, platform 3.66 m above the area) is the Augustan/Tiberian building, not the republican one. Standard weights and measures kept in it. Pleiades 157276290; the placement here is moved to it."
+  pleiades: 157276290
+  verified: platner-ashby+pleiades
 - id: aedes_vestae
   latin: Aedes Vestae
   english: Temple of Vesta
   type: temple
   regio: 8
   lat: 41.8917
-  lon: 12.4869
+  lon: 12.4862
   precision: exact
   location: south-east of the Forum at the foot of the Palatine; the circular temple holding the sacred fire
-  built: {year: null, certainty: traditional, by: "Numa Pompilius (Livy 1.20; Plut. Numa 11)"}
+  built: {year: null, certainty: traditional, by: "Numa Pompilius (Livy 1.20.3; Dion. Hal. 2.64; Plut. Numa 11)"}
   events:
-  - {year: -390, what: "Vestals carry the sacra away during the Gallic sack (Livy 5.40.7)"}
-  - {year: -241, what: "fire; Pontifex Maximus L. Caecilius Metellus rescued the Palladium (Livy Per. 19; Pliny NH 7.141)"}
-  - {year: -210, what: "fire in the Forum threatens the temple (Livy 26.27.14)"}
-  form: "small circular temple with a sacred hearth, not templum in the augural sense"
-  sources: ["Livy 1.20", "Livy 5.40.7", "Livy 26.27.14", "Plut. Numa 11", "Platner-Ashby s.v. Vesta, Aedes"]
+  - {year: -390, what: "burned in the Gallic sack, the Vestals having carried the sacra away (Livy 5.40.7; Plut. Cam. 21; P&A concludes the temple was burned)"}
+  - {year: -241, what: "fire; the Pontifex Maximus L. Caecilius Metellus rescued the Palladium (Livy Per. 19; Pliny NH 7.141)"}
+  - {year: -210, what: "great fire round the Forum; the temple saved by thirteen public slaves (Livy 26.27.2-3)"}
+  form: "small round temple with a sacred hearth, originally of wattle and thatch; later marble; its concrete podium is 15.05 m in diameter, the later temple had twenty columns"
+  sources: ["Livy 1.20.3", "Livy 5.40.7", "Livy 26.27.2", "Livy Per. 19", "Pliny NH 7.141", "Plut. Numa 11", "Plut. Camillus 21", "Platner-Ashby s.v. Vesta, Aedes"]
+  notes: "P&A: round temple of Numa (Dion. Hal.; Plut. Numa 11; Ov. Fast. 6.261-264), originally a hut of wattles and thatch; undoubtedly burned in 390 (P&A, citing Liv. and Plut. Cam. 21; Livy 5.40.7 itself says the Vestals carried the sacra away), again in 241 when L. Caecilius Metellus saved the Palladium (Liv. Per. 19; Plin. NH 7.141); saved from the fire of 210 by thirteen slaves (Livy 26.27.2); burned AD 64. The later temple was of white marble with 20 columns; the surviving concrete podium has a foundation 15.05 m across. Pleiades 55302071."
+  pleiades: 55302071
+  verified: platner-ashby+pleiades
 - id: atrium_vestae
   latin: Atrium Vestae
   english: House of the Vestals
   type: house
   regio: 8
-  lat: 41.8915
-  lon: 12.4875
+  lat: 41.8914
+  lon: 12.4866
   precision: exact
   location: south-east of the Temple of Vesta
-  built: {year: -509, certainty: traditional, by: "regal period; dwelling of the Vestal Virgins"}
-  sources: ["Platner-Ashby s.v. Atrium Vestae"]
+  built: {year: null, certainty: uncertain, by: "dwelling of the Vestal Virgins; the cult is ascribed to Numa, but the earliest visible house remains date from the 2nd century BC (P&A)"}
+  sources: ["Festus 333", "Gellius 1.12.9", "Platner-Ashby s.v. Atrium Vestae"]
+  notes: "CORRECTED: no date can be given. P&A: originally 'atrium Vestae' meant the whole precinct of Vesta; by the end of the Republic the dwelling of the Vestals. Excavations show remains of the republican house immediately south of the temple, adjoining the Domus Publica on the east, 'though almost no remains earlier than the second century BC are now visible'. The 'built -509 regal period' was an assumption, replaced. Livy 26.27.1-14 (210 fire) refers to the 'atrium regium', not the Vestals' house. Surviving structure is Neronian-Severan. Pleiades 795139357."
+  pleiades: 795139357
+  verified: platner-ashby+pleiades
 - id: regia
   latin: Regia
   english: Regia
   type: shrine
   regio: 8
-  lat: 41.8921
-  lon: 12.4873
+  lat: 41.8919
+  lon: 12.4864
   precision: exact
   location: Via Sacra, at the south-east edge of the Forum
-  built: {year: -600, certainty: traditional, by: "Numa Pompilius (Plut. Numa 14; Festus 346L)"}
+  built: {year: -600, certainty: traditional, by: "house said to have been built by Numa Pompilius (Plut. Numa 14; Solin. 1.21; Ov. Trist. 3.1.30); cappellaccio walls older than the Gallic fire of 390 (P&A)"}
   events:
-  - {year: -210, what: "burned (Livy 26.27.14)"}
-  - {year: -148, what: "burned"}
-  - {year: -36, what: "rebuilt by Cn. Domitius Calvinus (Dio 48.42.4)"}
-  form: "trapezoidal marble-faced building, sacra of Mars and Ops, residence of the Pontifex Maximus"
-  sources: ["Livy 26.27.14", "Dio 48.42.4", "Platner-Ashby s.v. Regia"]
+  - {year: -210, what: "Livy 26.27.2 lists the 'atrium regium' among buildings burned in the fire round the Forum (identification with the Regia uncertain)"}
+  - {year: -148, what: "burned and restored (Obseq. 19; Livy Per. 50)"}
+  - {year: -36, what: "rebuilt in marble by Cn. Domitius Calvinus (Dio 48.42.4)"}
+  form: "after 36 BC an irregular pentagon between the Sacra Via, the precinct of Vesta and the temple of Divus Julius; principal trapezoidal block about 22 x 8 m of white marble; held the sacrarium of Mars with the sacred spears (hastae) and shields (ancilia); residence of the Pontifex Maximus until Augustus"
+  sources: ["Livy 26.27.2", "Dio 48.42.4", "Dio 44.17", "Plut. Numa 14", "Gellius 4.6.1", "Obsequens 19", "Platner-Ashby s.v. Regia"]
+  notes: "P&A: the house which Numa is said to have built (Solin. 1.21; Ov. Trist. 3.1.30; Serv. Aen. 8.363); burned and restored 148 (Obseq. 19; Liv. Per. 50), again 36 BC when Cn. Domitius Calvinus rebuilt it in marble (Dio 48.42.4); a possible burning by the Gauls in 390; cappellaccio walls from before 390. Principal part trapezoidal, mean 22 x 8 m, white marble blocks (Calvinus phase). Contained the sacrarium of Mars (hastae and ancilia: Serv. Aen. 7.603; Gell. 4.6; Dio 44.17). Livy 26.27.2 names an 'atrium regium' among the buildings burned in 210; P&A's Regia article does not list a 210 fire, so that event is flagged uncertain. Pontifex Maximus's residence moved by Augustus in 12 BC (Dio 54.27). Pleiades 554680094. The 'sacra of Mars and Ops' in the old form field: the Mars shrine is verified, Ops is not in P&A's text and was dropped."
+  pleiades: 554680094
+  verified: platner-ashby+pleiades
 - id: aedes_concordiae_forum
   latin: Aedes Concordiae
   english: Temple of Concord (at the Forum)
   type: temple
   regio: 8
-  lat: 41.8922
-  lon: 12.4834
+  lat: 41.8929
+  lon: 12.4842
   precision: exact
   location: west end of the Forum below the Capitol, above the Comitium
-  built: {year: -367, certainty: probable, by: "vow of Camillus after the Licinian-Sextian laws (Plut. Cam. 42; Ovid Fasti 1.641-644)"}
+  built: {year: -367, certainty: traditional, by: "tradition: vowed by L. Furius Camillus in 367 during the Licinian-Sextian disturbances (Plut. Cam. 42; Ov. Fast. 1.641-644); actual date of erection unknown (P&A)"}
   events:
-  - {year: -304, what: "aedicula Concordiae of the aedile Cn. Flavius (Livy 9.46.6)"}
-  - {year: -121, what: "rebuilt by L. Opimius after the killing of C. Gracchus (Plut. C. Gracchus 17; App. BC 1.26)"}
-  sources: ["Plut. Cam. 42", "Livy 9.46.6", "Plut. C. Gracchus 17", "Platner-Ashby s.v. Concordia, Aedes"]
+  - {year: -304, what: "aedicula of Concord set up on the Graecostasis by the aedile Cn. Flavius (Livy 9.46.6)"}
+  - {year: -211, what: "statue of Victory on the roof struck down by lightning (Livy 26.23.4)"}
+  - {year: -121, what: "restored by L. Opimius after the killing of C. Gracchus (Plut. C. Gracchus 17; Appian BC 1.26)"}
+  sources: ["Plut. Camillus 42", "Varro LL 5.148", "Ovid Fasti 1.641-644", "Livy 9.46.6", "Livy 26.23.4", "Plut. C. Gracchus 17", "Appian BC 1.26", "Platner-Ashby s.v. Concordia, Aedes"]
+  notes: "CORRECTED: certainty lowered to traditional. P&A: temple at the north-west corner of the forum 'said to have been vowed by L. Furius Camillus in 367' (Plut. Cam. 42; Varro LL 5.148, 5.156; Ov. Fast. 1.641-644); 'the date of the actual erection of the temple is not known'; dedication day probably 22 July. Statue of Victory on its roof struck by lightning 211 (Livy 26.23.4). After the death of C. Gracchus the Senate ordered L. Opimius to restore it, 121 (Plut. C. Gracchus 17; App. BC 1.26). The aedicula of Concord set up on the Graecostasis by the aedile Cn. Flavius in 304 (Livy 9.46.6) is a separate small shrine. P&A also lists a separate temple of Concordia on the Arx (vowed 218 by the praetor L. Manlius, dedicated 5 Feb 216: Livy 22.33.7, 23.21.7), which is not in this dataset. Pleiades 694134032 adopted for coordinates (about 90 m NE of the earlier value)."
+  pleiades: 694134032
+  verified: platner-ashby+pleiades
 - id: aedes_divi_iulii
   latin: Aedes Divi Iulii
   english: Temple of the Deified Julius
   type: temple
   regio: 8
-  lat: 41.8921
-  lon: 12.4868
+  lat: 41.892
+  lon: 12.486
   precision: exact
   location: east end of the Forum, where Caesar's body was cremated 44 BC
-  built: {year: -29, certainty: certain, by: "decreed 42 BC; dedicated by Octavian 18 Aug 29 BC (Dio 47.18.3-4, 51.22.2)"}
-  form: "hexastyle temple with a rostra for speakers; decorated with ships' beaks of Actium"
-  sources: ["Dio 47.18.3-4", "Dio 51.22.2", "Platner-Ashby s.v. Divus Iulius, Aedes"]
+  built: {year: -29, certainty: certain, by: "authorised by the triumvirs in 42 (Dio 47.18.3-4); built by Octavian and dedicated 18 August 29 (Dio 51.22.2; Res Gestae 19.1)"}
+  form: "Ionic hexastyle temple on a platform 3.5 m high (26 x about 30 m) with a semicircular altar niche in the front; the projecting platform wings were decorated with ships' beaks from Actium and served as a rostra (P&A)"
+  sources: ["Dio 47.18.3-4", "Dio 51.22.2", "Appian BC 2.148", "Res Gestae 19", "Frontinus Aq. 129", "Platner-Ashby s.v. Divus Iulius, Aedes"]
+  notes: "Verified against P&A: authorised by the triumvirs in 42 (Dio 47.18), built by Augustus alone (Mon. Anc. 4.2 = RG 19.1: 'aedem divi Iuli feci'), dedicated 18 August 29 (Dio 51.22; Hemerol. Amit. Antiat.). Podium: rectangular platform 3.5 m high, 26 m wide, about 30 m long; stylobate 2.36 m above it, about 17 m wide; the platform's projecting wings (7 m each side) were the 'rostra aedis divi Iuli', decorated with the beaks of the ships captured at Actium (Frontin. Aq. 129; Dio 56.34). Temple Ionic, hexastyle (from Richter's reconstruction on coins). The altar niche is on the site of Caesar's pyre (App. BC 1.4, 2.148). Pleiades 277569430."
+  pleiades: 277569430
+  verified: platner-ashby+pleiades
 - id: ianus_geminus
   latin: Ianus Geminus
   english: Shrine of Janus (Janus Geminus)
   type: shrine
   regio: 8
-  lat: 41.8934
-  lon: 12.4857
+  lat: 41.8933
+  lon: 12.4851
   precision: approx
   location: near the Curia, by the Argiletum
   built: {year: null, certainty: traditional, by: "Numa Pompilius; doors open in war, closed in peace (Livy 1.19.2-3)"}
   events:
-  - {year: -235, what: "closed after the First Punic War (Livy 1.19.3)"}
-  - {year: -29, what: "closed by Augustus (Res Gestae 13)"}
-  sources: ["Livy 1.19.2-3", "Res Gestae 13", "Platner-Ashby s.v. Ianus Geminus"]
+  - {year: -235, what: "doors closed after the First Punic War, under T. Manlius Torquatus (Livy 1.19.3; Varro)"}
+  - {year: -29, what: "closed by Augustus after Actium (Res Gestae 13; Suet. Aug. 22); P&A dates this to 30 BC, Dio 51.20.4 to 29; closed again 25 BC (RG 13)"}
+  sources: ["Livy 1.19.2-3", "Varro LL 5.165", "Pliny NH 34.33", "Horace Carm. 4.15.9", "Res Gestae 13", "Suetonius Aug. 22", "Platner-Ashby s.v. Ianus Geminus"]
+  notes: "P&A: shrine of Janus on the north side of the forum; tradition varies: Numa, as an index of peace and war (Livy 1.19; Plin. NH 34.33; Varro LL 5.165), or Romulus and Tatius (Serv. Aen. 1.291). Doors closed in 235 after the First Punic War (Livy 1.19.3), 'in 30 B.C. after Actium' per P&A (Hor. Carm. 4.15.9), and twice more by Augustus (Mon. Anc. 2.42-46 = RG 13; Suet. Aug. 22). The usual date for the first Augustan closing is 29 BC (Dio 51.20.4: not checked here), kept below, with P&A's 30 BC noted. No rebuilding is recorded. Pleiades 468681435 (precise) adopted."
+  pleiades: 468681435
+  verified: platner-ashby+pleiades
 - id: lacus_curtius
   latin: Lacus Curtius
   english: Lacus Curtius
