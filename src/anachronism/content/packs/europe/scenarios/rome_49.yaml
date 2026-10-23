@@ -1,0 +1,309 @@
+schema_version: 1
+# Late-Republic start 2 of 2 (R1, late agent).
+# DECISION (explained in the report): the player's "Rome" is the Republic as a whole, ruled by the Senate and its
+# consuls, with Pompey as its best general (the Senate gave him the command in the crisis: Caesar, Civil War 1.1-6).
+# Caesar is a separate civ, e1_caesar, holding his three provinces (Cisalpine Gaul, Gallia Comata and Illyricum:
+# Suetonius, Divus Iulius 22; Plutarch, Caesar 14). Pompey's holdings (Spain through his legates, the East through his
+# settlement) are Roman provinces held by the Republic. The civil war is a war between rome and e1_caesar.
+# verified: consuls Lentulus and C. Claudius Marcellus: Dio 41.1 and his consul table (read); Crus and Marcellus's praenomen:
+# Wikipedia cross-check only. Populations are the pack's scale, not census counts; Gaul's are cut by Caesar's wars
+# (Plutarch, Caesar 15: about a million killed and as many enslaved, read). Ages are approximate where noted.
+scenarios:
+  - id: rome_49
+    name: "Caesar crosses the Rubicon, 49 BC"
+    description: >-
+      January 49 BC. Caesar's ten years in Gaul are almost over, and the Senate, led by Pompey's friends, will not let him stand
+      for a second consulship without giving up his army. The consuls Gaius Claudius Marcellus and Lucius Cornelius Lentulus
+      Crus have refused to hear his letter fairly; his tribune Antony has fled to his camp. A river on the road to Ariminum marks
+      the boundary of his province. Across it lie Italy, a Republic that holds every other province, and Pompey, who
+      beat the pirates and the kings and now commands what the Senate can raise. In Egypt a boy king and his sister quarrel
+      over the throne; in Parthia a king has just destroyed a Roman army at Carrhae.
+    start_year: -49
+    years_per_turn: 5
+    campaign_years_per_turn: 1
+    player_civ: rome
+    map: europe
+    music: roman
+    cost_scale: 10
+    common_techs: {written_law: widespread}
+    sources:
+      - "Dio 41.1 and Dio's consul tables for 53-27 BC (read): consuls of 49 were L. Cornelius Lentulus and C. Claudius Marcellus"
+      - "Caesar, Civil War 1.1-11 (read, Wikisource translation): the consuls, the Senate and the failed negotiations"
+      - "Suetonius, Divus Iulius 22, 31-35 (read): Caesar's provinces; the Rubicon; the war in Spain and Macedonia"
+      - "Plutarch, Caesar 15, 32 (read): Gaul's losses; the Rubicon as the boundary of Cisalpine Gaul"
+      - "Plutarch, Crassus 21-31 (read): Orodes (Hyrodes), Surena and the king of Armenia Artavasdes"
+      - "Caesar, Civil War 3.107-108 (read): Ptolemy's will, the boy king, Pothinus and Cleopatra"
+      - "Appian, Mithridatic Wars 120-121 (read): Pharnaces, king of the Bosporus for fifteen years; Bithynia and Pontus governed by an annual praetor"
+      - "Annexation dates of Cyprus (58) and Cyrenaica: verified: no (cross-checked on Wikipedia only)"
+    confidence: medium
+    civs:
+      rome:
+        navy_bp: 8000
+        martial_bp: 12000
+        disposition: cautious
+        scripts:
+          - {id: "senate_vs_caesar", goal: "conquer", target: "e1_caesar", preconditions: {after_year: -50}, note: "The Senate refuses Caesar's terms and the consul Lentulus threatens to act without him; Caesar crosses (Caesar, BC 1.1-9; Suetonius, Div. Iul. 31-32)."}
+          - {id: "rome_vs_juba", goal: "conquer", target: "numidia", preconditions: {after_year: -48}, depends_on: ["senate_vs_caesar"], note: "Caesar's war in Africa ends with Scipio's camps taken near Thapsus and Juba and Petreius dead by each other's hand (Plutarch, Caesar 53; Appian, BC 2.100)."}
+          - {id: "rome_vs_pharnaces", goal: "conquer", target: "pontus", preconditions: {after_year: -48, before_year: -46}, depends_on: ["senate_vs_caesar"], note: "Caesar defeats Pharnaces near Zela: 'Came, saw, conquered' (Plutarch, Caesar 50)."}
+          - {id: "julian_calendar", goal: "adopt", target: "astronomy_calendar", preconditions: {after_year: -46}, note: "Caesar reforms the calendar in his third consulship (Suetonius, Div. Iul. 40; verified in part: the footnote on the 355-day year)."}
+          - {id: "antony_parthian_war", goal: "conquer", target: "e1_parthia", preconditions: {after_year: -37, before_year: -34}, depends_on: ["senate_vs_caesar"], note: "Antony marches through Armenia on Praaspa, to get back the standards and prisoners lost with Crassus (Dio 49.24-25)."}
+          - {id: "antony_captures_artavasdes", goal: "conquer", target: "e1_armenia", preconditions: {after_year: -36, before_year: -33}, note: "Antony takes the king of Armenia captive (Dio 50.1; the Alexandria triumph, Dio 49.40)."}
+          - {id: "war_on_cleopatra", goal: "conquer", target: "ptolemaic", preconditions: {after_year: -33}, depends_on: ["senate_vs_caesar"], note: "The Senate declares war on Cleopatra, not on Antony (Dio 50.4); Actium, 2 September 31 (Dio 51.1)."}
+        capital: it_roma
+        generals: [{name: "Gnaeus Pompeius Magnus", skill: 4, trait: quartermaster, note: "Cleared the sea of pirates in under three months (Plutarch, Pompey 28); keeps to a war of delay until his staff forces battle (Pompey 66-67)."}, {name: "Titus Labienus", skill: 4, trait: horse, note: "Caesar's senior lieutenant, who swears at Dyrrachium never to desert Pompey (Caesar, BC 3.13)."}, {name: "Lucius Afranius", skill: 3, trait: shield, note: "One of Pompey's three lieutenants in Spain (Caesar, BC 1.38; Suetonius, Div. Iul. 34)."}, {name: "Marcus Petreius", skill: 3, trait: bold, note: "One of Pompey's three lieutenants in Spain (Suetonius, Div. Iul. 34); dies with Juba after Thapsus (Appian, BC 2.100)."}, {name: "Quintus Caecilius Metellus Scipio", skill: 2, trait: shield, note: "Pompey's father-in-law, sharing his camp and honours in Thessaly (Caesar, BC 3.82); his camp at Thapsus is taken (Plutarch, Caesar 53)."}, {name: "Lucius Domitius Ahenobarbus", skill: 2, trait: bold, note: "Holds Corfinium and is killed fleeing after Pharsalus (Caesar, BC 1.16 and 3.99)."}, {name: "Marcus Calpurnius Bibulus", skill: 2, trait: siege, note: "Commander-in-chief of Pompey's fleets (Caesar, BC 3.5)."}, {name: "Marcus Terentius Varro", skill: 2, trait: quartermaster, note: "Pompey's third lieutenant in Spain, with Afranius and Petreius (Caesar, BC 1.38; Suetonius, Div. Iul. 34)."}]
+        leader: Consul Gaius Claudius Marcellus (with Lucius Cornelius Lentulus Crus; Pompey commands)
+        leader_age: 45
+        pitch: "The Republic against its own general. Hold Italy against ten veteran legions, or leave it and fight where your fleets and your provinces give you the edge."
+        provinces:
+          it_roma: 288000
+          it_latium: 216000
+          it_volsci: 117000
+          it_hernici: 58000
+          it_aequi: 40000
+          it_sabina: 99000
+          it_falisci: 36000
+          it_veii: 54000
+          it_caere: 54000
+          it_tarquinii: 90000
+          it_volsinii: 81000
+          it_populonia: 54000
+          it_etruria_n: 81000
+          it_arretium: 81000
+          it_umbria: 86000
+          it_picenum: 117000
+          it_senones: 50000
+          it_marsi: 76000
+          it_frentani: 32000
+          it_campania: 270000
+          it_neapolis: 72000
+          it_picentini: 36000
+          it_aurunci: 50000
+          it_samnium: 135000
+          it_hirpini: 58000
+          it_lucania: 108000
+          it_apulia: 90000
+          it_peucetia: 63000
+          it_messapia: 99000
+          it_tarentum: 90000
+          it_bruttium: 148000
+          it_rhegium: 32000
+          it_ligures_apuani: 28000
+          si_messana: 45000
+          si_catana: 72000
+          si_syracuse: 153000
+          si_enna: 50000
+          si_akragas: 76000
+          si_gela: 32000
+          si_halaesa: 40000
+          si_panormus: 68000
+          si_lilybaeum: 54000
+          sa_sardinia: 98000
+          co_corsica: 54000
+          east_iberia: 300000
+          celtiberia: 324000
+          car_gades: 300000
+          lusitania: 170000
+          car_carthage: 618000
+          car_byzacena: 378000
+          mac_macedonia: 570000
+          mac_thessaly: 324000
+          epi_epirus: 160000
+          mac_corinth: 100000
+          ach_achaea: 204000
+          ath_attica: 240000
+          spa_laconia: 144000
+          aet_aetolia: 162000
+          per_pergamon: 216000
+          sel_asia: 1080000
+          bit_bithynia: 320000
+          pon_pontus: 280000
+          sel_cilicia: 240000
+          sel_syria: 1134000
+          pto_coele_syria: 756000
+          pto_cyprus: 189000
+          pto_cyrenaica: 238000
+        stockpiles: {food: 19484, materials: 4871, wealth: 12178, knowledge: 6089}
+        stats: {literacy_bp: 1500, unrest_bp: 2500, legitimacy_bp: 5500}
+        influence: {clergy: 2500, nobility: 6000, guilds: 1500}
+        techs: {republic: widespread, citizen_assembly: adopted, agriculture: widespread, irrigation: widespread, ox_plough: widespread, iron_plough: widespread, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: widespread, writing: widespread, alphabet: widespread, masonry: widespread, surveying: widespread, astronomy_calendar: adopted, standard_measures: widespread, coinage: widespread, census: widespread, sailing: widespread, horse_riding: widespread, composite_bow: adopted, fortification: widespread, crossbow: adopted, schools: widespread, roads: widespread, piston_bellows: adopted, aqueduct: widespread, sanitation: adopted, concrete: widespread, glassmaking: adopted, canals: adopted, water_wheel: concept}
+      e1_caesar:
+        navy_bp: 1500
+        martial_bp: 25000
+        disposition: aggressive
+        scripts:
+          - {id: "rubicon", goal: "conquer", target: "rome", preconditions: {after_year: -50}, note: "Caesar crosses the Rubicon, boundary of his province, and begins the civil war (Suetonius, Div. Iul. 31-33; Plutarch, Caesar 32)."}
+          - {id: "alexandrian_war", goal: "conquer", target: "ptolemaic", preconditions: {after_year: -48}, depends_on: ["rubicon"], note: "Caesar follows Pompey to Alexandria and is drawn into the quarrel of the king and Cleopatra (Caesar, BC 3.106-112; Suetonius, Div. Iul. 35)."}
+        capital: it_boii
+        # Caesar's headquarters in the winter was Ravenna, in the land of the Boii and Umbrians on this map (verified: no).
+        leader: Gaius Julius Caesar
+        leader_age: 50
+        leader_until: -44
+        # Suetonius, Div. Iul. 88: he died in the fifty-sixth year of his age (so born 100 BC).
+        successors: [{name: "Gaius Octavius (Octavian)", age: 18, disposition: "cautious"}]
+        pitch: "Ten legions, a Gaul of your own making and a Senate that will not give you what the law allowed. Cross, or be prosecuted."
+        provinces:
+          it_boii: 76000
+          it_insubres: 112000
+          it_cenomani: 68000
+          it_veneti: 96000
+          it_taurini: 44000
+          it_liguria: 72000
+          illyria: 170000
+          southern_gaul: 240000
+          central_gaul: 428000
+          belgic_gaul: 244000
+        stockpiles: {food: 2480, materials: 620, wealth: 775, knowledge: 387}
+        stats: {literacy_bp: 1000, unrest_bp: 1200, legitimacy_bp: 5000}
+        influence: {clergy: 1500, nobility: 3000, guilds: 3500}
+        techs: {republic: widespread, agriculture: widespread, irrigation: widespread, ox_plough: widespread, iron_plough: widespread, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: widespread, writing: widespread, alphabet: widespread, masonry: widespread, surveying: widespread, astronomy_calendar: adopted, standard_measures: widespread, coinage: widespread, census: widespread, sailing: adopted, horse_riding: widespread, composite_bow: adopted, fortification: widespread, crossbow: adopted, schools: adopted, roads: widespread, piston_bellows: adopted, aqueduct: adopted, sanitation: adopted, concrete: adopted, canals: concept}
+      numidia:
+        navy_bp: 0
+        martial_bp: 25000
+        disposition: cautious
+        scripts:
+          - {id: "juba_vs_curio", goal: "conquer", target: "e1_caesar", preconditions: {after_year: -50, before_year: -47}, note: "Juba's general Sabura and the Numidian horse destroy Curio's army (Caesar, BC 2.38-44)."}
+        capital: num_massyli
+        music: near_east
+        leader: Juba I
+        leader_age: 40
+        leader_until: -46
+        # Juba's friendship with Pompey's family and his feud with Curio, who as tribune had proposed to confiscate his kingdom: Caesar, BC 2.25.
+        # He and Petreius kill each other at a banquet after Thapsus (Appian, BC 2.100); age unknown (verified: no).
+        pitch: "A king of horsemen who hates Curio and loves Pompey. Rome's civil war could make your kingdom or end it."
+        provinces:
+          num_massyli: 432000
+          num_masaesyli: 376000
+        stockpiles: {food: 1292, materials: 323, wealth: 202, knowledge: 101}
+        stats: {literacy_bp: 300, unrest_bp: 1000, legitimacy_bp: 6500}
+        influence: {clergy: 2500, nobility: 6500, guilds: 1000}
+        techs: {agriculture: widespread, ox_plough: widespread, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: adopted, horse_riding: widespread, masonry: adopted, fortification: adopted, sailing: adopted, composite_bow: adopted, writing: adopted, alphabet: adopted}
+      ptolemaic:
+        navy_bp: 10000
+        martial_bp: 9000
+        disposition: scholarly
+        scripts:
+          - {id: "pothinus_kills_pompey", goal: "ally", target: "e1_caesar", preconditions: {after_year: -49, before_year: -47}, note: "The king's counsellors decide to kill Pompey to please Caesar (Plutarch, Pompey 77; Caesar, BC 3.104)."}
+          - {id: "cleopatra_and_antony", goal: "ally", target: "rome", preconditions: {after_year: -41}, depends_on: ["alexandrian_war"], note: "Antony has Cleopatra and her children sit by him in Alexandria and proclaims her Queen of Kings (Dio 49.41)."}
+        capital: pto_delta
+        music: near_east
+        leader: Ptolemy XIII (with his sister Cleopatra VII)
+        leader_age: 13
+        leader_until: -47
+        # The late king's will named the elder son and the elder daughter as heirs (Caesar, BC 3.108); Pothinus, the boy's tutor, was regent
+        # (BC 3.108) and had driven Cleopatra from the country (Plutarch, Caesar 49). Ptolemy XIII's age ('quite young': Plutarch, Pompey 77) is approximate.
+        successors: [{name: "Cleopatra VII", age: 22, disposition: "scholarly", died: -30, ends: "takes her own life at Alexandria"}]
+        pitch: "A boy king, a clever sister and a Roman general who has lost a battle. Egypt's grain decides every war around the sea."
+        provinces:
+          pto_delta: 1822000
+          pto_middle: 1012000
+          pto_thebaid: 1215000
+        stockpiles: {food: 6478, materials: 1619, wealth: 3239, knowledge: 1619}
+        stats: {literacy_bp: 1000, unrest_bp: 2000, legitimacy_bp: 5000}
+        influence: {clergy: 4500, nobility: 4000, guilds: 1500}
+        techs: {agriculture: widespread, irrigation: widespread, ox_plough: widespread, iron_plough: adopted, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: adopted, writing: widespread, alphabet: widespread, masonry: widespread, surveying: widespread, astronomy_calendar: widespread, standard_measures: widespread, coinage: widespread, sailing: widespread, horse_riding: widespread, chariot: adopted, fortification: widespread, schools: widespread, roads: adopted, canals: widespread, glassmaking: widespread, census: widespread}
+      e1_parthia:
+        navy_bp: 0
+        martial_bp: 30000
+        disposition: aggressive
+        scripts:
+          - {id: "labienus_pacorus_invasion", goal: "conquer", target: "rome", preconditions: {after_year: -41}, note: "Pacorus, son of Orodes, and Q. Labienus (who sided with Brutus and Cassius) invade the Roman east (Dio 48.24-26)."}
+        capital: sel_babylonia
+        music: near_east
+        leader: Orodes II
+        leader_age: 45
+        leader_until: -37
+        # Plutarch calls him Hyrodes (Crassus 21): he divided his forces, sending Surena against Crassus and himself ravaging Armenia.
+        # His age, and the date of his death (c.38-37 BC), are not in the texts read (verified: no).
+        pitch: "You have just beaten Crassus. The Romans are about to fight each other: pick the right side to help."
+        provinces:
+          sel_babylonia: 1485000
+          sel_media: 523000
+          sel_susiana: 297000
+          sel_persis: 374000
+          sel_upper_mesopotamia: 446000
+        stockpiles: {food: 5000, materials: 1250, wealth: 1562, knowledge: 781}
+        stats: {literacy_bp: 500, unrest_bp: 1200, legitimacy_bp: 6500}
+        influence: {clergy: 3500, nobility: 5500, guilds: 1000}
+        techs: {agriculture: widespread, irrigation: widespread, ox_plough: widespread, iron_plough: adopted, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: adopted, writing: adopted, alphabet: adopted, masonry: widespread, surveying: adopted, astronomy_calendar: widespread, standard_measures: adopted, coinage: widespread, horse_riding: widespread, composite_bow: widespread, fortification: adopted, schools: adopted, roads: adopted, canals: widespread}
+      e1_armenia:
+        navy_bp: 0
+        martial_bp: 18000
+        disposition: cautious
+        scripts: []
+        capital: armenia
+        music: near_east
+        leader: Artavasdes II
+        leader_age: 40
+        leader_until: -34
+        # Artavasdes is named in Plutarch, Crassus 21 and Dio 49.25 (read); the age is a guess and Antony captures him (Dio 50.1).
+        pitch: "Between Rome and Parthia, with Crassus dead and a Parthian army in your fields."
+        provinces:
+          armenia: 280000
+        stockpiles: {food: 448, materials: 112, wealth: 112, knowledge: 56}
+        stats: {literacy_bp: 400, unrest_bp: 900, legitimacy_bp: 6000}
+        influence: {clergy: 4000, nobility: 5500, guilds: 500}
+        techs: {agriculture: widespread, irrigation: adopted, ox_plough: widespread, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: adopted, writing: adopted, alphabet: adopted, masonry: adopted, standard_measures: adopted, coinage: adopted, horse_riding: widespread, composite_bow: adopted, fortification: adopted}
+      pontus:
+        navy_bp: 3000
+        martial_bp: 12000
+        disposition: aggressive
+        scripts:
+          - {id: "pharnaces_vs_rome", goal: "conquer", target: "rome", preconditions: {after_year: -48, before_year: -46}, note: "Pharnaces besieges Phanagoreia and Sinope and beats Domitius Calvinus; Caesar beats him near Zela (Appian, Mith. 120; Plutarch, Caesar 50)."}
+        capital: bosporus
+        music: near_east
+        leader: Pharnaces II
+        leader_age: 48
+        leader_until: -47
+        # Appian, Mith. 120: he died of his wounds 'being then fifty years of age and having been king of Bosphorus fifteen years'.
+        pitch: "The son who turned on Mithridates and now holds the Bosporus. The Romans are busy fighting one another."
+        provinces:
+          bosporus: 120000
+        stockpiles: {food: 192, materials: 48, wealth: 48, knowledge: 24}
+        stats: {literacy_bp: 400, unrest_bp: 1000, legitimacy_bp: 5500}
+        influence: {clergy: 3500, nobility: 5000, guilds: 1500}
+        techs: {agriculture: widespread, irrigation: widespread, ox_plough: widespread, iron_plough: adopted, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: adopted, writing: widespread, alphabet: widespread, masonry: widespread, surveying: adopted, standard_measures: widespread, coinage: widespread, sailing: widespread, composite_bow: adopted, horse_riding: widespread, chariot: adopted, fortification: widespread, schools: adopted, roads: adopted}
+      massalia:
+        navy_bp: 10000
+        martial_bp: 4000
+        disposition: mercantile
+        scripts: []
+        capital: mas_massalia
+        leader: ""
+        music: near_east
+        # The Massilians shut their gates against Caesar and took Domitius's ships and Pompey's exhortation (Caesar, BC 1.34-35); Trebonius and Decimus Brutus besiege them (BC 1.36).
+        pitch: "A free Greek city that owes much to Pompey and to Caesar alike. Choose, or be besieged."
+        provinces:
+          mas_massalia: 112000
+        stockpiles: {food: 179, materials: 44, wealth: 112, knowledge: 56}
+        stats: {literacy_bp: 2000, unrest_bp: 600, legitimacy_bp: 7500}
+        influence: {clergy: 2500, nobility: 5000, guilds: 2500}
+        techs: {republic: adopted, agriculture: widespread, ox_plough: widespread, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, writing: widespread, alphabet: widespread, masonry: widespread, surveying: widespread, astronomy_calendar: widespread, standard_measures: widespread, coinage: widespread, sailing: widespread, fortification: widespread, schools: widespread, roads: adopted}
+    unowned:
+      sa_barbagia: 63000
+      it_salassi: 24000
+      thrace: 476000
+      galatia: 140000
+      cappadocia: 280000
+      rho_rhodes: 140000
+      colchis: 98000
+      nabataea: 98000
+      arabia: 189000
+      britain: 567000
+      germania: 476000
+      dacia: 280000
+      scythia: 280000
+      mauretania: 280000
+      garamantes: 98000
+    relations:
+      - {a: "rome", b: "e1_caesar", status: "hostile", grievance_bp: 6000, note: "The Senate and Caesar have failed to agree terms (Caesar, BC 1.1-11)."}
+      - {a: "rome", b: "massalia", status: "allied", note: "Massalia shuts its gates to Caesar at Pompey's urging (Caesar, BC 1.34-35)."}
+      - {a: "rome", b: "numidia", status: "allied", note: "Juba's family friendship with Pompey (Caesar, BC 2.25)."}
+      - {a: "rome", b: "ptolemaic", status: "trading", note: "The late king's league with the Roman people; one copy of his will is lodged with Pompey (Caesar, BC 3.108)."}
+      - {a: "rome", b: "e1_parthia", status: "hostile", grievance_bp: 4000, note: "Crassus' army was destroyed by Surena (Plutarch, Crassus 21-31)."}
+      - {a: "e1_caesar", b: "numidia", status: "hostile", grievance_bp: 3000, note: "Curio, as tribune, tried to make Juba's kingdom public property (Caesar, BC 2.25)."}
+      - {a: "e1_parthia", b: "e1_armenia", status: "hostile", grievance_bp: 2500, note: "Orodes devastates Armenia to punish Artavasdes (Plutarch, Crassus 21)."}
+    faiths:
+      - {id: roman_gods, name: "The gods of Rome", followers: [rome, e1_caesar], spreads: false, note: "The state cults, with Caesar as pontifex maximus (verified: no)."}
+      - {id: olympians, name: "The Greek gods", followers: [ptolemaic, massalia, pontus], spreads: true, note: "Hellenistic cults of the kings' cities."}
+      - {id: punic_gods, name: "The gods of the Libyans", followers: [numidia], spreads: false, note: "Cults of Numidia (verified: no)."}
+      - {id: iranian_gods, name: "The gods of Iran", followers: [e1_parthia, e1_armenia], spreads: false, note: "Mithra, Anahita and Greek gods under the Arsacids (verified: no)."}
