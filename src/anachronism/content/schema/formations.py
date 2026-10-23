@@ -39,6 +39,8 @@ class Formation(Frozen):
     """... and without them the line is thin: this much less power, and no edge."""
     blocked_terrain: tuple[Identifier, ...] = ()
     """Terrain where this line cannot form (a wide line in forest or marsh is thin)."""
+    sources: tuple[str, ...] = ()
+    """Ancient passages the entry rests on (internal research notes, never shown to players)."""
     layout: dict[Identifier, dict[Identifier, int]] = Field(default_factory=dict)
     """Where each kind of soldier stands when its deployment is left to the general (D-270):
     kind -> {left, centre, right, reserve: weight}. The key ``default`` covers kinds not named;

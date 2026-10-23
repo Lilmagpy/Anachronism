@@ -7,6 +7,7 @@ from typing import Any
 from pydantic import TypeAdapter
 
 from anachronism.content.schema.base import Frozen, Identifier, Positive
+from anachronism.content.schema.battles import Battle
 from anachronism.content.schema.buildings import Building
 from anachronism.content.schema.chapters import AlmanacEntry, Chapter
 from anachronism.content.schema.civ import CivDefinition
@@ -69,6 +70,7 @@ LIST_KINDS: dict[str, type[Frozen]] = {
     "tactics": Tactic,
     "formations": Formation,
     "symbols": Symbol,
+    "battles": Battle,
 }
 """Kinds holding a list of items with ids; each item is validated on its own."""
 

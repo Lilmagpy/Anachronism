@@ -6,6 +6,7 @@ from dataclasses import dataclass, field
 
 from anachronism.content.schema import (
     AlmanacEntry,
+    Battle,
     Building,
     Chapter,
     CivDefinition,
@@ -60,6 +61,7 @@ class Registry:
     tactics: dict[str, Tactic] = field(default_factory=dict)
     formations: dict[str, Formation] = field(default_factory=dict)
     symbols: dict[str, Symbol] = field(default_factory=dict)
+    battles: dict[str, Battle] = field(default_factory=dict)
     origins: dict[tuple[str, str], str] = field(default_factory=dict)
     invalid: dict[str, set[str]] = field(default_factory=dict)
     """Ids of items that exist but failed validation (already reported), per kind."""

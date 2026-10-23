@@ -7,6 +7,7 @@ from anachronism.content.schema.base import (
     Identifier,
     Rate,
 )
+from anachronism.content.schema.battles import Battle, BattleSide
 from anachronism.content.schema.buildings import Building
 from anachronism.content.schema.chapters import AlmanacEntry, Chapter, ChapterChoice, Deeds
 from anachronism.content.schema.civ import CivDefinition
@@ -70,6 +71,8 @@ __all__ = [
     "SPECIAL_SPEAKERS",
     "Access",
     "AlmanacEntry",
+    "Battle",
+    "BattleSide",
     "Building",
     "Category",
     "Chapter",

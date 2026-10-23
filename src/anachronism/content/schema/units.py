@@ -53,3 +53,5 @@ class Unit(Frozen):
     """Extra (or less) power when fighting on these terrains."""
     note: str = ""
     """A line of history shown in the game."""
+    sources: tuple[str, ...] = ()
+    """Ancient passages the entry rests on (internal research notes, never shown to players)."""

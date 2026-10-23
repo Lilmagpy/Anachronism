@@ -37,6 +37,7 @@ def cross_reference_issues(registry: Registry) -> list[ContentIssue]:
         *_chapter_issues(registry),
         *_tactic_issues(registry),
         *_formation_issues(registry),
+        *_battle_issues(registry),
         *_symbol_issues(registry),
         *_dialogue_issues(registry),
     ]
@@ -442,6 +443,24 @@ def _formation_issues(registry: Registry) -> list[ContentIssue]:
                 issues.append(
                     ContentIssue(where, label, f"{other!r} is said to beat it but does not")
                 )
+    return issues
+
+
+def _battle_issues(registry: Registry) -> list[ContentIssue]:
+    issues: list[ContentIssue] = []
+    for battle in registry.battles.values():
+        where = registry.origin("battles", battle.id)
+        label = f"battles ({battle.id})"
+        if registry.is_unknown("terrain", battle.terrain):
+            issues.append(ContentIssue(where, label, f"unknown terrain {battle.terrain!r}"))
+        for side in (battle.side_a, battle.side_b):
+            for unit in side.troops:
+                if registry.is_unknown("units", unit):
+                    issues.append(ContentIssue(where, label, f"unknown unit {unit!r}"))
+            if side.formation and registry.is_unknown("formations", side.formation):
+                issues.append(ContentIssue(where, label, f"unknown formation {side.formation!r}"))
+            if side.tactic and registry.is_unknown("tactics", side.tactic):
+                issues.append(ContentIssue(where, label, f"unknown battle plan {side.tactic!r}"))
     return issues
 
 
