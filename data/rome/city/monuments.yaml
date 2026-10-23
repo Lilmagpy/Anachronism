@@ -10,19 +10,25 @@ monuments:
   english: Temple of Jupiter Optimus Maximus (Capitoline Temple)
   type: temple
   regio: 8
-  lat: 41.8929
-  lon: 12.4827
+  lat: 41.8922
+  lon: 12.4817
   precision: approx
-  location: Capitol, southern summit (Capitolium); under Palazzo dei Conservatori / Caffarelli
-  built: {year: -509, certainty: traditional, by: "vowed by Tarquinius Priscus, built by Tarquinius Superbus; dedicated by the consul M. Horatius (Livy 2.8.6; Polybius 3.22.1 dates the first treaty to the year after, so the Republic already had the temple)"}
+  location: "Capitol, southern summit (Capitolium); podium remains in the Palazzo Caffarelli area (the 'Museo Mussolini' of P&A) and beside the Palazzo dei Conservatori"
+  built: {year: -509, certainty: traditional, by: "vowed by Tarquinius Priscus, largely built by Tarquinius Superbus (Livy 1.38.7, 1.55-56; Dion. Hal. 4.61); dedicated on 13 September by the consul M. Horatius Pulvillus in the first year of the Republic (Livy 2.8; Polyb. 3.22.1, which dates the first treaty to that year; Tac. Hist. 3.72)"}
   events:
-  - {year: -83, what: "burned down 6 July 83 BC (Cic. Cat. 3.9; Tac. Hist. 3.72)"}
-  - {year: -78, what: "rebuilding begun under Sulla, completed by Q. Lutatius Catulus (Plut. Publicola 15); same plan on a larger scale, with columns taken from the Olympieion at Athens"}
-  - {year: -69, what: "dedicated by Q. Lutatius Catulus (Tac. Hist. 3.72; Cic. Verr. 2.4.69)"}
-  form: "Tuscan temple on a very large podium, about 55 x 60 m, three cellae (Jupiter, Juno, Minerva), deep pronaos with three rows of columns; terracotta decoration and quadriga by Vulca of Veii in the first temple"
+  - {year: -296, what: "terracotta quadriga on the pediment replaced by a (probably bronze) one (Liv. 10.23.12)"}
+  - {year: -193, what: "aediles M. Aemilius Lepidus and L. Aemilius Paullus set gilded shields on the pediment (Liv. 35.10)"}
+  - {year: -179, what: "walls and columns re-stuccoed (Liv. 40.51.3)"}
+  - {year: -142, what: "cella ceiling gilded (Plin. NH 33.57)"}
+  - {year: -83, what: "burned down on 6 July 83 BC (Cic. Cat. 3.9; Sall. Cat. 47.2; Tac. Hist. 3.72; App. BC 1.83); the Sibylline books also lost (Dion. Hal. 4.62)"}
+  - {year: -78, what: "rebuilding begun under Sulla, most of it assigned by the Senate to Q. Lutatius Catulus (Val. Max. 9.3.8; Cic. Verr. 2.4.69; Plut. Publ. 15); year approximate, on the old foundations and plan but higher (Tac. Hist. 3.72; Val. Max. 4.4.11)"}
+  - {year: -69, what: "dedicated by Q. Lutatius Catulus (Liv. Per. 98; Plut. Publ. 15; Plin. NH 7.138)"}
+  form: "Tuscan temple on a tufa podium (stylobate of parallel walls 5.60 m thick, 4-5 m high) of about 55 x 60 m; three cellae side by side (Jupiter centre, Minerva right, Juno left), the cella about 100 ft (27.8 m) square, with a deep pronaos of columns; the first temple had a terracotta statue of Jupiter and a terracotta quadriga, attributed to Vulca of Veii (Plin. NH 35.157; Plut. Publ. 13)"
   materials: [tufa (cappellaccio) podium, timber superstructure, terracotta; marble columns in the Catulus phase]
-  sources: ["Livy 2.8.6", "Polybius 3.22", "Dion. Hal. 4.61", "Tac. Hist. 3.72", "Plut. Publicola 15", "Platner-Ashby s.v. Iuppiter Optimus Maximus Capitolinus, Aedes"]
-  pleiades: null
+  sources: ["Livy 1.38.7", "Livy 1.55-56", "Livy 2.8", "Polybius 3.22", "Dion. Hal. 4.61", "Cic. Cat. 3.9", "Cic. Verr. 2.4.69", "Tac. Hist. 3.72", "Livy Per. 98", "Plut. Publicola 13-15", "Platner-Ashby s.v. Iuppiter Optimus Maximus Capitolinus, Aedes"]
+  notes: "Checked against P&A 'Iuppiter Optimus Maximus Capitolinus, Aedes' (pp297-302): dedication on 13 Sept (Liv. 2.8, 7.3.8; Polyb. 3.22; Tac. Hist. 3.72); fire 6 July 83 (Cic. Cat. 3.9; Sall. Cat. 47.2; App. BC 1.83); Sulla began the rebuilding (Val. Max. 9.3.8; Tac. Hist. 3.72), most of it fell to Catulus (Cic. Verr. 2.4.69), who dedicated in 69 (Liv. Per. 98; Plut. Publ. 15). The year 78 for the start of rebuilding is not in P&A: it is an approximation. P&A doubts the Olympieion columns were used (coins of 43 BC show Doric). Coordinates moved to Pleiades 871801169 (about 100 m SW of the earlier value)."
+  pleiades: 871801169
+  verified: platner-ashby+pleiades
 - id: arx_capitolina
   latin: Arx
   english: Arx (citadel, northern summit of the Capitol)
@@ -31,20 +37,30 @@ monuments:
   lat: 41.8946
   lon: 12.4833
   precision: approx
-  location: Capitol, northern summit, under S. Maria in Aracoeli
-  built: {year: null, certainty: traditional, by: "regal period; defended against the Gauls 390 BC (Livy 5.47)"}
-  sources: ["Livy 5.47", "Platner-Ashby s.v. Arx"]
+  location: "Capitol, northern summit, under S. Maria in Aracoeli; about 49 m above sea level, area about one hectare"
+  built: {year: null, certainty: traditional, by: "citadel of the City of the Four Regions (regal period); sentinels posted here during comitia in the Campus Martius (Cass. Dio 37.28); held against the Gauls 390 BC (Livy 5.47); M. Manlius Capitolinus's house stood here until destroyed in 384 BC (Livy 6.20.13)"}
+  sources: ["Livy 5.47", "Livy 6.20.9", "Livy 6.20.13", "Cass. Dio 37.28", "Platner-Ashby s.v. Arx"]
+  notes: "No separate Pleiades place for the Arx: Pleiades 347036492 (Capitolinus Mons) covers the hill. P&A: height c. 49 m, area c. 1 ha; the Auguraculum lay at its north-east corner; the Aracoeli church (9th c.) altered the ground so its original topography is uncertain. P&A gives Liv. 5.47 only through the entry's other references (6.20.9, 6.20.13 for Manlius's house); Livy 5.47 itself (the geese) is the usual citation for the Gallic night attack."
+  pleiades: null
+  verified: platner-ashby
 - id: aedes_iunonis_monetae
   latin: Aedes Iunonis Monetae
   english: Temple of Juno Moneta
   type: temple
   regio: 8
-  lat: 41.8945
+  lat: 41.8939
   lon: 12.4832
   precision: approx
   location: Capitol, Arx, on the site of the house of M. Manlius Capitolinus; under S. Maria in Aracoeli
-  built: {year: -344, certainty: certain, by: "vowed by L. Furius Camillus as dictator 345 against the Aurunci; dedicated 344 (Livy 7.28.4-6)"}
-  sources: ["Livy 7.28.4-6", "Ovid Fasti 6.183-190", "Platner-Ashby s.v. Iuno Moneta, Aedes"]
+  built: {year: -344, certainty: certain, by: "vowed 345 by the dictator L. Furius (Camillus) in the Aurunci war; the Senate appointed duumviri to build it on the site of M. Manlius Capitolinus's house; dedicated the next year, 344 (Livy 7.28.4-6), on 1 June (Ov. Fast. 6.183)"}
+  sources: ["Livy 7.28.4-6", "Livy 6.20.13", "Livy 4.7.12", "Ovid Fasti 6.183", "Macrob. Sat. 1.12.30", "Platner-Ashby s.v. Iuno Moneta, Aedes"]
+  events:
+  - {year: -196, what: "prodigy: spear-points burned 'at Moneta' (Liv. 33.26.8)"}
+  - {year: -269, what: "the mint was in the temple in the last centuries of the Republic, perhaps from the first silver coinage in 269 (conjecture in P&A)"}
+  form: "temple of Juno Moneta on the Arx; held the libri lintei (Liv. 4.7.12, 4.20.8)"
+  notes: "P&A calls the vower M. Furius Camillus; Livy 7.28.4-6 names the dictator only as L. Furius (Camillus). Dedicated 1 June (Ov. Fast. 6.183; Macrob. 1.12.30). Site probably the transepts of S. Maria in Aracoeli (Hulsen); no remains found. The Pleiades point is the Aracoeli church."
+  pleiades: 76518529
+  verified: platner-ashby+pleiades
 - id: aedes_iovis_feretri
   latin: Aedes Iovis Feretri
   english: Temple of Jupiter Feretrius
@@ -54,23 +70,29 @@ monuments:
   lon: 12.4830
   precision: rough
   location: Capitol, probably near the Capitoline temple (exact site lost)
-  built: {year: null, certainty: traditional, by: "Romulus, according to tradition (Livy 1.10.5-7)"}
+  built: {year: null, certainty: traditional, by: "Romulus, after winning the spolia opima from Acron of the Caeninenses, said to be the first temple in Rome (Livy 1.10.5-7; Dion. Hal. 2.34; Plut. Rom. 16)"}
   events:
-  - {year: -32, what: "roof ruinous; restored by Augustus on the advice of Atticus (Livy 4.20.7; Nepos Atticus 20; Res Gestae 19) - restoration c. 32 BC"}
-  form: "tiny shrine; site of the spolia opima dedications (Cossus 437, Livy 4.20)"
-  sources: ["Livy 1.10.5-7", "Livy 4.20.7", "Res Gestae 19", "Platner-Ashby s.v. Iuppiter Feretrius, Aedes"]
+  - {year: -31, what: "roof gone and building neglected; restored by Augustus at the urging of Atticus, probably c. 31 BC (Nep. Att. 20.3; Livy 4.20.7; RG 19.2)"}
+  form: "very small shrine, not more than 15 ft on its longest side (Dion. Hal. 2.34); on a high stylobate with a plain pediment on a coin of c. 44 BC; spolia opima deposited by Cossus (437 or 428, Livy 4.19-20) and Marcellus (222)"
+  sources: ["Livy 1.10.5-7", "Livy 1.33.8", "Livy 4.20", "Dion. Hal. 2.34", "Plut. Marcellus 8", "Nepos Atticus 20.3", "Res Gestae 19", "Platner-Ashby s.v. Iuppiter Feretrius, Aedes"]
+  notes: "Not in Pleiades. P&A: very small (15 ft on its longest side, Dion. Hal. 2.34), enlarged by Ancus (Liv. 1.33.8), probably inside the later Area Capitolina. Cossus's spolia opima: Livy dates it 437 (Liv. 4.19-20) but Livy 4.20.5-11 reports Augustus's reading of the linen corselet, which makes Cossus a consul, i.e. 428 (the date in P&A and Diodorus 12.80). Marcellus 222 BC (Liv. Per. 20; Plut. Marc. 8). Augustus's restoration: P&A 'probably about 31 BC' (Nep. Att. 20.3; Mon. Anc. 4.5 = RG 19.2; Liv. 4.20.7), so the event year here is 31, not 32."
+  pleiades: null
+  verified: platner-ashby
 - id: aedes_veiovis
   latin: Aedes Vediovis
   english: Temple of Vediovis
   type: temple
   regio: 8
-  lat: 41.8941
-  lon: 12.4838
-  precision: approx
+  lat: 41.8928
+  lon: 12.4836
+  precision: exact
   location: Capitol, in the saddle (Asylum) between the Arx and the Capitolium; remains under the Tabularium side, near Piazza del Campidoglio
-  built: {year: -192, certainty: certain, by: "vowed by L. Furius Purpureo as praetor in Gaul 200 (Livy 31.21.12); contracted 194; dedicated 192 (Livy 34.53.7, 35.41.8)"}
-  form: "cella wider than deep, with an unusual orientation; cult statue of the god, a cypress-wood goat figure"
-  sources: ["Livy 31.21.12", "Livy 34.53.7", "Livy 35.41.8", "Platner-Ashby s.v. Vediovis, Aedes"]
+  built: {year: -192, certainty: probable, by: "vowed by L. Furius Purpurio as praetor in the Gallic war of 200 (Livy 31.21.12, emended text); dedicated by the duumvir Q. Marcius Ralla in 192 (Livy 35.41.8, emended text); P&A treats the identification as unsettled"}
+  form: "cella wider than deep with pronaos columns added along the flanks (Vitr. 4.8.4); cult statue of a youthful god with arrows and a goat (Gell. 5.12.11; Ov. Fast. 3.443); travertine/tufa remains survive below the Tabularium"
+  sources: ["Livy 31.21.12", "Livy 34.53.7", "Livy 35.41.8", "Vitruvius 4.8.4", "Gellius 5.12", "Ovid Fasti 3.429-430", "Platner-Ashby s.v. Veiovis, Aedes; Aedes Veiovis in Capitolio"]
+  notes: "CORRECTED. P&A treats two temples of Vediovis. (1) On the Tiber island, known only from an emended text of Liv. 34.53.7 (194 BC: dedicated by the duumvir C. Servilius, vowed six years earlier in the Gallic war by L. Furius Purpurio as praetor, the contract let by him as consul). (2) The Capitoline temple 'inter duos lucos' (Vitr. 4.8.4; Gell. 5.12.5), dedicated on 7 March (Ov. Fast. 3.429-430): Liv. 35.41.8 (192 BC) says Q. Marcius Ralla, duumvir, dedicated a temple vowed by Purpurio, but the MSS read 'aedes duae Iovi' and the emendation to Vediovis is conjectural. P&A says the matter cannot be settled. The previous entry's 'contracted 194; dedicated 192 (Livy 34.53.7)' mixed the island temple with the Capitoline one. Livy 31.21.12 is the vow of 200 (MSS 'deo Iovi'). Pleiades 243075423 gives the standing remains by the Tabularium side."
+  pleiades: 243075423
+  verified: platner-ashby+pleiades
 - id: aedes_mentis
   latin: Aedes Mentis
   english: Temple of Mens
@@ -80,8 +102,13 @@ monuments:
   lon: 12.4826
   precision: rough
   location: Capitol, next to the temple of Venus Erycina
-  built: {year: -215, certainty: certain, by: "vowed by T. Otacilius Crassus as praetor after Lake Trasimene 217 (Livy 22.9.10); dedicated 215 (Livy 23.31.9)"}
-  sources: ["Livy 22.9.10", "Livy 23.31.9", "Platner-Ashby s.v. Mens, Aedes"]
+  built: {year: -215, certainty: certain, by: "vowed by the praetor T. Otacilius Crassus in 217 after Lake Trasimene on the Sibylline books' advice (Livy 22.9.10, 22.10.10); dedicated by Otacilius as duumvir in 215 (Livy 23.31.9, 23.32.20), on 8 June (Ov. Fast. 6.247-248)"}
+  sources: ["Livy 22.9.10", "Livy 22.10.10", "Livy 23.31.9", "Livy 23.32.20", "Ovid Fasti 6.241-248", "Cic. Nat. D. 2.61", "Platner-Ashby s.v. Mens, Aedes"]
+  events:
+  - {year: -115, what: "restored by M. Aemilius Scaurus, as consul 115 or after the Cimbric war 107 (Cic. Nat. D. 2.61; Plut. Fort. Rom. 5); date uncertain"}
+  notes: "Not in Pleiades. P&A: dedicated 8 June (Ov. Fast. 6.247-248); the temples of Mens and Venus Erucina were separated by an open drain (Liv. 23.31.9). Restoration by M. Aemilius Scaurus, either as consul 115 or after the Cimbric war 107 (Cic. Nat. D. 2.61; Plut. Fort. Rom. 5). Location: on the Capitol, probably in the Area Capitolina; exact site unknown."
+  pleiades: null
+  verified: platner-ashby
 - id: aedes_veneris_erycinae_capitol
   latin: Aedes Veneris Erycinae (Capitolium)
   english: Temple of Venus Erycina (on the Capitol)
@@ -91,8 +118,11 @@ monuments:
   lon: 12.4831
   precision: rough
   location: Capitol
-  built: {year: -215, certainty: certain, by: "vowed by Q. Fabius Maximus as dictator 217 (Livy 22.9.7-10, 22.10.10); dedicated 215 by Fabius (Livy 23.30.13-14)"}
-  sources: ["Livy 22.9.7", "Livy 23.30.13", "Platner-Ashby s.v. Venus Erycina"]
+  built: {year: -215, certainty: certain, by: "vowed by the dictator Q. Fabius Maximus in 217 after Lake Trasimene on the Sibylline books' advice (Livy 22.9.7-10, 22.10.10); dedicated by Fabius as duumvir in 215 (Livy 23.30.13-14, 23.31.9)"}
+  sources: ["Livy 22.9.7", "Livy 22.9.10", "Livy 22.10.10", "Livy 23.30.13", "Livy 23.31.9", "Platner-Ashby s.v. Venus Erucina"]
+  notes: "Not in Pleiades. P&A: vowed by the dictator Q. Fabius Maximus after Trasimene (Liv. 22.9.10, 22.10.10), dedicated by Fabius as duumvir in 215 (Liv. 23.30.13, 23.31.9); the two temples were separated by a drain (Liv. 23.31.9). Probably the later 'aedes Capitolina Veneris' (Suet. Cal. 7; Galba 18). Livy 22.9.7 is the Sibylline instruction (it names Venus Erycina), not the dedication."
+  pleiades: null
+  verified: platner-ashby
 - id: aedes_veneris_erycinae_collina
   latin: Aedes Veneris Erycinae ad Portam Collinam
   english: Temple of Venus Erycina outside the Colline Gate
@@ -113,9 +143,14 @@ monuments:
   lon: 12.4824
   precision: rough
   location: Capitol, next to the temple of Jupiter
-  built: {year: -254, certainty: probable, by: "traditionally Numa; new temple or restoration by M. Aemilius Scaurus c. 115 BC (Cic. Nat. D. 2.61, Plin. NH 35.? not cited)"}
-  notes: "Dates uncertain; Cicero (Nat. D. 2.61) says Atilius Calatinus dedicated a temple of Fides (about 254 BC), so the date given is the Cicero attribution."
-  sources: ["Cic. Nat. D. 2.61", "Platner-Ashby s.v. Fides, Aedes"]
+  built: {year: -254, certainty: probable, by: "Numa's shrine (Livy 1.21.4; Dion. Hal. 2.75); temple dedicated by A. Atilius Calatinus in 254 or 250 BC (Cic. Nat. D. 2.61), on 1 October (fasti)"}
+  notes: "Dates uncertain; Cicero (Nat. D. 2.61) says Atilius Calatinus dedicated a temple of Fides (about 254 BC), so the date given is the Cicero attribution. Not in Pleiades. P&A: shrine of Fides ascribed to Numa (Liv. 1.21.4; Dion. Hal. 2.75; Plut. Numa 16); the temple was dedicated, presumably built, by A. Atilius Calatinus in 254 or 250 BC (Cic. Nat. D. 2.61), restored and re-dedicated by M. Aemilius Scaurus in 115; dedication day 1 October. Used for Senate meetings (Val. Max. 3.17; App. BC 1.16) and held treaty tablets. Probably in the south-east corner of the Area Capitolina near the Porta Pandana; exact site unknown."
+  sources: ["Livy 1.21.4", "Dion. Hal. 2.75", "Plut. Numa 16", "Cic. Nat. D. 2.61", "Valerius Maximus 3.17", "Platner-Ashby s.v. Fides, Aedes"]
+  events:
+  - {year: -115, what: "restored and re-dedicated by M. Aemilius Scaurus (Cic. Nat. D. 2.61)"}
+  - {year: -43, what: "storm tore off treaty tablets from the walls (Cass. Dio 45.17.3; Obseq. 128)"}
+  pleiades: null
+  verified: platner-ashby
 # ---------------------------------------------------------------- FORUM
 - id: forum_romanum
   latin: Forum Romanum
