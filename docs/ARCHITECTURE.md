@@ -129,3 +129,58 @@ that saving mid-game does not change what happens next.
 ## 8. Configuration and secrets (Phase 2)
 `ANTHROPIC_API_KEY` from the environment or a git-ignored `.env`. Model and effort per task,
 monthly spending cap and debug-log toggle in config. `.env.example` documents the keys.
+
+## 9. The Roman Republic (R2, D-286)
+In a scenario with `republic: true` (the `rome_*` scenarios) the player's state is governed by
+the Republic, not one ruler. Other scenarios keep the ruler model; `punic_wars` is unchanged until
+it is migrated.
+
+**Content** (`content/schema/republic.py`; packs: `packs/rome/`). Every entry has `sources`.
+- `magistracies`: an office with `eras` (by year): seats, how often it is chosen (`every`), order
+  rules (`patricians_only`, `plebeians_only`, `plebeian_min/max`), `replaced_by` (consular
+  tribunes for consuls, with a chance), `term_months`, and the cursus rules after the Lex Villia
+  annalis (`min_age`, `interval_years`, `reelect_gap_years`, `prior_office`). `appointed` +
+  `companion` make a dictator and his master of the horse; `census: true` marks the censors.
+- `gentes`: order, `nomen`, praenomina and cognomina, `standing` snapshots (dignitas, auctoritas,
+  wealth, clients), `stances` on Senate issues, `popular_lean_bp`.
+- `people`: historical persons (birth, death, gens, `offices` by year, traits). A birth that is
+  unknown is estimated from the first office.
+- `fasti`: one entry per year: colleges of holders (a person id, or name + gens for a man not
+  modelled; `suffect` for replacements).
+- `republic_rules` (optional single file): every tunable number, and the Senate's blocs by era
+  (orders until 287, nobles, then optimates and populares from 133).
+`checks.py` validates the references. The sample pack covers 509-500 and 264-260 BC; the real
+data in `data/rome/` is converted into this shape.
+
+**State** (`engine/republic_state.py`, `GameState.republic`): `people` (alive or dead, with
+offices, glory), `families` (a gens in play), `magistrates` (those in office now),
+`record` (the game's own Fasti of senior offices), `census`, `influence`, `backing`,
+`emergency_bp`, `diverged`. The frozen content copies go into `World` (`magistracies`,
+`gentes`, `people`, `fasti`, `republic_rules`).
+
+**Rules** (`engine/republic.py`), run from `end_turn` for each year the turn covers
+(`run_year`), after the year advances:
+1. Old terms end; senior offices go to the record. A dictator's term is six months; censors
+   carry into the next year (18 months).
+2. People: a death draw for each (age table in `republic_rules`), births in each gens, real
+   persons come of age. In a chronicle a historical person is spared until his last recorded
+   office and dies in his real year.
+3. Families' dignitas fades; influence grows by an income.
+4. Magistrates: in a chronicle, the Fasti seat the historical holders. A holder who is dead, or
+   displaced by the player's backing, is replaced by election and `diverged` becomes true. Other
+   offices are elected in rank order by weighted draw on `engine.rng` (weights: family standing,
+   glory, wealth, faction share, backing). The laws of the year decide who may stand; if no one
+   may, the best of the rest, then a new man.
+5. A dictator is named (with a master of the horse) when war and threats raise the emergency
+   level (`emergency_bp`) and the era allows it; never in a year the Fasti covers.
+6. The census when censors are chosen.
+`civ.ruler` is set to the senior magistrates so the old ruler fields still read; `age_and_succeed`
+is skipped for the Republic. Player influence: `persuade(family, issue)` and
+`back_candidate(person, office, year)` (not yet wired as logged actions); `senate_vote(issue)`
+and `senate_mood()` give the Senate's will. Hooks for other systems: `award_glory`,
+`kill_person`, `declare_emergency`.
+
+**View** (`tools/republic_view.py`, key `republic` in the server's view, `null` otherwise):
+`year_label`, `influence`, `emergency_bp`, `history_turned`, `magistrates[]` (office, name,
+rank, months, suffect, appointed, from_fasti, master_of), `senate.factions[]` (weight and mood in
+bp, per-issue leaning), `senate.votes[]`, `families[]`, `notable[]`, `census[]`, `fasti[]`.

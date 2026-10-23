@@ -226,7 +226,7 @@ def eligible(
         return False
     if era.interval_years and mag.cursus:
         last = _last_year(state, person, None, year)
-        if last is not None and year - last < era.interval_years:
+        if last is not None and year - last <= era.interval_years:
             return False
     if era.reelect_gap_years:
         same = _last_year(state, person, mag.id, year)
@@ -567,7 +567,7 @@ def _hold_year(
     if fasti is not None:
         handled = _apply_fasti(state, rep, rng, events, fasti, taken, shares)
     elected = _elect_all(state, rep, rng, events, year, taken, shares, handled)
-    _maybe_dictator(state, rep, rng, events, year, taken, fasti is not None)
+    _maybe_dictator(state, rep, rng, events, year, taken, fasti is not None, shares)
     _emergency(state, rep)
     _take_census(state, rep, year)
     _announce(state, rep, events, year, elected)
@@ -751,6 +751,7 @@ def _maybe_dictator(
     year: int,
     taken: set[str],
     history_year: bool,
+    shares: dict[str, int],
 ) -> None:
     """In an emergency the consuls may name a dictator (for six months) and his master of horse."""
     mags = state.world.magistracies
@@ -778,13 +779,12 @@ def _maybe_dictator(
         dictator = pool[rng.weighted_index(weights)]
         _take(state, rep, dictator, mag, era, year)
         taken.add(dictator.id)
-        rest = [p for p in pool if p.id != dictator.id]
         master = ""
-        if rest:
-            horse = rest[rng.weighted_index([1 + max(0, p.glory) for p in rest])]
-            _take(state, rep, horse, companion, c_era, year, master=dictator.id)
-            taken.add(horse.id)
-            master = horse.name
+        horse = _choose(state, rep, rng, events, companion, c_era, year, 1, taken, shares)
+        for man in horse:
+            _take(state, rep, man, companion, c_era, year, master=dictator.id)
+            taken.add(man.id)
+            master = man.name
         events.add(
             state.player_civ,
             "dictator",
