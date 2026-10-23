@@ -46,7 +46,7 @@ scenarios:
           - {id: "fulvius_vs_gauls", goal: "conquer", target: "e1_allobroges", preconditions: {after_year: -125}, note: "M. Fulvius Flaccus is sent to help Massalia against the Salluvii (125); Sextius founds Aquae Sextiae; Domitius beats the Allobroges at Vindalium; Fabius beats them and Bituitus (121) (Livy, Per. 60-61)."}
           - {id: "arverni_war", goal: "conquer", target: "e1_arverni", preconditions: {after_year: -122}, depends_on: ["fulvius_vs_gauls"], note: "Q. Fabius Maximus defeats Bituitus, king of the Arverni (121); Bituitus goes to Rome to answer to the Senate and is kept at Alba (Livy, Per. 61)."}
           - {id: "gracchan_franchise", goal: "ally", target: "e1_socii", preconditions: {after_year: -125}, note: "Fulvius Flaccus, consul and land commissioner, tries to give the Italians citizenship for their lost land (125) and the Senate blocks him (Appian, BC 1.21)."}
-          - {id: "jugurthine_war", goal: "conquer", target: "numidia", preconditions: {after_year: -112}, note: "The Senate goes to war after Cirta (112); Jugurtha buys off Bestia and beats Albinus (110); Metellus and Marius wear him down; Bocchus hands him over (105) (Sallust, BJ 26-114; Livy, Per. 65, 67)."}
+          - {id: "jugurthine_war", goal: "conquer", target: "numidia", preconditions: {after_year: -112}, note: "The Senate goes to war after Cirta (112); Jugurtha buys off Bestia and sends Aulus Albinus' army under the yoke (110); Metellus and Marius wear him down; Bocchus hands him over (105) (Sallust, BJ 26-114; Livy, Per. 65, 67)."}
           - {id: "cimbric_war", goal: "conquer", target: "e1_cimbri", preconditions: {after_year: -113}, note: "Carbo's army is routed by the Cimbri (113); Arausio costs Manlius and Caepio's armies (105); Marius beats the Teutones near Aquae Sextiae (102) and the Cimbri with Catulus (101) (Livy, Per. 63, 67, 68; Plutarch, Marius 18-27)."}
           - {id: "social_war", goal: "conquer", target: "e1_socii", preconditions: {after_year: -91}, note: "The murder of Livius Drusus (91) sets the Italian allies in revolt (Livy, Per. 71-72; Appian, BC 1.35-39); Rome ends it by extending citizenship (Appian, BC 1.49)."}
           - {id: "first_mithridatic_war", goal: "conquer", target: "pontus", preconditions: {after_year: -89}, note: "Mithridates VI overruns Asia (88); Sulla beats his armies at Orchomenus and meets him at Dardanus (85) (Appian, Mith. 49-54; Plutarch, Sulla 24)."}
@@ -140,7 +140,7 @@ scenarios:
         martial_bp: 25000
         disposition: cautious
         scripts:
-          - {id: "jugurtha_vs_rome", goal: "conquer", target: "rome", preconditions: {after_year: -112}, note: "Jugurtha bribes his way past the Senate and sends Albinus' army under the yoke at Suthul (110) (Sallust, BJ 27-38)."}
+          - {id: "jugurtha_vs_rome", goal: "conquer", target: "rome", preconditions: {after_year: -112}, note: "Jugurtha bribes his way past the Senate and sends Aulus Albinus' army under the yoke at Suthul (110) (Sallust, BJ 27-38)."}
         capital: num_massyli
         music: near_east
         leader: Micipsa
