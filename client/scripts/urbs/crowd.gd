@@ -70,9 +70,6 @@ void fragment() {
 """
 
 var _seats: Array[Dictionary] = []   # {pos, yaw, u, row}
-var _inst: Array[Dictionary] = []    # per seat: {xf, col, custom}
-var _mm1: MultiMeshInstance3D
-var _mm2: MultiMeshInstance3D
 var _mat: ShaderMaterial
 var palette: Array[Color] = [
 	Color(0.78, 0.7, 0.5), Color(0.7, 0.45, 0.3), Color(0.55, 0.62, 0.7), Color(0.62, 0.5, 0.38),
@@ -85,7 +82,12 @@ var toga_rows := 3
 var fan_colours: Array[Color] = []
 var fan_share := 0.0
 ## Seats nearer the camera than this get the detailed figure.
-var lod_distance := 42.0
+var lod_distance := 30.0
+## Beyond this the cheap figure; beyond cull_distance nothing is drawn.
+var far_distance := 110.0
+var cull_distance := 700.0
+var cell_size := 48.0
+var _cells: Array[Dictionary] = []
 ## Standing figures (a street) instead of seated ones (tiers).
 var standing := false
 var _last_cam := Vector3(1e9, 1e9, 1e9)
@@ -105,12 +107,19 @@ func count() -> int:
 	return _seats.size()
 
 
-## Build the MultiMeshes from the seats added so far.
+## Build the MultiMeshes from the seats added so far: the seats are grouped into square cells
+## (so each cell is culled by the camera on its own) and each cell has one MultiMesh per level
+## of detail.
 func build() -> void:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_value
-	var lo := Vector3(1e9, 1e9, 1e9)
-	var hi := Vector3(-1e9, -1e9, -1e9)
+	var sh := Shader.new()
+	sh.code = SHADER
+	_mat = ShaderMaterial.new()
+	_mat.shader = sh
+	_mat.set_shader_parameter("face", M.face_texture(Color(0.86, 0.66, 0.52), 3))
+	_mat.set_shader_parameter("shoulder_y", (0.92 if standing else 0.49) + F.SH_Y)
+	var cell_of: Dictionary = {}
 	for s in _seats:
 		var p: Vector3 = s["pos"]
 		var sc := rng.randf_range(0.92, 1.08)
@@ -124,76 +133,88 @@ func build() -> void:
 			if fan_colours.size() > 0 and rng.randf() < fan_share:
 				col = fan_colours[rng.randi() % fan_colours.size()]
 			col = col.lerp(Color(0.5, 0.5, 0.5), rng.randf() * 0.15)
-		_inst.append({"xf": Transform3D(b, p), "col": col,
-			"custom": Color(rng.randf(), float(s["u"]), rng.randf(), rng.randf())})
-		lo = lo.min(p)
-		hi = hi.max(p)
-	var sh := Shader.new()
-	sh.code = SHADER
-	_mat = ShaderMaterial.new()
-	_mat.shader = sh
-	_mat.set_shader_parameter("face", M.face_texture(Color(0.86, 0.66, 0.52), 3))
-	var aabb := AABB(lo - Vector3(2, 2, 2), hi - lo + Vector3(4, 6, 4)) if _seats.size() > 0 else AABB()
-	_mat.set_shader_parameter("shoulder_y", (0.92 if standing else 0.49) + F.SH_Y)
-	_mm1 = _make_mm(_figure_mesh(1, standing), aabb)
-	_mm2 = _make_mm(_figure_mesh(2, standing), aabb)
+		var inst := {"xf": Transform3D(b, p), "col": col, "custom": Color(rng.randf(), float(s["u"]), rng.randf(), rng.randf())}
+		var key := Vector2i(floori(p.x / cell_size), floori(p.z / cell_size))
+		if not cell_of.has(key):
+			cell_of[key] = {"inst": [], "lo": p, "hi": p, "last": [-1, -1, -1], "mm": [], "mi": []}
+		var c: Dictionary = cell_of[key]
+		(c["inst"] as Array).append(inst)
+		c["lo"] = (c["lo"] as Vector3).min(p)
+		c["hi"] = (c["hi"] as Vector3).max(p)
+	var meshes: Array = [_figure_mesh(1, standing), _figure_mesh(2, standing), _figure_mesh(3, standing)]
+	for key in cell_of:
+		var c: Dictionary = cell_of[key]
+		var lo: Vector3 = c["lo"]
+		var hi: Vector3 = c["hi"]
+		var aabb := AABB(lo - Vector3(2, 2, 2), hi - lo + Vector3(4, 6, 4))
+		c["centre"] = aabb.get_center()
+		c["radius"] = aabb.size.length() * 0.5
+		var n: int = (c["inst"] as Array).size()
+		for lv in 3:
+			var mm := MultiMesh.new()
+			mm.transform_format = MultiMesh.TRANSFORM_3D
+			mm.use_colors = true
+			mm.use_custom_data = true
+			mm.mesh = meshes[lv]
+			mm.instance_count = n
+			mm.visible_instance_count = 0
+			mm.custom_aabb = aabb
+			var mi := MultiMeshInstance3D.new()
+			mi.multimesh = mm
+			mi.material_override = _mat
+			mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			add_child(mi)
+			(c["mm"] as Array).append(mm)
+			(c["mi"] as Array).append(mi)
+		_cells.append(c)
 	update_lod(Vector3(1e8, 0, 0))   # everything far until a camera is known
 
 
-func _make_mm(mesh: Mesh, aabb: AABB) -> MultiMeshInstance3D:
-	var mm := MultiMesh.new()
-	mm.transform_format = MultiMesh.TRANSFORM_3D
-	mm.use_colors = true
-	mm.use_custom_data = true
-	mm.mesh = mesh
-	mm.instance_count = _inst.size()
-	mm.visible_instance_count = 0
-	if _inst.size() > 0:
-		mm.custom_aabb = aabb
-	var mi := MultiMeshInstance3D.new()
-	mi.multimesh = mm
-	mi.material_override = _mat
-	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	add_child(mi)
-	return mi
-
-
-## Sort the seats into the two detail levels by distance from `cam_pos`.
+## Sort the seats into the three detail levels by distance from `cam_pos` (world space).
 func update_lod(cam_pos: Vector3) -> void:
 	_last_cam = cam_pos
-	var m1 := _mm1.multimesh
-	var m2 := _mm2.multimesh
-	var n1 := 0
-	var n2 := 0
-	var d2 := lod_distance * lod_distance
-	var g := global_transform
-	var cam_local := g.affine_inverse() * cam_pos
-	for it in _inst:
-		var xf: Transform3D = it["xf"]
-		if xf.origin.distance_squared_to(cam_local) < d2:
-			m1.set_instance_transform(n1, xf)
-			m1.set_instance_color(n1, it["col"])
-			m1.set_instance_custom_data(n1, it["custom"])
-			n1 += 1
-		else:
-			m2.set_instance_transform(n2, xf)
-			m2.set_instance_color(n2, it["col"])
-			m2.set_instance_custom_data(n2, it["custom"])
-			n2 += 1
-	m1.visible_instance_count = n1
-	m2.visible_instance_count = n2
+	var cam_local := global_transform.affine_inverse() * cam_pos
+	var d1 := lod_distance * lod_distance
+	var d2 := far_distance * far_distance
+	for c in _cells:
+		var dc: float = (c["centre"] as Vector3).distance_to(cam_local)
+		var r: float = c["radius"]
+		var mms: Array = c["mm"]
+		if dc - r > cull_distance:
+			for lv in 3:
+				(mms[lv] as MultiMesh).visible_instance_count = 0
+			c["last"] = [-1, -1, -1]
+			continue
+		var insts: Array = c["inst"]
+		var all_far := dc - r > far_distance
+		if all_far and (c["last"] as Array)[2] == insts.size():
+			continue
+		var n := [0, 0, 0]
+		for it in insts:
+			var xf: Transform3D = it["xf"]
+			var dd := xf.origin.distance_squared_to(cam_local)
+			var lv := 0 if dd < d1 else (1 if dd < d2 else 2)
+			var m: MultiMesh = mms[lv]
+			var k: int = n[lv]
+			m.set_instance_transform(k, xf)
+			m.set_instance_color(k, it["col"])
+			m.set_instance_custom_data(k, it["custom"])
+			n[lv] = k + 1
+		for lv in 3:
+			(mms[lv] as MultiMesh).visible_instance_count = n[lv]
+		c["last"] = n
 
 
 func _process(delta: float) -> void:
 	_timer += delta
-	if _timer < 0.4 or _mm1 == null:
+	if _timer < 0.4 or _cells.is_empty():
 		return
 	_timer = 0.0
 	var cam := get_viewport().get_camera_3d()
 	if cam == null:
 		return
 	var cp := cam.global_position
-	if cp.distance_to(_last_cam) > 12.0:
+	if cp.distance_to(_last_cam) > 10.0:
 		update_lod(cp)
 
 
@@ -218,26 +239,33 @@ static func _figure_mesh(lod: int, stand := false) -> ArrayMesh:
 		return _fig_cache[ck]
 	var parts: Array = []
 	var seat_y := 0.92 if stand else 0.49
+	var xf0 := Transform3D(Basis(), Vector3(0, seat_y, 0))
 	if lod == 1:
-		parts.append([M.lathe(F.TORSO_PROFILE, 10), Transform3D(Basis(), Vector3(0, seat_y, 0)), 1.0])
-		parts.append([M.lathe([Vector4(0.06, 0.0, 0.0, 0.0), Vector4(0.06, 0.168, 0.118, 0.0), Vector4(-0.05, 0.2, 0.14, 0.0), Vector4(-0.2, 0.235, 0.17, 0.0)], 10, 1), Transform3D(Basis(), Vector3(0, seat_y, 0)), 1.0])
+		parts.append([M.lathe(F.TORSO_PROFILE, 10), xf0, 1.0])
+		parts.append([M.lathe([Vector4(0.06, 0.0, 0.0, 0.0), Vector4(0.06, 0.168, 0.118, 0.0), Vector4(-0.05, 0.2, 0.14, 0.0), Vector4(-0.2, 0.235, 0.17, 0.0)], 10, 1), xf0, 1.0])
 		parts.append([M.lathe_y(F.HEAD_PROFILE, 10, 12), Transform3D(Basis(), Vector3(0, seat_y + F.HEAD_Y + 0.03, 0)), 0.0])
 		parts.append([F._hair_mesh(), Transform3D(Basis(), Vector3(0, seat_y + F.HEAD_Y + 0.03, 0)), 4.0])
 		parts.append([M.ellipsoid(0.013, 0.024, 0.02, 5, 3), Transform3D(Basis(), Vector3(0, seat_y + F.HEAD_Y + 0.152, 0.106)), 2.0])
 		for s in [-1.0, 1.0]:
 			parts.append([M.capsule(0.055, 0.034, 0.5, 7), Transform3D(Basis(Vector3(0, 0, 1), -0.05 * s), Vector3(F.SH_X * s, seat_y + F.SH_Y, 0)), 2.0])
-			# seated legs: the thigh forward, the shin down
 			if stand:
 				parts.append([M.capsule(0.085, 0.06, F.THIGH, 7), Transform3D(Basis(), Vector3(F.HIP_X * s, seat_y, 0)), 3.0])
 				parts.append([M.capsule(0.058, 0.04, F.SHIN, 7), Transform3D(Basis(), Vector3(F.HIP_X * s, seat_y - F.THIGH, 0)), 3.0])
 			else:
-				parts.append([M.capsule(0.085, 0.06, F.THIGH, 7), Transform3D(Basis(Vector3.RIGHT, -PI / 2.0 + 0.0), Vector3(F.HIP_X * s, seat_y, 0)), 3.0])
+				parts.append([M.capsule(0.085, 0.06, F.THIGH, 7), Transform3D(Basis(Vector3.RIGHT, -PI / 2.0), Vector3(F.HIP_X * s, seat_y, 0)), 3.0])
 				parts.append([M.capsule(0.058, 0.04, F.SHIN, 7), Transform3D(Basis(), Vector3(F.HIP_X * s, seat_y, F.THIGH)), 3.0])
-	else:
-		parts.append([M.lathe(F.TORSO_PROFILE, 6), Transform3D(Basis(), Vector3(0, seat_y, 0)), 1.0])
+	elif lod == 2:
+		parts.append([M.lathe(F.TORSO_PROFILE, 6, 0, 1), xf0, 1.0])
 		parts.append([M.ellipsoid(0.075, 0.115, 0.095, 6, 3), Transform3D(Basis(), Vector3(0, seat_y + F.HEAD_Y + 0.15, 0)), 0.0])
 		for s in [-1.0, 1.0]:
-			parts.append([M.capsule(0.055, 0.034, 0.5, 4), Transform3D(Basis(), Vector3(F.SH_X * s, seat_y + F.SH_Y, 0)), 2.0])
+			parts.append([M.ellipsoid(0.045, 0.26, 0.045, 4, 3), Transform3D(Basis(), Vector3(F.SH_X * s, seat_y + F.SH_Y - 0.22, 0)), 2.0])
+			if stand:
+				parts.append([M.ellipsoid(0.07, 0.42, 0.07, 4, 3), Transform3D(Basis(), Vector3(F.HIP_X * s, seat_y - 0.42, 0)), 3.0])
+	else:
+		parts.append([M.ellipsoid(0.19, 0.3, 0.11, 5, 3), Transform3D(Basis(), Vector3(0, seat_y + 0.3, 0)), 1.0])
+		parts.append([M.ellipsoid(0.08, 0.11, 0.09, 4, 2), Transform3D(Basis(), Vector3(0, seat_y + F.HEAD_Y + 0.15, 0)), 0.0])
+		if stand:
+			parts.append([M.ellipsoid(0.15, 0.45, 0.09, 4, 2), Transform3D(Basis(), Vector3(0, seat_y - 0.45, 0)), 3.0])
 	var m := M.merge(parts)
 	_fig_cache[ck] = m
 	return m
