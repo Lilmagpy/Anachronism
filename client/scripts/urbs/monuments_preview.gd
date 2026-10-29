@@ -42,8 +42,12 @@ func _initialize() -> void:
 	var height := Callable()
 	if _args.has("terrain"):
 		UrbsTerrain.prepare()
-		UrbsTerrain.build(root)
-		height = Callable(UrbsTerrain, "height_at")
+		UrbsTerrain.build(root)   # the river
+		for cx in range(-1750, 1750, 250):
+			for cz in range(-1750, 1750, 250):
+				var rect := Rect2(cx, cz, 250, 250)
+				root.add_child(UrbsTerrain.build_chunk(rect, 0 if rect.get_center().length() < 800.0 else 1))
+		height = UrbsTerrain.height_at
 	else:
 		root.add_child(ground)
 	_mon = UrbsMonuments.new()

@@ -2599,7 +2599,6 @@ monuments:
   built: {year: -378, certainty: certain, by: "with the Servian Wall"}
   sources: ["Platner-Ashby s.v. Porta Capena"]
   model: servian_gate
-  offset_m: [207, -167]  # east, north metres added to lat/lon; unverified: the Servian gate stood by the modern Piazza di Porta Capena (Wikipedia coordinates 41.8838, 12.4905), 270 m from the dataset point; keeps the wall clear of the Circus Maximus
   footprint_m: {length: 26, width: 34}  # unverified
   height_m: 16  # unverified
   snap_to: murus_servianus

@@ -5424,10 +5424,6 @@
 "location": "Servian Wall, south-east of the Palatine, start of the Via Appia",
 "lon": 12.4885,
 "model": "servian_gate",
-"offset_m": [
-207,
--167
-],
 "precision": "approx",
 "regio": 1,
 "snap_to": "murus_servianus",
