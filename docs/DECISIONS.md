@@ -2581,7 +2581,7 @@ matters. Engine only: the client screens for it come in a later step.
   `senate_vote` only records a `senate` event when called with `record=True`, so views never
   change the state. A battle is `decisive` (`sides["decisive"]`) when the beaten army broke.
 
-## D-286.1 The player's politics: persuade, back, propose to the Senate — DELEGATED (2026-10-29)
+## D-290 The player's politics: persuade, back, propose to the Senate — DELEGATED (2026-10-29)
 - Three new replay-safe actions (`persuade`, `back`, `senate`; `engine/senate.py`), so the
   player's work in the Senate is logged and a replay applies it again.
 - **Why a Senate vote and a tribune.** The Senate handles war, embassies and the treasury
