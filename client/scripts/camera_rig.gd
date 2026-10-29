@@ -8,6 +8,8 @@
 class_name CameraRig
 extends Node3D
 
+signal zoomed_past_nearest(at: Vector2)   # Urbs (D-289): the wheel turned inward with no zoom left
+
 var near := 60.0       ## closest zoom; the map sets this
 var far := 1100.0      ## farthest zoom; the map sets this to fit
 const PITCH_NEAR := 0.72  ## radians above the horizon when fully zoomed in (about 41°)
@@ -119,6 +121,8 @@ func _ground_under(screen: Vector2) -> Vector3:
 
 func _zoom(factor: float, at: Vector2) -> void:
 	_stop_flight()
+	if factor < 1.0 and target_distance <= near * 1.04:   # Urbs (D-289): ask to go down into the city
+		zoomed_past_nearest.emit(at)
 	target_distance = clampf(target_distance * factor, near, far)
 	_anchor = at
 

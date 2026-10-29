@@ -15,6 +15,7 @@ signal end_turn_requested
 signal idea_submitted(text: String, answer: String)
 signal menu_requested
 signal capital_requested
+signal urbs_requested   # Urbs (D-289): the Visit Rome button
 signal city_requested(province_id: String)   ## fly to a city (from the Cities screen)
 signal spoke                    ## a character has started speaking (for the chime)
 signal armies_changed           ## the army selection changed: redraw the armies
@@ -600,6 +601,13 @@ func _fill_top_bar() -> void:
 	_stat("unrest", "Unrest: when it runs high come riots, then revolts", pct(status["unrest_bp"]), trends["unrest_bp"], false)
 	_stat("legitimacy", "Legitimacy: the people's trust in the throne; it holds the realm and its armies together", pct(status["legitimacy_bp"]), trends["legitimacy_bp"], true)
 	_stat("suspicion", "Suspicion: how uncanny your progress looks to the world; it draws spies and enemies", pct(status["suspicion_bp"]), trends["suspicion_bp"], false)
+	var visit := Button.new()   # Urbs (D-289): walk into the city of Rome
+	visit.text = "Visit Rome"
+	visit.tooltip_text = "Walk through the city of Rome as it stood in this year: zoom in to the streets and click a building"
+	visit.focus_mode = Control.FOCUS_NONE
+	visit.custom_minimum_size = Vector2(0, 44)
+	visit.pressed.connect(func(): urbs_requested.emit())
+	_top.add_child(visit)
 	var menu := Button.new()
 	menu.tooltip_text = "Menu: save, load, chronicle, tech tree, settings (Esc)"
 	menu.focus_mode = Control.FOCUS_NONE
