@@ -294,6 +294,9 @@ def _parse_file(
         return None
     version = raw.get("schema_version")
     if external:  # a dataset file outside the pack: no schema_version, a single list kind
+        # The Empire file also carries `events_on_republican` (later fires and rebuilds of
+        # the Republic's buildings), which the client reads and the engine does not need.
+        raw = {key: value for key, value in raw.items() if key != "events_on_republican"}
         if list(raw) != ["monuments"]:
             issues.append(
                 ContentIssue(relative, "", f"expected only 'monuments'; found {list(raw)}")

@@ -20,7 +20,8 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [ ] R2 The Roman state: yearly magistrates, Senate, families and factions, orders, cursus honorum, the Fasti
   - [x] Engine: magistracies, yearly elections, Senate votes, families, the Fasti as default history (`engine/republic.py`)
   - [ ] Full Fasti 509-27 BC, people and families (agent at work)
-  - [ ] Client panel for the Republic view; persuade/back as replay-safe actions
+  - [x] Persuade, back a candidate and put matters to the Senate as replay-safe actions (`engine/senate.py`, D-286.1)
+  - [ ] Client panel for the Republic view and the Senate proposals
 - [ ] R3 Italy and the world: peoples of Italy, allies, citizenship, colonies, overseas powers, provinces and governors
 - [ ] R4 Army, economy, religion
   - [x] Army groundwork: 8 army techs, 36 units, 5 formations, 8 tactics, 15 sourced battles (D-288)

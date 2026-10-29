@@ -45,16 +45,29 @@ def marks_for(monument: Monument, timeline: Iterable[CityTimeline]) -> list[Mark
     explicit = [t for t in timeline if t.monument == monument.id]
     marks: list[Mark] = [(t.year, _ORDER[t.kind], t.kind) for t in explicit]
     destroyed = [t.year for t in explicit if t.kind in ("fire", "demolished")]
-    if monument.ended is not None:
+    if monument.ended is not None and monument.ended.year is not None:
         destroyed.append(monument.ended.year)
         marks.append((monument.ended.year, _ORDER["demolished"], "demolished"))
-    built = monument.built_year
+    built = first_year(monument)
     if built is not None:
         first_done = min((t.year for t in explicit if t.kind == "completed"), default=None)
         replaced = first_done is not None and not any(y < first_done for y in destroyed)
         if not replaced:
             marks.append((built, _ORDER["completed"], "completed"))
     return sorted(marks)
+
+
+def first_year(monument: Monument) -> int | None:
+    """The year the monument was finished, if known.
+
+    With no building date but a floor from the sources ("after 27 BC"), it stands from
+    the floor. A monument with no dates at all has always stood.
+    """
+    if monument.built is None:
+        return None
+    if monument.built.year is not None:
+        return monument.built.year
+    return monument.built.not_before
 
 
 def status_at(marks: list[Mark], year: int, built_known: bool) -> MonumentStatus:
@@ -93,7 +106,7 @@ def status_map(world: World, year: int) -> dict[str, MonumentStatus]:
         mid: status_at(
             marks_for(world.monuments[mid], by_monument.get(mid, [])),
             year,
-            world.monuments[mid].built_year is not None,
+            first_year(world.monuments[mid]) is not None,
         )
         for mid in sorted(world.monuments)
     }
@@ -239,15 +252,27 @@ def senate_house(state: GameState) -> str:
     return ""
 
 
-def record_vote(state: GameState, issue: str, yes_bp: int, no_bp: int) -> None:
-    """Note a Senate vote as a ``senate`` event for the 3D city to play."""
+def record_vote(
+    state: GameState,
+    issue: str,
+    yes_bp: int,
+    no_bp: int,
+    *,
+    turn: int | None = None,
+    year: int | None = None,
+) -> None:
+    """Note a Senate vote as a ``senate`` event for the 3D city to play.
+
+    A vote taken while a turn resolves belongs to the turn being resolved: the caller passes
+    its ``turn`` and ``year`` (the yearly step drops the events of older turns).
+    """
     if state.city is None:
         return
     state.city.events.append(
         CityEvent(
             kind="senate",
-            year=state.year,
-            turn=state.turn,
+            year=state.year if year is None else year,
+            turn=state.turn if turn is None else turn,
             ref=issue,
             monument=senate_house(state),
             value=yes_bp,

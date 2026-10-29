@@ -259,6 +259,63 @@ class Faction(Frozen):
         return year >= self.from_year and (self.to_year is None or year <= self.to_year)
 
 
+class SenateLaw(Frozen):
+    """A law the player can put to the Senate (``law:<id>``); passing it sets a flag.
+
+    The flag is ``RepublicState.laws[id]`` (the year it passed): content and scripts read it.
+    """
+
+    id: Identifier
+    name: str
+    issue: Issue
+    """Which question of the Senate it is: the families' stances on it decide the vote."""
+    from_year: int
+    """First year the law can be proposed."""
+    to_year: int | None = None
+    sources: Sources
+    confidence: Confidence = Confidence.LOW
+    notes: str = ""
+
+    def open_in(self, year: int) -> bool:
+        """True if the law can be put to the Senate in ``year``."""
+        return year >= self.from_year and (self.to_year is None or year <= self.to_year)
+
+
+class SenateCosts(Frozen):
+    """What each kind of proposal costs in influence, whatever the vote's outcome."""
+
+    war_with: Annotated[int, Field(ge=0)] = 200
+    peace_with: Annotated[int, Field(ge=0)] = 150
+    law: Annotated[int, Field(ge=0)] = 300
+    fund: Annotated[int, Field(ge=0)] = 200
+    colony: Annotated[int, Field(ge=0)] = 250
+
+
+class SenateRules(Frozen):
+    """What the player can put to the Senate (R2 follow-up, D-286) and what a vote costs."""
+
+    costs: SenateCosts = SenateCosts()
+    fail_influence_loss: Annotated[int, Field(ge=0)] = 50
+    """Influence lost besides the cost when the Senate says no (never below zero)."""
+    fail_legitimacy_bp: Rate = 200
+    """Legitimacy the court loses when the Senate refuses the player."""
+    opposed_favour_shift: Annotated[int, Field(ge=0, le=10_000)] = 1000
+    """How far the families that voted no turn against the player on that issue."""
+    forced_favour_shift: Annotated[int, Field(ge=0, le=10_000)] = 1500
+    """The same, when a tribune forces the matter over the Senate's refusal."""
+    veto_office: Identifier = "tribune_plebs"
+    veto_from_year: int = -494
+    """The tribune's veto (auxilium): Livy 2.33.1-3; it can block a vote from this year."""
+    force_from_year: int = -287
+    """From here plebiscites bind everyone, so a tribune can also carry a refused matter."""
+    veto_scale_bp: Rate = 5000
+    """Chance of an interposition, per point of popular lean between the two sides of the vote."""
+    veto_max_bp: Rate = 2500
+    """Never more than this chance: the interposition is a small risk, not a rule."""
+    laws: tuple[SenateLaw, ...] = ()
+    sources: tuple[str, ...] = ()
+
+
 class RepublicRules(Frozen):
     """Tunable numbers of the Republic (one optional file per pack); every field has a default."""
 
@@ -299,6 +356,8 @@ class RepublicRules(Frozen):
     spawn_new_men: bool = True
     """When too few men are eligible, new men (novi homines) stand."""
     factions: tuple[Faction, ...] = ()
+    senate: SenateRules = SenateRules()
+    """What the player may put to the Senate, and the tribune's veto."""
     city: CityRules = CityRules()
     """The city of Rome's calendar of games and where the Senate sits (U7)."""
     sources: tuple[str, ...] = ()

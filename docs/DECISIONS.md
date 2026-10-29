@@ -2580,3 +2580,33 @@ matters. Engine only: the client screens for it come in a later step.
   `republic_rules.city`; passages not re-read are marked unverified there and in the floods.
   `senate_vote` only records a `senate` event when called with `record=True`, so views never
   change the state. A battle is `decisive` (`sides["decisive"]`) when the beaten army broke.
+
+## D-290 The player's politics: persuade, back, propose to the Senate — DELEGATED (2026-10-29)
+- Three new replay-safe actions (`persuade`, `back`, `senate`; `engine/senate.py`), so the
+  player's work in the Senate is logged and a replay applies it again.
+- **Why a Senate vote and a tribune.** The Senate handles war, embassies and the treasury
+  (Polybius 6.13), but the people deliberate on war and peace (Polybius 6.14.10-12), and one
+  tribune's interposition stops the Senate (Polybius 6.16.4; the tribunate: Livy 2.33.1-3, renewed
+  449: Livy 3.55.6-10; all read on Perseus/LacusCurtius). So the vote is the first step, and a
+  tribune may block it (from 494) or carry a refused matter to the plebs (from the Lex Hortensia,
+  287). Passages not re-read are marked unverified in `republic_rules.yaml`: Gellius 14.7 (the
+  consul's relatio), Livy 31.6-8, Plutarch and Appian on the Gracchi, Velleius 2.16.4.
+- **The proposals** are a small set, kept as data: `war_with`, `peace_with`, `law` (four laws in
+  content: `land_reform`, `debt_relief`, `grain_dole`, `grant_citizenship`, each with its years),
+  `fund` (a tech node; the Senate funds public works: Polybius 6.13.3) and `colony`. The Issue list
+  has no question of its own for the grain dole, so it is counted as relief of the poor (`debt`).
+- **Costs and shifts are game balance**: influence 200/150/300/200/250 for war/peace/law/fund/
+  colony, paid whatever the vote; a refusal costs 50 more influence and 2% legitimacy and the
+  families that voted no lose 1000 favour on the issue (1500 if a tribune forced it).
+- **The tribune's chance** is the gap between the two sides' weighted `popular_lean_bp`, times
+  50%, at most 25%: a small risk, only when a tribune of the plebs is in office, and the only
+  randomness in these actions (one draw from the game's RNG, only when the chance is above zero).
+- **No colonies in the engine yet**: a passed `colony:<province>` sets `republic.colonies`, a flag
+  for content and scripts; `law:<id>` sets `republic.laws`. R3 will give them effects.
+- **The engine's own wars** (a rival's declaration on Rome, a script, an ultimatum, or the plain
+  `DeclareWar` action) record a Senate vote on `war` in `rivals.declare_war`; it does not decide
+  the war, so existing scenarios behave as before and the 3D city still plays a vote each time.
+  A vote taken while a turn resolves is stamped with that turn, or the yearly step would drop it.
+- Refactor: `describe_blockers` moved to `engine/tech.py` and the body of `StartProject` to
+  `projects.begin_project` so the Senate can fund a work without importing `commands`.
+- Bots ignore the new actions.
