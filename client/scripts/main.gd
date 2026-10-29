@@ -877,6 +877,8 @@ func _take_screenshot(path: String) -> void:
 		var then := str(options.get("then", ""))
 		if then == "enter":
 			_enter_urbs()
+		elif then == "leave":
+			_leave_urbs()
 		elif urbs != null:
 			var c := urbs.cam
 			match then:

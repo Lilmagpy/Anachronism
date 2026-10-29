@@ -83,7 +83,7 @@ func _ground(x: float, z: float) -> float:
 
 func _orbit_pitch() -> float:
 	var k := inverse_lerp(log(MIN_ORBIT), log(MAX_ORBIT), log(dist))   # 0 near .. 1 far
-	return clampf(lerpf(0.42, 1.30, k) + tilt, 0.2, 1.5)
+	return clampf(lerpf(0.36, 1.05, k) + tilt, 0.2, 1.5)
 
 
 func _pose() -> Transform3D:

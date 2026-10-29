@@ -388,6 +388,11 @@ func _enter_interior_now(id: String) -> void:
 			_hidden.append(node)
 	chunks.process_mode = Node.PROCESS_MODE_DISABLED
 	sun.visible = false
+	environment.background_mode = Environment.BG_COLOR   # a roof, not the sky: the interior lights itself
+	environment.background_color = Color(0.04, 0.035, 0.03)
+	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
+	environment.ambient_light_color = Color(0.55, 0.50, 0.44)
+	environment.ambient_light_energy = 0.6
 	var spawn := Transform3D(Basis.IDENTITY, Vector3(0, 1.7, 0))
 	if interior.has_method("spawn"):
 		spawn = interior.spawn()
@@ -416,5 +421,7 @@ func _leave_interior_now() -> void:
 			node.visible = true
 	_hidden.clear()
 	chunks.process_mode = Node.PROCESS_MODE_INHERIT
+	environment.background_mode = Environment.BG_SKY
+	environment.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
 	set_hour(hour)
 	hud.set_inside(false, {})
