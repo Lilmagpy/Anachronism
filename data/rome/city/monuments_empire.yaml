@@ -534,3 +534,267 @@ monuments:
   verified: false
   pleiades: null
   notes: "Size converted (1,800 x 1,200 feet at 0.296 m); location rough."
+# ================================================================ CLAUDIANS AND NERO
+- id: aqua_claudia
+  latin: Aqua Claudia
+  english: Aqua Claudia
+  type: aqueduct
+  regio: 0
+  lat: 41.8905
+  lon: 12.5156
+  precision: approx
+  location: Springs at the 38th mile of the Via Sublacensis; enters Rome at the Porta Maggiore (Porta Praenestina) on high arches
+  built: {year: 52, certainty: certain, by: "begun by Gaius AD 38, finished and dedicated by Claudius 1 August AD 52 (Frontin. Aq. 13-14; Suet. Claud. 20; Pliny NH 36.122)"}
+  form: "about 46,406 paces, of which about 9,500 on arches; the monument at Porta Maggiore carries the Claudia and Anio Novus channels one above the other (Frontin. Aq. 13)"
+  route: [[41.9100, 12.9500], [41.8700, 12.7200], [41.8905, 12.5156]]
+  footprint_m: null
+  bearing_deg: null
+  height_m: 30
+  model: aqueduct
+  sources: ["Frontin. Aq. 13-14", "Suet. Claud. 20", "Pliny NH 36.122", "Platner-Ashby s.v. Aqua Claudia"]
+  verified: false
+  pleiades: null
+  notes: "Route schematic; lengths from memory of Frontinus, unverified."
+- id: anio_novus
+  latin: Anio Novus
+  english: Anio Novus
+  type: aqueduct
+  regio: 0
+  lat: 41.8906
+  lon: 12.5155
+  precision: approx
+  location: Anio valley above Subiaco, entering Rome at the Porta Maggiore on the upper channel of the Claudia arches
+  built: {year: 52, certainty: certain, by: "begun by Gaius AD 38, dedicated by Claudius 1 August AD 52 (Frontin. Aq. 15; Suet. Claud. 20)"}
+  form: "about 58,700 paces, the highest-level aqueduct of Rome (Frontin. Aq. 15)"
+  route: [[41.9200, 13.0700], [41.9000, 12.7500], [41.8906, 12.5155]]
+  footprint_m: null
+  bearing_deg: null
+  height_m: 30
+  model: aqueduct
+  sources: ["Frontin. Aq. 15", "Suet. Claud. 20", "Platner-Ashby s.v. Anio Novus"]
+  verified: false
+  pleiades: null
+  notes: "Length from memory; the prompt text said 'Claudia and Anio Novus (AD 52)'. Route schematic."
+- id: arcus_claudii_lata
+  latin: Arcus Claudii
+  english: Arch of Claudius on the Via Lata
+  type: arch
+  regio: 7
+  lat: 41.9005
+  lon: 12.4810
+  precision: rough
+  location: Via Lata (Corso), where the Aqua Virgo crossed it; site approximate
+  built: {year: 51, certainty: certain, by: "Senate for Claudius' conquest of Britain, AD 51-52 (CIL VI 920; Dio 60.22)"}
+  form: "arch carrying the Aqua Virgo over the Via Lata; inscription survives (CIL 6.920)"
+  footprint_m: null
+  bearing_deg: null
+  height_m: null
+  model: arch
+  sources: ["CIL 6.920", "Dio 60.22", "Platner-Ashby s.v. Arcus Claudii"]
+  verified: false
+  pleiades: null
+  notes: "Position placeholder."
+- id: domus_transitoria
+  latin: Domus Transitoria
+  english: Domus Transitoria (Nero's first palace)
+  type: palace
+  regio: 10
+  lat: 41.8895
+  lon: 12.4905
+  precision: rough
+  location: Palatine joined to the Esquiline gardens of Maecenas; remains below the Domus Flavia and under the Palatine
+  built: {year: 60, certainty: probable, by: "Nero; destroyed by the fire of AD 64 (Suet. Nero 31; Tac. Ann. 15.39)"}
+  events:
+  - {year: 64, what: "burned in the fire, though Nero's house was said to have been reached by the flames (Tac. Ann. 15.39)"}
+  form: "palace linking the Palatine and the Esquiline (the 'Transitoria' name from this passage)"
+  footprint_m: null
+  bearing_deg: null
+  height_m: null
+  model: domus
+  sources: ["Suet. Nero 31", "Tac. Ann. 15.39", "Platner-Ashby s.v. Domus Transitoria"]
+  verified: false
+  pleiades: null
+  notes: "Rough site. The start date 60 is a guess from the Neronian buildings; unverified."
+- id: incendium_64
+  latin: Incendium Neronianum
+  english: Great Fire of AD 64
+  type: event
+  regio: 0
+  lat: 41.8890
+  lon: 12.4860
+  precision: rough
+  location: Began in the shops by the Circus Maximus (Tac. Ann. 15.38); swept the Palatine, Velabrum, Forum and Caelian
+  built: {year: 64, certainty: certain, by: "Fire of 18-19 July AD 64; six days and seven nights; of the 14 regions four remained whole, three were levelled, seven left with few traces (Tac. Ann. 15.38-41; Suet. Nero 38; Dio 62.16-18)"}
+  events:
+  - {year: 64, what: "Nero rebuilt with a stricter building code (Tac. Ann. 15.43)"}
+  form: "city fire"
+  footprint_m: null
+  bearing_deg: null
+  height_m: null
+  model: fire
+  sources: ["Tac. Ann. 15.38-44", "Suet. Nero 38", "Dio 62.16-18"]
+  verified: false
+  pleiades: null
+  notes: "Not a building; kept as a map overlay entry. Tacitus gives night of 18/19 July; passages not re-read."
+- id: domus_aurea
+  latin: Domus Aurea
+  english: Golden House of Nero
+  type: palace
+  regio: 3
+  lat: 41.8915
+  lon: 12.4967
+  precision: approx
+  location: Oppian hill (surviving wing under the Baths of Trajan); the park occupied the valley between Palatine, Caelian and Esquiline
+  built: {year: 65, certainty: certain, by: "Nero after the fire, architects Severus and Celer (Tac. Ann. 15.42; Suet. Nero 31)"}
+  events:
+  - {year: 68, what: "unfinished at Nero's death"}
+  - {year: 79, what: "Vespasian gave the lake area to the people for the amphitheatre (Suet. Vesp. 9; Martial Spect. 2)"}
+  form: "vestibule with a colossal statue 120 feet high, a lake 'like a sea' surrounded by buildings, ivory-ceilinged dining rooms, revolving dome (Suet. Nero 31)"
+  footprint_m: {length: 500, width: 250}
+  bearing_deg: null
+  height_m: null
+  model: palace
+  sources: ["Suet. Nero 31", "Tac. Ann. 15.42", "Martial Spect. 2", "Platner-Ashby s.v. Domus Aurea"]
+  verified: false
+  pleiades: null
+  notes: "Footprint is a vague estimate (the park claimed an immense area, Suet. Nero 31); the surviving wing is the Oppian one."
+- id: colossus_neronis
+  latin: Colossus Neronis (Solis)
+  english: Colossus of Nero
+  type: statue
+  regio: 4
+  lat: 41.8898
+  lon: 12.4905
+  precision: approx
+  location: Vestibule of the Domus Aurea on the Velia; base later beside the Temple of Venus and Roma, near the Colosseum
+  built: {year: 65, certainty: probable, by: "Nero, by Zenodorus; 106.5 feet (Pliny NH 34.45); 120 feet (Suet. Nero 31)"}
+  events:
+  - {year: 75, what: "Vespasian turned it into the Sun with a radiate crown (Suet. Vesp. 18; Pliny NH 34.45); Hadrian moved it with 24 elephants (HA Hadr. 19.12) - beyond range"}
+  form: "bronze colossus, a standing statue about 30-35 m high"
+  footprint_m: {length: 7, width: 7}
+  bearing_deg: null
+  height_m: 35
+  model: colossus
+  sources: ["Suet. Nero 31", "Pliny NH 34.45", "Suet. Vesp. 18", "HA Hadr. 19.12"]
+  verified: false
+  pleiades: null
+  notes: "Pliny and Suetonius differ on the height (106.5 vs 120 Roman feet); base position from memory."
+- id: macellum_magnum
+  latin: Macellum Magnum
+  english: Macellum Magnum (Nero's market)
+  type: market
+  regio: 2
+  lat: 41.8855
+  lon: 12.4965
+  precision: rough
+  location: Caelian hill
+  built: {year: 59, certainty: probable, by: "Nero (coin sestertii c. 64; Dio 61.18.3)"}
+  form: "circular central colonnade on the Caelian"
+  footprint_m: null
+  bearing_deg: null
+  height_m: null
+  model: market
+  sources: ["Dio 61.18.3", "Platner-Ashby s.v. Macellum Magnum"]
+  verified: false
+  pleiades: null
+  notes: "Dio 61.18.3 reference and date from memory; unverified."
+- id: thermae_neronianae
+  latin: Thermae Neronianae
+  english: Baths of Nero (with the Gymnasium)
+  type: baths
+  regio: 9
+  lat: 41.8988
+  lon: 12.4748
+  precision: rough
+  location: Campus Martius, between the Pantheon and the Stadium of Domitian (S. Luigi dei Francesi / Piazza Navona area)
+  built: {year: 62, certainty: probable, by: "Nero, dedicated AD 60 (gymnasium) and 62 (baths) (Tac. Ann. 14.47, 15.22; Suet. Nero 12; Dio 62.21)"}
+  form: "large hot baths; renowned (Martial 7.34; Juv. 7.233) - unverified"
+  footprint_m: null
+  bearing_deg: null
+  height_m: null
+  model: baths
+  sources: ["Tac. Ann. 14.47", "Suet. Nero 12", "Dio 62.21", "Platner-Ashby s.v. Thermae Neronianae"]
+  verified: false
+  pleiades: null
+  notes: "Gymnasium AD 60 / baths AD 62 - dates not re-read. Site rough."
+- id: aedes_divi_claudii
+  latin: Templum Divi Claudii
+  english: Temple of the Deified Claudius
+  type: temple
+  regio: 2
+  lat: 41.8883
+  lon: 12.4950
+  precision: approx
+  location: Caelian hill, on the platform under S. Stefano Rotondo and the Passionist monastery of SS. Giovanni e Paolo
+  built: {year: 54, certainty: probable, by: "begun by Agrippina after Claudius' deification, largely demolished by Nero, completed by Vespasian (Suet. Vesp. 9)"}
+  form: "temple on an immense terraced platform with a nymphaeum on the Via Triumphalis side"
+  footprint_m: {length: 180, width: 200}
+  bearing_deg: null
+  height_m: null
+  model: temple_hexastyle
+  sources: ["Suet. Vesp. 9", "Platner-Ashby s.v. Claudius, Divus, Templum"]
+  verified: false
+  pleiades: null
+  notes: "Footprint is the platform from memory (about 180 x 200 m); unverified."
+# ================================================================ FLAVIANS
+- id: amphitheatrum_flavium
+  latin: Amphitheatrum Flavium (Colosseum)
+  english: Flavian Amphitheatre (Colosseum)
+  type: amphitheatre
+  regio: 3
+  lat: 41.8902
+  lon: 12.4922
+  precision: exact
+  location: In the drained lake of Nero's Domus Aurea, between the Velia, Caelian and Oppian
+  built: {year: 80, certainty: certain, by: "begun by Vespasian c. AD 70-72 on the site of Nero's lake (Suet. Vesp. 9; Martial Spect. 2), dedicated by Titus in AD 80 with 100 days of games (Suet. Titus 7; Dio 66.25), top storeys finished by Domitian (Suet. Dom. 5)"}
+  events:
+  - {year: 80, what: "inaugural games, 100 days; 9,000 wild animals killed (Dio 66.25)"}
+  - {year: 217, what: "struck by lightning (beyond range)"}
+  form: "elliptical amphitheatre of four storeys, arena 83 x 48 m, outer wall 188 x 156 m, height ~ 48 m, seating for about 50,000"
+  materials: [travertine, tufa, brick, concrete]
+  footprint_m: {length: 188, width: 156}
+  bearing_deg: 100
+  height_m: 48
+  model: amphitheatre
+  sources: ["Suet. Vesp. 9", "Suet. Titus 7", "Suet. Dom. 5", "Dio 66.25", "Martial Spect.", "Platner-Ashby s.v. Amphitheatrum Flavium"]
+  verified: false
+  pleiades: null
+  notes: "Dimensions are those given in the task (Platner-Ashby s.v.), not re-read. Long-axis bearing from memory of the map and unverified. 'Begun c. AD 70-72' is the task's figure."
+- id: ludus_magnus
+  latin: Ludus Magnus
+  english: Ludus Magnus (the main gladiatorial school)
+  type: school
+  regio: 3
+  lat: 41.8894
+  lon: 12.4937
+  precision: exact
+  location: East of the Colosseum between the Caelian and the Oppian, connected by passage to the amphitheatre
+  built: {year: 90, certainty: probable, by: "Domitian (Regionary catalogues and brick stamps); the Hadrianic/Trajanic form is later"}
+  form: "elliptical training arena with seating for about 3,000 inside a rectangular barracks courtyard"
+  footprint_m: {length: 125, width: 60}
+  bearing_deg: null
+  height_m: null
+  model: arena_school
+  sources: ["Platner-Ashby s.v. Ludus Magnus"]
+  verified: false
+  pleiades: null
+  notes: "Domitianic date inferred from memory; unverified."
+- id: thermae_titi
+  latin: Thermae Titi
+  english: Baths of Titus
+  type: baths
+  regio: 3
+  lat: 41.8912
+  lon: 12.4957
+  precision: approx
+  location: Oppian hill on part of the Domus Aurea, near the Colosseum
+  built: {year: 80, certainty: certain, by: "Titus (Suet. Titus 7; Martial Spect. 2; Dio 66.25)"}
+  form: "small bath complex built quickly in AD 80, later swallowed by the Baths of Trajan"
+  footprint_m: {length: 120, width: 90}
+  bearing_deg: null
+  height_m: null
+  model: baths
+  sources: ["Suet. Titus 7", "Martial Spect. 2", "Dio 66.25", "Platner-Ashby s.v. Thermae Titi"]
+  verified: false
+  pleiades: null
+  notes: "Footprint a guess; unverified."
