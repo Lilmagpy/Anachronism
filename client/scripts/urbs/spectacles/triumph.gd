@@ -67,6 +67,7 @@ func _ready() -> void:
 	if bool(params.get("crowd", true)):
 		var c = Crowd.new()
 		c.toga_rows = 1
+		c.standing = true
 		c.add_seats(Crowd.line_seats(route, 6.5, int(params.get("rows", 2)), 1.6, 1.0, 0.0))
 		c.build()
 		add_child(c)

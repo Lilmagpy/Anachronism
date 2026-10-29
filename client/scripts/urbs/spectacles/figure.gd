@@ -712,7 +712,7 @@ func equip_fasces() -> Node3D:
 			return Vector3(x, y, lerpf(-0.004, 0.004, 0.5))
 		return M.surface(4, 6, fn, -1))
 	_part(fs, axe, metal(Color(0.8, 0.82, 0.86), 0.8), Vector3(0.04, 0.5, 0.0))
-	fs.rotation = Vector3(0.0, 0.0, 0.0)
+	fs.rotation = Vector3(1.57, 0.0, 0.0)   # upright when the right forearm is held level (pitch -0.35, elbow 1.2)
 	return fs
 
 

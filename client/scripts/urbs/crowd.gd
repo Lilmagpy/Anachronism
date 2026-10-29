@@ -26,6 +26,7 @@ uniform float clock = 0.0;
 uniform float roar = 0.2;       // 0 sits quietly, 1 on their feet cheering
 uniform float wave_pos = 0.0;   // 0..1 round the ring
 uniform float wave_amt = 0.8;
+uniform float shoulder_y = 0.96;
 uniform sampler2D face : source_color, filter_linear;
 varying vec3 tint;
 varying float part;
@@ -43,7 +44,7 @@ void vertex() {
 	hairv = INSTANCE_CUSTOM.w;
 	vec3 v = VERTEX;
 	if (part > 1.5 && part < 2.5) {
-		vec3 sh = vec3(sign(v.x) * 0.205, 0.96, 0.0);
+		vec3 sh = vec3(sign(v.x) * 0.205, shoulder_y, 0.0);
 		vec3 p = v - sh;
 		float a = lift * lift * 2.9 * sign(v.x);
 		float ca = cos(a); float sa = sin(a);
@@ -85,6 +86,8 @@ var fan_colours: Array[Color] = []
 var fan_share := 0.0
 ## Seats nearer the camera than this get the detailed figure.
 var lod_distance := 42.0
+## Standing figures (a street) instead of seated ones (tiers).
+var standing := false
 var _last_cam := Vector3(1e9, 1e9, 1e9)
 var _timer := 0.0
 
@@ -131,8 +134,9 @@ func build() -> void:
 	_mat.shader = sh
 	_mat.set_shader_parameter("face", M.face_texture(Color(0.86, 0.66, 0.52), 3))
 	var aabb := AABB(lo - Vector3(2, 2, 2), hi - lo + Vector3(4, 6, 4)) if _seats.size() > 0 else AABB()
-	_mm1 = _make_mm(_figure_mesh(1), aabb)
-	_mm2 = _make_mm(_figure_mesh(2), aabb)
+	_mat.set_shader_parameter("shoulder_y", (0.92 if standing else 0.49) + F.SH_Y)
+	_mm1 = _make_mm(_figure_mesh(1, standing), aabb)
+	_mm2 = _make_mm(_figure_mesh(2, standing), aabb)
 	update_lod(Vector3(1e8, 0, 0))   # everything far until a camera is known
 
 
@@ -208,11 +212,12 @@ func set_state(clock: float, roar: float, wave_pos: float, wave_amt := 0.8) -> v
 static var _fig_cache: Dictionary = {}
 
 
-static func _figure_mesh(lod: int) -> ArrayMesh:
-	if _fig_cache.has(lod):
-		return _fig_cache[lod]
+static func _figure_mesh(lod: int, stand := false) -> ArrayMesh:
+	var ck := lod + (10 if stand else 0)
+	if _fig_cache.has(ck):
+		return _fig_cache[ck]
 	var parts: Array = []
-	var seat_y := 0.49
+	var seat_y := 0.92 if stand else 0.49
 	if lod == 1:
 		parts.append([M.lathe(F.TORSO_PROFILE, 10), Transform3D(Basis(), Vector3(0, seat_y, 0)), 1.0])
 		parts.append([M.lathe([Vector4(0.06, 0.0, 0.0, 0.0), Vector4(0.06, 0.168, 0.118, 0.0), Vector4(-0.05, 0.2, 0.14, 0.0), Vector4(-0.2, 0.235, 0.17, 0.0)], 10, 1), Transform3D(Basis(), Vector3(0, seat_y, 0)), 1.0])
@@ -222,15 +227,19 @@ static func _figure_mesh(lod: int) -> ArrayMesh:
 		for s in [-1.0, 1.0]:
 			parts.append([M.capsule(0.055, 0.034, 0.5, 7), Transform3D(Basis(Vector3(0, 0, 1), -0.05 * s), Vector3(F.SH_X * s, seat_y + F.SH_Y, 0)), 2.0])
 			# seated legs: the thigh forward, the shin down
-			parts.append([M.capsule(0.085, 0.06, F.THIGH, 7), Transform3D(Basis(Vector3.RIGHT, -PI / 2.0 + 0.0), Vector3(F.HIP_X * s, seat_y, 0)), 3.0])
-			parts.append([M.capsule(0.058, 0.04, F.SHIN, 7), Transform3D(Basis(), Vector3(F.HIP_X * s, seat_y, F.THIGH)), 3.0])
+			if stand:
+				parts.append([M.capsule(0.085, 0.06, F.THIGH, 7), Transform3D(Basis(), Vector3(F.HIP_X * s, seat_y, 0)), 3.0])
+				parts.append([M.capsule(0.058, 0.04, F.SHIN, 7), Transform3D(Basis(), Vector3(F.HIP_X * s, seat_y - F.THIGH, 0)), 3.0])
+			else:
+				parts.append([M.capsule(0.085, 0.06, F.THIGH, 7), Transform3D(Basis(Vector3.RIGHT, -PI / 2.0 + 0.0), Vector3(F.HIP_X * s, seat_y, 0)), 3.0])
+				parts.append([M.capsule(0.058, 0.04, F.SHIN, 7), Transform3D(Basis(), Vector3(F.HIP_X * s, seat_y, F.THIGH)), 3.0])
 	else:
 		parts.append([M.lathe(F.TORSO_PROFILE, 6), Transform3D(Basis(), Vector3(0, seat_y, 0)), 1.0])
 		parts.append([M.ellipsoid(0.075, 0.115, 0.095, 6, 3), Transform3D(Basis(), Vector3(0, seat_y + F.HEAD_Y + 0.15, 0)), 0.0])
 		for s in [-1.0, 1.0]:
 			parts.append([M.capsule(0.055, 0.034, 0.5, 4), Transform3D(Basis(), Vector3(F.SH_X * s, seat_y + F.SH_Y, 0)), 2.0])
 	var m := M.merge(parts)
-	_fig_cache[lod] = m
+	_fig_cache[ck] = m
 	return m
 
 

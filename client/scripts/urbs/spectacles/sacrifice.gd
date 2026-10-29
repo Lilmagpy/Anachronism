@@ -102,6 +102,7 @@ func _ready() -> void:
 		var c = Crowd.new()
 		var poly := PackedVector3Array([Vector3(0, 0, 6.0), Vector3(0, 0, 26.0)])
 		c.toga_rows = 1
+		c.standing = true
 		c.add_seats(Crowd.line_seats(poly, 7.0, 3, 1.3, 1.0, 0.0))
 		c.build()
 		add_child(c)
