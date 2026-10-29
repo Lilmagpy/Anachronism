@@ -55,6 +55,8 @@ def republic_view(state: GameState) -> dict[str, Any] | None:
     return {
         "year_label": year_label(state.year),
         "influence": rep.influence,
+        "persuade_cost": state.world.republic_rules.persuade_cost,
+        "back_cost": state.world.republic_rules.back_cost,
         "emergency_bp": rep.emergency_bp,
         "history_turned": rep.diverged,
         "magistrates": [
