@@ -2556,3 +2556,17 @@ matters. Engine only: the client screens for it come in a later step.
     Cannae with enough horse.
   - Real battles are a content kind (`battles`), each with its sources.
 - **Seas:** Rhodes now borders both the Aegean and the Levantine Sea, restoring the sea route east.
+
+## D-289 Urbs: Rome as a place you walk into — owner's direction (2026-10-29)
+- The owner wants the real Rome in the game: zoom in from the map to street level, click a
+  building, go inside, and watch what happened there (races in the Circus, fights in the
+  arena, the Senate, sacrifices, triumphs). Plan: `docs/plans/city.md`.
+- Built as a separate client mode (`client/scripts/urbs/`) on a shared metre-scale frame
+  centred on the Forum (`urbs/geo.gd`), from the sourced dataset in `data/rome/city`,
+  exported to JSON by `anachronism-city-export`.
+- **Colosseum:** it opened in AD 80, after the campaign's end in 27 BC. The city dataset and
+  model therefore run to about AD 120, so it exists when the campaign reaches it or a player's
+  idea brings it forward. In the Republic the games are in the Forum, in wooden stands, as
+  they were (Livy *Per.* 16). **Owner to decide** whether the campaign extends into the Empire.
+- Agents work in parallel on separate files (terrain, streets and fill, monuments, cameras,
+  interiors, spectacles, the Empire dataset, the engine's city state).

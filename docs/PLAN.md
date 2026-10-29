@@ -25,6 +25,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [ ] R4 Army, economy, religion
   - [x] Army groundwork: 8 army techs, 36 units, 5 formations, 8 tactics, 15 sourced battles (D-288)
 - [ ] R5 The city of Rome: topography, dated monuments, Roman kit forms, the city visit
+  - [ ] Urbs U1-U8 (D-289, plans/city.md): walk-in Rome with interiors and spectacles
 - [ ] R6 Depth pass: every year 509-27 BC checked against the sources; full campaign playthrough
 
 Everything below is the history of the multi-civilisation game, kept for the record.

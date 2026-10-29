@@ -1,0 +1,343 @@
+{
+"campus_martius": {
+"english": "Campus Martius",
+"floor_m": 12,
+"lat": 41.9,
+"latin": "Campus Martius",
+"lon": 12.47,
+"sources": [
+"Livy 2.5.2",
+"Strabo 5.3.8",
+"Platner-Ashby s.v. Campus Martius"
+],
+"text": "Floodplain of the river bend west and north of the Capitol, about 2 km long; land of the Tarquins consecrated to Mars (Livy 2.5.2); muster, voting (Saepta), games, later monuments; frequently flooded (Livy 35.9.2)."
+},
+"hills": [
+{
+"english": "Capitoline Hill",
+"height_m": 46,
+"id": "capitolinus",
+"lat": 41.8934,
+"latin": "Mons Capitolinus",
+"lon": 12.4828,
+"regio": 8,
+"sources": [
+"Livy 1.33; 5.47",
+"Platner-Ashby s.v. Capitolium; Arx"
+],
+"summits": [
+{
+"lat": 41.8929,
+"location": "southern summit (temple of Jupiter)",
+"lon": 12.4827,
+"name": "Capitolium"
+},
+{
+"lat": 41.8946,
+"location": "northern summit",
+"lon": 12.4833,
+"name": "Arx"
+},
+{
+"lat": 41.894,
+"location": "the saddle between them",
+"lon": 12.484,
+"name": "Asylum"
+}
+],
+"text": "Two summits joined by a saddle (the Intermontium). Steep cliffs to the south (Tarpeian Rock) and a long steep approach, the Clivus Capitolinus, from the Forum."
+},
+{
+"english": "Palatine Hill",
+"height_m": 51,
+"id": "palatinus",
+"lat": 41.8892,
+"latin": "Mons Palatinus",
+"lon": 12.4875,
+"regio": 10,
+"sources": [
+"Livy 1.7; Dion. Hal. 1.79",
+"Platner-Ashby s.v. Palatium"
+],
+"summits": [
+{
+"lat": 41.8895,
+"location": "north-west spur (Cermalus)",
+"lon": 12.4851,
+"name": "Germalus"
+},
+{
+"lat": 41.8892,
+"location": "main plateau",
+"lon": 12.488,
+"name": "Palatium"
+},
+{
+"lat": 41.8908,
+"location": "saddle toward the Esquiline",
+"lon": 12.49,
+"name": "Velia"
+}
+],
+"text": "Traditional site of the first settlement of Romulus (Roma Quadrata); the Germalus is the western spur above the Velabrum; house of the aristocracy in the Late Republic."
+},
+{
+"english": "Aventine Hill",
+"height_m": 46,
+"id": "aventinus",
+"lat": 41.8825,
+"latin": "Mons Aventinus",
+"lon": 12.4825,
+"regio": 13,
+"sources": [
+"Livy 3.50",
+"Platner-Ashby s.v. Aventinus"
+],
+"summits": [
+{
+"lat": 41.884,
+"location": "north-west knob",
+"lon": 12.479,
+"name": "Aventinus Maior"
+},
+{
+"lat": 41.88,
+"location": "south-east knob",
+"lon": 12.486,
+"name": "Aventinus Minor"
+}
+],
+"text": "Plebeian hill, outside the pomerium until Claudius (AD 49); the secessions of the plebs went to the Aventine or Sacred Mount (Livy 3.50, 3.54)."
+},
+{
+"english": "Caelian Hill",
+"height_m": 50,
+"id": "caelius",
+"lat": 41.8855,
+"latin": "Mons Caelius",
+"lon": 12.4962,
+"regio": 2,
+"sources": [
+"Livy 1.30",
+"Platner-Ashby s.v. Caelius Mons"
+],
+"text": "Elongated spur east of the Palatine, enclosed by the Servian Wall (Porta Caelimontana); said to be settled by Alba refugees (Livy 1.30)."
+},
+{
+"english": "Esquiline Hill",
+"height_m": 60,
+"id": "esquilinus",
+"lat": 41.893,
+"latin": "Mons Esquilinus",
+"lon": 12.5,
+"regio": 5,
+"sources": [
+"Varro LL 5.50",
+"Platner-Ashby s.v. Esquiliae"
+],
+"summits": [
+{
+"lat": 41.8905,
+"location": "south-western spur (Domus Aurea area)",
+"lon": 12.495,
+"name": "Oppius"
+},
+{
+"lat": 41.8975,
+"location": "northern spur (S. Maria Maggiore)",
+"lon": 12.4985,
+"name": "Cispius"
+},
+{
+"lat": 41.8918,
+"location": "western arm",
+"lon": 12.4945,
+"name": "Fagutal"
+}
+],
+"text": "Largest of the hills; the Servian agger runs across its east side; necropolis for the poor in the plain outside the Porta Esquilina until Maecenas' gardens in the 30s BC."
+},
+{
+"english": "Viminal Hill",
+"height_m": 57,
+"id": "viminalis",
+"lat": 41.9005,
+"latin": "Mons Viminalis",
+"lon": 12.4965,
+"regio": 6,
+"sources": [
+"Varro LL 5.51",
+"Platner-Ashby s.v. Viminalis"
+],
+"text": "Narrow spur between Quirinal and Esquiline, crossed by the Servian agger."
+},
+{
+"english": "Quirinal Hill",
+"height_m": 61,
+"id": "quirinalis",
+"lat": 41.903,
+"latin": "Mons Quirinalis",
+"lon": 12.4895,
+"regio": 6,
+"sources": [
+"Varro LL 5.51",
+"Livy 1.44",
+"Platner-Ashby s.v. Quirinalis"
+],
+"text": "Highest of the traditional seven hills; Sabine (Quirinus, Fides, Salus) settlement; north-east end the Colline Gate."
+}
+],
+"other_heights": [
+{
+"english": "Pincian Hill",
+"height_m": 63,
+"id": "pincius",
+"lat": 41.91,
+"latin": "Collis Hortulorum",
+"lon": 12.482,
+"sources": [
+"Platner-Ashby s.v. Horti Lucullani"
+],
+"text": "Outside the Servian Wall; Gardens of Lucullus and Sallustius (late Republic)."
+},
+{
+"english": "Janiculum",
+"height_m": 82,
+"id": "ianiculum",
+"lat": 41.889,
+"latin": "Ianiculum",
+"lon": 12.461,
+"sources": [
+"Livy 1.33.6",
+"Platner-Ashby s.v. Ianiculum"
+],
+"text": "Ridge across the Tiber, a fort of Ancus Marcius (Livy 1.33.6); military flag raised during comitia centuriata."
+},
+{
+"english": "Vatican Hill",
+"height_m": 75,
+"id": "vaticanus",
+"lat": 41.903,
+"latin": "Mons Vaticanus",
+"lon": 12.453,
+"sources": [
+"Platner-Ashby s.v. Vaticanus Mons"
+],
+"text": "North of the Janiculum, outside the city; fields of the Tiber plain."
+}
+],
+"tiber": {
+"course": [
+[
+41.9335,
+12.4668
+],
+[
+41.906,
+12.469
+],
+[
+41.896,
+12.472
+],
+[
+41.8925,
+12.4755
+],
+[
+41.89,
+12.4775
+],
+[
+41.8885,
+12.478
+],
+[
+41.883,
+12.477
+],
+[
+41.877,
+12.476
+],
+[
+41.87,
+12.472
+]
+],
+"english": "Tiber",
+"island": {
+"lat": 41.89,
+"latin": "Insula Tiberina",
+"length_m": 270,
+"lon": 12.4775,
+"width_m": 67
+},
+"lat": 41.89,
+"latin": "Tiberis",
+"lon": 12.477,
+"sources": [
+"Livy 1.4",
+"Livy 7.3.2",
+"Livy 35.9.2",
+"Platner-Ashby s.v. Tiberis"
+],
+"text": "River 60-90 m wide through the city, flowing north to south then west; the Tiber Island and fords at the Forum Boarium; the Pons Sublicius is the earliest crossing; floods regular (Livy 7.3.2; 24.9.6; 35.9.2). Floodplain (Campus Martius, Forum Boarium, Forum Holitorium) lay 2-6 m above normal water. Harbour at the Emporium (193 BC).",
+"width_m": 60
+},
+"valleys": [
+{
+"english": "Forum valley",
+"floor_m": 11,
+"id": "forum_valley",
+"lat": 41.8925,
+"latin": "Forum Romanum",
+"lon": 12.4853,
+"sources": [
+"Livy 1.38.6",
+"Dion. Hal. 3.67",
+"Platner-Ashby s.v. Forum Romanum"
+],
+"text": "Marshy valley between the Capitol, Palatine, Velia and Quirinal spur, drained by the Cloaca Maxima and paved from about 600 BC; the ancient ground is 4-5 m below present level."
+},
+{
+"english": "Velabrum",
+"floor_m": 10,
+"id": "velabrum",
+"lat": 41.8905,
+"latin": "Velabrum",
+"lon": 12.483,
+"sources": [
+"Varro LL 5.43-44",
+"Platner-Ashby s.v. Velabrum"
+],
+"text": "Low marshy ground between the Capitol, Palatine and the Forum Boarium; flooded by the Tiber until the Cloaca Maxima drained it; the Vicus Tuscus ran through it; one of the oldest market places."
+},
+{
+"english": "Valley of Murcia (Circus Maximus)",
+"floor_m": 12,
+"id": "vallis_murcia",
+"lat": 41.8861,
+"latin": "Vallis Murcia",
+"lon": 12.4851,
+"sources": [
+"Livy 1.35.8",
+"Platner-Ashby s.v. Circus Maximus"
+],
+"text": "Long valley between the Palatine and Aventine; site of the Circus Maximus, with the Murtia/Murcia stream."
+},
+{
+"english": "Subura valley",
+"floor_m": 18,
+"id": "subura_argiletum",
+"lat": 41.8955,
+"latin": "Subura / Argiletum",
+"lon": 12.4905,
+"sources": [
+"Varro LL 5.48",
+"Platner-Ashby s.v. Subura"
+],
+"text": "Low district between the Viminal, Esquiline and Capitol-Forum; crowded; Argiletum road to the Forum."
+}
+]
+}

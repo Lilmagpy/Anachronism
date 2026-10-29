@@ -1,0 +1,3895 @@
+{
+"monuments": [
+{
+"built": {
+"by": "vowed by Tarquinius Priscus, built by Tarquinius Superbus; dedicated by the consul M. Horatius (Livy 2.8.6; Polybius 3.22.1 dates the first treaty to the year after, so the Republic already had the temple)",
+"certainty": "traditional",
+"year": -509
+},
+"english": "Temple of Jupiter Optimus Maximus (Capitoline Temple)",
+"events": [
+{
+"what": "burned down 6 July 83 BC (Cic. Cat. 3.9; Tac. Hist. 3.72)",
+"year": -83
+},
+{
+"what": "rebuilding begun under Sulla, completed by Q. Lutatius Catulus (Plut. Publicola 15); same plan on a larger scale, with columns taken from the Olympieion at Athens",
+"year": -78
+},
+{
+"what": "dedicated by Q. Lutatius Catulus (Tac. Hist. 3.72; Cic. Verr. 2.4.69)",
+"year": -69
+}
+],
+"form": "Tuscan temple on a very large podium, about 55 x 60 m, three cellae (Jupiter, Juno, Minerva), deep pronaos with three rows of columns; terracotta decoration and quadriga by Vulca of Veii in the first temple",
+"id": "aedes_iovis_capitolini",
+"lat": 41.8929,
+"latin": "Aedes Iovis Optimi Maximi Capitolini",
+"location": "Capitol, southern summit (Capitolium); under Palazzo dei Conservatori / Caffarelli",
+"lon": 12.4827,
+"materials": [
+"tufa (cappellaccio) podium",
+"timber superstructure",
+"terracotta; marble columns in the Catulus phase"
+],
+"pleiades": null,
+"precision": "approx",
+"regio": 8,
+"sources": [
+"Livy 2.8.6",
+"Polybius 3.22",
+"Dion. Hal. 4.61",
+"Tac. Hist. 3.72",
+"Plut. Publicola 15",
+"Platner-Ashby s.v. Iuppiter Optimus Maximus Capitolinus, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "regal period; defended against the Gauls 390 BC (Livy 5.47)",
+"certainty": "traditional",
+"year": null
+},
+"english": "Arx (citadel, northern summit of the Capitol)",
+"id": "arx_capitolina",
+"lat": 41.8946,
+"latin": "Arx",
+"location": "Capitol, northern summit, under S. Maria in Aracoeli",
+"lon": 12.4833,
+"precision": "approx",
+"regio": 8,
+"sources": [
+"Livy 5.47",
+"Platner-Ashby s.v. Arx"
+],
+"type": "citadel"
+},
+{
+"built": {
+"by": "vowed by L. Furius Camillus as dictator 345 against the Aurunci; dedicated 344 (Livy 7.28.4-6)",
+"certainty": "certain",
+"year": -344
+},
+"english": "Temple of Juno Moneta",
+"id": "aedes_iunonis_monetae",
+"lat": 41.8945,
+"latin": "Aedes Iunonis Monetae",
+"location": "Capitol, Arx, on the site of the house of M. Manlius Capitolinus; under S. Maria in Aracoeli",
+"lon": 12.4832,
+"precision": "approx",
+"regio": 8,
+"sources": [
+"Livy 7.28.4-6",
+"Ovid Fasti 6.183-190",
+"Platner-Ashby s.v. Iuno Moneta, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "Romulus, according to tradition (Livy 1.10.5-7)",
+"certainty": "traditional",
+"year": null
+},
+"english": "Temple of Jupiter Feretrius",
+"events": [
+{
+"what": "roof ruinous; restored by Augustus on the advice of Atticus (Livy 4.20.7; Nepos Atticus 20; Res Gestae 19) - restoration c. 32 BC",
+"year": -32
+}
+],
+"form": "tiny shrine; site of the spolia opima dedications (Cossus 437, Livy 4.20)",
+"id": "aedes_iovis_feretri",
+"lat": 41.8932,
+"latin": "Aedes Iovis Feretri",
+"location": "Capitol, probably near the Capitoline temple (exact site lost)",
+"lon": 12.483,
+"precision": "rough",
+"regio": 8,
+"sources": [
+"Livy 1.10.5-7",
+"Livy 4.20.7",
+"Res Gestae 19",
+"Platner-Ashby s.v. Iuppiter Feretrius, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "vowed by L. Furius Purpureo as praetor in Gaul 200 (Livy 31.21.12); contracted 194; dedicated 192 (Livy 34.53.7, 35.41.8)",
+"certainty": "certain",
+"year": -192
+},
+"english": "Temple of Vediovis",
+"form": "cella wider than deep, with an unusual orientation; cult statue of the god, a cypress-wood goat figure",
+"id": "aedes_veiovis",
+"lat": 41.8941,
+"latin": "Aedes Vediovis",
+"location": "Capitol, in the saddle (Asylum) between the Arx and the Capitolium; remains under the Tabularium side, near Piazza del Campidoglio",
+"lon": 12.4838,
+"precision": "approx",
+"regio": 8,
+"sources": [
+"Livy 31.21.12",
+"Livy 34.53.7",
+"Livy 35.41.8",
+"Platner-Ashby s.v. Vediovis, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "vowed by T. Otacilius Crassus as praetor after Lake Trasimene 217 (Livy 22.9.10); dedicated 215 (Livy 23.31.9)",
+"certainty": "certain",
+"year": -215
+},
+"english": "Temple of Mens",
+"id": "aedes_mentis",
+"lat": 41.8935,
+"latin": "Aedes Mentis",
+"location": "Capitol, next to the temple of Venus Erycina",
+"lon": 12.4826,
+"precision": "rough",
+"regio": 8,
+"sources": [
+"Livy 22.9.10",
+"Livy 23.31.9",
+"Platner-Ashby s.v. Mens, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "vowed by Q. Fabius Maximus as dictator 217 (Livy 22.9.7-10, 22.10.10); dedicated 215 by Fabius (Livy 23.30.13-14)",
+"certainty": "certain",
+"year": -215
+},
+"english": "Temple of Venus Erycina (on the Capitol)",
+"id": "aedes_veneris_erycinae_capitol",
+"lat": 41.8936,
+"latin": "Aedes Veneris Erycinae (Capitolium)",
+"location": "Capitol",
+"lon": 12.4831,
+"precision": "rough",
+"regio": 8,
+"sources": [
+"Livy 22.9.7",
+"Livy 23.30.13",
+"Platner-Ashby s.v. Venus Erycina"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "dedicated 181 by L. Porcius Licinus, vowed 184 (Livy 40.34.4)",
+"certainty": "certain",
+"year": -181
+},
+"english": "Temple of Venus Erycina outside the Colline Gate",
+"id": "aedes_veneris_erycinae_collina",
+"lat": 41.9072,
+"latin": "Aedes Veneris Erycinae ad Portam Collinam",
+"location": "outside the Colline Gate, on the Quirinal slope",
+"lon": 12.4968,
+"precision": "rough",
+"regio": 6,
+"sources": [
+"Livy 40.34.4",
+"Platner-Ashby s.v. Venus Erycina"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "traditionally Numa; new temple or restoration by M. Aemilius Scaurus c. 115 BC (Cic. Nat. D. 2.61, Plin. NH 35.? not cited)",
+"certainty": "probable",
+"year": -254
+},
+"english": "Temple of Fides (Fides Publica)",
+"id": "aedes_fidei",
+"lat": 41.8933,
+"latin": "Aedes Fidei",
+"location": "Capitol, next to the temple of Jupiter",
+"lon": 12.4824,
+"notes": "Dates uncertain; Cicero (Nat. D. 2.61) says Atilius Calatinus dedicated a temple of Fides (about 254 BC), so the date given is the Cicero attribution.",
+"precision": "rough",
+"regio": 8,
+"sources": [
+"Cic. Nat. D. 2.61",
+"Platner-Ashby s.v. Fides, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "drained and paved under Tarquinius Priscus (Livy 1.38.6); first paving archaeologically c. 600 BC",
+"certainty": "traditional",
+"year": -600
+},
+"english": "Roman Forum",
+"events": [
+{
+"what": "great fire destroys the shops around the Forum; rebuilt as tabernae argentariae (Livy 26.27.1-4)",
+"year": -210
+},
+{
+"what": "Forum disturbed by the funeral of Clodius, Curia burned (Asc. Mil. 29-33; Cic. Mil. 90)",
+"year": -52
+},
+{
+"what": "Caesar replans the Forum: moves the Rostra and starts Basilica Iulia (Dio 43.49)",
+"year": -46
+}
+],
+"id": "forum_romanum",
+"lat": 41.8925,
+"latin": "Forum Romanum",
+"location": "valley between the Capitol and the Palatine/Velia, drained by the Cloaca Maxima",
+"lon": 12.4853,
+"pleiades": null,
+"precision": "exact",
+"regio": 8,
+"sources": [
+"Livy 1.38.6",
+"Livy 26.27.1-4",
+"Platner-Ashby s.v. Forum Romanum"
+],
+"type": "forum"
+},
+{
+"built": {
+"by": "regal origin; place of the tribal and curiate assemblies",
+"certainty": "traditional",
+"year": -509
+},
+"english": "Comitium",
+"events": [
+{
+"what": "levelled and rebuilt as part of Sulla's reorganisation near the Curia (Platner-Ashby; archaeology)",
+"year": -80
+},
+{
+"what": "Caesar's plan moves the Rostra and removes the Comitium (Dio 43.49.1)",
+"year": -44
+}
+],
+"form": "open circular space with steps (the Volcanal on its edge); the area retained its political role until Caesar",
+"id": "comitium",
+"lat": 41.8928,
+"latin": "Comitium",
+"location": "north-west corner of the Forum, below the Curia; round-ish open space for assemblies",
+"lon": 12.485,
+"precision": "approx",
+"regio": 8,
+"sources": [
+"Livy 1.36",
+"Dio 43.49.1",
+"Platner-Ashby s.v. Comitium"
+],
+"type": "comitium"
+},
+{
+"built": {
+"by": "archaic sanctuary; black marble paving laid probably c. 80 BC or in Caesar's time over the archaic site (Festus 184L; Dion. Hal. 3.? as tomb of Romulus tradition)",
+"certainty": "probable",
+"year": null
+},
+"english": "Black Stone (Niger Lapis) with the Volcanal",
+"id": "lapis_niger",
+"lat": 41.8929,
+"latin": "Lapis Niger",
+"location": "Comitium, in front of the Curia",
+"lon": 12.4852,
+"precision": "exact",
+"regio": 8,
+"sources": [
+"Festus 184L",
+"Platner-Ashby s.v. Niger Lapis"
+],
+"type": "shrine"
+},
+{
+"built": {
+"by": "decorated with the beaks of the ships of Antium captured by C. Maenius (Livy 8.14.12; Pliny NH 34.20)",
+"certainty": "certain",
+"year": -338
+},
+"english": "Rostra (speakers' platform)",
+"events": [
+{
+"what": "Caesar's plan moves the Rostra to the west end of the Forum; completed by Augustus (Dio 43.49.1)",
+"year": -44
+}
+],
+"form": "tufa platform about 3.5 m high, 12 m long, with ships' rams on its face",
+"id": "rostra_republic",
+"lat": 41.8927,
+"latin": "Rostra",
+"location": "between the Comitium and the Forum, west end of the Forum",
+"lon": 12.4848,
+"precision": "exact",
+"regio": 8,
+"sources": [
+"Livy 8.14.12",
+"Pliny NH 34.20",
+"Dio 43.49.1",
+"Platner-Ashby s.v. Rostra"
+],
+"type": "rostra"
+},
+{
+"built": {
+"by": "platform for foreign ambassadors; Pliny NH 33.19 mentions it c. 304 BC",
+"certainty": "probable",
+"year": -304
+},
+"english": "Graecostasis",
+"id": "graecostasis",
+"lat": 41.8927,
+"latin": "Graecostasis",
+"location": "beside the Rostra, at the Comitium",
+"lon": 12.4851,
+"precision": "approx",
+"regio": 8,
+"sources": [
+"Pliny NH 33.19",
+"Varro LL 5.155",
+"Platner-Ashby s.v. Graecostasis"
+],
+"type": "platform"
+},
+{
+"built": {
+"by": "early; senators assembled before meetings (Varro LL 5.156; Festus 470L)",
+"certainty": "uncertain",
+"year": null
+},
+"english": "Senaculum",
+"id": "senaculum",
+"lat": 41.8929,
+"latin": "Senaculum",
+"location": "near the Curia and Comitium",
+"lon": 12.4846,
+"precision": "rough",
+"regio": 8,
+"sources": [
+"Varro LL 5.156",
+"Platner-Ashby s.v. Senacula"
+],
+"type": "platform"
+},
+{
+"built": {
+"by": "Tullus Hostilius (Livy 1.30.2; Cic. Rep. 2.31)",
+"certainty": "traditional",
+"year": null
+},
+"ended": {
+"what": "demolished",
+"year": -45
+},
+"english": "Senate House (Curia Hostilia)",
+"events": [
+{
+"what": "enlarged by Sulla after he increased the number of senators (Platner-Ashby; Dio 40.50.2 on rebuild)",
+"year": -80
+},
+{
+"what": "burned at the funeral of P. Clodius; Faustus Sulla began rebuilding (Dio 40.49.2, 40.50.2)",
+"year": -52
+},
+{
+"what": "demolished for Caesar's new Curia Iulia (Dio 44.5.2)",
+"year": -45
+}
+],
+"id": "curia_hostilia",
+"lat": 41.893,
+"latin": "Curia Hostilia",
+"location": "north side of the Comitium, below the Argiletum",
+"lon": 12.4853,
+"precision": "approx",
+"regio": 8,
+"sources": [
+"Livy 1.30.2",
+"Cic. Mil. 90",
+"Dio 40.49.2",
+"Platner-Ashby s.v. Curia Hostilia"
+],
+"type": "curia"
+},
+{
+"built": {
+"by": "begun by Caesar 44 as part of the new Forum Iulium plan; completed and dedicated 29 BC by Augustus (Dio 44.5.2, 51.22.1; Res Gestae 19)",
+"certainty": "certain",
+"year": -44
+},
+"english": "Curia Iulia",
+"events": [
+{
+"what": "dedicated by Octavian (Dio 51.22.1)",
+"year": -29
+}
+],
+"id": "curia_iulia",
+"lat": 41.8929,
+"latin": "Curia Iulia",
+"location": "north-east side of the Forum, now the standing brick Curia (a Diocletianic rebuild)",
+"lon": 12.4856,
+"precision": "exact",
+"regio": 8,
+"sources": [
+"Dio 44.5.2",
+"Dio 51.22.1",
+"Res Gestae 19",
+"Platner-Ashby s.v. Curia Iulia"
+],
+"type": "curia"
+},
+{
+"built": {
+"by": "land bought from private owners for 100 million sesterces from 54 BC; dedicated by Caesar 26 Sep 46 BC with the temple of Venus Genetrix (Cic. Att. 4.16.8; Dio 43.22.2; Suet. Iul. 26)",
+"certainty": "certain",
+"year": -46
+},
+"english": "Forum of Caesar",
+"events": [
+{
+"what": "completed by Augustus (Res Gestae 20)",
+"year": -29
+}
+],
+"form": "porticoed forum about 160 x 75 m with the temple of Venus Genetrix at the north-west end",
+"id": "forum_iulium",
+"lat": 41.8938,
+"latin": "Forum Iulium",
+"location": "north-east of the Curia, at the foot of the Capitol (Arx slope) - Via dei Fori Imperiali",
+"lon": 12.4863,
+"precision": "exact",
+"regio": 8,
+"sources": [
+"Cic. Att. 4.16.8",
+"Suet. Iul. 26",
+"Dio 43.22.2",
+"Platner-Ashby s.v. Forum Iulium"
+],
+"type": "forum"
+},
+{
+"built": {
+"by": "vowed by Caesar before Pharsalus 48 (App. BC 2.68, 2.102); dedicated 46 (Dio 43.22)",
+"certainty": "certain",
+"year": -46
+},
+"english": "Temple of Venus Genetrix",
+"form": "octostyle Corinthian temple on a high podium, marble",
+"id": "aedes_veneris_genetricis",
+"lat": 41.8941,
+"latin": "Aedes Veneris Genetricis",
+"location": "head of the Forum of Caesar",
+"lon": 12.4861,
+"materials": [
+"marble",
+"tufa core"
+],
+"precision": "exact",
+"regio": 8,
+"sources": [
+"App. BC 2.68",
+"Dio 43.22.2",
+"Platner-Ashby s.v. Venus Genetrix, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "M. Porcius Cato as censor (Livy 39.44.7; Plut. Cato Maior 19)",
+"certainty": "certain",
+"year": -184
+},
+"ended": {
+"what": "burned with the Curia at Clodius' funeral (Asc. Mil. 33)",
+"year": -52
+},
+"english": "Basilica Porcia",
+"id": "basilica_porcia",
+"lat": 41.8929,
+"latin": "Basilica Porcia",
+"location": "Forum, beside the Curia (north-west); exact site lost",
+"lon": 12.4851,
+"precision": "rough",
+"regio": 8,
+"sources": [
+"Livy 39.44.7",
+"Plut. Cato Maior 19",
+"Platner-Ashby s.v. Basilica Porcia"
+],
+"type": "basilica"
+},
+{
+"built": {
+"by": "M. Aemilius Lepidus and M. Fulvius Nobilior as censors (Livy 40.51.5)",
+"certainty": "certain",
+"year": -179
+},
+"english": "Basilica Aemilia (Basilica Fulvia)",
+"events": [
+{
+"what": "restored by M. Aemilius Lepidus (consul 78) with shields (Pliny NH 35.13)",
+"year": -78
+},
+{
+"what": "L. Aemilius Paullus rebuilds it with Phrygian marble columns at great cost, financed in part by Caesar's money (Cic. Att. 4.16.8; Plut. Caes. 29)",
+"year": -54
+},
+{
+"what": "completed by L. Aemilius Paullus (consul 34) (Appian BC 2.26 / Plutarch Caesar 29; Dio 49.42)",
+"year": -34
+}
+],
+"form": "two-storey colonnaded hall with shops (tabernae novae) along the Forum side",
+"id": "basilica_aemilia",
+"lat": 41.8929,
+"latin": "Basilica Aemilia (Fulvia)",
+"location": "north side of the Forum, between the Curia and the Temple of Divus Iulius",
+"lon": 12.4863,
+"precision": "exact",
+"regio": 8,
+"sources": [
+"Livy 40.51.5",
+"Cic. Att. 4.16.8",
+"Plut. Caes. 29",
+"Platner-Ashby s.v. Basilica Aemilia"
+],
+"type": "basilica"
+},
+{
+"built": {
+"by": "Ti. Sempronius Gracchus as censor 169, work contracted 170 (Livy 44.16.10)",
+"certainty": "certain",
+"year": -170
+},
+"ended": {
+"what": "cleared for the Basilica Iulia (Platner-Ashby; Cic. Att. 4.16.8)",
+"year": -46
+},
+"english": "Basilica Sempronia",
+"id": "basilica_sempronia",
+"lat": 41.8921,
+"latin": "Basilica Sempronia",
+"location": "west end of the Forum, in the Vicus Tuscus area, on the site of the house of Scipio Africanus",
+"lon": 12.484,
+"precision": "rough",
+"regio": 8,
+"sources": [
+"Livy 44.16.10",
+"Platner-Ashby s.v. Basilica Sempronia"
+],
+"type": "basilica"
+},
+{
+"built": {
+"by": "L. Opimius, consul 121 (Varro LL 5.156)",
+"certainty": "certain",
+"year": -121
+},
+"english": "Basilica Opimia",
+"id": "basilica_opimia",
+"lat": 41.8921,
+"latin": "Basilica Opimia",
+"location": "Forum, beside the temple of Concord",
+"lon": 12.4863,
+"precision": "rough",
+"regio": 8,
+"sources": [
+"Varro LL 5.156",
+"Platner-Ashby s.v. Basilica Opimia"
+],
+"type": "basilica"
+},
+{
+"built": {
+"by": "begun by Julius Caesar 54; partially dedicated 46 (Suet. Iul. 26; Cic. Att. 4.16.8; Dio 43.22)",
+"certainty": "certain",
+"year": -46
+},
+"english": "Basilica Iulia",
+"events": [
+{
+"what": "burned and rebuilt by Augustus (Res Gestae 20)",
+"year": -12
+}
+],
+"form": "about 101 x 49 m; five aisles, tabernae outside; seat of the Centumviral court",
+"id": "basilica_iulia",
+"lat": 41.8919,
+"latin": "Basilica Iulia",
+"location": "south side of the Forum, between the Temple of Castor and the temple of Saturn, over the Basilica Sempronia",
+"lon": 12.4851,
+"precision": "exact",
+"regio": 8,
+"sources": [
+"Cic. Att. 4.16.8",
+"Suet. Iul. 26",
+"Res Gestae 20",
+"Platner-Ashby s.v. Basilica Iulia"
+],
+"type": "basilica"
+},
+{
+"built": {
+"by": "vowed by T. Larcius as dictator or by Postumius; dedicated 497 (Livy 2.21.2; Dion. Hal. 6.1.4; Macrobius Sat. 1.8.1-2)",
+"certainty": "certain",
+"year": -497
+},
+"english": "Temple of Saturn (and Aerarium)",
+"events": [
+{
+"what": "rebuilt by L. Munatius Plancus (consul 42), as the inscription recorded",
+"year": -42
+}
+],
+"form": "hexastyle temple on a high podium of concrete and travertine; the rebuilt temple is the standing eight columns",
+"id": "aedes_saturni",
+"lat": 41.8921,
+"latin": "Aedes Saturni",
+"location": "west end of the Forum, at the foot of the Capitol (Clivus Capitolinus); the Aerarium was in its podium",
+"lon": 12.4838,
+"precision": "exact",
+"regio": 8,
+"sources": [
+"Livy 2.21.2",
+"Dion. Hal. 6.1.4",
+"Macrob. Sat. 1.8.1-2",
+"Platner-Ashby s.v. Saturnus, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "vowed by the dictator A. Postumius at Lake Regillus 499; dedicated 15 July 484 by his son (Livy 2.20.12, 2.42.5; Dion. Hal. 6.13)",
+"certainty": "certain",
+"year": -484
+},
+"english": "Temple of Castor and Pollux",
+"events": [
+{
+"what": "rebuilt by L. Caecilius Metellus Dalmaticus (Cic. Verr. 2.1.129-154)",
+"year": -117
+},
+{
+"what": "repair contract of C. Verres (Cic. Verr. 2.1.129-154)",
+"year": -73
+},
+{
+"what": "burned and rebuilt by Tiberius (outside our dating)",
+"year": -14
+}
+],
+"form": "octostyle peripteral temple on a high podium (about 7 m) used as a speakers' platform and as a place for the weights standard",
+"id": "aedes_castoris",
+"lat": 41.8915,
+"latin": "Aedes Castoris",
+"location": "south side of the Forum, beside the Vicus Tuscus",
+"lon": 12.4858,
+"precision": "exact",
+"regio": 8,
+"sources": [
+"Livy 2.20.12",
+"Livy 2.42.5",
+"Cic. Verr. 2.1.129",
+"Platner-Ashby s.v. Castor, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "Numa Pompilius (Livy 1.20; Plut. Numa 11)",
+"certainty": "traditional",
+"year": null
+},
+"english": "Temple of Vesta",
+"events": [
+{
+"what": "Vestals carry the sacra away during the Gallic sack (Livy 5.40.7)",
+"year": -390
+},
+{
+"what": "fire; Pontifex Maximus L. Caecilius Metellus rescued the Palladium (Livy Per. 19; Pliny NH 7.141)",
+"year": -241
+},
+{
+"what": "fire in the Forum threatens the temple (Livy 26.27.14)",
+"year": -210
+}
+],
+"form": "small circular temple with a sacred hearth, not templum in the augural sense",
+"id": "aedes_vestae",
+"lat": 41.8917,
+"latin": "Aedes Vestae",
+"location": "south-east of the Forum at the foot of the Palatine; the circular temple holding the sacred fire",
+"lon": 12.4869,
+"precision": "exact",
+"regio": 8,
+"sources": [
+"Livy 1.20",
+"Livy 5.40.7",
+"Livy 26.27.14",
+"Plut. Numa 11",
+"Platner-Ashby s.v. Vesta, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "regal period; dwelling of the Vestal Virgins",
+"certainty": "traditional",
+"year": -509
+},
+"english": "House of the Vestals",
+"id": "atrium_vestae",
+"lat": 41.8915,
+"latin": "Atrium Vestae",
+"location": "south-east of the Temple of Vesta",
+"lon": 12.4875,
+"precision": "exact",
+"regio": 8,
+"sources": [
+"Platner-Ashby s.v. Atrium Vestae"
+],
+"type": "house"
+},
+{
+"built": {
+"by": "Numa Pompilius (Plut. Numa 14; Festus 346L)",
+"certainty": "traditional",
+"year": -600
+},
+"english": "Regia",
+"events": [
+{
+"what": "burned (Livy 26.27.14)",
+"year": -210
+},
+{
+"what": "burned",
+"year": -148
+},
+{
+"what": "rebuilt by Cn. Domitius Calvinus (Dio 48.42.4)",
+"year": -36
+}
+],
+"form": "trapezoidal marble-faced building, sacra of Mars and Ops, residence of the Pontifex Maximus",
+"id": "regia",
+"lat": 41.8921,
+"latin": "Regia",
+"location": "Via Sacra, at the south-east edge of the Forum",
+"lon": 12.4873,
+"precision": "exact",
+"regio": 8,
+"sources": [
+"Livy 26.27.14",
+"Dio 48.42.4",
+"Platner-Ashby s.v. Regia"
+],
+"type": "shrine"
+},
+{
+"built": {
+"by": "vow of Camillus after the Licinian-Sextian laws (Plut. Cam. 42; Ovid Fasti 1.641-644)",
+"certainty": "probable",
+"year": -367
+},
+"english": "Temple of Concord (at the Forum)",
+"events": [
+{
+"what": "aedicula Concordiae of the aedile Cn. Flavius (Livy 9.46.6)",
+"year": -304
+},
+{
+"what": "rebuilt by L. Opimius after the killing of C. Gracchus (Plut. C. Gracchus 17; App. BC 1.26)",
+"year": -121
+}
+],
+"id": "aedes_concordiae_forum",
+"lat": 41.8922,
+"latin": "Aedes Concordiae",
+"location": "west end of the Forum below the Capitol, above the Comitium",
+"lon": 12.4834,
+"precision": "exact",
+"regio": 8,
+"sources": [
+"Plut. Cam. 42",
+"Livy 9.46.6",
+"Plut. C. Gracchus 17",
+"Platner-Ashby s.v. Concordia, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "decreed 42 BC; dedicated by Octavian 18 Aug 29 BC (Dio 47.18.3-4, 51.22.2)",
+"certainty": "certain",
+"year": -29
+},
+"english": "Temple of the Deified Julius",
+"form": "hexastyle temple with a rostra for speakers; decorated with ships' beaks of Actium",
+"id": "aedes_divi_iulii",
+"lat": 41.8921,
+"latin": "Aedes Divi Iulii",
+"location": "east end of the Forum, where Caesar's body was cremated 44 BC",
+"lon": 12.4868,
+"precision": "exact",
+"regio": 8,
+"sources": [
+"Dio 47.18.3-4",
+"Dio 51.22.2",
+"Platner-Ashby s.v. Divus Iulius, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "Numa Pompilius; doors open in war, closed in peace (Livy 1.19.2-3)",
+"certainty": "traditional",
+"year": null
+},
+"english": "Shrine of Janus (Janus Geminus)",
+"events": [
+{
+"what": "closed after the First Punic War (Livy 1.19.3)",
+"year": -235
+},
+{
+"what": "closed by Augustus (Res Gestae 13)",
+"year": -29
+}
+],
+"id": "ianus_geminus",
+"lat": 41.8934,
+"latin": "Ianus Geminus",
+"location": "near the Curia, by the Argiletum",
+"lon": 12.4857,
+"precision": "approx",
+"regio": 8,
+"sources": [
+"Livy 1.19.2-3",
+"Res Gestae 13",
+"Platner-Ashby s.v. Ianus Geminus"
+],
+"type": "shrine"
+},
+{
+"built": {
+"by": "M. Curtius leaps into the chasm (Livy 7.6)",
+"certainty": "traditional",
+"year": -362
+},
+"english": "Lacus Curtius",
+"id": "lacus_curtius",
+"lat": 41.8921,
+"latin": "Lacus Curtius",
+"location": "middle of the Forum",
+"lon": 12.4854,
+"precision": "exact",
+"regio": 8,
+"sources": [
+"Livy 7.6",
+"Varro LL 5.148-150",
+"Platner-Ashby s.v. Lacus Curtius"
+],
+"type": "monument"
+},
+{
+"built": {
+"by": "early; water where Castor and Pollux watered horses after Lake Regillus (Dion. Hal. 6.13)",
+"certainty": "uncertain",
+"year": null
+},
+"english": "Spring and shrine of Juturna",
+"id": "lacus_iuturnae",
+"lat": 41.8913,
+"latin": "Lacus Iuturnae",
+"location": "by the Temple of Castor",
+"lon": 12.4862,
+"precision": "exact",
+"regio": 8,
+"sources": [
+"Dion. Hal. 6.13",
+"Platner-Ashby s.v. Iuturnae, Lacus"
+],
+"type": "fountain"
+},
+{
+"built": {
+"by": "Ancus Marcius (Livy 1.33.8); Servius Tullius the Tullianum (Varro LL 5.151)",
+"certainty": "traditional",
+"year": null
+},
+"english": "State prison and Tullianum",
+"id": "carcer",
+"lat": 41.8934,
+"latin": "Carcer (Tullianum)",
+"location": "foot of the Capitol, above the Comitium",
+"lon": 12.4841,
+"precision": "exact",
+"regio": 8,
+"sources": [
+"Livy 1.33.8",
+"Sall. Cat. 55",
+"Platner-Ashby s.v. Carcer"
+],
+"type": "prison"
+},
+{
+"built": {
+"by": "Q. Fabius Maximus Allobrogicus after his victory over the Allobroges (Cic. de Orat. 2.267; Cic. Planc. 17)",
+"certainty": "probable",
+"year": -121
+},
+"english": "Arch of Fabius",
+"id": "fornix_fabianus",
+"lat": 41.8921,
+"latin": "Fornix Fabianus",
+"location": "Via Sacra, east end of the Forum",
+"lon": 12.487,
+"precision": "approx",
+"regio": 8,
+"sources": [
+"Cic. de Orat. 2.267",
+"Platner-Ashby s.v. Fornix Fabianus"
+],
+"type": "arch"
+},
+{
+"built": {
+"by": "C. Duilius after the naval victory at Mylae (Pliny NH 34.20; Quint. 1.7.12)",
+"certainty": "certain",
+"year": -260
+},
+"english": "Column of Duilius",
+"id": "columna_rostrata_duilii",
+"lat": 41.8927,
+"latin": "Columna Rostrata C. Duilii",
+"location": "Forum, near the Rostra",
+"lon": 12.4844,
+"precision": "rough",
+"regio": 8,
+"sources": [
+"Pliny NH 34.20",
+"Platner-Ashby s.v. Columna Rostrata"
+],
+"type": "monument"
+},
+{
+"built": {
+"by": "Q. Lutatius Catulus as consul 78 (CIL VI 1313 inscription)",
+"certainty": "certain",
+"year": -78
+},
+"english": "Tabularium (state archive)",
+"form": "huge substructure of Gabine stone (lapis gabinus) with arcade facing the Forum",
+"id": "tabularium",
+"lat": 41.8929,
+"latin": "Tabularium",
+"location": "Capitol, between the two summits, facing the Forum",
+"lon": 12.4838,
+"materials": [
+"tufa (Gabii)",
+"peperino"
+],
+"precision": "exact",
+"regio": 8,
+"sources": [
+"CIL VI 1313",
+"Platner-Ashby s.v. Tabularium"
+],
+"type": "archive"
+},
+{
+"built": {
+"by": "existed by 214 (Livy 24.18.? census records); rebuilt 169 by Ti. Sempronius Gracchus and C. Claudius Pulcher as censors (Livy 43.16.13); rebuilt by Asinius Pollio 39 BC (Suet. Aug. 29)",
+"certainty": "probable",
+"year": null
+},
+"english": "Atrium Libertatis",
+"id": "atrium_libertatis",
+"lat": 41.8947,
+"latin": "Atrium Libertatis",
+"location": "Capitol slope above the Forum of Caesar / Forum of Augustus",
+"lon": 12.4852,
+"precision": "rough",
+"regio": 8,
+"sources": [
+"Livy 43.16.13",
+"Suet. Aug. 29",
+"Platner-Ashby s.v. Atrium Libertatis"
+],
+"type": "archive"
+},
+{
+"built": {
+"by": "early; route of triumphs",
+"certainty": "traditional",
+"year": null
+},
+"english": "Sacred Way",
+"id": "via_sacra",
+"lat": 41.8921,
+"latin": "Via Sacra",
+"location": "from the Velia and Regia through the Forum to the Capitol",
+"lon": 12.4862,
+"precision": "exact",
+"regio": 8,
+"sources": [
+"Platner-Ashby s.v. Sacra Via"
+],
+"type": "road"
+},
+{
+"built": {
+"by": "Tarquinius Priscus (Livy 1.38.6; Dion. Hal. 3.67); Tarquinius Superbus (Livy 1.56.2)",
+"certainty": "traditional",
+"year": -600
+},
+"english": "Great Sewer",
+"events": [
+{
+"what": "Cato and Flaccus as censors contract to build covered sewers (Livy 39.44.5)",
+"year": -184
+},
+{
+"what": "cleaned by Agrippa, who sailed through it (Dio 49.43.1; Pliny NH 36.104)",
+"year": -33
+}
+],
+"form": "originally an open drain, then a vaulted channel of cappellaccio, later Gabine tufa; about 3 m wide",
+"id": "cloaca_maxima",
+"lat": 41.8922,
+"latin": "Cloaca Maxima",
+"location": "from the Forum (below the Basilica Aemilia) through the Velabrum to the Tiber near the Pons Aemilius",
+"lon": 12.4838,
+"precision": "approx",
+"regio": 8,
+"route": [
+[
+41.8924,
+12.485
+],
+[
+41.8919,
+12.4832
+],
+[
+41.8912,
+12.4808
+],
+[
+41.8896,
+12.4797
+],
+[
+41.889,
+12.4786
+]
+],
+"sources": [
+"Livy 1.38.6",
+"Livy 39.44.5",
+"Pliny NH 36.104",
+"Platner-Ashby s.v. Cloaca Maxima"
+],
+"type": "sewer"
+},
+{
+"built": {
+"by": "Etruscan settlers (Livy 2.14.9)",
+"certainty": "traditional",
+"year": null
+},
+"english": "Tuscan Street",
+"id": "vicus_tuscus",
+"lat": 41.8912,
+"latin": "Vicus Tuscus",
+"location": "from the Forum along the Temple of Castor to the Velabrum",
+"lon": 12.4845,
+"precision": "approx",
+"regio": 8,
+"sources": [
+"Livy 2.14.9",
+"Platner-Ashby s.v. Vicus Tuscus"
+],
+"type": "road"
+},
+{
+"built": {
+"by": "early market by the river port",
+"certainty": "traditional",
+"year": null
+},
+"english": "Cattle Market",
+"id": "forum_boarium",
+"lat": 41.8886,
+"latin": "Forum Boarium",
+"location": "between the Capitol, Palatine, Aventine and the Tiber, near the Pons Sublicius",
+"lon": 12.4813,
+"precision": "approx",
+"regio": 11,
+"sources": [
+"Platner-Ashby s.v. Forum Boarium"
+],
+"type": "market"
+},
+{
+"built": {
+"by": "Evander, according to tradition (Livy 1.7.3-15)",
+"certainty": "traditional",
+"year": null
+},
+"english": "Great Altar of Hercules",
+"events": [
+{
+"what": "cult given to public slaves after Appius Claudius' reform (Livy 9.29.9-11)",
+"year": -312
+}
+],
+"id": "ara_maxima_herculis",
+"lat": 41.8887,
+"latin": "Ara Maxima Herculis",
+"location": "Forum Boarium, near the Circus Maximus end; under S. Maria in Cosmedin",
+"lon": 12.4825,
+"precision": "approx",
+"regio": 11,
+"sources": [
+"Livy 1.7.3-15",
+"Livy 9.29.9-11",
+"Platner-Ashby s.v. Ara Maxima Herculis"
+],
+"type": "altar"
+},
+{
+"built": {
+"by": "Servius Tullius (Livy 5.19.6; Dion. Hal. 4.27)",
+"certainty": "probable",
+"year": null
+},
+"english": "Temples of Fortuna and Mater Matuta",
+"events": [
+{
+"what": "temple of Mater Matuta dedicated or restored by Camillus after Veii (Livy 5.19.6, 5.23.7)",
+"year": -396
+},
+{
+"what": "fire consumes the temples (Livy 24.47.15)",
+"year": -213
+}
+],
+"id": "aedes_fortunae_matris_matutae",
+"lat": 41.8896,
+"latin": "Aedes Fortunae et Matris Matutae (Sant'Omobono)",
+"location": "Forum Boarium, Sant'Omobono precinct",
+"lon": 12.481,
+"precision": "exact",
+"regio": 11,
+"sources": [
+"Livy 5.19.6",
+"Livy 24.47.15",
+"Dion. Hal. 4.27",
+"Platner-Ashby s.v. Fortuna, Aedes; Mater Matuta"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "L. Mummius Achaicus (146) or the banker M. Octavius Herennius; Hermodorus of Salamis the architect",
+"certainty": "probable",
+"year": -120
+},
+"english": "Round Temple in the Forum Boarium (Hercules Victor)",
+"form": "circular temple, 20 Corinthian columns, Greek marble, earliest marble temple in Rome (c. 120 BC)",
+"id": "aedes_herculis_victoris",
+"lat": 41.8884,
+"latin": "Aedes Herculis Victoris (Hercules Olivarius)",
+"location": "Forum Boarium, by the Tiber",
+"lon": 12.4812,
+"materials": [
+"Pentelic marble",
+"tufa"
+],
+"precision": "exact",
+"regio": 11,
+"sources": [
+"Platner-Ashby s.v. Hercules Victor, Aedes",
+"Vitr. 3.2.5 (Hermodorus of Salamis)"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "earlier cult of Portunus, god of the harbour; extant rectangular tetrastyle Ionic temple c. 120-80 BC (Varro LL 6.19)",
+"certainty": "probable",
+"year": -120
+},
+"english": "Temple of Portunus",
+"id": "aedes_portuni",
+"lat": 41.8887,
+"latin": "Aedes Portuni",
+"location": "Forum Boarium, by the Tiber beside the round temple",
+"lon": 12.4808,
+"materials": [
+"tufa",
+"travertine"
+],
+"precision": "exact",
+"regio": 11,
+"sources": [
+"Varro LL 6.19",
+"Platner-Ashby s.v. Portunus, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "with the Servian Wall; triple gate (Livy 4.16.2)",
+"certainty": "certain",
+"year": -378
+},
+"english": "Porta Trigemina",
+"id": "porta_trigemina",
+"lat": 41.888,
+"latin": "Porta Trigemina",
+"location": "Servian Wall, between the Capitol/Forum Boarium and the Tiber",
+"lon": 12.4793,
+"precision": "rough",
+"regio": 11,
+"sources": [
+"Livy 4.16.2",
+"Livy 35.10.12",
+"Platner-Ashby s.v. Porta Trigemina"
+],
+"type": "gate"
+},
+{
+"built": {
+"by": "early market (Livy 21.62.3)",
+"certainty": "traditional",
+"year": null
+},
+"english": "Vegetable Market",
+"id": "forum_holitorium",
+"lat": 41.8922,
+"latin": "Forum Holitorium",
+"location": "below the south slope of the Capitol by the Tiber; later under the Theatre of Marcellus",
+"lon": 12.4782,
+"precision": "approx",
+"regio": 9,
+"sources": [
+"Livy 21.62.3",
+"Platner-Ashby s.v. Forum Holitorium"
+],
+"type": "market"
+},
+{
+"built": {
+"by": "C. Duilius, consul 260 (Tac. Ann. 2.49)",
+"certainty": "probable",
+"year": -260
+},
+"english": "Temple of Janus (Forum Holitorium)",
+"id": "aedes_ianus_holitorium",
+"lat": 41.8921,
+"latin": "Aedes Iani",
+"location": "Forum Holitorium, next to Spes and Juno Sospita",
+"lon": 12.4784,
+"precision": "approx",
+"regio": 9,
+"sources": [
+"Tac. Ann. 2.49",
+"Platner-Ashby s.v. Ianus, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "A. Atilius Calatinus in the First Punic War (Tac. Ann. 2.49; Cic. Leg. 2.28)",
+"certainty": "probable",
+"year": -254
+},
+"english": "Temple of Hope",
+"events": [
+{
+"what": "burned (Livy 21.62.4; 24.47.15)",
+"year": -213
+}
+],
+"id": "aedes_spei",
+"lat": 41.8919,
+"latin": "Aedes Spei",
+"location": "Forum Holitorium, by the Tiber",
+"lon": 12.4786,
+"precision": "approx",
+"regio": 9,
+"sources": [
+"Tac. Ann. 2.49",
+"Livy 21.62.4",
+"Platner-Ashby s.v. Spes, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "vowed by C. Cornelius Cethegus 197 against the Insubres; dedicated 194 (Livy 32.30.10, 34.53.3)",
+"certainty": "certain",
+"year": -194
+},
+"english": "Temple of Juno Sospita",
+"id": "aedes_iunonis_sospitae",
+"lat": 41.8917,
+"latin": "Aedes Iunonis Sospitae",
+"location": "Forum Holitorium",
+"lon": 12.4788,
+"precision": "approx",
+"regio": 9,
+"sources": [
+"Livy 32.30.10",
+"Livy 34.53.3",
+"Platner-Ashby s.v. Iuno Sospita"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "vowed by M'. Acilius Glabrio 191 at Thermopylae; dedicated 181 by his son (Livy 40.34.4-5)",
+"certainty": "certain",
+"year": -181
+},
+"english": "Temple of Pietas",
+"id": "aedes_pietatis",
+"lat": 41.8918,
+"latin": "Aedes Pietatis",
+"location": "Forum Holitorium",
+"lon": 12.478,
+"precision": "approx",
+"regio": 9,
+"sources": [
+"Livy 40.34.4",
+"Platner-Ashby s.v. Pietas, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "vowed 433 during a plague; dedicated 431 by the consul Cn. Iulius (Livy 4.25.3, 4.29.7)",
+"certainty": "certain",
+"year": -431
+},
+"english": "Temple of Apollo (Medicus, later Sosianus)",
+"events": [
+{
+"what": "rebuilt by C. Sosius (triumphed 34) in marble, with the Greek pedimental sculptures (Pliny NH 13.53, 36.28)",
+"year": -34
+}
+],
+"id": "aedes_apollinis_medici",
+"lat": 41.8918,
+"latin": "Aedes Apollinis (Medici)",
+"location": "Prata Flaminia, by the Theatre of Marcellus",
+"lon": 12.4775,
+"precision": "exact",
+"regio": 9,
+"sources": [
+"Livy 4.25.3",
+"Livy 4.29.7",
+"Pliny NH 36.28",
+"Platner-Ashby s.v. Apollo, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "vowed by Ap. Claudius Caecus in battle against the Etruscans and Samnites, 296 (Livy 10.19.17-21)",
+"certainty": "certain",
+"year": -296
+},
+"english": "Temple of Bellona",
+"id": "aedes_bellonae",
+"lat": 41.8915,
+"latin": "Aedes Bellonae",
+"location": "Prata Flaminia, next to the Theatre of Marcellus; Senate met here for foreign envoys and generals awaiting triumph",
+"lon": 12.477,
+"precision": "approx",
+"regio": 9,
+"sources": [
+"Livy 10.19.17-21",
+"Platner-Ashby s.v. Bellona, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "by Cn. Domitius Ahenobarbus, consul 32 BC (Pliny NH 36.26 on Scopas group; Platner-Ashby)",
+"certainty": "uncertain",
+"year": null
+},
+"english": "Temple of Neptune (Circus Flaminius)",
+"id": "aedes_neptuni_flaminium",
+"lat": 41.8912,
+"latin": "Aedes Neptuni in Circo Flaminio",
+"location": "Campus Martius, near the Circus Flaminius",
+"lon": 12.4765,
+"precision": "rough",
+"regio": 9,
+"sources": [
+"Pliny NH 36.26",
+"Platner-Ashby s.v. Neptunus, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "Q. Caecilius Metellus Macedonicus after his triumph over Macedonia (Vell. 1.11.2-5; Pliny NH 36.? 34.64)",
+"certainty": "certain",
+"year": -146
+},
+"english": "Portico of Octavia (replacing the Portico of Metellus)",
+"events": [
+{
+"what": "rebuilt by Augustus (Octavian) with the spoils of Dalmatia and named for his sister Octavia (Res Gestae 19; Suet. Aug. 29; Dio 49.43.8)",
+"year": -33
+}
+],
+"form": "Portico of Metellus enclosed two temples, of Jupiter Stator (first marble temple in Rome, by Hermodorus of Salamis) and of Juno Regina",
+"id": "porticus_octaviae",
+"lat": 41.8923,
+"latin": "Porticus Octaviae (Porticus Metelli)",
+"location": "Campus Martius, between the Theatre of Marcellus and the Circus Flaminius",
+"lon": 12.4791,
+"precision": "exact",
+"regio": 9,
+"sources": [
+"Vell. Pat. 1.11.2-5",
+"Res Gestae 19",
+"Suet. Aug. 29",
+"Platner-Ashby s.v. Porticus Octaviae; Porticus Metelli"
+],
+"type": "portico"
+},
+{
+"built": {
+"by": "Q. Caecilius Metellus Macedonicus; marble, architect Hermodorus of Salamis (Vell. 1.11.3-5)",
+"certainty": "probable",
+"year": -146
+},
+"english": "Temple of Jupiter Stator (Metellus)",
+"id": "aedes_iovis_statoris_metelli",
+"lat": 41.8923,
+"latin": "Aedes Iovis Statoris (Metelli)",
+"location": "inside the Porticus Metelli",
+"lon": 12.4793,
+"precision": "approx",
+"regio": 9,
+"sources": [
+"Vell. Pat. 1.11.3-5",
+"Platner-Ashby s.v. Iuppiter Stator, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "vowed by M. Aemilius Lepidus 187 against the Ligurians, dedicated 179 (Livy 39.2.11, 40.52.1-2)",
+"certainty": "certain",
+"year": -179
+},
+"english": "Temple of Juno Regina (Circus Flaminius)",
+"id": "aedes_iunonis_reginae_circus",
+"lat": 41.8924,
+"latin": "Aedes Iunonis Reginae (Circo Flaminio)",
+"location": "in the Porticus Metelli / Octavia",
+"lon": 12.4789,
+"precision": "approx",
+"regio": 9,
+"sources": [
+"Livy 39.2.11",
+"Livy 40.52.1",
+"Platner-Ashby s.v. Iuno Regina, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "M. Fulvius Nobilior dedicated the Aedes Herculis Musarum; Livy 40.52.? Dianae by M. Aemilius Lepidus - doubtful",
+"certainty": "probable",
+"year": -179
+},
+"english": "Temple of Diana (Circus Flaminius)",
+"id": "aedes_dianae_circus_flaminius",
+"lat": 41.891,
+"latin": "Aedes Dianae (Circo Flaminio)",
+"location": "Circus Flaminius",
+"lon": 12.4762,
+"notes": "Livy 40.52.1 names Aemilius Lepidus dedicating Diana and Juno Regina in the Circus Flaminius in 179; I list it here at low certainty.",
+"precision": "rough",
+"regio": 9,
+"sources": [
+"Livy 40.52.1",
+"Platner-Ashby s.v. Diana, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "vowed by L. Aemilius Regillus 190 at Myonnesus; dedicated 179 (Livy 40.52.5-6)",
+"certainty": "certain",
+"year": -179
+},
+"english": "Temple of the Lares of the Sea",
+"id": "lares_permarini",
+"lat": 41.8916,
+"latin": "Aedes Larum Permarinum",
+"location": "Campus Martius, near the Porticus Minucia",
+"lon": 12.4768,
+"precision": "rough",
+"regio": 9,
+"sources": [
+"Livy 40.52.5",
+"Platner-Ashby s.v. Lares Permarini"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "C. Flaminius as censor 220 (Livy Per. 20; Livy 3.54.15 for the earlier place)",
+"certainty": "certain",
+"year": -221
+},
+"english": "Circus Flaminius",
+"form": "more a meeting ground than a track; the Plebeian Games were later held here (Livy 23.30.17 the first temples)",
+"id": "circus_flaminius",
+"lat": 41.8913,
+"latin": "Circus Flaminius",
+"location": "Campus Martius, south, between Capitol and Tiber; used for the Plebeian Games and assemblies",
+"lon": 12.4776,
+"precision": "approx",
+"regio": 9,
+"sources": [
+"Livy Per. 20",
+"Livy 3.54.15",
+"Platner-Ashby s.v. Circus Flaminius"
+],
+"type": "circus"
+},
+{
+"built": {
+"by": "L. Minucius Rufus, consul 110, after his Thracian war (Vell. 2.8.3)",
+"certainty": "probable",
+"year": -107
+},
+"english": "Old Portico of Minucius",
+"id": "porticus_minucia_vetus",
+"lat": 41.8955,
+"latin": "Porticus Minucia Vetus",
+"location": "Campus Martius, near the Largo Argentina",
+"lon": 12.4775,
+"precision": "approx",
+"regio": 9,
+"sources": [
+"Vell. Pat. 2.8.3",
+"Platner-Ashby s.v. Porticus Minucia Vetus"
+],
+"type": "portico"
+},
+{
+"built": {
+"by": "vowed by the aediles C. Scribonius Curio and Cn. Domitius 196; dedicated 194 (Livy 33.42.10, 34.53.4)",
+"certainty": "certain",
+"year": -194
+},
+"english": "Temple of Faunus",
+"id": "aedes_faunus",
+"lat": 41.8908,
+"latin": "Aedes Fauni",
+"location": "Tiber Island",
+"lon": 12.4779,
+"precision": "approx",
+"regio": 14,
+"sources": [
+"Livy 33.42.10",
+"Livy 34.53.4",
+"Platner-Ashby s.v. Faunus, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "Sibylline decree 293 after plague; envoys fetch the snake from Epidaurus 292; vowed by Q. Fabius Gurges, temple traditionally dedicated 291 (Livy Per. 11; Ovid Met. 15.622-744; Val. Max. 1.8.2). Traditional dedication date 1 January 289/291 uncertain.",
+"certainty": "probable",
+"year": -291
+},
+"english": "Temple of Aesculapius",
+"id": "aedes_aesculapii",
+"lat": 41.8905,
+"latin": "Aedes Aesculapii",
+"location": "Tiber Island (modern S. Giovanni Calibita and Fatebenefratelli hospital)",
+"lon": 12.4775,
+"precision": "approx",
+"regio": 14,
+"sources": [
+"Livy Per. 11",
+"Livy 10.47.6-7",
+"Ovid Met. 15.622",
+"Platner-Ashby s.v. Aesculapius, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "legend of the island formed from the harvest of the Tarquins thrown into the river (Livy 2.5.2-4); shaped as a ship in travertine in the 1st c. BC",
+"certainty": "traditional",
+"year": null
+},
+"english": "Tiber Island",
+"id": "insula_tiberina",
+"lat": 41.89,
+"latin": "Insula Tiberina",
+"location": "in the Tiber between the Forum Holitorium and Trastevere",
+"lon": 12.4775,
+"precision": "exact",
+"regio": 14,
+"sources": [
+"Livy 2.5.2-4",
+"Platner-Ashby s.v. Insula Tiberina"
+],
+"type": "island"
+},
+{
+"built": {
+"by": "stone arrived 204 (Livy 29.10-14); contracted 205; dedicated 10 April 191 by M. Iunius Brutus (Livy 36.36.3-4)",
+"certainty": "certain",
+"year": -191
+},
+"english": "Temple of the Magna Mater (Cybele)",
+"events": [
+{
+"what": "burned and rebuilt by Q. Caecilius Metellus (Val. Max. 1.8.11)",
+"year": -111
+}
+],
+"id": "aedes_magnae_matris",
+"lat": 41.8895,
+"latin": "Aedes Magnae Matris",
+"location": "Palatine, north-west side, near the Scalae Caci",
+"lon": 12.4851,
+"precision": "exact",
+"regio": 10,
+"sources": [
+"Livy 29.37.2",
+"Livy 36.36.3",
+"Platner-Ashby s.v. Magna Mater, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "L. Postumius Megellus as curule aedile (Livy 10.33.9)",
+"certainty": "certain",
+"year": -294
+},
+"english": "Temple of Victory",
+"id": "aedes_victoriae",
+"lat": 41.8892,
+"latin": "Aedes Victoriae",
+"location": "Palatine, west end by the Clivus Victoriae",
+"lon": 12.4867,
+"precision": "approx",
+"regio": 10,
+"sources": [
+"Livy 10.33.9",
+"Platner-Ashby s.v. Victoria, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "Romulus' vow (Livy 1.12.6); vowed again by M. Atilius Regulus 294 (Livy 10.36.11)",
+"certainty": "traditional",
+"year": -294
+},
+"english": "Temple of Jupiter Stator (Palatine)",
+"id": "aedes_iovis_statoris_palatine",
+"lat": 41.8908,
+"latin": "Aedes Iovis Statoris (Palatine)",
+"location": "Palatine, near the Porta Mugonia / Via Sacra",
+"lon": 12.4868,
+"precision": "rough",
+"regio": 10,
+"sources": [
+"Livy 1.12.6",
+"Livy 10.36.11",
+"Platner-Ashby s.v. Iuppiter Stator, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "vowed by Octavian 36 after Naulochus; dedicated 9 Oct 28 BC (Dio 49.15.5, 53.1.3; Suet. Aug. 29; Res Gestae 19)",
+"certainty": "certain",
+"year": -28
+},
+"english": "Temple of Apollo on the Palatine",
+"form": "marble temple with porticoes and a library",
+"id": "aedes_apollinis_palatini",
+"lat": 41.8886,
+"latin": "Aedes Apollinis Palatini",
+"location": "Palatine, next to Octavian's house",
+"lon": 12.4872,
+"precision": "exact",
+"regio": 10,
+"sources": [
+"Dio 53.1.3",
+"Suet. Aug. 29",
+"Res Gestae 19",
+"Platner-Ashby s.v. Apollo Palatinus"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "preserved hut said to be Romulus' (Dion. Hal. 1.79; Plut. Romulus 20)",
+"certainty": "traditional",
+"year": null
+},
+"english": "Hut of Romulus",
+"id": "casa_romuli",
+"lat": 41.8887,
+"latin": "Casa Romuli",
+"location": "Palatine, south-west (Germalus)",
+"lon": 12.4856,
+"precision": "approx",
+"regio": 10,
+"sources": [
+"Dion. Hal. 1.79",
+"Plut. Romulus 20",
+"Platner-Ashby s.v. Casa Romuli"
+],
+"type": "shrine"
+},
+{
+"built": {
+"by": "Cicero bought it from M. Licinius Crassus for 3.5 million sesterces in 62 (Cic. Fam. 5.6.2; Plut. Cic. 8; Gell. 12.12.2)",
+"certainty": "certain",
+"year": -62
+},
+"english": "House of Cicero on the Palatine",
+"events": [
+{
+"what": "demolished by Clodius after Cicero's exile; site consecrated to Libertas (Cic. Dom. 100-116; Plut. Cic. 33)",
+"year": -58
+},
+{
+"what": "rebuilt at public expense after Cicero's return (Cic. Att. 4.2.5)",
+"year": -57
+}
+],
+"id": "domus_ciceronis",
+"lat": 41.8908,
+"latin": "Domus M. Tulli Ciceronis",
+"location": "Palatine, north-west corner, overlooking the Forum, near the house of Catulus",
+"lon": 12.486,
+"precision": "rough",
+"regio": 10,
+"sources": [
+"Cic. Fam. 5.6.2",
+"Cic. Dom. 100-116",
+"Plut. Cic. 8",
+"Platner-Ashby s.v. Domus M. Tulli Ciceronis"
+],
+"type": "house"
+},
+{
+"built": {
+"by": "Q. Hortensius Hortalus; acquired by Octavian after the 40s (Suet. Aug. 72; Dio 53.16.5)",
+"certainty": "probable",
+"year": -50
+},
+"english": "House of Hortensius, later of Augustus",
+"id": "domus_hortensii_augusti",
+"lat": 41.8884,
+"latin": "Domus Hortensii (Domus Augusti)",
+"location": "Palatine, south-west, over the Scalae Caci",
+"lon": 12.485,
+"precision": "approx",
+"regio": 10,
+"sources": [
+"Suet. Aug. 72",
+"Platner-Ashby s.v. Domus Augusti"
+],
+"type": "house"
+},
+{
+"built": {
+"by": "Q. Lutatius Catulus built a porticus on the site of Fulvius Flaccus' house from the spoils of the Cimbri (Cic. Dom. 102; Val. Max. 6.3.1)",
+"certainty": "probable",
+"year": -101
+},
+"english": "House of Catulus (with Porticus Catuli)",
+"id": "domus_catuli",
+"lat": 41.8905,
+"latin": "Domus Q. Lutatii Catuli",
+"location": "Palatine, north-west near the Germalus",
+"lon": 12.4858,
+"precision": "rough",
+"regio": 10,
+"sources": [
+"Cic. Dom. 102",
+"Val. Max. 6.3.1",
+"Platner-Ashby s.v. Porticus Catuli"
+],
+"type": "house"
+},
+{
+"built": {
+"by": "Pompey; later passed to Antony (Cic. Phil. 2.68-69)",
+"certainty": "probable",
+"year": -62
+},
+"english": "House of Pompey on the Carinae",
+"id": "domus_pompeii_carinae",
+"lat": 41.8918,
+"latin": "Domus Pompei in Carinis",
+"location": "Carinae, on the Esquiline spur between the Palatine and Esquiline; later of M. Antony",
+"lon": 12.4918,
+"precision": "rough",
+"regio": 3,
+"sources": [
+"Cic. Phil. 2.68",
+"Platner-Ashby s.v. Domus Pompei"
+],
+"type": "house"
+},
+{
+"built": {
+"by": "by the Regia, rebuilt on the Pontifex Maximus' residence; Julius Caesar lived there from 63 as Pontifex Maximus (Suet. Iul. 46)",
+"certainty": "traditional",
+"year": null
+},
+"english": "Official residence of the Pontifex Maximus",
+"id": "domus_publica",
+"lat": 41.8916,
+"latin": "Domus Publica",
+"location": "Via Sacra, near the Regia",
+"lon": 12.4881,
+"precision": "approx",
+"regio": 8,
+"sources": [
+"Suet. Iul. 46",
+"Platner-Ashby s.v. Domus Publica"
+],
+"type": "house"
+},
+{
+"built": {
+"by": "P. Clodius Pulcher, bought for 14.8 million sesterces (Pliny NH 36.103; Cic. Dom.)",
+"certainty": "uncertain",
+"year": null
+},
+"english": "House of Clodius on the Palatine",
+"id": "domus_clodii",
+"lat": 41.8896,
+"latin": "Domus P. Clodii",
+"location": "Palatine",
+"lon": 12.488,
+"precision": "rough",
+"regio": 10,
+"sources": [
+"Pliny NH 36.103",
+"Platner-Ashby s.v. Domus P. Clodii"
+],
+"type": "house"
+},
+{
+"built": {
+"by": "vowed by the dictator A. Postumius 496; dedicated 493 by Sp. Cassius (Dion. Hal. 6.94; Tac. Ann. 2.49; Livy 3.55.13)",
+"certainty": "certain",
+"year": -493
+},
+"english": "Temple of Ceres, Liber and Libera",
+"events": [
+{
+"what": "burned (Dio 50.10.3); rebuilt by Augustus, dedicated by Tiberius AD 17 (Tac. Ann. 2.49)",
+"year": -31
+}
+],
+"form": "Greek-style temple, decorated by Damophilos and Gorgasos (Pliny NH 35.154)",
+"id": "aedes_cereris_liberi_liberae",
+"lat": 41.887,
+"latin": "Aedes Cereris, Liberi, Liberaeque",
+"location": "foot of the Aventine, by the Circus Maximus; the plebeian cult centre and archive",
+"lon": 12.4805,
+"precision": "approx",
+"regio": 11,
+"sources": [
+"Dion. Hal. 6.94",
+"Tac. Ann. 2.49",
+"Livy 3.55.13",
+"Platner-Ashby s.v. Ceres, Liber, Libera, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "dedicated 15 May 495 by M. Laetorius, a centurion (Livy 2.21.7)",
+"certainty": "certain",
+"year": -495
+},
+"english": "Temple of Mercury",
+"id": "aedes_mercurii",
+"lat": 41.8859,
+"latin": "Aedes Mercurii",
+"location": "between the Aventine and the Circus Maximus",
+"lon": 12.4836,
+"precision": "approx",
+"regio": 11,
+"sources": [
+"Livy 2.21.7",
+"Platner-Ashby s.v. Mercurius, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "vowed by M. Furius Camillus at Veii 396; dedicated 392 (Livy 5.21.3, 5.22.7, 5.23.7, 5.31.3)",
+"certainty": "certain",
+"year": -392
+},
+"english": "Temple of Juno Regina on the Aventine",
+"id": "aedes_iunonis_reginae_aventine",
+"lat": 41.8835,
+"latin": "Aedes Iunonis Reginae (Aventinus)",
+"location": "Aventine, perhaps near S. Alessio / Priscilla",
+"lon": 12.4825,
+"precision": "rough",
+"regio": 13,
+"sources": [
+"Livy 5.21.3",
+"Livy 5.23.7",
+"Livy 5.31.3",
+"Platner-Ashby s.v. Iuno Regina, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "Servius Tullius, federal sanctuary of the Latin League (Livy 1.45; Dion. Hal. 4.26)",
+"certainty": "traditional",
+"year": null
+},
+"english": "Temple of Diana on the Aventine",
+"id": "aedes_dianae_aventina",
+"lat": 41.8824,
+"latin": "Aedes Dianae (Aventinus)",
+"location": "Aventine, at S. Prisca / S. Sabina",
+"lon": 12.4825,
+"precision": "rough",
+"regio": 13,
+"sources": [
+"Livy 1.45",
+"Dion. Hal. 4.26",
+"Platner-Ashby s.v. Diana, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "Ti. Sempronius Gracchus father, from fines (Livy 24.16.19; Festus)",
+"certainty": "probable",
+"year": -238
+},
+"english": "Temple of Libertas on the Aventine",
+"id": "aedes_libertatis_aventine",
+"lat": 41.884,
+"latin": "Aedes Libertatis",
+"location": "Aventine",
+"lon": 12.483,
+"precision": "rough",
+"regio": 13,
+"sources": [
+"Livy 24.16.19",
+"Platner-Ashby s.v. Libertas, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "Q. Fabius Gurges, aedile, from fines on matrons convicted of adultery (Livy 10.31.9)",
+"certainty": "certain",
+"year": -295
+},
+"english": "Temple of Venus Obsequens",
+"id": "aedes_veneris_obsequentis",
+"lat": 41.8868,
+"latin": "Aedes Veneris Obsequentis",
+"location": "by the Circus Maximus, at the foot of the Aventine",
+"lon": 12.4838,
+"precision": "rough",
+"regio": 11,
+"sources": [
+"Livy 10.31.9",
+"Platner-Ashby s.v. Venus Obsequens"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "vowed by M. Livius Salinator 207 at the Metaurus; dedicated 191 (Livy 36.36.5-6)",
+"certainty": "certain",
+"year": -191
+},
+"english": "Temple of Juventas",
+"id": "aedes_iuventatis",
+"lat": 41.8862,
+"latin": "Aedes Iuventatis",
+"location": "Circus Maximus, near the Carceres",
+"lon": 12.4842,
+"precision": "rough",
+"regio": 11,
+"sources": [
+"Livy 36.36.5",
+"Platner-Ashby s.v. Iuventas, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "Tarquinius Priscus laid out seats (Livy 1.35.8-9)",
+"certainty": "traditional",
+"year": -600
+},
+"english": "Circus Maximus",
+"events": [
+{
+"what": "starting gates (carceres) built (Livy 8.20.2)",
+"year": -329
+},
+{
+"what": "censors Fulvius Flaccus and Postumius Albinus improve it (Livy 41.27.6)",
+"year": -174
+},
+{
+"what": "enlarged by Caesar, with a euripus canal and seats for 150,000 (Pliny NH 36.102, Suet. Iul. 39)",
+"year": -46
+}
+],
+"form": "about 600 m long, 140 m wide; wood seats until Caesar's masonry on the long sides (partial)",
+"id": "circus_maximus",
+"lat": 41.8861,
+"latin": "Circus Maximus",
+"location": "valley between the Palatine and the Aventine",
+"lon": 12.4851,
+"precision": "exact",
+"regio": 11,
+"sources": [
+"Livy 1.35.8",
+"Livy 8.20.2",
+"Livy 41.27.6",
+"Suet. Iul. 39",
+"Platner-Ashby s.v. Circus Maximus"
+],
+"type": "circus"
+},
+{
+"built": {
+"by": "C. Sempronius Gracchus, tribune, with the grain law (Plut. C. Gracchus 6)",
+"certainty": "probable",
+"year": -123
+},
+"english": "Sempronian granaries",
+"id": "horrea_sempronia",
+"lat": 41.883,
+"latin": "Horrea Sempronia",
+"location": "by the Aventine near the Tiber",
+"lon": 12.478,
+"precision": "rough",
+"regio": 13,
+"sources": [
+"Plut. C. Gracchus 6",
+"Platner-Ashby s.v. Horrea Sempronia"
+],
+"type": "horrea"
+},
+{
+"built": {
+"by": "a Sulpicius Galba of the later Republic (Platner-Ashby s.v. Horrea Galbae)",
+"certainty": "probable",
+"year": -50
+},
+"english": "Horrea Galbae",
+"id": "horrea_galbae",
+"lat": 41.8795,
+"latin": "Horrea Galbae",
+"location": "between the Aventine and the emporium, at the Via Marmorata",
+"lon": 12.479,
+"precision": "approx",
+"regio": 13,
+"sources": [
+"Platner-Ashby s.v. Horrea Galbae"
+],
+"type": "horrea"
+},
+{
+"built": {
+"by": "M. Aemilius Lepidus and L. Aemilius Paullus, aediles (Livy 35.10.12)",
+"certainty": "certain",
+"year": -193
+},
+"english": "Emporium (river port)",
+"events": [
+{
+"what": "banks paved with stone steps (Livy 41.27.8)",
+"year": -174
+}
+],
+"id": "emporium",
+"lat": 41.8795,
+"latin": "Emporium",
+"location": "Tiber bank below the Aventine (modern Testaccio)",
+"lon": 12.4765,
+"precision": "approx",
+"regio": 13,
+"sources": [
+"Livy 35.10.12",
+"Livy 41.27.8",
+"Platner-Ashby s.v. Emporium"
+],
+"type": "port"
+},
+{
+"built": {
+"by": "M. Aemilius Lepidus and L. Aemilius Paullus (Livy 35.10.12); rebuilt 174 (Livy 41.27.8)",
+"certainty": "certain",
+"year": -193
+},
+"english": "Porticus Aemilia (warehouse hall)",
+"form": "long hall about 487 x 60 m with 50 aisles roofed with concrete barrel vaults, one of the first big concrete buildings; opus caementicium",
+"id": "porticus_aemilia",
+"lat": 41.8788,
+"latin": "Porticus Aemilia",
+"location": "Emporium, Testaccio, along the Tiber",
+"lon": 12.4772,
+"materials": [
+"concrete",
+"tufa"
+],
+"precision": "exact",
+"regio": 13,
+"sources": [
+"Livy 35.10.12",
+"Livy 41.27.8",
+"Platner-Ashby s.v. Porticus Aemilia"
+],
+"type": "horrea"
+},
+{
+"built": {
+"by": "Republican dockyard in the Campus Martius; date of foundation unknown (Platner-Ashby)",
+"certainty": "uncertain",
+"year": null
+},
+"english": "Naval dockyards",
+"id": "navalia",
+"lat": 41.901,
+"latin": "Navalia",
+"location": "Campus Martius, on the Tiber bank north of the Circus Flaminius (the exact site is uncertain)",
+"lon": 12.471,
+"precision": "rough",
+"regio": 9,
+"sources": [
+"Platner-Ashby s.v. Navalia"
+],
+"type": "port"
+},
+{
+"built": {
+"by": "land of the Tarquins confiscated and consecrated to Mars (Livy 2.5.2)",
+"certainty": "traditional",
+"year": -509
+},
+"english": "Campus Martius",
+"id": "campus_martius",
+"lat": 41.9,
+"latin": "Campus Martius",
+"location": "Tiber floodplain north of the Capitol, in the river bend",
+"lon": 12.47,
+"precision": "rough",
+"regio": 9,
+"sources": [
+"Livy 2.5.2",
+"Platner-Ashby s.v. Campus Martius"
+],
+"type": "field"
+},
+{
+"built": {
+"by": "site of the census muster (Livy 1.44.1)",
+"certainty": "traditional",
+"year": null
+},
+"english": "Altar of Mars",
+"id": "ara_martis",
+"lat": 41.9005,
+"latin": "Ara Martis",
+"location": "Campus Martius",
+"lon": 12.472,
+"precision": "rough",
+"regio": 9,
+"sources": [
+"Livy 1.44.1",
+"Platner-Ashby s.v. Ara Martis"
+],
+"type": "altar"
+},
+{
+"built": {
+"by": "built for the census; first used by the censors (Livy 4.22.7)",
+"certainty": "certain",
+"year": -435
+},
+"english": "Villa Publica",
+"id": "villa_publica",
+"lat": 41.8985,
+"latin": "Villa Publica",
+"location": "Campus Martius, west of the Via Lata",
+"lon": 12.4755,
+"precision": "rough",
+"regio": 9,
+"sources": [
+"Livy 4.22.7",
+"Platner-Ashby s.v. Villa Publica"
+],
+"type": "public_building"
+},
+{
+"built": {
+"by": "an early altar-temple; a later temple of Mars by D. Iunius Brutus Callaicus c. 138 BC (Cic. Arch. 27; Val. Max.8.14.2)",
+"certainty": "uncertain",
+"year": null
+},
+"english": "Temple of Mars (Campus Martius)",
+"id": "aedes_martis_campus",
+"lat": 41.8985,
+"latin": "Aedes Martis in Campo",
+"location": "Campus Martius",
+"lon": 12.474,
+"precision": "rough",
+"regio": 9,
+"sources": [
+"Cic. Arch. 27",
+"Platner-Ashby s.v. Mars, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "M. Fulvius Nobilior from his Ambracian spoils, after the Aetolian war 187 (Cic. Arch. 27; Pliny NH 35.66)",
+"certainty": "probable",
+"year": -187
+},
+"english": "Temple of Hercules of the Muses",
+"id": "aedes_herculis_musarum",
+"lat": 41.896,
+"latin": "Aedes Herculis Musarum",
+"location": "Campus Martius, near the Circus Flaminius",
+"lon": 12.4752,
+"precision": "rough",
+"regio": 9,
+"sources": [
+"Cic. Arch. 27",
+"Pliny NH 35.66",
+"Platner-Ashby s.v. Hercules Musarum, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "attributed to Q. Lutatius Catulus (consul 241), Falerii; identification with Juno Curritis is modern, uncertain",
+"certainty": "uncertain",
+"year": -241
+},
+"english": "Temple A, Largo Argentina (probably Juno Curritis)",
+"id": "area_sacra_argentina_a",
+"lat": 41.896,
+"latin": "Aedes (Area Sacra di Largo Argentina A)",
+"location": "Campus Martius, Largo di Torre Argentina",
+"lon": 12.4769,
+"materials": [
+"tufa",
+"travertine"
+],
+"precision": "exact",
+"regio": 9,
+"sources": [
+"Platner-Ashby s.v. Iuno Curritis (uncertain)"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "vowed by Q. Lutatius Catulus at Vercellae 101 (Plut. Marius 26)",
+"certainty": "probable",
+"year": -101
+},
+"english": "Temple of Fortuna Huiusce Diei (Temple B, Largo Argentina)",
+"form": "round peripteral temple, tufa and travertine; houses the colossal head of the cult statue (Aedes Fortunae)",
+"id": "area_sacra_argentina_b",
+"lat": 41.8957,
+"latin": "Aedes Fortunae Huiusce Diei",
+"location": "Largo di Torre Argentina, round temple",
+"lon": 12.477,
+"precision": "exact",
+"regio": 9,
+"sources": [
+"Plut. Marius 26",
+"Platner-Ashby s.v. Fortuna Huiusce Diei, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "identified with Feronia, possibly dedicated after the Third Samnite War (Livy 22.1.? Feronia). Archaeological date early 3rd century.",
+"certainty": "uncertain",
+"year": -290
+},
+"english": "Temple C, Largo Argentina (Feronia?)",
+"id": "area_sacra_argentina_c",
+"lat": 41.8955,
+"latin": "Aedes (Argentina C) Feroniae",
+"location": "Largo Argentina",
+"lon": 12.4767,
+"precision": "exact",
+"regio": 9,
+"sources": [
+"Platner-Ashby s.v. Feronia"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "2nd-century BC temple of unknown deity; possibly Lares Permarini or Nymphae",
+"certainty": "uncertain",
+"year": -150
+},
+"english": "Temple D, Largo Argentina (identity unknown)",
+"id": "area_sacra_argentina_d",
+"lat": 41.8953,
+"latin": "Aedes (Argentina D) Laverna?",
+"location": "Largo Argentina",
+"lon": 12.4767,
+"precision": "exact",
+"regio": 9,
+"sources": [
+"archaeological identification; no ancient text"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "Pompey, dedicated in his second consulship 55 BC with games for 5 days and 500 lions (Plut. Pomp. 40, 52; Cic. Fam. 7.1; Pliny NH 8.20)",
+"certainty": "certain",
+"year": -55
+},
+"english": "Theatre of Pompey",
+"form": "first permanent stone theatre in Rome, about 150 m diameter, 17,000 to 20,000 seats; temple of Venus Victrix atop the cavea; Porticus Pompeiana behind; curia attached",
+"id": "theatrum_pompei",
+"lat": 41.8958,
+"latin": "Theatrum Pompei",
+"location": "Campus Martius, near Largo Argentina; Campo de' Fiori",
+"lon": 12.4743,
+"materials": [
+"concrete",
+"tufa",
+"travertine",
+"marble"
+],
+"precision": "exact",
+"regio": 9,
+"sources": [
+"Plut. Pomp. 40",
+"Cic. Fam. 7.1",
+"Pliny NH 8.20",
+"Platner-Ashby s.v. Theatrum Pompei"
+],
+"type": "theatre"
+},
+{
+"built": {
+"by": "Pompey (Plut. Brut. 14; Cic. Div. 2.23)",
+"certainty": "certain",
+"year": -55
+},
+"english": "Curia of Pompey",
+"events": [
+{
+"what": "Caesar assassinated at the foot of Pompey's statue there on 15 March (Suet. Iul. 80-82)",
+"year": -44
+}
+],
+"id": "curia_pompeia",
+"lat": 41.8955,
+"latin": "Curia Pompeia",
+"location": "Campus Martius, within the Porticus Pompeiana, Largo Argentina",
+"lon": 12.4757,
+"precision": "exact",
+"regio": 9,
+"sources": [
+"Suet. Iul. 80",
+"Plut. Brut. 14",
+"Platner-Ashby s.v. Curia Pompeia"
+],
+"type": "curia"
+},
+{
+"built": {
+"by": "Pompey (Vitr. 5.9.1)",
+"certainty": "certain",
+"year": -55
+},
+"english": "Portico of Pompey",
+"id": "porticus_pompeiana",
+"lat": 41.8953,
+"latin": "Porticus Pompeiana",
+"location": "behind the Theatre of Pompey",
+"lon": 12.475,
+"precision": "exact",
+"regio": 9,
+"sources": [
+"Vitr. 5.9.1",
+"Platner-Ashby s.v. Porticus Pompeiana"
+],
+"type": "portico"
+},
+{
+"built": {
+"by": "M. Aemilius Scaurus as aedile; 80,000 seats, 360 columns, three storeys, glass, gilt (Pliny NH 36.113-115)",
+"certainty": "certain",
+"year": -58
+},
+"ended": {
+"what": "temporary, dismantled after the games",
+"year": -58
+},
+"english": "Temporary theatre of Scaurus",
+"id": "theatrum_scauri",
+"lat": 41.901,
+"latin": "Theatrum M. Aemilii Scauri",
+"location": "Campus Martius (temporary)",
+"lon": 12.476,
+"precision": "rough",
+"regio": 9,
+"sources": [
+"Pliny NH 36.113",
+"Platner-Ashby s.v. Theatrum Scauri"
+],
+"type": "theatre"
+},
+{
+"built": {
+"by": "begun by Julius Caesar, who cleared the site (Suet. Iul. 44); built by Augustus, dedicated 13 or 11 BC (Dio 43.49.2, 54.26.1)",
+"certainty": "certain",
+"year": -13
+},
+"english": "Theatre of Marcellus",
+"id": "theatrum_marcelli",
+"lat": 41.8919,
+"latin": "Theatrum Marcelli",
+"location": "between the Capitol and the Tiber, Forum Holitorium",
+"lon": 12.4796,
+"precision": "exact",
+"regio": 9,
+"sources": [
+"Suet. Iul. 44",
+"Dio 43.49.2",
+"Dio 54.26.1",
+"Platner-Ashby s.v. Theatrum Marcelli"
+],
+"type": "theatre"
+},
+{
+"built": {
+"by": "T. Statilius Taurus, dedicated 29 (Dio 51.23.1)",
+"certainty": "certain",
+"year": -29
+},
+"english": "Amphitheatre of Statilius Taurus",
+"id": "amphitheatrum_tauri",
+"lat": 41.891,
+"latin": "Amphitheatrum Statili Tauri",
+"location": "Campus Martius",
+"lon": 12.474,
+"precision": "rough",
+"regio": 9,
+"sources": [
+"Dio 51.23.1",
+"Platner-Ashby s.v. Amphitheatrum Tauri"
+],
+"type": "amphitheatre"
+},
+{
+"built": {
+"by": "begun by Julius Caesar 54 (Cic. Att. 4.16.8; Dio 53.23.1); dedicated by Agrippa 26 BC",
+"certainty": "certain",
+"year": -26
+},
+"english": "Saepta (voting enclosure)",
+"form": "marble porticoed enclosure for voting; Diribitorium nearby",
+"id": "saepta_iulia",
+"lat": 41.8975,
+"latin": "Saepta (Iulia)",
+"location": "Campus Martius, east of the Pantheon area, along the Via Lata",
+"lon": 12.48,
+"precision": "approx",
+"regio": 9,
+"sources": [
+"Cic. Att. 4.16.8",
+"Dio 53.23.1",
+"Platner-Ashby s.v. Saepta Iulia"
+],
+"type": "public_building"
+},
+{
+"built": {
+"by": "M. Agrippa, consul 27 (Dio 53.27.2; the inscription records M. Agrippa L.f. cos tertium)",
+"certainty": "certain",
+"year": -27
+},
+"english": "Pantheon of Agrippa (first Pantheon)",
+"id": "pantheon_agrippae",
+"lat": 41.8986,
+"latin": "Pantheum Agrippae",
+"location": "Campus Martius, under the present Pantheon",
+"lon": 12.4769,
+"precision": "exact",
+"regio": 9,
+"sources": [
+"Dio 53.27.2",
+"Platner-Ashby s.v. Pantheon"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "Augustus, begun 28 BC (Suet. Aug. 100; Strabo 5.3.8)",
+"certainty": "certain",
+"year": -28
+},
+"english": "Mausoleum of Augustus",
+"id": "mausoleum_augusti",
+"lat": 41.9059,
+"latin": "Mausoleum Augusti",
+"location": "northern Campus Martius, by the Via Flaminia",
+"lon": 12.4766,
+"precision": "exact",
+"regio": 9,
+"sources": [
+"Suet. Aug. 100",
+"Strabo 5.3.8",
+"Platner-Ashby s.v. Mausoleum Augusti"
+],
+"type": "tomb"
+},
+{
+"built": {
+"by": "Agrippa 25 BC (Dio 53.27.1); with the Stagnum and Euripus (Aqua Virgo)",
+"certainty": "certain",
+"year": -25
+},
+"english": "Baths of Agrippa",
+"id": "thermae_agrippae",
+"lat": 41.898,
+"latin": "Thermae Agrippae",
+"location": "Campus Martius, near the Pantheon",
+"lon": 12.478,
+"precision": "approx",
+"regio": 9,
+"sources": [
+"Dio 53.27.1",
+"Platner-Ashby s.v. Thermae Agrippae"
+],
+"type": "baths"
+},
+{
+"built": {
+"by": "vowed by the triumvirs 43 BC (Dio 47.15.4); earlier shrines suppressed 58, 53, 50 (Val. Max. 1.3.4; Dio 40.47.3)",
+"certainty": "probable",
+"year": -43
+},
+"english": "Temple of Isis and Serapis (triumviral vow)",
+"id": "aedes_isidis_serapis",
+"lat": 41.8985,
+"latin": "Aedes Isidis et Serapis",
+"location": "Campus Martius",
+"lon": 12.479,
+"precision": "rough",
+"regio": 9,
+"sources": [
+"Dio 47.15.4",
+"Val. Max. 1.3.4",
+"Platner-Ashby s.v. Isis et Serapis"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "voted by the senate 13 BC, dedicated 30 Jan 9 BC (Res Gestae 12) - outside the 27 BC limit, included as a feature of the Augustan city",
+"certainty": "certain",
+"year": -9
+},
+"english": "Altar of Augustan Peace",
+"id": "ara_pacis_augustae",
+"lat": 41.9063,
+"latin": "Ara Pacis Augustae",
+"location": "northern Campus Martius, near the Via Flaminia",
+"lon": 12.4753,
+"precision": "exact",
+"regio": 9,
+"sources": [
+"Res Gestae 12",
+"Platner-Ashby s.v. Ara Pacis Augustae"
+],
+"type": "altar"
+},
+{
+"built": {
+"by": "vowed by L. Papirius Cursor (the dictator) 325; dedicated by his son consul 293 (Livy 10.46.7)",
+"certainty": "certain",
+"year": -293
+},
+"english": "Temple of Quirinus",
+"events": [
+{
+"what": "burned",
+"year": -49
+},
+{
+"what": "rebuilt by Augustus (Dio 54.19.4; Res Gestae 19)",
+"year": -16
+}
+],
+"id": "aedes_quirini",
+"lat": 41.9015,
+"latin": "Aedes Quirini",
+"location": "Quirinal, south-west edge, overlooking the Forum",
+"lon": 12.4893,
+"precision": "approx",
+"regio": 6,
+"sources": [
+"Livy 10.46.7",
+"Res Gestae 19",
+"Platner-Ashby s.v. Quirinus, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "vowed by C. Iunius Bubulcus 311; dedicated 302 (Livy 9.43.25, 10.1.9)",
+"certainty": "certain",
+"year": -302
+},
+"english": "Temple of Salus",
+"form": "painted by C. Fabius Pictor",
+"id": "aedes_salutis",
+"lat": 41.9005,
+"latin": "Aedes Salutis",
+"location": "Quirinal",
+"lon": 12.488,
+"precision": "approx",
+"regio": 6,
+"sources": [
+"Livy 9.43.25",
+"Livy 10.1.9",
+"Platner-Ashby s.v. Salus, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "vowed by Tarquinius Superbus, dedicated by Sp. Postumius 466 (Dion. Hal. 9.60.8; Livy 8.20.8)",
+"certainty": "probable",
+"year": -466
+},
+"english": "Temple of Semo Sancus Dius Fidius",
+"id": "aedes_dei_fidii",
+"lat": 41.901,
+"latin": "Aedes Semonis Sanci Dei Fidii",
+"location": "Quirinal, Mons Sanqualis",
+"lon": 12.487,
+"precision": "approx",
+"regio": 6,
+"sources": [
+"Dion. Hal. 9.60.8",
+"Livy 8.20.8",
+"Platner-Ashby s.v. Semo Sancus"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "vowed by P. Sempronius Sophus as consul 204 (Livy 29.36.8); dedicated 194 (Livy 34.53.5)",
+"certainty": "certain",
+"year": -194
+},
+"english": "Temple of Fortuna Primigenia",
+"id": "aedes_fortunae_primigeniae",
+"lat": 41.9007,
+"latin": "Aedes Fortunae Primigeniae",
+"location": "Quirinal",
+"lon": 12.4887,
+"precision": "approx",
+"regio": 6,
+"sources": [
+"Livy 29.36.8",
+"Livy 34.53.5",
+"Platner-Ashby s.v. Fortuna Primigenia"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "vowed by P. Sempronius Sophus as consul 268 (Platner-Ashby); dedicated shortly after",
+"certainty": "certain",
+"year": -268
+},
+"english": "Temple of Tellus",
+"id": "aedes_telluris",
+"lat": 41.892,
+"latin": "Aedes Telluris",
+"location": "Carinae",
+"lon": 12.493,
+"notes": "The vow after an earthquake in the war against the Picentes; Platner-Ashby gives P. Sempronius Sophus.",
+"precision": "rough",
+"regio": 4,
+"sources": [
+"Platner-Ashby s.v. Tellus, Aedes"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "vowed by M. Claudius Marcellus at Clastidium 222 and Syracuse 211; dedicated 205 by his son (Livy 27.25.7-10, 29.11.13); Marius' later temple of Honos and Virtus 101-100 BC (Vitr. 3.2.5)",
+"certainty": "certain",
+"year": -205
+},
+"english": "Temples of Honos and Virtus",
+"id": "aedes_honoris_virtutis",
+"lat": 41.8855,
+"latin": "Aedes Honoris et Virtutis",
+"location": "Porta Capena, on the Via Appia",
+"lon": 12.4893,
+"precision": "rough",
+"regio": 1,
+"sources": [
+"Livy 27.25.7-10",
+"Livy 29.11.13",
+"Platner-Ashby s.v. Honos et Virtus"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "after the Vestal scandal, on Sibylline advice (Val. Max. 8.15.12; Ovid Fasti 4.157-160)",
+"certainty": "probable",
+"year": -114
+},
+"english": "Temple of Venus Verticordia",
+"id": "aedes_veneris_verticordiae",
+"lat": 41.8862,
+"latin": "Aedes Veneris Verticordiae",
+"location": "Circus Maximus area (Murcia valley)",
+"lon": 12.4845,
+"precision": "rough",
+"regio": 11,
+"sources": [
+"Val. Max. 8.15.12",
+"Ovid Fasti 4.157",
+"Platner-Ashby s.v. Venus Verticordia"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "Romulus (Livy 1.9.6; Dion. Hal. 2.31)",
+"certainty": "traditional",
+"year": null
+},
+"english": "Altar of Consus",
+"id": "aedes_dei_consi",
+"lat": 41.8869,
+"latin": "Ara Consi",
+"location": "underground in the Circus Maximus",
+"lon": 12.4851,
+"precision": "rough",
+"regio": 11,
+"sources": [
+"Livy 1.9.6",
+"Platner-Ashby s.v. Consus, Ara"
+],
+"type": "altar"
+},
+{
+"built": {
+"by": "mentioned by Plautus; formal macellum built by the censors 179 (Livy 40.51.5)",
+"certainty": "probable",
+"year": -179
+},
+"english": "Macellum (market)",
+"id": "macellum",
+"lat": 41.8912,
+"latin": "Macellum",
+"location": "Esquiline slope near the Velia",
+"lon": 12.4935,
+"precision": "rough",
+"regio": 3,
+"sources": [
+"Livy 40.51.5",
+"Platner-Ashby s.v. Macellum"
+],
+"type": "market"
+},
+{
+"built": {
+"by": "Sp. Carvilius Maximus as consul 293 (Livy 10.46.14)",
+"certainty": "probable",
+"year": -293
+},
+"english": "Temple of Fors Fortuna",
+"id": "aedes_fortis_fortunae",
+"lat": 41.8825,
+"latin": "Aedes Fortis Fortunae",
+"location": "Trastevere, on the Via Portuensis",
+"lon": 12.4695,
+"precision": "rough",
+"regio": 14,
+"sources": [
+"Livy 10.46.14",
+"Platner-Ashby s.v. Fors Fortuna"
+],
+"type": "temple"
+},
+{
+"built": {
+"by": "C. Cestius Epulo, within 330 days (inscription CIL VI 1374); date 18-12 BC",
+"certainty": "probable",
+"year": -12
+},
+"english": "Pyramid of Cestius",
+"id": "pyramis_cestii",
+"lat": 41.8763,
+"latin": "Pyramis Cestii",
+"location": "Via Ostiensis, by the Servian/Aurelian wall",
+"lon": 12.4812,
+"precision": "exact",
+"regio": 13,
+"sources": [
+"CIL VI 1374",
+"Platner-Ashby s.v. Sepulcrum C. Cestii"
+],
+"type": "tomb"
+},
+{
+"built": {
+"by": "tomb of L. Cornelius Scipio Barbatus, consul 298 (CIL I 6-7, Elogia)",
+"certainty": "probable",
+"year": -298
+},
+"english": "Tomb of the Scipios",
+"id": "sepulcrum_scipionum",
+"lat": 41.8798,
+"latin": "Sepulcrum Scipionum",
+"location": "Via Appia, first mile",
+"lon": 12.4981,
+"precision": "exact",
+"regio": 1,
+"sources": [
+"CIL I2 6-7",
+"Platner-Ashby s.v. Sepulcrum Scipionum"
+],
+"type": "tomb"
+},
+{
+"built": {
+"by": "c. 50-30 BC; daughter of Metellus Creticus",
+"certainty": "probable",
+"year": -50
+},
+"english": "Tomb of Caecilia Metella",
+"id": "sepulcrum_caeciliae_metellae",
+"lat": 41.8559,
+"latin": "Sepulcrum Caeciliae Metellae",
+"location": "Via Appia, third mile",
+"lon": 12.5226,
+"precision": "exact",
+"regio": 1,
+"sources": [
+"CIL VI 1274",
+"Platner-Ashby s.v. Sepulcrum Caeciliae Metellae"
+],
+"type": "tomb"
+},
+{
+"built": {
+"by": "L. Licinius Lucullus after the Mithridatic wars (Plut. Luc. 39)",
+"certainty": "probable",
+"year": -60
+},
+"english": "Gardens of Lucullus",
+"id": "horti_lucullani",
+"lat": 41.9087,
+"latin": "Horti Lucullani",
+"location": "Pincian Hill",
+"lon": 12.4825,
+"precision": "rough",
+"regio": 7,
+"sources": [
+"Plut. Luc. 39",
+"Platner-Ashby s.v. Horti Lucullani"
+],
+"type": "garden"
+},
+{
+"built": {
+"by": "C. Sallustius Crispus (the historian), with Caesar's proceeds",
+"certainty": "probable",
+"year": -40
+},
+"english": "Gardens of Sallust",
+"id": "horti_sallustiani",
+"lat": 41.9095,
+"latin": "Horti Sallustiani",
+"location": "between Pincian and Quirinal",
+"lon": 12.495,
+"precision": "rough",
+"regio": 6,
+"sources": [
+"Platner-Ashby s.v. Horti Sallustiani"
+],
+"type": "garden"
+},
+{
+"built": {
+"by": "censors' contracts for a wall of squared stone, 378 BC (Livy 6.32.1; Dion. Hal. 4.13 attributes it to Servius Tullius; archaeology confirms 4th century)",
+"certainty": "certain",
+"year": -378
+},
+"english": "Servian Wall (Republican city wall)",
+"form": "agger on the Esquiline-Viminal-Quirinal plateau (Servian Rampart) 10 m high, 3.6 m wide stone wall, with a ditch",
+"id": "murus_servianus",
+"lat": 41.896,
+"latin": "Murus Servianus",
+"location": "circuit of the seven hills, about 11 km, enclosing about 426 ha",
+"lon": 12.49,
+"materials": [
+"Grotta Oscura tufa (from Veii territory",
+"after 396)",
+"cappellaccio in earlier phases"
+],
+"precision": "approx",
+"regio": 0,
+"route": [
+[
+41.8885,
+12.4885
+],
+[
+41.8845,
+12.485
+],
+[
+41.88,
+12.485
+],
+[
+41.8795,
+12.479
+],
+[
+41.888,
+12.4793
+],
+[
+41.892,
+12.4807
+],
+[
+41.8957,
+12.483
+],
+[
+41.9,
+12.487
+],
+[
+41.9068,
+12.496
+],
+[
+41.9015,
+12.5
+],
+[
+41.8957,
+12.5017
+],
+[
+41.89,
+12.4995
+],
+[
+41.8885,
+12.4885
+]
+],
+"sources": [
+"Livy 6.32.1",
+"Dion. Hal. 4.13",
+"Platner-Ashby s.v. Murus Servii Tullii"
+],
+"type": "wall"
+},
+{
+"built": {
+"by": "with the Servian Wall",
+"certainty": "certain",
+"year": -378
+},
+"english": "Porta Capena",
+"id": "porta_capena",
+"lat": 41.8855,
+"latin": "Porta Capena",
+"location": "Servian Wall, south-east of the Palatine, start of the Via Appia",
+"lon": 12.4885,
+"precision": "approx",
+"regio": 1,
+"sources": [
+"Platner-Ashby s.v. Porta Capena"
+],
+"type": "gate"
+},
+{
+"built": {
+"by": "with the Servian Wall; battle of the Colline Gate 82 BC (Plut. Sulla 29-30)",
+"certainty": "certain",
+"year": -378
+},
+"english": "Porta Collina",
+"id": "porta_collina",
+"lat": 41.9068,
+"latin": "Porta Collina",
+"location": "Servian Wall, north-east, on the Quirinal; start of the Via Nomentana / Salaria",
+"lon": 12.496,
+"precision": "rough",
+"regio": 6,
+"sources": [
+"Plut. Sulla 29",
+"Platner-Ashby s.v. Porta Collina"
+],
+"type": "gate"
+},
+{
+"built": {
+"by": "with the Servian Wall",
+"certainty": "certain",
+"year": -378
+},
+"english": "Porta Esquilina",
+"id": "porta_esquilina",
+"lat": 41.8957,
+"latin": "Porta Esquilina",
+"location": "Servian Wall, east, near the Arch of Gallienus",
+"lon": 12.5017,
+"precision": "rough",
+"regio": 5,
+"sources": [
+"Platner-Ashby s.v. Porta Esquilina"
+],
+"type": "gate"
+},
+{
+"built": {
+"by": "with the Servian Wall",
+"certainty": "certain",
+"year": -378
+},
+"english": "Porta Viminalis",
+"id": "porta_viminalis",
+"lat": 41.9005,
+"latin": "Porta Viminalis",
+"location": "Servian Wall, north-east",
+"lon": 12.4975,
+"precision": "rough",
+"regio": 5,
+"sources": [
+"Platner-Ashby s.v. Porta Viminalis"
+],
+"type": "gate"
+},
+{
+"built": {
+"by": "with the Servian Wall",
+"certainty": "certain",
+"year": -378
+},
+"english": "Porta Caelimontana",
+"id": "porta_caelimontana",
+"lat": 41.8873,
+"latin": "Porta Caelimontana",
+"location": "Servian Wall, Caelian",
+"lon": 12.4965,
+"precision": "rough",
+"regio": 2,
+"sources": [
+"Platner-Ashby s.v. Porta Caelimontana"
+],
+"type": "gate"
+},
+{
+"built": {
+"by": "with the Servian Wall",
+"certainty": "certain",
+"year": -378
+},
+"english": "Porta Naevia",
+"id": "porta_naevia",
+"lat": 41.8795,
+"latin": "Porta Naevia",
+"location": "Servian Wall, Aventine, south",
+"lon": 12.4845,
+"precision": "rough",
+"regio": 13,
+"sources": [
+"Platner-Ashby s.v. Porta Naevia"
+],
+"type": "gate"
+},
+{
+"built": {
+"by": "with the Servian Wall",
+"certainty": "certain",
+"year": -378
+},
+"english": "Porta Raudusculana",
+"id": "porta_raudusculana",
+"lat": 41.8825,
+"latin": "Porta Raudusculana",
+"location": "Servian Wall, Aventine, west",
+"lon": 12.481,
+"precision": "rough",
+"regio": 13,
+"sources": [
+"Platner-Ashby s.v. Porta Raudusculana"
+],
+"type": "gate"
+},
+{
+"built": {
+"by": "with the Servian Wall",
+"certainty": "certain",
+"year": -378
+},
+"english": "Porta Lavernalis",
+"id": "porta_lavernalis",
+"lat": 41.8797,
+"latin": "Porta Lavernalis",
+"location": "Servian Wall, Aventine, south-west",
+"lon": 12.4835,
+"precision": "rough",
+"regio": 13,
+"sources": [
+"Platner-Ashby s.v. Porta Lavernalis"
+],
+"type": "gate"
+},
+{
+"built": {
+"by": "with the Servian Wall",
+"certainty": "certain",
+"year": -378
+},
+"english": "Porta Carmentalis",
+"id": "porta_carmentalis",
+"lat": 41.8918,
+"latin": "Porta Carmentalis",
+"location": "Servian Wall, foot of the Capitol toward the Forum Holitorium; triumphs avoided the unlucky right arch (Livy 2.49.8)",
+"lon": 12.4807,
+"precision": "approx",
+"regio": 8,
+"sources": [
+"Livy 2.49.8",
+"Platner-Ashby s.v. Porta Carmentalis"
+],
+"type": "gate"
+},
+{
+"built": {
+"by": "with the Servian Wall",
+"certainty": "certain",
+"year": -378
+},
+"english": "Porta Flumentana",
+"id": "porta_flumentana",
+"lat": 41.8925,
+"latin": "Porta Flumentana",
+"location": "Servian Wall, between the Capitol and the Tiber",
+"lon": 12.477,
+"precision": "rough",
+"regio": 9,
+"sources": [
+"Livy 35.9.2",
+"Platner-Ashby s.v. Porta Flumentana"
+],
+"type": "gate"
+},
+{
+"built": {
+"by": "with the Servian Wall",
+"certainty": "certain",
+"year": -378
+},
+"english": "Porta Fontinalis",
+"id": "porta_fontinalis",
+"lat": 41.896,
+"latin": "Porta Fontinalis",
+"location": "Servian Wall, Capitol north side",
+"lon": 12.483,
+"precision": "rough",
+"regio": 8,
+"sources": [
+"Platner-Ashby s.v. Porta Fontinalis"
+],
+"type": "gate"
+},
+{
+"built": {
+"by": "with the Servian Wall",
+"certainty": "certain",
+"year": -378
+},
+"english": "Porta Ratumena",
+"id": "porta_ratumena",
+"lat": 41.9005,
+"latin": "Porta Ratumena",
+"location": "Servian Wall, between the Capitol and Quirinal",
+"lon": 12.4835,
+"precision": "rough",
+"regio": 6,
+"sources": [
+"Platner-Ashby s.v. Porta Ratumena"
+],
+"type": "gate"
+},
+{
+"built": {
+"by": "with the Servian Wall",
+"certainty": "certain",
+"year": -378
+},
+"english": "Porta Sanqualis",
+"id": "porta_sanqualis",
+"lat": 41.9,
+"latin": "Porta Sanqualis",
+"location": "Servian Wall, Quirinal",
+"lon": 12.4875,
+"precision": "rough",
+"regio": 6,
+"sources": [
+"Platner-Ashby s.v. Porta Sanqualis"
+],
+"type": "gate"
+},
+{
+"built": {
+"by": "with the Servian Wall",
+"certainty": "certain",
+"year": -378
+},
+"english": "Porta Salutaris",
+"id": "porta_salutaris",
+"lat": 41.9008,
+"latin": "Porta Salutaris",
+"location": "Servian Wall, Quirinal",
+"lon": 12.4884,
+"precision": "rough",
+"regio": 6,
+"sources": [
+"Platner-Ashby s.v. Porta Salutaris"
+],
+"type": "gate"
+},
+{
+"built": {
+"by": "with the Servian Wall",
+"certainty": "certain",
+"year": -378
+},
+"english": "Porta Querquetulana",
+"id": "porta_querquetulana",
+"lat": 41.8885,
+"latin": "Porta Querquetulana",
+"location": "Servian Wall, Caelian",
+"lon": 12.495,
+"precision": "rough",
+"regio": 2,
+"sources": [
+"Platner-Ashby s.v. Porta Querquetulana"
+],
+"type": "gate"
+},
+{
+"built": {
+"by": "Ancus Marcius (Livy 1.33.6); defended by Horatius Cocles 508 (Livy 2.10)",
+"certainty": "traditional",
+"year": null
+},
+"english": "Pons Sublicius (pile bridge)",
+"form": "timber pile bridge kept by the pontifices without iron nails",
+"id": "pons_sublicius",
+"lat": 41.888,
+"latin": "Pons Sublicius",
+"location": "Tiber, south of the Forum Boarium, below the Aventine",
+"lon": 12.477,
+"precision": "rough",
+"regio": 11,
+"sources": [
+"Livy 1.33.6",
+"Livy 2.10",
+"Platner-Ashby s.v. Pons Sublicius"
+],
+"type": "bridge"
+},
+{
+"built": {
+"by": "piers contracted by the censors M. Aemilius Lepidus and M. Fulvius Nobilior (Livy 40.51.4); arches added 142 by Scipio Aemilianus and L. Mummius (Platner-Ashby)",
+"certainty": "certain",
+"year": -179
+},
+"english": "Pons Aemilius (Ponte Rotto)",
+"events": [
+{
+"what": "arches built (Platner-Ashby)",
+"year": -142
+}
+],
+"id": "pons_aemilius",
+"lat": 41.8884,
+"latin": "Pons Aemilius",
+"location": "Tiber, by the Forum Boarium",
+"lon": 12.4789,
+"materials": [
+"tufa",
+"travertine"
+],
+"precision": "exact",
+"regio": 11,
+"sources": [
+"Livy 40.51.4",
+"Platner-Ashby s.v. Pons Aemilius"
+],
+"type": "bridge"
+},
+{
+"built": {
+"by": "stone bridge by M. Aemilius Scaurus, censor 109 (Aur. Vict. De vir. ill. 72); a wooden bridge existed in 207 (Livy 27.51.2) and 63 (Cic. Cat. 3.5)",
+"certainty": "probable",
+"year": -109
+},
+"english": "Milvian Bridge",
+"id": "pons_mulvius",
+"lat": 41.9335,
+"latin": "Pons Mulvius",
+"location": "Via Flaminia, over the Tiber, 3 km north of the city",
+"lon": 12.4668,
+"precision": "exact",
+"regio": 0,
+"sources": [
+"Livy 27.51.2",
+"Cic. Cat. 3.5",
+"Aur. Vict. Vir. ill. 72",
+"Platner-Ashby s.v. Pons Mulvius"
+],
+"type": "bridge"
+},
+{
+"built": {
+"by": "L. Fabricius, curator viarum (CIL VI 1305; Dio 37.45.3)",
+"certainty": "certain",
+"year": -62
+},
+"english": "Pons Fabricius",
+"id": "pons_fabricius",
+"lat": 41.8907,
+"latin": "Pons Fabricius",
+"location": "from Forum Holitorium to Tiber Island",
+"lon": 12.478,
+"materials": [
+"tufa",
+"travertine"
+],
+"precision": "exact",
+"regio": 14,
+"sources": [
+"CIL VI 1305",
+"Dio 37.45.3",
+"Platner-Ashby s.v. Pons Fabricius"
+],
+"type": "bridge"
+},
+{
+"built": {
+"by": "probably L. Cestius, praetor c. 46-44 (Platner-Ashby); some say 60s BC",
+"certainty": "uncertain",
+"year": -46
+},
+"english": "Pons Cestius",
+"id": "pons_cestius",
+"lat": 41.8896,
+"latin": "Pons Cestius",
+"location": "from Tiber Island to Trastevere",
+"lon": 12.4774,
+"precision": "exact",
+"regio": 14,
+"sources": [
+"Platner-Ashby s.v. Pons Cestius"
+],
+"type": "bridge"
+},
+{
+"built": {
+"by": "censor Ap. Claudius Caecus (Livy 9.29.5-6; Diod. 20.36)",
+"certainty": "certain",
+"year": -312
+},
+"english": "Appian Way",
+"id": "via_appia",
+"lat": 41.8855,
+"latin": "Via Appia",
+"location": "from Porta Capena southeast to Capua",
+"lon": 12.4885,
+"precision": "exact",
+"regio": 1,
+"route": [
+[
+41.8855,
+12.4885
+],
+[
+41.8798,
+12.4981
+],
+[
+41.8559,
+12.5226
+],
+[
+41.76,
+12.605
+],
+[
+41.67,
+12.71
+]
+],
+"sources": [
+"Livy 9.29.5-6",
+"Diod. 20.36",
+"Platner-Ashby s.v. Via Appia"
+],
+"type": "road"
+},
+{
+"built": {
+"by": "C. Flaminius as censor (Livy Per. 20)",
+"certainty": "certain",
+"year": -220
+},
+"english": "Flaminian Way",
+"id": "via_flaminia",
+"lat": 41.895,
+"latin": "Via Flaminia",
+"location": "from the Capitol through the Campus Martius north to Ariminum (Rimini)",
+"lon": 12.481,
+"precision": "approx",
+"regio": 9,
+"route": [
+[
+41.895,
+12.481
+],
+[
+41.9059,
+12.4766
+],
+[
+41.9335,
+12.4668
+],
+[
+41.98,
+12.49
+]
+],
+"sources": [
+"Livy Per. 20",
+"Platner-Ashby s.v. Via Flaminia"
+],
+"type": "road"
+},
+{
+"built": {
+"by": "ancient salt route to the Sabines",
+"certainty": "traditional",
+"year": null
+},
+"english": "Salt Road",
+"id": "via_salaria",
+"lat": 41.9068,
+"latin": "Via Salaria",
+"location": "from the Porta Collina into the Sabine land",
+"lon": 12.496,
+"precision": "approx",
+"regio": 6,
+"sources": [
+"Platner-Ashby s.v. Via Salaria"
+],
+"type": "road"
+},
+{
+"built": {
+"by": "Ancus Marcius (Livy 1.33.9) founds Ostia",
+"certainty": "traditional",
+"year": -600
+},
+"english": "Ostian Road",
+"id": "via_ostiensis",
+"lat": 41.8795,
+"latin": "Via Ostiensis",
+"location": "from the Porta Trigemina to Ostia",
+"lon": 12.483,
+"precision": "approx",
+"regio": 13,
+"sources": [
+"Livy 1.33.9",
+"Platner-Ashby s.v. Via Ostiensis"
+],
+"type": "road"
+},
+{
+"built": {
+"by": "ancient route",
+"certainty": "traditional",
+"year": null
+},
+"english": "Latin Road",
+"id": "via_latina",
+"lat": 41.8873,
+"latin": "Via Latina",
+"location": "from Rome southeast to Casilinum",
+"lon": 12.4965,
+"precision": "approx",
+"regio": 2,
+"sources": [
+"Platner-Ashby s.v. Via Latina"
+],
+"type": "road"
+},
+{
+"built": {
+"by": "M. Valerius Maximus censor 307 (Livy 9.43.25)",
+"certainty": "probable",
+"year": -307
+},
+"english": "Valerian Way",
+"id": "via_valeria",
+"lat": 41.8957,
+"latin": "Via Valeria",
+"location": "east through Tibur to the Marsi",
+"lon": 12.5017,
+"precision": "approx",
+"regio": 5,
+"sources": [
+"Livy 9.43.25",
+"Platner-Ashby s.v. Via Valeria"
+],
+"type": "road"
+},
+{
+"built": {
+"by": "Ap. Claudius Caecus and C. Plautius Venox as censors (Frontin. Aq. 5; Livy 9.29.6)",
+"certainty": "certain",
+"year": -312
+},
+"english": "Appian Aqueduct",
+"form": "about 16.4 km, 16 km underground, only 60 paces on arches; first aqueduct of Rome",
+"id": "aqua_appia",
+"lat": 41.889,
+"latin": "Aqua Appia",
+"location": "from the springs near the 8th mile of the Via Praenestina, almost wholly underground, ending at the Salinae by the Porta Trigemina",
+"lon": 12.48,
+"precision": "rough",
+"regio": 0,
+"route": [
+[
+41.884,
+12.597
+],
+[
+41.8907,
+12.5158
+],
+[
+41.8865,
+12.5
+],
+[
+41.886,
+12.4885
+],
+[
+41.8875,
+12.4795
+]
+],
+"sources": [
+"Frontin. Aq. 5",
+"Livy 9.29.6",
+"Platner-Ashby s.v. Aqua Appia"
+],
+"type": "aqueduct"
+},
+{
+"built": {
+"by": "M'. Curius Dentatus and L. Papirius Cursor, duumviri; paid for with the spoils of Pyrrhus (Frontin. Aq. 6)",
+"certainty": "certain",
+"year": -272
+},
+"english": "Old Anio Aqueduct",
+"form": "about 63.6 km, mostly underground",
+"id": "aqua_anio_vetus",
+"lat": 41.891,
+"latin": "Aqua Anio Vetus",
+"location": "from the Anio above Tibur (Tivoli) to the Esquiline",
+"lon": 12.5,
+"precision": "rough",
+"regio": 0,
+"route": [
+[
+42.0,
+12.92
+],
+[
+41.96,
+12.79
+],
+[
+41.91,
+12.62
+],
+[
+41.8907,
+12.5158
+],
+[
+41.894,
+12.503
+]
+],
+"sources": [
+"Frontin. Aq. 6",
+"Platner-Ashby s.v. Anio Vetus"
+],
+"type": "aqueduct"
+},
+{
+"built": {
+"by": "Q. Marcius Rex as praetor (Frontin. Aq. 7; Pliny NH 31.41)",
+"certainty": "certain",
+"year": -144
+},
+"english": "Marcian Aqueduct",
+"form": "about 91 km, last 10 km on arches along the Via Latina; cost 180 million sesterces",
+"id": "aqua_marcia",
+"lat": 41.8935,
+"latin": "Aqua Marcia",
+"location": "from the springs near Arsoli through the Anio valley to the Capitol",
+"lon": 12.487,
+"precision": "rough",
+"regio": 0,
+"route": [
+[
+42.0,
+13.0
+],
+[
+41.96,
+12.8
+],
+[
+41.88,
+12.6
+],
+[
+41.857,
+12.539
+],
+[
+41.8907,
+12.5158
+],
+[
+41.8935,
+12.487
+]
+],
+"sources": [
+"Frontin. Aq. 7",
+"Pliny NH 31.41",
+"Platner-Ashby s.v. Aqua Marcia"
+],
+"type": "aqueduct"
+},
+{
+"built": {
+"by": "Cn. Servilius Caepio and L. Cassius Longinus Ravilla as censors (Frontin. Aq. 8)",
+"certainty": "certain",
+"year": -125
+},
+"english": "Tepula Aqueduct",
+"id": "aqua_tepula",
+"lat": 41.8935,
+"latin": "Aqua Tepula",
+"location": "from the Lucullan fields near the 10th mile of the Via Latina, carried on top of the Marcia channel to the Capitol",
+"lon": 12.488,
+"precision": "rough",
+"regio": 0,
+"route": [
+[
+41.83,
+12.65
+],
+[
+41.857,
+12.539
+],
+[
+41.8907,
+12.5158
+],
+[
+41.8935,
+12.488
+]
+],
+"sources": [
+"Frontin. Aq. 8",
+"Platner-Ashby s.v. Aqua Tepula"
+],
+"type": "aqueduct"
+},
+{
+"built": {
+"by": "M. Agrippa as aedile (Frontin. Aq. 9; Dio 49.42.1)",
+"certainty": "certain",
+"year": -33
+},
+"english": "Julian Aqueduct",
+"id": "aqua_iulia",
+"lat": 41.8935,
+"latin": "Aqua Iulia",
+"location": "from the springs near the 12th mile of the Via Latina, joining the Marcia and Tepula on the same arches",
+"lon": 12.489,
+"precision": "rough",
+"regio": 0,
+"route": [
+[
+41.82,
+12.68
+],
+[
+41.857,
+12.539
+],
+[
+41.8907,
+12.5158
+],
+[
+41.8935,
+12.489
+]
+],
+"sources": [
+"Frontin. Aq. 9",
+"Dio 49.42",
+"Platner-Ashby s.v. Aqua Iulia"
+],
+"type": "aqueduct"
+},
+{
+"built": {
+"by": "M. Agrippa, dedicated 19 BC (Frontin. Aq. 10; Dio 54.11.7)",
+"certainty": "certain",
+"year": -19
+},
+"english": "Virgo Aqueduct",
+"id": "aqua_virgo",
+"lat": 41.8985,
+"latin": "Aqua Virgo",
+"location": "from springs on the Via Collatina to the Campus Martius baths of Agrippa",
+"lon": 12.479,
+"precision": "rough",
+"regio": 9,
+"route": [
+[
+41.908,
+12.624
+],
+[
+41.91,
+12.54
+],
+[
+41.91,
+12.49
+],
+[
+41.8985,
+12.479
+]
+],
+"sources": [
+"Frontin. Aq. 10",
+"Dio 54.11.7",
+"Platner-Ashby s.v. Aqua Virgo"
+],
+"type": "aqueduct"
+},
+{
+"built": {
+"by": "Caesar bequeathed gardens beyond the Tiber to the people (Suet. Iul. 83; Cic. Phil. 2.109)",
+"certainty": "probable",
+"year": -44
+},
+"english": "Gardens of Caesar",
+"id": "horti_caesaris",
+"lat": 41.876,
+"latin": "Horti Caesaris",
+"location": "across the Tiber, near the Porta Portuensis",
+"lon": 12.466,
+"precision": "rough",
+"regio": 14,
+"sources": [
+"Suet. Iul. 83",
+"Cic. Phil. 2.109"
+],
+"type": "garden"
+}
+]
+}
