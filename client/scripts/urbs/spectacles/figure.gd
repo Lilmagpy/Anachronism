@@ -144,6 +144,29 @@ static func gallop(h: Node3D, phase: float, amp := 1.0) -> void:
 	body.rotation.x = sin(phase) * 0.05 * amp
 
 
+## A sacrificial ox, white with gilt horns; legs are in meta "legs" (swing them to walk).
+static func make_ox(white := Color(0.94, 0.93, 0.9)) -> Node3D:
+	var ox := Node3D.new()
+	var body := Node3D.new()
+	ox.add_child(body)
+	_box(body, Vector3(0.8, 0.9, 1.9), Vector3(0, 1.1, 0), white)
+	_box(body, Vector3(0.45, 0.5, 0.7), Vector3(0, 1.0, 1.15), white)
+	for s in [-0.28, 0.28]:
+		_box(body, Vector3(0.07, 0.07, 0.4), Vector3(s, 1.4, 1.35), Color(0.85, 0.7, 0.3))
+	var legs_a: Array = []
+	for z in [0.65, -0.65]:
+		for x in [0.25, -0.25]:
+			var leg := Node3D.new()
+			leg.position = Vector3(x, 0.65, z)
+			ox.add_child(leg)
+			_box(leg, Vector3(0.14, 0.65, 0.14), Vector3(0, -0.33, 0), white.darkened(0.08))
+			legs_a.append(leg)
+	_box(body, Vector3(0.2, 0.08, 0.5), Vector3(0, 1.0, 1.55), Color(0.85, 0.6, 0.6))
+	_box(body, Vector3(1.0, 0.1, 0.5), Vector3(0, 1.4, 0.2), Color(0.55, 0.1, 0.3))   # the cloth on its back
+	ox.set_meta("legs", legs_a)
+	return ox
+
+
 ## Equip a shield held in front of the left side of the body (a child of the torso: animate
 ## its position and rotation to guard and parry; the left arm is hidden behind it). kind: "scutum" (tall oblong), "round", "parma" (small square).
 func equip_shield(kind: String, col := Color(0.62, 0.2, 0.15)) -> Node3D:

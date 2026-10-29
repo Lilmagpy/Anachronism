@@ -56,7 +56,7 @@ func view_names() -> PackedStringArray:
 func make_label(text: String, size := 0.5, col := Color(1, 1, 1)) -> Label3D:
 	var l := Label3D.new()
 	l.text = text
-	l.pixel_size = 0.02 * size
+	l.pixel_size = 0.012 * size
 	l.font_size = 48
 	l.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	l.no_depth_test = true

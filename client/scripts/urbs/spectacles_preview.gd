@@ -42,6 +42,10 @@ func _initialize() -> void:
 			var c := str(_args["cam"]).split(",")
 			var f := Vector3(float(c[0]), float(c[1]), float(c[2]))
 			cam.transform = Transform3D(Basis.looking_at(Vector3(float(c[3]), float(c[4]), float(c[5])) - f, Vector3.UP), f)
+		elif _args.has("gen") and sp.has_method("general_at"):
+			var g: Vector3 = sp.general_at(float(ts))
+			var o := float(_args["gen"])
+			cam.transform = Transform3D(Basis.looking_at(Vector3(0, -0.3, -1) * 1.0 + Vector3(-o, 0, 0) * 0.0 + (Vector3(0, 0.5, 0) - Vector3(0, 4, o)) * 0.0 + (-Vector3(0, 4.0, o)).normalized() * 0.0 + Vector3(0, -1, -o) .normalized(), Vector3.UP), g + Vector3(-6, 4.0, o))
 		elif _args.has("follow") and sp.has_method("leader_view"):
 			cam.transform = sp.leader_view(float(ts), float(_args["follow"]), int(_args.get("who", -1)))
 		elif vi >= 0 and vi < views.size():

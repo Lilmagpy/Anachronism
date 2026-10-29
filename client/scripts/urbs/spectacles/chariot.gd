@@ -14,7 +14,7 @@ var horses: Array[Node3D] = []
 var colour := Color.WHITE
 
 
-static func make(team_colour: Color, n_horses: int, coat_seed: int) -> RefCounted:
+static func make(team_colour: Color, n_horses: int, coat_seed: int, white_team := false) -> RefCounted:
 	var c = (load("res://scripts/urbs/spectacles/chariot.gd") as GDScript).new()
 	c.colour = team_colour
 	c.car = Node3D.new()
@@ -51,7 +51,7 @@ static func make(team_colour: Color, n_horses: int, coat_seed: int) -> RefCounte
 	F.box(c.team, Vector3(0.08, 0.08, POLE), Vector3(0, 0.75, -POLE / 2.0 + 0.2), Color(0.5, 0.35, 0.2)).rotation.x = -0.1
 	F.box(c.team, Vector3(float(n_horses) * 0.72, 0.07, 0.07), Vector3(0, 1.25, 0.1), Color(0.4, 0.28, 0.15))
 	for i in n_horses:
-		var h := F.make_horse(coats[rng.randi() % coats.size()])
+		var h := F.make_horse(Color(0.95, 0.94, 0.9) if white_team else coats[rng.randi() % coats.size()])
 		h.position = Vector3((float(i) - (n_horses - 1) * 0.5) * 0.72, 0, 0.75)
 		F.box(h, Vector3(0.06, 0.3, 0.06), Vector3(0, 2.0, 0.78), team_colour).rotation.x = 0.0
 		c.team.add_child(h)
