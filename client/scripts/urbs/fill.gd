@@ -1,67 +1,92 @@
 ## Urbs (D-289, step U3): the ordinary buildings of Rome between the monuments.
 ##
-## What it makes, for a year: lots along every street (a row of tabernae -- shop-fronts -- where
-## the street is a shopping street, and behind or instead of them a row of houses), and in the
-## ground between the streets a loose lattice of lots (insulae, domus, casae, workshops, horti).
-## Everything is deterministic: it depends only on the year, the data and fixed hash values of the
-## lot position (no random state), so a chunk looks the same whenever it is built, in any order.
+## Layout, for a year. Three layers, all deterministic (fixed hashes of lot positions, no random
+## state, so a chunk looks the same whenever and in whatever order it is built):
+##  1. Street furniture and street-front lots along every known street (streets.yaml): wells or
+##     fountains, compitum shrines at crossroads, then a row of tabernae (shop-fronts) where the
+##     street is a shopping street, and a continuous row of houses behind or instead of them.
+##  2. A lattice of blocks over the whole city: blocks of 3 x 3 plots of 17 m (insulae, casae,
+##     workshops; a domus on 2 x 2 plots in the houses of the rich; a garden estate (horti) on a whole
+##     block on the outer hills) separated by 6.5 m lanes. The lattice is rotated by an angle that
+##     drifts slowly over the city, so the blocks follow no single grid. THE LANES ARE INFERRED
+##     minor streets, not data: the known street network leaves gaps of 100-300 m everywhere and
+##     real Rome was a dense web of vici and alleys there (Livy 5.55.2-5: crooked, hasty streets).
+##     Plots that collide with a street-front lot or a monument are dropped; the gap is then packed
+##     with small houses (infill). Where two lattice regions meet and overlap, the region with the
+##     lower hash wins.
+##  3. The ground between the houses (packed earth, not meadow) as one mesh per chunk.
+## Everything that is not a monument, a street, the river or the Servian wall is built over where
+## the district says so.
 ##
-## Character (data/rome/city/regions.yaml `districts`, each with its sources): domus of the rich
-## on the Palatine, the Carinae and the Quirinal (P-A s.v. Carinae: "many prominent Romans
-## dwelt here"); dense insulae and workshops in the Subura (P-A s.v. Subura, Martial, Juvenal), the
-## Velabrum (P-A s.v. Velabrum: trade in food, oil and wine), the Forum Boarium and Emporium
-## (Livy 21.62.3 for the third storey in 218 BC), the Aventine (Livy 3.31.1, the plebeian land)
-## and Transtiberim; gardens (horti) on the Pincian and Esquiline in the late Republic (P-A s.v.
-## Horti); the Campus Martius open until the Circus Flaminius and Via Flaminia of 220 BC, then
-## built over from the south (P-A s.v. Campus Martius). Forms: Vitruvius 2.8.17 and 6.3
-## (fill_meshes.gd). After the Gallic sack the lots are irregular (Livy 5.55.2-5): the early
-## eras use mostly small casae.
+## Character (data/rome/city/regions.yaml `districts`, with their sources): domus of the rich on the
+## Palatine, Carinae and Quirinal (P-A s.v. Carinae); dense insulae and workshops in the Subura
+## (P-A s.v. Subura, Martial, Juvenal), the Velabrum (P-A s.v. Velabrum), the Forum Boarium (Livy
+## 21.62.3: an ox on the third storey, 218 BC), the Aventine (Livy 3.31.1) and Transtiberim; horti
+## on the Pincian and Esquiline in the late Republic (P-A s.v. Horti); the Campus Martius open
+## until 220 BC then built over from the south (P-A s.v. Campus Martius). Storeys: Vitruvius 2.8.17
+## (read) on building up; Strabo 5.3.7 (read) on Augustus' 70-foot limit (nothing here exceeds
+## five storeys, 16 m). Density = district max_density x (city population / saturates_at) ** 0.7,
+## the population from population.json (central estimate, log-interpolated; Pliny NH 3.66 on the
+## size of the city, # unverified).
 ##
-## Density = district `max_density` x (city population / `saturates_at`) ** 0.7, the population
-## taken from population.json (central estimate, log-interpolated).
-##
-## Interface (urbs.gd): build(urbs, year, height) once per year, then build_chunk(rect, lod,
-## height) -> Node3D for each 250 m chunk, push_out(p, radius, h) for the walking camera.
-## Also: chunks_in(radius, centre) and build_chunk_into(parent, chunk, year, height, footprints)
-## for tools and tests. The monument footprints to avoid are read from `urbs.monuments`
-## (ids() and bounds(id)); `footprints` can also be set directly (list of Rect2 in local x, z).
+## Interface (urbs.gd): build(urbs, year, height) per year; build_chunk(rect, lod, height) ->
+## Node3D returns a UrbsFillChunk that fills itself over the next frames (a few ms per frame);
+## push_out(p, radius, h) keeps the walking camera out of walls (finished chunks only).
+## Tools/tests: `prepare()`, `build_chunk_into(parent, chunk, year, height, footprints, lod)`
+## (synchronous), `chunks_in(radius, centre)`, `footprints_from_json(year)`, `count_stats`.
 class_name UrbsFill
 extends RefCounted
 
 const CHUNK := 250.0
-const CELL := 25.0
+const PITCH := 14.0
+const LANE := 5.0
+const BP := PITCH * 3.0 + LANE
+const REG := 138.0
 const REGIONS_PATH := "res://data/city/regions.json"
 const POP_PATH := "res://data/city/population.json"
 const TOPO_PATH := "res://data/city/topography.json"
 const MONUMENTS_PATH := "res://data/city/monuments.json"
-const SHOP_DEPTH := 5.2
+const SHOP_DEPTH := 5.0
+const FOOTPATH := 1.0
 const KERB := 0.3
-const LATTICE_MIN_STREET := 33.0     ## the lattice stays this far from any street
-const TIBER_BAND := 50.0             ## no building within this distance of the river's centre line
-const MAX_SLOPE := 0.42
+const TIBER_BAND := 48.0
+const MAX_SLOPE := 0.6
+const MASK_RES := 3.0
+const MASK_HALF := 3300.0
+const MASK_N := 2200
+const M_STREET := 1
+const M_FOOT := 2
+const M_WATER := 4
 const PALETTE: Array[Color] = [
 	Color(0.80, 0.62, 0.40), Color(0.78, 0.50, 0.36), Color(0.84, 0.76, 0.58), Color(0.70, 0.40, 0.30),
 	Color(0.62, 0.56, 0.48), Color(0.88, 0.84, 0.74), Color(0.82, 0.68, 0.36), Color(0.66, 0.36, 0.28),
-	Color(0.74, 0.58, 0.44), Color(0.58, 0.48, 0.40),
+	Color(0.74, 0.58, 0.44), Color(0.58, 0.48, 0.40), Color(0.86, 0.80, 0.66), Color(0.76, 0.56, 0.38),
 ]
 
 var year := -300
 var height: Callable = func(_x: float, _z: float) -> float: return 10.0
-var footprints: Array = []           ## Rect2 in local metres (monuments and anything else to avoid)
+var footprints: Array = []           ## Rect2 in local metres: monuments and anything else to avoid
+var sync_chunks := false             ## true: build_chunk finishes the chunk before returning
+var count_stats := {}
+var reject_stats := {}               ## why lattice lots were refused (diagnostics)                ## lot counts of the street layer, for reports
 
 var _streets := UrbsStreets.new()
 var _districts: Array = []
 var _default: Dictionary = {}
+var _default_inside: Dictionary = {}
 var _pop_pts: Array = []
 var _tiber := PackedVector2Array()
+var _wall := PackedVector2Array()
 var _loaded := false
+var _mask := PackedByteArray()
 var _street_lots: Array = []
-var _street_hash := {}               ## Vector2i(30 m cell) -> Array of lot indices
-var _street_by_chunk := {}           ## Vector2i -> Array of lots
-var _chunk_cache := {}               ## Vector2i -> Array of lots (street lots + lattice lots)
-var _lattice_hash := {}
-var _material: StandardMaterial3D
-var count_stats := {}                ## lot counts by mesh family for the last year, for reports
+var _street_hash := {}
+var _street_by_chunk := {}
+var _region_cache := {}              ## Vector2i -> candidate array
+var _region_state := {}              ## Vector2i -> {cands, idx, lots, done}
+var _region_by_chunk := {}           ## Vector2i(chunk) -> Array of lots
+var _chunk_cache := {}               ## finished chunks: Vector2i -> Array of lots
+var _warm := false
 
 
 # ---------------------------------------------------------------- set-up
@@ -75,19 +100,26 @@ func build(urbs: Node3D, new_year: int, new_height: Callable) -> void:
 	if mon != null and mon.has_method("ids"):
 		for id in mon.ids():
 			var b: AABB = mon.bounds(id)
-			footprints.append(Rect2(b.position.x, b.position.z, b.size.x, b.size.z))
+			if minf(b.size.x, b.size.z) < 600.0:     # skip the Servian wall's whole-circuit box
+				footprints.append(Rect2(b.position.x, b.position.z, b.size.x, b.size.z))
 	prepare()
 
 
-## Load the data and lay out the street-front lots for the current `year`/`height`/`footprints`.
+## Load the data and lay out the street layer for the current `year`, `height`, `footprints`.
 func prepare() -> void:
 	if not _loaded:
 		_load()
 	_streets.height = height
 	_streets.load_data(year)
+	_region_cache = {}
+	_region_state = {}
+	_region_by_chunk = {}
 	_chunk_cache = {}
-	_lattice_hash = {}
+	_stamp_mask()
 	_gen_street_lots()
+	if not _warm:
+		_warm = true
+		_warm_meshes()
 
 
 func _load() -> void:
@@ -100,6 +132,9 @@ func _load() -> void:
 				"r": float(d["radius_m"]), "max": float(d["max_density"]), "sat": float(d["saturates_at"]),
 				"onset": int(d["onset"]), "eras": d["eras"],
 			})
+		var di: Dictionary = reg.get("default_inside", {})
+		_default_inside = {"id": "default_inside", "c": Vector2.ZERO, "r": 1.0e9, "max": float(di.get("max_density", 0.9)),
+			"sat": float(di.get("saturates_at", 150000)), "onset": int(di.get("onset", -378)), "eras": di.get("eras", [])}
 		var df: Dictionary = reg.get("default", {})
 		_default = {"id": "default", "c": Vector2.ZERO, "r": 1.0e9, "max": float(df.get("max_density", 0.1)),
 			"sat": float(df.get("saturates_at", 800000)), "onset": int(df.get("onset", -200)), "eras": df.get("eras", [])}
@@ -112,13 +147,33 @@ func _load() -> void:
 	if topo is Dictionary:
 		for ll in topo["tiber"]["course"]:
 			_tiber.append(UrbsGeo.to_local(float(ll[0]), float(ll[1])))
-	_material = StandardMaterial3D.new()
-	_material.vertex_color_use_as_albedo = true
-	_material.roughness = 0.95
-	_material.cull_mode = BaseMaterial3D.CULL_DISABLED
+	var mons: Variant = JSON.parse_string(FileAccess.get_file_as_string(MONUMENTS_PATH))
+	if mons is Dictionary:
+		for m in mons["monuments"]:
+			if str(m["id"]) == "murus_servianus" and m.has("route"):
+				for ll in m["route"]:
+					_wall.append(UrbsGeo.to_local(float(ll[0]), float(ll[1])))
 
 
-## Footprints (Rect2) of the monuments standing in `year`, read straight from monuments.json
+func _warm_meshes() -> void:
+	for shape in ["gable", "hip", "stepped"]:
+		for st in range(2, 6):
+			for feat in 3:
+				for pitch in 2:
+					for lod in 3:
+						UrbsFillMeshes.get_mesh("insula:%s:%d:%d:%d" % [shape, st, feat, pitch], lod)
+						if shape != "stepped" and st >= 3:
+							UrbsFillMeshes.get_mesh("insula:%s:%d:%d:%d:n" % [shape, st, feat, pitch], lod)
+	for lod in 3:
+		for k in ["domus", "horti", "casa:tile", "casa:thatch", "casa:shingle", "workshop:0", "workshop:1",
+				"tree:cypress", "tree:pine", "tree:round", "prop:cart", "prop:amph", "prop:sacks", "prop:crates",
+				"furn:fountain", "furn:well", "furn:shrine"]:
+			UrbsFillMeshes.get_mesh(k, lod)
+		for v in 6:
+			UrbsFillMeshes.get_mesh("taberna:%d" % v, lod)
+
+
+## Footprints (Rect2) of the monuments standing in `for_year`, read straight from monuments.json
 ## with rough sizes by type. For tools and previews; the game passes `urbs.monuments` bounds.
 static func footprints_from_json(for_year: int) -> Array:
 	var out: Array = []
@@ -161,6 +216,18 @@ static func _r(a: int, b: int, c: int) -> float:
 	return float(_hash(a, b, c)) / 2147483648.0
 
 
+static func _smooth_noise(p: Vector2) -> float:
+	var ix := floori(p.x)
+	var iz := floori(p.y)
+	var fx := p.x - ix
+	var fz := p.y - iz
+	fx = fx * fx * (3.0 - 2.0 * fx)
+	fz = fz * fz * (3.0 - 2.0 * fz)
+	var a := lerpf(_r(ix, iz, 61), _r(ix + 1, iz, 61), fx)
+	var b := lerpf(_r(ix, iz + 1, 61), _r(ix + 1, iz + 1, 61), fx)
+	return lerpf(a, b, fz)
+
+
 func _population() -> float:
 	if _pop_pts.is_empty():
 		return 100000.0
@@ -182,6 +249,8 @@ func _district_at(p: Vector2) -> Dictionary:
 		if d["r"] < best_r and p.distance_squared_to(d["c"]) < d["r"] * d["r"]:
 			best = d
 			best_r = d["r"]
+	if best == _default and year >= -378 and not _wall.is_empty() and Geometry2D.is_point_in_polygon(p, _wall):
+		return _default_inside
 	return best
 
 
@@ -199,27 +268,79 @@ func _era(d: Dictionary) -> Dictionary:
 func _occupancy(d: Dictionary) -> float:
 	if year < int(d["onset"]):
 		return 0.0
-	return float(d["max"]) * pow(clampf(_population() / float(d["sat"]), 0.0, 1.0), 0.7)
+	var f := pow(clampf(_population() / float(d["sat"]), 0.0, 1.0), 0.7)
+	# inside the Servian wall the city is built continuously once it has grown
+	return minf(float(d["max"]) * f * 1.12, 0.985)
 
 
-func _near_tiber(p: Vector2, band: float) -> bool:
-	for i in range(_tiber.size() - 1):
-		var a := _tiber[i]
-		var ab := _tiber[i + 1] - a
-		var u := clampf((p - a).dot(ab) / maxf(ab.length_squared(), 1.0), 0.0, 1.0)
-		if p.distance_to(a + ab * u) < band:
-			return true
-	return false
+# ---------------------------------------------------------------- hazard mask
+
+func _mask_idx(p: Vector2) -> int:
+	var ix := int((p.x + MASK_HALF) / MASK_RES)
+	var iz := int((p.y + MASK_HALF) / MASK_RES)
+	if ix < 0 or iz < 0 or ix >= MASK_N or iz >= MASK_N:
+		return -1
+	return iz * MASK_N + ix
+
+
+func _mask_disc(c: Vector2, r: float, bit: int) -> void:
+	var r2 := r * r
+	var x0 := int((c.x - r + MASK_HALF) / MASK_RES)
+	var x1 := int((c.x + r + MASK_HALF) / MASK_RES)
+	var z0 := int((c.y - r + MASK_HALF) / MASK_RES)
+	var z1 := int((c.y + r + MASK_HALF) / MASK_RES)
+	for iz in range(maxi(z0, 0), mini(z1, MASK_N - 1) + 1):
+		var pz := (float(iz) + 0.5) * MASK_RES - MASK_HALF
+		for ix in range(maxi(x0, 0), mini(x1, MASK_N - 1) + 1):
+			var px := (float(ix) + 0.5) * MASK_RES - MASK_HALF
+			if (px - c.x) * (px - c.x) + (pz - c.y) * (pz - c.y) <= r2:
+				_mask[iz * MASK_N + ix] |= bit
+
+
+func _mask_rect(r: Rect2, bit: int) -> void:
+	var x0 := int((r.position.x + MASK_HALF) / MASK_RES)
+	var x1 := int((r.end.x + MASK_HALF) / MASK_RES)
+	var z0 := int((r.position.y + MASK_HALF) / MASK_RES)
+	var z1 := int((r.end.y + MASK_HALF) / MASK_RES)
+	for iz in range(maxi(z0, 0), mini(z1, MASK_N - 1) + 1):
+		for ix in range(maxi(x0, 0), mini(x1, MASK_N - 1) + 1):
+			_mask[iz * MASK_N + ix] |= bit
+
+
+func _mask_line(pts: PackedVector2Array, step: float, r: float, bit: int) -> void:
+	for i in range(pts.size() - 1):
+		var a := pts[i]
+		var b := pts[i + 1]
+		var n := maxi(1, int(a.distance_to(b) / step))
+		for k in range(n + 1):
+			_mask_disc(a.lerp(b, float(k) / float(n)), r, bit)
+
+
+func _stamp_mask() -> void:
+	_mask = PackedByteArray()
+	_mask.resize(MASK_N * MASK_N)
+	_mask_line(_tiber, 12.0, TIBER_BAND, M_WATER)
+	for f in footprints:
+		_mask_rect((f as Rect2).grow(2.0), M_FOOT)
+	if year >= -378:    # the Servian wall (Livy 6.32.1: begun 378 BC)
+		_mask_line(_wall, 6.0, 8.0, M_FOOT)
+	for st in _streets.streets:
+		var pts: PackedVector2Array = st["pts"]
+		_mask_line(pts, 2.2, float(st["hw"]) + 0.2, M_STREET)
+
+
+func _hazard(p: Vector2) -> int:
+	var i := _mask_idx(p)
+	return 0 if i < 0 else _mask[i]
 
 
 # ---------------------------------------------------------------- lots
 
 ## A lot: {mesh, c, th, sx, sz, hx, hz, y, tint, top, kind}. `th` is the yaw of a local frame whose
-## +z points to the front (the street); (hx, hz) are half sizes along local x and z.
+## +z points to the front; (hx, hz) are half sizes along local x and z. tint.a is a per-lot random.
 func _make_lot(mesh: String, nominal: Vector2, c: Vector2, front: Vector2, w: float, d: float, tint: Color, top: float, kind: String) -> Dictionary:
-	var th := atan2(front.x, front.y)
-	return {"mesh": mesh, "c": c, "th": th, "sx": w / nominal.x, "sz": d / nominal.y, "hx": w * 0.5, "hz": d * 0.5,
-		"y": 0.0, "tint": tint, "top": top, "kind": kind}
+	return {"mesh": mesh, "c": c, "th": atan2(front.x, front.y), "sx": w / nominal.x, "sz": d / nominal.y,
+		"hx": w * 0.5, "hz": d * 0.5, "y": 0.0, "tint": tint, "top": top, "kind": kind}
 
 
 static func _axes(lot: Dictionary) -> Array:
@@ -227,7 +348,6 @@ static func _axes(lot: Dictionary) -> Array:
 	return [Vector2(cos(th), -sin(th)), Vector2(sin(th), cos(th))]
 
 
-## Separating-axis test of two oriented lot rectangles, with a margin.
 static func _overlap(a: Dictionary, b: Dictionary, margin: float) -> bool:
 	var aa := _axes(a)
 	var bb := _axes(b)
@@ -248,33 +368,8 @@ func _corners(lot: Dictionary) -> Array:
 	return [c, c + x + z, c + x - z, c - x + z, c - x - z, c + z, c - z, c + x, c - x]
 
 
-## True if the lot can stand: not on water, not on a monument, off other streets, not too steep.
-## `own` is the index of the street the lot fronts (its own strip is already accounted for).
-func _acceptable(lot: Dictionary, own: String) -> bool:
-	var pts := _corners(lot)
-	var c: Vector2 = lot["c"]
-	if _near_tiber(c, TIBER_BAND):
-		return false
-	var rad := maxf(lot["hx"], lot["hz"]) * 1.42
-	var bbox := Rect2(c.x - rad, c.y - rad, rad * 2.0, rad * 2.0)
-	for f in footprints:
-		if (f as Rect2).grow(1.5).intersects(bbox):
-			# test the real corners against the footprint
-			for p in pts:
-				if (f as Rect2).grow(1.5).has_point(p):
-					return false
-			if bbox.size.x > 0.0 and (f as Rect2).grow(1.5).encloses(Rect2(c.x - 1, c.y - 1, 2, 2)):
-				return false
-	var near := _streets.nearest_street(c)
-	if not near.is_empty() and near["distance"] < rad + 24.0:
-		for p in pts:
-			var ns := _streets.nearest_street(p)
-			if ns.is_empty():
-				continue
-			if str(ns["id"]) != own and ns["distance"] < float(ns["half_width"]) + 0.8:
-				return false
-			if str(ns["id"]) == own and ns["distance"] < float(ns["half_width"]) + 0.1:
-				return false
+## Slope test and ground height of a lot; sets lot.y. False if too steep.
+func _ground_ok(lot: Dictionary, pts: Array) -> bool:
 	var lo := 1.0e9
 	var hi := -1.0e9
 	var sum := 0.0
@@ -290,7 +385,7 @@ func _acceptable(lot: Dictionary, own: String) -> bool:
 	return true
 
 
-func _pick_type(d: Dictionary, era: Dictionary, roll: float) -> String:
+func _pick_type(era: Dictionary, roll: float) -> String:
 	var w: Dictionary = era["w"]
 	var total := 0.0
 	for k in w:
@@ -307,141 +402,154 @@ func _pick_type(d: Dictionary, era: Dictionary, roll: float) -> String:
 	return ""
 
 
-func _storeys(d: Dictionary, r: float) -> int:
+func _storeys(r: float) -> int:
 	# insulae are rare and low in the early Republic (Livy 21.62.3: a third storey by 218 BC)
 	if year < -250:
 		return 2 + int(r * 2.0)
 	if year < -150:
 		return 3 + int(r * 2.0)
-	return 3 + int(r * 2.99)
-
-
-func _shape(r: float) -> String:
-	return "gable" if r < 0.5 else ("hip" if r < 0.75 else "stepped")
+	return 3 + int(r * 2.99) if r < 0.97 else 5
 
 
 func _roof_kind(r: float) -> String:
-	if year < -280:    # shingles and thatch until the war with Pyrrhus (Pliny NH 16.36, unverified)
+	if year < -280:
 		return "thatch" if r < 0.55 else "shingle"
 	return "tile" if r < 0.8 else "shingle"
 
 
-## Build the lot of `type` at centre `c`, front direction `front`, from hash values `h` (3 ints).
-## Returns {} if the type makes no building.
-func _lot_of(type: String, c: Vector2, front: Vector2, a: int, b: int, salt: int) -> Dictionary:
-	var tint: Color = PALETTE[_hash(a, b, salt + 90) % PALETTE.size()]
+## The lot of `type` at `c`, facing `front`, from hash values (a, b, salt). `cell` limits sizes to a
+## 17 m lattice plot. Returns {} for types that make no building.
+func _lot_of(type: String, c: Vector2, front: Vector2, a: int, b: int, salt: int, cell := false) -> Dictionary:
+	var tint := Color(PALETTE[_hash(a, b, salt + 90) % PALETTE.size()], _r(a, b, salt + 91))
+	var cap := 13.2 if cell else 99.0
 	match type:
 		"insula":
-			var s := _storeys({}, _r(a, b, salt + 1))
-			var w := 14.0 + _r(a, b, salt + 2) * 8.5
-			var d := 14.0 + _r(a, b, salt + 3) * 8.5
-			var shape := _shape(_r(a, b, salt + 4))
-			var top := 3.7 + 3.1 * float(s - 1) + 2.4
-			return _make_lot("insula:%s:%d" % [shape, s], Vector2(18, 18), c, front, w, d, tint, top, "insula")
+			var s := _storeys(_r(a, b, salt + 1))
+			var w := minf(10.0 + _r(a, b, salt + 2) * 4.0, cap)
+			var d := minf(11.0 + _r(a, b, salt + 3) * 3.8, cap)
+			var shape := "gable" if _r(a, b, salt + 4) < 0.5 else ("hip" if _r(a, b, salt + 4) < 0.75 else "stepped")
+			var fr := _r(a, b, salt + 6)
+			var feat := 0 if fr < 0.55 else (1 if fr < 0.8 else 2)
+			var pitch := 1 if _r(a, b, salt + 7) < 0.4 else 0
+			var top := 3.7 + 3.1 * float(s - 1) + (3.3 if pitch == 1 else 1.9)
+			if _r(a, b, salt + 8) < 0.75 and shape != "stepped" and s >= 3:
+				# a narrow-fronted house, 6-7 m wide: the commonest kind of dwelling in the streets
+				var wn := 5.6 + _r(a, b, salt + 9) * 1.2
+				var lot_n := _make_lot("insula:%s:%d:%d:%d:n" % [shape, s, feat, pitch], Vector2(7, 18), c, front, wn, d, tint, top, "insula")
+				lot_n["narrow"] = true
+				return lot_n
+			return _make_lot("insula:%s:%d:%d:%d" % [shape, s, feat, pitch], Vector2(18, 18), c, front, w, d, tint, top, "insula")
 		"casa":
-			var w2 := 6.5 + _r(a, b, salt + 2) * 4.0
-			var d2 := 7.5 + _r(a, b, salt + 3) * 4.0
-			return _make_lot("casa:" + _roof_kind(_r(a, b, salt + 5)), Vector2(8, 9), c, front, w2, d2, tint, 4.9, "casa")
+			var w2 := 5.2 + _r(a, b, salt + 2) * 1.4 if cell else 6.5 + _r(a, b, salt + 2) * 3.0
+			var d2 := 6.0 + _r(a, b, salt + 3) * 1.5 if cell else 7.5 + _r(a, b, salt + 3) * 3.0
+			return _make_lot("casa:" + _roof_kind(_r(a, b, salt + 5)), Vector2(8, 9), c, front, w2, d2, tint, 5.0, "casa")
 		"workshop":
-			var w3 := 13.0 + _r(a, b, salt + 2) * 4.0
-			var d3 := 12.0 + _r(a, b, salt + 3) * 3.0
-			return _make_lot("workshop:%d" % int(_r(a, b, salt + 4) * 2.0), Vector2(16, 14), c, front, w3, d3, tint, 7.8, "workshop")
+			var w3 := minf(11.5 + _r(a, b, salt + 2) * 3.0, cap)
+			var d3 := minf(10.5 + _r(a, b, salt + 3) * 2.5, cap)
+			return _make_lot("workshop:%d" % int(_r(a, b, salt + 4) * 2.0), Vector2(16, 14), c, front, w3, d3, tint, 8.2, "workshop")
 		"domus":
 			var w4 := 17.0 + _r(a, b, salt + 2) * 7.0
-			var d4 := 29.0 + _r(a, b, salt + 3) * 13.0
-			return _make_lot("domus", Vector2(20, 34), c, front, w4, d4, tint, 6.3, "domus")
+			var d4 := 28.0 + _r(a, b, salt + 3) * 7.0
+			if cell:
+				w4 = 18.0 + _r(a, b, salt + 2) * 4.5
+				d4 = 21.0 + _r(a, b, salt + 3) * 4.5
+			return _make_lot("domus", Vector2(20, 34), c, front, w4, d4, tint, 6.4, "domus")
 	return {}
 
 
-## Street-front lots: for each street and side, stretches of tabernae (shop-fronts) with houses
-## behind them, or houses directly on the street. Deterministic: depends on the street, the
-## stretch and the position along it only.
+# ---------------------------------------------------------------- street layer
+
 func _gen_street_lots() -> void:
 	_street_lots = []
 	_street_hash = {}
 	_street_by_chunk = {}
+	var furniture_n := 0
+	# 1. crossroads shrines
+	for sh_pos in _crossroads():
+		var p: Vector2 = sh_pos[0]
+		var front: Vector2 = sh_pos[1]
+		if _occupancy(_district_at(p)) < 0.25:
+			continue
+		var lot := _make_lot("furn:shrine", Vector2(2.2, 2.0), p, front, 2.2, 2.0, Color(1, 1, 1, _r(roundi(p.x), roundi(p.y), 5)), 2.7, "furn")
+		_add_street_lot(lot, "", 0.2, true)
+		furniture_n += 1
+	# 2. wells and fountains along the streets
 	for si in _streets.streets.size():
 		var st: Dictionary = _streets.streets[si]
+		if str(st["kind"]) == "road":
+			continue
 		var sid := str(st["id"])
 		var sh := hash(sid) & 0xfffff
-		var length: float = st["len"]
-		var hw: float = st["hw"]
-		for side in [1, -1]:
-			# 1. the stretches: [end, shops?]
-			var stretches: Array = []
-			var s := 0.0
-			var n := 0
-			while s < length:
-				var p0: Vector2 = _streets.sample_at(si, s)[0]
-				var era0 := _era(_district_at(p0))
-				var e := s + 22.0 + _r(sh, n, side + 5) * 40.0
-				stretches.append([e, _r(sh, n, side + 7) < float(era0["shops"])])
-				s = e
-				n += 1
-			# 2. tabernae along the shop stretches
-			s = 0.0
-			var item := 0
-			while s < length:
-				var shops_here := _shops_at(stretches, s)
-				if not shops_here:
-					s = _stretch_end(stretches, s)
-					continue
-				var tw := 3.7 + _r(sh, item, side + 11) * 1.9
-				var mid := _streets.sample_at(si, s + tw * 0.5)
-				var mp: Vector2 = mid[0]
-				var mt: Vector2 = mid[1]
-				if mp.length() < 3600.0:
-					var mn := Vector2(-mt.y, mt.x) * float(side)
-					var occ := _occupancy(_district_at(mp))
-					if _r(sh, item, side + 13) < 0.93 and _r(sh, item, side + 15) < clampf(occ * 1.25, 0.0, 1.0):
-						var dd := 5.0 + _r(sh, item, side + 17) * 0.4
-						var pos := mp + mn * (hw + KERB + 0.4 + dd * 0.5)
-						var variant := int(_r(sh, item, side + 19) * 3.0)
-						_add_street_lot(_make_lot("taberna:%d" % variant, Vector2(4.6, 5.2), pos, -mn, tw, dd,
-							PALETTE[_hash(sh, item, side + 21) % PALETTE.size()], 4.5, "taberna"), sid, 0.2)
-				s += tw + (2.4 if _r(sh, item, side + 22) < 0.07 else 0.0)
-				item += 1
-			# 3. houses along the whole street (behind the shops where there are any)
-			s = 0.0
-			item = 0
-			while s < length:
-				var sp := _streets.sample_at(si, s)
-				var p: Vector2 = sp[0]
-				if p.length() > 3600.0:
-					s += 30.0
-					continue
-				var d := _district_at(p)
-				var era := _era(d)
-				var type := _pick_type(d, era, _r(sh, item, side + 25))
-				var probe := _lot_of(type, Vector2.ZERO, Vector2.UP, sh, item, side * 31 + 3) if type != "" else {}
-				if probe.is_empty() or _r(sh, item, side + 27) >= _occupancy(d):
-					s += 12.0 + _r(sh, item, side + 28) * 8.0
-					item += 1
-					continue
-				var wide: float = probe["hx"] * 2.0
-				var depth: float = probe["hz"] * 2.0
-				var mid2 := _streets.sample_at(si, s + wide * 0.5)
-				var np: Vector2 = mid2[0]
-				var nt: Vector2 = mid2[1]
-				var nn := Vector2(-nt.y, nt.x) * float(side)
-				var rowdist := hw + KERB + 0.5 + (SHOP_DEPTH + 0.5 if _shops_at(stretches, s + wide * 0.5) else 0.0)
-				var lot := _lot_of(type, np + nn * (rowdist + depth * 0.5), -nn, sh, item, side * 31 + 3)
-				_add_street_lot(lot, sid, 0.25)
-				s += wide + _r(sh, item, side + 29) * 2.2
-				item += 1
-	# bucket by chunk
-	for lot in _street_lots:
-		var key := Vector2i(floori(lot["c"].x / CHUNK), floori(lot["c"].y / CHUNK))
-		if not _street_by_chunk.has(key):
-			_street_by_chunk[key] = []
-		_street_by_chunk[key].append(lot)
-	count_stats = {}
+		var s := 25.0 + _r(sh, 1, 3) * 60.0
+		var n := 0
+		while s < float(st["len"]) - 10.0:
+			var sp := _streets.sample_at(si, s)
+			var p: Vector2 = sp[0]
+			var t: Vector2 = sp[1]
+			var d := _district_at(p)
+			if _occupancy(d) > 0.3 and p.length() < 3000.0:
+				var side := 1.0 if _r(sh, n, 11) < 0.5 else -1.0
+				var nn := Vector2(-t.y, t.x) * side
+				var fountain := year >= -312 and _r(sh, n, 12) < (0.5 if year < -144 else 0.8)
+				var kind := "fountain" if fountain else "well"
+				var nominal := Vector2(1.8, 0.8) if fountain else Vector2(1.4, 1.4)
+				var depth := nominal.y
+				var cp := p + nn * (float(st["hw"]) + KERB + 0.35 + depth * 0.5)
+				var lot := _make_lot("furn:" + kind, nominal, cp, -nn, nominal.x, nominal.y, Color(1, 1, 1, _r(sh, n, 13)), 2.1, "furn")
+				_add_street_lot(lot, sid, 0.3, true)
+				furniture_n += 1
+			s += 80.0 + _r(sh, n, 14) * 60.0
+			n += 1
+	# 3. tabernae and houses along every street
+	for si in _streets.streets.size():
+		_street_rows(si)
+	_bucket_street_lots()
+	count_stats = {"furniture": furniture_n}
 	for lot in _street_lots:
 		var k := str(lot["mesh"]).split(":")[0]
 		count_stats[k] = int(count_stats.get(k, 0)) + 1
 
 
-static func _shops_at(stretches: Array, s: float) -> bool:
+## Points where two known streets cross: [[position of the shrine, facing], ...].
+func _crossroads() -> Array:
+	var out: Array = []
+	var seen := {}
+	var grid: Dictionary = _streets._grid
+	var keys := grid.keys()
+	keys.sort()
+	for key in keys:
+		var refs: Array = grid[key]
+		for i in refs.size():
+			for j in range(i + 1, refs.size()):
+				var ra: Array = refs[i]
+				var rb: Array = refs[j]
+				if ra[0] == rb[0]:
+					continue
+				var sa: Dictionary = _streets.streets[ra[0]]
+				var sb: Dictionary = _streets.streets[rb[0]]
+				var a0: Vector2 = sa["pts"][ra[1]]
+				var a1: Vector2 = sa["pts"][ra[1] + 1]
+				var b0: Vector2 = sb["pts"][rb[1]]
+				var b1: Vector2 = sb["pts"][rb[1] + 1]
+				var hit: Variant = Geometry2D.segment_intersects_segment(a0, a1, b0, b1)
+				if hit == null:
+					continue
+				var p: Vector2 = hit
+				var cell := Vector2i(roundi(p.x / 30.0), roundi(p.y / 30.0))
+				if seen.has(cell):
+					continue
+				seen[cell] = true
+				var ta := (a1 - a0).normalized()
+				var tb := (b1 - b0).normalized()
+				var na := Vector2(-ta.y, ta.x)
+				var nb := Vector2(-tb.y, tb.x)
+				var corner := p + na * (float(sa["hw"]) + 2.6) + nb * (float(sb["hw"]) + 2.6)
+				var face := (p - corner).normalized()
+				out.append([corner, face])
+	return out
+
+
+func _shops_at(stretches: Array, s: float) -> bool:
 	for e in stretches:
 		if s < e[0]:
 			return e[1]
@@ -455,12 +563,107 @@ static func _stretch_end(stretches: Array, s: float) -> float:
 	return 1.0e9
 
 
-func _add_street_lot(lot: Dictionary, own: String, margin: float) -> void:
-	if lot.is_empty():
+func _street_rows(si: int) -> void:
+	var st: Dictionary = _streets.streets[si]
+	var sid := str(st["id"])
+	var sh := hash(sid) & 0xfffff
+	var length: float = st["len"]
+	var hw: float = st["hw"]
+	for side in [1, -1]:
+		var stretches: Array = []
+		var s := 0.0
+		var n := 0
+		while s < length:
+			var p0: Vector2 = _streets.sample_at(si, s)[0]
+			var era0 := _era(_district_at(p0))
+			var e := s + 22.0 + _r(sh, n, side + 5) * 40.0
+			stretches.append([e, _r(sh, n, side + 7) < float(era0["shops"])])
+			s = e
+			n += 1
+		# tabernae along the shop stretches
+		s = 0.0
+		var item := 0
+		while s < length:
+			if not _shops_at(stretches, s):
+				s = _stretch_end(stretches, s)
+				continue
+			var tw := 3.6 + _r(sh, item, side + 11) * 1.8
+			var mid := _streets.sample_at(si, s + tw * 0.5)
+			var mp: Vector2 = mid[0]
+			var mt: Vector2 = mid[1]
+			if mp.length() < 3500.0:
+				var mn := Vector2(-mt.y, mt.x) * float(side)
+				var occ := _occupancy(_district_at(mp))
+				if _r(sh, item, side + 13) < 0.95 and _r(sh, item, side + 15) < clampf(occ * 1.3, 0.0, 1.0):
+					var dd := SHOP_DEPTH + _r(sh, item, side + 17) * 0.4
+					var pos := mp + mn * (hw + KERB + FOOTPATH + dd * 0.5)
+					var variant := int(_r(sh, item, side + 19) * 6.0)
+					var tab := _make_lot("taberna:%d" % variant, Vector2(4.6, 5.2), pos, -mn, tw, dd, Color(PALETTE[_hash(sh, item, side + 21) % PALETTE.size()], _r(sh, item, side + 20)), 5.0 if variant != 4 else 7.5, "taberna")
+					if _add_street_lot(tab, sid, 0.2):
+						_street_prop(mp, mn, hw, sh, item, side)
+			s += tw + (2.2 if _r(sh, item, side + 22) < 0.06 else 0.0)
+			item += 1
+		# houses along the whole street
+		s = 0.0
+		item = 0
+		while s < length:
+			var sp := _streets.sample_at(si, s)
+			var p: Vector2 = sp[0]
+			if p.length() > 3500.0:
+				s += 30.0
+				continue
+			var d := _district_at(p)
+			var era := _era(d)
+			var type := _pick_type(era, _r(sh, item, side + 25))
+			if type == "horti" or type == "field":
+				type = ""
+			if type == "":
+				s += 10.0
+				item += 1
+				continue
+			var probe := _lot_of(type, Vector2.ZERO, Vector2.UP, sh, item, side * 31 + 3)
+			if probe.is_empty() or _r(sh, item, side + 27) >= _occupancy(d):
+				s += 8.0 + _r(sh, item, side + 28) * 6.0
+				item += 1
+				continue
+			var wide: float = probe["hx"] * 2.0
+			var depth: float = probe["hz"] * 2.0
+			var mid2 := _streets.sample_at(si, s + wide * 0.5)
+			var np: Vector2 = mid2[0]
+			var nt: Vector2 = mid2[1]
+			var nn := Vector2(-nt.y, nt.x) * float(side)
+			var rowdist := hw + KERB + FOOTPATH + (SHOP_DEPTH + 0.5 if _shops_at(stretches, s + wide * 0.5) else 0.0)
+			var lot := _lot_of(type, np + nn * (rowdist + depth * 0.5), -nn, sh, item, side * 31 + 3)
+			var ok := _add_street_lot(lot, sid, 0.25)
+			s += wide + (_r(sh, item, side + 29) * 1.8 + 0.4 if ok else 5.0)
+			item += 1
+
+
+## Heaps, carts and sacks on the footpath in front of a shop.
+func _street_prop(mp: Vector2, mn: Vector2, hw: float, sh: int, item: int, side: int) -> void:
+	var r := _r(sh, item, side + 41)
+	if r > 0.38:
 		return
+	var kind := "amph" if r < 0.14 else ("sacks" if r < 0.22 else ("cart" if r < 0.27 else "crates"))
+	var along := (_r(sh, item, side + 43) - 0.5) * 1.6
+	var tan := Vector2(-mn.y, mn.x)
+	var pos := mp + mn * (hw + KERB + 0.55) + tan * along
+	var th := Vector2(-mn.x, -mn.y)
+	var lot := _make_lot("prop:" + kind, Vector2(1, 1), pos, th, 1.0, 1.0, Color(1, 1, 1, _r(sh, item, side + 44)), 1.5, "prop")
+	lot["hx"] = 0.4
+	lot["hz"] = 0.4
+	lot["c"] = pos
+	lot["y"] = float(height.call(pos.x, pos.y))
+	_street_lots.append(lot)
+
+
+func _add_street_lot(lot: Dictionary, own: String, margin: float, force_ok := false) -> bool:
+	if lot.is_empty():
+		return false
 	var c: Vector2 = lot["c"]
+	if c.length() > 3500.0:
+		return false
 	var key := Vector2i(floori(c.x / 30.0), floori(c.y / 30.0))
-	# overlap with lots already placed nearby
 	for dx in range(-1, 2):
 		for dz in range(-1, 2):
 			var k2 := key + Vector2i(dx, dz)
@@ -468,42 +671,38 @@ func _add_street_lot(lot: Dictionary, own: String, margin: float) -> void:
 				for idx in _street_hash[k2]:
 					var other: Dictionary = _street_lots[idx]
 					if c.distance_to(other["c"]) < 60.0 and _overlap(lot, other, margin):
-						return
-	if not _acceptable(lot, own):
-		return
+						return false
+	var pts := _corners(lot)
+	for p in pts:
+		if _hazard(p) & (M_FOOT | M_WATER):
+			return false
+	if not force_ok or str(lot["kind"]) != "furn":
+		var near := _streets.nearest_street(c)
+		if not near.is_empty() and near["distance"] < maxf(lot["hx"], lot["hz"]) * 1.42 + 14.0:
+			for p in pts:
+				var ns := _streets.nearest_street(p)
+				if ns.is_empty():
+					continue
+				var lim := float(ns["half_width"]) + (0.15 if str(ns["id"]) == own else 0.7)
+				if ns["distance"] < lim:
+					return false
+	if not _ground_ok(lot, pts):
+		return false
 	_street_hash[key] = _street_hash.get(key, [])
 	_street_hash[key].append(_street_lots.size())
 	_street_lots.append(lot)
+	return true
 
 
-## Lattice lots of one chunk: the ground between the streets.
-func _lattice_lots(key: Vector2i) -> Array:
-	var out: Array = []
-	var i0 := key.x * 10
-	var j0 := key.y * 10
-	var placed: Array = []
-	for j in range(j0, j0 + 10):
-		for i in range(i0, i0 + 10):
-			var lot := _lattice_cell(i, j)
-			if lot.is_empty():
-				continue
-			var hit := false
-			for o in placed:
-				if lot["c"].distance_to(o["c"]) < 40.0 and _overlap(lot, o, 0.5):
-					hit = true
-					break
-			if hit:
-				continue
-			if _overlaps_street_lots(lot):
-				continue
-			if not _acceptable(lot, ""):
-				continue
-			placed.append(lot)
-			out.append(lot)
-	return out
+func _bucket_street_lots() -> void:
+	for lot in _street_lots:
+		var key := Vector2i(floori(lot["c"].x / CHUNK), floori(lot["c"].y / CHUNK))
+		if not _street_by_chunk.has(key):
+			_street_by_chunk[key] = []
+		_street_by_chunk[key].append(lot)
 
 
-func _overlaps_street_lots(lot: Dictionary) -> bool:
+func _overlaps_street_lots(lot: Dictionary, margin: float) -> bool:
 	var c: Vector2 = lot["c"]
 	var key := Vector2i(floori(c.x / 30.0), floori(c.y / 30.0))
 	for dx in range(-2, 3):
@@ -512,136 +711,273 @@ func _overlaps_street_lots(lot: Dictionary) -> bool:
 			if _street_hash.has(k2):
 				for idx in _street_hash[k2]:
 					var other: Dictionary = _street_lots[idx]
-					if c.distance_to(other["c"]) < 70.0 and _overlap(lot, other, 0.8):
+					if c.distance_to(other["c"]) < 70.0 and _overlap(lot, other, margin):
 						return true
 	return false
 
 
-func _horti_cell(i: int, j: int) -> bool:
-	var hi := floori(float(i) / 3.0)
-	var hj := floori(float(j) / 3.0)
-	var mc := Vector2((hi * 3 + 1.5) * CELL, (hj * 3 + 1.5) * CELL)
-	var d := _district_at(mc)
+# ---------------------------------------------------------------- the lattice
+
+func _region_angle(gi: int, gj: int) -> float:
+	var c := Vector2((float(gi) + 0.5) * REG, (float(gj) + 0.5) * REG)
+	var f := _smooth_noise(c / 650.0)
+	return deg_to_rad(roundf((f * 2.0 - 1.0) * 36.0 / 6.0) * 6.0)
+
+
+## Candidate lots of region (gi, gj): the lattice plots, before any acceptance test. The lattice is
+## the same global one (rotated about the origin by the region's angle) for every region, so
+## neighbours with the same angle fit exactly and never collide.
+func _region_cands(gi: int, gj: int) -> Array:
+	var rk := Vector2i(gi, gj)
+	if _region_cache.has(rk):
+		return _region_cache[rk]
+	var out: Array = []
+	var th := _region_angle(gi, gj)
+	var rc := Vector2((float(gi) + 0.5) * REG, (float(gj) + 0.5) * REG)
+	var ax := Vector2(cos(th), sin(th))
+	var az := Vector2(-sin(th), cos(th))
+	var sq := Rect2(float(gi) * REG, float(gj) * REG, REG, REG)
+	var half := REG * 0.71 + PITCH
+	var ru := rc.dot(ax)
+	var rv := rc.dot(az)
+	var ba0 := floori((ru - half) / BP) - 1
+	var ba1 := floori((ru + half) / BP) + 1
+	var bb0 := floori((rv - half) / BP) - 1
+	var bb1 := floori((rv + half) / BP) + 1
+	for bb in range(bb0, bb1 + 1):
+		for l in 3:
+			var v := float(bb) * BP + float(l) * PITCH + PITCH * 0.5
+			for ba in range(ba0, ba1 + 1):
+				for k in 3:
+					var u := float(ba) * BP + float(k) * PITCH + PITCH * 0.5
+					var c := ax * u + az * v
+					if not sq.has_point(c):
+						continue
+					out.append({"c": c, "a": ba * 3 + k, "b": bb * 3 + l, "ba": ba, "bb": bb, "k": k, "l": l, "ax": ax, "az": az, "gi": gi, "gj": gj,
+						"bc": ax * (float(ba) * BP + PITCH * 1.5) + az * (float(bb) * BP + PITCH * 1.5)})
+	_region_cache[rk] = out
+	return out
+
+
+## Plan of one block: "horti", "domus" or "" (plots decided one by one).
+func _block_plan(gi: int, gj: int, ba: int, bb: int, bc: Vector2) -> String:
+	var d := _district_at(bc)
 	var era := _era(d)
 	var w: Dictionary = era["w"]
 	var total := 0.0
-	for k in w:
-		total += float(w[k])
-	if total <= 0.0 or not w.has("horti"):
-		return false
-	return _r(hi, hj, 11) < float(w["horti"]) / total and _r(hi, hj, 12) < _occupancy(d) * 1.4
+	for key in w:
+		total += float(w[key])
+	if total <= 0.0:
+		return ""
+	var occ := _occupancy(d)
+	var r := _r(gi * 97 + ba, gj * 89 + bb, 11)
+	if w.has("horti") and r < float(w["horti"]) / total and _r(gi * 97 + ba, gj * 89 + bb, 12) < occ * 1.3:
+		return "horti"
+	var r2 := _r(gi * 97 + ba, gj * 89 + bb, 13)
+	if w.has("domus") and r2 < float(w["domus"]) / total and _r(gi * 97 + ba, gj * 89 + bb, 14) < occ:
+		return "domus"
+	return ""
 
 
-func _domus_macro(i: int, j: int) -> bool:
-	var di := floori(float(i) / 2.0)
-	var dj := floori(float(j) / 2.0)
-	var mc := Vector2((di * 2 + 1.0) * CELL, (dj * 2 + 1.0) * CELL)
-	var d := _district_at(mc)
+func _cell_lots(cd: Dictionary, sub_only := false) -> Array:
+	var gi: int = cd["gi"]
+	var gj: int = cd["gj"]
+	var a: int = cd["a"]
+	var b: int = cd["b"]
+	var k: int = cd["k"]
+	var l: int = cd["l"]
+	var ba: int = cd["ba"]
+	var bb: int = cd["bb"]
+	var c: Vector2 = cd["c"]
+	var ax: Vector2 = cd["ax"]
+	var az: Vector2 = cd["az"]
+	var seed_a := gi * 131 + a
+	var seed_b := gj * 137 + b
+	var plan := _block_plan(gi, gj, ba, bb, cd["bc"])
+	var d := _district_at(c)
 	var era := _era(d)
-	var w: Dictionary = era["w"]
+	var occ := _occupancy(d)
+	var out: Array = []
+	var jit := deg_to_rad((_r(seed_a, seed_b, 3) - 0.5) * 6.0)
+	if plan == "horti":
+		if k != 1 or l != 1:
+			return out
+		var s := 43.0
+		var front := ax * cos(jit) + az * sin(jit)
+		front = (-az if _r(seed_a, seed_b, 4) < 0.5 else az)
+		out.append(_make_lot("horti", Vector2(70, 70), cd["bc"], front, s, s, Color(1, 1, 1, _r(seed_a, seed_b, 5)), 8.0, "horti"))
+		return out
+	if plan == "domus" and k < 2 and l < 2:
+		if k != 0 or l != 0:
+			return out
+		var cc: Vector2 = c + ax * PITCH * 0.5 + az * PITCH * 0.5
+		var fr := -az if _r(seed_a, seed_b, 4) < 0.5 else -ax
+		var lot := _lot_of("domus", cc, fr, seed_a, seed_b, 300, true)
+		out.append(lot)
+		return out
+	# front: toward the nearest lane of the block
+	var opts: Array = []
+	if k == 0: opts.append(-ax)
+	if k == 2: opts.append(ax)
+	if l == 0: opts.append(-az)
+	if l == 2: opts.append(az)
+	if opts.is_empty():
+		opts = [ax, -ax, az, -az]
+	var fdir: Vector2 = opts[int(_r(seed_a, seed_b, 6) * float(opts.size()))]
+	var front2 := fdir.rotated(jit)
+	var w_all: Dictionary = era["w"]
 	var total := 0.0
-	for k in w:
-		total += float(w[k])
-	if total <= 0.0 or not w.has("domus"):
-		return false
-	if not (_r(di, dj, 21) < float(w["domus"]) / total and _r(di, dj, 22) < _occupancy(d)):
-		return false
-	for oi in 2:
-		for oj in 2:
-			if _horti_cell(di * 2 + oi, dj * 2 + oj):
-				return false
+	for key in w_all:
+		total += float(w_all[key])
+	if total <= 0.0:
+		return out
+	var type := _pick_type(era, _r(seed_a, seed_b, 7))
+	if type == "domus":
+		type = "insula"
+	if type == "horti" or type == "field" or type == "":
+		return out
+	if _r(seed_a, seed_b, 8) >= occ and not sub_only:
+		return out
+	if type == "casa":
+		# four small houses to a plot, each its own lot
+		for q in 4:
+			var qo := Vector2(float(q % 2) - 0.5, float(q / 2) - 0.5) * (PITCH * 0.5)
+			var qc := c + ax * qo.x + az * qo.y
+			qc += Vector2(_r(seed_a, seed_b, 20 + q) - 0.5, _r(seed_a, seed_b, 30 + q) - 0.5) * 2.4
+			if _r(seed_a, seed_b, 40 + q) > 0.5:
+				continue
+			var fq := (fdir if q % 2 == 0 else -fdir).rotated(deg_to_rad((_r(seed_a, seed_b, 50 + q) - 0.5) * 28.0))
+			var lot := _lot_of("casa", qc, fq, seed_a * 5 + q, seed_b, 400, true)
+			out.append(lot)
+		return out
+	var cj := c + Vector2(_r(seed_a, seed_b, 9) - 0.5, _r(seed_a, seed_b, 10) - 0.5) * 1.4
+	var main := _lot_of(type, cj, front2, seed_a, seed_b, 500, true)
+	if main.get("narrow", false):
+		# two narrow houses side by side on one plot
+		var along := Vector2(front2.y, -front2.x)
+		var wn: float = main["hx"] * 2.0
+		var second := main.duplicate()
+		main["c"] = cj + along * (wn * 0.5 + 0.2)
+		second["c"] = cj - along * (wn * 0.5 + 0.2)
+		var salt2 := _lot_of(type, cj, front2, seed_a + 1, seed_b, 500, true)
+		second["tint"] = salt2["tint"]
+		out.append(second)
+	out.append(main)
+	return out
+
+
+## Priority of a region when two lattices overlap (lower wins).
+func _rprio(gi: int, gj: int) -> int:
+	return _hash(gi, gj, 77)
+
+
+## Work on region `rk` until `deadline` (usec ticks). True when done.
+func advance_region(rk: Vector2i, deadline: int) -> bool:
+	if not _region_state.has(rk):
+		_region_state[rk] = {"cands": _region_cands(rk.x, rk.y), "idx": 0, "lots": [], "done": false}
+	var st: Dictionary = _region_state[rk]
+	if st["done"]:
+		return true
+	var cands: Array = st["cands"]
+	var neigh: Array = []
+	while st["idx"] < cands.size():
+		var cd: Dictionary = cands[st["idx"]]
+		st["idx"] += 1
+		for lot in _cell_lots(cd):
+			if lot.is_empty():
+				continue
+			var verdict := _lattice_verdict(lot, rk, neigh)
+			if verdict == 0:
+				st["lots"].append(lot)
+			elif verdict == 2 and str(lot["kind"]) != "casa" and str(lot["kind"]) != "horti" and str(lot["kind"]) != "domus":
+				# plot blocked by a street-front lot: pack the gap with small houses instead
+				var ax: Vector2 = cd["ax"]
+				var az: Vector2 = cd["az"]
+				for q in 4:
+					var qo := Vector2(float(q % 2) - 0.5, float(q / 2) - 0.5) * (PITCH * 0.5)
+					var qc: Vector2 = cd["c"] + ax * qo.x + az * qo.y
+					var sa: int = cd["gi"] * 131 + cd["a"]
+					var sb: int = cd["gj"] * 137 + cd["b"]
+					var small := _lot_of("casa", qc, (ax if q % 2 == 0 else -az), sa * 5 + q, sb, 600, true)
+					small["sx"] *= 0.8
+					small["sz"] *= 0.8
+					small["hx"] *= 0.8
+					small["hz"] *= 0.8
+					if _lattice_verdict(small, rk, neigh) == 0:
+						st["lots"].append(small)
+		if Time.get_ticks_usec() > deadline:
+			return false
+	st["done"] = true
+	for lot in st["lots"]:
+		var key := Vector2i(floori(lot["c"].x / CHUNK), floori(lot["c"].y / CHUNK))
+		if not _region_by_chunk.has(key):
+			_region_by_chunk[key] = []
+		_region_by_chunk[key].append(lot)
 	return true
 
 
-## Smooth value noise in [0, 1) on a unit lattice (for clustering).
-static func _smooth_noise(p: Vector2) -> float:
-	var ix := floori(p.x)
-	var iz := floori(p.y)
-	var fx := p.x - ix
-	var fz := p.y - iz
-	fx = fx * fx * (3.0 - 2.0 * fx)
-	fz = fz * fz * (3.0 - 2.0 * fz)
-	var a := lerpf(_r(ix, iz, 61), _r(ix + 1, iz, 61), fx)
-	var b := lerpf(_r(ix, iz + 1, 61), _r(ix + 1, iz + 1, 61), fx)
-	return lerpf(a, b, fz)
-
-
-func _block_angle(c: Vector2) -> float:
-	var gi := floori(c.x / 130.0)
-	var gj := floori(c.y / 130.0)
-	var pick := [-12.0, -6.0, 0.0, 0.0, 6.0, 12.0, 20.0]
-	return deg_to_rad(pick[int(_r(gi, gj, 41) * float(pick.size()))])
-
-
-func _lattice_cell(i: int, j: int) -> Dictionary:
-	var centre := Vector2((float(i) + 0.5) * CELL, (float(j) + 0.5) * CELL)
-	if centre.length() > 3300.0:
-		return {}
-	# horti: 3 x 3 cells
-	if _horti_cell(i, j):
-		if posmod(i, 3) != 1 or posmod(j, 3) != 1:
-			return {}
-		var hi := floori(float(i) / 3.0)
-		var hj := floori(float(j) / 3.0)
-		var hc := Vector2((hi * 3 + 1.5) * CELL, (hj * 3 + 1.5) * CELL)
-		if _streets.nearest_street(hc).get("distance", 999.0) < 46.0:
-			return {}
-		var th := _block_angle(hc) + float(int(_r(hi, hj, 13) * 4.0)) * PI * 0.5
-		var s := 0.92 + _r(hi, hj, 14) * 0.1
-		return _make_lot("horti", Vector2(70, 70), hc, Vector2(sin(th), cos(th)), 70.0 * s, 70.0 * s, Color(1, 1, 1), 8.0, "horti")
-	# domus: 2 x 2 cells
-	if _domus_macro(i, j):
-		if posmod(i, 2) != 0 or posmod(j, 2) != 0:
-			return {}
-		var di := floori(float(i) / 2.0)
-		var dj := floori(float(j) / 2.0)
-		var mc := Vector2((di * 2 + 1.0) * CELL, (dj * 2 + 1.0) * CELL)
-		if _streets.nearest_street(mc).get("distance", 999.0) < 30.0:
-			return {}
-		var th2 := _block_angle(mc) + float(int(_r(di, dj, 23) * 4.0)) * PI * 0.5
-		var lot := _lot_of("domus", mc + Vector2(_r(di, dj, 24) - 0.5, _r(di, dj, 25) - 0.5) * 4.0, Vector2(sin(th2), cos(th2)), di, dj, 100)
-		return lot
-	# a cell of a domus macro that failed? then a single lot
-	var d := _district_at(centre)
-	var near := _streets.nearest_street(centre)
-	if not near.is_empty() and near["distance"] < LATTICE_MIN_STREET:
-		return {}
-	var era := _era(d)
-	var cluster := 0.55 + 0.9 * _smooth_noise(centre / 90.0)
-	if _r(i, j, 32) >= clampf(_occupancy(d) * cluster, 0.0, 1.0):
-		return {}
-	var type := _pick_type(d, era, _r(i, j, 31))
-	if type == "" or type == "field" or type == "horti" or type == "domus":
-		return {}
-	var small := type == "casa" or type == "workshop"
-	var jitter := Vector2(_r(i, j, 33) - 0.5, _r(i, j, 34) - 0.5) * (12.0 if small else 1.6)
-	var ang := _block_angle(centre) + float(int(_r(i, j, 35) * 4.0)) * PI * 0.5
-	if small:   # irregular, as after the Gallic sack (Livy 5.55.5)
-		ang += (_r(i, j, 36) - 0.5) * deg_to_rad(50.0)
-	var lot2 := _lot_of(type, centre + jitter, Vector2(sin(ang), cos(ang)), i, j, 200)
-	# keep rotated lots small enough for their 25 m cell
-	if not lot2.is_empty():
-		var off_axis := absf(fposmod(ang, PI * 0.5))
-		off_axis = minf(off_axis, PI * 0.5 - off_axis)
-		if not small and off_axis > 0.2 and (lot2["hx"] > 8.6 or lot2["hz"] > 8.6):
-			var k := 8.6 / maxf(lot2["hx"], lot2["hz"])
-			lot2["sx"] *= k
-			lot2["sz"] *= k
-			lot2["hx"] *= k
-			lot2["hz"] *= k
-	return lot2
+## 0 accepted, 1 hazard (water, monument, street, steep), 2 blocked by another lot.
+func _lattice_verdict(lot: Dictionary, rk: Vector2i, neigh: Array) -> int:
+	var pts := _corners(lot)
+	for p in pts:
+		var hz := _hazard(p)
+		if hz != 0:
+			var rk2 := "hazard_%d" % hz
+			reject_stats[rk2] = int(reject_stats.get(rk2, 0)) + 1
+			return 1
+	if not _ground_ok(lot, pts):
+		reject_stats["slope"] = int(reject_stats.get("slope", 0)) + 1
+		return 1
+	if _overlaps_street_lots(lot, 0.6):
+		reject_stats["street_lot"] = int(reject_stats.get("street_lot", 0)) + 1
+		return 2
+	# region borders: lower-priority region yields to the other region's candidates
+	var c: Vector2 = lot["c"]
+	var sq := Rect2(float(rk.x) * REG, float(rk.y) * REG, REG, REG)
+	var edge := minf(minf(c.x - sq.position.x, sq.end.x - c.x), minf(c.y - sq.position.y, sq.end.y - c.y))
+	if edge < 24.0:
+		var my := _rprio(rk.x, rk.y)
+		for dz in range(-1, 2):
+			for dx in range(-1, 2):
+				if dx == 0 and dz == 0:
+					continue
+				var nk := Vector2i(rk.x + dx, rk.y + dz)
+				if _rprio(nk.x, nk.y) >= my:
+					continue
+				for cd in _region_cands(nk.x, nk.y):
+					if c.distance_to(cd["c"]) > 40.0:
+						continue
+					for other in _cell_lots(cd):
+						if not other.is_empty() and c.distance_to(other["c"]) < 45.0 and _overlap(lot, other, 0.4):
+							reject_stats["region_border"] = int(reject_stats.get("region_border", 0)) + 1
+							return 2
+	return 0
 
 
 # ---------------------------------------------------------------- chunks
 
-func _lots_of_chunk(key: Vector2i) -> Array:
-	if _chunk_cache.has(key):
-		return _chunk_cache[key]
-	var lots: Array = []
-	lots.append_array(_street_by_chunk.get(key, []))
-	lots.append_array(_lattice_lots(key))
+## Region keys that supply the lots of chunk `key`.
+func regions_for_chunk(key: Vector2i) -> Array:
+	var x0 := float(key.x) * CHUNK - 30.0
+	var x1 := float(key.x + 1) * CHUNK + 30.0
+	var z0 := float(key.y) * CHUNK - 30.0
+	var z1 := float(key.y + 1) * CHUNK + 30.0
+	var out: Array = []
+	for gj in range(floori(z0 / REG), floori(z1 / REG) + 1):
+		for gi in range(floori(x0 / REG), floori(x1 / REG) + 1):
+			out.append(Vector2i(gi, gj))
+	return out
+
+
+func lots_for_chunk(key: Vector2i) -> Array:
+	var out: Array = []
+	out.append_array(_street_by_chunk.get(key, []))
+	out.append_array(_region_by_chunk.get(key, []))
+	return out
+
+
+func chunk_finished(key: Vector2i, lots: Array) -> void:
 	_chunk_cache[key] = lots
-	return lots
 
 
 ## Chunk coordinates whose centre lies within `radius` metres of `centre` (default: the Forum).
@@ -658,74 +994,65 @@ func chunks_in(radius: float, centre := Vector2.ZERO) -> Array[Vector2i]:
 	return out
 
 
-## The houses of one 250 m chunk (urbs.gd interface). lod 0 best .. 2 coarsest.
-func build_chunk(rect: Rect2, lod: int, new_height: Callable) -> Node3D:
-	if not _loaded or new_height != height and not height.is_valid():
-		height = new_height
+## The houses of one 250 m chunk (urbs.gd interface): a node that fills itself over the next frames.
+func build_chunk(rect: Rect2, lod: int, _new_height: Callable) -> Node3D:
 	var key := Vector2i(roundi(rect.position.x / CHUNK), roundi(rect.position.y / CHUNK))
-	return _chunk_node(key, lod)
+	return _chunk_job(key, lod)
 
 
-## Tool/test form: build chunk `chunk` for `for_year` under `parent`.
+func _chunk_job(key: Vector2i, lod: int) -> UrbsFillChunk:
+	var job := UrbsFillChunk.new()
+	job.name = "Fill_%d_%d" % [key.x, key.y]
+	job.fill = self
+	job.key = key
+	job.lod = lod
+	if sync_chunks:
+		job.finish_now()
+	return job
+
+
+## Tool/test form: build chunk `chunk` for `for_year` under `parent`, synchronously.
 func build_chunk_into(parent: Node3D, chunk: Vector2i, for_year: int, new_height: Callable, new_footprints: Array, lod := 0) -> Node3D:
 	if for_year != year or not _loaded or new_footprints != footprints:
 		year = for_year
 		height = new_height
 		footprints = new_footprints
 		prepare()
-	var node := _chunk_node(chunk, lod)
-	parent.add_child(node)
-	return node
+	var job := _chunk_job(chunk, lod)
+	job.finish_now()
+	parent.add_child(job)
+	return job
 
 
-func _chunk_node(key: Vector2i, lod: int) -> Node3D:
-	var root := Node3D.new()
-	root.name = "Fill_%d_%d" % [key.x, key.y]
-	var lots := _lots_of_chunk(key)
-	var buckets := {}
-	for lot in lots:
-		var mesh_key := str(lot["mesh"])
-		if lod >= 2 and mesh_key.begins_with("taberna"):
-			continue
-		if not buckets.has(mesh_key):
-			buckets[mesh_key] = []
-		buckets[mesh_key].append(lot)
-		if mesh_key == "horti":
-			_add_trees(lot, buckets, lod)
-	var keys := buckets.keys()
-	keys.sort()
-	for mk in keys:
-		var list: Array = buckets[mk]
-		var multi := MultiMesh.new()
-		multi.transform_format = MultiMesh.TRANSFORM_3D
-		multi.use_colors = true
-		multi.mesh = UrbsFillMeshes.get_mesh(mk, lod)
-		multi.instance_count = list.size()
-		for n in list.size():
-			var lot: Dictionary = list[n]
-			var basis := Basis(Vector3.UP, float(lot["th"])) * Basis.from_scale(Vector3(lot["sx"], lot.get("sy", 1.0), lot["sz"]))
-			multi.set_instance_transform(n, Transform3D(basis, Vector3(lot["c"].x, lot["y"], lot["c"].y)))
-			multi.set_instance_color(n, lot["tint"])
-		var inst := MultiMeshInstance3D.new()
-		inst.name = mk.replace(":", "_")
-		inst.multimesh = multi
-		inst.material_override = _material
-		inst.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON if lod < 2 else GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-		root.add_child(inst)
-	return root
+## One MultiMeshInstance3D for `list` of lots sharing the mesh `mesh_key`.
+func make_instances(list: Array, mesh_key: String, lod: int) -> MultiMeshInstance3D:
+	var multi := MultiMesh.new()
+	multi.transform_format = MultiMesh.TRANSFORM_3D
+	multi.use_custom_data = true
+	multi.mesh = UrbsFillMeshes.get_mesh(mesh_key, lod)
+	multi.instance_count = list.size()
+	for n in list.size():
+		var lot: Dictionary = list[n]
+		var basis := Basis(Vector3.UP, float(lot["th"])) * Basis.from_scale(Vector3(lot["sx"], lot.get("sy", 1.0), lot["sz"]))
+		multi.set_instance_transform(n, Transform3D(basis, Vector3(lot["c"].x, lot["y"], lot["c"].y)))
+		multi.set_instance_custom_data(n, lot["tint"])
+	var inst := MultiMeshInstance3D.new()
+	inst.name = mesh_key.replace(":", "_")
+	inst.multimesh = multi
+	inst.material_override = UrbsFillMeshes.material()
+	inst.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON if lod < 2 and not mesh_key.begins_with("prop") else GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	return inst
 
 
-## Scatter the trees of one horti estate (deterministic from its position).
-func _add_trees(lot: Dictionary, buckets: Dictionary, lod: int) -> void:
+func add_trees(lot: Dictionary, buckets: Dictionary, lod: int) -> void:
 	var c: Vector2 = lot["c"]
 	var a := roundi(c.x)
 	var b := roundi(c.y)
 	var ax := _axes(lot)
-	var n := 26 if lod < 2 else 10
+	var n := 22 if lod < 2 else 8
 	for k in n:
 		var lx: float = (_r(a, b, 500 + k) - 0.5) * lot["hx"] * 1.8
 		var lz: float = (_r(a, b, 600 + k) - 0.5) * lot["hz"] * 1.8
-		# keep clear of the villa (local, unscaled coordinates) and the gate path
 		var ux: float = lx / float(lot["sx"])
 		var uz: float = lz / float(lot["sz"])
 		if absf(ux) < 16.0 and uz > -10.0 and uz < 11.0:
@@ -733,28 +1060,121 @@ func _add_trees(lot: Dictionary, buckets: Dictionary, lod: int) -> void:
 		if absf(ux) < 3.0 and uz > 0.0:
 			continue
 		var p: Vector2 = c + ax[0] * lx + ax[1] * lz
-		var kind := "cypress" if _r(a, b, 700 + k) < 0.45 else ("pine" if _r(a, b, 700 + k) < 0.7 else "round")
-		var tk := "tree:" + kind
+		var rk := _r(a, b, 700 + k)
+		var tk := "tree:" + ("cypress" if rk < 0.45 else ("pine" if rk < 0.7 else "round"))
 		if not buckets.has(tk):
 			buckets[tk] = []
 		var sc := 0.8 + _r(a, b, 800 + k) * 0.7
 		var y: float = height.call(p.x, p.y)
-		buckets[tk].append({"c": p, "th": _r(a, b, 900 + k) * TAU, "sx": sc, "sz": sc, "sy": sc, "y": y - 0.1, "tint": Color(1, 1, 1)})
+		buckets[tk].append({"c": p, "th": _r(a, b, 900 + k) * TAU, "sx": sc, "sz": sc, "sy": sc, "y": y - 0.1, "tint": Color(1, 1, 1, _r(a, b, 950 + k)), "kind": "tree", "hx": 0, "hz": 0})
+
+
+func _wall_bounds() -> Rect2:
+	var r := Rect2(_wall[0], Vector2.ZERO)
+	for p in _wall:
+		r = r.expand(p)
+	return r
+
+
+## Ground between the houses: packed earth over every 8 m cell near a lot. Incremental; True when done.
+func floor_step(node: Node3D, key: Vector2i, lots: Array, lod: int, st: Dictionary, deadline: int) -> bool:
+	var n := 32 if lod == 0 else 16
+	var cell := CHUNK / float(n)
+	var x0 := float(key.x) * CHUNK
+	var z0 := float(key.y) * CHUNK
+	if not st.has("mark"):
+		var mark := PackedByteArray()
+		mark.resize(n * n)
+		for lot in lots:
+			var kind := str(lot["kind"])
+			if kind == "prop" or kind == "tree":
+				continue
+			var r := maxf(lot["hx"], lot["hz"]) * 1.42 + 5.0
+			var c: Vector2 = lot["c"]
+			var ia := maxi(int((c.x - r - x0) / cell), 0)
+			var ib := mini(int((c.x + r - x0) / cell), n - 1)
+			var ja := maxi(int((c.y - r - z0) / cell), 0)
+			var jb := mini(int((c.y + r - z0) / cell), n - 1)
+			for j in range(ja, jb + 1):
+				for i in range(ia, ib + 1):
+					mark[j * n + i] = 1
+		if year >= -378 and not _wall.is_empty():
+			# inside the Servian wall no meadow shows: the floor covers every cell, built or not
+			var ib := Rect2(x0, z0, CHUNK, CHUNK)
+			var wb := _wall_bounds()
+			if wb.intersects(ib):
+				for j in range(n):
+					for i in range(n):
+						if mark[j * n + i] == 0:
+							var cp := Vector2(x0 + (float(i) + 0.5) * cell, z0 + (float(j) + 0.5) * cell)
+							if Geometry2D.is_point_in_polygon(cp, _wall) and (_hazard(cp) & M_WATER) == 0:
+								mark[j * n + i] = 1
+		st["mark"] = mark
+		st["row"] = 0
+		st["h"] = PackedFloat32Array()
+		st["h"].resize((n + 1) * (n + 1))
+		var any := false
+		for m in mark:
+			if m != 0:
+				any = true
+				break
+		st["any"] = any
+		if not any:
+			return true
+	while st["row"] <= n:
+		var j: int = st["row"]
+		for i in range(n + 1):
+			st["h"][j * (n + 1) + i] = float(height.call(x0 + float(i) * cell, z0 + float(j) * cell)) + 0.09
+		st["row"] += 1
+		if Time.get_ticks_usec() > deadline and st["row"] <= n:
+			return false
+	var verts := PackedVector3Array()
+	var normals := PackedVector3Array()
+	var cols := PackedColorArray()
+	for j in range(n + 1):
+		for i in range(n + 1):
+			verts.append(Vector3(x0 + float(i) * cell, st["h"][j * (n + 1) + i], z0 + float(j) * cell))
+			normals.append(Vector3.UP)
+			cols.append(UrbsFillMeshes.EARTH)
+	var idx := PackedInt32Array()
+	var mk: PackedByteArray = st["mark"]
+	for j in range(n):
+		for i in range(n):
+			if mk[j * n + i] == 0:
+				continue
+			var a := j * (n + 1) + i
+			idx.append_array([a, a + 1, a + n + 1, a + 1, a + n + 2, a + n + 1])
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = verts
+	arrays[Mesh.ARRAY_NORMAL] = normals
+	arrays[Mesh.ARRAY_COLOR] = cols
+	arrays[Mesh.ARRAY_INDEX] = idx
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	var mi := MeshInstance3D.new()
+	mi.name = "Ground"
+	mi.mesh = mesh
+	mi.material_override = UrbsFillMeshes.material()
+	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	node.add_child(mi)
+	return true
 
 
 # ---------------------------------------------------------------- collision for the walking camera
 
 ## Push `p` (x, z) out of any building footprint, keeping `radius` clear. `h` is the eye height;
-## above a building's roof nothing blocks.
+## above a building's roof nothing blocks. Works on finished chunks.
 func push_out(p: Vector2, radius: float, h: float) -> Vector2:
 	var key := Vector2i(floori(p.x / CHUNK), floori(p.y / CHUNK))
 	for dz in range(-1, 2):
 		for dx in range(-1, 2):
 			var k2 := key + Vector2i(dx, dz)
-			if not (_street_by_chunk.has(k2) or _chunk_cache.has(k2)):
+			if not _chunk_cache.has(k2):
 				continue
-			for lot in _lots_of_chunk(k2):
-				if not lot.has("hx") or str(lot["kind"]) == "horti":
+			for lot in _chunk_cache[k2]:
+				var kind := str(lot["kind"])
+				if kind == "horti" or kind == "prop" or kind == "tree":
 					continue
 				var ground: float = float(lot["y"])
 				if h > ground + float(lot["top"]) + 0.5:
@@ -768,9 +1188,7 @@ func push_out(p: Vector2, radius: float, h: float) -> Vector2:
 				var ex: float = lot["hx"] + radius
 				var ez: float = lot["hz"] + radius
 				if absf(lx) < ex and absf(lz) < ez:
-					var push_x := ex - absf(lx)
-					var push_z := ez - absf(lz)
-					if push_x < push_z:
+					if ex - absf(lx) < ez - absf(lz):
 						lx = signf(lx) * ex if lx != 0.0 else ex
 					else:
 						lz = signf(lz) * ez if lz != 0.0 else ez

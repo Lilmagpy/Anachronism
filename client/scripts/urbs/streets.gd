@@ -23,7 +23,7 @@ const CELL := 64.0           ## spatial index cell, metres
 const STEP := 4.0            ## spacing of strip samples, metres
 const KERB_W := 0.28
 const KERB_H := 0.2
-const SURFACE_LIFT := 0.14   ## strips float this far above the terrain to avoid z-fighting
+const SURFACE_LIFT := 0.2   ## strips float this far above the terrain to avoid z-fighting
 const SEARCH_RINGS := 7
 
 static var _tex_cache := {}
@@ -274,6 +274,43 @@ func _street_mesh(s: Dictionary, lift: float, surface: Material, kerb_mat: Mater
 				var flip := side_i == 1
 				_quad(ki, b0, b0 + 1, b1, b1 + 1, flip)           # top
 				_quad(ki, b0 + 2, b0, b1 + 2, b1, flip)           # inner face
+	if bool(s["paved"]) and length > 40.0:
+		# stepping stones across the roadway (as at Pompeii) every ~45 m, and drain gratings
+		var sh := hash(String(s["id"])) & 0xffff
+		var d := 18.0 + float(sh % 20)
+		var k := 0
+		while d < length - 10.0:
+			var q := _point_at(s, d)
+			var q2 := _point_at(s, minf(d + 1.0, length))
+			var tg := (q2 - q).normalized()
+			var nr := Vector2(-tg.y, tg.x)
+			var hs := float(s["hw"])
+			for off: float in [-hs * 0.55, 0.0, hs * 0.55]:
+				var c2 := q + nr * off
+				var yb := float(height.call(c2.x, c2.y)) + SURFACE_LIFT + lift
+				_box_into(kv, kn, ki, Vector3(c2.x, yb, c2.y), tg, nr, Vector2(0.45, 0.7), 0.26)
+			d += 42.0 + float((sh * (k + 3)) % 14)
+			k += 1
+	var drain_v := PackedVector3Array()
+	var drain_i := PackedInt32Array()
+	if bool(s["paved"]):
+		var dd := 9.0 + float(hash(String(s["id"])) % 11)
+		while dd < length - 5.0:
+			var q := _point_at(s, dd)
+			var q2 := _point_at(s, minf(dd + 1.0, length))
+			var tg := (q2 - q).normalized()
+			var nr := Vector2(-tg.y, tg.x)
+			for sd: float in [1.0, -1.0]:
+				var c3 := q + nr * (float(s["hw"]) - 0.22) * sd
+				var y3 := float(height.call(c3.x, c3.y)) + SURFACE_LIFT + lift + 0.015
+				var a3 := c3 - tg * 0.35
+				var b3 := c3 + tg * 0.35
+				var o3 := nr * 0.17
+				var base := drain_v.size()
+				drain_v.append(Vector3(a3.x - o3.x, y3, a3.y - o3.y)); drain_v.append(Vector3(b3.x - o3.x, y3, b3.y - o3.y))
+				drain_v.append(Vector3(b3.x + o3.x, y3, b3.y + o3.y)); drain_v.append(Vector3(a3.x + o3.x, y3, a3.y + o3.y))
+				drain_i.append_array([base, base + 1, base + 2, base, base + 2, base + 3])
+			dd += 26.0 + float(hash(String(s["id"])) % 9)
 	var mesh := ArrayMesh.new()
 	var arrays := []
 	arrays.resize(Mesh.ARRAY_MAX)
@@ -291,7 +328,45 @@ func _street_mesh(s: Dictionary, lift: float, surface: Material, kerb_mat: Mater
 		ka[Mesh.ARRAY_INDEX] = ki
 		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, ka)
 		mesh.surface_set_material(1, kerb_mat)
+	if drain_v.size() > 0:
+		var da := []
+		da.resize(Mesh.ARRAY_MAX)
+		da[Mesh.ARRAY_VERTEX] = drain_v
+		var dn := PackedVector3Array()
+		for _i in drain_v.size():
+			dn.append(Vector3.UP)
+		da[Mesh.ARRAY_NORMAL] = dn
+		da[Mesh.ARRAY_INDEX] = drain_i
+		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, da)
+		var dm := StandardMaterial3D.new()
+		dm.albedo_color = Color(0.05, 0.045, 0.04)
+		dm.roughness = 1.0
+		dm.cull_mode = BaseMaterial3D.CULL_DISABLED
+		mesh.surface_set_material(mesh.get_surface_count() - 1, dm)
 	return mesh
+
+
+## A box (stepping stone) standing on the road: centre on the ground, `u` along, `v` across.
+static func _box_into(kv: PackedVector3Array, kn: PackedVector3Array, ki: PackedInt32Array, c: Vector3, u: Vector2, v: Vector2, size: Vector2, h: float) -> void:
+	var hu := u * size.x * 0.5
+	var hv := v * size.y * 0.5
+	var corners := [c + Vector3(-hu.x - hv.x, 0, -hu.y - hv.y), c + Vector3(hu.x - hv.x, 0, hu.y - hv.y),
+		c + Vector3(hu.x + hv.x, 0, hu.y + hv.y), c + Vector3(-hu.x + hv.x, 0, -hu.y + hv.y)]
+	var base := kv.size()
+	for p in corners:
+		kv.append(p + Vector3(0, h, 0))
+		kn.append(Vector3.UP)
+	ki.append_array([base, base + 1, base + 2, base, base + 2, base + 3])
+	for i in 4:
+		var a: Vector3 = corners[i]
+		var b: Vector3 = corners[(i + 1) % 4]
+		var nb := kv.size()
+		var out := (Vector3((a + b) * 0.5) - c).normalized()
+		out.y = 0.0
+		kv.append(a); kv.append(b); kv.append(b + Vector3(0, h, 0)); kv.append(a + Vector3(0, h, 0))
+		for _j in 4:
+			kn.append(out.normalized())
+		ki.append_array([nb, nb + 1, nb + 2, nb, nb + 2, nb + 3])
 
 
 ## Two triangles for the strip quad a-b (this sample) / c-d (next sample).
