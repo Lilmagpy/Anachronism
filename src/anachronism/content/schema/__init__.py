@@ -37,6 +37,9 @@ from anachronism.content.schema.republic import (
     OfficeHeld,
     Order,
     RepublicRules,
+    SenateCosts,
+    SenateLaw,
+    SenateRules,
     Standing,
 )
 from anachronism.content.schema.rivals import (
@@ -148,6 +151,9 @@ __all__ = [
     "Scenario",
     "ScenarioCiv",
     "Script",
+    "SenateCosts",
+    "SenateLaw",
+    "SenateRules",
     "ScriptGoal",
     "SeaZone",
     "Ship",

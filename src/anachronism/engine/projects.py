@@ -2,13 +2,14 @@
 
 from __future__ import annotations
 
+from anachronism.content.schema import Stage
 from anachronism.engine.actions import Priority
 from anachronism.engine.economy import Costs, project_costs
 from anachronism.engine.events import EventLog, list_names
 from anachronism.engine.fixed import BP, apply_bp, clamp
 from anachronism.engine.rng import GameRng
-from anachronism.engine.state import CivState, GameState
-from anachronism.engine.tech import adopt
+from anachronism.engine.state import CivState, GameState, Project
+from anachronism.engine.tech import adopt, describe_blockers, feasibility, propose
 from anachronism.engine.timeflow import rate_per_turn, turns_for
 
 
@@ -16,6 +17,32 @@ def project_turns(state: GameState, node_id: str) -> int:
     """Turns a fully funded project on this advancement takes."""
     node = state.tech_nodes[node_id]
     return turns_for(state, state.world.rules.projects.duration_decades[node.complexity - 1])
+
+
+def begin_project(
+    state: GameState, civ_id: str, node_id: str, priority: Priority = Priority.NORMAL
+) -> tuple[bool, str]:
+    """Commit a civilisation to experimenting with a feasible advancement (``StartProject``)."""
+    civ = state.civs[civ_id]
+    node = state.tech_nodes[node_id]
+    known = civ.tech.get(node_id)
+    if known is not None and known.stage.is_adopted:
+        return False, f"{node.name} is already in use"
+    if node_id in civ.projects:
+        return False, f"work on {node.name} is already under way"
+    result = feasibility(state, civ_id, node_id)
+    if result.blocked:
+        return False, f"cannot start {node.name}: {describe_blockers(state, result)}"
+    propose(state, civ_id, node_id)
+    civ.tech[node_id].stage = Stage.EXPERIMENTING
+    civ.tech[node_id].goal = False
+    civ.projects[node_id] = Project(
+        node_id=node_id,
+        started_turn=state.turn,
+        priority=priority,
+        progress_bp=civ.tech[node_id].head_start_bp,  # stolen methods (D-115)
+    )
+    return True, f"Work begins on {node.name}."
 
 
 def setback_chance_bp(state: GameState, civ: CivState, node_id: str) -> int:
