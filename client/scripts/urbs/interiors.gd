@@ -169,6 +169,18 @@ static func _attach(root: Node3D, r: Dictionary) -> void:
 		cover.scale = Vector3.ONE * Roman.MS
 		cover.material_override = _material
 		root.add_child(cover)
+	if r.get("ground", false):   # the street round a building (the scene hides the city's own ground)
+		var ground := MeshInstance3D.new()
+		ground.name = "Ground"
+		var plane := PlaneMesh.new()
+		plane.size = Vector2(500, 500)
+		ground.mesh = plane
+		var gm := StandardMaterial3D.new()
+		gm.albedo_color = Color(0.50, 0.45, 0.35)
+		gm.roughness = 1.0
+		ground.material_override = gm
+		ground.position.y = -0.03
+		root.add_child(ground)
 	# The scene turns its own sun off while inside, so the interior brings the sun that comes
 	# through its real openings (doors, windows, the compluvium, the open sky).
 	var sun := DirectionalLight3D.new()

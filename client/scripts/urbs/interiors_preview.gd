@@ -53,6 +53,8 @@ func _build() -> void:
 	for n in r.get("notes", []):
 		print("  NOTE ", n)
 	_world(kind)
+	if r.get("ground", false):
+		Interiors.current.get_node("Ground").visible = true
 	var views: Array = [["start", r["spawn"]]]
 	views.append_array(r["views"])
 	if _opts.has("list"):
@@ -64,19 +66,6 @@ func _build() -> void:
 
 
 func _world(kind: String) -> void:
-	var ground := MeshInstance3D.new()
-	var plane := PlaneMesh.new()
-	plane.size = Vector2(1600, 1600)
-	ground.mesh = plane
-	var gm := StandardMaterial3D.new()
-	gm.albedo_color = Color(0.50, 0.46, 0.36)
-	gm.roughness = 1.0
-	ground.material_override = gm
-	ground.position.y = -0.02
-	if kind != "arena" and kind != "circus" and kind != "theatre":
-		_root.add_child(ground)
-	else:
-		_root.add_child(ground)
 	var env := WorldEnvironment.new()
 	var e := Environment.new()
 	var sky := Sky.new()

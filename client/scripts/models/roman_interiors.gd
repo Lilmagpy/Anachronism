@@ -140,6 +140,7 @@ static func _pack(k: Kit, cover: Kit, lights: Array, spawn: Transform3D, seats: 
 		"tris": k.triangles() + (cover.triangles() if cover != null else 0),
 	}
 	d.merge(extra, true)
+	d["ground"] = not d.get("no_ground", false)
 	return d
 
 
@@ -1033,9 +1034,321 @@ static func _arc_pts(cx: float, cz: float, r: float, t0: float, t1: float, n: in
 	return pts
 
 
+
+# ====================================================================================================
+#  ARENA: the Forum with wooden stands (Republic), the Colosseum (after AD 80)
+# ====================================================================================================
+
+static func _ell(a: float, b: float, t: float, y: float) -> Vector3:
+	return Vector3(cos(t) * a, y, sin(t) * b)
+
+
+## An open two-storey colonnade with wide spacing (Vitruvius 5.1.1-3: wide intercolumniations
+## for the shows, bankers' shops below, balconies above, upper columns a quarter smaller),
+## along a line from (x0, z) to (x1, z), the shops behind it at `back` metres.
+static func _stoa(k: Kit, kc: Kit, x0: float, x1: float, z: float, back: float, col: Color) -> void:
+	var ch := 4.8
+	var cd := 0.62
+	var n := maxi(2, int(round((x1 - x0) / 4.6)))
+	var dirz := signf(back)
+	for i in range(n + 1):
+		var x := x0 + (x1 - x0) * i / n
+		_column(k, Vector3(x, 0.0, z), cd, ch, col, Kit.STONE, "tuscan")
+		_column(k, Vector3(x, ch + 0.5, z), cd * 0.75, ch * 0.72, col, Kit.STONE, "tuscan")
+	_span(k, x0 - cd, ch, z - 0.4, x1 + cd, ch + 0.5, z + 0.4, col, Kit.STONE)
+	_span(k, x0 - cd, ch + 0.5 + ch * 0.72, z - 0.4, x1 + cd, ch + 1.2 + ch * 0.72, z + 0.4, col, Kit.STONE)
+	# the gallery (maenianum) floor, its balustrade, the shops behind
+	_span(k, x0 - cd, ch + 0.2, minf(z, z + back), x1 + cd, ch + 0.5, maxf(z, z + back), WOOD_L, Kit.TIMBER)
+	_span(k, x0 - cd, ch + 0.5, z - 0.05, x1 + cd, ch + 1.3, z + 0.05, col.darkened(0.05), Kit.STONE)
+	var wz := z + back
+	_wall(k, Vector2(x0 - cd, wz), Vector2(x1 + cd, wz), 0.0, ch + 0.5 + ch * 0.72 + 1.2, 0.8, Color(0.88, 0.78, 0.62), Kit.PLASTER,
+		_shop_doors(x1 - x0 + 2.0 * cd, 4.6))
+	kc.quad(Vector3(x0 - cd, ch + 1.2 + ch * 0.72, z), Vector3(x1 + cd, ch + 1.2 + ch * 0.72, z), Vector3(x1 + cd, ch + 2.6 + ch * 0.72, wz), Vector3(x0 - cd, ch + 2.6 + ch * 0.72, wz), TILE_C, Kit.TILE, Vector3(0, 0, z))
+	if dirz != 0.0:
+		pass
+
+
+static func _shop_doors(length: float, pitch: float) -> Array:
+	var holes: Array = []
+	var n := maxi(1, int(length / pitch))
+	for i in n:
+		holes.append([length * (i + 0.5) / n, 2.4, 3.0])           # a shop door
+		holes.append([length * (i + 0.5) / n, 1.2, 6.8, 5.0])      # an upper window
+	return holes
+
+
+static func _arena(sz: Vector2, year: int, variant: String) -> Dictionary:
+	if variant == "colosseum":
+		return _colosseum(sz, year)
+	return _forum_games(sz, year)
+
+
+## The Forum Romanum as the place of the gladiator games: the open space sized for them
+## (Vitruvius 5.1.1-2: oblong, width two thirds of the length, wide intercolumniations, shops
+## and balconies in the porticoes), temporary wooden stands round the sand, the Rostra at
+## the west end. The first munus in Rome was at the Forum Boarium in 264 BC (Livy Per. 16,
+## # unverified: not read); the games moved to the Forum (Cicero; Festus on the maeniana,
+## # unverified: not read).
+static func _forum_games(sz: Vector2, year: int) -> Dictionary:
+	var L := sz.x
+	var W := sz.y
+	var k := _kit()
+	var kc := _kit()
+	var lights: Array = []
+	var paving := TUFA.lightened(0.25) if year < -40 else TRAVERTINE
+	_span(k, -L * 0.5 - 6.0, -0.5, -W * 0.5 - 8.0, L * 0.5 + 8.0, 0.0, W * 0.5 + 8.0, paving, Kit.STONE, false)
+	var rows := 9
+	var tread := 0.8
+	var rise := 0.46
+	var D := rows * tread
+	var h0 := 0.7
+	var x_w := -L * 0.5 + 16.0          # west end left open (the Rostra, the Comitium)
+	var x_e := L * 0.5 - D
+	var z_n := -W * 0.5 + D
+	var z_s := W * 0.5 - D
+	# the sand of the arena
+	_floor(k, x_w, z_n, x_e, z_s, 0.04, SAND, Kit.EARTH)
+	# stands along the north and south sides and the east end (timber on trestles)
+	for s: float in [-1.0, 1.0]:
+		var prev := h0
+		for r in rows:
+			var zi: float = s * (W * 0.5 - D + r * tread) - 0.0
+			var zo: float = s * (W * 0.5 - D + (r + 1) * tread)
+			var hh := h0 + (r + 1) * rise
+			var col := WOOD_L if r % 2 == 0 else WOOD
+			var xe := x_e
+			k.quad(Vector3(x_w, prev, zi), Vector3(xe, prev, zi), Vector3(xe, hh, zi), Vector3(x_w, hh, zi), col.darkened(0.1), Kit.TIMBER, Vector3((x_w + xe) * 0.5, prev, zi + s * 4.0))
+			k.quad(Vector3(x_w, hh, zi), Vector3(xe, hh, zi), Vector3(xe, hh, zo), Vector3(x_w, hh, zo), col, Kit.TIMBER, Vector3((x_w + xe) * 0.5, hh - 1.0, zi))
+			prev = hh
+		# trestles behind the rows
+		var np := int((x_e - x_w) / 5.0)
+		for i in range(np + 1):
+			var xp := x_w + (x_e - x_w) * i / np
+			k.rod(Vector3(xp, 0.0, s * (W * 0.5 - D + 0.3)), Vector3(xp, h0 + 2.0, s * (W * 0.5 - D + 0.3)), 0.1, WOOD_D, Kit.TIMBER)
+			k.rod(Vector3(xp, 0.0, s * (W * 0.5 - 0.5)), Vector3(xp, h0 + rows * rise, s * (W * 0.5 - 0.5)), 0.1, WOOD_D, Kit.TIMBER)
+		# the fence round the sand: posts and rails
+		for i in range(np * 2 + 1):
+			var xp := x_w + (x_e - x_w) * i / (np * 2)
+			k.rod(Vector3(xp, 0.0, s * (W * 0.5 - D - 0.2)), Vector3(xp, 1.5, s * (W * 0.5 - D - 0.2)), 0.07, WOOD_D, Kit.TIMBER)
+		_span(k, x_w, 1.0, s * (W * 0.5 - D - 0.2) - 0.05, x_e, 1.12, s * (W * 0.5 - D - 0.2) + 0.05, WOOD_D, Kit.TIMBER)
+	var prev2 := h0
+	for r in rows:
+		var xi := x_e + r * tread
+		var xo := x_e + (r + 1) * tread
+		var hh := h0 + (r + 1) * rise
+		var col2 := WOOD_L if r % 2 == 0 else WOOD
+		k.quad(Vector3(xi, prev2, z_n), Vector3(xi, prev2, z_s), Vector3(xi, hh, z_s), Vector3(xi, hh, z_n), col2.darkened(0.1), Kit.TIMBER, Vector3(xi + 4.0, prev2, 0))
+		k.quad(Vector3(xi, hh, z_n), Vector3(xo, hh, z_n), Vector3(xo, hh, z_s), Vector3(xi, hh, z_s), col2, Kit.TIMBER, Vector3(xi, hh - 1.0, 0))
+		prev2 = hh
+	for i in range(0, 9):
+		var zp := z_n + (z_s - z_n) * i / 8.0
+		k.rod(Vector3(x_e, 0.0, zp), Vector3(x_e, h0 + 2.0, zp), 0.1, WOOD_D, Kit.TIMBER)
+	# the porticoes: shops below, balconies above (north, south, east)
+	var col_s := Color(0.9, 0.84, 0.72)
+	_stoa(k, kc, -L * 0.5 + 18.0, L * 0.5, -W * 0.5, -7.0, col_s)
+	_stoa(k, kc, -L * 0.5 + 18.0, L * 0.5, W * 0.5, 7.0, col_s)
+	# the Rostra at the west end: a platform with the beaks of ships
+	var rx := -L * 0.5 + 6.0
+	_span(k, rx - 2.0, 0.0, -7.0, rx + 2.0, 3.4, 7.0, TUFA, Kit.STONE, false)
+	_span(k, rx - 2.3, 3.4, -7.3, rx + 2.3, 3.7, 7.3, TUFA.lightened(0.1), Kit.STONE, false)
+	for i in range(6):
+		var zz := -5.5 + i * 2.2
+		k.rod(Vector3(rx + 2.0, 2.2, zz), Vector3(rx + 3.6, 2.9, zz), 0.16, BRONZE, Kit.GOLD)
+	var spawn := look(Vector3(rx + 9.0, EYE, 0.0), Vector3(x_e, 3.0, 0.0))
+	var seat_row := func(side: float, row: int, x: float, target: Vector3) -> Transform3D:
+		return look(Vector3(x, h0 + (row + 1) * rise + 1.1, side * (W * 0.5 - D + (row + 0.5) * tread)), target)
+	var seats := {
+		"stand_north": seat_row.call(-1.0, 4, 0.0, Vector3(0, 0.5, 0.0)),
+		"stand_south": seat_row.call(1.0, 4, 0.0, Vector3(0, 0.5, 0.0)),
+		"front": seat_row.call(1.0, 0, L * 0.1, Vector3(0, 0.5, -W * 0.2)),
+		"top": seat_row.call(-1.0, 8, -L * 0.1, Vector3(0, 0.5, W * 0.1)),
+		"balcony": look(Vector3(0, 5.2 + 1.5, -W * 0.5 - 2.0), Vector3(0, 0.5, W * 0.15)),
+	}
+	var views := [
+		["stand", seats["stand_south"]], ["balcony", seats["balcony"]], ["front", seats["front"]],
+		["overview", look(Vector3(L * 0.15, W * 1.15, W * 1.0), Vector3(-L * 0.05, 0.0, 0.0))],
+	]
+	var notes := [
+		"The Forum sized for the shows: oblong, width two thirds of the length, wide intercolumniations, shops with upper rooms in the porticoes: Vitruvius 5.1.1-3. Read.",
+		"Gladiator shows in the Forum, 'the ancient custom of Italian cities': Vitruvius 5.1.1. Read. The first munus, 264 BC at the Forum Boarium: Livy Per. 16 # unverified (not read).",
+		"Temporary timber stands, the maeniana (balconies) of the porticoes: Festus s.v. maeniana, Cicero # unverified (not read); the shape (rows, trestles, fence) is conjecture.",
+		"The Rostra at the west end (Platner-Ashby s.v. Rostra, not read) # unverified; its size here is a guess.",
+		"Size defaults 110 x 55 m: conjecture; give the real Forum floor in the monument record.",
+	]
+	return _pack(k, kc, lights, spawn, seats, views, notes, {"anchors": {"sand_centre": Vector3((x_w + x_e) * 0.5, 0.04, 0.0), "rostra": Vector3(rx, 3.7, 0.0), "entrance": Vector3(x_w, 0, 0)}, "floor_y": 0.0, "arena_size": Vector2(x_e - x_w, z_s - z_n)})
+
+
+## The Flavian amphitheatre from inside (Platner-Ashby s.v. Amphitheatrum Flavium): the arena an
+## ellipse (83 x 48 m by the modern survey, P-A gives 86 x 54), its wooden floor on lofty
+## substructures, a fence and a narrow marble passage, then the podium about 4 m above the arena
+## with the marble chairs and the bronze balustrade, the cavea in the maenianum primum (about
+## 20 rows) and the maenianum secundum (about 16) divided by a praecinctio, a wall 5 m high with a
+## Corinthian colonnade and a flat roof above the last rows, wooden seats for women behind it,
+## the awning (velarium) on masts. The imperial box on the podium at the north end of the minor
+## axis, the prefect's opposite; entrances into the arena at the ends of the major axis.
+## The hypogeum with its walls parallel to the major axis (5.5-6 m high) is built from AD 81
+## (it is Domitian's, P-A: "additions on the inside"); before that, a plain wooden floor.
+static func _colosseum(sz: Vector2, year: int) -> Dictionary:
+	var a := sz.x * 0.5
+	var b := sz.y * 0.5
+	var k := _kit()
+	var kc := _kit()
+	var lights: Array = []
+	var N := 96
+	var per := 20
+	var nrow := 36
+	var tread := 0.78
+	var rise := 0.43
+	var walk := 3.2
+	var lift := 2.2
+	var h0 := 4.0
+	var d0 := 4.4        # podium platform depth beyond the arena edge
+	var col := TRAVERTINE
+	var marble := MARBLE
+	# the arena floor (in the cover mesh: a cutaway shows what is under it) and the ring wall
+	var sand := SAND
+	for i in N:
+		var t0 := TAU * i / N
+		var t1 := TAU * (i + 1) / N
+		kc.tri(Vector3(0, 0.02, 0), _ell(a + 0.6, b + 0.6, t0, 0.02), _ell(a + 0.6, b + 0.6, t1, 0.02), sand, Kit.EARTH, Vector3(0, -2, 0))
+		# the podium wall: its face towards the arena, then the platform behind
+		k.quad(_ell(a, b, t0, -6.0 if year >= 81 else 0.0), _ell(a, b, t1, -6.0 if year >= 81 else 0.0), _ell(a, b, t1, h0), _ell(a, b, t0, h0), col, Kit.STONE, _ell(a + 6.0, b + 6.0, (t0 + t1) * 0.5, 1.0))
+		k.quad(_ell(a, b, t0, h0), _ell(a + d0, b + d0, t0, h0), _ell(a + d0, b + d0, t1, h0), _ell(a, b, t1, h0), marble, Kit.PAINT, _ell(a, b, (t0 + t1) * 0.5, h0 - 1.0))
+		# the bronze balustrade along the edge
+		k.quad(_ell(a + 0.1, b + 0.1, t0, h0), _ell(a + 0.1, b + 0.1, t1, h0), _ell(a + 0.1, b + 0.1, t1, h0 + 0.9), _ell(a + 0.1, b + 0.1, t0, h0 + 0.9), BRONZE, Kit.GOLD, _ell(a + 6.0, b + 6.0, (t0 + t1) * 0.5, 1.0))
+	# the stepped cavea
+	var rows: Array = []
+	for r in nrow:
+		rows.append(_row(r, per, tread, rise, walk, lift, h0))
+	for r in nrow:
+		var dd0: float = d0 + rows[r][0]
+		var dd1: float = d0 + rows[r][1]
+		var hh: float = rows[r][2]
+		var prev: float = h0 if r == 0 else rows[r - 1][2]
+		var tint := (r / 4) % 2
+		var cr := marble if tint == 0 else marble.darkened(0.08)
+		if r > 0 and r % per == 0:
+			var pd: float = d0 + rows[r - 1][1]
+			var py: float = rows[r - 1][2]
+			for i in N:
+				var t0 := TAU * i / N
+				var t1 := TAU * (i + 1) / N
+				k.quad(_ell(a + pd, b + pd, t0, py), _ell(a + dd0, b + dd0, t0, py), _ell(a + dd0, b + dd0, t1, py), _ell(a + pd, b + pd, t1, py), TRAVERTINE.darkened(0.05), Kit.STONE, _ell(a + pd, b + pd, (t0 + t1) * 0.5, py - 1.0))
+		for i in N:
+			var t0 := TAU * i / N
+			var t1 := TAU * (i + 1) / N
+			var tm := (t0 + t1) * 0.5
+			var far := _ell(a + dd1 + 6.0, b + dd1 + 6.0, tm, prev)
+			k.quad(_ell(a + dd0, b + dd0, t0, prev), _ell(a + dd0, b + dd0, t1, prev), _ell(a + dd0, b + dd0, t1, hh), _ell(a + dd0, b + dd0, t0, hh), cr.darkened(0.12), Kit.STONE, far)
+			k.quad(_ell(a + dd0, b + dd0, t0, hh), _ell(a + dd1, b + dd1, t0, hh), _ell(a + dd1, b + dd1, t1, hh), _ell(a + dd0, b + dd0, t1, hh), cr, Kit.STONE, _ell(a + dd0, b + dd0, tm, hh - 1.0))
+	# aisles between the wedges (cunei): darker steps every 8 segments, vomitoria at their feet
+	for i in range(0, N, 8):
+		var t0 := TAU * i / N
+		var t1 := TAU * (i + 0.6) / N
+		for r in nrow:
+			var dd0: float = d0 + rows[r][0]
+			var dd1: float = d0 + rows[r][1]
+			var hh: float = rows[r][2]
+			k.quad(_ell(a + dd0, b + dd0, t0, hh + 0.01), _ell(a + dd1, b + dd1, t0, hh + 0.01), _ell(a + dd1, b + dd1, t1, hh + 0.01), _ell(a + dd0, b + dd0, t1, hh + 0.01), Color(0.62, 0.58, 0.52), Kit.STONE, _ell(a + dd0, b + dd0, t0, hh - 1.0))
+	# the wall above the secundum with the colonnade and its flat roof
+	var last_d: float = d0 + rows[nrow - 1][1]
+	var top_h: float = rows[nrow - 1][2]
+	var wh := 5.0
+	for i in N:
+		var t0 := TAU * i / N
+		var t1 := TAU * (i + 1) / N
+		var rb := last_d + 0.4
+		k.quad(_ell(a + rb, b + rb, t0, top_h), _ell(a + rb, b + rb, t1, top_h), _ell(a + rb, b + rb, t1, top_h + wh), _ell(a + rb, b + rb, t0, top_h + wh), Color(0.84, 0.78, 0.66), Kit.PLASTER, _ell(a + rb + 6.0, b + rb + 6.0, (t0 + t1) * 0.5, top_h))
+		# roof slab over the colonnade walk
+		var r0 := rb - 3.6
+		kc.quad(_ell(a + r0, b + r0, t0, top_h + wh + 0.4), _ell(a + r0, b + r0, t1, top_h + wh + 0.4), _ell(a + rb + 0.4, b + rb + 0.4, t1, top_h + wh + 0.4), _ell(a + rb + 0.4, b + rb + 0.4, t0, top_h + wh + 0.4), TILE_C, Kit.TILE, _ell(a + r0, b + r0, (t0 + t1) * 0.5, top_h))
+	var ncol := 72
+	for i in ncol:
+		var t := TAU * (i + 0.5) / ncol
+		var rc := last_d - 2.8
+		var p := _ell(a + rc, b + rc, t, top_h)
+		k.cylinder(p, 0.32, wh + 0.2, Color(0.62, 0.52, 0.48), Kit.PAINT, 8)     # cipollino and granite columns
+		k.box(p + Vector3(0, wh + 0.2, 0), Vector3(0.9, 0.35, 0.9), marble, Kit.STONE)
+	# awning (velarium): cloth panels from the colonnade roof inwards, on masts
+	for i in N:
+		var t0 := TAU * i / N
+		var t1 := TAU * (i + 1) / N
+		var c := Color(0.92, 0.88, 0.76) if (i / 3) % 2 == 0 else Color(0.74, 0.26, 0.2)
+		var rin := last_d - 3.6 - 0.45 * (last_d - 3.6)
+		kc.quad(_ell(a + rin, b + rin, t0, top_h + wh + 2.0), _ell(a + rin, b + rin, t1, top_h + wh + 2.0), _ell(a + last_d - 3.6, b + last_d - 3.6, t1, top_h + wh + 4.2), _ell(a + last_d - 3.6, b + last_d - 3.6, t0, top_h + wh + 4.2), c, Kit.CLOTH, Vector3(0, top_h - 5.0, 0))
+	for i in range(0, ncol, 2):
+		var t := TAU * (i + 0.5) / ncol
+		var rc2 := last_d + 0.3
+		var p2 := _ell(a + rc2, b + rc2, t, top_h + wh + 0.4)
+		kc.rod(p2, p2 + Vector3(0, 6.0, 0), 0.12, WOOD_D, Kit.TIMBER)
+	# the imperial box (north end of the minor axis, +z here) and the prefect's opposite
+	for s: float in [-1.0, 1.0]:
+		var zc := s * (b + 1.6)
+		_span(k, -5.0, h0, zc - 1.6, 5.0, h0 + 0.3, zc + 1.6, TRAVERTINE, Kit.STONE, false)
+		for cx in [-5.0, 5.0]:
+			k.rod(Vector3(cx, h0 + 0.3, zc), Vector3(cx, h0 + 4.5, zc), 0.14, WOOD_D, Kit.TIMBER)
+		_span(kc, -5.4, h0 + 4.5, zc - 2.0, 5.4, h0 + 4.7, zc + 2.0, PURPLE if s > 0 else Color(0.5, 0.2, 0.2), Kit.CLOTH)
+		k.box(Vector3(0, h0 + 0.3, zc), Vector3(1.2, 0.8, 1.0), GILT, Kit.GOLD, 0.0, true)   # the emperor's chair
+	# the marble chairs of the podium, here as a row of blocks
+	var nchair := 54
+	for i in nchair:
+		var t := TAU * (i + 0.5) / nchair
+		if absf(sin(t)) > 0.97 and absf(cos(t)) < 0.2:
+			continue
+		var p := _ell(a + 2.4, b + 2.4, t, h0)
+		k.box(p, Vector3(0.7, 0.9, 0.7), marble, Kit.STONE, -t, true)
+	# the doors at the ends of the major axis, into the arena
+	for s: float in [-1.0, 1.0]:
+		k.box(Vector3(s * (a - 0.1), 0.0, 0.0), Vector3(0.4, 3.6, 4.2), Color(0.08, 0.06, 0.05), Kit.DARK, 0.0, true)
+	# the hypogeum under the floor (from AD 81)
+	if year >= 81:
+		_span(k, -a * 0.97, -6.0, -b * 0.95, a * 0.97, -5.9, b * 0.95, Color(0.30, 0.24, 0.20), Kit.EARTH, false)
+		var brick := Color(0.82, 0.55, 0.40)
+		for zz in [-10.0, -5.0, 0.0, 5.0, 10.0]:
+			var half: float = a * sqrt(maxf(0.0, 1.0 - (zz / b) * (zz / b))) * 0.94
+			for seg in 3:
+				var xa: float = -half + (2.0 * half) * seg / 3.0 + 3.0
+				var xb: float = -half + (2.0 * half) * (seg + 1) / 3.0 - 3.0
+				_span(k, xa, -6.0, zz - 0.5, xb, -0.3, zz + 0.5, brick, Kit.BRICK)
+		for i in 24:
+			var t0 := TAU * i / 24.0
+			var t1 := TAU * (i + 1) / 24.0
+			k.quad(_ell(a - 2.0, b - 2.0, t0, -6.0), _ell(a - 2.0, b - 2.0, t1, -6.0), _ell(a - 2.0, b - 2.0, t1, -0.3), _ell(a - 2.0, b - 2.0, t0, -0.3), brick, Kit.BRICK, Vector3(0, -3.0, 0))
+		for xx in [-12.0, 12.0, -26.0, 26.0]:
+			_span(k, xx - 0.5, -6.0, -b * 0.9, xx + 0.5, -0.3, -b * 0.3, brick, Kit.BRICK)
+			_span(k, xx - 0.5, -6.0, b * 0.3, xx + 0.5, -0.3, b * 0.9, brick, Kit.BRICK)
+			k.box(Vector3(xx + 3.0, -6.0, 2.0), Vector3(1.8, 2.2, 1.8), WOOD, Kit.TIMBER, 0.0, true)   # a lift cage
+			lights.append({"pos": Vector3(xx, -3.5, 0.0), "colour": Color(1.0, 0.62, 0.3), "energy": 1.6, "range": 9.0, "kind": "torch"})
+	var spawn := look(Vector3(-a + 4.0, EYE, 0.0), Vector3(a, 8.0, 0.0))
+	var seat_at := func(row: int, t: float, tgt: Vector3) -> Transform3D:
+		var dd: float = d0 + (rows[row][0] + rows[row][1]) * 0.5
+		var hh: float = rows[row][2] + 1.15
+		var p := _ell(a + dd, b + dd, t, hh)
+		return look(p, tgt)
+	var seats := {
+		"podium": look(Vector3(0, h0 + 1.7, b + 1.6), Vector3(0, 0.0, -b * 0.3)),
+		"primum": seat_at.call(8, PI * 0.25, Vector3(0, 0, 0)),
+		"secundum": seat_at.call(28, PI * 0.9, Vector3(0, 0, 0)),
+		"summum": look(Vector3(_ell(a + last_d - 2.0, b + last_d - 2.0, PI * 1.5, top_h + wh - 1.5)), Vector3(0, 0, 0)),
+	}
+	var views := [
+		["podium", seats["podium"]], ["primum", seats["primum"]], ["secundum", seats["secundum"]],
+		["summum", seats["summum"]],
+		["overview", look(Vector3(a * 1.1, a * 1.5, b * 2.0), Vector3(0, 6.0, 0))],
+		["cutaway_hypogeum", look(Vector3(a * 0.5, 28.0, b * 1.1), Vector3(0, -3.0, 0))],
+	]
+	var notes := [
+		"Arena 83 x 48 m (modern survey; Platner-Ashby gives 86 x 54), podium about 4 m above it with a bronze balustrade and marble chairs, maenianum primum about 20 rows and secundum about 16 divided by a praecinctio, wall 5 m high with a Corinthian colonnade of cipollino and granite, flat roof, wooden seats of the maenianum summum behind, awning on masts, imperial box at the north end of the minor axis: Platner-Ashby s.v. Amphitheatrum Flavium. Read.",
+		"Substructures 5.5 to 6.08 m high, walls parallel to the major axis, passages on the axes: P-A. Read. The hypogeum is dated from Domitian (AD 81) here; the P-A text says only 'additions on the inside'. # unverified",
+		"Row depth and height, the velarium's shape, the chairs' spacing, the lift cages: conjecture.",
+		"Built from AD 80 (Suet. Titus 7; Dio 66.25 via P-A); exists in the campaign only if the Empire data (monuments_empire) has it.",
+	]
+	return _pack(k, kc, lights, spawn, seats, views, notes, {
+		"anchors": {"arena_centre": Vector3(0, 0, 0), "imperial_box": Vector3(0, h0 + 0.3, b + 1.6), "door_west": Vector3(-a, 0, 0), "door_east": Vector3(a, 0, 0)},
+		"floor_y": 0.0, "arena_size": Vector2(sz.x, sz.y), "no_ground": true})
+
+
 # --- STUBS ---
-static func _arena(_sz: Vector2, _y: int, _v: String) -> Dictionary:
-	return {}
 static func _domus(_sz: Vector2, _y: int) -> Dictionary:
 	return {}
 static func _insula(_sz: Vector2, _y: int) -> Dictionary:
