@@ -16,6 +16,7 @@ scenarios:
     years_per_turn: 5
     campaign_years_per_turn: 1
     player_civ: rome
+    republic: true
     map: europe
     music: roman
     confidence: low

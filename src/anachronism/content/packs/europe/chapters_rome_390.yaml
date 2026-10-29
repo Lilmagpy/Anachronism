@@ -1,0 +1,572 @@
+schema_version: 1
+# Chronicle mode: Rome from the Allia to the first Samnite war, 390-342 BC (traditional Roman dating).
+# The ruler of each scene is the leading magistrate of the crisis (tribunes with consular power,
+# a dictator, a consul), because Rome had no single ruler. Facts follow Livy (English text on Perseus),
+# with Polybius, Diodorus and Plutarch where named, all read in October 2026. The Gallic sack is dated 390
+# by the traditional Roman reckoning; Polybius 1.6.1-2 puts it in 387/6, in the year of the Peace of
+# Antalcidas, and the chronology of the following years is uncertain by that much. Livy begins book 6
+# by saying that the public records were largely lost in the burning of the city (6.1.1-3).
+# benchmark_provinces counts the provinces of this map the real Rome held at that date.
+chapters:
+  - id: r390_allia
+    scenario: rome_390
+    civ: rome
+    year: -390
+    until_year: -390
+    title: "The Eleventh Milestone"
+    place: "The Senate house, Rome"
+    speaker: ruler
+    speaker_name: "Quintus Sulpicius Longus"
+    speaker_title: "Military tribune"
+    benchmark_provinces: 2
+    story: >-
+      The Senonian Gauls who were besieging Clusium have broken off. Their envoys came to Rome and demanded
+      that the three Fabii, who fought for Clusium against every custom among nations, be handed over; the people
+      replied by electing those three Fabii to be military tribunes with consular power. The Gauls are marching
+      on Rome as fast as they can, filling the country with such a noise that the peasants flee and the
+      towns run to arms.
+
+
+      Livy says that Rome did not even name a dictator against an enemy no one had ever seen. You and your
+      colleagues hold the command, and you have called a levy no larger than for an ordinary war. Veii has been
+      Roman for six years; Camillus, who took it, is living at Ardea. The Gauls are eleven miles away. Where will
+      the army stand?
+    choices:
+      - label: "March out and meet them at the river Allia"
+        historical: true
+        legitimacy_bp: -600
+        unrest_bp: 800
+        influence: {nobility: -300}
+        outcome: >-
+          At the eleventh milestone the Allia runs in a deep channel down to the Tiber. The Gauls fill every
+          place in front and on the flanks, with a din of horns and war cries. The tribunes extend the line
+          to avoid being outflanked, leaving a thin centre and a small reserve on a hill to the right. Brennus
+          takes the reserve for an ambush and charges it, and the army breaks at the first shout. Most of the
+          men flee across the Tiber to Veii; those on the right run to Rome and into the citadel without even
+          shutting the gates.
+        deeds: {war_with: [e5_senones], men: 12000}
+      - label: "Keep the army inside the walls, and fortify the Capitol"
+        food_bp: -800
+        materials_bp: -400
+        legitimacy_bp: -200
+        outcome: >-
+          The Gauls plunder the countryside unopposed. The city has no walls fit for the name against such
+          numbers, and the garrison on the Capitol will have to feed everyone who can reach it.
+        deeds: {war_with: [e5_senones], men: 8000}
+      - label: "Recall Camillus from Ardea and name him dictator first"
+        legitimacy_bp: 300
+        unrest_bp: 300
+        influence: {nobility: -300}
+        outcome: >-
+          Messengers ride to Ardea. The Gauls are not waiting for the Senate to change its mind, and the army that
+          meets them is under a commander who has just been brought back from exile; but it is under a commander.
+        deeds: {war_with: [e5_senones], men: 12000}
+    history: >-
+      Livy (5.37-5.38) says the levy was held no more carefully than for an ordinary war, and that the tribunes
+      who had provoked it commanded; at the Allia the left wing threw down its arms and plunged into the Tiber,
+      and the greater part fled to Veii; the right wing ran to Rome. Diodorus (14.114) has the Romans put 24,000
+      in line by the river against more than 70,000 Gauls. Livy's date is the traditional one, the 18th of July,
+      later known as the "Allian day". Polybius (1.6.1-2, 2.18.2-3) places the capture in the year of the Peace of
+      Antalcidas, 387/6, when Dionysius I was besieging Rhegium, and says that the Gauls occupied the whole city
+      except the Capitol.
+    sources: ["Livy 5.35.1-5.38.10", "Livy 6.1.11-12", "Polybius 1.6.1-2", "Polybius 2.18.2-3", "Diodorus 14.114"]
+
+  - id: r390_ransom
+    scenario: rome_390
+    civ: rome
+    year: -390
+    until_year: -389
+    after: [r390_allia]
+    title: "Woe to the Vanquished"
+    place: "The Capitol, Rome"
+    speaker: ruler
+    speaker_name: "Quintus Sulpicius Longus"
+    speaker_title: "Military tribune"
+    benchmark_provinces: 2
+    story: >-
+      The Gauls reached the city at sunset, found the gates open and no guard on the walls, and for a night
+      did not dare to enter. In the morning they came in and burned it. The young men and the senate's wealth have
+      been taken up to the Capitol; the old men who would not survive the city's fall have been left to wait
+      in their houses. The Vestals and their sacred things were carried off in a cart to Caere, whose people
+      took them in.
+
+
+      The Gauls have tried an assault up the steep ascent and been beaten back with slaughter. One night
+      they climbed in silence, and were noticed by the geese sacred to Juno; Marcus Manlius, who had been
+      consul three years before, woke and pushed the first Gaul down on the others. Now the siege is a blockade.
+      Corn is short on both sides, and the Gauls, who burned the corn along with the city, are sickening in the
+      ruins. At Veii the survivors are gathering and want Camillus. On the Capitol you have been told that for a
+      price the Gauls might leave.
+    choices:
+      - label: "Agree to ransom the city with a thousand pounds of gold"
+        historical: true
+        wealth_bp: -2500
+        legitimacy_bp: -800
+        unrest_bp: 600
+        influence: {nobility: -300}
+        outcome: >-
+          Quintus Sulpicius settles the terms with Brennus. The Gauls bring false weights; when the tribune objects,
+          Brennus throws his sword on top of the weights. "Woe to the vanquished!" The Gauls leave the ruins
+          and Rome has her city back, and a name for being bought.
+        deeds: {peace_with: [e5_senones]}
+      - label: "Hold the Capitol until Camillus comes"
+        wealth_bp: 0
+        food_bp: -1500
+        legitimacy_bp: 600
+        unrest_bp: 300
+        influence: {nobility: 400}
+        outcome: >-
+          The garrison holds. Camillus, recalled from exile by the Senate's decree and made dictator by order of the people, comes up to the city while the
+          gold is still being weighed, tells the Gauls the bargain is void because it was made without the dictator's
+          authority, and drives them off with steel. This is the story the Romans came to tell, and some of it
+          was probably told afterwards.
+        deeds: {war_with: [e5_senones]}
+      - label: "Break out and fight on the slope"
+        materials_bp: -800
+        legitimacy_bp: -300
+        unrest_bp: 500
+        outcome: >-
+          The sortie is hopeless. The survivors are driven back to the citadel and the garrison is one third smaller.
+        deeds: {war_with: [e5_senones]}
+    history: >-
+      Livy (5.39-5.49) tells of the geese, Manlius, and the arrival of Camillus in the midst of the weighing so that
+      the Romans were not left to live ransomed; he has Camillus then defeat the Gauls twice, the second time at the
+      eighth stone on the Gabine road, and returns in triumph as a second founder of the city. Polybius
+      (2.18.2-3) is plainer: the Gauls were recalled by an invasion of their land by the Veneti, and "made terms
+      with the Romans, handed back the city, and returned to their own land". Plutarch (Camillus 28) says the Gauls,
+      in the seventh month of the siege, were suffering from disease in the ruins. Strabo (5.2.3) says the Caerites
+      afterwards attacked the Gauls as they went through the Sabine country and took back the ransom.
+      The ransom story is old: Livy gives the ransom as 1,000 pounds of gold (5.48.8).
+    sources: ["Livy 5.39.1-5.49.7", "Polybius 2.18.2-3", "Plutarch, Camillus 28", "Strabo 5.2.3"]
+
+  - id: r390_rebuild
+    scenario: rome_390
+    civ: rome
+    year: -389
+    until_year: -387
+    after: [r390_ransom]
+    title: "Rome or Veii?"
+    place: "The Curia Hostilia, Rome"
+    speaker: general
+    speaker_name: "Marcus Furius Camillus"
+    speaker_title: "Dictator"
+    benchmark_provinces: 2
+    story: >-
+      The city is a heap of ashes. The plebs, and the tribunes with them, want to move to Veii, where the walls are
+      standing and the houses are empty. Veii's land has just been divided among the plebs, and there is
+      talk of making Veii the capital, or of splitting the Roman people between the two cities.
+
+
+      You are dictator for the second time. Rome has to be rebuilt, the gods' temples restored, and the
+      Volsci, Aequi and Etruscans have all noticed the state it is in. Some of the Latins and Hernici, who have
+      been faithful ever since Lake Regillus, are wavering too. In the Senate you make a long speech, mostly about
+      religion. Then the vote.
+    choices:
+      - label: "Rebuild Rome on the old site"
+        historical: true
+        legitimacy_bp: 800
+        wealth_bp: -500
+        materials_bp: -800
+        influence: {clergy: 500}
+        outcome: >-
+          Just as the Senate is debating, soldiers coming off guard pass through the comitium and a centurion
+          calls out, "Standard-bearer, fix your standard! It is best for us to remain here." The senators come out
+          of the Curia and say that they embrace the omen. The bill is thrown out. Tiles are provided at public cost,
+          anyone may cut stone and timber where he likes, provided he finishes within the year, and the streets are
+          built over wherever there is room. Within a year there is a new city.
+      - label: "Move the government to Veii"
+        legitimacy_bp: -800
+        unrest_bp: 700
+        influence: {clergy: -600, guilds: 300}
+        outcome: >-
+          The Senate follows the plebs across the river. The temples of the Capitol stand empty, and the gods
+          of the city are left to the Gauls.
+        deeds: {capital: it_veii}
+      - label: "Rebuild Rome, and send half the people to Veii"
+        legitimacy_bp: 100
+        unrest_bp: 400
+        influence: {guilds: 200}
+        outcome: >-
+          Two half-cities, neither able to defend itself, and a divided people. The plebs, who are more
+          numerous, come to prefer Veii.
+    history: >-
+      Livy (5.49-5.55) says Camillus prevented the people from moving to Veii (5.49.8), proposed that all temples
+      be restored and the sacred things expiated, and that a league of hospitality be made with Caere (5.50); the
+      centurion's words in the comitium decided the matter (5.55.1-2). The city was rebuilt in haste, which is why
+      the old sewers now pass under private houses (5.55.4-5). Livy (6.4.4-7) adds that Veientines, Capenates and
+      Faliscans who had come over to Rome were made citizens with land, that those who had settled in Veii
+      were recalled under threat of death, and that four new tribes were made from the new citizens (6.5): Stellatina, Tormentina,
+      Sabatina and Arniensis. Camillus triumphed in the same year over the Volsci, Aequi and Etruscans (6.4.1-2).
+    sources: ["Livy 5.49.8-5.55.5", "Livy 6.2-6.5"]
+
+  - id: r390_manlius
+    scenario: rome_390
+    civ: rome
+    year: -385
+    until_year: -382
+    title: "The Saviour of the Capitol"
+    place: "The Forum, Rome"
+    speaker: ruler
+    speaker_name: "Marcus Furius Camillus"
+    speaker_title: "Military tribune"
+    benchmark_provinces: 2
+    story: >-
+      Marcus Manlius, who woke to the geese and saved the Capitol, has turned against his own order. Livy says he
+      envied Camillus and found it hard to be second to him. Seeing a centurion who had served well in the Veientine
+      and Gallic wars led off to prison for debt, he ran into the middle of the Forum, paid the creditor with the
+      scales and bronze and set the man free, and announced that he had not saved the Capitol so that his fellow
+      citizens could be chained. He now holds meetings in his house, by night and day, with the leaders of the
+      plebs.
+
+
+      The Senate says that the Republic must take no harm from him. The magistrates, the dictator and the
+      tribunes of the plebs are all uncertain what to do, because the plebs love him.
+    choices:
+      - label: "Try him before the people"
+        historical: true
+        legitimacy_bp: 400
+        unrest_bp: -200
+        influence: {nobility: 300, guilds: -200}
+        outcome: >-
+          Two tribunes of the plebs, Marcus Maenius and Quintus Publilius, argue that this should be a contest
+          between the state and one pestilent citizen, not between patricians and plebeians, and a day is set for
+          his trial. At the trial none of his relatives, not even his brothers, put on mourning. He is condemned, and
+          the tribunes throw him from the Tarpeian rock, the cliff of the Capitol he saved.
+      - label: "Imprison him as a threat to the state"
+        legitimacy_bp: -600
+        unrest_bp: 1200
+        influence: {nobility: 400, guilds: -500}
+        outcome: >-
+          The plebs, who love him, are angry, and the city is nearer to a quarrel between the orders than it has
+          been since the Gauls.
+      - label: "Relieve some debts from the public treasury"
+        wealth_bp: -1000
+        unrest_bp: -600
+        legitimacy_bp: 200
+        influence: {nobility: -400, guilds: 400}
+        outcome: >-
+          Manlius loses much of his following, and the nobles never forgive being forced to pay for it.
+    history: >-
+      Livy (6.11-6.20) records that Manlius's popular movement began in a quarrel with Camillus, that he paid a
+      centurion's debt in the Forum, was imprisoned (6.16), and in the end was tried and thrown from the Tarpeian
+      rock; his house on the Capitol was razed, and it was decreed that no patrician should live in the citadel and
+      that no Manlius should again bear the name Marcus. Livy notes that some say he was condemned by duumvirs for
+      treason, and that he finds in no author what the prosecutors charged him with (6.20.4). The dating (385-384) is Livy's traditional one.
+    sources: ["Livy 6.11.1-6.20.14"]
+
+  - id: r390_licinian
+    scenario: rome_390
+    civ: rome
+    year: -367
+    until_year: -364
+    title: "The Licinian-Sextian Rogations"
+    place: "The Forum, Rome"
+    speaker: ruler
+    speaker_name: "Marcus Furius Camillus"
+    speaker_title: "Dictator"
+    benchmark_provinces: 2
+    story: >-
+      For ten years the tribunes Gaius Licinius Stolo and Lucius Sextius Lateranus have been re-elected. For five of those
+      years, Livy says, they let no curule magistrate be elected at all. They have three bills: that
+      interest already paid should be deducted from the principal and the rest repaid in three equal yearly
+      instalments; that no one should hold more than five hundred iugera of public land; and that there be no more
+      military tribunes, and one of the two consuls be chosen from the plebs.
+
+
+      Licinius's wife was a Fabia, and her sister's husband is a patrician; so the family has not been despised for
+      the alliance. Meanwhile Velitrae is under siege, and rumour of a Gallic war comes in from outside. The Senate
+      has named you dictator for the fifth time. What will you let through?
+    choices:
+      - label: "Accept all three laws, and create a praetor and two curule aediles for the patricians"
+        historical: true
+        legitimacy_bp: 900
+        unrest_bp: -1200
+        influence: {nobility: -700, guilds: 600}
+        outcome: >-
+          The two orders settle. The consulship is opened to plebeians, and in exchange the patricians reserve a new
+          single office, the praetor, who administers justice in the city, and two curule aediles, who put on the
+          games. Lucius Sextius is the first plebeian consul; his colleague is the patrician Lucius Aemilius Mamercus.
+      - label: "Accept the debt and land laws, but not the plebeian consul"
+        wealth_bp: -600
+        legitimacy_bp: 300
+        unrest_bp: -300
+        influence: {nobility: -300, guilds: 200}
+        outcome: >-
+          The tribunes had foreseen this and will not yield; the consulship is the whole point. They threaten
+          again to stop every election.
+      - label: "Refuse all three; call out the army against the Gauls instead"
+        legitimacy_bp: -800
+        unrest_bp: 1000
+        influence: {nobility: 500, guilds: -500}
+        outcome: >-
+          The levy fails. The Gauls turn out to be a rumour, the tribunes come back stronger, and the patricians
+          have made one more concession they could not afford.
+    history: >-
+      Livy (6.35-6.42, 7.1) records the tribunes' three bills (debt, 500 iugera, a plebeian consul), the ten years of
+      obstruction, the dictatorship of Camillus for the fifth time against a rumoured Gallic war, and the compromise: a
+      plebeian consul, and in exchange a patrician praetor and two curule aediles. Sextius became the first plebeian
+      consul. Livy also says the commons won half the decemvirs for sacred rites (6.42.2). The wall of hewn stone that
+      the censors contracted in 378 (6.32.1) had been paid for by a tax at a time of acute debt. Licinius Stolo was
+      himself later fined for holding a thousand iugera by emancipating his son (7.16.9).
+    sources: ["Livy 6.32.1", "Livy 6.34.1-6.42.14", "Livy 7.1.1-6", "Livy 7.16.9"]
+
+  - id: r390_torquatus
+    scenario: rome_390
+    civ: rome
+    year: -361
+    until_year: -359
+    title: "The Torque and the Gaul"
+    place: "The bridge over the Anio"
+    speaker: general
+    speaker_name: "Titus Manlius"
+    speaker_title: "Young soldier"
+    benchmark_provinces: 2
+    story: >-
+      The Gauls have come back. They have pitched their camp by the Salarian road, three miles from the city, at
+      the bridge across the Anio. A dictator has been named and every man able to serve has sworn the military
+      oath. Both sides have left the bridge standing between them. Polybius says that thirty years after the
+      capture the Celts came as far as Alba, and the Romans were taken by surprise and did not dare to fight.
+
+
+      On the bridge a huge Gaul in bright armour is shouting a challenge to any Roman to fight in single combat.
+      The Romans are silent. A young man, Titus Manlius, asks the dictator for leave.
+    choices:
+      - label: "Let him fight"
+        historical: true
+        legitimacy_bp: 600
+        unrest_bp: -300
+        influence: {nobility: 200}
+        outcome: >-
+          Manlius stabs the Gaul in the belly and the groin, laying him flat over a wide space, and takes nothing
+          from the body but the chain. The Gauls stand without moving, and the Romans run forward to meet
+          him and lead him to the dictator. The soldiers call him Torquatus, "the one with the chain", and the name
+          stays in his family. The dictator gives him a golden crown.
+        deeds: {war_with: [cisalpine_gauls]}
+      - label: "Forbid single combat and hold the bridge"
+        legitimacy_bp: -300
+        unrest_bp: 200
+        outcome: >-
+          The Gauls jeer, and the soldiers learn that their commander is more afraid than they are.
+        deeds: {war_with: [cisalpine_gauls]}
+      - label: "Break the bridge and withdraw behind the city"
+        food_bp: -400
+        legitimacy_bp: -700
+        unrest_bp: 600
+        outcome: >-
+          The Gauls, no longer opposed, plunder the country for weeks. Rome is not taken, but its farmers
+          are ruined.
+        deeds: {war_with: [cisalpine_gauls]}
+    history: >-
+      Livy (7.9-7.10) tells that the Gauls camped by the Salarian road at the Anio bridge, that the dictator
+      proclaimed a suspension of all business and called up every man, and that Titus Manlius killed a Gaul in single
+      combat and took his chain (torques), giving his family the name Torquatus. Livy himself (6.42.5-6) says
+      he thinks the event belongs not less than ten years after 367. Polybius (2.18) says the Celts came as far as Alba
+      thirty years after the capture, and that the Romans, caught unprepared, did not give battle; twelve years later,
+      forewarned, they came out and the Gauls retreated by night.
+    sources: ["Livy 7.9.1-7.10.14", "Livy 6.42.4-6", "Polybius 2.18"]
+
+  - id: r390_samnite_caere
+    scenario: rome_390
+    civ: rome
+    year: -354
+    until_year: -351
+    title: "Friends in the Hills and on the Coast"
+    place: "The Senate house, Rome"
+    speaker: ruler
+    speaker_name: "A senator"
+    speaker_title: "Of the old families"
+    benchmark_provinces: 2
+    story: >-
+      The Tarquinians sacrificed three hundred and seven Roman prisoners in their forum four years ago. Rome has
+      answered by scourging and beheading Tarquinian captives in the Roman Forum. The Samnites, who have heard
+      of these successes, have sent envoys to ask for a treaty of friendship.
+
+
+      There is also a rumour that Caere, out of sympathy with its fellow Etruscans, has sided with Tarquinii. If Rome
+      must fight Etruria again, its southern flank needs to be quiet. But the Samnites are strong, and they are
+      the hill people who come down on Campania.
+    choices:
+      - label: "Make a treaty with the Samnites and pardon Caere"
+        historical: true
+        legitimacy_bp: 500
+        wealth_bp: 200
+        outcome: >-
+          The senate receives the Samnite envoys kindly and a treaty is struck. Caere's envoys remind the people of
+          the Vestals and the sacred things kept safe in the Gallic year, and ask the Romans to think of the old
+          hospitality rather than the present grievance. Peace is granted, and the question of a truce for
+          a hundred years is left to the Senate. Falerii, accused of the same fault, becomes the target of the war.
+        deeds: {ally_with: [e5_samnites, e5_caere]}
+      - label: "Refuse the Samnites and punish Caere"
+        legitimacy_bp: -400
+        unrest_bp: 400
+        outcome: >-
+          A war on two fronts, against a city that sheltered the Vestals, would be remembered. The Samnites
+          take their offer to the Campanians.
+        deeds: {war_with: [e5_caere]}
+      - label: "Treaty with the Samnites, and make Caere pay"
+        wealth_bp: 400
+        legitimacy_bp: -100
+        unrest_bp: 200
+        outcome: >-
+          Caere pays and remembers. Its people will count that the Vestals were no use to them.
+        deeds: {ally_with: [e5_samnites], grudges: {e5_caere: 2000}}
+    history: >-
+      Livy (7.19.3-7.20.9) says the Tarquinian captives were scourged and beheaded in the Forum in return for the
+      Romans sacrificed at Tarquinii (7.15.10); that the Samnites asked for friendship and a treaty was made; and that
+      Caere, which had once sheltered Rome's sacred things and the Vestals, was pardoned in return and the question
+      of a truce of a hundred years left to the Senate (7.20.7-9). In 351 Tarquinii and Falerii received a truce of
+      forty years (7.22.5). Strabo (5.2.3) adds that the Romans, he thought, were ungrateful: they gave Caere citizenship
+      but enrolled the Caerites on the roll of those without the vote.
+    sources: ["Livy 7.15.10", "Livy 7.19.3-7.20.9", "Livy 7.22.5", "Strabo 5.2.3"]
+
+  - id: r390_corvus
+    scenario: rome_390
+    civ: rome
+    year: -349
+    until_year: -347
+    title: "The Crow on the Helmet"
+    place: "The Roman camp, Latium"
+    speaker: general
+    speaker_name: "Marcus Valerius"
+    speaker_title: "Military tribune"
+    benchmark_provinces: 2
+    story: >-
+      The Gauls are in Latium again, and the Romans are encamped against them. A gigantic Gaul in splendid armour
+      comes forward and, through an interpreter, challenges any Roman to single combat. A young military tribune,
+      Marcus Valerius, thinks himself as worthy of the honour as Titus Manlius was.
+
+
+      The consul has to give permission. If the tribune loses, the army will lose heart; if he wins, the army will
+      follow him. This is a year before Carthage will ask for another treaty.
+    choices:
+      - label: "Give him leave to fight"
+        historical: true
+        legitimacy_bp: 500
+        unrest_bp: -200
+        outcome: >-
+          As the two meet a crow settles on the Roman's helmet, facing his enemy. The tribune takes it for a
+          divine sign, and the bird attacks the Gaul's face and eyes as the fight goes on. Valerius wins, and
+          from this victory takes the name Corvus, the crow.
+      - label: "Refuse, and fight a regular battle"
+        legitimacy_bp: -100
+        outcome: >-
+          The Gauls are not impressed. In the meantime Rome loses the story its army would have retold for
+          generations.
+    history: >-
+      Livy (7.25-7.26) tells of the Gauls in Latium and of the combat of Marcus Valerius with the Gaul, with the
+      crow that settled on his helmet; Polybius (2.18) says the Gauls retreated by night when the Romans came
+      out in force. The treaty with Carthage is recorded by Livy at 348 (7.27.2), where Carthage "had sent envoys to
+      ask for a friendly alliance"; Polybius (3.24) quotes a second treaty without a date, in which Carthage adds
+      Tyre and Utica and forbids the Romans to trade in Sardinia and Libya.
+    sources: ["Livy 7.26.1-4", "Livy 7.27.2", "Polybius 2.18", "Polybius 3.24"]
+
+  - id: r390_capua
+    scenario: rome_390
+    civ: rome
+    year: -343
+    until_year: -341
+    title: "Capua Surrenders to Rome"
+    place: "The Senate house, Rome"
+    speaker: ruler
+    speaker_name: "A consul"
+    speaker_title: "Of the Republic"
+    benchmark_provinces: 2
+    story: >-
+      Livy opens this year with the words that his history now turns to wars greater than any recorded before. The
+      Samnites, friends and allies of Rome, have made an unprovoked attack on the Sidicines, who have turned to the
+      Campanians. The Campanians, weakened by luxury, were beaten, and the Samnites have seized the Tifata hills
+      above Capua and beaten them again in the plain. Capua sends to Rome for help.
+
+
+      Rome has a treaty with the Samnites, struck in 354. The Campanian envoys say that Rome made that treaty without
+      barring itself from making others. They say that the Campanians are second only to Rome in the size
+      of their city and the fertility of their land. The Senate answers that it is bound by its treaty with Samnium.
+      The envoys rise and put the city, its land, its temples and everything in it into the hands of the Roman
+      people.
+    choices:
+      - label: "Accept the surrender and send envoys to warn the Samnites off"
+        historical: true
+        wealth_bp: 500
+        legitimacy_bp: 400
+        outcome: >-
+          It becomes a matter of honour that a people who have surrendered cannot be left to their fate. The envoys sent
+          to the Samnites are answered with defiance, and the magistrates of Samnium order their cohorts out to
+          ravage Campania, within earshot of the Romans. War is voted by the people. Valerius marches into Campania
+          and camps at Mount Gaurus, while Cornelius marches to Samnium.
+        deeds: {war_with: [e5_samnites], ally_with: [e5_campanians], men: 12000}
+      - label: "Keep faith with the Samnite treaty and refuse"
+        legitimacy_bp: -200
+        outcome: >-
+          The Campanians go to the Latins. Samnium takes Capua, and has reached the borders of Latium.
+      - label: "Take the surrender but send no army"
+        legitimacy_bp: -800
+        unrest_bp: 400
+        outcome: >-
+          The Samnites ravage Campania in front of the envoys, and Rome is seen to have accepted a gift it could
+          not protect.
+        deeds: {ally_with: [e5_campanians]}
+    history: >-
+      Livy (7.29-8.2) records that the war began in 343 over Campanian appeals; that the Senate first said it could not
+      break its treaty, then accepted the Campanians' formal surrender (deditio) of themselves and their territory
+      (7.31); that the Samnite council answered Rome's envoys with defiance; and that the consuls campaigned in
+      Campania and Samnium (Mount Gaurus; the manuscript spelling is "Glaurus" in one translation). The Samnites
+      asked for peace and in 341 were granted a renewal of the earlier treaty and the right to make war on the Sidicines
+      (8.1-8.2). A translator's note on this passage quotes Mommsen and Arnold, who held that the Roman annalists so disguised the Samnite and Latin wars that a probable account needs correcting.
+    sources: ["Livy 7.29.1-7.32.4", "Livy 8.1.1-8.2.4"]
+
+  - id: r390_mutiny
+    scenario: rome_390
+    civ: rome
+    year: -342
+    until_year: -340
+    after: [r390_capua]
+    title: "The Garrison at Capua"
+    place: "Between Rome and Capua"
+    speaker: ruler
+    speaker_name: "Marcus Valerius Corvus"
+    speaker_title: "Dictator"
+    benchmark_provinces: 2
+    story: >-
+      A force was left to winter in Capua and Suessa to check the Samnites. A residence in Capua was not good for
+      discipline; the soldiers began to talk of seizing the city as its present holders had taken it from its ancient
+      owners. The consul has tried to purge the army by dismissing the leading mutineers, and the men, realising what is
+      being done, have run to a camp near Rome and chosen a general of their own, Titus Quinctius, whom they dragged
+      from his farm.
+
+
+      Two armies stand facing each other. Livy says neither side had yet been hardened to the sight of citizens' blood.
+      You have been named dictator. The soldiers are calling for the same terms that earlier secessions got. What will you give them?
+    choices:
+      - label: "Immunity for all, and a law on the muster-roll"
+        historical: true
+        legitimacy_bp: 700
+        unrest_bp: -1000
+        influence: {nobility: -300, guilds: 400}
+        outcome: >-
+          Valerius speaks to them in the open space between the lines, and they hear him in silence. Quinctius says that
+          his men will submit to the dictator and asks only that no one be punished for the secession. The dictator
+          rides back, gets the Senate's consent and brings in a bill in the Petilian Grove giving immunity to all who
+          took part. A military law forbids striking any soldier's name off the roll without his consent, and
+          another forbids making a former military tribune serve as a centurion.
+      - label: "Punish the ringleaders"
+        legitimacy_bp: -900
+        unrest_bp: 1500
+        influence: {nobility: 300, guilds: -400}
+        outcome: >-
+          The army is not so much beaten as divided against itself. The Samnites, the Latins and the
+          Privernates see Rome with a mutiny at its throat.
+      - label: "Disband the army and raise another"
+        wealth_bp: -800
+        legitimacy_bp: -400
+        unrest_bp: 600
+        outcome: >-
+          A new army can be raised, but not in a season, and the Latins had long been faithless to their treaty.
+    history: >-
+      Livy (7.38-7.42) tells of the mutiny in Campania, and says that the sources disagree about nearly everything
+      but the fact of the mutiny and its end: in some accounts Valerius was dictator, in others the consuls settled it,
+      and in some the mutineers marched out of Rome itself under a Gaius Manlius. The report of the disturbance,
+      together with the Samnite war, made many peoples unwilling to ally with Rome; the Latins, Livy says, had long
+      been faithless to their treaty, and the Privernates ravaged the colonies of Norba and Setia (7.42.8). Livy also
+      reports various laws attributed to the same year, including one by the tribune Lucius Genucius forbidding usury
+      (7.42.2). The Latin War followed in 340.
+    sources: ["Livy 7.38.1-7.42.8"]
