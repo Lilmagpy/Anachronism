@@ -12,6 +12,7 @@ from anachronism.engine.actions import (
     ArmyFormation,
     ArmyPlan,
     ArmyStance,
+    BackCandidate,
     Build,
     BuildFleet,
     CancelProject,
@@ -30,8 +31,10 @@ from anachronism.engine.actions import (
     MakePeace,
     MarchArmy,
     PauseProject,
+    Persuade,
     ProposeAlliance,
     ProposeIdea,
+    ProposeToSenate,
     RaiseArmy,
     ResumeProject,
     RuleOnIdea,
@@ -57,6 +60,7 @@ from anachronism.engine.events import EventLog
 from anachronism.engine.judge import apply_ruling
 from anachronism.engine.offers import respond
 from anachronism.engine.projects import begin_project, hasten
+from anachronism.engine.senate import back_man, persuade_family, propose_to_senate
 from anachronism.engine.state import GameState
 from anachronism.engine.tech import describe_blockers, propose
 
@@ -110,6 +114,12 @@ def _apply(state: GameState, action: Action) -> tuple[bool, str]:
         message = respond(state, accept=action.accept, events=events)
         state.events.extend(events.items)
         return True, message
+    if isinstance(action, Persuade):
+        return persuade_family(state, action)
+    if isinstance(action, BackCandidate):
+        return back_man(state, action)
+    if isinstance(action, ProposeToSenate):
+        return propose_to_senate(state, action)
     if isinstance(action, ChooseChapter):
         if civ.id != state.player_civ:
             return False, "only the player's court plays the chronicle"

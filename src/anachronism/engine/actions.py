@@ -399,6 +399,46 @@ class ScuttleFleet(Frozen):
     fleet: str
 
 
+class Persuade(Frozen):
+    """Spend influence to win a family of the Senate over on an issue (R2).
+
+    ``family`` is a gens id (``cornelii``), ``issue`` one of the Senate's issues (``war``,
+    ``peace``, ``land``, ``colony``, ``building``, ``idea``, ``debt``, ``citizenship``).
+    """
+
+    kind: Literal["persuade"] = "persuade"
+    civ: str
+    family: str
+    issue: str
+
+
+class BackCandidate(Frozen):
+    """Spend influence to back a man for an office at the next election (R2).
+
+    ``person`` is a person id from the Republic view, ``office`` a magistracy id (``consul``).
+    """
+
+    kind: Literal["back"] = "back"
+    civ: str
+    person: str
+    office: str
+
+
+class ProposeToSenate(Frozen):
+    """Put a matter to the Senate (R2 follow-up, D-286); it costs influence whatever the vote.
+
+    ``issue`` is the Senate's question and ``proposal`` what the player wants, as the Republic
+    view lists them: ``war_with:<civ>``, ``peace_with:<civ>``, ``law:<law_id>`` (or just the law
+    id, e.g. ``land_reform``, ``grain_dole``), ``fund:<project_id>``, ``colony:<province_id>``.
+    The Senate votes; a tribune may block or carry the matter; if it passes it takes effect.
+    """
+
+    kind: Literal["senate"] = "senate"
+    civ: str
+    issue: str
+    proposal: str
+
+
 Orders = (
     RaiseArmy
     | MarchArmy
@@ -469,7 +509,10 @@ Action = Annotated[
     | Unqueue
     | ChooseDilemma
     | ChooseChapter
-    | AnswerEnvoy,
+    | AnswerEnvoy
+    | Persuade
+    | BackCandidate
+    | ProposeToSenate,
     Field(discriminator="kind"),
 ]
 

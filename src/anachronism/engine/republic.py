@@ -76,7 +76,8 @@ def death_bp(rules: RepublicRules, age: int) -> int:
     return bp
 
 
-def _family_weight(family: Family) -> int:
+def family_weight(family: Family) -> int:
+    """How much a family counts in the Senate: its auctoritas, dignitas and clients."""
     return max(1, family.auctoritas_bp + family.dignitas_bp // 2 + family.clients // 2)
 
 
@@ -117,7 +118,7 @@ def faction_shares(state: GameState, year: int) -> dict[str, int]:
     total = 0
     for gid in sorted(rep.families):
         gens = state.world.gentes[gid]
-        weight = _family_weight(rep.families[gid])
+        weight = family_weight(rep.families[gid])
         fid = faction_of(state, gens.order, _lean_popular(gens), year)
         weights[fid] = weights.get(fid, 0) + weight
         total += weight
@@ -540,7 +541,7 @@ def _new_man(
     ]
     if not ids:
         return None
-    weights = [_family_weight(rep.families[gid]) for gid in ids]
+    weights = [family_weight(rep.families[gid]) for gid in ids]
     gens = state.world.gentes[ids[rng.weighted_index(weights)]]
     least = era.min_age
     if least is None:
@@ -888,17 +889,25 @@ def family_leaning(state: GameState, family_id: str, issue: Issue) -> int:
     return stance + rep.families[family_id].favour.get(issue.value, 0)
 
 
-def senate_vote(state: GameState, issue: Issue, *, record: bool = False) -> Vote:
+def senate_vote(
+    state: GameState,
+    issue: Issue,
+    *,
+    record: bool = False,
+    turn: int | None = None,
+    year: int | None = None,
+) -> Vote:
     """The Senate's will: a vote weighted by the families' standing.
 
     With ``record`` the vote is a real one: it becomes a ``senate`` event in the city (U7).
-    Looking at the Senate's mood (a view, a forecast) leaves ``record`` off.
+    Looking at the Senate's mood (a view, a forecast) leaves ``record`` off. A vote recorded
+    while a turn resolves passes that turn's ``turn`` and ``year``.
     """
     rep = _rep(state)
     yes = no = total = 0
     leanings: dict[str, int] = {}
     for fid in sorted(rep.families):
-        weight = _family_weight(rep.families[fid])
+        weight = family_weight(rep.families[fid])
         lean = family_leaning(state, fid, issue)
         leanings[fid] = lean
         total += weight
@@ -909,7 +918,7 @@ def senate_vote(state: GameState, issue: Issue, *, record: bool = False) -> Vote
     yes_bp = yes * BP // total if total else 0
     no_bp = no * BP // total if total else 0
     if record:
-        city_module.record_vote(state, issue.value, yes_bp, no_bp)
+        city_module.record_vote(state, issue.value, yes_bp, no_bp, turn=turn, year=year)
     return Vote(issue, yes_bp, no_bp, yes > no, leanings)
 
 
@@ -932,7 +941,7 @@ def senate_mood(state: GameState) -> list[FactionMood]:
     year = state.year
     out: list[FactionMood] = []
     blocs = factions_at(state, year)
-    total = sum(_family_weight(f) for f in rep.families.values())
+    total = sum(family_weight(f) for f in rep.families.values())
     for faction in blocs:
         members = [
             fid
@@ -941,13 +950,13 @@ def senate_mood(state: GameState) -> list[FactionMood]:
                 faction, state.world.gentes[fid].order, _lean_popular(state.world.gentes[fid])
             )
         ]
-        weight = sum(_family_weight(rep.families[f]) for f in members)
+        weight = sum(family_weight(rep.families[f]) for f in members)
         issues: dict[str, int] = {}
         for issue in ISSUE_ORDER:
             if weight:
                 issues[issue.value] = (
                     sum(
-                        _family_weight(rep.families[f]) * family_leaning(state, f, issue)
+                        family_weight(rep.families[f]) * family_leaning(state, f, issue)
                         for f in members
                     )
                     // weight
