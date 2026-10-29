@@ -77,13 +77,6 @@ func _world(kind: String) -> void:
 		_root.add_child(ground)
 	else:
 		_root.add_child(ground)
-	var sun := DirectionalLight3D.new()
-	sun.rotation_degrees = Vector3(-48, 35, 0)
-	sun.light_color = Color(1.0, 0.93, 0.80)
-	sun.light_energy = 1.4
-	sun.shadow_enabled = true
-	sun.directional_shadow_max_distance = 400.0
-	_root.add_child(sun)
 	var env := WorldEnvironment.new()
 	var e := Environment.new()
 	var sky := Sky.new()

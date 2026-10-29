@@ -40,7 +40,7 @@ static func kind_of(monument: Dictionary) -> Array:
 		"curia":
 			return ["curia", "julia" if "iulia" in id else ("pompeia" if "pompeia" in id else "hostilia")]
 		"basilica":
-			return ["basilica", ""]
+			return ["basilica", id.trim_prefix("basilica_")]
 		"circus":
 			return ["circus", ""] if id == "circus_maximus" else ["", ""]
 		"amphitheatre":
@@ -53,6 +53,8 @@ static func kind_of(monument: Dictionary) -> Array:
 			return ["insula", ""]
 		"theatre":
 			return ["theatre", "pompey" if "pompei" in id else ""]
+		"shrine", "altar":
+			return ["temple", ""]
 	return ["", ""]
 
 
@@ -81,6 +83,24 @@ static func _default_bearing(kind: String, variant: String) -> float:
 	if kind == "circus":
 		return 135.0     # the Vallis Murcia runs NW-SE: carceres NW, sphendone SE (Platner-Ashby)
 	return 180.0
+
+
+## The interior of one monument record as a free-standing node at `at` (world), or null when
+## the monument has no interior. `year` dresses it (frescoes, columns). Used by interior.gd.
+static func build_node(monument: Dictionary, at: Transform3D, for_year: int) -> Node3D:
+	var kv := kind_of(monument)
+	if kv[0] == "":
+		return null
+	var size := size_of(monument, kv[0], kv[1])
+	var r := Roman.build(kv[0], size, {"year": for_year, "variant": kv[1]})
+	if r.is_empty():
+		return null
+	var root := Node3D.new()
+	root.name = "UrbsInterior"
+	root.transform = at
+	_attach(root, r)
+	root.set_meta("result", r)
+	return root
 
 
 ## Build the interior in `parent` and return the camera's starting transform (world).
@@ -149,6 +169,16 @@ static func _attach(root: Node3D, r: Dictionary) -> void:
 		cover.scale = Vector3.ONE * Roman.MS
 		cover.material_override = _material
 		root.add_child(cover)
+	# The scene turns its own sun off while inside, so the interior brings the sun that comes
+	# through its real openings (doors, windows, the compluvium, the open sky).
+	var sun := DirectionalLight3D.new()
+	sun.name = "Sun"
+	sun.rotation_degrees = Vector3(-52, 38, 0)
+	sun.light_color = Color(1.0, 0.93, 0.80)
+	sun.light_energy = 1.35
+	sun.shadow_enabled = true
+	sun.directional_shadow_max_distance = 260.0
+	root.add_child(sun)
 	for l in r["lights"]:
 		var light := OmniLight3D.new()
 		light.name = "Lamp"
