@@ -294,16 +294,15 @@ func _build_hud() -> void:
 			"choices": [{"label": "Close the quarter", "hint": "food -3%, unrest +6"},
 				{"label": "Pray at the temples", "hint": "unrest +3, clergy +6"},
 				{"label": "Let the physicians try", "hint": "wealth -4%, knowledge +8%"}]}
+	if options.has("republic-demo") and view.get("republic") != null:   # Republic (D-286): --republic-demo: unfold the two greatest families (screenshots)
+		var houses: Array = view["republic"]["families"].duplicate()
+		houses.sort_custom(func(a, b): return int(a["dignitas_bp"]) > int(b["dignitas_bp"]))
+		for family in houses.slice(0, 2):
+			RepublicPanel.unfold_family(str(family["id"]))
 	hud.show_view(view)
 	hud.speak(view.get("voices", []), true)
 	if options.has("start"):
 		_on_action({"kind": "start", "node_id": str(options["start"])})
-	if options.has("republic-demo") and view.get("republic") != null:   # Republic (D-286): --republic-demo, made-up proposals (screenshots)
-		view["republic"]["proposals"] = [
-			{"issue": "land", "proposal": "land_law", "label": "A land law for the veterans", "cost": 200, "forecast_yes_bp": 5200, "forecast_no_bp": 2100},
-			{"issue": "citizenship", "proposal": "latin_rights", "label": "Citizenship for the Latin allies", "cost": 400, "forecast_yes_bp": 1800, "forecast_no_bp": 6400}]
-		for family in view["republic"]["families"].slice(0, 2):
-			RepublicPanel.unfold_family(str(family["id"]))
 	if options.has("breakthrough-demo"):  # --breakthrough-demo=idea: its card (screenshots)
 		for idea in view.get("ideas", []):
 			if str(idea["id"]) == str(options["breakthrough-demo"]):

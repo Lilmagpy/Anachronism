@@ -9,9 +9,9 @@
 ## preference, kept in static variables so a refresh of the HUD does not fold them again).
 ##
 ## The actions it sends (each built in exactly one function, so the shapes are easy to fix):
-##   propose_to_senate  {"kind", "issue", "proposal"}   see `_propose_action`
-##   persuade           {"kind", "family", "issue"}     see `_persuade_action`
-##   back_candidate     {"kind", "person", "office"}    see `_back_action`
+##   senate   {"kind", "issue", "proposal"}   see `_propose_action`
+##   persuade {"kind", "family", "issue"}     see `_persuade_action`
+##   back     {"kind", "person", "office"}    see `_back_action`
 class_name RepublicPanel
 extends VBoxContainer
 
@@ -196,9 +196,9 @@ func show_republic(rep: Variant, rome_colour: Color) -> void:
 	_rep = rep
 	_build_header()
 	_build_this_year()
-	_build_senate()
 	if _rep.has("proposals"):
 		_build_proposals()
+	_build_senate()
 	_build_families()
 	_build_notable()
 	_build_fasti()
@@ -333,6 +333,12 @@ static func _num(value: int) -> String:
 		out = "," + text.substr(text.length() - 3) + out
 		text = text.substr(0, text.length() - 3)
 	return ("-" if value < 0 else "") + text + out
+
+
+## What persuading or backing costs in influence (from the view's `influence_costs`).
+func _cost(what: String) -> int:
+	var costs: Dictionary = _rep.get("influence_costs", {})
+	return int(costs.get(what, 0))
 
 
 func _pct(bp: int) -> String:
@@ -549,6 +555,17 @@ func _build_senate() -> void:
 		if not blocs_now.is_empty() and not blocs_now.has(faction["id"]):
 			continue
 		body.add_child(_bloc_card(faction))
+	var last: Array = _rep.get("last_votes", [])
+	if not last.is_empty():
+		body.add_child(_t("What the Senate decided lately", 15, HEADING, 800))
+		for vote in last.slice(maxi(0, last.size() - 6)):
+			body.add_child(_decided_row(vote))
+	var laws: Array = _rep.get("laws", [])
+	if not laws.is_empty():
+		body.add_child(_wrap("Laws passed: " + ", ".join(laws.map(func(l): return "%s (%s)" % [_humane(str(l["id"])), _years(int(l["year"]))])), 12, DIM))
+	var colonies: Array = _rep.get("colonies", [])
+	if not colonies.is_empty():
+		body.add_child(_wrap("Colonies founded: " + ", ".join(colonies.map(func(c): return "%s (%s)" % [_humane(str(c["province"])), _years(int(c["year"]))])), 12, DIM))
 	body.add_child(_t("If the Senate voted today", 15, HEADING, 800))
 	body.add_child(_wrap("Each family leans for or against each matter; a vote carries if more of the Senate's weight is for than against.", 12, DIM))
 	for vote in senate.get("votes", []):
@@ -617,6 +634,39 @@ func _bar_row(caption: String, bar: Control, figure: String, figure_colour := IN
 	return row
 
 
+## "war_with:carthage" -> "War with carthage"; ids read as plain words.
+func _humane(id: String) -> String:
+	var bits := id.split(":")
+	var words := bits[0].replace("_", " ")
+	if bits.size() > 1:
+		words += " " + bits[1].replace("_", " ").capitalize()
+	return words.substr(0, 1).to_upper() + words.substr(1)
+
+
+## One vote the Senate has already held, and how it ended, in plain words.
+func _decided_row(vote: Dictionary) -> Control:
+	var issue := str(vote["issue"])
+	var outcome := str(vote.get("outcome", ""))
+	var words := {"passed": ["Passed", GOOD], "failed": ["Failed", BAD],
+		"vetoed": ["Vetoed by a tribune", BAD], "forced": ["Forced through by a tribune", GOOD]}
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 0)
+	var head := HBoxContainer.new()
+	head.add_theme_constant_override("separation", 6)
+	var title := _issue_name(issue)
+	if str(vote.get("proposal", "")) != "":
+		title = _humane(str(vote["proposal"]))
+	var name := _t(title, 13, INK, 800)
+	name.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	name.clip_text = true
+	head.add_child(name)
+	var result: Array = words.get(outcome, ["Held", DIM])
+	head.add_child(_t(str(result[0]), 12, result[1], 800))
+	box.add_child(head)
+	box.add_child(_t("%s · for %s, against %s" % [_years(int(vote["year"])), _pct(int(vote["yes_bp"])), _pct(int(vote["no_bp"]))], 12, DIM, 600))
+	return box
+
+
 func _vote_row(vote: Dictionary) -> Control:
 	var issue := str(vote["issue"])
 	var yes := int(vote["yes_bp"])
@@ -667,6 +717,11 @@ func _build_proposals() -> void:
 		box.add_child(_wrap(_issue_help(str(p.get("issue", ""))), 12, DIM))
 		box.add_child(_bar([[0.0, yes / 10000.0, GOOD], [1.0 - no / 10000.0, 1.0, BAD]], false, 10.0,
 			"Forecast of the vote if you put it to the Senate."))
+		var tribune := str(p.get("tribune", ""))
+		if tribune == "veto":
+			box.add_child(_wrap("A tribune of the plebs may veto this (%s chance)." % _pct(int(p.get("tribune_bp", 0))), 12, BAD, 700))
+		elif tribune == "force":
+			box.add_child(_wrap("A tribune may force this through against the Senate (%s chance)." % _pct(int(p.get("tribune_bp", 0))), 12, GOOD, 700))
 		var foot := HBoxContainer.new()
 		foot.add_theme_constant_override("separation", 8)
 		var forecast := _t("Forecast: %s for, %s against" % [_pct(yes), _pct(no)], 12, DIM, 700)
@@ -683,7 +738,7 @@ func _build_proposals() -> void:
 
 ## The action for a proposal. (One place to change if the engine's key names differ.)
 func _propose_action(p: Dictionary) -> Dictionary:
-	return {"kind": "propose_to_senate", "issue": str(p.get("issue", "")), "proposal": str(p.get("proposal", ""))}
+	return {"kind": "senate", "issue": str(p.get("issue", "")), "proposal": str(p.get("proposal", ""))}
 
 
 ## The action for winning a family over on an issue.
@@ -693,7 +748,7 @@ func _persuade_action(family_id: String, issue: String) -> Dictionary:
 
 ## The action for backing a man at the coming election for an office.
 func _back_action(person_id: String, office: String) -> Dictionary:
-	return {"kind": "back_candidate", "person": person_id, "office": office}
+	return {"kind": "back", "person": person_id, "office": office}
 
 
 # --- the great families -------------------------------------------------------------------
@@ -771,7 +826,7 @@ func _family_details(box: VBoxContainer, f: Dictionary) -> void:
 	box.add_child(_t("Where it stands on the matters of the day", 13, HEADING, 800))
 	var stance: Dictionary = f.get("stance", {})
 	var influence := int(_rep.get("influence", 0))
-	var cost := int(_rep.get("persuade_cost", 0))
+	var cost := _cost("persuade")
 	for issue in ISSUE_ORDER:
 		if not stance.has(issue):
 			continue
@@ -780,11 +835,11 @@ func _family_details(box: VBoxContainer, f: Dictionary) -> void:
 		row.add_theme_constant_override("separation", 6)
 		row.tooltip_text = UiStyle.wrap_tip(_issue_help(issue), 48)
 		var name := _t(_issue_name(issue), 12, INK, 700)
-		name.custom_minimum_size.x = 82
+		name.custom_minimum_size.x = 98
 		name.mouse_filter = Control.MOUSE_FILTER_PASS
 		row.add_child(name)
 		var bar := _lean_bar(lean, 10000.0, 10.0)
-		bar.custom_minimum_size.x = 50
+		bar.custom_minimum_size.x = 44
 		bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		row.add_child(bar)
 		var word := _t(_lean_word(lean), 12, _lean_colour(lean), 700)
@@ -822,7 +877,9 @@ func _person_card(p: Dictionary, top_glory: int, holders: Dictionary) -> Control
 	var card := _card()
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 9)
-	row.add_child(_portrait(str(p["id"]), 52, 64, int(p["age"])))
+	var face := _portrait(str(p["id"]), 52, 64, int(p["age"]))
+	face.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	row.add_child(face)
 	var text := VBoxContainer.new()
 	text.add_theme_constant_override("separation", 2)
 	text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -899,7 +956,7 @@ func _offices_held(offices: Array) -> String:
 ## A Back button for the next office up his career (or the offices the view says are open).
 func _back_button(p: Dictionary) -> Control:
 	var influence := int(_rep.get("influence", 0))
-	var cost := int(_rep.get("back_cost", 0))
+	var cost := _cost("back")
 	var options: Array = p.get("backable", [])
 	if options.is_empty():
 		var next := _next_office(p)
