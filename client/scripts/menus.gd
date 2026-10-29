@@ -255,7 +255,7 @@ func _year_card(s: Dictionary) -> Control:
 	fill_space.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	fill_space.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	body.add_child(fill_space)
-	var facts := UiStyle.label("%s   ·   %d provinces" % [GameHud.people(int(rome["population"])), int(rome["provinces"])],
+	var facts := UiStyle.label("%s   ·   %d province%s" % [GameHud.people(int(rome["population"])), int(rome["provinces"]), "" if int(rome["provinces"]) == 1 else "s"],
 		15, UiStyle.GOLD, "body", 800)
 	facts.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	facts.mouse_filter = Control.MOUSE_FILTER_IGNORE
