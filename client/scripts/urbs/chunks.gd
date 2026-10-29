@@ -12,7 +12,7 @@ const SIZE := 250.0
 const STREET_RADIUS := 1500.0       ## kept around the camera at street level
 const ORBIT_RADIUS := 2800.0        ## kept when orbiting (the Servian city and the Campus Martius)
 const BUDGET_MSEC := 4.0            ## building time allowed per frame
-const LOD_NEAR := 600.0             ## finest detail within this distance of the camera
+const LOD_NEAR := 250.0             ## finest detail within this distance of the camera
 const LOD_MID := 1100.0
 
 var terrain: Object

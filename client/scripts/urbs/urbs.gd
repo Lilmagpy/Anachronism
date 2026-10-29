@@ -127,7 +127,11 @@ func open(new_year: int, at := Vector3.ZERO, flags := {}) -> void:
 	cam.snap_city(target, 1500.0)
 	_apply_flags(flags)
 	chunks.focus_on(cam.focus(), cam.mode == UrbsCamera.Mode.CITY)
-	chunks.load_all_now()   # the first picture is complete, not popping in
+	# The first picture is complete, not popping in: the fill finishes its chunks at once here,
+	# then goes back to spreading its work over frames.
+	fill.sync_chunks = true
+	chunks.load_all_now()
+	fill.sync_chunks = false
 
 
 func close() -> void:

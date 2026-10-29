@@ -491,8 +491,8 @@ func _consul_card(m: Dictionary) -> Control:
 		chips.add_child(_chip("From the Fasti", Color(0.30, 0.38, 0.55),
 			"History's own consul for this year: the election went as it did in Rome's records."))
 	else:
-		chips.add_child(_chip("Elected by you", UiStyle.GOLD_DARK,
-			"Not taken from the Fasti: the game's own election chose him, with your influence in it."))
+		chips.add_child(_chip("Elected", UiStyle.GOLD_DARK,
+			"Not taken from the Fasti: the game's own election chose him. Your backing counts in it."))
 	if bool(m.get("historical", false)):
 		chips.add_child(Glyph.new("laurel", 18.0))
 	text.add_child(chips)
