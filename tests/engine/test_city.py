@@ -220,9 +220,10 @@ def test_view_has_top_level_year_and_dataset_ids(content: Content) -> None:
     state = new_game(content, "rome_264", seed=1)
     view = build_view(state)
     assert view["year"] == -264
-    path = "data/rome/city/monuments.yaml"
-    with open(path, encoding="utf-8") as f:
-        ids = {m["id"] for m in yaml.safe_load(f)["monuments"]}
+    ids: set[str] = set()
+    for path in ("data/rome/city/monuments.yaml", "data/rome/city/monuments_empire.yaml"):
+        with open(path, encoding="utf-8") as f:
+            ids |= {m["id"] for m in yaml.safe_load(f)["monuments"]}
     shown = {m["id"] for m in view["city"]["monuments"]}
     assert shown
     assert shown <= ids

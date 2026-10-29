@@ -34,7 +34,7 @@ class MonumentBuilt(_Open):
 class MonumentEvent(_Open):
     """A dated note: a rebuild, a fire, an end."""
 
-    year: int
+    year: int | None = None  # None: known only by a reign, not a year
     what: str = ""
 
 

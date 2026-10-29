@@ -45,16 +45,28 @@ def marks_for(monument: Monument, timeline: Iterable[CityTimeline]) -> list[Mark
     explicit = [t for t in timeline if t.monument == monument.id]
     marks: list[Mark] = [(t.year, _ORDER[t.kind], t.kind) for t in explicit]
     destroyed = [t.year for t in explicit if t.kind in ("fire", "demolished")]
-    if monument.ended is not None:
+    if monument.ended is not None and monument.ended.year is not None:
         destroyed.append(monument.ended.year)
         marks.append((monument.ended.year, _ORDER["demolished"], "demolished"))
-    built = monument.built_year
+    built = first_year(monument)
     if built is not None:
         first_done = min((t.year for t in explicit if t.kind == "completed"), default=None)
         replaced = first_done is not None and not any(y < first_done for y in destroyed)
         if not replaced:
             marks.append((built, _ORDER["completed"], "completed"))
     return sorted(marks)
+
+
+def first_year(monument: Monument) -> int | None:
+    """The year the monument was finished, if known.
+
+    With no building date but dated notes (a fire, a restoration), it stood by the first of
+    them. Only a monument with no dates at all has always stood.
+    """
+    if monument.built_year is not None:
+        return monument.built_year
+    noted = [e.year for e in monument.events if e.year is not None]
+    return min(noted) if noted else None
 
 
 def status_at(marks: list[Mark], year: int, built_known: bool) -> MonumentStatus:
@@ -93,7 +105,7 @@ def status_map(world: World, year: int) -> dict[str, MonumentStatus]:
         mid: status_at(
             marks_for(world.monuments[mid], by_monument.get(mid, [])),
             year,
-            world.monuments[mid].built_year is not None,
+            first_year(world.monuments[mid]) is not None,
         )
         for mid in sorted(world.monuments)
     }
