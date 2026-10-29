@@ -390,13 +390,13 @@ static func _shop_opening(b: MB, face: int, h: float, wid: float, w: float, d: f
 	b.rect_on(face, h + wid * 0.5, h + wid * 0.5 + 0.3, 0.0, 2.45, w, d, 0.08, STONE)
 	if dl == 0:
 		var r := _fr(k, 5)
-		if r < 0.5:
+		if r < 0.22:
 			# masonry counter with two dolia sunk in it, amphorae on top and beside
 			b.on_wall(face, h, 0.0, wid - 0.6, 1.0, 0.6, w, d, 0.1, STONE)
 			var fz := d * 0.5 + 0.1 if face == 0 else -d * 0.5 - 0.1
 			if face == 0:
 				for dx in [-0.45, 0.45]:
-					b.cone(h + dx, fz + 0.3, 1.0, 1.02, 0.28, 0.26, 6, DARK)
+					b.box(Vector3(h + dx - 0.22, 1.0, fz + 0.08), Vector3(h + dx + 0.22, 1.03, fz + 0.52), DARK, false)
 				_amphora(b, h - 0.2, 1.0, fz + 0.3, 0.8)
 				_amphora(b, h + 0.3, 1.0, fz + 0.3, 0.7)
 				_amphora(b, h + wid * 0.5 + 0.5, 0.0, fz + 0.5, 1.0)
@@ -450,7 +450,7 @@ static func _insula(shape: String, storeys: int, feature: int, pitch: int, lod: 
 		for i in nwin:
 			var hh := (-1.75 + 3.5 * float(i)) if narrow else (-7.2 + 3.6 * float(i))
 			if lod < 2:
-				_window(m, 0, hh, y0 + 0.9, 1.15, 1.5, w, md, lod, s * 11 + i)
+				_window(m, 0, hh, y0 + 0.9, 1.15, 1.5, w, md, lod if s <= 2 else maxi(lod, 1), s * 11 + i)
 				_window(m, 1, hh, y0 + 0.9, 1.15, 1.5, w, md, mini(lod + 1, 2), s * 13 + i)
 			else:
 				m.rect_on(0, hh - 0.55, hh + 0.55, y0 + 0.9, y0 + 2.3, w, md, 0.03, DARK)
@@ -472,7 +472,7 @@ static func _insula(shape: String, storeys: int, feature: int, pitch: int, lod: 
 				var zb := md * 0.5
 				m.box(Vector3(bx - hw, y0 + 0.05, zb), Vector3(bx + hw, y0 + 0.2, zb + 1.15), WOOD)
 				m.box(Vector3(bx - hw, y0 + 1.0, zb + 1.08), Vector3(bx + hw, y0 + 1.1, zb + 1.15), WOOD, false)
-				var n_post := int(hw)
+				var n_post := mini(int(hw), 2)
 				for q in range(n_post + 1):
 					var px := bx - hw + 0.1 + (2.0 * hw - 0.2) * float(q) / float(maxi(n_post, 1))
 					m.box(Vector3(px - 0.04, y0 + 0.2, zb + 1.08), Vector3(px + 0.04, y0 + 1.0, zb + 1.14), WOOD, false)
@@ -589,13 +589,13 @@ static func _workshop(variant: int, lod: int) -> MB:
 	b.rect_on(0, -1.5, 1.5, 0.0, 1.8, w, d, 0.0, DARK)
 	if lod < 2:
 		b.box(Vector3(-1.7, 1.8, d * 0.5 - 0.5), Vector3(1.7, 2.0, d * 0.5 + 0.1), WOOD)
-	if variant == 0:
+	if variant == 0 and lod < 2:
 		for i in 4:
 			for j in 2:
 				_amphora(b, -6.2 + 0.85 * float(i), 0.0, yz0 + 1.2 + 0.85 * float(j), 1.3 if lod < 2 else 1.0)
 				if lod == 0 and j == 0:
 					_amphora(b, -5.8 + 0.85 * float(i), 0.0, yz0 + 1.6, 1.3)
-	else:
+	elif variant == 1:
 		b.box(Vector3(3.0, 0.0, yz0 + 0.8), Vector3(6.4, 1.6, yz0 + 2.0), WOOD)
 		b.box(Vector3(3.4, 1.6, yz0 + 1.0), Vector3(6.0, 2.2, yz0 + 1.8), WOOD)
 		if lod < 2:
