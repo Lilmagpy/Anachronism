@@ -350,7 +350,7 @@ static func _tuscan(k: Kit, w: float, archaic: bool, nfront: int) -> void:
 ## cella walls with engaged half-columns on the sides and back, entablature all round.
 ## Eustyle spacing (Vitruvius 3.3.6: clear gap 2 1/4 d), column heights 9 d (Ionic, 3.5) and
 ## 10 d (Corinthian, 4.1), pediment rise = span / 9 (3.5.12; here a touch steeper).
-static func _pseudo(k: Kit, n: int, order: String, mat_kind: String) -> void:
+static func _pseudo(k: Kit, n: int, order: String, mat_kind: String, lod := false) -> void:
 	var tetra := n == 4
 	var d := 0.113 if tetra else 0.125
 	var h := d * (9.0 if order == "ionic" else 10.0)
@@ -394,17 +394,20 @@ static func _pseudo(k: Kit, n: int, order: String, mat_kind: String) -> void:
 	_b(k, -wx, ph, -zz, wx, ph + h, zc, wallc, Kit.PLASTER if mat_kind != "marble" else Kit.STONE)
 	_door(k, Vector3(0, ph, zc + 0.002), 0.0, s * 0.62, h * 0.55, colc, DWOOD)
 	# free columns of the porch: the full front row, and the flank columns of the second ranks
+	var fd := 0 if lod else 1
 	for i in n:
-		_col(k, Vector3(-xo + i * s, ph, zz), h, order, colc, colm, 1)
+		_col(k, Vector3(-xo + i * s, ph, zz), h, order, colc, colm, fd)
 	for j in range(1, pb):
 		for sx in [-1.0, 1.0]:
-			_col(k, Vector3(sx * xo, ph, zz - j * s), h, order, colc, colm, 1)
+			_col(k, Vector3(sx * xo, ph, zz - j * s), h, order, colc, colm, fd)
 	# engaged half-columns on the flanks and the back (pseudoperipteral)
 	for j in range(pb, bays + 1):
 		for sx in [-1.0, 1.0]:
-			_col(k, Vector3(sx * xo, ph, zz - j * s), h, order, colc, colm, 0)
-	for i in n:
-		_col(k, Vector3(-xo + i * s, ph, -zz), h, order, colc, colm, 0)
+			if not lod or j % 2 == 0:
+				_col(k, Vector3(sx * xo, ph, zz - j * s), h, order, colc, colm, 0)
+	if not lod:
+		for i in n:
+			_col(k, Vector3(-xo + i * s, ph, -zz), h, order, colc, colm, 0)
 	# entablature: architrave, frieze, cornice
 	var ex := xo + 0.75 * d
 	var ez := zz + 0.75 * d
@@ -464,6 +467,447 @@ static func _tholos(k: Kit, marble: bool) -> void:
 
 
 # =============================================================================================
+# PUBLIC BUILDINGS
+# =============================================================================================
+
+
+## A row of arches: n bays of width `bay`, piers `pw` wide (n + 1 piers), centred on xc, one storey
+## from y0 up to yt with the arches springing at ys, wall thickness z0..z1.
+static func _arcade(k: Kit, xc: float, n: int, bay: float, pw: float, y0: float, ys: float, yt: float,
+		z0: float, z1: float, c: Color, m: int, segs := 6, back := false, ratio := 1.0, dark := true) -> void:
+	var xs := xc - n * bay * 0.5
+	for i in n + 1:
+		var px := xs + i * bay
+		k.box(Vector3(px, y0, (z0 + z1) * 0.5), Vector3(pw, yt - y0, z1 - z0), c, m)
+	for i in n:
+		var a := xs + i * bay + pw * 0.5
+		var b := xs + (i + 1) * bay - pw * 0.5
+		_arch(k, a, b, ys, yt, z0, z1, c, m, segs, true, back, ratio)
+		if dark:
+			_b(k, a, y0, z0 + 0.01, b, ys + (b - a) * 0.5 * ratio * 0.9, z0 + 0.02, DARK_C, Kit.DARK)
+
+
+## A shop front (taberna) in a wall facing yaw: timber lintel, folded shutters, a stone counter.
+static func _shopfront(k: Kit, p: Vector3, yaw: float, w: float, h: float) -> void:
+	k.push(Kit.at(p, yaw))
+	k.box(Vector3(0, 0, 0.0), Vector3(w, h, 0.012), DARK_C, Kit.DARK)
+	k.box(Vector3(0, h, 0.0), Vector3(w * 1.12, h * 0.1, 0.05), DWOOD, Kit.TIMBER)
+	k.box(Vector3(-w * 0.5 + w * 0.06, 0, 0.012), Vector3(w * 0.12, h, 0.02), WOOD, Kit.TIMBER)
+	k.box(Vector3(w * 0.1, 0, 0.04), Vector3(w * 0.7, h * 0.34, 0.07), PEPERINO, Kit.STONE)
+	k.pop()
+
+
+## Republican basilica with two storeys of arcades and a clerestory (Basilica Aemilia, 179 BC,
+## Livy 40.51.5; Basilica Sempronia 169 BC, Livy 44.16.10; Platner-Ashby s.v. Basilica
+## Aemilia: about 70 m long). Vitruvius 5.1.4-5: a nave twice an aisle or more, aisles two
+## storeys, the nave lit by a clerestory. Tufa or travertine piers; terracotta roof.
+static func _basilica(k: Kit, travertine: bool) -> void:
+	var L := 5.0
+	var W := 2.6
+	var c := TRAVERT if travertine else GROTTA
+	var wl := STUCCO if not travertine else TRAVERT.darkened(0.04)
+	var bay := L / 8.0
+	_pad(k, L + 0.3, W + 0.3, Color(0.70, 0.66, 0.58), Kit.STONE, 0.05)
+	k.push(Kit.at(Vector3(0, 0.05, 0)))
+	_arcade(k, 0.0, 8, bay, 0.17, 0.0, 0.34, 0.62, W / 2.0 - 0.14, W / 2.0, c, Kit.STONE, 6, false, 1.0)
+	_b(k, -L / 2 - 0.02, 0.62, W / 2.0 - 0.16, L / 2 + 0.02, 0.67, W / 2.0 + 0.03, c.lightened(0.05), Kit.STONE)
+	_arcade(k, 0.0, 8, bay, 0.17, 0.67, 0.95, 1.2, W / 2.0 - 0.14, W / 2.0, c, Kit.STONE, 6, false, 1.0)
+	_b(k, -L / 2 - 0.04, 1.2, W / 2.0 - 0.18, L / 2 + 0.04, 1.27, W / 2.0 + 0.05, c.lightened(0.08), Kit.STONE)
+	for i in 8:   # tabernae behind the ground-floor arches: a counter in each
+		var x := -L / 2 + (i + 0.5) * bay
+		k.box(Vector3(x, 0.0, W / 2.0 - 0.06), Vector3(bay * 0.6, 0.12, 0.06), PEPERINO, Kit.STONE)
+	# back, end walls and the clerestory
+	_b(k, -L / 2, 0.0, -W / 2, L / 2, 1.27, -W / 2 + 0.14, wl, Kit.PLASTER)
+	for s in [-1.0, 1.0]:
+		_b(k, s * L / 2 - 0.07, 0.0, -W / 2 + 0.14, s * L / 2 + 0.07, 1.27, W / 2 - 0.14, wl, Kit.PLASTER)
+	for i in 6:
+		var x := -L / 2 + (i + 0.5) * L / 6
+		_b(k, x - 0.05, 0.75, -W / 2 - 0.004, x + 0.05, 1.0, -W / 2 + 0.01, DARK_C, Kit.DARK)
+	var nw := 0.58
+	_b(k, -L / 2, 1.27, -nw - 0.06, L / 2, 1.95, -nw + 0.06, wl, Kit.PLASTER)
+	_b(k, -L / 2, 1.27, nw - 0.06, L / 2, 1.95, nw + 0.06, wl, Kit.PLASTER)
+	for s in [-1.0, 1.0]:
+		_b(k, s * L / 2 - 0.06, 1.27, -nw, s * L / 2 + 0.06, 1.95, nw, wl, Kit.PLASTER)
+		for i in 10:
+			var x := -L / 2 + (i + 0.5) * L / 10
+			_b(k, x - 0.05, 1.5, s * (nw + 0.06) - 0.006, x + 0.05, 1.78, s * (nw + 0.06) + 0.006, DARK_C, Kit.DARK)
+	# the aisle roofs, low pitched, and the nave roof
+	for s in [-1.0, 1.0]:
+		_slab(k, [Vector3(-L / 2 - 0.06, 1.3, s * (W / 2 + 0.1)), Vector3(L / 2 + 0.06, 1.3, s * (W / 2 + 0.1)),
+			Vector3(L / 2 + 0.06, 1.55, s * (nw + 0.06)), Vector3(-L / 2 - 0.06, 1.55, s * (nw + 0.06))], 0.04, TERRA, Kit.TILE)
+	_gable_x(k, Vector3(0, 1.95, 0), L, nw * 2.0 + 0.1, 0.42, 0.08, TERRA, wl, Kit.PLASTER, 0.04)
+	k.pop()
+
+
+## The Curia Iulia type (Caesar's senate house, begun 44, dedicated 29 BC; the Republican
+## Curia Hostilia stood at the same place, Platner-Ashby s.v. Curia Iulia: about 27 x 18 m and
+## about 21 m to the eaves in the Diocletianic rebuild): a tall plain hall, brick under stucco with
+## a marble-look dado, a low pediment, three tall windows over the portal.
+static func _curia(k: Kit) -> void:
+	var w := 1.8
+	var d := 2.7
+	var h := 2.0
+	_pad(k, w + 0.5, d + 0.7, Color(0.72, 0.68, 0.60), Kit.STONE, 0.05)
+	k.push(Kit.at(Vector3(0, 0.05, 0)))
+	_b(k, -w / 2 - 0.06, 0.0, -d / 2 - 0.06, w / 2 + 0.06, 0.2, d / 2 + 0.06, TRAVERT, Kit.STONE)
+	_stair(k, 0.0, 0.9, d / 2 + 0.06, 0.2, 3, 0.07, TRAVERT, Kit.STONE)
+	_b(k, -w / 2, 0.2, -d / 2, w / 2, 0.75, d / 2, STUCCO_W, Kit.PLASTER)   # the stuccoed dado
+	_b(k, -w / 2, 0.75, -d / 2, w / 2, h, d / 2, BRICK_C, Kit.BRICK)
+	_b(k, -w / 2 - 0.03, 0.75, -d / 2 - 0.03, w / 2 + 0.03, 0.79, d / 2 + 0.03, TRAVERT, Kit.STONE)
+	_b(k, -w / 2 - 0.05, h - 0.06, -d / 2 - 0.05, w / 2 + 0.05, h + 0.02, d / 2 + 0.05, TRAVERT, Kit.STONE)
+	for sx in [-1.0, 1.0]:
+		for sz in [-1.0, 1.0]:
+			_b(k, sx * w / 2 - 0.06 - (0.0 if sx > 0 else -0.0), 0.2, sz * d / 2 - 0.06, sx * w / 2 + 0.06, h, sz * d / 2 + 0.06, TRAVERT, Kit.STONE)
+	# portal, the great bronze door, and the three windows above (Curia Iulia reconstruction)
+	k.door(Vector3(0, 0.2, d / 2 + 0.001), 0.0, 0.5, 0.95, TRAVERT, BRONZE)
+	for x in [-0.5, 0.0, 0.5]:
+		k.window(Vector3(x, 1.5, d / 2 + 0.001), 0.0, 0.26, 0.5, TRAVERT, "frame")
+	for s in [-1.0, 1.0]:
+		for z in [-0.9, -0.3, 0.3, 0.9]:
+			k.window(Vector3(s * (w / 2 + 0.001), 1.5, z), s * PI / 2.0, 0.2, 0.45, TRAVERT, "frame")
+	_gable_z(k, Vector3(0, h + 0.02, 0), d, w, 0.26, 0.07, TERRA, STUCCO, Kit.PLASTER, 0.04)
+	k.pop()
+
+
+## The Rostra: the speakers' platform in the Forum, faced with the bronze beaks (rostra) of the
+## ships of Antium taken in 338 BC (Livy 8.14.12; Plin. NH 34.20; Platner-Ashby s.v. Rostra).
+## Here: a tufa platform about 24 x 11 m, 3.5 m high, a flight of steps at the back, eight
+## beaks on the front, and the rostral column of C. Duilius (260 BC, Plin. NH 34.20) at the end.
+static func _rostra(k: Kit) -> void:
+	var w := 2.4
+	var d := 1.1
+	var h := 0.36
+	_pad(k, w + 0.6, d + 0.9, Color(0.72, 0.68, 0.60), Kit.STONE, 0.04)
+	k.push(Kit.at(Vector3(0, 0.04, 0)))
+	_podium(k, w / 2.0, -d / 2.0, d / 2.0, h, GROTTA, Kit.STONE)
+	_b(k, -w / 2 + 0.03, h, -d / 2 + 0.03, w / 2 - 0.03, h + 0.025, d / 2 - 0.03, GROTTA.lightened(0.05), Kit.STONE)
+	for i in 8:   # the beaks: bronze rams, each a tapering ram with two ridges
+		var x := -w / 2 + (i + 0.5) * w / 8.0
+		k.push(Transform3D(Basis(Vector3.RIGHT, PI / 2.0), Vector3(x, h * 0.55, d / 2.0 + 0.0)))
+		k.frustum(Vector3.ZERO, 0.045, 0.02, 0.2, BRONZE, Kit.GOLD, 6)
+		k.pop()
+		_b(k, x - 0.05, h * 0.55 + 0.02, d / 2.0, x + 0.05, h * 0.55 + 0.05, d / 2.0 + 0.13, BRONZE, Kit.GOLD)
+		_b(k, x - 0.05, h * 0.55 - 0.05, d / 2.0, x + 0.05, h * 0.55 - 0.02, d / 2.0 + 0.13, BRONZE, Kit.GOLD)
+	for i in 5:   # steps behind
+		_b(k, w * 0.3 - 0.35, 0.0, -d / 2.0 - 0.06 * (5 - i), w * 0.3 + 0.35, h * (i + 1) / 6.0, -d / 2.0, GROTTA.lightened(0.04), Kit.STONE)
+	for i in 3:   # statue plinths of the honoured
+		_b(k, -0.8 + i * 0.7, h + 0.025, -0.1, -0.7 + i * 0.7, h + 0.12, 0.0, GROTTA, Kit.STONE)
+		k.frustum(Vector3(-0.75 + i * 0.7, h + 0.12, -0.05), 0.02, 0.012, 0.16, BRONZE, Kit.GOLD, 5)
+	# the columna rostrata at the right end: shaft with three pairs of beaks
+	var cx := w / 2.0 - 0.15
+	k.box(Vector3(cx, h + 0.025, 0.0), Vector3(0.18, 0.1, 0.18), GROTTA, Kit.STONE)
+	_shaft(k, Vector3(cx, h + 0.125, 0.0), 0.05, 0.04, 0.8, TRAVERT, Kit.STONE, 0, 8)
+	for i in 3:
+		for sx in [-1.0, 1.0]:
+			k.push(Transform3D(Basis(Vector3(0, 0, 1), -sx * PI / 2.0), Vector3(cx + sx * 0.03, h + 0.3 + i * 0.22, 0.0)))
+			k.frustum(Vector3.ZERO, 0.025, 0.01, 0.1, BRONZE, Kit.GOLD, 5)
+			k.pop()
+	k.frustum(Vector3(cx, h + 0.925, 0), 0.05, 0.03, 0.05, BRONZE, Kit.GOLD, 6)
+	k.dome(Vector3(cx, h + 0.975, 0), 0.03, BRONZE, Kit.GOLD, 1.0, 2, 6)
+	k.pop()
+
+
+## A colonnaded portico, one bay segment 1.0 long and tiling along x (Porticus Aemilia 193 BC,
+## Livy 35.10.12; Porticus Metelli 146 BC with the first marble temples, Vell. Pat. 1.11.3; Vitruvius
+## 5.9 porticoes: columns, an entablature, a lean-to roof against a back wall). Two columns per
+## segment, spaced 0.5. `marble`: Metellus' Ionic marble form.
+static func _portico(k: Kit, marble: bool) -> void:
+	var h := 0.55
+	var order := "ionic" if marble else "tuscan"
+	var c := MARBLE if marble else STUCCO_W
+	var m := Kit.STONE if marble else Kit.PLASTER
+	var d := _dia(h, order)
+	_b(k, -0.5, 0.0, -0.42, 0.5, 0.05, 0.42, c.darkened(0.08), Kit.STONE)   # stylobate, joined across segments
+	for x in [-0.25, 0.25]:
+		_col(k, Vector3(x, 0.05, 0.3), h, order, c, m, 1)
+	_b(k, -0.5, 0.05 + h, 0.3 - d * 0.6, 0.5, 0.05 + h + 0.6 * d, 0.3 + d * 0.6, c, Kit.STONE)     # architrave
+	_b(k, -0.5, 0.05 + h + 0.6 * d, 0.3 - d * 0.6, 0.5, 0.05 + h + 1.2 * d, 0.3 + d * 0.6, RED if not marble else c.darkened(0.06), Kit.PAINT if not marble else Kit.STONE)
+	_b(k, -0.5, 0.05 + h + 1.2 * d, 0.3 - d * 0.8, 0.5, 0.05 + h + 1.5 * d, 0.3 + d * 0.8, c.lightened(0.04), Kit.STONE)
+	# the back wall, with doors to tabernae, and the lean-to roof
+	_b(k, -0.5, 0.05, -0.42, 0.5, 0.05 + h + 0.3, -0.34, STUCCO if not marble else c, Kit.PLASTER if not marble else Kit.STONE)
+	_b(k, -0.5, 0.05 + h + 0.3, -0.44, 0.5, 0.05 + h + 0.36, -0.32, c.lightened(0.05), Kit.STONE)
+	k.box(Vector3(0.0, 0.05, -0.335), Vector3(0.18, 0.3, 0.012), DARK_C, Kit.DARK)
+	var ye := 0.05 + h + 1.5 * d
+	_slab(k, [Vector3(-0.5, ye + 0.02, 0.3 + d * 0.8 + 0.04), Vector3(0.5, ye + 0.02, 0.3 + d * 0.8 + 0.04),
+		Vector3(0.5, 0.05 + h + 0.4, -0.4), Vector3(-0.5, 0.05 + h + 0.4, -0.4)], 0.03, TERRA, Kit.TILE)
+
+
+## The Tabularium (78 BC, Q. Lutatius Catulus; the state archive on the Capitoline above the Forum;
+## CIL VI 1313; Platner-Ashby s.v. Tabularium): a monumental substructure in peperino blocks, c. 70 m
+## long; the Forum front has a blank rusticated base, a gallery of arches framed by engaged Doric
+## half-columns (the Forum gallery), and above, a second order (restored as an arcade).
+static func _tabularium(k: Kit) -> void:
+	var L := 4.5
+	var D := 1.2
+	var bay := L / 9.0
+	_pad(k, L + 0.4, D + 0.4, Color(0.66, 0.62, 0.54), Kit.STONE, 0.05)
+	k.push(Kit.at(Vector3(0, 0.05, 0)))
+	_b(k, -L / 2 - 0.05, 0.0, -D / 2, L / 2 + 0.05, 0.62, D / 2 - 0.2, PEPERINO.darkened(0.06), Kit.STONE)   # blank base
+	for i in 5:   # slit windows and the postern in the base
+		_b(k, -L / 2 + (i + 0.5) * L / 5 - 0.03, 0.3, D / 2 - 0.205, -L / 2 + (i + 0.5) * L / 5 + 0.03, 0.5, D / 2 - 0.19, DARK_C, Kit.DARK)
+	_b(k, -0.12, 0.0, D / 2 - 0.205, 0.12, 0.3, D / 2 - 0.19, DARK_C, Kit.DARK)
+	_b(k, -L / 2 - 0.08, 0.62, -D / 2, L / 2 + 0.08, 0.68, D / 2 - 0.12, PEPERINO.lightened(0.08), Kit.STONE)
+	# the gallery of arches with engaged half-columns, z thickness 0.2
+	_b(k, -L / 2, 0.68, -D / 2, L / 2, 1.4, D / 2 - 0.35, PEPERINO, Kit.STONE)
+	_arcade(k, 0.0, 9, bay, 0.2, 0.68, 1.0, 1.28, D / 2 - 0.35, D / 2 - 0.15, PEPERINO, Kit.STONE, 6, false, 1.0)
+	for i in 10:
+		_col(k, Vector3(-L / 2 + i * bay, 0.68, D / 2 - 0.12), 0.6, "doric", PEPERINO.lightened(0.05), Kit.STONE, 0)
+	_b(k, -L / 2 - 0.1, 1.28, -D / 2, L / 2 + 0.1, 1.4, D / 2 - 0.04, PEPERINO.lightened(0.1), Kit.STONE)   # Doric entablature
+	for i in 18:   # triglyph hints
+		var x := -L / 2 + (i + 0.5) * L / 18
+		k.box(Vector3(x, 1.3, D / 2 - 0.035), Vector3(0.05, 0.08, 0.012), DWOOD, Kit.PAINT)
+	# a second order, slightly set back, then the cornice and a flat tiled roof
+	_arcade(k, 0.0, 9, bay, 0.2, 1.4, 1.62, 1.82, D / 2 - 0.5, D / 2 - 0.3, PEPERINO, Kit.STONE, 6, false, 1.0)
+	_b(k, -L / 2, 1.4, -D / 2, L / 2, 1.9, D / 2 - 0.5, PEPERINO, Kit.STONE)
+	_b(k, -L / 2 - 0.06, 1.82, -D / 2, L / 2 + 0.06, 1.9, D / 2 - 0.26, PEPERINO.lightened(0.1), Kit.STONE)
+	_gable_x(k, Vector3(0, 1.9, -D / 2 + 0.3), L + 0.1, 0.62, 0.15, 0.04, TERRA, PEPERINO, Kit.STONE, 0.03)
+	k.pop()
+
+
+## Warehouses (horrea) round a courtyard: Platner-Ashby s.v. Horrea (Horrea Sempronia of C. Gracchus,
+## Plut. C. Gracchus 6; Livy 29.37.2 on grain storage). Ranges of vaulted rooms on a raised floor
+## against damp, facing a court; high blank outer walls with slit windows; one great gate on +z.
+static func _horrea(k: Kit) -> void:
+	var s := 2.4
+	var t := 0.62
+	var hw := s / 2.0
+	var h := 0.62
+	_pad(k, s + 0.3, s + 0.3, Color(0.70, 0.64, 0.52), Kit.EARTH, 0.04)
+	k.push(Kit.at(Vector3(0, 0.04, 0)))
+	_ring(k, 0.0, 0.0, hw, hw, 0.14, 0.0, h, GROTTA, Kit.STONE)          # outer wall
+	_ring(k, 0.0, 0.0, hw - t, hw - t, 0.1, 0.0, h * 0.9, STUCCO, Kit.PLASTER)   # court wall
+	_ring(k, 0.0, 0.0, hw + 0.03, hw + 0.03, 0.05, h, h + 0.04, GROTTA.lightened(0.1), Kit.STONE)
+	_frame_roof(k, Vector3.ZERO, hw + 0.08, hw + 0.08, hw - t, hw - t, h + 0.02, h * 0.82, 0.04, TERRA)
+	for i in 8:   # slit windows in the outer wall
+		var x := -hw + 0.3 + i * 0.3
+		_b(k, x - 0.03, h * 0.6, hw - 0.005, x + 0.03, h * 0.88, hw + 0.002, DARK_C, Kit.DARK)
+		_b(k, x - 0.03, h * 0.6, -hw - 0.002, x + 0.03, h * 0.88, -hw + 0.005, DARK_C, Kit.DARK)
+	for i in 8:
+		var z := -hw + 0.3 + i * 0.3
+		_b(k, hw - 0.005, h * 0.6, z - 0.03, hw + 0.002, h * 0.88, z + 0.03, DARK_C, Kit.DARK)
+		_b(k, -hw - 0.002, h * 0.6, z - 0.03, -hw + 0.005, h * 0.88, z + 0.03, DARK_C, Kit.DARK)
+	# the great gate (arch) and the court's doors to the store rooms on the raised floor
+	_b(k, -0.28, 0.0, hw - 0.01, 0.28, 0.4, hw + 0.01, DARK_C, Kit.DARK)
+	_arch(k, -0.28, 0.28, 0.4, 0.62, hw - 0.14, hw + 0.01, TRAVERT, Kit.STONE, 6, true, false)
+	for i in 4:
+		var x := -0.75 + i * 0.5
+		_b(k, x - 0.1, 0.1, hw - t + 0.04, x + 0.1, 0.5, hw - t + 0.06, DARK_C, Kit.DARK)
+		_b(k, x - 0.1, 0.1, -hw + t - 0.06, x + 0.1, 0.5, -hw + t - 0.04, DARK_C, Kit.DARK)
+		_b(k, hw - t + 0.04, 0.1, x - 0.1, hw - t + 0.06, 0.5, x + 0.1, DARK_C, Kit.DARK)
+		_b(k, -hw + t - 0.06, 0.1, x - 0.1, -hw + t - 0.04, 0.5, x + 0.1, DARK_C, Kit.DARK)
+	_b(k, -hw + t + 0.0, 0.0, -hw + t, hw - t, 0.04, hw - t, Color(0.62, 0.55, 0.42), Kit.EARTH)
+	for i in 6:   # stacked amphorae and sacks in the court
+		var p := Vector3(-0.25 + (i % 3) * 0.25, 0.04, -0.2 + (i / 3) * 0.3)
+		k.frustum(p, 0.03, 0.08, 0.14, TERRA_L, Kit.PAINT, 6, false)
+		k.frustum(p + Vector3(0, 0.14, 0), 0.08, 0.04, 0.1, TERRA_L, Kit.PAINT, 6)
+	k.pop()
+
+
+## The macellum, the provision market (Livy 40.51.5, 179 BC, "macellum" built on the site of Fulvius' house;
+## Platner-Ashby s.v. Macellum): a walled square of shops round a colonnaded court, in the centre
+## a round pavilion (tholos) of eight columns under a conical roof, the fish-sellers' fountain.
+static func _macellum(k: Kit) -> void:
+	var s := 1.9
+	var hw := s / 2.0
+	var h := 0.42
+	_pad(k, s + 0.3, s + 0.3, Color(0.70, 0.66, 0.56), Kit.STONE, 0.04)
+	k.push(Kit.at(Vector3(0, 0.04, 0)))
+	_ring(k, 0.0, 0.0, hw, hw, 0.12, 0.0, h, GROTTA, Kit.STONE)
+	_ring(k, 0.0, 0.0, hw + 0.03, hw + 0.03, 0.05, h, h + 0.04, GROTTA.lightened(0.08), Kit.STONE)
+	_frame_roof(k, Vector3.ZERO, hw + 0.06, hw + 0.06, hw - 0.42, hw - 0.42, h + 0.04, h * 0.8, 0.035, TERRA)
+	for i in 5:   # tabernae on the front, each with a counter and an upper window
+		var x := -hw + (i + 0.5) * s / 5.0
+		_shopfront(k, Vector3(x, 0.0, hw + 0.001), 0.0, 0.26, 0.3)
+	for sg in [-1.0, 1.0]:
+		for i in 4:
+			var z := -hw + (i + 0.6) * s / 4.4
+			_shopfront(k, Vector3(sg * (hw + 0.001), 0.0, z), sg * PI / 2.0, 0.26, 0.3)
+	for x in [-0.6, -0.2, 0.2, 0.6]:   # the colonnade round the court (Tuscan, stuccoed)
+		for sz in [-1.0, 1.0]:
+			_col(k, Vector3(x, 0.0, sz * (hw - 0.45)), 0.28, "tuscan", STUCCO_W, Kit.PLASTER, 0)
+	_b(k, -hw + 0.43, 0.0, -hw + 0.43, hw - 0.43, 0.02, hw - 0.43, Color(0.78, 0.72, 0.60), Kit.STONE)
+	# central tholos
+	var n := 8
+	var r := 0.3
+	k.frustum(Vector3(0, 0.0, 0), r + 0.08, r + 0.08, 0.05, TRAVERT, Kit.STONE, 8)
+	for i in n:
+		var a := i * TAU / n
+		_col(k, Vector3(cos(a) * r, 0.05, sin(a) * r), 0.4, "tuscan", STUCCO_W, Kit.PLASTER, 0)
+	k.frustum(Vector3(0, 0.45, 0), r + 0.05, r + 0.05, 0.06, TRAVERT, Kit.STONE, 8)
+	k.frustum(Vector3(0, 0.51, 0), r + 0.08, 0.0, 0.2, TERRA, Kit.TILE, 8)
+	k.cylinder(Vector3(0, 0.05, 0), 0.1, 0.1, GROTTA, Kit.STONE, 8)   # the fish-sellers' fountain
+	k.cylinder(Vector3(0, 0.15, 0), 0.08, 0.01, Color.WHITE, Kit.WATER, 8)
+	k.pop()
+
+
+# =============================================================================================
+# THEATRE AND CIRCUS
+# =============================================================================================
+
+
+static func _pt(r: float, th: float, y: float) -> Vector3:
+	return Vector3(r * cos(th), y, r * sin(th))
+
+
+## The Theatre of Pompey (dedicated 55 BC; the first permanent stone theatre in Rome: Plin. NH
+## 36.115, Tac. Ann. 14.20, Dio 39.38; Platner-Ashby s.v. Theatrum Pompei): a semicircular cavea
+## about 150 m across, concrete vaults faced in travertine and tufa, an outer facade of three
+## arcaded orders, the stage building (scaena) with its columnar front, and at the top of the
+## cavea, on the axis, the temple of Venus Victrix (Gell. NA 10.1.7; Plin. NH 8.20). Here: the
+## cavea opens to -z (the temple at the far end, facing +z), the stage house on +z.
+## 15 units across, using the real 150 m; orchestra radius 2, ima/media/summa cavea.
+static func _theatre_pompey(k: Kit) -> void:
+	var R := 7.5
+	var n := 18
+	var dth := PI / n
+	var ap := R * cos(dth / 2.0)
+	var b := 2.0 * R * sin(dth / 2.0)
+	var c := TRAVERT
+	_b(k, -R - 0.6, 0.0, -R - 0.5, R + 0.6, 0.04, 3.2, Color(0.66, 0.62, 0.54), Kit.STONE)
+	k.push(Kit.at(Vector3(0, 0.04, 0)))
+	# the cavea: stepped seating in three zones, with landings (diazomata) between them
+	var steps: Array = []
+	var zones := [[2.2, 3.4, 0.0, 0.64], [3.7, 4.9, 0.64, 1.4], [5.2, 6.4, 1.4, 2.2]]
+	var y_prev := 0.0
+	for zi in zones.size():
+		var z: Array = zones[zi]
+		if zi > 0:
+			steps.append([float(zones[zi - 1][1]), float(z[0]), y_prev, y_prev])
+		for s in 3:
+			var ri: float = float(z[0]) + s * (float(z[1]) - float(z[0])) / 3.0
+			var ro: float = float(z[0]) + (s + 1) * (float(z[1]) - float(z[0])) / 3.0
+			var yt: float = float(z[2]) + (s + 1) * (float(z[3]) - float(z[2])) / 3.0
+			steps.append([ri, ro, y_prev, yt])
+			y_prev = yt
+	steps.append([6.4, ap - 0.3, y_prev, y_prev])   # the top walkway behind the last seats
+	for i in n:
+		var ta := PI + i * dth
+		var tb := ta + dth
+		var tm := (ta + tb) * 0.5
+		var col := c.darkened(0.05 if i % 2 == 0 else 0.0)
+		for st in steps:
+			var ri: float = st[0]
+			var ro: float = st[1]
+			var y0: float = st[2]
+			var y1: float = st[3]
+			k.quad(_pt(ri, ta, y1), _pt(ro, ta, y1), _pt(ro, tb, y1), _pt(ri, tb, y1), col, Kit.STONE, Vector3(ri * cos(tm), y1 - 1.0, ri * sin(tm)))
+			if y1 > y0:
+				k.quad(_pt(ri, ta, y0), _pt(ri, tb, y0), _pt(ri, tb, y1), _pt(ri, ta, y1), col.darkened(0.08), Kit.STONE, _pt(ri * 2.0, tm, (y0 + y1) * 0.5))
+	for s in [-1.0, 1.0]:   # the ends of the cavea
+		for st in steps:
+			var ri: float = st[0]
+			var ro: float = st[1]
+			var y1: float = st[3]
+			if y1 > 0.0:
+				k.quad(Vector3(s * ri, 0, 0), Vector3(s * ro, 0, 0), Vector3(s * ro, y1, 0), Vector3(s * ri, y1, 0), c.darkened(0.1), Kit.STONE, Vector3(s * (ri + ro) * 0.5, y1 * 0.5, -1.0))
+	# the orchestra: a half disc of paving
+	var pts: Array = []
+	for i in 11:
+		pts.append(_pt(2.2, PI + i * PI / 10.0, 0.004))
+	k.polygon(pts, Color(0.80, 0.70, 0.52), Kit.STONE, Vector3(0, -1, 0))
+	# the outer facade: three storeys of arches, then an attic
+	for i in n:
+		var mid := PI + (i + 0.5) * dth
+		k.push(Kit.at(Vector3.ZERO, atan2(cos(mid), sin(mid))))
+		for sto in 3:
+			var y0 := sto * 0.9
+			_b(k, -b / 2, y0, ap - 0.3, -b / 2 + 0.15, y0 + 0.9, ap, c, Kit.STONE)
+			_b(k, b / 2 - 0.15, y0, ap - 0.3, b / 2, y0 + 0.9, ap, c, Kit.STONE)
+			k.quad(Vector3(-b / 2 + 0.15, y0, ap - 0.31), Vector3(b / 2 - 0.15, y0, ap - 0.31), Vector3(b / 2 - 0.15, y0 + 0.7, ap - 0.31), Vector3(-b / 2 + 0.15, y0 + 0.7, ap - 0.31), DARK_C, Kit.DARK, Vector3(0, y0, ap - 1.0))
+			_arch(k, -b / 2 + 0.15, b / 2 - 0.15, y0 + 0.4, y0 + 0.86, ap - 0.3, ap, c, Kit.STONE, 4, true, false, 1.0)
+			_b(k, -b / 2 - 0.01, y0 + 0.86, ap - 0.34, b / 2 + 0.01, y0 + 0.9, ap + 0.05, c.lightened(0.07), Kit.STONE)
+		_b(k, -b / 2, 2.7, ap - 0.25, b / 2, 3.1, ap, c.darkened(0.04), Kit.STONE)
+		k.quad(Vector3(-0.12, 2.8, ap + 0.003), Vector3(0.12, 2.8, ap + 0.003), Vector3(0.12, 3.0, ap + 0.003), Vector3(-0.12, 3.0, ap + 0.003), DARK_C, Kit.DARK, Vector3(0, 2.9, ap - 1.0))
+		_b(k, -b / 2 - 0.02, 3.1, ap - 0.3, b / 2 + 0.02, 3.16, ap + 0.04, c.lightened(0.1), Kit.STONE)
+		k.pop()
+	# the temple of Venus Victrix at the top of the cavea, on the axis, facing the stage
+	_b(k, -0.95, 0.0, -ap + 0.35, 0.95, 2.2, -5.2, c.darkened(0.06), Kit.STONE)
+	k.push(Transform3D(Basis.from_scale(Vector3(0.55, 0.55, 0.55)), Vector3(0, 2.2, -6.15)))
+	_pseudo(k, 4, "corinthian", "travertine", true)
+	k.pop()
+	# the stage house: stage, the columnar front (scaenae frons) in two orders, wings, roofs
+	_b(k, -4.4, 0.0, 0.0, 4.4, 0.2, 1.0, Color(0.55, 0.40, 0.25), Kit.TIMBER)   # the timber stage
+	_b(k, -4.4, 0.0, 1.0, 4.4, 1.75, 1.45, STUCCO, Kit.PLASTER)
+	for x in [-3.0, -1.5, 0.0, 1.5, 3.0]:
+		_b(k, x - 0.2, 0.25, 1.0 - 0.01, x + 0.2, 0.8, 1.0 + 0.01, DARK_C, Kit.DARK)
+	for i in 5:
+		var x := -3.6 + i * 1.8
+		_col(k, Vector3(x, 0.2, 1.1), 0.75, "corinthian", MARBLE, Kit.STONE, 0)
+		_col(k, Vector3(x, 1.0, 1.1), 0.62, "corinthian", MARBLE, Kit.STONE, 0)
+	_b(k, -4.4, 0.95, 0.98, 4.4, 1.0, 1.2, MARBLE.darkened(0.04), Kit.STONE)
+	_b(k, -4.45, 1.62, 0.98, 4.45, 1.75, 1.2, MARBLE.darkened(0.04), Kit.STONE)
+	for s in [-1.0, 1.0]:   # the wings (versurae)
+		_b(k, s * 5.95 - 1.55, 0.0, 0.0, s * 5.95 + 1.55, 2.0, 2.2, STUCCO, Kit.PLASTER)
+		_b(k, s * 5.95 - 1.6, 2.0, -0.05, s * 5.95 + 1.6, 2.08, 2.25, c.lightened(0.05), Kit.STONE)
+		for x in [-0.8, 0.0, 0.8]:
+			_b(k, s * 5.95 + x - 0.18, 0.5, 2.2 - 0.005, s * 5.95 + x + 0.18, 1.5, 2.2 + 0.004, DARK_C, Kit.DARK)
+		_gable_x(k, Vector3(s * 5.95, 2.08, 1.1), 3.2, 2.2, 0.4, 0.06, TERRA, STUCCO, Kit.PLASTER, 0.04)
+	_gable_x(k, Vector3(0, 1.75, 1.75), 8.8, 1.5, 0.3, 0.05, TERRA, STUCCO, Kit.PLASTER, 0.04)
+	k.pop()
+
+
+## The Circus Maximus (Livy 1.35.8-9 the first seats of Tarquin; 8.20.2 carceres 329 BC; 41.27.5-6
+## the seven eggs, 174 BC; Plin. NH 36.102 Caesar's stone rebuild; Platner-Ashby s.v. Circus
+## Maximus: about 621 x 118 m, track about 79 m wide). A tiling segment of the long flank, 1.0
+## long along x: a low podium wall on the track side (+z), rows of seats (stone below, timber above,
+## as in the Republican circus), and an arcaded outer wall of two storeys at the back (-z).
+static func _circus_segment(k: Kit) -> void:
+	var c := GROTTA
+	_b(k, -0.5, 0.0, -1.15, 0.5, 0.03, 1.35, Color(0.72, 0.62, 0.45), Kit.EARTH)   # the sand edge
+	_b(k, -0.5, 0.03, 0.95, 0.5, 0.2, 1.05, c.lightened(0.05), Kit.STONE)           # the podium wall
+	for i in 10:
+		var z0 := 0.95 - i * 0.14
+		var y1 := 0.2 + (i + 1) * 0.085
+		var stone := i < 4
+		_b(k, -0.5, 0.0, z0 - 0.14, 0.5, y1, z0, c if stone else Color(0.55, 0.40, 0.25), Kit.STONE if stone else Kit.TIMBER)
+	_b(k, -0.5, 0.0, -0.6, 0.5, 1.05, -0.45, c, Kit.STONE)
+	_b(k, -0.5, 1.05, -1.1, 0.5, 1.1, -0.35, c.lightened(0.08), Kit.STONE)
+	_b(k, -0.5, 0.0, -1.1, -0.3, 1.05, -0.6, c, Kit.STONE)   # the arcaded back: two storeys
+	_b(k, 0.3, 0.0, -1.1, 0.5, 1.05, -0.6, c, Kit.STONE)
+	_b(k, -0.3, 0.0, -1.1, 0.3, 0.4, -0.95, c, Kit.STONE)
+	_arch(k, -0.3, 0.3, 0.35, 0.52, -1.1, -0.9, c, Kit.STONE, 6, true, true)
+	_arch(k, -0.3, 0.3, 0.8, 1.0, -1.1, -0.9, c, Kit.STONE, 6, true, true)
+	_b(k, -0.3, 0.0, -1.1, 0.3, 0.3, -1.08, DARK_C, Kit.DARK)
+	_b(k, -0.5, 0.52, -1.14, 0.5, 0.57, -0.85, c.lightened(0.07), Kit.STONE)
+
+
+## The end of the circus with the starting gates (Livy 8.20.2: carceres 329 BC; Dion. Hal. 3.68)
+## and the beginning of the spina. Faces +z: twelve arched stalls (the carceres) closed by
+## timber gates, a tower (oppidum) at each end, the spina down the middle with the seven
+## eggs that counted laps (Livy 41.27.6, 174 BC) on two pillars and the turning post (meta).
+## 7.9 wide as the track.
+static func _circus_end(k: Kit) -> void:
+	var c := GROTTA
+	var bay := 0.62
+	_b(k, -4.0, 0.0, -0.6, 4.0, 0.03, 2.8, Color(0.72, 0.62, 0.45), Kit.EARTH)
+	_b(k, -3.0, 0.03, -0.9, 3.0, 0.8, -0.1, c, Kit.STONE)
+	_arcade(k, 0.0, 12, 0.5, 0.1, 0.03, 0.3, 0.5, -0.1, 0.0, c, Kit.STONE, 4, false, 1.0, true)
+	_b(k, -3.05, 0.5, -0.1, 3.05, 0.8, 0.0, c, Kit.STONE)
+	for i in 12:   # the timber gates
+		var x0 := -3.0 + i * 0.5
+		_b(k, x0 + 0.06, 0.03, -0.085, x0 + 0.44, 0.34, -0.075, DWOOD, Kit.TIMBER)
+	_b(k, -3.05, 0.8, -0.95, 3.05, 0.86, 0.04, c.lightened(0.08), Kit.STONE)
+	for s in [-1.0, 1.0]:   # the oppida
+		_b(k, s * 3.5 - 0.5, 0.03, -0.9, s * 3.5 + 0.5, 1.2, 0.1, c, Kit.STONE)
+		_b(k, s * 3.5 - 0.55, 1.2, -0.95, s * 3.5 + 0.55, 1.26, 0.15, c.lightened(0.08), Kit.STONE)
+		_b(k, s * 3.5 - 0.1, 0.5, 0.1 - 0.0, s * 3.5 + 0.1, 0.9, 0.1 + 0.004, DARK_C, Kit.DARK)
+		_gable_x(k, Vector3(s * 3.5, 1.26, -0.4), 1.1, 1.0, 0.25, 0.04, TERRA, STUCCO, Kit.PLASTER, 0.03)
+	_b(k, -3.0, 0.8, -0.9, 3.0, 0.88, -0.1, DWOOD, Kit.TIMBER)   # the roof of the stalls
+	# the spina: a low basin with its water channel (euripus), turning posts, eggs
+	_b(k, -0.14, 0.03, 0.9, 0.14, 0.2, 2.6, c.lightened(0.05), Kit.STONE)
+	_b(k, -0.1, 0.2, 0.95, 0.1, 0.22, 2.55, Color(0.55, 0.75, 0.85), Kit.WATER)
+	for s in [-1.0, 1.0]:
+		k.frustum(Vector3(s * 0.08, 0.22, 0.95), 0.025, 0.02, 0.45, TRAVERT, Kit.STONE, 6)
+	_b(k, -0.1, 0.65, 0.93, 0.1, 0.69, 0.97, WOOD, Kit.TIMBER)
+	for i in 7:   # the seven eggs
+		k.dome(Vector3(-0.09 + i * 0.03, 0.69, 0.95), 0.014, TERRA_L, Kit.PAINT, 1.4, 2, 5)
+	for i in 3:   # the meta prima: three cones on a base
+		k.frustum(Vector3(-0.1 + i * 0.1, 0.22, 2.6), 0.04, 0.012, 0.28, TRAVERT, Kit.STONE, 6)
+	_b(k, -0.25, 0.03, 2.55, 0.25, 0.1, 2.75, c, Kit.STONE)
+	_b(k, -0.12, 0.2, 0.7, 0.12, 0.3, 0.9, c, Kit.STONE)
+
+
+# =============================================================================================
 # DISPATCH
 # =============================================================================================
 
@@ -472,6 +916,8 @@ const KINDS := [
 	"temple_tetrastyle_ionic", "temple_tetrastyle_ionic_travertine", "temple_tetrastyle_ionic_marble",
 	"temple_hexastyle_corinthian", "temple_hexastyle_corinthian_marble",
 	"temple_round", "temple_round_marble",
+	"basilica", "basilica_travertine", "curia", "rostra", "portico", "portico_marble", "tabularium", "horrea", "macellum",
+	"theatre_pompey", "circus_segment", "circus_end",
 ]
 
 
@@ -502,6 +948,30 @@ static func build(kind: String) -> ArrayMesh:
 			_tholos(k, false)
 		"temple_round_marble":
 			_tholos(k, true)
+		"basilica":
+			_basilica(k, false)
+		"basilica_travertine":
+			_basilica(k, true)
+		"curia":
+			_curia(k)
+		"rostra":
+			_rostra(k)
+		"portico":
+			_portico(k, false)
+		"portico_marble":
+			_portico(k, true)
+		"tabularium":
+			_tabularium(k)
+		"horrea":
+			_horrea(k)
+		"macellum":
+			_macellum(k)
+		"theatre_pompey":
+			_theatre_pompey(k)
+		"circus_segment":
+			_circus_segment(k)
+		"circus_end":
+			_circus_end(k)
 		_:
 			_pad(k, 1.0, 1.0)
 	return k.finish()
