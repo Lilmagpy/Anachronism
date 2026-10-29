@@ -130,6 +130,12 @@ func _run() -> void:
 			tris += m.multimesh.instance_count * (m.multimesh.mesh.get_faces().size() / 3)
 	print("PREVIEW year=%d chunks=%d prep_ms=%d chunks_ms=%d instances=%s tris=%d" % [year, chunks.size(), t_prep, t_chunks, str(stats), tris])
 	print("PREVIEW street_lots=%s" % str(fill.count_stats))
+	var shown := {}
+	for lot in fill._street_lots:
+		var m := str(lot["mesh"])
+		if m.begins_with("furn:") and int(shown.get(m, 0)) < 3 and lot["c"].distance_to(Vector2(pos.x, pos.z)) < 900.0:
+			shown[m] = int(shown.get(m, 0)) + 1
+			print("FURN %s at %d,%d yaw=%.0f" % [m, lot["c"].x, lot["c"].y, rad_to_deg(lot["th"])])
 	# camera
 	var cam := Camera3D.new()
 	cam.fov = float(args.get("fov", "70"))
@@ -177,7 +183,7 @@ func _environment(root: Node3D, hour: float) -> void:
 	sun.rotation = Vector3(-el, az, 0)
 	sun.shadow_enabled = true
 	sun.directional_shadow_max_distance = 600.0
-	sun.light_energy = 0.95
+	sun.light_energy = 0.75
 	root.add_child(sun)
 	var env := Environment.new()
 	env.background_mode = Environment.BG_SKY
@@ -190,7 +196,7 @@ func _environment(root: Node3D, hour: float) -> void:
 	env.sky = sky
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	env.ambient_light_color = Color(0.82, 0.8, 0.76)
-	env.ambient_light_energy = 0.5
+	env.ambient_light_energy = 0.42
 	env.tonemap_mode = Environment.TONE_MAPPER_FILMIC
 	env.fog_enabled = true
 	env.fog_light_color = Color(0.78, 0.82, 0.88)

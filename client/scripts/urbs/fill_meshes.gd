@@ -37,7 +37,7 @@ const STONE := Color(0.80, 0.77, 0.70, 0.3)
 const DARK := Color(0.10, 0.07, 0.05, 0.5)
 const WOOD := Color(0.40, 0.28, 0.18, 0.7)
 const TERRA := Color(0.74, 0.44, 0.27, 0.8)
-const TILE := Color(0.82, 0.38, 0.23, 0.9)
+const TILE := Color(0.74, 0.33, 0.20, 0.9)
 const THATCH := Color(0.74, 0.60, 0.34, 0.9)
 const SHINGLE := Color(0.52, 0.38, 0.26, 0.9)
 const GRASS := Color(0.38, 0.5, 0.25, 0.1)
@@ -110,6 +110,7 @@ render_mode cull_disabled;
 varying vec4 vcol;
 varying vec4 vcust;
 varying vec3 lpos;
+varying vec3 lnorm;
 
 float h21(vec2 p) { p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y); }
 float vn(vec2 p) {
@@ -122,6 +123,7 @@ void vertex() {
 	vcol = COLOR;
 	vcust = INSTANCE_CUSTOM;
 	lpos = VERTEX;
+	lnorm = NORMAL;
 }
 
 vec3 masonry(vec2 uv, float seed) {
@@ -148,11 +150,12 @@ vec3 brick(vec2 uv, float seed) {
 
 void fragment() {
 	float dist = length(VERTEX);
-	float fade = clamp(1.0 - (dist - 8.0) / 40.0, 0.0, 1.0);
+	float fade = clamp(1.0 - (dist - 6.0) / 22.0, 0.0, 1.0);
 	vec3 wp = (INV_VIEW_MATRIX * vec4(VERTEX, 1.0)).xyz;
 	vec3 wn = normalize((INV_VIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
-	vec2 uv = abs(wn.y) > 0.6 ? wp.xz : (abs(wn.x) > abs(wn.z) ? wp.zy : wp.xy);
 	float seed = vcust.a * 91.0;
+	vec3 an = abs(lnorm);
+	vec2 uv = (an.y > 0.6 ? lpos.xz : (an.x > an.z ? lpos.zy : lpos.xy)) + vec2(seed * 0.37, seed * 0.11);
 	int id = int(vcol.a * 10.0 + 0.5);
 	vec3 col = vcol.rgb;
 	float rough = 0.92;
@@ -199,7 +202,7 @@ void fragment() {
 		col = mix(vec3(0.55, 0.49, 0.40), masonry(uv, seed + 11.0), fade);
 	} else if (id == 8) {
 		col = vcol.rgb * (0.82 + 0.32 * vn(uv * 12.0 + seed));
-		rough = 0.6;
+		rough = 0.9;
 	} else if (id == 1) {
 		col = vcol.rgb * (0.7 + 0.6 * fbm(wp.xz * 0.8));
 	} else if (id == 6) {
@@ -210,8 +213,7 @@ void fragment() {
 		float n = fbm(wp.xz * 0.45);
 		col = mix(vec3(0.27, 0.21, 0.15), vec3(0.37, 0.30, 0.22), n);
 		col *= 0.88 + 0.24 * vn(wp.xz * 5.0);
-		float peb = step(0.93, h21(floor(wp.xz * 4.0)));
-		col = mix(col, vec3(0.40, 0.37, 0.33), peb * 0.5);
+		col *= 0.9 + 0.2 * smoothstep(0.4, 0.9, vn(wp.xz * 1.7));
 	}
 	ALBEDO = col;
 	ROUGHNESS = rough;
@@ -357,8 +359,9 @@ static func _fr(i: int, k: int) -> float:
 
 ## Amphora standing at (x, y, z): foot, belly, neck, mouth ring.
 static func _amphora(b: MB, x: float, y: float, z: float, s := 1.0, col := TERRA) -> void:
-	b.cone(x, z, y, y + 0.34 * s, 0.06 * s, 0.19 * s, 5, col)
-	b.cone(x, z, y + 0.34 * s, y + 0.84 * s, 0.19 * s, 0.07 * s, 5, col)
+	b.cone(x, z, y, y + 0.26 * s, 0.05 * s, 0.19 * s, 6, col)
+	b.cone(x, z, y + 0.26 * s, y + 0.58 * s, 0.19 * s, 0.11 * s, 6, col)
+	b.cone(x, z, y + 0.58 * s, y + 0.84 * s, 0.11 * s, 0.065 * s, 6, col)
 
 
 ## Window centred at h on `face`; dl 0 full (sill box, shutters), 1 flat sill, 2 just the opening.

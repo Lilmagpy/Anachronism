@@ -96,6 +96,10 @@ func build(urbs: Node3D, new_year: int, new_height: Callable) -> void:
 	year = new_year
 	height = new_height
 	footprints = []
+	# with --screenshot every chunk is finished before it is returned, so the picture is complete
+	for a in OS.get_cmdline_user_args():
+		if String(a).begins_with("--screenshot"):
+			sync_chunks = true
 	var mon: Variant = urbs.get("monuments") if urbs != null else null
 	if mon != null and mon.has_method("ids"):
 		for id in mon.ids():
