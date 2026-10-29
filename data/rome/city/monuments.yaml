@@ -1225,7 +1225,7 @@ monuments:
   lon: 12.4880
   precision: rough
   location: Palatine
-  built: {year: -61, certainty: uncertain, by: "P. Clodius Pulcher bought a Palatine house (that of Q. Seius, Cic. Dom. 115) and began building on part of Cicero's site after 58; price HS 14,800,000 (Pliny NH 36.103, not checked)"}
+  built: {year: null, certainty: uncertain, by: "P. Clodius Pulcher bought a Palatine house (that of Q. Seius, Cic. Dom. 115) and began building on part of Cicero's site after 58; price HS 14,800,000 (Pliny NH 36.103, not checked)"}
   sources: ["Cic. Dom. 115-116", "Cic. Att. 4.3.3", "Pliny NH 36.103", "Platner-Ashby s.v. Domus (Clodius; Q. Seius Postumus)"]
   notes: "P&A (s.v. domus, 'Clodius'): the house Clodius intended to build and apparently began on part of the site of Cicero's house and that of his neighbour Q. Seius (Cic. Dom. 115-116); Q. Seius Postumus's Palatine house bought by Clodius after (it was said) Seius was poisoned (Cic. Dom. 115); P. Sulla's Palatine house seized by Clodius in 57 (Cic. Att. 4.3.3). The 14.8 million sesterces price (Plin. NH 36.103) is not in P&A and was not checked against Pliny. Not in Pleiades."
   pleiades: null
