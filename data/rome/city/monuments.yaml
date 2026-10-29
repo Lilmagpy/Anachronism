@@ -167,8 +167,9 @@ monuments:
   type: forum
   regio: 8
   model: plaza
+  offset_m: [-8, -22]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 23 m off
   bearing_deg: 106  # unverified
-  footprint_m: {length: 130, width: 50}  # unverified
+  footprint_m: {length: 130, width: 40}  # unverified
   height_m: 0
   surface: travertine
   geometry_source: "paved open area between the Rostra and the Regia/Divus Iulius, long axis ESE (the Sacra Via line); size from the plan of the excavated paving (not measured in Platner-Ashby s.v. Forum Romanum, which gives levels: 10.6-10.9 m archaic, 11.8 Sullan, 14 m Caesarian)"
@@ -308,6 +309,7 @@ monuments:
   type: curia
   regio: 8
   model: curia
+  offset_m: [-17, 0]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 17 m off
   bearing_deg: 135  # unverified
   footprint_m: {length: 17.61, width: 25.2}
   height_m: 21
@@ -328,6 +330,7 @@ monuments:
   type: forum
   regio: 8
   model: plaza
+  offset_m: [-113, 24]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 116 m off
   bearing_deg: 140  # unverified
   footprint_m: {length: 160, width: 75}  # unverified
   height_m: 0
@@ -350,6 +353,7 @@ monuments:
   type: temple
   regio: 8
   model: temple_hexastyle_corinthian_marble  # unverified
+  offset_m: [-107, 11]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 108 m off
   bearing_deg: 140
   footprint_m: {length: 30, width: 16}  # unverified
   construction: {begun: -48, completed: -46}  # work years; see geometry_source
@@ -386,6 +390,7 @@ monuments:
   type: basilica
   regio: 8
   model: basilica
+  offset_m: [-6, -38]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 38 m off
   bearing_deg: 196
   footprint_m: {length: 29, width: 70}  # unverified
   phases: [{from: -54, state: standing_scaffold}, {from: -34, state: standing, model: basilica_travertine}]
@@ -428,6 +433,7 @@ monuments:
   type: basilica
   regio: 8
   model: basilica
+  offset_m: [-128, 139]  # east, north metres added to lat/lon; unverified: placed beside the temple of Concord (Platner-Ashby s.v. Basilica Opimia); the exact spot is a guess
   bearing_deg: 196  # unverified
   footprint_m: {length: 40, width: 20}  # unverified
   geometry_source: "Basilica Opimia beside the temple of Concord (Platner-Ashby s.v. Basilica Opimia); size unknown"
@@ -444,6 +450,7 @@ monuments:
   type: basilica
   regio: 8
   model: basilica_travertine
+  offset_m: [-26, 6]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 27 m off
   bearing_deg: 16
   footprint_m: {length: 49, width: 101}
   construction: {begun: -54, completed: -46}  # work years; see geometry_source
@@ -464,6 +471,7 @@ monuments:
   type: temple
   regio: 8
   model: temple_tuscan_small  # unverified
+  offset_m: [30, 44]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 53 m off
   bearing_deg: 80  # unverified
   footprint_m: {length: 40, width: 22.5}
   phases: [{from: -42, state: standing, model: temple_hexastyle_corinthian}]
@@ -484,6 +492,7 @@ monuments:
   type: temple
   regio: 8
   model: temple_tuscan_small  # unverified
+  offset_m: [-20, 18]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 27 m off
   bearing_deg: 16  # unverified
   footprint_m: {length: 50, width: 30}
   phases: [{from: -117, state: standing, model: temple_hexastyle_corinthian}]
@@ -506,6 +515,7 @@ monuments:
   type: temple
   regio: 8
   model: temple_round
+  offset_m: [-66, -4]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 66 m off
   bearing_deg: 100  # unverified
   footprint_m: {radius: 7.5}
   geometry_source: "Platner-Ashby s.v. Vesta (round, foundation 15.05 m diameter, 20 Corinthian/Ionic columns 4.45 m high); the doorway side not stated: east assumed"
@@ -527,6 +537,7 @@ monuments:
   type: house
   regio: 8
   model: domus
+  offset_m: [-66, -11]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 67 m off
   bearing_deg: 16  # unverified
   footprint_m: {length: 45, width: 24}  # unverified
   height_m: 9  # unverified
@@ -544,6 +555,7 @@ monuments:
   type: shrine
   regio: 8
   model: regia
+  offset_m: [-58, -18]  # east, north metres added to lat/lon; unverified: nudged east to clear the temple of Divus Iulius (Wikipedia coordinates put them 13 m apart)
   bearing_deg: 16  # unverified
   footprint_m: {length: 22, width: 8}
   height_m: 7  # unverified
@@ -566,6 +578,7 @@ monuments:
   type: temple
   regio: 8
   model: aedicula  # unverified
+  offset_m: [70, 81]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 107 m off
   bearing_deg: 78  # unverified
   footprint_m: {length: 3.5, width: 3}
   phases: [{from: -121, state: standing, model: temple_hexastyle_corinthian, footprint_m: {length: 38, width: 45}}]
@@ -586,6 +599,7 @@ monuments:
   type: temple
   regio: 8
   model: temple_hexastyle_corinthian  # unverified
+  offset_m: [-46, -18]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 49 m off
   bearing_deg: 286  # unverified
   footprint_m: {length: 30, width: 26}
   construction: {begun: -42, completed: -29}  # work years; see geometry_source
@@ -624,6 +638,7 @@ monuments:
   type: monument
   regio: 8
   model: plaza
+  offset_m: [-31, 33]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 45 m off
   bearing_deg: 0
   footprint_m: {length: 10, width: 9}
   height_m: 0
@@ -641,6 +656,7 @@ monuments:
   type: fountain
   regio: 8
   model: basin
+  offset_m: [-20, 18]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 27 m off
   bearing_deg: 0
   footprint_m: {length: 10, width: 10}
   height_m: 1.2
@@ -657,6 +673,7 @@ monuments:
   type: prison
   regio: 8
   model: aedicula
+  offset_m: [28, -7]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 29 m off
   bearing_deg: 16  # unverified
   footprint_m: {length: 7, width: 7}
   height_m: 4  # unverified
@@ -708,6 +725,7 @@ monuments:
   type: archive
   regio: 8
   model: tabularium
+  offset_m: [-16, -13]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 21 m off
   bearing_deg: 115  # unverified
   footprint_m: {length: 30, width: 70}  # unverified
   geometry_source: "Platner-Ashby s.v. Tabularium (substructure wall 3.43 m thick, first-storey corridor 5 m wide and 10 high, eleven arches 7.5 m high and 3.5-3.6 wide; length c. 70 m in the kit, Platner gives no length); front faces the Forum (ESE)"
@@ -846,6 +864,7 @@ monuments:
   type: temple
   regio: 11
   model: temple_round_marble
+  offset_m: [-30, 24]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 38 m off
   bearing_deg: 90  # unverified
   footprint_m: {radius: 7.4}
   geometry_source: "Platner-Ashby s.v. Hercules Victor (circular, 20 Corinthian columns, Greek marble); radius c. 7.4 m (14.8 m across, as in the kit)"
@@ -864,6 +883,7 @@ monuments:
   type: temple
   regio: 11
   model: temple_tetrastyle_ionic_travertine
+  offset_m: [3, 52]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 52 m off
   bearing_deg: 270  # unverified
   footprint_m: {length: 20, width: 12}  # unverified
   geometry_source: "Platner-Ashby s.v. Aedes Portuni (tetrastyle Ionic pseudoperipteral on a podium); front toward the Tiber assumed"
@@ -1250,6 +1270,7 @@ monuments:
   type: temple
   regio: 10
   model: temple_hexastyle_corinthian_marble
+  offset_m: [-124, 22]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 126 m off
   bearing_deg: 90  # unverified
   footprint_m: {length: 50, width: 25}  # unverified
   construction: {begun: -36, completed: -28}  # work years; see geometry_source
@@ -1306,6 +1327,7 @@ monuments:
   type: house
   regio: 10
   model: domus
+  offset_m: [25, 56]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 61 m off
   bearing_deg: 16  # unverified
   footprint_m: {length: 45, width: 30}  # unverified
   height_m: 9  # unverified
@@ -1504,6 +1526,7 @@ monuments:
   type: circus
   regio: 11
   model: circus_maximus
+  offset_m: [50, -22]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 55 m off
   bearing_deg: 134  # unverified
   footprint_m: {length: 621, width: 118}
   phases: [{from: -329, state: standing, variant: carceres}, {from: -174, state: standing, variant: eggs}, {from: -46, state: standing, variant: caesar}, {from: -33, state: standing, variant: augustan}]
@@ -1542,6 +1565,7 @@ monuments:
   type: horrea
   regio: 13
   model: horrea
+  offset_m: [-308, -6]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 308 m off
   bearing_deg: 45  # unverified
   footprint_m: {length: 155, width: 200}
   height_m: 14  # unverified
@@ -1559,6 +1583,7 @@ monuments:
   type: port
   regio: 13
   model: quay
+  offset_m: [-297, 146]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 331 m off
   bearing_deg: 270  # unverified
   footprint_m: {length: 500, width: 40}  # unverified
   height_m: 0
@@ -1578,6 +1603,7 @@ monuments:
   type: horrea
   regio: 13
   model: long_hall
+  offset_m: [-297, 146]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 331 m off
   bearing_deg: 45  # unverified
   footprint_m: {length: 60, width: 487}
   height_m: 9  # unverified
@@ -1692,6 +1718,7 @@ monuments:
   type: temple
   regio: 9
   model: temple_tetrastyle_ionic  # unverified
+  offset_m: [4, -80]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 80 m off
   bearing_deg: 90  # unverified
   footprint_m: {length: 23, width: 13}  # unverified
   geometry_source: "excavated Area Sacra di Largo Argentina, Temple A (temples face east onto a paved court); size from the plan, not read in PA"
@@ -1709,6 +1736,7 @@ monuments:
   type: temple
   regio: 9
   model: temple_round
+  offset_m: [4, -80]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 80 m off
   bearing_deg: 90  # unverified
   footprint_m: {radius: 8.5}  # unverified
   geometry_source: "Largo Argentina, Temple B (round peripteral temple of Fortuna Huiusce Diei, Q. Lutatius Catulus 101 BC); radius from the plan of the stylobate, not read in PA"
@@ -1726,6 +1754,7 @@ monuments:
   type: temple
   regio: 9
   model: temple_tuscan_small  # unverified
+  offset_m: [4, -80]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 80 m off
   bearing_deg: 90  # unverified
   footprint_m: {length: 30, width: 14}  # unverified
   geometry_source: "Largo Argentina, Temple C (Feronia?); size from the plan"
@@ -1742,6 +1771,7 @@ monuments:
   type: temple
   regio: 9
   model: temple_tetrastyle_ionic  # unverified
+  offset_m: [4, -80]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 80 m off
   bearing_deg: 90  # unverified
   footprint_m: {length: 38, width: 20}  # unverified
   geometry_source: "Largo Argentina, Temple D (the largest); size from the plan"
@@ -1758,6 +1788,7 @@ monuments:
   type: theatre
   regio: 9
   model: theatre_pompey
+  offset_m: [-58, -56]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 81 m off
   bearing_deg: 134  # unverified: scaena side toward the Porticus Pompeiana (Platner-Ashby s.v. Porticus Pompei: the portico lay behind the stage)
   footprint_m: {radius: 77.5}
   construction: {begun: -61, completed: -55}  # work years; see geometry_source
@@ -1778,6 +1809,7 @@ monuments:
   type: curia
   regio: 9
   model: curia
+  offset_m: [-58, -56]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 81 m off
   bearing_deg: 270  # unverified
   footprint_m: {length: 20, width: 30}  # unverified
   geometry_source: "Curia Pompei (Suet. Iul. 80, Platner-Ashby s.v. Curia Pompei); attached to the portico, dimensions assumed"
@@ -1796,6 +1828,7 @@ monuments:
   type: portico
   regio: 9
   model: portico_enclosure
+  offset_m: [-26, -88]  # east, north metres added to lat/lon; unverified: the theatre of Pompey correction (-58, -56) plus 45 m along the stage axis so the portico lies behind the scaena instead of overlapping it (Platner-Ashby s.v. Porticus Pompei)
   bearing_deg: 134  # unverified
   footprint_m: {length: 135, width: 180}
   height_m: 11  # unverified
@@ -1919,6 +1952,7 @@ monuments:
   type: baths
   regio: 9
   model: baths
+  offset_m: [-83, -121]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 147 m off
   bearing_deg: 180  # unverified
   footprint_m: {length: 100, width: 80}  # unverified
   height_m: 20  # unverified
@@ -2131,6 +2165,7 @@ monuments:
   type: tomb
   regio: 13
   model: tomb_pyramid
+  offset_m: [-30, 10]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 32 m off
   bearing_deg: 24  # unverified
   footprint_m: {length: 22, width: 22}
   height_m: 27
@@ -2228,6 +2263,7 @@ monuments:
   type: gate
   regio: 1
   model: gate
+  offset_m: [207, -167]  # east, north metres added to lat/lon; unverified: the Servian gate stood by the modern Piazza di Porta Capena (Wikipedia coordinates 41.8838, 12.4905), 270 m from the dataset point; keeps the wall clear of the Circus Maximus
   footprint_m: {length: 9, width: 12}  # unverified
   height_m: 12  # unverified
   snap_to: murus_servianus
@@ -2540,6 +2576,7 @@ monuments:
   type: bridge
   regio: 14
   model: bridge_stone
+  offset_m: [28, 46]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 54 m off
   bearing_deg: 38
   footprint_m: {length: 62, width: 5.5}
   height_m: 10  # unverified
@@ -2558,6 +2595,7 @@ monuments:
   type: bridge
   regio: 14
   model: bridge_stone
+  offset_m: [-14, 69]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 70 m off
   bearing_deg: 252  # unverified
   footprint_m: {length: 48, width: 8.2}
   height_m: 10

@@ -39,6 +39,7 @@ var _boxes := {}         ## id -> Array of {centre, size} in world axes (for pic
 var _kinds := {}         ## id -> "kit"|"own"|"placeholder"|"site"|"ruin"
 var _todo := {}          ## model -> what the kit agent could add
 var _routes := {}        ## id -> PackedVector2Array
+var _circ := {}          ## the gate circuit (see _circuit)
 
 
 func _init() -> void:
@@ -193,6 +194,34 @@ func _project(route: PackedVector2Array, p: Vector2) -> Dictionary:
 	return best
 
 
+## The Servian circuit as the 16 gates in order round the city (the dataset's own `route` for the
+## wall has 13 rough points and cuts across the Circus Maximus, so the wall here is threaded
+## through the gates instead). Returns {ids: Array, pos: PackedVector2Array (closed)}.
+func _circuit() -> Dictionary:
+	if not _circ.is_empty():
+		return _circ
+	var centre := Vector2(150, 350)
+	var list := []
+	for gid in _order:
+		var g: Dictionary = _recs[gid]
+		if str(g.get("snap_to", "")) == "murus_servianus":
+			var p := UrbsGeo.to_local(float(g["lat"]), float(g["lon"]))
+			var off: Variant = g.get("offset_m")
+			if off is Array:
+				p += Vector2(float(off[0]), -float(off[1]))
+			list.append({"id": gid, "pos": p, "ang": (p - centre).angle()})
+	list.sort_custom(func(a, b): return a.ang < b.ang)
+	var ids := []
+	var pos := PackedVector2Array()
+	for e in list:
+		ids.append(e.id)
+		pos.append(e.pos)
+	if pos.size() > 0:
+		pos.append(pos[0])
+	_circ = {"ids": ids, "pos": pos}
+	return _circ
+
+
 func _is_clockwise(route: PackedVector2Array) -> bool:
 	var area := 0.0
 	for i in route.size() - 1:
@@ -210,18 +239,24 @@ func _make(id: String, st: Dictionary) -> void:
 	var yaw := 0.0
 	var world := false
 	var route: PackedVector2Array = _routes.get(id, PackedVector2Array())
+	if model == "wall":
+		route = _circuit().pos
 	var form_st: Dictionary = st.duplicate()
 	var snap := str(m.get("snap_to", ""))
-	if snap != "" and _routes.has(snap):
-		var wall: PackedVector2Array = _routes[snap]
-		var pr := _project(wall, UrbsGeo.to_local(float(m["lat"]), float(m["lon"])))
-		centre = pr.pos
-		var dir: Vector2 = pr.dir
-		var out_n := Vector2(-dir.y, dir.x) * (1.0 if _is_clockwise(wall) else -1.0)
+	if snap != "" and not _circuit().ids.is_empty() and (_circuit().ids as Array).has(id):
+		var circ := _circuit()
+		var ids: Array = circ.ids
+		var pts: PackedVector2Array = circ.pos
+		var i := ids.find(id)
+		centre = pts[i]
+		var prev := pts[(i - 1 + ids.size()) % ids.size()]
+		var next := pts[(i + 1) % ids.size()]
+		var dir := (next - prev).normalized()
+		var out_n := Vector2(-dir.y, dir.x) * (1.0 if _is_clockwise(pts) else -1.0)
 		yaw = atan2(out_n.x, out_n.y)
 	else:
 		centre = UrbsGeo.to_local(float(like["lat"]), float(like["lon"]))
-		var off: Variant = m.get("offset_m")
+		var off: Variant = like.get("offset_m")
 		if off is Array:
 			centre += Vector2(float(off[0]), -float(off[1]))
 		var br: Variant = like.get("bearing_deg")
@@ -327,15 +362,20 @@ func _ground_at(p: Vector2) -> float:
 func _wall_extras(st: Dictionary, route: PackedVector2Array) -> void:
 	if route.size() < 2:
 		return
+	var circ := _circuit()
+	var ids: Array = circ.ids
 	var gates: Array = []
-	for gid in _order:
-		var g: Dictionary = _recs[gid]
-		if str(g.get("snap_to", "")) == "murus_servianus" and not state_at(gid, _year).is_empty():
-			gates.append(float(_project(route, UrbsGeo.to_local(float(g["lat"]), float(g["lon"]))).s))
+	var dist := {}
+	var acc := 0.0
+	for i in ids.size():
+		if i > 0:
+			acc += route[i].distance_to(route[i - 1])
+		dist[ids[i]] = acc
+		gates.append(acc)
 	st["gates"] = gates
-	if _recs.has("porta_collina") and _recs.has("porta_esquilina"):
-		var a := float(_project(route, UrbsGeo.to_local(float(_recs["porta_collina"]["lat"]), float(_recs["porta_collina"]["lon"]))).s)
-		var b := float(_project(route, UrbsGeo.to_local(float(_recs["porta_esquilina"]["lat"]), float(_recs["porta_esquilina"]["lon"]))).s)
+	if dist.has("porta_collina") and dist.has("porta_esquilina"):
+		var a := float(dist["porta_collina"])
+		var b := float(dist["porta_esquilina"])
 		st["agger"] = Vector2(minf(a, b), maxf(a, b))
 
 

@@ -11,6 +11,7 @@
 ##   --fov=DEGREES         (default 60)
 ##   --screenshot=PATH     save and quit
 ##   --report              print the counts of real forms and placeholders, and what is unverified
+##   --labels              float each monument's id above it
 ##   --pick=px,py          print the monument id under that screen pixel (tests UrbsMonuments.pick)
 extends SceneTree
 
@@ -46,6 +47,19 @@ func _initialize() -> void:
 		for k in r.todo:
 			print("TODO roman.gd ", k, ": ", r.todo[k])
 	_light(root)
+	if _args.has("labels"):
+		for id in _mon.ids():
+			var b := _mon.bounds(id)
+			var l := Label3D.new()
+			l.text = str(id).replace("aedes_", "").replace("porta_", "P.")
+			l.font_size = 40
+			l.pixel_size = 0.12 if b.size.length() > 60.0 else 0.05
+			l.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+			l.no_depth_test = true
+			l.modulate = Color(0.05, 0.05, 0.3)
+			l.outline_size = 8
+			l.position = Vector3(b.get_center().x, b.end.y + 4.0, b.get_center().z)
+			root.add_child(l)
 	_cam = Camera3D.new()
 	_cam.fov = float(_args.get("fov", "60"))
 	_cam.far = 12000.0

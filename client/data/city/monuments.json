@@ -358,7 +358,7 @@
 ],
 "footprint_m": {
 "length": 130,
-"width": 50
+"width": 40
 },
 "geometry_source": "paved open area between the Rostra and the Regia/Divus Iulius, long axis ESE (the Sacra Via line); size from the plan of the excavated paving (not measured in Platner-Ashby s.v. Forum Romanum, which gives levels: 10.6-10.9 m archaic, 11.8 Sullan, 14 m Caesarian)",
 "geometry_unverified": [
@@ -372,6 +372,10 @@
 "location": "valley between the Capitol and the Palatine/Velia, drained by the Cloaca Maxima",
 "lon": 12.4853,
 "model": "plaza",
+"offset_m": [
+-8,
+-22
+],
 "pleiades": null,
 "precision": "exact",
 "regio": 8,
@@ -672,6 +676,10 @@
 "location": "north-east side of the Forum, now the standing brick Curia (a Diocletianic rebuild)",
 "lon": 12.4856,
 "model": "curia",
+"offset_m": [
+-17,
+0
+],
 "precision": "exact",
 "regio": 8,
 "sources": [
@@ -717,6 +725,10 @@
 "location": "north-east of the Curia, at the foot of the Capitol (Arx slope) - Via dei Fori Imperiali",
 "lon": 12.4863,
 "model": "plaza",
+"offset_m": [
+-113,
+24
+],
 "precision": "exact",
 "regio": 8,
 "sources": [
@@ -761,6 +773,10 @@
 "tufa core"
 ],
 "model": "temple_hexastyle_corinthian_marble",
+"offset_m": [
+-107,
+11
+],
 "precision": "exact",
 "regio": 8,
 "sources": [
@@ -844,6 +860,10 @@
 "location": "north side of the Forum, between the Curia and the Temple of Divus Iulius",
 "lon": 12.4863,
 "model": "basilica",
+"offset_m": [
+-6,
+-38
+],
 "phases": [
 {
 "from": -54,
@@ -935,6 +955,10 @@
 "location": "Forum, beside the temple of Concord",
 "lon": 12.4863,
 "model": "basilica",
+"offset_m": [
+-128,
+139
+],
 "precision": "rough",
 "regio": 8,
 "sources": [
@@ -976,6 +1000,10 @@
 "location": "south side of the Forum, between the Temple of Castor and the temple of Saturn, over the Basilica Sempronia",
 "lon": 12.4851,
 "model": "basilica_travertine",
+"offset_m": [
+-26,
+6
+],
 "precision": "exact",
 "regio": 8,
 "sources": [
@@ -1016,6 +1044,10 @@
 "location": "west end of the Forum, at the foot of the Capitol (Clivus Capitolinus); the Aerarium was in its podium",
 "lon": 12.4838,
 "model": "temple_tuscan_small",
+"offset_m": [
+30,
+44
+],
 "phases": [
 {
 "from": -42,
@@ -1071,6 +1103,10 @@
 "location": "south side of the Forum, beside the Vicus Tuscus",
 "lon": 12.4858,
 "model": "temple_tuscan_small",
+"offset_m": [
+-20,
+18
+],
 "phases": [
 {
 "from": -117,
@@ -1124,6 +1160,10 @@
 "location": "south-east of the Forum at the foot of the Palatine; the circular temple holding the sacred fire",
 "lon": 12.4869,
 "model": "temple_round",
+"offset_m": [
+-66,
+-4
+],
 "precision": "exact",
 "regio": 8,
 "sources": [
@@ -1160,6 +1200,10 @@
 "location": "south-east of the Temple of Vesta",
 "lon": 12.4875,
 "model": "domus",
+"offset_m": [
+-66,
+-11
+],
 "precision": "exact",
 "regio": 8,
 "sources": [
@@ -1206,6 +1250,10 @@
 "location": "Via Sacra, at the south-east edge of the Forum",
 "lon": 12.4873,
 "model": "regia",
+"offset_m": [
+-58,
+-18
+],
 "precision": "exact",
 "regio": 8,
 "sources": [
@@ -1249,6 +1297,10 @@
 "location": "west end of the Forum below the Capitol, above the Comitium",
 "lon": 12.4834,
 "model": "aedicula",
+"offset_m": [
+70,
+81
+],
 "phases": [
 {
 "footprint_m": {
@@ -1298,6 +1350,10 @@
 "location": "east end of the Forum, where Caesar's body was cremated 44 BC",
 "lon": 12.4868,
 "model": "temple_hexastyle_corinthian",
+"offset_m": [
+-46,
+-18
+],
 "precision": "exact",
 "regio": 8,
 "sources": [
@@ -1371,6 +1427,10 @@
 "location": "middle of the Forum",
 "lon": 12.4854,
 "model": "plaza",
+"offset_m": [
+-31,
+33
+],
 "precision": "exact",
 "regio": 8,
 "sources": [
@@ -1401,6 +1461,10 @@
 "location": "by the Temple of Castor",
 "lon": 12.4862,
 "model": "basin",
+"offset_m": [
+-20,
+18
+],
 "precision": "exact",
 "regio": 8,
 "sources": [
@@ -1433,6 +1497,10 @@
 "location": "foot of the Capitol, above the Comitium",
 "lon": 12.4841,
 "model": "aedicula",
+"offset_m": [
+28,
+-7
+],
 "precision": "exact",
 "regio": 8,
 "sources": [
@@ -1536,6 +1604,10 @@
 "peperino"
 ],
 "model": "tabularium",
+"offset_m": [
+-16,
+-13
+],
 "precision": "exact",
 "regio": 8,
 "sources": [
@@ -1823,6 +1895,10 @@
 "tufa"
 ],
 "model": "temple_round_marble",
+"offset_m": [
+-30,
+24
+],
 "precision": "exact",
 "regio": 11,
 "sources": [
@@ -1858,6 +1934,10 @@
 "travertine"
 ],
 "model": "temple_tetrastyle_ionic_travertine",
+"offset_m": [
+3,
+52
+],
 "precision": "exact",
 "regio": 11,
 "sources": [
@@ -2641,6 +2721,10 @@
 "location": "Palatine, next to Octavian's house",
 "lon": 12.4872,
 "model": "temple_hexastyle_corinthian_marble",
+"offset_m": [
+-124,
+22
+],
 "precision": "exact",
 "regio": 10,
 "sources": [
@@ -2769,6 +2853,10 @@
 "location": "Palatine, south-west, over the Scalae Caci",
 "lon": 12.485,
 "model": "domus",
+"offset_m": [
+25,
+56
+],
 "precision": "approx",
 "regio": 10,
 "sources": [
@@ -3179,6 +3267,10 @@
 "location": "valley between the Palatine and the Aventine",
 "lon": 12.4851,
 "model": "circus_maximus",
+"offset_m": [
+50,
+-22
+],
 "phases": [
 {
 "from": -329,
@@ -3264,6 +3356,10 @@
 "location": "between the Aventine and the emporium, at the Via Marmorata",
 "lon": 12.479,
 "model": "horrea",
+"offset_m": [
+-308,
+-6
+],
 "precision": "approx",
 "regio": 13,
 "sources": [
@@ -3301,6 +3397,10 @@
 "location": "Tiber bank below the Aventine (modern Testaccio)",
 "lon": 12.4765,
 "model": "quay",
+"offset_m": [
+-297,
+146
+],
 "precision": "approx",
 "regio": 13,
 "sources": [
@@ -3339,6 +3439,10 @@
 "tufa"
 ],
 "model": "long_hall",
+"offset_m": [
+-297,
+146
+],
 "precision": "exact",
 "regio": 13,
 "sources": [
@@ -3556,6 +3660,10 @@
 "travertine"
 ],
 "model": "temple_tetrastyle_ionic",
+"offset_m": [
+4,
+-80
+],
 "precision": "exact",
 "regio": 9,
 "sources": [
@@ -3587,6 +3695,10 @@
 "location": "Largo di Torre Argentina, round temple",
 "lon": 12.477,
 "model": "temple_round",
+"offset_m": [
+4,
+-80
+],
 "precision": "exact",
 "regio": 9,
 "sources": [
@@ -3620,6 +3732,10 @@
 "location": "Largo Argentina",
 "lon": 12.4767,
 "model": "temple_tuscan_small",
+"offset_m": [
+4,
+-80
+],
 "precision": "exact",
 "regio": 9,
 "sources": [
@@ -3652,6 +3768,10 @@
 "location": "Largo Argentina",
 "lon": 12.4767,
 "model": "temple_tetrastyle_ionic",
+"offset_m": [
+4,
+-80
+],
 "precision": "exact",
 "regio": 9,
 "sources": [
@@ -3692,6 +3812,10 @@
 "marble"
 ],
 "model": "theatre_pompey",
+"offset_m": [
+-58,
+-56
+],
 "precision": "exact",
 "regio": 9,
 "sources": [
@@ -3732,6 +3856,10 @@
 "location": "Campus Martius, within the Porticus Pompeiana, Largo Argentina",
 "lon": 12.4757,
 "model": "curia",
+"offset_m": [
+-58,
+-56
+],
 "precision": "exact",
 "regio": 9,
 "sources": [
@@ -3765,6 +3893,10 @@
 "location": "behind the Theatre of Pompey",
 "lon": 12.475,
 "model": "portico_enclosure",
+"offset_m": [
+-26,
+-88
+],
 "precision": "exact",
 "regio": 9,
 "sources": [
@@ -4004,6 +4136,10 @@
 "location": "Campus Martius, near the Pantheon",
 "lon": 12.478,
 "model": "baths",
+"offset_m": [
+-83,
+-121
+],
 "precision": "approx",
 "regio": 9,
 "sources": [
@@ -4430,6 +4566,10 @@
 "location": "Via Ostiensis, by the Servian/Aurelian wall",
 "lon": 12.4812,
 "model": "tomb_pyramid",
+"offset_m": [
+-30,
+10
+],
 "precision": "exact",
 "regio": 13,
 "sources": [
@@ -4656,6 +4796,10 @@
 "location": "Servian Wall, south-east of the Palatine, start of the Via Appia",
 "lon": 12.4885,
 "model": "gate",
+"offset_m": [
+207,
+-167
+],
 "precision": "approx",
 "regio": 1,
 "snap_to": "murus_servianus",
@@ -5253,6 +5397,10 @@
 "travertine"
 ],
 "model": "bridge_stone",
+"offset_m": [
+28,
+46
+],
 "precision": "exact",
 "regio": 14,
 "sources": [
@@ -5285,6 +5433,10 @@
 "location": "from Tiber Island to Trastevere",
 "lon": 12.4774,
 "model": "bridge_stone",
+"offset_m": [
+-14,
+69
+],
 "precision": "exact",
 "regio": 14,
 "sources": [
