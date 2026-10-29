@@ -154,9 +154,9 @@ chapters:
         outcome: >-
           Porsenna asks for the Tarquins to be restored, and is refused. He gets the lands that had been
           taken from Veii, and hostages from Rome, and then he marches away. The hostage Cloelia slips her
-          guards and swims the Tiber with a band of girls; Porsenna sends her back, but gives her
-          her freedom out of admiration.
-        deeds: {peace_with: [e5_clusium], grudges: {e5_clusium: 0}}
+          guards and swims the Tiber with a band of girls; Rome sends her back as the treaty requires, and
+          Porsenna, admiring her, gives her half the hostages to choose from.
+        deeds: {peace_with: [e5_clusium]}
       - label: "Take the Tarquins back to end the siege"
         legitimacy_bp: -3000
         unrest_bp: 1500
@@ -202,8 +202,7 @@ chapters:
 
 
       Rome is poor in men and has enemies on every side. A noble house with its own followers might be
-      worth more than a legion. But the Senate has not yet taken a foreigner into its ranks, and the old
-      families will not welcome a new patrician.
+      worth more than a legion. The old families may not welcome a new patrician.
     choices:
       - label: "Give them citizenship, land across the Anio and a place in the Senate"
         historical: true
@@ -326,7 +325,6 @@ chapters:
           themselves. The compromise is struck: the plebs shall have magistrates of their own, who are
           inviolable and can protect any citizen against the consuls, and no patrician may hold the office.
           Two tribunes are chosen, Gaius Licinius and Lucius Albinus, and they add three colleagues.
-        deeds: {peace_with: [e5_volsci]}
       - label: "Cancel the debts and nothing else"
         wealth_bp: -800
         unrest_bp: -400
@@ -390,7 +388,7 @@ chapters:
         outcome: >-
           The Latin cities refuse to be told that Regillus made them subjects. The talks break down in
           insults and each side sharpens its spears for the next war.
-        deeds: {grudges: {e5_latins: 2500}}
+        deeds: {tributaries: [e5_latins], grudges: {e5_latins: 2500}}
       - label: "No treaty: keep Latium divided"
         wealth_bp: -400
         outcome: >-
@@ -594,8 +592,8 @@ chapters:
     speaker_title: "Consul"
     benchmark_provinces: 1
     story: >-
-      Volero Publilius, once a soldier whom the consuls had refused to excuse from service, was elected
-      tribune of the plebs. Everyone expected him to prosecute the consuls. Instead he has put a bill before
+      Volero Publilius, a plebeian who had been a centurion and denied the consuls' right to make him a common
+      soldier, was beat off a lictor in the Forum and was later elected tribune of the plebs. Everyone expected him to prosecute the consuls. Instead he has put a bill before
       the people: that the plebs' magistrates should be chosen in the assembly of the tribes.
 
 
@@ -778,8 +776,8 @@ chapters:
         influence: {nobility: 400, guilds: -200}
         outcome: >-
           The ten are Appius Claudius, Titus Genucius, Publius Sestius, Lucius Veturius, Gaius Julius, Aulus
-          Manlius, Publius Sulpicius, Publius Curiatius, Titus Romilius and Spurius Postumius; the last three
-          of them are the envoys of Athens. The ten sit in turn, one day in ten, as judges with the twelve
+          Manlius, Publius Sulpicius, Publius Curiatius, Titus Romilius and Spurius Postumius; Postumius, Manlius and
+          Sulpicius are the envoys who went to Athens. The ten sit in turn, one day in ten, as judges with the twelve
           rods. They behave with striking fairness and unanimity. Before the year is out they publish ten
           tables of laws and ask the whole people to read and amend them.
       - label: "Plebeians on the commission as well"
@@ -802,8 +800,7 @@ chapters:
       membership on condition that the Icilian law on the Aventine and the other sacred laws should stand. The
       ten were elected in the 302nd year from the founding of Rome; they set up ten tables of laws, which the
       centuriate assembly passed, and it was felt that two tables were missing. The second year of the decemvirate
-      added them, and then did not give up power. Cicero and others called these the source of all later Roman
-      law.
+      added them, and then did not give up power. Livy calls the Ten Tables the fountain-head of all public and private law (3.34.6).
     sources: ["Livy 3.31.8-3.34.7", "Livy 3.37.4"]
 
   - id: r509_verginia
@@ -990,7 +987,7 @@ chapters:
     benchmark_provinces: 1
     story: >-
       The truce with Veii has run out, and Rome has declared war. The army has just taken Anxur from the
-      Volsci, after a night attack on the hill above the town. Rome's soldiers are citizens who serve at their
+      Volsci, by a flank attack from the hill above the town. Rome's soldiers are citizens who serve at their
       own expense and go home for the harvest, and Veii, standing on a rock behind strong walls, will not
       fall in a single summer.
 
@@ -1031,8 +1028,7 @@ chapters:
       to the people. The tribunes opposed the tax; the senators contributed first, some of them with
       uncoined bronze in wagons, since there was as yet no silver coinage, and the people followed. In the
       following winter the generals built winter huts at Veii for the first time (Livy 5.2), and the tribunes
-      attacked this as the price of the new pay. In 403 the knights, who had no public horses, offered to serve on
-      their own (5.7).
+      attacked this as the price of the new pay. In a later year the knights who had no public horses offered to serve on their own (5.7).
     sources: ["Livy 4.58.1-4.60.9", "Livy 5.2.1-6", "Livy 5.7.4-9"]
 
   - id: r509_veii
@@ -1091,8 +1087,7 @@ chapters:
       at the council at the Fanum Voltumnae (5.1.3-6). Camillus was named dictator, drove the siege, dug a mine
       into the enemy citadel, vowed a tenth of the spoil to Apollo and invited Juno to Rome. The city was taken and
       plundered, the free inhabitants were sold and the proceeds were the only money applied to public use, which the
-      people resented. The ancient statue of Juno Regina was carried to the Aventine. Livy dates the fall to the
-      year, in the traditional chronology, 396.
+      people resented. The ancient statue of Juno Regina was carried to the Aventine. The traditional date of the fall is 396.
     sources: ["Livy 5.1.1-7", "Livy 5.17.6-5.22.8", "Livy 5.30.8"]
 
   - id: r509_clusium

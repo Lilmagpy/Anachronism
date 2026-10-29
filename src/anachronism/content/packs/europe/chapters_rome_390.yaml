@@ -452,6 +452,15 @@ chapters:
         outcome: >-
           The Gauls are not impressed. In the meantime Rome loses the story its army would have retold for
           generations.
+        deeds: {war_with: [cisalpine_gauls], men: 8000}
+      - label: "Send the Gauls an envoy to buy them off"
+        wealth_bp: -700
+        legitimacy_bp: -400
+        unrest_bp: 200
+        outcome: >-
+          The Gauls take the silver and are back the following year, as the Aequi always were. The army has seen
+          its commander pay for what a single man could have won.
+        deeds: {peace_with: [cisalpine_gauls]}
     history: >-
       Livy (7.25-7.26) tells of the Gauls in Latium and of the combat of Marcus Valerius with the Gaul, with the
       crow that settled on his helmet; Polybius (2.18) says the Gauls retreated by night when the Romans came

@@ -28,7 +28,7 @@ scenarios:
       - "Rulers' ages are approximate; no birth years are recorded."
     civs:
       rome:
-        # Rome in 509: one city and its fields. No coinage (bronze is weighed, Pliny NH 33.43 unverified), no aqueducts, no paved roads.
+        # Rome in 509: one city and its fields. No coinage (Livy 4.60.6: in 406 there was 'as yet no silver coinage' and senators paid in uncoined bronze), no aqueducts, no paved roads.
         # Leaders: Livy 1.60.3-4 names Brutus and Collatinus; Livy 2.2.10-11 has Collatinus resign and P. Valerius elected; Livy 2.6.9 Brutus dies in battle (509).
         disposition: cautious
         navy_bp: 500
