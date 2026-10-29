@@ -16,6 +16,7 @@ extends "res://scripts/urbs/spectacles/base.gd"
 const F := preload("res://scripts/urbs/spectacles/figure.gd")
 const A := preload("res://scripts/urbs/spectacles/animals.gd")
 const M := preload("res://scripts/urbs/spectacles/meshlib.gd")
+const R := preload("res://scripts/urbs/spectacles/rig.gd")
 const Chariot := preload("res://scripts/urbs/spectacles/chariot.gd")
 const Crowd := preload("res://scripts/urbs/crowd.gd")
 const Sacrifice := preload("res://scripts/urbs/spectacles/sacrifice.gd")
@@ -206,21 +207,25 @@ func _build_order(rng: RandomNumberGenerator) -> void:
 
 func _make_litter(kind: String) -> Node3D:
 	var n := Node3D.new()
-	F.box(n, Vector3(2.4, 0.15, 1.5), Vector3(0, 1.15, 0), Color(0.5, 0.36, 0.2))
+	var plist: Array = []
+	var bx := func(key: String, size: Vector3, at: Vector3, col: Color, metal := 0.0) -> void:
+		plist.append(F.rp(key, F.fmesh(func(): return M.box(size)), at, Vector3.ZERO, 5, col, metal))
+	bx.call("l_deck", Vector3(2.4, 0.15, 1.5), Vector3(0, 1.15, 0), Color(0.5, 0.36, 0.2))
 	match kind:
 		"statue":
-			F.box(n, Vector3(0.6, 0.9, 0.5), Vector3(0, 1.7, 0), Color(0.85, 0.82, 0.76))
-			F.box(n, Vector3(0.35, 0.35, 0.35), Vector3(0, 2.35, 0), Color(0.85, 0.82, 0.76))
+			bx.call("l_body", Vector3(0.6, 0.9, 0.5), Vector3(0, 1.7, 0), Color(0.85, 0.82, 0.76))
+			bx.call("l_head", Vector3(0.35, 0.35, 0.35), Vector3(0, 2.35, 0), Color(0.85, 0.82, 0.76))
 		"gold":
 			for i in 5:
-				F.box(n, Vector3(0.6, 0.3, 0.4), Vector3(-0.8 + i * 0.4, 1.4 + (i % 2) * 0.3, 0), Color(0.9, 0.75, 0.2))
+				bx.call("l_ingot", Vector3(0.6, 0.3, 0.4), Vector3(-0.8 + i * 0.4, 1.4 + (i % 2) * 0.3, 0), Color(0.9, 0.75, 0.2), 0.8)
 		"arms":
 			for i in 4:
-				F.box(n, Vector3(0.08, 1.3, 0.5), Vector3(-0.9 + i * 0.6, 1.9, 0), Color(0.6, 0.62, 0.66))
-			F.box(n, Vector3(0.7, 0.9, 0.05), Vector3(0, 1.8, 0.3), Color(0.3, 0.45, 0.6))
+				bx.call("l_spear", Vector3(0.08, 1.3, 0.5), Vector3(-0.9 + i * 0.6, 1.9, 0), Color(0.6, 0.62, 0.66), 0.5)
+			bx.call("l_shield", Vector3(0.7, 0.9, 0.05), Vector3(0, 1.8, 0.3), Color(0.3, 0.45, 0.6))
 		_:
-			F.box(n, Vector3(1.8, 1.3, 0.06), Vector3(0, 1.95, 0), Color(0.7, 0.5, 0.3))
-			F.box(n, Vector3(1.5, 1.0, 0.07), Vector3(0, 1.95, 0), Color(0.35, 0.5, 0.65))
+			bx.call("l_frame", Vector3(1.8, 1.3, 0.06), Vector3(0, 1.95, 0), Color(0.7, 0.5, 0.3))
+			bx.call("l_pic", Vector3(1.5, 1.0, 0.07), Vector3(0, 1.95, 0), Color(0.35, 0.5, 0.65))
+	R.rigid(n, "litter_" + kind, plist)
 	return n
 
 

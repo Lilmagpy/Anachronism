@@ -56,7 +56,7 @@ static func surface(nu: int, nv: int, fn: Callable, orient := 0) -> ArrayMesh:
 
 ## A lathe: profile entries are Vector4(y, radius_x, radius_z, z_offset), bottom to top; the
 ## front of the shape (+z) is at u = 0.5. Closed with poles if the end radii are 0.
-static func lathe(profile: Array, nu := 16, orient := 0) -> ArrayMesh:
+static func lathe(profile: Array, nu := 16, orient := 0, rings_per_seg := 2) -> ArrayMesh:
 	var n := profile.size()
 	var fn := func(u: float, v: float) -> Vector3:
 		var f := v * float(n - 1)
@@ -70,7 +70,7 @@ static func lathe(profile: Array, nu := 16, orient := 0) -> ArrayMesh:
 		var cz := lerpf(a.w, b.w, t)
 		var th := (u - 0.5) * TAU
 		return Vector3(rx * sin(th), y, rz * cos(th) + cz)
-	return surface(nu, (n - 1) * 2, fn, orient)
+	return surface(nu, (n - 1) * rings_per_seg, fn, orient)
 
 
 ## A lathe whose v coordinate is linear in height y (so a texture can be laid by height); the
@@ -182,7 +182,7 @@ static func face_texture(skin: Color, seed_value := 0) -> ImageTexture:
 		return _face_tex[key]
 	var W := 128
 	var H := 128
-	var img := Image.create(W, H, false, Image.FORMAT_RGB8)
+	var img := Image.create(W, H, false, Image.FORMAT_RGBA8)
 	img.fill(skin)
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_value + 17
@@ -231,6 +231,9 @@ static func face_texture(skin: Color, seed_value := 0) -> ImageTexture:
 			# a little stubble shadow on the chin for older faces
 			if (seed_value % 3) == 1 and v < 0.2 and absf(dx) < 0.1:
 				c = c.lerp(dark, 0.18)
+			# alpha = how far this pixel differs from plain skin (the shader mixes it over the skin colour)
+			var dlt := absf(c.r - skin.r) + absf(c.g - skin.g) + absf(c.b - skin.b)
+			c.a = clampf(dlt * 5.0, 0.0, 1.0)
 			img.set_pixel(x, y, c)
 	var tex := ImageTexture.create_from_image(img)
 	_face_tex[key] = tex
@@ -264,4 +267,17 @@ static func merge(parts: Array) -> ArrayMesh:
 	arrays[Mesh.ARRAY_TEX_UV2] = uv2
 	var m := ArrayMesh.new()
 	m.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	return m
+
+
+## An axis-aligned box mesh (cached), as an ArrayMesh so it can be merged.
+static func box(size: Vector3) -> ArrayMesh:
+	var key := "box%.3f,%.3f,%.3f" % [size.x, size.y, size.z]
+	if _cache.has(key):
+		return _cache[key]
+	var bm := BoxMesh.new()
+	bm.size = size
+	var m := ArrayMesh.new()
+	m.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, bm.get_mesh_arrays())
+	_cache[key] = m
 	return m

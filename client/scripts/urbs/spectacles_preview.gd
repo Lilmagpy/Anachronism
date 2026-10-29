@@ -64,6 +64,8 @@ func _initialize() -> void:
 			path = path.replace(".png", "_t%s.png" % ts)
 		get_root().get_viewport().get_texture().get_image().save_png(path)
 		print("PREVIEW saved ", path)
+		if _args.has("perf"):
+			await _perf(sp, kind, ts)
 	quit()
 
 
@@ -130,7 +132,7 @@ func _environment(root: Node3D) -> void:
 	var sun := DirectionalLight3D.new()
 	sun.rotation_degrees = Vector3(-42, 40, 0)
 	sun.light_energy = 1.4
-	sun.shadow_enabled = true
+	sun.shadow_enabled = not _args.has("noshadow")
 	sun.directional_shadow_max_distance = 400.0
 	root.add_child(sun)
 	var env := Environment.new()
@@ -198,3 +200,26 @@ func _figures(root: Node3D) -> void:
 	get_root().get_viewport().get_texture().get_image().save_png(path)
 	print("PREVIEW saved ", path)
 	quit()
+
+
+## --perf: print draw calls, objects, primitives and the frame time for the current view, with
+## and without the spectacle (the stand-in scenery stays), so its own cost can be read off.
+func _perf(sp: Node3D, kind: String, ts: String) -> void:
+	var ri := func(what: int) -> int: return int(RenderingServer.get_rendering_info(what))
+	var sample := func() -> Array:
+		for i in 3:
+			await process_frame
+		var t0 := Time.get_ticks_usec()
+		var n := 12
+		for i in n:
+			await process_frame
+		var ms := float(Time.get_ticks_usec() - t0) / 1000.0 / n
+		return [ri.call(RenderingServer.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME), ri.call(RenderingServer.RENDERING_INFO_TOTAL_OBJECTS_IN_FRAME),
+			ri.call(RenderingServer.RENDERING_INFO_TOTAL_PRIMITIVES_IN_FRAME), ms]
+	var with_sp: Array = await sample.call()
+	sp.visible = false
+	var without: Array = await sample.call()
+	sp.visible = true
+	print("PERF %s t=%s with: draws=%d objects=%d prims=%d frame=%.1fms | scenery only: draws=%d objects=%d prims=%d frame=%.1fms | spectacle: draws=%d objects=%d prims=%d" % [
+		kind, ts, with_sp[0], with_sp[1], with_sp[2], with_sp[3], without[0], without[1], without[2], without[3],
+		with_sp[0] - without[0], with_sp[1] - without[1], with_sp[2] - without[2]])
