@@ -72,3 +72,12 @@ owner's call (logged in D-289).
 - U6 Spectacles: race, munus, Senate, sacrifice, triumph, driven by engine events.
 - U7 The engine's city state and the `city` view; the player's anachronisms appear in the city.
 - U8 Polish: lighting, time of day, crowds, sound; screenshots and a playthrough for the owner.
+
+## After the city: moments (owner's request, 2026-10-29)
+
+Once Urbs is done, every discovery, building and event gets its own cinematic: the game
+flies into the place where it happens and plays it out in full. The idea's breakthrough in
+the workshop; the aqueduct's arches rising span by span over the years; the temple vowed in
+battle, then built, then dedicated; a fire sweeping a district; the Senate's decisive vote;
+a triumph; a battle. Each is built on the Urbs scene and the spectacles, with its own camera
+path, timing and sound, and can be skipped. Planned as U9 after U8. Not started.
