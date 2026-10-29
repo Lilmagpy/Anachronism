@@ -1471,7 +1471,7 @@ monuments:
   sources: ["Livy 4.22.7", "Livy 30.21", "Livy 34.44.5", "Plutarch Sulla 30", "Platner-Ashby s.v. Villa Publica"]
   events:
   - {year: -194, what: "restored and enlarged by the censors (Livy 34.44.5)"}
-  - {year: -82, what: "about 4,000 prisoners from the Colline Gate massacred in the Villa Publica on Sulla's orders (Plut. Sulla 30; Sen. Clem. 1.12.1)"}
+  - {year: -82, what: "about 4,000 prisoners from the Colline Gate massacred in the Villa Publica on Sulla's orders (Plut. Sulla 30)"}
   - {year: -34, what: "probably restored by Fonteius Capito (P&A, from a coin)"}
   notes: "Verified: P&A: the only public building in the Campus Martius proper before the end of the Republic, built 435 (Livy 4.22.7), restored and enlarged in 194 (Livy 34.44.5, verified in the Latin text 'atrium Libertatis et villa publica ab iisdem refecta amplificataque'), probably again in 34 by Fonteius Capito (coin); the Senate met in the temple of Bellona while Sulla had 4000 prisoners killed in the Villa in 82 (Joseph.; Plut. Sulla 30); generals awaiting triumphs and foreign envoys lodged there (Carthaginian envoys of 202: Livy 30.21). Not in Pleiades."
   pleiades: null
@@ -1487,7 +1487,7 @@ monuments:
   location: Campus Martius
   built: {year: -138, certainty: probable, by: "built for D. Iunius Brutus Callaicus, after his Spanish triumph, in 138 BC; architect Hermodorus of Salamis (Nepos ap. Priscian 8.17; Vitr. 3.2.5; Cic. Arch. 27)"}
   sources: ["Cic. Arch. 27", "Valerius Maximus 8.14.2", "Pliny NH 36.26", "Vitruvius 3.2.5", "Platner-Ashby s.v. Mars, Aedes (in circo Flaminio)"]
-  notes: "CORRECTED and dated: this is the temple of Mars in the Circus Flaminius, built for D. Iunius Brutus Callaicus in 138 BC by Hermodorus of Salamis (Nepos ap. Priscian 8.17; P&A), with Accius's verses in the vestibule (Schol. Bob. Cic. Arch. 27; Val. Max. 8.14.2) and a colossal Mars and a Venus by Scopas (Plin. NH 36.26); exact site unknown (south of the Theatre of Pompey, or under S. Nicola ai Cesarini, P&A). A different, older temple of Mars lies outside the Porta Capena on the Via Appia (dedicated 1 June; Livy 6.5.8 dedicated 388?), not this entry. Cic. Arch. 27 mentions the temple and Accius's poem. Pleiades 699284690 is a generic 'Mars, Aedes' point and was not matched."
+  notes: "CORRECTED and dated: this is the temple of Mars in the Circus Flaminius, built for D. Iunius Brutus Callaicus in 138 BC by Hermodorus of Salamis (Nepos ap. Priscian 8.17; P&A), with Accius's verses in the vestibule (Schol. Bob. Cic. Arch. 27; Val. Max. 8.14.2) and a colossal Mars and a Venus by Scopas (Plin. NH 36.26); exact site unknown (south of the Theatre of Pompey, or under S. Nicola ai Cesarini, P&A). A different, older temple of Mars lies outside the Porta Capena on the Via Appia (dedicated 1 June; its foundation date is unknown, perhaps Livy 6.5.8 under 388 per P&A), not this entry. Cic. Arch. 27 mentions the temple and Accius's poem. Pleiades 699284690 is a generic 'Mars, Aedes' point and was not matched."
   pleiades: null
   verified: platner-ashby
 - id: aedes_herculis_musarum
