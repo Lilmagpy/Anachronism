@@ -1016,8 +1016,11 @@ monuments:
   lon: 12.4775
   precision: approx
   location: Campus Martius, near the Largo Argentina
-  built: {year: -107, certainty: probable, by: "L. Minucius Rufus, consul 110, after his Thracian war (Vell. 2.8.3)"}
-  sources: ["Vell. Pat. 2.8.3", "Platner-Ashby s.v. Porticus Minucia Vetus"]
+  built: {year: -106, certainty: probable, by: "M. Minucius Rufus, consul 110, from the spoils of his triumph over the Scordisci (Vell. Pat. 2.8.3); triumph c. 106 (approximate year)"}
+  sources: ["Vell. Pat. 2.8.3", "Pliny NH 35.114", "Cic. Phil. 2.84", "Platner-Ashby s.v. Porticus Minucia"]
+  notes: "CORRECTED: builder is M. Minucius Rufus (consul 110), not L.; Velleius 2.8.3 says 'per eadem tempora clarus eius Minuci qui porticus ... molitus est, ex Scordiscis triumphus fuit' - the portico was built from the proceeds of his triumph over the Scordisci. P&A gives no year; the triumph is c. 106 BC (from the Fasti, not P&A), so -106 is flagged as approximate; the old -107 and 'Thracian war' are unsupported. P&A: the relation of the Vetus to the Frumentaria is very uncertain (they may be separate or parts of one building; Hulsen puts the Frumentaria about 200 m south of the Vetus). Officials set up tribunals in it (Cic. Phil.). Remains at Via dei Calderari 23. Dedication of the Lares Permarini temple 'in porticu Minucia' (Fasti Praenestini) is another pointer to the site. Pleiades 698151983 is the Porticus Minucia complex."
+  pleiades: 698151983
+  verified: platner-ashby+pleiades
 - id: aedes_faunus
   latin: Aedes Fauni
   english: Temple of Faunus
@@ -1027,8 +1030,11 @@ monuments:
   lon: 12.4779
   precision: approx
   location: Tiber Island
-  built: {year: -194, certainty: certain, by: "vowed by the aediles C. Scribonius Curio and Cn. Domitius 196; dedicated 194 (Livy 33.42.10, 34.53.4)"}
-  sources: ["Livy 33.42.10", "Livy 34.53.4", "Platner-Ashby s.v. Faunus, Aedes"]
+  built: {year: -194, certainty: certain, by: "vowed 196 by the aediles Cn. Domitius Ahenobarbus and C. Scribonius Curio, built from fines (Livy 33.42.10); dedicated 194 by Domitius (Livy 34.53.4), on 13 February (Ov. Fast. 2.193)"}
+  sources: ["Livy 33.42.10", "Livy 34.53.4", "Ovid Fasti 2.193-194", "Vitruvius 3.2.3", "Platner-Ashby s.v. Faunus, Aedes"]
+  notes: "Verified: P&A: the only temple of Faunus in Rome, at the north end of the Tiber island (Ov. Fast. 2.193-194), vowed in 196 by the aediles Cn. Domitius Ahenobarbus and C. Scribonius Curio out of fines from three pecuarii (Livy 33.42.10), dedicated two years later by Domitius (Livy 34.53.4) on the Ides (of February); prostyle (Vitr. 3.2.3). Not in Pleiades separately."
+  pleiades: null
+  verified: platner-ashby
 - id: aedes_aesculapii
   latin: Aedes Aesculapii
   english: Temple of Aesculapius
@@ -1038,19 +1044,28 @@ monuments:
   lon: 12.4775
   precision: approx
   location: Tiber Island (modern S. Giovanni Calibita and Fatebenefratelli hospital)
-  built: {year: -291, certainty: probable, by: "Sibylline decree 293 after plague; envoys fetch the snake from Epidaurus 292; vowed by Q. Fabius Gurges, temple traditionally dedicated 291 (Livy Per. 11; Ovid Met. 15.622-744; Val. Max. 1.8.2). Traditional dedication date 1 January 289/291 uncertain."}
-  sources: ["Livy Per. 11", "Livy 10.47.6-7", "Ovid Met. 15.622", "Platner-Ashby s.v. Aesculapius, Aedes"]
+  built: {year: -291, certainty: probable, by: "temple built soon after 291 BC when the serpent of Aesculapius came from Epidaurus (Livy Per. 11; Val. Max. 1.8.2; Ov. Met. 15.622-744); the Sibylline books had ordered the god's cult in 293 (Livy 10.47.6-7)"}
+  sources: ["Livy 10.47.6-7", "Livy Per. 11", "Livy 42.24", "Valerius Maximus 1.8.2", "Ovid Met. 15.622-744", "Varro LL 7.57", "Platner-Ashby s.v. Aesculapius, Aedes"]
+  events:
+  - {year: -170, what: "envoys of Perseus received in the temple, outside the pomerium (Livy 42.24)"}
+  - {year: -62, what: "first temple probably restored about the time of the Pons Fabricius (P&A, conjecture; Varro LL 7.57 'aedes vetere')"}
+  notes: "CORRECTED: 'vowed by Q. Fabius Gurges' is not in P&A or the passages cited (Livy 10.31.9 has Gurges vowing a temple of Venus, not Aesculapius) and was removed. P&A: erected on the island 'soon after 291 BC': plague in 293, Sibylline books consulted (Livy 10.47.6-7: no action that year because the consuls were at war), embassy to Epidaurus in 292, snake brought 291 (Livy Per. 11; Val. Max. 1.8.2; Ov. Met. 15.622-744); the whole island consecrated; dedicated on 1 January (Ov. Fast. 1.291). Ambassadors of Perseus received there in 170 (Livy 42.24). The first temple was rebuilt or restored towards the end of the Republic (Varro LL 7.57 'in Aesculapii aede vetere'), perhaps at the time of the Pons Fabricius (62). Not in Pleiades separately."
+  pleiades: null
+  verified: platner-ashby
 - id: insula_tiberina
   latin: Insula Tiberina
   english: Tiber Island
   type: island
   regio: 14
-  lat: 41.8900
-  lon: 12.4775
+  lat: 41.8907
+  lon: 12.4772
   precision: exact
   location: in the Tiber between the Forum Holitorium and Trastevere
-  built: {year: null, certainty: traditional, by: "legend of the island formed from the harvest of the Tarquins thrown into the river (Livy 2.5.2-4); shaped as a ship in travertine in the 1st c. BC"}
-  sources: ["Livy 2.5.2-4", "Platner-Ashby s.v. Insula Tiberina"]
+  built: {year: null, certainty: traditional, by: "legend: formed from the harvest of the Tarquins thrown into the Tiber (Livy 2.5.2-4); stone ship-shaped embankment c. 70-42 BC, contemporary with the Pons Fabricius and Pons Cestius (P&A)"}
+  sources: ["Livy 2.5.2-4", "Valerius Maximus 1.8.2", "Platner-Ashby s.v. Insula Tiberina"]
+  notes: "P&A: island 269 m long, 67 m wide; the serpent of Aesculapius left the ship and swam ashore (292/291); the island was consecrated as the god's temenos and later had shrines of Jupiter, Faunus, Tiberinus, Semo Sancus; later shaped as a ship with a stone platform and wall, undated but of the same period as the Pons Fabricius (62 BC) and Pons Cestius (70-42 BC). The legend of the island formed from the Tarquins' sown field (Livy 2.5.2-4) was not checked line-by-line. Pleiades 771725842."
+  pleiades: 771725842
+  verified: platner-ashby+pleiades
 # ---------------------------------------------------------------- PALATINE
 - id: aedes_magnae_matris
   latin: Aedes Magnae Matris
@@ -1058,13 +1073,17 @@ monuments:
   type: temple
   regio: 10
   lat: 41.8895
-  lon: 12.4851
+  lon: 12.485
   precision: exact
   location: Palatine, north-west side, near the Scalae Caci
-  built: {year: -191, certainty: certain, by: "stone arrived 204 (Livy 29.10-14); contracted 205; dedicated 10 April 191 by M. Iunius Brutus (Livy 36.36.3-4)"}
+  built: {year: -191, certainty: certain, by: "contracted by the censors M. Livius and C. Claudius in 204 (Livy 29.37.2) after the black stone came from Pessinus in 204; dedicated 191 by the praetor M. Iunius Brutus (Livy 36.36.3-4), on 11 April (P&A)"}
   events:
-  - {year: -111, what: "burned and rebuilt by Q. Caecilius Metellus (Val. Max. 1.8.11)"}
-  sources: ["Livy 29.37.2", "Livy 36.36.3", "Platner-Ashby s.v. Magna Mater, Aedes"]
+  - {year: -111, what: "burned; restored by a Metellus, probably the consul of 110 (Val. Max. 1.8.11)"}
+  sources: ["Livy 29.10-14", "Livy 29.37.2", "Livy 36.36.3-4", "Valerius Maximus 1.8.11", "Platner-Ashby s.v. Magna Mater, Aedes"]
+  form: "prostyle hexastyle Corinthian temple about 33 x 17 m on a concrete podium (this is the Augustan rebuilding of AD 3 per P&A; the republican plan is not known)"
+  notes: "Verified in Livy 29.37.2 (censors M. Livius and C. Claudius let the contract 'aedem Matris Magnae in Palatio faciendam', 204) and Livy 36.36.3-4 (dedicated 'per idem fere tempus', 191, by M. Iunius Brutus; contracted by the censors of 204). P&A gives the dedication day as 11 April 191 (the old 10 April is not supported by P&A; Livy gives no day) and says the temple burned in 111, was restored by a Metellus (probably the consul of 110) (Val. Max. 1.8.11), burned again and was restored by Augustus in AD 3. The dimensions (33.18 x 17.10 m, prostyle hexastyle, Corinthian, podium concrete) belong to the Augustan rebuilding. The stone was kept in the temple of Victory 204-191. Pleiades 192818177."
+  pleiades: 192818177
+  verified: platner-ashby+pleiades
 - id: aedes_victoriae
   latin: Aedes Victoriae
   english: Temple of Victory
@@ -1074,8 +1093,11 @@ monuments:
   lon: 12.4867
   precision: approx
   location: Palatine, west end by the Clivus Victoriae
-  built: {year: -294, certainty: certain, by: "L. Postumius Megellus as curule aedile (Livy 10.33.9)"}
-  sources: ["Livy 10.33.9", "Platner-Ashby s.v. Victoria, Aedes"]
+  built: {year: -294, certainty: certain, by: "built by L. Postumius Megellus as curule aedile from fines; dedicated by him as consul in 294 (Livy 10.33.9), on 1 August (fasti)"}
+  sources: ["Livy 10.33.9", "Livy 29.14.13", "Livy 35.9.6", "Dion. Hal. 1.32.5", "Platner-Ashby s.v. Victoria, Aedes"]
+  notes: "Verified in Livy 10.33.9 (Latin): the consul L. Postumius dedicated, before leaving for the army, the temple of Victory 'quam aedilis curulis ex multaticia pecunia faciendam curaverat' (294). P&A: ascribed by tradition to Evander (Dion. Hal. 1.32.5); dedicated 1 August (Fast. Praen.); the stone of the Magna Mater was kept in it 204-191 (Livy 29.14.13); Cato later built a shrine of Victoria Virgo nearby (Livy 35.9.6); site on the Clivus Victoriae near S. Teodoro; Boni identified it with foundations near the Arch of Titus. Pleiades Clivus Victoriae 668537796 exists but there is no separate temple entry."
+  pleiades: null
+  verified: platner-ashby+pleiades
 - id: aedes_iovis_statoris_palatine
   latin: Aedes Iovis Statoris (Palatine)
   english: Temple of Jupiter Stator (Palatine)
@@ -1085,20 +1107,26 @@ monuments:
   lon: 12.4868
   precision: rough
   location: Palatine, near the Porta Mugonia / Via Sacra
-  built: {year: -294, certainty: traditional, by: "Romulus' vow (Livy 1.12.6); vowed again by M. Atilius Regulus 294 (Livy 10.36.11)"}
-  sources: ["Livy 1.12.6", "Livy 10.36.11", "Platner-Ashby s.v. Iuppiter Stator, Aedes"]
+  built: {year: -294, certainty: probable, by: "Romulus's vow (Livy 1.12.3-6) left only a fanum; the temple was vowed by the consul M. Atilius Regulus in 294 (Livy 10.36.11) and built immediately after (Livy 10.37.15; P&A)"}
+  sources: ["Livy 1.12.3-6", "Livy 10.36.11", "Livy 10.37.15", "Ovid Fasti 6.793", "Platner-Ashby s.v. Iuppiter Stator, Aedes"]
+  notes: "Verified: P&A: Romulus's vow in the Sabine battle (Livy 1.12.3-6) produced no temple ('only a fanum'); in 294 M. Atilius Regulus vowed one in a battle with the Samnites (Livy 10.36.11) and the Senate ordered a temple to be built the same year (Livy 10.37.15), erected immediately (Livy 27.37.7 per P&A); Ovid Fast. 6.793 gives 27 January as dedication day, perhaps of a later restoration. A foundation near the Arch of Titus (later Turris Cartularia) is generally taken to be the Flavian-period temple. Site only approximate (by the Porta Mugonia). Not in Pleiades."
+  pleiades: null
+  verified: platner-ashby
 - id: aedes_apollinis_palatini
   latin: Aedes Apollinis Palatini
   english: Temple of Apollo on the Palatine
   type: temple
   regio: 10
-  lat: 41.8886
-  lon: 12.4872
+  lat: 41.8888
+  lon: 12.4857
   precision: exact
   location: Palatine, next to Octavian's house
   built: {year: -28, certainty: certain, by: "vowed by Octavian 36 after Naulochus; dedicated 9 Oct 28 BC (Dio 49.15.5, 53.1.3; Suet. Aug. 29; Res Gestae 19)"}
   form: "marble temple with porticoes and a library"
-  sources: ["Dio 53.1.3", "Suet. Aug. 29", "Res Gestae 19", "Platner-Ashby s.v. Apollo Palatinus"]
+  sources: ["Dio 49.15.5", "Dio 53.1.3", "Velleius 2.81", "Suetonius Aug. 29", "Res Gestae 19", "Platner-Ashby s.v. Apollo Palatinus, Aedes"]
+  notes: "Verified: P&A: on ground struck by lightning, vowed by Octavian in 36 BC during the war on Sextus Pompeius, dedicated 9 October 28 BC (Vell. 2.81; Dio 49.15.5, 53.1.3; Suet. Aug. 29; Mon. Anc. 4.1 = RG 19.1); white Luna marble; facade Ionic if Richmond is right; the library and portico are Augustan additions; burned 363 AD. Pleiades 257097394 (precise)."
+  pleiades: 257097394
+  verified: platner-ashby+pleiades
 - id: casa_romuli
   latin: Casa Romuli
   english: Hut of Romulus
@@ -1109,7 +1137,12 @@ monuments:
   precision: approx
   location: Palatine, south-west (Germalus)
   built: {year: null, certainty: traditional, by: "preserved hut said to be Romulus' (Dion. Hal. 1.79; Plut. Romulus 20)"}
-  sources: ["Dion. Hal. 1.79", "Plut. Romulus 20", "Platner-Ashby s.v. Casa Romuli"]
+  sources: ["Dion. Hal. 1.79", "Plut. Romulus 20", "Dio 48.43", "Dio 54.29", "Platner-Ashby s.v. Casa Romuli"]
+  events:
+  - {year: -38, what: "hut damaged by fire and restored in the same style (Dio 48.43)"}
+  notes: "Verified: P&A: hut of straw with a thatched roof on the south-west corner of the Palatine near the top of the Scalae Caci, venerated and restored in the same style whenever damaged by fire (Dion. Hal. 1.79; Plut. Rom. 20; Dio 48.43, 54.29); 'no exact identification with any existing remains is possible'; perhaps the tugurium Faustuli; last mentioned in 78 AD. The fires of 38 BC (Dio 48.43) and 12 BC (Dio 54.29) are recorded. Not in Pleiades."
+  pleiades: null
+  verified: platner-ashby
 - id: domus_ciceronis
   latin: Domus M. Tulli Ciceronis
   english: House of Cicero on the Palatine
@@ -1119,11 +1152,14 @@ monuments:
   lon: 12.4860
   precision: rough
   location: Palatine, north-west corner, overlooking the Forum, near the house of Catulus
-  built: {year: -62, certainty: certain, by: "Cicero bought it from M. Licinius Crassus for 3.5 million sesterces in 62 (Cic. Fam. 5.6.2; Plut. Cic. 8; Gell. 12.12.2)"}
+  built: {year: -62, certainty: certain, by: "bought from M. Licinius Crassus for HS 3,500,000 in 62 (Cic. Fam. 5.6.2; Gell. 12.12; Plut. Cic. 8); it had stood on the site of the house of the tribune M. Livius Drusus (P&A)"}
   events:
-  - {year: -58, what: "demolished by Clodius after Cicero's exile; site consecrated to Libertas (Cic. Dom. 100-116; Plut. Cic. 33)"}
-  - {year: -57, what: "rebuilt at public expense after Cicero's return (Cic. Att. 4.2.5)"}
-  sources: ["Cic. Fam. 5.6.2", "Cic. Dom. 100-116", "Plut. Cic. 8", "Platner-Ashby s.v. Domus M. Tulli Ciceronis"]
+  - {year: -58, what: "burned by Clodius after Cicero's exile; Clodius enlarged the Porticus Catuli and set up a shrine of Libertas (Cic. Dom. 62, 100-116; Plut. Cic. 33; Dio 38.17.6)"}
+  - {year: -57, what: "after the recall the site was recovered with damages enough to partially rebuild (Dio 39.11, 39.20; Cic. Att. 4.2.5)"}
+  sources: ["Cic. Fam. 5.6.2", "Cic. Dom. 62", "Cic. Dom. 100-116", "Plut. Cicero 8", "Plut. Cicero 33", "Gellius 12.12", "Dio 39.11", "Platner-Ashby s.v. Domus M. Tulli Ciceronis"]
+  notes: "Verified: P&A: on the north-east side of the Palatine overlooking the Forum (Cic. Dom. 100; Plut. Cic. 8), bought in 62 for HS 3,500,000 from Marcus Crassus (Cic. Fam. 5.6.2; Gell. 12.12); adjoined the Porticus Catuli. CORRECTED: Clodius BURNED it (not 'demolished'), enlarged the portico of Catulus and built a shrine of Libertas (Cic. Dom. 62, 116; App.); after Cicero's recall he recovered the site and damages enough to partially rebuild (Dio 39.11, 39.20; Cic. Att. 4.1.7, 4.2.5, 4.3.2). Later owned by L. Marcius Censorinus (cos. 39) and Statilius Sisenna. Pleiades 233061795 is only a 'related' point at the hill's centre and was not adopted."
+  pleiades: 233061795
+  verified: platner-ashby
 - id: domus_hortensii_augusti
   latin: Domus Hortensii (Domus Augusti)
   english: House of Hortensius, later of Augustus
@@ -1133,8 +1169,11 @@ monuments:
   lon: 12.4850
   precision: approx
   location: Palatine, south-west, over the Scalae Caci
-  built: {year: -50, certainty: probable, by: "Q. Hortensius Hortalus; acquired by Octavian after the 40s (Suet. Aug. 72; Dio 53.16.5)"}
-  sources: ["Suet. Aug. 72", "Platner-Ashby s.v. Domus Augusti"]
+  built: {year: null, certainty: uncertain, by: "originally the house of the orator Q. Hortensius Hortalus (d. 50), later Augustus's residence 'aedes Hortensianae' (Suet. Aug. 72); enlarged after the Apollo temple was built (Dio 49.15.5); the oak crown decreed 13 Jan 27 (Dio 53.16.4)"}
+  sources: ["Suetonius Aug. 5", "Suetonius Aug. 29", "Suetonius Aug. 72", "Dio 49.15.5", "Dio 53.16.4", "Platner-Ashby s.v. Domus Augusti (2)"]
+  notes: "CORRECTED: the old 'built -50 probable, acquired after the 40s (Dio 53.16.5)' was invented. P&A: Augustus lived 'in aedibus modicis Hortensianis' (Suet. Aug. 72); the house was the house of Hortensius, close to the temple of Apollo; a part was struck by lightning and the temple of Apollo erected on the site (Suet. Aug. 29), the Senate voting him a house at public expense (Dio 49.15.5); the oak crown was decreed over the door on 13 Jan 27 (Fasti Praen.; Mon. Anc. 6.13 = RG 34.2; Dio 53.16.4); he also acquired the house of Q. Lutatius Catulus. The house burned in AD 3 (outside range). P&A identifies Hortensius's house with the 'House of Livia' on the Palatine (conjecture, depending on where the temple of Apollo stood); the building Pleiades calls 'House of Augustus' (250568480) is a modern identification. The birthplace 'ad capita bubula' is a different house (Suet. Aug. 5)."
+  pleiades: 250568480
+  verified: platner-ashby+pleiades
 - id: domus_catuli
   latin: Domus Q. Lutatii Catuli
   english: House of Catulus (with Porticus Catuli)
@@ -1144,8 +1183,11 @@ monuments:
   lon: 12.4858
   precision: rough
   location: Palatine, north-west near the Germalus
-  built: {year: -101, certainty: probable, by: "Q. Lutatius Catulus built a porticus on the site of Fulvius Flaccus' house from the spoils of the Cimbri (Cic. Dom. 102; Val. Max. 6.3.1)"}
-  sources: ["Cic. Dom. 102", "Val. Max. 6.3.1", "Platner-Ashby s.v. Porticus Catuli"]
+  built: {year: -101, certainty: probable, by: "Q. Lutatius Catulus after his victory over the Cimbri (101), on the site of the house of M. Fulvius Flaccus (Cic. Dom. 102; Val. Max. 6.3.1; Plin. NH 17.2)"}
+  sources: ["Cic. Dom. 102", "Cic. Dom. 114", "Valerius Maximus 6.3.1", "Pliny NH 17.2", "Varro RR 3.5.12", "Platner-Ashby s.v. Porticus Catuli; Domus Q. Lutatius Catulus"]
+  notes: "Verified: P&A: Q. Lutatius Catulus built an unusually magnificent house (Plin. NH 17.2) after his victory over the Cimbri, on the Palatine near his Porticus, on the site of the house of M. Fulvius Flaccus (destroyed after his death in 121), incorporated by Augustus into his own house about 20 BC (Suet. Gramm. 17; Varro RR 3.5.12; Cic. Dom. 102, 114; Val. Max. 6.3.1). The porticus: after the Cimbrian victory of 101 (P&A), enlarged by Clodius during Cicero's exile, later restored to its original size by Senate decree. Site not exactly known. Not in Pleiades."
+  pleiades: null
+  verified: platner-ashby
 - id: domus_pompeii_carinae
   latin: Domus Pompei in Carinis
   english: House of Pompey on the Carinae
@@ -1155,8 +1197,11 @@ monuments:
   lon: 12.4918
   precision: rough
   location: Carinae, on the Esquiline spur between the Palatine and Esquiline; later of M. Antony
-  built: {year: -62, certainty: probable, by: "Pompey; later passed to Antony (Cic. Phil. 2.68-69)"}
-  sources: ["Cic. Phil. 2.68", "Platner-Ashby s.v. Domus Pompei"]
+  built: {year: null, certainty: uncertain, by: "Pompey's house on the Carinae near the temple of Tellus (Cic. Har. Resp. 49), ornamented with pirate rostra (Cic. Phil. 2.68); building date unknown; passed to Antony after Pompey's death (Dio 48.38)"}
+  sources: ["Cic. Phil. 2.68", "Cic. Har. Resp. 49", "Velleius 2.77", "Appian BC 2.126", "Dio 48.38", "Plut. Pompey 40", "Platner-Ashby s.v. Domus Cn. Pompei"]
+  notes: "CORRECTED: the old 'built -62 probable' had no source. P&A: Pompey's house on the Carinae near the temple of Tellus (Suet. Gramm. 15; App. BC 2.126; Vell. 2.77; Cic. Har. Resp. 49), ornamented with rostra from captured pirate ships (Cic. Phil. 2.68), hence 'domus rostrata'; after his death it passed to Antony (Dio 48.38; Flor. 2.18.4) and later to the imperial family; Plutarch (Pomp. 40) says Pompey built a finer house after his theatre, probably near his Horti on the Pincian slope. Date of construction unknown. Not in Pleiades."
+  pleiades: null
+  verified: platner-ashby
 - id: domus_publica
   latin: Domus Publica
   english: Official residence of the Pontifex Maximus
@@ -1166,8 +1211,11 @@ monuments:
   lon: 12.4881
   precision: approx
   location: Via Sacra, near the Regia
-  built: {year: null, certainty: traditional, by: "by the Regia, rebuilt on the Pontifex Maximus' residence; Julius Caesar lived there from 63 as Pontifex Maximus (Suet. Iul. 46)"}
-  sources: ["Suet. Iul. 46", "Platner-Ashby s.v. Domus Publica"]
+  built: {year: null, certainty: traditional, by: "residence of the Pontifex Maximus beside the Regia and the Vestals' house, of unknown origin; Caesar lived here as Pontifex Maximus from 63 (Suet. Iul. 46)"}
+  sources: ["Suetonius Iul. 46", "Dio 54.27", "Platner-Ashby s.v. Atrium Vestae; Regia"]
+  notes: "P&A (s.v. Atrium Vestae; 'Domus Publica: see Regia and Atrium Vestae'): the Domus Publica seems to have been larger than the Vestals' house, occupying the space between the Sacra Via and the earlier Nova Via, adjoining the republican Atrium Vestae on the east; residence of the Pontifex Maximus (Caesar, Suet. Iul. 46) until Augustus, on becoming Pontifex Maximus in 12 BC, moved to the Palatine (Dio 54.27) and gave the Domus Publica to the Vestals. Date of origin unknown. Not in Pleiades."
+  pleiades: null
+  verified: platner-ashby
 - id: domus_clodii
   latin: Domus P. Clodii
   english: House of Clodius on the Palatine
@@ -1177,8 +1225,11 @@ monuments:
   lon: 12.4880
   precision: rough
   location: Palatine
-  built: {year: null, certainty: uncertain, by: "P. Clodius Pulcher, bought for 14.8 million sesterces (Pliny NH 36.103; Cic. Dom.)"}
-  sources: ["Pliny NH 36.103", "Platner-Ashby s.v. Domus P. Clodii"]
+  built: {year: -61, certainty: uncertain, by: "P. Clodius Pulcher bought a Palatine house (that of Q. Seius, Cic. Dom. 115) and began building on part of Cicero's site after 58; price HS 14,800,000 (Pliny NH 36.103, not checked)"}
+  sources: ["Cic. Dom. 115-116", "Cic. Att. 4.3.3", "Pliny NH 36.103", "Platner-Ashby s.v. Domus (Clodius; Q. Seius Postumus)"]
+  notes: "P&A (s.v. domus, 'Clodius'): the house Clodius intended to build and apparently began on part of the site of Cicero's house and that of his neighbour Q. Seius (Cic. Dom. 115-116); Q. Seius Postumus's Palatine house bought by Clodius after (it was said) Seius was poisoned (Cic. Dom. 115); P. Sulla's Palatine house seized by Clodius in 57 (Cic. Att. 4.3.3). The 14.8 million sesterces price (Plin. NH 36.103) is not in P&A and was not checked against Pliny. Not in Pleiades."
+  pleiades: null
+  verified: platner-ashby
 # ---------------------------------------------------------------- AVENTINE
 - id: aedes_cereris_liberi_liberae
   latin: Aedes Cereris, Liberi, Liberaeque
