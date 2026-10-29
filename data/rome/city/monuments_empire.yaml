@@ -315,7 +315,7 @@ monuments:
   lon: 12.4774
   precision: approx
   location: Between the Theatre of Marcellus and the Circus Flaminius; the propylaeum survives at the church of S. Angelo in Pescheria
-  built: {year: null, certainty: probable, by: "Augustus, in the name of his sister Octavia, after 27 BC (Vitr. 3.2.5), replacing the Porticus Metelli round the temples of Jupiter Stator and Juno (Vell. 1.11; Plin. NH 36.42; Suet. Aug. 29). Dio 49.43 (after 33 BC, from Dalmatian spoils) is a confusion with the Porticus Octavia (Platner-Ashby)"}
+  built: {year: null, not_before: -27, certainty: probable, by: "Augustus, in the name of his sister Octavia, after 27 BC (Vitr. 3.2.5), replacing the Porticus Metelli round the temples of Jupiter Stator and Juno (Vell. 1.11; Plin. NH 36.42; Suet. Aug. 29). Dio 49.43 (after 33 BC, from Dalmatian spoils) is a confusion with the Porticus Octavia (Platner-Ashby)"}
   events:
   - {year: 80, what: "burned in AD 80 (Platner-Ashby); restored later (beyond the evidence read)"}
   form: "rectangular double portico enclosing the temples of Juno and Jupiter Stator, with a library and the Curia Octaviae"
@@ -658,7 +658,7 @@ monuments:
   lon: 12.4905
   precision: rough
   location: Palatine joined to the Esquiline gardens of Maecenas; remains below the Domus Flavia and under the Palatine
-  built: {year: null, certainty: probable, by: "Nero before 64: a palace connecting the Palatine with the Gardens of Maecenas (Tac. Ann. 15.39, read; Suet. Nero 31); burnt in the fire of 64 and replaced by the Domus Aurea"}
+  built: {year: null, not_before: 54, certainty: probable, by: "Nero before 64: a palace connecting the Palatine with the Gardens of Maecenas (Tac. Ann. 15.39, read; Suet. Nero 31); burnt in the fire of 64 and replaced by the Domus Aurea"}
   events:
   - {year: 64, what: "burned when the fire reached the house by which Nero had connected the Palatine with the Gardens of Maecenas (Tac. Ann. 15.39, read)"}
   form: "palace of two stories linking Palatine and Esquiline estates; remains found under the Domus Augustana: a sunk garden with a nymphaeum and two pavilions (Boni); attribution to the Transitoria is likely but not certain (Platner-Ashby)"

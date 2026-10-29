@@ -776,6 +776,7 @@
 "built": {
 "by": "Augustus, in the name of his sister Octavia, after 27 BC (Vitr. 3.2.5), replacing the Porticus Metelli round the temples of Jupiter Stator and Juno (Vell. 1.11; Plin. NH 36.42; Suet. Aug. 29). Dio 49.43 (after 33 BC, from Dalmatian spoils) is a confusion with the Porticus Octavia (Platner-Ashby)",
 "certainty": "probable",
+"not_before": -27,
 "year": null
 },
 "english": "Portico of Octavia",
@@ -1534,6 +1535,7 @@
 "built": {
 "by": "Nero before 64: a palace connecting the Palatine with the Gardens of Maecenas (Tac. Ann. 15.39, read; Suet. Nero 31); burnt in the fire of 64 and replaced by the Domus Aurea",
 "certainty": "probable",
+"not_before": 54,
 "year": null
 },
 "english": "Domus Transitoria (Nero's first palace)",

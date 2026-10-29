@@ -26,7 +26,9 @@ class MonumentBuilt(_Open):
     """When and by whom a monument was built."""
 
     year: int | None = None
-    """Negative = BC; ``None`` if unknown (then it stands from the start)."""
+    """Negative = BC; ``None`` if unknown (then it stands from the start, or `not_before`)."""
+    not_before: int | None = None
+    """A floor from the sources when the year is unknown ("after 27 BC"): stands from here."""
     certainty: str = ""
     by: str = ""
 

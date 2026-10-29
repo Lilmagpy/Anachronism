@@ -60,13 +60,14 @@ def marks_for(monument: Monument, timeline: Iterable[CityTimeline]) -> list[Mark
 def first_year(monument: Monument) -> int | None:
     """The year the monument was finished, if known.
 
-    With no building date but dated notes (a fire, a restoration), it stood by the first of
-    them. Only a monument with no dates at all has always stood.
+    With no building date but a floor from the sources ("after 27 BC"), it stands from
+    the floor. A monument with no dates at all has always stood.
     """
-    if monument.built_year is not None:
-        return monument.built_year
-    noted = [e.year for e in monument.events if e.year is not None]
-    return min(noted) if noted else None
+    if monument.built is None:
+        return None
+    if monument.built.year is not None:
+        return monument.built.year
+    return monument.built.not_before
 
 
 def status_at(marks: list[Mark], year: int, built_known: bool) -> MonumentStatus:
