@@ -932,16 +932,16 @@ monuments:
   lon: 12.4880
   precision: approx
   location: Central Palatine, over the earlier Neronian structures
-  built: {year: 92, certainty: probable, by: "Domitian, architect Rabirius (Martial 7.56, 8.36; Stat. Silv. 4.2)"}
-  form: "official half: peristyle court, triclinium (coenatio Iovis), basilica and aula regia"
-  footprint_m: {length: 130, width: 100}
+  built: {year: 92, certainty: certain, by: "Domitian's architect Rabirius; the existing remains are due to a great restoration completed in AD 92 (Mart. 7.56.2; Mart. 8.36, 8.39 on the lofty pile and the completed triclinium, written c. 93; Stat. Silv. 4.2) (Platner-Ashby)"}
+  form: "the state apartments in the NW half of the Domus Augustiana, entered from the north-west with a lofty facade and colonnade in front (later propped by Hadrianic walls); Suetonius has Domitian line the walks with selenite (Suet. Dom. 14); 'Domus Flavia' is a modern term for Domitian's part (Platner-Ashby)"
   bearing_deg: null
   height_m: null
   model: palace
-  sources: ["Martial 7.56", "Statius Silv. 4.2", "Platner-Ashby s.v. Domus Augustiana"]
-  verified: false
-  pleiades: null
-  notes: "Date 'AD 92' from the Statius poem; the Domus Flavia/Augustana division is modern."
+  sources: ["Mart. 7.56.2", "Mart. 8.36", "Mart. 8.39", "Stat. Silv. 4.2", "Suet. Dom. 14", "Platner-Ashby s.v. Domus Augustiana (read)"]
+  verified: true
+  unverified_fields: [lat, lon, footprint_m, bearing_deg, height_m]
+  pleiades: 564783056
+  notes: "Platner-Ashby does not separate the Flavia and Augustana by size; first-draft footprints removed. Pleiades 564783056 Domus Flavia (41.8888, 12.4866)."
 - id: domus_augustana
   latin: Domus Augustana
   english: Domus Augustana (private wing of Domitian's palace)
@@ -951,16 +951,16 @@ monuments:
   lon: 12.4889
   precision: approx
   location: South-east Palatine, over the Circus Maximus side; two-storey peristyle with a pool in maze form
-  built: {year: 92, certainty: probable, by: "Domitian, architect Rabirius (Martial 7.56)"}
-  form: "private wing on two floors around a large peristyle with an elaborate island pool"
-  footprint_m: {length: 120, width: 90}
+  built: {year: 92, certainty: certain, by: "Domitian, architect Rabirius, finished AD 92 (Mart. 7.56.2; Platner-Ashby s.v. Domus Augustiana)"}
+  form: "the SE half of Domitian's palace of the Palatine; 'Domus Augustiana' (CIL VI 8640, 8647) denoted the whole imperial residence apart from the Domus Tiberiana at any given period; the Villa Mills lies on solid rock over part of it"
   bearing_deg: null
   height_m: null
   model: palace
-  sources: ["Martial 7.56", "Platner-Ashby s.v. Domus Augustiana"]
-  verified: false
+  sources: ["Mart. 7.56.2", "CIL VI 8640", "CIL VI 8647-9", "Platner-Ashby s.v. Domus Augustiana (read)"]
+  verified: true
+  unverified_fields: [lat, lon, footprint_m, bearing_deg, height_m]
   pleiades: null
-  notes: "Footprint a guess; unverified."
+  notes: "First-draft footprint and the island-pool claim are not in Platner-Ashby and are removed. Pleiades 155566866 is titled Paedagogium and 792237246 is an OSM location of Domus Augustana (not retrieved); none adopted."
 - id: stadium_palatinum
   latin: Hippodromus Palatii
   english: Garden Stadium of the Palatine (Hippodromus)
@@ -970,16 +970,17 @@ monuments:
   lon: 12.4894
   precision: approx
   location: South-east of the Domus Augustana, Palatine
-  built: {year: 92, certainty: probable, by: "Domitian (no source read; # unverified), later rebuilt by Theodoric"}
-  form: "elongated garden court with portico, used as a private stadium"
-  footprint_m: {length: 160, width: 48}
+  built: {year: 92, certainty: uncertain, by: "part of Domitian's palace complex; the name hippodromus is as old as Pliny the Younger (Ep. 5.6.19, 40) for a garden shaped like a circus or stadium (Platner-Ashby)"}
+  form: "long narrow garden court shaped like a stadium, 160 m long and 50 m wide, with arcades; white marble path edgings and gutter found (Platner-Ashby)"
+  footprint_m: {length: 160, width: 50}
   bearing_deg: null
   height_m: null
   model: stadium
-  sources: ["Platner-Ashby s.v. Domus Augustiana"]
-  verified: false
-  pleiades: null
-  notes: "Not the Stadium of Domitian in the Campus Martius."
+  sources: ["Plin. Ep. 5.6.19", "Plin. Ep. 5.6.40", "Platner-Ashby s.v. Domus Augustiana (read)"]
+  verified: true
+  unverified_fields: [built, lat, lon, bearing_deg, height_m]
+  pleiades: 132886213
+  notes: "First-draft Suet. Dom. 4 citation removed. Platner-Ashby does not date the stadium (Domitianic palace phase assumed). Pleiades 132886213 Palatine Stadium (41.8876, 12.4875)."
 - id: stadium_domitiani
   latin: Stadium Domitiani
   english: Stadium of Domitian
@@ -989,16 +990,19 @@ monuments:
   lon: 12.4731
   precision: exact
   location: Campus Martius, outline preserved by Piazza Navona
-  built: {year: 86, certainty: probable, by: "Domitian, inaugurated with the Capitoline agon AD 86 (Suet. Dom. 4-5; Dio 67.8; Eus. Chron.)"}
-  form: "athletic stadium, 30,000 seats, arcaded outer wall in travertine"
+  built: {year: 86, certainty: probable, by: "Domitian, for athletic contests (Suet. Dom. 5, read; Eutrop. 7.23; Chron. 146; Jerome a. Abr. 2105); the Capitoline agon was first held in AD 86 (year from other sources, not read)"}
+  form: "stadium with 30,088 loca, seats for about 15,000 spectators (Platner-Ashby, HJ 593); arena about 250 m long; the Piazza Navona preserves almost exactly its shape and size; arcades below the cavea"
   footprint_m: {length: 275, width: 106}
   bearing_deg: 340
   height_m: null
   model: stadium
-  sources: ["Suet. Dom. 4-5", "Dio 67.8", "Platner-Ashby s.v. Stadium Domitiani"]
-  verified: false
-  pleiades: null
-  notes: "Outline well known (Piazza Navona); capacity 30,000 and date AD 86 are from memory."
+  sources: ["Suet. Dom. 5", "Suet. Dom. 4", "Eutrop. 7.23", "Dio 78.25", "Platner-Ashby s.v. Stadium Domitiani (read)"]
+  verified: true
+  events:
+  - {year: 217, what: "used for gladiatorial combats after the Colosseum was struck by lightning in 217 (Dio 78.25) - beyond range"}
+  unverified_fields: [built, footprint_m, bearing_deg]
+  pleiades: 92342486
+  notes: "Capacity corrected from 30,000 to about 15,000 (30,088 loca). Platner-Ashby gives the arena as about 250 m; the 275 x 106 m outer size is the Piazza Navona figure from memory. Pleiades 92342486 Stadium Domitiani (41.8989, 12.4731)."
 - id: odeum_domitiani
   latin: Odeum
   english: Odeum of Domitian
@@ -1008,37 +1012,38 @@ monuments:
   lon: 12.4744
   precision: rough
   location: Campus Martius, west of the Stadium (Palazzo Massimo / Piazza dei Massimi area)
-  built: {year: 86, certainty: probable, by: "Domitian (Platner-Ashby s.v. Odeum; Suet. Dom. 5)"}
+  built: {year: 86, certainty: probable, by: "Domitian (Suet. Dom. 5, read; Eutrop. 7.23; Chron. 146; Jerome a. Abr. 2105)"}
   events:
-  - {year: 100, what: "restored by Trajan, Apollodorus (Platner-Ashby)"}
-  form: "covered concert hall, seating about 10,000"
-  footprint_m: {radius: 53}
+  - {year: 118, what: "restored by Apollodorus in the reign of Trajan (Dio 69.4, as cited in Platner-Ashby)"}
+  form: "building for musical performances in the Campus Martius probably near the Stadium; 10,600 loca, places for about 5,000 spectators (BC 1894, 310-324)"
   bearing_deg: null
   height_m: null
   model: odeum
-  sources: ["Suet. Dom. 5", "Platner-Ashby s.v. Odeum"]
-  verified: false
-  pleiades: null
-  notes: "Placement rough; the Trajanic restoration unverified."
+  sources: ["Suet. Dom. 5", "Eutrop. 7.23", "Dio 69.4", "Amm. Marc. 16.10.14", "Platner-Ashby s.v. Odeum (read)"]
+  verified: true
+  unverified_fields: [built, lat, lon, footprint_m, height_m]
+  pleiades: 219858507
+  notes: "Capacity corrected from 10,000 to about 5,000. The Dio 69.4 restoration is reign-dated, not year-dated (Dio 69.4.1: Hadrian's remark about Apollodorus). Pleiades 219858507 Odeon of Domitian has no coordinates; the position is a guess."
 - id: forum_transitorium
   latin: Forum Transitorium (Forum Nervae)
   english: Forum of Nerva
   type: forum
   regio: 8
-  lat: 41.8935
-  lon: 12.4868
+  lat: 41.8934
+  lon: 12.4867
   precision: exact
   location: Between the Forum of Augustus and the Temple of Peace, along the Argiletum; two columns 'Colonnacce' stand
-  built: {year: 97, certainty: certain, by: "begun by Domitian, completed and dedicated by Nerva AD 97 (Suet. Dom. 5; HA Alex. Sev. 28.6; Martial 1.2)"}
-  form: "long narrow forum with a Temple of Minerva at one end; used as a passage between Subura and the Forum"
-  footprint_m: {length: 120, width: 45}
+  built: {year: 97, certainty: certain, by: "built by Domitian, dedicated by Nerva at the beginning of AD 97 (Suet. Dom. 5, read; Stat. Silv. 4.3.9-10; Cassiod. Chron. 140; Jerome a. Abr. 2105; CIL VI 953)"}
+  form: "very narrow forum transforming the Argiletum, between the Forum Augustum and the Forum Pacis, about 120 m long and 40 m wide, enclosing wall continuing the walls of the neighbouring fora, temple of Minerva at one end; the main thoroughfare between the Subura and the Forum Romanum (hence Transitorium) (Platner-Ashby)"
+  footprint_m: {length: 120, width: 40}
   bearing_deg: 45
   height_m: null
   model: forum
-  sources: ["Suet. Dom. 5", "HA Alex. Sev. 28.6", "Martial 1.2", "Platner-Ashby s.v. Forum Transitorium"]
-  verified: false
-  pleiades: null
-  notes: "Dimensions from memory; unverified."
+  sources: ["Suet. Dom. 5", "Stat. Silv. 4.3.9-10", "Mart. 1.2.8", "CIL VI 953", "HA Alex. Sev. 28.6", "Platner-Ashby s.v. Forum Nervae (read)"]
+  verified: true
+  unverified_fields: [bearing_deg, height_m]
+  pleiades: 984830239
+  notes: "Size read in Platner-Ashby. Pleiades 984830239 Forum of Nerva (41.8934, 12.4867)."
 - id: meta_sudans
   latin: Meta Sudans
   english: Meta Sudans (fountain)
@@ -1048,16 +1053,17 @@ monuments:
   lon: 12.4905
   precision: approx
   location: Between the Palatine and the Colosseum; base partially excavated
-  built: {year: 80, certainty: probable, by: "Titus/Domitian era (Platner-Ashby s.v. Meta Sudans)"}
-  form: "conical brick-and-marble fountain, 17 m high"
+  built: {year: 96, certainty: probable, by: "Domitian, said to have built it in AD 96 (Chron. 146), a date matching the brickwork (AJA 1912, 413) (Platner-Ashby)"}
+  form: "large conical fountain just south-west of the Colosseum, meeting-point of five Augustan regions (I, II, III, IV, X); resembled a goal (meta) of the circus; shown on a coin of Alexander Severus; Seneca Ep. 56.4 uses the name for a fountain at Baiae"
   footprint_m: {radius: 8}
   bearing_deg: null
   height_m: 17
   model: fountain
-  sources: ["Platner-Ashby s.v. Meta Sudans"]
-  verified: false
-  pleiades: null
-  notes: "Date is not secure; here as a compact landmark only."
+  sources: ["Chronogr. a. 354 (Chron. 146)", "Sen. Ep. 56.4", "Platner-Ashby s.v. Meta Sudans (read)"]
+  verified: true
+  unverified_fields: [footprint_m, height_m]
+  pleiades: 419380619
+  notes: "First-draft date 80 corrected to 96 (Platner-Ashby). Size/height (17 m) from memory. Pleiades 419380619 OSM location of Meta Sudans (41.8901, 12.4907)."
 # ================================================================ TRAJAN AND HADRIAN
 - id: forum_traiani
   latin: Forum Traiani
@@ -1068,16 +1074,20 @@ monuments:
   lon: 12.4842
   precision: approx
   location: Between the Capitol/Quirinal saddle and the Forum of Augustus; Via dei Fori Imperiali and the Column
-  built: {year: 112, certainty: certain, by: "Trajan, architect Apollodorus of Damascus (Dio 68.16; 69.4); forum dedicated AD 112, Basilica Ulpia and Column AD 113 (CIL VI 960)"}
-  form: "forum with the equestrian statue of Trajan, the Basilica Ulpia, two libraries and the Column"
-  footprint_m: {length: 300, width: 185}
+  built: {year: 112, certainty: certain, by: "Trajan with the Greek architect Apollodorus, dedicated at least in part about AD 113 (Dio 68.16.3, read; Dio 69.4.1; Aur. Vict. Caes. 13.5 suggests Domitian may have planned or begun it)"}
+  form: "the last, largest and most magnificent imperial forum: space 185 m wide, about 310 m long including the temple precinct; forum court 116 m wide and 95 long enclosed in a marble-faced wall with two hemicycles 45 m deep; double colonnades on three sides; gilded horses and standards on the colonnade roof; bronze equestrian statue of Trajan in the middle; Basilica Ulpia on the NW side; two libraries and the Column behind (Platner-Ashby)"
+  footprint_m: {length: 310, width: 185}
   bearing_deg: 45
   height_m: null
   model: forum
-  sources: ["Dio 68.16", "Dio 69.4", "CIL VI 960", "Platner-Ashby s.v. Forum Traiani"]
-  verified: false
-  pleiades: null
-  notes: "Overall size from memory incl. the exedrae and the Temple of Divus Traianus (added by Hadrian, beyond range)."
+  sources: ["Dio 68.16.3", "Dio 68.29", "Dio 69.4.1", "Aur. Vict. Caes. 13.5", "Gell. 13.25", "Amm. Marc. 16.10.15", "HA Hadr. 19.9", "CIL VI 960", "Platner-Ashby s.v. Forum Traiani (read)"]
+  verified: true
+  events:
+  - {year: 116, what: "the Senate set up an arch for Trajan's Dacian victories at the entrance from the Forum of Augustus, in the year of his death (Dio 68.29)"}
+  - {year: 130, what: "Hadrian built the great temple of Trajan on the NW side of the library (HA Hadr. 19.9; CIL VI 966) - beyond range"}
+  unverified_fields: [bearing_deg, height_m]
+  pleiades: 250091860
+  notes: "Size read in Platner-Ashby. Pleiades 250091860 Forum Traiani (41.8952, 12.4853). The Dio 68.16 / 68.29 references were checked against the Dio text read only in part (book 68 downloaded; passages located by Platner-Ashby quotations)."
 - id: basilica_ulpia
   latin: Basilica Ulpia
   english: Basilica Ulpia
@@ -1087,16 +1097,16 @@ monuments:
   lon: 12.4848
   precision: approx
   location: Northwest of the forum square of Trajan
-  built: {year: 112, certainty: certain, by: "Trajan; dedicated AD 112/113 (CIL VI 960)"}
-  form: "basilica with five aisles, two apses, marble paving; height of nave 37 m"
-  footprint_m: {length: 170, width: 60}
+  built: {year: 112, certainty: probable, by: "Trajan; probably completed in AD 112 (CIL VI 959; Platner-Ashby s.v. Forum Traiani)"}
+  form: "rectangular basilica with apses at each end, floor 1 m above the forum court; great hall with a double ring of 96 columns forming two aisles 5 m wide; nave 25 m wide; total length without the apses about 130 m; ten-column facade on the forum side with quadrigae"
+  footprint_m: {length: 130, width: 60}
   bearing_deg: 135
-  height_m: 37
   model: basilica
-  sources: ["Platner-Ashby s.v. Basilica Ulpia"]
-  verified: false
-  pleiades: null
-  notes: "Dimensions from memory; unverified."
+  sources: ["CIL VI 959", "HA Com. 2.1", "Platner-Ashby s.v. Forum Traiani (read)"]
+  verified: true
+  unverified_fields: [footprint_m, bearing_deg, height_m, lat, lon]
+  pleiades: 629324739
+  notes: "Length (130 m) and nave width (25 m) read; total width (about 60 m) and the 37 m height of the first draft are from memory and unverified (the width is 25 + 2 x 5 + 2 x 5 + outer walls). Pleiades 629324739 Basilica Ulpia (41.8955, 12.4846)."
 - id: columna_traiani
   latin: Columna Traiani
   english: Trajan's Column
@@ -1106,16 +1116,17 @@ monuments:
   lon: 12.4841
   precision: exact
   location: Between the Basilica Ulpia and the two libraries in the Forum of Trajan
-  built: {year: 113, certainty: certain, by: "Senate and People, dedicated 12 May AD 113 (CIL VI 960)"}
-  form: "Doric column with spiral relief frieze of the Dacian wars, 29.8 m high shaft; total height with base and pedestal about 35 m (100 Roman feet)"
+  built: {year: 113, certainty: certain, by: "dedicated 113 (Platner-Ashby; inscription CIL VI 960: Senate and People); Dio 68.16 ascribes it to Trajan himself"}
+  form: "column of Parian marble; shaft and base of 18 blocks 3.70 m in diameter; with capital and plinth 100 Roman feet (29.77 m); with pedestal 38 m (the Notitia says 128.5 feet); surmounted by a gilt bronze statue of Trajan; stood in a small court 24 x 16 m between the Basilica Ulpia and the libraries (Platner-Ashby)"
   footprint_m: {radius: 2.7}
   bearing_deg: null
-  height_m: 35
+  height_m: 38
   model: column
-  sources: ["CIL VI 960", "Platner-Ashby s.v. Columna Traiani"]
-  verified: false
-  pleiades: null
-  notes: "Height from memory."
+  sources: ["CIL VI 960", "Dio 68.16", "Notitia (columnam cochlidem altam pedes CXXVIII semis)", "Platner-Ashby s.v. Forum Traiani (read)"]
+  verified: true
+  unverified_fields: [footprint_m]
+  pleiades: 783489695
+  notes: "First-draft 35 m corrected to 38 m (with pedestal; 29.77 m without). Radius is the shaft diameter 3.70 m halved, plus pedestal approximated. The 12 May dedication date of the first draft is not in Platner-Ashby and is removed. Pleiades 783489695 Column of Trajan (41.8958, 12.4843)."
 - id: mercati_traianei
   latin: Mercatus Traiani
   english: Markets of Trajan
