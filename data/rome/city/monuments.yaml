@@ -1440,7 +1440,10 @@ monuments:
   precision: rough
   location: Tiber floodplain north of the Capitol, in the river bend
   built: {year: -509, certainty: traditional, by: "land of the Tarquins confiscated and consecrated to Mars (Livy 2.5.2)"}
-  sources: ["Livy 2.5.2", "Platner-Ashby s.v. Campus Martius"]
+  sources: ["Livy 2.5.2", "Livy 3.54", "Dion. Hal. 5.13", "Platner-Ashby s.v. Campus Martius"]
+  notes: "Verified: P&A: the plain between the Capitoline, Quirinal and Pincian slopes and the Tiber, about 250 ha, 10-15 m above sea level in antiquity and 3-8 m above the Tiber, so often flooded; the south part was Prata Flaminia (Livy 3.54, 3.63). By one tradition the land of the Tarquins, after their expulsion state land consecrated to Mars (Livy 2.5.2). Under Augustus the name was restricted to the part of Region IX west of the Via Lata. Pleiades 422863 is a 'related' (centroid) point."
+  pleiades: 422863
+  verified: platner-ashby+pleiades
 - id: ara_martis
   latin: Ara Martis
   english: Altar of Mars
@@ -1451,7 +1454,10 @@ monuments:
   precision: rough
   location: Campus Martius
   built: {year: null, certainty: traditional, by: "site of the census muster (Livy 1.44.1)"}
-  sources: ["Livy 1.44.1", "Platner-Ashby s.v. Ara Martis"]
+  sources: ["Livy 1.44.1", "Livy 35.10.12", "Livy 40.45.8", "Platner-Ashby s.v. Mars, Ara"]
+  notes: "P&A (Mars, Ara; read via the Aedes Martis page): ancient altar in the Campus Martius where the censors sat on curule chairs for the census (Livy 40.45.8, 179 BC); a portico from the Porta Fontinalis to the altar was built in 193 by the aediles Lepidus and Paullus (Livy 35.10.12, verified in the Latin text); the exact site depends on the Porta Fontinalis, in any case not far north of the Capitol nor far from the Via Lata. Livy 1.44.1 is Servius's census assembly in the Campus Martius (the altar is not named in the text read). Rough. Not in Pleiades."
+  pleiades: null
+  verified: platner-ashby
 - id: villa_publica
   latin: Villa Publica
   english: Villa Publica
@@ -1462,7 +1468,14 @@ monuments:
   precision: rough
   location: Campus Martius, west of the Via Lata
   built: {year: -435, certainty: certain, by: "built for the census; first used by the censors (Livy 4.22.7)"}
-  sources: ["Livy 4.22.7", "Platner-Ashby s.v. Villa Publica"]
+  sources: ["Livy 4.22.7", "Livy 30.21", "Livy 34.44.5", "Plutarch Sulla 30", "Platner-Ashby s.v. Villa Publica"]
+  events:
+  - {year: -194, what: "restored and enlarged by the censors (Livy 34.44.5)"}
+  - {year: -82, what: "about 4,000 prisoners from the Colline Gate massacred in the Villa Publica on Sulla's orders (Plut. Sulla 30; Sen. Clem. 1.12.1)"}
+  - {year: -34, what: "probably restored by Fonteius Capito (P&A, from a coin)"}
+  notes: "Verified: P&A: the only public building in the Campus Martius proper before the end of the Republic, built 435 (Livy 4.22.7), restored and enlarged in 194 (Livy 34.44.5, verified in the Latin text 'atrium Libertatis et villa publica ab iisdem refecta amplificataque'), probably again in 34 by Fonteius Capito (coin); the Senate met in the temple of Bellona while Sulla had 4000 prisoners killed in the Villa in 82 (Joseph.; Plut. Sulla 30); generals awaiting triumphs and foreign envoys lodged there (Carthaginian envoys of 202: Livy 30.21). Not in Pleiades."
+  pleiades: null
+  verified: platner-ashby
 - id: aedes_martis_campus
   latin: Aedes Martis in Campo
   english: Temple of Mars (Campus Martius)
@@ -1472,8 +1485,11 @@ monuments:
   lon: 12.4740
   precision: rough
   location: Campus Martius
-  built: {year: null, certainty: uncertain, by: "an early altar-temple; a later temple of Mars by D. Iunius Brutus Callaicus c. 138 BC (Cic. Arch. 27; Val. Max.8.14.2)"}
-  sources: ["Cic. Arch. 27", "Platner-Ashby s.v. Mars, Aedes"]
+  built: {year: -138, certainty: probable, by: "built for D. Iunius Brutus Callaicus, after his Spanish triumph, in 138 BC; architect Hermodorus of Salamis (Nepos ap. Priscian 8.17; Vitr. 3.2.5; Cic. Arch. 27)"}
+  sources: ["Cic. Arch. 27", "Valerius Maximus 8.14.2", "Pliny NH 36.26", "Vitruvius 3.2.5", "Platner-Ashby s.v. Mars, Aedes (in circo Flaminio)"]
+  notes: "CORRECTED and dated: this is the temple of Mars in the Circus Flaminius, built for D. Iunius Brutus Callaicus in 138 BC by Hermodorus of Salamis (Nepos ap. Priscian 8.17; P&A), with Accius's verses in the vestibule (Schol. Bob. Cic. Arch. 27; Val. Max. 8.14.2) and a colossal Mars and a Venus by Scopas (Plin. NH 36.26); exact site unknown (south of the Theatre of Pompey, or under S. Nicola ai Cesarini, P&A). A different, older temple of Mars lies outside the Porta Capena on the Via Appia (dedicated 1 June; Livy 6.5.8 dedicated 388?), not this entry. Cic. Arch. 27 mentions the temple and Accius's poem. Pleiades 699284690 is a generic 'Mars, Aedes' point and was not matched."
+  pleiades: null
+  verified: platner-ashby
 - id: aedes_herculis_musarum
   latin: Aedes Herculis Musarum
   english: Temple of Hercules of the Muses
@@ -1483,8 +1499,13 @@ monuments:
   lon: 12.4752
   precision: rough
   location: Campus Martius, near the Circus Flaminius
-  built: {year: -187, certainty: probable, by: "M. Fulvius Nobilior from his Ambracian spoils, after the Aetolian war 187 (Cic. Arch. 27; Pliny NH 35.66)"}
-  sources: ["Cic. Arch. 27", "Pliny NH 35.66", "Platner-Ashby s.v. Hercules Musarum, Aedes"]
+  built: {year: -187, certainty: probable, by: "M. Fulvius Nobilior, probably after his triumph in 187, from the spoils of Ambracia (taken 189) (Cic. Arch. 27; Eumenius, Pro restaurandis scholis 7.8); dedicated 30 June (Ov. Fast. 6.797)"}
+  sources: ["Cic. Arch. 27", "Macrobius Sat. 1.12.16", "Pliny NH 35.66", "Suetonius Aug. 29", "Ovid Fasti 6.797", "Platner-Ashby s.v. Hercules Musarum, Aedes"]
+  events:
+  - {year: -29, what: "restored by L. Marcius Philippus, who built the Porticus Philippi round it (Suet. Aug. 29)"}
+  notes: "Verified: P&A: a temple of Hercules and the Muses erected by M. Fulvius Nobilior after the capture of Ambracia in 189, 'probably after his triumph in 187' (Cic. Arch. 27; Eumenius, Pro rest. schol. 7.8); the first annotated Fasti were set up in it (Macrob. Sat. 1.12.16); restored in 29 BC by L. Marcius Philippus who built the Porticus Philippi around it (Suet. Aug. 29); dedication day 30 June (Ov. Fast. 6.797). Pliny NH 35.66 cited for a painting there (Zeuxis' Muses?) not checked. Pleiades 765376678 is a 'related' point near the Porticus Octaviae and was not adopted."
+  pleiades: 765376678
+  verified: platner-ashby
 - id: area_sacra_argentina_a
   latin: Aedes (Area Sacra di Largo Argentina A)
   english: Temple A, Largo Argentina (probably Juno Curritis)
@@ -1494,9 +1515,12 @@ monuments:
   lon: 12.4769
   precision: exact
   location: Campus Martius, Largo di Torre Argentina
-  built: {year: -241, certainty: uncertain, by: "attributed to Q. Lutatius Catulus (consul 241), Falerii; identification with Juno Curritis is modern, uncertain"}
+  built: {year: null, certainty: uncertain, by: "temple A of the Largo Argentina sacred area; identified by modern scholars, without ancient text, as Iuno Curritis; early 3rd-century BC phase on archaeological grounds"}
   materials: [tufa, travertine]
-  sources: ["Platner-Ashby s.v. Iuno Curritis (uncertain)"]
+  sources: ["archaeological identification; no ancient text"]
+  notes: "UNVERIFIED IDENTIFICATION. 'Platner-Ashby s.v. Iuno Curritis' does not exist: P&A (1929) has no article on this, and no ancient text places any of the four Largo Argentina temples. The labels A-D (A: Iuno Curritis, B: Fortuna Huiusce Diei, C: Feronia, D: Lares Permarini or Nymphae) are modern conjectures from the excavations of 1926-32 (and later), and the claim that A was built by Q. Lutatius Catulus (consul 241) after the capture of Falerii is not supported by any text I could read. Only the location (Pleiades 967215409, Largo di Torre Argentina, precise) is checked. The date -241 is therefore treated as a modern guess; the earliest phase of Temple A is conventionally dated to the early 3rd century BC."
+  pleiades: 967215409
+  verified: pleiades
 - id: area_sacra_argentina_b
   latin: Aedes Fortunae Huiusce Diei
   english: Temple of Fortuna Huiusce Diei (Temple B, Largo Argentina)
@@ -1506,9 +1530,12 @@ monuments:
   lon: 12.4770
   precision: exact
   location: Largo di Torre Argentina, round temple
-  built: {year: -101, certainty: probable, by: "vowed by Q. Lutatius Catulus at Vercellae 101 (Plut. Marius 26)"}
+  built: {year: -101, certainty: probable, by: "vowed by Q. Lutatius Catulus on the day of Vercellae (30 June 101), dedicated on an anniversary of the battle (Plut. Mar. 26; Fasti); identification with Temple B is modern"}
   form: "round peripteral temple, tufa and travertine; houses the colossal head of the cult statue (Aedes Fortunae)"
-  sources: ["Plut. Marius 26", "Platner-Ashby s.v. Fortuna Huiusce Diei, Aedes"]
+  sources: ["Plut. Marius 26", "Cic. Leg. 2.28", "Platner-Ashby s.v. Fortuna Huiusce Diei, Aedes"]
+  notes: "P&A: temple of Fortuna Huiusce Diei vowed by Q. Lutatius Catulus on the day of Vercellae (30 June 101), dedicated by him on an anniversary of the battle (Plut. Mar. 26; Fast. Allif. Pinc., CIL I2 217, 219, 323); in campo Martio, but 'the exact site is unknown'. The identification with the round Temple B at Largo Argentina (with the colossal marble head, hence 'Aedes Fortunae') is modern archaeological reasoning (1926-32 excavations), not in P&A. Pleiades 967215409 for the Largo Argentina area."
+  pleiades: 967215409
+  verified: platner-ashby+pleiades
 - id: area_sacra_argentina_c
   latin: Aedes (Argentina C) Feroniae
   english: Temple C, Largo Argentina (Feronia?)
@@ -1518,8 +1545,11 @@ monuments:
   lon: 12.4767
   precision: exact
   location: Largo Argentina
-  built: {year: -290, certainty: uncertain, by: "identified with Feronia, possibly dedicated after the Third Samnite War (Livy 22.1.? Feronia). Archaeological date early 3rd century."}
-  sources: ["Platner-Ashby s.v. Feronia"]
+  built: {year: null, certainty: uncertain, by: "temple C of the Largo Argentina area, conventionally identified (modern) with Feronia (Livy 22.1.18; fasti, 13 November); date c. early 3rd century BC on archaeological grounds"}
+  sources: ["Livy 22.1.18", "Platner-Ashby s.v. Feronia (lucus in Campo Martio)"]
+  notes: "P&A knows a lucus and temple of Feronia in the Campus Martius from an inscription near the Porta Salaria (NS 1905, 15) and the calendar (festival 13 Nov, Fast. Arval.); Livy 22.1.18 (217 BC) mentions gifts to Feronia (P&A). P&A does not locate it at Largo Argentina; the identification of Temple C with Feronia (built c. 290 on archaeological grounds) is modern. The old citation 'Livy 22.1.?' is corrected to 22.1.18. Location only verified (Pleiades 967215409)."
+  pleiades: 967215409
+  verified: pleiades
 - id: area_sacra_argentina_d
   latin: Aedes (Argentina D) Laverna?
   english: Temple D, Largo Argentina (identity unknown)
@@ -1529,8 +1559,11 @@ monuments:
   lon: 12.4767
   precision: exact
   location: Largo Argentina
-  built: {year: -150, certainty: uncertain, by: "2nd-century BC temple of unknown deity; possibly Lares Permarini or Nymphae"}
+  built: {year: null, certainty: uncertain, by: "temple D of the Largo Argentina area; deity unknown, 2nd century BC (modern archaeological dating)"}
   sources: ["archaeological identification; no ancient text"]
+  notes: "UNVERIFIED IDENTIFICATION. Temple D of the Largo Argentina area is of unknown deity and date: no ancient text; the '2nd-century BC; possibly Lares Permarini or Nymphae' is a modern conjecture (the Lares Permarini temple stood 'in porticu Minucia', Fasti Praenestini, vowed 190 and dedicated 179: Livy 40.52.4). Only the location is verified (Pleiades 967215409)."
+  pleiades: 967215409
+  verified: pleiades
 - id: theatrum_pompei
   latin: Theatrum Pompei
   english: Theatre of Pompey
