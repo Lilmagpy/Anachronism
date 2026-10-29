@@ -1,0 +1,353 @@
+# Streets of Rome, 509-27 BC. Format like monuments.yaml (see README.md).
+#
+# Each street is a polyline of [lat, lon] points (WGS84, in the direction given by `direction`).
+# `precision`: exact (identified remains, a few metres), approx (100-300 m), rough (300 m or worse).
+# Every point list was traced by hand from (a) the course described in Platner and Ashby, "A
+# Topographical Dictionary of Ancient Rome" (1929; LacusCurtius, public domain) and (b) the course of
+# the modern streets that P-A says follow the ancient ones (Corso, Via Cavour, Via Nazionale, Via XX
+# Settembre, Via di Marforio, Via Appia Antica...). None is a surveyed line: the best are "approx".
+#
+# Other fields:
+#   kind        street | clivus (hill road) | vicus (street of a neighbourhood) | road (viae outside the walls)
+#   width_m     width of the paved or metalled way between kerbs, metres. Only the Sacra via (5 m,
+#               P-A s.v. Sacra Via: the Augustan pavement) is measured in the sources we read; the
+#               rest are design values chosen by the author for the 3D city (narrow lanes 3-4 m, vici
+#               4 m, main roads 5-7 m) and are flagged `width_source: assumed`.
+#   exists_from year (negative = BC) the street first exists, or null if older than the Republic.
+#   paved_from  year the surface becomes stone (silex = polygonal basalt/lava) paving, or null if the
+#               street stays gravel/beaten earth (glarea) within 509-27 BC. Livy 41.27.5 (174 BC): the
+#               censors Fulvius Flaccus and Postumius Albinus "were the first of all to contract for
+#               paving the streets in the city with silex and for gravelling and edging the roads
+#               outside the city" -> every street inside the Servian walls is paved from 174.
+#   sources     ancient authors and Platner-Ashby entries; entries without an online article are
+#               marked "# unverified" (LacusCurtius has no separate article for them).
+streets:
+- id: via_sacra
+  latin: Sacra Via
+  english: Sacred Way
+  kind: street
+  direction: "from the top of the Velia (Arch of Titus site) to the Forum"
+  points: [[41.8905, 12.4908], [41.8909, 12.4897], [41.8913, 12.4886], [41.8917, 12.4876], [41.8921, 12.4867], [41.8925, 12.4859], [41.8927, 12.4851], [41.8927, 12.4846]]
+  precision: approx
+  width_m: 5.0
+  width_source: "P-A s.v. Sacra Via: Augustan pavement 5 m wide"
+  exists_from: null
+  paved_from: -174
+  sources: ["Platner-Ashby s.v. Sacra Via (read): from the summit of the Velia, where it passed near the temple of Jupiter Stator and the later arch of Titus, down to the east end of the Forum by the Regia; a fornix Fabianus spanned it from 121 BC; Sullan-period pavement found at 11.90-12.50 m a.s.l. near the temple of Caesar, c. 14 m at the 'temple of Romulus', c. 27 m at the Clivus Palatinus", "Cic. pro Planc. 17", "Hor. Sat. 1.9.1", "Livy 41.27.5 (paving of the city streets, 174 BC)"]
+  notes: "P-A: the 'Sacra via' of the sources is only the stretch from the Velia to the Regia (the common but wrong extension to the Colosseum and across the Forum to the Capitol is modern usage); the line shown continues to the Forum floor at the east end of the Basilica Aemilia. The bend north of the later temple of Divus Iulius is the Augustan line (after 36 BC); before that the street ran straighter to the Regia and Vesta. Nero changed the line east of the arch of Titus (outside our period)."
+- id: clivus_capitolinus
+  latin: Clivus Capitolinus
+  english: Capitoline Hill road
+  kind: clivus
+  direction: "from the west corner of the Forum, past the temple of Saturn, up to the Asylum / Capitol"
+  points: [[41.8926, 12.4852], [41.8928, 12.4845], [41.8927, 12.4839], [41.8930, 12.4834], [41.8934, 12.4831], [41.8938, 12.4834], [41.8940, 12.4839]]
+  precision: approx
+  width_m: 5.0
+  width_source: assumed
+  exists_from: null
+  paved_from: -174
+  sources: ["Platner-Ashby s.v. Clivus Capitolinus (read): a path continuing the Sacra via, made a cart road at the end of the regal period; paved in 174 BC by the censors Fulvius Flaccus and Postumius Albinus; starts near the corner of the Basilica Iulia, skirts the north front and west side of the temple of Saturn, ascends to the Asylum with a gradient of about 1:8", "Livy 41.27.7 (paved with silex, 174 BC)", "Livy 37.3 (Scipio's arch at the top, 190 BC)", "Cic. pro Mil. 64 (houses on the clivus)"]
+  notes: "Upper course lost (P-A: no trace of the upper part or the branch to the Arx); the end point at the Asylum is the line P-A gives, the last turn toward the temple of Jupiter is conjecture."
+- id: clivus_argentarius
+  latin: Clivus Argentarius
+  english: Silversmiths' slope
+  kind: clivus
+  direction: "from the Forum between Curia and Carcer, along the Capitoline slope toward the Campus Martius"
+  points: [[41.8937, 12.4852], [41.8942, 12.4846], [41.8948, 12.4839], [41.8953, 12.4832], [41.8955, 12.4828]]
+  precision: approx
+  width_m: 4.0
+  width_source: assumed
+  exists_from: null
+  paved_from: -174
+  sources: ["Platner-Ashby s.v. Clivus Argentarius (read): the only immediate connection between the Forum and the Campus Martius before the imperial fora; left the Forum between the curia and the carcer and ran along the slope of the Capitol, corresponding to the modern Via di Marforio; in the Republic it seems to have been called Lautumiae", "Platner-Ashby s.v. Vicus Iugarius (read): 'the road which preceded the via Flaminia and the clivus Argentarius'"]
+  notes: "The name Clivus Argentarius is found only in medieval documents (P-A); we use it for the Republican street. Ends at the Porta Fontinalis, where Via Lata begins."
+- id: vicus_tuscus
+  latin: Vicus Tuscus
+  english: Etruscans' Street
+  kind: vicus
+  direction: "from the Forum between the Basilica Iulia and the temple of Castor, south along the west flank of the Palatine to the Forum Boarium"
+  points: [[41.8919, 12.4855], [41.8912, 12.4851], [41.8904, 12.4847], [41.8897, 12.4842], [41.8890, 12.4836], [41.8884, 12.4829], [41.8883, 12.4818]]
+  precision: approx
+  width_m: 4.0
+  width_source: assumed
+  exists_from: null
+  paved_from: -174
+  sources: ["Platner-Ashby s.v. Vicus Tuscus (read): principal artery between the Forum and the Forum Boarium and Circus Maximus; the eastern boundary of the Velabrum; shops of silk, incense, perfume, clothing; pavement of small brick cubes found between the Basilica Iulia and the temple of Castor", "Livy 27.37.15 and 33.26.9 (the route of the procession)", "Dion. Hal. 5.36.4"]
+- id: vicus_iugarius
+  latin: Vicus Iugarius
+  english: Yoke Street
+  kind: vicus
+  direction: "from the Forum between the Basilica Iulia and the temple of Castor, west along the foot of the Capitol to the Porta Carmentalis"
+  points: [[41.8921, 12.4850], [41.8919, 12.4841], [41.8916, 12.4832], [41.8915, 12.4823], [41.8916, 12.4814]]
+  precision: approx
+  width_m: 4.0
+  width_source: assumed
+  exists_from: null
+  paved_from: -174
+  sources: ["Platner-Ashby s.v. Vicus Iugarius (read): led from the Forum, between the Basilica Iulia and the temple of Castor, to the Porta Carmentalis, 'kept close to the southern edge of the Capitol'; before the Augustan period it lay a little further south-east", "Livy 24.27.15; 27.37.14; 35.21.6"]
+  notes: "Part of the original trade route from the north and east to the Tiber crossing below the island (P-A)."
+- id: via_velabrum
+  latin: "Vicus per Velabrum (name not attested)"
+  english: Street through the Velabrum to the Forum Boarium
+  kind: street
+  direction: "from the Vicus Iugarius south through the Velabrum past the later church of S. Giorgio to the Forum Boarium"
+  points: [[41.8917, 12.4838], [41.8908, 12.4835], [41.8899, 12.4832], [41.8891, 12.4829], [41.8886, 12.4824], [41.8884, 12.4816]]
+  precision: rough
+  width_m: 4.0
+  width_source: assumed
+  exists_from: null
+  paved_from: -174
+  sources: ["Platner-Ashby s.v. Velabrum (read): the district lay between the vicus Tuscus on the east and the vicus Iugarius on the west; the dividing line between Velabrum and Forum Boarium passes S. Giorgio in Velabro and the arcus Argentariorum; 'all the traffic between the forum and the pons Sublicius passed through the streets that bounded it'", "Platner-Ashby s.v. Forum Boarium (read)"]
+  notes: "The Velabrum was drained by the Cloaca Maxima; no ancient name or line is attested for a street across it. This is a reconstruction joining the Vicus Iugarius to the Forum Boarium at the Arcus Argentariorum, as the owner asked ('the street through the Velabrum to the Forum Boarium'). Treat as rough."
+- id: argiletum
+  latin: Argiletum
+  english: Argiletum
+  kind: street
+  direction: "from the Forum between Curia and Basilica Aemilia north-east to the Subura"
+  points: [[41.8934, 12.4857], [41.8940, 12.4863], [41.8946, 12.4870], [41.8951, 12.4877], [41.8954, 12.4885]]
+  precision: approx
+  width_m: 5.0
+  width_source: assumed
+  exists_from: null
+  paved_from: -174
+  sources: ["Platner-Ashby s.v. Argiletum (read): the street between the Subura and the Forum, entered between the Curia and the Basilica Aemilia; its lower part, occupied by private houses (Cic. Att. 1.14.7; 12.32.2), later became the Forum Transitorium", "Livy 1.19.2", "Mart. 1.3.1 (booksellers)"]
+- id: subura
+  latin: Subura
+  english: Subura (main street of the valley)
+  kind: street
+  direction: "from the head of the Argiletum east up the Subura valley between Viminal and Oppius (modern Via della Madonna dei Monti / Via Cavour)"
+  points: [[41.8954, 12.4885], [41.8957, 12.4895], [41.8959, 12.4905], [41.8961, 12.4917], [41.8963, 12.4930]]
+  precision: approx
+  width_m: 4.0
+  width_source: assumed
+  exists_from: null
+  paved_from: -174
+  sources: ["Platner-Ashby s.v. Subura (read): the valley between the southern end of the Viminal and the Oppius, connected with the Forum by the Argiletum and continued east between the Oppius and the Cispius by the Clivus Suburanus to the Porta Esquilina; now traversed by Via Cavour and Via dello Statuto", "Mart. 2.17; 12.18.2 (clamosa); Juv. 11.51 (fervens)"]
+- id: clivus_suburanus
+  latin: Clivus Suburanus
+  english: Suburan slope
+  kind: clivus
+  direction: "from the Subura east between the Oppius and the Cispius to the Porta Esquilina"
+  points: [[41.8963, 12.4930], [41.8965, 12.4945], [41.8964, 12.4960], [41.8960, 12.4975], [41.8954, 12.4988], [41.8949, 12.4998]]
+  precision: approx
+  width_m: 4.0
+  width_source: assumed
+  exists_from: null
+  paved_from: -174
+  sources: ["Platner-Ashby s.v. Subura (read): continued eastward 'by the Clivus Suburanus, ending at the Porta Esquilina'", "Platner-Ashby s.v. Regiones Quattuordecim (read): the clivus Suburanus from the porta Esquilina west bounds Regions III and IV", "Platner-Ashby s.v. Via Praenestina (read): the Clivus Suburanus led to the Porta Esquilina"]
+  notes: "No separate P-A article online (# unverified for details); the line follows the modern Via di S. Martino ai Monti / Via di S. Pietro in Vincoli valley as a guess."
+- id: vicus_patricius
+  latin: Vicus Patricius
+  english: Patricians' Street
+  kind: vicus
+  direction: "from the Subura north-east between the Cispius and the Viminal (modern Via Urbana) to the Porta Viminalis"
+  points: [[41.8960, 12.4903], [41.8970, 12.4916], [41.8981, 12.4930], [41.8992, 12.4943], [41.9004, 12.4957], [41.9015, 12.4970], [41.9024, 12.4983]]
+  precision: rough
+  width_m: 4.0
+  width_source: assumed
+  exists_from: null
+  paved_from: -174
+  sources: ["Platner-Ashby s.v. Subura (read): 'a third depression north-east between the Cispius and the Viminal that was marked by the vicus Patricius'", "Platner-Ashby s.v. Regiones Quattuordecim (read): the vicus Patricius from the porta Viminalis to a point near the Subura bounds Region IV", "Via Urbana (S. Pudenziana in vico Patricii) as the modern equivalent: # unverified"]
+- id: vicus_longus
+  latin: Vicus Longus
+  english: Long Street
+  kind: vicus
+  direction: "from the Subura / Argiletum north-east up the valley between Quirinal and Viminal (area of Via Nazionale) to the Alta Semita"
+  points: [[41.8951, 12.4880], [41.8963, 12.4868], [41.8975, 12.4876], [41.8990, 12.4895], [41.9005, 12.4915], [41.9019, 12.4936], [41.9033, 12.4958]]
+  precision: rough
+  width_m: 4.0
+  width_source: assumed
+  exists_from: null
+  paved_from: -174
+  sources: ["Platner-Ashby s.v. Vicus Iugarius (read): the via Salaria, the vicus Longus, the clivus Insteius and the Argiletum formed one of the routes from the north-east to the Tiber crossing", "Platner-Ashby s.v. Subura (read): a depression extended from the Subura northward between the Viminal and the Quirinal"]
+  notes: "No separate P-A article online. The owner's brief places it in the Via Nazionale area; the real line is disputed and the points are a conjectural valley road. Treat as rough."
+- id: alta_semita
+  latin: Alta Semita
+  english: High Path
+  kind: street
+  direction: "north-east along the ridge of the Quirinal (modern Via del Quirinale, Via XX Settembre) to the Porta Collina"
+  points: [[41.8991, 12.4860], [41.8996, 12.4872], [41.9004, 12.4893], [41.9017, 12.4917], [41.9030, 12.4940], [41.9044, 12.4952], [41.9056, 12.4962]]
+  precision: approx
+  width_m: 5.0
+  width_source: assumed
+  exists_from: null
+  paved_from: -174
+  sources: ["Platner-Ashby s.v. Alta Semita (read): the principal street of Region VI, ran north-east along the ridge of the Quirinal to the porta Collina, corresponding with the modern Via del Quirinale and Via Venti Settembre; ancient pavement 1.83 m below the present level; the north-east part probably called Vicus portae Collinae", "Platner-Ashby s.v. Regiones Quattuordecim (read)"]
+- id: nova_via
+  latin: Nova Via
+  english: New Way
+  kind: street
+  direction: "from the Sacra via at the north-east corner of the Palatine, along the north slope of the hill to the Velabrum"
+  points: [[41.8906, 12.4900], [41.8908, 12.4889], [41.8910, 12.4878], [41.8911, 12.4867], [41.8909, 12.4858], [41.8903, 12.4852], [41.8898, 12.4848]]
+  precision: approx
+  width_m: 4.0
+  width_source: assumed
+  exists_from: null
+  paved_from: -174
+  sources: ["Platner-Ashby s.v. Nova Via (read): began near the temple of Jupiter Stator, ran along the north slope of the Palatine between the aedes Vestae and the lucus Vestae (Cic. Div. 1.101) to the north-west corner and the Velabrum (Varro LL 6.24; 5.43); excavated pavement at 23.40 m above sea level behind the atrium Vestae and 32.30 m at the Clivus Palatinus", "Livy 1.41.4", "Varro LL 6.59"]
+  notes: "P-A: the original road may have lain a little north of the excavated imperial line."
+- id: clivus_palatinus
+  latin: Clivus Palatinus
+  english: Palatine slope
+  kind: clivus
+  direction: "from the Sacra via near the arch of Titus up to the Porta Mugonia and the Palatine"
+  points: [[41.8903, 12.4903], [41.8897, 12.4899], [41.8892, 12.4894], [41.8888, 12.4888]]
+  precision: rough
+  width_m: 4.0
+  width_source: assumed
+  exists_from: null
+  paved_from: -174
+  sources: ["Platner-Ashby s.v. Sacra Via (read): the so-called clivus Palatinus branched off south from the Sacra via near the arch of Titus and ascended the Palatine at the porta Mugonia; junction at about 27.6 m above sea level", "Platner-Ashby s.v. Nova Via (read)"]
+  notes: "No separate P-A article online (# unverified); P-A calls it 'so-called'. Short stub only."
+- id: via_lata
+  latin: Via Lata (Via Flaminia inside the walls)
+  english: Broad Way (Flaminian Way in the city)
+  kind: road
+  direction: "from the Porta Fontinalis on the east slope of the Capitol north across the Campus Martius (modern Via del Corso) to the Porta Flaminia site; then on to the Pons Mulvius"
+  points: [[41.8955, 12.4828], [41.8960, 12.4824], [41.8985, 12.4810], [41.9007, 12.4800], [41.9040, 12.4787], [41.9070, 12.4776], [41.9092, 12.4768], [41.9108, 12.4763], [41.9150, 12.4745], [41.9200, 12.4728], [41.9270, 12.4710], [41.9347, 12.4693]]
+  precision: approx
+  width_m: 7.0
+  width_source: assumed
+  exists_from: -220
+  paved_from: -174
+  sources: ["Platner-Ashby s.v. Via Flaminia (read): built 220 BC by the censor C. Flaminius (Livy Per. 20); starts from a gate of the Servian wall on the east slope of the Capitol; ran across the Campus Martius 'in an absolutely straight line to the pons Mulvius'; 'the modern Corso coincides absolutely with the ancient line'", "Platner-Ashby s.v. Via Lata: the name for the intramural part is attested only from the 4th c. AD", "Livy Per. 20"]
+  notes: "Inside the Aurelian walls (to about 41.9108) the points follow the modern Corso (P-A: coincides absolutely) so are approx; beyond Porta Flaminia they are rough. Before 220 BC the Prata Flaminia and Campus were open ground with only tracks. Before it was paved the Via Flaminia outside the city was gravelled; inside the city paved from 174 BC (Livy 41.27.5)."
+- id: via_flumentana
+  latin: "Road from the Campus Martius through the Porta Carmentalis (name not attested)"
+  english: Road along the Tiber side of the Capitol to the Forum Boarium and Porta Trigemina
+  kind: road
+  direction: "from the Campus Martius south between the Capitol and the river, through the Porta Carmentalis and Porta Flumentana, to the Porta Trigemina"
+  points: [[41.8962, 12.4776], [41.8945, 12.4789], [41.8929, 12.4801], [41.8917, 12.4809], [41.8906, 12.4807], [41.8895, 12.4806], [41.8884, 12.4802], [41.8875, 12.4796]]
+  precision: rough
+  width_m: 5.0
+  width_source: assumed
+  exists_from: null
+  paved_from: -174
+  sources: ["Platner-Ashby s.v. Forum Boarium (read): 'the road which ran from the campus Martius between the Capitol and the river, passing through the porta Carmentalis and the porta Flumentana, and on to the porta Trigemina'", "Platner-Ashby s.v. Vicus Iugarius (read)"]
+- id: clivus_publicius
+  latin: Clivus Publicius
+  english: Publicius' slope
+  kind: clivus
+  direction: "from the valley of the Circus Maximus up the Aventine"
+  points: [[41.8868, 12.4826], [41.8860, 12.4816], [41.8853, 12.4807], [41.8847, 12.4799]]
+  precision: rough
+  width_m: 4.0
+  width_source: assumed
+  exists_from: -238
+  paved_from: -174
+  sources: ["Platner-Ashby s.v. Forum Boarium (read): mentions 'the clivus Publicius descending from the' Aventine to the road along the valley of the Circus Maximus", "Ovid Fasti 5.275-294 (the aediles L. and M. Publicius Malleolus built it from fines, 238 BC): # unverified, from memory; Livy 41.27.5 for paving"]
+  notes: "No separate P-A article online (# unverified). The date 238 BC rests on the Publicii's aedileship as I recall it from Ovid and Varro; treat as probable."
+- id: via_appia
+  latin: Via Appia
+  english: Appian Way
+  kind: road
+  direction: "from the Porta Capena south-east (modern Via di Porta S. Sebastiano, then the Via Appia Antica)"
+  points: [[41.8838, 12.4905], [41.8812, 12.4930], [41.8780, 12.4962], [41.8745, 12.5005], [41.8700, 12.5052], [41.8650, 12.5095], [41.8607, 12.5131], [41.8590, 12.5165], [41.8568, 12.5222], [41.8520, 12.5280], [41.8460, 12.5333]]
+  precision: approx
+  width_m: 4.2
+  width_source: assumed
+  exists_from: -312
+  paved_from: -293
+  sources: ["Platner-Ashby s.v. Via Appia (read): built 312 BC by the censor Appius Claudius Caecus (Livy 9.29); issued from the Porta Capena; 'the original road was only gravelled'; in 296 a footpath saxo quadrato from the gate to the templum Martis (Livy 10.23.12); three years later the whole road paved with silex from the temple to Bovillae (Livy 10.47.4); in 189 the first mile from the gate to the temple (Livy 38.28.3)", "Livy 10.47.4 (read, Latin Library): via a Martis silice ad Bovillas perstrata est", "Livy 38.28.3 (read): uiam silice sternendam a porta Capena ad Martis locauerunt"]
+  notes: "paved_from -293 is the date for the stretch from the temple of Mars (about the 1st mile) to Bovillae; the first mile out of the Porta Capena (which is the part inside our map near the gate) was paved in 189 BC. Fill and streets scripts treat 189 as the pavement year for points within 1.5 km of the gate. Beyond about 1.5 km the points are rough."
+- id: via_latina
+  latin: Via Latina
+  english: Latin Way
+  kind: road
+  direction: "branches left from the Via Appia about 830 m beyond the Porta Capena, through the later Porta Latina, south-east"
+  points: [[41.8782, 12.4975], [41.8745, 12.5030], [41.8723, 12.5068], [41.8680, 12.5135], [41.8620, 12.5225], [41.8560, 12.5340], [41.8495, 12.5460], [41.8420, 12.5580]]
+  precision: rough
+  width_m: 4.2
+  width_source: assumed
+  exists_from: -334
+  paved_from: null
+  sources: ["Platner-Ashby s.v. Via Latina (read): branched off the Appia 830 m from the porta Capena and 500 m further passed the Porta Latina; an artificial military highway, probably built after 389 BC and in existence as far as Cales by 334 (Livy 10.36)", "Livy 10.36"]
+  notes: "Not attested as paved within 509-27 BC in the sources we read; shown as gravel. exists_from -334 is the latest safe 'it is there' date (P-A: 'at least as early as 334')."
+- id: via_ostiensis
+  latin: Via Ostiensis
+  english: Ostian Way
+  kind: road
+  direction: "from the Porta Trigemina along the north-west and south-west sides of the Aventine, then south (modern Via Marmorata, Via Ostiense)"
+  points: [[41.8875, 12.4795], [41.8856, 12.4784], [41.8825, 12.4774], [41.8795, 12.4785], [41.8764, 12.4807], [41.8700, 12.4800], [41.8640, 12.4782], [41.8587, 12.4764], [41.8480, 12.4720]]
+  precision: approx
+  width_m: 4.5
+  width_source: assumed
+  exists_from: null
+  paved_from: null
+  sources: ["Platner-Ashby s.v. Via Ostiensis (read): the road from the Porta Trigemina 'kept under the north-west and south-west sides of the Aventine', joined by branches from the Porta Lavernalis and Porta Raudusculana a little beyond the tomb of Cestius; then due south; 14 miles to Ostia; archaic milestone set up by the aediles", "Livy 41.27.5 (the Emporium outside the Porta Trigemina paved with stone, 174 BC)"]
+  notes: "Beyond the tomb of Cestius (41.8760, 12.4812) the points are rough."
+- id: via_salaria
+  latin: Via Salaria
+  english: Salt Way
+  kind: road
+  direction: "north from the Porta Collina (modern Via Salaria begins at the Aurelian Porta Salaria)"
+  points: [[41.9058, 12.4963], [41.9100, 12.4976], [41.9159, 12.4989], [41.9230, 12.5015], [41.9290, 12.5050]]
+  precision: rough
+  width_m: 4.2
+  width_source: assumed
+  exists_from: null
+  paved_from: null
+  sources: ["Platner-Ashby s.v. Via Salaria (read): a very ancient road, by which the Sabines fetched salt from the marshes at the mouth of the Tiber (Festus 326; Strabo 5.3.1); passed through the porta Collina, and the via Nomentana left it immediately outside the gate", "Livy 7.9.6"]
+- id: via_nomentana
+  latin: Via Nomentana
+  english: Nomentan Way
+  kind: road
+  direction: "from just outside the Porta Collina north-east (Via Ficulensis) to the later Porta Nomentana and Nomentum"
+  points: [[41.9058, 12.4963], [41.9078, 12.5015], [41.9098, 12.5068], [41.9140, 12.5130], [41.9180, 12.5190]]
+  precision: rough
+  width_m: 4.2
+  width_source: assumed
+  exists_from: null
+  paved_from: null
+  sources: ["Platner-Ashby s.v. Via Nomentana (read): diverged immediately outside the porta Collina from the via Salaria; originally led to Ficulea (Livy 3.52, via Ficulensis), then prolonged to Nomentum, 14 miles; a road of purely local importance"]
+- id: via_tiburtina
+  latin: Via Tiburtina
+  english: Tiburtine Way
+  kind: road
+  direction: "from the Porta Esquilina east-north-east to Tibur"
+  points: [[41.8947, 12.4998], [41.8953, 12.5040], [41.8958, 12.5090], [41.8960, 12.5150], [41.8993, 12.5195], [41.9040, 12.5300], [41.9110, 12.5440], [41.9170, 12.5565]]
+  precision: rough
+  width_m: 4.2
+  width_source: assumed
+  exists_from: null
+  paved_from: null
+  sources: ["Platner-Ashby s.v. Via Tiburtina (read): 'probably left the city by the porta Esquilina of the Servian wall' (other theories use the Porta Viminalis); 20 miles to Tibur, becoming the Via Valeria beyond"]
+  notes: "P-A hedges on the start; the Esquilina start is chosen."
+- id: via_praenestina
+  latin: Via Praenestina (Via Gabina)
+  english: Praenestine Way
+  kind: road
+  direction: "from the Porta Esquilina east to the Porta Praenestina (Porta Maggiore) and on to Gabii and Praeneste"
+  points: [[41.8949, 12.4998], [41.8948, 12.5020], [41.8944, 12.5042], [41.8928, 12.5095], [41.8905, 12.5158], [41.8905, 12.5250], [41.8892, 12.5385], [41.8880, 12.5520]]
+  precision: rough
+  width_m: 4.2
+  width_source: assumed
+  exists_from: null
+  paved_from: null
+  sources: ["Platner-Ashby s.v. Via Praenestina (read): began at the porta Esquilina (to which the Clivus Suburanus led) and separated from the via Labicana just before the Porta Praenestina; pavement and the 'Casa Tonda' found at Piazza Vittorio Emanuele; originally the Via Gabina to Gabii, then prolonged to Praeneste (25 miles)"]
+  notes: "The intramural stretch (Porta Esquilina to the Aurelian Porta Praenestina) is shared with the Via Labicana: P-A s.v. Via Labicana says the intramural road from the Porta Esquilina 'should really bear the same name'. It is drawn once, here."
+- id: via_labicana
+  latin: Via Labicana
+  english: Labican Way
+  kind: road
+  direction: "from the Porta Praenestina junction south-east to Labici"
+  points: [[41.8905, 12.5158], [41.8878, 12.5262], [41.8840, 12.5392], [41.8800, 12.5530]]
+  precision: rough
+  width_m: 4.2
+  width_source: assumed
+  exists_from: null
+  paved_from: null
+  sources: ["Platner-Ashby s.v. Via Labicana (read): diverged to the right from the via Praenestina just inside the porta Praenestina of the Aurelian wall; the first part may have belonged to the original route to Tusculum; ran to Labici, 15 miles"]
+- id: via_aurelia
+  latin: Via Aurelia (vetus)
+  english: Aurelian Way
+  kind: road
+  direction: "from the pons Aemilius across Trastevere and up the Janiculum, then west"
+  points: [[41.8879, 12.4789], [41.8884, 12.4750], [41.8886, 12.4715], [41.8895, 12.4685], [41.8908, 12.4663], [41.8921, 12.4645], [41.8922, 12.4600], [41.8935, 12.4525]]
+  precision: rough
+  width_m: 4.2
+  width_source: assumed
+  exists_from: -241
+  paved_from: null
+  sources: ["Platner-Ashby s.v. Via Aurelia (read): 'the road which led from the pons Aemilius across the low ground on the right bank of the Tiber (two arches of a viaduct found near S. Crisogono) up to the Janiculum, where it passed through the Aurelian wall by the Porta Aurelia'", "date of the road (a consul Aurelius Cotta, c. 241 BC): # unverified, not in the P-A article we read"]
+  notes: "The pons Aemilius was built 179/142 BC (see monuments.yaml); before the bridge the Trastevere road started at the Pons Sublicius. The points use the later bridge."

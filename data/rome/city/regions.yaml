@@ -1,0 +1,384 @@
+# Regions of Rome: the 14 Augustan regiones (7 BC), the 4 Servian regions before them, and the
+# `districts` that give each part of the city its character for the 3D fill (fill.gd).
+# Polygons are [lat, lon] lists, closed implicitly, hand-drawn and ROUGH: Platner and Ashby say that
+# the Augustan outer boundaries cannot be drawn exactly (they were extended during the next three
+# centuries) and that the inner boundaries of the Servian regions cannot be drawn with exactness.
+# Boundaries follow P-A's verbal description (Regiones Quattuordecim, read on LacusCurtius) and the
+# modern landmarks named in it. They are good to a couple of hundred metres at best.
+# The Augustan regions are dated 7 BC (Suet. Aug. 30; Cass. Dio 55.8, cited by P-A), i.e. inside the
+# game's range (509-27 BC) only as "the city that the regions were later laid over"; before 7 BC the
+# four Servian regions applied. The 3D fill uses the 14 only as a spatial index of the city's
+# later sub-divisions; its character comes from the `districts` below.
+regiones_augustae:
+- id: reg_01
+  number: 1
+  latin: Porta Capena
+  polygon: [[41.8897, 12.4912], [41.8870, 12.4915], [41.8840, 12.4893], [41.8800, 12.4900], [41.8740, 12.4945], [41.8680, 12.5010], [41.8610, 12.5090], [41.8560, 12.5170], [41.8545, 12.5215], [41.8610, 12.5170], [41.8700, 12.5075], [41.8770, 12.5000], [41.8830, 12.4950], [41.8880, 12.4935]]
+  precision: rough
+  text: "An irregular strip from the east corner of the Palatine south past the Porta Capena, bounded on the west by the Palatine and never more than about 150 m wide on average; beyond the Aventine it widened to the Almo, outside the Aurelian wall."
+  sources: ["Platner-Ashby s.v. Regiones Quattuordecim (read): 'I, Porta Capena...'"]
+- id: reg_02
+  number: 2
+  latin: Caelimontium
+  polygon: [[41.8890, 12.4920], [41.8885, 12.4990], [41.8870, 12.5060], [41.8858, 12.5140], [41.8790, 12.5065], [41.8800, 12.5000], [41.8820, 12.4950], [41.8850, 12.4925]]
+  precision: rough
+  text: "Most of the Caelian, bounded by Region I, the Aurelian wall, and the straight street from the Colosseum to the Porta Caelimontana and Porta Asinaria."
+  sources: ["Platner-Ashby s.v. Regiones Quattuordecim (read)"]
+- id: reg_03
+  number: 3
+  latin: Isis et Serapis
+  polygon: [[41.8897, 12.4912], [41.8945, 12.4940], [41.8949, 12.4998], [41.8915, 12.4988], [41.8890, 12.4950]]
+  precision: rough
+  text: "The Colosseum valley and the Oppius, bounded by Region II, the Servian wall, the Clivus Suburanus from the Porta Esquilina west and its prolongation to a point north of the Colosseum, then south to the Meta Sudans. The name comes from temples of Isis and Serapis later built there."
+  sources: ["Platner-Ashby s.v. Regiones Quattuordecim (read)"]
+- id: reg_04
+  number: 4
+  latin: Templum Pacis
+  polygon: [[41.8897, 12.4912], [41.8905, 12.4880], [41.8915, 12.4862], [41.8932, 12.4866], [41.8936, 12.4851], [41.8946, 12.4864], [41.8960, 12.4903], [41.8985, 12.4935], [41.9022, 12.4983], [41.8949, 12.4998], [41.8945, 12.4940]]
+  precision: rough
+  text: "The Sacra via from its beginning to the atrium Vestae, the Subura and the Cispius; bounded by Region III's line, the Servian wall, the vicus Patricius from the Porta Viminalis to near the Subura, and the line between the Fora of Nerva and Vespasian, embracing the northern part of the Forum. (The name Templum Pacis dates from Vespasian.)"
+  sources: ["Platner-Ashby s.v. Regiones Quattuordecim (read)"]
+- id: reg_05
+  number: 5
+  latin: Esquiliae
+  polygon: [[41.8915, 12.4988], [41.8949, 12.4998], [41.9022, 12.4985], [41.9055, 12.5040], [41.9020, 12.5130], [41.8960, 12.5160], [41.8905, 12.5160], [41.8857, 12.5148], [41.8885, 12.5045]]
+  precision: rough
+  text: "The eastern district outside the Servian wall, north of the via Asinaria. In Augustus' time the Campus Viminalis and the ground between the via Tiburtina and the via Salaria lay outside the city and were not in Region V until after Vespasian; the boundary was 300-400 m beyond the later Aurelian wall on the south."
+  sources: ["Platner-Ashby s.v. Regiones Quattuordecim (read)"]
+- id: reg_06
+  number: 6
+  latin: Alta Semita
+  polygon: [[41.8955, 12.4855], [41.8962, 12.4838], [41.8995, 12.4835], [41.9040, 12.4820], [41.9080, 12.4830], [41.9115, 12.4888], [41.9159, 12.4989], [41.9115, 12.5000], [41.9058, 12.4963], [41.9022, 12.4985], [41.8985, 12.4920]]
+  precision: rough
+  text: "The Quirinal from the imperial fora to the Servian wall between the Porta Viminalis and the Porta Collina, west far enough to take in the horti Sallustiani and north beyond the later Aurelian wall; named for the Alta Semita along the ridge."
+  sources: ["Platner-Ashby s.v. Regiones Quattuordecim (read)", "Platner-Ashby s.v. Alta Semita (read)"]
+- id: reg_07
+  number: 7
+  latin: Via Lata
+  polygon: [[41.8957, 12.4828], [41.9005, 12.4803], [41.9108, 12.4766], [41.9115, 12.4888], [41.9080, 12.4830], [41.9040, 12.4820], [41.8995, 12.4835], [41.8962, 12.4838]]
+  precision: rough
+  text: "Named for the southern end of the Via Flaminia (the Corso); lay between the Via Flaminia and the western boundary of Region VI, i.e. the east side of the Corso up the slope of the Pincian."
+  sources: ["Platner-Ashby s.v. Regiones Quattuordecim (read)"]
+- id: reg_08
+  number: 8
+  latin: Forum Romanum vel Magnum
+  polygon: [[41.8957, 12.4830], [41.8962, 12.4858], [41.8947, 12.4866], [41.8936, 12.4866], [41.8915, 12.4864], [41.8902, 12.4850], [41.8892, 12.4830], [41.8895, 12.4808], [41.8920, 12.4806]]
+  precision: rough
+  text: "An irregular region: the Forum (not the whole Sacra via), the (later) imperial fora, the Capitol and the ground south of it, extending to a line drawn north of the Forum Boarium through the Velabrum to the east end of the atrium Vestae."
+  sources: ["Platner-Ashby s.v. Regiones Quattuordecim (read)"]
+- id: reg_09
+  number: 9
+  latin: Circus Flaminius
+  polygon: [[41.8957, 12.4828], [41.9005, 12.4803], [41.9108, 12.4766], [41.9112, 12.4700], [41.9060, 12.4700], [41.8960, 12.4732], [41.8932, 12.4765], [41.8918, 12.4790], [41.8920, 12.4807]]
+  precision: rough
+  text: "All the ground between the Servian wall, the Via Flaminia and the Tiber: the Campus Martius. After Augustus the name Campus Martius was restricted to the part west of the Via Lata; a boundary stone found near the Pantheon shows that in Augustus' time the southern part was more or less built over and the northern part was open meadow."
+  sources: ["Platner-Ashby s.v. Regiones Quattuordecim (read)", "Platner-Ashby s.v. Campus Martius (read)"]
+- id: reg_10
+  number: 10
+  latin: Palatium
+  polygon: [[41.8912, 12.4855], [41.8909, 12.4885], [41.8903, 12.4905], [41.8885, 12.4905], [41.8872, 12.4890], [41.8870, 12.4865], [41.8880, 12.4845], [41.8898, 12.4846]]
+  precision: approx
+  text: "The Palatine within the lines Tacitus gives for the first pomerium."
+  sources: ["Platner-Ashby s.v. Regiones Quattuordecim (read)", "Tac. Ann. 12.24"]
+- id: reg_11
+  number: 11
+  latin: Circus Maximus
+  polygon: [[41.8892, 12.4830], [41.8895, 12.4806], [41.8905, 12.4790], [41.8888, 12.4780], [41.8862, 12.4785], [41.8858, 12.4800], [41.8845, 12.4825], [41.8828, 12.4862], [41.8832, 12.4898], [41.8850, 12.4900], [41.8872, 12.4890], [41.8870, 12.4865], [41.8880, 12.4845], [41.8890, 12.4846]]
+  precision: rough
+  text: "A very irregular region containing the Circus Maximus and the Forum Boarium, bounded by the Tiber and Regions IX, VIII, X, XII and XIII."
+  sources: ["Platner-Ashby s.v. Regiones Quattuordecim (read)"]
+- id: reg_12
+  number: 12
+  latin: Piscina Publica
+  polygon: [[41.8832, 12.4898], [41.8828, 12.4862], [41.8795, 12.4835], [41.8745, 12.4850], [41.8700, 12.4905], [41.8640, 12.4990], [41.8610, 12.5090], [41.8680, 12.5010], [41.8740, 12.4945], [41.8800, 12.4900]]
+  precision: rough
+  text: "The eastern part of the Aventine and the ground toward the Via Appia; named for a former public reservoir. Bounded by the Via Appia and Region I, the Aurelian wall, and the vicus portae Raudusculanae and vicus Piscinae Publicae."
+  sources: ["Platner-Ashby s.v. Regiones Quattuordecim (read)"]
+- id: reg_13
+  number: 13
+  latin: Aventinus
+  polygon: [[41.8858, 12.4800], [41.8862, 12.4787], [41.8830, 12.4778], [41.8770, 12.4768], [41.8700, 12.4728], [41.8660, 12.4770], [41.8680, 12.4860], [41.8700, 12.4905], [41.8745, 12.4850], [41.8795, 12.4835], [41.8828, 12.4862], [41.8845, 12.4825]]
+  precision: rough
+  text: "The Aventine and the district south of it, between the boundaries of Region XII and XI, the Aurelian wall, and the Tiber."
+  sources: ["Platner-Ashby s.v. Regiones Quattuordecim (read)"]
+- id: reg_14
+  number: 14
+  latin: Trans Tiberim
+  polygon: [[41.8700, 12.4720], [41.8770, 12.4752], [41.8830, 12.4762], [41.8885, 12.4772], [41.8925, 12.4748], [41.8960, 12.4712], [41.9060, 12.4682], [41.9070, 12.4600], [41.9030, 12.4530], [41.8950, 12.4500], [41.8860, 12.4520], [41.8780, 12.4600], [41.8700, 12.4680]]
+  precision: rough
+  text: "All the city on the right bank of the Tiber (Trastevere), with the Tiber island; its limits cannot be fixed, but it included much more than the area within the Aurelian wall: south to the temple of Fors Fortuna, north to include the Vatican district."
+  sources: ["Platner-Ashby s.v. Regiones Quattuordecim (read)"]
+
+regiones_servianae:
+- id: serv_suburana
+  number: 1
+  latin: Regio Suburana
+  polygon: [[41.8908, 12.4915], [41.8930, 12.4935], [41.8945, 12.4955], [41.8915, 12.4988], [41.8890, 12.4975], [41.8855, 12.4985], [41.8840, 12.4935], [41.8838, 12.4900], [41.8875, 12.4910]]
+  precision: rough
+  text: "Comprised the Sucusa (Caelian spur), the Ceroliensis (the saddle between the Palatine and the Esquiline, with the Carinae) and the Caelius, by the generally accepted view, which is sharply disputed."
+  sources: ["Platner-Ashby s.v. Regiones Quattuor (read)", "Varro LL 5.45-54"]
+- id: serv_esquilina
+  number: 2
+  latin: Regio Esquilina
+  polygon: [[41.8945, 12.4940], [41.8960, 12.4903], [41.8985, 12.4935], [41.9022, 12.4985], [41.8949, 12.4998]]
+  precision: rough
+  text: "The Oppius and Cispius spurs of the Esquiline."
+  sources: ["Platner-Ashby s.v. Regiones Quattuor (read)"]
+- id: serv_collina
+  number: 3
+  latin: Regio Collina
+  polygon: [[41.8957, 12.4830], [41.8962, 12.4858], [41.8975, 12.4905], [41.8985, 12.4935], [41.9022, 12.4985], [41.9058, 12.4963], [41.8995, 12.4830]]
+  precision: rough
+  text: "The Quirinal and the Viminal."
+  sources: ["Platner-Ashby s.v. Regiones Quattuor (read)"]
+- id: serv_palatina
+  number: 4
+  latin: Regio Palatina
+  polygon: [[41.8915, 12.4850], [41.8912, 12.4890], [41.8908, 12.4912], [41.8885, 12.4905], [41.8872, 12.4885], [41.8875, 12.4850], [41.8895, 12.4838]]
+  precision: rough
+  text: "The Palatium, the Velia and the Cermalus (Germalus). All the area inside the pomerium belonged to the four regions except, apparently, the Capitoline, which was the citadel and religious centre; the Aventine lay outside the pomerium. The division stayed in force until Augustus' reorganisation."
+  sources: ["Platner-Ashby s.v. Regiones Quattuor (read)", "Varro LL 5.45-54"]
+
+# Character of the city, district by district, for fill.gd. A district is a circle (lat, lon,
+# radius_m); where circles overlap the smaller one wins; a point inside none gets `default`.
+#
+# Each district has
+#   max_density    fraction of its building plots that are built when the city is full
+#   saturates_at   city population at which the district reaches max_density; below it the
+#                  density grows as (population / saturates_at) ** 0.7 (population.yaml, central
+#                  estimate, interpolated in log space); core districts fill first
+#   onset          year before which the district is not built at all (open ground, fields, cemetery)
+#   eras           list of {from: year, weights: {...}}: from that year the mix of building types
+#                  is the weights (relative; casa = small single-storey house of wood/mud-brick or
+#                  rubble, domus = atrium house of the well-off, insula = multi-storey tenement,
+#                  workshop = craft and storage, horti = walled garden estate with villa).
+#                  `shops: x` is the chance that a street frontage has tabernae (shop-fronts).
+# The weights are the author's reading of the sources below (design values, not measurements).
+# No fabricated numbers about people: nothing here counts inhabitants.
+districts:
+- id: palatine
+  name: Palatine
+  lat: 41.8892
+  lon: 12.4875
+  radius_m: 230
+  max_density: 0.8
+  saturates_at: 40000
+  onset: -509
+  eras:
+  - {from: -509, weights: {casa: 0.7, domus: 0.3}, shops: 0.0}
+  - {from: -200, weights: {casa: 0.15, domus: 0.8, insula: 0.05}, shops: 0.1}
+  - {from: -100, weights: {domus: 0.92, insula: 0.08}, shops: 0.05}
+  sources: ["topography.yaml (Palatine: the aristocracy's hill in the Late Republic; Platner-Ashby s.v. Palatium)", "Cic. Att. 1.13.6 and Dom. 100-116 (his own house on the Palatine, bought from Crassus 62 BC): # unverified", "Livy 1.7 (Palatine as the oldest settlement)"]
+- id: carinae
+  name: Carinae
+  lat: 41.8935
+  lon: 12.4938
+  radius_m: 190
+  max_density: 0.8
+  saturates_at: 80000
+  onset: -509
+  eras:
+  - {from: -509, weights: {casa: 0.7, domus: 0.3}, shops: 0.0}
+  - {from: -250, weights: {domus: 0.7, casa: 0.1, insula: 0.2}, shops: 0.1}
+  - {from: -100, weights: {domus: 0.75, insula: 0.25}, shops: 0.1}
+  sources: ["Platner-Ashby s.v. Carinae (read): 'during the republic many prominent Romans dwelt here' and Florus 2.18.4 calls it celeberrima pars urbis; Sextus Pompeius' house (Vell. Pat. 2.77); Livy 26.10 (Hannibal's approach, 211)"]
+- id: quirinal
+  name: Quirinal (Alta Semita)
+  lat: 41.9000
+  lon: 12.4885
+  radius_m: 320
+  max_density: 0.7
+  saturates_at: 150000
+  onset: -450
+  eras:
+  - {from: -450, weights: {casa: 0.7, domus: 0.2, insula: 0.1}, shops: 0.1}
+  - {from: -200, weights: {domus: 0.55, insula: 0.35, casa: 0.1}, shops: 0.2}
+  - {from: -100, weights: {domus: 0.6, insula: 0.4}, shops: 0.2}
+  sources: ["Platner-Ashby s.v. Alta Semita (read): the ridge street, Region VI", "Nepos Att. 13.2 (Atticus house on the Quirinal): # unverified", "Platner-Ashby s.v. Quirinalis"]
+- id: subura
+  name: Subura
+  lat: 41.8960
+  lon: 12.4910
+  radius_m: 250
+  max_density: 0.97
+  saturates_at: 120000
+  onset: -509
+  eras:
+  - {from: -509, weights: {casa: 0.85, workshop: 0.15}, shops: 0.3}
+  - {from: -250, weights: {casa: 0.35, insula: 0.45, workshop: 0.2}, shops: 0.6}
+  - {from: -150, weights: {insula: 0.75, workshop: 0.15, domus: 0.1}, shops: 0.8}
+  sources: ["Platner-Ashby s.v. Subura (read): fervens, clamosa, dirty and wet, a resort of provisioners and finery dealers and tradesmen of many sorts (Mart. 5.22.5-9; 7.31; 12.18.2; Juv. 11.51), with some distinguished residents (Caesar lived here, Suet. Iul. 46)", "Vitruvius 2.8.17 (read): the crowd obliged Romans to build upward"]
+- id: viminal
+  name: Viminal
+  lat: 41.9010
+  lon: 12.4950
+  radius_m: 230
+  max_density: 0.85
+  saturates_at: 180000
+  onset: -400
+  eras:
+  - {from: -400, weights: {casa: 0.8, workshop: 0.2}, shops: 0.1}
+  - {from: -200, weights: {insula: 0.5, casa: 0.2, domus: 0.2, workshop: 0.1}, shops: 0.3}
+  sources: ["Platner-Ashby s.v. Regiones Quattuor (read): Collina region = Quirinal and Viminal", "character is the author's inference from the Subura valley next to it: # unverified"]
+- id: esquiline_inner
+  name: Oppius and Cispius
+  lat: 41.8955
+  lon: 12.4965
+  radius_m: 230
+  max_density: 0.9
+  saturates_at: 120000
+  onset: -450
+  eras:
+  - {from: -450, weights: {casa: 0.8, workshop: 0.2}, shops: 0.1}
+  - {from: -220, weights: {insula: 0.5, casa: 0.15, domus: 0.25, workshop: 0.1}, shops: 0.35}
+  sources: ["Platner-Ashby s.v. Regiones Quattuordecim (read): the Cispius belongs to the Subura region; Regiones Quattuor (read): Esquilina = Oppius and Cispius", "character an inference: # unverified"]
+- id: velabrum
+  name: Velabrum
+  lat: 41.8903
+  lon: 12.4833
+  radius_m: 130
+  max_density: 0.95
+  saturates_at: 60000
+  onset: -509
+  eras:
+  - {from: -509, weights: {casa: 0.5, workshop: 0.5}, shops: 0.5}
+  - {from: -220, weights: {insula: 0.45, workshop: 0.35, casa: 0.2}, shops: 0.8}
+  sources: ["Platner-Ashby s.v. Velabrum (read): marshy until drained by the Cloaca Maxima; 'an important centre of industrial and commercial activity, in particular the trade in food-stuffs, oil and wine' (Plaut. Capt. 489; Hor. Sat. 2.3.229; Mart. 11.52.10)"]
+- id: forum_boarium
+  name: Forum Boarium and Emporium
+  lat: 41.8873
+  lon: 12.4800
+  radius_m: 230
+  max_density: 0.9
+  saturates_at: 80000
+  onset: -450
+  eras:
+  - {from: -450, weights: {workshop: 0.5, casa: 0.5}, shops: 0.4}
+  - {from: -218, weights: {insula: 0.4, workshop: 0.45, casa: 0.15}, shops: 0.6}
+  - {from: -174, weights: {insula: 0.35, workshop: 0.55, domus: 0.1}, shops: 0.6}
+  sources: ["Platner-Ashby s.v. Forum Boarium (read): the cattle-market, 'in process of time greatly encroached upon by buildings'", "Livy 21.62.3 (218 BC: an ox went up to the third storey of a building in the Forum Boarium: tertiam contignationem; read)", "Livy 41.27.8 (174 BC: the Emporium outside the Porta Trigemina paved with stone; read)", "Livy 35.21.5 (192 BC: Tiber flood wrecked buildings near the Porta Flumentana; read)"]
+- id: aventine
+  name: Aventine
+  lat: 41.8830
+  lon: 12.4830
+  radius_m: 330
+  max_density: 0.8
+  saturates_at: 200000
+  onset: -456
+  eras:
+  - {from: -456, weights: {casa: 0.85, workshop: 0.15}, shops: 0.1}
+  - {from: -250, weights: {casa: 0.35, insula: 0.45, domus: 0.1, workshop: 0.1}, shops: 0.3}
+  - {from: -120, weights: {insula: 0.65, domus: 0.2, workshop: 0.15}, shops: 0.4}
+  sources: ["Livy 3.31.1 (456 BC: the lex de Aventino publicando, public land of the Aventine allotted to the plebs; read)", "Platner-Ashby s.v. Aventinus (plebeian hill; no online article: # unverified for density)", "topography.yaml (Aventine, Livy 3.50)"]
+- id: transtiberim
+  name: Transtiberim
+  lat: 41.8875
+  lon: 12.4690
+  radius_m: 380
+  max_density: 0.85
+  saturates_at: 250000
+  onset: -400
+  eras:
+  - {from: -400, weights: {casa: 0.7, workshop: 0.3}, shops: 0.15}
+  - {from: -200, weights: {insula: 0.4, casa: 0.2, workshop: 0.4}, shops: 0.4}
+  - {from: -60, weights: {insula: 0.55, workshop: 0.3, domus: 0.1, casa: 0.05}, shops: 0.5}
+  sources: ["Platner-Ashby s.v. Regiones Quattuordecim (read): Region XIV, all the city on the right bank", "tanners, millers, boatmen (Mart. 6.93.4; 1.41.3): # unverified", "Platner-Ashby s.v. Horti Caesaris (read): the horti on the right bank"]
+- id: caelian
+  name: Caelian
+  lat: 41.8860
+  lon: 12.4965
+  radius_m: 290
+  max_density: 0.55
+  saturates_at: 250000
+  onset: -400
+  eras:
+  - {from: -400, weights: {casa: 0.8, domus: 0.2}, shops: 0.05}
+  - {from: -200, weights: {domus: 0.55, casa: 0.2, insula: 0.2, horti: 0.05}, shops: 0.1}
+  sources: ["Platner-Ashby s.v. Regiones Quattuordecim (read): Region II Caelimontium", "Platner-Ashby s.v. Clivus Scauri (read)", "character an inference: # unverified"]
+- id: capitol
+  name: Capitol and Arx
+  lat: 41.8934
+  lon: 12.4828
+  radius_m: 130
+  max_density: 0.25
+  saturates_at: 30000
+  onset: -509
+  eras:
+  - {from: -509, weights: {domus: 0.6, casa: 0.4}, shops: 0.0}
+  sources: ["Platner-Ashby s.v. Clivus Capitolinus (read): private houses along the clivus inter duos lucos (Cic. Mil. 64)", "the hill is mostly temples (monuments.yaml), so very few lots are left"]
+- id: forum
+  name: Forum Romanum
+  lat: 41.8925
+  lon: 12.4853
+  radius_m: 125
+  max_density: 0.15
+  saturates_at: 30000
+  onset: -509
+  eras:
+  - {from: -509, weights: {casa: 1.0}, shops: 0.9}
+  sources: ["monuments.yaml (basilicas, temples, tabernae): the Forum is filled by the monuments, not by the fill"]
+- id: esquiline_horti
+  name: Esquiline (cemetery, then Horti Maecenatis and Lamiani)
+  lat: 41.8930
+  lon: 12.5075
+  radius_m: 480
+  max_density: 0.45
+  saturates_at: 500000
+  onset: -150
+  eras:
+  - {from: -150, weights: {casa: 0.5, workshop: 0.3, insula: 0.2}, shops: 0.05}
+  - {from: -60, weights: {horti: 0.55, insula: 0.25, domus: 0.2}, shops: 0.05}
+  sources: ["Hor. Sat. 1.8.7-16 (the Esquiline, once a common burial ground, turned by Maecenas into healthy gardens, c. 35 BC): # unverified", "Platner-Ashby s.v. Horti Maecenatis and Horti Lamiani (cached)", "Varro LL 5.25 (puticuli on the Esquiline): # unverified"]
+- id: pincian_horti
+  name: Pincian (Horti Luculliani) and Sallustian gardens
+  lat: 41.9085
+  lon: 12.4880
+  radius_m: 480
+  max_density: 0.4
+  saturates_at: 600000
+  onset: -150
+  eras:
+  - {from: -150, weights: {field: 1.0}, shops: 0.0}
+  - {from: -65, weights: {horti: 0.8, domus: 0.2}, shops: 0.0}
+  sources: ["topography.yaml (Pincian Hill outside the Servian Wall; gardens of Lucullus and Sallustius, late Republic)", "Platner-Ashby s.v. Horti Luculliani and Horti Sallustiani (cached)"]
+- id: campus_south
+  name: Campus Martius south (Prata Flaminia, Circus Flaminius)
+  lat: 41.8975
+  lon: 12.4775
+  radius_m: 360
+  max_density: 0.8
+  saturates_at: 300000
+  onset: -219
+  eras:
+  - {from: -219, weights: {casa: 0.4, workshop: 0.3, insula: 0.3}, shops: 0.4}
+  - {from: -100, weights: {insula: 0.5, domus: 0.2, workshop: 0.25, casa: 0.05}, shops: 0.6}
+  sources: ["Platner-Ashby s.v. Campus Martius (read): a cippus near the Pantheon shows that in Augustus' time the part between it and the circus Flaminius was 'more or less built over' and the part to the north was open meadow; the south portion was originally the Prata Flaminia (Livy 3.54, 3.63)", "Platner-Ashby s.v. Via Flaminia (read): road built 220 BC; the Circus Flaminius of the same censor"]
+- id: campus_north
+  name: Campus Martius north (the Campus proper)
+  lat: 41.9075
+  lon: 12.4735
+  radius_m: 520
+  max_density: 0.2
+  saturates_at: 900000
+  onset: -80
+  eras:
+  - {from: -80, weights: {field: 0.8, horti: 0.1, domus: 0.1}, shops: 0.0}
+  sources: ["Platner-Ashby s.v. Campus Martius (read): about 250 ha of open meadow with ponds, groves and hot springs; in the Augustan period the open campus lay north of the boundary stone", "Strabo 5.3.8 (the Campus: vast, covered with grass, used for exercise; shows it open in Augustus' day): # unverified"]
+- id: appia_suburb
+  name: Via Appia and the tombs south of Porta Capena
+  lat: 41.8760
+  lon: 12.4985
+  radius_m: 420
+  max_density: 0.25
+  saturates_at: 600000
+  onset: -312
+  eras:
+  - {from: -312, weights: {field: 0.8, casa: 0.2}, shops: 0.0}
+  sources: ["Platner-Ashby s.v. Via Appia (read): flanked with tombs; Via Latina (read): the triangle between the two roads occupied by tombs"]
+default:
+  max_density: 0.18
+  saturates_at: 800000
+  onset: -200
+  eras:
+  - {from: -200, weights: {field: 0.7, casa: 0.2, insula: 0.1}, shops: 0.0}
+  sources: ["outside any named district: scattered buildings and open land (author's choice)"]
