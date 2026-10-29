@@ -377,16 +377,23 @@ func _apply(time: float) -> void:
 			var tau := tt - ct
 			car.rotation.z = minf(tau * 2.2, 1.45)
 			car.position.y = 0.3 * minf(tau, 1.0)
-			ch.driver.position = Vector3(0, 0.42 + maxf(0.0, 2.6 * tau - 4.0 * tau * tau), -0.1 + 7.0 * (1.0 - exp(-tau * 1.6)))
+			ch.driver.position = Vector3(0, 0.455 + maxf(0.0, 2.6 * tau - 4.0 * tau * tau), -0.12 + 7.0 * (1.0 - exp(-tau * 1.6)))
 			ch.driver.rotation.x = minf(tau * 3.0, 1.5)
 			ch.driver.rotation.z = minf(tau * 4.0, 1.2)
+			# flailing in the air, then limp
+			var fl := exp(-tau * 0.7)
+			ch.driver.pose_arms(-2.4 * fl - 0.2, -2.0 * fl - 0.3, 0.8 * fl, 0.8 * fl)
+			ch.driver.legs[0].rotation = Vector3(-0.8 * fl, 0, 0.3)
+			ch.driver.legs[1].rotation = Vector3(0.5 * fl, 0, -0.3)
+			ch.reins.visible = false
 			if tau > 14.0:
 				car.visible = false
 				ch.driver.visible = false
 		else:
-			ch.driver.position = Vector3(0, 0.42, -0.1)
+			ch.driver.position = Vector3(0, 0.455, -0.12)
 			ch.driver.rotation = Vector3.ZERO
-			ch.driver.torso.rotation.x = 0.0
+			ch.reins.visible = true
+		ch.update_reins()
 	# gates
 	var open := smoothstep(GATE_T, GATE_T + 0.8, tt)
 	for g in _gates.size():
@@ -451,3 +458,26 @@ func leader_view(time: float, dist := 16.0, who := -1) -> Transform3D:
 ## Facts about the simulated race for tests and previews.
 func debug_info() -> String:
 	return "winner=%d finish_times=%s crashes=%s laps=%s" % [winner, _fin_t, _crash_t, _lap_times]
+
+
+## A close view beside the leading pack, low and just ahead of the leader, on the outside of the
+## track (the turns are the best of it).
+func cine_view(time: float) -> Transform3D:
+	var tt := clampf(time, GATE_T + 1.0, duration)
+	var best := 0
+	var bs := -1e9
+	for i in N:
+		var sv := _sample(_S[i], tt)
+		if sv > bs:
+			bs = sv
+			best = i
+	var pc := track_at(bs, _sample(_R[best], tt))
+	var pos: Vector3 = pc[0]
+	var dir: Vector3 = pc[1]
+	var out := Vector3(-dir.z, 0, dir.x).normalized()
+	var centre := Vector3(clampf(pos.x, -Ls, Ls), 0, 0)
+	if (pos - centre).dot(out) < 0.0:
+		out = -out
+	# beside the pack on the inside of the turn if there is room, else outside
+	var from := pos + out * 7.5 + dir * 8.0 + Vector3(0, 2.6, 0)
+	return look(from, pos - dir * 1.0 + Vector3(0, 0.8, 0))

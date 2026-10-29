@@ -12,6 +12,8 @@
 extends "res://scripts/urbs/spectacles/base.gd"
 
 const F := preload("res://scripts/urbs/spectacles/figure.gd")
+const A := preload("res://scripts/urbs/spectacles/animals.gd")
+const M := preload("res://scripts/urbs/spectacles/meshlib.gd")
 const Crowd := preload("res://scripts/urbs/crowd.gd")
 
 const T_ARRIVE := 18.0
@@ -50,34 +52,26 @@ func _ready() -> void:
 	prayer = params.get("prayer", PRAYER)
 	favourable = bool(params.get("favourable", true))
 	duration = 72.0
-	_add("tibicen", Color(0.8, 0.75, 0.65), Vector3(-1.4, 0, 3.4), 0.0)
-	_add("lictor_a", Color(0.7, 0.12, 0.1), Vector3(1.2, 0, 4.6), 1.0)
-	_add("lictor_b", Color(0.7, 0.12, 0.1), Vector3(-1.2, 0, 4.6), 1.0)
-	_add("magistrate", Color(0.95, 0.93, 0.86), Vector3(0.0, 0, 2.3), 2.0, true)
-	_add("haruspex", Color(0.9, 0.88, 0.8), Vector3(-2.4, 0, 1.2), 3.0, true)
-	_add("servant", Color(0.82, 0.76, 0.6), Vector3(-1.4, 0, 1.0), 3.0)
-	_add("leader_a", Color(0.75, 0.68, 0.55), Vector3(2.9, 0, 1.6), 4.0)
-	_add("leader_b", Color(0.75, 0.68, 0.55), Vector3(2.9, 0, -0.6), 4.0)
-	_add("popa", Color(0.72, 0.56, 0.42), Vector3(4.3, 0, 0.5), 5.5)
-	_add("cultrarius", Color(0.7, 0.55, 0.4), Vector3(2.0, 0, -1.3), 5.5)
-	# the veil over the magistrate's head
-	var mag: Node3D = _cast["magistrate"]
-	F.box(mag.head, Vector3(0.3, 0.22, 0.32), Vector3(0, 0.09, -0.02), Color(0.95, 0.93, 0.86))
-	# lictors' fasces
+	_add("tibicen", {"tunic": Color(0.86, 0.8, 0.66), "seed": 11})
+	_add("lictor_a", {"tunic": Color(0.45, 0.12, 0.38), "seed": 12}, Vector3(1.2, 0, 4.6), 1.0)
+	_add("lictor_b", {"tunic": Color(0.45, 0.12, 0.38), "seed": 13}, Vector3(-1.2, 0, 4.6), 1.0)
+	_add("magistrate", {"tunic": Color(0.9, 0.87, 0.8), "toga": true, "veil": true, "border": Color(0.52, 0.1, 0.32), "seed": 14, "hair": Color(0.5, 0.48, 0.46), "belt_on": false}, Vector3(0.0, 0, 2.3), 2.0)
+	_add("haruspex", {"tunic": Color(0.9, 0.87, 0.8), "toga": true, "border": Color(0.94, 0.92, 0.84), "seed": 15, "hair": Color(0.62, 0.6, 0.58), "belt_on": false}, Vector3(-2.4, 0, 1.2), 3.0)
+	_add("servant", {"tunic": Color(0.82, 0.76, 0.6), "seed": 16}, Vector3(-1.4, 0, 1.0), 3.0)
+	_add("leader_a", {"tunic": Color(0.78, 0.7, 0.55), "seed": 17}, Vector3(2.9, 0, 1.6), 4.0)
+	_add("leader_b", {"tunic": Color(0.78, 0.7, 0.55), "seed": 18}, Vector3(2.9, 0, -0.6), 4.0)
+	_add("popa", {"bare": true, "tunic": Color(0.9, 0.88, 0.8), "laurel": true, "seed": 19, "skin": Color(0.8, 0.6, 0.46)}, Vector3(4.3, 0, 0.5), 5.5)
+	_add("cultrarius", {"bare": true, "tunic": Color(0.9, 0.88, 0.8), "laurel": true, "seed": 20}, Vector3(2.0, 0, -1.3), 5.5)
+	_stations["tibicen"] = [Vector3(-1.4, 0, 3.4), 0.0]
+	(_cast["tibicen"] as Node3D).equip_pipes()
 	for n in ["lictor_a", "lictor_b"]:
-		var lf: Node3D = _cast[n]
-		F.box(lf.hand_r, Vector3(0.1, 0.1, 0.9), Vector3(0, -0.2, 0.0), Color(0.5, 0.35, 0.2)).rotation.x = PI / 2.0
-		lf.pose_arms(-0.3, 0.1)
-	# the flute: a pair of pipes
-	var tib: Node3D = _cast["tibicen"]
-	F.box(tib.head, Vector3(0.05, 0.05, 0.5), Vector3(0.1, -0.05, 0.28), Color(0.35, 0.25, 0.12))
-	# the hammer of the popa
-	_hammer = Node3D.new()
-	(_cast["popa"] as Node3D).hand_r.add_child(_hammer)
-	F.box(_hammer, Vector3(0.07, 0.07, 0.6), Vector3(0, 0, 0), Color(0.45, 0.3, 0.15)).rotation.x = PI / 2.0
-	F.box(_hammer, Vector3(0.14, 0.14, 0.24), Vector3(0, -0.28, 0), Color(0.4, 0.4, 0.42))
+		(_cast[n] as Node3D).equip_fasces()
+	(_cast["popa"] as Node3D).equip_limus()
+	(_cast["popa"] as Node3D).equip_mallet()
+	(_cast["cultrarius"] as Node3D).equip_limus()
+	(_cast["cultrarius"] as Node3D).equip_knife()
 	# the altar's fire and smoke
-	var fire := F.box(self, Vector3(0.7, 0.25, 0.7), Vector3(0, 1.4, 0), Color(0.95, 0.5, 0.12))
+	var fire := F._part(self, M.ellipsoid(0.4, 0.16, 0.4, 10, 4), F.mat(Color(0.95, 0.5, 0.12)), Vector3(0, 1.4, 0))
 	fire.name = "Fire"
 	for i in 18:
 		var m := MeshInstance3D.new()
@@ -98,8 +92,8 @@ func _ready() -> void:
 	_ox = _make_ox()
 	add_child(_ox)
 	# the exta
-	_liver = F.box(self, Vector3(0.3, 0.12, 0.22), Vector3.ZERO, Color(0.6, 0.15, 0.12))
-	F.box(_liver, Vector3(0.1, 0.1, 0.1), Vector3(0.12, 0.05, 0.0), Color(0.3, 0.4, 0.2))
+	_liver = F._part(self, M.ellipsoid(0.16, 0.04, 0.1, 10, 5), F.mat(Color(0.6, 0.15, 0.12)))
+	F._part(_liver, M.ellipsoid(0.05, 0.03, 0.04, 6, 4), F.mat(Color(0.3, 0.4, 0.2)), Vector3(0.1, 0.03, 0.02))
 	_label = make_label("", 0.9, Color(1, 0.95, 0.8))
 	_label.position = Vector3(0, 5.2, 2.0)
 	_speech = make_label("", 0.8, Color(1, 1, 0.9))
@@ -107,6 +101,8 @@ func _ready() -> void:
 	if bool(params.get("crowd", true)):
 		var c = Crowd.new()
 		var poly := PackedVector3Array([Vector3(0, 0, 6.0), Vector3(0, 0, 26.0)])
+		c.toga_rows = 1
+		c.standing = true
 		c.add_seats(Crowd.line_seats(poly, 7.0, 3, 1.3, 1.0, 0.0))
 		c.build()
 		add_child(c)
@@ -114,17 +110,15 @@ func _ready() -> void:
 	seek(float(params.get("start_at", 0.0)))
 
 
-func _add(name_: String, col: Color, station: Vector3, delay: float, toga := false) -> void:
-	var f = F.make(col, toga, Color(0.55, 0.08, 0.3), 1.0)
+func _add(name_: String, opts: Dictionary, station := Vector3.ZERO, delay := 0.0) -> void:
+	var f = F.person(opts)
 	add_child(f)
 	_cast[name_] = f
 	_stations[name_] = [station, delay]
 
 
 func _make_ox() -> Node3D:
-	var ox := F.make_ox()
-	_ox_legs = ox.get_meta("legs")
-	return ox
+	return A.make_ox()
 
 
 func _apply(time: float) -> void:
@@ -152,15 +146,8 @@ func _apply(time: float) -> void:
 	# the ox walks with its leaders, then stands
 	var ox_left := maxf(0.0, 27.0 - 1.45 * tt)
 	_ox.position = Vector3(2.9, 0, 0.5 + ox_left)
-	_ox.rotation = Vector3(0, -PI / 2.0 * (1.0 if ox_left <= 0.0 else 0.0) + (PI if ox_left > 0.0 else 0.0), 0)
-	if ox_left > 0.0:
-		_ox.rotation.y = PI    # walking toward -z: its front is +z, so turn it
-		_ox.rotation.y = 0.0
-	else:
-		_ox.rotation.y = PI / 2.0   # standing broadside, its head toward +x? face the altar (-x)
-		_ox.rotation.y = -PI / 2.0
-	for i in _ox_legs.size():
-		(_ox_legs[i] as Node3D).rotation.x = sin(tt * 5.0 + i * 1.6) * 0.4 if ox_left > 0.0 else 0.0
+	_ox.rotation = Vector3(0, PI if ox_left > 0.0 else -PI / 2.0, 0)   # walking toward -z, then facing the altar
+	A.walk_ox(_ox, tt * 4.6, 1.0 if ox_left > 0.0 else 0.0)
 	# the strike
 	var fall := smoothstep(T_STRIKE + 0.6, T_STRIKE + 2.8, tt)
 	_ox.rotation.z = 1.45 * fall
@@ -174,6 +161,10 @@ func _apply(time: float) -> void:
 	mag.pose_arms(0, 0)
 	har.pose_arms(0, 0)
 	serv.pose_arms(-0.4, -0.4)
+	for ln in ["lictor_a", "lictor_b"]:
+		var lic: Node3D = _cast[ln]
+		lic.arms[0].rotation = Vector3(-0.35, 0, -0.12)
+		lic.elbows[0].rotation = Vector3(-1.2, 0, 0)
 	popa.pose_arms(-0.4, 0.0)
 	cultr.pose_arms(-0.3, -0.3)
 	var wine := tt >= T_WINE - 6.0 and tt < T_MOLA
@@ -263,3 +254,7 @@ func seat_views() -> Array[Transform3D]:
 	out.append(look(Vector3(-7.0, 1.8, 14.0), Vector3(0, 1.4, 1.0)))
 	out.append(look(Vector3(0, 4.0, -9.0), Vector3(0.5, 1.2, 3.0)))
 	return out
+
+
+func cine_view(_time: float) -> Transform3D:
+	return look(Vector3(3.6, 1.65, 4.2), Vector3(0.6, 1.45, 0.4))

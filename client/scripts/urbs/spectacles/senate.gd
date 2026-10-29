@@ -69,7 +69,11 @@ func _ready() -> void:
 	var no_i := 0
 	for i in count:
 		var consular := i < 6
-		var f = F.make(Color(0.93, 0.9, 0.82), true, Color(0.55, 0.08, 0.3) if not consular else Color(0.5, 0.05, 0.4), rng.randf_range(0.95, 1.06))
+		var tones := [Color(0.86, 0.66, 0.52), Color(0.8, 0.6, 0.46), Color(0.9, 0.72, 0.58), Color(0.74, 0.54, 0.42)]
+		var grey := rng.randf() < (0.55 if consular else 0.3)
+		var f = F.person({"tunic": Color(0.9, 0.87, 0.8), "toga": true, "border": Color(0.94, 0.92, 0.84), "scale": rng.randf_range(0.95, 1.05),
+			"skin": tones[rng.randi() % tones.size()], "seed": i + 1, "belt_on": false,
+			"hair": Color(0.62, 0.6, 0.58) if grey else Color(0.14, 0.1, 0.08).lerp(Color(0.4, 0.28, 0.16), rng.randf())})
 		add_child(f)
 		_sen.append(f)
 		_seat.append(benches[i])
@@ -84,10 +88,10 @@ func _ready() -> void:
 		var row := idx / 3
 		var sx := 2.0 + col * 1.4
 		_side_target.append(Vector3(sx if _yes[i] else -sx, 0, z_top + 3.0 + row * 1.3))
-	_consul = F.make(Color(0.93, 0.9, 0.82), true, Color(0.55, 0.08, 0.3), 1.05)
+	_consul = F.person({"tunic": Color(0.9, 0.87, 0.8), "toga": true, "border": Color(0.52, 0.1, 0.32), "scale": 1.05, "seed": 77, "hair": Color(0.5, 0.48, 0.46), "belt_on": false})
 	_consul.position = Vector3(0, 0.9, -hall.y / 2.0 + 2.4)
 	add_child(_consul)
-	F.box(_consul, Vector3(0.9, 0.45, 0.6), Vector3(0, 0.25, -0.1), Color(0.8, 0.7, 0.4))   # curule chair
+	_curule_chair(_consul)
 	_speakers = [0, 1, 7, 15]
 	_label = make_label("", 0.9, Color(1, 0.95, 0.8))
 	_label.position = Vector3(0, 5.5, -hall.y / 2.0 + 3.0)
@@ -231,3 +235,30 @@ func seat_views() -> Array[Transform3D]:
 	out.append(look(Vector3(0, 3.0, -hall.y / 2.0 + 1.0), Vector3(0, 1.0, 8.0)))
 	out.append(look(Vector3(-hall.x / 2.0 + 1.5, 2.6, -2.0), Vector3(hall.x / 2.0 - 3.0, 1.2, 6.0)))
 	return out
+
+
+## The curule chair: an ivory X-frame with a leather seat, under the consul's feet origin.
+func _curule_chair(parent: Node3D) -> void:
+	const M := preload("res://scripts/urbs/spectacles/meshlib.gd")
+	var ivory := Color(0.93, 0.89, 0.76)
+	for sx in [-1.0, 1.0]:
+		for sg in [-1.0, 1.0]:
+			var piv := Node3D.new()
+			piv.position = Vector3(sx * 0.24, 0.46, -0.15 + sg * 0.2)
+			piv.rotation.x = sg * asin(0.4 / 0.62)
+			parent.add_child(piv)
+			F._part(piv, M.capsule(0.022, 0.022, 0.6, 6), F.mat(ivory))
+	F._part(parent, M.ellipsoid(0.3, 0.03, 0.27, 12, 4), F.cloth(Color(0.55, 0.12, 0.12)), Vector3(0, 0.48, -0.15))
+
+
+func cine_view(time: float) -> Transform3D:
+	var tt := minf(time, duration)
+	var tgt := Vector3(0, 1.4, -hall.y / 2.0 + 2.6)
+	if tt >= T_RELATIO and tt < T_SPEAK_END and _speakers.size() > 0:
+		var k := clampi(int((tt - T_RELATIO) / ((T_SPEAK_END - T_RELATIO) / _speakers.size())), 0, _speakers.size() - 1)
+		if _speakers[k] < _seat.size():
+			var sp: Vector3 = _seat[_speakers[k]]
+			tgt = sp + Vector3(0, 1.5, 0)
+	elif tt >= T_CALL:
+		tgt = Vector3(0, 1.3, -hall.y / 2.0 + 10.0)
+	return look(Vector3(-hall.x / 2.0 + 2.6, 2.3, 4.0) if tt < T_CALL else Vector3(0, 2.4, 2.0), tgt)

@@ -48,6 +48,17 @@ func camera_views() -> Array[Transform3D]:
 	return out
 
 
+## One close cinematic view (it may follow the action at `time`); local to this node.
+func cine_view(_time: float) -> Transform3D:
+	var v := seat_views()
+	return v[0] if v.size() > 0 else Transform3D()
+
+
+## The cinematic view in WORLD space.
+func cine_camera(time: float) -> Transform3D:
+	return (global_transform if is_inside_tree() else transform) * cine_view(time)
+
+
 func view_names() -> PackedStringArray:
 	return PackedStringArray()
 
@@ -56,7 +67,7 @@ func view_names() -> PackedStringArray:
 func make_label(text: String, size := 0.5, col := Color(1, 1, 1)) -> Label3D:
 	var l := Label3D.new()
 	l.text = text
-	l.pixel_size = 0.012 * size
+	l.pixel_size = 0.009 * size
 	l.font_size = 48
 	l.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	l.no_depth_test = true
