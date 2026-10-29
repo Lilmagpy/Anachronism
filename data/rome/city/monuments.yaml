@@ -896,10 +896,13 @@ monuments:
   regio: 9
   lat: 41.8915
   lon: 12.4770
-  precision: approx
-  location: Prata Flaminia, next to the Theatre of Marcellus; Senate met here for foreign envoys and generals awaiting triumph
-  built: {year: -296, certainty: certain, by: "vowed by Ap. Claudius Caecus in battle against the Etruscans and Samnites, 296 (Livy 10.19.17-21)"}
-  sources: ["Livy 10.19.17-21", "Platner-Ashby s.v. Bellona, Aedes"]
+  precision: rough
+  location: "Campus Martius near the Circus Flaminius by tradition; exact site unknown (P&A)"
+  built: {year: -296, certainty: certain, by: "vowed by Ap. Claudius Caecus in battle against Etruscans and Samnites in 296 (Livy 10.19.17-21; Plin. NH 35.12); dedicated a few years later, on 3 June (Ov. Fast. 6.201)"}
+  sources: ["Livy 10.19.17-21", "Pliny NH 35.12", "Ovid Fasti 6.201-204", "Platner-Ashby s.v. Bellona, Aedes"]
+  notes: "Not in Pleiades. P&A: vowed by Ap. Claudius Caecus in 296 (Livy 10.19.17; Plin. NH 35.12; Ovid Fast. 6.201-204; CIL I2 p192 elog.), dedicated 'a few years later' on 3 June; 'No traces'; probably not built before the 3rd c.; SITE UNKNOWN: P&A rejects a connection with the pulvinar of the Circus Flaminius and conjectures the Vatican hills. The coordinate here (near the Circus Flaminius) is only the conventional placement and is rough. The temple was used for meetings of the Senate with foreign ambassadors and generals awaiting triumph (a well-known fact, not in the P&A passage read)."
+  pleiades: null
+  verified: platner-ashby
 - id: aedes_neptuni_flaminium
   latin: Aedes Neptuni in Circo Flaminio
   english: Temple of Neptune (Circus Flaminius)
@@ -909,22 +912,30 @@ monuments:
   lon: 12.4765
   precision: rough
   location: Campus Martius, near the Circus Flaminius
-  built: {year: null, certainty: uncertain, by: "by Cn. Domitius Ahenobarbus, consul 32 BC (Pliny NH 36.26 on Scopas group; Platner-Ashby)"}
-  sources: ["Pliny NH 36.26", "Platner-Ashby s.v. Neptunus, Aedes"]
+  built: {year: null, certainty: uncertain, by: "temple of Cn. Domitius Ahenobarbus, vowed 42-38 BC (coin evidence) and perhaps built after 32; an earlier altar or temple existed by 206 (Livy 28.11.4; P&A)"}
+  sources: ["Livy 28.11.4", "Pliny NH 36.26", "Dio fr. 57.60", "Platner-Ashby s.v. Neptunus, Aedes"]
+  events:
+  - {year: -206, what: "altar/temple of Neptune sweats in the prodigies of 206 (Livy 28.11.4; Dio fr. 57.60)"}
+  notes: "Not in Pleiades. P&A: an altar of Neptune in the Circus Flaminius sweated in 206 (Livy 28.11.4 per P&A's 'XXVIII.1.4', Dio fr. 57.60 implies a real temple); the temple of Cn. Domitius Ahenobarbus (denarius struck 42-38) was vowed 42-38 and perhaps not built before 32 (when he was consul); dedication day 1 December; whether Domitius built anew or restored the earlier temple cannot be determined. The marble frieze (Scopas group, Plin. NH 36.26) is of the second half of the 1st c. BC."
+  pleiades: null
+  verified: platner-ashby
 - id: porticus_octaviae
   latin: Porticus Octaviae (Porticus Metelli)
   english: Portico of Octavia (replacing the Portico of Metellus)
   type: portico
   regio: 9
-  lat: 41.8923
-  lon: 12.4791
+  lat: 41.8925
+  lon: 12.4786
   precision: exact
   location: Campus Martius, between the Theatre of Marcellus and the Circus Flaminius
-  built: {year: -146, certainty: certain, by: "Q. Caecilius Metellus Macedonicus after his triumph over Macedonia (Vell. 1.11.2-5; Pliny NH 36.? 34.64)"}
+  built: {year: -146, certainty: probable, by: "Porticus Metelli built by Q. Caecilius Metellus Macedonicus after his triumph of 146 (Vell. Pat. 1.11.2-5), enclosing the temples of Jupiter Stator and Juno Regina; replaced by Augustus's Porticus Octaviae after 27 BC (Suet. Aug. 29; Plin. NH 36.42; P&A)"}
   events:
-  - {year: -33, what: "rebuilt by Augustus (Octavian) with the spoils of Dalmatia and named for his sister Octavia (Res Gestae 19; Suet. Aug. 29; Dio 49.43.8)"}
-  form: "Portico of Metellus enclosed two temples, of Jupiter Stator (first marble temple in Rome, by Hermodorus of Salamis) and of Juno Regina"
-  sources: ["Vell. Pat. 1.11.2-5", "Res Gestae 19", "Suet. Aug. 29", "Platner-Ashby s.v. Porticus Octaviae; Porticus Metelli"]
+  - {year: -27, what: "Augustus replaces the Porticus Metelli with the Porticus Octaviae, dedicated in his sister's name, some time after 27 BC (P&A; Suet. Aug. 29); Dio's 33 BC date is rejected by P&A"}
+  form: "Portico of Metellus enclosed the temples of Jupiter Stator (Hermodorus of Salamis, Vitr. 3.2.5; marble, Vell. 1.11.5) and Juno Regina; the Augustan enclosure is rectangular, 118 m wide, with a double colonnade of granite columns, a library and a curia"
+  sources: ["Vell. Pat. 1.11.2-5", "Vitruvius 3.2.5", "Pliny NH 36.42", "Suetonius Aug. 29", "Livy Per. 140", "Res Gestae 19", "Platner-Ashby s.v. Porticus Octaviae; Porticus Metelli"]
+  notes: "CORRECTED. The YAML event 'rebuilt -33 with Dalmatian spoils (RG 19; Dio 49.43.8)' conflated two buildings. P&A: the Porticus Octaviae was built by Augustus and dedicated in his sister's name 'at some time after 27 B.C.' (Suet. Aug. 29; Liv. Ep. 140.2; Vitr. 3.2.5), replacing the Porticus Metelli around the temples of Jupiter Stator and Juno (Plin. NH 36.42); Dio's statement that it was built after 33 from the Dalmatian spoils is a confusion with the Porticus Octavia (the Res Gestae 19.1 portico 'ad circum Flaminium ... ex nomine eius qui priorem eodem in solo fecerat Octaviam'). Porticus Metelli: built with the two temples by Q. Caecilius Metellus Macedonicus after his triumph in 146 (Vell. 1.11.2-5). P&A: burned in AD 80, restored again after 203. Enclosure 118 m wide, double colonnade of granite columns. Library (Suet. Gramm. 21; Plut. Marc. 30) and curia Octaviae inside. Pleiades 236573248 (precise)."
+  pleiades: 236573248
+  verified: platner-ashby+pleiades
 - id: aedes_iovis_statoris_metelli
   latin: Aedes Iovis Statoris (Metelli)
   english: Temple of Jupiter Stator (Metellus)
@@ -935,7 +946,10 @@ monuments:
   precision: approx
   location: inside the Porticus Metelli
   built: {year: -146, certainty: probable, by: "Q. Caecilius Metellus Macedonicus; marble, architect Hermodorus of Salamis (Vell. 1.11.3-5)"}
-  sources: ["Vell. Pat. 1.11.3-5", "Platner-Ashby s.v. Iuppiter Stator, Aedes"]
+  sources: ["Vell. Pat. 1.11.3-5", "Vitruvius 3.2.5", "Platner-Ashby s.v. Iuppiter Stator, Aedes"]
+  notes: "P&A: temple (with that of Juno Regina and the enclosing Porticus Metelli) built by Q. Caecilius Metellus Macedonicus after his triumph in 146 (Vell. 1.11.3-5), 'not stated in so many words' by Velleius but a natural inference; Vell. 1.11.5 calls them the first marble temples; Hermodorus of Salamis as architect from Vitr. 3.2.5. Not to be confused with the Palatine temple vowed by Romulus and made by M. Atilius Regulus in 294 (Livy 1.12.3-6; 10.36.11). Not in Pleiades separately."
+  pleiades: null
+  verified: platner-ashby
 - id: aedes_iunonis_reginae_circus
   latin: Aedes Iunonis Reginae (Circo Flaminio)
   english: Temple of Juno Regina (Circus Flaminius)
@@ -946,7 +960,10 @@ monuments:
   precision: approx
   location: in the Porticus Metelli / Octavia
   built: {year: -179, certainty: certain, by: "vowed by M. Aemilius Lepidus 187 against the Ligurians, dedicated 179 (Livy 39.2.11, 40.52.1-2)"}
-  sources: ["Livy 39.2.11", "Livy 40.52.1", "Platner-Ashby s.v. Iuno Regina, Aedes"]
+  sources: ["Livy 39.2.11", "Livy 40.52.1-2", "Platner-Ashby s.v. Iuno Regina, Aedes"]
+  notes: "Verified in Livy 39.2.11 (vow of 187 in the Ligurian war) and 40.52.1-2 (Latin: Lepidus as censor dedicates both temples 'utramque in circo Flaminio' eight years after the vow, with scenic games). P&A: temple near the Circus Flaminius. Not in Pleiades. Note: P&A also has Juno Regina on the Aventine (see aedes_iunonis_reginae_aventine)."
+  pleiades: null
+  verified: platner-ashby
 - id: aedes_dianae_circus_flaminius
   latin: Aedes Dianae (Circo Flaminio)
   english: Temple of Diana (Circus Flaminius)
@@ -956,9 +973,11 @@ monuments:
   lon: 12.4762
   precision: rough
   location: Circus Flaminius
-  built: {year: -179, certainty: probable, by: "M. Fulvius Nobilior dedicated the Aedes Herculis Musarum; Livy 40.52.? Dianae by M. Aemilius Lepidus - doubtful"}
-  notes: "Livy 40.52.1 names Aemilius Lepidus dedicating Diana and Juno Regina in the Circus Flaminius in 179; I list it here at low certainty."
-  sources: ["Livy 40.52.1", "Platner-Ashby s.v. Diana, Aedes"]
+  built: {year: -179, certainty: certain, by: "vowed by M. Aemilius Lepidus in 187 in the Ligurian war (Livy 39.2.11); dedicated by him as censor in 179 (Livy 40.52.1-2)"}
+  notes: "Livy 40.52.1 names Aemilius Lepidus dedicating Diana and Juno Regina in the Circus Flaminius in 179; I list it here at low certainty. CORRECTED: previous 'by' text was garbled (mentioned M. Fulvius Nobilior and Hercules Musarum, unrelated). Livy 40.52.1 (Latin text) says M. Aemilius Lepidus, as censor, dedicated both temples of Juno Regina and Diana 'utramque in circo Flaminio', vowed eight years earlier (187) in the Ligurian war; P&A agrees (vowed 187, Livy 39.2; dedicated 179). Certainty raised from low to certain. Not in Pleiades."
+  sources: ["Livy 39.2.11", "Livy 40.52.1-2", "Platner-Ashby s.v. Diana, Aedes"]
+  pleiades: null
+  verified: platner-ashby
 - id: lares_permarini
   latin: Aedes Larum Permarinum
   english: Temple of the Lares of the Sea
@@ -969,7 +988,10 @@ monuments:
   precision: rough
   location: Campus Martius, near the Porticus Minucia
   built: {year: -179, certainty: certain, by: "vowed by L. Aemilius Regillus 190 at Myonnesus; dedicated 179 (Livy 40.52.5-6)"}
-  sources: ["Livy 40.52.5", "Platner-Ashby s.v. Lares Permarini"]
+  sources: ["Livy 40.52.4-7", "Macrobius Sat. 1.10.10", "Platner-Ashby s.v. Lares Permarini, Aedes"]
+  notes: "Verified in Livy 40.52.4-7 (Latin): dedicated by the censor M. Aemilius Lepidus 'in Campo', vowed eleven years earlier by L. Aemilius Regillus in the naval battle against Antiochus's fleet (190, off Myonnesus); its dedicatory tablet copied in the Capitoline temple. P&A: dedicated 22 December 179 (Macrob. 1.10.10; Fasti Praenestini); stood in the Porticus Minucia (Fast. Praen.), so its site depends on that portico's (Pleiades Porticus Minucia 698151983: 41.8951, 12.4792)."
+  pleiades: null
+  verified: platner-ashby
 - id: circus_flaminius
   latin: Circus Flaminius
   english: Circus Flaminius
@@ -979,9 +1001,12 @@ monuments:
   lon: 12.4776
   precision: approx
   location: Campus Martius, south, between Capitol and Tiber; used for the Plebeian Games and assemblies
-  built: {year: -221, certainty: certain, by: "C. Flaminius as censor 220 (Livy Per. 20; Livy 3.54.15 for the earlier place)"}
-  form: "more a meeting ground than a track; the Plebeian Games were later held here (Livy 23.30.17 the first temples)"
-  sources: ["Livy Per. 20", "Livy 3.54.15", "Platner-Ashby s.v. Circus Flaminius"]
+  built: {year: -220, certainty: certain, by: "built by C. Flaminius as censor (Livy Per. 20; P&A gives 221); in the Prata Flaminia (Livy 3.54.15)"}
+  form: "long track about 260 x 100 m (P&A estimate) used for the ludi plebeii and Taurii and for assemblies; built of concrete with opus reticulatum facing and travertine/tufa piers (later phase)"
+  sources: ["Livy Per. 20", "Livy 3.54.15", "Varro LL 5.154", "Valerius Maximus 1.7.4", "Platner-Ashby s.v. Circus Flaminius"]
+  notes: "CORRECTED date: P&A says built by C. Flaminius as censor in 221 BC, but Livy Per. 20 and Livy's narrative place Flaminius's censorship in 220 (the usual date); 'Livy 23.30.17 the first temples' in the old form field is not a source and was removed. P&A: in the Prata Flaminia in the southern Campus Martius (Livy 3.54.15; Per. 20; Fest. 89); the ludi plebeii and Taurii were held there; estimated length about 260 m, width about 100 m; remains of concrete faced with opus reticulatum; later events: ludi saeculares 158 (Livy 40.52.4 per P&A's text, truncated). Pleiades 158081395 location is 'related' (same point as the Porticus Octaviae) and is not adopted."
+  pleiades: 158081395
+  verified: platner-ashby+pleiades
 - id: porticus_minucia_vetus
   latin: Porticus Minucia Vetus
   english: Old Portico of Minucius
