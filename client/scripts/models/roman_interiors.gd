@@ -402,7 +402,7 @@ static func _temple(sz: Vector2, year: int, variant: String) -> Dictionary:
 			k.rod(Vector3(cx + 0.75, ph + bh + 0.5, bz + 0.1), Vector3(cx + 0.75, ph + bh + hs * 0.9, bz + 0.1), 0.05, GILT, Kit.GOLD)   # sceptre
 		else:
 			_figure(k, Vector3(cx, ph + bh + 0.14, bz), hs, TOGA if deity == "Iuno" else Color(0.78, 0.74, 0.66), Color(0.9, 0.82, 0.72), 0.0, false, Kit.PAINT, deity == "Minerva")
-		for s in [-1.0, 1.0]:
+		for s: float in [-1.0, 1.0]:
 			var lp := Vector3(cx + s * (bw * 0.5 + 0.9), ph, bz + 0.6)
 			_lamp_stand(k, lp, 1.6)
 			_lamp(lights, lp + Vector3(0, 1.9, 0), 1.5, 9.0)
@@ -431,13 +431,13 @@ static func _temple(sz: Vector2, year: int, variant: String) -> Dictionary:
 		var z := L * 0.5 - e - (L - 2.0 * e) * i / nside
 		if z > rz[rz.size() - 1] - 0.5 and z < rz[0] + 0.1 and rows > 1:
 			pass
-		for s in [-1.0, 1.0]:
+		for s: float in [-1.0, 1.0]:
 			_column(k, Vector3(s * (W * 0.5 - e), ph, z), cd, ch, order, Kit.STONE, colstyle)
 	# entablature: heavy beams over the columns
 	var yb := ph + ch
 	for z in rz:
 		_span(k, -W * 0.5 + e - cd, yb, z - cd * 0.7, W * 0.5 - e + cd, yb + ae, z + cd * 0.7, order, Kit.STONE)
-	for s in [-1.0, 1.0]:
+	for s: float in [-1.0, 1.0]:
 		_span(k, s * (W * 0.5 - e) - cd * 0.7, yb, -L * 0.5 + e - cd, s * (W * 0.5 - e) + cd * 0.7, yb + ae, L * 0.5 - e + cd, order, Kit.STONE)
 	_span(k, -W * 0.5 + e - cd, yb, -L * 0.5 + e - cd * 0.7, W * 0.5 - e + cd, yb + ae, -L * 0.5 + e + cd * 0.7, order, Kit.STONE)
 	# pronaos ceiling and the roof
@@ -451,7 +451,7 @@ static func _temple(sz: Vector2, year: int, variant: String) -> Dictionary:
 	_span(k, -1.6, 0.05, za - 1.2, 1.6, 0.3, za + 1.2, stone, Kit.STONE, false)
 	_span(k, -1.3, 0.3, za - 0.9, 1.3, 1.5, za + 0.9, TRAVERTINE, Kit.STONE)
 	_span(k, -1.45, 1.5, za - 1.05, 1.45, 1.7, za + 1.05, TRAVERTINE.lightened(0.05), Kit.STONE)
-	for sx in [-1.0, 1.0]:      # the horns of the altar
+	for sx: float in [-1.0, 1.0]:      # the horns of the altar
 		k.cylinder(Vector3(sx * 1.2, 1.7, za - 0.9), 0.1, 0.22, TRAVERTINE, Kit.STONE, 6)
 		k.cylinder(Vector3(sx * 1.2, 1.7, za + 0.9), 0.1, 0.22, TRAVERTINE, Kit.STONE, 6)
 	k.frustum(Vector3(0, 1.7, za), 0.7, 0.2, 0.3, Color(0.9, 0.45, 0.15), Kit.GOLD, 8)   # the fire on it
@@ -514,11 +514,11 @@ static func _curia(sz: Vector2, year: int, variant: String) -> Dictionary:
 		side_holes.append([L * (i + 0.5) / nwin, 2.2, wy + wh, wy])
 	var fx := W * 0.5 + wt * 0.5
 	var front_holes: Array = [[fx, dw, dh]]
-	for s in [-1.0, 0.0, 1.0]:
+	for s: float in [-1.0, 0.0, 1.0]:
 		front_holes.append([fx + s * W * 0.27, 2.0, wy + wh, wy])
 	_wall(k, Vector2(-W * 0.5 - wt * 0.5, L * 0.5), Vector2(W * 0.5 + wt * 0.5, L * 0.5), fl, H, wt, wallc, Kit.PLASTER, front_holes)
 	_wall(k, Vector2(-W * 0.5 - wt * 0.5, -L * 0.5), Vector2(W * 0.5 + wt * 0.5, -L * 0.5), fl, H, wt, wallc, Kit.PLASTER)
-	for s in [-1.0, 1.0]:
+	for s: float in [-1.0, 1.0]:
 		_wall(k, Vector2(s * W * 0.5, -L * 0.5 + wt * 0.5), Vector2(s * W * 0.5, L * 0.5 - wt * 0.5), fl, H, wt, wallc, Kit.PLASTER, side_holes)
 	# foundation, steps up from the Comitium, floor
 	_span(k, -W * 0.5 - wt, 0.0, -L * 0.5 - wt, W * 0.5 + wt, fl, L * 0.5 + wt * 0.5, TRAVERTINE, Kit.STONE, false)
@@ -527,7 +527,7 @@ static func _curia(sz: Vector2, year: int, variant: String) -> Dictionary:
 	_floor(k, -hw, zt, hw, zf, fl, MARBLE_D, Kit.PAINT)
 	_checker(k, -hw * 0.45, zt + 5.0, hw * 0.45, zf - 4.0, fl + 0.005, 1.8, Color(0.82, 0.78, 0.70), Color(0.45, 0.28, 0.24))
 	# painted lower walls (red dado), marble above it in the later hall; the cornice at half height
-	for s in [-1.0, 1.0]:
+	for s: float in [-1.0, 1.0]:
 		_span(k, s * hw - (0.0 if s < 0 else 0.05), fl, zt, s * hw + (0.05 if s < 0 else 0.0), fl + 1.6, zf, RED if year < 100 else MARBLE_D, Kit.PLASTER)
 		_span(k, s * (hw - 0.18) - 0.18, fl + H * 0.5, zt, s * (hw - 0.18) + 0.18, fl + H * 0.5 + 0.5, zf, wallc.darkened(0.12), Kit.PLASTER)
 	_span(k, -hw, fl + H * 0.5, zt, hw, fl + H * 0.5 + 0.5, zt + 0.36, wallc.darkened(0.12), Kit.PLASTER)
@@ -537,7 +537,7 @@ static func _curia(sz: Vector2, year: int, variant: String) -> Dictionary:
 	var rs := 0.38
 	var zs0 := zt + 3.9 + 0.5
 	var zs1 := zf - 4.0
-	for s in [-1.0, 1.0]:
+	for s: float in [-1.0, 1.0]:
 		for j in 3:
 			var xa: float = s * (hw - j * td)
 			var xb: float = s * (hw - (j + 1) * td)
@@ -556,7 +556,7 @@ static func _curia(sz: Vector2, year: int, variant: String) -> Dictionary:
 	_span(k, -hw * 0.5, fl, tz1, hw * 0.5, fl + 0.34, tz1 + 0.5, TRAVERTINE, Kit.STONE, false)
 	_span(k, -hw * 0.5, fl + 0.34, tz1, hw * 0.5, fl + 0.68, tz1 + 0.25, TRAVERTINE, Kit.STONE, false)
 	_span(k, -hw + 0.2, fl + 1.0, zt, hw - 0.2, fl + 1.04, tz1 - 0.2, Color(0.5, 0.2, 0.18), Kit.CLOTH)   # a cloth over the dais
-	for cx in [-1.4, 0.0, 1.4]:
+	for cx: float in [-1.4, 0.0, 1.4]:
 		_curule(k, Vector3(cx, fl + 1.04, zt + 2.2), 0.0)
 	var vz := zt + 1.0
 	if julia:
@@ -564,7 +564,7 @@ static func _curia(sz: Vector2, year: int, variant: String) -> Dictionary:
 		k.cylinder(Vector3(gx, fl + 1.04, vz), 0.9, 1.3, MARBLE, Kit.STONE, 8)
 		k.dome(Vector3(gx, fl + 2.34, vz), 0.65, GILT, Kit.GOLD, 1.0, 4, 10)       # the globe
 		_figure(k, Vector3(gx, fl + 3.1, vz), 3.2, GILT, GILT, 0.0, false, Kit.GOLD)   # Victory
-		for sx in [-1.0, 1.0]:
+		for sx: float in [-1.0, 1.0]:
 			k.box(Vector3(gx + sx * 1.55, fl + 1.04, vz + 0.4), Vector3(0.1, 0.6, 1.8), GILT, Kit.GOLD, 0.0, true)   # her wings' stand-in
 	else:
 		k.cylinder(Vector3(0, fl + 1.04, zt + 1.2), 0.55, 1.2, TRAVERTINE, Kit.STONE, 8)
@@ -586,7 +586,7 @@ static func _curia(sz: Vector2, year: int, variant: String) -> Dictionary:
 	k.box(Vector3(dw * 0.5 - cos(th) * dw * 0.25, fl, L * 0.5 - wt - sin(th) * dw * 0.25), Vector3(dw * 0.5, dh, 0.14), BRONZE, Kit.GOLD, PI - th, true)
 	# hanging lamps and braziers (the real light comes through the windows and the door)
 	for q in 3:
-		for sx in [-1.0, 1.0]:
+		for sx: float in [-1.0, 1.0]:
 			var lp := Vector3(sx * hw * 0.55, fl + H * 0.72, zt + 5.0 + q * (L - 10.0) / 2.0)
 			k.rod(lp, lp + Vector3(0, 2.4, 0), 0.015, BRONZE, Kit.GOLD)
 			k.frustum(lp - Vector3(0, 0.25, 0), 0.07, 0.2, 0.22, BRONZE, Kit.GOLD, 8)
@@ -623,7 +623,7 @@ static func _curia(sz: Vector2, year: int, variant: String) -> Dictionary:
 ## An x-fold curule chair (sella curulis): ivory legs crossed, a seat.
 static func _curule(k: Kit, foot: Vector3, yaw: float) -> void:
 	k.push(Kit.at(foot, yaw))
-	for s in [-1.0, 1.0]:
+	for s: float in [-1.0, 1.0]:
 		k.rod(Vector3(s * 0.28, 0.0, 0.2), Vector3(-s * 0.28, 0.46, -0.2), 0.025, IVORY, Kit.PAINT)
 		k.rod(Vector3(s * 0.28, 0.0, -0.2), Vector3(-s * 0.28, 0.46, 0.2), 0.025, IVORY, Kit.PAINT)
 	k.box(Vector3(0, 0.45, 0), Vector3(0.62, 0.05, 0.5), PURPLE, Kit.CLOTH)
@@ -681,17 +681,17 @@ static func _basilica(sz: Vector2, year: int, variant := "") -> Dictionary:
 		front_holes.append([L * (i + 0.5) / nd, door_w, 6.4])
 	_wall(k, Vector2(-L * 0.5, zfront), Vector2(L * 0.5, zfront), 0.0, yu, wt, wallc, Kit.PLASTER, front_holes)
 	_wall(k, Vector2(-L * 0.5, -zfront), Vector2(L * 0.5, -zfront), 0.0, yu, wt, wallc, Kit.PLASTER, [[L * 0.3, 1.6, 3.0], [L * 0.7, 1.6, 3.0]])
-	for s in [-1.0, 1.0]:
+	for s: float in [-1.0, 1.0]:
 		_wall(k, Vector2(s * L * 0.5, -zfront), Vector2(s * L * 0.5, zfront), 0.0, yu, wt, wallc, Kit.PLASTER, [[W * 0.5, 2.4, 4.0]])
 	# the two orders of columns round the nave
 	var nx := maxi(4, int(round(L / (ch * 0.55))))
 	var sx := L / nx
 	for i in range(nx + 1):
 		var x := -L * 0.5 + wt + (L - 2.0 * wt) * i / nx
-		for s in [-1.0, 1.0]:
+		for s: float in [-1.0, 1.0]:
 			_column(k, Vector3(x, 0.0, s * m * 0.5), cd, ch, col, Kit.PAINT, "corinthian")
 			_column(k, Vector3(x, yg, s * m * 0.5), ud, uh, col, Kit.PAINT, "corinthian")
-	for s in [-1.0, 1.0]:
+	for s: float in [-1.0, 1.0]:
 		_span(k, -L * 0.5 + wt - cd, ch, s * m * 0.5 - cd * 0.7, L * 0.5 - wt + cd, yg, s * m * 0.5 + cd * 0.7, col, Kit.STONE)
 		_span(k, -L * 0.5 + wt - cd, yg + uh, s * m * 0.5 - cd * 0.7, L * 0.5 - wt + cd, yu, s * m * 0.5 + cd * 0.7, col, Kit.STONE)
 		# gallery floor over the aisle, and the parapet between the upper columns
@@ -701,13 +701,13 @@ static func _basilica(sz: Vector2, year: int, variant := "") -> Dictionary:
 	var yr := yu + 2.8
 	for i in range(nx + 1):
 		var x := -L * 0.5 + wt + (L - 2.0 * wt) * i / nx
-		for s in [-1.0, 1.0]:
+		for s: float in [-1.0, 1.0]:
 			_span(k, x - 0.5, yu, s * m * 0.5 - 0.5, x + 0.5, yr, s * m * 0.5 + 0.5, col, Kit.STONE)
-	for s in [-1.0, 1.0]:
+	for s: float in [-1.0, 1.0]:
 		_span(kc, -L * 0.5 + wt - cd, yr, s * m * 0.5 - 0.6, L * 0.5 - wt + cd, yr + 0.9, s * m * 0.5 + 0.6, WOOD_D, Kit.TIMBER)
 	# roofs: the nave gable, the aisles' sloping roofs, a plank ceiling over the aisle galleries
 	kc.gable_roof(Vector3(0, yr + 0.9, 0), L + 1.0, m + 3.0, m * 0.22, 0.6, 0.3, TILE_C, Kit.TILE, wallc, Kit.PLASTER)
-	for s in [-1.0, 1.0]:
+	for s: float in [-1.0, 1.0]:
 		var z0: float = s * (m * 0.5 + 0.6)
 		var z1: float = s * (W * 0.5 + 0.6)
 		var pts: Array = [Vector3(-L * 0.5 - 0.5, yu, z0), Vector3(L * 0.5 + 0.5, yu, z0), Vector3(L * 0.5 + 0.5, yu - 1.4, z1), Vector3(-L * 0.5 - 0.5, yu - 1.4, z1)]
@@ -735,7 +735,7 @@ static func _basilica(sz: Vector2, year: int, variant := "") -> Dictionary:
 		k.quad(Vector3(p0.x, 0, p0.y), Vector3(p1.x, 0, p1.y), Vector3(p1.x, 1.1, p1.y), Vector3(p0.x, 1.1, p0.y), TRAVERTINE, Kit.STONE, c)
 	for i in range(-2, 3):
 		_curule(k, Vector3(tx + 1.6, 1.1, i * 1.5), -PI * 0.5)
-	for s in [-1.0, 1.0]:
+	for s: float in [-1.0, 1.0]:
 		_lamp_stand(k, Vector3(tx + tr * 0.9, 1.1, s * tr * 0.6), 1.7)
 		_lamp(lights, Vector3(tx + tr * 0.9, 3.0, s * tr * 0.6), 1.6, 11.0)
 	# the judges' benches before it
@@ -749,7 +749,7 @@ static func _basilica(sz: Vector2, year: int, variant := "") -> Dictionary:
 	# hanging lamps along both aisles
 	for i in range(1, nx, 2):
 		var x := -L * 0.5 + (L) * i / nx
-		for s in [-1.0, 1.0]:
+		for s: float in [-1.0, 1.0]:
 			_lamp(lights, Vector3(x, 4.2, s * (m * 0.5 + a * 0.5)), 1.4, 9.0)
 	# the shops along the Forum side
 	var nshop := maxi(3, int(L / 4.6))
@@ -789,9 +789,251 @@ static func _basilica(sz: Vector2, year: int, variant := "") -> Dictionary:
 	return _pack(k, kc, lights, spawn, seats, views, notes, {"anchors": {"tribunal": Vector3(tx + 1.6, 1.1, 0.0), "door": Vector3(0, 0, zfront)}, "floor_y": 0.0})
 
 
+
+# ====================================================================================================
+#  CIRCUS MAXIMUS
+# ====================================================================================================
+
+## One row of a stepped bank: radial start, radial end and top height of row `r` (rows in
+## groups of `per`, a walkway of `walk` and an extra `lift` between groups).
+static func _row(r: int, per: int, tread: float, rise: float, walk: float, lift: float, h0: float) -> Array:
+	var g := r / per
+	var d0 := r * tread + g * walk
+	return [d0, d0 + tread, h0 + (r + 1) * rise + g * lift]
+
+
+## The Circus Maximus from inside. Long axis z: the twelve carceres at -z (the Forum Boarium end),
+## the curved end (sphendone) at +z, the spina along the middle, the Palatine (and the pulvinar,
+## Mon. Anc. 4.4) on the +x side. Sizes: the arena 568 m long and 75-87 m wide, the spina 344 m
+## (Platner-Ashby, the final plan); Dionysius 3.68 in 7 BC gives 3.5 stadia by 4 plethra with a
+## euripus 10 ft wide and 10 ft deep, three tiers of seats, the lowest of stone, the upper two of
+## wood, the carceres roofless. In the Republic all the seats were wooden (Livy 1.35.8, 1.56.2),
+## the carceres first built in 329 BC (Livy 8.20.1), the eggs set up in 174 BC (Livy 41.27.6),
+## the dolphins in 33 BC (Dio 49.43.2), the euripus made by Caesar in 46 BC (Pliny NH 8.21).
+static func _circus(sz: Vector2, year: int) -> Dictionary:
+	var L := sz.x
+	var W := sz.y
+	var k := _kit()
+	var lights: Array = []
+	var cz := L * 0.0267                       # depth of the carceres building
+	var za := -L * 0.5 + cz                    # where the arena begins (the starting line)
+	var A := L * 0.5 - za                      # arena length (568 for 600)
+	var euripus := year >= -46
+	var ew := 3.0                              # 10 Roman feet
+	var stone_low := year >= -46               # the lowest tier of stone from Caesar's rebuilding
+	var R0 := W * 0.5 + (ew + 0.8 if euripus else 1.5)
+	var zc := L * 0.5 - R0                     # centre of the curved end
+	# the track
+	_floor(k, -W * 0.5, za, W * 0.5, L * 0.5 - R0 + W * 0.5 + 0.0, 0.0, SAND, Kit.EARTH)
+	k.polygon(_arc_pts(0.0, zc, W * 0.5, 0.0, PI, 12, 0.0), SAND, Kit.EARTH, Vector3(0, -1, zc))
+	if euripus:
+		_floor(k, W * 0.5, za, W * 0.5 + ew, zc, -0.25, Color(0.35, 0.55, 0.65), Kit.WATER)
+		_floor(k, -W * 0.5 - ew, za, -W * 0.5, zc, -0.25, Color(0.35, 0.55, 0.65), Kit.WATER)
+		for i in 12:
+			var a0 := PI * i / 12.0
+			var a1 := PI * (i + 1) / 12.0
+			var q: Array = []
+			for aa in [a0, a1]:
+				q.append([Vector3(cos(aa) * W * 0.5, -0.25, zc + sin(aa) * W * 0.5), Vector3(cos(aa) * (W * 0.5 + ew), -0.25, zc + sin(aa) * (W * 0.5 + ew))])
+			k.quad(q[0][0], q[0][1], q[1][1], q[1][0], Color(0.35, 0.55, 0.65), Kit.WATER, Vector3(0, -3, zc))
+	# the stepped banks: 3 groups of 12 rows; a podium wall in front
+	var per := 12
+	var nrow := 36
+	var tread := 0.75
+	var rise := 0.42
+	var walk := 3.0
+	var lift := 1.3
+	var h0 := 2.2 if euripus else 1.4
+	var seat_c := TRAVERTINE if stone_low else WOOD_L
+	var wall_c := TRAVERTINE
+	var rows: Array = []
+	for r in nrow:
+		rows.append(_row(r, per, tread, rise, walk, lift, h0))
+	var last_d: float = rows[nrow - 1][1]
+	var top_h: float = rows[nrow - 1][2]
+	for s: float in [-1.0, 1.0]:
+		var prev_h := 0.0
+		_span(k, minf(s * (R0 - 0.7), s * R0), -0.3, za, maxf(s * (R0 - 0.7), s * R0), h0, zc, wall_c, Kit.STONE, false)   # podium wall
+		prev_h = h0
+		for r in nrow:
+			var d0: float = rows[r][0]
+			var d1: float = rows[r][1]
+			var hh: float = rows[r][2]
+			var mat_r := Kit.STONE if (stone_low and r < per) else Kit.TIMBER
+			var col_r := TRAVERTINE if (stone_low and r < per) else (WOOD_L if (r / 3) % 2 == 0 else WOOD)
+			var xi: float = s * (R0 + d0)
+			var xo: float = s * (R0 + d1)
+			if r > 0 and r % per == 0:   # the walkway between the tiers
+				var pd: float = rows[r - 1][1]
+				var py: float = rows[r - 1][2]
+				k.quad(Vector3(s * (R0 + pd), py, za), Vector3(s * (R0 + d0), py, za), Vector3(s * (R0 + d0), py, zc), Vector3(s * (R0 + pd), py, zc), DUST, Kit.EARTH, Vector3(s * (R0 + d0), py - 1, zc))
+				prev_h = py
+			k.quad(Vector3(xi, prev_h, za), Vector3(xi, prev_h, zc), Vector3(xi, hh, zc), Vector3(xi, hh, za), col_r.darkened(0.08), mat_r, Vector3(s * (R0 + d1 + 4.0), prev_h, (za + zc) * 0.5))
+			k.quad(Vector3(xi, hh, za), Vector3(xo, hh, za), Vector3(xo, hh, zc), Vector3(xi, hh, zc), col_r, mat_r, Vector3(xi, hh - 1, (za + zc) * 0.5))
+			prev_h = hh
+		# aisles (stairs) every 40 m on the straight side
+		var na := int((zc - za) / 40.0)
+		for i in range(1, na + 1):
+			var zs := za + (zc - za) * i / (na + 1)
+			for r in nrow:
+				var d0: float = rows[r][0]
+				var d1: float = rows[r][1]
+				var hh: float = rows[r][2]
+				_floor(k, minf(s * (R0 + d0), s * (R0 + d1)), zs - 0.7, maxf(s * (R0 + d0), s * (R0 + d1)), zs + 0.7, hh + 0.01, DUST.darkened(0.2), Kit.EARTH)
+		# the back wall behind the top row
+		var xb: float = s * (R0 + last_d + 0.3)
+		k.quad(Vector3(xb, top_h, za), Vector3(xb, top_h, zc), Vector3(xb, top_h + 2.8, zc), Vector3(xb, top_h + 2.8, za), wall_c, Kit.PLASTER, Vector3(s * (R0 + last_d - 5), top_h, (za + zc) * 0.5))
+	# the curved end
+	var segs := 28
+	for r in nrow:
+		var d0: float = rows[r][0]
+		var d1: float = rows[r][1]
+		var hh: float = rows[r][2]
+		var prev: float = h0 if r == 0 else rows[r - 1][2]
+		var col_r2 := TRAVERTINE if (stone_low and r < per) else (WOOD_L if (r / 3) % 2 == 0 else WOOD)
+		var mat2 := Kit.STONE if (stone_low and r < per) else Kit.TIMBER
+		if r > 0 and r % per == 0:
+			var pd2: float = rows[r - 1][1]
+			for i in segs:
+				var t0 := PI * i / segs
+				var t1 := PI * (i + 1) / segs
+				k.quad(_pol(R0 + pd2, t0, zc, prev), _pol(R0 + pd2, t1, zc, prev), _pol(R0 + d0, t1, zc, prev), _pol(R0 + d0, t0, zc, prev), DUST, Kit.EARTH, Vector3(0, prev - 1, zc))
+		for i in segs:
+			var t0 := PI * i / segs
+			var t1 := PI * (i + 1) / segs
+			var tm := (t0 + t1) * 0.5
+			var far := _pol(R0 + d1 + 4.0, tm, zc, prev)
+			k.quad(_pol(R0 + d0, t0, zc, prev), _pol(R0 + d0, t1, zc, prev), _pol(R0 + d0, t1, zc, hh), _pol(R0 + d0, t0, zc, hh), col_r2.darkened(0.08), mat2, far)
+			k.quad(_pol(R0 + d0, t0, zc, hh), _pol(R0 + d1, t0, zc, hh), _pol(R0 + d1, t1, zc, hh), _pol(R0 + d0, t1, zc, hh), col_r2, mat2, _pol(R0 + d0, tm, zc, hh - 1.0))
+	for i in segs:
+		var t0 := PI * i / segs
+		var t1 := PI * (i + 1) / segs
+		k.quad(_pol(R0 - 0.7, t0, zc, -0.3), _pol(R0 - 0.7, t1, zc, -0.3), _pol(R0 - 0.7, t1, zc, h0), _pol(R0 - 0.7, t0, zc, h0), wall_c, Kit.STONE, _pol(R0 + 3.0, (t0 + t1) * 0.5, zc, 0.5))
+		var rb := R0 + last_d + 0.3
+		k.quad(_pol(rb, t0, zc, top_h), _pol(rb, t1, zc, top_h), _pol(rb, t1, zc, top_h + 2.8), _pol(rb, t0, zc, top_h + 2.8), wall_c, Kit.PLASTER, _pol(rb - 5.0, (t0 + t1) * 0.5, zc, top_h))
+	# the spina: a low platform down the middle, 344 m of it
+	var Ls := A * 0.605
+	var zs0 := za + (A - Ls) * 0.5
+	var zs1 := zs0 + Ls
+	var sw := 8.0
+	_span(k, -sw * 0.5, 0.0, zs0, sw * 0.5, 1.2, zs1, TRAVERTINE, Kit.STONE, false)
+	_span(k, -sw * 0.5 - 0.3, 1.2, zs0 - 0.3, sw * 0.5 + 0.3, 1.45, zs1 + 0.3, TRAVERTINE.lightened(0.05), Kit.STONE, false)
+	if euripus and year >= -30:   # basins with dolphins spouting water appear later on; a channel for now
+		_floor(k, -sw * 0.25, zs0 + 6.0, sw * 0.25, zs1 - 6.0, 1.47, Color(0.35, 0.55, 0.65), Kit.WATER)
+	# the metae: three cones on a base at each end (wood before Claudius, Platner-Ashby)
+	for ze in [zs0 - 3.5, zs1 + 3.5]:
+		_span(k, -sw * 0.5 - 0.5, 0.0, ze - 3.0, sw * 0.5 + 0.5, 1.0, ze + 3.0, TRAVERTINE, Kit.STONE, false)
+		for cx: float in [-2.6, 0.0, 2.6]:
+			k.frustum(Vector3(cx, 1.0, ze), 1.15, 0.3, 4.6, Color(0.50, 0.36, 0.2), Kit.TIMBER, 10)
+	# the eggs (174 BC) near the carceres end, the dolphins (33 BC) near the other
+	if year >= -174:
+		var ze2 := zs0 + 8.0
+		_span(k, -3.0, 1.45, ze2 - 0.2, 3.0, 3.6, ze2 + 0.2, WOOD_D, Kit.TIMBER)
+		for q in 7:
+			var ex := -2.7 + q * 0.9
+			k.dome(Vector3(ex, 3.6, ze2), 0.38, IVORY, Kit.PAINT, 1.45, 3, 8)
+	if year >= -33:
+		var zd := zs1 - 8.0
+		for q in 7:
+			var dx := -2.7 + q * 0.9
+			k.rod(Vector3(dx, 1.45, zd), Vector3(dx, 3.2, zd), 0.05, BRONZE, Kit.GOLD)
+			k.dome(Vector3(dx, 3.2, zd), 0.34, BRONZE, Kit.GOLD, 0.7, 3, 7)
+			k.rod(Vector3(dx, 3.4, zd - 0.45), Vector3(dx, 3.0, zd + 0.45), 0.08, BRONZE, Kit.GOLD)
+	# statues on columns (Livy 39.7.8, 40.2.1), a shrine in the middle, the obelisk once Augustus set it up
+	if year >= -189:
+		for q in 3:
+			var zz := zs0 + Ls * (0.3 + 0.2 * q)
+			k.frustum(Vector3(-2.0, 1.45, zz), 0.45, 0.4, 5.5, TRAVERTINE, Kit.STONE, 10)
+			_figure(k, Vector3(-2.0, 6.95, zz), 2.4, BRONZE, BRONZE, 0.0, false, Kit.GOLD)
+	var zm := (zs0 + zs1) * 0.5
+	for sx: float in [-1.0, 1.0]:
+		for sz2: float in [-1.0, 1.0]:
+			_column(k, Vector3(2.2 + sx * 0.7, 1.45, zm + sz2 * 0.9), 0.4, 3.6, TRAVERTINE, Kit.STONE, "tuscan")
+	_span(k, 1.3, 5.05, zm - 1.5, 3.1, 5.4, zm + 1.5, TRAVERTINE, Kit.STONE)
+	k.wedge(Vector3(2.2, 5.4, zm), 3.2, 1.8, 0.9, TERRA, Kit.PLASTER, PI / 2.0)
+	if year >= -10:
+		k.push(Kit.at(Vector3(0, 1.45, zm), PI / 4.0))
+		k.frustum(Vector3.ZERO, 1.2, 0.8, 21.5, Color(0.82, 0.55, 0.50), Kit.STONE, 4)
+		k.frustum(Vector3(0, 21.5, 0), 0.8, 0.0, 1.4, GILT, Kit.GOLD, 4)
+		k.pop()
+	# the finish line (position unverified) and the pulvinar on the Palatine side
+	var zf := za + A * 0.27
+	_floor(k, -W * 0.5, zf - 0.25, W * 0.5, zf + 0.25, 0.02, Color(0.95, 0.94, 0.9), Kit.PAINT)
+	var pr := 9
+	var px0: float = R0 + rows[pr][0]
+	var py0: float = rows[pr][2]
+	_span(k, px0 - 0.4, py0, zf - 7.0, px0 + 9.0, py0 + 0.5, zf + 7.0, TRAVERTINE, Kit.STONE, false)
+	for cx in [px0 + 0.2, px0 + 8.4]:
+		for cz2 in [zf - 6.4, zf + 6.4]:
+			k.rod(Vector3(cx, py0 + 0.5, cz2), Vector3(cx, py0 + 5.0, cz2), 0.12, WOOD_D, Kit.TIMBER)
+	_span(k, px0 - 0.2, py0 + 5.0, zf - 7.0, px0 + 9.2, py0 + 5.25, zf + 7.0, PURPLE, Kit.CLOTH)
+	for q in 4:
+		_span(k, px0 + 3.0, py0 + 0.5, zf - 5.5 + q * 3.0, px0 + 5.6, py0 + 1.0, zf - 4.2 + q * 3.0, Color(0.6, 0.2, 0.2), Kit.CLOTH)
+	# the carceres: twelve stalls, roofless, closed by gates (Dionysius 3.68; first built 329 BC)
+	var zcb := za - cz
+	var pitch := (W + 2.0 * (R0 - W * 0.5)) / 12.0
+	var xs0 := -pitch * 6.0
+	_span(k, xs0 - 1.0, 0.0, zcb - 0.8, -xs0 + 1.0, 7.5, zcb + 0.1, TRAVERTINE if year > -200 else TUFA, Kit.STONE, false)
+	for i in range(13):
+		var xp := xs0 + pitch * i
+		_span(k, xp - pitch * 0.14, 0.0, zcb, xp + pitch * 0.14, 6.2, za, TRAVERTINE if year > -200 else TUFA, Kit.STONE, false)
+	for i in 12:
+		var xc := xs0 + pitch * (i + 0.5)
+		var gw := pitch * 0.72
+		k.box(Vector3(xc - gw * 0.25, 0.0, za - 0.1), Vector3(gw * 0.5, 4.2, 0.12), WOOD, Kit.TIMBER, 0.0, true)
+		k.box(Vector3(xc + gw * 0.25, 0.0, za - 0.1), Vector3(gw * 0.5, 4.2, 0.12), WOOD, Kit.TIMBER, 0.0, true)
+		_span(k, xc - gw * 0.5, 4.2, za - 0.2, xc + gw * 0.5, 4.5, za + 0.05, WOOD_D, Kit.TIMBER)
+	_span(k, -pitch * 0.5 - 0.2, 6.2, zcb, pitch * 0.5 + 0.2, 8.2, za, TRAVERTINE, Kit.STONE)   # the stand above the middle gate
+	var spawn := look(Vector3(-W * 0.27, EYE, za + 6.0), Vector3(-W * 0.1, 3.0, za + 230.0))
+	var seats := {}
+	var zk := zc
+	# seat viewpoints: row index into the banks, side, position along z, and what the eyes meet
+	var rr := func(side: float, row: int, z: float, target: Vector3) -> Transform3D:
+		var xx: float = side * (R0 + (rows[row][0] + rows[row][1]) * 0.5)
+		return look(Vector3(xx, rows[row][2] + 1.15, z), target)
+	seats["carceres"] = rr.call(1.0, 14, za + 30.0, Vector3(0, 3.0, zcb))
+	seats["finish"] = rr.call(1.0, 3, zf, Vector3(-W * 0.5, 0.5, zf))
+	seats["senate"] = rr.call(-1.0, 2, za + A * 0.32, Vector3(0, 2.0, za + A * 0.4))
+	var pxv := px0 + 4.5
+	seats["pulvinar"] = look(Vector3(pxv, py0 + 2.2, zf), Vector3(0, 1.5, zf + 60.0))
+	seats["turn"] = look(Vector3(_pol(R0 + (rows[8][0] + rows[8][1]) * 0.5, PI * 0.35, zc, 0.0).x, rows[8][2] + 1.15, _pol(R0 + (rows[8][0] + rows[8][1]) * 0.5, PI * 0.35, zc, 0.0).z), Vector3(0, 3.0, zs1 + 3.5))
+	var top := _pol(R0 + rows[nrow - 1][1] - 1.0, PI * 0.5, zc, 0.0)
+	seats["sphendone"] = look(Vector3(top.x, top_h + 1.3, top.z), Vector3(0, 0.0, -L * 0.2))
+	var views := [
+		["carceres", seats["carceres"]], ["finish", seats["finish"]], ["pulvinar", seats["pulvinar"]],
+		["senate", seats["senate"]], ["turn", seats["turn"]], ["sphendone", seats["sphendone"]],
+		["gates", look(Vector3(0, EYE, za + 22.0), Vector3(0, 3.0, zcb))],
+		["overview", look(Vector3(W * 2.2, 260.0, L * 0.05), Vector3(0, 0.0, -L * 0.02))],
+	]
+	var notes := [
+		"Dimensions: arena 568 m, width 75 to 87 m, spina 344 m, whole 600 m (Platner-Ashby s.v. Circus Maximus). Read.",
+		"Dionysius 3.68 (7 BC) via Platner-Ashby: 621 x 118 m, euripus 10 ft wide and deep, three tiers (lowest stone, two of wood), carceres roofless, rope barrier. Read through P-A, not the original.",
+		"Wooden seats and 'fori' in the Republic: Livy 1.35.8-9 and 1.56.2 (the first read, the second read in part).",
+		"Carceres first built 329 BC (Livy 8.20.1 via P-A); eggs 174 BC (Livy 41.27.6 via P-A; the primary text could not be fetched) # unverified at source; dolphins 33 BC (Dio 49.43.2, read).",
+		"Euripus by Caesar 46 BC (Pliny NH 8.21 via P-A); the pulvinar by Augustus (Mon. Anc. 4.4 via P-A).",
+		"The width of the spina (8 m), the position of the finish line and of the pulvinar, the deities of the spina's shrines, the straight line of the carceres: conjecture. # unverified",
+		"Orientation: carceres NW, curved end SE, Palatine on the +x side (Platner-Ashby: the Vallis Murcia between Palatine and Aventine).",
+	]
+	return _pack(k, null, lights, spawn, seats, views, notes, {
+		"anchors": {"carceres_line": Vector3(0, 0, za), "finish_line": Vector3(0, 0, zf), "spina_start": Vector3(0, 1.45, zs0), "spina_end": Vector3(0, 1.45, zs1),
+			"meta_a": Vector3(0, 1.0, zs0 - 3.5), "meta_b": Vector3(0, 1.0, zs1 + 3.5), "pulvinar": Vector3(px0 + 4.5, py0 + 0.5, zf), "sphendone_centre": Vector3(0, 0, zc)},
+		"floor_y": 0.0, "lane_width": pitch, "track_width": W, "arena_length": A})
+
+
+## A point on a circle of radius r about (0, zc) at angle t (0 = +x, PI/2 = +z), at height y.
+static func _pol(r: float, t: float, zc: float, y: float) -> Vector3:
+	return Vector3(cos(t) * r, y, zc + sin(t) * r)
+
+
+static func _arc_pts(cx: float, cz: float, r: float, t0: float, t1: float, n: int, y: float) -> Array:
+	var pts: Array = []
+	for i in range(n + 1):
+		var t := t0 + (t1 - t0) * i / n
+		pts.append(Vector3(cx + cos(t) * r, y, cz + sin(t) * r))
+	return pts
+
+
 # --- STUBS ---
-static func _circus(_sz: Vector2, _y: int) -> Dictionary:
-	return {}
 static func _arena(_sz: Vector2, _y: int, _v: String) -> Dictionary:
 	return {}
 static func _domus(_sz: Vector2, _y: int) -> Dictionary:
