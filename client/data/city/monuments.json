@@ -896,6 +896,12 @@
 "location": "west end of the Forum, in the Vicus Tuscus area, on the site of the house of Scipio Africanus",
 "lon": 12.484,
 "model": "basilica",
+"phases": [
+{
+"from": -54,
+"state": "gone"
+}
+],
 "place_like": "basilica_iulia",
 "precision": "rough",
 "regio": 8,
@@ -3654,7 +3660,7 @@
 "type": "temple"
 },
 {
-"bearing_deg": 180,
+"bearing_deg": 134,
 "built": {
 "by": "Pompey, dedicated in his second consulship 55 BC with games for 5 days and 500 lions (Plut. Pomp. 40, 52; Cic. Fam. 7.1; Pliny NH 8.20)",
 "certainty": "certain",
@@ -3736,7 +3742,7 @@
 "type": "curia"
 },
 {
-"bearing_deg": 180,
+"bearing_deg": 134,
 "built": {
 "by": "Pompey (Vitr. 5.9.1)",
 "certainty": "certain",
@@ -3744,8 +3750,8 @@
 },
 "english": "Portico of Pompey",
 "footprint_m": {
-"length": 180,
-"width": 135
+"length": 135,
+"width": 180
 },
 "geometry_source": "Platner-Ashby s.v. Porticus Pompei (rectangular court about 180 m long and 135 wide, four rows of columns)",
 "geometry_unverified": [
@@ -3804,7 +3810,7 @@
 "type": "theatre"
 },
 {
-"bearing_deg": 20,
+"bearing_deg": 202.5,
 "built": {
 "by": "begun by Julius Caesar, who cleared the site (Suet. Iul. 44); built by Augustus, dedicated 13 or 11 BC (Dio 43.49.2, 54.26.1)",
 "certainty": "certain",
@@ -5509,6 +5515,7 @@
 "type": "aqueduct"
 },
 {
+"arcade_m": 330,
 "built": {
 "by": "M'. Curius Dentatus and L. Papirius Cursor, duumviri; paid for with the spoils of Pyrrhus (Frontin. Aq. 6)",
 "certainty": "certain",
@@ -5701,6 +5708,7 @@
 "type": "aqueduct"
 },
 {
+"arcade_m": 1000,
 "built": {
 "by": "M. Agrippa, dedicated 19 BC (Frontin. Aq. 10; Dio 54.11.7)",
 "certainty": "certain",

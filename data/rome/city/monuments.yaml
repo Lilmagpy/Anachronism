@@ -408,6 +408,7 @@ monuments:
   type: basilica
   regio: 8
   model: basilica
+  phases: [{from: -54, state: gone}]  # the site was cleared for the Basilica Iulia (begun 54 BC, Cic. Att. 4.16.8)
   bearing_deg: 16  # unverified
   footprint_m: {length: 49, width: 101}  # unverified
   construction: {begun: -170, completed: -169}  # work years; see geometry_source
@@ -1757,7 +1758,7 @@ monuments:
   type: theatre
   regio: 9
   model: theatre_pompey
-  bearing_deg: 180  # unverified
+  bearing_deg: 134  # unverified: scaena side toward the Porticus Pompeiana (Platner-Ashby s.v. Porticus Pompei: the portico lay behind the stage)
   footprint_m: {radius: 77.5}
   construction: {begun: -61, completed: -55}  # work years; see geometry_source
   geometry_source: "Platner-Ashby s.v. Theatrum Pompei (diameter 150-160 m, scaena about 95 m long; facade of three arcades Doric/Ionic/Corinthian, 24 peperino arches in the lowest; temple of Venus Victrix at the top of the cavea, Gell. NA 10.1.7)"
@@ -1795,8 +1796,8 @@ monuments:
   type: portico
   regio: 9
   model: portico_enclosure
-  bearing_deg: 180  # unverified
-  footprint_m: {length: 180, width: 135}
+  bearing_deg: 134  # unverified
+  footprint_m: {length: 135, width: 180}
   height_m: 11  # unverified
   geometry_source: "Platner-Ashby s.v. Porticus Pompei (rectangular court about 180 m long and 135 wide, four rows of columns)"
   geometry_unverified: [bearing_deg, height_m]
@@ -1830,7 +1831,7 @@ monuments:
   type: theatre
   regio: 9
   model: theatre_stone
-  bearing_deg: 20
+  bearing_deg: 202.5  # unverified: Platner-Ashby: stage toward the river, main axis NNE-SSW; front = scaena side (SSW)
   footprint_m: {radius: 65}
   height_m: 32.6  # unverified
   construction: {begun: -44, completed: -13}  # work years; see geometry_source
@@ -2674,6 +2675,7 @@ monuments:
   type: aqueduct
   regio: 0
   model: aqueduct
+  arcade_m: 330  # unverified: arcaded stretch at the city end
   height_m: 12  # unverified
   geometry_source: "Frontin. Aq. 6 (Anio Vetus, 272 BC, 43 miles, mostly underground, 221 paces on arches in the last miles); arch height assumed"
   geometry_unverified: [height_m]
@@ -2740,6 +2742,7 @@ monuments:
   type: aqueduct
   regio: 9
   model: aqueduct
+  arcade_m: 1000  # unverified: arches in the Campus Martius (Frontin. Aq. 10)
   height_m: 8  # unverified
   geometry_source: "Frontin. Aq. 10 (Virgo, 19 BC, mostly underground, arches in the Campus Martius)"
   geometry_unverified: [height_m]
