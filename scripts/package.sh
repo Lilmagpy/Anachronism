@@ -24,6 +24,8 @@ rm -rf "$STAGE"
 mkdir -p "$STAGE/bin" "$CACHE"
 cp "$ROOT/pyproject.toml" "$ROOT/uv.lock" "$ROOT/README.md" "$ROOT/.python-version" "$STAGE/"
 cp -R "$ROOT/src" "$STAGE/"
+# The rome pack reads the city dataset from outside src/ (data/rome/city, D-289), so it ships too.
+cp -R "$ROOT/data" "$STAGE/"
 find "$STAGE/src" -name __pycache__ -prune -exec rm -rf {} +
 git -C "$ROOT" rev-parse --short HEAD > "$STAGE/STAMP"
 # the version shown on the title screen: the number of commits, so each build is higher
