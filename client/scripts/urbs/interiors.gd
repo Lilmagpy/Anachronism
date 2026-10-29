@@ -19,6 +19,8 @@ extends RefCounted
 
 const Roman := preload("res://scripts/models/roman_interiors.gd")
 const Geo := preload("res://scripts/urbs/geo.gd")
+const Figure := preload("res://scripts/urbs/spectacles/figure.gd")
+const MeshLib := preload("res://scripts/urbs/spectacles/meshlib.gd")
 
 static var current: Node3D = null
 static var _result: Dictionary = {}
@@ -169,6 +171,8 @@ static func _attach(root: Node3D, r: Dictionary) -> void:
 		cover.scale = Vector3.ONE * Roman.MS
 		cover.material_override = _material
 		root.add_child(cover)
+	for spec in r.get("statues", []):
+		root.add_child(_make_statue(spec))
 	if r.get("ground", false):   # the street round a building (the scene hides the city's own ground)
 		var ground := MeshInstance3D.new()
 		ground.name = "Ground"
@@ -201,6 +205,72 @@ static func _attach(root: Node3D, r: Dictionary) -> void:
 		light.omni_attenuation = 1.4
 		light.shadow_enabled = false
 		root.add_child(light)
+
+
+static var _statue_mats: Dictionary = {}
+
+
+static func _statue_mat(style: String) -> StandardMaterial3D:
+	if _statue_mats.has(style):
+		return _statue_mats[style]
+	var m := StandardMaterial3D.new()
+	m.roughness = 0.75
+	match style:
+		"terracotta":
+			m.albedo_color = Color(0.70, 0.34, 0.22)
+		"gilt":
+			m.albedo_color = Color(0.92, 0.74, 0.28)
+			m.metallic = 0.85
+			m.roughness = 0.35
+		"marble":
+			m.albedo_color = Color(0.92, 0.90, 0.85)
+		"bronze":
+			m.albedo_color = Color(0.55, 0.40, 0.20)
+			m.metallic = 0.7
+			m.roughness = 0.4
+	_statue_mats[style] = m
+	return m
+
+
+## One cult statue: the spectacles' jointed figure, scaled up, posed and finished in its material.
+static func _make_statue(spec: Dictionary) -> Node3D:
+	var style: String = spec["style"]
+	var opts := {"toga": true, "tunic": Color(0.9, 0.85, 0.7)}
+	if style == "person":
+		opts = {"toga": false, "tunic": spec.get("colour", Color(0.7, 0.6, 0.45)), "seed": int(spec["foot"].x * 7.0)}
+	if style == "chryselephantine":
+		opts = {"bare": true, "skin": Color(0.93, 0.89, 0.78), "tunic": Color(0.92, 0.74, 0.28), "hair": Color(0.9, 0.72, 0.3)}
+	var f: Node3D = Figure.person(opts)
+	var attr: String = spec.get("attr", "")
+	if spec["pose"] == "seated":
+		f.sit(1.0)
+	if attr == "sceptre":
+		f.equip_sceptre()
+	elif attr == "helmet":
+		f.equip_helmet()
+		f.equip_shield()
+	elif attr == "spear":
+		f.equip_spear()
+	elif attr == "wings":
+		for sx in [-1.0, 1.0]:
+			var wing := MeshInstance3D.new()
+			wing.mesh = MeshLib.ellipsoid(0.04, 0.32, 0.16, 10, 6)
+			wing.position = Vector3(sx * 0.2, 0.3, -0.12)
+			wing.rotation = Vector3(0.0, 0.0, -sx * 0.5)
+			f.torso.add_child(wing)
+	if style != "chryselephantine" and style != "person":
+		_override(f, _statue_mat(style))
+	f.scale = Vector3.ONE * (float(spec["h"]) / 1.75)
+	f.position = spec["foot"]
+	f.rotation.y = float(spec["yaw"])
+	return f
+
+
+static func _override(node: Node, m: Material) -> void:
+	if node is MeshInstance3D:
+		(node as MeshInstance3D).material_override = m
+	for c in node.get_children():
+		_override(c, m)
 
 
 ## Free the interior.
