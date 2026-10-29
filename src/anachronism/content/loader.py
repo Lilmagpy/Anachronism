@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import glob
 import hashlib
+import os
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -23,6 +25,7 @@ from anachronism.content.schema import (
     Battle,
     Building,
     Chapter,
+    CityTimeline,
     CivDefinition,
     Dialogue,
     Dilemma,
@@ -35,6 +38,7 @@ from anachronism.content.schema import (
     HistoricalPerson,
     Magistracy,
     MapResource,
+    Monument,
     PackManifest,
     ProvinceGeography,
     RepublicRules,
@@ -91,6 +95,9 @@ class Content:
     fasti: Mapping[str, FastiYear] = field(default_factory=dict)
     republic_rules: RepublicRules = field(default_factory=RepublicRules)
     battles: Mapping[str, Battle] = field(default_factory=dict)
+    monuments: Mapping[str, Monument] = field(default_factory=dict)
+    """The city of Rome (U7), read from the dataset the rome pack points at."""
+    city_timeline: Mapping[str, CityTimeline] = field(default_factory=dict)
     """Chance events (plague, flood, bumper harvests...)."""
 
 
@@ -147,6 +154,11 @@ def load_content(pack_ids: Sequence[str] | None = None, root: Path = PACKS_DIR) 
             parsed = _parse_file(relative, data, issues)
             if parsed is not None:
                 _register(parsed, relative, registry, issues)
+        for relative, data in _external_files(root, pack_dir, manifests[pack_id], issues):
+            digest.update(relative.encode() + b"\0" + data + b"\0")
+            parsed = _parse_file(relative, data, issues, external=True)
+            if parsed is not None:
+                _register(parsed, relative, registry, issues)
     issues.extend(_missing_singletons(registry))
     issues.extend(cross_reference_issues(registry))
     if issues:
@@ -185,8 +197,29 @@ def load_content(pack_ids: Sequence[str] | None = None, root: Path = PACKS_DIR) 
         fasti=registry.fasti,
         republic_rules=registry.republic_rules or RepublicRules(),
         battles=registry.battles,
+        monuments=registry.monuments,
+        city_timeline=registry.city_timeline,
         digest=digest.hexdigest(),
     )
+
+
+def _external_files(
+    root: Path, pack_dir: Path, manifest: PackManifest, issues: list[ContentIssue]
+) -> list[tuple[str, bytes]]:
+    """Read the dataset files a pack points at with ``external`` (U7), in sorted order."""
+    found: list[tuple[str, bytes]] = []
+    for pattern in manifest.external:
+        matches = sorted(glob.glob(os.path.normpath(pack_dir / pattern)))
+        if not matches:
+            issues.append(
+                ContentIssue(
+                    f"{pack_dir.name}/{MANIFEST}", "pack.external", f"{pattern!r}: no file"
+                )
+            )
+        for match in matches:
+            relative = Path(os.path.relpath(match, root)).as_posix()
+            found.append((relative, Path(match).read_bytes()))
+    return found
 
 
 def _discover_packs(root: Path, issues: list[ContentIssue]) -> dict[str, PackManifest]:
@@ -243,7 +276,9 @@ def _resolve_order(
     return order
 
 
-def _parse_file(relative: str, data: bytes, issues: list[ContentIssue]) -> ParsedFile | None:
+def _parse_file(
+    relative: str, data: bytes, issues: list[ContentIssue], *, external: bool = False
+) -> ParsedFile | None:
     """Parse and validate one file.
 
     List items are validated one by one, so a broken item is reported without hiding its
@@ -258,7 +293,13 @@ def _parse_file(relative: str, data: bytes, issues: list[ContentIssue]) -> Parse
         issues.append(ContentIssue(relative, "", "file must be a mapping of keys to values"))
         return None
     version = raw.get("schema_version")
-    if version != CURRENT_SCHEMA_VERSION:
+    if external:  # a dataset file outside the pack: no schema_version, a single list kind
+        if list(raw) != ["monuments"]:
+            issues.append(
+                ContentIssue(relative, "", f"expected only 'monuments'; found {list(raw)}")
+            )
+            return None
+    elif version != CURRENT_SCHEMA_VERSION:
         issues.append(
             ContentIssue(
                 relative,

@@ -163,6 +163,9 @@ class TechNode(Frozen):
     """Internal research notes; never shown to players."""
     confidence: Confidence = Confidence.LOW
     """How sure the date and effects are; internal only."""
+    builds: Identifier | None = None
+    """A great work this advancement raises in the city of Rome when adopted (U7): the kind of
+    structure, e.g. ``aqueduct`` or ``dome``; the 3D city shows it, early if the player was."""
     keywords: tuple[Annotated[str, Field(min_length=2, max_length=40)], ...] = ()
     """Words a player might use for this idea ("printing", "press"); the offline
     interpreter and the model's related-node search match on them."""

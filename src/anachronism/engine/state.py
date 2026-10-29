@@ -16,6 +16,7 @@ from anachronism.content.schema import (
     AlmanacEntry,
     Building,
     Chapter,
+    CityTimeline,
     Dilemma,
     Disposition,
     EffectType,
@@ -30,6 +31,7 @@ from anachronism.content.schema import (
     HistoricalPerson,
     Magistracy,
     MapResource,
+    Monument,
     ProvinceGeography,
     RelationStatus,
     RepublicRules,
@@ -47,6 +49,7 @@ from anachronism.content.schema import (
     Unit,
 )
 from anachronism.engine.actions import LoggedAction, Priority
+from anachronism.engine.city_state import CityState
 from anachronism.engine.republic_state import RepublicState
 from anachronism.engine.rng import RngState
 
@@ -128,6 +131,10 @@ class World(Frozen):
     gentes: dict[str, Gens] = Field(default_factory=dict)
     people: dict[str, HistoricalPerson] = Field(default_factory=dict)
     """Real persons who may be seeded."""
+    monuments: dict[str, Monument] = Field(default_factory=dict)
+    """The city of Rome's monuments (U7), in Republic scenarios."""
+    city_timeline: tuple[CityTimeline, ...] = ()
+    """When they were begun, finished, burnt or pulled down, sorted by monument and year."""
     fasti: dict[int, FastiYear] = Field(default_factory=dict)
     """The Fasti by year: whom history elected."""
 
@@ -538,6 +545,8 @@ class GameState(Mutable):
     outcome: Outcome | None = None
     republic: RepublicState | None = None
     """How Rome governs itself (R2), in scenarios with ``republic: true``; else ``None``."""
+    city: CityState | None = None
+    """The city of Rome (U7): what stands, the turn's events; ``None`` outside the Republic."""
     victory_start: dict[str, int] = Field(default_factory=dict)
     """The player's share on each victory path at the start: victory means gaining ground."""
 

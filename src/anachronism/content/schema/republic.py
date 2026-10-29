@@ -12,6 +12,7 @@ from typing import Annotated
 from pydantic import Field, model_validator
 
 from anachronism.content.schema.base import Confidence, Frozen, Identifier, Rate
+from anachronism.content.schema.monuments import CityRules
 
 Sources = Annotated[tuple[str, ...], Field(min_length=1)]
 """Where a fact comes from, e.g. ``("Livy 2.1", "Fasti Capitolini")``."""
@@ -298,4 +299,6 @@ class RepublicRules(Frozen):
     spawn_new_men: bool = True
     """When too few men are eligible, new men (novi homines) stand."""
     factions: tuple[Faction, ...] = ()
+    city: CityRules = CityRules()
+    """The city of Rome's calendar of games and where the Senate sits (U7)."""
     sources: tuple[str, ...] = ()

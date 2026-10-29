@@ -16,8 +16,10 @@ from anachronism.tools.lint_content import main as lint_main
 @pytest.fixture
 def packs(tmp_path: Path) -> Path:
     """A private copy of the real packs that a test may break."""
-    root = tmp_path / "packs"
+    root = tmp_path / "src" / "anachronism" / "content" / "packs"
     shutil.copytree(PACKS_DIR, root)
+    # the rome pack reads the city dataset from data/ (``external`` in its pack.yaml)
+    shutil.copytree(PACKS_DIR.parents[3] / "data" / "rome" / "city", tmp_path / "data/rome/city")
     return root
 
 

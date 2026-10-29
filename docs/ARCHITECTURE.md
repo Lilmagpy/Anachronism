@@ -121,6 +121,12 @@ files, each holding `schema_version` and exactly one kind (D-036). Packs load in
 order; list items are validated one by one; cross-references are checked afterwards; every
 problem is reported with its file and location. See CONTENT_GUIDE.md.
 
+A pack may also point at dataset files outside itself with `external:` in `pack.yaml` (glob
+patterns relative to the pack folder). The `rome` pack uses it to read
+`data/rome/city/monuments*.yaml` in place (no copy, so the 3D client and the engine share one
+source). External files have no `schema_version` and hold one list kind (`monuments`); the lint
+reports a pattern that matches nothing.
+
 ## 7. Save format
 One JSON file with sorted keys: the whole `GameState`. Tests check that save → load → save
 is byte-identical, that a replay from the initial state and the action log is identical, and
@@ -184,3 +190,35 @@ and `senate_mood()` give the Senate's will. Hooks for other systems: `award_glor
 `year_label`, `influence`, `emergency_bp`, `history_turned`, `magistrates[]` (office, name,
 rank, months, suffect, appointed, from_fasti, master_of), `senate.factions[]` (weight and mood in
 bp, per-issue leaning), `senate.votes[]`, `families[]`, `notable[]`, `census[]`, `fasti[]`.
+
+## 10. The city of Rome (U7)
+In Republic scenarios the engine also knows the city, so the 3D client (Urbs) is driven by the
+game and the city is saved with it.
+
+**Content** (`content/schema/monuments.py`): kind `monuments` is the dataset
+`data/rome/city/monuments*.yaml` (extra fields are kept, so client-only fields do no harm);
+kind `city_timeline` (`rome/city_timeline.yaml`) gives the turning points as data (`vowed`,
+`begun`, `completed`, `fire`, `demolished`, `flood`, each with a source), because the dataset's
+`events` are free text and are not parsed; `republic_rules.city` holds the games calendar
+(`ludi`: festival, month, first year, venue), the funeral-games rule (`munus_*`) and the
+Senate's houses. `TechNode.builds` names a great work an idea raises when adopted. All are
+copied into `World` (`monuments`, `city_timeline`, `republic_rules.city`).
+
+**State** (`engine/city_state.py`, `GameState.city`, `None` outside the Republic): `standing`
+(monument id to `MonumentStatus`: `state` planned/building/standing/burnt/ruined, `years_left`,
+`since`), `changed`, `anachronisms`, `events` (frozen `CityEvent`s of the turn), `funerals`.
+
+**Rules** (`engine/city.py`): a monument's status in a year is a pure function of its
+dataset dates and the timeline (`status_map`), so a new game starts at the right place;
+`run_year`, called at the end of `republic.run_year`, recomputes it and emits events:
+`sacrifice` (`vow`, `dedication`), `fire`, `flood` from the timeline; `games` (every festival of
+the calendar whose first year has come; `munus` for a dead man who held an office of rank 5 or
+more, from 264 BC); at the turn's last year `triumph` (the senior magistrate in office; for a
+battle the engine marks `decisive` or an enemy capital taken, with the spoils) and anachronisms
+(an adopted project with `builds`). `senate_vote(..., record=True)` adds a `senate` event.
+A burnt monument keeps its state while it is rebuilt; `years_left` tells how long.
+
+**View** (`tools/city_view.py`, key `city`, `null` outside the Republic):
+`{year, senate_house, monuments: [{id, status, years_left}], changed: [id], anachronisms:
+[{id, tech, name, builds, year, ahead}], events: [{kind, year, ref, monument, person, value,
+other}]}`. `monuments` lists everything not still `planned`.

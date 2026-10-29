@@ -38,6 +38,7 @@ def cross_reference_issues(registry: Registry) -> list[ContentIssue]:
         *_tactic_issues(registry),
         *_formation_issues(registry),
         *_battle_issues(registry),
+        *_city_issues(registry),
         *_symbol_issues(registry),
         *_republic_issues(registry),
         *_dialogue_issues(registry),
@@ -468,6 +469,32 @@ def _battle_issues(registry: Registry) -> list[ContentIssue]:
                 issues.append(ContentIssue(where, label, f"unknown formation {side.formation!r}"))
             if side.tactic and registry.is_unknown("tactics", side.tactic):
                 issues.append(ContentIssue(where, label, f"unknown battle plan {side.tactic!r}"))
+    return issues
+
+
+def _city_issues(registry: Registry) -> list[ContentIssue]:
+    """The city of Rome (U7): timeline and calendar must name monuments that exist."""
+    issues: list[ContentIssue] = []
+    for turn in registry.city_timeline.values():
+        where = registry.origin("city_timeline", turn.id)
+        if registry.is_unknown("monuments", turn.monument):
+            issues.append(
+                ContentIssue(
+                    where, f"city_timeline ({turn.id})", f"unknown monument {turn.monument!r}"
+                )
+            )
+    rules = registry.republic_rules
+    if rules is None:
+        return issues
+    where = registry.origin("republic_rules", "republic_rules")
+    refs = [
+        *((f"ludi ({ludus.id})", ludus.venue) for ludus in rules.city.ludi),
+        *(("senate_houses", house) for house in rules.city.senate_houses),
+        *((("munus_venue", rules.city.munus_venue),) if rules.city.munus_venue else ()),
+    ]
+    for label, monument in refs:
+        if registry.is_unknown("monuments", monument):
+            issues.append(ContentIssue(where, f"city.{label}", f"unknown monument {monument!r}"))
     return issues
 
 
