@@ -104,7 +104,7 @@ senate:
     name: "discessio, 'going apart': those for the proposal went and stood on one side, those against on the other, and were counted"
     formula: "pedibus in sententiam ire, 'to go by foot to a proposal'"
     source: "Gellius 14.7.9 (Varro); Cic. Phil. 3.? # unverified"
-    formula: "the presiding magistrate called: those who think so, go to this side; those who think otherwise, to that (paraphrase); Pliny Ep. 8.14.19   # unverified"
+    call_formula: "the presiding magistrate called: those who think so, go to this side; those who think otherwise, to that (paraphrase); Pliny Ep. 8.14.19   # unverified"
     note: "voice-vote opinions came first, the division after; the game plays only the division"
 
 sacrifice:
