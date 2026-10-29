@@ -1,0 +1,351 @@
+{
+"chariot_race": {
+"crashes": {
+"note": "the term is quoted in the modern literature; ancient passage not identified",
+"term": "naufragium, a 'shipwreck'"
+},
+"factions": [
+{
+"colour": "white",
+"name": "albata",
+"rgb": [
+0.93,
+0.93,
+0.9
+],
+"source": "Tertullian De spect. 9"
+},
+{
+"colour": "red",
+"name": "russata",
+"rgb": [
+0.8,
+0.16,
+0.14
+],
+"source": "Tertullian De spect. 9; Pliny NH 7.186 (a supporter of the Reds on a charioteer's pyre)"
+},
+{
+"colour": "green",
+"name": "prasina",
+"rgb": [
+0.2,
+0.55,
+0.28
+],
+"source": "Tertullian De spect. 9"
+},
+{
+"colour": "blue",
+"name": "veneta",
+"rgb": [
+0.2,
+0.38,
+0.75
+],
+"source": "Tertullian De spect. 9"
+}
+],
+"factions_note": "Tertullian says the first two colours were white and red and green and blue came later; the date of the four-faction system is disputed (late Republic or early Empire). Shown as four because the brief asks; the Republic evidence is thin. Gold and purple were Domitian's (Suet. Dom. 7), not used.",
+"laps": {
+"count": 7,
+"count_source": "Imperial and later sources give seven laps (spatia); Republican figure not read",
+"counter_dolphins": "seven bronze dolphins added by Agrippa in 33 BC; Dio 49.43.2",
+"counter_republic": "seven eggs on a bar, one removed or turned each lap; Livy 41.27.6 (174 BC)",
+"direction": "anticlockwise round the spina, turns on the left; standard modern reading of the circus layout"
+},
+"metae": {
+"description": "three conical pillars at each end of the spina; the turn round them is the dangerous place",
+"source": "Tertullian De spect. 8"
+},
+"pompa": {
+"order": [
+"boys and youths of equestrian and citizen families, on horse and on foot, by age-class",
+"charioteers in quadrigae and bigae and riders of single horses",
+"athletes, naked but for a loincloth",
+"dancers in three bands (men, youths, boys) to pipes and lyres; satyr and silenus dancers",
+"lyre players, incense burners",
+"sacred vessels of gold and silver",
+"the images of the gods carried on shoulders (placed on the pulvinar for the games)"
+],
+"route": "from the Capitol, through the Forum, to the Circus Maximus",
+"sacrifice_at_end": "victims sacrificed; the games follow",
+"source": "Dion. Hal. 7.72"
+},
+"pulvinar": {
+"description": "the shrine-couch from which the gods' images and the presiding magistrate watched, on the Palatine side",
+"source": "Suet. Aug. 45 (Augustus and the pulvinar); Livy 5.13 (lectisternium, couches for the gods)"
+},
+"races_per_day": {
+"game_use": "the animation shows one race; the programme length is the engine's choice",
+"imperial": "Domitian once gave 100 races in a day (Suet. Dom. 4.3, 'centum missus'); a day of 24 is the usual modern figure for the Empire",
+"republic": "unknown"
+},
+"start": {
+"carceres": 12,
+"carceres_source": "twelve is the usual modern count; Livy 41.27.6 (carceres rebuilt 174 BC) for the structure",
+"signal": "the presiding magistrate (editor) drops a cloth, the mappa; gates open together",
+"signal_note": "disputed/thin for the Republic: the mappa story is attested later (Cassiod. Var. 3.51 is the usual cite)"
+},
+"teams": {
+"biga": "two horses; Dion. Hal. 7.72 names both",
+"quadriga": "four horses abreast",
+"source": "Dion. Hal. 7.72"
+},
+"where": "Circus Maximus (monument id circus_maximus); the Circus Flaminius also held games"
+},
+"ludi": [
+{
+"english": "Roman Games",
+"founded": "traditional, by Tarquinius Priscus (Livy 1.35.9; Dion. Hal. 7.71, 7.73); a regular annual feast of the republic from 366 BC (Livy 6.42.12) # date and passage unverified",
+"id": "ludi_romani",
+"latin": "Ludi Romani",
+"note": "the extension from one day to 15 over the Republic is the standard story; precise stages unverified",
+"when": "4-19 September in the late Republic"
+},
+{
+"english": "Plebeian Games",
+"founded": "origin uncertain; attested by Livy 23.30.17 (216 BC) # unverified",
+"id": "ludi_plebeii",
+"latin": "Ludi Plebeii",
+"note": "given by the plebeian aediles",
+"when": "4-17 November"
+},
+{
+"english": "Games of Apollo",
+"founded": "vowed 212 BC on the Marcian prophecies (Livy 25.12); made annual 208 BC (Livy 27.23.5) # unverified",
+"id": "ludi_apollinares",
+"latin": "Ludi Apollinares",
+"note": "the game year 212 BC is the vow; the first celebration is 212 BC",
+"when": "July; the date varied before fixing"
+},
+{
+"english": "Games of the Great Mother",
+"founded": "the stone of Cybele came to Rome in 204 BC (Livy 29.10-14); the temple was dedicated and the games set up in 191 BC (Livy 36.36.3) # unverified",
+"id": "ludi_megalenses",
+"latin": "Ludi Megalenses",
+"note": "the 204 BC date in the brief is the arrival of the goddess; the games proper begin in the 190s",
+"when": "4 April and after"
+},
+{
+"english": "Games of Ceres",
+"founded": "uncertain; plebeian aediles; Livy 30.39.8 mentions the games of 202 BC # unverified",
+"id": "ludi_cereales",
+"latin": "Ludi Cereri",
+"when": "12-19 April"
+},
+{
+"english": "Games of Flora",
+"founded": "temple of Flora vowed 241/238 BC (Pliny NH 18.286); made annual by decree of the Senate 173 BC (Ovid Fasti 5.277-330) # unverified",
+"id": "ludi_florales",
+"latin": "Ludi Florales",
+"when": "28 April to 3 May"
+}
+],
+"munus": {
+"armatures": [
+{
+"arms": "oblong shield (scutum), visored helmet with crest, sword, greave on the left leg, short armguard on the right arm",
+"name": "samnis",
+"source": "Livy 9.40.17 (Campanians arm gladiators as Samnites, from the spoils); details of the kit from modern reconstructions"
+},
+{
+"arms": "large shield, helmet, sword; later called murmillo",
+"name": "gallus",
+"source": "Cicero passage not identified (unverified); the 'Gallus' name is Republican, murmillo is the Imperial name"
+},
+{
+"arms": "small square shield (parmula), curved sword (sica), greaves",
+"name": "thraex",
+"source": "attested late Republic (Spartacus is called a Thracian, Plut. Crassus 8); details from modern reconstructions"
+}
+],
+"armatures_note": "retiarius, secutor and others are Imperial; not shown",
+"bout": {
+"gesture_note": "disputed: the raised finger (ad digitum) is Imperial evidence (Martial Spect. 29), and the 'thumb' signal (pollex verso, Juvenal 3.36) is ambiguous. The game shows a raised finger and a hand sign only as the engine's decision.",
+"missio_source": "Cic. Tusc. 2.41; Cic. Pro Rabirio Post. 17 # both unverified",
+"sequence": "pairs matched by arms; the fight until one is wounded or yields",
+"stroke": "the loser was expected to take the sword without flinching; Cic. Tusc. 2.41",
+"yield": "a beaten man grounded his shield and raised a finger; the editor, swayed by the crowd, gave missio (let him live) or the sign for the stroke"
+},
+"origin": [
+{
+"source": "Livy Per. 16; Val. Max. 2.4.7",
+"what": "first gladiators in Rome, three pairs in the Forum Boarium at the funeral of D. Junius Brutus Pera, given by his sons",
+"year": -264
+},
+{
+"source": "Livy 23.30.15",
+"what": "22 pairs for M. Aemilius Lepidus",
+"year": -216
+},
+{
+"source": "Livy 31.50.4",
+"what": "25 pairs",
+"year": -200
+},
+{
+"source": "Livy 39.46.2",
+"what": "60 men for P. Licinius, three days",
+"year": -183
+},
+{
+"source": "Livy 41.28.11",
+"what": "T. Flamininus, three days, 74 men",
+"year": -174
+}
+],
+"origin_nature": "a funeral duty (munus) owed to the dead, given privately by the heirs until the later Republic",
+"people": {
+"editor": "the giver of the games; sits with the stands' best seats and gives the sign; Republic: a private citizen or magistrate",
+"lanista": "the trainer-dealer who owned and hired out the troupe; Cic. Pro Sestio 134 (gladiators and lanistae)"
+},
+"where": {
+"amphitheatre": "first stone amphitheatre 29 BC, Statilius Taurus, Dio 51.23.1 (Campus Martius)",
+"republic": "in the Forum, between the temporary wooden stands (spectaculum); Vitruvius 5.1.1 on the oblong Forum made for gladiatorial shows; Plut. C. Gracchus 12 on the seats"
+}
+},
+"sacrifice": {
+"favourable_signs": "favourable: exta whole, liver clean; unfavourable: the head of the liver missing, or a defect",
+"prayer_paraphrase": "Father Mars, we pray that you keep this farm, our household and our flock safe and well, and take this offering in the proper way. If it is not right, we shall do it again.",
+"prayer_source": "Cato Agr. 141 (paraphrased, not translated)",
+"steps": [
+{
+"source": "Plut. Quaest. Rom. 10 (veiled head, Roman rite); Dion. Hal. 7.72",
+"step": "procession",
+"what": "the magistrate (head veiled with the toga), attendants, the victim led to the altar before the temple, flute-player (tibicen) playing"
+},
+{
+"source": "Pliny NH 8.183 # unverified; Livy 5.? # unverified",
+"step": "victim",
+"what": "led with a slack rope, a sign it comes willingly; white for Jupiter, with gilded horns for a great sacrifice"
+},
+{
+"source": "Cic. ND 2.67; Cato Agr. 134",
+"step": "praefatio",
+"what": "before the god in question was named, Janus and Vesta were invoked first; wine and incense offered"
+},
+{
+"source": "Festus s.v. immolare, Servius on Ecl. 8.82 # unverified",
+"step": "mola_salsa",
+"what": "salted spelt-meal sprinkled on the victim's head, a knife drawn along the back"
+},
+{
+"source": "Cato Agr. 132 (porca praecidanea), 134 (Janus, Jupiter, Juno), 139 (grove), 141 (Mars Pater, suovetaurilia)",
+"step": "prayer",
+"what": "the formula spoken by the magistrate and echoed word for word; paraphrased from Cato"
+},
+{
+"source": "Suet. Calig. 32 (popa and hammer) # unverified",
+"step": "strike",
+"what": "the popa stunned with a hammer or axe, the cultrarius cut the throat"
+},
+{
+"source": "Cic. Div. 2.28-36 # unverified; Livy 27.23.? # unverified",
+"step": "exta",
+"what": "the liver, heart, lungs and gall-bladder drawn out and read; sound organs mean the god accepts (litatio); a defect means the sacrifice is repeated"
+},
+{
+"source": "Dion. Hal. 7.72 # unverified",
+"step": "feast",
+"what": "the god's portion (the exta) roasted on the altar; the rest eaten"
+}
+]
+},
+"senate": {
+"division": {
+"formula": "pedibus in sententiam ire, 'to go by foot to a proposal'",
+"name": "discessio, 'going apart': those for the proposal went and stood on one side, those against on the other, and were counted",
+"note": "voice-vote opinions came first, the division after; the game plays only the division",
+"source": "Gellius 14.7.9 (Varro); Cic. Phil. 3.? # unverified"
+},
+"session": {
+"chair": "the presiding magistrate on a curule chair on the tribunal at the far end; senators sit on benches along the side walls (the Curia Julia had three tiers)",
+"daylight": "no decree after sunset; Gellius 14.7.8 # unverified",
+"order_of_speaking": "by rank: the princeps senatus, then consulars, then praetorians and so on; in the late Republic the consuls-designate were asked first (Gellius 4.10.1)",
+"order_source": "Gellius 14.7.9; 4.10.1; Cic. Phil. 5.? # unverified",
+"relatio": "the presiding magistrate lays the matter before the house (referre ad senatum)",
+"seats_note": "the 'three broad steps each side' is the Curia Julia as excavated; the Republican Curia Hostilia is not known in detail",
+"size": "about 300 senators in the middle Republic; 600 under Sulla; 900 under Caesar",
+"veto": "a tribune could stop the matter by intercessio"
+},
+"summons": {
+"auspices": "the magistrate took the auspices the same morning, before the meeting",
+"auspices_source": "Gellius 14.7.? (Varro); Cic. Div. 2.71 # both unverified",
+"place": "only in a templum, a place inaugurated: the Curia (Hostilia, later Julia), temples such as Jupiter Stator, Concordia, Bellona",
+"place_source": "Gellius 14.7.7 # passage unverified",
+"source": "Gellius 14.7.4-6 (Varro's handbook for Pompey, 70 BC)",
+"who": "a consul, a praetor or a tribune of the plebs (an interrex too)"
+}
+},
+"triumph": {
+"conditions": "decree of the Senate; a general with imperium; a conventional minimum of 5,000 enemy dead (Val. Max. 2.8.1 # unverified)",
+"dress_of_general": "see order.general",
+"end": {
+"sacrifice": "at the temple of Jupiter Optimus Maximus the general lays his laurel on Jupiter's lap and sacrifices oxen; the captive leaders, if condemned, were killed at the foot of the Capitol",
+"source": "Josephus BJ 7.153-155; Livy 45.40 # unverified"
+},
+"order": [
+{
+"source": "Dion. Hal. 5.47; Josephus BJ 7.? # unverified",
+"unit": "senate_magistrates",
+"what": "the Senate and magistrates lead the way"
+},
+{
+"source": "Plut. Aem. 33",
+"unit": "trumpeters",
+"what": "trumpeters"
+},
+{
+"source": "Plut. Aem. 32-33; Livy 45.40; Appian Pun. 66",
+"unit": "spoils",
+"what": "wagons of captured arms, statues and pictures, gold and silver, carried in carts and on poles; labelled with the names of cities taken"
+},
+{
+"source": "Plut. Aem. 33; Livy 45.40",
+"unit": "white_oxen",
+"what": "white oxen with gilded horns and garlands, for the sacrifice, with attendants"
+},
+{
+"source": "Plut. Aem. 33 (Perseus and his children); Josephus BJ 7.153-155",
+"unit": "captives",
+"what": "captive chiefs and kings in chains with their families"
+},
+{
+"source": "Plut. Aem. 34 # unverified",
+"unit": "lictors",
+"what": "lictors with laurel-wreathed fasces, in red tunics"
+},
+{
+"source": "Plut. Aem. 34; Livy 10.7.9; Pliny NH 33.111 (red paint); Pliny NH 28.39 (slave, fascinum); Tertullian Apol. 33",
+"unit": "general",
+"what": "the general in the quadriga with four horses, laurel crown, face painted red, embroidered purple toga (toga picta) and palm-embroidered tunic, holding laurel and a sceptre; a public slave behind holds the crown and whispers that he is a man"
+},
+{
+"source": "Livy 5.23.5; Plut. Cam. 7",
+"unit": "horses_white",
+"what": "white horses; Camillus (396 BC) was criticised for using them"
+},
+{
+"source": "Plut. Aem. 34; Suet. Iul. 49, 51",
+"unit": "soldiers",
+"what": "soldiers in order by unit, wreathed with laurel, singing and shouting 'Io triumphe', and singing rude songs at the general"
+}
+],
+"order_note": "Plut. Aem. 32-34 describes the triumph of L. Aemilius Paullus (167 BC) over three days; Josephus BJ 7.123-157 is Vespasian and Titus in AD 71 (a parallel, Imperial); Appian Pun. 66 is Scipio's triumph (201 BC).",
+"route": {
+"disputed": "the exact route is disputed (the Velabrum and Circus Maximus before the Via Sacra is the usual reconstruction; Coarelli, Östenberg); the Porta Triumphalis's location is uncertain",
+"source": "Josephus BJ 7.130-131 (Vespasian); Plut. Aem. 32; Cic. Pis. 55 # all unverified",
+"stages": [
+"assembly on the Campus Martius (the general cannot enter the pomerium before)",
+"the Porta Triumphalis",
+"the Circus Flaminius and the theatres where the crowd stood",
+"the Circus Maximus",
+"the Via Sacra",
+"the Forum",
+"the Clivus Capitolinus to the Capitol and the temple of Jupiter Optimus Maximus"
+]
+}
+},
+"version": 1
+}
