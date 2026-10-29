@@ -12,6 +12,7 @@
 ##   --screenshot=PATH     save and quit
 ##   --report              print the counts of real forms and placeholders, and what is unverified
 ##   --labels              float each monument's id above it
+##   --entrance=<id>       print the door transform, the card date and the footprint count
 ##   --pick=px,py          print the monument id under that screen pixel (tests UrbsMonuments.pick)
 extends SceneTree
 
@@ -139,12 +140,19 @@ func _light(root: Node3D) -> void:
 func _shoot() -> void:
 	for i in 8:
 		await process_frame
+	if _args.has("entrance"):
+		var e := _mon.entrance(str(_args["entrance"]))
+		print("entrance of ", _args["entrance"], ": at ", e.origin, " looking ", -e.basis.z)
+		print("info: ", _mon.info(str(_args["entrance"])).get("date", ""), " | ", _mon.info(str(_args["entrance"])).get("english", ""))
+		print("footprints: ", _mon.footprints().size())
 	if _args.has("pick"):
+		var vp := Vector2(get_root().size)
 		var p := str(_args["pick"]).split(",")
-		print("pick at ", p, " -> '", _mon.pick(_cam, Vector2(float(p[0]), float(p[1]))), "'")
+		var at := vp * 0.5 if p.size() < 2 else Vector2(float(p[0]), float(p[1]))
+		print("pick at ", at, " of ", vp, " -> '", _mon.pick(_cam, at), "'")
 	if _args.has("screenshot"):
 		get_root().get_viewport().get_texture().get_image().save_png(str(_args["screenshot"]))
 		print("saved ", _args["screenshot"])
 		quit()
-	elif _args.has("report") or _args.has("pick"):
+	elif _args.has("report") or _args.has("pick") or _args.has("entrance"):
 		quit()
