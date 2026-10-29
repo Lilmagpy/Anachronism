@@ -6,7 +6,7 @@
 ## `--look=lat,lon,distance` points it at a real place, `--scenario=ID` picks the scenario
 ## (default `punic_wars`; the player is always Rome). On the real map:
 ## `--start=idea_id` begins an experiment, `--select=province_id` selects a province and
-## `--play=N` then ends N turns, `--click=x,y` clicks the map, `--tab=ideas|projects|world` opens a panel (all for
+## `--play=N` then ends N turns, `--click=x,y` clicks the map, `--tab=ideas|projects|world|senate` opens a panel (all for
 ## screenshots and tests). `--smoke` goes through the title screen and picker, builds the
 ## game, prints SMOKE OK and quits. `--screen=title|picker` (`--pick=scenario_id`) shows the menus;
 ## `--civ=ID` starts straight away as that civilisation (default rome).
@@ -298,6 +298,12 @@ func _build_hud() -> void:
 	hud.speak(view.get("voices", []), true)
 	if options.has("start"):
 		_on_action({"kind": "start", "node_id": str(options["start"])})
+	if options.has("republic-demo") and view.get("republic") != null:   # Republic (D-286): --republic-demo, made-up proposals (screenshots)
+		view["republic"]["proposals"] = [
+			{"issue": "land", "proposal": "land_law", "label": "A land law for the veterans", "cost": 200, "forecast_yes_bp": 5200, "forecast_no_bp": 2100},
+			{"issue": "citizenship", "proposal": "latin_rights", "label": "Citizenship for the Latin allies", "cost": 400, "forecast_yes_bp": 1800, "forecast_no_bp": 6400}]
+		for family in view["republic"]["families"].slice(0, 2):
+			RepublicPanel.unfold_family(str(family["id"]))
 	if options.has("breakthrough-demo"):  # --breakthrough-demo=idea: its card (screenshots)
 		for idea in view.get("ideas", []):
 			if str(idea["id"]) == str(options["breakthrough-demo"]):
@@ -563,7 +569,8 @@ func _on_action(action: Dictionary) -> void:
 				settlements.recolour()
 			provinces.show_ties(view)
 		if action["kind"] in ["raise", "march", "stance", "disband", "fortify", "dilemma", "envoy_answer",
-				"build_fleet", "sail", "scuttle", "plan", "build", "spies", "hasten"]:
+				"build_fleet", "sail", "scuttle", "plan", "build", "spies", "hasten",
+				"propose_to_senate", "persuade", "back_candidate"]:   # Republic (D-286): say what the Senate did
 			hud.message = str(reply["message"])
 			if reply["accepted"] and action["kind"] == "disband":
 				hud.selected_army = ""
@@ -749,8 +756,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.keycode == KEY_C:  # your cities (D-127)
 			hud.open_cities()
 			return
-		var tabs := {KEY_1: "ideas", KEY_2: "projects", KEY_3: "world"}
-		if tabs.has(event.keycode):
+		var tabs := {KEY_1: "ideas", KEY_2: "projects", KEY_3: "world", KEY_4: "senate"}   # Republic (D-286)
+		if tabs.has(event.keycode) and (event.keycode != KEY_4 or view.get("republic") != null):
 			hud.set_tab(tabs[event.keycode])
 			return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
