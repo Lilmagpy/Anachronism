@@ -381,7 +381,7 @@ districts:
 # upward because of the crowd). The polygon is the wall's route in monuments.yaml (murus_servianus).
 default_inside:
   max_density: 0.9
-  saturates_at: 250000
+  saturates_at: 450000
   onset: -378
   eras:
   - {from: -378, weights: {casa: 0.7, workshop: 0.15, insula: 0.15}, shops: 0.15}
@@ -395,3 +395,34 @@ default:
   eras:
   - {from: -200, weights: {field: 0.7, casa: 0.2, insula: 0.1}, shops: 0.0}
   sources: ["outside any named district: scattered buildings and open land (author's choice)"]
+
+# The Servian circuit as the author traces it through the gates of monuments.yaml (Porta
+# Flumentana, Fontinalis, Ratumena, Collina, Viminalis, Esquilina, Caelimontana, Capena, Naevia,
+# Lavernalis, Trigemina...) and Platner-Ashby s.v. Murus Servii Tullii / Regiones: the wall enclosed
+# the Capitol, Palatine, Quirinal, Viminal, Esquiline, a corner of the Caelian and the Aventine.
+# About 4.0 km2 (the sources give 426 ha: population.yaml built_up_area). The `route` of
+# murus_servianus in monuments.yaml is a coarser 13-point line of only 2.8 km2 and is used only to
+# keep houses off the drawn wall; THIS polygon decides what counts as "inside the walls". Rough.
+servian_circuit:
+  polygon: [[41.8925, 12.4770], [41.8945, 12.4812], [41.8960, 12.4830], [41.9005, 12.4835], [41.9040, 12.4890], [41.9072, 12.4962], [41.9010, 12.5000], [41.8960, 12.5035], [41.8905, 12.5010], [41.8862, 12.4990], [41.8845, 12.4940], [41.8852, 12.4890], [41.8815, 12.4865], [41.8790, 12.4850], [41.8790, 12.4825], [41.8805, 12.4785], [41.8880, 12.4785], [41.8905, 12.4772]]
+  precision: rough
+  sources: ["monuments.yaml gates (rough)", "Platner-Ashby s.v. Murus Servii Tullii", "population.yaml built_up_area (426 ha)"]
+
+# Outside the walls: no houses on bare pads. Open ground is farmland in parcels of about 44 m
+# (kinds: field = ploughed or sown strips, orchard, vineyard, garden = kitchen garden, pasture,
+# meadow) with the mix below; the Campus Martius (districts campus_*) is open meadow. Farm
+# steadings (a farmhouse with barn and yard) stand among them, villas and horti on the hills are
+# the districts' `horti` weights, and tombs line every road out of a gate (see streets.gd roads).
+# The mixes are the author's reading, not data.
+rural:
+  default: {field: 0.34, orchard: 0.16, vineyard: 0.18, garden: 0.14, pasture: 0.10, farm: 0.08}
+  campus: {meadow: 0.78, pasture: 0.14, orchard: 0.08}
+  near_city: {garden: 0.32, field: 0.2, orchard: 0.2, vineyard: 0.14, farm: 0.08, pasture: 0.06}
+  sources:
+  - "Twelve Tables 10.1 as quoted in Cic. Leg. 2.58 (read, Latin Library): hominem mortuum in urbe ne sepelito neve urito -> burials outside the city, hence the tombs along the roads"
+  - "Platner-Ashby s.v. Via Appia and Via Latina (read): the road flanked with tombs and columbaria within and without the Aurelian wall; the whole triangle between the Appia and the Latina occupied by tombs"
+  - "Platner-Ashby s.v. Via Flaminia (read): burial on the Flaminia a special honour (Stat. Silv. 2.1.176; Mart. 6.28; Juv. 1.170)"
+  - "Platner-Ashby s.v. Campus Martius (read): about 250 ha of open meadow with ponds and groves; in Augustus' time the southern part built over and the north open"
+  - "Platner-Ashby s.v. Horti (cached): the gardens of the late Republic on the Pincian, Esquiline and right bank"
+  - "Cato Agr. 1 and Varro Rust. 1 on farm kinds (vineyard, olive yard, orchard, kitchen garden, meadow): # unverified"
+  - "the shares between kinds, the parcel size and the farm steadings are the author's design"

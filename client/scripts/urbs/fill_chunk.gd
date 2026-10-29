@@ -19,6 +19,7 @@ var _buckets := {}
 var _bucket_keys: Array = []
 var _bi := 0
 var _floor_state := {}
+var _rural_state := {}
 
 
 func _process(_delta: float) -> void:
@@ -72,8 +73,14 @@ func step(ms: float) -> void:
 				else:
 					stage = 3
 			3:
-				if fill.floor_step(self, key, lots, lod, _floor_state, deadline):
+				if fill.rural_step(key, _rural_state, deadline):
 					stage = 4
+			4:
+				fill.rural_build(self, _rural_state.get("parcels", []), lod)
+				stage = 5
+			5:
+				if fill.floor_step(self, key, lots, lod, _floor_state, deadline):
+					stage = 6
 			_:
 				fill.chunk_finished(key, lots)
 				done = true

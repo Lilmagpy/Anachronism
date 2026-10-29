@@ -77,11 +77,14 @@ var _default_inside: Dictionary = {}
 var _pop_pts: Array = []
 var _tiber := PackedVector2Array()
 var _wall := PackedVector2Array()
+var _circuit := PackedVector2Array()   ## the Servian circuit (regions.yaml servian_circuit): what is 'inside the walls'
+var _rural := {}                       ## regions.yaml rural: kind weights
 var _loaded := false
 var _mask := PackedByteArray()
 var _street_lots: Array = []
 var _street_hash := {}
 var _street_by_chunk := {}
+var _lot_grid := {}                  ## 30 m cell -> lattice lots (finished regions), for overlap tests
 var _region_cache := {}              ## Vector2i -> candidate array
 var _region_state := {}              ## Vector2i -> {cands, idx, lots, done}
 var _region_by_chunk := {}           ## Vector2i(chunk) -> Array of lots
@@ -119,6 +122,7 @@ func prepare() -> void:
 	_region_state = {}
 	_region_by_chunk = {}
 	_chunk_cache = {}
+	_lot_grid = {}
 	_stamp_mask()
 	_gen_street_lots()
 	if not _warm:
@@ -136,6 +140,11 @@ func _load() -> void:
 				"r": float(d["radius_m"]), "max": float(d["max_density"]), "sat": float(d["saturates_at"]),
 				"onset": int(d["onset"]), "eras": d["eras"],
 			})
+		var circ: Variant = reg.get("servian_circuit")
+		if circ is Dictionary:
+			for ll in circ["polygon"]:
+				_circuit.append(UrbsGeo.to_local(float(ll[0]), float(ll[1])))
+		_rural = reg.get("rural", {})
 		var di: Dictionary = reg.get("default_inside", {})
 		_default_inside = {"id": "default_inside", "c": Vector2.ZERO, "r": 1.0e9, "max": float(di.get("max_density", 0.9)),
 			"sat": float(di.get("saturates_at", 150000)), "onset": int(di.get("onset", -378)), "eras": di.get("eras", [])}
@@ -232,6 +241,24 @@ static func _smooth_noise(p: Vector2) -> float:
 	return lerpf(a, b, fz)
 
 
+## Inside the walls? From 378 BC the Servian circuit; before that the early town (about 450 m).
+func _urban(p: Vector2) -> bool:
+	if year >= -378 and not _circuit.is_empty():
+		return Geometry2D.is_point_in_polygon(p, _circuit)
+	return p.length() < 450.0
+
+
+## Distance from `p` to the Servian circuit (0 if inside).
+func _circuit_dist(p: Vector2) -> float:
+	if _circuit.is_empty() or Geometry2D.is_point_in_polygon(p, _circuit):
+		return 0.0
+	var best := 1.0e9
+	for i in _circuit.size():
+		var q := Geometry2D.get_closest_point_to_segment(p, _circuit[i], _circuit[(i + 1) % _circuit.size()])
+		best = minf(best, p.distance_to(q))
+	return best
+
+
 func _population() -> float:
 	if _pop_pts.is_empty():
 		return 100000.0
@@ -253,7 +280,7 @@ func _district_at(p: Vector2) -> Dictionary:
 		if d["r"] < best_r and p.distance_squared_to(d["c"]) < d["r"] * d["r"]:
 			best = d
 			best_r = d["r"]
-	if best == _default and year >= -378 and not _wall.is_empty() and Geometry2D.is_point_in_polygon(p, _wall):
+	if best == _default and year >= -378 and not _circuit.is_empty() and Geometry2D.is_point_in_polygon(p, _circuit):
 		return _default_inside
 	return best
 
@@ -267,6 +294,17 @@ func _era(d: Dictionary) -> Dictionary:
 		if int(e["from"]) <= year:
 			pick = e
 	return {"w": pick["weights"], "shops": float(pick.get("shops", 0.0))}
+
+
+## Occupancy at a point: the district's own, fading out over its outer 40% so a district's edge dissolves
+## into the suburbs instead of ending in a circle.
+func _occupancy_at(d: Dictionary, p: Vector2) -> float:
+	var occ := _occupancy(d)
+	var r: float = d["r"]
+	if r > 5000.0 or _urban(p):
+		return occ
+	var edge := 1.0 - p.distance_to(d["c"]) / r
+	return occ * smoothstep(0.0, 0.4, edge) * 0.8 + occ * 0.2 * smoothstep(0.0, 0.1, edge)
 
 
 func _occupancy(d: Dictionary) -> float:
@@ -436,7 +474,7 @@ func _lot_of(type: String, c: Vector2, front: Vector2, a: int, b: int, salt: int
 			var feat := 0 if fr < 0.55 else (1 if fr < 0.8 else 2)
 			var pitch := 1 if _r(a, b, salt + 7) < 0.4 else 0
 			var top := 3.7 + 3.1 * float(s - 1) + (3.3 if pitch == 1 else 1.9)
-			if _r(a, b, salt + 8) < 0.75 and shape != "stepped" and s >= 3:
+			if _r(a, b, salt + 8) < 0.88 and shape != "stepped" and s >= 3:
 				# a narrow-fronted house, 6-7 m wide: the commonest kind of dwelling in the streets
 				var wn := 5.6 + _r(a, b, salt + 9) * 1.2
 				var lot_n := _make_lot("insula:%s:%d:%d:%d:n" % [shape, s, feat, pitch], Vector2(7, 18), c, front, wn, d, tint, top, "insula")
@@ -504,6 +542,8 @@ func _gen_street_lots() -> void:
 				furniture_n += 1
 			s += 80.0 + _r(sh, n, 14) * 60.0
 			n += 1
+	# 2b. tombs along the roads out of the gates (before the houses, so the houses give way)
+	furniture_n += _gen_tombs()
 	# 3. tabernae and houses along every street
 	for si in _streets.streets.size():
 		_street_rows(si)
@@ -512,6 +552,47 @@ func _gen_street_lots() -> void:
 	for lot in _street_lots:
 		var k := str(lot["mesh"]).split(":")[0]
 		count_stats[k] = int(count_stats.get(k, 0)) + 1
+
+
+## Tombs lining the roads outside the walls: altar tombs, columbaria, round mausolea, tumuli, stelae.
+## Burial outside the city by law (Twelve Tables 10.1; Cic. Leg. 2.58, read); P-A s.v. Via Appia and Via
+## Latina (read): roads flanked with tombs and columbaria. Sparser near the gates, where houses and
+## inns line the road instead.
+func _gen_tombs() -> int:
+	var n := 0
+	var sizes := {"altar": Vector3(3, 3, 2.3), "columbarium": Vector3(5, 5, 4.6), "round": Vector3(8, 8, 7.2), "tumulus": Vector3(9, 9, 3.2), "stele": Vector3(1, 0.5, 2.0)}
+	for si in _streets.streets.size():
+		var st: Dictionary = _streets.streets[si]
+		if str(st["kind"]) != "road":
+			continue
+		var sid := str(st["id"])
+		var sh := hash(sid) & 0xfffff
+		var s := 0.0
+		var item := 0
+		while s < float(st["len"]):
+			var sp := _streets.sample_at(si, s)
+			var p: Vector2 = sp[0]
+			var t: Vector2 = sp[1]
+			if p.length() > 3200.0 or _urban(p):
+				s += 10.0
+				continue
+			var dist := _circuit_dist(p)
+			for side in [1, -1]:
+				var prob := 0.3 if dist < 450.0 else 0.72
+				if _r(sh, item, side + 71) >= prob:
+					continue
+				var rk := _r(sh, item, side + 72)
+				var kind := "altar" if rk < 0.3 else ("columbarium" if rk < 0.5 else ("round" if rk < 0.62 else ("tumulus" if rk < 0.75 else "stele")))
+				var sz: Vector3 = sizes[kind]
+				var sc := 0.85 + _r(sh, item, side + 73) * 0.4
+				var nn := Vector2(-t.y, t.x) * float(side)
+				var cp := p + nn * (float(st["hw"]) + KERB + 2.2 + _r(sh, item, side + 74) * 2.0 + sz.y * sc * 0.5)
+				var lot := _make_lot("tomb:" + kind, Vector2(sz.x, sz.y), cp, -nn, sz.x * sc, sz.y * sc, Color(1, 1, 1, _r(sh, item, side + 75)), sz.z, "tomb")
+				if _add_street_lot(lot, sid, 0.6):
+					n += 1
+			s += 15.0 + _r(sh, item, 76) * 22.0
+			item += 1
+	return n
 
 
 ## Points where two known streets cross: [[position of the shrine, facing], ...].
@@ -567,19 +648,33 @@ static func _stretch_end(stretches: Array, s: float) -> float:
 	return 1.0e9
 
 
+## Era mix and occupancy at a point of a street: ribbon development along the roads just outside
+## the walls (casae, workshops and inns, thinning with distance), the district's own mix elsewhere.
+func _street_context(p: Vector2, road: bool) -> Dictionary:
+	if road and not _urban(p):
+		var dd := _circuit_dist(p)
+		if dd < 800.0:
+			var f := pow(clampf(_population() / 150000.0, 0.0, 1.0), 0.5)
+			return {"era": {"w": {"casa": 0.55, "workshop": 0.25, "insula": 0.2}, "shops": 0.25}, "occ": 0.65 * (1.0 - dd / 800.0) * f}
+		return {"era": {"w": {}, "shops": 0.0}, "occ": 0.0}
+	var d := _district_at(p)
+	return {"era": _era(d), "occ": _occupancy_at(d, p)}
+
+
 func _street_rows(si: int) -> void:
 	var st: Dictionary = _streets.streets[si]
 	var sid := str(st["id"])
 	var sh := hash(sid) & 0xfffff
 	var length: float = st["len"]
 	var hw: float = st["hw"]
+	var road := str(st["kind"]) == "road"
 	for side in [1, -1]:
 		var stretches: Array = []
 		var s := 0.0
 		var n := 0
 		while s < length:
 			var p0: Vector2 = _streets.sample_at(si, s)[0]
-			var era0 := _era(_district_at(p0))
+			var era0: Dictionary = _street_context(p0, road)["era"]
 			var e := s + 22.0 + _r(sh, n, side + 5) * 40.0
 			stretches.append([e, _r(sh, n, side + 7) < float(era0["shops"])])
 			s = e
@@ -597,7 +692,7 @@ func _street_rows(si: int) -> void:
 			var mt: Vector2 = mid[1]
 			if mp.length() < 3500.0:
 				var mn := Vector2(-mt.y, mt.x) * float(side)
-				var occ := _occupancy(_district_at(mp))
+				var occ: float = _street_context(mp, road)["occ"]
 				if _r(sh, item, side + 13) < 0.95 and _r(sh, item, side + 15) < clampf(occ * 1.3, 0.0, 1.0):
 					var dd := SHOP_DEPTH + _r(sh, item, side + 17) * 0.4
 					var pos := mp + mn * (hw + KERB + FOOTPATH + dd * 0.5)
@@ -616,8 +711,8 @@ func _street_rows(si: int) -> void:
 			if p.length() > 3500.0:
 				s += 30.0
 				continue
-			var d := _district_at(p)
-			var era := _era(d)
+			var ctx := _street_context(p, road)
+			var era: Dictionary = ctx["era"]
 			var type := _pick_type(era, _r(sh, item, side + 25))
 			if type == "horti" or type == "field":
 				type = ""
@@ -626,7 +721,7 @@ func _street_rows(si: int) -> void:
 				item += 1
 				continue
 			var probe := _lot_of(type, Vector2.ZERO, Vector2.UP, sh, item, side * 31 + 3)
-			if probe.is_empty() or _r(sh, item, side + 27) >= _occupancy(d):
+			if probe.is_empty() or _r(sh, item, side + 27) >= float(ctx["occ"]):
 				s += 8.0 + _r(sh, item, side + 28) * 6.0
 				item += 1
 				continue
@@ -773,7 +868,7 @@ func _block_plan(gi: int, gj: int, ba: int, bb: int, bc: Vector2) -> String:
 		total += float(w[key])
 	if total <= 0.0:
 		return ""
-	var occ := _occupancy(d)
+	var occ := _occupancy_at(d, bc)
 	var r := _r(gi * 97 + ba, gj * 89 + bb, 11)
 	if w.has("horti") and r < float(w["horti"]) / total and _r(gi * 97 + ba, gj * 89 + bb, 12) < occ * 1.3:
 		return "horti"
@@ -800,8 +895,10 @@ func _cell_lots(cd: Dictionary, sub_only := false) -> Array:
 	var plan := _block_plan(gi, gj, ba, bb, cd["bc"])
 	var d := _district_at(c)
 	var era := _era(d)
-	var occ := _occupancy(d)
+	var occ := _occupancy_at(d, c)
 	var out: Array = []
+	if str(d["id"]) == "default":
+		return out        # open country: farmland parcels and farm steadings only (rural_step)
 	var jit := deg_to_rad((_r(seed_a, seed_b, 3) - 0.5) * 6.0)
 	if plan == "horti":
 		if k != 1 or l != 1:
@@ -848,7 +945,7 @@ func _cell_lots(cd: Dictionary, sub_only := false) -> Array:
 			var qo := Vector2(float(q % 2) - 0.5, float(q / 2) - 0.5) * (PITCH * 0.5)
 			var qc := c + ax * qo.x + az * qo.y
 			qc += Vector2(_r(seed_a, seed_b, 20 + q) - 0.5, _r(seed_a, seed_b, 30 + q) - 0.5) * 2.4
-			if _r(seed_a, seed_b, 40 + q) > 0.5:
+			if _r(seed_a, seed_b, 40 + q) > 0.42:
 				continue
 			var fq := (fdir if q % 2 == 0 else -fdir).rotated(deg_to_rad((_r(seed_a, seed_b, 50 + q) - 0.5) * 28.0))
 			var lot := _lot_of("casa", qc, fq, seed_a * 5 + q, seed_b, 400, true)
@@ -913,6 +1010,9 @@ func advance_region(rk: Vector2i, deadline: int) -> bool:
 			return false
 	st["done"] = true
 	for lot in st["lots"]:
+		var gk := Vector2i(floori(lot["c"].x / 30.0), floori(lot["c"].y / 30.0))
+		_lot_grid[gk] = _lot_grid.get(gk, [])
+		_lot_grid[gk].append(lot)
 		var key := Vector2i(floori(lot["c"].x / CHUNK), floori(lot["c"].y / CHUNK))
 		if not _region_by_chunk.has(key):
 			_region_by_chunk[key] = []
@@ -1073,11 +1173,208 @@ func add_trees(lot: Dictionary, buckets: Dictionary, lod: int) -> void:
 		buckets[tk].append({"c": p, "th": _r(a, b, 900 + k) * TAU, "sx": sc, "sz": sc, "sy": sc, "y": y - 0.1, "tint": Color(1, 1, 1, _r(a, b, 950 + k)), "kind": "tree", "hx": 0, "hz": 0})
 
 
-func _wall_bounds() -> Rect2:
-	var r := Rect2(_wall[0], Vector2.ZERO)
-	for p in _wall:
+func _circuit_bounds() -> Rect2:
+	if _circuit.is_empty():
+		return Rect2()
+	var r := Rect2(_circuit[0], Vector2.ZERO)
+	for p in _circuit:
 		r = r.expand(p)
 	return r
+
+
+# ---------------------------------------------------------------- farmland outside the walls
+
+const PARCEL := 44.0
+const FIELD_TINTS: Array[Color] = [Color(0.45, 0.32, 0.21), Color(0.42, 0.56, 0.24), Color(0.72, 0.62, 0.34), Color(0.50, 0.44, 0.28), Color(0.36, 0.50, 0.22)]
+
+
+func _pick_rural(w: Dictionary, roll: float) -> String:
+	var keys := w.keys()
+	keys.sort()
+	var total := 0.0
+	for k in keys:
+		total += float(w[k])
+	var acc := 0.0
+	for k in keys:
+		acc += float(w[k]) / maxf(total, 0.001)
+		if roll < acc:
+			return str(k)
+	return str(keys[keys.size() - 1]) if not keys.is_empty() else ""
+
+
+## Overlap of a candidate with any finished lot or street-front lot near it.
+func _hits_lots(cand: Dictionary, margin: float) -> bool:
+	var c: Vector2 = cand["c"]
+	var reach := maxf(cand["hx"], cand["hz"]) * 1.42 + 20.0
+	var cells := int(ceil(reach / 30.0))
+	var key := Vector2i(floori(c.x / 30.0), floori(c.y / 30.0))
+	for dz in range(-cells, cells + 1):
+		for dx in range(-cells, cells + 1):
+			var k2 := key + Vector2i(dx, dz)
+			if _street_hash.has(k2):
+				for idx in _street_hash[k2]:
+					var o: Dictionary = _street_lots[idx]
+					var ok := str(o["kind"])
+					if ok != "prop" and ok != "tomb" and ok != "furn" and c.distance_to(o["c"]) < reach + 10.0 and _overlap(cand, o, margin):
+						return true
+			if _lot_grid.has(k2):
+				for o in _lot_grid[k2]:
+					if c.distance_to(o["c"]) < reach + 10.0 and _overlap(cand, o, margin):
+						return true
+	return false
+
+
+## Farm parcels of chunk `key` outside the walls, incrementally. True when done; st["parcels"] holds them.
+func rural_step(key: Vector2i, st: Dictionary, deadline: int) -> bool:
+	if not st.has("cells"):
+		var cells: Array = []
+		var x0 := float(key.x) * CHUNK
+		var z0 := float(key.y) * CHUNK
+		for j in range(floori(z0 / PARCEL) - 1, floori((z0 + CHUNK) / PARCEL) + 2):
+			for i in range(floori(x0 / PARCEL) - 1, floori((x0 + CHUNK) / PARCEL) + 2):
+				var c := Vector2((float(i) + 0.5) * PARCEL, (float(j) + 0.5) * PARCEL) + Vector2(_r(i, j, 81) - 0.5, _r(i, j, 82) - 0.5) * 6.0
+				if c.x >= x0 and c.x < x0 + CHUNK and c.y >= z0 and c.y < z0 + CHUNK:
+					cells.append([i, j, c])
+		st["cells"] = cells
+		st["idx"] = 0
+		st["parcels"] = []
+	var cells2: Array = st["cells"]
+	while st["idx"] < cells2.size():
+		var cd: Array = cells2[st["idx"]]
+		st["idx"] += 1
+		var p := _parcel_at(cd[0], cd[1], cd[2])
+		if not p.is_empty():
+			st["parcels"].append(p)
+		if Time.get_ticks_usec() > deadline:
+			return false
+	return true
+
+
+func _parcel_at(i: int, j: int, c: Vector2) -> Dictionary:
+	if c.length() > 3250.0 or _urban(c):
+		return {}
+	var d := _district_at(c)
+	var w: Dictionary
+	if str(d["id"]).begins_with("campus_"):
+		w = _rural.get("campus", {})
+	elif _circuit_dist(c) < 500.0:
+		w = _rural.get("near_city", {})
+	else:
+		w = _rural.get("default", {})
+	var kind := _pick_rural(w, _r(i, j, 83))
+	if kind == "":
+		return {}
+	var size := 40.0 + _r(i, j, 84) * 2.5
+	var th := float(int(_r(i, j, 85) * 4.0)) * PI * 0.5 + (_r(i, j, 86) - 0.5) * 0.4
+	var front := Vector2(sin(th), cos(th))
+	var tint := Color(1, 1, 1, _r(i, j, 87))
+	if kind == "field" or kind == "farm":
+		tint = Color(FIELD_TINTS[int(_r(i, j, 88) * float(FIELD_TINTS.size()))], _r(i, j, 87))
+	elif kind == "vineyard":
+		tint = Color(0.40, 0.32, 0.22, _r(i, j, 87))
+	elif kind == "garden":
+		tint = Color(0.34, 0.42, 0.20, _r(i, j, 87))
+	else:
+		tint = Color(0.42, 0.52, 0.26, _r(i, j, 87))
+	var cand := {"c": c, "th": th, "hx": size * 0.5, "hz": size * 0.5, "kind": "rural", "sub": kind, "tint": tint, "y": 0.0, "mesh": "rural", "top": 0.0}
+	var pts := _corners(cand)
+	for pt in pts:
+		if _hazard(pt) & (M_FOOT | M_WATER) != 0:
+			return {}
+	var lo := 1.0e9
+	var hi := -1.0e9
+	for pt in pts:
+		var hh: float = height.call(pt.x, pt.y)
+		lo = minf(lo, hh)
+		hi = maxf(hi, hh)
+	if (hi - lo) / size > 0.3:
+		return {}
+	if _hits_lots(cand, 1.2):
+		return {}
+	var ax := _axes(cand)
+	cand["ax"] = ax
+	cand["front"] = front
+	return cand
+
+
+## Ground of the parcels (one mesh following the terrain) and what stands on them (trees, vine rows,
+## beds, farm steadings), added to `node`.
+func rural_build(node: Node3D, parcels: Array, lod: int) -> void:
+	if parcels.is_empty():
+		return
+	var gn := 4 if lod == 0 else 2
+	var verts := PackedVector3Array()
+	var norms := PackedVector3Array()
+	var cols := PackedColorArray()
+	var uvs := PackedVector2Array()
+	var idx := PackedInt32Array()
+	var buckets := {}
+	for p in parcels:
+		var ax: Array = p["ax"]
+		var kind: String = p["sub"]
+		var is_sown := kind == "field" or kind == "vineyard" or kind == "garden" or kind == "farm"
+		var cid := 1.0 if is_sown else 0.5
+		var tint: Color = p["tint"]
+		var base := verts.size()
+		for b in range(gn + 1):
+			for a in range(gn + 1):
+				var u: float = (float(a) / float(gn) - 0.5) * float(p["hx"]) * 2.0
+				var v: float = (float(b) / float(gn) - 0.5) * float(p["hz"]) * 2.0
+				var wp: Vector2 = p["c"] + ax[0] * u + ax[1] * v
+				verts.append(Vector3(wp.x, float(height.call(wp.x, wp.y)) + 0.1, wp.y))
+				norms.append(Vector3.UP)
+				cols.append(Color(tint.r, tint.g, tint.b, cid))
+				uvs.append(Vector2(u, v))
+		for b in range(gn):
+			for a in range(gn):
+				var q := base + b * (gn + 1) + a
+				idx.append_array([q, q + 1, q + gn + 1, q + 1, q + gn + 2, q + gn + 1])
+		if lod >= 2:
+			continue
+		var c: Vector2 = p["c"]
+		var ci := roundi(c.x)
+		var cj := roundi(c.y)
+		var gy: float = float(height.call(c.x, c.y))
+		var sx: float = float(p["hx"]) * 2.0 / 44.0
+		match kind:
+			"orchard", "pasture", "meadow":
+				var n := (4 if kind == "orchard" else 2) if lod == 0 else 2
+				for a in range(n):
+					for b in range(n):
+						if kind != "orchard" and _r(ci, cj, 120 + a * 5 + b) > 0.5:
+							continue
+						var u: float = ((float(a) + 0.5) / float(n) - 0.5) * float(p["hx"]) * 1.7 + (_r(ci, cj, 130 + a) - 0.5) * 3.0
+						var v: float = ((float(b) + 0.5) / float(n) - 0.5) * float(p["hz"]) * 1.7 + (_r(ci, cj, 140 + b) - 0.5) * 3.0
+						var wp2: Vector2 = c + ax[0] * u + ax[1] * v
+						var tk := "tree:fruit" if kind == "orchard" else ("tree:pine" if _r(ci, cj, 150 + a + b) < 0.4 else "tree:round")
+						if not buckets.has(tk):
+							buckets[tk] = []
+						var sc := (0.9 + _r(ci, cj, 160 + a * 3 + b) * 0.5) * (1.0 if kind == "orchard" else 1.1)
+						buckets[tk].append({"c": wp2, "th": _r(ci, cj, 170 + a + b) * TAU, "sx": sc, "sz": sc, "sy": sc, "y": float(height.call(wp2.x, wp2.y)) - 0.1, "tint": Color(1, 1, 1, _r(ci, cj, 180 + a + b))})
+			"vineyard", "garden", "farm":
+				var mk := "rural:vines" if kind == "vineyard" else ("rural:beds" if kind == "garden" else "rural:farm")
+				if not buckets.has(mk):
+					buckets[mk] = []
+				buckets[mk].append({"c": c, "th": p["th"], "sx": sx, "sz": sx, "y": gy, "tint": Color(1, 1, 1, _r(ci, cj, 190))})
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = verts
+	arrays[Mesh.ARRAY_NORMAL] = norms
+	arrays[Mesh.ARRAY_COLOR] = cols
+	arrays[Mesh.ARRAY_TEX_UV] = uvs
+	arrays[Mesh.ARRAY_INDEX] = idx
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	var mi := MeshInstance3D.new()
+	mi.name = "Farmland"
+	mi.mesh = mesh
+	mi.material_override = UrbsFillMeshes.farm_material()
+	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	node.add_child(mi)
+	var keys := buckets.keys()
+	keys.sort()
+	for mk2 in keys:
+		node.add_child(make_instances(buckets[mk2], mk2, lod))
 
 
 ## Ground between the houses: packed earth over every 8 m cell near a lot. Incremental; True when done.
@@ -1089,9 +1386,11 @@ func floor_step(node: Node3D, key: Vector2i, lots: Array, lod: int, st: Dictiona
 	if not st.has("mark"):
 		var mark := PackedByteArray()
 		mark.resize(n * n)
+		var cnt := PackedByteArray()
+		cnt.resize(n * n)
 		for lot in lots:
 			var kind := str(lot["kind"])
-			if kind == "prop" or kind == "tree":
+			if kind == "prop" or kind == "tree" or kind == "tomb" or kind == "furn":
 				continue
 			var r := maxf(lot["hx"], lot["hz"]) * 1.42 + 5.0
 			var c: Vector2 = lot["c"]
@@ -1101,18 +1400,26 @@ func floor_step(node: Node3D, key: Vector2i, lots: Array, lod: int, st: Dictiona
 			var jb := mini(int((c.y + r - z0) / cell), n - 1)
 			for j in range(ja, jb + 1):
 				for i in range(ia, ib + 1):
-					mark[j * n + i] = 1
-		if year >= -378 and not _wall.is_empty():
-			# inside the Servian wall no meadow shows: the floor covers every cell, built or not
-			var ib := Rect2(x0, z0, CHUNK, CHUNK)
-			var wb := _wall_bounds()
-			if wb.intersects(ib):
-				for j in range(n):
-					for i in range(n):
-						if mark[j * n + i] == 0:
-							var cp := Vector2(x0 + (float(i) + 0.5) * cell, z0 + (float(j) + 0.5) * cell)
-							if Geometry2D.is_point_in_polygon(cp, _wall) and (_hazard(cp) & M_WATER) == 0:
-								mark[j * n + i] = 1
+					cnt[j * n + i] = mini(int(cnt[j * n + i]) + 1, 250)
+		# outside the walls only where houses stand close together (a pad under a lone house looks
+		# wrong); inside, any cell near a house, and below every cell of the circuit
+		var circ_box := _circuit_bounds()
+		var near_circ := circ_box.grow(60.0).intersects(Rect2(x0, z0, CHUNK, CHUNK))
+		for j in range(n):
+			for i in range(n):
+				var k := j * n + i
+				if cnt[k] == 0:
+					continue
+				var cp := Vector2(x0 + (float(i) + 0.5) * cell, z0 + (float(j) + 0.5) * cell)
+				if cnt[k] >= 3 or (near_circ and _urban(cp)):
+					mark[k] = 1
+		if year >= -378 and not _circuit.is_empty() and near_circ:
+			for j in range(n):
+				for i in range(n):
+					if mark[j * n + i] == 0:
+						var cp2 := Vector2(x0 + (float(i) + 0.5) * cell, z0 + (float(j) + 0.5) * cell)
+						if Geometry2D.is_point_in_polygon(cp2, _circuit) and (_hazard(cp2) & M_WATER) == 0:
+							mark[j * n + i] = 1
 		st["mark"] = mark
 		st["row"] = 0
 		st["h"] = PackedFloat32Array()
