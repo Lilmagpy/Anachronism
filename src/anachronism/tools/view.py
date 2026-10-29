@@ -58,6 +58,7 @@ from anachronism.engine.timeflow import per_turn, turns_for
 from anachronism.engine.victory import progress
 from anachronism.engine.war import defence_bp, fronts
 from anachronism.tools.console import describe_effect
+from anachronism.tools.republic_view import republic_view
 
 TRENDED = ("population", "food", "literacy_bp", "unrest_bp", "legitimacy_bp", "suspicion_bp")
 
@@ -157,6 +158,7 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
             }
             for other_id, other in sorted(state.civs.items())
         ],
+        "republic": republic_view(state),
         "wars": fronts(state),
         "armies": _armies(state),
         "tactics": _tactics(state),

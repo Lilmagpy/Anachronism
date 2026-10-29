@@ -13,11 +13,16 @@ from anachronism.content.schema import (
     Dilemma,
     EffectType,
     Era,
+    FastiYear,
     Formation,
+    Gens,
     Happening,
+    HistoricalPerson,
+    Magistracy,
     MapResource,
     PackManifest,
     ProvinceGeography,
+    RepublicRules,
     Rules,
     Scenario,
     SeaZone,
@@ -60,6 +65,11 @@ class Registry:
     tactics: dict[str, Tactic] = field(default_factory=dict)
     formations: dict[str, Formation] = field(default_factory=dict)
     symbols: dict[str, Symbol] = field(default_factory=dict)
+    magistracies: dict[str, Magistracy] = field(default_factory=dict)
+    gentes: dict[str, Gens] = field(default_factory=dict)
+    people: dict[str, HistoricalPerson] = field(default_factory=dict)
+    fasti: dict[str, FastiYear] = field(default_factory=dict)
+    republic_rules: RepublicRules | None = None
     origins: dict[tuple[str, str], str] = field(default_factory=dict)
     invalid: dict[str, set[str]] = field(default_factory=dict)
     """Ids of items that exist but failed validation (already reported), per kind."""

@@ -23,6 +23,7 @@ from anachronism.engine.offers import envoys
 from anachronism.engine.population import grow_population
 from anachronism.engine.projects import advance_projects
 from anachronism.engine.reports import snapshot
+from anachronism.engine.republic import run_year
 from anachronism.engine.rivals import rivals_turn
 from anachronism.engine.rng import GameRng
 from anachronism.engine.rulers import age_and_succeed
@@ -62,7 +63,8 @@ def end_turn(state: GameState) -> tuple[GameState, list[Event]]:
         update_suspicion(new, civ, rng, events)
         _update_literacy(new, civ.stats, effects, weighted(new, civ_id, "literacy_bp"))
         strike(new, civ, effects, rng, events)
-        age_and_succeed(new, civ, rng, events)
+        if new.republic is None or civ_id != new.player_civ:
+            age_and_succeed(new, civ, rng, events)  # Rome has magistrates, not a ruler (R2)
         effects_by_civ[civ_id] = effects
     # rivals: news, awareness, scripts, free agents; then the wars (brief §7)
     strengths = rivals_turn(new, effects_by_civ, list(events.items), rng, events)
@@ -93,7 +95,11 @@ def end_turn(state: GameState) -> tuple[GameState, list[Event]]:
     spread_faiths(new, effects_by_civ, rng, events)
     grow_population(new, effects_by_civ, starving)
     new.turn += 1
+    old_year = new.year
     new.year += new.world.years_per_turn
+    if new.republic is not None:
+        for year in range(old_year + 1, new.year + 1):
+            run_year(new, rng, events, year)
     # chronicle mode (D-120): the world's news, then the next chapter of history
     almanac(new, new.year - new.world.years_per_turn, events)
     advance(new, events)

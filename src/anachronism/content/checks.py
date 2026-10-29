@@ -38,6 +38,7 @@ def cross_reference_issues(registry: Registry) -> list[ContentIssue]:
         *_tactic_issues(registry),
         *_formation_issues(registry),
         *_symbol_issues(registry),
+        *_republic_issues(registry),
         *_dialogue_issues(registry),
     ]
 
@@ -558,4 +559,50 @@ def _chapter_issues(registry: Registry) -> list[ContentIssue]:
                 issues.append(
                     ContentIssue(where, f"almanac ({entry.id})", f"{state!r} is not a state")
                 )
+    return issues
+
+
+def _republic_issues(registry: Registry) -> list[ContentIssue]:
+    """The Republic's cross-references: offices, families, people and the Fasti."""
+    issues: list[ContentIssue] = []
+    offices = registry.magistracies
+    for office in offices.values():
+        where = registry.origin("magistracies", office.id)
+        label = f"magistracies ({office.id})"
+        for earlier, later in pairwise(sorted(office.eras, key=lambda e: e.from_year)):
+            if earlier.to_year is None or earlier.to_year >= later.from_year:
+                issues.append(ContentIssue(where, label, "eras overlap"))
+        for era in office.eras:
+            for ref in (era.replaced_by, era.prior_office, era.companion):
+                if ref is not None and registry.is_unknown("magistracies", ref):
+                    issues.append(ContentIssue(where, label, f"unknown office {ref!r}"))
+    for person in registry.people.values():
+        where = registry.origin("people", person.id)
+        label = f"people ({person.id})"
+        if registry.is_unknown("gentes", person.gens):
+            issues.append(ContentIssue(where, label, f"unknown gens {person.gens!r}"))
+        if person.father is not None and registry.is_unknown("people", person.father):
+            issues.append(ContentIssue(where, label, f"unknown father {person.father!r}"))
+        if person.born is not None and person.died is not None and person.died < person.born:
+            issues.append(ContentIssue(where, label, "dies before being born"))
+        for held in person.offices:
+            if registry.is_unknown("magistracies", held.office):
+                issues.append(ContentIssue(where, label, f"unknown office {held.office!r}"))
+    seen: dict[int, str] = {}
+    for entry in registry.fasti.values():
+        where = registry.origin("fasti", entry.id)
+        label = f"fasti ({entry.id})"
+        if entry.year in seen:
+            issues.append(
+                ContentIssue(where, label, f"year {entry.year} also in {seen[entry.year]}")
+            )
+        seen[entry.year] = entry.id
+        for college in entry.colleges:
+            if registry.is_unknown("magistracies", college.office):
+                issues.append(ContentIssue(where, label, f"unknown office {college.office!r}"))
+            for holder in college.holders:
+                if holder.person is not None and registry.is_unknown("people", holder.person):
+                    issues.append(ContentIssue(where, label, f"unknown person {holder.person!r}"))
+                if holder.gens is not None and registry.is_unknown("gentes", holder.gens):
+                    issues.append(ContentIssue(where, label, f"unknown gens {holder.gens!r}"))
     return issues

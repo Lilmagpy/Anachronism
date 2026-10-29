@@ -1,0 +1,13 @@
+schema_version: 1
+# Tunable numbers of the Republic (content/schema/republic.py). Game balance, not history,
+# except where a source is named. Ages: the Lex Villia annalis (Livy 40.44.1) fixed the order
+# and intervals of offices in 180 BC; the exact minimum ages are the scholars' reconstruction.
+republic_rules:
+  default_praenomina: [Lucius, Gaius, Marcus, Publius, Quintus, Titus, Aulus, Gnaeus]  # source: the common praenomina (Varro, De lingua latina 9.60 ff.; Livy passim)
+  sources: ["Livy 40.44.1 (Lex Villia annalis)", "Cicero, Philippics 5.47"]
+  factions:
+    - {id: patricians, name: "The patricians", from_year: -509, to_year: -287, order: patrician}
+    - {id: plebeians, name: "The plebeians", from_year: -509, to_year: -287, order: plebeian}
+    - {id: nobiles, name: "The nobility", from_year: -286, to_year: -134}
+    - {id: optimates, name: "The optimates", from_year: -133, populist: false}
+    - {id: populares, name: "The populares", from_year: -133, populist: true}

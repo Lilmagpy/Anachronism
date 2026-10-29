@@ -27,11 +27,16 @@ from anachronism.content.schema import (
     Dilemma,
     EffectType,
     Era,
+    FastiYear,
     Formation,
+    Gens,
     Happening,
+    HistoricalPerson,
+    Magistracy,
     MapResource,
     PackManifest,
     ProvinceGeography,
+    RepublicRules,
     Rules,
     Scenario,
     SeaZone,
@@ -79,6 +84,11 @@ class Content:
     tactics: Mapping[str, Tactic] = field(default_factory=dict)
     formations: Mapping[str, Formation] = field(default_factory=dict)
     symbols: Mapping[str, Symbol] = field(default_factory=dict)
+    magistracies: Mapping[str, Magistracy] = field(default_factory=dict)
+    gentes: Mapping[str, Gens] = field(default_factory=dict)
+    people: Mapping[str, HistoricalPerson] = field(default_factory=dict)
+    fasti: Mapping[str, FastiYear] = field(default_factory=dict)
+    republic_rules: RepublicRules = field(default_factory=RepublicRules)
     """Chance events (plague, flood, bumper harvests...)."""
 
 
@@ -167,6 +177,11 @@ def load_content(pack_ids: Sequence[str] | None = None, root: Path = PACKS_DIR) 
         tactics=registry.tactics,
         formations=registry.formations,
         symbols=registry.symbols,
+        magistracies=registry.magistracies,
+        gentes=registry.gentes,
+        people=registry.people,
+        fasti=registry.fasti,
+        republic_rules=registry.republic_rules or RepublicRules(),
         digest=digest.hexdigest(),
     )
 
