@@ -720,18 +720,19 @@ monuments:
   lon: 12.4905
   precision: approx
   location: Vestibule of the Domus Aurea on the Velia; base later beside the Temple of Venus and Roma, near the Colosseum
-  built: {year: 65, certainty: probable, by: "Nero, by Zenodorus; 106.5 feet (Pliny NH 34.45); 120 feet (Suet. Nero 31)"}
+  built: {year: 65, certainty: probable, by: "Nero, by the Greek Zenodorus, in the vestibule of the Domus Aurea on the Velia; 120 feet high (Suet. Nero 31, read; Plin. NH 34.45 gives 106.5 feet, not re-read)"}
   events:
-  - {year: 75, what: "Vespasian turned it into the Sun with a radiate crown (Suet. Vesp. 18; Pliny NH 34.45); Hadrian moved it with 24 elephants (HA Hadr. 19.12) - beyond range"}
-  form: "bronze colossus, a standing statue about 30-35 m high"
+  - {year: null, what: "changed by Vespasian into a statue of the Sun (Plin. NH 34.45; Suet. Vesp. 18; Mart. Spect. 2.1 as cited in Platner-Ashby); later moved by Hadrian (HA Hadr. 19.12, not re-read) - beyond range"}
+  form: "colossal bronze statue of Nero, 120 feet (about 35.5 m) high (Suet. Nero 31)"
   footprint_m: {length: 7, width: 7}
   bearing_deg: null
   height_m: 35
   model: colossus
-  sources: ["Suet. Nero 31", "Pliny NH 34.45", "Suet. Vesp. 18", "HA Hadr. 19.12"]
-  verified: false
-  pleiades: null
-  notes: "Pliny and Suetonius differ on the height (106.5 vs 120 Roman feet); base position from memory."
+  sources: ["Suet. Nero 31", "Suet. Vesp. 18", "Plin. NH 34.45", "Mart. Spect. 2.1", "Platner-Ashby s.v. Colossus Neronis (read)"]
+  verified: true
+  unverified_fields: [lat, lon, footprint_m, height_m]
+  pleiades: 527986452
+  notes: "Platner-Ashby gives 120 feet and the Vespasianic conversion into the Sun; the Pliny figure of 106.5 feet is quoted from memory and not re-read. Pleiades 527986452 (Colossus Neronis, 41.8909, 12.491) is a place near the Velia; the base position is approximate."
 - id: macellum_magnum
   latin: Macellum Magnum
   english: Macellum Magnum (Nero's market)
@@ -741,16 +742,17 @@ monuments:
   lon: 12.4965
   precision: rough
   location: Caelian hill
-  built: {year: 59, certainty: probable, by: "Nero (coin sestertii c. 64; Dio 61.18.3)"}
-  form: "circular central colonnade on the Caelian"
+  built: {year: 59, certainty: certain, by: "Nero, built and dedicated in AD 59 (Platner-Ashby; Dio 62.18.3 as cited there, CIL VI 1648, 9183)"}
+  form: "circular market building on the Caelian, probably on the site of S. Stefano Rotondo; coins show a circular two-storied building with a central tholos surrounded by colonnades (22 columns inside, 36 outside in the fourth-century rebuilding, which kept the plan); the Neronian building itself survives only in foundations, part of the enclosure wall and eight pilasters"
   footprint_m: null
   bearing_deg: null
   height_m: null
   model: market
-  sources: ["Dio 61.18.3", "Platner-Ashby s.v. Macellum Magnum"]
-  verified: false
-  pleiades: null
-  notes: "Dio 61.18.3 reference and date from memory; unverified."
+  sources: ["Dio 62.18.3", "CIL VI 1648", "CIL VI 9183", "Platner-Ashby s.v. Macellum Magnum (read)"]
+  verified: true
+  unverified_fields: [lat, lon, footprint_m]
+  pleiades: 327869515
+  notes: "Pleiades 327869515 (Macellum Magnum) has no coordinates. Dates read; Dio 62.18.3 as cited by Platner-Ashby (the Dio text read has this reference in 62.18 but I did not locate the macellum sentence)."
 - id: thermae_neronianae
   latin: Thermae Neronianae
   english: Baths of Nero (with the Gymnasium)
@@ -760,35 +762,38 @@ monuments:
   lon: 12.4748
   precision: rough
   location: Campus Martius, between the Pantheon and the Stadium of Domitian (S. Luigi dei Francesi / Piazza Navona area)
-  built: {year: 62, certainty: probable, by: "Nero, dedicated AD 60 (gymnasium) and 62 (baths) (Tac. Ann. 14.47, 15.22; Suet. Nero 12; Dio 62.21)"}
-  form: "large hot baths; renowned (Martial 7.34; Juv. 7.233) - unverified"
+  built: {year: 62, certainty: probable, by: "Nero near the Pantheon (Suet. Nero 12; Aur. Vict. Ep. 5; Eutrop. 7.15). Chronica put it in 64; if identical with his Gymnasium (built 62) then 62 (Platner-Ashby)"}
+  form: "the second public bathing establishment in Rome; very noted in Martial (2.48.8, 3.25.4)"
   footprint_m: null
   bearing_deg: null
   height_m: null
   model: baths
-  sources: ["Tac. Ann. 14.47", "Suet. Nero 12", "Dio 62.21", "Platner-Ashby s.v. Thermae Neronianae"]
-  verified: false
+  sources: ["Suet. Nero 12", "Aur. Vict. Ep. 5", "Eutrop. 7.15", "Mart. 2.48.8", "Mart. 3.25.4", "Platner-Ashby s.v. Thermae Neronianae (read)"]
+  verified: true
+  events:
+  - {year: 227, what: "rebuilt by Alexander Severus and renamed Thermae Alexandrinae - beyond range"}
+  unverified_fields: [lat, lon]
   pleiades: null
-  notes: "Gymnasium AD 60 / baths AD 62 - dates not re-read. Site rough."
+  notes: "Dates read: 62 (Gymnasium) or 64 (Chronica); Platner-Ashby says they were near the Pantheon; the position is rough. The first draft cited Tac. Ann. 14.47 and Dio 62.21 for the gymnasium (not read)."
 - id: aedes_divi_claudii
   latin: Templum Divi Claudii
   english: Temple of the Deified Claudius
   type: temple
   regio: 2
-  lat: 41.8883
-  lon: 12.4950
+  lat: 41.8876
+  lon: 12.4934
   precision: approx
-  location: Caelian hill, on the platform under S. Stefano Rotondo and the Passionist monastery of SS. Giovanni e Paolo
-  built: {year: 54, certainty: probable, by: "begun by Agrippina after Claudius' deification, largely demolished by Nero, completed by Vespasian (Suet. Vesp. 9)"}
+  location: "Caelian hill, north-west corner opposite the Colosseum, now the gardens of the Passionist Fathers (SS. Giovanni e Paolo); Nero extended the Aqua Claudia distribution station there (Frontin. Aq. 1.20, 2.76)"
+  built: {year: 54, certainty: probable, by: "begun by Agrippina after Claudius' deification, almost entirely destroyed by Nero, rebuilt by Vespasian (Suet. Vesp. 9, read; Platner-Ashby)"}
   form: "temple on an immense terraced platform with a nymphaeum on the Via Triumphalis side"
-  footprint_m: {length: 180, width: 200}
   bearing_deg: null
   height_m: null
   model: temple_hexastyle
-  sources: ["Suet. Vesp. 9", "Platner-Ashby s.v. Claudius, Divus, Templum"]
-  verified: false
-  pleiades: null
-  notes: "Footprint is the platform from memory (about 180 x 200 m); unverified."
+  sources: ["Suet. Vesp. 9", "Frontin. Aq. 1.20", "Aur. Vict. Caes. 9", "CIL VI 10251a", "Platner-Ashby s.v. Claudius, Divus, templum (read)"]
+  verified: true
+  unverified_fields: [built, footprint_m, bearing_deg, height_m]
+  pleiades: 645216382
+  notes: "Platner-Ashby gives no dimensions (the first-draft 180 x 200 m platform was from memory and is removed). Year 54 is a placeholder for Agrippina's start; the rebuilding by Vespasian has no recorded year. Pleiades 645216382 templum divi Claudii (41.8876, 12.4934)."
 # ================================================================ FLAVIANS
 - id: amphitheatrum_flavium
   latin: Amphitheatrum Flavium (Colosseum)
@@ -799,39 +804,42 @@ monuments:
   lon: 12.4922
   precision: exact
   location: In the drained lake of Nero's Domus Aurea, between the Velia, Caelian and Oppian
-  built: {year: 80, certainty: certain, by: "begun by Vespasian c. AD 70-72 on the site of Nero's lake (Suet. Vesp. 9; Martial Spect. 2), dedicated by Titus in AD 80 with 100 days of games (Suet. Titus 7; Dio 66.25), top storeys finished by Domitian (Suet. Dom. 5)"}
+  built: {year: 80, certainty: certain, by: "begun by Vespasian in the depression between Velia, Esquiline and Caelian on the stagnum of Nero's Domus Aurea (Suet. Vesp. 9, read; Mart. Spect. 2; Aur. Vict. Caes. 9.7); Vespasian carried it to the top of the second arcade and dedicated it before his death in 79 (Chronogr. a. 354); Titus added the third and fourth stories and dedicated the enlarged building in 80 with games of a hundred days (Suet. Tit. 7, read; Dio 66.25, read; Jerome a. Abr. 2095; Eutrop. 7.21); Domitian completed it ad clipea (Chronogr. 354)"}
   events:
-  - {year: 80, what: "inaugural games, 100 days; 9,000 wild animals killed (Dio 66.25)"}
-  - {year: 217, what: "struck by lightning (beyond range)"}
-  form: "elliptical amphitheatre of four storeys, arena 83 x 48 m, outer wall 188 x 156 m, height ~ 48 m, seating for about 50,000"
-  materials: [travertine, tufa, brick, concrete]
+  - {year: 80, what: "inaugural games lasted 100 days: 9,000 tame and wild animals killed (Dio 66.25.1); Suetonius says 5,000 beasts in a single day (Titus 7.3); sham sea fights were put on in the old naumachia, and Dio also describes the arena being flooded for a naval show"}
+  - {year: 150, what: "changes or additions by Nerva and Trajan (CIL VI 32254); restored by Antoninus Pius (HA Pius 8) - beyond range"}
+  - {year: 217, what: "struck by lightning (Dio 78.25); no combats until 222-223 - beyond range"}
+  form: "elliptical amphitheatre, outer wall 188 m on the main axis (NW-SE per Platner-Ashby) and 156 m on the minor axis, 48.50 m high in four stories; the lower three are open arcades of 80 arches (76 numbered, 4 unnumbered entrances at the axis ends) with Doric, Ionic and Corinthian engaged half-columns; arena 86 x 54 m in Platner-Ashby (83 x 48 m in recent measurement); podium about 4 m above the arena"
+  materials: [travertine facade and skeleton, peperino, tufa and concrete, brick facing, marble seats]
   footprint_m: {length: 188, width: 156}
-  bearing_deg: 100
-  height_m: 48
+  bearing_deg: 120
+  height_m: 48.5
   model: amphitheatre
-  sources: ["Suet. Vesp. 9", "Suet. Titus 7", "Suet. Dom. 5", "Dio 66.25", "Martial Spect.", "Platner-Ashby s.v. Amphitheatrum Flavium"]
-  verified: false
-  pleiades: null
-  notes: "Dimensions are those given in the task (Platner-Ashby s.v.), not re-read. Long-axis bearing from memory of the map and unverified. 'Begun c. AD 70-72' is the task's figure."
+  sources: ["Suet. Vesp. 9", "Suet. Tit. 7", "Suet. Dom. 5", "Dio 66.25", "Dio 78.25", "Mart. Spect. 2", "Aur. Vict. Caes. 9.7", "Chronogr. a. 354", "HA Pius 8", "Platner-Ashby s.v. Amphitheatrum Flavium (read)"]
+  verified: true
+  unverified_fields: [bearing_deg, arena_axes]
+  pleiades: 285857974
+  notes: "Read in full: Platner-Ashby; Suet. Vesp. 9 and Tit. 7; Dio 66.24-25. Suetonius says only that Vespasian planned an amphitheatre in the heart of the city (Vesp. 9); the lake site comes from Martial Spect. 2 and Platner-Ashby. The start year (c. 70-72) is the task's figure and is not in Platner-Ashby. Bearing: Platner-Ashby says main axis NW-SE, which I have not converted to degrees from a map; 120 is a rough placeholder. Pleiades 285857974 Amphitheatrum Flavium (41.8903, 12.4923)."
 - id: ludus_magnus
   latin: Ludus Magnus
   english: Ludus Magnus (the main gladiatorial school)
   type: school
   regio: 3
-  lat: 41.8894
-  lon: 12.4937
+  lat: 41.8901
+  lon: 12.4951
   precision: exact
   location: East of the Colosseum between the Caelian and the Oppian, connected by passage to the amphitheatre
-  built: {year: 90, certainty: probable, by: "Domitian (Regionary catalogues and brick stamps); the Hadrianic/Trajanic form is later"}
-  form: "elliptical training arena with seating for about 3,000 inside a rectangular barracks courtyard"
-  footprint_m: {length: 125, width: 60}
+  built: {year: 90, certainty: uncertain, by: "probably one of the four ludi established by Domitian near the Colosseum (Chron. 146 as cited in Platner-Ashby)"}
+  form: "rectangular court about 60 x 90 m surrounded by small chambers and containing an elliptical enclosure (Marble Plan fragment 4); in Region III"
+  footprint_m: {length: 90, width: 60}
   bearing_deg: null
   height_m: null
   model: arena_school
-  sources: ["Platner-Ashby s.v. Ludus Magnus"]
-  verified: false
-  pleiades: null
-  notes: "Domitianic date inferred from memory; unverified."
+  sources: ["Chronogr. a. 354 (Chron. 146)", "CIL VI 1645", "Herodian 1.15.8", "Platner-Ashby s.v. Ludus Magnus (read)"]
+  verified: true
+  unverified_fields: [built, bearing_deg, height_m]
+  pleiades: 594335209
+  notes: "Platner-Ashby gives the Marble Plan size and the Domitianic origin as probable only. The 3,000-seat claim of the first draft is removed. Pleiades 594335209 OSM location: Ludus Magnus (41.8901, 12.4951)."
 - id: thermae_titi
   latin: Thermae Titi
   english: Baths of Titus
@@ -841,75 +849,80 @@ monuments:
   lon: 12.4957
   precision: approx
   location: Oppian hill on part of the Domus Aurea, near the Colosseum
-  built: {year: 80, certainty: certain, by: "Titus (Suet. Titus 7; Martial Spect. 2; Dio 66.25)"}
-  form: "small bath complex built quickly in AD 80, later swallowed by the Baths of Trajan"
-  footprint_m: {length: 120, width: 90}
+  built: {year: 80, certainty: certain, by: "Titus, built in great haste at the time of the Colosseum dedication (Suet. Tit. 7, read; Dio 66.25.1, read; Mart. Spect. 2)"}
+  form: "baths in Region III near the Colosseum within the precinct of the Domus Aurea, though no actual buildings of the Domus seem to have been removed; a restoration was contemplated in 238 (HA Max. et Balb. 1); lay just west of the later Baths of Trajan"
   bearing_deg: null
   height_m: null
   model: baths
-  sources: ["Suet. Titus 7", "Martial Spect. 2", "Dio 66.25", "Platner-Ashby s.v. Thermae Titi"]
-  verified: false
-  pleiades: null
-  notes: "Footprint a guess; unverified."
+  sources: ["Suet. Tit. 7", "Dio 66.25.1", "Mart. Spect. 2", "Mart. 3.20.15", "Platner-Ashby s.v. Thermae Titi (read)"]
+  verified: true
+  unverified_fields: [footprint_m, bearing_deg]
+  pleiades: 855441498
+  notes: "The first-draft footprint was a guess and is removed. Pleiades 855441498 Thermae Titi (41.8934, 12.4965)."
 - id: arcus_titi
   latin: Arcus Titi
   english: Arch of Titus
   type: arch
   regio: 4
-  lat: 41.8899
-  lon: 12.4889
+  lat: 41.8907
+  lon: 12.4886
   precision: exact
   location: Summa Sacra Via, on the Velia ridge east of the Forum Romanum
-  built: {year: 81, certainty: probable, by: "Senate and People after Titus' death and deification (CIL VI 945); relief of the Jewish triumph of AD 71; erected c. AD 81 under Domitian"}
-  form: "single-bay arch of Pentelic marble, relief panels of the triumph with the Temple's menorah"
+  built: {year: 81, certainty: probable, by: "begun in honour of Titus and the siege of Jerusalem but not finished and dedicated until after his death (CIL VI 945); no ancient literary mention (Platner-Ashby); the Nerva/Trajan theory is improbable"}
+  form: "single-bay arch of Pentelic marble 13.50 m wide, 15.40 m high, 4.75 m deep; archway 8.30 m high and 5.36 m wide; attic 4.40 m high; engaged fluted Corinthian columns"
   footprint_m: {length: 13.5, width: 4.75}
   bearing_deg: 110
   height_m: 15.4
   model: arch
-  sources: ["CIL VI 945", "Platner-Ashby s.v. Arcus Titi"]
-  verified: false
-  pleiades: null
-  notes: "Dimensions from memory; whether it was built under Titus or Domitian is the usual debate; the inscription names the deified Titus."
+  sources: ["CIL VI 945", "CIL VI 19151", "Platner-Ashby s.v. Arcus Titi (read)"]
+  verified: true
+  unverified_fields: [bearing_deg, built]
+  pleiades: 236855821
+  notes: "Dimensions read in Platner-Ashby. Year 81 is a convention: the arch was finished after Titus died in September 81, whoever dedicated it. Pleiades 236855821 Arch of Titus (41.8907, 12.4886). The Via Sacra runs roughly WNW-ESE here."
 - id: aedes_vespasiani
   latin: Templum Divi Vespasiani et Titi
   english: Temple of Vespasian and Titus
   type: temple
   regio: 8
-  lat: 41.8926
-  lon: 12.4838
+  lat: 41.8927
+  lon: 12.4839
   precision: exact
   location: Foot of the Capitol, between the Temple of Saturn and the Tabularium; three Corinthian columns stand
-  built: {year: 91, certainty: probable, by: "begun by Titus, completed by Domitian after AD 87 (Suet. Dom. 5; Platner-Ashby)"}
-  form: "hexastyle Corinthian temple on a high podium, 7.6 m shaft"
+  built: {year: 91, certainty: probable, by: "begun by Titus, completed by Domitian (Chron. 146; Notitia Reg. VIII; AJA 1912, 411 per Platner-Ashby); the architrave inscription names only Vespasian (CIL VI 938)"}
+  form: "prostyle hexastyle Corinthian temple, 33 m long and 22 m wide, built against the Tabularium on a narrow strip beside the Clivus Capitolinus; three white marble columns 15.20 m high and 1.57 m in diameter stand at the south-east corner of the pronaos; cella with oriental marbles"
   footprint_m: {length: 33, width: 22}
   bearing_deg: 135
-  height_m: 24
+  height_m: 17
   model: temple_hexastyle
-  sources: ["Suet. Dom. 5", "Platner-Ashby s.v. Vespasianus, Divus, Templum"]
-  verified: false
-  pleiades: null
-  notes: "Year from memory (~ AD 87-91); unverified."
+  sources: ["Chronogr. a. 354 (Chron. 146)", "CIL VI 938", "Platner-Ashby s.v. Vespasianus, Divus, templum (read)"]
+  verified: true
+  events:
+  - {year: 200, what: "restored by Severus and Caracalla (second line of the architrave inscription) - beyond range"}
+  unverified_fields: [built, bearing_deg, height_m]
+  pleiades: 193196776
+  notes: "Size read in Platner-Ashby. No source read gives the completion year; 91 is the common modern figure, not verified. Pleiades 193196776 Temple of Vespasian and Titus (41.8927, 12.4839)."
 - id: templum_pacis
   latin: Templum Pacis (Forum Pacis)
   english: Temple of Peace (Forum of Vespasian)
   type: forum
   regio: 4
-  lat: 41.8920
-  lon: 12.4880
+  lat: 41.8926
+  lon: 12.4873
   precision: approx
   location: South-east of the Forum of Augustus, between the Via Sacra and the Argiletum; the Forma Urbis marble plan hung in an apse
-  built: {year: 75, certainty: certain, by: "Vespasian, dedicated AD 75 (Dio 66.15.1; Josephus BJ 7.158-162)"}
+  built: {year: 75, certainty: certain, by: "begun by Vespasian after the capture of Jerusalem in AD 71 and dedicated in 75 (Suet. Vesp. 9, read; Joseph. BJ 7.5.7 (158); Dio 65.15.1 in Cary/Boissevain numbering; Aur. Vict. Caes. 9.7)"}
   events:
-  - {year: 192, what: "burned in AD 192 (beyond range)"}
-  form: "rectangular garden court with porticoes on three sides and a temple to Pax on the south-east; held the treasures of the Jewish war (Josephus BJ 7.158-162)"
-  footprint_m: {length: 110, width: 105}
+  - {year: 192, what: "burned in AD 192 (Dio 72.24) - beyond range"}
+  form: "forum Pacis: rectangular, 145 m long and about two-thirds as wide, same orientation as the other imperial fora, peperino enclosing wall lined with marble with several gates; the temple of Peace stood in the middle, north of the Basilica Aemilia; the Forma Urbis marble plan was later fixed on a wall of the hall on the NE side (under Severus)"
+  footprint_m: {length: 145, width: 97}
   bearing_deg: null
   height_m: null
   model: forum
-  sources: ["Dio 66.15.1", "Josephus BJ 7.158-162", "Platner-Ashby s.v. Pax, Templum"]
-  verified: false
-  pleiades: null
-  notes: "Size from memory; Pliny NH 36.102 praises it as among the most beautiful buildings (unread)."
+  sources: ["Suet. Vesp. 9", "Joseph. BJ 7.5.7 (158-162)", "Dio 65.15.1", "Plin. NH 36.102", "Platner-Ashby s.v. Pax, Templum (read)"]
+  verified: true
+  unverified_fields: [bearing_deg, height_m]
+  pleiades: 152567558
+  notes: "Size read in Platner-Ashby (145 m, width about two-thirds). The first draft's 110 x 105 m was wrong. Dio 65.15 is Platner-Ashby's numbering; the Dio text read here (66.x) has no Peace passage (epitome). Pleiades 152567558 forum Pacis (41.8926, 12.4873)."
 - id: domus_flavia
   latin: Domus Flavia
   english: Domus Flavia (palace of Domitian)
