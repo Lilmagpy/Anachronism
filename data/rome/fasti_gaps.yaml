@@ -1,0 +1,60 @@
+schema_version: 1
+# Years of the Varronian count that have no regular magistrates in the Fasti (the anarchy 375-371; the dictator years 333, 324, 309, 301).
+# The Republic schema has no empty year, so these are kept apart; the loader can treat them as gaps.
+gaps:
+  - id: fasti_375bc
+    year: -375
+    kind: anarchy
+    notes: "Traditionally a year without consuls or consular tribunes: the \"anarchy\" of 375-371 in the Varronian count (Livy 6.35). Perhaps a later reconstruction. Livy 6.35: a dearth of magistrates lasted in the City for five years (Livy's account of the five years without consular tribunes or consuls, 375-371 in the Varronian count)."
+    sources:
+      - "Livy 6.35"
+    confidence: low
+  - id: fasti_374bc
+    year: -374
+    kind: anarchy
+    notes: "Traditionally a year without consuls or consular tribunes: the \"anarchy\" of 375-371 in the Varronian count (Livy 6.35). Perhaps a later reconstruction."
+    sources:
+      - "Livy 6.35"
+    confidence: low
+  - id: fasti_373bc
+    year: -373
+    kind: anarchy
+    notes: "Traditionally a year without consuls or consular tribunes: the \"anarchy\" of 375-371 in the Varronian count (Livy 6.35). Perhaps a later reconstruction."
+    sources:
+      - "Livy 6.35"
+    confidence: low
+  - id: fasti_372bc
+    year: -372
+    kind: anarchy
+    notes: "Traditionally a year without consuls or consular tribunes: the \"anarchy\" of 375-371 in the Varronian count (Livy 6.35). Perhaps a later reconstruction."
+    sources:
+      - "Livy 6.35"
+    confidence: low
+  - id: fasti_371bc
+    year: -371
+    kind: anarchy
+    notes: "Traditionally a year without consuls or consular tribunes: the \"anarchy\" of 375-371 in the Varronian count (Livy 6.35). Perhaps a later reconstruction."
+    sources:
+      - "Livy 6.35"
+    confidence: low
+  - id: fasti_333bc
+    year: -333
+    kind: dictator_year
+    notes: "Dictator year: the Varronian lists have no consuls (or other regular magistrates) for this year; it is generally thought to be an artificial insertion that reconciles the Varronian count with other chronologies."
+    sources:
+      - "Fasti Capitolini"  # unverified
+    confidence: low
+  - id: fasti_324bc
+    year: -324
+    kind: dictator_year
+    notes: "Dictator year: the Varronian lists have no consuls (or other regular magistrates) for this year; it is generally thought to be an artificial insertion that reconciles the Varronian count with other chronologies."
+    sources:
+      - "Fasti Capitolini"  # unverified
+    confidence: low
+  - id: fasti_309bc
+    year: -309
+    kind: dictator_year
+    notes: "Dictator year: the Varronian lists have no consuls (or other regular magistrates) for this year; it is generally thought to be an artificial insertion that reconciles the Varronian count with other chronologies."
+    sources:
+      - "Fasti Capitolini"  # unverified
+    confidence: low
