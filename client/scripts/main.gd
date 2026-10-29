@@ -10,6 +10,8 @@
 ## screenshots and tests). `--smoke` goes through the title screen and picker, builds the
 ## game, prints SMOKE OK and quits. `--screen=title|picker` (`--pick=scenario_id`) shows the menus;
 ## `--civ=ID` starts straight away as that civilisation (default rome).
+## Urbs, the walk-in city of Rome (D-289): `--urbs` opens it at once; its other flags
+## (`--year`, `--at`, `--mode`, `--hour`, `--then`, `--urbs-shots`) are listed in urbs.gd.
 extends Node3D
 
 const UiScale := preload("res://scripts/ui_scale.gd")
@@ -37,6 +39,11 @@ var view: Dictionary = {}
 var options := {}
 var environment := Environment.new()
 var sun := DirectionalLight3D.new()
+var urbs: Urbs   # Urbs (D-289): the city of Rome, built on first visit
+var _in_urbs := false
+var _urbs_busy := false
+var _urbs_cooldown := 0   ## msec tick before which zooming in will not open the city again
+var _veil := ColorRect.new()
 
 
 func _ready() -> void:
@@ -137,6 +144,8 @@ func _enter_game(result: Variant) -> void:
 	if view.get("map") != null:
 		_build_earth(holder, str(view["map"]))
 		_build_hud()
+		if options.has("urbs"):   # Urbs (D-289)
+			await _enter_urbs(true)
 		if options.has("smoke"):  # CI self-test: the engine answered and the world was built
 			print("SMOKE OK: %s as %s, %d provinces, %d ideas" % [view["scenario"], view["status"]["name"], view["provinces"].size(), view["ideas"].size()])
 			bridge.stop()
@@ -251,6 +260,8 @@ func _build_hud() -> void:
 	add_child(game_menu)
 	hud.menu_requested.connect(game_menu.open_menu)
 	hud.capital_requested.connect(_visit_capital)
+	hud.urbs_requested.connect(func(): _enter_urbs())   # Urbs (D-289)
+	rig.zoomed_past_nearest.connect(_on_zoomed_past_nearest)
 	hud.city_requested.connect(func(id: String):  # fly down to a city to see it (D-127)
 		for p in view["provinces"]:
 			if p["id"] == id and p.get("latlon") != null:
@@ -419,6 +430,97 @@ func _visit_capital() -> void:
 	for p in view["provinces"]:
 		if p["owner"] == view["player"] and p["capital"] and p["latlon"] != null:
 			rig.fly_to(earth.ground_at(p["latlon"][0], p["latlon"][1]), 70.0)
+
+
+# --- Urbs (D-289): the walk-in city of Rome ------------------------------------------------
+
+const ROME_LATLON := Vector2(41.8925, 12.4853)   # the Forum Romanum, also UrbsGeo's origin
+
+
+## Map units per local metre east and north at Rome, so a map point and a city point agree.
+func _rome_frame() -> Dictionary:
+	var origin := earth.ground_at(ROME_LATLON.x, ROME_LATLON.y)
+	var east := earth.ground_at(ROME_LATLON.x, ROME_LATLON.y + 0.2) - origin
+	var north := earth.ground_at(ROME_LATLON.x + 0.2, ROME_LATLON.y) - origin
+	return {"origin": origin, "east": east / (0.2 * UrbsGeo.M_PER_DEG_LON), "north": north / (0.2 * UrbsGeo.M_PER_DEG_LAT)}
+
+
+func _on_zoomed_past_nearest(_at: Vector2) -> void:
+	if _in_urbs or _urbs_busy or earth == null or Time.get_ticks_msec() < _urbs_cooldown:
+		return
+	var frame := _rome_frame()
+	var reach: float = (frame["north"] as Vector3).length() * 0.2 * UrbsGeo.M_PER_DEG_LAT * 1.4   # ~30 km
+	if Vector2(rig.position.x - frame["origin"].x, rig.position.z - frame["origin"].z).length() < reach:
+		_enter_urbs()
+
+
+func _veil_to(alpha: float, seconds: float) -> void:
+	if _veil.get_parent() == null:
+		var layer := CanvasLayer.new()
+		layer.layer = 95
+		_veil.color = Urbs.FADE_COLOUR
+		_veil.set_anchors_preset(Control.PRESET_FULL_RECT)
+		_veil.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_veil.modulate.a = 0.0
+		layer.add_child(_veil)
+		add_child(layer)
+	var tween := create_tween()
+	tween.tween_property(_veil, "modulate:a", alpha, seconds).set_trans(Tween.TRANS_SINE)
+	await tween.finished
+
+
+func _map_shown(shown: bool) -> void:
+	holder.visible = shown
+	sun.visible = shown
+	if hud != null:
+		hud.visible = shown
+	rig.set_process(shown)
+	rig.set_process_unhandled_input(shown)
+	if shown:
+		rig.camera.current = true
+
+
+## Fade from the map into the city of Rome in the game's year, over the place the map looked at.
+func _enter_urbs(instant := false) -> void:
+	if _in_urbs or _urbs_busy or earth == null:
+		return
+	_urbs_busy = true
+	if urbs == null:
+		urbs = Urbs.new()
+		add_child(urbs)
+		urbs.exit_requested.connect(_leave_urbs)
+	if not instant:
+		await _veil_to(1.0, 0.45)
+	var frame := _rome_frame()
+	var off: Vector3 = rig.position - frame["origin"]
+	var east: Vector3 = frame["east"]
+	var north: Vector3 = frame["north"]
+	var local := Vector3(off.dot(east) / east.length_squared(), 0.0, -off.dot(north) / north.length_squared())
+	if local.length() > 2500.0:   # the map was looking somewhere else: open over the Forum
+		local = Vector3.ZERO
+	_in_urbs = true
+	_map_shown(false)
+	urbs.open(int(options.get("year", view.get("year", -300))), local, options if instant else {})
+	_urbs_busy = false
+	if not instant:
+		await _veil_to(0.0, 0.7)
+
+
+## Fade from the city back to the map, over the place the city was looking at.
+func _leave_urbs() -> void:
+	if not _in_urbs or _urbs_busy:
+		return
+	_urbs_busy = true
+	await _veil_to(1.0, 0.45)
+	var frame := _rome_frame()
+	var at: Vector3 = urbs.cam.focus()
+	rig.look_at_point(frame["origin"] + (frame["east"] as Vector3) * at.x - (frame["north"] as Vector3) * at.z, maxf(rig.near * 2.2, 40.0))
+	urbs.close()
+	_in_urbs = false
+	_map_shown(true)
+	_urbs_cooldown = Time.get_ticks_msec() + 1500
+	_urbs_busy = false
+	await _veil_to(0.0, 0.6)
 
 
 ## A saved game was loaded: redraw the map for it (a different region if need be).
@@ -598,6 +700,8 @@ func _ground_height(point: Vector3) -> float:
 
 
 func _process(delta: float) -> void:
+	if _in_urbs:   # Urbs (D-289): the map sleeps while the city is open
+		return
 	if menus != null and earth != null:  # the title backdrop drifts slowly east
 		rig.position.x += delta * 6.0
 	if provinces != null:
@@ -616,7 +720,7 @@ func _process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if provinces == null:
+	if provinces == null or _in_urbs:   # Urbs (D-289): the city reads its own keys
 		return
 	if _replay != null:  # a click or key skips the turn's replay
 		if (event is InputEventMouseButton or event is InputEventKey) and event.pressed:
@@ -769,6 +873,27 @@ func _take_screenshot(path: String) -> void:
 		while waited < 1.2:
 			await get_tree().process_frame
 			waited += get_process_delta_time()
+	if options.has("urbs-shots"):   # Urbs (D-289): --urbs-shots=t1,t2 pictures while --then=... glides
+		var then := str(options.get("then", ""))
+		if then == "enter":
+			_enter_urbs()
+		elif then == "leave":
+			_leave_urbs()
+		elif urbs != null:
+			var c := urbs.cam
+			match then:
+				"street": c.go_street(c.target)
+				"city": c.go_city(c.pos + Vector3(-sin(c.yaw), 0, -cos(c.yaw)) * 80.0, 260.0)
+				"inside": urbs.enter_monument(str(options.get("at", "")))
+		var elapsed := 0.0
+		for t in str(options["urbs-shots"]).split(","):
+			while elapsed < float(t):
+				await get_tree().process_frame
+				elapsed += get_process_delta_time()
+			get_viewport().get_texture().get_image().save_png(path.replace(".png", "_t%s.png" % t))
+		bridge.stop()
+		get_tree().quit()
+		return
 	if options.has("replay-shots"):  # --replay-shots=t1,t2,...: pictures as the next turn plays
 		if options.has("replay-demo"):  # --replay-demo=province: a made-up turn there (screenshots)
 			_demo_replay(str(options["replay-demo"]))
