@@ -262,10 +262,11 @@
 ],
 "ridges": [
 {
-"core": 50,
+"cliff": true,
+"core": 78,
 "id": "capitolinus",
-"note": "460 m long, 180 m wide on average, NE-SW; 'surrounded by steep cliffs on all sides except the south-east' (so a short foot, the Forum side softened by the valley); saddle (Inter Duos Lucos) at about 37 m, present summits 38-39 m above the Tiber (about 44-45 a.s.l.); Tarpeian cliff at the SW corner",
-"outer": 105,
+"note": "460 m long, 180 m wide on average, NE-SW; 'surrounded by steep cliffs on all sides except the south-east' (the Forum side is softened by the valley); saddle (Inter Duos Lucos) at about 37 m, present summits 38-39 m above the Tiber (about 44-45 a.s.l.); Tarpeian cliff at the SW corner",
+"outer": 108,
 "pts": [
 [
 41.8921,
@@ -301,7 +302,7 @@
 {
 "core": 80,
 "id": "capitol_quirinal",
-"note": "The Quirinal is a tongue more than 2 km long ending at the Porta Collina; a fairly deep depression joined it to the Capitol until Trajan's excavations (the Column of Trajan street pavement lies below it)",
+"note": "The Quirinal is a narrow irregular tongue a little over 2 km long from the Porta Collina to the Collis Latiaris, sloping off more gradually on the north and west to the Campus Martius; highest point in the Royal Gardens area; a fairly deep depression joined it to the Capitol until Trajan's excavations",
 "outer": 190,
 "pts": [
 [
@@ -332,42 +333,43 @@
 ],
 "soft": true,
 "sources": [
-"Platner-Ashby s.v. Quirinalis Mons (read on LacusCurtius)"
+"Platner-Ashby s.v. Quirinalis Collis (read on LacusCurtius)"
 ]
 },
 {
-"core": 60,
+"core": 70,
 "id": "viminalis",
-"note": "Narrow spur between Quirinal and Esquiline; shape # unverified",
-"outer": 150,
+"note": "Tongue about 700 m long, area about 24 ha, height 50-57 m (originally somewhat higher), extending south-west from the Esquiline plateau; separated from the Cispius by the valley of the Vicus Patricius and from the Quirinal by the depression of the Via Nazionale; named for its osiers",
+"outer": 110,
 "pts": [
 [
-41.8985,
-12.4925,
-45
+41.9,
+12.4935,
+50
 ],
 [
-41.9005,
-12.4965,
+41.9012,
+12.4975,
 57
 ],
 [
-41.902,
-12.504,
+41.9022,
+12.501,
 55
 ]
 ],
 "soft": true,
 "sources": [
-"Varro LL 5.51",
-"Platner-Ashby s.v. Viminalis"
+"Platner-Ashby s.v. Viminalis Collis (read on LacusCurtius)",
+"Varro LL 5.51"
 ]
 },
 {
-"core": 95,
+"cliff": true,
+"core": 112,
 "id": "palatinus",
 "note": "Irregular quadrilateral, highest point 51.20 m a.s.l., about 25 acres; 'almost entirely surrounded by two marshy valleys', joined to the Esquiline (Oppius) only by the narrow ridge of the Velia (here about 30 m, the Arch of Titus ridge)",
-"outer": 150,
+"outer": 145,
 "pts": [
 [
 41.8897,
@@ -402,7 +404,7 @@
 {
 "core": 90,
 "id": "esquilinus",
-"note": "Oppius and Fagutal spurs on the west, merging into the eastern plateau; shape # unverified",
+"note": "Oppius and Cispius are the two projections of the high eastern ground (Esquiliae, the older name); well wooded at first (groves Fagutalis, Mefitis, Esquilinus, Lucinae); crest positions are the modeller's reading # unverified",
 "outer": 220,
 "pts": [
 [
@@ -428,14 +430,14 @@
 ],
 "soft": true,
 "sources": [
-"Varro LL 5.50",
-"Platner-Ashby s.v. Esquiliae"
+"Platner-Ashby s.v. Esquiliae (read on LacusCurtius)",
+"Varro LL 5.50"
 ]
 },
 {
 "core": 60,
 "id": "cispius",
-"note": "Northern spur of the Esquiline (S. Maria Maggiore); shape # unverified",
+"note": "Northern projection of the Esquiline (S. Maria Maggiore), parted from the Viminal by the valley of the Vicus Patricius; position # unverified",
 "outer": 160,
 "pts": [
 [
@@ -456,7 +458,7 @@
 ],
 "soft": true,
 "sources": [
-"Platner-Ashby s.v. Esquiliae"
+"Platner-Ashby s.v. Esquiliae (read on LacusCurtius)"
 ]
 },
 {
@@ -492,10 +494,11 @@
 ]
 },
 {
-"core": 75,
+"cliff": true,
+"core": 92,
 "id": "aventinus",
-"note": "Two knobs (Aventinus Maior, Minor) with a saddle; steep towards the river and the Circus; shape # unverified",
-"outer": 170,
+"note": "Two knobs (Aventinus Maior, Minor) with a saddle; steep towards the river and the Circus. Shape # unverified: the Platner-Ashby article could not be fetched (Aventinus_Mons.html gives 404 on LacusCurtius)",
+"outer": 128,
 "pts": [
 [
 41.884,
@@ -514,73 +517,94 @@
 ]
 ],
 "sources": [
-"Platner-Ashby s.v. Aventinus (not fetched)",
-"Livy 3.50"
+"Livy 3.50",
+"Platner-Ashby s.v. Aventinus Mons (# unverified, not read)"
 ]
 },
 {
 "core": 80,
 "id": "pincius",
-"note": "Collis Hortulorum, outside the Servian wall; shape # unverified",
-"outer": 220,
+"note": "Collis Hortulorum: runs west from the Porta Salaria, NNW from the Porta Pinciana to the Muro Torto and west again to the Porta Flaminia, divided from the Quirinal by the valley of the Horti Sallustiani; the substructions of the Horti Lucullani altered its contour (late Republic). Crest heights 56-62 m are modern, # unverified for 509-27 BC",
+"outer": 200,
 "pts": [
 [
-41.906,
-12.48,
-45
+41.911,
+12.49,
+60
 ],
 [
-41.91,
+41.9118,
 12.482,
-63
+62
 ],
 [
-41.915,
-12.488,
-62
+41.914,
+12.479,
+58
+],
+[
+41.9185,
+12.48,
+56
 ]
 ],
 "soft": true,
 "sources": [
+"Platner-Ashby s.v. Pincius Mons (read on LacusCurtius)",
 "Platner-Ashby s.v. Horti Lucullani"
 ]
 },
 {
-"core": 110,
+"core": 90,
 "id": "ianiculum",
-"note": "Long ridge on the west bank, joined in the north to the Vatican hill; shape # unverified",
-"outer": 300,
+"note": "Long ridge on the right bank running almost due north from opposite the Aventine, 60-70 m above the Campus Martius on average; 82 m at the Porta Aurelia (S. Pancrazio), 69 m west of S. Pietro in Montorio; the Janiculum proper is the 2 km south of S. Spirito, where the ridge comes within 100 m of the river; not continuous in the north (Vatican). Heights as quoted; crest positions are the modeller's reading # unverified",
+"outer": 260,
 "pts": [
 [
 41.88,
-12.462,
-60
+12.466,
+48
 ],
 [
-41.889,
+41.8855,
+12.4635,
+69
+],
+[
+41.888,
 12.461,
 82
 ],
 [
+41.892,
+12.461,
+80
+],
+[
 41.8985,
-12.4575,
-70
+12.4585,
+66
+],
+[
+41.902,
+12.458,
+48
 ],
 [
 41.903,
-12.453,
-75
+12.4551,
+60
 ],
 [
-41.907,
-12.451,
-60
+41.91,
+12.456,
+75
 ]
 ],
 "soft": true,
 "sources": [
-"Livy 1.33.6",
-"Platner-Ashby s.v. Ianiculum"
+"Platner-Ashby s.v. Ianiculum (read on LacusCurtius, page Janiculum.html)",
+"Livy 1.33.6"
 ]
 }
 ],
@@ -700,14 +724,144 @@
 "Varro LL 5.48",
 "Platner-Ashby s.v. Subura"
 ]
+},
+{
+"core": 25,
+"id": "via_nazionale",
+"note": "the depression between Quirinal and Viminal (now the Via Nazionale); the floor rises from the Subura; levels are the modeller's reading # unverified",
+"outer": 70,
+"pts": [
+[
+41.897,
+12.494,
+24
+],
+[
+41.9005,
+12.495,
+34
+],
+[
+41.9035,
+12.4975,
+44
+]
+],
+"sources": [
+"Platner-Ashby s.v. Viminalis Collis and Quirinalis Collis (read on LacusCurtius)"
+]
+}
+],
+"woods": [
+{
+"density": 0.9,
+"id": "esquiline_groves",
+"lat": 41.896,
+"lon": 12.503,
+"mix": {
+"cypress": 1,
+"oak": 5,
+"scrub": 3
+},
+"radius": 800,
+"sources": [
+"Platner-Ashby s.v. Esquiliae: well wooded at first, groves Fagutalis, Mefitis, Esquilinus, Lucinae (read on LacusCurtius)"
+]
+},
+{
+"density": 0.8,
+"id": "caelius_oaks",
+"lat": 41.887,
+"lon": 12.502,
+"mix": {
+"oak": 6,
+"scrub": 2
+},
+"radius": 700,
+"sources": [
+"Tacitus Ann. 4.65 (the Caelian once Querquetulanus, for its oaks) # unverified, from memory"
+]
+},
+{
+"density": 0.7,
+"id": "janiculum",
+"lat": 41.89,
+"lon": 12.459,
+"mix": {
+"oak": 3,
+"pine": 2,
+"scrub": 4
+},
+"radius": 900,
+"sources": [
+"modeller's choice # unverified"
+]
+},
+{
+"density": 0.7,
+"id": "pincian_gardens",
+"lat": 41.913,
+"lon": 12.483,
+"mix": {
+"cypress": 2,
+"oak": 3,
+"pine": 3
+},
+"radius": 700,
+"sources": [
+"Platner-Ashby s.v. Horti Lucullani (gardens, late Republic); earlier open ground # unverified"
+]
+},
+{
+"density": 0.35,
+"id": "northern_fields",
+"lat": 41.93,
+"lon": 12.49,
+"mix": {
+"oak": 3,
+"scrub": 4
+},
+"radius": 1100,
+"sources": [
+"modeller's choice # unverified"
+]
+},
+{
+"density": 0.5,
+"id": "eastern_plateau",
+"lat": 41.895,
+"lon": 12.518,
+"mix": {
+"oak": 3,
+"pine": 1,
+"scrub": 4
+},
+"radius": 1000,
+"sources": [
+"modeller's choice # unverified"
+]
+},
+{
+"density": 0.5,
+"id": "aventine_south",
+"lat": 41.874,
+"lon": 12.48,
+"mix": {
+"oak": 2,
+"scrub": 4
+},
+"radius": 900,
+"sources": [
+"modeller's choice # unverified"
+]
 }
 ]
 },
 "tiber": {
 "banks": {
 "bank_cut_m": 16,
-"depth_m": 3.2,
-"half_width_m": 35
+"depth_m": 3.4,
+"half_width_m": 45
 },
 "course": [
 [

@@ -18,6 +18,8 @@ static var _course: PackedVector2Array = PackedVector2Array()
 static var _cum: PackedFloat32Array = PackedFloat32Array()
 static var _island_c: Vector2 = Vector2.ZERO
 static var _island_dir: Vector2 = Vector2.RIGHT
+static var _turn: PackedFloat32Array = PackedFloat32Array()   ## how sharply the river turns at each point (+ left / - right), -1..1
+static var _noise: FastNoiseLite = null
 
 
 ## The parsed topography.json (cached). Shared with UrbsTerrain.
@@ -58,6 +60,17 @@ static func _ensure() -> void:
 		if i > 0:
 			acc += _course[i].distance_to(_course[i - 1])
 		_cum[i] = acc
+	_noise = FastNoiseLite.new()
+	_noise.seed = 41
+	_noise.frequency = 1.0
+	_turn.resize(_course.size())
+	for i in _course.size():
+		var a: Vector2 = _course[maxi(i - 4, 0)]
+		var b: Vector2 = _course[i]
+		var c: Vector2 = _course[mini(i + 4, _course.size() - 1)]
+		var d1 := (b - a).normalized()
+		var d2 := (c - b).normalized()
+		_turn[i] = clampf(d1.cross(d2) * 3.0, -1.0, 1.0)
 	var isl: Dictionary = _tiber().get("island", {})
 	_island_c = UrbsGeo.to_local(float(isl.get("lat", 41.8905)), float(isl.get("lon", 12.4772)))
 	var k := _nearest_index(_island_c)
@@ -142,24 +155,36 @@ static func island() -> Dictionary:
 	return {"center": _island_c, "dir": _island_dir, "half_long": ISLAND_HALF_LONG, "half_wide": ISLAND_HALF_WIDE}
 
 
-## Channel half-width at a point: normal width, wider round the island so water passes both sides.
-static func half_width_at(x: float, z: float) -> float:
-	var hw := half_width()
-	return hw + 38.0 * (1.0 - smoothstep(0.9, 2.0, island_r(x, z)))
+## Half-width of the channel at distance `s` metres along the course: the normal width, varying
+## by about 15% along the river.
+static func half_width_at_s(s: float) -> float:
+	_ensure()
+	return half_width() * (1.0 + 0.15 * _noise.get_noise_1d(s / 180.0))
+
+
+## Extra half-width round the island so that water passes on both sides of it.
+static func island_widen(x: float, z: float) -> float:
+	return 38.0 * (1.0 - smoothstep(0.9, 2.0, island_r(x, z)))
 
 
 ## Cuts the river into `h` (a square grid of n x n vertices, `cell` metres apart, whose first
-## vertex is at (origin, origin)). Writes the channel bed, the cut banks and the island, and
-## returns {"dist": distance to the centre line, "level": water level at the nearest point}.
+## vertex is at (origin, origin)): the channel bed, banks (steep and short on the outside of a
+## bend, long and gentle with a gravel bar on the inside), and the Tiber Island with its stepped
+## rock shelves. Returns rasters, one value per grid vertex: "dist" distance to the centre line,
+## "level" water level, "hw" channel half-width, "inner" 0..1 how much the point lies on the
+## inside of a bend.
 static func carve(h: PackedFloat32Array, n: int, origin: float, cell: float) -> Dictionary:
 	_ensure()
 	var dist := PackedFloat32Array()
 	dist.resize(n * n)
 	dist.fill(99999.0)
-	var level := PackedFloat32Array()
-	level.resize(n * n)
-	level.fill(5.5)
-	var reach := half_width() + 38.0 + _bank_cut() + cell
+	var arc := PackedFloat32Array()
+	arc.resize(n * n)
+	var side := PackedFloat32Array()
+	side.resize(n * n)
+	var turn := PackedFloat32Array()
+	turn.resize(n * n)
+	var reach := half_width() * 1.15 + 38.0 + 44.0 + cell
 	for k in range(_course.size() - 1):
 		var a := _course[k]
 		var b := _course[k + 1]
@@ -173,13 +198,23 @@ static func carve(h: PackedFloat32Array, n: int, origin: float, cell: float) -> 
 			for i in range(i0, i1 + 1):
 				var p := Vector2(origin + i * cell, origin + j * cell)
 				var t := clampf((p - a).dot(ab) / l2, 0.0, 1.0)
-				var d := p.distance_to(a + ab * t)
+				var q := a + ab * t
+				var d := p.distance_to(q)
 				var idx := j * n + i
 				if d < dist[idx]:
 					dist[idx] = d
-					level[idx] = water_level_at_s(lerpf(_cum[k], _cum[k + 1], t))
+					arc[idx] = lerpf(_cum[k], _cum[k + 1], t)
+					side[idx] = signf(ab.cross(p - q))
+					turn[idx] = lerpf(_turn[k], _turn[k + 1], t)
+	var level := PackedFloat32Array()
+	level.resize(n * n)
+	var hwr := PackedFloat32Array()
+	hwr.resize(n * n)
+	var inner := PackedFloat32Array()
+	inner.resize(n * n)
+	level.fill(5.5)
+	hwr.fill(half_width())
 	var depth := _depth()
-	var cut := _bank_cut()
 	for j in n:
 		for i in n:
 			var idx := j * n + i
@@ -188,25 +223,36 @@ static func carve(h: PackedFloat32Array, n: int, origin: float, cell: float) -> 
 				continue
 			var x := origin + i * cell
 			var z := origin + j * cell
-			var hw := half_width_at(x, z)
-			if d > hw + cut:
-				continue
-			var wl := level[idx]
+			var s := arc[idx]
+			var wl := water_level_at_s(s)
+			level[idx] = wl
+			var hw := half_width_at_s(s) + island_widen(x, z)
+			hwr[idx] = hw
+			var inn := clampf(side[idx] * turn[idx] * 1.5, 0.0, 1.0)
+			var outr := clampf(-side[idx] * turn[idx] * 1.5, 0.0, 1.0)
+			inner[idx] = inn
+			var dd := d + 3.5 * _noise.get_noise_2d(x / 22.0, z / 22.0)
+			var cut := _bank_cut() + 26.0 * inn - 8.0 * outr
 			var terr := h[idx]
-			var bed := wl - depth + (depth - 0.6) * pow(minf(d / hw, 1.0), 2.0)
-			var out: float
-			if d <= hw:
-				out = minf(terr, bed)
-			else:
-				var bank := lerpf(wl - 0.6, terr, smoothstep(hw, hw + cut, d))
-				out = minf(terr, bank)
+			var out := terr
+			if dd <= hw + cut:
+				var bed := wl - depth + (depth - 0.6) * pow(minf(dd / hw, 1.0), 2.0)
+				bed = lerpf(bed, wl + 0.35, smoothstep(0.72, 1.0, dd / hw) * inn * 0.9)   # gravel bar
+				if dd <= hw:
+					out = minf(terr, bed)
+				else:
+					var tt := smoothstep(hw, hw + cut, dd)
+					var bank := lerpf(wl + 0.2 if inn > 0.3 else wl - 0.6, terr, pow(tt, 1.0 + 0.7 * inn - 0.45 * outr))
+					out = minf(terr, bank)
 			var r := island_r(x, z)
-			if r < 1.1:
-				var w := 1.0 - smoothstep(0.7, 1.1, r)
+			if r < 1.12:
 				var top := wl + ISLAND_RAISE * (1.0 - 0.25 * r * r)
-				out = lerpf(out, maxf(top, out), w)
+				var v := clampf((1.12 - r) / 0.42, 0.0, 1.0)
+				var stepped := floorf(v * 4.0 + 0.6 * _noise.get_noise_2d(x / 9.0, z / 9.0)) / 4.0
+				var ih := wl - 0.6 + (top - wl + 0.6) * (0.25 * v + 0.75 * maxf(stepped, 0.0))   # rock shelves
+				out = maxf(out, ih)
 			h[idx] = out
-	return {"dist": dist, "level": level}
+	return {"dist": dist, "level": level, "hw": hwr, "inner": inner}
 
 
 ## Builds the water surface along the whole course and adds it to `parent`. Returns the node.
@@ -221,7 +267,7 @@ static func build_water(parent: Node3D) -> MeshInstance3D:
 		var b := _course[mini(i + 1, _course.size() - 1)]
 		var dir := (b - a).normalized()
 		var side := Vector2(-dir.y, dir.x)
-		var hw := half_width_at(p.x, p.y) + 6.0
+		var hw := half_width_at_s(_cum[i]) + island_widen(p.x, p.y) + 8.0
 		var y := water_level_at_s(_cum[i])
 		verts.append(Vector3(p.x - side.x * hw, y, p.y - side.y * hw))
 		verts.append(Vector3(p.x + side.x * hw, y, p.y + side.y * hw))
@@ -255,19 +301,19 @@ static func _water_material() -> ShaderMaterial:
 	sh.code = """
 shader_type spatial;
 render_mode cull_disabled;
-uniform vec3 deep_color : source_color = vec3(0.17, 0.25, 0.20);
-uniform vec3 shallow_color : source_color = vec3(0.33, 0.38, 0.27);
+uniform vec3 deep_color : source_color = vec3(0.30, 0.26, 0.10);
+uniform vec3 shallow_color : source_color = vec3(0.44, 0.36, 0.14);
 void fragment() {
-	vec2 w = UV * vec2(18.0, 1.0);
+	vec2 w = UV * vec2(7.0, 1.0);
 	float t = TIME * 0.35;
 	float r = sin(w.y * 6.0 - t * 3.0 + sin(w.x * 3.0) * 1.7) * 0.5 + sin(w.y * 11.0 - t * 5.0 + w.x * 5.0) * 0.5;
 	float edge = abs(UV.x - 0.5) * 2.0;
 	vec3 c = mix(deep_color, shallow_color, smoothstep(0.55, 1.0, edge));
-	ALBEDO = c + vec3(0.02) * r;
-	ROUGHNESS = 0.12;
+	ALBEDO = c + vec3(0.012) * r;
+	ROUGHNESS = 0.35;
 	METALLIC = 0.0;
-	SPECULAR = 0.8;
-	ALPHA = 0.9;
+	SPECULAR = 0.25;
+	ALPHA = 0.94;
 }
 """
 	var m := ShaderMaterial.new()

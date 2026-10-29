@@ -124,7 +124,7 @@ tiber:
   # and been embanked since (Platner-Ashby s.v. Tiberis). Accurate to ~50 m. # unverified
   surface_m: [6.2, 5.3]   # normal water level a.s.l. at the north and south end of the course
   surface_source: "Platner-Ashby s.v. Campus Martius: the plain was 10-15 m a.s.l. and 3-8 m above the Tiber, so the river stood at about 5-7 m"
-  banks: {half_width_m: 35, bank_cut_m: 16, depth_m: 3.2}   # model choice; width 60-90 m per the text above
+  banks: {half_width_m: 45, bank_cut_m: 16, depth_m: 3.4}   # model choice: 90 m wide, the top of the 60-90 m in the text above (Platner-Ashby s.v. Tiberis); varies +-15% along the course
 campus_martius:
   latin: Campus Martius
   english: Campus Martius
@@ -144,72 +144,75 @@ campus_martius:
 terrain_model:
   ridges:
   - id: capitolinus
+    cliff: true   # steep flanks all round (no soft foot)
     pts: [[41.8921,12.4815,40],[41.8929,12.4827,46],[41.8940,12.4838,37],[41.8946,12.4833,46],[41.8953,12.4842,40]]
-    core: 50
-    outer: 105
-    note: "460 m long, 180 m wide on average, NE-SW; 'surrounded by steep cliffs on all sides except the south-east' (so a short foot, the Forum side softened by the valley); saddle (Inter Duos Lucos) at about 37 m, present summits 38-39 m above the Tiber (about 44-45 a.s.l.); Tarpeian cliff at the SW corner"
+    core: 78
+    outer: 108
+    note: "460 m long, 180 m wide on average, NE-SW; 'surrounded by steep cliffs on all sides except the south-east' (the Forum side is softened by the valley); saddle (Inter Duos Lucos) at about 37 m, present summits 38-39 m above the Tiber (about 44-45 a.s.l.); Tarpeian cliff at the SW corner"
     sources: ["Platner-Ashby s.v. Capitolinus Mons (read on LacusCurtius)", "Platner-Ashby s.v. Tarpeium Saxum"]
   - id: capitol_quirinal
     soft: true   # rounded flanks (a long slope, no cliff)
     pts: [[41.8953,12.4842,38],[41.8985,12.4870,45],[41.9030,12.4895,61],[41.9065,12.4935,60],[41.9085,12.5000,55]]
     core: 80
     outer: 190
-    note: "The Quirinal is a tongue more than 2 km long ending at the Porta Collina; a fairly deep depression joined it to the Capitol until Trajan's excavations (the Column of Trajan street pavement lies below it)"
-    sources: ["Platner-Ashby s.v. Quirinalis Mons (read on LacusCurtius)"]
+    note: "The Quirinal is a narrow irregular tongue a little over 2 km long from the Porta Collina to the Collis Latiaris, sloping off more gradually on the north and west to the Campus Martius; highest point in the Royal Gardens area; a fairly deep depression joined it to the Capitol until Trajan's excavations"
+    sources: ["Platner-Ashby s.v. Quirinalis Collis (read on LacusCurtius)"]
   - id: viminalis
-    soft: true   # rounded flanks (a long slope, no cliff)
-    pts: [[41.8985,12.4925,45],[41.9005,12.4965,57],[41.9020,12.5040,55]]
-    core: 60
-    outer: 150
-    note: "Narrow spur between Quirinal and Esquiline; shape # unverified"
-    sources: ["Varro LL 5.51", "Platner-Ashby s.v. Viminalis"]
+    soft: true
+    pts: [[41.9000,12.4935,50],[41.9012,12.4975,57],[41.9022,12.5010,55]]
+    core: 70
+    outer: 110
+    note: "Tongue about 700 m long, area about 24 ha, height 50-57 m (originally somewhat higher), extending south-west from the Esquiline plateau; separated from the Cispius by the valley of the Vicus Patricius and from the Quirinal by the depression of the Via Nazionale; named for its osiers"
+    sources: ["Platner-Ashby s.v. Viminalis Collis (read on LacusCurtius)", "Varro LL 5.51"]
   - id: palatinus
+    cliff: true
     pts: [[41.8897,12.4851,47],[41.8892,12.4880,51],[41.8885,12.4900,48],[41.8905,12.4905,30],[41.8905,12.4950,54]]
-    core: 95
-    outer: 150
+    core: 112
+    outer: 145
     note: "Irregular quadrilateral, highest point 51.20 m a.s.l., about 25 acres; 'almost entirely surrounded by two marshy valleys', joined to the Esquiline (Oppius) only by the narrow ridge of the Velia (here about 30 m, the Arch of Titus ridge)"
     sources: ["Platner-Ashby s.v. Palatinus Mons (read on LacusCurtius)"]
   - id: esquilinus
-    soft: true   # rounded flanks (a long slope, no cliff)
+    soft: true
     pts: [[41.8905,12.4950,54],[41.8925,12.4975,58],[41.8932,12.5020,60],[41.8932,12.5100,62]]
     core: 90
     outer: 220
-    note: "Oppius and Fagutal spurs on the west, merging into the eastern plateau; shape # unverified"
-    sources: ["Varro LL 5.50", "Platner-Ashby s.v. Esquiliae"]
+    note: "Oppius and Cispius are the two projections of the high eastern ground (Esquiliae, the older name); well wooded at first (groves Fagutalis, Mefitis, Esquilinus, Lucinae); crest positions are the modeller's reading # unverified"
+    sources: ["Platner-Ashby s.v. Esquiliae (read on LacusCurtius)", "Varro LL 5.50"]
   - id: cispius
-    soft: true   # rounded flanks (a long slope, no cliff)
+    soft: true
     pts: [[41.8932,12.5000,60],[41.8975,12.4985,60],[41.9000,12.4995,58]]
     core: 60
     outer: 160
-    note: "Northern spur of the Esquiline (S. Maria Maggiore); shape # unverified"
-    sources: ["Platner-Ashby s.v. Esquiliae"]
+    note: "Northern projection of the Esquiline (S. Maria Maggiore), parted from the Viminal by the valley of the Vicus Patricius; position # unverified"
+    sources: ["Platner-Ashby s.v. Esquiliae (read on LacusCurtius)"]
   - id: caelius
-    soft: true   # rounded flanks (a long slope, no cliff)
+    soft: true
     pts: [[41.8838,12.4905,48],[41.8855,12.4962,50],[41.8875,12.5050,52],[41.8900,12.5150,55]]
     core: 90
     outer: 190
     note: "Tongue about 2 km long and 400-500 m wide stretching west from the eastern plateau, ending in two promontories (Caeliolus in the east, SS. Giovanni e Paolo in the west)"
     sources: ["Platner-Ashby s.v. Caelius Mons (read on LacusCurtius)"]
   - id: aventinus
+    cliff: true
     pts: [[41.8840,12.4790,46],[41.8825,12.4825,46],[41.8800,12.4860,43]]
-    core: 75
-    outer: 170
-    note: "Two knobs (Aventinus Maior, Minor) with a saddle; steep towards the river and the Circus; shape # unverified"
-    sources: ["Platner-Ashby s.v. Aventinus (not fetched)", "Livy 3.50"]
+    core: 92
+    outer: 128
+    note: "Two knobs (Aventinus Maior, Minor) with a saddle; steep towards the river and the Circus. Shape # unverified: the Platner-Ashby article could not be fetched (Aventinus_Mons.html gives 404 on LacusCurtius)"
+    sources: ["Livy 3.50", "Platner-Ashby s.v. Aventinus Mons (# unverified, not read)"]
   - id: pincius
-    soft: true   # rounded flanks (a long slope, no cliff)
-    pts: [[41.9060,12.4800,45],[41.9100,12.4820,63],[41.9150,12.4880,62]]
+    soft: true
+    pts: [[41.9110,12.4900,60],[41.9118,12.4820,62],[41.9140,12.4790,58],[41.9185,12.4800,56]]
     core: 80
-    outer: 220
-    note: "Collis Hortulorum, outside the Servian wall; shape # unverified"
-    sources: ["Platner-Ashby s.v. Horti Lucullani"]
+    outer: 200
+    note: "Collis Hortulorum: runs west from the Porta Salaria, NNW from the Porta Pinciana to the Muro Torto and west again to the Porta Flaminia, divided from the Quirinal by the valley of the Horti Sallustiani; the substructions of the Horti Lucullani altered its contour (late Republic). Crest heights 56-62 m are modern, # unverified for 509-27 BC"
+    sources: ["Platner-Ashby s.v. Pincius Mons (read on LacusCurtius)", "Platner-Ashby s.v. Horti Lucullani"]
   - id: ianiculum
-    soft: true   # rounded flanks (a long slope, no cliff)
-    pts: [[41.8800,12.4620,60],[41.8890,12.4610,82],[41.8985,12.4575,70],[41.9030,12.4530,75],[41.9070,12.4510,60]]
-    core: 110
-    outer: 300
-    note: "Long ridge on the west bank, joined in the north to the Vatican hill; shape # unverified"
-    sources: ["Livy 1.33.6", "Platner-Ashby s.v. Ianiculum"]
+    soft: true
+    pts: [[41.8800,12.4660,48],[41.8855,12.4635,69],[41.8880,12.4610,82],[41.8920,12.4610,80],[41.8985,12.4585,66],[41.9020,12.4580,48],[41.9030,12.4551,60],[41.9100,12.4560,75]]
+    core: 90
+    outer: 260
+    note: "Long ridge on the right bank running almost due north from opposite the Aventine, 60-70 m above the Campus Martius on average; 82 m at the Porta Aurelia (S. Pancrazio), 69 m west of S. Pietro in Montorio; the Janiculum proper is the 2 km south of S. Spirito, where the ridge comes within 100 m of the river; not continuous in the north (Vatican). Heights as quoted; crest positions are the modeller's reading # unverified"
+    sources: ["Platner-Ashby s.v. Ianiculum (read on LacusCurtius, page Janiculum.html)", "Livy 1.33.6"]
   valleys:
   - id: forum_valley
     pts: [[41.8925,12.4838,10.0],[41.8925,12.4870,10.0],[41.8913,12.4895,13]]
@@ -235,6 +238,12 @@ terrain_model:
     outer: 90
     note: "Argiletum and Subura, the low ground between Capitol-Quirinal and Esquiline"
     sources: ["Varro LL 5.48", "Platner-Ashby s.v. Subura"]
+  - id: via_nazionale
+    pts: [[41.8970,12.4940,24],[41.9005,12.4950,34],[41.9035,12.4975,44]]
+    core: 25
+    outer: 70
+    note: "the depression between Quirinal and Viminal (now the Via Nazionale); the floor rises from the Subura; levels are the modeller's reading # unverified"
+    sources: ["Platner-Ashby s.v. Viminalis Collis and Quirinalis Collis (read on LacusCurtius)"]
   plains:
   - id: campus_martius
     pts: [[41.8940,12.4800,12.5],[41.9000,12.4772,12],[41.9060,12.4762,13],[41.9115,12.4765,14]]
@@ -242,3 +251,15 @@ terrain_model:
     outer: 700
     note: "level ground 10-15 m a.s.l. (13-20 now), 3-8 m above the Tiber, a little under 2 km wide between the Quirinal and the river, with ponds and streams (not modelled)"
     sources: ["Platner-Ashby s.v. Campus Martius (read on LacusCurtius)"]
+  # Trees and scrub, only on the outer ground (never in the built-up centre). Each wood is a disc
+  # (centre, radius in metres) with a density (candidates per 100 m^2) and a mix of kinds (oak,
+  # pine = umbrella pine, cypress, scrub). The list is the modeller's choice of where the ground was
+  # open or wooded; only the Esquiline groves and the Caelian oak name are attested.
+  woods:
+  - {id: esquiline_groves, lat: 41.8960, lon: 12.5030, radius: 800, density: 0.9, mix: {oak: 5, scrub: 3, cypress: 1}, sources: ["Platner-Ashby s.v. Esquiliae: well wooded at first, groves Fagutalis, Mefitis, Esquilinus, Lucinae (read on LacusCurtius)"]}
+  - {id: caelius_oaks, lat: 41.8870, lon: 12.5020, radius: 700, density: 0.8, mix: {oak: 6, scrub: 2}, sources: ["Tacitus Ann. 4.65 (the Caelian once Querquetulanus, for its oaks) # unverified, from memory"]}
+  - {id: janiculum, lat: 41.8900, lon: 12.4590, radius: 900, density: 0.7, mix: {oak: 3, pine: 2, scrub: 4}, sources: ["modeller's choice # unverified"]}
+  - {id: pincian_gardens, lat: 41.9130, lon: 12.4830, radius: 700, density: 0.7, mix: {oak: 3, pine: 3, cypress: 2}, sources: ["Platner-Ashby s.v. Horti Lucullani (gardens, late Republic); earlier open ground # unverified"]}
+  - {id: northern_fields, lat: 41.9300, lon: 12.4900, radius: 1100, density: 0.35, mix: {oak: 3, scrub: 4}, sources: ["modeller's choice # unverified"]}
+  - {id: eastern_plateau, lat: 41.8950, lon: 12.5180, radius: 1000, density: 0.5, mix: {oak: 3, scrub: 4, pine: 1}, sources: ["modeller's choice # unverified"]}
+  - {id: aventine_south, lat: 41.8740, lon: 12.4800, radius: 900, density: 0.5, mix: {oak: 2, scrub: 4}, sources: ["modeller's choice # unverified"]}
