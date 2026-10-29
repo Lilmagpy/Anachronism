@@ -12,6 +12,7 @@ from anachronism.engine.republic import (
     year_label,
 )
 from anachronism.engine.republic_state import Person
+from anachronism.engine.senate import available, interposition
 from anachronism.engine.state import GameState
 
 NOTABLE = 12
@@ -39,6 +40,56 @@ def _person(state: GameState, person: Person) -> dict[str, Any]:
     }
 
 
+def _proposals(state: GameState) -> list[dict[str, Any]]:
+    """What the player may put to the Senate now, with the Senate's forecast (no record)."""
+    votes = {}
+    out: list[dict[str, Any]] = []
+    for item in available(state):
+        if item.issue not in votes:
+            vote = senate_vote(state, item.issue)
+            votes[item.issue] = (vote, interposition(state, vote))
+        vote, stand = votes[item.issue]
+        out.append(
+            {
+                "issue": item.issue.value,
+                "proposal": item.proposal,
+                "label": item.label,
+                "cost": item.cost,
+                "forecast_yes_bp": vote.yes_bp,
+                "forecast_no_bp": vote.no_bp,
+                "passes": vote.passes,
+                "tribune": stand.kind,
+                "tribune_bp": stand.chance_bp,
+            }
+        )
+    return out
+
+
+def _last_votes(state: GameState) -> list[dict[str, Any]]:
+    """The turn's Senate votes (from the city events), with how the player's own ended."""
+    rep = state.republic
+    assert rep is not None
+    ballots = {(b.turn, b.issue, b.yes_bp, b.no_bp): b for b in rep.ballots}
+    out: list[dict[str, Any]] = []
+    for e in state.city.events if state.city is not None else []:
+        if e.kind != "senate":
+            continue
+        ballot = ballots.get((e.turn, e.ref, e.value, e.other))
+        out.append(
+            {
+                "issue": e.ref,
+                "year": e.year,
+                "turn": e.turn,
+                "yes_bp": e.value,
+                "no_bp": e.other,
+                "house": e.monument,
+                "proposal": ballot.proposal if ballot else "",
+                "outcome": ballot.outcome if ballot else "",
+            }
+        )
+    return out
+
+
 def republic_view(state: GameState) -> dict[str, Any] | None:
     """Everything the client needs to draw how Rome governs itself, or ``None``."""
     rep = state.republic
@@ -54,6 +105,14 @@ def republic_view(state: GameState) -> dict[str, Any] | None:
     return {
         "year_label": year_label(state.year),
         "influence": rep.influence,
+        "influence_costs": {
+            "persuade": state.world.republic_rules.persuade_cost,
+            "back": state.world.republic_rules.back_cost,
+        },
+        "proposals": _proposals(state),
+        "last_votes": _last_votes(state),
+        "laws": [{"id": lid, "year": year} for lid, year in sorted(rep.laws.items())],
+        "colonies": [{"province": pid, "year": year} for pid, year in sorted(rep.colonies.items())],
         "emergency_bp": rep.emergency_bp,
         "history_turned": rep.diverged,
         "magistrates": [

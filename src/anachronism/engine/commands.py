@@ -12,6 +12,7 @@ from anachronism.engine.actions import (
     ArmyFormation,
     ArmyPlan,
     ArmyStance,
+    BackCandidate,
     Build,
     BuildFleet,
     CancelProject,
@@ -30,8 +31,10 @@ from anachronism.engine.actions import (
     MakePeace,
     MarchArmy,
     PauseProject,
+    Persuade,
     ProposeAlliance,
     ProposeIdea,
+    ProposeToSenate,
     RaiseArmy,
     ResumeProject,
     RuleOnIdea,
@@ -56,9 +59,10 @@ from anachronism.engine.diplomacy import apply_diplomacy
 from anachronism.engine.events import EventLog
 from anachronism.engine.judge import apply_ruling
 from anachronism.engine.offers import respond
-from anachronism.engine.projects import hasten
-from anachronism.engine.state import GameState, Project
-from anachronism.engine.tech import Feasibility, feasibility, propose
+from anachronism.engine.projects import begin_project, hasten
+from anachronism.engine.senate import back_man, persuade_family, propose_to_senate
+from anachronism.engine.state import GameState
+from anachronism.engine.tech import describe_blockers, propose
 
 
 def apply_action(state: GameState, action: Action) -> tuple[GameState, LoggedAction]:
@@ -72,33 +76,6 @@ def apply_action(state: GameState, action: Action) -> tuple[GameState, LoggedAct
     logged = LoggedAction(turn=new.turn, action=action, ok=ok, message=message)
     new.action_log.append(logged)
     return new, logged
-
-
-def describe_blockers(state: GameState, result: Feasibility) -> str:
-    """Explain in words what stops a project from starting."""
-
-    def names(ids: tuple[str, ...]) -> str:
-        return ", ".join(state.tech_nodes[i].name for i in ids)
-
-    parts = []
-    if result.stub:
-        parts.append("the idea still needs a proper ruling")
-    if result.missing_prerequisites:
-        parts.append(f"needs {names(result.missing_prerequisites)} first")
-    if result.missing_widespread:
-        parts.append(f"needs {names(result.missing_widespread)} to be widespread")
-    if result.missing_buildings:
-        kinds = state.world.buildings
-        built = ", ".join(
-            kinds[b].name.lower() if b in kinds else b for b in result.missing_buildings
-        )
-        parts.append(f"needs {built} built somewhere in the realm")
-    if result.beyond_age:
-        parts.append("lies beyond this age")
-    if result.missing_materials:
-        materials = ", ".join(state.world.resources[m].name for m in result.missing_materials)
-        parts.append(f"needs access to {materials}")
-    return "; ".join(parts)
 
 
 def _apply(state: GameState, action: Action) -> tuple[bool, str]:
@@ -137,6 +114,12 @@ def _apply(state: GameState, action: Action) -> tuple[bool, str]:
         message = respond(state, accept=action.accept, events=events)
         state.events.extend(events.items)
         return True, message
+    if isinstance(action, Persuade):
+        return persuade_family(state, action)
+    if isinstance(action, BackCandidate):
+        return back_man(state, action)
+    if isinstance(action, ProposeToSenate):
+        return propose_to_senate(state, action)
     if isinstance(action, ChooseChapter):
         if civ.id != state.player_civ:
             return False, "only the player's court plays the chronicle"
@@ -177,23 +160,7 @@ def _apply(state: GameState, action: Action) -> tuple[bool, str]:
         return True, f"{node.name} could be attempted now."
 
     if isinstance(action, StartProject):
-        if known is not None and known.stage.is_adopted:
-            return False, f"{node.name} is already in use"
-        if project is not None:
-            return False, f"work on {node.name} is already under way"
-        result = feasibility(state, civ.id, node.id)
-        if result.blocked:
-            return False, f"cannot start {node.name}: {describe_blockers(state, result)}"
-        propose(state, civ.id, node.id)
-        civ.tech[node.id].stage = Stage.EXPERIMENTING
-        civ.tech[node.id].goal = False
-        civ.projects[node.id] = Project(
-            node_id=node.id,
-            started_turn=state.turn,
-            priority=action.priority,
-            progress_bp=civ.tech[node.id].head_start_bp,  # stolen methods (D-115)
-        )
-        return True, f"Work begins on {node.name}."
+        return begin_project(state, civ.id, node.id, action.priority)
 
     if project is None:
         return False, f"there is no project for {node.name}"

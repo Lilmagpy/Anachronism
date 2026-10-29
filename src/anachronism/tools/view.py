@@ -24,7 +24,6 @@ from anachronism.engine.armies import (
 from anachronism.engine.buildings import cost as building_cost
 from anachronism.engine.buildings import options as building_options
 from anachronism.engine.buildings import slots, worth
-from anachronism.engine.commands import describe_blockers
 from anachronism.engine.conquest import full_garrison, garrison_men, storm_outlook
 from anachronism.engine.culture import tie_income, trade_income, tribute
 from anachronism.engine.decrees import cost, explain_costs, explain_ready_in, news_on_the_road
@@ -53,7 +52,7 @@ from anachronism.engine.rivals import at_war, overlord_of, relation, status, str
 from anachronism.engine.state import Army, Event, GameState
 from anachronism.engine.suspicion import adoption_suspicion_bp
 from anachronism.engine.tactics import AUTO, final, natural, needs_text, short_of_men
-from anachronism.engine.tech import feasibility, is_adopted
+from anachronism.engine.tech import describe_blockers, feasibility, is_adopted
 from anachronism.engine.timeflow import per_turn, turns_for
 from anachronism.engine.victory import progress
 from anachronism.engine.war import defence_bp, fronts

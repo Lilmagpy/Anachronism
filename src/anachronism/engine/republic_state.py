@@ -92,6 +92,20 @@ class Backing(_Mutable):
     year: int
 
 
+class Ballot(_Mutable):
+    """How a matter the player put to the Senate ended (kept for the view)."""
+
+    turn: int
+    year: int
+    issue: str
+    proposal: str
+    yes_bp: int
+    no_bp: int
+    outcome: str
+    """``passed``, ``failed``, ``vetoed`` (a tribune blocked it) or ``forced`` (a tribune
+    carried it over the Senate's refusal)."""
+
+
 class RepublicState(_Mutable):
     """How Rome governs itself, in one game."""
 
@@ -111,3 +125,10 @@ class RepublicState(_Mutable):
     diverged: bool = False
     """History has been turned from the Fasti."""
     next_person: int = 1
+    laws: dict[str, int] = Field(default_factory=dict)
+    """Law id -> the year the Senate passed it: a flag content and scripts can read."""
+    colonies: dict[str, int] = Field(default_factory=dict)
+    """Province id -> the year the Senate resolved to found a colony there (the engine has no
+    colonies of its own yet, so this is a flag)."""
+    ballots: list[Ballot] = Field(default_factory=list)
+    """The most recent matters the player put to the Senate, oldest first."""

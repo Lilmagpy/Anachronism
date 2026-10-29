@@ -219,3 +219,30 @@ def spread_step(state: GameState, civ: CivState, effects: Effects, events: Event
             f"{list_names(now_common)} {verb} now common across {civ.name}.",
             list_names(now_common),
         )
+
+
+def describe_blockers(state: GameState, result: Feasibility) -> str:
+    """Explain in words what stops a project from starting."""
+
+    def names(ids: tuple[str, ...]) -> str:
+        return ", ".join(state.tech_nodes[i].name for i in ids)
+
+    parts = []
+    if result.stub:
+        parts.append("the idea still needs a proper ruling")
+    if result.missing_prerequisites:
+        parts.append(f"needs {names(result.missing_prerequisites)} first")
+    if result.missing_widespread:
+        parts.append(f"needs {names(result.missing_widespread)} to be widespread")
+    if result.missing_buildings:
+        kinds = state.world.buildings
+        built = ", ".join(
+            kinds[b].name.lower() if b in kinds else b for b in result.missing_buildings
+        )
+        parts.append(f"needs {built} built somewhere in the realm")
+    if result.beyond_age:
+        parts.append("lies beyond this age")
+    if result.missing_materials:
+        materials = ", ".join(state.world.resources[m].name for m in result.missing_materials)
+        parts.append(f"needs access to {materials}")
+    return "; ".join(parts)

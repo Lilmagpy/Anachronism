@@ -181,15 +181,60 @@ offices, glory), `families` (a gens in play), `magistrates` (those in office now
    level (`emergency_bp`) and the era allows it; never in a year the Fasti covers.
 6. The census when censors are chosen.
 `civ.ruler` is set to the senior magistrates so the old ruler fields still read; `age_and_succeed`
-is skipped for the Republic. Player influence: `persuade(family, issue)` and
-`back_candidate(person, office, year)` (not yet wired as logged actions); `senate_vote(issue)`
-and `senate_mood()` give the Senate's will. Hooks for other systems: `award_glory`,
-`kill_person`, `declare_emergency`.
+is skipped for the Republic. Hooks for other systems: `award_glory`, `kill_person`,
+`declare_emergency`. `senate_vote(issue)` and `senate_mood()` give the Senate's will.
+
+**The player's politics** (`engine/senate.py`; logged actions, so a replay applies them again).
+The player does not command; he spends influence. Three actions, valid only for the player's
+civ in a Republic game (the bridge adds `civ`):
+- `{"kind": "persuade", "family": "<gens id>", "issue": "<Issue>"}`: `republic.persuade`, costs
+  `persuade_cost`, moves the family's favour on the issue by `persuade_shift`.
+- `{"kind": "back", "person": "<person id>", "office": "<magistracy id>"}`: `back_candidate` for
+  the next election, costs `back_cost`.
+- `{"kind": "senate", "issue": "<Issue>", "proposal": "<proposal>"}`: put a matter to the Senate.
+  `proposal` is one of `war_with:<civ>`, `peace_with:<civ>`, `law:<law id>` (a bare law id works:
+  `land_reform`), `fund:<tech node id>`, `colony:<province id>`. `issue` must be the proposal's
+  own issue (war, peace, the law's issue, `building` for a node that `builds` else `idea`,
+  `colony`). Laws are content (`republic_rules.senate.laws`: `land_reform`, `debt_relief`,
+  `grain_dole`, `grant_citizenship`, each with its years and sources).
+`ProposeToSenate` flow: validate (unknown, closed or wrong-issue proposals, or too little
+influence, are rejected with the state unchanged) -> spend `senate.costs.<kind>` whatever the
+vote -> `senate_vote(record=True)` (a `senate` city event) -> a tribune may interpose -> outcome:
+- `passed`: it takes effect through the engine's own paths: `apply_diplomacy(DeclareWar,
+  voted=True)` or `MakePeace`; a law sets `republic.laws[id] = year`; a colony sets
+  `republic.colonies[province] = year` (the engine has no colonies yet, so this is a flag for
+  content to read); funding calls `projects.begin_project`.
+- `failed`: nothing happens; the player loses `fail_influence_loss` influence and
+  `fail_legitimacy_bp`, and every family that voted no loses `opposed_favour_shift` favour on the
+  issue (they remember).
+- `vetoed`: the Senate would have passed it and a tribune of the plebs blocked it; no further loss.
+- `forced`: the Senate refused, a tribune carried it to the plebs: it takes effect, and the
+  families that opposed it lose `forced_favour_shift` favour.
+The action is `ok` whenever a vote was held; `message` says how it went, and
+`republic.ballots` (the last 20) keeps `{issue, proposal, yes_bp, no_bp, outcome}`.
+The tribune (`senate.interposition`): needs a `tribune_plebs` in office; a veto is possible from
+`veto_from_year` (494 BC, Livy 2.33.1-3; Polybius 6.16.4), carrying a refused matter to the
+people from `force_from_year` (287, the Lex Hortensia). The chance is the gap between the
+weighted `popular_lean_bp` of the losing and the winning side of the vote times
+`veto_scale_bp`, never above `veto_max_bp`, and zero if the losing side is not the more popular
+one. It is the only randomness: one `GameRng` draw, only when the chance is above zero.
+Polybius 6.13 (the Senate handles war and embassies) and 6.14.10-12 (the people deliberate on war
+and peace) are why a Senate vote is the first step and the tribune can reach the people.
+Every war that touches the player's civ and is declared outside `ProposeToSenate` (the plain
+`DeclareWar` action, a rival's declaration, a script, an ultimatum) also records a `senate`
+vote on `war` in `rivals.declare_war`, stamped with the turn being resolved; it does not decide
+the war. The AI players (`bots`) do not use these actions.
 
 **View** (`tools/republic_view.py`, key `republic` in the server's view, `null` otherwise):
-`year_label`, `influence`, `emergency_bp`, `history_turned`, `magistrates[]` (office, name,
-rank, months, suffect, appointed, from_fasti, master_of), `senate.factions[]` (weight and mood in
-bp, per-issue leaning), `senate.votes[]`, `families[]`, `notable[]`, `census[]`, `fasti[]`.
+`year_label`, `influence`, `influence_costs` (`{persuade, back}`), `emergency_bp`,
+`history_turned`, `magistrates[]` (office, name, rank, months, suffect, appointed, from_fasti,
+master_of), `senate.factions[]` (weight and mood in bp, per-issue leaning), `senate.votes[]`,
+`proposals[]` (`{issue, proposal, label, cost, forecast_yes_bp, forecast_no_bp, passes,
+tribune, tribune_bp}`: what can be put to the Senate now, with the forecast from an unrecorded
+`senate_vote`; `tribune` is `veto`, `force` or `""`), `last_votes[]` (the turn's `senate` city
+events: `{issue, year, turn, yes_bp, no_bp, house, proposal, outcome}`; `proposal` and `outcome`
+are empty for votes the player did not call), `laws[]`, `colonies[]`, `families[]`, `notable[]`,
+`census[]`, `fasti[]`.
 
 ## 10. The city of Rome (U7)
 In Republic scenarios the engine also knows the city, so the 3D client (Urbs) is driven by the

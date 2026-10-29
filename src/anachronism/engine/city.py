@@ -252,15 +252,27 @@ def senate_house(state: GameState) -> str:
     return ""
 
 
-def record_vote(state: GameState, issue: str, yes_bp: int, no_bp: int) -> None:
-    """Note a Senate vote as a ``senate`` event for the 3D city to play."""
+def record_vote(
+    state: GameState,
+    issue: str,
+    yes_bp: int,
+    no_bp: int,
+    *,
+    turn: int | None = None,
+    year: int | None = None,
+) -> None:
+    """Note a Senate vote as a ``senate`` event for the 3D city to play.
+
+    A vote taken while a turn resolves belongs to the turn being resolved: the caller passes
+    its ``turn`` and ``year`` (the yearly step drops the events of older turns).
+    """
     if state.city is None:
         return
     state.city.events.append(
         CityEvent(
             kind="senate",
-            year=state.year,
-            turn=state.turn,
+            year=state.year if year is None else year,
+            turn=state.turn if turn is None else turn,
             ref=issue,
             monument=senate_house(state),
             value=yes_bp,

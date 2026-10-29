@@ -21,6 +21,7 @@ from collections.abc import Mapping
 from anachronism.content.schema import (
     Disposition,
     EffectType,
+    Issue,
     RelationStatus,
     Script,
     ScriptGoal,
@@ -203,11 +204,26 @@ def overlord_of(state: GameState, a: str, b: str) -> str | None:
 
 
 def declare_war(
-    state: GameState, attacker: str, defender: str, events: EventLog, why: str = ""
+    state: GameState,
+    attacker: str,
+    defender: str,
+    events: EventLog,
+    why: str = "",
+    *,
+    voted: bool = False,
 ) -> None:
-    """Start a war; the defender's allies join it (and so the ripples spread, §7.4)."""
+    """Start a war; the defender's allies join it (and so the ripples spread, §7.4).
+
+    In a Republic game a war that touches the player's civ goes before the Senate (R2): the
+    vote is recorded as a ``senate`` city event. It does not decide the war; a war the player
+    asks the Senate for (``ProposeToSenate``) has been voted already, so it passes ``voted``.
+    """
     if status(state, attacker, defender) is RelationStatus.WAR:
         return
+    if not voted and state.republic is not None and state.player_civ in (attacker, defender):
+        from anachronism.engine.republic import senate_vote  # republic imports this module
+
+        senate_vote(state, Issue.WAR, record=True, turn=events.turn, year=events.year)
     set_status(state, attacker, defender, RelationStatus.WAR)
     add_grievance(state, defender, attacker, 1000)
     # the player's own historical intention against this state has now come to pass, so

@@ -42,8 +42,13 @@ _WARMER = {
 }
 
 
-def apply_diplomacy(state: GameState, action: Diplomacy) -> tuple[bool, str]:
-    """Carry out a diplomatic action. Returns whether it happened and a message."""
+def apply_diplomacy(
+    state: GameState, action: Diplomacy, *, voted: bool = False
+) -> tuple[bool, str]:
+    """Carry out a diplomatic action. Returns whether it happened and a message.
+
+    ``voted``: the Senate has already voted on the war this declares (``ProposeToSenate``).
+    """
     me, target = action.civ, action.target
     if target not in state.civs or target == me:
         return False, f"unknown civilisation {target!r}"
@@ -52,7 +57,7 @@ def apply_diplomacy(state: GameState, action: Diplomacy) -> tuple[bool, str]:
     them = state.civs[target].name
     current = status(state, me, target)
     events = EventLog(turn=state.turn, year=state.year)
-    ok, message = _apply(state, action, me, target, them, current, events)
+    ok, message = _apply(state, action, me, target, them, current, events, voted)
     state.events.extend(events.items)
     return ok, message
 
@@ -65,6 +70,7 @@ def _apply(
     them: str,
     current: RelationStatus | None,
     events: EventLog,
+    voted: bool = False,
 ) -> tuple[bool, str]:
     rules = state.world.rules.rivals
     if isinstance(action, DeclareWar):
@@ -75,7 +81,7 @@ def _apply(
         if current is RelationStatus.ALLIED:
             set_status(state, me, target, RelationStatus.NEUTRAL)  # betrayal is remembered
             add_grievance(state, target, me, 3000)
-        declare_war(state, me, target, events)
+        declare_war(state, me, target, events, voted=voted)
         return True, f"War with {them}."
     if isinstance(action, MakePeace):
         rel = relation(state, me, target)
