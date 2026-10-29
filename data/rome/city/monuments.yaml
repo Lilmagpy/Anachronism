@@ -1240,11 +1240,15 @@ monuments:
   lon: 12.4805
   precision: approx
   location: foot of the Aventine, by the Circus Maximus; the plebeian cult centre and archive
-  built: {year: -493, certainty: certain, by: "vowed by the dictator A. Postumius 496; dedicated 493 by Sp. Cassius (Dion. Hal. 6.94; Tac. Ann. 2.49; Livy 3.55.13)"}
+  built: {year: -493, certainty: certain, by: "vowed in the famine of 496 by the dictator A. Postumius on the Sibylline books' advice; dedicated 493 by the consul Sp. Cassius (Dion. Hal. 6.17, 6.94; Tac. Ann. 2.49)"}
   events:
-  - {year: -31, what: "burned (Dio 50.10.3); rebuilt by Augustus, dedicated by Tiberius AD 17 (Tac. Ann. 2.49)"}
-  form: "Greek-style temple, decorated by Damophilos and Gorgasos (Pliny NH 35.154)"
-  sources: ["Dion. Hal. 6.94", "Tac. Ann. 2.49", "Livy 3.55.13", "Platner-Ashby s.v. Ceres, Liber, Libera, Aedes"]
+  - {year: -449, what: "senatus consulta deposited in the temple in the care of the plebeian aediles (Livy 3.55.13)"}
+  - {year: -31, what: "burned (Dio 50.10.3); restored by Augustus and dedicated by Tiberius in AD 17 (Tac. Ann. 2.49)"}
+  form: "araeostyle temple with Tuscan columns and a fastigium decorated with gilded statues of Etruscan workmanship (Vitr. 3.3.5), with paintings and plastic work by the Greeks Damophilos and Gorgasos (Plin. NH 35.154)"
+  sources: ["Dion. Hal. 6.17", "Dion. Hal. 6.94", "Livy 3.55.13", "Vitruvius 3.3.5", "Pliny NH 35.154", "Tacitus Ann. 2.49", "Platner-Ashby s.v. Ceres, Liber, Libera, Aedes"]
+  notes: "Verified against P&A: slope of the Aventine near the west end of the Circus Maximus; vowed in the famine of 496 by the dictator (P&A writes 'L. Postumius', the usual tradition 'A. Postumius') on the Sibylline books' advice, dedicated in 493 by the consul Sp. Cassius (Dion. Hal. 6.17, 6.94); araeostyle with Tuscan columns and Etruscan gilded fastigium statues (Vitr. 3.3.5); senatus consulta deposited there from 449 (Livy 3.55.13); burned 31 BC (Dio 50.10.3), restored by Augustus, dedicated by Tiberius AD 17 (Tac. Ann. 2.49). The Greek artists Damophilos and Gorgasos decorated it (Pliny NH 35.154), the previous 'Greek-style' form is at odds with P&A's 'araeostyle Tuscan' - corrected. Pleiades 581361483 is only a 'related' point."
+  pleiades: 581361483
+  verified: platner-ashby
 - id: aedes_mercurii
   latin: Aedes Mercurii
   english: Temple of Mercury
@@ -1254,8 +1258,11 @@ monuments:
   lon: 12.4836
   precision: approx
   location: between the Aventine and the Circus Maximus
-  built: {year: -495, certainty: certain, by: "dedicated 15 May 495 by M. Laetorius, a centurion (Livy 2.21.7)"}
-  sources: ["Livy 2.21.7", "Platner-Ashby s.v. Mercurius, Aedes"]
+  built: {year: -495, certainty: certain, by: "dedicated on the Ides of May 495 by the centurion M. Laetorius (Plaetorius) by popular vote (Livy 2.21.7, 2.27.5-6)"}
+  sources: ["Livy 2.21.7", "Livy 2.27.5-6", "Valerius Maximus 9.3.6", "Ovid Fasti 5.669", "Platner-Ashby s.v. Mercurius, Aedes"]
+  notes: "Verified in Livy 2.21.7 (Latin): 'Aedes Mercuri dedicata est idibus Maiis' (495), and 2.27.5-6: the people gave the dedication to the first-rank centurion M. Laetorius (Livy's spelling; P&A and Val. Max. 9.3.6 Plaetorius), as a snub to the consuls. On the Aventine slope above and facing the Circus Maximus (Ov. Fast. 5.669). Pleiades 107133090 is a 'related' point only."
+  pleiades: 107133090
+  verified: platner-ashby+pleiades
 - id: aedes_iunonis_reginae_aventine
   latin: Aedes Iunonis Reginae (Aventinus)
   english: Temple of Juno Regina on the Aventine
@@ -1266,7 +1273,10 @@ monuments:
   precision: rough
   location: Aventine, perhaps near S. Alessio / Priscilla
   built: {year: -392, certainty: certain, by: "vowed by M. Furius Camillus at Veii 396; dedicated 392 (Livy 5.21.3, 5.22.7, 5.23.7, 5.31.3)"}
-  sources: ["Livy 5.21.3", "Livy 5.23.7", "Livy 5.31.3", "Platner-Ashby s.v. Iuno Regina, Aedes"]
+  sources: ["Livy 5.21.3", "Livy 5.22.6-7", "Livy 5.23.7", "Livy 5.31.3", "Livy 5.52.10", "Livy 27.37", "Dion. Hal. 13.3", "Plut. Camillus 6", "Res Gestae 19", "Platner-Ashby s.v. Iuno Regina, Aedes (1)"]
+  notes: "Verified: P&A: vowed by Camillus before the fall of Veii (396), dedicated 392 (Livy 5.21.3, 5.22.6-7, 5.23.7, 5.31.3, 5.52.10); the wooden statue from Veii (Dion. Hal. 13.3; Plut. Cam. 6; Val. Max. 1.8.3); in the lustration procession of 207 (Livy 27.37); restored by Augustus (Mon. Anc. 4.7 = RG 19.2); dedication day 1 September. Site approximate: two inscriptions (CIL VI 364-365) found near S. Sabina, the church itself stands on a private house. Not in Pleiades separately. Note: Livy 5.31.3 is the dedication in his order of events; the vow is 5.21.3."
+  pleiades: null
+  verified: platner-ashby
 - id: aedes_dianae_aventina
   latin: Aedes Dianae (Aventinus)
   english: Temple of Diana on the Aventine
@@ -1277,7 +1287,10 @@ monuments:
   precision: rough
   location: Aventine, at S. Prisca / S. Sabina
   built: {year: null, certainty: traditional, by: "Servius Tullius, federal sanctuary of the Latin League (Livy 1.45; Dion. Hal. 4.26)"}
-  sources: ["Livy 1.45", "Dion. Hal. 4.26", "Platner-Ashby s.v. Diana, Aedes"]
+  sources: ["Livy 1.45", "Dion. Hal. 4.26", "Dion. Hal. 10.32", "Platner-Ashby s.v. Diana, Aedes (Aventine)"]
+  notes: "Verified: P&A: Aventine temple ascribed by tradition to Servius Tullius as the common sanctuary of the Latin League (Livy 1.45; Dion. Hal. 4.26), dedication day 13 August, rebuilt by L. Cornificius under Augustus (Suet. Aug. 29 per P&A's partly cut text); the lex Icilia de Aventino publicando (456) was inscribed there (Dion. Hal. 10.32). Not in Pleiades separately."
+  pleiades: null
+  verified: platner-ashby
 - id: aedes_libertatis_aventine
   latin: Aedes Libertatis
   english: Temple of Libertas on the Aventine
@@ -1287,8 +1300,11 @@ monuments:
   lon: 12.4830
   precision: rough
   location: Aventine
-  built: {year: -238, certainty: probable, by: "Ti. Sempronius Gracchus father, from fines (Livy 24.16.19; Festus)"}
-  sources: ["Livy 24.16.19", "Platner-Ashby s.v. Libertas, Aedes"]
+  built: {year: -238, certainty: probable, by: "built by Ti. Sempronius Gracchus (consul 238, father of the Gracchi) from fines (Livy 24.16.19; Festus 121); the year is his consulship"}
+  sources: ["Livy 24.16.19", "Festus 121", "Res Gestae 19", "Platner-Ashby s.v. Libertas (see Iuppiter Libertas, Aedes)"]
+  notes: "Verified: P&A: Ti. Sempronius Gracchus (consul 238) built and dedicated a temple of Libertas on the Aventine out of fines (Livy 24.16.19, quoted in P&A; Festus 121); his son placed a painting of the victory at Beneventum (214) there; its identity with the temple of Iuppiter Libertas on the Aventine (restored by Augustus, RG 19.2; re-dedicated 1 Sept) is uncertain; P&A suggests the site near Iuno Regina and S. Sabina. The year 238 is the consulship, not stated as the building year; certainty lowered to probable. Not in Pleiades."
+  pleiades: null
+  verified: platner-ashby
 - id: aedes_veneris_obsequentis
   latin: Aedes Veneris Obsequentis
   english: Temple of Venus Obsequens
@@ -1298,8 +1314,11 @@ monuments:
   lon: 12.4838
   precision: rough
   location: by the Circus Maximus, at the foot of the Aventine
-  built: {year: -295, certainty: certain, by: "Q. Fabius Gurges, aedile, from fines on matrons convicted of adultery (Livy 10.31.9)"}
-  sources: ["Livy 10.31.9", "Platner-Ashby s.v. Venus Obsequens"]
+  built: {year: -295, certainty: probable, by: "begun by Q. Fabius Maximus Gurges as aedile in 295 from fines on adulteresses; dedicated after the end of the Third Samnite War (Livy 10.31.9; Serv. Aen. 1.720); dedication day 19 August"}
+  sources: ["Livy 10.31.9", "Livy 29.37.2", "Servius Aen. 1.720", "Platner-Ashby s.v. Venus Obsequens"]
+  notes: "Verified: P&A: built by Q. Fabius Maximus Gurges out of fines on women convicted of adultery; 'begun in 295 B.C. and dedicated after the close of the third Samnite war' (Livy 10.31.9; Serv. Aen. 1.720), ad circum Maximum (Livy 29.37.2: the censors of 204 built a road to the temple of Venus); dedication day 19 August (Vinalia rustica). The dedication year is not given, so 295 is the begun year and the entry was only 'probable'. Not in Pleiades."
+  pleiades: null
+  verified: platner-ashby
 - id: aedes_iuventatis
   latin: Aedes Iuventatis
   english: Temple of Juventas
@@ -1309,24 +1328,31 @@ monuments:
   lon: 12.4842
   precision: rough
   location: Circus Maximus, near the Carceres
-  built: {year: -191, certainty: certain, by: "vowed by M. Livius Salinator 207 at the Metaurus; dedicated 191 (Livy 36.36.5-6)"}
-  sources: ["Livy 36.36.5", "Platner-Ashby s.v. Iuventas, Aedes"]
+  built: {year: -191, certainty: certain, by: "vowed by the consul M. Livius Salinator at the Metaurus (207); contracted by him as censor in 204; dedicated in 191 by C. Licinius Lucullus, duumvir (Livy 36.36.5-6)"}
+  sources: ["Livy 36.36.5-6", "Dio 54.19.7", "Res Gestae 19", "Platner-Ashby s.v. Iuventas, Aedes"]
+  notes: "Verified in Livy 36.36.5-6 (Latin text): 'Iuuentatis aedem in circo maximo C. Licinius Lucullus duumuir dedicauit. uouerat eam sexdecim annis ante M. Liuius consul' (so 191; vow 207 at the Metaurus; Livius as censor contracted for it in 204). P&A prints '193' for the dedication, which does not match Livy's year; 191 kept. Burned 16 BC (Dio 54.19.7), restored by Augustus (Mon. Anc. 4.8 = RG 19.2). Site by the Circus Maximus, rough. Not in Pleiades."
+  pleiades: null
+  verified: platner-ashby
 - id: circus_maximus
   latin: Circus Maximus
   english: Circus Maximus
   type: circus
   regio: 11
-  lat: 41.8861
-  lon: 12.4851
+  lat: 41.8859
+  lon: 12.4857
   precision: exact
   location: valley between the Palatine and the Aventine
   built: {year: -600, certainty: traditional, by: "Tarquinius Priscus laid out seats (Livy 1.35.8-9)"}
   events:
-  - {year: -329, what: "starting gates (carceres) built (Livy 8.20.2)"}
-  - {year: -174, what: "censors Fulvius Flaccus and Postumius Albinus improve it (Livy 41.27.6)"}
-  - {year: -46, what: "enlarged by Caesar, with a euripus canal and seats for 150,000 (Pliny NH 36.102, Suet. Iul. 39)"}
-  form: "about 600 m long, 140 m wide; wood seats until Caesar's masonry on the long sides (partial)"
-  sources: ["Livy 1.35.8", "Livy 8.20.2", "Livy 41.27.6", "Suet. Iul. 39", "Platner-Ashby s.v. Circus Maximus"]
+  - {year: -329, what: "starting gates (carceres) first built, the first permanent structure (Livy 8.20.1)"}
+  - {year: -196, what: "arch of L. Stertinius with gilded statues in the Circus Maximus (Livy 33.27.4)"}
+  - {year: -174, what: "the censors Q. Fulvius Flaccus and A. Postumius Albinus restore the carceres and set up the egg counters ('ova') (Livy 41.27.6, text corrupt)"}
+  - {year: -46, what: "Caesar adds a euripus moat and lengthens the circus (Suet. Iul. 39; Pliny NH 8.21, 36.102)"}
+  form: "long track in the Vallis Murcia about 600 m x 150 m (P&A); Dionysius 3.68 gives 621 m x 118 m with a euripus; seats of timber until the Caesarian/Augustan building, 250,000 places in Pliny NH 36.102"
+  sources: ["Livy 1.35.8-9", "Livy 8.20.1", "Livy 41.27.6", "Dion. Hal. 3.68", "Suetonius Iul. 39", "Pliny NH 8.21", "Pliny NH 36.102", "Platner-Ashby s.v. Circus Maximus"]
+  notes: "CORRECTED: carceres: Livy 8.20.1 (329 BC), not 8.20.2. Caesar's phase: Pliny NH 36.102 gives 'longitudine stadiorum trium latitudine unius sed cum aedificiis iugerum quaternum ad sedem CCL': 3 stadia long, 1 wide, 4 jugera with buildings, 250,000 seats - NOT 150,000; Suet. Iul. 39 and Pliny NH 8.21 mention the euripus of 46. Dionysius 3.68 (7 BC): 3.5 stadia (621 m) long, 4 plethra (118 m) wide, with a euripus 10 ft wide and deep. P&A: valley 600 m x 150 m. Tarquinian beginnings: Livy 1.35.8-9; Livy 41.27.6 (174) is textually corrupt. Pleiades 458808506 (precise)."
+  pleiades: 458808506
+  verified: platner-ashby+pleiades
 - id: horrea_sempronia
   latin: Horrea Sempronia
   english: Sempronian granaries
@@ -1336,8 +1362,11 @@ monuments:
   lon: 12.4780
   precision: rough
   location: by the Aventine near the Tiber
-  built: {year: -123, certainty: probable, by: "C. Sempronius Gracchus, tribune, with the grain law (Plut. C. Gracchus 6)"}
-  sources: ["Plut. C. Gracchus 6", "Platner-Ashby s.v. Horrea Sempronia"]
+  built: {year: -123, certainty: uncertain, by: "inferred from Festus 290 and the Gracchan grain law of 123 (Plut. C. Gracchus 6); not directly attested (P&A)"}
+  sources: ["Festus 290", "Plutarch C. Gracchus 6", "Platner-Ashby s.v. Horrea Sempronia"]
+  notes: "P&A: 'Horrea Sempronia: mentioned only in Festus (290), where the inference seems to be that these warehouses were established by the Gracchan legislation. If so, they were as old as the horrea Galbae.' So attribution to C. Gracchus is an inference from Festus 290 and Plut. C. Gracchus 6 (the grain law with granaries), not a record; certainty lowered. Site unknown (rough). Not in Pleiades."
+  pleiades: null
+  verified: platner-ashby
 - id: horrea_galbae
   latin: Horrea Galbae
   english: Horrea Galbae
@@ -1347,34 +1376,45 @@ monuments:
   lon: 12.4790
   precision: approx
   location: between the Aventine and the emporium, at the Via Marmorata
-  built: {year: -50, certainty: probable, by: "a Sulpicius Galba of the later Republic (Platner-Ashby s.v. Horrea Galbae)"}
-  sources: ["Platner-Ashby s.v. Horrea Galbae"]
+  built: {year: null, certainty: uncertain, by: "built between about 144/108 and the end of the Republic, near the tomb of Ser. Sulpicius Galba (CIL I2 695); called Horrea Sulpicia / Galbae (Hor. Carm. 4.12.18; Porph.)"}
+  sources: ["Horace Carm. 4.12.18", "CIL I2 695", "Platner-Ashby s.v. Horrea Galbae"]
+  notes: "CORRECTED: '-50 probable' had no basis. P&A: warehouses in the Praedia Galbana between the south-west Aventine and the Tiber; the tomb of Ser. Sulpicius Galba (consul 144 or 108; CIL I2 695) lies there, and 'about that time, or before the end of the republic' the horrea were built; enlarged or restored by the emperor Galba. Excavated area about 200 x 155 m, mostly opus reticulatum. Pleiades 51787061 'Horrea Galbana' has only a 'related' location (41.888, 12.4916, not the Aventine foot) and was not adopted for coordinates."
+  pleiades: 51787061
+  verified: platner-ashby+pleiades
 - id: emporium
   latin: Emporium
   english: Emporium (river port)
   type: port
   regio: 13
-  lat: 41.8795
-  lon: 12.4765
+  lat: 41.8823
+  lon: 12.4747
   precision: approx
   location: Tiber bank below the Aventine (modern Testaccio)
-  built: {year: -193, certainty: certain, by: "M. Aemilius Lepidus and L. Aemilius Paullus, aediles (Livy 35.10.12)"}
+  built: {year: -193, certainty: probable, by: "set up by the aediles M. Aemilius Lepidus and L. Aemilius Paullus in 193, who added it to their portico outside the Porta Trigemina (Livy 35.10.12)"}
   events:
-  - {year: -174, what: "banks paved with stone steps (Livy 41.27.8)"}
+  - {year: -174, what: "the censors pave the Emporium with stone, fence it with stakes and cut steps up from the Tiber (Livy 41.27.8)"}
   sources: ["Livy 35.10.12", "Livy 41.27.8", "Platner-Ashby s.v. Emporium"]
+  notes: "Verified in Livy 35.10.12 (Latin): the aediles of 193, M. Aemilius Lepidus and L. Aemilius Paullus, built a portico outside the Porta Trigemina 'emporio ad Tiberim adiecto'; Livy 41.27.8 (174, Latin): the censors paved the Emporium with stone and fenced it with stakes, repaired the Porticus Aemilia and made steps up from the Tiber. P&A: 'said to have been established' in 193 and probably at first an open space with wharf and offices. The old note 'banks paved with stone steps' is corrected. Pleiades 937921711 (Emporium, precise) adopted for coordinates."
+  pleiades: 937921711
+  verified: platner-ashby+pleiades
 - id: porticus_aemilia
   latin: Porticus Aemilia
   english: Porticus Aemilia (warehouse hall)
   type: horrea
   regio: 13
-  lat: 41.8788
-  lon: 12.4772
-  precision: exact
+  lat: 41.88
+  lon: 12.4736
+  precision: approx
   location: Emporium, Testaccio, along the Tiber
-  built: {year: -193, certainty: certain, by: "M. Aemilius Lepidus and L. Aemilius Paullus (Livy 35.10.12); rebuilt 174 (Livy 41.27.8)"}
-  form: "long hall about 487 x 60 m with 50 aisles roofed with concrete barrel vaults, one of the first big concrete buildings; opus caementicium"
+  built: {year: -193, certainty: certain, by: "built by the aediles M. Aemilius Lepidus and L. Aemilius Paullus in 193 outside the Porta Trigemina (Livy 35.10.12); restored by the censors of 174 (Livy 41.27.8)"}
+  form: "long colonnaded portico/hall beside the Emporium; the large concrete-vaulted hall of about 487 x 60 m known from the Forma Urbis and excavation is a later (2nd-century BC) phase according to modern scholarship, not described by P&A"
   materials: [concrete, tufa]
   sources: ["Livy 35.10.12", "Livy 41.27.8", "Platner-Ashby s.v. Porticus Aemilia"]
+  events:
+  - {year: -174, what: "restored by the censors Q. Fulvius Flaccus and A. Postumius Albinus (Livy 41.27.8)"}
+  notes: "P&A: the Porticus Aemilia extra portam Trigeminam was built by the aediles M. (P&A prints L.) Aemilius Lepidus and L. Aemilius Paullus in 193 (Livy 35.10.12) and restored in 174 by the censors Q. Fulvius Flaccus and A. Postumius Albinus (Livy 41.27.8). P&A gives NO dimensions: the 'about 487 x 60 m, 50 aisles of concrete barrel vaults' in the old form field is from later excavation and the Forma Urbis fragments (a 2nd-century BC rebuilding, not the 193 structure) and is flagged as modern. There was also a second Porticus Aemilia near the Ara Martis (Livy 40.51.6 per P&A). Pleiades 51787060 (precise) adopted for coordinates."
+  pleiades: 51787060
+  verified: platner-ashby+pleiades
 - id: navalia
   latin: Navalia
   english: Naval dockyards
@@ -1385,7 +1425,10 @@ monuments:
   precision: rough
   location: Campus Martius, on the Tiber bank north of the Circus Flaminius (the exact site is uncertain)
   built: {year: null, certainty: uncertain, by: "Republican dockyard in the Campus Martius; date of foundation unknown (Platner-Ashby)"}
-  sources: ["Platner-Ashby s.v. Navalia"]
+  sources: ["Livy 3.26.8", "Livy 8.14.12", "Livy 40.51.6", "Livy 45.35.3", "Polyb. 36.5.9", "Platner-Ashby s.v. Navalia"]
+  notes: "Verified: P&A: docks for warships on the left bank of the Tiber in the Campus Martius, opposite the Prata Quinctia (Livy 3.26.8; Plin. NH 18.20), existing by 167 (Livy 45.35.3; Polyb. 36.5.9) but exact site disputed; first mention of 'navalia' is for 338 (Livy 8.14.12, Antium ships hauled up); the early navalia may have lain on the bank between the Porta Carmentalis and the Porta Trigemina (Val. Max. 1.8.2; Plut. Cat. Min. 39; Vell. 2.45); a portico 'post navalia' was contracted in 179 (Livy 40.51.6). Rough. Not in Pleiades."
+  pleiades: null
+  verified: platner-ashby
 # ---------------------------------------------------------------- CAMPUS MARTIUS
 - id: campus_martius
   latin: Campus Martius
