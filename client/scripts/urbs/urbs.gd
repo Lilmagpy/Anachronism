@@ -387,12 +387,16 @@ func _enter_interior_now(id: String) -> void:
 			node.visible = false
 			_hidden.append(node)
 	chunks.process_mode = Node.PROCESS_MODE_DISABLED
-	sun.visible = false
-	environment.background_mode = Environment.BG_COLOR   # a roof, not the sky: the interior lights itself
-	environment.background_color = Color(0.04, 0.035, 0.03)
-	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	environment.ambient_light_color = Color(0.55, 0.50, 0.44)
-	environment.ambient_light_energy = 0.6
+	# The circus, the arena and the theatre are open to the sky and keep the sun; a roofed
+	# interior lights itself (lamps, doors, the compluvium) under a dark ceiling.
+	var open_sky: bool = interior.has_method("open_sky") and interior.open_sky()
+	sun.visible = open_sky
+	if not open_sky:
+		environment.background_mode = Environment.BG_COLOR
+		environment.background_color = Color(0.04, 0.035, 0.03)
+		environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
+		environment.ambient_light_color = Color(0.55, 0.50, 0.44)
+		environment.ambient_light_energy = 0.6
 	var spawn := Transform3D(Basis.IDENTITY, Vector3(0, 1.7, 0))
 	if interior.has_method("spawn"):
 		spawn = interior.spawn()

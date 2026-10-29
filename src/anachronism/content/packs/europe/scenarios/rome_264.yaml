@@ -23,6 +23,7 @@ scenarios:
     start_year: -264
     years_per_turn: 10
     campaign_years_per_turn: 2
+    republic: true
     player_civ: rome
     map: europe
     music: roman  # the client plays client/music/<name>.mp3 (D-208)

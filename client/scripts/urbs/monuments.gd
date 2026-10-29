@@ -113,6 +113,11 @@ func _key(st: Dictionary) -> String:
 # ---------------------------------------------------------------------------------------------
 
 
+## A number from the dataset, or the default when the field is missing or null.
+static func _num(v: Variant, default: float) -> float:
+	return float(v) if (v is float or v is int) else default
+
+
 ## The state of monument `id` in `year`: {} when absent, else {state, model, variant, length,
 ## width, radius, height, podium}. state is standing, standing_scaffold, building or burnt.
 func state_at(id: String, year: int) -> Dictionary:
@@ -123,9 +128,13 @@ func state_at(id: String, year: int) -> Dictionary:
 	if model == "none":
 		return {}
 	var built: Variant = m.get("built")
+	# No date at all: it has always stood (as the engine rules, U7); a floor from the sources
+	# ("after 27 BC", `not_before`) counts as its year.
 	var first := FAR
 	if built is Dictionary and built.get("year") != null:
 		first = int(built["year"])
+	elif built is Dictionary and built.get("not_before") != null:
+		first = int(built["not_before"])
 	var begun := first
 	var cons: Variant = m.get("construction")
 	if cons is Dictionary:
@@ -136,11 +145,12 @@ func state_at(id: String, year: int) -> Dictionary:
 	var ended: Variant = m.get("ended")
 	if ended is Dictionary and ended.get("year") != null and year >= int(ended["year"]):
 		return {}
-	var fp: Dictionary = m.get("footprint_m", {})
+	var fp_raw: Variant = m.get("footprint_m")
+	var fp: Dictionary = fp_raw if fp_raw is Dictionary else {}
 	var st := {"state": "standing" if year >= first else "building", "model": model, "variant": "",
-		"length": float(fp.get("length", 0.0)), "width": float(fp.get("width", 0.0)),
-		"radius": float(fp.get("radius", 0.0)), "height": float(m.get("height_m", 0.0)),
-		"podium": float(m.get("podium_m", 0.0)), "thickness": float(m.get("thickness_m", 3.6))}
+		"length": _num(fp.get("length"), 0.0), "width": _num(fp.get("width"), 0.0),
+		"radius": _num(fp.get("radius"), 0.0), "height": _num(m.get("height_m"), 0.0),
+		"podium": _num(m.get("podium_m"), 0.0), "thickness": _num(m.get("thickness_m"), 3.6)}
 	for ph in m.get("phases", []):
 		if year < int(ph["from"]):
 			break
