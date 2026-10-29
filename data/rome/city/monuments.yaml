@@ -10,6 +10,14 @@ monuments:
   english: Temple of Jupiter Optimus Maximus (Capitoline Temple)
   type: temple
   regio: 8
+  model: temple_tuscan_archaic
+  bearing_deg: 206.5  # unverified
+  footprint_m: {length: 61.42, width: 56.98}
+  podium_m: 4.5
+  phases: [{from: -83, state: burnt}, {from: -78, state: building}, {from: -69, state: standing, model: temple_tuscan_restored}]
+  geometry_source: "Platner-Ashby s.v. Iuppiter Optimus Maximus Capitolinus, Aedes (read: fronted south, main axis 26.5 deg east of the N-S line, stylobate c. 55 x 60 m, 56.98 x 61.42 m with its facing after Paribeni, podium 4-5 m, cella 27.81 m square, hexastyle with three rows of columns in front; Dion. Hal. 4.61 perimeter 800 ft); Vitr. 3.3.5"
+  geometry_note: "Platner says the axis deviates '26.5 degrees to the east of the north and south line'; read as the north end swung east, so the south front faces 206.5 (SSW). If the other reading is right the front faces 153.5. Height not given: the kit proportions (Vitr. 4.7) are used."
+  geometry_unverified: [bearing_deg, height_m]
   lat: 41.8929
   lon: 12.4827
   precision: approx
@@ -28,6 +36,8 @@ monuments:
   english: Arx (citadel, northern summit of the Capitol)
   type: citadel
   regio: 8
+  model: none
+  geometry_source: "the Arx is the northern summit of the Capitoline hill (ground, not a building); walls of the citadel not modelled (Platner-Ashby s.v. Arx)"
   lat: 41.8946
   lon: 12.4833
   precision: approx
@@ -39,6 +49,10 @@ monuments:
   english: Temple of Juno Moneta
   type: temple
   regio: 8
+  model: temple_tuscan_small  # unverified
+  bearing_deg: 142  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan); sited on the Arx (Livy 7.28.4-6)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8945
   lon: 12.4832
   precision: approx
@@ -50,6 +64,12 @@ monuments:
   english: Temple of Jupiter Feretrius
   type: temple
   regio: 8
+  model: aedicula
+  bearing_deg: 206.5  # unverified
+  footprint_m: {length: 4.4, width: 3}  # unverified
+  height_m: 3.5  # unverified
+  geometry_source: "Dion. Hal. 2.34.4 (greatest dimension under 15 feet, about 4.4 m); Livy 4.20.7 roof ruinous"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8932
   lon: 12.4830
   precision: rough
@@ -64,6 +84,11 @@ monuments:
   english: Temple of Vediovis
   type: temple
   regio: 8
+  model: temple_tetrastyle_ionic_travertine  # unverified
+  bearing_deg: 145  # unverified
+  construction: {begun: -194, completed: -192}  # work years; see geometry_source
+  geometry_source: "form assumed from date and type, native kit size (no measured plan); Platner-Ashby s.v. Vediovis, Aedes (cella wider than deep, unusual orientation: not read, not reproduced)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8941
   lon: 12.4838
   precision: approx
@@ -76,6 +101,11 @@ monuments:
   english: Temple of Mens
   type: temple
   regio: 8
+  model: temple_tetrastyle_ionic  # unverified
+  bearing_deg: 206.5  # unverified
+  construction: {begun: -217, completed: -215}  # work years; see geometry_source
+  geometry_source: "form assumed from date and type, native kit size (no measured plan); on the Capitol beside Venus Erycina (Livy 23.31.9)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8935
   lon: 12.4826
   precision: rough
@@ -87,6 +117,11 @@ monuments:
   english: Temple of Venus Erycina (on the Capitol)
   type: temple
   regio: 8
+  model: temple_tetrastyle_ionic  # unverified
+  bearing_deg: 206.5  # unverified
+  construction: {begun: -217, completed: -215}  # work years; see geometry_source
+  geometry_source: "form assumed from date and type, native kit size (no measured plan); Livy 23.30.13"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8936
   lon: 12.4831
   precision: rough
@@ -98,6 +133,11 @@ monuments:
   english: Temple of Venus Erycina outside the Colline Gate
   type: temple
   regio: 6
+  model: temple_tetrastyle_ionic  # unverified
+  bearing_deg: 210  # unverified
+  construction: {begun: -184, completed: -181}  # work years; see geometry_source
+  geometry_source: "form assumed from date and type, native kit size (no measured plan); Livy 40.34.4"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.9072
   lon: 12.4968
   precision: rough
@@ -109,6 +149,10 @@ monuments:
   english: Temple of Fides (Fides Publica)
   type: temple
   regio: 8
+  model: temple_tetrastyle_ionic  # unverified
+  bearing_deg: 206.5  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan); beside the Capitoline temple (Cic. Nat. D. 2.61)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8933
   lon: 12.4824
   precision: rough
@@ -122,6 +166,14 @@ monuments:
   english: Roman Forum
   type: forum
   regio: 8
+  model: plaza
+  offset_m: [-8, -22]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 23 m off
+  bearing_deg: 106  # unverified
+  footprint_m: {length: 130, width: 40}  # unverified
+  height_m: 0
+  surface: travertine
+  geometry_source: "paved open area between the Rostra and the Regia/Divus Iulius, long axis ESE (the Sacra Via line); size from the plan of the excavated paving (not measured in Platner-Ashby s.v. Forum Romanum, which gives levels: 10.6-10.9 m archaic, 11.8 Sullan, 14 m Caesarian)"
+  geometry_unverified: [bearing_deg, footprint_m]
   lat: 41.8925
   lon: 12.4853
   precision: exact
@@ -138,6 +190,13 @@ monuments:
   english: Comitium
   type: comitium
   regio: 8
+  model: comitium
+  bearing_deg: 196
+  footprint_m: {radius: 21}  # unverified
+  height_m: 1.2
+  phases: [{from: -44, state: gone}]
+  geometry_source: "Platner-Ashby s.v. Comitium (circular, rostra vetera on the south edge facing due south, levels 10.4-13.5 m); radius from the Comitium steps, not measured in PA"
+  geometry_unverified: [footprint_m]
   lat: 41.8928
   lon: 12.4850
   precision: approx
@@ -153,6 +212,13 @@ monuments:
   english: Black Stone (Niger Lapis) with the Volcanal
   type: shrine
   regio: 8
+  model: plaza
+  bearing_deg: 196
+  footprint_m: {length: 4, width: 3.5}  # unverified
+  height_m: 0
+  surface: black
+  geometry_source: "black marble paving in the Comitium, about 3.5 x 4 m (Platner-Ashby s.v. Lapis Niger: not read for dimensions)"
+  geometry_unverified: [footprint_m]
   lat: 41.8929
   lon: 12.4852
   precision: exact
@@ -164,6 +230,13 @@ monuments:
   english: Rostra (speakers' platform)
   type: rostra
   regio: 8
+  model: rostra
+  bearing_deg: 196
+  footprint_m: {length: 8, width: 12}  # unverified
+  height_m: 3.5
+  phases: [{from: -44, state: gone}]
+  geometry_source: "dataset form: 3.5 m high, 12 m long; Platner-Ashby s.v. Rostra (curved steps, faced due south onto the Forum from the Comitium edge)"
+  geometry_unverified: [footprint_m]
   lat: 41.8927
   lon: 12.4848
   precision: exact
@@ -178,6 +251,12 @@ monuments:
   english: Graecostasis
   type: platform
   regio: 8
+  model: platform
+  bearing_deg: 196  # unverified
+  footprint_m: {length: 8, width: 12}  # unverified
+  height_m: 3  # unverified
+  geometry_source: "raised platform beside the Rostra (Platner-Ashby s.v. Graecostasis); size assumed"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8927
   lon: 12.4851
   precision: approx
@@ -189,6 +268,12 @@ monuments:
   english: Senaculum
   type: platform
   regio: 8
+  model: platform
+  bearing_deg: 127  # unverified
+  footprint_m: {length: 10, width: 15}  # unverified
+  height_m: 1  # unverified
+  geometry_source: "site of the Senaculum unknown (Platner-Ashby s.v. Senaculum); marker platform only"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8929
   lon: 12.4846
   precision: rough
@@ -200,6 +285,13 @@ monuments:
   english: Senate House (Curia Hostilia)
   type: curia
   regio: 8
+  model: curia
+  bearing_deg: 196
+  footprint_m: {length: 18, width: 25}  # unverified
+  height_m: 14  # unverified
+  phases: [{from: -52, state: burnt}, {from: -50, state: standing, model: curia}]
+  geometry_source: "Platner-Ashby s.v. Curia Hostilia (faced due south on the Comitium, per Hulsen); size taken from the Curia Iulia hall 25.2 x 17.6 m (Platner-Ashby s.v. Curia Julia) as the same plan"
+  geometry_unverified: [footprint_m, height_m]
   lat: 41.8930
   lon: 12.4853
   precision: approx
@@ -216,6 +308,14 @@ monuments:
   english: Curia Iulia
   type: curia
   regio: 8
+  model: curia
+  offset_m: [-17, 0]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 17 m off
+  bearing_deg: 135  # unverified
+  footprint_m: {length: 17.61, width: 25.2}
+  height_m: 21
+  construction: {begun: -44, completed: -29}  # work years; see geometry_source
+  geometry_source: "Platner-Ashby s.v. Curia Julia (hall 25.20 x 17.61 m; 21 m to the eaves for the Diocletianic rebuild; axis parallel with the Forum Iulium, NW-SE; Forum Iulium temple faces SE)"
+  geometry_unverified: [bearing_deg]
   lat: 41.8929
   lon: 12.4856
   precision: exact
@@ -229,6 +329,15 @@ monuments:
   english: Forum of Caesar
   type: forum
   regio: 8
+  model: plaza
+  offset_m: [-113, 24]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 116 m off
+  bearing_deg: 140  # unverified
+  footprint_m: {length: 160, width: 75}  # unverified
+  height_m: 0
+  construction: {begun: -54, completed: -46}  # work years; see geometry_source
+  surface: travertine
+  geometry_source: "Platner-Ashby s.v. Forum Julium (axis NW-SE, temple facing SE; text gives 115 x 30 m, the dataset form 160 x 75 m, which is the modern excavated size; the 160 x 75 is used)"
+  geometry_unverified: [bearing_deg, footprint_m]
   lat: 41.8938
   lon: 12.4863
   precision: exact
@@ -243,6 +352,13 @@ monuments:
   english: Temple of Venus Genetrix
   type: temple
   regio: 8
+  model: temple_hexastyle_corinthian_marble  # unverified
+  offset_m: [-107, 11]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 108 m off
+  bearing_deg: 140
+  footprint_m: {length: 30, width: 16}  # unverified
+  construction: {begun: -48, completed: -46}  # work years; see geometry_source
+  geometry_source: "Platner-Ashby s.v. Forum Julium (on the NW axis, facing SE); octostyle Corinthian in the data, kit offers hexastyle (TODO octostyle)"
+  geometry_unverified: [footprint_m, height_m, model]
   lat: 41.8941
   lon: 12.4861
   precision: exact
@@ -256,6 +372,11 @@ monuments:
   english: Basilica Porcia
   type: basilica
   regio: 8
+  model: basilica
+  bearing_deg: 196  # unverified
+  footprint_m: {length: 45, width: 20}  # unverified
+  geometry_source: "Basilica Porcia (184 BC) beside the Curia; size unknown, small tufa basilica assumed (Platner-Ashby s.v. Basilica Porcia)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8929
   lon: 12.4851
   precision: rough
@@ -268,6 +389,13 @@ monuments:
   english: Basilica Aemilia (Basilica Fulvia)
   type: basilica
   regio: 8
+  model: basilica
+  offset_m: [-6, -38]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 38 m off
+  bearing_deg: 196
+  footprint_m: {length: 29, width: 70}  # unverified
+  phases: [{from: -54, state: standing_scaffold}, {from: -34, state: standing, model: basilica_travertine}]
+  geometry_source: "Platner-Ashby s.v. Basilica Aemilia (main hall c. 90 m long and 27 wide for the Augustan building; earlier Fulvia of 179 smaller); 70 x 29 as in the Republican plan (unverified); long axis parallel with the Forum, front on the Sacra Via side faces south"
+  geometry_unverified: [footprint_m]
   lat: 41.8929
   lon: 12.4863
   precision: exact
@@ -284,6 +412,14 @@ monuments:
   english: Basilica Sempronia
   type: basilica
   regio: 8
+  model: basilica
+  phases: [{from: -54, state: gone}]  # the site was cleared for the Basilica Iulia (begun 54 BC, Cic. Att. 4.16.8)
+  bearing_deg: 16  # unverified
+  footprint_m: {length: 49, width: 101}  # unverified
+  construction: {begun: -170, completed: -169}  # work years; see geometry_source
+  place_like: basilica_iulia
+  geometry_source: "built on the site later covered by the Basilica Iulia (Livy 44.16.10; Platner-Ashby s.v. Basilica Julia: 101 x 49 m bounded by Sacra Via, Vicus Iugarius, Vicus Tuscus); position moved to that site"
+  geometry_unverified: [bearing_deg, footprint_m]
   lat: 41.8921
   lon: 12.4840
   precision: rough
@@ -296,6 +432,12 @@ monuments:
   english: Basilica Opimia
   type: basilica
   regio: 8
+  model: basilica
+  offset_m: [-128, 139]  # east, north metres added to lat/lon; unverified: placed beside the temple of Concord (Platner-Ashby s.v. Basilica Opimia); the exact spot is a guess
+  bearing_deg: 196  # unverified
+  footprint_m: {length: 40, width: 20}  # unverified
+  geometry_source: "Basilica Opimia beside the temple of Concord (Platner-Ashby s.v. Basilica Opimia); size unknown"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8921
   lon: 12.4863
   precision: rough
@@ -307,6 +449,13 @@ monuments:
   english: Basilica Iulia
   type: basilica
   regio: 8
+  model: basilica_travertine
+  offset_m: [-26, 6]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 27 m off
+  bearing_deg: 16
+  footprint_m: {length: 49, width: 101}
+  construction: {begun: -54, completed: -46}  # work years; see geometry_source
+  geometry_source: "Platner-Ashby s.v. Basilica Julia (101 m long, 49 wide, central court 82 x 16, aisles 7.5 m, two storeys, marble); faces north onto the Forum"
+  geometry_unverified: [height_m]
   lat: 41.8919
   lon: 12.4851
   precision: exact
@@ -321,6 +470,13 @@ monuments:
   english: Temple of Saturn (and Aerarium)
   type: temple
   regio: 8
+  model: temple_tuscan_small  # unverified
+  offset_m: [30, 44]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 53 m off
+  bearing_deg: 80  # unverified
+  footprint_m: {length: 40, width: 22.5}
+  phases: [{from: -42, state: standing, model: temple_hexastyle_corinthian}]
+  geometry_source: "Platner-Ashby s.v. Saturnus, Aedes (podium 22.50 m wide, about 40 long; Ionic hexastyle prostyle, columns 11 m high; kit has no Ionic hexastyle: Corinthian stand-in); front faces the Forum (east); archaic phase small Tuscan"
+  geometry_unverified: [bearing_deg, model]
   lat: 41.8921
   lon: 12.4838
   precision: exact
@@ -335,6 +491,13 @@ monuments:
   english: Temple of Castor and Pollux
   type: temple
   regio: 8
+  model: temple_tuscan_small  # unverified
+  offset_m: [-20, 18]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 27 m off
+  bearing_deg: 16  # unverified
+  footprint_m: {length: 50, width: 30}
+  phases: [{from: -117, state: standing, model: temple_hexastyle_corinthian}]
+  geometry_source: "Platner-Ashby s.v. Castor, Aedes (Augustan temple c. 50 x 30 m, floor 7 m above the Sacra Via, octastyle peripteral, 11 columns on each side, 12.5 m columns; podium of Metellus 117 BC on the same site); facing north onto the Forum"
+  geometry_unverified: [bearing_deg, model]
   lat: 41.8915
   lon: 12.4858
   precision: exact
@@ -351,6 +514,12 @@ monuments:
   english: Temple of Vesta
   type: temple
   regio: 8
+  model: temple_round
+  offset_m: [-66, -4]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 66 m off
+  bearing_deg: 100  # unverified
+  footprint_m: {radius: 7.5}
+  geometry_source: "Platner-Ashby s.v. Vesta (round, foundation 15.05 m diameter, 20 Corinthian/Ionic columns 4.45 m high); the doorway side not stated: east assumed"
+  geometry_unverified: [bearing_deg]
   lat: 41.8917
   lon: 12.4869
   precision: exact
@@ -367,6 +536,13 @@ monuments:
   english: House of the Vestals
   type: house
   regio: 8
+  model: domus
+  offset_m: [-66, -11]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 67 m off
+  bearing_deg: 16  # unverified
+  footprint_m: {length: 45, width: 24}  # unverified
+  height_m: 9  # unverified
+  geometry_source: "Platner-Ashby s.v. Atrium Vestae (courtyard 24 m wide; 69 m long only after Julia Domna); Republican length assumed"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8915
   lon: 12.4875
   precision: exact
@@ -378,6 +554,13 @@ monuments:
   english: Regia
   type: shrine
   regio: 8
+  model: regia
+  offset_m: [-58, -18]  # east, north metres added to lat/lon; unverified: nudged east to clear the temple of Divus Iulius (Wikipedia coordinates put them 13 m apart)
+  bearing_deg: 16  # unverified
+  footprint_m: {length: 22, width: 8}
+  height_m: 7  # unverified
+  geometry_source: "Platner-Ashby s.v. Regia (trapezoidal, mean length c. 22 m, width 8 m, area 27 x 12 m); front on the Sacra Via faces north"
+  geometry_unverified: [bearing_deg, height_m]
   lat: 41.8921
   lon: 12.4873
   precision: exact
@@ -394,6 +577,13 @@ monuments:
   english: Temple of Concord (at the Forum)
   type: temple
   regio: 8
+  model: aedicula  # unverified
+  offset_m: [70, 81]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 107 m off
+  bearing_deg: 78  # unverified
+  footprint_m: {length: 3.5, width: 3}
+  phases: [{from: -121, state: standing, model: temple_hexastyle_corinthian, footprint_m: {length: 38, width: 45}}]
+  geometry_source: "Platner-Ashby s.v. Concordia (Augustan cella 45 m wide and 24 deep, pronaos 34 wide and 14 deep, concrete podium of 121 BC); transverse-cella plan not in the kit (TODO); early shrine a small aedicula"
+  geometry_unverified: [bearing_deg, height_m, model]
   lat: 41.8922
   lon: 12.4834
   precision: exact
@@ -408,6 +598,13 @@ monuments:
   english: Temple of the Deified Julius
   type: temple
   regio: 8
+  model: temple_hexastyle_corinthian  # unverified
+  offset_m: [-46, -18]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 49 m off
+  bearing_deg: 286  # unverified
+  footprint_m: {length: 30, width: 26}
+  construction: {begun: -42, completed: -29}  # work years; see geometry_source
+  geometry_source: "Platner-Ashby s.v. Divus Iulius, Aedes (platform 3.5 m high, 26 wide, c. 30 long, stylobate 2.36 m above, cella 17 m wide, columns 1.18 m thick and 9 diameters high); faces west onto the Forum, rostra projecting in front; hexastyle Ionic, kit stand-in Corinthian (TODO)"
+  geometry_unverified: [bearing_deg, model]
   lat: 41.8921
   lon: 12.4868
   precision: exact
@@ -420,6 +617,12 @@ monuments:
   english: Shrine of Janus (Janus Geminus)
   type: shrine
   regio: 8
+  model: aedicula
+  bearing_deg: 106  # unverified
+  footprint_m: {length: 5, width: 4}  # unverified
+  height_m: 4.5  # unverified
+  geometry_source: "Varro LL 5.165, Livy 1.19.2 (a small double-doored shrine, bronze); size unverified"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8934
   lon: 12.4857
   precision: approx
@@ -434,6 +637,13 @@ monuments:
   english: Lacus Curtius
   type: monument
   regio: 8
+  model: plaza
+  offset_m: [-31, 33]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 45 m off
+  bearing_deg: 0
+  footprint_m: {length: 10, width: 9}
+  height_m: 0
+  surface: travertine
+  geometry_source: "Platner-Ashby s.v. Lacus Curtius (trapezoidal paved field about 10 m long and 9 m wide, third layer of travertine with a curb)"
   lat: 41.8921
   lon: 12.4854
   precision: exact
@@ -445,6 +655,12 @@ monuments:
   english: Spring and shrine of Juturna
   type: fountain
   regio: 8
+  model: basin
+  offset_m: [-20, 18]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 27 m off
+  bearing_deg: 0
+  footprint_m: {length: 10, width: 10}
+  height_m: 1.2
+  geometry_source: "Platner-Ashby s.v. Lacus Iuturnae (basin about 10 m square at the top, wall 1.23 m high)"
   lat: 41.8913
   lon: 12.4862
   precision: exact
@@ -456,6 +672,13 @@ monuments:
   english: State prison and Tullianum
   type: prison
   regio: 8
+  model: aedicula
+  offset_m: [28, -7]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 29 m off
+  bearing_deg: 16  # unverified
+  footprint_m: {length: 7, width: 7}
+  height_m: 4  # unverified
+  geometry_source: "Platner-Ashby s.v. Carcer (lower chamber nearly 7 m in diameter, vault 12 ft high; upper room a vaulted trapezoid 5-3.6 m)"
+  geometry_unverified: [bearing_deg, height_m]
   lat: 41.8934
   lon: 12.4841
   precision: exact
@@ -467,6 +690,12 @@ monuments:
   english: Arch of Fabius
   type: arch
   regio: 8
+  model: arch
+  bearing_deg: 106  # unverified
+  footprint_m: {length: 6, width: 12}  # unverified
+  height_m: 12  # unverified
+  geometry_source: "Platner-Ashby s.v. Fornix Fabianus (single arch 3.945 m in diameter, tufa and peperino with travertine facing); the arch spanned the Sacra Via east end"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8921
   lon: 12.4870
   precision: approx
@@ -478,6 +707,12 @@ monuments:
   english: Column of Duilius
   type: monument
   regio: 8
+  model: column_monument
+  bearing_deg: 106  # unverified
+  footprint_m: {length: 2.5, width: 2.5}  # unverified
+  height_m: 14  # unverified
+  geometry_source: "Plin. NH 34.20; Platner-Ashby s.v. Columna Rostrata C. Duilii (a column with ships beaks); height assumed, site rough"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8927
   lon: 12.4844
   precision: rough
@@ -489,6 +724,12 @@ monuments:
   english: Tabularium (state archive)
   type: archive
   regio: 8
+  model: tabularium
+  offset_m: [-16, -13]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 21 m off
+  bearing_deg: 115  # unverified
+  footprint_m: {length: 30, width: 70}  # unverified
+  geometry_source: "Platner-Ashby s.v. Tabularium (substructure wall 3.43 m thick, first-storey corridor 5 m wide and 10 high, eleven arches 7.5 m high and 3.5-3.6 wide; length c. 70 m in the kit, Platner gives no length); front faces the Forum (ESE)"
+  geometry_unverified: [bearing_deg, footprint_m]
   lat: 41.8929
   lon: 12.4838
   precision: exact
@@ -502,6 +743,12 @@ monuments:
   english: Atrium Libertatis
   type: archive
   regio: 8
+  model: public_building
+  bearing_deg: 178  # unverified
+  footprint_m: {length: 30, width: 40}  # unverified
+  height_m: 10  # unverified
+  geometry_source: "Atrium Libertatis (Livy 43.16.13, Platner-Ashby s.v.): site not secure; box marker only"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8947
   lon: 12.4852
   precision: rough
@@ -513,6 +760,8 @@ monuments:
   english: Sacred Way
   type: road
   regio: 8
+  model: none
+  geometry_source: "street (see streets.yaml)"
   lat: 41.8921
   lon: 12.4862
   precision: exact
@@ -525,6 +774,10 @@ monuments:
   english: Great Sewer
   type: sewer
   regio: 8
+  model: sewer
+  footprint_m: {length: 0, width: 3.2}
+  height_m: 4.2
+  geometry_source: "Platner-Ashby s.v. Cloaca Maxima (channel 4.20 m high, 3.20 m wide near the Forum, vaulted peperino; 10 m below ground in the lower section); shown as the outfall arch at the Tiber, the rest runs underground"
   lat: 41.8922
   lon: 12.4838
   precision: approx
@@ -541,6 +794,8 @@ monuments:
   english: Tuscan Street
   type: road
   regio: 8
+  model: none
+  geometry_source: "street (see streets.yaml)"
   lat: 41.8912
   lon: 12.4845
   precision: approx
@@ -552,6 +807,13 @@ monuments:
   english: Cattle Market
   type: market
   regio: 11
+  model: plaza
+  bearing_deg: 100  # unverified
+  footprint_m: {length: 90, width: 70}  # unverified
+  height_m: 0
+  surface: earth
+  geometry_source: "open ground between the Tiber, the Palatine and the Capitol; extent assumed (Platner-Ashby s.v. Forum Boarium)"
+  geometry_unverified: [bearing_deg, footprint_m]
   lat: 41.8886
   lon: 12.4813
   precision: approx
@@ -563,6 +825,12 @@ monuments:
   english: Great Altar of Hercules
   type: altar
   regio: 11
+  model: altar
+  bearing_deg: 90  # unverified
+  footprint_m: {length: 5, width: 5}  # unverified
+  height_m: 1.5  # unverified
+  geometry_source: "Platner-Ashby s.v. Ara Maxima Herculis (altar of Hercules, in the Forum Boarium); size assumed"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8887
   lon: 12.4825
   precision: approx
@@ -576,6 +844,11 @@ monuments:
   english: Temples of Fortuna and Mater Matuta
   type: temple
   regio: 11
+  model: temple_tetrastyle_ionic
+  bearing_deg: 90  # unverified
+  footprint_m: {length: 26, width: 12}
+  geometry_source: "Platner-Ashby s.v. Aedes Matris Matutae / Fortunae (the temple at S. Omobono: archaeology of two temples side by side, same orientation, the Ionic tetrastyle pseudoperipteral one 20 x 12 m on a podium 2.5 m high, orientation N-S parallel with the Tiber for the Pons Aemilius temple, which faced the street from the Pons Aemilius); east assumed for the archaic pair"
+  geometry_unverified: [bearing_deg]
   lat: 41.8896
   lon: 12.4810
   precision: exact
@@ -590,6 +863,12 @@ monuments:
   english: Round Temple in the Forum Boarium (Hercules Victor)
   type: temple
   regio: 11
+  model: temple_round_marble
+  offset_m: [-30, 24]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 38 m off
+  bearing_deg: 90  # unverified
+  footprint_m: {radius: 7.4}
+  geometry_source: "Platner-Ashby s.v. Hercules Victor (circular, 20 Corinthian columns, Greek marble); radius c. 7.4 m (14.8 m across, as in the kit)"
+  geometry_unverified: [bearing_deg]
   lat: 41.8884
   lon: 12.4812
   precision: exact
@@ -603,6 +882,12 @@ monuments:
   english: Temple of Portunus
   type: temple
   regio: 11
+  model: temple_tetrastyle_ionic_travertine
+  offset_m: [3, 52]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 52 m off
+  bearing_deg: 270  # unverified
+  footprint_m: {length: 20, width: 12}  # unverified
+  geometry_source: "Platner-Ashby s.v. Aedes Portuni (tetrastyle Ionic pseudoperipteral on a podium); front toward the Tiber assumed"
+  geometry_unverified: [bearing_deg, footprint_m]
   lat: 41.8887
   lon: 12.4808
   precision: exact
@@ -615,6 +900,12 @@ monuments:
   english: Porta Trigemina
   type: gate
   regio: 11
+  model: gate
+  footprint_m: {length: 9, width: 12}
+  height_m: 12  # unverified
+  snap_to: murus_servianus
+  geometry_source: "Platner-Ashby s.v. Porta Trigemina (an arch of tufa, 3.30 m wide, over a paved road found 40 m south of S. Maria in Cosmedin); flanking towers assumed"
+  geometry_unverified: [height_m]
   lat: 41.8880
   lon: 12.4793
   precision: rough
@@ -626,6 +917,13 @@ monuments:
   english: Vegetable Market
   type: market
   regio: 9
+  model: plaza
+  bearing_deg: 290  # unverified
+  footprint_m: {length: 95, width: 40}  # unverified
+  height_m: 0
+  surface: earth
+  geometry_source: "vegetable market north of the Theatre of Marcellus; extent assumed (Platner-Ashby s.v. Forum Holitorium)"
+  geometry_unverified: [bearing_deg, footprint_m]
   lat: 41.8922
   lon: 12.4782
   precision: approx
@@ -637,6 +935,11 @@ monuments:
   english: Temple of Janus (Forum Holitorium)
   type: temple
   regio: 9
+  model: temple_tetrastyle_ionic_travertine
+  bearing_deg: 304
+  footprint_m: {length: 22, width: 12}  # unverified
+  geometry_source: "Platner-Ashby s.v. Aedes Iani: three temples side by side with the same orientation facing the Forum Holitorium"
+  geometry_unverified: [footprint_m, height_m]
   lat: 41.8921
   lon: 12.4784
   precision: approx
@@ -648,6 +951,11 @@ monuments:
   english: Temple of Hope
   type: temple
   regio: 9
+  model: temple_tetrastyle_ionic_travertine
+  bearing_deg: 315  # unverified
+  footprint_m: {length: 30, width: 10}
+  geometry_source: "Platner-Ashby s.v. Spes, Aedes (about 30 m long and 10 wide, Ionic amphiprostyle hexastyle, twelve or thirteen steps; middle and largest of the three)"
+  geometry_unverified: [bearing_deg]
   lat: 41.8919
   lon: 12.4786
   precision: approx
@@ -661,6 +969,12 @@ monuments:
   english: Temple of Juno Sospita
   type: temple
   regio: 9
+  model: temple_tetrastyle_ionic_travertine
+  bearing_deg: 318
+  footprint_m: {length: 22, width: 12}  # unverified
+  construction: {begun: -197, completed: -194}  # work years; see geometry_source
+  geometry_source: "Platner-Ashby s.v. Aedes Iani (three temples same orientation facing the Forum Holitorium); Juno Sospita by Livy 34.53.3"
+  geometry_unverified: [footprint_m, height_m]
   lat: 41.8917
   lon: 12.4788
   precision: approx
@@ -672,6 +986,12 @@ monuments:
   english: Temple of Pietas
   type: temple
   regio: 9
+  model: temple_tetrastyle_ionic
+  bearing_deg: 20  # unverified
+  footprint_m: {length: 22, width: 12}  # unverified
+  phases: [{from: -13, state: gone}]
+  geometry_source: "Platner-Ashby s.v. Pietas, Aedes (in the Forum Holitorium, site of the later Theatre of Marcellus); size assumed"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8918
   lon: 12.4780
   precision: approx
@@ -683,6 +1003,13 @@ monuments:
   english: Temple of Apollo (Medicus, later Sosianus)
   type: temple
   regio: 9
+  model: temple_tetrastyle_ionic  # unverified
+  bearing_deg: 270  # unverified
+  footprint_m: {length: 30, width: 17}  # unverified
+  construction: {begun: -433, completed: -431}  # work years; see geometry_source
+  phases: [{from: -34, state: standing, model: temple_hexastyle_corinthian_marble}]
+  geometry_source: "Platner-Ashby s.v. Apollo in Campo Martio (podium wall 13 m long, 4 m high, 2 m thick under S. Maria in Campitelli); the Sosian marble temple of 34 BC: octostyle? kit stand-in"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8918
   lon: 12.4775
   precision: exact
@@ -696,6 +1023,10 @@ monuments:
   english: Temple of Bellona
   type: temple
   regio: 9
+  model: temple_tetrastyle_ionic  # unverified
+  bearing_deg: 90  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan); Livy 10.19.17"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8915
   lon: 12.4770
   precision: approx
@@ -707,6 +1038,10 @@ monuments:
   english: Temple of Neptune (Circus Flaminius)
   type: temple
   regio: 9
+  model: temple_tetrastyle_ionic  # unverified
+  bearing_deg: 90  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan); site unknown"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8912
   lon: 12.4765
   precision: rough
@@ -718,6 +1053,12 @@ monuments:
   english: Portico of Octavia (replacing the Portico of Metellus)
   type: portico
   regio: 9
+  model: portico_enclosure
+  bearing_deg: 225
+  footprint_m: {length: 130, width: 118}
+  height_m: 10  # unverified
+  geometry_source: "Platner-Ashby s.v. Porticus Octaviae (rectangle 118 m wide and somewhat longer, double colonnade of granite columns, 28 in a row at the front; main axis NE-SW, entrance in the middle of the SW side; pronaos columns 8.6 m); the Metellus portico of 146 BC enclosed two temples"
+  geometry_unverified: [height_m]
   lat: 41.8923
   lon: 12.4791
   precision: exact
@@ -732,6 +1073,11 @@ monuments:
   english: Temple of Jupiter Stator (Metellus)
   type: temple
   regio: 9
+  model: temple_hexastyle_corinthian_marble
+  bearing_deg: 225  # unverified
+  footprint_m: {length: 35, width: 20}  # unverified
+  geometry_source: "Vell. Pat. 1.11.3-5 (first all-marble temple, Metellus 146 BC); in the middle of the porticus (Platner-Ashby s.v. Porticus Metelli); size assumed"
+  geometry_unverified: [bearing_deg, footprint_m]
   lat: 41.8923
   lon: 12.4793
   precision: approx
@@ -743,6 +1089,12 @@ monuments:
   english: Temple of Juno Regina (Circus Flaminius)
   type: temple
   regio: 9
+  model: temple_tetrastyle_ionic_marble
+  bearing_deg: 225  # unverified
+  footprint_m: {length: 30, width: 17}  # unverified
+  construction: {begun: -187, completed: -179}  # work years; see geometry_source
+  geometry_source: "Vell. Pat. 1.11.3 (Juno Regina marble temple in the Metellus portico); size assumed"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8924
   lon: 12.4789
   precision: approx
@@ -754,6 +1106,10 @@ monuments:
   english: Temple of Diana (Circus Flaminius)
   type: temple
   regio: 9
+  model: temple_tetrastyle_ionic  # unverified
+  bearing_deg: 90  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan); doubtful entry"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8910
   lon: 12.4762
   precision: rough
@@ -766,6 +1122,11 @@ monuments:
   english: Temple of the Lares of the Sea
   type: temple
   regio: 9
+  model: temple_tetrastyle_ionic  # unverified
+  bearing_deg: 90  # unverified
+  construction: {begun: -190, completed: -179}  # work years; see geometry_source
+  geometry_source: "form assumed from date and type, native kit size (no measured plan); Livy 40.52.5-6"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8916
   lon: 12.4768
   precision: rough
@@ -777,6 +1138,13 @@ monuments:
   english: Circus Flaminius
   type: circus
   regio: 9
+  model: plaza
+  bearing_deg: 90
+  footprint_m: {length: 260, width: 80}  # unverified
+  height_m: 0
+  surface: earth
+  geometry_source: "Platner-Ashby s.v. Circus Flaminius (major axis almost due east-west, carceres end on the east); extent assumed, not a racing circus"
+  geometry_unverified: [footprint_m]
   lat: 41.8913
   lon: 12.4776
   precision: approx
@@ -789,6 +1157,12 @@ monuments:
   english: Old Portico of Minucius
   type: portico
   regio: 9
+  model: portico_enclosure
+  bearing_deg: 180  # unverified
+  footprint_m: {length: 100, width: 60}  # unverified
+  height_m: 9  # unverified
+  geometry_source: "Porticus Minucia Vetus (107 BC); size assumed (Platner-Ashby s.v. Porticus Minucia)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8955
   lon: 12.4775
   precision: approx
@@ -800,6 +1174,12 @@ monuments:
   english: Temple of Faunus
   type: temple
   regio: 14
+  model: temple_tetrastyle_ionic
+  bearing_deg: 90  # unverified
+  footprint_m: {length: 14, width: 9}  # unverified
+  construction: {begun: -196, completed: -194}  # work years; see geometry_source
+  geometry_source: "Vitr. 3.2.3 (prostyle temple of Faunus on the island); small tetrastyle assumed; Platner-Ashby s.v. Faunus, Aedes"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8908
   lon: 12.4779
   precision: approx
@@ -811,6 +1191,10 @@ monuments:
   english: Temple of Aesculapius
   type: temple
   regio: 14
+  model: temple_tetrastyle_ionic  # unverified
+  bearing_deg: 90  # unverified
+  geometry_source: "Platner-Ashby s.v. Aesculapius, Aedes (on the island); size assumed"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8905
   lon: 12.4775
   precision: approx
@@ -822,6 +1206,8 @@ monuments:
   english: Tiber Island
   type: island
   regio: 14
+  model: none
+  geometry_source: "the island is ground (terrain agent); its ship-shaped travertine facing is Imperial"
   lat: 41.8900
   lon: 12.4775
   precision: exact
@@ -834,6 +1220,12 @@ monuments:
   english: Temple of the Magna Mater (Cybele)
   type: temple
   regio: 10
+  model: temple_hexastyle_corinthian  # unverified
+  bearing_deg: 180  # unverified
+  footprint_m: {length: 33.18, width: 17.1}
+  construction: {begun: -205, completed: -191}  # work years; see geometry_source
+  geometry_source: "Platner-Ashby s.v. Aedes Matris Deum (total length 33.18 m, width 17.10 m, prostyle hexastyle, Corinthian; rear wall double); the east end faces the Circus side assumed"
+  geometry_unverified: [bearing_deg, model]
   lat: 41.8895
   lon: 12.4851
   precision: exact
@@ -847,6 +1239,10 @@ monuments:
   english: Temple of Victory
   type: temple
   regio: 10
+  model: temple_tetrastyle_ionic  # unverified
+  bearing_deg: 201  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan); Livy 10.33.9"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8892
   lon: 12.4867
   precision: approx
@@ -858,6 +1254,10 @@ monuments:
   english: Temple of Jupiter Stator (Palatine)
   type: temple
   regio: 10
+  model: temple_tuscan_small  # unverified
+  bearing_deg: 327  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan); Livy 10.36.11"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8908
   lon: 12.4868
   precision: rough
@@ -869,6 +1269,13 @@ monuments:
   english: Temple of Apollo on the Palatine
   type: temple
   regio: 10
+  model: temple_hexastyle_corinthian_marble
+  offset_m: [-124, 22]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 126 m off
+  bearing_deg: 90  # unverified
+  footprint_m: {length: 50, width: 25}  # unverified
+  construction: {begun: -36, completed: -28}  # work years; see geometry_source
+  geometry_source: "Vell. Pat. 2.81, Suet. Aug. 29 (marble temple with porticoes and libraries); Platner-Ashby s.v. Apollo, Palatinus aedes; size assumed"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8886
   lon: 12.4872
   precision: exact
@@ -881,6 +1288,12 @@ monuments:
   english: Hut of Romulus
   type: shrine
   regio: 10
+  model: hut
+  bearing_deg: 90  # unverified
+  footprint_m: {length: 4, width: 3}  # unverified
+  height_m: 3  # unverified
+  geometry_source: "Vitr. 2.1.5, Dion. Hal. 1.79 (thatched hut of Romulus on the Palatine); size assumed"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8887
   lon: 12.4856
   precision: approx
@@ -892,6 +1305,13 @@ monuments:
   english: House of Cicero on the Palatine
   type: house
   regio: 10
+  model: domus
+  bearing_deg: 16  # unverified
+  footprint_m: {length: 45, width: 30}  # unverified
+  height_m: 9  # unverified
+  phases: [{from: -58, state: gone}, {from: -57, state: building}, {from: -55, state: standing}]
+  geometry_source: "form assumed from date and type, native kit size (no measured plan); Cic. Dom. 100; Plut. Cic. 33"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8908
   lon: 12.4860
   precision: rough
@@ -906,6 +1326,13 @@ monuments:
   english: House of Hortensius, later of Augustus
   type: house
   regio: 10
+  model: domus
+  offset_m: [25, 56]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 61 m off
+  bearing_deg: 16  # unverified
+  footprint_m: {length: 45, width: 30}  # unverified
+  height_m: 9  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan); Suet. Aug. 72"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8884
   lon: 12.4850
   precision: approx
@@ -917,6 +1344,12 @@ monuments:
   english: House of Catulus (with Porticus Catuli)
   type: house
   regio: 10
+  model: domus
+  bearing_deg: 16  # unverified
+  footprint_m: {length: 40, width: 25}  # unverified
+  height_m: 9  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8905
   lon: 12.4858
   precision: rough
@@ -928,6 +1361,12 @@ monuments:
   english: House of Pompey on the Carinae
   type: house
   regio: 3
+  model: domus
+  bearing_deg: 16  # unverified
+  footprint_m: {length: 40, width: 25}  # unverified
+  height_m: 9  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8918
   lon: 12.4918
   precision: rough
@@ -939,6 +1378,12 @@ monuments:
   english: Official residence of the Pontifex Maximus
   type: house
   regio: 8
+  model: domus
+  bearing_deg: 16  # unverified
+  footprint_m: {length: 45, width: 30}  # unverified
+  height_m: 9  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan); the Pontifex Maximus residence (Suet. Iul. 46)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8916
   lon: 12.4881
   precision: approx
@@ -950,6 +1395,12 @@ monuments:
   english: House of Clodius on the Palatine
   type: house
   regio: 10
+  model: domus
+  bearing_deg: 16  # unverified
+  footprint_m: {length: 40, width: 25}  # unverified
+  height_m: 9  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8896
   lon: 12.4880
   precision: rough
@@ -962,6 +1413,13 @@ monuments:
   english: Temple of Ceres, Liber and Libera
   type: temple
   regio: 11
+  model: temple_tuscan_small
+  bearing_deg: 105  # unverified
+  footprint_m: {length: 40, width: 25}  # unverified
+  construction: {begun: -496, completed: -493}  # work years; see geometry_source
+  phases: [{from: -31, state: burnt}]
+  geometry_source: "Vitr. 3.3.5 (Ceres: araeostyle, Tuscan type, with Greek decoration by Damophilos and Gorgasos, Pliny NH 35.154); size assumed"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8870
   lon: 12.4805
   precision: approx
@@ -976,6 +1434,10 @@ monuments:
   english: Temple of Mercury
   type: temple
   regio: 11
+  model: temple_tetrastyle_ionic  # unverified
+  bearing_deg: 80
+  geometry_source: "Platner-Ashby s.v. Mercurius, Aedes (above and facing the Circus Maximus near its SE end; podium of three steps); size assumed"
+  geometry_unverified: [footprint_m, height_m, model]
   lat: 41.8859
   lon: 12.4836
   precision: approx
@@ -987,6 +1449,11 @@ monuments:
   english: Temple of Juno Regina on the Aventine
   type: temple
   regio: 13
+  model: temple_tetrastyle_ionic  # unverified
+  bearing_deg: 37  # unverified
+  construction: {begun: -396, completed: -392}  # work years; see geometry_source
+  geometry_source: "form assumed from date and type, native kit size (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8835
   lon: 12.4825
   precision: rough
@@ -998,6 +1465,10 @@ monuments:
   english: Temple of Diana on the Aventine
   type: temple
   regio: 13
+  model: temple_tuscan_small  # unverified
+  bearing_deg: 28  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8824
   lon: 12.4825
   precision: rough
@@ -1009,6 +1480,10 @@ monuments:
   english: Temple of Libertas on the Aventine
   type: temple
   regio: 13
+  model: temple_tetrastyle_ionic  # unverified
+  bearing_deg: 37  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8840
   lon: 12.4830
   precision: rough
@@ -1020,6 +1495,10 @@ monuments:
   english: Temple of Venus Obsequens
   type: temple
   regio: 11
+  model: temple_tetrastyle_ionic  # unverified
+  bearing_deg: 126  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan); near the Circus (Livy 10.31.9)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8868
   lon: 12.4838
   precision: rough
@@ -1031,6 +1510,10 @@ monuments:
   english: Temple of Juventas
   type: temple
   regio: 11
+  model: temple_tetrastyle_ionic  # unverified
+  bearing_deg: 98  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan); Platner-Ashby s.v. Iuventas (in the Circus Maximus, beside the carceres)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8862
   lon: 12.4842
   precision: rough
@@ -1042,6 +1525,14 @@ monuments:
   english: Circus Maximus
   type: circus
   regio: 11
+  model: circus_maximus
+  offset_m: [50, -22]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 55 m off
+  bearing_deg: 134  # unverified
+  footprint_m: {length: 621, width: 118}
+  phases: [{from: -329, state: standing, variant: carceres}, {from: -174, state: standing, variant: eggs}, {from: -46, state: standing, variant: caesar}, {from: -33, state: standing, variant: augustan}]
+  geometry_source: "Dion. Hal. 3.68 (3.5 stades = 621 m long, 4 plethra = 118 m wide, euripus 10 ft broad and 10 ft deep, three tiers of seats the lowest of stone, rest timber, outer one-storey arcade with shops, carceres uncovered with a rope barrier, curved end opposite the carceres); Platner-Ashby s.v. Circus Maximus (valley 600 x 150 m; carceres 329 BC Livy 8.20.2, eggs 174 BC Livy 41.27.6, dolphins 33 BC Dio 49.43.2, Caesar 46 BC Suet. Iul. 39 and Plin. NH 36.102)"
+  geometry_note: "bearing = direction the carceres face (toward the curved end, SE): the long axis NW-SE, measured on the plan from the remains under Via dei Cerchi; carceres at the Tiber/Forum Boarium (NW) end."
+  geometry_unverified: [bearing_deg]
   lat: 41.8861
   lon: 12.4851
   precision: exact
@@ -1058,6 +1549,10 @@ monuments:
   english: Sempronian granaries
   type: horrea
   regio: 13
+  model: horrea
+  bearing_deg: 45  # unverified
+  geometry_source: "Plut. C. Gracchus 6, Livy 29.37.2; Platner-Ashby s.v. Horrea: site rough, kit horrea"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8830
   lon: 12.4780
   precision: rough
@@ -1069,6 +1564,13 @@ monuments:
   english: Horrea Galbae
   type: horrea
   regio: 13
+  model: horrea
+  offset_m: [-308, -6]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 308 m off
+  bearing_deg: 45  # unverified
+  footprint_m: {length: 155, width: 200}
+  height_m: 14  # unverified
+  geometry_source: "Platner-Ashby s.v. Horrea Galbae (rectangle on each side of Via Bodoni about 200 m long and 155 wide, enclosed by a wall, divided into sections by courts); Galba built 50 BC? dataset date"
+  geometry_unverified: [bearing_deg, height_m]
   lat: 41.8795
   lon: 12.4790
   precision: approx
@@ -1080,6 +1582,13 @@ monuments:
   english: Emporium (river port)
   type: port
   regio: 13
+  model: quay
+  offset_m: [-297, 146]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 331 m off
+  bearing_deg: 270  # unverified
+  footprint_m: {length: 500, width: 40}  # unverified
+  height_m: 0
+  geometry_source: "Livy 41.27.8 (banks paved with stone steps 174 BC); extent assumed"
+  geometry_unverified: [bearing_deg, footprint_m]
   lat: 41.8795
   lon: 12.4765
   precision: approx
@@ -1093,6 +1602,13 @@ monuments:
   english: Porticus Aemilia (warehouse hall)
   type: horrea
   regio: 13
+  model: long_hall
+  offset_m: [-297, 146]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 331 m off
+  bearing_deg: 45  # unverified
+  footprint_m: {length: 60, width: 487}
+  height_m: 9  # unverified
+  geometry_source: "Platner-Ashby s.v. Porticus Aemilia / dataset form (long hall 487 x 60 m, 50 aisles, concrete barrel vaults, 193 BC Livy 35.10.12); bearing along the quay assumed"
+  geometry_unverified: [bearing_deg, height_m]
   lat: 41.8788
   lon: 12.4772
   precision: exact
@@ -1106,6 +1622,12 @@ monuments:
   english: Naval dockyards
   type: port
   regio: 9
+  model: shipsheds
+  bearing_deg: 270  # unverified
+  footprint_m: {length: 40, width: 200}  # unverified
+  height_m: 8  # unverified
+  geometry_source: "Platner-Ashby s.v. Navalia (docks for warships on the left bank of the Tiber in the Campus Martius); size assumed"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.9010
   lon: 12.4710
   precision: rough
@@ -1118,6 +1640,8 @@ monuments:
   english: Campus Martius
   type: field
   regio: 9
+  model: none
+  geometry_source: "open field: ground, not a building"
   lat: 41.9000
   lon: 12.4700
   precision: rough
@@ -1129,6 +1653,12 @@ monuments:
   english: Altar of Mars
   type: altar
   regio: 9
+  model: altar
+  bearing_deg: 90  # unverified
+  footprint_m: {length: 6, width: 6}  # unverified
+  height_m: 1.5  # unverified
+  geometry_source: "Ara Martis in the Campus Martius (Livy 40.45.8); size assumed"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.9005
   lon: 12.4720
   precision: rough
@@ -1140,6 +1670,12 @@ monuments:
   english: Villa Publica
   type: public_building
   regio: 9
+  model: portico_enclosure
+  bearing_deg: 0  # unverified
+  footprint_m: {length: 50, width: 40}  # unverified
+  height_m: 7  # unverified
+  geometry_source: "Platner-Ashby s.v. Villa Publica (435 BC, Livy 4.22.7); size assumed"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8985
   lon: 12.4755
   precision: rough
@@ -1151,6 +1687,10 @@ monuments:
   english: Temple of Mars (Campus Martius)
   type: temple
   regio: 9
+  model: temple_tetrastyle_ionic  # unverified
+  bearing_deg: 90  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan); Platner-Ashby s.v. Mars, Aedes"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8985
   lon: 12.4740
   precision: rough
@@ -1162,6 +1702,10 @@ monuments:
   english: Temple of Hercules of the Muses
   type: temple
   regio: 9
+  model: temple_tetrastyle_ionic  # unverified
+  bearing_deg: 90  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan); Platner-Ashby s.v. Hercules Musarum, Aedes (Fulvius Nobilior, 187)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8960
   lon: 12.4752
   precision: rough
@@ -1173,6 +1717,12 @@ monuments:
   english: Temple A, Largo Argentina (probably Juno Curritis)
   type: temple
   regio: 9
+  model: temple_tetrastyle_ionic  # unverified
+  offset_m: [4, -80]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 80 m off
+  bearing_deg: 90  # unverified
+  footprint_m: {length: 23, width: 13}  # unverified
+  geometry_source: "excavated Area Sacra di Largo Argentina, Temple A (temples face east onto a paved court); size from the plan, not read in PA"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8960
   lon: 12.4769
   precision: exact
@@ -1185,6 +1735,12 @@ monuments:
   english: Temple of Fortuna Huiusce Diei (Temple B, Largo Argentina)
   type: temple
   regio: 9
+  model: temple_round
+  offset_m: [4, -80]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 80 m off
+  bearing_deg: 90  # unverified
+  footprint_m: {radius: 8.5}  # unverified
+  geometry_source: "Largo Argentina, Temple B (round peripteral temple of Fortuna Huiusce Diei, Q. Lutatius Catulus 101 BC); radius from the plan of the stylobate, not read in PA"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8957
   lon: 12.4770
   precision: exact
@@ -1197,6 +1753,12 @@ monuments:
   english: Temple C, Largo Argentina (Feronia?)
   type: temple
   regio: 9
+  model: temple_tuscan_small  # unverified
+  offset_m: [4, -80]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 80 m off
+  bearing_deg: 90  # unverified
+  footprint_m: {length: 30, width: 14}  # unverified
+  geometry_source: "Largo Argentina, Temple C (Feronia?); size from the plan"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8955
   lon: 12.4767
   precision: exact
@@ -1208,6 +1770,12 @@ monuments:
   english: Temple D, Largo Argentina (identity unknown)
   type: temple
   regio: 9
+  model: temple_tetrastyle_ionic  # unverified
+  offset_m: [4, -80]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 80 m off
+  bearing_deg: 90  # unverified
+  footprint_m: {length: 38, width: 20}  # unverified
+  geometry_source: "Largo Argentina, Temple D (the largest); size from the plan"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8953
   lon: 12.4767
   precision: exact
@@ -1219,6 +1787,14 @@ monuments:
   english: Theatre of Pompey
   type: theatre
   regio: 9
+  model: theatre_pompey
+  offset_m: [-58, -56]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 81 m off
+  bearing_deg: 134  # unverified: scaena side toward the Porticus Pompeiana (Platner-Ashby s.v. Porticus Pompei: the portico lay behind the stage)
+  footprint_m: {radius: 77.5}
+  construction: {begun: -61, completed: -55}  # work years; see geometry_source
+  geometry_source: "Platner-Ashby s.v. Theatrum Pompei (diameter 150-160 m, scaena about 95 m long; facade of three arcades Doric/Ionic/Corinthian, 24 peperino arches in the lowest; temple of Venus Victrix at the top of the cavea, Gell. NA 10.1.7)"
+  geometry_note: "cavea opens toward the north (scaena to the south); the temple on the axis faces the stage"
+  geometry_unverified: [bearing_deg]
   lat: 41.8958
   lon: 12.4743
   precision: exact
@@ -1232,6 +1808,12 @@ monuments:
   english: Curia of Pompey
   type: curia
   regio: 9
+  model: curia
+  offset_m: [-58, -56]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 81 m off
+  bearing_deg: 270  # unverified
+  footprint_m: {length: 20, width: 30}  # unverified
+  geometry_source: "Curia Pompei (Suet. Iul. 80, Platner-Ashby s.v. Curia Pompei); attached to the portico, dimensions assumed"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8955
   lon: 12.4757
   precision: exact
@@ -1245,6 +1827,13 @@ monuments:
   english: Portico of Pompey
   type: portico
   regio: 9
+  model: portico_enclosure
+  offset_m: [-26, -88]  # east, north metres added to lat/lon; unverified: the theatre of Pompey correction (-58, -56) plus 45 m along the stage axis so the portico lies behind the scaena instead of overlapping it (Platner-Ashby s.v. Porticus Pompei)
+  bearing_deg: 134  # unverified
+  footprint_m: {length: 135, width: 180}
+  height_m: 11  # unverified
+  geometry_source: "Platner-Ashby s.v. Porticus Pompei (rectangular court about 180 m long and 135 wide, four rows of columns)"
+  geometry_unverified: [bearing_deg, height_m]
   lat: 41.8953
   lon: 12.4750
   precision: exact
@@ -1256,6 +1845,12 @@ monuments:
   english: Temporary theatre of Scaurus
   type: theatre
   regio: 9
+  model: theatre_timber
+  bearing_deg: 180  # unverified
+  footprint_m: {radius: 60}  # unverified
+  height_m: 25  # unverified
+  geometry_source: "Plin. NH 36.113-115 (the temporary theatre of M. Aemilius Scaurus, 58 BC, 80,000 seats, 360 columns); radius assumed (a 150 m theatre-sized structure is not stated)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.9010
   lon: 12.4760
   precision: rough
@@ -1268,6 +1863,14 @@ monuments:
   english: Theatre of Marcellus
   type: theatre
   regio: 9
+  model: theatre_stone
+  bearing_deg: 202.5  # unverified: Platner-Ashby: stage toward the river, main axis NNE-SSW; front = scaena side (SSW)
+  footprint_m: {radius: 65}
+  height_m: 32.6  # unverified
+  construction: {begun: -44, completed: -13}  # work years; see geometry_source
+  geometry_source: "Platner-Ashby s.v. Theatrum Marcelli (diameter about 150 m, scaena about 80-90 m long and 20 deep, apsidal halls 25 x 15 m at its ends; stage toward the river, main axis NNE-SSW; thirteen piers 3 m wide and 2 deep; three open arcades, Doric then Ionic)"
+  geometry_note: "bearing: scaena toward the river (west-southwest), axis NNE-SSW so the open side faces NNE; the dataset radius 65 comes from the 130 m published diameter, Platner says 150 m"
+  geometry_unverified: [height_m]
   lat: 41.8919
   lon: 12.4796
   precision: exact
@@ -1279,6 +1882,12 @@ monuments:
   english: Amphitheatre of Statilius Taurus
   type: amphitheatre
   regio: 9
+  model: amphitheatre
+  bearing_deg: 90  # unverified
+  footprint_m: {length: 80, width: 110}  # unverified
+  height_m: 20  # unverified
+  geometry_source: "Dio 51.23.1; Suet. Aug. 29 (stone amphitheatre of Statilius Taurus in the Campus Martius, 29 BC); dimensions not given"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8910
   lon: 12.4740
   precision: rough
@@ -1290,6 +1899,13 @@ monuments:
   english: Saepta (voting enclosure)
   type: public_building
   regio: 9
+  model: portico_enclosure
+  bearing_deg: 0  # unverified
+  footprint_m: {length: 310, width: 120}  # unverified
+  height_m: 12  # unverified
+  construction: {begun: -54, completed: -26}  # work years; see geometry_source
+  geometry_source: "Platner-Ashby s.v. Saepta Julia (piers 1.70 m square, 6.20 m apart; enclosure about 300 m long on the Via Lata side, Diribitorium beside); Cic. Att. 4.16.8"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8975
   lon: 12.4800
   precision: approx
@@ -1302,6 +1918,11 @@ monuments:
   english: Pantheon of Agrippa (first Pantheon)
   type: temple
   regio: 9
+  model: temple_hexastyle_corinthian_marble
+  bearing_deg: 180
+  footprint_m: {length: 41.1, width: 43.76}  # unverified
+  geometry_source: "Platner-Ashby s.v. Pantheon (Agrippa podium 43.76 m wide, 19.82 deep, faced south, pronaos 21.26 m); rotunda is Hadrianic and absent"
+  geometry_unverified: [footprint_m]
   lat: 41.8986
   lon: 12.4769
   precision: exact
@@ -1313,6 +1934,12 @@ monuments:
   english: Mausoleum of Augustus
   type: tomb
   regio: 9
+  model: tomb_drum
+  bearing_deg: 180
+  footprint_m: {radius: 43.5}
+  height_m: 45  # unverified
+  geometry_source: "Platner-Ashby s.v. Mausoleum Augusti (drum of 87 m external diameter at the base, faced with travertine; entrance on the south; Strabo 5.3.8 mound planted with evergreens)"
+  geometry_unverified: [height_m]
   lat: 41.9059
   lon: 12.4766
   precision: exact
@@ -1324,6 +1951,13 @@ monuments:
   english: Baths of Agrippa
   type: baths
   regio: 9
+  model: baths
+  offset_m: [-83, -121]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 147 m off
+  bearing_deg: 180  # unverified
+  footprint_m: {length: 100, width: 80}  # unverified
+  height_m: 20  # unverified
+  geometry_source: "Platner-Ashby s.v. Thermae Agrippae (25 BC, Dio 53.27.1); the plan is not measured: assumed"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8980
   lon: 12.4780
   precision: approx
@@ -1335,6 +1969,10 @@ monuments:
   english: Temple of Isis and Serapis (triumviral vow)
   type: temple
   regio: 9
+  model: temple_hexastyle_corinthian  # unverified
+  bearing_deg: 90  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan); Platner-Ashby s.v. Isis (the Iseum Campense)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8985
   lon: 12.4790
   precision: rough
@@ -1346,6 +1984,13 @@ monuments:
   english: Altar of Augustan Peace
   type: altar
   regio: 9
+  model: altar_enclosure
+  bearing_deg: 90  # unverified
+  footprint_m: {length: 10.6, width: 11.6}  # unverified
+  height_m: 3.7  # unverified
+  construction: {begun: -13, completed: -9}  # work years; see geometry_source
+  geometry_source: "Res Gestae 12; the marble enclosure is 11.65 x 10.55 m (from the reconstructed altar, not read): unverified"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.9063
   lon: 12.4753
   precision: exact
@@ -1358,6 +2003,11 @@ monuments:
   english: Temple of Quirinus
   type: temple
   regio: 6
+  model: temple_tetrastyle_ionic  # unverified
+  bearing_deg: 198  # unverified
+  phases: [{from: -49, state: burnt}, {from: -16, state: standing}]
+  geometry_source: "form assumed from date and type, native kit size (no measured plan); Vitr. 3.2.7 (dipteral, Doric)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.9015
   lon: 12.4893
   precision: approx
@@ -1372,6 +2022,11 @@ monuments:
   english: Temple of Salus
   type: temple
   regio: 6
+  model: temple_tetrastyle_ionic  # unverified
+  bearing_deg: 194  # unverified
+  construction: {begun: -307, completed: -302}  # work years; see geometry_source
+  geometry_source: "form assumed from date and type, native kit size (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.9005
   lon: 12.4880
   precision: approx
@@ -1384,6 +2039,10 @@ monuments:
   english: Temple of Semo Sancus Dius Fidius
   type: temple
   regio: 6
+  model: temple_tuscan_small  # unverified
+  bearing_deg: 188  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.9010
   lon: 12.4870
   precision: approx
@@ -1395,6 +2054,11 @@ monuments:
   english: Temple of Fortuna Primigenia
   type: temple
   regio: 6
+  model: temple_tetrastyle_ionic  # unverified
+  bearing_deg: 197  # unverified
+  construction: {begun: -204, completed: -194}  # work years; see geometry_source
+  geometry_source: "form assumed from date and type, native kit size (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.9007
   lon: 12.4887
   precision: approx
@@ -1406,6 +2070,10 @@ monuments:
   english: Temple of Tellus
   type: temple
   regio: 4
+  model: temple_tetrastyle_ionic  # unverified
+  bearing_deg: 275  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan); Platner-Ashby s.v. Tellus, Aedes (on the Esquiline in Carinis)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8920
   lon: 12.4930
   precision: rough
@@ -1418,6 +2086,10 @@ monuments:
   english: Temples of Honos and Virtus
   type: temple
   regio: 1
+  model: temple_tetrastyle_ionic  # unverified
+  bearing_deg: 337  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8855
   lon: 12.4893
   precision: rough
@@ -1429,6 +2101,10 @@ monuments:
   english: Temple of Venus Verticordia
   type: temple
   regio: 11
+  model: temple_tetrastyle_ionic  # unverified
+  bearing_deg: 103  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8862
   lon: 12.4845
   precision: rough
@@ -1440,6 +2116,12 @@ monuments:
   english: Altar of Consus
   type: altar
   regio: 11
+  model: altar
+  bearing_deg: 180  # unverified
+  footprint_m: {length: 4, width: 4}  # unverified
+  height_m: 1.2  # unverified
+  geometry_source: "Ara Consi (underground altar in the Circus, uncovered only on 21 Aug and 15 Dec; Platner-Ashby s.v. Aedes Consi)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8869
   lon: 12.4851
   precision: rough
@@ -1451,6 +2133,10 @@ monuments:
   english: Macellum (market)
   type: market
   regio: 3
+  model: macellum
+  bearing_deg: 90  # unverified
+  geometry_source: "Livy 40.51.5 (179 BC macellum); Platner-Ashby s.v. Macellum; site rough, kit size"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8912
   lon: 12.4935
   precision: rough
@@ -1463,6 +2149,10 @@ monuments:
   english: Temple of Fors Fortuna
   type: temple
   regio: 14
+  model: temple_tetrastyle_ionic  # unverified
+  bearing_deg: 50  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan); Livy 10.46.14 (Carvilius 293 BC, across the Tiber)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
   lat: 41.8825
   lon: 12.4695
   precision: rough
@@ -1474,6 +2164,13 @@ monuments:
   english: Pyramid of Cestius
   type: tomb
   regio: 13
+  model: tomb_pyramid
+  offset_m: [-30, 10]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 32 m off
+  bearing_deg: 24  # unverified
+  footprint_m: {length: 22, width: 22}
+  height_m: 27
+  geometry_source: "Platner-Ashby s.v. Sepulcrum C. Cestii (brick-faced concrete covered with white marble slabs, 27 m high, about 22 m square, on a travertine foundation)"
+  geometry_unverified: [bearing_deg]
   lat: 41.8763
   lon: 12.4812
   precision: exact
@@ -1485,6 +2182,12 @@ monuments:
   english: Tomb of the Scipios
   type: tomb
   regio: 1
+  model: tomb_rock
+  bearing_deg: 309  # unverified
+  footprint_m: {length: 22, width: 14}  # unverified
+  height_m: 6  # unverified
+  geometry_source: "tomb of the Scipios (Platner-Ashby s.v. Sepulcrum Scipionum, rock-cut, tufa facade added in the 2nd century BC); size assumed"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8798
   lon: 12.4981
   precision: exact
@@ -1496,6 +2199,12 @@ monuments:
   english: Tomb of Caecilia Metella
   type: tomb
   regio: 1
+  model: tomb_drum
+  bearing_deg: 90
+  footprint_m: {radius: 14.75}  # unverified
+  height_m: 11  # unverified
+  geometry_source: "tomb of Caecilia Metella on the Via Appia (travertine drum on a square base); diameter about 29.5 m assumed; outside the city, 5 km away"
+  geometry_unverified: [footprint_m, height_m]
   lat: 41.8559
   lon: 12.5226
   precision: exact
@@ -1507,6 +2216,8 @@ monuments:
   english: Gardens of Lucullus
   type: garden
   regio: 7
+  model: none
+  geometry_source: "gardens: an area (fill agent); Pincian hill"
   lat: 41.9087
   lon: 12.4825
   precision: rough
@@ -1518,6 +2229,8 @@ monuments:
   english: Gardens of Sallust
   type: garden
   regio: 6
+  model: none
+  geometry_source: "gardens: an area (fill agent)"
   lat: 41.9095
   lon: 12.4950
   precision: rough
@@ -1530,6 +2243,11 @@ monuments:
   english: Servian Wall (Republican city wall)
   type: wall
   regio: 0
+  model: wall
+  height_m: 10  # unverified
+  thickness_m: 3.6
+  geometry_source: "dataset form: wall 3.6 m thick and 10 m high; Platner-Ashby s.v. Murus Servii Tullii (ashlar of Grotta Oscura tufa 2 ft courses; the agger on the Esquiline 7 stades long, 50 ft thick with a ditch 30 ft deep and 100 ft wide, Dion. Hal. 9.68)"
+  geometry_unverified: [height_m]
   lat: 41.8960
   lon: 12.4900
   precision: approx
@@ -1544,6 +2262,13 @@ monuments:
   english: Porta Capena
   type: gate
   regio: 1
+  model: gate
+  offset_m: [207, -167]  # east, north metres added to lat/lon; unverified: the Servian gate stood by the modern Piazza di Porta Capena (Wikipedia coordinates 41.8838, 12.4905), 270 m from the dataset point; keeps the wall clear of the Circus Maximus
+  footprint_m: {length: 9, width: 12}  # unverified
+  height_m: 12  # unverified
+  snap_to: murus_servianus
+  geometry_source: "Platner-Ashby s.v. Porta Capena (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
+  geometry_unverified: [footprint_m, height_m]
   lat: 41.8855
   lon: 12.4885
   precision: approx
@@ -1555,6 +2280,12 @@ monuments:
   english: Porta Collina
   type: gate
   regio: 6
+  model: gate
+  footprint_m: {length: 9, width: 12}  # unverified
+  height_m: 12  # unverified
+  snap_to: murus_servianus
+  geometry_source: "Platner-Ashby s.v. Porta Collina (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
+  geometry_unverified: [footprint_m, height_m]
   lat: 41.9068
   lon: 12.4960
   precision: rough
@@ -1566,6 +2297,12 @@ monuments:
   english: Porta Esquilina
   type: gate
   regio: 5
+  model: gate
+  footprint_m: {length: 9, width: 12}  # unverified
+  height_m: 12  # unverified
+  snap_to: murus_servianus
+  geometry_source: "Platner-Ashby s.v. Porta Esquilina (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
+  geometry_unverified: [footprint_m, height_m]
   lat: 41.8957
   lon: 12.5017
   precision: rough
@@ -1577,6 +2314,12 @@ monuments:
   english: Porta Viminalis
   type: gate
   regio: 5
+  model: gate
+  footprint_m: {length: 9, width: 12}  # unverified
+  height_m: 12  # unverified
+  snap_to: murus_servianus
+  geometry_source: "Platner-Ashby s.v. Porta Viminalis (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
+  geometry_unverified: [footprint_m, height_m]
   lat: 41.9005
   lon: 12.4975
   precision: rough
@@ -1588,6 +2331,12 @@ monuments:
   english: Porta Caelimontana
   type: gate
   regio: 2
+  model: gate
+  footprint_m: {length: 9, width: 12}  # unverified
+  height_m: 12  # unverified
+  snap_to: murus_servianus
+  geometry_source: "Platner-Ashby s.v. Porta Caelimontana (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
+  geometry_unverified: [footprint_m, height_m]
   lat: 41.8873
   lon: 12.4965
   precision: rough
@@ -1599,6 +2348,12 @@ monuments:
   english: Porta Naevia
   type: gate
   regio: 13
+  model: gate
+  footprint_m: {length: 9, width: 12}  # unverified
+  height_m: 12  # unverified
+  snap_to: murus_servianus
+  geometry_source: "Platner-Ashby s.v. Porta Naevia (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
+  geometry_unverified: [footprint_m, height_m]
   lat: 41.8795
   lon: 12.4845
   precision: rough
@@ -1610,6 +2365,12 @@ monuments:
   english: Porta Raudusculana
   type: gate
   regio: 13
+  model: gate
+  footprint_m: {length: 9, width: 12}  # unverified
+  height_m: 12  # unverified
+  snap_to: murus_servianus
+  geometry_source: "Platner-Ashby s.v. Porta Raudusculana (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
+  geometry_unverified: [footprint_m, height_m]
   lat: 41.8825
   lon: 12.4810
   precision: rough
@@ -1621,6 +2382,12 @@ monuments:
   english: Porta Lavernalis
   type: gate
   regio: 13
+  model: gate
+  footprint_m: {length: 9, width: 12}  # unverified
+  height_m: 12  # unverified
+  snap_to: murus_servianus
+  geometry_source: "Platner-Ashby s.v. Porta Lavernalis (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
+  geometry_unverified: [footprint_m, height_m]
   lat: 41.8797
   lon: 12.4835
   precision: rough
@@ -1632,6 +2399,13 @@ monuments:
   english: Porta Carmentalis
   type: gate
   regio: 8
+  model: gate
+  offset_m: [-35, -45]  # east, north metres added to lat/lon; unverified: Wikipedia coordinates of the Carmental Gate (41.8914, 12.4803), 57 m from the dataset point; Platner-Ashby: near Via della Consolazione x Via della Bocca della Verita, SW corner of the Capitol
+  footprint_m: {length: 9, width: 12}  # unverified
+  height_m: 12  # unverified
+  snap_to: murus_servianus
+  geometry_source: "Platner-Ashby s.v. Porta Carmentalis (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
+  geometry_unverified: [footprint_m, height_m]
   lat: 41.8918
   lon: 12.4807
   precision: approx
@@ -1643,6 +2417,13 @@ monuments:
   english: Porta Flumentana
   type: gate
   regio: 9
+  model: gate
+  offset_m: [48, -170]  # east, north metres added to lat/lon; unverified: Platner-Ashby s.v. Porta Flumentana only says the gate lay on the wall joining the Capitol to the river, with the southern Campus Martius outside it; moved so the wall passes south of the Forum Holitorium and the Theatre of Marcellus site, which lay outside the Porta Carmentalis (Livy 25.7)
+  footprint_m: {length: 9, width: 12}  # unverified
+  height_m: 12  # unverified
+  snap_to: murus_servianus
+  geometry_source: "Platner-Ashby s.v. Porta Flumentana (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
+  geometry_unverified: [footprint_m, height_m]
   lat: 41.8925
   lon: 12.4770
   precision: rough
@@ -1654,6 +2435,12 @@ monuments:
   english: Porta Fontinalis
   type: gate
   regio: 8
+  model: gate
+  footprint_m: {length: 9, width: 12}  # unverified
+  height_m: 12  # unverified
+  snap_to: murus_servianus
+  geometry_source: "Platner-Ashby s.v. Porta Fontinalis (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
+  geometry_unverified: [footprint_m, height_m]
   lat: 41.8960
   lon: 12.4830
   precision: rough
@@ -1665,6 +2452,12 @@ monuments:
   english: Porta Ratumena
   type: gate
   regio: 6
+  model: gate
+  footprint_m: {length: 9, width: 12}  # unverified
+  height_m: 12  # unverified
+  snap_to: murus_servianus
+  geometry_source: "Platner-Ashby s.v. Porta Ratumena (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
+  geometry_unverified: [footprint_m, height_m]
   lat: 41.9005
   lon: 12.4835
   precision: rough
@@ -1676,6 +2469,12 @@ monuments:
   english: Porta Sanqualis
   type: gate
   regio: 6
+  model: gate
+  footprint_m: {length: 9, width: 12}  # unverified
+  height_m: 12  # unverified
+  snap_to: murus_servianus
+  geometry_source: "Platner-Ashby s.v. Porta Sanqualis (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
+  geometry_unverified: [footprint_m, height_m]
   lat: 41.9000
   lon: 12.4875
   precision: rough
@@ -1687,6 +2486,12 @@ monuments:
   english: Porta Salutaris
   type: gate
   regio: 6
+  model: gate
+  footprint_m: {length: 9, width: 12}  # unverified
+  height_m: 12  # unverified
+  snap_to: murus_servianus
+  geometry_source: "Platner-Ashby s.v. Porta Salutaris (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
+  geometry_unverified: [footprint_m, height_m]
   lat: 41.9008
   lon: 12.4884
   precision: rough
@@ -1698,6 +2503,12 @@ monuments:
   english: Porta Querquetulana
   type: gate
   regio: 2
+  model: gate
+  footprint_m: {length: 9, width: 12}  # unverified
+  height_m: 12  # unverified
+  snap_to: murus_servianus
+  geometry_source: "Platner-Ashby s.v. Porta Querquetulana (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
+  geometry_unverified: [footprint_m, height_m]
   lat: 41.8885
   lon: 12.4950
   precision: rough
@@ -1710,6 +2521,12 @@ monuments:
   english: Pons Sublicius (pile bridge)
   type: bridge
   regio: 11
+  model: bridge_timber
+  bearing_deg: 255  # unverified
+  footprint_m: {length: 100, width: 6}  # unverified
+  height_m: 5  # unverified
+  geometry_source: "Plin. NH 36.100, Dion. Hal. 3.45, Plut. Numa 9 (timber pile bridge, no iron nails); length and width assumed"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8880
   lon: 12.4770
   precision: rough
@@ -1722,6 +2539,13 @@ monuments:
   english: Pons Aemilius (Ponte Rotto)
   type: bridge
   regio: 11
+  model: bridge_stone
+  bearing_deg: 255  # unverified
+  footprint_m: {length: 100, width: 8}  # unverified
+  height_m: 11  # unverified
+  phases: [{from: -179, state: standing, variant: timber_deck}, {from: -142, state: standing, variant: arches}]
+  geometry_source: "Platner-Ashby s.v. Pons Aemilius (stone piers 179 BC, arches 142 BC Livy 40.51.4; the Ponte Rotto); length and width assumed from the river width"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.8884
   lon: 12.4789
   precision: exact
@@ -1736,6 +2560,12 @@ monuments:
   english: Milvian Bridge
   type: bridge
   regio: 0
+  model: bridge_stone
+  bearing_deg: 330  # unverified
+  footprint_m: {length: 136, width: 8}  # unverified
+  height_m: 10  # unverified
+  geometry_source: "Pons Mulvius (stone bridge 109 BC); length assumed; 4.6 km north of the Forum"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
   lat: 41.9335
   lon: 12.4668
   precision: exact
@@ -1747,6 +2577,13 @@ monuments:
   english: Pons Fabricius
   type: bridge
   regio: 14
+  model: bridge_stone
+  offset_m: [28, 46]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 54 m off
+  bearing_deg: 38
+  footprint_m: {length: 62, width: 5.5}
+  height_m: 10  # unverified
+  geometry_source: "Platner-Ashby s.v. Pons Fabricius (62 m long, two semicircular arches of 24.25 and 24.50 m with a small one between, tufa and peperino faced with travertine; oriented somewhat north of northeast: Thayer note); width assumed"
+  geometry_unverified: [height_m]
   lat: 41.8907
   lon: 12.4780
   precision: exact
@@ -1759,6 +2596,13 @@ monuments:
   english: Pons Cestius
   type: bridge
   regio: 14
+  model: bridge_stone
+  offset_m: [-14, 69]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 70 m off
+  bearing_deg: 252  # unverified
+  footprint_m: {length: 48, width: 8.2}
+  height_m: 10
+  geometry_source: "Platner-Ashby s.v. Pons Cestius (the Pons Gratiani on its site: 48 m long, 8.20 wide, central arch 23.65 m, side arches 5.80 m); the republican plan is inferred"
+  geometry_unverified: [bearing_deg]
   lat: 41.8896
   lon: 12.4774
   precision: exact
@@ -1771,6 +2615,8 @@ monuments:
   english: Appian Way
   type: road
   regio: 1
+  model: none
+  geometry_source: "street (see streets.yaml)"
   lat: 41.8855
   lon: 12.4885
   precision: exact
@@ -1783,6 +2629,8 @@ monuments:
   english: Flaminian Way
   type: road
   regio: 9
+  model: none
+  geometry_source: "street (see streets.yaml)"
   lat: 41.8950
   lon: 12.4810
   precision: approx
@@ -1795,6 +2643,8 @@ monuments:
   english: Salt Road
   type: road
   regio: 6
+  model: none
+  geometry_source: "street (see streets.yaml)"
   lat: 41.9068
   lon: 12.4960
   precision: approx
@@ -1806,6 +2656,8 @@ monuments:
   english: Ostian Road
   type: road
   regio: 13
+  model: none
+  geometry_source: "street (see streets.yaml)"
   lat: 41.8795
   lon: 12.4830
   precision: approx
@@ -1817,6 +2669,8 @@ monuments:
   english: Latin Road
   type: road
   regio: 2
+  model: none
+  geometry_source: "street (see streets.yaml)"
   lat: 41.8873
   lon: 12.4965
   precision: approx
@@ -1828,6 +2682,8 @@ monuments:
   english: Valerian Way
   type: road
   regio: 5
+  model: none
+  geometry_source: "street (see streets.yaml)"
   lat: 41.8957
   lon: 12.5017
   precision: approx
@@ -1840,6 +2696,11 @@ monuments:
   english: Appian Aqueduct
   type: aqueduct
   regio: 0
+  model: aqueduct
+  height_m: 6  # unverified
+  arcade_m: 60
+  geometry_source: "Frontin. Aq. 5 (Appia: 11,190 paces underground, 60 paces on arches at the Porta Capena, 312 BC); the rest underground"
+  geometry_unverified: [height_m]
   lat: 41.8890
   lon: 12.4800
   precision: rough
@@ -1853,6 +2714,11 @@ monuments:
   english: Old Anio Aqueduct
   type: aqueduct
   regio: 0
+  model: aqueduct
+  arcade_m: 330  # unverified: arcaded stretch at the city end
+  height_m: 12  # unverified
+  geometry_source: "Frontin. Aq. 6 (Anio Vetus, 272 BC, 43 miles, mostly underground, 221 paces on arches in the last miles); arch height assumed"
+  geometry_unverified: [height_m]
   lat: 41.8910
   lon: 12.5000
   precision: rough
@@ -1866,6 +2732,10 @@ monuments:
   english: Marcian Aqueduct
   type: aqueduct
   regio: 0
+  model: aqueduct
+  height_m: 20  # unverified
+  geometry_source: "Frontin. Aq. 7 (Marcia 144 BC; 463 paces on piers at the last 7 miles, the arcade up to 28 m high near the city, Frontin. Aq. 7.6); height assumed"
+  geometry_unverified: [height_m]
   lat: 41.8935
   lon: 12.4870
   precision: rough
@@ -1879,6 +2749,10 @@ monuments:
   english: Tepula Aqueduct
   type: aqueduct
   regio: 0
+  model: aqueduct
+  height_m: 20  # unverified
+  geometry_source: "Frontin. Aq. 8 (Tepula, 125 BC, carried on the arches of the Marcia); route rough"
+  geometry_unverified: [height_m]
   lat: 41.8935
   lon: 12.4880
   precision: rough
@@ -1891,6 +2765,10 @@ monuments:
   english: Julian Aqueduct
   type: aqueduct
   regio: 0
+  model: aqueduct
+  height_m: 20  # unverified
+  geometry_source: "Frontin. Aq. 9 (Julia, 33 BC, the same arcade, upper channel); route rough"
+  geometry_unverified: [height_m]
   lat: 41.8935
   lon: 12.4890
   precision: rough
@@ -1903,6 +2781,11 @@ monuments:
   english: Virgo Aqueduct
   type: aqueduct
   regio: 9
+  model: aqueduct
+  arcade_m: 1000  # unverified: arches in the Campus Martius (Frontin. Aq. 10)
+  height_m: 8  # unverified
+  geometry_source: "Frontin. Aq. 10 (Virgo, 19 BC, mostly underground, arches in the Campus Martius)"
+  geometry_unverified: [height_m]
   lat: 41.8985
   lon: 12.4790
   precision: rough
@@ -1916,6 +2799,8 @@ monuments:
   english: Gardens of Caesar
   type: garden
   regio: 14
+  model: none
+  geometry_source: "gardens: an area (fill agent)"
   lat: 41.8760
   lon: 12.4660
   precision: rough
