@@ -15,39 +15,29 @@ const Roman := preload("res://scripts/models/roman.gd")
 
 const U := 10.0   ## metres per kit unit
 
-## model key -> how it is made: "kit" (roman.gd), "own" (built in this file), "placeholder".
-const FORMS := {
-	"temple_tuscan_archaic": "kit", "temple_tuscan_restored": "kit", "temple_tuscan_small": "kit",
-	"temple_tetrastyle_ionic": "kit", "temple_tetrastyle_ionic_travertine": "kit",
-	"temple_tetrastyle_ionic_marble": "kit", "temple_hexastyle_corinthian": "kit",
-	"temple_hexastyle_corinthian_marble": "kit", "temple_round": "kit", "temple_round_marble": "kit",
-	"basilica": "kit", "basilica_travertine": "kit", "curia": "kit", "rostra": "kit",
-	"tabularium": "kit", "horrea": "kit", "macellum": "kit", "theatre_pompey": "kit",
-	"portico_enclosure": "kit",
-	"circus_maximus": "kit", "plaza": "own", "comitium": "own", "aedicula": "own", "altar": "own",
-	"altar_enclosure": "own", "basin": "own", "arch": "own", "column_monument": "own",
-	"hut": "own", "gate": "own", "wall": "own", "sewer": "own", "bridge_stone": "own",
-	"bridge_timber": "own", "aqueduct": "own", "theatre_stone": "own", "theatre_timber": "own",
-	"amphitheatre": "own", "quay": "own", "long_hall": "own", "shipsheds": "own",
-	"tomb_drum": "own", "tomb_pyramid": "own", "tomb_rock": "own", "domus": "own",
-	"platform": "placeholder", "public_building": "placeholder", "regia": "placeholder",
-	"baths": "placeholder", "none": "none",
-}
+## Models drawn in this file (everything else in Roman.KINDS comes from the kit, roman.gd).
+const OWN := ["plaza", "comitium", "aedicula", "altar", "altar_enclosure", "basin", "arch", "column_monument",
+	"hut", "bridge_stone", "bridge_timber", "sewer", "circus_maximus", "quay", "long_hall", "shipsheds",
+	"tomb_drum", "tomb_pyramid", "tomb_rock", "wall", "aqueduct", "portico_enclosure"]
 
-## What the kit agent could add to roman.gd to replace a stand-in or a placeholder (TODO roman.gd).
-const TODO_KIT := {
-	"temple_hexastyle_corinthian": "Ionic hexastyle (Saturn, Divus Iulius), octostyle peripteral Corinthian (Castor, Venus Genetrix), transverse-cella plan (Concord), pseudo-peripteral on a high podium with a rostra (Divus Iulius)",
-	"regia": "the Regia: trapezoidal marble-faced building with three rooms",
-	"platform": "Graecostasis / Senaculum: a raised platform with a low portico",
-	"public_building": "Atrium Libertatis (archive hall with a portico)",
-	"baths": "Thermae Agrippae: a hall of vaults round a rotunda, with a pool",
-	"domus": "the atrium house of Vitruvius 6.3 with impluvium, peristyle and shops (the kit header names it but has no kind)",
-	"theatre_stone": "an arcaded theatre without the temple (Marcellus): split theatre_pompey into cavea, scaena, temple",
-	"amphitheatre": "a stone amphitheatre (Taurus 29 BC)",
-	"wall": "Servian wall with merlons, towers and the agger and ditch",
-	"gate": "Servian gate (single or double arch between two towers)",
-	"aqueduct": "arcade on piers with the specus channel",
-}
+## What is still missing from roman.gd (nothing from the original list; kept for the report).
+const TODO_KIT := {}
+
+
+## How a model is made: "kit" (roman.gd), "own" (this file), "placeholder" (a box), "none".
+static func kind_of(model: String) -> String:
+	if model == "none":
+		return "none"
+	if OWN.has(model):
+		return "own"
+	if Roman.KINDS.has(model):
+		return "kit"
+	return "placeholder"
+
+
+## Kit forms scaled uniformly from their native diameter (metres) to the footprint's diameter.
+const UNIFORM_DIAM := {"theatre_pompey": 150.0, "theatre_stone": 150.0, "theatre_timber": 120.0,
+	"amphitheatre_flavian": 200.0}
 
 const STONE_C := Color(0.74, 0.69, 0.60)
 const SAND := Color(0.78, 0.68, 0.48)
@@ -68,10 +58,12 @@ const SOOT := Color(0.30, 0.25, 0.22)
 ## coordinates (`world: true`).
 static func make(rec: Dictionary, st: Dictionary, route: PackedVector2Array = PackedVector2Array(),
 		ground := Callable()) -> Dictionary:
-	var model := str(st.get("model", "none"))
+	var model := _alias(str(st.get("model", "none")), st)
+	st = st.duplicate()
+	st["model"] = model
 	var state := str(st.get("state", "standing"))
 	var d := _dims(model, st)
-	var out := {"parts": [], "boxes": [], "kind": str(FORMS.get(model, "placeholder")), "todo": "", "world": false}
+	var out := {"parts": [], "boxes": [], "kind": kind_of(model), "todo": "", "world": false}
 	if model == "none":
 		return out
 	if state == "building":
@@ -88,6 +80,24 @@ static func make(rec: Dictionary, st: Dictionary, route: PackedVector2Array = Pa
 	if TODO_KIT.has(model):
 		out.todo = str(TODO_KIT[model])
 	return out
+
+
+## Model keys the Empire dataset uses, mapped to forms that exist (the rest become a box).
+static func _alias(model: String, st: Dictionary) -> String:
+	match model:
+		"temple_hexastyle": return "temple_hexastyle_corinthian_marble"
+		"temple_octastyle", "temple_decastyle": return "temple_octastyle_pycnostyle"
+		"theatre": return "theatre_stone"
+		"amphitheatre":
+			return "amphitheatre_flavian" if maxf(float(st.get("length", 0.0)), float(st.get("width", 0.0))) >= 100.0 else "amphitheatre_small"
+		"portico": return "portico_enclosure"
+		"forum": return "plaza"
+		"mausoleum": return "tomb_drum"
+		"altar_precinct": return "altar_enclosure"
+		"column": return "column_monument"
+		"fountain", "basin": return "basin"
+		"market": return "macellum"
+	return model
 
 
 ## Width (x), height (y), depth (z) in metres, or a radius, for a model in a state.
@@ -213,7 +223,6 @@ static func _standing(out: Dictionary, rec: Dictionary, st: Dictionary, d: Dicti
 	match model:
 		"plaza": _plaza(out, d, str(rec.get("surface", "travertine")))
 		"comitium": _comitium(out, d)
-		"platform": _platform(out, d)
 		"aedicula": _aedicula(out, d)
 		"altar": _altar(out, d)
 		"altar_enclosure": _altar_enclosure(out, d)
@@ -221,16 +230,12 @@ static func _standing(out: Dictionary, rec: Dictionary, st: Dictionary, d: Dicti
 		"arch": _arch_monument(out, d)
 		"column_monument": _column_monument(out, d)
 		"hut": _hut(out, d)
-		"gate": _gate(out, d)
 		"wall": _wall(out, st, route, ground)
 		"sewer": _sewer(out, d, route, ground)
 		"bridge_stone": _bridge_stone(out, d)
 		"bridge_timber": _bridge_timber(out, d)
 		"aqueduct": _aqueduct(out, d, st, route, ground)
 		"circus_maximus": _circus(out, d)
-		"theatre_stone": _theatre(out, d, false)
-		"theatre_timber": _theatre(out, d, true)
-		"amphitheatre": _amphitheatre(out, d)
 		"quay": _quay(out, d)
 		"long_hall": _long_hall(out, d)
 		"shipsheds": _shipsheds(out, d)
@@ -238,13 +243,9 @@ static func _standing(out: Dictionary, rec: Dictionary, st: Dictionary, d: Dicti
 		"tomb_drum": _tomb_drum(out, d)
 		"tomb_pyramid": _tomb_pyramid(out, d)
 		"tomb_rock": _tomb_rock(out, d)
-		"domus": _domus(out, d)
-		"regia": _regia(out, d)
-		"baths": _block(out, d, Roman.STUCCO_W, Roman.TERRA, true)
-		"public_building": _block(out, d, Roman.STUCCO, Roman.TERRA, false)
 		_:
 			if Roman.KINDS.has(model):
-				_kit(out, model, d, 150.0 if model == "theatre_pompey" else 0.0)
+				_kit(out, model, d, float(UNIFORM_DIAM.get(model, 0.0)))
 			else:
 				_block(out, d, Roman.STUCCO, Roman.TERRA, false)   # TODO roman.gd: unknown model key
 				out.kind = "placeholder"
@@ -266,11 +267,6 @@ static func _block(out: Dictionary, d: Dictionary, wall: Color, roof: Color, hip
 	k.door(Vector3(0, 0, l * 0.5 + 0.02), 0.0, minf(3.0, w * 0.25), minf(4.0, wh * 0.6), Roman.DWOOD)
 	_add(out, k.finish())
 	_box_shape(out, Vector3(0, h * 0.5, 0), Vector3(w, h, l))
-
-
-static func _regia(out: Dictionary, d: Dictionary) -> void:
-	# TODO roman.gd: the Regia is trapezoidal, three rooms, marble-faced (Platner-Ashby s.v. Regia)
-	_block(out, d, Roman.MARBLE, Roman.TERRA, false)
 
 
 # ---------------------------------------------------------------------------------------------
@@ -302,18 +298,6 @@ static func _comitium(out: Dictionary, d: Dictionary) -> void:
 		k.cylinder(Vector3.ZERO, r * (1.0 - 0.15 * i), 0.4 * (i + 1), STONE_C.darkened(0.04 * i), Kit.STONE, 32)
 	_add(out, k.finish())
 	_box_shape(out, Vector3(0, 0.6, 0), Vector3(r * 2.0, 1.2, r * 2.0))
-
-
-static func _platform(out: Dictionary, d: Dictionary) -> void:
-	# TODO roman.gd: a raised platform with a low portico (Graecostasis, Senaculum)
-	var k := Kit.new()
-	var w := maxf(float(d.w), 3.0)
-	var l := maxf(float(d.l), 3.0)
-	var h := maxf(float(d.h), 0.8)
-	k.box(Vector3.ZERO, Vector3(w, h, l), Roman.GROTTA, Kit.STONE)
-	k.box(Vector3(0, h, 0), Vector3(w * 1.04, 0.25, l * 1.04), Roman.GROTTA.lightened(0.08), Kit.STONE)
-	_add(out, k.finish())
-	_box_shape(out, Vector3(0, h * 0.5, 0), Vector3(w, h + 0.25, l))
 
 
 static func _aedicula(out: Dictionary, d: Dictionary) -> void:
@@ -421,94 +405,9 @@ static func _hut(out: Dictionary, d: Dictionary) -> void:
 	_box_shape(out, Vector3(0, h * 0.5, 0), Vector3(r * 2.7, h, r * 2.7))
 
 
-## A Servian gate: two towers and a single arched passage between them, built of Grotta Oscura
-## tufa (Platner-Ashby s.v. Murus Servii Tullii); the arch of 3.30 m is the one found south of
-## S. Maria in Cosmedin (s.v. Porta Trigemina). Front = the outer face.
-static func _gate(out: Dictionary, d: Dictionary) -> void:
-	var k := Kit.new()
-	var w := maxf(float(d.w), 8.0)
-	var l := maxf(float(d.l), 4.0)
-	var h := maxf(float(d.h), 8.0)
-	var pw := minf(3.3, w * 0.3)
-	var c := Roman.GROTTA
-	var yt := h * 0.62
-	_b(k, -w / 2, 0, -l / 2, -pw / 2, h, l / 2, c, Kit.STONE)
-	_b(k, pw / 2, 0, -l / 2, w / 2, h, l / 2, c, Kit.STONE)
-	Roman._arch(k, -pw / 2, pw / 2, yt * 0.55, yt, -l / 2, l / 2, c, Kit.STONE, 8)
-	_b(k, -pw / 2, yt, -l / 2, pw / 2, h * 0.82, l / 2, c, Kit.STONE)
-	_b(k, -w / 2 - 0.3, h, -l / 2 - 0.3, -pw / 2 + 0.3, h + 0.7, l / 2 + 0.3, c.lightened(0.06), Kit.STONE)
-	_b(k, pw / 2 - 0.3, h, -l / 2 - 0.3, w / 2 + 0.3, h + 0.7, l / 2 + 0.3, c.lightened(0.06), Kit.STONE)
-	for s: float in [-1.0, 1.0]:   # arrow slits
-		k.box(Vector3(s * (pw / 2 + (w - pw) / 4), h * 0.5, l / 2 + 0.01), Vector3(0.25, 1.2, 0.05), Roman.DARK_C, Kit.DARK)
-	_add(out, k.finish())
-	_box_shape(out, Vector3(0, h * 0.5, 0), Vector3(w, h, l))
-
-
 # ---------------------------------------------------------------------------------------------
 # Walking round curves and along routes
 # ---------------------------------------------------------------------------------------------
-
-
-## Points on an ellipse arc (centre cx, cz, radii rx, rz, parameter a0..a1, p = c + (rx cos, rz sin))
-## about `step` metres apart: [{pos: Vector2, normal: Vector2 (outward), tangent: Vector2, len}].
-static func _arc_walk(cx: float, cz: float, rx: float, rz: float, a0: float, a1: float, step: float) -> Array:
-	var res := []
-	var circ := 0.0
-	var n_probe := 64
-	var prev := Vector2(rx * cos(a0), rz * sin(a0))
-	for i in range(1, n_probe + 1):
-		var a := a0 + (a1 - a0) * i / n_probe
-		var p := Vector2(rx * cos(a), rz * sin(a))
-		circ += p.distance_to(prev)
-		prev = p
-	var n := maxi(1, int(round(circ / step)))
-	var seg := circ / n
-	for i in n:
-		var a := a0 + (a1 - a0) * (i + 0.5) / n
-		var p := Vector2(cx + rx * cos(a), cz + rz * sin(a))
-		var nrm := Vector2(cos(a) / rx, sin(a) / rz).normalized()
-		var tan := Vector2(-rx * sin(a), rz * cos(a)).normalized()
-		res.append({"pos": p, "normal": nrm, "tangent": tan, "len": seg})
-	return res
-
-
-## Yaw that turns local +x along the 2D direction t (x, z).
-static func _yaw_x(t: Vector2) -> float:
-	return atan2(-t.y, t.x)
-
-
-## Yaw that turns local +z along the 2D direction n (x, z).
-static func _yaw_z(n: Vector2) -> float:
-	return atan2(n.x, n.y)
-
-
-## Rings of seats on an elliptical arc: `rows` steps rising from radius (rx, rz) outwards.
-static func _seat_rings(k: Kit, cx: float, cz: float, rx: float, rz: float, a0: float, a1: float,
-		rows: int, row_w: float, step_h: float, c0: Color, c1: Color, m0: int, m1: int, first_row_h := 0.5) -> void:
-	for j in rows:
-		var rrx := rx + j * row_w
-		var rrz := rz + j * row_w
-		var hh := first_row_h + (j + 1) * step_h
-		var col := c0 if j < rows / 3 else c1
-		var mat := m0 if j < rows / 3 else m1
-		for e in _arc_walk(cx, cz, rrx + row_w * 0.5, rrz + row_w * 0.5, a0, a1, 6.0):
-			var p: Vector2 = e.pos
-			k.box(Vector3(p.x, 0, p.y), Vector3(float(e.len) * 1.06, hh, row_w * 1.02), col, mat, _yaw_x(e.tangent) + 0.0)
-
-
-## A two-storey arcaded facade along an arc: bays of arches, a cornice, an attic. Faces outward.
-static func _arc_facade(k: Kit, cx: float, cz: float, rx: float, rz: float, a0: float, a1: float,
-		storeys: int, sh: float, c: Color, m: int, bay := 6.0) -> void:
-	for e in _arc_walk(cx, cz, rx, rz, a0, a1, bay):
-		var p: Vector2 = e.pos
-		var yaw := _yaw_z(e.normal)
-		k.push(Kit.at(Vector3(p.x, 0, p.y), yaw))
-		var bw: float = e.len
-		for s in storeys:
-			var y0 := s * sh
-			Roman._arcade(k, 0.0, 1, bw, bw * 0.34, y0, y0 + sh * 0.56, y0 + sh * 0.9, -0.6, 0.6, c, m, 5, true)
-			k.box(Vector3(0, y0 + sh * 0.9, 0), Vector3(bw * 1.02, sh * 0.1, 1.4), c.lightened(0.06), m)
-		k.pop()
 
 
 ## Distances along a closed or open polyline, with a sample function.
@@ -531,58 +430,6 @@ static func _route_at(route: PackedVector2Array, s: float) -> Dictionary:
 	return {"pos": route[0], "dir": Vector2.RIGHT}
 
 
-## The Servian wall along its route: ashlar wall 3.6 m thick with a parapet on the outer face,
-## and on the Esquiline stretch (st.agger = Vector2 of route distances) the earth agger behind it
-## (Dion. Hal. 9.68: 50 ft thick). Gaps are left at the gates (st.gates = distances).
-## World coordinates; parts are chunks of about 250 m. # TODO roman.gd: towers, merlons, ditch.
-static func _wall(out: Dictionary, st: Dictionary, route: PackedVector2Array, ground: Callable) -> void:
-	out.world = true
-	if route.size() < 2:
-		return
-	var h := float(st.get("height", 10.0))
-	var th := float(st.get("thickness", 3.6))
-	var total := _route_length(route)
-	var area := 0.0
-	for i in route.size() - 1:
-		area += route[i].x * route[i + 1].y - route[i + 1].x * route[i].y
-	var outward_sign := 1.0 if area > 0.0 else -1.0   # sign of the right-hand normal that points out
-	var agger: Vector2 = st.get("agger", Vector2(-1, -1))
-	var gates: Array = st.get("gates", [])
-	var k := Kit.new()
-	var acc_len := 0.0
-	var s := 0.0
-	var step := 10.0
-	var c := Roman.GROTTA
-	while s < total:
-		var mid := _route_at(route, s + step * 0.5)
-		var skip := false
-		for g in gates:
-			if absf(float(g) - (s + step * 0.5)) < 6.5:
-				skip = true
-		if not skip:
-			var p: Vector2 = mid.pos
-			var dir: Vector2 = mid.dir
-			var y: float = ground.call(p.x, p.y) if ground.is_valid() else 10.0
-			var yaw := _yaw_x(dir)
-			var right := Vector2(-dir.y, dir.x)   # a right-hand normal in (x, z)
-			var out_n := right * (1.0 if (right.x * 0.0 + 0.0) == 0.0 else 1.0) * outward_sign
-			var local_z := out_n.dot(Vector2(sin(yaw), cos(yaw)))
-			k.box(Vector3(p.x, y - 1.0, p.y), Vector3(step * 1.03, h + 1.0, th), c, Kit.STONE, yaw)
-			var off := Vector2(sin(yaw), cos(yaw)) * (th * 0.5 - 0.45) * signf(local_z)
-			k.box(Vector3(p.x + off.x, y + h, p.y + off.y), Vector3(step * 1.03, 1.3, 0.9), c.lightened(0.07), Kit.STONE, yaw)
-			if s >= agger.x and s <= agger.y:
-				var inner := -out_n * (th * 0.5 + 7.5)
-				k.box(Vector3(p.x + inner.x, y - 1.0, p.y + inner.y), Vector3(step * 1.03, h - 0.3, 15.0), Roman.EARTH_C, Kit.EARTH, yaw)
-		acc_len += step
-		s += step
-		if acc_len >= 250.0 or s >= total:
-			var mesh := k.finish()
-			_add(out, mesh)
-			_box_shape(out, mesh.get_aabb().get_center(), mesh.get_aabb().size)
-			k = Kit.new()
-			acc_len = 0.0
-
-
 ## The Cloaca Maxima outfall into the Tiber (the last point of the route, facing the river):
 ## a masonry mouth 3.2 m wide and 4.2 m high (Platner-Ashby s.v. Cloaca Maxima) in the bank wall.
 ## The rest of the sewer is underground and not drawn.
@@ -594,7 +441,7 @@ static func _sewer(out: Dictionary, d: Dictionary, route: PackedVector2Array, gr
 	var dir := (route[route.size() - 1] - route[route.size() - 2]).normalized()
 	var y: float = ground.call(p.x, p.y) if ground.is_valid() else 10.0
 	var k := Kit.new()
-	var yaw := _yaw_z(dir)
+	var yaw := Roman.yaw_z(dir)
 	k.push(Kit.at(Vector3(p.x, y - 3.0, p.y), yaw))
 	var c := Roman.PEPERINO
 	_b(k, -5.0, 0, -2.0, -1.6, 7.5, 2.0, c, Kit.STONE)
@@ -664,43 +511,6 @@ static func _bridge_timber(out: Dictionary, d: Dictionary) -> void:
 	_box_shape(out, Vector3(0, -2.0, 0), Vector3(w, 6.0, l))
 
 
-## Aqueduct arcades along the route where it ran above ground. st.arcade = list of [s0, s1]
-## route-distance intervals. One bay = a pier and an arch; the specus (channel) on top.
-## World coordinates. # TODO roman.gd: the kit agent's aqueduct arcade.
-static func _aqueduct(out: Dictionary, d: Dictionary, st: Dictionary, route: PackedVector2Array, ground: Callable) -> void:
-	out.world = true
-	var h := maxf(float(d.h), 6.0)
-	var arcade: Array = st.get("arcade", [])
-	var c := Roman.PEPERINO.lightened(0.08)
-	var bay := 6.0
-	var pw := 2.2
-	for iv in arcade:
-		var k := Kit.new()
-		var s: float = float(iv[0])
-		var s1: float = float(iv[1])
-		var acc := 0.0
-		while s < s1:
-			var mid := _route_at(route, s + bay * 0.5)
-			var p: Vector2 = mid.pos
-			var dir: Vector2 = mid.dir
-			var y: float = ground.call(p.x, p.y) if ground.is_valid() else 10.0
-			var yaw := _yaw_z(Vector2(-dir.y, dir.x))   # local +z across the line
-			k.push(Kit.at(Vector3(p.x, y, p.y), yaw))
-			var ys := h * 0.62
-			Roman._arcade(k, 0.0, 1, bay, pw, -0.5, ys, h, -1.1, 1.1, c, Kit.STONE, 5, true)
-			k.box(Vector3(0, h, 0), Vector3(bay * 1.01, 1.9, 2.6), c.lightened(0.05), Kit.STONE)
-			k.pop()
-			s += bay
-			acc += bay
-			if acc >= 240.0 or s >= s1:
-				var mesh := k.finish()
-				if mesh.get_surface_count() > 0:
-					_add(out, mesh)
-					_box_shape(out, mesh.get_aabb().get_center(), mesh.get_aabb().size + Vector3(2, 0, 2))
-				k = Kit.new()
-				acc = 0.0
-
-
 # ---------------------------------------------------------------------------------------------
 # The Circus Maximus
 # ---------------------------------------------------------------------------------------------
@@ -754,17 +564,17 @@ static func _circus(out: Dictionary, d: Dictionary) -> void:
 	# the curved end (sphendone): seat rings and, once in stone, the arcaded outer wall
 	var arc_rows := 5
 	if stone:
-		_seat_rings(k, 0.0, zs, tw / 2.0, tw / 2.0, 0.0, PI, arc_rows, bd / arc_rows, 1.7, Roman.TRAVERT.darkened(0.1), Roman.WOOD, Kit.STONE, Kit.TIMBER)
-		_arc_facade(k, 0.0, zs, W / 2.0 + 1.0, W / 2.0 + 1.0, 0.0, PI, 2, 5.0, Roman.TRAVERT.darkened(0.05), Kit.STONE, 7.0)
+		Roman.seat_rings(k, 0.0, zs, tw / 2.0, tw / 2.0, 0.0, PI, arc_rows, bd / arc_rows, 1.7, Roman.TRAVERT.darkened(0.1), Roman.WOOD, Kit.STONE, Kit.TIMBER)
+		Roman.arc_facade(k, 0.0, zs, W / 2.0 + 1.0, W / 2.0 + 1.0, 0.0, PI, 2, 5.0, Roman.TRAVERT.darkened(0.05), Kit.STONE, 7.0)
 	else:
-		_seat_rings(k, 0.0, zs, tw / 2.0, tw / 2.0, 0.0, PI, arc_rows, bd / arc_rows, 1.6, Roman.EARTH_C, Roman.WOOD, Kit.EARTH, Kit.TIMBER)
+		Roman.seat_rings(k, 0.0, zs, tw / 2.0, tw / 2.0, 0.0, PI, arc_rows, bd / arc_rows, 1.6, Roman.EARTH_C, Roman.WOOD, Kit.EARTH, Kit.TIMBER)
 	# the euripus: a water channel 10 ft wide inside the banks, but not at the carceres (Dion. Hal. 3.68)
 	if stone:
 		for side: float in [-1.0, 1.0]:
 			k.box(Vector3(side * (tw / 2.0 - 1.6), 0.0, (zc0 + 40.0 + zs) / 2.0), Vector3(3.0, 0.3, zs - zc0 - 40.0), Roman.WATER_C, Kit.WATER)
-		for e in _arc_walk(0.0, zs, tw / 2.0 - 1.6, tw / 2.0 - 1.6, 0.0, PI, 6.0):
+		for e in Roman.arc_walk(0.0, zs, tw / 2.0 - 1.6, tw / 2.0 - 1.6, 0.0, PI, 6.0):
 			var p: Vector2 = e.pos
-			k.box(Vector3(p.x, 0.0, p.y), Vector3(float(e.len) * 1.05, 0.3, 3.0), Roman.WATER_C, Kit.WATER, _yaw_x(e.tangent))
+			k.box(Vector3(p.x, 0.0, p.y), Vector3(float(e.len) * 1.05, 0.3, 3.0), Roman.WATER_C, Kit.WATER, Roman.yaw_x(e.tangent))
 	# the spina with its two turning posts (metae), the eggs and, later, the dolphins
 	var za := -160.0
 	var zb := minf(180.0, zs - 70.0)
@@ -804,66 +614,6 @@ static func _circus(out: Dictionary, d: Dictionary) -> void:
 # ---------------------------------------------------------------------------------------------
 # Theatres, amphitheatre
 # ---------------------------------------------------------------------------------------------
-
-
-## A theatre: the semicircular cavea opens to +z (the stage side), centre at the origin.
-## Stone: two arcaded storeys outside and an attic (Marcellus: Doric then Ionic; Plat.-Ash.).
-## Timber: a temporary frame (Scaurus 58 BC, Plin. NH 36.113-115).
-static func _theatre(out: Dictionary, d: Dictionary, timber: bool) -> void:
-	var k := Kit.new()
-	var R := maxf(float(d.r), maxf(float(d.w), 40.0) * 0.5)
-	var h := maxf(float(d.h), 14.0)
-	var rows := 14
-	var orch := R * 0.24
-	var row_w := (R - orch) / rows
-	var c := Roman.TRAVERT.darkened(0.05)
-	var c2 := Roman.WOOD if timber else c
-	var m2 := Kit.TIMBER if timber else Kit.STONE
-	_seat_rings(k, 0.0, 0.0, orch, orch, PI, TAU, rows, row_w, h * 0.5 / rows, c2, c2, m2, m2, 0.4)
-	k.cylinder(Vector3.ZERO, orch, 0.2, SAND, Kit.EARTH, 24)
-	if timber:
-		for e in _arc_walk(0.0, 0.0, R, R, PI, TAU, 5.0):
-			var p: Vector2 = e.pos
-			k.box(Vector3(p.x, 0, p.y), Vector3(0.7, h, 0.7), Roman.DWOOD, Kit.TIMBER)
-	else:
-		_arc_facade(k, 0.0, 0.0, R, R, PI, TAU, 2, h * 0.4, c, Kit.STONE, 7.0)
-		for e in _arc_walk(0.0, 0.0, R + 0.3, R + 0.3, PI, TAU, 7.0):   # the attic above
-			var p: Vector2 = e.pos
-			k.box(Vector3(p.x, h * 0.8, p.y), Vector3(float(e.len) * 1.03, h * 0.2, 1.2), c.lightened(0.04), Kit.STONE, _yaw_x(e.tangent))
-	# the stage: a podium and the scaena frons (a wall of columns), 85 m long, 20 m deep (Platner-Ashby)
-	var sw := minf(R * 1.2, 90.0)
-	k.box(Vector3(0, 0, 8.0), Vector3(sw, 1.4, 16.0), c2, m2)
-	k.box(Vector3(0, 1.4, 17.0), Vector3(sw, h * 0.8, 4.0), c if not timber else Roman.WOOD, Kit.STONE if not timber else Kit.TIMBER)
-	for i in int(sw / 4.5):
-		k.column(Vector3(-sw / 2.0 + 2.0 + i * 4.5, 1.4, 14.5), 0.5, h * 0.55, Roman.MARBLE)
-	for s: float in [-1.0, 1.0]:   # the apsidal halls at each end of the scaena
-		k.box(Vector3(s * (sw / 2.0 + 6.0), 0, 14.0), Vector3(12.0, h * 0.7, 20.0), c, Kit.STONE)
-	_add(out, k.finish())
-	_box_shape(out, Vector3(0, h * 0.4, -R * 0.4), Vector3(R * 2.0, h * 0.8, R * 1.2))
-	_box_shape(out, Vector3(0, h * 0.4, 12.0), Vector3(sw + 24.0, h * 0.8, 22.0))
-
-
-## A stone amphitheatre: an elliptical bowl, two arcaded storeys, an attic.
-static func _amphitheatre(out: Dictionary, d: Dictionary) -> void:
-	# TODO roman.gd: the real amphitheatre (Statilius Taurus 29 BC, plan unknown)
-	var k := Kit.new()
-	var a := maxf(float(d.l), 40.0) * 0.5
-	var b := maxf(float(d.w), 30.0) * 0.5
-	var h := maxf(float(d.h), 14.0)
-	var rows := 8
-	var row_w := (b - b * 0.35) / rows
-	var c := Roman.TRAVERT.darkened(0.05)
-	for j in rows:
-		var rx := a * 0.45 + j * row_w * (a / b)
-		var rz := b * 0.35 + j * row_w
-		var hh := 0.5 + (j + 1) * h * 0.55 / rows
-		for e in _arc_walk(0.0, 0.0, rx, rz, 0.0, TAU, 6.0):
-			var p: Vector2 = e.pos
-			k.box(Vector3(p.x, 0, p.y), Vector3(float(e.len) * 1.06, hh, row_w * 1.1), c, Kit.STONE, _yaw_x(e.tangent))
-	_arc_facade(k, 0.0, 0.0, a, b, 0.0, TAU, 2, h * 0.4, c, Kit.STONE, 7.0)
-	k.cylinder(Vector3.ZERO, 1.0, 0.05, SAND, Kit.EARTH, 6)
-	_add(out, k.finish())
-	_box_shape(out, Vector3(0, h * 0.5, 0), Vector3(a * 2.0, h, b * 2.0))
 
 
 # ---------------------------------------------------------------------------------------------
@@ -1012,21 +762,6 @@ static func _tomb_rock(out: Dictionary, d: Dictionary) -> void:
 	_box_shape(out, Vector3(0, h * 0.5, 0), Vector3(w, h, l))
 
 
-## A town house (domus): street front, a pent roof round the open atrium.
-## TODO roman.gd: the atrium house of Vitruvius 6.3 (impluvium, peristyle, shops).
-static func _domus(out: Dictionary, d: Dictionary) -> void:
-	var k := Kit.new()
-	var w := maxf(float(d.w), 10.0)
-	var l := maxf(float(d.l), 10.0)
-	var h := maxf(float(d.h), 6.0)
-	var wh := h * 0.6
-	k.box(Vector3.ZERO, Vector3(w, wh, l), Roman.STUCCO, Kit.PLASTER)
-	Roman._frame_roof(k, Vector3(0, wh, 0), w / 2 + 0.5, l / 2 + 0.5, w * 0.16, l * 0.16, 0.0, h - wh, 0.25, Roman.TERRA)
-	k.door(Vector3(0, 0, l / 2.0 + 0.02), 0.0, 2.4, 3.4, Roman.DWOOD)
-	_add(out, k.finish())
-	_box_shape(out, Vector3(0, h * 0.5, 0), Vector3(w, h, l))
-
-
 # ---------------------------------------------------------------------------------------------
 # Building sites and burnt shells
 # ---------------------------------------------------------------------------------------------
@@ -1101,3 +836,106 @@ static func _ruin(out: Dictionary, d: Dictionary, id: String) -> void:
 		k.box(Vector3(fx, 0.7, fz), Vector3(rng.randf_range(2.0, 4.0), 0.9, 0.9), CHAR, Kit.TIMBER, rng.randf() * PI)
 	_add(out, k.finish())
 	_box_shape(out, Vector3(0, h * 0.2, 0), Vector3(w, h * 0.4, l))
+
+
+
+# ---------------------------------------------------------------------------------------------
+# Routes drawn with the kit's tiles (the Servian wall, the aqueducts)
+# ---------------------------------------------------------------------------------------------
+
+
+## Appends the kit tile `mesh` (1.0 long = 10 m) at p, ground height y, along dir, `seg_len` metres
+## long, its front (+z) turned towards `front`.
+static func _tile(st: SurfaceTool, mesh: ArrayMesh, p: Vector2, y: float, dir: Vector2, front: Vector2,
+		seg_len: float, sy := 1.0) -> void:
+	var yaw := Roman.yaw_x(dir)
+	if front.dot(Vector2(sin(yaw), cos(yaw))) < 0.0:
+		yaw += PI
+	var b := Basis(Vector3.UP, yaw) * Basis.from_scale(Vector3(U * seg_len / 10.0, U * sy, U))
+	st.append_from(mesh, 0, Transform3D(b, Vector3(p.x, y, p.y)))
+
+
+static func _flush(out: Dictionary, st: SurfaceTool) -> void:
+	var mesh := st.commit()
+	if mesh.get_surface_count() > 0:
+		_add(out, mesh)
+		var a := mesh.get_aabb()
+		_box_shape(out, a.get_center(), a.size)
+
+
+## The Servian wall as kit tiles along the route (a closed circuit through the gates): `servian_wall`
+## tiles of 10 m, `servian_wall_agger` between the Colline and Esquiline gates (st.agger, route
+## distances), a tower every 90 m (assumed; Platner-Ashby mention towers only at the agger), a gap
+## of 36 m at each gate (st.gates) for the `servian_gate` form. World coordinates.
+static func _wall(out: Dictionary, st: Dictionary, route: PackedVector2Array, ground: Callable) -> void:
+	out.world = true
+	if route.size() < 2:
+		return
+	var total := _route_length(route)
+	var area := 0.0
+	for i in route.size() - 1:
+		area += route[i].x * route[i + 1].y - route[i + 1].x * route[i].y
+	var sign_out := 1.0 if area > 0.0 else -1.0
+	var agger: Vector2 = st.get("agger", Vector2(-1, -1))
+	var gates: Array = st.get("gates", [])
+	var plain := _kit_mesh("servian_wall")
+	var banked := _kit_mesh("servian_wall_agger")
+	var tower := _kit_mesh("servian_tower")
+	var sb := SurfaceTool.new()
+	var acc := 0.0
+	var s := 0.0
+	var next_tower := 45.0
+	while s < total:
+		var seg := minf(10.0, total - s)
+		var a := _route_at(route, s)
+		var b := _route_at(route, s + seg)
+		var pa: Vector2 = a.pos
+		var pb: Vector2 = b.pos
+		var dir := (pb - pa).normalized()
+		var out_n := Vector2(-dir.y, dir.x) * sign_out
+		var mid := (pa + pb) * 0.5
+		var skip := false
+		for g in gates:
+			if absf(float(g) - (s + seg * 0.5)) < 18.0:
+				skip = true
+		if not skip and seg > 0.5:
+			var y: float = minf(float(ground.call(pa.x, pa.y)), float(ground.call(pb.x, pb.y))) if ground.is_valid() else 10.0
+			var on_agger := s >= agger.x and s <= agger.y
+			_tile(sb, banked if on_agger else plain, mid, y, dir, out_n, seg)
+			if s >= next_tower and not on_agger:
+				_tile(sb, tower, mid + out_n * 0.8, y, dir, out_n, 10.0)
+				next_tower = s + 90.0
+		acc += seg
+		s += seg
+		if acc >= 250.0 or s >= total:
+			_flush(out, sb)
+			sb = SurfaceTool.new()
+			acc = 0.0
+
+
+## Aqueduct arcades as kit tiles along the route over the intervals st.arcade (route distances);
+## `aqueduct_arcade_tall` scaled in height to d.h. World coordinates.
+static func _aqueduct(out: Dictionary, d: Dictionary, st: Dictionary, route: PackedVector2Array, ground: Callable) -> void:
+	out.world = true
+	var tile := _kit_mesh("aqueduct_arcade_tall")
+	var sy := maxf(float(d.h), 6.0) / 20.0
+	for iv in st.get("arcade", []):
+		var sb := SurfaceTool.new()
+		var s := float(iv[0])
+		var s1 := float(iv[1])
+		var acc := 0.0
+		while s < s1:
+			var seg := minf(10.0, s1 - s)
+			var a := _route_at(route, s)
+			var b := _route_at(route, s + seg)
+			var pa: Vector2 = a.pos
+			var pb: Vector2 = b.pos
+			var dir := (pb - pa).normalized()
+			var y: float = minf(float(ground.call(pa.x, pa.y)), float(ground.call(pb.x, pb.y))) if ground.is_valid() else 10.0
+			_tile(sb, tile, (pa + pb) * 0.5, y, dir, Vector2(-dir.y, dir.x), seg, sy)
+			s += seg
+			acc += seg
+			if acc >= 240.0 or s >= s1:
+				_flush(out, sb)
+				sb = SurfaceTool.new()
+				acc = 0.0

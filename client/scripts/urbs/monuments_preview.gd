@@ -11,6 +11,8 @@
 ##   --fov=DEGREES         (default 60)
 ##   --screenshot=PATH     save and quit
 ##   --report              print the counts of real forms and placeholders, and what is unverified
+##   --terrain             use the real ground (UrbsTerrain) instead of flat y = 10
+##   --rel                 --cam and --look heights are metres above the ground there
 ##   --labels              float each monument's id above it
 ##   --entrance=<id>       print the door transform, the card date and the footprint count
 ##   --pick=px,py          print the monument id under that screen pixel (tests UrbsMonuments.pick)
@@ -37,14 +39,20 @@ func _initialize() -> void:
 	gm.albedo_color = Color(0.46, 0.55, 0.32)
 	gm.roughness = 1.0
 	ground.material_override = gm
-	root.add_child(ground)
+	var height := Callable()
+	if _args.has("terrain"):
+		UrbsTerrain.prepare()
+		UrbsTerrain.build(root)
+		height = Callable(UrbsTerrain, "height_at")
+	else:
+		root.add_child(ground)
 	_mon = UrbsMonuments.new()
-	_mon.build(root, year, Callable())
+	_mon.build(root, year, height)
 	print("year %d: %d monuments" % [year, _mon.ids().size()])
 	if _args.has("report"):
 		var r := _mon.report(year)
 		print("by kind: ", r.by_kind)
-		print("by model: ", r.by_model)
+		print("placeholders by model: ", r.placeholder_models)
 		for k in r.todo:
 			print("TODO roman.gd ", k, ": ", r.todo[k])
 	_light(root)
@@ -102,8 +110,12 @@ func _initialize() -> void:
 			pos = look + out * size * 0.9 + side * size * 0.5 + Vector3(0, size * 0.55, 0)
 	if _args.has("cam"):
 		pos = _vec(str(_args["cam"]))
+		if _args.has("rel") and _args.has("terrain"):
+			pos.y += UrbsTerrain.height_at(pos.x, pos.z)
 	if _args.has("look"):
 		look = _vec(str(_args["look"]))
+		if _args.has("rel") and _args.has("terrain"):
+			look.y += UrbsTerrain.height_at(look.x, look.z)
 	_cam.look_at_from_position(pos, look)
 	_shoot.call_deferred()
 

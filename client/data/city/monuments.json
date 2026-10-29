@@ -1,7 +1,7 @@
 {
 "monuments": [
 {
-"bearing_deg": 206.5,
+"bearing_deg": 153.5,
 "built": {
 "by": "vowed by Tarquinius Priscus, largely built by Tarquinius Superbus (Livy 1.38.7, 1.55-56; Dion. Hal. 4.61); dedicated on 13 September by the consul M. Horatius Pulvillus in the first year of the Republic (Livy 2.8; Polyb. 3.22.1, which dates the first treaty to that year; Tac. Hist. 3.72)",
 "certainty": "traditional",
@@ -43,7 +43,7 @@
 "width": 56.98
 },
 "form": "Tuscan temple on a tufa podium (stylobate of parallel walls 5.60 m thick, 4-5 m high) of about 55 x 60 m; three cellae side by side (Jupiter centre, Minerva right, Juno left), the cella about 100 ft (27.8 m) square, with a deep pronaos of columns; the first temple had a terracotta statue of Jupiter and a terracotta quadriga, attributed to Vulca of Veii (Plin. NH 35.157; Plut. Publ. 13)",
-"geometry_note": "Platner says the axis deviates '26.5 degrees to the east of the north and south line'; read as the north end swung east, so the south front faces 206.5 (SSW). If the other reading is right the front faces 153.5. Height not given: the kit proportions (Vitr. 4.7) are used.",
+"geometry_note": "Platner: the temple fronted south and its axis deviated 26.5 degrees to the east of the north-south line. Chosen reading: the front faces 153.5 (SSE), which fits the Forum and the Clivus Capitolinus approach to the south-east; the other reading (206.5, SSW) turns the front away from the Forum. Height not given: kit proportions (Vitr. 4.7).",
 "geometry_source": "Platner-Ashby s.v. Iuppiter Optimus Maximus Capitolinus, Aedes (read: fronted south, main axis 26.5 deg east of the N-S line, stylobate c. 55 x 60 m, 56.98 x 61.42 m with its facing after Paribeni, podium 4-5 m, cella 27.81 m square, hexastyle with three rows of columns in front; Dion. Hal. 4.61 perimeter 800 ft); Vitr. 3.3.5",
 "geometry_unverified": [
 "bearing_deg",
@@ -172,7 +172,7 @@
 "verified": "platner-ashby+pleiades"
 },
 {
-"bearing_deg": 206.5,
+"bearing_deg": 153.5,
 "built": {
 "by": "Romulus, after winning the spolia opima from Acron of the Caeninenses, said to be the first temple in Rome (Livy 1.10.5-7; Dion. Hal. 2.34; Plut. Rom. 16)",
 "certainty": "traditional",
@@ -263,7 +263,7 @@
 "verified": "platner-ashby+pleiades"
 },
 {
-"bearing_deg": 206.5,
+"bearing_deg": 153.5,
 "built": {
 "by": "vowed by the praetor T. Otacilius Crassus in 217 after Lake Trasimene on the Sibylline books' advice (Livy 22.9.10, 22.10.10); dedicated by Otacilius as duumvir in 215 (Livy 23.31.9, 23.32.20), on 8 June (Ov. Fast. 6.247-248)",
 "certainty": "certain",
@@ -310,7 +310,7 @@
 "verified": "platner-ashby"
 },
 {
-"bearing_deg": 206.5,
+"bearing_deg": 153.5,
 "built": {
 "by": "vowed by the dictator Q. Fabius Maximus in 217 after Lake Trasimene on the Sibylline books' advice (Livy 22.9.7-10, 22.10.10); dedicated by Fabius as duumvir in 215 (Livy 23.30.13-14, 23.31.9)",
 "certainty": "certain",
@@ -390,7 +390,7 @@
 "verified": "platner-ashby"
 },
 {
-"bearing_deg": 206.5,
+"bearing_deg": 153.5,
 "built": {
 "by": "Numa's shrine (Livy 1.21.4; Dion. Hal. 2.75); temple dedicated by A. Atilius Calatinus in 254 or 250 BC (Cic. Nat. D. 2.61), on 1 October (fasti)",
 "certainty": "probable",
@@ -676,7 +676,7 @@
 "latin": "Graecostasis",
 "location": "beside the Rostra, at the Comitium",
 "lon": 12.4851,
-"model": "platform",
+"model": "platform_portico",
 "notes": "CORRECTED: the 304 BC date is not a foundation date. Pliny NH 33.19 says Cn. Flavius (304) dedicated a bronze aedicula of Concord 'in Graecostasi, quae tunc supra comitium erat', so the Graecostasis already existed by 304; its origin is unknown. P&A: a raised place at the edge of the Comitium for foreign (esp. Greek) ambassadors (Varro LL 5.155), near the Curia (Cic. QFr. 2.1.3) and west of the Rostra; sun-noon sighting (Plin. NH 7.212). Pleiades 780447855 has only a 'related' location about 130 m ESE of the placement here, so the Pleiades coordinate is not adopted.",
 "pleiades": 780447855,
 "precision": "approx",
@@ -715,7 +715,7 @@
 "latin": "Senaculum",
 "location": "near the Curia and Comitium",
 "lon": 12.4846,
-"model": "platform",
+"model": "platform_portico",
 "notes": "Not in Pleiades. P&A: place where senators assembled before entering the Curia; Varro LL 5.156 puts it 'supra Graecostasim ubi aedes Concordiae et basilica Opimia'; Val. Max. 2.2.6; originally an open area, afterwards a hall; the original building must have been removed when Opimius enlarged the temple of Concord (121 BC) or Tiberius (7 BC). Festus 470L is not cited in P&A and was not checked.",
 "pleiades": null,
 "precision": "rough",
@@ -832,10 +832,6 @@
 "lon": 12.4854,
 "model": "curia",
 "notes": "Verified: P&A 'begun by Julius Caesar in 44 B.C. ... continued by the triumvirs (Cass. Dio 44.5; 45.17; 47.19), completed and dedicated in 29 B.C. by Augustus (Mon. Anc. 4.1 = RG 19.1; Dio 51.22.1)'; built in comitio. Existing brick building is Diocletianic (c. AD 300); the republican-period plan is not preserved. Coordinates from Pleiades 837078212 (precise); the earlier 'exact' is kept for the site of the Curia.",
-"offset_m": [
--17,
-0
-],
 "pleiades": 837078212,
 "precision": "exact",
 "regio": 8,
@@ -885,10 +881,6 @@
 "lon": 12.4851,
 "model": "plaza",
 "notes": "CORRECTED: P&A says land was bought in 54 BC by Cicero and Oppius for Caesar, 60 million sesterces already paid (Cic. Att. 4.16.8; P&A cites 4.16.9), and the final cost was reported as 100 million (Suet. Iul. 26.2); so '100 million from 54' was wrong in the other direction: 60 million by 54, 100 million at the end. Dedicated 26 Sept 46 with the temple of Venus Genetrix at Caesar's Triumph (Dio 43.22.2; Appian BC 2.102). P&A (1929) gives the forum as rectangular c. 115 x 30 m; the 160 x 75 m figure kept in 'form' comes from later excavation (Meneghini), not P&A. P&A: not finished by Caesar (Nic. Dam. Caes. 22; Plin. NH 35.156) but by Octavian (Mon. Anc. 4.12 = RG 20.3; Dio 45.6.4); a fountain with nymphs (Appiades) stood before the temple. Pleiades 445545537.",
-"offset_m": [
--113,
-24
-],
 "pleiades": 445545537,
 "precision": "exact",
 "regio": 8,
@@ -920,7 +912,7 @@
 "width": 16
 },
 "form": "octostyle peripteral temple on a high podium (from Renaissance drawings by Palladio and Labacco, cited by P&A), marble (Ov. Ars 3.3.2), facing south-east, in the centre of the Forum Iulium",
-"geometry_source": "Platner-Ashby s.v. Forum Julium (on the NW axis, facing SE); octostyle Corinthian in the data, kit offers hexastyle (TODO octostyle)",
+"geometry_source": "Platner-Ashby s.v. Forum Julium (on the NW axis, facing SE); octostyle Corinthian, pycnostyle (kit temple_octastyle_pycnostyle: columns 1.5 d apart, Vitr. 3.3.2)",
 "geometry_unverified": [
 "footprint_m",
 "height_m",
@@ -935,12 +927,8 @@
 "marble",
 "tufa core"
 ],
-"model": "temple_hexastyle_corinthian_marble",
+"model": "temple_octastyle_pycnostyle",
 "notes": "P&A: Caesar vowed the temple at Pharsalus (Appian BC 2.68, 2.102) and built it in the middle of his forum; dedicated 26 Sept 46 (Dio 43.22.2). Octostyle only from Palladio's Renaissance drawing (P&A); 'solid marble' from Ov. Ars 3.3.2; 'Corinthian' not confirmed here. Pleiades 898745908 (precise), about 90 m west of the earlier coordinate; Pleiades value adopted.",
-"offset_m": [
--107,
-11
-],
 "pleiades": 898745908,
 "precision": "exact",
 "regio": 8,
@@ -1034,10 +1022,6 @@
 "lon": 12.4861,
 "model": "basilica",
 "notes": "CORRECTED: Livy 40.51.5 (Latin text) credits only M. Fulvius (Nobilior), censor 179, with building a basilica 'post argentarias novas'; P&A argues from the name 'Aemilia et Fulvia' that his colleague M. Aemilius Lepidus shared the work (an inference). Restored/decorated by Lepidus as consul 78 (Pliny NH 35.13); restored by the aedile L. Aemilius Paullus from 55/54 with Caesar's money (Plut. Caes. 29; Cic. Att. 4.16.8; App. BC 2.26); finished and dedicated by his son L. Aemilius Lepidus Paullus as consul 34 (Dio 49.42). Burned 14 BC (outside range). Pleiades 417632343.",
-"offset_m": [
--6,
--38
-],
 "phases": [
 {
 "from": -54,
@@ -1188,10 +1172,6 @@
 "lon": 12.4848,
 "model": "basilica_travertine",
 "notes": "CORRECTED: the 12 BC burning event was wrong. P&A: perhaps begun by Aemilius Paullus on Caesar's behalf in 54 (Cic. Att. 4.16.8 is difficult), dedicated unfinished in 46 (Mon. Anc. 4.13 = RG 20.3; Hieron. a. Abr. 1971), completed by Augustus, burned soon afterwards and rebuilt larger, dedicated again in AD 12 under the names of Gaius and Lucius Caesar (RG 20.3). Footprint 101 x 49 m; central court 82 x 16 m with two aisles each side and galleries above; originally white marble with Doric engaged columns. Centumviral court: not in the part of P&A checked. Pleiades 173078007.",
-"offset_m": [
--26,
-6
-],
 "pleiades": 173078007,
 "precision": "exact",
 "regio": 8,
@@ -1227,7 +1207,7 @@
 "width": 22.5
 },
 "form": "temple at the foot of the Capitoline hill on the Clivus Capitolinus, housing the state treasury (aerarium); blocks of the original podium and an early stone-arched drain survive; the eight standing columns (11 m high, granite) belong to the 4th-century AD restoration",
-"geometry_source": "Platner-Ashby s.v. Saturnus, Aedes (podium 22.50 m wide, about 40 long; Ionic hexastyle prostyle, columns 11 m high; kit has no Ionic hexastyle: Corinthian stand-in); front faces the Forum (east); archaic phase small Tuscan",
+"geometry_source": "Platner-Ashby s.v. Saturnus, Aedes (podium 22.50 m wide, about 40 long; Ionic hexastyle prostyle, columns 11 m high; Plancus phase drawn as the kit Ionic hexastyle); front faces the Forum (east); archaic phase small Tuscan",
 "geometry_unverified": [
 "bearing_deg",
 "model"
@@ -1246,7 +1226,7 @@
 "phases": [
 {
 "from": -42,
-"model": "temple_hexastyle_corinthian",
+"model": "temple_hexastyle_ionic",
 "state": "standing"
 }
 ],
@@ -1300,14 +1280,10 @@
 "lon": 12.4856,
 "model": "temple_tuscan_small",
 "notes": "CORRECTED: the dedication day was 27 January (calendar), not 15 July (15 July is the transvectio equitum linked to the Lake Regillus apparition, Dion. Hal. 6.13) (P&A: 'The day of dedication is given in the calendar as 27th January'). P&A: vowed 499 by the dictator A. Postumius, dedicated 484 by his son as duumvir (Liv. 2.20.12, 2.42.5); restored 117 by L. Caecilius Metellus (Cic. Scaur. 46; Verr. 2.1.129-154); completely rebuilt by Tiberius in AD 6 (outside our range). The octastyle peripteral temple (11 columns on the flanks, podium floor about 7 m above the Sacra Via, platform 3.66 m above the area) is the Augustan/Tiberian building, not the republican one. Standard weights and measures kept in it. Pleiades 157276290; the placement here is moved to it.",
-"offset_m": [
--20,
-18
-],
 "phases": [
 {
 "from": -117,
-"model": "temple_hexastyle_corinthian",
+"model": "temple_octastyle_peripteral",
 "state": "standing"
 }
 ],
@@ -1363,10 +1339,6 @@
 "lon": 12.4862,
 "model": "temple_round",
 "notes": "P&A: round temple of Numa (Dion. Hal.; Plut. Numa 11; Ov. Fast. 6.261-264), originally a hut of wattles and thatch; undoubtedly burned in 390 (P&A, citing Liv. and Plut. Cam. 21; Livy 5.40.7 itself says the Vestals carried the sacra away), again in 241 when L. Caecilius Metellus saved the Palladium (Liv. Per. 19; Plin. NH 7.141); saved from the fire of 210 by thirteen slaves (Livy 26.27.2); burned AD 64. The later temple was of white marble with 20 columns; the surviving concrete podium has a foundation 15.05 m across. Pleiades 55302071.",
-"offset_m": [
--66,
--4
-],
 "pleiades": 55302071,
 "precision": "exact",
 "regio": 8,
@@ -1409,10 +1381,6 @@
 "lon": 12.4866,
 "model": "domus",
 "notes": "CORRECTED: no date can be given. P&A: originally 'atrium Vestae' meant the whole precinct of Vesta; by the end of the Republic the dwelling of the Vestals. Excavations show remains of the republican house immediately south of the temple, adjoining the Domus Publica on the east, 'though almost no remains earlier than the second century BC are now visible'. The 'built -509 regal period' was an assumption, replaced. Livy 26.27.1-14 (210 fire) refers to the 'atrium regium', not the Vestals' house. Surviving structure is Neronian-Severan. Pleiades 795139357.",
-"offset_m": [
--66,
--11
-],
 "pleiades": 795139357,
 "precision": "exact",
 "regio": 8,
@@ -1464,10 +1432,6 @@
 "lon": 12.4864,
 "model": "regia",
 "notes": "P&A: the house which Numa is said to have built (Solin. 1.21; Ov. Trist. 3.1.30; Serv. Aen. 8.363); burned and restored 148 (Obseq. 19; Liv. Per. 50), again 36 BC when Cn. Domitius Calvinus rebuilt it in marble (Dio 48.42.4); a possible burning by the Gauls in 390; cappellaccio walls from before 390. Principal part trapezoidal, mean 22 x 8 m, white marble blocks (Calvinus phase). Contained the sacrarium of Mars (hastae and ancilia: Serv. Aen. 7.603; Gell. 4.6; Dio 44.17). Livy 26.27.2 names an 'atrium regium' among the buildings burned in 210; P&A's Regia article does not list a 210 fire, so that event is flagged uncertain. Pontifex Maximus's residence moved by Augustus in 12 BC (Dio 54.27). Pleiades 554680094. The 'sacra of Mars and Ops' in the old form field: the Mars shrine is verified, Ops is not in P&A's text and was dropped.",
-"offset_m": [
--58,
--18
-],
 "pleiades": 554680094,
 "precision": "exact",
 "regio": 8,
@@ -1509,7 +1473,7 @@
 "length": 3.5,
 "width": 3
 },
-"geometry_source": "Platner-Ashby s.v. Concordia (Augustan cella 45 m wide and 24 deep, pronaos 34 wide and 14 deep, concrete podium of 121 BC); transverse-cella plan not in the kit (TODO); early shrine a small aedicula",
+"geometry_source": "Platner-Ashby s.v. Concordia (Augustan cella 45 m wide and 24 deep, pronaos 34 wide and 14 deep, concrete podium of 121 BC); transverse-cella plan drawn as the kit temple_concord (order, six columns and heights assumed); early shrine a small aedicula",
 "geometry_unverified": [
 "bearing_deg",
 "height_m",
@@ -1522,10 +1486,6 @@
 "lon": 12.4842,
 "model": "aedicula",
 "notes": "CORRECTED: certainty lowered to traditional. P&A: temple at the north-west corner of the forum 'said to have been vowed by L. Furius Camillus in 367' (Plut. Cam. 42; Varro LL 5.148, 5.156; Ov. Fast. 1.641-644); 'the date of the actual erection of the temple is not known'; dedication day probably 22 July. Statue of Victory on its roof struck by lightning 211 (Livy 26.23.4). After the death of C. Gracchus the Senate ordered L. Opimius to restore it, 121 (Plut. C. Gracchus 17; App. BC 1.26). The aedicula of Concord set up on the Graecostasis by the aedile Cn. Flavius in 304 (Livy 9.46.6) is a separate small shrine. P&A also lists a separate temple of Concordia on the Arx (vowed 218 by the praetor L. Manlius, dedicated 5 Feb 216: Livy 22.33.7, 23.21.7), which is not in this dataset. Pleiades 694134032 adopted for coordinates (about 90 m NE of the earlier value).",
-"offset_m": [
-70,
-81
-],
 "phases": [
 {
 "footprint_m": {
@@ -1533,7 +1493,7 @@
 "width": 45
 },
 "from": -121,
-"model": "temple_hexastyle_corinthian",
+"model": "temple_concord",
 "state": "standing"
 }
 ],
@@ -1570,7 +1530,7 @@
 "width": 26
 },
 "form": "Ionic hexastyle temple on a platform 3.5 m high (26 x about 30 m) with a semicircular altar niche in the front; the projecting platform wings were decorated with ships' beaks from Actium and served as a rostra (P&A)",
-"geometry_source": "Platner-Ashby s.v. Divus Iulius, Aedes (platform 3.5 m high, 26 wide, c. 30 long, stylobate 2.36 m above, cella 17 m wide, columns 1.18 m thick and 9 diameters high); faces west onto the Forum, rostra projecting in front; hexastyle Ionic, kit stand-in Corinthian (TODO)",
+"geometry_source": "Platner-Ashby s.v. Divus Iulius, Aedes (platform 3.5 m high, 26 wide, c. 30 long, stylobate 2.36 m above, cella 17 m wide, columns 1.18 m thick and 9 diameters high); faces west onto the Forum, rostra projecting in front; hexastyle Ionic (kit temple_hexastyle_ionic_marble)",
 "geometry_unverified": [
 "bearing_deg",
 "model"
@@ -1580,12 +1540,8 @@
 "latin": "Aedes Divi Iulii",
 "location": "east end of the Forum, where Caesar's body was cremated 44 BC",
 "lon": 12.486,
-"model": "temple_hexastyle_corinthian",
+"model": "temple_hexastyle_ionic_marble",
 "notes": "Verified against P&A: authorised by the triumvirs in 42 (Dio 47.18), built by Augustus alone (Mon. Anc. 4.2 = RG 19.1: 'aedem divi Iuli feci'), dedicated 18 August 29 (Dio 51.22; Hemerol. Amit. Antiat.). Podium: rectangular platform 3.5 m high, 26 m wide, about 30 m long; stylobate 2.36 m above it, about 17 m wide; the platform's projecting wings (7 m each side) were the 'rostra aedis divi Iuli', decorated with the beaks of the ships captured at Actium (Frontin. Aq. 129; Dio 56.34). Temple Ionic, hexastyle (from Richter's reconstruction on coins). The altar niche is on the site of Caesar's pyre (App. BC 1.4, 2.148). Pleiades 277569430.",
-"offset_m": [
--46,
--18
-],
 "pleiades": 277569430,
 "precision": "exact",
 "regio": 8,
@@ -1673,10 +1629,6 @@
 "lon": 12.4851,
 "model": "plaza",
 "notes": "P&A gives three explanations of the name: (1) the Sabine Mettius Curtius who rode into the marsh in the war of Romulus and Tatius (Livy 1.12.10; Varro LL 5.149); (2) the leap of M. Curtius into a chasm, 362 BC (Livy 7.6.1-6; relief in Palazzo dei Conservatori, a late copy of a c. 2nd-c. original); (3) a spot struck by lightning and enclosed by C. Curtius, consul 445 (Varro LL 5.150). By Augustus it was dry ground (Ov. Fast. 6.403-404). Existing remains: two layers of cappellaccio and Monte Verde tufa attributed to the Sullan period (Van Deman, Frank) with a travertine layer from the Caesarian reconstruction, about 10 m x 9 m. The year 362 is therefore one of three legendary dates, not a historical fact. Pleiades 459049147 (precise).",
-"offset_m": [
--31,
-33
-],
 "pleiades": 459049147,
 "precision": "exact",
 "regio": 8,
@@ -1714,10 +1666,6 @@
 "lon": 12.486,
 "model": "basin",
 "notes": "P&A: spring of Juturna in the south corner of the forum where Castor and Pollux watered their horses after Lake Regillus (496 BC; Ov. Fast. 1.706; Dion. Hal. 6.13) and again after Pydna (168). No building date given: the basin (about 10 m square at the top, 2.12 m deep) is a later structure over an earlier tufa pavement; coins of the gens Postumia (c. 90 BC) show the spring as a puteal with the Dioscuri. The temple of Castor was built on the west side of the spring. Pleiades 707467453 (precise) adopted for coordinates.",
-"offset_m": [
--20,
-18
-],
 "pleiades": 707467453,
 "precision": "exact",
 "regio": 8,
@@ -1754,10 +1702,6 @@
 "lon": 12.4846,
 "model": "aedicula",
 "notes": "P&A: Livy 1.33 attributes the Carcer to Ancus Marcius; Varro LL 5.151 and Festus 356 attribute the Tullianum (the lower chamber) to Servius Tullius. Lower chamber nearly 7 m in diameter, originally circular; Sall. Cat. 55 gives 12 feet depth; T. Frank dates the lower chamber to the 3rd century and the stone vault to after 100 BC, but most authorities give it high antiquity (P&A disputes Frank). Pleiades 755655444 (Tullianum, precise) adopted.",
-"offset_m": [
-28,
--7
-],
 "pleiades": 755655444,
 "precision": "exact",
 "regio": 8,
@@ -1932,7 +1876,7 @@
 "latin": "Atrium Libertatis",
 "location": "Capitol slope above the Forum of Caesar / Forum of Augustus",
 "lon": 12.4852,
-"model": "public_building",
+"model": "archive_hall",
 "notes": "CORRECTED: the old text claimed Livy 43.16.13 records a rebuilding in 169 by Gracchus and Claudius; in the Latin text it only has the censors going up into the atrium Libertatis and sealing the tablets and closing the tabularium (169) when put on trial. P&A: building holding the censors' offices and records and some bronze laws (Livy 43.16, 45.15; Festus 241); said to have held the Thurian hostages in 212 (Livy 25.7.12) and slaves tortured at Milo's trial (Cic. Mil. 59); restored and enlarged by the censors of 194 (Livy 34.44.5, 'atrium Libertatis et villa publica ab iisdem refecta amplificataque'); restored magnificently by Asinius Pollio (Suet. Aug. 29; the usual date 39 BC is not in the P&A text read here). The earlier claim 'existed by 214 (Livy 24.18)' is unsupported and was removed. Site unknown (not on the later curia site). Not in Pleiades.",
 "pleiades": null,
 "precision": "rough",
@@ -2239,10 +2183,6 @@
 ],
 "model": "temple_round_marble",
 "notes": "CORRECTED: 'Vitr. 3.2.5 (Hermodorus of Salamis)' removed: Vitruvius 3.2.5 names Hermodorus as architect of the temple of Mars in the Circus Flaminius (and the Jupiter Stator temple), not this round temple; the Hermodorus attribution here is a modern guess, not an ancient source. P&A: Hercules Victor, a round temple in the Forum Boarium already standing in 296 BC (Livy 10.23.3 'ad aedem rotundam Herculis'), with frescoes by the poet Pacuvius (Plin. NH 35.19); a temple of Hercules Victor was vowed by L. Mummius in 145 and dedicated in 142 as censor, to judge from CIL I2 626 = VI 331 (found on the Caelian, so the connection to this round temple is not certain); a possible restoration by L. Aemilius Paullus rests on a conjectural emendation of Festus 242 (P&A). P&A also says the remains destroyed under Sixtus IV were a round temple near S. Maria in Cosmedin and that the surviving round temple (S. Maria del Sole) is, 'more probably', the temple of Portunus; modern scholarship reverses this (Hercules Victor = the round temple, Portunus = the rectangular Ionic temple). The marble round temple (c. 120 BC) is a modern dating, not in P&A, and is kept only as a flagged guess. Pleiades 825969667 (Temple of Hercules Victor) adopted for coordinates.",
-"offset_m": [
--30,
-24
-],
 "pleiades": 825969667,
 "precision": "approx",
 "regio": 11,
@@ -2286,10 +2226,6 @@
 ],
 "model": "temple_tetrastyle_ionic_travertine",
 "notes": "CORRECTED: the old '-120 probable, extant tetrastyle Ionic temple' was unsupported. P&A: Varro LL 6.19: 'Portunalia dicta a Portuno, cui eo die aedes in portu Tiberino facta et feriae institutae'; Portunalia on 17 August = dedication day, calendar 'Portuno ad pontem Aemilium'; the portus Tiberinus is a quay near the Pons Aemilius, temple close by; no date. P&A thinks the round temple (S. Maria del Sole) is probably Portunus, far from certain, and identifies the rectangular Ionic tetrastyle prostyle temple (S. Maria Egiziaca, 20 x 12 m, podium 2.5 m) as Mater Matuta, which cannot be reconciled with the modern identification used here for coordinates (Pleiades 494660670: the rectangular temple); the c. 120-80 BC date of that building is modern (not in P&A) and flagged.",
-"offset_m": [
-3,
-52
-],
 "pleiades": 494660670,
 "precision": "approx",
 "regio": 11,
@@ -2310,20 +2246,20 @@
 },
 "english": "Porta Trigemina",
 "footprint_m": {
-"length": 9,
-"width": 12
+"length": 26,
+"width": 34
 },
 "geometry_source": "Platner-Ashby s.v. Porta Trigemina (an arch of tufa, 3.30 m wide, over a paved road found 40 m south of S. Maria in Cosmedin); flanking towers assumed",
 "geometry_unverified": [
 "height_m"
 ],
-"height_m": 12,
+"height_m": 16,
 "id": "porta_trigemina",
 "lat": 41.888,
 "latin": "Porta Trigemina",
 "location": "Servian Wall, between the Capitol/Forum Boarium and the Tiber",
 "lon": 12.4793,
-"model": "gate",
+"model": "servian_gate",
 "notes": "CORRECTED: the gate existed in the story of 439 (Livy 4.16.2: L. Minucius given an ox 'extra portam Trigeminam'), before the wall of 378, so '378 certain' is unsound; the name, if not anachronistic in Livy, implies a gate on the Palatine-Aventine line before the Servian Wall. P&A: important gate in the Servian wall between the Aventine and the Tiber (Region XI), exact site disputed: below S. Sabina, or about 40 m south of S. Maria in Cosmedin (arch of tufa 3.30 m wide found 1886), or at the north corner of the Aventine near S. Anna dei Calzettari. Livy 35.10.12 (193 BC): the aediles built a portico outside the Porta Trigemina and added the Emporium to it; Livy 41.27.8 (174): the censors paved the Emporium outside the gate, repaired the Porticus Aemilia and paved a portico inside the gate up the Aventine. Pleiades 303638861 has only a 'related' location.",
 "pleiades": 303638861,
 "precision": "rough",
@@ -3232,10 +3168,6 @@
 "lon": 12.4857,
 "model": "temple_hexastyle_corinthian_marble",
 "notes": "Verified: P&A: on ground struck by lightning, vowed by Octavian in 36 BC during the war on Sextus Pompeius, dedicated 9 October 28 BC (Vell. 2.81; Dio 49.15.5, 53.1.3; Suet. Aug. 29; Mon. Anc. 4.1 = RG 19.1); white Luna marble; facade Ionic if Richmond is right; the library and portico are Augustan additions; burned 363 AD. Pleiades 257097394 (precise).",
-"offset_m": [
--124,
-22
-],
 "pleiades": 257097394,
 "precision": "exact",
 "regio": 10,
@@ -3879,10 +3811,6 @@
 "lon": 12.4857,
 "model": "circus_maximus",
 "notes": "CORRECTED: carceres: Livy 8.20.1 (329 BC), not 8.20.2. Caesar's phase: Pliny NH 36.102 gives 'longitudine stadiorum trium latitudine unius sed cum aedificiis iugerum quaternum ad sedem CCL': 3 stadia long, 1 wide, 4 jugera with buildings, 250,000 seats - NOT 150,000; Suet. Iul. 39 and Pliny NH 8.21 mention the euripus of 46. Dionysius 3.68 (7 BC): 3.5 stadia (621 m) long, 4 plethra (118 m) wide, with a euripus 10 ft wide and deep. P&A: valley 600 m x 150 m. Tarquinian beginnings: Livy 1.35.8-9; Livy 41.27.6 (174) is textually corrupt. Pleiades 458808506 (precise).",
-"offset_m": [
-50,
--22
-],
 "phases": [
 {
 "from": -329,
@@ -4024,10 +3952,6 @@
 "lon": 12.4747,
 "model": "quay",
 "notes": "Verified in Livy 35.10.12 (Latin): the aediles of 193, M. Aemilius Lepidus and L. Aemilius Paullus, built a portico outside the Porta Trigemina 'emporio ad Tiberim adiecto'; Livy 41.27.8 (174, Latin): the censors paved the Emporium with stone and fenced it with stakes, repaired the Porticus Aemilia and made steps up from the Tiber. P&A: 'said to have been established' in 193 and probably at first an open space with wharf and offices. The old note 'banks paved with stone steps' is corrected. Pleiades 937921711 (Emporium, precise) adopted for coordinates.",
-"offset_m": [
--297,
-146
-],
 "pleiades": 937921711,
 "precision": "approx",
 "regio": 13,
@@ -4075,10 +3999,6 @@
 ],
 "model": "long_hall",
 "notes": "P&A: the Porticus Aemilia extra portam Trigeminam was built by the aediles M. (P&A prints L.) Aemilius Lepidus and L. Aemilius Paullus in 193 (Livy 35.10.12) and restored in 174 by the censors Q. Fulvius Flaccus and A. Postumius Albinus (Livy 41.27.8). P&A gives NO dimensions: the 'about 487 x 60 m, 50 aisles of concrete barrel vaults' in the old form field is from later excavation and the Forma Urbis fragments (a 2nd-century BC rebuilding, not the 193 structure) and is flagged as modern. There was also a second Porticus Aemilia near the Ara Martis (Livy 40.51.6 per P&A). Pleiades 51787060 (precise) adopted for coordinates.",
-"offset_m": [
--297,
-146
-],
 "pleiades": 51787060,
 "precision": "approx",
 "regio": 13,
@@ -4662,7 +4582,7 @@
 },
 "english": "Theatre of Marcellus",
 "footprint_m": {
-"radius": 65
+"radius": 75
 },
 "geometry_note": "bearing: scaena toward the river (west-southwest), axis NNE-SSW so the open side faces NNE; the dataset radius 65 comes from the 130 m published diameter, Platner says 150 m",
 "geometry_source": "Platner-Ashby s.v. Theatrum Marcelli (diameter about 150 m, scaena about 80-90 m long and 20 deep, apsidal halls 25 x 15 m at its ends; stage toward the river, main axis NNE-SSW; thirteen piers 3 m wide and 2 deep; three open arcades, Doric then Ionic)",
@@ -4710,7 +4630,7 @@
 "latin": "Amphitheatrum Statili Tauri",
 "location": "Campus Martius",
 "lon": 12.474,
-"model": "amphitheatre",
+"model": "amphitheatre_small",
 "precision": "rough",
 "regio": 9,
 "sources": [
@@ -5489,21 +5409,21 @@
 },
 "english": "Porta Capena",
 "footprint_m": {
-"length": 9,
-"width": 12
+"length": 26,
+"width": 34
 },
 "geometry_source": "Platner-Ashby s.v. Porta Capena (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed",
 "geometry_unverified": [
 "footprint_m",
 "height_m"
 ],
-"height_m": 12,
+"height_m": 16,
 "id": "porta_capena",
 "lat": 41.8855,
 "latin": "Porta Capena",
 "location": "Servian Wall, south-east of the Palatine, start of the Via Appia",
 "lon": 12.4885,
-"model": "gate",
+"model": "servian_gate",
 "offset_m": [
 207,
 -167
@@ -5524,21 +5444,21 @@
 },
 "english": "Porta Collina",
 "footprint_m": {
-"length": 9,
-"width": 12
+"length": 26,
+"width": 34
 },
 "geometry_source": "Platner-Ashby s.v. Porta Collina (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed",
 "geometry_unverified": [
 "footprint_m",
 "height_m"
 ],
-"height_m": 12,
+"height_m": 16,
 "id": "porta_collina",
 "lat": 41.9068,
 "latin": "Porta Collina",
 "location": "Servian Wall, north-east, on the Quirinal; start of the Via Nomentana / Salaria",
 "lon": 12.496,
-"model": "gate",
+"model": "servian_gate",
 "precision": "rough",
 "regio": 6,
 "snap_to": "murus_servianus",
@@ -5556,21 +5476,21 @@
 },
 "english": "Porta Esquilina",
 "footprint_m": {
-"length": 9,
-"width": 12
+"length": 26,
+"width": 34
 },
 "geometry_source": "Platner-Ashby s.v. Porta Esquilina (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed",
 "geometry_unverified": [
 "footprint_m",
 "height_m"
 ],
-"height_m": 12,
+"height_m": 16,
 "id": "porta_esquilina",
 "lat": 41.8957,
 "latin": "Porta Esquilina",
 "location": "Servian Wall, east, near the Arch of Gallienus",
 "lon": 12.5017,
-"model": "gate",
+"model": "servian_gate",
 "precision": "rough",
 "regio": 5,
 "snap_to": "murus_servianus",
@@ -5587,21 +5507,21 @@
 },
 "english": "Porta Viminalis",
 "footprint_m": {
-"length": 9,
-"width": 12
+"length": 26,
+"width": 34
 },
 "geometry_source": "Platner-Ashby s.v. Porta Viminalis (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed",
 "geometry_unverified": [
 "footprint_m",
 "height_m"
 ],
-"height_m": 12,
+"height_m": 16,
 "id": "porta_viminalis",
 "lat": 41.9005,
 "latin": "Porta Viminalis",
 "location": "Servian Wall, north-east",
 "lon": 12.4975,
-"model": "gate",
+"model": "servian_gate",
 "precision": "rough",
 "regio": 5,
 "snap_to": "murus_servianus",
@@ -5618,21 +5538,21 @@
 },
 "english": "Porta Caelimontana",
 "footprint_m": {
-"length": 9,
-"width": 12
+"length": 26,
+"width": 34
 },
 "geometry_source": "Platner-Ashby s.v. Porta Caelimontana (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed",
 "geometry_unverified": [
 "footprint_m",
 "height_m"
 ],
-"height_m": 12,
+"height_m": 16,
 "id": "porta_caelimontana",
 "lat": 41.8873,
 "latin": "Porta Caelimontana",
 "location": "Servian Wall, Caelian",
 "lon": 12.4965,
-"model": "gate",
+"model": "servian_gate",
 "precision": "rough",
 "regio": 2,
 "snap_to": "murus_servianus",
@@ -5649,21 +5569,21 @@
 },
 "english": "Porta Naevia",
 "footprint_m": {
-"length": 9,
-"width": 12
+"length": 26,
+"width": 34
 },
 "geometry_source": "Platner-Ashby s.v. Porta Naevia (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed",
 "geometry_unverified": [
 "footprint_m",
 "height_m"
 ],
-"height_m": 12,
+"height_m": 16,
 "id": "porta_naevia",
 "lat": 41.8795,
 "latin": "Porta Naevia",
 "location": "Servian Wall, Aventine, south",
 "lon": 12.4845,
-"model": "gate",
+"model": "servian_gate",
 "precision": "rough",
 "regio": 13,
 "snap_to": "murus_servianus",
@@ -5680,21 +5600,21 @@
 },
 "english": "Porta Raudusculana",
 "footprint_m": {
-"length": 9,
-"width": 12
+"length": 26,
+"width": 34
 },
 "geometry_source": "Platner-Ashby s.v. Porta Raudusculana (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed",
 "geometry_unverified": [
 "footprint_m",
 "height_m"
 ],
-"height_m": 12,
+"height_m": 16,
 "id": "porta_raudusculana",
 "lat": 41.8825,
 "latin": "Porta Raudusculana",
 "location": "Servian Wall, Aventine, west",
 "lon": 12.481,
-"model": "gate",
+"model": "servian_gate",
 "precision": "rough",
 "regio": 13,
 "snap_to": "murus_servianus",
@@ -5711,21 +5631,21 @@
 },
 "english": "Porta Lavernalis",
 "footprint_m": {
-"length": 9,
-"width": 12
+"length": 26,
+"width": 34
 },
 "geometry_source": "Platner-Ashby s.v. Porta Lavernalis (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed",
 "geometry_unverified": [
 "footprint_m",
 "height_m"
 ],
-"height_m": 12,
+"height_m": 16,
 "id": "porta_lavernalis",
 "lat": 41.8797,
 "latin": "Porta Lavernalis",
 "location": "Servian Wall, Aventine, south-west",
 "lon": 12.4835,
-"model": "gate",
+"model": "servian_gate",
 "precision": "rough",
 "regio": 13,
 "snap_to": "murus_servianus",
@@ -5742,21 +5662,21 @@
 },
 "english": "Porta Carmentalis",
 "footprint_m": {
-"length": 9,
-"width": 12
+"length": 26,
+"width": 34
 },
 "geometry_source": "Platner-Ashby s.v. Porta Carmentalis (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed",
 "geometry_unverified": [
 "footprint_m",
 "height_m"
 ],
-"height_m": 12,
+"height_m": 16,
 "id": "porta_carmentalis",
 "lat": 41.8918,
 "latin": "Porta Carmentalis",
 "location": "Servian Wall, foot of the Capitol toward the Forum Holitorium; triumphs avoided the unlucky right arch (Livy 2.49.8)",
 "lon": 12.4807,
-"model": "gate",
+"model": "servian_gate",
 "offset_m": [
 -35,
 -45
@@ -5778,21 +5698,21 @@
 },
 "english": "Porta Flumentana",
 "footprint_m": {
-"length": 9,
-"width": 12
+"length": 26,
+"width": 34
 },
 "geometry_source": "Platner-Ashby s.v. Porta Flumentana (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed",
 "geometry_unverified": [
 "footprint_m",
 "height_m"
 ],
-"height_m": 12,
+"height_m": 16,
 "id": "porta_flumentana",
 "lat": 41.8925,
 "latin": "Porta Flumentana",
 "location": "Servian Wall, between the Capitol and the Tiber",
 "lon": 12.477,
-"model": "gate",
+"model": "servian_gate",
 "offset_m": [
 48,
 -170
@@ -5814,21 +5734,21 @@
 },
 "english": "Porta Fontinalis",
 "footprint_m": {
-"length": 9,
-"width": 12
+"length": 26,
+"width": 34
 },
 "geometry_source": "Platner-Ashby s.v. Porta Fontinalis (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed",
 "geometry_unverified": [
 "footprint_m",
 "height_m"
 ],
-"height_m": 12,
+"height_m": 16,
 "id": "porta_fontinalis",
 "lat": 41.896,
 "latin": "Porta Fontinalis",
 "location": "Servian Wall, Capitol north side",
 "lon": 12.483,
-"model": "gate",
+"model": "servian_gate",
 "precision": "rough",
 "regio": 8,
 "snap_to": "murus_servianus",
@@ -5845,21 +5765,21 @@
 },
 "english": "Porta Ratumena",
 "footprint_m": {
-"length": 9,
-"width": 12
+"length": 26,
+"width": 34
 },
 "geometry_source": "Platner-Ashby s.v. Porta Ratumena (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed",
 "geometry_unverified": [
 "footprint_m",
 "height_m"
 ],
-"height_m": 12,
+"height_m": 16,
 "id": "porta_ratumena",
 "lat": 41.9005,
 "latin": "Porta Ratumena",
 "location": "Servian Wall, between the Capitol and Quirinal",
 "lon": 12.4835,
-"model": "gate",
+"model": "servian_gate",
 "precision": "rough",
 "regio": 6,
 "snap_to": "murus_servianus",
@@ -5876,21 +5796,21 @@
 },
 "english": "Porta Sanqualis",
 "footprint_m": {
-"length": 9,
-"width": 12
+"length": 26,
+"width": 34
 },
 "geometry_source": "Platner-Ashby s.v. Porta Sanqualis (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed",
 "geometry_unverified": [
 "footprint_m",
 "height_m"
 ],
-"height_m": 12,
+"height_m": 16,
 "id": "porta_sanqualis",
 "lat": 41.9,
 "latin": "Porta Sanqualis",
 "location": "Servian Wall, Quirinal",
 "lon": 12.4875,
-"model": "gate",
+"model": "servian_gate",
 "precision": "rough",
 "regio": 6,
 "snap_to": "murus_servianus",
@@ -5907,21 +5827,21 @@
 },
 "english": "Porta Salutaris",
 "footprint_m": {
-"length": 9,
-"width": 12
+"length": 26,
+"width": 34
 },
 "geometry_source": "Platner-Ashby s.v. Porta Salutaris (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed",
 "geometry_unverified": [
 "footprint_m",
 "height_m"
 ],
-"height_m": 12,
+"height_m": 16,
 "id": "porta_salutaris",
 "lat": 41.9008,
 "latin": "Porta Salutaris",
 "location": "Servian Wall, Quirinal",
 "lon": 12.4884,
-"model": "gate",
+"model": "servian_gate",
 "precision": "rough",
 "regio": 6,
 "snap_to": "murus_servianus",
@@ -5938,21 +5858,21 @@
 },
 "english": "Porta Querquetulana",
 "footprint_m": {
-"length": 9,
-"width": 12
+"length": 26,
+"width": 34
 },
 "geometry_source": "Platner-Ashby s.v. Porta Querquetulana (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed",
 "geometry_unverified": [
 "footprint_m",
 "height_m"
 ],
-"height_m": 12,
+"height_m": 16,
 "id": "porta_querquetulana",
 "lat": 41.8885,
 "latin": "Porta Querquetulana",
 "location": "Servian Wall, Caelian",
 "lon": 12.495,
-"model": "gate",
+"model": "servian_gate",
 "precision": "rough",
 "regio": 2,
 "snap_to": "murus_servianus",

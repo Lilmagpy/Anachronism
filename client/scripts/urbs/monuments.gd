@@ -39,6 +39,7 @@ var _boxes := {}         ## id -> Array of {centre, size} in world axes (for pic
 var _kinds := {}         ## id -> "kit"|"own"|"placeholder"|"site"|"ruin"
 var _todo := {}          ## model -> what the kit agent could add
 var _routes := {}        ## id -> PackedVector2Array
+var _empire := {}        ## ids from monuments_empire.json
 var _circ := {}          ## the gate circuit (see _circuit)
 
 
@@ -50,6 +51,8 @@ func _init() -> void:
 		if parsed is Dictionary:
 			for m in parsed.get("monuments", []):
 				_recs[str(m["id"])] = m
+				if path.contains("empire"):
+					_empire[str(m["id"])] = true
 	_order = _recs.keys()
 	_order.sort()
 	for id in _order:
@@ -545,16 +548,17 @@ func footprints() -> Array:
 
 ## Counts over the whole dataset in `year`: how many stand with a kit form, an own form, a
 ## placeholder, and which kit forms are missing.
-func report(year: int) -> Dictionary:
-	var c := {"kit": 0, "own": 0, "placeholder": 0, "site": 0, "ruin": 0, "absent": 0, "none": 0}
+func report(_year: int) -> Dictionary:
+	var rep := {"republic": {"kit": 0, "own": 0, "placeholder": 0, "none": 0}, "empire": {"kit": 0, "own": 0, "placeholder": 0, "none": 0}}
 	var by_model := {}
 	for id in _order:
 		var m: Dictionary = _recs[id]
-		var model := str(m.get("model", "none"))
-		if model == "none":
-			c["none"] += 1
-			continue
-		var kind := str(Forms.FORMS.get(model, "placeholder"))
-		c[kind] = int(c.get(kind, 0)) + 1
-		by_model[model] = int(by_model.get(model, 0)) + 1
-	return {"by_kind": c, "by_model": by_model, "todo": Forms.TODO_KIT}
+		var fp: Variant = m.get("footprint_m")
+		var ln := float((fp as Dictionary).get("length", 0.0)) if fp is Dictionary else 0.0
+		var model := Forms._alias(str(m.get("model", "none")), {"length": ln})
+		var part: Dictionary = rep["empire"] if _empire.has(id) else rep["republic"]
+		var kind := Forms.kind_of(model)
+		part[kind] = int(part.get(kind, 0)) + 1
+		if kind == "placeholder":
+			by_model[model] = int(by_model.get(model, 0)) + 1
+	return {"by_kind": rep, "placeholder_models": by_model, "todo": Forms.TODO_KIT}

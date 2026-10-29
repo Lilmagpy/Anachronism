@@ -30,12 +30,12 @@ monuments:
   pleiades: 871801169
   verified: platner-ashby+pleiades
   model: temple_tuscan_archaic
-  bearing_deg: 206.5  # unverified
+  bearing_deg: 153.5  # unverified: Platner-Ashby fronted south, axis 26.5 deg east of the N-S line; read as SSE, toward the Forum and the approach up the Clivus Capitolinus
   footprint_m: {length: 61.42, width: 56.98}
   podium_m: 4.5
   phases: [{from: -83, state: burnt}, {from: -78, state: building}, {from: -69, state: standing, model: temple_tuscan_restored}]
   geometry_source: "Platner-Ashby s.v. Iuppiter Optimus Maximus Capitolinus, Aedes (read: fronted south, main axis 26.5 deg east of the N-S line, stylobate c. 55 x 60 m, 56.98 x 61.42 m with its facing after Paribeni, podium 4-5 m, cella 27.81 m square, hexastyle with three rows of columns in front; Dion. Hal. 4.61 perimeter 800 ft); Vitr. 3.3.5"
-  geometry_note: "Platner says the axis deviates '26.5 degrees to the east of the north and south line'; read as the north end swung east, so the south front faces 206.5 (SSW). If the other reading is right the front faces 153.5. Height not given: the kit proportions (Vitr. 4.7) are used."
+  geometry_note: "Platner: the temple fronted south and its axis deviated 26.5 degrees to the east of the north-south line. Chosen reading: the front faces 153.5 (SSE), which fits the Forum and the Clivus Capitolinus approach to the south-east; the other reading (206.5, SSW) turns the front away from the Forum. Height not given: kit proportions (Vitr. 4.7)."
   geometry_unverified: [bearing_deg, height_m]
 - id: arx_capitolina
   latin: Arx
@@ -93,7 +93,7 @@ monuments:
   pleiades: null
   verified: platner-ashby
   model: aedicula
-  bearing_deg: 206.5  # unverified
+  bearing_deg: 153.5  # unverified: Platner-Ashby fronted south, axis 26.5 deg east of the N-S line; read as SSE, toward the Forum and the approach up the Clivus Capitolinus
   footprint_m: {length: 4.4, width: 3}  # unverified
   height_m: 3.5  # unverified
   geometry_source: "Dion. Hal. 2.34.4 (greatest dimension under 15 feet, about 4.4 m); Livy 4.20.7 roof ruinous"
@@ -135,7 +135,7 @@ monuments:
   pleiades: null
   verified: platner-ashby
   model: temple_tetrastyle_ionic  # unverified
-  bearing_deg: 206.5  # unverified
+  bearing_deg: 153.5  # unverified: Platner-Ashby fronted south, axis 26.5 deg east of the N-S line; read as SSE, toward the Forum and the approach up the Clivus Capitolinus
   construction: {begun: -217, completed: -215}  # work years; see geometry_source
   geometry_source: "form assumed from date and type, native kit size (no measured plan); on the Capitol beside Venus Erycina (Livy 23.31.9)"
   geometry_unverified: [bearing_deg, footprint_m, height_m, model]
@@ -154,7 +154,7 @@ monuments:
   pleiades: null
   verified: platner-ashby
   model: temple_tetrastyle_ionic  # unverified
-  bearing_deg: 206.5  # unverified
+  bearing_deg: 153.5  # unverified: Platner-Ashby fronted south, axis 26.5 deg east of the N-S line; read as SSE, toward the Forum and the approach up the Clivus Capitolinus
   construction: {begun: -217, completed: -215}  # work years; see geometry_source
   geometry_source: "form assumed from date and type, native kit size (no measured plan); Livy 23.30.13"
   geometry_unverified: [bearing_deg, footprint_m, height_m, model]
@@ -196,7 +196,7 @@ monuments:
   verified: platner-ashby
 # ---------------------------------------------------------------- FORUM
   model: temple_tetrastyle_ionic  # unverified
-  bearing_deg: 206.5  # unverified
+  bearing_deg: 153.5  # unverified: Platner-Ashby fronted south, axis 26.5 deg east of the N-S line; read as SSE, toward the Forum and the approach up the Clivus Capitolinus
   geometry_source: "form assumed from date and type, native kit size (no measured plan); beside the Capitoline temple (Cic. Nat. D. 2.61)"
   geometry_unverified: [bearing_deg, footprint_m, height_m, model]
 - id: forum_romanum
@@ -314,7 +314,7 @@ monuments:
   notes: "CORRECTED: the 304 BC date is not a foundation date. Pliny NH 33.19 says Cn. Flavius (304) dedicated a bronze aedicula of Concord 'in Graecostasi, quae tunc supra comitium erat', so the Graecostasis already existed by 304; its origin is unknown. P&A: a raised place at the edge of the Comitium for foreign (esp. Greek) ambassadors (Varro LL 5.155), near the Curia (Cic. QFr. 2.1.3) and west of the Rostra; sun-noon sighting (Plin. NH 7.212). Pleiades 780447855 has only a 'related' location about 130 m ESE of the placement here, so the Pleiades coordinate is not adopted."
   pleiades: 780447855
   verified: platner-ashby+pleiades
-  model: platform
+  model: platform_portico
   bearing_deg: 196  # unverified
   footprint_m: {length: 8, width: 12}  # unverified
   height_m: 3  # unverified
@@ -334,7 +334,7 @@ monuments:
   notes: "Not in Pleiades. P&A: place where senators assembled before entering the Curia; Varro LL 5.156 puts it 'supra Graecostasim ubi aedes Concordiae et basilica Opimia'; Val. Max. 2.2.6; originally an open area, afterwards a hall; the original building must have been removed when Opimius enlarged the temple of Concord (121 BC) or Tiberius (7 BC). Festus 470L is not cited in P&A and was not checked."
   pleiades: null
   verified: platner-ashby
-  model: platform
+  model: platform_portico
   bearing_deg: 127  # unverified
   footprint_m: {length: 10, width: 15}  # unverified
   height_m: 1  # unverified
@@ -383,7 +383,6 @@ monuments:
   pleiades: 837078212
   verified: platner-ashby+pleiades
   model: curia
-  offset_m: [-17, 0]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 17 m off
   bearing_deg: 135  # unverified
   footprint_m: {length: 17.61, width: 25.2}
   height_m: 21
@@ -408,7 +407,6 @@ monuments:
   pleiades: 445545537
   verified: platner-ashby+pleiades
   model: plaza
-  offset_m: [-113, 24]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 116 m off
   bearing_deg: 140  # unverified
   footprint_m: {length: 160, width: 75}  # unverified
   height_m: 0
@@ -432,12 +430,11 @@ monuments:
   notes: "P&A: Caesar vowed the temple at Pharsalus (Appian BC 2.68, 2.102) and built it in the middle of his forum; dedicated 26 Sept 46 (Dio 43.22.2). Octostyle only from Palladio's Renaissance drawing (P&A); 'solid marble' from Ov. Ars 3.3.2; 'Corinthian' not confirmed here. Pleiades 898745908 (precise), about 90 m west of the earlier coordinate; Pleiades value adopted."
   pleiades: 898745908
   verified: platner-ashby+pleiades
-  model: temple_hexastyle_corinthian_marble  # unverified
-  offset_m: [-107, 11]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 108 m off
+  model: temple_octastyle_pycnostyle  # unverified
   bearing_deg: 140
   footprint_m: {length: 30, width: 16}  # unverified
   construction: {begun: -48, completed: -46}  # work years; see geometry_source
-  geometry_source: "Platner-Ashby s.v. Forum Julium (on the NW axis, facing SE); octostyle Corinthian in the data, kit offers hexastyle (TODO octostyle)"
+  geometry_source: "Platner-Ashby s.v. Forum Julium (on the NW axis, facing SE); octostyle Corinthian, pycnostyle (kit temple_octastyle_pycnostyle: columns 1.5 d apart, Vitr. 3.3.2)"
   geometry_unverified: [footprint_m, height_m, model]
 - id: basilica_porcia
   latin: Basilica Porcia
@@ -479,7 +476,6 @@ monuments:
   pleiades: 417632343
   verified: platner-ashby+pleiades
   model: basilica
-  offset_m: [-6, -38]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 38 m off
   bearing_deg: 196
   footprint_m: {length: 29, width: 70}  # unverified
   phases: [{from: -54, state: standing_scaffold}, {from: -34, state: standing, model: basilica_travertine}]
@@ -546,7 +542,6 @@ monuments:
   pleiades: 173078007
   verified: platner-ashby+pleiades
   model: basilica_travertine
-  offset_m: [-26, 6]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 27 m off
   bearing_deg: 16
   footprint_m: {length: 49, width: 101}
   construction: {begun: -54, completed: -46}  # work years; see geometry_source
@@ -574,8 +569,8 @@ monuments:
   offset_m: [30, 44]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 53 m off
   bearing_deg: 80  # unverified
   footprint_m: {length: 40, width: 22.5}
-  phases: [{from: -42, state: standing, model: temple_hexastyle_corinthian}]
-  geometry_source: "Platner-Ashby s.v. Saturnus, Aedes (podium 22.50 m wide, about 40 long; Ionic hexastyle prostyle, columns 11 m high; kit has no Ionic hexastyle: Corinthian stand-in); front faces the Forum (east); archaic phase small Tuscan"
+  phases: [{from: -42, state: standing, model: temple_hexastyle_ionic}]
+  geometry_source: "Platner-Ashby s.v. Saturnus, Aedes (podium 22.50 m wide, about 40 long; Ionic hexastyle prostyle, columns 11 m high; Plancus phase drawn as the kit Ionic hexastyle); front faces the Forum (east); archaic phase small Tuscan"
   geometry_unverified: [bearing_deg, model]
 - id: aedes_castoris
   latin: Aedes Castoris
@@ -596,10 +591,9 @@ monuments:
   pleiades: 157276290
   verified: platner-ashby+pleiades
   model: temple_tuscan_small  # unverified
-  offset_m: [-20, 18]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 27 m off
   bearing_deg: 16  # unverified
   footprint_m: {length: 50, width: 30}
-  phases: [{from: -117, state: standing, model: temple_hexastyle_corinthian}]
+  phases: [{from: -117, state: standing, model: temple_octastyle_peripteral}]
   geometry_source: "Platner-Ashby s.v. Castor, Aedes (Augustan temple c. 50 x 30 m, floor 7 m above the Sacra Via, octastyle peripteral, 11 columns on each side, 12.5 m columns; podium of Metellus 117 BC on the same site); facing north onto the Forum"
   geometry_unverified: [bearing_deg, model]
 - id: aedes_vestae
@@ -622,7 +616,6 @@ monuments:
   pleiades: 55302071
   verified: platner-ashby+pleiades
   model: temple_round
-  offset_m: [-66, -4]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 66 m off
   bearing_deg: 100  # unverified
   footprint_m: {radius: 7.5}
   geometry_source: "Platner-Ashby s.v. Vesta (round, foundation 15.05 m diameter, 20 Corinthian/Ionic columns 4.45 m high); the doorway side not stated: east assumed"
@@ -642,7 +635,6 @@ monuments:
   pleiades: 795139357
   verified: platner-ashby+pleiades
   model: domus
-  offset_m: [-66, -11]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 67 m off
   bearing_deg: 16  # unverified
   footprint_m: {length: 45, width: 24}  # unverified
   height_m: 9  # unverified
@@ -668,7 +660,6 @@ monuments:
   pleiades: 554680094
   verified: platner-ashby+pleiades
   model: regia
-  offset_m: [-58, -18]  # east, north metres added to lat/lon; unverified: nudged east to clear the temple of Divus Iulius (Wikipedia coordinates put them 13 m apart)
   bearing_deg: 16  # unverified
   footprint_m: {length: 22, width: 8}
   height_m: 7  # unverified
@@ -693,11 +684,10 @@ monuments:
   pleiades: 694134032
   verified: platner-ashby+pleiades
   model: aedicula  # unverified
-  offset_m: [70, 81]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 107 m off
   bearing_deg: 78  # unverified
   footprint_m: {length: 3.5, width: 3}
-  phases: [{from: -121, state: standing, model: temple_hexastyle_corinthian, footprint_m: {length: 38, width: 45}}]
-  geometry_source: "Platner-Ashby s.v. Concordia (Augustan cella 45 m wide and 24 deep, pronaos 34 wide and 14 deep, concrete podium of 121 BC); transverse-cella plan not in the kit (TODO); early shrine a small aedicula"
+  phases: [{from: -121, state: standing, model: temple_concord, footprint_m: {length: 38, width: 45}}]
+  geometry_source: "Platner-Ashby s.v. Concordia (Augustan cella 45 m wide and 24 deep, pronaos 34 wide and 14 deep, concrete podium of 121 BC); transverse-cella plan drawn as the kit temple_concord (order, six columns and heights assumed); early shrine a small aedicula"
   geometry_unverified: [bearing_deg, height_m, model]
 - id: aedes_divi_iulii
   latin: Aedes Divi Iulii
@@ -714,12 +704,11 @@ monuments:
   notes: "Verified against P&A: authorised by the triumvirs in 42 (Dio 47.18), built by Augustus alone (Mon. Anc. 4.2 = RG 19.1: 'aedem divi Iuli feci'), dedicated 18 August 29 (Dio 51.22; Hemerol. Amit. Antiat.). Podium: rectangular platform 3.5 m high, 26 m wide, about 30 m long; stylobate 2.36 m above it, about 17 m wide; the platform's projecting wings (7 m each side) were the 'rostra aedis divi Iuli', decorated with the beaks of the ships captured at Actium (Frontin. Aq. 129; Dio 56.34). Temple Ionic, hexastyle (from Richter's reconstruction on coins). The altar niche is on the site of Caesar's pyre (App. BC 1.4, 2.148). Pleiades 277569430."
   pleiades: 277569430
   verified: platner-ashby+pleiades
-  model: temple_hexastyle_corinthian  # unverified
-  offset_m: [-46, -18]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 49 m off
+  model: temple_hexastyle_ionic_marble  # unverified
   bearing_deg: 286  # unverified
   footprint_m: {length: 30, width: 26}
   construction: {begun: -42, completed: -29}  # work years; see geometry_source
-  geometry_source: "Platner-Ashby s.v. Divus Iulius, Aedes (platform 3.5 m high, 26 wide, c. 30 long, stylobate 2.36 m above, cella 17 m wide, columns 1.18 m thick and 9 diameters high); faces west onto the Forum, rostra projecting in front; hexastyle Ionic, kit stand-in Corinthian (TODO)"
+  geometry_source: "Platner-Ashby s.v. Divus Iulius, Aedes (platform 3.5 m high, 26 wide, c. 30 long, stylobate 2.36 m above, cella 17 m wide, columns 1.18 m thick and 9 diameters high); faces west onto the Forum, rostra projecting in front; hexastyle Ionic (kit temple_hexastyle_ionic_marble)"
   geometry_unverified: [bearing_deg, model]
 - id: ianus_geminus
   latin: Ianus Geminus
@@ -760,7 +749,6 @@ monuments:
   pleiades: 459049147
   verified: platner-ashby+pleiades
   model: plaza
-  offset_m: [-31, 33]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 45 m off
   bearing_deg: 0
   footprint_m: {length: 10, width: 9}
   height_m: 0
@@ -782,7 +770,6 @@ monuments:
   pleiades: 707467453
   verified: platner-ashby+pleiades
   model: basin
-  offset_m: [-20, 18]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 27 m off
   bearing_deg: 0
   footprint_m: {length: 10, width: 10}
   height_m: 1.2
@@ -802,7 +789,6 @@ monuments:
   pleiades: 755655444
   verified: platner-ashby+pleiades
   model: aedicula
-  offset_m: [28, -7]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 29 m off
   bearing_deg: 16  # unverified
   footprint_m: {length: 7, width: 7}
   height_m: 4  # unverified
@@ -889,7 +875,7 @@ monuments:
   notes: "CORRECTED: the old text claimed Livy 43.16.13 records a rebuilding in 169 by Gracchus and Claudius; in the Latin text it only has the censors going up into the atrium Libertatis and sealing the tablets and closing the tabularium (169) when put on trial. P&A: building holding the censors' offices and records and some bronze laws (Livy 43.16, 45.15; Festus 241); said to have held the Thurian hostages in 212 (Livy 25.7.12) and slaves tortured at Milo's trial (Cic. Mil. 59); restored and enlarged by the censors of 194 (Livy 34.44.5, 'atrium Libertatis et villa publica ab iisdem refecta amplificataque'); restored magnificently by Asinius Pollio (Suet. Aug. 29; the usual date 39 BC is not in the P&A text read here). The earlier claim 'existed by 214 (Livy 24.18)' is unsupported and was removed. Site unknown (not on the later curia site). Not in Pleiades."
   pleiades: null
   verified: platner-ashby
-  model: public_building
+  model: archive_hall
   bearing_deg: 178  # unverified
   footprint_m: {length: 30, width: 40}  # unverified
   height_m: 10  # unverified
@@ -1036,7 +1022,6 @@ monuments:
   pleiades: 825969667
   verified: platner-ashby+pleiades
   model: temple_round_marble
-  offset_m: [-30, 24]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 38 m off
   bearing_deg: 90  # unverified
   footprint_m: {radius: 7.4}
   geometry_source: "Platner-Ashby s.v. Hercules Victor (circular, 20 Corinthian columns, Greek marble); radius c. 7.4 m (14.8 m across, as in the kit)"
@@ -1058,7 +1043,6 @@ monuments:
   pleiades: 494660670
   verified: platner-ashby+pleiades
   model: temple_tetrastyle_ionic_travertine
-  offset_m: [3, 52]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 52 m off
   bearing_deg: 270  # unverified
   footprint_m: {length: 20, width: 12}  # unverified
   geometry_source: "Platner-Ashby s.v. Aedes Portuni (tetrastyle Ionic pseudoperipteral on a podium); front toward the Tiber assumed"
@@ -1077,9 +1061,9 @@ monuments:
   notes: "CORRECTED: the gate existed in the story of 439 (Livy 4.16.2: L. Minucius given an ox 'extra portam Trigeminam'), before the wall of 378, so '378 certain' is unsound; the name, if not anachronistic in Livy, implies a gate on the Palatine-Aventine line before the Servian Wall. P&A: important gate in the Servian wall between the Aventine and the Tiber (Region XI), exact site disputed: below S. Sabina, or about 40 m south of S. Maria in Cosmedin (arch of tufa 3.30 m wide found 1886), or at the north corner of the Aventine near S. Anna dei Calzettari. Livy 35.10.12 (193 BC): the aediles built a portico outside the Porta Trigemina and added the Emporium to it; Livy 41.27.8 (174): the censors paved the Emporium outside the gate, repaired the Porticus Aemilia and paved a portico inside the gate up the Aventine. Pleiades 303638861 has only a 'related' location."
   pleiades: 303638861
   verified: platner-ashby
-  model: gate
-  footprint_m: {length: 9, width: 12}
-  height_m: 12  # unverified
+  model: servian_gate
+  footprint_m: {length: 26, width: 34}  # unverified
+  height_m: 16  # unverified
   snap_to: murus_servianus
   geometry_source: "Platner-Ashby s.v. Porta Trigemina (an arch of tufa, 3.30 m wide, over a paved road found 40 m south of S. Maria in Cosmedin); flanking towers assumed"
   geometry_unverified: [height_m]
@@ -1528,7 +1512,6 @@ monuments:
   pleiades: 257097394
   verified: platner-ashby+pleiades
   model: temple_hexastyle_corinthian_marble
-  offset_m: [-124, 22]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 126 m off
   bearing_deg: 90  # unverified
   footprint_m: {length: 50, width: 25}  # unverified
   construction: {begun: -36, completed: -28}  # work years; see geometry_source
@@ -1837,7 +1820,6 @@ monuments:
   pleiades: 458808506
   verified: platner-ashby+pleiades
   model: circus_maximus
-  offset_m: [50, -22]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 55 m off
   bearing_deg: 134  # unverified
   footprint_m: {length: 621, width: 118}
   phases: [{from: -329, state: standing, variant: carceres}, {from: -174, state: standing, variant: eggs}, {from: -46, state: standing, variant: caesar}, {from: -33, state: standing, variant: augustan}]
@@ -1900,7 +1882,6 @@ monuments:
   pleiades: 937921711
   verified: platner-ashby+pleiades
   model: quay
-  offset_m: [-297, 146]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 331 m off
   bearing_deg: 270  # unverified
   footprint_m: {length: 500, width: 40}  # unverified
   height_m: 0
@@ -1925,7 +1906,6 @@ monuments:
   pleiades: 51787060
   verified: platner-ashby+pleiades
   model: long_hall
-  offset_m: [-297, 146]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 331 m off
   bearing_deg: 45  # unverified
   footprint_m: {length: 60, width: 487}
   height_m: 9  # unverified
@@ -2221,7 +2201,7 @@ monuments:
   sources: ["Suet. Iul. 44", "Dio 43.49.2", "Dio 54.26.1", "Platner-Ashby s.v. Theatrum Marcelli"]
   model: theatre_stone
   bearing_deg: 202.5  # unverified: Platner-Ashby: stage toward the river, main axis NNE-SSW; front = scaena side (SSW)
-  footprint_m: {radius: 65}
+  footprint_m: {radius: 75}
   height_m: 32.6  # unverified
   construction: {begun: -44, completed: -13}  # work years; see geometry_source
   geometry_source: "Platner-Ashby s.v. Theatrum Marcelli (diameter about 150 m, scaena about 80-90 m long and 20 deep, apsidal halls 25 x 15 m at its ends; stage toward the river, main axis NNE-SSW; thirteen piers 3 m wide and 2 deep; three open arcades, Doric then Ionic)"
@@ -2238,7 +2218,7 @@ monuments:
   location: Campus Martius
   built: {year: -29, certainty: certain, by: "T. Statilius Taurus, dedicated 29 (Dio 51.23.1)"}
   sources: ["Dio 51.23.1", "Platner-Ashby s.v. Amphitheatrum Tauri"]
-  model: amphitheatre
+  model: amphitheatre_small
   bearing_deg: 90  # unverified
   footprint_m: {length: 80, width: 110}  # unverified
   height_m: 20  # unverified
@@ -2618,10 +2598,10 @@ monuments:
   location: Servian Wall, south-east of the Palatine, start of the Via Appia
   built: {year: -378, certainty: certain, by: "with the Servian Wall"}
   sources: ["Platner-Ashby s.v. Porta Capena"]
-  model: gate
+  model: servian_gate
   offset_m: [207, -167]  # east, north metres added to lat/lon; unverified: the Servian gate stood by the modern Piazza di Porta Capena (Wikipedia coordinates 41.8838, 12.4905), 270 m from the dataset point; keeps the wall clear of the Circus Maximus
-  footprint_m: {length: 9, width: 12}  # unverified
-  height_m: 12  # unverified
+  footprint_m: {length: 26, width: 34}  # unverified
+  height_m: 16  # unverified
   snap_to: murus_servianus
   geometry_source: "Platner-Ashby s.v. Porta Capena (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
   geometry_unverified: [footprint_m, height_m]
@@ -2636,9 +2616,9 @@ monuments:
   location: Servian Wall, north-east, on the Quirinal; start of the Via Nomentana / Salaria
   built: {year: -378, certainty: certain, by: "with the Servian Wall; battle of the Colline Gate 82 BC (Plut. Sulla 29-30)"}
   sources: ["Plut. Sulla 29", "Platner-Ashby s.v. Porta Collina"]
-  model: gate
-  footprint_m: {length: 9, width: 12}  # unverified
-  height_m: 12  # unverified
+  model: servian_gate
+  footprint_m: {length: 26, width: 34}  # unverified
+  height_m: 16  # unverified
   snap_to: murus_servianus
   geometry_source: "Platner-Ashby s.v. Porta Collina (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
   geometry_unverified: [footprint_m, height_m]
@@ -2653,9 +2633,9 @@ monuments:
   location: Servian Wall, east, near the Arch of Gallienus
   built: {year: -378, certainty: certain, by: "with the Servian Wall"}
   sources: ["Platner-Ashby s.v. Porta Esquilina"]
-  model: gate
-  footprint_m: {length: 9, width: 12}  # unverified
-  height_m: 12  # unverified
+  model: servian_gate
+  footprint_m: {length: 26, width: 34}  # unverified
+  height_m: 16  # unverified
   snap_to: murus_servianus
   geometry_source: "Platner-Ashby s.v. Porta Esquilina (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
   geometry_unverified: [footprint_m, height_m]
@@ -2670,9 +2650,9 @@ monuments:
   location: Servian Wall, north-east
   built: {year: -378, certainty: certain, by: "with the Servian Wall"}
   sources: ["Platner-Ashby s.v. Porta Viminalis"]
-  model: gate
-  footprint_m: {length: 9, width: 12}  # unverified
-  height_m: 12  # unverified
+  model: servian_gate
+  footprint_m: {length: 26, width: 34}  # unverified
+  height_m: 16  # unverified
   snap_to: murus_servianus
   geometry_source: "Platner-Ashby s.v. Porta Viminalis (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
   geometry_unverified: [footprint_m, height_m]
@@ -2687,9 +2667,9 @@ monuments:
   location: Servian Wall, Caelian
   built: {year: -378, certainty: certain, by: "with the Servian Wall"}
   sources: ["Platner-Ashby s.v. Porta Caelimontana"]
-  model: gate
-  footprint_m: {length: 9, width: 12}  # unverified
-  height_m: 12  # unverified
+  model: servian_gate
+  footprint_m: {length: 26, width: 34}  # unverified
+  height_m: 16  # unverified
   snap_to: murus_servianus
   geometry_source: "Platner-Ashby s.v. Porta Caelimontana (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
   geometry_unverified: [footprint_m, height_m]
@@ -2704,9 +2684,9 @@ monuments:
   location: Servian Wall, Aventine, south
   built: {year: -378, certainty: certain, by: "with the Servian Wall"}
   sources: ["Platner-Ashby s.v. Porta Naevia"]
-  model: gate
-  footprint_m: {length: 9, width: 12}  # unverified
-  height_m: 12  # unverified
+  model: servian_gate
+  footprint_m: {length: 26, width: 34}  # unverified
+  height_m: 16  # unverified
   snap_to: murus_servianus
   geometry_source: "Platner-Ashby s.v. Porta Naevia (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
   geometry_unverified: [footprint_m, height_m]
@@ -2721,9 +2701,9 @@ monuments:
   location: Servian Wall, Aventine, west
   built: {year: -378, certainty: certain, by: "with the Servian Wall"}
   sources: ["Platner-Ashby s.v. Porta Raudusculana"]
-  model: gate
-  footprint_m: {length: 9, width: 12}  # unverified
-  height_m: 12  # unverified
+  model: servian_gate
+  footprint_m: {length: 26, width: 34}  # unverified
+  height_m: 16  # unverified
   snap_to: murus_servianus
   geometry_source: "Platner-Ashby s.v. Porta Raudusculana (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
   geometry_unverified: [footprint_m, height_m]
@@ -2738,9 +2718,9 @@ monuments:
   location: Servian Wall, Aventine, south-west
   built: {year: -378, certainty: certain, by: "with the Servian Wall"}
   sources: ["Platner-Ashby s.v. Porta Lavernalis"]
-  model: gate
-  footprint_m: {length: 9, width: 12}  # unverified
-  height_m: 12  # unverified
+  model: servian_gate
+  footprint_m: {length: 26, width: 34}  # unverified
+  height_m: 16  # unverified
   snap_to: murus_servianus
   geometry_source: "Platner-Ashby s.v. Porta Lavernalis (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
   geometry_unverified: [footprint_m, height_m]
@@ -2755,10 +2735,10 @@ monuments:
   location: Servian Wall, foot of the Capitol toward the Forum Holitorium; triumphs avoided the unlucky right arch (Livy 2.49.8)
   built: {year: -378, certainty: certain, by: "with the Servian Wall"}
   sources: ["Livy 2.49.8", "Platner-Ashby s.v. Porta Carmentalis"]
-  model: gate
+  model: servian_gate
   offset_m: [-35, -45]  # east, north metres added to lat/lon; unverified: Wikipedia coordinates of the Carmental Gate (41.8914, 12.4803), 57 m from the dataset point; Platner-Ashby: near Via della Consolazione x Via della Bocca della Verita, SW corner of the Capitol
-  footprint_m: {length: 9, width: 12}  # unverified
-  height_m: 12  # unverified
+  footprint_m: {length: 26, width: 34}  # unverified
+  height_m: 16  # unverified
   snap_to: murus_servianus
   geometry_source: "Platner-Ashby s.v. Porta Carmentalis (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
   geometry_unverified: [footprint_m, height_m]
@@ -2773,10 +2753,10 @@ monuments:
   location: Servian Wall, between the Capitol and the Tiber
   built: {year: -378, certainty: certain, by: "with the Servian Wall"}
   sources: ["Livy 35.9.2", "Platner-Ashby s.v. Porta Flumentana"]
-  model: gate
+  model: servian_gate
   offset_m: [48, -170]  # east, north metres added to lat/lon; unverified: Platner-Ashby s.v. Porta Flumentana only says the gate lay on the wall joining the Capitol to the river, with the southern Campus Martius outside it; moved so the wall passes south of the Forum Holitorium and the Theatre of Marcellus site, which lay outside the Porta Carmentalis (Livy 25.7)
-  footprint_m: {length: 9, width: 12}  # unverified
-  height_m: 12  # unverified
+  footprint_m: {length: 26, width: 34}  # unverified
+  height_m: 16  # unverified
   snap_to: murus_servianus
   geometry_source: "Platner-Ashby s.v. Porta Flumentana (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
   geometry_unverified: [footprint_m, height_m]
@@ -2791,9 +2771,9 @@ monuments:
   location: Servian Wall, Capitol north side
   built: {year: -378, certainty: certain, by: "with the Servian Wall"}
   sources: ["Platner-Ashby s.v. Porta Fontinalis"]
-  model: gate
-  footprint_m: {length: 9, width: 12}  # unverified
-  height_m: 12  # unverified
+  model: servian_gate
+  footprint_m: {length: 26, width: 34}  # unverified
+  height_m: 16  # unverified
   snap_to: murus_servianus
   geometry_source: "Platner-Ashby s.v. Porta Fontinalis (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
   geometry_unverified: [footprint_m, height_m]
@@ -2808,9 +2788,9 @@ monuments:
   location: Servian Wall, between the Capitol and Quirinal
   built: {year: -378, certainty: certain, by: "with the Servian Wall"}
   sources: ["Platner-Ashby s.v. Porta Ratumena"]
-  model: gate
-  footprint_m: {length: 9, width: 12}  # unverified
-  height_m: 12  # unverified
+  model: servian_gate
+  footprint_m: {length: 26, width: 34}  # unverified
+  height_m: 16  # unverified
   snap_to: murus_servianus
   geometry_source: "Platner-Ashby s.v. Porta Ratumena (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
   geometry_unverified: [footprint_m, height_m]
@@ -2825,9 +2805,9 @@ monuments:
   location: Servian Wall, Quirinal
   built: {year: -378, certainty: certain, by: "with the Servian Wall"}
   sources: ["Platner-Ashby s.v. Porta Sanqualis"]
-  model: gate
-  footprint_m: {length: 9, width: 12}  # unverified
-  height_m: 12  # unverified
+  model: servian_gate
+  footprint_m: {length: 26, width: 34}  # unverified
+  height_m: 16  # unverified
   snap_to: murus_servianus
   geometry_source: "Platner-Ashby s.v. Porta Sanqualis (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
   geometry_unverified: [footprint_m, height_m]
@@ -2842,9 +2822,9 @@ monuments:
   location: Servian Wall, Quirinal
   built: {year: -378, certainty: certain, by: "with the Servian Wall"}
   sources: ["Platner-Ashby s.v. Porta Salutaris"]
-  model: gate
-  footprint_m: {length: 9, width: 12}  # unverified
-  height_m: 12  # unverified
+  model: servian_gate
+  footprint_m: {length: 26, width: 34}  # unverified
+  height_m: 16  # unverified
   snap_to: murus_servianus
   geometry_source: "Platner-Ashby s.v. Porta Salutaris (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
   geometry_unverified: [footprint_m, height_m]
@@ -2860,9 +2840,9 @@ monuments:
   built: {year: -378, certainty: certain, by: "with the Servian Wall"}
   sources: ["Platner-Ashby s.v. Porta Querquetulana"]
 # ---------------------------------------------------------------- BRIDGES
-  model: gate
-  footprint_m: {length: 9, width: 12}  # unverified
-  height_m: 12  # unverified
+  model: servian_gate
+  footprint_m: {length: 26, width: 34}  # unverified
+  height_m: 16  # unverified
   snap_to: murus_servianus
   geometry_source: "Platner-Ashby s.v. Porta Querquetulana (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
   geometry_unverified: [footprint_m, height_m]
