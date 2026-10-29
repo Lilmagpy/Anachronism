@@ -5,7 +5,10 @@
 ##
 ## Usage, from anywhere:
 ##   var y := UrbsTerrain.height_at(x, z)        # ground height a.s.l. at local (x, z) metres
-##   UrbsTerrain.build(parent)                    # meshes, collision and the river water
+##   UrbsTerrain.build(urbs)                      # whole-scene parts (the river water)
+##   UrbsTerrain.build_chunk(rect, lod)           # the ground of one 250 m chunk (collision at lod 0)
+##   UrbsTerrain.build_all(parent)                # everything at once (standalone preview)
+## (all static: calling them on an `UrbsTerrain.new()` instance works too, as urbs.gd does)
 ## The frame is UrbsGeo's (x east, z south, y a.s.l.); the Forum floor is about y = 10.
 ##
 ## Model (the heights and the 460 x 180 m Capitol, 600 x 150 m Circus valley, 10-15 m Campus
@@ -199,74 +202,113 @@ static func bounds() -> Rect2:
 	return Rect2(-HALF_M, -HALF_M, 2.0 * HALF_M, 2.0 * HALF_M)
 
 
-## Builds the ground: 100 chunk meshes, one collision heightmap, and the Tiber water. Everything
-## goes under a new Node3D named "UrbsTerrain" added to `parent`, which is returned.
-static func build(parent: Node3D) -> Node3D:
+## Whole-scene parts for the Urbs root (urbs.gd interface): the Tiber's water surface. The
+## ground itself comes chunk by chunk from build_chunk. Returns the node holding the parts.
+static func build(urbs: Node3D) -> Node3D:
 	prepare()
 	var root := Node3D.new()
-	root.name = "UrbsTerrain"
-	parent.add_child(root)
-	var mat := _ground_material()
-	var chunks := CELLS / CHUNK_CELLS
-	for cj in chunks:
-		for ci in chunks:
-			var mi := MeshInstance3D.new()
-			mi.name = "Chunk_%d_%d" % [ci, cj]
-			mi.mesh = _chunk_mesh(ci * CHUNK_CELLS, cj * CHUNK_CELLS)
-			mi.material_override = mat
-			root.add_child(mi)
-	var body := StaticBody3D.new()
-	body.name = "GroundBody"
-	var shape := HeightMapShape3D.new()
-	shape.map_width = VERTS
-	shape.map_depth = VERTS
-	shape.map_data = _h
-	var cs := CollisionShape3D.new()
-	cs.shape = shape
-	body.add_child(cs)
-	body.scale = Vector3(CELL_M, 1.0, CELL_M)
-	root.add_child(body)
+	root.name = "UrbsRiver"
+	urbs.add_child(root)
 	UrbsTiber.build_water(root)
 	return root
 
 
-static func _chunk_mesh(i0: int, j0: int) -> ArrayMesh:
-	var c := CHUNK_CELLS
-	var nv := (c + 1) * (c + 1)
+## The ground of one chunk covering `rect` (local x, z metres; 250 m squares aligned to the
+## field, but any rect inside it works). lod 0 is the finest (10 m cells) and carries collision
+## (a heightmap body); lod 1 and 2 use 50 m cells with no collision. Every chunk has a skirt
+## dropped 4 m round its edge so neighbours of different detail show no cracks.
+static func build_chunk(rect: Rect2, lod: int) -> Node3D:
+	prepare()
+	var step := 1 if lod <= 0 else 5
+	var i0 := roundi((rect.position.x + HALF_M) / CELL_M)
+	var j0 := roundi((rect.position.y + HALF_M) / CELL_M)
+	var ci := maxi(roundi(rect.size.x / CELL_M), 1)
+	var cj := maxi(roundi(rect.size.y / CELL_M), 1)
+	var node := Node3D.new()
+	node.name = "Ground_%d_%d_L%d" % [i0, j0, lod]
+	var mi := MeshInstance3D.new()
+	mi.name = "Mesh"
+	mi.mesh = _chunk_mesh(i0, j0, ci, cj, step)
+	mi.material_override = _ground_material()
+	node.add_child(mi)
+	if lod <= 0:
+		var shape := HeightMapShape3D.new()
+		shape.map_width = ci + 1
+		shape.map_depth = cj + 1
+		var data := PackedFloat32Array()
+		data.resize((ci + 1) * (cj + 1))
+		for dj in cj + 1:
+			for di in ci + 1:
+				data[dj * (ci + 1) + di] = _h[_gi(j0 + dj) * VERTS + _gi(i0 + di)]
+		shape.map_data = data
+		var body := StaticBody3D.new()
+		body.name = "GroundBody"
+		var cs := CollisionShape3D.new()
+		cs.shape = shape
+		body.add_child(cs)
+		body.scale = Vector3(CELL_M, 1.0, CELL_M)
+		body.position = Vector3(rect.position.x + ci * CELL_M * 0.5, 0.0, rect.position.y + cj * CELL_M * 0.5)
+		node.add_child(body)
+	return node
+
+
+## Builds the whole field at once (100 chunks of 500 m, with collision) plus the river, under a
+## new Node3D "UrbsTerrain" added to `parent`. Used by the standalone preview.
+static func build_all(parent: Node3D) -> Node3D:
+	prepare()
+	var root := Node3D.new()
+	root.name = "UrbsTerrain"
+	parent.add_child(root)
+	var size := CHUNK_CELLS * CELL_M
+	for cj in CELLS / CHUNK_CELLS:
+		for ci in CELLS / CHUNK_CELLS:
+			root.add_child(build_chunk(Rect2(-HALF_M + ci * size, -HALF_M + cj * size, size, size), 0))
+	build(root)
+	return root
+
+
+static func _gi(i: int) -> int:
+	return clampi(i, 0, CELLS)
+
+
+static func _chunk_mesh(i0: int, j0: int, ci: int, cj: int, step: int) -> ArrayMesh:
+	var nx := maxi(ci / step, 1)
+	var nz := maxi(cj / step, 1)
 	var verts := PackedVector3Array()
-	verts.resize(nv)
 	var norms := PackedVector3Array()
-	norms.resize(nv)
 	var cols := PackedColorArray()
-	cols.resize(nv)
 	var uvs := PackedVector2Array()
-	uvs.resize(nv)
-	var k := 0
-	for dj in c + 1:
-		for di in c + 1:
-			var i := i0 + di
-			var j := j0 + dj
-			var x := -HALF_M + i * CELL_M
-			var z := -HALF_M + j * CELL_M
-			var y := _h[j * VERTS + i]
-			verts[k] = Vector3(x, y, z)
-			var hl := _h[j * VERTS + maxi(i - 1, 0)]
-			var hr := _h[j * VERTS + mini(i + 1, CELLS)]
-			var hu := _h[maxi(j - 1, 0) * VERTS + i]
-			var hd := _h[mini(j + 1, CELLS) * VERTS + i]
-			var nrm := Vector3(hl - hr, 2.0 * CELL_M, hu - hd).normalized()
-			norms[k] = nrm
-			cols[k] = _ground_colour(x, z, y, nrm.y, _river_dist[j * VERTS + i], _river_level[j * VERTS + i])
-			uvs[k] = Vector2(x, z) * 0.1
-			k += 1
+	var stride := nx + 1
+	# top surface then, after it, a skirt ring (same x, z; y lowered, same normal and colour)
+	for dj in nz + 1:
+		for di in nx + 1:
+			_add_vertex(i0 + di * step, j0 + dj * step, 0.0, verts, norms, cols, uvs)
 	var idx := PackedInt32Array()
-	for dj in c:
-		for di in c:
-			var a := dj * (c + 1) + di
-			var b := a + 1
-			var d := a + c + 1
-			var e := d + 1
-			idx.append_array([a, b, d, b, e, d])
+	for dj in nz:
+		for di in nx:
+			var a := dj * stride + di
+			idx.append_array([a, a + 1, a + stride, a + 1, a + stride + 1, a + stride])
+	var ring: Array[Vector2i] = []
+	for di in nx:
+		ring.append(Vector2i(di, 0))
+	for dj in nz:
+		ring.append(Vector2i(nx, dj))
+	for di in range(nx, 0, -1):
+		ring.append(Vector2i(di, nz))
+	for dj in range(nz, 0, -1):
+		ring.append(Vector2i(0, dj))
+	var base := verts.size()
+	for r in ring:
+		_add_vertex(i0 + r.x * step, j0 + r.y * step, 4.0, verts, norms, cols, uvs)
+	for k in ring.size():
+		var r0: Vector2i = ring[k]
+		var r1: Vector2i = ring[(k + 1) % ring.size()]
+		var t0 := r0.y * stride + r0.x
+		var t1 := r1.y * stride + r1.x
+		var s0 := base + k
+		var s1 := base + (k + 1) % ring.size()
+		idx.append_array([t0, t1, s0, t1, s1, s0])
+		idx.append_array([t0, s0, t1, t1, s0, s1])   # double sided: the skirt is seen from outside
 	var arr: Array = []
 	arr.resize(Mesh.ARRAY_MAX)
 	arr[Mesh.ARRAY_VERTEX] = verts
@@ -277,6 +319,23 @@ static func _chunk_mesh(i0: int, j0: int) -> ArrayMesh:
 	var mesh := ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
 	return mesh
+
+
+static func _add_vertex(i: int, j: int, drop: float, verts: PackedVector3Array, norms: PackedVector3Array, cols: PackedColorArray, uvs: PackedVector2Array) -> void:
+	i = _gi(i)
+	j = _gi(j)
+	var x := -HALF_M + i * CELL_M
+	var z := -HALF_M + j * CELL_M
+	var y := _h[j * VERTS + i]
+	var hl := _h[j * VERTS + _gi(i - 1)]
+	var hr := _h[j * VERTS + _gi(i + 1)]
+	var hu := _h[_gi(j - 1) * VERTS + i]
+	var hd := _h[_gi(j + 1) * VERTS + i]
+	var nrm := Vector3(hl - hr, 2.0 * CELL_M, hu - hd).normalized()
+	verts.append(Vector3(x, y - drop, z))
+	norms.append(nrm)
+	cols.append(_ground_colour(x, z, y, nrm.y, _river_dist[j * VERTS + i], _river_level[j * VERTS + i]))
+	uvs.append(Vector2(x, z) * 0.1)
 
 
 ## Ground colour: grass on the gentle hill tops, tufa earth on the steep sides, a lighter
@@ -296,7 +355,12 @@ static func _ground_colour(x: float, z: float, y: float, ny: float, rd: float, w
 	return c
 
 
+static var _material: ShaderMaterial = null
+
+
 static func _ground_material() -> ShaderMaterial:
+	if _material != null:
+		return _material
 	var sh := Shader.new()
 	sh.code = """
 shader_type spatial;
@@ -315,6 +379,6 @@ void fragment() {
 	SPECULAR = 0.05;
 }
 """
-	var m := ShaderMaterial.new()
-	m.shader = sh
-	return m
+	_material = ShaderMaterial.new()
+	_material.shader = sh
+	return _material

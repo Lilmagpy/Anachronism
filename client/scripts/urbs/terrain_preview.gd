@@ -32,7 +32,7 @@ func _initialize() -> void:
 	var root := Node3D.new()
 	get_root().add_child(root)
 	t0 = Time.get_ticks_msec()
-	var ground := UrbsTerrain.build(root)
+	var ground := UrbsTerrain.build_all(root)
 	if args.has("plain"):   # debug: grey clay, to judge the shape alone
 		var clay := StandardMaterial3D.new()
 		clay.albedo_color = Color(0.7, 0.7, 0.7)
