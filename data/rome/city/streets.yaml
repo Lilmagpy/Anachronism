@@ -238,18 +238,31 @@ streets:
   sources: ["Platner-Ashby s.v. Forum Boarium (read): mentions 'the clivus Publicius descending from the' Aventine to the road along the valley of the Circus Maximus", "Ovid Fasti 5.275-294 (the aediles L. and M. Publicius Malleolus built it from fines, 238 BC): # unverified, from memory; Livy 41.27.5 for paving"]
   notes: "No separate P-A article online (# unverified). The date 238 BC rests on the Publicii's aedileship as I recall it from Ovid and Varro; treat as probable."
 - id: via_appia
-  latin: Via Appia
-  english: Appian Way
+  latin: Via Appia (first mile, Porta Capena to the later Porta Appia)
+  english: Appian Way, first mile
   kind: road
-  direction: "from the Porta Capena south-east (modern Via di Porta S. Sebastiano, then the Via Appia Antica)"
-  points: [[41.8838, 12.4905], [41.8812, 12.4930], [41.8780, 12.4962], [41.8745, 12.5005], [41.8700, 12.5052], [41.8650, 12.5095], [41.8607, 12.5131], [41.8590, 12.5165], [41.8568, 12.5222], [41.8520, 12.5280], [41.8460, 12.5333]]
+  direction: "from the Porta Capena south-east (modern Via di Porta S. Sebastiano) to the site of the Aurelian Porta Appia, one Roman mile out"
+  points: [[41.8838, 12.4905], [41.8812, 12.4930], [41.8780, 12.4962], [41.8745, 12.5005], [41.8700, 12.5052], [41.8650, 12.5095], [41.8607, 12.5131]]
   precision: approx
   width_m: 4.2
   width_source: assumed
   exists_from: -312
+  paved_from: -189
+  sources: ["Platner-Ashby s.v. Via Appia (read): built 312 BC by the censor Appius Claudius Caecus (Livy 9.29); issued from the Porta Capena; 'the original road was only gravelled'; in 296 a footpath saxo quadrato from the gate to the templum Martis (Livy 10.23.12); in 189 B.C. the first mile, from the gate to the temple, was paved with silex (Livy 38.28.3)", "Livy 38.28.3 (read, Latin Library): uiam silice sternendam a porta Capena ad Martis locauerunt", "Platner-Ashby: the first milestone was just inside the porta Appia"]
+  notes: "Split from the outer road at the Aurelian Porta Appia (about one mile from the Porta Capena), because the two parts were paved in different years (189 and 293 BC). P-A: this part of the course ran a little further north-east than the modern Via di Porta S. Sebastiano."
+- id: via_appia_outer
+  latin: Via Appia (beyond the first mile)
+  english: Appian Way beyond the first mile
+  kind: road
+  direction: "from the first mile south-east along the modern Via Appia Antica"
+  points: [[41.8607, 12.5131], [41.8590, 12.5165], [41.8568, 12.5222], [41.8520, 12.5280], [41.8460, 12.5333]]
+  precision: rough
+  width_m: 4.2
+  width_source: assumed
+  exists_from: -312
   paved_from: -293
-  sources: ["Platner-Ashby s.v. Via Appia (read): built 312 BC by the censor Appius Claudius Caecus (Livy 9.29); issued from the Porta Capena; 'the original road was only gravelled'; in 296 a footpath saxo quadrato from the gate to the templum Martis (Livy 10.23.12); three years later the whole road paved with silex from the temple to Bovillae (Livy 10.47.4); in 189 the first mile from the gate to the temple (Livy 38.28.3)", "Livy 10.47.4 (read, Latin Library): via a Martis silice ad Bovillas perstrata est", "Livy 38.28.3 (read): uiam silice sternendam a porta Capena ad Martis locauerunt"]
-  notes: "paved_from -293 is the date for the stretch from the temple of Mars (about the 1st mile) to Bovillae; the first mile out of the Porta Capena (which is the part inside our map near the gate) was paved in 189 BC. Fill and streets scripts treat 189 as the pavement year for points within 1.5 km of the gate. Beyond about 1.5 km the points are rough."
+  sources: ["Platner-Ashby s.v. Via Appia (read): three years after the 296 footpath the whole road was paved with silex from the temple of Mars to Bovillae (Livy 10.47.4)", "Livy 10.47.4 (read, Latin Library): via a Martis silice ad Bovillas perstrata est"]
+  notes: "Gravel (glareo strata) from 312 to 293 BC, paved from 293 (Livy 10.47.4, three years after the footpath of 296). Beyond about 1.5 km from the gate the points are rough."
 - id: via_latina
   latin: Via Latina
   english: Latin Way
