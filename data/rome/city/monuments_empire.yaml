@@ -1,18 +1,22 @@
 # Monuments of Rome 27 BC - AD 120 (Augustus to Hadrian's accession years). Format: README.md,
 # plus per entry: footprint_m {length, width} or {radius}; bearing_deg (compass bearing of the
 # long axis / front, degrees clockwise from north, null if not known); height_m; model (form key
-# for the client: temple_hexastyle, temple_octastyle, temple_round, basilica, forum, portico,
-# theatre, amphitheatre, baths, arch, column, mausoleum, obelisk, bridge, aqueduct, horrea,
-# insula, domus, palace, camp, stadium, odeum, market, colossus, fire, ...).
+# for the client: temple_hexastyle, temple_octastyle, temple_decastyle, temple_round, altar_precinct, basilica,
+# forum, portico, theatre, amphitheatre, baths, arch, column, mausoleum, obelisk, aqueduct, camp, stadium,
+# odeum, market, colossus, fountain, palace, domus, curia, basin, arena_school, fire, ...).
 #
-# PROVENANCE WARNING (read this). The session that wrote this file had NO network access to
-# LacusCurtius, Perseus or Pleiades (egress proxy refused penelope.uchicago.edu, pleiades.stoa.org).
-# Every entry was therefore written from memory of the sources and NONE of the passage numbers
-# was re-read. Every entry carries `verified: false`. `pleiades` is null everywhere: ids were
-# not looked up and none was guessed. Coordinates are from memory of the identified remains
-# (Colosseum, Pantheon, fora, Mausoleum, Ara Pacis, Theatre of Marcellus ...) and are good to
-# some tens of metres when precision is "exact"/"approx"; "rough" means the site itself is debated.
-# Sizes and bearings are marked unverified in `notes` where they are especially doubtful.
+# PROVENANCE. First drafted from memory (network was down), then CHECKED in a second pass against
+# Platner-Ashby (LacusCurtius) article by article, plus Suetonius (Augustus, Tiberius, Caligula, Claudius,
+# Nero, Vespasian, Titus, Domitian), Cassius Dio books 51, 62, 66, 68, 69 and Tacitus Annals 2, 3, 4,
+# 6, 12, 14, 15 and Histories 1, 3, 4 (LacusCurtius). `verified: true` means the dates, sizes and
+# citations in the entry were read in Platner-Ashby; any field still not read is listed in
+# `unverified_fields` and explained in `notes`. `verified: false` (mercati_traianei) means no source read.
+# Not read: Martial, Statius, Pliny NH, Pliny Panegyricus, Res Gestae text, Frontinus, Perseus (down),
+# so citations to them are as quoted in Platner-Ashby or from memory (marked in notes).
+# `pleiades` is the id of the matching Pleiades place (CC BY, pleiades.stoa.org/places/<id>) where one
+# was found; null otherwise. Pleiades coordinates were used where Platner-Ashby gave none and noted.
+# bearing_deg is for placement only: Platner-Ashby rarely gives an orientation; most values are from
+# modern plans and are listed in `unverified_fields`.
 # Entries that duplicate a Republican-file monument carry `republican_id`; their ids differ so
 # that the two files can be merged without clashes.
 # Out-of-range items (after AD 120) are included only where the task asked, with `beyond_range: true`.
@@ -912,7 +916,7 @@ monuments:
   location: South-east of the Forum of Augustus, between the Via Sacra and the Argiletum; the Forma Urbis marble plan hung in an apse
   built: {year: 75, certainty: certain, by: "begun by Vespasian after the capture of Jerusalem in AD 71 and dedicated in 75 (Suet. Vesp. 9, read; Joseph. BJ 7.5.7 (158); Dio 65.15.1 in Cary/Boissevain numbering; Aur. Vict. Caes. 9.7)"}
   events:
-  - {year: 192, what: "burned in AD 192 (Dio 72.24) - beyond range"}
+  - {year: 191, what: "destroyed by fire, probably in 191, just before the death of Commodus (Dio 72.24.1; Galen, de comp. med. 1.1) - beyond range"}
   form: "forum Pacis: rectangular, 145 m long and about two-thirds as wide, same orientation as the other imperial fora, peperino enclosing wall lined with marble with several gates; the temple of Peace stood in the middle, north of the Basilica Aemilia; the Forma Urbis marble plan was later fixed on a wall of the hall on the NE side (under Severus)"
   footprint_m: {length: 145, width: 97}
   bearing_deg: null
@@ -1136,7 +1140,7 @@ monuments:
   lon: 12.4863
   precision: exact
   location: Quirinal slope above the Forum of Trajan
-  built: {year: 110, certainty: probable, by: "Trajan, Apollodorus of Damascus; brick stamps date c. AD 110"}
+  built: {year: 110, certainty: uncertain, by: "Trajan's architect Apollodorus is generally credited; the c. 110 date rests on brick stamps - NOT confirmed in Platner-Ashby, which describes only tabernae behind the hemicycles of the forum wall"}
   form: "multi-level semicircular range of shops and offices on the hillside"
   footprint_m: {length: 150, width: 60}
   bearing_deg: null
@@ -1144,8 +1148,9 @@ monuments:
   model: market
   sources: ["Platner-Ashby s.v. Forum Traiani"]
   verified: false
+  unverified_fields: [built, footprint_m, height_m, lat, lon, bearing_deg]
   pleiades: null
-  notes: "Size from memory; Platner-Ashby treats the markets only cursorily."
+  notes: "NOT VERIFIED. Platner-Ashby s.v. Forum Traiani mentions tabernae along the outside of the forum's hemicycle walls but gives no account of the Markets; no ancient source or Pleiades record was found. The 150 x 60 x 30 m figures are from memory. Left verified: false."
 - id: thermae_traiani
   latin: Thermae Traiani
   english: Baths of Trajan
@@ -1155,16 +1160,17 @@ monuments:
   lon: 12.4985
   precision: approx
   location: Oppian hill over the Domus Aurea
-  built: {year: 109, certainty: certain, by: "Trajan, inaugurated AD 109 (Fasti Ostienses; Dio 68.7); Apollodorus"}
-  form: "baths on a terrace 330 x 315 m with exedrae, library halls"
-  footprint_m: {length: 330, width: 315}
-  bearing_deg: null
+  built: {year: 109, certainty: uncertain, by: "built for Trajan by Apollodorus (Paus. 5.12.6; Dio 69.4.1); Jerome (a. Abr. 2105) puts Titianae et Traianae under Domitian, which may mean the baths were planned by him; women bathed in them in Trajan's time (Chron. 146) (Platner-Ashby). The year 109 is NOT in Platner-Ashby and was not verified"}
+  form: "baths on the Esquiline just south-east of S. Pietro in Vincoli within the precinct of the Domus Aurea, partly built over it; extreme size 340 x 330 m, or 280 x 210 m without the exedral projections; axis NE-SW at 30 degrees from the meridian; peribolus with reading rooms and gymnasia, a large exedra on the south side serving as a theatre (Platner-Ashby)"
+  footprint_m: {length: 340, width: 330}
+  bearing_deg: 30
   height_m: null
   model: baths
-  sources: ["Dio 68.7", "Platner-Ashby s.v. Thermae Traiani"]
-  verified: false
-  pleiades: null
-  notes: "Dimensions and date from memory."
+  sources: ["Paus. 5.12.6", "Dio 69.4.1", "Chronogr. a. 354 (Chron. 146)", "Jerome a. Abr. 2105", "Platner-Ashby s.v. Thermae Traiani (read)"]
+  verified: true
+  unverified_fields: [built, lat, lon, height_m]
+  pleiades: 188289894
+  notes: "Size and orientation read in Platner-Ashby (the bearing 30 is the axis of the baths measured from the meridian; whether to the east or west of north is not stated - assumed NE-SW as written). Year 109 is the standard date (not in Platner-Ashby; unverified). Pleiades 188289894 Thermae Traiani (41.8924, 12.4973)."
 - id: aqua_traiana
   latin: Aqua Traiana
   english: Aqua Traiana
@@ -1174,37 +1180,41 @@ monuments:
   lon: 12.4650
   precision: approx
   location: Springs around Lake Bracciano, ending on the Janiculum (Fontanone)
-  built: {year: 109, certainty: certain, by: "Trajan, dedicated 24 June AD 109 (inscriptions and Fasti Ostienses)"}
-  form: "about 57 km long, bringing about 118,000 cubic metres daily to Trastevere and the Janiculum"
+  built: {year: 109, certainty: probable, by: "Trajan; a boundary cippus of AD 109 was found some 10 miles from Rome (CIL VI 1260; Platner-Ashby); the day (24 June) of the first draft is not in Platner-Ashby"}
+  form: "drew its water from springs at the north-west corner of Lake Bracciano (lacus Sabatinus); its terminal castellum and mills lay on the Janiculum/via Aurelia side; rebuilt as the Acqua Paola by Paul V in 1605; cut by Vitiges in 537"
   route: [[42.1000, 12.1800], [41.9500, 12.3500], [41.8890, 12.4650]]
   footprint_m: null
   bearing_deg: null
   height_m: null
   model: aqueduct
-  sources: ["Platner-Ashby s.v. Aqua Traiana"]
-  verified: false
-  pleiades: null
-  notes: "Route schematic."
+  sources: ["CIL VI 1260", "Platner-Ashby s.v. Aqua Traiana (read)"]
+  verified: true
+  unverified_fields: [route, lat, lon]
+  pleiades: 423567
+  notes: "First-draft figures (57 km, 118,000 m3/day) removed: not in Platner-Ashby. Pleiades 423567 Aqua Traiana (41.8889, 12.4641); 236701133 is the Fontanone."
 - id: aedes_veneris_et_romae
   latin: Templum Veneris et Romae
   english: Temple of Venus and Roma
   type: temple
   regio: 4
-  lat: 41.8896
-  lon: 12.4895
+  lat: 41.8909
+  lon: 12.4897
   precision: exact
   location: Velia, between the Forum and the Colosseum
-  built: {year: 121, certainty: probable, by: "begun by Hadrian AD 121 (HA Hadr. 19.12), dedicated AD 135; completed by Antoninus Pius"}
-  form: "temple of Hadrian's own design on a platform 145 x 100 m with a double cella"
+  built: {year: 121, certainty: uncertain, by: "Hadrian designed it himself and the plans were criticised by Apollodorus (Dio 69.4); dedicated 135 (Jerome a. Abr. 2147); perhaps finished by Antoninus Pius. The start year 121 is the task's figure, not found in Platner-Ashby"}
+  form: "double temple, the cellae back to back (Venus facing east, Roma west) on a concrete podium faced with travertine, 145 m long and 100 m wide, on the north side of the Sacra Via, on the line of the Colosseum's main axis, requiring the removal of the Colossus; chambers in the east end of the podium held the amphitheatre's machinery; peribolus of grey Egyptian granite columns (Platner-Ashby)"
   footprint_m: {length: 145, width: 100}
-  bearing_deg: 100
+  bearing_deg: 120
   height_m: null
   model: temple_decastyle
-  sources: ["HA Hadr. 19.12", "Platner-Ashby s.v. Venus et Roma, Templum"]
-  verified: false
+  sources: ["Dio 69.4", "HA Hadr. 19", "Jerome a. Abr. 2147", "Chronogr. a. 354 (Chron. 146)", "Platner-Ashby s.v. Venus et Roma, templum (read)"]
+  verified: true
   beyond_range: true
-  pleiades: null
-  notes: "Beyond the AD 120 end; flagged."
+  events:
+  - {year: 307, what: "damaged by fire and restored by Maxentius (Chron. 148) - beyond range"}
+  unverified_fields: [built, bearing_deg, height_m]
+  pleiades: 261794683
+  notes: "Beyond the AD 120 window. Podium size read in Platner-Ashby; its axis is that of the Colosseum so the bearing placeholder equals the Colosseum's (unverified). Pleiades 261794683 Templum Veneris et Romae (41.8909, 12.4897)."
 - id: mausoleum_hadriani
   latin: Mausoleum Hadriani
   english: Mausoleum of Hadrian
@@ -1214,33 +1224,35 @@ monuments:
   lon: 12.4663
   precision: exact
   location: Right bank of the Tiber opposite the Campus Martius (Castel Sant'Angelo)
-  built: {year: 123, certainty: probable, by: "begun by Hadrian AD 123, completed by Antoninus Pius 139 (HA Hadr. 19; Dio 69.23)"}
-  form: "tomb of a drum 64 m wide on a square base 89 m wide"
+  built: {year: 123, certainty: uncertain, by: "Hadrian, together with the bridge (HA Hadr. 19: fecit sui nominis pontem et sepulcrum iuxta Tiberim; Dio 69.23); the dedicatory inscription to Hadrian and Sabina was set up in AD 139 by Antoninus Pius. The start year 123 is the task's figure, not in Platner-Ashby"}
+  form: "lower part a base about 84 m square and 10 m high, travertine faced with marble; main drum 64 m in diameter and 21 m high, concrete faced with Parian marble; bridge Pons Aelius; the Antonine emperors and families were buried here"
   footprint_m: {radius: 32}
   bearing_deg: null
-  height_m: 40
+  height_m: 31
   model: mausoleum
-  sources: ["HA Hadr. 19", "Dio 69.23"]
-  verified: false
+  sources: ["HA Hadr. 19", "HA Pius 5", "Dio 69.23", "Platner-Ashby s.v. Mausoleum Hadriani (read)"]
+  verified: true
   beyond_range: true
-  pleiades: null
-  notes: "Beyond the AD 120 end; flagged; dimensions from memory."
+  unverified_fields: [built, bearing_deg]
+  pleiades: 334776904
+  notes: "Beyond the AD 120 window. Base and drum sizes read in Platner-Ashby (84 m x 10 m; 64 m diameter x 21 m); total height 31 m is base + drum only, without the crowning. Pleiades 334776904 Mausoleum Hadriani (41.903, 12.4664)."
 # ================================================================ EVENTS ON REPUBLICAN BUILDINGS
 events_on_republican:
-- {monument_id: circus_maximus, year: -10, what: "Augustus set up the obelisk of Ramesses II on the spina; the pulvinar was added (Pliny NH 36.71; Res Gestae 'obelisk in Circus' # unverified; Suet. Aug. 45)", sources: ["Pliny NH 36.71", "Suet. Aug. 45"]}
-- {monument_id: circus_maximus, year: 36, what: "fire on the Aventine side destroyed part (Tac. Ann. 6.45)", sources: ["Tac. Ann. 6.45"]}
-- {monument_id: circus_maximus, year: 41, what: "Claudius rebuilt the starting gates in tufa and the turning-posts gilded (Suet. Claud. 21)", sources: ["Suet. Claud. 21"]}
-- {monument_id: circus_maximus, year: 64, what: "fire began in the shops on the Palatine/Aventine side of the circus and spread (Tac. Ann. 15.38); Nero later rebuilt (Suet. Nero 38)", sources: ["Tac. Ann. 15.38"]}
-- {monument_id: circus_maximus, year: 81, what: "Domitian restored the circus (Suet. Dom. 5); passage unverified", sources: ["Suet. Dom. 5"]}
-- {monument_id: circus_maximus, year: 103, what: "enlarged by Trajan (Pliny Pan. 51; Platner-Ashby)", sources: ["Pliny Pan. 51"]}
-- {monument_id: aedes_iovis_capitolini, year: 69, what: "burned 19 December AD 69 in the fight between Flavian and Vitellian troops (Tac. Hist. 3.71-72)", sources: ["Tac. Hist. 3.71-72", "Suet. Vesp. 8"]}
-- {monument_id: aedes_iovis_capitolini, year: 70, what: "foundation of the new temple laid 21 June AD 70 with the haruspices' rites (Tac. Hist. 4.53); dedicated by Vespasian c. AD 75", sources: ["Tac. Hist. 4.53"]}
-- {monument_id: aedes_iovis_capitolini, year: 80, what: "burned again in AD 80 (Suet. Titus 8; Dio 66.24.2)", sources: ["Suet. Titus 8", "Dio 66.24.2"]}
-- {monument_id: aedes_iovis_capitolini, year: 82, what: "rebuilt by Domitian, with gilded roof (Suet. Dom. 5; Plut. Publ. 15)", sources: ["Suet. Dom. 5", "Plut. Publ. 15"]}
-- {monument_id: rostra_republic, year: -29, what: "Rostra Iulia added in front of the temple of Divus Julius (Dio 51.19.2)", sources: ["Dio 51.19.2"]}
-- {monument_id: aedes_castoris, year: 6, what: "rebuilt by Tiberius and dedicated AD 6 (Suet. Tib. 20; Dio 55.27.4)", sources: ["Suet. Tib. 20", "Dio 55.27.4"]}
-- {monument_id: aedes_concordiae_forum, year: 10, what: "rebuilt by Tiberius and dedicated AD 10 (Suet. Tib. 20; Dio 56.25.1)", sources: ["Suet. Tib. 20", "Dio 56.25.1"]}
-- {monument_id: theatrum_pompei, year: 22, what: "stage burned and restored by Tiberius (Tac. Ann. 3.72; Dio 57.21.3)", sources: ["Tac. Ann. 3.72", "Dio 57.21.3"]}
-- {monument_id: theatrum_pompei, year: 80, what: "burned in AD 80, restored by Domitian (Dio 66.24.2)", sources: ["Dio 66.24.2"]}
-- {monument_id: aedes_vestae, year: 64, what: "burned in the fire of AD 64 (Tac. Ann. 15.41)", sources: ["Tac. Ann. 15.41"]}
-- {monument_id: aedes_vestae, year: 191, what: "burned in AD 191 (beyond range)", sources: ["Dio 72.24"]}
+# Each entry: {monument_id (an id in monuments.yaml), year, what, sources}. All read in Platner-Ashby (LacusCurtius) unless flagged.
+- {monument_id: circus_maximus, year: -31, what: "a fire destroyed a considerable part of the circus (Dio 50.10.3, per Platner-Ashby)", sources: ["Dio 50.10.3", "Platner-Ashby s.v. Circus Maximus"]}
+- {monument_id: circus_maximus, year: -10, what: "Augustus set up the obelisk of Heliopolis (Ramesses II, now in Piazza del Popolo) on the spina; he also built or restored the pulvinar on the Palatine side (Mon. Anc. 4.4)", sources: ["Plin. NH 36.71", "Amm. Marc. 17.4.12", "Mon. Anc. 4.4", "Platner-Ashby s.v. Circus Maximus"]}
+- {monument_id: circus_maximus, year: 36, what: "the part of the circus on the Aventine side burned together with the Aventine; Tiberius paid the owners' losses (Tac. Ann. 6.45, read)", sources: ["Tac. Ann. 6.45", "Dio 58.26.5", "Platner-Ashby s.v. Circus Maximus"]}
+- {monument_id: circus_maximus, year: null, what: "reign of Claudius (AD 41-54): Claudius built the starting gates (carceres) of marble instead of tufa and gilded goals instead of wooden metae (Suet. Claud. 21); the year is the reign's start, not recorded", sources: ["Suet. Claud. 21"]}
+- {monument_id: circus_maximus, year: 64, what: "the Great Fire broke out in the shops on the Palatine/Caelian side of the circus and swept its full length (Tac. Ann. 15.38, read); Nero rebuilt it - the circus was in use in 68 (Suet. Nero 25; Dio 62.20-21)", sources: ["Tac. Ann. 15.38", "Suet. Nero 25", "Platner-Ashby s.v. Circus Maximus"]}
+- {monument_id: circus_maximus, year: null, what: "reign of Domitian (AD 81-96): both long sides were injured by fire under Domitian (Suet. Dom. 5: the circus was later rebuilt with stone from his naumachia); the year of the fire is not recorded", sources: ["Suet. Dom. 5"]}
+- {monument_id: circus_maximus, year: null, what: "reign of Trajan (AD 98-117): Trajan restored the circus with the stone of Domitian's naumachia and enlarged the cavea by two stadia in length (Paus. 5.12.6; Dio 68.7.2); Pliny Pan. 51 describes his removal of Domitian's private box. No year is recorded in the sources read", sources: ["Paus. 5.12.6", "Dio 68.7.2", "Plin. Pan. 51", "Platner-Ashby s.v. Circus Maximus"]}
+- {monument_id: aedes_iovis_capitolini, year: 69, what: "burned when the Vitellians stormed the Capitol, 19 December AD 69 (Tac. Hist. 3.71-72; Suet. Vit. 15; Dio 64.17)", sources: ["Tac. Hist. 3.71-72", "Suet. Vit. 15", "Dio 64.17", "Platner-Ashby s.v. Iuppiter Optimus Maximus Capitolinus"]}
+- {monument_id: aedes_iovis_capitolini, year: 70, what: "rebuilt by Vespasian on its original lines but higher (Tac. Hist. 4.4, 4.9, 4.53; Suet. Vesp. 8; Dio 65.7.10 in Cary numbering); Tac. Hist. 4.53 describes the foundation rites. Platner-Ashby gives no dedication year", sources: ["Tac. Hist. 4.53", "Suet. Vesp. 8", "Platner-Ashby s.v. Iuppiter Optimus Maximus Capitolinus"]}
+- {monument_id: aedes_iovis_capitolini, year: 80, what: "burned again in AD 80 (Dio 66.24.2, read) and rebuilt by Domitian, work begun in 80, dedication probably in 82; hexastyle Corinthian, Pentelic marble columns, gilt roof tiles (Suet. Dom. 5; Plut. Publ. 15)", sources: ["Dio 66.24.2", "Suet. Dom. 5", "Plut. Publ. 15", "Platner-Ashby s.v. Iuppiter Optimus Maximus Capitolinus"]}
+- {monument_id: rostra_republic, year: -29, what: "Augustus added the rostra of the temple of Divus Julius at the east end of the forum, the platform decorated with the beaks of the ships captured at Actium (Dio 51.19; Frontin. Aq. 129)", sources: ["Dio 51.19", "Platner-Ashby s.v. Iulius, Divus, aedes"]}
+- {monument_id: aedes_castoris, year: 6, what: "completely rebuilt by Tiberius and dedicated in AD 6 in his own name and that of his brother Drusus (Suet. Tib. 20; Dio 55.27.4); later made the vestibule of Caligula's palace (Suet. Cal. 22)", sources: ["Suet. Tib. 20", "Dio 55.27.4", "Ov. Fast. 1.707-708", "Platner-Ashby s.v. Castor, Aedes"]}
+- {monument_id: aedes_concordiae_forum, year: 10, what: "Tiberius began the restoration in 7 BC with spoils from Germany (Dio 55.8.2); the temple was dedicated as Concordia Augusta in the names of Tiberius and the dead Drusus on 16 January AD 10 (Ov. Fast. 1.640-648)", sources: ["Dio 55.8.2", "Ov. Fast. 1.640-648", "Platner-Ashby s.v. Concordia, Aedes"]}
+- {monument_id: theatrum_pompei, year: 21, what: "burned in AD 21 (Jerome a. Abr. 2037) or 22 (Tac. Ann. 3.72); Tiberius took on the restoration but did not complete or dedicate it (Tac. Ann. 6.45, read; Suet. Tib. 47; Suet. Cal. 21); a bronze statue of Sejanus was set up in it (Dio 57.21.3)", sources: ["Tac. Ann. 3.72", "Tac. Ann. 6.45", "Suet. Tib. 47", "Dio 57.21.3", "Platner-Ashby s.v. Theatrum Pompei"]}
+- {monument_id: theatrum_pompei, year: 80, what: "the scaena burned in AD 80 (Dio 66.24.2, read) but must have been repaired very soon (Platner-Ashby)", sources: ["Dio 66.24.2", "Platner-Ashby s.v. Theatrum Pompei"]}
+- {monument_id: aedes_vestae, year: 64, what: "burned in the Great Fire, together with the Penates, but soon restored, probably by Nero (Tac. Ann. 15.41, read)", sources: ["Tac. Ann. 15.41", "Platner-Ashby s.v. Vesta, Aedes"]}
+- {monument_id: aedes_vestae, year: 191, what: "burned again in 191 and restored by Julia Domna (Herodian 1.14.4; Dio 72.24) - beyond range", sources: ["Herodian 1.14.4", "Dio 72.24", "Platner-Ashby s.v. Vesta, Aedes"]}
