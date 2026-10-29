@@ -1,0 +1,1011 @@
+schema_version: 1
+# Chronicle mode for rome_133: from the land law of Tiberius Gracchus (133 BC) to the end of Mithridates (63 BC).
+# Each chapter opens in its year; one choice is what history chose (historical: true).
+# VERIFIED: every fact in a story/history was checked against a text actually read (cached in
+# /tmp/claude-0/verify_fasti/): Plutarch (Tiberius Gracchus, Gaius Gracchus, Marius, Sulla, Pompey, Crassus) on
+# LacusCurtius; Appian, Civil Wars 1 on LacusCurtius; Appian, Spanish and Mithridatic Wars on Livius.org; Livy's
+# Periochae on thelatinlibrary.com; Sallust, Jugurthine War on Wikisource. Each chapter's `sources` says which.
+# Year numbers not given by those texts were cross-checked on Wikipedia's year pages (never cited).
+# Anything not read is marked "verified: no" and kept out of the story. benchmark_provinces counts the provinces of
+# this map the real Rome held at that date (approximate, from the scenario's own start).
+chapters:
+  - id: r133_land_law
+    scenario: rome_133
+    civ: rome
+    year: -133
+    until_year: -131
+    title: "The Land Law of Tiberius Gracchus"
+    place: "Rome, the Forum"
+    speaker: ruler
+    benchmark_provinces: 49
+    story: >-
+      A tribune of the plebs, Tiberius Sempronius Gracchus, stands before the assembly with a bill in his hand.
+      Long ago, he says, a law forbade any one man to hold more than five hundred iugera of the public land won in
+      war; the rich have ignored it, put the land into the hands of figureheads and driven off the small tenants who
+      once farmed it and served in the legions.
+
+
+      The bill is mild. Those who hold too much must give up the land they hold unjustly, and are to be paid its value; the land recovered will go to citizens who need it. The consul Mucius Scaevola, the jurist, is among those who helped him
+      draft it. But the great holders of public land will lose most, and the Senate is behind them. A fellow tribune,
+      Marcus Octavius, has been persuaded to veto the bill. Tiberius says the assembly may remove a tribune who works
+      against the people. You are asked what Rome should do.
+    choices:
+      - label: "Let the people depose Octavius and pass the law"
+        historical: true
+        unrest_bp: 800
+        legitimacy_bp: -700
+        influence: {nobility: -800, guilds: 300}
+        outcome: >-
+          The assembly removes Octavius from office and the law is carried. A three-man commission (Tiberius, his
+          brother Gaius and his father-in-law Appius Claudius) is set up to take back and divide the land. The
+          nobles have a precedent to call tyranny, and every tribune after this knows a veto can be broken.
+        deeds: {grudges: {e1_socii: 500}}
+      - label: "Ask the Senate to accept a compromise with compensation"
+        wealth_bp: -600
+        legitimacy_bp: 300
+        influence: {nobility: 200}
+        outcome: >-
+          The Senate is offered the same law with fuller payment for improvements and a slower commission. It hears the
+          offer and does nothing. The poor see another delay, and the tribune is left to choose between giving up and
+          going on alone.
+      - label: "Uphold the veto and shelve the bill"
+        legitimacy_bp: 500
+        unrest_bp: 1200
+        influence: {nobility: 500}
+        outcome: >-
+          The veto stands and the bill dies. The poor hold the rich to blame, and the legions will go on drawing on a
+          shrinking pool of small farmers.
+    history: >-
+      The people deposed Octavius, passed the law and elected Tiberius, his brother Gaius and Appius Claudius as the
+      commission (Livy, Periocha 58). Plutarch records that the older law allowed no one to hold more than five hundred
+      iugera, that the bill ordered the holders to give up their land when paid its value, and that the Senate refused the commissioners a tent and fixed their daily allowance at nine obols.
+    sources: ["Plutarch, Tiberius Gracchus 8-13, 16 (read)", "Livy, Periocha 58 (read)", "Appian, Civil Wars 1.9-13 (partly read)"]
+
+  - id: r133_riot
+    scenario: rome_133
+    civ: rome
+    year: -133
+    until_year: -131
+    title: "Attalus's Will and the Riot on the Capitol"
+    place: "The Capitol"
+    speaker: ruler
+    after: [r133_land_law]
+    benchmark_provinces: 49
+    story: >-
+      News has come from Pergamum. King Attalus has died and left the Roman people his heir. Tiberius at once proposes
+      that the king's money, when it reaches Rome, be given to the new settlers to buy stock and tools, and that the
+      people, not the Senate, decide the fate of the king's cities. The Senate takes it as an attack on its right to
+      manage foreign affairs.
+
+
+      Tiberius means to stand for a second year as tribune, which is against custom; his enemies say he wants a crown.
+      On the day of the vote the Senate meets. Scipio Nasica calls on the consul Mucius Scaevola to put down the tyrant.
+      The consul answers that he will use no force and put no citizen to death without trial. What does the Republic
+      do next?
+    choices:
+      - label: "Follow Nasica: the senators take clubs and clear the assembly"
+        historical: true
+        unrest_bp: 1200
+        legitimacy_bp: -500
+        influence: {nobility: 500, guilds: -300}
+        outcome: >-
+          Nasica wraps his toga round his arm and leads the senators up the Capitol; the crowd gives way, and benches and
+          clubs do their work. Tiberius is killed with more than three hundred of his followers, none by the sword. It is
+          the first political bloodshed in Rome since the kings. The land commission survives.
+      - label: "Back the consul: arrest no one and let the vote be held"
+        legitimacy_bp: 600
+        unrest_bp: 600
+        outcome: >-
+          Scaevola keeps to his word. Tiberius is re-elected or the vote fails, and the quarrel is carried over into the
+          next year without bloodshed, for now.
+      - label: "Send Tiberius to Spain or Asia as a legate to get him out of the city"
+        wealth_bp: -300
+        legitimacy_bp: 200
+        unrest_bp: 300
+        outcome: >-
+          The tribune is offered a commission abroad, which he can refuse. He refuses, and the Senate has lost time.
+    history: >-
+      Scaevola refused to use violence (Plutarch, TG 19). Nasica led the senators; Tiberius was struck down with
+      pieces of benches and more than three hundred others were beaten to death, none by the sword. Plutarch calls it the
+      first sedition to end in bloodshed and the death of citizens since the abolition of royal power (TG 19-20). Afterwards the Senate no longer opposed the distribution and the people elected Publius Crassus commissioner in Tiberius's place (TG 21).
+    sources: ["Plutarch, Tiberius Gracchus 14, 16, 19-21 (read)", "Livy, Periocha 58 (read)"]
+
+  - id: r133_numantia
+    scenario: rome_133
+    civ: rome
+    year: -133
+    until_year: -131
+    title: "Numantia Starves"
+    place: "Before Numantia"
+    speaker: ruler
+    needs_war_with: [e1_numantia]
+    benchmark_provinces: 49
+    story: >-
+      Scipio Aemilianus, who took Carthage, was voted a second consulship, the age law being set aside, to end a war the Romans were tired of. He took no new levy, but volunteers sent by cities and kings and five hundred friends and clients. With an army of sixty thousand he refused every challenge to open battle and starved the city instead. Inside, the Numantines have eaten
+      their hides and then their dead.
+
+
+      Now they send men to ask for terms. Scipio says they must give up their arms and put themselves and the city into
+      his hands. The Numantines kill their own envoys for bringing such an answer. Hunger will end the siege soon. What
+      shall be done with the city when it falls?
+    choices:
+      - label: "Raze the city, sell the people and share out the land"
+        historical: true
+        unrest_bp: 100
+        wealth_bp: 500
+        influence: {nobility: 200}
+        outcome: >-
+          Fifty prisoners are kept for the triumph; the rest are sold and the town is levelled. Its land is given to the
+          neighbouring peoples. Scipio takes the surname Numantinus beside Africanus. The long war is over.
+        deeds: {conquer: [e1_numantia], take: [celtiberia]}
+      - label: "Accept the surrender and leave the town standing as a tributary"
+        wealth_bp: 200
+        legitimacy_bp: 300
+        outcome: >-
+          Numantia keeps its walls and its people. Spain is quiet for a time, but other tribes will note that a small hill-fort could defy the Roman army and be spared.
+        deeds: {take: [celtiberia]}
+      - label: "Lift the siege and offer a treaty on equal terms"
+        legitimacy_bp: -800
+        unrest_bp: 800
+        outcome: >-
+          The Numantines made treaties on equal terms before, which Rome would not make with others. A new one would shame the people and the generals alike; the army is not pleased.
+        deeds: {peace_with: [e1_numantia]}
+    history: >-
+      Appian writes that the Numantines had 8,000 fighting men before the war, that Scipio's army of 60,000 starved them
+      out, that fifty were kept for the triumph, the rest sold and the city razed, and its territory divided among its
+      neighbours (Spanish Wars 90-98). Livy's Periocha records that they killed each other and Scipio destroyed the city
+      and triumphed in the fourteenth year after Carthage (Per. 59). Appian also notes Rome sent ten commissioners to
+      settle the province.
+    sources: ["Appian, Spanish Wars 84-99 (read)", "Livy, Periocha 59 (read)"]
+
+  - id: r133_aristonicus
+    scenario: rome_133
+    civ: rome
+    year: -131
+    until_year: -127
+    title: "Aristonicus Claims Asia"
+    place: "The Senate House"
+    speaker: ruler
+    benchmark_provinces: 50
+    story: >-
+      Eumenes's son Aristonicus has taken the interior of the old kingdom of Pergamum in arms, saying that the cities were
+      meant to be free, not Roman. The Senate has to decide who will command in Asia. Publius Licinius Crassus, the pontifex
+      maximus, wants the command and is consul this year. No pontifex maximus has ever left Italy.
+
+
+      The inheritance is rich, and Tiberius Gracchus once wanted its treasure for the poor. The cities of Asia, meanwhile,
+      are waiting to see which way Rome will go.
+    choices:
+      - label: "Send the consul Crassus with an army, though he is pontifex maximus"
+        historical: true
+        wealth_bp: -500
+        unrest_bp: 300
+        outcome: >-
+          Crassus goes, the first pontifex maximus to leave Italy, and is beaten in battle and killed. Marcus Perperna, the
+          next consul, takes Aristonicus's surrender.
+        deeds: {men: 15000, take: [sel_asia]}
+      - label: "Send a lesser general and keep the pontifex at home"
+        wealth_bp: -400
+        legitimacy_bp: 200
+        outcome: >-
+          A magistrate with less standing goes. Asia is slower to fall, and the Senate has avoided breaking the custom.
+        deeds: {men: 10000}
+      - label: "Let the free cities of Asia govern themselves under Roman supervision"
+        wealth_bp: -800
+        legitimacy_bp: 300
+        outcome: >-
+          Rome honours the wording of the will. The revenue is lost, and Aristonicus keeps the interior.
+    history: >-
+      Livy's Periocha says that Aristonicus, Eumenes's son, seized Asia although Attalus's will declared its cities free,
+      that the consul Publius Licinius Crassus, who was also pontifex maximus, crossed out of Italy for the first time in
+      such a case and was beaten and killed, and that Marcus Perperna, as consul, received the surrender of Aristonicus
+      (Per. 59). Plutarch adds that Blossius, a friend of Tiberius, fled to Aristonicus and killed himself when the cause was lost (TG 20).
+    sources: ["Livy, Periocha 59 (read)", "Plutarch, Tiberius Gracchus 21 (read)"]
+
+  - id: r133_scipio_allies
+    scenario: rome_133
+    civ: rome
+    year: -129
+    until_year: -126
+    title: "The Allies' Champion"
+    place: "The Senate House"
+    speaker: ruler
+    benchmark_provinces: 50
+    story: >-
+      The land commission has gone to work and the Italian allies are in trouble. Lawsuits fly over every field that
+      might be public land; allies whose families have farmed it for generations are being turned out. They have asked
+      Scipio Aemilianus, who relied on their help in war, to speak for them.
+
+
+      Scipio does not attack the law before the plebs, who still adore the Gracchi, but argues in the Senate that the
+      triumvirs, who do not have the litigants' trust, should not judge these suits. His enemies say he means to end
+      the law by force. The plebs are angry that the man they twice elected consul against the age rule has taken the
+      allies' side.
+    choices:
+      - label: "Take the cases away from the triumvirs and give them to a consul"
+        historical: true
+        unrest_bp: 500
+        legitimacy_bp: -200
+        influence: {nobility: 400}
+        outcome: >-
+          The consul Tuditanus is given the cases, finds the work too hard and marches off to fight the Illyrians instead.
+          Nobody brings suits to the triumvirs, who sit idle. The plebs turn on Scipio, who is found dead in bed one
+          morning without a wound. The allies have gained nothing.
+        deeds: {ally_with: [e1_socii]}
+      - label: "Keep the commission's power over the allies' land"
+        unrest_bp: -300
+        legitimacy_bp: 300
+        influence: {guilds: 300, nobility: -300}
+        outcome: >-
+          The land is divided. Allied families are moved off the fields, and the allies' anger will not be forgotten.
+        deeds: {grudges: {e1_socii: 1500}}
+      - label: "Offer the allies Roman citizenship in return for their land claims"
+        wealth_bp: -400
+        unrest_bp: 800
+        legitimacy_bp: 200
+        outcome: >-
+          Some senators think this the only way out. It is not decided now; it will be proposed again, and each time the
+          Senate will refuse.
+        deeds: {ally_with: [e1_socii]}
+    history: >-
+      The Senate accepted Scipio's argument, and the consul Tuditanus was given the cases; he went to war with the
+      Illyrians instead of judging them, and the triumvirs had no business. Scipio died in his bed without a wound
+      (Appian, BC 1.19-20). Appian does not know whether Cornelia, the mother of the Gracchi, the allies' enemies or his
+      own hand killed him.
+    sources: ["Appian, Civil Wars 1.18-20 (read)"]
+
+  - id: r133_flaccus
+    scenario: rome_133
+    civ: rome
+    year: -125
+    until_year: -122
+    title: "Citizenship for the Italians?"
+    place: "The Forum"
+    speaker: ruler
+    benchmark_provinces: 50
+    story: >-
+      The consul Marcus Fulvius Flaccus is also one of the land commissioners. He has put a proposal: that the Italians
+      be admitted to Roman citizenship, so that out of gratitude for the greater favour they will quarrel no more over the
+      land. The Italians would take the offer; they would rather be citizens than keep their fields.
+
+
+      The Senate is angry at the thought of making its subjects the equals of citizens. A message arrives from Massalia:
+      the Salluvii are plundering its lands and it asks for help.
+    choices:
+      - label: "Let the Senate refuse and send Flaccus to help Massalia"
+        historical: true
+        unrest_bp: 600
+        legitimacy_bp: -300
+        influence: {nobility: 400}
+        outcome: >-
+          The proposal is dropped. Flaccus goes to Gaul against the Salluvii and Ligurians, and the Roman conquest beyond the
+          Alps begins. Fregellae revolts, and the praetor Opimius takes its surrender and destroys it.
+        deeds: {grudges: {e1_socii: 800}}
+      - label: "Pass the citizenship proposal"
+        wealth_bp: -500
+        unrest_bp: -400
+        legitimacy_bp: 400
+        influence: {nobility: -900}
+        outcome: >-
+          The Italians gain the vote a generation earlier than they did, at the price of a fierce quarrel among the nobles.
+        deeds: {ally_with: [e1_socii]}
+      - label: "Give the Latins the vote but not the other allies"
+        legitimacy_bp: 100
+        outcome: >-
+          The Latin colonies are satisfied; the peoples of the south and the Apennines, the Marsi and Samnites, still wait.
+        deeds: {ally_with: [e1_socii]}
+    history: >-
+      Appian says the Senate was angry at the idea of making subjects equal citizens, and the attempt was dropped
+      (BC 1.21). Livy's Periocha for this time says that Flaccus was the first to subdue the Ligurians beyond the Alps,
+      sent to help Massalia against the Salluvii, and that the praetor Opimius took the surrender of the rebellious
+      Fregellae and destroyed it (Per. 60).
+    sources: ["Appian, Civil Wars 1.21 (read)", "Livy, Periocha 60 (read)"]
+
+  - id: r133_gaius_laws
+    scenario: rome_133
+    civ: rome
+    year: -123
+    until_year: -121
+    title: "Gaius Gracchus and the Grain Law"
+    place: "The Forum"
+    speaker: ruler
+    after: [r133_flaccus]
+    benchmark_provinces: 50
+    story: >-
+      Gaius Gracchus, Tiberius's younger brother, is tribune and a more eloquent speaker than his brother. He has carried a law for a monthly distribution of grain to each citizen at the public expense, and he is laying out long roads through Italy that put contractors and craftsmen in his debt. He proposes many colonies, and a law adding six hundred knights to the three hundred senators.
+
+
+      The Latins are asked to demand full citizenship, and the other allies the vote. The Senate is alarmed and bids all
+      non-voters to stay forty stades from the city while voting goes on. It has also found a tribune, Livius Drusus,
+      to veto his bills without giving a reason.
+    choices:
+      - label: "Let Drusus outbid him: twelve colonies and a veto"
+        historical: true
+        wealth_bp: -500
+        unrest_bp: 400
+        influence: {nobility: 500, guilds: -200}
+        outcome: >-
+          Drusus is given the right to found twelve colonies and the plebs, pleased, scoff at Gaius's other bills. Plutarch
+          says the Senate backed Drusus's twelve colonies of three thousand poor citizens each while it was angry at Gaius
+          for far fewer. Gaius loses the favour of the people.
+      - label: "Support Gaius's grain law and his roads"
+        food_bp: -600
+        wealth_bp: -700
+        unrest_bp: -800
+        legitimacy_bp: 300
+        influence: {guilds: 700, nobility: -600}
+        outcome: >-
+          The monthly grain goes to the citizens and the roads give work to contractors and craftsmen. The treasury pays; the
+          nobles brand the tribune a demagogue.
+      - label: "Give the vote to the Latin allies as he asks"
+        unrest_bp: 600
+        legitimacy_bp: -200
+        influence: {nobility: -700}
+        outcome: >-
+          The Latins are pleased; the poor citizens are not: they fear that new citizens will crowd them out of the dole.
+        deeds: {ally_with: [e1_socii]}
+    history: >-
+      Appian describes Gaius's grain law, roads, colonies and call for the Latins to demand citizenship; the Senate had
+      Drusus veto his laws, and gave Drusus the right to found twelve colonies (BC 1.21-23). Livy's Periocha lists the
+      grain law, the agrarian law and the law that added knights to the Senate to corrupt them, and that he was re-elected
+      tribune and founded a colony on the ruins of Carthage (Per. 60).
+    sources: ["Appian, Civil Wars 1.21-23 (read)", "Livy, Periocha 60 (read)", "Plutarch, Gaius Gracchus 8-9 (partly read)"]
+
+  - id: r133_gaius_fall
+    scenario: rome_133
+    civ: rome
+    year: -121
+    until_year: -119
+    title: "The Last Decree"
+    place: "The Aventine"
+    speaker: ruler
+    after: [r133_gaius_laws]
+    benchmark_provinces: 50
+    story: >-
+      Gaius has lost the favour of the crowd. He and Flaccus were sent to found a colony on the site of Carthage, and when the Senate moved to repeal the colony law they were furious and came to the Capitol with armed followers. Summoned to the Senate to defend themselves, they have run, armed, to the Aventine and fortified the temple of Diana. The consul Lucius Opimius has a decree of the Senate to call the people to arms.
+
+
+      Flaccus's son goes out as a messenger twice. The Senate says: lay down your arms and come to the Senate House, or
+      send no more messengers. Opimius is ready to send armed men.
+    choices:
+      - label: "Let the consul act under the Senate's decree"
+        historical: true
+        unrest_bp: 800
+        legitimacy_bp: -600
+        influence: {nobility: 600, guilds: -400}
+        outcome: >-
+          Opimius arrests the second messenger and sends his men in. Gaius is chased across the river and dies by his slave's
+          hand; Flaccus is dragged from hiding and killed. Their heads are weighed against gold. The prisoners are
+          strangled. Later a tribune accuses Opimius of putting uncondemned citizens in prison, and he is acquitted.
+      - label: "Open talks and let Gaius and Flaccus plead before the people"
+        legitimacy_bp: 500
+        unrest_bp: 600
+        influence: {guilds: 400, nobility: -400}
+        outcome: >-
+          The Senate sends no soldiers, and the Aventine stays in arms. The longer it lasts the more the city divides.
+      - label: "Exile the leaders without a trial"
+        unrest_bp: 300
+        legitimacy_bp: -200
+        outcome: >-
+          The two men leave and the party remains; they have a new cause in banishment.
+    history: >-
+      Appian: the colony law and the Senate's move to repeal it (BC 1.24-25); then the Senate summoned them, they ran armed to the Aventine and fortified Diana's temple, and the consul
+      Opimius arrested the second messenger and sent in his armed men. Gaius was killed on the point of arrest; Flaccus was
+      seized and put to death; the heads were paid for with their weight in gold (BC 1.26). Livy: Opimius, called to arms
+      by decree of the Senate, drove out and killed Gaius and Flaccus, and was later accused by Decius for putting
+      uncondemned citizens in prison and acquitted (Per. 61).
+    sources: ["Appian, Civil Wars 1.26 (read)", "Livy, Periocha 61 (read)"]
+
+  - id: r133_gaul
+    scenario: rome_133
+    civ: rome
+    year: -120
+    until_year: -117
+    title: "Bituitus in Chains, Gaul in Reach"
+    place: "The Senate House"
+    speaker: ruler
+    benchmark_provinces: 50
+    story: >-
+      The consul Quintus Fabius Maximus has beaten the Allobroges and the Arvernian king Bituitus on the Rhône; a hundred
+      and twenty thousand of Bituitus's army are said to have fallen. Another Roman, Domitius, beat the Allobroges at
+      Vindalium, who had sheltered the fugitive Salluvian king and wasted the lands of the Aedui, Rome's allies. A colony,
+      Aquae Sextiae, has been planted in the hills.
+
+
+      Bituitus came to Rome to answer to the Senate, and is held at Alba as a prisoner, for it is thought he acted against
+      the peace. The Allobroges have submitted. What shall be done with Gaul beyond the Alps?
+    choices:
+      - label: "Hold the road to Spain and make allies of the Aedui"
+        historical: true
+        wealth_bp: 300
+        outcome: >-
+          The Allobroges are accepted in surrender. Rome holds the land along the road between Italy and Spain, and the
+          Aedui become its friends. The Arverni are left alone.
+        deeds: {take: [southern_gaul], peace_with: [e1_arverni]}
+      - label: "Crush the Arverni and take their country as well"
+        wealth_bp: -400
+        unrest_bp: 300
+        influence: {nobility: 400}
+        outcome: >-
+          The Arverni, the strongest people in Gaul, are broken but their land is much larger than Rome can hold.
+          The cost of garrisons is high.
+        deeds: {conquer: [e1_arverni, e1_allobroges]}
+      - label: "Withdraw to the Alps and leave Massalia to defend itself"
+        legitimacy_bp: -300
+        influence: {nobility: -200}
+        outcome: >-
+          Massalia, a friend of old, is left to face the Gauls alone, and Spain is cut off by land.
+        deeds: {peace_with: [e1_allobroges, e1_arverni]}
+    history: >-
+      Livy's Periocha for this time records Sextius founding Aquae Sextiae, Domitius beating the Allobroges at Vindalium,
+      Fabius beating the Allobroges and Bituitus (120,000 killed), Bituitus being held at Alba, and the Allobroges being
+      received in surrender (Per. 61). The year of the province's start is not given in the texts read; Wikipedia's year
+      pages put Fabius's victory in 121 (cross-check only).
+    sources: ["Livy, Periocha 61 (read)"]
+
+  - id: r133_jugurtha
+    scenario: rome_133
+    civ: rome
+    year: -112
+    until_year: -108
+    title: "Cirta and the King Who Can Be Bought"
+    place: "The Senate House"
+    speaker: numidia
+    needs_alive: [numidia]
+    benchmark_provinces: 50
+    story: >-
+      King Micipsa's adopted son Jugurtha has murdered Hiempsal and besieged Adherbal in Cirta. The Italians who defended the town persuaded Adherbal to give himself up on the promise of his life. Jugurtha tortured him to
+      death and killed all the adult Numidians and the traders he found with arms.
+
+
+      The Senate's friends of the king try to hide the crime by stalling. Gaius Memmius, a tribune-elect, has made it
+      plain to the people that this is what they are doing. Jugurtha has sent his son and two friends with gold to try the
+      power of money on everybody.
+    choices:
+      - label: "Declare war and give Numidia to the consul Bestia"
+        historical: true
+        wealth_bp: -500
+        unrest_bp: 300
+        outcome: >-
+          Bestia raises an army and goes to Africa. Jugurtha buys Bestia and Scaurus and gets easy terms, and is then brought to Rome under a pledge of safety from the praetor Cassius. There the bribed tribune Baebius tells him to be silent, and the people go home
+          jeered at. The war drags on; in 110 Aulus Albinus's army is sent under the yoke at Suthul.
+        deeds: {war_with: [numidia]}
+      - label: "Divide the kingdom between Jugurtha and Adherbal's party"
+        wealth_bp: 300
+        legitimacy_bp: -400
+        outcome: >-
+          Rome accepts the murderer as its client. Every foreign king learns what a Senator costs.
+      - label: "Send a commission and hold the war back"
+        wealth_bp: -200
+        legitimacy_bp: -200
+        outcome: >-
+          Commissioners go and take the king's money. Nothing is done.
+    history: >-
+      Sallust: Jugurtha took Cirta, tortured Adherbal and massacred the adult Numidians and traders under arms (BJ 26);
+      Memmius forced the Senate to act and Numidia was given to the consul Bestia (BJ 27); Bestia and Scaurus were bought (BJ 29) and Jugurtha, brought to Rome by the praetor Cassius, bribed the tribune Baebius to silence him (BJ 28-34). The next year Albinus, as consul,
+      had Massiva murdered by Jugurtha's man; Aulus's army was sent under the yoke at Suthul (BJ 35-38).
+    sources: ["Sallust, Bellum Jugurthinum 26-38 (read)", "Livy, Periocha 65 (read)"]
+
+  - id: r133_marius
+    scenario: rome_133
+    civ: rome
+    year: -107
+    until_year: -104
+    title: "Marius Asks for Men"
+    place: "The Forum"
+    speaker: ruler
+    benchmark_provinces: 50
+    story: >-
+      Gaius Marius, a new man raised to high office, has won the consulship. He wants the war against Jugurtha, which Metellus has fought without ending it, and is not content with the legions the Senate allows him.
+
+
+      The old levy is by property class, and the poor and landless are left out. Marius proposes to take volunteers,
+      whoever comes, and most of them are men with nothing. Some say he is short of good recruits; others that he courts
+      the class that gave him the consulship.
+    choices:
+      - label: "Let him enrol the landless as volunteers"
+        historical: true
+        wealth_bp: -500
+        unrest_bp: -400
+        legitimacy_bp: -200
+        influence: {nobility: -400, guilds: 300}
+        outcome: >-
+          Marius takes anyone who volunteers, mostly the proletariat, as Sallust says, and sails for Africa. The army will
+          look to its general, not the Senate, for pay, land and discharge, and the mere promise of a settlement will
+          one day be the price of its loyalty.
+        deeds: {men: 8000, martial_bp: 1500}
+      - label: "Hold to the property levy and send him the usual men"
+        legitimacy_bp: 200
+        influence: {nobility: 400}
+        outcome: >-
+          The war goes on at the old pace. Metellus's men are loyal to Metellus. The poor go on losing their farms.
+      - label: "Settle volunteers on public land after their service"
+        wealth_bp: -800
+        unrest_bp: -600
+        influence: {guilds: 400, nobility: -500}
+        outcome: >-
+          A law for discharged soldiers is proposed beforehand, giving the soldiers a reason to fight and the Senate a
+          reason to resist.
+        deeds: {men: 6000, martial_bp: 1000}
+    history: >-
+      Sallust: Marius enrolled soldiers not by classes in the manner of the forefathers but allowing anyone to volunteer,
+      for the most part the proletariat. "Some say that he did this through lack of good men, others because of a desire
+      to curry favour" (BJ 86). Historians debate how far this was a deliberate reform, and call the later system the
+      "Marian reforms".
+    sources: ["Sallust, Bellum Jugurthinum 84-86 (read)", "Plutarch, Marius 9 (partly read)"]
+
+  - id: r133_arausio
+    scenario: rome_133
+    civ: rome
+    year: -105
+    until_year: -102
+    title: "Arausio"
+    place: "The Senate House"
+    speaker: ruler
+    needs_war_with: [e1_cimbri]
+    benchmark_provinces: 51
+    story: >-
+      Jugurtha is a prisoner. But in Gaul the Cimbri have routed Carbo and Silanus and killed Scaurus, the Tigurini have killed Cassius, and at Arausio the consul
+      Manlius and the proconsul Caepio have been beaten, their camps taken. The Periocha counts eighty thousand soldiers
+      and forty thousand camp followers dead. Caepio, whose rashness caused it, has been condemned and his goods seized, the
+      first time since Tarquin.
+
+
+      The Cimbri have turned toward Spain, but they will come back, and the Senate must choose a man to meet them.
+    choices:
+      - label: "Elect Marius consul again and again"
+        historical: true
+        wealth_bp: -400
+        unrest_bp: -400
+        legitimacy_bp: -200
+        influence: {nobility: -300, guilds: 300}
+        outcome: >-
+          Marius, absent in Africa, is elected consul a second and a third time, and "by stealthy canvassing" a fourth
+          (Livy). The fear of the Cimbri keeps him in office for several years running, against all custom.
+        deeds: {men: 15000, martial_bp: 800}
+      - label: "Stay with the usual annual consuls and strengthen the Alpine passes"
+        wealth_bp: -300
+        legitimacy_bp: 300
+        influence: {nobility: 300}
+        outcome: >-
+          The old magistrates meet the danger with the old officers. The Cimbri turn aside to Spain, and Italy is spared for
+          the moment.
+      - label: "Make peace and grant the Cimbri land to settle"
+        wealth_bp: -300
+        legitimacy_bp: -500
+        outcome: >-
+          The envoys of the Cimbri had asked for land in earlier years and the Senate had said no. Granting it now looks
+          like fear.
+        deeds: {peace_with: [e1_cimbri]}
+    history: >-
+      Livy: at Arausio the consul Manlius and the proconsul Caepio were beaten, 80,000 soldiers and 40,000 camp followers
+      killed; Caepio was condemned and his property confiscated; Marius was given the consulship for several years in
+      succession for fear of the Cimbrian war, and the Cimbri crossed into Spain, were driven out by the Celtiberians,
+      and rejoined the Teutones (Per. 67). Marius triumphed over Jugurtha, who was put to death in prison (Per. 67).
+    sources: ["Livy, Periochae 63, 65, 67 (read)"]
+
+  - id: r133_vercellae
+    scenario: rome_133
+    civ: rome
+    year: -101
+    until_year: -99
+    title: "The Plain of Vercellae"
+    place: "Vercellae"
+    speaker: ruler
+    needs_war_with: [e1_cimbri]
+    benchmark_provinces: 51
+    story: >-
+      Marius has destroyed the Teutones and Ambrones near Aquae Sextiae and was made consul for the fifth time in his
+      absence. Now the Cimbri have crossed the Alps, put Catulus to flight on the Adige and entered Italy. The armies of
+      Catulus and Marius have joined.
+
+
+      The Romans answer that they do not take advice from enemies on how to fight, and they agree to give battle on the third day on the plain of Vercellae, which suits the Roman cavalry. What does Rome do?
+    choices:
+      - label: "Give battle on the plain they chose"
+        historical: true
+        unrest_bp: -300
+        legitimacy_bp: 500
+        influence: {guilds: 200, nobility: 100}
+        outcome: >-
+          The two armies together beat the Cimbri; Livy's Periocha counts 140,000 killed and 60,000 taken. Marius is welcomed
+          by the whole city and accepts one triumph instead of the two offered. The nobles who had envied the new man now
+          admit he has saved the state.
+        deeds: {conquer: [e1_cimbri]}
+      - label: "Refuse battle and let them winter in Italy, wearing them down"
+        wealth_bp: -600
+        unrest_bp: 600
+        outcome: >-
+          Northern Italy is plundered through the winter and the army is idle.
+      - label: "Negotiate a grant of land beyond the Po"
+        legitimacy_bp: -400
+        wealth_bp: -400
+        outcome: >-
+          A landless people is settled on Roman soil. Both sides sit on their weapons.
+        deeds: {peace_with: [e1_cimbri]}
+    history: >-
+      Livy's Periocha: Marius defended his camp against the Teutones and Ambrones and destroyed them in two battles around
+      Aquae Sextiae; the Cimbri, having driven Catulus from the Alps, crossed into Italy, and were defeated when the armies
+      of Catulus and Marius joined: 140,000 killed and 60,000 captured. Marius took one triumph instead of two (Per. 68).
+      Plutarch records the agreement to fight on the third day on the plain of Vercellae (Marius 25).
+    sources: ["Livy, Periocha 68 (read)", "Plutarch, Marius 25-27 (read)"]
+
+  - id: r133_saturninus
+    scenario: rome_133
+    civ: rome
+    year: -100
+    until_year: -98
+    title: "Saturninus and the Veterans"
+    place: "The Forum"
+    speaker: ruler
+    after: [r133_vercellae]
+    benchmark_provinces: 51
+    story: >-
+      Marius, in his sixth consulship, has made himself hated by supporting the tribune Saturninus in many things,
+      including the murder of a rival for the tribunate. Saturninus's agrarian law carries a clause that every senator
+      must swear to obey whatever the people vote. Marius pretends to oppose it in the Senate, only to catch Metellus,
+      who will not swear, in a trap.
+
+
+      Now the Senate and the knights are united against Saturninus. Leading men come to Marius by night to ask him to act,
+      while he lets Saturninus in by another door.
+    choices:
+      - label: "Let Marius lead his soldiers into the Forum against Saturninus"
+        historical: true
+        unrest_bp: 500
+        legitimacy_bp: 300
+        influence: {nobility: 400, guilds: -300}
+        outcome: >-
+          Marius takes the insurgents to the Capitol, cuts the water pipes, and they surrender on the public faith. He tries
+          to save them, but the crowd kills them. Marius's reputation does not recover.
+      - label: "Back Saturninus's land law for the veterans"
+        wealth_bp: -700
+        unrest_bp: -500
+        legitimacy_bp: -400
+        influence: {nobility: -600, guilds: 400}
+        outcome: >-
+          The veterans receive land and the Senate swears its oath. A man exiles himself rather than take it.
+      - label: "Settle the veterans quietly through the Senate"
+        wealth_bp: -500
+        unrest_bp: -200
+        influence: {nobility: -100}
+        outcome: >-
+          The Senate gives the veterans something. It is less than Saturninus offered and arrives later.
+    history: >-
+      Plutarch: Marius made himself hated by taking part in Saturninus's misdeeds, played a double game with the leading
+      men and with Saturninus, and when the Senate and knights combined, led his soldiers into the Forum, drove the
+      insurgents to the Capitol, cut off the water conduits and forced them to surrender (Marius 28-30). Wikipedia's year
+      page puts it in 100 BC (cross-check).
+    sources: ["Plutarch, Marius 28-30 (read)"]
+
+  - id: r133_drusus
+    scenario: rome_133
+    civ: rome
+    year: -91
+    until_year: -89
+    title: "Livius Drusus Promises Citizenship"
+    place: "The Forum"
+    speaker: ruler
+    benchmark_provinces: 51
+    story: >-
+      The knights hold the courts, and the Senate cannot bear their power. The tribune Marcus Livius Drusus, of a very
+      noble house, has taken up the Senate's cause. To gain strength he has passed land and grain laws and settled colonies
+      in Italy and Sicily. To reconcile the orders he proposes to add three hundred knights to the three hundred senators and
+      draw the juries from the whole body.
+
+
+      The Italians have been promised citizenship by Drusus in return for their support. If the promise cannot be kept, they
+      will not take it quietly.
+    choices:
+      - label: "Let the Senate drop him and the citizenship with him"
+        historical: true
+        unrest_bp: 1400
+        legitimacy_bp: -800
+        influence: {nobility: 500}
+        outcome: >-
+          The senators are angry that so many knights should be raised to their rank at once. Drusus is hated even by the
+          Senate as the author of the Social War, and is murdered at home by an unknown hand. The Italians begin to plot
+          revolt; at Asculum the praetor Servilius and every Roman in the town are killed.
+        deeds: {war_with: [e1_socii]}
+      - label: "Pass the citizenship law"
+        wealth_bp: -600
+        unrest_bp: 600
+        legitimacy_bp: 400
+        influence: {nobility: -800}
+        outcome: >-
+          The Italians are made citizens before a shot is fired, with the Senate divided. The knights and the old tribes
+          do not like it.
+        deeds: {ally_with: [e1_socii]}
+      - label: "Temporise with a limited franchise for the Latins"
+        legitimacy_bp: -200
+        unrest_bp: 600
+        outcome: >-
+          Some of the Latin cities are satisfied. The Marsi and Samnites are not.
+    history: >-
+      Livy's Periocha 71: Drusus, to strengthen the Senate, stirred the allies with hope of citizenship and carried
+      agrarian, grain and jury laws by force; when the promise could not be kept the Italians began to plan revolt; Drusus,
+      disliked even by the Senate as if the author of the Social War, was killed at home by an unknown hand. Periocha 72
+      lists the peoples that revolted (Picentes, Vestini, Marsi, Paeligni, Marrucini, Samnites, Lucanians) and
+      the killing of the proconsul Servilius and all the Romans in Asculum. Appian's list adds the Frentani, Hirpini,
+      Apulians and others (BC 1.35-39).
+    sources: ["Livy, Periochae 71-72 (read)", "Appian, Civil Wars 1.35-39 (read)"]
+
+  - id: r133_citizenship
+    scenario: rome_133
+    civ: rome
+    year: -90
+    until_year: -87
+    title: "The Franchise as the Price of Peace"
+    place: "The Senate House"
+    speaker: e1_socii
+    needs_war_with: [e1_socii]
+    after: [r133_drusus]
+    benchmark_provinces: 51
+    story: >-
+      Italy is in flames from the Adriatic to the Liris. The revolt has spread from the Marsi and Samnites to the Hirpini,
+      Apulians and Lucanians. Etruria and Umbria, on the other side of Rome, are restless, and the Senate has garrisoned the
+      coast from Cumae to the city with freedmen, enrolled in the army for the first time.
+
+
+      The allies fight not to leave Rome but to join it. A decree could offer citizenship to those who have kept
+      faith, and the Etruscans are ready to accept it.
+    choices:
+      - label: "Offer citizenship to the allies who have not revolted, voting in new tribes"
+        historical: true
+        wealth_bp: -400
+        unrest_bp: -500
+        legitimacy_bp: 300
+        influence: {nobility: -300}
+        outcome: >-
+          The Etruscans accept gladly. The new citizens are put in ten new tribes that vote last, so their votes often count
+          for nothing, which the Italians either do not notice at first or accept. The faithful stay faithful, the
+          wavering are held, and the rebels hope for the same.
+        deeds: {peace_with: [e1_socii]}
+      - label: "Fight on and grant nothing"
+        wealth_bp: -1200
+        unrest_bp: 1200
+        legitimacy_bp: -600
+        outcome: >-
+          The war goes on for years. Every defeat gives the rebels new allies.
+      - label: "Grant citizenship to all Italians at once, in all thirty-five tribes"
+        wealth_bp: -600
+        unrest_bp: 300
+        influence: {nobility: -900}
+        outcome: >-
+          The war is over at once. The old citizens find themselves outvoted by the new, and a fight over the tribes begins
+          at once.
+        deeds: {ally_with: [e1_socii]}
+    history: >-
+      Appian: the Senate voted that Italians who had adhered to their alliance should be admitted to citizenship, the
+      Etruscans gladly accepted, and the new citizens were not enrolled in the thirty-five tribes but in ten new tribes
+      that voted last (BC 1.49). The consul's law is conventionally dated 90 BC, with a second law the next year;
+      those names are not in the texts read.
+    sources: ["Appian, Civil Wars 1.49 (read)"]
+
+  - id: r133_sulla_march
+    scenario: rome_133
+    civ: rome
+    year: -88
+    until_year: -86
+    title: "Sulla Marches on Rome"
+    place: "The road to Rome"
+    speaker: ruler
+    after: [r133_citizenship]
+    benchmark_provinces: 51
+    story: >-
+      King Mithridates has invaded Bithynia and Phrygia, and the consul Sulla has drawn the command of the war. Marius, who
+      thinks it will be easy and lucrative, has persuaded the tribune Publius Sulpicius to get it for him, with a bill to
+      spread the new Italian citizens over all the tribes. The old citizens fight the new with sticks and stones.
+
+
+      Sulla calls his army together and tells them what Sulpicius and Marius have done to him. They are afraid of
+      missing the campaign and its plunder, and tell him to lead them to Rome. All his senior officers except one
+      quaestor leave him.
+    choices:
+      - label: "Let Sulla lead six legions into the city"
+        historical: true
+        unrest_bp: 1500
+        legitimacy_bp: -1500
+        influence: {nobility: 300}
+        outcome: >-
+          To three embassies that ask why he marches against his country Sulla answers: "To deliver her from tyrants." Appian dates the beginning of faction chiefs fighting each other with great armies from this time.
+        deeds: {men: 12000, martial_bp: 800}
+      - label: "Give the command to Marius and keep Sulla at home"
+        legitimacy_bp: -600
+        unrest_bp: 800
+        outcome: >-
+          The legions Sulla led are left behind with their general. A sullen army remains at Nola.
+      - label: "Propose that both consuls share the command"
+        legitimacy_bp: 200
+        wealth_bp: -300
+        outcome: >-
+          The Senate asks for a compromise. Sulla's army does not wait to hear it.
+    history: >-
+      Appian: the Marian bill for the new citizens and the fighting in the city, then Sulla's speech to the army, six
+      legions led to Rome, all superior officers but a quaestor leaving, and the answer "to deliver her from tyrants"
+      (BC 1.55-57). Appian calls it the beginning of civil wars fought with armies.
+    sources: ["Appian, Civil Wars 1.55-57 (read)"]
+
+  - id: r133_mithridates
+    scenario: rome_133
+    civ: rome
+    year: -88
+    until_year: -85
+    title: "The Day of the Italians in Asia"
+    place: "Ephesus"
+    speaker: pontus
+    needs_alive: [pontus]
+    after: [r133_sulla_march]
+    benchmark_provinces: 51
+    story: >-
+      King Mithridates has overrun Bithynia and Phrygia, and a decree goes out through the cities of Asia from his
+      headquarters: all Italians, men, women and children, are to be killed on one day. The cities obey. Not even those
+      who ran to temples are spared.
+
+
+      Rome is torn by civil war and has no army to send. What will you do?
+    choices:
+      - label: "Let Sulla settle Italy first and then sail against Mithridates"
+        historical: true
+        wealth_bp: -800
+        outcome: >-
+          Sulla leaves Rome and takes the war to Greece, where he beats Mithridates's generals at Orchomenus, with his own
+          hand taking a standard to lead the men forward. Mithridates's general Archelaus asks for peace; Sulla meets the
+          king himself at Dardanus.
+        deeds: {war_with: [pontus], men: 15000}
+      - label: "Recall Sulla and send other generals"
+        wealth_bp: -900
+        legitimacy_bp: -300
+        outcome: >-
+          The war goes slower. Greece and Asia go over to the king.
+        deeds: {war_with: [pontus]}
+      - label: "Make peace with Mithridates and give up Asia"
+        wealth_bp: -400
+        legitimacy_bp: -1200
+        unrest_bp: 1000
+        outcome: >-
+          The massacre is left unavenged and the Asian revenues are gone; the knights who farm the taxes are ruined.
+        deeds: {peace_with: [pontus]}
+    history: >-
+      Appian: the king ordered the Italians in the Asian cities killed in one day, including mothers and babes, not
+      sparing those who fled to temples (Mithridatic Wars 22-23).
+      Sulla then fought at Orchomenus (Mith. 49-51) and Archelaus asked for peace (Mith. 54). Plutarch adds the
+      meeting at Dardanus in the Troad (Sulla 24).
+    sources: ["Appian, Mithridatic Wars 22-23, 49-54 (read)", "Plutarch, Sulla 24 (read)"]
+
+  - id: r133_sulla_dictator
+    scenario: rome_133
+    civ: rome
+    year: -82
+    until_year: -80
+    title: "The Dictator Without a Term"
+    place: "The Forum"
+    speaker: ruler
+    benchmark_provinces: 51
+    story: >-
+      Sulla has come home from the east and crushed the Marian side in Italy; Norba has fallen in fire and murder.
+      He calls the people to an assembly and says he will bring in a change that will benefit them if they obey him, but
+      of his enemies he will spare none.
+
+
+      Then he posts a list: about forty senators and sixteen hundred knights are to be killed, with rewards for the
+      killers and penalties for hiding the condemned. More names are added later. There are no elections according to
+      law any more. Sulla's message to the assembly asks that a dictator be chosen.
+    choices:
+      - label: "Make him dictator to make laws and settle the state, with no time limit"
+        historical: true
+        unrest_bp: 800
+        legitimacy_bp: -1000
+        influence: {nobility: 500, guilds: -500}
+        outcome: >-
+          The assembly gives him the power as long as he likes, to enact such laws as he thinks best. It is the old
+          dictatorship, but without its six-month limit.
+      - label: "Hold consular elections and resist"
+        wealth_bp: -1000
+        unrest_bp: 1500
+        legitimacy_bp: -400
+        outcome: >-
+          Sulla's army is in Italy and no one can stop him. There is more killing.
+      - label: "Offer him a dictatorship limited to a year"
+        legitimacy_bp: 200
+        unrest_bp: 400
+        outcome: >-
+          Sulla refuses to be limited. The old form is not used.
+    history: >-
+      Appian: after Norba, Sulla assembled the people and proscribed about forty senators and 1,600 knights, the first
+      formal list, with prizes to assassins and rewards to informers (BC 1.95); the Romans, having no elections according
+      to law, chose Sulla absolute master for as long as he pleased, to enact such laws as he thought best (BC 1.99).
+      Plutarch counts his proscriptions at eighty, then two hundred and twenty, then as many more (Sulla 31).
+    sources: ["Appian, Civil Wars 1.95-99 (read)", "Plutarch, Sulla 31 (read)"]
+
+  - id: r133_pompey_east
+    scenario: rome_133
+    civ: rome
+    year: -66
+    until_year: -63
+    title: "A Command Without a Limit"
+    place: "The Rostra"
+    speaker: ruler
+    needs_alive: [pontus]
+    benchmark_provinces: 52
+    story: >-
+      Pompey has cleared the sea of pirates in less than three months: he divided the Mediterranean into thirteen
+      districts, with five hundred ships and a hundred and twenty thousand foot, took ninety bronze-beaked ships in
+      surrender, and spared more than twenty thousand pirate prisoners. Prices of grain fell at once.
+
+
+      Now the tribune Manilius proposes giving him all the lands and forces of Lucullus, Bithynia and the command of the war
+      against Mithridates and Tigranes, with his sea power kept. Plutarch says the whole Roman supremacy would lie in the
+      hands of one man.
+    choices:
+      - label: "Pass the Manilian law"
+        historical: true
+        wealth_bp: -500
+        legitimacy_bp: 300
+        influence: {nobility: -500, guilds: 300}
+        outcome: >-
+          Pompey is given the war, over the protest of the nobles who think it a tyranny. Lucullus, who did the work, is
+          robbed of the glory.
+        deeds: {war_with: [pontus, e1_armenia], ships: 40, men: 20000}
+      - label: "Keep Lucullus in command"
+        wealth_bp: -300
+        legitimacy_bp: 200
+        influence: {nobility: 400}
+        outcome: >-
+          The army of Lucullus is mutinous and war-weary. The war drags on.
+        deeds: {war_with: [pontus]}
+      - label: "Divide the command between several generals"
+        wealth_bp: -600
+        legitimacy_bp: -200
+        outcome: >-
+          No one has authority enough, and the kings use the quarrels between Roman generals.
+        deeds: {war_with: [pontus]}
+    history: >-
+      Plutarch: Pompey ended piracy in under three months with ninety bronze-beaked ships taken and more than twenty
+      thousand men spared (Pompey 28); the tribune Manilius proposed that he receive Lucullus's provinces and forces,
+      and the command against Mithridates and Tigranes; the aristocracy thought it a tyranny (Pompey 30). The Manilian law
+      was passed in 66 BC (editor's note in the Loeb text).
+    sources: ["Plutarch, Pompey 26-30 (read)"]
+
+  - id: r133_mithridates_end
+    scenario: rome_133
+    civ: rome
+    year: -63
+    title: "The End of the King"
+    place: "Panticapaeum"
+    speaker: pontus
+    needs_alive: [pontus]
+    after: [r133_pompey_east]
+    benchmark_provinces: 52
+    story: >-
+      Mithridates, driven to the Bosporus, with his own son Pharnaces in revolt and his army against him, takes poison, but
+      he has so long accustomed himself to antidotes that it has no effect. He sees a Gaul in his service, Bituitus, and
+      says that he will profit most from his right arm if he will kill him and save him from being led in a Roman triumph.
+
+
+      Pompey's settlement of the east is yet to come. The Senate will soon be asked what to do with the lands of the
+      king, who reigned fifty-seven years and fought Rome for forty.
+    choices:
+      - label: "Take Pontus as a Roman province and settle the east"
+        historical: true
+        wealth_bp: 1500
+        influence: {nobility: 200}
+        outcome: >-
+          The king is dead. The war that began with the killing of the Italians in Asia is finished, and the eastern
+          provinces start to pay.
+        deeds: {conquer: [pontus], take: [pon_pontus]}
+      - label: "Make Pharnaces a friendly king and withdraw"
+        wealth_bp: 500
+        legitimacy_bp: 200
+        outcome: >-
+          Pharnaces keeps the Bosporus and Rome holds the coast, a client that will cause trouble again.
+        deeds: {peace_with: [pontus]}
+      - label: "Leave the war unfinished"
+        legitimacy_bp: -500
+        outcome: >-
+          The pirates, the Armenian king and the Pontic nobles all carry on.
+    history: >-
+      Appian: Mithridates tried poison, but was so used to antidotes that it failed; he asked the Gaul Bituitus to kill
+      him and Bituitus did; he had lived sixty-eight or sixty-nine years and reigned fifty-seven, having been an orphan
+      when the kingdom came to him (Mithridatic Wars 111-112). The texts read do not describe Pompey's settlement.
+    sources: ["Appian, Mithridatic Wars 111-112 (read)"]
