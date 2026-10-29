@@ -157,6 +157,18 @@ func nearest_street(p: Vector2) -> Dictionary:
 	return best
 
 
+## Position and unit tangent at arc length `d` metres along street number `index` (the order of
+## `streets`): [Vector2 point, Vector2 tangent]. For fill.gd.
+func sample_at(index: int, d: float) -> Array:
+	var s: Dictionary = streets[index]
+	var dd := clampf(d, 0.0, float(s["len"]))
+	var p := _point_at(s, dd)
+	var q := _point_at(s, minf(dd + 1.0, float(s["len"])))
+	var o := _point_at(s, maxf(dd - 1.0, 0.0))
+	var tg := (q - o).normalized()
+	return [p, tg if tg.length() > 0.1 else Vector2.RIGHT]
+
+
 ## Ground point at fraction `t` of the street's length (0 = first YAML point, 1 = last).
 func along(street_id: String, t: float) -> Vector3:
 	if not _by_id.has(street_id):
