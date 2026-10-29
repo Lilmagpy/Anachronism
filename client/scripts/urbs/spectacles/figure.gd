@@ -82,6 +82,18 @@ func kneel(amount: float) -> void:
 	position.y = 0.0
 
 
+## Sit (0 standing, 1 seated on a bench; the feet origin stays on the floor, so raise the figure
+## by the bench height yourself).
+func sit(amount: float) -> void:
+	torso.position.y = 0.9 - 0.42 * amount
+	legs[0].position.y = 0.9 - 0.42 * amount
+	legs[1].position.y = 0.9 - 0.42 * amount
+	legs[0].rotation.x = -1.45 * amount
+	legs[1].rotation.x = -1.45 * amount
+	arms[0].rotation.x = 0.0
+	arms[1].rotation.x = 0.0
+
+
 ## Turn the figure so its front (+z) points along `dir` (a horizontal vector).
 static func face(node: Node3D, dir: Vector3) -> void:
 	if Vector2(dir.x, dir.z).length() > 0.0001:

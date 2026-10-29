@@ -38,6 +38,16 @@ func seat_views() -> Array[Transform3D]:
 	return []
 
 
+## The camera presets in WORLD space (seat_views() moved by this node's transform), for the
+## city's camera to glide to.
+func camera_views() -> Array[Transform3D]:
+	var out: Array[Transform3D] = []
+	var g := global_transform if is_inside_tree() else transform
+	for v in seat_views():
+		out.append(g * v)
+	return out
+
+
 func view_names() -> PackedStringArray:
 	return PackedStringArray()
 
@@ -46,7 +56,7 @@ func view_names() -> PackedStringArray:
 func make_label(text: String, size := 0.5, col := Color(1, 1, 1)) -> Label3D:
 	var l := Label3D.new()
 	l.text = text
-	l.pixel_size = 0.01 * size
+	l.pixel_size = 0.02 * size
 	l.font_size = 48
 	l.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	l.no_depth_test = true
