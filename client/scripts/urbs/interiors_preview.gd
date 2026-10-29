@@ -52,7 +52,7 @@ func _build() -> void:
 	print("INTERIOR %s %s size %s: %d triangles, built in %d ms" % [kind, variant, size, r.get("tris", 0), Time.get_ticks_msec() - t0])
 	for n in r.get("notes", []):
 		print("  NOTE ", n)
-	_world(kind)
+	_world(bool(r.get("open_sky", false)))
 	if r.get("ground", false):
 		Interiors.current.get_node("Ground").visible = true
 	var views: Array = [["start", r["spawn"]]]
@@ -65,7 +65,7 @@ func _build() -> void:
 	_shoot.call_deferred(views)
 
 
-func _world(kind: String) -> void:
+func _world(open_sky: bool) -> void:
 	var env := WorldEnvironment.new()
 	var e := Environment.new()
 	var sky := Sky.new()
@@ -73,10 +73,17 @@ func _world(kind: String) -> void:
 	sm.sky_top_color = Color(0.22, 0.40, 0.66)
 	sm.sky_horizon_color = Color(0.78, 0.74, 0.66)
 	sky.sky_material = sm
-	e.background_mode = Environment.BG_SKY
-	e.sky = sky
-	e.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
-	e.ambient_light_energy = 0.55
+	if open_sky:
+		e.background_mode = Environment.BG_SKY
+		e.sky = sky
+		e.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
+		e.ambient_light_energy = 0.55
+	else:   # as Urbs sets it while inside: a dark roof, neutral warm ambient
+		e.background_mode = Environment.BG_COLOR
+		e.background_color = Color(0.04, 0.035, 0.03)
+		e.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
+		e.ambient_light_color = Color(0.55, 0.50, 0.44)
+		e.ambient_light_energy = 0.6
 	e.tonemap_mode = Environment.TONE_MAPPER_FILMIC
 	e.tonemap_exposure = 1.0
 	env.environment = e
