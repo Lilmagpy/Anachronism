@@ -29,7 +29,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
   - [ ] Urbs (D-289, plans/city.md): walk-in Rome with interiors and spectacles
     - [x] U1 frame, exporter, streets and regions data, spectacles data (verified), Empire monuments (verified)
     - [x] U2 ground: hills, cliffs, Tiber, ancient levels, woods (first pass)
-    - [x] U3 160 monuments placed, dated, oriented, clickable; 20,000 buildings inside the walls at 50 BC, farms and tombs outside
+    - [x] U3 160 monuments placed, dated, oriented, clickable, every form built (no placeholders); 20,000 buildings inside the walls at 50 BC, farms and tombs outside
     - [x] U4 modes map -> city -> street -> inside, cards, chunked loading
     - [x] U5 interiors: temple, curia, basilica, circus, arena, theatre, domus, insula, furnished and lit
     - [x] U6 spectacles animated, sourced, with jointed figures, horses and crowds; triumph under 250 draw calls

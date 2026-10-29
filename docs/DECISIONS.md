@@ -2619,3 +2619,13 @@ matters. Engine only: the client screens for it come in a later step.
 - Outside the walls: tombs line every road out of a gate (Twelve Tables 10.1 in Cicero, *De
   legibus* 2.58), ribbon development for about 800 m, then farmland in parcels; the parcel
   mix is design, marked as such.
+
+## D-292 The Capitoline temple faces south-south-east, towards the Forum — DELEGATED (2026-10-29)
+- Platner-Ashby: the temple fronted south with its axis 26.5 degrees east of the north-south
+  line. Read as the front turned east of south (bearing 153.5), which faces the Forum and the
+  Clivus Capitolinus; the other reading would turn it away. Noted in the entry's
+  `geometry_note`; the neighbouring Capitoline temples share the bearing.
+- With the verified coordinates merged, half the placement offsets double-corrected and were
+  dropped; the 19 kept each still reduce the error against an independent point.
+- The Roman kit is complete for the Republic dataset (100 kit forms, 46 own forms, 0
+  placeholders); the Empire set still has 12 placeholders (palaces, obelisk, stadia, odeum).
