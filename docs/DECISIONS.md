@@ -2610,3 +2610,12 @@ matters. Engine only: the client screens for it come in a later step.
 - Refactor: `describe_blockers` moved to `engine/tech.py` and the body of `StartProject` to
   `projects.begin_project` so the Senate can fund a work without importing `commands`.
 - Bots ignore the new actions.
+
+## D-291 The walled city is the Servian circuit through the gates — DELEGATED (2026-10-29)
+- The dataset's 13-point wall route encloses only 2.8 km²; the sources give about 426 ha.
+  The fill now uses a `servian_circuit` polygon traced through the sixteen gates
+  (`regions.yaml`, about 4.0 km², marked rough) to decide what is inside the walls. The old
+  route still keeps houses off the drawn wall until the wall itself is retraced.
+- Outside the walls: tombs line every road out of a gate (Twelve Tables 10.1 in Cicero, *De
+  legibus* 2.58), ribbon development for about 800 m, then farmland in parcels; the parcel
+  mix is design, marked as such.
