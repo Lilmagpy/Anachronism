@@ -50,6 +50,7 @@ const CLOTHS: Array[Color] = [
 
 static var _cache := {}
 static var _material: ShaderMaterial
+static var _farm_material: ShaderMaterial
 
 
 # ---------------------------------------------------------------- public
@@ -58,6 +59,7 @@ static var _material: ShaderMaterial
 ##   insula:<shape gable|hip|stepped>:<storeys 2-5>:<feature 0-2>:<pitch 0|1>[:n  narrow, 7 m wide]
 ##   domus  casa:<tile|thatch|shingle>  taberna:<0-5>  workshop:<0|1>  horti  tree:<cypress|pine|round>
 ##   prop:<cart|amph|sacks|crates>  furn:<fountain|well|shrine>
+##   tomb:<altar|columbarium|round|tumulus|stele>  rural:<vines|beds|farm|trees>  tree:fruit
 static func get_mesh(key: String, lod := 0) -> ArrayMesh:
 	var full := "%s@%d" % [key, clampi(lod, 0, 2)]
 	if _cache.has(full):
@@ -83,12 +85,28 @@ static func get_mesh(key: String, lod := 0) -> ArrayMesh:
 			mb = _prop(p[1])
 		"furn":
 			mb = _furn(p[1])
+		"tomb":
+			mb = _tomb(p[1], lod)
+		"rural":
+			mb = _rural(p[1], lod)
 		_:
 			mb = MB.new()
 			mb.box(Vector3(-1, 0, -1), Vector3(1, 2, 1), PLASTER)
 	var mesh := mb.to_mesh()
 	_cache[full] = mesh
 	return mesh
+
+
+## Material of the farmland ground meshes (fill.gd rural_build): vertex alpha 1.0 = sown or
+## ploughed strips (rows 1.1 m apart along the parcel's own axes, taken from UV in metres),
+## 0.5 = meadow. Vertex colour is the tint.
+static func farm_material() -> ShaderMaterial:
+	if _farm_material == null:
+		var sh := Shader.new()
+		sh.code = FARM_SHADER
+		_farm_material = ShaderMaterial.new()
+		_farm_material.shader = sh
+	return _farm_material
 
 
 ## The one material every building, prop and tree uses.
@@ -217,6 +235,35 @@ void fragment() {
 	}
 	ALBEDO = col;
 	ROUGHNESS = rough;
+}
+"""
+
+
+const FARM_SHADER := """
+shader_type spatial;
+render_mode cull_disabled;
+
+float h21(vec2 p) { p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y); }
+float vn(vec2 p) {
+	vec2 i = floor(p); vec2 f = fract(p); f = f * f * (3.0 - 2.0 * f);
+	return mix(mix(h21(i), h21(i + vec2(1, 0)), f.x), mix(h21(i + vec2(0, 1)), h21(i + vec2(1, 1)), f.x), f.y);
+}
+float fbm(vec2 p) { return vn(p) * 0.5 + vn(p * 2.03 + 7.1) * 0.3 + vn(p * 4.1 + 3.7) * 0.2; }
+
+void fragment() {
+	vec3 wp = (INV_VIEW_MATRIX * vec4(VERTEX, 1.0)).xyz;
+	vec3 col = pow(COLOR.rgb, vec3(2.2));
+	if (COLOR.a > 0.75) {
+		float rows = 0.5 + 0.5 * sin(UV.x * 5.7);
+		float n = fbm(UV * 0.11 + floor(col.r * 97.0));
+		col = col * (0.50 + 0.34 * rows) * (0.62 + 0.38 * n);
+	} else {
+		float n = fbm(wp.xz * 0.28);
+		col = col * (0.42 + 0.5 * n);
+		col = mix(col, vec3(0.40, 0.36, 0.2), smoothstep(0.62, 0.85, fbm(wp.xz * 0.11 + 4.0)) * 0.55);
+	}
+	ALBEDO = col;
+	ROUGHNESS = 1.0;
 }
 """
 
@@ -721,6 +768,10 @@ static func _tree(kind: String) -> MB:
 			b.cone(0, 0, 4.2, 5.8, 1.0, 3.6, 8, Color(0.20, 0.34, 0.17, 0.1))
 			b.cone(0, 0, 5.8, 6.8, 3.6, 3.0, 8, Color(0.24, 0.38, 0.19, 0.1))
 			b.cone(0, 0, 6.8, 7.4, 3.0, 0.3, 8, Color(0.22, 0.36, 0.18, 0.1))
+		"fruit":
+			b.cone(0, 0, 0.0, 1.2, 0.18, 0.14, 5, trunk)
+			b.cone(0, 0, 1.0, 2.4, 0.4, 1.7, 7, Color(0.36, 0.50, 0.22, 0.1))
+			b.cone(0, 0, 2.4, 3.2, 1.7, 0.3, 7, Color(0.40, 0.54, 0.24, 0.1))
 		_:
 			b.cone(0, 0, 0.0, 2.0, 0.25, 0.2, 5, trunk)
 			b.cone(0, 0, 1.6, 3.3, 0.6, 2.2, 8, Color(0.32, 0.47, 0.20, 0.1))
@@ -786,4 +837,89 @@ static func _furn(kind: String) -> MB:
 			b.shed(-1.0, 1.0, -0.2, -0.7, 2.6, 2.3, TILE)
 			b.box(Vector3(-0.5, 0.5, -0.5), Vector3(0.5, 1.6, -0.2), DARK)   # the niche of the Lares
 			b.box(Vector3(-0.3, 0.5, 0.2), Vector3(0.3, 1.05, 0.6), STONE)  # altar
+	return b
+
+
+# ---------------------------------------------------------------- tombs (lining the roads)
+
+## Roadside tombs, nominal sizes: altar 3 x 3, columbarium 5 x 5, round 8 x 8, tumulus 9 x 9,
+## stele 1 x 0.5. Burial outside the city by law: Twelve Tables 10.1 (Cic. Leg. 2.58, read).
+static func _tomb(kind: String, lod: int) -> MB:
+	var b := MB.new()
+	var marble := Color(0.86, 0.84, 0.78, 0.3)
+	match kind:
+		"altar":
+			b.box(Vector3(-1.5, -1.0, -1.5), Vector3(1.5, 0.5, 1.5), STONE)
+			b.box(Vector3(-1.2, 0.5, -1.2), Vector3(1.2, 1.9, 1.2), marble)
+			b.box(Vector3(-1.45, 1.9, -1.45), Vector3(1.45, 2.3, 1.45), STONE)
+			b.rect_on(0, -0.8, 0.8, 0.9, 1.6, 3.0, 3.0, 0.62, DARK)
+		"columbarium":
+			_walls(b, 5.0, 5.0, 3.4)
+			b.gable(-2.8, 2.8, -2.8, 2.8, 3.4, 1.2, TILE, PLASTER)
+			b.rect_on(0, -0.6, 0.6, 0.0, 2.2, 5.0, 5.0, 0.03, DARK)
+			if lod < 2:
+				for i in 3:
+					for j in 2:
+						b.rect_on(2, -1.6 + 1.6 * float(i) - 0.35, -1.6 + 1.6 * float(i) + 0.35, 1.0 + 1.0 * float(j), 1.5 + 1.0 * float(j), 5.0, 5.0, 0.03, DARK)
+		"round":
+			b.cone(0, 0, -1.0, 1.5, 4.0, 3.9, 10, STONE)
+			b.cone(0, 0, 1.5, 5.0, 3.8, 3.6, 10, marble)
+			b.cone(0, 0, 5.0, 5.4, 3.9, 3.9, 10, STONE)
+			b.cone(0, 0, 5.4, 7.2, 3.0, 0.1, 10, Color(0.40, 0.46, 0.25, 0.1))
+		"tumulus":
+			b.cone(0, 0, -0.5, 0.2, 4.5, 4.3, 12, STONE)
+			b.cone(0, 0, 0.2, 3.2, 4.3, 0.2, 12, Color(0.40, 0.48, 0.26, 0.1))
+		_:
+			b.box(Vector3(-0.5, -0.5, -0.25), Vector3(0.5, 2.0, 0.25), marble)
+	return b
+
+
+# ---------------------------------------------------------------- farmland furniture
+
+## Things standing on farm parcels (nominal 44 x 44 m): vineyard rows, kitchen-garden beds, a
+## farm steading, a small orchard.
+static func _rural(kind: String, lod: int) -> MB:
+	var b := MB.new()
+	var leaf := Color(0.26, 0.42, 0.18, 0.1)
+	match kind:
+		"vines":
+			var rows := 9 if lod == 0 else 4
+			for i in rows:
+				var x := -18.0 + 36.0 * float(i) / float(rows - 1)
+				b.box(Vector3(x - 0.3, 0.0, -18.0), Vector3(x + 0.3, 1.35, 18.0), leaf)
+				if lod == 0:
+					for j in 7:
+						var z := -17.0 + 34.0 * float(j) / 6.0
+						b.box(Vector3(x - 0.04, 0.0, z - 0.04), Vector3(x + 0.04, 1.9, z + 0.04), WOOD, false)
+		"beds":
+			for i in 4:
+				for j in 3:
+					var x0 := -17.0 + 9.0 * float(i)
+					var z0 := -15.0 + 10.5 * float(j)
+					var g := Color(0.32 + 0.1 * float((i + j) % 2), 0.48, 0.2, 0.1)
+					b.box(Vector3(x0, 0.0, z0), Vector3(x0 + 7.5, 0.28, z0 + 8.0), g)
+			var shed := MB.new()
+			_walls(shed, 4.0, 4.0, 2.6)
+			shed.gable(-2.4, 2.4, -2.4, 2.4, 2.6, 1.4, TILE, PLASTER)
+			shed.rect_on(0, -0.5, 0.5, 0.0, 2.0, 4.0, 4.0, 0.03, DARK)
+			_append(b, shed, Vector3(17.0, 0.0, 17.0))
+		"farm":
+			var house := MB.new()
+			_walls(house, 12.0, 9.0, 3.4)
+			house.gable(-6.6, 6.6, -5.0, 5.0, 3.4, 2.4, TILE, PLASTER)
+			house.rect_on(0, -0.7, 0.7, 0.0, 2.2, 12.0, 9.0, 0.03, DARK)
+			house.rect_on(0, 2.5, 3.6, 1.2, 2.2, 12.0, 9.0, 0.03, DARK)
+			house.rect_on(0, -3.6, -2.5, 1.2, 2.2, 12.0, 9.0, 0.03, DARK)
+			_append(b, house, Vector3(-4.0, 0.0, -10.0))
+			var barn := MB.new()
+			_walls(barn, 14.0, 9.0, 4.2, WOOD)
+			barn.gable(-7.6, 7.6, -5.0, 5.0, 4.2, 2.6, Color(0.60, 0.46, 0.28, 0.9), WOOD)
+			barn.rect_on(0, -2.0, 2.0, 0.0, 3.4, 14.0, 9.0, 0.03, DARK)
+			_append(b, barn, Vector3(-3.0, 0.0, 10.0))
+			for s in [Vector2(14.0, 10.0), Vector2(15.5, 4.0)]:
+				b.cone(s.x, s.y, 0.0, 2.2, 1.9, 1.4, 8, Color(0.78, 0.66, 0.34, 0.8))
+				b.cone(s.x, s.y, 2.2, 3.4, 1.4, 0.1, 8, Color(0.78, 0.66, 0.34, 0.8))
+			b.box(Vector3(12.0, 0.0, -14.0), Vector3(15.0, 1.0, -10.5), WOOD)   # woodpile
+			if lod == 0:
+				_amphora(b, 3.5, 0.0, -5.0, 1.3)
 	return b

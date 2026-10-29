@@ -51,7 +51,7 @@
 ],
 "max_density": 0.9,
 "onset": -378,
-"saturates_at": 250000,
+"saturates_at": 450000,
 "sources": [
 "Livy 6.32.1 (the wall)",
 "Strabo 5.3.7 (read)",
@@ -1590,5 +1590,119 @@
 ],
 "text": "The Palatium, the Velia and the Cermalus (Germalus). All the area inside the pomerium belonged to the four regions except, apparently, the Capitoline, which was the citadel and religious centre; the Aventine lay outside the pomerium. The division stayed in force until Augustus' reorganisation."
 }
+],
+"rural": {
+"campus": {
+"meadow": 0.78,
+"orchard": 0.08,
+"pasture": 0.14
+},
+"default": {
+"farm": 0.08,
+"field": 0.34,
+"garden": 0.14,
+"orchard": 0.16,
+"pasture": 0.1,
+"vineyard": 0.18
+},
+"near_city": {
+"farm": 0.08,
+"field": 0.2,
+"garden": 0.32,
+"orchard": 0.2,
+"pasture": 0.06,
+"vineyard": 0.14
+},
+"sources": [
+"Twelve Tables 10.1 as quoted in Cic. Leg. 2.58 (read, Latin Library): hominem mortuum in urbe ne sepelito neve urito -> burials outside the city, hence the tombs along the roads",
+"Platner-Ashby s.v. Via Appia and Via Latina (read): the road flanked with tombs and columbaria within and without the Aurelian wall; the whole triangle between the Appia and the Latina occupied by tombs",
+"Platner-Ashby s.v. Via Flaminia (read): burial on the Flaminia a special honour (Stat. Silv. 2.1.176; Mart. 6.28; Juv. 1.170)",
+"Platner-Ashby s.v. Campus Martius (read): about 250 ha of open meadow with ponds and groves; in Augustus' time the southern part built over and the north open",
+"Platner-Ashby s.v. Horti (cached): the gardens of the late Republic on the Pincian, Esquiline and right bank",
+"Cato Agr. 1 and Varro Rust. 1 on farm kinds (vineyard, olive yard, orchard, kitchen garden, meadow): # unverified",
+"the shares between kinds, the parcel size and the farm steadings are the author's design"
 ]
+},
+"servian_circuit": {
+"polygon": [
+[
+41.8925,
+12.477
+],
+[
+41.8945,
+12.4812
+],
+[
+41.896,
+12.483
+],
+[
+41.9005,
+12.4835
+],
+[
+41.904,
+12.489
+],
+[
+41.9072,
+12.4962
+],
+[
+41.901,
+12.5
+],
+[
+41.896,
+12.5035
+],
+[
+41.8905,
+12.501
+],
+[
+41.8862,
+12.499
+],
+[
+41.8845,
+12.494
+],
+[
+41.8852,
+12.489
+],
+[
+41.8815,
+12.4865
+],
+[
+41.879,
+12.485
+],
+[
+41.879,
+12.4825
+],
+[
+41.8805,
+12.4785
+],
+[
+41.888,
+12.4785
+],
+[
+41.8905,
+12.4772
+]
+],
+"precision": "rough",
+"sources": [
+"monuments.yaml gates (rough)",
+"Platner-Ashby s.v. Murus Servii Tullii",
+"population.yaml built_up_area (426 ha)"
+]
+}
 }

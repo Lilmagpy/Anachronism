@@ -158,7 +158,7 @@ func _run() -> void:
 
 ## --count: lots inside the Servian wall for the chunks loaded, and per-step build times.
 func _count(fill: UrbsFill, chunks: Array, year: int) -> void:
-	var poly := fill._wall
+	var poly := fill._circuit
 	var inside := {}
 	var total := 0
 	for key in chunks:
@@ -172,7 +172,7 @@ func _count(fill: UrbsFill, chunks: Array, year: int) -> void:
 	var n := 0
 	for k in inside:
 		n += int(inside[k])
-	print("COUNT year=%d all=%d inside_wall=%d %s" % [year, total, n, str(inside)])
+	print("COUNT year=%d all=%d inside_walls=%d %s" % [year, total, n, str(inside)])
 	print("REJECT %s" % str(fill.reject_stats))
 
 
