@@ -1348,10 +1348,796 @@ static func _colosseum(sz: Vector2, year: int) -> Dictionary:
 		"floor_y": 0.0, "arena_size": Vector2(sz.x, sz.y), "no_ground": true})
 
 
-# --- STUBS ---
-static func _domus(_sz: Vector2, _y: int) -> Dictionary:
-	return {}
-static func _insula(_sz: Vector2, _y: int) -> Dictionary:
-	return {}
-static func _theatre(_sz: Vector2, _y: int, _v: String) -> Dictionary:
-	return {}
+
+# ====================================================================================================
+#  THEATRE (Pompey's, 55 BC)
+# ====================================================================================================
+
+## A Roman theatre by Vitruvius 5.6: the orchestra a circle with four triangles inscribed, seven
+## stairways on the cavea, the scene twice the diameter of the orchestra, the stage no higher
+## than five feet, seats 20-22 digits high and 2 to 2.5 feet deep, columns of the scaenae frons a
+## quarter of the orchestra diameter, three doors (the regia and the two hospitalia). Pompey's
+## had the temple of Venus Victrix at the top of the cavea, the seats its steps (Tertullian De
+## spect. 10, Gellius 10.1.7, Pliny NH 8.20, via Platner-Ashby s.v. Theatrum Pompei), shrines
+## of Honos, Virtus and Felicitas (Fasti Allifani, ib.), the plan taken from Mytilene (Plut.
+## Pompey 42, read). Stage at -z, cavea rising toward +z; `size.x` is the outer diameter.
+static func _theatre(sz: Vector2, year: int, variant: String) -> Dictionary:
+	var R := sz.x * 0.5
+	var k := _kit()
+	var kc := _kit()
+	var lights: Array = []
+	var pompey := variant == "pompey"
+	var ro := R * 0.27                         # orchestra radius
+	var tread := 0.65
+	var rise := 0.40
+	var walk := 2.5
+	var lift := 1.2
+	var nrow := int((R - 3.0 - ro - 2.0 * walk) / tread)
+	var per := int(ceil(nrow / 3.0))
+	var marble := TRAVERTINE
+	var N := 72
+	var rows: Array = []
+	for r in nrow:
+		rows.append(_row(r, per, tread, rise, walk, lift, 0.0))
+	# orchestra floor, senators' seats
+	for i in 18:
+		var t0 := PI * i / 18.0
+		var t1 := PI * (i + 1) / 18.0
+		k.tri(Vector3(0, 0, 0), _pol(ro, t0, 0.0, 0.0), _pol(ro, t1, 0.0, 0.0), Color(0.78, 0.72, 0.62), Kit.PAINT, Vector3(0, -2, 0))
+	for q in 3:
+		var rq := ro * (0.9 - q * 0.1)
+		var nq := int(PI * rq / 1.0)
+		for i in range(1, nq):
+			var t := PI * i / nq
+			var p := _pol(rq, t, 0.0, 0.0)
+			k.box(p, Vector3(0.5, 0.42, 0.45), WOOD_L, Kit.TIMBER, -t - PI * 0.5, true)
+	# the cavea
+	for r in nrow:
+		var d0: float = ro + rows[r][0]
+		var d1: float = ro + rows[r][1]
+		var hh: float = rows[r][2]
+		var prev: float = 0.0 if r == 0 else rows[r - 1][2]
+		var cr := marble if (r / 3) % 2 == 0 else marble.darkened(0.07)
+		if r > 0 and r % per == 0:
+			var pd: float = ro + rows[r - 1][1]
+			var py: float = rows[r - 1][2]
+			for i in N:
+				var t0 := PI * i / N
+				var t1 := PI * (i + 1) / N
+				k.quad(_pol(pd, t0, 0.0, py), _pol(d0, t0, 0.0, py), _pol(d0, t1, 0.0, py), _pol(pd, t1, 0.0, py), TRAVERTINE.darkened(0.06), Kit.STONE, _pol(pd, (t0 + t1) * 0.5, 0.0, py - 1.0))
+		for i in N:
+			var t0 := PI * i / N
+			var t1 := PI * (i + 1) / N
+			var tm := (t0 + t1) * 0.5
+			k.quad(_pol(d0, t0, 0.0, prev), _pol(d0, t1, 0.0, prev), _pol(d0, t1, 0.0, hh), _pol(d0, t0, 0.0, hh), cr.darkened(0.1), Kit.STONE, _pol(d1 + 6.0, tm, 0.0, prev))
+			k.quad(_pol(d0, t0, 0.0, hh), _pol(d1, t0, 0.0, hh), _pol(d1, t1, 0.0, hh), _pol(d0, t1, 0.0, hh), cr, Kit.STONE, _pol(d0, tm, 0.0, hh - 1.0))
+		# the ends of the rows, against the side passages
+		for sgn: float in [0.0, PI]:
+			var sx := 1.0 if sgn == 0.0 else -1.0
+			k.quad(Vector3(sx * d0, 0, 0), Vector3(sx * d1, 0, 0), Vector3(sx * d1, hh, 0), Vector3(sx * d0, hh, 0), TRAVERTINE.darkened(0.12), Kit.STONE, Vector3(sx * (d0 + d1) * 0.5, hh * 0.5, 5.0))
+	# stairways: seven in the lowest tier, alternating above (Vitruvius 5.6.1-3)
+	for g in 3:
+		var angles: Array = []
+		for j in 7:
+			if g % 2 == 0:
+				angles.append(PI * j / 6.0)
+			else:
+				if j < 6:
+					angles.append(PI * (j + 0.5) / 6.0)
+		for ang: float in angles:
+			if ang < 0.02 or ang > PI - 0.02:
+				continue
+			for r in range(g * per, mini((g + 1) * per, nrow)):
+				var dd0: float = ro + rows[r][0]
+				var dd1: float = ro + rows[r][1]
+				var hh: float = rows[r][2]
+				var hw := 0.9 / (dd0 + 0.1)
+				k.quad(_pol(dd0, ang - hw, 0.0, hh + 0.01), _pol(dd1, ang - hw, 0.0, hh + 0.01), _pol(dd1, ang + hw, 0.0, hh + 0.01), _pol(dd0, ang + hw, 0.0, hh + 0.01), Color(0.58, 0.54, 0.48), Kit.STONE, _pol(dd0, ang, 0.0, hh - 1.0))
+	var r_top: float = ro + rows[nrow - 1][1]
+	var top_h: float = rows[nrow - 1][2]
+	# back wall and the colonnade of the top, its roof level with the top of the scene (5.6.4)
+	for i in N:
+		var t0 := PI * i / N
+		var t1 := PI * (i + 1) / N
+		var rb := r_top + 0.5
+		if pompey and absf((t0 + t1) * 0.5 - PI * 0.5) < 0.22:
+			continue    # the way up to the temple
+		k.quad(_pol(rb, t0, 0.0, top_h), _pol(rb, t1, 0.0, top_h), _pol(rb, t1, 0.0, top_h + 7.0), _pol(rb, t0, 0.0, top_h + 7.0), Color(0.88, 0.80, 0.66), Kit.PLASTER, _pol(rb - 6.0, (t0 + t1) * 0.5, 0.0, top_h))
+		kc.quad(_pol(rb - 3.5, t0, 0.0, top_h + 7.4), _pol(rb - 3.5, t1, 0.0, top_h + 7.4), _pol(rb + 0.6, t1, 0.0, top_h + 7.4), _pol(rb + 0.6, t0, 0.0, top_h + 7.4), TILE_C, Kit.TILE, _pol(rb - 3.5, (t0 + t1) * 0.5, 0.0, top_h))
+	var ncol := int(PI * r_top / 5.0)
+	for i in range(1, ncol):
+		var t := PI * i / ncol
+		if pompey and absf(t - PI * 0.5) < 0.2:
+			continue
+		_column(k, _pol(r_top - 3.2, t, 0.0, top_h), 0.8, 7.0, marble, Kit.STONE, "corinthian")
+	# the stage (no higher than 5 ft), its front with niches, the scaenae frons
+	var sh := 1.4
+	var zf0 := -ro * 0.5                       # the face of the scene
+	var half := ro * 2.0                       # the scene is twice the orchestra's diameter long
+	_span(k, -half, 0.0, zf0 - 2.0, half, sh, 0.0, WOOD, Kit.TIMBER, false)
+	_floor(k, -half, zf0 - 2.0, half, 0.0, sh + 0.005, WOOD_L, Kit.TIMBER)
+	for i in range(-8, 9):
+		var nx := i * half / 8.5
+		k.box(Vector3(nx, 0.0, 0.02), Vector3(half / 8.5 * 0.55, sh * 0.8, 0.3), BLACK_P, Kit.DARK, 0.0, true)   # the niches of the pulpitum front
+	var pod := ro * 2.0 / 12.0                 # the podium: a twelfth of the orchestra's diameter
+	var c1 := ro * 2.0 / 4.0                   # columns: a quarter of the diameter
+	var a1 := c1 * 0.2
+	var pod2 := pod * 0.5
+	var c2 := c1 * 0.75
+	var a2 := c2 * 0.2
+	var pod3 := pod2 * 0.5
+	var c3 := c2 * 0.75
+	var zw := zf0 - 4.5                        # the back wall of the scene
+	var y1 := sh
+	var y2 := y1 + pod + c1 + a1
+	var y3 := y2 + pod2 + c2 + a2
+	var ytop := y3 + pod3 + c3 + 1.0
+	var wallc := Color(0.84, 0.66, 0.52)
+	_span(k, -half, 0.0, zw - 1.0, half, ytop, zw + 0.5, wallc, Kit.PLASTER, false)
+	var nbay := 17
+	var bw := 2.0 * half / nbay
+	for tier in 3:
+		var yb: float = [y1, y2, y3][tier]
+		var podh: float = [pod, pod2, pod3][tier]
+		var ch: float = [c1, c2, c3][tier]
+		var ah: float = [a1, a2, a2 * 0.8][tier]
+		var zc := zf0 - 1.0 - tier * 0.4
+		_span(k, -half - 0.5, yb, zc - 0.8, half + 0.5, yb + podh, zc + 0.8, marble, Kit.STONE, tier > 0)
+		for i in range(nbay + 1):
+			var x := -half + bw * i
+			var colr := marble if tier != 1 else Color(0.78, 0.55, 0.45)
+			_column(k, Vector3(x, yb + podh, zc), ch * 0.1, ch, colr, Kit.PAINT, "corinthian")
+		_span(k, -half - 0.5, yb + podh + ch, zc - 0.7, half + 0.5, yb + podh + ch + ah, zc + 0.7, marble, Kit.STONE)
+		# statues between the columns
+		for i in range(nbay):
+			var x := -half + bw * (i + 0.5)
+			_figure(k, Vector3(x, yb + podh, zc + 0.1 - 0.0), minf(ch * 0.45, 3.2), marble.darkened(0.04), marble, 0.0, false, Kit.STONE)
+	# the three doors: regia in the middle, the hospitalia on either side (5.6.3, 5.6.8)
+	var door_z := zw + 0.55
+	k.box(Vector3(0, y1, door_z), Vector3(5.0, 6.0, 0.15), Color(0.10, 0.07, 0.05), Kit.DARK, 0.0, true)
+	for sx: float in [-1.0, 1.0]:
+		k.box(Vector3(sx * ro * 0.5, y1, door_z), Vector3(3.2, 4.4, 0.15), Color(0.10, 0.07, 0.05), Kit.DARK, 0.0, true)
+	if year >= -32:
+		k.cylinder(Vector3(0, y1, zf0 - 0.5), 0.9, 1.4, marble, Kit.STONE, 8)
+		_figure(k, Vector3(0, y1 + 1.4, zf0 - 0.5), 2.8, marble, marble, PI, false, Kit.STONE)    # Pompey's statue
+	# the stage roof, sloping down toward the audience
+	kc.quad(Vector3(-half - 1.0, ytop + 1.5, zw - 1.0), Vector3(half + 1.0, ytop + 1.5, zw - 1.0), Vector3(half + 1.0, y2 + pod2 + c2 * 0.6, zf0 + 1.0), Vector3(-half - 1.0, y2 + pod2 + c2 * 0.6, zf0 + 1.0), TILE_C, Kit.TILE, Vector3(0, -3, zw))
+	# the temple of Venus Victrix at the top of the cavea, facing the stage, and the shrines
+	var views: Array = []
+	var seats := {}
+	var tp := 1.6
+	if pompey:
+		var tz0 := r_top + 0.8
+		var tw := 20.0
+		var td := 15.0
+		_span(k, -tw * 0.5, top_h, tz0, tw * 0.5, top_h + tp, tz0 + td, marble, Kit.STONE, false)
+		for i in 8:
+			_span(k, -tw * 0.3, top_h + tp * (7 - i) / 8.0, tz0 - (i + 1) * 0.4, tw * 0.3, top_h + tp * (8 - i) / 8.0, tz0 + 0.01, marble, Kit.STONE, false)
+		for i in 7:
+			var cx := -tw * 0.5 + 1.2 + (tw - 2.4) * i / 6.0
+			_column(k, Vector3(cx, top_h + tp, tz0 + 2.0), 1.0, 8.4, marble, Kit.STONE, "corinthian")
+		_span(k, -tw * 0.5, top_h + tp + 8.4, tz0 + 1.2, tw * 0.5, top_h + tp + 9.6, tz0 + 2.8, marble, Kit.STONE)
+		_wall(k, Vector2(-tw * 0.5 + 1.0, tz0 + 6.0), Vector2(tw * 0.5 - 1.0, tz0 + 6.0), top_h + tp, 8.4, 0.8, Color(0.9, 0.82, 0.68), Kit.PLASTER, [[tw * 0.5 - 1.0, 3.2, 6.0]])
+		_wall(k, Vector2(-tw * 0.5 + 1.0, tz0 + td - 1.0), Vector2(tw * 0.5 - 1.0, tz0 + td - 1.0), top_h + tp, 8.4, 0.8, Color(0.9, 0.82, 0.68), Kit.PLASTER)
+		for sx: float in [-1.0, 1.0]:
+			_wall(k, Vector2(sx * (tw * 0.5 - 1.0), tz0 + 6.0), Vector2(sx * (tw * 0.5 - 1.0), tz0 + td - 1.0), top_h + tp, 8.4, 0.8, Color(0.9, 0.82, 0.68), Kit.PLASTER)
+		_figure(k, Vector3(0, top_h + tp, tz0 + 10.0), 4.2, GILT, Color(0.9, 0.82, 0.72), PI, false, Kit.GOLD)   # Venus Victrix
+		kc.gable_roof(Vector3(0, top_h + tp + 9.6, tz0 + td * 0.5 + 0.8), td + 0.6, tw, 3.4, 0.5, 0.3, TILE_C, Kit.TILE, Color(0.86, 0.66, 0.5), Kit.PLASTER, PI / 2.0)
+		for q in 3:   # the shrines of Honos, Virtus, Felicitas: places unknown
+			var t: float = PI * [0.28, 0.72, 0.84][q]
+			var p := _pol(r_top - 1.4, t, 0.0, top_h)
+			k.box(p, Vector3(2.6, 3.2, 2.2), Color(0.9, 0.82, 0.68), Kit.PLASTER, -t - PI * 0.5, true)
+			k.box(p + Vector3(0, 3.2, 0), Vector3(3.0, 0.3, 2.6), TILE_C, Kit.TILE, -t - PI * 0.5, true)
+		seats["temple"] = look(Vector3(0, top_h + tp + EYE, tz0 + 1.0), Vector3(0, y1 + 3.0, zf0))
+	var rr := func(row: int, t: float) -> Transform3D:
+		var d: float = ro + (rows[row][0] + rows[row][1]) * 0.5
+		var p := _pol(d, t, 0.0, rows[row][2] + 1.15)
+		return look(p, Vector3(0, sh + 2.5, zf0 - 1.0))
+	seats["ima"] = rr.call(4, PI * 0.5)
+	seats["media"] = rr.call(per + 8, PI * 0.5)
+	seats["summa"] = rr.call(nrow - 6, PI * 0.5)
+	seats["side"] = rr.call(per - 2, PI * 0.12)
+	seats["orchestra"] = look(Vector3(0, EYE, ro * 0.55), Vector3(0, sh + 3.0, zf0))
+	var spawn: Transform3D = seats["orchestra"]
+	views = [["ima", seats["ima"]], ["media", seats["media"]], ["summa", seats["summa"]], ["side", seats["side"]],
+		["stage", look(Vector3(0, sh + EYE, zf0 + 1.0), Vector3(0, top_h * 0.6, ro * 2.0))],
+		["overview", look(Vector3(R * 0.25, R * 1.15, R * 1.55), Vector3(0, top_h * 0.2, -R * 0.05))]]
+	if pompey:
+		views.append(["temple", seats["temple"]])
+	var notes := [
+		"Layout: Vitruvius 5.6.1-8 (four triangles in the orchestra circle, seven stairways, stage <= 5 ft, scene twice the orchestra's diameter, order heights 1/4 of the diameter and 3/4 above, doors regia and hospitalia, seats 20-22 digits high). Read.",
+		"Temple of Venus Victrix at the top of the cavea as a pretext for permanent seating (Tertullian De spect. 10, Gellius 10.1.7, Pliny NH 8.20); shrines of Honos, Virtus, Felicitas (Fasti Allifani); plan from Mytilene (Plutarch Pompey 42). Platner-Ashby read; Tertullian, Gellius not read. The temple's size and order, and the places of the three shrines, are conjecture. # unverified",
+		"Pompey's statue opposite the regia, put there by Augustus (Suet. Aug. 31 via P-A). Read through P-A. Date gate -32 is loose.",
+		"The statues of the fourteen nations (Pliny NH 36.41) stood in the portico, not the scene; the statues between the scene's columns here are generic.",
+		"Orchestra radius is a guess (27 percent of the cavea radius); Pompey's theatre is given as about 150 m across in monuments.json.",
+	]
+	return _pack(k, kc, lights, spawn, seats, views, notes, {
+		"anchors": {"orchestra": Vector3(0, 0, 0), "stage": Vector3(0, sh, zf0 * 0.5), "regia": Vector3(0, y1, door_z), "temple": Vector3(0, top_h + tp, r_top + 10.0)},
+		"floor_y": 0.0, "stage_height": sh})
+
+
+
+# ====================================================================================================
+#  DOMUS (atrium house, Vitruvius 6.3)
+# ====================================================================================================
+
+## A wall decoration along the inner face of a wall from a to b (plan), inward normal n, from y0 up
+## `h`: the First style (blocks of coloured stucco in relief, imitating masonry; before about 80 BC),
+## the Second style (painted architecture: a dado, panels between painted pilasters, a cornice and a
+## vista; about 80 to 15 BC), later a plainer panelled style. The dating of the styles is the modern
+## (Mau) convention, not an ancient source. # unverified
+static func _paint_wall(k: Kit, a: Vector2, b: Vector2, n: Vector2, y0: float, h: float, year: int, tint := 0) -> void:
+	var d := b - a
+	var length := d.length()
+	if length < 1.0:
+		return
+	var dir := d / length
+	var yaw := atan2(-dir.y, dir.x)
+	var base := a + n * 0.275
+	if year < -80:
+		var cols: Array = [OCHRE, RED, Color(0.55, 0.30, 0.45), Color(0.88, 0.82, 0.62)]
+		var zones: Array = [[0.0, 0.8, 1], [0.8, h * 0.42, 2], [h * 0.42, h * 0.58, 3], [h * 0.58, h - 0.35, 4]]
+		var zi := 0
+		for zone in zones:
+			var yb: float = zone[0]
+			var yt: float = zone[1]
+			var bw: float = [1.1, 1.6, 0.8, 0.9][zi] if zi < 4 else 1.0
+			if zi == 0:
+				bw = length
+			var nb := maxi(1, int(round(length / bw)))
+			var sw := length / nb
+			for i in nb:
+				var c := base + dir * (sw * (i + 0.5))
+				var col: Color = cols[(i + zi + tint) % 4] if zi != 0 else Color(0.36, 0.22, 0.2)
+				k.box(Vector3(c.x, y0 + yb + 0.03, c.y), Vector3(sw - 0.05, yt - yb - 0.06, 0.05), col, Kit.PLASTER, yaw, true)
+			zi += 1
+		k.box(Vector3((a + b).x * 0.5 + n.x * 0.31, y0 + h - 0.35, (a + b).y * 0.5 + n.y * 0.31), Vector3(length, 0.3, 0.14), Color(0.92, 0.88, 0.78), Kit.PLASTER, yaw, true)   # cornice
+	else:
+		var np := maxi(2, int(round(length / 2.2)))
+		var sw2 := length / np
+		var zone_top := y0 + h * 0.66
+		k.box(Vector3((a + b).x * 0.5 + n.x * 0.28, y0, (a + b).y * 0.5 + n.y * 0.28), Vector3(length, 0.95, 0.05), Color(0.30, 0.14, 0.12), Kit.PLASTER, yaw, true)   # dado
+		for i in np:
+			var c := base + dir * (sw2 * (i + 0.5))
+			var red := (i + tint) % 2 == 0
+			var panel := RED if red else Color(0.13, 0.11, 0.10)
+			if year > -15:
+				panel = Color(0.93, 0.90, 0.82) if red else Color(0.14, 0.12, 0.11)
+			k.box(Vector3(c.x, y0 + 0.95, c.y), Vector3(sw2 - 0.5, zone_top - y0 - 0.95, 0.04), panel, Kit.PLASTER, yaw, true)
+			var pc := base + dir * (sw2 * i)
+			k.box(Vector3(pc.x + n.x * 0.04, y0 + 0.95, pc.y + n.y * 0.04), Vector3(0.34, zone_top - y0 - 0.95, 0.14), Color(0.92, 0.86, 0.72), Kit.PLASTER, yaw, true)   # painted pilaster
+		var pc2 := base + dir * length
+		k.box(Vector3(pc2.x + n.x * 0.04, y0 + 0.95, pc2.y + n.y * 0.04), Vector3(0.34, zone_top - y0 - 0.95, 0.14), Color(0.92, 0.86, 0.72), Kit.PLASTER, yaw, true)
+		k.box(Vector3((a + b).x * 0.5 + n.x * 0.31, zone_top, (a + b).y * 0.5 + n.y * 0.31), Vector3(length, 0.3, 0.2), Color(0.92, 0.84, 0.62), Kit.PLASTER, yaw, true)   # cornice
+		# above it, painted architecture: a vista through columns, in blue and ochre
+		var uc := base + dir * (length * 0.5)
+		k.box(Vector3(uc.x, zone_top + 0.3, uc.y), Vector3(length * 0.8, y0 + h - zone_top - 0.5, 0.03), Color(0.72, 0.62, 0.38), Kit.PLASTER, yaw, true)
+		for q in 3:
+			var vc := base + dir * (length * (0.3 + 0.2 * q))
+			k.box(Vector3(vc.x, zone_top + 0.5, vc.y), Vector3(length * 0.12, y0 + h - zone_top - 0.9, 0.06), Color(0.30, 0.42, 0.55), Kit.PLASTER, yaw, true)
+
+
+## A tilted roof slab: top quad TILE, underside timber, four corners given in order.
+static func _roof_quad(kc: Kit, p: Array, col := TILE_C) -> void:
+	var c: Vector3 = (p[0] + p[1] + p[2] + p[3]) * 0.25
+	kc.quad(p[0], p[1], p[2], p[3], col, Kit.TILE, c - Vector3(0, 2.0, 0))
+	kc.quad(p[0] - Vector3(0, 0.25, 0), p[3] - Vector3(0, 0.25, 0), p[2] - Vector3(0, 0.25, 0), p[1] - Vector3(0, 0.25, 0), Color(0.5, 0.33, 0.2), Kit.TIMBER, c + Vector3(0, 2.0, 0))
+
+
+## A couch (kline) for the dining room with a cushion.
+static func _couch(k: Kit, foot: Vector3, w: float, d: float, yaw: float) -> void:
+	k.push(Kit.at(foot, yaw))
+	k.box(Vector3(0, 0, 0), Vector3(w, 0.45, d), WOOD, Kit.TIMBER, 0.0, true)
+	k.box(Vector3(0, 0.45, 0), Vector3(w - 0.1, 0.14, d - 0.1), Color(0.55, 0.22, 0.2), Kit.CLOTH, 0.0, true)
+	k.box(Vector3(0, 0.45, -d * 0.4), Vector3(w - 0.1, 0.4, 0.15), Color(0.55, 0.22, 0.2), Kit.CLOTH, 0.0, true)
+	k.pop()
+
+
+## The atrium house. The footprint is W (frontage, x) by L (depth, z), the street at +z. Plan
+## from the street: the fauces (flanked by two shops on a wide house), the atrium with its
+## compluvium and impluvium, cubicula on both sides, alae and the tablinum at the back, then the
+## peristyle garden with the triclinium and the kitchen. Proportions after Vitruvius 6.3: the atrium
+## length to width 5:3, its height to the beams three quarters of its length, the opening a
+## quarter to a third of its width, the alae by the table of 6.3.4, the tablinum by 6.3.5-6
+## (a half to two fifths of the atrium's width, height an eighth more than the width), the fauces
+## two thirds or half the tablinum, the peristyle a third longer across than deep with columns as
+## high as the portico is wide, the triclinium twice as long as wide (6.3.7-8).
+static func _domus(sz: Vector2, year: int) -> Dictionary:
+	var L := sz.x
+	var W := sz.y
+	var k := _kit()
+	var kc := _kit()
+	var lights: Array = []
+	var zf := L * 0.5
+	var wt := 0.5
+	var ww := Color(0.90, 0.84, 0.70)
+	var xl := -W * 0.5
+	var xr := W * 0.5
+	var shops := W >= 15.0
+	# the atrium by Vitruvius' first proportion (5:3), shrunk if the plot is short
+	var wa := clampf(W * 0.38, 5.4, 12.0)
+	if (W - wa) * 0.5 < 3.6:
+		wa = W - 7.2
+	var la := wa * 5.0 / 3.0
+	var tw := wa * (2.0 / 3.0 if wa < 6.5 else (0.5 if wa < 12.2 else 0.4))   # 6.3.5
+	var fw := tw * (2.0 / 3.0 if wa < 9.0 else 0.5)                           # 6.3.6
+	var df := 3.8                                                              # fauces length
+	var td := maxf(5.0, tw * 0.9)
+	var gar := 14.0                                                            # least depth for the peristyle
+	var avail := L - df - td - gar - wt * 2.0
+	if la > avail:
+		la = maxf(avail, wa * 1.25)
+	var he := 0.75 * la                                                        # to the beams, 6.3.4
+	var hf := 4.4                                                              # side rooms and fauces
+	var z_a0 := zf - df                  # atrium front edge
+	var z_a1 := z_a0 - la                # atrium back edge
+	var z_t1 := z_a1 - td                # tablinum back
+	var ala_ft := la / RF
+	var alw := la / (3.0 if ala_ft < 40.0 else (3.5 if ala_ft < 50.0 else (4.0 if ala_ft < 60.0 else (4.5 if ala_ft < 80.0 else 5.0))))   # 6.3.4
+	var side := (W - wa) * 0.5
+	var pave := Color(0.42, 0.30, 0.27)
+	# ground: street frontage, threshold mosaic, atrium floor
+	_span(k, xl - 1.0, -0.4, -L * 0.5 - 1.0, xr + 1.0, 0.0, zf + 4.0, Color(0.55, 0.50, 0.44), Kit.STONE, false)
+	_floor(k, xl, -L * 0.5, xr, zf, 0.01, pave, Kit.PAINT)
+	_checker(k, -fw * 0.5, zf - df, fw * 0.5, zf - 0.3, 0.02, 0.45, Color(0.9, 0.88, 0.82), Color(0.12, 0.1, 0.09))
+	_checker(k, -tw * 0.5 + 0.2, z_a1 - td + 0.4, tw * 0.5 - 0.2, z_a1 - 0.2, 0.02, 0.4, Color(0.92, 0.9, 0.84), Color(0.16, 0.14, 0.12))
+	# the street wall with the door of the fauces and the two shops
+	var fx := W * 0.5
+	var front_holes: Array = [[fx, fw, 3.4]]
+	if shops:
+		var sx := (W - fw) * 0.25 - 0.3
+		front_holes.append([W * 0.5 - fw * 0.5 - sx * 0.5 - 0.15, minf(sx, 3.0), 2.7])
+		front_holes.append([W * 0.5 + fw * 0.5 + sx * 0.5 + 0.15, minf(sx, 3.0), 2.7])
+	_wall(k, Vector2(xl - wt * 0.5, zf), Vector2(xr + wt * 0.5, zf), 0.0, hf + 1.6, wt, ww, Kit.PLASTER, _front_offset(front_holes, wt * 0.5))
+	# door leaves of the fauces, open
+	var th := deg_to_rad(80.0)
+	k.box(Vector3(-fw * 0.5 + cos(th) * fw * 0.25, 0.0, zf - sin(th) * fw * 0.25), Vector3(fw * 0.5, 3.0, 0.1), WOOD, Kit.TIMBER, th, true)
+	k.box(Vector3(fw * 0.5 - cos(th) * fw * 0.25, 0.0, zf - sin(th) * fw * 0.25), Vector3(fw * 0.5, 3.0, 0.1), WOOD, Kit.TIMBER, PI - th, true)
+	# fauces walls (+ the shops beside them)
+	var sx0 := -fw * 0.5
+	var sx1 := fw * 0.5
+	_wall(k, Vector2(sx0, zf), Vector2(sx0, z_a0), 0.0, hf + 1.6, wt, ww, Kit.PLASTER)
+	_wall(k, Vector2(sx1, zf), Vector2(sx1, z_a0), 0.0, hf + 1.6, wt, ww, Kit.PLASTER)
+	if shops:
+		for s: float in [-1.0, 1.0]:
+			var xo := s * (W * 0.5)
+			_wall(k, Vector2(xo, zf), Vector2(xo, z_a0), 0.0, hf + 1.6, wt, ww, Kit.PLASTER)
+			var xin := s * (fw * 0.5)
+			# the shop's counter and shelf
+			var cxm := s * (W * 0.25 + fw * 0.25)
+			_span(k, cxm - 1.0, 0.0, zf - 1.1, cxm + 1.0, 0.95, zf - 0.5, Color(0.7, 0.55, 0.4), Kit.STONE)
+			k.cylinder(Vector3(cxm - 0.5, 0.0, zf - 1.8), 0.4, 0.9, TERRA, Kit.PAINT, 8)
+			_lamp(lights, Vector3(cxm, 2.6, zf - 2.0), 0.7, 5.0)
+	# the atrium: four tall walls, doors to the rooms, painted
+	var holes_side: Array = []
+	var ncub := 2
+	var cub_len := (la - alw) / ncub
+	for i in ncub:
+		holes_side.append([(z_a0 - z_a1) - (alw + cub_len * (i + 0.5)) + 0.0, 1.2, 2.6])
+	holes_side.append([la - alw * 0.5, minf(alw * 0.8, 3.6), 3.4])    # the ala, wide open
+	_wall(k, Vector2(-wa * 0.5, z_a0), Vector2(-wa * 0.5, z_a1), 0.0, he, wt, ww, Kit.PLASTER, holes_side)
+	_wall(k, Vector2(wa * 0.5, z_a0), Vector2(wa * 0.5, z_a1), 0.0, he, wt, ww, Kit.PLASTER, holes_side)
+	_wall(k, Vector2(-wa * 0.5, z_a0), Vector2(-fw * 0.5, z_a0), 0.0, he, wt, ww, Kit.PLASTER)
+	_wall(k, Vector2(fw * 0.5, z_a0), Vector2(wa * 0.5, z_a0), 0.0, he, wt, ww, Kit.PLASTER)
+	_wall(k, Vector2(-fw * 0.5, z_a0), Vector2(fw * 0.5, z_a0), hf + 1.6, he - hf - 1.6, wt, ww, Kit.PLASTER)
+	# back of the atrium: tablinum opening in the middle
+	_wall(k, Vector2(-wa * 0.5, z_a1), Vector2(wa * 0.5, z_a1), 0.0, he, wt, ww, Kit.PLASTER, [[wa * 0.5, tw, tw * 1.125]])
+	for s: float in [-1.0, 1.0]:
+		_paint_wall(k, Vector2(s * wa * 0.5, z_a0 - 0.3), Vector2(s * wa * 0.5, z_a1 + 0.3), Vector2(-s, 0.0), 0.0, minf(he, 6.0), year, 0)
+	_paint_wall(k, Vector2(-wa * 0.5 + 0.3, z_a1), Vector2(-tw * 0.5 - 0.2, z_a1), Vector2(0.0, 1.0), 0.0, minf(he, 6.0), year, 1)
+	_paint_wall(k, Vector2(tw * 0.5 + 0.2, z_a1), Vector2(wa * 0.5 - 0.3, z_a1), Vector2(0.0, 1.0), 0.0, minf(he, 6.0), year, 1)
+	# impluvium: a basin under the compluvium, water, a rim
+	var cw := wa * 0.3                                      # 6.3.6: a quarter to a third
+	var cl := cw * la / wa
+	var zc := (z_a0 + z_a1) * 0.5
+	_span(k, -cw * 0.5 - 0.3, 0.0, zc - cl * 0.5 - 0.3, cw * 0.5 + 0.3, 0.2, zc + cl * 0.5 + 0.3, MARBLE, Kit.STONE)
+	_floor(k, -cw * 0.5, zc - cl * 0.5, cw * 0.5, zc + cl * 0.5, 0.16, Color(0.35, 0.55, 0.65), Kit.WATER)
+	# the compluvium roof, sloping inward to the opening (Tuscan atrium, 6.3.1)
+	var ex := wa * 0.5 + 0.8
+	var ey := he
+	var iy := he - 1.5
+	_roof_quad(kc, [Vector3(-ex, ey, z_a0 + 0.8), Vector3(ex, ey, z_a0 + 0.8), Vector3(cw * 0.5, iy, zc + cl * 0.5), Vector3(-cw * 0.5, iy, zc + cl * 0.5)])
+	_roof_quad(kc, [Vector3(ex, ey, z_a1 - 0.8), Vector3(-ex, ey, z_a1 - 0.8), Vector3(-cw * 0.5, iy, zc - cl * 0.5), Vector3(cw * 0.5, iy, zc - cl * 0.5)])
+	_roof_quad(kc, [Vector3(-ex, ey, z_a1 - 0.8), Vector3(-ex, ey, z_a0 + 0.8), Vector3(-cw * 0.5, iy, zc + cl * 0.5), Vector3(-cw * 0.5, iy, zc - cl * 0.5)])
+	_roof_quad(kc, [Vector3(ex, ey, z_a0 + 0.8), Vector3(ex, ey, z_a1 - 0.8), Vector3(cw * 0.5, iy, zc - cl * 0.5), Vector3(cw * 0.5, iy, zc + cl * 0.5)])
+	for i in range(1, 6):   # beams and trimmers showing underneath
+		var zz := z_a0 - la * i / 6.0
+		kc.box(Vector3(0, he - 0.45, zz), Vector3(wa + 1.0, 0.3, 0.3), WOOD_D, Kit.TIMBER, 0.0, true)
+	lights.append({"pos": Vector3(0, he - 0.8, zc), "colour": Color(0.80, 0.88, 1.0), "energy": 1.4, "range": 12.0, "kind": "sky"})
+	# side rooms: cubicula and the alae with the masks of the ancestors
+	for s: float in [-1.0, 1.0]:
+		var xo := s * (W * 0.5)
+		var xi := s * (wa * 0.5)
+		_wall(k, Vector2(xo, z_a0), Vector2(xo, z_a1), 0.0, hf + 1.6, wt, ww, Kit.PLASTER)
+		for i in ncub:
+			var za0 := z_a0 - cub_len * i
+			var za1 := z_a0 - cub_len * (i + 1)
+			_wall(k, Vector2(xi, za1), Vector2(xo, za1), 0.0, hf + 1.0, wt * 0.8, ww, Kit.PLASTER)
+			# the bed and a lamp
+			var bz := (za0 + za1) * 0.5
+			k.box(Vector3(s * (W * 0.5 - 1.3), 0.0, bz), Vector3(1.0, 0.45, 1.9), WOOD, Kit.TIMBER, 0.0, true)
+			k.box(Vector3(s * (W * 0.5 - 1.3), 0.45, bz), Vector3(0.95, 0.12, 1.85), Color(0.78, 0.74, 0.62), Kit.CLOTH, 0.0, true)
+			_lamp(lights, Vector3(s * (W * 0.5 - 1.0), 1.4, bz + 0.6), 0.6, 4.0)
+			_paint_wall(k, Vector2(xo, za0 - 0.3), Vector2(xo, za1 + 0.3), Vector2(-s, 0.0), 0.0, hf, year, i)
+		# the ala: open to the atrium, with the wax masks of the ancestors in cupboards (Pliny NH 35.6, # unverified)
+		var zal := z_a1 + alw * 0.5
+		_wall(k, Vector2(xi, z_a1), Vector2(xo, z_a1), 0.0, hf + 1.0, wt * 0.8, ww, Kit.PLASTER)
+		for q in 3:
+			var mx := xo - s * 0.6
+			k.box(Vector3(mx, 1.2, z_a1 + 0.9 + q * 1.0), Vector3(0.5, 0.7, 0.6), WOOD, Kit.TIMBER, 0.0, true)
+			k.dome(Vector3(mx - s * 0.02, 1.9, z_a1 + 0.9 + q * 1.0), 0.14, Color(0.85, 0.75, 0.6), Kit.PAINT, 1.2, 3, 7)
+	# flat roofs over the side rooms
+	for s: float in [-1.0, 1.0]:
+		kc.box(Vector3(s * (wa * 0.5 + side * 0.5), hf + 1.0, (z_a0 + z_a1) * 0.5), Vector3(side + 0.6, 0.3, la + 1.0), TILE_C, Kit.TILE, 0.0, true)
+	# the tablinum: a room open to the atrium and the garden, with a coffered ceiling
+	var tz0 := z_a1
+	var tz1 := z_a1 - td
+	var tx0 := -tw * 0.5
+	var tx1 := tw * 0.5
+	var th_t := tw * 1.125 + tw / 3.0
+	_wall(k, Vector2(tx0, tz0), Vector2(tx0, tz1), 0.0, th_t, wt, ww, Kit.PLASTER)
+	_wall(k, Vector2(tx1, tz0), Vector2(tx1, tz1), 0.0, th_t, wt, ww, Kit.PLASTER)
+	_wall(k, Vector2(tx0, tz1), Vector2(tx1, tz1), th_t * 0.0 + tw * 1.125, th_t - tw * 1.125, wt, ww, Kit.PLASTER)
+	_wall(k, Vector2(-wa * 0.5, tz0), Vector2(tx0, tz0), he, 0.0001, wt, ww, Kit.PLASTER)
+	_ceiling(kc, tx0, tz1, tx1, tz0, th_t, maxi(2, int(tw / 1.8)), maxi(2, int(td / 1.8)), 0.25, 0.3, Color(0.55, 0.38, 0.22), WOOD_D, true)
+	for s: float in [-1.0, 1.0]:
+		_paint_wall(k, Vector2(s * tw * 0.5, tz0 - 0.3), Vector2(s * tw * 0.5, tz1 + 0.3), Vector2(-s, 0.0), 0.0, tw * 1.125, year, 2)
+	k.box(Vector3(0, 0, tz1 + 1.0), Vector3(1.8, 0.8, 0.8), WOOD_L, Kit.TIMBER, 0.0, true)    # the master's table
+	_lamp(lights, Vector3(0, 2.2, tz1 + 1.2), 0.9, 6.0)
+	# the rest of the plan behind: walls between the atrium side rooms and the garden, the peristyle
+	var gz0 := z_t1
+	var gz1 := -L * 0.5 + wt
+	var pw := W - 2.0 * wt
+	var ph := minf(gz0 - gz1, pw * 0.75)           # 6.3.7: a third longer across than deep
+	gz1 = gz0 - ph
+	for s: float in [-1.0, 1.0]:
+		_wall(k, Vector2(s * W * 0.5, z_a1), Vector2(s * W * 0.5, -L * 0.5), 0.0, hf + 1.6, wt, ww, Kit.PLASTER)
+		_wall(k, Vector2(s * tw * 0.5, z_a1), Vector2(s * W * 0.5, z_a1), 0.0, hf + 1.0, wt, ww, Kit.PLASTER)
+	_wall(k, Vector2(xl, -L * 0.5), Vector2(xr, -L * 0.5), 0.0, hf + 1.6, wt, ww, Kit.PLASTER)
+	var pcw := minf(3.4, pw * 0.14)           # the portico's width = the columns' height (6.3.7)
+	var cd := pcw / 8.0
+	var gx0 := xl + 0.4
+	var gx1 := xr - 0.4
+	var zt := gz0 - 0.3
+	var zb := gz1 + 0.3
+	_floor(k, gx0, zb, gx1, zt, 0.01, Color(0.72, 0.66, 0.56), Kit.STONE)
+	# the garden inside the portico
+	_floor(k, gx0 + pcw, zb + pcw, gx1 - pcw, zt - pcw, 0.03, GRASS, Kit.LEAF)
+	var icd := cd * 3.5
+	var nxc := maxi(3, int((gx1 - gx0) / (icd * 3.2)))
+	var nzc := maxi(2, int((zt - zb) / (icd * 3.2)))
+	var cols_x: Array = []
+	for i in range(nxc + 1):
+		cols_x.append(gx0 + (gx1 - gx0) * i / nxc)
+	for i in range(nxc + 1):
+		_column(k, Vector3(cols_x[i], 0.0, zt - 0.5), cd * 2.0, pcw, MARBLE if year > -80 else TRAVERTINE, Kit.STONE, "tuscan")
+		_column(k, Vector3(cols_x[i], 0.0, zb + 0.5), cd * 2.0, pcw, MARBLE if year > -80 else TRAVERTINE, Kit.STONE, "tuscan")
+	for j in range(1, nzc):
+		var zz2 := zb + 0.5 + (zt - zb - 1.0) * j / nzc
+		_column(k, Vector3(gx0, 0.0, zz2), cd * 2.0, pcw, MARBLE if year > -80 else TRAVERTINE, Kit.STONE, "tuscan")
+		_column(k, Vector3(gx1, 0.0, zz2), cd * 2.0, pcw, MARBLE if year > -80 else TRAVERTINE, Kit.STONE, "tuscan")
+	_span(k, gx0 - 0.4, pcw, zb + 0.1, gx1 + 0.4, pcw + 0.4, zb + 0.9, ww, Kit.PLASTER)
+	_span(k, gx0 - 0.4, pcw, zt - 0.9, gx1 + 0.4, pcw + 0.4, zt - 0.1, ww, Kit.PLASTER)
+	# a sloping portico roof along the edges
+	var yr0 := pcw + 0.4
+	var gcx := (gx0 + gx1) * 0.5
+	var gcz := (zt + zb) * 0.5
+	_roof_quad(kc, [Vector3(gx0 - 0.6, yr0 + 0.9, zt - 0.1), Vector3(gx1 + 0.6, yr0 + 0.9, zt - 0.1), Vector3(gx1 + 0.6, yr0 - 0.2, zt - pcw), Vector3(gx0 - 0.6, yr0 - 0.2, zt - pcw)])
+	_roof_quad(kc, [Vector3(gx1 + 0.6, yr0 + 0.9, zb + 0.1), Vector3(gx0 - 0.6, yr0 + 0.9, zb + 0.1), Vector3(gx0 - 0.6, yr0 - 0.2, zb + pcw), Vector3(gx1 + 0.6, yr0 - 0.2, zb + pcw)])
+	# a long pool, trees, a herm, a fountain
+	var pwid := minf(2.0, (gx1 - gx0) * 0.12)
+	_span(k, gcx - (gx1 - gx0) * 0.3, 0.0, gcz - pwid, gcx + (gx1 - gx0) * 0.3, 0.35, gcz + pwid, MARBLE, Kit.STONE)
+	_floor(k, gcx - (gx1 - gx0) * 0.3 + 0.2, gcz - pwid + 0.2, gcx + (gx1 - gx0) * 0.3 - 0.2, gcz + pwid - 0.2, 0.3, Color(0.35, 0.55, 0.65), Kit.WATER)
+	for q in 4:
+		var tx := gx0 + pcw + 1.5 + (gx1 - gx0 - 2.0 * pcw - 3.0) * (q % 2)
+		var tzp := zb + pcw + 1.2 + (zt - zb - 2.0 * pcw - 2.4) * (q / 2)
+		_tree(k, Vector3(tx, 0.03, tzp), 3.6 + q * 0.3)
+	for q in 5:
+		k.box(Vector3(gx0 + pcw + 0.8 + q * 1.1, 0.03, zb + pcw + 0.5), Vector3(0.7, 0.5, 0.5), LEAF_C, Kit.LEAF, 0.0, true)
+	k.box(Vector3(gcx, 0.35, gcz + pwid + 1.2), Vector3(0.4, 1.4, 0.4), MARBLE, Kit.STONE, 0.0, true)    # a herm
+	k.dome(Vector3(gcx, 1.75, gcz + pwid + 1.2), 0.22, MARBLE, Kit.STONE, 1.1, 3, 7)
+	# the triclinium: twice as long as wide (6.3.8), on one side, three couches round a table
+	var trw := minf(4.4, (gx1 - gx0) * 0.2)
+	var trl := trw * 2.0
+	var trx := xr - 0.2 - trw * 0.5
+	var trz := gz0 - 0.6 - trl * 0.5
+	# kitchen and a small room on the other side, at the front of the garden
+	var kx := xl + 0.2 + 2.0
+	var kz := gz0 - 0.6 - 1.6
+	var rx0 := xl + 0.2
+	var rx1 := xl + 4.4
+	var rz0 := gz0 - 0.2
+	var rz1 := gz0 - 3.8
+	_wall(k, Vector2(rx1, rz0), Vector2(rx1, rz1), 0.0, hf, wt, Color(0.50, 0.44, 0.38), Kit.PLASTER, [[1.8, 1.2, 2.4]])
+	_wall(k, Vector2(rx0, rz1), Vector2(rx1, rz1), 0.0, hf, wt, Color(0.50, 0.44, 0.38), Kit.PLASTER)
+	_span(k, rx0 + 0.1, 0.0, rz0 - 1.4, rx0 + 2.5, 0.9, rz0 - 0.5, TRAVERTINE.darkened(0.1), Kit.STONE)     # the hearth with its arches
+	for q in 3:
+		k.box(Vector3(rx0 + 0.55 + q * 0.7, 0.0, rz0 - 0.52), Vector3(0.5, 0.55, 0.06), BLACK_P, Kit.DARK, 0.0, true)
+	k.cylinder(Vector3(rx0 + 1.2, 0.9, rz0 - 0.95), 0.28, 0.3, BRONZE, Kit.GOLD, 8)    # a pot on the fire
+	lights.append({"pos": Vector3(rx0 + 1.2, 1.3, rz0 - 0.95), "colour": Color(1.0, 0.55, 0.22), "energy": 1.8, "range": 6.0, "kind": "fire"})
+	_span(k, rx0 + 0.1, 1.7, rz0 - 0.9, rx0 + 0.9, 2.3, rz0 - 0.5, Color(0.9, 0.82, 0.68), Kit.PLASTER)    # the lararium niche above (Pompeian evidence, # unverified)
+	_span(k, rx0 + 0.05, 2.3, rz0 - 1.0, rx0 + 1.0, 2.45, rz0 - 0.45, TILE_C, Kit.TILE)
+	# the triclinium walls, couches, table
+	_wall(k, Vector2(xr - trw - 0.2, trz + trl * 0.5), Vector2(xr - trw - 0.2, trz - trl * 0.5), 0.0, hf + 0.4, wt, ww, Kit.PLASTER, [[trl * 0.5, 2.0, 2.6]])
+	_wall(k, Vector2(xr - trw - 0.2, trz - trl * 0.5), Vector2(xr, trz - trl * 0.5), 0.0, hf + 0.4, wt, ww, Kit.PLASTER)
+	_paint_wall(k, Vector2(xr, trz + trl * 0.5 - 0.3), Vector2(xr, trz - trl * 0.5 + 0.3), Vector2(-1.0, 0.0), 0.0, hf + 0.4, year, 1)
+	_couch(k, Vector3(trx, 0.0, trz - trl * 0.5 + 0.8), trw * 0.7, 0.9, 0.0)
+	_couch(k, Vector3(trx - trw * 0.5 + 0.8, 0.0, trz), trl * 0.4, 0.9, PI * 0.5)
+	_couch(k, Vector3(trx + trw * 0.5 - 0.8, 0.0, trz), trl * 0.4, 0.9, PI * 0.5)
+	k.cylinder(Vector3(trx, 0.0, trz), 0.5, 0.55, WOOD_L, Kit.TIMBER, 10)
+	_lamp(lights, Vector3(trx, 2.4, trz), 1.0, 6.0)
+	kc.box(Vector3(trx, hf + 0.4, trz), Vector3(trw + 0.6, 0.3, trl + 0.6), TILE_C, Kit.TILE, 0.0, true)
+	kc.box(Vector3((rx0 + rx1) * 0.5, hf, (rz0 + rz1) * 0.5), Vector3(rx1 - rx0 + 0.6, 0.3, rz0 - rz1 + 0.6), TILE_C, Kit.TILE, 0.0, true)
+	# the fauces and shops under flat roofs
+	kc.box(Vector3(0, hf + 1.6, zf - df * 0.5), Vector3(W + 0.8, 0.3, df + 0.6), TILE_C, Kit.TILE, 0.0, true)
+	var spawn := look(Vector3(0, EYE, zf + 3.0), Vector3(0, 2.2, z_a1 - 3.0))
+	var views := [
+		["street", spawn],
+		["atrium", look(Vector3(0, EYE, z_a0 - 0.8), Vector3(0, 2.4, z_a1 - td))],
+		["tablinum", look(Vector3(0, EYE, tz0 - 0.8), Vector3(0, 1.8, gz1))],
+		["peristyle", look(Vector3(gcx - 7.0, EYE, zt - pcw - 0.3), Vector3(gcx + 6.0, 1.2, zb + pcw + 1.0))],
+		["triclinium", look(Vector3(trx - trw * 0.3, EYE, trz + trl * 0.4), Vector3(trx, 0.8, trz - trl * 0.3))],
+		["overview", look(Vector3(W * 0.6, L * 0.9, L * 0.75), Vector3(0, 0.0, -L * 0.1))],
+	]
+	var seats := {"atrium": views[1][1], "tablinum": views[2][1], "peristyle": views[3][1]}
+	var notes := [
+		"Atrium 5:3, height to the beams 3/4 of its length, impluvium 1/4 to 1/3 of its width, alae by the table of 6.3.4, tablinum and fauces by 6.3.5-6, peristyle a third longer across than deep with columns as high as the portico is wide, triclinium twice as long as wide: Vitruvius 6.3.1-8. Read.",
+		"The alae's table in Vitruvius starts at 30 ft; shorter atria use a third (assumption). The tablinum's height rule is applied as written (an eighth more than its width, the ceiling a third of the width higher).",
+		"Wall painting: the First style (block imitation) before about 80 BC, the Second (painted architecture) after, a plainer style after about 15 BC: the Mau convention of Pompeian scholarship, not an ancient source. # unverified",
+		"Masks of the ancestors in the alae: Pliny NH 35.6-7. # unverified (not read). Lararium, kitchen hearth and the shops beside the fauces follow Pompeian houses. # unverified",
+		"Dimensions of rooms, positions of cubicula, the kitchen and the furniture: conjecture. The compluvium and its roof slope (Tuscan atrium) follow 6.3.1.",
+	]
+	return _pack(k, kc, lights, spawn, seats, views, notes, {"anchors": {"door": Vector3(0, 0, zf), "impluvium": Vector3(0, 0.2, zc), "tablinum": Vector3(0, 0, tz0 - td * 0.5), "garden": Vector3(gcx, 0, gcz), "hearth": Vector3(rx0 + 1.2, 0.9, rz0 - 0.95)}, "floor_y": 0.0})
+
+
+## Opening centres measured from the wall's left end, when the wall starts `by` metres left of x = -W/2.
+static func _front_offset(holes: Array, by: float) -> Array:
+	var out: Array = []
+	for h in holes:
+		var c: Array = (h as Array).duplicate()
+		c[0] = c[0] + by
+		out.append(c)
+	return out
+
+
+# ====================================================================================================
+#  INSULA (Vitruvius 2.8.17)
+# ====================================================================================================
+
+## A floor slab over `rect` (x0, z0, x1, z1) with rectangular holes cut out (x0, z0, x1, z1 each).
+static func _slab_holes(k: Kit, rect: Array, holes: Array, y: float, thick: float, col: Color, under := WOOD_D) -> void:
+	var xs: Array = [rect[0], rect[2]]
+	for h in holes:
+		for x in [h[0], h[2]]:
+			if x > rect[0] and x < rect[2]:
+				xs.append(x)
+	xs.sort()
+	for i in range(xs.size() - 1):
+		var xa: float = xs[i]
+		var xb: float = xs[i + 1]
+		if xb - xa < 0.01:
+			continue
+		var cuts: Array = []
+		for h in holes:
+			if h[0] <= xa + 0.001 and h[2] >= xb - 0.001:
+				cuts.append([maxf(h[1], rect[1]), minf(h[3], rect[3])])
+		cuts.sort_custom(func(p, q): return p[0] < q[0])
+		var z := float(rect[1])
+		for c in cuts:
+			if c[0] > z:
+				_slab_piece(k, xa, z, xb, c[0], y, thick, col, under)
+			z = maxf(z, c[1])
+		if z < rect[3]:
+			_slab_piece(k, xa, z, xb, rect[3], y, thick, col, under)
+
+
+static func _slab_piece(k: Kit, xa: float, za: float, xb: float, zb: float, y: float, thick: float, col: Color, under: Color) -> void:
+	_span(k, xa, y - thick, za, xb, y, zb, col, Kit.TIMBER, false)
+	_floor(k, xa, za, xb, zb, y - thick, under, Kit.TIMBER, false)
+
+
+## A tenement block (insula): tabernae with mezzanines on the street, a stair, a courtyard, flats
+## above that grow poorer with every flight. Outer walls 1.5 Roman feet thick, the legal limit on a
+## public way (Vitruvius 2.8.17), the upper storeys won by height because the plan could not hold
+## the people (ib.). `sz` is (frontage x, depth z); the street at +z.
+static func _insula(sz: Vector2, year: int) -> Dictionary:
+	var X := sz.x
+	var Z := sz.y
+	var k := _kit()
+	var kc := _kit()
+	var lights: Array = []
+	var wt := 1.5 * RF                           # 0.44 m
+	var zf := Z * 0.5
+	var sd := 6.4                                # depth of the front block (shops, stair)
+	var zb := zf - sd
+	var hs := [4.4, 3.4, 3.2, 3.0]               # storey heights
+	var ys: Array = [0.0]
+	for h in hs:
+		ys.append(ys[-1] + h)
+	var ytop: float = ys[4]
+	var xl := -X * 0.5
+	var xr := X * 0.5
+	var cx0 := xl + 3.0
+	var cx1 := xr - 3.0
+	var cz1 := zb
+	var cz0 := -Z * 0.5 + 5.2
+	var wall_cols: Array = [Color(0.90, 0.84, 0.70), Color(0.92, 0.84, 0.70), Color(0.88, 0.84, 0.76), Color(0.66, 0.52, 0.38)]
+	var wall_mats: Array = [Kit.PLASTER, Kit.PLASTER, Kit.PLASTER, Kit.MUDBRICK]
+	# street, courtyard pavement
+	_span(k, xl - 1.5, -0.4, -Z * 0.5 - 1.5, xr + 1.5, 0.0, zf + 5.0, Color(0.50, 0.47, 0.42), Kit.STONE, false)
+	_floor(k, xl, -Z * 0.5, xr, zf, 0.01, Color(0.58, 0.52, 0.44), Kit.STONE)
+	# the stair shaft in the front block (right of the street door), the entrance, the shops
+	var xe := xr - 9.0                            # the entrance corridor
+	var sx0 := xe + 0.95
+	var shaft := [sx0, zb, sx0 + 2.4, zf - 0.4]
+	var bays: Array = []                          # shop partition x positions
+	var nshop := 5
+	var span_l := (xe - 0.75) - xl
+	var bw := span_l / nshop
+	for i in range(nshop + 1):
+		bays.append(xl + bw * i)
+	# outer wall, storey by storey, with the shop fronts and windows
+	for f in 4:
+		var y0: float = ys[f]
+		var h: float = hs[f]
+		var col: Color = wall_cols[f]
+		var mat: int = wall_mats[f]
+		var fh: Array = []
+		var rh: Array = []
+		if f == 0:
+			for i in nshop:
+				fh.append([(bays[i] + bays[i + 1]) * 0.5 - xl + wt * 0.5, 3.0, 2.9])
+			fh.append([xe - xl + wt * 0.5, 1.6, 2.6])
+		else:
+			for i in range(nshop):
+				fh.append([(bays[i] + bays[i + 1]) * 0.5 - xl + wt * 0.5, 1.3, 2.7, 1.0])
+			fh.append([xe - xl + wt * 0.5, 1.0, 2.5, 1.1])
+			fh.append([sx0 + 1.2 - xl + wt * 0.5, 0.8, 2.4, 1.2])
+		var side_h: Array = []
+		var back_h: Array = []
+		if f > 0:
+			for q in 3:
+				side_h.append([Z * 0.2 + q * Z * 0.3, 0.9, 2.4, 1.1])
+			for q in 5:
+				back_h.append([X * (q + 0.5) / 5.0, 0.9, 2.4, 1.1])
+		else:
+			back_h.append([X * 0.5, 1.0, 2.2])
+		_wall(k, Vector2(xl - wt * 0.5, zf), Vector2(xr + wt * 0.5, zf), y0, h, wt, col, mat, fh)
+		_wall(k, Vector2(xl - wt * 0.5, -Z * 0.5), Vector2(xr + wt * 0.5, -Z * 0.5), y0, h, wt, col, mat, back_h)
+		_wall(k, Vector2(xl, -Z * 0.5 + wt * 0.5), Vector2(xl, zf - wt * 0.5), y0, h, wt, col, mat, side_h)
+		_wall(k, Vector2(xr, -Z * 0.5 + wt * 0.5), Vector2(xr, zf - wt * 0.5), y0, h, wt, col, mat, side_h)
+		# the walls round the courtyard, with doors from every room
+		var doors_f: Array = []
+		for i in nshop:
+			doors_f.append([(bays[i] + bays[i + 1]) * 0.5 - xl + wt * 0.5, 1.0, 2.2])
+		var doors_c: Array = []
+		if f == 0:
+			doors_f = [[xe - xl + wt * 0.5, 1.6, 2.6], [sx0 + 1.2 - xl + wt * 0.5, 1.0, 2.2]]
+		_wall(k, Vector2(xl, zb), Vector2(xr, zb), y0, h, wt * 0.9, col, mat, doors_f)
+		var nr := int((cz1 - cz0) / 4.2)
+		var dside: Array = []
+		for q in nr:
+			dside.append([(cz1 - cz0) * (q + 0.5) / nr, 1.0, 2.2])
+		_wall(k, Vector2(cx0, cz1), Vector2(cx0, cz0), y0, h, wt * 0.9, col, mat, dside)
+		_wall(k, Vector2(cx1, cz1), Vector2(cx1, cz0), y0, h, wt * 0.9, col, mat, dside)
+		var nrr := int(X / 4.6)
+		var drear: Array = []
+		for q in nrr:
+			drear.append([X * (q + 0.5) / nrr, 1.0, 2.2])
+		_wall(k, Vector2(xl, cz0), Vector2(xr, cz0), y0, h, wt * 0.9, col, mat, drear)
+		# partitions: between the shops and front rooms, side rooms, rear rooms
+		for i in range(1, nshop):
+			_wall(k, Vector2(bays[i], zb), Vector2(bays[i], zf), y0, h, wt * 0.8, col, mat)
+		_wall(k, Vector2(xe - 0.75, zb), Vector2(xe - 0.75, zf), y0, h, wt * 0.8, col, mat)
+		_wall(k, Vector2(sx0, zb), Vector2(sx0, zf), y0, h, wt * 0.8, col, mat)
+		_wall(k, Vector2(sx0 + 2.4, zb), Vector2(sx0 + 2.4, zf), y0, h, wt * 0.8, col, mat)
+		_wall(k, Vector2(sx0 + 1.15, zb + 0.5), Vector2(sx0 + 1.15, zf - 0.5), y0, h, wt * 0.5, WOOD, Kit.TIMBER)   # the stair's spine wall
+		for q in range(1, nr):
+			var zq := cz0 + (cz1 - cz0) * q / nr
+			_wall(k, Vector2(xl, zq), Vector2(cx0, zq), y0, h, wt * 0.8, col, mat)
+			_wall(k, Vector2(cx1, zq), Vector2(xr, zq), y0, h, wt * 0.8, col, mat)
+		for q in range(1, nrr):
+			var xq := xl + X * q / nrr
+			_wall(k, Vector2(xq, -Z * 0.5), Vector2(xq, cz0), y0, h, wt * 0.8, col, mat)
+		# furnishings: the higher, the poorer
+		if f >= 1:
+			var kind_rooms: Array = []
+			for i in nshop:
+				kind_rooms.append(Vector3((bays[i] + bays[i + 1]) * 0.5, y0, zf - 1.2))
+			for r in kind_rooms:
+				if f <= 2:
+					k.box(Vector3(r.x - 1.0, y0 + 0.0, r.z - 1.2), Vector3(1.0, 0.45, 1.9), WOOD, Kit.TIMBER, 0.0, true)
+					k.box(Vector3(r.x - 1.0, y0 + 0.45, r.z - 1.2), Vector3(0.95, 0.1, 1.85), Color(0.72, 0.68, 0.58), Kit.CLOTH, 0.0, true)
+				else:
+					k.box(Vector3(r.x - 1.0, y0, r.z - 1.2), Vector3(0.9, 0.2, 1.8), Color(0.62, 0.52, 0.30), Kit.THATCH, 0.0, true)    # a straw pallet
+				k.cylinder(Vector3(r.x + 0.9, y0, r.z - 2.4), 0.28, 0.5, BRONZE, Kit.GOLD, 8)    # a brazier
+				if f == 1:
+					k.box(Vector3(r.x + 0.4, y0, r.z - 0.6), Vector3(0.9, 0.7, 0.6), WOOD_L, Kit.TIMBER, 0.0, true)
+					_lamp(lights, Vector3(r.x, y0 + 1.5, r.z - 1.8), 0.5, 4.0)
+				elif f == 2 and int(r.x) % 2 == 0:
+					_lamp(lights, Vector3(r.x, y0 + 1.5, r.z - 1.8), 0.35, 3.5)
+	# floors: slabs with the courtyard void (a balcony ring round it above the ground floor) and the stair holes
+	var balc := 1.3
+	for f in range(1, 4):
+		var y: float = ys[f]
+		var holes: Array = [[cx0 + balc, cz0 + balc, cx1 - balc, cz1 - 0.0]]
+		if f <= 3:
+			var hole_x0: float = sx0 if f % 2 == 1 else sx0 + 1.25
+			holes.append([hole_x0, zb, hole_x0 + 1.15, zf - 0.4])
+		_slab_holes(k, [xl, -Z * 0.5, xr, zf], holes, y, 0.3, Color(0.62, 0.46, 0.30))
+	# the balcony rail round the courtyard void
+	for f in range(1, 4):
+		var y2: float = ys[f]
+		for i in range(0, int((cx1 - cx0) / 1.6) + 1):
+			var xp := cx0 + balc + (cx1 - cx0 - 2.0 * balc) * i / maxf(1.0, floorf((cx1 - cx0) / 1.6))
+			k.rod(Vector3(xp, y2, cz0 + balc), Vector3(xp, y2 + 1.0, cz0 + balc), 0.04, WOOD_D, Kit.TIMBER)
+		_span(k, cx0 + balc, y2 + 0.95, cz0 + balc - 0.04, cx1 - balc, y2 + 1.03, cz0 + balc + 0.04, WOOD_D, Kit.TIMBER)
+		_span(k, cx0 + balc - 0.04, y2 + 0.95, cz0 + balc, cx0 + balc + 0.04, y2 + 1.03, cz1, WOOD_D, Kit.TIMBER)
+		_span(k, cx1 - balc - 0.04, y2 + 0.95, cz0 + balc, cx1 - balc + 0.04, y2 + 1.03, cz1, WOOD_D, Kit.TIMBER)
+	# the stairs: flights alternate between two lanes, steps 0.19 x 0.27
+	for f in 3:
+		var y0: float = ys[f]
+		var n := int(round(hs[f] / 0.19))
+		var rise: float = hs[f] / n
+		var run := (zf - 0.4 - zb - 0.4) / n
+		if f % 2 == 0:
+			for i in n:
+				k.box(Vector3(sx0 + 0.6, y0, zb + 0.2 + run * (i + 0.5)), Vector3(1.15, rise * (i + 1) * 0.0 + 0.12, run), WOOD, Kit.TIMBER, 0.0, true)
+		# solid-looking steps (a stair of boxes from the floor of the flight up to its step)
+		for i in n:
+			var lane_x := sx0 + 0.6 if f % 2 == 0 else sx0 + 1.85
+			var zc2 := (zb + 0.2 + run * (i + 0.5)) if f % 2 == 0 else (zf - 0.2 - run * (i + 0.5))
+			k.box(Vector3(lane_x, y0 + rise * i, zc2), Vector3(1.1, rise, run), WOOD, Kit.TIMBER, 0.0, true)
+	# the ground floor: shops with mezzanines, counters, the well in the courtyard
+	for i in nshop:
+		var cx: float = (bays[i] + bays[i + 1]) * 0.5
+		# mezzanine over the back half, ladder up the side wall
+		_span(k, bays[i] + 0.2, 2.5, zb + 0.2, bays[i + 1] - 0.2, 2.75, zb + 3.2, Color(0.56, 0.40, 0.26), Kit.TIMBER, true)
+		_span(k, bays[i] + 0.2, 2.75, zb + 3.15, bays[i + 1] - 0.2, 3.45, zb + 3.25, WOOD_D, Kit.TIMBER)       # a low rail
+		for q in 12:
+			k.box(Vector3(bays[i] + 0.35, 0.0 + q * 0.2, zb + 3.5 - 0.0), Vector3(0.15, 0.2, 0.45 + 0.0), WOOD_D, Kit.TIMBER, 0.0, true)
+		# a counter with a dolium (the thermopolium of the street) in every other shop
+		if i % 2 == 0:
+			_span(k, cx - 1.2, 0.0, zf - 1.3, cx + 1.2, 0.95, zf - 0.6, Color(0.66, 0.52, 0.38), Kit.STONE)
+			k.cylinder(Vector3(cx - 0.6, 0.0, zf - 0.95), 0.4, 0.95, TERRA, Kit.PAINT, 9)
+			k.cylinder(Vector3(cx + 0.5, 0.0, zf - 0.95), 0.36, 0.95, TERRA, Kit.PAINT, 9)
+		else:
+			_span(k, cx - 1.1, 0.0, zf - 1.2, cx + 1.1, 0.8, zf - 0.7, WOOD, Kit.TIMBER)
+			for q in 3:
+				k.box(Vector3(cx - 0.9 + q * 0.9, 0.8, zf - 0.95), Vector3(0.6, 0.35, 0.3), Color(0.8, 0.7, 0.5), Kit.THATCH, 0.0, true)
+		_lamp(lights, Vector3(cx, 2.0, zb + 2.0), 0.7, 5.0)
+	# courtyard: well-head, a trough, washing
+	k.cylinder(Vector3((cx0 + cx1) * 0.5, 0.0, (cz0 + cz1) * 0.5), 0.7, 0.9, TRAVERTINE, Kit.STONE, 10)
+	for q in 4:
+		k.rod(Vector3(cx0 + 2.0 + q * 3.0, 3.2, cz0 + 1.3), Vector3(cx0 + 2.0 + q * 3.0 + 2.0, 3.0, cz0 + 1.3), 0.015, WOOD_D, Kit.TIMBER)
+		k.box(Vector3(cx0 + 2.6 + q * 3.0, 2.2, cz0 + 1.3), Vector3(1.1, 0.9, 0.04), Color(0.9, 0.88, 0.82) if q % 2 == 0 else Color(0.62, 0.35, 0.3), Kit.CLOTH, 0.0, true)
+	# roof: the front block under a gable, the wings under a lean-to
+	kc.gable_roof(Vector3(0, ytop, (zf + zb) * 0.5), X + 0.6, sd + 0.4, 1.8, 0.5, 0.25, TILE_C, Kit.TILE, wall_cols[3], Kit.MUDBRICK)
+	for s: float in [-1.0, 1.0]:
+		var xw0: float = xl if s < 0 else cx1
+		var xw1: float = cx0 if s < 0 else xr
+		kc.box(Vector3((xw0 + xw1) * 0.5, ytop, (cz0 + cz1) * 0.5), Vector3(xw1 - xw0 + 0.5, 0.3, cz1 - cz0 + 0.5), TILE_C, Kit.TILE, 0.0, true)
+	kc.box(Vector3(0, ytop, (-Z * 0.5 + cz0) * 0.5), Vector3(X + 0.5, 0.3, cz0 + Z * 0.5 + 0.5), TILE_C, Kit.TILE, 0.0, true)
+	kc.box(Vector3(0, ytop, (cz0 + cz1) * 0.5), Vector3(cx1 - cx0 - 2.0 * balc + 0.0, 0.0, 0.0), TILE_C, Kit.TILE, 0.0, true)
+	lights.append({"pos": Vector3(0, ys[2], (cz0 + cz1) * 0.5), "colour": Color(0.80, 0.88, 1.0), "energy": 1.6, "range": 16.0, "kind": "sky"})
+	# camera points
+	var spawn := look(Vector3(xl + 4.0, EYE, zf + 5.0), Vector3(xl + 8.0, 6.0, zf))
+	var xm: float = (bays[1] + bays[2]) * 0.5
+	var views := [
+		["street", spawn],
+		["taberna", look(Vector3(xm, EYE, zf - 0.8), Vector3(xm, 1.8, zb))],
+		["mezzanine", look(Vector3(xm, 2.75 + EYE, zb + 2.8), Vector3(xm, 2.8, zf - 0.5))],
+		["stair", look(Vector3(sx0 + 0.6, EYE, zb + 0.5), Vector3(sx0 + 0.6, 4.0, zf - 1.0))],
+		["flat_1", look(Vector3((bays[2] + bays[3]) * 0.5, ys[1] + EYE, zf - 0.8), Vector3((bays[2] + bays[3]) * 0.5, ys[1] + 1.3, zb))],
+		["flat_3", look(Vector3((bays[2] + bays[3]) * 0.5, ys[3] + EYE, zf - 0.8), Vector3((bays[2] + bays[3]) * 0.5, ys[3] + 1.0, zb))],
+		["courtyard", look(Vector3(0, EYE, cz1 - 1.0), Vector3(0, 5.0, cz0))],
+		["overview", look(Vector3(X * 0.7, Z * 1.5, -Z * 0.9), Vector3(0, 4.0, 0))],
+	]
+	var seats := {"taberna": views[1][1], "mezzanine": views[2][1], "flat_1": views[4][1], "flat_3": views[5][1], "courtyard": views[6][1]}
+	var notes := [
+		"Walls on the street no thicker than 1.5 Roman feet by law, so the tall houses are carried on piers and tied with the timbers of the floors, and the people are lodged by height: Vitruvius 2.8.17. Read.",
+		"Shops with mezzanines, the stair, the courtyard with balconies, flats poorer the higher you go (plaster with a painted dado, whitewash, then bare mud-brick and straw): from Ostia and the satirists (Juvenal 3.190-202, Martial) # unverified (not read); the plan is conjecture.",
+		"Storey heights 4.4 / 3.4 / 3.2 / 3.0 m (about 14 m); the Augustan limit of 70 ft (Strabo 5.3.7) # unverified.",
+		"Thermopolium counters with dolia follow Pompeii and Ostia. # unverified for Rome",
+	]
+	return _pack(k, kc, lights, spawn, seats, views, notes, {"anchors": {"door": Vector3(xe, 0, zf), "courtyard": Vector3(0, 0, (cz0 + cz1) * 0.5), "stair": Vector3(sx0 + 0.6, 0, zb + 0.5)}, "floor_y": 0.0})
