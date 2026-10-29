@@ -11,3 +11,15 @@ republic_rules:
     - {id: nobiles, name: "The nobility", from_year: -286, to_year: -134}
     - {id: optimates, name: "The optimates", from_year: -133, populist: false}
     - {id: populares, name: "The populares", from_year: -133, populist: true}
+  city:
+    # The games calendar (U7). Months and first years are the tradition's; where a passage has not
+    # been re-read it is marked unverified. Funeral games: Livy Per. 16 (264 BC, Forum Boarium).
+    munus_from_year: -264
+    munus_venue: forum_boarium
+    munus_min_rank: 5
+    senate_houses: [curia_iulia, curia_hostilia, curia_pompeia]
+    ludi:
+      - {id: ludi_romani, name: "Ludi Romani", kind: circus, month: 9, from_year: -509, venue: circus_maximus, sources: ["Livy 1.35.9 (traditional founding under Tarquinius Priscus)", "Livy 2.36.1"]}
+      - {id: ludi_plebeii, name: "Ludi Plebeii", kind: circus, month: 11, from_year: -216, venue: circus_flaminius, sources: ["Livy 23.30.17 (first attested; unverified: passage not re-read)"]}
+      - {id: ludi_apollinares, name: "Ludi Apollinares", kind: circus, month: 7, from_year: -208, venue: circus_maximus, sources: ["Livy 27.23.5 (made annual 208; unverified: passage not re-read)"]}
+      - {id: ludi_megalenses, name: "Ludi Megalenses", kind: scaenic, month: 4, from_year: -204, venue: aedes_magnae_matris, sources: ["Livy 34.54.3 (games before the temple, 194; unverified: passage not re-read)"]}

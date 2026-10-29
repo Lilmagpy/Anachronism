@@ -9,6 +9,7 @@ from anachronism.content.schema import (
     Battle,
     Building,
     Chapter,
+    CityTimeline,
     CivDefinition,
     Dialogue,
     Dilemma,
@@ -21,6 +22,7 @@ from anachronism.content.schema import (
     HistoricalPerson,
     Magistracy,
     MapResource,
+    Monument,
     PackManifest,
     ProvinceGeography,
     RepublicRules,
@@ -72,6 +74,8 @@ class Registry:
     fasti: dict[str, FastiYear] = field(default_factory=dict)
     republic_rules: RepublicRules | None = None
     battles: dict[str, Battle] = field(default_factory=dict)
+    monuments: dict[str, Monument] = field(default_factory=dict)
+    city_timeline: dict[str, CityTimeline] = field(default_factory=dict)
     origins: dict[tuple[str, str], str] = field(default_factory=dict)
     invalid: dict[str, set[str]] = field(default_factory=dict)
     """Ids of items that exist but failed validation (already reported), per kind."""

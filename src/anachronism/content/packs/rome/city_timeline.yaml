@@ -1,0 +1,59 @@
+schema_version: 1
+# The turning points of the city of Rome's monuments (U7), read by engine/city.py.
+# A fact is entered only when an ancient source (or the dataset's own dated note) gives the year.
+# Not entered, for want of a recorded rebuilding date: the fires of 213 (Spes, Fortuna, Mater Matuta),
+# 210 (Regia, Vesta), 241 (Vesta) and 12 BC (Basilica Iulia). The dedication year of every monument is
+# its built.year in data/rome/city/monuments.yaml unless a "completed" entry here replaces it.
+city_timeline:
+  - {id: aedes_apollinis_medici_vowed_433, monument: aedes_apollinis_medici, year: -433, kind: vowed, source: "Livy 4.25.3 (vow year as stated in the monument dataset)"}
+  - {id: aedes_apollinis_palatini_begun_36, monument: aedes_apollinis_palatini, year: -36, kind: begun, source: "Suet. Aug. 29; Dio 49.15.5"}
+  - {id: aedes_apollinis_palatini_vowed_36, monument: aedes_apollinis_palatini, year: -36, kind: vowed, source: "Dio 49.15.5 (vow year as stated in the monument dataset)"}
+  - {id: aedes_bellonae_vowed_296, monument: aedes_bellonae, year: -296, kind: vowed, source: "Livy 10.19.17-21 (vow year as stated in the monument dataset)"}
+  - {id: aedes_castoris_vowed_499, monument: aedes_castoris, year: -499, kind: vowed, source: "Livy 2.20.12 (vow year as stated in the monument dataset)"}
+  - {id: aedes_cereris_liberi_liberae_vowed_496, monument: aedes_cereris_liberi_liberae, year: -496, kind: vowed, source: "Dion. Hal. 6.94 (vow year as stated in the monument dataset)"}
+  - {id: aedes_cereris_liberi_liberae_fire_31, monument: aedes_cereris_liberi_liberae, year: -31, kind: fire, source: "Dio 50.10.3"}
+  - {id: aedes_faunus_vowed_196, monument: aedes_faunus, year: -196, kind: vowed, source: "Livy 33.42.10 (vow year as stated in the monument dataset)"}
+  - {id: aedes_fortunae_primigeniae_vowed_204, monument: aedes_fortunae_primigeniae, year: -204, kind: vowed, source: "Livy 29.36.8 (vow year as stated in the monument dataset)"}
+  - {id: aedes_iovis_capitolini_fire_83, monument: aedes_iovis_capitolini, year: -83, kind: fire, source: "Cic. Cat. 3.9; Tac. Hist. 3.72"}
+  - {id: aedes_iovis_capitolini_begun_78, monument: aedes_iovis_capitolini, year: -78, kind: begun, source: "Plut. Publicola 15 (rebuilding after the fire of 83)"}
+  - {id: aedes_iovis_capitolini_completed_69, monument: aedes_iovis_capitolini, year: -69, kind: completed, source: "Tac. Hist. 3.72; Cic. Verr. 2.4.69"}
+  - {id: aedes_iovis_statoris_palatine_vowed_294, monument: aedes_iovis_statoris_palatine, year: -294, kind: vowed, source: "Livy 10.36.11 (vow year as stated in the monument dataset)"}
+  - {id: aedes_iunonis_monetae_vowed_345, monument: aedes_iunonis_monetae, year: -345, kind: vowed, source: "Livy 7.28.4-6 (vow year as stated in the monument dataset)"}
+  - {id: aedes_iunonis_reginae_aventine_vowed_396, monument: aedes_iunonis_reginae_aventine, year: -396, kind: vowed, source: "Livy 5.21.3 (vow year as stated in the monument dataset)"}
+  - {id: aedes_iunonis_reginae_circus_vowed_187, monument: aedes_iunonis_reginae_circus, year: -187, kind: vowed, source: "Livy 39.2.11 (vow year as stated in the monument dataset)"}
+  - {id: aedes_iunonis_sospitae_vowed_197, monument: aedes_iunonis_sospitae, year: -197, kind: vowed, source: "Livy 32.30.10 (vow year as stated in the monument dataset)"}
+  - {id: aedes_iuventatis_vowed_207, monument: aedes_iuventatis, year: -207, kind: vowed, source: "Livy 36.36.5-6 (vow year as stated in the monument dataset)"}
+  - {id: aedes_magnae_matris_begun_205, monument: aedes_magnae_matris, year: -205, kind: begun, source: "Livy 36.36.3-4 (contracted)"}
+  - {id: aedes_magnae_matris_completed_111, monument: aedes_magnae_matris, year: -111, kind: completed, source: "Val. Max. 1.8.11 (burned and rebuilt by Q. Caecilius Metellus)"}
+  - {id: aedes_magnae_matris_fire_111, monument: aedes_magnae_matris, year: -111, kind: fire, source: "Val. Max. 1.8.11"}
+  - {id: aedes_mentis_vowed_217, monument: aedes_mentis, year: -217, kind: vowed, source: "Livy 22.9.10 (vow year as stated in the monument dataset)"}
+  - {id: aedes_pietatis_vowed_191, monument: aedes_pietatis, year: -191, kind: vowed, source: "Livy 40.34.4-5 (vow year as stated in the monument dataset)"}
+  - {id: aedes_quirini_vowed_325, monument: aedes_quirini, year: -325, kind: vowed, source: "Livy 10.46.7 (vow year as stated in the monument dataset)"}
+  - {id: aedes_quirini_fire_49, monument: aedes_quirini, year: -49, kind: fire, source: "dataset note: burned; date as in data/rome/city/monuments.yaml"}
+  - {id: aedes_quirini_completed_16, monument: aedes_quirini, year: -16, kind: completed, source: "Dio 54.19.4; Res Gestae 19"}
+  - {id: aedes_salutis_vowed_311, monument: aedes_salutis, year: -311, kind: vowed, source: "Livy 9.43.25 (vow year as stated in the monument dataset)"}
+  - {id: aedes_veiovis_vowed_200, monument: aedes_veiovis, year: -200, kind: vowed, source: "Livy 31.21.12 (vow year as stated in the monument dataset)"}
+  - {id: aedes_veiovis_begun_194, monument: aedes_veiovis, year: -194, kind: begun, source: "Livy 34.53.7 (contracted)"}
+  - {id: aedes_veneris_erycinae_capitol_vowed_217, monument: aedes_veneris_erycinae_capitol, year: -217, kind: vowed, source: "Livy 22.9.7-10 (vow year as stated in the monument dataset)"}
+  - {id: aedes_veneris_erycinae_collina_vowed_184, monument: aedes_veneris_erycinae_collina, year: -184, kind: vowed, source: "Livy 40.34.4 (vow year as stated in the monument dataset)"}
+  - {id: aedes_veneris_genetricis_vowed_48, monument: aedes_veneris_genetricis, year: -48, kind: vowed, source: "App. BC 2.68 (vow year as stated in the monument dataset)"}
+  - {id: basilica_iulia_begun_54, monument: basilica_iulia, year: -54, kind: begun, source: "Suet. Iul. 26; Cic. Att. 4.16.8"}
+  - {id: basilica_porcia_fire_52, monument: basilica_porcia, year: -52, kind: fire, source: "Asc. Mil. 33"}
+  - {id: curia_hostilia_fire_52, monument: curia_hostilia, year: -52, kind: fire, source: "Dio 40.49.2; Asc. Mil. 29-33"}
+  - {id: curia_iulia_begun_44, monument: curia_iulia, year: -44, kind: begun, source: "Dio 44.5.2"}
+  - {id: curia_iulia_completed_29, monument: curia_iulia, year: -29, kind: completed, source: "Dio 51.22.1"}
+  - {id: domus_ciceronis_demolished_58, monument: domus_ciceronis, year: -58, kind: demolished, source: "Cic. Dom. 100-116; Plut. Cic. 33"}
+  - {id: domus_ciceronis_completed_57, monument: domus_ciceronis, year: -57, kind: completed, source: "Cic. Att. 4.2.5"}
+  - {id: forum_boarium_flood_215, monument: forum_boarium, year: -215, kind: flood, source: "Livy 24.9.6 (unverified: passage not re-read)"}
+  - {id: forum_boarium_flood_202, monument: forum_boarium, year: -202, kind: flood, source: "Livy 30.38.10 (unverified: passage not re-read)"}
+  - {id: forum_boarium_flood_54, monument: forum_boarium, year: -54, kind: flood, source: "Dio 39.61.1 (unverified: passage not re-read)"}
+  - {id: forum_boarium_flood_44, monument: forum_boarium, year: -44, kind: flood, source: "Dio 45.17.3 (unverified: passage not re-read)"}
+  - {id: forum_boarium_flood_27, monument: forum_boarium, year: -27, kind: flood, source: "Dio 53.20.1 (unverified: passage not re-read)"}
+  - {id: forum_iulium_begun_54, monument: forum_iulium, year: -54, kind: begun, source: "Cic. Att. 4.16.8"}
+  - {id: forum_romanum_completed_210, monument: forum_romanum, year: -210, kind: completed, source: "Livy 26.27.1-4 (rebuilt as tabernae argentariae)"}
+  - {id: forum_romanum_fire_210, monument: forum_romanum, year: -210, kind: fire, source: "Livy 26.27.1-4 (the shops round the Forum)"}
+  - {id: lares_permarini_vowed_190, monument: lares_permarini, year: -190, kind: vowed, source: "Livy 40.52.5-6 (vow year as stated in the monument dataset)"}
+  - {id: regia_fire_148, monument: regia, year: -148, kind: fire, source: "dataset note: burned (date as in data/rome/city/monuments.yaml)"}
+  - {id: regia_completed_36, monument: regia, year: -36, kind: completed, source: "Dio 48.42.4"}
+  - {id: saepta_iulia_begun_54, monument: saepta_iulia, year: -54, kind: begun, source: "Cic. Att. 4.16.8; Dio 53.23.1"}
+  - {id: theatrum_marcelli_begun_44, monument: theatrum_marcelli, year: -44, kind: begun, source: "Suet. Iul. 44 (Caesar cleared the site; Augustus built)"}

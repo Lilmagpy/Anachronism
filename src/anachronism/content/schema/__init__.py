@@ -15,6 +15,14 @@ from anachronism.content.schema.dialogue import MOMENTS, SPECIAL_SPEAKERS, Dialo
 from anachronism.content.schema.dilemmas import Choice, Dilemma
 from anachronism.content.schema.formations import Formation
 from anachronism.content.schema.happenings import Happening
+from anachronism.content.schema.monuments import (
+    CityRules,
+    CityTimeline,
+    Ludus,
+    Monument,
+    MonumentBuilt,
+    MonumentEvent,
+)
 from anachronism.content.schema.pack import CONTENT_KINDS, LIST_KINDS, SINGLE_KINDS, PackManifest
 from anachronism.content.schema.republic import (
     College,
@@ -93,6 +101,8 @@ __all__ = [
     "Chapter",
     "ChapterChoice",
     "Choice",
+    "CityRules",
+    "CityTimeline",
     "CivDefinition",
     "College",
     "Confidence",
@@ -116,9 +126,13 @@ __all__ = [
     "Holder",
     "Identifier",
     "Issue",
+    "Ludus",
     "Magistracy",
     "MagistracyEra",
     "MapResource",
+    "Monument",
+    "MonumentBuilt",
+    "MonumentEvent",
     "OfficeHeld",
     "Order",
     "PackManifest",

@@ -15,6 +15,7 @@ from anachronism.content.schema.dialogue import Dialogue, Speaker
 from anachronism.content.schema.dilemmas import Dilemma
 from anachronism.content.schema.formations import Formation
 from anachronism.content.schema.happenings import Happening
+from anachronism.content.schema.monuments import CityTimeline, Monument
 from anachronism.content.schema.republic import (
     FastiYear,
     Gens,
@@ -46,6 +47,9 @@ class PackManifest(Frozen):
     name: str
     version: Positive
     depends_on: tuple[Identifier, ...] = ()
+    external: tuple[str, ...] = ()
+    """Glob patterns (relative to the pack folder) for dataset files outside the pack that hold
+    one list kind keyed by name and no ``schema_version``: ``monuments`` (U7)."""
 
 
 SINGLE_KINDS: dict[str, TypeAdapter[Any]] = {
@@ -83,6 +87,8 @@ LIST_KINDS: dict[str, type[Frozen]] = {
     "people": HistoricalPerson,
     "fasti": FastiYear,
     "battles": Battle,
+    "monuments": Monument,
+    "city_timeline": CityTimeline,
 }
 """Kinds holding a list of items with ids; each item is validated on its own."""
 
