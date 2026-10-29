@@ -3,11 +3,13 @@
 ##   /tmp/claude-0/render.sh --path . -s res://scripts/urbs/terrain_preview.gd -- --screenshot=/tmp/claude-0/terrain.png
 ## Flags (after the `--`):
 ##   --screenshot=PATH      save the picture and quit (without it the window stays open)
-##   --view=aerial|forum|tiber|capitol|campus|circus   a camera preset (default aerial)
+##   --view=NAME            a camera preset (see VIEWS; default aerial); --views=a,b,c takes
+##                          several in one run and saves PATH_a.png, PATH_b.png, ...
 ##   --at=x,z,height        camera position in local metres (height above the ground at x,z? no:
 ##                          absolute y a.s.l.); overrides the preset
 ##   --look=x,z,height      point the camera looks at (default: the Forum, y = 12)
 ##   --fov=DEGREES          field of view (default 60)
+##   --lod=0|1|2           chunk detail level (default 0)
 ##   --plain                grey clay material (debug: judge the shape alone)
 ##   --noshadow             sun without shadows
 ##   --marks                stand a pole with a name on each hill summit and on the Forum
@@ -16,6 +18,10 @@ extends SceneTree
 var _shot := ""
 var _frames := 0
 var args_noshadow := false
+var _cam: Camera3D
+var _args := {}
+var _queue: PackedStringArray = PackedStringArray()
+var _qi := 0
 
 
 func _initialize() -> void:
@@ -32,7 +38,7 @@ func _initialize() -> void:
 	var root := Node3D.new()
 	get_root().add_child(root)
 	t0 = Time.get_ticks_msec()
-	var ground := UrbsTerrain.build_all(root)
+	var ground := UrbsTerrain.build_all(root, int(args.get("lod", "0")))
 	if args.has("plain"):   # debug: grey clay, to judge the shape alone
 		var clay := StandardMaterial3D.new()
 		clay.albedo_color = Color(0.7, 0.7, 0.7)
@@ -43,31 +49,45 @@ func _initialize() -> void:
 	_environment(root)
 	if args.has("marks"):
 		_marks(root)
-	var views := {
-		"aerial": [Vector3(-300, 750, 1500), Vector3(0, 10, -50), 55.0],
-		"forum": [Vector3(60, 14, 20), Vector3(-215, 25, -60), 70.0],
-		"tiber": [Vector3(-300, 80, -200), Vector3(-640, 6, 0), 70.0],
-		"capitol": [Vector3(250, 120, 400), Vector3(-200, 30, -100), 60.0],
-		"campus": [Vector3(-200, 400, -2600), Vector3(-800, 10, -1000), 60.0],
-		"circus": [Vector3(600, 120, 900), Vector3(150, 12, 330), 65.0],
-	}
-	var v: Array = views.get(args.get("view", "aerial"), views["aerial"])
+	_cam = Camera3D.new()
+	_cam.far = 12000.0
+	_cam.near = 0.5
+	root.add_child(_cam)
+	_args = args
+	_queue = String(args.get("views", args.get("view", "aerial"))).split(",")
+	_apply_view(_queue[0])
+
+
+const VIEWS := {
+	"aerial": [Vector3(-300, 750, 1500), Vector3(0, 10, -50), 55.0],
+	"forum": [Vector3(60, 14, 20), Vector3(-215, 25, -60), 70.0],
+	"tiber": [Vector3(-300, 80, -200), Vector3(-640, 6, 0), 70.0],
+	"island": [Vector3(-420, 110, 420), Vector3(-640, 6, 0), 60.0],
+	"capitol": [Vector3(250, 120, 400), Vector3(-200, 30, -100), 60.0],
+	"cliffs": [Vector3(-420, 45, 120), Vector3(-260, 30, -30), 60.0],
+	"palatine": [Vector3(-100, 60, 560), Vector3(250, 35, 330), 60.0],
+	"campus": [Vector3(-200, 400, -2600), Vector3(-800, 10, -1000), 60.0],
+	"circus": [Vector3(600, 120, 900), Vector3(150, 12, 330), 65.0],
+	"east": [Vector3(300, 140, 700), Vector3(1500, 45, 400), 60.0],
+	"janiculum": [Vector3(-900, 150, 300), Vector3(-1900, 70, 0), 60.0],
+	"top": [Vector3(0, 3200, 1), Vector3(0, 0, 0), 55.0],
+}
+
+
+func _apply_view(name: String) -> void:
+	var v: Array = VIEWS.get(name, VIEWS["aerial"])
 	var pos: Vector3 = v[0]
 	var look: Vector3 = v[1]
 	var fov: float = v[2]
-	if args.has("at"):
-		pos = _vec(args["at"])
-	if args.has("look"):
-		look = _vec(args["look"])
-	if args.has("fov"):
-		fov = float(args["fov"])
-	var cam := Camera3D.new()
-	cam.fov = fov
-	cam.far = 12000.0
-	cam.near = 0.5
-	root.add_child(cam)
-	cam.look_at_from_position(pos, look)
-	print("camera at %s looking at %s; ground there %.1f m" % [pos, look, UrbsTerrain.height_at(pos.x, pos.z)])
+	if _args.has("at"):
+		pos = _vec(_args["at"])
+	if _args.has("look"):
+		look = _vec(_args["look"])
+	if _args.has("fov"):
+		fov = float(_args["fov"])
+	_cam.fov = fov
+	_cam.look_at_from_position(pos, look)
+	print("view %s: camera at %s looking at %s; ground there %.1f m" % [name, pos, look, UrbsTerrain.height_at(pos.x, pos.z)])
 
 
 func _vec(s: String) -> Vector3:
@@ -134,9 +154,15 @@ func _marks(root: Node3D) -> void:
 
 func _process(_delta: float) -> bool:
 	_frames += 1
-	if _shot != "" and _frames == 8:
-		var img := get_root().get_texture().get_image()
-		img.save_png(_shot)
-		print("saved ", _shot)
-		quit()
+	if _shot != "" and _frames % 8 == 0:
+		var path := _shot
+		if _queue.size() > 1:
+			path = _shot.trim_suffix(".png") + "_" + _queue[_qi] + ".png"
+		get_root().get_texture().get_image().save_png(path)
+		print("saved ", path)
+		_qi += 1
+		if _qi >= _queue.size():
+			quit()
+		else:
+			_apply_view(_queue[_qi])
 	return false
