@@ -132,17 +132,18 @@ static func gallop(h: Node3D, phase: float, amp := 1.0) -> void:
 	body.rotation.x = sin(phase) * 0.05 * amp
 
 
-## Equip a shield on the left hand. kind: "scutum" (tall oblong), "round", "parma" (small square).
+## Equip a shield held in front of the left side of the body (a child of the torso: animate
+## its position and rotation to guard and parry; the left arm is hidden behind it). kind: "scutum" (tall oblong), "round", "parma" (small square).
 func equip_shield(kind: String, col := Color(0.62, 0.2, 0.15)) -> Node3D:
 	var sh := Node3D.new()
-	hand_l.add_child(sh)
+	torso.add_child(sh)
 	var size := Vector3(0.7, 0.9, 0.06)
 	match kind:
 		"round":
 			size = Vector3(0.8, 0.8, 0.06)
 		"parma":
 			size = Vector3(0.5, 0.5, 0.05)
-	sh.position = Vector3(-0.0, 0.1, 0.18)
+	sh.position = Vector3(-0.22, 0.2, 0.3)
 	_box(sh, size, Vector3.ZERO, col)
 	_box(sh, size * Vector3(1.0, 1.0, 0.0) + Vector3(-0.1, -0.1, 0.09), Vector3(0, 0, 0.02), Color(0.8, 0.68, 0.3))
 	_box(sh, Vector3(0.12, 0.12, 0.1), Vector3(0, 0, 0.06), Color(0.75, 0.7, 0.6))
@@ -153,7 +154,7 @@ func equip_shield(kind: String, col := Color(0.62, 0.2, 0.15)) -> Node3D:
 func equip_sword(kind := "gladius") -> Node3D:
 	var sw := Node3D.new()
 	hand_r.add_child(sw)
-	sw.rotation.x = -PI / 2.0
+	sw.rotation.x = PI / 2.0
 	_box(sw, Vector3(0.05, 0.05, 0.14), Vector3(0, 0, 0), Color(0.35, 0.22, 0.1))
 	var blade := _box(sw, Vector3(0.05, 0.03, 0.62), Vector3(0, 0, 0.38), Color(0.82, 0.83, 0.86))
 	if kind == "sica":
