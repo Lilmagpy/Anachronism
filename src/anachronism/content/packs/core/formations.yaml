@@ -17,7 +17,7 @@ formations:
     name: Balanced line
     description: "Every part of the line equal: nothing to exploit, nothing to fear, and a steady front against a reserve kept idle in the rear."
     beats: [deep_reserve]
-    loses_to: [strong_left, strong_right, wide_line]
+    loses_to: [strong_left, strong_right, wide_line, cannae_envelopment, phalanx]
     natural_bp: 1000
     layout:
       default: {left: 1, centre: 1, right: 1}
@@ -26,7 +26,7 @@ formations:
     name: Strong centre
     description: "Pile the best men in the middle and punch through - it splits a stretched wide line, but a strong wing turns its flank."
     beats: [wide_line]
-    loses_to: [strong_left, strong_right, deep_reserve]
+    loses_to: [strong_left, strong_right, deep_reserve, triplex_acies, cannae_envelopment, zama_lanes]
     power_bp: 400
     layout:
       infantry: {left: 1, centre: 4, right: 1}
@@ -38,8 +38,8 @@ formations:
   - id: strong_left
     name: Strong left, refused right
     description: "Mass the left and hold the right back: it turns the flank of a balanced line or a strong centre, and meets a strong right as an equal - the better general wins (Leuctra)."
-    beats: [balanced, strong_centre]
-    loses_to: [deep_reserve]
+    beats: [balanced, strong_centre, phalanx]
+    loses_to: [deep_reserve, hollow_square]
     duel: [strong_right]
     layout:
       mounted: {left: 8, right: 2}
@@ -49,8 +49,8 @@ formations:
   - id: strong_right
     name: Strong right, refused left
     description: "Mass the right and hold the left back: it turns the flank of a balanced line or a strong centre, and meets a strong left as an equal - the better general wins."
-    beats: [balanced, strong_centre]
-    loses_to: [deep_reserve]
+    beats: [balanced, strong_centre, phalanx]
+    loses_to: [deep_reserve, hollow_square]
     duel: [strong_left]
     layout:
       mounted: {left: 2, right: 8}
@@ -60,7 +60,7 @@ formations:
   - id: deep_reserve
     name: Deep reserve
     description: "Hold a fifth of the army back to plug the breach and strike late: it beats a strong centre or a strong wing, but a wide line overlaps it and a steady line wastes it."
-    beats: [strong_centre, strong_left, strong_right]
+    beats: [strong_centre, strong_left, strong_right, cannae_envelopment, hollow_square]
     loses_to: [balanced, wide_line]
     power_bp: 0
     reserve_bp: 1700
@@ -72,7 +72,7 @@ formations:
     name: Wide line
     description: "Stretch the line to overlap their flanks and envelop them - it beats a balanced line or a deep reserve, but needs at least 1.2 times the enemy's men, or it is thin, and a strong centre punches through it."
     beats: [balanced, deep_reserve]
-    loses_to: [strong_centre]
+    loses_to: [strong_centre, phalanx, hollow_square]
     needs_ratio_bp: 12000
     thin_bp: 2000
     layout:
@@ -80,3 +80,98 @@ formations:
       missile: {left: 1, centre: 1, right: 1}
       default: {left: 4, centre: 3, right: 4}
     blocked_terrain: [forest, marsh]
+
+# --- The Roman world, 509-27 BC (R4). Each of these needs the right soldiers (needs_units) and
+# so never appears in an army that has none; the generic formations above stay the default.
+  - id: triplex_acies
+    name: Triple line (triplex acies)
+    description: "Hastati, principes and triarii in three lines with gaps, each relieving the last: it beats a pike phalanx and a strong centre, and meets a deep reserve as an equal."
+    beats: [phalanx, strong_centre]
+    duel: [deep_reserve]
+    power_bp: 300
+    reserve_bp: 800
+    needs_units: [hastati, principes, triarii, socii_infantry, extraordinarii, cohort_legionaries]
+    needs_share_bp: 5000
+    layout:
+      spear: {centre: 1, reserve: 3}
+      infantry: {left: 2, centre: 3, right: 2}
+      missile: {left: 1, centre: 1, right: 1}
+      mounted: {left: 1, right: 1}
+      elephant: {centre: 1}
+    sources:
+      - "Polybius 6.21-26 (the three lines of a legion; the allied wings)"
+      - "Livy 8.8.5-14 (the lines and the intervals; the triarii kneeling behind)"
+      - "Polybius 18.28-32 (why the legion beats the phalanx)"
+    # The 'checkerboard' (quincunx) of staggered maniples is a modern name for this arrangement; Polybius 15.9.7 says that the ordinary Roman custom was to place the second line's maniples opposite the gaps.
+
+  - id: phalanx
+    name: Phalanx
+    description: "Close ranks with spear or pike, sixteen deep: nothing stands against its front on flat, clear ground, but a wall of pikes is useless on rough ground and dies from the flank or rear."
+    beats: [balanced, wide_line]
+    loses_to: [strong_left, strong_right, triplex_acies]
+    duel: [strong_centre]
+    power_bp: 1200
+    natural_bp: 1200
+    needs_units: [macedonian_phalangites, pontic_phalanx, servian_hoplites, etruscan_hoplites, carthaginian_citizens, libyan_spearmen]
+    needs_share_bp: 5000
+    blocked_terrain: [forest, marsh, hills, mountains]
+    layout:
+      spear: {left: 1, centre: 4, right: 1}
+      infantry: {left: 1, centre: 2, right: 1}
+      missile: {left: 1, centre: 1, right: 1}
+      mounted: {left: 3, right: 3}
+      elephant: {left: 1, centre: 1, right: 1}
+    sources:
+      - "Polybius 18.29-31 (frontal strength; needs level, clear ground; cannot turn about)"
+      - "Polybius 18.24-26 (Cynoscephalae: the right wing wins from the high ground, the left is broken and the Romans take the pikes in the rear)"
+      - "Livy 37.40.1-3 (Antiochus' phalanx at Magnesia: sixteen thousand, thirty-two deep, elephants in the gaps)"
+
+  - id: cannae_envelopment
+    name: Crescent and double envelopment
+    description: "A bowed centre gives ground while strong wings of horse and spearmen close round the flanks: it destroys a deep, packed enemy on open ground (Cannae), and a reserve or a square can shrug it off."
+    beats: [balanced, strong_centre]
+    loses_to: [deep_reserve, hollow_square]
+    edge_bp: 2000
+    needs_units: [roman_equites, socii_cavalry, extraordinarii_horse, gallic_horse, germanic_horse, numidian_horse, cavalry, heavy_cavalry, cataphracts, parthian_cataphracts]
+    needs_share_bp: 2500
+    blocked_terrain: [forest, marsh, hills, mountains]
+    layout:
+      mounted: {left: 5, right: 5}
+      spear: {left: 4, centre: 1, right: 4}
+      infantry: {left: 1, centre: 5, right: 1}
+      missile: {left: 1, centre: 2, right: 1}
+      elephant: {centre: 1}
+    sources:
+      - "Polybius 3.113-117 (Cannae: the crescent, the horse on each wing, the Africans held back to wheel in; the Roman maniples deepened and packed)"
+      - "Polybius 3.117.4-5 (the lesson: better half the infantry and far more cavalry)"
+
+  - id: zama_lanes
+    name: Lanes against elephants
+    description: "Maniples drawn up in straight files with open lanes between them and the skirmishers in front, so charging elephants run through harmlessly: it beats a strong centre where the elephants stand."
+    beats: [strong_centre]
+    needs_units: [velites, census_skirmishers]
+    needs_share_bp: 1000
+    layout:
+      missile: {left: 1, centre: 5, right: 1}
+      infantry: {left: 3, centre: 4, right: 3}
+      spear: {reserve: 1}
+      mounted: {left: 4, right: 4}
+    sources:
+      - "Polybius 15.9.6-10 (Scipio's order at Zama: maniples one behind another, not staggered; velites in the lanes)"
+      - "Polybius 15.12.1-5 (the elephants broken by trumpets, the velites and the lanes)"
+
+  - id: hollow_square
+    name: Hollow square (orbis)
+    description: "Infantry on all four sides with horse and baggage inside: it cannot be turned or surrounded, so it beats a wide line, an envelopment and a flank attack - but it cannot move fast, and a reserve breaks it."
+    beats: [wide_line, cannae_envelopment, strong_left, strong_right]
+    loses_to: [deep_reserve]
+    power_bp: -500
+    needs_units: [hastati, principes, triarii, socii_infantry, cohort_legionaries, extraordinarii]
+    needs_share_bp: 5000
+    layout:
+      default: {left: 1, centre: 1, right: 1, reserve: 1}
+      mounted: {reserve: 1}
+      missile: {reserve: 2, centre: 1}
+    sources:
+      - "Plutarch, Crassus 23.3-4 (Crassus forms a hollow square of four fronts, twelve cohorts to a side, a squadron of horse with each cohort)"
+      - "Caesar, Gallic War 5.33 (the orbis) # unverified"

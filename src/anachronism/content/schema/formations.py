@@ -37,8 +37,14 @@ class Formation(Frozen):
     """It needs at least this many men for every 10,000 of the enemy's (12_000 = 1.2 to 1) ..."""
     thin_bp: int = Field(default=0, ge=0, le=5000)
     """... and without them the line is thin: this much less power, and no edge."""
+    needs_units: tuple[Identifier, ...] = ()
+    """Soldiers it needs (any of these kinds of unit), making up at least ``needs_share_bp`` of
+    the side's men: the triple line needs maniples, the Cannae envelopment needs horse."""
+    needs_share_bp: Rate = 0
     blocked_terrain: tuple[Identifier, ...] = ()
     """Terrain where this line cannot form (a wide line in forest or marsh is thin)."""
+    sources: tuple[str, ...] = ()
+    """Ancient passages the entry rests on (internal research notes, never shown to players)."""
     layout: dict[Identifier, dict[Identifier, int]] = Field(default_factory=dict)
     """Where each kind of soldier stands when its deployment is left to the general (D-270):
     kind -> {left, centre, right, reserve: weight}. The key ``default`` covers kinds not named;

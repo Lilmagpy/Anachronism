@@ -1,0 +1,113 @@
+schema_version: 1
+# Armies of the Roman world, 509-27 BC (R4). Each is a way of raising and fighting men that
+# gates the soldiers in units.yaml. Dates are the traditional or conventional ones, and the
+# notes say where the ancient sources disagree. Researched from the passages cited in `sources`.
+techs:
+  - id: hoplite_phalanx
+    name: Hoplite phalanx
+    keywords: [hoplite, phalanx, shield wall, citizen army, spear wall, servian army]
+    category: military
+    year: -675
+    complexity: 2
+    prerequisites: [bronze_working]
+    effects: [{type: military_strength, bp: 800}]
+    flavour: "Men who can afford bronze fight shoulder to shoulder, and the city is only as strong as its line."
+    history: "The Greek hoplite phalanx took shape from about 700 BC. Rome's early army was a phalanx of citizens armed by property class; Livy and Dionysius credit it to King Servius Tullius (traditionally 6th century)."
+    sources: ["Livy 1.43", "Dionysius of Halicarnassus 4.16-18", "Livy 8.8.3-4 (the phalanx 'like the Macedonian' of old Rome)"]
+    confidence: medium
+
+  - id: italian_alliance
+    name: Allied contingents (socii)
+    keywords: [allies, socii, latin allies, alae, allied troops, latin rights]
+    category: governance
+    year: -338
+    complexity: 2
+    prerequisites: [written_law]
+    effects: [{type: military_strength, bp: 600}]
+    flavour: "Rome asks no tribute of its allies, only men - and gets as many as it sends itself."
+    history: "After the Latin War (340-338 BC) Rome bound the Latins and Italian peoples to itself by treaty, each owing troops, not taxes. By Polybius' day the allies provided as many foot soldiers as Rome and about three times the horse."
+    sources: ["Polybius 6.26.5-9", "Livy 8.8.14-15 (an allied force of equal size in the old days)"]
+    confidence: medium
+
+  - id: manipular_legion
+    name: Manipular legion
+    keywords: [manipular legion, manipular, maniple, hastati, principes, triarii, velites, legion]
+    category: military
+    year: -340
+    complexity: 3
+    prerequisites: [hoplite_phalanx, iron_working]
+    effects: [{type: military_strength, bp: 1500}]
+    flavour: "Three lines, each with gaps, each able to relieve the last. The army bends and does not break."
+    history: "Livy dates the break-up of the phalanx into maniples and the three lines to the Latin War (340 BC); the full system of Polybius' account is that of about 220 BC. Some modern scholars date the change later, to the Samnite wars."
+    sources: ["Livy 8.8", "Polybius 6.19-26", "Polybius 18.28-32", "Livy 9.19.7-8"]
+    confidence: medium
+
+  - id: gladius_hispaniensis
+    name: Spanish sword
+    keywords: [gladius, spanish sword, short sword, sword, scutum]
+    category: military
+    year: -225
+    complexity: 2
+    prerequisites: [iron_working]
+    effects: [{type: military_strength, bp: 700}]
+    flavour: "A short blade that stabs and cuts, learnt from the enemy in Spain."
+    history: "Polybius calls the Roman sword 'Spanish' and says it thrusts and cuts well. Its adoption is dated by modern scholars to the Spanish wars of the Hannibalic age (about 225-200 BC); the sources do not say when."
+    sources: ["Polybius 6.23.6-7"]
+    confidence: medium
+
+  - id: cohort_legion
+    name: Cohort legion
+    keywords: [cohort, marian reforms, professional army, legionary, eagle, aquila]
+    category: military
+    year: -107
+    complexity: 3
+    prerequisites: [manipular_legion, gladius_hispaniensis]
+    effects: [{type: military_strength, bp: 1200}]
+    flavour: "One kind of soldier, one kind of drill, ten cohorts to a legion, and a general to be loyal to."
+    history: "Gaius Marius enrolled men without property as consul in 107 BC (Sallust). The cohort as the legion's main unit appears in Caesar's day; whether Marius or earlier generals made it so, and the 'Marian reform' as one act, is debated. Most modern scholars see a slow change."
+    sources:
+      - "Sallust, Jugurtha 86" # unverified
+      - "Plutarch, Marius 13 (Marius trains his army; the 'Marian mules')"
+      - "Caesar, Gallic War, passim (cohorts)" # unverified
+    confidence: low
+
+  - id: sarissa_phalanx
+    name: Macedonian pike phalanx
+    keywords: [sarissa, pike, macedonian phalanx, pikemen, phalangite]
+    category: military
+    year: -340
+    complexity: 3
+    prerequisites: [hoplite_phalanx]
+    effects: [{type: military_strength, bp: 1200}]
+    flavour: "A pike of fourteen cubits and sixteen ranks behind it: nothing can stand against it on level ground."
+    history: "Philip II and Alexander of Macedon made the pike phalanx the core of their armies. Polybius says nothing can withstand its frontal charge on clear, level ground, but it fails on broken ground."
+    sources: ["Polybius 18.28-32", "Livy 9.19.7-8"]
+    confidence: high
+
+  - id: elephant_warfare
+    name: War elephants
+    keywords: [war elephants, elephant, mahout, elephants in battle]
+    category: military
+    year: -326
+    complexity: 2
+    prerequisites: [horse_riding]
+    requires: {materials: [elephants]}
+    effects: [{type: military_strength, bp: 900}]
+    flavour: "A living tower. Horses bolt from it, and it sometimes bolts from the battle."
+    history: "Indian kings used war elephants; Alexander met them at the Hydaspes (326 BC) and his successors, Pyrrhus and Carthage took them up. Rome first met them at Heraclea (280 BC)."
+    sources: ["Plutarch, Pyrrhus 16-17", "Polybius 5.84-85", "Polybius 15.12"]
+    confidence: medium
+
+  - id: cataphract_armour
+    name: Armoured horse and rider
+    keywords: [cataphract, armoured cavalry, lancer, heavy horse, clibanarii]
+    category: military
+    year: -209
+    complexity: 3
+    prerequisites: [horse_riding, iron_working]
+    requires: {materials: [horses]}
+    effects: [{type: military_strength, bp: 1000}]
+    flavour: "Man and horse in scale or mail: a living battering ram, and a very hot one."
+    history: "Armoured lancers were a mark of Iranian and Seleucid armies; Antiochus III used 3,000 at Magnesia (190 BC) and Parthian cataphracts rode with Surena at Carrhae (53 BC)."
+    sources: ["Livy 37.40.5, 37.40.10", "Plutarch, Crassus 21, 24-25"]
+    confidence: medium

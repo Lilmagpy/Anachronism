@@ -20,6 +20,7 @@ from anachronism.content.schema import (
     LIST_KINDS,
     SINGLE_KINDS,
     AlmanacEntry,
+    Battle,
     Building,
     Chapter,
     CivDefinition,
@@ -89,6 +90,7 @@ class Content:
     people: Mapping[str, HistoricalPerson] = field(default_factory=dict)
     fasti: Mapping[str, FastiYear] = field(default_factory=dict)
     republic_rules: RepublicRules = field(default_factory=RepublicRules)
+    battles: Mapping[str, Battle] = field(default_factory=dict)
     """Chance events (plague, flood, bumper harvests...)."""
 
 
@@ -182,6 +184,7 @@ def load_content(pack_ids: Sequence[str] | None = None, root: Path = PACKS_DIR) 
         people=registry.people,
         fasti=registry.fasti,
         republic_rules=registry.republic_rules or RepublicRules(),
+        battles=registry.battles,
         digest=digest.hexdigest(),
     )
 

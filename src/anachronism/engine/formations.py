@@ -24,6 +24,11 @@ def lacks(form: Formation, side: list[Army], other: list[Army], terrain: str = "
     """Why a side cannot properly draw up in this formation against this enemy, or ""."""
     if terrain and terrain in form.blocked_terrain:
         return "too rough a place to form a line like that"
+    if form.needs_units:
+        total = _men(side)
+        have = sum(n for a in side for u, n in a.troops.items() if u in form.needs_units)
+        if total <= 0 or have * BP < form.needs_share_bp * total:
+            return f"needs {form.needs_share_bp // 100}% of the right soldiers for it"
     if form.needs_ratio_bp and _men(side) * BP < form.needs_ratio_bp * _men(other):
         ratio = form.needs_ratio_bp
         return f"needs {ratio // BP}.{ratio % BP // 1000} times the enemy's men"
