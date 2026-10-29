@@ -25,6 +25,7 @@ scenarios:
     map: europe
     music: roman
     cost_scale: 10
+    republic: true
     common_techs: {written_law: widespread}
     sources:
       - "Fasti Capitolini (consuls of 133 BC: P. Mucius Scaevola and L. Calpurnius Piso Frugi); Livy, Periochae 58"

@@ -25,6 +25,7 @@ scenarios:
     map: europe
     music: roman
     cost_scale: 10
+    republic: true
     common_techs: {written_law: widespread}
     sources:
       - "Dio 41.1 and Dio's consul tables for 53-27 BC (read): consuls of 49 were L. Cornelius Lentulus and C. Claudius Marcellus"
@@ -206,7 +207,7 @@ scenarios:
         martial_bp: 30000
         disposition: aggressive
         scripts:
-          - {id: "labienus_pacorus_invasion", goal: "conquer", target: "rome", preconditions: {after_year: -41}, note: "Pacorus, son of Orodes, and Q. Labienus (who sided with Brutus and Cassius) invade the Roman east (Dio 48.24-26)."}
+          - {id: "labienus_pacorus_invasion", goal: "conquer", target: "rome", preconditions: {after_year: -41}, note: "Pacorus, son of Orodes, and Labienus (an ally of Brutus and Cassius) invade the Roman east (Dio 48.24-26)."}
         capital: sel_babylonia
         music: near_east
         leader: Orodes II
