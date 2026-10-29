@@ -7,7 +7,7 @@
 ##   --street=ID --t=0..1                  stand on that street, looking along it (+ --back to look the other way)
 ##   --at=x,z                              or stand at local metres x, z (then --yaw=DEG, 0 = north)
 ##   --eye=M (default 1.7)  --pitch=DEG (default -3)  --yaw=DEG  --radius=M (chunks loaded, default 450)
-##   --lod=0..2   --hour=H (default 10)    --slope: tilt the ground (+4% to the east) to test the foundations
+##   --lod=0..2   --hour=H (default 10)   --steps: time the incremental chunk build (worst step, ms)   --count: report building counts inside the Servian wall    --flat: flat ground instead of the real terrain; --slope: with --flat, tilt the ground (+4% to the east) to test the foundations
 extends SceneTree
 
 var args := {}
@@ -26,7 +26,11 @@ func _run() -> void:
 	var radius := float(args.get("radius", "450"))
 	var lod := int(args.get("lod", "0"))
 	var tilt := args.has("slope")
-	var height := func(x: float, _z: float) -> float: return 10.0 + (x * 0.04 if tilt else 0.0)
+	var flat := args.has("flat")
+	var height: Callable = func(x: float, z: float) -> float:
+		if flat:
+			return 10.0 + (x * 0.04 if tilt else 0.0)
+		return UrbsTerrain.height_at(x, z)
 	var root := Node3D.new()
 	get_root().add_child(root)
 	_environment(root, float(args.get("hour", "10")))
@@ -40,7 +44,7 @@ func _run() -> void:
 	gm.roughness = 1.0
 	ground.material_override = gm
 	ground.position.y = 9.95
-	if not tilt:
+	if flat and not tilt:
 		root.add_child(ground)
 	var streets := UrbsStreets.new()
 	streets.build(root, year, height)
@@ -62,6 +66,7 @@ func _run() -> void:
 		pos = Vector3(float(f[0]), 0, float(f[1]))
 	var started := Time.get_ticks_msec()
 	fill.footprints = feet
+	fill.sync_chunks = true
 	fill.year = year
 	fill.height = height
 	fill.prepare()
@@ -73,7 +78,29 @@ func _run() -> void:
 	var chunks := fill.chunks_in(radius, Vector2(pos.x, pos.z))
 	for key in chunks:
 		fill.build_chunk_into(holder, key, year, height, feet, lod)
+		if not flat:
+			var rect := Rect2(Vector2(key) * 250.0, Vector2(250, 250))
+			root.add_child(UrbsTerrain.build_chunk(rect, 0 if lod == 0 else 1))
 	var t_chunks := Time.get_ticks_msec() - started
+	if args.has("count"):
+		_count(fill, chunks, year)
+	if args.has("steps"):
+		fill.sync_chunks = false
+		var worst := 0.0
+		var steps := 0
+		var total := 0.0
+		for key in chunks:
+			var job := fill._chunk_job(key, lod)
+			job.set_process(false)
+			holder.add_child(job)
+			while not job.done:
+				var t0 := Time.get_ticks_usec()
+				job.step(2.5)
+				var dt := float(Time.get_ticks_usec() - t0) / 1000.0
+				worst = maxf(worst, dt)
+				total += dt
+				steps += 1
+		print("STEPS chunks=%d steps=%d worst_step_ms=%.1f avg_chunk_ms=%.1f" % [chunks.size(), steps, worst, total / maxf(chunks.size(), 1)])
 	# monument placeholders
 	var mon := Node3D.new()
 	root.add_child(mon)
@@ -95,12 +122,20 @@ func _run() -> void:
 	var tris := 0
 	for ch in holder.get_children():
 		for mi in ch.get_children():
+			if not (mi is MultiMeshInstance3D):
+				continue
 			var m := mi as MultiMeshInstance3D
 			var fam := String(mi.name).split("_")[0]
 			stats[fam] = int(stats.get(fam, 0)) + m.multimesh.instance_count
 			tris += m.multimesh.instance_count * (m.multimesh.mesh.get_faces().size() / 3)
 	print("PREVIEW year=%d chunks=%d prep_ms=%d chunks_ms=%d instances=%s tris=%d" % [year, chunks.size(), t_prep, t_chunks, str(stats), tris])
 	print("PREVIEW street_lots=%s" % str(fill.count_stats))
+	var shown := {}
+	for lot in fill._street_lots:
+		var m := str(lot["mesh"])
+		if m.begins_with("furn:") and int(shown.get(m, 0)) < 3 and lot["c"].distance_to(Vector2(pos.x, pos.z)) < 900.0:
+			shown[m] = int(shown.get(m, 0)) + 1
+			print("FURN %s at %d,%d yaw=%.0f" % [m, lot["c"].x, lot["c"].y, rad_to_deg(lot["th"])])
 	# camera
 	var cam := Camera3D.new()
 	cam.fov = float(args.get("fov", "70"))
@@ -121,6 +156,26 @@ func _run() -> void:
 	quit()
 
 
+## --count: lots inside the Servian wall for the chunks loaded, and per-step build times.
+func _count(fill: UrbsFill, chunks: Array, year: int) -> void:
+	var poly := fill._wall
+	var inside := {}
+	var total := 0
+	for key in chunks:
+		for lot in fill.lots_for_chunk(key):
+			var k := str(lot["mesh"]).split(":")[0]
+			if k == "prop" or k == "furn" or k == "tree":
+				continue
+			total += 1
+			if Geometry2D.is_point_in_polygon(lot["c"], poly):
+				inside[k] = int(inside.get(k, 0)) + 1
+	var n := 0
+	for k in inside:
+		n += int(inside[k])
+	print("COUNT year=%d all=%d inside_wall=%d %s" % [year, total, n, str(inside)])
+	print("REJECT %s" % str(fill.reject_stats))
+
+
 func _environment(root: Node3D, hour: float) -> void:
 	var sun := DirectionalLight3D.new()
 	var az := deg_to_rad(150.0)
@@ -128,7 +183,7 @@ func _environment(root: Node3D, hour: float) -> void:
 	sun.rotation = Vector3(-el, az, 0)
 	sun.shadow_enabled = true
 	sun.directional_shadow_max_distance = 600.0
-	sun.light_energy = 1.25
+	sun.light_energy = 0.75
 	root.add_child(sun)
 	var env := Environment.new()
 	env.background_mode = Environment.BG_SKY
@@ -141,11 +196,11 @@ func _environment(root: Node3D, hour: float) -> void:
 	env.sky = sky
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	env.ambient_light_color = Color(0.82, 0.8, 0.76)
-	env.ambient_light_energy = 0.7
+	env.ambient_light_energy = 0.42
 	env.tonemap_mode = Environment.TONE_MAPPER_FILMIC
 	env.fog_enabled = true
 	env.fog_light_color = Color(0.78, 0.82, 0.88)
-	env.fog_density = 0.00025
+	env.fog_density = 0.00012
 	var we := WorldEnvironment.new()
 	we.environment = env
 	root.add_child(we)

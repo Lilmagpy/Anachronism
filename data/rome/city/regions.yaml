@@ -161,7 +161,7 @@ districts:
   lat: 41.8892
   lon: 12.4875
   radius_m: 230
-  max_density: 0.8
+  max_density: 0.85
   saturates_at: 40000
   onset: -509
   eras:
@@ -174,7 +174,7 @@ districts:
   lat: 41.8935
   lon: 12.4938
   radius_m: 190
-  max_density: 0.8
+  max_density: 0.92
   saturates_at: 80000
   onset: -509
   eras:
@@ -187,7 +187,7 @@ districts:
   lat: 41.9000
   lon: 12.4885
   radius_m: 320
-  max_density: 0.7
+  max_density: 0.92
   saturates_at: 150000
   onset: -450
   eras:
@@ -213,7 +213,7 @@ districts:
   lat: 41.9010
   lon: 12.4950
   radius_m: 230
-  max_density: 0.85
+  max_density: 0.92
   saturates_at: 180000
   onset: -400
   eras:
@@ -225,7 +225,7 @@ districts:
   lat: 41.8955
   lon: 12.4965
   radius_m: 230
-  max_density: 0.9
+  max_density: 0.95
   saturates_at: 120000
   onset: -450
   eras:
@@ -249,7 +249,7 @@ districts:
   lat: 41.8873
   lon: 12.4800
   radius_m: 230
-  max_density: 0.9
+  max_density: 0.95
   saturates_at: 80000
   onset: -450
   eras:
@@ -262,7 +262,7 @@ districts:
   lat: 41.8830
   lon: 12.4830
   radius_m: 330
-  max_density: 0.8
+  max_density: 0.9
   saturates_at: 200000
   onset: -456
   eras:
@@ -275,7 +275,7 @@ districts:
   lat: 41.8875
   lon: 12.4690
   radius_m: 380
-  max_density: 0.85
+  max_density: 0.92
   saturates_at: 250000
   onset: -400
   eras:
@@ -288,7 +288,7 @@ districts:
   lat: 41.8860
   lon: 12.4965
   radius_m: 290
-  max_density: 0.55
+  max_density: 0.7
   saturates_at: 250000
   onset: -400
   eras:
@@ -346,7 +346,7 @@ districts:
   lat: 41.8975
   lon: 12.4775
   radius_m: 360
-  max_density: 0.8
+  max_density: 0.92
   saturates_at: 300000
   onset: -219
   eras:
@@ -375,6 +375,19 @@ districts:
   eras:
   - {from: -312, weights: {field: 0.8, casa: 0.2}, shops: 0.0}
   sources: ["Platner-Ashby s.v. Via Appia (read): flanked with tombs; Via Latina (read): the triangle between the two roads occupied by tombs"]
+# Inside the Servian wall (from 378 BC, Livy 6.32.1) every point not in a named district gets
+# `default_inside`: the walled city of 426 ha (population.yaml built_up_area) was built up edge to
+# edge by the late Republic (Strabo 5.3.7 on its height and density, Vitruvius 2.8.17 on building
+# upward because of the crowd). The polygon is the wall's route in monuments.yaml (murus_servianus).
+default_inside:
+  max_density: 0.9
+  saturates_at: 250000
+  onset: -378
+  eras:
+  - {from: -378, weights: {casa: 0.7, workshop: 0.15, insula: 0.15}, shops: 0.15}
+  - {from: -250, weights: {casa: 0.3, insula: 0.5, workshop: 0.15, domus: 0.05}, shops: 0.35}
+  - {from: -150, weights: {insula: 0.75, workshop: 0.12, domus: 0.13}, shops: 0.5}
+  sources: ["Livy 6.32.1 (the wall)", "Strabo 5.3.7 (read)", "Vitruvius 2.8.17 (read)", "author's choice of mix: no source gives one"]
 default:
   max_density: 0.18
   saturates_at: 800000

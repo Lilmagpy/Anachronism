@@ -18,6 +18,47 @@
 "outside any named district: scattered buildings and open land (author's choice)"
 ]
 },
+"default_inside": {
+"eras": [
+{
+"from": -378,
+"shops": 0.15,
+"weights": {
+"casa": 0.7,
+"insula": 0.15,
+"workshop": 0.15
+}
+},
+{
+"from": -250,
+"shops": 0.35,
+"weights": {
+"casa": 0.3,
+"domus": 0.05,
+"insula": 0.5,
+"workshop": 0.15
+}
+},
+{
+"from": -150,
+"shops": 0.5,
+"weights": {
+"domus": 0.13,
+"insula": 0.75,
+"workshop": 0.12
+}
+}
+],
+"max_density": 0.9,
+"onset": -378,
+"saturates_at": 250000,
+"sources": [
+"Livy 6.32.1 (the wall)",
+"Strabo 5.3.7 (read)",
+"Vitruvius 2.8.17 (read)",
+"author's choice of mix: no source gives one"
+]
+},
 "districts": [
 {
 "eras": [
@@ -50,7 +91,7 @@
 "id": "palatine",
 "lat": 41.8892,
 "lon": 12.4875,
-"max_density": 0.8,
+"max_density": 0.85,
 "name": "Palatine",
 "onset": -509,
 "radius_m": 230,
@@ -92,7 +133,7 @@
 "id": "carinae",
 "lat": 41.8935,
 "lon": 12.4938,
-"max_density": 0.8,
+"max_density": 0.92,
 "name": "Carinae",
 "onset": -509,
 "radius_m": 190,
@@ -133,7 +174,7 @@
 "id": "quirinal",
 "lat": 41.9,
 "lon": 12.4885,
-"max_density": 0.7,
+"max_density": 0.92,
 "name": "Quirinal (Alta Semita)",
 "onset": -450,
 "radius_m": 320,
@@ -210,7 +251,7 @@
 "id": "viminal",
 "lat": 41.901,
 "lon": 12.495,
-"max_density": 0.85,
+"max_density": 0.92,
 "name": "Viminal",
 "onset": -400,
 "radius_m": 230,
@@ -244,7 +285,7 @@
 "id": "esquiline_inner",
 "lat": 41.8955,
 "lon": 12.4965,
-"max_density": 0.9,
+"max_density": 0.95,
 "name": "Oppius and Cispius",
 "onset": -450,
 "radius_m": 230,
@@ -318,7 +359,7 @@
 "id": "forum_boarium",
 "lat": 41.8873,
 "lon": 12.48,
-"max_density": 0.9,
+"max_density": 0.95,
 "name": "Forum Boarium and Emporium",
 "onset": -450,
 "radius_m": 230,
@@ -363,7 +404,7 @@
 "id": "aventine",
 "lat": 41.883,
 "lon": 12.483,
-"max_density": 0.8,
+"max_density": 0.9,
 "name": "Aventine",
 "onset": -456,
 "radius_m": 330,
@@ -407,7 +448,7 @@
 "id": "transtiberim",
 "lat": 41.8875,
 "lon": 12.469,
-"max_density": 0.85,
+"max_density": 0.92,
 "name": "Transtiberim",
 "onset": -400,
 "radius_m": 380,
@@ -442,7 +483,7 @@
 "id": "caelian",
 "lat": 41.886,
 "lon": 12.4965,
-"max_density": 0.55,
+"max_density": 0.7,
 "name": "Caelian",
 "onset": -400,
 "radius_m": 290,
@@ -590,7 +631,7 @@
 "id": "campus_south",
 "lat": 41.8975,
 "lon": 12.4775,
-"max_density": 0.8,
+"max_density": 0.92,
 "name": "Campus Martius south (Prata Flaminia, Circus Flaminius)",
 "onset": -219,
 "radius_m": 360,
