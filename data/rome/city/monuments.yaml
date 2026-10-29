@@ -2400,6 +2400,7 @@ monuments:
   type: gate
   regio: 8
   model: gate
+  offset_m: [-35, -45]  # east, north metres added to lat/lon; unverified: Wikipedia coordinates of the Carmental Gate (41.8914, 12.4803), 57 m from the dataset point; Platner-Ashby: near Via della Consolazione x Via della Bocca della Verita, SW corner of the Capitol
   footprint_m: {length: 9, width: 12}  # unverified
   height_m: 12  # unverified
   snap_to: murus_servianus
@@ -2417,6 +2418,7 @@ monuments:
   type: gate
   regio: 9
   model: gate
+  offset_m: [48, -170]  # east, north metres added to lat/lon; unverified: Platner-Ashby s.v. Porta Flumentana only says the gate lay on the wall joining the Capitol to the river, with the southern Campus Martius outside it; moved so the wall passes south of the Forum Holitorium and the Theatre of Marcellus site, which lay outside the Porta Carmentalis (Livy 25.7)
   footprint_m: {length: 9, width: 12}  # unverified
   height_m: 12  # unverified
   snap_to: murus_servianus

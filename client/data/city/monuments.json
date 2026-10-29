@@ -5049,6 +5049,10 @@
 "location": "Servian Wall, foot of the Capitol toward the Forum Holitorium; triumphs avoided the unlucky right arch (Livy 2.49.8)",
 "lon": 12.4807,
 "model": "gate",
+"offset_m": [
+-35,
+-45
+],
 "precision": "approx",
 "regio": 8,
 "snap_to": "murus_servianus",
@@ -5081,6 +5085,10 @@
 "location": "Servian Wall, between the Capitol and the Tiber",
 "lon": 12.477,
 "model": "gate",
+"offset_m": [
+48,
+-170
+],
 "precision": "rough",
 "regio": 9,
 "snap_to": "murus_servianus",

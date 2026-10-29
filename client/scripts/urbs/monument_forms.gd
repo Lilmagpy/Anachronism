@@ -748,7 +748,7 @@ static func _circus(out: Dictionary, d: Dictionary) -> void:
 			for j in 4:   # stepped earth banks with timber stands above
 				var x0 := side * (tw / 2.0 + j * bd / 4.0 + bd / 8.0)
 				var hh := 1.6 + j * 2.2
-				var col := Roman.EARTH_C if j < 2 else Roman.WOOD
+				var col := Roman.EARTH_C.lightened(0.12) if j < 2 else Roman.WOOD.lightened(0.18)
 				var mat := Kit.EARTH if j < 2 else Kit.TIMBER
 				k.box(Vector3(x0, 0, (zstart + zs) / 2.0), Vector3(bd / 4.0 + 0.2, hh, zs - zstart), col, mat)
 	# the curved end (sphendone): seat rings and, once in stone, the arcaded outer wall
