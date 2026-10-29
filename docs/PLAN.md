@@ -19,14 +19,22 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
   - [ ] Check every start in the client; owner plays one
 - [ ] R2 The Roman state: yearly magistrates, Senate, families and factions, orders, cursus honorum, the Fasti
   - [x] Engine: magistracies, yearly elections, Senate votes, families, the Fasti as default history (`engine/republic.py`)
-  - [ ] Full Fasti 509-27 BC, people and families (agent at work)
+  - [ ] Full Fasti 509-27 BC (draft of every year on branch claude/r1-fasti), people and families with stances
   - [x] Persuade, back a candidate and put matters to the Senate as replay-safe actions (`engine/senate.py`, D-286.1)
   - [ ] Client panel for the Republic view and the Senate proposals
 - [ ] R3 Italy and the world: peoples of Italy, allies, citizenship, colonies, overseas powers, provinces and governors
 - [ ] R4 Army, economy, religion
   - [x] Army groundwork: 8 army techs, 36 units, 5 formations, 8 tactics, 15 sourced battles (D-288)
 - [ ] R5 The city of Rome: topography, dated monuments, Roman kit forms, the city visit
-  - [ ] Urbs U1-U8 (D-289, plans/city.md): walk-in Rome with interiors and spectacles
+  - [ ] Urbs (D-289, plans/city.md): walk-in Rome with interiors and spectacles
+    - [x] U1 frame, exporter, streets and regions data, spectacles data (verified), Empire monuments (verified)
+    - [x] U2 ground: hills, cliffs, Tiber, ancient levels, woods (first pass)
+    - [x] U3 160 monuments placed, dated, oriented, clickable; fill of insulae and domus (density pass in progress)
+    - [x] U4 modes map -> city -> street -> inside, cards, chunked loading
+    - [x] U5 interiors: temple, curia, basilica, circus, arena, theatre, domus, insula (polish pass in progress)
+    - [x] U6 spectacles animated and sourced (figure-quality pass in progress)
+    - [x] U7 engine city state and `city` view
+    - [ ] U8 polish, time of day, crowds, sound; owner playthrough
   - [ ] U9 Moments: a cinematic for every discovery, building and event, played in the city (after U8)
 - [ ] R6 Depth pass: every year 509-27 BC checked against the sources; full campaign playthrough
 
