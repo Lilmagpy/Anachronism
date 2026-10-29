@@ -137,7 +137,7 @@ func _build_order(rng: RandomNumberGenerator) -> void:
 	cursor += ceil(n_cap / 2.0) * 1.8 + 6.0
 	# 6 the lictors: two files, laurel on the fasces
 	for i in 12:
-		var f = F.make(Color(0.7, 0.12, 0.1), false, Color.WHITE, 1.02)
+		var f = F.make(Color(0.45, 0.12, 0.38), false, Color.WHITE, 1.02)   # purple tunics (Appian Pun. 66)
 		f.pose_arms(-0.3, 0.1)
 		F.box(f.hand_r, Vector3(0.1, 0.1, 1.0), Vector3(0, -0.2, 0), Color(0.5, 0.35, 0.2)).rotation.x = PI / 2.0
 		F.box(f.hand_r, Vector3(0.14, 0.2, 0.14), Vector3(0, 0.5, 0), Color(0.25, 0.5, 0.2))
@@ -157,6 +157,10 @@ func _build_order(rng: RandomNumberGenerator) -> void:
 	_slave.pose_arms(-2.8, -0.2)
 	F.box(_slave.hand_r, Vector3(0.4, 0.06, 0.4), Vector3(0, 0.1, 0), Color(0.85, 0.7, 0.2))
 	_chariot.car.add_child(_slave)
+	var kid = F.make(Color(0.95, 0.93, 0.86), true, Color(0.55, 0.08, 0.3), 0.5)   # boys and girls rode with him (Appian Pun. 66)
+	kid.position = Vector3(0.38, 0.42, 0.15)
+	kid.pose_arms(-0.3, -0.3)
+	_chariot.car.add_child(kid)
 	add_child(_chariot.car)
 	add_child(_chariot.team)
 	_members.append({"node": _chariot.car, "along": cursor + 6.0, "lat": 0.0, "kind": "chariot", "phase": 0.0, "stop": 6.0})
