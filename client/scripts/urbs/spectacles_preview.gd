@@ -21,6 +21,9 @@ func _initialize() -> void:
 	var root := Node3D.new()
 	get_root().add_child(root)
 	_environment(root)
+	if kind == "figures":
+		_figures(root)
+		return
 	var params := _params(kind, root)
 	var sp := Spectacles.play(kind, params, root)
 	var cam := Camera3D.new()
@@ -38,7 +41,9 @@ func _initialize() -> void:
 	for ts in times:
 		sp.playing = false
 		sp.seek(float(ts))
-		if _args.has("cam"):
+		if _args.has("cine"):
+			cam.transform = sp.cine_view(float(ts))
+		elif _args.has("cam"):
 			var c := str(_args["cam"]).split(",")
 			var f := Vector3(float(c[0]), float(c[1]), float(c[2]))
 			cam.transform = Transform3D(Basis.looking_at(Vector3(float(c[3]), float(c[4]), float(c[5])) - f, Vector3.UP), f)
@@ -137,3 +142,59 @@ func _environment(root: Node3D) -> void:
 	var we := WorldEnvironment.new()
 	we.environment = env
 	root.add_child(we)
+
+
+## --kind=figures: a lineup of the people (and animals) for close inspection.
+##   --t=phase for the walk cycle; camera --cam=...
+func _figures(root: Node3D) -> void:
+	const F := preload("res://scripts/urbs/spectacles/figure.gd")
+	Standin.ground(root, 60.0)
+	var cam := Camera3D.new()
+	cam.fov = 40.0
+	root.add_child(cam)
+	cam.current = true
+	var phase := float(str(_args.get("t", "0.6")))
+	var list: Array = []
+	list.append(F.person({"tunic": Color(0.7, 0.45, 0.3), "seed": 1}))
+	list.append(F.person({"tunic": Color(0.9, 0.88, 0.8), "toga": true, "seed": 2, "laticlave": false}))
+	list.append(F.person({"tunic": Color(0.9, 0.88, 0.8), "toga": true, "veil": true, "seed": 3}))
+	var lic = F.person({"tunic": Color(0.45, 0.12, 0.38), "seed": 4, "hair": Color(0.3, 0.22, 0.15)})
+	lic.equip_fasces()
+	list.append(lic)
+	var g1 = F.person({"bare": true, "tunic": Color(0.85, 0.8, 0.7), "seed": 5, "skin": Color(0.8, 0.6, 0.45)})
+	g1.equip_kit("samnis")
+	list.append(g1)
+	var g2 = F.person({"bare": true, "tunic": Color(0.85, 0.8, 0.7), "seed": 6})
+	g2.equip_kit("thraex")
+	list.append(g2)
+	var g3 = F.person({"bare": true, "tunic": Color(0.85, 0.8, 0.7), "seed": 7, "skin": Color(0.9, 0.7, 0.58)})
+	g3.equip_kit("gallus")
+	list.append(g3)
+	var vict = F.person({"bare": true, "tunic": Color(0.9, 0.88, 0.8), "seed": 8, "laurel": true})
+	vict.equip_limus()
+	vict.equip_mallet()
+	list.append(vict)
+	var gen = F.person({"tunic": Color(0.5, 0.1, 0.5), "toga": true, "picta": true, "laurel": true, "seed": 9, "border": Color(0.9, 0.72, 0.2)})
+	gen.paint_face(Color(0.78, 0.3, 0.24))
+	gen.equip_branch()
+	list.append(gen)
+	for i in list.size():
+		var f: Node3D = list[i]
+		f.position = Vector3(-8.0 + i * 1.6, 0, 0)
+		root.add_child(f)
+		f.walk(phase + i, 1.0 if i != 4 else 0.0)
+		if i >= 4 and i <= 6:
+			f.pose_arms(-0.5, -0.5)
+			if f.shield_node != null:
+				f.hand_to(1, f.shield_node.position + Vector3(0, -0.05, -0.05))
+	await process_frame
+	await process_frame
+	var cs := str(_args.get("cam", "0,1.4,6,0,0.9,0")).split(",")
+	var from := Vector3(float(cs[0]), float(cs[1]), float(cs[2]))
+	cam.transform = Transform3D(Basis.looking_at(Vector3(float(cs[3]), float(cs[4]), float(cs[5])) - from, Vector3.UP), from)
+	for i in 4:
+		await process_frame
+	var path := str(_args.get("screenshot", "/tmp/claude-0/u6_fig.png"))
+	get_root().get_viewport().get_texture().get_image().save_png(path)
+	print("PREVIEW saved ", path)
+	quit()

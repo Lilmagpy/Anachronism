@@ -59,21 +59,21 @@ func _ready() -> void:
 			pairs[k]["missio"] = m
 	duration = LEAD_IN + pairs.size() * BOUT + 2.0
 	editor_pos = params.get("editor_pos", Vector3(0, 1.3, rz + 1.8))
+	var tones := [Color(0.86, 0.66, 0.52), Color(0.78, 0.58, 0.44), Color(0.9, 0.72, 0.58), Color(0.7, 0.5, 0.38)]
+	var hairs := [Color(0.15, 0.1, 0.08), Color(0.3, 0.2, 0.12), Color(0.12, 0.1, 0.1), Color(0.45, 0.32, 0.18)]
 	for k in pairs.size():
 		var row: Array = []
 		for side in 2:
 			var key: String = pairs[k]["a" if side == 0 else "b"]
-			var kit: Dictionary = ARMS[key]
-			var f = F.make(Color(0.72, 0.56, 0.42) if side == 0 else Color(0.66, 0.5, 0.38), false, Color.WHITE, 1.0)
-			f.equip_helmet(kit["helm"], kit["crest"])
-			var sh: Node3D = f.equip_shield(kit["shield"], kit["col"])
-			f.equip_sword(kit["sword"])
+			var f = F.person({"bare": true, "tunic": Color(0.9, 0.86, 0.76), "belt": Color(0.45, 0.3, 0.18),
+				"skin": tones[(k * 2 + side) % tones.size()], "hair": hairs[(k + side * 2) % hairs.size()], "seed": k * 2 + side + 1})
+			var sh: Node3D = f.equip_kit(key)
 			add_child(f)
 			f.visible = false
 			row.append(f)
 			row.append(sh)
 		_fighters.append(row)
-	_editor = F.make(Color(0.5, 0.15, 0.4), true, Color(0.55, 0.1, 0.35), 1.05)
+	_editor = F.person({"tunic": Color(0.9, 0.86, 0.78), "toga": true, "border": Color(0.52, 0.1, 0.32), "scale": 1.04, "seed": 40, "hair": Color(0.3, 0.3, 0.3)})
 	_editor.position = editor_pos
 	F.face(_editor, Vector3(0, 0, -1))
 	add_child(_editor)
@@ -162,16 +162,58 @@ func _pose_bout(k: int, tb: float) -> float:
 	F.face(fa, pos_b - pos_a)
 	F.face(fb, pos_a - pos_b)
 	if tb < 4.0:
-		fa.walk(tb * 6.0, 1.0)
-		fb.walk(tb * 6.0 + 1.0, 1.0)
-		fa.pose_arms(-0.5, -0.9)
-		fb.pose_arms(-0.5, -0.9)
-		sa.position = Vector3(-0.22, 0.2, 0.3)
-		sb.position = Vector3(-0.22, 0.2, 0.3)
+		fa.walk(tb * 5.0, 0.9)
+		fb.walk(tb * 5.0 + 1.0, 0.9)
+		for pair in [[fa, sa], [fb, sb]]:
+			_arms_ready(pair[0], pair[1], 0.0)
+			_sword_arm(pair[0], -1.0)
 		roar = 0.2 + 0.15 * smoothstep(1.0, 4.0, tb)
 	if tb >= 20.5:
 		roar = _pose_end(pr, loser, fa, fb, sa, sb, tb, pos_a, pos_b)
 	return roar
+
+
+const GUARD := Vector3(0.17, 0.2, 0.25)
+
+
+## The shield on its guard (g 0 low .. 1 raised to parry) and the left hand behind it.
+func _arms_ready(f: Node3D, sh: Node3D, g: float) -> void:
+	sh.position = GUARD + Vector3(-0.07 * g, 0.13 * g, 0.1 * g)
+	sh.rotation = Vector3(-0.15 * g, -0.25 * g, 0.0)
+	f.hand_to(1, sh.position + Vector3(-0.0, -0.13, -0.07))
+
+
+## The sword arm through a thrust, t 0..1: wind-up (eased), a fast strike, a recovery.
+## t < 0 holds the guard.
+func _sword_arm(f: Node3D, t: float) -> void:
+	var pitch := -0.9
+	var elbow := 1.25
+	if t >= 0.0:
+		var wind := smoothstep(0.0, 0.3, t)
+		var strike := 1.0 - pow(1.0 - clampf((t - 0.3) / 0.14, 0.0, 1.0), 3.0)
+		var back := smoothstep(0.58, 1.0, t)
+		var w := wind * (1.0 - strike)
+		var st := strike * (1.0 - back)
+		pitch = -0.9 + 0.75 * w - 0.7 * st
+		elbow = 1.25 + 0.45 * w - 1.05 * st
+		f.torso.rotation.x += 0.22 * st
+		f.torso.rotation.y += 0.5 * st - 0.2 * w
+	f.arms[0].rotation = Vector3(pitch, 0.0, -0.12)
+	f.elbows[0].rotation = Vector3(-elbow, 0, 0)
+
+
+## A fighting crouch, the shield foot forward and the hips turned side-on.
+func _stance(f: Node3D, sway: float) -> void:
+	f.pelvis.position.y = 0.86
+	f.legs[1].rotation = Vector3(-0.42, 0, 0.1)
+	f.knees[1].rotation = Vector3(0.55, 0, 0)
+	f.ankles[1].rotation = Vector3(-0.12, 0, 0)
+	f.legs[0].rotation = Vector3(0.32 + 0.05 * sway, 0, -0.12)
+	f.knees[0].rotation = Vector3(0.45, 0, 0)
+	f.ankles[0].rotation = Vector3(0.12, 0, 0)
+	f.pelvis.rotation = Vector3(0, -0.5, 0)
+	f.torso.rotation = Vector3(0.1, -0.2, 0)
+	f.head.rotation = Vector3(0, 0.55, 0)
 
 
 func _pose_fight(fa: Node3D, fb: Node3D, sa: Node3D, sb: Node3D, atk: int, ph: float, fight: bool) -> void:
@@ -181,21 +223,17 @@ func _pose_fight(fa: Node3D, fb: Node3D, sa: Node3D, sb: Node3D, atk: int, ph: f
 		var f: Node3D = figs[who]
 		var sh: Node3D = shs[who]
 		f.walk(0.0, 0.0)
-		f.kneel(0.0)
 		f.rotation.x = 0.0
-		var attacking: bool = who == atk
-		if attacking:
-			var th := sin(clampf((ph - 0.15) * 2.4, 0.0, 1.0) * PI)    # thrust out and back
-			f.pose_arms(-0.8 - 0.75 * th, -1.0)
-			sh.position = Vector3(-0.22, 0.2, 0.3)
-			sh.rotation = Vector3.ZERO
-			f.torso.rotation.x = -0.18 * th
+		_stance(f, sin(ph * TAU + who))
+		if who == atk:
+			_arms_ready(f, sh, 0.0)
+			_sword_arm(f, ph)
 		else:
-			var g := sin(clampf((ph - 0.1) * 2.2, 0.0, 1.0) * PI)   # raises the shield to parry
-			f.pose_arms(-0.7, -1.0)
-			sh.position = Vector3(-0.1 + 0.25 * g, 0.2 + 0.18 * g, 0.34 + 0.1 * g)
-			sh.rotation = Vector3(-0.25 * g, 0.5 * g, 0.0)
-			f.torso.rotation.x = 0.1 * g
+			# the defender raises his shield to meet the thrust and rocks back at the hit
+			var g := smoothstep(0.15, 0.4, ph) * (1.0 - smoothstep(0.62, 0.95, ph))
+			_arms_ready(f, sh, g)
+			_sword_arm(f, -1.0)
+			f.torso.rotation.x += 0.1 * g
 
 
 func _pose_end(pr: Dictionary, loser: int, fa: Node3D, fb: Node3D, sa: Node3D, sb: Node3D, tb: float, pos_a: Vector3, pos_b: Vector3) -> float:
@@ -211,47 +249,76 @@ func _pose_end(pr: Dictionary, loser: int, fa: Node3D, fb: Node3D, sa: Node3D, s
 	var roar := 0.5
 	# 20.5-23: the loser is hit and goes down on a knee
 	var down := smoothstep(20.5, 22.5, tb)
-	lf.kneel(down)
-	lf.torso.rotation.x = 0.0
-	lsh.position = Vector3(-0.22, 0.2, 0.3).lerp(Vector3(-0.5, -0.4, 0.4), down)
-	wf.kneel(0.0)
-	wf.pose_arms(-0.8, -1.0)
-	wsh.position = Vector3(-0.22, 0.2, 0.3)
-	wsh.rotation = Vector3.ZERO
+	lf.walk(0.0, 0.0)
+	lf.rotation.x = 0.0
+	lf.kneel(down, false)
+	lf.torso.rotation.x += 0.2 * down
+	# the shield dropped, the sword arm limp
+	lsh.position = GUARD.lerp(Vector3(0.28, -0.42, 0.42), down)
+	lsh.rotation = Vector3(-1.2 * down, 0, 0)
+	lf.arms[0].rotation = Vector3(0.1, 0, -0.15)
+	lf.elbows[0].rotation = Vector3(-0.3, 0, 0)
+	lf.hand_to(1, lsh.position + Vector3(0, 0.05, -0.1))
+	wf.walk(0.0, 0.0)
+	wf.rotation.x = 0.0
+	_stance(wf, 0.0)
+	_arms_ready(wf, wsh, 0.0)
+	_sword_arm(wf, -1.0)
 	wf.torso.rotation.x = 0.0
-	lf.pose_arms(-0.3, -0.2)
 	if tb >= 23.0 and tb < 29.0:
-		# raises a finger: the left arm up
-		lf.pose_arms(-0.3, -2.8)
+		# raises a finger: the left arm up (the shield stays on the sand)
+		var up := smoothstep(23.0, 24.0, tb)
+		lf.arms[1].rotation = Vector3(lerpf(-0.3, -2.85, up), 0, 0.25 * up)
+		lf.elbows[1].rotation = Vector3(-lerpf(0.4, 0.25, up), 0, 0)
 		roar = 0.85
-	if tb >= 22.5 and tb < 29.0:
-		wf.pose_arms(-0.5, -1.0)
 	# keep the winner a step back from the kneeling man
-	wf.position = ploser + ldir * -1.0 * -1.9
+	wf.position = ploser + ldir * 1.9
 	var pr_missio: bool = bool(pr["missio"])
 	if tb >= 29.0:
 		if pr_missio:
 			# both leave toward the gate; the loser rises, the winner salutes
 			var u := smoothstep(29.0, 34.0, tb)
-			lf.kneel(1.0 - smoothstep(29.0, 30.5, tb))
+			lf.kneel(1.0 - smoothstep(29.0, 30.5, tb), false)
 			lf.position = ploser + Vector3(-signf(ploser.x + 0.001) * 20.0 * u, 0, 0)
 			wf.position = wf.position + Vector3(signf(wf.position.x + 0.001) * 20.0 * u, 0, 0)
 			F.face(lf, Vector3(-signf(ploser.x + 0.001), 0, 0))
 			F.face(wf, Vector3(signf(wf.position.x + 0.001), 0, 0))
-			lf.walk(tb * 5.0, smoothstep(30.0, 31.0, tb))
-			wf.walk(tb * 5.0, smoothstep(30.0, 31.0, tb))
-			wf.pose_arms(-2.8, -1.0)
+			var wk := smoothstep(30.0, 31.0, tb)
+			if wk > 0.01:
+				lf.walk(tb * 5.0, wk)
+				wf.walk(tb * 5.0, wk)
+			wf.arms[0].rotation = Vector3(-2.7, 0, -0.2)
+			wf.elbows[0].rotation = Vector3(-0.35, 0, 0)
 			roar = 0.9 - 0.4 * u
 		else:
 			# the winner strikes; the loser falls back and lies still
 			var hit := smoothstep(29.0, 30.0, tb)
-			wf.pose_arms(-2.0 + 1.6 * hit, -1.0)
-			lf.kneel(1.0)
+			_sword_arm(wf, 0.3 + 0.2 * hit)
+			wf.torso.rotation.x = 0.35 * hit
+			lf.kneel(1.0, false)
 			lf.rotation.x = -1.4 * smoothstep(30.0, 31.5, tb)
-			lf.position.y = 0.45 * smoothstep(30.0, 31.5, tb)
-			lf.pose_arms(0.2, 0.2)
+			lf.position.y = 0.2 * smoothstep(30.0, 31.5, tb)
+			lf.arms[1].rotation = Vector3(0.2, 0, 0.3)
 			roar = 0.6
 	return roar
+
+
+## A close view for the cinematic camera: over the shoulder of one gladiator at the other.
+func cine_view(time: float) -> Transform3D:
+	var tt := minf(time, duration)
+	var bout := int((tt - LEAD_IN) / BOUT) if tt >= LEAD_IN else 0
+	bout = clampi(bout, 0, pairs.size() - 1)
+	var a: Node3D = _fighters[bout][0]
+	var b: Node3D = _fighters[bout][2]
+	var pa := a.position
+	var pb := b.position
+	var dir := (pb - pa)
+	dir.y = 0.0
+	dir = dir.normalized()
+	var side := Vector3(-dir.z, 0, dir.x)
+	var mid := (pa + pb) * 0.5
+	var from := pa - dir * 1.5 + side * 0.65 + Vector3(0, 1.75, 0)
+	return look(from, mid + dir * 0.6 + Vector3(0, 1.15, 0))
 
 
 func view_names() -> PackedStringArray:
