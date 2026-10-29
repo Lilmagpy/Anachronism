@@ -951,6 +951,8 @@ def battle(
         f" {w_civ.adjective} losses {dead_w:,}, {l_civ.adjective} {dead_l:,}."
     )
     sides_told = {"a": adj[0], "d": adj[1], "winner": "a" if won_a else "d"}
+    if rout:
+        sides_told["decisive"] = "1"  # the beaten army broke: a triumph for the victor (U7)
     where = storm or ground_text(state, lines.ground, lines.held)
     events.add(winner, "battle_won", text, place, phases=phases, sides=sides_told, ground=where)
     events.add(loser, "battle_lost", text, place, phases=phases, sides=sides_told, ground=where)

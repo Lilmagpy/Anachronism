@@ -72,8 +72,9 @@ TimelineKind = Literal["vowed", "begun", "completed", "fire", "demolished", "flo
 class CityTimeline(Frozen):
     """One turning point in a monument's life, as data (the dataset's text is not parsed).
 
-    ``vowed`` is only a vow (a sacrifice, no change of status); ``begun`` starts building (or rebuilding after a fire); ``completed`` is a dedication or
-    rebuilding finished (it replaces the dataset's ``built.year`` as the finishing year);
+    ``vowed`` is only a vow (a sacrifice, no change of status); ``begun`` starts building (or
+    rebuilding after a fire); ``completed`` is a dedication or rebuilding finished (it replaces
+    the dataset's ``built.year`` as the finishing year unless it follows a fire or demolition);
     ``fire`` burns it; ``demolished`` ruins it; ``flood`` only floods it (no status change).
     """
 

@@ -5,6 +5,7 @@ from __future__ import annotations
 from anachronism import __version__
 from anachronism.content.loader import Content
 from anachronism.content.schema import (
+    CityTimeline,
     CivDefinition,
     ProvinceGeography,
     RelationStatus,
@@ -128,6 +129,8 @@ def build_state(
         magistracies=dict(sorted(content.magistracies.items())) if scenario.republic else {},
         gentes=dict(sorted(content.gentes.items())) if scenario.republic else {},
         people=dict(sorted(content.people.items())) if scenario.republic else {},
+        monuments=dict(sorted(content.monuments.items())) if scenario.republic else {},
+        city_timeline=_timeline(content) if scenario.republic else (),
         fasti={fy.year: fy for fy in sorted(content.fasti.values(), key=lambda f: f.year)}
         if scenario.republic
         else {},
@@ -183,6 +186,13 @@ def build_state(
     if scenario.republic:
         start_republic(state, GameRng(state.rng))
     return state
+
+
+def _timeline(content: Content) -> tuple[CityTimeline, ...]:
+    """The city's turning points, in a fixed order (monument, year, kind)."""
+    return tuple(
+        sorted(content.city_timeline.values(), key=lambda t: (t.monument, t.year, t.kind, t.id))
+    )
 
 
 def _rules_for(content: Content, difficulty: str) -> Rules:

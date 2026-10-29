@@ -212,7 +212,9 @@ def _external_files(
         matches = sorted(glob.glob(os.path.normpath(pack_dir / pattern)))
         if not matches:
             issues.append(
-                ContentIssue(f"{pack_dir.name}/{MANIFEST}", "pack.external", f"{pattern!r}: no file")
+                ContentIssue(
+                    f"{pack_dir.name}/{MANIFEST}", "pack.external", f"{pattern!r}: no file"
+                )
             )
         for match in matches:
             relative = Path(os.path.relpath(match, root)).as_posix()
@@ -293,7 +295,9 @@ def _parse_file(
     version = raw.get("schema_version")
     if external:  # a dataset file outside the pack: no schema_version, a single list kind
         if list(raw) != ["monuments"]:
-            issues.append(ContentIssue(relative, "", f"expected only 'monuments'; found {list(raw)}"))
+            issues.append(
+                ContentIssue(relative, "", f"expected only 'monuments'; found {list(raw)}")
+            )
             return None
     elif version != CURRENT_SCHEMA_VERSION:
         issues.append(

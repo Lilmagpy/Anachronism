@@ -25,6 +25,7 @@ from anachronism.content.schema import (
     Order,
     RepublicRules,
 )
+from anachronism.engine import city as city_module
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import BP
 from anachronism.engine.republic_state import (
@@ -267,6 +268,7 @@ def start_republic(state: GameState, rng: GameRng) -> None:
             _spawn_historical(state, rep, hp, state.year)
     events = EventLog(turn=state.turn, year=state.year)
     _hold_year(state, rep, rng, events, state.year)
+    city_module.start_city(state, events.turn)
     state.events.extend(events.items)
 
 
@@ -277,6 +279,7 @@ def run_year(state: GameState, rng: GameRng, events: EventLog, year: int) -> Non
     _life(state, rep, rng, events, year)
     _fade(state, rep, year)
     _hold_year(state, rep, rng, events, year)
+    city_module.run_year(state, events, year)
 
 
 # ---------------------------------------------------------------- the year
@@ -885,8 +888,12 @@ def family_leaning(state: GameState, family_id: str, issue: Issue) -> int:
     return stance + rep.families[family_id].favour.get(issue.value, 0)
 
 
-def senate_vote(state: GameState, issue: Issue) -> Vote:
-    """The Senate's will: a vote weighted by the families' standing."""
+def senate_vote(state: GameState, issue: Issue, *, record: bool = False) -> Vote:
+    """The Senate's will: a vote weighted by the families' standing.
+
+    With ``record`` the vote is a real one: it becomes a ``senate`` event in the city (U7).
+    Looking at the Senate's mood (a view, a forecast) leaves ``record`` off.
+    """
     rep = _rep(state)
     yes = no = total = 0
     leanings: dict[str, int] = {}
@@ -901,6 +908,8 @@ def senate_vote(state: GameState, issue: Issue) -> Vote:
             no += weight
     yes_bp = yes * BP // total if total else 0
     no_bp = no * BP // total if total else 0
+    if record:
+        city_module.record_vote(state, issue.value, yes_bp, no_bp)
     return Vote(issue, yes_bp, no_bp, yes > no, leanings)
 
 

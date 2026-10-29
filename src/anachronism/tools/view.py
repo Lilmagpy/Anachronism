@@ -57,6 +57,7 @@ from anachronism.engine.tech import feasibility, is_adopted
 from anachronism.engine.timeflow import per_turn, turns_for
 from anachronism.engine.victory import progress
 from anachronism.engine.war import defence_bp, fronts
+from anachronism.tools.city_view import city_view
 from anachronism.tools.console import describe_effect
 from anachronism.tools.republic_view import republic_view
 
@@ -159,6 +160,7 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
             for other_id, other in sorted(state.civs.items())
         ],
         "republic": republic_view(state),
+        "city": city_view(state),
         "wars": fronts(state),
         "armies": _armies(state),
         "tactics": _tactics(state),

@@ -2570,3 +2570,13 @@ matters. Engine only: the client screens for it come in a later step.
   they were (Livy *Per.* 16). **Owner to decide** whether the campaign extends into the Empire.
 - Agents work in parallel on separate files (terrain, streets and fill, monuments, cameras,
   interiors, spectacles, the Empire dataset, the engine's city state).
+- **U7 (engine's city state), DELEGATED:** the pack reads the dataset in place through a
+  `pack.yaml` `external:` glob (no copy; the lint reports a pattern with no file); the
+  `monuments` schema keeps unknown fields. Turning points (vow, begun, completed, fire,
+  demolished, flood) are a data file in the rome pack (`city_timeline.yaml`), not parsed from the
+  dataset's free-text `events`; only years a source gives are entered (the fires of 213, 210,
+  241 and 12 BC lack a recorded rebuilding date and are left out). A burnt monument stays `burnt`
+  while it is rebuilt (`years_left` says how long). The games calendar sits in
+  `republic_rules.city`; passages not re-read are marked unverified there and in the floods.
+  `senate_vote` only records a `senate` event when called with `record=True`, so views never
+  change the state. A battle is `decisive` (`sides["decisive"]`) when the beaten army broke.
