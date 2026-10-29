@@ -74,7 +74,6 @@ monuments:
   built: {year: -28, certainty: certain, by: "Augustus; vowed 36 BC after Naulochus, dedicated 9 October 28 BC (Res Gestae 19; Suet. Aug. 29; Dio 53.1.3; Vell. 2.81)"}
   events:
   - {year: -28, what: "dedication with library (Greek and Latin) in the adjoining porticus with statues of the Danaids (Suet. Aug. 29; Prop. 2.31)"}
-  - {year: 3, what: "burned? A fire on the Palatine in AD 3 destroyed the house of Augustus' neighbour; Augustus's own house burned 3 AD (Dio 55.12.4-5) - not the temple; the Sibylline books were later placed in the base of the statue (Suet. Aug. 31)"}
   form: "temple of Luna marble with quadriga on the roof, doors of ivory; porticus with 50 columns of African marble (Prop. 2.31)"
   footprint_m: null
   bearing_deg: null
@@ -83,7 +82,7 @@ monuments:
   sources: ["Res Gestae 19", "Suet. Aug. 29", "Dio 53.1.3", "Prop. 2.31", "Platner-Ashby s.v. Apollo Palatinus, Aedes"]
   verified: false
   pleiades: null
-  notes: "Site contested (Carettoni's 1960s excavation near the Casa di Livia vs. the podium NE of the Domus Augustana); the 3 AD fire entry is doubtful - check Dio 55.12 before use."
+  notes: "Site contested (Carettoni's 1960s excavation near the Casa di Livia vs. other candidates)."
 - id: mausoleum_augusti_empire
   republican_id: mausoleum_augusti
   latin: Mausoleum Augusti
@@ -139,16 +138,15 @@ monuments:
   location: Campus Martius, around Piazza di Montecitorio and Via del Campo Marzio; the obelisk now stands in Piazza di Montecitorio
   built: {year: -10, certainty: probable, by: "Augustus; obelisk of Psammetichus II brought from Heliopolis and set up in the Campus Martius as a gnomon, 10 BC (Pliny NH 36.71-73; Res Gestae 'consecrated to the Sun' after Egypt's annexation; Gellius 5.? doubtful)"}
   events:
-  - {year: 9, what: "Pliny notes (NH 36.72-73) that the shadow no longer fell correctly 'for thirty years' - already faulty in Pliny's time; Domitian restored it (Hierosolymitan inscription?) - unverified"}
   form: "obelisk about 21.8 m high on a bronze-lettered meridian, with a pavement of bronze lines and Greek letters"
   footprint_m: {length: 160, width: 75}
   bearing_deg: null
   height_m: 21.8
   model: obelisk
-  sources: ["Pliny NH 36.71-73", "Res Gestae 12? # unverified", "Platner-Ashby s.v. Horologium Augusti"]
+  sources: ["Pliny NH 36.71-73", "Platner-Ashby s.v. Horologium Augusti"]
   verified: false
   pleiades: null
-  notes: "Whether the meridian really worked as a sundial (Buchner 1982) vs. a monument alone is contested; the 160 x 75 m size and the Ara Pacis alignment are Buchner's reconstruction - unverified. Event line on Domitian flagged unverified."
+  notes: "Whether the meridian really worked as a sundial (Buchner 1982) vs. a monument alone is contested; the 160 x 75 m size and the Ara Pacis alignment are Buchner's reconstruction - unverified. Pliny NH 36.72-73 also remarks that the gnomon had ceased to mark the hours accurately in his own day; unverified detail."
 - id: pantheon_agrippae_empire
   republican_id: pantheon_agrippae
   latin: Pantheum Agrippae
@@ -162,7 +160,7 @@ monuments:
   built: {year: -25, certainty: probable, by: "M. Agrippa as consul 27 BC, dedicated c. 25 BC (Dio 53.27.2; Pliny NH 36.38; Pliny 34.13 on caryatids)"}
   events:
   - {year: 80, what: "burned in the fire of AD 80 (Dio 66.24.2)"}
-  - {year: 110, what: "struck by lightning and burned under Trajan (HA Hadr. 19? and brick stamps) - rebuilt by Domitian after AD 80 and again after AD 110, then Hadrian (see pantheon_hadriani)"}
+  - {year: 110, what: "later tradition (Jerome/Orosius, not read) reports a lightning fire under Trajan; rebuilding is then attributed to Domitian after 80 and to Hadrian (see pantheon_hadriani) - unverified"}
   form: "rectangular temple facing south (excavation evidence) with a pronaos, ~ 43 x 20 m; Caryatids (Pliny 36.38) by Diogenes of Athens in the interior"
   footprint_m: {length: 43, width: 19.5}
   bearing_deg: 180
@@ -271,8 +269,7 @@ monuments:
   location: Campus Martius, near the Circus Flaminius; Crypta Balbi on Via delle Botteghe Oscure marks the portico
   built: {year: -13, certainty: certain, by: "L. Cornelius Balbus, dedicated 13 BC (Suet. Aug. 29; Dio 54.25.2; Pliny NH 36.60)"}
   events:
-  - {year: 19, what: "dedication-year list of 'ludi' there; Tacitus? no entry - see notes"}
-  - {year: 80, what: "burned in AD 80 and restored by Titus (Suet. Titus 8? Dio 66.24.2) - unverified"}
+  - {year: 80, what: "burned in AD 80 and restored by Titus (Suet. Dio 66.24.2) - unverified"}
   form: "theatre with a Crypta (covered portico) behind it; capacity 6,000 or 11,600 in the late Regionary lists"
   footprint_m: {radius: 45}
   bearing_deg: null
@@ -281,4 +278,259 @@ monuments:
   sources: ["Suet. Aug. 29", "Dio 54.25.2", "Pliny NH 36.60", "Platner-Ashby s.v. Theatrum Balbi"]
   verified: false
   pleiades: null
-  notes: "Radius is a guess from the cavea curve in Via delle Botteghe Oscure; the 19 and 80 event lines are placeholders and unverified."
+  notes: "Radius is a guess from the cavea curve in Via delle Botteghe Oscure; the AD 80 restoration line is unverified."
+- id: porticus_octaviae_empire
+  republican_id: porticus_octaviae
+  latin: Porticus Octaviae
+  english: Portico of Octavia
+  type: portico
+  regio: 9
+  lat: 41.8922
+  lon: 12.4774
+  precision: approx
+  location: Between the Theatre of Marcellus and the Circus Flaminius; the propylaeum survives at the church of S. Angelo in Pescheria
+  built: {year: -33, certainty: probable, by: "Augustus rebuilt the Porticus Metelli of 146 BC in the name of his sister Octavia, after 33 BC; Suet. Aug. 29; Dio 49.43.8; Pliny NH 34.31"}
+  events:
+  - {year: 80, what: "burned in AD 80 (Dio 66.24.2); restored later by Septimius Severus (outside range)"}
+  form: "rectangular double portico enclosing the temples of Juno and Jupiter Stator, with a library and the Curia Octaviae"
+  footprint_m: {length: 135, width: 119}
+  bearing_deg: null
+  height_m: null
+  model: portico
+  sources: ["Suet. Aug. 29", "Dio 49.43.8", "Dio 66.24.2", "Pliny NH 34.31", "Platner-Ashby s.v. Porticus Octaviae"]
+  verified: false
+  pleiades: null
+  notes: "Size from memory of the Forma Urbis plan (~ 119 x 132 m), unverified."
+- id: aedes_divi_iulii_empire
+  republican_id: aedes_divi_iulii
+  latin: Aedes Divi Iulii
+  english: Temple of the Deified Julius
+  type: temple
+  regio: 8
+  lat: 41.8923
+  lon: 12.4866
+  precision: exact
+  location: East end of the Forum Romanum, on the site of Caesar's pyre
+  built: {year: -29, certainty: certain, by: "triumvirs/Octavian; dedicated 18 August 29 BC (Dio 47.18.4, 51.22.1)"}
+  events:
+  - {year: -29, what: "Rostra Iulia at its front, decorated with the rostra of Actium (Dio 51.19.2)"}
+  form: "Ionic hexastyle temple on a high podium with a rostra platform in front"
+  footprint_m: {length: 30, width: 18}
+  bearing_deg: 290
+  height_m: 17
+  model: temple_hexastyle
+  sources: ["Dio 47.18.4", "Dio 51.22.1", "Dio 51.19.2", "Platner-Ashby s.v. Divus Iulius, Aedes"]
+  verified: false
+  pleiades: null
+  notes: "Dimensions and bearing (front faces west into the Forum) from memory; unverified."
+- id: curia_iulia_empire
+  republican_id: curia_iulia
+  latin: Curia Iulia
+  english: Senate House (Curia Julia)
+  type: curia
+  regio: 8
+  lat: 41.8927
+  lon: 12.4852
+  precision: exact
+  location: North side of the Forum Romanum, next to the Comitium
+  built: {year: -29, certainty: certain, by: "begun by Caesar; completed and dedicated by Octavian 29 BC (Dio 51.22.1; Res Gestae 19)"}
+  events:
+  - {year: 64, what: "burned in the fire of AD 64 (Tac. Ann. 15.38-44 for the general fire) - this specific loss is not read"}
+  - {year: 80, what: "burned in AD 80 and rebuilt by Domitian (Dio 66.24.2; Suet. Dom. 5 for the Domitianic rebuildings)"}
+  form: "rectangular hall with three tiers of senators' benches along each side; Altar and Statue of Victory inside (Dio 51.22.1)"
+  footprint_m: {length: 27, width: 18}
+  bearing_deg: 30
+  height_m: 21
+  model: curia
+  sources: ["Dio 51.22.1", "Res Gestae 19", "Dio 66.24.2", "Platner-Ashby s.v. Curia Iulia"]
+  verified: false
+  pleiades: null
+  notes: "The standing building is Diocletian's; the Augustan plan is inferred from it; 21 x 27 m is the standing size. AD 64 line unverified."
+- id: basilica_iulia_empire
+  republican_id: basilica_iulia
+  latin: Basilica Iulia
+  english: Basilica Julia
+  type: basilica
+  regio: 8
+  lat: 41.8921
+  lon: 12.4846
+  precision: exact
+  location: South side of the Forum Romanum between the Temples of Saturn and Castor
+  built: {year: -46, certainty: certain, by: "begun by Caesar (dedicated unfinished 46 BC), completed by Augustus after a fire, dedicated in the names of Gaius and Lucius (Suet. Aug. 29; Res Gestae 20)"}
+  events:
+  - {year: 12, what: "second rebuilding after a fire; rededicated (Res Gestae 20 and Suet. Aug. 29 speak of Augustus completing it after fire; the specific second-dedication year is not read) - unverified"}
+  form: "basilica with a central hall and double aisles, centumviral court seat"
+  footprint_m: {length: 101, width: 49}
+  bearing_deg: 100
+  height_m: 24
+  model: basilica
+  sources: ["Suet. Aug. 29", "Res Gestae 20", "Platner-Ashby s.v. Basilica Iulia"]
+  verified: false
+  pleiades: null
+  notes: "101 x 49 m is the modern-excavation figure from memory. Dedication year(s) after the fire unverified."
+- id: aqua_iulia_empire
+  republican_id: aqua_iulia
+  latin: Aqua Iulia
+  english: Aqua Julia
+  type: aqueduct
+  regio: 0
+  lat: 41.8883
+  lon: 12.5175
+  precision: rough
+  location: Springs near the 6th mile of the Via Latina; runs on the Marcia/Tepula channel to Rome
+  built: {year: -33, certainty: certain, by: "Agrippa as aedile 33 BC, repairing the Marcia and Tepula and adding the new Julia (Frontin. Aq. 9; Dio 49.42.1)"}
+  form: "channel above the Tepula in the same arches as the Marcia and Tepula"
+  footprint_m: null
+  bearing_deg: null
+  height_m: null
+  model: aqueduct
+  route: [[41.8330, 12.5900], [41.8650, 12.5450], [41.8883, 12.5175]]
+  sources: ["Frontin. Aq. 9", "Dio 49.42.1", "Platner-Ashby s.v. Aqua Iulia"]
+  verified: false
+  pleiades: null
+  notes: "Route is a straight-line schematic, rough. Duplicates the Republican-file entry for the Julia because the Republic file covers it to 27 BC."
+- id: aqua_virgo_empire
+  republican_id: aqua_virgo
+  latin: Aqua Virgo
+  english: Aqua Virgo
+  type: aqueduct
+  regio: 0
+  lat: 41.9030
+  lon: 12.4860
+  precision: approx
+  location: Springs at the 8th mile of the Via Collatina; the channel enters Rome beneath the Pincian, then flows in Campus Martius
+  built: {year: -19, certainty: certain, by: "Agrippa 19 BC (Frontin. Aq. 10; Dio 54.11.7)"}
+  events:
+  - {year: 44, what: "restored by Claudius (Frontin. Aq. 10; Dio 60.?) - unverified"}
+  form: "about 14,105 paces long, mostly underground, only about 1,200 paces on arches (Frontin. Aq. 10)"
+  route: [[41.8960, 12.6250], [41.9220, 12.5300], [41.9080, 12.4900], [41.8995, 12.4790]]
+  footprint_m: null
+  bearing_deg: null
+  height_m: null
+  model: aqueduct
+  sources: ["Frontin. Aq. 10", "Dio 54.11.7", "Platner-Ashby s.v. Aqua Virgo"]
+  verified: false
+  pleiades: null
+  notes: "Route schematic and rough; the Claudian restoration (Frontinus puts Claudius' repairs at Aq. 10) is read from memory only."
+- id: aqua_alsietina
+  latin: Aqua Alsietina (Augusta)
+  english: Aqua Alsietina
+  type: aqueduct
+  regio: 14
+  lat: 41.8867
+  lon: 12.4650
+  precision: rough
+  location: From Lake Alsietinus (Martignano), ending in Trastevere on the Janiculum
+  built: {year: -2, certainty: probable, by: "Augustus, to feed his Naumachia in Trastevere (Frontin. Aq. 11)"}
+  form: "about 22,172 paces long, poor water, not for drinking (Frontin. Aq. 11)"
+  route: [[42.1120, 12.2570], [41.9700, 12.3600], [41.8867, 12.4650]]
+  footprint_m: null
+  bearing_deg: null
+  height_m: null
+  model: aqueduct
+  sources: ["Frontin. Aq. 11", "Platner-Ashby s.v. Aqua Alsietina"]
+  verified: false
+  pleiades: null
+  notes: "Date 2 BC from the naumachia, not read."
+- id: domus_tiberiana
+  latin: Domus Tiberiana
+  english: Palace of Tiberius
+  type: palace
+  regio: 10
+  lat: 41.8907
+  lon: 12.4868
+  precision: approx
+  location: North-west corner of the Palatine, above the Forum and the Clivus Victoriae
+  built: {year: 14, certainty: probable, by: "Tiberius (Suet. Tib. 15; Tac. Ann. 4.15? # unverified), enlarged by Caligula and Nero (Suet. Cal. 22 on the bridge to the Capitol)"}
+  events:
+  - {year: 64, what: "burned in the fire of AD 64 (Tac. Ann. 15.39 for the Palatine) - unverified for this palace"}
+  form: "large palace complex of concrete vaults round a central court; the greater part later covered by the Farnese gardens"
+  footprint_m: {length: 130, width: 110}
+  bearing_deg: null
+  height_m: null
+  model: palace
+  sources: ["Suet. Tib. 15", "Suet. Cal. 22", "Platner-Ashby s.v. Domus Tiberiana"]
+  verified: false
+  pleiades: null
+  notes: "Size from memory; the date of the earliest phase is debated (it may be Tiberian only in name; the visible plan is largely Flavian-Hadrianic)."
+- id: castra_praetoria
+  latin: Castra Praetoria
+  english: Praetorian Camp
+  type: camp
+  regio: 6
+  lat: 41.9066
+  lon: 12.5065
+  precision: exact
+  location: North-east of the city on the Viminal/Quirinal edge, beside the Servian wall; the brick walls survive
+  built: {year: 23, certainty: certain, by: "Tiberius at the urging of Sejanus (Tac. Ann. 4.2; Suet. Tib. 37; Dio 57.19.6)"}
+  form: "rectangular fort with brick walls and corner towers; the later wall height raised under Aurelian"
+  footprint_m: {length: 440, width: 380}
+  bearing_deg: 0
+  height_m: 5
+  model: camp
+  sources: ["Tac. Ann. 4.2", "Suet. Tib. 37", "Dio 57.19.6", "Platner-Ashby s.v. Castra Praetoria"]
+  verified: false
+  pleiades: null
+  notes: "Size from memory (about 440 x 380 m); the walls are roughly aligned with the cardinal directions, set 0."
+- id: aedes_divi_augusti
+  latin: Templum Divi Augusti
+  english: Temple of the Deified Augustus
+  type: temple
+  regio: 8
+  lat: 41.8910
+  lon: 12.4858
+  precision: rough
+  location: Possibly near the Forum, between the Vicus Tuscus and the Palatine; the site (S. Maria Antiqua area?) is not agreed
+  built: {year: 37, certainty: probable, by: "begun by Tiberius, completed and dedicated by Caligula (Suet. Cal. 21; Tac. Ann. 6.45; Dio 59.7.1)"}
+  events:
+  - {year: 80, what: "burned in AD 80 and rebuilt by Domitian (Dio 66.24.2; Suet. Dom. 5) - unverified for this temple"}
+  form: "temple; Caligula also built a bridge between this temple and the Capitol (Suet. Cal. 22)"
+  footprint_m: null
+  bearing_deg: null
+  height_m: null
+  model: temple_hexastyle
+  sources: ["Suet. Cal. 21", "Tac. Ann. 6.45", "Dio 59.7.1", "Platner-Ashby s.v. Augustus, Divus, Templum"]
+  verified: false
+  pleiades: null
+  notes: "Site very doubtful; position is a placeholder."
+- id: amphitheatrum_tauri_empire
+  republican_id: amphitheatrum_tauri
+  latin: Amphitheatrum Statilii Tauri
+  english: Amphitheatre of Statilius Taurus
+  type: amphitheatre
+  regio: 9
+  lat: 41.8955
+  lon: 12.4790
+  precision: rough
+  location: Campus Martius, exact site lost
+  built: {year: -29, certainty: certain, by: "T. Statilius Taurus, with Augustus' backing (Dio 51.23.1; Suet. Aug. 29)"}
+  events:
+  - {year: 64, what: "destroyed in the fire of AD 64 (Dio 62.18.2) - unverified"}
+  form: "first stone amphitheatre in Rome, partly timber"
+  footprint_m: null
+  bearing_deg: null
+  height_m: null
+  model: amphitheatre
+  sources: ["Dio 51.23.1", "Suet. Aug. 29", "Platner-Ashby s.v. Amphitheatrum Tauri"]
+  verified: false
+  pleiades: null
+  notes: "Position placeholder; AD 64 entry unverified."
+- id: naumachia_augusti
+  latin: Naumachia Augusti
+  english: Naumachia of Augustus
+  type: basin
+  regio: 14
+  lat: 41.8870
+  lon: 12.4660
+  precision: rough
+  location: Trastevere, across the Tiber, beside the grove of the Caesars (Nemus Caesarum)
+  built: {year: -2, certainty: probable, by: "Augustus, fed by the Aqua Alsietina; sea-fight of Athenians vs Persians staged there (Res Gestae 23; Dio 55.10.7)"}
+  form: "artificial lake about 1,800 x 1,200 Roman feet (Res Gestae 23)"
+  footprint_m: {length: 533, width: 355}
+  bearing_deg: null
+  height_m: null
+  model: basin
+  sources: ["Res Gestae 23", "Dio 55.10.7", "Platner-Ashby s.v. Naumachia Augusti"]
+  verified: false
+  pleiades: null
+  notes: "Size converted (1,800 x 1,200 feet at 0.296 m); location rough."
