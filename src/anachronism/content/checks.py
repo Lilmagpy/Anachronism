@@ -460,7 +460,7 @@ def _battle_issues(registry: Registry) -> list[ContentIssue]:
         if registry.is_unknown("terrain", battle.terrain):
             issues.append(ContentIssue(where, label, f"unknown terrain {battle.terrain!r}"))
         for side in (battle.side_a, battle.side_b):
-            for unit in side.troops:
+            for unit in (*side.units, *side.troops):
                 if registry.is_unknown("units", unit):
                     issues.append(ContentIssue(where, label, f"unknown unit {unit!r}"))
             if side.formation and registry.is_unknown("formations", side.formation):

@@ -21,8 +21,11 @@ class BattleSide(Frozen):
     civ: str = ""
     """Who they were, in words (``rome``, ``carthage``, ``cisalpine gauls``)."""
     commanders: tuple[str, ...] = Field(min_length=1)
+    units: tuple[Identifier, ...] = ()
+    """Kinds of soldier present (unit ids), whether or not a source gives their numbers."""
     troops: dict[Identifier, int] = Field(default_factory=dict)
-    """Men by unit id (see units.yaml), as the sources give them, rounded; may be partial."""
+    """Men by unit id, only where an ancient source gives the number (rounded; may be partial).
+    Elephant units count animals, not men."""
     total_men: int = Field(default=0, ge=0)
     """The source's total for the side (0 if no source gives one)."""
     formation: Identifier | None = None
