@@ -7,6 +7,8 @@ begun in range but finished slightly later are kept, flagged in their `built` te
 - `monuments.yaml`: top-level key `monuments`, a list of structures.
 - `population.yaml`: census figures, grain dole, city-population estimates, built-up area.
 - `topography.yaml`: hills, valleys, Tiber, Campus Martius.
+- `streets.yaml`: 26 streets and roads as `[lat, lon]` polylines with width, `exists_from`, `paved_from` (Livy 41.27.5: city streets paved with silex from 174 BC), precision and sources.
+- `regions.yaml`: the 14 Augustan regiones and 4 Servian regions (rough polygons, Platner-Ashby s.v. Regiones) and the `districts` (circles with building-type mix per era) that drive the 3D fill.
 
 ## Monument fields
 | field | meaning |
