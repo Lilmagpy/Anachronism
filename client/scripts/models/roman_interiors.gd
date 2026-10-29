@@ -90,6 +90,13 @@ static func build(kind: String, size: Vector2, opts := {}) -> Dictionary:
 	var year: int = int(opts.get("year", -100))
 	var variant: String = str(opts.get("variant", ""))
 	var sz := Vector2(maxf(size.x, size.y), minf(size.x, size.y)) if kind != "circus" else size
+	var r := _build_kind(kind, sz, year, variant)
+	if not r.is_empty():
+		r["open_sky"] = kind in ["circus", "arena", "theatre"]   # the scene should keep its sky for these
+	return r
+
+
+static func _build_kind(kind: String, sz: Vector2, year: int, variant: String) -> Dictionary:
 	match kind:
 		"temple":
 			return _temple(sz, year, variant)

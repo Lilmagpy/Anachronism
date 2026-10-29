@@ -82,6 +82,10 @@ class Holder extends Node3D:
 		var a: Dictionary = result.get("anchors", {})
 		return xf * (a[anchor_name] as Vector3) if a.has(anchor_name) else xf.origin
 
+	## True for interiors under the open sky (circus, arena, theatre): the scene may keep its sky.
+	func open_sky() -> bool:
+		return bool(result.get("open_sky", false))
+
 	func set_cutaway(on: bool) -> void:
 		if has_node("Cover"):
 			(get_node("Cover") as Node3D).visible = not on
