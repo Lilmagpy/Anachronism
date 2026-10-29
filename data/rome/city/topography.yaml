@@ -150,12 +150,14 @@ terrain_model:
     note: "460 m long, 180 m wide on average, NE-SW; 'surrounded by steep cliffs on all sides except the south-east' (so a short foot, the Forum side softened by the valley); saddle (Inter Duos Lucos) at about 37 m, present summits 38-39 m above the Tiber (about 44-45 a.s.l.); Tarpeian cliff at the SW corner"
     sources: ["Platner-Ashby s.v. Capitolinus Mons (read on LacusCurtius)", "Platner-Ashby s.v. Tarpeium Saxum"]
   - id: capitol_quirinal
+    soft: true   # rounded flanks (a long slope, no cliff)
     pts: [[41.8953,12.4842,38],[41.8985,12.4870,45],[41.9030,12.4895,61],[41.9065,12.4935,60],[41.9085,12.5000,55]]
     core: 80
     outer: 190
     note: "The Quirinal is a tongue more than 2 km long ending at the Porta Collina; a fairly deep depression joined it to the Capitol until Trajan's excavations (the Column of Trajan street pavement lies below it)"
     sources: ["Platner-Ashby s.v. Quirinalis Mons (read on LacusCurtius)"]
   - id: viminalis
+    soft: true   # rounded flanks (a long slope, no cliff)
     pts: [[41.8985,12.4925,45],[41.9005,12.4965,57],[41.9020,12.5040,55]]
     core: 60
     outer: 150
@@ -168,18 +170,21 @@ terrain_model:
     note: "Irregular quadrilateral, highest point 51.20 m a.s.l., about 25 acres; 'almost entirely surrounded by two marshy valleys', joined to the Esquiline (Oppius) only by the narrow ridge of the Velia (here about 30 m, the Arch of Titus ridge)"
     sources: ["Platner-Ashby s.v. Palatinus Mons (read on LacusCurtius)"]
   - id: esquilinus
+    soft: true   # rounded flanks (a long slope, no cliff)
     pts: [[41.8905,12.4950,54],[41.8925,12.4975,58],[41.8932,12.5020,60],[41.8932,12.5100,62]]
     core: 90
     outer: 220
     note: "Oppius and Fagutal spurs on the west, merging into the eastern plateau; shape # unverified"
     sources: ["Varro LL 5.50", "Platner-Ashby s.v. Esquiliae"]
   - id: cispius
+    soft: true   # rounded flanks (a long slope, no cliff)
     pts: [[41.8932,12.5000,60],[41.8975,12.4985,60],[41.9000,12.4995,58]]
     core: 60
     outer: 160
     note: "Northern spur of the Esquiline (S. Maria Maggiore); shape # unverified"
     sources: ["Platner-Ashby s.v. Esquiliae"]
   - id: caelius
+    soft: true   # rounded flanks (a long slope, no cliff)
     pts: [[41.8838,12.4905,48],[41.8855,12.4962,50],[41.8875,12.5050,52],[41.8900,12.5150,55]]
     core: 90
     outer: 190
@@ -192,12 +197,14 @@ terrain_model:
     note: "Two knobs (Aventinus Maior, Minor) with a saddle; steep towards the river and the Circus; shape # unverified"
     sources: ["Platner-Ashby s.v. Aventinus (not fetched)", "Livy 3.50"]
   - id: pincius
+    soft: true   # rounded flanks (a long slope, no cliff)
     pts: [[41.9060,12.4800,45],[41.9100,12.4820,63],[41.9150,12.4880,62]]
     core: 80
     outer: 220
     note: "Collis Hortulorum, outside the Servian wall; shape # unverified"
     sources: ["Platner-Ashby s.v. Horti Lucullani"]
   - id: ianiculum
+    soft: true   # rounded flanks (a long slope, no cliff)
     pts: [[41.8800,12.4620,60],[41.8890,12.4610,82],[41.8985,12.4575,70],[41.9030,12.4530,75],[41.9070,12.4510,60]]
     core: 110
     outer: 300
@@ -205,7 +212,7 @@ terrain_model:
     sources: ["Livy 1.33.6", "Platner-Ashby s.v. Ianiculum"]
   valleys:
   - id: forum_valley
-    pts: [[41.8925,12.4838,10.0],[41.8925,12.4870,10.5],[41.8913,12.4895,13]]
+    pts: [[41.8925,12.4838,10.0],[41.8925,12.4870,10.0],[41.8913,12.4895,13]]
     core: 45
     outer: 110
     note: "ancient floor about 10 m a.s.l. (modern 14-16); the valley centre 'was originally a swamp' (traces of man at 3.6 m, burials at 6-7 m a.s.l. in the excavations)"

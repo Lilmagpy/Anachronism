@@ -330,6 +330,7 @@
 55
 ]
 ],
+"soft": true,
 "sources": [
 "Platner-Ashby s.v. Quirinalis Mons (read on LacusCurtius)"
 ]
@@ -356,6 +357,7 @@
 55
 ]
 ],
+"soft": true,
 "sources": [
 "Varro LL 5.51",
 "Platner-Ashby s.v. Viminalis"
@@ -424,6 +426,7 @@
 62
 ]
 ],
+"soft": true,
 "sources": [
 "Varro LL 5.50",
 "Platner-Ashby s.v. Esquiliae"
@@ -451,6 +454,7 @@
 58
 ]
 ],
+"soft": true,
 "sources": [
 "Platner-Ashby s.v. Esquiliae"
 ]
@@ -482,6 +486,7 @@
 55
 ]
 ],
+"soft": true,
 "sources": [
 "Platner-Ashby s.v. Caelius Mons (read on LacusCurtius)"
 ]
@@ -535,6 +540,7 @@
 62
 ]
 ],
+"soft": true,
 "sources": [
 "Platner-Ashby s.v. Horti Lucullani"
 ]
@@ -571,6 +577,7 @@
 60
 ]
 ],
+"soft": true,
 "sources": [
 "Livy 1.33.6",
 "Platner-Ashby s.v. Ianiculum"
@@ -592,7 +599,7 @@
 [
 41.8925,
 12.487,
-10.5
+10.0
 ],
 [
 41.8913,
