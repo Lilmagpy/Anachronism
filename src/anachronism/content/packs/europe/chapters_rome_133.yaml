@@ -475,6 +475,7 @@ chapters:
         legitimacy_bp: -400
         outcome: >-
           Rome accepts the murderer as its client. Every foreign king learns what a Senator costs.
+        deeds: {ally_with: [numidia]}
       - label: "Send a commission and hold the war back"
         wealth_bp: -200
         legitimacy_bp: -200
@@ -815,6 +816,7 @@ chapters:
         unrest_bp: 800
         outcome: >-
           The legions Sulla led are left behind with their general. A sullen army remains at Nola.
+        deeds: {men: 6000}
       - label: "Propose that both consuls share the command"
         legitimacy_bp: 200
         wealth_bp: -300

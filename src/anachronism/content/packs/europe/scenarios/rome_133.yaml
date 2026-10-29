@@ -113,7 +113,7 @@ scenarios:
         stockpiles: {food: 8979, materials: 2244, wealth: 4489, knowledge: 2244}
         stats: {literacy_bp: 800, unrest_bp: 1800, legitimacy_bp: 6500}
         influence: {clergy: 2500, nobility: 6000, guilds: 1500}
-        techs: {republic: widespread, citizen_assembly: adopted, agriculture: widespread, irrigation: widespread, ox_plough: widespread, iron_plough: widespread, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: widespread, writing: widespread, alphabet: widespread, masonry: widespread, surveying: adopted, astronomy_calendar: adopted, standard_measures: widespread, coinage: widespread, census: widespread, sailing: widespread, horse_riding: widespread, composite_bow: adopted, fortification: widespread, crossbow: concept, schools: adopted, roads: widespread, piston_bellows: adopted, aqueduct: adopted, sanitation: adopted, concrete: adopted, glassmaking: concept, canals: concept}
+        techs: {republic: widespread, citizen_assembly: adopted, agriculture: widespread, irrigation: widespread, ox_plough: widespread, iron_plough: widespread, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: widespread, writing: widespread, alphabet: widespread, masonry: widespread, surveying: adopted, astronomy_calendar: adopted, standard_measures: widespread, coinage: widespread, census: widespread, sailing: widespread, horse_riding: widespread, composite_bow: adopted, fortification: widespread, crossbow: concept, schools: adopted, roads: widespread, piston_bellows: adopted, aqueduct: adopted, sanitation: adopted, concrete: adopted, glassmaking: concept, canals: concept, hoplite_phalanx: widespread, italian_alliance: widespread, manipular_legion: widespread, gladius_hispaniensis: widespread, cohort_legion: concept}
       e1_socii:
         navy_bp: 1500
         martial_bp: 12000
@@ -156,7 +156,7 @@ scenarios:
         stockpiles: {food: 1211, materials: 302, wealth: 189, knowledge: 94}
         stats: {literacy_bp: 150, unrest_bp: 1000, legitimacy_bp: 6500}
         influence: {clergy: 2500, nobility: 6500, guilds: 1000}
-        techs: {agriculture: widespread, ox_plough: widespread, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: adopted, horse_riding: widespread, masonry: adopted, fortification: adopted, sailing: adopted, composite_bow: adopted, writing: adopted, alphabet: adopted}
+        techs: {agriculture: widespread, ox_plough: widespread, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: adopted, horse_riding: widespread, masonry: adopted, fortification: adopted, sailing: adopted, composite_bow: adopted, writing: adopted, alphabet: adopted, elephant_warfare: adopted}
       seleucid:
         navy_bp: 3000
         martial_bp: 10000
@@ -177,7 +177,7 @@ scenarios:
         stockpiles: {food: 2976, materials: 744, wealth: 1302, knowledge: 651}
         stats: {literacy_bp: 600, unrest_bp: 1500, legitimacy_bp: 5500}
         influence: {clergy: 3000, nobility: 5000, guilds: 2000}
-        techs: {agriculture: widespread, irrigation: widespread, ox_plough: widespread, iron_plough: adopted, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: adopted, writing: widespread, alphabet: widespread, masonry: widespread, surveying: widespread, astronomy_calendar: widespread, standard_measures: widespread, coinage: widespread, sailing: widespread, composite_bow: adopted, horse_riding: widespread, chariot: adopted, fortification: widespread, crossbow: adopted, schools: widespread, roads: adopted, piston_bellows: adopted, canals: adopted, glassmaking: adopted, census: adopted}
+        techs: {agriculture: widespread, irrigation: widespread, ox_plough: widespread, iron_plough: adopted, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: adopted, writing: widespread, alphabet: widespread, masonry: widespread, surveying: widespread, astronomy_calendar: widespread, standard_measures: widespread, coinage: widespread, sailing: widespread, composite_bow: adopted, horse_riding: widespread, chariot: adopted, fortification: widespread, crossbow: adopted, schools: widespread, roads: adopted, piston_bellows: adopted, canals: adopted, glassmaking: adopted, census: adopted, hoplite_phalanx: widespread, sarissa_phalanx: widespread, elephant_warfare: adopted, cataphract_armour: adopted}
       ptolemaic:
         navy_bp: 12000
         martial_bp: 9000
@@ -203,7 +203,7 @@ scenarios:
         stockpiles: {food: 7209, materials: 1802, wealth: 3604, knowledge: 1802}
         stats: {literacy_bp: 800, unrest_bp: 1800, legitimacy_bp: 5000}
         influence: {clergy: 4500, nobility: 4000, guilds: 1500}
-        techs: {agriculture: widespread, irrigation: widespread, ox_plough: widespread, iron_plough: adopted, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: adopted, writing: widespread, alphabet: widespread, masonry: widespread, surveying: widespread, astronomy_calendar: widespread, standard_measures: widespread, coinage: widespread, sailing: widespread, horse_riding: widespread, chariot: adopted, fortification: widespread, schools: widespread, roads: adopted, canals: widespread, glassmaking: widespread, census: widespread}
+        techs: {agriculture: widespread, irrigation: widespread, ox_plough: widespread, iron_plough: adopted, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: adopted, writing: widespread, alphabet: widespread, masonry: widespread, surveying: widespread, astronomy_calendar: widespread, standard_measures: widespread, coinage: widespread, sailing: widespread, horse_riding: widespread, chariot: adopted, fortification: widespread, schools: widespread, roads: adopted, canals: widespread, glassmaking: widespread, census: widespread, hoplite_phalanx: widespread, sarissa_phalanx: widespread, elephant_warfare: adopted}
       pontus:
         navy_bp: 3000
         martial_bp: 12000
@@ -224,7 +224,7 @@ scenarios:
         stockpiles: {food: 448, materials: 112, wealth: 112, knowledge: 56}
         stats: {literacy_bp: 400, unrest_bp: 1000, legitimacy_bp: 6000}
         influence: {clergy: 3500, nobility: 5000, guilds: 1500}
-        techs: {agriculture: widespread, irrigation: widespread, ox_plough: widespread, iron_plough: adopted, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: adopted, writing: widespread, alphabet: widespread, masonry: widespread, surveying: adopted, standard_measures: widespread, coinage: widespread, sailing: widespread, composite_bow: adopted, horse_riding: widespread, chariot: adopted, fortification: widespread, schools: adopted, roads: adopted}
+        techs: {agriculture: widespread, irrigation: widespread, ox_plough: widespread, iron_plough: adopted, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: adopted, writing: widespread, alphabet: widespread, masonry: widespread, surveying: adopted, standard_measures: widespread, coinage: widespread, sailing: widespread, composite_bow: adopted, horse_riding: widespread, chariot: adopted, fortification: widespread, schools: adopted, roads: adopted, hoplite_phalanx: widespread, sarissa_phalanx: adopted}
       bithynia:
         navy_bp: 3000
         disposition: cautious
@@ -282,7 +282,7 @@ scenarios:
         stockpiles: {food: 5000, materials: 1250, wealth: 1562, knowledge: 781}
         stats: {literacy_bp: 400, unrest_bp: 1200, legitimacy_bp: 6000}
         influence: {clergy: 3500, nobility: 5500, guilds: 1000}
-        techs: {agriculture: widespread, irrigation: widespread, ox_plough: widespread, iron_plough: adopted, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: adopted, writing: adopted, alphabet: adopted, masonry: widespread, surveying: adopted, astronomy_calendar: widespread, standard_measures: adopted, coinage: widespread, horse_riding: widespread, composite_bow: widespread, fortification: adopted, schools: adopted, roads: adopted, canals: widespread}
+        techs: {agriculture: widespread, irrigation: widespread, ox_plough: widespread, iron_plough: adopted, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: adopted, writing: adopted, alphabet: adopted, masonry: widespread, surveying: adopted, astronomy_calendar: widespread, standard_measures: adopted, coinage: widespread, horse_riding: widespread, composite_bow: widespread, fortification: adopted, schools: adopted, roads: adopted, canals: widespread, cataphract_armour: widespread}
       e1_armenia:
         navy_bp: 0
         martial_bp: 18000

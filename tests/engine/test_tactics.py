@@ -32,8 +32,12 @@ def test_generals_pick_plans_for_their_soldiers_and_ground(warring: GameState) -
         assert chosen is not None
         return chosen.id
 
-    assert pick({"horse_archers": 8000, "levy": 2000}, True, "steppe") == "feint"
-    assert pick({"cavalry": 3000, "levy": 7000}, True, "plains") == "flank"
+    # Horse archers on open ground ride in, shoot and wheel away (Plutarch, Crassus 24-25).
+    assert pick({"horse_archers": 8000, "levy": 2000}, True, "steppe") == "parthian_shot"
+    # Strong horse on open ground tries Hannibal's double envelopment (Polybius 3.115-116);
+    # with fewer horse it is the plain flank attack.
+    assert pick({"cavalry": 3000, "levy": 7000}, True, "plains") == "double_envelopment"
+    assert pick({"cavalry": 2000, "levy": 8000}, True, "plains") == "flank"
     assert pick({"archers": 5000, "levy": 5000}, True, "plains") == "skirmish"
     assert pick({"levy": 10_000}, True, "plains") == "charge"
     assert pick({"levy": 10_000}, False, "hills") == "hold"

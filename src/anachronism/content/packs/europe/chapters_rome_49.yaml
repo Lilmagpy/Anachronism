@@ -43,6 +43,7 @@ chapters:
         outcome: >-
           Caesar's chief grievance, that Pompey keeps troops near the city while he is told to disband, is met. Pompey goes
           to Spain, and the Senate is in the hands of whoever stays in Rome. Lentulus will not have it put to the vote.
+        deeds: {peace_with: [e1_caesar]}
       - label: "Put both armies under the Senate and demand that both disband"
         wealth_bp: -200
         legitimacy_bp: 200
@@ -349,6 +350,7 @@ chapters:
         influence: {nobility: -300}
         outcome: >-
           The town of Utica is spared (it was, in fact, pardoned), but Cato will not accept a pardon.
+        deeds: {peace_with: [e1_caesar]}
     history: >-
       Plutarch tells of Scipio fortifying near Thapsus and of Caesar's sudden attack on the three camps, with the caveat that
       another account says Caesar himself was not in the action (Caesar 53). Appian: Juba and Petreius killed each other at a

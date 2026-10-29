@@ -2534,3 +2534,25 @@ matters. Engine only: the client screens for it come in a later step.
   checking pass.
 - The test port (all old-scenario tests now use `punic_wars`) found that the Aegean no longer
   links to the Levantine sea since the other packs were removed; to be restored.
+
+## D-288 Rome's start points, the Republic engine and the three armies — DELEGATED (2026-10-29)
+- **Six start points:** 509, 390, 340, 264, 133 and 49 BC, each with its own civs (prefixes
+  `e5_`, `e3_`, `e2_`, `e1_`), scripts and chronicle chapters. 340 was added because the Latin and
+  Samnite wars need a start of their own.
+- **The Republic engine** (`engine/republic.py`) runs only in scenarios with `republic: true`.
+  Each year it seats the real magistrates from the Fasti until the player's influence changes
+  who wins; then elections decide by family standing, glory, wealth and backing.
+- **133 BC:** the Italian allies are one civ (`e1_socii`), so the Social War of 91 BC can happen.
+- **49 BC:** the player is the Republic, with Pompey as its general. Caesar is a separate civ
+  (`e1_caesar`) holding Gaul, Cisalpine Gaul and Illyricum. Pompey's lands were the Republic's
+  provinces, so they are not split off as a separate state.
+- **Army:** the new units unlock through eight army techs, given at each start as the sources
+  suggest.
+  - Rome: the phalanx in 509; the manipular legion in 340 (Livy 8.8); the cohort legion
+    widespread by 49.
+  - Rivals: Macedon and the other kingdoms descended from Alexander's empire get the sarissa
+    phalanx; Carthage gets elephants from 264; the Seleucids get cataphracts by 133.
+  - Formations and tactics can require certain soldiers (`needs_units`), so a general only tries
+    Cannae with enough horse.
+  - Real battles are a content kind (`battles`), each with its sources.
+- **Seas:** Rhodes now borders both the Aegean and the Levantine Sea, restoring the sea route east.

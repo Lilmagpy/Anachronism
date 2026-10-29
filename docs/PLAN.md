@@ -11,9 +11,19 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 ## Rome rework (D-286): the current direction — design: plans/rome.md
 - [x] R0 Plan and archive (branch `claude/archive-multi-civ`) — **gate: owner approves plans/rome.md**
 - [ ] R1 Narrow the game to Rome: remove other packs, chronicles and styles; one map re-cut for Italy; start points 509/390/264/133/49 BC
+  - [x] Other packs, scenarios, chronicles and client styles removed; tests ported (all green)
+  - [x] Italy re-cut by peoples (51 provinces: `provinces_italy.yaml`)
+  - [x] Start points written: 509, 390, 340, 264, 133, 49 BC (each with civs, scripts, chapters)
+  - [x] Client: "Choose the year of Rome" picker
+  - [ ] Retire `punic_wars` and the old overlapping provinces (tests still use them)
+  - [ ] Check every start in the client; owner plays one
 - [ ] R2 The Roman state: yearly magistrates, Senate, families and factions, orders, cursus honorum, the Fasti
+  - [x] Engine: magistracies, yearly elections, Senate votes, families, the Fasti as default history (`engine/republic.py`)
+  - [ ] Full Fasti 509-27 BC, people and families (agent at work)
+  - [ ] Client panel for the Republic view; persuade/back as replay-safe actions
 - [ ] R3 Italy and the world: peoples of Italy, allies, citizenship, colonies, overseas powers, provinces and governors
 - [ ] R4 Army, economy, religion
+  - [x] Army groundwork: 8 army techs, 36 units, 5 formations, 8 tactics, 15 sourced battles (D-288)
 - [ ] R5 The city of Rome: topography, dated monuments, Roman kit forms, the city visit
 - [ ] R6 Depth pass: every year 509-27 BC checked against the sources; full campaign playthrough
 

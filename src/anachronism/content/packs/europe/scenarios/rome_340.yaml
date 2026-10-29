@@ -94,6 +94,9 @@ scenarios:
           republic: widespread
           citizen_assembly: adopted
           census: adopted
+          hoplite_phalanx: widespread
+          italian_alliance: adopted
+          manipular_legion: adopted
       e3_latins:
         # Latium had two praetors in 340 BC, Lucius Annius of Setia and Lucius Numisius of Circeii (Livy 8.3).
         navy_bp: 1500
@@ -791,6 +794,8 @@ scenarios:
           chariot: adopted
           fortification: widespread
           schools: adopted
+          hoplite_phalanx: widespread
+          sarissa_phalanx: widespread
       epirus:
         # Alexander the Molossian crossed to Italy about 334 BC and was killed near Pandosia (Livy 8.17, 8.24); Livy dates this later than most moderns. Pyrrhus is the king of 306-272 BC with gaps (Plutarch, Pyrrhus 1-34).
         navy_bp: 2000
@@ -834,6 +839,9 @@ scenarios:
           horse_riding: widespread
           chariot: adopted
           fortification: adopted
+          hoplite_phalanx: widespread
+          sarissa_phalanx: widespread
+          elephant_warfare: concept
     unowned:
       it_aequi: 32000
       it_falisci: 30000

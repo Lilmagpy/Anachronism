@@ -74,6 +74,10 @@ scenarios:
           piston_bellows: adopted
           aqueduct: adopted
           concrete: concept
+          hoplite_phalanx: widespread
+          italian_alliance: widespread
+          manipular_legion: widespread
+          gladius_hispaniensis: concept
       carthage:
         navy_bp: 40000
         disposition: mercantile
@@ -124,6 +128,7 @@ scenarios:
           roads: concept
           piston_bellows: adopted
           canals: adopted
+          elephant_warfare: adopted
       syracuse:
         disposition: cautious
         scripts:
@@ -216,6 +221,8 @@ scenarios:
           schools: adopted
           roads: adopted
           piston_bellows: adopted
+          hoplite_phalanx: widespread
+          sarissa_phalanx: widespread
       athens:
         disposition: scholarly
         capital: ath_attica
@@ -441,6 +448,9 @@ scenarios:
           crossbow: adopted
           roads: adopted
           piston_bellows: adopted
+          hoplite_phalanx: widespread
+          sarissa_phalanx: widespread
+          elephant_warfare: adopted
       rhodes:
         navy_bp: 30000
         disposition: mercantile
@@ -667,6 +677,9 @@ scenarios:
           canals: widespread
           alchemy: concept
           water_wheel: concept
+          hoplite_phalanx: widespread
+          sarissa_phalanx: widespread
+          elephant_warfare: adopted
       seleucid:
         disposition: aggressive
         scripts:
@@ -722,6 +735,10 @@ scenarios:
           piston_bellows: adopted
           canals: adopted
           postal_relay: adopted
+          hoplite_phalanx: widespread
+          sarissa_phalanx: widespread
+          elephant_warfare: adopted
+          cataphract_armour: concept
       massalia:
         navy_bp: 20000
         disposition: mercantile

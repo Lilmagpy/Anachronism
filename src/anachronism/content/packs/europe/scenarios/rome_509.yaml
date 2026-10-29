@@ -70,7 +70,7 @@ scenarios:
         stockpiles: {food: 450, materials: 112, wealth: 27, knowledge: 30}
         stats: {literacy_bp: 200, unrest_bp: 1200, legitimacy_bp: 5500}
         influence: {clergy: 2500, nobility: 7000, guilds: 500}
-        techs: {agriculture: widespread, alphabet: adopted, astronomy_calendar: adopted, bronze_working: widespread, charcoal_burning: widespread, chariot: adopted, copper_smelting: widespread, fortification: adopted, herbal_medicine: adopted, horse_riding: widespread, iron_plough: concept, iron_working: widespread, irrigation: concept, masonry: adopted, ore_prospecting: concept, ox_plough: widespread, piston_bellows: adopted, pottery_kiln: widespread, republic: adopted, roads: concept, sailing: adopted, standard_measures: adopted, surveying: concept, wheel: widespread, writing: adopted, written_law: adopted}
+        techs: {agriculture: widespread, alphabet: adopted, astronomy_calendar: adopted, bronze_working: widespread, charcoal_burning: widespread, chariot: adopted, copper_smelting: widespread, fortification: adopted, herbal_medicine: adopted, horse_riding: widespread, iron_plough: concept, iron_working: widespread, irrigation: concept, masonry: adopted, ore_prospecting: concept, ox_plough: widespread, piston_bellows: adopted, pottery_kiln: widespread, republic: adopted, roads: concept, sailing: adopted, standard_measures: adopted, surveying: concept, wheel: widespread, writing: adopted, written_law: adopted, hoplite_phalanx: adopted}
       e5_latins:
         disposition: cautious
         scripts:
