@@ -575,6 +575,9 @@ func _fill_top_bar() -> void:
 		reign = " · %s (%d)" % [status["ruler"], int(status["ruler_age"])]
 	elif int(status.get("ruler_age", 0)) > 0:
 		reign = " · a new ruler (%d)" % int(status["ruler_age"])
+	var consuls := _consul_text()   # Republic (D-286): the consuls stand where a ruler would
+	if consuls != "":
+		reign = " · " + consuls
 	titles.add_child(UiStyle.label("%s · turn %d%s" % [year_text(view["year"]), view["turn"], reign], 15, DIM, "body", 700))
 	_top.add_child(titles)
 	var strip := Control.new()  # the figures; clipped, never pushing the menu off the screen
@@ -621,6 +624,23 @@ func _fill_top_bar() -> void:
 	menu.add_child(picture)
 	menu.pressed.connect(func(): menu_requested.emit())
 	_top.add_child(menu)
+
+
+## "Consuls: L. Tarquinius Collatinus and T. Larcius Flavus" in a Roman scenario, else "".   # Republic (D-286)
+func _consul_text() -> String:
+	var republic: Variant = view.get("republic")
+	if republic == null:
+		return ""
+	var names := PackedStringArray()
+	for m in republic.get("magistrates", []):
+		if m["office"] == "consul" and not m["suffect"]:
+			names.append(RepublicPanel.short_name(str(m["name"])))
+	if names.is_empty():
+		for m in republic.get("magistrates", []):
+			if m["office"] in ["dictator", "consular_tribune"]:
+				names.append(RepublicPanel.short_name(str(m["name"])))
+		return "" if names.is_empty() else "%s: %s" % ["Dictator" if names.size() == 1 else "Consular tribunes", " and ".join(names) if names.size() <= 2 else "%s and %d more" % [names[0], names.size() - 1]]
+	return "Consuls: " + " and ".join(names.slice(0, 2))
 
 
 ## One figure with its icon and a trend arrow; `up_is_good` decides green or red.
@@ -676,20 +696,36 @@ func _build_side_panel() -> void:
 
 func _fill_side() -> void:
 	_clear(_tabs)
-	for entry in [["ideas", "Ideas"], ["projects", "Projects %d" % view["projects"].size()], ["world", "World"]]:
+	var entries: Array = [["ideas", "Ideas"], ["projects", "Projects %d" % view["projects"].size()], ["world", "World"]]
+	var republic: Variant = view.get("republic")   # Republic (D-286): the Senate tab, in Roman scenarios
+	if republic != null:
+		entries.append(["senate", "Senate"])
+	elif tab == "senate":
+		tab = "ideas"
+		_update_idea_box()
+	for entry in entries:
 		var button := _button("", set_tab.bind(entry[0]))
 		button.toggle_mode = true
 		button.button_pressed = tab == entry[0]
 		button.custom_minimum_size.y = 46
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		if entries.size() > 3:   # Republic (D-286): four tabs share the width
+			for state in ["normal", "hover", "pressed", "disabled", "focus"]:
+				var slim := UiStyle.button_box(state)
+				slim.content_margin_left = 2
+				slim.content_margin_right = 2
+				slim.content_margin_top = 4
+				slim.content_margin_bottom = 4
+				slim.border_width_bottom = 4 if state != "pressed" else 2
+				button.add_theme_stylebox_override(state, slim)
 		# icon + name, centred inside the button
 		var holder := HBoxContainer.new()
 		holder.set_anchors_preset(Control.PRESET_FULL_RECT)
 		holder.alignment = BoxContainer.ALIGNMENT_CENTER
-		holder.add_theme_constant_override("separation", 6)
+		holder.add_theme_constant_override("separation", 6 if entries.size() < 4 else 3)
 		holder.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		holder.add_child(GameIcon.make(entry[0], 22))
-		var name := UiStyle.label(entry[1], 15, INK, "body", 800)
+		holder.add_child(RepublicPanel.tab_icon(20 if entries.size() > 3 else 22) if entry[0] == "senate" else GameIcon.make(entry[0], 20 if entries.size() > 3 else 22))   # Republic (D-286)
+		var name := UiStyle.label(entry[1], 15 if entries.size() < 4 else 13, INK, "body", 800)   # Republic (D-286): four tabs
 		name.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		holder.add_child(name)
 		button.add_child(holder)
@@ -717,6 +753,8 @@ func _fill_side() -> void:
 			_fill_projects()
 		"world":
 			_fill_world()
+		"senate":   # Republic (D-286)
+			_fill_senate()
 
 
 # --- the idea box: the player's own words for the court (DESIGN §8) ----------------------
@@ -1053,6 +1091,14 @@ func _fill_projects() -> void:
 		box.add_child(row)
 		box.add_child(HSeparator.new())
 		_side_body.add_child(box)
+
+
+## The Senate tab (Republic, D-286): the Roman state, drawn by RepublicPanel from view["republic"].
+func _fill_senate() -> void:
+	var panel := RepublicPanel.new()
+	panel.action_requested.connect(func(action: Dictionary): action_requested.emit(action))
+	_side_body.add_child(panel)
+	panel.show_republic(view.get("republic"), civ_colours.get(view["player"], UiStyle.GOLD))
 
 
 func _fill_world() -> void:
@@ -2654,5 +2700,5 @@ func _build_end_turn() -> void:
 	_end_turn.offset_right = -8
 	_end_turn.offset_bottom = -8
 	_end_turn.pressed.connect(request_end_turn)
-	_end_turn.tooltip_text = "Let ten years pass (Enter). Tabs: 1 Ideas, 2 Projects, 3 World"
+	_end_turn.tooltip_text = "Let ten years pass (Enter). Tabs: 1 Ideas, 2 Projects, 3 World, 4 Senate"   # Republic (D-286)
 	_root.add_child(_end_turn)

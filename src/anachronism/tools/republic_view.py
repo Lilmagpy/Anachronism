@@ -7,6 +7,7 @@ from typing import Any
 from anachronism.content.schema import Issue
 from anachronism.engine.republic import (
     factions_at,
+    family_leaning,
     senate_mood,
     senate_vote,
     year_label,
@@ -124,6 +125,8 @@ def republic_view(state: GameState) -> dict[str, Any] | None:
                 "name": m.name,
                 "gens": people[m.person].gens if m.person in people else "",
                 "order": people[m.person].order.value if m.person in people else "",
+                "age": state.year - people[m.person].born if m.person in people else None,
+                "historical": people[m.person].historical if m.person in people else False,
                 "months": m.term_months,
                 "suffect": m.suffect,
                 "appointed": m.appointed,
@@ -165,6 +168,7 @@ def republic_view(state: GameState) -> dict[str, Any] | None:
                 "wealth": f.wealth,
                 "clients": f.clients,
                 "living": sum(1 for p in people.values() if p.alive and p.gens == fid),
+                "stance": {i.value: family_leaning(state, fid, i) for i in Issue},
             }
             for fid, f in sorted(rep.families.items())
         ],
