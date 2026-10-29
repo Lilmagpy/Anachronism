@@ -1,0 +1,284 @@
+# Monuments of Rome 27 BC - AD 120 (Augustus to Hadrian's accession years). Format: README.md,
+# plus per entry: footprint_m {length, width} or {radius}; bearing_deg (compass bearing of the
+# long axis / front, degrees clockwise from north, null if not known); height_m; model (form key
+# for the client: temple_hexastyle, temple_octastyle, temple_round, basilica, forum, portico,
+# theatre, amphitheatre, baths, arch, column, mausoleum, obelisk, bridge, aqueduct, horrea,
+# insula, domus, palace, camp, stadium, odeum, market, colossus, fire, ...).
+#
+# PROVENANCE WARNING (read this). The session that wrote this file had NO network access to
+# LacusCurtius, Perseus or Pleiades (egress proxy refused penelope.uchicago.edu, pleiades.stoa.org).
+# Every entry was therefore written from memory of the sources and NONE of the passage numbers
+# was re-read. Every entry carries `verified: false`. `pleiades` is null everywhere: ids were
+# not looked up and none was guessed. Coordinates are from memory of the identified remains
+# (Colosseum, Pantheon, fora, Mausoleum, Ara Pacis, Theatre of Marcellus ...) and are good to
+# some tens of metres when precision is "exact"/"approx"; "rough" means the site itself is debated.
+# Sizes and bearings are marked unverified in `notes` where they are especially doubtful.
+# Entries that duplicate a Republican-file monument carry `republican_id`; their ids differ so
+# that the two files can be merged without clashes.
+# Out-of-range items (after AD 120) are included only where the task asked, with `beyond_range: true`.
+monuments:
+# ================================================================ AUGUSTAN FORA AND TEMPLES
+- id: forum_augusti
+  latin: Forum Augusti
+  english: Forum of Augustus
+  type: forum
+  regio: 8
+  lat: 41.8939
+  lon: 12.4863
+  precision: approx
+  location: Between the Forum of Caesar and the Subura wall, north-east of the Forum Romanum; partly under Via dei Fori Imperiali
+  built: {year: -2, certainty: certain, by: "Augustus; vowed at Philippi 42 BC, forum opened 2 BC with games (Suet. Aug. 29; Res Gestae 21; Dio 55.10.1-8)"}
+  events:
+  - {year: -2, what: "dedicated 1 August 2 BC with the temple of Mars Ultor; statues of the summi viri in the porticoes with elogia (Suet. Aug. 31, 29; Ovid Fasti 5.545-598)"}
+  form: "colonnaded forum with two apsidal exedrae and a high firewall (travertine/peperino) at the rear against the Subura"
+  materials: [Gabine stone and Luna marble, peperino firewall]
+  footprint_m: {length: 125, width: 85}
+  bearing_deg: 45
+  height_m: 33
+  model: forum
+  sources: ["Suet. Aug. 29", "Suet. Aug. 31", "Res Gestae 21", "Dio 55.10", "Ovid Fasti 5.545-598", "Platner-Ashby s.v. Forum Augustum"]
+  verified: false
+  pleiades: null
+  notes: "Size and bearing from memory of the plan (long axis NE-SW, temple at the NE end); unverified."
+- id: aedes_martis_ultoris
+  latin: Aedes Martis Ultoris
+  english: Temple of Mars Ultor
+  type: temple
+  regio: 8
+  lat: 41.8941
+  lon: 12.4868
+  precision: approx
+  location: North-east end of the Forum of Augustus, backing on the Subura firewall
+  built: {year: -2, certainty: certain, by: "Augustus, vowed 42 BC at Philippi; dedicated 1 August 2 BC (Suet. Aug. 29; Dio 55.10.1-3; Res Gestae 21)"}
+  events:
+  - {year: -2, what: "The standards recovered from the Parthians (20 BC) were placed in the temple (Dio 54.8.3; Res Gestae 29; Dio 55.10.3); the Senate was to vote triumphs there and generals to set out from it (Suet. Aug. 29)"}
+  form: "octastyle Corinthian temple, Luna marble, cult statues of Mars, Venus and Divus Julius"
+  footprint_m: {length: 35, width: 23}
+  bearing_deg: 225
+  height_m: 33
+  model: temple_octastyle
+  sources: ["Suet. Aug. 29", "Dio 55.10", "Res Gestae 21 and 29", "Ovid Fasti 5.569-578", "Platner-Ashby s.v. Mars Ultor, Aedes"]
+  verified: false
+  pleiades: null
+  notes: "Dimensions from memory (podium ~ 3.5 m high); unverified. Front faces south-west into the forum (bearing_deg is the direction the front faces)."
+- id: aedes_apollinis_palatini_empire
+  republican_id: aedes_apollinis_palatini
+  latin: Aedes Apollinis Palatini
+  english: Temple of Apollo on the Palatine
+  type: temple
+  regio: 10
+  lat: 41.8887
+  lon: 12.4872
+  precision: rough
+  location: Palatine, next to Augustus' house; its identification with the podium by the Casa di Livia / the 'Area Apollinis' is debated
+  built: {year: -28, certainty: certain, by: "Augustus; vowed 36 BC after Naulochus, dedicated 9 October 28 BC (Res Gestae 19; Suet. Aug. 29; Dio 53.1.3; Vell. 2.81)"}
+  events:
+  - {year: -28, what: "dedication with library (Greek and Latin) in the adjoining porticus with statues of the Danaids (Suet. Aug. 29; Prop. 2.31)"}
+  - {year: 3, what: "burned? A fire on the Palatine in AD 3 destroyed the house of Augustus' neighbour; Augustus's own house burned 3 AD (Dio 55.12.4-5) - not the temple; the Sibylline books were later placed in the base of the statue (Suet. Aug. 31)"}
+  form: "temple of Luna marble with quadriga on the roof, doors of ivory; porticus with 50 columns of African marble (Prop. 2.31)"
+  footprint_m: null
+  bearing_deg: null
+  height_m: null
+  model: temple_hexastyle
+  sources: ["Res Gestae 19", "Suet. Aug. 29", "Dio 53.1.3", "Prop. 2.31", "Platner-Ashby s.v. Apollo Palatinus, Aedes"]
+  verified: false
+  pleiades: null
+  notes: "Site contested (Carettoni's 1960s excavation near the Casa di Livia vs. the podium NE of the Domus Augustana); the 3 AD fire entry is doubtful - check Dio 55.12 before use."
+- id: mausoleum_augusti_empire
+  republican_id: mausoleum_augusti
+  latin: Mausoleum Augusti
+  english: Mausoleum of Augustus
+  type: tomb
+  regio: 9
+  lat: 41.9060
+  lon: 12.4766
+  precision: exact
+  location: Campus Martius, between the Via Flaminia and the Tiber, Piazza Augusto Imperatore
+  built: {year: -28, certainty: certain, by: "Augustus in his sixth consulship, 28 BC (Suet. Aug. 100; Strabo 5.3.8)"}
+  events:
+  - {year: -23, what: "Marcellus first to be buried there (Dio 53.30.5)"}
+  - {year: 14, what: "Augustus' ashes deposited; Res Gestae set up on bronze pillars in front (Suet. Aug. 101; Res Gestae preface)"}
+  form: "tumulus on a travertine drum, concentric walls, topped by a colossal bronze statue of Augustus; two obelisks at the entrance (now Quirinal and Esquiline)"
+  materials: [travertine, concrete, earth]
+  footprint_m: {radius: 43.5}
+  bearing_deg: null
+  height_m: 42
+  model: mausoleum
+  sources: ["Suet. Aug. 100-101", "Strabo 5.3.8", "Dio 53.30.5", "Res Gestae preface", "Platner-Ashby s.v. Mausoleum Augusti"]
+  verified: false
+  pleiades: null
+  notes: "Diameter ~87 m and height ~42 m from memory of modern reconstructions (height is conjectural)."
+- id: ara_pacis_augustae_empire
+  republican_id: ara_pacis_augustae
+  latin: Ara Pacis Augustae
+  english: Altar of Augustan Peace
+  type: altar
+  regio: 9
+  lat: 41.9063
+  lon: 12.4753
+  precision: approx
+  location: Campus Martius, west of the Via Flaminia (Via Lata); original site under Palazzo Fiano, now re-erected beside the Mausoleum
+  built: {year: -9, certainty: certain, by: "Senate decree 13 BC on Augustus' return from Spain and Gaul; dedicated 30 January 9 BC (Res Gestae 12; Ovid Fasti 1.709-722)"}
+  form: "marble precinct wall with altar inside, relief procession; sacrificial altar on a raised base"
+  footprint_m: {length: 11.65, width: 10.62}
+  bearing_deg: 90
+  height_m: 3.68
+  model: altar_precinct
+  sources: ["Res Gestae 12", "Ovid Fasti 1.709-722", "Platner-Ashby s.v. Ara Pacis Augustae"]
+  verified: false
+  pleiades: null
+  notes: "Size (11.65 x 10.62 x ~3.7 m) from memory of the reconstruction; the main entrance faces west, the altar is inside at the east - axis taken as E-W; unverified."
+- id: horologium_augusti
+  latin: Horologium Augusti
+  english: Sundial (Horologium) of Augustus and its obelisk
+  type: obelisk
+  regio: 9
+  lat: 41.9010
+  lon: 12.4790
+  precision: approx
+  location: Campus Martius, around Piazza di Montecitorio and Via del Campo Marzio; the obelisk now stands in Piazza di Montecitorio
+  built: {year: -10, certainty: probable, by: "Augustus; obelisk of Psammetichus II brought from Heliopolis and set up in the Campus Martius as a gnomon, 10 BC (Pliny NH 36.71-73; Res Gestae 'consecrated to the Sun' after Egypt's annexation; Gellius 5.? doubtful)"}
+  events:
+  - {year: 9, what: "Pliny notes (NH 36.72-73) that the shadow no longer fell correctly 'for thirty years' - already faulty in Pliny's time; Domitian restored it (Hierosolymitan inscription?) - unverified"}
+  form: "obelisk about 21.8 m high on a bronze-lettered meridian, with a pavement of bronze lines and Greek letters"
+  footprint_m: {length: 160, width: 75}
+  bearing_deg: null
+  height_m: 21.8
+  model: obelisk
+  sources: ["Pliny NH 36.71-73", "Res Gestae 12? # unverified", "Platner-Ashby s.v. Horologium Augusti"]
+  verified: false
+  pleiades: null
+  notes: "Whether the meridian really worked as a sundial (Buchner 1982) vs. a monument alone is contested; the 160 x 75 m size and the Ara Pacis alignment are Buchner's reconstruction - unverified. Event line on Domitian flagged unverified."
+- id: pantheon_agrippae_empire
+  republican_id: pantheon_agrippae
+  latin: Pantheum Agrippae
+  english: Pantheon of Agrippa (first building)
+  type: temple
+  regio: 9
+  lat: 41.8986
+  lon: 12.4769
+  precision: exact
+  location: Campus Martius, Piazza della Rotonda; Hadrian's rotunda stands on the same site
+  built: {year: -25, certainty: probable, by: "M. Agrippa as consul 27 BC, dedicated c. 25 BC (Dio 53.27.2; Pliny NH 36.38; Pliny 34.13 on caryatids)"}
+  events:
+  - {year: 80, what: "burned in the fire of AD 80 (Dio 66.24.2)"}
+  - {year: 110, what: "struck by lightning and burned under Trajan (HA Hadr. 19? and brick stamps) - rebuilt by Domitian after AD 80 and again after AD 110, then Hadrian (see pantheon_hadriani)"}
+  form: "rectangular temple facing south (excavation evidence) with a pronaos, ~ 43 x 20 m; Caryatids (Pliny 36.38) by Diogenes of Athens in the interior"
+  footprint_m: {length: 43, width: 19.5}
+  bearing_deg: 180
+  height_m: null
+  model: temple_hexastyle
+  sources: ["Dio 53.27.2-3", "Pliny NH 36.38", "Dio 66.24.2", "Platner-Ashby s.v. Pantheon"]
+  verified: false
+  pleiades: null
+  notes: "Agrippa's building was not the rotunda; its plan comes from Ziolkowski/Hetland's excavations of the 1890s and 1990s. Date of the AD 110 fire from Orosius/Jerome; unverified. Dimensions from memory."
+- id: pantheon_hadriani
+  latin: Pantheum
+  english: Pantheon of Hadrian (the standing rotunda)
+  type: temple
+  regio: 9
+  lat: 41.8986
+  lon: 12.4769
+  precision: exact
+  location: Campus Martius, Piazza della Rotonda
+  built: {year: 125, certainty: probable, by: "Hadrian, c. AD 118-128; brick stamps of 123-125 date the rotunda; the inscription copies Agrippa's (HA Hadr. 19.10; Dio 69.7)"}
+  form: "rotunda 43.3 m in diameter and height under a coffered concrete dome with an oculus 8.9 m wide; portico of 16 granite Corinthian columns (8 across the front) at 34 m wide"
+  footprint_m: {radius: 21.65}
+  bearing_deg: 0
+  height_m: 43.3
+  model: temple_round
+  sources: ["HA Hadr. 19.10", "Dio 69.7", "Platner-Ashby s.v. Pantheon"]
+  verified: false
+  beyond_range: true
+  pleiades: null
+  notes: "Just beyond the 27 BC - AD 120 window if the rebuilding is placed c. 125; kept because the task asked for it. Front faces roughly north; exact bearing not recorded here (set 0 for placement only)."
+- id: thermae_agrippae_empire
+  republican_id: thermae_agrippae
+  latin: Thermae Agrippae
+  english: Baths of Agrippa
+  type: baths
+  regio: 9
+  lat: 41.8975
+  lon: 12.4763
+  precision: approx
+  location: Campus Martius, between the Pantheon and the Saepta; the Stagnum Agrippae to the south-west
+  built: {year: -19, certainty: probable, by: "M. Agrippa; baths 25 BC with the Euripus channel (Dio 53.27.1; Pliny NH 36.121); bequeathed to the Roman people in his will 12 BC (Dio 54.29.4)"}
+  events:
+  - {year: -12, what: "bequeathed with the gardens to the people free of charge (Dio 54.29.4)"}
+  - {year: 80, what: "damaged in the fire of AD 80 and restored (Dio 66.24.2)"}
+  form: "first imperial bath complex in Rome, with a stagnum and Euripus; Lysippus's Apoxyomenos stood before them (Pliny NH 34.62)"
+  footprint_m: {length: 120, width: 100}
+  bearing_deg: null
+  height_m: null
+  model: baths
+  sources: ["Dio 53.27.1", "Dio 54.29.4", "Pliny NH 34.62", "Platner-Ashby s.v. Thermae Agrippae"]
+  verified: false
+  pleiades: null
+  notes: "Footprint approximate from memory; the 80 AD restoration entry unverified."
+- id: saepta_iulia_empire
+  republican_id: saepta_iulia
+  latin: Saepta Iulia
+  english: Saepta Julia (voting enclosure)
+  type: portico
+  regio: 9
+  lat: 41.8975
+  lon: 12.4800
+  precision: approx
+  location: Campus Martius, east of the Pantheon, along the Via Lata, between Piazza del Collegio Romano and the Pantheon
+  built: {year: -26, certainty: certain, by: "begun by Julius Caesar, continued by Lepidus, dedicated by Agrippa 26 BC (Dio 53.23.1-2; Cic. Att. 4.16.8)"}
+  events:
+  - {year: 80, what: "burned in AD 80, restored by Domitian (Dio 66.24.2; Mart. 9.59 for the shops)"}
+  form: "vast rectangular marble portico enclosure with voting pens, later a shopping and exhibition place"
+  footprint_m: {length: 310, width: 120}
+  bearing_deg: null
+  height_m: null
+  model: portico
+  sources: ["Dio 53.23.1", "Cic. Att. 4.16.8", "Mart. 9.59", "Platner-Ashby s.v. Saepta Iulia"]
+  verified: false
+  pleiades: null
+  notes: "Size from memory (Forma Urbis fragments); the restorations in AD 80 and by Domitian unverified."
+- id: theatrum_marcelli_empire
+  republican_id: theatrum_marcelli
+  latin: Theatrum Marcelli
+  english: Theatre of Marcellus
+  type: theatre
+  regio: 9
+  lat: 41.8920
+  lon: 12.4797
+  precision: exact
+  location: Between the Capitol and the Tiber, Forum Holitorium side; the arcaded outer wall still stands in Via del Teatro di Marcello
+  built: {year: -11, certainty: probable, by: "begun by Caesar, completed by Augustus and named for his nephew Marcellus (Suet. Aug. 29; Dio 43.49.2, 54.26.1; Res Gestae 21)"}
+  events:
+  - {year: -13, what: "dedicated 13 or 11 BC (Dio 54.26.1 says 13 BC; Pliny NH 8.65 describes tigers at the dedication in 11 BC); reconstructed also after AD 64 (unverified)"}
+  form: "tiered semicircular theatre, arcade outer wall of 41 arches in two orders (Doric, Ionic) over concrete radial vaults; later a third attic level"
+  materials: [travertine, tufa, concrete]
+  footprint_m: {radius: 65}
+  bearing_deg: null
+  height_m: 32
+  model: theatre
+  sources: ["Suet. Aug. 29", "Dio 43.49.2", "Dio 54.26.1", "Res Gestae 21", "Pliny NH 8.65", "Platner-Ashby s.v. Theatrum Marcelli"]
+  verified: false
+  pleiades: null
+  notes: "Dedication year: 13 BC (Dio) vs 11 BC (Pliny/others); scholars differ."
+- id: theatrum_balbi
+  latin: Theatrum Balbi
+  english: Theatre of Balbus
+  type: theatre
+  regio: 9
+  lat: 41.8943
+  lon: 12.4766
+  precision: approx
+  location: Campus Martius, near the Circus Flaminius; Crypta Balbi on Via delle Botteghe Oscure marks the portico
+  built: {year: -13, certainty: certain, by: "L. Cornelius Balbus, dedicated 13 BC (Suet. Aug. 29; Dio 54.25.2; Pliny NH 36.60)"}
+  events:
+  - {year: 19, what: "dedication-year list of 'ludi' there; Tacitus? no entry - see notes"}
+  - {year: 80, what: "burned in AD 80 and restored by Titus (Suet. Titus 8? Dio 66.24.2) - unverified"}
+  form: "theatre with a Crypta (covered portico) behind it; capacity 6,000 or 11,600 in the late Regionary lists"
+  footprint_m: {radius: 45}
+  bearing_deg: null
+  height_m: null
+  model: theatre
+  sources: ["Suet. Aug. 29", "Dio 54.25.2", "Pliny NH 36.60", "Platner-Ashby s.v. Theatrum Balbi"]
+  verified: false
+  pleiades: null
+  notes: "Radius is a guess from the cavea curve in Via delle Botteghe Oscure; the 19 and 80 event lines are placeholders and unverified."
