@@ -1012,8 +1012,8 @@
 },
 "english": "Basilica Porcia",
 "footprint_m": {
-"length": 45,
-"width": 20
+"length": 16,
+"width": 26
 },
 "geometry_source": "Basilica Porcia (184 BC) beside the Curia; size unknown, small tufa basilica assumed (Platner-Ashby s.v. Basilica Porcia)",
 "geometry_unverified": [
@@ -1022,10 +1022,10 @@
 "height_m"
 ],
 "id": "basilica_porcia",
-"lat": 41.8929,
+"lat": 41.893004,
 "latin": "Basilica Porcia",
 "location": "Forum, beside the Curia (north-west); exact site lost",
-"lon": 12.4851,
+"lon": 12.484902,
 "model": "basilica",
 "notes": "Verified: Livy 39.44.7 (Latin text): the censor Cato bought the atria Maenium and Titium in the Lautumiae and four shops and built a basilica 'quae Porcia appellata est' (184 BC). Also Plut. Cato Maior 19. P&A: the first basilica in Rome, a little west of the Curia, in Lautumiis. Pleiades 547224816 has only a 'related' point (forum centroid), not adopted.",
 "pleiades": 547224816,
@@ -1911,10 +1911,10 @@
 ],
 "height_m": 10,
 "id": "columna_maenia",
-"lat": 41.893,
+"lat": 41.893013,
 "latin": "Columna Maenia",
 "location": "on the north-west side of the Forum, near the Basilica Porcia and the Carcer",
-"lon": 12.48479,
+"lon": 12.484697,
 "materials": [],
 "model": "column_honorific",
 "notes": "Added in U8 as part of the Forum's furniture. Its exact spot is unknown (near the Basilica Porcia and the Carcer); the statue on top is assumed from the honour of a column (Pliny NH 34.20), not stated by Platner-Ashby.",

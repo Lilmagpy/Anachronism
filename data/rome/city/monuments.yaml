@@ -465,8 +465,8 @@ monuments:
   english: Basilica Porcia
   type: basilica
   regio: 8
-  lat: 41.8929
-  lon: 12.4851
+  lat: 41.893004  # U8: the dataset point overlapped the Curia Hostilia. Platner-Ashby s.v. Basilica Porcia (read 2026-10-30): 'a little west of the curia, in Lautumiis' (the quarries on the Capitoline slope just above the Carcer, s.v. Lautumiae); placed between the Curia Hostilia's west side and the Carcer, behind the Comitium; # unverified spot
+  lon: 12.484902
   precision: rough
   location: Forum, beside the Curia (north-west); exact site lost
   built: {year: -184, certainty: certain, by: "M. Porcius Cato as censor (Livy 39.44.7; Plut. Cato Maior 19)"}
@@ -477,7 +477,7 @@ monuments:
   verified: platner-ashby
   model: basilica
   bearing_deg: 196  # unverified
-  footprint_m: {length: 45, width: 20}  # unverified
+  footprint_m: {length: 16, width: 26}  # unverified: built on the ground of two houses and four shops (Platner-Ashby s.v.), so smaller than the 45 x 20 first assumed
   geometry_source: "Basilica Porcia (184 BC) beside the Curia; size unknown, small tufa basilica assumed (Platner-Ashby s.v. Basilica Porcia)"
   geometry_unverified: [bearing_deg, footprint_m, height_m]
 - id: basilica_aemilia
@@ -871,8 +871,8 @@ monuments:
   english: Column of Maenius
   type: monument
   regio: 8
-  lat: 41.893
-  lon: 12.48479
+  lat: 41.893013  # U8: between the Basilica Porcia and the Carcer (Platner-Ashby s.v. Columna Maenia: near both); # unverified spot
+  lon: 12.484697
   precision: rough
   location: on the north-west side of the Forum, near the Basilica Porcia and the Carcer
   built: {year: -338, certainty: certain, by: "erected in 338 BC in honour of C. Maenius, the victor in the naval battle at Antium (Plin. NH 34.20); another tradition, probably false, made it the column a later Maenius kept when he sold his house to Cato for the Basilica Porcia (Asc. in Cic. div. in Caec. 50). Platner-Ashby s.v. Columna Maenia, read"}
