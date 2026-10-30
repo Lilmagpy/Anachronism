@@ -6,6 +6,7 @@
 ##   far       the same from 400 m (shimmer check)
 ##   column    a fluted marble column at 1 m          roof   a tiled roof at 3 m
 ##   wall      brick, reticulatum and stucco at 2 m
+##   trees     site_flora's tree meshes, plain (back) and as a MultiMesh (front)
 ##   city      the real city: opens Urbs itself (no engine needed) with the Urbs flags given
 ##             here (--year, --mode, --at, --yaw, --pitch, --hour, --day, --fx); --restyle swaps
 ##             the builders' plain materials for library ones first (UrbsMaterials.restyle)
@@ -110,6 +111,7 @@ const VIEWS := {
 	"column": [Vector3(0.2, 1.9, 1.15), Vector3(0.0, 1.6, 0.0), 60.0],
 	"roof": [Vector3(1.8, 6.2, 3.4), Vector3(0.0, 4.2, -0.5), 60.0],
 	"wall": [Vector3(0.0, 1.6, 2.4), Vector3(0.0, 1.4, 0.0), 65.0],
+	"trees": [Vector3(14.0, 9.0, 30.0), Vector3(14.0, 4.0, 0.0), 60.0],
 }
 
 
@@ -132,6 +134,8 @@ func _build(view: String) -> void:
 			_box(Vector3(0.0, 0, -0.3), Vector3(1.5, 3, 0.4), "opus_reticulatum")
 			_box(Vector3(1.6, 0, -0.3), Vector3(1.5, 3, 0.4), "stucco_red")
 			_box(Vector3(0, -0.2, 0.6), Vector3(5, 0.2, 2.5), "street_basalt")
+		"trees":
+			_trees()
 		_:
 			var names := UrbsMaterials.names()
 			var page := int(args.get("page", "0"))
@@ -140,6 +144,30 @@ func _build(view: String) -> void:
 				var at := Vector3((i % 7) * 3.8, 0, (i / 7) * 3.8 - 3.0)
 				_sample(at, name)
 				i += 1
+
+
+## site_flora's own tree meshes: the back row as plain MeshInstances, the front row as a
+## MultiMesh with instance colours (as the city plants them).
+func _trees() -> void:
+	UrbsSiteFlora._ensure_meshes()
+	var i := 0
+	for kind in UrbsSiteFlora.KINDS:
+		var mesh: Mesh = UrbsSiteFlora._meshes[kind][0]
+		var mi := MeshInstance3D.new()
+		mi.mesh = mesh
+		mi.position = Vector3(i * 3.5, 0, -6)
+		scene.add_child(mi)
+		var mm := MultiMesh.new()
+		mm.transform_format = MultiMesh.TRANSFORM_3D
+		mm.use_colors = true
+		mm.mesh = mesh
+		mm.instance_count = 1
+		mm.set_instance_transform(0, Transform3D(Basis(), Vector3(i * 3.5, 0, 4)))
+		mm.set_instance_color(0, Color(0.9, 0.9, 0.85))
+		var mmi := MultiMeshInstance3D.new()
+		mmi.multimesh = mm
+		scene.add_child(mmi)
+		i += 1
 
 
 func _sample(at: Vector3, name: String) -> void:
