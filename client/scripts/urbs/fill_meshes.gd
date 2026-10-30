@@ -42,7 +42,6 @@ const SURFACES: Array[String] = [
 
 static var _cache := {}
 static var _material: ShaderMaterial
-static var _farm_material: ShaderMaterial
 
 
 # ---------------------------------------------------------------- public
@@ -115,18 +114,6 @@ static func lod_key(key: String, lod: int) -> String:
 		"workshop":
 			return key if lod == 1 else "workshop:0"
 	return key
-
-
-## Material of the farmland ground meshes (fill.gd rural_build): vertex alpha 1.0 = sown or
-## ploughed strips (rows 1.1 m apart along the parcel's own axes, taken from UV in metres),
-## 0.5 = meadow. Vertex colour is the tint.
-static func farm_material() -> ShaderMaterial:
-	if _farm_material == null:
-		var sh := Shader.new()
-		sh.code = FARM_SHADER
-		_farm_material = ShaderMaterial.new()
-		_farm_material.shader = sh
-	return _farm_material
 
 
 ## The one material every building, prop and tree uses; its colours are UrbsMaterials.COLOURS.
@@ -503,34 +490,5 @@ void fragment() {
 	METALLIC = metal;
 	SPECULAR = spec;
 	NORMAL = nrm;
-}
-"""
-
-
-const FARM_SHADER := """
-shader_type spatial;
-render_mode cull_disabled;
-
-float h21(vec2 p) { p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y); }
-float vn(vec2 p) {
-	vec2 i = floor(p); vec2 f = fract(p); f = f * f * (3.0 - 2.0 * f);
-	return mix(mix(h21(i), h21(i + vec2(1, 0)), f.x), mix(h21(i + vec2(0, 1)), h21(i + vec2(1, 1)), f.x), f.y);
-}
-float fbm(vec2 p) { return vn(p) * 0.5 + vn(p * 2.03 + 7.1) * 0.3 + vn(p * 4.1 + 3.7) * 0.2; }
-
-void fragment() {
-	vec3 wp = (INV_VIEW_MATRIX * vec4(VERTEX, 1.0)).xyz;
-	vec3 col = pow(COLOR.rgb, vec3(2.2));
-	if (COLOR.a > 0.75) {
-		float rows = 0.5 + 0.5 * sin(UV.x * 5.7);
-		float n = fbm(UV * 0.11 + floor(col.r * 97.0));
-		col = col * (0.50 + 0.34 * rows) * (0.62 + 0.38 * n);
-	} else {
-		float n = fbm(wp.xz * 0.28);
-		col = col * (0.42 + 0.5 * n);
-		col = mix(col, vec3(0.40, 0.36, 0.2), smoothstep(0.62, 0.85, fbm(wp.xz * 0.11 + 4.0)) * 0.55);
-	}
-	ALBEDO = col;
-	ROUGHNESS = 1.0;
 }
 """
