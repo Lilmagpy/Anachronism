@@ -2706,3 +2706,18 @@ on crests and tufa faces, and real farmland on the ground outside the walls.
 stickers. Most citations in this pass are `# unverified` because LacusCurtius and Perseus were
 unreachable; they are marked in the data.
 
+## D-297 Light and surfaces in U8 — DELEGATED (2026-10-30)
+
+**Decision.** (1) Every surface name in `UrbsMaterials` is a procedural PBR shader (no texture
+files) working in the model's own metres, so courses stay level and roof rows follow the eaves;
+every pattern fades to its average colour once it is a few pixels across, so nothing shimmers at
+any distance. (2) The sun is the real sun over Rome (latitude 41.9) by hour and day of the year,
+default day 120 (late April), in local solar time. (3) AgX tone mapping at exposure 1.35. (4)
+Shade is lit by the sky plus a warm bounce from sunlit ground and walls, because the renderer
+has no bounced-light simulation and shade otherwise goes blue-black. (5) Depth fog only on the
+far hills, as aerial perspective. (6) Screen-space indirect light only at street level and inside.
+
+**Why.** The owner's review (U8): a grey-pink wash, flat light and flat colours, against Rome
+Reborn's deep sky, hard sun and real stone. The 60 fps budget still has to be measured on a real
+laptop GPU: this cloud machine renders in software.
+
