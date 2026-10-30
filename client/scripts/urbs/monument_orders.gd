@@ -300,7 +300,7 @@ static func entablature_height(order: String, h: float, d: float, sculpted := fa
 ## axes plus half a diameter), standing on y. `frieze_mat` is the frieze's own surface (painted
 ## stucco on Republican temples, marble later). Returns the top height.
 static func entablature(mm: UrbsMonumentMesh, order: String, h: float, d: float, x0: float, x1: float, z0: float, z1: float,
-		y: float, mat: String, frieze_mat: String, lod := 0, sculpted := false, col_xs := PackedFloat32Array()) -> float:
+		y: float, mat: String, frieze_mat: String, lod := 0, sculpted := false, col_xs := PackedFloat32Array(), total_h := 0.0) -> float:
 	var cx := (x0 + x1) * 0.5
 	var cz := (z0 + z1) * 0.5
 	var hx := (x1 - x0) * 0.5
@@ -311,6 +311,8 @@ static func entablature(mm: UrbsMonumentMesh, order: String, h: float, d: float,
 		"tuscan":
 			return _tuscan_entablature(mm, h, d, cx, cz, hx, hz, y, mat, frieze_mat, lod)
 	var a := architrave_height(h, d)
+	if total_h > 0.0:   # a measured entablature: keep Vitruvius' ratios, scale to the height
+		a = total_h / (1.0 + (1.25 if sculpted else 0.75) + 2.5 * (6.0 / 7.0) * (4.0 / 12.0))
 	var cym := a / 7.0
 	var rest := a - cym
 	var f1 := rest * 3.0 / 12.0
@@ -464,6 +466,17 @@ static func roof(mm: UrbsMonumentMesh, x0: float, x1: float, z0: float, z1: floa
 			mm.slab([e0, e1, r1, r0], thick, tile_mat, "timber_oak")
 		else:
 			mm.slab([r0, r1, e1, e0], thick, tile_mat, "timber_oak")
+	# the cover tiles (imbrices): a raised roll down the slope over every joint of the pan tiles,
+	# about 0.6 m apart (a Roman tegula is about 2 ft wide, # unverified); every second one at lod 1
+	if lod <= 1:
+		var pitch := 0.62 * (1.0 if lod == 0 else 2.0)
+		var nrow := int((zz1 - zz0) / pitch)
+		for s: float in [-1.0, 1.0]:
+			for i in range(1, nrow):
+				var z := zz0 + (zz1 - zz0) * i / nrow
+				var top := Vector3(cx + s * 0.15, y + rise + thick - 0.15 * slope + 0.05, z)
+				var low := Vector3(cx + s * ex, y - drop + thick + 0.05, z)
+				mm.rod(top, low, 0.075, "ridge_terracotta")
 	# ridge tiles
 	mm.rod(Vector3(cx, y + rise + thick * 0.6, zz0 - 0.1), Vector3(cx, y + rise + thick * 0.6, zz1 + 0.1), thick * 0.7, "ridge_terracotta")
 	if lod == 0:
@@ -488,7 +501,7 @@ static func roof(mm: UrbsMonumentMesh, x0: float, x1: float, z0: float, z1: floa
 ## corner ones as high as the tympanum's centre, the middle one an eighth more). `z` is the
 ## face plane; `depth` how far back the tympanum wall and cornice go. Returns the rise.
 static func pediment(mm: UrbsMonumentMesh, x0: float, x1: float, z: float, y: float, front: bool, depth: float,
-		mat: String, tymp_mat: String, sculpt_mat: String, lod := 0, sculpture := true, rise_override := 0.0) -> float:
+		mat: String, tymp_mat: String, sculpt_mat: String, lod := 0, sculpture := true, rise_override := 0.0, acro_scale := 1.0) -> float:
 	var cx := (x0 + x1) * 0.5
 	var span := x1 - x0
 	var rise := rise_override if rise_override > 0.0 else span / 9.0
@@ -516,7 +529,7 @@ static func pediment(mm: UrbsMonumentMesh, x0: float, x1: float, z: float, y: fl
 	if sculpture and lod == 0:
 		_tympanum_sculpture(mm, cx, span, zf - dir * inset * 0.5, y, rise, sculpt_mat, dir)
 	# acroteria: a plinth and a figure at each corner and the apex (3.5.12)
-	var ah := rise - inset * 0.3
+	var ah := minf((rise - inset * 0.3) * acro_scale, 4.5)   # a figure over 4.5 m would dwarf the temple
 	if lod <= 1:
 		for s: float in [-1.0, 0.0, 1.0]:
 			var hgt := ah * (1.125 if s == 0.0 else 1.0)

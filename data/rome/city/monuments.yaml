@@ -566,6 +566,12 @@ monuments:
   pleiades: null
   verified: platner-ashby
   model: temple_tuscan_small  # unverified
+  architecture:  # form fields for the 3D city (U8); each block applies to that model only
+    temple_hexastyle_ionic: {plan: prostyle, order: ionic, front: 6, flank: 3, column_h_m: 11.0, column_d_m: 1.43,
+      podium_h_m: 7.0, mat: marble, source: "Platner-Ashby s.v. Saturnus, Aedes (read): podium of Plancus 22.50 m wide,
+        about 40 long, travertine and peperino walls with concrete filling, marble facing; Ionic hexastyle prostyle with
+        two columns on each side besides the corners; columns 11 m high and 1.43 m thick at the base (the surviving
+        4th-century columns)", unverified: [podium_h_m]}
   offset_m: [30, 44]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 53 m off
   bearing_deg: 80  # unverified
   footprint_m: {length: 40, width: 22.5}
@@ -591,6 +597,15 @@ monuments:
   pleiades: 157276290
   verified: platner-ashby+pleiades
   model: temple_tuscan_small  # unverified
+  architecture:  # form fields for the 3D city (U8); each block applies to that model only
+    temple_octastyle_peripteral: {plan: peripteral, order: corinthian, front: 8, flank: 11, column_h_m: 12.5,
+      column_d_m: 1.45, entablature_h_m: 3.75, podium_h_m: 7.0, platform: {height_m: 3.66, steps: 11, depth_m: 6.0},
+      mat: marble, source: "Platner-Ashby s.v. Castor, Aedes (read): Corinthian, octastyle peripteral, eleven columns on
+        each side, the whole about 50 x 30 m, the floor about 7 m above the Sacra Via; columns of white marble, fluted,
+        12.50 m high and 1.45 thick, entablature 3.75 m; from the pronaos eleven steps down to a platform 3.66 m above
+        the area, with a railing, two narrow stairs at its ends. These are the Augustan remains, drawn for the temple of
+        Metellus (117 BC) on the same site", unverified: [platform.depth_m, the 117 BC temple drawn with the Augustan
+        dimensions]}
   bearing_deg: 16  # unverified
   footprint_m: {length: 50, width: 30}
   phases: [{from: -117, state: standing, model: temple_octastyle_peripteral}]
@@ -616,6 +631,11 @@ monuments:
   pleiades: 55302071
   verified: platner-ashby+pleiades
   model: temple_round
+  architecture:  # form fields for the 3D city (U8); each block applies to that model only
+    temple_round: {plan: round, order: ionic, front: 20, steps: 3, podium_h_m: 1.8, roof: bronze_roof, source:
+        "Platner-Ashby s.v. Vesta, Aedes (read): circular foundation 15.05 m across; the coins show a round building with
+        a conical roof (of bronze, Plin. NH 34.13), on a base of three steps, with Ionic capitals; marble steps on tufa
+        footings", unverified: [podium_h_m, column count 20 from the dataset form]}
   bearing_deg: 100  # unverified
   footprint_m: {radius: 7.5}
   geometry_source: "Platner-Ashby s.v. Vesta (round, foundation 15.05 m diameter, 20 Corinthian/Ionic columns 4.45 m high); the doorway side not stated: east assumed"
@@ -705,6 +725,12 @@ monuments:
   pleiades: 277569430
   verified: platner-ashby+pleiades
   model: temple_hexastyle_ionic_marble  # unverified
+  architecture:  # form fields for the 3D city (U8); each block applies to that model only
+    temple_hexastyle_ionic_marble: {plan: prostyle, order: ionic, front: 6, flank: 2, intercol: pycnostyle,
+      column_d_m: 1.18, column_h_m: 10.62, podium_h_m: 5.86, mat: marble, source: "Platner-Ashby s.v. Divus Iulius, Aedes
+        (read): a platform 3.5 m high, 26 wide, about 30 long, the stylobate 2.36 m above it; Ionic hexastyle, probably
+        with antae, pycnostyle; columns 1.18 m thick at the base, nine diameters high; the cella the whole width, about
+        17 m", unverified: [flank]}
   bearing_deg: 286  # unverified
   footprint_m: {length: 30, width: 26}
   construction: {begun: -42, completed: -29}  # work years; see geometry_source

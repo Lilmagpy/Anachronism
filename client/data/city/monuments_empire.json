@@ -331,6 +331,7 @@
 "Amm. Marc. 23.3.3",
 "Platner-Ashby s.v. Apollo Palatinus, Aedes (read)"
 ],
+"twin_of": "aedes_apollinis_palatini",
 "type": "temple",
 "unverified_fields": [
 "lat",
@@ -396,6 +397,7 @@
 "Dio 55.2.3",
 "Platner-Ashby s.v. Mausoleum Augusti (read)"
 ],
+"twin_of": "mausoleum_augusti",
 "type": "tomb",
 "unverified_fields": [
 "height_m"
@@ -525,6 +527,7 @@
 "CIL VI 896",
 "Platner-Ashby s.v. Pantheon (read)"
 ],
+"twin_of": "pantheon_agrippae",
 "type": "temple",
 "unverified_fields": [
 "height_m"
@@ -663,6 +666,7 @@
 "HA Hadr. 19",
 "Platner-Ashby s.v. Saepta Iulia (read)"
 ],
+"twin_of": "saepta_iulia",
 "type": "portico",
 "unverified_fields": [
 "bearing_deg",
@@ -722,6 +726,7 @@
 "CIL VI 32323",
 "Platner-Ashby s.v. Theatrum Marcelli (read)"
 ],
+"twin_of": "theatrum_marcelli",
 "type": "theatre",
 "unverified_fields": [
 "bearing_deg",
@@ -912,6 +917,7 @@
 "Jerome a. Abr. (Chron. 161)",
 "Platner-Ashby s.v. Curia Iulia (read)"
 ],
+"twin_of": "curia_iulia",
 "type": "curia",
 "unverified_fields": [
 "bearing_deg",
@@ -966,6 +972,7 @@
 "Quint. 12.5.6",
 "Platner-Ashby s.v. Basilica Iulia (read)"
 ],
+"twin_of": "basilica_iulia",
 "type": "basilica",
 "unverified_fields": [
 "bearing_deg",

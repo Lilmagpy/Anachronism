@@ -12,6 +12,11 @@ extends RefCounted
 
 const Kit := preload("res://scripts/models/kit.gd")
 const Roman := preload("res://scripts/models/roman.gd")
+const Temples := preload("res://scripts/urbs/monument_temples.gd")
+
+## Distance bands of the three levels of detail (metres from the camera to the monument's
+## origin; 0 = no limit). Parts and instances carry their band as `range`.
+const LOD_RANGES := [Vector2(0.0, 150.0), Vector2(150.0, 400.0), Vector2(400.0, 0.0)]
 
 const U := 10.0   ## metres per kit unit
 
@@ -28,7 +33,7 @@ const TODO_KIT := {}
 static func kind_of(model: String) -> String:
 	if model == "none":
 		return "none"
-	if OWN.has(model):
+	if OWN.has(model) or Temples.handles(model):
 		return "own"
 	if Roman.KINDS.has(model):
 		return "kit"
@@ -63,7 +68,8 @@ static func make(rec: Dictionary, st: Dictionary, route: PackedVector2Array = Pa
 	st["model"] = model
 	var state := str(st.get("state", "standing"))
 	var d := _dims(model, st)
-	var out := {"parts": [], "boxes": [], "kind": kind_of(model), "todo": "", "world": false}
+	var out := {"parts": [], "boxes": [], "kind": kind_of(model), "todo": "", "world": false, "instances": [],
+		"opens": [], "tris": [0, 0, 0]}
 	if model == "none":
 		return out
 	if state == "building":
@@ -137,6 +143,42 @@ static func _default_height(model: String, w: float, l: float) -> float:
 
 static func _add(out: Dictionary, mesh: ArrayMesh, xform := Transform3D.IDENTITY) -> void:
 	(out.parts as Array).append({"mesh": mesh, "xform": xform})
+
+
+static var _tri_cache := {}
+
+
+## Triangles in a mesh (cached by the mesh's id).
+static func mesh_tris(mesh: Mesh) -> int:
+	var key := mesh.get_instance_id()
+	if not _tri_cache.has(key):
+		var n := 0
+		for i in mesh.get_surface_count():
+			var arr := mesh.surface_get_arrays(i)
+			var idx: Variant = arr[Mesh.ARRAY_INDEX]
+			n += (idx as PackedInt32Array).size() / 3 if idx != null and (idx as PackedInt32Array).size() > 0 else (arr[Mesh.ARRAY_VERTEX] as PackedVector3Array).size() / 3
+		_tri_cache[key] = n
+	return _tri_cache[key]
+
+
+## A form drawn by a UrbsMonumentMesh builder at the three levels of detail: `make(lod)` returns
+## UrbsMonumentMesh.finish(). Each level's mesh and instanced parts carry their distance band;
+## the solids and open footprints of lod 0 become the boxes for collision and picking.
+static func _lodded(out: Dictionary, make: Callable) -> void:
+	for l in 3:
+		var r: Dictionary = make.call(l)
+		var rng: Vector2 = LOD_RANGES[l]
+		(out.parts as Array).append({"mesh": r.mesh, "xform": Transform3D.IDENTITY, "own": true, "range": rng})
+		var tris := int(r.tris)
+		for key in r.instances:
+			var inst: Dictionary = r.instances[key]
+			(out.instances as Array).append({"key": key, "mesh": inst.mesh, "xforms": inst.xforms, "range": rng})
+			tris += mesh_tris(inst.mesh) * (inst.xforms as Array).size()
+		(out.tris as Array)[l] = tris
+		if l == 0:
+			for b in r.solids:
+				(out.boxes as Array).append({"centre": b.centre, "size": b.size, "yaw": 0.0, "exact": true})
+			out.opens = r.opens
 
 
 static func _box_shape(out: Dictionary, centre: Vector3, size: Vector3, yaw := 0.0) -> void:
@@ -220,6 +262,10 @@ static func _height_given(d: Dictionary) -> bool:
 
 static func _standing(out: Dictionary, rec: Dictionary, st: Dictionary, d: Dictionary, model: String,
 		route: PackedVector2Array, ground: Callable) -> void:
+	if Temples.handles(model):
+		var sp := Temples.spec(model, rec, st)
+		_lodded(out, func(l: int) -> Dictionary: return Temples.build(sp.duplicate(), l))
+		return
 	match model:
 		"plaza": _plaza(out, d, str(rec.get("surface", "travertine")))
 		"comitium": _comitium(out, d)
