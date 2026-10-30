@@ -486,6 +486,10 @@ void fragment() {
 		rough = 1.0;
 	}
 	ALBEDO = col;
+	// a little bounce light from the sunlit street and the walls opposite, so walls in deep shade
+	// (late afternoon, narrow lanes) keep their colour instead of going near-black; strongest on
+	// walls, least on roofs, which see the sky anyway
+	EMISSION = col * (0.045 + 0.035 * (1.0 - abs(lnorm.y)));
 	ROUGHNESS = rough;
 	METALLIC = metal;
 	SPECULAR = spec;
