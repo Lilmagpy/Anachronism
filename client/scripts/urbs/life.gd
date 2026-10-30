@@ -30,6 +30,7 @@
 ## animated in its own vertex shader. Budget: < 2 ms CPU and < 60 draw calls at street level.
 ##
 ## ## Sources (passages read for this pass, Latin at thelatinlibrary.com; see also spectacles.yaml)
+##   Placement: nobody is put inside a monument's solids (UrbsMonuments.solid_boxes, D-295).
 ##   Scale and hours: population.json (city_population, central estimates, log-interpolated by
 ##     year). Hours of the day: Martial 4.8 (read; Imperial, AD 80s): hours 1-2 the morning
 ##     callers (salutatio), 3 the lawyers, to the 5th "varios extendit Roma labores", 6th rest,
@@ -149,7 +150,9 @@ var _stall_open: Array[MultiMeshInstance3D] = []
 var _rigs: Array = []              # {node, kind, agent, animals: Array, extra: Array}
 var _venue_crowd: Node3D
 var _forum: Dictionary = {}        # {c: Vector2, u: Vector2, v: Vector2, hl, hw, y}
-var _blockers: Array = []          # AABBs of monuments people must not stand in
+var _blockers: Array = []          # AABBs of monuments' solids people must not stand in
+var _block_grid := {}              # Vector2i cell -> indices into _blockers
+const BLOCK_CELL := 40.0
 var _vcol_mat: StandardMaterial3D
 var _counts := {}
 
@@ -176,14 +179,27 @@ func build(urbs_node: Node3D, new_year: int, new_hour: float, height_fn: Callabl
 		_street_h.append(hs)
 	_link_streets()
 	_find_forum()
+	# what people must not stand in: the monuments' real solids (UrbsMonuments.solid_boxes),
+	# not plazas or routes (no bounds), not steps and low platforms (1.3 m or less)
 	_blockers.clear()
+	_block_grid.clear()
+	var mb: Variant = urbs.monuments.get("_bounds")
 	for id in urbs.monuments.ids():
-		if id in ["forum_romanum", "comitium", "forum_boarium", "forum_holitorium", "circus_maximus", "circus_flaminius", "campus_martius", "via_sacra", "emporium"]:
+		if mb is Dictionary and ((mb as Dictionary).get(id, AABB()) as AABB).size == Vector3.ZERO:
 			continue
-		var b: AABB = urbs.monuments.bounds(id)
-		if b.size.x > 400.0 or b.size.z > 400.0:
-			continue   # walls, aqueducts, the river
-		_blockers.append(b)
+		var boxes: Array = urbs.monuments.solid_boxes(id) if urbs.monuments.has_method("solid_boxes") else [urbs.monuments.bounds(id)]
+		for b in boxes:
+			var bb: AABB = b
+			if bb.size.y <= 1.3 or bb.size.x > 400.0 or bb.size.z > 400.0:
+				continue
+			_blockers.append(bb)
+			var k := _blockers.size() - 1
+			for gx in range(floori((bb.position.x - 1.0) / BLOCK_CELL), floori((bb.end.x + 1.0) / BLOCK_CELL) + 1):
+				for gz in range(floori((bb.position.z - 1.0) / BLOCK_CELL), floori((bb.end.z + 1.0) / BLOCK_CELL) + 1):
+					var key := Vector2i(gx, gz)
+					if not _block_grid.has(key):
+						_block_grid[key] = []
+					(_block_grid[key] as Array).append(k)
 	_vcol_mat = StandardMaterial3D.new()
 	_vcol_mat.vertex_color_use_as_albedo = true
 	_vcol_mat.roughness = 0.95
@@ -440,7 +456,9 @@ func _make_people() -> void:
 	if not _forum.is_empty():
 		var spots := _forum_spots()
 		var made := 0
-		while made < n_forum:
+		var tries := 0
+		while made < n_forum and tries < n_forum * 8:
+			tries += 1
 			var spot: Dictionary = spots[_rng.randi() % spots.size()]
 			var group := 1 + _rng.randi() % 4 if _rng.randf() < 0.75 else 1
 			var c: Vector2 = spot["p"] + Vector2(_rng.randf_range(-1.0, 1.0), _rng.randf_range(-1.0, 1.0)) * float(spot["r"])
@@ -626,8 +644,11 @@ func _forum_spots() -> Array:
 
 
 func _blocked(p: Vector2) -> bool:
-	for b in _blockers:
-		var bb: AABB = b
+	var key := Vector2i(floori(p.x / BLOCK_CELL), floori(p.y / BLOCK_CELL))
+	if not _block_grid.has(key):
+		return false
+	for k in _block_grid[key]:
+		var bb: AABB = _blockers[k]
 		if p.x > bb.position.x - 0.8 and p.x < bb.end.x + 0.8 and p.y > bb.position.z - 0.8 and p.y < bb.end.z + 0.8:
 			return true
 	return false
