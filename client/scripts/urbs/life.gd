@@ -90,13 +90,16 @@ const REGIONS_PATH := "res://data/city/regions.json"
 ## Walkers nearer than this get a skinned figure; the pool holds `near_figures` of them.
 var near_figures := 40
 var near_distance := 42.0
-## The detailed MultiMesh figure out to here, the cheap one beyond, nothing past cull_distance.
-var mid_distance := 170.0
+## MultiMesh levels: the detailed walker (with shadows) to near_mm_distance, the middle one to
+## mid_distance, the far one to cull_distance, nothing beyond.
+var near_mm_distance := 75.0
+var mid_distance := 300.0
 var cull_distance := 1100.0
+const HIDDEN := 9
 ## One street walker per this many inhabitants at the day's peak; one Forum idler per this many.
-var people_per_walker := 520.0
+var people_per_walker := 230.0
 var people_per_idler := 2400.0
-var max_walkers := 1600
+var max_walkers := 3600
 var auto_tick := true
 ## Carts and mules (rigs) kept at once; litters near the Forum.
 var cart_count := 8
@@ -119,8 +122,14 @@ var _frame := 0
 var _streets: Array = []           # urbs.streets.streets
 var _links: Array = []             # per street: [[end 0|1, other street, d on it], ...]
 var _agents: Array[Dictionary] = []
-var _mm_mid: MultiMesh
-var _mm_far: MultiMesh
+var _move_figs := PackedInt32Array()   # walking agents with a skinned figure: every frame
+var _move_near := PackedInt32Array()   # level 1 walkers: every second frame
+var _move_mid := PackedInt32Array()    # agents stepped one frame in four (level 2)
+var _move_far := PackedInt32Array()    # agents stepped one frame in sixteen (level 3)
+var _street_h: Array[PackedFloat32Array] = []   # ground height at each street point
+var _mm_mid: MultiMesh   # level 1: near walkers (shadows)
+var _mm_far: MultiMesh   # level 2: middle distance
+var _mm_vfar: MultiMesh  # level 3: far
 var _mm_dog: MultiMesh
 var _mi_mid: MultiMeshInstance3D
 var _mi_far: MultiMeshInstance3D
@@ -159,6 +168,12 @@ func build(urbs_node: Node3D, new_year: int, new_hour: float, height_fn: Callabl
 	population = _population(year)
 	activity = activity_at(hour)
 	_streets = urbs.streets.streets if urbs.streets != null else []
+	_street_h.clear()
+	for st in _streets:
+		var hs := PackedFloat32Array()
+		for q in (st["pts"] as PackedVector2Array):
+			hs.append(float(height.call(q.x, q.y)))
+		_street_h.append(hs)
 	_link_streets()
 	_find_forum()
 	_blockers.clear()
@@ -176,6 +191,7 @@ func build(urbs_node: Node3D, new_year: int, new_hour: float, height_fn: Callabl
 	_make_stalls()
 	_make_vehicles()
 	_size_multimeshes()
+	_prewarm_figures()
 	for a in _agents:
 		if str(a["mode"]) in ["street", "cart", "mule", "litter"]:
 			_step_street(a, 0.0)
@@ -198,6 +214,7 @@ func clear() -> void:
 	_stall_open.clear()
 	_mm_mid = null
 	_mm_far = null
+	_mm_vfar = null
 	_mm_dog = null
 	_smoke = null
 	_stalls = null
@@ -382,7 +399,7 @@ func _new_agent(kind: String) -> Dictionary:
 		"kind": kind, "col": _cloth(kind), "scale": float(k["scale"]) * _rng.randf_range(0.95, 1.05),
 		"custom": Color(_rng.randf(), 1.0, _rng.randf() * 0.7, flags + _rng.randf() * 0.95),
 		"si": -1, "d": 0.0, "dir": 1, "lat": 0.0, "speed": _rng.randf_range(1.15, 1.55), "amp": 1.0,
-		"pos": Vector3.ZERO, "yaw": 0.0, "lod": 3, "fig": -1, "phase": _rng.randf() * TAU,
+		"pos": Vector3.ZERO, "yaw": 0.0, "lod": HIDDEN, "fig": -1, "phase": _rng.randf() * TAU,
 		"mode": "street", "target": Vector2.ZERO, "pause": 0.0, "area": {}, "face": Vector2.ZERO,
 		"active": true, "dog": false,
 	}
@@ -466,16 +483,30 @@ func _make_people() -> void:
 	# the MultiMeshes (sized when everyone is made: _size_multimeshes)
 	_mm_mid = _multimesh(Crowd.walker_mesh(1), 1)
 	_mm_far = _multimesh(Crowd.walker_mesh(2), 1)
+	_mm_vfar = _multimesh(Crowd.walker_mesh(3), 1)
 	_mm_dog = _multimesh(Crowd.dog_mesh(), 1)
 	var mat := Crowd.walk_material()
 	_mi_mid = _mm_instance(_mm_mid, mat, "WalkersNear", true)
-	_mi_far = _mm_instance(_mm_far, mat, "WalkersFar", false)
+	_mi_far = _mm_instance(_mm_far, mat, "WalkersMid", false)
+	_mm_instance(_mm_vfar, mat, "WalkersFar", false)
 	_mi_dog = _mm_instance(_mm_dog, mat, "Dogs", false)
 	# the skinned figures for the nearest people are made on demand, per class (_take_fig)
 
 
+## Make the skinned figures up front (their first bake is the slow part), hidden, in the
+## proportions of the Forum's dress, so walking into a crowd never stalls.
+func _prewarm_figures() -> void:
+	var share := {"toga": 0.30, "tunic": 0.38, "stola": 0.18, "pilleus": 0.08, "child": 0.06}
+	for k in share:
+		for i in int(round(float(share[k]) * near_figures)):
+			var a := _new_agent(k)
+			_figs.append({"node": _make_figure(k, a), "kind": k, "agent": -1})
+			(_figs[_figs.size() - 1]["node"] as Node3D).visible = false
+			_fig_free.append(_figs.size() - 1)
+
+
 func _size_multimeshes() -> void:
-	for mm in [_mm_mid, _mm_far, _mm_dog]:
+	for mm in [_mm_mid, _mm_far, _mm_vfar, _mm_dog]:
 		if mm != null:
 			(mm as MultiMesh).instance_count = maxi(1, _agents.size())
 			(mm as MultiMesh).visible_instance_count = 0
@@ -855,6 +886,7 @@ func _make_vehicles() -> void:
 	for i in cart_count:
 		var a := _new_agent("tunic")
 		a["mode"] = "cart"
+		a["rig"] = true
 		a["speed"] = _rng.randf_range(0.8, 1.0)
 		a["lat"] = 0.0
 		var root := Node3D.new()
@@ -880,6 +912,7 @@ func _make_vehicles() -> void:
 	for i in mule_count:
 		var a := _new_agent("tunic")
 		a["mode"] = "mule"
+		a["rig"] = true
 		a["speed"] = _rng.randf_range(1.0, 1.25)
 		var root := Node3D.new()
 		root.name = "Mule%d" % i
@@ -903,6 +936,7 @@ func _make_vehicles() -> void:
 	for i in litter_count:
 		var a := _new_agent("toga")
 		a["mode"] = "litter"
+		a["rig"] = true
 		a["speed"] = _rng.randf_range(0.95, 1.1)
 		var root := Node3D.new()
 		root.name = "Litter%d" % i
@@ -1279,36 +1313,47 @@ func tick(delta: float, cam_pos: Vector3) -> void:
 	if _smoke_mat != null:
 		_smoke_mat.set_shader_parameter("clock", _clock)
 	_lod_timer += delta
-	if _lod_timer > 0.45 or cam_pos.distance_to(_cam) > 8.0:
+	if _lod_phase >= 0:
+		_lod_step()
+	elif _lod_timer > 1.2 or cam_pos.distance_to(_cam) > 12.0:
 		_lod_timer = 0.0
 		_cam = cam_pos
-		_update_lod(cam_pos)
-	var far_pass := _frame % 4
-	var dt4 := delta * 4.0
-	for i in _agents.size():
-		var a := _agents[i]
-		if not a["active"]:
-			continue
-		var lod: int = a["lod"]
-		if lod >= 3:
-			continue
-		if lod == 2 and (i % 4) != far_pass:
-			continue
-		var dt := dt4 if lod == 2 else delta
-		match str(a["mode"]):
-			"street", "cart", "mule", "litter":
-				_step_street(a, dt)
-			"plaza":
-				_step_plaza(a, dt)
-			_:
-				pass
-		_write(i, a)
+		_lod_begin(cam_pos)
+		_lod_step()
+	# skinned figures every frame, level 1 one frame in two, level 2 one in six, level 3 one in 16
+	for i in _move_figs:
+		_step(i, delta, true)
+	var k := _frame % 2
+	while k < _move_near.size():
+		_step(_move_near[k], delta * 2.0, true)
+		k += 2
+	k = _frame % 6
+	while k < _move_mid.size():
+		_step(_move_mid[k], delta * 6.0, false)
+		k += 6
+	k = _frame % 16
+	while k < _move_far.size():
+		_step(_move_far[k], delta * 16.0, false)
+		k += 16
 	_update_rigs(delta)
 	if _lamp_node != null and _lamp_node.visible:
 		_update_lights(cam_pos)
 
 
-func _step_street(a: Dictionary, dt: float) -> void:
+func _step(i: int, dt: float, exact := true) -> void:
+	var a := _agents[i]
+	match str(a["mode"]):
+		"street", "cart", "mule", "litter":
+			_step_street(a, dt, exact)
+		"plaza":
+			_step_plaza(a, dt)
+		_:
+			if int(a["lod"]) != 0:
+				return
+	_write(i, a)
+
+
+func _step_street(a: Dictionary, dt: float, exact := true) -> void:
 	var si: int = a["si"]
 	if si < 0 or si >= _streets.size():
 		return
@@ -1332,15 +1377,33 @@ func _step_street(a: Dictionary, dt: float) -> void:
 			var l: Array = choices[_rng.randi() % choices.size()]
 			si = int(l[1])
 			a["si"] = si
+			a["seg"] = 0
 			s = _streets[si]
 			d = float(l[2])
 			a["dir"] = 1 if _rng.randf() < 0.5 else -1
 			var hw := float(s["hw"])
 			a["lat"] = signf(a["lat"]) * hw * (0.0 if str(a["mode"]) == "cart" else _rng.randf_range(0.25, 0.85))
 	a["d"] = d
-	var r: Array = _street_pos(si, d, float(a["lat"]))
-	var p: Vector3 = r[0]
-	var tg: Vector2 = r[1]
+	# walk the street's own polyline from the agent's last segment (no search from the start)
+	var cum: PackedFloat32Array = s["cum"]
+	var pts: PackedVector2Array = s["pts"]
+	var k: int = clampi(int(a.get("seg", 0)), 0, cum.size() - 2)
+	while k < cum.size() - 2 and cum[k + 1] < d:
+		k += 1
+	while k > 0 and cum[k] > d:
+		k -= 1
+	a["seg"] = k
+	var seg_len := maxf(cum[k + 1] - cum[k], 0.0001)
+	var q := pts[k].lerp(pts[k + 1], clampf((d - cum[k]) / seg_len, 0.0, 1.0))
+	var tg := (pts[k + 1] - pts[k]) / seg_len
+	q += Vector2(-tg.y, tg.x) * float(a["lat"])
+	var gy: float
+	if exact:
+		gy = float(height.call(q.x, q.y))
+	else:
+		var hs: PackedFloat32Array = _street_h[si]
+		gy = lerpf(hs[k], hs[k + 1], clampf((d - cum[k]) / seg_len, 0.0, 1.0))
+	var p := Vector3(q.x, gy + 0.22, q.y)
 	var dir := float(a["dir"])
 	a["pos"] = p
 	a["yaw"] = atan2(tg.x * dir, tg.y * dir)
@@ -1385,9 +1448,9 @@ func _write(i: int, a: Dictionary) -> void:
 				node.walk(float(a["phase"]), float(a["amp"]))
 		return
 	var slot: int = a.get("slot", -1)
-	if slot < 0 or lod > 2:
+	if slot < 0 or lod == HIDDEN:
 		return
-	var mm: MultiMesh = _mm_dog if a["dog"] else (_mm_mid if lod == 1 else _mm_far)
+	var mm: MultiMesh = _mm_dog if a["dog"] else [_mm_mid, _mm_mid, _mm_far, _mm_vfar][lod]
 	var sc: float = a["scale"]
 	mm.set_instance_transform(slot, Transform3D(Basis(Vector3.UP, float(a["yaw"])).scaled(Vector3.ONE * sc), p))
 	var cd: Color = a["custom"]
@@ -1399,37 +1462,90 @@ func _write(i: int, a: Dictionary) -> void:
 
 ## Sort the people into detail levels by distance, pack each level's MultiMesh with only its own
 ## people (so the GPU draws no hidden instances), and hand the skinned figures to the nearest.
+## The pass is spread over LOD_PHASES frames (_lod_step): eight slices of classification, then
+## the near figures, then one MultiMesh per frame. _update_lod runs all of it at once.
+const LOD_SLICES := 8
+const LOD_PHASES := LOD_SLICES + 6
+var _lod_phase := -1
+var _lod_cam := Vector3.ZERO
+var _lod_near: Array = []
+var _lod_lists: Array = []
+
+
 func _update_lod(cam_pos: Vector3) -> void:
+	_lod_begin(cam_pos)
+	while _lod_phase >= 0:
+		_lod_step()
+
+
+func _lod_begin(cam_pos: Vector3) -> void:
+	_lod_cam = cam_pos
+	_lod_near = []
+	_lod_lists = [[], [], [], []]   # level 1, 2, 3, dogs
+	_lod_phase = 0
+
+
+func _lod_step() -> void:
+	if _lod_phase < 0:
+		return
+	if _lod_phase < LOD_SLICES:
+		_lod_classify(_lod_phase)
+	elif _lod_phase == LOD_SLICES:
+		_lod_apply_levels()
+	elif _lod_phase == LOD_SLICES + 1:
+		_lod_apply_figures()
+	elif _lod_phase == LOD_SLICES + 2:
+		_lod_apply_lists()
+	else:
+		_lod_fill(_lod_phase - LOD_SLICES - 3)
+	_lod_phase += 1
+	if _lod_phase >= LOD_PHASES:
+		_lod_phase = -1
+
+
+# Slice k of the agents: the new level goes in "nlod" (applied together in _lod_apply).
+func _lod_classify(k: int) -> void:
 	var d0 := near_distance * near_distance
-	var d1 := mid_distance * mid_distance
-	var d2 := cull_distance * cull_distance
-	var near: Array = []   # [dist2, index]
-	var lists: Array = [[], [], []]   # mid, far, dog
-	for i in _agents.size():
+	var d1 := near_mm_distance * near_mm_distance
+	var d2 := mid_distance * mid_distance
+	var d3 := cull_distance * cull_distance
+	var n := _agents.size()
+	for i in range(n * k / LOD_SLICES, n * (k + 1) / LOD_SLICES):
 		var a := _agents[i]
-		var lod := 3
-		var mode := str(a["mode"])
-		var rig := mode in ["cart", "mule", "litter"]
+		var lod := HIDDEN
 		if a["active"]:
-			var dd := (a["pos"] as Vector3).distance_squared_to(cam_pos)
-			if rig:
-				lod = 1 if dd < d1 * 2.0 else 3
+			var dd := (a["pos"] as Vector3).distance_squared_to(_lod_cam)
+			if a.get("rig", false):
+				lod = 1 if dd < d2 else HIDDEN
 			elif a["dog"]:
-				lod = 1 if dd < d1 else 3
+				lod = 1 if dd < d1 * 1.5 else HIDDEN
 			elif dd < d0:
 				lod = 0
-				near.append([dd, i])
+				_lod_near.append([dd, i])
 			elif dd < d1:
 				lod = 1
 			elif dd < d2:
 				lod = 2
+			elif dd < d3:
+				lod = 3
+		a["nlod"] = lod
+
+
+# Apply the new levels (then the skinned figures to the nearest, then the stepping lists).
+func _lod_apply_levels() -> void:
+	for i in _agents.size():
+		var a := _agents[i]
+		var lod: int = a.get("nlod", HIDDEN)
 		a["lod"] = lod
 		a["slot"] = -1
 		if lod != 0 and int(a["fig"]) >= 0:
 			_release_fig(i)
-	near.sort_custom(func(x, y): return x[0] < y[0])
+
+
+func _lod_apply_figures() -> void:
+	_lod_near.sort_custom(func(x, y): return x[0] < y[0])
 	var given := 0
-	for item in near:
+	for item in _lod_near:
 		var i: int = item[1]
 		var a := _agents[i]
 		if given >= near_figures:
@@ -1445,40 +1561,75 @@ func _update_lod(cam_pos: Vector3) -> void:
 			a["fig"] = fi
 			_figs[fi]["agent"] = i
 		given += 1
+	_counts["near"] = given
+
+
+func _lod_apply_lists() -> void:
+	_move_figs = PackedInt32Array()
+	_move_near = PackedInt32Array()
+	_move_mid = PackedInt32Array()
+	_move_far = PackedInt32Array()
 	for i in _agents.size():
 		var a := _agents[i]
 		var lod: int = a["lod"]
-		if str(a["mode"]) in ["cart", "mule", "litter"]:
+		if lod == HIDDEN:
 			continue
-		if a["dog"] and lod == 1:
-			(lists[2] as Array).append(i)
-		elif lod == 1:
-			(lists[0] as Array).append(i)
+		var moving := str(a["mode"]) != "stand"
+		if lod == 0:
+			_write(i, a)
+			if moving:
+				_move_figs.append(i)
+			continue
+		if not a.get("rig", false):
+			(_lod_lists[3] if a["dog"] else _lod_lists[lod - 1]).append(i)
+		if not moving:
+			continue
+		if lod == 1:
+			_move_near.append(i)
 		elif lod == 2:
-			(lists[1] as Array).append(i)
-	var mms := [_mm_mid, _mm_far, _mm_dog]
-	for k in 3:
-		var mm: MultiMesh = mms[k]
-		var lst: Array = lists[k]
+			_move_mid.append(i)
+		else:
+			_move_far.append(i)
+	for r in _rigs:
+		var a := _agents[r["agent"]]
+		(r["node"] as Node3D).visible = a["active"] and int(a["lod"]) != HIDDEN
+	_counts["level1"] = (_lod_lists[0] as Array).size()
+	_counts["level2"] = (_lod_lists[1] as Array).size()
+	_counts["level3"] = (_lod_lists[2] as Array).size()
+	_counts["dogs_shown"] = (_lod_lists[3] as Array).size()
+
+
+# Rewrite one level's MultiMesh in one bulk buffer: per instance 12 floats of transform (by
+# rows), 4 of colour, 4 of custom data. k: 0 level 1 and the dogs, 1 level 2, 2 level 3.
+func _lod_fill(k: int) -> void:
+	var todo: Array = [[_mm_mid, _lod_lists[0]], [_mm_dog, _lod_lists[3]]] if k == 0 else ([[_mm_far, _lod_lists[1]]] if k == 1 else [[_mm_vfar, _lod_lists[2]]])
+	for pair in todo:
+		var mm: MultiMesh = pair[0]
+		var lst: Array = pair[1]
+		var buf := PackedFloat32Array()
+		buf.resize(mm.instance_count * 20)
+		var o := 0
 		for slot in lst.size():
 			var i: int = lst[slot]
 			var a := _agents[i]
 			a["slot"] = slot
-			mm.set_instance_color(slot, a["col"])
-			mm.set_instance_custom_data(slot, a["custom"])
-			_write(i, a)
+			var yaw: float = a["yaw"]
+			var sc: float = a["scale"]
+			var cs := cos(yaw) * sc
+			var sn := sin(yaw) * sc
+			var p: Vector3 = a["pos"]
+			var c: Color = a["col"]
+			var cd: Color = a["custom"]
+			cd.g = float(a["amp"])
+			a["custom"] = cd
+			buf[o] = cs; buf[o + 1] = 0.0; buf[o + 2] = sn; buf[o + 3] = p.x
+			buf[o + 4] = 0.0; buf[o + 5] = sc; buf[o + 6] = 0.0; buf[o + 7] = p.y
+			buf[o + 8] = -sn; buf[o + 9] = 0.0; buf[o + 10] = cs; buf[o + 11] = p.z
+			buf[o + 12] = c.r; buf[o + 13] = c.g; buf[o + 14] = c.b; buf[o + 15] = 1.0
+			buf[o + 16] = cd.r; buf[o + 17] = cd.g; buf[o + 18] = cd.b; buf[o + 19] = cd.a
+			o += 20
+		mm.buffer = buf
 		mm.visible_instance_count = lst.size()
-	for i in _agents.size():
-		if int(_agents[i]["lod"]) == 0:
-			_write(i, _agents[i])
-	# rigs: hide the far ones
-	for r in _rigs:
-		var a := _agents[r["agent"]]
-		(r["node"] as Node3D).visible = a["active"] and int(a["lod"]) < 3
-	_counts["near"] = given
-	_counts["mid"] = (lists[0] as Array).size()
-	_counts["far"] = (lists[1] as Array).size()
-	_counts["dogs_shown"] = (lists[2] as Array).size()
 
 
 func _take_fig(kind: String, a: Dictionary) -> int:

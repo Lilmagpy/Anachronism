@@ -406,7 +406,7 @@ void vertex() {
 		float side = sign(v.x);
 		if (dog) { side *= (v.z > 0.0 ? 1.0 : -1.0); }
 		float ph = phase + (side > 0.0 ? 3.14159 : 0.0);
-		float sw = sin(ph) * 0.5 * amp;
+		float sw = sin(ph) * 0.5 * amp * (robe ? 0.55 : 1.0);
 		float hy = dog ? 0.32 : hip_y;
 		float ky = dog ? 0.16 : knee_y;
 		if (v.y < ky && !dog) {
@@ -436,16 +436,20 @@ void vertex() {
 	VERTEX = hide ? vec3(0.0) : v;
 }
 void fragment() {
-	vec3 skin = mix(vec3(0.95, 0.75, 0.6), vec3(0.6, 0.4, 0.3), tone);
+	// colours are authored in sRGB (as the rig's source_color uniforms are); ALBEDO is linear
+	vec3 skin = mix(vec3(0.86, 0.66, 0.52), vec3(0.55, 0.37, 0.27), tone);
 	vec3 c = skin;
 	if (part < 0.5) {
-		c = texture(face, UV).rgb * mix(1.1, 0.72, tone);
-	} else if (part < 1.5 || (part > 5.5 && part < 6.5)) {
-		c = tint;
-	} else if (part > 3.5 && part < 4.5) {
-		c = mix(vec3(0.12, 0.09, 0.07), vec3(0.42, 0.3, 0.2), hairv);
-	} else if (part > 4.5 && part < 5.5) {
-		c = vec3(0.78, 0.72, 0.6);   // undyed felt
+		c = texture(face, UV).rgb * mix(1.0, 0.55, tone);
+	} else {
+		if (part < 1.5 || (part > 5.5 && part < 6.5)) {
+			c = tint;
+		} else if (part > 3.5 && part < 4.5) {
+			c = mix(vec3(0.12, 0.09, 0.07), vec3(0.42, 0.3, 0.2), hairv);
+		} else if (part > 4.5 && part < 5.5) {
+			c = vec3(0.78, 0.72, 0.6);   // undyed felt
+		}
+		c = pow(c, vec3(2.2));
 	}
 	ALBEDO = c;
 	ROUGHNESS = 0.9;
@@ -469,21 +473,47 @@ static func walk_material() -> ShaderMaterial:
 	return _walk_mat
 
 
-## A standing figure for the walk shader: the seated crowd's standing mesh plus the optional
-## pilleus (part 5) and long robe (part 6). lod 1 is the detailed one, 2 the cheap one.
+## A standing figure for the walk shader, made for the purpose (cheap limbs, no capsules):
+## level 1 (near, ~900 triangles), 2 (middle, ~230), 3 (far, ~80). Parts: 0 head (painted face at
+## level 1), 1 tunic body and skirt, 2 arms, 3 legs, 4 hair, 5 pilleus (shown with flag 1), 6 long
+## robe to the shin, toga or stola (flag 2). Feet at y = 0, faces +z.
 static func walker_mesh(lod: int) -> ArrayMesh:
 	var ck := 100 + lod
 	if _fig_cache.has(ck):
 		return _fig_cache[ck]
-	var base := _figure_mesh(lod, true)
-	var parts: Array = [[base, Transform3D(), -1.0]]
-	var top := 0.92 + F.HEAD_Y + 0.03
-	# the pilleus: a close conical felt cap (Livy 30.45.5, 45.44.19: the freedman's cap; shape # unverified)
-	var cap_prof := [Vector4(0.0, 0.088, 0.1, -0.004), Vector4(0.05, 0.08, 0.09, -0.004), Vector4(0.11, 0.045, 0.05, -0.004), Vector4(0.135, 0.0, 0.0, -0.004)]
-	parts.append([M.lathe(cap_prof, 10 if lod == 1 else 6), Transform3D(Basis(), Vector3(0, top + 0.17, 0)), 5.0])
-	# the long robe: toga or stola, from the hips to the shin / ankle (Horace Sat. 1.2.99 "ad talos stola demissa")
-	var robe_prof := [Vector4(0.06, 0.0, 0.0, 0.0), Vector4(0.06, 0.172, 0.12, 0.0), Vector4(-0.1, 0.205, 0.145, 0.0), Vector4(-0.5, 0.235, 0.17, 0.0), Vector4(-0.80, 0.265, 0.195, 0.0)]
-	parts.append([M.lathe(robe_prof, 12 if lod == 1 else 7, 1), Transform3D(Basis(), Vector3(0, 0.92, 0)), 6.0])
+	var hip := 0.92
+	var parts: Array = []
+	var top := hip + F.HEAD_Y + 0.03
+	var nu: int = [0, 9, 6, 4][lod]
+	var cap_prof := [Vector4(0.0, 0.088, 0.1, -0.004), Vector4(0.06, 0.075, 0.085, -0.004), Vector4(0.135, 0.0, 0.0, -0.004)]
+	var robe_prof := [Vector4(0.04, 0.172, 0.12, 0.0), Vector4(-0.2, 0.215, 0.155, 0.0), Vector4(-0.80, 0.262, 0.195, 0.0)]
+	var skirt_prof := [Vector4(0.04, 0.17, 0.118, 0.0), Vector4(-0.36, 0.232, 0.172, 0.0)]
+	var limb := func(r0: float, r1: float, length: float, n: int) -> ArrayMesh:
+		return M.lathe([Vector4(-length - r1 * 0.6, 0.0, 0.0, 0.0), Vector4(-length, r1, r1, 0.0), Vector4(-length * 0.5, (r0 + r1) * 0.5, (r0 + r1) * 0.5, 0.0), Vector4(0.0, r0, r0, 0.0), Vector4(r0 * 0.6, 0.0, 0.0, 0.0)], n, 0, 1)
+	if lod == 1:
+		parts.append([M.lathe(F.TORSO_PROFILE, nu, 0, 1), Transform3D(Basis(), Vector3(0, hip, 0)), 1.0])
+		parts.append([M.lathe(skirt_prof, nu, 1, 1), Transform3D(Basis(), Vector3(0, hip, 0)), 1.0])
+		parts.append([M.lathe_y(F.HEAD_PROFILE, 10, 8), Transform3D(Basis(), Vector3(0, top, 0)), 0.0])
+		parts.append([F._hair_mesh(), Transform3D(Basis(), Vector3(0, top, 0)), 4.0])
+		for sx in [-1.0, 1.0]:
+			parts.append([limb.call(0.056, 0.036, 0.52, 6), Transform3D(Basis(Vector3(0, 0, 1), -0.05 * sx), Vector3(F.SH_X * sx, hip + F.SH_Y, 0)), 2.0])
+			parts.append([limb.call(0.08, 0.045, F.THIGH + F.SHIN, 6), Transform3D(Basis(), Vector3(F.HIP_X * sx, hip, 0)), 3.0])
+			parts.append([M.ellipsoid(0.045, 0.035, 0.11, 5, 3), Transform3D(Basis(), Vector3(F.HIP_X * sx, 0.035, 0.04)), 3.0])
+	elif lod == 2:
+		parts.append([M.lathe([Vector4(-0.36, 0.0, 0.0, 0.0), Vector4(-0.36, 0.22, 0.16, 0.0), Vector4(0.0, 0.17, 0.115, 0.0), Vector4(0.42, 0.19, 0.11, 0.0), Vector4(0.56, 0.0, 0.0, 0.0)], nu, 0, 1), Transform3D(Basis(), Vector3(0, hip, 0)), 1.0])
+		parts.append([M.ellipsoid(0.08, 0.115, 0.095, 6, 4), Transform3D(Basis(), Vector3(0, top + 0.12, 0)), 0.0])
+		parts.append([M.ellipsoid(0.085, 0.07, 0.1, 6, 3), Transform3D(Basis(), Vector3(0, top + 0.17, -0.01)), 4.0])
+		for sx in [-1.0, 1.0]:
+			parts.append([limb.call(0.05, 0.035, 0.52, 4), Transform3D(Basis(), Vector3(F.SH_X * sx, hip + F.SH_Y, 0)), 2.0])
+			parts.append([limb.call(0.075, 0.045, F.THIGH + F.SHIN, 4), Transform3D(Basis(), Vector3(F.HIP_X * sx, hip, 0)), 3.0])
+	else:
+		parts.append([M.ellipsoid(0.19, 0.42, 0.13, 4, 3), Transform3D(Basis(), Vector3(0, hip + 0.1, 0)), 1.0])
+		parts.append([M.ellipsoid(0.085, 0.12, 0.1, 4, 2), Transform3D(Basis(), Vector3(0, top + 0.13, 0)), 0.0])
+		for sx in [-1.0, 1.0]:
+			parts.append([M.ellipsoid(0.075, 0.46, 0.075, 3, 2), Transform3D(Basis(), Vector3(F.HIP_X * sx, hip - 0.46, 0)), 3.0])
+	if lod < 3:
+		parts.append([M.lathe(cap_prof, maxi(nu, 4), 0, 1), Transform3D(Basis(), Vector3(0, top + 0.17, 0)), 5.0])
+	parts.append([M.lathe(robe_prof, maxi(nu, 5), 1, 1), Transform3D(Basis(), Vector3(0, hip, 0)), 6.0])
 	var m := _merge_keep(parts)
 	_fig_cache[ck] = m
 	return m
@@ -495,14 +525,14 @@ static func dog_mesh() -> ArrayMesh:
 	if _fig_cache.has(200):
 		return _fig_cache[200]
 	var parts: Array = []
-	parts.append([M.ellipsoid(0.13, 0.15, 0.33, 8, 5), Transform3D(Basis(), Vector3(0, 0.42, 0)), 1.0])
-	parts.append([M.ellipsoid(0.09, 0.09, 0.14, 7, 4), Transform3D(Basis(), Vector3(0, 0.52, 0.38)), 1.0])
-	parts.append([M.ellipsoid(0.045, 0.045, 0.09, 5, 3), Transform3D(Basis(), Vector3(0, 0.49, 0.52)), 4.0])
+	parts.append([M.ellipsoid(0.13, 0.15, 0.33, 7, 4), Transform3D(Basis(), Vector3(0, 0.42, 0)), 1.0])
+	parts.append([M.ellipsoid(0.09, 0.09, 0.14, 6, 3), Transform3D(Basis(), Vector3(0, 0.52, 0.38)), 1.0])
+	parts.append([M.ellipsoid(0.045, 0.045, 0.09, 4, 2), Transform3D(Basis(), Vector3(0, 0.49, 0.52)), 4.0])
 	for s in [-1.0, 1.0]:
-		parts.append([M.ellipsoid(0.02, 0.05, 0.012, 4, 3), Transform3D(Basis(), Vector3(0.06 * s, 0.61, 0.36)), 4.0])
+		parts.append([M.ellipsoid(0.02, 0.05, 0.012, 3, 2), Transform3D(Basis(), Vector3(0.06 * s, 0.61, 0.36)), 4.0])
 		for z in [0.22, -0.24]:
-			parts.append([M.capsule(0.045, 0.03, 0.30, 5), Transform3D(Basis(), Vector3(0.085 * s, 0.32, z)), 3.0])
-	parts.append([M.capsule(0.03, 0.015, 0.3, 5), Transform3D(Basis(Vector3.RIGHT, 2.4), Vector3(0, 0.5, -0.33)), 4.0])
+			parts.append([M.ellipsoid(0.04, 0.17, 0.04, 4, 3), Transform3D(Basis(), Vector3(0.085 * s, 0.17, z)), 3.0])
+	parts.append([M.ellipsoid(0.025, 0.025, 0.17, 4, 2), Transform3D(Basis(Vector3.RIGHT, -0.7), Vector3(0, 0.55, -0.4)), 4.0])
 	var m := M.merge(parts)
 	_fig_cache[200] = m
 	return m

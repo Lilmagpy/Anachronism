@@ -13,6 +13,10 @@
 ##                      the life also gets it (set_events). --t=S holds the spectacle at S seconds.
 ##   --spectacle-view=N use the spectacle's seat_views()[N] as the camera
 ##   --cam=x,y,z,tx,ty,tz  place the camera (local metres, y above sea level)
+##   --street=ID --st=0..1 [--back] [--eye=1.7] [--pitch=DEG]   stand on a street looking along it
+##   --market=forum_boarium|forum_holitorium|macellum [--eye=1.7]  stand at a market's edge looking in
+##   --bench            (headless is fine) time life.tick over 300 frames at the camera: mean,
+##                      worst, and the LOD pass
 ##   --perf             print draw calls, objects, primitives and frame time with and without the
 ##                      life, the CPU time of life.tick, and the counts
 extends SceneTree
@@ -63,6 +67,30 @@ func _run() -> void:
 		var c := str(_args["cam"]).split(",")
 		var from := Vector3(float(c[0]), float(c[1]), float(c[2]))
 		cam.global_transform = Transform3D(Basis.looking_at(Vector3(float(c[3]), float(c[4]), float(c[5])) - from, Vector3.UP), from)
+	elif _args.has("street"):
+		urbs.cam.set_process(false)
+		var st := float(_args.get("st", "0.5"))
+		var a: Vector3 = urbs.streets.along(str(_args["street"]), st)
+		var b: Vector3 = urbs.streets.along(str(_args["street"]), st + (-0.02 if _args.has("back") else 0.02))
+		var eye := float(_args.get("eye", "1.7"))
+		var from := a + Vector3(0, eye, 0)
+		var dir := (b - a)
+		dir.y = 0.0
+		var to := from + dir.normalized() * 30.0 + Vector3(0, 30.0 * tan(deg_to_rad(float(_args.get("pitch", "-3")))), 0)
+		cam.global_transform = Transform3D(Basis.looking_at(to - from, Vector3.UP), from)
+	elif _args.has("market"):
+		urbs.cam.set_process(false)
+		var placed: Dictionary = urbs.monuments.get("_placed")
+		var pl: Dictionary = placed.get(str(_args["market"]), {})
+		if not pl.is_empty():
+			var c: Vector2 = pl["centre"]
+			var yaw: float = pl["yaw"]
+			var u := Vector2(sin(yaw), cos(yaw))
+			var edge := c - u * (float(pl["length"]) * 0.5 + 4.0) + Vector2(cos(yaw), -sin(yaw)) * 6.0
+			var eye := float(_args.get("eye", "1.7"))
+			var from := Vector3(edge.x, urbs.height_at(edge.x, edge.y) + eye, edge.y)
+			var to := Vector3(c.x, urbs.height_at(c.x, c.y) + 0.8, c.y)
+			cam.global_transform = Transform3D(Basis.looking_at(to - from, Vector3.UP), from)
 	elif _args.has("spectacle-view") and sp != null:
 		urbs.cam.set_process(false)
 		var views: Array[Transform3D] = sp.camera_views()
@@ -78,6 +106,25 @@ func _run() -> void:
 		life.tick(1.0 / 30.0, cam.global_position)
 		await process_frame
 	print("LIFE counts ", life.counts(), " camera ", cam.global_position, " forum ", life._forum)
+	if _args.has("bench"):
+		var total := 0
+		var worst := 0
+		for i in 300:
+			var a := Time.get_ticks_usec()
+			life.tick(1.0 / 60.0, cam.global_position)
+			var d := Time.get_ticks_usec() - a
+			total += d
+			worst = maxi(worst, d)
+		var phases := []
+		life._lod_begin(cam.global_position)
+		while life._lod_phase >= 0:
+			var c0 := Time.get_ticks_usec()
+			life._lod_step()
+			phases.append(snappedf((Time.get_ticks_usec() - c0) / 1000.0, 0.01))
+		print("BENCH lod phases ms ", phases)
+		var b := Time.get_ticks_usec()
+		life._update_lod(cam.global_position)
+		print("BENCH tick mean=%.2fms worst=%.2fms lod_pass=%.2fms steps per frame: near=%d mid=%d far=%d" % [total / 300000.0, worst / 1000.0, (Time.get_ticks_usec() - b) / 1000.0, life._move_figs.size() + life._move_near.size() / 2, life._move_mid.size() / 6, life._move_far.size() / 16])
 	if _args.has("screenshot"):
 		var path := str(_args["screenshot"])
 		get_root().get_viewport().get_texture().get_image().save_png(path)
