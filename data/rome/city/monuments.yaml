@@ -1456,8 +1456,8 @@ monuments:
   english: Temple of Faunus
   type: temple
   regio: 14
-  lat: 41.891251  # U8 island pass: on the island's upstream (north) half, 80 m up its axis from the middle, where Platner-Ashby s.v. Faunus (as summarised in the notes: Ov. Fast. 2.193-194) puts it at the north end; the island fitted between the two bridges (tiber.gd) lands at about (-639, 195) with its axis at bearing 134; # unverified spot
-  lon: 12.476901
+  lat: 41.891015  # U8 island pass: on the island's upstream (north) half, 75 m up its axis (on the axis, checked on land: ground 8.8 m) from the middle, where Platner-Ashby s.v. Faunus (as summarised in the notes: Ov. Fast. 2.193-194) puts it at the north end; the island fitted between the two bridges (tiber.gd) lands at about (-639, 195) with its axis at bearing 114; # unverified spot
+  lon: 12.476767
   precision: approx
   location: Tiber Island
   built: {year: -194, certainty: certain, by: "vowed 196 by the aediles Cn. Domitius Ahenobarbus and C. Scribonius Curio, built from fines (Livy 33.42.10); dedicated 194 by Domitius (Livy 34.53.4), on 13 February (Ov. Fast. 2.193)"}
@@ -1476,7 +1476,7 @@ monuments:
   english: Temple of Aesculapius
   type: temple
   regio: 14
-  lat: 41.890464  # U8 island pass: on the island's axis 45 m downstream of its middle: San Bartolomeo all'Isola was built over the temple's ruins on the downstream end (Wikipedia s.v. Tiber Island, read 2026-10-30); the island fitted between the two bridges (tiber.gd) lands at about (-639, 195) with its axis at bearing 134; # unverified spot
+  lat: 41.890464  # U8 island pass: on the island's axis 45 m downstream of its middle: San Bartolomeo all'Isola was built over the temple's ruins on the downstream end (Wikipedia s.v. Tiber Island, read 2026-10-30); the island fitted between the two bridges (tiber.gd) lands at about (-639, 195) with its axis at bearing 114; # unverified spot
   lon: 12.477978
   precision: approx
   location: Tiber Island (modern S. Giovanni Calibita and Fatebenefratelli hospital)
@@ -2922,8 +2922,8 @@ monuments:
   english: Pons Sublicius (pile bridge)
   type: bridge
   regio: 11
-  lat: 41.884438  # U8 island pass: the old point lay 125 m inside Trastevere. Wikipedia s.v. Pons Sublicius (read 2026-10-30): 41.88444, 12.47667, a tentative identification on the marble plan (Tucci 2004), downstream of the Pons Aemilius; latitude kept, moved 58 m west onto the modelled river's centre line; # unverified
-  lon: 12.475970
+  lat: 41.884438  # U8 island pass: the old point lay 125 m inside Trastevere. Wikipedia s.v. Pons Sublicius (read 2026-10-30): 41.88444, 12.47667, a tentative identification on the marble plan (Tucci 2004), downstream of the Pons Aemilius; latitude kept, moved 50 m west onto the centre line of the modelled course (UrbsTiber.course()); # unverified
+  lon: 12.476066
   precision: rough
   location: Tiber, south of the Forum Boarium, below the Aventine
   built: {year: null, certainty: traditional, by: "Ancus Marcius (Livy 1.33.6); defended by Horatius Cocles 508 (Livy 2.10)"}
