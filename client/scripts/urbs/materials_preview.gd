@@ -12,8 +12,9 @@
 ## Flags: --hour=H (default 10) --day=N --fx=nossao,nossil,noglow,nofog --plain (flat colours)
 ##   --tonemap=aces|filmic|agx|reinhard --exposure=E --ambient=A --bounce=B (tuning the light)
 ##   --shot=PATH  save the picture and quit
-##   --perf       time the frame with each post effect on and off (60 frames each) and print
-##                PERF lines: wall-clock frame ms and the renderer's own CPU/GPU ms
+##   --perf       time the frame with each post effect on and off and print PERF lines:
+##                wall-clock frame ms and the renderer's own CPU/GPU ms (--frames=N measured,
+##                default 4, after --warm=N, default 3: a software GPU takes seconds a frame)
 extends SceneTree
 
 var args := {}
@@ -265,12 +266,12 @@ func _perf() -> void:
 		atmosphere._mode = ""
 		var street := urbs == null or urbs.cam.mode != UrbsCamera.Mode.CITY
 		atmosphere.update(not street, urbs.cam.dist if urbs != null else 0.0, false)
-		for i in 15:
+		for i in int(args.get("warm", "3")):
 			await process_frame
 		var t0 := Time.get_ticks_usec()
 		var cpu := 0.0
 		var gpu := 0.0
-		var frames := 60
+		var frames := int(args.get("frames", "4"))
 		for i in frames:
 			await process_frame
 			cpu += RenderingServer.viewport_get_measured_render_time_cpu(vp)
