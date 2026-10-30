@@ -454,6 +454,9 @@ static func _tuscan(mm: UrbsMonumentMesh, s: Dictionary, lod: int) -> void:
 	# terracotta statues (the quadriga on the Capitolium: Plin. NH 28.16, # unverified)
 	Orders.pediment(mm, -span * 0.5 - over * 0.5, span * 0.5 + over * 0.5, zcol + d * 0.5 + over, ytop_e + 0.1 - over * rise / (span * 0.5), true,
 		d * 0.8, str(m.ent), str(m.frieze), str(m.sculpt), lod, true, rise + over * rise / (span * 0.5), 0.3)
+	# the back gable, closed and plain
+	Orders.pediment(mm, -span * 0.5 - over * 0.5, span * 0.5 + over * 0.5, cz0 - over, ytop_e + 0.1 - over * rise / (span * 0.5), false,
+		d * 0.8, str(m.ent), str(m.wall), str(m.sculpt), lod, false, rise + over * rise / (span * 0.5), 0.3)
 	mm.solid(Vector3(0, ytop, (cz0 + zcol) * 0.5), Vector3(span, ytop_e - ytop + rise, zcol - cz0))
 
 
