@@ -219,9 +219,9 @@ monuments:
   pleiades: 502866838
   verified: platner-ashby+pleiades
   model: plaza
-  offset_m: [-8, -22]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 23 m off
+  offset_m: [-8, -15]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); U8 moved the centre 7 m north to sit between the two basilicas' fronts
   bearing_deg: 106  # unverified
-  footprint_m: {length: 130, width: 40}  # unverified
+  footprint_m: {length: 120, width: 56}  # unverified: the open paved area between the two basilicas' steps, from the Rostra to the Regia
   height_m: 0
   surface: travertine
   geometry_source: "paved open area between the Rostra and the Regia/Divus Iulius, long axis ESE (the Sacra Via line); size from the plan of the excavated paving (not measured in Platner-Ashby s.v. Forum Romanum, which gives levels: 10.6-10.9 m archaic, 11.8 Sullan, 14 m Caesarian)"
@@ -295,11 +295,35 @@ monuments:
   verified: platner-ashby+pleiades
   model: rostra
   bearing_deg: 196
+  offset_m: [28, 0]  # unverified: moved east to the Comitium's south edge, west of the Lapis Niger
   footprint_m: {length: 8, width: 12}  # unverified
   height_m: 3.5
   phases: [{from: -44, state: gone}]
-  geometry_source: "dataset form: 3.5 m high, 12 m long; Platner-Ashby s.v. Rostra (curved steps, faced due south onto the Forum from the Comitium edge)"
-  geometry_unverified: [footprint_m]
+  geometry_source: "dataset form: 3.5 m high, 12 m long; Platner-Ashby s.v. Rostra (read, U8): on the south side of the Comitium in front of the Curia Hostilia, between the Comitium and the Forum; the Sullan platform lay to the west of the niger lapis, about one metre above the Comitium floor, with two curved steps about 35 cm high; a straight flight of steps up from the Comitium. The dataset's point (the remains of the Augustan Rostra) is kept for rostra_augusti and this platform is shifted 28 m east"
+  geometry_unverified: [footprint_m, height_m, offset_m]
+- id: rostra_augusti
+  latin: Rostra (Caesaris, Augusti)
+  english: Rostra of Caesar and Augustus (speakers' platform)
+  type: rostra
+  regio: 8
+  lat: 41.8926
+  lon: 12.4846
+  precision: approx
+  location: north-west end of the Forum, in front of the temples of Saturn and Concord
+  built: {year: -44, certainty: probable, by: "Caesar decided to move the rostra to the north-west end of the Forum (Dio 43.49); his plan seems not to have been carried out, or at least not dedicated, until after 42 BC; Augustus completed them (Pomponius, Dig. 1.2.2). Platner-Ashby s.v. Rostra Augusti, read"}
+  events:
+  - {year: -42, what: "dedication not before 42 BC (Platner-Ashby s.v. Rostra Augusti)"}
+  form: "Caesar's concrete core 3.50 m high, over 13 m long; Augustus enclosed it in a larger core carrying a curved flight of steps on the west across the whole length; the platform extended 10 m forward from the western brick wall, its front about 24 m long and 3 m high; front and side walls of tufa blocks faced with marble, bronze beaks in two rows let into the facing; travertine paving on travertine beams and piers; a marble balustrade along the sides and front with an opening in the middle (Platner-Ashby s.v. Rostra Augusti)"
+  materials: [tufa, marble, travertine, bronze, brick]
+  sources: ["Dio 43.49", "Pomponius, Dig. 1.2.2", "Suetonius Aug. 100", "Tacitus Ann. 4.67", "Platner-Ashby s.v. Rostra Augusti"]
+  pleiades: null
+  notes: "Added in U8 so that the Forum has its Rostra after 44 BC (rostra_republic is gone from 44 BC). Mark Antony's funeral speech for Caesar was probably made from here (Platner-Ashby). Statues stood on it (Tac. Ann. 4.67, Augustus; Amm. Marc. 16.10.13); which ones in each year is not known, so the figures are generic."
+  model: rostra_augusti
+  bearing_deg: 106
+  footprint_m: {length: 14, width: 24}
+  height_m: 3.0
+  geometry_source: "Platner-Ashby s.v. Rostra Augusti (read): front about 24 m long and 3 high, platform 10 m deep from the western wall, curved steps on the west (about 4 m assumed); point of the remains as in the dataset's Rostra entry; faces the Forum (ESE)"
+  geometry_unverified: [bearing_deg, footprint_m.length]
 - id: graecostasis
   latin: Graecostasis
   english: Graecostasis
@@ -774,7 +798,7 @@ monuments:
   notes: "P&A gives three explanations of the name: (1) the Sabine Mettius Curtius who rode into the marsh in the war of Romulus and Tatius (Livy 1.12.10; Varro LL 5.149); (2) the leap of M. Curtius into a chasm, 362 BC (Livy 7.6.1-6; relief in Palazzo dei Conservatori, a late copy of a c. 2nd-c. original); (3) a spot struck by lightning and enclosed by C. Curtius, consul 445 (Varro LL 5.150). By Augustus it was dry ground (Ov. Fast. 6.403-404). Existing remains: two layers of cappellaccio and Monte Verde tufa attributed to the Sullan period (Van Deman, Frank) with a travertine layer from the Caesarian reconstruction, about 10 m x 9 m. The year 362 is therefore one of three legendary dates, not a historical fact. Pleiades 459049147 (precise)."
   pleiades: 459049147
   verified: platner-ashby+pleiades
-  model: plaza
+  model: lacus_curtius
   bearing_deg: 0
   footprint_m: {length: 10, width: 9}
   height_m: 0
@@ -842,6 +866,28 @@ monuments:
   height_m: 12  # unverified
   geometry_source: "Platner-Ashby s.v. Fornix Fabianus (single arch 3.945 m in diameter, tufa and peperino with travertine facing); the arch spanned the Sacra Via east end"
   geometry_unverified: [bearing_deg, footprint_m, height_m]
+- id: columna_maenia
+  latin: Columna Maenia
+  english: Column of Maenius
+  type: monument
+  regio: 8
+  lat: 41.893
+  lon: 12.48479
+  precision: rough
+  location: on the north-west side of the Forum, near the Basilica Porcia and the Carcer
+  built: {year: -338, certainty: certain, by: "erected in 338 BC in honour of C. Maenius, the victor in the naval battle at Antium (Plin. NH 34.20); another tradition, probably false, made it the column a later Maenius kept when he sold his house to Cato for the Basilica Porcia (Asc. in Cic. div. in Caec. 50). Platner-Ashby s.v. Columna Maenia, read"}
+  events: []
+  form: "an honorific column; still standing in the 4th century AD (Symm. Ep. 5.54.3); a time-signal mark: when the setting sun moved from it to the Carcer the last hour was called (Plin. NH 7.212)"
+  materials: []
+  sources: ["Pliny NH 34.20", "Pliny NH 7.212", "Cicero div. in Caec. 50", "Platner-Ashby s.v. Columna Maenia"]
+  pleiades: null
+  notes: "Added in U8 as part of the Forum's furniture. Its exact spot is unknown (near the Basilica Porcia and the Carcer); the statue on top is assumed from the honour of a column (Pliny NH 34.20), not stated by Platner-Ashby."
+  model: column_honorific
+  bearing_deg: 106
+  footprint_m: {length: 2.2, width: 2.2}
+  height_m: 10
+  geometry_source: "site only (Platner-Ashby s.v. Columna Maenia, read); height and order assumed"
+  geometry_unverified: [lat, lon, footprint_m, height_m, bearing_deg]
 - id: columna_rostrata_duilii
   latin: Columna Rostrata C. Duilii
   english: Column of Duilius

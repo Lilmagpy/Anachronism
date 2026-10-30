@@ -13,6 +13,7 @@ extends RefCounted
 const Kit := preload("res://scripts/models/kit.gd")
 const Roman := preload("res://scripts/models/roman.gd")
 const Temples := preload("res://scripts/urbs/monument_temples.gd")
+const Civic := preload("res://scripts/urbs/monument_civic.gd")
 
 ## Distance bands of the three levels of detail (metres from the camera to the monument's
 ## origin; 0 = no limit). Parts and instances carry their band as `range`.
@@ -33,7 +34,7 @@ const TODO_KIT := {}
 static func kind_of(model: String) -> String:
 	if model == "none":
 		return "none"
-	if OWN.has(model) or Temples.handles(model):
+	if OWN.has(model) or Temples.handles(model) or Civic.handles(model):
 		return "own"
 	if Roman.KINDS.has(model):
 		return "kit"
@@ -265,6 +266,15 @@ static func _standing(out: Dictionary, rec: Dictionary, st: Dictionary, d: Dicti
 	if Temples.handles(model):
 		var sp := Temples.spec(model, rec, st)
 		_lodded(out, func(l: int) -> Dictionary: return Temples.build(sp.duplicate(), l))
+		out.no_skirt = true
+		out.base = "lo"
+		out.door = Temples.door(sp)
+		return
+	if Civic.handles(model):
+		var sc := Civic.spec(model, rec, st)
+		_lodded(out, func(l: int) -> Dictionary: return Civic.build(sc.duplicate(), l))
+		out.no_skirt = true
+		out.base = "lo" if model == "tabularium" else "hi"
 		return
 	match model:
 		"plaza": _plaza(out, d, str(rec.get("surface", "travertine")))

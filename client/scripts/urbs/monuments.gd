@@ -303,6 +303,20 @@ func _make(id: String, st: Dictionary) -> void:
 			_wall_extras(form_st, route)
 		elif model == "aqueduct":
 			_arcade_extras(id, m, form_st, route)
+	# the ground under the footprint: its lowest and highest corner (the new forms draw their own
+	# foundations down from the highest, or sit on the lowest; `base` in the result says which)
+	var half0 := Vector2(maxf(float(st.width), float(st.radius) * 2.0), maxf(float(st.length), float(st.radius) * 2.0)) * 0.5
+	var lo0 := INF
+	var hi0 := -INF
+	if not kind_route:
+		var rot0 := Basis(Vector3.UP, yaw)
+		for off0 in [Vector2.ZERO, Vector2(1, 1), Vector2(-1, 1), Vector2(1, -1), Vector2(-1, -1)]:
+			var wp0 := rot0 * Vector3(off0.x * half0.x, 0, off0.y * half0.y)
+			var gy0 := _ground_at(centre + Vector2(wp0.x, wp0.z))
+			lo0 = minf(lo0, gy0)
+			hi0 = maxf(hi0, gy0)
+		form_st["skirt"] = hi0 - lo0
+	form_st["year"] = _year
 	var res: Dictionary = Forms.make(m, form_st, route, Callable(self, "_ground"))
 	world = bool(res.get("world", false))
 	_kinds[id] = str(res.kind)
@@ -326,6 +340,8 @@ func _make(id: String, st: Dictionary) -> void:
 			hi = maxf(hi, gy)
 		base_y = lo
 		skirt = hi - lo
+		if str(res.get("base", "lo")) == "hi":
+			base_y = hi
 	if world:
 		node.position = Vector3.ZERO
 	else:
@@ -406,7 +422,7 @@ func _make(id: String, st: Dictionary) -> void:
 	_tris[id] = res.get("tris", [0, 0, 0])
 	_placed[id] = {"centre": centre, "yaw": yaw, "y": base_y, "length": maxf(float(st.length), float(st.radius) * 2.0),
 		"width": maxf(float(st.width), float(st.radius) * 2.0), "radius": float(st.radius), "model": model, "state": st.state,
-		"native": aabb.size}
+		"native": aabb.size, "door": res.get("door", null)}
 
 
 ## Shows a part only within its distance band (Vector2(begin, end), 0 = no limit), with a small
@@ -651,6 +667,11 @@ func entrance(id: String) -> Transform3D:
 		return Transform3D(Basis.looking_at(Vector3(0, 0, -1), Vector3.UP), Vector3(c.x, float(p.y) + 1.7, c.y))
 	else:
 		pos += front * (depth if depth > 0.0 else 4.0)
+	if p.get("door") is Vector3:
+		# the new temples know their door: stand on the threshold, eye height above the floor
+		var xf: Transform3D = _xf.get(id, Transform3D(Basis(Vector3.UP, yaw), Vector3(c.x, float(p.y), c.y)))
+		var dp: Vector3 = xf * ((p.door as Vector3) + Vector3(0, 1.7, 0))
+		return Transform3D(Basis.looking_at(look, Vector3.UP), dp)
 	var m: Dictionary = _recs[id]
 	var podium := float(m.get("podium_m", 0.0))
 	if podium <= 0.0 and str(m.get("type", "")) == "temple":

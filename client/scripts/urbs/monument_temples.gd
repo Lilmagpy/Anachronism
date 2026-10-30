@@ -108,6 +108,47 @@ static func build(s: Dictionary, lod: int) -> Dictionary:
 	return mm.finish()
 
 
+## The doorway of a temple in its own frame: the threshold just outside the cella door, at the
+## height of the floor (the top of the podium). Computed from the same sizes as `_classical`.
+static func door(s0: Dictionary) -> Vector3:
+	var s := s0.duplicate()
+	match str(s.plan):
+		"round":
+			var R := float(s.get("R", 7.5))
+			return Vector3(0, float(s.get("podium_h_m", 1.2)), R)
+		"tuscan":
+			var W := float(s.get("W", 16.0))
+			var L := float(s.get("L", W * 1.2))
+			var h := float(s.get("column_h_m", W / 3.0))
+			var ph := float(s.get("podium_h_m", clampf(W * 0.085, 1.5, 4.5)))
+			var steps_n := maxi(1, int(round(ph / 0.24)))
+			if steps_n % 2 == 0:
+				steps_n += 1
+			var body_l := L - steps_n * 0.45
+			h = h
+			return Vector3(0, ph, -L * 0.5 + body_l * 0.5 + 1.5)
+	var W2 := float(s.get("W", 15.0))
+	_size_columns(s, W2)
+	var d := float(s._d)
+	var h2 := float(s._h)
+	var sp := float(s._s)
+	var ph2 := float(s.get("podium_h_m", maxf(1.5, h2 * 0.33)))
+	var steps2 := maxi(1, int(round(ph2 / 0.24)))
+	if steps2 % 2 == 0:
+		steps2 += 1
+	var stair_d := steps2 * (0.45 if ph2 < 4.0 else 0.4)
+	if s.has("platform"):
+		var pf0: Dictionary = s.platform
+		stair_d = int(pf0.get("steps", 11)) * 0.4 + float(pf0.get("depth_m", 6.0))
+	var flank := int(s.get("flank", 3))
+	var body_l2 := (flank - 1) * sp + 1.8 * d if str(s.plan) == "peripteral" else W2 * 1.6
+	var L2 := float(s.get("L", body_l2 + stair_d))
+	var zf := -L2 * 0.5 + L2 - stair_d
+	var zcol := zf - 0.9 * d
+	var cz1 := zcol - 2.0 * sp if str(s.plan) == "peripteral" else zcol - (flank - 0.4) * sp
+	return Vector3(0, ph2, cz1 + 1.2)
+
+
 # --- helpers ----------------------------------------------------------------------------------
 
 
