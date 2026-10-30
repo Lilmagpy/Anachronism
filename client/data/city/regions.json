@@ -106,6 +106,48 @@
 "eras": [
 {
 "from": -509,
+"shops": 0.05,
+"weights": {
+"casa": 0.6,
+"domus": 0.4
+}
+},
+{
+"from": -200,
+"shops": 0.15,
+"weights": {
+"casa": 0.1,
+"domus": 0.75,
+"insula": 0.15
+}
+},
+{
+"from": -100,
+"shops": 0.15,
+"weights": {
+"domus": 0.8,
+"insula": 0.2
+}
+}
+],
+"id": "velia",
+"lat": 41.8913,
+"lon": 12.488,
+"max_density": 0.85,
+"name": "Velia",
+"onset": -509,
+"radius_m": 110,
+"saturates_at": 40000,
+"sources": [
+"Livy 2.7.5-12 (read, Gutenberg trans. Spillan): P. Valerius builds a house 'on the summit of Mount Velia', then moves it to the foot of the hill, 509 BC",
+"the ridge between the Palatine and the Oppian where the Sacra Via crosses: Platner-Ashby s.v. Velia # unverified (LacusCurtius unavailable)",
+"the weights (a residential ridge of good houses on the Via Sacra) are a modelling choice, not a source"
+]
+},
+{
+"eras": [
+{
+"from": -509,
 "shops": 0.0,
 "weights": {
 "casa": 0.7,

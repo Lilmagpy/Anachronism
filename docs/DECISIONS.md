@@ -2651,3 +2651,20 @@ before the long checks, not at the end of a round. (3) The agent briefs are comm
 and the reference still in a minute. What cannot be prevented is the restart itself; what can
 is losing anything to it.
 
+## D-294 Houses in U8: how they stand and what they are — DELEGATED (2026-10-30)
+
+**Decision.** (1) Every MultiMesh whose shader reads vertex colour sets `use_colors` with a white
+instance colour: Godot's compatibility renderer multiplies vertex colour by the instance colour
+even when none is set, which had turned every house the same flat brown. (2) A house stands at
+the height of its highest corner on a 6 m masonry base; lots that step more than 5 m or slope more
+than 0.5 are left empty, so nothing floats or is buried. (3) Horrea appear from 193 BC (the
+Emporium, Livy 35.10.12, # unverified) within 230 m of the Tiber. (4) House variants that look
+alike from far away share one MultiMesh (`lod_key`), halving the MultiMeshes. (5) Beyond 250 m
+only tall buildings cast shadows. (6) A Velia district (Livy 2.7, read) so the ridge on the Via
+Sacra gets its good houses.
+
+**Why.** The owner's review (U8): houses read as flat slabs. The houses pass rebuilt them as
+Republican domus (Vitruvius 6.3, 6.5), insulae (Vitruvius 2.8.17; Strabo 5.3.7), shops,
+workshops and horrea with tiled roofs, shutters, balconies and awnings, while cutting draw
+calls by about a third.
+
