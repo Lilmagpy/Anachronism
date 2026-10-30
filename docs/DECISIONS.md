@@ -2687,3 +2687,22 @@ the Porticus Octaviae: the Servian wall's and the aqueducts' single bounding box
 city, so every street camera inside the walls was thrown hundreds of metres away before it took
 its picture. With real solids, the cameras land where they are asked to.
 
+## D-296 The ground in U8: plateaus, carved platforms, the Tiber on its real course — DELEGATED (2026-10-30)
+
+**Decision.** (1) The Capitoline, Palatine and Aventine are plateaus with cliff or slope flanks
+(Capitoline 46 m after `topography.yaml` and Platner-Ashby); the Velia is its own ridge fitted to
+the excavated pavements. (2) The Forum (11 m, between the early floor and the Sullan paving),
+Caesar's forum, the Area Capitolina and the Circus arena are carved dead flat; every street is
+cut level across, and the clivi climb as ramps between walls. (3) 4 m terraces with retaining
+walls on moderate slopes inside the walls are a modelling choice. (4) The Tiber south of the
+island follows the modern river (bridge coordinates), and the island is placed so the dataset's
+bridges span its channels (Pons Fabricius 62 m, Pons Cestius 48 m); its exact position is being
+checked against Pleiades. (5) The ground's colour is baked into world-space maps so every level
+of detail shades alike. (6) Trees by species where sources name groves (the Asylum, the Forum's
+fig, olive and vine, the Ficus Ruminalis, Pompey's planes, the great gardens), generic greenery
+on crests and tufa faces, and real farmland on the ground outside the walls.
+
+**Why.** The owner's review (U8): flat ground, houses on bare slopes, no trees, farms as striped
+stickers. Most citations in this pass are `# unverified` because LacusCurtius and Perseus were
+unreachable; they are marked in the data.
+
