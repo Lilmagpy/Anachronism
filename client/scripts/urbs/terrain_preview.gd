@@ -35,6 +35,13 @@ func _initialize() -> void:
 	var t0 := Time.get_ticks_msec()
 	UrbsTerrain.prepare()
 	print("heightfield: %d ms" % (Time.get_ticks_msec() - t0))
+	if args.has("probe"):   # --probe=x,z;x,z;...  print the ground height at local points and quit
+		for pt in String(args["probe"]).split(";"):
+			var f := pt.split(",")
+			if f.size() >= 2:
+				print("probe %s: y=%.2f" % [pt, UrbsTerrain.height_at(float(f[0]), float(f[1]))])
+		quit()
+		return
 	var root := Node3D.new()
 	get_root().add_child(root)
 	t0 = Time.get_ticks_msec()

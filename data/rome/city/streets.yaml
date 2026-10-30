@@ -8,7 +8,7 @@
 # Settembre, Via di Marforio, Via Appia Antica...). None is a surveyed line: the best are "approx".
 #
 # Other fields:
-#   kind        street | clivus (hill road) | vicus (street of a neighbourhood) | road (viae outside the walls)
+#   kind        street | clivus (hill road) | vicus (street of a neighbourhood) | road (viae outside the walls) | stairs (a stepped way, U8)
 #   width_m     width of the paved or metalled way between kerbs, metres. Only the Sacra via (5 m,
 #               P-A s.v. Sacra Via: the Augustan pavement) is measured in the sources we read; the
 #               rest are design values chosen by the author for the 3D city (narrow lanes 3-4 m, vici
@@ -237,6 +237,19 @@ streets:
   paved_from: -174
   sources: ["Platner-Ashby s.v. Forum Boarium (read): mentions 'the clivus Publicius descending from the' Aventine to the road along the valley of the Circus Maximus", "Ovid Fasti 5.275-294 (the aediles L. and M. Publicius Malleolus built it from fines, 238 BC): # unverified, from memory; Livy 41.27.5 for paving"]
   notes: "No separate P-A article online (# unverified). The date 238 BC rests on the Publicii's aedileship as I recall it from Ovid and Varro; treat as probable."
+- id: scalae_caci
+  latin: Scalae Caci
+  english: Steps of Cacus
+  kind: stairs
+  direction: "from the Germalus (south-west corner of the Palatine, by the hut of Romulus) down to the valley of the Circus Maximus"
+  points: [[41.88854, 12.48494], [41.88796, 12.48446], [41.88733, 12.48409]]
+  precision: approx
+  width_m: 3.0
+  width_source: assumed
+  exists_from: null
+  paved_from: null
+  sources: ["Platner-Ashby s.v. Scalae Caci: an ancient stairway on the south-west side of the Palatine (Germalus), near the casa Romuli and the temple of Magna Mater, leading down toward the Circus Maximus; traces of the steps and a gate found # unverified, not read (LacusCurtius unreachable this session)", "Solinus 1.18; Plut. Rom. 20 (the stairs of Cacus by the hut of Romulus) # unverified, from memory"]
+  notes: "Steps, not a road: stone treads on the slope. The line is drawn from the plateau edge below the temple of Magna Mater to the foot of the hill at the carceres end of the Circus; approx."
 - id: via_appia
   latin: Via Appia (first mile, Porta Capena to the later Porta Appia)
   english: Appian Way, first mile

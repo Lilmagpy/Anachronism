@@ -768,6 +768,37 @@
 "width_source": "assumed"
 },
 {
+"direction": "from the Germalus (south-west corner of the Palatine, by the hut of Romulus) down to the valley of the Circus Maximus",
+"english": "Steps of Cacus",
+"exists_from": null,
+"id": "scalae_caci",
+"kind": "stairs",
+"latin": "Scalae Caci",
+"notes": "Steps, not a road: stone treads on the slope. The line is drawn from the plateau edge below the temple of Magna Mater to the foot of the hill at the carceres end of the Circus; approx.",
+"paved_from": null,
+"points": [
+[
+41.88854,
+12.48494
+],
+[
+41.88796,
+12.48446
+],
+[
+41.88733,
+12.48409
+]
+],
+"precision": "approx",
+"sources": [
+"Platner-Ashby s.v. Scalae Caci: an ancient stairway on the south-west side of the Palatine (Germalus), near the casa Romuli and the temple of Magna Mater, leading down toward the Circus Maximus; traces of the steps and a gate found # unverified, not read (LacusCurtius unreachable this session)",
+"Solinus 1.18; Plut. Rom. 20 (the stairs of Cacus by the hut of Romulus) # unverified, from memory"
+],
+"width_m": 3.0,
+"width_source": "assumed"
+},
+{
 "direction": "from the Porta Capena south-east (modern Via di Porta S. Sebastiano) to the site of the Aurelian Porta Appia, one Roman mile out",
 "english": "Appian Way, first mile",
 "exists_from": -312,

@@ -227,6 +227,150 @@
 }
 ],
 "terrain_model": {
+"groves": [
+{
+"density": 1.0,
+"from": null,
+"id": "inter_duos_lucos",
+"lat": 41.894,
+"lon": 12.484,
+"mix": {
+"laurel": 2,
+"oak": 4
+},
+"radius": 45,
+"sources": [
+"Livy 1.8.5: the Asylum 'inter duos lucos', the two groves on the Capitoline saddle # unverified, not re-read",
+"Platner-Ashby s.v. Asylum # unverified"
+]
+},
+{
+"density": 1.0,
+"from": null,
+"id": "ficus_olea_vitis",
+"lat": 41.8925,
+"lon": 12.4851,
+"mix": {
+"fig": 1,
+"olive": 1
+},
+"radius": 7,
+"sources": [
+"Pliny NH 15.77-78: a fig, an olive and a vine in the middle of the Forum by the Lacus Curtius # unverified, from memory"
+]
+},
+{
+"density": 1.0,
+"from": null,
+"id": "ficus_ruminalis",
+"lat": 41.8927,
+"lon": 12.485,
+"mix": {
+"fig": 1
+},
+"radius": 4,
+"sources": [
+"Pliny NH 15.77 (the Ficus Ruminalis in the Comitium), Tac. Ann. 13.58 # unverified, from memory"
+]
+},
+{
+"density": 0.8,
+"from": null,
+"id": "lucus_vestae",
+"lat": 41.8912,
+"lon": 12.4865,
+"mix": {
+"laurel": 2,
+"oak": 3
+},
+"radius": 35,
+"sources": [
+"Cic. Div. 1.101 (the lucus Vestae below the Nova Via), P-A s.v. Nova Via (read, streets.yaml)"
+]
+},
+{
+"density": 0.9,
+"from": -55,
+"grid": 14,
+"id": "porticus_pompeiana_planes",
+"lat": 41.8953,
+"lon": 12.475,
+"mix": {
+"plane": 1
+},
+"radius": 60,
+"sources": [
+"Propertius 2.32.11-16: the plane trees of Pompey's portico # unverified, from memory"
+]
+},
+{
+"density": 0.6,
+"from": -60,
+"id": "horti_lucullani",
+"lat": 41.9087,
+"lon": 12.4825,
+"mix": {
+"cypress": 3,
+"laurel": 2,
+"pine": 3,
+"plane": 2
+},
+"radius": 260,
+"sources": [
+"Platner-Ashby s.v. Horti Lucullani (read on LacusCurtius, U2)"
+]
+},
+{
+"density": 0.6,
+"from": -40,
+"id": "horti_sallustiani",
+"lat": 41.9095,
+"lon": 12.495,
+"mix": {
+"cypress": 3,
+"laurel": 2,
+"pine": 3,
+"plane": 2
+},
+"radius": 260,
+"sources": [
+"Platner-Ashby s.v. Horti Sallustiani # unverified, not read"
+]
+},
+{
+"density": 0.6,
+"from": -60,
+"id": "horti_caesaris",
+"lat": 41.876,
+"lon": 12.466,
+"mix": {
+"cypress": 2,
+"olive": 2,
+"pine": 3,
+"plane": 3
+},
+"radius": 300,
+"sources": [
+"Platner-Ashby s.v. Horti Caesaris # unverified, not read"
+]
+},
+{
+"density": 0.7,
+"from": -35,
+"id": "horti_maecenatis",
+"lat": 41.8935,
+"lon": 12.5,
+"mix": {
+"cypress": 3,
+"laurel": 2,
+"pine": 3
+},
+"radius": 220,
+"sources": [
+"Platner-Ashby s.v. Horti Maecenatis (Esquiline, the former paupers' cemetery, Hor. Sat. 1.8) # unverified, not read"
+]
+}
+],
 "plains": [
 {
 "core": 380,
@@ -260,28 +404,63 @@
 ]
 }
 ],
-"ridges": [
+"plateaus": [
 {
-"cliff": true,
-"core": 78,
+"flank": 60,
 "id": "capitolinus",
-"note": "460 m long, 180 m wide on average, NE-SW; 'surrounded by steep cliffs on all sides except the south-east' (the Forum side is softened by the valley); saddle (Inter Duos Lucos) at about 37 m, present summits 38-39 m above the Tiber (about 44-45 a.s.l.); Tarpeian cliff at the SW corner",
-"outer": 108,
-"pts": [
+"note": "460 x 180 m NE-SW, two summits (Capitolium SW, Arx NE) with the saddle of the Asylum between them at about 37 m; steep cliffs all round except toward the Forum, where the Tabularium fills the slope; the Tarpeian rock at the SW. Outline # unverified (modeller's reading of the modern plan)",
+"outline": [
 [
-41.8921,
+41.892,
 12.4815,
+38
+],
+[
+41.89286,
+12.48114,
+42
+],
+[
+41.89385,
+12.48156,
+42
+],
+[
+41.89502,
+12.48228,
+42
+],
+[
+41.89538,
+12.48325,
 40
 ],
 [
-41.8929,
-12.4827,
-46
+41.89497,
+12.48361,
+38
 ],
 [
-41.894,
-12.4838,
-37
+41.89403,
+12.48433,
+36
+],
+[
+41.89304,
+12.48373,
+34
+],
+[
+41.89241,
+12.48289,
+40
+]
+],
+"peaks": [
+[
+41.89259,
+12.48216,
+45
 ],
 [
 41.8946,
@@ -289,16 +468,337 @@
 46
 ],
 [
-41.8953,
-12.4842,
+41.894,
+12.4838,
+37
+]
+],
+"shape": "cliff",
+"sources": [
+"Platner-Ashby s.v. Capitolinus Mons (read on LacusCurtius, U2)",
+"Platner-Ashby s.v. Tabularium (read, monuments.yaml)",
+"Livy 1.8.5 (the Asylum inter duos lucos) # unverified, not re-read"
+]
+},
+{
+"flank": 90,
+"id": "palatinus",
+"note": "irregular quadrilateral, highest point 51.20 m; the north flank over the Forum is an even slope (Nova Via pavement at 23.40 m half-way up, P-A s.v. Nova Via), the west (Cermalus) and south (Circus) sides steeper; the Velia leaves the NE corner. Outline # unverified (modeller's reading)",
+"outline": [
+[
+41.89039,
+12.4845,
+45
+],
+[
+41.8905,
+12.486,
+42
+],
+[
+41.8903,
+12.488,
+42
+],
+[
+41.89057,
+12.48892,
+36
+],
+[
+41.889,
+12.4895,
+45
+],
+[
+41.8876,
+12.4885,
+46
+],
+[
+41.8876,
+12.486,
+47
+],
+[
+41.8885,
+12.484,
+47
+],
+[
+41.8898,
+12.4838,
+47
+]
+],
+"peaks": [
+[
+41.8892,
+12.488,
+51
+],
+[
+41.8889,
+12.48602,
+49
+],
+[
+41.88953,
+12.48506,
+48
+]
+],
+"shape": "slope",
+"sources": [
+"Platner-Ashby s.v. Palatinus Mons (read on LacusCurtius, U2)",
+"Platner-Ashby s.v. Nova Via (read, streets.yaml)"
+]
+},
+{
+"flank": 80,
+"id": "aventinus",
+"note": "two knobs (Aventinus Maior NW 46 m, Minor SE 43 m) with a saddle; steep towards the river and the Circus, whose seats lay against its foot. Outline # unverified (P-A s.v. Aventinus Mons could not be fetched)",
+"outline": [
+[
+41.8848,
+12.4793,
+42
+],
+[
+41.8849,
+12.482,
+42
+],
+[
+41.8842,
+12.48481,
+41
+],
+[
+41.8825,
+12.486,
+38
+],
+[
+41.88,
+12.4875,
+41
+],
+[
+41.879,
+12.48551,
 40
+],
+[
+41.88,
+12.48299,
+41
+],
+[
+41.882,
+12.479,
+43
+]
+],
+"peaks": [
+[
+41.8835,
+12.48108,
+46
+],
+[
+41.88026,
+12.48651,
+43
+],
+[
+41.88233,
+12.48433,
+38
+]
+],
+"shape": "cliff",
+"sources": [
+"Livy 3.50",
+"Platner-Ashby s.v. Circus Maximus (read on LacusCurtius, U2): the valley 600 x 150 m between Palatine and Aventine"
+]
+}
+],
+"platforms": [
+{
+"blend": 30,
+"id": "forum_romanum",
+"level": [
+10.0,
+12.5
+],
+"note": "the whole piazza and the buildings round it, from the foot of the Tabularium to the Regia and the Atrium Vestae; the floor was about 10 m a.s.l. (Sullan pavement 11.90-12.50 m by the temple of Caesar at the east end, P-A s.v. Sacra Via)",
+"polygon": [
+[
+41.89317,
+12.48379
+],
+[
+41.89174,
+12.48379
+],
+[
+41.8916,
+12.48482
+],
+[
+41.89115,
+12.48578
+],
+[
+41.89115,
+12.48711
+],
+[
+41.89196,
+12.48735
+],
+[
+41.89277,
+12.48687
+],
+[
+41.89317,
+12.48602
+],
+[
+41.89349,
+12.48554
+],
+[
+41.89349,
+12.48458
 ]
 ],
 "sources": [
-"Platner-Ashby s.v. Capitolinus Mons (read on LacusCurtius)",
-"Platner-Ashby s.v. Tarpeium Saxum"
+"Platner-Ashby s.v. Forum Romanum (read on LacusCurtius, U2)",
+"Platner-Ashby s.v. Sacra Via (read, streets.yaml)"
 ]
 },
+{
+"blend": 20,
+"id": "forum_iulium",
+"level": [
+13.0,
+13.0
+],
+"note": "the floor of Caesar's forum, a little above the Forum Romanum on the saddle toward the Quirinal; level # unverified",
+"polygon": [
+[
+41.89331,
+12.48446
+],
+[
+41.8934,
+12.48566
+],
+[
+41.89439,
+12.48542
+],
+[
+41.8943,
+12.48433
+]
+],
+"sources": [
+"Platner-Ashby s.v. Forum Iulium # unverified, not read"
+]
+},
+{
+"blend": 25,
+"id": "area_capitolina",
+"level": [
+42.0,
+42.0
+],
+"note": "the terrace of the temple of Jupiter on the Capitolium summit; level set 4 m below the summit figure so the 4-5 m podium (P-A s.v. Iuppiter Optimus Maximus) stands clear. Extent # unverified",
+"polygon": [
+[
+41.89254,
+12.48108
+],
+[
+41.89268,
+12.48228
+],
+[
+41.89192,
+12.48243
+],
+[
+41.89174,
+12.48126
+]
+],
+"sources": [
+"Platner-Ashby s.v. Iuppiter Optimus Maximus Capitolinus, Aedes (read, monuments.yaml)",
+"Platner-Ashby s.v. Area Capitolina # unverified, not read"
+]
+},
+{
+"blend": 45,
+"id": "circus_maximus",
+"level": [
+12.0,
+12.0
+],
+"note": "the arena floor of the Vallis Murcia, 621 x 118 m (Dion. Hal. 3.68) plus the seating margins, kept level (the real floor fell a little toward the Tiber; the valley floor is 10.5-13 m here)",
+"polygon": [
+[
+41.88848,
+12.48358
+],
+[
+41.88442,
+12.48922
+],
+[
+41.88333,
+12.48782
+],
+[
+41.88739,
+12.48217
+]
+],
+"sources": [
+"Dion. Hal. 3.68 (read, monuments.yaml)",
+"Platner-Ashby s.v. Circus Maximus (read on LacusCurtius, U2)"
+]
+}
+],
+"quays": [
+{
+"from": -174,
+"from_m": 560,
+"id": "emporium",
+"rise_m": 4.5,
+"side": "left",
+"sources": [
+"Livy 41.27.8 (174 BC: the censors paved the Emporium with stone, fenced it and built steps down to the Tiber) # unverified, not re-read",
+"Platner-Ashby s.v. Emporium # unverified"
+],
+"to_m": 1110
+},
+{
+"from": null,
+"from_m": 0,
+"id": "insula_revetment",
+"rise_m": 3.4,
+"side": "island",
+"sources": [
+"Platner-Ashby s.v. Insula Tiberina: the travertine facing in the form of a ship is of the 1st century BC # unverified"
+],
+"to_m": 0
+}
+],
+"ridges": [
 {
 "core": 80,
 "id": "capitol_quirinal",
@@ -362,43 +862,6 @@
 "sources": [
 "Platner-Ashby s.v. Viminalis Collis (read on LacusCurtius)",
 "Varro LL 5.51"
-]
-},
-{
-"cliff": true,
-"core": 112,
-"id": "palatinus",
-"note": "Irregular quadrilateral, highest point 51.20 m a.s.l., about 25 acres; 'almost entirely surrounded by two marshy valleys', joined to the Esquiline (Oppius) only by the narrow ridge of the Velia (here about 30 m, the Arch of Titus ridge)",
-"outer": 145,
-"pts": [
-[
-41.8897,
-12.4851,
-47
-],
-[
-41.8892,
-12.488,
-51
-],
-[
-41.8885,
-12.49,
-48
-],
-[
-41.8905,
-12.4905,
-30
-],
-[
-41.8905,
-12.495,
-54
-]
-],
-"sources": [
-"Platner-Ashby s.v. Palatinus Mons (read on LacusCurtius)"
 ]
 },
 {
@@ -494,34 +957,6 @@
 ]
 },
 {
-"cliff": true,
-"core": 92,
-"id": "aventinus",
-"note": "Two knobs (Aventinus Maior, Minor) with a saddle; steep towards the river and the Circus. Shape # unverified: the Platner-Ashby article could not be fetched (Aventinus_Mons.html gives 404 on LacusCurtius)",
-"outer": 128,
-"pts": [
-[
-41.884,
-12.479,
-46
-],
-[
-41.8825,
-12.4825,
-46
-],
-[
-41.88,
-12.486,
-43
-]
-],
-"sources": [
-"Livy 3.50",
-"Platner-Ashby s.v. Aventinus Mons (# unverified, not read)"
-]
-},
-{
 "core": 80,
 "id": "pincius",
 "note": "Collis Hortulorum: runs west from the Porta Salaria, NNW from the Porta Pinciana to the Muro Torto and west again to the Porta Flaminia, divided from the Quirinal by the valley of the Horti Sallustiani; the substructions of the Horti Lucullani altered its contour (late Republic). Crest heights 56-62 m are modern, # unverified for 509-27 BC",
@@ -606,8 +1041,48 @@
 "Platner-Ashby s.v. Ianiculum (read on LacusCurtius, page Janiculum.html)",
 "Livy 1.33.6"
 ]
+},
+{
+"core": 30,
+"id": "velia",
+"note": "U8: the Velia, the narrow ridge joining the Palatine's north-east corner to the Oppius; the Sacra via crosses its summit (P-A s.v. Sacra Via: c. 27 m a.s.l. at the Clivus Palatinus junction, 27.6 m) and the Nova Via leaves it at 32.30 m (P-A s.v. Nova Via). Heights fitted to those excavated pavements; the crest line is the modeller's reading # unverified",
+"outer": 110,
+"pts": [
+[
+41.89057,
+12.48892,
+30
+],
+[
+41.8905,
+12.4905,
+31
+],
+[
+41.8905,
+12.49206,
+38
+],
+[
+41.8905,
+12.495,
+54
+]
+],
+"soft": true,
+"sources": [
+"Platner-Ashby s.v. Sacra Via (read earlier, streets.yaml)",
+"Platner-Ashby s.v. Nova Via (read earlier, streets.yaml)",
+"Platner-Ashby s.v. Palatinus Mons (read on LacusCurtius): joined to the Esquiline only by the narrow ridge of the Velia"
+]
 }
 ],
+"street_cuts": {
+"blend_m": 9.0,
+"max_gradient": 0.16,
+"shoulder_m": 2.0,
+"smooth_m": 36.0
+},
 "valleys": [
 {
 "core": 45,
@@ -931,6 +1406,8 @@
 ],
 "english": "Tiber",
 "island": {
+"channel_east_m": 62,
+"channel_west_m": 48,
 "lat": 41.89,
 "latin": "Insula Tiberina",
 "length_m": 270,
