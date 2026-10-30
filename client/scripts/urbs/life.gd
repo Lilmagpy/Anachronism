@@ -16,6 +16,10 @@
 ##                                                     # senate event gathers the people before the
 ##                                                     # senate house (Livy 22.7.7). The spectacle
 ##                                                     # itself: UrbsSpectacles.play_event(e, urbs)
+##   life.set_spectacle(true / false)                  # around UrbsSpectacles.play_event: the
+##                                                     # street keeps a dozen skinned figures so the
+##                                                     # spectacle's own fit the 4096 instance-uniform
+##                                                     # slots of the compatibility renderer
 ##   life.tick(delta, cam.camera.global_position)      # each frame from _process; or leave
 ##                                                     # `auto_tick` true and it drives itself from
 ##                                                     # the viewport camera
@@ -141,6 +145,7 @@ var _mi_mid: MultiMeshInstance3D
 var _mi_far: MultiMeshInstance3D
 var _mi_dog: MultiMeshInstance3D
 var _figs: Array = []              # [{node, kind, agent}]
+var _figs_saved := -1              # near_figures before set_spectacle(true)
 var _fig_free: Array[int] = []
 var _cam := Vector3(1e9, 0, 1e9)
 var _lod_timer := 0.0
@@ -217,6 +222,9 @@ func build(urbs_node: Node3D, new_year: int, new_hour: float, height_fn: Callabl
 	for a in _agents:
 		if str(a["mode"]) in ["street", "cart", "mule", "litter"]:
 			_step_street(a, 0.0)
+	for i in _agents.size():
+		if str(_agents[i]["mode"]) == "follow":
+			_step(i, 0.0)
 	_make_lamps()
 	_make_smoke()
 	_apply_hour()
@@ -951,14 +959,13 @@ func _make_vehicles() -> void:
 			ox.position = Vector3(sx, 0.0, 2.6)
 			root.add_child(ox)
 			oxen.append(ox)
-		# the driver walks at the near ox's head with a goad
-		var driver: Node3D = F.person({"tunic": TUNIC_COLOURS[_rng.randi() % TUNIC_COLOURS.size()], "seed": i})
-		driver.position = Vector3(-1.25, 0.0, 3.0)
-		root.add_child(driver)
-		var rig := {"node": root, "kind": "cart", "agent": _agents.size(), "animals": oxen, "extra": [driver], "phase": _rng.randf() * TAU}
+		var rig := {"node": root, "kind": "cart", "agent": _agents.size(), "animals": oxen, "extra": [], "phase": _rng.randf() * TAU}
 		_agents.append(a)
 		_rigs.append(rig)
 		_place_vehicle(a, true)
+		# the driver walks at the near ox's head: an ordinary walker that follows the cart (a
+		# skinned figure only when near, like everyone), not a rig of its own
+		_add_follower(_agents.size() - 1, Vector3(-1.25, 0.0, 3.0))
 	# pack mules with a muleteer (no ban on pack animals; Juvenal 3.237 "mandrae", read)
 	for i in mule_count:
 		var a := _new_agent("tunic")
@@ -976,13 +983,11 @@ func _make_vehicles() -> void:
 		for sx in [-0.34, 0.34]:
 			F.box(body, Vector3(0.28, 0.45, 0.6), Vector3(sx, 1.35, 0.0), Color(0.62, 0.5, 0.34))
 		F.box(body, Vector3(0.5, 0.2, 0.7), Vector3(0.0, 1.68, 0.0), Color(0.55, 0.42, 0.3))
-		var man: Node3D = F.person({"tunic": TUNIC_COLOURS[_rng.randi() % TUNIC_COLOURS.size()], "seed": 50 + i})
-		man.position = Vector3(0.9, 0.0, 0.9)
-		root.add_child(man)
-		var rig := {"node": root, "kind": "mule", "agent": _agents.size(), "animals": [mule], "extra": [man], "phase": _rng.randf() * TAU}
+		var rig := {"node": root, "kind": "mule", "agent": _agents.size(), "animals": [mule], "extra": [], "phase": _rng.randf() * TAU}
 		_agents.append(a)
 		_rigs.append(rig)
 		_place_vehicle(a, false)
+		_add_follower(_agents.size() - 1, Vector3(0.9, 0.0, 0.9))
 	# litters near the Forum (Cic. Phil. 2.58, read: an open litter)
 	for i in litter_count:
 		var a := _new_agent("toga")
@@ -1015,6 +1020,16 @@ func _make_vehicles() -> void:
 		a["d"] = _rng.randf() * float(_streets[pick]["len"])
 		a["dir"] = 1 if _rng.randf() < 0.5 else -1
 		a["lat"] = float(_streets[pick]["hw"]) * 0.3 * (1.0 if _rng.randf() < 0.5 else -1.0)
+
+
+## A walker (a muleteer, a carter) who keeps `offset` (in the vehicle's frame) from agent `leader`.
+func _add_follower(leader: int, offset: Vector3) -> void:
+	var f := _new_agent("tunic")
+	f["mode"] = "follow"
+	f["leader"] = leader
+	f["offset"] = offset
+	f["amp"] = 0.8
+	_agents.append(f)
 
 
 func _street_index(prefer: Array) -> int:
@@ -1392,6 +1407,8 @@ func _apply_hour() -> void:
 					_place_vehicle(a, true)
 			"mule", "litter":
 				on = activity > 0.2
+			"follow":
+				on = _agents[int(a["leader"])]["active"]
 		a["active"] = on
 	for mi in _stall_open:
 		mi.visible = open
@@ -1460,6 +1477,14 @@ func _step(i: int, dt: float, exact := true) -> void:
 			_step_street(a, dt, exact)
 		"plaza":
 			_step_plaza(a, dt)
+		"follow":
+			var lead := _agents[int(a["leader"])]
+			var yaw: float = lead["yaw"]
+			var q: Vector3 = (lead["pos"] as Vector3) + Basis(Vector3.UP, yaw) * (a["offset"] as Vector3)
+			q.y = float(height.call(q.x, q.z)) + 0.2
+			a["pos"] = q
+			a["yaw"] = yaw
+			a["phase"] = lead["phase"]
 		_:
 			if int(a["lod"]) != 0:
 				return
@@ -1790,13 +1815,34 @@ func _take_fig(kind: String, a: Dictionary) -> int:
 	return pick
 
 
+## While a spectacle plays (its own figures and animals need the shader's instance slots: the
+## compatibility renderer has 4096), keep only a dozen skinned street figures; false restores.
+func set_spectacle(on: bool) -> void:
+	if on and _figs_saved < 0:
+		_figs_saved = near_figures
+		near_figures = 12
+		for k in _fig_free:
+			var node: Node3D = _figs[k]["node"]
+			if node != null:
+				node.queue_free()
+				_figs[k]["node"] = null
+		_cam = Vector3(1e9, 0, 1e9)
+	elif not on and _figs_saved >= 0:
+		near_figures = _figs_saved
+		_figs_saved = -1
+		_cam = Vector3(1e9, 0, 1e9)
+
+
 func _release_fig(i: int) -> void:
 	var a := _agents[i]
 	var fi: int = a["fig"]
 	if fi < 0:
 		return
 	var f: Dictionary = _figs[fi]
-	if f["node"] != null:
+	if f["node"] != null and _figs_saved >= 0:
+		(f["node"] as Node3D).queue_free()   # spectacle mode: give the slots back
+		f["node"] = null
+	elif f["node"] != null:
 		(f["node"] as Node3D).visible = false
 	f["agent"] = -1
 	a["fig"] = -1
@@ -1818,10 +1864,8 @@ func _update_rigs(delta: float) -> void:
 			"cart":
 				for ox in r["animals"]:
 					A.walk_ox(ox, ph * 0.8, 1.0)
-				(r["extra"][0] as Node3D).walk(ph, 0.75)
 			"mule":
 				A.walk_ox(r["animals"][0], ph, 0.9)
-				(r["extra"][0] as Node3D).walk(ph, 0.85)
 			"litter":
 				var k := 0
 				for b in r["extra"]:

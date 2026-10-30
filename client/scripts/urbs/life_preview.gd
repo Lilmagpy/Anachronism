@@ -63,6 +63,7 @@ func _run() -> void:
 		var sflags := {"event": _args["event"]}
 		if _args.has("t"):
 			sflags["t"] = _args["t"]
+		life.set_spectacle(true)
 		sp = Spectacles.handle_flags(sflags, urbs)
 		print("SPECTACLE ", sp.name if sp != null else "none")
 	var cam: Camera3D = urbs.cam.camera
