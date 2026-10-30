@@ -2738,3 +2738,21 @@ renderer's per-instance shader buffer is raised to 16384 so a spectacle and the 
 **Why.** The owner's review (U8): empty streets, where Rome Reborn has people everywhere, the main
 cue for scale; and the plan's "life inside, driven by the engine's events, not random".
 
+## D-299 The Tiber island, the riverside monuments and the Basilica Porcia — DELEGATED (2026-10-30)
+
+**Decision.** (1) The bridge records' `offset_m` corrections are folded into their coordinates,
+so the terrain (which fits the island between the bridges) and the monuments (which draw them)
+read the same points; the island now sits 31 m from Wikipedia's point for the Isola Tiberina, its
+long axis at bearing 114. (2) The temples of Faunus and Aesculapius stand on the island; the Circus
+Flaminius, its neighbouring temples, the Emporium, the Pons Sublicius and the Porta Flumentana and
+Trigemina are moved onto land, each with its source or `# unverified` in the data. (3) The Servian
+wall is not drawn between the Porta Flumentana and the Porta Trigemina (`open_between`), because
+Platner-Ashby says its line there has not been determined. (4) The Basilica Porcia stands a little
+west of the Curia, in Lautumiis (Platner-Ashby s.v., read), no longer over the ground in front of
+the Curia.
+
+**Why.** The new Tiber course left temples standing in the water and the island 60 m off its
+bridges; and the Senate's crowd and camera landed inside the Basilica Porcia. (The lead's own
+instruction quoted the island's position with a wrong conversion, (-630, 211) instead of
+(-646, 211); the agent caught it.)
+
