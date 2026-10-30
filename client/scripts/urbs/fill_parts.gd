@@ -311,21 +311,27 @@ class MB:
 		var back := -out * 0.4
 		quad(a + dn, b + dn, b + dn + back, a + dn + back, WOOD, Vector3.DOWN)
 
-	## Antefixes: an upright palmette plate at the end of every cover tile along an eave.
-	func antefixes(a: Vector3, b: Vector3, out: Vector3, slope: float) -> void:
+	## Antefixes: a small flat terracotta plaque (palmette or head), about 0.16 m tall and 0.14 m
+	## wide, upright on the eave at the end of every cover tile, its face to the street. Only at full
+	## detail (callers check lod == 0).
+	func antefixes(a: Vector3, b: Vector3, out: Vector3, _slope: float) -> void:
 		var len := a.distance_to(b)
-		var n_tiles := maxi(int(len / 0.55), 1)
+		var n_tiles := maxi(int(len / 0.5), 1)
 		var dir := (b - a) / float(n_tiles)
-		var half := dir.normalized() * 0.12
-		var tilt := Vector3(0, 0.13, 0) - out * 0.03 * slope
+		var al := dir.normalized()
+		var half := al * 0.07
+		var top := half * 0.6
 		for i in range(n_tiles + 1):
-			var p := a + dir * float(i) - out * 0.02
+			var p := a + dir * float(i) + out * 0.01
 			if i == 0:
-				p += dir.normalized() * 0.16
+				p += al * 0.1
 			elif i == n_tiles:
-				p -= dir.normalized() * 0.16
-			# one pointed plate per cover tile (the palmette's outline)
-			tri(p - half, p + half, p + tilt * 1.45, RIDGE, out)
+				p -= al * 0.1
+			# a plaque 0.12 high and a rounded (bevelled) head 0.04 high: four triangles, no point
+			var y1 := Vector3(0, 0.12, 0)
+			var y2 := Vector3(0, 0.16, 0)
+			quad(p - half, p + half, p + half + y1, p - half + y1, RIDGE, out)
+			quad(p - half + y1, p + half + y1, p + top + y2, p - top + y2, RIDGE, out)
 
 	func cone(cx: float, cz: float, y0: float, y1: float, r0: float, r1: float, sides: int, col: Color) -> void:
 		for s in sides:

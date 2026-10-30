@@ -691,7 +691,8 @@ func _street_rows(si: int) -> void:
 			stretches.append([e, _r(sh, n, side + 7) < float(era0["shops"])])
 			s = e
 			n += 1
-		# tabernae along the shop stretches
+		# tabernae along the shop stretches; `placed` keeps the stretches of street they really took
+		var placed: Array[Vector2] = []
 		s = 0.0
 		var item := 0
 		while s < length:
@@ -711,6 +712,7 @@ func _street_rows(si: int) -> void:
 					var variant := int(_r(sh, item, side + 19) * 6.0)
 					var tab := _make_lot("taberna:%d" % variant, Vector2(4.6, 5.2), pos, -mn, tw, dd, Color(_palette[_hash(sh, item, side + 21) % _palette.size()], _r(sh, item, side + 20)), 5.0 if variant != 4 else 7.5, "taberna")
 					if _add_street_lot(tab, sid, 0.2):
+						placed.append(Vector2(s, s + tw))
 						_street_prop(mp, mn, hw, sh, item, side)
 			s += tw + (2.2 if _r(sh, item, side + 22) < 0.06 else 0.0)
 			item += 1
@@ -743,10 +745,27 @@ func _street_rows(si: int) -> void:
 			var np: Vector2 = mid2[0]
 			var nt: Vector2 = mid2[1]
 			var nn := Vector2(-nt.y, nt.x) * float(side)
-			var rowdist := hw + KERB + FOOTPATH + (SHOP_DEPTH + 0.5 if _shops_at(stretches, s + wide * 0.5) else 0.0)
+			# set back behind the shop row only where tabernae were really built in front; elsewhere the
+			# house comes up to the footpath (no strip of bare earth between the kerb and the house)
+			var behind := false
+			for iv in placed:
+				if iv.x < s + wide - 0.5 and iv.y > s + 0.5:
+					behind = true
+					break
+			var rowdist := hw + KERB + FOOTPATH + (SHOP_DEPTH + 0.5 if behind else 0.0)
 			var lot := _lot_of(type, np + nn * (rowdist + depth * 0.5), -nn, sh, item, side * 31 + 3)
 			var ok := _add_street_lot(lot, sid, 0.25)
-			s += wide + (_r(sh, item, side + 29) * 1.8 + 0.4 if ok else 5.0)
+			if not ok and type != "casa":
+				# a big house does not fit here: try a small one at the same spot before leaving a gap
+				var small := _lot_of("casa", Vector2.ZERO, Vector2.UP, sh, item, side * 31 + 7, true)
+				var mid3 := _streets.sample_at(si, s + small["hx"])
+				var n3 := Vector2(-mid3[1].y, mid3[1].x) * float(side)
+				var rd3 := hw + KERB + FOOTPATH + (SHOP_DEPTH + 0.5 if behind else 0.0)
+				small = _lot_of("casa", mid3[0] + n3 * (rd3 + float(small["hz"])), -n3, sh, item, side * 31 + 7, true)
+				if _add_street_lot(small, sid, 0.25):
+					ok = true
+					wide = float(small["hx"]) * 2.0
+			s += wide + (_r(sh, item, side + 29) * 1.8 + 0.4) if ok else 2.0
 			item += 1
 
 
