@@ -38,7 +38,7 @@ const NEAR_M := 2000.0                    ## within this of the Forum, lod 0 use
 const WARP_M := 38.0                      ## how far hill and valley outlines wander from their ideal line
 const FORUM_FLOOR_M := 10.0               ## ancient Forum floor, m a.s.l.
 const TERRACE_M := 4.0                    ## height of one hillside terrace
-const CACHE_VERSION := "u8-site-11"        ## bump when the model code changes
+const CACHE_VERSION := "u8-site-12"        ## bump when the model code changes
 const STREETS_PATH := "res://data/city/streets.json"
 const REGIONS_PATH := "res://data/city/regions.json"
 const RURAL_CELL := 25.0                  ## resolution of the farmland weight raster
@@ -954,13 +954,13 @@ static func _ground_weights(x: float, z: float, y: float, ny: float, k: int) -> 
 	var urban := _urban_at(x, z)
 	var green := UrbsSiteFlora.grove_weight(x, z)
 	var worn := urban * (1.0 - green)
-	dust = maxf(dust, worn * smoothstep(0.80, 0.94, ny) * 0.8 * (1.0 - mud))
+	dust = maxf(dust, worn * smoothstep(0.80, 0.94, ny) * 0.7 * (1.0 - mud))
 	var grass_c := Color(0.47, 0.47, 0.25).lerp(Color(0.53, 0.50, 0.28), smoothstep(30.0, 60.0, y))
 	var meadow_c := Color(0.39, 0.44, 0.22)
 	var grass := meadow_c.lerp(grass_c, smoothstep(16.0, 34.0, y))
-	grass = grass.lerp(Color(0.52, 0.49, 0.35), worn * 0.85)
+	grass = grass.lerp(Color(0.50, 0.48, 0.36), worn * 0.85)
 	# trodden earth, light and dusty; compacted gravel on the carved platforms, close to travertine
-	var dust_c := Color(0.64, 0.58, 0.47).lerp(Color(0.75, 0.70, 0.59), maxf(forum * 0.5, built))
+	var dust_c := Color(0.63, 0.59, 0.50).lerp(Color(0.74, 0.71, 0.62), maxf(forum * 0.5, built))
 	var tufa := Color(0.60, 0.50, 0.36).lerp(Color(0.42, 0.44, 0.26), 0.35 * urban)
 	var c := grass.lerp(tufa, steep)
 	c = c.lerp(dust_c, dust * (1.0 - steep))
