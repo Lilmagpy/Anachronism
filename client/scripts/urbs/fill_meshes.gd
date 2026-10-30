@@ -308,8 +308,9 @@ void fragment() {
 		float row = fract(course + h21(vec2(floor(across), 1.0)) * 0.5);
 		float tone = 0.86 + 0.28 * h21(vec2(floor(across), floor(course)));
 		vec3 base = mix(c_tegulae, c_tegulae_old, clamp(vcust.a * 0.7 + 0.4 * fbm(lpos.xz * 0.25 + seed) - 0.25, 0.0, 1.0));
-		col = base * mix(1.0, tone, aa);
-		col *= mix(1.0, (0.74 + 0.26 * smoothstep(0.0, 0.3, row)) * (0.9 + 0.16 * cov), aa);
+		// far away the pattern averages out: use its mean (about 0.82) so distant roofs keep the
+		// depth of colour of the near ones instead of washing out
+		col = base * mix(0.82, tone * (0.74 + 0.26 * smoothstep(0.0, 0.3, row)) * (0.9 + 0.16 * cov), aa);
 		float lich = smoothstep(0.7, 0.86, fbm(lpos.xz * 0.6 + seed));
 		col = mix(col, col * lin(vec3(0.7, 0.66, 0.5)), lich * 0.5);
 		nrm = normalize(NORMAL + normalize(v_across) * x * cov * 0.85 * aa);
