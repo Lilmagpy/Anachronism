@@ -231,41 +231,116 @@ vec3 brick(vec2 uv, float seed, vec3 c, vec3 mortar_c) {
 	return mix(c * (0.78 + 0.4 * h21(vec2(floor(bx), row) + seed)), mortar_c, clamp(mortar, 0.0, 1.0));
 }
 
-// painted letters of a shop sign (dipinti): rows of Latin capitals drawn from strokes, red on
-// white, always reading left to right. 12 letter forms: I L E F H N T V O C A M, and spaces.
+// the words of the shop signs; letter codes A=0 B=1 C=2 E=3 F=4 G=5 I=6 L=7 M=8 N=9 O=10 P=11 Q=12 R=13 S=14 T=15 V=16 X=17 .=18 D=19, space 31
+// words: VINVM, VINA, CAVPONA, OLEVM, TABERNA, PANIS, FIGVLVS, MEL, FABER, FVLLO, M.TVLLI, C.VALERI, L.CORNELI, P.CLAVDI, Q.FABI, T.MANLI, CN.OCTAVI, SEX.IVLI
+// trades: 0 counter with dolia (wine, oil, an inn), 1 table of goods, 2 workbench; names in the
+// genitive (the owner's), common Republican praenomina and nomina, no particular person meant
+const int W_CH[180] = {16, 6, 9, 16, 8, 31, 31, 31, 31, 31, 16, 6, 9, 0, 31, 31, 31, 31, 31, 31, 2, 0, 16, 11, 10, 9, 0, 31, 31, 31, 10, 7, 3, 16, 8, 31, 31, 31, 31, 31, 15, 0, 1, 3, 13, 9, 0, 31, 31, 31, 11, 0, 9, 6, 14, 31, 31, 31, 31, 31, 4, 6, 5, 16, 7, 16, 14, 31, 31, 31, 8, 3, 7, 31, 31, 31, 31, 31, 31, 31, 4, 0, 1, 3, 13, 31, 31, 31, 31, 31, 4, 16, 7, 7, 10, 31, 31, 31, 31, 31, 8, 18, 15, 16, 7, 7, 6, 31, 31, 31, 2, 18, 16, 0, 7, 3, 13, 6, 31, 31, 7, 18, 2, 10, 13, 9, 3, 7, 6, 31, 11, 18, 2, 7, 0, 16, 19, 6, 31, 31, 12, 18, 4, 0, 1, 6, 31, 31, 31, 31, 15, 18, 8, 0, 9, 7, 6, 31, 31, 31, 2, 9, 18, 10, 2, 15, 0, 16, 6, 31, 14, 3, 17, 18, 6, 16, 7, 6, 31, 31};
+const int W_LEN[18] = {5, 4, 7, 5, 7, 5, 7, 3, 5, 5, 7, 8, 9, 8, 6, 7, 9, 8};
+const int W_TRADE[18] = {0, 1, 2, 3, 4, 1, 3, 5, 4, 1, 6, 7, 8, 9, 5, 6, 4, 8};
+const int W_NAME[8] = {10, 11, 12, 13, 14, 15, 16, 17};
 float seg(vec2 p, vec2 a, vec2 b, float w) {
 	vec2 pa = p - a; vec2 ba = b - a;
 	float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
 	return 1.0 - step(w, length(pa - ba * h));
 }
-float letters(vec2 uv, float seed) {
-	float rowh = 0.3;
-	float ry = fract(uv.y / rowh);
-	float rown = floor(uv.y / rowh);
-	if (ry < 0.16 || ry > 0.86) return 0.0;
-	float cw = 0.2;
-	float ci = floor(uv.x / cw);
-	vec2 q = vec2(fract(uv.x / cw), (ry - 0.16) / 0.7);   // letter box: x 0..1 left to right, y 0..1 up
-	float g = h21(vec2(ci, rown + seed));
-	if (g < 0.2) return 0.0;  // a space between words
-	int k = int(floor(h21(vec2(ci * 1.3, rown + seed * 0.7)) * 12.0));
-	float w = 0.09;
+
+// one capital in the box q (0..1 left to right, 0..1 up); strokes about 0.09 thick
+float glyph(int k, vec2 q) {
+	float w = 0.12;
 	vec2 bl = vec2(0.2, 0.0); vec2 tl = vec2(0.2, 1.0); vec2 br = vec2(0.75, 0.0); vec2 tr = vec2(0.75, 1.0);
-	vec2 ml = vec2(0.2, 0.5); vec2 mr = vec2(0.7, 0.5);
+	vec2 ml = vec2(0.2, 0.5);
 	float s = 0.0;
-	if (k == 0) { s = seg(q, vec2(0.47, 0.0), vec2(0.47, 1.0), w); }
-	else if (k == 1) { s = max(seg(q, bl, tl, w), seg(q, bl, br, w)); }
-	else if (k == 2) { s = max(max(seg(q, bl, tl, w), seg(q, tl, tr, w)), max(seg(q, ml, mr, w), seg(q, bl, br, w))); }
-	else if (k == 3) { s = max(max(seg(q, bl, tl, w), seg(q, tl, tr, w)), seg(q, ml, mr, w)); }
-	else if (k == 4) { s = max(max(seg(q, bl, tl, w), seg(q, br, tr, w)), seg(q, ml, vec2(0.75, 0.5), w)); }
-	else if (k == 5) { s = max(max(seg(q, bl, tl, w), seg(q, br, tr, w)), seg(q, tl, br, w)); }
-	else if (k == 6) { s = max(seg(q, vec2(0.1, 1.0), vec2(0.85, 1.0), w), seg(q, vec2(0.47, 0.0), vec2(0.47, 1.0), w)); }
-	else if (k == 7) { s = max(seg(q, tl, vec2(0.47, 0.0), w), seg(q, vec2(0.47, 0.0), tr, w)); }
-	else if (k == 8) { s = max(max(seg(q, bl, tl, w), seg(q, br, tr, w)), max(seg(q, tl, tr, w), seg(q, bl, br, w))); }
-	else if (k == 9) { s = max(max(seg(q, bl, tl, w), seg(q, tl, tr, w)), seg(q, bl, br, w)); }
-	else if (k == 10) { s = max(max(seg(q, bl, vec2(0.47, 1.0), w), seg(q, vec2(0.47, 1.0), br, w)), seg(q, vec2(0.3, 0.4), vec2(0.65, 0.4), w)); }
-	else { s = max(max(seg(q, bl, tl, w), seg(q, br, tr, w)), max(seg(q, tl, vec2(0.47, 0.45), w), seg(q, vec2(0.47, 0.45), tr, w))); }
+	if (k == 0) {        // A
+		s = max(max(seg(q, vec2(0.12, 0.0), vec2(0.47, 1.0), w), seg(q, vec2(0.47, 1.0), vec2(0.82, 0.0), w)), seg(q, vec2(0.27, 0.38), vec2(0.67, 0.38), w));
+	} else if (k == 1) { // B
+		s = max(seg(q, bl, tl, w), seg(q, tl, vec2(0.58, 1.0), w));
+		s = max(s, max(seg(q, vec2(0.58, 1.0), vec2(0.7, 0.78), w), seg(q, vec2(0.7, 0.78), vec2(0.58, 0.52), w)));
+		s = max(s, max(seg(q, ml, vec2(0.62, 0.52), w), seg(q, vec2(0.62, 0.52), vec2(0.78, 0.27), w)));
+		s = max(s, max(seg(q, vec2(0.78, 0.27), vec2(0.62, 0.0), w), seg(q, vec2(0.62, 0.0), bl, w)));
+	} else if (k == 2 || k == 5) { // C, G
+		s = max(seg(q, vec2(0.75, 0.85), vec2(0.5, 1.0), w), seg(q, vec2(0.5, 1.0), vec2(0.27, 0.92), w));
+		s = max(s, max(seg(q, vec2(0.27, 0.92), vec2(0.18, 0.7), w), seg(q, vec2(0.18, 0.7), vec2(0.18, 0.3), w)));
+		s = max(s, max(seg(q, vec2(0.18, 0.3), vec2(0.27, 0.08), w), seg(q, vec2(0.27, 0.08), vec2(0.5, 0.0), w)));
+		s = max(s, seg(q, vec2(0.5, 0.0), vec2(0.75, 0.15), w));
+		if (k == 5) s = max(s, max(seg(q, vec2(0.75, 0.15), vec2(0.75, 0.42), w), seg(q, vec2(0.75, 0.42), vec2(0.5, 0.42), w)));
+	} else if (k == 3) { // E
+		s = max(max(seg(q, bl, tl, w), seg(q, tl, tr, w)), max(seg(q, ml, vec2(0.65, 0.5), w), seg(q, bl, br, w)));
+	} else if (k == 4) { // F
+		s = max(max(seg(q, bl, tl, w), seg(q, tl, tr, w)), seg(q, ml, vec2(0.65, 0.5), w));
+	} else if (k == 6) { // I
+		s = seg(q, vec2(0.47, 0.0), vec2(0.47, 1.0), w);
+	} else if (k == 7) { // L
+		s = max(seg(q, bl, tl, w), seg(q, bl, br, w));
+	} else if (k == 8) { // M
+		s = max(seg(q, vec2(0.12, 0.0), vec2(0.12, 1.0), w), seg(q, vec2(0.82, 0.0), vec2(0.82, 1.0), w));
+		s = max(s, max(seg(q, vec2(0.12, 1.0), vec2(0.47, 0.35), w), seg(q, vec2(0.47, 0.35), vec2(0.82, 1.0), w)));
+	} else if (k == 9) { // N
+		s = max(max(seg(q, bl, tl, w), seg(q, br, tr, w)), seg(q, tl, br, w));
+	} else if (k == 10 || k == 12) { // O, Q
+		s = max(seg(q, vec2(0.47, 1.0), vec2(0.76, 0.82), w), seg(q, vec2(0.76, 0.82), vec2(0.76, 0.18), w));
+		s = max(s, max(seg(q, vec2(0.76, 0.18), vec2(0.47, 0.0), w), seg(q, vec2(0.47, 0.0), vec2(0.18, 0.18), w)));
+		s = max(s, max(seg(q, vec2(0.18, 0.18), vec2(0.18, 0.82), w), seg(q, vec2(0.18, 0.82), vec2(0.47, 1.0), w)));
+		if (k == 12) s = max(s, seg(q, vec2(0.5, 0.2), vec2(0.88, -0.1), w));
+	} else if (k == 11 || k == 13) { // P, R
+		s = max(seg(q, bl, tl, w), seg(q, tl, vec2(0.6, 1.0), w));
+		s = max(s, max(seg(q, vec2(0.6, 1.0), vec2(0.75, 0.76), w), seg(q, vec2(0.75, 0.76), vec2(0.6, 0.5), w)));
+		s = max(s, seg(q, vec2(0.6, 0.5), ml, w));
+		if (k == 13) s = max(s, seg(q, vec2(0.45, 0.5), vec2(0.8, 0.0), w));
+	} else if (k == 14) { // S
+		s = max(seg(q, vec2(0.75, 0.88), vec2(0.55, 1.0), w), seg(q, vec2(0.55, 1.0), vec2(0.32, 1.0), w));
+		s = max(s, max(seg(q, vec2(0.32, 1.0), vec2(0.18, 0.84), w), seg(q, vec2(0.18, 0.84), vec2(0.26, 0.6), w)));
+		s = max(s, max(seg(q, vec2(0.26, 0.6), vec2(0.68, 0.42), w), seg(q, vec2(0.68, 0.42), vec2(0.77, 0.17), w)));
+		s = max(s, max(seg(q, vec2(0.77, 0.17), vec2(0.62, 0.0), w), seg(q, vec2(0.62, 0.0), vec2(0.36, 0.0), w)));
+		s = max(s, seg(q, vec2(0.36, 0.0), vec2(0.17, 0.12), w));
+	} else if (k == 15) { // T
+		s = max(seg(q, vec2(0.1, 1.0), vec2(0.84, 1.0), w), seg(q, vec2(0.47, 0.0), vec2(0.47, 1.0), w));
+	} else if (k == 16) { // V
+		s = max(seg(q, vec2(0.12, 1.0), vec2(0.47, 0.0), w), seg(q, vec2(0.47, 0.0), vec2(0.82, 1.0), w));
+	} else if (k == 17) { // X
+		s = max(seg(q, vec2(0.15, 1.0), vec2(0.8, 0.0), w), seg(q, vec2(0.15, 0.0), vec2(0.8, 1.0), w));
+	} else if (k == 18) { // interpunct
+		s = 1.0 - step(0.08, length(q - vec2(0.47, 0.45)));
+	} else if (k == 19) { // D
+		s = max(seg(q, bl, tl, w), seg(q, tl, vec2(0.5, 1.0), w));
+		s = max(s, max(seg(q, vec2(0.5, 1.0), vec2(0.76, 0.75), w), seg(q, vec2(0.76, 0.75), vec2(0.76, 0.25), w)));
+		s = max(s, max(seg(q, vec2(0.76, 0.25), vec2(0.5, 0.0), w), seg(q, vec2(0.5, 0.0), bl, w)));
+	}
 	return s;
+}
+
+// one word (`wi` in the tables above) centred in the box p (0..1, 0..1) whose width is `aspect`
+// times its height
+float word(int wi, vec2 p, float aspect) {
+	int n = W_LEN[wi];
+	float cw = min(0.62, aspect * 0.9 / float(n));   // letter width, in letter heights
+	float x0 = (aspect - cw * float(n)) * 0.5;
+	float x = p.x * aspect - x0;
+	if (x < 0.0 || x >= cw * float(n) || p.y < 0.0 || p.y > 1.0) return 0.0;
+	int ci = int(floor(x / cw));
+	int k = W_CH[wi * 10 + ci];
+	if (k == 31) return 0.0;
+	vec2 q = vec2(fract(x / cw), p.y);
+	q.x = (q.x - 0.5) / 0.86 + 0.5;    // a little space between letters
+	return glyph(k, q);
+}
+
+// the sign: one trade word, or the owner's name above it. UV2.y = trade * 100 + r (r 0..99);
+// everything is rounded to integers first, because interpolated values differ in the last bits
+// from pixel to pixel and a hash of them would change the word from one pixel to the next
+float sign_text(vec2 suv, vec2 suv2, float inst) {
+	int code = int(round(suv2.y));
+	int t = clamp(code / 100, 0, 2);
+	int r = code - (code / 100) * 100;
+	int si = int(round(inst * 997.0));
+	int tw = W_TRADE[t * 6 + (r * 7 + si * 3) % 6];
+	float hgt = 0.55;
+	if ((r + si) % 3 == 0) {
+		int nm = W_NAME[(r * 5 + si) % 8];
+		float a = suv2.x / (hgt * 0.34);
+		return max(word(nm, vec2(suv.x, (suv.y - 0.56) / 0.34), a), word(tw, vec2(suv.x, (suv.y - 0.12) / 0.34), a));
+	}
+	return word(tw, vec2(suv.x, (suv.y - 0.2) / 0.6), suv2.x / (hgt * 0.6));
 }
 
 void fragment() {
@@ -365,18 +440,13 @@ void fragment() {
 		col = dark * (0.28 + 0.08 * vn(uv * 2.0 + seed)) + c_timber_oak * shelf * 0.14 * fade;
 		rough = 1.0;
 	} else if (id == 13) {
-		// painted sign: white ground, red or black letters
+		// painted sign (dipinti): red capitals on a white ground, words chosen by the shop's trade
 		vec3 ink = c_stucco_red * 0.85;
-		// along the wall from left to right as seen from outside (the face's own right hand), so the
-		// letters never read mirrored whichever way the building faces
-		float su = dot(lpos.xz, vec2(lnorm.z, -lnorm.x));
-		float l = letters(vec2(su + seed * 0.37, up), seed) * fade;
-		col = mix(c_stucco_white * (0.9 + 0.1 * fbm(uv * 2.0)), ink, l * 0.8);
-	} else if (id == 21) {
-		float bd = fract(u / 0.24);
-		col = mix(c_timber_weathered, c_timber_oak, 0.8) * 0.6 * (0.85 + 0.25 * h21(vec2(floor(u / 0.24), seed)));
-		col *= mix(1.0, 0.6, step(bd, 0.06) * fade);
-		rough = 0.95;
+		float l = UV2.x > 0.1 ? sign_text(UV, UV2, vcust.a) * fade : 0.0;
+		col = mix(c_stucco_white * (0.9 + 0.1 * fbm(uv * 2.0)), ink, l * 0.85);
+		// a thin red frame round the panel
+		float frame = UV2.x > 0.1 ? (1.0 - step(0.03, min(min(UV.x, 1.0 - UV.x) * UV2.x / 0.55, min(UV.y, 1.0 - UV.y)))) : 0.0;
+		col = mix(col, ink, frame * 0.8 * fade);
 	} else if (id == 7) {
 		float g = vn(vec2(uv.x * 24.0 + uv.y * 3.0, uv.y * 1.5 + seed));
 		col = mix(c_timber_weathered, c_timber_oak, step(0.5, vcust.a)) * (0.72 + 0.4 * g);

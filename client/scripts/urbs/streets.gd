@@ -4,7 +4,15 @@
 ## sources). A street exists from `exists_from`; it is paved with polygonal basalt (silex) from
 ## `paved_from` (Livy 41.27.5: the censors of 174 BC paved the city streets with silex and
 ## gravelled the roads outside it; the Via Appia 293 and 189 BC, Livy 10.47.4 and 38.28.3), and
-## is beaten earth (inside the walls) or gravel (roads) before. Stone kerbs edge a paved street.
+## is beaten earth (inside the walls) or gravel (roads) before. Stone kerbs edge a paved street,
+## and inside the Servian circuit a raised footway (crepido, peperino slabs: the modeller's choice; at
+## Pompeii they are beaten earth, mortar or slabs) runs behind each kerb up to the house fronts
+## (UrbsFill sets them at KERB + FOOTPATH); outside the walls
+## a paved road has kerbs only. Stepping stones cross the paved city streets. A `stairs` street (the
+## Scalae Caci) is built as steps by UrbsSite and has no strip here. Surfaces come from
+## UrbsMaterials: street_basalt, gravel, earth_packed, tufa_grey (kerbs and footway slabs), the modeller's choice,
+## basalt (stepping stones). U8: the ground under every street is cut level across it by
+## UrbsTerrain, so the strip lies flat.
 ##
 ## API (the spectacles and the camera use these):
 ##   build(parent, year, height)       make the meshes under `parent`; `height` is (x, z) -> y
@@ -23,10 +31,10 @@ const CELL := 64.0           ## spatial index cell, metres
 const STEP := 4.0            ## spacing of strip samples, metres
 const KERB_W := 0.28
 const KERB_H := 0.2
-const SURFACE_LIFT := 0.2   ## strips float this far above the terrain to avoid z-fighting
+const SURFACE_LIFT := 0.12  ## strips float this far above the terrain to avoid z-fighting
+const FOOTWAY_W := 1.25     ## the raised footway behind the kerb, inside the walls (reaches the fill's frontage, FOOTPATH 1 m + a little under the walls)
+const FOOTWAY_H := 0.22
 const SEARCH_RINGS := 7
-
-static var _tex_cache := {}
 
 var year := -300
 var height: Callable = func(_x: float, _z: float) -> float: return 10.0
@@ -68,6 +76,7 @@ func load_data(new_year: int) -> void:
 			"len": cum[cum.size() - 1],
 			"paved": paved_from != null and int(paved_from) <= year,
 			"road": str(entry.get("kind", "street")) == "road",
+			"stairs": str(entry.get("kind", "street")) == "stairs",
 		}
 		_by_id[s["id"]] = streets.size()
 		streets.append(s)
@@ -194,16 +203,20 @@ func build(parent: Node3D, new_year: int, new_height: Callable) -> void:
 	_root = Node3D.new()
 	_root.name = "Streets"
 	parent.add_child(_root)
-	var paved_mat := _material(true)
-	var earth_mat := _material(false)
-	var gravel_mat := _material(false, true)
-	var kerb_mat := StandardMaterial3D.new()
-	kerb_mat.albedo_color = Color(0.52, 0.5, 0.46)
-	kerb_mat.roughness = 1.0
+	var paved_mat := UrbsMaterials.get_material("street_basalt")
+	var earth_mat := UrbsMaterials.get_material("earth_packed")
+	var gravel_mat := UrbsMaterials.get_material("gravel")
+	var kerb_mat := UrbsMaterials.get_material("tufa_grey")
+	var foot_mat := UrbsMaterials.get_material("tufa_grey")
+	var circuit := UrbsTerrain.circuit()
 	for si in streets.size():
 		var s: Dictionary = streets[si]
-		var surface: StandardMaterial3D = paved_mat if s["paved"] else (gravel_mat if s["road"] else earth_mat)
-		var mesh := _street_mesh(s, float(si) * 0.004, surface, kerb_mat)
+		if bool(s.get("stairs", false)):
+			continue
+		var surface: Material = paved_mat if s["paved"] else (gravel_mat if s["road"] else earth_mat)
+		var mid: Vector2 = (s["pts"] as PackedVector2Array)[(s["pts"] as PackedVector2Array).size() / 2]
+		var in_city := circuit.size() > 2 and Geometry2D.is_point_in_polygon(mid, circuit)
+		var mesh := _street_mesh(s, float(si) * 0.004, surface, kerb_mat, foot_mat, in_city and not bool(s["road"]))
 		if mesh == null:
 			continue
 		var node := MeshInstance3D.new()
@@ -213,12 +226,13 @@ func build(parent: Node3D, new_year: int, new_height: Callable) -> void:
 		_root.add_child(node)
 
 
-func _street_mesh(s: Dictionary, lift: float, surface: Material, kerb_mat: Material) -> ArrayMesh:
+func _street_mesh(s: Dictionary, lift: float, surface: Material, kerb_mat: Material, foot_mat: Material, footway: bool) -> ArrayMesh:
 	var pts: PackedVector2Array = s["pts"]
 	var length: float = s["len"]
 	if pts.size() < 2 or length < 1.0:
 		return null
 	var hw: float = s["hw"]
+	footway = footway and bool(s["paved"])
 	var n := maxi(2, int(ceil(length / STEP)) + 1)
 	var samples := PackedVector2Array()
 	var tangents := PackedVector2Array()
@@ -236,6 +250,10 @@ func _street_mesh(s: Dictionary, lift: float, surface: Material, kerb_mat: Mater
 	var kv := PackedVector3Array()
 	var kn := PackedVector3Array()
 	var ki := PackedInt32Array()
+	var fv := PackedVector3Array()
+	var fnr := PackedVector3Array()
+	var fuv := PackedVector2Array()
+	var fi := PackedInt32Array()
 	var run := 0.0
 	for i in n:
 		if i > 0:
@@ -256,15 +274,32 @@ func _street_mesh(s: Dictionary, lift: float, surface: Material, kerb_mat: Mater
 				var a0 := b + row
 				idx.append_array([a0, a0 + 3, a0 + 1, a0 + 1, a0 + 3, a0 + 4])
 		if bool(s["paved"]):
+			# no kerb or footway where the street crosses a paved platform (the Forum, the Circus)
+			var on := 0.0 if UrbsSite.platform_at(samples[i].x, samples[i].y) != "" else 1.0
 			for side: float in [1.0, -1.0]:
 				var inner := samples[i] + nrm * (hw * side)
-				var outer := samples[i] + nrm * ((hw + KERB_W) * side)
+				var outer := samples[i] + nrm * ((hw + KERB_W * on) * side)
 				var y_in := float(height.call(inner.x, inner.y)) + SURFACE_LIFT + lift
 				var y_out := float(height.call(outer.x, outer.y)) + SURFACE_LIFT + lift
 				# top of the kerb stone, then its inner face dropping to the road
-				kv.append(Vector3(inner.x, y_in + KERB_H, inner.y)); kn.append(Vector3.UP)
-				kv.append(Vector3(outer.x, y_out + KERB_H, outer.y)); kn.append(Vector3.UP)
+				kv.append(Vector3(inner.x, y_in + KERB_H * on, inner.y)); kn.append(Vector3.UP)
+				kv.append(Vector3(outer.x, y_out + KERB_H * on, outer.y)); kn.append(Vector3.UP)
 				kv.append(Vector3(inner.x, y_in, inner.y)); kn.append(Vector3(-nrm.x * side, 0.0, -nrm.y * side))
+				if footway:   # the raised footway behind the kerb, at kerb height
+					var back := samples[i] + nrm * ((hw + (KERB_W + FOOTWAY_W) * on) * side)
+					var y_back := float(height.call(back.x, back.y)) + SURFACE_LIFT + lift
+					var y_top := maxf(y_out, y_back) + FOOTWAY_H * on - (1.0 - on) * 0.3
+					fv.append(Vector3(outer.x, y_top, outer.y)); fnr.append(Vector3.UP); fuv.append(Vector2(run / 2.0, 0.0))
+					fv.append(Vector3(back.x, y_top, back.y)); fnr.append(Vector3.UP); fuv.append(Vector2(run / 2.0, 0.5))
+					fv.append(Vector3(back.x, minf(y_back, y_out) - 0.3, back.y)); fnr.append(Vector3(nrm.x * side, 0.0, nrm.y * side)); fuv.append(Vector2(run / 2.0, 0.7))
+	if footway:
+		for i in range(1, n):
+			for side_i in 2:
+				var b0 := (i - 1) * 6 + side_i * 3
+				var b1 := i * 6 + side_i * 3
+				var flip := side_i == 1
+				_quad(fi, b0, b0 + 1, b1, b1 + 1, flip)           # top
+				_quad(fi, b0 + 1, b0 + 2, b1 + 1, b1 + 2, flip)   # back face
 	if bool(s["paved"]):
 		# kerb triangles: per sample 6 verts (2 sides x 3)
 		for i in range(1, n):
@@ -275,7 +310,7 @@ func _street_mesh(s: Dictionary, lift: float, surface: Material, kerb_mat: Mater
 				_quad(ki, b0, b0 + 1, b1, b1 + 1, flip)           # top
 				_quad(ki, b0 + 2, b0, b1 + 2, b1, flip)           # inner face
 	if bool(s["paved"]) and length > 40.0:
-		# stepping stones across the roadway (as at Pompeii) every ~45 m, and drain gratings
+		# stepping stones across the roadway (as at Pompeii) every ~45 m
 		var sh := hash(String(s["id"])) & 0xffff
 		var d := 18.0 + float(sh % 20)
 		var k := 0
@@ -285,32 +320,12 @@ func _street_mesh(s: Dictionary, lift: float, surface: Material, kerb_mat: Mater
 			var tg := (q2 - q).normalized()
 			var nr := Vector2(-tg.y, tg.x)
 			var hs := float(s["hw"])
-			for off: float in [-hs * 0.55, 0.0, hs * 0.55]:
+			for off: float in ([-hs * 0.55, 0.0, hs * 0.55] if UrbsSite.platform_at(q.x, q.y) == "" else []):
 				var c2 := q + nr * off
 				var yb := float(height.call(c2.x, c2.y)) + SURFACE_LIFT + lift
 				_box_into(kv, kn, ki, Vector3(c2.x, yb, c2.y), tg, nr, Vector2(0.45, 0.7), 0.26)
 			d += 42.0 + float((sh * (k + 3)) % 14)
 			k += 1
-	var drain_v := PackedVector3Array()
-	var drain_i := PackedInt32Array()
-	if bool(s["paved"]):
-		var dd := 9.0 + float(hash(String(s["id"])) % 11)
-		while dd < length - 5.0:
-			var q := _point_at(s, dd)
-			var q2 := _point_at(s, minf(dd + 1.0, length))
-			var tg := (q2 - q).normalized()
-			var nr := Vector2(-tg.y, tg.x)
-			for sd: float in [1.0, -1.0]:
-				var c3 := q + nr * (float(s["hw"]) - 0.22) * sd
-				var y3 := float(height.call(c3.x, c3.y)) + SURFACE_LIFT + lift + 0.015
-				var a3 := c3 - tg * 0.35
-				var b3 := c3 + tg * 0.35
-				var o3 := nr * 0.17
-				var base := drain_v.size()
-				drain_v.append(Vector3(a3.x - o3.x, y3, a3.y - o3.y)); drain_v.append(Vector3(b3.x - o3.x, y3, b3.y - o3.y))
-				drain_v.append(Vector3(b3.x + o3.x, y3, b3.y + o3.y)); drain_v.append(Vector3(a3.x + o3.x, y3, a3.y + o3.y))
-				drain_i.append_array([base, base + 1, base + 2, base, base + 2, base + 3])
-			dd += 26.0 + float(hash(String(s["id"])) % 9)
 	var mesh := ArrayMesh.new()
 	var arrays := []
 	arrays.resize(Mesh.ARRAY_MAX)
@@ -328,21 +343,15 @@ func _street_mesh(s: Dictionary, lift: float, surface: Material, kerb_mat: Mater
 		ka[Mesh.ARRAY_INDEX] = ki
 		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, ka)
 		mesh.surface_set_material(1, kerb_mat)
-	if drain_v.size() > 0:
-		var da := []
-		da.resize(Mesh.ARRAY_MAX)
-		da[Mesh.ARRAY_VERTEX] = drain_v
-		var dn := PackedVector3Array()
-		for _i in drain_v.size():
-			dn.append(Vector3.UP)
-		da[Mesh.ARRAY_NORMAL] = dn
-		da[Mesh.ARRAY_INDEX] = drain_i
-		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, da)
-		var dm := StandardMaterial3D.new()
-		dm.albedo_color = Color(0.05, 0.045, 0.04)
-		dm.roughness = 1.0
-		dm.cull_mode = BaseMaterial3D.CULL_DISABLED
-		mesh.surface_set_material(mesh.get_surface_count() - 1, dm)
+	if fv.size() > 0 and fi.size() > 0:
+		var fa := []
+		fa.resize(Mesh.ARRAY_MAX)
+		fa[Mesh.ARRAY_VERTEX] = fv
+		fa[Mesh.ARRAY_NORMAL] = fnr
+		fa[Mesh.ARRAY_TEX_UV] = fuv
+		fa[Mesh.ARRAY_INDEX] = fi
+		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, fa)
+		mesh.surface_set_material(mesh.get_surface_count() - 1, foot_mat)
 	return mesh
 
 
@@ -385,78 +394,3 @@ func _point_at(s: Dictionary, d: float) -> Vector2:
 		k += 1
 	var seg := maxf(cum[k + 1] - cum[k], 0.0001)
 	return pts[k].lerp(pts[k + 1], clampf((d - cum[k]) / seg, 0.0, 1.0))
-
-
-# ---------------------------------------------------------------- materials
-
-static func _material(paved: bool, gravel := false) -> StandardMaterial3D:
-	var m := StandardMaterial3D.new()
-	m.albedo_texture = _texture("basalt" if paved else ("gravel" if gravel else "earth"))
-	m.roughness = 0.92
-	m.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS_ANISOTROPIC
-	m.cull_mode = BaseMaterial3D.CULL_DISABLED
-	return m
-
-
-## Procedural, tiling 3 m textures: basalt = polygonal silex slabs, earth = beaten earth.
-static func _texture(kind: String) -> ImageTexture:
-	if _tex_cache.has(kind):
-		return _tex_cache[kind]
-	var size := 128
-	var img := Image.create(size, size, true, Image.FORMAT_RGB8)
-	var rng := RandomNumberGenerator.new()
-	rng.seed = 7919
-	if kind == "basalt":
-		var grid := 6
-		var pts: Array = []
-		var tone: Array = []
-		for gz in grid:
-			for gx in grid:
-				pts.append(Vector2((gx + rng.randf_range(0.15, 0.85)) / grid, (gz + rng.randf_range(0.15, 0.85)) / grid))
-				tone.append(rng.randf_range(0.20, 0.36))
-		for y in size:
-			for x in size:
-				var p := Vector2(float(x) / size, float(y) / size)
-				var d1 := 9.0
-				var d2 := 9.0
-				var which := 0
-				var gx0 := int(p.x * grid)
-				var gz0 := int(p.y * grid)
-				for oz in range(-1, 2):
-					for ox in range(-1, 2):
-						var rx := gx0 + ox
-						var rz := gz0 + oz
-						var gx := posmod(rx, grid)
-						var gz := posmod(rz, grid)
-						var q: Vector2 = pts[gz * grid + gx]
-						q += Vector2(floori(float(rx) / grid), floori(float(rz) / grid))
-						var d := p.distance_to(q)
-						if d < d1:
-							d2 = d1
-							d1 = d
-							which = gz * grid + gx
-						elif d < d2:
-							d2 = d
-				var v: float = tone[which]
-				var noise := rng.randf_range(-0.025, 0.025)
-				if d2 - d1 < 0.018:
-					v = 0.09          # the joint between slabs
-				img.set_pixel(x, y, Color(v * 1.0 + noise, v * 0.99 + noise, v * 0.96 + noise))
-	elif kind == "gravel":
-		for y in size:
-			for x in size:
-				var v := rng.randf_range(0.50, 0.68)
-				img.set_pixel(x, y, Color(v, v * 0.93, v * 0.78))
-	else:
-		var noise := FastNoiseLite.new()
-		noise.seed = 31
-		noise.frequency = 0.06
-		for y in size:
-			for x in size:
-				var n := noise.get_noise_2d(x, y) * 0.5 + 0.5
-				var v := 0.34 + n * 0.14 + rng.randf_range(-0.03, 0.03)
-				img.set_pixel(x, y, Color(v * 1.02, v * 0.88, v * 0.66))
-	img.generate_mipmaps()
-	var tex := ImageTexture.create_from_image(img)
-	_tex_cache[kind] = tex
-	return tex
