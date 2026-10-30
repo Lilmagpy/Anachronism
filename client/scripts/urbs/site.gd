@@ -349,7 +349,7 @@ static func _clivus_walls(m: Mesher, pts: PackedVector2Array, hw: float, height:
 				var cut := maxf(float(prev["g"]) - float(prev["road"]), beyond - road)
 				var fill := maxf(float(prev["road"]) - float(prev["g"]), road - beyond)
 				if cut > 1.0:   # the bank above the road held back
-					m.wall(mat, prev["at"], at, -nrm, float(prev["road"]) - 0.3, maxf(float(prev["g"]), float(prev["road"])) + WALL_UP, road - 0.3, maxf(beyond, road) + WALL_UP, 4.4)
+					m.wall(mat, prev["at"], at, -nrm, float(prev["road"]) - 0.3, maxf(float(prev["g"]), float(prev["road"])) + WALL_UP, road - 0.3, maxf(beyond, road) + WALL_UP, 1.2)
 				elif fill > 1.0:   # the road carried on an embankment, with a parapet
 					m.wall(mat, prev["at"], at, nrm, minf(float(prev["g"]), float(prev["road"])) - 0.6, float(prev["road"]) + 0.9, minf(beyond, road) - 0.6, road + 0.9, 0.8)
 			prev = cur
@@ -523,7 +523,7 @@ static func build_chunk_walls(rect: Rect2, lod: int, year: int) -> Node3D:
 							var ya1 := UrbsTerrain.height_at(a.x - da.x * 3.5, a.y - da.y * 3.5) + WALL_UP
 							var yb1 := UrbsTerrain.height_at(b.x - db.x * 3.5, b.y - db.y * 3.5) + WALL_UP
 							if ya1 - ya0 > 1.0 and yb1 - yb0 > 1.0:
-								m.wall(mat, a, b, (da + db).normalized(), ya0, ya1, yb0, yb1, 3.2)
+								m.wall(mat, a, b, (da + db).normalized(), ya0, ya1, yb0, yb1, 0.9)
 								any = true
 				lvl += step
 	if not any:

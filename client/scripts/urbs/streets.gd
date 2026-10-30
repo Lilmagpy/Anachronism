@@ -5,11 +5,12 @@
 ## `paved_from` (Livy 41.27.5: the censors of 174 BC paved the city streets with silex and
 ## gravelled the roads outside it; the Via Appia 293 and 189 BC, Livy 10.47.4 and 38.28.3), and
 ## is beaten earth (inside the walls) or gravel (roads) before. Stone kerbs edge a paved street,
-## and inside the Servian circuit a raised footway (crepido, beaten earth) runs behind each kerb, as
-## at Pompeii (the width, 1 m, matches the gap UrbsFill leaves: FOOTPATH + KERB); outside the walls
+## and inside the Servian circuit a raised footway (crepido, stone slabs: the modeller's choice; at
+## Pompeii they are beaten earth, mortar or slabs) runs behind each kerb up to the house fronts
+## (UrbsFill sets them at KERB + FOOTPATH); outside the walls
 ## a paved road has kerbs only. Stepping stones cross the paved city streets. A `stairs` street (the
 ## Scalae Caci) is built as steps by UrbsSite and has no strip here. Surfaces come from
-## UrbsMaterials: street_basalt, gravel, earth_packed, tufa_grey (kerbs, the modeller's choice),
+## UrbsMaterials: street_basalt, gravel, earth_packed, tufa_grey (kerbs) and travertine (footways), the modeller's choice,
 ## basalt (stepping stones). U8: the ground under every street is cut level across it by
 ## UrbsTerrain, so the strip lies flat.
 ##
@@ -31,7 +32,7 @@ const STEP := 4.0            ## spacing of strip samples, metres
 const KERB_W := 0.28
 const KERB_H := 0.2
 const SURFACE_LIFT := 0.12  ## strips float this far above the terrain to avoid z-fighting
-const FOOTWAY_W := 1.0      ## the raised footway behind the kerb, inside the walls
+const FOOTWAY_W := 1.25     ## the raised footway behind the kerb, inside the walls (reaches the fill's frontage, FOOTPATH 1 m + a little under the walls)
 const FOOTWAY_H := 0.22
 const SEARCH_RINGS := 7
 
@@ -206,6 +207,7 @@ func build(parent: Node3D, new_year: int, new_height: Callable) -> void:
 	var earth_mat := UrbsMaterials.get_material("earth_packed")
 	var gravel_mat := UrbsMaterials.get_material("gravel")
 	var kerb_mat := UrbsMaterials.get_material("tufa_grey")
+	var foot_mat := UrbsMaterials.get_material("travertine")
 	var circuit := UrbsTerrain.circuit()
 	for si in streets.size():
 		var s: Dictionary = streets[si]
@@ -214,7 +216,7 @@ func build(parent: Node3D, new_year: int, new_height: Callable) -> void:
 		var surface: Material = paved_mat if s["paved"] else (gravel_mat if s["road"] else earth_mat)
 		var mid: Vector2 = (s["pts"] as PackedVector2Array)[(s["pts"] as PackedVector2Array).size() / 2]
 		var in_city := circuit.size() > 2 and Geometry2D.is_point_in_polygon(mid, circuit)
-		var mesh := _street_mesh(s, float(si) * 0.004, surface, kerb_mat, earth_mat, in_city and not bool(s["road"]))
+		var mesh := _street_mesh(s, float(si) * 0.004, surface, kerb_mat, foot_mat, in_city and not bool(s["road"]))
 		if mesh == null:
 			continue
 		var node := MeshInstance3D.new()

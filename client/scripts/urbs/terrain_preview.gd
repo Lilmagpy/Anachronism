@@ -13,6 +13,9 @@
 ##   --plain                grey clay material (debug: judge the shape alone)
 ##   --noshadow             sun without shadows
 ##   --marks                stand a pole with a name on each hill summit and on the Forum
+##   --probe=x,z;x,z        print the ground height at those local points and quit
+##   --perf=x,z,street|orbit  build the chunks UrbsChunks would load for a camera there (lod by
+##                          distance) and print triangles and instances by kind, then quit
 extends SceneTree
 
 var _shot := ""
@@ -40,6 +43,10 @@ func _initialize() -> void:
 			var f := pt.split(",")
 			if f.size() >= 2:
 				print("probe %s: y=%.2f" % [pt, UrbsTerrain.height_at(float(f[0]), float(f[1]))])
+		quit()
+		return
+	if args.has("perf"):
+		_perf(String(args["perf"]))
 		quit()
 		return
 	var root := Node3D.new()
@@ -178,3 +185,64 @@ func _process(_delta: float) -> bool:
 		else:
 			_apply_view(_queue[_qi])
 	return false
+
+
+## Triangles and draw items of the ground a camera at `spec` (x,z,street|orbit) would load.
+func _perf(spec: String) -> void:
+	var f := spec.split(",")
+	var focus := Vector2(float(f[0]), float(f[1]))
+	var orbit := f.size() > 2 and f[2] == "orbit"
+	var radius := UrbsChunks.ORBIT_RADIUS if orbit else UrbsChunks.STREET_RADIUS
+	var reach := int(ceil(radius / UrbsChunks.SIZE))
+	var centre := UrbsChunks.key_of(focus.x, focus.y)
+	var tris := {}
+	var items := {}
+	var count := 0
+	var t0 := Time.get_ticks_msec()
+	var worst := 0
+	for dx in range(-reach, reach + 1):
+		for dz in range(-reach, reach + 1):
+			var key := centre + Vector2i(dx, dz)
+			var rect := UrbsChunks.rect_of(key)
+			var c := rect.get_center()
+			var d := c.distance_to(focus)
+			if d > radius + UrbsChunks.SIZE * 0.5 or c.length() > UrbsGeo.RADIUS_M + UrbsChunks.SIZE:
+				continue
+			var lod := 2 if orbit else UrbsChunks._lod_at(d)
+			var t1 := Time.get_ticks_msec()
+			var node := UrbsTerrain.build_chunk(rect, lod)
+			worst = maxi(worst, Time.get_ticks_msec() - t1)
+			count += 1
+			for ch in node.get_children():
+				var kind := String(ch.name).split("_")[0]
+				var n := 0
+				if ch is MeshInstance3D:
+					n = _mesh_tris((ch as MeshInstance3D).mesh)
+				elif ch is MultiMeshInstance3D:
+					var mm := (ch as MultiMeshInstance3D).multimesh
+					n = _mesh_tris(mm.mesh) * mm.instance_count
+					items[kind + "_instances"] = int(items.get(kind + "_instances", 0)) + mm.instance_count
+				else:
+					continue
+				tris[kind] = int(tris.get(kind, 0)) + n
+				items[kind] = int(items.get(kind, 0)) + 1
+			node.free()
+	var total := 0
+	for k in tris:
+		total += int(tris[k])
+	print("perf %s: %d chunks in %d ms (worst chunk %d ms); triangles %d" % [spec, count, Time.get_ticks_msec() - t0, worst, total])
+	var keys := tris.keys()
+	keys.sort()
+	for k in keys:
+		print("  %-12s %9d tris  %4d nodes  %s" % [k, tris[k], items.get(k, 0), ("%d instances" % items[k + "_instances"]) if items.has(k + "_instances") else ""])
+
+
+func _mesh_tris(mesh: Mesh) -> int:
+	if mesh == null:
+		return 0
+	var n := 0
+	for s in mesh.get_surface_count():
+		var arr := mesh.surface_get_arrays(s)
+		var idx: PackedInt32Array = arr[Mesh.ARRAY_INDEX] if arr[Mesh.ARRAY_INDEX] != null else PackedInt32Array()
+		n += idx.size() / 3 if idx.size() > 0 else (arr[Mesh.ARRAY_VERTEX] as PackedVector3Array).size() / 3
+	return n

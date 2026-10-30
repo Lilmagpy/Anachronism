@@ -327,6 +327,9 @@ static func build_chunk(node: Node3D, rect: Rect2, lod: int, year: int) -> void:
 		if not lists.has(kind):
 			lists[kind] = []
 		(lists[kind] as Array).append(item)
+	if lod >= 2:
+		_bake_far(node, lists)
+		return
 	for kind: String in KINDS:
 		if not lists.has(kind):
 			continue
@@ -345,6 +348,51 @@ static func build_chunk(node: Node3D, rect: Rect2, lod: int, year: int) -> void:
 		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON if lod == 0 else GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		mmi.visibility_range_end = (1400.0 if lod <= 1 else 4500.0) if kind != "hedge" else 700.0
 		node.add_child(mmi)
+
+
+## Far chunks: every tree's low crown baked into one mesh (one draw call for the chunk).
+static func _bake_far(node: Node3D, lists: Dictionary) -> void:
+	var verts := PackedVector3Array()
+	var norms := PackedVector3Array()
+	var cols := PackedColorArray()
+	var idx := PackedInt32Array()
+	for kind: String in KINDS:
+		if not lists.has(kind):
+			continue
+		var far: ArrayMesh = _meshes[kind][1]
+		var arr := far.surface_get_arrays(far.get_surface_count() - 1)
+		var pv: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
+		var pn: PackedVector3Array = arr[Mesh.ARRAY_NORMAL]
+		var pc: PackedColorArray = arr[Mesh.ARRAY_COLOR]
+		var pi: PackedInt32Array = arr[Mesh.ARRAY_INDEX]
+		for item: Array in lists[kind]:
+			var xf: Transform3D = item[1]
+			var tint: Color = item[2]
+			var nb := xf.basis.inverse().transposed()
+			var base := verts.size()
+			for k in pv.size():
+				verts.append(xf * pv[k])
+				norms.append((nb * pn[k]).normalized())
+				cols.append(Color(pc[k].r * tint.r, pc[k].g * tint.g, pc[k].b * tint.b))
+			for i in pi:
+				idx.append(base + i)
+	if idx.is_empty():
+		return
+	var out: Array = []
+	out.resize(Mesh.ARRAY_MAX)
+	out[Mesh.ARRAY_VERTEX] = verts
+	out[Mesh.ARRAY_NORMAL] = norms
+	out[Mesh.ARRAY_COLOR] = cols
+	out[Mesh.ARRAY_INDEX] = idx
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, out)
+	mesh.surface_set_material(0, _material("foliage", true))
+	var mi := MeshInstance3D.new()
+	mi.name = "Flora_far"
+	mi.mesh = mesh
+	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	mi.visibility_range_end = 4500.0
+	node.add_child(mi)
 
 
 static func _material(name: String, colour_fallback: bool) -> Material:
@@ -371,48 +419,48 @@ static func _ensure_meshes() -> void:
 	var blob_far := _sphere(6, 3)
 	var spindle := _sphere(8, 7)
 	# umbrella pine: a tall bare trunk, a little crooked, a broad flat crown of dark green
-	var pine_crown := Color(0.20, 0.29, 0.13)
+	var pine_crown := Color(0.15, 0.22, 0.10)
 	_meshes["pine"] = [_tree([[trunk, tr.call(Vector3(0.3, 4.2, 0), Vector3(1.3, 8.6, 1.3), 0.06), bark]],
 		[[blob, tr.call(Vector3(0.6, 9.4, 0), Vector3(5.6, 1.7, 5.2)), pine_crown], [blob, tr.call(Vector3(2.4, 9.0, 1.2), Vector3(3.0, 1.3, 2.8)), pine_crown.lightened(0.06)],
 		[blob, tr.call(Vector3(-1.6, 9.2, -1.4), Vector3(3.2, 1.4, 3.0)), pine_crown.darkened(0.06)]], 0.35),
 		_tree([], [[blob_far, tr.call(Vector3(0.6, 9.4, 0), Vector3(5.6, 1.7, 5.2)), pine_crown]], 0.0)]
 	# cypress: a dark narrow spindle
-	var cyp := Color(0.13, 0.22, 0.10)
+	var cyp := Color(0.10, 0.16, 0.08)
 	_meshes["cypress"] = [_tree([[trunk, tr.call(Vector3(0, 0.6, 0), Vector3(0.7, 1.2, 0.7)), bark]],
 		[[spindle, tr.call(Vector3(0, 6.2, 0), Vector3(1.35, 5.8, 1.35)), cyp]], 0.12),
 		_tree([], [[_sphere(5, 4), tr.call(Vector3(0, 6.2, 0), Vector3(1.35, 5.8, 1.35)), cyp]], 0.0)]
 	# plane: a pale mottled trunk, a broad high crown of light green
-	var plane := Color(0.31, 0.41, 0.16)
+	var plane := Color(0.24, 0.32, 0.12)
 	_meshes["plane"] = [_tree([[trunk, tr.call(Vector3(0, 3.0, 0), Vector3(1.8, 6.0, 1.8)), bark_plane]],
 		[[blob, tr.call(Vector3(0, 9.5, 0), Vector3(5.6, 4.2, 5.6)), plane], [blob, tr.call(Vector3(3.0, 8.2, 1.0), Vector3(3.4, 2.8, 3.4)), plane.lightened(0.05)],
 		[blob, tr.call(Vector3(-2.6, 8.6, -1.8), Vector3(3.6, 3.0, 3.6)), plane.darkened(0.05)], [blob, tr.call(Vector3(0.6, 11.8, -0.8), Vector3(3.0, 2.2, 3.0)), plane.lightened(0.08)]], 0.3),
 		_tree([], [[blob_far, tr.call(Vector3(0, 9.5, 0), Vector3(6.2, 4.4, 6.2)), plane]], 0.0)]
 	# olive: a short twisted grey trunk, a loose silvery crown
-	var olive := Color(0.29, 0.33, 0.22)
+	var olive := Color(0.25, 0.28, 0.19)
 	_meshes["olive"] = [_tree([[trunk, tr.call(Vector3(0.15, 0.8, 0), Vector3(2.2, 1.6, 2.2), 0.2), bark_grey], [trunk, tr.call(Vector3(-0.35, 1.7, 0.2), Vector3(1.3, 1.2, 1.3), -0.5), bark_grey]],
 		[[blob, tr.call(Vector3(0.2, 2.9, 0), Vector3(2.5, 1.7, 2.4)), olive], [blob, tr.call(Vector3(-1.2, 2.5, 0.9), Vector3(1.6, 1.3, 1.6)), olive.lightened(0.05)],
 		[blob, tr.call(Vector3(1.4, 2.3, -1.0), Vector3(1.5, 1.2, 1.5)), olive.darkened(0.05)]], 0.4),
 		_tree([], [[blob_far, tr.call(Vector3(0.2, 2.7, 0), Vector3(2.7, 1.8, 2.6)), olive]], 0.0)]
 	# fig: low and spreading, big leaves, mid green
-	var fig := Color(0.27, 0.38, 0.14)
+	var fig := Color(0.20, 0.29, 0.11)
 	_meshes["fig"] = [_tree([[trunk, tr.call(Vector3(0, 0.7, 0), Vector3(1.8, 1.4, 1.8)), bark_grey]],
 		[[blob, tr.call(Vector3(0, 2.6, 0), Vector3(3.2, 1.9, 3.0)), fig], [blob, tr.call(Vector3(1.6, 2.3, 0.6), Vector3(1.8, 1.2, 1.8)), fig.lightened(0.05)]], 0.3),
 		_tree([], [[blob_far, tr.call(Vector3(0, 2.6, 0), Vector3(3.4, 1.7, 3.2)), fig]], 0.0)]
 	# holm oak: dark, dense, rounded
-	var oak := Color(0.20, 0.28, 0.12)
+	var oak := Color(0.15, 0.21, 0.09)
 	_meshes["oak"] = [_tree([[trunk, tr.call(Vector3(0, 1.5, 0), Vector3(1.2, 3.0, 1.2)), bark]],
 		[[blob, tr.call(Vector3(0, 5.0, 0), Vector3(3.5, 2.9, 3.5)), oak], [blob, tr.call(Vector3(1.8, 4.2, 0.7), Vector3(2.1, 1.8, 2.1)), oak.lightened(0.05)],
 		[blob, tr.call(Vector3(-1.5, 4.5, -0.9), Vector3(2.2, 1.9, 2.2)), oak.darkened(0.05)]], 0.3),
 		_tree([], [[blob_far, tr.call(Vector3(0, 4.8, 0), Vector3(3.8, 3.0, 3.8)), oak]], 0.0)]
 	# laurel: a dense dark bush-tree
-	var laurel := Color(0.17, 0.27, 0.11)
+	var laurel := Color(0.13, 0.20, 0.08)
 	_meshes["laurel"] = [_tree([[trunk, tr.call(Vector3(0, 0.5, 0), Vector3(0.8, 1.0, 0.8)), bark]],
 		[[spindle, tr.call(Vector3(0, 3.0, 0), Vector3(2.0, 2.8, 2.0)), laurel]], 0.25),
 		_tree([], [[blob_far, tr.call(Vector3(0, 3.0, 0), Vector3(2.0, 2.8, 2.0)), laurel]], 0.0)]
-	var scrub := Color(0.32, 0.35, 0.16)
+	var scrub := Color(0.25, 0.27, 0.13)
 	_meshes["scrub"] = [_tree([], [[blob, tr.call(Vector3(0, 0.7, 0), Vector3(1.5, 1.0, 1.5)), scrub], [blob, tr.call(Vector3(1.0, 0.5, 0.6), Vector3(1.0, 0.7, 1.0)), scrub.lightened(0.05)]], 0.35),
 		_tree([], [[blob_far, tr.call(Vector3(0, 0.7, 0), Vector3(1.6, 1.0, 1.6)), scrub]], 0.0)]
-	var hedge := Color(0.24, 0.32, 0.14)
+	var hedge := Color(0.18, 0.24, 0.11)
 	_meshes["hedge"] = [_tree([], [[blob, tr.call(Vector3(0, 1.0, 0), Vector3(1.4, 1.3, 1.4)), hedge], [blob, tr.call(Vector3(1.1, 0.9, 0.3), Vector3(1.1, 1.1, 1.1)), hedge.darkened(0.05)]], 0.3),
 		_tree([], [[blob_far, tr.call(Vector3(0, 1.0, 0), Vector3(1.6, 1.3, 1.6)), hedge]], 0.0)]
 

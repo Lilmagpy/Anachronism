@@ -38,10 +38,12 @@ const NEAR_M := 2000.0                    ## within this of the Forum, lod 0 use
 const WARP_M := 38.0                      ## how far hill and valley outlines wander from their ideal line
 const FORUM_FLOOR_M := 10.0               ## ancient Forum floor, m a.s.l.
 const TERRACE_M := 4.0                    ## height of one hillside terrace
-const CACHE_VERSION := "u8-site-7"        ## bump when the model code changes
+const CACHE_VERSION := "u8-site-8"        ## bump when the model code changes
 const STREETS_PATH := "res://data/city/streets.json"
 const REGIONS_PATH := "res://data/city/regions.json"
 const RURAL_CELL := 25.0                  ## resolution of the farmland weight raster
+const MAP_CELL := 10.0                    ## resolution of the baked ground colour maps
+const MAP_N := 501                        ## texels per side of the ground colour maps
 
 static var year := -44                    ## the year being shown (set by build); flora and site works read it
 static var _h: PackedFloat32Array = PackedFloat32Array()
@@ -54,6 +56,8 @@ static var _plateau_w: PackedFloat32Array = PackedFloat32Array()   ## 1 on a pla
 static var _built_w: PackedFloat32Array = PackedFloat32Array()     ## 1 on a platform or a street cut (trodden ground)
 static var _terrace_w: PackedFloat32Array = PackedFloat32Array()   ## how much the ground is terraced
 static var _rural: PackedFloat32Array = PackedFloat32Array()       ## farmland weight, RURAL_CELL grid
+static var _map_col: PackedByteArray = PackedByteArray()          ## ground colour (rgb, sRGB) and farmland (a), MAP_N x MAP_N
+static var _map_w: PackedByteArray = PackedByteArray()            ## ground weights: grass, mud, dust, gravel
 static var _circuit: PackedVector2Array = PackedVector2Array()
 static var _warp: FastNoiseLite = null
 static var _warp2: FastNoiseLite = null
@@ -89,6 +93,8 @@ static func _save_cache(key: String) -> void:
 	for arr: PackedFloat32Array in [_h, _river_dist, _river_level, _river_hw, _river_inner, _valley_w, _plateau_w, _built_w, _terrace_w]:
 		f.store_buffer(arr.to_byte_array())
 	f.store_buffer(_rural.to_byte_array())
+	f.store_buffer(_map_col)
+	f.store_buffer(_map_w)
 
 
 static func _load_cache(key: String) -> bool:
@@ -97,7 +103,7 @@ static func _load_cache(key: String) -> bool:
 		return false
 	var bytes := VERTS * VERTS * 4
 	var rn := _rural_n()
-	if f.get_length() != bytes * 9 + rn * rn * 4:
+	if f.get_length() != bytes * 9 + rn * rn * 4 + MAP_N * MAP_N * 8:
 		return false
 	_h = f.get_buffer(bytes).to_float32_array()
 	_river_dist = f.get_buffer(bytes).to_float32_array()
@@ -109,6 +115,8 @@ static func _load_cache(key: String) -> bool:
 	_built_w = f.get_buffer(bytes).to_float32_array()
 	_terrace_w = f.get_buffer(bytes).to_float32_array()
 	_rural = f.get_buffer(rn * rn * 4).to_float32_array()
+	_map_col = f.get_buffer(MAP_N * MAP_N * 4)
+	_map_w = f.get_buffer(MAP_N * MAP_N * 4)
 	return true
 
 
@@ -204,6 +212,7 @@ static func _compute() -> void:
 	_river_inner = riv["inner"]
 	_h = h
 	_compute_rural()
+	_bake_maps()
 
 
 ## Control points (x, z, height) of a terrain_model entry, in local metres.
@@ -567,6 +576,40 @@ static func _compute_rural() -> void:
 			_rural[j * rn + i] = w
 
 
+## The ground's colour and material weights baked into two world-space maps (MAP_CELL apart),
+## which the ground shader samples by position. (In the game's compatibility renderer per-vertex
+## attributes of the chunk meshes did not reach the shader intact; a map does not depend on them,
+## and it shades every lod alike.)
+static func _bake_maps() -> void:
+	_map_col = PackedByteArray()
+	_map_col.resize(MAP_N * MAP_N * 4)
+	_map_w = PackedByteArray()
+	_map_w.resize(MAP_N * MAP_N * 4)
+	var st := int(MAP_CELL / CELL_M)
+	for j in MAP_N:
+		for i in MAP_N:
+			var gi := _gi(i * st)
+			var gj := _gi(j * st)
+			var k := gj * VERTS + gi
+			var x := -HALF_M + gi * CELL_M
+			var z := -HALF_M + gj * CELL_M
+			var e := 2
+			var nrm := Vector3(_h[gj * VERTS + _gi(gi - e)] - _h[gj * VERTS + _gi(gi + e)], 2.0 * e * CELL_M, _h[_gi(gj - e) * VERTS + gi] - _h[_gi(gj + e) * VERTS + gi]).normalized()
+			var w := _ground_weights(x, z, _h[k], nrm.y, k)
+			var c: Color = w[0]
+			var a: Vector2 = w[1]
+			var b: Vector2 = w[2]
+			var o := (j * MAP_N + i) * 4
+			_map_col[o] = clampi(roundi(c.r * 255.0), 0, 255)
+			_map_col[o + 1] = clampi(roundi(c.g * 255.0), 0, 255)
+			_map_col[o + 2] = clampi(roundi(c.b * 255.0), 0, 255)
+			_map_col[o + 3] = clampi(roundi(c.a * 255.0), 0, 255)
+			_map_w[o] = clampi(roundi(a.x * 255.0), 0, 255)
+			_map_w[o + 1] = clampi(roundi(a.y * 255.0), 0, 255)
+			_map_w[o + 2] = clampi(roundi(b.x * 255.0), 0, 255)
+			_map_w[o + 3] = clampi(roundi(b.y * 255.0), 0, 255)
+
+
 ## Farmland weight 0..1 at local (x, z).
 static func rural_at(x: float, z: float) -> float:
 	prepare()
@@ -749,13 +792,10 @@ static func _chunk_mesh(i0: int, j0: int, ci: int, cj: int, step: int) -> ArrayM
 	var nz := maxi(cj / step, 1)
 	var pp := PackedVector3Array()
 	var pn := PackedVector3Array()
-	var pc := PackedColorArray()
-	var pu := PackedVector2Array()
-	var pu2 := PackedVector2Array()
 	var stride := nx + 1
 	for dj in nz + 1:
 		for di in nx + 1:
-			_add_vertex(i0 + di * step, j0 + dj * step, 0.0, step, pp, pn, pc, pu, pu2)
+			_add_vertex(i0 + di * step, j0 + dj * step, 0.0, step, pp, pn)
 	var idx := PackedInt32Array()
 	for dj in nz:
 		for di in nx:
@@ -773,7 +813,7 @@ static func _chunk_mesh(i0: int, j0: int, ci: int, cj: int, step: int) -> ArrayM
 		ring.append(Vector2i(0, dj))
 	var base := pp.size()
 	for r in ring:
-		_add_vertex(i0 + r.x * step, j0 + r.y * step, 4.0, step, pp, pn, pc, pu, pu2)
+		_add_vertex(i0 + r.x * step, j0 + r.y * step, 4.0, step, pp, pn)
 	for k in ring.size():
 		var r0: Vector2i = ring[k]
 		var r1: Vector2i = ring[(k + 1) % ring.size()]
@@ -786,9 +826,6 @@ static func _chunk_mesh(i0: int, j0: int, ci: int, cj: int, step: int) -> ArrayM
 	arr.resize(Mesh.ARRAY_MAX)
 	arr[Mesh.ARRAY_VERTEX] = pp
 	arr[Mesh.ARRAY_NORMAL] = pn
-	arr[Mesh.ARRAY_COLOR] = pc
-	arr[Mesh.ARRAY_TEX_UV] = pu
-	arr[Mesh.ARRAY_TEX_UV2] = pu2
 	arr[Mesh.ARRAY_INDEX] = idx
 	var mesh := ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
@@ -844,32 +881,18 @@ static func _water_mesh(i0: int, j0: int, ci: int, cj: int, step: int) -> ArrayM
 	return mesh
 
 
-static func _add_vertex(i: int, j: int, drop: float, step: int, pp: PackedVector3Array, pn: PackedVector3Array, pc: PackedColorArray, pu: PackedVector2Array, pu2: PackedVector2Array) -> void:
+static func _add_vertex(i: int, j: int, drop: float, step: int, pp: PackedVector3Array, pn: PackedVector3Array) -> void:
 	i = _gi(i)
 	j = _gi(j)
 	var k := j * VERTS + i
-	var x := -HALF_M + i * CELL_M
-	var z := -HALF_M + j * CELL_M
-	var y := _h[k]
 	# the normal over the mesh's own spacing (at least two cells): an even shading on the slopes
 	var e := maxi(step, 2)
 	var hl := _h[j * VERTS + _gi(i - e)]
 	var hr := _h[j * VERTS + _gi(i + e)]
 	var hu := _h[_gi(j - e) * VERTS + i]
 	var hd := _h[_gi(j + e) * VERTS + i]
-	var nrm := Vector3(hl - hr, 2.0 * e * CELL_M, hu - hd).normalized()
-	pp.append(Vector3(x, y - drop, z))
-	pn.append(nrm)
-	# the colour from the finer slope (two cells), so terraces and cliffs read the same at every lod
-	var hl2 := _h[j * VERTS + _gi(i - 2)]
-	var hr2 := _h[j * VERTS + _gi(i + 2)]
-	var hu2 := _h[_gi(j - 2) * VERTS + i]
-	var hd2 := _h[_gi(j + 2) * VERTS + i]
-	var ny := Vector3(hl2 - hr2, 4.0 * CELL_M, hu2 - hd2).normalized().y
-	var w := _ground_weights(x, z, y, ny, k)
-	pc.append(w[0])
-	pu.append(w[1])
-	pu2.append(w[2])
+	pp.append(Vector3(-HALF_M + i * CELL_M, _h[k] - drop, -HALF_M + j * CELL_M))
+	pn.append(Vector3(hl - hr, 2.0 * e * CELL_M, hu - hd).normalized())
 
 
 ## Ground colour and material weights at a vertex. Returns [colour (alpha = farmland), (grass,
@@ -929,7 +952,11 @@ static func _ground_material() -> ShaderMaterial:
 shader_type spatial;
 varying vec3 wpos;
 varying vec3 wnorm;
-varying float rural;
+uniform sampler2D ground_col : filter_linear, repeat_disable;
+uniform sampler2D ground_w : filter_linear, repeat_disable;
+uniform float map_half = 2500.0;
+uniform float map_cell = 10.0;
+uniform float map_n = 501.0;
 float hash(vec3 p) { p = fract(p * 0.3183099 + 0.1); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
 float vnoise(vec3 x) {
 	vec3 i = floor(x); vec3 f = fract(x);
@@ -943,7 +970,6 @@ float ih(int a, int b, int s) { return float(pcg(uint(a) ^ pcg(uint(b) ^ pcg(uin
 void vertex() {
 	wpos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 	wnorm = normalize(mat3(MODEL_MATRIX) * NORMAL);
-	rural = COLOR.a;
 }
 // kind: 0 ploughed, 1 green crop, 2 ripe/stubble, 3 pasture, 4 olive grove, 5 vineyard; hedge in .a
 vec4 farm(vec2 p) {
@@ -981,8 +1007,12 @@ void fragment() {
 	float mid = vnoise(wpos * 0.09);
 	float fine = vnoise(wpos * 0.7);
 	float micro = vnoise(wpos * 3.1);
-	float wg = UV.x; float wm = UV.y; float wd = UV2.x; float wgr = UV2.y;
-	vec3 col = lin(COLOR.rgb) * (0.84 + 0.28 * (0.4 * big + 0.3 * mid + 0.3 * fine));
+	vec2 muv = ((wpos.xz + vec2(map_half)) / map_cell + 0.5) / map_n;
+	vec4 gc = texture(ground_col, muv);
+	vec4 wts = texture(ground_w, muv);
+	float rural = gc.a;
+	float wg = wts.x; float wm = wts.y; float wd = wts.z; float wgr = wts.w;
+	vec3 col = lin(gc.rgb) * (0.84 + 0.28 * (0.4 * big + 0.3 * mid + 0.3 * fine));
 	// grass: a gentle drift between green and straw, and a fine speckle of tufts
 	float dry = smoothstep(0.3, 0.75, vnoise(wpos * 0.02 + 7.0) + 0.3 * (fine - 0.5));
 	col = mix(col, col * vec3(1.2, 1.12, 0.85), dry * 0.35 * wg);
@@ -1015,4 +1045,9 @@ void fragment() {
 """
 	_material = ShaderMaterial.new()
 	_material.shader = sh
+	_material.set_shader_parameter("ground_col", ImageTexture.create_from_image(Image.create_from_data(MAP_N, MAP_N, false, Image.FORMAT_RGBA8, _map_col)))
+	_material.set_shader_parameter("ground_w", ImageTexture.create_from_image(Image.create_from_data(MAP_N, MAP_N, false, Image.FORMAT_RGBA8, _map_w)))
+	_material.set_shader_parameter("map_half", HALF_M)
+	_material.set_shader_parameter("map_cell", MAP_CELL)
+	_material.set_shader_parameter("map_n", float(MAP_N))
 	return _material
