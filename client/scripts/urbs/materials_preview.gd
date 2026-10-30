@@ -80,7 +80,7 @@ func _city() -> void:
 	urbs.open(int(args.get("year", "-44")), Vector3.ZERO, flags)
 	print("city built in %d ms" % (Time.get_ticks_msec() - t0))
 	if args.has("restyle"):
-		print("restyled %d surfaces" % UrbsMaterials.restyle(urbs))
+		print("restyled %d surfaces: %s" % [UrbsMaterials.restyle(urbs), UrbsMaterials.last_restyle])
 	env = urbs.environment
 	sun = urbs.sun
 	atmosphere = urbs.atmosphere

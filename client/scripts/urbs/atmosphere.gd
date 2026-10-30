@@ -36,7 +36,7 @@ var elevation := 45.0            ## the sun's height above the horizon, degrees
 var direction := Vector3.UP      ## towards the sun (x east, y up, z south)
 var fx := {"ssao": true, "ssil": true, "glow": true, "fog": true}
 var tonemap := Environment.TONE_MAPPER_AGX   ## (tuning) the tone mapper
-var exposure := 1.25                         ## (tuning) tone-mapping exposure
+var exposure := 1.35                         ## (tuning) tone-mapping exposure
 var ambient := 1.3                           ## (tuning) scales the ambient light
 var bounce := 0.6                            ## (tuning) share of the ambient that is warm bounce
 var _mode := ""
@@ -180,9 +180,12 @@ func _tint_sky(sun_c: Color) -> void:
 	sky_material.set_shader_parameter("sunset", low * (1.0 - night))
 	sky_material.set_shader_parameter("haze", lerpf(0.35, 0.6, day_w))
 	sky_material.set_shader_parameter("energy", lerpf(1.0, 0.85, low) * lerpf(1.0, 0.15, night))
-	environment.ambient_light_energy = ambient * lerpf(0.85, 0.7, low) * lerpf(1.0, 0.35, night)
-	environment.ambient_light_sky_contribution = 1.0 - bounce
-	var ground_lit := Color(0.78, 0.72, 0.62) * sun_c * clampf(sun.light_energy / NOON_ENERGY, 0.0, 1.0)
+	environment.ambient_light_energy = ambient * lerpf(0.85, 0.95, low) * lerpf(1.0, 0.35, night)
+	# bounce fades gently with the sun: the sunlit ground and walls still glow at sunset
+	var sun_share := sqrt(clampf(sun.light_energy / NOON_ENERGY, 0.0, 1.0))
+	var ground_lit := Color(0.78, 0.72, 0.62) * sun_c.lerp(Color.WHITE, 0.4) * lerpf(0.45, 1.0, sun_share)
+	# as the sun sinks, shade is lit more by the sky (blue shade under golden light)
+	environment.ambient_light_sky_contribution = 1.0 - bounce * lerpf(0.35, 1.0, sun_share)
 	environment.ambient_light_color = ground_lit.lerp(Color(0.05, 0.06, 0.09), night)
 	environment.fog_light_color = horizon.lerp(Color(0.80, 0.84, 0.90), 0.2 * day_w)
 	environment.fog_light_energy = lerpf(1.0, 0.25, night)

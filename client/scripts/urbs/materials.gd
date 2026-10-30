@@ -246,6 +246,8 @@ const BUILDING := ["marble_luna", "marble_pentelic", "travertine", "tufa_grey", 
 const TERRAIN_NODES := ["UrbsTerrain", "UrbsRiver", "Terrain", "TiberWater"]
 
 static var _texture_means: Dictionary = {}
+## What the last `restyle` swapped: library name -> number of surfaces (for reports and tests).
+static var last_restyle: Dictionary = {}
 
 
 ## Swap the plain StandardMaterial3Ds of a built subtree for library materials where the node's
@@ -253,6 +255,7 @@ static var _texture_means: Dictionary = {}
 ## transparent materials, unknown colours and the terrain are left alone. Returns how many
 ## surfaces were swapped. Safe to call twice.
 static func restyle(root: Node) -> int:
+	last_restyle = {}
 	var swapped := 0
 	var stack: Array = [[root, false]]
 	while not stack.is_empty():
@@ -269,6 +272,7 @@ static func restyle(root: Node) -> int:
 			var pick := _identify(mmi.material_override, String(mmi.name), ground)
 			if pick != "":
 				mmi.material_override = get_material(pick)
+				_count(pick)
 				swapped += 1
 		for child in node.get_children():
 			stack.append([child, ground])
@@ -281,6 +285,7 @@ static func _restyle_mesh(mi: MeshInstance3D, ground: bool) -> int:
 		var pick := _identify(mi.material_override, label, ground)
 		if pick != "":
 			mi.material_override = get_material(pick)
+			_count(pick)
 			return 1
 		return 0
 	if mi.mesh == null:
@@ -293,8 +298,13 @@ static func _restyle_mesh(mi: MeshInstance3D, ground: bool) -> int:
 		var pick := _identify(mat, label, ground)
 		if pick != "":
 			mi.set_surface_override_material(i, get_material(pick))
+			_count(pick)
 			n += 1
 	return n
+
+
+static func _count(name: String) -> void:
+	last_restyle[name] = int(last_restyle.get(name, 0)) + 1
 
 
 static func _is_terrain(node: Node) -> bool:
