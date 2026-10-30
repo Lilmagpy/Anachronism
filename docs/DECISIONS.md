@@ -2687,3 +2687,54 @@ the Porticus Octaviae: the Servian wall's and the aqueducts' single bounding box
 city, so every street camera inside the walls was thrown hundreds of metres away before it took
 its picture. With real solids, the cameras land where they are asked to.
 
+## D-296 The ground in U8: plateaus, carved platforms, the Tiber on its real course — DELEGATED (2026-10-30)
+
+**Decision.** (1) The Capitoline, Palatine and Aventine are plateaus with cliff or slope flanks
+(Capitoline 46 m after `topography.yaml` and Platner-Ashby); the Velia is its own ridge fitted to
+the excavated pavements. (2) The Forum (11 m, between the early floor and the Sullan paving),
+Caesar's forum, the Area Capitolina and the Circus arena are carved dead flat; every street is
+cut level across, and the clivi climb as ramps between walls. (3) 4 m terraces with retaining
+walls on moderate slopes inside the walls are a modelling choice. (4) The Tiber south of the
+island follows the modern river (bridge coordinates), and the island is placed so the dataset's
+bridges span its channels (Pons Fabricius 62 m, Pons Cestius 48 m); its exact position is being
+checked against Pleiades. (5) The ground's colour is baked into world-space maps so every level
+of detail shades alike. (6) Trees by species where sources name groves (the Asylum, the Forum's
+fig, olive and vine, the Ficus Ruminalis, Pompey's planes, the great gardens), generic greenery
+on crests and tufa faces, and real farmland on the ground outside the walls.
+
+**Why.** The owner's review (U8): flat ground, houses on bare slopes, no trees, farms as striped
+stickers. Most citations in this pass are `# unverified` because LacusCurtius and Perseus were
+unreachable; they are marked in the data.
+
+## D-297 Light and surfaces in U8 — DELEGATED (2026-10-30)
+
+**Decision.** (1) Every surface name in `UrbsMaterials` is a procedural PBR shader (no texture
+files) working in the model's own metres, so courses stay level and roof rows follow the eaves;
+every pattern fades to its average colour once it is a few pixels across, so nothing shimmers at
+any distance. (2) The sun is the real sun over Rome (latitude 41.9) by hour and day of the year,
+default day 120 (late April), in local solar time. (3) AgX tone mapping at exposure 1.35. (4)
+Shade is lit by the sky plus a warm bounce from sunlit ground and walls, because the renderer
+has no bounced-light simulation and shade otherwise goes blue-black. (5) Depth fog only on the
+far hills, as aerial perspective. (6) Screen-space indirect light only at street level and inside.
+
+**Why.** The owner's review (U8): a grey-pink wash, flat light and flat colours, against Rome
+Reborn's deep sky, hard sun and real stone. The 60 fps budget still has to be measured on a real
+laptop GPU: this cloud machine renders in software.
+
+## D-298 People in the city, and the turn's events played where they happened — DELEGATED (2026-10-30)
+
+**Decision.** (1) Street life (life.gd) fills the known streets, the Forum and the markets with
+people scaled by the year's population and the hour (Martial 4.8): Forum groups where Plautus puts
+them (Curculio 466-485), stalls in the Forum Boarium, Holitorium and by the Macellum, ox carts only
+before 6 h and after 16 h (the daytime ban, Tabula Heracleensis, # unverified), mules, litters,
+dogs, kitchen smoke and lamps; dress by class and sex (toga, tunic, stola and palla, pilleus).
+Everyone far away is one GPU-animated MultiMesh; only the nearest 32 are full figures. (2) When the
+city opens, the turn's events reach it: a games event fills the streets and lines the venue, a
+Senate meeting gathers a crowd in the Comitium (Livy 22.7.7), and the first event with a spectacle
+plays at its venue (race, munus, Senate, sacrifice, triumph); one spectacle at a time. (3) The
+renderer's per-instance shader buffer is raised to 16384 so a spectacle and the street fit together.
+(4) Opening on an open-air venue stands you at its edge looking in, not outside its gate.
+
+**Why.** The owner's review (U8): empty streets, where Rome Reborn has people everywhere, the main
+cue for scale; and the plan's "life inside, driven by the engine's events, not random".
+

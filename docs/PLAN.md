@@ -34,7 +34,9 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
     - [x] U5 interiors: temple, curia, basilica, circus, arena, theatre, domus, insula, furnished and lit
     - [x] U6 spectacles animated, sourced, with jointed figures, horses and crowds; triumph under 250 draw calls
     - [x] U7 engine city state and `city` view
-    - [ ] U8 polish, time of day, crowds, sound; owner playthrough
+    - [ ] U8 polish, time of day, crowds, sound; owner playthrough (round 2 merged 2026-10-30: houses,
+      monuments, site and trees, light and materials, street life; left: river placements, fill on
+      the Forum, sound, night, owner playthrough)
   - [ ] U9 Moments: a cinematic for every discovery, building and event, played in the city (after U8)
 - [ ] R6 Depth pass: every year 509-27 BC checked against the sources; full campaign playthrough
 

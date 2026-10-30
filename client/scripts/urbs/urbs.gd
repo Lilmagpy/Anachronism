@@ -35,9 +35,14 @@
 ##                         and h (street: eye height; city: orbit distance)
 ##   --mode=city|street|inside   which camera (default city)
 ##   --yaw=DEG --pitch=DEG  look direction as a compass bearing (0 north, 90 east, 270 west)
-##   --hour=H              time of day, 0-24 (default 10)
+##   --hour=H              time of day, 0-24 (default 10), local solar time   # U8 render
+##   --day=N               day of the year for the sun's path (default 120)    # U8 render
+##   --fx=nossao,nossil,noglow,nofog   turn post effects off (testing; atmosphere.gd)  # U8 render
 ##   --then=street|city|inside   after opening, glide to that mode (to photograph a transition)
 ##   --urbs-shots=t1,t2    with --screenshot: save PATH_tT.png at those seconds of the glide
+##   --event=kind:ref[:monument]  play an engine event's spectacle (spectacles.gd header)
+##   --spectacle=race|munus|senate|sacrifice|triumph  play one directly (with --at=<monument>)
+##   --spectacle-view=N    put the camera at the spectacle's Nth own view
 class_name Urbs
 extends Node3D
 
@@ -56,9 +61,13 @@ var interiors := UrbsInterior.new()
 var chunks := UrbsChunks.new()
 var cam := UrbsCamera.new()
 var hud := UrbsHud.new()
+var life := UrbsLife.new()          ## U8 life: people, stalls, carts, smoke, lamps (life.gd)
+var spectacle: Node3D               ## the spectacle playing, if any (spectacles/spectacles.gd)
+var events: Array = []              ## the turn's city events (view["city"]["events"])
 var sun := DirectionalLight3D.new()
 var environment := Environment.new()
-var sky_material := ProceduralSkyMaterial.new()
+var atmosphere := UrbsAtmosphere.new()   # U8 render: sky, sun, haze, shadows, post (atmosphere.gd)
+var sky_material: ShaderMaterial         # U8 render: the sky shader (atmosphere.sky_material)
 var hour := 10.0
 var selected := ""                  ## the monument whose card is open
 var interior: Node3D                ## the interior being visited, if INSIDE
@@ -84,6 +93,7 @@ func _ready() -> void:
 	chunks.height = Callable(self, "height_at")
 	add_child(chunks)
 	add_child(hud)
+	add_child(life)
 	hud.back_pressed.connect(_back)
 	hud.enter_pressed.connect(func() -> void:
 		if selected != "":
@@ -109,10 +119,16 @@ func _ready() -> void:
 
 ## Build the city of `new_year` (once per year) and take over the screen. `at` is the local
 ## point to open over (default the Forum); `flags` are the command-line options.
-func open(new_year: int, at := Vector3.ZERO, flags := {}) -> void:
+func open(new_year: int, at := Vector3.ZERO, flags := {}, new_events: Array = []) -> void:
 	year = new_year
 	if _built_year != year:
 		_rebuild()
+	events = new_events
+	life.set_events(events)
+	if flags.has("fx"):   # U8 render
+		atmosphere.set_fx(str(flags["fx"]))
+	if flags.has("day"):   # U8 render
+		atmosphere.day = int(flags["day"])
 	if flags.has("hour"):
 		set_hour(float(flags["hour"]))
 	hud.set_year(year)
@@ -126,16 +142,26 @@ func open(new_year: int, at := Vector3.ZERO, flags := {}) -> void:
 	var target := at
 	cam.snap_city(target, 1500.0)
 	_apply_flags(flags)
+	_start_spectacle(flags)
+	if spectacle != null and flags.has("spectacle-view") and spectacle.has_method("camera_views"):
+		# --spectacle-view=N: one of the spectacle's own camera positions (stands, track, box ...)
+		var views: Array = spectacle.camera_views()
+		if not views.is_empty():
+			cam.snap_inside(views[clampi(int(flags["spectacle-view"]), 0, views.size() - 1)])
 	chunks.focus_on(cam.focus(), cam.mode == UrbsCamera.Mode.CITY)
 	# The first picture is complete, not popping in: the fill finishes its chunks at once here,
 	# then goes back to spreading its work over frames.
 	fill.sync_chunks = true
 	chunks.load_all_now()
 	fill.sync_chunks = false
+	# and the first crowd is in place too (life spreads its placement over frames otherwise)
+	for i in 30:
+		life.tick(1.0 / 30.0, cam.camera.global_position)
 
 
 func close() -> void:
 	active = false
+	_stop_spectacle()
 	if interior != null:
 		_leave_interior_now()
 	visible = false
@@ -160,6 +186,7 @@ func _rebuild() -> void:
 	streets.build(self, year, height)
 	monuments.build(self, year, height)
 	fill.build(self, year, height)
+	life.build(self, year, hour, height)   # after the streets and monuments it walks among
 	for node in get_children():
 		if not before.has(node):
 			_city_nodes.append(node)
@@ -196,6 +223,13 @@ func _apply_flags(flags: Dictionary) -> void:
 			if at != "" and not at.contains(","):
 				# stand out in front of the doorway, looking back at the façade
 				var door: Transform3D = monuments.entrance(at)
+				var model := str(monuments.entry(at).get("model", ""))
+				var open_air := false
+				var into := 0.0   # how far in from the entrance: past the stands to the arena's edge
+				for k in ["circus", "theatre", "amphitheatre", "stadium", "plaza", "forum"]:
+					if model.contains(k):
+						open_air = true
+						into = 0.0 if k in ["plaza", "forum"] else 35.0
 				var outward := door.basis.z
 				outward.y = 0.0
 				outward = outward.normalized() if outward.length() > 0.01 else Vector3(0, 0, 1)
@@ -207,6 +241,8 @@ func _apply_flags(flags: Dictionary) -> void:
 					front = maxf(front, corner.x * outward.x + corner.z * outward.z)
 				var back := front + clampf(b.size.y * 1.8, 22.0, 60.0)
 				stand = Vector3(door.origin.x, 0, door.origin.z) + outward * back
+				if open_air:   # a venue open to the sky: stand at its entrance, looking in
+					stand = Vector3(door.origin.x, 0, door.origin.z) - outward * into   # facing still looks in
 				if not yaw_set:
 					facing = atan2(outward.x, outward.z)   # looks along -outward, at the door
 			cam.snap_street(stand, facing, maxf(height, UrbsCamera.EYE), deg_to_rad(float(flags.get("pitch", "3"))))
@@ -240,61 +276,50 @@ func _process(_delta: float) -> void:
 		return
 	var orbit := cam.mode == UrbsCamera.Mode.CITY
 	chunks.focus_on(cam.focus(), orbit)
-	var reach: float = cam.dist * 1.6 if orbit else 400.0
-	sun.directional_shadow_max_distance = clampf(reach, 150.0, 2500.0)
-	environment.fog_density = 0.00012 if orbit else 0.00032
-	if interior != null:
-		environment.fog_enabled = false
-	else:
-		environment.fog_enabled = true
+	atmosphere.update(orbit, cam.dist, interior != null)   # U8 render: cascades, haze, SSAO by mode
 
 
 # --- time of day, sky, fog ------------------------------------------------------------------
 
+# U8 render: the sky, the sun and the environment are atmosphere.gd's.
 func _build_sky() -> void:
-	var sky := Sky.new()
-	sky.sky_material = sky_material
-	environment.background_mode = Environment.BG_SKY
-	environment.sky = sky
-	environment.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
-	environment.ambient_light_energy = 0.6
-	environment.tonemap_mode = Environment.TONE_MAPPER_FILMIC
-	environment.tonemap_exposure = 1.0
-	environment.fog_enabled = true
-	environment.fog_density = 0.00025
-	environment.fog_sky_affect = 0.6
-	environment.fog_aerial_perspective = 0.25
-	environment.adjustment_enabled = true
-	environment.adjustment_saturation = 1.08
-	sun.shadow_enabled = true
-	sun.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS
-	sun.shadow_bias = 0.05
-	sun.shadow_normal_bias = 1.0
-	sun.light_angular_distance = 0.5
+	atmosphere.setup(environment, sun)
+	sky_material = atmosphere.sky_material
 
 
-## Time of day in hours (6 sunrise, 12 noon, 18 sunset): moves the sun and re-tints sky and fog.
+## Time of day in hours, local solar time (about 5:20 sunrise, 12 noon, 18:40 sunset at the
+## default day): moves the sun over Rome and re-tints sky, light and haze.   # U8 render
 func set_hour(new_hour: float) -> void:
 	hour = fposmod(new_hour, 24.0)
-	var day := clampf((hour - 6.0) / 12.0, -0.2, 1.2)
-	var elevation := sin(clampf(day, 0.0, 1.0) * PI) * 62.0 + 2.0   # degrees; 2 degrees at the horizon
-	if hour < 5.5 or hour > 18.5:
-		elevation = -10.0
-	sun.rotation_degrees = Vector3(-elevation, (12.0 - hour) / 6.0 * 90.0, 0.0)
-	var high := smoothstep(0.0, 25.0, elevation)            # 0 at the horizon .. 1 in full day
-	sun.light_energy = 1.7 * smoothstep(-2.0, 12.0, elevation)
-	sun.visible = elevation > -2.0 and interior == null
-	sun.light_color = Color(1.0, 0.62, 0.38).lerp(Color(1.0, 0.94, 0.84), high)
-	var night := 1.0 - smoothstep(-8.0, 6.0, elevation)
-	var top := Color(0.20, 0.38, 0.68).lerp(Color(0.02, 0.03, 0.08), night)
-	var horizon := Color(0.80, 0.68, 0.56).lerp(Color(0.80, 0.74, 0.66), high).lerp(Color(0.06, 0.06, 0.10), night)
-	sky_material.sky_top_color = top
-	sky_material.sky_horizon_color = horizon
-	sky_material.ground_horizon_color = horizon
-	sky_material.ground_bottom_color = horizon.darkened(0.35)
-	sky_material.sun_angle_max = 40.0
-	environment.fog_light_color = horizon.lerp(Color(0.8, 0.8, 0.8), 0.15)
-	environment.ambient_light_energy = lerpf(0.25, 0.65, 1.0 - night)
+	atmosphere.set_hour(hour)
+	sun.visible = atmosphere.sun_up() and interior == null
+	life.set_hour(hour)
+
+
+# --- spectacles -----------------------------------------------------------------------------
+
+## Play what the city shows on opening: the `--event` / `--spectacle` flags if given, else the
+## first of the turn's events that has a spectacle (a race in the Circus, the Senate at the
+## Curia, a sacrifice, a triumph, a munus). One at a time; the street keeps fewer skinned
+## figures meanwhile so both fit the renderer's per-instance budget.
+func _start_spectacle(flags: Dictionary) -> void:
+	_stop_spectacle()
+	var sp: Node3D = UrbsSpectacles.handle_flags(flags, self)
+	if sp == null:
+		for e in events:
+			if e is Dictionary and not UrbsSpectacles.from_event(e).is_empty():
+				sp = UrbsSpectacles.play_event(e, self)
+				if sp != null:
+					break
+	spectacle = sp
+	life.set_spectacle(spectacle != null)
+
+
+func _stop_spectacle() -> void:
+	if spectacle != null and is_instance_valid(spectacle):
+		UrbsSpectacles.stop()
+	spectacle = null
+	life.set_spectacle(false)
 
 
 # --- picking and the monument card ---------------------------------------------------------

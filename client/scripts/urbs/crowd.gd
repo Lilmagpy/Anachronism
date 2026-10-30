@@ -55,14 +55,18 @@ void vertex() {
 	VERTEX = v;
 }
 void fragment() {
-	vec3 skin = mix(vec3(0.95, 0.75, 0.6), vec3(0.6, 0.4, 0.3), tone);
+	// colours are sRGB (as the figures' source_color uniforms are); ALBEDO is linear (U8)
+	vec3 skin = mix(vec3(0.86, 0.66, 0.52), vec3(0.55, 0.37, 0.27), tone);
 	vec3 c = skin;
 	if (part < 0.5) {
-		c = texture(face, UV).rgb * mix(1.1, 0.72, tone);
-	} else if (part < 1.5) {
-		c = tint;
-	} else if (part > 3.5) {
-		c = mix(vec3(0.12, 0.09, 0.07), vec3(0.42, 0.3, 0.2), hairv);
+		c = texture(face, UV).rgb * mix(1.0, 0.55, tone);
+	} else {
+		if (part < 1.5) {
+			c = tint;
+		} else if (part > 3.5) {
+			c = mix(vec3(0.12, 0.09, 0.07), vec3(0.42, 0.3, 0.2), hairv);
+		}
+		c = pow(c, vec3(2.2));
 	}
 	ALBEDO = c;
 	ROUGHNESS = 0.9;
@@ -173,7 +177,7 @@ func build() -> void:
 ## Sort the seats into the three detail levels by distance from `cam_pos` (world space).
 func update_lod(cam_pos: Vector3) -> void:
 	_last_cam = cam_pos
-	var cam_local := global_transform.affine_inverse() * cam_pos
+	var cam_local := (global_transform if is_inside_tree() else transform).affine_inverse() * cam_pos
 	var d1 := lod_distance * lod_distance
 	var d2 := far_distance * far_distance
 	for c in _cells:
@@ -360,4 +364,223 @@ static func line_seats(poly: PackedVector3Array, offset: float, rows := 2, step 
 				var q: Vector3 = p + side * s * (offset + k * row_depth)
 				q.y += k * rise
 				out.append({"pos": q, "yaw": atan2(-s * side.x, -s * side.z), "u": d / total, "row": k})
+	return out
+
+
+# ---- walkers (U8 street life): a vertex-shader walk cycle for moving MultiMesh figures ------
+#
+# life.gd moves thousands of people along the streets. Each is one MultiMesh instance whose
+# transform is written by the simulation; the legs, arms and body bob come from this shader, so
+# the CPU touches one transform per person and nothing else.
+#   INSTANCE_CUSTOM.x  phase offset (0..1, turns)       .y  walk amplitude (0 stands, 1 walks, 1.4 hurries)
+#   INSTANCE_CUSTOM.z  skin tone (0 light .. 1 dark)     .w  floor(w) = flags (bit 0 pilleus, bit 1 long robe,
+#                                                             bit 2 dog), fract(w) = hair shade
+#   COLOR              cloth colour (tunic, toga, stola; the dog's coat)
+# Part ids (UV2.x) as the seated crowd, plus 5 = pilleus (drawn only with flag 1) and 6 = long robe
+# (drawn only with flag 2): toga to the shin, stola to the ankle.
+
+const WALK_SHADER := """
+shader_type spatial;
+render_mode cull_back;
+uniform float clock = 0.0;
+uniform float stride = 1.9;      // walk cycles per second at amplitude 1
+uniform float hip_y = 0.92;
+uniform float knee_y = 0.49;
+uniform float shoulder_y = 1.39;
+uniform sampler2D face : source_color, filter_linear;
+varying vec3 tint;
+varying float part;
+varying float tone;
+varying float hairv;
+void vertex() {
+	float ph0 = INSTANCE_CUSTOM.x * 6.2832;
+	float amp = INSTANCE_CUSTOM.y;
+	float flags = floor(INSTANCE_CUSTOM.w + 0.001);
+	hairv = fract(INSTANCE_CUSTOM.w);
+	tone = INSTANCE_CUSTOM.z;
+	tint = COLOR.rgb;
+	part = UV2.x;
+	bool cap = mod(flags, 2.0) >= 1.0;
+	bool robe = mod(floor(flags / 2.0), 2.0) >= 1.0;
+	bool dog = flags >= 4.0;
+	vec3 v = VERTEX;
+	bool hide = (part > 4.5 && part < 5.5 && !cap) || (part > 5.5 && part < 6.5 && !robe);   // a part this person does not wear
+	float phase = clock * 6.2832 * stride * (dog ? 1.8 : 1.0) + ph0;
+	if (part > 2.5 && part < 3.5) {               // legs: swing from the hip, knee bends on the forward swing
+		float side = sign(v.x);
+		if (dog) { side *= (v.z > 0.0 ? 1.0 : -1.0); }
+		float ph = phase + (side > 0.0 ? 3.14159 : 0.0);
+		float sw = sin(ph) * 0.5 * amp * (robe ? 0.55 : 1.0);
+		float hy = dog ? 0.32 : hip_y;
+		float ky = dog ? 0.16 : knee_y;
+		if (v.y < ky && !dog) {
+			float kb = max(0.0, -cos(ph)) * 0.8 * amp;
+			vec3 k = vec3(v.x, ky, 0.0);
+			vec3 p = v - k;
+			p = vec3(p.x, p.y * cos(kb) - p.z * sin(kb), p.y * sin(kb) + p.z * cos(kb));
+			v = p + k;
+		}
+		vec3 h = vec3(v.x, hy, dog ? v.z : 0.0);
+		if (dog) { h.z = v.z > 0.0 ? 0.22 : -0.24; }
+		vec3 p = v - h;
+		p = vec3(p.x, p.y * cos(sw) - p.z * sin(sw), p.y * sin(sw) + p.z * cos(sw));
+		v = p + h;
+	} else if (part > 1.5 && part < 2.5 && !dog) {    // arms: opposite the same-side leg
+		float side = sign(v.x);
+		float ph = phase + (side > 0.0 ? 0.0 : 3.14159);
+		float a = sin(ph) * 0.42 * amp;
+		vec3 s = vec3(v.x, shoulder_y, 0.0);
+		vec3 p = v - s;
+		p = vec3(p.x, p.y * cos(a) - p.z * sin(a), p.y * sin(a) + p.z * cos(a));
+		v = p + s;
+	} else if (!dog && part > 0.5 && part < 1.5 && v.y < hip_y + 0.02 && v.y > knee_y) {
+		v.z += sin(phase) * 0.03 * amp * (hip_y - v.y) / (hip_y - knee_y);   // the skirt follows the legs a little
+	}
+	v.y += 0.03 * amp * (0.5 - 0.5 * cos(2.0 * phase)) + 0.008 * (1.0 - min(amp, 1.0)) * sin(clock * 1.3 + ph0 * 3.0);
+	VERTEX = hide ? vec3(0.0) : v;
+}
+void fragment() {
+	// colours are authored in sRGB (as the rig's source_color uniforms are); ALBEDO is linear
+	vec3 skin = mix(vec3(0.86, 0.66, 0.52), vec3(0.55, 0.37, 0.27), tone);
+	vec3 c = skin;
+	if (part < 0.5) {
+		c = texture(face, UV).rgb * mix(1.0, 0.55, tone);
+	} else {
+		if (part < 1.5 || (part > 5.5 && part < 6.5)) {
+			c = tint;
+		} else if (part > 3.5 && part < 4.5) {
+			c = mix(vec3(0.12, 0.09, 0.07), vec3(0.42, 0.3, 0.2), hairv);
+		} else if (part > 4.5 && part < 5.5) {
+			c = vec3(0.78, 0.72, 0.6);   // undyed felt
+		}
+		c = pow(c, vec3(2.2));
+	}
+	ALBEDO = c;
+	ROUGHNESS = 0.9;
+}
+"""
+
+static var _walk_mat: ShaderMaterial
+
+
+## The shared material of every walking crowd (life.gd drives `clock`).
+static func walk_material() -> ShaderMaterial:
+	if _walk_mat == null:
+		var sh := Shader.new()
+		sh.code = WALK_SHADER
+		_walk_mat = ShaderMaterial.new()
+		_walk_mat.shader = sh
+		_walk_mat.set_shader_parameter("face", M.face_texture(Color(0.86, 0.66, 0.52), 5))
+		_walk_mat.set_shader_parameter("hip_y", 0.92)
+		_walk_mat.set_shader_parameter("knee_y", 0.92 - F.THIGH)
+		_walk_mat.set_shader_parameter("shoulder_y", 0.92 + F.SH_Y)
+	return _walk_mat
+
+
+## A standing figure for the walk shader, made for the purpose (cheap limbs, no capsules):
+## level 1 (near, ~900 triangles), 2 (middle, ~230), 3 (far, ~80). Parts: 0 head (painted face at
+## level 1), 1 tunic body and skirt, 2 arms, 3 legs, 4 hair, 5 pilleus (shown with flag 1), 6 long
+## robe to the shin, toga or stola (flag 2). Feet at y = 0, faces +z.
+static func walker_mesh(lod: int) -> ArrayMesh:
+	var ck := 100 + lod
+	if _fig_cache.has(ck):
+		return _fig_cache[ck]
+	var hip := 0.92
+	var parts: Array = []
+	var top := hip + F.HEAD_Y + 0.03
+	var nu: int = [0, 9, 6, 4][lod]
+	var cap_prof := [Vector4(0.0, 0.088, 0.1, -0.004), Vector4(0.06, 0.075, 0.085, -0.004), Vector4(0.135, 0.0, 0.0, -0.004)]
+	var robe_prof := [Vector4(0.04, 0.172, 0.12, 0.0), Vector4(-0.2, 0.215, 0.155, 0.0), Vector4(-0.80, 0.262, 0.195, 0.0)]
+	var skirt_prof := [Vector4(0.04, 0.17, 0.118, 0.0), Vector4(-0.36, 0.232, 0.172, 0.0)]
+	var limb := func(r0: float, r1: float, length: float, n: int) -> ArrayMesh:
+		return M.lathe([Vector4(-length - r1 * 0.6, 0.0, 0.0, 0.0), Vector4(-length, r1, r1, 0.0), Vector4(-length * 0.5, (r0 + r1) * 0.5, (r0 + r1) * 0.5, 0.0), Vector4(0.0, r0, r0, 0.0), Vector4(r0 * 0.6, 0.0, 0.0, 0.0)], n, 0, 1)
+	if lod == 1:
+		parts.append([M.lathe(F.TORSO_PROFILE, 7, 0, 1), Transform3D(Basis(), Vector3(0, hip, 0)), 1.0])
+		parts.append([M.lathe(skirt_prof, 8, 1, 1), Transform3D(Basis(), Vector3(0, hip, 0)), 1.0])
+		parts.append([M.lathe_y(F.HEAD_PROFILE, 8, 6), Transform3D(Basis(), Vector3(0, top, 0)), 0.0])
+		parts.append([M.ellipsoid(0.087, 0.07, 0.095, 7, 3), Transform3D(Basis(), Vector3(0, top + 0.185, -0.03)), 4.0])
+		for sx in [-1.0, 1.0]:
+			parts.append([limb.call(0.056, 0.036, 0.52, 5), Transform3D(Basis(Vector3(0, 0, 1), -0.05 * sx), Vector3(F.SH_X * sx, hip + F.SH_Y, 0)), 2.0])
+			parts.append([limb.call(0.08, 0.045, F.THIGH + F.SHIN, 5), Transform3D(Basis(), Vector3(F.HIP_X * sx, hip, 0)), 3.0])
+			parts.append([M.ellipsoid(0.045, 0.035, 0.11, 4, 2), Transform3D(Basis(), Vector3(F.HIP_X * sx, 0.035, 0.04)), 3.0])
+	elif lod == 2:
+		parts.append([M.lathe([Vector4(-0.36, 0.0, 0.0, 0.0), Vector4(-0.36, 0.22, 0.16, 0.0), Vector4(0.0, 0.17, 0.115, 0.0), Vector4(0.42, 0.19, 0.11, 0.0), Vector4(0.56, 0.0, 0.0, 0.0)], nu, 0, 1), Transform3D(Basis(), Vector3(0, hip, 0)), 1.0])
+		parts.append([M.ellipsoid(0.08, 0.115, 0.095, 5, 3), Transform3D(Basis(), Vector3(0, top + 0.12, 0)), 0.0])
+		parts.append([M.ellipsoid(0.085, 0.07, 0.1, 5, 2), Transform3D(Basis(), Vector3(0, top + 0.17, -0.01)), 4.0])
+		for sx in [-1.0, 1.0]:
+			parts.append([limb.call(0.05, 0.035, 0.52, 4), Transform3D(Basis(), Vector3(F.SH_X * sx, hip + F.SH_Y, 0)), 2.0])
+			parts.append([limb.call(0.075, 0.045, F.THIGH + F.SHIN, 4), Transform3D(Basis(), Vector3(F.HIP_X * sx, hip, 0)), 3.0])
+	else:
+		parts.append([M.ellipsoid(0.19, 0.42, 0.13, 4, 3), Transform3D(Basis(), Vector3(0, hip + 0.1, 0)), 1.0])
+		parts.append([M.ellipsoid(0.085, 0.12, 0.1, 4, 2), Transform3D(Basis(), Vector3(0, top + 0.13, 0)), 0.0])
+		for sx in [-1.0, 1.0]:
+			parts.append([M.ellipsoid(0.075, 0.46, 0.075, 3, 2), Transform3D(Basis(), Vector3(F.HIP_X * sx, hip - 0.46, 0)), 3.0])
+	if lod < 3:
+		parts.append([M.lathe(cap_prof, maxi(nu, 4), 0, 1), Transform3D(Basis(), Vector3(0, top + 0.17, 0)), 5.0])
+	parts.append([M.lathe(robe_prof, maxi(nu, 5), 1, 1), Transform3D(Basis(), Vector3(0, hip, 0)), 6.0])
+	var m := _merge_keep(parts)
+	_fig_cache[ck] = m
+	return m
+
+
+## A dog for the walk shader (flag 4): body, head, four legs, tail; 0.55 m at the shoulder.
+## Varro RR 2.9 (read): white guard dogs were preferred, seen more easily in the dark.
+static func dog_mesh() -> ArrayMesh:
+	if _fig_cache.has(200):
+		return _fig_cache[200]
+	var parts: Array = []
+	parts.append([M.ellipsoid(0.13, 0.15, 0.33, 7, 4), Transform3D(Basis(), Vector3(0, 0.42, 0)), 1.0])
+	parts.append([M.ellipsoid(0.09, 0.09, 0.14, 6, 3), Transform3D(Basis(), Vector3(0, 0.52, 0.38)), 1.0])
+	parts.append([M.ellipsoid(0.045, 0.045, 0.09, 4, 2), Transform3D(Basis(), Vector3(0, 0.49, 0.52)), 4.0])
+	for s in [-1.0, 1.0]:
+		parts.append([M.ellipsoid(0.02, 0.05, 0.012, 3, 2), Transform3D(Basis(), Vector3(0.06 * s, 0.61, 0.36)), 4.0])
+		for z in [0.22, -0.24]:
+			parts.append([M.ellipsoid(0.04, 0.17, 0.04, 4, 3), Transform3D(Basis(), Vector3(0.085 * s, 0.17, z)), 3.0])
+	parts.append([M.ellipsoid(0.025, 0.025, 0.17, 4, 2), Transform3D(Basis(Vector3.RIGHT, -0.7), Vector3(0, 0.55, -0.4)), 4.0])
+	var m := M.merge(parts)
+	_fig_cache[200] = m
+	return m
+
+
+# Merge parts, keeping the part ids already in a merged mesh's UV2 when the id given is < 0.
+static func _merge_keep(parts: Array) -> ArrayMesh:
+	var verts := PackedVector3Array()
+	var norms := PackedVector3Array()
+	var uvs := PackedVector2Array()
+	var uv2 := PackedVector2Array()
+	var idx := PackedInt32Array()
+	for p in parts:
+		var mesh: ArrayMesh = p[0]
+		var xf: Transform3D = p[1]
+		var pid: float = p[2]
+		var arr := mesh.surface_get_arrays(0)
+		var v: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
+		var n: PackedVector3Array = arr[Mesh.ARRAY_NORMAL]
+		var t: PackedVector2Array = arr[Mesh.ARRAY_TEX_UV]
+		var t2: Variant = arr[Mesh.ARRAY_TEX_UV2]
+		var ix: Variant = arr[Mesh.ARRAY_INDEX]
+		var base := verts.size()
+		for i in v.size():
+			verts.append(xf * v[i])
+			norms.append((xf.basis * n[i]).normalized())
+			uvs.append(t[i] if t != null and i < t.size() else Vector2.ZERO)
+			if pid < 0.0 and t2 != null:
+				uv2.append((t2 as PackedVector2Array)[i])
+			else:
+				uv2.append(Vector2(pid, 0.0))
+		if ix != null and (ix as PackedInt32Array).size() > 0:
+			for k in (ix as PackedInt32Array):
+				idx.append(base + k)
+		else:
+			for i in v.size():
+				idx.append(base + i)
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = verts
+	arrays[Mesh.ARRAY_NORMAL] = norms
+	arrays[Mesh.ARRAY_TEX_UV] = uvs
+	arrays[Mesh.ARRAY_TEX_UV2] = uv2
+	arrays[Mesh.ARRAY_INDEX] = idx
+	var out := ArrayMesh.new()
+	out.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 	return out
