@@ -1359,9 +1359,11 @@ func _make_senate_crowd() -> void:
 	var centre := d2 + out2 * 14.0
 	var reach := 13.0
 	if urbs.monuments.ids().has("comitium"):
-		var cb: AABB = urbs.monuments.bounds("comitium")
-		centre = Vector2(cb.get_center().x, cb.get_center().z)
-		reach = maxf(cb.size.x, cb.size.z) * 0.5
+		var placed: Variant = urbs.monuments.get("_placed")
+		if placed is Dictionary and (placed as Dictionary).has("comitium"):
+			var pl: Dictionary = placed["comitium"]
+			centre = pl["centre"]
+			reach = clampf(maxf(float(pl["radius"]), float(pl["length"]) * 0.5), 10.0, 24.0)
 	for k in int(reach / 1.0):
 		var r := 0.6 + k * 1.0
 		var n := maxi(1, int(TAU * r / 1.05))
