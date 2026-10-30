@@ -2629,3 +2629,16 @@ matters. Engine only: the client screens for it come in a later step.
   dropped; the 19 kept each still reduce the error against an independent point.
 - The Roman kit is complete for the Republic dataset (100 kit forms, 46 own forms, 0
   placeholders); the Empire set still has 12 placeholders (palaces, obelisk, stadia, odeum).
+
+## D-293 Every agent branch is pushed as it commits — DELEGATED (2026-10-30)
+
+**Decision.** Agents working in parallel worktrees push their own branch to GitHub after every
+commit. Only the lead merges into `claude/phase-2-3d` and only the owner merges to `main`.
+
+**Why.** The cloud container restarted on 2026-10-30 and wiped the disk. The rule had been
+"commit on your branch, never push", so the whole first U8 round (site, houses, monument
+detail, lighting and materials, half of street life: about a day of five agents' work) was
+lost; only what the lead had pushed survived (the city through U7). Pushing a work-in-progress
+branch costs nothing and makes a restart a nuisance instead of a loss. The U8 round is being
+redone from the same briefs.
+

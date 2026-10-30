@@ -73,6 +73,29 @@ owner's call (logged in D-289).
 - U7 The engine's city state and the `city` view; the player's anachronisms appear in the city.
 - U8 Polish: lighting, time of day, crowds, sound; screenshots and a playthrough for the owner.
 
+## U8: the gap with Rome Reborn (owner's review, 2026-10-29)
+
+The owner judged the first full pass "incredibly janky" against Rome Reborn. Side by side (a
+Rome Reborn still viewed as reference only), the gap is:
+
+| Rome Reborn | Ours before U8 |
+|---|---|
+| Deep sky, hard sun, crisp shadows, subtle aerial haze | Grey-pink wash, overexposed, flat light |
+| Veined marble, travertine, brick with mortar, painted stucco, ridged tiles, bronze and gilt | Flat colours; black holes for openings |
+| Fluted columns, real capitals, mouldings, pediment sculpture, acroteria, steps, bronze doors | Boxes with a brick texture; the Forum drawn as a courtyard with one roof |
+| Travertine paving, honorific statues, the Rostra | Sand |
+| Real valleys, towering Capitol, ramps, retaining walls | Flat ground; houses on bare slopes |
+| Pines, cypresses, gardens | No trees; farms as striped stickers |
+| People everywhere | Empty streets |
+| Tiled roofs, shutters, railed balconies | Flat slabs; laundry as coloured squares |
+
+Five parallel passes close it: rendering and materials (one shared library,
+`urbs/materials.gd`), monuments (real orders, the Forum's furniture), site (carved valleys,
+ramps, quays, trees), life (crowds, markets, spectacles wired to events) and houses.
+
+A first run of all five was lost on 2026-10-30 when the cloud container restarted before any
+of it was pushed (D-293). The second run pushes every agent branch as it commits.
+
 ## After the city: moments (owner's request, 2026-10-29)
 
 Once Urbs is done, every discovery, building and event gets its own cinematic: the game
