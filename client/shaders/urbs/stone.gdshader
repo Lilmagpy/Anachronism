@@ -64,7 +64,7 @@ void fragment() {
 		v1 = mix(v1, 0.05, smoothstep(0.03, 0.12, w1));
 		v2 = mix(v2, 0.03, smoothstep(0.03, 0.12, w2));
 		float soft = smoothstep(0.42, 0.5, n1) * (1.0 - smoothstep(0.5, 0.58, n1));
-		float vein = clamp(v1 * 0.8 + v2 * 0.35 + soft * 0.25, 0.0, 1.0) * vein_amount;
+		float vein = clamp(v1 * 0.8 + v2 * 0.35 + soft * 0.08, 0.0, 1.0) * vein_amount;
 		col = mix(col, vein_colour.rgb, vein);
 		// polish: a little duller where the veins and the weather run
 		r = rough + 0.1 * vein + 0.12 * (cloud - 0.5);
@@ -83,18 +83,18 @@ void fragment() {
 		col *= 0.9 + 0.2 * band;
 		float pore_n = u_noise2(vec2(uv.x * 9.0, uv.y * 42.0) + floor(p.z * 3.0));
 		float keep = u_detail(0.06, fp);
-		float pore = smoothstep(0.74, 0.82, pore_n) * keep;
-		col *= 1.0 - pore * 0.45 * vein_amount;
+		float pore = smoothstep(0.8, 0.88, pore_n) * keep;
+		col *= 1.0 - pore * 0.32 * vein_amount;
 		col *= 1.0 - (1.0 - keep) * 0.04 * vein_amount;
 		r = rough + pore * 0.2;
 		grad.y += (u_noise2(vec2(uv.x * 9.0, uv.y * 42.0 + 0.3)) - pore_n) * 0.8 * keep * vein_amount;
 	} else if (mode == 3) {
-		float speck_n = u_noise3(p * 40.0);
-		float keep = u_detail(0.03, fp);
-		float speck = smoothstep(0.78, 0.86, speck_n) * keep;
-		col = mix(col, vein_colour.rgb, speck * vein_amount + (1.0 - keep) * 0.05 * vein_amount);
-		float hole = smoothstep(0.8, 0.9, u_noise3(p * 13.0 + 5.0)) * u_detail(0.08, fp);
-		col *= 1.0 - hole * 0.35;
+		float speck_n = u_noise3(p * 60.0);
+		float keep = u_detail(0.02, fp);
+		float speck = smoothstep(0.84, 0.9, speck_n) * keep;
+		col = mix(col, vein_colour.rgb, (speck * 0.6 + (1.0 - keep) * 0.03) * vein_amount);
+		float hole = smoothstep(0.86, 0.93, u_noise3(p * 16.0 + 5.0)) * u_detail(0.06, fp);
+		col *= 1.0 - hole * 0.16;
 		col *= 0.92 + 0.16 * u_fbm3(p, 2.5, fp);
 	} else {
 		col *= 0.85 + 0.3 * u_fbm3(p, 9.0, fp);

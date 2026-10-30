@@ -53,7 +53,7 @@ const COLOURS := {
 	"stucco_white": Color(0.92, 0.90, 0.85), "stucco_cream": Color(0.90, 0.85, 0.72),
 	"stucco_ochre": Color(0.82, 0.66, 0.40), "stucco_red": Color(0.62, 0.22, 0.16),
 	"stucco_worn": Color(0.78, 0.72, 0.62), "fresco_panel": Color(0.70, 0.30, 0.25),
-	"tegulae": Color(0.64, 0.32, 0.20), "tegulae_old": Color(0.56, 0.33, 0.24),
+	"tegulae": Color(0.62, 0.29, 0.17), "tegulae_old": Color(0.56, 0.33, 0.24),
 	"ridge_terracotta": Color(0.66, 0.38, 0.26), "antefix_terracotta": Color(0.74, 0.46, 0.30),
 	"bronze_roof": Color(0.55, 0.40, 0.22),
 	"bronze": Color(0.62, 0.45, 0.22), "bronze_verdigris": Color(0.35, 0.55, 0.48),
@@ -105,7 +105,7 @@ const RECIPES := {
 	"stucco_worn": ["plaster", {"base_colour": Color(0.78, 0.72, 0.62), "wear": 0.75}],
 	"fresco_panel": ["plaster", {"base_colour": Color(0.62, 0.20, 0.15), "trim_colour": Color(0.13, 0.11, 0.10), "panel": 1.8, "wear": 0.1, "rough": 0.7, "grime": 0.3}],
 	# --- roofs: mode 0 tegulae and imbrices, 1 ridge, 2 relief
-	"tegulae": ["tiles", {"mode": 0, "base_colour": Color(0.66, 0.33, 0.21), "alt_colour": Color(0.56, 0.27, 0.17), "lichen": 0.12}],
+	"tegulae": ["tiles", {"mode": 0, "base_colour": Color(0.64, 0.30, 0.18), "alt_colour": Color(0.54, 0.25, 0.15), "lichen": 0.12}],
 	"tegulae_old": ["tiles", {"mode": 0, "base_colour": Color(0.58, 0.34, 0.25), "alt_colour": Color(0.48, 0.31, 0.24), "lichen": 0.5}],
 	"ridge_terracotta": ["tiles", {"mode": 1, "base_colour": Color(0.68, 0.39, 0.26), "alt_colour": Color(0.58, 0.32, 0.21), "lichen": 0.15}],
 	"antefix_terracotta": ["tiles", {"mode": 2, "base_colour": Color(0.76, 0.47, 0.31), "alt_colour": Color(0.68, 0.40, 0.26), "lichen": 0.05}],

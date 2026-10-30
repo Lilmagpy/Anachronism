@@ -67,7 +67,7 @@ func setup(env: Environment, sun_light: DirectionalLight3D) -> void:
 	env.adjustment_enabled = true
 	env.adjustment_brightness = 1.0
 	env.adjustment_contrast = 1.06
-	env.adjustment_saturation = 1.06
+	env.adjustment_saturation = 1.12   # AgX desaturates; give the terracotta back
 	# aerial perspective: depth fog from far away, tinted by the sky
 	env.fog_enabled = true
 	env.fog_mode = Environment.FOG_MODE_DEPTH

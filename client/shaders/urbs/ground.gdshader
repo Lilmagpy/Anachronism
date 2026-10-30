@@ -50,8 +50,8 @@ void fragment() {
 		col = mix(col, cj, bk.x * 0.9);
 		col = mix(mix(ca, cb, 0.45) * 0.95, col, keep);
 		grad = bk.yz * 0.01;
-		float pore = smoothstep(0.78, 0.85, u_noise2(vec2(uv.x * 10.0, uv.y * 40.0))) * u_detail(0.05, fp);
-		col *= 1.0 - pore * 0.3;
+		float pore = smoothstep(0.82, 0.88, u_noise2(vec2(uv.x * 10.0, uv.y * 40.0))) * u_detail(0.05, fp);
+		col *= 1.0 - pore * 0.22;
 		r = rough - 0.15 * (1.0 - bk.x) * keep;
 	} else if (mode == 1) {
 		vec2 q = uv / unit;
