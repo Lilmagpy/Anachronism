@@ -41,6 +41,10 @@ var _todo := {}          ## model -> what the kit agent could add
 var _routes := {}        ## id -> PackedVector2Array
 var _empire := {}        ## ids from monuments_empire.json
 var _circ := {}          ## the gate circuit (see _circuit)
+var _solids := {}        ## id -> Array of AABB in the monument's own frame (walls, podia, roofs)
+var _opens := {}         ## id -> Array of AABB in its frame: courts and plazas (walked on, never picked)
+var _xf := {}            ## id -> Transform3D of the monument's frame
+var _tris := {}          ## id -> [triangles at lod 0, 1, 2]
 
 
 func _init() -> void:
@@ -75,6 +79,10 @@ func build(urbs: Node3D, year: int, height: Callable = Callable()) -> void:
 	_bounds.clear()
 	_boxes.clear()
 	_kinds.clear()
+	_solids.clear()
+	_opens.clear()
+	_xf.clear()
+	_tris.clear()
 	_root = Node3D.new()
 	_root.name = "Monuments"
 	urbs.add_child(_root)
@@ -100,6 +108,10 @@ func set_year(year: int) -> void:
 			_placed.erase(id)
 			_bounds.erase(id)
 			_boxes.erase(id)
+			_solids.erase(id)
+			_opens.erase(id)
+			_xf.erase(id)
+			_tris.erase(id)
 		_keys[id] = key
 		if not st.is_empty():
 			_make(id, st)
@@ -130,6 +142,11 @@ func state_at(id: String, year: int) -> Dictionary:
 	var model := str(m.get("model", "none"))
 	if model == "none":
 		return {}
+	# An Empire entry that is the same building as a Republican one (`twin_of`) is drawn only
+	# while its twin is absent, so the city never holds two copies of the Basilica Iulia.
+	var twin := str(m.get("twin_of", ""))
+	if twin != "" and _recs.has(twin) and not state_at(twin, year).is_empty():
+		return {}
 	var built: Variant = m.get("built")
 	# No date at all: it has always stood (as the engine rules, U7); a floor from the sources
 	# ("after 27 BC", `not_before`) counts as its year.
@@ -154,12 +171,14 @@ func state_at(id: String, year: int) -> Dictionary:
 		"length": _num(fp.get("length"), 0.0), "width": _num(fp.get("width"), 0.0),
 		"radius": _num(fp.get("radius"), 0.0), "height": _num(m.get("height_m"), 0.0),
 		"podium": _num(m.get("podium_m"), 0.0), "thickness": _num(m.get("thickness_m"), 3.6)}
+	var gone := false
 	for ph in m.get("phases", []):
 		if year < int(ph["from"]):
 			break
 		var s := str(ph["state"])
-		if s == "gone":
-			return {}
+		gone = s == "gone"   # a later phase can bring it back (rebuilt on the site)
+		if gone:
+			continue
 		st.state = s
 		if ph.has("model"):
 			st.model = str(ph["model"])
@@ -170,6 +189,8 @@ func state_at(id: String, year: int) -> Dictionary:
 			st.length = float(pf.get("length", st.length))
 			st.width = float(pf.get("width", st.width))
 			st.radius = float(pf.get("radius", st.radius))
+	if gone:
+		return {}
 	if st.state == "standing" and year < first:
 		st.state = "building"
 	return st
@@ -244,7 +265,7 @@ func _is_clockwise(route: PackedVector2Array) -> bool:
 
 func _make(id: String, st: Dictionary) -> void:
 	var m: Dictionary = _recs[id]
-	var like: Dictionary = _recs.get(str(m.get("place_like", "")), m)
+	var like: Dictionary = _recs.get(str(m.get("place_like", m.get("twin_of", ""))), m)
 	var model: String = st.model
 	var node := Node3D.new()
 	node.name = id
@@ -282,6 +303,21 @@ func _make(id: String, st: Dictionary) -> void:
 			_wall_extras(form_st, route)
 		elif model == "aqueduct":
 			_arcade_extras(id, m, form_st, route)
+	# the ground under the footprint: its lowest and highest corner (the new forms draw their own
+	# foundations down from the highest, or sit on the lowest; `base` in the result says which)
+	var half0 := Vector2(maxf(float(st.width), float(st.radius) * 2.0), maxf(float(st.length), float(st.radius) * 2.0)) * 0.5
+	var lo0 := INF
+	var hi0 := -INF
+	if not kind_route:
+		var rot0 := Basis(Vector3.UP, yaw)
+		for off0 in [Vector2.ZERO, Vector2(1, 1), Vector2(-1, 1), Vector2(1, -1), Vector2(-1, -1),
+				Vector2(1, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, -1)]:
+			var wp0 := rot0 * Vector3(off0.x * half0.x, 0, off0.y * half0.y)
+			var gy0 := _ground_at(centre + Vector2(wp0.x, wp0.z))
+			lo0 = minf(lo0, gy0)
+			hi0 = maxf(hi0, gy0)
+		form_st["skirt"] = hi0 - lo0
+	form_st["year"] = _year
 	var res: Dictionary = Forms.make(m, form_st, route, Callable(self, "_ground"))
 	world = bool(res.get("world", false))
 	_kinds[id] = str(res.kind)
@@ -305,6 +341,12 @@ func _make(id: String, st: Dictionary) -> void:
 			hi = maxf(hi, gy)
 		base_y = lo
 		skirt = hi - lo
+		if str(res.get("base", "lo")) == "hi":
+			base_y = maxf(hi, hi0)
+		elif str(res.get("base", "lo")) == "centre":
+			# built into a valley against the hills (the circus): the floor at the centre's
+			# ground, the foundation down to the lowest point, the slopes over the outer seats
+			base_y = _ground_at(centre)
 	if world:
 		node.position = Vector3.ZERO
 	else:
@@ -313,57 +355,118 @@ func _make(id: String, st: Dictionary) -> void:
 	_root.add_child(node)
 	for part in res.parts:
 		var mi := MeshInstance3D.new()
-		mi.mesh = part.mesh
+		mi.mesh = part.mesh if part.get("own", false) else Forms.to_library(part.mesh, _unit_of(part))
 		mi.transform = part.xform
-		mi.material_override = _material
 		mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
+		_set_range(mi, part.get("range", Vector2.ZERO))
 		node.add_child(mi)
-	if skirt > 0.3 and not world and model != "plaza":
-		var k := Kit.new()
-		k.box(Vector3(0, -skirt - 0.4, 0), Vector3(half.x * 1.9, skirt + 0.4, half.y * 1.9), Color(0.55, 0.49, 0.40), Kit.STONE)
+	# repeated parts (columns): one MultiMesh per kind, in the monument's frame
+	for inst in res.get("instances", []):
+		var xfs: Array = inst.xforms
+		var mmesh := MultiMesh.new()
+		mmesh.transform_format = MultiMesh.TRANSFORM_3D
+		# white instance colours: under the GL compatibility renderer a MultiMesh multiplies the
+		# vertex colour by the instance colour even when it has none (then black)
+		mmesh.use_colors = true
+		mmesh.mesh = inst.mesh
+		mmesh.instance_count = xfs.size()
+		for k in xfs.size():
+			mmesh.set_instance_transform(k, xfs[k])
+			mmesh.set_instance_color(k, Color.WHITE)
+		var mmi := MultiMeshInstance3D.new()
+		mmi.multimesh = mmesh
+		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
+		_set_range(mmi, inst.range)
+		node.add_child(mmi)
+	if skirt > 0.3 and not world and model != "plaza" and not bool(res.get("no_skirt", false)):
+		# a foundation down to the lowest ground under the footprint
+		var fm := UrbsMonumentMesh.new()
+		fm.box(Vector3(0, -skirt - 0.4, 0), Vector3(half.x * 1.9, skirt + 0.4, half.y * 1.9), "opus_quadratum")
 		var mi := MeshInstance3D.new()
-		mi.mesh = k.finish()
-		mi.material_override = _material
+		mi.mesh = fm.finish_mesh()
 		node.add_child(mi)
-	# collision for the pick: boxes in the monument's frame
+	# collision and picking: boxes in the monument's frame (exact solids from the new forms;
+	# the older forms' boxes are kept at least 3 m on a side)
 	var body := StaticBody3D.new()
 	body.collision_layer = 1 << (PICK_LAYER - 1)
 	body.collision_mask = 0
 	body.set_meta("monument_id", id)
+	var xf := Transform3D(Basis(Vector3.UP, 0.0 if world else yaw), node.position)
+	var local: Array = []
 	var world_boxes: Array = []
 	var aabb := AABB()
 	var first := true
 	for bx in res.boxes:
-		var size: Vector3 = (bx.size as Vector3).max(Vector3(3, 3, 3))
+		var size: Vector3 = bx.size
+		if not bx.get("exact", false):
+			size = size.max(Vector3(3, 3, 3))
 		var cs := CollisionShape3D.new()
 		var shape := BoxShape3D.new()
 		shape.size = size
 		cs.shape = shape
 		cs.position = bx.centre
 		body.add_child(cs)
-		var xf := Transform3D(Basis(Vector3.UP, 0.0 if world else yaw), node.position)
-		var wc := xf * (bx.centre as Vector3)
-		var corner_box := AABB(Vector3.ZERO, Vector3.ZERO)
-		var lo2 := Vector3(INF, INF, INF)
-		var hi2 := Vector3(-INF, -INF, -INF)
-		for sx in [-0.5, 0.5]:
-			for sz in [-0.5, 0.5]:
-				var c := xf * ((bx.centre as Vector3) + Vector3(sx * size.x, 0, sz * size.z))
-				lo2 = lo2.min(c)
-				hi2 = hi2.max(c)
-		lo2.y = wc.y - size.y * 0.5
-		hi2.y = wc.y + size.y * 0.5
-		corner_box = AABB(lo2, hi2 - lo2)
+		local.append(AABB((bx.centre as Vector3) - size * 0.5, size))
+		var corner_box := _world_aabb(xf, AABB((bx.centre as Vector3) - size * 0.5, size))
 		world_boxes.append(corner_box)
 		aabb = corner_box if first else aabb.merge(corner_box)
 		first = false
+	var opens: Array = []
+	for o in res.get("opens", []):
+		opens.append(AABB((o.centre as Vector3) - (o.size as Vector3) * 0.5, o.size))
+	if world and not first:
+		# a route (the Servian wall, an aqueduct): its box would span the whole city, and urbs.gd's
+		# push_out treats each monument's bounds as one solid, so a walker anywhere inside the
+		# walls was thrown hundreds of metres. The bounds are its centre only; its own segments
+		# still collide and pick in push_out() and pick() here.
+		aabb = AABB(aabb.get_center(), Vector3.ZERO)
+	elif first and not opens.is_empty():
+		# only an open footprint (a plaza): the bounds are its centre, so nothing collides with
+		# it or picks it by its box, but `--at` still finds it
+		var oa := _world_aabb(xf, opens[0])
+		aabb = AABB(oa.get_center(), Vector3.ZERO)
 	node.add_child(body)
 	_nodes[id] = node
 	_bounds[id] = aabb
 	_boxes[id] = world_boxes
+	_solids[id] = local
+	_opens[id] = opens
+	_xf[id] = xf
+	_tris[id] = res.get("tris", [0, 0, 0])
 	_placed[id] = {"centre": centre, "yaw": yaw, "y": base_y, "length": maxf(float(st.length), float(st.radius) * 2.0),
 		"width": maxf(float(st.width), float(st.radius) * 2.0), "radius": float(st.radius), "model": model, "state": st.state,
-		"native": aabb.size}
+		"native": aabb.size, "door": res.get("door", null)}
+
+
+## Metres per mesh unit of an old kit part: the length of its transform's x axis (kit meshes
+## are in 10 m units and placed with a scale; the route forms are built in metres).
+static func _unit_of(part: Dictionary) -> float:
+	var xf: Transform3D = part.xform
+	var sc := xf.basis.get_scale()
+	return maxf((sc.x + sc.y + sc.z) / 3.0, 0.001)
+
+
+## Shows a part only within its distance band (Vector2(begin, end), 0 = no limit), with a small
+## margin so a part does not flicker at the edge.
+static func _set_range(g: GeometryInstance3D, r: Vector2) -> void:
+	if r == Vector2.ZERO:
+		return
+	g.visibility_range_begin = r.x
+	g.visibility_range_end = r.y
+	g.visibility_range_begin_margin = 4.0 if r.x > 0.0 else 0.0
+	g.visibility_range_end_margin = 4.0 if r.y > 0.0 else 0.0
+	g.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_DISABLED
+
+
+## The world-axis box round a box `b` given in a frame `xf`.
+static func _world_aabb(xf: Transform3D, b: AABB) -> AABB:
+	var lo := Vector3(INF, INF, INF)
+	var hi := Vector3(-INF, -INF, -INF)
+	for i in 8:
+		var c := xf * b.get_endpoint(i)
+		lo = lo.min(c)
+		hi = hi.max(c)
+	return AABB(lo, hi - lo)
 
 
 func _ground_at(p: Vector2) -> float:
@@ -438,26 +541,96 @@ func entry(id: String) -> Dictionary:
 	return _recs.get(id, {})
 
 
-## The id under a screen position, "" if none. Casts the camera ray against each monument's boxes.
+## The id under a screen position, "" if none: the camera ray against each monument's solid
+## boxes in its own frame (open courts and plazas are walked on, not picked).
 func pick(camera: Camera3D, screen_pos: Vector2) -> String:
 	var origin := camera.project_ray_origin(screen_pos)
 	var dir := camera.project_ray_normal(screen_pos)
 	return pick_ray(origin, dir)
 
 
-## The id of the nearest monument box on a ray ("" if none).
+## The id of the nearest solid on a ray ("" if none).
 func pick_ray(origin: Vector3, dir: Vector3) -> String:
 	var best := ""
 	var best_t := INF
-	for id in _boxes:
-		for b in _boxes[id]:
-			var hit: Variant = (b as AABB).intersects_ray(origin, dir)
+	for id in _solids:
+		var wb: AABB = _bounds.get(id, AABB())
+		if wb.size != Vector3.ZERO and wb.grow(0.5).intersects_ray(origin, dir) == null:
+			continue
+		var inv: Transform3D = (_xf[id] as Transform3D).affine_inverse()
+		var o := inv * origin
+		var d := inv.basis * dir
+		for b in _solids[id]:
+			var hit: Variant = (b as AABB).intersects_ray(o, d)
 			if hit != null:
-				var t := origin.distance_to(hit)
+				var t := o.distance_to(hit)
 				if t < best_t:
 					best_t = t
 					best = id
 	return best
+
+
+## The solid boxes of a monument as world-axis AABBs (local metres), [] when it is absent.
+func solid_boxes(id: String) -> Array[AABB]:
+	var out: Array[AABB] = []
+	if not _solids.has(id):
+		return out
+	for b in _solids[id]:
+		out.append(_world_aabb(_xf[id], b))
+	return out
+
+
+## Keeps a walker of `radius` whose eye is at height `eye_y` (y a.s.l.) out of the monuments'
+## solids: the new (x, z). A solid stops the walker when it rises above the
+## feet (eye_y - 1.7) by more than 1.3 m and its bottom is below the eye; the courts and plazas
+## never stop anyone.
+func push_out(p: Vector2, radius: float, eye_y: float) -> Vector2:
+	for id in _solids:
+		var wb: AABB = _bounds.get(id, AABB())
+		if wb.size == Vector3.ZERO:
+			continue   # plazas, and routes (their 250 m segment boxes are too coarse to walk against)
+		if p.x < wb.position.x - radius or p.x > wb.end.x + radius or p.y < wb.position.z - radius or p.y > wb.end.z + radius:
+			continue
+		var xf: Transform3D = _xf[id]
+		var inv := xf.affine_inverse()
+		var lp := inv * Vector3(p.x, eye_y, p.y)
+		var lfeet := lp.y - 1.7
+		var moved := false
+		for b in _solids[id]:
+			var bb: AABB = b
+			# a step or a low platform (up to 1.3 m, a basilica's floor) is walked over: the camera
+			# follows the ground and cannot climb, so it would otherwise stop at every plinth
+			if bb.end.y <= lfeet + 1.3 or bb.position.y >= lp.y:
+				continue
+			var x0 := bb.position.x - radius
+			var x1 := bb.end.x + radius
+			var z0 := bb.position.z - radius
+			var z1 := bb.end.z + radius
+			if lp.x <= x0 or lp.x >= x1 or lp.z <= z0 or lp.z >= z1:
+				continue
+			var dl := lp.x - x0
+			var dr := x1 - lp.x
+			var dn := lp.z - z0
+			var ds := z1 - lp.z
+			var mn := minf(minf(dl, dr), minf(dn, ds))
+			if mn == dl:
+				lp.x = x0
+			elif mn == dr:
+				lp.x = x1
+			elif mn == dn:
+				lp.z = z0
+			else:
+				lp.z = z1
+			moved = true
+		if moved:
+			var w := xf * lp
+			p = Vector2(w.x, w.z)
+	return p
+
+
+## Triangles of a monument at lod 0, 1, 2 (the new forms; [0, 0, 0] for the older ones).
+func triangles(id: String) -> Array:
+	return _tris.get(id, [0, 0, 0])
 
 
 ## Card text: name, date, builder, form, events, sources.
@@ -518,6 +691,11 @@ func entrance(id: String) -> Transform3D:
 		return Transform3D(Basis.looking_at(Vector3(0, 0, -1), Vector3.UP), Vector3(c.x, float(p.y) + 1.7, c.y))
 	else:
 		pos += front * (depth if depth > 0.0 else 4.0)
+	if p.get("door") is Vector3:
+		# the new temples know their door: stand on the threshold, eye height above the floor
+		var xf: Transform3D = _xf.get(id, Transform3D(Basis(Vector3.UP, yaw), Vector3(c.x, float(p.y), c.y)))
+		var dp: Vector3 = xf * ((p.door as Vector3) + Vector3(0, 1.7, 0))
+		return Transform3D(Basis.looking_at(look, Vector3.UP), dp)
 	var m: Dictionary = _recs[id]
 	var podium := float(m.get("podium_m", 0.0))
 	if podium <= 0.0 and str(m.get("type", "")) == "temple":

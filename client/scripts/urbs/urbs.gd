@@ -34,7 +34,7 @@
 ##   --at=<monument_id>    put the camera at that monument; or --at=x,z,h : local metres x, z
 ##                         and h (street: eye height; city: orbit distance)
 ##   --mode=city|street|inside   which camera (default city)
-##   --yaw=DEG --pitch=DEG  look direction (0 = north) for the street camera
+##   --yaw=DEG --pitch=DEG  look direction as a compass bearing (0 north, 90 east, 270 west)
 ##   --hour=H              time of day, 0-24 (default 10), local solar time   # U8 render
 ##   --day=N               day of the year for the sun's path (default 120)    # U8 render
 ##   --fx=nossao,nossil,noglow,nofog   turn post effects off (testing; atmosphere.gd)  # U8 render
@@ -180,7 +180,9 @@ func _apply_flags(flags: Dictionary) -> void:
 	var has_spot := false
 	var height := -1.0
 	var yaw_set := flags.has("yaw")
-	var yaw := deg_to_rad(float(flags.get("yaw", "0")))
+	# The flag is a compass bearing; the camera's yaw turns the other way (it looks along
+	# -sin(yaw), -cos(yaw) with x east and z south), so bearing B is yaw -B.
+	var yaw := -deg_to_rad(float(flags.get("yaw", "0")))
 	if at.contains(","):
 		var f := at.split(",")
 		spot = Vector3(float(f[0]), 0, float(f[1]))
@@ -198,10 +200,17 @@ func _apply_flags(flags: Dictionary) -> void:
 		"street":
 			var stand := spot
 			var facing := yaw
-			if at != "" and not at.contains(","):   # stand south of the monument, looking at it
+			if at != "" and not at.contains(","):
+				# stand out in front of the doorway, looking back at the façade
+				var door: Transform3D = monuments.entrance(at)
+				var outward := door.basis.z
+				outward.y = 0.0
+				outward = outward.normalized() if outward.length() > 0.01 else Vector3(0, 0, 1)
 				var b := monuments.bounds(at)
-				stand = Vector3(spot.x, 0, b.end.z + maxf(b.size.z * 0.4, 25.0))
-				facing = 0.0
+				var back := clampf(maxf(b.size.x, b.size.z) * 0.6, 25.0, 70.0)
+				stand = Vector3(door.origin.x, 0, door.origin.z) + outward * back
+				if not yaw_set:
+					facing = atan2(outward.x, outward.z)   # looks along -outward, at the door
 			cam.snap_street(stand, facing, maxf(height, UrbsCamera.EYE), deg_to_rad(float(flags.get("pitch", "3"))))
 		"inside":
 			if at != "" and not at.contains(","):
@@ -221,22 +230,8 @@ func height_at(x: float, z: float) -> float:
 
 ## Keep a walker of `radius` at `h` m above the ground out of buildings: the new position.
 func push_out(p: Vector2, radius: float, h: float) -> Vector2:
-	var eye_y := height_at(p.x, p.y) + h
-	for id in monuments.ids():
-		var b: AABB = monuments.bounds(id)
-		if eye_y > b.end.y + 0.5:
-			continue   # flying over it
-		var grown := Rect2(b.position.x - radius, b.position.z - radius, b.size.x + radius * 2, b.size.z + radius * 2)
-		if grown.has_point(p):
-			var left := p.x - grown.position.x
-			var right := grown.end.x - p.x
-			var top := p.y - grown.position.y
-			var bottom := grown.end.y - p.y
-			var m := minf(minf(left, right), minf(top, bottom))
-			if m == left: p.x = grown.position.x
-			elif m == right: p.x = grown.end.x
-			elif m == top: p.y = grown.position.y
-			else: p.y = grown.end.y
+	# against each monument's real solids (open courts, plazas and low platforms do not block)
+	p = monuments.push_out(p, radius, height_at(p.x, p.y) + h)
 	if fill.has_method("push_out"):
 		p = fill.push_out(p, radius, h)
 	return p
@@ -270,28 +265,7 @@ func set_hour(new_hour: float) -> void:
 
 ## The monument under a screen point, or "".
 func pick_monument(screen: Vector2) -> String:
-	var origin := cam.camera.project_ray_origin(screen)
-	var dir := cam.camera.project_ray_normal(screen)
-	var best := ""
-	var best_t := INF
-	for id in monuments.ids():
-		var t := _ray_box(origin, dir, monuments.bounds(id))
-		if t >= 0.0 and t < best_t:
-			best_t = t
-			best = id
-	return best
-
-
-static func _ray_box(origin: Vector3, dir: Vector3, box: AABB) -> float:
-	var t_min := 0.0
-	var t_max := INF
-	for axis in 3:
-		var inv := 1.0 / dir[axis] if absf(dir[axis]) > 1e-9 else 1e9
-		var t1 := (box.position[axis] - origin[axis]) * inv
-		var t2 := (box.end[axis] - origin[axis]) * inv
-		t_min = maxf(t_min, minf(t1, t2))
-		t_max = minf(t_max, maxf(t1, t2))
-	return t_min if t_min <= t_max else -1.0
+	return monuments.pick(cam.camera, screen)   # against the solids, so open courts are not picked
 
 
 func _on_click(screen: Vector2) -> void:

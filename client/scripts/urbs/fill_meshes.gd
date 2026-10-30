@@ -231,28 +231,41 @@ vec3 brick(vec2 uv, float seed, vec3 c, vec3 mortar_c) {
 	return mix(c * (0.78 + 0.4 * h21(vec2(floor(bx), row) + seed)), mortar_c, clamp(mortar, 0.0, 1.0));
 }
 
-// painted letters of a shop sign (dipinti): rows of strokes in red or black on white
+// painted letters of a shop sign (dipinti): rows of Latin capitals drawn from strokes, red on
+// white, always reading left to right. 12 letter forms: I L E F H N T V O C A M, and spaces.
+float seg(vec2 p, vec2 a, vec2 b, float w) {
+	vec2 pa = p - a; vec2 ba = b - a;
+	float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
+	return 1.0 - step(w, length(pa - ba * h));
+}
 float letters(vec2 uv, float seed) {
 	float rowh = 0.3;
 	float ry = fract(uv.y / rowh);
 	float rown = floor(uv.y / rowh);
-	if (ry < 0.18 || ry > 0.86) return 0.0;
+	if (ry < 0.16 || ry > 0.86) return 0.0;
 	float cw = 0.2;
-	float cx = uv.x / cw;
-	float ci = floor(cx);
-	float fx = fract(cx);
+	float ci = floor(uv.x / cw);
+	vec2 q = vec2(fract(uv.x / cw), (ry - 0.16) / 0.7);   // letter box: x 0..1 left to right, y 0..1 up
 	float g = h21(vec2(ci, rown + seed));
-	if (g < 0.24) return 0.0;  // a space between words
-	float ly = (ry - 0.18) / 0.68;
+	if (g < 0.2) return 0.0;  // a space between words
+	int k = int(floor(h21(vec2(ci * 1.3, rown + seed * 0.7)) * 12.0));
+	float w = 0.09;
+	vec2 bl = vec2(0.2, 0.0); vec2 tl = vec2(0.2, 1.0); vec2 br = vec2(0.75, 0.0); vec2 tr = vec2(0.75, 1.0);
+	vec2 ml = vec2(0.2, 0.5); vec2 mr = vec2(0.7, 0.5);
 	float s = 0.0;
-	float w = 0.16;
-	if (h21(vec2(ci, rown + 3.1)) < 0.75) s = max(s, step(abs(fx - 0.2), w * 0.6));
-	if (h21(vec2(ci, rown + 5.7)) < 0.45) s = max(s, step(abs(fx - 0.7), w * 0.6));
-	if (h21(vec2(ci, rown + 8.3)) < 0.5) s = max(s, step(abs(ly - 0.92), 0.1) * step(0.1, fx) * step(fx, 0.8));
-	if (h21(vec2(ci, rown + 9.9)) < 0.35) s = max(s, step(abs(ly - 0.5), 0.09) * step(0.1, fx) * step(fx, 0.75));
-	if (h21(vec2(ci, rown + 2.2)) < 0.35) s = max(s, step(abs(ly - 0.06), 0.1) * step(0.1, fx) * step(fx, 0.8));
-	if (g > 0.85) s = max(s, step(abs(fx - ly * 0.6 - 0.15), w * 0.6));   // a diagonal stroke (V, A, M)
-	return s * step(0.04, fx) * step(fx, 0.86);
+	if (k == 0) { s = seg(q, vec2(0.47, 0.0), vec2(0.47, 1.0), w); }
+	else if (k == 1) { s = max(seg(q, bl, tl, w), seg(q, bl, br, w)); }
+	else if (k == 2) { s = max(max(seg(q, bl, tl, w), seg(q, tl, tr, w)), max(seg(q, ml, mr, w), seg(q, bl, br, w))); }
+	else if (k == 3) { s = max(max(seg(q, bl, tl, w), seg(q, tl, tr, w)), seg(q, ml, mr, w)); }
+	else if (k == 4) { s = max(max(seg(q, bl, tl, w), seg(q, br, tr, w)), seg(q, ml, vec2(0.75, 0.5), w)); }
+	else if (k == 5) { s = max(max(seg(q, bl, tl, w), seg(q, br, tr, w)), seg(q, tl, br, w)); }
+	else if (k == 6) { s = max(seg(q, vec2(0.1, 1.0), vec2(0.85, 1.0), w), seg(q, vec2(0.47, 0.0), vec2(0.47, 1.0), w)); }
+	else if (k == 7) { s = max(seg(q, tl, vec2(0.47, 0.0), w), seg(q, vec2(0.47, 0.0), tr, w)); }
+	else if (k == 8) { s = max(max(seg(q, bl, tl, w), seg(q, br, tr, w)), max(seg(q, tl, tr, w), seg(q, bl, br, w))); }
+	else if (k == 9) { s = max(max(seg(q, bl, tl, w), seg(q, tl, tr, w)), seg(q, bl, br, w)); }
+	else if (k == 10) { s = max(max(seg(q, bl, vec2(0.47, 1.0), w), seg(q, vec2(0.47, 1.0), br, w)), seg(q, vec2(0.3, 0.4), vec2(0.65, 0.4), w)); }
+	else { s = max(max(seg(q, bl, tl, w), seg(q, br, tr, w)), max(seg(q, tl, vec2(0.47, 0.45), w), seg(q, vec2(0.47, 0.45), tr, w))); }
+	return s;
 }
 
 void fragment() {
@@ -354,7 +367,10 @@ void fragment() {
 	} else if (id == 13) {
 		// painted sign: white ground, red or black letters
 		vec3 ink = c_stucco_red * 0.85;
-		float l = letters(vec2(u + seed * 0.37, up), seed) * fade;
+		// along the wall from left to right as seen from outside (the face's own right hand), so the
+		// letters never read mirrored whichever way the building faces
+		float su = dot(lpos.xz, vec2(lnorm.z, -lnorm.x));
+		float l = letters(vec2(su + seed * 0.37, up), seed) * fade;
 		col = mix(c_stucco_white * (0.9 + 0.1 * fbm(uv * 2.0)), ink, l * 0.8);
 	} else if (id == 21) {
 		float bd = fract(u / 0.24);

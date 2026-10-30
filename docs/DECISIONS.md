@@ -2668,3 +2668,22 @@ Republican domus (Vitruvius 6.3, 6.5), insulae (Vitruvius 2.8.17; Strabo 5.3.7),
 workshops and horrea with tiled roofs, shutters, balconies and awnings, while cutting draw
 calls by about a third.
 
+## D-295 Monuments in U8: real orders, a paved Forum, and the courtyard that was not the Forum — DELEGATED (2026-10-30)
+
+**Decision.** (1) Temples are built from the orders after Vitruvius (3.3-4.7): fluted columns,
+capitals, entablature, pediment with acroteria, tiled roof, a podium with frontal steps and a
+bronze door; 64 of the 66 temple records use the new builder. (2) The Forum is a travertine-paved
+piazza with the Lacus Curtius, the Rostra (Republican, then Caesar's and Augustus'), the rostral
+columns and statues, edged by separate basilicas, the Curia and the Tabularium (Platner-Ashby,
+read on archive.org). (3) The Circus Maximus is built phase by phase. (4) Eight Empire records
+that duplicated Republican ones carry `twin_of` and are drawn only when the Republican one is
+absent; `rostra_augusti` and `columna_maenia` are added. (5) Collision and clicking use each
+monument's real solids (`solid_boxes`), not one box round the whole monument. (6) The camera's
+`--yaw` flag is a compass bearing, and `--at=<monument>` stands out in front of the door looking
+at the façade.
+
+**Why.** The owner's "Forum drawn as a courtyard ringed by one orange roof" turned out to be
+the Porticus Octaviae: the Servian wall's and the aqueducts' single bounding boxes spanned the
+city, so every street camera inside the walls was thrown hundreds of metres away before it took
+its picture. With real solids, the cameras land where they are asked to.
+
