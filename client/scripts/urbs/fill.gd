@@ -60,6 +60,7 @@ const MASK_N := 2200
 const M_STREET := 1
 const M_FOOT := 2
 const M_WATER := 4
+const M_WALK := 8                 ## street, kerb and footway: no earth apron is laid here
 const HORREA_DISTRICTS := ["forum_boarium", "aventine", "velabrum", "campus_south", "transtiberim", "default_inside"]
 
 var year := -300
@@ -378,6 +379,7 @@ func _stamp_mask() -> void:
 		_mask_line(_wall, 6.0, 8.0, M_FOOT)
 	for st in _streets.streets:
 		var pts: PackedVector2Array = st["pts"]
+		_mask_line(pts, 2.2, float(st["hw"]) + KERB + FOOTPATH, M_WALK)
 		_mask_line(pts, 2.2, float(st["hw"]) + 0.2, M_STREET)
 
 
@@ -1139,7 +1141,7 @@ func advance_region(rk: Vector2i, deadline: int) -> bool:
 func _lattice_verdict(lot: Dictionary, rk: Vector2i, neigh: Array) -> int:
 	var pts := _corners(lot)
 	for p in pts:
-		var hz := _hazard(p)
+		var hz := _hazard(p) & ~M_WALK
 		if hz != 0:
 			var rk2 := "hazard_%d" % hz
 			reject_stats[rk2] = int(reject_stats.get(rk2, 0)) + 1
@@ -1481,6 +1483,10 @@ func floor_step(node: Node3D, _key: Vector2i, lots: Array, _lod: int, _st: Dicti
 		for b in 4:
 			for a in 4:
 				var q0 := base + b * 5 + a
+				# not over the street, its kerb or its footway
+				var mid := (verts[q0] + verts[q0 + 6]) * 0.5
+				if _hazard(Vector2(mid.x, mid.z)) & M_WALK:
+					continue
 				idx.append_array([q0, q0 + 1, q0 + 6, q0, q0 + 6, q0 + 5])
 	if idx.is_empty():
 		return true
