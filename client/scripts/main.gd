@@ -505,7 +505,8 @@ func _enter_urbs(instant := false) -> void:
 		local = Vector3.ZERO
 	_in_urbs = true
 	_map_shown(false)
-	urbs.open(int(options.get("year", view.get("year", -300))), local, options if instant else {})
+	var city_events: Array = (view.get("city", {}) as Dictionary).get("events", []) if view.get("city") is Dictionary else []
+	urbs.open(int(options.get("year", view.get("year", -300))), local, options if instant else {}, city_events)
 	_urbs_busy = false
 	if not instant:
 		await _veil_to(0.0, 0.7)

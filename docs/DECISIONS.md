@@ -2721,3 +2721,20 @@ far hills, as aerial perspective. (6) Screen-space indirect light only at street
 Reborn's deep sky, hard sun and real stone. The 60 fps budget still has to be measured on a real
 laptop GPU: this cloud machine renders in software.
 
+## D-298 People in the city, and the turn's events played where they happened — DELEGATED (2026-10-30)
+
+**Decision.** (1) Street life (life.gd) fills the known streets, the Forum and the markets with
+people scaled by the year's population and the hour (Martial 4.8): Forum groups where Plautus puts
+them (Curculio 466-485), stalls in the Forum Boarium, Holitorium and by the Macellum, ox carts only
+before 6 h and after 16 h (the daytime ban, Tabula Heracleensis, # unverified), mules, litters,
+dogs, kitchen smoke and lamps; dress by class and sex (toga, tunic, stola and palla, pilleus).
+Everyone far away is one GPU-animated MultiMesh; only the nearest 32 are full figures. (2) When the
+city opens, the turn's events reach it: a games event fills the streets and lines the venue, a
+Senate meeting gathers a crowd in the Comitium (Livy 22.7.7), and the first event with a spectacle
+plays at its venue (race, munus, Senate, sacrifice, triumph); one spectacle at a time. (3) The
+renderer's per-instance shader buffer is raised to 16384 so a spectacle and the street fit together.
+(4) Opening on an open-air venue stands you at its edge looking in, not outside its gate.
+
+**Why.** The owner's review (U8): empty streets, where Rome Reborn has people everywhere, the main
+cue for scale; and the plan's "life inside, driven by the engine's events, not random".
+
