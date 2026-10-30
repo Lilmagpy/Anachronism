@@ -52,8 +52,8 @@ const KERB := 0.28                ## = UrbsStreets.KERB_W
 const FOOTWAY_H := 0.22           ## = UrbsStreets.FOOTWAY_H: floors of street fronts stand at least this high
 const APRON := 2.6                ## packed earth round a building lot, metres (covers a 5 m lane between two lots)
 const RIVER_CLEAR := 8.0          ## metres kept clear beyond the Tiber's half width (UrbsTerrain)
-const MAX_SLOPE := 0.5
-const MAX_STEP := 5.0                ## most a building may stand above the ground at its lowest corner (plinth < SKIRT)
+const MAX_SLOPE := 0.8                ## steeper hillsides were built over on substructures (the Palatine over the Circus)
+const MAX_STEP := 9.0                ## most a building may stand above the ground at its lowest corner (plinth < SKIRT 10 m)
 const MASK_RES := 3.0
 const MASK_HALF := 3300.0
 const MASK_N := 2200
@@ -110,8 +110,15 @@ func build(urbs: Node3D, new_year: int, new_height: Callable) -> void:
 	if mon != null and mon.has_method("ids"):
 		for id in mon.ids():
 			var b: AABB = mon.bounds(id)
-			if minf(b.size.x, b.size.z) < 600.0:     # skip the Servian wall's whole-circuit box
-				footprints.append(Rect2(b.position.x, b.position.z, b.size.x, b.size.z))
+			if minf(b.size.x, b.size.z) >= 600.0:     # skip the Servian wall's whole-circuit box
+				continue
+			# a monument standing on its own platform (the Circus, the Forum, the Area Capitolina)
+			# is kept clear by the platform's outline (UrbsSite); its axis-aligned box would be far
+			# too big for a building turned on the diagonal (the Circus's covers the Palatine flank)
+			var bc := b.get_center()
+			if maxf(b.size.x, b.size.z) > 120.0 and UrbsSite.platform_at(bc.x, bc.z) != "":
+				continue
+			footprints.append(Rect2(b.position.x, b.position.z, b.size.x, b.size.z))
 	prepare()
 
 
@@ -214,6 +221,8 @@ static func footprints_from_json(for_year: int) -> Array:
 			continue
 		var p := UrbsGeo.to_local(float(m["lat"]), float(m["lon"]))
 		var r: float = radius[t]
+		if r > 60.0 and UrbsSite.platform_at(p.x, p.y) != "":
+			continue    # on its platform: the platform's outline keeps it clear (see build)
 		out.append(Rect2(p.x - r, p.y - r, r * 2.0, r * 2.0))
 	return out
 

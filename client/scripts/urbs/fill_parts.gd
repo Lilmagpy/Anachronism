@@ -26,7 +26,7 @@
 class_name UrbsFillParts
 extends RefCounted
 
-const SKIRT := 6.0
+const SKIRT := 10.0   ## the masonry base below the floor: up to 9 m shows on a steep downhill side
 
 # surface ids (vertex alpha * 20)
 const ID_EARTH := 0
