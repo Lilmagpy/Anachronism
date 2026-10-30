@@ -4,10 +4,14 @@
 ##     --year=-50 --street=subura --t=0.35 --eye=1.7 --pitch=-3 --shot=/tmp/claude-0/streets_a.png
 ##
 ## Flags: --year=N (default -50)           --shot=PATH (default: no picture, just counts)
-##   --street=ID --t=0..1                  stand on that street, looking along it (+ --back to look the other way)
+##   --street=ID --t=0..1                  stand on that street, looking along it (+ --back to look the other way;
+##                                         --turn=DEG turns from the street's direction, --side=M steps sideways)
 ##   --at=x,z                              or stand at local metres x, z (then --yaw=DEG, 0 = north)
 ##   --eye=M (default 1.7)  --pitch=DEG (default -3)  --yaw=DEG  --radius=M (chunks loaded, default 450)
 ##   --lod=0..2   --hour=H (default 10)   --steps: time the incremental chunk build (worst step, ms)   --count: report building counts inside the Servian wall    --flat: flat ground instead of the real terrain; --slope: with --flat, tilt the ground (+4% to the east) to test the foundations
+##   --perf: load the chunks the street camera keeps (1500 m, LOD by distance as chunks.gd: 0 within
+##           250 m, 1 within 1100 m, 2 beyond) and print instances, triangles by LOD, and the
+##           renderer's draw calls and primitives for the frame (needs a window: use render.sh)
 extends SceneTree
 
 var args := {}
@@ -59,8 +63,8 @@ func _run() -> void:
 		var p := streets.along(sid, t)
 		var p2 := streets.along(sid, t + (-0.01 if args.has("back") else 0.01))
 		var dir := Vector2(p2.x - p.x, p2.z - p.z).normalized()
-		yaw = atan2(dir.x, -dir.y)
-		pos = Vector3(p.x, 0, p.z)
+		yaw = atan2(dir.x, -dir.y) + deg_to_rad(float(args.get("turn", "0")))
+		pos = Vector3(p.x, 0, p.z) + Vector3(-dir.y, 0, dir.x) * float(args.get("side", "0"))
 	elif args.has("at"):
 		var f := String(args["at"]).split(",")
 		pos = Vector3(float(f[0]), 0, float(f[1]))
@@ -75,12 +79,25 @@ func _run() -> void:
 	var holder := Node3D.new()
 	holder.name = "Fill"
 	root.add_child(holder)
+	var perf := args.has("perf")
+	if perf and not args.has("radius"):
+		radius = 1500.0
 	var chunks := fill.chunks_in(radius, Vector2(pos.x, pos.z))
+	var lod_tris := [0, 0, 0]
 	for key in chunks:
-		fill.build_chunk_into(holder, key, year, height, feet, lod)
+		var klod := lod
+		if perf:
+			var mid := (Vector2(key) + Vector2(0.5, 0.5)) * 250.0
+			var dd := mid.distance_to(Vector2(pos.x, pos.z))
+			klod = 0 if dd < 250.0 else (1 if dd < 1100.0 else 2)
+		var job := fill.build_chunk_into(holder, key, year, height, feet, klod)
+		for mi in job.get_children():
+			if mi is MultiMeshInstance3D:
+				var mm := (mi as MultiMeshInstance3D).multimesh
+				lod_tris[klod] += mm.instance_count * (mm.mesh.get_faces().size() / 3)
 		if not flat:
 			var rect := Rect2(Vector2(key) * 250.0, Vector2(250, 250))
-			root.add_child(UrbsTerrain.build_chunk(rect, 0 if lod == 0 else 1))
+			root.add_child(UrbsTerrain.build_chunk(rect, 0 if klod == 0 else 1))
 	var t_chunks := Time.get_ticks_msec() - started
 	if args.has("count"):
 		_count(fill, chunks, year)
@@ -148,6 +165,17 @@ func _run() -> void:
 	cam.current = true
 	for i in 6:
 		await process_frame
+	if perf:
+		await RenderingServer.frame_post_draw
+		var dc := RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME)
+		var prims := RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_PRIMITIVES_IN_FRAME)
+		var objs := RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_OBJECTS_IN_FRAME)
+		var mmi := 0
+		for ch in holder.get_children():
+			for mi in ch.get_children():
+				if mi is MultiMeshInstance3D:
+					mmi += 1
+		print("PERF chunks=%d multimeshes=%d fill_tris_by_lod=%s fill_tris=%d frame_draw_calls=%d frame_primitives=%d frame_objects=%d" % [chunks.size(), mmi, str(lod_tris), lod_tris[0] + lod_tris[1] + lod_tris[2], dc, prims, objs])
 	if args.has("shot"):
 		await RenderingServer.frame_post_draw
 		var img := get_root().get_texture().get_image()
