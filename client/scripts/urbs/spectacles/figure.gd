@@ -15,7 +15,9 @@
 ## Options for person(): tunic Color, toga bool, border Color, toga_colour, scale, skin Color,
 ## bare bool (bare-chested), hair Color, veil bool (capite velato), picta bool (toga picta),
 ## belt Color, shoes Color, sleeves bool, laticlave bool, laurel bool, hem Color + hem_band bool,
-## belt_on bool, seed int.
+## belt_on bool, seed int. U8 street life adds: stola bool (a matron: tunic to the ankles with a
+## palla wrapped over it, palla Color; Horace Sat. 1.2.29, 99, read), pilleus bool (the freedman's
+## felt cap, Livy 30.45.5 and 45.44.19, read), long bool (an ankle-length tunic without palla).
 extends Node3D
 
 const M := preload("res://scripts/urbs/spectacles/meshlib.gd")
@@ -274,8 +276,12 @@ func _build() -> void:
 		_bp(b_kn[si], "shin", fcap(0.058, 0.04, SHIN, 0.012), Vector3.ZERO, Vector3.ZERO, 0)
 		_bp(b_an[si], "shoe", fell(0.046, 0.034, 0.118), Vector3(0, -0.02, 0.05), Vector3.ZERO, 5, shoe)
 	# clothes
+	var stola: bool = opts.get("stola", false)
 	if not bare and not toga:
-		_tunic_skirt(opts.get("hem_band", false))
+		_tunic_skirt(opts.get("hem_band", false), 0.80 if (stola or opts.get("long", false)) else 0.34)
+		if stola:
+			rig.set_colour("c_toga", opts.get("palla", Color(0.55, 0.45, 0.6)))
+			_palla()
 	elif bare:
 		_loincloth(opts.get("belt", Color(0.5, 0.35, 0.2)))
 	if toga:
@@ -289,7 +295,9 @@ func _build() -> void:
 		_veil()
 	if opts.get("laurel", false):
 		equip_laurel()
-	has_long_robe = toga
+	if opts.get("pilleus", false):
+		equip_pilleus()
+	has_long_robe = toga or stola or bool(opts.get("long", false))
 	walk(0.0, 0.0)
 
 
@@ -411,6 +419,32 @@ func _veil() -> void:
 				var rz := maxf(pr.z, 0.07) * k
 				return Vector3(rx * sin(th), y, rz * cos(th) + pr.w * 0.5)
 			return M.surface(26, 10, fn, 1))), Vector3(0, 0.03, 0), Vector3.ZERO, 2)
+
+
+## The palla: a matron's mantle wrapped over the stola, the same way the toga crosses the chest
+## (Horace Sat. 1.2.99 "ad talos stola demissa et circumdata palla", read). Colour slot 2.
+func _palla() -> void:
+	_bp(b_torso, "palla_chest", func(lod: int) -> ArrayMesh:
+		return _cached("palla_chest%d" % lod, func():
+			var fn := func(u: float, v: float) -> Vector3:
+				var th := (u - 0.5) * TAU
+				var top := 0.33 - 0.17 * sin(th)
+				var y := lerpf(-0.30, top, v)
+				var pr := _profile_at(TORSO_PROFILE, clampf(y, -0.07, 0.54))
+				var rip := 1.0 + 0.04 * sin(7.0 * th + y * 9.0)
+				var widen := 1.0 + 0.75 * clampf(-y / 0.3, 0.0, 1.0)   # clears the stola's skirt below the hips
+				return Vector3((pr.y * 1.08 + 0.014) * rip * widen * sin(th), y, (pr.z * 1.08 + 0.014) * rip * widen * cos(th) + pr.w)
+			return M.surface(24 if lod == 0 else 12, 8 if lod == 0 else 4, fn, 1)), Vector3.ZERO, Vector3.ZERO, 2)
+	_bp(b_sh[1], "palla_arm", fcap(0.066, 0.062, 0.24), Vector3.ZERO, Vector3.ZERO, 2)
+
+
+## The pilleus: the close felt cap of the freedman (Livy 30.45.5: Q. Terentius Culleo followed
+## Scipio's chariot "pilleo capiti imposito"; Livy 45.44.19: Prusias "pilleatum, capite raso",
+## both read). Its exact shape is a modern reconstruction (# unverified).
+func equip_pilleus(col := Color(0.78, 0.72, 0.6)) -> void:
+	_bp(b_head, "pilleus", fmesh(func():
+		return _cached("pilleus", func():
+			return M.lathe([Vector4(0.0, 0.088, 0.1, -0.004), Vector4(0.05, 0.08, 0.09, -0.004), Vector4(0.11, 0.045, 0.05, -0.004), Vector4(0.135, 0.0, 0.0, -0.004)], 14))), Vector3(0, 0.2, 0), Vector3.ZERO, 5, col)
 
 
 # ---- poses ------------------------------------------------------------------------------
