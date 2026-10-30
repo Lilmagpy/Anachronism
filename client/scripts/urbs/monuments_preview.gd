@@ -16,6 +16,9 @@
 ##   --labels              float each monument's id above it
 ##   --entrance=<id>       print the door transform, the card date and the footprint count
 ##   --pick=px,py          print the monument id under that screen pixel (tests UrbsMonuments.pick)
+##   --push=x,z,eye_y      print where UrbsMonuments.push_out moves a walker (radius 0.5) standing there
+##   --perf                print triangles per monument at lod 0 / 1 / 2 (the new forms), the totals,
+##                         and the frame's draw calls and primitives from the renderer
 extends SceneTree
 
 var _args := {}
@@ -161,6 +164,28 @@ func _shoot() -> void:
 		print("entrance of ", _args["entrance"], ": at ", e.origin, " looking ", -e.basis.z)
 		print("info: ", _mon.info(str(_args["entrance"])).get("date", ""), " | ", _mon.info(str(_args["entrance"])).get("english", ""))
 		print("footprints: ", _mon.footprints().size())
+	if _args.has("push"):
+		var q := str(_args["push"]).split(",")
+		var p0 := Vector2(float(q[0]), float(q[1]))
+		print("push_out ", p0, " eye ", q[2], " -> ", _mon.push_out(p0, 0.5, float(q[2])))
+	if _args.has("perf"):
+		var tot := [0, 0, 0]
+		var rows := []
+		for id in _mon.ids():
+			var t: Array = _mon.triangles(id)
+			if int(t[0]) > 0:
+				rows.append([int(t[0]), id, t])
+			for l in 3:
+				tot[l] += int(t[l])
+		rows.sort_custom(func(a, b): return a[0] > b[0])
+		for r in rows.slice(0, 25):
+			print("perf %-34s lod0 %7d  lod1 %7d  lod2 %6d" % [r[1], r[2][0], r[2][1], r[2][2]])
+		print("perf TOTAL (new forms, all monuments) lod0 %d  lod1 %d  lod2 %d" % tot)
+		var rs := RenderingServer
+		print("perf frame: draw calls %d, primitives %d, objects %d" % [
+			rs.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME),
+			rs.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_PRIMITIVES_IN_FRAME),
+			rs.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_OBJECTS_IN_FRAME)])
 	if _args.has("pick"):
 		var vp := Vector2(get_root().size)
 		var p := str(_args["pick"]).split(",")
@@ -170,5 +195,5 @@ func _shoot() -> void:
 		get_root().get_viewport().get_texture().get_image().save_png(str(_args["screenshot"]))
 		print("saved ", _args["screenshot"])
 		quit()
-	elif _args.has("report") or _args.has("pick") or _args.has("entrance"):
+	elif _args.has("report") or _args.has("pick") or _args.has("entrance") or _args.has("perf") or _args.has("push"):
 		quit()

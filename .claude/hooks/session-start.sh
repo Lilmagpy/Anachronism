@@ -15,3 +15,9 @@ fi
 
 cd "${CLAUDE_PROJECT_DIR:-$(dirname "$0")/../..}"
 uv sync --locked
+
+# Cloud graphics toolchain (Godot, render queue, reference still) lives in /tmp and is wiped by
+# a container restart; rebuild it in the background so a restart costs a minute, not a day (D-293).
+if [ -d /tmp/claude-0 ] || mkdir -p /tmp/claude-0 2>/dev/null; then
+  nohup bash scripts/dev/cloud-toolchain.sh > /tmp/claude-0/toolchain.log 2>&1 &
+fi

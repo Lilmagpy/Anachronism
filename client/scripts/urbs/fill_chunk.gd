@@ -52,7 +52,7 @@ func step(ms: float) -> void:
 			1:
 				lots = fill.lots_for_chunk(key)
 				for lot in lots:
-					var mk := str(lot["mesh"])
+					var mk := UrbsFillMeshes.lod_key(str(lot["mesh"]), lod)
 					if lod >= 2 and (mk.begins_with("taberna") or mk.begins_with("prop") or mk.begins_with("furn")):
 						continue
 					if lod >= 1 and mk.begins_with("prop"):
