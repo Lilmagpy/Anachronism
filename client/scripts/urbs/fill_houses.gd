@@ -54,7 +54,7 @@ static func insula(shape: String, storeys: int, feature: int, pitch: int, lod: i
 		# a lower annex at the back under its own lean-to roof
 		var annex_h := maxf(gf, h - sh)
 		var an := MB.new()
-		P.walls(an, w, 6.0, annex_h, [[], [P.door_hole(0.0, 1.1, 2.2)], [], []])
+		P.walls(an, w, 6.0, annex_h, [[], [P.door_hole(0.0, 1.1, 2.2)], [], []], P.PLASTER, lod)
 		P.door(an, 1, 0.0, 1.1, 2.2, w, 6.0, lod, seed + 1)
 		if lod < 2:
 			for i in (1 if narrow else 3):
@@ -66,7 +66,7 @@ static func insula(shape: String, storeys: int, feature: int, pitch: int, lod: i
 		mz = 3.0
 	var m := MB.new()
 	# openings of the front: shops below, windows above
-	var shops: Array[float] = [-1.75, 1.75] if narrow else [-6.75, -2.25, 2.25, 6.75]
+	var shops: Array = [-1.75, 1.75] if narrow else [-6.75, -2.25, 2.25, 6.75]
 	var shop_w := 2.9 if narrow else 2.6
 	var front_holes: Array = []
 	var back_holes: Array = []
@@ -81,7 +81,7 @@ static func insula(shape: String, storeys: int, feature: int, pitch: int, lod: i
 			for i in win_h.size():
 				front_holes.append(P.window_hole(win_h[i], y0, 1.1, 1.4))
 	back_holes.append(P.door_hole(0.0, 1.1, 2.3))
-	P.walls(m, w, md, h, [front_holes, back_holes, [], []])
+	P.walls(m, w, md, h, [front_holes, back_holes, [], []], P.PLASTER, lod)
 	for i in shops.size():
 		var awn := i if (feature == 2 or (feature == 0 and i % 2 == 1)) else -1
 		P.shop_front(m, 0, shops[i], shop_w, w, md, lod, seed * 5 + i, awn, true)
@@ -108,12 +108,12 @@ static func insula(shape: String, storeys: int, feature: int, pitch: int, lod: i
 		# timber galleries (maeniana) with railings on the street face
 		if lod == 0 and s >= 2 and (feature != 1 or s % 2 == 0):
 			var full := feature == 2
-			var xs: Array[float] = [-6.5, 0.0, 6.5] if full else [-4.2 if s % 2 == 0 else 3.6]
+			var xs: Array = [-6.5, 0.0, 6.5] if full else [-4.2 if s % 2 == 0 else 3.6]
 			var hw := 2.3 if full else 2.0
 			if narrow:
 				xs = [0.0]
 				hw = 2.9
-			for bx in xs:
+			for bx: float in xs:
 				P.balcony(m, 0, bx, hw, y0 + 0.08, w, md, seed * 23 + s * 7 + int(bx), feature == 1 or (feature == 0 and s % 2 == 1), s == storeys - 1 and feature == 1)
 		elif lod == 1 and s >= 2 and feature != 1 and not narrow:
 			m.on_wall(0, -4.2 if s % 2 == 0 else 3.6, y0 + 0.08, 4.0, 0.14, 1.1, w, md, 0.0, P.WOOD)
@@ -164,7 +164,7 @@ static func domus(lod: int) -> MB:
 	var front_holes: Array = [P.door_hole(0.0, 1.8, 3.4), P.shop_hole(-5.4, 2.6), P.shop_hole(5.4, 2.6)]
 	# front
 	b.rect_on(0, -hx, hx, -P.SKIRT, 0.0, w, d, 0.0, P.PLINTH)
-	b.face_with_holes(0, -hx, hx, 0.0, h0, w, d, front_holes, P.PLASTER)
+	b.face_with_holes(0, -hx, hx, 0.0, h0, w, d, front_holes if lod == 0 else [], P.PLASTER)
 	P.door(b, 0, 0.0, 1.8, 3.4, w, d, lod, 31, true)
 	P.shop_front(b, 0, -5.4, 2.6, w, d, lod, 32, 3 if lod == 0 else -1, true)
 	P.shop_front(b, 0, 5.4, 2.6, w, d, lod, 33, -1, true)
@@ -183,7 +183,7 @@ static func domus(lod: int) -> MB:
 			for i in 4:
 				P.window_flat(b, face, -14.0 + 4.0 * float(i), 3.6, 0.8, 0.9, w, d, 50 + face * 5 + i)
 	b.rect_on(1, -hx, hx, -P.SKIRT, 0.0, w, d, 0.0, P.PLINTH)
-	b.face_with_holes(1, -hx, hx, 0.0, h1, w, d, [P.door_hole(6.0, 1.2, 2.3)], P.PLASTER)
+	b.face_with_holes(1, -hx, hx, 0.0, h1, w, d, [P.door_hole(6.0, 1.2, 2.3)] if lod == 0 else [], P.PLASTER)
 	P.door(b, 1, 6.0, 1.2, 2.3, w, d, lod, 36)
 	# the step between the two heights, on the flanks' line
 	b.quad(Vector3(-hx, h1, az0), Vector3(hx, h1, az0), Vector3(hx, h0, az0), Vector3(-hx, h0, az0), P.PLASTER, Vector3(0, 0, -1))
@@ -297,7 +297,7 @@ static func casa(roof_kind: String, lod: int) -> MB:
 	var holes: Array = [P.door_hole(-0.6, 1.0, 2.1)]
 	if lod == 0:
 		holes.append(P.window_hole(2.1, 1.2, 0.9, 0.9))
-	P.walls(b, w, d, h, [holes, [], [], []])
+	P.walls(b, w, d, h, [holes, [], [], []], P.PLASTER, lod)
 	P.door(b, 0, -0.6, 1.0, 2.1, w, d, lod, 51)
 	if lod == 0:
 		P.window(b, 0, 2.1, 1.2, 0.9, 0.9, w, d, 0, 52)
@@ -338,7 +338,7 @@ static func taberna(variant: int, lod: int) -> MB:
 	var holes: Array = [P.shop_hole(0.0, 3.2)]
 	if variant == 4 and lod == 0:
 		holes.append(P.window_hole(0.0, 4.4, 1.2, 1.3))
-	P.walls(b, w, d, h, [holes, [], [], []])
+	P.walls(b, w, d, h, [holes, [], [], []], P.PLASTER, lod)
 	P.shop_front(b, 0, 0.0, 3.2, w, d, lod, variant * 3 + 1, variant if variant < 4 else -1, variant != 5)
 	if variant == 4 and lod < 2:
 		if lod == 0:
@@ -373,13 +373,13 @@ static func workshop(variant: int, lod: int) -> MB:
 	var hz := -d * 0.5 + hd * 0.5
 	var hall := MB.new()
 	var holes: Array = [Rect2(-4.8, 0.0, 3.4, 3.4), Rect2(1.4, 0.0, 3.4, 3.4)]
-	P.walls(hall, w, hd, h, [holes, [], [], []])
+	P.walls(hall, w, hd, h, [holes, [], [], []], P.PLASTER, lod)
 	for hh in [-3.1, 3.1]:
 		if lod == 0:
 			hall.reveal(0, hh - 1.7, hh + 1.7, 0.0, 3.4, w, hd, 0.5, P.PLASTER, P.SHADE, 0.5)
 			hall.rect_on(0, hh - 1.7, hh - 0.2, 0.02, 3.38, w, hd, -0.42, P.DOOR)   # one leaf open
 		else:
-			hall.rect_on(0, hh - 1.7, hh + 1.7, 0.0, 3.4, w, hd, -0.1, P.SHADE)
+			hall.rect_on(0, hh - 1.7, hh + 1.7, 0.0, 3.4, w, hd, 0.02, P.SHADE)
 		if lod < 2:
 			hall.on_wall(0, hh, 3.4, 3.7, 0.3, 0.12, w, hd, 0.0, P.WOOD)
 			hall.on_wall(0, hh, 0.0, 3.9, 0.14, 0.4, w, hd, 0.0, P.STONE)
@@ -456,18 +456,18 @@ static func horrea(lod: int) -> MB:
 	var h := 7.0
 	var b := MB.new()
 	var holes: Array = []
-	var doors: Array[float] = [-8.0, 0.0, 8.0]
+	var doors: Array = [-8.0, 0.0, 8.0]
 	for x in doors:
 		holes.append(Rect2(x - 1.6, 0.0, 3.2, 3.6))
-	P.walls(b, w, d, h, [holes, [], [], []])
+	P.walls(b, w, d, h, [holes, [], [], []], P.PLASTER, lod)
 	for i in doors.size():
-		var x := doors[i]
+		var x: float = doors[i]
 		if lod == 0:
 			b.reveal(0, x - 1.6, x + 1.6, 0.0, 3.6, w, d, 0.6, P.PLASTER, P.DOOR, 0.6)
 			if i == 1:
 				b.rect_on(0, x - 1.6, x, 0.02, 3.58, w, d, -0.58, P.SHADE)   # one leaf open
 		else:
-			b.rect_on(0, x - 1.6, x + 1.6, 0.0, 3.6, w, d, -0.15, P.DOOR)
+			b.rect_on(0, x - 1.6, x + 1.6, 0.0, 3.6, w, d, 0.02, P.DOOR)
 		if lod < 2:
 			b.on_wall(0, x, 3.6, 3.9, 0.35, 0.14, w, d, 0.0, P.STONE)
 			b.on_wall(0, x, 0.0, 4.0, 0.16, 0.5, w, d, 0.0, P.STONE)
@@ -530,7 +530,7 @@ static func horti(lod: int) -> MB:
 		var hh := -10.8 + 4.3 * float(i)
 		vholes.append(P.window_hole(hh, 1.2, 1.4, 2.2))
 	vholes.append(P.door_hole(0.0, 1.6, 3.0))
-	P.walls(villa, 26.0, 13.0, 7.0, [vholes if lod == 0 else [P.door_hole(0.0, 1.6, 3.0)], [], [], []])
+	P.walls(villa, 26.0, 13.0, 7.0, [vholes if lod == 0 else [P.door_hole(0.0, 1.6, 3.0)], [], [], []], P.PLASTER, lod)
 	P.door(villa, 0, 0.0, 1.6, 3.0, 26.0, 13.0, lod, 81, true)
 	for i in 6:
 		var hh := -10.8 + 4.3 * float(i)
@@ -546,7 +546,7 @@ static func horti(lod: int) -> MB:
 	b.append(villa, Vector3(0, 0, vz))
 	for sx in [-22.0, 22.0]:
 		var pav := MB.new()
-		P.walls(pav, 8.0, 8.0, 4.6, [[P.door_hole(0.0, 1.2, 2.4)], [], [], []])
+		P.walls(pav, 8.0, 8.0, 4.6, [[P.door_hole(0.0, 1.2, 2.4)], [], [], []], P.PLASTER, lod)
 		P.door(pav, 0, 0.0, 1.2, 2.4, 8.0, 8.0, lod, 95)
 		pav.hip(-4.6, 4.6, -4.6, 4.6, 4.6, P.rise(4.6), P.TILE, lod)
 		b.append(pav, Vector3(sx, 0, 8.0))

@@ -50,20 +50,18 @@ const SHOP_DEPTH := 5.0
 const FOOTPATH := 1.0
 const KERB := 0.3
 const TIBER_BAND := 48.0
-const MAX_SLOPE := 0.6
+const MAX_SLOPE := 0.5
+const MAX_STEP := 5.0                ## most a building may stand above the ground at its lowest corner (plinth < SKIRT)
 const MASK_RES := 3.0
 const MASK_HALF := 3300.0
 const MASK_N := 2200
 const M_STREET := 1
 const M_FOOT := 2
 const M_WATER := 4
-const PALETTE: Array[Color] = [
-	Color(0.80, 0.62, 0.40), Color(0.78, 0.50, 0.36), Color(0.84, 0.76, 0.58), Color(0.70, 0.40, 0.30),
-	Color(0.62, 0.56, 0.48), Color(0.88, 0.84, 0.74), Color(0.82, 0.68, 0.36), Color(0.66, 0.36, 0.28),
-	Color(0.74, 0.58, 0.44), Color(0.58, 0.48, 0.40), Color(0.86, 0.80, 0.66), Color(0.76, 0.56, 0.38),
-]
+const HORREA_DISTRICTS := ["forum_boarium", "aventine", "velabrum", "campus_south", "transtiberim", "default_inside"]
 
 var year := -300
+var _palette: Array[Color] = UrbsFillMeshes.plaster_palette()   ## plaster colours (stucco_* of UrbsMaterials)
 var height: Callable = func(_x: float, _z: float) -> float: return 10.0
 var footprints: Array = []           ## Rect2 in local metres: monuments and anything else to avoid
 var sync_chunks := false             ## true: build_chunk finishes the chunk before returning
@@ -169,21 +167,25 @@ func _load() -> void:
 
 
 func _warm_meshes() -> void:
+	var keys: Array[String] = ["domus", "horti", "horrea", "casa:tile", "casa:thatch", "casa:shingle", "workshop:0", "workshop:1",
+		"workshop:2", "tree:cypress", "tree:pine", "tree:round", "prop:cart", "prop:amph", "prop:sacks", "prop:crates",
+		"furn:fountain", "furn:well", "furn:shrine"]
+	for v in 6:
+		keys.append("taberna:%d" % v)
 	for shape in ["gable", "hip", "stepped"]:
 		for st in range(2, 6):
 			for feat in 3:
 				for pitch in 2:
-					for lod in 3:
-						UrbsFillMeshes.get_mesh("insula:%s:%d:%d:%d" % [shape, st, feat, pitch], lod)
-						if shape != "stepped" and st >= 3:
-							UrbsFillMeshes.get_mesh("insula:%s:%d:%d:%d:n" % [shape, st, feat, pitch], lod)
+					keys.append("insula:%s:%d:%d:%d" % [shape, st, feat, pitch])
+					if shape != "stepped" and st >= 3:
+						keys.append("insula:%s:%d:%d:%d:n" % [shape, st, feat, pitch])
 	for lod in 3:
-		for k in ["domus", "horti", "casa:tile", "casa:thatch", "casa:shingle", "workshop:0", "workshop:1",
-				"tree:cypress", "tree:pine", "tree:round", "prop:cart", "prop:amph", "prop:sacks", "prop:crates",
-				"furn:fountain", "furn:well", "furn:shrine"]:
-			UrbsFillMeshes.get_mesh(k, lod)
-		for v in 6:
-			UrbsFillMeshes.get_mesh("taberna:%d" % v, lod)
+		var seen := {}
+		for k in keys:
+			var lk := UrbsFillMeshes.lod_key(k, lod)
+			if not seen.has(lk):
+				seen[lk] = true
+				UrbsFillMeshes.get_mesh(lk, lod)
 
 
 ## Footprints (Rect2) of the monuments standing in `for_year`, read straight from monuments.json
@@ -256,6 +258,14 @@ func _circuit_dist(p: Vector2) -> float:
 	for i in _circuit.size():
 		var q := Geometry2D.get_closest_point_to_segment(p, _circuit[i], _circuit[(i + 1) % _circuit.size()])
 		best = minf(best, p.distance_to(q))
+	return best
+
+
+## Distance from `p` to the Tiber's course (topography.json), metres.
+func _tiber_dist(p: Vector2) -> float:
+	var best := 1.0e9
+	for i in range(_tiber.size() - 1):
+		best = minf(best, p.distance_to(Geometry2D.get_closest_point_to_segment(p, _tiber[i], _tiber[i + 1])))
 	return best
 
 
@@ -421,9 +431,11 @@ func _ground_ok(lot: Dictionary, pts: Array) -> bool:
 		hi = maxf(hi, hh)
 		sum += hh
 	var span := maxf(lot["hx"], lot["hz"]) * 2.0
-	if (hi - lo) / span > MAX_SLOPE:
+	if (hi - lo) / span > MAX_SLOPE or hi - lo > MAX_STEP:
 		return false
-	lot["y"] = sum / float(pts.size()) - 0.15
+	# one base per building: the floor at the highest of the corners, so no part is buried, and
+	# the masonry plinth (UrbsFillParts.SKIRT deep) closes the gap down to the ground below
+	lot["y"] = hi - 0.04 if str(lot.get("kind", "")) != "furn" else sum / float(pts.size()) - 0.05
 	return true
 
 
@@ -462,7 +474,7 @@ func _roof_kind(r: float) -> String:
 ## The lot of `type` at `c`, facing `front`, from hash values (a, b, salt). `cell` limits sizes to a
 ## 17 m lattice plot. Returns {} for types that make no building.
 func _lot_of(type: String, c: Vector2, front: Vector2, a: int, b: int, salt: int, cell := false) -> Dictionary:
-	var tint := Color(PALETTE[_hash(a, b, salt + 90) % PALETTE.size()], _r(a, b, salt + 91))
+	var tint := Color(_palette[_hash(a, b, salt + 90) % _palette.size()], _r(a, b, salt + 91))
 	var cap := 13.2 if cell else 99.0
 	match type:
 		"insula":
@@ -488,7 +500,7 @@ func _lot_of(type: String, c: Vector2, front: Vector2, a: int, b: int, salt: int
 		"workshop":
 			var w3 := minf(11.5 + _r(a, b, salt + 2) * 3.0, cap)
 			var d3 := minf(10.5 + _r(a, b, salt + 3) * 2.5, cap)
-			return _make_lot("workshop:%d" % int(_r(a, b, salt + 4) * 2.0), Vector2(16, 14), c, front, w3, d3, tint, 8.2, "workshop")
+			return _make_lot("workshop:%d" % mini(int(_r(a, b, salt + 4) * 3.0), 2), Vector2(16, 14), c, front, w3, d3, tint, 8.2, "workshop")
 		"domus":
 			var w4 := 17.0 + _r(a, b, salt + 2) * 7.0
 			var d4 := 28.0 + _r(a, b, salt + 3) * 7.0
@@ -697,7 +709,7 @@ func _street_rows(si: int) -> void:
 					var dd := SHOP_DEPTH + _r(sh, item, side + 17) * 0.4
 					var pos := mp + mn * (hw + KERB + FOOTPATH + dd * 0.5)
 					var variant := int(_r(sh, item, side + 19) * 6.0)
-					var tab := _make_lot("taberna:%d" % variant, Vector2(4.6, 5.2), pos, -mn, tw, dd, Color(PALETTE[_hash(sh, item, side + 21) % PALETTE.size()], _r(sh, item, side + 20)), 5.0 if variant != 4 else 7.5, "taberna")
+					var tab := _make_lot("taberna:%d" % variant, Vector2(4.6, 5.2), pos, -mn, tw, dd, Color(_palette[_hash(sh, item, side + 21) % _palette.size()], _r(sh, item, side + 20)), 5.0 if variant != 4 else 7.5, "taberna")
 					if _add_street_lot(tab, sid, 0.2):
 						_street_prop(mp, mn, hw, sh, item, side)
 			s += tw + (2.2 if _r(sh, item, side + 22) < 0.06 else 0.0)
@@ -858,7 +870,7 @@ func _region_cands(gi: int, gj: int) -> Array:
 	return out
 
 
-## Plan of one block: "horti", "domus" or "" (plots decided one by one).
+## Plan of one block: "horti", "domus", "horrea" or "" (plots decided one by one).
 func _block_plan(gi: int, gj: int, ba: int, bb: int, bc: Vector2) -> String:
 	var d := _district_at(bc)
 	var era := _era(d)
@@ -869,6 +881,11 @@ func _block_plan(gi: int, gj: int, ba: int, bb: int, bc: Vector2) -> String:
 	if total <= 0.0:
 		return ""
 	var occ := _occupancy_at(d, bc)
+	# warehouses (horrea) on the blocks nearest the river, from the Emporium of 193 BC (Livy
+	# 35.10.12, # unverified) and the Porticus Aemilia: the river port's stores
+	if year >= -193 and str(d["id"]) in HORREA_DISTRICTS and _tiber_dist(bc) < 230.0:
+		if _r(gi * 97 + ba, gj * 89 + bb, 15) < 0.45 * occ:
+			return "horrea"
 	var r := _r(gi * 97 + ba, gj * 89 + bb, 11)
 	if w.has("horti") and r < float(w["horti"]) / total and _r(gi * 97 + ba, gj * 89 + bb, 12) < occ * 1.3:
 		return "horti"
@@ -907,6 +924,15 @@ func _cell_lots(cd: Dictionary, sub_only := false) -> Array:
 		var front := ax * cos(jit) + az * sin(jit)
 		front = (-az if _r(seed_a, seed_b, 4) < 0.5 else az)
 		out.append(_make_lot("horti", Vector2(70, 70), cd["bc"], front, s, s, Color(1, 1, 1, _r(seed_a, seed_b, 5)), 8.0, "horti"))
+		return out
+	if plan == "horrea" and k < 2 and l < 2:
+		if k != 0 or l != 0:
+			return out
+		var hc: Vector2 = c + ax * PITCH * 0.5 + az * PITCH * 0.5
+		var hf := -az if _r(seed_a, seed_b, 4) < 0.5 else -ax
+		var hw := 25.0 + _r(seed_a, seed_b, 5) * 2.0
+		var hd := 16.5 + _r(seed_a, seed_b, 6) * 1.5
+		out.append(_make_lot("horrea", Vector2(24, 16), hc, hf, hw, hd, Color(_palette[_hash(seed_a, seed_b, 7) % _palette.size()], _r(seed_a, seed_b, 8)), 10.5, "horrea"))
 		return out
 	if plan == "domus" and k < 2 and l < 2:
 		if k != 0 or l != 0:
@@ -990,7 +1016,7 @@ func advance_region(rk: Vector2i, deadline: int) -> bool:
 			var verdict := _lattice_verdict(lot, rk, neigh)
 			if verdict == 0:
 				st["lots"].append(lot)
-			elif verdict == 2 and str(lot["kind"]) != "casa" and str(lot["kind"]) != "horti" and str(lot["kind"]) != "domus":
+			elif verdict == 2 and str(lot["kind"]) != "casa" and str(lot["kind"]) != "horti" and str(lot["kind"]) != "domus" and str(lot["kind"]) != "horrea":
 				# plot blocked by a street-front lot: pack the gap with small houses instead
 				var ax: Vector2 = cd["ax"]
 				var az: Vector2 = cd["az"]
@@ -1133,6 +1159,9 @@ func make_instances(list: Array, mesh_key: String, lod: int) -> MultiMeshInstanc
 	var multi := MultiMesh.new()
 	multi.transform_format = MultiMesh.TRANSFORM_3D
 	multi.use_custom_data = true
+	# the compatibility renderer multiplies the vertex colour by the instance colour whether or not
+	# the MultiMesh has colours, which zeroed the surface ids in the vertex alpha: give it white
+	multi.use_colors = true
 	multi.mesh = UrbsFillMeshes.get_mesh(mesh_key, lod)
 	multi.instance_count = list.size()
 	for n in list.size():
@@ -1140,6 +1169,7 @@ func make_instances(list: Array, mesh_key: String, lod: int) -> MultiMeshInstanc
 		var basis := Basis(Vector3.UP, float(lot["th"])) * Basis.from_scale(Vector3(lot["sx"], lot.get("sy", 1.0), lot["sz"]))
 		multi.set_instance_transform(n, Transform3D(basis, Vector3(lot["c"].x, lot["y"], lot["c"].y)))
 		multi.set_instance_custom_data(n, lot["tint"])
+		multi.set_instance_color(n, Color.WHITE)
 	var inst := MultiMeshInstance3D.new()
 	inst.name = mesh_key.replace(":", "_")
 	inst.multimesh = multi

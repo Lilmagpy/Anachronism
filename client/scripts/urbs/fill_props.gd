@@ -109,7 +109,7 @@ static func tomb(kind: String, lod: int) -> MB:
 			b.box(Vector3(-1.45, 1.9, -1.45), Vector3(1.45, 2.3, 1.45), P.STONE)
 			b.rect_on(0, -0.8, 0.8, 0.9, 1.6, 3.0, 3.0, 0.62, P.SIGN)
 		"columbarium":
-			P.walls(b, 5.0, 5.0, 3.4, [[P.door_hole(0.0, 1.2, 2.2)], [], [], []])
+			P.walls(b, 5.0, 5.0, 3.4, [[P.door_hole(0.0, 1.2, 2.2)], [], [], []], P.PLASTER, lod)
 			P.door(b, 0, 0.0, 1.2, 2.2, 5.0, 5.0, lod, 71)
 			b.gable(-2.8, 2.8, -2.8, 2.8, 3.4, P.rise(2.8), P.TILE, P.PLASTER, lod)
 			if lod < 2:
@@ -152,13 +152,13 @@ static func rural(kind: String, lod: int) -> MB:
 					var g := Color(0.32 + 0.1 * float((i + j) % 2), 0.48, 0.2, 0.05)
 					b.box(Vector3(x0, 0.0, z0), Vector3(x0 + 7.5, 0.28, z0 + 8.0), g)
 			var shed := MB.new()
-			P.walls(shed, 4.0, 4.0, 2.6, [[P.door_hole(0.0, 1.0, 2.0)], [], [], []])
+			P.walls(shed, 4.0, 4.0, 2.6, [[P.door_hole(0.0, 1.0, 2.0)], [], [], []], P.PLASTER, lod)
 			P.door(shed, 0, 0.0, 1.0, 2.0, 4.0, 4.0, lod, 72)
 			shed.gable(-2.4, 2.4, -2.4, 2.4, 2.6, P.rise(2.4), P.TILE, P.PLASTER, lod)
 			b.append(shed, Vector3(17.0, 0.0, 17.0))
 		"farm":
 			var house := MB.new()
-			P.walls(house, 12.0, 9.0, 3.4, [[P.door_hole(0.0, 1.4, 2.2)], [], [], []])
+			P.walls(house, 12.0, 9.0, 3.4, [[P.door_hole(0.0, 1.4, 2.2)], [], [], []], P.PLASTER, lod)
 			P.door(house, 0, 0.0, 1.4, 2.2, 12.0, 9.0, lod, 73)
 			house.gable(-6.6, 6.6, -5.0, 5.0, 3.4, P.rise(5.0), P.TILE, P.PLASTER, lod)
 			if lod < 2:
@@ -166,7 +166,7 @@ static func rural(kind: String, lod: int) -> MB:
 				P.window_flat(house, 0, -3.0, 1.2, 1.0, 1.0, 12.0, 9.0, 75)
 			b.append(house, Vector3(-4.0, 0.0, -10.0))
 			var barn := MB.new()
-			P.walls(barn, 14.0, 9.0, 4.2, [[Rect2(-2.0, 0.0, 4.0, 3.4)], [], [], []], P.WOOD)
+			P.walls(barn, 14.0, 9.0, 4.2, [[Rect2(-2.0, 0.0, 4.0, 3.4)], [], [], []], P.WOOD, lod)
 			barn.rect_on(0, -2.0, 2.0, 0.0, 3.4, 14.0, 9.0, -0.3, P.SHADE)
 			barn.gable(-7.6, 7.6, -5.0, 5.0, 4.2, P.rise(5.0, 30.0), P.SHINGLE, P.WOOD, 2)
 			b.append(barn, Vector3(-3.0, 0.0, 10.0))

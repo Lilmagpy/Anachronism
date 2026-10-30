@@ -110,7 +110,9 @@ class MB:
 			b = d
 			d = t
 			nrm = -nrm
-		v.append(a); v.append(b); v.append(d)
+		# Godot treats clockwise triangles as front faces: emit (a, d, b) so the face whose normal
+		# points at the viewer is the front one (lighting is right on both sides with cull off)
+		v.append(a); v.append(d); v.append(b)
 		n.append(nrm); n.append(nrm); n.append(nrm)
 		c.append(col); c.append(col); c.append(col)
 
@@ -369,8 +371,11 @@ static func rise(half_span: float, pitch_deg := PITCH_DEG) -> float:
 
 
 ## Four walls of a W x D block, `h` high, each face with the holes listed for it (`holes[face]`
-## is an Array of Rect2 in face coordinates), over a masonry plinth SKIRT deep.
-static func walls(b: MB, w: float, d: float, h: float, holes: Array = [], col := PLASTER) -> void:
+## is an Array of Rect2 in face coordinates), over a masonry plinth SKIRT deep. Above LOD 0 the
+## walls are solid: the openings are painted on them by the callers.
+static func walls(b: MB, w: float, d: float, h: float, holes: Array = [], col := PLASTER, lod := 0) -> void:
+	if lod > 0:
+		holes = []
 	for face in 4:
 		var span := (w if face < 2 else d) * 0.5
 		b.rect_on(face, -span, span, -SKIRT, 0.0, w, d, 0.0, PLINTH)
@@ -397,7 +402,7 @@ static func window(b: MB, face: int, h: float, y0: float, wid: float, tall: floa
 	if lod >= 2:
 		return
 	if lod == 1:
-		b.rect_on(face, h0, h1, y0, y0 + tall, w, d, -0.08, SHUTTER if r < 0.6 else LATTICE)
+		b.rect_on(face, h0, h1, y0, y0 + tall, w, d, 0.02, SHUTTER if r < 0.6 else LATTICE)
 		return
 	if r < 0.5:
 		# closed shutters: two leaves with a thin gap, set back a little
@@ -446,7 +451,7 @@ static func door(b: MB, face: int, h: float, wid: float, tall: float, w: float, 
 			b.rect_on(face, h0 + 0.02, h, 0.02, tall - 0.02, w, d, -0.35, SHADE)
 			b.rect_on(face, h + 0.0, h1 - 0.02, 0.02, tall - 0.02, w, d, -0.30, DOOR)
 	else:
-		b.rect_on(face, h0, h1, 0.0, tall, w, d, -0.1, DOOR)
+		b.rect_on(face, h0, h1, 0.0, tall, w, d, 0.02, DOOR)
 	# jambs and lintel
 	b.on_wall(face, h0 - jw * 0.5, 0.0, jw, tall + 0.3, 0.07 if grand else 0.04, w, d, 0.0, jcol)
 	b.on_wall(face, h1 + jw * 0.5, 0.0, jw, tall + 0.3, 0.07 if grand else 0.04, w, d, 0.0, jcol)
@@ -471,7 +476,7 @@ static func shop_front(b: MB, face: int, h: float, wid: float, w: float, d: floa
 		b.rect_on(face, h0, h1, 0.0, tall, w, d, 0.02, SHADE)
 		return
 	if lod == 1:
-		b.rect_on(face, h0, h1, 0.0, tall, w, d, -0.15, SHADE)
+		b.rect_on(face, h0, h1, 0.0, tall, w, d, 0.02, SHADE)
 		b.on_wall(face, h, tall, wid + 0.5, 0.3, 0.1, w, d, 0.0, WOOD)
 		if awning >= 0 and face == 0:
 			var ca: Color = AWNINGS[awning % AWNINGS.size()]
@@ -565,7 +570,7 @@ static func balcony(b: MB, face: int, h: float, hw: float, y: float, w: float, d
 	for i in n_post:
 		var t := float(i) / float(n_post - 1)
 		var pp := outer0.lerp(outer1, t) + al * (0.05 if i == 0 else (-0.05 if i == n_post - 1 else 0.0))
-		b.box(pp + Vector3(-0.04, 0.14, -0.04), pp + Vector3(0.04, rail_y + 0.05, 0.04), WOOD, true, false)
+		b.box(pp + Vector3(-0.04, 0.14, -0.04), pp + Vector3(0.04, 1.1, 0.04), WOOD, true, false)
 	var r_lo := Vector3(minf(outer0.x, outer1.x) - 0.05, rail_y, minf(outer0.z, outer1.z) - 0.05)
 	var r_hi := Vector3(maxf(outer0.x, outer1.x) + 0.05, rail_y + 0.08, maxf(outer0.z, outer1.z) + 0.05)
 	b.box(r_lo, r_hi, WOOD, true, true)
@@ -576,7 +581,7 @@ static func balcony(b: MB, face: int, h: float, hw: float, y: float, w: float, d
 	for i in n_bal:
 		var t := (float(i) + 0.5) / float(n_bal)
 		var bp := outer0.lerp(outer1, t)
-		b.box(bp + Vector3(-0.025, 0.14, -0.025), bp + Vector3(0.025, rail_y, 0.025), WOOD, false, false)
+		b.box(bp + Vector3(-0.025, 0.14, -0.025), bp + Vector3(0.025, 1.05, 0.025), WOOD, false, false)
 	# laundry on a line between two posts, hanging over the rail
 	if laundry:
 		var n_cl := mini(int(hw * 2.0 / 0.8), 5)
@@ -584,7 +589,7 @@ static func balcony(b: MB, face: int, h: float, hw: float, y: float, w: float, d
 			if fr(k, 20 + i) > 0.7:
 				continue
 			var t := (float(i) + 0.5) / float(n_cl)
-			var cp := outer0.lerp(outer1, t) + out * 0.08 + Vector3(0, rail_y + 0.08, 0)
+			var cp := outer0.lerp(outer1, t) + out * 0.08 + Vector3(0, 1.13, 0)
 			var cw := 0.28 + fr(k, 30 + i) * 0.1
 			var ch := 0.6 + fr(k, 40 + i) * 0.5
 			var cl: Color = LINENS[(k + i) % LINENS.size()]
