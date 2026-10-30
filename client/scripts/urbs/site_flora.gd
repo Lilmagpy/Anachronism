@@ -84,6 +84,20 @@ static func _wood_at(x: float, z: float) -> Dictionary:
 	return {"d": best, "w": pick}
 
 
+## How much (x, z) lies in a grove or garden of the dataset (0..1, every year): the ground there
+## stays green (UrbsTerrain).
+static func grove_weight(x: float, z: float) -> float:
+	_load()
+	var best := 0.0
+	for g: Dictionary in _groves:
+		var r: float = g["r"]
+		if r < 12.0:
+			continue
+		var d := (g["c"] as Vector2).distance_to(Vector2(x, z))
+		best = maxf(best, 1.0 - smoothstep(0.6 * r, r, d))
+	return best
+
+
 ## Approximate crown radius of a kind at scale 1, metres.
 static func crown_radius(kind: String) -> float:
 	return {"pine": 5.0, "cypress": 1.3, "plane": 6.0, "olive": 2.6, "fig": 3.2, "oak": 3.6, "laurel": 2.0, "scrub": 1.5, "hedge": 1.0}.get(kind, 2.0)
