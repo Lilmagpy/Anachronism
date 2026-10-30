@@ -180,10 +180,11 @@ func _tint_sky(sun_c: Color) -> void:
 	sky_material.set_shader_parameter("sunset", low * (1.0 - night))
 	sky_material.set_shader_parameter("haze", lerpf(0.35, 0.6, day_w))
 	sky_material.set_shader_parameter("energy", lerpf(1.0, 0.85, low) * lerpf(1.0, 0.15, night))
-	environment.ambient_light_energy = ambient * lerpf(0.85, 0.95, low) * lerpf(1.0, 0.35, night)
 	# bounce fades gently with the sun: the sunlit ground and walls still glow at sunset
 	var sun_share := sqrt(clampf(sun.light_energy / NOON_ENERGY, 0.0, 1.0))
 	var ground_lit := Color(0.78, 0.72, 0.62) * sun_c.lerp(Color.WHITE, 0.4) * lerpf(0.45, 1.0, sun_share)
+	# a low sun leaves more of the scene in shade, lit by the whole bright sky: more ambient
+	environment.ambient_light_energy = ambient * 0.87 * lerpf(2.0, 1.0, sun_share) * lerpf(1.0, 0.35, night)
 	# as the sun sinks, shade is lit more by the sky (blue shade under golden light)
 	environment.ambient_light_sky_contribution = 1.0 - bounce * lerpf(0.35, 1.0, sun_share)
 	environment.ambient_light_color = ground_lit.lerp(Color(0.05, 0.06, 0.09), night)
