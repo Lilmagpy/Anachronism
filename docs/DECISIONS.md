@@ -2642,3 +2642,12 @@ lost; only what the lead had pushed survived (the city through U7). Pushing a wo
 branch costs nothing and makes a restart a nuisance instead of a loss. The U8 round is being
 redone from the same briefs.
 
+**Safeguards added the same day.** (1) `scripts/dev/push-watchdog.sh` runs in the lead's
+session and pushes any `claude/*` worktree branch with unpushed commits every five minutes,
+catching an agent that forgets. (2) The lead pushes `claude/phase-2-3d` right after every merge,
+before the long checks, not at the end of a round. (3) The agent briefs are committed under
+`docs/plans/briefs/` instead of living in the session's scratch folder. (4)
+`scripts/dev/cloud-toolchain.sh`, started by the session hook, rebuilds Godot, the render queue
+and the reference still in a minute. What cannot be prevented is the restart itself; what can
+is losing anything to it.
+
