@@ -109,8 +109,9 @@ func polygon(points: Array, mat: String, inside := Vector3.INF) -> void:
 # --- solids -------------------------------------------------------------------------------------
 
 
-## A box standing on `foot` (the middle of its base), `size` = (x, y, z), turned `yaw`.
-func box(foot: Vector3, size: Vector3, mat: String, yaw := 0.0, bottom := false) -> void:
+## A box standing on `foot` (the middle of its base), `size` = (x, y, z), turned `yaw`. Its underside
+## is drawn (ceilings, beams and soffits are seen from below).
+func box(foot: Vector3, size: Vector3, mat: String, yaw := 0.0, bottom := true) -> void:
 	if size.x <= 0.0 or size.y <= 0.0 or size.z <= 0.0:
 		return
 	push(at(foot, yaw))
@@ -129,7 +130,7 @@ func box(foot: Vector3, size: Vector3, mat: String, yaw := 0.0, bottom := false)
 
 
 ## A box from corner extents x0..x1, y0..y1, z0..z1.
-func ext(x0: float, y0: float, z0: float, x1: float, y1: float, z1: float, mat: String, bottom := false) -> void:
+func ext(x0: float, y0: float, z0: float, x1: float, y1: float, z1: float, mat: String, bottom := true) -> void:
 	box(Vector3((x0 + x1) * 0.5, minf(y0, y1), (z0 + z1) * 0.5), Vector3(absf(x1 - x0), absf(y1 - y0), absf(z1 - z0)), mat, 0.0, bottom)
 
 

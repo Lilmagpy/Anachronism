@@ -361,10 +361,14 @@ func _make(id: String, st: Dictionary) -> void:
 		var xfs: Array = inst.xforms
 		var mmesh := MultiMesh.new()
 		mmesh.transform_format = MultiMesh.TRANSFORM_3D
+		# white instance colours: under the GL compatibility renderer a MultiMesh multiplies the
+		# vertex colour by the instance colour even when it has none (then black)
+		mmesh.use_colors = true
 		mmesh.mesh = inst.mesh
 		mmesh.instance_count = xfs.size()
 		for k in xfs.size():
 			mmesh.set_instance_transform(k, xfs[k])
+			mmesh.set_instance_color(k, Color.WHITE)
 		var mmi := MultiMeshInstance3D.new()
 		mmi.multimesh = mmesh
 		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
@@ -573,8 +577,9 @@ func solid_boxes(id: String) -> Array[AABB]:
 
 
 ## Keeps a walker of `radius` whose eye is at height `eye_y` (y a.s.l.) out of the monuments'
-## solids: the new (x, z). A solid stops the walker when it rises more than a step above the
-## feet (eye_y - 1.7) and its bottom is below the eye; the courts and plazas never stop anyone.
+## solids: the new (x, z). A solid stops the walker when it rises above the
+## feet (eye_y - 1.7) by more than 1.3 m and its bottom is below the eye; the courts and plazas
+## never stop anyone.
 func push_out(p: Vector2, radius: float, eye_y: float) -> Vector2:
 	for id in _solids:
 		var wb: AABB = _bounds.get(id, AABB())
@@ -589,7 +594,9 @@ func push_out(p: Vector2, radius: float, eye_y: float) -> Vector2:
 		var moved := false
 		for b in _solids[id]:
 			var bb: AABB = b
-			if bb.end.y <= lfeet + 0.45 or bb.position.y >= lp.y:
+			# a step or a low platform (up to 1.3 m, a basilica's floor) is walked over: the camera
+			# follows the ground and cannot climb, so it would otherwise stop at every plinth
+			if bb.end.y <= lfeet + 1.3 or bb.position.y >= lp.y:
 				continue
 			var x0 := bb.position.x - radius
 			var x1 := bb.end.x + radius
