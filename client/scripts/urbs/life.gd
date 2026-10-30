@@ -366,7 +366,9 @@ const KINDS := {
 	"pilleus": {"long": false, "cap": true, "scale": 1.0,  "street": 0.07, "forum": 0.08},
 	"child":  {"long": false, "cap": false, "scale": 0.68, "street": 0.07, "forum": 0.05},
 }
-const TOGA_COLOURS := [Color(0.94, 0.92, 0.85), Color(0.9, 0.88, 0.8), Color(0.86, 0.83, 0.76), Color(0.95, 0.94, 0.9)]
+## The toga of undyed wool: cream to off-white, never paper white (# unverified: the fuller's
+## whitening of the toga candida is for candidates only).
+const TOGA_COLOURS := [Color(0.88, 0.85, 0.76), Color(0.84, 0.8, 0.7), Color(0.8, 0.77, 0.68), Color(0.9, 0.88, 0.8)]
 const TUNIC_COLOURS := [Color(0.76, 0.68, 0.5), Color(0.62, 0.5, 0.36), Color(0.7, 0.62, 0.55), Color(0.55, 0.45, 0.35),
 	Color(0.66, 0.3, 0.24), Color(0.5, 0.52, 0.6), Color(0.8, 0.74, 0.6), Color(0.45, 0.38, 0.3), Color(0.72, 0.6, 0.35)]
 const STOLA_COLOURS := [Color(0.82, 0.62, 0.3), Color(0.42, 0.5, 0.68), Color(0.6, 0.38, 0.5), Color(0.5, 0.6, 0.42),
@@ -446,7 +448,7 @@ func _make_people() -> void:
 				continue
 			var ring := 0.55 + 0.18 * group
 			for g in group:
-				var a := _new_agent(_pick_kind("forum") if spot["kind"] == "" else str(spot["kind"]))
+				var a := _new_agent(str(spot["kind"]) if spot["kind"] != "" and _rng.randf() < 0.6 else _pick_kind("forum"))
 				var ang := TAU * g / group + _rng.randf() * 0.4
 				var p := c + Vector2(cos(ang), sin(ang)) * (ring if group > 1 else 0.0)
 				a["mode"] = "stand"
@@ -667,7 +669,8 @@ func _make_stalls() -> void:
 				var c: Vector2 = p["centre"] + u * (-hl + 2.1 + i * 4.2) + v * off
 				if _blocked(c):
 					continue
-				places.append({"p": c, "yaw": yaw + PI / 2.0 + (PI if r % 2 == 1 else 0.0), "goods": _rng.randi() % 3})
+				c += Vector2(_rng.randf_range(-0.6, 0.6), _rng.randf_range(-0.6, 0.6))
+				places.append({"p": c, "yaw": yaw + PI / 2.0 + (PI if r % 2 == 1 else 0.0) + _rng.randf_range(-0.12, 0.12), "goods": _rng.randi() % 3})
 	# the Macellum (Livy 40.51.5; Varro LL 5.146): stalls round the market hall
 	if placed.has("macellum"):
 		var p: Dictionary = placed["macellum"]
@@ -757,7 +760,7 @@ func _make_stalls() -> void:
 		(mm_frame[w] as MultiMesh).visible_instance_count = k_frame[w]
 		(mm_canvas[w] as MultiMesh).visible_instance_count = k_canvas[w]
 		(mm_striped[w] as MultiMesh).visible_instance_count = k_striped[w]
-		_add_mm(_stalls, mm_frame[w], UrbsMaterials.get_material("timber_weathered"), "StallFrames%d" % w)
+		_add_mm(_stalls, mm_frame[w], UrbsMaterials.get_material("timber_oak"), "StallFrames%d" % w)
 		_stall_open.append(_add_mm(_stalls, mm_canvas[w], UrbsMaterials.get_material("awning_canvas"), "AwningsCanvas%d" % w))
 		_stall_open.append(_add_mm(_stalls, mm_striped[w], UrbsMaterials.get_material("awning_striped"), "AwningsStriped%d" % w))
 	for g in 3:
@@ -816,7 +819,8 @@ static func _stall_awning_mesh(wall: bool) -> ArrayMesh:
 		var z := lerpf(1.08, z_back, v)
 		var y := lerpf(2.42, y_back, v) - 0.08 * sin(v * PI) - 0.03 * sin(u * PI)
 		return Vector3(x, y, z)
-	return M.surface(6, 4, fn, 1)
+	# both faces: the cloth is seen from the street below and from the hills above
+	return M.merge([[M.surface(6, 4, fn, 1), Transform3D(), 0.0], [M.surface(6, 4, fn, -1), Transform3D(), 0.0]])
 
 
 ## Goods on the table. 0 produce, 1 pottery, 2 bread and cloth. Vertex colours.

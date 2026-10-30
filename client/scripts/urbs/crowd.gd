@@ -491,18 +491,18 @@ static func walker_mesh(lod: int) -> ArrayMesh:
 	var limb := func(r0: float, r1: float, length: float, n: int) -> ArrayMesh:
 		return M.lathe([Vector4(-length - r1 * 0.6, 0.0, 0.0, 0.0), Vector4(-length, r1, r1, 0.0), Vector4(-length * 0.5, (r0 + r1) * 0.5, (r0 + r1) * 0.5, 0.0), Vector4(0.0, r0, r0, 0.0), Vector4(r0 * 0.6, 0.0, 0.0, 0.0)], n, 0, 1)
 	if lod == 1:
-		parts.append([M.lathe(F.TORSO_PROFILE, nu, 0, 1), Transform3D(Basis(), Vector3(0, hip, 0)), 1.0])
-		parts.append([M.lathe(skirt_prof, nu, 1, 1), Transform3D(Basis(), Vector3(0, hip, 0)), 1.0])
-		parts.append([M.lathe_y(F.HEAD_PROFILE, 10, 8), Transform3D(Basis(), Vector3(0, top, 0)), 0.0])
-		parts.append([F._hair_mesh(), Transform3D(Basis(), Vector3(0, top, 0)), 4.0])
+		parts.append([M.lathe(F.TORSO_PROFILE, 7, 0, 1), Transform3D(Basis(), Vector3(0, hip, 0)), 1.0])
+		parts.append([M.lathe(skirt_prof, 8, 1, 1), Transform3D(Basis(), Vector3(0, hip, 0)), 1.0])
+		parts.append([M.lathe_y(F.HEAD_PROFILE, 8, 6), Transform3D(Basis(), Vector3(0, top, 0)), 0.0])
+		parts.append([M.ellipsoid(0.087, 0.07, 0.095, 7, 3), Transform3D(Basis(), Vector3(0, top + 0.185, -0.03)), 4.0])
 		for sx in [-1.0, 1.0]:
-			parts.append([limb.call(0.056, 0.036, 0.52, 6), Transform3D(Basis(Vector3(0, 0, 1), -0.05 * sx), Vector3(F.SH_X * sx, hip + F.SH_Y, 0)), 2.0])
-			parts.append([limb.call(0.08, 0.045, F.THIGH + F.SHIN, 6), Transform3D(Basis(), Vector3(F.HIP_X * sx, hip, 0)), 3.0])
-			parts.append([M.ellipsoid(0.045, 0.035, 0.11, 5, 3), Transform3D(Basis(), Vector3(F.HIP_X * sx, 0.035, 0.04)), 3.0])
+			parts.append([limb.call(0.056, 0.036, 0.52, 5), Transform3D(Basis(Vector3(0, 0, 1), -0.05 * sx), Vector3(F.SH_X * sx, hip + F.SH_Y, 0)), 2.0])
+			parts.append([limb.call(0.08, 0.045, F.THIGH + F.SHIN, 5), Transform3D(Basis(), Vector3(F.HIP_X * sx, hip, 0)), 3.0])
+			parts.append([M.ellipsoid(0.045, 0.035, 0.11, 4, 2), Transform3D(Basis(), Vector3(F.HIP_X * sx, 0.035, 0.04)), 3.0])
 	elif lod == 2:
 		parts.append([M.lathe([Vector4(-0.36, 0.0, 0.0, 0.0), Vector4(-0.36, 0.22, 0.16, 0.0), Vector4(0.0, 0.17, 0.115, 0.0), Vector4(0.42, 0.19, 0.11, 0.0), Vector4(0.56, 0.0, 0.0, 0.0)], nu, 0, 1), Transform3D(Basis(), Vector3(0, hip, 0)), 1.0])
-		parts.append([M.ellipsoid(0.08, 0.115, 0.095, 6, 4), Transform3D(Basis(), Vector3(0, top + 0.12, 0)), 0.0])
-		parts.append([M.ellipsoid(0.085, 0.07, 0.1, 6, 3), Transform3D(Basis(), Vector3(0, top + 0.17, -0.01)), 4.0])
+		parts.append([M.ellipsoid(0.08, 0.115, 0.095, 5, 3), Transform3D(Basis(), Vector3(0, top + 0.12, 0)), 0.0])
+		parts.append([M.ellipsoid(0.085, 0.07, 0.1, 5, 2), Transform3D(Basis(), Vector3(0, top + 0.17, -0.01)), 4.0])
 		for sx in [-1.0, 1.0]:
 			parts.append([limb.call(0.05, 0.035, 0.52, 4), Transform3D(Basis(), Vector3(F.SH_X * sx, hip + F.SH_Y, 0)), 2.0])
 			parts.append([limb.call(0.075, 0.045, F.THIGH + F.SHIN, 4), Transform3D(Basis(), Vector3(F.HIP_X * sx, hip, 0)), 3.0])

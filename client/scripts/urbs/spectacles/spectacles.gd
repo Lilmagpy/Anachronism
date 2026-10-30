@@ -156,9 +156,22 @@ static func handle_flags(flags: Dictionary, urbs: Node3D) -> Node3D:
 
 ## Place a spectacle of `kind` on monument `id` (its bounds and entrance from `urbs.monuments`,
 ## ground from `urbs.terrain`) with `params`, and play it. Returns the spectacle.
+const FALLBACKS := {
+	"senate": ["curia_iulia", "curia_hostilia", "curia_pompeia"],
+	"race": ["circus_maximus", "circus_flaminius"],
+	"munus": ["forum_boarium", "forum_romanum"],
+	"sacrifice": ["aedes_iovis_capitolini"],
+}
+
+
 static func place(kind: String, id: String, urbs: Node3D, params: Dictionary = {}) -> Node3D:
 	if not urbs.monuments.ids().has(id):
-		id = str(DEFAULT_MONUMENT.get(kind, ""))
+		# the venue is not standing in this year: the next one of its kind that is
+		id = ""
+		for alt in FALLBACKS.get(kind, []):
+			if urbs.monuments.ids().has(alt):
+				id = alt
+				break
 	var xf := Transform3D()
 	var height := func(x: float, z: float) -> float: return urbs.terrain.height_at(x, z)
 	if id != "" and urbs.monuments.ids().has(id):
