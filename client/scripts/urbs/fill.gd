@@ -50,7 +50,7 @@ const SHOP_DEPTH := 5.0
 const FOOTPATH := 1.25            ## = UrbsStreets.FOOTWAY_W: house fronts meet the back of the raised footway
 const KERB := 0.28                ## = UrbsStreets.KERB_W
 const FOOTWAY_H := 0.22           ## = UrbsStreets.FOOTWAY_H: floors of street fronts stand at least this high
-const APRON := 1.0                ## packed earth round a building lot, metres
+const APRON := 2.6                ## packed earth round a building lot, metres (covers a 5 m lane between two lots)
 const RIVER_CLEAR := 8.0          ## metres kept clear beyond the Tiber's half width (UrbsTerrain)
 const MAX_SLOPE := 0.5
 const MAX_STEP := 5.0                ## most a building may stand above the ground at its lowest corner (plinth < SKIRT)
@@ -1454,8 +1454,8 @@ func rural_build(node: Node3D, parcels: Array, lod: int) -> void:
 		node.add_child(make_instances(list, "rural:farm", lod))
 
 
-## Ground round the houses: a packed-earth apron 1 m wide round every building lot, draped over
-## the terrain at the lot's corners (the terrain draws the rest of the ground evenly; the earth is
+## Ground round the houses: a packed-earth apron 2.6 m wide round every building lot (enough to
+## pave the lanes between neighbours), draped over the terrain (the terrain draws the rest of the ground evenly; the earth is
 ## not spread over the open hillsides). One mesh per chunk. True when done.
 func floor_step(node: Node3D, _key: Vector2i, lots: Array, _lod: int, _st: Dictionary, _deadline: int) -> bool:
 	var verts := PackedVector3Array()
@@ -1471,13 +1471,17 @@ func floor_step(node: Node3D, _key: Vector2i, lots: Array, _lod: int, _st: Dicti
 		var ex: Vector2 = ax[0] * (float(lot["hx"]) + APRON)
 		var ez: Vector2 = ax[1] * (float(lot["hz"]) + APRON)
 		var base := verts.size()
-		for q in [c - ex - ez, c + ex - ez, c + ex + ez, c - ex + ez]:
-			var qq: Vector2 = q
-			verts.append(Vector3(qq.x, float(height.call(qq.x, qq.y)) + 0.06, qq.y))
-			normals.append(Vector3.UP)
-			cols.append(UrbsFillMeshes.EARTH)
-		# clockwise seen from above (Godot's front faces)
-		idx.append_array([base, base + 1, base + 2, base, base + 2, base + 3])
+		# a 4 x 4 grid draped on the terrain, so it follows terraces and slopes instead of cutting them
+		for b in 5:
+			for a in 5:
+				var qq: Vector2 = c + ex * (float(a) / 2.0 - 1.0) + ez * (float(b) / 2.0 - 1.0)
+				verts.append(Vector3(qq.x, float(height.call(qq.x, qq.y)) + 0.07, qq.y))
+				normals.append(Vector3.UP)
+				cols.append(UrbsFillMeshes.EARTH)
+		for b in 4:
+			for a in 4:
+				var q0 := base + b * 5 + a
+				idx.append_array([q0, q0 + 1, q0 + 6, q0, q0 + 6, q0 + 5])
 	if idx.is_empty():
 		return true
 	# wind every quad so its front is up whatever the lot's yaw
