@@ -100,6 +100,8 @@ class MB:
 	var v := PackedVector3Array()
 	var n := PackedVector3Array()
 	var c := PackedColorArray()
+	var uv := PackedVector2Array()    ## only painted signs use UV (panel 0..1, left to right from outside)
+	var uv2 := PackedVector2Array()   ## signs: (panel width m, trade category * 100 + a number 0-99)
 
 	func tri(a: Vector3, b: Vector3, d: Vector3, col: Color, hint := Vector3.ZERO) -> void:
 		var nrm := (b - a).cross(d - a)
@@ -116,6 +118,8 @@ class MB:
 		v.append(a); v.append(d); v.append(b)
 		n.append(nrm); n.append(nrm); n.append(nrm)
 		c.append(col); c.append(col); c.append(col)
+		uv.append(Vector2.ZERO); uv.append(Vector2.ZERO); uv.append(Vector2.ZERO)
+		uv2.append(Vector2.ZERO); uv2.append(Vector2.ZERO); uv2.append(Vector2.ZERO)
 
 	func quad(a: Vector3, b: Vector3, d: Vector3, e: Vector3, col: Color, hint := Vector3.ZERO) -> void:
 		tri(a, b, d, col, hint)
@@ -178,6 +182,37 @@ class MB:
 		var a := fp(face, h0, y0, w, d, off_in)
 		var b := fp(face, h1, y1, w, d, off_out)
 		box(Vector3(minf(a.x, b.x), y0, minf(a.z, b.z)), Vector3(maxf(a.x, b.x), y1, maxf(a.z, b.z)), col, true, false)
+
+	## A painted sign panel on a wall face: UV runs 0..1 left to right as read from outside and 0..1
+	## upwards; UV2 = (panel width in metres, `trade` = category * 100 + a number 0-99) picks the words.
+	func sign_panel(face: int, h0: float, h1: float, y0: float, y1: float, w: float, d: float, off: float, trade: float) -> void:
+		var flip := face == 1 or face == 2      # faces whose +h runs right to left seen from outside
+		var pts := [fp(face, h0, y0, w, d, off), fp(face, h1, y0, w, d, off), fp(face, h1, y1, w, d, off), fp(face, h0, y1, w, d, off)]
+		var uvs := [Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1)]
+		if flip:
+			uvs = [Vector2(1, 0), Vector2(0, 0), Vector2(0, 1), Vector2(1, 1)]
+		var nrm := outward(face)
+		var u2 := Vector2(h1 - h0, trade)
+		for t in [[0, 1, 2], [0, 2, 3]]:
+			var a: Vector3 = pts[t[0]]
+			var b: Vector3 = pts[t[1]]
+			var e: Vector3 = pts[t[2]]
+			var ua: Vector2 = uvs[t[0]]
+			var ub: Vector2 = uvs[t[1]]
+			var ue: Vector2 = uvs[t[2]]
+			if (b - a).cross(e - a).dot(nrm) < 0.0:
+				var tv := b
+				b = e
+				e = tv
+				var tu := ub
+				ub = ue
+				ue = tu
+			# clockwise front faces (see tri)
+			v.append(a); v.append(e); v.append(b)
+			n.append(nrm); n.append(nrm); n.append(nrm)
+			c.append(SIGN); c.append(SIGN); c.append(SIGN)
+			uv.append(ua); uv.append(ue); uv.append(ub)
+			uv2.append(u2); uv2.append(u2); uv2.append(u2)
 
 	## A wall face with holes: `holes` are Rect2(h0, y0, width, height) in face coordinates.
 	## Built as horizontal bands between the holes' edges.
@@ -355,6 +390,8 @@ class MB:
 			v.append(src.v[i] + offset)
 		n.append_array(src.n)
 		c.append_array(src.c)
+		uv.append_array(src.uv)
+		uv2.append_array(src.uv2)
 
 	func triangles() -> int:
 		return v.size() / 3
@@ -366,6 +403,8 @@ class MB:
 		arrays[Mesh.ARRAY_VERTEX] = v
 		arrays[Mesh.ARRAY_NORMAL] = n
 		arrays[Mesh.ARRAY_COLOR] = c
+		arrays[Mesh.ARRAY_TEX_UV] = uv
+		arrays[Mesh.ARRAY_TEX_UV2] = uv2
 		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 		return mesh
 
@@ -524,7 +563,10 @@ static func shop_front(b: MB, face: int, h: float, wid: float, w: float, d: floa
 		b.cone(sk.x, sk.z, 0.0, 0.5, 0.3, 0.26, 7, CLOTH)
 	# painted sign above the lintel
 	if sign and fr(k, 9) < 0.7:
-		b.rect_on(face, h0 - 0.1, h1 + 0.1, tall + 0.4, tall + 0.95, w, d, 0.012, SIGN)
+		# the trade the sign names follows what the shop shows: 0 counter with dolia (wine, oil, an
+		# inn), 1 a table of goods, 2 a workbench
+		var trade := 0.0 if r < 0.45 else (1.0 if r < 0.8 else 2.0)
+		b.sign_panel(face, h0 - 0.1, h1 + 0.1, tall + 0.4, tall + 0.95, w, d, 0.012, trade * 100.0 + float((int(fr(k, 11) * 100.0) + int(absf(h) * 2.0 + 0.5) * 13) % 100))
 	# awning: a cloth from a timber bar over the opening down to two poles at the kerb
 	if awning >= 0 and face == 0:
 		var ca: Color = AWNINGS[awning % AWNINGS.size()]
