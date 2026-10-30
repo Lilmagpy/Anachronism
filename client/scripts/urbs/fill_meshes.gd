@@ -231,16 +231,16 @@ vec3 brick(vec2 uv, float seed, vec3 c, vec3 mortar_c) {
 
 // painted letters of a shop sign (dipinti): rows of strokes in red or black on white
 float letters(vec2 uv, float seed) {
-	float rowh = 0.24;
+	float rowh = 0.3;
 	float ry = fract(uv.y / rowh);
 	float rown = floor(uv.y / rowh);
 	if (ry < 0.18 || ry > 0.86) return 0.0;
-	float cw = 0.15;
+	float cw = 0.2;
 	float cx = uv.x / cw;
 	float ci = floor(cx);
 	float fx = fract(cx);
 	float g = h21(vec2(ci, rown + seed));
-	if (g < 0.16) return 0.0;  // a space between words
+	if (g < 0.24) return 0.0;  // a space between words
 	float ly = (ry - 0.18) / 0.68;
 	float s = 0.0;
 	float w = 0.16;
@@ -283,7 +283,7 @@ void fragment() {
 		base = mix(base, dado_c, dado);
 		base *= mix(0.68, 1.0, smoothstep(-0.2, 2.2, up));
 		float peel = fbm(uv * 0.9 + seed * 3.0);
-		float peel_zone = smoothstep(0.62, 0.68, peel) * smoothstep(4.5, 0.8, up) * step(0.3, fract(vcust.a * 7.0));
+		float peel_zone = smoothstep(0.70, 0.74, peel) * smoothstep(3.5, 0.6, up) * step(0.45, fract(vcust.a * 7.0));
 		vec3 under = vcust.a > 0.6 ? brick(uv, seed, c_brick_latericium, c_stucco_worn) : masonry(uv, seed, c_opus_incertum, c_tufa_grey, c_stucco_worn);
 		col = mix(base, mix(c_opus_incertum, under, fade), peel_zone * 0.9);
 		rough = 0.95;
@@ -339,11 +339,11 @@ void fragment() {
 		// the inside of a shop or a doorway in shade: dim, never black
 		vec3 dark = mix(tint, c_earth_packed, 0.4);
 		float shelf = step(0.82, fract(lpos.y * 1.6)) * step(0.9, up);
-		col = dark * (0.13 + 0.06 * vn(uv * 2.0 + seed)) + c_timber_oak * shelf * 0.1 * fade;
+		col = dark * (0.2 + 0.08 * vn(uv * 2.0 + seed)) + c_timber_oak * shelf * 0.12 * fade;
 		rough = 1.0;
 	} else if (id == 13) {
 		// painted sign: white ground, red or black letters
-		vec3 ink = vcust.a < 0.6 ? c_stucco_red : c_basalt * 0.5;
+		vec3 ink = vcust.a < 0.8 ? c_stucco_red : c_basalt * 0.5;
 		float l = letters(vec2(u + seed * 0.37, up), seed) * fade;
 		col = mix(c_stucco_white * (0.9 + 0.1 * fbm(uv * 2.0)), ink, l * 0.9);
 	} else if (id == 7) {

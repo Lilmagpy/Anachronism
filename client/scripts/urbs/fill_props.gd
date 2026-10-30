@@ -162,8 +162,8 @@ static func rural(kind: String, lod: int) -> MB:
 			P.door(house, 0, 0.0, 1.4, 2.2, 12.0, 9.0, lod, 73)
 			house.gable(-6.6, 6.6, -5.0, 5.0, 3.4, P.rise(5.0), P.TILE, P.PLASTER, lod)
 			if lod < 2:
-				P.window_flat(house, 0, 3.0, 1.2, 1.0, 1.0, 12.0, 9.0, 74)
-				P.window_flat(house, 0, -3.0, 1.2, 1.0, 1.0, 12.0, 9.0, 75)
+				P.window_flat(house, 0, 3.0, 1.2, 1.0, 1.0, 12.0, 9.0, 74, lod)
+				P.window_flat(house, 0, -3.0, 1.2, 1.0, 1.0, 12.0, 9.0, 75, lod)
 			b.append(house, Vector3(-4.0, 0.0, -10.0))
 			var barn := MB.new()
 			P.walls(barn, 14.0, 9.0, 4.2, [[Rect2(-2.0, 0.0, 4.0, 3.4)], [], [], []], P.WOOD, lod)

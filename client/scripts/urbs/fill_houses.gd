@@ -59,7 +59,7 @@ static func insula(shape: String, storeys: int, feature: int, pitch: int, lod: i
 		if lod < 2:
 			for i in (1 if narrow else 3):
 				var hh := -5.0 + 5.0 * float(i) if not narrow else 0.0
-				P.window_flat(an, 1, hh, annex_h - 1.9, 0.9, 1.2, w, 6.0, seed + 40 + i)
+				P.window_flat(an, 1, hh, annex_h - 1.9, 0.9, 1.2, w, 6.0, seed + 40 + i, lod)
 		an.shed(-w * 0.5 - 0.4, w * 0.5 + 0.4, 3.0, -3.5, annex_h + P.rise(6.5, deg), annex_h, P.TILE, lod)
 		b.append(an, Vector3(0, 0, -d * 0.5 + 3.0))
 		md = d - 6.0
@@ -87,24 +87,30 @@ static func insula(shape: String, storeys: int, feature: int, pitch: int, lod: i
 		P.shop_front(m, 0, shops[i], shop_w, w, md, lod, seed * 5 + i, awn, true)
 	P.door(m, 1, 0.0, 1.1, 2.3, w, md, lod, seed + 2)
 	if lod < 2 and not narrow:
-		P.window_flat(m, 1, -5.5, 1.5, 1.0, 1.1, w, md, seed + 3)
-		P.window_flat(m, 1, 5.5, 1.5, 1.0, 1.1, w, md, seed + 4)
+		P.window_flat(m, 1, -5.5, 1.5, 1.0, 1.1, w, md, seed + 3, lod)
+		P.window_flat(m, 1, 5.5, 1.5, 1.0, 1.1, w, md, seed + 4, lod)
 	for s in range(1, storeys):
 		var y0 := gf + sh * float(s - 1)
-		if lod < 2:
+		if lod >= 2:
+			# far away: the windows as plain shutter panels, front and back
+			for hh: float in win_h:
+				m.rect_on(0, hh - 0.5, hh + 0.5, y0 + 1.0, y0 + 2.2, w, md, 0.02, P.SHUTTER)
+				m.rect_on(1, hh - 0.5, hh + 0.5, y0 + 1.0, y0 + 2.2, w, md, 0.02, P.SHUTTER)
+		if lod == 0:
 			P.string_course(m, 0, y0, w, md)
+		if lod < 2:
 			for i in win_h.size():
 				if lod == 0:
 					P.window(m, 0, win_h[i], y0 + 0.9, 1.1, 1.4, w, md, 0, seed * 11 + s * 11 + i)
 				else:
 					P.window(m, 0, win_h[i], y0 + 0.9, 1.1, 1.4, w, md, 1, seed * 11 + s * 11 + i)
-				P.window_flat(m, 1, win_h[i], y0 + 1.0, 1.0, 1.2, w, md, seed * 13 + s * 13 + i)
+				P.window_flat(m, 1, win_h[i], y0 + 1.0, 1.0, 1.2, w, md, seed * 13 + s * 13 + i, lod)
 			var n_side := 1 if md < 10.0 else 3
 			for i in n_side:
 				var zz := -md * 0.5 + md * (float(i) + 0.5) / float(n_side)
-				P.window_flat(m, 2, zz, y0 + 1.0, 1.0, 1.2, w, md, seed * 17 + s * 17 + i)
+				P.window_flat(m, 2, zz, y0 + 1.0, 1.0, 1.2, w, md, seed * 17 + s * 17 + i, lod)
 				if not narrow:
-					P.window_flat(m, 3, zz, y0 + 1.0, 1.0, 1.2, w, md, seed * 19 + s * 19 + i)
+					P.window_flat(m, 3, zz, y0 + 1.0, 1.0, 1.2, w, md, seed * 19 + s * 19 + i, lod)
 		# timber galleries (maeniana) with railings on the street face
 		if lod == 0 and s >= 2 and (feature != 1 or s % 2 == 0):
 			var full := feature == 2
@@ -118,7 +124,7 @@ static func insula(shape: String, storeys: int, feature: int, pitch: int, lod: i
 		elif lod == 1 and s >= 2 and feature != 1 and not narrow:
 			m.on_wall(0, -4.2 if s % 2 == 0 else 3.6, y0 + 0.08, 4.0, 0.14, 1.1, w, md, 0.0, P.WOOD)
 	# an outside stair to the first floor on the right flank
-	if lod < 2 and not narrow and storeys >= 3 and P.fr(seed, 8) < 0.55:
+	if lod == 0 and not narrow and storeys >= 3 and P.fr(seed, 8) < 0.55:
 		P.stair(m, 2, -md * 0.5 + 1.0, gf, w, md, lod, seed + 9)
 	# upper storey projecting on brackets (feature 2)
 	if feature == 2 and lod < 2:
@@ -170,7 +176,7 @@ static func domus(lod: int) -> MB:
 	P.shop_front(b, 0, 5.4, 2.6, w, d, lod, 33, -1, true)
 	if lod < 2:
 		for sx in [-8.2, -2.6, 2.6, 8.2]:
-			P.window_flat(b, 0, sx, 4.6, 0.8, 0.9, w, d, 34 + int(sx))
+			P.window_flat(b, 0, sx, 4.6, 0.8, 0.9, w, d, 34 + int(sx), lod)
 	# flanks and back: tall blank walls, the back part lower (peristyle wing 5.6 m)
 	var h1 := 5.6
 	for face in [2, 3]:
@@ -179,9 +185,9 @@ static func domus(lod: int) -> MB:
 		b.rect_on(face, -hz, az0, 0.0, h1, w, d, 0.0, P.PLASTER)
 		if lod < 2:
 			for i in 3:
-				P.window_flat(b, face, 5.0 + 4.0 * float(i), 4.8, 0.8, 0.9, w, d, 40 + face * 5 + i)
+				P.window_flat(b, face, 5.0 + 4.0 * float(i), 4.8, 0.8, 0.9, w, d, 40 + face * 5 + i, lod)
 			for i in 4:
-				P.window_flat(b, face, -14.0 + 4.0 * float(i), 3.6, 0.8, 0.9, w, d, 50 + face * 5 + i)
+				P.window_flat(b, face, -14.0 + 4.0 * float(i), 3.6, 0.8, 0.9, w, d, 50 + face * 5 + i, lod)
 	b.rect_on(1, -hx, hx, -P.SKIRT, 0.0, w, d, 0.0, P.PLINTH)
 	b.face_with_holes(1, -hx, hx, 0.0, h1, w, d, [P.door_hole(6.0, 1.2, 2.3)] if lod == 0 else [], P.PLASTER)
 	P.door(b, 1, 6.0, 1.2, 2.3, w, d, lod, 36)
@@ -253,22 +259,23 @@ static func domus(lod: int) -> MB:
 	b.quad(Vector3(-1.6, 0.45, -6.0), Vector3(1.6, 0.45, -6.0), Vector3(1.6, 0.45, -11.4), Vector3(-1.6, 0.45, -11.4), P.WATER, up)
 	if lod < 2:
 		var col_h := hl - 0.45
+		var sides := 8 if lod == 0 else 4
 		var nx := 6
 		for i in nx:
 			var x := gx0 + (gx1 - gx0) * float(i) / float(nx - 1)
-			b.cone(x, gz1, 0.4, col_h, 0.24, 0.2, 8, P.STONE)
-			b.cone(x, gz0, 0.4, col_h, 0.24, 0.2, 8, P.STONE)
+			b.cone(x, gz1, 0.4, col_h, 0.24, 0.2, sides, P.STONE)
+			b.cone(x, gz0, 0.4, col_h, 0.24, 0.2, sides, P.STONE)
 		for j in range(1, 4):
 			var z := gz0 + (gz1 - gz0) * float(j) / 4.0
-			b.cone(gx0, z, 0.4, col_h, 0.24, 0.2, 8, P.STONE)
-			b.cone(gx1, z, 0.4, col_h, 0.24, 0.2, 8, P.STONE)
+			b.cone(gx0, z, 0.4, col_h, 0.24, 0.2, sides, P.STONE)
+			b.cone(gx1, z, 0.4, col_h, 0.24, 0.2, sides, P.STONE)
 		# architrave over the columns
 		b.box(Vector3(gx0 - 0.3, col_h, gz0 - 0.3), Vector3(gx1 + 0.3, hl, gz0 + 0.3), P.WOOD)
 		b.box(Vector3(gx0 - 0.3, col_h, gz1 - 0.3), Vector3(gx1 + 0.3, hl, gz1 + 0.3), P.WOOD)
 		b.box(Vector3(gx0 - 0.3, col_h, gz0), Vector3(gx0 + 0.3, hl, gz1), P.WOOD)
 		b.box(Vector3(gx1 - 0.3, col_h, gz0), Vector3(gx1 + 0.3, hl, gz1), P.WOOD)
 		# two small trees and clipped box in the garden
-		for t in [Vector2(-4.4, -8.6), Vector2(4.4, -8.6)]:
+		for t in ([Vector2(-4.4, -8.6), Vector2(4.4, -8.6)] if lod == 0 else []):
 			b.cone(t.x, t.y, 0.4, 1.6, 0.12, 0.1, 5, P.WOOD)
 			b.cone(t.x, t.y, 1.4, 2.6, 0.5, 1.5, 7, P.LEAF)
 			b.cone(t.x, t.y, 2.6, 3.4, 1.5, 0.2, 7, P.LEAF)
@@ -301,11 +308,11 @@ static func casa(roof_kind: String, lod: int) -> MB:
 	P.door(b, 0, -0.6, 1.0, 2.1, w, d, lod, 51)
 	if lod == 0:
 		P.window(b, 0, 2.1, 1.2, 0.9, 0.9, w, d, 0, 52)
-		P.window_flat(b, 2, -1.0, 1.3, 0.8, 0.8, w, d, 53)
+		P.window_flat(b, 2, -1.0, 1.3, 0.8, 0.8, w, d, 53, lod)
 		P.amphora(b, -2.6, 0.0, d * 0.5 + 0.4, 0.9)
 		b.box(Vector3(-w * 0.5 - 0.5, 0.0, -2.0), Vector3(-w * 0.5, 0.8, 0.5), P.WOOD)
 	elif lod == 1:
-		P.window_flat(b, 0, 2.1, 1.2, 0.9, 0.9, w, d, 52)
+		P.window_flat(b, 0, 2.1, 1.2, 0.9, 0.9, w, d, 52, lod)
 	var roof := MB.new()
 	var rh := P.rise(d * 0.5 + 0.5, deg)
 	if col == P.TILE:
@@ -345,7 +352,7 @@ static func taberna(variant: int, lod: int) -> MB:
 			P.window(b, 0, 0.0, 4.4, 1.2, 1.3, w, d, 0, 77)
 			P.balcony(b, 0, 0.0, 1.9, 3.75, w, d, 78, true, false)
 		else:
-			P.window_flat(b, 0, 0.0, 4.4, 1.2, 1.3, w, d, 77)
+			P.window_flat(b, 0, 0.0, 4.4, 1.2, 1.3, w, d, 77, lod)
 	if variant == 5 and lod == 0:
 		b.box(Vector3(-w * 0.5 + 0.5, 0.0, d * 0.5 - 0.1), Vector3(w * 0.5 - 0.5, 1.0, d * 0.5 + 0.55), P.STONE)
 		for i in 5:
@@ -385,8 +392,8 @@ static func workshop(variant: int, lod: int) -> MB:
 			hall.on_wall(0, hh, 0.0, 3.9, 0.14, 0.4, w, hd, 0.0, P.STONE)
 	if lod < 2:
 		for i in 2:
-			P.window_flat(hall, 2, -2.0 + 4.0 * float(i), 3.0, 0.9, 0.9, w, hd, 61 + i)
-			P.window_flat(hall, 3, -2.0 + 4.0 * float(i), 3.0, 0.9, 0.9, w, hd, 63 + i)
+			P.window_flat(hall, 2, -2.0 + 4.0 * float(i), 3.0, 0.9, 0.9, w, hd, 61 + i, lod)
+			P.window_flat(hall, 3, -2.0 + 4.0 * float(i), 3.0, 0.9, 0.9, w, hd, 63 + i, lod)
 	hall.gable(-w * 0.5 - 0.6, w * 0.5 + 0.6, -hd * 0.5 - 0.6, hd * 0.5 + 0.6, h, P.rise(hd * 0.5 + 0.6), P.TILE, P.PLASTER, lod)
 	if lod == 0:
 		P.smoke_hood(hall, -w * 0.3, h + P.rise(hd * 0.5 + 0.6) * 0.5, -hd * 0.25, lod)
@@ -409,7 +416,7 @@ static func workshop(variant: int, lod: int) -> MB:
 			b.cone(-5.0, yz0 + 2.0, 0.0, 1.4, 1.5, 1.3, 8, P.BRICK)
 			b.cone(-5.0, yz0 + 2.0, 1.4, 2.6, 1.3, 0.3, 8, P.BRICK)
 			b.rect_on(0, -5.5, -4.5, 0.0, 0.8, 10.0, -(yz0 + 2.0) * 2.0 + 3.0, 0.02, P.SHADE)
-			for i in 5:
+			for i in (5 if lod == 0 else 0):
 				for j in 2:
 					P.amphora(b, 1.0 + 0.9 * float(i), 0.0, yz0 + 1.0 + 0.9 * float(j), 1.2)
 			if lod == 0:
@@ -539,9 +546,9 @@ static func horti(lod: int) -> MB:
 		if lod == 0:
 			P.window(villa, 0, hh, 1.2, 1.4, 2.2, 26.0, 13.0, 0, 82 + i)
 		elif lod == 1:
-			P.window_flat(villa, 0, hh, 1.2, 1.4, 2.2, 26.0, 13.0, 82 + i)
+			P.window_flat(villa, 0, hh, 1.2, 1.4, 2.2, 26.0, 13.0, 82 + i, lod)
 		if lod < 2:
-			P.window_flat(villa, 0, hh, 4.4, 1.1, 1.3, 26.0, 13.0, 90 + i)
+			P.window_flat(villa, 0, hh, 4.4, 1.1, 1.3, 26.0, 13.0, 90 + i, lod)
 	villa.hip(-13.6, 13.6, -7.1, 7.1, 7.0, P.rise(7.1), P.TILE, lod)
 	b.append(villa, Vector3(0, 0, vz))
 	for sx in [-22.0, 22.0]:
@@ -553,7 +560,7 @@ static func horti(lod: int) -> MB:
 	if lod < 2:
 		for i in 9:
 			var x := -12.0 + float(i) * 3.0
-			b.cone(x, vz + 7.9, 0.0, 3.6, 0.25, 0.21, 8, P.STONE)
+			b.cone(x, vz + 7.9, 0.0, 3.6, 0.25, 0.21, 8 if lod == 0 else 4, P.STONE)
 		b.box(Vector3(-12.5, 3.6, vz + 7.5), Vector3(12.5, 4.0, vz + 8.3), P.WOOD)
 		b.shed(-12.5, 12.5, vz + 6.6, vz + 8.6, 4.0 + P.rise(2.0), 4.0, P.TILE, lod)
 		b.box(Vector3(-8.4, 0.0, 13.6), Vector3(8.4, 0.5, 22.4), P.STONE)

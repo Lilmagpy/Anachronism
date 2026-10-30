@@ -240,9 +240,9 @@ class MB:
 			tri(Vector3(x0, base, z0), Vector3(x0, base, z1), Vector3(x0, top, zm), wall_col, Vector3(-1, 0, 0))
 		if lod < 2:
 			ridge(Vector3(x0, top, zm), Vector3(x1, top, zm), 0.22)
+		if lod == 0:
 			fascia(Vector3(x0, base, z1), Vector3(x1, base, z1), Vector3(0, 0, 1))
 			fascia(Vector3(x0, base, z0), Vector3(x1, base, z0), Vector3(0, 0, -1))
-		if lod == 0:
 			antefixes(Vector3(x0, base, z1), Vector3(x1, base, z1), Vector3(0, 0, 1), rh / maxf(zm - z0, 0.1))
 			antefixes(Vector3(x0, base, z0), Vector3(x1, base, z0), Vector3(0, 0, -1), rh / maxf(zm - z0, 0.1))
 
@@ -265,11 +265,11 @@ class MB:
 				ridge(corner, r0, 0.16)
 			for corner in [Vector3(x1, base, z0), Vector3(x1, base, z1)]:
 				ridge(corner, r1, 0.16)
+		if lod == 0:
 			fascia(Vector3(x0, base, z1), Vector3(x1, base, z1), Vector3(0, 0, 1))
 			fascia(Vector3(x0, base, z0), Vector3(x1, base, z0), Vector3(0, 0, -1))
 			fascia(Vector3(x1, base, z0), Vector3(x1, base, z1), Vector3(1, 0, 0))
 			fascia(Vector3(x0, base, z0), Vector3(x0, base, z1), Vector3(-1, 0, 0))
-		if lod == 0:
 			var slope := rh / maxf(inset, 0.1)
 			antefixes(Vector3(x0, base, z1), Vector3(x1, base, z1), Vector3(0, 0, 1), slope)
 			antefixes(Vector3(x0, base, z0), Vector3(x1, base, z0), Vector3(0, 0, -1), slope)
@@ -279,7 +279,7 @@ class MB:
 	## Single-pitch roof from the high edge (z_hi, y_hi) to the low eave (z_lo, y_lo).
 	func shed(x0: float, x1: float, z_hi: float, z_lo: float, y_hi: float, y_lo: float, roof: Color, lod := 0) -> void:
 		quad(Vector3(x0, y_hi, z_hi), Vector3(x1, y_hi, z_hi), Vector3(x1, y_lo, z_lo), Vector3(x0, y_lo, z_lo), roof, Vector3(0, 1, 0))
-		if lod < 2 and is_equal_approx(roof.a, TILE.a):
+		if lod == 0 and is_equal_approx(roof.a, TILE.a):
 			var out := Vector3(0, 0, signf(z_lo - z_hi))
 			fascia(Vector3(x0, y_lo, z_lo), Vector3(x1, y_lo, z_lo), out)
 			if lod == 0:
@@ -315,16 +315,16 @@ class MB:
 		var len := a.distance_to(b)
 		var n_tiles := maxi(int(len / 0.55), 1)
 		var dir := (b - a) / float(n_tiles)
-		var half := dir.normalized() * 0.14
-		var tilt := Vector3(0, 0.26, 0) - out * 0.06 * slope
+		var half := dir.normalized() * 0.1
+		var tilt := Vector3(0, 0.17, 0) - out * 0.04 * slope
 		for i in range(n_tiles + 1):
 			var p := a + dir * float(i) - out * 0.02
 			if i == 0:
 				p += dir.normalized() * 0.16
 			elif i == n_tiles:
 				p -= dir.normalized() * 0.16
-			quad(p - half, p + half, p + half + tilt, p - half + tilt, RIDGE, out)
-			tri(p - half + tilt, p + half + tilt, p + tilt + Vector3(0, 0.12, 0), RIDGE, out)
+			# one pointed plate per cover tile (the palmette's outline)
+			tri(p - half, p + half, p + tilt * 1.45, RIDGE, out)
 
 	func cone(cx: float, cz: float, y0: float, y1: float, r0: float, r1: float, sides: int, col: Color) -> void:
 		for s in sides:
@@ -428,30 +428,27 @@ static func window_hole(h: float, y0: float, wid: float, tall: float) -> Rect2:
 
 ## A plain small opening (side and back faces, upper floors): a shallow recess with a shutter
 ## plane, cheap. Needs no hole in the wall (it is painted proud of it).
-static func window_flat(b: MB, face: int, h: float, y0: float, wid: float, tall: float, w: float, d: float, k: int) -> void:
+static func window_flat(b: MB, face: int, h: float, y0: float, wid: float, tall: float, w: float, d: float, k: int, lod := 0) -> void:
 	var leaf := SHUTTER if fr(k, 5) < 0.6 else LATTICE
 	b.rect_on(face, h - wid * 0.5, h + wid * 0.5, y0, y0 + tall, w, d, 0.02, leaf)
-	b.on_wall(face, h, y0 - 0.08, wid + 0.2, 0.08, 0.08, w, d, 0.0, STONE)
+	if lod == 0:
+		b.rect_on(face, h - wid * 0.5 - 0.1, h + wid * 0.5 + 0.1, y0 - 0.1, y0, w, d, 0.035, STONE)
 
 
 ## House door centred at `h`: stone jambs and lintel, a threshold step, the leaves recessed.
 static func door(b: MB, face: int, h: float, wid: float, tall: float, w: float, d: float, lod: int, k: int, grand := false) -> void:
 	var h0 := h - wid * 0.5
 	var h1 := h + wid * 0.5
-	if lod >= 2:
+	if lod >= 1:
 		b.rect_on(face, h0, h1, 0.0, tall, w, d, 0.02, DOOR)
 		return
 	var jw := 0.32 if grand else 0.18
 	var jcol := STONE if grand else PLASTER
-	if lod == 0:
-		b.reveal(face, h0, h1, 0.0, tall, w, d, 0.4, jcol, DOOR, 0.36)
-		var open := fr(k, 6) < 0.3
-		if open:
-			# one leaf ajar: the passage behind in shade
-			b.rect_on(face, h0 + 0.02, h, 0.02, tall - 0.02, w, d, -0.35, SHADE)
-			b.rect_on(face, h + 0.0, h1 - 0.02, 0.02, tall - 0.02, w, d, -0.30, DOOR)
-	else:
-		b.rect_on(face, h0, h1, 0.0, tall, w, d, 0.02, DOOR)
+	b.reveal(face, h0, h1, 0.0, tall, w, d, 0.4, jcol, DOOR, 0.36)
+	if fr(k, 6) < 0.3:
+		# one leaf ajar: the passage behind in shade
+		b.rect_on(face, h0 + 0.02, h, 0.02, tall - 0.02, w, d, -0.35, SHADE)
+		b.rect_on(face, h + 0.0, h1 - 0.02, 0.02, tall - 0.02, w, d, -0.30, DOOR)
 	# jambs and lintel
 	b.on_wall(face, h0 - jw * 0.5, 0.0, jw, tall + 0.3, 0.07 if grand else 0.04, w, d, 0.0, jcol)
 	b.on_wall(face, h1 + jw * 0.5, 0.0, jw, tall + 0.3, 0.07 if grand else 0.04, w, d, 0.0, jcol)
@@ -477,10 +474,10 @@ static func shop_front(b: MB, face: int, h: float, wid: float, w: float, d: floa
 		return
 	if lod == 1:
 		b.rect_on(face, h0, h1, 0.0, tall, w, d, 0.02, SHADE)
-		b.on_wall(face, h, tall, wid + 0.5, 0.3, 0.1, w, d, 0.0, WOOD)
+		b.rect_on(face, h0 - 0.25, h1 + 0.25, tall, tall + 0.3, w, d, 0.03, WOOD)
 		if awning >= 0 and face == 0:
 			var ca: Color = AWNINGS[awning % AWNINGS.size()]
-			b.shed(h0 - 0.3, h1 + 0.3, d * 0.5 + 0.05, d * 0.5 + 1.7, 3.2, 2.5, ca, 1)
+			b.shed(h0 - 0.3, h1 + 0.3, d * 0.5 + 0.05, d * 0.5 + 1.7, 3.2, 2.5, ca, 2)
 		return
 	var r := fr(k, 5)
 	var deep := 1.2    # how far inside the opening we model
@@ -499,8 +496,8 @@ static func shop_front(b: MB, face: int, h: float, wid: float, w: float, d: floa
 		# dolia mouths set in the counter top, an amphora on it
 		for i in 2:
 			var cm := MB.fp(face, h0 + 0.75 + 0.65 * float(i), 0.0, w, d, -0.57)
-			b.cone(cm.x, cm.z, 0.95, 0.99, 0.30, 0.24, 7, TERRA)
-			b.cone(cm.x, cm.z, 0.99, 1.0, 0.24, 0.0, 7, SHADE)
+			b.cone(cm.x, cm.z, 0.95, 0.99, 0.30, 0.24, 6, TERRA)
+			b.cone(cm.x, cm.z, 0.99, 1.0, 0.24, 0.0, 6, SHADE)
 		var am := MB.fp(face, h1 - 0.7, 0.0, w, d, -0.57)
 		amphora(b, am.x, 0.95, am.z, 0.7)
 	elif r < 0.8:
@@ -577,7 +574,7 @@ static func balcony(b: MB, face: int, h: float, hw: float, y: float, w: float, d
 	# a mid rail
 	b.box(Vector3(r_lo.x, y + 0.6, r_lo.z), Vector3(r_hi.x, y + 0.65, r_hi.z), WOOD, true, true)
 	# balusters: thin boards
-	var n_bal := int(hw * 2.0 / 0.35)
+	var n_bal := int(hw * 2.0 / 0.45)
 	for i in n_bal:
 		var t := (float(i) + 0.5) / float(n_bal)
 		var bp := outer0.lerp(outer1, t)
@@ -664,6 +661,6 @@ static func smoke_hood(b: MB, x: float, y: float, z: float, lod: int) -> void:
 
 ## Amphora standing at (x, y, z): foot, belly, neck, mouth ring.
 static func amphora(b: MB, x: float, y: float, z: float, s := 1.0, col := TERRA) -> void:
-	b.cone(x, z, y, y + 0.26 * s, 0.05 * s, 0.19 * s, 6, col)
-	b.cone(x, z, y + 0.26 * s, y + 0.58 * s, 0.19 * s, 0.11 * s, 6, col)
-	b.cone(x, z, y + 0.58 * s, y + 0.84 * s, 0.11 * s, 0.065 * s, 6, col)
+	b.cone(x, z, y, y + 0.26 * s, 0.05 * s, 0.19 * s, 5, col)
+	b.cone(x, z, y + 0.26 * s, y + 0.58 * s, 0.19 * s, 0.11 * s, 5, col)
+	b.cone(x, z, y + 0.58 * s, y + 0.84 * s, 0.11 * s, 0.065 * s, 5, col)
