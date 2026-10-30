@@ -976,6 +976,9 @@ static func _wall(out: Dictionary, st: Dictionary, route: PackedVector2Array, gr
 		for g in gates:
 			if absf(float(g) - (s + seg * 0.5)) < 18.0:
 				skip = true
+		for gap: Vector2 in st.get("gaps", []):
+			if s + seg * 0.5 > gap.x + 18.0 and s + seg * 0.5 < gap.y - 18.0:
+				skip = true
 		if not skip and seg > 0.5:
 			var y: float = minf(float(ground.call(pa.x, pa.y)), float(ground.call(pb.x, pb.y))) if ground.is_valid() else 10.0
 			var on_agger := s >= agger.x and s <= agger.y

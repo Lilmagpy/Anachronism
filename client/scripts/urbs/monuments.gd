@@ -489,6 +489,21 @@ func _wall_extras(st: Dictionary, route: PackedVector2Array) -> void:
 		dist[ids[i]] = acc
 		gates.append(acc)
 	st["gates"] = gates
+	# stretches drawn without a wall (the record's `open_between`: pairs of neighbouring gates)
+	var gaps := []
+	var wrec: Dictionary = _recs.get("murus_servianus", {})
+	for pair in wrec.get("open_between", []):
+		var a := str(pair[0])
+		var b := str(pair[1])
+		if dist.has(a) and dist.has(b):
+			var ia := ids.find(a)
+			var ib := ids.find(b)
+			if absi(ia - ib) == 1:
+				gaps.append(Vector2(minf(float(dist[a]), float(dist[b])), maxf(float(dist[a]), float(dist[b]))))
+			elif (ia == 0 and ib == ids.size() - 1) or (ib == 0 and ia == ids.size() - 1):
+				var last := maxf(float(dist[a]), float(dist[b]))
+				gaps.append(Vector2(last, acc + route[route.size() - 1].distance_to(route[route.size() - 2])))
+	st["gaps"] = gaps
 	if dist.has("porta_collina") and dist.has("porta_esquilina"):
 		var a := float(dist["porta_collina"])
 		var b := float(dist["porta_esquilina"])

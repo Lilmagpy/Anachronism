@@ -1012,8 +1012,8 @@
 },
 "english": "Basilica Porcia",
 "footprint_m": {
-"length": 45,
-"width": 20
+"length": 16,
+"width": 26
 },
 "geometry_source": "Basilica Porcia (184 BC) beside the Curia; size unknown, small tufa basilica assumed (Platner-Ashby s.v. Basilica Porcia)",
 "geometry_unverified": [
@@ -1022,10 +1022,10 @@
 "height_m"
 ],
 "id": "basilica_porcia",
-"lat": 41.8929,
+"lat": 41.893004,
 "latin": "Basilica Porcia",
 "location": "Forum, beside the Curia (north-west); exact site lost",
-"lon": 12.4851,
+"lon": 12.484902,
 "model": "basilica",
 "notes": "Verified: Livy 39.44.7 (Latin text): the censor Cato bought the atria Maenium and Titium in the Lautumiae and four shops and built a basilica 'quae Porcia appellata est' (184 BC). Also Plut. Cato Maior 19. P&A: the first basilica in Rome, a little west of the Curia, in Lautumiis. Pleiades 547224816 has only a 'related' point (forum centroid), not adopted.",
 "pleiades": 547224816,
@@ -1911,10 +1911,10 @@
 ],
 "height_m": 10,
 "id": "columna_maenia",
-"lat": 41.893,
+"lat": 41.893013,
 "latin": "Columna Maenia",
 "location": "on the north-west side of the Forum, near the Basilica Porcia and the Carcer",
-"lon": 12.48479,
+"lon": 12.484697,
 "materials": [],
 "model": "column_honorific",
 "notes": "Added in U8 as part of the Forum's furniture. Its exact spot is unknown (near the Basilica Porcia and the Carcer); the statue on top is assumed from the honour of a column (Pliny NH 34.20), not stated by Platner-Ashby.",
@@ -2428,7 +2428,7 @@
 "lat": 41.888,
 "latin": "Porta Trigemina",
 "location": "Servian Wall, between the Capitol/Forum Boarium and the Tiber",
-"lon": 12.4793,
+"lon": 12.479662,
 "model": "servian_gate",
 "notes": "CORRECTED: the gate existed in the story of 439 (Livy 4.16.2: L. Minucius given an ox 'extra portam Trigeminam'), before the wall of 378, so '378 certain' is unsound; the name, if not anachronistic in Livy, implies a gate on the Palatine-Aventine line before the Servian Wall. P&A: important gate in the Servian wall between the Aventine and the Tiber (Region XI), exact site disputed: below S. Sabina, or about 40 m south of S. Maria in Cosmedin (arch of tufa 3.30 m wide found 1886), or at the north corner of the Aventine near S. Anna dei Calzettari. Livy 35.10.12 (193 BC): the aediles built a portico outside the Porta Trigemina and added the Emporium to it; Livy 41.27.8 (174): the censors paved the Emporium outside the gate, repaired the Porticus Aemilia and paved a portico inside the gate up the Aventine. Pleiades 303638861 has only a 'related' location.",
 "pleiades": 303638861,
@@ -2749,10 +2749,10 @@
 "model"
 ],
 "id": "aedes_bellonae",
-"lat": 41.8915,
+"lat": 41.89277,
 "latin": "Aedes Bellonae",
 "location": "Campus Martius near the Circus Flaminius by tradition; exact site unknown (P&A)",
-"lon": 12.477,
+"lon": 12.477286,
 "model": "temple_tetrastyle_ionic",
 "notes": "Not in Pleiades. P&A: vowed by Ap. Claudius Caecus in 296 (Livy 10.19.17; Plin. NH 35.12; Ovid Fast. 6.201-204; CIL I2 p192 elog.), dedicated 'a few years later' on 3 June; 'No traces'; probably not built before the 3rd c.; SITE UNKNOWN: P&A rejects a connection with the pulvinar of the Circus Flaminius and conjectures the Vatican hills. The coordinate here (near the Circus Flaminius) is only the conventional placement and is rough. The temple was used for meetings of the Senate with foreign ambassadors and generals awaiting triumph (a well-known fact, not in the P&A passage read).",
 "pleiades": null,
@@ -2789,10 +2789,10 @@
 "model"
 ],
 "id": "aedes_neptuni_flaminium",
-"lat": 41.8912,
+"lat": 41.893103,
 "latin": "Aedes Neptuni in Circo Flaminio",
 "location": "Campus Martius, near the Circus Flaminius",
-"lon": 12.4765,
+"lon": 12.476561,
 "model": "temple_tetrastyle_ionic",
 "notes": "Not in Pleiades. P&A: an altar of Neptune in the Circus Flaminius sweated in 206 (Livy 28.11.4 per P&A's 'XXVIII.1.4', Dio fr. 57.60 implies a real temple); the temple of Cn. Domitius Ahenobarbus (denarius struck 42-38) was vowed 42-38 and perhaps not built before 32 (when he was consul); dedication day 1 December; whether Domitius built anew or restored the earlier temple cannot be determined. The marble frieze (Scopas group, Plin. NH 36.26) is of the second half of the 1st c. BC.",
 "pleiades": null,
@@ -2944,10 +2944,10 @@
 "model"
 ],
 "id": "aedes_dianae_circus_flaminius",
-"lat": 41.891,
+"lat": 41.893274,
 "latin": "Aedes Dianae (Circo Flaminio)",
 "location": "Circus Flaminius",
-"lon": 12.4762,
+"lon": 12.476211,
 "model": "temple_tetrastyle_ionic",
 "notes": "Livy 40.52.1 names Aemilius Lepidus dedicating Diana and Juno Regina in the Circus Flaminius in 179; I list it here at low certainty. CORRECTED: previous 'by' text was garbled (mentioned M. Fulvius Nobilior and Hercules Musarum, unrelated). Livy 40.52.1 (Latin text) says M. Aemilius Lepidus, as censor, dedicated both temples of Juno Regina and Diana 'utramque in circo Flaminio', vowed eight years earlier (187) in the Ligurian war; P&A agrees (vowed 187, Livy 39.2; dedicated 179). Certainty raised from low to certain. Not in Pleiades.",
 "pleiades": null,
@@ -2981,10 +2981,10 @@
 "model"
 ],
 "id": "lares_permarini",
-"lat": 41.8916,
+"lat": 41.892941,
 "latin": "Aedes Larum Permarinum",
 "location": "Campus Martius, near the Porticus Minucia",
-"lon": 12.4768,
+"lon": 12.476923,
 "model": "temple_tetrastyle_ionic",
 "notes": "Verified in Livy 40.52.4-7 (Latin): dedicated by the censor M. Aemilius Lepidus 'in Campo', vowed eleven years earlier by L. Aemilius Regillus in the naval battle against Antiochus's fleet (190, off Myonnesus); its dedicatory tablet copied in the Capitoline temple. P&A: dedicated 22 December 179 (Macrob. 1.10.10; Fasti Praenestini); stood in the Porticus Minucia (Fast. Praen.), so its site depends on that portico's (Pleiades Porticus Minucia 698151983: 41.8951, 12.4792).",
 "pleiades": null,
@@ -2999,7 +2999,7 @@
 "verified": "platner-ashby"
 },
 {
-"bearing_deg": 90,
+"bearing_deg": 122,
 "built": {
 "by": "built by C. Flaminius as censor (Livy Per. 20; P&A gives 221); in the Prata Flaminia (Livy 3.54.15)",
 "certainty": "certain",
@@ -3007,8 +3007,8 @@
 },
 "english": "Circus Flaminius",
 "footprint_m": {
-"length": 260,
-"width": 80
+"length": 200,
+"width": 60
 },
 "form": "long track about 260 x 100 m (P&A estimate) used for the ludi plebeii and Taurii and for assemblies; built of concrete with opus reticulatum facing and travertine/tufa piers (later phase)",
 "geometry_source": "Platner-Ashby s.v. Circus Flaminius (major axis almost due east-west, carceres end on the east); extent assumed, not a racing circus",
@@ -3017,10 +3017,10 @@
 ],
 "height_m": 0,
 "id": "circus_flaminius",
-"lat": 41.8913,
+"lat": 41.8925,
 "latin": "Circus Flaminius",
 "location": "Campus Martius, south, between Capitol and Tiber; used for the Plebeian Games and assemblies",
-"lon": 12.4776,
+"lon": 12.476911,
 "model": "plaza",
 "notes": "CORRECTED date: P&A says built by C. Flaminius as censor in 221 BC, but Livy Per. 20 and Livy's narrative place Flaminius's censorship in 220 (the usual date); 'Livy 23.30.17 the first temples' in the old form field is not a source and was removed. P&A: in the Prata Flaminia in the southern Campus Martius (Livy 3.54.15; Per. 20; Fest. 89); the ludi plebeii and Taurii were held there; estimated length about 260 m, width about 100 m; remains of concrete faced with opus reticulatum; later events: ludi saeculares 158 (Livy 40.52.4 per P&A's text, truncated). Pleiades 158081395 location is 'related' (same point as the Porticus Octaviae) and is not adopted.",
 "pleiades": 158081395,
@@ -3098,10 +3098,10 @@
 "height_m"
 ],
 "id": "aedes_faunus",
-"lat": 41.8908,
+"lat": 41.891015,
 "latin": "Aedes Fauni",
 "location": "Tiber Island",
-"lon": 12.4779,
+"lon": 12.476767,
 "model": "temple_tetrastyle_ionic",
 "notes": "Verified: P&A: the only temple of Faunus in Rome, at the north end of the Tiber island (Ov. Fast. 2.193-194), vowed in 196 by the aediles Cn. Domitius Ahenobarbus and C. Scribonius Curio out of fines from three pecuarii (Livy 33.42.10), dedicated two years later by Domitius (Livy 34.53.4) on the Ides (of February); prostyle (Vitr. 3.2.3). Not in Pleiades separately.",
 "pleiades": null,
@@ -3143,10 +3143,10 @@
 "model"
 ],
 "id": "aedes_aesculapii",
-"lat": 41.8905,
+"lat": 41.890464,
 "latin": "Aedes Aesculapii",
 "location": "Tiber Island (modern S. Giovanni Calibita and Fatebenefratelli hospital)",
-"lon": 12.4775,
+"lon": 12.477978,
 "model": "temple_tetrastyle_ionic",
 "notes": "CORRECTED: 'vowed by Q. Fabius Gurges' is not in P&A or the passages cited (Livy 10.31.9 has Gurges vowing a temple of Venus, not Aesculapius) and was removed. P&A: erected on the island 'soon after 291 BC': plague in 293, Sibylline books consulted (Livy 10.47.6-7: no action that year because the consuls were at war), embassy to Epidaurus in 292, snake brought 291 (Livy Per. 11; Val. Max. 1.8.2; Ov. Met. 15.622-744); the whole island consecrated; dedicated on 1 January (Ov. Fast. 1.291). Ambassadors of Perseus received there in 170 (Livy 42.24). The first temple was rebuilt or restored towards the end of the Republic (Varro LL 7.57 'in Aesculapii aede vetere'), perhaps at the time of the Pons Fabricius (62). Not in Pleiades separately.",
 "pleiades": null,
@@ -4119,7 +4119,7 @@
 "lat": 41.8823,
 "latin": "Emporium",
 "location": "Tiber bank below the Aventine (modern Testaccio)",
-"lon": 12.4747,
+"lon": 12.475185,
 "model": "quay",
 "notes": "Verified in Livy 35.10.12 (Latin): the aediles of 193, M. Aemilius Lepidus and L. Aemilius Paullus, built a portico outside the Porta Trigemina 'emporio ad Tiberim adiecto'; Livy 41.27.8 (174, Latin): the censors paved the Emporium with stone and fenced it with stakes, repaired the Porticus Aemilia and made steps up from the Tiber. P&A: 'said to have been established' in 193 and probably at first an open space with wharf and offices. The old note 'banks paved with stone steps' is corrected. Pleiades 937921711 (Emporium, precise) adopted for coordinates.",
 "pleiades": 937921711,
@@ -5507,6 +5507,12 @@
 "cappellaccio in earlier phases"
 ],
 "model": "wall",
+"open_between": [
+[
+"porta_flumentana",
+"porta_trigemina"
+]
+],
 "precision": "approx",
 "regio": 0,
 "route": [
@@ -5880,8 +5886,8 @@
 "lon": 12.477,
 "model": "servian_gate",
 "offset_m": [
-48,
--170
+113,
+-95
 ],
 "precision": "rough",
 "regio": 9,
@@ -6048,7 +6054,7 @@
 "type": "gate"
 },
 {
-"bearing_deg": 255,
+"bearing_deg": 297,
 "built": {
 "by": "Ancus Marcius (Livy 1.33.6); defended by Horatius Cocles 508 (Livy 2.10)",
 "certainty": "traditional",
@@ -6068,10 +6074,10 @@
 ],
 "height_m": 5,
 "id": "pons_sublicius",
-"lat": 41.888,
+"lat": 41.884438,
 "latin": "Pons Sublicius",
 "location": "Tiber, south of the Forum Boarium, below the Aventine",
-"lon": 12.477,
+"lon": 12.476066,
 "model": "bridge_timber",
 "precision": "rough",
 "regio": 11,
@@ -6190,19 +6196,15 @@
 ],
 "height_m": 10,
 "id": "pons_fabricius",
-"lat": 41.8907,
+"lat": 41.891198,
 "latin": "Pons Fabricius",
 "location": "from Forum Holitorium to Tiber Island",
-"lon": 12.478,
+"lon": 12.478031,
 "materials": [
 "tufa",
 "travertine"
 ],
 "model": "bridge_stone",
-"offset_m": [
-28,
-46
-],
 "precision": "exact",
 "regio": 14,
 "sources": [
@@ -6230,15 +6232,11 @@
 ],
 "height_m": 10,
 "id": "pons_cestius",
-"lat": 41.8896,
+"lat": 41.89045,
 "latin": "Pons Cestius",
 "location": "from Tiber Island to Trastevere",
-"lon": 12.4774,
+"lon": 12.477104,
 "model": "bridge_stone",
-"offset_m": [
--14,
-69
-],
 "precision": "exact",
 "regio": 14,
 "sources": [
