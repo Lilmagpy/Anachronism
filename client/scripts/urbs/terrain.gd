@@ -38,7 +38,7 @@ const NEAR_M := 2000.0                    ## within this of the Forum, lod 0 use
 const WARP_M := 38.0                      ## how far hill and valley outlines wander from their ideal line
 const FORUM_FLOOR_M := 10.0               ## ancient Forum floor, m a.s.l.
 const TERRACE_M := 4.0                    ## height of one hillside terrace
-const CACHE_VERSION := "u8-site-10"        ## bump when the model code changes
+const CACHE_VERSION := "u8-site-12"        ## bump when the model code changes
 const STREETS_PATH := "res://data/city/streets.json"
 const REGIONS_PATH := "res://data/city/regions.json"
 const RURAL_CELL := 25.0                  ## resolution of the farmland weight raster
@@ -58,6 +58,7 @@ static var _terrace_w: PackedFloat32Array = PackedFloat32Array()   ## how much t
 static var _rural: PackedFloat32Array = PackedFloat32Array()       ## farmland weight, RURAL_CELL grid
 static var _map_col: PackedByteArray = PackedByteArray()          ## ground colour (rgb, sRGB) and farmland (a), MAP_N x MAP_N
 static var _map_w: PackedByteArray = PackedByteArray()            ## ground weights: grass, mud, dust, gravel
+static var _urban: PackedFloat32Array = PackedFloat32Array()      ## 0..1 inside the Servian circuit (soft edge), MAP_N x MAP_N
 static var _circuit: PackedVector2Array = PackedVector2Array()
 static var _warp: FastNoiseLite = null
 static var _warp2: FastNoiseLite = null
@@ -581,6 +582,7 @@ static func _compute_rural() -> void:
 ## attributes of the chunk meshes did not reach the shader intact; a map does not depend on them,
 ## and it shades every lod alike.)
 static func _bake_maps() -> void:
+	_bake_urban()
 	_map_col = PackedByteArray()
 	_map_col.resize(MAP_N * MAP_N * 4)
 	_map_w = PackedByteArray()
@@ -608,6 +610,32 @@ static func _bake_maps() -> void:
 			_map_w[o + 1] = clampi(roundi(a.y * 255.0), 0, 255)
 			_map_w[o + 2] = clampi(roundi(b.x * 255.0), 0, 255)
 			_map_w[o + 3] = clampi(roundi(b.y * 255.0), 0, 255)
+
+
+## The inside of the Servian circuit as a soft 0..1 mask on the map grid (a binary mask blurred
+## by shrinking and re-growing it, about 60 m of soft edge).
+static func _bake_urban() -> void:
+	var img := Image.create(MAP_N, MAP_N, false, Image.FORMAT_L8)
+	var poly := circuit()
+	for j in MAP_N:
+		for i in MAP_N:
+			var p := Vector2(-HALF_M + i * MAP_CELL, -HALF_M + j * MAP_CELL)
+			img.set_pixel(i, j, Color(1, 1, 1) if poly.size() > 2 and Geometry2D.is_point_in_polygon(p, poly) else Color(0, 0, 0))
+	img.resize(MAP_N / 6, MAP_N / 6, Image.INTERPOLATE_BILINEAR)
+	img.resize(MAP_N, MAP_N, Image.INTERPOLATE_CUBIC)
+	_urban = PackedFloat32Array()
+	_urban.resize(MAP_N * MAP_N)
+	for j in MAP_N:
+		for i in MAP_N:
+			_urban[j * MAP_N + i] = clampf(img.get_pixel(i, j).r, 0.0, 1.0)
+
+
+static func _urban_at(x: float, z: float) -> float:
+	if _urban.is_empty():
+		return 0.0
+	var i := clampi(roundi((x + HALF_M) / MAP_CELL), 0, MAP_N - 1)
+	var j := clampi(roundi((z + HALF_M) / MAP_CELL), 0, MAP_N - 1)
+	return _urban[j * MAP_N + i]
 
 
 ## Farmland weight 0..1 at local (x, z).
@@ -920,11 +948,20 @@ static func _ground_weights(x: float, z: float, y: float, ny: float, k: int) -> 
 		stone = smoothstep(0.86, 0.96, ir) * (1.0 - smoothstep(1.0, 1.12, ir))
 		mud *= smoothstep(0.9, 1.0, ir)
 		dust = maxf(dust, 0.5 * (1.0 - smoothstep(0.8, 0.95, ir)))
+	# Inside the walls a crowded city: beaten earth and gravel on the gentle ground, worn grass and
+	# scrub on the slopes, real green only in the gardens and groves (UrbsSiteFlora) and on the
+	# steep untouched faces.
+	var urban := _urban_at(x, z)
+	var green := UrbsSiteFlora.grove_weight(x, z)
+	var worn := urban * (1.0 - green)
+	dust = maxf(dust, worn * smoothstep(0.80, 0.94, ny) * 0.7 * (1.0 - mud))
 	var grass_c := Color(0.47, 0.47, 0.25).lerp(Color(0.53, 0.50, 0.28), smoothstep(30.0, 60.0, y))
 	var meadow_c := Color(0.39, 0.44, 0.22)
 	var grass := meadow_c.lerp(grass_c, smoothstep(16.0, 34.0, y))
-	var dust_c := Color(0.57, 0.48, 0.35).lerp(Color(0.66, 0.57, 0.42), maxf(forum, built))
-	var tufa := Color(0.60, 0.50, 0.36)
+	grass = grass.lerp(Color(0.50, 0.48, 0.36), worn * 0.85)
+	# trodden earth, light and dusty; compacted gravel on the carved platforms, close to travertine
+	var dust_c := Color(0.63, 0.59, 0.50).lerp(Color(0.74, 0.71, 0.62), maxf(forum * 0.5, built))
+	var tufa := Color(0.60, 0.50, 0.36).lerp(Color(0.42, 0.44, 0.26), 0.35 * urban)
 	var c := grass.lerp(tufa, steep)
 	c = c.lerp(dust_c, dust * (1.0 - steep))
 	c = c.lerp(Color(0.33, 0.28, 0.19), mud)
