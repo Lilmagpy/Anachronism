@@ -361,3 +361,194 @@ static func line_seats(poly: PackedVector3Array, offset: float, rows := 2, step 
 				q.y += k * rise
 				out.append({"pos": q, "yaw": atan2(-s * side.x, -s * side.z), "u": d / total, "row": k})
 	return out
+
+
+# ---- walkers (U8 street life): a vertex-shader walk cycle for moving MultiMesh figures ------
+#
+# life.gd moves thousands of people along the streets. Each is one MultiMesh instance whose
+# transform is written by the simulation; the legs, arms and body bob come from this shader, so
+# the CPU touches one transform per person and nothing else.
+#   INSTANCE_CUSTOM.x  phase offset (0..1, turns)       .y  walk amplitude (0 stands, 1 walks, 1.4 hurries)
+#   INSTANCE_CUSTOM.z  skin tone (0 light .. 1 dark)     .w  floor(w) = flags (bit 0 pilleus, bit 1 long robe,
+#                                                             bit 2 dog), fract(w) = hair shade
+#   COLOR              cloth colour (tunic, toga, stola; the dog's coat)
+# Part ids (UV2.x) as the seated crowd, plus 5 = pilleus (drawn only with flag 1) and 6 = long robe
+# (drawn only with flag 2): toga to the shin, stola to the ankle.
+
+const WALK_SHADER := """
+shader_type spatial;
+render_mode cull_back;
+uniform float clock = 0.0;
+uniform float stride = 1.9;      // walk cycles per second at amplitude 1
+uniform float hip_y = 0.92;
+uniform float knee_y = 0.49;
+uniform float shoulder_y = 1.39;
+uniform sampler2D face : source_color, filter_linear;
+varying vec3 tint;
+varying float part;
+varying float tone;
+varying float hairv;
+void vertex() {
+	float ph0 = INSTANCE_CUSTOM.x * 6.2832;
+	float amp = INSTANCE_CUSTOM.y;
+	float flags = floor(INSTANCE_CUSTOM.w + 0.001);
+	hairv = fract(INSTANCE_CUSTOM.w);
+	tone = INSTANCE_CUSTOM.z;
+	tint = COLOR.rgb;
+	part = UV2.x;
+	bool cap = mod(flags, 2.0) >= 1.0;
+	bool robe = mod(floor(flags / 2.0), 2.0) >= 1.0;
+	bool dog = flags >= 4.0;
+	vec3 v = VERTEX;
+	if ((part > 4.5 && part < 5.5 && !cap) || (part > 5.5 && part < 6.5 && !robe)) {
+		VERTEX = vec3(0.0); return;   // the part this person does not wear
+	}
+	float phase = clock * 6.2832 * stride * (dog ? 1.8 : 1.0) + ph0;
+	if (part > 2.5 && part < 3.5) {               // legs: swing from the hip, knee bends on the forward swing
+		float side = sign(v.x);
+		if (dog) { side *= (v.z > 0.0 ? 1.0 : -1.0); }
+		float ph = phase + (side > 0.0 ? 3.14159 : 0.0);
+		float sw = sin(ph) * 0.5 * amp;
+		float hy = dog ? 0.32 : hip_y;
+		float ky = dog ? 0.16 : knee_y;
+		if (v.y < ky && !dog) {
+			float kb = max(0.0, -cos(ph)) * 0.8 * amp;
+			vec3 k = vec3(v.x, ky, 0.0);
+			vec3 p = v - k;
+			p = vec3(p.x, p.y * cos(kb) - p.z * sin(kb), p.y * sin(kb) + p.z * cos(kb));
+			v = p + k;
+		}
+		vec3 h = vec3(v.x, hy, dog ? v.z : 0.0);
+		if (dog) { h.z = v.z > 0.0 ? 0.22 : -0.24; }
+		vec3 p = v - h;
+		p = vec3(p.x, p.y * cos(sw) - p.z * sin(sw), p.y * sin(sw) + p.z * cos(sw));
+		v = p + h;
+	} else if (part > 1.5 && part < 2.5 && !dog) {    // arms: opposite the same-side leg
+		float side = sign(v.x);
+		float ph = phase + (side > 0.0 ? 0.0 : 3.14159);
+		float a = sin(ph) * 0.42 * amp;
+		vec3 s = vec3(v.x, shoulder_y, 0.0);
+		vec3 p = v - s;
+		p = vec3(p.x, p.y * cos(a) - p.z * sin(a), p.y * sin(a) + p.z * cos(a));
+		v = p + s;
+	} else if (!dog && part > 0.5 && part < 1.5 && v.y < hip_y + 0.02 && v.y > knee_y) {
+		v.z += sin(phase) * 0.03 * amp * (hip_y - v.y) / (hip_y - knee_y);   // the skirt follows the legs a little
+	}
+	v.y += 0.03 * amp * (0.5 - 0.5 * cos(2.0 * phase)) + 0.008 * (1.0 - min(amp, 1.0)) * sin(clock * 1.3 + ph0 * 3.0);
+	VERTEX = v;
+}
+void fragment() {
+	vec3 skin = mix(vec3(0.95, 0.75, 0.6), vec3(0.6, 0.4, 0.3), tone);
+	vec3 c = skin;
+	if (part < 0.5) {
+		c = texture(face, UV).rgb * mix(1.1, 0.72, tone);
+	} else if (part < 1.5 || (part > 5.5 && part < 6.5)) {
+		c = tint;
+	} else if (part > 3.5 && part < 4.5) {
+		c = mix(vec3(0.12, 0.09, 0.07), vec3(0.42, 0.3, 0.2), hairv);
+	} else if (part > 4.5 && part < 5.5) {
+		c = vec3(0.78, 0.72, 0.6);   // undyed felt
+	}
+	ALBEDO = c;
+	ROUGHNESS = 0.9;
+}
+"""
+
+static var _walk_mat: ShaderMaterial
+
+
+## The shared material of every walking crowd (life.gd drives `clock`).
+static func walk_material() -> ShaderMaterial:
+	if _walk_mat == null:
+		var sh := Shader.new()
+		sh.code = WALK_SHADER
+		_walk_mat = ShaderMaterial.new()
+		_walk_mat.shader = sh
+		_walk_mat.set_shader_parameter("face", M.face_texture(Color(0.86, 0.66, 0.52), 5))
+		_walk_mat.set_shader_parameter("hip_y", 0.92)
+		_walk_mat.set_shader_parameter("knee_y", 0.92 - F.THIGH)
+		_walk_mat.set_shader_parameter("shoulder_y", 0.92 + F.SH_Y)
+	return _walk_mat
+
+
+## A standing figure for the walk shader: the seated crowd's standing mesh plus the optional
+## pilleus (part 5) and long robe (part 6). lod 1 is the detailed one, 2 the cheap one.
+static func walker_mesh(lod: int) -> ArrayMesh:
+	var ck := 100 + lod
+	if _fig_cache.has(ck):
+		return _fig_cache[ck]
+	var base := _figure_mesh(lod, true)
+	var parts: Array = [[base, Transform3D(), -1.0]]
+	var top := 0.92 + F.HEAD_Y + 0.03
+	# the pilleus: a close conical felt cap (Livy 30.45.5, 45.44.19: the freedman's cap; shape # unverified)
+	var cap_prof := [Vector4(0.0, 0.088, 0.1, -0.004), Vector4(0.05, 0.08, 0.09, -0.004), Vector4(0.11, 0.045, 0.05, -0.004), Vector4(0.135, 0.0, 0.0, -0.004)]
+	parts.append([M.lathe(cap_prof, 10 if lod == 1 else 6), Transform3D(Basis(), Vector3(0, top + 0.17, 0)), 5.0])
+	# the long robe: toga or stola, from the hips to the shin / ankle (Horace Sat. 1.2.99 "ad talos stola demissa")
+	var robe_prof := [Vector4(0.06, 0.0, 0.0, 0.0), Vector4(0.06, 0.172, 0.12, 0.0), Vector4(-0.1, 0.205, 0.145, 0.0), Vector4(-0.5, 0.235, 0.17, 0.0), Vector4(-0.80, 0.265, 0.195, 0.0)]
+	parts.append([M.lathe(robe_prof, 12 if lod == 1 else 7, 1), Transform3D(Basis(), Vector3(0, 0.92, 0)), 6.0])
+	var m := _merge_keep(parts)
+	_fig_cache[ck] = m
+	return m
+
+
+## A dog for the walk shader (flag 4): body, head, four legs, tail; 0.55 m at the shoulder.
+## Varro RR 2.9 (read): white guard dogs were preferred, seen more easily in the dark.
+static func dog_mesh() -> ArrayMesh:
+	if _fig_cache.has(200):
+		return _fig_cache[200]
+	var parts: Array = []
+	parts.append([M.ellipsoid(0.13, 0.15, 0.33, 8, 5), Transform3D(Basis(), Vector3(0, 0.42, 0)), 1.0])
+	parts.append([M.ellipsoid(0.09, 0.09, 0.14, 7, 4), Transform3D(Basis(), Vector3(0, 0.52, 0.38)), 1.0])
+	parts.append([M.ellipsoid(0.045, 0.045, 0.09, 5, 3), Transform3D(Basis(), Vector3(0, 0.49, 0.52)), 4.0])
+	for s in [-1.0, 1.0]:
+		parts.append([M.ellipsoid(0.02, 0.05, 0.012, 4, 3), Transform3D(Basis(), Vector3(0.06 * s, 0.61, 0.36)), 4.0])
+		for z in [0.22, -0.24]:
+			parts.append([M.capsule(0.045, 0.03, 0.30, 5), Transform3D(Basis(), Vector3(0.085 * s, 0.32, z)), 3.0])
+	parts.append([M.capsule(0.03, 0.015, 0.3, 5), Transform3D(Basis(Vector3.RIGHT, 2.4), Vector3(0, 0.5, -0.33)), 4.0])
+	var m := M.merge(parts)
+	_fig_cache[200] = m
+	return m
+
+
+# Merge parts, keeping the part ids already in a merged mesh's UV2 when the id given is < 0.
+static func _merge_keep(parts: Array) -> ArrayMesh:
+	var verts := PackedVector3Array()
+	var norms := PackedVector3Array()
+	var uvs := PackedVector2Array()
+	var uv2 := PackedVector2Array()
+	var idx := PackedInt32Array()
+	for p in parts:
+		var mesh: ArrayMesh = p[0]
+		var xf: Transform3D = p[1]
+		var pid: float = p[2]
+		var arr := mesh.surface_get_arrays(0)
+		var v: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
+		var n: PackedVector3Array = arr[Mesh.ARRAY_NORMAL]
+		var t: PackedVector2Array = arr[Mesh.ARRAY_TEX_UV]
+		var t2: Variant = arr[Mesh.ARRAY_TEX_UV2]
+		var ix: Variant = arr[Mesh.ARRAY_INDEX]
+		var base := verts.size()
+		for i in v.size():
+			verts.append(xf * v[i])
+			norms.append((xf.basis * n[i]).normalized())
+			uvs.append(t[i] if t != null and i < t.size() else Vector2.ZERO)
+			if pid < 0.0 and t2 != null:
+				uv2.append((t2 as PackedVector2Array)[i])
+			else:
+				uv2.append(Vector2(pid, 0.0))
+		if ix != null and (ix as PackedInt32Array).size() > 0:
+			for k in (ix as PackedInt32Array):
+				idx.append(base + k)
+		else:
+			for i in v.size():
+				idx.append(base + i)
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = verts
+	arrays[Mesh.ARRAY_NORMAL] = norms
+	arrays[Mesh.ARRAY_TEX_UV] = uvs
+	arrays[Mesh.ARRAY_TEX_UV2] = uv2
+	arrays[Mesh.ARRAY_INDEX] = idx
+	var out := ArrayMesh.new()
+	out.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	return out
