@@ -199,8 +199,13 @@ func _apply_flags(flags: Dictionary) -> void:
 				var outward := door.basis.z
 				outward.y = 0.0
 				outward = outward.normalized() if outward.length() > 0.01 else Vector3(0, 0, 1)
+				# from the door out to the front of the steps, then far enough back to frame the façade
 				var b := monuments.bounds(at)
-				var back := clampf(maxf(b.size.x, b.size.z) * 0.6, 25.0, 70.0)
+				var front := 0.0
+				for i in 8:
+					var corner := b.get_endpoint(i) - door.origin
+					front = maxf(front, corner.x * outward.x + corner.z * outward.z)
+				var back := front + clampf(b.size.y * 1.8, 22.0, 60.0)
 				stand = Vector3(door.origin.x, 0, door.origin.z) + outward * back
 				if not yaw_set:
 					facing = atan2(outward.x, outward.z)   # looks along -outward, at the door
