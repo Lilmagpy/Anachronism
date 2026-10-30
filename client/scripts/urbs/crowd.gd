@@ -400,9 +400,7 @@ void vertex() {
 	bool robe = mod(floor(flags / 2.0), 2.0) >= 1.0;
 	bool dog = flags >= 4.0;
 	vec3 v = VERTEX;
-	if ((part > 4.5 && part < 5.5 && !cap) || (part > 5.5 && part < 6.5 && !robe)) {
-		VERTEX = vec3(0.0); return;   // the part this person does not wear
-	}
+	bool hide = (part > 4.5 && part < 5.5 && !cap) || (part > 5.5 && part < 6.5 && !robe);   // a part this person does not wear
 	float phase = clock * 6.2832 * stride * (dog ? 1.8 : 1.0) + ph0;
 	if (part > 2.5 && part < 3.5) {               // legs: swing from the hip, knee bends on the forward swing
 		float side = sign(v.x);
@@ -435,7 +433,7 @@ void vertex() {
 		v.z += sin(phase) * 0.03 * amp * (hip_y - v.y) / (hip_y - knee_y);   // the skirt follows the legs a little
 	}
 	v.y += 0.03 * amp * (0.5 - 0.5 * cos(2.0 * phase)) + 0.008 * (1.0 - min(amp, 1.0)) * sin(clock * 1.3 + ph0 * 3.0);
-	VERTEX = v;
+	VERTEX = hide ? vec3(0.0) : v;
 }
 void fragment() {
 	vec3 skin = mix(vec3(0.95, 0.75, 0.6), vec3(0.6, 0.4, 0.3), tone);

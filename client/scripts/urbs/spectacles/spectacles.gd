@@ -3,6 +3,42 @@
 ## the event plus the venue's geometry (see each script's header). The returned node is a
 ## spectacle (base.gd): it plays by itself in _process, can be seeked (seek(t)), exposes
 ## seat_views() camera presets and emits `finished`. stop() frees the current one.
+##
+## ## Engine events -> spectacles (U8)
+## The engine's `city` view (docs/ARCHITECTURE.md section 10; tools/city_view.py) lists the turn's
+## events as {kind, year, ref, monument, person, value, other}. `from_event(e)` maps one to a
+## spectacle and `play_event(e, urbs)` places and plays it on its monument:
+##
+##   engine kind / ref                 spectacle   placed on            params from the event
+##   games / ludi_* of kind circus     race        e.monument (circus_maximus for the Ludi
+##     (ludi_romani, ludi_apollinares,             Romani and Apollinares, circus_flaminius for
+##      ludi_plebeii)                              the Plebeii: republic_rules.yaml city.ludi)
+##                                                                      festival = ref; the Ludi
+##                                                 Romani fill the Circus: 22 rows, 55% of the
+##                                                 crowd in faction colours (see below)
+##   games / munus                     munus       e.monument (forum_boarium: Livy Per. 16,
+##                                                 # unverified; the Forum Romanum from 216 BC,
+##                                                 Livy 23.30.15, read)     person = the dead man
+##   games / ludi_megalenses (scaenic) none        (no theatre spectacle yet; the Urbs street
+##                                                 life still shows the festival crowd)
+##   senate / <issue>                  senate      e.monument (the senate house in use)
+##                                                 vote {issue: ref, yes_bp: value, no_bp: other,
+##                                                 passes: value > other}
+##   sacrifice / vow | dedication      sacrifice   e.monument (the temple); favourable = true
+##                                                 (the engine records only the vow kept)
+##   triumph / battle | capital        triumph     the route Campus Martius - Circus Maximus -
+##                                                 Via Sacra - Capitol (triumph_route)
+##                                                 general = person, spoils by ref and value
+##   fire, flood                       none        (the monuments show the burnt state; no
+##                                                 spectacle)
+##
+## The Ludi Romani each September (month 9, republic_rules.yaml): the race runs with the Circus
+## full, the front rows the senators and knights in white togas (Livy 1.35.8, read: "loca divisa
+## patribus equitibusque", places marked out for the senators and the knights), the rest in
+## tunics with a large share wearing their faction's colour (Tertullian De spect. 9.5, read; the
+## four colours are attested for the Empire, spectacles.yaml factions_note). The pompa circensis
+## that opened them (Dion. Hal. 7.72, read) is triumph.gd's procession order; it is not played
+## before the race (# not built).
 class_name UrbsSpectacles
 extends RefCounted
 
@@ -48,18 +84,81 @@ const DEFAULT_MONUMENT := {
 }
 
 
+## The spectacle for one engine event (see the header): {kind, monument, params}, or {} when the
+## event has none. Pure: no scene needed (tests and the HUD can ask what an event will show).
+static func from_event(e: Dictionary) -> Dictionary:
+	var ek := str(e.get("kind", ""))
+	var ref := str(e.get("ref", ""))
+	var mon := str(e.get("monument", "")) if e.get("monument") != null else ""
+	var person := str(e.get("person", "")) if e.get("person") != null else ""
+	var value := int(e.get("value", 0)) if e.get("value") != null else 0
+	var other := int(e.get("other", 0)) if e.get("other") != null else 0
+	match ek:
+		"games":
+			if ref == "munus":
+				return {"kind": "munus", "monument": mon if mon != "" else "forum_boarium", "params": {"person": person}}
+			if ref == "ludi_megalenses":
+				return {}
+			var p := {"festival": ref}
+			if ref == "ludi_romani":
+				p["rows"] = 22
+				p["fan_share"] = 0.55
+			return {"kind": "race", "monument": mon if mon != "" else "circus_maximus", "params": p}
+		"senate":
+			return {"kind": "senate", "monument": mon if mon != "" else "curia_hostilia",
+				"params": {"vote": {"issue": ref.replace("_", " "), "yes_bp": value, "no_bp": other, "passes": value > other}}}
+		"sacrifice":
+			return {"kind": "sacrifice", "monument": mon if mon != "" else "aedes_iovis_capitolini",
+				"params": {"favourable": true, "label": "The vow kept" if ref == "dedication" else "The vow"}}
+		"triumph":
+			var spoils: Array = ["captured arms", "pictures of the war"]
+			if ref == "capital":
+				spoils = ["statues of the taken city", "silver and gold, %d talents" % maxi(value, 1), "captured arms", "pictures of the taken city"]
+			return {"kind": "triumph", "monument": "", "params": {"general": person, "spoils": spoils}}
+	return {}
+
+
+## Play an engine event on the city (see the header); null if it has no spectacle.
+static func play_event(e: Dictionary, urbs: Node3D, extra: Dictionary = {}) -> Node3D:
+	var sp := from_event(e)
+	if sp.is_empty():
+		return null
+	var params: Dictionary = (sp["params"] as Dictionary).duplicate()
+	params.merge(extra, true)
+	return place(str(sp["kind"]), str(sp["monument"]), urbs, params)
+
+
 ## The handler for `--spectacle=race|munus|senate|sacrifice|triumph [--t=seconds] [--at=<monument>]`
 ## (flags as main.gd passes them to Urbs.open). Places the spectacle on the monument (its bounds
 ## and entrance from `urbs.monuments`, ground from `urbs.terrain`), plays it, and with --t holds
 ## it still at that second. Returns the spectacle, or null if the flag is absent.
 static func handle_flags(flags: Dictionary, urbs: Node3D) -> Node3D:
-	if not flags.has("spectacle"):
+	var sp: Node3D
+	var extra := {}
+	if flags.has("seed"):
+		extra["seed"] = int(flags["seed"])
+	if flags.has("event"):
+		# --event=kind:ref[:monument]: play an engine event as the city would (U8)
+		var f := str(flags["event"]).split(":")
+		var e := {"kind": f[0], "ref": f[1] if f.size() > 1 else "", "monument": f[2] if f.size() > 2 else null,
+			"value": 6400, "other": 3600, "person": "the consul"}
+		sp = play_event(e, urbs, extra)
+	elif flags.has("spectacle"):
+		var kind := str(flags["spectacle"])
+		sp = place(kind, str(flags.get("at", DEFAULT_MONUMENT.get(kind, ""))), urbs, extra)
+	if sp == null:
 		return null
-	var kind := str(flags["spectacle"])
-	var id := str(flags.get("at", DEFAULT_MONUMENT.get(kind, "")))
+	if flags.has("t"):
+		sp.playing = false
+		sp.seek(float(flags["t"]))
+	return sp
+
+
+## Place a spectacle of `kind` on monument `id` (its bounds and entrance from `urbs.monuments`,
+## ground from `urbs.terrain`) with `params`, and play it. Returns the spectacle.
+static func place(kind: String, id: String, urbs: Node3D, params: Dictionary = {}) -> Node3D:
 	if not urbs.monuments.ids().has(id):
 		id = str(DEFAULT_MONUMENT.get(kind, ""))
-	var params := {}
 	var xf := Transform3D()
 	var height := func(x: float, z: float) -> float: return urbs.terrain.height_at(x, z)
 	if id != "" and urbs.monuments.ids().has(id):
@@ -69,10 +168,19 @@ static func handle_flags(flags: Dictionary, urbs: Node3D) -> Node3D:
 		xf = Transform3D(Basis(), Vector3(c.x, y, c.z))
 		match kind:
 			"race":
-				if box.size.z > box.size.x:
-					xf.basis = Basis(Vector3.UP, PI / 2.0)
-				params["length"] = maxf(box.size.x, box.size.z)
-				params["width"] = minf(box.size.x, box.size.z)
+				# the track's long axis follows the monument's own bearing when it is known
+				var placed: Variant = urbs.monuments.get("_placed")
+				if placed is Dictionary and (placed as Dictionary).has(id):
+					var pl: Dictionary = placed[id]
+					xf.basis = Basis(Vector3.UP, float(pl["yaw"]) - PI / 2.0)
+					xf.origin = Vector3((pl["centre"] as Vector2).x, float(pl["y"]), (pl["centre"] as Vector2).y)
+					params["length"] = float(pl["length"])
+					params["width"] = float(pl["width"])
+				else:
+					if box.size.z > box.size.x:
+						xf.basis = Basis(Vector3.UP, PI / 2.0)
+					params["length"] = maxf(box.size.x, box.size.z)
+					params["width"] = minf(box.size.x, box.size.z)
 			"munus":
 				params["rx"] = clampf(box.size.x * 0.25, 14.0, 40.0)
 				params["rz"] = clampf(box.size.z * 0.18, 10.0, 28.0)
@@ -91,15 +199,10 @@ static func handle_flags(flags: Dictionary, urbs: Node3D) -> Node3D:
 				params["route"] = triumph_route(urbs, height)
 	elif kind == "triumph":
 		params["route"] = triumph_route(urbs, height)
-	if flags.has("seed"):
-		params["seed"] = int(flags["seed"])
 	var sp := play(kind, params, urbs)
 	if sp == null:
 		return null
 	sp.transform = xf
-	if flags.has("t"):
-		sp.playing = false
-		sp.seek(float(flags["t"]))
 	return sp
 
 

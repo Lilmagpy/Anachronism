@@ -7,7 +7,9 @@
 ## real races ran many minutes).
 ##
 ## Params (all optional): length (track length x, 580), width (track width z, 90), laps (7),
-## seed, duration (90), rows / spacing (crowd), crashes (0..2, default 2), crowd (bool).
+## seed, duration (90), rows / spacing (crowd), crashes (0..2, default 2), crowd (bool),
+## fan_share (0..1, share of the crowd in faction colours, default 0.35), festival (the engine's
+## ludi id; "ludi_romani" for the September games, which spectacles.gd plays with the Circus full).
 ## Local frame: spina on the x axis, carceres at the west (-x) end, floor at y = 0; the parent
 ## scales/places it on the circus monument.
 extends "res://scripts/urbs/spectacles/base.gd"
@@ -310,7 +312,7 @@ func _build() -> void:
 	if bool(params.get("crowd", true)):
 		var c = Crowd.new()
 		c.fan_colours.assign([FACTIONS[0][1], FACTIONS[1][1], FACTIONS[2][1], FACTIONS[3][1]])
-		c.fan_share = 0.35
+		c.fan_share = float(params.get("fan_share", 0.35))
 		c.add_seats(Crowd.stadium_seats(Ls, width / 2.0 + 2.0, int(params.get("rows", 14)), float(params.get("spacing", 1.5)), 0.9, 0.55, 0.0, true))
 		c.build()
 		add_child(c)

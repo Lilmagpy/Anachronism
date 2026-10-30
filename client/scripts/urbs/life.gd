@@ -175,6 +175,10 @@ func build(urbs_node: Node3D, new_year: int, new_hour: float, height_fn: Callabl
 	_make_people()
 	_make_stalls()
 	_make_vehicles()
+	_size_multimeshes()
+	for a in _agents:
+		if str(a["mode"]) in ["street", "cart", "mule", "litter"]:
+			_step_street(a, 0.0)
 	_make_lamps()
 	_make_smoke()
 	_apply_hour()
@@ -339,10 +343,10 @@ func _street_weight(s: Dictionary) -> float:
 ## each class in the streets and in the Forum (Plautus Curculio 466-485 for the Forum's togate
 ## business crowd; see the header).
 const KINDS := {
-	"toga":   {"long": true,  "cap": false, "scale": 1.0,  "street": 0.14, "forum": 0.46},
-	"tunic":  {"long": false, "cap": false, "scale": 1.0,  "street": 0.52, "forum": 0.30},
-	"stola":  {"long": true,  "cap": false, "scale": 0.94, "street": 0.20, "forum": 0.12},
-	"pilleus": {"long": false, "cap": true, "scale": 1.0,  "street": 0.07, "forum": 0.07},
+	"toga":   {"long": true,  "cap": false, "scale": 1.0,  "street": 0.12, "forum": 0.32},
+	"tunic":  {"long": false, "cap": false, "scale": 1.0,  "street": 0.54, "forum": 0.40},
+	"stola":  {"long": true,  "cap": false, "scale": 0.94, "street": 0.20, "forum": 0.15},
+	"pilleus": {"long": false, "cap": true, "scale": 1.0,  "street": 0.07, "forum": 0.08},
 	"child":  {"long": false, "cap": false, "scale": 0.68, "street": 0.07, "forum": 0.05},
 }
 const TOGA_COLOURS := [Color(0.94, 0.92, 0.85), Color(0.9, 0.88, 0.8), Color(0.86, 0.83, 0.76), Color(0.95, 0.94, 0.9)]
@@ -459,32 +463,22 @@ func _make_people() -> void:
 			a["dir"] = 1 if _rng.randf() < 0.5 else -1
 			a["lat"] = float(_streets[si]["hw"]) * _rng.randf_range(0.5, 0.95) * (1.0 if _rng.randf() < 0.5 else -1.0)
 		_agents.append(a)
-	# the MultiMeshes
-	var n := _agents.size()
-	_mm_mid = _multimesh(Crowd.walker_mesh(1), n)
-	_mm_far = _multimesh(Crowd.walker_mesh(2), n)
-	_mm_dog = _multimesh(Crowd.dog_mesh(), n)
+	# the MultiMeshes (sized when everyone is made: _size_multimeshes)
+	_mm_mid = _multimesh(Crowd.walker_mesh(1), 1)
+	_mm_far = _multimesh(Crowd.walker_mesh(2), 1)
+	_mm_dog = _multimesh(Crowd.dog_mesh(), 1)
 	var mat := Crowd.walk_material()
 	_mi_mid = _mm_instance(_mm_mid, mat, "WalkersNear", true)
 	_mi_far = _mm_instance(_mm_far, mat, "WalkersFar", false)
 	_mi_dog = _mm_instance(_mm_dog, mat, "Dogs", false)
-	for i in n:
-		var a := _agents[i]
-		var c: Color = a["col"]
-		for mm in [_mm_mid, _mm_far, _mm_dog]:
-			mm.set_instance_color(i, c)
-			mm.set_instance_custom_data(i, a["custom"])
-			mm.set_instance_transform(i, Transform3D(Basis().scaled(Vector3.ZERO), Vector3.ZERO))
-	# the pool of skinned figures for the nearest people
-	var pool := {"toga": 0.30, "tunic": 0.36, "stola": 0.20, "pilleus": 0.07, "child": 0.07}
-	var made_f := 0
-	for k in pool:
-		var cnt := int(round(float(pool[k]) * near_figures))
-		for i in cnt:
-			_figs.append({"node": null, "kind": k, "agent": -1})
-			made_f += 1
-	for i in _figs.size():
-		_fig_free.append(i)
+	# the skinned figures for the nearest people are made on demand, per class (_take_fig)
+
+
+func _size_multimeshes() -> void:
+	for mm in [_mm_mid, _mm_far, _mm_dog]:
+		if mm != null:
+			(mm as MultiMesh).instance_count = maxi(1, _agents.size())
+			(mm as MultiMesh).visible_instance_count = 0
 
 
 func _multimesh(mesh: ArrayMesh, n: int) -> MultiMesh:
@@ -494,7 +488,7 @@ func _multimesh(mesh: ArrayMesh, n: int) -> MultiMesh:
 	mm.use_custom_data = true
 	mm.mesh = mesh
 	mm.instance_count = n
-	mm.visible_instance_count = n
+	mm.visible_instance_count = 0
 	mm.custom_aabb = AABB(Vector3(-2600, -50, -2600), Vector3(5200, 300, 5200))
 	return mm
 
@@ -518,8 +512,8 @@ func _make_figure(kind: String, a: Dictionary) -> Node3D:
 			o["toga"] = true
 			o["toga_colour"] = a["col"]
 			o["tunic"] = Color(0.9, 0.88, 0.82)
-			if _rng.randf() < 0.08:
-				o["border"] = Color(0.5, 0.1, 0.3)   # a curule magistrate's praetexta (# unverified)
+			if _rng.randf() < 0.04:
+				o["border"] = Color(0.40, 0.07, 0.16)   # a curule magistrate's praetexta (# unverified)
 			else:
 				o["border"] = a["col"]
 		"stola":
@@ -1374,116 +1368,117 @@ func _step_plaza(a: Dictionary, dt: float) -> void:
 	a["phase"] = float(a["phase"]) + float(a["speed"]) * dt / 1.45 * TAU
 
 
-## Write an agent's transform into its MultiMesh (or move its figure).
+## Write an agent's transform into its MultiMesh slot (or move its figure).
 func _write(i: int, a: Dictionary) -> void:
 	var lod: int = a["lod"]
 	var p: Vector3 = a["pos"]
-	var sc: float = a["scale"]
-	var xf := Transform3D(Basis(Vector3.UP, float(a["yaw"])).scaled(Vector3.ONE * sc), p)
-	if a["dog"]:
-		if lod <= 1:
-			_mm_dog.set_instance_transform(i, xf)
-		return
 	if lod == 0 and int(a["fig"]) >= 0:
 		var f: Dictionary = _figs[int(a["fig"])]
 		var node: Node3D = f["node"]
 		if node != null:
 			node.position = p
 			node.rotation.y = float(a["yaw"])
-			if str(a["mode"]) == "stand":
+			if str(a["mode"]) == "stand" or float(a["amp"]) < 0.01:
 				node.walk(0.0, 0.0)
 				node.pose_arms(0.25 + 0.05 * sin(_clock * 0.7 + float(a["phase"])), 0.25, 0.08, 0.08, 1.9, 1.7)
 			else:
 				node.walk(float(a["phase"]), float(a["amp"]))
 		return
-	if lod == 1:
-		_mm_mid.set_instance_transform(i, xf)
-	elif lod == 2:
-		_mm_far.set_instance_transform(i, xf)
-	# the walk amplitude lives in the custom data's y
+	var slot: int = a.get("slot", -1)
+	if slot < 0 or lod > 2:
+		return
+	var mm: MultiMesh = _mm_dog if a["dog"] else (_mm_mid if lod == 1 else _mm_far)
+	var sc: float = a["scale"]
+	mm.set_instance_transform(slot, Transform3D(Basis(Vector3.UP, float(a["yaw"])).scaled(Vector3.ONE * sc), p))
 	var cd: Color = a["custom"]
 	if absf(cd.g - float(a["amp"])) > 0.01:
 		cd.g = float(a["amp"])
 		a["custom"] = cd
-		(_mm_mid if lod == 1 else _mm_far).set_instance_custom_data(i, cd)
+		mm.set_instance_custom_data(slot, cd)
 
 
-const ZERO_XF := Transform3D(Basis(Vector3.ZERO, Vector3.ZERO, Vector3.ZERO), Vector3.ZERO)
-
-
-## Sort the people into detail levels by distance and hand the skinned figures to the nearest.
+## Sort the people into detail levels by distance, pack each level's MultiMesh with only its own
+## people (so the GPU draws no hidden instances), and hand the skinned figures to the nearest.
 func _update_lod(cam_pos: Vector3) -> void:
 	var d0 := near_distance * near_distance
 	var d1 := mid_distance * mid_distance
 	var d2 := cull_distance * cull_distance
 	var near: Array = []   # [dist2, index]
+	var lists: Array = [[], [], []]   # mid, far, dog
 	for i in _agents.size():
 		var a := _agents[i]
-		var old: int = a["lod"]
 		var lod := 3
+		var mode := str(a["mode"])
+		var rig := mode in ["cart", "mule", "litter"]
 		if a["active"]:
 			var dd := (a["pos"] as Vector3).distance_squared_to(cam_pos)
-			if a["dog"]:
+			if rig:
+				lod = 1 if dd < d1 * 2.0 else 3
+			elif a["dog"]:
 				lod = 1 if dd < d1 else 3
-			elif dd < d0 and str(a["mode"]) not in ["cart", "mule", "litter"]:
+			elif dd < d0:
 				lod = 0
 				near.append([dd, i])
 			elif dd < d1:
 				lod = 1
 			elif dd < d2:
 				lod = 2
-			if str(a["mode"]) in ["cart", "mule", "litter"]:
-				lod = 1 if dd < d1 * 2.0 else 3   # these are rigs: the MultiMesh slot stays empty
-		if lod != old:
-			if a["dog"]:
-				if lod >= 3:
-					_mm_dog.set_instance_transform(i, ZERO_XF)
-			else:
-				if old == 1:
-					_mm_mid.set_instance_transform(i, ZERO_XF)
-				elif old == 2:
-					_mm_far.set_instance_transform(i, ZERO_XF)
-				if str(a["mode"]) in ["cart", "mule", "litter"]:
-					pass
-				elif lod == 1:
-					_mm_mid.set_instance_custom_data(i, a["custom"])
-				elif lod == 2:
-					_mm_far.set_instance_custom_data(i, a["custom"])
-			a["lod"] = lod
-			if lod != 0 and int(a["fig"]) >= 0:
-				_release_fig(i)
-			if lod != 3 and lod != 0 and not a["dog"] and str(a["mode"]) not in ["cart", "mule", "litter"]:
-				_write(i, a)
-	# the skinned figures: the nearest first
+		a["lod"] = lod
+		a["slot"] = -1
+		if lod != 0 and int(a["fig"]) >= 0:
+			_release_fig(i)
 	near.sort_custom(func(x, y): return x[0] < y[0])
 	var given := 0
 	for item in near:
 		var i: int = item[1]
 		var a := _agents[i]
 		if given >= near_figures:
-			# too many near: back to the detailed MultiMesh
 			if int(a["fig"]) >= 0:
 				_release_fig(i)
 			a["lod"] = 1
-			_mm_mid.set_instance_custom_data(i, a["custom"])
-			_write(i, a)
 			continue
+		if int(a["fig"]) < 0:
+			var fi := _take_fig(str(a["kind"]), a)
+			if fi < 0:
+				a["lod"] = 1
+				continue
+			a["fig"] = fi
+			_figs[fi]["agent"] = i
 		given += 1
-		if int(a["fig"]) >= 0:
+	for i in _agents.size():
+		var a := _agents[i]
+		var lod: int = a["lod"]
+		if str(a["mode"]) in ["cart", "mule", "litter"]:
 			continue
-		var fi := _take_fig(str(a["kind"]), a)
-		if fi < 0:
-			a["lod"] = 1
-			_mm_mid.set_instance_custom_data(i, a["custom"])
+		if a["dog"] and lod == 1:
+			(lists[2] as Array).append(i)
+		elif lod == 1:
+			(lists[0] as Array).append(i)
+		elif lod == 2:
+			(lists[1] as Array).append(i)
+	var mms := [_mm_mid, _mm_far, _mm_dog]
+	for k in 3:
+		var mm: MultiMesh = mms[k]
+		var lst: Array = lists[k]
+		for slot in lst.size():
+			var i: int = lst[slot]
+			var a := _agents[i]
+			a["slot"] = slot
+			mm.set_instance_color(slot, a["col"])
+			mm.set_instance_custom_data(slot, a["custom"])
 			_write(i, a)
-			continue
-		a["fig"] = fi
-		_figs[fi]["agent"] = i
-		_write(i, a)
+		mm.visible_instance_count = lst.size()
+	for i in _agents.size():
+		if int(_agents[i]["lod"]) == 0:
+			_write(i, _agents[i])
 	# rigs: hide the far ones
 	for r in _rigs:
 		var a := _agents[r["agent"]]
 		(r["node"] as Node3D).visible = a["active"] and int(a["lod"]) < 3
+	_counts["near"] = given
+	_counts["mid"] = (lists[0] as Array).size()
+	_counts["far"] = (lists[1] as Array).size()
+	_counts["dogs_shown"] = (lists[2] as Array).size()
 
 
 func _take_fig(kind: String, a: Dictionary) -> int:
@@ -1492,26 +1487,36 @@ func _take_fig(kind: String, a: Dictionary) -> int:
 		if _figs[k]["kind"] == kind:
 			pick = k
 			break
-	if pick < 0 and not _fig_free.is_empty():
-		pick = _fig_free[0]
 	if pick < 0:
-		return -1
+		if _figs.size() < near_figures + 24:
+			_figs.append({"node": null, "kind": kind, "agent": -1})
+			pick = _figs.size() - 1
+		else:
+			# reuse a free figure of another class: rebuild it as this class
+			if _fig_free.is_empty():
+				return -1
+			pick = _fig_free[0]
+			var old: Node3D = _figs[pick]["node"]
+			if old != null:
+				old.queue_free()
+			_figs[pick]["node"] = null
+			_figs[pick]["kind"] = kind
 	_fig_free.erase(pick)
 	var f: Dictionary = _figs[pick]
 	if f["node"] == null:
-		f["node"] = _make_figure(str(f["kind"]), a)
+		f["node"] = _make_figure(kind, a)
 	var node: Node3D = f["node"]
 	node.visible = true
-	# recolour to the agent (the class shape is the pool's)
+	# recolour to the agent (the class shape is the figure's)
 	var rig: Node = node.rig
-	var fk := str(f["kind"])
-	if fk == "toga":
+	if kind == "toga":
 		rig.set_colour("c_toga", a["col"])
 	else:
 		rig.set_colour("c_tunic", a["col"])
-	rig.set_colour("c_skin", Color(0.95, 0.75, 0.6).lerp(Color(0.6, 0.4, 0.3), (a["custom"] as Color).b))
-	rig.set_colour("c_face", Color(0.95, 0.75, 0.6).lerp(Color(0.6, 0.4, 0.3), (a["custom"] as Color).b))
-	node.scale = Vector3.ONE * float(a["scale"]) * (1.0 if fk != "child" else 1.0)
+	var skin := Color(0.95, 0.75, 0.6).lerp(Color(0.6, 0.4, 0.3), (a["custom"] as Color).b)
+	rig.set_colour("c_skin", skin)
+	rig.set_colour("c_face", skin)
+	node.scale = Vector3.ONE * float(a["scale"])
 	return pick
 
 
