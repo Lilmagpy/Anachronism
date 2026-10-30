@@ -35,7 +35,9 @@
 ##                         and h (street: eye height; city: orbit distance)
 ##   --mode=city|street|inside   which camera (default city)
 ##   --yaw=DEG --pitch=DEG  look direction as a compass bearing (0 north, 90 east, 270 west)
-##   --hour=H              time of day, 0-24 (default 10)
+##   --hour=H              time of day, 0-24 (default 10), local solar time   # U8 render
+##   --day=N               day of the year for the sun's path (default 120)    # U8 render
+##   --fx=nossao,nossil,noglow,nofog   turn post effects off (testing; atmosphere.gd)  # U8 render
 ##   --then=street|city|inside   after opening, glide to that mode (to photograph a transition)
 ##   --urbs-shots=t1,t2    with --screenshot: save PATH_tT.png at those seconds of the glide
 class_name Urbs
@@ -58,7 +60,8 @@ var cam := UrbsCamera.new()
 var hud := UrbsHud.new()
 var sun := DirectionalLight3D.new()
 var environment := Environment.new()
-var sky_material := ProceduralSkyMaterial.new()
+var atmosphere := UrbsAtmosphere.new()   # U8 render: sky, sun, haze, shadows, post (atmosphere.gd)
+var sky_material: ShaderMaterial         # U8 render: the sky shader (atmosphere.sky_material)
 var hour := 10.0
 var selected := ""                  ## the monument whose card is open
 var interior: Node3D                ## the interior being visited, if INSIDE
@@ -113,6 +116,10 @@ func open(new_year: int, at := Vector3.ZERO, flags := {}) -> void:
 	year = new_year
 	if _built_year != year:
 		_rebuild()
+	if flags.has("fx"):   # U8 render
+		atmosphere.set_fx(str(flags["fx"]))
+	if flags.has("day"):   # U8 render
+		atmosphere.day = int(flags["day"])
 	if flags.has("hour"):
 		set_hour(float(flags["hour"]))
 	hud.set_year(year)
@@ -240,61 +247,23 @@ func _process(_delta: float) -> void:
 		return
 	var orbit := cam.mode == UrbsCamera.Mode.CITY
 	chunks.focus_on(cam.focus(), orbit)
-	var reach: float = cam.dist * 1.6 if orbit else 400.0
-	sun.directional_shadow_max_distance = clampf(reach, 150.0, 2500.0)
-	environment.fog_density = 0.00012 if orbit else 0.00032
-	if interior != null:
-		environment.fog_enabled = false
-	else:
-		environment.fog_enabled = true
+	atmosphere.update(orbit, cam.dist, interior != null)   # U8 render: cascades, haze, SSAO by mode
 
 
 # --- time of day, sky, fog ------------------------------------------------------------------
 
+# U8 render: the sky, the sun and the environment are atmosphere.gd's.
 func _build_sky() -> void:
-	var sky := Sky.new()
-	sky.sky_material = sky_material
-	environment.background_mode = Environment.BG_SKY
-	environment.sky = sky
-	environment.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
-	environment.ambient_light_energy = 0.6
-	environment.tonemap_mode = Environment.TONE_MAPPER_FILMIC
-	environment.tonemap_exposure = 1.0
-	environment.fog_enabled = true
-	environment.fog_density = 0.00025
-	environment.fog_sky_affect = 0.6
-	environment.fog_aerial_perspective = 0.25
-	environment.adjustment_enabled = true
-	environment.adjustment_saturation = 1.08
-	sun.shadow_enabled = true
-	sun.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS
-	sun.shadow_bias = 0.05
-	sun.shadow_normal_bias = 1.0
-	sun.light_angular_distance = 0.5
+	atmosphere.setup(environment, sun)
+	sky_material = atmosphere.sky_material
 
 
-## Time of day in hours (6 sunrise, 12 noon, 18 sunset): moves the sun and re-tints sky and fog.
+## Time of day in hours, local solar time (about 5:20 sunrise, 12 noon, 18:40 sunset at the
+## default day): moves the sun over Rome and re-tints sky, light and haze.   # U8 render
 func set_hour(new_hour: float) -> void:
 	hour = fposmod(new_hour, 24.0)
-	var day := clampf((hour - 6.0) / 12.0, -0.2, 1.2)
-	var elevation := sin(clampf(day, 0.0, 1.0) * PI) * 62.0 + 2.0   # degrees; 2 degrees at the horizon
-	if hour < 5.5 or hour > 18.5:
-		elevation = -10.0
-	sun.rotation_degrees = Vector3(-elevation, (12.0 - hour) / 6.0 * 90.0, 0.0)
-	var high := smoothstep(0.0, 25.0, elevation)            # 0 at the horizon .. 1 in full day
-	sun.light_energy = 1.7 * smoothstep(-2.0, 12.0, elevation)
-	sun.visible = elevation > -2.0 and interior == null
-	sun.light_color = Color(1.0, 0.62, 0.38).lerp(Color(1.0, 0.94, 0.84), high)
-	var night := 1.0 - smoothstep(-8.0, 6.0, elevation)
-	var top := Color(0.20, 0.38, 0.68).lerp(Color(0.02, 0.03, 0.08), night)
-	var horizon := Color(0.80, 0.68, 0.56).lerp(Color(0.80, 0.74, 0.66), high).lerp(Color(0.06, 0.06, 0.10), night)
-	sky_material.sky_top_color = top
-	sky_material.sky_horizon_color = horizon
-	sky_material.ground_horizon_color = horizon
-	sky_material.ground_bottom_color = horizon.darkened(0.35)
-	sky_material.sun_angle_max = 40.0
-	environment.fog_light_color = horizon.lerp(Color(0.8, 0.8, 0.8), 0.15)
-	environment.ambient_light_energy = lerpf(0.25, 0.65, 1.0 - night)
+	atmosphere.set_hour(hour)
+	sun.visible = atmosphere.sun_up() and interior == null
 
 
 # --- picking and the monument card ---------------------------------------------------------
