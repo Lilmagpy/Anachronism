@@ -28,7 +28,7 @@
 ## Every person is an instance of ONE MultiMesh per detail level (crowd.gd walker_mesh 1 and 2),
 ## animated by crowd.gd's WALK_SHADER on the GPU (legs, arms, bob, idle sway); the CPU writes one
 ## transform per person, near ones every frame, far ones every fourth. Only the nearest
-## `near_figures` (default 40) people are skinned figure.gd persons with a per-node rig, plus the
+## `near_figures` (default 32) people are skinned figure.gd persons with a per-node rig, plus the
 ## litters' bearers and the carts' oxen. Stalls, lamps and smoke are MultiMeshes; smoke is
 ## animated in its own vertex shader. Budget: < 2 ms CPU and < 60 draw calls at street level.
 ##
@@ -94,7 +94,7 @@ const POP_PATH := "res://data/city/population.json"
 const REGIONS_PATH := "res://data/city/regions.json"
 
 ## Walkers nearer than this get a skinned figure; the pool holds `near_figures` of them.
-var near_figures := 40
+var near_figures := 32
 var near_distance := 42.0
 ## MultiMesh levels: the detailed walker (with shadows) to near_mm_distance, the middle one to
 ## mid_distance, the far one to cull_distance, nothing beyond.
@@ -108,8 +108,8 @@ var people_per_idler := 2400.0
 var max_walkers := 3600
 var auto_tick := true
 ## Carts and mules (rigs) kept at once; litters near the Forum.
-var cart_count := 14
-var mule_count := 5
+var cart_count := 10
+var mule_count := 4
 var litter_count := 2
 
 var urbs: Node3D
@@ -1302,17 +1302,17 @@ func _make_venue_crowd() -> void:
 			var q: Vector2 = c + u * lerpf(-hl * 0.8, hl * 0.8, float(i) / 8.0) + v * hw * side
 			poly.append(Vector3(q.x, float(height.call(q.x, q.y)) + 0.2, q.y))
 		crowd.add_seats(Crowd.line_seats(poly, 1.0, 3, 1.3, 0.9, 0.0))
-	crowd.build()
 	crowd.name = "VenueCrowd"
 	add_child(crowd)
+	crowd.build()
 	crowd.set_state(0.0, 0.25, 0.0, 0.0)
 	_venue_crowd = crowd
 
 
 ## While the Senate sits (a `senate` event), the people gather before the senate house, "like a
 ## crowded assembly, turned towards the Comitium and the Curia", calling for the magistrates
-## (Livy 22.7.7, read: the day the news of Trasimene came, 217 BC). A standing crowd of about 240
-## in a fan before the door, the front rows in togas.
+## (Livy 22.7.7, read: the day the news of Trasimene came, 217 BC). A standing crowd fills the
+## Comitium facing the Curia's door, those nearest the door in togas.
 func _make_senate_crowd() -> void:
 	if _senate_crowd != null:
 		_senate_crowd.queue_free()
@@ -1339,25 +1339,31 @@ func _make_senate_crowd() -> void:
 	crowd.standing = true
 	crowd.toga_rows = 3
 	crowd.seed_value = 31
-	var rows := 12
-	for k in rows:
-		var r := 7.0 + k * 1.0
-		var n := int(r * 2.0)
+	# the crowd stands in the Comitium (Livy: "in comitium et curiam versa") when it is there,
+	# else in a fan before the door; everyone faces the door, the nearest rows in togas
+	var centre := d2 + out2 * 14.0
+	var reach := 13.0
+	if urbs.monuments.ids().has("comitium"):
+		var cb: AABB = urbs.monuments.bounds("comitium")
+		centre = Vector2(cb.get_center().x, cb.get_center().z)
+		reach = maxf(cb.size.x, cb.size.z) * 0.5
+	for k in int(reach / 1.0):
+		var r := 0.6 + k * 1.0
+		var n := maxi(1, int(TAU * r / 1.05))
 		for i in n:
-			var a := lerpf(-1.0, 1.0, (float(i) + 0.5) / n) + _rng.randf_range(-0.03, 0.03)
-			var dir := out2.rotated(a)
-			var p := d2 + dir * (r + _rng.randf_range(-0.25, 0.25))
+			var p := centre + Vector2(r, 0).rotated(TAU * (float(i) + _rng.randf_range(-0.2, 0.2)) / n)
 			if _blocked(p):
 				continue
 			var y := float(height.call(p.x, p.y)) + 0.15
 			var face := d2 - p
-			crowd.add_seat(Vector3(p.x, y, p.y), atan2(face.x, face.y), float(i) / n, k)
+			var row := int(p.distance_to(d2) / 3.0)
+			crowd.add_seat(Vector3(p.x, y, p.y), atan2(face.x, face.y), float(i) / n, row)
 	if crowd.count() == 0:
 		crowd.free()
 		return
-	crowd.build()
 	crowd.name = "SenateCrowd"
 	add_child(crowd)
+	crowd.build()
 	crowd.set_state(0.0, 0.15, 0.0, 0.0)
 	_senate_crowd = crowd
 	_counts["senate_crowd"] = crowd.count()
@@ -1752,7 +1758,7 @@ func _take_fig(kind: String, a: Dictionary) -> int:
 			pick = k
 			break
 	if pick < 0:
-		if _figs.size() < near_figures + 24:
+		if _figs.size() < near_figures + 6:
 			_figs.append({"node": null, "kind": kind, "agent": -1})
 			pick = _figs.size() - 1
 		else:

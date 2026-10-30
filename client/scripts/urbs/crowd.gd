@@ -177,7 +177,7 @@ func build() -> void:
 ## Sort the seats into the three detail levels by distance from `cam_pos` (world space).
 func update_lod(cam_pos: Vector3) -> void:
 	_last_cam = cam_pos
-	var cam_local := global_transform.affine_inverse() * cam_pos
+	var cam_local := (global_transform if is_inside_tree() else transform).affine_inverse() * cam_pos
 	var d1 := lod_distance * lod_distance
 	var d2 := far_distance * far_distance
 	for c in _cells:
