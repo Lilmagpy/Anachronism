@@ -12,7 +12,10 @@
 ##   life.set_hour(hour)                               # from set_hour: crowds thin, stalls shut,
 ##                                                     # carts come out, lamps and smoke
 ##   life.set_events(view["city"]["events"])           # the turn's events: a games event raises the
-##                                                     # crowds and gathers one at the venue
+##                                                     # crowds and gathers one along the venue; a
+##                                                     # senate event gathers the people before the
+##                                                     # senate house (Livy 22.7.7). The spectacle
+##                                                     # itself: UrbsSpectacles.play_event(e, urbs)
 ##   life.tick(delta, cam.camera.global_position)      # each frame from _process; or leave
 ##                                                     # `auto_tick` true and it drives itself from
 ##                                                     # the viewport camera
@@ -61,6 +64,8 @@
 ##     "quod in tenebris facilius agnoscuntur". The street dogs here are mostly pale.
 ##   Smoke: Horace Odes 3.29.12 (read; 23 BC): "fumum et opes strepitumque Romae", the smoke,
 ##     wealth and din of Rome. Cooking hours follow Martial 4.8 (read): the ninth hour's dinner.
+##   The crowd before the Curia while the Senate sits: Livy 22.7.7 (read): "frequentis contionis
+##     modo turba in comitium et curiam versa magistratus vocaret" (217 BC).
 ##   Night: Juvenal 3.268-277 (read; Imperial): the dangers of the night street, with nothing
 ##     about street lighting; the lamps here are few, at doorways (# unverified reconstruction).
 ##   Clothing by class and sex:
@@ -149,6 +154,7 @@ var _stalls: Node3D
 var _stall_open: Array[MultiMeshInstance3D] = []
 var _rigs: Array = []              # {node, kind, agent, animals: Array, extra: Array}
 var _venue_crowd: Node3D
+var _senate_crowd: Node3D
 var _forum: Dictionary = {}        # {c: Vector2, u: Vector2, v: Vector2, hl, hw, y}
 var _blockers: Array = []          # AABBs of monuments' solids people must not stand in
 var _block_grid := {}              # Vector2i cell -> indices into _blockers
@@ -236,6 +242,7 @@ func clear() -> void:
 	_stalls = null
 	_lamp_node = null
 	_venue_crowd = null
+	_senate_crowd = null
 	built = false
 
 
@@ -264,6 +271,7 @@ func set_events(list: Array) -> void:
 	if built:
 		_apply_hour()
 		_make_venue_crowd()
+		_make_senate_crowd()
 
 
 ## How busy the city is at `h` (0..1), from Martial 4.8 (read): the morning callers from the
@@ -1299,6 +1307,60 @@ func _make_venue_crowd() -> void:
 	add_child(crowd)
 	crowd.set_state(0.0, 0.25, 0.0, 0.0)
 	_venue_crowd = crowd
+
+
+## While the Senate sits (a `senate` event), the people gather before the senate house, "like a
+## crowded assembly, turned towards the Comitium and the Curia", calling for the magistrates
+## (Livy 22.7.7, read: the day the news of Trasimene came, 217 BC). A standing crowd of about 240
+## in a fan before the door, the front rows in togas.
+func _make_senate_crowd() -> void:
+	if _senate_crowd != null:
+		_senate_crowd.queue_free()
+		_senate_crowd = null
+	var house := ""
+	for e in events:
+		if str(e.get("kind", "")) == "senate":
+			house = str(e.get("monument", "")) if e.get("monument") != null else ""
+			if not urbs.monuments.ids().has(house):
+				house = ""
+				for alt in ["curia_iulia", "curia_hostilia", "curia_pompeia"]:
+					if urbs.monuments.ids().has(alt):
+						house = alt
+						break
+	if house == "":
+		return
+	var door: Transform3D = urbs.monuments.entrance(house)
+	var inward := -door.basis.z
+	inward.y = 0.0
+	inward = inward.normalized()
+	var out2 := Vector2(-inward.x, -inward.z)
+	var d2 := Vector2(door.origin.x, door.origin.z)
+	var crowd = Crowd.new()
+	crowd.standing = true
+	crowd.toga_rows = 3
+	crowd.seed_value = 31
+	var rows := 12
+	for k in rows:
+		var r := 7.0 + k * 1.0
+		var n := int(r * 2.0)
+		for i in n:
+			var a := lerpf(-1.0, 1.0, (float(i) + 0.5) / n) + _rng.randf_range(-0.03, 0.03)
+			var dir := out2.rotated(a)
+			var p := d2 + dir * (r + _rng.randf_range(-0.25, 0.25))
+			if _blocked(p):
+				continue
+			var y := float(height.call(p.x, p.y)) + 0.15
+			var face := d2 - p
+			crowd.add_seat(Vector3(p.x, y, p.y), atan2(face.x, face.y), float(i) / n, k)
+	if crowd.count() == 0:
+		crowd.free()
+		return
+	crowd.build()
+	crowd.name = "SenateCrowd"
+	add_child(crowd)
+	crowd.set_state(0.0, 0.15, 0.0, 0.0)
+	_senate_crowd = crowd
+	_counts["senate_crowd"] = crowd.count()
 
 
 # ---- the hour ---------------------------------------------------------------------------------------
