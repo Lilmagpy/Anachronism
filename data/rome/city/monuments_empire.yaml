@@ -328,6 +328,7 @@ monuments:
   bearing_deg: null
   height_m: null
   model: portico
+  twin_of: porticus_octaviae  # same building as the Republican entry: drawn only when that one is absent, in its place
   sources: ["Suet. Aug. 29", "Vitr. 3.2.5", "Vell. 1.11", "Plin. NH 36.42", "Dio 49.43", "Platner-Ashby s.v. Porticus Octaviae (read)"]
   verified: true
   unverified_fields: [footprint_m, bearing_deg, height_m]

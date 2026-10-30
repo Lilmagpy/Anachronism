@@ -406,7 +406,13 @@ func _make(id: String, st: Dictionary) -> void:
 	var opens: Array = []
 	for o in res.get("opens", []):
 		opens.append(AABB((o.centre as Vector3) - (o.size as Vector3) * 0.5, o.size))
-	if first and not opens.is_empty():
+	if world and not first:
+		# a route (the Servian wall, an aqueduct): its box would span the whole city, and urbs.gd's
+		# push_out treats each monument's bounds as one solid, so a walker anywhere inside the
+		# walls was thrown hundreds of metres. The bounds are its centre only; its own segments
+		# still collide and pick in push_out() and pick() here.
+		aabb = AABB(aabb.get_center(), Vector3.ZERO)
+	elif first and not opens.is_empty():
 		# only an open footprint (a plaza): the bounds are its centre, so nothing collides with
 		# it or picks it by its box, but `--at` still finds it
 		var oa := _world_aabb(xf, opens[0])
@@ -541,7 +547,7 @@ func pick_ray(origin: Vector3, dir: Vector3) -> String:
 	var best_t := INF
 	for id in _solids:
 		var wb: AABB = _bounds.get(id, AABB())
-		if wb.size == Vector3.ZERO or wb.grow(0.5).intersects_ray(origin, dir) == null:
+		if wb.size != Vector3.ZERO and wb.grow(0.5).intersects_ray(origin, dir) == null:
 			continue
 		var inv: Transform3D = (_xf[id] as Transform3D).affine_inverse()
 		var o := inv * origin
@@ -573,7 +579,7 @@ func push_out(p: Vector2, radius: float, eye_y: float) -> Vector2:
 	for id in _solids:
 		var wb: AABB = _bounds.get(id, AABB())
 		if wb.size == Vector3.ZERO:
-			continue
+			continue   # plazas, and routes (their 250 m segment boxes are too coarse to walk against)
 		if p.x < wb.position.x - radius or p.x > wb.end.x + radius or p.y < wb.position.z - radius or p.y > wb.end.z + radius:
 			continue
 		var xf: Transform3D = _xf[id]

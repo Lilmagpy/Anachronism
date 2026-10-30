@@ -816,6 +816,7 @@
 "Dio 49.43",
 "Platner-Ashby s.v. Porticus Octaviae (read)"
 ],
+"twin_of": "porticus_octaviae",
 "type": "portico",
 "unverified_fields": [
 "footprint_m",

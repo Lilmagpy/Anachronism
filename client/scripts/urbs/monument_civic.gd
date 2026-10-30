@@ -31,7 +31,7 @@ const MM := preload("res://scripts/urbs/monument_mesh.gd")
 const Orders := preload("res://scripts/urbs/monument_orders.gd")
 
 const MODELS := ["plaza", "lacus_curtius", "rostra", "rostra_augusti", "column_monument", "column_honorific",
-	"curia", "basilica", "basilica_travertine", "tabularium", "comitium"]
+	"curia", "basilica", "basilica_travertine", "tabularium", "comitium", "portico_enclosure"]
 
 ## Surfaces of the basilicas and the curia by material set.
 const SETS := {
@@ -74,6 +74,7 @@ static func build(s: Dictionary, lod: int) -> Dictionary:
 		"basilica", "basilica_travertine": _basilica(mm, s, lod)
 		"tabularium": _tabularium(mm, s, lod)
 		"comitium": _comitium(mm, s, lod)
+		"portico_enclosure": _portico_enclosure(mm, s, lod)
 	return mm.finish()
 
 
@@ -729,3 +730,83 @@ static func _comitium(mm: UrbsMonumentMesh, s: Dictionary, lod: int) -> void:
 		mm.lathe(Vector3(0, -skirt, 0), PackedVector2Array([Vector2(r - i * 0.8, 0.0), Vector2(r - i * 0.8, skirt + 1.2 - i * 0.3),
 			Vector2(r - (i + 1) * 0.8, skirt + 1.2 - i * 0.3)]), "tufa_grey", sides, false)
 	mm.open(Vector3(0, -skirt, 0), Vector3(r * 1.4, skirt + 1.2, r * 1.4))
+
+
+# --- colonnaded enclosures ------------------------------------------------------------------------
+
+
+## A colonnaded enclosure (the Porticus of Metellus/Octavia, the Porticus of Pompey, the Saepta,
+## the Porticus Minucia, the Villa Publica): an open court (walked on, never picked) with a
+## colonnade facing inward on every side under a lean-to tiled roof against a plain outer wall,
+## and a gabled propylon of four columns in the middle of the front. Vitruvius 5.9 (porticoes;
+## # unverified, not re-read). The column height is about 0.7 of `height_m`, their spacing 3.5 m,
+## the colonnade 7 m deep (# unverified). Marble and Ionic from 146 BC for the Porticus of
+## Metellus (Vell. Pat. 1.11.3-5, the first marble temple, as cited in the dataset), Tuscan in
+## stuccoed tufa otherwise; the Saepta of 26 BC marble (dataset form).
+static func _portico_enclosure(mm: UrbsMonumentMesh, s: Dictionary, lod: int) -> void:
+	var W := maxf(float(s.W), 30.0)
+	var L := maxf(float(s.L), 30.0)
+	var H := maxf(float(s.H), 7.0)
+	var id := str(s.id)
+	var marble := id.begins_with("porticus_octaviae") or id.begins_with("saepta") or id == "porticus_pompeiana"
+	var order := "ionic" if marble else "tuscan"
+	var col_mat := "marble_luna" if marble else "stucco_white"
+	var wall := "stucco_cream" if not marble else "travertine"
+	var skirt := float(s.skirt)
+	var depth := 7.0
+	var col_h := H * 0.7
+	var d := col_h / (9.0 if marble else 7.0)
+	var sp := 3.5
+	# the court, open
+	mm.ext(-W / 2, -skirt, -L / 2, W / 2, 0.05, L / 2, "gravel" if not marble else "forum_travertine")
+	mm.open(Vector3(0, -skirt, 0), Vector3(W - 2.0 * depth, skirt + 0.05, L - 2.0 * depth))
+	var gate := minf(14.0, W * 0.25)
+	# four wings: each (centre, yaw, length); local +z of a wing faces the court
+	var wings := [[Vector3(0, 0, L / 2 - depth * 0.5), PI, W], [Vector3(0, 0, -L / 2 + depth * 0.5), 0.0, W],
+		[Vector3(W / 2 - depth * 0.5, 0, 0), -PI / 2.0, L], [Vector3(-W / 2 + depth * 0.5, 0, 0), PI / 2.0, L]]
+	for wi in wings.size():
+		var wg: Array = wings[wi]
+		var len := float(wg[2])
+		mm.push(MM.at(wg[0], float(wg[1])))
+		var front := wi == 0
+		var segs: Array = [[-len / 2, len / 2]] if not front else [[-len / 2, -gate / 2], [gate / 2, len / 2]]
+		for sg: Array in segs:
+			var a := float(sg[0])
+			var b := float(sg[1])
+			# the stylobate, the outer wall, the roof
+			mm.ext(a, 0.0, -depth * 0.5, b, 0.4, depth * 0.5, "travertine")
+			mm.ext(a, 0.0, -depth * 0.5, b, col_h + 2.6, -depth * 0.5 + 0.8, wall)
+			mm.solid(Vector3((a + b) * 0.5, 0.0, -depth * 0.5 + 0.4), Vector3(b - a, col_h + 2.6, 0.8))
+			mm.slab([Vector3(a, col_h + 1.6, depth * 0.5 + 0.4), Vector3(b, col_h + 1.6, depth * 0.5 + 0.4),
+				Vector3(b, col_h + 3.4, -depth * 0.5), Vector3(a, col_h + 3.4, -depth * 0.5)], 0.25, "tegulae", "timber_oak")
+			# the beam over the columns
+			mm.ext(a, col_h + 0.4, depth * 0.5 - d * 0.7, b, col_h + 1.6, depth * 0.5 + 0.1, col_mat if marble else "stucco_white")
+			if lod < 2:
+				var n := maxi(1, int((b - a) / sp))
+				for i in n:
+					var x := a + (i + 0.5) * (b - a) / n
+					# long colonnades: plain shafts even close up (hundreds of columns)
+					mm.instance("pcol|%s|%.2f|%d" % [order, col_h, maxi(lod, 1)], Orders.column_mesh(order, col_h, col_mat, maxi(lod, 1), d), Transform3D(Basis.IDENTITY, Vector3(x, 0.4, depth * 0.5 - d * 0.6)))
+				# doors in the outer wall now and then (shops or rooms behind)
+				if lod == 0 and not marble:
+					var nd := int((b - a) / 14.0)
+					for k in nd:
+						var xd := a + (k + 0.5) * (b - a) / nd
+						mm.push(MM.at(Vector3(xd, 0.4, -depth * 0.5 + 0.8)))
+						Orders.door(mm, Vector3.ZERO, 1.6, 2.8, "travertine", "timber_oak", 1, 0.3)
+						mm.pop()
+		mm.pop()
+	# the propylon: four columns before and behind a gabled porch over the gate
+	mm.push(MM.at(Vector3(0, 0, L / 2 - depth * 0.5), 0.0))
+	var pw := gate + 2.0
+	mm.ext(-pw / 2, 0.0, -depth * 0.5 - 1.0, pw / 2, 0.4, depth * 0.5 + 1.0, "travertine")
+	for zf: float in [depth * 0.5 + 0.4, -depth * 0.5 - 0.4]:
+		for i in 4:
+			var x := -pw / 2 + 0.8 + i * (pw - 1.6) / 3.0
+			if lod < 2:
+				mm.instance("pcol|%s|%.2f|%d|p" % [order, col_h + 1.2, lod], Orders.column_mesh(order, col_h + 1.2, col_mat, lod), Transform3D(Basis.IDENTITY, Vector3(x, 0.4, zf)))
+	var ye := Orders.entablature(mm, order, col_h + 1.2, d * 1.1, -pw / 2, pw / 2, -depth * 0.5 - 0.6, depth * 0.5 + 0.6, col_h + 1.6, col_mat, col_mat, lod)
+	Orders.pediment(mm, -pw / 2 - 0.3, pw / 2 + 0.3, depth * 0.5 + 0.9, ye, true, 0.9, col_mat, col_mat, "statue_marble", lod, false, (pw + 0.6) / 8.0)
+	Orders.pediment(mm, -pw / 2 - 0.3, pw / 2 + 0.3, -depth * 0.5 - 0.9, ye, false, 0.9, col_mat, col_mat, "statue_marble", lod, false, (pw + 0.6) / 8.0)
+	Orders.roof(mm, -pw / 2 - 0.3, pw / 2 + 0.3, -depth * 0.5 - 0.5, depth * 0.5 + 0.5, ye + 0.1, (pw + 0.6) / 8.0, 0.3, lod)
+	mm.pop()
