@@ -432,7 +432,7 @@ func _palla() -> void:
 				var y := lerpf(-0.30, top, v)
 				var pr := _profile_at(TORSO_PROFILE, clampf(y, -0.07, 0.54))
 				var rip := 1.0 + 0.04 * sin(7.0 * th + y * 9.0)
-				var widen := 1.0 + 0.35 * clampf(-y / 0.3, 0.0, 1.0)
+				var widen := 1.0 + 0.75 * clampf(-y / 0.3, 0.0, 1.0)   # clears the stola's skirt below the hips
 				return Vector3((pr.y * 1.08 + 0.014) * rip * widen * sin(th), y, (pr.z * 1.08 + 0.014) * rip * widen * cos(th) + pr.w)
 			return M.surface(24 if lod == 0 else 12, 8 if lod == 0 else 4, fn, 1)), Vector3.ZERO, Vector3.ZERO, 2)
 	_bp(b_sh[1], "palla_arm", fcap(0.066, 0.062, 0.24), Vector3.ZERO, Vector3.ZERO, 2)

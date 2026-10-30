@@ -103,7 +103,7 @@ var people_per_idler := 2400.0
 var max_walkers := 3600
 var auto_tick := true
 ## Carts and mules (rigs) kept at once; litters near the Forum.
-var cart_count := 8
+var cart_count := 14
 var mule_count := 5
 var litter_count := 2
 
@@ -1171,8 +1171,8 @@ void vertex() {
 	float on = step(seed, amount);
 	float life = 14.0 + 4.0 * seed;
 	float t = fract(clock / life + idx + seed * 3.7);
-	float rise = t * (16.0 + 10.0 * seed);
-	float size = 1.0 + 3.2 * t + 0.8 * seed;
+	float rise = t * (22.0 + 14.0 * seed);
+	float size = 2.0 + 7.0 * t + 1.5 * seed;
 	alpha = tint.a * (1.0 - t) * smoothstep(0.0, 0.08, t) * on;
 	vec3 world_base = MODEL_MATRIX[3].xyz;
 	vec3 centre = world_base + vec3(0.0, rise, 0.0) + wind * rise * (0.6 + 0.4 * seed) + vec3(sin(t * 9.0 + seed * 20.0), 0.0, cos(t * 7.0 + seed * 11.0)) * 0.6 * t;
@@ -1241,7 +1241,7 @@ func _make_smoke() -> void:
 	_smoke_mat = ShaderMaterial.new()
 	_smoke_mat.shader = sh
 	var smoke_col: Color = UrbsMaterials.COLOURS.get("smoke", Color(0.6, 0.6, 0.6, 0.4))
-	_smoke_mat.set_shader_parameter("tint", Color(smoke_col.r, smoke_col.g, smoke_col.b, 0.38))
+	_smoke_mat.set_shader_parameter("tint", Color(smoke_col.r, smoke_col.g, smoke_col.b, 0.42))
 	_smoke = MultiMeshInstance3D.new()
 	_smoke.name = "Smoke"
 	_smoke.multimesh = mm
