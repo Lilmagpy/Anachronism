@@ -290,7 +290,7 @@ static func _standing(out: Dictionary, rec: Dictionary, st: Dictionary, d: Dicti
 		# carceres for someone standing at them); its seat rows are long boxes, so it is cheap
 		_single(out, Circus.build(Circus.spec(rec, st)))
 		out.no_skirt = true
-		out.base = "hi"
+		out.base = "centre"
 		return
 	if Civic.handles(model):
 		var sc := Civic.spec(model, rec, st)

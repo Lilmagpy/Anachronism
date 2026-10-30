@@ -343,6 +343,10 @@ func _make(id: String, st: Dictionary) -> void:
 		skirt = hi - lo
 		if str(res.get("base", "lo")) == "hi":
 			base_y = maxf(hi, hi0)
+		elif str(res.get("base", "lo")) == "centre":
+			# built into a valley against the hills (the circus): the floor at the centre's
+			# ground, the foundation down to the lowest point, the slopes over the outer seats
+			base_y = _ground_at(centre)
 	if world:
 		node.position = Vector3.ZERO
 	else:
