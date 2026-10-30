@@ -115,13 +115,20 @@ tiber:
   width_m: 60
   text: "River 60-90 m wide through the city, flowing north to south then west; the Tiber Island and fords at the Forum Boarium; the Pons Sublicius is the earliest crossing; floods regular (Livy 7.3.2; 24.9.6; 35.9.2). Floodplain (Campus Martius, Forum Boarium, Forum Holitorium) lay 2-6 m above normal water. Harbour at the Emporium (193 BC)."
   sources: ["Livy 1.4", "Livy 7.3.2", "Livy 35.9.2", "Platner-Ashby s.v. Tiberis"]
-  island: {latin: Insula Tiberina, lat: 41.8908, lon: 12.4772, length_m: 270, width_m: 67, fit_bridges: [pons_fabricius, pons_cestius], abutment_m: 3}
+  island: {latin: Insula Tiberina, lat: 41.89083, lon: 12.47722, length_m: 270, width_m: 67, fit_bridges: [pons_fabricius, pons_cestius], abutment_m: 3}
   # U8: the island (Wikipedia s.v. Tiber Island: 41.8908, 12.4772, 270 x 67 m, 'boat-shaped') is placed
   # and turned so that the two bridges of the dataset span its two channels: the Pons Fabricius (62 m,
   # P-A s.v. Pons Fabricius, read in R5) the eastern one, the Pons Cestius (48 m, P-A s.v. Pons Cestius)
   # the western one, each resting `abutment_m` on land at both ends. tiber.gd computes the frame from
   # monuments.json; the island's long axis comes out at a bearing of about 143 degrees.
-  course: [[41.9335,12.4668],[41.9200,12.4672],[41.9060,12.4690],[41.9045,12.4675],[41.9026,12.4655],[41.9012,12.4630],[41.8990,12.4645],[41.8975,12.4665],[41.8955,12.4685],[41.8933,12.4707],[41.8915,12.4745],[41.8901,12.4778],[41.8890,12.4792],[41.8862,12.4772],[41.8833,12.4752],[41.8800,12.4718],[41.8754,12.4704],[41.8690,12.4700]]
+  # U8 island pass: tiber.gd read the bridges' raw lat/lon while monuments.gd drew them with their
+  # offset_m (the Wikipedia points of the remains), so the island was fitted 60 m south of the bridges
+  # as drawn. The offsets are now folded into the bridges' lat/lon, and each bridge moved a further
+  # ~27 m (within its +-30 m) so that the 67 m island fits between their ends with its axis along the
+  # river: the island comes out at about (-639, 195), axis bearing 134, 31 m from the Wikipedia point
+  # (41.89083, 12.47722 = (-669, 186), the seed above). The course point at the island is moved to
+  # the new middle of the water, [41.8907, 12.4776]. # unverified
+  course: [[41.9335,12.4668],[41.9200,12.4672],[41.9060,12.4690],[41.9045,12.4675],[41.9026,12.4655],[41.9012,12.4630],[41.8990,12.4645],[41.8975,12.4665],[41.8955,12.4685],[41.8933,12.4707],[41.8915,12.4745],[41.8907,12.4776],[41.8890,12.4792],[41.8862,12.4772],[41.8833,12.4752],[41.8800,12.4718],[41.8754,12.4704],[41.8690,12.4700]]
   # U2: points 3-10 added to show the great westward bend round the Campus Martius (Platner-Ashby
   # s.v. Campus Martius: the plain lies "between the Capitoline, Quirinal, Pincian and the Tiber").
   # Positions are read off the modern river at its bridges (Ponte Cavour, Sant'Angelo, Vittorio
@@ -132,8 +139,9 @@ tiber:
   # coordinates, read 2026-10-30): Ponte Palatino 41.8890, 12.4792; Ponte Sublicio 41.8833, 12.4752;
   # Ponte Testaccio 41.8754, 12.4704; [41.8800, 12.4718] keeps the Porticus Aemilia (41.8801, 12.4736)
   # about 90 m back from the Emporium quay as Wikipedia s.v. Porticus Aemilia describes; the last
-  # point is a straight run to the field's edge # unverified. The point at the island (41.8901,
-  # 12.4778) is the middle of the water between the two banks fitted to the bridges (tiber.gd).
+  # point is a straight run to the field's edge # unverified. The point at the island (41.8907,
+  # 12.4776 since the U8 island pass) is the middle of the water between the two banks fitted to the
+  # bridges (tiber.gd).
   surface_m: [6.2, 5.3]   # normal water level a.s.l. at the north and south end of the course
   surface_source: "Platner-Ashby s.v. Campus Martius: the plain was 10-15 m a.s.l. and 3-8 m above the Tiber, so the river stood at about 5-7 m"
   banks: {half_width_m: 45, bank_cut_m: 16, depth_m: 3.4}   # model choice: 90 m wide, the top of the 60-90 m in the text above (Platner-Ashby s.v. Tiberis); varies +-15% along the course

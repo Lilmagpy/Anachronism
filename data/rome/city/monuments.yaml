@@ -1414,8 +1414,8 @@ monuments:
   english: Circus Flaminius
   type: circus
   regio: 9
-  lat: 41.8913
-  lon: 12.4776
+  lat: 41.8925  # U8 island pass: the old point lay in the Tiber's east channel. Wikipedia s.v. Circus Flaminius (read 2026-10-30): between the Tiber to the south and the Porticus of Octavia and Philippus to the north, the Theatre of Marcellus to the east, on a south-east to north-west axis, the open piazza no more than 300 m long; placed between those monuments' dataset points, 80 m from the river's centre line; # unverified
+  lon: 12.476911
   precision: approx
   location: Campus Martius, south, between Capitol and Tiber; used for the Plebeian Games and assemblies
   built: {year: -220, certainty: certain, by: "built by C. Flaminius as censor (Livy Per. 20; P&A gives 221); in the Prata Flaminia (Livy 3.54.15)"}
@@ -1425,8 +1425,8 @@ monuments:
   pleiades: 158081395
   verified: platner-ashby+pleiades
   model: plaza
-  bearing_deg: 90
-  footprint_m: {length: 260, width: 80}  # unverified
+  bearing_deg: 122  # U8: parallel to the river, the SE-NW axis of Wikipedia s.v. Circus Flaminius (Platner-Ashby gave almost due east-west); # unverified
+  footprint_m: {length: 200, width: 60}  # unverified: shortened from 260 x 80 to fit between the river, the Porticus Octaviae and the Theatre of Marcellus
   height_m: 0
   surface: earth
   geometry_source: "Platner-Ashby s.v. Circus Flaminius (major axis almost due east-west, carceres end on the east); extent assumed, not a racing circus"
@@ -1456,8 +1456,8 @@ monuments:
   english: Temple of Faunus
   type: temple
   regio: 14
-  lat: 41.8908
-  lon: 12.4779
+  lat: 41.891251  # U8 island pass: on the island's upstream (north) half, 80 m up its axis from the middle, where Platner-Ashby s.v. Faunus (as summarised in the notes: Ov. Fast. 2.193-194) puts it at the north end; the island fitted between the two bridges (tiber.gd) lands at about (-639, 195) with its axis at bearing 134; # unverified spot
+  lon: 12.476901
   precision: approx
   location: Tiber Island
   built: {year: -194, certainty: certain, by: "vowed 196 by the aediles Cn. Domitius Ahenobarbus and C. Scribonius Curio, built from fines (Livy 33.42.10); dedicated 194 by Domitius (Livy 34.53.4), on 13 February (Ov. Fast. 2.193)"}
@@ -1476,8 +1476,8 @@ monuments:
   english: Temple of Aesculapius
   type: temple
   regio: 14
-  lat: 41.8905
-  lon: 12.4775
+  lat: 41.890464  # U8 island pass: on the island's axis 45 m downstream of its middle: San Bartolomeo all'Isola was built over the temple's ruins on the downstream end (Wikipedia s.v. Tiber Island, read 2026-10-30); the island fitted between the two bridges (tiber.gd) lands at about (-639, 195) with its axis at bearing 134; # unverified spot
+  lon: 12.477978
   precision: approx
   location: Tiber Island (modern S. Giovanni Calibita and Fatebenefratelli hospital)
   built: {year: -291, certainty: probable, by: "temple built soon after 291 BC when the serpent of Aesculapius came from Epidaurus (Livy Per. 11; Val. Max. 1.8.2; Ov. Met. 15.622-744); the Sibylline books had ordered the god's cult in 293 (Livy 10.47.6-7)"}
@@ -1943,7 +1943,7 @@ monuments:
   type: port
   regio: 13
   lat: 41.8823
-  lon: 12.4747
+  lon: 12.475185  # U8 island pass: 40 m east, so that the quay stands on the bank of the modelled river, not in it (the course south of the island follows the modern bridges); Wikipedia s.v. Emporium (Rome) gives 41.87417, 12.47167, which falls west of the modelled river; # unverified
   precision: approx
   location: Tiber bank below the Aventine (modern Testaccio)
   built: {year: -193, certainty: probable, by: "set up by the aediles M. Aemilius Lepidus and L. Aemilius Paullus in 193, who added it to their portico outside the Porta Trigemina (Livy 35.10.12)"}
@@ -2825,7 +2825,7 @@ monuments:
   built: {year: -378, certainty: certain, by: "with the Servian Wall"}
   sources: ["Livy 35.9.2", "Platner-Ashby s.v. Porta Flumentana"]
   model: servian_gate
-  offset_m: [48, -170]  # east, north metres added to lat/lon; unverified: Platner-Ashby s.v. Porta Flumentana only says the gate lay on the wall joining the Capitol to the river, with the southern Campus Martius outside it; moved so the wall passes south of the Forum Holitorium and the Theatre of Marcellus site, which lay outside the Porta Carmentalis (Livy 25.7)
+  offset_m: [113, -95]  # east, north metres added to lat/lon; U8 island pass: the old offset put the gate on the Tiber Island. Platner-Ashby s.v. Porta Flumentana (read 2026-10-30): in the part of the wall joining the Capitoline to the river, near the Tiber (Fest. 89), the district outside it in the southern Campus Martius; placed on the left bank south of the Theatre of Marcellus, beside the bank end of the Pons Fabricius; # unverified spot
   footprint_m: {length: 26, width: 34}  # unverified
   height_m: 16  # unverified
   snap_to: murus_servianus
@@ -2922,15 +2922,15 @@ monuments:
   english: Pons Sublicius (pile bridge)
   type: bridge
   regio: 11
-  lat: 41.8880
-  lon: 12.4770
+  lat: 41.884438  # U8 island pass: the old point lay 125 m inside Trastevere. Wikipedia s.v. Pons Sublicius (read 2026-10-30): 41.88444, 12.47667, a tentative identification on the marble plan (Tucci 2004), downstream of the Pons Aemilius; latitude kept, moved 58 m west onto the modelled river's centre line; # unverified
+  lon: 12.475970
   precision: rough
   location: Tiber, south of the Forum Boarium, below the Aventine
   built: {year: null, certainty: traditional, by: "Ancus Marcius (Livy 1.33.6); defended by Horatius Cocles 508 (Livy 2.10)"}
   form: "timber pile bridge kept by the pontifices without iron nails"
   sources: ["Livy 1.33.6", "Livy 2.10", "Platner-Ashby s.v. Pons Sublicius"]
   model: bridge_timber
-  bearing_deg: 255  # unverified
+  bearing_deg: 297  # unverified: square across the modelled river there
   footprint_m: {length: 100, width: 6}  # unverified
   height_m: 5  # unverified
   geometry_source: "Plin. NH 36.100, Dion. Hal. 3.45, Plut. Numa 9 (timber pile bridge, no iron nails); length and width assumed"
@@ -2978,15 +2978,14 @@ monuments:
   english: Pons Fabricius
   type: bridge
   regio: 14
-  lat: 41.8907
-  lon: 12.4780
+  lat: 41.891198  # U8 island pass: the Wikipedia point of the remains (the former offset), moved 27 m (within its +-30 m) 11 m towards the Pons Cestius and 25 m upstream so that the island's 67 m fits between the two bridges' ends; # unverified
+  lon: 12.478031
   precision: exact
   location: from Forum Holitorium to Tiber Island
   built: {year: -62, certainty: certain, by: "L. Fabricius, curator viarum (CIL VI 1305; Dio 37.45.3)"}
   materials: [tufa, travertine]
   sources: ["CIL VI 1305", "Dio 37.45.3", "Platner-Ashby s.v. Pons Fabricius"]
   model: bridge_stone
-  offset_m: [28, 46]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 54 m off
   bearing_deg: 38
   footprint_m: {length: 62, width: 5.5}
   height_m: 10  # unverified
@@ -2997,15 +2996,14 @@ monuments:
   english: Pons Cestius
   type: bridge
   regio: 14
-  lat: 41.8896
-  lon: 12.4774
+  lat: 41.890450  # U8 island pass: the Wikipedia point of the remains (the former offset), moved 27 m (within its +-30 m) 11 m towards the Pons Fabricius and 25 m upstream so that the island's 67 m fits between the two bridges' ends; # unverified
+  lon: 12.477104
   precision: exact
   location: from Tiber Island to Trastevere
   built: {year: -46, certainty: uncertain, by: "probably L. Cestius, praetor c. 46-44 (Platner-Ashby); some say 60s BC"}
   sources: ["Platner-Ashby s.v. Pons Cestius"]
 # ---------------------------------------------------------------- ROADS
   model: bridge_stone
-  offset_m: [-14, 69]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 70 m off
   bearing_deg: 252  # unverified
   footprint_m: {length: 48, width: 8.2}
   height_m: 10
