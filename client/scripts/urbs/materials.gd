@@ -8,7 +8,8 @@
 ## plaster.gdshader (stucco, Pompeian panels), tiles.gdshader (tegulae and imbrices, ridge tiles,
 ## antefixes, bronze roofs), metal.gdshader (bronze, verdigris, gilt, iron, studded doors),
 ## wood.gdshader, cloth.gdshader, ground.gdshader (Forum slabs, polygonal basalt, gravel,
-## earth, grass...), water.gdshader. `RECIPES` says which shader and which settings each name
+## earth, grass...), water.gdshader, plant.gdshader (foliage with clumps, translucency and
+## wind; bark). `RECIPES` says which shader and which settings each name
 ## gets. They map themselves from the model's own position in metres (any UVs will do), and
 ## each pattern fades to its average colour once it is a few pixels across (no shimmer).
 ## `COLOURS` stays the plain colour of each surface (fallbacks, and shaders that only want
@@ -38,6 +39,7 @@
 ##             garden_bed, sand_arena, mud_bank
 ##   water:    tiber_water, fountain_water
 ##   other:    glass_lamp (emissive), smoke, statue_bronze, statue_marble, terracotta_pot
+##   plants:   foliage (leaf mass; multiplied by the vertex colour of each species), bark
 class_name UrbsMaterials
 
 const COLOURS := {
@@ -73,6 +75,7 @@ const COLOURS := {
 	"glass_lamp": Color(1.0, 0.85, 0.55), "smoke": Color(0.6, 0.6, 0.6, 0.4),
 	"statue_bronze": Color(0.50, 0.38, 0.20), "statue_marble": Color(0.92, 0.90, 0.86),
 	"terracotta_pot": Color(0.70, 0.44, 0.30),
+	"foliage": Color(0.30, 0.40, 0.20), "bark": Color(0.36, 0.30, 0.24),
 }
 
 ## Which shader and settings each surface gets (colours sRGB). Names missing here fall back to
@@ -140,6 +143,9 @@ const RECIPES := {
 	"garden_bed": ["ground", {"mode": 5, "base_colour": Color(0.38, 0.29, 0.21), "alt_colour": Color(0.32, 0.25, 0.18), "unit": 0.5}],
 	"sand_arena": ["ground", {"mode": 6, "base_colour": Color(0.86, 0.76, 0.56), "alt_colour": Color(0.79, 0.69, 0.50)}],
 	"mud_bank": ["ground", {"mode": 7, "base_colour": Color(0.50, 0.42, 0.32), "alt_colour": Color(0.42, 0.36, 0.28)}],
+	# --- plants (site_flora.gd: the species colour is the vertex colour; these are fallbacks)
+	"foliage": ["plant", {"kind": 0, "base_colour": Color(0.30, 0.40, 0.20)}],
+	"bark": ["plant", {"kind": 1, "base_colour": Color(0.36, 0.30, 0.24)}],
 	# --- water
 	"tiber_water": ["water", {"base_colour": Color(0.42, 0.50, 0.40), "clarity": 0.1}],
 	"fountain_water": ["water", {"base_colour": Color(0.50, 0.66, 0.72), "clarity": 0.6, "flow_speed": 0.1}],
