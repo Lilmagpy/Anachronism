@@ -89,6 +89,7 @@ monuments:
   bearing_deg: null
   height_m: null
   model: temple_hexastyle
+  twin_of: aedes_apollinis_palatini  # same building as the Republican entry: drawn only when that one is absent, in its place
   sources: ["Mon. Anc. 4.1", "Suet. Aug. 29", "Suet. Aug. 31", "Dio 49.15.5", "Dio 53.1.3", "Vell. 2.81", "Prop. 2.31", "Amm. Marc. 23.3.3", "Platner-Ashby s.v. Apollo Palatinus, Aedes (read)"]
   verified: true
   materials: [Luna marble, concrete podium (Augustan)]
@@ -117,6 +118,7 @@ monuments:
   bearing_deg: null
   height_m: 42
   model: mausoleum
+  twin_of: mausoleum_augusti  # same building as the Republican entry: drawn only when that one is absent, in its place
   sources: ["Suet. Aug. 100-101", "Strabo 5.3.8", "Dio 53.30.5", "Dio 54.28.5", "Dio 55.2.3", "Platner-Ashby s.v. Mausoleum Augusti (read)"]
   verified: true
   unverified_fields: [height_m]
@@ -184,6 +186,7 @@ monuments:
   bearing_deg: 180
   height_m: null
   model: temple_hexastyle
+  twin_of: pantheon_agrippae  # same building as the Republican entry: drawn only when that one is absent, in its place
   sources: ["Dio 53.27.2", "Dio 66.24.2", "Plin. NH 36.38", "Plin. NH 34.13", "Orosius 7.12", "CIL VI 896", "Platner-Ashby s.v. Pantheon (read)"]
   verified: true
   unverified_fields: [height_m]
@@ -254,6 +257,7 @@ monuments:
   bearing_deg: null
   height_m: null
   model: portico
+  twin_of: saepta_iulia  # same building as the Republican entry: drawn only when that one is absent, in its place
   sources: ["Cic. Att. 4.16.14", "Dio 53.23", "Dio 66.24", "Suet. Aug. 43", "Mart. 9.59", "Stat. Silv. 4.5", "HA Hadr. 19", "Platner-Ashby s.v. Saepta Iulia (read)"]
   verified: true
   unverified_fields: [bearing_deg, lat, lon]
@@ -279,6 +283,7 @@ monuments:
   bearing_deg: null
   height_m: 32
   model: theatre
+  twin_of: theatrum_marcelli  # same building as the Republican entry: drawn only when that one is absent, in its place
   sources: ["Suet. Caes. 44", "Suet. Aug. 29", "Suet. Aug. 43", "Suet. Vesp. 19", "Mon. Anc. 4.22", "Dio 43.49.2", "Dio 54.26.1", "Plin. NH 8.65", "CIL VI 32323", "Platner-Ashby s.v. Theatrum Marcelli (read)"]
   verified: true
   unverified_fields: [bearing_deg, height_m]
@@ -323,6 +328,7 @@ monuments:
   bearing_deg: null
   height_m: null
   model: portico
+  twin_of: porticus_octaviae  # same building as the Republican entry: drawn only when that one is absent, in its place
   sources: ["Suet. Aug. 29", "Vitr. 3.2.5", "Vell. 1.11", "Plin. NH 36.42", "Dio 49.43", "Platner-Ashby s.v. Porticus Octaviae (read)"]
   verified: true
   unverified_fields: [footprint_m, bearing_deg, height_m]
@@ -370,6 +376,7 @@ monuments:
   bearing_deg: 30
   height_m: 21
   model: curia
+  twin_of: curia_iulia  # same building as the Republican entry: drawn only when that one is absent, in its place
   sources: ["Dio 47.19", "Dio 51.22", "Mon. Anc. 4.1", "Jerome a. Abr. (Chron. 161)", "Platner-Ashby s.v. Curia Iulia (read)"]
   verified: true
   unverified_fields: [bearing_deg, height_m]
@@ -395,6 +402,7 @@ monuments:
   bearing_deg: 100
   height_m: 24
   model: basilica
+  twin_of: basilica_iulia  # same building as the Republican entry: drawn only when that one is absent, in its place
   sources: ["Cic. Att. 4.16.8", "Mon. Anc. 4.13-16", "Dio 56.27", "Suet. Aug. 29", "Quint. 12.5.6", "Platner-Ashby s.v. Basilica Iulia (read)"]
   verified: true
   unverified_fields: [bearing_deg, height_m]
