@@ -75,8 +75,9 @@ const DOOR := Color(1, 1, 1, 1.0)
 
 ## Laundry colours (undyed linen, a few dyed pieces): rgb used by the shader.
 const LINENS: Array[Color] = [
-	Color(0.92, 0.90, 0.84, 0.90), Color(0.88, 0.84, 0.72, 0.90), Color(0.80, 0.34, 0.26, 0.90),
-	Color(0.86, 0.80, 0.60, 0.90), Color(0.40, 0.48, 0.62, 0.90), Color(0.90, 0.88, 0.82, 0.90),
+	Color(0.92, 0.90, 0.84, 0.90), Color(0.88, 0.84, 0.72, 0.90), Color(0.70, 0.42, 0.34, 0.90),
+	Color(0.86, 0.80, 0.60, 0.90), Color(0.56, 0.58, 0.62, 0.90), Color(0.90, 0.88, 0.82, 0.90),
+	Color(0.84, 0.78, 0.66, 0.90),
 ]
 ## Awning cloths: rgb used by the shader (stripes in the cloth colour on cream).
 const AWNINGS: Array[Color] = [
@@ -315,8 +316,8 @@ class MB:
 		var len := a.distance_to(b)
 		var n_tiles := maxi(int(len / 0.55), 1)
 		var dir := (b - a) / float(n_tiles)
-		var half := dir.normalized() * 0.1
-		var tilt := Vector3(0, 0.17, 0) - out * 0.04 * slope
+		var half := dir.normalized() * 0.12
+		var tilt := Vector3(0, 0.13, 0) - out * 0.03 * slope
 		for i in range(n_tiles + 1):
 			var p := a + dir * float(i) - out * 0.02
 			if i == 0:

@@ -4,7 +4,8 @@
 ##     --year=-50 --street=subura --t=0.35 --eye=1.7 --pitch=-3 --shot=/tmp/claude-0/streets_a.png
 ##
 ## Flags: --year=N (default -50)           --shot=PATH (default: no picture, just counts)
-##   --street=ID --t=0..1                  stand on that street, looking along it (+ --back to look the other way)
+##   --street=ID --t=0..1                  stand on that street, looking along it (+ --back to look the other way;
+##                                         --turn=DEG turns from the street's direction, --side=M steps sideways)
 ##   --at=x,z                              or stand at local metres x, z (then --yaw=DEG, 0 = north)
 ##   --eye=M (default 1.7)  --pitch=DEG (default -3)  --yaw=DEG  --radius=M (chunks loaded, default 450)
 ##   --lod=0..2   --hour=H (default 10)   --steps: time the incremental chunk build (worst step, ms)   --count: report building counts inside the Servian wall    --flat: flat ground instead of the real terrain; --slope: with --flat, tilt the ground (+4% to the east) to test the foundations
@@ -62,8 +63,8 @@ func _run() -> void:
 		var p := streets.along(sid, t)
 		var p2 := streets.along(sid, t + (-0.01 if args.has("back") else 0.01))
 		var dir := Vector2(p2.x - p.x, p2.z - p.z).normalized()
-		yaw = atan2(dir.x, -dir.y)
-		pos = Vector3(p.x, 0, p.z)
+		yaw = atan2(dir.x, -dir.y) + deg_to_rad(float(args.get("turn", "0")))
+		pos = Vector3(p.x, 0, p.z) + Vector3(-dir.y, 0, dir.x) * float(args.get("side", "0"))
 	elif args.has("at"):
 		var f := String(args["at"]).split(",")
 		pos = Vector3(float(f[0]), 0, float(f[1]))

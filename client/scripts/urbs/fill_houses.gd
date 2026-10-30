@@ -348,6 +348,9 @@ static func taberna(variant: int, lod: int) -> MB:
 	P.walls(b, w, d, h, [holes, [], [], []], P.PLASTER, lod)
 	P.shop_front(b, 0, 0.0, 3.2, w, d, lod, variant * 3 + 1, variant if variant < 4 else -1, variant != 5)
 	if variant == 4 and lod < 2:
+		# the upper room (pergula) has small windows on its flanks too
+		P.window_flat(b, 2, 0.0, 4.5, 0.8, 1.0, w, d, 79, lod)
+		P.window_flat(b, 3, 0.0, 4.5, 0.8, 1.0, w, d, 80, lod)
 		if lod == 0:
 			P.window(b, 0, 0.0, 4.4, 1.2, 1.3, w, d, 0, 77)
 			P.balcony(b, 0, 0.0, 1.9, 3.75, w, d, 78, true, false)

@@ -151,6 +151,8 @@ static func plaster_palette() -> Array[Color]:
 		var c: Color = UrbsMaterials.COLOURS[nm]
 		out.append(c)
 		out.append(c.lerp(Color(0.95, 0.93, 0.88), 0.35) if nm != "stucco_white" else c.darkened(0.06))
+	# a few houses washed in Pompeian red (softened: a whole red facade is rare in the evidence)
+	out.append((UrbsMaterials.COLOURS["stucco_red"] as Color).lerp(UrbsMaterials.COLOURS["stucco_ochre"], 0.35))
 	return out
 
 
@@ -263,11 +265,16 @@ void fragment() {
 	float u = an.x > an.z ? lpos.z : lpos.x;
 	vec2 uv = flat_face ? lpos.xz : vec2(u, lpos.y);
 	int id = int(vcol.a * 20.0 + 0.5);
+	// the underside of a roof or a ridge is the timber boarding under the tiles, not tiles
+	if ((id == 9 || id == 11 || id == 14 || id == 15) && !FRONT_FACING) {
+		id = 21;
+	}
 	vec3 tint = lin(vcust.rgb);
 	vec3 vc = lin(vcol.rgb);
 	vec3 col = vec3(0.5);
 	float rough = 0.92;
 	float metal = 0.0;
+	float spec = 0.35;
 	float up = lpos.y;
 	vec3 nrm = NORMAL;
 	if (id == 10) {
@@ -283,9 +290,9 @@ void fragment() {
 		base = mix(base, dado_c, dado);
 		base *= mix(0.68, 1.0, smoothstep(-0.2, 2.2, up));
 		float peel = fbm(uv * 0.9 + seed * 3.0);
-		float peel_zone = smoothstep(0.70, 0.74, peel) * smoothstep(3.5, 0.6, up) * step(0.45, fract(vcust.a * 7.0));
+		float peel_zone = smoothstep(0.72, 0.78, peel) * smoothstep(2.6, 0.4, up) * step(0.5, fract(vcust.a * 7.0));
 		vec3 under = vcust.a > 0.6 ? brick(uv, seed, c_brick_latericium, c_stucco_worn) : masonry(uv, seed, c_opus_incertum, c_tufa_grey, c_stucco_worn);
-		col = mix(base, mix(c_opus_incertum, under, fade), peel_zone * 0.9);
+		col = mix(base, mix(c_opus_incertum, under, fade) * 0.85, peel_zone * 0.55);
 		rough = 0.95;
 	} else if (id == 9) {
 		// pan-and-cover tiles: cover tiles (imbrices) every 0.42 m across the slope, shaded as
@@ -300,16 +307,18 @@ void fragment() {
 		float course = lpos.y / 0.15;
 		float row = fract(course + h21(vec2(floor(across), 1.0)) * 0.5);
 		float tone = 0.86 + 0.28 * h21(vec2(floor(across), floor(course)));
-		vec3 base = mix(c_tegulae, c_tegulae_old, clamp(vcust.a * 0.6 + 0.5 * fbm(lpos.xz * 0.25 + seed) - 0.2, 0.0, 1.0));
+		vec3 base = mix(c_tegulae, c_tegulae_old, clamp(vcust.a * 0.7 + 0.4 * fbm(lpos.xz * 0.25 + seed) - 0.25, 0.0, 1.0));
 		col = base * mix(1.0, tone, aa);
 		col *= mix(1.0, (0.74 + 0.26 * smoothstep(0.0, 0.3, row)) * (0.9 + 0.16 * cov), aa);
-		float lich = smoothstep(0.66, 0.84, fbm(lpos.xz * 0.6 + seed));
-		col = mix(col, lin(vec3(0.42, 0.42, 0.34)), lich * 0.35);
+		float lich = smoothstep(0.7, 0.86, fbm(lpos.xz * 0.6 + seed));
+		col = mix(col, col * lin(vec3(0.7, 0.66, 0.5)), lich * 0.5);
 		nrm = normalize(NORMAL + normalize(v_across) * x * cov * 0.85 * aa);
-		rough = 0.78;
+		rough = 0.9;
+		spec = 0.2;
 	} else if (id == 11) {
 		col = c_ridge_terracotta * (0.85 + 0.25 * vn(lpos.xz * 3.0 + lpos.y + seed));
-		rough = 0.8;
+		rough = 0.88;
+		spec = 0.25;
 	} else if (id == 12 || id == 20) {
 		// shutters and doors: vertical planks, a batten, the doors with bronze studs
 		float pw = id == 12 ? 0.13 : 0.2;
@@ -339,13 +348,18 @@ void fragment() {
 		// the inside of a shop or a doorway in shade: dim, never black
 		vec3 dark = mix(tint, c_earth_packed, 0.4);
 		float shelf = step(0.82, fract(lpos.y * 1.6)) * step(0.9, up);
-		col = dark * (0.2 + 0.08 * vn(uv * 2.0 + seed)) + c_timber_oak * shelf * 0.12 * fade;
+		col = dark * (0.28 + 0.08 * vn(uv * 2.0 + seed)) + c_timber_oak * shelf * 0.14 * fade;
 		rough = 1.0;
 	} else if (id == 13) {
 		// painted sign: white ground, red or black letters
-		vec3 ink = vcust.a < 0.8 ? c_stucco_red : c_basalt * 0.5;
+		vec3 ink = c_stucco_red * 0.85;
 		float l = letters(vec2(u + seed * 0.37, up), seed) * fade;
-		col = mix(c_stucco_white * (0.9 + 0.1 * fbm(uv * 2.0)), ink, l * 0.9);
+		col = mix(c_stucco_white * (0.9 + 0.1 * fbm(uv * 2.0)), ink, l * 0.8);
+	} else if (id == 21) {
+		float bd = fract(u / 0.24);
+		col = mix(c_timber_weathered, c_timber_oak, 0.5) * 0.55 * (0.85 + 0.25 * h21(vec2(floor(u / 0.24), seed)));
+		col *= mix(1.0, 0.6, step(bd, 0.06) * fade);
+		rough = 0.95;
 	} else if (id == 7) {
 		float g = vn(vec2(uv.x * 24.0 + uv.y * 3.0, uv.y * 1.5 + seed));
 		col = mix(c_timber_weathered, c_timber_oak, step(0.5, vcust.a)) * (0.72 + 0.4 * g);
@@ -400,6 +414,7 @@ void fragment() {
 	ALBEDO = col;
 	ROUGHNESS = rough;
 	METALLIC = metal;
+	SPECULAR = spec;
 	NORMAL = nrm;
 }
 """
