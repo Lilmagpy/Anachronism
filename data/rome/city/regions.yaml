@@ -169,6 +169,19 @@ districts:
   - {from: -200, weights: {casa: 0.15, domus: 0.8, insula: 0.05}, shops: 0.1}
   - {from: -100, weights: {domus: 0.92, insula: 0.08}, shops: 0.05}
   sources: ["topography.yaml (Palatine: the aristocracy's hill in the Late Republic; Platner-Ashby s.v. Palatium)", "Cic. Att. 1.13.6 and Dom. 100-116 (his own house on the Palatine, bought from Crassus 62 BC): # unverified", "Livy 1.7 (Palatine as the oldest settlement)"]
+- id: velia
+  name: Velia
+  lat: 41.8913
+  lon: 12.4880
+  radius_m: 110
+  max_density: 0.85
+  saturates_at: 40000
+  onset: -509
+  eras:
+  - {from: -509, weights: {casa: 0.6, domus: 0.4}, shops: 0.05}
+  - {from: -200, weights: {domus: 0.75, casa: 0.1, insula: 0.15}, shops: 0.15}
+  - {from: -100, weights: {domus: 0.8, insula: 0.2}, shops: 0.15}
+  sources: ["Livy 2.7.5-12 (read, Gutenberg trans. Spillan): P. Valerius builds a house 'on the summit of Mount Velia', then moves it to the foot of the hill, 509 BC", "the ridge between the Palatine and the Oppian where the Sacra Via crosses: Platner-Ashby s.v. Velia # unverified (LacusCurtius unavailable)", "the weights (a residential ridge of good houses on the Via Sacra) are a modelling choice, not a source"]
 - id: carinae
   name: Carinae
   lat: 41.8935

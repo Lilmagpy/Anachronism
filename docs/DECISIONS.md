@@ -2642,3 +2642,48 @@ lost; only what the lead had pushed survived (the city through U7). Pushing a wo
 branch costs nothing and makes a restart a nuisance instead of a loss. The U8 round is being
 redone from the same briefs.
 
+**Safeguards added the same day.** (1) `scripts/dev/push-watchdog.sh` runs in the lead's
+session and pushes any `claude/*` worktree branch with unpushed commits every five minutes,
+catching an agent that forgets. (2) The lead pushes `claude/phase-2-3d` right after every merge,
+before the long checks, not at the end of a round. (3) The agent briefs are committed under
+`docs/plans/briefs/` instead of living in the session's scratch folder. (4)
+`scripts/dev/cloud-toolchain.sh`, started by the session hook, rebuilds Godot, the render queue
+and the reference still in a minute. What cannot be prevented is the restart itself; what can
+is losing anything to it.
+
+## D-294 Houses in U8: how they stand and what they are — DELEGATED (2026-10-30)
+
+**Decision.** (1) Every MultiMesh whose shader reads vertex colour sets `use_colors` with a white
+instance colour: Godot's compatibility renderer multiplies vertex colour by the instance colour
+even when none is set, which had turned every house the same flat brown. (2) A house stands at
+the height of its highest corner on a 6 m masonry base; lots that step more than 5 m or slope more
+than 0.5 are left empty, so nothing floats or is buried. (3) Horrea appear from 193 BC (the
+Emporium, Livy 35.10.12, # unverified) within 230 m of the Tiber. (4) House variants that look
+alike from far away share one MultiMesh (`lod_key`), halving the MultiMeshes. (5) Beyond 250 m
+only tall buildings cast shadows. (6) A Velia district (Livy 2.7, read) so the ridge on the Via
+Sacra gets its good houses.
+
+**Why.** The owner's review (U8): houses read as flat slabs. The houses pass rebuilt them as
+Republican domus (Vitruvius 6.3, 6.5), insulae (Vitruvius 2.8.17; Strabo 5.3.7), shops,
+workshops and horrea with tiled roofs, shutters, balconies and awnings, while cutting draw
+calls by about a third.
+
+## D-295 Monuments in U8: real orders, a paved Forum, and the courtyard that was not the Forum — DELEGATED (2026-10-30)
+
+**Decision.** (1) Temples are built from the orders after Vitruvius (3.3-4.7): fluted columns,
+capitals, entablature, pediment with acroteria, tiled roof, a podium with frontal steps and a
+bronze door; 64 of the 66 temple records use the new builder. (2) The Forum is a travertine-paved
+piazza with the Lacus Curtius, the Rostra (Republican, then Caesar's and Augustus'), the rostral
+columns and statues, edged by separate basilicas, the Curia and the Tabularium (Platner-Ashby,
+read on archive.org). (3) The Circus Maximus is built phase by phase. (4) Eight Empire records
+that duplicated Republican ones carry `twin_of` and are drawn only when the Republican one is
+absent; `rostra_augusti` and `columna_maenia` are added. (5) Collision and clicking use each
+monument's real solids (`solid_boxes`), not one box round the whole monument. (6) The camera's
+`--yaw` flag is a compass bearing, and `--at=<monument>` stands out in front of the door looking
+at the façade.
+
+**Why.** The owner's "Forum drawn as a courtyard ringed by one orange roof" turned out to be
+the Porticus Octaviae: the Servian wall's and the aqueducts' single bounding boxes spanned the
+city, so every street camera inside the walls was thrown hundreds of metres away before it took
+its picture. With real solids, the cameras land where they are asked to.
+
