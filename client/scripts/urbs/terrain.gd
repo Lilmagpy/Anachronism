@@ -38,7 +38,7 @@ const NEAR_M := 2000.0                    ## within this of the Forum, lod 0 use
 const WARP_M := 38.0                      ## how far hill and valley outlines wander from their ideal line
 const FORUM_FLOOR_M := 10.0               ## ancient Forum floor, m a.s.l.
 const TERRACE_M := 4.0                    ## height of one hillside terrace
-const CACHE_VERSION := "u8-site-8"        ## bump when the model code changes
+const CACHE_VERSION := "u8-site-9"        ## bump when the model code changes
 const STREETS_PATH := "res://data/city/streets.json"
 const REGIONS_PATH := "res://data/city/regions.json"
 const RURAL_CELL := 25.0                  ## resolution of the farmland weight raster
@@ -906,9 +906,11 @@ static func _ground_weights(x: float, z: float, y: float, ny: float, k: int) -> 
 	var flat := smoothstep(0.80, 0.95, ny)
 	var steep := 1.0 - smoothstep(0.66, 0.86, ny)
 	var forum := (1.0 - smoothstep(150.0, 520.0, Vector2(x, z).length())) * flat
-	var valley := smoothstep(0.35, 0.9, _valley_w[k]) * flat
+	# the hill flanks get one even colour: no dust there (the flank's wavy edge made stripes)
+	var flank := smoothstep(0.0, 0.12, _plateau_w[k]) * (1.0 - smoothstep(0.97, 1.0, _plateau_w[k]))
+	var valley := smoothstep(0.8, 0.98, _valley_w[k]) * (1.0 - flank)
 	var built := smoothstep(0.2, 0.9, _built_w[k])
-	var dust := clampf(maxf(maxf(forum * 0.9, valley * 0.7), built * 0.85), 0.0, 1.0)
+	var dust := clampf(maxf(maxf(forum * 0.9 * (1.0 - flank), valley * 0.7), built * 0.85), 0.0, 1.0)
 	var bank := (1.0 - smoothstep(0.0, 24.0, rd - hw)) * (1.0 - smoothstep(1.2, 4.5, y - wl))
 	var mud := clampf(bank * (1.0 - _river_inner[k] * 0.8), 0.0, 1.0)
 	var gravel := clampf(_river_inner[k] * (1.0 - smoothstep(0.3, 1.2, y - wl)) * smoothstep(hw * 0.8, hw, rd) * 1.2, 0.0, 1.0)

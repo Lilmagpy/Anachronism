@@ -5,12 +5,12 @@
 ## `paved_from` (Livy 41.27.5: the censors of 174 BC paved the city streets with silex and
 ## gravelled the roads outside it; the Via Appia 293 and 189 BC, Livy 10.47.4 and 38.28.3), and
 ## is beaten earth (inside the walls) or gravel (roads) before. Stone kerbs edge a paved street,
-## and inside the Servian circuit a raised footway (crepido, stone slabs: the modeller's choice; at
+## and inside the Servian circuit a raised footway (crepido, peperino slabs: the modeller's choice; at
 ## Pompeii they are beaten earth, mortar or slabs) runs behind each kerb up to the house fronts
 ## (UrbsFill sets them at KERB + FOOTPATH); outside the walls
 ## a paved road has kerbs only. Stepping stones cross the paved city streets. A `stairs` street (the
 ## Scalae Caci) is built as steps by UrbsSite and has no strip here. Surfaces come from
-## UrbsMaterials: street_basalt, gravel, earth_packed, tufa_grey (kerbs) and travertine (footways), the modeller's choice,
+## UrbsMaterials: street_basalt, gravel, earth_packed, tufa_grey (kerbs and footway slabs), the modeller's choice,
 ## basalt (stepping stones). U8: the ground under every street is cut level across it by
 ## UrbsTerrain, so the strip lies flat.
 ##
@@ -207,7 +207,7 @@ func build(parent: Node3D, new_year: int, new_height: Callable) -> void:
 	var earth_mat := UrbsMaterials.get_material("earth_packed")
 	var gravel_mat := UrbsMaterials.get_material("gravel")
 	var kerb_mat := UrbsMaterials.get_material("tufa_grey")
-	var foot_mat := UrbsMaterials.get_material("travertine")
+	var foot_mat := UrbsMaterials.get_material("tufa_grey")
 	var circuit := UrbsTerrain.circuit()
 	for si in streets.size():
 		var s: Dictionary = streets[si]
@@ -274,19 +274,21 @@ func _street_mesh(s: Dictionary, lift: float, surface: Material, kerb_mat: Mater
 				var a0 := b + row
 				idx.append_array([a0, a0 + 3, a0 + 1, a0 + 1, a0 + 3, a0 + 4])
 		if bool(s["paved"]):
+			# no kerb or footway where the street crosses a paved platform (the Forum, the Circus)
+			var on := 0.0 if UrbsSite.platform_at(samples[i].x, samples[i].y) != "" else 1.0
 			for side: float in [1.0, -1.0]:
 				var inner := samples[i] + nrm * (hw * side)
-				var outer := samples[i] + nrm * ((hw + KERB_W) * side)
+				var outer := samples[i] + nrm * ((hw + KERB_W * on) * side)
 				var y_in := float(height.call(inner.x, inner.y)) + SURFACE_LIFT + lift
 				var y_out := float(height.call(outer.x, outer.y)) + SURFACE_LIFT + lift
 				# top of the kerb stone, then its inner face dropping to the road
-				kv.append(Vector3(inner.x, y_in + KERB_H, inner.y)); kn.append(Vector3.UP)
-				kv.append(Vector3(outer.x, y_out + KERB_H, outer.y)); kn.append(Vector3.UP)
+				kv.append(Vector3(inner.x, y_in + KERB_H * on, inner.y)); kn.append(Vector3.UP)
+				kv.append(Vector3(outer.x, y_out + KERB_H * on, outer.y)); kn.append(Vector3.UP)
 				kv.append(Vector3(inner.x, y_in, inner.y)); kn.append(Vector3(-nrm.x * side, 0.0, -nrm.y * side))
 				if footway:   # the raised footway behind the kerb, at kerb height
-					var back := samples[i] + nrm * ((hw + KERB_W + FOOTWAY_W) * side)
+					var back := samples[i] + nrm * ((hw + (KERB_W + FOOTWAY_W) * on) * side)
 					var y_back := float(height.call(back.x, back.y)) + SURFACE_LIFT + lift
-					var y_top := maxf(y_out, y_back) + FOOTWAY_H
+					var y_top := maxf(y_out, y_back) + FOOTWAY_H * on - (1.0 - on) * 0.3
 					fv.append(Vector3(outer.x, y_top, outer.y)); fnr.append(Vector3.UP); fuv.append(Vector2(run / 2.0, 0.0))
 					fv.append(Vector3(back.x, y_top, back.y)); fnr.append(Vector3.UP); fuv.append(Vector2(run / 2.0, 0.5))
 					fv.append(Vector3(back.x, minf(y_back, y_out) - 0.3, back.y)); fnr.append(Vector3(nrm.x * side, 0.0, nrm.y * side)); fuv.append(Vector2(run / 2.0, 0.7))
@@ -318,7 +320,7 @@ func _street_mesh(s: Dictionary, lift: float, surface: Material, kerb_mat: Mater
 			var tg := (q2 - q).normalized()
 			var nr := Vector2(-tg.y, tg.x)
 			var hs := float(s["hw"])
-			for off: float in [-hs * 0.55, 0.0, hs * 0.55]:
+			for off: float in ([-hs * 0.55, 0.0, hs * 0.55] if UrbsSite.platform_at(q.x, q.y) == "" else []):
 				var c2 := q + nr * off
 				var yb := float(height.call(c2.x, c2.y)) + SURFACE_LIFT + lift
 				_box_into(kv, kn, ki, Vector3(c2.x, yb, c2.y), tg, nr, Vector2(0.45, 0.7), 0.26)
