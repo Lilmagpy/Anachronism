@@ -184,7 +184,8 @@ class MB:
 		box(Vector3(minf(a.x, b.x), y0, minf(a.z, b.z)), Vector3(maxf(a.x, b.x), y1, maxf(a.z, b.z)), col, true, false)
 
 	## A painted sign panel on a wall face: UV runs 0..1 left to right as read from outside and 0..1
-	## upwards; UV2 = (panel width in metres, `trade` = category * 100 + a number 0-99) picks the words.
+	## upwards; UV2 = (panel width in metres, `trade` = category * 100 + a number 0-99 from the sign's
+	## place along the wall, so neighbouring shops of one building differ) picks the words.
 	func sign_panel(face: int, h0: float, h1: float, y0: float, y1: float, w: float, d: float, off: float, trade: float) -> void:
 		var flip := face == 1 or face == 2      # faces whose +h runs right to left seen from outside
 		var pts := [fp(face, h0, y0, w, d, off), fp(face, h1, y0, w, d, off), fp(face, h1, y1, w, d, off), fp(face, h0, y1, w, d, off)]
@@ -566,7 +567,7 @@ static func shop_front(b: MB, face: int, h: float, wid: float, w: float, d: floa
 		# the trade the sign names follows what the shop shows: 0 counter with dolia (wine, oil, an
 		# inn), 1 a table of goods, 2 a workbench
 		var trade := 0.0 if r < 0.45 else (1.0 if r < 0.8 else 2.0)
-		b.sign_panel(face, h0 - 0.1, h1 + 0.1, tall + 0.4, tall + 0.95, w, d, 0.012, trade * 100.0 + float((int(fr(k, 11) * 100.0) + int(absf(h) * 2.0 + 0.5) * 13) % 100))
+		b.sign_panel(face, h0 - 0.1, h1 + 0.1, tall + 0.4, tall + 0.95, w, d, 0.012, trade * 100.0 + float(int((h + 20.0) * 2.0 + 0.5) % 100))
 	# awning: a cloth from a timber bar over the opening down to two poles at the kerb
 	if awning >= 0 and face == 0:
 		var ca: Color = AWNINGS[awning % AWNINGS.size()]
