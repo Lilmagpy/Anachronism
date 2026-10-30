@@ -285,9 +285,9 @@ terrain_model:
   platforms:
   - id: forum_romanum
     polygon: [[41.89317, 12.48379], [41.89174, 12.48379], [41.8916, 12.48482], [41.89115, 12.48578], [41.89115, 12.48711], [41.89196, 12.48735], [41.89277, 12.48687], [41.89317, 12.48602], [41.89349, 12.48554], [41.89349, 12.48458]]
-    level: [10.0, 12.5]
+    level: [11.0, 11.0]
     blend: 30
-    note: "the whole piazza and the buildings round it, from the foot of the Tabularium to the Regia and the Atrium Vestae; the floor was about 10 m a.s.l. (Sullan pavement 11.90-12.50 m by the temple of Caesar at the east end, P-A s.v. Sacra Via)"
+    note: "the whole piazza and the buildings round it, from the foot of the Tabularium to the Regia and the Atrium Vestae, dead flat so the paving (monuments.yaml forum_romanum, 120 x 56 m) and every building on it meet the ground; the early floor was about 10 m a.s.l., the Sullan pavement 11.90-12.50 m by the temple of Caesar (P-A s.v. Sacra Via): 11 m is the modeller's middle value for the late Republic"
     sources: ["Platner-Ashby s.v. Forum Romanum (read on LacusCurtius, U2)", "Platner-Ashby s.v. Sacra Via (read, streets.yaml)"]
   - id: forum_iulium
     polygon: [[41.89331, 12.48446], [41.8934, 12.48566], [41.89439, 12.48542], [41.8943, 12.48433]]

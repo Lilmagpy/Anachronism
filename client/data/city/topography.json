@@ -656,10 +656,10 @@
 "blend": 30,
 "id": "forum_romanum",
 "level": [
-10.0,
-12.5
+11.0,
+11.0
 ],
-"note": "the whole piazza and the buildings round it, from the foot of the Tabularium to the Regia and the Atrium Vestae; the floor was about 10 m a.s.l. (Sullan pavement 11.90-12.50 m by the temple of Caesar at the east end, P-A s.v. Sacra Via)",
+"note": "the whole piazza and the buildings round it, from the foot of the Tabularium to the Regia and the Atrium Vestae, dead flat so the paving (monuments.yaml forum_romanum, 120 x 56 m) and every building on it meet the ground; the early floor was about 10 m a.s.l., the Sullan pavement 11.90-12.50 m by the temple of Caesar (P-A s.v. Sacra Via): 11 m is the modeller's middle value for the late Republic",
 "polygon": [
 [
 41.89317,
