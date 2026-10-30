@@ -58,6 +58,9 @@ var interiors := UrbsInterior.new()
 var chunks := UrbsChunks.new()
 var cam := UrbsCamera.new()
 var hud := UrbsHud.new()
+var life := UrbsLife.new()          ## U8 life: people, stalls, carts, smoke, lamps (life.gd)
+var spectacle: Node3D               ## the spectacle playing, if any (spectacles/spectacles.gd)
+var events: Array = []              ## the turn's city events (view["city"]["events"])
 var sun := DirectionalLight3D.new()
 var environment := Environment.new()
 var atmosphere := UrbsAtmosphere.new()   # U8 render: sky, sun, haze, shadows, post (atmosphere.gd)
@@ -87,6 +90,7 @@ func _ready() -> void:
 	chunks.height = Callable(self, "height_at")
 	add_child(chunks)
 	add_child(hud)
+	add_child(life)
 	hud.back_pressed.connect(_back)
 	hud.enter_pressed.connect(func() -> void:
 		if selected != "":
@@ -112,10 +116,12 @@ func _ready() -> void:
 
 ## Build the city of `new_year` (once per year) and take over the screen. `at` is the local
 ## point to open over (default the Forum); `flags` are the command-line options.
-func open(new_year: int, at := Vector3.ZERO, flags := {}) -> void:
+func open(new_year: int, at := Vector3.ZERO, flags := {}, new_events: Array = []) -> void:
 	year = new_year
 	if _built_year != year:
 		_rebuild()
+	events = new_events
+	life.set_events(events)
 	if flags.has("fx"):   # U8 render
 		atmosphere.set_fx(str(flags["fx"]))
 	if flags.has("day"):   # U8 render
@@ -133,16 +139,21 @@ func open(new_year: int, at := Vector3.ZERO, flags := {}) -> void:
 	var target := at
 	cam.snap_city(target, 1500.0)
 	_apply_flags(flags)
+	_start_spectacle(flags)
 	chunks.focus_on(cam.focus(), cam.mode == UrbsCamera.Mode.CITY)
 	# The first picture is complete, not popping in: the fill finishes its chunks at once here,
 	# then goes back to spreading its work over frames.
 	fill.sync_chunks = true
 	chunks.load_all_now()
 	fill.sync_chunks = false
+	# and the first crowd is in place too (life spreads its placement over frames otherwise)
+	for i in 30:
+		life.tick(1.0 / 30.0, cam.camera.global_position)
 
 
 func close() -> void:
 	active = false
+	_stop_spectacle()
 	if interior != null:
 		_leave_interior_now()
 	visible = false
@@ -167,6 +178,7 @@ func _rebuild() -> void:
 	streets.build(self, year, height)
 	monuments.build(self, year, height)
 	fill.build(self, year, height)
+	life.build(self, year, hour, height)   # after the streets and monuments it walks among
 	for node in get_children():
 		if not before.has(node):
 			_city_nodes.append(node)
@@ -203,6 +215,11 @@ func _apply_flags(flags: Dictionary) -> void:
 			if at != "" and not at.contains(","):
 				# stand out in front of the doorway, looking back at the façade
 				var door: Transform3D = monuments.entrance(at)
+				var model := str(monuments.entry(at).get("model", ""))
+				var open_air := false
+				for k in ["circus", "theatre", "amphitheatre", "stadium", "plaza", "forum"]:
+					if model.contains(k):
+						open_air = true
 				var outward := door.basis.z
 				outward.y = 0.0
 				outward = outward.normalized() if outward.length() > 0.01 else Vector3(0, 0, 1)
@@ -214,6 +231,8 @@ func _apply_flags(flags: Dictionary) -> void:
 					front = maxf(front, corner.x * outward.x + corner.z * outward.z)
 				var back := front + clampf(b.size.y * 1.8, 22.0, 60.0)
 				stand = Vector3(door.origin.x, 0, door.origin.z) + outward * back
+				if open_air:   # a venue open to the sky: stand at its entrance, looking in
+					stand = Vector3(door.origin.x, 0, door.origin.z)   # facing below still looks in
 				if not yaw_set:
 					facing = atan2(outward.x, outward.z)   # looks along -outward, at the door
 			cam.snap_street(stand, facing, maxf(height, UrbsCamera.EYE), deg_to_rad(float(flags.get("pitch", "3"))))
@@ -264,6 +283,33 @@ func set_hour(new_hour: float) -> void:
 	hour = fposmod(new_hour, 24.0)
 	atmosphere.set_hour(hour)
 	sun.visible = atmosphere.sun_up() and interior == null
+	life.set_hour(hour)
+
+
+# --- spectacles -----------------------------------------------------------------------------
+
+## Play what the city shows on opening: the `--event` / `--spectacle` flags if given, else the
+## first of the turn's events that has a spectacle (a race in the Circus, the Senate at the
+## Curia, a sacrifice, a triumph, a munus). One at a time; the street keeps fewer skinned
+## figures meanwhile so both fit the renderer's per-instance budget.
+func _start_spectacle(flags: Dictionary) -> void:
+	_stop_spectacle()
+	var sp: Node3D = UrbsSpectacles.handle_flags(flags, self)
+	if sp == null:
+		for e in events:
+			if e is Dictionary and not UrbsSpectacles.from_event(e).is_empty():
+				sp = UrbsSpectacles.play_event(e, self)
+				if sp != null:
+					break
+	spectacle = sp
+	life.set_spectacle(spectacle != null)
+
+
+func _stop_spectacle() -> void:
+	if spectacle != null and is_instance_valid(spectacle):
+		UrbsSpectacles.stop()
+	spectacle = null
+	life.set_spectacle(false)
 
 
 # --- picking and the monument card ---------------------------------------------------------
