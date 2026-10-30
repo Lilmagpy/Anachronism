@@ -2428,7 +2428,7 @@
 "lat": 41.888,
 "latin": "Porta Trigemina",
 "location": "Servian Wall, between the Capitol/Forum Boarium and the Tiber",
-"lon": 12.4793,
+"lon": 12.479662,
 "model": "servian_gate",
 "notes": "CORRECTED: the gate existed in the story of 439 (Livy 4.16.2: L. Minucius given an ox 'extra portam Trigeminam'), before the wall of 378, so '378 certain' is unsound; the name, if not anachronistic in Livy, implies a gate on the Palatine-Aventine line before the Servian Wall. P&A: important gate in the Servian wall between the Aventine and the Tiber (Region XI), exact site disputed: below S. Sabina, or about 40 m south of S. Maria in Cosmedin (arch of tufa 3.30 m wide found 1886), or at the north corner of the Aventine near S. Anna dei Calzettari. Livy 35.10.12 (193 BC): the aediles built a portico outside the Porta Trigemina and added the Emporium to it; Livy 41.27.8 (174): the censors paved the Emporium outside the gate, repaired the Porticus Aemilia and paved a portico inside the gate up the Aventine. Pleiades 303638861 has only a 'related' location.",
 "pleiades": 303638861,
@@ -2749,10 +2749,10 @@
 "model"
 ],
 "id": "aedes_bellonae",
-"lat": 41.8915,
+"lat": 41.89277,
 "latin": "Aedes Bellonae",
 "location": "Campus Martius near the Circus Flaminius by tradition; exact site unknown (P&A)",
-"lon": 12.477,
+"lon": 12.477286,
 "model": "temple_tetrastyle_ionic",
 "notes": "Not in Pleiades. P&A: vowed by Ap. Claudius Caecus in 296 (Livy 10.19.17; Plin. NH 35.12; Ovid Fast. 6.201-204; CIL I2 p192 elog.), dedicated 'a few years later' on 3 June; 'No traces'; probably not built before the 3rd c.; SITE UNKNOWN: P&A rejects a connection with the pulvinar of the Circus Flaminius and conjectures the Vatican hills. The coordinate here (near the Circus Flaminius) is only the conventional placement and is rough. The temple was used for meetings of the Senate with foreign ambassadors and generals awaiting triumph (a well-known fact, not in the P&A passage read).",
 "pleiades": null,
@@ -2789,10 +2789,10 @@
 "model"
 ],
 "id": "aedes_neptuni_flaminium",
-"lat": 41.8912,
+"lat": 41.893103,
 "latin": "Aedes Neptuni in Circo Flaminio",
 "location": "Campus Martius, near the Circus Flaminius",
-"lon": 12.4765,
+"lon": 12.476561,
 "model": "temple_tetrastyle_ionic",
 "notes": "Not in Pleiades. P&A: an altar of Neptune in the Circus Flaminius sweated in 206 (Livy 28.11.4 per P&A's 'XXVIII.1.4', Dio fr. 57.60 implies a real temple); the temple of Cn. Domitius Ahenobarbus (denarius struck 42-38) was vowed 42-38 and perhaps not built before 32 (when he was consul); dedication day 1 December; whether Domitius built anew or restored the earlier temple cannot be determined. The marble frieze (Scopas group, Plin. NH 36.26) is of the second half of the 1st c. BC.",
 "pleiades": null,
@@ -2944,10 +2944,10 @@
 "model"
 ],
 "id": "aedes_dianae_circus_flaminius",
-"lat": 41.891,
+"lat": 41.893274,
 "latin": "Aedes Dianae (Circo Flaminio)",
 "location": "Circus Flaminius",
-"lon": 12.4762,
+"lon": 12.476211,
 "model": "temple_tetrastyle_ionic",
 "notes": "Livy 40.52.1 names Aemilius Lepidus dedicating Diana and Juno Regina in the Circus Flaminius in 179; I list it here at low certainty. CORRECTED: previous 'by' text was garbled (mentioned M. Fulvius Nobilior and Hercules Musarum, unrelated). Livy 40.52.1 (Latin text) says M. Aemilius Lepidus, as censor, dedicated both temples of Juno Regina and Diana 'utramque in circo Flaminio', vowed eight years earlier (187) in the Ligurian war; P&A agrees (vowed 187, Livy 39.2; dedicated 179). Certainty raised from low to certain. Not in Pleiades.",
 "pleiades": null,
@@ -2981,10 +2981,10 @@
 "model"
 ],
 "id": "lares_permarini",
-"lat": 41.8916,
+"lat": 41.892941,
 "latin": "Aedes Larum Permarinum",
 "location": "Campus Martius, near the Porticus Minucia",
-"lon": 12.4768,
+"lon": 12.476923,
 "model": "temple_tetrastyle_ionic",
 "notes": "Verified in Livy 40.52.4-7 (Latin): dedicated by the censor M. Aemilius Lepidus 'in Campo', vowed eleven years earlier by L. Aemilius Regillus in the naval battle against Antiochus's fleet (190, off Myonnesus); its dedicatory tablet copied in the Capitoline temple. P&A: dedicated 22 December 179 (Macrob. 1.10.10; Fasti Praenestini); stood in the Porticus Minucia (Fast. Praen.), so its site depends on that portico's (Pleiades Porticus Minucia 698151983: 41.8951, 12.4792).",
 "pleiades": null,
@@ -5507,6 +5507,12 @@
 "cappellaccio in earlier phases"
 ],
 "model": "wall",
+"open_between": [
+[
+"porta_flumentana",
+"porta_trigemina"
+]
+],
 "precision": "approx",
 "regio": 0,
 "route": [

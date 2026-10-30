@@ -1125,7 +1125,7 @@ monuments:
   type: gate
   regio: 11
   lat: 41.8880
-  lon: 12.4793
+  lon: 12.479662  # U8 island pass: 30 m east, off the water's edge of the modelled river; Platner-Ashby s.v. Porta Trigemina (read): between the Aventine and the Tiber, the exact site disputed; # unverified
   precision: rough
   location: Servian Wall, between the Capitol/Forum Boarium and the Tiber
   built: {year: -378, certainty: probable, by: "gate on the line of the Servian Wall (wall completed 378: Livy 6.32.1); the gate is named already in 439 (Livy 4.16.2)"}
@@ -1277,8 +1277,8 @@ monuments:
   english: Temple of Bellona
   type: temple
   regio: 9
-  lat: 41.8915
-  lon: 12.4770
+  lat: 41.892770  # U8 island pass: the rough point (placed by the old Circus Flaminius) now lay in the Tiber; moved onto land along the north side of the Circus Flaminius as now placed (its record's location: near the Circus Flaminius); # unverified spot
+  lon: 12.477286
   precision: rough
   location: "Campus Martius near the Circus Flaminius by tradition; exact site unknown (P&A)"
   built: {year: -296, certainty: certain, by: "vowed by Ap. Claudius Caecus in battle against Etruscans and Samnites in 296 (Livy 10.19.17-21; Plin. NH 35.12); dedicated a few years later, on 3 June (Ov. Fast. 6.201)"}
@@ -1295,8 +1295,8 @@ monuments:
   english: Temple of Neptune (Circus Flaminius)
   type: temple
   regio: 9
-  lat: 41.8912
-  lon: 12.4765
+  lat: 41.893103  # U8 island pass: the rough point (placed by the old Circus Flaminius) now lay in the Tiber; moved onto land along the north side of the Circus Flaminius as now placed (its record's location: near the Circus Flaminius); # unverified spot
+  lon: 12.476561
   precision: rough
   location: Campus Martius, near the Circus Flaminius
   built: {year: null, certainty: uncertain, by: "temple of Cn. Domitius Ahenobarbus, vowed 42-38 BC (coin evidence) and perhaps built after 32; an earlier altar or temple existed by 206 (Livy 28.11.4; P&A)"}
@@ -1377,8 +1377,8 @@ monuments:
   english: Temple of Diana (Circus Flaminius)
   type: temple
   regio: 9
-  lat: 41.8910
-  lon: 12.4762
+  lat: 41.893274  # U8 island pass: the rough point (placed by the old Circus Flaminius) now lay in the Tiber; moved onto land along the north side of the Circus Flaminius as now placed (its record's location: near the Circus Flaminius); # unverified spot
+  lon: 12.476211
   precision: rough
   location: Circus Flaminius
   built: {year: -179, certainty: certain, by: "vowed by M. Aemilius Lepidus in 187 in the Ligurian war (Livy 39.2.11); dedicated by him as censor in 179 (Livy 40.52.1-2)"}
@@ -1395,8 +1395,8 @@ monuments:
   english: Temple of the Lares of the Sea
   type: temple
   regio: 9
-  lat: 41.8916
-  lon: 12.4768
+  lat: 41.892941  # U8 island pass: the rough point (placed by the old Circus Flaminius) now lay in the Tiber; moved onto land along the north side of the Circus Flaminius as now placed (its record's location: near the Circus Flaminius); # unverified spot
+  lon: 12.476923
   precision: rough
   location: Campus Martius, near the Porticus Minucia
   built: {year: -179, certainty: certain, by: "vowed by L. Aemilius Regillus 190 at Myonnesus; dedicated 179 (Livy 40.52.5-6)"}
@@ -2655,6 +2655,7 @@ monuments:
   route: [[41.8885,12.4885],[41.8845,12.4850],[41.8800,12.4850],[41.8795,12.4790],[41.8880,12.4793],[41.8920,12.4807],[41.8957,12.4830],[41.9000,12.4870],[41.9068,12.4960],[41.9015,12.5000],[41.8957,12.5017],[41.8900,12.4995],[41.8885,12.4885]]
   sources: ["Livy 6.32.1", "Dion. Hal. 4.13", "Platner-Ashby s.v. Murus Servii Tullii"]
   model: wall
+  open_between: [[porta_flumentana, porta_trigemina]]  # U8: the riverside between these gates is drawn without a wall. Platner-Ashby s.v. Porta Trigemina (read): 'the line of the wall has not yet been determined in this quarter'; a straight run between the gates would cross the Tiber's bend and the island; # unverified
   height_m: 10  # unverified
   thickness_m: 3.6
   geometry_source: "dataset form: wall 3.6 m thick and 10 m high; Platner-Ashby s.v. Murus Servii Tullii (ashlar of Grotta Oscura tufa 2 ft courses; the agger on the Esquiline 7 stades long, 50 ft thick with a ditch 30 ft deep and 100 ft wide, Dion. Hal. 9.68)"
