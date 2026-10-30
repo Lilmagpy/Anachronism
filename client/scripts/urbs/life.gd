@@ -486,7 +486,7 @@ func _make_people() -> void:
 	_mm_vfar = _multimesh(Crowd.walker_mesh(3), 1)
 	_mm_dog = _multimesh(Crowd.dog_mesh(), 1)
 	var mat := Crowd.walk_material()
-	_mi_mid = _mm_instance(_mm_mid, mat, "WalkersNear", true)
+	_mi_mid = _mm_instance(_mm_mid, mat, "WalkersNear", false)
 	_mi_far = _mm_instance(_mm_far, mat, "WalkersMid", false)
 	_mm_instance(_mm_vfar, mat, "WalkersFar", false)
 	_mi_dog = _mm_instance(_mm_dog, mat, "Dogs", false)
@@ -556,6 +556,7 @@ func _make_figure(kind: String, a: Dictionary) -> Node3D:
 		"child":
 			o["scale"] = 0.68
 	var f: Node3D = F.person(o)
+	f.rig.lod_distance = 14.0   # the full-detail body (and its shadow) only this close
 	f.name = "Fig_" + kind
 	add_child(f)
 	return f
@@ -694,37 +695,41 @@ func _make_stalls() -> void:
 				var pt: Array = urbs.streets.sample_at(si, 4.0 + i * 9.0 + _rng.randf_range(-1.5, 1.5))
 				var tg: Vector2 = pt[1]
 				var nrm := Vector2(-tg.y, tg.x)
-				var c: Vector2 = pt[0] + nrm * (hw + 1.9) * side
+				# against the house fronts (the kerb and the footpath are 1.3 m: fill.gd), table
+				# back to the wall, the awning reaching to the street's edge
+				var c: Vector2 = pt[0] + nrm * (hw + 1.05) * side
 				if _blocked(c):
 					continue
-				places.append({"p": c, "yaw": atan2(-nrm.x * side, -nrm.y * side), "goods": _rng.randi() % 3})
+				places.append({"p": c, "yaw": atan2(-nrm.x * side, -nrm.y * side), "goods": _rng.randi() % 3, "wall": true})
 	if places.is_empty():
 		_stalls.set_meta("count", 0)
 		return
-	# meshes
-	var frame_mesh := _stall_frame_mesh()
-	var awning_mesh := _stall_awning_mesh()
+	# meshes: free-standing stalls (four poles) and wall stalls (two poles, the awning fixed to
+	# the house front)
 	var goods: Array = [_goods_mesh(0), _goods_mesh(1), _goods_mesh(2)]
 	var n_all := places.size()
-	var mm_frame := _plain_mm(frame_mesh, n_all)
-	var mm_canvas := _plain_mm(awning_mesh, n_all)
-	var mm_striped := _plain_mm(awning_mesh, n_all)
+	var mm_frame: Array = [_plain_mm(_stall_frame_mesh(false), n_all), _plain_mm(_stall_frame_mesh(true), n_all)]
+	var mm_canvas: Array = [_plain_mm(_stall_awning_mesh(false), n_all), _plain_mm(_stall_awning_mesh(true), n_all)]
+	var mm_striped: Array = [_plain_mm(_stall_awning_mesh(false), n_all), _plain_mm(_stall_awning_mesh(true), n_all)]
 	var mm_goods: Array = [_plain_mm(goods[0], n_all), _plain_mm(goods[1], n_all), _plain_mm(goods[2], n_all)]
-	var k_canvas := 0
-	var k_striped := 0
+	var k_frame := [0, 0]
+	var k_canvas := [0, 0]
+	var k_striped := [0, 0]
 	var k_goods := [0, 0, 0]
 	for i in n_all:
 		var pl: Dictionary = places[i]
 		var c: Vector2 = pl["p"]
 		var y := float(height.call(c.x, c.y)) + 0.2
 		var xf := Transform3D(Basis(Vector3.UP, float(pl["yaw"])), Vector3(c.x, y, c.y))
-		mm_frame.set_instance_transform(i, xf)
+		var w := 1 if pl.get("wall", false) else 0
+		(mm_frame[w] as MultiMesh).set_instance_transform(k_frame[w], xf)
+		k_frame[w] += 1
 		if _rng.randf() < 0.55:
-			mm_canvas.set_instance_transform(k_canvas, xf)
-			k_canvas += 1
+			(mm_canvas[w] as MultiMesh).set_instance_transform(k_canvas[w], xf)
+			k_canvas[w] += 1
 		else:
-			mm_striped.set_instance_transform(k_striped, xf)
-			k_striped += 1
+			(mm_striped[w] as MultiMesh).set_instance_transform(k_striped[w], xf)
+			k_striped[w] += 1
 		var g: int = pl["goods"]
 		(mm_goods[g] as MultiMesh).set_instance_transform(k_goods[g], xf)
 		k_goods[g] += 1
@@ -733,7 +738,7 @@ func _make_stalls() -> void:
 		var v := _new_agent("tunic" if _rng.randf() < 0.75 else "stola")
 		v["mode"] = "stand"
 		v["amp"] = 0.0
-		var vp := c - back * 1.1
+		var vp := c - back * 1.1 if w == 0 else c + Vector2(back.y, -back.x) * 1.35 + back * 0.3
 		v["pos"] = Vector3(vp.x, y - 0.07, vp.y)
 		v["yaw"] = atan2(back.x, back.y)
 		v["market"] = true
@@ -748,13 +753,15 @@ func _make_stalls() -> void:
 			sh["yaw"] = atan2(-back.x, -back.y) + _rng.randf_range(-0.3, 0.3)
 			sh["market"] = true
 			_agents.append(sh)
-	mm_canvas.visible_instance_count = k_canvas
-	mm_striped.visible_instance_count = k_striped
+	for w in 2:
+		(mm_frame[w] as MultiMesh).visible_instance_count = k_frame[w]
+		(mm_canvas[w] as MultiMesh).visible_instance_count = k_canvas[w]
+		(mm_striped[w] as MultiMesh).visible_instance_count = k_striped[w]
+		_add_mm(_stalls, mm_frame[w], UrbsMaterials.get_material("timber_weathered"), "StallFrames%d" % w)
+		_stall_open.append(_add_mm(_stalls, mm_canvas[w], UrbsMaterials.get_material("awning_canvas"), "AwningsCanvas%d" % w))
+		_stall_open.append(_add_mm(_stalls, mm_striped[w], UrbsMaterials.get_material("awning_striped"), "AwningsStriped%d" % w))
 	for g in 3:
 		(mm_goods[g] as MultiMesh).visible_instance_count = k_goods[g]
-	_add_mm(_stalls, mm_frame, UrbsMaterials.get_material("timber_weathered"), "StallFrames")
-	_stall_open.append(_add_mm(_stalls, mm_canvas, UrbsMaterials.get_material("awning_canvas"), "AwningsCanvas"))
-	_stall_open.append(_add_mm(_stalls, mm_striped, UrbsMaterials.get_material("awning_striped"), "AwningsStriped"))
 	for g in 3:
 		_stall_open.append(_add_mm(_stalls, mm_goods[g], _vcol_mat, "Goods%d" % g))
 	_stalls.set_meta("count", n_all)
@@ -779,9 +786,9 @@ func _add_mm(parent: Node3D, mm: MultiMesh, mat: Material, nm: String) -> MultiM
 	return mi
 
 
-## The frame: a 1.9 x 0.8 m trestle table at 0.85 m, four poles (the front pair 2.4 m, the back
-## 2.0 m). Faces +z (the customers' side).
-static func _stall_frame_mesh() -> ArrayMesh:
+## The frame: a 1.9 x 0.8 m trestle table at 0.85 m, the front poles 2.4 m; a free stall has two
+## back poles of 2.0 m, a wall stall a beam into the house front instead. Faces +z (the customers).
+static func _stall_frame_mesh(wall: bool) -> ArrayMesh:
 	var parts: Array = []
 	parts.append([M.box(Vector3(1.9, 0.05, 0.8)), Transform3D(Basis(), Vector3(0, 0.85, 0.15)), 5.0])
 	for sx in [-0.8, 0.8]:
@@ -789,21 +796,27 @@ static func _stall_frame_mesh() -> ArrayMesh:
 			parts.append([M.box(Vector3(0.06, 0.83, 0.06)), Transform3D(Basis(), Vector3(sx, 0.42, sz)), 5.0])
 	for sx in [-1.05, 1.05]:
 		parts.append([M.box(Vector3(0.08, 2.4, 0.08)), Transform3D(Basis(), Vector3(sx, 1.2, 1.0)), 5.0])
-		parts.append([M.box(Vector3(0.08, 2.0, 0.08)), Transform3D(Basis(), Vector3(sx, 1.0, -0.9)), 5.0])
+		if wall:
+			parts.append([M.box(Vector3(0.06, 0.06, 1.3)), Transform3D(Basis(Vector3.RIGHT, -0.15), Vector3(sx, 2.32, 0.37)), 5.0])
+		else:
+			parts.append([M.box(Vector3(0.08, 2.0, 0.08)), Transform3D(Basis(), Vector3(sx, 1.0, -0.9)), 5.0])
 	parts.append([M.box(Vector3(2.2, 0.06, 0.06)), Transform3D(Basis(), Vector3(0, 2.38, 1.0)), 5.0])
-	parts.append([M.box(Vector3(2.2, 0.06, 0.06)), Transform3D(Basis(), Vector3(0, 1.98, -0.9)), 5.0])
+	if not wall:
+		parts.append([M.box(Vector3(2.2, 0.06, 0.06)), Transform3D(Basis(), Vector3(0, 1.98, -0.9)), 5.0])
 	return M.merge(parts)
 
 
-## The awning: a cloth from the front bar (2.4 m) to the back bar (2.0 m), sagging a little.
-static func _stall_awning_mesh() -> ArrayMesh:
+## The awning: a cloth from the front bar (2.4 m) back to the back bar (2.0 m) or to the wall
+## (2.55 m), sagging a little.
+static func _stall_awning_mesh(wall: bool) -> ArrayMesh:
+	var z_back := -0.27 if wall else -0.98
+	var y_back := 2.55 if wall else 2.02
 	var fn := func(u: float, v: float) -> Vector3:
 		var x := lerpf(-1.15, 1.15, u)
-		var z := lerpf(1.08, -0.98, v)
-		var y := lerpf(2.42, 2.02, v) - 0.08 * sin(v * PI) - 0.03 * sin(u * PI)
+		var z := lerpf(1.08, z_back, v)
+		var y := lerpf(2.42, y_back, v) - 0.08 * sin(v * PI) - 0.03 * sin(u * PI)
 		return Vector3(x, y, z)
-	var m := M.surface(6, 4, fn, 1)
-	return m
+	return M.surface(6, 4, fn, 1)
 
 
 ## Goods on the table. 0 produce, 1 pottery, 2 bread and cloth. Vertex colours.
@@ -817,26 +830,26 @@ static func _goods_mesh(kind: int) -> ArrayMesh:
 			for i in 6:
 				var x := -0.75 + i * 0.3
 				var c: Color = [Color(0.35, 0.55, 0.25), Color(0.75, 0.55, 0.2), Color(0.6, 0.2, 0.15), Color(0.8, 0.7, 0.3), Color(0.45, 0.6, 0.3), Color(0.7, 0.3, 0.2)][i]
-				parts.append([M.ellipsoid(0.14, 0.11, 0.17, 7, 4), Transform3D(Basis(), Vector3(x, 0.96, 0.15)), 0.0])
+				parts.append([M.ellipsoid(0.14, 0.11, 0.17, 5, 3), Transform3D(Basis(), Vector3(x, 0.96, 0.15)), 0.0])
 				cols.append(c)
 			# a basket at each end and a sack under the table
 			for sx in [-0.95, 0.95]:
-				parts.append([M.lathe([Vector4(0.0, 0.14, 0.14, 0.0), Vector4(0.3, 0.2, 0.2, 0.0), Vector4(0.32, 0.17, 0.17, 0.0)], 8), Transform3D(Basis(), Vector3(sx, 0.0, 0.5)), 0.0])
+				parts.append([M.lathe([Vector4(0.0, 0.14, 0.14, 0.0), Vector4(0.3, 0.2, 0.2, 0.0), Vector4(0.32, 0.17, 0.17, 0.0)], 6, 0, 1), Transform3D(Basis(), Vector3(sx, 0.0, 0.5)), 0.0])
 				cols.append(Color(0.7, 0.58, 0.35))
-			parts.append([M.ellipsoid(0.3, 0.26, 0.24, 7, 4), Transform3D(Basis(), Vector3(0.3, 0.26, 0.0)), 0.0])
+			parts.append([M.ellipsoid(0.3, 0.26, 0.24, 5, 3), Transform3D(Basis(), Vector3(0.3, 0.26, 0.0)), 0.0])
 			cols.append(Color(0.72, 0.66, 0.5))
 		1:
 			for i in 4:
 				var x := -0.65 + i * 0.43
-				parts.append([M.lathe([Vector4(0.0, 0.08, 0.08, 0.0), Vector4(0.1, 0.17, 0.17, 0.0), Vector4(0.3, 0.14, 0.14, 0.0), Vector4(0.36, 0.08, 0.08, 0.0), Vector4(0.4, 0.09, 0.09, 0.0)], 10), Transform3D(Basis(), Vector3(x, 0.88, 0.1)), 0.0])
+				parts.append([M.lathe([Vector4(0.0, 0.08, 0.08, 0.0), Vector4(0.1, 0.17, 0.17, 0.0), Vector4(0.3, 0.14, 0.14, 0.0), Vector4(0.36, 0.08, 0.08, 0.0), Vector4(0.4, 0.09, 0.09, 0.0)], 7, 0, 1), Transform3D(Basis(), Vector3(x, 0.88, 0.1)), 0.0])
 				cols.append(Color(0.7, 0.44, 0.3).lerp(Color(0.5, 0.3, 0.2), rng.randf() * 0.5))
 			for sx in [-1.0, -0.6, 0.6, 1.0]:
-				parts.append([M.lathe([Vector4(0.0, 0.06, 0.06, 0.0), Vector4(0.25, 0.2, 0.2, 0.0), Vector4(0.7, 0.16, 0.16, 0.0), Vector4(0.85, 0.07, 0.07, 0.0), Vector4(0.92, 0.09, 0.09, 0.0)], 10), Transform3D(Basis(Vector3.RIGHT, 0.2), Vector3(sx, 0.0, 0.55)), 0.0])
+				parts.append([M.lathe([Vector4(0.0, 0.06, 0.06, 0.0), Vector4(0.25, 0.2, 0.2, 0.0), Vector4(0.7, 0.16, 0.16, 0.0), Vector4(0.85, 0.07, 0.07, 0.0), Vector4(0.92, 0.09, 0.09, 0.0)], 7, 0, 1), Transform3D(Basis(Vector3.RIGHT, 0.2), Vector3(sx, 0.0, 0.55)), 0.0])
 				cols.append(Color(0.7, 0.44, 0.3))
 		_:
 			for i in 5:
 				var x := -0.7 + i * 0.35
-				parts.append([M.ellipsoid(0.13, 0.06, 0.13, 7, 3), Transform3D(Basis(), Vector3(x, 0.93, -0.05)), 0.0])
+				parts.append([M.ellipsoid(0.13, 0.06, 0.13, 5, 2), Transform3D(Basis(), Vector3(x, 0.93, -0.05)), 0.0])
 				cols.append(Color(0.72, 0.52, 0.28))
 			for i in 3:
 				var x := -0.55 + i * 0.55
@@ -1443,7 +1456,13 @@ func _write(i: int, a: Dictionary) -> void:
 			node.rotation.y = float(a["yaw"])
 			if str(a["mode"]) == "stand" or float(a["amp"]) < 0.01:
 				node.walk(0.0, 0.0)
-				node.pose_arms(0.25 + 0.05 * sin(_clock * 0.7 + float(a["phase"])), 0.25, 0.08, 0.08, 1.9, 1.7)
+				var ph: float = a["phase"]
+				match int(ph * 7.0) % 4:   # a fixed stance per person
+					0: node.pose_arms(0.05, 0.05, 0.06, 0.06, 0.15, 0.15)              # arms at rest
+					1: node.pose_arms(0.25, 0.25, 0.08, 0.08, 1.9, 1.7)                # hands joined
+					2: node.pose_arms(-0.85, 0.1, 0.3, 0.05, 0.6, 0.2)                 # speaking, the right hand out
+					_: node.pose_arms(0.1, 0.0, 0.05, 0.75, 0.2, 2.2)                  # a hand on the hip
+				node.look_yaw(sin(ph * 13.0) * 0.4, 0.05)
 			else:
 				node.walk(float(a["phase"]), float(a["amp"]))
 		return
@@ -1516,7 +1535,7 @@ func _lod_classify(k: int) -> void:
 		if a["active"]:
 			var dd := (a["pos"] as Vector3).distance_squared_to(_lod_cam)
 			if a.get("rig", false):
-				lod = 1 if dd < d2 else HIDDEN
+				lod = 1 if dd < 160.0 * 160.0 else HIDDEN
 			elif a["dog"]:
 				lod = 1 if dd < d1 * 1.5 else HIDDEN
 			elif dd < d0:
