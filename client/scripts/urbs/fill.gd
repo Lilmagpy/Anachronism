@@ -47,9 +47,11 @@ const POP_PATH := "res://data/city/population.json"
 const TOPO_PATH := "res://data/city/topography.json"
 const MONUMENTS_PATH := "res://data/city/monuments.json"
 const SHOP_DEPTH := 5.0
-const FOOTPATH := 1.0
-const KERB := 0.3
-const TIBER_BAND := 48.0
+const FOOTPATH := 1.25            ## = UrbsStreets.FOOTWAY_W: house fronts meet the back of the raised footway
+const KERB := 0.28                ## = UrbsStreets.KERB_W
+const FOOTWAY_H := 0.22           ## = UrbsStreets.FOOTWAY_H: floors of street fronts stand at least this high
+const APRON := 2.6                ## packed earth round a building lot, metres (covers a 5 m lane between two lots)
+const RIVER_CLEAR := 8.0          ## metres kept clear beyond the Tiber's half width (UrbsTerrain)
 const MAX_SLOPE := 0.5
 const MAX_STEP := 5.0                ## most a building may stand above the ground at its lowest corner (plinth < SKIRT)
 const MASK_RES := 3.0
@@ -58,6 +60,7 @@ const MASK_N := 2200
 const M_STREET := 1
 const M_FOOT := 2
 const M_WATER := 4
+const M_WALK := 8                 ## street, kerb and footway: no earth apron is laid here
 const HORREA_DISTRICTS := ["forum_boarium", "aventine", "velabrum", "campus_south", "transtiberim", "default_inside"]
 
 var year := -300
@@ -73,7 +76,6 @@ var _districts: Array = []
 var _default: Dictionary = {}
 var _default_inside: Dictionary = {}
 var _pop_pts: Array = []
-var _tiber := PackedVector2Array()
 var _wall := PackedVector2Array()
 var _circuit := PackedVector2Array()   ## the Servian circuit (regions.yaml servian_circuit): what is 'inside the walls'
 var _rural := {}                       ## regions.yaml rural: kind weights
@@ -88,6 +90,9 @@ var _region_state := {}              ## Vector2i -> {cands, idx, lots, done}
 var _region_by_chunk := {}           ## Vector2i(chunk) -> Array of lots
 var _chunk_cache := {}               ## finished chunks: Vector2i -> Array of lots
 var _warm := false
+var _footway_on := false             ## the street being laid out has a raised footway (UrbsStreets)
+var _site_mask := PackedByteArray()  ## per mask cell, lazily: 0 unknown, 1 clear, 2 river, 3 platform
+var _tree_cache := {}                ## Vector2i(chunk) -> UrbsSite.tree_spots of that chunk
 
 
 # ---------------------------------------------------------------- set-up
@@ -121,6 +126,7 @@ func prepare() -> void:
 	_region_by_chunk = {}
 	_chunk_cache = {}
 	_lot_grid = {}
+	_tree_cache = {}
 	_stamp_mask()
 	_gen_street_lots()
 	if not _warm:
@@ -154,10 +160,6 @@ func _load() -> void:
 		for e in pop.get("city_population", []):
 			_pop_pts.append([int(e["year"]), float(e["central"])])
 		_pop_pts.sort_custom(func(a, b): return a[0] < b[0])
-	var topo: Variant = JSON.parse_string(FileAccess.get_file_as_string(TOPO_PATH))
-	if topo is Dictionary:
-		for ll in topo["tiber"]["course"]:
-			_tiber.append(UrbsGeo.to_local(float(ll[0]), float(ll[1])))
 	var mons: Variant = JSON.parse_string(FileAccess.get_file_as_string(MONUMENTS_PATH))
 	if mons is Dictionary:
 		for m in mons["monuments"]:
@@ -261,12 +263,9 @@ func _circuit_dist(p: Vector2) -> float:
 	return best
 
 
-## Distance from `p` to the Tiber's course (topography.json), metres.
+## Distance from `p` to the Tiber's bank (UrbsTerrain), metres.
 func _tiber_dist(p: Vector2) -> float:
-	var best := 1.0e9
-	for i in range(_tiber.size() - 1):
-		best = minf(best, p.distance_to(Geometry2D.get_closest_point_to_segment(p, _tiber[i], _tiber[i + 1])))
-	return best
+	return maxf(UrbsTerrain.river_distance(p.x, p.y) - UrbsTerrain.river_half_width(p.x, p.y), 0.0)
 
 
 func _population() -> float:
@@ -371,19 +370,69 @@ func _mask_line(pts: PackedVector2Array, step: float, r: float, bit: int) -> voi
 func _stamp_mask() -> void:
 	_mask = PackedByteArray()
 	_mask.resize(MASK_N * MASK_N)
-	_mask_line(_tiber, 12.0, TIBER_BAND, M_WATER)
+	# the river is UrbsTerrain's (its channels, the island reach, the quays): asked per cell in _hazard
+	_site_mask = PackedByteArray()
+	_site_mask.resize(MASK_N * MASK_N)
 	for f in footprints:
 		_mask_rect((f as Rect2).grow(2.0), M_FOOT)
 	if year >= -378:    # the Servian wall (Livy 6.32.1: begun 378 BC)
 		_mask_line(_wall, 6.0, 8.0, M_FOOT)
 	for st in _streets.streets:
 		var pts: PackedVector2Array = st["pts"]
+		_mask_line(pts, 2.2, float(st["hw"]) + KERB + FOOTPATH, M_WALK)
 		_mask_line(pts, 2.2, float(st["hw"]) + 0.2, M_STREET)
 
 
 func _hazard(p: Vector2) -> int:
 	var i := _mask_idx(p)
-	return 0 if i < 0 else _mask[i]
+	if i < 0:
+		return 0
+	var m: int = _mask[i]
+	var sm: int = _site_mask[i]
+	if sm == 0:
+		# the site, asked once per 3 m cell: the Tiber with a margin (UrbsTerrain), the built
+		# platforms (UrbsSite: the Forum, the Area Capitolina, the Circus arena)
+		var cx := (float(i % MASK_N) + 0.5) * MASK_RES - MASK_HALF
+		var cz := (float(i / MASK_N) + 0.5) * MASK_RES - MASK_HALF
+		sm = 1
+		if UrbsTerrain.in_river(cx, cz) or UrbsTerrain.river_distance(cx, cz) < UrbsTerrain.river_half_width(cx, cz) + RIVER_CLEAR:
+			sm = 2
+		elif UrbsSite.platform_at(cx, cz) != "":
+			sm = 3
+		_site_mask[i] = sm
+	if sm == 2:
+		m |= M_WATER
+	elif sm == 3:
+		m |= M_FOOT
+	return m
+
+
+## The trees UrbsSiteFlora plants in chunk `key` (cached for the year).
+func _trees_in(key: Vector2i) -> Array:
+	if not _tree_cache.has(key):
+		_tree_cache[key] = UrbsSite.tree_spots(Rect2(Vector2(key) * CHUNK, Vector2(CHUNK, CHUNK)))
+	return _tree_cache[key]
+
+
+## True if a tree's trunk and inner crown stand on the lot's footprint.
+func _hits_tree(lot: Dictionary) -> bool:
+	var c: Vector2 = lot["c"]
+	var reach := maxf(lot["hx"], lot["hz"]) * 1.42 + 6.0
+	var ax := _axes(lot)
+	var k0 := Vector2i(floori((c.x - reach) / CHUNK), floori((c.y - reach) / CHUNK))
+	var k1 := Vector2i(floori((c.x + reach) / CHUNK), floori((c.y + reach) / CHUNK))
+	for kz in range(k0.y, k1.y + 1):
+		for kx in range(k0.x, k1.x + 1):
+			for t: Dictionary in _trees_in(Vector2i(kx, kz)):
+				var tp: Vector3 = t["pos"]
+				var rel := Vector2(tp.x, tp.z) - c
+				if rel.length() > reach:
+					continue
+				var dx := maxf(absf(rel.dot(ax[0])) - float(lot["hx"]), 0.0)
+				var dz := maxf(absf(rel.dot(ax[1])) - float(lot["hz"]), 0.0)
+				if sqrt(dx * dx + dz * dz) < maxf(0.8, float(t["radius"]) * 0.45):
+					return true
+	return false
 
 
 # ---------------------------------------------------------------- lots
@@ -435,7 +484,12 @@ func _ground_ok(lot: Dictionary, pts: Array) -> bool:
 		return false
 	# one base per building: the floor at the highest of the corners, so no part is buried, and
 	# the masonry plinth (UrbsFillParts.SKIRT deep) closes the gap down to the ground below
-	lot["y"] = hi - 0.04 if str(lot.get("kind", "")) != "furn" else sum / float(pts.size()) - 0.05
+	if str(lot.get("kind", "")) == "furn":
+		lot["y"] = sum / float(pts.size()) - 0.05
+		return true
+	# on a platform or a hillside terrace stand at its level (UrbsSite), never below a corner
+	var c: Vector2 = lot["c"]
+	lot["y"] = maxf(hi, UrbsSite.terrace_height_at(c.x, c.y)) - 0.04
 	return true
 
 
@@ -532,6 +586,7 @@ func _gen_street_lots() -> void:
 		var st: Dictionary = _streets.streets[si]
 		if str(st["kind"]) == "road":
 			continue
+		_footway_on = _has_footway(st)
 		var sid := str(st["id"])
 		var sh := hash(sid) & 0xfffff
 		var s := 25.0 + _r(sh, 1, 3) * 60.0
@@ -554,11 +609,13 @@ func _gen_street_lots() -> void:
 				furniture_n += 1
 			s += 80.0 + _r(sh, n, 14) * 60.0
 			n += 1
+	_footway_on = false
 	# 2b. tombs along the roads out of the gates (before the houses, so the houses give way)
 	furniture_n += _gen_tombs()
 	# 3. tabernae and houses along every street
 	for si in _streets.streets.size():
 		_street_rows(si)
+	_footway_on = false
 	_bucket_street_lots()
 	count_stats = {"furniture": furniture_n}
 	for lot in _street_lots:
@@ -673,6 +730,14 @@ func _street_context(p: Vector2, road: bool) -> Dictionary:
 	return {"era": _era(d), "occ": _occupancy_at(d, p)}
 
 
+## Whether UrbsStreets gives street `st` a raised footway: paved, not a country road, inside the walls.
+func _has_footway(st: Dictionary) -> bool:
+	if not bool(st.get("paved", false)) or str(st["kind"]) == "road" or _circuit.is_empty():
+		return false
+	var pts: PackedVector2Array = st["pts"]
+	return Geometry2D.is_point_in_polygon(pts[pts.size() / 2], _circuit)
+
+
 func _street_rows(si: int) -> void:
 	var st: Dictionary = _streets.streets[si]
 	var sid := str(st["id"])
@@ -680,6 +745,7 @@ func _street_rows(si: int) -> void:
 	var length: float = st["len"]
 	var hw: float = st["hw"]
 	var road := str(st["kind"]) == "road"
+	_footway_on = _has_footway(st)
 	for side in [1, -1]:
 		var stretches: Array = []
 		var s := 0.0
@@ -783,7 +849,7 @@ func _street_prop(mp: Vector2, mn: Vector2, hw: float, sh: int, item: int, side:
 	lot["hx"] = 0.4
 	lot["hz"] = 0.4
 	lot["c"] = pos
-	lot["y"] = float(height.call(pos.x, pos.y))
+	lot["y"] = float(height.call(pos.x, pos.y)) + (FOOTWAY_H if _footway_on else 0.0)
 	_street_lots.append(lot)
 
 
@@ -818,6 +884,12 @@ func _add_street_lot(lot: Dictionary, own: String, margin: float, force_ok := fa
 					return false
 	if not _ground_ok(lot, pts):
 		return false
+	var lk := str(lot["kind"])
+	if _footway_on and lk != "tomb" and lk != "prop":
+		# the street has a raised footway: the fronts (and anything standing on it) start at its top
+		var fc: Vector2 = c + _axes(lot)[1] * float(lot["hz"])
+		var top: float = float(height.call(fc.x, fc.y)) + FOOTWAY_H
+		lot["y"] = maxf(float(lot["y"]), top - 0.02) if lk != "furn" else float(lot["y"]) + FOOTWAY_H
 	_street_hash[key] = _street_hash.get(key, [])
 	_street_hash[key].append(_street_lots.size())
 	_street_lots.append(lot)
@@ -902,7 +974,7 @@ func _block_plan(gi: int, gj: int, ba: int, bb: int, bc: Vector2) -> String:
 	var occ := _occupancy_at(d, bc)
 	# warehouses (horrea) on the blocks nearest the river, from the Emporium of 193 BC (Livy
 	# 35.10.12, # unverified) and the Porticus Aemilia: the river port's stores
-	if year >= -193 and str(d["id"]) in HORREA_DISTRICTS and _tiber_dist(bc) < 230.0:
+	if year >= -193 and str(d["id"]) in HORREA_DISTRICTS and _tiber_dist(bc) < 200.0:
 		if _r(gi * 97 + ba, gj * 89 + bb, 15) < 0.45 * occ:
 			return "horrea"
 	var r := _r(gi * 97 + ba, gj * 89 + bb, 11)
@@ -1069,13 +1141,16 @@ func advance_region(rk: Vector2i, deadline: int) -> bool:
 func _lattice_verdict(lot: Dictionary, rk: Vector2i, neigh: Array) -> int:
 	var pts := _corners(lot)
 	for p in pts:
-		var hz := _hazard(p)
+		var hz := _hazard(p) & ~M_WALK
 		if hz != 0:
 			var rk2 := "hazard_%d" % hz
 			reject_stats[rk2] = int(reject_stats.get(rk2, 0)) + 1
 			return 1
 	if not _ground_ok(lot, pts):
 		reject_stats["slope"] = int(reject_stats.get("slope", 0)) + 1
+		return 1
+	if _hits_tree(lot):
+		reject_stats["tree"] = int(reject_stats.get("tree", 0)) + 1
 		return 1
 	if _overlaps_street_lots(lot, 0.6):
 		reject_stats["street_lot"] = int(reject_stats.get("street_lot", 0)) + 1
@@ -1120,7 +1195,16 @@ func regions_for_chunk(key: Vector2i) -> Array:
 
 func lots_for_chunk(key: Vector2i) -> Array:
 	var out: Array = []
-	out.append_array(_street_by_chunk.get(key, []))
+	# street-front buildings standing on a tree (UrbsSite.tree_spots) give way to it; asked here, when
+	# the chunk is built, so opening the city does not wait for the trees of every chunk
+	for lot in _street_by_chunk.get(key, []):
+		var lk := str(lot["kind"])
+		if lk != "prop" and lk != "tomb" and lk != "furn":
+			if not lot.has("tree_ok"):
+				lot["tree_ok"] = not _hits_tree(lot)
+			if not lot["tree_ok"]:
+				continue
+		out.append(lot)
 	out.append_array(_region_by_chunk.get(key, []))
 	return out
 
@@ -1349,164 +1433,72 @@ func _parcel_at(i: int, j: int, c: Vector2) -> Dictionary:
 	return cand
 
 
-## Ground of the parcels (one mesh following the terrain) and what stands on them (trees, vine rows,
-## beds, farm steadings), added to `node`.
+## The farm steadings standing on the parcels (house, barn, stacks), added to `node`. The fields
+## themselves, furrows, hedgerows, olive groves and vine rows are the terrain's and the flora's
+## (UrbsTerrain, UrbsSiteFlora); a steading takes the orientation of the field it stands in
+## (UrbsSite.parcel_at) and keeps clear of the trees planted there.
 func rural_build(node: Node3D, parcels: Array, lod: int) -> void:
-	if parcels.is_empty():
-		return
-	var gn := 4 if lod == 0 else 2
-	var verts := PackedVector3Array()
-	var norms := PackedVector3Array()
-	var cols := PackedColorArray()
-	var uvs := PackedVector2Array()
-	var idx := PackedInt32Array()
-	var buckets := {}
+	var list: Array = []
 	for p in parcels:
-		var ax: Array = p["ax"]
-		var kind: String = p["sub"]
-		var is_sown := kind == "field" or kind == "vineyard" or kind == "garden" or kind == "farm"
-		var cid := 1.0 if is_sown else 0.5
-		var tint: Color = p["tint"]
-		var base := verts.size()
-		for b in range(gn + 1):
-			for a in range(gn + 1):
-				var u: float = (float(a) / float(gn) - 0.5) * float(p["hx"]) * 2.0
-				var v: float = (float(b) / float(gn) - 0.5) * float(p["hz"]) * 2.0
-				var wp: Vector2 = p["c"] + ax[0] * u + ax[1] * v
-				verts.append(Vector3(wp.x, float(height.call(wp.x, wp.y)) + 0.1, wp.y))
-				norms.append(Vector3.UP)
-				cols.append(Color(tint.r, tint.g, tint.b, cid))
-				uvs.append(Vector2(u, v))
-		for b in range(gn):
-			for a in range(gn):
-				var q := base + b * (gn + 1) + a
-				idx.append_array([q, q + 1, q + gn + 1, q + 1, q + gn + 2, q + gn + 1])
-		if lod >= 2:
+		if str(p["sub"]) != "farm":
 			continue
 		var c: Vector2 = p["c"]
+		var field := UrbsSite.parcel_at(c.x, c.y)
 		var ci := roundi(c.x)
 		var cj := roundi(c.y)
-		var gy: float = float(height.call(c.x, c.y))
+		var th := float(field.get("angle", p["th"])) + float(int(_r(ci, cj, 191) * 4.0)) * PI * 0.5
 		var sx: float = float(p["hx"]) * 2.0 / 44.0
-		match kind:
-			"orchard", "pasture", "meadow":
-				var n := (4 if kind == "orchard" else 2) if lod == 0 else 2
-				for a in range(n):
-					for b in range(n):
-						if kind != "orchard" and _r(ci, cj, 120 + a * 5 + b) > 0.5:
-							continue
-						var u: float = ((float(a) + 0.5) / float(n) - 0.5) * float(p["hx"]) * 1.7 + (_r(ci, cj, 130 + a) - 0.5) * 3.0
-						var v: float = ((float(b) + 0.5) / float(n) - 0.5) * float(p["hz"]) * 1.7 + (_r(ci, cj, 140 + b) - 0.5) * 3.0
-						var wp2: Vector2 = c + ax[0] * u + ax[1] * v
-						var tk := "tree:fruit" if kind == "orchard" else ("tree:pine" if _r(ci, cj, 150 + a + b) < 0.4 else "tree:round")
-						if not buckets.has(tk):
-							buckets[tk] = []
-						var sc := (0.9 + _r(ci, cj, 160 + a * 3 + b) * 0.5) * (1.0 if kind == "orchard" else 1.1)
-						buckets[tk].append({"c": wp2, "th": _r(ci, cj, 170 + a + b) * TAU, "sx": sc, "sz": sc, "sy": sc, "y": float(height.call(wp2.x, wp2.y)) - 0.1, "tint": Color(1, 1, 1, _r(ci, cj, 180 + a + b))})
-			"vineyard", "garden", "farm":
-				var mk := "rural:vines" if kind == "vineyard" else ("rural:beds" if kind == "garden" else "rural:farm")
-				if not buckets.has(mk):
-					buckets[mk] = []
-				buckets[mk].append({"c": c, "th": p["th"], "sx": sx, "sz": sx, "y": gy, "tint": Color(1, 1, 1, _r(ci, cj, 190))})
-	var arrays := []
-	arrays.resize(Mesh.ARRAY_MAX)
-	arrays[Mesh.ARRAY_VERTEX] = verts
-	arrays[Mesh.ARRAY_NORMAL] = norms
-	arrays[Mesh.ARRAY_COLOR] = cols
-	arrays[Mesh.ARRAY_TEX_UV] = uvs
-	arrays[Mesh.ARRAY_INDEX] = idx
-	var mesh := ArrayMesh.new()
-	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-	var mi := MeshInstance3D.new()
-	mi.name = "Farmland"
-	mi.mesh = mesh
-	mi.material_override = UrbsFillMeshes.farm_material()
-	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	node.add_child(mi)
-	var keys := buckets.keys()
-	keys.sort()
-	for mk2 in keys:
-		node.add_child(make_instances(buckets[mk2], mk2, lod))
+		var lot := {"c": c, "th": th, "sx": sx, "sz": sx, "hx": 20.0 * sx, "hz": 20.0 * sx, "y": float(height.call(c.x, c.y)), "tint": Color(1, 1, 1, _r(ci, cj, 190)), "kind": "farm"}
+		if _hits_tree(lot):
+			continue
+		list.append(lot)
+	if not list.is_empty():
+		node.add_child(make_instances(list, "rural:farm", lod))
 
 
-## Ground between the houses: packed earth over every 8 m cell near a lot. Incremental; True when done.
-func floor_step(node: Node3D, key: Vector2i, lots: Array, lod: int, st: Dictionary, deadline: int) -> bool:
-	var n := 32 if lod == 0 else 16
-	var cell := CHUNK / float(n)
-	var x0 := float(key.x) * CHUNK
-	var z0 := float(key.y) * CHUNK
-	if not st.has("mark"):
-		var mark := PackedByteArray()
-		mark.resize(n * n)
-		var cnt := PackedByteArray()
-		cnt.resize(n * n)
-		for lot in lots:
-			var kind := str(lot["kind"])
-			if kind == "prop" or kind == "tree" or kind == "tomb" or kind == "furn":
-				continue
-			var r := maxf(lot["hx"], lot["hz"]) * 1.42 + 5.0
-			var c: Vector2 = lot["c"]
-			var ia := maxi(int((c.x - r - x0) / cell), 0)
-			var ib := mini(int((c.x + r - x0) / cell), n - 1)
-			var ja := maxi(int((c.y - r - z0) / cell), 0)
-			var jb := mini(int((c.y + r - z0) / cell), n - 1)
-			for j in range(ja, jb + 1):
-				for i in range(ia, ib + 1):
-					cnt[j * n + i] = mini(int(cnt[j * n + i]) + 1, 250)
-		# outside the walls only where houses stand close together (a pad under a lone house looks
-		# wrong); inside, any cell near a house, and below every cell of the circuit
-		var circ_box := _circuit_bounds()
-		var near_circ := circ_box.grow(60.0).intersects(Rect2(x0, z0, CHUNK, CHUNK))
-		for j in range(n):
-			for i in range(n):
-				var k := j * n + i
-				if cnt[k] == 0:
-					continue
-				var cp := Vector2(x0 + (float(i) + 0.5) * cell, z0 + (float(j) + 0.5) * cell)
-				if cnt[k] >= 3 or (near_circ and _urban(cp)):
-					mark[k] = 1
-		if year >= -378 and not _circuit.is_empty() and near_circ:
-			for j in range(n):
-				for i in range(n):
-					if mark[j * n + i] == 0:
-						var cp2 := Vector2(x0 + (float(i) + 0.5) * cell, z0 + (float(j) + 0.5) * cell)
-						if Geometry2D.is_point_in_polygon(cp2, _circuit) and (_hazard(cp2) & M_WATER) == 0:
-							mark[j * n + i] = 1
-		st["mark"] = mark
-		st["row"] = 0
-		st["h"] = PackedFloat32Array()
-		st["h"].resize((n + 1) * (n + 1))
-		var any := false
-		for m in mark:
-			if m != 0:
-				any = true
-				break
-		st["any"] = any
-		if not any:
-			return true
-	while st["row"] <= n:
-		var j: int = st["row"]
-		for i in range(n + 1):
-			st["h"][j * (n + 1) + i] = float(height.call(x0 + float(i) * cell, z0 + float(j) * cell)) + 0.09
-		st["row"] += 1
-		if Time.get_ticks_usec() > deadline and st["row"] <= n:
-			return false
+## Ground round the houses: a packed-earth apron 2.6 m wide round every building lot (enough to
+## pave the lanes between neighbours), draped over the terrain (the terrain draws the rest of the ground evenly; the earth is
+## not spread over the open hillsides). One mesh per chunk. True when done.
+func floor_step(node: Node3D, _key: Vector2i, lots: Array, _lod: int, _st: Dictionary, _deadline: int) -> bool:
 	var verts := PackedVector3Array()
 	var normals := PackedVector3Array()
 	var cols := PackedColorArray()
-	for j in range(n + 1):
-		for i in range(n + 1):
-			verts.append(Vector3(x0 + float(i) * cell, st["h"][j * (n + 1) + i], z0 + float(j) * cell))
-			normals.append(Vector3.UP)
-			cols.append(UrbsFillMeshes.EARTH)
 	var idx := PackedInt32Array()
-	var mk: PackedByteArray = st["mark"]
-	for j in range(n):
-		for i in range(n):
-			if mk[j * n + i] == 0:
-				continue
-			var a := j * (n + 1) + i
-			idx.append_array([a, a + 1, a + n + 1, a + 1, a + n + 2, a + n + 1])
+	for lot in lots:
+		var kind := str(lot["kind"])
+		if not (kind in ["insula", "casa", "domus", "taberna", "workshop", "horrea"]):
+			continue
+		var ax := _axes(lot)
+		var c: Vector2 = lot["c"]
+		var ex: Vector2 = ax[0] * (float(lot["hx"]) + APRON)
+		var ez: Vector2 = ax[1] * (float(lot["hz"]) + APRON)
+		var base := verts.size()
+		# a 4 x 4 grid draped on the terrain, so it follows terraces and slopes instead of cutting them
+		for b in 5:
+			for a in 5:
+				var qq: Vector2 = c + ex * (float(a) / 2.0 - 1.0) + ez * (float(b) / 2.0 - 1.0)
+				verts.append(Vector3(qq.x, float(height.call(qq.x, qq.y)) + 0.07, qq.y))
+				normals.append(Vector3.UP)
+				cols.append(UrbsFillMeshes.EARTH)
+		for b in 4:
+			for a in 4:
+				var q0 := base + b * 5 + a
+				# not over the street, its kerb or its footway
+				var mid := (verts[q0] + verts[q0 + 6]) * 0.5
+				if _hazard(Vector2(mid.x, mid.z)) & M_WALK:
+					continue
+				idx.append_array([q0, q0 + 1, q0 + 6, q0, q0 + 6, q0 + 5])
+	if idx.is_empty():
+		return true
+	# wind every quad so its front is up whatever the lot's yaw
+	for t in range(0, idx.size(), 3):
+		var a := verts[idx[t]]
+		var b := verts[idx[t + 1]]
+		var d := verts[idx[t + 2]]
+		if (b - a).cross(d - a).y > 0.0:
+			var tmp := idx[t + 1]
+			idx[t + 1] = idx[t + 2]
+			idx[t + 2] = tmp
 	var arrays := []
 	arrays.resize(Mesh.ARRAY_MAX)
 	arrays[Mesh.ARRAY_VERTEX] = verts
