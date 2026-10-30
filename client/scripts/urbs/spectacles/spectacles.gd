@@ -183,7 +183,39 @@ static func place(kind: String, id: String, urbs: Node3D, params: Dictionary = {
 			"race":
 				# the track's long axis follows the monument's own bearing when it is known
 				var placed: Variant = urbs.monuments.get("_placed")
-				if placed is Dictionary and (placed as Dictionary).has(id):
+				if placed is Dictionary and (placed as Dictionary).has(id) and str((placed as Dictionary)[id].get("model", "")) == "circus_maximus":
+					# fit the race to the Circus model (monument_forms.gd _circus): a 79 m track
+					# between the banks, the metae at z = -163 and +183 from the model's centre
+					# (carceres at -L/2, the curved end from L/2 - W/2), so the race's spina is
+					# centred 10 m towards the curved end and its turns sit on the metae
+					var pl: Dictionary = placed[id]
+					var L := float(pl["length"])
+					var W := float(pl["width"])
+					var yaw := float(pl["yaw"])
+					var axis := Vector2(sin(yaw), cos(yaw))
+					var zb := minf(180.0, L / 2.0 - W / 2.0 - 70.0)
+					var mid := (-160.0 + zb) / 2.0
+					var c2: Vector2 = (pl["centre"] as Vector2) + axis * mid
+					xf.basis = Basis(Vector3.UP, yaw - PI / 2.0)
+					xf.origin = Vector3(c2.x, float(pl["y"]) + 0.1, c2.y)
+					var tw := 79.0
+					params["width"] = tw
+					params["length"] = (zb + 160.0 + 6.0) + tw
+					# the stands: the flanks from 30 m inside the carceres to the curved end
+					var z0 := -L / 2.0 + 30.0
+					var z1 := L / 2.0 - W / 2.0
+					params["crowd_half"] = (z1 - z0) / 2.0
+					params["crowd_x"] = (z0 + z1) / 2.0 - mid
+					# the stone stands of roman.gd _circus_segment (10 kit units, scaled to the 19.5 m
+					# banks): a 2 m podium, then ten steps of 1.09 m rising 0.85 m from 42.6 m off
+					# the axis. Seated figures have their feet 0.45 m below the step they sit on.
+					params["crowd_r0"] = 43.15
+					params["crowd_depth"] = 1.09
+					params["crowd_rise"] = 0.85
+					params["crowd_base"] = 2.85 - 0.45
+					params["spacing"] = 1.1
+					params["rows"] = 10
+				elif placed is Dictionary and (placed as Dictionary).has(id):
 					var pl: Dictionary = placed[id]
 					xf.basis = Basis(Vector3.UP, float(pl["yaw"]) - PI / 2.0)
 					xf.origin = Vector3((pl["centre"] as Vector2).x, float(pl["y"]), (pl["centre"] as Vector2).y)

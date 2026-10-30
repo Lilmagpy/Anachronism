@@ -9,7 +9,9 @@
 ## Params (all optional): length (track length x, 580), width (track width z, 90), laps (7),
 ## seed, duration (90), rows / spacing (crowd), crashes (0..2, default 2), crowd (bool),
 ## fan_share (0..1, share of the crowd in faction colours, default 0.35), festival (the engine's
-## ludi id; "ludi_romani" for the September games, which spectacles.gd plays with the Circus full).
+## ludi id; "ludi_romani" for the September games, which spectacles.gd plays with the Circus full),
+## crowd_half / crowd_x / crowd_r0 / crowd_depth / crowd_rise / crowd_base (the stands of a real
+## circus).
 ## Local frame: spina on the x axis, carceres at the west (-x) end, floor at y = 0; the parent
 ## scales/places it on the circus monument.
 extends "res://scripts/urbs/spectacles/base.gd"
@@ -313,8 +315,14 @@ func _build() -> void:
 		var c = Crowd.new()
 		c.fan_colours.assign([FACTIONS[0][1], FACTIONS[1][1], FACTIONS[2][1], FACTIONS[3][1]])
 		c.fan_share = float(params.get("fan_share", 0.35))
-		c.add_seats(Crowd.stadium_seats(Ls, width / 2.0 + 2.0, int(params.get("rows", 14)), float(params.get("spacing", 1.5)), 0.9, 0.55, 0.0, true))
+		# on a real circus the stands do not follow the track: crowd_half (half the straight of
+		# the stands), crowd_x (their centre along the spina), crowd_r0 (first row from the axis),
+		# crowd_rise (height per row) come from the monument (spectacles.gd place())
+		var ch := float(params.get("crowd_half", Ls))
+		var cr0 := float(params.get("crowd_r0", width / 2.0 + 2.0))
+		c.add_seats(Crowd.stadium_seats(ch, cr0, int(params.get("rows", 14)), float(params.get("spacing", 1.5)), float(params.get("crowd_depth", 0.9)), float(params.get("crowd_rise", 0.55)), float(params.get("crowd_base", 0.0)), true))
 		c.build()
+		c.position.x = float(params.get("crowd_x", 0.0))
 		add_child(c)
 		_crowd = c
 	_label = make_label("", 1.0, Color(1, 0.95, 0.8))

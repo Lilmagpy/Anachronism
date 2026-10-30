@@ -360,8 +360,8 @@ func _street_weight(s: Dictionary) -> float:
 ## each class in the streets and in the Forum (Plautus Curculio 466-485 for the Forum's togate
 ## business crowd; see the header).
 const KINDS := {
-	"toga":   {"long": true,  "cap": false, "scale": 1.0,  "street": 0.12, "forum": 0.32},
-	"tunic":  {"long": false, "cap": false, "scale": 1.0,  "street": 0.54, "forum": 0.40},
+	"toga":   {"long": true,  "cap": false, "scale": 1.0,  "street": 0.12, "forum": 0.25},
+	"tunic":  {"long": false, "cap": false, "scale": 1.0,  "street": 0.54, "forum": 0.45},
 	"stola":  {"long": true,  "cap": false, "scale": 0.94, "street": 0.20, "forum": 0.15},
 	"pilleus": {"long": false, "cap": true, "scale": 1.0,  "street": 0.07, "forum": 0.08},
 	"child":  {"long": false, "cap": false, "scale": 0.68, "street": 0.07, "forum": 0.05},
@@ -448,7 +448,7 @@ func _make_people() -> void:
 				continue
 			var ring := 0.55 + 0.18 * group
 			for g in group:
-				var a := _new_agent(str(spot["kind"]) if spot["kind"] != "" and _rng.randf() < 0.6 else _pick_kind("forum"))
+				var a := _new_agent(str(spot["kind"]) if spot["kind"] != "" and _rng.randf() < 0.4 else _pick_kind("forum"))
 				var ang := TAU * g / group + _rng.randf() * 0.4
 				var p := c + Vector2(cos(ang), sin(ang)) * (ring if group > 1 else 0.0)
 				a["mode"] = "stand"
@@ -773,9 +773,14 @@ func _make_stalls() -> void:
 func _plain_mm(mesh: Mesh, n: int) -> MultiMesh:
 	var mm := MultiMesh.new()
 	mm.transform_format = MultiMesh.TRANSFORM_3D
+	# white instance colours: the compatibility renderer multiplies the vertex colour by the
+	# instance colour, which is zero when a MultiMesh has none (lead's note, U8)
+	mm.use_colors = true
 	mm.mesh = mesh
 	mm.instance_count = n
 	mm.visible_instance_count = n
+	for i in n:
+		mm.set_instance_color(i, Color.WHITE)
 	return mm
 
 
@@ -1122,8 +1127,8 @@ func _make_lamps() -> void:
 	for i in 8:
 		var l := OmniLight3D.new()
 		l.light_color = Color(1.0, 0.78, 0.5)
-		l.light_energy = 1.6
-		l.omni_range = 10.0
+		l.light_energy = 2.4
+		l.omni_range = 14.0
 		l.omni_attenuation = 1.4
 		l.shadow_enabled = false
 		l.visible = false
@@ -1198,6 +1203,7 @@ func _make_smoke() -> void:
 	var mm := MultiMesh.new()
 	mm.transform_format = MultiMesh.TRANSFORM_3D
 	mm.use_custom_data = true
+	mm.use_colors = true
 	mm.mesh = quad
 	mm.instance_count = pos.size() * puffs
 	mm.visible_instance_count = mm.instance_count
@@ -1208,6 +1214,7 @@ func _make_smoke() -> void:
 			var idx := i * puffs + k
 			mm.set_instance_transform(idx, Transform3D(Basis(), pos[i]))
 			mm.set_instance_custom_data(idx, Color(float(k) / puffs, seed_v, 0.0, 0.0))
+			mm.set_instance_color(idx, Color.WHITE)
 	var sh := Shader.new()
 	sh.code = SMOKE_SHADER
 	_smoke_mat = ShaderMaterial.new()

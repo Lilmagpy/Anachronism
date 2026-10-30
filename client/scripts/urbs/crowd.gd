@@ -55,14 +55,18 @@ void vertex() {
 	VERTEX = v;
 }
 void fragment() {
-	vec3 skin = mix(vec3(0.95, 0.75, 0.6), vec3(0.6, 0.4, 0.3), tone);
+	// colours are sRGB (as the figures' source_color uniforms are); ALBEDO is linear (U8)
+	vec3 skin = mix(vec3(0.86, 0.66, 0.52), vec3(0.55, 0.37, 0.27), tone);
 	vec3 c = skin;
 	if (part < 0.5) {
-		c = texture(face, UV).rgb * mix(1.1, 0.72, tone);
-	} else if (part < 1.5) {
-		c = tint;
-	} else if (part > 3.5) {
-		c = mix(vec3(0.12, 0.09, 0.07), vec3(0.42, 0.3, 0.2), hairv);
+		c = texture(face, UV).rgb * mix(1.0, 0.55, tone);
+	} else {
+		if (part < 1.5) {
+			c = tint;
+		} else if (part > 3.5) {
+			c = mix(vec3(0.12, 0.09, 0.07), vec3(0.42, 0.3, 0.2), hairv);
+		}
+		c = pow(c, vec3(2.2));
 	}
 	ALBEDO = c;
 	ROUGHNESS = 0.9;
