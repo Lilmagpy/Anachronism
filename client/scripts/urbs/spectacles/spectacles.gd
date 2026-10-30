@@ -28,7 +28,8 @@
 ##                                                 (the engine records only the vow kept)
 ##   triumph / battle | capital        triumph     the route Campus Martius - Circus Maximus -
 ##                                                 Via Sacra - Capitol (triumph_route)
-##                                                 general = person, spoils by ref and value
+##                                                 general = person, spoils by ref (the
+##                                                 engine's value, its wealth, is not shown)
 ##   fire, flood                       none        (the monuments show the burnt state; no
 ##                                                 spectacle)
 ##
@@ -113,7 +114,7 @@ static func from_event(e: Dictionary) -> Dictionary:
 		"triumph":
 			var spoils: Array = ["captured arms", "pictures of the war"]
 			if ref == "capital":
-				spoils = ["statues of the taken city", "silver and gold, %d talents" % maxi(value, 1), "captured arms", "pictures of the taken city"]
+				spoils = ["statues of the taken city", "silver and gold of the taken city", "captured arms", "pictures of the taken city"]
 			return {"kind": "triumph", "monument": "", "params": {"general": person, "spoils": spoils}}
 	return {}
 
