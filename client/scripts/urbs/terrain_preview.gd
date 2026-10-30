@@ -78,6 +78,11 @@ const VIEWS := {
 	"east": [Vector3(300, 140, 700), Vector3(1500, 45, 400), 60.0],
 	"janiculum": [Vector3(-900, 150, 300), Vector3(-1900, 70, 0), 60.0],
 	"top": [Vector3(0, 3200, 1), Vector3(0, 0, 0), 55.0],
+	"aventine": [Vector3(-230, 52, 880), Vector3(120, 40, 430), 62.0],
+	"isola": [Vector3(-480, 60, 140), Vector3(-640, 6, 280), 62.0],
+	"forum_low": [Vector3(60, 12, 20), Vector3(-215, 25, -60), 70.0],
+	"farms": [Vector3(1500, 160, 1500), Vector3(2100, 30, 2100), 60.0],
+	"slopes": [Vector3(150, 60, -150), Vector3(400, 45, -400), 62.0],
 }
 
 

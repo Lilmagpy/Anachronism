@@ -248,7 +248,7 @@
 "density": 1.0,
 "from": null,
 "id": "ficus_olea_vitis",
-"lat": 41.8925,
+"lat": 41.8924,
 "lon": 12.4851,
 "mix": {
 "fig": 1,
@@ -371,6 +371,13 @@
 ]
 }
 ],
+"island_facing": {
+"from": -62,
+"prow": "downstream",
+"sources": [
+"Platner-Ashby s.v. Insula Tiberina # unverified, not read this session"
+]
+},
 "plains": [
 {
 "core": 380,
@@ -411,66 +418,76 @@
 "note": "460 x 180 m NE-SW, two summits (Capitolium SW, Arx NE) with the saddle of the Asylum between them at about 37 m; steep cliffs all round except toward the Forum, where the Tabularium fills the slope; the Tarpeian rock at the SW. Outline # unverified (modeller's reading of the modern plan)",
 "outline": [
 [
-41.892,
-12.4815,
-38
+41.89237,
+12.48289,
+40
 ],
 [
-41.89286,
-12.48114,
-42
-],
-[
-41.89385,
-12.48156,
-42
-],
-[
-41.89502,
+41.89194,
 12.48228,
 42
 ],
 [
-41.89538,
+41.89185,
+12.48132,
+42
+],
+[
+41.89277,
+12.48098,
+42
+],
+[
+41.89385,
+12.48146,
+42
+],
+[
+41.89504,
+12.48228,
+42
+],
+[
+41.8954,
 12.48325,
 40
 ],
 [
 41.89497,
-12.48361,
+12.48371,
 38
 ],
 [
-41.89403,
-12.48433,
+41.89425,
+12.48395,
 36
 ],
 [
-41.89304,
-12.48373,
-34
+41.89351,
+12.48347,
+35
 ],
 [
-41.89241,
-12.48289,
-40
+41.89263,
+12.48349,
+36
 ]
 ],
 "peaks": [
 [
-41.89259,
-12.48216,
-45
-],
-[
-41.8946,
-12.4833,
+41.89228,
+12.4818,
 46
 ],
 [
-41.894,
-12.4838,
+41.89317,
+12.48295,
 37
+],
+[
+41.8945,
+12.4833,
+46
 ]
 ],
 "shape": "cliff",
@@ -481,22 +498,27 @@
 ]
 },
 {
-"flank": 90,
+"flank": 70,
 "id": "palatinus",
 "note": "irregular quadrilateral, highest point 51.20 m; the north flank over the Forum is an even slope (Nova Via pavement at 23.40 m half-way up, P-A s.v. Nova Via), the west (Cermalus) and south (Circus) sides steeper; the Velia leaves the NE corner. Outline # unverified (modeller's reading)",
 "outline": [
 [
-41.89039,
-12.4845,
+41.8898,
+12.48397,
+46
+],
+[
+41.89041,
+12.48458,
 45
 ],
 [
-41.8905,
-12.486,
-42
+41.89057,
+12.48602,
+43
 ],
 [
-41.8903,
+41.89034,
 12.488,
 42
 ],
@@ -506,28 +528,33 @@
 36
 ],
 [
-41.889,
-12.4895,
+41.88953,
+12.48971,
 45
 ],
 [
-41.8876,
-12.4885,
+41.88845,
+12.48983,
 46
 ],
 [
-41.8876,
-12.486,
+41.88746,
+12.4894,
+46
+],
+[
+41.88645,
+12.48742,
+46
+],
+[
+41.88846,
+12.48465,
 47
 ],
 [
-41.8885,
-12.484,
-47
-],
-[
-41.8898,
-12.4838,
+41.88904,
+12.48388,
 47
 ]
 ],
@@ -555,7 +582,7 @@
 ]
 },
 {
-"flank": 80,
+"flank": 90,
 "id": "aventinus",
 "note": "two knobs (Aventinus Maior NW 46 m, Minor SE 43 m) with a saddle; steep towards the river and the Circus, whose seats lay against its foot. Outline # unverified (P-A s.v. Aventinus Mons could not be fetched)",
 "outline": [
@@ -565,8 +592,8 @@
 42
 ],
 [
-41.8849,
-12.482,
+41.88527,
+12.4825,
 42
 ],
 [
@@ -711,7 +738,7 @@
 ]
 },
 {
-"blend": 25,
+"blend": 6,
 "id": "area_capitolina",
 "level": [
 42.0,
@@ -739,7 +766,8 @@
 "sources": [
 "Platner-Ashby s.v. Iuppiter Optimus Maximus Capitolinus, Aedes (read, monuments.yaml)",
 "Platner-Ashby s.v. Area Capitolina # unverified, not read"
-]
+],
+"walls": true
 },
 {
 "blend": 45,
@@ -776,26 +804,15 @@
 "quays": [
 {
 "from": -174,
-"from_m": 560,
 "id": "emporium",
+"lat": 41.8823,
+"length_m": 500,
+"lon": 12.4747,
 "rise_m": 4.5,
-"side": "left",
 "sources": [
-"Livy 41.27.8 (174 BC: the censors paved the Emporium with stone, fenced it and built steps down to the Tiber) # unverified, not re-read",
-"Platner-Ashby s.v. Emporium # unverified"
-],
-"to_m": 1110
-},
-{
-"from": null,
-"from_m": 0,
-"id": "insula_revetment",
-"rise_m": 3.4,
-"side": "island",
-"sources": [
-"Platner-Ashby s.v. Insula Tiberina: the travertine facing in the form of a ship is of the 1st century BC # unverified"
-],
-"to_m": 0
+"Livy 35.10.12 (the Emporium laid out by the aediles of 193 BC) # unverified, not re-read",
+"Livy 41.27.8 (174 BC: the censors paved the Emporium with stone, fenced it with posts and made steps up from the Tiber) # unverified, not re-read"
+]
 }
 ],
 "ridges": [
@@ -1384,34 +1401,45 @@
 12.4745
 ],
 [
-41.8905,
+41.8901,
+12.4778
+],
+[
+41.889,
+12.4792
+],
+[
+41.8862,
 12.4772
 ],
 [
-41.8885,
-12.4783
+41.8833,
+12.4752
 ],
 [
-41.883,
-12.4772
+41.88,
+12.4718
 ],
 [
-41.877,
-12.476
+41.8754,
+12.4704
 ],
 [
-41.87,
-12.472
+41.869,
+12.47
 ]
 ],
 "english": "Tiber",
 "island": {
-"channel_east_m": 62,
-"channel_west_m": 48,
-"lat": 41.89,
+"abutment_m": 3,
+"fit_bridges": [
+"pons_fabricius",
+"pons_cestius"
+],
+"lat": 41.8908,
 "latin": "Insula Tiberina",
 "length_m": 270,
-"lon": 12.4775,
+"lon": 12.4772,
 "width_m": 67
 },
 "lat": 41.89,
