@@ -357,7 +357,7 @@ void fragment() {
 		col = mix(c_stucco_white * (0.9 + 0.1 * fbm(uv * 2.0)), ink, l * 0.8);
 	} else if (id == 21) {
 		float bd = fract(u / 0.24);
-		col = mix(c_timber_weathered, c_timber_oak, 0.5) * 0.55 * (0.85 + 0.25 * h21(vec2(floor(u / 0.24), seed)));
+		col = mix(c_timber_weathered, c_timber_oak, 0.8) * 0.6 * (0.85 + 0.25 * h21(vec2(floor(u / 0.24), seed)));
 		col *= mix(1.0, 0.6, step(bd, 0.06) * fade);
 		rough = 0.95;
 	} else if (id == 7) {

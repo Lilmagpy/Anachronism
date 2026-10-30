@@ -1174,7 +1174,10 @@ func make_instances(list: Array, mesh_key: String, lod: int) -> MultiMeshInstanc
 	inst.name = mesh_key.replace(":", "_")
 	inst.multimesh = multi
 	inst.material_override = UrbsFillMeshes.material()
-	inst.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON if lod < 2 and not mesh_key.begins_with("prop") else GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	# shadows: everything near; from 250 m only the buildings tall enough for their shadows to read
+	var tall := mesh_key.begins_with("insula") or mesh_key.begins_with("domus") or mesh_key.begins_with("horrea") or mesh_key.begins_with("workshop") or mesh_key.begins_with("horti")
+	var casts := (lod == 0 and not mesh_key.begins_with("prop")) or (lod == 1 and tall)
+	inst.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON if casts else GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	return inst
 
 
