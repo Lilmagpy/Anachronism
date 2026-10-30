@@ -1,0 +1,9 @@
+schema_version: 1
+pack:
+  id: rome
+  name: The Roman Republic - magistracies, families, people and the Fasti
+  version: 1
+  depends_on: [core]
+  external:
+    # the city dataset lives in data/, shared with the 3D client; it is read in place, not copied
+    - ../../../../../data/rome/city/monuments*.yaml

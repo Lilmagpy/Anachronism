@@ -1,0 +1,397 @@
+schema_version: 1
+# Rome at the founding of the Republic, 509 BC (D-286). Every fact has its source in a note or comment; passage numbers
+# were read against the English translations on Perseus and LacusCurtius in October 2026. Where Livy and others
+# disagree on a date it is said so. Chapters: chapters_rome_509.yaml.
+scenarios:
+  - id: rome_509
+    name: "The Republic is born, 509 BC"
+    description: >-
+      509 BC. The last king of Rome, Tarquinius Superbus, has been driven out, and the Romans have sworn
+      never again to suffer a king. Two consuls, Lucius Junius Brutus and Lucius Tarquinius Collatinus, hold office
+      for a year. Rome is one small city and its fields on the Tiber. Round it stand the Latin cities, the Etruscans of
+      Veii, Caere and Tarquinii, Porsenna of Clusium who will take the exiled Tarquins' side, and the hill peoples
+      who raid every summer. Far off lie Greek Cumae and Croton, Syracuse and Carthage, which signs its first treaty
+      with Rome this very year. A hundred years of wars, secessions and laws lie ahead.
+    start_year: -509
+    years_per_turn: 5
+    campaign_years_per_turn: 1
+    player_civ: rome
+    republic: true
+    map: europe
+    music: roman
+    confidence: low
+    sources:
+      - "Livy 1.60 and 2.1-2.8 (expulsion; first consuls Brutus and Collatinus; Collatinus resigns, Valerius elected; Brutus killed at the Arsian wood; Horatius dedicates the Capitoline temple)"
+      - "Polybius 3.22 (first treaty with Carthage 'in the year of Lucius Junius Brutus and Marcus Horatius'; Polybius's consuls differ from Livy's)"
+      - "Populations: no ancient census survives for these peoples; figures are order-of-magnitude judgements. Livy 1.44 and Dionysius 5.20 give census totals of adult male citizens that modern historians doubt; Rome is set at about 90,000 people (some 25,000 adult male citizens), well inside the province's capacity."
+      - "Techs are judgements from the archaeological record, not from a sourced list. 'republic' and 'written_law' are given to Rome as game conventions: Rome has no public code until the Twelve Tables (Livy 3.57.10, 449)."
+      - "Rulers' ages are approximate; no birth years are recorded."
+    civs:
+      rome:
+        # Rome in 509: one city and its fields. No coinage (Livy 4.60.6: in 406 there was 'as yet no silver coinage' and senators paid in uncoined bronze), no aqueducts, no paved roads.
+        # Leaders: Livy 1.60.3-4 names Brutus and Collatinus; Livy 2.2.10-11 has Collatinus resign and P. Valerius elected; Livy 2.6.9 Brutus dies in battle (509).
+        disposition: cautious
+        navy_bp: 500
+        scripts:
+          - {id: "r509_cassian_treaty", goal: "ally", target: "e5_latins", preconditions: {after_year: -497}, depends_on: ["r509_regillus"], note: "Treaty with the Latin cities, struck by Spurius Cassius alone (493): Livy 2.33.4 and 2.33.9; text in Dionysius 6.95.2."}
+          - {id: "r509_hernici_treaty", goal: "ally", target: "e5_hernici", preconditions: {after_year: -487}, note: "Treaty with the Hernici, two-thirds of their land taken (486): Livy 2.41.1."}
+          - {id: "r509_vs_volsci", goal: "conquer", target: "e5_volsci", preconditions: {after_year: -496}, note: "Wars with the Volsci: Livy 2.22, 2.30-31 (494), 2.33-40 (Coriolanus, 491-488); they go on to 338 (Livy 8.14)."}
+          - {id: "r509_vs_aequi", goal: "conquer", target: "e5_aequi", preconditions: {after_year: -495}, note: "Wars with the Aequi: Livy 2.30.3 (494); Cincinnatus at Algidus 458 (Livy 3.25-29); again in 389 (Livy 6.2-4)."}
+          - {id: "r509_vs_sabines", goal: "conquer", target: "e5_sabines", preconditions: {after_year: -505, before_year: -450}, note: "Sabine wars: Livy 2.16.1-6 (505-503), 2.31.1 (494), 3.26.1-2 (458)."}
+          - {id: "r509_vs_veii_fabii", goal: "conquer", target: "e5_veii", preconditions: {after_year: -481, before_year: -472}, note: "The Fabii take the war with Veii on themselves (479) and are destroyed at the Cremera (477); forty-year truce 474: Livy 2.48.8-2.54.1."}
+          - {id: "r509_fidenae", goal: "conquer", target: "e5_veii", preconditions: {after_year: -439, before_year: -425}, note: "Fidenae revolts to Lars Tolumnius of Veii; Cossus kills him (437): Livy 4.17-20."}
+          - {id: "r509_fall_of_veii", goal: "conquer", target: "e5_veii", preconditions: {after_year: -407}, note: "Siege of Veii from 406; Camillus takes the city in 396: Livy 4.58-60 and 5.19-22."}
+          - {id: "r509_vs_falisci", goal: "conquer", target: "e5_falisci", preconditions: {after_year: -397, before_year: -392}, note: "Capena and Falerii submit after Veii falls (395-394): Livy 5.24 and 5.27."}
+        capital: it_roma
+        generals:
+          - {name: "Publius Valerius Publicola", skill: 3, note: "Consul 509; beat Veii and Tarquinii at the Arsian wood and triumphed: Livy 2.6.6, 2.7.4."}
+          - {name: "Titus Largius", skill: 3, note: "First dictator, on Livy's best reading (Livy 2.18.4-5). Spelled 'Larcius' elsewhere."}
+          - {name: "Aulus Postumius Albus", skill: 3, trait: bold, note: "Dictator at Lake Regillus: Livy 2.19-20; Dionysius 6.2."}
+          - {name: "Lucius Quinctius Cincinnatus", skill: 3, note: "Dictator, called from the plough, 458: Livy 3.26-29. Not available until then in history."}
+          - {name: "Aulus Cornelius Cossus", skill: 3, trait: horse, note: "Killed Lars Tolumnius in single combat, 437: Livy 4.19-20."}
+          - {name: "Marcus Furius Camillus", skill: 5, trait: siege, note: "Dictator who took Veii, 396: Livy 5.19-22."}
+        leader: "Consuls L. Junius Brutus and L. Tarquinius Collatinus"
+        leader_age: 40
+        leader_until: -509
+        successors:
+          - {name: "Publius Valerius Publicola", age: 45, died: -503, ends: "dies too poor to pay for his own funeral"}
+          - {name: "Aulus Postumius Albus", age: 45, until: -495}
+          - {name: "Agrippa Menenius Lanatus", age: 55, died: -493, ends: "dies too poor to pay for his funeral"}
+          - {name: "Spurius Cassius Vecellinus", age: 45, until: -485, ends: "is condemned and put to death"}
+          - {name: "The consuls and the Senate", age: 50, until: -459}
+          - {name: "Lucius Quinctius Cincinnatus", age: 55, until: -458, ends: "lays down the dictatorship after sixteen days"}
+          - {name: "The consuls and the Senate", age: 50, until: -452}
+          - {name: "Appius Claudius, decemvir", age: 45, disposition: "aggressive", until: -449, ends: "kills himself in prison"}
+          - {name: "The consuls and the military tribunes", age: 50, until: -397}
+          - {name: "Marcus Furius Camillus", age: 50, disposition: "aggressive", died: -365, ends: "dies of the plague"}
+        pitch: "You have a city, a river and a vow never to have a king. Every neighbour is stronger. Give Rome ideas before it gives the world its legions."
+        provinces:
+          it_roma: 90000
+        stockpiles: {food: 450, materials: 112, wealth: 27, knowledge: 30}
+        stats: {literacy_bp: 200, unrest_bp: 1200, legitimacy_bp: 5500}
+        influence: {clergy: 2500, nobility: 7000, guilds: 500}
+        techs: {agriculture: widespread, alphabet: adopted, astronomy_calendar: adopted, bronze_working: widespread, charcoal_burning: widespread, chariot: adopted, copper_smelting: widespread, fortification: adopted, herbal_medicine: adopted, horse_riding: widespread, iron_plough: concept, iron_working: widespread, irrigation: concept, masonry: adopted, ore_prospecting: concept, ox_plough: widespread, piston_bellows: adopted, pottery_kiln: widespread, republic: adopted, roads: concept, sailing: adopted, standard_measures: adopted, surveying: concept, wheel: widespread, writing: adopted, written_law: adopted, hoplite_phalanx: adopted}
+      e5_latins:
+        disposition: cautious
+        scripts:
+          - {id: "r509_regillus", goal: "conquer", target: "rome", preconditions: {after_year: -500, before_year: -490}, note: "Lake Regillus: Livy 2.19-20 (placed about 499); Dionysius 6.2 puts it in 496. Mamilius, Tarquin's son-in-law, is killed (Livy 2.20.9)."}
+        capital: it_latium
+        generals:
+          - {name: "Octavius Mamilius of Tusculum", skill: 3, trait: horse, note: "Tarquin's son-in-law and the first man of the Latin name: Livy 1.49.9; killed at Regillus, Livy 2.20.9."}
+        leader: "Octavius Mamilius of Tusculum"
+        leader_age: 45
+        leader_died: -496
+        successors:
+          - {name: "The Latin council", age: 50, until: -338}
+        pitch: "Thirty cities of one blood and one language. Rome is only the first among equals."
+        provinces:
+          it_latium: 140000
+        stockpiles: {food: 700, materials: 175, wealth: 84, knowledge: 56}
+        stats: {literacy_bp: 200, unrest_bp: 800, legitimacy_bp: 6000}
+        influence: {clergy: 2500, nobility: 6500, guilds: 1000}
+        techs: {agriculture: widespread, alphabet: adopted, astronomy_calendar: adopted, bronze_working: widespread, charcoal_burning: widespread, chariot: adopted, copper_smelting: widespread, fortification: adopted, herbal_medicine: adopted, horse_riding: widespread, iron_plough: concept, iron_working: widespread, irrigation: concept, masonry: adopted, ore_prospecting: concept, ox_plough: widespread, piston_bellows: adopted, pottery_kiln: widespread, roads: concept, sailing: adopted, standard_measures: adopted, surveying: concept, wheel: widespread, writing: adopted}
+      e5_veii:
+        disposition: aggressive
+        scripts:
+          - {id: "r509_veii_janiculum", goal: "conquer", target: "rome", preconditions: {after_year: -480, before_year: -472}, note: "After the Cremera the Veientes hold the Janiculum and march on Rome (477): Livy 2.50-2.51."}
+        capital: it_veii
+        generals:
+          - {name: "Lars Tolumnius", skill: 3, trait: horse, note: "King of Veii; had Rome's envoys killed at Fidenae and was slain by Cossus, 437: Livy 4.17-19."}
+        leader: "The magnates of Veii"
+        leader_age: 45
+        leader_until: -439
+        successors:
+          - {name: "Lars Tolumnius", age: 45, disposition: "aggressive", until: -437, ends: "is killed in single combat by Cossus"}
+          - {name: "The magnates of Veii", age: 50, until: -403}
+          - {name: "A king of Veii (unnamed)", age: 50, until: -396, ends: "falls with the city"}
+        pitch: "Twelve miles upriver, the richest city in southern Etruria. Rome is a neighbour you cannot ignore."
+        provinces:
+          it_veii: 40000
+        stockpiles: {food: 200, materials: 50, wealth: 24, knowledge: 16}
+        stats: {literacy_bp: 300, unrest_bp: 800, legitimacy_bp: 6000}
+        influence: {clergy: 3000, nobility: 6000, guilds: 1000}
+        techs: {agriculture: widespread, alphabet: widespread, astronomy_calendar: adopted, bronze_working: widespread, charcoal_burning: widespread, chariot: widespread, copper_smelting: widespread, fortification: adopted, herbal_medicine: adopted, horse_riding: widespread, iron_plough: adopted, iron_working: widespread, irrigation: adopted, masonry: widespread, ore_prospecting: adopted, ox_plough: widespread, piston_bellows: adopted, pottery_kiln: widespread, roads: adopted, sailing: widespread, standard_measures: adopted, surveying: adopted, wheel: widespread, writing: widespread}
+      e5_falisci:
+        disposition: cautious
+        capital: it_falisci
+        leader: "The magistrates of Falerii"
+        leader_age: 45
+        leader_until: -394
+        pitch: "Between Rome and Etruria. Choose a side, or be chosen."
+        provinces:
+          it_falisci: 25000
+        stockpiles: {food: 120, materials: 30, wealth: 14, knowledge: 9}
+        stats: {literacy_bp: 200, unrest_bp: 800, legitimacy_bp: 6000}
+        influence: {clergy: 3000, nobility: 6000, guilds: 1000}
+        techs: {agriculture: widespread, alphabet: adopted, bronze_working: widespread, charcoal_burning: adopted, copper_smelting: widespread, fortification: adopted, herbal_medicine: adopted, horse_riding: widespread, iron_working: adopted, masonry: widespread, ox_plough: adopted, piston_bellows: adopted, pottery_kiln: widespread, wheel: widespread, writing: adopted}
+      e5_caere:
+        # The Tarquin princes took refuge at Caere (Livy 1.60.2). The Pyrgi gold tablets name a ruler of Caere, Thefarie Velianas, c. 500: unverified here, so the leader is left unnamed.
+        disposition: mercantile
+        navy_bp: 15000
+        capital: it_caere
+        leader: "The magnates of Caere"
+        leader_age: 45
+        pitch: "The Tyrrhenian coast's richest port, with friends in Delphi and Carthage alike."
+        provinces:
+          it_caere: 40000
+        stockpiles: {food: 200, materials: 50, wealth: 40, knowledge: 16}
+        stats: {literacy_bp: 400, unrest_bp: 700, legitimacy_bp: 6500}
+        influence: {clergy: 2500, nobility: 5000, guilds: 2500}
+        techs: {agriculture: widespread, alphabet: widespread, astronomy_calendar: adopted, bronze_working: widespread, charcoal_burning: widespread, chariot: widespread, copper_smelting: widespread, fortification: adopted, herbal_medicine: adopted, horse_riding: widespread, iron_plough: adopted, iron_working: widespread, irrigation: adopted, masonry: widespread, ore_prospecting: adopted, ox_plough: widespread, piston_bellows: adopted, pottery_kiln: widespread, roads: adopted, sailing: widespread, standard_measures: adopted, surveying: adopted, wheel: widespread, writing: widespread}
+      e5_tarquinii:
+        disposition: aggressive
+        scripts:
+          - {id: "r509_arsian_wood", goal: "conquer", target: "rome", preconditions: {after_year: -510, before_year: -507}, note: "Veii and Tarquinii march with the exiled king; Brutus and Arruns Tarquinius kill each other: Livy 2.6-2.7 (509)."}
+        capital: it_tarquinii
+        generals:
+          - {name: "Arruns Tarquinius", skill: 2, trait: horse, note: "The king's son; led the Etruscan horse and killed Brutus, falling to his spear: Livy 2.6.7-9."}
+        leader: "The magnates of Tarquinii"
+        leader_age: 45
+        pitch: "Home city of the Tarquin kings. Put your kinsman back on Rome's throne."
+        provinces:
+          it_tarquinii: 65000
+        stockpiles: {food: 320, materials: 80, wealth: 38, knowledge: 25}
+        stats: {literacy_bp: 300, unrest_bp: 800, legitimacy_bp: 6000}
+        influence: {clergy: 3000, nobility: 6000, guilds: 1000}
+        techs: {agriculture: widespread, alphabet: widespread, astronomy_calendar: adopted, bronze_working: widespread, charcoal_burning: widespread, chariot: widespread, copper_smelting: widespread, fortification: adopted, herbal_medicine: adopted, horse_riding: widespread, iron_plough: adopted, iron_working: widespread, irrigation: adopted, masonry: widespread, ore_prospecting: adopted, ox_plough: widespread, piston_bellows: adopted, pottery_kiln: widespread, roads: adopted, sailing: widespread, standard_measures: adopted, surveying: adopted, wheel: widespread, writing: widespread}
+      e5_clusium:
+        disposition: aggressive
+        scripts:
+          - {id: "r509_porsenna", goal: "conquer", target: "rome", preconditions: {after_year: -509, before_year: -504}, note: "Porsenna besieges Rome (Livy 2.9-15); Tacitus (Hist. 3.72) and Pliny (NH 34.139) hint that Rome submitted. His treaty bars iron except for the plough."}
+        capital: it_volsinii
+        generals:
+          - {name: "Lars Porsenna", skill: 3, trait: bold, note: "King of Clusium: Livy 2.9.2-4, 2.12-2.15."}
+          - {name: "Arruns Porsenna", skill: 2, note: "His son; killed leading the attack on Aricia: Livy 2.14.5-7."}
+        leader: "Lars Porsenna"
+        leader_age: 50
+        leader_until: -503
+        successors:
+          - {name: "The magnates of Clusium", age: 50, until: -391}
+        pitch: "You are the greatest king in Etruria. Rome has thrown out one of your blood."
+        provinces:
+          it_volsinii: 60000
+        stockpiles: {food: 300, materials: 75, wealth: 36, knowledge: 24}
+        stats: {literacy_bp: 300, unrest_bp: 700, legitimacy_bp: 6500}
+        influence: {clergy: 3000, nobility: 6000, guilds: 1000}
+        techs: {agriculture: widespread, alphabet: widespread, astronomy_calendar: adopted, bronze_working: widespread, charcoal_burning: widespread, chariot: widespread, copper_smelting: widespread, fortification: adopted, herbal_medicine: adopted, horse_riding: widespread, iron_plough: adopted, iron_working: widespread, irrigation: adopted, masonry: widespread, ore_prospecting: adopted, ox_plough: widespread, piston_bellows: adopted, pottery_kiln: widespread, roads: adopted, sailing: widespread, standard_measures: adopted, surveying: adopted, wheel: widespread, writing: widespread}
+      e5_etruscan_league:
+        # Etruscan Campania (Capua, Nola) is left unowned in 509: Polybius 2.17.1 says the Etruscans once held the plains round Capua and Nola.
+        disposition: cautious
+        navy_bp: 12000
+        capital: it_etruria_n
+        leader: "The council of the twelve peoples"
+        leader_age: 50
+        pitch: "The northern Etruscans: iron from Elba, ships, and twelve cities that rarely agree."
+        provinces:
+          it_etruria_n: 60000
+          it_arretium: 55000
+          it_populonia: 40000
+        stockpiles: {food: 780, materials: 195, wealth: 117, knowledge: 62}
+        stats: {literacy_bp: 300, unrest_bp: 700, legitimacy_bp: 6000}
+        influence: {clergy: 3000, nobility: 5500, guilds: 1500}
+        techs: {agriculture: widespread, alphabet: widespread, astronomy_calendar: adopted, bronze_working: widespread, charcoal_burning: widespread, chariot: widespread, copper_smelting: widespread, fortification: adopted, herbal_medicine: adopted, horse_riding: widespread, iron_plough: adopted, iron_working: widespread, irrigation: adopted, masonry: widespread, ore_prospecting: adopted, ox_plough: widespread, piston_bellows: adopted, pottery_kiln: widespread, roads: adopted, sailing: widespread, standard_measures: adopted, surveying: adopted, wheel: widespread, writing: widespread}
+      e5_sabines:
+        disposition: aggressive
+        martial_bp: 11000
+        capital: it_sabina
+        leader: "The Sabine cantons"
+        leader_age: 50
+        pitch: "The hill farmers of the Anio. Rome has taken your daughters before."
+        provinces:
+          it_sabina: 70000
+        stockpiles: {food: 350, materials: 87, wealth: 42, knowledge: 28}
+        stats: {literacy_bp: 100, unrest_bp: 800, legitimacy_bp: 6000}
+        influence: {clergy: 3500, nobility: 5500, guilds: 1000}
+        techs: {agriculture: widespread, alphabet: concept, bronze_working: widespread, charcoal_burning: adopted, copper_smelting: widespread, fortification: adopted, herbal_medicine: adopted, horse_riding: widespread, iron_working: adopted, masonry: adopted, ox_plough: adopted, piston_bellows: adopted, pottery_kiln: widespread, wheel: widespread, writing: adopted}
+      e5_volsci:
+        disposition: aggressive
+        martial_bp: 12000
+        scripts:
+          - {id: "r509_coriolanus", goal: "conquer", target: "rome", preconditions: {after_year: -491, before_year: -486}, note: "Attius Tullius and the Roman exile Gnaeus Marcius (Coriolanus) lead the Volsci to the gates of Rome; his mother and wife turn him back: Livy 2.35-2.40."}
+        capital: it_volsci
+        generals:
+          - {name: "Gnaeus Marcius Coriolanus", skill: 4, trait: bold, note: "Roman exile who led the Volsci, 491-488: Livy 2.35.6, 2.39-2.40. Tradition, partly legendary."}
+          - {name: "Attius Tullius", skill: 3, note: "First man of the Volsci, Coriolanus's host and colleague: Livy 2.35.7, 2.39.1."}
+        leader: "The Volscian chiefs"
+        leader_age: 50
+        pitch: "A hill people who want the plain. Rome stands in the way."
+        provinces:
+          it_volsci: 80000
+        stockpiles: {food: 400, materials: 100, wealth: 48, knowledge: 32}
+        stats: {literacy_bp: 100, unrest_bp: 900, legitimacy_bp: 6000}
+        influence: {clergy: 3500, nobility: 5500, guilds: 1000}
+        techs: {agriculture: widespread, alphabet: concept, bronze_working: widespread, charcoal_burning: adopted, copper_smelting: widespread, fortification: adopted, herbal_medicine: adopted, horse_riding: adopted, iron_working: adopted, masonry: adopted, ox_plough: adopted, piston_bellows: adopted, pottery_kiln: widespread, sailing: adopted, wheel: widespread, writing: concept}
+      e5_aequi:
+        disposition: aggressive
+        martial_bp: 13000
+        scripts:
+          - {id: "r509_algidus", goal: "conquer", target: "rome", preconditions: {after_year: -462, before_year: -455}, note: "Cloelius Gracchus invades Tusculum's land and traps a consul at Algidus; Cincinnatus relieves him: Livy 3.25.5-3.29."}
+        capital: it_aequi
+        generals:
+          - {name: "Cloelius Gracchus", skill: 3, trait: bold, note: "Foremost man of the Aequi in 458: Livy 3.25.5; taken in chains by Cincinnatus, Livy 3.28.10."}
+        leader: "The Aequian chiefs"
+        leader_age: 50
+        pitch: "The mountains are yours, and every summer the plain is within reach."
+        provinces:
+          it_aequi: 30000
+        stockpiles: {food: 150, materials: 37, wealth: 18, knowledge: 12}
+        stats: {literacy_bp: 100, unrest_bp: 900, legitimacy_bp: 6000}
+        influence: {clergy: 3500, nobility: 5500, guilds: 1000}
+        techs: {agriculture: widespread, alphabet: concept, bronze_working: widespread, charcoal_burning: adopted, copper_smelting: widespread, fortification: adopted, herbal_medicine: adopted, horse_riding: adopted, iron_working: adopted, masonry: adopted, ox_plough: adopted, piston_bellows: adopted, pottery_kiln: widespread, wheel: widespread, writing: concept}
+      e5_hernici:
+        disposition: cautious
+        capital: it_hernici
+        leader: "The Hernican chiefs"
+        leader_age: 50
+        pitch: "A small people between two predators. Pick your friend."
+        provinces:
+          it_hernici: 40000
+        stockpiles: {food: 200, materials: 50, wealth: 24, knowledge: 16}
+        stats: {literacy_bp: 100, unrest_bp: 800, legitimacy_bp: 6000}
+        influence: {clergy: 3500, nobility: 5500, guilds: 1000}
+        techs: {agriculture: widespread, alphabet: concept, bronze_working: widespread, charcoal_burning: adopted, copper_smelting: widespread, fortification: adopted, herbal_medicine: adopted, horse_riding: adopted, iron_working: adopted, masonry: adopted, ox_plough: adopted, piston_bellows: adopted, pottery_kiln: widespread, wheel: widespread, writing: concept}
+      e5_cumae:
+        # Etruscan Capua (the rest of Campania) is the unowned it_campania; Aristodemus's death date (c. 490) is approximate and unchecked.
+        disposition: aggressive
+        navy_bp: 15000
+        scripts:
+          - {id: "r509_aricia", goal: "conquer", target: "e5_clusium", preconditions: {after_year: -509, before_year: -505}, note: "Cumaean troops help Aricia and cut up Arruns Porsenna's army: Livy 2.14.5-9 (Livy's 508)."}
+        capital: it_neapolis
+        generals:
+          - {name: "Aristodemus Malacus", skill: 4, trait: horse, note: "Tyrant of Cumae: Livy 2.21.5, 2.34.4; Dionysius 7.2.4. Dionysius also credits him with beating the Etruscans in 524 (unchecked)."}
+        leader: "Aristodemus Malacus"
+        leader_age: 45
+        leader_until: -490
+        successors:
+          - {name: "The magistrates of Cumae", age: 50, until: -421}
+        pitch: "The oldest Greek colony in Italy, and a tyrant who has already beaten the Etruscans."
+        provinces:
+          it_neapolis: 50000
+        stockpiles: {food: 250, materials: 62, wealth: 50, knowledge: 20}
+        stats: {literacy_bp: 600, unrest_bp: 900, legitimacy_bp: 5500}
+        influence: {clergy: 2000, nobility: 4000, guilds: 4000}
+        techs: {agriculture: widespread, alphabet: widespread, astronomy_calendar: adopted, bronze_working: widespread, charcoal_burning: widespread, chariot: adopted, coinage: concept, copper_smelting: widespread, fortification: widespread, herbal_medicine: adopted, horse_riding: widespread, iron_plough: adopted, iron_working: widespread, irrigation: adopted, masonry: widespread, ore_prospecting: concept, ox_plough: widespread, piston_bellows: adopted, pottery_kiln: widespread, roads: concept, sailing: widespread, schools: adopted, standard_measures: widespread, surveying: adopted, wheel: widespread, writing: widespread}
+      e5_croton:
+        disposition: scholarly
+        navy_bp: 8000
+        capital: it_bruttium
+        generals:
+          - {name: "Milo of Croton", skill: 3, trait: bold, note: "The athlete who led Croton's 100,000 against Sybaris, in lion-skin and Olympic crowns: Diodorus 12.9.5-6."}
+        leader: "The council of Croton"
+        leader_age: 50
+        pitch: "Pythagoras's city has just destroyed rich Sybaris. Where will you take the school?"
+        provinces:
+          it_bruttium: 100000
+        stockpiles: {food: 500, materials: 125, wealth: 60, knowledge: 40}
+        stats: {literacy_bp: 900, unrest_bp: 700, legitimacy_bp: 6500}
+        influence: {clergy: 3500, nobility: 4000, guilds: 2500}
+        techs: {agriculture: widespread, alphabet: widespread, astronomy_calendar: adopted, bronze_working: widespread, charcoal_burning: widespread, chariot: adopted, copper_smelting: widespread, fortification: widespread, herbal_medicine: adopted, horse_riding: widespread, iron_plough: adopted, iron_working: widespread, irrigation: adopted, masonry: widespread, ore_prospecting: concept, ox_plough: widespread, piston_bellows: adopted, pottery_kiln: widespread, roads: concept, sailing: widespread, schools: widespread, standard_measures: widespread, surveying: adopted, wheel: widespread, writing: widespread}
+      e5_tarentum:
+        # Herodotus 3.136 names Aristophilides as king of the Tarentines (c. 517).
+        disposition: mercantile
+        navy_bp: 12000
+        capital: it_tarentum
+        leader: "Aristophilides, king of Tarentum"
+        leader_age: 45
+        pitch: "A harbour on the heel, and no rival in sight until the Iapygians come."
+        provinces:
+          it_tarentum: 65000
+        stockpiles: {food: 320, materials: 80, wealth: 64, knowledge: 25}
+        stats: {literacy_bp: 700, unrest_bp: 800, legitimacy_bp: 6000}
+        influence: {clergy: 2500, nobility: 4500, guilds: 3000}
+        techs: {agriculture: widespread, alphabet: widespread, astronomy_calendar: adopted, bronze_working: widespread, charcoal_burning: widespread, chariot: adopted, copper_smelting: widespread, fortification: widespread, herbal_medicine: adopted, horse_riding: widespread, iron_plough: adopted, iron_working: widespread, irrigation: adopted, masonry: widespread, ore_prospecting: concept, ox_plough: widespread, piston_bellows: adopted, pottery_kiln: widespread, roads: concept, sailing: widespread, schools: adopted, standard_measures: widespread, surveying: adopted, wheel: widespread, writing: widespread}
+      syracuse:
+        # Herodotus 7.155.2: Syracuse's landed gentry (the Gamoroi) were driven out by the people before Gelon; no ruler of 509 is named in the sources read here.
+        # Gelon's death year (478) is unchecked.
+        disposition: cautious
+        navy_bp: 15000
+        scripts:
+          - {id: "r509_hieron_cumae", goal: "conquer", target: "e5_etruscan_league", preconditions: {after_year: -479, before_year: -471}, note: "Hieron sends a fleet to Cumae and beats the Tyrrhenians (474): Diodorus 11.51."}
+        capital: si_syracuse
+        generals:
+          - {name: "Gelon of Gela", skill: 5, trait: horse, note: "Captain of all Hippocrates' cavalry, later master of Syracuse: Herodotus 7.154-7.155."}
+        leader: "The Syracusan assembly and gentry"
+        leader_age: 45
+        leader_until: -485
+        successors:
+          - {name: "Gelon of Gela", age: 35, disposition: "aggressive", died: -478}
+        pitch: "Greek Sicily's greatest city, between Carthage and the tyrants of its own island."
+        provinces:
+          si_syracuse: 110000
+        stockpiles: {food: 550, materials: 137, wealth: 110, knowledge: 44}
+        stats: {literacy_bp: 700, unrest_bp: 900, legitimacy_bp: 5500}
+        influence: {clergy: 2000, nobility: 5000, guilds: 3000}
+        techs: {agriculture: widespread, alphabet: widespread, astronomy_calendar: adopted, bronze_working: widespread, charcoal_burning: widespread, chariot: adopted, coinage: adopted, copper_smelting: widespread, fortification: widespread, herbal_medicine: adopted, horse_riding: widespread, iron_plough: adopted, iron_working: widespread, irrigation: adopted, masonry: widespread, ore_prospecting: concept, ox_plough: widespread, piston_bellows: adopted, pottery_kiln: widespread, roads: concept, sailing: widespread, schools: adopted, standard_measures: widespread, surveying: adopted, wheel: widespread, writing: widespread}
+      carthage:
+        # Polybius 3.22 shows Carthage already holding Libya and Sardinia and a 'Carthaginian province in Sicily' in 509 (the first treaty with Rome).
+        disposition: mercantile
+        navy_bp: 30000
+        music: near_east
+        scripts:
+          - {id: "r509_himera", goal: "conquer", target: "syracuse", preconditions: {after_year: -483, before_year: -478}, note: "Hamilcar, son of Hanno, lands in Sicily and is defeated at Himera by Gelon and Theron (480): Herodotus 7.165-7.167."}
+        capital: car_carthage
+        generals:
+          - {name: "Hamilcar son of Hanno", skill: 3, trait: bold, note: "King of the Carthaginians in 480; disappeared at Himera: Herodotus 7.165-7.167."}
+        leader: "The magnates of Carthage"
+        leader_age: 45
+        leader_until: -482
+        successors:
+          - {name: "Hamilcar son of Hanno", age: 45, disposition: "aggressive", until: -480, ends: "vanishes at Himera"}
+          - {name: "The Council of Carthage", age: 50, until: -396}
+        pitch: "The Phoenician city has the sea and has just written down in a treaty what Rome may and may not do on it."
+        provinces:
+          car_carthage: 250000
+          car_byzacena: 150000
+          car_emporia: 40000
+          si_lilybaeum: 40000
+          sa_sardinia: 80000
+        stockpiles: {food: 2800, materials: 700, wealth: 700, knowledge: 224}
+        stats: {literacy_bp: 600, unrest_bp: 800, legitimacy_bp: 6500}
+        influence: {clergy: 2500, nobility: 4000, guilds: 3500}
+        techs: {agriculture: widespread, alphabet: widespread, astronomy_calendar: adopted, bronze_working: widespread, charcoal_burning: widespread, chariot: adopted, copper_smelting: widespread, fortification: widespread, herbal_medicine: adopted, horse_riding: widespread, iron_plough: adopted, iron_working: widespread, irrigation: widespread, masonry: widespread, ore_prospecting: adopted, ox_plough: widespread, piston_bellows: adopted, pottery_kiln: widespread, roads: concept, sailing: widespread, standard_measures: widespread, surveying: adopted, wheel: widespread, writing: widespread}
+    unowned:
+      it_campania: 150000
+      it_umbria: 60000
+      it_picenum: 80000
+      it_senones: 20000
+      it_marsi: 50000
+      it_frentani: 20000
+      it_aurunci: 35000
+      it_samnium: 80000
+      it_hirpini: 35000
+      it_lucania: 60000
+      it_apulia: 60000
+      it_peucetia: 40000
+      it_messapia: 70000
+      it_picentini: 20000
+      it_rhegium: 20000
+      it_boii: 50000
+      it_insubres: 70000
+      it_cenomani: 40000
+      it_veneti: 70000
+      it_liguria: 50000
+      it_ligures_apuani: 20000
+      it_taurini: 30000
+      it_salassi: 20000
+      si_messana: 25000
+      si_catana: 40000
+      si_akragas: 50000
+      si_gela: 20000
+      si_halaesa: 25000
+      si_enna: 30000
+      si_panormus: 40000
+      sa_barbagia: 50000
+      co_corsica: 25000
+    relations:
+      - {a: "rome", b: "e5_tarquinii", status: "hostile", grievance_bp: 6000, note: "The Tarquin family is exiled and its cities armed (Livy 2.6)."}
+      - {a: "rome", b: "e5_veii", status: "hostile", grievance_bp: 3000, note: "Veii wants its lost lands back (Livy 2.6.4)."}
+      - {a: "rome", b: "e5_latins", status: "hostile", grievance_bp: 1500, note: "Mamilius, Tarquin's son-in-law, is stirring the Latin cities (Livy 2.18.3)."}
+      - {a: "rome", b: "carthage", status: "trading", note: "The first treaty of 509-508 (Polybius 3.22)."}
+      - {a: "e5_veii", b: "e5_tarquinii", status: "allied", note: "They march together in 509 (Livy 2.6.2-6)."}
+      - {a: "e5_clusium", b: "e5_tarquinii", status: "allied", note: "Porsenna takes up the exiles' cause (Livy 2.9.1-4)."}
+    faiths:
+      - {id: roman_gods, name: "The gods of Rome", followers: [rome], spreads: false, note: "Jupiter Optimus Maximus, whose temple on the Capitol is dedicated in 509 by Horatius (Livy 2.8.5-8; Polybius 3.22.1)."}
+      - {id: italic_gods, name: "The gods of the Latin and Italic hills", followers: [e5_latins, e5_falisci, e5_sabines, e5_volsci, e5_aequi, e5_hernici], spreads: false, note: "Jupiter Latiaris on the Alban Mount and Diana of Aricia (Livy 1.50, 1.52)."}
+      - {id: etruscan_gods, name: "The gods of the Etruscans", followers: [e5_veii, e5_caere, e5_tarquinii, e5_clusium, e5_etruscan_league], spreads: false, note: "The Etruscan peoples' league meets at the shrine of Voltumna (Livy 4.23.5, 5.1.5)."}
+      - {id: olympians, name: "The Olympian gods", followers: [e5_cumae, e5_croton, e5_tarentum, syracuse], spreads: false, note: "The Greek cities of Italy and Sicily."}
+      - {id: punic_gods, name: "The gods of Carthage", followers: [carthage], spreads: false, note: "Baal Hammon and Tanit."}

@@ -1,0 +1,413 @@
+schema_version: 1
+# Late-Republic start 1 of 2 (R1, late agent). Civs: rome, numidia, seleucid, ptolemaic, pontus, bithynia,
+# massalia (civs_ancient.yaml) and e1_* (civs_rome_late.yaml). Provinces: provinces_italy.yaml (it_*, si_*,
+# sa_*, co_*) and provinces_ancient.yaml for everything outside Italy.
+# Populations are the pack's scale (a share of each province's capacity), not census counts: the
+# census of 131 BC counted 318,823 citizens (Livy, Periochae 59), a figure that excludes women,
+# children, slaves and the allies.
+# Ages are approximate where the sources give none: the consuls' ages follow the minimum for the office.
+# verified: consuls of 133 (Scaevola, Piso Frugi) cross-checked on Wikipedia (not cited); Plutarch, TG 9 confirms Scaevola was consul that year (read).
+scenarios:
+  - id: rome_133
+    name: "The Gracchi, 133 BC"
+    description: >-
+      133 BC. Carthage and Corinth lie in ruins and Rome rules the western Mediterranean, but the harvest
+      of conquest has gone to the few. Rich men farm the public land with slave gangs while the farmers who
+      won the wars lose their holdings; the Italian allies who fill half of every army have no vote. The
+      young tribune Tiberius Gracchus is about to propose a land law, King Attalus of Pergamon has just died
+      and left his kingdom to the Roman people, and Scipio Aemilianus is besieging Numantia. Beyond the Alps
+      Gauls still hold the road to Spain; in Numidia, a prince named Jugurtha serves Rome in Spain; far to the
+      east, a boy in Pontus will one day be Mithridates.
+    start_year: -133
+    years_per_turn: 10
+    campaign_years_per_turn: 2
+    player_civ: rome
+    map: europe
+    music: roman
+    cost_scale: 10
+    republic: true
+    common_techs: {written_law: widespread}
+    sources:
+      - "Fasti Capitolini (consuls of 133 BC: P. Mucius Scaevola and L. Calpurnius Piso Frugi); Livy, Periochae 58"
+      - "Plutarch, Tiberius Gracchus 8-21; Appian, Civil Wars 1.7-17 (the land law, the bequest of Attalus, the riot)"
+      - "Appian, Spanish Wars 84-98 (Scipio Aemilianus consul a second time and sent to Numantia, 134 BC)"
+      - "Livy, Periochae 51-52 (Carthage taken by Scipio, Metellus triumphs over Andriscus, Mummius destroys Corinth after defeating the Achaeans) - read. The organisation of Africa and Macedonia as provinces (146 and 148): verified: no"
+      - "Livy, Periochae 58-59 and Plutarch, Tiberius Gracchus 14 (Attalus' will makes the Roman people his heir; Aristonicus occupies Asia, Crassus is defeated and killed, Perperna takes his surrender) - read"
+      - "Polybius 6.19-26 (the Roman army and the allies' contingents): verified: no"
+      - "Provinces and populations are scaled to the pack's map; Italy north of the Apennines counts as Roman because of its colonies (verified: no). Year-level dates cross-checked on Wikipedia year pages, never cited"
+    confidence: medium
+    civs:
+      rome:
+        navy_bp: 3000
+        martial_bp: 12000
+        disposition: aggressive
+        scripts:
+          - {id: "numantine_war", goal: "conquer", target: "e1_numantia", preconditions: {after_year: -134}, note: "Scipio Aemilianus takes command in Spain (134) and starves out Numantia, which falls in 133 (Appian, Spanish Wars 84-98)."}
+          - {id: "tiberian_land_law", goal: "adopt", target: "surveying", preconditions: {after_year: -133}, note: "Ti. Gracchus' land law (133) sets up a three-man commission to survey and re-assign public land (Plutarch, TG 9-13; Appian, BC 1.9-13)."}
+          - {id: "fulvius_vs_gauls", goal: "conquer", target: "e1_allobroges", preconditions: {after_year: -125}, note: "M. Fulvius Flaccus is sent to help Massalia against the Salluvii (125); Sextius founds Aquae Sextiae; Domitius beats the Allobroges at Vindalium; Fabius beats them and Bituitus (121) (Livy, Per. 60-61)."}
+          - {id: "arverni_war", goal: "conquer", target: "e1_arverni", preconditions: {after_year: -122}, depends_on: ["fulvius_vs_gauls"], note: "Q. Fabius Maximus defeats Bituitus, king of the Arverni (121); Bituitus goes to Rome to answer to the Senate and is kept at Alba (Livy, Per. 61)."}
+          - {id: "gracchan_franchise", goal: "ally", target: "e1_socii", preconditions: {after_year: -125}, note: "Fulvius Flaccus, consul and land commissioner, tries to give the Italians citizenship for their lost land (125) and the Senate blocks him (Appian, BC 1.21)."}
+          - {id: "jugurthine_war", goal: "conquer", target: "numidia", preconditions: {after_year: -112}, note: "The Senate goes to war after Cirta (112); Jugurtha buys off Bestia and sends Aulus Albinus' army under the yoke (110); Metellus and Marius wear him down; Bocchus hands him over (105) (Sallust, BJ 26-114; Livy, Per. 65, 67)."}
+          - {id: "cimbric_war", goal: "conquer", target: "e1_cimbri", preconditions: {after_year: -113}, note: "Carbo's army is routed by the Cimbri (113); Arausio costs Manlius and Caepio's armies (105); Marius beats the Teutones near Aquae Sextiae (102) and the Cimbri with Catulus (101) (Livy, Per. 63, 67, 68; Plutarch, Marius 18-27)."}
+          - {id: "social_war", goal: "conquer", target: "e1_socii", preconditions: {after_year: -91}, note: "The murder of Livius Drusus (91) sets the Italian allies in revolt (Livy, Per. 71-72; Appian, BC 1.35-39); Rome ends it by extending citizenship (Appian, BC 1.49)."}
+          - {id: "first_mithridatic_war", goal: "conquer", target: "pontus", preconditions: {after_year: -89}, note: "Mithridates VI overruns Asia (88); Sulla beats his armies at Orchomenus and meets him at Dardanus (85) (Appian, Mith. 49-54; Plutarch, Sulla 24)."}
+          - {id: "third_mithridatic_war", goal: "conquer", target: "pontus", preconditions: {after_year: -74}, depends_on: ["first_mithridatic_war"], note: "Nicomedes IV's bequest of Bithynia (74) sets off the war; Pompey, voted the command by the Manilian law (66), ends it; Mithridates dies in 63 (Livy, Per. 93; Plutarch, Pompey 30; Appian, Mith. 112)."}
+          - {id: "crassus_parthian_expedition", goal: "conquer", target: "e1_parthia", preconditions: {after_year: -55, before_year: -52}, note: "Crassus marches against Parthia and is destroyed by Surena near Carrhae (53) (Plutarch, Crassus 17-31)."}
+        capital: it_roma
+        generals: [{name: "Publius Cornelius Scipio Aemilianus", skill: 5, trait: siege, note: "Conqueror of Carthage, made consul a second time for Numantia (Appian, Spanish Wars 84)."}, {name: "Quintus Caecilius Metellus Macedonicus", skill: 3, trait: shield, note: "Consul who defeated Andriscus in Macedonia (148); not verified here beyond the Fasti."}, {name: "Decimus Junius Brutus Callaicus", skill: 3, trait: bold, note: "Counter-guerrilla commander against the Lusitanians, who crossed the Lethe and took Talabriga (Appian, Spanish Wars 71-73)."}, {name: "Marcus Perperna", skill: 2, trait: horse, note: "Consul who receives Aristonicus' surrender (Livy, Per. 59)."}, {name: "Gaius Marius", skill: 2, trait: quartermaster, note: "A young equestrian officer at Numantia, noticed by Scipio (Sallust, BJ 7: Scipio relied on the young Jugurtha, and Marius is not named there; Marius was consul in 107)."}, {name: "Lucius Cornelius Sulla", skill: 5, trait: bold, note: "Quaestor under Marius, he receives Jugurtha from Bocchus (Sallust, BJ 102-113) and fights Mithridates' armies at Orchomenus (Appian, Mith. 49)."}]
+        leader: Consul Publius Mucius Scaevola (with Lucius Calpurnius Piso Frugi)
+        leader_age: 45
+        pitch: "Master of the Mediterranean and rotting from within. Land, citizenship and the army are all up for decision. Give Rome ideas before it gives the world a civil war."
+        provinces:
+          it_roma: 304000
+          it_latium: 216000
+          it_volsci: 110000
+          it_hernici: 55000
+          it_aequi: 38000
+          it_sabina: 94000
+          it_falisci: 34000
+          it_veii: 51000
+          it_caere: 51000
+          it_tarquinii: 85000
+          it_volsinii: 76000
+          it_populonia: 51000
+          it_etruria_n: 76000
+          it_arretium: 76000
+          it_umbria: 81000
+          it_senones: 33000
+          it_campania: 255000
+          it_neapolis: 68000
+          it_picentini: 34000
+          it_aurunci: 47000
+          it_apulia: 85000
+          it_peucetia: 60000
+          it_messapia: 94000
+          it_tarentum: 85000
+          it_bruttium: 140000
+          it_rhegium: 28000
+          it_boii: 48000
+          it_insubres: 56000
+          it_cenomani: 34000
+          it_veneti: 60000
+          it_liguria: 36000
+          it_ligures_apuani: 18000
+          si_messana: 42000
+          si_catana: 68000
+          si_syracuse: 144000
+          si_enna: 47000
+          si_akragas: 72000
+          si_gela: 30000
+          si_halaesa: 38000
+          si_panormus: 64000
+          si_lilybaeum: 51000
+          sa_sardinia: 119000
+          co_corsica: 30000
+          east_iberia: 200000
+          car_gades: 200000
+          mac_macedonia: 570000
+          mac_thessaly: 324000
+          epi_epirus: 120000
+          car_carthage: 428000
+          car_byzacena: 297000
+          per_pergamon: 189000
+        stockpiles: {food: 8979, materials: 2244, wealth: 4489, knowledge: 2244}
+        stats: {literacy_bp: 800, unrest_bp: 1800, legitimacy_bp: 6500}
+        influence: {clergy: 2500, nobility: 6000, guilds: 1500}
+        techs: {republic: widespread, citizen_assembly: adopted, agriculture: widespread, irrigation: widespread, ox_plough: widespread, iron_plough: widespread, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: widespread, writing: widespread, alphabet: widespread, masonry: widespread, surveying: adopted, astronomy_calendar: adopted, standard_measures: widespread, coinage: widespread, census: widespread, sailing: widespread, horse_riding: widespread, composite_bow: adopted, fortification: widespread, crossbow: concept, schools: adopted, roads: widespread, piston_bellows: adopted, aqueduct: adopted, sanitation: adopted, concrete: adopted, glassmaking: concept, canals: concept, hoplite_phalanx: widespread, italian_alliance: widespread, manipular_legion: widespread, gladius_hispaniensis: widespread, cohort_legion: concept}
+      e1_socii:
+        navy_bp: 1500
+        martial_bp: 12000
+        disposition: cautious
+        scripts: []
+        capital: it_samnium
+        # The rebel confederacy of 91 BC was the Marsi, Paeligni, Vestini, Marrucini, Frentani, Picentes, Samnites,
+        # Hirpini, Lucanians and Apulians (Appian, BC 1.39: Marsi, Peligni, Vestini, Marrucini, Picentines, Frentani, Hirpini, Pompeiians, Venusini, Apulians, Lucanians, Samnites; Livy, Per. 72) - read.
+        # These six provinces are the heartland of the revolt; the rest of Italy is held by Rome on this map.
+        leader: ""
+        pitch: "Half the legions are yours, and none of the spoils. Be loyal, or be Italy."
+        provinces:
+          it_samnium: 128000
+          it_hirpini: 55000
+          it_frentani: 30000
+          it_marsi: 72000
+          it_picenum: 110000
+          it_lucania: 102000
+        stockpiles: {food: 795, materials: 198, wealth: 198, knowledge: 99}
+        stats: {literacy_bp: 300, unrest_bp: 2000, legitimacy_bp: 5500}
+        influence: {clergy: 2500, nobility: 5000, guilds: 2500}
+        techs: {republic: adopted, agriculture: widespread, irrigation: widespread, ox_plough: widespread, iron_plough: adopted, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: adopted, writing: widespread, alphabet: widespread, masonry: widespread, surveying: adopted, standard_measures: widespread, coinage: widespread, sailing: adopted, horse_riding: widespread, fortification: widespread, roads: adopted}
+      numidia:
+        navy_bp: 0
+        martial_bp: 25000
+        disposition: cautious
+        scripts:
+          - {id: "jugurtha_vs_rome", goal: "conquer", target: "rome", preconditions: {after_year: -112}, note: "Jugurtha bribes his way past the Senate and sends Aulus Albinus' army under the yoke at Suthul (110) (Sallust, BJ 27-38)."}
+        capital: num_massyli
+        music: near_east
+        leader: Micipsa
+        leader_age: 55
+        leader_died: -118
+        # Micipsa reigned 148-118 (Sallust, BJ 5-11); his nephew Jugurtha, adopted with Hiempsal and Adherbal, rules with them.
+        successors: [{name: "Jugurtha", age: 42, disposition: "aggressive", until: -105, ends: "is betrayed by King Bocchus to Sulla"}, {name: "Gauda", age: 45}]
+        pitch: "The best horsemen in the world, and Rome's loyal friend. For now."
+        provinces:
+          num_massyli: 405000
+          num_masaesyli: 352000
+        stockpiles: {food: 1211, materials: 302, wealth: 189, knowledge: 94}
+        stats: {literacy_bp: 150, unrest_bp: 1000, legitimacy_bp: 6500}
+        influence: {clergy: 2500, nobility: 6500, guilds: 1000}
+        techs: {agriculture: widespread, ox_plough: widespread, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: adopted, horse_riding: widespread, masonry: adopted, fortification: adopted, sailing: adopted, composite_bow: adopted, writing: adopted, alphabet: adopted, elephant_warfare: adopted}
+      seleucid:
+        navy_bp: 3000
+        martial_bp: 10000
+        disposition: aggressive
+        scripts:
+          - {id: "seleucid_vs_parthia", goal: "conquer", target: "e1_parthia", preconditions: {after_year: -131}, note: "Antiochus VII marches east against Parthia (130-129) and dies in the attempt (Justin 38.10; Josephus, AJ 13.250-253; verified: no)."}
+        capital: sel_syria
+        leader: Antiochus VII Sidetes
+        leader_age: 33
+        leader_until: -129
+        # Reign dates: Antiochus VII 138-129; Demetrius II's second reign 129-125; Antiochus VIII Grypus 125-96.
+        successors: [{name: "Demetrius II Nicator", age: 35, until: -125, ends: "is murdered while fleeing to Tyre"}, {name: "Antiochus VIII Grypus", age: 16, until: -96, ends: "is poisoned by his minister Heracleon"}]
+        pitch: "The last strong Seleucid. Parthia holds Babylon, Judaea is in revolt and the dynasty is falling."
+        provinces:
+          sel_syria: 972000
+          pto_coele_syria: 648000
+          sel_cilicia: 240000
+        stockpiles: {food: 2976, materials: 744, wealth: 1302, knowledge: 651}
+        stats: {literacy_bp: 600, unrest_bp: 1500, legitimacy_bp: 5500}
+        influence: {clergy: 3000, nobility: 5000, guilds: 2000}
+        techs: {agriculture: widespread, irrigation: widespread, ox_plough: widespread, iron_plough: adopted, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: adopted, writing: widespread, alphabet: widespread, masonry: widespread, surveying: widespread, astronomy_calendar: widespread, standard_measures: widespread, coinage: widespread, sailing: widespread, composite_bow: adopted, horse_riding: widespread, chariot: adopted, fortification: widespread, crossbow: adopted, schools: widespread, roads: adopted, piston_bellows: adopted, canals: adopted, glassmaking: adopted, census: adopted, hoplite_phalanx: widespread, sarissa_phalanx: widespread, elephant_warfare: adopted, cataphract_armour: adopted}
+      ptolemaic:
+        navy_bp: 12000
+        martial_bp: 9000
+        disposition: scholarly
+        scripts:
+          - {id: "ptolemy_vs_seleucid", goal: "conquer", target: "seleucid", preconditions: {after_year: -128}, note: "Ptolemy VIII backs the pretender Alexander Zabinas against Demetrius II (c.128) (Justin 39.1; verified: no)."}
+          - {id: "apion_bequest", goal: "ally", target: "rome", preconditions: {after_year: -96}, note: "Ptolemy Apion, king of Cyrene, dies and leaves the Roman people his heir (96) (Livy, Per. 70)."}
+          - {id: "auletes_courts_rome", goal: "ally", target: "rome", preconditions: {after_year: -62}, note: "Ptolemy XII Auletes buys recognition from Caesar (59) (Suetonius, Divus Iulius 54.3)."}
+        capital: pto_delta
+        music: near_east
+        leader: Ptolemy VIII Euergetes II
+        leader_age: 50
+        leader_died: -116
+        # Ptolemy VIII 145-116; Ptolemy IX 116-107 and 88-80; Ptolemy X 107-88.
+        successors: [{name: "Ptolemy IX Soter II", age: 28, until: -107, ends: "is driven out by his mother Cleopatra III"}, {name: "Ptolemy X Alexander I", age: 33, until: -88, ends: "is driven out by the Alexandrians"}]
+        pitch: "The Nile's grain, the Library and a family that murders itself. Egypt has the learning to leap, if the court lets it."
+        provinces:
+          pto_delta: 1822000
+          pto_middle: 1012000
+          pto_thebaid: 1215000
+          pto_cyrenaica: 255000
+          pto_cyprus: 202000
+        stockpiles: {food: 7209, materials: 1802, wealth: 3604, knowledge: 1802}
+        stats: {literacy_bp: 800, unrest_bp: 1800, legitimacy_bp: 5000}
+        influence: {clergy: 4500, nobility: 4000, guilds: 1500}
+        techs: {agriculture: widespread, irrigation: widespread, ox_plough: widespread, iron_plough: adopted, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: adopted, writing: widespread, alphabet: widespread, masonry: widespread, surveying: widespread, astronomy_calendar: widespread, standard_measures: widespread, coinage: widespread, sailing: widespread, horse_riding: widespread, chariot: adopted, fortification: widespread, schools: widespread, roads: adopted, canals: widespread, glassmaking: widespread, census: widespread, hoplite_phalanx: widespread, sarissa_phalanx: widespread, elephant_warfare: adopted}
+      pontus:
+        navy_bp: 3000
+        martial_bp: 12000
+        disposition: cautious
+        scripts:
+          - {id: "mithridates_vs_bithynia", goal: "conquer", target: "bithynia", preconditions: {after_year: -91}, note: "The war over the Bithynian throne (91-90), where Roman legates restore Nicomedes IV (Appian, Mith. 10-11); years cross-checked only."}
+          - {id: "mithridates_invades_asia", goal: "conquer", target: "rome", preconditions: {after_year: -89}, depends_on: ["mithridates_vs_bithynia"], note: "Mithridates invades Asia (88) and has all Italians in its cities killed in one day (Appian, Mith. 22-23)."}
+        capital: pon_pontus
+        leader: Mithridates V Euergetes
+        leader_age: 45
+        leader_died: -120
+        # Mithridates V was murdered at Sinope in 120 (Justin 37.1.1; Strabo 10.4.10: verified: no); Mithridates VI Eupator
+        # (b. c.134), a boy, ruled through his mother and seized power c.113-112 (Justin 37.2-3; Appian, Mith. 112: Mithridates VI lived 68 or 69 years and reigned 57, 'for the kingdom came to him when he was an orphan', so he was about 12 in 120).
+        successors: [{name: "Mithridates VI Eupator", age: 12, disposition: "aggressive", until: -63, ends: "dies by the sword of his Gaulish officer Bituitus"}]
+        pitch: "A Persian-blooded king on the Black Sea whose son will fight Rome for forty years."
+        provinces:
+          pon_pontus: 280000
+        stockpiles: {food: 448, materials: 112, wealth: 112, knowledge: 56}
+        stats: {literacy_bp: 400, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 3500, nobility: 5000, guilds: 1500}
+        techs: {agriculture: widespread, irrigation: widespread, ox_plough: widespread, iron_plough: adopted, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: adopted, writing: widespread, alphabet: widespread, masonry: widespread, surveying: adopted, standard_measures: widespread, coinage: widespread, sailing: widespread, composite_bow: adopted, horse_riding: widespread, chariot: adopted, fortification: widespread, schools: adopted, roads: adopted, hoplite_phalanx: widespread, sarissa_phalanx: adopted}
+      bithynia:
+        navy_bp: 3000
+        disposition: cautious
+        scripts: []
+        capital: bit_bithynia
+        leader: Nicomedes II Epiphanes
+        leader_age: 40
+        leader_died: -127
+        # Nicomedes II c.149-127, Nicomedes III 127-94, Nicomedes IV 94-74 (who leaves his kingdom to Rome: Livy, Per. 93).
+        successors: [{name: "Nicomedes III Euergetes", age: 30, died: -94}, {name: "Nicomedes IV Philopator", age: 25, died: -74, ends: "leaves his kingdom to the Roman people"}]
+        pitch: "A small Greek-speaking kingdom between Pontus and the sea, with one eye on Rome."
+        provinces:
+          bit_bithynia: 280000
+        stockpiles: {food: 448, materials: 112, wealth: 112, knowledge: 56}
+        stats: {literacy_bp: 400, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 3000, nobility: 5000, guilds: 2000}
+        techs: {agriculture: widespread, irrigation: widespread, ox_plough: widespread, iron_plough: adopted, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: adopted, writing: widespread, alphabet: widespread, masonry: widespread, surveying: adopted, standard_measures: widespread, coinage: widespread, sailing: widespread, horse_riding: widespread, fortification: widespread, schools: adopted, roads: adopted}
+      massalia:
+        navy_bp: 12000
+        martial_bp: 4000
+        disposition: mercantile
+        scripts: []
+        capital: mas_massalia
+        leader: ""
+        music: near_east
+        pitch: "A Greek city on a Gaulish shore. Rome is your friend and your master."
+        provinces:
+          mas_massalia: 112000
+        stockpiles: {food: 179, materials: 44, wealth: 112, knowledge: 56}
+        stats: {literacy_bp: 1500, unrest_bp: 600, legitimacy_bp: 7500}
+        influence: {clergy: 2500, nobility: 5000, guilds: 2500}
+        techs: {republic: adopted, agriculture: widespread, ox_plough: widespread, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, writing: widespread, alphabet: widespread, masonry: widespread, surveying: widespread, astronomy_calendar: widespread, standard_measures: widespread, coinage: widespread, sailing: widespread, fortification: widespread, schools: widespread, roads: adopted}
+      e1_parthia:
+        navy_bp: 0
+        martial_bp: 30000
+        disposition: aggressive
+        scripts:
+          - {id: "parthia_vs_seleucid", goal: "conquer", target: "seleucid", preconditions: {after_year: -130}, note: "Parthia defeats Antiochus VII (129) (Justin 38.10; verified: no)."}
+          - {id: "parthia_vs_rome", goal: "conquer", target: "rome", preconditions: {after_year: -54}, note: "Surena, foremost Parthian of his time, destroys Crassus' army near Carrhae (53) (Plutarch, Crassus 21-31)."}
+        capital: sel_babylonia
+        music: near_east
+        leader: Mithridates I
+        leader_age: 60
+        leader_died: -132
+        # Mithridates I (Arsaces VI) d. c.132; Phraates II d. 127 fighting nomads; Artabanus I d. c.124; Mithridates II 124-88
+        # (Justin 41.6 and 42.1-2). Reign dates after Justin; ages approximate.
+        successors: [{name: "Phraates II", age: 35, until: -127, ends: "falls fighting the steppe nomads"}, {name: "Artabanus I", age: 40, until: -124, ends: "dies of wounds against the Tochari"}, {name: "Mithridates II the Great", age: 30, died: -88}]
+        pitch: "Horse-archers on the plateau, and Babylon now yours. A new great power beyond the Euphrates."
+        provinces:
+          sel_babylonia: 1485000
+          sel_media: 523000
+          sel_susiana: 297000
+          sel_persis: 374000
+          sel_upper_mesopotamia: 446000
+        stockpiles: {food: 5000, materials: 1250, wealth: 1562, knowledge: 781}
+        stats: {literacy_bp: 400, unrest_bp: 1200, legitimacy_bp: 6000}
+        influence: {clergy: 3500, nobility: 5500, guilds: 1000}
+        techs: {agriculture: widespread, irrigation: widespread, ox_plough: widespread, iron_plough: adopted, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: adopted, writing: adopted, alphabet: adopted, masonry: widespread, surveying: adopted, astronomy_calendar: widespread, standard_measures: adopted, coinage: widespread, horse_riding: widespread, composite_bow: widespread, fortification: adopted, schools: adopted, roads: adopted, canals: widespread, cataphract_armour: widespread}
+      e1_armenia:
+        navy_bp: 0
+        martial_bp: 18000
+        disposition: aggressive
+        scripts:
+          - {id: "tigranes_allies_mithridates", goal: "ally", target: "pontus", preconditions: {after_year: -95}, note: "Tigranes becomes Mithridates' son-in-law (Appian, Mith. 66, 'persuaded his son-in-law, Tigranes') and acts for him in Cappadocia."}
+          - {id: "tigranes_vs_seleucid", goal: "conquer", target: "seleucid", preconditions: {after_year: -85}, note: "Tigranes takes Syria from the last Seleucids c.83 (Appian, Syrian Wars 48; verified: no)."}
+          - {id: "tigranes_vs_rome", goal: "conquer", target: "rome", preconditions: {after_year: -72}, depends_on: ["tigranes_allies_mithridates"], note: "Lucullus beats Tigranes at Tigranocerta (69) (Plutarch, Lucullus 25-28; verified: no)."}
+        capital: armenia
+        music: near_east
+        leader: ""
+        leader_died: -95
+        # Tigranes II 95-55 (Appian, Mith. 105); the earlier kings' dates are not reliably known.
+        successors: [{name: "Tigranes II the Great", age: 45, disposition: "aggressive", died: -55}]
+        pitch: "A mountain kingdom between Parthia and Pontus; if a great king arises it will be sudden."
+        provinces:
+          armenia: 280000
+        stockpiles: {food: 448, materials: 112, wealth: 112, knowledge: 56}
+        stats: {literacy_bp: 300, unrest_bp: 900, legitimacy_bp: 6500}
+        influence: {clergy: 4000, nobility: 5500, guilds: 500}
+        techs: {agriculture: widespread, irrigation: adopted, ox_plough: widespread, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: adopted, writing: adopted, alphabet: adopted, masonry: adopted, standard_measures: adopted, coinage: adopted, horse_riding: widespread, composite_bow: adopted, fortification: adopted}
+      e1_arverni:
+        navy_bp: 0
+        martial_bp: 14000
+        disposition: aggressive
+        scripts:
+          - {id: "allobroges_arverni_league", goal: "ally", target: "e1_allobroges", preconditions: {after_year: -125}, note: "Bituitus, king of the Arverni, fights beside the Allobroges against Fabius (121); 120,000 of his army are said to have been killed (Livy, Per. 61)."}
+        capital: central_gaul
+        music: near_east
+        leader: ""
+        # The Arverni's kings before Bituitus cannot be dated (verified: no).
+        pitch: "The richest people of Gaul. Rome's armies are coming over the Alps."
+        provinces:
+          central_gaul: 665000
+        stockpiles: {food: 1064, materials: 266, wealth: 266, knowledge: 133}
+        stats: {literacy_bp: 100, unrest_bp: 1000, legitimacy_bp: 6500}
+        influence: {clergy: 4000, nobility: 5500, guilds: 500}
+        techs: {agriculture: widespread, ox_plough: widespread, iron_plough: adopted, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: adopted, horse_riding: widespread, chariot: adopted, masonry: adopted, fortification: adopted}
+      e1_allobroges:
+        navy_bp: 0
+        martial_bp: 14000
+        disposition: aggressive
+        scripts: []
+        capital: southern_gaul
+        music: near_east
+        leader: ""
+        pitch: "Gauls who shelter Rome's enemies and sit athwart the way to Spain."
+        provinces:
+          southern_gaul: 240000
+        stockpiles: {food: 384, materials: 96, wealth: 72, knowledge: 36}
+        stats: {literacy_bp: 100, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 4000, nobility: 5500, guilds: 500}
+        techs: {agriculture: widespread, ox_plough: widespread, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, horse_riding: widespread, chariot: adopted, masonry: adopted, fortification: adopted}
+      e1_cimbri:
+        navy_bp: 0
+        martial_bp: 40000
+        disposition: aggressive
+        scripts:
+          - {id: "cimbri_migrate", goal: "conquer", target: "rome", preconditions: {after_year: -113}, note: "The wandering Cimbri rout Carbo (113), Silanus (109), Cassius (107), Scaurus and, at Arausio, Manlius and Caepio (105) (Livy, Per. 63, 65, 67)."}
+        capital: germania
+        music: near_east
+        leader: ""
+        # Their kings (Boiorix, Lugius, Claodicus, Teutobod) are named only in the migration accounts (Plutarch, Marius 25; Florus 1.38).
+        pitch: "A whole people on the move: wagons, families and a hundred thousand spears. Where will you settle?"
+        provinces:
+          germania: 170000
+        stockpiles: {food: 272, materials: 68, wealth: 17, knowledge: 8}
+        stats: {literacy_bp: 0, unrest_bp: 800, legitimacy_bp: 6500}
+        influence: {clergy: 3500, nobility: 6000, guilds: 500}
+        techs: {agriculture: widespread, ox_plough: adopted, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: adopted, horse_riding: widespread}
+      e1_numantia:
+        navy_bp: 0
+        martial_bp: 30000
+        disposition: aggressive
+        scripts: []
+        capital: celtiberia
+        music: near_east
+        leader: ""
+        # Scipio's army of 60,000 starved the city rather than fight its defenders (Appian, Spanish Wars 90 and 97); the city fell in 133 (Livy, Per. 59).
+        pitch: "One hill-fort against the Roman war machine. Hold, if you can, till the Romans tire."
+        provinces:
+          celtiberia: 378000
+        stockpiles: {food: 604, materials: 151, wealth: 75, knowledge: 37}
+        stats: {literacy_bp: 100, unrest_bp: 1500, legitimacy_bp: 7500}
+        influence: {clergy: 3000, nobility: 6000, guilds: 1000}
+        techs: {agriculture: widespread, ox_plough: widespread, pottery_kiln: widespread, charcoal_burning: widespread, wheel: widespread, herbal_medicine: widespread, copper_smelting: widespread, bronze_working: widespread, iron_working: widespread, ore_prospecting: adopted, horse_riding: widespread, masonry: adopted, fortification: widespread}
+    unowned:
+      ach_achaea: 238000
+      mac_corinth: 140000
+      ath_attica: 280000
+      spa_laconia: 168000
+      aet_aetolia: 189000
+      lusitania: 238000
+      belgic_gaul: 427000
+      britain: 567000
+      mauretania: 280000
+      garamantes: 98000
+      illyria: 238000
+      dacia: 280000
+      thrace: 476000
+      scythia: 280000
+      bosporus: 140000
+      colchis: 98000
+      galatia: 140000
+      cappadocia: 280000
+      nabataea: 98000
+      arabia: 189000
+      rho_rhodes: 140000
+      sel_asia: 945000
+      sa_barbagia: 63000
+      it_taurini: 38000
+      it_salassi: 24000
+    relations:
+      - {a: "rome", b: "e1_socii", status: "allied", grievance_bp: 2000, note: "The allies' land is caught up in the commission's claims (Appian, BC 1.18-21)."}
+      - {a: "rome", b: "e1_numantia", status: "war", grievance_bp: 5000, note: "The Numantine War: Scipio is sent to end it (Appian, Spanish Wars 84); Mancinus' treaty was repudiated (Plutarch, TG 5-7; year cross-checked only)."}
+      - {a: "rome", b: "massalia", status: "allied", note: "Massalia is Rome's friend; a Roman army will be sent to help it against the Salluvii (Livy, Per. 60)."}
+      - {a: "rome", b: "numidia", status: "allied", note: "Micipsa sends cavalry and infantry under Jugurtha to help Rome at Numantia (Sallust, BJ 7)."}
+      - {a: "rome", b: "bithynia", status: "allied", note: "Bithynia is a friendly kingdom of Rome; Nicomedes IV will leave it to Rome (Livy, Per. 93; verified: no for Nicomedes II)."}
+      - {a: "rome", b: "ptolemaic", status: "trading", note: "Friendly relations; not verified (verified: no)."}
+      - {a: "seleucid", b: "e1_parthia", status: "hostile", grievance_bp: 6000, note: "Parthia holds Babylonia since 141 (verified: no)."}
+      - {a: "seleucid", b: "ptolemaic", status: "hostile", grievance_bp: 2500, note: "Rival Hellenistic courts (verified: no)."}
+    faiths:
+      - {id: roman_gods, name: "The gods of Rome", followers: [rome, e1_socii], spreads: false, note: "Jupiter Optimus Maximus and the state cults, with Greek rites and Cybele since 204 (Livy 29.10-14)."}
+      - {id: olympians, name: "The Greek gods", followers: [seleucid, ptolemaic, pontus, bithynia, massalia], spreads: true, note: "The Hellenistic cults of the kings' cities."}
+      - {id: punic_gods, name: "The gods of the Libyans", followers: [numidia], spreads: false, note: "Punic and Libyan cults of Numidia (Sallust, BJ 19)."}
+      - {id: celtic_gods, name: "The Celtic gods and druids", followers: [e1_arverni, e1_allobroges, e1_numantia], spreads: false, note: "Druids are attested by Caesar for Gaul (Gallic War 6.13-18)."}
+      - {id: iranian_gods, name: "The gods of Iran", followers: [e1_parthia, e1_armenia], spreads: false, note: "Mithra, Anahita and Greek gods under the Arsacid kings."}
+      - {id: northern_gods, name: "The gods of the northern tribes", followers: [e1_cimbri], spreads: false, note: "Their own beliefs are poorly known (verified: no)."}

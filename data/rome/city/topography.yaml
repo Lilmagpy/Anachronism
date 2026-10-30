@@ -1,0 +1,357 @@
+# Topography of Rome. Heights are modern metres above sea level of the natural summit
+# (ancient heights have not changed much on the summits, but valley floors have been raised
+# by 5-15 m of later fill: ancient ground level in the Forum was about 10-11 m a.s.l.
+# versus 14-16 m today). Coordinates are summit centres, WGS84, approx 100 m.
+hills:
+- id: capitolinus
+  latin: Mons Capitolinus
+  english: Capitoline Hill
+  height_m: 46
+  lat: 41.8934
+  lon: 12.4828
+  regio: 8
+  summits: [{name: Capitolium, location: southern summit (temple of Jupiter), lat: 41.8929, lon: 12.4827}, {name: Arx, location: northern summit, lat: 41.8946, lon: 12.4833}, {name: Asylum, location: the saddle between them, lat: 41.8940, lon: 12.4840}]
+  text: "Two summits joined by a saddle (the Intermontium). Steep cliffs to the south (Tarpeian Rock) and a long steep approach, the Clivus Capitolinus, from the Forum."
+  sources: ["Livy 1.33; 5.47", "Platner-Ashby s.v. Capitolium; Arx"]
+- id: palatinus
+  latin: Mons Palatinus
+  english: Palatine Hill
+  height_m: 51
+  lat: 41.8892
+  lon: 12.4875
+  regio: 10
+  summits: [{name: Germalus, location: north-west spur (Cermalus), lat: 41.8895, lon: 12.4851}, {name: Palatium, location: main plateau, lat: 41.8892, lon: 12.4880}, {name: Velia, location: saddle toward the Esquiline, lat: 41.8908, lon: 12.4900}]
+  text: "Traditional site of the first settlement of Romulus (Roma Quadrata); the Germalus is the western spur above the Velabrum; house of the aristocracy in the Late Republic."
+  sources: ["Livy 1.7; Dion. Hal. 1.79", "Platner-Ashby s.v. Palatium"]
+- id: aventinus
+  latin: Mons Aventinus
+  english: Aventine Hill
+  height_m: 46
+  lat: 41.8825
+  lon: 12.4825
+  regio: 13
+  summits: [{name: Aventinus Maior, location: north-west knob, lat: 41.8840, lon: 12.4790}, {name: Aventinus Minor, location: south-east knob, lat: 41.8800, lon: 12.4860}]
+  text: "Plebeian hill, outside the pomerium until Claudius (AD 49); the secessions of the plebs went to the Aventine or Sacred Mount (Livy 3.50, 3.54)."
+  sources: ["Livy 3.50", "Platner-Ashby s.v. Aventinus"]
+- id: caelius
+  latin: Mons Caelius
+  english: Caelian Hill
+  height_m: 50
+  lat: 41.8855
+  lon: 12.4962
+  regio: 2
+  text: "Elongated spur east of the Palatine, enclosed by the Servian Wall (Porta Caelimontana); said to be settled by Alba refugees (Livy 1.30)."
+  sources: ["Livy 1.30", "Platner-Ashby s.v. Caelius Mons"]
+- id: esquilinus
+  latin: Mons Esquilinus
+  english: Esquiline Hill
+  height_m: 60
+  lat: 41.8930
+  lon: 12.5000
+  regio: 5
+  summits: [{name: Oppius, location: south-western spur (Domus Aurea area), lat: 41.8905, lon: 12.4950}, {name: Cispius, location: northern spur (S. Maria Maggiore), lat: 41.8975, lon: 12.4985}, {name: Fagutal, location: western arm, lat: 41.8918, lon: 12.4945}]
+  text: "Largest of the hills; the Servian agger runs across its east side; necropolis for the poor in the plain outside the Porta Esquilina until Maecenas' gardens in the 30s BC."
+  sources: ["Varro LL 5.50", "Platner-Ashby s.v. Esquiliae"]
+- id: viminalis
+  latin: Mons Viminalis
+  english: Viminal Hill
+  height_m: 57
+  lat: 41.9005
+  lon: 12.4965
+  regio: 6
+  text: "Narrow spur between Quirinal and Esquiline, crossed by the Servian agger."
+  sources: ["Varro LL 5.51", "Platner-Ashby s.v. Viminalis"]
+- id: quirinalis
+  latin: Mons Quirinalis
+  english: Quirinal Hill
+  height_m: 61
+  lat: 41.9030
+  lon: 12.4895
+  regio: 6
+  text: "Highest of the traditional seven hills; Sabine (Quirinus, Fides, Salus) settlement; north-east end the Colline Gate."
+  sources: ["Varro LL 5.51", "Livy 1.44", "Platner-Ashby s.v. Quirinalis"]
+other_heights:
+- {id: pincius, latin: Collis Hortulorum, english: Pincian Hill, height_m: 63, lat: 41.9100, lon: 12.4820, text: "Outside the Servian Wall; Gardens of Lucullus and Sallustius (late Republic).", sources: ["Platner-Ashby s.v. Horti Lucullani"]}
+- {id: ianiculum, latin: Ianiculum, english: Janiculum, height_m: 82, lat: 41.8890, lon: 12.4610, text: "Ridge across the Tiber, a fort of Ancus Marcius (Livy 1.33.6); military flag raised during comitia centuriata.", sources: ["Livy 1.33.6", "Platner-Ashby s.v. Ianiculum"]}
+- {id: vaticanus, latin: Mons Vaticanus, english: Vatican Hill, height_m: 75, lat: 41.9030, lon: 12.4530, text: "North of the Janiculum, outside the city; fields of the Tiber plain.", sources: ["Platner-Ashby s.v. Vaticanus Mons"]}
+valleys:
+- id: forum_valley
+  latin: Forum Romanum
+  english: Forum valley
+  lat: 41.8925
+  lon: 12.4853
+  floor_m: 11
+  text: "Marshy valley between the Capitol, Palatine, Velia and Quirinal spur, drained by the Cloaca Maxima and paved from about 600 BC; the ancient ground is 4-5 m below present level."
+  sources: ["Livy 1.38.6", "Dion. Hal. 3.67", "Platner-Ashby s.v. Forum Romanum"]
+- id: velabrum
+  latin: Velabrum
+  english: Velabrum
+  lat: 41.8905
+  lon: 12.4830
+  floor_m: 10
+  text: "Low marshy ground between the Capitol, Palatine and the Forum Boarium; flooded by the Tiber until the Cloaca Maxima drained it; the Vicus Tuscus ran through it; one of the oldest market places."
+  sources: ["Varro LL 5.43-44", "Platner-Ashby s.v. Velabrum"]
+- id: vallis_murcia
+  latin: Vallis Murcia
+  english: Valley of Murcia (Circus Maximus)
+  lat: 41.8861
+  lon: 12.4851
+  floor_m: 12
+  text: "Long valley between the Palatine and Aventine; site of the Circus Maximus, with the Murtia/Murcia stream."
+  sources: ["Livy 1.35.8", "Platner-Ashby s.v. Circus Maximus"]
+- id: subura_argiletum
+  latin: Subura / Argiletum
+  english: Subura valley
+  lat: 41.8955
+  lon: 12.4905
+  floor_m: 18
+  text: "Low district between the Viminal, Esquiline and Capitol-Forum; crowded; Argiletum road to the Forum."
+  sources: ["Varro LL 5.48", "Platner-Ashby s.v. Subura"]
+tiber:
+  latin: Tiberis
+  english: Tiber
+  lat: 41.8900
+  lon: 12.4770
+  width_m: 60
+  text: "River 60-90 m wide through the city, flowing north to south then west; the Tiber Island and fords at the Forum Boarium; the Pons Sublicius is the earliest crossing; floods regular (Livy 7.3.2; 24.9.6; 35.9.2). Floodplain (Campus Martius, Forum Boarium, Forum Holitorium) lay 2-6 m above normal water. Harbour at the Emporium (193 BC)."
+  sources: ["Livy 1.4", "Livy 7.3.2", "Livy 35.9.2", "Platner-Ashby s.v. Tiberis"]
+  island: {latin: Insula Tiberina, lat: 41.89083, lon: 12.47722, length_m: 270, width_m: 67, fit_bridges: [pons_fabricius, pons_cestius], abutment_m: 3}
+  # U8: the island (Wikipedia s.v. Tiber Island: 41.8908, 12.4772, 270 x 67 m, 'boat-shaped') is placed
+  # and turned so that the two bridges of the dataset span its two channels: the Pons Fabricius (62 m,
+  # P-A s.v. Pons Fabricius, read in R5) the eastern one, the Pons Cestius (48 m, P-A s.v. Pons Cestius)
+  # the western one, each resting `abutment_m` on land at both ends. tiber.gd computes the frame from
+  # monuments.json; the island's long axis comes out at a bearing of about 143 degrees.
+  # U8 island pass: tiber.gd read the bridges' raw lat/lon while monuments.gd drew them with their
+  # offset_m (the Wikipedia points of the remains), so the island was fitted 60 m south of the bridges
+  # as drawn. The offsets are now folded into the bridges' lat/lon, and each bridge moved a further
+  # ~27 m (within its +-30 m) so that the 67 m island fits between their ends with its axis along the
+  # river: the island comes out at (-639, 195), axis bearing 114 (checked in the engine), 31 m from the Wikipedia point
+  # (41.89083, 12.47722 = (-669, 186), the seed above). The course point at the island is moved to
+  # the new middle of the water, [41.8907, 12.4776]. # unverified
+  course: [[41.9335,12.4668],[41.9200,12.4672],[41.9060,12.4690],[41.9045,12.4675],[41.9026,12.4655],[41.9012,12.4630],[41.8990,12.4645],[41.8975,12.4665],[41.8955,12.4685],[41.8933,12.4707],[41.8915,12.4745],[41.8907,12.4776],[41.8890,12.4792],[41.8862,12.4772],[41.8833,12.4752],[41.8800,12.4718],[41.8754,12.4704],[41.8690,12.4700]]
+  # U2: points 3-10 added to show the great westward bend round the Campus Martius (Platner-Ashby
+  # s.v. Campus Martius: the plain lies "between the Capitoline, Quirinal, Pincian and the Tiber").
+  # Positions are read off the modern river at its bridges (Ponte Cavour, Sant'Angelo, Vittorio
+  # Emanuele II, Mazzini, Sisto) as a proxy for the ancient bed; the Tiber has shifted in detail
+  # and been embanked since (Platner-Ashby s.v. Tiberis). Accurate to ~50 m. # unverified
+  # U8: south of the island the old points ran up to 200 m east of the river (they put the Emporium and
+  # the Porticus Aemilia in Trastevere). Replaced by the modern bridges as proxies (Wikipedia
+  # coordinates, read 2026-10-30): Ponte Palatino 41.8890, 12.4792; Ponte Sublicio 41.8833, 12.4752;
+  # Ponte Testaccio 41.8754, 12.4704; [41.8800, 12.4718] keeps the Porticus Aemilia (41.8801, 12.4736)
+  # about 90 m back from the Emporium quay as Wikipedia s.v. Porticus Aemilia describes; the last
+  # point is a straight run to the field's edge # unverified. The point at the island (41.8907,
+  # 12.4776 since the U8 island pass) is the middle of the water between the two banks fitted to the
+  # bridges (tiber.gd).
+  surface_m: [6.2, 5.3]   # normal water level a.s.l. at the north and south end of the course
+  surface_source: "Platner-Ashby s.v. Campus Martius: the plain was 10-15 m a.s.l. and 3-8 m above the Tiber, so the river stood at about 5-7 m"
+  banks: {half_width_m: 45, bank_cut_m: 16, depth_m: 3.4}   # model choice: 90 m wide, the top of the 60-90 m in the text above (Platner-Ashby s.v. Tiberis); varies +-15% along the course
+campus_martius:
+  latin: Campus Martius
+  english: Campus Martius
+  lat: 41.9000
+  lon: 12.4700
+  floor_m: 12
+  text: "Floodplain of the river bend west and north of the Capitol, about 2 km long; land of the Tarquins consecrated to Mars (Livy 2.5.2); muster, voting (Saepta), games, later monuments; frequently flooded (Livy 35.9.2)."
+  sources: ["Livy 2.5.2", "Strabo 5.3.8", "Platner-Ashby s.v. Campus Martius"]
+
+# U2 terrain model: how the heightfield is built (client/scripts/urbs/terrain.gd). Each hill is a
+# ridge (a polyline of [lat, lon, height_a.s.l.]) whose height falls away from the crest between
+# `core` metres (flat top) and `outer` metres (foot): a short gap makes a cliff, a long one a slope.
+# Valleys are polylines [lat, lon, ancient_floor] flattened to their floor inside `core` and
+# blended back to the hills by `outer`. The heights of the summits come from the entries above;
+# crest lengths and widths are fitted to the measurements quoted in the sources. The positions of
+# the saddles and spurs are the modeller's reading of the sources, not surveyed data.
+terrain_model:
+  ridges:
+  - id: capitol_quirinal
+    soft: true   # rounded flanks (a long slope, no cliff)
+    pts: [[41.8953,12.4842,38],[41.8985,12.4870,45],[41.9030,12.4895,61],[41.9065,12.4935,60],[41.9085,12.5000,55]]
+    core: 80
+    outer: 190
+    note: "The Quirinal is a narrow irregular tongue a little over 2 km long from the Porta Collina to the Collis Latiaris, sloping off more gradually on the north and west to the Campus Martius; highest point in the Royal Gardens area; a fairly deep depression joined it to the Capitol until Trajan's excavations"
+    sources: ["Platner-Ashby s.v. Quirinalis Collis (read on LacusCurtius)"]
+  - id: viminalis
+    soft: true
+    pts: [[41.9000,12.4935,50],[41.9012,12.4975,57],[41.9022,12.5010,55]]
+    core: 70
+    outer: 110
+    note: "Tongue about 700 m long, area about 24 ha, height 50-57 m (originally somewhat higher), extending south-west from the Esquiline plateau; separated from the Cispius by the valley of the Vicus Patricius and from the Quirinal by the depression of the Via Nazionale; named for its osiers"
+    sources: ["Platner-Ashby s.v. Viminalis Collis (read on LacusCurtius)", "Varro LL 5.51"]
+  - id: esquilinus
+    soft: true
+    pts: [[41.8905,12.4950,54],[41.8925,12.4975,58],[41.8932,12.5020,60],[41.8932,12.5100,62]]
+    core: 90
+    outer: 220
+    note: "Oppius and Cispius are the two projections of the high eastern ground (Esquiliae, the older name); well wooded at first (groves Fagutalis, Mefitis, Esquilinus, Lucinae); crest positions are the modeller's reading # unverified"
+    sources: ["Platner-Ashby s.v. Esquiliae (read on LacusCurtius)", "Varro LL 5.50"]
+  - id: cispius
+    soft: true
+    pts: [[41.8932,12.5000,60],[41.8975,12.4985,60],[41.9000,12.4995,58]]
+    core: 60
+    outer: 160
+    note: "Northern projection of the Esquiline (S. Maria Maggiore), parted from the Viminal by the valley of the Vicus Patricius; position # unverified"
+    sources: ["Platner-Ashby s.v. Esquiliae (read on LacusCurtius)"]
+  - id: caelius
+    soft: true
+    pts: [[41.8838,12.4905,48],[41.8855,12.4962,50],[41.8875,12.5050,52],[41.8900,12.5150,55]]
+    core: 90
+    outer: 190
+    note: "Tongue about 2 km long and 400-500 m wide stretching west from the eastern plateau, ending in two promontories (Caeliolus in the east, SS. Giovanni e Paolo in the west)"
+    sources: ["Platner-Ashby s.v. Caelius Mons (read on LacusCurtius)"]
+  - id: pincius
+    soft: true
+    pts: [[41.9110,12.4900,60],[41.9118,12.4820,62],[41.9140,12.4790,58],[41.9185,12.4800,56]]
+    core: 80
+    outer: 200
+    note: "Collis Hortulorum: runs west from the Porta Salaria, NNW from the Porta Pinciana to the Muro Torto and west again to the Porta Flaminia, divided from the Quirinal by the valley of the Horti Sallustiani; the substructions of the Horti Lucullani altered its contour (late Republic). Crest heights 56-62 m are modern, # unverified for 509-27 BC"
+    sources: ["Platner-Ashby s.v. Pincius Mons (read on LacusCurtius)", "Platner-Ashby s.v. Horti Lucullani"]
+  - id: ianiculum
+    soft: true
+    pts: [[41.8800,12.4660,48],[41.8855,12.4635,69],[41.8880,12.4610,82],[41.8920,12.4610,80],[41.8985,12.4585,66],[41.9020,12.4580,48],[41.9030,12.4551,60],[41.9100,12.4560,75]]
+    core: 90
+    outer: 260
+    note: "Long ridge on the right bank running almost due north from opposite the Aventine, 60-70 m above the Campus Martius on average; 82 m at the Porta Aurelia (S. Pancrazio), 69 m west of S. Pietro in Montorio; the Janiculum proper is the 2 km south of S. Spirito, where the ridge comes within 100 m of the river; not continuous in the north (Vatican). Heights as quoted; crest positions are the modeller's reading # unverified"
+    sources: ["Platner-Ashby s.v. Ianiculum (read on LacusCurtius, page Janiculum.html)", "Livy 1.33.6"]
+  - id: velia
+    soft: true
+    pts: [[41.89057, 12.48892, 30], [41.8905, 12.4905, 31], [41.8905, 12.49206, 38], [41.8905, 12.495, 54]]
+    core: 30
+    outer: 110
+    note: "U8: the Velia, the narrow ridge joining the Palatine's north-east corner to the Oppius; the Sacra via crosses its summit (P-A s.v. Sacra Via: c. 27 m a.s.l. at the Clivus Palatinus junction, 27.6 m) and the Nova Via leaves it at 32.30 m (P-A s.v. Nova Via). Heights fitted to those excavated pavements; the crest line is the modeller's reading # unverified"
+    sources: ["Platner-Ashby s.v. Sacra Via (read earlier, streets.yaml)", "Platner-Ashby s.v. Nova Via (read earlier, streets.yaml)", "Platner-Ashby s.v. Palatinus Mons (read on LacusCurtius): joined to the Esquiline only by the narrow ridge of the Velia"]
+  valleys:
+  - id: forum_valley
+    pts: [[41.8925,12.4838,10.0],[41.8925,12.4870,10.0],[41.8913,12.4895,13]]
+    core: 45
+    outer: 110
+    note: "ancient floor about 10 m a.s.l. (modern 14-16); the valley centre 'was originally a swamp' (traces of man at 3.6 m, burials at 6-7 m a.s.l. in the excavations)"
+    sources: ["Platner-Ashby s.v. Forum Romanum (read on LacusCurtius)", "Ovid Fasti 6.401-2"]
+  - id: velabrum
+    pts: [[41.8925,12.4838,10.0],[41.8905,12.4830,9.8],[41.8895,12.4800,9.2],[41.8890,12.4782,8.5]]
+    core: 55
+    outer: 120
+    note: "between the Palatine's NW slope and the Capitoline, running to the river; the Forum valley's continuation, once marshy"
+    sources: ["Platner-Ashby s.v. Velabrum (read on LacusCurtius)"]
+  - id: vallis_murcia
+    pts: [[41.8885,12.4825,10.5],[41.8861,12.4853,12],[41.8838,12.4880,13],[41.8815,12.4930,16]]
+    core: 65
+    outer: 130
+    note: "600 m long and 150 m wide, between Palatine and Aventine (Circus Maximus); a stream through it"
+    sources: ["Platner-Ashby s.v. Circus Maximus (read on LacusCurtius)"]
+  - id: subura
+    pts: [[41.8935,12.4865,12],[41.8955,12.4905,18],[41.8970,12.4940,24]]
+    core: 40
+    outer: 90
+    note: "Argiletum and Subura, the low ground between Capitol-Quirinal and Esquiline"
+    sources: ["Varro LL 5.48", "Platner-Ashby s.v. Subura"]
+  - id: via_nazionale
+    pts: [[41.8970,12.4940,24],[41.9005,12.4950,34],[41.9035,12.4975,44]]
+    core: 25
+    outer: 70
+    note: "the depression between Quirinal and Viminal (now the Via Nazionale); the floor rises from the Subura; levels are the modeller's reading # unverified"
+    sources: ["Platner-Ashby s.v. Viminalis Collis and Quirinalis Collis (read on LacusCurtius)"]
+  plains:
+  - id: campus_martius
+    pts: [[41.8940,12.4800,12.5],[41.9000,12.4772,12],[41.9060,12.4762,13],[41.9115,12.4765,14]]
+    core: 380
+    outer: 700
+    note: "level ground 10-15 m a.s.l. (13-20 now), 3-8 m above the Tiber, a little under 2 km wide between the Quirinal and the river, with ponds and streams (not modelled)"
+    sources: ["Platner-Ashby s.v. Campus Martius (read on LacusCurtius)"]
+  # U8 site model (client/scripts/urbs/terrain.gd, site.gd). The three cliff hills are PLATEAUS:
+  # a polygon outline with the height a.s.l. at each vertex, interior `peaks` [lat, lon, height]
+  # (summits and saddles), and a `flank` width in metres over which the top falls to the ground
+  # round it; `shape: cliff` keeps the top edge sharp with a talus foot, `shape: slope` is an even
+  # hillside. Outlines are the modeller's reading of the modern plan minus the known fill;
+  # the heights come from the entries above and from the excavated pavements quoted in
+  # streets.yaml (Nova Via 23.40 m behind the Atrium Vestae, 32.30 m at the Clivus Palatinus;
+  # Sacra Via 27.6 m at the Clivus Palatinus junction; Forum floor about 10 m).
+  plateaus:
+  - id: capitolinus
+    outline: [[41.89237, 12.48289, 40], [41.89194, 12.48228, 42], [41.89185, 12.48132, 42], [41.89277, 12.48098, 42], [41.89385, 12.48146, 42], [41.89504, 12.48228, 42], [41.8954, 12.48325, 40], [41.89497, 12.48371, 38], [41.89425, 12.48395, 36], [41.89351, 12.48347, 35], [41.89263, 12.48349, 36]]
+    peaks: [[41.89228, 12.4818, 46], [41.89317, 12.48295, 37], [41.8945, 12.4833, 46]]
+    flank: 60
+    shape: cliff
+    note: "460 x 180 m NE-SW, two summits (Capitolium SW, Arx NE) with the saddle of the Asylum between them at about 37 m; steep cliffs all round except toward the Forum, where the Tabularium fills the slope; the Tarpeian rock at the SW. Outline # unverified (modeller's reading of the modern plan)"
+    sources: ["Platner-Ashby s.v. Capitolinus Mons (read on LacusCurtius, U2)", "Platner-Ashby s.v. Tabularium (read, monuments.yaml)", "Livy 1.8.5 (the Asylum inter duos lucos) # unverified, not re-read"]
+  - id: palatinus
+    outline: [[41.8898, 12.48397, 46], [41.89041, 12.48458, 45], [41.89057, 12.48602, 43], [41.89034, 12.488, 42], [41.89057, 12.48892, 36], [41.88953, 12.48971, 45], [41.88845, 12.48983, 46], [41.88746, 12.4894, 46], [41.88645, 12.48742, 46], [41.88846, 12.48465, 47], [41.88904, 12.48388, 47]]
+    peaks: [[41.8892, 12.488, 51], [41.8889, 12.48602, 49], [41.88953, 12.48506, 48]]
+    flank: 70
+    shape: slope
+    note: "irregular quadrilateral, highest point 51.20 m; the north flank over the Forum is an even slope (Nova Via pavement at 23.40 m half-way up, P-A s.v. Nova Via), the west (Cermalus) and south (Circus) sides steeper; the Velia leaves the NE corner. Outline # unverified (modeller's reading)"
+    sources: ["Platner-Ashby s.v. Palatinus Mons (read on LacusCurtius, U2)", "Platner-Ashby s.v. Nova Via (read, streets.yaml)"]
+  - id: aventinus
+    outline: [[41.8848, 12.4793, 42], [41.88527, 12.4825, 42], [41.8842, 12.48481, 41], [41.8825, 12.486, 38], [41.88, 12.4875, 41], [41.879, 12.48551, 40], [41.88, 12.48299, 41], [41.882, 12.479, 43]]
+    peaks: [[41.8835, 12.48108, 46], [41.88026, 12.48651, 43], [41.88233, 12.48433, 38]]
+    flank: 90
+    shape: cliff
+    note: "two knobs (Aventinus Maior NW 46 m, Minor SE 43 m) with a saddle; steep towards the river and the Circus, whose seats lay against its foot. Outline # unverified (P-A s.v. Aventinus Mons could not be fetched)"
+    sources: ["Livy 3.50", "Platner-Ashby s.v. Circus Maximus (read on LacusCurtius, U2): the valley 600 x 150 m between Palatine and Aventine"]
+  # PLATFORMS: polygons carved flat (the built floors), `level` in metres a.s.l. (two values =
+  # a gradient from the west end to the east end), blended into the ground over `blend` m;
+  # `walls: true` stands substructure / retaining walls on the edges where the ground falls or rises.
+  platforms:
+  - id: forum_romanum
+    polygon: [[41.89317, 12.48379], [41.89174, 12.48379], [41.8916, 12.48482], [41.89115, 12.48578], [41.89115, 12.48711], [41.89196, 12.48735], [41.89277, 12.48687], [41.89317, 12.48602], [41.89349, 12.48554], [41.89349, 12.48458]]
+    level: [11.0, 11.0]
+    blend: 30
+    note: "the whole piazza and the buildings round it, from the foot of the Tabularium to the Regia and the Atrium Vestae, dead flat so the paving (monuments.yaml forum_romanum, 120 x 56 m) and every building on it meet the ground; the early floor was about 10 m a.s.l., the Sullan pavement 11.90-12.50 m by the temple of Caesar (P-A s.v. Sacra Via): 11 m is the modeller's middle value for the late Republic"
+    sources: ["Platner-Ashby s.v. Forum Romanum (read on LacusCurtius, U2)", "Platner-Ashby s.v. Sacra Via (read, streets.yaml)"]
+  - id: forum_iulium
+    polygon: [[41.89331, 12.48446], [41.8934, 12.48566], [41.89439, 12.48542], [41.8943, 12.48433]]
+    level: [13.0, 13.0]
+    blend: 20
+    note: "the floor of Caesar's forum, a little above the Forum Romanum on the saddle toward the Quirinal; level # unverified"
+    sources: ["Platner-Ashby s.v. Forum Iulium # unverified, not read"]
+  - id: area_capitolina
+    polygon: [[41.89254, 12.48108], [41.89268, 12.48228], [41.89192, 12.48243], [41.89174, 12.48126]]
+    level: [42.0, 42.0]
+    blend: 6
+    walls: true
+    note: "the terrace of the temple of Jupiter on the Capitolium summit; level set 4 m below the summit figure so the 4-5 m podium (P-A s.v. Iuppiter Optimus Maximus) stands clear. Extent # unverified"
+    sources: ["Platner-Ashby s.v. Iuppiter Optimus Maximus Capitolinus, Aedes (read, monuments.yaml)", "Platner-Ashby s.v. Area Capitolina # unverified, not read"]
+  - id: circus_maximus
+    polygon: [[41.88848, 12.48358], [41.88442, 12.48922], [41.88333, 12.48782], [41.88739, 12.48217]]
+    level: [12.0, 12.0]
+    blend: 45
+    note: "the arena floor of the Vallis Murcia, 621 x 118 m (Dion. Hal. 3.68) plus the seating margins, kept level (the real floor fell a little toward the Tiber; the valley floor is 10.5-13 m here)"
+    sources: ["Dion. Hal. 3.68 (read, monuments.yaml)", "Platner-Ashby s.v. Circus Maximus (read on LacusCurtius, U2)"]
+  # STREET CUTS: every street in streets.yaml is cut into the ground with a smoothed profile
+  # (a hill road becomes a ramp notched into the slope; a `stairs` street keeps its slope).
+  street_cuts: {shoulder_m: 2.0, blend_m: 9.0, smooth_m: 36.0, max_gradient: 0.16}   # a clivus: shoulder 1.6, blend 4 (a sharp cutting, walled); max_gradient 0.16 against P-A's 1:8 (0.125) for the Clivus Capitolinus, a little steeper so the cut stays shallow
+  # GROVES and gardens inside the city (trees the sources place), each a disc: kinds are pine
+  # (umbrella pine), cypress, plane, olive, fig, oak, laurel; `from` = first year (null: always).
+  groves:
+  - {id: inter_duos_lucos, lat: 41.8940, lon: 12.4840, radius: 45, density: 1.0, mix: {oak: 4, laurel: 2}, from: null, sources: ["Livy 1.8.5: the Asylum 'inter duos lucos', the two groves on the Capitoline saddle # unverified, not re-read", "Platner-Ashby s.v. Asylum # unverified"]}
+  - {id: ficus_olea_vitis, lat: 41.8924, lon: 12.4851, radius: 7, density: 1.0, mix: {fig: 1, olive: 1}, from: null, sources: ["Pliny NH 15.77-78: a fig, an olive and a vine in the middle of the Forum by the Lacus Curtius # unverified, from memory"]}
+  - {id: ficus_ruminalis, lat: 41.8927, lon: 12.4850, radius: 4, density: 1.0, mix: {fig: 1}, from: null, sources: ["Pliny NH 15.77 (the Ficus Ruminalis in the Comitium), Tac. Ann. 13.58 # unverified, from memory"]}
+  - {id: lucus_vestae, lat: 41.8912, lon: 12.4865, radius: 35, density: 0.8, mix: {oak: 3, laurel: 2}, from: null, sources: ["Cic. Div. 1.101 (the lucus Vestae below the Nova Via), P-A s.v. Nova Via (read, streets.yaml)"]}
+  - {id: porticus_pompeiana_planes, lat: 41.8953, lon: 12.4750, radius: 60, density: 0.9, mix: {plane: 1}, from: -55, grid: 14, sources: ["Propertius 2.32.11-16: the plane trees of Pompey's portico # unverified, from memory"]}
+  - {id: horti_lucullani, lat: 41.9087, lon: 12.4825, radius: 260, density: 0.6, mix: {cypress: 3, pine: 3, plane: 2, laurel: 2}, from: -60, sources: ["Platner-Ashby s.v. Horti Lucullani (read on LacusCurtius, U2)"]}
+  - {id: horti_sallustiani, lat: 41.9095, lon: 12.4950, radius: 260, density: 0.6, mix: {cypress: 3, pine: 3, plane: 2, laurel: 2}, from: -40, sources: ["Platner-Ashby s.v. Horti Sallustiani # unverified, not read"]}
+  - {id: horti_caesaris, lat: 41.8760, lon: 12.4660, radius: 300, density: 0.6, mix: {cypress: 2, pine: 3, plane: 3, olive: 2}, from: -60, sources: ["Platner-Ashby s.v. Horti Caesaris # unverified, not read"]}
+  - {id: horti_maecenatis, lat: 41.8935, lon: 12.5000, radius: 220, density: 0.7, mix: {cypress: 3, pine: 3, laurel: 2}, from: -35, sources: ["Platner-Ashby s.v. Horti Maecenatis (Esquiline, the former paupers' cemetery, Hor. Sat. 1.8) # unverified, not read"]}
+  # QUAYS: stretches of the Tiber bank built up in stone (steps to the water), by distance along
+  # the river's course measured from the Pons Aemilius (negative = upstream) and bank side.
+  # QUAYS: stretches of the Tiber bank built up in stone (a wall at the water with flights of
+  # steps down to it), centred on the bank point nearest [lat, lon], `length_m` along the river,
+  # on the bank that point lies on; the ground behind is levelled `rise_m` above the water.
+  quays:
+  - {id: emporium, lat: 41.8823, lon: 12.4747, length_m: 500, rise_m: 4.5, from: -174, sources: ["Livy 35.10.12 (the Emporium laid out by the aediles of 193 BC) # unverified, not re-read", "Livy 41.27.8 (174 BC: the censors paved the Emporium with stone, fenced it with posts and made steps up from the Tiber) # unverified, not re-read"]}
+  # The Tiber island's facing: P-A s.v. Insula Tiberina (# unverified, LacusCurtius unreachable this
+  # session) describes travertine walls shaped as a ship with its prow at the downstream end, a
+  # work usually put in the 1st century BC; monuments.yaml calls it Imperial. Scholars differ:
+  # drawn from the year of the Pons Fabricius (62 BC), flagged.
+  island_facing: {from: -62, prow: downstream, sources: ["Platner-Ashby s.v. Insula Tiberina # unverified, not read this session"]}
+  # Trees and scrub, only on the outer ground (never in the built-up centre). Each wood is a disc
+  # (centre, radius in metres) with a density (candidates per 100 m^2) and a mix of kinds (oak,
+  # pine = umbrella pine, cypress, scrub). The list is the modeller's choice of where the ground was
+  # open or wooded; only the Esquiline groves and the Caelian oak name are attested.
+  woods:
+  - {id: esquiline_groves, lat: 41.8960, lon: 12.5030, radius: 800, density: 0.9, mix: {oak: 5, scrub: 3, cypress: 1}, sources: ["Platner-Ashby s.v. Esquiliae: well wooded at first, groves Fagutalis, Mefitis, Esquilinus, Lucinae (read on LacusCurtius)"]}
+  - {id: caelius_oaks, lat: 41.8870, lon: 12.5020, radius: 700, density: 0.8, mix: {oak: 6, scrub: 2}, sources: ["Tacitus Ann. 4.65 (the Caelian once Querquetulanus, for its oaks) # unverified, from memory"]}
+  - {id: janiculum, lat: 41.8900, lon: 12.4590, radius: 900, density: 0.7, mix: {oak: 3, pine: 2, scrub: 4}, sources: ["modeller's choice # unverified"]}
+  - {id: pincian_gardens, lat: 41.9130, lon: 12.4830, radius: 700, density: 0.7, mix: {oak: 3, pine: 3, cypress: 2}, sources: ["Platner-Ashby s.v. Horti Lucullani (gardens, late Republic); earlier open ground # unverified"]}
+  - {id: northern_fields, lat: 41.9300, lon: 12.4900, radius: 1100, density: 0.35, mix: {oak: 3, scrub: 4}, sources: ["modeller's choice # unverified"]}
+  - {id: eastern_plateau, lat: 41.8950, lon: 12.5180, radius: 1000, density: 0.5, mix: {oak: 3, scrub: 4, pine: 1}, sources: ["modeller's choice # unverified"]}
+  - {id: aventine_south, lat: 41.8740, lon: 12.4800, radius: 900, density: 0.5, mix: {oak: 2, scrub: 4}, sources: ["modeller's choice # unverified"]}

@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+import glob
 import hashlib
+import os
 from collections.abc import Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
@@ -19,16 +21,38 @@ from anachronism.content.schema import (
     CURRENT_SCHEMA_VERSION,
     LIST_KINDS,
     SINGLE_KINDS,
+    AlmanacEntry,
+    Battle,
+    Building,
+    Chapter,
+    CityTimeline,
     CivDefinition,
+    Dialogue,
+    Dilemma,
     EffectType,
     Era,
+    FastiYear,
+    Formation,
+    Gens,
+    Happening,
+    HistoricalPerson,
+    Magistracy,
     MapResource,
+    Monument,
     PackManifest,
     ProvinceGeography,
+    RepublicRules,
     Rules,
     Scenario,
+    SeaZone,
+    Ship,
+    Speaker,
+    Symbol,
+    Tactic,
+    Tale,
     TechNode,
     Terrain,
+    Unit,
 )
 
 PACKS_DIR = Path(__file__).parent / "packs"
@@ -47,10 +71,34 @@ class Content:
     resources: Mapping[str, MapResource]
     techs: Mapping[str, TechNode]
     provinces: Mapping[str, ProvinceGeography]
+    seas: Mapping[str, SeaZone]
     civs: Mapping[str, CivDefinition]
     scenarios: Mapping[str, Scenario]
+    speakers: Mapping[str, Speaker]
+    dialogue: Mapping[str, Dialogue]
     digest: str
     """SHA-256 of every loaded file, recorded in saves to identify the content version."""
+    happenings: Mapping[str, Happening] = field(default_factory=dict)
+    units: Mapping[str, Unit] = field(default_factory=dict)
+    tales: Mapping[str, Tale] = field(default_factory=dict)
+    dilemmas: Mapping[str, Dilemma] = field(default_factory=dict)
+    ships: Mapping[str, Ship] = field(default_factory=dict)
+    buildings: Mapping[str, Building] = field(default_factory=dict)
+    chapters: Mapping[str, Chapter] = field(default_factory=dict)
+    almanac: Mapping[str, AlmanacEntry] = field(default_factory=dict)
+    tactics: Mapping[str, Tactic] = field(default_factory=dict)
+    formations: Mapping[str, Formation] = field(default_factory=dict)
+    symbols: Mapping[str, Symbol] = field(default_factory=dict)
+    magistracies: Mapping[str, Magistracy] = field(default_factory=dict)
+    gentes: Mapping[str, Gens] = field(default_factory=dict)
+    people: Mapping[str, HistoricalPerson] = field(default_factory=dict)
+    fasti: Mapping[str, FastiYear] = field(default_factory=dict)
+    republic_rules: RepublicRules = field(default_factory=RepublicRules)
+    battles: Mapping[str, Battle] = field(default_factory=dict)
+    monuments: Mapping[str, Monument] = field(default_factory=dict)
+    """The city of Rome (U7), read from the dataset the rome pack points at."""
+    city_timeline: Mapping[str, CityTimeline] = field(default_factory=dict)
+    """Chance events (plague, flood, bumper harvests...)."""
 
 
 @dataclass(frozen=True)
@@ -106,6 +154,11 @@ def load_content(pack_ids: Sequence[str] | None = None, root: Path = PACKS_DIR) 
             parsed = _parse_file(relative, data, issues)
             if parsed is not None:
                 _register(parsed, relative, registry, issues)
+        for relative, data in _external_files(root, pack_dir, manifests[pack_id], issues):
+            digest.update(relative.encode() + b"\0" + data + b"\0")
+            parsed = _parse_file(relative, data, issues, external=True)
+            if parsed is not None:
+                _register(parsed, relative, registry, issues)
     issues.extend(_missing_singletons(registry))
     issues.extend(cross_reference_issues(registry))
     if issues:
@@ -122,10 +175,51 @@ def load_content(pack_ids: Sequence[str] | None = None, root: Path = PACKS_DIR) 
         resources=registry.resources,
         techs=registry.techs,
         provinces=registry.provinces,
+        seas=registry.seas,
         civs=registry.civs,
         scenarios=registry.scenarios,
+        speakers=registry.speakers,
+        dialogue=registry.dialogue,
+        happenings=registry.happenings,
+        units=registry.units,
+        tales=registry.tales,
+        dilemmas=registry.dilemmas,
+        ships=registry.ships,
+        buildings=registry.buildings,
+        chapters=registry.chapters,
+        almanac=registry.almanac,
+        tactics=registry.tactics,
+        formations=registry.formations,
+        symbols=registry.symbols,
+        magistracies=registry.magistracies,
+        gentes=registry.gentes,
+        people=registry.people,
+        fasti=registry.fasti,
+        republic_rules=registry.republic_rules or RepublicRules(),
+        battles=registry.battles,
+        monuments=registry.monuments,
+        city_timeline=registry.city_timeline,
         digest=digest.hexdigest(),
     )
+
+
+def _external_files(
+    root: Path, pack_dir: Path, manifest: PackManifest, issues: list[ContentIssue]
+) -> list[tuple[str, bytes]]:
+    """Read the dataset files a pack points at with ``external`` (U7), in sorted order."""
+    found: list[tuple[str, bytes]] = []
+    for pattern in manifest.external:
+        matches = sorted(glob.glob(os.path.normpath(pack_dir / pattern)))
+        if not matches:
+            issues.append(
+                ContentIssue(
+                    f"{pack_dir.name}/{MANIFEST}", "pack.external", f"{pattern!r}: no file"
+                )
+            )
+        for match in matches:
+            relative = Path(os.path.relpath(match, root)).as_posix()
+            found.append((relative, Path(match).read_bytes()))
+    return found
 
 
 def _discover_packs(root: Path, issues: list[ContentIssue]) -> dict[str, PackManifest]:
@@ -182,7 +276,9 @@ def _resolve_order(
     return order
 
 
-def _parse_file(relative: str, data: bytes, issues: list[ContentIssue]) -> ParsedFile | None:
+def _parse_file(
+    relative: str, data: bytes, issues: list[ContentIssue], *, external: bool = False
+) -> ParsedFile | None:
     """Parse and validate one file.
 
     List items are validated one by one, so a broken item is reported without hiding its
@@ -197,7 +293,16 @@ def _parse_file(relative: str, data: bytes, issues: list[ContentIssue]) -> Parse
         issues.append(ContentIssue(relative, "", "file must be a mapping of keys to values"))
         return None
     version = raw.get("schema_version")
-    if version != CURRENT_SCHEMA_VERSION:
+    if external:  # a dataset file outside the pack: no schema_version, a single list kind
+        # The Empire file also carries `events_on_republican` (later fires and rebuilds of
+        # the Republic's buildings), which the client reads and the engine does not need.
+        raw = {key: value for key, value in raw.items() if key != "events_on_republican"}
+        if list(raw) != ["monuments"]:
+            issues.append(
+                ContentIssue(relative, "", f"expected only 'monuments'; found {list(raw)}")
+            )
+            return None
+    elif version != CURRENT_SCHEMA_VERSION:
         issues.append(
             ContentIssue(
                 relative,

@@ -1,0 +1,13 @@
+schema_version: 1
+# Historical choices for the Europe pack's moments (D-104).
+dilemmas:
+  - id: corvus
+    title: Copy the enemy's ship
+    text: "A Carthaginian warship has run aground on the coast. Rome has never built a fleet - but here is a perfect model."
+    chance_bp: 4000
+    scenarios: [punic_wars]
+    civs: [rome]
+    at_war: true
+    choices:
+      - {label: "Copy it plank by plank", outcome: "In sixty days Rome builds a hundred ships, with a boarding bridge - the corvus - of its own invention.", materials_bp: -2000, knowledge_bp: 1200, idea: sternpost_rudder}
+      - {label: "Stay a land power", outcome: "The legions are enough. Let Carthage keep the sea.", legitimacy_bp: 200}

@@ -65,7 +65,7 @@ src/anachronism/
     packs/testworld/      fictional 3-civ world and the Bronze Dawn scenario
     packs/east_asia/      pilot                                                (Phase 5)
   llm/                    provider, fake, offline, anthropic, schemas, guard, pipeline,
-                          cache, budget, prompts                                (Phase 2)
+                          cache, budget, prompts, voice, counsel (rival rulers)   (Phase 2)
   ui/                     app, screens, widgets, theme, assets                  (Phase 3)
   tools/
     console.py            `anachronism-console`: play in a terminal
@@ -121,6 +121,12 @@ files, each holding `schema_version` and exactly one kind (D-036). Packs load in
 order; list items are validated one by one; cross-references are checked afterwards; every
 problem is reported with its file and location. See CONTENT_GUIDE.md.
 
+A pack may also point at dataset files outside itself with `external:` in `pack.yaml` (glob
+patterns relative to the pack folder). The `rome` pack uses it to read
+`data/rome/city/monuments*.yaml` in place (no copy, so the 3D client and the engine share one
+source). External files have no `schema_version` and hold one list kind (`monuments`); the lint
+reports a pattern that matches nothing.
+
 ## 7. Save format
 One JSON file with sorted keys: the whole `GameState`. Tests check that save → load → save
 is byte-identical, that a replay from the initial state and the action log is identical, and
@@ -129,3 +135,135 @@ that saving mid-game does not change what happens next.
 ## 8. Configuration and secrets (Phase 2)
 `ANTHROPIC_API_KEY` from the environment or a git-ignored `.env`. Model and effort per task,
 monthly spending cap and debug-log toggle in config. `.env.example` documents the keys.
+
+## 9. The Roman Republic (R2, D-286)
+In a scenario with `republic: true` (the `rome_*` scenarios) the player's state is governed by
+the Republic, not one ruler. Other scenarios keep the ruler model; `punic_wars` is unchanged until
+it is migrated.
+
+**Content** (`content/schema/republic.py`; packs: `packs/rome/`). Every entry has `sources`.
+- `magistracies`: an office with `eras` (by year): seats, how often it is chosen (`every`), order
+  rules (`patricians_only`, `plebeians_only`, `plebeian_min/max`), `replaced_by` (consular
+  tribunes for consuls, with a chance), `term_months`, and the cursus rules after the Lex Villia
+  annalis (`min_age`, `interval_years`, `reelect_gap_years`, `prior_office`). `appointed` +
+  `companion` make a dictator and his master of the horse; `census: true` marks the censors.
+- `gentes`: order, `nomen`, praenomina and cognomina, `standing` snapshots (dignitas, auctoritas,
+  wealth, clients), `stances` on Senate issues, `popular_lean_bp`.
+- `people`: historical persons (birth, death, gens, `offices` by year, traits). A birth that is
+  unknown is estimated from the first office.
+- `fasti`: one entry per year: colleges of holders (a person id, or name + gens for a man not
+  modelled; `suffect` for replacements).
+- `republic_rules` (optional single file): every tunable number, and the Senate's blocs by era
+  (orders until 287, nobles, then optimates and populares from 133).
+`checks.py` validates the references. The sample pack covers 509-500 and 264-260 BC; the real
+data in `data/rome/` is converted into this shape.
+
+**State** (`engine/republic_state.py`, `GameState.republic`): `people` (alive or dead, with
+offices, glory), `families` (a gens in play), `magistrates` (those in office now),
+`record` (the game's own Fasti of senior offices), `census`, `influence`, `backing`,
+`emergency_bp`, `diverged`. The frozen content copies go into `World` (`magistracies`,
+`gentes`, `people`, `fasti`, `republic_rules`).
+
+**Rules** (`engine/republic.py`), run from `end_turn` for each year the turn covers
+(`run_year`), after the year advances:
+1. Old terms end; senior offices go to the record. A dictator's term is six months; censors
+   carry into the next year (18 months).
+2. People: a death draw for each (age table in `republic_rules`), births in each gens, real
+   persons come of age. In a chronicle a historical person is spared until his last recorded
+   office and dies in his real year.
+3. Families' dignitas fades; influence grows by an income.
+4. Magistrates: in a chronicle, the Fasti seat the historical holders. A holder who is dead, or
+   displaced by the player's backing, is replaced by election and `diverged` becomes true. Other
+   offices are elected in rank order by weighted draw on `engine.rng` (weights: family standing,
+   glory, wealth, faction share, backing). The laws of the year decide who may stand; if no one
+   may, the best of the rest, then a new man.
+5. A dictator is named (with a master of the horse) when war and threats raise the emergency
+   level (`emergency_bp`) and the era allows it; never in a year the Fasti covers.
+6. The census when censors are chosen.
+`civ.ruler` is set to the senior magistrates so the old ruler fields still read; `age_and_succeed`
+is skipped for the Republic. Hooks for other systems: `award_glory`, `kill_person`,
+`declare_emergency`. `senate_vote(issue)` and `senate_mood()` give the Senate's will.
+
+**The player's politics** (`engine/senate.py`; logged actions, so a replay applies them again).
+The player does not command; he spends influence. Three actions, valid only for the player's
+civ in a Republic game (the bridge adds `civ`):
+- `{"kind": "persuade", "family": "<gens id>", "issue": "<Issue>"}`: `republic.persuade`, costs
+  `persuade_cost`, moves the family's favour on the issue by `persuade_shift`.
+- `{"kind": "back", "person": "<person id>", "office": "<magistracy id>"}`: `back_candidate` for
+  the next election, costs `back_cost`.
+- `{"kind": "senate", "issue": "<Issue>", "proposal": "<proposal>"}`: put a matter to the Senate.
+  `proposal` is one of `war_with:<civ>`, `peace_with:<civ>`, `law:<law id>` (a bare law id works:
+  `land_reform`), `fund:<tech node id>`, `colony:<province id>`. `issue` must be the proposal's
+  own issue (war, peace, the law's issue, `building` for a node that `builds` else `idea`,
+  `colony`). Laws are content (`republic_rules.senate.laws`: `land_reform`, `debt_relief`,
+  `grain_dole`, `grant_citizenship`, each with its years and sources).
+`ProposeToSenate` flow: validate (unknown, closed or wrong-issue proposals, or too little
+influence, are rejected with the state unchanged) -> spend `senate.costs.<kind>` whatever the
+vote -> `senate_vote(record=True)` (a `senate` city event) -> a tribune may interpose -> outcome:
+- `passed`: it takes effect through the engine's own paths: `apply_diplomacy(DeclareWar,
+  voted=True)` or `MakePeace`; a law sets `republic.laws[id] = year`; a colony sets
+  `republic.colonies[province] = year` (the engine has no colonies yet, so this is a flag for
+  content to read); funding calls `projects.begin_project`.
+- `failed`: nothing happens; the player loses `fail_influence_loss` influence and
+  `fail_legitimacy_bp`, and every family that voted no loses `opposed_favour_shift` favour on the
+  issue (they remember).
+- `vetoed`: the Senate would have passed it and a tribune of the plebs blocked it; no further loss.
+- `forced`: the Senate refused, a tribune carried it to the plebs: it takes effect, and the
+  families that opposed it lose `forced_favour_shift` favour.
+The action is `ok` whenever a vote was held; `message` says how it went, and
+`republic.ballots` (the last 20) keeps `{issue, proposal, yes_bp, no_bp, outcome}`.
+The tribune (`senate.interposition`): needs a `tribune_plebs` in office; a veto is possible from
+`veto_from_year` (494 BC, Livy 2.33.1-3; Polybius 6.16.4), carrying a refused matter to the
+people from `force_from_year` (287, the Lex Hortensia). The chance is the gap between the
+weighted `popular_lean_bp` of the losing and the winning side of the vote times
+`veto_scale_bp`, never above `veto_max_bp`, and zero if the losing side is not the more popular
+one. It is the only randomness: one `GameRng` draw, only when the chance is above zero.
+Polybius 6.13 (the Senate handles war and embassies) and 6.14.10-12 (the people deliberate on war
+and peace) are why a Senate vote is the first step and the tribune can reach the people.
+Every war that touches the player's civ and is declared outside `ProposeToSenate` (the plain
+`DeclareWar` action, a rival's declaration, a script, an ultimatum) also records a `senate`
+vote on `war` in `rivals.declare_war`, stamped with the turn being resolved; it does not decide
+the war. The AI players (`bots`) do not use these actions.
+
+**View** (`tools/republic_view.py`, key `republic` in the server's view, `null` otherwise):
+`year_label`, `influence`, `influence_costs` (`{persuade, back}`), `emergency_bp`,
+`history_turned`, `magistrates[]` (office, name, rank, months, suffect, appointed, from_fasti,
+master_of), `senate.factions[]` (weight and mood in bp, per-issue leaning), `senate.votes[]`,
+`proposals[]` (`{issue, proposal, label, cost, forecast_yes_bp, forecast_no_bp, passes,
+tribune, tribune_bp}`: what can be put to the Senate now, with the forecast from an unrecorded
+`senate_vote`; `tribune` is `veto`, `force` or `""`), `last_votes[]` (the turn's `senate` city
+events: `{issue, year, turn, yes_bp, no_bp, house, proposal, outcome}`; `proposal` and `outcome`
+are empty for votes the player did not call), `laws[]`, `colonies[]`, `families[]`, `notable[]`,
+`census[]`, `fasti[]`.
+
+## 10. The city of Rome (U7)
+In Republic scenarios the engine also knows the city, so the 3D client (Urbs) is driven by the
+game and the city is saved with it.
+
+**Content** (`content/schema/monuments.py`): kind `monuments` is the dataset
+`data/rome/city/monuments*.yaml` (extra fields are kept, so client-only fields do no harm);
+kind `city_timeline` (`rome/city_timeline.yaml`) gives the turning points as data (`vowed`,
+`begun`, `completed`, `fire`, `demolished`, `flood`, each with a source), because the dataset's
+`events` are free text and are not parsed; `republic_rules.city` holds the games calendar
+(`ludi`: festival, month, first year, venue), the funeral-games rule (`munus_*`) and the
+Senate's houses. `TechNode.builds` names a great work an idea raises when adopted. All are
+copied into `World` (`monuments`, `city_timeline`, `republic_rules.city`).
+
+**State** (`engine/city_state.py`, `GameState.city`, `None` outside the Republic): `standing`
+(monument id to `MonumentStatus`: `state` planned/building/standing/burnt/ruined, `years_left`,
+`since`), `changed`, `anachronisms`, `events` (frozen `CityEvent`s of the turn), `funerals`.
+
+**Rules** (`engine/city.py`): a monument's status in a year is a pure function of its
+dataset dates and the timeline (`status_map`), so a new game starts at the right place;
+`run_year`, called at the end of `republic.run_year`, recomputes it and emits events:
+`sacrifice` (`vow`, `dedication`), `fire`, `flood` from the timeline; `games` (every festival of
+the calendar whose first year has come; `munus` for a dead man who held an office of rank 5 or
+more, from 264 BC); at the turn's last year `triumph` (the senior magistrate in office; for a
+battle the engine marks `decisive` or an enemy capital taken, with the spoils) and anachronisms
+(an adopted project with `builds`). `senate_vote(..., record=True)` adds a `senate` event.
+A burnt monument keeps its state while it is rebuilt; `years_left` tells how long.
+
+**View** (`tools/city_view.py`, key `city`, `null` outside the Republic):
+`{year, senate_house, monuments: [{id, status, years_left}], changed: [id], anachronisms:
+[{id, tech, name, builds, year, ahead}], events: [{kind, year, ref, monument, person, value,
+other}]}`. `monuments` lists everything not still `planned`.

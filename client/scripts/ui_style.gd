@@ -1,0 +1,272 @@
+## The game's look: fonts, colours and ready-made panels and buttons, in a bright style like
+## Rise of Kingdoms (D-059): cream panels with gold trim, bold gold buttons, big titles.
+class_name UiStyle
+extends RefCounted
+
+const CREAM := Color(0.97, 0.93, 0.84)
+const PARCHMENT := Color(0.93, 0.86, 0.71)
+const INK := Color(0.17, 0.12, 0.08)
+const INK_SOFT := Color(0.38, 0.30, 0.22)
+const GOLD := Color(0.96, 0.76, 0.26)
+const GOLD_DARK := Color(0.66, 0.44, 0.12)
+const RED := Color(0.72, 0.18, 0.14)
+const NIGHT := Color(0.09, 0.08, 0.10)
+
+static var _fonts := {}
+
+
+## A font by role: "title" (Cinzel), "body" (Nunito) or "emblem" (Chinese characters),
+## at a weight from 400 (regular) to 900 (black).
+static func font(role: String, weight := 400) -> Font:
+	var key := "%s:%d" % [role, weight]
+	if _fonts.has(key):
+		return _fonts[key]
+	var path: String = {"title": "res://fonts/Cinzel.ttf", "body": "res://fonts/Nunito.ttf",
+		"emblem": "res://fonts/emblems.ttf"}[role]
+	var base := _font_file(path)
+	var variation := FontVariation.new()
+	variation.base_font = base
+	if role != "emblem":
+		variation.variation_opentype = {TextServerManager.get_primary_interface().name_to_tag("wght"): weight}
+	# Characters missing from a font (e.g. 秦 in Nunito) fall back to the emblem font.
+	if role != "emblem":
+		variation.fallbacks = [_font_file("res://fonts/emblems.ttf")]
+	_fonts[key] = variation
+	return variation
+
+
+## A font file: the raw file if the build carries it, else Godot's imported copy. (A build
+## without either measured text as taking no room while drawing it in a fallback font, so
+## panels shrank to slivers under their own words.)
+static func _font_file(path: String) -> FontFile:
+	var bytes := FileAccess.get_file_as_bytes(path)
+	if not bytes.is_empty():
+		var file := FontFile.new()
+		file.data = bytes
+		return file
+	return load(path) as FontFile
+
+
+## Drops the cached fonts (call when the game closes, so nothing is left allocated).
+static func release() -> void:
+	_fonts.clear()
+
+
+static func theme() -> Theme:
+	var t := Theme.new()
+	t.default_font = font("body", 600)
+	t.default_font_size = 17
+	t.set_color("font_color", "Label", INK)
+	t.set_stylebox("panel", "PanelContainer", ornate_panel())
+	for state in ["normal", "hover", "pressed", "disabled", "focus"]:
+		t.set_stylebox(state, "Button", button_box(state))
+	t.set_color("font_color", "Button", INK)
+	t.set_color("font_hover_color", "Button", INK)
+	t.set_color("font_pressed_color", "Button", INK)
+	t.set_color("font_disabled_color", "Button", Color(INK, 0.4))
+	t.set_font("font", "Button", font("body", 800))
+	# hover explanations: a dark, gold-edged card with large cream text, easy to read over
+	# the bright map and the cream panels alike
+	var tip := StyleBoxFlat.new()
+	tip.bg_color = Color(0.13, 0.10, 0.07, 0.97)
+	tip.border_color = GOLD
+	tip.set_border_width_all(2)
+	tip.set_corner_radius_all(8)
+	tip.content_margin_left = 14
+	tip.content_margin_right = 14
+	tip.content_margin_top = 10
+	tip.content_margin_bottom = 10
+	tip.shadow_color = Color(0, 0, 0, 0.45)
+	tip.shadow_size = 6
+	t.set_stylebox("panel", "TooltipPanel", tip)
+	t.set_color("font_color", "TooltipLabel", Color(1.0, 0.95, 0.84))
+	t.set_font("font", "TooltipLabel", font("body", 600))
+	t.set_font_size("font_size", "TooltipLabel", 18)
+	t.set_constant("line_spacing", "TooltipLabel", 3)
+	return t
+
+
+## Long hover texts broken into lines of about `width` characters, so a tooltip is a
+## readable card rather than one line across the screen.
+static func wrap_tip(text: String, width := 60) -> String:
+	var out := PackedStringArray()
+	for paragraph in text.split("\n"):
+		var line := ""
+		for word in paragraph.split(" "):
+			if line != "" and line.length() + 1 + word.length() > width:
+				out.append(line)
+				line = word
+			else:
+				line = word if line == "" else line + " " + word
+		out.append(line)
+	return "\n".join(out)
+
+
+static var _ornate: StyleBoxTexture
+static var _plates := {}
+
+
+## A name plate for a place on the map (G1): a dark translucent ribbon with a gold rim and
+## its owner's colour at the left end, like the name banners of Rise of Kingdoms' cities.
+## Widths are rounded up so plates of similar names share one texture.
+static func name_plate(width: int, height: int, colour: Color) -> ImageTexture:
+	width = int(ceil(width / 16.0)) * 16
+	var key := "%d|%d|%s" % [width, height, colour.to_html()]
+	if _plates.has(key):
+		return _plates[key]
+	var image := Image.create(width, height, false, Image.FORMAT_RGBA8)
+	var radius := height * 0.42
+	var cap := int(height * 0.32)   # the owner's colour band at the left
+	for y in height:
+		for x in width:
+			# distance inside a rounded rectangle (negative outside)
+			var dx := maxf(radius - x, x - (width - 1 - radius))
+			var dy := maxf(radius - y, y - (height - 1 - radius))
+			var outside := Vector2(maxf(dx, 0.0), maxf(dy, 0.0)).length() + minf(maxf(dx, dy), 0.0) - radius
+			var inside := -outside
+			if inside < -0.5:
+				continue
+			var a := clampf(inside + 0.5, 0.0, 1.0)
+			var fill := Color(0.10, 0.08, 0.07, 0.66).lerp(Color(0.16, 0.12, 0.09, 0.72), float(y) / height)
+			if x < cap + radius * 0.4:
+				fill = Color(colour.darkened(0.15), 0.92)
+			var c := fill
+			if inside < 2.5:
+				c = Color(GOLD.r, GOLD.g, GOLD.b, 0.95)   # the rim
+			elif inside < 3.5:
+				c = Color(0.0, 0.0, 0.0, 0.5)
+			c.a *= a
+			image.set_pixel(x, y, c)
+	image.generate_mipmaps()
+	var texture := ImageTexture.create_from_image(image)
+	_plates[key] = texture
+	return texture
+
+
+## The game's framed panel (G1): parchment inside a double gold frame with studded corners,
+## drawn once into a nine-patch so it stretches to any size.
+static func ornate_panel() -> StyleBoxTexture:
+	if _ornate != null:
+		return _ornate
+	var n := 96
+	var m := 26   # the frame's width in the nine-patch
+	var image := Image.create(n, n, false, Image.FORMAT_RGBA8)
+	var dark := Color(0.45, 0.28, 0.08)
+	var rim := Color(0.86, 0.64, 0.22)
+	var bright := Color(1.0, 0.86, 0.45)
+	for y in n:
+		for x in n:
+			var d := mini(mini(x, y), mini(n - 1 - x, n - 1 - y))   # distance from the edge
+			var corner := Vector2(mini(x, n - 1 - x), mini(y, n - 1 - y))
+			# rounded outer corners
+			if corner.x < 8 and corner.y < 8 and corner.distance_to(Vector2(8, 8)) > 8.5:
+				continue
+			var c: Color
+			if d < 2:
+				c = dark
+			elif d < 6:
+				c = rim.lerp(bright, 1.0 - absf(d - 4.0) / 2.0)
+			elif d < 7:
+				c = dark
+			elif d < 9:
+				c = Color(0.80, 0.70, 0.52)
+			elif d < 10:
+				c = rim
+			else:
+				# parchment, a shade darker toward the frame
+				var shade := clampf((d - 10) / 18.0, 0.0, 1.0)
+				c = PARCHMENT.lerp(CREAM, shade)
+			image.set_pixel(x, y, c)
+	# a gold stud in each corner
+	for cx in [12, n - 13]:
+		for cy in [12, n - 13]:
+			for y in range(cy - 4, cy + 5):
+				for x in range(cx - 4, cx + 5):
+					var r := Vector2(x - cx, y - cy).length()
+					if r <= 4.2:
+						image.set_pixel(x, y, dark if r > 3.2 else bright.lerp(rim, r / 3.2))
+	var box := StyleBoxTexture.new()
+	box.texture = ImageTexture.create_from_image(image)
+	box.set_texture_margin_all(m)
+	box.set_content_margin_all(18)
+	box.content_margin_top = 16
+	_ornate = box
+	return box
+
+
+static func panel(fill := CREAM, border := GOLD_DARK, radius := 14) -> StyleBoxFlat:
+	var box := StyleBoxFlat.new()
+	box.bg_color = fill
+	box.border_color = border
+	box.set_border_width_all(3)
+	box.set_corner_radius_all(radius)
+	box.set_content_margin_all(18)
+	box.shadow_color = Color(0, 0, 0, 0.35)
+	box.shadow_size = 10
+	box.shadow_offset = Vector2(0, 4)
+	return box
+
+
+static func button_box(state: String, base := GOLD) -> StyleBoxFlat:
+	var box := StyleBoxFlat.new()
+	box.set_corner_radius_all(10)
+	box.content_margin_left = 22
+	box.content_margin_right = 22
+	box.content_margin_top = 8
+	box.content_margin_bottom = 8
+	box.border_color = GOLD_DARK
+	box.set_border_width_all(3)
+	box.border_width_bottom = 6  # a chunky lip, like a physical button
+	match state:
+		"hover":
+			box.bg_color = base.lightened(0.15)
+		"pressed":
+			box.bg_color = base.darkened(0.1)
+			box.border_width_bottom = 3
+			box.content_margin_top = 11
+		"disabled":
+			box.bg_color = Color(0.75, 0.72, 0.66)
+			box.border_color = Color(0.55, 0.52, 0.48)
+		"focus":
+			box.draw_center = false
+			box.border_color = Color(0, 0, 0, 0)
+		_:
+			box.bg_color = base
+	return box
+
+
+static func label(text: String, size := 17, colour := INK, role := "body", weight := 600) -> Label:
+	var l := Label.new()
+	l.text = text
+	l.add_theme_font_override("font", font(role, weight))
+	l.add_theme_font_size_override("font_size", size)
+	l.add_theme_color_override("font_color", colour)
+	return l
+
+
+static func wrapped(text: String, size := 16, colour := INK_SOFT, width := 360.0) -> Label:
+	var l := label(text, size, colour)
+	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	l.custom_minimum_size.x = width
+	return l
+
+
+## A big title with a dark outline, for use over pictures.
+static func headline(text: String, size := 64, colour := CREAM) -> Label:
+	var l := label(text, size, colour, "title", 900)
+	l.add_theme_color_override("font_outline_color", Color(0.12, 0.07, 0.03))
+	l.add_theme_constant_override("outline_size", maxi(6, size / 7))
+	l.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.5))
+	l.add_theme_constant_override("shadow_offset_y", size / 14)
+	return l
+
+
+static func big_button(text: String, size := 26, base := GOLD) -> Button:
+	var b := Button.new()
+	b.text = text
+	b.focus_mode = Control.FOCUS_NONE
+	b.add_theme_font_override("font", font("title", 900))
+	b.add_theme_font_size_override("font_size", size)
+	for state in ["normal", "hover", "pressed", "disabled", "focus"]:
+		b.add_theme_stylebox_override(state, button_box(state, base))
+	return b

@@ -1,15 +1,70 @@
 """Pydantic models for content packs. Unknown fields are errors, so typos are caught."""
 
-from anachronism.content.schema.base import CURRENT_SCHEMA_VERSION, Frozen, Identifier, Rate
+from anachronism.content.schema.base import (
+    CURRENT_SCHEMA_VERSION,
+    Confidence,
+    Frozen,
+    Identifier,
+    Rate,
+)
+from anachronism.content.schema.battles import Battle, BattleSide
+from anachronism.content.schema.buildings import Building
+from anachronism.content.schema.chapters import AlmanacEntry, Chapter, ChapterChoice, Deeds
 from anachronism.content.schema.civ import CivDefinition
+from anachronism.content.schema.dialogue import MOMENTS, SPECIAL_SPEAKERS, Dialogue, Speaker
+from anachronism.content.schema.dilemmas import Choice, Dilemma
+from anachronism.content.schema.formations import Formation
+from anachronism.content.schema.happenings import Happening
+from anachronism.content.schema.monuments import (
+    CityRules,
+    CityTimeline,
+    Ludus,
+    Monument,
+    MonumentBuilt,
+    MonumentEvent,
+)
 from anachronism.content.schema.pack import CONTENT_KINDS, LIST_KINDS, SINGLE_KINDS, PackManifest
+from anachronism.content.schema.republic import (
+    College,
+    Faction,
+    FastiYear,
+    Gens,
+    HistoricalPerson,
+    Holder,
+    Issue,
+    Magistracy,
+    MagistracyEra,
+    OfficeHeld,
+    Order,
+    RepublicRules,
+    SenateCosts,
+    SenateLaw,
+    SenateRules,
+    Standing,
+)
+from anachronism.content.schema.rivals import (
+    Disposition,
+    Faith,
+    Preconditions,
+    RelationStatus,
+    Script,
+    ScriptGoal,
+    StartingRelation,
+)
 from anachronism.content.schema.rules import Rules
 from anachronism.content.schema.scenario import (
+    General,
+    GeneralTrait,
     Scenario,
     ScenarioCiv,
     StartingStats,
     StartingStockpiles,
+    Successor,
 )
+from anachronism.content.schema.ships import Ship
+from anachronism.content.schema.symbols import Symbol
+from anachronism.content.schema.tactics import Tactic
+from anachronism.content.schema.tales import Tale
 from anachronism.content.schema.tech import (
     NUMERIC_EFFECTS,
     Category,
@@ -22,11 +77,13 @@ from anachronism.content.schema.tech import (
     Stage,
     TechNode,
 )
+from anachronism.content.schema.units import Unit, UnitKind
 from anachronism.content.schema.world import (
     Access,
     Era,
     MapResource,
     ProvinceGeography,
+    SeaZone,
     Terrain,
 )
 
@@ -34,30 +91,85 @@ __all__ = [
     "CONTENT_KINDS",
     "CURRENT_SCHEMA_VERSION",
     "LIST_KINDS",
+    "MOMENTS",
     "NUMERIC_EFFECTS",
     "SINGLE_KINDS",
+    "SPECIAL_SPEAKERS",
     "Access",
+    "AlmanacEntry",
+    "Battle",
+    "BattleSide",
+    "Building",
     "Category",
+    "Chapter",
+    "ChapterChoice",
+    "Choice",
+    "CityRules",
+    "CityTimeline",
     "CivDefinition",
+    "College",
+    "Confidence",
+    "Deeds",
+    "Dialogue",
+    "Dilemma",
+    "Disposition",
     "Effect",
     "EffectType",
     "Era",
+    "Faction",
+    "Faith",
+    "FastiYear",
+    "Formation",
     "Frozen",
+    "General",
+    "GeneralTrait",
+    "Gens",
+    "Happening",
+    "HistoricalPerson",
+    "Holder",
     "Identifier",
+    "Issue",
+    "Ludus",
+    "Magistracy",
+    "MagistracyEra",
     "MapResource",
+    "Monument",
+    "MonumentBuilt",
+    "MonumentEvent",
+    "OfficeHeld",
+    "Order",
     "PackManifest",
+    "Preconditions",
     "Provenance",
     "ProvinceGeography",
     "Rate",
+    "RelationStatus",
+    "RepublicRules",
     "Requirements",
     "Resistance",
     "Rules",
     "Scenario",
     "ScenarioCiv",
+    "Script",
+    "ScriptGoal",
+    "SeaZone",
+    "SenateCosts",
+    "SenateLaw",
+    "SenateRules",
+    "Ship",
     "SocialGroup",
+    "Speaker",
     "Stage",
+    "Standing",
+    "StartingRelation",
     "StartingStats",
     "StartingStockpiles",
+    "Successor",
+    "Symbol",
+    "Tactic",
+    "Tale",
     "TechNode",
     "Terrain",
+    "Unit",
+    "UnitKind",
 ]

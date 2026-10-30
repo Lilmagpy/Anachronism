@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from anachronism.content.schema import EffectType
+from anachronism.engine.buildings import bonus
 from anachronism.engine.effects import Effects
 from anachronism.engine.fixed import BP, apply_bp, div_round, with_bonus
 from anachronism.engine.state import GameState
@@ -13,6 +14,7 @@ def province_capacity(state: GameState, province_id: str, effects: Effects | Non
     """People the province can support, including its owner's population_cap effects."""
     geography = state.world.geography[province_id]
     base = geography.capacity or state.world.terrain[geography.terrain].capacity
+    base = with_bonus(base, bonus(state, province_id).capacity_bp)  # aqueducts, granaries
     if effects is None:
         return base
     return with_bonus(base, effects[EffectType.POPULATION_CAP])
@@ -34,6 +36,7 @@ def grow_population(
             rate = rate_per_turn(state, rules.growth_bp)
             if effects is not None:
                 rate = with_bonus(rate, effects[EffectType.HEALTH])
+            rate = with_bonus(rate, bonus(state, province_id).growth_bp)
             province.population += div_round(people * rate * (capacity - people), capacity * BP)
         elif people > capacity:
             loss = apply_bp(people - capacity, rate_per_turn(state, rules.overcrowding_loss_bp))

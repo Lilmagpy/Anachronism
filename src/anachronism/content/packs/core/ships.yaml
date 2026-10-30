@@ -1,0 +1,9 @@
+schema_version: 1
+# Kinds of warship (content/schema/ships.py, D-107). attack: fighting power per ship.
+# materials and wealth: to build one ship; upkeep_wealth: per ship per turn, in tenths.
+ships:
+  - {id: galleys, name: Galleys, attack: 3, needs_techs: [sailing], materials: 4, wealth: 2, upkeep_wealth: 3, note: "Oared warships with a bronze ram: the navies of the ancient world."}
+  - {id: warships, name: Heavy warships, attack: 6, needs_techs: [sailing, iron_working], materials: 7, wealth: 4, upkeep_wealth: 5, note: "Triremes and quinqueremes: three or five banks of rowers and a ram that splits hulls."}
+  - {id: war_junks, name: War junks, attack: 8, needs_techs: [sternpost_rudder, compass], materials: 8, wealth: 5, upkeep_wealth: 6, note: "Sailing warships with watertight bulkheads, steered by a sternpost rudder."}
+  - {id: carracks, name: Carracks, attack: 11, needs_techs: [caravel], materials: 10, wealth: 6, upkeep_wealth: 7, note: "Ocean-going sailing ships, tall-sided and hard to board."}
+  - {id: gunships, name: Gun ships, attack: 18, needs_techs: [caravel, cannon], materials: 14, wealth: 9, upkeep_wealth: 9, note: "Broadsides of cannon: the sea belongs to whoever has the most guns."}

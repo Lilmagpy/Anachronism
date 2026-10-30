@@ -1,0 +1,75 @@
+schema_version: 1
+# Tunable numbers of the Republic (content/schema/republic.py). Game balance, not history,
+# except where a source is named. Ages: the Lex Villia annalis (Livy 40.44.1) fixed the order
+# and intervals of offices in 180 BC; the exact minimum ages are the scholars' reconstruction.
+republic_rules:
+  default_praenomina: [Lucius, Gaius, Marcus, Publius, Quintus, Titus, Aulus, Gnaeus]  # source: the common praenomina (Varro, De lingua latina 9.60 ff.; Livy passim)
+  sources: ["Livy 40.44.1 (Lex Villia annalis)", "Cicero, Philippics 5.47"]
+  factions:
+    - {id: patricians, name: "The patricians", from_year: -509, to_year: -287, order: patrician}
+    - {id: plebeians, name: "The plebeians", from_year: -509, to_year: -287, order: plebeian}
+    - {id: nobiles, name: "The nobility", from_year: -286, to_year: -134}
+    - {id: optimates, name: "The optimates", from_year: -133, populist: false}
+    - {id: populares, name: "The populares", from_year: -133, populist: true}
+  senate:
+    # What the player can put to the Senate (ProposeToSenate) and what it costs. The costs and the
+    # shifts are GAME BALANCE; the procedure is the sources'. The consul (or a tribune) brings the
+    # matter (the relatio) and the Senate votes: Aulus Gellius 14.7.9 (unverified: passage not
+    # re-read). The Senate handles embassies, war and the dispatch of envoys: Polybius 6.13.5-9
+    # (read); but the people deliberate on war and peace and ratify treaties: Polybius 6.14.10-12
+    # (read). So a vote of the Senate is the first step, and a tribune of the plebs can stop it or
+    # carry it to the people. A single tribune's interposition stops the Senate deciding: Polybius
+    # 6.16.4 (read). The tribunes were made inviolable with the right to protect citizens against
+    # the consuls in 494 (Livy 2.33.1-3, read), and their inviolability was renewed in 449 (Livy
+    # 3.55.6-10, read). From the Lex Hortensia of 287 plebiscites bind all citizens (Pliny, NH
+    # 16.37 and Aulus Gellius 15.27.4; unverified: passages not re-read), so from then a tribune
+    # can carry a refused matter to the plebs. The chance of either is a SMALL game-balance number
+    # from how much more popular one side of the vote is than the other (popular_lean_bp).
+    sources: ["Polybius 6.13.5-9", "Polybius 6.14.10-12", "Polybius 6.16.4", "Livy 2.33.1-3", "Livy 3.55.6-10", "Aulus Gellius 14.7.9 (unverified: passage not re-read)"]
+    costs: {war_with: 200, peace_with: 150, law: 300, fund: 200, colony: 250}
+    fail_influence_loss: 50
+    fail_legitimacy_bp: 200
+    opposed_favour_shift: 1000
+    forced_favour_shift: 1500
+    veto_office: tribune_plebs
+    veto_from_year: -494
+    force_from_year: -287
+    veto_scale_bp: 5000
+    veto_max_bp: 2500
+    laws:
+      - id: land_reform
+        name: "An agrarian law"
+        issue: land
+        from_year: -367
+        sources: ["Livy 6.35.4-5 (the Licinian-Sextian rogations; unverified: passage not re-read)", "Plutarch, Tiberius Gracchus 8-9 (the Sempronian law of 133; unverified: passage not re-read)", "Appian, Civil Wars 1.9-11 (unverified: passage not re-read)"]
+        notes: "Limits what one man may hold of the public land and gives the rest to the poor. The date is the Licinian-Sextian rogations of the tradition (Livy puts them in the 370s-367); the engine takes 367 as the first year."
+      - id: debt_relief
+        name: "A law to ease debt"
+        issue: debt
+        from_year: -494
+        sources: ["Livy 2.23-24, 2.31 (the debt crisis before the first secession; unverified: passage not re-read)", "Livy 8.28 (the end of debt bondage, nexum, in 326; unverified: passage not re-read)"]
+        notes: "Debt bondage was the grievance of the first secession in the tradition; the Poetelian-Papirian law ended nexum (326 in Livy)."
+      - id: grain_dole
+        name: "Grain sold to the citizens below the market price"
+        issue: debt
+        from_year: -123
+        sources: ["Plutarch, Gaius Gracchus 5.1 (unverified: passage not re-read)", "Appian, Civil Wars 1.21 (unverified: passage not re-read)"]
+        notes: "Gaius Gracchus' grain law of 123. The Issue list has no question of its own for it; it is counted with relief of the poor (debt)."
+      - id: grant_citizenship
+        name: "Citizenship for the Italian allies"
+        issue: citizenship
+        from_year: -125
+        sources: ["Appian, Civil Wars 1.21 (Fulvius Flaccus' proposal of 125; unverified: passage not re-read)", "Velleius Paterculus 2.16.4 (the Lex Julia of 90; unverified: passage not re-read)"]
+        notes: "Proposed in 125 and refused; granted by the Lex Julia in 90 after the Social War."
+  city:
+    # The games calendar (U7). Months and first years are the tradition's; where a passage has not
+    # been re-read it is marked unverified. Funeral games: Livy Per. 16 (264 BC, Forum Boarium).
+    munus_from_year: -264
+    munus_venue: forum_boarium
+    munus_min_rank: 5
+    senate_houses: [curia_iulia, curia_hostilia, curia_pompeia]
+    ludi:
+      - {id: ludi_romani, name: "Ludi Romani", kind: circus, month: 9, from_year: -509, venue: circus_maximus, sources: ["Livy 1.35.9 (traditional founding under Tarquinius Priscus)", "Livy 2.36.1"]}
+      - {id: ludi_plebeii, name: "Ludi Plebeii", kind: circus, month: 11, from_year: -216, venue: circus_flaminius, sources: ["Livy 23.30.17 (first attested; unverified: passage not re-read)"]}
+      - {id: ludi_apollinares, name: "Ludi Apollinares", kind: circus, month: 7, from_year: -208, venue: circus_maximus, sources: ["Livy 27.23.5 (made annual 208; unverified: passage not re-read)"]}
+      - {id: ludi_megalenses, name: "Ludi Megalenses", kind: scaenic, month: 4, from_year: -204, venue: aedes_magnae_matris, sources: ["Livy 34.54.3 (games before the temple, 194; unverified: passage not re-read)"]}

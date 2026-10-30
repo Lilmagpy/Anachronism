@@ -5,16 +5,38 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 from anachronism.content.schema import (
+    AlmanacEntry,
+    Battle,
+    Building,
+    Chapter,
+    CityTimeline,
     CivDefinition,
+    Dialogue,
+    Dilemma,
     EffectType,
     Era,
+    FastiYear,
+    Formation,
+    Gens,
+    Happening,
+    HistoricalPerson,
+    Magistracy,
     MapResource,
+    Monument,
     PackManifest,
     ProvinceGeography,
+    RepublicRules,
     Rules,
     Scenario,
+    SeaZone,
+    Ship,
+    Speaker,
+    Symbol,
+    Tactic,
+    Tale,
     TechNode,
     Terrain,
+    Unit,
 )
 
 
@@ -30,8 +52,30 @@ class Registry:
     resources: dict[str, MapResource] = field(default_factory=dict)
     techs: dict[str, TechNode] = field(default_factory=dict)
     provinces: dict[str, ProvinceGeography] = field(default_factory=dict)
+    seas: dict[str, SeaZone] = field(default_factory=dict)
     civs: dict[str, CivDefinition] = field(default_factory=dict)
     scenarios: dict[str, Scenario] = field(default_factory=dict)
+    speakers: dict[str, Speaker] = field(default_factory=dict)
+    dialogue: dict[str, Dialogue] = field(default_factory=dict)
+    happenings: dict[str, Happening] = field(default_factory=dict)
+    units: dict[str, Unit] = field(default_factory=dict)
+    tales: dict[str, Tale] = field(default_factory=dict)
+    dilemmas: dict[str, Dilemma] = field(default_factory=dict)
+    ships: dict[str, Ship] = field(default_factory=dict)
+    buildings: dict[str, Building] = field(default_factory=dict)
+    chapters: dict[str, Chapter] = field(default_factory=dict)
+    almanac: dict[str, AlmanacEntry] = field(default_factory=dict)
+    tactics: dict[str, Tactic] = field(default_factory=dict)
+    formations: dict[str, Formation] = field(default_factory=dict)
+    symbols: dict[str, Symbol] = field(default_factory=dict)
+    magistracies: dict[str, Magistracy] = field(default_factory=dict)
+    gentes: dict[str, Gens] = field(default_factory=dict)
+    people: dict[str, HistoricalPerson] = field(default_factory=dict)
+    fasti: dict[str, FastiYear] = field(default_factory=dict)
+    republic_rules: RepublicRules | None = None
+    battles: dict[str, Battle] = field(default_factory=dict)
+    monuments: dict[str, Monument] = field(default_factory=dict)
+    city_timeline: dict[str, CityTimeline] = field(default_factory=dict)
     origins: dict[tuple[str, str], str] = field(default_factory=dict)
     invalid: dict[str, set[str]] = field(default_factory=dict)
     """Ids of items that exist but failed validation (already reported), per kind."""

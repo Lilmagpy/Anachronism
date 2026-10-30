@@ -1,0 +1,865 @@
+schema_version: 1
+# Kinds of soldier (content/schema/units.py, D-099). attack/defence: fighting power per
+# 1,000 men. Costs are per 1,000 men raised; upkeep per 1,000 men per turn. bonus_vs and
+# terrain are basis points (5000 = +50%). kind drives match-ups:
+#   spear beats mounted; mounted beats missile and siege; missile beats infantry and spear;
+#   infantry beats spear in the press; elephants terrify everyone but marsh and mountains.
+units:
+  - id: levy
+    name: Levies
+    kind: infantry
+    attack: 4
+    defence: 5
+    food: 2
+    upkeep_food: 1
+    note: "Farmers with spears and shields, called from the fields. Many, cheap, and not keen."
+
+  - id: spearmen
+    name: Spearmen
+    kind: spear
+    attack: 6
+    defence: 9
+    needs_techs: [bronze_working]
+    food: 2
+    materials: 1
+    wealth: 1
+    upkeep_food: 1
+    upkeep_wealth: 1
+    bonus_vs: {mounted: 6000, elephant: 3000}
+    terrain: {hills: 1000}
+    note: "A wall of bronze points: horses will not charge into it."
+
+  - id: swordsmen
+    name: Heavy infantry
+    kind: infantry
+    attack: 9
+    defence: 8
+    needs_techs: [iron_working]
+    needs_resources: [iron]
+    food: 2
+    materials: 2
+    wealth: 2
+    upkeep_food: 1
+    upkeep_wealth: 2
+    bonus_vs: {spear: 3000}
+    terrain: {forest: 1000, mountains: 1000}
+    note: "Iron swords and drilled ranks - the legion, the hoplite of the age of iron."
+
+  - id: archers
+    name: Archers
+    kind: missile
+    attack: 6
+    defence: 4
+    needs_techs: [composite_bow]
+    food: 2
+    materials: 1
+    wealth: 1
+    upkeep_food: 1
+    upkeep_wealth: 1
+    bonus_vs: {infantry: 4000, spear: 3000, elephant: 2000}
+    terrain: {hills: 1000, forest: -2000}
+    note: "Horn, wood and sinew: the composite bow throws death beyond the reach of spears."
+
+  - id: crossbowmen
+    name: Crossbowmen
+    kind: missile
+    attack: 9
+    defence: 6
+    needs_techs: [crossbow]
+    food: 2
+    materials: 2
+    wealth: 2
+    upkeep_food: 1
+    upkeep_wealth: 2
+    bonus_vs: {infantry: 4000, spear: 3000, mounted: 2000}
+    note: "A peasant with a crossbow can kill a lord in armour. Lords do not like this."
+
+  - id: chariots
+    name: Chariots
+    kind: mounted
+    attack: 9
+    defence: 4
+    mobility: 3
+    needs_techs: [chariot]
+    needs_resources: [horses]
+    food: 3
+    materials: 2
+    wealth: 3
+    upkeep_food: 2
+    upkeep_wealth: 2
+    bonus_vs: {infantry: 2000, missile: 3000}
+    terrain: {plains: 3000, river_plains: 2000, desert: 1000, steppe: 2000, hills: -4000, mountains: -6000, forest: -5000, marsh: -6000}
+    note: "Kings ride to war on wheels. Terrible on open ground, useless in the hills."
+
+  - id: cavalry
+    name: Cavalry
+    kind: mounted
+    attack: 10
+    defence: 6
+    mobility: 3
+    needs_techs: [horse_riding]
+    needs_resources: [horses]
+    food: 3
+    wealth: 3
+    upkeep_food: 2
+    upkeep_wealth: 2
+    bonus_vs: {missile: 5000, siege: 5000}
+    terrain: {plains: 2000, steppe: 3000, mountains: -5000, forest: -4000, marsh: -5000}
+    note: "Horsemen who strike the flanks and ride down fleeing men."
+
+  - id: horse_archers
+    name: Horse archers
+    kind: mounted
+    attack: 10
+    defence: 5
+    mobility: 4
+    needs_techs: [horse_riding, composite_bow]
+    needs_resources: [horses]
+    food: 3
+    wealth: 3
+    upkeep_food: 2
+    upkeep_wealth: 2
+    bonus_vs: {infantry: 3000, spear: 4000, siege: 4000}
+    terrain: {steppe: 5000, desert: 2000, plains: 2000, forest: -4000, mountains: -5000, marsh: -4000}
+    note: "The terror of the settled world: they shoot, wheel away, and shoot again."
+
+  - id: heavy_cavalry
+    name: Armoured horsemen
+    kind: mounted
+    attack: 15
+    defence: 9
+    mobility: 2
+    needs_techs: [stirrup]
+    needs_resources: [horses, iron]
+    food: 4
+    materials: 3
+    wealth: 6
+    upkeep_food: 2
+    upkeep_wealth: 4
+    bonus_vs: {missile: 4000, infantry: 3000, siege: 4000}
+    terrain: {plains: 2000, mountains: -5000, forest: -4000, marsh: -6000}
+    note: "With stirrups a rider can couch a lance: cataphract, knight, samurai."
+
+  - id: war_elephants
+    name: War elephants
+    kind: elephant
+    attack: 14
+    defence: 10
+    needs_resources: [elephants]
+    food: 6
+    wealth: 6
+    upkeep_food: 4
+    upkeep_wealth: 2
+    bonus_vs: {infantry: 4000, mounted: 3000}
+    terrain: {forest: -2000, marsh: -4000, mountains: -5000, river_plains: 1000}
+    note: "Living towers. Horses bolt at their smell - but a panicked elephant tramples its own side."
+
+  - id: siege_engines
+    name: Siege engines
+    kind: siege
+    attack: 2
+    defence: 3
+    siege: 10
+    mobility: 1
+    needs_techs: [surveying]
+    food: 2
+    materials: 4
+    wealth: 2
+    upkeep_food: 1
+    upkeep_wealth: 1
+    note: "Rams, towers and stone-throwers: walls that held for years fall in a season."
+
+  - id: cannon
+    name: Cannon
+    kind: siege
+    attack: 10
+    defence: 4
+    siege: 30
+    mobility: 1
+    needs_techs: [cannon]
+    food: 2
+    materials: 5
+    wealth: 5
+    upkeep_food: 1
+    upkeep_wealth: 2
+    bonus_vs: {infantry: 2000, spear: 2000, elephant: 4000}
+    note: "Bronze guns that knock down in a day walls built to last a thousand years."
+
+  - id: musketeers
+    name: Musketeers
+    kind: infantry
+    attack: 16
+    defence: 14
+    needs_techs: [musket]
+    food: 2
+    materials: 3
+    wealth: 4
+    upkeep_food: 1
+    upkeep_wealth: 3
+    bonus_vs: {mounted: 3000, elephant: 4000, spear: 2000}
+    note: "Smoke, noise and lead: the end of the age of armour."
+
+# --- The Roman world, 509-27 BC (R4) ---------------------------------------------------------
+# Stats are relative to the generic units above (levy 4/5, spearmen 6/9, heavy infantry 9/8,
+# cavalry 10/6). What each kind is good and bad at follows the ancient accounts named in
+# `sources`; a swing in terrain is basis points. Men for a battle are real troop numbers (see
+# battles.yaml); a unit here stands for 1,000 men.
+
+  # ---- Rome: the three armies ---------------------------------------------------------------
+  - id: servian_hoplites
+    name: Hoplites of the classes
+    kind: spear
+    attack: 6
+    defence: 9
+    needs_techs: [hoplite_phalanx]
+    food: 2
+    materials: 2
+    wealth: 2
+    upkeep_food: 1
+    upkeep_wealth: 1
+    bonus_vs: {mounted: 5000, elephant: 3000}
+    terrain: {plains: 1000, river_plains: 1000, hills: -1500, forest: -2500, mountains: -3000, marsh: -3000}
+    note: "The citizen phalanx of the first and second census classes, with helmet, greaves, shield and spear. Livy and Dionysius credit the class system to Servius Tullius; it is traditional rather than certain."
+    sources:
+      - "Livy 1.43.1-4 (first and second classes: arms)"
+      - "Dionysius of Halicarnassus 4.16-18"
+      - "Livy 8.8.3-4 (the phalanx of old Rome, replaced by maniples)"
+
+  - id: census_skirmishers
+    name: Fourth and fifth class skirmishers
+    kind: missile
+    attack: 4
+    defence: 2
+    mobility: 3
+    food: 1
+    wealth: 0
+    upkeep_food: 1
+    bonus_vs: {infantry: 1500, elephant: 1000}
+    terrain: {hills: 500, forest: -1000}
+    note: "The poorer classes of the old census: the fourth with spear and javelin, the fifth with slings and stones. They fought in front of the line or beside it."
+    sources:
+      - "Livy 1.43.6-7"
+
+  - id: hastati
+    name: Hastati
+    kind: infantry
+    attack: 8
+    defence: 7
+    needs_techs: [manipular_legion]
+    food: 2
+    materials: 2
+    wealth: 2
+    upkeep_food: 1
+    upkeep_wealth: 2
+    bonus_vs: {spear: 3000, elephant: 1000}
+    terrain: {hills: 500, forest: 1000, mountains: 500, marsh: -500}
+    note: "The first line of the manipular legion: young men with the big scutum, two pila and the sword. They fight first, and if beaten fall back through the gaps to the principes. In Livy's early description they were armed with a spear in part; Polybius, writing of about 220 BC, gives them pilum and gladius."
+    sources:
+      - "Polybius 6.21.7-9, 6.23 (arms and numbers: 1,200 per legion)"
+      - "Livy 8.8.5-9 (earlier form)"
+      - "Polybius 18.30-31 (why they beat a phalanx: free to move, rough ground)"
+
+  - id: principes
+    name: Principes
+    kind: infantry
+    attack: 9
+    defence: 8
+    needs_techs: [manipular_legion]
+    food: 2
+    materials: 2
+    wealth: 3
+    upkeep_food: 1
+    upkeep_wealth: 2
+    bonus_vs: {spear: 3000, elephant: 1000}
+    terrain: {hills: 500, forest: 1000, mountains: 500, marsh: -500}
+    note: "Men in the prime of life, in the second line. They carry the same arms as the hastati and take up the fight when the first line falls back."
+    sources:
+      - "Polybius 6.21.7-9, 6.23.15 (1,200 per legion, same arms as hastati)"
+      - "Livy 8.8.7, 8.8.9"
+
+  - id: triarii
+    name: Triarii
+    kind: spear
+    attack: 7
+    defence: 11
+    needs_techs: [manipular_legion]
+    food: 2
+    materials: 2
+    wealth: 3
+    upkeep_food: 1
+    upkeep_wealth: 2
+    bonus_vs: {mounted: 5000, elephant: 2000}
+    terrain: {hills: 500, forest: 0, marsh: -1000}
+    note: "The oldest and steadiest, 600 to a legion, armed with the long spear. They kneel behind the line and rise when the others fail - 'it has come down to the triarii'."
+    sources:
+      - "Polybius 6.21.7-9, 6.23.15 (600, long spears, not pila)"
+      - "Livy 8.8.8-13"
+
+  - id: velites
+    name: Velites
+    kind: missile
+    attack: 5
+    defence: 3
+    mobility: 3
+    needs_techs: [manipular_legion]
+    food: 1
+    wealth: 1
+    upkeep_food: 1
+    upkeep_wealth: 1
+    bonus_vs: {infantry: 2000, mounted: 1500, elephant: 3000}
+    terrain: {hills: 1000, forest: 500, plains: 0, marsh: 0}
+    note: "The youngest and poorest, with javelins, a light shield and a sword, who open the fight. At Zama Scipio's velites met the elephants in the lanes between his lines and drove them off."
+    sources:
+      - "Polybius 6.21.7, 6.22 (youngest and poorest; javelins, parma, sword)"
+      - "Polybius 15.9.9, 15.12.3-4 (Zama)"
+      - "Polybius 2.30.1 (javelineers against the naked Gaesatae)"
+
+  - id: roman_equites
+    name: Roman cavalry
+    kind: mounted
+    attack: 9
+    defence: 6
+    mobility: 3
+    needs_techs: [horse_riding]
+    needs_resources: [horses]
+    food: 3
+    wealth: 3
+    upkeep_food: 2
+    upkeep_wealth: 2
+    bonus_vs: {missile: 4000, siege: 4000}
+    terrain: {plains: 1500, steppe: 1500, mountains: -5000, forest: -4000, marsh: -5000}
+    note: "The equites, wealthy citizens: 300 to a legion in Polybius' day, in ten turmae. Armed Greek fashion with cuirass and sturdy lance; in the old days they fought almost unarmoured. Roman horse was usually the weaker arm against Gauls and Carthaginians."
+    sources:
+      - "Polybius 6.20.9, 6.25 (300 per legion, ten turmae, arms)"
+      - "Polybius 3.115-116 (routed at Cannae)"
+      - "Livy 1.43.8-9 (eighteen centuries of equites)"
+
+  - id: socii_infantry
+    name: Allied infantry (alae)
+    kind: infantry
+    attack: 8
+    defence: 7
+    needs_techs: [italian_alliance, manipular_legion]
+    food: 2
+    materials: 2
+    wealth: 1
+    upkeep_food: 1
+    upkeep_wealth: 1
+    bonus_vs: {spear: 3000}
+    terrain: {hills: 500, forest: 1000, mountains: 500}
+    note: "Latin and Italian allies, organised and armed like the legions and drawn up on their two wings (the alae). Polybius: as many foot as the Romans, three times the horse; the allies' food was free, so they cost Rome less."
+    sources:
+      - "Polybius 6.26.5-9 (praefecti sociorum; right and left wing; strength)"
+      - "Polybius 6.39.14 (allies' ration free)" # unverified
+      - "Livy 8.8.15"
+
+  - id: socii_cavalry
+    name: Allied cavalry
+    kind: mounted
+    attack: 9
+    defence: 5
+    mobility: 3
+    needs_techs: [italian_alliance]
+    needs_resources: [horses]
+    food: 3
+    wealth: 2
+    upkeep_food: 2
+    upkeep_wealth: 1
+    bonus_vs: {missile: 4000, siege: 4000}
+    terrain: {plains: 1500, mountains: -5000, forest: -4000, marsh: -5000}
+    note: "Three times as many horse as Rome's own in a consular army. At Cannae they held the left wing against the Numidians."
+    sources:
+      - "Polybius 6.26.7"
+      - "Polybius 3.113.3 (Cannae: allied horse on the left)"
+
+  - id: extraordinarii
+    name: Extraordinarii
+    kind: infantry
+    attack: 10
+    defence: 8
+    needs_techs: [italian_alliance, manipular_legion]
+    food: 2
+    materials: 2
+    wealth: 2
+    upkeep_food: 1
+    upkeep_wealth: 2
+    bonus_vs: {spear: 3000}
+    terrain: {hills: 500, forest: 1000}
+    note: "The consul's picked allies: a fifth of the allied foot and a third of the horse, kept beside him as advance guard, rear guard or reserve."
+    sources:
+      - "Polybius 6.26.6, 6.26.8"
+
+  - id: extraordinarii_horse
+    name: Extraordinarii horse
+    kind: mounted
+    attack: 10
+    defence: 6
+    mobility: 3
+    needs_techs: [italian_alliance]
+    needs_resources: [horses]
+    food: 3
+    wealth: 3
+    upkeep_food: 2
+    upkeep_wealth: 2
+    bonus_vs: {missile: 5000, siege: 5000}
+    terrain: {plains: 1500, mountains: -5000, forest: -4000, marsh: -5000}
+    note: "A third of the allied horse, picked for the consul's own use."
+    sources:
+      - "Polybius 6.26.6, 6.26.8"
+
+  - id: cohort_legionaries
+    name: Legionaries of the cohort legion
+    kind: infantry
+    attack: 11
+    defence: 9
+    needs_techs: [cohort_legion]
+    food: 2
+    materials: 3
+    wealth: 3
+    upkeep_food: 1
+    upkeep_wealth: 3
+    bonus_vs: {spear: 3500, elephant: 1500}
+    terrain: {hills: 500, forest: 1000, mountains: 500, marsh: -500}
+    note: "One kind of heavy infantryman: ten cohorts to a legion, paid, trained to carry their own kit ('Marian mules') and loyal to their general. Whether this was Marius' sudden reform of about 107 BC or a slow change is debated."
+    sources:
+      - "Plutarch, Marius 13 (training; the 'mules')"
+      - "Sallust, Jugurtha 86" # unverified
+      - "Caesar, Civil War 3.10 (cohorts as the unit of account: '130 cohorts of Roman citizens')"
+
+  # ---- Auxiliaries ----------------------------------------------------------------------------
+  - id: cretan_archers
+    name: Cretan archers
+    kind: missile
+    attack: 7
+    defence: 3
+    mobility: 3
+    needs_techs: [composite_bow]
+    food: 2
+    materials: 1
+    wealth: 2
+    upkeep_food: 1
+    upkeep_wealth: 2
+    bonus_vs: {infantry: 3500, spear: 3500, elephant: 2000, mounted: 1000}
+    terrain: {hills: 1500, mountains: 1000, forest: -1500}
+    note: "Mercenary bowmen, hired by Hellenistic kings, Rome and her enemies. At Magnesia they scattered the scythed chariots with a storm of arrows."
+    sources:
+      - "Livy 37.41.10-11 (Magnesia: Eumenes' Cretans against the chariots)"
+      - "Caesar, Civil War 3.4 (archers from Crete in Pompey's army)"
+
+  - id: balearic_slingers
+    name: Balearic slingers
+    kind: missile
+    attack: 6
+    defence: 2
+    mobility: 3
+    food: 1
+    materials: 0
+    wealth: 2
+    upkeep_food: 1
+    upkeep_wealth: 2
+    bonus_vs: {infantry: 3000, spear: 2500, elephant: 1500}
+    terrain: {plains: 500, hills: 500, forest: -1500}
+    note: "Slingers from the Balearic islands, hired by Carthage and later Rome. Their stones out-range javelins and arrows."
+    sources:
+      - "Polybius 3.113.5 (Hannibal's slingers at Cannae)"
+      - "Polybius 15.11.1 (Balearic Islanders at Zama)"
+      - "Caesar, Gallic War 2.7 (Balearic slingers in Caesar's army)" # unverified
+
+  - id: numidian_horse
+    name: Numidian light horse
+    kind: mounted
+    attack: 7
+    defence: 3
+    mobility: 4
+    needs_techs: [horse_riding]
+    needs_resources: [horses]
+    food: 2
+    wealth: 2
+    upkeep_food: 1
+    upkeep_wealth: 1
+    bonus_vs: {missile: 4000, siege: 4000, infantry: 500}
+    terrain: {plains: 1500, steppe: 2500, desert: 3000, hills: 500, mountains: -3000, forest: -3000, marsh: -4000}
+    note: "Fast African riders who harry, draw off and return. At Cannae they pinned the Roman allied horse until Hasdrubal's squadrons arrived; at Zama Massinissa's Numidians, now Rome's, rode on Scipio's right."
+    sources:
+      - "Polybius 3.113.5, 3.116 (Cannae)"
+      - "Polybius 15.9.8, 15.12.2, 15.14.7 (Zama: Massinissa)"
+      - "Polybius 3.72.1 (Trebia: Numidians draw the Romans on)"
+
+  - id: gallic_horse
+    name: Gallic horse
+    kind: mounted
+    attack: 9
+    defence: 5
+    mobility: 3
+    needs_techs: [iron_working, horse_riding]
+    needs_resources: [horses]
+    food: 3
+    wealth: 3
+    upkeep_food: 2
+    upkeep_wealth: 2
+    bonus_vs: {missile: 4000, siege: 4000}
+    terrain: {plains: 1500, steppe: 1500, mountains: -5000, forest: -4000, marsh: -5000}
+    note: "Noble Gallic riders: brave, boastful and the main cavalry of Gaul. Fighting for Hannibal at Cannae they and the Spaniards crushed the Roman horse; later they rode for Rome and Caesar."
+    sources:
+      - "Polybius 3.113.5, 3.115.1-5 (Cannae)"
+      - "Caesar, Civil War 3.4 (Gallic horse under Deiotarus) (read)"
+      - "Caesar, Gallic War 7.65, 7.80 (Alesia)" # unverified
+
+  - id: germanic_horse
+    name: Germanic horse
+    kind: mounted
+    attack: 9
+    defence: 5
+    mobility: 3
+    needs_techs: [iron_working, horse_riding]
+    needs_resources: [horses]
+    food: 3
+    wealth: 3
+    upkeep_food: 2
+    upkeep_wealth: 2
+    bonus_vs: {missile: 3000, siege: 3000, infantry: 500}
+    terrain: {plains: 1000, forest: 0, mountains: -4000, marsh: -4000}
+    note: "Germanic riders, who fought with swift foot soldiers running among the horses; hired by Caesar from the Rhine tribes and used again by his rivals."
+    sources:
+      - "Caesar, Civil War 3.4 (Germans in Gabinius' troops) (read)"
+      - "Caesar, Gallic War 1.48, 7.65, 7.80" # unverified
+
+  # ---- Rome's enemies -------------------------------------------------------------------------
+  - id: etruscan_hoplites
+    name: Etruscan hoplites
+    kind: spear
+    attack: 6
+    defence: 9
+    needs_techs: [hoplite_phalanx]
+    food: 2
+    materials: 2
+    wealth: 2
+    upkeep_food: 1
+    upkeep_wealth: 1
+    bonus_vs: {mounted: 5000, elephant: 3000}
+    terrain: {plains: 1000, river_plains: 1000, hills: -1500, forest: -2500, mountains: -3000, marsh: -3000}
+    note: "The citizen phalanxes of the Etruscan cities, armed like Greek hoplites and like Rome's own first classes. They fought well in the line and badly when beaten in the field by a flexible enemy."
+    sources:
+      - "Livy 9.36-37 (Etruscan wars)" # unverified
+
+  - id: samnite_infantry
+    name: Samnite infantry
+    kind: infantry
+    attack: 7
+    defence: 6
+    mobility: 3
+    needs_techs: [iron_working]
+    food: 2
+    materials: 2
+    wealth: 1
+    upkeep_food: 1
+    upkeep_wealth: 1
+    bonus_vs: {spear: 2000}
+    terrain: {hills: 2500, mountains: 3000, forest: 2000, plains: -1000, river_plains: -1000, marsh: -500}
+    note: "Mountain farmers with broad shield, javelins and sword, who ambushed the Romans at the Caudine Forks (321 BC). In 310 BC their elite wore gilded and silvered shields and chain mail."
+    sources:
+      - "Livy 9.40.1-4 (Samnite arms, 310 BC) (read)"
+      - "Livy 9.1-12 (Caudine Forks)" # unverified
+
+  - id: gaesatae
+    name: Gaesatae
+    kind: infantry
+    attack: 12
+    defence: 2
+    mobility: 3
+    needs_techs: [iron_working]
+    food: 2
+    materials: 1
+    wealth: 1
+    upkeep_food: 1
+    upkeep_wealth: 0
+    bonus_vs: {spear: 1500}
+    terrain: {forest: 1500, hills: 1000, plains: -500, marsh: 0}
+    note: "Alpine Gauls who fought naked, to be unhampered by the brambles, in front of the whole army. At Telamon the Roman javelins found the larger targets and wore them down."
+    sources:
+      - "Polybius 2.28.8, 2.29.7-9, 2.30.2-4 (Telamon)"
+
+  - id: gallic_warband
+    name: Gallic warband
+    kind: infantry
+    attack: 9
+    defence: 4
+    mobility: 3
+    needs_techs: [iron_working]
+    food: 2
+    materials: 1
+    wealth: 1
+    upkeep_food: 1
+    upkeep_wealth: 0
+    bonus_vs: {spear: 1500}
+    terrain: {forest: 1000, hills: 500, plains: 0, marsh: -500}
+    note: "Boii, Insubres and Senones in trousers and cloaks: a terrible first charge, a slashing sword that needs a long swing, and a shield that does not cover the whole body. They broke the Romans at the Allia; they could not stand a long fight."
+    sources:
+      - "Polybius 2.28.7, 2.30.1-3, 3.114.1 (swords and shields)"
+      - "Livy 5.37-38 (the Allia)"
+      - "Livy 10.29.6-7 (Sentinum: the Gauls' close shield wall)"
+
+  - id: german_warriors
+    name: Germanic warriors
+    kind: infantry
+    attack: 11
+    defence: 4
+    mobility: 3
+    needs_techs: [iron_working]
+    food: 2
+    materials: 1
+    wealth: 1
+    upkeep_food: 1
+    upkeep_wealth: 0
+    bonus_vs: {spear: 1500}
+    terrain: {forest: 1500, marsh: 500, hills: 500, plains: 0}
+    note: "The Cimbri and Teutones: huge, fierce, with their families in wagons behind. Terrifying to look at, strongest in the first charge and weak in discipline; Marius took the time to teach his men not to fear them."
+    sources:
+      - "Plutarch, Marius 11, 15 (the invaders; their numbers and appearance)"
+      - "Plutarch, Marius 16 (Marius accustoms his men to the sight of them)"
+
+  - id: macedonian_phalangites
+    name: Macedonian phalangites
+    kind: spear
+    attack: 8
+    defence: 10
+    needs_techs: [sarissa_phalanx]
+    food: 2
+    materials: 3
+    wealth: 3
+    upkeep_food: 1
+    upkeep_wealth: 2
+    bonus_vs: {mounted: 6000, elephant: 3000}
+    terrain: {plains: 3000, river_plains: 3000, hills: -3500, forest: -5000, marsh: -5000, mountains: -5000}
+    note: "Sixteen ranks with the sarissa: nothing withstands its frontal charge on flat clear ground (Polybius). But it needs level ground without ditches, ridges or woods, and cannot turn about; the legion's gaps and flanks beat it."
+    sources:
+      - "Polybius 18.28-31 (the comparison)"
+      - "Polybius 18.24-26 (Cynoscephalae: hills break it)"
+      - "Livy 9.19.7-8"
+      - "Livy 37.40.1-3 (the Seleucid phalanx, 16,000, 32 ranks)"
+
+  - id: african_elephants
+    name: African war elephants
+    kind: elephant
+    attack: 12
+    defence: 8
+    needs_techs: [elephant_warfare]
+    needs_resources: [elephants]
+    food: 6
+    wealth: 6
+    upkeep_food: 4
+    upkeep_wealth: 2
+    bonus_vs: {infantry: 4000, mounted: 3500}
+    terrain: {river_plains: 1000, plains: 500, hills: -2000, forest: -2500, marsh: -4000, mountains: -5000}
+    note: "The smaller elephant of Carthage and Ptolemaic Egypt, brought from the North African forests. They do not stand against Indian elephants (Raphia), and at Zama the trumpets and the velites turned them back on their own side."
+    sources:
+      - "Polybius 5.84-85 (Raphia: African elephants refuse the Indian ones)"
+      - "Polybius 15.11.1, 15.12.1-4 (Zama: over eighty; routed by trumpets and velites)"
+
+  - id: indian_elephants
+    name: Indian war elephants
+    kind: elephant
+    attack: 15
+    defence: 10
+    needs_techs: [elephant_warfare]
+    needs_resources: [elephants]
+    food: 7
+    wealth: 7
+    upkeep_food: 4
+    upkeep_wealth: 3
+    bonus_vs: {infantry: 4500, mounted: 4000}
+    terrain: {river_plains: 1000, plains: 500, hills: -2000, forest: -2500, marsh: -4500, mountains: -5000}
+    note: "The larger elephant of Pyrrhus and the Seleucids. At Heraclea the Romans' horses bolted from them, and the legion's first sight of them lost the field."
+    sources:
+      - "Plutarch, Pyrrhus 17.3 (Heraclea)"
+      - "Livy 37.40.2-4 (Magnesia: elephants with towers and four armed men)"
+      - "Polybius 5.84.5-6 (larger than African)"
+
+  - id: carthaginian_citizens
+    name: Carthaginian citizen infantry
+    kind: spear
+    attack: 7
+    defence: 9
+    needs_techs: [hoplite_phalanx]
+    food: 2
+    materials: 2
+    wealth: 3
+    upkeep_food: 1
+    upkeep_wealth: 2
+    bonus_vs: {mounted: 5000, elephant: 3000}
+    terrain: {plains: 1500, river_plains: 1500, hills: -1500, forest: -2500, marsh: -3000, mountains: -3000}
+    note: "Carthage's own citizens and the Sacred Band: a heavy phalanx, rarely called up, and not the army of Hannibal's wars. At Zama they stood in a line of their own and gave the mercenaries no help."
+    sources:
+      - "Polybius 15.11.2, 15.13.3-4 (Zama: Carthaginians behind the mercenaries, did not support them)"
+
+  - id: libyan_spearmen
+    name: Libyan spearmen
+    kind: spear
+    attack: 7
+    defence: 9
+    needs_techs: [hoplite_phalanx]
+    food: 2
+    materials: 2
+    wealth: 2
+    upkeep_food: 1
+    upkeep_wealth: 2
+    bonus_vs: {mounted: 5000, elephant: 3000}
+    terrain: {plains: 1000, river_plains: 1000, hills: -1000, forest: -2000, marsh: -2500, mountains: -2500}
+    note: "The heavy infantry of Carthage's African subjects: Hannibal's best, rearmed with captured Roman shields and swords after Trebia and Trasimene, and the pincers of Cannae."
+    sources:
+      - "Polybius 3.114.1 (Africans armed in the Roman fashion)"
+      - "Polybius 3.113.5-9 (Cannae: half the Africans on each side of the Spaniards and Celts, as a reserve)"
+      - "Polybius 3.115-116 (the Africans close in on the flanks) (partly read)"
+      - "Polybius 15.11.2 (Zama: native Libyans second line)"
+
+  - id: iberian_scutarii
+    name: Iberian scutarii
+    kind: infantry
+    attack: 9
+    defence: 6
+    mobility: 3
+    needs_techs: [iron_working]
+    food: 2
+    materials: 2
+    wealth: 2
+    upkeep_food: 1
+    upkeep_wealth: 2
+    bonus_vs: {spear: 2500}
+    terrain: {hills: 1000, forest: 1000, mountains: 1500, plains: 0, marsh: -500}
+    note: "Spanish swordsmen with a big shield (scutum) and a thrusting and cutting blade, dressed in short purple-bordered tunics. Rome took the Spanish sword from them."
+    sources:
+      - "Polybius 3.114.1-3 (Cannae: Spaniards' swords and dress)"
+      - "Polybius 6.23.6-7 (the Spanish sword)"
+
+  - id: iberian_caetrati
+    name: Iberian caetrati
+    kind: missile
+    attack: 5
+    defence: 4
+    mobility: 3
+    needs_techs: [iron_working]
+    food: 1
+    materials: 1
+    wealth: 1
+    upkeep_food: 1
+    upkeep_wealth: 1
+    bonus_vs: {infantry: 2000, spear: 1500}
+    terrain: {hills: 1500, mountains: 1500, forest: 500, plains: -500}
+    note: "Light Spanish troops with a small round shield (caetra) and javelins, who skirmish and fight in rough country. They served Carthage and, later, Rome."
+    sources:
+      - "Polybius 3.113.5 (Hannibal's light troops: pikemen/javelins) (partial)"
+      - "Livy 28.5, Caesar Civil War 1.39 (caetrati)" # unverified
+
+  - id: cataphracts
+    name: Cataphracts
+    kind: mounted
+    attack: 14
+    defence: 9
+    mobility: 2
+    needs_techs: [cataphract_armour]
+    needs_resources: [horses, iron]
+    food: 4
+    materials: 3
+    wealth: 5
+    upkeep_food: 2
+    upkeep_wealth: 4
+    bonus_vs: {infantry: 3000, missile: 2500, siege: 4000}
+    terrain: {plains: 2500, steppe: 2500, hills: -2500, forest: -4500, marsh: -5500, mountains: -5000}
+    note: "Seleucid and Iranian lancers in mail, horse and man. At Magnesia 6,000 of them with the royal guard formed Antiochus' wings; in the wet, with the right wing broken, they did no more than the rest."
+    sources:
+      - "Livy 37.40.5, 37.40.10 (Magnesia: 3,000 + 3,000 mailed horse)"
+      - "Plutarch, Crassus 24.1 (Parthian riders in plated armour)"
+
+  - id: scythed_chariots
+    name: Scythed chariots
+    kind: mounted
+    attack: 7
+    defence: 2
+    mobility: 3
+    needs_techs: [chariot]
+    needs_resources: [horses]
+    food: 3
+    materials: 3
+    wealth: 4
+    upkeep_food: 2
+    upkeep_wealth: 2
+    bonus_vs: {infantry: 3000}
+    terrain: {plains: 3000, river_plains: 2000, hills: -5000, forest: -6000, marsh: -6000, mountains: -6000}
+    note: "A terror if the enemy stands, but only if. At Magnesia the Romans' allies shot at the horses and the chariots bolted back through their own line."
+    sources:
+      - "Livy 37.40.11 (placed in front of the left wing)"
+      - "Livy 37.41.3-11 (Magnesia: driven back by missiles and noise)"
+
+  - id: parthian_horse_archers
+    name: Parthian horse archers
+    kind: mounted
+    attack: 11
+    defence: 5
+    mobility: 4
+    needs_techs: [horse_riding, composite_bow]
+    needs_resources: [horses]
+    food: 3
+    wealth: 3
+    upkeep_food: 2
+    upkeep_wealth: 3
+    bonus_vs: {infantry: 4500, spear: 5000, siege: 4000}
+    terrain: {steppe: 5000, desert: 3000, plains: 3000, hills: -2000, forest: -4500, mountains: -5000, marsh: -4500}
+    note: "Large, strong bows, camels laden with spare arrows, and a habit of shooting as they ride away. Against infantry with no horse to chase them, there is no answer: the Romans could neither close nor stand."
+    sources:
+      - "Plutarch, Crassus 24.4-6, 25.1 (Carrhae: the shooting; the camels with arrows)"
+
+  - id: parthian_cataphracts
+    name: Parthian cataphracts
+    kind: mounted
+    attack: 15
+    defence: 9
+    mobility: 2
+    needs_techs: [cataphract_armour]
+    needs_resources: [horses, iron]
+    food: 4
+    materials: 3
+    wealth: 6
+    upkeep_food: 2
+    upkeep_wealth: 4
+    bonus_vs: {infantry: 3000, missile: 3000, siege: 4000}
+    terrain: {plains: 2500, steppe: 3000, desert: 2000, hills: -2500, forest: -4500, marsh: -5500, mountains: -5000}
+    note: "Surena's lancers: a thousand mail-clad horsemen in his escort alone. At Carrhae they drew back from the locked Roman shields and joined the circling horsemen who shot the square to pieces."
+    sources:
+      - "Plutarch, Crassus 21.6-7, 24.1-3 (Surena's mailed horse)"
+      - "Plutarch, Crassus 25 (the tactics)"
+
+  - id: pontic_phalanx
+    name: Pontic phalanx
+    kind: spear
+    attack: 7
+    defence: 9
+    needs_techs: [sarissa_phalanx]
+    food: 2
+    materials: 3
+    wealth: 3
+    upkeep_food: 1
+    upkeep_wealth: 2
+    bonus_vs: {mounted: 5000, elephant: 3000}
+    terrain: {plains: 2500, river_plains: 2500, hills: -3000, forest: -4500, marsh: -4500, mountains: -4500}
+    note: "Mithridates' pike phalanx, armed in Macedonian fashion. Like every phalanx it was strongest on flat ground; Sulla fought it in Boeotia in 86 BC. Details here are not yet checked against the sources."
+    sources:
+      - "Plutarch, Sulla 16-21 (Chaeronea and Orchomenus)" # unverified
+      - "Plutarch, Lucullus 7-8 (Mithridates' army)" # unverified
+
+  - id: bastarnae_horse
+    name: Bastarnae horse
+    kind: mounted
+    attack: 9
+    defence: 5
+    mobility: 3
+    needs_techs: [horse_riding]
+    needs_resources: [horses]
+    food: 3
+    wealth: 3
+    upkeep_food: 2
+    upkeep_wealth: 2
+    bonus_vs: {missile: 3000, siege: 3000, infantry: 1000}
+    terrain: {plains: 1500, steppe: 2000, mountains: -4000, forest: -3500, marsh: -4000}
+    note: "Perseus bargained for 10,000 Bastarnae horse, each with a runner fighting at his side - 'all professional soldiers' - and lost them when he would not pay."
+    sources:
+      - "Plutarch, Aemilius Paulus 9.6, 12 (the Bastarnae)"

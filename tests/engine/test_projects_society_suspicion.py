@@ -130,10 +130,14 @@ def test_extreme_unrest_brings_riots_and_revolts(game: GameState, rules: RuleOve
     assert game.provinces[civ.capital].owner == "veyra"
 
 
-def test_losing_half_the_provinces_is_collapse(game: GameState) -> None:
+def test_losing_half_the_provinces_to_revolt_is_collapse(game: GameState) -> None:
     civ = game.civs["veyra"]
     for province_id in ("veyra_coast", "veyra_marshes", "veyra_delta"):
-        game.provinces[province_id].owner = None
+        game.provinces[province_id].owner = "kessrin"  # lost in war: not a collapse
+    calm = EventLog(1, game.year)
+    update_society(game, civ, calm_outcome(), civ_effects(game, "veyra"), GameRng(game.rng), calm)
+    assert not civ.collapsed
+    civ.revolts = 3  # the same three broke away instead
     events = EventLog(1, game.year)
     update_society(game, civ, calm_outcome(), civ_effects(game, "veyra"), GameRng(game.rng), events)
     assert civ.collapsed

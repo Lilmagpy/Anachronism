@@ -110,3 +110,26 @@ def test_copies_share_frozen_content_but_not_mutable_state(state: GameState) -> 
     assert copy.civs["veyra"] is not state.civs["veyra"]
     copy.civs["veyra"].stockpiles.food = 0
     assert state.civs["veyra"].stockpiles.food == 600
+
+
+def test_common_techs_reach_only_states_with_the_prerequisites(content: Content) -> None:
+    state = build_state(content, "punic_wars", seed=1)
+    assert state.civs["rome"].tech["written_law"].stage is Stage.WIDESPREAD
+    assert "written_law" not in state.civs["cisalpine_gauls"].tech  # no writing yet
+    for civ in state.civs.values():
+        for node_id, known in civ.tech.items():
+            if known.stage.is_adopted:
+                for needed in content.techs[node_id].prerequisites:
+                    assert civ.tech[needed].stage.is_adopted, (civ.id, node_id, needed)
+
+
+def test_difficulty_levels_change_the_rival_rules_and_are_saved(content: Content) -> None:
+    easy = build_state(content, "punic_wars", seed=1, difficulty="easy")
+    hard = build_state(content, "punic_wars", seed=1, difficulty="hard")
+    normal = build_state(content, "punic_wars", seed=1)
+    rules = normal.world.rules.rivals
+    assert easy.world.rules.rivals.player_grace_turns > rules.player_grace_turns
+    assert hard.world.rules.rivals.capture_per_excess_bp > rules.capture_per_excess_bp
+    assert loads(dumps(hard)).world.difficulty == "hard"
+    with pytest.raises(ValueError, match="unknown difficulty"):
+        build_state(content, "punic_wars", seed=1, difficulty="nightmare")
