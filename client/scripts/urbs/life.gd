@@ -948,20 +948,11 @@ func _make_vehicles() -> void:
 		a["rig"] = true
 		a["speed"] = _rng.randf_range(0.8, 1.0)
 		a["lat"] = 0.0
-		var root := Node3D.new()
-		root.name = "Cart%d" % i
-		add_child(root)
-		var cargo := _rng.randi() % 3
-		_cart_mesh(root, cargo)
-		var oxen: Array = []
-		for sx in [-0.6, 0.6]:
-			var ox: Node3D = A.make_ox([Color(0.55, 0.4, 0.28), Color(0.72, 0.62, 0.5), Color(0.35, 0.28, 0.22)][_rng.randi() % 3], false)
-			ox.position = Vector3(sx, 0.0, 2.6)
-			root.add_child(ox)
-			oxen.append(ox)
-		var rig := {"node": root, "kind": "cart", "agent": _agents.size(), "animals": oxen, "extra": [], "phase": _rng.randf() * TAU}
+		var rig := {"kind": "cart", "name": "Cart%d" % i, "agent": _agents.size(), "cargo": _rng.randi() % 3,
+			"coats": [_rng.randi() % 3, _rng.randi() % 3], "phase": _rng.randf() * TAU}
 		_agents.append(a)
 		_rigs.append(rig)
+		_make_rig_node(rig)
 		_place_vehicle(a, true)
 		# the driver walks at the near ox's head: an ordinary walker that follows the cart (a
 		# skinned figure only when near, like everyone), not a rig of its own
@@ -972,20 +963,10 @@ func _make_vehicles() -> void:
 		a["mode"] = "mule"
 		a["rig"] = true
 		a["speed"] = _rng.randf_range(1.0, 1.25)
-		var root := Node3D.new()
-		root.name = "Mule%d" % i
-		add_child(root)
-		var mule: Node3D = A.make_horse([Color(0.45, 0.4, 0.36), Color(0.38, 0.3, 0.24), Color(0.6, 0.55, 0.5)][_rng.randi() % 3], false)
-		mule.scale = Vector3(0.82, 0.82, 0.82)
-		root.add_child(mule)
-		# the packs
-		var body: Node3D = mule.get_meta("body")
-		for sx in [-0.34, 0.34]:
-			F.box(body, Vector3(0.28, 0.45, 0.6), Vector3(sx, 1.35, 0.0), Color(0.62, 0.5, 0.34))
-		F.box(body, Vector3(0.5, 0.2, 0.7), Vector3(0.0, 1.68, 0.0), Color(0.55, 0.42, 0.3))
-		var rig := {"node": root, "kind": "mule", "agent": _agents.size(), "animals": [mule], "extra": [], "phase": _rng.randf() * TAU}
+		var rig := {"kind": "mule", "name": "Mule%d" % i, "agent": _agents.size(), "coats": [_rng.randi() % 3], "phase": _rng.randf() * TAU}
 		_agents.append(a)
 		_rigs.append(rig)
+		_make_rig_node(rig)
 		_place_vehicle(a, false)
 		_add_follower(_agents.size() - 1, Vector3(0.9, 0.0, 0.9))
 	# litters near the Forum (Cic. Phil. 2.58, read: an open litter)
@@ -994,32 +975,65 @@ func _make_vehicles() -> void:
 		a["mode"] = "litter"
 		a["rig"] = true
 		a["speed"] = _rng.randf_range(0.95, 1.1)
-		var root := Node3D.new()
-		root.name = "Litter%d" % i
-		add_child(root)
-		_litter_mesh(root)
-		var bearers: Array = []
-		for sx in [-0.45, 0.45]:
-			for sz in [1.35, -1.35]:
-				var b: Node3D = F.person({"tunic": Color(0.72, 0.62, 0.5).lerp(Color(0.5, 0.45, 0.4), _rng.randf() * 0.5), "seed": 70 + i * 4 + bearers.size(), "sleeves": false})
-				b.position = Vector3(sx, 0.0, sz)
-				root.add_child(b)
-				b.pose_arms(-1.5, -1.5, 0.15, 0.15, 1.25, 1.25)
-				bearers.append(b)
-		var rider: Node3D = F.person({"toga": true, "seed": 90 + i, "tunic": Color(0.92, 0.9, 0.84)})
-		rider.position = Vector3(0, 1.38 - (F.SHIN + 0.075), 0.1)
-		rider.sit(1.0)
-		rider.look_yaw(0.4)
-		root.add_child(rider)
-		var rig := {"node": root, "kind": "litter", "agent": _agents.size(), "animals": [], "extra": bearers, "rider": rider, "phase": _rng.randf() * TAU}
+		var rig := {"kind": "litter", "name": "Litter%d" % i, "agent": _agents.size(), "seed": i, "phase": _rng.randf() * TAU}
 		_agents.append(a)
 		_rigs.append(rig)
+		_make_rig_node(rig)
 		# start on a Forum street
 		var pick := _street_index(["via_sacra", "argiletum", "vicus_tuscus", "nova_via", "clivus_argentarius"])
 		a["si"] = pick
 		a["d"] = _rng.randf() * float(_streets[pick]["len"])
 		a["dir"] = 1 if _rng.randf() < 0.5 else -1
 		a["lat"] = float(_streets[pick]["hw"]) * 0.3 * (1.0 if _rng.randf() < 0.5 else -1.0)
+
+
+## (Re)make the nodes of a cart, mule or litter from its record (set_spectacle frees them).
+func _make_rig_node(rig: Dictionary) -> void:
+	var root := Node3D.new()
+	root.name = str(rig["name"])
+	add_child(root)
+	rig["node"] = root
+	rig["animals"] = []
+	rig["extra"] = []
+	match str(rig["kind"]):
+		"cart":
+			_cart_mesh(root, int(rig["cargo"]))
+			var k := 0
+			for sx in [-0.6, 0.6]:
+				var ox: Node3D = A.make_ox([Color(0.55, 0.4, 0.28), Color(0.72, 0.62, 0.5), Color(0.35, 0.28, 0.22)][int(rig["coats"][k])], false)
+				ox.position = Vector3(sx, 0.0, 2.6)
+				root.add_child(ox)
+				(rig["animals"] as Array).append(ox)
+				k += 1
+		"mule":
+			var mule: Node3D = A.make_horse([Color(0.45, 0.4, 0.36), Color(0.38, 0.3, 0.24), Color(0.6, 0.55, 0.5)][int(rig["coats"][0])], false)
+			mule.scale = Vector3(0.82, 0.82, 0.82)
+			root.add_child(mule)
+			# the packs
+			var body: Node3D = mule.get_meta("body")
+			for sx in [-0.34, 0.34]:
+				F.box(body, Vector3(0.28, 0.45, 0.6), Vector3(sx, 1.35, 0.0), Color(0.62, 0.5, 0.34))
+			F.box(body, Vector3(0.5, 0.2, 0.7), Vector3(0.0, 1.68, 0.0), Color(0.55, 0.42, 0.3))
+			(rig["animals"] as Array).append(mule)
+		"litter":
+			var i: int = rig["seed"]
+			_litter_mesh(root)
+			for sx in [-0.45, 0.45]:
+				for sz in [1.35, -1.35]:
+					var n: int = (rig["extra"] as Array).size()
+					var b: Node3D = F.person({"tunic": Color(0.72, 0.62, 0.5).lerp(Color(0.5, 0.45, 0.4), fmod(n * 0.37 + i * 0.21, 1.0) * 0.5), "seed": 70 + i * 4 + n, "sleeves": false})
+					b.position = Vector3(sx, 0.0, sz)
+					root.add_child(b)
+					b.pose_arms(-1.5, -1.5, 0.15, 0.15, 1.25, 1.25)
+					(rig["extra"] as Array).append(b)
+			var rider: Node3D = F.person({"toga": true, "seed": 90 + i, "tunic": Color(0.92, 0.9, 0.84)})
+			rider.position = Vector3(0, 1.38 - (F.SHIN + 0.075), 0.1)
+			rider.sit(1.0)
+			rider.look_yaw(0.4)
+			root.add_child(rider)
+			rig["rider"] = rider
+	var a := _agents[int(rig["agent"])]
+	root.visible = a["active"] and int(a["lod"]) != HIDDEN
 
 
 ## A walker (a muleteer, a carter) who keeps `offset` (in the vehicle's frame) from agent `leader`.
@@ -1421,7 +1435,8 @@ func _apply_hour() -> void:
 		_smoke_mat.set_shader_parameter("amount", smoke_at(hour))
 	for r in _rigs:
 		var a := _agents[r["agent"]]
-		(r["node"] as Node3D).visible = a["active"]
+		if r.get("node") != null:
+			(r["node"] as Node3D).visible = a["active"]
 	_cam = Vector3(1e9, 0, 1e9)   # force a LOD pass
 
 
@@ -1738,7 +1753,8 @@ func _lod_apply_lists() -> void:
 			_move_far.append(i)
 	for r in _rigs:
 		var a := _agents[r["agent"]]
-		(r["node"] as Node3D).visible = a["active"] and int(a["lod"]) != HIDDEN
+		if r.get("node") != null:
+			(r["node"] as Node3D).visible = a["active"] and int(a["lod"]) != HIDDEN
 	_counts["level1"] = (_lod_lists[0] as Array).size()
 	_counts["level2"] = (_lod_lists[1] as Array).size()
 	_counts["level3"] = (_lod_lists[2] as Array).size()
@@ -1817,8 +1833,11 @@ func _take_fig(kind: String, a: Dictionary) -> int:
 	return pick
 
 
-## While a spectacle plays (its own figures and animals need the shader's instance slots: the
-## compatibility renderer has 4096), keep only a dozen skinned street figures; false restores.
+## While a spectacle plays, the street gives up most of its skinned bodies: every skinned body
+## (figure.gd and animals.gd, through rig.gd's shader) holds a block of the renderer's
+## instance-uniform buffer, 16 slots of 4096 in the compatibility renderer, so about 256 in all,
+## and a race alone has 160. On: a dozen street figures and no carts, mules or litters (their
+## walkers stay); off: everything back.
 func set_spectacle(on: bool) -> void:
 	if on and _figs_saved < 0:
 		_figs_saved = near_figures
@@ -1826,12 +1845,19 @@ func set_spectacle(on: bool) -> void:
 		for k in _fig_free:
 			var node: Node3D = _figs[k]["node"]
 			if node != null:
-				node.queue_free()
+				node.free()
 				_figs[k]["node"] = null
+		for r in _rigs:
+			if r.get("node") != null:
+				(r["node"] as Node3D).free()
+				r["node"] = null
 		_cam = Vector3(1e9, 0, 1e9)
 	elif not on and _figs_saved >= 0:
 		near_figures = _figs_saved
 		_figs_saved = -1
+		for r in _rigs:
+			if r.get("node") == null:
+				_make_rig_node(r)
 		_cam = Vector3(1e9, 0, 1e9)
 
 
@@ -1842,7 +1868,7 @@ func _release_fig(i: int) -> void:
 		return
 	var f: Dictionary = _figs[fi]
 	if f["node"] != null and _figs_saved >= 0:
-		(f["node"] as Node3D).queue_free()   # spectacle mode: give the slots back
+		(f["node"] as Node3D).free()   # spectacle mode: give the slots back
 		f["node"] = null
 	elif f["node"] != null:
 		(f["node"] as Node3D).visible = false
@@ -1855,6 +1881,8 @@ func _release_fig(i: int) -> void:
 func _update_rigs(delta: float) -> void:
 	for r in _rigs:
 		var a := _agents[r["agent"]]
+		if r.get("node") == null:
+			continue
 		var node: Node3D = r["node"]
 		if not node.visible:
 			continue
