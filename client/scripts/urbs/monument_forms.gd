@@ -14,6 +14,7 @@ const Kit := preload("res://scripts/models/kit.gd")
 const Roman := preload("res://scripts/models/roman.gd")
 const Temples := preload("res://scripts/urbs/monument_temples.gd")
 const Civic := preload("res://scripts/urbs/monument_civic.gd")
+const Circus := preload("res://scripts/urbs/monument_circus.gd")
 
 ## Distance bands of the three levels of detail (metres from the camera to the monument's
 ## origin; 0 = no limit). Parts and instances carry their band as `range`.
@@ -162,6 +163,20 @@ static func mesh_tris(mesh: Mesh) -> int:
 	return _tri_cache[key]
 
 
+## A form drawn by a UrbsMonumentMesh builder at one level of detail, visible at every distance.
+static func _single(out: Dictionary, r: Dictionary) -> void:
+	(out.parts as Array).append({"mesh": r.mesh, "xform": Transform3D.IDENTITY, "own": true, "range": Vector2.ZERO})
+	var tris := int(r.tris)
+	for key in r.instances:
+		var inst: Dictionary = r.instances[key]
+		(out.instances as Array).append({"key": key, "mesh": inst.mesh, "xforms": inst.xforms, "range": Vector2.ZERO})
+		tris += mesh_tris(inst.mesh) * (inst.xforms as Array).size()
+	out.tris = [tris, tris, tris]
+	for b in r.solids:
+		(out.boxes as Array).append({"centre": b.centre, "size": b.size, "yaw": 0.0, "exact": true})
+	out.opens = r.opens
+
+
 ## A form drawn by a UrbsMonumentMesh builder at the three levels of detail: `make(lod)` returns
 ## UrbsMonumentMesh.finish(). Each level's mesh and instanced parts carry their distance band;
 ## the solids and open footprints of lod 0 become the boxes for collision and picking.
@@ -269,6 +284,13 @@ static func _standing(out: Dictionary, rec: Dictionary, st: Dictionary, d: Dicti
 		out.no_skirt = true
 		out.base = "lo"
 		out.door = Temples.door(sp)
+		return
+	if model == "circus_maximus":
+		# 621 m long: one level of detail (a band measured from its centre would coarsen the
+		# carceres for someone standing at them); its seat rows are long boxes, so it is cheap
+		_single(out, Circus.build(Circus.spec(rec, st)))
+		out.no_skirt = true
+		out.base = "hi"
 		return
 	if Civic.handles(model):
 		var sc := Civic.spec(model, rec, st)
@@ -995,3 +1017,92 @@ static func _aqueduct(out: Dictionary, d: Dictionary, st: Dictionary, route: Pac
 				_flush(out, sb)
 				sb = SurfaceTool.new()
 				acc = 0.0
+
+
+# ---------------------------------------------------------------------------------------------
+# The old kit meshes on the shared material library (U8)
+# ---------------------------------------------------------------------------------------------
+
+
+## Candidate surfaces for each kit material id, with the colour each stands for (the kit's
+## palette in roman.gd). A kit face goes to the nearest candidate by colour.
+const LIB_CANDIDATES := {
+	1: [["stucco_white", Color(0.95, 0.93, 0.88)], ["stucco_cream", Color(0.93, 0.88, 0.76)], ["stucco_ochre", Color(0.82, 0.62, 0.30)],
+		["stucco_red", Color(0.66, 0.20, 0.15)], ["stucco_worn", Color(0.78, 0.72, 0.62)]],
+	2: [["travertine", Color(0.88, 0.83, 0.72)], ["tufa_yellow", Color(0.76, 0.65, 0.42)], ["tufa_grey", Color(0.60, 0.56, 0.50)],
+		["tufa_brown", Color(0.55, 0.49, 0.40)], ["marble_luna", Color(0.93, 0.91, 0.86)], ["basalt", Color(0.30, 0.30, 0.31)],
+		["fountain_water", Color(0.55, 0.75, 0.85)]],
+	5: [["timber_oak", Color(0.52, 0.38, 0.24)], ["timber_weathered", Color(0.62, 0.55, 0.45)], ["timber_painted", Color(0.30, 0.20, 0.12)]],
+	9: [["bronze", Color(0.62, 0.45, 0.22)], ["gilt", Color(0.95, 0.78, 0.30)]],
+	12: [["stucco_red", Color(0.66, 0.20, 0.15)], ["stucco_white", Color(0.95, 0.93, 0.88)], ["antefix_terracotta", Color(0.84, 0.52, 0.32)],
+		["timber_painted", Color(0.30, 0.20, 0.12)], ["faction_blue", Color(0.22, 0.36, 0.56)], ["stucco_ochre", Color(0.82, 0.62, 0.30)]],
+	13: [["earth_packed", Color(0.58, 0.48, 0.36)], ["sand_arena", Color(0.78, 0.68, 0.48)]],
+}
+## Kit material ids with a single surface.
+const LIB_FIXED := {0: "tegulae", 3: "brick_latericium", 4: "stucco_worn", 6: "tegulae", 7: "timber_weathered",
+	8: "shutter_wood", 10: "awning_canvas", 11: "awning_canvas", 14: "grass", 15: "fountain_water"}
+
+static var _lib_cache := {}
+
+
+## The surface name for a kit face of material `id` and colour `c`.
+static func lib_name(id: int, c: Color) -> String:
+	if LIB_FIXED.has(id):
+		return LIB_FIXED[id]
+	var best := "stucco_worn"
+	var best_d := INF
+	for cand in LIB_CANDIDATES.get(id, LIB_CANDIDATES[1]):
+		var k: Color = cand[1]
+		var d := Vector3(c.r - k.r, c.g - k.g, c.b - k.b).length_squared()
+		if d < best_d:
+			best_d = d
+			best = cand[0]
+	return best
+
+
+## A kit mesh (vertex colours, material id in the alpha) split into one surface per UrbsMaterials
+## name, with UVs in metres (`unit` metres per mesh unit) and tangents. Cached by the mesh.
+static func to_library(mesh: ArrayMesh, unit := U) -> ArrayMesh:
+	var key := mesh.get_instance_id()
+	if _lib_cache.has(key):
+		return _lib_cache[key]
+	var tools := {}
+	for si in mesh.get_surface_count():
+		var arr := mesh.surface_get_arrays(si)
+		var verts: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
+		var norms: PackedVector3Array = arr[Mesh.ARRAY_NORMAL]
+		var cols: PackedColorArray = arr[Mesh.ARRAY_COLOR]
+		var idx: Variant = arr[Mesh.ARRAY_INDEX]
+		var order := PackedInt32Array()
+		if idx != null and (idx as PackedInt32Array).size() > 0:
+			order = idx
+		else:
+			order.resize(verts.size())
+			for i in verts.size():
+				order[i] = i
+		for t in range(0, order.size() - 2, 3):
+			var i0 := order[t]
+			var c := cols[i0] if cols.size() > i0 else Color(0.8, 0.8, 0.8, 0.15)
+			var name := lib_name(int(c.a * 16.0), c)
+			if not tools.has(name):
+				var st := SurfaceTool.new()
+				st.begin(Mesh.PRIMITIVE_TRIANGLES)
+				tools[name] = st
+			var sto: SurfaceTool = tools[name]
+			for k in 3:
+				var vi := order[t + k]
+				var p := verts[vi]
+				var n := norms[vi] if norms.size() > vi else Vector3.UP
+				sto.set_normal(n)
+				sto.set_uv(UrbsMonumentMesh._uv(p * unit, n))
+				sto.add_vertex(p)
+	var out := ArrayMesh.new()
+	var names: Array = tools.keys()
+	names.sort()
+	for name in names:
+		var st2: SurfaceTool = tools[name]
+		st2.generate_tangents()
+		st2.commit(out)
+		out.surface_set_material(out.get_surface_count() - 1, UrbsMaterials.get_material(name))
+	_lib_cache[key] = out
+	return out

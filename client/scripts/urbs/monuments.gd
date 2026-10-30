@@ -310,7 +310,8 @@ func _make(id: String, st: Dictionary) -> void:
 	var hi0 := -INF
 	if not kind_route:
 		var rot0 := Basis(Vector3.UP, yaw)
-		for off0 in [Vector2.ZERO, Vector2(1, 1), Vector2(-1, 1), Vector2(1, -1), Vector2(-1, -1)]:
+		for off0 in [Vector2.ZERO, Vector2(1, 1), Vector2(-1, 1), Vector2(1, -1), Vector2(-1, -1),
+				Vector2(1, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, -1)]:
 			var wp0 := rot0 * Vector3(off0.x * half0.x, 0, off0.y * half0.y)
 			var gy0 := _ground_at(centre + Vector2(wp0.x, wp0.z))
 			lo0 = minf(lo0, gy0)
@@ -341,7 +342,7 @@ func _make(id: String, st: Dictionary) -> void:
 		base_y = lo
 		skirt = hi - lo
 		if str(res.get("base", "lo")) == "hi":
-			base_y = hi
+			base_y = maxf(hi, hi0)
 	if world:
 		node.position = Vector3.ZERO
 	else:
@@ -350,10 +351,8 @@ func _make(id: String, st: Dictionary) -> void:
 	_root.add_child(node)
 	for part in res.parts:
 		var mi := MeshInstance3D.new()
-		mi.mesh = part.mesh
+		mi.mesh = part.mesh if part.get("own", false) else Forms.to_library(part.mesh, _unit_of(part))
 		mi.transform = part.xform
-		if not part.get("own", false):
-			mi.material_override = _material
 		mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
 		_set_range(mi, part.get("range", Vector2.ZERO))
 		node.add_child(mi)
@@ -372,11 +371,11 @@ func _make(id: String, st: Dictionary) -> void:
 		_set_range(mmi, inst.range)
 		node.add_child(mmi)
 	if skirt > 0.3 and not world and model != "plaza" and not bool(res.get("no_skirt", false)):
-		var k := Kit.new()
-		k.box(Vector3(0, -skirt - 0.4, 0), Vector3(half.x * 1.9, skirt + 0.4, half.y * 1.9), Color(0.55, 0.49, 0.40), Kit.STONE)
+		# a foundation down to the lowest ground under the footprint
+		var fm := UrbsMonumentMesh.new()
+		fm.box(Vector3(0, -skirt - 0.4, 0), Vector3(half.x * 1.9, skirt + 0.4, half.y * 1.9), "opus_quadratum")
 		var mi := MeshInstance3D.new()
-		mi.mesh = k.finish()
-		mi.material_override = _material
+		mi.mesh = fm.finish_mesh()
 		node.add_child(mi)
 	# collision and picking: boxes in the monument's frame (exact solids from the new forms;
 	# the older forms' boxes are kept at least 3 m on a side)
@@ -423,6 +422,14 @@ func _make(id: String, st: Dictionary) -> void:
 	_placed[id] = {"centre": centre, "yaw": yaw, "y": base_y, "length": maxf(float(st.length), float(st.radius) * 2.0),
 		"width": maxf(float(st.width), float(st.radius) * 2.0), "radius": float(st.radius), "model": model, "state": st.state,
 		"native": aabb.size, "door": res.get("door", null)}
+
+
+## Metres per mesh unit of an old kit part: the length of its transform's x axis (kit meshes
+## are in 10 m units and placed with a scale; the route forms are built in metres).
+static func _unit_of(part: Dictionary) -> float:
+	var xf: Transform3D = part.xform
+	var sc := xf.basis.get_scale()
+	return maxf((sc.x + sc.y + sc.z) / 3.0, 0.001)
 
 
 ## Shows a part only within its distance band (Vector2(begin, end), 0 = no limit), with a small
