@@ -17,6 +17,10 @@
 ##   --market=forum_boarium|forum_holitorium|macellum [--eye=1.7]  stand at a market's edge looking in
 ##   --bench            (headless is fine) time life.tick over 300 frames at the camera: mean,
 ##                      worst, and the LOD pass
+##   --intended         keep the street camera where the flags put it: urbs.gd's push_out treats the
+##                      Servian wall's box (the whole city) as solid and shoves every street camera
+##                      to x = -641, and --yaw turns anticlockwise; with this flag the camera stays
+##                      at --at and --yaw is a compass bearing (0 north, 90 east), as the header says
 ##   --perf             print draw calls, objects, primitives and frame time with and without the
 ##                      life, the CPU time of life.tick, and the counts
 extends SceneTree
@@ -62,6 +66,27 @@ func _run() -> void:
 		sp = Spectacles.handle_flags(sflags, urbs)
 		print("SPECTACLE ", sp.name if sp != null else "none")
 	var cam: Camera3D = urbs.cam.camera
+	if _args.has("intended") and str(_args.get("mode", "")) == "street":
+		urbs.cam.set_process(false)
+		var c: Camera3D = urbs.cam.camera
+		var at := str(_args.get("at", "0,0"))
+		var stand := Vector3.ZERO
+		var bearing := float(_args.get("yaw", "0"))
+		var eye := 1.7
+		if at.contains(","):
+			var f := at.split(",")
+			stand = Vector3(float(f[0]), 0, float(f[1]))
+			eye = maxf(float(f[2]) if f.size() > 2 else 1.7, 1.7)
+		elif urbs.monuments.ids().has(at):
+			var b: AABB = urbs.monuments.bounds(at)
+			stand = Vector3(b.get_center().x, 0, b.end.z + maxf(b.size.z * 0.4, 25.0))
+			bearing = 0.0
+		var basis := Basis(Vector3.UP, -deg_to_rad(bearing)) * Basis(Vector3.RIGHT, deg_to_rad(float(_args.get("pitch", "3"))))
+		c.global_transform = Transform3D(basis, Vector3(stand.x, urbs.height_at(stand.x, stand.z) + eye, stand.z))
+		urbs.chunks.focus_on(c.global_position, false)
+		urbs.fill.sync_chunks = true
+		urbs.chunks.load_all_now()
+		urbs.fill.sync_chunks = false
 	if _args.has("cam"):
 		urbs.cam.set_process(false)
 		var c := str(_args["cam"]).split(",")
