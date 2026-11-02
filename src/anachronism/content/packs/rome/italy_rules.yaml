@@ -63,10 +63,10 @@ italy_rules:
   colony_refusal_bp: 4000
   # provinces
   provinces_from_year: -227
-  tribute_per_1000: 2
+  tribute_per_1000: 1
   tribute_loyalty_bp: 50
   province_baseline_loyalty_bp: 5000
-  province_drift_bp: 300
+  province_drift_bp: 1000
   extortion_chance_bp: 1500
   extortion_share_bp: 5000
   extortion_loyalty_bp: 800
