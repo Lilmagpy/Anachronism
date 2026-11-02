@@ -507,8 +507,9 @@ func _forecast_bar(yes: int, no: int, tribune_kind: String, tribune_bp: int) -> 
 
 func _build_header() -> void:
 	add_child(_wrap("You do not command Rome: you whisper. Win families over, back men for office and put matters to the Senate, and the Republic may follow.", 13, DIM))
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 8)
+	var row := HFlowContainer.new()   # chips and the link wrap when the panel is narrow
+	row.add_theme_constant_override("h_separation", 8)
+	row.add_theme_constant_override("v_separation", 4)
 	var influence := _chip("Influence %s" % _num(int(_rep.get("influence", 0))), UiStyle.GOLD_DARK,
 		"Your standing with the Senate. You spend it to win a family over on an issue (%d), to back a man at an election (%d), or to put a proposal to the Senate (its cost is on each proposal)." % [_cost("persuade"), _cost("back")])
 	row.add_child(influence)
@@ -519,9 +520,6 @@ func _build_header() -> void:
 	if bool(_rep.get("history_turned", false)):
 		row.add_child(_chip("History has turned", Color(0.35, 0.30, 0.55),
 			"Rome's story has left the one in the books: some magistrates are no longer the real ones."))
-	var gap := Control.new()
-	gap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	row.add_child(gap)
 	var how := LinkButton.new()
 	how.text = "How influence works"
 	how.underline = LinkButton.UNDERLINE_MODE_ON_HOVER

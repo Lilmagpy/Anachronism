@@ -220,7 +220,7 @@ func _year_card(s: Dictionary) -> Control:
 	var card := PanelContainer.new()
 	# F1 client: every starting year fits on one screen; cards narrow as the list grows
 	var room := get_viewport().get_visible_rect().size.x - 80.0 - 18.0 * (catalog.size() - 1)
-	var card_width := clampf(floorf(room / maxf(catalog.size(), 1)), 230.0, 380.0)
+	var card_width := clampf(floorf(room / maxf(catalog.size(), 1)), 200.0, 380.0)
 	card.custom_minimum_size = Vector2(card_width, 470)
 	card.mouse_filter = Control.MOUSE_FILTER_STOP
 	card.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
@@ -234,12 +234,12 @@ func _year_card(s: Dictionary) -> Control:
 	body.add_theme_constant_override("separation", 8)
 	body.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	card.add_child(body)
-	var year := UiStyle.headline(GameHud.year_text(int(s["start_year"])), 54 if card_width >= 300 else 42, UiStyle.GOLD)
+	var year := UiStyle.headline(GameHud.year_text(int(s["start_year"])), 54 if card_width >= 300 else (42 if card_width >= 240 else 36), UiStyle.GOLD)
 	year.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	body.add_child(year)
 	body.add_child(_gold_rule())
 	var text_width := card_width - 40.0
-	var title := UiStyle.label(_title_of(s).to_upper(), 20 if card_width >= 300 else 16, UiStyle.CREAM, "title", 800)
+	var title := UiStyle.label(_title_of(s).to_upper(), 20 if card_width >= 300 else (16 if card_width >= 240 else 14), UiStyle.CREAM, "title", 800)
 	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.custom_minimum_size.x = text_width
@@ -250,7 +250,7 @@ func _year_card(s: Dictionary) -> Control:
 		pitch.add_theme_font_override("font", UiStyle.font("body", 800))
 		pitch.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		body.add_child(pitch)
-	if str(s["description"]).strip_edges() != "":
+	if str(s["description"]).strip_edges() != "" and card_width >= 240:   # a narrow card keeps the pitch alone
 		var story := UiStyle.wrapped(str(s["description"]), 14 if card_width >= 300 else 13, Color(0.93, 0.86, 0.78), text_width)
 		story.max_lines_visible = 8 if card_width >= 300 else 7
 		story.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
