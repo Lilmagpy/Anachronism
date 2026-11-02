@@ -40,7 +40,7 @@ techs:
     confidence: high
 
   - id: alphabet
-    name: The Latin alphabet
+    name: Phonetic alphabet
     keywords: [alphabet, phonetic, letters, spelling, simple script, abc, latin letters, twenty-one letters]
     category: knowledge
     year: -1050
