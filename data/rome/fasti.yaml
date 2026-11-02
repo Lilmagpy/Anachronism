@@ -4214,7 +4214,7 @@ fasti:
     colleges:
       - office: consul
         holders:
-          - {person: m_aemilius_lepidus_187}
+          - {name: "Marcus Aemilius Lepidus", gens: aemilii}
           - {name: "Marcus Publicius Malleolus", gens: publicii}
       - office: tribune_plebs
         holders:
@@ -5366,7 +5366,7 @@ fasti:
       - office: consul
         holders:
           - {name: "Titus Manlius Torquatus", gens: manlii}
-          - {person: cn_octavius_87}
+          - {name: "Gnaeus Octavius", gens: octavii}
     sources:
       - "Fasti Capitolini"
       - "Wikipedia, List of Roman consuls (after Broughton, MRR; names checked 2026-11-02)"
@@ -5828,7 +5828,7 @@ fasti:
     colleges:
       - office: consul
         holders:
-          - {person: cn_octavius_87}
+          - {name: "Gnaeus Octavius", gens: octavii}
           - {name: "Titus Annius Rufus", gens: annii}
     sources:
       - "Fasti Capitolini"
@@ -5840,7 +5840,7 @@ fasti:
       - office: consul
         holders:
           - {name: "Lucius Cassius Longinus Ravilla", gens: cassii}
-          - {person: l_cornelius_cinna}
+          - {name: "Lucius Cornelius Cinna", gens: cornelii}
     sources:
       - "Fasti Capitolini"
       - "Wikipedia, List of Roman consuls (after Broughton, MRR; names checked 2026-11-02)"
@@ -5850,7 +5850,7 @@ fasti:
     colleges:
       - office: consul
         holders:
-          - {person: m_aemilius_lepidus_78}
+          - {name: "Marcus Aemilius Lepidus", gens: aemilii}
           - {name: "Lucius Aurelius Orestes", gens: aurelii}
     sources:
       - "Fasti Capitolini"
@@ -6256,7 +6256,7 @@ fasti:
       - office: consul
         holders:
           - {name: "Gaius Coelius Caldus", gens: coelii}
-          - {person: l_domitius_ahenobarbus_54}
+          - {name: "Lucius Domitius Ahenobarbus", gens: domitii}
     sources:
       - "Fasti Capitolini"
       - "Wikipedia, List of Roman consuls (after Broughton, MRR; names checked 2026-11-02)"

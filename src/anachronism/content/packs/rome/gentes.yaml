@@ -159,7 +159,7 @@ gentes:
     branches:
       - {cognomen: "Luscus", from_year: -178, to_year: -113}
       - {cognomen: "Rufus", from_year: -153, to_year: -88}
-      - {cognomen: "Milo", from_year: -113}
+      - {cognomen: "Milo", from_year: -82}
     standing:
       - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
       - {from_year: -133, dignitas_bp: 1130, auctoritas_bp: 850, wealth: 180, clients: 150}
@@ -215,7 +215,7 @@ gentes:
     praenomina: [Lucius, Quintus, Sextus]
     branches:
       - {cognomen: "Pansa", from_year: -325, to_year: -260}
-      - {cognomen: "Saturninus", from_year: -165, to_year: -60}
+      - {cognomen: "Saturninus", from_year: -128, to_year: -49}
     standing:
       - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
       - {from_year: -286, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
@@ -449,7 +449,7 @@ gentes:
     branches:
       - {cognomen: "Piso", from_year: -205}
       - {cognomen: "Bestia", from_year: -136, to_year: -71}
-      - {cognomen: "Bibulus", from_year: -113}
+      - {cognomen: "Bibulus", from_year: -84}
     standing:
       - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 60, clients: 30}
       - {from_year: -200, dignitas_bp: 690, auctoritas_bp: 550, wealth: 165, clients: 90}
@@ -602,11 +602,11 @@ gentes:
       - {cognomen: "Hortator", from_year: -362, to_year: -297}
       - {cognomen: "Marcellus", from_year: -356, plebeian: true}
       - {cognomen: "Caecus", from_year: -337, to_year: -240}
-      - {cognomen: "Pulcher", from_year: -311}
       - {cognomen: "Canina", from_year: -310, to_year: -233}
       - {cognomen: "Russus", from_year: -293, to_year: -228}
       - {cognomen: "Caudex", from_year: -289, to_year: -209}
       - {cognomen: "Glicia", from_year: -274, to_year: -209, plebeian: true}
+      - {cognomen: "Pulcher", from_year: -274}
       - {cognomen: "Centho", from_year: -265, to_year: -173}
       - {cognomen: "Nero", from_year: -232, to_year: -157}
     standing:
@@ -706,7 +706,7 @@ gentes:
       - {cognomen: "Blasio", from_year: -295, to_year: -217}
       - {cognomen: "Cethegus", from_year: -229, to_year: -120}
       - {cognomen: "Merula", from_year: -218, to_year: -47}
-      - {cognomen: "Cinna", from_year: -152, to_year: -44}
+      - {cognomen: "Cinna", from_year: -152, to_year: -35}
       - {cognomen: "Sulla", from_year: -113, to_year: -38}
       - {cognomen: "Balbus", from_year: -65, plebeian: true}
     standing:
@@ -1024,10 +1024,10 @@ gentes:
       - {cognomen: "Curvus", from_year: -347, to_year: -265}
       - {cognomen: "Paetinus", from_year: -324, to_year: -215}
       - {cognomen: "Maximus", from_year: -323, to_year: -223}
-      - {cognomen: "Flaccus", from_year: -289, to_year: -82}
+      - {cognomen: "Flaccus", from_year: -289, to_year: -67}
       - {cognomen: "Centumalus", from_year: -254, to_year: -171}
       - {cognomen: "Nobilior", from_year: -214, to_year: -96}
-    extinct_after: -52
+    extinct_after: -37
     standing:
       - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 60, clients: 45}
       - {from_year: -286, dignitas_bp: 3154, auctoritas_bp: 2230, wealth: 753, clients: 639}
@@ -1428,7 +1428,7 @@ gentes:
     branches:
       - {cognomen: "Denter", from_year: -327, to_year: -262}
       - {cognomen: "Salinator", from_year: -244, to_year: -148}
-      - {cognomen: "Drusus", from_year: -174, to_year: -51}
+      - {cognomen: "Drusus", from_year: -172, to_year: -47}
     standing:
       - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 60, clients: 45}
       - {from_year: -286, dignitas_bp: 690, auctoritas_bp: 550, wealth: 165, clients: 135}
@@ -1917,7 +1917,7 @@ gentes:
       - {cognomen: "Crassus", from_year: -466, to_year: -290}
       - {cognomen: "Cursor", from_year: -412, to_year: -232}
       - {cognomen: "Maso", from_year: -256, to_year: -191}
-      - {cognomen: "Carbo", from_year: -184, to_year: -42, plebeian: true}
+      - {cognomen: "Carbo", from_year: -156, to_year: -37, plebeian: true}
     standing:
       - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 60, clients: 45}
       - {from_year: -448, dignitas_bp: 3814, auctoritas_bp: 2680, wealth: 910, clients: 774}
@@ -2053,8 +2053,8 @@ gentes:
     order: plebeian
     praenomina: [Gnaeus, Quintus, Sextus]
     branches:
-      - {cognomen: "Rufus", from_year: -153}
-      - {cognomen: "Strabo", from_year: -152, to_year: -49}
+      - {cognomen: "Strabo", from_year: -114, to_year: -49}
+      - {cognomen: "Rufus", from_year: -113}
       - {cognomen: "Magnus", from_year: -95}
     standing:
       - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 80, clients: 60}
@@ -2801,7 +2801,7 @@ gentes:
     order: plebeian
     praenomina: [Gaius]
     branches:
-      - {cognomen: "Pansa", from_year: -108}
+      - {cognomen: "Pansa", from_year: -68}
     standing:
       - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
       - {from_year: -79, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}

@@ -348,6 +348,7 @@ def start_republic(state: GameState, rng: GameRng) -> None:
     _seed_population(state, rep, rng, state.year)
     events = EventLog(turn=state.turn, year=state.year)
     _hold_year(state, rep, rng, events, state.year)
+    _deaths_in_office(state, rep, events, state.year)  # Brutus falls in 509 itself
     city_module.start_city(state, events.turn)
     state.events.extend(events.items)
 
@@ -502,15 +503,27 @@ def _deaths_in_office(state: GameState, rep: RepublicState, events: EventLog, ye
     for pid in sorted(rep.people):
         person = rep.people[pid]
         if person.alive and person.history_died == year:
-            _die(state, rep, person, year, events)
+            _die(state, rep, person, year, events, keep_office=True)
 
 
 def _die(
-    state: GameState, rep: RepublicState, person: Person, year: int, events: EventLog | None
+    state: GameState,
+    rep: RepublicState,
+    person: Person,
+    year: int,
+    events: EventLog | None,
+    *,
+    keep_office: bool = False,
 ) -> None:
+    """He dies; his seats fall vacant.
+
+    Unless ``keep_office``: he died in office at the end of his year, and the year's list and
+    the record keep him.
+    """
     person.alive = False
     person.died = year
-    rep.magistrates = [m for m in rep.magistrates if m.person != person.id]
+    if not keep_office:
+        rep.magistrates = [m for m in rep.magistrates if m.person != person.id]
     if person.offices and events is not None:
         cause = ""
         if state.chronicle_mode and person.history_died == year:

@@ -411,7 +411,7 @@ people:
     gens: octavii
     died: -87
     died_of: "murdered"
-    offices: [{office: consul, year: -165}, {office: consul, year: -128}, {office: praetor, year: -90}, {office: consul, year: -87}]
+    offices: [{office: praetor, year: -90}, {office: consul, year: -87}]
     traits: [conservative, pious]
     popular: false
     notes: "Consul 87; drove out his colleague Cinna and was killed in his consular robes on the Janiculum when Cinna and Marius took the city (Appian, Civil Wars 1.64-71; Plutarch, Marius 42)."
@@ -529,7 +529,7 @@ people:
     gens: cornelii
     died: -84
     died_of: "murdered"
-    offices: [{office: consul, year: -127}, {office: praetor, year: -90}, {office: consul, year: -87}, {office: consul, year: -86}, {office: consul, year: -85}, {office: consul, year: -84}]
+    offices: [{office: praetor, year: -90}, {office: consul, year: -87}, {office: consul, year: -86}, {office: consul, year: -85}, {office: consul, year: -84}]
     traits: [popular, bold]
     popular: true
     notes: "Consul 87 and, without election, 86, 85 and 84; took Rome with Marius and ruled it until his soldiers at Ancona killed him as he prepared to face Sulla (Appian, Civil Wars 1.64-78; Velleius 2.20-24). Caesar married his daughter."
@@ -571,7 +571,7 @@ people:
     gens: domitii
     died: -48
     died_of: "battle"
-    offices: [{office: consul, year: -94}, {office: aedile_curule, year: -61}, {office: praetor, year: -58}, {office: consul, year: -54}]
+    offices: [{office: aedile_curule, year: -61}, {office: praetor, year: -58}, {office: consul, year: -54}]
     traits: [conservative, proud, stubborn]
     popular: false
     notes: "Cato's brother-in-law and Caesar's bitterest enemy; consul 54; surrendered at Corfinium and was pardoned (49: Caesar, Bellum Civile 1.15-23); commanded Pompey's left at Pharsalus and was killed in the rout (Caesar, Bellum Civile 3.99; Cicero, Philippics 2.71)."
@@ -732,7 +732,7 @@ people:
     gens: aemilii
     died: -152
     died_of: "natural"
-    offices: [{office: consul, year: -232}, {office: aedile_curule, year: -193}, {office: praetor, year: -191}, {office: consul, year: -187}, {office: censor, year: -179}, {office: consul, year: -175}, {office: consul, year: -158}]
+    offices: [{office: aedile_curule, year: -193}, {office: praetor, year: -191}, {office: consul, year: -187}, {office: censor, year: -179}, {office: consul, year: -175}, {office: consul, year: -158}]
     traits: [conservative, builder, pious]
     notes: "Consul 187 and 175, censor 179 (the Basilica Aemilia and the Pons Aemilius: Livy 40.51), pontifex maximus from 180, chosen princeps senatus six times (Livy 40.42.12, 40.51.1); died 152 (Livy, Periochae 48)."
     sources: ["Livy 40.42.12", "Livy 40.51", "Livy, Periochae 48", "Fasti Capitolini"]
@@ -742,7 +742,7 @@ people:
     gens: aemilii
     died: -77
     died_of: "illness"
-    offices: [{office: consul, year: -126}, {office: praetor, year: -81}, {office: consul, year: -78}]
+    offices: [{office: praetor, year: -81}, {office: consul, year: -78}]
     traits: [bold, greedy]
     popular: true
     notes: "Consul 78; tried to undo Sulla's settlement, marched on Rome and was beaten by Catulus and Pompey, dying in Sardinia (Appian, Civil Wars 1.105-107; Plutarch, Pompey 16). Father of the triumvir."

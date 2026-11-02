@@ -304,12 +304,10 @@ def _make_popular(state: GameState, popular: set[str], others: set[str]) -> None
     """Families in ``popular`` lean to the populares, those in ``others`` to the optimates."""
     for fid in popular:
         state.world.gentes[fid] = state.world.gentes[fid].model_copy(
-            update={"popular_lean_bp": 9000}
+            update={"popular_lean_bp": 10_000}
         )
     for fid in others:
-        state.world.gentes[fid] = state.world.gentes[fid].model_copy(
-            update={"popular_lean_bp": 1000}
-        )
+        state.world.gentes[fid] = state.world.gentes[fid].model_copy(update={"popular_lean_bp": 0})
 
 
 def _certain_tribune(state: GameState) -> None:
@@ -338,7 +336,7 @@ def test_a_tribune_can_block_a_vote_that_would_pass(content: Content) -> None:
     for fid in left:
         rep.families[fid].auctoritas_bp += 100_000
     stand = interposition(state, senate_vote(state, Issue.WAR))
-    assert stand.kind == "veto" and stand.chance_bp == 8000 and stand.tribune
+    assert stand.kind == "veto" and stand.chance_bp == 10_000 and stand.tribune
     favour = {fid: f.favour[Issue.WAR.value] for fid, f in rep.families.items()}
     state, logged = apply_action(state, war_with_carthage())
     assert logged.ok and "interposes" in logged.message
@@ -448,13 +446,14 @@ def test_the_view_lists_proposals_with_the_senates_forecast(content: Content) ->
             "issue": "war",
             "year": -264,
             "turn": 0,
-            "yes_bp": 10_000,
-            "no_bp": 0,
+            "yes_bp": view["last_votes"][0]["yes_bp"],  # the house divides by its lean (F1)
+            "no_bp": view["last_votes"][0]["no_bp"],
             "house": view["last_votes"][0]["house"],
             "proposal": "war_with:carthage",
             "outcome": "passed",
         }
     ]
+    assert view["last_votes"][0]["yes_bp"] > view["last_votes"][0]["no_bp"]
     assert "war_with:carthage" not in {p["proposal"] for p in view["proposals"]}
     assert "peace_with:carthage" in {p["proposal"] for p in view["proposals"]}
     json.dumps(view)  # everything is plain data

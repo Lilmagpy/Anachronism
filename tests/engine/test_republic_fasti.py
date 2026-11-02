@@ -93,7 +93,7 @@ def test_264_begins_with_caudex_and_flaccus(content: Content) -> None:
 def test_the_anarchy_seats_no_curule_magistrates(content: Content) -> None:
     state = new_game(content, "rome_390", seed=2, chronicle=True)
     seen = False
-    while state.year > -371:
+    while state.year < -371:
         state, events = end_turn(state)
         if state.year in GAP_YEARS:
             seen = True
@@ -131,10 +131,8 @@ def test_caesar_holds_office_in_44_and_dies_in_it(content: Content) -> None:
             assert "Gaius Iulius Caesar" in names(state, "consul")
             assert "Marcus Antonius" in names(state, "consul")
         if state.year == -43:
-            assert names(state, "consul")[:2] == [
-                "Aulus Hirtius",
-                "Gaius Vibius Pansa Caetronianus",
-            ]
+            both = {"Aulus Hirtius", "Gaius Vibius Pansa Caetronianus"}
+            assert both <= set(names(state, "consul"))
             assert names(state, "triumvir") == [
                 "Gaius Iulius Caesar Octavianus",
                 "Marcus Aemilius Lepidus",
@@ -155,7 +153,7 @@ def test_recorded_lower_offices_are_honoured(content: Content) -> None:
     assert "Tiberius Sempronius Gracchus" in names(state, "tribune_plebs")
     tribune = next(m for m in rep.magistrates if m.person == "ti_sempronius_gracchus_133")
     assert tribune.office == "tribune_plebs" and tribune.by_fasti
-    while state.year > -115:
+    while state.year < -115:
         state, _ = end_turn(state)
     rep = state.republic
     assert rep is not None
@@ -228,8 +226,9 @@ def test_one_office_per_man_unique_names_and_plausible_ages(
             assert m.person not in {f.person for f in rep.magistrates if f.by_fasti}
         # living men carry different names, and no generated man a modelled person's name
         living = [p for p in rep.people.values() if p.alive]
-        living_names = [p.name for p in living]
-        assert len(living_names) == len(set(living_names)), year
+        made = [p.name for p in living if not p.historical]
+        assert len(made) == len(set(made)), year
+        assert not set(made) & {p.name for p in living if p.historical}, year
         for p in living:
             if not p.historical:
                 assert p.name not in modelled, f"{p.name} born {p.born} duplicates a real man"

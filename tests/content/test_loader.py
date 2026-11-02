@@ -20,6 +20,7 @@ def packs(tmp_path: Path) -> Path:
     shutil.copytree(PACKS_DIR, root)
     # the rome pack reads the city dataset from data/ (``external`` in its pack.yaml)
     shutil.copytree(PACKS_DIR.parents[3] / "data" / "rome" / "city", tmp_path / "data/rome/city")
+    shutil.copy(PACKS_DIR.parents[3] / "data" / "rome" / "fasti.yaml", tmp_path / "data/rome")  # F1
     return root
 
 

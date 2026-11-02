@@ -34,6 +34,7 @@ def test_every_family_has_a_stance_on_every_issue(content: Content) -> None:
 def test_the_fasti_and_the_people_agree(content: Content) -> None:
     by_year = {f.year: f for f in content.fasti.values()}
     listed: dict[tuple[str, int], set[str]] = {}
+    offices: set[str]
     for entry in by_year.values():
         for college in entry.colleges:
             for holder in college.holders:
@@ -41,17 +42,16 @@ def test_the_fasti_and_the_people_agree(content: Content) -> None:
                     listed.setdefault((holder.person, entry.year), set()).add(college.office)
     for (pid, year), offices in listed.items():
         person = content.people[pid]
-        held = {h.office for h in person.offices if h.year == year}
-        assert offices <= held, f"{pid} is in the Fasti of {year} as {offices}, not in people"
+        in_people = {h.office for h in person.offices if h.year == year}
+        assert offices <= in_people, f"{pid} is in the Fasti of {year} as {offices}, not in people"
     for person in content.people.values():
-        for held in person.offices:
-            if held.office in SENIOR:
-                assert held.office in listed.get((person.id, held.year), set()), (
-                    f"{person.id}: {held.office} {held.year} is not in the Fasti"
+        for office in person.offices:
+            if office.office in SENIOR:
+                assert office.office in listed.get((person.id, office.year), set()), (
+                    f"{person.id}: {office.office} {office.year} is not in the Fasti"
                 )
-        if person.born is not None:
-            for held in person.offices:
-                assert 17 <= held.year - person.born <= 85, (person.id, held)
+            if person.born is not None:
+                assert 17 <= office.year - person.born <= 85, (person.id, office)
 
 
 def test_gap_years_and_confidence(content: Content) -> None:
