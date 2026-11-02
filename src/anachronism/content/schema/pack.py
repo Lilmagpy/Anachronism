@@ -23,6 +23,16 @@ from anachronism.content.schema.republic import (
     Magistracy,
     RepublicRules,
 )
+from anachronism.content.schema.rome_society import (  # F1 rome_society: R4 content kinds
+    Coinage,
+    Cult,
+    Grain,
+    Land,
+    Priesthood,
+    Prodigy,
+    Recruitment,
+    Rites,
+)
 from anachronism.content.schema.rules import Rules
 from anachronism.content.schema.scenario import Scenario
 from anachronism.content.schema.ships import Ship
@@ -58,6 +68,12 @@ SINGLE_KINDS: dict[str, TypeAdapter[Any]] = {
     "republic_rules": TypeAdapter(RepublicRules),
     "eras": TypeAdapter(tuple[Era, ...]),
     "effect_caps": TypeAdapter(dict[EffectType, dict[Identifier, int]]),
+    # F1 rome_society: religion's numbers, land, grain, coinage and the legion's eras (R4)
+    "rites": TypeAdapter(Rites),
+    "land": TypeAdapter(Land),
+    "grain": TypeAdapter(Grain),
+    "coinage": TypeAdapter(Coinage),
+    "recruitment": TypeAdapter(Recruitment),
 }
 """Kinds defined once, as a whole."""
 
@@ -89,6 +105,10 @@ LIST_KINDS: dict[str, type[Frozen]] = {
     "battles": Battle,
     "monuments": Monument,
     "city_timeline": CityTimeline,
+    # F1 rome_society: priesthoods, prodigies and cults (R4)
+    "priesthoods": Priesthood,
+    "prodigies": Prodigy,
+    "cults": Cult,
 }
 """Kinds holding a list of items with ids; each item is validated on its own."""
 

@@ -38,6 +38,16 @@ from anachronism.content.schema import (
     Terrain,
     Unit,
 )
+from anachronism.content.schema.rome_society import (  # F1 rome_society (R4)
+    Coinage,
+    Cult,
+    Grain,
+    Land,
+    Priesthood,
+    Prodigy,
+    Recruitment,
+    Rites,
+)
 
 
 @dataclass
@@ -76,6 +86,15 @@ class Registry:
     battles: dict[str, Battle] = field(default_factory=dict)
     monuments: dict[str, Monument] = field(default_factory=dict)
     city_timeline: dict[str, CityTimeline] = field(default_factory=dict)
+    # F1 rome_society: religion, land, grain, coinage and the legion's eras (R4)
+    priesthoods: dict[str, Priesthood] = field(default_factory=dict)
+    prodigies: dict[str, Prodigy] = field(default_factory=dict)
+    cults: dict[str, Cult] = field(default_factory=dict)
+    rites: Rites | None = None
+    land: Land | None = None
+    grain: Grain | None = None
+    coinage: Coinage | None = None
+    recruitment: Recruitment | None = None
     origins: dict[tuple[str, str], str] = field(default_factory=dict)
     invalid: dict[str, set[str]] = field(default_factory=dict)
     """Ids of items that exist but failed validation (already reported), per kind."""

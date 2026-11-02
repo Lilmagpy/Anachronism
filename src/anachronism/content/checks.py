@@ -16,6 +16,7 @@ from anachronism.content.schema import (
     ScriptGoal,
     Stage,
 )
+from anachronism.content.schema.rome_society import issues as rome_society_issues  # F1 (R4)
 
 
 def cross_reference_issues(registry: Registry) -> list[ContentIssue]:
@@ -42,6 +43,8 @@ def cross_reference_issues(registry: Registry) -> list[ContentIssue]:
         *_symbol_issues(registry),
         *_republic_issues(registry),
         *_dialogue_issues(registry),
+        # F1 rome_society: religion, land, grain, coinage and the legion's eras (R4)
+        *(ContentIssue(*found) for found in rome_society_issues(registry)),
     ]
 
 

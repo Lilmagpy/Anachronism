@@ -1,0 +1,52 @@
+schema_version: 1
+# Religion's tunable numbers (content/schema/rome_society.py: Rites), read by engine/religion.py.
+# Every number is GAME BALANCE; the procedure and the dates are the sources'.
+rites:
+  auspices:
+    # Before a battle of the player's army the signs are taken: one draw of the game's RNG.
+    # Favourable signs hearten the men, unfavourable ones unsettle them (Livy 22.3.11-14: before
+    # Trasimene Flaminius' horse threw him and the standard could not be pulled up, and the army
+    # marched on 'territis etiam duplici prodigio'; Livy 22.42.8-9: before Cannae the chickens
+    # would not eat and Paullus held Varro back a day; Suetonius, Tiberius 2.2 and Cicero, De
+    # natura deorum 2.7: P. Claudius Pulcher, 249 BC, had the chickens thrown into the sea, 'ut
+    # biberent, quoniam esse nollent', and lost the fleet at Drepana). The commander's piety
+    # (traits `pious` / `impious` on a person) and the augurs' college move the odds.
+    base_bp: 6500
+    pious_bp: 1500
+    impious_bp: -2500
+    augur_bp: 500
+    college_bp: 1000
+    favourable_morale_bp: 400
+    unfavourable_morale_bp: -700
+    pious_trait: pious
+    impious_trait: impious
+    sources: ["Livy 22.3.11-14", "Livy 22.42.8-9", "Suetonius, Tiberius 2.2", "Cicero, De natura deorum 2.7-8"]
+  prodigies:
+    # A dated prodigy (prodigies.yaml) fires in its year; in a year the list does not cover an
+    # undated kind may be drawn. The Senate orders the expiation (hostiae maiores, a supplicatio,
+    # the novemdiale sacrum for a rain of stones: Livy 23.31.15 'ut adsolet'), which costs the
+    # treasury; one it cannot pay for leaves the people afraid until it is.
+    yearly_chance_bp: 3000
+    default_cost: 15
+    default_monument: aedes_iovis_capitolini
+    unexpiated_unrest_bp: 250
+    expiation_unrest_relief_bp: 100
+    kept: 30
+    sources: ["Livy 23.31.15", "Livy 43.13.1-2 (Livy on why he records them)"]
+  sibylline:
+    # A famine, a disaster or a decisive defeat sends the decemviri to the Books (Livy 22.9.7-10
+    # after Trasimene; Livy 5.13.5-6 the first lectisternium in a plague, 399 BC; Livy 10.47.6-7
+    # the plague of 293 and Aesculapius; Livy 29.10.4-6 the showers of stones of 205 and the
+    # Magna Mater). The Books burned with the Capitol on 6 July 83 BC (Dion. Hal. 4.62.5-6) and a
+    # new collection was gathered after 76 BC (Tac. Ann. 6.12; the year 76 is Fenestella's, in
+    # Lactantius, Div. Inst. 1.6.14 # unverified: passage not read).
+    consult_on: [famine, disaster, battle_lost]
+    cost: 40
+    unrest_relief_bp: 600
+    legitimacy_bp: 200
+    lost_from_year: -83
+    restored_year: -76
+    monument: aedes_iovis_capitolini
+    sources: ["Livy 22.9.7-10", "Livy 5.13.5-6", "Livy 10.47.6-7", "Livy 29.10.4-6", "Dionysius of Halicarnassus 4.62.5-6", "Tacitus, Annals 6.12"]
+  kept_auspices: 20
+  sources: ["Livy 22.3", "Livy 22.9", "Livy 29.10", "Dionysius of Halicarnassus 4.62"]

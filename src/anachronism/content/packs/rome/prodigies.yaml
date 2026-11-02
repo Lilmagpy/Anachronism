@@ -1,0 +1,861 @@
+schema_version: 1
+# Prodigies reported to the Senate and the expiations it ordered (content/schema/rome_society.py:
+# Prodigy), read by engine/religion.py. Livy's yearly notices (books 3-45) and Julius Obsequens'
+# Liber prodigiorum (190-11 BC; his years are the consular years his headings give). Each dated
+# entry fires in its year; the undated ones at the end are recurring kinds drawn in years the
+# list does not cover. `sign` and `expiation` paraphrase the Latin; nothing is copied. `cost` is
+# GAME BALANCE (0 = the default in rites.yaml). Passages were read in the Latin Library text
+# unless marked # unverified.
+prodigies:
+  # ---- the early Republic (Livy 3-10) ----------------------------------------------------
+  - id: p461_flesh
+    year: -461
+    place: Rome
+    sign: "The sky seemed to burn, the earth shook, a cow spoke, and it rained flesh, which birds snatched in the air."
+    expiation: "The duumviri opened the Books: they warned against gatherings of foreigners and against sedition."
+    sibylline: true
+    sources: ["Livy 3.10.6-7"]
+    confidence: high
+  - id: p458_wolves
+    year: -458
+    place: the Capitol
+    sign: "Wolves were seen on the Capitol and driven off by dogs."
+    expiation: "The Capitol was purified."
+    sources: ["Livy 3.29.9"]
+    confidence: high
+  - id: p436_quakes
+    year: -436
+    place: Rome and the countryside
+    sign: "In a worsening plague, repeated earthquakes brought down farmhouses."
+    expiation: "A public obsecratio was held, the duumviri leading the prayers."
+    sibylline: true
+    sources: ["Livy 4.21.5"]
+    confidence: high
+  - id: p398_alban_lake
+    year: -398
+    place: the Alban Mount
+    sign: "In the siege of Veii the Alban lake rose to an unheard-of height without rain."
+    expiation: "Envoys were sent to Delphi; the lake was to be drained over the fields before Veii could fall."
+    cost: 30
+    sources: ["Livy 5.15.1-4", "Livy 5.16.8-11", "Livy 5.17.1-4"]
+    confidence: high
+  - id: p344_moneta
+    year: -344
+    place: Rome
+    sign: "After the dedication of Juno Moneta's temple it rained stones and night seemed to fall by day, as once on the Alban Mount."
+    expiation: "The Books were opened and a dictator named to appoint days of rest."
+    monument: aedes_iunonis_monetae
+    sibylline: true
+    sources: ["Livy 7.28.7-8"]
+    confidence: high
+  - id: p296_many
+    year: -296
+    place: Rome
+    sign: "Many prodigies in the year before Sentinum."
+    expiation: "The Senate decreed two days of supplicatio, with wine and incense given at public cost; men and women thronged to pray."
+    sources: ["Livy 10.23.1-2"]
+    confidence: high
+  - id: p293_plague
+    year: -293
+    place: Rome and the army
+    sign: "A heavy pestilence; it rained earth in many places, and many in Appius Claudius' army were struck by lightning."
+    expiation: "The Books were opened; they ordered Aesculapius brought from Epidaurus, but the consuls at war did no more that year than a one-day supplicatio."
+    sibylline: true
+    cult: aesculapius
+    cost: 30
+    sources: ["Livy 10.31.8-9", "Livy 10.47.6-7"]
+    confidence: high
+  # ---- the war with Hannibal (Livy 21-30) -------------------------------------------------
+  - id: p218_ticinus
+    year: -218
+    place: the camp on the Ticinus
+    sign: "A wolf entered the camp and tore at the men it met, and a swarm of bees settled on a tree over the general's tent."
+    expiation: "The signs were expiated before Scipio rode out to scout."
+    sources: ["Livy 21.46.2-3"]
+    confidence: high
+  - id: p218_winter
+    year: -218
+    place: Rome and about
+    sign: "A six-month-old child shouted 'Triumph!' in the Forum Holitorium; an ox climbed to a third storey in the Forum Boarium; phantom ships shone in the sky; the temple of Hope was struck by lightning; at Lanuvium Juno's spear moved; stones rained in Picenum."
+    expiation: "The Books were consulted; a novemdiale for the stones, a lustratio of the city, greater victims, a gift of gold to Juno, a lectisternium at Caere and a supplicatio."
+    sibylline: true
+    cost: 30
+    sources: ["Livy 21.62.1-11"]
+    confidence: high
+  - id: p217_spring
+    year: -217
+    place: Italy, Sardinia and Sicily
+    sign: "Soldiers' javelins burned in Sicily; in Sardinia a horseman's staff caught fire and two shields sweated blood; the sun's disc shrank; burning stones fell at Praeneste; at Arpi shields were seen in the sky and the sun fought the moon; two moons rose at Capena; the waters of Caere ran with blood."
+    expiation: "The decemviri consulted the Books: a golden thunderbolt of fifty pounds for Jupiter, silver gifts for Juno and Minerva, sacrifices to Juno Regina on the Aventine and Juno Sospita at Lanuvium, a lectisternium, and the Saturnalia kept with a public feast."
+    monument: aedes_saturni
+    sibylline: true
+    cost: 40
+    sources: ["Livy 22.1.8-20"]
+    confidence: high
+  - id: p217_trasimene
+    year: -217
+    place: Rome, after Trasimene
+    sign: "The dictator Fabius told the Senate that Flaminius had sinned more by neglect of the rites than by rashness: his horse had thrown him and the standard could not be pulled from the ground."
+    expiation: "The Books were opened: the vow to Mars renewed, great games vowed to Jupiter, temples vowed to Venus Erycina and Mens, a supplicatio and lectisternium, and a sacred spring vowed on the people's order."
+    monument: aedes_veneris_erycinae_capitol
+    sibylline: true
+    cult: venus_erycina
+    cost: 50
+    sources: ["Livy 22.3.11-14", "Livy 22.9.7-10", "Livy 22.10.1-10"]
+    confidence: high
+  - id: p216_spring
+    year: -216
+    place: Rome, the Aventine, Aricia, the Sabine country
+    sign: "Stones rained on the Aventine and at Aricia; statues in the Sabine country ran with blood; the hot springs of Caere flowed; men were struck dead by lightning in the covered way to the Campus."
+    expiation: "The decemviri opened the Books and the prodigies were expiated as they prescribed."
+    sibylline: true
+    sources: ["Livy 22.36.6-9"]
+    confidence: high
+  - id: p216_vestals
+    year: -216
+    place: Rome, after Cannae
+    sign: "Two Vestals, Opimia and Floronia, were convicted of unchastity: one was buried alive at the Colline Gate, the other took her own life, and the pontifex maximus had the scribe Cantilius flogged to death in the Comitium."
+    expiation: "The Books were consulted; a Gaulish and a Greek couple were buried alive in the Forum Boarium, and Fabius Pictor was sent to the oracle at Delphi."
+    monument: aedes_vestae
+    sibylline: true
+    cost: 50
+    sources: ["Livy 22.57.2-6"]
+    confidence: high
+  - id: p215_lanuvium
+    year: -215
+    place: Sinuessa and Lanuvium
+    sign: "The sea seemed to burn; at Sinuessa a cow bore a foal; at Lanuvium the statues of Juno Sospita ran with blood and stones rained about the temple."
+    expiation: "A novemdiale for the stones, as is the custom, and the other prodigies carefully expiated."
+    sources: ["Livy 23.31.15"]
+    confidence: high
+  - id: p214_lanuvium
+    year: -214
+    place: Lanuvium, Apulia, Mantua, Cales and Rome
+    sign: "Crows nested inside Juno Sospita's temple at Lanuvium; a green palm burned in Apulia; a pool at Mantua ran with blood; it rained chalk at Cales and blood in the Forum Boarium; a spring burst from the ground in the Vicus Insteius."
+    expiation: "The prodigies were expiated with greater victims and a one-day supplicatio decreed."
+    sources: ["Livy 24.10.6-13"]
+    confidence: high
+  - id: p213_caieta
+    year: -213
+    place: Caieta, Aricia, Tarracina, Amiternum
+    sign: "The wall and gate of Caieta and the temple of Jupiter at Aricia were struck by lightning; phantom warships were seen in the river at Tarracina; arms clashed in the temple of Jupiter Vicilinus; the river at Amiternum ran with blood."
+    expiation: "Expiated by the pontiffs' decree before the consuls left for their provinces."
+    sources: ["Livy 24.44.7-9"]
+    confidence: high
+  - id: p212_alban_stones
+    year: -212
+    place: the Alban Mount, the Capitol, Cumae, Reate
+    sign: "Stones rained for two days on the Alban Mount; two temples on the Capitol and the rampart above Suessula were struck; at Cumae walls and towers were thrown down by lightning; at Reate a huge rock seemed to fly, and the sun glowed blood-red."
+    expiation: "A one-day supplicatio, several days of the consuls' sacrifices, and a novemdiale."
+    sources: ["Livy 25.7.7-9"]
+    confidence: high
+  - id: p212_gracchus
+    year: -212
+    place: Lucania
+    sign: "As Tiberius Gracchus sacrificed, two snakes glided out and ate the liver of the victim, three times over."
+    expiation: "The haruspices warned the general against hidden men and secret counsels; he was betrayed and killed soon after."
+    sources: ["Livy 25.16.1-4"]
+    confidence: high
+  - id: p211_concord
+    year: -211
+    place: Rome, Anagnia, Fregellae, Eretum, Reate
+    sign: "Lightning struck the Victory on the roof of Concord's temple; walls and gates at Anagnia and Fregellae were struck; blood ran a whole day in the forum at Subertum; stones rained at Eretum; a mule foaled at Reate."
+    expiation: "Greater victims, a one-day obsecratio and a novemdiale."
+    monument: aedes_concordiae_forum
+    sources: ["Livy 26.23.4-6"]
+    confidence: high
+  - id: p210_tusculum
+    year: -210
+    place: Tusculum, Anagnia, Tarracina, Tarquinii, Capena
+    sign: "A lamb was born with an udder at Tusculum and Jupiter's roof was stripped by lightning; the ground before Anagnia's gate burned a day and a night; sea-snakes leapt in the harbour of Tarracina; a pig with a human face was born at Tarquinii; statues in the grove of Feronia sweated blood."
+    expiation: "Expiated with greater victims by the pontiffs' decree and a supplicatio."
+    sources: ["Livy 27.4.11-15"]
+    confidence: high
+  - id: p209_alban
+    year: -209
+    place: the Alban Mount, Ostia, Capua, Sinuessa, Privernum
+    sign: "Jupiter's statue on the Alban Mount was struck; the Alban water ran with blood; a statue's garland fell into its hand at Rome; an ox spoke at Privernum, and a child of doubtful sex was born at Sinuessa."
+    expiation: "Greater victims, a one-day supplicatio, and the child drowned in the sea as the haruspices ordered."
+    sources: ["Livy 27.11.1-6"]
+    confidence: high
+  - id: p208_capua
+    year: -208
+    place: Capua, Cumae, Casinum, Ostia, Caere, Volsinii
+    sign: "Two temples at Capua were struck; mice gnawed the gold in Jupiter's temple at Cumae; a swarm of bees settled in the forum at Casinum; a vulture flew into Jupiter's temple at Caere; a lake at Volsinii ran with blood."
+    expiation: "A one-day supplicatio; for days the greater victims gave no good omen, and the gods' peace was long in coming."
+    monument: aedes_apollinis_medici
+    sources: ["Livy 27.23.1-4"]
+    confidence: high
+  - id: p207_frusino
+    year: -207
+    place: Veii, Minturnae, Frusino, Rome
+    sign: "Stones rained at Veii; Jupiter's temple and the grove of Marica at Minturnae were struck; a wolf tore a sentry at Capua; at Frusino a child the size of a four-year-old was born of doubtful sex; and Juno Regina's temple on the Aventine was struck."
+    expiation: "A novemdiale twice over, greater victims and a supplicatio; the child was shut in a chest and sunk at sea; twenty-seven maidens sang a hymn by Livius Andronicus through the city and two white cows were offered to Juno Regina."
+    monument: aedes_iunonis_reginae_aventine
+    cost: 30
+    sources: ["Livy 27.37.1-15"]
+    confidence: high
+  - id: p206_satricum
+    year: -206
+    place: Tarracina, Satricum, Antium, Caere, Alba, Rome
+    sign: "Temples at Tarracina and Satricum were struck and two snakes slid into Jupiter's temple there; bloody ears of corn were reaped at Antium; two suns were seen at Alba; an ox spoke in the Roman countryside; Neptune's altar in the Circus Flaminius sweated; the temples of Ceres, Salus and Quirinus were struck."
+    expiation: "Greater victims and a one-day supplicatio; the fire of Vesta went out and the Vestal on watch was scourged by the pontifex maximus."
+    monument: aedes_salutis
+    sources: ["Livy 28.11.1-7"]
+    confidence: high
+  - id: p205_stones
+    year: -205
+    place: Rome
+    sign: "Stones rained from the sky more often than usual that year."
+    expiation: "The Books were consulted and a prophecy found: a foreign enemy would be driven from Italy if the Idaean Mother were brought from Pessinus; envoys were sent to King Attalus by way of Delphi."
+    sibylline: true
+    cult: magna_mater
+    cost: 30
+    sources: ["Livy 29.10.4-8", "Livy 29.11.1-8"]
+    confidence: high
+  - id: p204_two_suns
+    year: -204
+    place: Setia, Tarracina, Anagnia, Lanuvium
+    sign: "Two suns were seen and the night was lit; a torch stretched across the sky at Setia; gates and walls were struck at Tarracina and Anagnia; a dreadful crash was heard in Juno Sospita's temple at Lanuvium."
+    expiation: "A one-day supplicatio and a novemdiale for the stones; then the Senate took up the reception of the Idaean Mother."
+    monument: aedes_magnae_matris
+    sources: ["Livy 29.14.2-5"]
+    confidence: high
+  - id: p203_crows
+    year: -203
+    place: the Capitol, Antium, Capua, Reate, Anagnia, Frusino
+    sign: "Crows were believed to have pecked and eaten gold on the Capitol; mice gnawed a golden crown at Antium; locusts covered the fields about Capua; a five-footed foal was born at Reate; fires and a great torch were seen at Anagnia; at Frusino a ring and a larger circle enclosed the sun."
+    expiation: "Expiated with greater victims and a one-day supplicatio."
+    sources: ["Livy 30.2.9-13"]
+    confidence: high
+  - id: p202_cumae
+    year: -202
+    place: Cumae, Velitrae, Aricia, Frusino, the Palatine
+    sign: "At Cumae the sun's disc shrank and stones rained; the earth sank in great chasms at Velitrae; forum and shops at Aricia and walls and gate at Frusino were struck; stones rained on the Palatine; and the Tiber flooded higher than ever."
+    expiation: "A novemdiale for the stones by ancestral custom and greater victims for the rest."
+    sources: ["Livy 30.38.8-10"]
+    confidence: high
+  # ---- the eastern wars (Livy 31-45) ----------------------------------------------------
+  - id: p200_sabines
+    year: -200
+    place: Lucania, Privernum, Lanuvium, the Sabine country, Frusino, Sinuessa
+    sign: "The sky burned in Lucania; the sun was red all day at Privernum; a great noise in Juno Sospita's temple at Lanuvium; children of doubtful sex were born among the Sabines; a lamb with a pig's head at Frusino and a pig with a human head at Sinuessa."
+    expiation: "Greater victims, a one-day supplicatio, the hermaphrodites carried out to sea, and a hymn sung by twenty-seven maidens."
+    sources: ["Livy 31.12.5-10"]
+    confidence: high
+  - id: p199_laurel
+    year: -199
+    place: Macedonia and Rome
+    sign: "A laurel grew on the stern of a warship, with other prodigies the Senate had already dealt with."
+    expiation: "The consuls sacrificed greater victims; for the laurel the haruspices ordered a one-day supplicatio at every couch of the gods."
+    sources: ["Livy 32.1.10-14"]
+    confidence: high
+  - id: p198_veii
+    year: -198
+    place: Veii, Lanuvium, Ardea, Capua, Arretium, Velitrae, Suessa Aurunca, Sinuessa
+    sign: "The public road at Veii, forum and temple at Lanuvium, Hercules' temple at Ardea and Capua's walls were struck; the sky seemed to burn at Arretium; the earth sank at Velitrae; a two-headed lamb and a pig with a human head were born."
+    expiation: "A one-day supplicatio and the consuls' sacrifices."
+    sources: ["Livy 32.9.1-5"]
+    confidence: high
+  - id: p197_wolf
+    year: -197
+    place: Rome, Fregenae, Frusino, Aefula, Formiae
+    sign: "The temples of Vulcan and Summanus at Rome and the walls of Fregenae were struck; light rose at night at Frusino; a two-headed, five-footed lamb was born at Aefula; two wolves entered Formiae and tore men, and a wolf came into Rome and up to the Capitol."
+    expiation: "The prodigies were expiated before the consuls and praetors left for their provinces."
+    sources: ["Livy 32.29.1-2"]
+    confidence: high
+  - id: p196_esquiline_wolf
+    year: -196
+    place: Rome, the Sabine country, Capena
+    sign: "A Roman knight and his horse were killed by lightning on the road to the Sabines; Feronia's temple at Capena was struck; the points of two spears burned at Juno Moneta's; a wolf came in by the Esquiline Gate, ran down to the Forum and out by the Porta Capena almost untouched."
+    expiation: "Expiated with greater victims."
+    monument: aedes_iunonis_monetae
+    sources: ["Livy 33.26.6-9"]
+    confidence: high
+  - id: p194_blood
+    year: -194
+    place: Rome, Ariminum, Picenum, Hadria
+    sign: "Drops of blood in the Forum, the Comitium and on the Capitol; it rained earth; Vulcan's head burned; milk flowed in the river Nar; children were born without eyes and nose at Ariminum and without hands or feet in Picenum; stones rained on the land of Hadria."
+    expiation: "Expiated by the pontiffs' decree, with a novemdiale for the stones."
+    sources: ["Livy 34.45.6-8"]
+    confidence: high
+  - id: p193_quakes
+    year: -193
+    place: Rome, Aricia, Lanuvium, Capua
+    sign: "Earthquakes for thirty-eight days; the Caelimontane Gate and the walls were struck; stones rained at Aricia, Lanuvium and on the Aventine; a huge swarm of wasps flew into the forum at Capua and settled in the temple of Mars."
+    expiation: "The decemviri opened the Books: a novemdiale, a supplicatio and a lustratio of the city; the wasps were gathered and burned."
+    sibylline: true
+    sources: ["Livy 34.55.1-4 # unverified: passage not re-read", "Livy 35.9.2-5"]
+    confidence: medium
+  - id: p192_ox
+    year: -192
+    place: Picenum, Arretium, Amiternum, Formiae, Rome
+    sign: "A goat bore six kids at once; a one-handed boy was born at Arretium; it rained earth at Amiternum; Formiae's gate and wall were struck; and the consul Domitius' ox said 'Rome, look to yourself'. The Tiber flooded the city and threw down two bridges."
+    expiation: "A supplicatio for the prodigies; the ox was to be kept and fed at public cost, as the haruspices ordered."
+    sources: ["Livy 35.21.2-6"]
+    confidence: high
+  - id: p191_fast
+    year: -191
+    place: Tarracina, Amiternum, Minturnae, the mouth of the Volturnus
+    sign: "Stones rained several times; Jupiter's temple and the shops about the forum at Minturnae were struck; two ships burned by lightning in the river mouth."
+    expiation: "The decemviri consulted the Books: a fast to Ceres to be kept every fifth year, a novemdiale, a one-day supplicatio with garlands, and the consul's sacrifice to the gods the decemviri named."
+    monument: aedes_cereris_liberi_liberae
+    sibylline: true
+    sources: ["Livy 36.37.2-6"]
+    confidence: high
+  - id: p190_lucina
+    year: -190
+    place: Rome, Puteoli, Nursia, Tusculum, Reate
+    sign: "Lightning disfigured the gable and doors of Juno Lucina's temple; walls and gate at Puteoli were struck and two men killed; a cloud rose from a clear sky at Nursia and killed two more; it rained earth at Tusculum; a mule foaled at Reate."
+    expiation: "The pontiffs expiated them, the Latin Festival was repeated because Laurentum had not been given its portion of meat, and a supplicatio with ten freeborn boys and ten maidens was held as the decemviri found in the Books."
+    sibylline: true
+    sources: ["Livy 37.3.1-6", "Julius Obsequens 1"]
+    confidence: high
+  - id: p188_darkness
+    year: -188
+    place: Rome and the Aventine
+    sign: "Darkness fell between the third and fourth hour of the day; stones rained on the Aventine."
+    expiation: "A supplicatio at every crossroads and a novemdiale."
+    sources: ["Livy 38.36.4", "Julius Obsequens 2"]
+    confidence: high
+  - id: p186_picenum
+    year: -186
+    place: Picenum, the Capitol, Umbria
+    sign: "Stones rained for three days in Picenum and fires from the sky singed men's clothes; the temple of Ops on the Capitol was struck; a child of doubtful sex about twelve years old was found in Umbria."
+    expiation: "A novemdiale, a one-day supplicatio by the pontiffs' decree, greater victims and a lustratio of the city; the child was driven from Roman soil and killed."
+    sources: ["Livy 39.22.3-5", "Julius Obsequens 3"]
+    confidence: high
+  - id: p183_vulcan
+    year: -183
+    place: Rome and Sicily
+    sign: "It rained blood for two days in the precinct of Vulcan and of Concord, and a new island rose from the sea off Sicily."
+    expiation: "The decemviri decreed a supplicatio to expiate it."
+    sources: ["Livy 39.46.3-5", "Livy 39.56.6", "Julius Obsequens 4"]
+    confidence: high
+  - id: p182_storm
+    year: -182
+    place: Rome, Reate, Caieta
+    sign: "A storm wrecked the city, threw down bronze statues on the Capitol and in the Circus Maximus and tore the gables from temples; a three-footed mule was born at Reate; Apollo's temple at Caieta was struck."
+    expiation: "The haruspices ordered the storm expiated: twenty greater victims and a one-day supplicatio."
+    sources: ["Livy 40.2.1-4", "Julius Obsequens 5"]
+    confidence: high
+  - id: p181_pestilence
+    year: -181
+    place: Rome and Lanuvium
+    sign: "It rained blood in the precincts of Vulcan and Concord; the pontiffs reported that the spears of Mars had moved; Juno Sospita's statue wept at Lanuvium; a pestilence so heavy that the undertakers could not keep up."
+    expiation: "The consuls sacrificed greater victims and the decemviri opened the Books: a one-day supplicatio at every couch in Rome and three days of prayer through Italy."
+    monument: regia
+    sibylline: true
+    sources: ["Livy 40.19.1-5", "Julius Obsequens 6"]
+    confidence: high
+  - id: p180_plague
+    year: -180
+    place: Rome
+    sign: "The plague carried off a praetor, a consul and many men of every rank, until the mortality itself was counted a prodigy."
+    expiation: "The pontifex maximus sought out the means of appeasing the gods, the decemviri opened the Books, the consul vowed gilded statues to Apollo, Aesculapius and Salus, and a two-day supplicatio was held by all over twelve, garlanded and holding laurel."
+    monument: aedes_aesculapii
+    sibylline: true
+    cost: 30
+    sources: ["Livy 40.37.1-3"]
+    confidence: high
+  - id: p179_storms
+    year: -179
+    place: the Capitol, Tarracina, Capua, Reate
+    sign: "Storms threw down statues on the Capitol and lightning struck many places, Jupiter's temple at Tarracina and the White Temple and Roman Gate at Capua; a three-footed mule was born at Reate."
+    expiation: "The decemviri consulted the Books and named the gods and the victims; a one-day supplicatio."
+    sibylline: true
+    sources: ["Livy 40.45.1-5", "Julius Obsequens 7"]
+    confidence: high
+  - id: p178_vesta
+    year: -178
+    place: Rome
+    sign: "A fire about the Forum burned the temple of Venus to nothing; the fire of Vesta went out."
+    expiation: "The Vestal was scourged by order of the pontifex maximus M. Aemilius; supplicationes were held, and the Roman Games repeated because of the prodigies."
+    monument: aedes_vestae
+    sources: ["Julius Obsequens 8", "Livy 40.59.6-8 # unverified: passage not re-read"]
+    confidence: medium
+  - id: p177_crustumerium
+    year: -177
+    place: Crustumerium, Capua, Puteoli, Rome
+    sign: "A stone fell from the sky into the grove of Mars at Crustumerium; a limbless child was born and a four-footed snake seen; buildings at Capua and two ships at Puteoli were struck; a wolf hunted through Rome from the Colline to the Esquiline Gate."
+    expiation: "The consuls sacrificed greater victims and a one-day supplicatio was held at every couch."
+    sources: ["Livy 41.9.4-7"]
+    confidence: high
+  - id: p176_liver
+    year: -176
+    place: Rome and the Alban Mount
+    sign: "When the consuls sacrificed, the liver of the victim wasted away and the head of the liver was missing; the consul Cornelius fell ill coming down from the Alban Mount and died at Cumae."
+    expiation: "The Senate ordered greater victims sacrificed until a good omen was had; they say it was never had from Salus."
+    sources: ["Livy 41.14.7-41.15.4 # unverified: chapter boundaries not re-read", "Julius Obsequens 9"]
+    confidence: medium
+  - id: p175_plague
+    year: -175
+    place: Rome and Italy
+    sign: "A plague so heavy among men and cattle that the bodies lay unburied and no vulture appeared."
+    expiation: "The Books were consulted and a supplicatio and votive games decreed."
+    sibylline: true
+    sources: ["Julius Obsequens 10", "Livy 41.21.5-11 # unverified: passage not re-read"]
+    confidence: medium
+  - id: p173_fleet_in_sky
+    year: -173
+    place: Lanuvium, Privernum, Veii, the Pomptine land, Gaul
+    sign: "A great fleet was seen in the sky at Lanuvium; dark wool grew from the earth at Privernum; stones rained at Veii; locusts covered the Pomptine land like clouds; fish came up from the furrows in the Gallic land."
+    expiation: "The Books were opened; the decemviri named the gods and victims, and a supplicatio and the prayers the fated books gave were made before the Macedonian war."
+    sibylline: true
+    sources: ["Livy 42.2.3-7"]
+    confidence: high
+  - id: p172_rostral_column
+    year: -172
+    place: the Capitol
+    sign: "The rostral column set up on the Capitol by the consul Aemilius in the first Punic War was struck by lightning and shattered to its base."
+    expiation: "The haruspices and the Books: a lustratio of the city, a supplicatio and obsecratio, greater victims on the Capitol and at Minerva's promontory in Campania, and ten days of games to Jupiter Best and Greatest; the haruspices read it as a portent of wider borders and the enemy's ruin."
+    sibylline: true
+    cost: 40
+    sources: ["Livy 42.20.1-6"]
+    confidence: high
+  - id: p169_cumae_apollo
+    year: -169
+    place: Anagnia, Minturnae, Reate, Cumae, Rome
+    sign: "A torch in the sky and a cow that spoke at Anagnia; the sky on fire at Minturnae; stones rained at Reate; Apollo wept three days and nights in the citadel of Cumae. Livy adds that in his own day such things are no longer reported or recorded."
+    expiation: "The cow was kept at public cost; forty greater victims, a supplicatio and a lectisternium."
+    sources: ["Livy 43.13.1-8"]
+    confidence: high
+  - id: p168_stones
+    year: -168
+    place: the Roman land and Veii
+    sign: "It rained stones twice at the year's end, once on Roman land and once at Veii."
+    expiation: "Two novemdialia."
+    sources: ["Livy 44.18.6-7"]
+    confidence: high
+  - id: p167_penates
+    year: -167
+    place: the Velia, Minervium, Anagnia, Lanuvium, Calatia
+    sign: "The temple of the Penates on the Velia was struck; two gates and a stretch of wall at Minervium; it rained earth at Anagnia; a torch was seen at Lanuvium; blood ran from a hearth at Calatia for three days and two nights."
+    expiation: "The decemviri opened the Books: a one-day supplicatio and fifty she-goats sacrificed in the Forum."
+    sibylline: true
+    sources: ["Livy 45.16.5-6", "Julius Obsequens 11"]
+    confidence: high
+  # ---- Julius Obsequens, after Livy's surviving books ------------------------------------
+  - id: p166_terracina
+    year: -166
+    place: Campania, Praeneste, Veii, Tarracina, Rome
+    sign: "It rained earth in Campania and blood at Praeneste; wool grew on trees at Veii; three women died at their work in Minerva's temple at Tarracina; a kite dropped a weasel from Jupiter's shrine into the Senate sitting on the Capitol; the temple of Salus was struck."
+    expiation: "Expiated by the Senate's decree."
+    monument: aedes_salutis
+    sources: ["Julius Obsequens 12"]
+    confidence: medium
+  - id: p165_wolves
+    year: -165
+    place: Rome
+    sign: "Plague and famine; the doors of the Penates opened of themselves by night; wolves appeared at midday on the Esquiline and the Quirinal."
+    expiation: "By the Books, the people sat in prayer at the crossroads and shrines; the city was purified, and no harm followed."
+    sibylline: true
+    sources: ["Julius Obsequens 13"]
+    confidence: medium
+  - id: p163_capua_sun
+    year: -163
+    place: Capua, Tarracina, Formiae, Antium, Gabii, the Palatine
+    sign: "The sun was seen at night at Capua; triplets were born at Tarracina; two suns by day at Formiae; the sky burned; a man was burned by a ray from a mirror at Antium; it rained milk at Gabii; a swan flew into the temple of Victory."
+    expiation: "Expiated by decree."
+    sources: ["Julius Obsequens 14"]
+    confidence: medium
+  - id: p162_ox
+    year: -162
+    place: Anagnia, Frusino, Reate
+    sign: "The sky burned at night at Anagnia; an ox spoke at Frusino; a three-footed mule was born at Reate."
+    expiation: "Expiated by decree."
+    sources: ["Julius Obsequens 15"]
+    confidence: medium
+  - id: p156_pm_house
+    year: -156
+    place: the Capitol and the Circus Flaminius
+    sign: "A storm shook Jupiter's temple on the Capitol and threw the roof and columns of the pontifex maximus' house into the Tiber; the portico between Juno Regina and Fortuna in the Circus Flaminius was struck; the bull led to the sacrifice fell dead."
+    expiation: "Expiated with victims."
+    sources: ["Julius Obsequens 16"]
+    confidence: medium
+  - id: p154_postumius
+    year: -154
+    place: Rome and Compsa
+    sign: "The consul Postumius, sacrificing before leaving for his province, found no head on the liver of victim after victim; he fell ill on the road and died at Rome. Arms flew in the sky at Compsa."
+    expiation: "Lightning strikes expiated; the consul's death followed."
+    sources: ["Julius Obsequens 17"]
+    confidence: medium
+  - id: p152_column
+    year: -152
+    place: the Campus Martius and Aricia
+    sign: "A whirlwind threw down a column with its gilded statue before Jupiter's temple in the Campus; stones rained at Aricia; phantom togaed figures were seen in Rome that vanished as one drew near."
+    expiation: "The haruspices foretold the death of magistrates and priests, and every magistrate resigned at once; a supplicatio for the stones."
+    cost: 30
+    sources: ["Julius Obsequens 18"]
+    confidence: medium
+  - id: p148_regia
+    year: -148
+    place: the Regia
+    sign: "In a great fire at Rome the Regia burned, but the shrine and one of the two laurels stood untouched in the flames."
+    expiation: "Expiated by decree."
+    monument: regia
+    sources: ["Julius Obsequens 19"]
+    confidence: medium
+  - id: p147_amiternum
+    year: -147
+    place: Amiternum, Caere, Frusino, Lanuvium
+    sign: "A child with three feet and one hand was born at Amiternum; streams of blood flowed from the earth at Caere; mice gnawed the sacred gold at Frusino; two coloured rings circled the sun at Lanuvium; a star burned for thirty-two days."
+    expiation: "Expiated by decree."
+    sources: ["Julius Obsequens 20"]
+    confidence: medium
+  - id: p143_salassi
+    year: -143
+    place: Amiternum and the Alps
+    sign: "After the Salassi defeated a Roman army, the decemviri found in the Books that whenever war was to be made on the Gauls, sacrifice must be offered in their land."
+    expiation: "Sacrifice in the enemy's land as the Books ordered."
+    sibylline: true
+    sources: ["Julius Obsequens 21"]
+    confidence: medium
+  - id: p142_famine
+    year: -142
+    place: Rome and Luna
+    sign: "Famine and plague; a child of doubtful sex was born at Luna and the plague there left the dead unburied."
+    expiation: "A supplicatio through the decemviri; the child carried out to sea by the haruspices' order."
+    sibylline: true
+    sources: ["Julius Obsequens 22"]
+    confidence: medium
+  - id: p140_aetna
+    year: -140
+    place: Praeneste and Etna
+    sign: "Standards seemed to fall from the sky at Praeneste and on Cephallenia; Etna poured out fire."
+    expiation: "Forty greater victims."
+    sources: ["Julius Obsequens 23"]
+    confidence: medium
+  - id: p137_chickens
+    year: -137
+    place: Lavinium, Praeneste, Tarracina, the Fucine lake, the Comitium
+    sign: "As the consul Mancinus took the auspices at Lavinium the chickens flew out of their cage into the Laurentine wood and were not found; a praetor was burned by lightning on his ship at Tarracina; the Fucine lake flooded for five miles; blood flowed in the Comitium."
+    expiation: "Expiated by decree; Mancinus went on to Numantia and the surrender."
+    sources: ["Julius Obsequens 24"]
+    confidence: medium
+  - id: p136_regium
+    year: -136
+    place: Regium and Puteoli
+    sign: "Regium almost wholly burned without any fault found; a slave girl bore a child with four hands and feet; streams of blood flowed in the hot springs of Puteoli."
+    expiation: "The child was burned by the haruspices' order and its ashes thrown into the sea."
+    sources: ["Julius Obsequens 25"]
+    confidence: medium
+  - id: p135_owl
+    year: -135
+    place: the Capitol, Bononia, Etna
+    sign: "Etna burned more fiercely than usual; corn grew on trees at Bononia; an owl was heard first on the Capitol and then about the city; an ox spoke."
+    expiation: "The owl was caught by a fowler for a reward and burned, its ashes scattered in the Tiber."
+    sources: ["Julius Obsequens 26"]
+    confidence: medium
+  - id: p134_amiternum
+    year: -134
+    place: Amiternum, Anagnia, the Capitol
+    sign: "The sun was seen at night at Amiternum; an ox spoke and was kept at public cost; it rained blood; a slave's tunic burned at Anagnia without a trace of flame; a bird groaned like a man on the Capitol; a Ligurian shield in Juno Regina's temple was struck."
+    expiation: "Expiated by decree; the slave war in Sicily went on."
+    sources: ["Julius Obsequens 27"]
+    confidence: medium
+  - id: p133_gracchus
+    year: -133
+    place: Rome
+    sign: "Tiberius Gracchus, the day he died, is said to have ignored dire omens at the sacrifice, stubbed his toe at his own threshold, and had crows drop a tile at his feet."
+    expiation: "Nothing was done; he was killed with his followers."
+    sources: ["Julius Obsequens 27a"]
+    confidence: medium
+  - id: p130_milk
+    year: -130
+    place: Reate, Rome, Ostia, Apulia, Tarracina
+    sign: "A five-footed mule was born at Reate; it rained milk on the Graecostasis; a wolf and a dog fighting at Ostia were killed by lightning; a flock of sheep in Apulia and a praetor of the Roman people were struck dead; a ship's sail was struck into the water at Tarracina."
+    expiation: "Expiated by decree."
+    sources: ["Julius Obsequens 28"]
+    confidence: medium
+  - id: p126_lipari
+    year: -126
+    place: the Capitol, Etna, the Lipari islands
+    sign: "A night storm shook temples on the Capitol; Etna poured fire over its summit; the sea boiled about the Lipari islands and killed sailors with its vapour and fish by the thousand."
+    expiation: "Expiated by decree."
+    sources: ["Julius Obsequens 29"]
+    confidence: medium
+  - id: p125_locusts
+    year: -125
+    place: Veii, the Capitol, Arpi, Africa
+    sign: "Corn grew on trees; it rained oil and milk at Veii; an owl was seen on the Capitol; stones rained three days at Arpi; a vast swarm of locusts in Africa was blown into the sea and cast up, and the stench bred a plague that killed cattle and men by the hundred thousand at Cyrene."
+    expiation: "Expiated by decree."
+    sources: ["Julius Obsequens 30"]
+    confidence: medium
+  - id: p124_croton
+    year: -124
+    place: Rome, Croton, Satura
+    sign: "It rained milk on the Graecostasis; lightning killed a flock with its dog and three shepherds at Croton; a two-headed calf was born at Satura; there was tumult in the city as Gaius Gracchus carried his laws."
+    expiation: "Expiated by decree."
+    sources: ["Julius Obsequens 31"]
+    confidence: medium
+  - id: p122_three_suns
+    year: -122
+    place: the Forum Vessanum, Gaul, the Capitol, Catina
+    sign: "A child of doubtful sex was born and carried out to sea; three suns and three moons were seen in Gaul; a two-headed calf was born; an owl was seen on the Capitol; Catina was buried by Etna's fire."
+    expiation: "Expiated by decree."
+    sources: ["Julius Obsequens 32"]
+    confidence: medium
+  - id: p119_maidens
+    year: -119
+    place: the Roman land
+    sign: "A child of doubtful sex, eight years old, was found in the Roman land."
+    expiation: "Carried out to sea, and thrice nine maidens sang through the city."
+    sources: ["Julius Obsequens 34"]
+    confidence: medium
+  - id: p118_bees
+    year: -118
+    place: Rome
+    sign: "As the consul Cato sacrificed the entrails wasted and the head of the liver was missing; it rained milk; the earth shook with a roar; a swarm of bees settled in the Forum."
+    expiation: "A sacrifice as the Books ordered."
+    sibylline: true
+    sources: ["Julius Obsequens 35"]
+    confidence: medium
+  - id: p117_spears
+    year: -117
+    place: Rome, Praeneste, Privernum, Saturnia
+    sign: "Lightning struck in and about Rome; it rained milk at Praeneste; the spears of Mars moved in the Regia; the earth sank at Privernum; a child of doubtful sex of ten years was found at Saturnia."
+    expiation: "The child drowned in the sea; twenty-seven maidens purified the city with a hymn."
+    monument: regia
+    sources: ["Julius Obsequens 36"]
+    confidence: medium
+  - id: p114_vestals
+    year: -114
+    place: the Stellate plain and Rome
+    sign: "A knight's maiden daughter, riding home from the Roman Games, was killed by lightning in a way that the haruspices read as disgrace to the Vestals and the equestrian order; three Vestals were found unchaste."
+    expiation: "The Vestals were tried; the Books ordered a temple to Venus Verticordia."
+    monument: aedes_veneris_verticordiae
+    sibylline: true
+    cult: venus_verticordia
+    cost: 40
+    sources: ["Julius Obsequens 37"]
+    confidence: medium
+  - id: p113_alban_fire
+    year: -113
+    place: the Alban Mount, Lucania, Privernum, Gaul
+    sign: "The Alban Mount seemed to burn at night; a shrine and a statue were struck; the altar of Salus was broken; the earth gaped wide in Lucania and at Privernum; the sky burned in Gaul; then the Cimbri and Teutones crossed the Alps."
+    expiation: "Expiated by decree."
+    sources: ["Julius Obsequens 38"]
+    confidence: medium
+  - id: p111_magna_mater_fire
+    year: -111
+    place: Rome
+    sign: "The greater part of the city burned with the temple of the Great Mother; it rained milk three days."
+    expiation: "Expiated with greater victims."
+    monument: aedes_magnae_matris
+    sources: ["Julius Obsequens 39"]
+    confidence: medium
+  - id: p108_cimolus
+    year: -108
+    place: Rome and Cimolus
+    sign: "A fire-bird and an owl were seen in the city; a man was eaten by a man in the quarries; many thousands were drowned by the swollen Po and the Arretine marsh; it rained milk twice."
+    expiation: "By the Books, sacrifice was made on the island of Cimolus by thirty freeborn boys and as many maidens."
+    sibylline: true
+    sources: ["Julius Obsequens 40"]
+    confidence: medium
+  - id: p106_silver
+    year: -106
+    place: Amiternum, Perusia, Atella, Trebula
+    sign: "A slave's newborn said 'hail' at Amiternum; it rained milk at Perusia and Rome; at Atella four fingers were cut from a man's hand as if by iron; stamped silver melted in a lightning blast; a woman struck by lightning at Trebula lived."
+    expiation: "Expiated by decree."
+    sources: ["Julius Obsequens 41"]
+    confidence: medium
+  - id: p105_mars
+    year: -105
+    place: Trebula Mutusca
+    sign: "Black snakes circled the altar at the games as the piper played and slid away when he stopped; the wooden statue of Mars was found standing on its head; a Roman army was cut down by the Lusitanians."
+    expiation: "The snakes were stoned to death by the people."
+    sources: ["Julius Obsequens 42"]
+    confidence: medium
+  - id: p104_arms_in_sky
+    year: -104
+    place: Rome, Nuceria, Lucania, Luna, Ariminum
+    sign: "An owl was seen outside the city; a cow spoke; an elm blown down at Nuceria stood up again; it rained milk in Lucania and blood at Luna; a dog spoke at Ariminum; armed hosts were seen fighting in the sky at dawn and dusk."
+    expiation: "Expiated by decree."
+    sources: ["Julius Obsequens 43"]
+    confidence: medium
+  - id: p102_etruria
+    year: -102
+    place: Etruria, Rome, the Anio
+    sign: "Stones rained in Etruria; the spears of Mars moved of themselves in the Regia; it rained blood by the Anio; a swarm of bees settled in the Forum."
+    expiation: "A novemdiale; the haruspices had the city purified, the ashes of the victims scattered in the sea by the decemviri, and nine days of procession by the magistrates round every temple and town."
+    monument: regia
+    sibylline: true
+    cost: 30
+    sources: ["Julius Obsequens 44"]
+    confidence: medium
+  - id: p101_ancilia
+    year: -101
+    place: Rome
+    sign: "The sacred shields moved with a clatter of themselves; a slave of Q. Servilius Caepio castrated himself for the Idaean Mother and was shipped overseas never to return; it rained mud on the Aventine."
+    expiation: "The city was purified and a goat with burning horns led through it and out by the Porta Naevia, in the year the Cimbri were destroyed."
+    sources: ["Julius Obsequens 44a"]
+    confidence: medium
+  - id: p100_picenum
+    year: -100
+    place: Tarquinii, Picenum, the Forum
+    sign: "A burning torch fell at Tarquinii; a shield-shaped disc crossed the sky at sunset; houses in Picenum were thrown down by an earthquake; a clash of arms was heard from under the earth; the gilded chariots in the Forum sweated at the feet."
+    expiation: "Expiated by decree, in the year of Saturninus."
+    sources: ["Julius Obsequens 45"]
+    confidence: medium
+  - id: p99_owl
+    year: -99
+    place: Rome, Lanuvium, Nursia
+    sign: "An owl was seen in the city; storms and lightning did great damage; drops of blood were seen in the goddess's chamber at Lanuvium; a temple at Nursia was wrecked by an earthquake."
+    expiation: "The city was purified."
+    sources: ["Julius Obsequens 46"]
+    confidence: medium
+  - id: p98_bull
+    year: -98
+    place: the Capitol and the Regia
+    sign: "An owl was seen on the Capitol above the gods' statues, and as it was expiated the bull fell dead; the spears of Mars moved; white chalk rained in the theatre at the games; thunder from a clear sky; the decemviri found no head on the liver at Apollo's temple."
+    expiation: "Expiated by the decemviri; the chalk was read as a good harvest."
+    monument: regia
+    sibylline: true
+    sources: ["Julius Obsequens 47"]
+    confidence: medium
+  - id: p97_pisaurum
+    year: -97
+    place: Rome, Pisaurum, Nursia
+    sign: "A child of doubtful sex was found and carried out to sea; a rumbling was heard from the earth at Pisaurum; battlements fell from walls with no earthquake, portending civil discord; Jupiter's statue at Nursia turned to the left."
+    expiation: "A supplicatio; twenty-seven maidens carried cypress images of Juno Regina and purified the city."
+    sources: ["Julius Obsequens 48"]
+    confidence: medium
+  - id: p96_wolf
+    year: -96
+    place: Rome, Faesulae, Arretium
+    sign: "A wolf that entered the city was killed in a private house; an owl was killed on the Capitol; Jupiter's gilded statue, its head and its column were thrown down; blood welled from the earth at Faesulae."
+    expiation: "The city was purified."
+    sources: ["Julius Obsequens 49"]
+    confidence: medium
+  - id: p94_eclipse
+    year: -94
+    place: the Volscian land, Volsinii, the Vestini
+    sign: "Stones rained in the Volscian land; at Volsinii the new moon failed and did not appear till the next day's third hour; a girl was born with two heads and four hands and feet; a fire-bird was seen and killed; a torch appeared in the sky and the whole sky seemed to burn."
+    expiation: "A novemdiale."
+    sources: ["Julius Obsequens 51"]
+    confidence: medium
+  - id: p92_fortuna
+    year: -92
+    place: Rome, Faesulae, Volaterrae
+    sign: "An owl caught in the temple of Fortuna Equestris died in the hands that held it; a rumbling of the earth at Faesulae; a cow spoke; bees settled on a private roof; a stream of blood flowed at Volaterrae; it rained milk at Rome."
+    expiation: "Expiated by decree."
+    sources: ["Julius Obsequens 53"]
+    confidence: medium
+  - id: p91_drusus
+    year: -91
+    place: Rome, Arretium, the Vestini, Aenaria, Regium
+    sign: "As Livius Drusus carried his laws and the Italian war rose, a ball of fire shot across the sky from the north with a great noise; blood ran from the middle of loaves at Arretium; stones and potsherds rained for seven days on the Vestini; flame burst from a chasm at Aenaria; an earthquake threw down part of Regium."
+    expiation: "Expiated by decree; the Social War followed."
+    sources: ["Julius Obsequens 54"]
+    confidence: medium
+  - id: p90_metella
+    year: -90
+    place: Lanuvium
+    sign: "Caecilia Metella dreamed that Juno Sospita was leaving her temple because it was fouled; under the goddess's statue a bitch had whelped."
+    expiation: "The temple was cleansed and restored and supplicationes held."
+    sources: ["Julius Obsequens 55"]
+    confidence: medium
+  - id: p83_capitol
+    year: -83
+    place: Capua and the Volturnus
+    sign: "In Sulla's time a great clash of standards and arms was heard between Capua and the Volturnus, as if two armies fought for days, and the trampled grass and hoofprints were found; at Clusium a woman bore a live snake."
+    expiation: "The snake was thrown into the river by the haruspices' order; the Capitol burned that year and the Books with it."
+    monument: aedes_iovis_capitolini
+    cost: 30
+    sources: ["Julius Obsequens 57"]
+    confidence: medium
+  - id: p76_reate
+    year: -76
+    place: Reate
+    sign: "An earthquake at Reate shook the temples, split the forum's paving, broke bridges and threw the river banks into the water; rumblings were heard underground, and days later what had been shaken fell."
+    expiation: "Expiated by decree, in the year Sertorius cut down Roman armies in Spain."
+    sources: ["Julius Obsequens 59"]
+    confidence: medium
+  - id: p63_catiline
+    year: -63
+    place: Rome, Pompeii, Spoletium
+    sign: "Lightning struck everywhere; a man was killed by lightning from a clear sky at Pompeii; a burning beam stretched across the sky; Spoletium was shaken by an earthquake; two years before, the she-wolf of Romulus and Remus and Jupiter's statue on the Capitol had been struck and the bronze tablets of the laws melted."
+    expiation: "By the haruspices' answer the statue was set up again in the Forum; Catiline's conspiracy followed."
+    monument: aedes_iovis_capitolini
+    sources: ["Julius Obsequens 61"]
+    confidence: medium
+  - id: p60_night
+    year: -60
+    place: Rome
+    sign: "On a clear day night fell at the eleventh hour and then the light returned; a whirlwind tore off roofs; a bridge gave way and threw people into the Tiber; trees were uprooted in the fields."
+    expiation: "Expiated by decree."
+    sources: ["Julius Obsequens 62"]
+    confidence: medium
+  - id: p54_crassus
+    year: -54
+    place: the Euphrates
+    sign: "Crossing the Euphrates against the Parthians Crassus ignored many prodigies: a storm snatched a standard from its bearer into the river, and darkness forbade the crossing."
+    expiation: "He pressed on and perished with his son and his army."
+    sources: ["Julius Obsequens 64"]
+    confidence: medium
+  - id: p53_wolves
+    year: -53
+    place: Rome
+    sign: "Wolves were seen in the city; dogs howled at night; the statue of Mars sweated; lightning ranged through the whole city, struck down statues of the gods and killed men."
+    expiation: "The city was purified, amid the great sedition over Pompey's dictatorship."
+    sources: ["Julius Obsequens 63"]
+    confidence: medium
+  - id: p50_mule
+    year: -50
+    place: Rome
+    sign: "A mule foaled, portending civil discord, the ruin of good men, a change of laws and shameful births; a fire that destroyed most of the city was counted a prodigy."
+    expiation: "Expiated by decree; the civil war between Caesar and Pompey broke out."
+    sources: ["Julius Obsequens 65"]
+    confidence: medium
+  - id: p44_caesar
+    year: -44
+    place: Rome
+    sign: "The dictator Caesar's victim was found without a heart; Calpurnia dreamed the gable the Senate had granted their house fell; the bedroom doors opened of themselves by night; and after his death a comet shone for seven days at the games of Venus Genetrix."
+    expiation: "Nothing; Caesar fell with twenty-three wounds in Pompey's Curia."
+    sources: ["Julius Obsequens 67-68"]
+    confidence: medium
+  - id: p42_three_suns
+    year: -42
+    place: Rome and Mutina
+    sign: "A mule foaled at twelve gates of Rome; night shone like day; the statue of Marian Victory at Mutina turned from south to north; as victims were offered three suns were seen and drew together into one."
+    expiation: "Expiated with victims."
+    sources: ["Julius Obsequens 70"]
+    confidence: medium
+  # ---- recurring kinds, drawn in years the list does not date ---------------------------
+  - id: k_stones
+    place: the countryside
+    sign: "Stones rained from a clear sky on the fields."
+    expiation: "A novemdiale sacrum, as is the custom when it rains stones."
+    sources: ["Livy 23.31.15", "Livy 27.37.1", "Livy 30.38.9"]
+    confidence: high
+  - id: k_lightning
+    place: Rome
+    sign: "Lightning struck a temple and the city walls."
+    expiation: "Greater victims and a one-day supplicatio by the pontiffs' decree."
+    sources: ["Livy 26.23.4-6", "Livy 32.9.1-5", "Livy 41.16.6"]
+    confidence: high
+  - id: k_wolf
+    place: Rome
+    sign: "A wolf came into the city in daylight and was hunted through the streets."
+    expiation: "Expiated with greater victims."
+    sources: ["Livy 33.26.8-9", "Livy 41.9.6", "Julius Obsequens 49"]
+    confidence: high
+  - id: k_androgyne
+    place: Latium
+    sign: "A child of doubtful sex was born."
+    expiation: "Carried out to sea by the haruspices' order, and a hymn sung by twenty-seven maidens."
+    sources: ["Livy 27.37.5-7", "Livy 31.12.6-10", "Julius Obsequens 34, 36"]
+    confidence: high
+  - id: k_blood
+    place: Latium
+    sign: "Statues sweated blood and a spring ran red."
+    expiation: "Greater victims and a supplicatio."
+    sources: ["Livy 22.1.10", "Livy 24.10.7", "Livy 28.11.2"]
+    confidence: high
+  - id: k_ox
+    place: Campania
+    sign: "An ox spoke."
+    expiation: "The ox was kept and fed at public cost and a supplicatio held."
+    sources: ["Livy 35.21.4", "Livy 41.13.2", "Livy 43.13.3"]
+    confidence: high

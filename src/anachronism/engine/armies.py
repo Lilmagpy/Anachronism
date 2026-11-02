@@ -52,11 +52,14 @@ from anachronism.engine.formations import formations as pick_formations
 from anachronism.engine.formations import power as formation_power
 from anachronism.engine.ground import Ground, ground_of, river_held
 from anachronism.engine.ground import text as ground_text
+from anachronism.engine.legions import after_battle as legions_after_battle  # F1 legions (R4)
+from anachronism.engine.legions import levy as legions_levy  # F1 legions (R4)
 from anachronism.engine.navies import SIZES, build_fleet, can_cross, sea_route
 from anachronism.engine.power import Parts, kinds_in, men_in, wing_powers
 from anachronism.engine.power import side_power as side_power
 from anachronism.engine.power import trait_bp as trait_bp
 from anachronism.engine.power import unit_power as unit_power
+from anachronism.engine.religion import auspices as take_auspices  # F1 religion (R4)
 from anachronism.engine.rivals import alive, at_war, frontier, province_links, relation, status
 from anachronism.engine.rng import GameRng
 from anachronism.engine.state import Army, GameState
@@ -179,6 +182,10 @@ def raise_army(
     if men < state.world.rules.armies.min_army:
         return None, "the realm cannot spare more men under arms"
     troops = composition(state, civ_id, men, style)
+    # F1 legions (R4): Rome levies by census class in the army era of the year
+    men, troops = legions_levy(state, civ_id, province_id, men, troops, style)
+    if men < state.world.rules.armies.min_army:
+        return None, "too few citizens of the classes are left to levy"
     food, materials, wealth = raise_cost(state, troops)
     stores = civ.stockpiles
     if not free:
@@ -792,6 +799,7 @@ def battle(
     sides = (attackers, defenders)
     adj = (_adjective(state, attackers), _adjective(state, defenders))
     morale = [_morale(attackers), _morale(defenders)]
+    morale = take_auspices(state, province_id, attackers, defenders, morale, rng, events)  # F1 (R4)
     phases: list[dict[str, Any]] = []
     totals = [0, 0]  # men each side has lost so far
 
@@ -957,6 +965,7 @@ def battle(
     events.add(winner, "battle_won", text, place, phases=phases, sides=sides_told, ground=where)
     events.add(loser, "battle_lost", text, place, phases=phases, sides=sides_told, ground=where)
     on_battle(state, province_id, winner, loser, events)  # a friend's gratitude (D-277)
+    legions_after_battle(state, winners, losers, events)  # F1 legions (R4): loyalty to the general
     glory = rules.victory_legitimacy_bp  # a victory is the talk of the court; a defeat, too
     w_civ.stats.legitimacy_bp = clamp(w_civ.stats.legitimacy_bp + glory, 0, BP)
     l_civ.stats.legitimacy_bp = clamp(l_civ.stats.legitimacy_bp - glory, 0, BP)

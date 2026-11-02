@@ -48,10 +48,12 @@ from anachronism.content.schema import (
     Terrain,
     Unit,
 )
+from anachronism.content.schema.rome_society import RomeSociety  # F1 rome_society (R4)
 from anachronism.engine.actions import LoggedAction, Priority
 from anachronism.engine.city_state import CityState
 from anachronism.engine.republic_state import RepublicState
 from anachronism.engine.rng import RngState
+from anachronism.engine.rome_society_state import RomeSocietyState  # F1 rome_society (R4)
 
 SAVE_SCHEMA_VERSION = 1
 
@@ -137,6 +139,8 @@ class World(Frozen):
     """When they were begun, finished, burnt or pulled down, sorted by monument and year."""
     fasti: dict[int, FastiYear] = Field(default_factory=dict)
     """The Fasti by year: whom history elected."""
+    rome_society: RomeSociety = Field(default_factory=RomeSociety)  # F1 rome_society (R4)
+    """Priesthoods, prodigies, cults, land, grain, coin and the legion's eras."""
 
 
 class Construction(Mutable):
@@ -547,6 +551,8 @@ class GameState(Mutable):
     """How Rome governs itself (R2), in scenarios with ``republic: true``; else ``None``."""
     city: CityState | None = None
     """The city of Rome (U7): what stands, the turn's events; ``None`` outside the Republic."""
+    rome_society: RomeSocietyState | None = None  # F1 rome_society (R4)
+    """Religion, land, grain, coin and the legions (engine/rome_society.py); Republic only."""
     victory_start: dict[str, int] = Field(default_factory=dict)
     """The player's share on each victory path at the start: victory means gaining ground."""
 

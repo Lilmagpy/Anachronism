@@ -1,0 +1,28 @@
+schema_version: 1
+# Coinage and tribute (content/schema/rome_society.py: Coinage), read by engine/roman_economy.py.
+# The dates are the sources'; the trade bonus and the tribute rate are GAME BALANCE.
+coinage:
+  reforms:
+    - id: silver_coinage
+      name: Rome strikes silver
+      year: -269
+      trade_bonus_bp: 300
+      notes: "Pliny, NH 33.44: silver was first coined in the consulship of Q. Ogulnius and C. Fabius, five years before the First Punic War ('q. ogulnio c. fabio cos., quinque annis ante primum punicum bellum'); 33.42: the Roman people used no coined silver before King Pyrrhus was beaten. Pliny also says the denarius was set at ten pounds of bronze, the quinarius at five, the sestertius at two and a half."
+      sources: ["Pliny, Natural History 33.42", "Pliny, Natural History 33.44"]
+      confidence: high
+    - id: denarius
+      name: The denarius
+      year: -211
+      trade_bonus_bp: 500
+      notes: "Pliny (NH 33.44-46) dates Rome's silver and its reductions of the as by the Punic wars ('librale autem pondus aeris inminutum est bello punico primo ... constitutumque ut asses sextantario pondere ferirentur'); the denarius itself is dated to 211 BC by the coin finds (Crawford, Roman Republican Coinage, 1974: a modern reference, used for the date only). The engine takes 211 for the coin that carried Rome's trade."
+      sources: ["Pliny, Natural History 33.44-46", "Crawford, Roman Republican Coinage (1974) # modern reference, date only"]
+      confidence: medium
+  tribute:
+    # Conquered provinces (whose people are not Rome's own) pay by population; the Italian allies
+    # sent men, not money (Polybius 6.26.5-9; see units.yaml), so the Italy agent's allied provinces
+    # belong in `exempt`. Sicily's tithe: Cicero, Verrines 2.3.12-15; Macedon after Pydna paid half
+    # what its kings had taken (Livy 45.18.7, 45.29.4 # unverified: passages not re-read).
+    per_1000: 3
+    exempt: []
+    sources: ["Cicero, Verrines 2.3.12-15", "Livy 45.18.7 # unverified: passage not re-read", "Livy 45.29.4 # unverified: passage not re-read"]
+  sources: ["Pliny, Natural History 33.42-46", "Cicero, Verrines 2.3.12-15"]

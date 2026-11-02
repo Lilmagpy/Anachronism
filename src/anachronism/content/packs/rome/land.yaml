@@ -1,0 +1,106 @@
+schema_version: 1
+# Ager publicus, latifundia, slaves and debt (content/schema/rome_society.py: Land), read by
+# engine/roman_economy.py. The dates and the laws are the sources'; every rate is GAME BALANCE.
+land:
+  # Public land in thousands of iugera per 1,000 people, at the start and per province taken; the
+  # rich occupy the free land year by year (Appian, Civil Wars 1.7: the rich took the greater part
+  # of the undistributed land and the poor were driven off it; Plutarch, Tiberius Gracchus 8.1-3).
+  start_ager_per_1000: 60
+  start_latifundia_bp: 2500
+  ager_per_1000_conquered: 120
+  occupation_bp: 400
+  assidui_start_bp: 7000
+  assidui_floor_bp: 2500
+  assidui_decline_bp: 120
+  reforms:
+    - id: lex_licinia
+      name: The Licinian-Sextian law on the land
+      year: -367
+      limit_iugera: 500
+      latifundia_cut_bp: 2500
+      assidui_gain_bp: 1200
+      notes: "Livy 6.35.4-5: among the rogations of C. Licinius and L. Sextius, one on debt (interest paid to be deducted from the principal and the rest paid in three years) and one 'de modo agrorum, ne quis plus quingenta iugera agri possideret'."
+      sources: ["Livy 6.35.4-5"]
+      confidence: high
+    - id: lex_sempronia_agraria
+      name: The Sempronian agrarian law
+      year: -133
+      limit_iugera: 500
+      latifundia_cut_bp: 4000
+      assidui_gain_bp: 2000
+      notes: "Plutarch, Tiberius Gracchus 8.1-3: the old law of 500 iugera checked the rich for a while, then they held most of the land under false names, and the poor left the countryside. Appian, Civil Wars 1.9: Gracchus renewed the 500-iugera limit, let sons hold half as much again, and had three commissioners divide the rest among the poor (1.9-11)."
+      sources: ["Plutarch, Tiberius Gracchus 8.1-3", "Appian, Civil Wars 1.9", "Appian, Civil Wars 1.10-11 # unverified: passage not re-read"]
+      confidence: high
+  slaves:
+    # Captives sold after a conquest (Livy 10.31.7: 2,700 captured in 293 BC; Livy 45.34.5-6:
+    # 150,000 Epirotes enslaved by Aemilius Paullus, 167 BC # unverified; Appian, Punica 130:
+    # 50,000 from Carthage, 146 # unverified). The revolt rates are game balance.
+    per_1000_conquered: 25
+    sacked_enslaved_bp: 10000
+    estate_wealth_per_1000: 2
+    revolt_threshold_bp: 1500
+    revolt_chance_bp: 400
+    revolt_unrest_bp: 1200
+    revolt_wealth_loss_bp: 1000
+    revolt_slaves_lost_bp: 2500
+    revolts:
+      - id: first_sicilian
+        name: The first slave war in Sicily
+        year: -135
+        province: si_enna
+        notes: "Eunus at Enna, 135-132 BC (Diodorus 34/35.2 # unverified: text not read; Obsequens 27 under 134: 'Fugitivorum bellum in Sicilia exortum' and 27b: the slaves cut down Roman armies in Sicily)."
+        sources: ["Julius Obsequens 27", "Julius Obsequens 27b", "Diodorus Siculus 34/35.2 # unverified: text not read", "Livy, Periochae 56 # unverified: passage not read"]
+        confidence: medium
+      - id: second_sicilian
+        name: The second slave war in Sicily
+        year: -104
+        province: si_syracuse
+        notes: "Salvius and Athenion, 104-100 BC (Diodorus 36.3-10 # unverified; Obsequens 45 under 100: 'Fugitivi in Sicilia')."
+        sources: ["Julius Obsequens 45", "Diodorus Siculus 36.3-10 # unverified: text not read"]
+        confidence: medium
+      - id: spartacus
+        name: The war of Spartacus
+        year: -73
+        province: it_campania
+        notes: "The gladiators broke out of the school at Capua (Plutarch, Crassus 8.1-2; Appian, Civil Wars 1.116) and the war lasted to 71 (Plutarch, Crassus 9-11; Appian 1.117-120)."
+        sources: ["Plutarch, Crassus 8.1-2", "Appian, Civil Wars 1.116", "Plutarch, Crassus 9-11 # unverified: passages not re-read"]
+        confidence: high
+    sources: ["Livy 10.31.7", "Plutarch, Crassus 8", "Appian, Civil Wars 1.116"]
+  debt:
+    # Debt bondage (nexum) was the grievance of the first secession (Livy 2.23.1-7: 'maxime
+    # propter nexos ob aes alienum'); the Poetelian law ended nexum in 326 (Livy 8.28.1-2, 'velut
+    # aliud initium libertatis'). The game's debt level rises with war years and bad harvests and
+    # is cut by the Senate's `debt_relief` law.
+    war_bp_per_year: 300
+    famine_bp: 600
+    shortage_bp: 300
+    peace_relief_bp: 500
+    law: debt_relief
+    relief_cut_bp: 6000
+    unrest_per_debt_bp: 800
+    secession_threshold_bp: 6000
+    secession_chance_bp: 1500
+    secession_unrest_bp: 1500
+    secession_legitimacy_bp: 800
+    secession_relief_bp: 5000
+    secessions:
+      - id: first_secession
+        name: The first secession of the plebs
+        year: -494
+        notes: "Livy 2.32.2-4: the plebs withdrew to the Sacred Mount across the Anio (Piso: the Aventine); 2.33.1-3: the settlement gave them sacrosanct magistrates of their own, the tribunes."
+        sources: ["Livy 2.32.2-4", "Livy 2.33.1-3"]
+        confidence: high
+      - id: second_secession
+        name: The second secession of the plebs
+        year: -449
+        notes: "After Verginia's death the army and the plebs went out against the decemvirs (Livy 3.50-54); the settlement restored the tribunate and the appeal."
+        sources: ["Livy 3.50.13-16", "Livy 3.54.5-10"]
+        confidence: high
+      - id: third_secession
+        name: The third secession of the plebs
+        year: -287
+        notes: "The plebs seceded to the Janiculum over debt; the dictator Q. Hortensius' law made plebiscites binding on all."
+        sources: ["Livy, Periochae 11 # unverified: passage not read", "Pliny, Natural History 16.37 # unverified: passage not read"]
+        confidence: medium
+    sources: ["Livy 2.23.1-7", "Livy 8.28.1-2"]
+  sources: ["Livy 6.35.4-5", "Plutarch, Tiberius Gracchus 8", "Appian, Civil Wars 1.7-11"]

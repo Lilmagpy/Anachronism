@@ -1,0 +1,63 @@
+schema_version: 1
+# Rome's food (content/schema/rome_society.py: Grain), read by engine/roman_economy.py. The city's
+# need is its people (the dataset's modern estimates); Latium feeds a falling share as the city
+# grows, and the provinces feed the rest while the state holds them. Shares are GAME BALANCE.
+grain:
+  home_share_bp: 6000
+  home_fade_per_100k_bp: 400
+  supplies:
+    - id: sicily
+      name: Sicily
+      provinces: [si_syracuse, si_catana, si_enna, si_akragas, si_gela, si_halaesa, si_panormus, si_lilybaeum, si_messana, car_lilybaeum, syr_syracuse, messana]
+      share_bp: 4000
+      from_year: -241
+      notes: "Rome's first province after the First Punic War (Polybius 1.62-63). Its tithe was farmed under the law of Hiero (Cicero, Verrines 2.3.12-15: 'lege Hieronica', the decumae sold in Sicily); Cicero calls Sicily the Republic's granary (Verrines 2.2.5 # unverified: passage not read)."
+      sources: ["Polybius 1.62.8-9", "Cicero, Verrines 2.3.12-15", "Cicero, Verrines 2.2.5 # unverified: passage not read"]
+      confidence: medium
+    - id: sardinia
+      name: Sardinia
+      provinces: [sa_sardinia, sa_barbagia, car_sardinia]
+      share_bp: 1500
+      from_year: -238
+      notes: "Taken from Carthage in 238 (Polybius 1.88.8-12 # unverified: passage not re-read); grain from Sardinia fed the armies (Livy 23.21.5, 215 BC # unverified; Plutarch, C. Gracchus 2.3: Micipsa's grain sent to the army in Sardinia, read)."
+      sources: ["Polybius 1.88.8-12 # unverified: passage not re-read", "Plutarch, Gaius Gracchus 2.3"]
+      confidence: medium
+    - id: africa
+      name: Africa
+      provinces: [car_carthage, car_byzacena, car_emporia]
+      share_bp: 2500
+      from_year: -146
+      notes: "The province of Africa after the destruction of Carthage; with Sicily and Sardinia the granary of the city (Cicero, Pro lege Manilia 34 # unverified: passage not read)."
+      sources: ["Cicero, Pro lege Manilia 34 # unverified: passage not read", "Appian, Punica 135 # unverified: passage not read"]
+      confidence: low
+    - id: egypt
+      name: Egypt
+      provinces: [pto_delta, pto_middle, pto_thebaid]
+      share_bp: 3000
+      from_year: -30
+      notes: "Egypt's grain fed Rome from Augustus' conquest (after the campaign's end in 27 BC: Tacitus, Annals 2.59 # unverified: passage not read)."
+      sources: ["Tacitus, Annals 2.59 # unverified: passage not read"]
+      confidence: low
+  city:
+    # Modern estimates of the city's people (no ancient figure), as in data/rome/city/population.yaml.
+    - {year: -500, people: 30000, sources: ["modern estimate from the settled area (Cornell, The Beginnings of Rome, 1995; Morley, Metropolis and Hinterland, 1996)"]}
+    - {year: -300, people: 50000, sources: ["modern estimate from the Servian Wall area (Morley 1996)"]}
+    - {year: -200, people: 200000, sources: ["modern estimate (Hopkins, Conquerors and Slaves, 1978; Morley 1996)"]}
+    - {year: -130, people: 300000, sources: ["modern estimate (Hopkins 1978; Lo Cascio 1994 argues higher)"]}
+    - {year: -50, people: 750000, sources: ["modern estimate (Hopkins 1978; Morley 1996; Lo Cascio 1994)"]}
+    - {year: -27, people: 900000, sources: ["modern estimate from the 200,000 dole recipients of 2 BC (Res Gestae 15) (Hopkins 1978; Scheidel 2007)"]}
+  shortage_unrest_bp: 1500
+  surplus_calm_bp: 100
+  dole:
+    # Gaius Gracchus' grain law of 123 sold grain to the citizens below the market price (Plutarch,
+    # C. Gracchus 5.2: a law 'relating to the supplies of grain, and lowered the market price to
+    # the poor'); Clodius made it free in 58 (Dio 38.13.1: 'he straightway went to distributing
+    # free corn'). The law is the Senate's `grain_dole` (republic_rules.yaml, from 123).
+    law: grain_dole
+    cost_per_1000: 1
+    unrest_relief_bp: 300
+    shortage_relief_bp: 5000
+    free_from_year: -58
+    free_cost_bp: 10000
+    sources: ["Plutarch, Gaius Gracchus 5.2", "Cassius Dio 38.13.1"]
+  sources: ["Cicero, Verrines 2.3.12-15", "Plutarch, Gaius Gracchus 5.2", "Cassius Dio 38.13.1"]

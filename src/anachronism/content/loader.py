@@ -54,6 +54,8 @@ from anachronism.content.schema import (
     Terrain,
     Unit,
 )
+from anachronism.content.schema.rome_society import RomeSociety  # F1 rome_society (R4)
+from anachronism.content.schema.rome_society import bundle as bundle_rome_society
 
 PACKS_DIR = Path(__file__).parent / "packs"
 MANIFEST = "pack.yaml"
@@ -99,6 +101,7 @@ class Content:
     """The city of Rome (U7), read from the dataset the rome pack points at."""
     city_timeline: Mapping[str, CityTimeline] = field(default_factory=dict)
     """Chance events (plague, flood, bumper harvests...)."""
+    rome_society: RomeSociety = field(default_factory=RomeSociety)  # F1 rome_society (R4)
 
 
 @dataclass(frozen=True)
@@ -199,6 +202,7 @@ def load_content(pack_ids: Sequence[str] | None = None, root: Path = PACKS_DIR) 
         battles=registry.battles,
         monuments=registry.monuments,
         city_timeline=registry.city_timeline,
+        rome_society=bundle_rome_society(registry),  # F1 rome_society (R4)
         digest=digest.hexdigest(),
     )
 

@@ -15,6 +15,7 @@ from anachronism.content.schema import (
     SocialGroup,
     Stage,
 )
+from anachronism.content.schema.rome_society import RomeSociety  # F1 rome_society (R4)
 from anachronism.engine.fixed import BP
 from anachronism.engine.republic import start_republic
 from anachronism.engine.rivals import contact_pairs
@@ -134,6 +135,7 @@ def build_state(
         fasti={fy.year: fy for fy in sorted(content.fasti.values(), key=lambda f: f.year)}
         if scenario.republic
         else {},
+        rome_society=content.rome_society if scenario.republic else RomeSociety(),  # F1 (R4)
         reign_died={
             c: start.leader_died
             for c, start in sorted(scenario.civs.items())

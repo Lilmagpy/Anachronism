@@ -1,0 +1,61 @@
+schema_version: 1
+# The colleges of the Republic (content/schema/rome_society.py: Priesthood), filled from the
+# Republic's people and held for life (engine/religion.py). Seats, dates and order rules follow
+# the sources named; `glory` (what a seat adds to a man's standing) is GAME BALANCE.
+priesthoods:
+  - id: pontifices
+    name: Pontifices
+    chief: true
+    glory: 300
+    eras:
+      - {from_year: -509, seats: 4, patricians_only: true, sources: ["Livy 10.6.6 (four pontiffs before the Lex Ogulnia)"]}
+      - {from_year: -300, seats: 8, plebeian_min: 4, sources: ["Livy 10.6.6, 10.9.2 (Lex Ogulnia, 300 BC: four plebeian pontiffs added, 'octo pontificum ... numerus factus')"]}
+      - {from_year: -81, seats: 15, plebeian_min: 4, sources: ["Livy, Periochae 89 (Sulla enlarged the colleges) # unverified: passage not re-read"]}
+    notes: "The pontifex maximus was chosen by the people from the college: Livy 25.5.2-4 (the election of 212 BC, won by P. Licinius Crassus, who had held no curule office; 'ante hunc intra centum annos et uiginti nemo ... pontifex maximus creatus fuerat qui sella curuli non sedisset'). Whether the pontifex maximus is counted among Livy's four is debated; the engine counts him in."
+    sources: ["Livy 10.6.6", "Livy 10.9.2", "Livy 25.5.2-4"]
+    confidence: medium
+
+  - id: augures
+    name: Augurs
+    augural: true
+    glory: 300
+    eras:
+      - {from_year: -509, seats: 4, patricians_only: true, sources: ["Livy 10.6.6 (four augurs before the Lex Ogulnia)"]}
+      - {from_year: -300, seats: 9, plebeian_min: 5, sources: ["Livy 10.6.6, 10.9.2 (five plebeian augurs added: 'nouem augurum numerus factus')"]}
+      - {from_year: -81, seats: 15, plebeian_min: 5, sources: ["Livy, Periochae 89 # unverified: passage not re-read"]}
+    notes: "The augurs took the auspices; a commander who ignored the signs is the stock example of impiety (Flaminius: Livy 22.3.11-14, Cic. Nat. D. 2.8; Pulcher: Cic. Nat. D. 2.7, Suet. Tib. 2.2). Their effect on a battle is in rites.yaml."
+    sources: ["Livy 10.6.6", "Livy 10.9.2", "Cicero, De natura deorum 2.7-8"]
+    confidence: medium
+
+  - id: decemviri_sacris_faciundis
+    name: Keepers of the Sibylline Books
+    sibylline: true
+    glory: 200
+    eras:
+      - {from_year: -509, seats: 2, patricians_only: true, sources: ["Livy 3.10.7 ('libri per duumuiros sacrorum aditi', 461 BC)", "Livy 5.13.6 (the duumviri hold the first lectisternium, 399 BC)"]}
+      - {from_year: -367, seats: 10, plebeian_min: 5, sources: ["Livy 6.42.2 ('de decemuiris sacrorum ex parte de plebe creandis ... creati quinque patrum, quinque plebis')", "Livy 10.8.2 (plebeians sit among the decemviri before 300)"]}
+      - {from_year: -81, seats: 15, plebeian_min: 5, sources: ["Servius, ad Aeneidem 6.73 (quindecimviri) # unverified: passage not read"]}
+    notes: "The Books burned with the Capitol in 83 BC (Dion. Hal. 4.62.5-6) and a new collection was gathered from Samos, Ilium, Erythrae and elsewhere (Tac. Ann. 6.12); the years are in rites.yaml."
+    sources: ["Livy 3.10.7", "Livy 5.13.6", "Livy 6.42.2", "Livy 10.8.2"]
+    confidence: medium
+
+  - id: flamines_maiores
+    name: Flamines of Jupiter, Mars and Quirinus
+    blocks_command: true
+    glory: 200
+    eras:
+      - {from_year: -509, seats: 3, patricians_only: true, sources: ["Livy 1.20.1-2 (Numa creates the flamen Dialis and the flamines of Mars and Quirinus)"]}
+    notes: "blocks_command stands for the flamen Dialis, who might not look on an army under arms (Gellius 10.15.4); for want of per-seat rules the engine applies it to all three. That the three were patrician: Cicero, De domo sua 38 # unverified: passage not read."
+    sources: ["Livy 1.20.1-2", "Gellius 10.15.4"]
+    confidence: medium
+
+  - id: vestales
+    name: Vestal Virgins
+    women: true
+    term_years: 30
+    glory: 0
+    eras:
+      - {from_year: -509, seats: 6, sources: ["Dionysius of Halicarnassus 2.67.1-2 (six virgins; thirty years' service in three decades)", "Plutarch, Numa 10.1 (four under Numa, six since Servius; thirty years)"]}
+    notes: "Taken as girls (Gellius 1.12.1: between six and ten years old # unverified: passage not re-read) and so not among the Republic's men: the game names each by her gens. A Vestal convicted of unchastity was buried alive at the Colline Gate (Livy 22.57.2-3, 216 BC)."
+    sources: ["Dionysius of Halicarnassus 2.67.1-2", "Plutarch, Numa 10.1", "Livy 22.57.2-3"]
+    confidence: high

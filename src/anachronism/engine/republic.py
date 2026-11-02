@@ -26,6 +26,7 @@ from anachronism.content.schema import (
     RepublicRules,
 )
 from anachronism.engine import city as city_module
+from anachronism.engine import rome_society  # F1 rome_society (R4)
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import BP
 from anachronism.engine.republic_state import (
@@ -270,6 +271,7 @@ def start_republic(state: GameState, rng: GameRng) -> None:
     events = EventLog(turn=state.turn, year=state.year)
     _hold_year(state, rep, rng, events, state.year)
     city_module.start_city(state, events.turn)
+    rome_society.start(state, rng, events)  # F1 rome_society (R4): religion, land, legions
     state.events.extend(events.items)
 
 
@@ -281,6 +283,7 @@ def run_year(state: GameState, rng: GameRng, events: EventLog, year: int) -> Non
     _fade(state, rep, year)
     _hold_year(state, rep, rng, events, year)
     city_module.run_year(state, events, year)
+    rome_society.run_year(state, rng, events, year)  # F1 rome_society (R4)
 
 
 # ---------------------------------------------------------------- the year
