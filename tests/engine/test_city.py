@@ -169,10 +169,11 @@ def test_a_project_that_builds_leaves_an_anachronism(content: Content) -> None:
     state, _ = end_turn(state)
     assert state.city is not None
     (work,) = state.city.anachronisms
-    assert (work.builds, work.tech, work.year) == ("dome", "concrete", -509)
+    # F1 ideas: concrete (200 BC) raises a vaulted hall; the dome is its own, later idea
+    assert (work.builds, work.tech, work.year) == ("concrete_hall", "concrete", -509)
     assert work.ahead == 309
     view = build_view(state)["city"]
-    assert view["anachronisms"][0]["name"] == "Hydraulic concrete"
+    assert view["anachronisms"][0]["name"] == "Roman concrete (opus caementicium)"
     assert any(e["monument"] == work.id for e in view["events"])
     state, _ = end_turn(state)
     assert state.city is not None

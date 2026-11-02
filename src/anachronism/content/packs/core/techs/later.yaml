@@ -1,7 +1,7 @@
 schema_version: 1
-# Medieval to early-modern advancements: the ideas a player is most likely to bring back.
-# year = approximate first appearance anywhere (placeholder values pending the source review,
-# see DECISIONS D-040 and D-075). complexity 1-5 drives cost and duration.
+# Ideas from after Rome: what a player is most likely to bring back. Each is measured against
+# the nearest thing Rome had (see agriculture.yaml for the dating rule: where Rome never had
+# it, year = when it reached Europe).
 techs:
   - id: eyeglasses
     name: Eyeglasses
@@ -11,31 +11,37 @@ techs:
     complexity: 2
     prerequisites: [glassmaking]
     effects: [{type: knowledge_gain, bp: 500}, {type: literacy_growth, bp: 20}]
-    flavour: "Old scholars read again; old craftsmen see their work."
-    history: "Eyeglasses were invented in Pisa around 1286."
+    flavour: "Old senators read again; old craftsmen see their work."
+    history: "Nero watched the games through an emerald (Pliny NH 37.64) and Seneca knew a glass globe of water makes letters large (Seneca, NQ 1.6.5), but no Roman ground a lens for the eye. Eyeglasses were invented in Pisa about 1286."
+    sources: ["Pliny NH 37.64 # unverified", "Seneca, Naturales quaestiones 1.6.5 # unverified"]
+    confidence: medium
 
   - id: glassmaking
-    name: Clear glass
-    keywords: [glass, glassmaking, glassblowing, clear glass, windows]
+    name: Blown glass
+    keywords: [glass, glassmaking, glassblowing, clear glass, windows, glass vessels, vitrum]
     category: craft
-    year: -100
+    year: -50
     complexity: 2
     prerequisites: [pottery_kiln]
     requires: {materials: [clay]}
     effects: [{type: wealth_output, bp: 400}, {type: health, bp: 200}]
-    flavour: "Sand and ash made into something you can see through."
-    history: "Clear glass was made in Alexandria in the 1st century BC; glassblowing was invented in Syria at about the same time."
+    flavour: "Sand and natron made into something you can see through."
+    history: "Glassblowing was invented on the Syrian coast about 50 BC and glass vessels, once a luxury, were soon cheaper than bronze cups at Rome (Strabo 16.2.25); Pliny tells the story of glass and its workshops (Pliny NH 36.190-199). Window glass came with the Empire."
+    sources: ["Strabo 16.2.25 # unverified", "Pliny NH 36.190-199 # unverified"]
+    confidence: medium
 
   - id: lenses
     name: Ground lenses
-    keywords: [lens, lenses, magnifying glass, ground glass, optics]
+    keywords: [lens, lenses, magnifying glass, ground glass, optics, burning glass]
     category: knowledge
-    year: 1000
+    year: 1021
     complexity: 2
     prerequisites: [glassmaking]
     effects: [{type: knowledge_gain, bp: 500}]
     flavour: "A curved glass that makes the small large."
-    history: "Ibn al-Haytham's 'Book of Optics' (around 1021) explained how lenses and the eye work."
+    history: "Romans lit altar fires with a burning glass (Pliny NH 37.28) and knew that water in a glass magnifies (Seneca, NQ 1.6.5), but the science of lenses waited for Ibn al-Haytham's Optics, about 1021."
+    sources: ["Pliny NH 37.28 # unverified", "Seneca, Naturales quaestiones 1.6.5 # unverified"]
+    confidence: medium
 
   - id: telescope
     name: Telescope
@@ -46,7 +52,9 @@ techs:
     prerequisites: [lenses, astronomy_calendar]
     effects: [{type: knowledge_gain, bp: 800}, {type: naval_strength, bp: 500}]
     flavour: "The moon has mountains, and the enemy's sails are seen an hour sooner."
-    history: "Hans Lipperhey applied for a patent on the telescope in 1608; Galileo turned one on the heavens in 1609."
+    history: "Roman lookouts on the Capitol and Rome's watchtowers saw with the naked eye alone. Hans Lipperhey applied for a patent on the telescope in 1608; Galileo turned one on the heavens in 1609."
+    sources: ["Lipperhey's patent application, 1608 (modern accounts) # unverified"]
+    confidence: high
 
   - id: microscope
     name: Microscope
@@ -57,7 +65,9 @@ techs:
     prerequisites: [lenses]
     effects: [{type: knowledge_gain, bp: 600}, {type: health, bp: 400}]
     flavour: "A drop of pond water holds a city of tiny beasts."
-    history: "Antonie van Leeuwenhoek saw bacteria through his own lenses in 1676."
+    history: "Varro guessed that marshes breed 'minute creatures, invisible to the eye' that enter by mouth and nose and cause disease (Varro RR 1.12.2): a guess without a glass. Leeuwenhoek saw them in 1676."
+    sources: ["Varro, De re rustica 1.12.2 # unverified"]
+    confidence: high
 
   - id: germ_theory
     name: Germ theory
@@ -70,7 +80,9 @@ techs:
     resistance: [{group: clergy, level: 1}]
     effects: [{type: health, bp: 1500}, {type: population_cap, bp: 600}]
     flavour: "Sickness is not a curse or a bad air. It is alive, and it can be killed."
-    history: "Louis Pasteur showed in the 1860s that microbes cause rot and disease; Robert Koch proved it germ by germ."
+    history: "Varro's invisible marsh creatures (Varro RR 1.12.2) and Vitruvius' care to site a city away from marshes (Vitr. 1.4.1) were as near as Rome came. Pasteur showed microbes cause disease in the 1860s; Koch proved it germ by germ."
+    sources: ["Varro, De re rustica 1.12.2 # unverified", "Vitruvius 1.4.1 # unverified"]
+    confidence: high
 
   - id: vaccination
     name: Vaccination
@@ -82,18 +94,22 @@ techs:
     effects: [{type: health, bp: 1200}]
     resistance: [{group: clergy, level: 1}]
     flavour: "The milkmaids never caught smallpox. Now no one has to."
-    history: "Edward Jenner vaccinated a boy with cowpox in 1796, protecting him from smallpox."
+    history: "Rome's answer to pestilence was the Sibylline Books and a temple to Apollo the Healer (Livy 4.25.3, 433 BC). Edward Jenner vaccinated a boy with cowpox in 1796."
+    sources: ["Livy 4.25.3 # unverified"]
+    confidence: high
 
   - id: soap
     name: Soap
-    keywords: [soap, washing, lye, cleanliness]
+    keywords: [soap, washing, lye, cleanliness, sapo]
     category: health
-    year: -2800
+    year: 77
     complexity: 1
     prerequisites: [pottery_kiln]
     effects: [{type: health, bp: 400}]
     flavour: "Fat, ash and water - and fewer fevers."
-    history: "A Babylonian clay tablet of about 2800 BC records soap made from fat and wood ash."
+    history: "Romans cleaned themselves with oil and a scraper (strigil) at the baths; soap (sapo) of tallow and ash was a Gallic invention, which Pliny says men used to redden their hair (Pliny NH 28.191, AD 77). Babylon had made soap by 2800 BC."
+    sources: ["Pliny NH 28.191 # unverified"]
+    confidence: medium
 
   - id: distillation
     name: Distillation
@@ -104,18 +120,22 @@ techs:
     prerequisites: [alchemy]
     effects: [{type: wealth_output, bp: 400}, {type: health, bp: 300}]
     flavour: "Wine boiled, its spirit caught - for medicine, and for merriment."
-    history: "Arab chemists such as Jabir ibn Hayyan refined distillation around AD 800; strong spirits came later."
+    history: "Dioscorides caught the vapour of boiling pitch on fleeces to make pitch-oil (Dioscorides 1.72) and the alchemists of Alexandria built the first stills in the 1st-3rd centuries AD; strong spirits came with the Arab chemists about AD 800."
+    sources: ["Dioscorides, De materia medica 1.72 # unverified"]
+    confidence: medium
 
   - id: mechanical_clock
     name: Mechanical clock
-    keywords: [clock, mechanical clock, escapement, timekeeping, hours]
+    keywords: [clock, mechanical clock, escapement, timekeeping, hours, bell tower]
     category: craft
     year: 1280
     complexity: 3
     prerequisites: [wheel, iron_working, astronomy_calendar]
     effects: [{type: labour_output, bp: 500}, {type: knowledge_gain, bp: 400}]
     flavour: "The bell in the tower tells the whole town when to work and when to pray."
-    history: "Weight-driven clocks with escapements appeared in European church towers around 1280."
+    history: "Rome told the hour by sundials and water clocks (Pliny NH 7.212-215), whose hours lengthened in summer and shrank in winter. Weight-driven clocks with an escapement appeared in European church towers about 1280."
+    sources: ["Pliny NH 7.212-215 # unverified"]
+    confidence: high
 
   - id: printing_press
     name: Printing press
@@ -128,23 +148,27 @@ techs:
     resistance: [{group: clergy, level: 1}]
     effects: [{type: literacy_growth, bp: 100}, {type: knowledge_gain, bp: 1500}, {type: cultural_influence, bp: 1000}]
     flavour: "A screw press, metal type and oily ink - a thousand pages a day."
-    history: "Johannes Gutenberg printed with metal type on a screw press in Mainz around 1450; his Bible appeared in 1455."
+    history: "Rome had the screw press for wine and oil (Pliny NH 18.317) and book-copying workshops of slaves (Nepos, Atticus 13.3); nobody married the two. Gutenberg did, at Mainz about 1450."
+    sources: ["Pliny NH 18.317 # unverified", "Cornelius Nepos, Atticus 13.3 # unverified"]
+    confidence: high
 
   - id: newspapers
     name: Newspapers
-    keywords: [newspaper, news sheets, gazette, broadsheet, journalism]
+    keywords: [newspaper, news sheets, gazette, broadsheet, journalism, acta diurna, daily news]
     category: knowledge
     year: 1605
     complexity: 2
     prerequisites: [printing_press, postal_relay]
     resistance: [{group: nobility, level: 1}]
     effects: [{type: information_speed, bp: 1500}, {type: literacy_growth, bp: 50}, {type: unrest, bp: 100}]
-    flavour: "Everyone knows everything by Thursday - including what the court would rather hide."
-    history: "The first printed newspaper, the 'Relation', was published in Strasbourg in 1605."
+    flavour: "Everyone knows everything by the Ides - including what the Senate would rather hide."
+    history: "Caesar's acta diurna (59 BC) posted the day's business of Senate and people in the Forum and were copied for the provinces (Suet. Iul. 20.1): a gazette by hand. The first printed newspaper, the Relation, appeared in Strasbourg in 1605."
+    sources: ["Suetonius, Iulius 20.1"]
+    confidence: high
 
   - id: scientific_method
     name: The scientific method
-    keywords: [scientific method, experiment, hypothesis, test ideas, evidence, science]
+    keywords: [scientific method, experiment, hypothesis, test ideas, evidence, science, natural philosophy]
     category: knowledge
     year: 1620
     complexity: 3
@@ -153,11 +177,13 @@ techs:
     resistance: [{group: clergy, level: 2}]
     effects: [{type: knowledge_gain, bp: 2000}]
     flavour: "Do not argue about how many teeth a horse has. Open its mouth and count."
-    history: "Francis Bacon's 'Novum Organum' (1620) set out reasoning from careful experiment."
+    history: "Lucretius taught Romans that nature works by atoms and law, not gods (Lucretius 1.146-158), and Pliny gathered twenty thousand facts without testing one (Pliny NH praef. 17). Francis Bacon's Novum Organum (1620) set out reasoning from careful experiment."
+    sources: ["Lucretius 1.146-158 # unverified", "Pliny NH praefatio 17 # unverified"]
+    confidence: high
 
   - id: universities
     name: Universities
-    keywords: [university, universities, college, academy of scholars, higher learning]
+    keywords: [university, universities, college, academy of scholars, higher learning, athenaeum]
     category: knowledge
     year: 1088
     complexity: 3
@@ -165,7 +191,9 @@ techs:
     requires: {buildings: [school]}
     effects: [{type: knowledge_gain, bp: 1000}, {type: literacy_growth, bp: 50}, {type: cultural_influence, bp: 500}]
     flavour: "Scholars gather where there are books and freedom to argue."
-    history: "The University of Bologna, from 1088, was the first in Europe; older schools of learning stood in Fez, Cairo and Nalanda."
+    history: "Young Romans of means finished their studies at Athens and Rhodes (Cicero, Brutus 315); Hadrian's Athenaeum at Rome (AD 135; Aurelius Victor, Caes. 14.3) was a hall for lectures, not a corporation of scholars. Bologna's university dates from 1088."
+    sources: ["Cicero, Brutus 315 # unverified", "Aurelius Victor, De Caesaribus 14.3 # unverified"]
+    confidence: medium
 
   - id: algebra
     name: Algebra
@@ -176,7 +204,9 @@ techs:
     prerequisites: [place_value_numerals]
     effects: [{type: knowledge_gain, bp: 800}, {type: wealth_output, bp: 300}]
     flavour: "Name the unknown x, and it gives itself up."
-    history: "Al-Khwarizmi wrote 'The Compendious Book on Calculation by Completion and Balancing' in Baghdad around AD 820."
+    history: "Roman mathematics was the surveyor's and the architect's geometry (Vitruvius 9 praef. 6-8 tells the problems of Plato and Pythagoras); Diophantus of Alexandria wrote the first book of equations about AD 250. Al-Khwarizmi named algebra in Baghdad about 820."
+    sources: ["Vitruvius 9 praef. 6-8 # unverified"]
+    confidence: medium
 
   - id: double_entry
     name: Double-entry bookkeeping
@@ -187,31 +217,37 @@ techs:
     prerequisites: [bookkeeping]
     effects: [{type: wealth_output, bp: 800}, {type: trade_income, bp: 500}]
     flavour: "Every coin is written twice, and the books always balance - or someone is stealing."
-    history: "Double-entry books were kept by Italian merchants by 1300; Luca Pacioli described the method in 1494."
+    history: "Roman ledgers listed receipts and payments side by side (Cicero, Pro Roscio Comoedo 4-9) but never made them balance each other. Double-entry books were kept by Italian merchants by 1300; Pacioli described the method in 1494."
+    sources: ["Cicero, Pro Roscio Comoedo 4-9 # unverified"]
+    confidence: high
 
   - id: banking
-    name: Banks and bills of exchange
-    keywords: [bank, banking, bills of exchange, credit, loans, letters of credit, interest]
+    name: Bankers and bills of exchange (argentarii)
+    keywords: [bank, banking, bills of exchange, credit, loans, letters of credit, interest, argentarii, bankers, moneylenders, permutatio]
     category: trade
-    year: 1150
+    year: -269
     complexity: 3
     prerequisites: [coinage, bookkeeping]
     requires: {buildings: [market]}
     resistance: [{group: clergy, level: 1}]
     effects: [{type: trade_income, bp: 1200}, {type: wealth_output, bp: 600}]
-    flavour: "Gold stays safe at home; a piece of paper travels instead."
-    history: "Italian merchants of Genoa and Florence developed banks and bills of exchange in the 12th century."
+    flavour: "Gold stays safe at home; a letter travels instead."
+    history: "Bankers' shops (tabernae argentariae) stood in the Forum by 310 BC (Livy 9.40.16) and the censors of 179 built new ones (Livy 40.51.5). Cicero sent money to his son in Athens by a banker's letter of exchange (permutatio: Cicero, Att. 12.24.1, 15.15.4). Genoa's and Florence's banks came in the 12th century."
+    sources: ["Livy 9.40.16 # unverified", "Livy 40.51.5", "Cicero, Ad Atticum 12.24.1 and 15.15.4 # unverified"]
+    confidence: medium
 
   - id: joint_stock_company
-    name: Joint-stock company
-    keywords: [joint stock, shares, company, stock exchange, investors, corporation]
+    name: Shareholders' companies (societates publicanorum)
+    keywords: [joint stock, shares, company, stock exchange, investors, corporation, publicani, tax farmers, societas, partes]
     category: trade
-    year: 1600
+    year: -215
     complexity: 3
     prerequisites: [banking, double_entry]
     effects: [{type: trade_income, bp: 1500}, {type: naval_strength, bp: 500}]
-    flavour: "Many purses, one ship, and the risk shared by all."
-    history: "The Dutch East India Company (1602) was the first company whose shares anyone could buy."
+    flavour: "Many purses, one contract, and the risk shared by all."
+    history: "The companies of publicani farmed the taxes and built the public works; in 215 BC three companies of nineteen men supplied the army in Spain on the state's credit (Livy 23.48.10-49.4). Almost every citizen had a share in the contracts (Polybius 6.17.3-4), and shares (partes) were bought and sold (Cicero, In Vatinium 29). The Dutch East India Company (1602) is the modern form."
+    sources: ["Livy 23.48.10-49.4 # unverified", "Polybius 6.17.3-4 # unverified", "Cicero, In Vatinium 29 # unverified"]
+    confidence: medium
 
   - id: caravel
     name: Ocean-going ships
@@ -223,18 +259,22 @@ techs:
     requires: {materials: [timber], buildings: [harbour]}
     effects: [{type: naval_strength, bp: 1200}, {type: trade_income, bp: 1000}, {type: mobility, bp: 600}]
     flavour: "A ship that can sail against the wind and come home from beyond the edge of the map."
-    history: "Portuguese caravels, able to sail into the wind, explored the African coast from the 1440s."
+    history: "Caesar's fleet was beaten by the Veneti's oak ships built for the Atlantic (Caesar, BG 3.13); Roman merchantmen hugged the coasts and laid up from November to March (Vegetius 4.39). Portuguese caravels that could sail into the wind explored Africa from the 1440s."
+    sources: ["Caesar, De bello Gallico 3.13", "Vegetius 4.39 # unverified"]
+    confidence: high
 
   - id: astrolabe
     name: Navigation by the stars
-    keywords: [astrolabe, quadrant, sextant, latitude, navigation, star navigation]
+    keywords: [astrolabe, quadrant, sextant, latitude, navigation, star navigation, pole star, steer by the stars]
     category: maritime
-    year: 800
+    year: -150
     complexity: 2
     prerequisites: [astronomy_calendar, sailing]
     effects: [{type: naval_strength, bp: 400}, {type: mobility, bp: 400}]
     flavour: "The pole star's height tells the sailor how far north he is."
-    history: "Astrolabes came from Greek astronomers; Arab navigators and scholars perfected them by about AD 800."
+    history: "Hipparchus of Rhodes (about 150 BC) built the first star catalogue and the plane astrolabe's geometry; Vitruvius describes the anaphoric clock that turns the heavens (Vitr. 9.8.8-15). Roman pilots steered by the Bears and the Pole (Lucan 8.167-184); Arab navigators perfected the astrolabe about AD 800."
+    sources: ["Vitruvius 9.8.8-15 # unverified", "Lucan, Pharsalia 8.167-184 # unverified", "Pliny NH 2.95 (Hipparchus) # unverified"]
+    confidence: medium
 
   - id: cannon
     name: Cannon
@@ -246,18 +286,22 @@ techs:
     requires: {buildings: [forge]}
     effects: [{type: military_strength, bp: 1200}]
     flavour: "No wall stands for long against a gun that throws stone balls."
-    history: "The first European picture of a cannon is from 1326; Chinese bronze guns are older."
+    history: "Rome's wall-breakers were the ram and the torsion stone-thrower (Vitruvius 10.13, 10.11). The first European picture of a cannon is from 1326; Chinese bronze guns are older."
+    sources: ["Vitruvius 10.11 and 10.13 # unverified"]
+    confidence: high
 
   - id: musket
     name: Muskets
-    keywords: [musket, arquebus, matchlock, firearms, guns, rifle, harquebus, tanegashima, volley, volleys]
+    keywords: [musket, arquebus, matchlock, firearms, guns, rifle, harquebus, volley, volleys]
     category: military
     year: 1450
     complexity: 3
     prerequisites: [gunpowder, iron_working]
     effects: [{type: military_strength, bp: 1500}]
-    flavour: "A farmer with a month's drill and a gun can stop a knight."
-    history: "Handguns spread through Europe and the Ottoman empire in the 1400s; the matchlock musket came around 1450."
+    flavour: "A farmer with a month's drill and a gun can stop a horseman."
+    history: "The legionary's missile was the pilum, thrown at fifteen paces (Polybius 6.23.9-11). Handguns spread through Europe in the 1400s; the matchlock musket came about 1450."
+    sources: ["Polybius 6.23.9-11 # unverified"]
+    confidence: high
 
   - id: star_fort
     name: Star forts
@@ -268,18 +312,22 @@ techs:
     prerequisites: [cannon, fortification, surveying]
     effects: [{type: military_strength, bp: 800}, {type: legitimacy, bp: 100}]
     flavour: "Low, thick, angled walls that cannon cannot break and every gun can cover."
-    history: "Italian engineers built angled 'star' bastions against cannon from about 1500."
+    history: "Roman walls were high and square-towered (Vitruvius 1.5 wants round or polygonal towers against the ram). Italian engineers built angled bastions against cannon from about 1500."
+    sources: ["Vitruvius 1.5.1-5 # unverified"]
+    confidence: high
 
   - id: seed_drill
     name: Seed drill
     keywords: [seed drill, sow in rows, planting machine]
     category: agriculture
-    year: -150
+    year: 1701
     complexity: 2
     prerequisites: [ox_plough, iron_working]
     effects: [{type: food_output, bp: 700}]
     flavour: "Seeds in neat rows, not scattered to the birds."
-    history: "The Chinese used multi-tube iron seed drills by the 2nd century BC; Europe adopted them only in the 1700s."
+    history: "Roman sowers broadcast the seed by hand from a basket and harrowed it in (Varro RR 1.29.1-2; Columella 2.9); China had iron seed drills by the 2nd century BC, and Jethro Tull built Europe's in 1701."
+    sources: ["Varro, De re rustica 1.29.1-2 # unverified", "Columella 2.9 # unverified"]
+    confidence: medium
 
   - id: new_world_crops
     name: New crops (maize, potatoes)
@@ -290,18 +338,22 @@ techs:
     prerequisites: [agriculture]
     effects: [{type: food_output, bp: 1200}, {type: population_cap, bp: 800}]
     flavour: "A crop that grows where wheat will not, and feeds twice as many."
-    history: "Maize and potatoes, grown in the Americas for thousands of years, reached Europe and Asia after 1492."
+    history: "Rome's new crops came from the East: the cherry Lucullus brought from Pontus in 74 BC (Pliny NH 15.102), peaches and apricots. Maize and potatoes, grown in the Americas for thousands of years, reached Europe after 1492."
+    sources: ["Pliny NH 15.102 # unverified"]
+    confidence: high
 
   - id: spinning_wheel
     name: Spinning wheel
-    keywords: [spinning wheel, spinning, thread, yarn, textiles]
+    keywords: [spinning wheel, spinning, thread, yarn, textiles, wool]
     category: craft
-    year: 1000
+    year: 1280
     complexity: 2
     prerequisites: [wheel]
     effects: [{type: wealth_output, bp: 500}, {type: labour_output, bp: 300}]
     flavour: "A wheel turns, and a day's thread is spun in an hour."
-    history: "The spinning wheel came from India around AD 1000 and reached Europe in the 13th century."
+    history: "Roman matrons spun with distaff and drop spindle, the virtue Augustus made his daughters learn (Suet. Aug. 64.2; the tombstone's 'lanam fecit'). The spinning wheel came from India about AD 1000 and reached Europe in the 13th century."
+    sources: ["Suetonius, Augustus 64.2 # unverified", "CIL VI 15346 (Claudia: domum servavit, lanam fecit) # unverified"]
+    confidence: medium
 
   - id: spinning_machine
     name: Spinning machines
@@ -314,7 +366,9 @@ techs:
     resistance: [{group: guilds, level: 2}]
     effects: [{type: wealth_output, bp: 1500}, {type: labour_output, bp: 1000}]
     flavour: "One machine, eight spindles - and the spinners riot."
-    history: "James Hargreaves' spinning jenny (about 1765) and Arkwright's water frame (1769) began the factory age."
+    history: "Vespasian refused a machine to haul columns cheaply, saying he must let the poor earn their bread (Suet. Vesp. 18): the Roman objection to labour-saving engines. Hargreaves' spinning jenny (about 1765) began the factory age."
+    sources: ["Suetonius, Vespasianus 18 # unverified"]
+    confidence: high
 
   - id: coke_smelting
     name: Coke smelting
@@ -326,11 +380,13 @@ techs:
     requires: {materials: [coal], buildings: [forge, mine]}
     effects: [{type: materials_output, bp: 1500}]
     flavour: "Iron from coal, not forests - and suddenly iron is cheap."
-    history: "Abraham Darby smelted iron with coke at Coalbrookdale in 1709."
+    history: "Roman smelting ate the forests: the iron works of Elba were moved to the mainland for want of wood (Diodorus 5.13.1). Abraham Darby smelted iron with coke at Coalbrookdale in 1709."
+    sources: ["Diodorus 5.13.1 # unverified"]
+    confidence: high
 
   - id: steam_engine
     name: Steam engine
-    keywords: [steam engine, steam power, boiling water push, piston engine, watt, newcomen, engine]
+    keywords: [steam engine, steam power, boiling water push, piston engine, watt, newcomen, engine, aeolipile]
     category: craft
     year: 1712
     complexity: 5
@@ -338,7 +394,9 @@ techs:
     requires: {materials: [iron, coal], literacy_bp: 1500, buildings: [mine]}
     effects: [{type: labour_output, bp: 1500}, {type: materials_output, bp: 1000}]
     flavour: "Fire makes water into a giant that never sleeps."
-    history: "Thomas Newcomen's steam engine pumped water from a mine in 1712; James Watt improved it from 1769."
+    history: "Hero of Alexandria spun a ball by its jets of steam (Pneumatica 2.11, 1st century AD) and Vitruvius knew the aeolipile (Vitr. 1.6.2): a toy, since no Roman needed it to pump a mine. Newcomen's engine pumped one in 1712."
+    sources: ["Hero of Alexandria, Pneumatica 2.11 # unverified", "Vitruvius 1.6.2 # unverified"]
+    confidence: high
 
   - id: railways
     name: Railways
@@ -350,7 +408,9 @@ techs:
     requires: {materials: [iron, coal], buildings: [mine]}
     effects: [{type: mobility, bp: 2000}, {type: trade_income, bp: 1500}, {type: military_strength, bp: 500}]
     flavour: "Iron roads and fire horses: a month's journey in a day."
-    history: "The Stockton and Darlington Railway opened in 1825, the first public railway worked by steam."
+    history: "The nearest Rome came to a railway was the diolkos, the paved slipway on which ships were hauled across the Isthmus of Corinth in grooves (Strabo 8.2.1). The Stockton and Darlington Railway opened in 1825."
+    sources: ["Strabo 8.2.1 # unverified", "Pliny NH 4.10 (the Isthmus) # unverified"]
+    confidence: high
 
   - id: lightning_rod
     name: Lightning rod
@@ -361,45 +421,53 @@ techs:
     prerequisites: [scientific_method, iron_working]
     effects: [{type: knowledge_gain, bp: 400}, {type: legitimacy, bp: 100}]
     flavour: "Heaven's fire, led politely into the ground."
-    history: "Benjamin Franklin proved lightning was electricity with his kite in 1752 and invented the lightning rod."
+    history: "To Romans lightning was Jupiter's word, read by Etruscan haruspices and buried where it struck (Pliny NH 2.138-146, the Etruscan books on thunderbolts). Franklin proved it electricity in 1752 and invented the rod."
+    sources: ["Pliny NH 2.138-146 # unverified"]
+    confidence: high
 
   - id: hospitals
     name: Hospitals
-    keywords: [hospital, hospitals, infirmary, care for the sick]
+    keywords: [hospital, hospitals, infirmary, care for the sick, valetudinarium, sick house]
     category: health
-    year: 400
+    year: 390
     complexity: 2
     prerequisites: [herbal_medicine, masonry]
     requires: {buildings: [temple]}
     effects: [{type: health, bp: 800}, {type: legitimacy, bp: 100}]
     flavour: "A house where the sick are cared for, not merely prayed over."
-    history: "Hospitals for all comers were founded by Christian bishops in the 4th century, and by Islamic rulers from the 8th; Buddhist India had them earlier."
+    history: "Sick slaves were abandoned at the temple of Aesculapius on the Tiber island (Suet. Claud. 25.2) and the legions kept an infirmary (valetudinarium) in every camp (Hyginus, De munitionibus castrorum 4). The first hospital for all comers at Rome was Fabiola's, about AD 390 (Jerome, Ep. 77.6)."
+    sources: ["Suetonius, Claudius 25.2 # unverified", "Hyginus, De munitionibus castrorum 4 # unverified", "Jerome, Epistulae 77.6 # unverified"]
+    confidence: medium
 
   - id: census
     name: The census
-    keywords: [census, count the people, population count, registry, records of people]
+    keywords: [census, count the people, population count, registry, records of people, property classes, lustrum]
     category: governance
-    year: -500
+    year: -509
     complexity: 2
     prerequisites: [writing, standard_measures]
     effects: [{type: wealth_output, bp: 600}, {type: labour_output, bp: 300}]
-    flavour: "Count every household, and the tax collector cannot be cheated."
-    history: "Censuses were taken in ancient Egypt, Persia and China; Rome counted its citizens every five years from about 500 BC."
+    flavour: "Count every citizen and his property, and the levy and the tax cannot be dodged."
+    history: "Servius Tullius was said to have first counted the citizens by property, 80,000 of them (Livy 1.42.5, 1.44.1-2); the Republic's first census, in 508 BC, found 130,000 (Dion. Hal. 5.20). The count was held about every five years and closed with the lustrum sacrifice."
+    sources: ["Livy 1.42.5", "Livy 1.44.1-2", "Dionysius of Halicarnassus 5.20 # unverified"]
+    confidence: high
 
   - id: written_law
-    name: Written law code
-    keywords: [law code, written law, laws, legal code, courts, justice]
+    name: Written law (the Twelve Tables)
+    keywords: [law code, written law, laws, legal code, courts, justice, twelve tables, decemvirs, publish the laws, codified law]
     category: governance
-    year: -1750
+    year: -450
     complexity: 2
     prerequisites: [writing]
     effects: [{type: legitimacy, bp: 200}, {type: unrest, bp: -100}]
-    flavour: "The same law for the farmer and the lord - in theory."
-    history: "Hammurabi of Babylon had his laws carved on a stone stele around 1754 BC; Ur-Nammu's code is older still."
+    flavour: "The same law for the plebeian and the patrician - in bronze, in the Forum."
+    history: "After the plebs demanded that the law be written down, the decemvirs set up ten tables in 451 BC and two more in 450 (Livy 3.34.6-7, 3.57.10); the Twelve Tables were the 'source of all public and private law' (Livy 3.34.6) that schoolboys still learned by heart in Cicero's youth (Cicero, De legibus 2.59). Hammurabi's stele is 1,300 years older."
+    sources: ["Livy 3.34.6-7", "Livy 3.57.10 # unverified", "Cicero, De legibus 2.59 # unverified"]
+    confidence: high
 
   - id: republic
-    name: Elected magistrates
-    keywords: [republic, elected, election, consuls, magistrates, senate, term limits]
+    name: Elected magistrates (the consuls)
+    keywords: [republic, elected, election, consuls, magistrates, senate, term limits, annual office, expel the king]
     category: governance
     year: -509
     complexity: 3
@@ -407,19 +475,23 @@ techs:
     resistance: [{group: nobility, level: 2}]
     effects: [{type: legitimacy, bp: 150}, {type: unrest, bp: -100}]
     flavour: "Rulers chosen for a year, and answerable when it ends."
-    history: "Rome expelled its last king in 509 BC and chose two consuls each year instead."
+    history: "Rome drove out Tarquin in 509 BC and chose two consuls each year, with all the king's power but for one year and shared (Livy 2.1.7-8). Polybius saw in consuls, Senate and people a mixed constitution that made Rome strong (Polybius 6.11-18)."
+    sources: ["Livy 2.1.7-8", "Polybius 6.11-18 # unverified"]
+    confidence: high
 
   - id: citizen_assembly
-    name: Citizens' assembly
-    keywords: [democracy, democratic, vote, voting, assembly, citizens, ballot, parliament, people rule]
+    name: Comitia reform (plebiscites bind all)
+    keywords: [democracy, democratic, vote, voting, assembly, citizens, ballot, parliament, people rule, comitia, plebiscite, lex hortensia, concilium plebis, tribes vote, power to the people]
     category: governance
-    year: -508
+    year: -287
     complexity: 3
     prerequisites: [republic, alphabet]
     resistance: [{group: nobility, level: 3}]
     effects: [{type: unrest, bp: -200}, {type: cultural_influence, bp: 400}, {type: legitimacy, bp: 100}]
-    flavour: "Every citizen may speak in the assembly - and must live with what it decides."
-    history: "Cleisthenes' reforms in Athens (508 BC) gave every citizen a voice in the assembly."
+    flavour: "What the plebs decide in their tribes binds the whole people - patricians too."
+    history: "The plebs seceded to the Janiculum in 287 BC and the dictator Q. Hortensius carried the law that plebiscites bind every citizen (Gellius 15.27.4; Pliny NH 16.37), the end of the Struggle of the Orders. Athens had given every citizen a vote under Cleisthenes in 508."
+    sources: ["Gellius 15.27.4 # unverified", "Pliny NH 16.37 # unverified", "Livy, Periochae 11 # unverified"]
+    confidence: high
 
   - id: windpump_polders
     name: Polders and pumps
@@ -430,7 +502,9 @@ techs:
     prerequisites: [windmill, canals]
     effects: [{type: food_output, bp: 800}, {type: population_cap, bp: 600}]
     flavour: "God made the world; the Dutch made Holland."
-    history: "Dutch windmills pumped water out of the polders from about 1400, making new land from the sea."
+    history: "The Pomptine marshes were drained in 160 BC by the consul Cornelius Cethegus (Livy, Per. 46) and flooded again; Caesar's and Augustus' plans came to nothing. Dutch windmills pumped the polders dry from about 1400."
+    sources: ["Livy, Periochae 46 # unverified", "Suetonius, Iulius 44.3"]
+    confidence: medium
 
   - id: battery
     name: Electric battery
@@ -442,7 +516,9 @@ techs:
     requires: {materials: [copper], literacy_bp: 1500}
     effects: [{type: knowledge_gain, bp: 800}]
     flavour: "Copper, zinc and brine: a spark that never runs out."
-    history: "Alessandro Volta built the first electric battery in 1800."
+    history: "Scribonius Largus, a court physician under Claudius, prescribed the shock of a live torpedo fish for headache and gout (Compositiones 11, 162): electricity as a cure, with no idea of what it was. Volta built the first battery in 1800."
+    sources: ["Scribonius Largus, Compositiones 11 and 162 # unverified"]
+    confidence: high
 
   - id: telegraph
     name: Electric telegraph
@@ -454,7 +530,9 @@ techs:
     requires: {materials: [copper]}
     effects: [{type: information_speed, bp: 3000}, {type: legitimacy, bp: 200}, {type: trade_income, bp: 500}]
     flavour: "News that once took a month arrives before the messenger has saddled his horse."
-    history: "Cooke and Wheatstone (1837) and Samuel Morse (1838-44) built the first working electric telegraphs."
+    history: "Polybius describes a Greek fire-signal code that spells out any message by torches, which Rome's watchtowers never took up (Polybius 10.43-47). Cooke and Wheatstone (1837) and Morse (1838-44) built the first electric telegraphs."
+    sources: ["Polybius 10.43-47 # unverified"]
+    confidence: high
 
   - id: telephone
     name: Telephone
@@ -466,7 +544,9 @@ techs:
     requires: {materials: [copper]}
     effects: [{type: information_speed, bp: 2000}, {type: trade_income, bp: 500}]
     flavour: "A voice from a hundred miles away, as if in the next room."
-    history: "Alexander Graham Bell patented the telephone in 1876."
+    history: "A Roman's voice carried as far as the Rostra would throw it, and his words as fast as a courier rode. Alexander Graham Bell patented the telephone in 1876."
+    sources: ["Bell's patent US 174,465 (1876) # unverified"]
+    confidence: high
 
   - id: photography
     name: Photography
@@ -477,7 +557,9 @@ techs:
     prerequisites: [lenses, alchemy]
     effects: [{type: cultural_influence, bp: 400}, {type: knowledge_gain, bp: 300}]
     flavour: "Light itself paints the picture, and it never lies - or so they say."
-    history: "Louis Daguerre announced his photographs in 1839; Niépce had made the first in 1826."
+    history: "Roman likenesses were wax masks of the ancestors (Polybius 6.53) and painted portraits; Pliny mourned that portrait painting was dying out (Pliny NH 35.4-5). Daguerre announced photographs in 1839."
+    sources: ["Polybius 6.53 # unverified", "Pliny NH 35.4-5 # unverified"]
+    confidence: high
 
   - id: anaesthesia
     name: Anaesthesia
@@ -488,7 +570,9 @@ techs:
     prerequisites: [distillation, herbal_medicine]
     effects: [{type: health, bp: 800}]
     flavour: "The surgeon may take his time: the patient sleeps through the knife."
-    history: "William Morton showed surgery under ether in Boston in 1846."
+    history: "Celsus wanted a surgeon 'unmoved by the patient's cries' (Celsus 7 praef. 4) and Dioscorides dulled pain with mandrake wine before the knife (Dioscorides 4.75). William Morton showed surgery under ether in 1846."
+    sources: ["Celsus, De medicina 7 praef. 4 # unverified", "Dioscorides, De materia medica 4.75 # unverified"]
+    confidence: high
 
   - id: steamship
     name: Steamships
@@ -500,7 +584,9 @@ techs:
     requires: {materials: [iron, coal], buildings: [harbour]}
     effects: [{type: naval_strength, bp: 2000}, {type: trade_income, bp: 1500}, {type: mobility, bp: 800}]
     flavour: "Against the wind and against the current, on time."
-    history: "Robert Fulton's 'Clermont' carried passengers up the Hudson by steam in 1807."
+    history: "A late Roman writer imagined a warship driven by paddle wheels turned by oxen (De rebus bellicis 17, 4th century AD): a drawing, never a ship. Fulton's Clermont steamed up the Hudson in 1807."
+    sources: ["Anonymus, De rebus bellicis 17 # unverified"]
+    confidence: high
 
   - id: canning
     name: Canned food
@@ -511,7 +597,9 @@ techs:
     prerequisites: [glassmaking, iron_working]
     effects: [{type: storage, bp: 2000}, {type: military_strength, bp: 300}]
     flavour: "Summer's harvest, sealed and boiled, still good next winter."
-    history: "Nicolas Appert sealed food in jars and boiled it in 1810, winning Napoleon's prize; tin cans followed."
+    history: "Romans kept food in salt, honey, vinegar and pitch-sealed jars (Columella 12; Apicius 1.7-12); the legionary marched on hard biscuit (bucellatum). Appert sealed food in jars and boiled it in 1810; tin cans followed."
+    sources: ["Columella 12.4-10 # unverified", "Apicius 1.7-12 # unverified"]
+    confidence: high
 
   - id: fertiliser
     name: Chemical fertiliser
@@ -522,7 +610,9 @@ techs:
     prerequisites: [alchemy, crop_rotation]
     effects: [{type: food_output, bp: 2000}, {type: population_cap, bp: 1000}]
     flavour: "What the soil lacks, the chemist can put back."
-    history: "John Bennet Lawes patented superphosphate fertiliser in 1842."
+    history: "Roman farmers manured with dung, ash, marl and ploughed-in lupines (Cato 29, 37; Varro RR 1.38; Pliny NH 17.42-57 on marl in Gaul and Britain). Lawes patented superphosphate in 1842."
+    sources: ["Cato, De agri cultura 29 and 37", "Varro, De re rustica 1.38 # unverified", "Pliny NH 17.42-57 # unverified"]
+    confidence: high
 
   - id: bessemer_steel
     name: Cheap steel
@@ -534,7 +624,9 @@ techs:
     requires: {materials: [iron, coal]}
     effects: [{type: materials_output, bp: 1500}, {type: military_strength, bp: 800}]
     flavour: "Blow air through molten iron and steel pours out by the ton."
-    history: "Henry Bessemer blew air through molten iron to make cheap steel in 1856."
+    history: "Every Roman blade was steeled by hand at the forge (Pliny NH 34.146-149). Henry Bessemer blew air through molten iron to make cheap steel in 1856."
+    sources: ["Pliny NH 34.146-149 # unverified"]
+    confidence: high
 
   - id: dynamite
     name: Dynamite
@@ -545,4 +637,6 @@ techs:
     prerequisites: [gunpowder, distillation]
     effects: [{type: materials_output, bp: 800}, {type: military_strength, bp: 800}]
     flavour: "Mountains move aside; so, sadly, do armies."
-    history: "Alfred Nobel patented dynamite in 1867."
+    history: "Roman engineers cut through rock with fire and vinegar, as Hannibal's men were said to in the Alps (Livy 21.37.2), and with the pick: 30,000 men cut the Fucine tunnel for eleven years (Suet. Claud. 20.2). Nobel patented dynamite in 1867."
+    sources: ["Livy 21.37.2 # unverified", "Suetonius, Claudius 20.2 # unverified"]
+    confidence: high
