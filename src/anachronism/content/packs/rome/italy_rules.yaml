@@ -1,0 +1,81 @@
+schema_version: 1
+# Tunable numbers of the alliance, colony and province systems (content/schema/italy.py, R3 F1).
+# GAME BALANCE except where a source is named; the sources are what the defaults are drawn from.
+# - Allied contingents: each consular army of 225 BC had four legions of 5,200 foot and 300 horse
+#   with 30,000 allied foot and 2,000 horse (Polybius 2.24.3-4, read on LacusCurtius); the allies
+#   were "about half the force" and more, so allied_ratio_bp puts 1.2 allied men beside every
+#   citizen soldier. Velleius 2.15.2 (read) has the allies furnish double the Romans' numbers.
+# - Loyalty: after Cannae the allies began to go over (Polybius 3.118.5, unverified: not re-read);
+#   the citizenship question opens with Fulvius Flaccus in 125 (Appian, Civil Wars 1.34, read) and
+#   the Gracchan land commission's claims on the allies' land are Appian 1.18-21 (unverified).
+# - The Social War: Asculum, the praetor Servilius killed (Appian 1.38; Velleius 2.15.1, both read);
+#   the peoples that rose (Appian 1.39, read); the loyal given citizenship (Appian 1.49; Velleius
+#   2.16.4, read), the conquered admitted singly afterwards (Velleius 2.17.1, read). The Lex Iulia
+#   of 90 and the Lex Plautia Papiria of 89 are the names the tradition gives these grants (Cicero,
+#   Pro Balbo 21 and Pro Archia 7, unverified).
+# - Colonies: 2,500 colonists at Cales (Livy 8.16.14, read) and Luceria (Livy 9.26.5, read); 300 at
+#   Puteoli, Volturnum and Liternum (Livy 34.45.1, read); the last Latin colony, Luca, four years
+#   after Aquileia (Velleius 1.15.2, read); twelve of the thirty Latin colonies refuse men and
+#   money in 209 (Livy 27.9.7, read).
+# - Provinces: the praetors raised to four in 227 (Livy, Periochae 20.7, read on livius.org;
+#   Pomponius, Digest 1.2.2.32, unverified); Sicily's tithe (Cicero, Verrines 2.3.12-15,
+#   unverified); L. Piso's extortion law of 149 (Cicero, Brutus 106, read on the Latin Library).
+italy_rules:
+  sources:
+    - "Polybius 2.24.3-4 (read)"
+    - "Velleius Paterculus 2.15.2, 2.16.4, 2.17.1 (read)"
+    - "Appian, Civil Wars 1.34, 1.38-39, 1.49 (read)"
+    - "Livy 8.16.14, 9.26.5, 27.9.7, 34.45.1 (read)"
+    - "Velleius Paterculus 1.15.2 (read)"
+    - "Livy, Periochae 20.7 (read)"
+    - "Cicero, Brutus 106 (read)"
+    - "Polybius 3.118.5 (unverified)"
+    - "Appian, Civil Wars 1.18-21 (unverified)"
+    - "Cicero, Verrines 2.3.12-15 (unverified)"
+  # the allies' levies
+  allied_ratio_bp: 12000
+  levy_loyalty_floor_bp: 3000
+  # loyalty
+  baseline_loyalty_bp: 6000
+  loyalty_drift_bp: 300
+  victory_bp: 300
+  defeat_bp: 600
+  refused_citizenship_bp: 150
+  confiscation_bp: 400
+  confiscation_years: 10
+  colony_in_ally_land_bp: 800
+  grant_bp: 2000
+  # the Social War
+  social_war_year: -91
+  social_war_until: -85
+  social_war_loyalty_bp: 4000
+  lex_iulia_year: -90
+  plautia_papiria_year: -89
+  lay_down_arms_bp: 5000
+  # colonies
+  latin_settlers: 2500
+  citizen_settlers: 300
+  settler_families_bp: 35000
+  latin_until_year: -180
+  colony_loyalty_bp: 8000
+  colony_garrison_bp: 4000
+  colony_growth_bp: 50
+  colony_refusal_bp: 4000
+  # provinces
+  provinces_from_year: -227
+  tribute_per_1000: 2
+  tribute_loyalty_bp: 50
+  province_baseline_loyalty_bp: 5000
+  province_drift_bp: 300
+  extortion_chance_bp: 1500
+  extortion_share_bp: 5000
+  extortion_loyalty_bp: 800
+  wealth_per_talent: 500
+  lex_calpurnia_year: -149
+  prosecution_chance_bp: 4000
+  conviction_bp: 5000
+  prosecution_glory: 300
+  revolt_loyalty_bp: 2000
+  revolt_chance_bp: 800
+  triumph_hunger_bp: 1500
+  triumph_hunger_grievance_bp: 1000

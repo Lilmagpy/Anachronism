@@ -1,0 +1,372 @@
+schema_version: 1
+# The treaties of Rome's allies (content/schema/italy.py: AllyTreaty), one per ally civ of the
+# rome_* scenarios (D-287: the socii are civs allied to Rome). A civ allied to Rome at the start, or
+# made its ally by a script or by diplomacy, gets its treaty from here; a civ without an entry gets
+# the default terms (status ally, levy 8%, loyalty 60%).
+#
+# levy_bp is the share of the people the treaty obliges it to furnish (the formula togatorum). The
+# proportions follow Polybius 2.24 (read on LacusCurtius), the census of 225 BC: the Latins 80,000
+# foot and 5,000 horse (2.24.10), the Samnites 70,000 and 7,000 (2.24.10), the Iapygians and
+# Messapians 50,000 and 16,000 (2.24.11), the Lucanians 30,000 and 3,000 (2.24.12), the Marsi,
+# Marrucini, Frentani and Vestini 20,000 and 4,000 (2.24.12), the Sabines and Etruscans above 50,000
+# and 4,000 (2.24.5), the Umbrians and Sarsinates about 20,000 and the Veneti and Cenomani 20,000
+# (2.24.7); the Greek cities of the coast were naval allies and sent ships (Polybius 1.20.14,
+# unverified). The Romans and Campanians together: 250,000 foot and 23,000 horse (2.24.14).
+# The levy_bp of each people is these numbers against the scenarios' populations, rounded: the
+# Samnites' 77,000 men on a people of about 700,000 is 11%; the Etruscans' 54,000 on 1.1 million
+# is 5%. Loyalty is GAME BALANCE seeded from each people's record.
+#
+# steps: what history gave each people (applied in their year while the treaty stands).
+treaties:
+  # ---- the 509 and 390 starts (e5_ civs) --------------------------------------------------------
+  - id: t_e5_latins
+    civ: e5_latins
+    name: The Latin League
+    status: latin
+    levy_bp: 1000
+    loyalty_bp: 6000
+    booty_share: true
+    land_share: true
+    steps:
+      - {year: -338, status: citizen, note: "Lanuvium, Aricia, Nomentum and Pedum given the citizenship; the League dissolved.", sources: ["Livy 8.14.2-3, 8.14.10 (read)"]}
+    notes: >-
+      The treaty of Spurius Cassius (493) made the Latins Rome's allies on equal terms, sharing booty
+      and the land of joint colonies (Livy 2.33.4, 2.33.9; the text in Dionysius 6.95, unverified).
+      The step of 338 applies only if the League is still Rome's ally then; in history it fought
+      Rome and was dissolved.
+    sources: ["Livy 2.33.4, 2.33.9 (unverified: not re-read)", "Dionysius of Halicarnassus 6.95 (unverified)", "Polybius 2.24.10 (read)", "Livy 8.14 (read)"]
+    confidence: medium
+  - id: t_e5_hernici
+    civ: e5_hernici
+    name: The Hernici
+    status: ally
+    levy_bp: 800
+    loyalty_bp: 6500
+    booty_share: true
+    land_share: true
+    steps:
+      - {year: -306, status: sine_suffragio, note: "Anagnia and the Hernici who had made war on Rome given the citizenship without the vote.", sources: ["Livy 9.43.24 (read)"]}
+    notes: >-
+      The Hernici joined the Cassian alliance in 486 and were given a share of the land and booty
+      (Livy 2.41.1, unverified). Aletrium, Verulae and Ferentinum chose to keep their own laws in
+      306 (Livy 9.43.23, read).
+    sources: ["Livy 2.41.1 (unverified)", "Livy 9.43.23-24 (read)"]
+    confidence: medium
+  - id: t_e5_caere
+    civ: e5_caere
+    name: Caere
+    status: ally
+    levy_bp: 500
+    loyalty_bp: 7000
+    booty_share: false
+    land_share: false
+    steps:
+      - {year: -353, status: sine_suffragio, note: "Pardoned for its care of the Vestals, a hundred years' truce; the first municipes without the vote.", sources: ["Livy 7.20.7-9 (read)", "Aulus Gellius 16.13.7 (unverified)", "Strabo 5.2.3 (unverified)"]}
+    notes: >-
+      Livy 7.20 gives the pardon and the truce in memory of the Vestals sheltered in 390; the
+      citizenship without the vote is Gellius' (16.13.7: the Caerites the first municipes sine
+      suffragio, the "Caerite tablets"). Not re-read.
+    sources: ["Livy 7.20.7-9 (read)", "Aulus Gellius 16.13.7 (unverified)"]
+    confidence: medium
+  - id: t_e5_campanians
+    civ: e5_campanians
+    name: The Campanians
+    status: ally
+    levy_bp: 800
+    loyalty_bp: 5500
+    booty_share: true
+    land_share: false
+    steps:
+      - {year: -338, status: sine_suffragio, note: "Capua's knights, who had not joined the Latins, given the private rights of Roman citizens; Fundi and Formiae with them.", sources: ["Livy 8.14.10 (read)", "Livy 8.11.16 (unverified)"]}
+    notes: "Capua surrendered itself to Rome in 343 (Livy 7.31, unverified)."
+    sources: ["Livy 7.31 (unverified)", "Livy 8.14.10 (read)"]
+    confidence: medium
+  - id: t_e5_samnites
+    civ: e5_samnites
+    name: The Samnites
+    status: ally
+    levy_bp: 1100
+    loyalty_bp: 4500
+    booty_share: true
+    land_share: false
+    notes: "The treaty of 354 (Livy 7.19.4, unverified), renewed in 341 (Livy 8.2, unverified)."
+    sources: ["Livy 7.19.4 (unverified)", "Livy 8.2 (unverified)", "Polybius 2.24.10 (read)"]
+    confidence: low
+  - id: t_e5_sabines
+    civ: e5_sabines
+    name: The Sabines
+    status: ally
+    levy_bp: 500
+    loyalty_bp: 6000
+    steps:
+      - {year: -290, status: sine_suffragio, note: "Curius Dentatus subdues the Sabines; citizenship without the vote.", sources: ["Velleius Paterculus 1.14.6 (read in part: the grant is listed)", "Livy, Periochae 11 (unverified)"]}
+      - {year: -268, status: citizen, note: "The Sabines given the vote.", sources: ["Velleius Paterculus 1.14.7 (read in part)", "Cicero, Pro Balbo 31 (unverified)"]}
+    sources: ["Velleius Paterculus 1.14.6-7 (read in part)", "Polybius 2.24.5 (read)"]
+    confidence: low
+  - id: t_e5_etruscan_league
+    civ: e5_etruscan_league
+    name: The Etruscan League
+    status: ally
+    levy_bp: 500
+    loyalty_bp: 5000
+    sources: ["Polybius 2.24.5 (read)"]
+    confidence: low
+  - id: t_e5_tarentum
+    civ: e5_tarentum
+    name: Tarentum
+    status: ally
+    levy_bp: 300
+    loyalty_bp: 4500
+    booty_share: false
+    notes: "A naval ally: Tarentum sent ships, not legions (Polybius 1.20.14, unverified); garrisoned from 272 (Polybius 2.24.13, read)."
+    sources: ["Polybius 2.24.13 (read)", "Polybius 1.20.14 (unverified)"]
+    confidence: low
+  - id: t_e5_cumae
+    civ: e5_cumae
+    name: Cumae and the Bay of Naples
+    status: ally
+    levy_bp: 300
+    loyalty_bp: 6500
+    booty_share: false
+    notes: "Naples' treaty of 326 made it a naval ally on favourable terms (Livy 8.26.6-7, unverified); Cumae and Suessula were given Capua's rights in 338 (Livy 8.14.11, read)."
+    steps:
+      - {year: -338, status: sine_suffragio, note: "Cumae and Suessula given the same rights as Capua.", sources: ["Livy 8.14.11 (read)"]}
+    sources: ["Livy 8.14.11 (read)", "Livy 8.26.6-7 (unverified)"]
+    confidence: low
+  # ---- the 340 start (e3_ civs) ------------------------------------------------------------------
+  - id: t_e3_latins
+    civ: e3_latins
+    name: The Latin League
+    status: latin
+    levy_bp: 1000
+    loyalty_bp: 3500
+    land_share: true
+    steps:
+      - {year: -338, status: citizen, note: "Lanuvium, Aricia, Nomentum and Pedum given the citizenship; the League dissolved.", sources: ["Livy 8.14.2-3, 8.14.10 (read)"]}
+    notes: "In 340 the Latins demand a consul and half the Senate and are refused (Livy 8.4-5, unverified)."
+    sources: ["Livy 8.4-5 (unverified)", "Livy 8.14 (read)"]
+    confidence: medium
+  - id: t_e3_samnites
+    civ: e3_samnites
+    name: The Samnites
+    status: ally
+    levy_bp: 1100
+    loyalty_bp: 4500
+    notes: "Allied by the treaty of 354, renewed in 341 (Livy 7.19.4, 8.2, unverified)."
+    sources: ["Livy 7.19.4 (unverified)", "Livy 8.2 (unverified)", "Polybius 2.24.10 (read)"]
+    confidence: low
+  - id: t_e3_campanians
+    civ: e3_campanians
+    name: The Campanians
+    status: ally
+    levy_bp: 800
+    loyalty_bp: 5500
+    steps:
+      - {year: -338, status: sine_suffragio, note: "Capua's knights given the private rights of Roman citizens.", sources: ["Livy 8.14.10 (read)"]}
+    sources: ["Livy 8.14.10 (read)"]
+    confidence: medium
+  - id: t_e3_aurunci
+    civ: e3_aurunci
+    name: The Aurunci and Sidicini
+    status: ally
+    levy_bp: 700
+    loyalty_bp: 5500
+    steps:
+      - {year: -338, status: sine_suffragio, note: "Fundi and Formiae given the private rights of Roman citizens for the passage they allowed.", sources: ["Livy 8.14.10 (read)"]}
+      - {year: -188, status: citizen, note: "The tribune C. Valerius Tappo's bill gives Formiae, Fundi and Arpinum the vote.", sources: ["Livy 38.36.7-9 (read)"]}
+    sources: ["Livy 8.14.10 (read)", "Livy 38.36.7-9 (read)"]
+    confidence: medium
+  - id: t_e3_hernici
+    civ: e3_hernici
+    name: The Hernici
+    status: ally
+    levy_bp: 800
+    loyalty_bp: 6500
+    land_share: true
+    steps:
+      - {year: -306, status: sine_suffragio, note: "Anagnia and the Hernici who had made war on Rome given the citizenship without the vote.", sources: ["Livy 9.43.24 (read)"]}
+    sources: ["Livy 9.43.23-24 (read)"]
+    confidence: medium
+  - id: t_e3_sabellians
+    civ: e3_sabellians
+    name: The Sabines and Central Apennine Peoples
+    status: ally
+    levy_bp: 700
+    loyalty_bp: 5500
+    steps:
+      - {year: -290, status: sine_suffragio, note: "The Sabines subdued by Curius Dentatus; citizenship without the vote.", sources: ["Velleius Paterculus 1.14.6 (read in part)"]}
+    sources: ["Velleius Paterculus 1.14.6 (read in part)", "Polybius 2.24.5, 2.24.12 (read)"]
+    confidence: low
+  - id: t_e3_etruscans
+    civ: e3_etruscans
+    name: The Etruscan Cities
+    status: ally
+    levy_bp: 500
+    loyalty_bp: 5000
+    sources: ["Polybius 2.24.5 (read)"]
+    confidence: low
+  - id: t_e3_umbrians
+    civ: e3_umbrians
+    name: The Umbrians
+    status: ally
+    levy_bp: 500
+    loyalty_bp: 5500
+    sources: ["Polybius 2.24.7 (read)"]
+    confidence: low
+  - id: t_e3_lucanians
+    civ: e3_lucanians
+    name: The Lucanians
+    status: ally
+    levy_bp: 800
+    loyalty_bp: 4500
+    notes: "The Lucanians asked Rome's protection against the Samnites in 298 (Livy 10.11-12, unverified)."
+    sources: ["Livy 10.11-12 (unverified)", "Polybius 2.24.12 (read)"]
+    confidence: low
+  - id: t_e3_tarentum
+    civ: e3_tarentum
+    name: Tarentum
+    status: ally
+    levy_bp: 300
+    loyalty_bp: 4000
+    booty_share: false
+    notes: "A naval ally (Polybius 1.20.14, unverified)."
+    sources: ["Polybius 2.24.13 (read)", "Polybius 1.20.14 (unverified)"]
+    confidence: low
+  # ---- the 264 start (e2_ civs) ------------------------------------------------------------------
+  - id: t_e2_samnites
+    civ: e2_samnites
+    name: The Samnite League
+    status: ally
+    levy_bp: 1100
+    loyalty_bp: 5000
+    notes: "70,000 foot and 7,000 horse in 225 (Polybius 2.24.10). The Samnites rose in the Social War (Appian 1.39)."
+    sources: ["Polybius 2.24.10 (read)", "Appian, Civil Wars 1.39 (read)"]
+    confidence: medium
+  - id: t_e2_central_italics
+    civ: e2_central_italics
+    name: The Marsi, Marrucini, Frentani and Vestini
+    status: ally
+    levy_bp: 900
+    loyalty_bp: 6500
+    notes: "20,000 foot and 4,000 horse in 225 (Polybius 2.24.12). The Marsi led the rising of 91 (Appian 1.39)."
+    sources: ["Polybius 2.24.12 (read)", "Appian, Civil Wars 1.39 (read)"]
+    confidence: medium
+  - id: t_e2_etruscans
+    civ: e2_etruscans
+    name: The Etruscan and Faliscan Cities
+    status: ally
+    levy_bp: 500
+    loyalty_bp: 6000
+    notes: "Above 50,000 foot and 4,000 horse with the Sabines in 225 (Polybius 2.24.5); each city bound by its own treaty. The Etruscans and Umbrians held back from the rising of 91 (Appian 1.36, read)."
+    sources: ["Polybius 2.24.5 (read)", "Appian, Civil Wars 1.36 (read)"]
+    confidence: medium
+  - id: t_e2_umbrians
+    civ: e2_umbrians
+    name: The Umbrians
+    status: ally
+    levy_bp: 500
+    loyalty_bp: 6500
+    notes: "About 20,000 with the Sarsinates in 225 (Polybius 2.24.7)."
+    sources: ["Polybius 2.24.7 (read)"]
+    confidence: medium
+  - id: t_e2_southern_italics
+    civ: e2_southern_italics
+    name: The Lucanians, Apulians and Messapians
+    status: ally
+    levy_bp: 900
+    loyalty_bp: 5000
+    notes: "Iapygians and Messapians 50,000 foot and 16,000 horse, Lucanians 30,000 and 3,000 in 225 (Polybius 2.24.11-12). Many went over to Hannibal after Cannae (Polybius 3.118.5, unverified) and rose in 91 (Appian 1.39)."
+    sources: ["Polybius 2.24.11-12 (read)", "Polybius 3.118.5 (unverified)", "Appian, Civil Wars 1.39 (read)"]
+    confidence: medium
+  - id: t_e2_italiote_greeks
+    civ: e2_italiote_greeks
+    name: The Greek Cities of Italy
+    status: ally
+    levy_bp: 300
+    loyalty_bp: 6000
+    booty_share: false
+    notes: "Naval allies: Naples, Tarentum and Rhegium furnished ships (Polybius 1.20.14, unverified); Tarentum held by a Roman garrison (Polybius 2.24.13, read)."
+    sources: ["Polybius 2.24.13 (read)", "Polybius 1.20.14 (unverified)"]
+    confidence: medium
+  - id: t_e2_cenomani
+    civ: e2_cenomani
+    name: The Cenomani
+    status: ally
+    levy_bp: 500
+    loyalty_bp: 6000
+    booty_share: true
+    notes: "The Cenomani and Veneti sided with Rome in 225 and sent 20,000 men (Polybius 2.23.2, 2.24.7)."
+    sources: ["Polybius 2.23.2 (unverified)", "Polybius 2.24.7 (read)"]
+    confidence: medium
+  - id: t_e2_veneti
+    civ: e2_veneti
+    name: The Veneti
+    status: ally
+    levy_bp: 500
+    loyalty_bp: 6500
+    sources: ["Polybius 2.24.7 (read)"]
+    confidence: medium
+  - id: t_e2_mamertines
+    civ: e2_mamertines
+    name: The Mamertines
+    status: ally
+    levy_bp: 500
+    loyalty_bp: 6000
+    booty_share: true
+    notes: "Messana appealed to Rome in 264 (Polybius 1.10.1-2, read in the scenario's sources)."
+    sources: ["Polybius 1.10.1-2 (unverified: not re-read)"]
+    confidence: low
+  - id: t_massalia
+    civ: massalia
+    name: Massalia
+    status: ally
+    levy_bp: 200
+    loyalty_bp: 8000
+    booty_share: false
+    notes: "Rome's old friend in the west; a naval ally outside Italy (Justin 43.5, unverified)."
+    sources: ["Justin 43.5 (unverified)"]
+    confidence: low
+  - id: t_syracuse
+    civ: syracuse
+    name: Syracuse
+    status: ally
+    levy_bp: 200
+    loyalty_bp: 7500
+    booty_share: false
+    notes: "Hiero II, Rome's loyal ally from 263 to his death (Polybius 1.16.9-11, unverified)."
+    sources: ["Polybius 1.16.9-11 (unverified)"]
+    confidence: low
+  - id: t_numidia
+    civ: numidia
+    name: Numidia
+    status: ally
+    levy_bp: 300
+    loyalty_bp: 7000
+    booty_share: true
+    notes: "Masinissa's horse at Zama (Livy 30.29, unverified); Micipsa's men under Jugurtha at Numantia (Sallust, Jugurtha 7, unverified)."
+    sources: ["Livy 30.29 (unverified)", "Sallust, Bellum Iugurthinum 7 (unverified)"]
+    confidence: low
+  # ---- the 133 start (e1_ civs) ------------------------------------------------------------------
+  - id: t_e1_socii
+    civ: e1_socii
+    name: The Italian allies
+    status: ally
+    levy_bp: 1000
+    loyalty_bp: 4500
+    notes: >-
+      The allies as one people (D-288): they furnish twice the Romans' numbers and are refused the
+      citizenship they ask for (Velleius 2.15.2, read); their land is caught up in the land
+      commission's claims (Appian 1.18-21, unverified). The grant_citizenship law, or the Lex Iulia
+      of default history after the rising of 91, gives them the citizenship (Appian 1.49, read).
+    sources: ["Velleius Paterculus 2.15.2 (read)", "Appian, Civil Wars 1.18-21 (unverified)", "Appian, Civil Wars 1.49 (read)"]
+    confidence: medium
+  - id: t_bithynia
+    civ: bithynia
+    name: Bithynia
+    status: ally
+    levy_bp: 200
+    loyalty_bp: 7000
+    booty_share: false
+    notes: "A friendly kingdom; Nicomedes IV bequeathed it to Rome in 74 (Livy, Periochae 93, unverified)."
+    sources: ["Livy, Periochae 93 (unverified)"]
+    confidence: low
