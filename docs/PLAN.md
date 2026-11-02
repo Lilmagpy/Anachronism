@@ -1,9 +1,10 @@
 # Anachronism — Plan
 
 **Current phase:** Phase 2 — 3D world (Godot) on the Phase 1 engine (branch `claude/phase-2-3d`).
-**Next action:** the owner plays the build (gate 2.16). Meanwhile, gameplay depth from the
-brief is being added (owner, 2026-10-02: "stop working on the graphics, and perfect the
-gameplay"): province buildings first (D-111), then a review of the brief for gaps.
+**Next action:** round F1 (2026-11-01, owner: "build the functionality of the game"): five
+parallel passes on R2 (Fasti, people, families, Senate), R3 (allies, citizenship, colonies,
+provinces), R4 (religion, land and grain, coinage, the army's eras), the Roman ideas library and
+ideas in the city, and a client playthrough with a city-events feed. Brief: `plans/briefs/f1.md`.
 
 Each phase ends at a **gate**: Claude stops, summarises, shows how to run it, lists known
 problems, and waits for approval (D-002: approval = merging the phase PR).
