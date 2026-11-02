@@ -25,7 +25,7 @@ from anachronism.content.schema.monuments import (
 )
 from anachronism.content.schema.pack import CONTENT_KINDS, LIST_KINDS, SINGLE_KINDS, PackManifest
 from anachronism.content.schema.republic import (
-    Branch,  # F1 republic: branches of a gens by era  # noqa: F401
+    Branch,  # F1 republic: branches of a gens by era
     College,
     Faction,
     FastiYear,
@@ -100,6 +100,7 @@ __all__ = [
     "AlmanacEntry",
     "Battle",
     "BattleSide",
+    "Branch",
     "Building",
     "Category",
     "Chapter",

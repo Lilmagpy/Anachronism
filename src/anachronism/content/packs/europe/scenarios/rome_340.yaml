@@ -19,6 +19,7 @@ scenarios:
     years_per_turn: 5
     campaign_years_per_turn: 1
     player_civ: rome
+    republic: true  # F1 republic: the 340 start is governed by the Senate like the other five
     map: europe
     music: roman  # the client plays client/music/<name>.mp3 (D-208)
     cost_scale: 10

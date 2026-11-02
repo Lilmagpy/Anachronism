@@ -44,7 +44,8 @@ class Person(_Mutable):
     protected_until: int | None = None
     """In a chronicle, no natural death before this year (his last recorded office)."""
     history_died: int | None = None
-    """The year he really died, when known (a chronicle keeps to it)."""
+    """The year he really died, when known (a chronicle keeps to it; if he held office that
+    year he dies after taking it)."""
 
 
 class Family(_Mutable):

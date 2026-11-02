@@ -1,10 +1,16 @@
-"""The Republic as the client sees it (R2): magistrates, the Senate's mood, notable people."""
+"""The Republic as the client sees it (R2): magistrates, the Senate's mood, notable people.
+
+F1 additions: ``year_disputed`` / ``year_gap`` / ``year_note`` (the Fasti's confidence and
+gap kind for the year, in a chronicle), ``disputed`` on each magistrate and record entry
+seated from a doubtful year, and on each proposal ``tribune_name`` and ``tribune_note`` (the
+chance a tribune acts, or why none will).
+"""
 
 from __future__ import annotations
 
 from typing import Any
 
-from anachronism.content.schema import Issue
+from anachronism.content.schema import FastiYear, Issue
 from anachronism.engine.republic import (
     factions_at,
     family_leaning,
@@ -13,7 +19,7 @@ from anachronism.engine.republic import (
     year_label,
 )
 from anachronism.engine.republic_state import Person
-from anachronism.engine.senate import available, interposition
+from anachronism.engine.senate import Interposition, available, interposition
 from anachronism.engine.state import GameState
 
 NOTABLE = 12
@@ -61,9 +67,27 @@ def _proposals(state: GameState) -> list[dict[str, Any]]:
                 "passes": vote.passes,
                 "tribune": stand.kind,
                 "tribune_bp": stand.chance_bp,
+                "tribune_name": stand.tribune,
+                "tribune_note": _tribune_note(stand),
             }
         )
     return out
+
+
+def _tribune_note(stand: Interposition) -> str:
+    """What the forecast says about the tribune, honestly: the chance and its ground."""
+    if stand.kind == "veto":
+        return f"{stand.tribune} may interpose his veto ({stand.chance_bp // 100}% chance)"
+    if stand.kind == "force":
+        return (
+            f"{stand.tribune} may carry it to the people over the Senate's refusal "
+            f"({stand.chance_bp // 100}% chance)"
+        )
+    return f"no tribune will act: {stand.why}" if stand.why else ""
+
+
+def _fasti_year(state: GameState, year: int) -> FastiYear | None:
+    return state.world.fasti.get(year) if state.chronicle_mode else None
 
 
 def _last_votes(state: GameState) -> list[dict[str, Any]]:
@@ -91,6 +115,12 @@ def _last_votes(state: GameState) -> list[dict[str, Any]]:
     return out
 
 
+def _disputed(state: GameState, year: int) -> bool:
+    """True when the Fasti's list for that year is doubtful (low confidence)."""
+    entry = _fasti_year(state, year)
+    return entry.disputed if entry is not None else False
+
+
 def republic_view(state: GameState) -> dict[str, Any] | None:
     """Everything the client needs to draw how Rome governs itself, or ``None``."""
     rep = state.republic
@@ -99,12 +129,16 @@ def republic_view(state: GameState) -> dict[str, Any] | None:
     mags = state.world.magistracies
     people = rep.people
     holders = {m.person for m in rep.magistrates}
+    this_year = _fasti_year(state, state.year)
     notable = sorted(
         (p for p in people.values() if p.alive),
         key=lambda p: (p.id not in holders, -p.glory, p.id),
     )[:NOTABLE]
     return {
         "year_label": year_label(state.year),
+        "year_disputed": this_year.disputed if this_year is not None else False,
+        "year_gap": this_year.gap if this_year is not None else "",
+        "year_note": this_year.notes if this_year is not None else "",
         "influence": rep.influence,
         "influence_costs": {
             "persuade": state.world.republic_rules.persuade_cost,
@@ -131,6 +165,7 @@ def republic_view(state: GameState) -> dict[str, Any] | None:
                 "suffect": m.suffect,
                 "appointed": m.appointed,
                 "from_fasti": m.by_fasti,
+                "disputed": _disputed(state, m.year) if m.by_fasti else False,
                 "master_of": m.master,
             }
             for m in sorted(rep.magistrates, key=lambda m: (-mags[m.office].rank, m.office, m.name))
@@ -175,7 +210,14 @@ def republic_view(state: GameState) -> dict[str, Any] | None:
         "notable": [_person(state, p) for p in notable],
         "census": [{"year": c.year, "citizens": c.citizens} for c in rep.census[-5:]],
         "fasti": [
-            {"year": m.year, "office": m.office, "name": m.name, "suffect": m.suffect}
+            {
+                "year": m.year,
+                "office": m.office,
+                "name": m.name,
+                "suffect": m.suffect,
+                "from_fasti": m.by_fasti,
+                "disputed": _disputed(state, m.year) if m.by_fasti else False,
+            }
             for m in rep.record[-40:]
         ],
     }

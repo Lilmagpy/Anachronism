@@ -8,6 +8,27 @@ changes have removed or replaced a historical holder. The player never commands:
 families and backs candidates with the influence he has won.
 
 All numbers are integers; every loop runs in sorted-id order; randomness is only ``GameRng``.
+
+The rules of the year (F1), in the order they run:
+
+1. Terms end; senior offices go to the record.
+2. Life: a death draw for everyone (the age table in ``republic_rules``); in a chronicle a real
+   person dies in his real year (``died``) and not before his last known year; the families
+   have sons in proportion to their standing (none after ``extinct_after``), named from the
+   branches alive in the year and never with the name of a living man or of a modelled person.
+3. Standing fades towards its base; influence grows.
+4. The magistrates. In a chronicle the Fasti seat the year's holders (a man named only by name
+   is the earlier namesake while that man would be under ``namesake_max_age``, else a new man
+   of the family), a gap year (the anarchy, a dictator year) seats no curule magistrate, and a
+   modelled person's recorded lower offices (praetor, tribune...) are honoured too. The rest is
+   elected office by office in rank order, by weighted draw among the eligible: the laws of
+   the year (orders, the cursus, the Lex Villia ages, ``max_office_age``), one office per man
+   per year. A dictator is named in an emergency, never in a year the Fasti cover.
+5. The census when censors take office.
+
+The Senate (``senate_vote``) weighs each family by its standing and by its living senators
+(members who have held office) and adds to its stance the lean of the bloc it belongs to in
+the year (orders until 287, the nobility, optimates and populares from 133).
 """
 
 from __future__ import annotations
@@ -81,6 +102,27 @@ def family_weight(family: Family) -> int:
     return max(1, family.auctoritas_bp + family.dignitas_bp // 2 + family.clients // 2)
 
 
+def senators_by_family(rep: RepublicState) -> dict[str, int]:
+    """Living members of each family who have held an office (its men in the Senate)."""
+    counts: dict[str, int] = {}
+    for pid in sorted(rep.people):
+        person = rep.people[pid]
+        if person.alive and person.offices:
+            counts[person.gens] = counts.get(person.gens, 0) + 1
+    return counts
+
+
+def senate_weights(state: GameState) -> dict[str, int]:
+    """Each family's weight in a vote: its standing, raised by its living senators."""
+    rep = _rep(state)
+    bonus = state.world.republic_rules.senator_weight_bp
+    senators = senators_by_family(rep)
+    return {
+        fid: family_weight(rep.families[fid]) * (BP + senators.get(fid, 0) * bonus) // BP
+        for fid in sorted(rep.families)
+    }
+
+
 def _lean_popular(gens: Gens) -> bool:
     return gens.popular_lean_bp >= POPULIST_LEAN_BP
 
@@ -145,7 +187,7 @@ def _spawn_historical(
         born = min(born, min(first, year) - rules.pre_villia_min_age)
     past = [Held(office=h.office, year=h.year) for h in hp.offices if h.year < year]
     future = [Held(office=h.office, year=h.year) for h in hp.offices if h.year >= year]
-    last = max((h.year for h in hp.offices), default=year)
+    last = hp.last_known_alive if hp.last_known_alive is not None else year
     person = Person(
         id=hp.id,
         name=hp.name,
@@ -159,11 +201,53 @@ def _spawn_historical(
         glory=sum(state.world.magistracies[h.office].glory for h in past),
         offices=past,
         future=future,
-        protected_until=hp.died if hp.died is not None else last,
+        protected_until=max(last, year),
         history_died=hp.died,
     )
     rep.people[hp.id] = person
     return person
+
+
+def _taken_names(state: GameState, rep: RepublicState, born: int) -> set[str]:
+    """Names no generated man may carry.
+
+    Every living man's, every modelled person's, and every name the Fasti will give to a man
+    of his generation (so the game's Marcus Fabius Licinus is not mistaken for the consul of 246).
+    """
+    names = {p.name for p in rep.people.values() if p.alive}
+    names.update(hp.name for hp in state.world.people.values())
+    for year in range(born, born + 80):
+        entry = state.world.fasti.get(year)
+        if entry is None:
+            continue
+        for college in entry.colleges:
+            names.update(h.name for h in college.holders if h.name)
+    return names
+
+
+def _name_man(state: GameState, rep: RepublicState, rng: GameRng, gens: Gens, born: int) -> str:
+    """A name from the family's praenomina and the branches alive in ``born``, not yet in use.
+
+    A generated namesake must never duplicate a living man or a modelled person (a second
+    "Lucius Iunius Brutus" would be re-elected as if the first had come back). When every
+    combination is in use the man is "Minor", the younger.
+    """
+    rules = state.world.republic_rules
+    firsts = list(gens.praenomina or rules.default_praenomina)
+    cognomina = list(gens.cognomina_at(born))
+    taken = _taken_names(state, rep, born)
+    combos = [(f, c) for f in firsts for c in (cognomina or [""])]
+    rng.shuffle(combos)
+    for first, cognomen in combos:
+        name = " ".join(part for part in (first, gens.nomen, cognomen) if part)
+        if name not in taken:
+            return name
+    first, cognomen = combos[0] if combos else ("", "")
+    base = " ".join(part for part in (first, gens.nomen, cognomen) if part)
+    for suffix in ("Minor", "Nepos", "Tertius", "Quartus", "Quintus", "Sextus"):
+        if f"{base} {suffix}" not in taken:
+            return f"{base} {suffix}"
+    return f"{base} {rep.next_person}"
 
 
 def _spawn_man(
@@ -175,15 +259,9 @@ def _spawn_man(
     name_note: str = "",
 ) -> Person:
     """A man of a family, born in ``born`` (a child of the game or a new man)."""
-    rules = state.world.republic_rules
-    firsts = gens.praenomina or rules.default_praenomina
-    parts = [rng.pick(firsts)] if firsts else []
-    parts.append(gens.nomen)
-    if gens.cognomina:
-        parts.append(rng.pick(gens.cognomina))
     person = Person(
         id=_new_id(rep),
-        name=" ".join(parts),
+        name=_name_man(state, rep, rng, gens, born),
         gens=gens.id,
         order=gens.order,
         born=born,
@@ -220,7 +298,7 @@ def eligible(
     least = era.min_age
     if least is None:
         least = rules.pre_villia_min_age if mag.cursus else rules.adult_age
-    if _age(person, year) < least:
+    if _age(person, year) < least or _age(person, year) > rules.max_office_age:
         return False
     if era.patricians_only and person.order is not Order.PATRICIAN:
         return False
@@ -267,10 +345,51 @@ def start_republic(state: GameState, rng: GameRng) -> None:
         born = hp.birth_year(rules.age_at_first_listed_office)
         if born <= state.year and (hp.died is None or hp.died >= state.year):
             _spawn_historical(state, rep, hp, state.year)
+    _seed_population(state, rep, rng, state.year)
     events = EventLog(turn=state.turn, year=state.year)
     _hold_year(state, rep, rng, events, state.year)
     city_module.start_city(state, events.turn)
     state.events.extend(events.items)
+
+
+SEED_YEARS = 65
+"""How far back the families' living men are generated at the start of a game."""
+SEED_CAREER_BP = (("quaestor", 30, 5000), ("aedile_curule", 36, 2500), ("praetor", 39, 2500))
+"""Offices a seeded man may already have held: (office, age, chance in bp given the one
+before), so the cursus has men of the proper career from the first election."""
+
+
+def _seed_population(state: GameState, rep: RepublicState, rng: GameRng, year: int) -> None:
+    """The families' living men at the start: the sons of the last sixty-five years who lived.
+
+    Without them the first elections would find only the modelled persons and fill every
+    praetorship with new men. Each year back, each family has a son with its usual chance,
+    and he faces the death table year by year to the start; a survivor of thirty or more may
+    already have climbed the first steps of the cursus.
+    """
+    rules = state.world.republic_rules
+    mags = state.world.magistracies
+    for gid in sorted(state.world.gentes):
+        gens = state.world.gentes[gid]
+        family = rep.families.get(gid)
+        for born in range(year - SEED_YEARS, year):
+            if not gens.alive_in(born) or not rng.chance(_birth_bp(rules, family)):
+                continue
+            if any(rng.chance(death_bp(rules, age)) for age in range(year - born)):
+                continue
+            man = _spawn_man(state, rep, rng, gens, born)
+            for office, age, chance in SEED_CAREER_BP:
+                held_year = born + age
+                mag = mags.get(office)
+                era = mag.era_at(held_year) if mag is not None else None
+                if held_year >= year or era is None or not rng.chance(chance):
+                    break
+                if (era.patricians_only and man.order is not Order.PATRICIAN) or (
+                    era.plebeians_only and man.order is not Order.PLEBEIAN
+                ):
+                    break
+                man.offices.append(Held(office=office, year=held_year))
+                man.glory += mag.glory if mag is not None else 0
 
 
 def run_year(state: GameState, rng: GameRng, events: EventLog, year: int) -> None:
@@ -280,6 +399,7 @@ def run_year(state: GameState, rng: GameRng, events: EventLog, year: int) -> Non
     _life(state, rep, rng, events, year)
     _fade(state, rep, year)
     _hold_year(state, rep, rng, events, year)
+    _deaths_in_office(state, rep, events, year)
     city_module.run_year(state, events, year)
 
 
@@ -318,13 +438,15 @@ def _life(state: GameState, rep: RepublicState, rng: GameRng, events: EventLog, 
         if state.chronicle_mode and person.protected_until is not None:
             if person.history_died is not None:
                 dies = person.history_died == year  # a chronicle keeps to the real death
+                if dies and any(h.year == year for h in person.future):
+                    dies = False  # he held office that year (Caesar in 44): he dies in it
             else:
                 dies = roll and year > person.protected_until
         if dies:
             _die(state, rep, person, year, events)
     for gid in sorted(state.world.gentes):
         gens = state.world.gentes[gid]
-        if rng.chance(rules.births_per_gens_per_year_bp):
+        if gens.alive_in(year) and rng.chance(_birth_bp(rules, rep.families.get(gid))):
             _spawn_man(state, rep, rng, gens, year)
     for hid in sorted(state.world.people):
         hp = state.world.people[hid]
@@ -340,6 +462,49 @@ def _life(state: GameState, rep: RepublicState, rng: GameRng, events: EventLog, 
             del rep.people[pid]
 
 
+def _birth_bp(rules: RepublicRules, family: Family | None) -> int:
+    """A family's chance of a son this year: the base rate scaled by its dignitas.
+
+    Within a quarter and two and a half times the base, so the great houses have the men.
+    """
+    if family is None:
+        return rules.births_per_gens_per_year_bp
+    scaled = (
+        rules.births_per_gens_per_year_bp
+        * family.dignitas_bp
+        // max(1, rules.birth_reference_dignitas_bp)
+    )
+    low = rules.births_per_gens_per_year_bp // 4
+    high = rules.births_per_gens_per_year_bp * 5 // 2
+    return min(BP, max(low, min(high, scaled)))
+
+
+DEATH_TEXT = {
+    "battle": "{name} falls in battle.",
+    "murdered": "{name} is murdered.",
+    "killed": "{name} is killed.",
+    "executed": "{name} is put to death.",
+    "proscribed": "{name} is proscribed and killed.",
+    "suicide": "{name} dies by his own hand.",
+    "illness": "{name} dies of illness.",
+    "natural": "{name} dies, full of years.",
+}
+
+
+def _deaths_in_office(state: GameState, rep: RepublicState, events: EventLog, year: int) -> None:
+    """A real person who died in a year he held office dies after taking it.
+
+    Caesar in 44, Hirtius and Pansa in 43: the seat falls to the suffect the Fasti name, or
+    stays empty.
+    """
+    if not state.chronicle_mode:
+        return
+    for pid in sorted(rep.people):
+        person = rep.people[pid]
+        if person.alive and person.history_died == year:
+            _die(state, rep, person, year, events)
+
+
 def _die(
     state: GameState, rep: RepublicState, person: Person, year: int, events: EventLog | None
 ) -> None:
@@ -347,7 +512,12 @@ def _die(
     person.died = year
     rep.magistrates = [m for m in rep.magistrates if m.person != person.id]
     if person.offices and events is not None:
-        events.add(state.player_civ, "death", f"{person.name} dies.", person.name)
+        cause = ""
+        if state.chronicle_mode and person.history_died == year:
+            hp = state.world.people.get(person.content_id)
+            cause = hp.died_of if hp is not None else ""
+        text = DEATH_TEXT.get(cause, "{name} dies.").format(name=person.name)
+        events.add(state.player_civ, "death", text, person.name)
 
 
 def kill_person(state: GameState, person_id: str, events: EventLog | None = None) -> bool:
@@ -456,7 +626,7 @@ def _take(
     person.glory += mag.glory
     family = rep.families.get(person.gens)
     if family is not None:
-        family.dignitas_bp += mag.glory // 10
+        family.dignitas_bp += mag.glory * state.world.republic_rules.office_dignitas_share_bp // BP
     return m
 
 
@@ -570,12 +740,66 @@ def _hold_year(
     fasti = state.world.fasti.get(year) if state.chronicle_mode else None
     if fasti is not None:
         handled = _apply_fasti(state, rep, rng, events, fasti, taken, shares)
+        if fasti.gap:
+            handled |= _gap_year(state, events, year, fasti.gap)
+    if state.chronicle_mode:
+        _seat_recorded(state, rep, year, taken, handled)
     elected = _elect_all(state, rep, rng, events, year, taken, shares, handled)
     _maybe_dictator(state, rep, rng, events, year, taken, fasti is not None, shares)
     _emergency(state, rep)
     _take_census(state, rep, year)
     _announce(state, rep, events, year, elected)
     _name_ruler(state, rep)
+
+
+def _gap_year(state: GameState, events: EventLog, year: int, kind: str) -> set[str]:
+    """A year without curule magistrates: only the plebeian offices are chosen.
+
+    The anarchy of 375-371 (Livy 6.35.10: the tribunes Licinius and Sextius blocked the
+    curule elections, and were themselves re-elected) and the "dictator years" the Varronian
+    list pads with (333, 324, 309, 301).
+    """
+    mags = state.world.magistracies
+    blocked = {
+        mid
+        for mid in sorted(mags)
+        if (era := mags[mid].era_at(year)) is None or not era.plebeians_only
+    }
+    if kind == "anarchy":
+        text = (
+            f"No consuls or consular tribunes are chosen for {year_label(year)}: the tribunes "
+            "block the elections and the city goes without curule magistrates."
+        )
+    else:
+        text = f"The lists give {year_label(year)} to a dictator alone: no consuls are chosen."
+    events.add(state.player_civ, "anarchy", text, kind)
+    return blocked
+
+
+def _seat_recorded(
+    state: GameState, rep: RepublicState, year: int, taken: set[str], handled: set[str]
+) -> None:
+    """Honour a modelled person's recorded offices the Fasti do not list.
+
+    A praetorship, a tribunate: he takes the seat before the election fills the rest.
+    """
+    mags = state.world.magistracies
+    for pid in sorted(rep.people):
+        person = rep.people[pid]
+        if not person.alive or pid in taken:
+            continue
+        for held in person.future:
+            if held.year != year or held.office in handled or held.office not in mags:
+                continue
+            mag = mags[held.office]
+            era = mag.era_at(year)
+            if era is None or era.appointed or not era.held_in(year):
+                continue
+            if sum(1 for m in rep.magistrates if m.office == mag.id) >= era.seats:
+                continue
+            _take(state, rep, person, mag, era, year, by_fasti=True)
+            taken.add(pid)
+            break
 
 
 def _elect_all(
@@ -611,11 +835,14 @@ def _elect_all(
             continue
         if rng.chance(era.replaced_bp):
             forced.add(era.replaced_by)
+    covered = state.chronicle_mode and year in state.world.fasti
     elected: list[str] = []
     for mid in order:
         mag, era = mags[mid], mags[mid].era_at(year)
         if era is None or not era.held_in(year) or mid in handled or era.appointed:
             continue
+        if covered and era.every > 1:
+            continue  # the censors of a year the Fasti cover are the Fasti's, or none
         if mid in stands_in and mid not in forced:
             continue
         if era.replaced_by and era.replaced_by in forced:
@@ -661,6 +888,14 @@ def _apply_fasti(
             if person is None or not person.alive:
                 if not holder.suffect:
                     missing += 1
+                    who = holder.name or state.world.people[holder.person or ""].name
+                    events.add(
+                        state.player_civ,
+                        "history_turned",
+                        f"{who}, whom history made {mag.name.lower()} of {year_label(year)}, "
+                        "is not alive to take it.",
+                        who,
+                    )
                 continue
             seated.append((person, holder.suffect))
         # the player's candidates displace the historical men who share the office
@@ -723,14 +958,19 @@ def _resolve_holder(
         if hp.died is not None and hp.died < year:
             return None
         return _spawn_historical(state, rep, hp, year, force=True)
+    rules = state.world.republic_rules
     for pid in sorted(rep.people):
         existing = rep.people[pid]
-        if existing.name == name and existing.alive:
+        if (
+            existing.name == name
+            and existing.alive
+            and existing.gens == gens_id
+            and rules.pre_villia_min_age <= year - existing.born <= rules.namesake_max_age
+        ):
             return existing
     assert gens_id is not None
     gens = state.world.gentes[gens_id]
     order = gens.order if plebeian is None else (Order.PLEBEIAN if plebeian else Order.PATRICIAN)
-    rules = state.world.republic_rules
     person = Person(
         id=_new_id(rep),
         name=name,
@@ -800,8 +1040,9 @@ def _maybe_dictator(
 
 
 def eligible_for_appointment(state: GameState, person: Person, year: int) -> bool:
-    """May this man be named to an emergency office (adult, of age for any career)?"""
-    return person.alive and _age(person, year) >= state.world.republic_rules.pre_villia_min_age
+    """May this man be named to an emergency office (of age for a career, not too old)?"""
+    rules = state.world.republic_rules
+    return person.alive and rules.pre_villia_min_age <= _age(person, year) <= rules.max_office_age
 
 
 def _consular(state: GameState, person: Person) -> bool:
@@ -883,10 +1124,19 @@ class Vote:
 
 
 def family_leaning(state: GameState, family_id: str, issue: Issue) -> int:
-    """How a family leans on an issue: its stance plus how far the player has won it over."""
+    """How a family leans on an issue.
+
+    Its stance, its bloc's lean in this era, and how far the player has won it over.
+    """
     rep = _rep(state)
-    stance = state.world.gentes[family_id].stances.get(issue, 0)
-    return stance + rep.families[family_id].favour.get(issue.value, 0)
+    gens = state.world.gentes[family_id]
+    stance = gens.stances.get(issue, 0)
+    bloc = 0
+    for faction in factions_at(state, state.year):
+        if _in_faction(faction, gens.order, _lean_popular(gens)):
+            bloc = faction.stances.get(issue, 0)
+            break
+    return stance + bloc + rep.families[family_id].favour.get(issue.value, 0)
 
 
 def senate_vote(
@@ -897,8 +1147,11 @@ def senate_vote(
     turn: int | None = None,
     year: int | None = None,
 ) -> Vote:
-    """The Senate's will: a vote weighted by the families' standing.
+    """The Senate's will: a vote weighted by the families' standing and their senators.
 
+    Each family's men divide by the strength of its lean on the issue (its stance, its
+    bloc's lean in the era, the player's persuasion): a lean of +3000 sends 65% of them to
+    the yes side. So the forecast differs by issue and by era, and a house of one mind is rare.
     With ``record`` the vote is a real one: it becomes a ``senate`` event in the city (U7).
     Looking at the Senate's mood (a view, a forecast) leaves ``record`` off. A vote recorded
     while a turn resolves passes that turn's ``turn`` and ``year``.
@@ -906,15 +1159,18 @@ def senate_vote(
     rep = _rep(state)
     yes = no = total = 0
     leanings: dict[str, int] = {}
+    weights = senate_weights(state)
     for fid in sorted(rep.families):
-        weight = family_weight(rep.families[fid])
+        weight = weights[fid]
         lean = family_leaning(state, fid, issue)
         leanings[fid] = lean
         total += weight
-        if lean > 0:
-            yes += weight
-        elif lean < 0:
-            no += weight
+        # a family's senators split by the strength of its lean: +10000 is every man for,
+        # 0 an even house, -10000 every man against
+        share = max(-BP, min(BP, lean))
+        for_it = weight * (BP + share) // (2 * BP)
+        yes += for_it
+        no += weight - for_it
     yes_bp = yes * BP // total if total else 0
     no_bp = no * BP // total if total else 0
     if record:
@@ -941,7 +1197,8 @@ def senate_mood(state: GameState) -> list[FactionMood]:
     year = state.year
     out: list[FactionMood] = []
     blocs = factions_at(state, year)
-    total = sum(family_weight(f) for f in rep.families.values())
+    weights = senate_weights(state)
+    total = sum(weights.values())
     for faction in blocs:
         members = [
             fid
@@ -950,16 +1207,12 @@ def senate_mood(state: GameState) -> list[FactionMood]:
                 faction, state.world.gentes[fid].order, _lean_popular(state.world.gentes[fid])
             )
         ]
-        weight = sum(family_weight(rep.families[f]) for f in members)
+        weight = sum(weights[f] for f in members)
         issues: dict[str, int] = {}
         for issue in ISSUE_ORDER:
             if weight:
                 issues[issue.value] = (
-                    sum(
-                        family_weight(rep.families[f]) * family_leaning(state, f, issue)
-                        for f in members
-                    )
-                    // weight
+                    sum(weights[f] * family_leaning(state, f, issue) for f in members) // weight
                 )
             else:
                 issues[issue.value] = 0

@@ -119,7 +119,8 @@ def test_a_war_the_senate_votes_for_is_declared(content: Content) -> None:
     assert rep.influence == before - state.world.republic_rules.senate.costs.war_with
     assert [b.outcome for b in rep.ballots] == ["passed"]
     # one recorded vote, not two (the declaration knows the Senate has voted)
-    assert senate_events(state) == [("war", 10_000, 0)]
+    recorded = senate_events(state)  # the house divides by the strength of its lean (F1)
+    assert len(recorded) == 1 and recorded[0][0] == "war" and recorded[0][1] > recorded[0][2]
     assert any(e.kind == "senate" for e in state.events)
 
 
@@ -141,7 +142,8 @@ def test_a_war_the_senate_refuses_does_not_happen(content: Content) -> None:
     assert state.civs["rome"].stats.legitimacy_bp == legitimacy - rules.fail_legitimacy_bp
     for fid, f in rep.families.items():  # those who voted no remember
         assert f.favour[Issue.WAR.value] == favour[fid] - rules.opposed_favour_shift
-    assert senate_events(state) == [("war", 0, 10_000)]
+    recorded = senate_events(state)
+    assert len(recorded) == 1 and recorded[0][0] == "war" and recorded[0][1] < recorded[0][2]
     assert [b.outcome for b in rep.ballots] == ["failed"]
 
 
@@ -431,9 +433,11 @@ def test_the_view_lists_proposals_with_the_senates_forecast(content: Content) ->
         "passes",
         "tribune",
         "tribune_bp",
+        "tribune_name",
+        "tribune_note",
     }
     assert war["issue"] == "war" and war["cost"] == 200
-    assert (war["forecast_yes_bp"], war["forecast_no_bp"]) == (10_000, 0)
+    assert war["forecast_yes_bp"] > 5000 > war["forecast_no_bp"] and war["passes"]
     assert "law:land_reform" in proposals and "law:grain_dole" not in proposals
     assert view["last_votes"] == []
     state, _ = apply_action(state, war_with_carthage())

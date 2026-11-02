@@ -141,7 +141,7 @@ people:
     born: -86
     died: -42
     died_of: "suicide"
-    offices: [{office: consul, year: -73}, {office: quaestor, year: -53}, {office: tribune_plebs, year: -49}, {office: praetor, year: -44}]
+    offices: [{office: quaestor, year: -53}, {office: tribune_plebs, year: -49}, {office: praetor, year: -44}]
     traits: [general, stern, bold]
     popular: false
     notes: "Crassus' quaestor who brought the survivors of Carrhae back to Syria and held it against the Parthians (Plutarch, Crassus 18-29; Cassius Dio 40.28-29); tribune 49, Pompeian, pardoned; peregrine praetor 44 and the mover of the conspiracy (Plutarch, Brutus 8-10); had himself killed by his freedman after the first battle of Philippi, thinking the day lost (Plutarch, Brutus 43)."
@@ -273,7 +273,7 @@ people:
     born: -157
     died: -86
     died_of: "illness"
-    offices: [{office: quaestor, year: -121}, {office: tribune_plebs, year: -119}, {office: praetor, year: -115}, {office: consul, year: -86}]
+    offices: [{office: quaestor, year: -121}, {office: tribune_plebs, year: -119}, {office: praetor, year: -115}, {office: consul, year: -107}, {office: consul, year: -104}, {office: consul, year: -103}, {office: consul, year: -102}, {office: consul, year: -101}, {office: consul, year: -100}, {office: consul, year: -86}]
     traits: [general, novus_homo, popular, bold, cruel]
     popular: true
     notes: "A new man of Arpinum: tribune 119, praetor 115, consul 107 against Jugurtha, whom Sulla captured (Sallust, Jugurtha 63-65, 73, 84-86, 113); enrolled the propertyless in the legions (Sallust, Jugurtha 86.2); consul five years running 104-100 against the Cimbri and Teutones, beaten at Aquae Sextiae and Vercellae (Plutarch, Marius 18-27); seventh consulship 86 after Cinna's return, died in its first days of pleurisy at about seventy (Plutarch, Marius 45-46)."
@@ -285,7 +285,7 @@ people:
     born: -109
     died: -82
     died_of: "suicide"
-    offices: [{office: consul, year: -107}, {office: consul, year: -104}, {office: consul, year: -103}, {office: consul, year: -102}, {office: consul, year: -101}, {office: consul, year: -100}, {office: consul, year: -82}]
+    offices: [{office: consul, year: -82}]
     traits: [popular, cruel, bold]
     popular: true
     notes: "Son of Marius; consul 82 at 27 against the law; beaten by Sulla at Sacriportus, besieged in Praeneste and killed himself when it fell (Appian, Civil Wars 1.87-94; Velleius 2.26-27)."
@@ -308,7 +308,7 @@ people:
     born: -84
     died: -49
     died_of: "battle"
-    offices: [{office: consul, year: -76}, {office: quaestor, year: -54}, {office: tribune_plebs, year: -50}]
+    offices: [{office: quaestor, year: -54}, {office: tribune_plebs, year: -50}]
     traits: [orator, bold, greedy]
     popular: true
     notes: "Tribune 50, bought for Caesar by the payment of his debts; proposed that both Caesar and Pompey lay down their commands, and carried the Senate 370 to 22 (Appian, Civil Wars 2.26-30; Plutarch, Pompey 58); as Caesar's commander in Africa was killed with his army by Juba at the Bagradas (Caesar, Bellum Civile 2.23-44)."
@@ -673,7 +673,7 @@ people:
   - id: l_postumius_megellus
     name: "Lucius Postumius Megellus"
     gens: postumii
-    offices: [{office: consul, year: -305}, {office: consul, year: -294}, {office: consul, year: -291}, {office: consul, year: -262}]
+    offices: [{office: consul, year: -262}]
     notes: "Consul 262 with Q. Mamilius Vitulus; took Agrigentum after a long siege (Polybius 1.17-19). Not the Megellus who was consul in 305, 294 and 291."
     sources: ["Polybius 1.17-19", "Fasti Capitolini"]
     confidence: high
@@ -682,7 +682,7 @@ people:
     gens: quinctii
     born: -519
     died_of: "natural"
-    offices: [{office: consul, year: -460}, {office: dictator, year: -458}, {office: dictator, year: -439}, {office: consular_tribune, year: -438}, {office: magister_equitum, year: -437}, {office: consular_tribune, year: -425}, {office: consular_tribune, year: -420}, {office: consular_tribune, year: -386}, {office: consular_tribune, year: -377}]
+    offices: [{office: consul, year: -460}, {office: dictator, year: -458}, {office: dictator, year: -439}, {office: consular_tribune, year: -438}, {office: magister_equitum, year: -437}]
     traits: [stern, frugal, general]
     legendary: true
     notes: "Called from the plough to the dictatorship in 458 and saved the army of Minucius on Mount Algidus (Livy 3.26-29); dictator again in 439 against Sp. Maelius, when Livy makes him over eighty (Livy 4.13.12). The birth year is taken from that; the death is unknown."
@@ -722,7 +722,7 @@ people:
   - id: l_valerius_potitus_449
     name: "Lucius Valerius Potitus"
     gens: valerii
-    offices: [{office: consul, year: -483}, {office: consul, year: -470}, {office: consul, year: -449}, {office: consular_tribune, year: -414}, {office: consular_tribune, year: -406}]
+    offices: [{office: consul, year: -470}, {office: consul, year: -449}, {office: consular_tribune, year: -414}]
     traits: [popular, lawgiver]
     notes: "Consul of 449 with Horatius: the Valerio-Horatian laws made plebiscites binding, restored the appeal and made the tribunes inviolable (Livy 3.55)."
     sources: ["Livy 3.55.1-13"]
@@ -1167,7 +1167,7 @@ people:
     name: "Publius Mucius Scaevola"
     gens: mucii
     alive_until: -115
-    offices: [{office: consul, year: -175}, {office: consul, year: -133}]
+    offices: [{office: consul, year: -133}]
     traits: [jurist, cautious]
     notes: "Consul 133; refused Nasica's demand to act against Tiberius Gracchus, yet defended his killers afterwards (Plutarch, Tiberius Gracchus 19; Cicero, De domo 91); pontifex maximus after Nasica; published the annales maximi (Cicero, De oratore 2.52)."
     sources: ["Plutarch, Tiberius Gracchus 19", "Cicero, De domo sua 91", "Cicero, De oratore 2.52", "Fasti Capitolini"]
@@ -1502,7 +1502,7 @@ people:
     born: -163
     died: -133
     died_of: "murdered"
-    offices: [{office: consul, year: -163}, {office: quaestor, year: -137}, {office: tribune_plebs, year: -133}]
+    offices: [{office: quaestor, year: -137}, {office: tribune_plebs, year: -133}]
     traits: [popular, reformer, orator]
     popular: true
     notes: "Quaestor under Mancinus at Numantia (137); tribune 133: carried the agrarian law over the veto of his colleague Octavius, whom he had deposed, stood again and was clubbed to death by senators led by Scipio Nasica (Plutarch, Tiberius Gracchus 8-19; Appian, Civil Wars 1.9-17). Not yet thirty when he died (Plutarch, Tiberius Gracchus 3)."
@@ -1513,7 +1513,7 @@ people:
     gens: sempronii
     died: -154
     died_of: "natural"
-    offices: [{office: tribune_plebs, year: -187}, {office: aedile_curule, year: -182}, {office: praetor, year: -180}, {office: consul, year: -177}, {office: censor, year: -169}]
+    offices: [{office: tribune_plebs, year: -187}, {office: aedile_curule, year: -182}, {office: praetor, year: -180}, {office: consul, year: -177}, {office: censor, year: -169}, {office: consul, year: -163}]
     traits: [honest, general, stern]
     notes: "As tribune in 187 shielded the Scipios from prosecution (Livy 38.52-53, 38.60); praetor in Nearer Spain 180-178, made the settlement the Spaniards long honoured (Livy 40.47-50); consul 177 (Sardinia) and 163; censor 169; married Cornelia, daughter of Africanus; father of the Gracchi (Plutarch, Tiberius Gracchus 1). Died about 154."
     sources: ["Livy 38.52-53", "Livy 40.47-50", "Livy 41.28", "Plutarch, Tiberius Gracchus 1"]

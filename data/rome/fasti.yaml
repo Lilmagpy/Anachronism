@@ -382,7 +382,7 @@ fasti:
       - office: consul
         holders:
           - {name: "Marcus Fabius Vibulanus", gens: fabii}
-          - {person: l_valerius_potitus_449}
+          - {name: "Lucius Valerius Potitus", gens: valerii}
     sources:
       - "Fasti Capitolini"
       - "Livy 2.41"
@@ -1284,7 +1284,7 @@ fasti:
       - office: consular_tribune
         holders:
           - {name: "Aulus Sempronius Atratinus", gens: sempronii, plebeian: false}
-          - {person: l_quinctius_cincinnatus}
+          - {name: "Lucius Quinctius Cincinnatus", gens: quinctii}
           - {name: "Lucius Furius Medullinus", gens: furii}
           - {name: "Lucius Horatius Barbatus", gens: horatii}
     sources:
@@ -1352,7 +1352,7 @@ fasti:
     colleges:
       - office: consular_tribune
         holders:
-          - {person: l_quinctius_cincinnatus}
+          - {name: "Lucius Quinctius Cincinnatus", gens: quinctii}
           - {name: "Lucius Furius Medullinus", gens: furii}
           - {name: "Marcus Manlius Vulso", gens: manlii}
           - {name: "Aulus Sempronius Atratinus", gens: sempronii, plebeian: false}
@@ -1565,7 +1565,7 @@ fasti:
           - {name: "Publius Cornelius Rutilus Cossus", gens: cornelii}
           - {name: "Gnaeus Cornelius Cossus", gens: cornelii}
           - {name: "Numerius Fabius Ambustus", gens: fabii}
-          - {person: l_valerius_potitus_449}
+          - {name: "Lucius Valerius Potitus", gens: valerii}
     sources:
       - "Fasti Capitolini"
       - "Livy 4.49"
@@ -1919,7 +1919,7 @@ fasti:
           - {person: m_furius_camillus}
           - {name: "Servius Cornelius Maluginensis", gens: cornelii}
           - {name: "Quintus Servilius Fidenas", gens: servilii}
-          - {person: l_quinctius_cincinnatus}
+          - {name: "Lucius Quinctius Cincinnatus", gens: quinctii}
           - {name: "Lucius Horatius Pulvillus", gens: horatii}
           - {name: "Publius Valerius Potitus Publicola", gens: valerii}
     sources:
@@ -2088,7 +2088,7 @@ fasti:
           - {name: "Publius Valerius Potitus Publicola", gens: valerii}
           - {name: "Gaius Veturius Crassus Cicurinus", gens: veturii}
           - {name: "Servius Sulpicius Praetextatus", gens: sulpicii}
-          - {person: l_quinctius_cincinnatus}
+          - {name: "Lucius Quinctius Cincinnatus", gens: quinctii}
           - {name: "Gaius Quinctius Cincinnatus", gens: quinctii}
     notes: "Livy 6.32: the consular tribunes were L. Aemilius, P. Valerius, C. Veturius, Ser. Sulpicius, and L. and C. Quinctius Cincinnatus."
     sources:
@@ -3306,7 +3306,7 @@ fasti:
     colleges:
       - office: consul
         holders:
-          - {person: l_postumius_megellus}
+          - {name: "Lucius Postumius Megellus", gens: postumii}
           - {name: "Tiberius Minucius Augurinus", gens: minucii, plebeian: false}
           - {name: "Marcus Fulvius Curvus Paetinus", gens: fulvii, suffect: true}
     sources:
@@ -3368,6 +3368,7 @@ fasti:
   - id: fasti_301bc
     year: -301
     confidence: low
+    gap: dictator_year
     colleges:
       - office: dictator
         holders:
@@ -3469,7 +3470,7 @@ fasti:
     colleges:
       - office: consul
         holders:
-          - {person: l_postumius_megellus}
+          - {name: "Lucius Postumius Megellus", gens: postumii}
           - {person: m_atilius_regulus}
     sources:
       - "Fasti Capitolini"
@@ -3509,7 +3510,7 @@ fasti:
     colleges:
       - office: consul
         holders:
-          - {person: l_postumius_megellus}
+          - {name: "Lucius Postumius Megellus", gens: postumii}
           - {name: "Gaius Iunius Bubulcus Brutus", gens: iunii}
     sources:
       - "Fasti Capitolini"
@@ -5216,7 +5217,7 @@ fasti:
     colleges:
       - office: consul
         holders:
-          - {person: p_mucius_scaevola_133}
+          - {name: "Publius Mucius Scaevola", gens: mucii}
           - {person: m_aemilius_lepidus_187}
     sources:
       - "Fasti Capitolini"
@@ -5390,7 +5391,7 @@ fasti:
     colleges:
       - office: consul
         holders:
-          - {person: ti_sempronius_gracchus_133}
+          - {person: ti_sempronius_gracchus_177}
           - {name: "Manius Iuventius Thalna", gens: iuventii}
     sources:
       - "Fasti Capitolini"
@@ -6088,7 +6089,7 @@ fasti:
     colleges:
       - office: consul
         holders:
-          - {person: c_marius_minor}
+          - {person: c_marius}
           - {name: "Lucius Cassius Longinus", gens: cassii}
     notes: "Plutarch, Life of Marius: Marius was elected consul and given the war against Jugurtha."
     sources:
@@ -6123,7 +6124,7 @@ fasti:
     colleges:
       - office: consul
         holders:
-          - {person: c_marius_minor}
+          - {person: c_marius}
           - {name: "Gaius Flavius Fimbria", gens: flavii}
     sources:
       - "Fasti Capitolini"
@@ -6134,7 +6135,7 @@ fasti:
     colleges:
       - office: consul
         holders:
-          - {person: c_marius_minor}
+          - {person: c_marius}
           - {name: "Lucius Aurelius Orestes", gens: aurelii}
       - office: tribune_plebs
         holders:
@@ -6148,7 +6149,7 @@ fasti:
     colleges:
       - office: consul
         holders:
-          - {person: c_marius_minor}
+          - {person: c_marius}
           - {person: q_lutatius_catulus_102}
       - office: censor
         holders:
@@ -6165,7 +6166,7 @@ fasti:
     colleges:
       - office: consul
         holders:
-          - {person: c_marius_minor}
+          - {person: c_marius}
           - {name: "Manius Aquillius", gens: aquillii}
       - office: tribune_plebs
         holders:
@@ -6181,7 +6182,7 @@ fasti:
     colleges:
       - office: consul
         holders:
-          - {person: c_marius_minor}
+          - {person: c_marius}
           - {name: "Lucius Valerius Flaccus", gens: valerii}
       - office: tribune_plebs
         holders:
@@ -6492,7 +6493,7 @@ fasti:
       - office: consul
         holders:
           - {name: "Gnaeus Octavius", gens: octavii}
-          - {person: c_scribonius_curio}
+          - {name: "Gaius Scribonius Curio", gens: scribonii}
     sources:
       - "Fasti Capitolini"
       - "Wikipedia, List of Roman consuls (after Broughton, MRR; names checked 2026-11-02)"
@@ -6525,7 +6526,7 @@ fasti:
       - office: consul
         holders:
           - {name: "Marcus Terentius Varro Lucullus", gens: terentii}
-          - {person: c_cassius_longinus}
+          - {name: "Gaius Cassius Longinus", gens: cassii}
     notes: "Plutarch, Life of Crassus: Spartacus and the gladiators broke out of Capua."
     sources:
       - "Fasti Capitolini"

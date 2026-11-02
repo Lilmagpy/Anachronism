@@ -5,12 +5,39 @@ schema_version: 1
 republic_rules:
   default_praenomina: [Lucius, Gaius, Marcus, Publius, Quintus, Titus, Aulus, Gnaeus]  # source: the common praenomina (Varro, De lingua latina 9.60 ff.; Livy passim)
   sources: ["Livy 40.44.1 (Lex Villia annalis)", "Cicero, Philippics 5.47"]
+  # F1: ages and names. No one over max_office_age stands or is named dictator (Cicero, Cato
+  # Maior, is the plea of the old; the Fasti seat whom they list regardless). A man the Fasti
+  # name only by name is the earlier namesake while he would be under namesake_max_age.
+  max_office_age: 70
+  namesake_max_age: 72
+  # Births: the base chance is for a family of dignitas 1000; scaled by dignitas, between a
+  # quarter and two and a half times. With 160 families this gives Rome roughly fifteen sons a
+  # year among the families that matter. A family's dignitas rises by half an office's glory
+  # when a member takes it (so its standing tracks its consulships) and the excess fades by
+  # dignitas_decay_bp a year.
+  births_per_gens_per_year_bp: 1500
+  birth_reference_dignitas_bp: 1000
+  office_dignitas_share_bp: 5000
+  election_noise: 300
+  # Each living member of a family who has held office adds a quarter of its weight to its vote
+  # (the family's senators: Festus s.v. senatores; the censors' lectio of ex-magistrates, Livy
+  # 23.23 for 216  # unverified).
+  senator_weight_bp: 2500
+  # The blocs of the Senate by era, each with the lean it adds to its members' stances (F1).
+  # Orders until the Lex Hortensia (287): the patricians against the land and debt laws and
+  # against sharing office (Livy 6.35-42), the plebeians for them. The nobility of the middle
+  # Republic is one bloc. From 133 the optimates and the populares (Cicero, Pro Sestio 96-105:
+  # the populares court the multitude, the optimates the best men; Sallust, Jugurtha 41-42).
   factions:
-    - {id: patricians, name: "The patricians", from_year: -509, to_year: -287, order: patrician}
-    - {id: plebeians, name: "The plebeians", from_year: -509, to_year: -287, order: plebeian}
-    - {id: nobiles, name: "The nobility", from_year: -286, to_year: -134}
-    - {id: optimates, name: "The optimates", from_year: -133, populist: false}
-    - {id: populares, name: "The populares", from_year: -133, populist: true}
+    - {id: patricians, name: "The patricians", from_year: -509, to_year: -287, order: patrician,
+       stances: {land: -2000, debt: -2000, citizenship: -1500, colony: 500}, sources: ["Livy 2.23-33", "Livy 6.35-42"]}
+    - {id: plebeians, name: "The plebeians", from_year: -509, to_year: -287, order: plebeian,
+       stances: {land: 2000, debt: 2500, citizenship: 1500, colony: 1000}, sources: ["Livy 2.23-33", "Livy 6.35-42"]}
+    - {id: nobiles, name: "The nobility", from_year: -286, to_year: -134, stances: {war: 500}, sources: ["Polybius 6.13"]}
+    - {id: optimates, name: "The optimates", from_year: -133, populist: false,
+       stances: {land: -2000, debt: -2000, citizenship: -1500, colony: -500}, sources: ["Cicero, Pro Sestio 96-105", "Sallust, Bellum Iugurthinum 41-42"]}
+    - {id: populares, name: "The populares", from_year: -133, populist: true,
+       stances: {land: 2500, debt: 2500, citizenship: 2000, colony: 1500}, sources: ["Cicero, Pro Sestio 96-105", "Sallust, Bellum Iugurthinum 41-42"]}
   senate:
     # What the player can put to the Senate (ProposeToSenate) and what it costs. The costs and the
     # shifts are GAME BALANCE; the procedure is the sources'. The consul (or a tribune) brings the
