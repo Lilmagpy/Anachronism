@@ -246,3 +246,27 @@ def test_the_real_rome_264_start_runs_with_the_society(content: Content) -> None
     rel = society(state).religion
     assert holders(rel, "pontifices")
     assert state.rome_society is not None and state.rome_society.year == state.year
+
+
+def test_the_society_view_is_json_ready(content: Content) -> None:
+    import json
+
+    from anachronism.tools.view import build_view
+
+    state = run(new_game(content, "rome_218", seed=1), 3)
+    view = build_view(state)["rome_society"]
+    assert view is not None
+    json.dumps(view)
+    assert {
+        "priests",
+        "prodigies",
+        "land",
+        "grain",
+        "coinage",
+        "debt",
+        "army_era",
+        "recruitment",
+    } <= set(view)
+    assert view["army_era"]["id"] == "manipular"
+    assert any(p["chief"] for p in view["priests"])
+    assert build_view(new_game(content, "punic_wars", seed=1))["rome_society"] is None
