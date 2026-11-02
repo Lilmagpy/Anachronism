@@ -218,7 +218,10 @@ func _year_card(s: Dictionary) -> Control:
 	var rome := _rome_of(s)
 	var chosen: bool = s["id"] == scenario["id"]
 	var card := PanelContainer.new()
-	card.custom_minimum_size = Vector2(380, 470)
+	# F1 client: every starting year fits on one screen; cards narrow as the list grows
+	var room := get_viewport().get_visible_rect().size.x - 80.0 - 18.0 * (catalog.size() - 1)
+	var card_width := clampf(floorf(room / maxf(catalog.size(), 1)), 230.0, 380.0)
+	card.custom_minimum_size = Vector2(card_width, 470)
 	card.mouse_filter = Control.MOUSE_FILTER_STOP
 	card.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	var fill := Color(0.50, 0.08, 0.09) if chosen else Color(0.30, 0.05, 0.06)
@@ -231,24 +234,25 @@ func _year_card(s: Dictionary) -> Control:
 	body.add_theme_constant_override("separation", 8)
 	body.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	card.add_child(body)
-	var year := UiStyle.headline(GameHud.year_text(int(s["start_year"])), 54, UiStyle.GOLD)
+	var year := UiStyle.headline(GameHud.year_text(int(s["start_year"])), 54 if card_width >= 300 else 42, UiStyle.GOLD)
 	year.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	body.add_child(year)
 	body.add_child(_gold_rule())
-	var title := UiStyle.label(_title_of(s).to_upper(), 20, UiStyle.CREAM, "title", 800)
+	var text_width := card_width - 40.0
+	var title := UiStyle.label(_title_of(s).to_upper(), 20 if card_width >= 300 else 16, UiStyle.CREAM, "title", 800)
 	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.custom_minimum_size.x = 340
+	title.custom_minimum_size.x = text_width
 	body.add_child(title)
 	var pitch_text := str(rome.get("pitch", ""))
 	if pitch_text != "":
-		var pitch := UiStyle.wrapped(pitch_text, 16, Color(0.98, 0.90, 0.62), 340)
+		var pitch := UiStyle.wrapped(pitch_text, 16 if card_width >= 300 else 14, Color(0.98, 0.90, 0.62), text_width)
 		pitch.add_theme_font_override("font", UiStyle.font("body", 800))
 		pitch.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		body.add_child(pitch)
 	if str(s["description"]).strip_edges() != "":
-		var story := UiStyle.wrapped(str(s["description"]), 14, Color(0.93, 0.86, 0.78), 340)
-		story.max_lines_visible = 8
+		var story := UiStyle.wrapped(str(s["description"]), 14 if card_width >= 300 else 13, Color(0.93, 0.86, 0.78), text_width)
+		story.max_lines_visible = 8 if card_width >= 300 else 7
 		story.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 		body.add_child(story)
 	var fill_space := Control.new()

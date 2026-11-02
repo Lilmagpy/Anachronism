@@ -82,6 +82,14 @@ var _dots := 0.0
 var _speech_queue: Array = []
 var _speech: Control
 var _story := StoryCard.new()   ## chronicle mode's chapters (D-120)
+# F1 client: toasts, the city feed, the end-turn confirm
+signal watch_requested(event: Dictionary, events: Array)   ## open Urbs with this city event playing
+var _toasts := VBoxContainer.new()   ## short answers from the engine, floating under the top bar
+var _last_toast := ""
+var _dilemma_confirmed := false   ## the player chose to end the turn with the dilemma unanswered
+var _dilemma_turn := -1
+var _feed: Control = null         ## the "This year in Rome" card, while open
+var _feed_turn := -1              ## the turn the feed was last shown for by itself
 
 
 func _ready() -> void:
@@ -119,6 +127,13 @@ func _ready() -> void:
 	_hover.add_theme_font_size_override("font_size", 18)
 	_hover.visible = false
 	_root.add_child(_hover)
+	_toasts.set_anchors_preset(Control.PRESET_CENTER_TOP)   # F1 client
+	_toasts.offset_top = 92
+	_toasts.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	_toasts.alignment = BoxContainer.ALIGNMENT_BEGIN
+	_toasts.add_theme_constant_override("separation", 6)
+	_toasts.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_root.add_child(_toasts)
 	_dev.position = Vector2(16, 96)
 	_dev.add_theme_font_size_override("font_size", 14)
 	_dev.add_theme_color_override("font_color", Color(0.85, 1.0, 0.85))
@@ -136,11 +151,16 @@ func show_view(new_view: Dictionary) -> void:
 		civ_colours[civ["id"]] = Color(civ["colour"])
 	if not selected.is_empty():
 		selected = _find_place(str(selected["id"]))
+	if message != "" and message != _last_toast:   # F1 client: the engine's answer floats up as a toast too
+		toast(message)
 	_fill_top_bar()
 	_fill_side()
 	_fill_card()
 	_fill_chronicle()
 	_fill_dilemma()
+	if int(view.get("turn", 0)) != _dilemma_turn:
+		_dilemma_turn = int(view.get("turn", 0))
+		_dilemma_confirmed = false
 	if _council != null and is_instance_valid(_council):
 		_fill_council()
 	if _story.get_parent() == null:
@@ -273,6 +293,20 @@ func _show_outcome(outcome: Dictionary) -> void:
 		var feat := _label("Boldest anachronism: %s, %d years before its time" % [boldest, boldest_ahead], 15, GOLD)
 		feat.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		column.add_child(feat)
+	# F1 client: the Roman ending names the year by its consuls and lists what you built early
+	var consuls := _consul_text()
+	if consuls != "" and ":" in consuls:
+		var year_of := _label("In the year of the %s" % consuls.replace("Consuls: ", "consuls ").replace("Consul: ", "consul ").replace("Dictator: ", "dictator ").replace("Consular tribunes: ", "consular tribunes "), 15, INK)
+		year_of.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		column.add_child(year_of)
+	var city: Variant = view.get("city")
+	if city != null and not (city.get("anachronisms", []) as Array).is_empty():
+		var names := PackedStringArray()
+		for a in city["anachronisms"]:
+			names.append("%s (%s, %s years early)" % [str(a["name"]), year_text(int(a["year"])), number(int(a["ahead"]))])
+		var built := UiStyle.wrapped("Raised in Rome before its time: " + ", ".join(names), 14, INK, 620)
+		built.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		column.add_child(built)
 	if won:
 		column.add_child(_label("A regional victory. Greater tiers - a hemisphere, the world - await more regions.", 13, DIM))
 	var keep := UiStyle.big_button("KEEP PLAYING", 24)
@@ -382,6 +416,60 @@ func select(place_id: String) -> void:
 		# the player wants the map now: let the court fall silent so the card shows
 		_speech_queue.clear()
 		_show_next_voice()
+
+
+## A short answer from the engine ("The Cornelii are won over on war."), floating under the
+## top bar for a few seconds, then gone. The last one also stays in the Senate tab.   # F1 client
+func toast(text: String) -> void:
+	_last_toast = text
+	var card := PanelContainer.new()
+	var good := not ("not " in text or "refuses" in text or "cannot" in text or "no such" in text or "unknown" in text)
+	var style := UiStyle.panel(Color(0.99, 0.96, 0.88), GOOD if good else BAD, 10)
+	style.set_content_margin_all(10)
+	style.content_margin_left = 16
+	style.content_margin_right = 16
+	card.add_theme_stylebox_override("panel", style)
+	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var words := UiStyle.wrapped(text, 16, INK, minf(560.0, get_viewport().get_visible_rect().size.x - 900.0))
+	words.add_theme_font_override("font", UiStyle.font("body", 700))
+	words.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	words.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	card.add_child(words)
+	_toasts.add_child(card)
+	while _toasts.get_child_count() > 3:
+		var oldest := _toasts.get_child(0)
+		_toasts.remove_child(oldest)
+		oldest.queue_free()
+	card.modulate.a = 0.0
+	var tween := create_tween()
+	tween.tween_property(card, "modulate:a", 1.0, 0.2)
+	tween.tween_interval(4.5 + text.length() / 40.0)
+	tween.tween_property(card, "modulate:a", 0.0, 0.6)
+	tween.tween_callback(card.queue_free)
+
+
+## Tab cycles the side panel's tabs, V visits Rome, R shows this year in Rome; Enter (End
+## Turn) and the number keys are main's.   # F1 client
+func _unhandled_key_input(event: InputEvent) -> void:
+	if not (event is InputEventKey) or not event.pressed or event.echo or view.is_empty() or _replaying:
+		return
+	if notebook.is_open() or cities.is_open() or (_feed != null and is_instance_valid(_feed)):
+		return
+	var key := (event as InputEventKey).keycode
+	if key == KEY_TAB:
+		var order: Array = ["ideas", "projects", "world"]
+		if view.get("republic") != null:
+			order.append("senate")
+		var at := order.find(tab)
+		var step := -1 if (event as InputEventKey).shift_pressed else 1
+		set_tab(order[(at + step + order.size()) % order.size()])
+		get_viewport().set_input_as_handled()
+	elif key == KEY_V:
+		urbs_requested.emit()
+		get_viewport().set_input_as_handled()
+	elif key == KEY_R and view.get("city") != null:
+		show_city_feed(view, true)
+		get_viewport().set_input_as_handled()
 
 
 ## Floating name under the mouse; empty text hides it.
@@ -578,7 +666,11 @@ func _fill_top_bar() -> void:
 	var consuls := _consul_text()   # Republic (D-286): the consuls stand where a ruler would
 	if consuls != "":
 		reign = " · " + consuls
-	titles.add_child(UiStyle.label("%s · turn %d%s" % [year_text(view["year"]), view["turn"], reign], 15, DIM, "body", 700))
+	var reign_line := UiStyle.label("%s · turn %d%s" % [year_text(view["year"]), view["turn"], reign], 15, DIM, "body", 700)
+	if consuls != "":   # F1 client: the year named by its consuls, as the Romans did; hover for the whole college
+		reign_line.tooltip_text = "The Romans named each year by its consuls. Turn %d: %d years pass at each End Turn. The Senate tab (4) lists every magistrate of the year." % [int(view["turn"]), int(view.get("years_per_turn", 10))]
+		reign_line.mouse_filter = Control.MOUSE_FILTER_STOP
+	titles.add_child(reign_line)
 	_top.add_child(titles)
 	var strip := Control.new()  # the figures; clipped, never pushing the menu off the screen
 	strip.clip_contents = true
@@ -586,27 +678,30 @@ func _fill_top_bar() -> void:
 	strip.mouse_filter = Control.MOUSE_FILTER_PASS
 	_top.add_child(strip)
 	_stats = HBoxContainer.new()
-	_stats.add_theme_constant_override("separation", 10 if get_viewport().get_visible_rect().size.x < 1800 else 14)
+	var width := get_viewport().get_visible_rect().size.x
+	_stats.add_theme_constant_override("separation", 6 if width < 1700 else (10 if width < 1800 else 14))   # F1 client: every figure fits at 1600 and 1280
 	_stats.set_anchors_and_offsets_preset(Control.PRESET_LEFT_WIDE)
 	_stats.alignment = BoxContainer.ALIGNMENT_BEGIN
 	strip.add_child(_stats)
 	strip.custom_minimum_size.y = 52
 	_stats.add_child(VSeparator.new())
 	var stores: Dictionary = status["stores"]
-	_stat("people", "People: more people means more workers and more taxes", people(status["population"]), trends["population"], true)
+	var republic: bool = view.get("republic") != null
+	_stat("people", "People: more people means more workers, more soldiers and more taxes", people(status["population"]), trends["population"], true)
 	_stat("food", "Food in store: if it runs out, people starve (%s)" % number(stores["food"]), compact(stores["food"]), trends["food"], true)
 	_stat("materials", "Materials: stone, timber and metal for building and experiments (%s)" % number(stores["materials"]), compact(stores["materials"]), 0, true)
-	_stat("wealth", "Wealth: pays for experiments, embassies, missionaries and decrees (%s)" % number(stores["wealth"]), compact(stores["wealth"]), 0, true)
+	_stat("wealth", "Wealth: pays for experiments, embassies, games and decrees (%s)" % number(stores["wealth"]), compact(stores["wealth"]), 0, true)
 	_stat("knowledge", "Knowledge: your scholars' learning, spent on every new idea (%s)" % number(stores["knowledge"]), compact(stores["knowledge"]), 0, true)
 	_stat("labour", "Labour: your workforce, and in brackets how many are free for experiments (%s, %s free)" % [number(status["workforce"]), number(status["free_labour"])], "%s (%s)" % [compact(status["workforce"]), compact(status["free_labour"])], 0, true)
 	_stats.add_child(VSeparator.new())
 	_stat("literacy", "Literacy: who can read; it speeds learning, and some ideas need it", pct(status["literacy_bp"]), trends["literacy_bp"], true)
 	_stat("unrest", "Unrest: when it runs high come riots, then revolts", pct(status["unrest_bp"]), trends["unrest_bp"], false)
-	_stat("legitimacy", "Legitimacy: the people's trust in the throne; it holds the realm and its armies together", pct(status["legitimacy_bp"]), trends["legitimacy_bp"], true)
+	_stat("legitimacy", ("Legitimacy: the people's trust in the Republic and its magistrates; it holds the state and its legions together" if republic
+		else "Legitimacy: the people's trust in the throne; it holds the realm and its armies together"), pct(status["legitimacy_bp"]), trends["legitimacy_bp"], true)
 	_stat("suspicion", "Suspicion: how uncanny your progress looks to the world; it draws spies and enemies", pct(status["suspicion_bp"]), trends["suspicion_bp"], false)
 	var visit := Button.new()   # Urbs (D-289): walk into the city of Rome
-	visit.text = "Visit Rome"
-	visit.tooltip_text = "Walk through the city of Rome as it stood in this year: zoom in to the streets and click a building"
+	visit.text = "Visit Rome" if width >= 1500 else "Rome"
+	visit.tooltip_text = "Walk through the city of Rome as it stood in this year: zoom in to the streets and click a building (V)"
 	visit.focus_mode = Control.FOCUS_NONE
 	visit.custom_minimum_size = Vector2(0, 44)
 	visit.pressed.connect(func(): urbs_requested.emit())
@@ -632,15 +727,26 @@ func _consul_text() -> String:
 	if republic == null:
 		return ""
 	var names := PackedStringArray()
+	# F1 client: a dictator outranks the consuls while he holds Rome; the consuls of the year
+	# otherwise, ordinary ones first and a suffect only when a seat has no one else
+	var dictators: Array = republic.get("magistrates", []).filter(func(m): return m["office"] == "dictator")
+	if not dictators.is_empty():
+		return "Dictator: " + RepublicPanel.short_name(str(dictators[0]["name"]))
 	for m in republic.get("magistrates", []):
 		if m["office"] == "consul" and not m["suffect"]:
 			names.append(RepublicPanel.short_name(str(m["name"])))
+	if names.size() < 2:
+		for m in republic.get("magistrates", []):
+			if m["office"] == "consul" and m["suffect"] and names.size() < 2:
+				names.append(RepublicPanel.short_name(str(m["name"])) + " (suffect)")
 	if names.is_empty():
 		for m in republic.get("magistrates", []):
-			if m["office"] in ["dictator", "consular_tribune"]:
+			if m["office"] == "consular_tribune":
 				names.append(RepublicPanel.short_name(str(m["name"])))
-		return "" if names.is_empty() else "%s: %s" % ["Dictator" if names.size() == 1 else "Consular tribunes", " and ".join(names) if names.size() <= 2 else "%s and %d more" % [names[0], names.size() - 1]]
-	return "Consuls: " + " and ".join(names.slice(0, 2))
+		if names.is_empty():
+			return "No consuls this year"
+		return "Consular tribunes: %s" % (" and ".join(names) if names.size() <= 2 else "%s and %d more" % [names[0], names.size() - 1])
+	return ("Consuls: " if names.size() > 1 else "Consul: ") + " and ".join(names.slice(0, 2))
 
 
 ## One figure with its icon and a trend arrow; `up_is_good` decides green or red.
@@ -650,10 +756,11 @@ func _stat(icon: String, name: String, value: String, trend: int, up_is_good: bo
 	row.add_theme_constant_override("separation", 5)
 	row.tooltip_text = name
 	row.mouse_filter = Control.MOUSE_FILTER_STOP
-	var narrow := get_viewport().get_visible_rect().size.x < 1800  # a laptop screen: tighter bar
-	var picture := GameIcon.make(icon, 24 if narrow else 30)
+	var width := get_viewport().get_visible_rect().size.x
+	var narrow := width < 1800  # a laptop screen: tighter bar
+	var picture := GameIcon.make(icon, 20 if width < 1700 else (24 if narrow else 30))
 	row.add_child(picture)
-	var figure := UiStyle.label(value, 16 if narrow else 19, INK, "body", 800)
+	var figure := UiStyle.label(value, 15 if width < 1700 else (16 if narrow else 19), INK, "body", 800)
 	figure.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.add_child(figure)
 	if trend != 0:
@@ -681,7 +788,9 @@ func _build_side_panel() -> void:
 	column.add_child(_idea_box)
 	var scroll := ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	# never shown, never scrolled: a wide row cannot push the panel out over the map (F1
+	# client); rows are built to fit the panel's width instead
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
 	_side_body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_side_body.add_theme_constant_override("separation", 8)
 	var gutter := MarginContainer.new()  # room for the scroll bar
@@ -746,6 +855,8 @@ func _fill_side() -> void:
 			_side_body.add_child(_wrapped(str(chronicle["verdict"]), 15, BAD if "did better" in str(chronicle["verdict"]) else GOOD))
 	if message != "":
 		_side_body.add_child(_wrapped(message, 14, GOLD))
+	if tab == "senate" and message == "" and _last_toast != "":   # F1 client: the Senate's last answer stays readable
+		_side_body.add_child(_wrapped(_last_toast, 13, DIM))
 	match tab:
 		"ideas":
 			_fill_ideas()
@@ -763,7 +874,7 @@ func _build_idea_box() -> void:
 	_idea_box.add_theme_constant_override("separation", 4)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 6)
-	_idea_input.placeholder_text = "Whisper an idea to your court…"
+	_idea_input.placeholder_text = "Whisper an idea into Rome's ear…"
 	_idea_input.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_idea_input.custom_minimum_size.y = 44
 	_idea_input.max_length = 600
@@ -833,9 +944,9 @@ func _update_idea_box() -> void:
 		_idea_status.add_theme_color_override("font_color", GOLD)
 		_idea_input.placeholder_text = "Your answer…"
 	else:
-		_idea_status.text = "Anything at all: \"make the river work for us\", \"a printing press\"… (%s)" % court_mode
+		_idea_status.text = "Anything at all: \"concrete that sets under water\", \"a water wheel\", \"pay the legions\"… (%s)" % court_mode
 		_idea_status.add_theme_color_override("font_color", DIM)
-		_idea_input.placeholder_text = "Whisper an idea to your court…"
+		_idea_input.placeholder_text = "Whisper an idea into Rome's ear…"
 
 
 ## The developer overlay (brief §6.6, §11): engine, seed, turn, the court's model and its
@@ -1122,7 +1233,7 @@ func _fill_world() -> void:
 			_side_body.add_child(_wrapped("⚔ %s and %s are at war" % [_civ_name(war["a"]), _civ_name(war["b"])], 14, BAD))
 	var status: Dictionary = view["status"]
 	if status.has("festival_cost"):
-		_side_body.add_child(_label("Royal decrees", 17, GOLD))
+		_side_body.add_child(_label("Decrees" if view.get("republic") != null else "Royal decrees", 17, GOLD))   # F1 client: Rome has no king
 		var decrees := HBoxContainer.new()
 		decrees.add_theme_constant_override("separation", 6)
 		var rich: int = int(status["stores"]["wealth"])
@@ -2185,10 +2296,22 @@ func _build_chronicle() -> void:
 func _fill_chronicle() -> void:
 	_clear(_chronicle)
 	var events: Array = view["events"]
-	_chronicle.get_parent().visible = int(view["turn"]) > 1 and _speech == null
-	_chronicle.add_child(_label("The last %d years" % int(view["years_per_turn"]), 14, GOLD))
+	var city: Variant = view.get("city")   # F1 client: the city's year, even on the first turn
+	var city_events: Array = city.get("events", []) if city != null else []
+	_chronicle.get_parent().visible = (int(view["turn"]) > 1 or not city_events.is_empty()) and _speech == null
+	var head := HBoxContainer.new()
+	head.add_theme_constant_override("separation", 8)
+	var title := _label("The last %d years" % int(view["years_per_turn"]) if int(view["turn"]) > 1 else year_text(int(view["year"])), 14, GOLD)
+	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	head.add_child(title)
+	if city != null and (not city_events.is_empty() or not (city.get("changed", []) as Array).is_empty()):
+		var rome := _button("🏛 This year in Rome (%d)" % city_events.size(), func(): show_city_feed(view, true))
+		rome.add_theme_font_size_override("font_size", 13)
+		rome.tooltip_text = "What happened in the city itself: games, funerals, votes, dedications, fires. Watch any of them in the streets (R)."
+		head.add_child(rome)
+	_chronicle.add_child(head)
 	if events.is_empty():
-		_chronicle.add_child(_label("Quiet years: nothing of note happened.", 13, DIM))
+		_chronicle.add_child(_label("Quiet years: nothing of note happened beyond the city." if not city_events.is_empty() else "Quiet years: nothing of note happened.", 13, DIM))
 		return
 	# one line each, cut short with "…"; however busy the decade, the box stays small, and
 	# hovering it shows everything
@@ -2435,7 +2558,69 @@ func request_end_turn() -> void:
 		_council_turn = int(view.get("turn", 0))
 		show_council()
 		return
+	if view.get("dilemma") != null and not _dilemma_confirmed:   # F1 client: a question waits
+		_confirm_end_turn()
+		return
 	end_turn_requested.emit()
+
+
+## "A question waits for your answer": end the turn anyway, or go back to it.   # F1 client
+func _confirm_end_turn() -> void:
+	var question: Dictionary = view["dilemma"]
+	var shade := ColorRect.new()
+	shade.color = Color(0, 0, 0, 0.4)
+	shade.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_screens.add_child(shade)
+	var box := PanelContainer.new()
+	box.set_anchors_preset(Control.PRESET_CENTER)
+	box.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	box.grow_vertical = Control.GROW_DIRECTION_BOTH
+	var column := VBoxContainer.new()
+	column.add_theme_constant_override("separation", 10)
+	column.add_child(UiStyle.label("A question waits", 26, UiStyle.RED, "title", 900))
+	var choices: Array = question.get("choices", [])
+	column.add_child(UiStyle.wrapped("\"%s\" has not been answered. If the turn ends now, the court takes the first answer: %s." % [
+		str(question["title"]), str(choices[0]["label"]) if not choices.is_empty() else "whatever it sees fit"], 16, INK, 520))
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 10)
+	var back := UiStyle.big_button("ANSWER FIRST", 18, Color(0.85, 0.8, 0.7))
+	back.pressed.connect(func(): shade.queue_free())
+	row.add_child(back)
+	var gap := Control.new()
+	gap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(gap)
+	var go := UiStyle.big_button("END THE TURN ANYWAY  ▸", 18)
+	go.pressed.connect(func():
+		shade.queue_free()
+		_dilemma_confirmed = true
+		request_end_turn())
+	row.add_child(go)
+	column.add_child(row)
+	box.add_child(column)
+	shade.add_child(box)
+
+
+## "This year in Rome" (F1 client): the city's events of the turn as a card, each with a Watch
+## button that opens Urbs at the venue with the event playing. Shown by itself after a turn
+## (once per turn) and on request (the chronicle box's button, or R).
+func show_city_feed(new_view: Dictionary, by_request := false) -> void:
+	var city: Variant = new_view.get("city")
+	if city == null:
+		return
+	var events: Array = city.get("events", [])
+	if not by_request:
+		if _feed_turn == int(new_view.get("turn", 0)) or (events.is_empty() and (city.get("changed", []) as Array).is_empty()):
+			return
+		_feed_turn = int(new_view.get("turn", 0))
+	if _feed != null and is_instance_valid(_feed):
+		_feed.queue_free()
+	var feed := CityFeed.new()
+	feed.watch_requested.connect(func(event: Dictionary):
+		feed.close()
+		watch_requested.emit(event, events))
+	_screens.add_child(feed)
+	feed.open(new_view)
+	_feed = feed
 
 
 ## The fights the player's armies will likely meet this turn: storms of besieged cities, and
@@ -2700,5 +2885,5 @@ func _build_end_turn() -> void:
 	_end_turn.offset_right = -8
 	_end_turn.offset_bottom = -8
 	_end_turn.pressed.connect(request_end_turn)
-	_end_turn.tooltip_text = "Let ten years pass (Enter). Tabs: 1 Ideas, 2 Projects, 3 World, 4 Senate"   # Republic (D-286)
+	_end_turn.tooltip_text = "End the turn (Enter): the years pass, elections are held, the city lives. Tabs: 1 Ideas, 2 Projects, 3 World, 4 Senate, or Tab to cycle. V visits Rome, R shows this year in Rome."   # Republic (D-286), F1 client
 	_root.add_child(_end_turn)

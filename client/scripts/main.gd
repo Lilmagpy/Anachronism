@@ -261,6 +261,8 @@ func _build_hud() -> void:
 	hud.menu_requested.connect(game_menu.open_menu)
 	hud.capital_requested.connect(_visit_capital)
 	hud.urbs_requested.connect(func(): _enter_urbs())   # Urbs (D-289)
+	hud.watch_requested.connect(_watch_city_event)   # F1 client: Watch in "This year in Rome"
+	RepublicPanel.reset()   # F1 client: a new game forgets whom the last one spoke to
 	rig.zoomed_past_nearest.connect(_on_zoomed_past_nearest)
 	hud.city_requested.connect(func(id: String):  # fly down to a city to see it (D-127)
 		for p in view["provinces"]:
@@ -309,6 +311,8 @@ func _build_hud() -> void:
 				hud.show_breakthroughs([{"id": idea["id"], "name": idea["name"], "ahead": idea["ahead"], "history": idea["history"]}])
 	if options.has("cities"):  # --cities[=province]: open the Cities screen (screenshots)
 		hud.open_cities("" if str(options["cities"]) == "true" else str(options["cities"]))
+	if options.has("feed"):  # --feed: open "This year in Rome" (screenshots)   # F1 client
+		hud.show_city_feed(view, true)
 	if options.has("notebook"):  # --notebook[=idea]: open the notebook (screenshots)
 		hud.open_notebook("" if str(options["notebook"]) == "true" else str(options["notebook"]))
 	if options.has("fold"):  # --fold: fold the waiting chapter away (screenshots)
@@ -512,6 +516,36 @@ func _enter_urbs(instant := false) -> void:
 		await _veil_to(0.0, 0.7)
 
 
+## F1 client: open the city at a venue with one of the turn's events playing there (the Watch
+## button of "This year in Rome"). The chosen event goes first so Urbs plays it; the rest
+## still tell the street life what kind of year it is. A "look" event only opens at the place.
+func _watch_city_event(event: Dictionary, events: Array) -> void:
+	if _in_urbs or _urbs_busy or earth == null:
+		return
+	var ordered: Array = [event]
+	for e in events:
+		if e != event:
+			ordered.append(e)
+	var flags := {"spectacle-view": "0"}
+	var monument := str(event.get("monument", "")) if event.get("monument") != null else ""
+	if monument != "":
+		flags["at"] = monument
+		flags["mode"] = "street" if str(event.get("kind", "")) == "look" else "city"
+	if str(event.get("kind", "")) == "look":
+		ordered = []   # nothing plays; the burnt or new building is the sight
+	_urbs_busy = true
+	if urbs == null:
+		urbs = Urbs.new()
+		add_child(urbs)
+		urbs.exit_requested.connect(_leave_urbs)
+	await _veil_to(1.0, 0.45)
+	_in_urbs = true
+	_map_shown(false)
+	urbs.open(int(event.get("year", view.get("year", -300))), Vector3.ZERO, flags, ordered)
+	_urbs_busy = false
+	await _veil_to(0.0, 0.7)
+
+
 ## Fade from the city back to the map, over the place the city was looking at.
 func _leave_urbs() -> void:
 	if not _in_urbs or _urbs_busy:
@@ -570,7 +604,8 @@ func _on_action(action: Dictionary) -> void:
 			provinces.show_ties(view)
 		if action["kind"] in ["raise", "march", "stance", "disband", "fortify", "dilemma", "envoy_answer",
 				"build_fleet", "sail", "scuttle", "plan", "build", "spies", "hasten",
-				"propose_to_senate", "persuade", "back_candidate"]:   # Republic (D-286): say what the Senate did
+				"propose_to_senate", "persuade", "back_candidate",
+				"senate", "back"]:   # Republic (D-286): say what the Senate did; # F1 client: the kinds the panel sends
 			hud.message = str(reply["message"])
 			if reply["accepted"] and action["kind"] == "disband":
 				hud.selected_army = ""
@@ -620,6 +655,8 @@ func _on_end_turn() -> void:
 	if reply != null and not _quick_turns:
 		hud.show_breakthroughs(view.get("replay", {}).get("breakthroughs", []))
 		hud.show_conquests(view.get("events", []).filter(func(e): return str(e["kind"]) == "spoils" and e.get("civ") == view["player"]))
+		if not options.has("smoke") and view.get("dilemma") == null and view.get("chronicle") == null:   # F1 client: the city's year, unless a decision waits
+			hud.show_city_feed(view)
 
 
 ## The map as the turn left it: colours, cities, armies, ties and landmarks.
