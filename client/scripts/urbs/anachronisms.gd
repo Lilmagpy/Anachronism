@@ -64,6 +64,7 @@ func build(urbs: Node3D, city_view: Dictionary) -> void:
 		if not mon._order.has(id):
 			mon._order.append(id)
 		_ids.append(id)
+		print("anachronism %s (%s) at %.0f, %.0f" % [id, rec["model"], UrbsGeo.to_local(float(rec["lat"]), float(rec["lon"])).x, UrbsGeo.to_local(float(rec["lat"]), float(rec["lon"])).y])
 	_ids.sort()
 	mon._order.sort()
 	mon.set_year(year)
@@ -117,7 +118,9 @@ static func free_site(mon: UrbsMonuments, centre: Vector2, fp: Dictionary, own_i
 		return centre
 	var others: Array = []
 	for f in mon.footprints():
-		if str(f.get("id", "")) != own_id:
+		var fid := str(f.get("id", ""))
+		# open ground is not an obstacle: a sundial may stand on the Forum's paving
+		if fid != own_id and str(mon.entry(fid).get("model", "")) not in ["plaza", "forum", "comitium", "campus"]:
 			others.append(f)
 	if _clear(centre, r, others):
 		return centre
