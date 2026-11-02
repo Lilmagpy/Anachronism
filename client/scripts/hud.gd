@@ -679,7 +679,7 @@ func _fill_top_bar() -> void:
 	_top.add_child(strip)
 	_stats = HBoxContainer.new()
 	var width := get_viewport().get_visible_rect().size.x
-	_stats.add_theme_constant_override("separation", 6 if width < 1700 else (10 if width < 1800 else 14))   # F1 client: every figure fits at 1600 and 1280
+	_stats.add_theme_constant_override("separation", 3 if width < 1400 else (6 if width < 1700 else (10 if width < 1800 else 14)))   # F1 client: every figure fits at 1600 and 1280
 	_stats.set_anchors_and_offsets_preset(Control.PRESET_LEFT_WIDE)
 	_stats.alignment = BoxContainer.ALIGNMENT_BEGIN
 	strip.add_child(_stats)
@@ -756,14 +756,14 @@ func _consul_text() -> String:
 ## Hover it for its name.
 func _stat(icon: String, name: String, value: String, trend: int, up_is_good: bool) -> void:
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 5)
+	row.add_theme_constant_override("separation", 3 if get_viewport().get_visible_rect().size.x < 1400 else 5)
 	row.tooltip_text = name
 	row.mouse_filter = Control.MOUSE_FILTER_STOP
 	var width := get_viewport().get_visible_rect().size.x
 	var narrow := width < 1800  # a laptop screen: tighter bar
-	var picture := GameIcon.make(icon, 20 if width < 1700 else (24 if narrow else 30))
+	var picture := GameIcon.make(icon, 17 if width < 1400 else (20 if width < 1700 else (24 if narrow else 30)))
 	row.add_child(picture)
-	var figure := UiStyle.label(value, 15 if width < 1700 else (16 if narrow else 19), INK, "body", 800)
+	var figure := UiStyle.label(value, 13 if width < 1400 else (15 if width < 1700 else (16 if narrow else 19)), INK, "body", 800)
 	figure.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.add_child(figure)
 	if trend != 0:

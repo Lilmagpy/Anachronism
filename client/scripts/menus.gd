@@ -220,7 +220,7 @@ func _year_card(s: Dictionary) -> Control:
 	var card := PanelContainer.new()
 	# F1 client: every starting year fits on one screen; cards narrow as the list grows
 	var room := get_viewport().get_visible_rect().size.x - 80.0 - 18.0 * (catalog.size() - 1)
-	var card_width := clampf(floorf(room / maxf(catalog.size(), 1)), 200.0, 380.0)
+	var card_width := clampf(floorf(room / maxf(catalog.size(), 1)), 150.0, 380.0)
 	card.custom_minimum_size = Vector2(card_width, 470)
 	card.mouse_filter = Control.MOUSE_FILTER_STOP
 	card.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
@@ -234,7 +234,7 @@ func _year_card(s: Dictionary) -> Control:
 	body.add_theme_constant_override("separation", 8)
 	body.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	card.add_child(body)
-	var year := UiStyle.headline(GameHud.year_text(int(s["start_year"])), 54 if card_width >= 300 else (42 if card_width >= 240 else 36), UiStyle.GOLD)
+	var year := UiStyle.headline(GameHud.year_text(int(s["start_year"])), 54 if card_width >= 300 else (42 if card_width >= 240 else (36 if card_width >= 190 else 28)), UiStyle.GOLD)
 	year.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	body.add_child(year)
 	body.add_child(_gold_rule())
@@ -245,7 +245,7 @@ func _year_card(s: Dictionary) -> Control:
 	title.custom_minimum_size.x = text_width
 	body.add_child(title)
 	var pitch_text := str(rome.get("pitch", ""))
-	if pitch_text != "":
+	if pitch_text != "" and card_width >= 190:   # the narrowest cards keep the year and the title
 		var pitch := UiStyle.wrapped(pitch_text, 16 if card_width >= 300 else 14, Color(0.98, 0.90, 0.62), text_width)
 		pitch.add_theme_font_override("font", UiStyle.font("body", 800))
 		pitch.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -260,7 +260,9 @@ func _year_card(s: Dictionary) -> Control:
 	fill_space.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	body.add_child(fill_space)
 	var facts := UiStyle.label("%s   ·   %d province%s" % [GameHud.people(int(rome["population"])), int(rome["provinces"]), "" if int(rome["provinces"]) == 1 else "s"],
-		15, UiStyle.GOLD, "body", 800)
+		15 if card_width >= 240 else 12, UiStyle.GOLD, "body", 800)
+	facts.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	facts.custom_minimum_size.x = text_width
 	facts.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	facts.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	body.add_child(facts)
