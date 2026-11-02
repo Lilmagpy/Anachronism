@@ -1,0 +1,75 @@
+schema_version: 1
+# The army's eras and the census-class levy (content/schema/rome_society.py: Recruitment), read
+# by engine/legions.py. The eras, thresholds and service terms are the sources'; the weights, the
+# levy share and the loyalty numbers are GAME BALANCE. Unit ids are in core/units.yaml.
+recruitment:
+  eras:
+    - id: phalanx
+      name: the phalanx of the classes
+      tech: hoplite_phalanx
+      from_year: -509
+      composition: {servian_hoplites: 6, census_skirmishers: 3, roman_equites: 1}
+      notes: "Livy 1.43: the first class with helmet, round shield, greaves and cuirass, spear and sword; the fourth with spear and javelin; the fifth with slings and stones; eighteen centuries of horse from the leading men. Livy 8.8.3: before the Latin war the Romans 'phalanges similes Macedonicis' used."
+      sources: ["Livy 1.43.1-9", "Livy 8.8.3-4"]
+      confidence: medium
+    - id: manipular
+      name: the manipular legion
+      tech: manipular_legion
+      from_year: -340
+      composition: {hastati: 4, principes: 4, triarii: 2, velites: 4, roman_equites: 1}
+      allies: {socii_infantry: 10, socii_cavalry: 3, extraordinarii: 2, extraordinarii_horse: 1}
+      notes: "Livy 8.8.5-14: from the Latin war the line was drawn up in maniples, hastati first, then principes, then the triarii under the standards. Polybius 6.21.9: 600 triarii, 1,200 principes, 1,200 hastati, the rest velites, in a legion of 4,200; 6.20.9: 300 horse. The allies, as many foot and three times the horse (Polybius 6.26.7), join when the Italian alliance is in force. Dating the change to 340 follows Livy; Polybius describes the army of about 220."
+      sources: ["Livy 8.8.5-14", "Polybius 6.21.9", "Polybius 6.20.9", "Polybius 6.26.7"]
+      confidence: medium
+    - id: cohort
+      name: the cohort legion
+      tech: cohort_legion
+      from_year: -107
+      proletarii: true
+      composition: {cohort_legionaries: 10, roman_equites: 1}
+      allies: {socii_infantry: 2, socii_cavalry: 1, balearic_slingers: 1}
+      notes: "Sallust, Jugurtha 86.2: Marius enrolled his men 'non more maiorum neque ex classibus, sed uti libido cuiusque erat, capite censos plerosque'; Plutarch, Marius 9.1: contrary to law and custom he enlisted the poor, whom earlier commanders had not accepted. Whether the cohort legion was Marius' act or a slow change is debated (Caesar counts his army in cohorts: Civil War 1.7-8, 1.12)."
+      sources: ["Sallust, Jugurtha 86.2", "Plutarch, Marius 9.1", "Caesar, Civil War 1.12"]
+      confidence: medium
+  thresholds:
+    # The property qualification for the legions in asses, and the share of citizens above it with
+    # the land as it stood at the scenario's start (GAME BALANCE, shrunk by the latifundia).
+    - from_year: -509
+      asses: 11000
+      qualify_bp: 7000
+      notes: "Livy 1.43.7: the fifth class rated at 11,000 asses; below it one century exempt from service."
+      sources: ["Livy 1.43.7-8"]
+    - from_year: -214
+      asses: 4000
+      qualify_bp: 7500
+      notes: "Polybius 6.19.2-3: all serve except those rated under four hundred drachmae (= 4,000 asses), who go to the fleet. The step is conventionally placed in the strain of the Hannibalic war; Polybius describes the army of about 220-150."
+      sources: ["Polybius 6.19.2-3"]
+    - from_year: -140
+      asses: 1500
+      qualify_bp: 8000
+      notes: "Cicero, De re publica 2.40: those with less than 1,500 asses or nothing but themselves were the proletarii. Gellius 16.10.10 gives 375 asses # unverified: passage not read. The year is a conventional one for the later second century."
+      sources: ["Cicero, De re publica 2.40", "Gellius 16.10.10 # unverified: passage not read"]
+    - from_year: -107
+      asses: 0
+      qualify_bp: 10000
+      notes: "Marius' levy of the capite censi (Sallust, Jugurtha 86.2)."
+      sources: ["Sallust, Jugurtha 86.2"]
+  service_years: 16
+  max_age: 46
+  levy_share_bp: 2500
+  citizen_share_bp: 1800
+  loyalty:
+    # From the cohort era a soldier's loyalty shifts to his general: victories, years of service,
+    # the levy of the propertyless and land for veterans (Marius' fourteen iugera: Plutarch, Crassus 2)
+    # bind him; Sulla marched on Rome with his legions in 88 (Appian, Civil Wars 1.57 # unverified:
+    # passage not read) and Caesar crossed the Rubicon with the Thirteenth in 49 (Caesar, Civil War
+    # 1.7-8). The threshold is where the civil-war chapters may read that an army would follow.
+    from_era: cohort
+    per_victory_bp: 600
+    per_year_bp: 150
+    proletarii_bp: 1000
+    land_law_bp: 800
+    fade_bp: 1000
+    march_threshold_bp: 7000
+    sources: ["Plutarch, Crassus 2", "Caesar, Civil War 1.7-8", "Appian, Civil Wars 1.57 # unverified: passage not read"]
+  sources: ["Polybius 6.19.2-4", "Livy 1.43", "Livy 8.8", "Sallust, Jugurtha 86.2"]
