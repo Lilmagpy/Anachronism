@@ -41,15 +41,15 @@ techs:
     confidence: high
 
   - id: piston_bellows
-    name: Double-acting bellows
+    name: Smiths' bellows (folles)
     keywords: [bellows, piston bellows, forced air, blowing air, folles, box bellows]
     category: craft
-    year: 1500
+    year: -753
     complexity: 2
     prerequisites: [charcoal_burning]
     effects: [{type: materials_output, bp: 400}]
     flavour: A steady blast of air on the push and on the pull.
-    history: "Roman smiths blew their fires with leather bellows (folles) that gave a puff and then a pause (Virgil, Aeneid 8.449; Georgics 4.171). China's double-acting piston bellows (4th c. BC) gave a steady blast; Europe had nothing like it before the box bellows of the 16th century."
+    history: "Italian forges blew their fires with leather bellows (folles), a puff and then a pause, before Rome was founded (Virgil, Aeneid 8.449; Georgics 4.171). China's double-acting piston bellows (4th c. BC) gave a steady blast; Europe had nothing like it before the box bellows of the 16th century."
     sources: ["Virgil, Aeneid 8.449-450", "Virgil, Georgics 4.171-172", "Needham on the Chinese box bellows (modern) # unverified"]
     confidence: medium
 

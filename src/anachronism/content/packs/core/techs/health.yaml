@@ -30,7 +30,7 @@ techs:
 
   - id: sanitation
     name: Sewers and public latrines (cloacae)
-    keywords: [sanitation, sewers, sewage, latrines, hygiene, drains, wash hands, soap, cloaca, cloaca maxima, great sewer, drain the city, public latrine]
+    keywords: [sanitation, sewers, sewage, latrines, hygiene, drains, wash hands, soap, cloaca, cloaca maxima, great sewer, drain the city, public latrine, sewers under the streets, sewer, underground drains]
     category: health
     builds: sewer_outfall
     year: -184
