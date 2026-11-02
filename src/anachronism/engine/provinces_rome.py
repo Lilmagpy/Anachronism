@@ -137,7 +137,11 @@ def _seat(
 
 
 def _former(state: GameState, taken: set[str], year: int) -> Magistrate | None:
-    """The most recent former senior magistrate still alive and free for a province."""
+    """The most recent former senior magistrate still alive and free for a province.
+
+    The game's own record first; then the offices the people were seeded with (a start in
+    the middle of history has ex-praetors and ex-consuls but no record yet).
+    """
     rep = _rep(state)
     mags = state.world.magistracies
     for m in sorted(rep.record, key=lambda m: (-m.year, m.person)):
@@ -145,7 +149,26 @@ def _former(state: GameState, taken: set[str], year: int) -> Magistrate | None:
             continue
         if _alive(state, m.person):
             return m
-    return None
+    held: list[tuple[int, str, str]] = []
+    for pid in sorted(rep.people):
+        person = rep.people[pid]
+        if pid in taken or not person.alive:
+            continue
+        for h in person.offices:
+            if h.year < year and mags[h.office].rank >= GOVERNOR_RANK and mags[h.office].cursus:
+                held.append((-h.year, pid, h.office))
+    if not held:
+        return None
+    _, pid, office = min(held)
+    person = rep.people[pid]
+    return Magistrate(
+        office=office,
+        person=pid,
+        name=person.name,
+        year=year,
+        ends_year=year,
+        term_months=12,
+    )
 
 
 def _lay_down(

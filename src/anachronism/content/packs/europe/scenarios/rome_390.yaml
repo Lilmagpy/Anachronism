@@ -32,6 +32,10 @@ scenarios:
         disposition: aggressive
         navy_bp: 800
         scripts:
+          - {id: "r390_second_samnite_war", goal: "conquer", target: "e5_samnites", preconditions: {after_year: -328}, depends_on: ["r390_first_samnite_war"], note: "Rome declares war on the Samnites over Palaepolis (327-326); the Caudine Forks (321); the war to 304 (Livy 8.23-8.25, 9.1-9.15, 9.45; unverified: not re-read)."}
+          - {id: "r390_third_samnite_war", goal: "conquer", target: "e5_samnites", preconditions: {after_year: -299}, depends_on: ["r390_second_samnite_war"], note: "The Lucanians appeal and Rome declares war on the Samnites (298); Sentinum (295) (Livy 10.11-10.12, 10.27-10.30; unverified: not re-read)."}
+          - {id: "r390_vs_tarentum", goal: "conquer", target: "e5_tarentum", preconditions: {after_year: -283}, note: "The Tarentines sink Roman ships and insult the envoys (282); Rome declares war (Cassius Dio 9.39; Livy, Periochae 12; unverified: not re-read)."}
+          - {id: "r390_first_punic_war", goal: "conquer", target: "carthage", preconditions: {after_year: -266}, note: "Rome crosses to Sicily at the Mamertines' call; the First Punic War, 264-241 (Polybius 1.10-1.63; unverified: not re-read for this entry)."}
           - {id: "r390_vs_volsci", goal: "conquer", target: "e5_volsci", preconditions: {after_year: -390}, note: "Camillus defeats the Volsci, Aequi and Etruscans (389): Livy 6.2-6.4. The Volscian wars go on to 338 (Livy 8.14)."}
           - {id: "r390_vs_aequi", goal: "conquer", target: "e5_aequi", preconditions: {after_year: -390, before_year: -380}, note: "Aequi beaten alongside the Volsci in 389-388: Livy 6.2-6.4."}
           - {id: "r390_vs_etruscans", goal: "conquer", target: "e5_etruscan_league", preconditions: {after_year: -390, before_year: -384}, note: "Etruscans besiege Sutrium and are beaten by Camillus (389): Livy 6.2.2 and 6.3.1-2."}
@@ -263,6 +267,8 @@ scenarios:
         disposition: aggressive
         martial_bp: 13000
         scripts:
+          - {id: "r390_samnites_second_war", goal: "conquer", target: "rome", preconditions: {after_year: -328}, note: "The Samnites reject Roman arbitration over Palaepolis and the Second Samnite War follows, 327-304 (Livy 8.23-9.46; unverified: not re-read)."}
+          - {id: "r390_samnites_third_war", goal: "conquer", target: "rome", preconditions: {after_year: -299}, depends_on: ["r390_samnites_second_war"], note: "The Samnites invade Lucania; Rome allies with the Lucanians and the Third Samnite War follows, 298-290 (Livy 10.11-10.12; unverified: not re-read)."}
           - {id: "r390_samnite_campania", goal: "conquer", target: "e5_campanians", preconditions: {after_year: -346}, note: "The Samnites attack the Sidicines, then the Campanians, and seize the heights above Capua (343): Livy 7.29."}
         capital: it_samnium
         leader: "The Samnite cantons' assemblies"
@@ -276,6 +282,8 @@ scenarios:
         influence: {clergy: 3500, nobility: 5500, guilds: 1000}
         techs: {agriculture: widespread, alphabet: adopted, bronze_working: widespread, charcoal_burning: adopted, copper_smelting: widespread, fortification: adopted, herbal_medicine: adopted, horse_riding: adopted, iron_working: adopted, masonry: adopted, ox_plough: adopted, piston_bellows: adopted, pottery_kiln: widespread, wheel: widespread, writing: adopted}
       e5_tarentum:
+        scripts:
+          - {id: "r390_tarentum_vs_rome", goal: "conquer", target: "rome", preconditions: {after_year: -283}, note: "The Tarentines sink Roman ships and insult the envoys (282); Rome declares war (Cassius Dio 9.39; Livy, Periochae 12; unverified: not re-read)."}
         disposition: mercantile
         navy_bp: 12000
         capital: it_tarentum
@@ -309,6 +317,7 @@ scenarios:
         disposition: aggressive
         navy_bp: 30000
         scripts:
+          - {id: "r390_hiero_joins_rome", goal: "ally", target: "rome", preconditions: {after_year: -265}, depends_on: ["r390_first_punic_war"], note: "Hiero II of Syracuse leaves Carthage for Rome and is its loyal ally from 263 (Polybius 1.16.9-11; unverified: not re-read)."}
           - {id: "r390_dionysius_italy", goal: "conquer", target: "e5_croton", preconditions: {after_year: -391, before_year: -384}, note: "Dionysius crosses to Italy, wins at the Elleporus and takes Rhegium after an eleven-month siege (Diodorus 14.100-14.111; Polybius 1.6.2 dates the siege 387-386)."}
         capital: si_syracuse
         generals:
@@ -329,6 +338,9 @@ scenarios:
         influence: {clergy: 1500, nobility: 5500, guilds: 3000}
         techs: {agriculture: widespread, alphabet: widespread, astronomy_calendar: adopted, bronze_working: widespread, charcoal_burning: widespread, chariot: adopted, coinage: adopted, copper_smelting: widespread, fortification: widespread, herbal_medicine: adopted, horse_riding: widespread, iron_plough: adopted, iron_working: widespread, irrigation: adopted, masonry: widespread, ore_prospecting: concept, ox_plough: widespread, piston_bellows: adopted, pottery_kiln: widespread, roads: concept, sailing: widespread, schools: adopted, standard_measures: widespread, surveying: adopted, wheel: widespread, writing: widespread}
       carthage:
+        scripts:
+          - {id: "r390_carthage_defends_sicily", goal: "conquer", target: "rome", preconditions: {after_year: -266}, note: "Carthage, holding western Sicily, goes to war with Rome over Messana; the First Punic War, 264-241 (Polybius 1.11-1.63; unverified: not re-read for this entry)."}
+          - {id: "r390_hannibals_war", goal: "conquer", target: "rome", preconditions: {after_year: -222}, depends_on: ["r390_first_punic_war"], note: "Saguntum falls (219); Hannibal crosses the Alps and wins at the Ticinus, Trebia, Trasimene and Cannae, 218-216 (Polybius 3.6-17, 3.33-118; unverified: not re-read for this entry)."}
         # Polybius 3.22 and 3.24 show the 'Carthaginian province in Sicily' in the treaties; Diodorus 14.96.4 records the peace of 392.
         disposition: mercantile
         navy_bp: 30000

@@ -214,13 +214,13 @@ class ItalyRules(Frozen):
     provinces_from_year: int = -227
     """Two praetors added for Sicily and Sardinia (Livy, Periochae 20.7; Pomponius, Digest
     1.2.2.32): the age of provinces."""
-    tribute_per_1000: Annotated[int, Field(ge=0)] = 2
+    tribute_per_1000: Annotated[int, Field(ge=0)] = 1
     """Wealth a province pays Rome per year for each thousand people (Sicily's tithe: Cicero,
     Verrines 2.3.12-15, unverified)."""
     tribute_loyalty_bp: Annotated[int, Field(ge=0)] = 50
     """Yearly loyalty cost of being taxed."""
     province_baseline_loyalty_bp: Rate = 5000
-    province_drift_bp: Rate = 300
+    province_drift_bp: Rate = 1000
     extortion_chance_bp: Rate = 1500
     """Yearly chance a governor enriches himself from his province."""
     extortion_share_bp: Rate = 5000
