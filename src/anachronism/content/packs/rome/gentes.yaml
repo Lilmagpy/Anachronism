@@ -1,196 +1,2877 @@
 schema_version: 1
-# Families of the Republic. The numbers in standing and stances are GAME BALANCE, not history;
-# names, orders and notes carry sources. Sample pack: the full list comes from data/rome later.
+# The families (gentes) of the Republic: every gens the Fasti name, 509-27 BC (F1).
+# `order`, `praenomina` and `branches` (cognomina with the years they are attested) come from the
+# Fasti themselves; `standing` snapshots by era are DERIVED from the family's offices in the Fasti
+# (a family's dignitas tracks its consulships; a family that died out falls to nothing after
+# `extinct_after`); `stances` on every Senate issue and `popular_lean_bp` are hand-authored for
+# the families whose politics the sources describe (`confidence: medium`, source in `notes`) and
+# inferred from the order and the record for the rest (`confidence: low`). The numbers are game
+# balance; the names, orders, branches and dates are history. Method: data/rome/README.md.
 gentes:
-  - id: iunii
-    name: Iunii
-    nomen: Iunius
-    order: patrician
-    praenomina: ['Lucius', 'Marcus']
-    cognomina: ['Brutus']
-    standing: [{from_year: -509, dignitas_bp: 1500, auctoritas_bp: 1200, wealth: 100, clients: 120}]
-    stances: {war: 3000}
+  - id: acilii
+    name: Acilii
+    nomen: Acilius
+    order: plebeian
+    praenomina: [Manius]
+    branches:
+      - {cognomen: "Glabrio", from_year: -216}
+      - {cognomen: "Balbus", from_year: -175, to_year: -74}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -200, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -133, dignitas_bp: 1570, auctoritas_bp: 1190, wealth: 250, clients: 210}
+      - {from_year: -79, dignitas_bp: 1680, auctoritas_bp: 1325, wealth: 267, clients: 225}
+    stances: {war: 3000, peace: 0, land: 500, colony: 500, building: 1000, idea: 500, debt: 1000, citizenship: 500}
     popular_lean_bp: 5000
-    notes: "Brutus is the founder of the Republic in tradition; the later Iunii Bruti are plebeian (Livy 2.1.7)."
-    sources: ["Livy 2.1.7"]
-  - id: tarquinii
-    name: Tarquinii
-    nomen: Tarquinius
+    notes: "M'. Acilius Glabrio beat Antiochus at Thermopylae (Livy 36.15-19); the Acilian law set up the extortion court jury of 122 (Cicero, Verrines 1.51  # unverified). Standing follows the family's offices in the Fasti (5 consulships in the Fasti)."
+    sources: ["Livy 36.15-19", "Fasti Capitolini"]
+    confidence: medium
+  - id: aebutii
+    name: Aebutii
+    nomen: Aebutius
     order: patrician
-    praenomina: ['Lucius', 'Sextus']
-    cognomina: ['Collatinus']
-    standing: [{from_year: -509, dignitas_bp: 1200, auctoritas_bp: 800, wealth: 200, clients: 80}]
-    stances: {war: 2000}
-    popular_lean_bp: 3000
-    notes: "Collatinus was forced to give up the consulship because of his name (Livy 2.2.3-11)."
-    sources: ["Livy 2.2.3-11"]
-  - id: valerii
-    name: Valerii
-    nomen: Valerius
-    order: patrician
-    praenomina: ['Publius', 'Marcus', 'Manius']
-    cognomina: ['Publicola', 'Maximus', 'Flaccus', 'Messalla']
-    standing: [{from_year: -509, dignitas_bp: 1400, auctoritas_bp: 1300, wealth: 200, clients: 200}]
-    stances: {land: 3000, debt: 2000}
-    popular_lean_bp: 6500
-    notes: "Publicola's laws favoured the people (Livy 2.8; Plutarch, Publicola 11-12)."
-    sources: ["Livy 2.8", "Plutarch, Publicola 11"]
-  - id: lucretii
-    name: Lucretii
-    nomen: Lucretius
-    order: patrician
-    praenomina: ['Titus', 'Spurius']
-    cognomina: ['Tricipitinus']
-    standing: [{from_year: -509, dignitas_bp: 900, auctoritas_bp: 800, wealth: 100, clients: 80}]
-    popular_lean_bp: 5000
-    sources: ["Livy 2.8.4"]
-  - id: horatii
-    name: Horatii
-    nomen: Horatius
-    order: patrician
-    praenomina: ['Marcus']
-    cognomina: ['Pulvillus']
-    standing: [{from_year: -509, dignitas_bp: 900, auctoritas_bp: 900, wealth: 100, clients: 80}]
-    stances: {building: 3000}
-    popular_lean_bp: 4500
-    notes: "Marcus Horatius dedicated the temple of Jupiter on the Capitol (Livy 2.8.6)."
-    sources: ["Livy 2.8.6"]
-  - id: larcii
-    name: Larcii
-    nomen: Larcius
-    order: patrician
-    praenomina: ['Titus', 'Spurius']
-    cognomina: ['Flavus', 'Rufus']
-    standing: [{from_year: -509, dignitas_bp: 700, auctoritas_bp: 600, wealth: 80, clients: 60}]
-    stances: {war: 3000}
-    popular_lean_bp: 4000
-    sources: ["Livy 2.18.4"]
-  - id: menenii
-    name: Menenii
-    nomen: Menenius
-    order: patrician
-    praenomina: ['Agrippa']
-    cognomina: ['Lanatus']
-    standing: [{from_year: -509, dignitas_bp: 700, auctoritas_bp: 700, wealth: 80, clients: 60}]
-    stances: {debt: 2500}
-    popular_lean_bp: 5500
-    notes: "Agrippa Menenius is named as mediator at the first secession of the plebs (Livy 2.32)."
-    sources: ["Livy 2.32"]
-  - id: postumii
-    name: Postumii
-    nomen: Postumius
-    order: patrician
-    praenomina: ['Publius', 'Lucius']
-    cognomina: ['Tubertus', 'Megellus']
-    standing: [{from_year: -509, dignitas_bp: 800, auctoritas_bp: 700, wealth: 100, clients: 70}]
-    stances: {war: 3500}
+    praenomina: [Postumus, Titus, Lucius]
+    branches:
+      - {cognomen: "Helva", from_year: -524, to_year: -395}
+    extinct_after: -365
+    standing:
+      - {from_year: -509, dignitas_bp: 822, auctoritas_bp: 640, wealth: 131, clients: 108}
+      - {from_year: -448, dignitas_bp: 1547, auctoritas_bp: 1187, wealth: 246, clients: 206}
+      - {from_year: -366, dignitas_bp: 841, auctoritas_bp: 797, wealth: 134, clients: 110}
+      - {from_year: -286, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 0, land: -2500, colony: 500, building: 500, idea: 0, debt: -2000, citizenship: -1500}
     popular_lean_bp: 3500
-    sources: ["Livy 2.16.1"]
-  - id: verginii
-    name: Verginii
-    nomen: Verginius
-    order: patrician
-    praenomina: ['Opiter']
-    cognomina: ['Tricostus']
-    standing: [{from_year: -509, dignitas_bp: 500, auctoritas_bp: 500, wealth: 60, clients: 40}]
+    notes: "Inferred from its record: a patrician family with 3 consulships in the Fasti, first attested 499 BC; stances are the order's. Standing follows the family's offices in the Fasti (3 consulships in the Fasti)."
+    sources: ["Fasti Capitolini"]
+    confidence: low
+  - id: aelii
+    name: Aelii
+    nomen: Aelius
+    order: plebeian
+    praenomina: [Publius, Sextus, Gaius, Quintus]
+    branches:
+      - {cognomen: "Paetus", from_year: -362, to_year: -127}
+      - {cognomen: "Ligus", from_year: -197, to_year: -132}
+    extinct_after: -97
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -366, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -286, dignitas_bp: 1042, auctoritas_bp: 830, wealth: 166, clients: 138}
+      - {from_year: -200, dignitas_bp: 3151, auctoritas_bp: 2320, wealth: 501, clients: 425}
+      - {from_year: -133, dignitas_bp: 2139, auctoritas_bp: 1786, wealth: 340, clients: 287}
+      - {from_year: -79, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 1500, peace: 1000, land: 0, colony: 500, building: 500, idea: 2500, debt: 0, citizenship: 500}
     popular_lean_bp: 5000
-    sources: ["Livy 2.16.8"]
+    notes: "The Aelii Paeti were jurists (Sex. Aelius' Tripertita: Pomponius, Digest 1.2.2.38  # unverified; Cicero, Brutus 78); the Aelii Tuberones Stoics. Standing follows the family's offices in the Fasti (6 consulships in the Fasti)."
+    sources: ["Cicero, Brutus 78", "Fasti Capitolini"]
+    confidence: medium
+  - id: aemilii
+    name: Aemilii
+    nomen: Aemilius
+    order: patrician
+    praenomina: [Lucius, Marcus, Mamercus, Manius, Quintus, Gaius, Tiberius]
+    branches:
+      - {cognomen: "Mamercus", from_year: -509, to_year: -423}
+      - {cognomen: "Mamercinus", from_year: -463, to_year: -276}
+      - {cognomen: "Papus", from_year: -346, to_year: -180}
+      - {cognomen: "Barbula", from_year: -342, to_year: -190}
+      - {cognomen: "Paullus", from_year: -327}
+      - {cognomen: "Lepidus", from_year: -310}
+      - {cognomen: "Scaurus", from_year: -148, to_year: -69}
+      - {cognomen: "Aemilius", from_year: -59}
+    standing:
+      - {from_year: -509, dignitas_bp: 2010, auctoritas_bp: 1450, wealth: 640, clients: 405}
+      - {from_year: -448, dignitas_bp: 4562, auctoritas_bp: 3190, wealth: 1452, clients: 927}
+      - {from_year: -366, dignitas_bp: 6000, auctoritas_bp: 6000, wealth: 2698, clients: 1728}
+      - {from_year: -286, dignitas_bp: 6000, auctoritas_bp: 6000, wealth: 2840, clients: 1819}
+      - {from_year: -200, dignitas_bp: 6000, auctoritas_bp: 6000, wealth: 2870, clients: 1839}
+      - {from_year: -133, dignitas_bp: 6000, auctoritas_bp: 6000, wealth: 2581, clients: 1653}
+      - {from_year: -79, dignitas_bp: 6000, auctoritas_bp: 6000, wealth: 2941, clients: 1884}
+    stances: {war: 2500, peace: 500, land: -2000, colony: 1000, building: 3000, idea: 2000, debt: -2000, citizenship: -500}
+    popular_lean_bp: 3500
+    notes: "Aemilius Paullus the conqueror of Macedon took its library for his sons (Plutarch, Aemilius 28); M. Aemilius Lepidus the censor built the Basilica Aemilia and the Pons Aemilius (Livy 40.51); Scaurus was princeps senatus and the optimates' elder (Sallust, Jugurtha 15, 25). The triumvir and the consul of 78 are the exceptions. Standing follows the family's offices in the Fasti (39 consulships in the Fasti)."
+    sources: ["Plutarch, Aemilius 28", "Livy 40.51", "Sallust, Bellum Iugurthinum 15, 25", "Fasti Capitolini"]
+    confidence: medium
+  - id: afranii
+    name: Afranii
+    nomen: Afranius
+    order: plebeian
+    praenomina: [Lucius]
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -79, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+    stances: {war: 3000, peace: 0, land: 500, colony: 500, building: 0, idea: 0, debt: 0, citizenship: 500}
+    popular_lean_bp: 4000
+    notes: "L. Afranius, Pompey's legate and consul of 60 (Plutarch, Pompey 44; Caesar, Bellum Civile 1.37-87). Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Plutarch, Pompey 44", "Caesar, Bellum Civile 1.37-87", "Fasti Capitolini"]
+    confidence: medium
+  - id: albinii
+    name: Albinii
+    nomen: Albinius
+    order: plebeian
+    praenomina: [Lucius, Marcus]
+    extinct_after: -309
+    standing:
+      - {from_year: -509, dignitas_bp: 338, auctoritas_bp: 310, wealth: 54, clients: 42}
+      - {from_year: -366, dignitas_bp: 527, auctoritas_bp: 447, wealth: 84, clients: 67}
+      - {from_year: -286, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 1000, peace: 500, land: 2500, colony: 500, building: 0, idea: 0, debt: 2500, citizenship: 1500}
+    popular_lean_bp: 8000
+    notes: "L. Albinius, one of the first tribunes of the plebs (Livy 2.33.2); the Albinius who carried the Vestals to Caere in 390 was a plebeian (Livy 5.40.9). Standing follows the family's offices in the Fasti (no consulship in the Fasti)."
+    sources: ["Livy 2.33.2", "Livy 5.40.9", "Fasti Capitolini"]
+    confidence: medium
+  - id: alfeni
+    name: Alfeni
+    nomen: Alfenus
+    order: plebeian
+    praenomina: [Publius]
+    branches:
+      - {cognomen: "Varus", from_year: -64}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+    stances: {war: 1500, peace: 1000, land: 500, colony: 500, building: 0, idea: 2500, debt: 500, citizenship: 1000}
+    popular_lean_bp: 5500
+    notes: "P. Alfenus Varus of Cremona, the jurist, suffect consul 39 (Pomponius, Digest 1.2.2.44  # unverified). Politics inferred. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Fasti Capitolini"]
+    confidence: medium
+  - id: anicii
+    name: Anicii
+    nomen: Anicius
+    order: plebeian
+    praenomina: [Lucius]
+    branches:
+      - {cognomen: "Gallus", from_year: -185, to_year: -120}
+    extinct_after: -90
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -133, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -79, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 0, land: 500, colony: 500, building: 500, idea: 500, debt: 500, citizenship: 1000}
+    popular_lean_bp: 5500
+    notes: "L. Anicius Gallus, praetor 168 who conquered Illyria, consul 160 (Livy 44.30-32, 45.43). Politics inferred. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Livy 44.30-32", "Livy 45.43", "Fasti Capitolini"]
+    confidence: medium
+  - id: annii
+    name: Annii
+    nomen: Annius
+    order: plebeian
+    praenomina: [Titus]
+    branches:
+      - {cognomen: "Luscus", from_year: -178, to_year: -113}
+      - {cognomen: "Rufus", from_year: -153, to_year: -88}
+      - {cognomen: "Milo", from_year: -113}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -133, dignitas_bp: 1130, auctoritas_bp: 850, wealth: 180, clients: 150}
+      - {from_year: -79, dignitas_bp: 998, auctoritas_bp: 800, wealth: 159, clients: 132}
+    stances: {war: 2500, peace: 0, land: -2000, colony: 0, building: 0, idea: 0, debt: -1500, citizenship: -500}
+    popular_lean_bp: 2500
+    notes: "T. Annius Milo fought Clodius' gangs for the optimates (Cicero, Pro Milone; Asconius). Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Cicero, Pro Milone", "Fasti Capitolini"]
+    confidence: medium
+  - id: antistii
+    name: Antistii
+    nomen: Antistius
+    order: plebeian
+    praenomina: [Gaius, Lucius]
+    branches:
+      - {cognomen: "Vetus", from_year: -55}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -366, dignitas_bp: 514, auctoritas_bp: 430, wealth: 82, clients: 66}
+      - {from_year: -286, dignitas_bp: 382, auctoritas_bp: 364, wealth: 61, clients: 48}
+      - {from_year: -200, dignitas_bp: 289, auctoritas_bp: 301, wealth: 46, clients: 35}
+    stances: {war: 2000, peace: 500, land: 1500, colony: 500, building: 0, idea: 0, debt: 1000, citizenship: 1000}
+    popular_lean_bp: 6000
+    notes: "The Antistii were tribunes in 422 and 420 (Livy 4.42, 4.44); C. Antistius Vetus suffect consul 30. Politics inferred. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Livy 4.42", "Livy 4.44", "Fasti Capitolini"]
+    confidence: medium
+  - id: antonii
+    name: Antonii
+    nomen: Antonius
+    order: plebeian
+    praenomina: [Marcus, Gaius, Lucius, Quintus, Titus]
+    branches:
+      - {cognomen: "Merenda", from_year: -475, to_year: -382}
+      - {cognomen: "Hybrida", from_year: -96}
+      - {cognomen: "Pietas", from_year: -66}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 60, clients: 45}
+      - {from_year: -448, dignitas_bp: 690, auctoritas_bp: 550, wealth: 165, clients: 135}
+      - {from_year: -366, dignitas_bp: 602, auctoritas_bp: 530, wealth: 144, clients: 117}
+      - {from_year: -286, dignitas_bp: 448, auctoritas_bp: 425, wealth: 107, clients: 85}
+      - {from_year: -200, dignitas_bp: 335, auctoritas_bp: 360, wealth: 80, clients: 62}
+      - {from_year: -133, dignitas_bp: 1127, auctoritas_bp: 900, wealth: 269, clients: 224}
+      - {from_year: -79, dignitas_bp: 3239, auctoritas_bp: 2340, wealth: 773, clients: 656}
+    stances: {war: 3500, peace: -1000, land: 2500, colony: 2000, building: 1000, idea: 500, debt: 1500, citizenship: 1500}
+    popular_lean_bp: 6500
+    notes: "M. Antonius the orator was an optimate killed by the Marians (Appian, Civil Wars 1.72); the triumvir settled veterans and carried Caesar's acts (Appian, Civil Wars 3.2-5, 5.12-14). Lean follows the triumvir. Standing follows the family's offices in the Fasti (6 consulships in the Fasti)."
+    sources: ["Appian, Civil Wars 1.72", "Appian, Civil Wars 3.2-5, 5.12-14", "Fasti Capitolini"]
+    confidence: medium
+  - id: appuleii
+    name: Appuleii
+    nomen: Appuleius
+    order: plebeian
+    praenomina: [Lucius, Quintus, Sextus]
+    branches:
+      - {cognomen: "Pansa", from_year: -325, to_year: -260}
+      - {cognomen: "Saturninus", from_year: -165, to_year: -60}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -286, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -200, dignitas_bp: 470, auctoritas_bp: 440, wealth: 75, clients: 60}
+      - {from_year: -133, dignitas_bp: 492, auctoritas_bp: 455, wealth: 78, clients: 63}
+    stances: {war: 3000, peace: -500, land: 4000, colony: 4000, building: 500, idea: 0, debt: 3000, citizenship: 2000}
+    popular_lean_bp: 9000
+    notes: "Saturninus' land, grain and colony laws for Marius' veterans (Appian, Civil Wars 1.28-33). Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Appian, Civil Wars 1.28-33", "Fasti Capitolini"]
+    confidence: medium
+  - id: apustii
+    name: Apustii
+    nomen: Apustius
+    order: plebeian
+    praenomina: [Lucius]
+    branches:
+      - {cognomen: "Fullo", from_year: -251, to_year: -186}
+    extinct_after: -156
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -200, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -133, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 0, land: 500, colony: 500, building: 0, idea: 0, debt: 500, citizenship: 500}
+    popular_lean_bp: 5500
+    notes: "L. Apustius Fullo, consul 226 (Polybius 2.22  # unverified). Politics inferred from the record. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Fasti Capitolini"]
+    confidence: medium
+  - id: aquillii
+    name: Aquillii
+    nomen: Aquillius
+    order: plebeian
+    praenomina: [Gaius, Manius, Lucius]
+    branches:
+      - {cognomen: "Tuscus", from_year: -512, to_year: -447, plebeian: false}
+      - {cognomen: "Corvus", from_year: -413, to_year: -348, plebeian: false}
+      - {cognomen: "Florus", from_year: -284, to_year: -219}
+    extinct_after: -31
+    standing:
+      - {from_year: -509, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -366, dignitas_bp: 580, auctoritas_bp: 515, wealth: 92, clients: 75}
+      - {from_year: -286, dignitas_bp: 888, auctoritas_bp: 749, wealth: 141, clients: 117}
+      - {from_year: -200, dignitas_bp: 575, auctoritas_bp: 576, wealth: 91, clients: 74}
+      - {from_year: -133, dignitas_bp: 1301, auctoritas_bp: 1071, wealth: 207, clients: 173}
+    stances: {war: 3000, peace: 0, land: 0, colony: 500, building: 0, idea: 0, debt: 0, citizenship: 0}
+    popular_lean_bp: 4500
+    notes: "C. Aquillius Tuscus, consul 487 (patrician, overridden); M'. Aquillius ended the Pergamene war (129) and the second slave war (101: Livy, Periochae 69). Politics inferred. Standing follows the family's offices in the Fasti (4 consulships in the Fasti)."
+    sources: ["Livy 2.40.14", "Livy, Periochae 59, 69", "Fasti Capitolini"]
+    confidence: medium
+  - id: asinii
+    name: Asinii
+    nomen: Asinius
+    order: plebeian
+    praenomina: [Gaius]
+    branches:
+      - {cognomen: "Pollio", from_year: -65}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -79, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+    stances: {war: 2500, peace: 1000, land: 1500, colony: 1000, building: 2500, idea: 3000, debt: 1000, citizenship: 1500}
+    popular_lean_bp: 6000
+    notes: "C. Asinius Pollio, Caesarian, historian, founder of the first public library (Pliny, Natural History 35.10  # unverified). Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Velleius Paterculus 2.63, 2.86", "Fasti Capitolini"]
+    confidence: medium
+  - id: aternii
+    name: Aternii
+    nomen: Aternius
+    order: patrician
+    praenomina: [Aulus]
+    branches:
+      - {cognomen: "Varus", from_year: -479, to_year: -414}
+    extinct_after: -384
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -448, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -366, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 0, land: -2500, colony: 500, building: 500, idea: 0, debt: -2000, citizenship: -1500}
+    popular_lean_bp: 3500
+    notes: "Inferred from its record: a patrician family with 1 consulship in the Fasti, first attested 454 BC; stances are the order's. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Fasti Capitolini"]
+    confidence: low
+  - id: atilii
+    name: Atilii
+    nomen: Atilius
+    order: plebeian
+    praenomina: [Marcus, Gaius, Aulus, Lucius, Sextus]
+    branches:
+      - {cognomen: "Luscus", from_year: -469, to_year: -404}
+      - {cognomen: "Priscus", from_year: -424, to_year: -356}
+      - {cognomen: "Regulus", from_year: -360, to_year: -174}
+      - {cognomen: "Caiatinus", from_year: -288, to_year: -209}
+      - {cognomen: "Bulbus", from_year: -270, to_year: -195}
+      - {cognomen: "Serranus", from_year: -195, to_year: -66}
+    extinct_after: -36
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 45}
+      - {from_year: -448, dignitas_bp: 514, auctoritas_bp: 430, wealth: 82, clients: 99}
+      - {from_year: -366, dignitas_bp: 1350, auctoritas_bp: 1024, wealth: 215, clients: 270}
+      - {from_year: -286, dignitas_bp: 4205, auctoritas_bp: 3019, wealth: 669, clients: 854}
+      - {from_year: -200, dignitas_bp: 5208, auctoritas_bp: 3963, wealth: 828, clients: 1059}
+      - {from_year: -133, dignitas_bp: 3679, auctoritas_bp: 3204, wealth: 585, clients: 746}
+      - {from_year: -79, dignitas_bp: 2146, auctoritas_bp: 2239, wealth: 341, clients: 432}
+    stances: {war: 4000, peace: -2500, land: 500, colony: 1000, building: 500, idea: 0, debt: 0, citizenship: 500}
+    popular_lean_bp: 5000
+    notes: "The Atilii Reguli and Caiatini led the First Punic War (Polybius 1.25-35); Regulus' refusal of peace is the stance on peace (Cicero, De officiis 3.99-100). Standing follows the family's offices in the Fasti (16 consulships in the Fasti)."
+    sources: ["Polybius 1.25-35", "Cicero, De officiis 3.99-100", "Fasti Capitolini"]
+    confidence: medium
+  - id: aufidii
+    name: Aufidii
+    nomen: Aufidius
+    order: plebeian
+    praenomina: [Gnaeus]
+    branches:
+      - {cognomen: "Orestes", from_year: -96, to_year: -31}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -79, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+    stances: {war: 2000, peace: 500, land: 500, colony: 500, building: 0, idea: 500, debt: 500, citizenship: 500}
+    popular_lean_bp: 5000
+    notes: "Cn. Aufidius Orestes, consul 71, a new man adopted by an Aurelius (Cicero, De domo 35). Politics inferred. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Cicero, De domo sua 35", "Fasti Capitolini"]
+    confidence: medium
+  - id: aulii
+    name: Aulii
+    nomen: Aulius
+    order: plebeian
+    praenomina: [Quintus]
+    branches:
+      - {cognomen: "Cerretanus", from_year: -348, to_year: -275}
+    extinct_after: -245
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -286, dignitas_bp: 1262, auctoritas_bp: 940, wealth: 201, clients: 168}
+      - {from_year: -200, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 3000, peace: 0, land: 1000, colony: 500, building: 0, idea: 0, debt: 1000, citizenship: 500}
+    popular_lean_bp: 5500
+    notes: "Q. Aulius Cerretanus, consul 323 and 319, killed as master of the horse in 315 (Livy 9.22). Politics inferred. Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Livy 9.22", "Fasti Capitolini"]
+    confidence: medium
+  - id: aurelii
+    name: Aurelii
+    nomen: Aurelius
+    order: plebeian
+    praenomina: [Lucius, Gaius, Marcus]
+    branches:
+      - {cognomen: "Cotta", from_year: -277}
+      - {cognomen: "Orestes", from_year: -182, to_year: -63}
+      - {cognomen: "Scaurus", from_year: -133, to_year: -68}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 60, clients: 30}
+      - {from_year: -286, dignitas_bp: 1130, auctoritas_bp: 850, wealth: 270, clients: 150}
+      - {from_year: -200, dignitas_bp: 1482, auctoritas_bp: 1130, wealth: 354, clients: 198}
+      - {from_year: -133, dignitas_bp: 3396, auctoritas_bp: 2527, wealth: 810, clients: 459}
+      - {from_year: -79, dignitas_bp: 3767, auctoritas_bp: 2860, wealth: 899, clients: 509}
+    stances: {war: 2000, peace: 500, land: 0, colony: 500, building: 1500, idea: 1500, debt: 0, citizenship: 500}
+    popular_lean_bp: 4500
+    notes: "The Aurelii Cottae were orators and moderates (Cicero, Brutus 182, 202); C. Cotta's law of 75 gave the tribunes back the right to further office (Asconius 66C  # unverified); the Via Aurelia bears the name. Standing follows the family's offices in the Fasti (12 consulships in the Fasti)."
+    sources: ["Cicero, Brutus 182, 202", "Fasti Capitolini"]
+    confidence: medium
+  - id: autronii
+    name: Autronii
+    nomen: Autronius
+    order: plebeian
+    praenomina: [Lucius]
+    branches:
+      - {cognomen: "Paetus", from_year: -58}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+    stances: {war: 2500, peace: 0, land: 1000, colony: 500, building: 0, idea: 0, debt: 1500, citizenship: 500}
+    popular_lean_bp: 6000
+    notes: "P. Autronius Paetus, elected consul for 65 and unseated for bribery, a Catilinarian (Sallust, Bellum Catilinae 17-18); L. Autronius suffect consul 33. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Sallust, Bellum Catilinae 17-18", "Fasti Capitolini"]
+    confidence: medium
+  - id: baebii
+    name: Baebii
+    nomen: Baebius
+    order: plebeian
+    praenomina: [Gnaeus, Marcus]
+    branches:
+      - {cognomen: "Tamphilus", from_year: -207, to_year: -141}
+    extinct_after: -111
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -200, dignitas_bp: 1130, auctoritas_bp: 850, wealth: 180, clients: 150}
+      - {from_year: -79, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 1500, peace: 500, land: 1500, colony: 500, building: 0, idea: 0, debt: 1000, citizenship: 500}
+    popular_lean_bp: 6000
+    notes: "Q. Baebius, tribune 200, attacked the Senate for wanting the Macedonian war (Livy 31.6); the Baebian law on the praetors (Livy 40.44.2). Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Livy 31.6", "Livy 40.44.2", "Fasti Capitolini"]
+    confidence: medium
+  - id: caecilii
+    name: Caecilii
+    nomen: Caecilius
+    order: plebeian
+    praenomina: [Quintus, Lucius, Gaius, Marcus]
+    branches:
+      - {cognomen: "Metellus", from_year: -309}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 80, clients: 60}
+      - {from_year: -286, dignitas_bp: 1702, auctoritas_bp: 1240, wealth: 542, clients: 456}
+      - {from_year: -200, dignitas_bp: 2538, auctoritas_bp: 1890, wealth: 808, clients: 684}
+      - {from_year: -133, dignitas_bp: 6000, auctoritas_bp: 4983, wealth: 2173, clients: 1854}
+      - {from_year: -79, dignitas_bp: 6000, auctoritas_bp: 5989, wealth: 2590, clients: 2211}
+    stances: {war: 3000, peace: -500, land: -3000, colony: 0, building: 2500, idea: 500, debt: -2500, citizenship: -2500}
+    popular_lean_bp: 2000
+    notes: "The Metelli, the richest plebeian house of the second century, built the Porticus Metelli (Velleius 1.11); Macedonicus opposed Tiberius Gracchus (Plutarch, Tiberius Gracchus 14), Numidicus went into exile rather than swear to Saturninus' land law (Appian, Civil Wars 1.29-31), Metellus Pius fought the Marians. Standing follows the family's offices in the Fasti (19 consulships in the Fasti)."
+    sources: ["Velleius Paterculus 1.11", "Plutarch, Tiberius Gracchus 14", "Appian, Civil Wars 1.29-31", "Fasti Capitolini"]
+    confidence: medium
+  - id: caedicii
+    name: Caedicii
+    nomen: Caedicius
+    order: plebeian
+    praenomina: [Quintus]
+    branches:
+      - {cognomen: "Noctua", from_year: -314, to_year: -249}
+    extinct_after: -186
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -286, dignitas_bp: 1130, auctoritas_bp: 850, wealth: 180, clients: 150}
+      - {from_year: -200, dignitas_bp: 690, auctoritas_bp: 630, wealth: 110, clients: 90}
+      - {from_year: -133, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 0, land: 1000, colony: 500, building: 0, idea: 0, debt: 1000, citizenship: 500}
+    popular_lean_bp: 6000
+    notes: "M. Caedicius, who heard the voice warning of the Gauls (Livy 5.32); Q. Caedicius consul 256. Politics inferred. Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Livy 5.32", "Polybius 1.25", "Fasti Capitolini"]
+    confidence: medium
+  - id: calpurnii
+    name: Calpurnii
+    nomen: Calpurnius
+    order: plebeian
+    praenomina: [Lucius, Gaius, Marcus, Gnaeus, Quintus]
+    branches:
+      - {cognomen: "Piso", from_year: -205}
+      - {cognomen: "Bestia", from_year: -136, to_year: -71}
+      - {cognomen: "Bibulus", from_year: -113}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 60, clients: 30}
+      - {from_year: -200, dignitas_bp: 690, auctoritas_bp: 550, wealth: 165, clients: 90}
+      - {from_year: -133, dignitas_bp: 3330, auctoritas_bp: 2350, wealth: 795, clients: 450}
+      - {from_year: -79, dignitas_bp: 3902, auctoritas_bp: 2940, wealth: 931, clients: 528}
+    stances: {war: 1000, peace: 1000, land: -1500, colony: 0, building: 500, idea: 1500, debt: -1000, citizenship: 0}
+    popular_lean_bp: 4000
+    notes: "L. Piso Frugi set up the extortion court (Cicero, Brutus 106) and wrote annals; Bibulus watched the sky against Caesar (Suetonius, Divus Julius 20); Piso Caesoninus, Caesar's father-in-law, an Epicurean. Standing follows the family's offices in the Fasti (10 consulships in the Fasti)."
+    sources: ["Cicero, Brutus 106", "Suetonius, Divus Julius 20", "Cicero, In Pisonem", "Fasti Capitolini"]
+    confidence: medium
+  - id: calvisii
+    name: Calvisii
+    nomen: Calvisius
+    order: plebeian
+    praenomina: [Gaius]
+    branches:
+      - {cognomen: "Sabinus", from_year: -64}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+    stances: {war: 2000, peace: 500, land: 1500, colony: 1500, building: 500, idea: 500, debt: 1500, citizenship: 1000}
+    popular_lean_bp: 5500
+    notes: "Inferred from its record: a plebeian family with 1 consulship in the Fasti, first attested 39 BC; stances are the order's. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Fasti Capitolini"]
+    confidence: low
+  - id: canidii
+    name: Canidii
+    nomen: Canidius
+    order: plebeian
+    praenomina: [Publius]
+    branches:
+      - {cognomen: "Crassus", from_year: -65}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -79, dignitas_bp: 470, auctoritas_bp: 400, wealth: 75, clients: 60}
+    stances: {war: 3500, peace: -500, land: 1500, colony: 1000, building: 0, idea: 0, debt: 1000, citizenship: 1000}
+    popular_lean_bp: 6500
+    notes: "P. Canidius Crassus, Antony's general (Plutarch, Antony 34, 42, 65). Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Plutarch, Antony 34, 42, 65", "Fasti Capitolini"]
+    confidence: medium
+  - id: caninii
+    name: Caninii
+    nomen: Caninius
+    order: plebeian
+    praenomina: [Gaius, Lucius]
+    branches:
+      - {cognomen: "Rebilus", from_year: -70}
+      - {cognomen: "Gallus", from_year: -62}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -79, dignitas_bp: 470, auctoritas_bp: 400, wealth: 75, clients: 60}
+    stances: {war: 2500, peace: 500, land: 1500, colony: 1000, building: 0, idea: 0, debt: 1000, citizenship: 1000}
+    popular_lean_bp: 6000
+    notes: "C. Caninius Rebilus, consul for one afternoon in 45 (Cicero, Ad familiares 7.30); L. Caninius Gallus consul 37. Caesarians. Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Cicero, Ad familiares 7.30", "Fasti Capitolini"]
+    confidence: medium
+  - id: canuleii
+    name: Canuleii
+    nomen: Canuleius
+    order: plebeian
+    praenomina: [Gaius]
+    extinct_after: -375
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -448, dignitas_bp: 338, auctoritas_bp: 310, wealth: 54, clients: 42}
+      - {from_year: -366, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 1000, peace: 1000, land: 2500, colony: 1000, building: 0, idea: 0, debt: 2500, citizenship: 3000}
+    popular_lean_bp: 8000
+    notes: "C. Canuleius' law of 445 allowed marriage between the orders (Livy 4.1-6). Standing follows the family's offices in the Fasti (no consulship in the Fasti)."
+    sources: ["Livy 4.1-6", "Fasti Capitolini"]
+    confidence: medium
+  - id: carrinates
+    name: Carrinates
+    nomen: Carrinas
+    order: plebeian
+    praenomina: [Gaius]
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -79, dignitas_bp: 470, auctoritas_bp: 400, wealth: 75, clients: 60}
+    stances: {war: 3000, peace: 0, land: 2000, colony: 1000, building: 0, idea: 0, debt: 1500, citizenship: 1500}
+    popular_lean_bp: 7500
+    notes: "C. Carrinas the Marian (Appian, Civil Wars 1.87-93) and his son, Caesar's officer and suffect consul 43. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Appian, Civil Wars 1.87-93", "Fasti Capitolini"]
+    confidence: medium
+  - id: carvilii
+    name: Carvilii
+    nomen: Carvilius
+    order: plebeian
+    praenomina: [Spurius]
+    branches:
+      - {cognomen: "Maximus", from_year: -318, to_year: -188}
+    extinct_after: -158
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -286, dignitas_bp: 1130, auctoritas_bp: 850, wealth: 180, clients: 150}
+      - {from_year: -200, dignitas_bp: 1570, auctoritas_bp: 1230, wealth: 250, clients: 210}
+      - {from_year: -133, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 3000, peace: 0, land: 1000, colony: 500, building: 1500, idea: 500, debt: 1000, citizenship: 500}
+    popular_lean_bp: 6000
+    notes: "Sp. Carvilius Maximus, consul 293 and 272, set up the colossal Jupiter on the Capitol from Samnite arms (Pliny, Natural History 34.43  # unverified); the first Roman to divorce (Gellius 4.3  # unverified). Standing follows the family's offices in the Fasti (4 consulships in the Fasti)."
+    sources: ["Livy 10.39-46", "Fasti Capitolini"]
+    confidence: medium
   - id: cassii
     name: Cassii
     nomen: Cassius
-    order: patrician
-    praenomina: ['Spurius']
-    cognomina: ['Vecellinus']
-    standing: [{from_year: -509, dignitas_bp: 700, auctoritas_bp: 500, wealth: 80, clients: 80}]
-    stances: {land: 6000, citizenship: 3000}
-    popular_lean_bp: 8000
-    notes: "Spurius Cassius later proposed an agrarian law (Livy 2.41), after this period."
-    sources: ["Livy 2.41"]
-  - id: cominii
-    name: Cominii
-    nomen: Cominius
-    order: patrician
-    praenomina: ['Postumus']
-    cognomina: ['Auruncus']
-    standing: [{from_year: -509, dignitas_bp: 500, auctoritas_bp: 400, wealth: 60, clients: 40}]
-    popular_lean_bp: 5000
-    sources: ["Livy 2.18.1"]
-  - id: sulpicii
-    name: Sulpicii
-    nomen: Sulpicius
-    order: patrician
-    praenomina: ['Servius']
-    cognomina: ['Camerinus']
-    standing: [{from_year: -509, dignitas_bp: 600, auctoritas_bp: 500, wealth: 70, clients: 50}]
-    popular_lean_bp: 4500
-    sources: ["Livy 2.19.1"]
-  - id: tullii
-    name: Tullii
-    nomen: Tullius
-    order: patrician
-    praenomina: ['Manius']
-    cognomina: ['Longus']
-    standing: [{from_year: -509, dignitas_bp: 400, auctoritas_bp: 300, wealth: 50, clients: 30}]
-    popular_lean_bp: 5000
-    sources: ["Livy 2.19.1"]
+    order: plebeian
+    praenomina: [Gaius, Spurius, Lucius, Quintus]
+    branches:
+      - {cognomen: "Vecellinus", from_year: -550, to_year: -446, plebeian: false}
+      - {cognomen: "Longinus", from_year: -196}
+    standing:
+      - {from_year: -509, dignitas_bp: 1702, auctoritas_bp: 1240, wealth: 271, clients: 228}
+      - {from_year: -448, dignitas_bp: 1416, auctoritas_bp: 1097, wealth: 225, clients: 189}
+      - {from_year: -366, dignitas_bp: 621, auctoritas_bp: 635, wealth: 99, clients: 80}
+      - {from_year: -286, dignitas_bp: 467, auctoritas_bp: 530, wealth: 74, clients: 59}
+      - {from_year: -200, dignitas_bp: 1347, auctoritas_bp: 1130, wealth: 214, clients: 179}
+      - {from_year: -133, dignitas_bp: 3899, auctoritas_bp: 2870, wealth: 620, clients: 527}
+      - {from_year: -79, dignitas_bp: 3767, auctoritas_bp: 2900, wealth: 599, clients: 509}
+    stances: {war: 2500, peace: 0, land: 2000, colony: 1000, building: 500, idea: 1000, debt: 1000, citizenship: 1000}
+    popular_lean_bp: 5500
+    notes: "Sp. Cassius proposed the first agrarian law (Livy 2.41; patrician in the tradition); L. Cassius Ravilla's ballot law of 137 (Cicero, De legibus 3.35); C. Cassius the tyrannicide was an optimate (Plutarch, Brutus 8). Standing follows the family's offices in the Fasti (10 consulships in the Fasti)."
+    sources: ["Livy 2.41", "Cicero, De legibus 3.35", "Plutarch, Brutus 8", "Fasti Capitolini"]
+    confidence: medium
+  - id: cincii
+    name: Cincii
+    nomen: Cincius
+    order: plebeian
+    praenomina: [Marcus]
+    branches:
+      - {cognomen: "Alimentus", from_year: -229, to_year: -164}
+    extinct_after: -134
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -200, dignitas_bp: 338, auctoritas_bp: 310, wealth: 54, clients: 42}
+      - {from_year: -133, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 1500, peace: 500, land: 500, colony: 0, building: 0, idea: 1500, debt: 2000, citizenship: 0}
+    popular_lean_bp: 6000
+    notes: "The Cincian law of 204 forbade fees for advocacy and limited gifts (Livy 34.4.9; Cicero, Cato Maior 10); L. Cincius Alimentus the annalist. Standing follows the family's offices in the Fasti (no consulship in the Fasti)."
+    sources: ["Livy 34.4.9", "Cicero, Cato Maior 10", "Fasti Capitolini"]
+    confidence: medium
   - id: claudii
     name: Claudii
     nomen: Claudius
     order: patrician
-    praenomina: ['Appius', 'Publius', 'Gaius']
-    cognomina: ['Caudex', 'Pulcher', 'Nero', 'Caecus']
-    standing: [{from_year: -509, dignitas_bp: 1500, auctoritas_bp: 1400, wealth: 300, clients: 300}]
-    stances: {war: 4000, land: -3000, debt: -2500}
+    praenomina: [Appius, Marcus, Gaius, Publius, Quintus, Tiberius]
+    branches:
+      - {cognomen: "Sabinus", from_year: -525, to_year: -455}
+      - {cognomen: "Crassus", from_year: -514, to_year: -309}
+      - {cognomen: "Inregillensis", from_year: -485, to_year: -297}
+      - {cognomen: "Hortator", from_year: -362, to_year: -297}
+      - {cognomen: "Marcellus", from_year: -356, plebeian: true}
+      - {cognomen: "Caecus", from_year: -337, to_year: -256}
+      - {cognomen: "Pulcher", from_year: -311}
+      - {cognomen: "Canina", from_year: -310, to_year: -233}
+      - {cognomen: "Caudex", from_year: -294, to_year: -224}
+      - {cognomen: "Russus", from_year: -293, to_year: -228}
+      - {cognomen: "Glicia", from_year: -274, to_year: -209, plebeian: true}
+      - {cognomen: "Centho", from_year: -265, to_year: -173}
+      - {cognomen: "Nero", from_year: -242, to_year: -162}
+    standing:
+      - {from_year: -509, dignitas_bp: 1130, auctoritas_bp: 850, wealth: 360, clients: 300}
+      - {from_year: -448, dignitas_bp: 2626, auctoritas_bp: 1870, wealth: 836, clients: 708}
+      - {from_year: -366, dignitas_bp: 3616, auctoritas_bp: 2761, wealth: 1151, clients: 978}
+      - {from_year: -286, dignitas_bp: 6000, auctoritas_bp: 4794, wealth: 2034, clients: 1735}
+      - {from_year: -200, dignitas_bp: 6000, auctoritas_bp: 6000, wealth: 3608, clients: 3084}
+      - {from_year: -133, dignitas_bp: 6000, auctoritas_bp: 6000, wealth: 2715, clients: 2319}
+      - {from_year: -79, dignitas_bp: 6000, auctoritas_bp: 6000, wealth: 2535, clients: 2164}
+    stances: {war: 4000, peace: -2000, land: -4000, colony: 1000, building: 3000, idea: 1500, debt: -3500, citizenship: 1000}
     popular_lean_bp: 3000
-    notes: "Game-balance stances: the Claudii were proudly conservative towards the plebs (Livy 2.27-29; Suetonius, Tiberius 2)."
-    sources: ["Livy 2.27", "Suetonius, Tiberius 2"]
-  - id: fulvii
-    name: Fulvii
-    nomen: Fulvius
-    order: plebeian
-    praenomina: ['Marcus', 'Quintus', 'Gnaeus']
-    cognomina: ['Flaccus', 'Centumalus']
-    standing: [{from_year: -509, dignitas_bp: 900, auctoritas_bp: 800, wealth: 150, clients: 120}]
-    stances: {war: 3000}
-    popular_lean_bp: 5500
+    notes: "Proudly hostile to the plebs from Appius Claudius Sabinus onward (Livy 2.27-29, 2.56-59; Suetonius, Tiberius 2); Appius Claudius Caecus built the road and the aqueduct and enrolled the sons of freedmen (Livy 9.29.5-8, 9.46.10-11), hence the taste for building and the odd leaning on citizenship. The Marcelli (plebeian) and P. Clodius (who left the order) are the exceptions, modelled as persons. Standing follows the family's offices in the Fasti (40 consulships in the Fasti)."
+    sources: ["Livy 2.27-29", "Livy 2.56-59", "Livy 9.29.5-8", "Livy 9.46.10-11", "Suetonius, Tiberius 2", "Fasti Capitolini"]
+    confidence: medium
+  - id: cloelii
+    name: Cloelii
+    nomen: Cloelius
+    order: patrician
+    praenomina: [Publius, Quintus, Titus]
+    branches:
+      - {cognomen: "Siculus", from_year: -523, to_year: -338}
+    extinct_after: -308
+    standing:
+      - {from_year: -509, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -448, dignitas_bp: 954, auctoritas_bp: 730, wealth: 152, clients: 126}
+      - {from_year: -366, dignitas_bp: 712, auctoritas_bp: 629, wealth: 113, clients: 92}
+      - {from_year: -286, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 0, land: -2500, colony: 500, building: 500, idea: 0, debt: -2000, citizenship: -1500}
+    popular_lean_bp: 3500
+    notes: "Inferred from its record: a patrician family with 1 consulship in the Fasti, first attested 498 BC; stances are the order's. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
     sources: ["Fasti Capitolini"]
+    confidence: low
+  - id: cocceii
+    name: Cocceii
+    nomen: Cocceius
+    order: plebeian
+    praenomina: [Gaius, Marcus]
+    branches:
+      - {cognomen: "Balbus", from_year: -64}
+      - {cognomen: "Nerva", from_year: -61}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+    stances: {war: 1500, peace: 2000, land: 1000, colony: 1000, building: 500, idea: 500, debt: 500, citizenship: 1000}
+    popular_lean_bp: 5500
+    notes: "L. Cocceius Nerva negotiated between Antony and Octavian (Appian, Civil Wars 5.60-64). Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Appian, Civil Wars 5.60-64", "Fasti Capitolini"]
+    confidence: medium
+  - id: coelii
+    name: Coelii
+    nomen: Coelius
+    order: plebeian
+    praenomina: [Gaius]
+    branches:
+      - {cognomen: "Caldus", from_year: -119, to_year: -54}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -133, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+    stances: {war: 2500, peace: 0, land: 1500, colony: 500, building: 500, idea: 1500, debt: 4000, citizenship: 500}
+    popular_lean_bp: 7000
+    notes: "C. Coelius Caldus' ballot law for treason trials (107: Cicero, De legibus 3.36); M. Caelius Rufus' debt law of 48 (Caesar, Bellum Civile 3.20-22). Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Cicero, De legibus 3.36", "Caesar, Bellum Civile 3.20-22", "Fasti Capitolini"]
+    confidence: medium
+  - id: cominii
+    name: Cominii
+    nomen: Cominius
+    order: patrician
+    praenomina: [Postumus]
+    branches:
+      - {cognomen: "Auruncus", from_year: -526, to_year: -453}
+    extinct_after: -423
+    standing:
+      - {from_year: -509, dignitas_bp: 1130, auctoritas_bp: 850, wealth: 180, clients: 150}
+      - {from_year: -448, dignitas_bp: 910, auctoritas_bp: 740, wealth: 145, clients: 120}
+      - {from_year: -366, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 0, land: -2000, colony: 0, building: 0, idea: 0, debt: -1500, citizenship: -1000}
+    popular_lean_bp: 4000
+    notes: "Postumus Cominius Auruncus, consul 501 and 493, took Longula and Corioli with Marcius (Livy 2.33.4-9). Politics inferred. Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Livy 2.18.1", "Livy 2.33.4-9", "Fasti Capitolini"]
+    confidence: medium
   - id: cornelii
     name: Cornelii
     nomen: Cornelius
     order: patrician
-    praenomina: ['Publius', 'Gnaeus', 'Lucius']
-    cognomina: ['Scipio', 'Asina', 'Lentulus', 'Cossus']
-    standing: [{from_year: -509, dignitas_bp: 1500, auctoritas_bp: 1500, wealth: 300, clients: 300}]
-    stances: {war: 3500, building: 2000}
-    popular_lean_bp: 4000
+    praenomina: [Publius, Lucius, Gnaeus, Aulus, Servius, Marcus, Gaius]
+    branches:
+      - {cognomen: "Maluginensis", from_year: -510, to_year: -321}
+      - {cognomen: "Cossus", from_year: -459, to_year: -282}
+      - {cognomen: "Rutilus", from_year: -433, to_year: -366}
+      - {cognomen: "Scipio", from_year: -420, to_year: -43}
+      - {cognomen: "Rufinus", from_year: -359, to_year: -237}
+      - {cognomen: "Scapula", from_year: -353, to_year: -288}
+      - {cognomen: "Lentulus", from_year: -352}
+      - {cognomen: "Arvina", from_year: -331, to_year: -248}
+      - {cognomen: "Dolabella", from_year: -308}
+      - {cognomen: "Merenda", from_year: -299, to_year: -234}
+      - {cognomen: "Blasio", from_year: -295, to_year: -217}
+      - {cognomen: "Cethegus", from_year: -229, to_year: -120}
+      - {cognomen: "Merula", from_year: -218, to_year: -47}
+      - {cognomen: "Cinna", from_year: -152, to_year: -44}
+      - {cognomen: "Sulla", from_year: -123, to_year: -39}
+      - {cognomen: "Balbus", from_year: -65, plebeian: true}
+    standing:
+      - {from_year: -509, dignitas_bp: 690, auctoritas_bp: 550, wealth: 220, clients: 180}
+      - {from_year: -448, dignitas_bp: 4254, auctoritas_bp: 2980, wealth: 1354, clients: 1152}
+      - {from_year: -366, dignitas_bp: 6000, auctoritas_bp: 6000, wealth: 4315, clients: 3690}
+      - {from_year: -286, dignitas_bp: 6000, auctoritas_bp: 6000, wealth: 4339, clients: 3710}
+      - {from_year: -200, dignitas_bp: 6000, auctoritas_bp: 6000, wealth: 4504, clients: 3852}
+      - {from_year: -133, dignitas_bp: 6000, auctoritas_bp: 6000, wealth: 4590, clients: 3926}
+      - {from_year: -79, dignitas_bp: 6000, auctoritas_bp: 6000, wealth: 5829, clients: 4988}
+    stances: {war: 3000, peace: -1000, land: -3500, colony: 1500, building: 2500, idea: 1500, debt: -3000, citizenship: -1500}
+    popular_lean_bp: 3000
+    notes: "The Scipios led Rome's wars and brought Greek learning and building (Polybius 10.2-5; Livy 39.52); Scipio Nasica Serapio led the senators who killed Tiberius Gracchus (Plutarch, Tiberius Gracchus 19), Sulla restored the Senate's power and shackled the tribunes (Appian, Civil Wars 1.100), the Lentuli were optimates to the end (Caesar, Bellum Civile 1.1-5). Cinna and Dolabella are the exceptions. Standing follows the family's offices in the Fasti (73 consulships in the Fasti)."
+    sources: ["Polybius 10.2-5", "Livy 39.52", "Plutarch, Tiberius Gracchus 19", "Appian, Civil Wars 1.100", "Caesar, Bellum Civile 1.1-5", "Fasti Capitolini"]
+    confidence: medium
+  - id: cornificii
+    name: Cornificii
+    nomen: Cornificius
+    order: plebeian
+    praenomina: [Lucius]
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+    stances: {war: 2000, peace: 1000, land: 500, colony: 500, building: 500, idea: 2000, debt: 500, citizenship: 500}
+    popular_lean_bp: 5000
+    notes: "Q. Cornificius, Caesarian governor and Cicero's friend, who held Africa for the Republic (Cicero, Ad familiares 12.17-30). Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Cicero, Ad familiares 12.17-30", "Fasti Capitolini"]
+    confidence: medium
+  - id: coruncanii
+    name: Coruncanii
+    nomen: Coruncanius
+    order: plebeian
+    praenomina: [Tiberius]
+    extinct_after: -176
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -286, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -200, dignitas_bp: 822, auctoritas_bp: 680, wealth: 131, clients: 108}
+      - {from_year: -133, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2000, peace: 500, land: 500, colony: 500, building: 500, idea: 2000, debt: 500, citizenship: 1000}
+    popular_lean_bp: 5000
+    notes: "Ti. Coruncanius, the first plebeian pontifex maximus and first public teacher of law (Cicero, Brutus 55). Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Cicero, Brutus 55", "Livy, Periochae 18", "Fasti Capitolini"]
+    confidence: medium
+  - id: curiatii
+    name: Curiatii
+    nomen: Curiatius
+    order: patrician
+    praenomina: [Publius]
+    branches:
+      - {cognomen: "Fistus", from_year: -478, to_year: -411}
+    extinct_after: -381
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -448, dignitas_bp: 866, auctoritas_bp: 670, wealth: 138, clients: 114}
+      - {from_year: -366, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 0, land: -2500, colony: 500, building: 500, idea: 0, debt: -2000, citizenship: -1500}
+    popular_lean_bp: 3500
+    notes: "Inferred from its record: a patrician family with 1 consulship in the Fasti, first attested 453 BC; stances are the order's. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
     sources: ["Fasti Capitolini"]
+    confidence: low
+  - id: curii
+    name: Curii
+    nomen: Curius
+    order: plebeian
+    praenomina: [Manius]
+    branches:
+      - {cognomen: "Dentatus", from_year: -335, to_year: -232}
+    extinct_after: -202
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -286, dignitas_bp: 1922, auctoritas_bp: 1390, wealth: 306, clients: 258}
+      - {from_year: -200, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 3500, peace: -500, land: 2000, colony: 1500, building: 2000, idea: -1000, debt: 1000, citizenship: 500}
+    popular_lean_bp: 5500
+    notes: "M'. Curius Dentatus divided the Sabine land among the citizens and built the Anio Vetus (Frontinus, De aquaeductu 1.6; Cicero, Cato Maior 55-56); the type of frugality. Standing follows the family's offices in the Fasti (3 consulships in the Fasti)."
+    sources: ["Frontinus, De aquaeductu 1.6", "Cicero, Cato Maior 55-56", "Fasti Capitolini"]
+    confidence: medium
+  - id: curtii
+    name: Curtii
+    nomen: Curtius
+    order: patrician
+    praenomina: [Gaius]
+    branches:
+      - {cognomen: "Philo", from_year: -470, to_year: -405}
+    extinct_after: -375
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -448, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -366, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 0, land: -2500, colony: 500, building: 500, idea: 0, debt: -2000, citizenship: -1500}
+    popular_lean_bp: 3500
+    notes: "Inferred from its record: a patrician family with 1 consulship in the Fasti, first attested 445 BC; stances are the order's. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Fasti Capitolini"]
+    confidence: low
+  - id: decii
+    name: Decii
+    nomen: Decius
+    order: plebeian
+    praenomina: [Publius]
+    branches:
+      - {cognomen: "Mus", from_year: -405, to_year: -239}
+    extinct_after: -209
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 45}
+      - {from_year: -366, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 135}
+      - {from_year: -286, dignitas_bp: 3154, auctoritas_bp: 2270, wealth: 502, clients: 639}
+      - {from_year: -200, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 4000, peace: -2000, land: 1000, colony: 1500, building: 500, idea: -500, debt: 1000, citizenship: 2000}
+    popular_lean_bp: 6000
+    notes: "The Decii Mures devoted themselves for the army (Livy 8.9, 10.28); P. Decius Mus argued for the Ogulnian law opening the priesthoods to plebeians (Livy 10.7). Standing follows the family's offices in the Fasti (6 consulships in the Fasti)."
+    sources: ["Livy 8.9", "Livy 10.7", "Livy 10.28", "Fasti Capitolini"]
+    confidence: medium
+  - id: didii
+    name: Didii
+    nomen: Didius
+    order: plebeian
+    praenomina: [Titus]
+    extinct_after: -28
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -133, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+    stances: {war: 3500, peace: -500, land: 500, colony: 500, building: 0, idea: 0, debt: 500, citizenship: 500}
+    popular_lean_bp: 5000
+    notes: "T. Didius, consul 98, a new man who fought in Spain (Appian, Hispanica 99-100). Politics inferred. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Appian, Hispanica 99-100", "Fasti Capitolini"]
+    confidence: medium
+  - id: domitii
+    name: Domitii
+    nomen: Domitius
+    order: plebeian
+    praenomina: [Gnaeus, Lucius]
+    branches:
+      - {cognomen: "Calvinus", from_year: -357}
+      - {cognomen: "Ahenobarbus", from_year: -217}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 80, clients: 45}
+      - {from_year: -366, dignitas_bp: 690, auctoritas_bp: 550, wealth: 220, clients: 135}
+      - {from_year: -286, dignitas_bp: 1130, auctoritas_bp: 850, wealth: 360, clients: 225}
+      - {from_year: -200, dignitas_bp: 1196, auctoritas_bp: 975, wealth: 381, clients: 238}
+      - {from_year: -133, dignitas_bp: 2494, auctoritas_bp: 1900, wealth: 794, clients: 504}
+      - {from_year: -79, dignitas_bp: 4056, auctoritas_bp: 2985, wealth: 1291, clients: 823}
+    stances: {war: 3000, peace: -500, land: -2500, colony: 500, building: 1000, idea: 0, debt: -2000, citizenship: -1500}
+    popular_lean_bp: 3000
+    notes: "L. Domitius Ahenobarbus (consul 54) was Caesar's bitterest enemy (Caesar, Bellum Civile 1.15-23); Cn. Domitius' law of 104 gave the choice of priests to the people (Cicero, De lege agraria 2.18), a popular act. Standing follows the family's offices in the Fasti (11 consulships in the Fasti)."
+    sources: ["Caesar, Bellum Civile 1.15-23", "Cicero, De lege agraria 2.18", "Fasti Capitolini"]
+    confidence: medium
   - id: duilii
     name: Duilii
     nomen: Duilius
     order: plebeian
-    praenomina: ['Gaius', 'Marcus']
-    cognomina: ['Nepos']
-    standing: [{from_year: -509, dignitas_bp: 500, auctoritas_bp: 300, wealth: 80, clients: 60}]
-    stances: {war: 4000}
+    praenomina: [Gaius, Kaeso]
+    branches:
+      - {cognomen: "Longus", from_year: -475, to_year: -359}
+    extinct_after: -161
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -448, dignitas_bp: 426, auctoritas_bp: 370, wealth: 68, clients: 54}
+      - {from_year: -366, dignitas_bp: 1042, auctoritas_bp: 806, wealth: 166, clients: 138}
+      - {from_year: -286, dignitas_bp: 1288, auctoritas_bp: 998, wealth: 205, clients: 171}
+      - {from_year: -200, dignitas_bp: 954, auctoritas_bp: 850, wealth: 152, clients: 126}
+      - {from_year: -133, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 3500, peace: -500, land: 1500, colony: 1000, building: 1500, idea: 500, debt: 1500, citizenship: 500}
     popular_lean_bp: 6000
-    notes: "Gaius Duilius won Rome's first naval victory at Mylae in 260 (Polybius 1.22-23)."
-    sources: ["Polybius 1.22-23"]
-  - id: otacilii
-    name: Otacilii
-    nomen: Otacilius
+    notes: "K. Duilius was tribune and decemvir (Livy 3.35, 3.52); C. Duilius won Mylae and set up the columna rostrata (Polybius 1.22-23). Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Livy 3.35", "Livy 3.52", "Polybius 1.22-23", "Fasti Capitolini"]
+    confidence: medium
+  - id: fabii
+    name: Fabii
+    nomen: Fabius
+    order: patrician
+    praenomina: [Quintus, Marcus, Numerius, Kaeso, Gaius]
+    branches:
+      - {cognomen: "Vibulanus", from_year: -510, to_year: -367}
+      - {cognomen: "Ambustus", from_year: -437, to_year: -281}
+      - {cognomen: "Dorsuo", from_year: -370, to_year: -305}
+      - {cognomen: "Maximus", from_year: -352}
+      - {cognomen: "Licinus", from_year: -298, to_year: -206}
+      - {cognomen: "Pictor", from_year: -294, to_year: -226}
+      - {cognomen: "Buteo", from_year: -272, to_year: -176}
+      - {cognomen: "Labeo", from_year: -208, to_year: -143}
+    standing:
+      - {from_year: -509, dignitas_bp: 3330, auctoritas_bp: 2350, wealth: 795, clients: 900}
+      - {from_year: -448, dignitas_bp: 6000, auctoritas_bp: 5290, wealth: 1824, clients: 2076}
+      - {from_year: -366, dignitas_bp: 6000, auctoritas_bp: 6000, wealth: 2359, clients: 2688}
+      - {from_year: -286, dignitas_bp: 6000, auctoritas_bp: 6000, wealth: 2512, clients: 2863}
+      - {from_year: -200, dignitas_bp: 6000, auctoritas_bp: 6000, wealth: 2442, clients: 2783}
+      - {from_year: -133, dignitas_bp: 6000, auctoritas_bp: 6000, wealth: 1848, clients: 2104}
+      - {from_year: -79, dignitas_bp: 5580, auctoritas_bp: 6000, wealth: 1332, clients: 1513}
+    stances: {war: 2000, peace: 1000, land: -3000, colony: 500, building: 1000, idea: -500, debt: -2500, citizenship: -2000}
+    popular_lean_bp: 2500
+    notes: "The Fabii fought the Veientes as a clan (Livy 2.48-50); the Cunctator's caution and his opposition to Scipio's African plan (Livy 22.12-18, 28.40-42) and Fabius Rullianus' confining of the city rabble to four tribes (Livy 9.46.14) are the family's conservatism. Standing follows the family's offices in the Fasti (45 consulships in the Fasti)."
+    sources: ["Livy 2.48-50", "Livy 9.46.14", "Livy 22.12-18", "Livy 28.40-42", "Fasti Capitolini"]
+    confidence: medium
+  - id: fabricii
+    name: Fabricii
+    nomen: Fabricius
     order: plebeian
-    praenomina: ['Manius', 'Titus']
-    cognomina: ['Crassus']
-    standing: [{from_year: -509, dignitas_bp: 600, auctoritas_bp: 400, wealth: 80, clients: 60}]
-    stances: {war: 4000}
+    praenomina: [Gaius]
+    branches:
+      - {cognomen: "Luscinus", from_year: -312, to_year: -235}
+    extinct_after: -205
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -286, dignitas_bp: 1482, auctoritas_bp: 1090, wealth: 236, clients: 198}
+      - {from_year: -200, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 3500, peace: 0, land: 1000, colony: 500, building: 500, idea: -1500, debt: 500, citizenship: 0}
+    popular_lean_bp: 5000
+    notes: "C. Fabricius refused Pyrrhus' gold and expelled a senator for his silver plate (Plutarch, Pyrrhus 20-21; Livy, Periochae 14). Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Plutarch, Pyrrhus 20-21", "Livy, Periochae 14", "Fasti Capitolini"]
+    confidence: medium
+  - id: fannii
+    name: Fannii
+    nomen: Fannius
+    order: plebeian
+    praenomina: [Gaius]
+    branches:
+      - {cognomen: "Strabo", from_year: -186, to_year: -121}
+    extinct_after: -52
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -200, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -133, dignitas_bp: 1130, auctoritas_bp: 850, wealth: 180, clients: 150}
+      - {from_year: -79, dignitas_bp: 910, auctoritas_bp: 740, wealth: 145, clients: 120}
+    stances: {war: 2000, peace: 500, land: 0, colony: 0, building: 0, idea: 1000, debt: 0, citizenship: -3000}
+    popular_lean_bp: 4000
+    notes: "C. Fannius, Gaius Gracchus' consul of 122, spoke against giving citizenship to the allies (Cicero, Brutus 99; Plutarch, Gaius Gracchus 12). Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Cicero, Brutus 99", "Plutarch, Gaius Gracchus 12", "Fasti Capitolini"]
+    confidence: medium
+  - id: flaminii
+    name: Flaminii
+    nomen: Flaminius
+    order: plebeian
+    praenomina: [Gaius]
+    extinct_after: -117
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 45}
+      - {from_year: -200, dignitas_bp: 2142, auctoritas_bp: 1540, wealth: 341, clients: 432}
+      - {from_year: -133, dignitas_bp: 1196, auctoritas_bp: 1067, wealth: 190, clients: 238}
+      - {from_year: -79, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 3000, peace: 0, land: 4500, colony: 3500, building: 3000, idea: 500, debt: 1500, citizenship: 1000}
+    popular_lean_bp: 8000
+    notes: "C. Flaminius divided the Gallic land against the Senate (Polybius 2.21), built the Via Flaminia and the Circus Flaminius (Livy, Periochae 20) and backed the Claudian law against senators trading (Livy 21.63). Standing follows the family's offices in the Fasti (3 consulships in the Fasti)."
+    sources: ["Polybius 2.21", "Livy 21.63", "Livy, Periochae 20", "Fasti Capitolini"]
+    confidence: medium
+  - id: flavii
+    name: Flavii
+    nomen: Flavius
+    order: plebeian
+    praenomina: [Gaius, Gnaeus, Lucius]
+    branches:
+      - {cognomen: "Fimbria", from_year: -129, to_year: -64}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -133, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+    stances: {war: 1500, peace: 500, land: 2000, colony: 1000, building: 500, idea: 1500, debt: 1500, citizenship: 2000}
+    popular_lean_bp: 7000
+    notes: "Cn. Flavius, the freedman's son who published the calendar and the forms of action (Livy 9.46); L. Flavius, tribune 60, proposed land for Pompey's veterans (Cassius Dio 37.50). Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Livy 9.46", "Cassius Dio 37.50", "Fasti Capitolini"]
+    confidence: medium
+  - id: fonteii
+    name: Fonteii
+    nomen: Fonteius
+    order: plebeian
+    praenomina: [Gaius]
+    branches:
+      - {cognomen: "Capito", from_year: -58}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+    stances: {war: 2500, peace: 500, land: 500, colony: 500, building: 500, idea: 500, debt: 500, citizenship: 1000}
     popular_lean_bp: 5500
-    sources: ["Polybius 1.16"]
+    notes: "The Fonteii of Tusculum; M. Fonteius defended by Cicero (Pro Fonteio); C. Fonteius Capito, Antony's friend, suffect consul 33. Politics inferred. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Cicero, Pro Fonteio", "Fasti Capitolini"]
+    confidence: medium
+  - id: foslii
+    name: Foslii
+    nomen: Foslius
+    order: patrician
+    praenomina: [Marcus]
+    branches:
+      - {cognomen: "Flaccinator", from_year: -458, to_year: -274}
+    extinct_after: -244
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -448, dignitas_bp: 514, auctoritas_bp: 430, wealth: 82, clients: 66}
+      - {from_year: -366, dignitas_bp: 382, auctoritas_bp: 364, wealth: 61, clients: 48}
+      - {from_year: -286, dignitas_bp: 993, auctoritas_bp: 781, wealth: 158, clients: 131}
+      - {from_year: -200, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 0, land: -2500, colony: 500, building: 500, idea: 0, debt: -2000, citizenship: -1500}
+    popular_lean_bp: 3500
+    notes: "Inferred from its record: a patrician family with 1 consulship in the Fasti, first attested 433 BC; stances are the order's. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Fasti Capitolini"]
+    confidence: low
+  - id: fufii
+    name: Fufii
+    nomen: Fufius
+    order: plebeian
+    praenomina: [Quintus]
+    branches:
+      - {cognomen: "Calenus", from_year: -72}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -79, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+    stances: {war: 2500, peace: 500, land: 1500, colony: 1000, building: 500, idea: 500, debt: 1000, citizenship: 1000}
+    popular_lean_bp: 6000
+    notes: "Q. Fufius Calenus, Caesarian tribune (61) and consul 47, defender of Antony (Cassius Dio 46.1-28). Politics inferred. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Cassius Dio 46.1-28", "Fasti Capitolini"]
+    confidence: medium
+  - id: fulvii
+    name: Fulvii
+    nomen: Fulvius
+    order: plebeian
+    praenomina: [Marcus, Quintus, Gnaeus, Lucius, Servius, Gaius]
+    branches:
+      - {cognomen: "Curvus", from_year: -347, to_year: -265}
+      - {cognomen: "Paetinus", from_year: -324, to_year: -215}
+      - {cognomen: "Maximus", from_year: -323, to_year: -223}
+      - {cognomen: "Flaccus", from_year: -294, to_year: -82}
+      - {cognomen: "Centumalus", from_year: -254, to_year: -171}
+      - {cognomen: "Nobilior", from_year: -225, to_year: -96}
+    extinct_after: -52
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 60, clients: 45}
+      - {from_year: -286, dignitas_bp: 3154, auctoritas_bp: 2230, wealth: 753, clients: 639}
+      - {from_year: -200, dignitas_bp: 6000, auctoritas_bp: 4849, wealth: 1577, clients: 1345}
+      - {from_year: -133, dignitas_bp: 6000, auctoritas_bp: 5137, wealth: 1560, clients: 1331}
+      - {from_year: -79, dignitas_bp: 3660, auctoritas_bp: 3491, wealth: 873, clients: 742}
+    stances: {war: 3500, peace: -500, land: 3000, colony: 2500, building: 2500, idea: 1500, debt: 1500, citizenship: 4000}
+    popular_lean_bp: 6500
+    notes: "M. Fulvius Flaccus proposed citizenship for the allies (125) and died with Gaius Gracchus (Appian, Civil Wars 1.21, 1.26); Fulvius Nobilior brought Ennius home and the Fulvii built the Basilica Fulvia (Livy 40.51). Standing follows the family's offices in the Fasti (20 consulships in the Fasti)."
+    sources: ["Appian, Civil Wars 1.21, 1.26", "Livy 40.51", "Cicero, Pro Archia 27", "Fasti Capitolini"]
+    confidence: medium
+  - id: fundanii
+    name: Fundanii
+    nomen: Fundanius
+    order: plebeian
+    praenomina: [Gaius]
+    branches:
+      - {cognomen: "Fundulus", from_year: -268, to_year: -203}
+    extinct_after: -173
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -200, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -133, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 0, land: 1000, colony: 500, building: 0, idea: 0, debt: 1000, citizenship: 500}
+    popular_lean_bp: 6000
+    notes: "M. Fundanius Fundulus, consul 243 (Livy, Periochae 19); a Fundanius was tribune in 195 defending the Oppian law's repeal (Livy 34.1). Politics inferred. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Livy 34.1", "Fasti Capitolini"]
+    confidence: medium
+  - id: furii
+    name: Furii
+    nomen: Furius
+    order: patrician
+    praenomina: [Lucius, Marcus, Gaius, Spurius, Publius, Agrippa, Sextus]
+    branches:
+      - {cognomen: "Medullinus", from_year: -513, to_year: -330}
+      - {cognomen: "Fusus", from_year: -471, to_year: -351}
+      - {cognomen: "Pacilus", from_year: -466, to_year: -211}
+      - {cognomen: "Camillus", from_year: -431, to_year: -285}
+      - {cognomen: "Philus", from_year: -248, to_year: -96}
+      - {cognomen: "Purpureo", from_year: -221, to_year: -156}
+    extinct_after: -66
+    standing:
+      - {from_year: -509, dignitas_bp: 2010, auctoritas_bp: 1450, wealth: 480, clients: 405}
+      - {from_year: -448, dignitas_bp: 6000, auctoritas_bp: 4210, wealth: 1446, clients: 1233}
+      - {from_year: -366, dignitas_bp: 6000, auctoritas_bp: 6000, wealth: 2984, clients: 2551}
+      - {from_year: -286, dignitas_bp: 6000, auctoritas_bp: 5728, wealth: 1511, clients: 1288}
+      - {from_year: -200, dignitas_bp: 3965, auctoritas_bp: 4195, wealth: 946, clients: 805}
+      - {from_year: -133, dignitas_bp: 3789, auctoritas_bp: 4187, wealth: 904, clients: 769}
+      - {from_year: -79, dignitas_bp: 3138, auctoritas_bp: 3783, wealth: 749, clients: 635}
+    stances: {war: 3000, peace: -500, land: -2500, colony: 2000, building: 2000, idea: 0, debt: -1500, citizenship: -1500}
+    popular_lean_bp: 3000
+    notes: "Camillus opposed moving the people to Veii and the Licinian laws, yet vowed the temple of Concord to end the Struggle (Livy 5.49-55, 6.42); the Veientine land was divided after his conquest (Livy 5.30). Standing follows the family's offices in the Fasti (17 consulships in the Fasti)."
+    sources: ["Livy 5.30", "Livy 5.49-55", "Livy 6.42", "Fasti Capitolini"]
+    confidence: medium
+  - id: gabinii
+    name: Gabinii
+    nomen: Gabinius
+    order: plebeian
+    praenomina: [Aulus]
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -133, dignitas_bp: 338, auctoritas_bp: 310, wealth: 54, clients: 42}
+      - {from_year: -79, dignitas_bp: 822, auctoritas_bp: 648, wealth: 131, clients: 108}
+    stances: {war: 3000, peace: 0, land: 1500, colony: 500, building: 500, idea: 500, debt: 1500, citizenship: 1000}
+    popular_lean_bp: 7000
+    notes: "A. Gabinius' laws: the ballot (139: Cicero, De legibus 3.35) and Pompey's command against the pirates (67: Cassius Dio 36.23-37). Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Cicero, De legibus 3.35", "Cassius Dio 36.23-37", "Fasti Capitolini"]
+    confidence: medium
+  - id: geganii
+    name: Geganii
+    nomen: Geganius
+    order: patrician
+    praenomina: [Marcus, Lucius, Proculus, Titus]
+    branches:
+      - {cognomen: "Macerinus", from_year: -517, to_year: -327}
+    extinct_after: -297
+    standing:
+      - {from_year: -509, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -448, dignitas_bp: 2802, auctoritas_bp: 1990, wealth: 446, clients: 378}
+      - {from_year: -366, dignitas_bp: 1899, auctoritas_bp: 1606, wealth: 302, clients: 254}
+      - {from_year: -286, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 0, land: -2500, colony: 500, building: 500, idea: 0, debt: -2000, citizenship: -1500}
+    popular_lean_bp: 3500
+    notes: "Inferred from its record: a patrician family with 5 consulships in the Fasti, first attested 492 BC; stances are the order's. Standing follows the family's offices in the Fasti (5 consulships in the Fasti)."
+    sources: ["Fasti Capitolini"]
+    confidence: low
+  - id: gellii
+    name: Gellii
+    nomen: Gellius
+    order: plebeian
+    praenomina: [Lucius]
+    branches:
+      - {cognomen: "Publicola", from_year: -97}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -79, dignitas_bp: 1042, auctoritas_bp: 790, wealth: 166, clients: 138}
+    stances: {war: 2500, peace: 500, land: 500, colony: 500, building: 500, idea: 1500, debt: 0, citizenship: 500}
+    popular_lean_bp: 5000
+    notes: "L. Gellius Publicola, consul 72 and censor 70, who expelled 64 senators (Livy, Periochae 98); a friend of Cicero. Politics inferred. Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Livy, Periochae 98", "Fasti Capitolini"]
+    confidence: medium
+  - id: genucii
+    name: Genucii
+    nomen: Genucius
+    order: plebeian
+    praenomina: [Lucius, Gnaeus, Gaius, Titus, Marcus]
+    branches:
+      - {cognomen: "Augurinus", from_year: -476, to_year: -356, plebeian: false}
+      - {cognomen: "Aventinensis", from_year: -390, to_year: -263}
+      - {cognomen: "Clepsina", from_year: -301, to_year: -230}
+    extinct_after: -200
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -448, dignitas_bp: 1306, auctoritas_bp: 970, wealth: 208, clients: 174}
+      - {from_year: -366, dignitas_bp: 2626, auctoritas_bp: 1966, wealth: 418, clients: 354}
+      - {from_year: -286, dignitas_bp: 3092, auctoritas_bp: 2452, wealth: 492, clients: 417}
+      - {from_year: -200, dignitas_bp: 1565, auctoritas_bp: 1571, wealth: 249, clients: 209}
+      - {from_year: -133, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2000, peace: 500, land: 2000, colony: 500, building: 0, idea: 0, debt: 3000, citizenship: 1500}
+    popular_lean_bp: 6500
+    notes: "The Genucian laws of 342 forbade interest and allowed two plebeian consuls (Livy 7.42); L. Genucius consul 365 was among the first plebeian consuls. Standing follows the family's offices in the Fasti (9 consulships in the Fasti)."
+    sources: ["Livy 7.42", "Fasti Capitolini"]
+    confidence: medium
+  - id: herennii
+    name: Herennii
+    nomen: Herennius
+    order: plebeian
+    praenomina: [Marcus]
+    branches:
+      - {cognomen: "Picens", from_year: -59}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -79, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+    stances: {war: 2000, peace: 500, land: 1500, colony: 500, building: 0, idea: 500, debt: 1000, citizenship: 1500}
+    popular_lean_bp: 6000
+    notes: "M. Herennius, consul 93, a new man (Cicero, Brutus 166); the Herennii were clients of Marius (Plutarch, Marius 5). Politics inferred. Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Cicero, Brutus 166", "Plutarch, Marius 5", "Fasti Capitolini"]
+    confidence: medium
+  - id: herminii
+    name: Herminii
+    nomen: Herminius
+    order: patrician
+    praenomina: [Lucius, Titus]
+    branches:
+      - {cognomen: "Aquilinus", from_year: -531, to_year: -466}
+      - {cognomen: "Coritinesanus", from_year: -473, to_year: -408}
+    extinct_after: -378
+    standing:
+      - {from_year: -509, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -448, dignitas_bp: 910, auctoritas_bp: 740, wealth: 145, clients: 120}
+      - {from_year: -366, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 0, land: -2500, colony: 500, building: 500, idea: 0, debt: -2000, citizenship: -1500}
+    popular_lean_bp: 3500
+    notes: "Inferred from its record: a patrician family with 2 consulships in the Fasti, first attested 506 BC; stances are the order's. Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Fasti Capitolini"]
+    confidence: low
+  - id: hirtii
+    name: Hirtii
+    nomen: Hirtius
+    order: plebeian
+    praenomina: [Aulus]
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -79, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+    stances: {war: 2500, peace: 500, land: 1500, colony: 1000, building: 500, idea: 2000, debt: 1000, citizenship: 1000}
+    popular_lean_bp: 6000
+    notes: "A. Hirtius, Caesar's officer and author (Caesar, Bellum Gallicum 8, preface). Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Caesar, Bellum Gallicum 8, preface", "Fasti Capitolini"]
+    confidence: medium
+  - id: horatii
+    name: Horatii
+    nomen: Horatius
+    order: patrician
+    praenomina: [Marcus, Gaius, Lucius]
+    branches:
+      - {cognomen: "Pulvillus", from_year: -539, to_year: -346}
+      - {cognomen: "Barbatus", from_year: -479, to_year: -385}
+    extinct_after: -308
+    standing:
+      - {from_year: -509, dignitas_bp: 1350, auctoritas_bp: 1000, wealth: 215, clients: 180}
+      - {from_year: -448, dignitas_bp: 2164, auctoritas_bp: 1615, wealth: 344, clients: 291}
+      - {from_year: -366, dignitas_bp: 1669, auctoritas_bp: 1421, wealth: 265, clients: 223}
+      - {from_year: -286, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 500, land: 500, colony: 0, building: 1500, idea: 0, debt: 500, citizenship: 0}
+    popular_lean_bp: 5000
+    notes: "Horatius Pulvillus dedicated the Capitoline temple (Livy 2.8.6-8); M. Horatius Barbatus carried the laws of 449 with Valerius (Livy 3.55). Standing follows the family's offices in the Fasti (5 consulships in the Fasti)."
+    sources: ["Livy 2.8.6-8", "Livy 3.55", "Fasti Capitolini"]
+    confidence: medium
+  - id: hortensii
+    name: Hortensii
+    nomen: Hortensius
+    order: plebeian
+    praenomina: [Quintus]
+    branches:
+      - {cognomen: "Hortalus", from_year: -99, to_year: -29}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 80, clients: 30}
+      - {from_year: -286, dignitas_bp: 602, auctoritas_bp: 490, wealth: 192, clients: 78}
+      - {from_year: -200, dignitas_bp: 426, auctoritas_bp: 402, wealth: 136, clients: 54}
+      - {from_year: -133, dignitas_bp: 302, auctoritas_bp: 318, wealth: 96, clients: 37}
+      - {from_year: -79, dignitas_bp: 742, auctoritas_bp: 618, wealth: 236, clients: 97}
+    stances: {war: 1500, peace: 500, land: 1500, colony: 500, building: 500, idea: 1500, debt: 2500, citizenship: 0}
+    popular_lean_bp: 3500
+    notes: "Q. Hortensius the dictator made plebiscites bind everyone (287: Pliny, Natural History 16.37  # unverified; Gellius 15.27.4  # unverified); Hortensius the orator was a rich optimate (Cicero, Brutus 301-329). Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Cicero, Brutus 301-329", "Gellius 15.27.4  # unverified", "Fasti Capitolini"]
+    confidence: medium
+  - id: hostilii
+    name: Hostilii
+    nomen: Hostilius
+    order: plebeian
+    praenomina: [Gaius, Aulus, Lucius]
+    branches:
+      - {cognomen: "Mancinus", from_year: -195, to_year: -97}
+    extinct_after: -67
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -200, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -133, dignitas_bp: 1570, auctoritas_bp: 1150, wealth: 250, clients: 210}
+      - {from_year: -79, dignitas_bp: 910, auctoritas_bp: 820, wealth: 145, clients: 120}
+    stances: {war: 2500, peace: 1000, land: 500, colony: 500, building: 0, idea: 0, debt: 500, citizenship: 500}
+    popular_lean_bp: 5000
+    notes: "A. Hostilius Mancinus consul 170; C. Hostilius Mancinus made the Numantine treaty (Plutarch, Tiberius Gracchus 5-7). Standing follows the family's offices in the Fasti (3 consulships in the Fasti)."
+    sources: ["Plutarch, Tiberius Gracchus 5-7", "Fasti Capitolini"]
+    confidence: medium
+  - id: icilii
+    name: Icilii
+    nomen: Icilius
+    order: plebeian
+    praenomina: [Lucius]
+    extinct_after: -379
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -448, dignitas_bp: 426, auctoritas_bp: 370, wealth: 68, clients: 54}
+      - {from_year: -366, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 1500, peace: 500, land: 3500, colony: 1000, building: 0, idea: 0, debt: 3000, citizenship: 2000}
+    popular_lean_bp: 8500
+    notes: "The Icilian law gave the Aventine to the plebs (Livy 3.31-32); L. Icilius led the second secession (Livy 3.44-54). Standing follows the family's offices in the Fasti (no consulship in the Fasti)."
+    sources: ["Livy 3.31-32", "Livy 3.44-54", "Fasti Capitolini"]
+    confidence: medium
+  - id: iulii
+    name: Iulii
+    nomen: Iulius
+    order: patrician
+    praenomina: [Gaius, Lucius, Sextus, Gnaeus, Vopiscus]
+    branches:
+      - {cognomen: "Iullus", from_year: -514, to_year: -339}
+      - {cognomen: "Mento", from_year: -456, to_year: -391}
+      - {cognomen: "Iulus", from_year: -377, to_year: -312}
+      - {cognomen: "Libo", from_year: -292, to_year: -227}
+      - {cognomen: "Caesar", from_year: -182}
+    standing:
+      - {from_year: -509, dignitas_bp: 1570, auctoritas_bp: 1150, wealth: 375, clients: 315}
+      - {from_year: -448, dignitas_bp: 4166, auctoritas_bp: 2920, wealth: 994, clients: 846}
+      - {from_year: -366, dignitas_bp: 4254, auctoritas_bp: 3336, wealth: 1015, clients: 864}
+      - {from_year: -286, dignitas_bp: 2285, auctoritas_bp: 2193, wealth: 545, clients: 461}
+      - {from_year: -200, dignitas_bp: 1387, auctoritas_bp: 1621, wealth: 331, clients: 277}
+      - {from_year: -133, dignitas_bp: 1673, auctoritas_bp: 1816, wealth: 399, clients: 336}
+      - {from_year: -79, dignitas_bp: 6000, auctoritas_bp: 6000, wealth: 1932, clients: 1650}
+    stances: {war: 3000, peace: -500, land: 2500, colony: 3000, building: 3000, idea: 2500, debt: 2500, citizenship: 3000}
+    popular_lean_bp: 7500
+    notes: "A modest patrician house until Caesar: L. Iulius Caesar's law of 90 gave citizenship to the loyal allies (Appian, Civil Wars 1.49), Caesar's agrarian laws and colonies settled the poor and the veterans (Suetonius, Divus Julius 20, 42), his Forum and buildings remade the city (Suetonius 26, 44). Standing follows the family's offices in the Fasti (24 consulships in the Fasti)."
+    sources: ["Appian, Civil Wars 1.49", "Suetonius, Divus Julius 20, 26, 42, 44", "Fasti Capitolini"]
+    confidence: medium
+  - id: iunii
+    name: Iunii
+    nomen: Iunius
+    order: plebeian
+    praenomina: [Decimus, Gaius, Marcus, Lucius]
+    branches:
+      - {cognomen: "Brutus", from_year: -574}
+      - {cognomen: "Bubulcus", from_year: -342, to_year: -237}
+      - {cognomen: "Pera", from_year: -291, to_year: -176}
+      - {cognomen: "Pullus", from_year: -274, to_year: -209}
+      - {cognomen: "Pennus", from_year: -192, to_year: -127}
+      - {cognomen: "Silanus", from_year: -134}
+    standing:
+      - {from_year: -509, dignitas_bp: 690, auctoritas_bp: 550, wealth: 165, clients: 135}
+      - {from_year: -448, dignitas_bp: 470, auctoritas_bp: 440, wealth: 112, clients: 90}
+      - {from_year: -366, dignitas_bp: 448, auctoritas_bp: 425, wealth: 107, clients: 85}
+      - {from_year: -286, dignitas_bp: 4958, auctoritas_bp: 3512, wealth: 1183, clients: 1008}
+      - {from_year: -200, dignitas_bp: 4361, auctoritas_bp: 3481, wealth: 1041, clients: 886}
+      - {from_year: -133, dignitas_bp: 3332, auctoritas_bp: 2891, wealth: 795, clients: 675}
+      - {from_year: -79, dignitas_bp: 3121, auctoritas_bp: 2867, wealth: 745, clients: 632}
+    stances: {war: 3000, peace: 0, land: -1000, colony: 500, building: 500, idea: 1500, debt: -500, citizenship: -500}
+    popular_lean_bp: 4000
+    notes: "Brutus the founder (Livy 2.1); the plebeian Iunii Bruti and Silani of the middle Republic; D. Brutus Callaicus and M. Brutus the tyrannicide stood with the Senate (Plutarch, Brutus 2, 8). Standing follows the family's offices in the Fasti (17 consulships in the Fasti)."
+    sources: ["Livy 2.1", "Plutarch, Brutus 2, 8", "Fasti Capitolini"]
+    confidence: medium
+  - id: iuventii
+    name: Iuventii
+    nomen: Iuventius
+    order: plebeian
+    praenomina: [Manius]
+    branches:
+      - {cognomen: "Thalna", from_year: -188, to_year: -123}
+    extinct_after: -93
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -200, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -79, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2000, peace: 500, land: 500, colony: 500, building: 500, idea: 500, debt: 500, citizenship: 500}
+    popular_lean_bp: 5000
+    notes: "M'. Iuventius Thalna, consul 163, died of joy at the news of a thanksgiving (Valerius Maximus 9.12.3  # unverified); the Iuventii of Tusculum. Politics inferred. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Fasti Capitolini"]
+    confidence: medium
+  - id: labieni
+    name: Labieni
+    nomen: Labienus
+    order: plebeian
+    praenomina: [Titus]
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -79, dignitas_bp: 338, auctoritas_bp: 310, wealth: 54, clients: 42}
+    stances: {war: 3000, peace: 0, land: 1500, colony: 1000, building: 0, idea: 0, debt: 1000, citizenship: 1000}
+    popular_lean_bp: 6000
+    notes: "T. Labienus, tribune 63 for Caesar, then Pompey's general (Cassius Dio 37.26-28; Caesar, Bellum Civile 1.15). Standing follows the family's offices in the Fasti (no consulship in the Fasti)."
+    sources: ["Cassius Dio 37.26-28", "Caesar, Bellum Civile 1.15", "Fasti Capitolini"]
+    confidence: medium
+  - id: laelii
+    name: Laelii
+    nomen: Laelius
+    order: plebeian
+    praenomina: [Gaius]
+    branches:
+      - {cognomen: "Sapiens", from_year: -181, to_year: -100}
+    extinct_after: -70
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -200, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -133, dignitas_bp: 910, auctoritas_bp: 740, wealth: 145, clients: 120}
+      - {from_year: -79, dignitas_bp: 690, auctoritas_bp: 630, wealth: 110, clients: 90}
+    stances: {war: 2000, peace: 1000, land: 500, colony: 500, building: 500, idea: 2500, debt: 0, citizenship: 0}
+    popular_lean_bp: 4000
+    notes: "C. Laelius the elder was Scipio's friend (Polybius 10.3); C. Laelius Sapiens withdrew his land law (Plutarch, Tiberius Gracchus 8). Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Polybius 10.3", "Plutarch, Tiberius Gracchus 8", "Fasti Capitolini"]
+    confidence: medium
+  - id: laetorii
+    name: Laetorii
+    nomen: Laetorius
+    order: plebeian
+    praenomina: [Gaius]
+    extinct_after: -401
+    standing:
+      - {from_year: -509, dignitas_bp: 338, auctoritas_bp: 310, wealth: 54, clients: 42}
+      - {from_year: -366, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 1500, peace: 500, land: 2500, colony: 500, building: 0, idea: 0, debt: 2500, citizenship: 1500}
+    popular_lean_bp: 8000
+    notes: "C. Laetorius, tribune 471, carried the Publilian law with Volero (Livy 2.56). Standing follows the family's offices in the Fasti (no consulship in the Fasti)."
+    sources: ["Livy 2.56", "Fasti Capitolini"]
+    confidence: medium
+  - id: larcii
+    name: Larcii
+    nomen: Larcius
+    order: patrician
+    praenomina: [Titus, Spurius]
+    branches:
+      - {cognomen: "Flavus", from_year: -531, to_year: -450}
+    extinct_after: -420
+    standing:
+      - {from_year: -509, dignitas_bp: 2362, auctoritas_bp: 1690, wealth: 376, clients: 318}
+      - {from_year: -448, dignitas_bp: 1746, auctoritas_bp: 1382, wealth: 278, clients: 234}
+      - {from_year: -366, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 3000, peace: 0, land: -2000, colony: 0, building: 0, idea: 0, debt: -1500, citizenship: -1000}
+    popular_lean_bp: 4000
+    notes: "T. Larcius the first dictator (Livy 2.18); an early patrician house that vanished after 490. Politics inferred. Standing follows the family's offices in the Fasti (4 consulships in the Fasti)."
+    sources: ["Livy 2.18", "Fasti Capitolini"]
+    confidence: medium
+  - id: licinii
+    name: Licinii
+    nomen: Licinius
+    order: plebeian
+    praenomina: [Gaius, Publius, Lucius, Marcus]
+    branches:
+      - {cognomen: "Calvus", from_year: -425, to_year: -324}
+      - {cognomen: "Stolo", from_year: -406, to_year: -321}
+      - {cognomen: "Varus", from_year: -261, to_year: -196}
+      - {cognomen: "Crassus", from_year: -235}
+      - {cognomen: "Lucullus", from_year: -176, to_year: -34}
+      - {cognomen: "Geta", from_year: -141, to_year: -76}
+      - {cognomen: "Murena", from_year: -87}
+    standing:
+      - {from_year: -509, dignitas_bp: 338, auctoritas_bp: 310, wealth: 108, clients: 63}
+      - {from_year: -366, dignitas_bp: 1979, auctoritas_bp: 1437, wealth: 630, clients: 398}
+      - {from_year: -286, dignitas_bp: 1121, auctoritas_bp: 1008, wealth: 357, clients: 223}
+      - {from_year: -200, dignitas_bp: 2764, auctoritas_bp: 2128, wealth: 880, clients: 559}
+      - {from_year: -133, dignitas_bp: 4370, auctoritas_bp: 3347, wealth: 1391, clients: 887}
+      - {from_year: -79, dignitas_bp: 5785, auctoritas_bp: 4480, wealth: 1841, clients: 1177}
+    stances: {war: 2000, peace: 500, land: 3000, colony: 1000, building: 1500, idea: 1500, debt: 2500, citizenship: 0}
+    popular_lean_bp: 5000
+    notes: "C. Licinius Stolo's law limited holdings of public land (Livy 6.35, 6.42); the Licinii Crassi were rich (Plutarch, Crassus 2) and the Luculli optimates; L. Crassus the orator's law of 95 drove out Latins claiming citizenship (Cicero, De officiis 3.47), hence the neutral stance on citizenship. Standing follows the family's offices in the Fasti (16 consulships in the Fasti)."
+    sources: ["Livy 6.35", "Livy 6.42", "Plutarch, Crassus 2", "Cicero, De officiis 3.47", "Fasti Capitolini"]
+    confidence: medium
+  - id: livii
+    name: Livii
+    nomen: Livius
+    order: plebeian
+    praenomina: [Marcus, Gaius]
+    branches:
+      - {cognomen: "Denter", from_year: -327, to_year: -262}
+      - {cognomen: "Salinator", from_year: -249, to_year: -148}
+      - {cognomen: "Drusus", from_year: -174, to_year: -51}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 60, clients: 45}
+      - {from_year: -286, dignitas_bp: 690, auctoritas_bp: 550, wealth: 165, clients: 135}
+      - {from_year: -200, dignitas_bp: 2494, auctoritas_bp: 1820, wealth: 595, clients: 504}
+      - {from_year: -133, dignitas_bp: 2648, auctoritas_bp: 2109, wealth: 632, clients: 535}
+      - {from_year: -79, dignitas_bp: 1961, auctoritas_bp: 1681, wealth: 468, clients: 395}
+    stances: {war: 2000, peace: 0, land: 1500, colony: 2500, building: 500, idea: 500, debt: 1000, citizenship: 2500}
+    popular_lean_bp: 4500
+    notes: "The elder Drusus outbid Gaius Gracchus with colonies for the Senate's sake (Plutarch, Gaius Gracchus 8-9); the younger proposed land, grain and citizenship for the Italians (Appian, Civil Wars 1.35-36). Standing follows the family's offices in the Fasti (6 consulships in the Fasti)."
+    sources: ["Plutarch, Gaius Gracchus 8-9", "Appian, Civil Wars 1.35-36", "Fasti Capitolini"]
+    confidence: medium
+  - id: lucretii
+    name: Lucretii
+    nomen: Lucretius
+    order: patrician
+    praenomina: [Lucius, Titus, Publius, Hostus, Spurius]
+    branches:
+      - {cognomen: "Tricipitinus", from_year: -538, to_year: -341}
+    extinct_after: -311
+    standing:
+      - {from_year: -509, dignitas_bp: 1350, auctoritas_bp: 1000, wealth: 215, clients: 180}
+      - {from_year: -448, dignitas_bp: 2208, auctoritas_bp: 1685, wealth: 351, clients: 297}
+      - {from_year: -366, dignitas_bp: 2615, auctoritas_bp: 2090, wealth: 416, clients: 352}
+      - {from_year: -286, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2000, peace: 500, land: -1500, colony: 0, building: 0, idea: 0, debt: -1000, citizenship: -500}
+    popular_lean_bp: 4000
+    notes: "The family of Lucretia and of Publicola's colleague (Livy 1.58, 2.8); politics inferred from the order and the record. Standing follows the family's offices in the Fasti (6 consulships in the Fasti)."
+    sources: ["Livy 1.58", "Livy 2.8", "Fasti Capitolini"]
+    confidence: medium
+  - id: lutatii
+    name: Lutatii
+    nomen: Lutatius
+    order: plebeian
+    praenomina: [Quintus, Gaius]
+    branches:
+      - {cognomen: "Catulus", from_year: -272}
+      - {cognomen: "Cerco", from_year: -266, to_year: -201}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 60, clients: 30}
+      - {from_year: -200, dignitas_bp: 1570, auctoritas_bp: 1150, wealth: 375, clients: 210}
+      - {from_year: -133, dignitas_bp: 1350, auctoritas_bp: 1120, wealth: 322, clients: 180}
+      - {from_year: -79, dignitas_bp: 1680, auctoritas_bp: 1345, wealth: 401, clients: 225}
+    stances: {war: 2500, peace: 500, land: -2500, colony: 0, building: 3000, idea: 1500, debt: -1500, citizenship: -1000}
+    popular_lean_bp: 2500
+    notes: "Catulus ended the First Punic War at sea (Polybius 1.59-63); the Catuli of 102 and 78 were learned optimates, the younger rebuilt the Capitol (Cicero, Verrines 2.4.69; Cassius Dio 37.46). Standing follows the family's offices in the Fasti (5 consulships in the Fasti)."
+    sources: ["Polybius 1.59-63", "Cicero, Verrines 2.4.69", "Cassius Dio 37.46", "Fasti Capitolini"]
+    confidence: medium
+  - id: maelii
+    name: Maelii
+    nomen: Maelius
+    order: plebeian
+    praenomina: [Publius, Spurius]
+    branches:
+      - {cognomen: "Capitolinus", from_year: -425, to_year: -356}
+    extinct_after: -326
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 60, clients: 30}
+      - {from_year: -366, dignitas_bp: 778, auctoritas_bp: 610, wealth: 186, clients: 102}
+      - {from_year: -286, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 1000, peace: 1000, land: 2000, colony: 500, building: 0, idea: 0, debt: 3500, citizenship: 1000}
+    popular_lean_bp: 8000
+    notes: "Sp. Maelius, the rich plebeian who fed the people in the famine and died for it (Livy 4.13-14). Standing follows the family's offices in the Fasti (no consulship in the Fasti)."
+    sources: ["Livy 4.13-14", "Fasti Capitolini"]
+    confidence: medium
+  - id: maenii
+    name: Maenii
+    nomen: Maenius
+    order: plebeian
+    praenomina: [Gaius]
+    extinct_after: -244
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -366, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -286, dignitas_bp: 1174, auctoritas_bp: 920, wealth: 187, clients: 156}
+      - {from_year: -200, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 0, land: 2000, colony: 1000, building: 1500, idea: 0, debt: 3000, citizenship: 1000}
+    popular_lean_bp: 7000
+    notes: "C. Maenius, consul 338, set up the Rostra (Livy 8.14); the Lex Maenia on the Senate's assent to elections and the Maenian law on debt (Livy 7.16  # unverified). Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Livy 8.14", "Cicero, Brutus 55", "Fasti Capitolini"]
+    confidence: medium
+  - id: mallii
+    name: Mallii
+    nomen: Mallius
+    order: plebeian
+    praenomina: [Gnaeus]
+    branches:
+      - {cognomen: "Maximus", from_year: -130, to_year: -65}
+    extinct_after: -35
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -133, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+    stances: {war: 2500, peace: 0, land: 1000, colony: 500, building: 0, idea: 0, debt: 1000, citizenship: 1000}
+    popular_lean_bp: 6000
+    notes: "Cn. Mallius Maximus, the new man beaten at Arausio and exiled (Livy, Periochae 67; Cicero, Pro Plancio 12). Politics inferred. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Livy, Periochae 67", "Cicero, Pro Plancio 12", "Fasti Capitolini"]
+    confidence: medium
   - id: mamilii
     name: Mamilii
     nomen: Mamilius
     order: plebeian
-    praenomina: ['Quintus']
-    cognomina: ['Vitulus']
-    standing: [{from_year: -509, dignitas_bp: 400, auctoritas_bp: 300, wealth: 60, clients: 40}]
+    praenomina: [Gaius, Lucius, Quintus]
+    branches:
+      - {cognomen: "Vitulus", from_year: -290, to_year: -222}
+      - {cognomen: "Turrinus", from_year: -264, to_year: -199}
+    extinct_after: -169
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -286, dignitas_bp: 1130, auctoritas_bp: 850, wealth: 180, clients: 150}
+      - {from_year: -200, dignitas_bp: 1130, auctoritas_bp: 930, wealth: 180, clients: 150}
+      - {from_year: -133, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 0, land: 1000, colony: 500, building: 500, idea: 500, debt: 1000, citizenship: 1500}
+    popular_lean_bp: 5500
+    notes: "The Mamilii of Tusculum, the first Latins to reach the consulship (Livy 3.29.6 on the grant of citizenship to L. Mamilius; Polybius 1.17). Standing follows the family's offices in the Fasti (3 consulships in the Fasti)."
+    sources: ["Livy 3.29.6", "Polybius 1.17", "Fasti Capitolini"]
+    confidence: medium
+  - id: manilii
+    name: Manilii
+    nomen: Manilius
+    order: plebeian
+    praenomina: [Gaius, Manius, Publius]
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -133, dignitas_bp: 1130, auctoritas_bp: 850, wealth: 180, clients: 150}
+      - {from_year: -79, dignitas_bp: 998, auctoritas_bp: 800, wealth: 159, clients: 132}
+    stances: {war: 2500, peace: 0, land: 1500, colony: 500, building: 0, idea: 1000, debt: 1000, citizenship: 2500}
+    popular_lean_bp: 7000
+    notes: "C. Manilius' law of 66 gave Pompey the eastern command and his bill let freedmen vote in all the tribes (Cassius Dio 36.42-44). Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Cassius Dio 36.42-44", "Cicero, Pro lege Manilia", "Fasti Capitolini"]
+    confidence: medium
+  - id: manlii
+    name: Manlii
+    nomen: Manlius
+    order: patrician
+    praenomina: [Aulus, Titus, Gnaeus, Lucius, Marcus, Publius, Quintus]
+    branches:
+      - {cognomen: "Cincinnatus", from_year: -505, to_year: -440}
+      - {cognomen: "Vulso", from_year: -499, to_year: -138}
+      - {cognomen: "Capitolinus", from_year: -449, to_year: -305}
+      - {cognomen: "Imperiosus", from_year: -378, to_year: -300}
+      - {cognomen: "Torquatus", from_year: -324}
+      - {cognomen: "Acidinus", from_year: -204, to_year: -139}
+    standing:
+      - {from_year: -509, dignitas_bp: 1130, auctoritas_bp: 850, wealth: 270, clients: 225}
+      - {from_year: -448, dignitas_bp: 2098, auctoritas_bp: 1510, wealth: 501, clients: 423}
+      - {from_year: -366, dignitas_bp: 6000, auctoritas_bp: 6000, wealth: 2118, clients: 1809}
+      - {from_year: -286, dignitas_bp: 5697, auctoritas_bp: 4832, wealth: 1359, clients: 1159}
+      - {from_year: -200, dignitas_bp: 6000, auctoritas_bp: 5714, wealth: 1640, clients: 1399}
+      - {from_year: -133, dignitas_bp: 5070, auctoritas_bp: 4756, wealth: 1210, clients: 1030}
+      - {from_year: -79, dignitas_bp: 3737, auctoritas_bp: 4007, wealth: 892, clients: 758}
+    stances: {war: 4000, peace: -2000, land: -2500, colony: 0, building: 0, idea: -1000, debt: -1500, citizenship: -2500}
+    popular_lean_bp: 2000
+    notes: "The Manlii Torquati were the type of stern command (Livy 7.10, 8.7); M. Manlius Capitolinus, who took up the debtors, is the exception the family itself condemned (Livy 6.20). Standing follows the family's offices in the Fasti (21 consulships in the Fasti)."
+    sources: ["Livy 6.20", "Livy 7.10", "Livy 8.7", "Fasti Capitolini"]
+    confidence: medium
+  - id: marcii
+    name: Marcii
+    nomen: Marcius
+    order: plebeian
+    praenomina: [Gaius, Quintus, Lucius, Gnaeus]
+    branches:
+      - {cognomen: "Coriolanus", from_year: -553, to_year: -488, plebeian: false}
+      - {cognomen: "Rutilus", from_year: -387, to_year: -270}
+      - {cognomen: "Tremulus", from_year: -331, to_year: -248}
+      - {cognomen: "Philippus", from_year: -306}
+      - {cognomen: "Figulus", from_year: -187}
+      - {cognomen: "Censorinus", from_year: -174}
+      - {cognomen: "Rex", from_year: -143, to_year: -28}
+      - {cognomen: "Rufus", from_year: -61}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 60, clients: 45}
+      - {from_year: -366, dignitas_bp: 2714, auctoritas_bp: 1930, wealth: 648, clients: 549}
+      - {from_year: -286, dignitas_bp: 3374, auctoritas_bp: 2604, wealth: 805, clients: 684}
+      - {from_year: -200, dignitas_bp: 3237, auctoritas_bp: 2683, wealth: 772, clients: 656}
+      - {from_year: -133, dignitas_bp: 3675, auctoritas_bp: 3021, wealth: 877, clients: 745}
+      - {from_year: -79, dignitas_bp: 4731, auctoritas_bp: 3933, wealth: 1129, clients: 961}
+    stances: {war: 2500, peace: 0, land: 1000, colony: 1000, building: 2500, idea: 500, debt: 500, citizenship: 500}
     popular_lean_bp: 5000
-    sources: ["Polybius 1.17"]
+    notes: "C. Marcius Rutilus the first plebeian dictator and censor (Livy 7.17, 7.22); Q. Marcius Rex built the Aqua Marcia (Frontinus, De aquaeductu 1.7); L. Marcius Philippus opposed Drusus (Cicero, De oratore 3.2). Standing follows the family's offices in the Fasti (21 consulships in the Fasti)."
+    sources: ["Livy 7.17", "Livy 7.22", "Frontinus, De aquaeductu 1.7", "Cicero, De oratore 3.2", "Fasti Capitolini"]
+    confidence: medium
+  - id: marii
+    name: Marii
+    nomen: Marius
+    order: plebeian
+    praenomina: [Gaius]
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 60}
+      - {from_year: -133, dignitas_bp: 2978, auctoritas_bp: 2110, wealth: 474, clients: 804}
+      - {from_year: -79, dignitas_bp: 3857, auctoritas_bp: 2710, wealth: 614, clients: 1044}
+    stances: {war: 4000, peace: -1500, land: 4000, colony: 3500, building: 1000, idea: 500, debt: 2500, citizenship: 3500}
+    popular_lean_bp: 8500
+    notes: "Marius enrolled the propertyless (Sallust, Jugurtha 86.2), allied with Saturninus for veterans' land (Appian, Civil Wars 1.29-30) and gave citizenship to whole cohorts on the field (Plutarch, Marius 28). Standing follows the family's offices in the Fasti (8 consulships in the Fasti)."
+    sources: ["Sallust, Bellum Iugurthinum 86.2", "Appian, Civil Wars 1.29-30", "Plutarch, Marius 28", "Fasti Capitolini"]
+    confidence: medium
+  - id: memmii
+    name: Memmii
+    nomen: Memmius
+    order: plebeian
+    praenomina: [Gaius]
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -133, dignitas_bp: 338, auctoritas_bp: 310, wealth: 54, clients: 42}
+    stances: {war: 2000, peace: 0, land: 2000, colony: 500, building: 500, idea: 1500, debt: 1500, citizenship: 500}
+    popular_lean_bp: 7000
+    notes: "C. Memmius the tribune of 111 attacked the nobles over Jugurtha (Sallust, Jugurtha 27, 30-34). Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Sallust, Bellum Iugurthinum 27, 30-34", "Fasti Capitolini"]
+    confidence: medium
+  - id: menenii
+    name: Menenii
+    nomen: Menenius
+    order: patrician
+    praenomina: [Agrippa, Titus, Lucius]
+    branches:
+      - {cognomen: "Lanatus", from_year: -558, to_year: -377}
+      - {cognomen: "Agrippa", from_year: -477, to_year: -412}
+      - {cognomen: "Menenius", from_year: -412, to_year: -336}
+    extinct_after: -306
+    standing:
+      - {from_year: -509, dignitas_bp: 1130, auctoritas_bp: 850, wealth: 180, clients: 150}
+      - {from_year: -448, dignitas_bp: 2758, auctoritas_bp: 2000, wealth: 439, clients: 372}
+      - {from_year: -366, dignitas_bp: 2516, auctoritas_bp: 2043, wealth: 400, clients: 339}
+      - {from_year: -286, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 1500, peace: 1500, land: 500, colony: 500, building: 0, idea: 0, debt: 2500, citizenship: 500}
+    popular_lean_bp: 5500
+    notes: "Agrippa Menenius reconciled the plebs at the first secession (Livy 2.32); the family stayed friends of the people. Standing follows the family's offices in the Fasti (5 consulships in the Fasti)."
+    sources: ["Livy 2.32-33", "Fasti Capitolini"]
+    confidence: medium
+  - id: metilii
+    name: Metilii
+    nomen: Metilius
+    order: plebeian
+    praenomina: [Marcus]
+    extinct_after: -147
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -200, dignitas_bp: 338, auctoritas_bp: 310, wealth: 54, clients: 42}
+      - {from_year: -133, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: -500, land: 1500, colony: 500, building: 0, idea: 0, debt: 1500, citizenship: 500}
+    popular_lean_bp: 7500
+    notes: "M. Metilius, tribune 217, had Minucius made the dictator's equal against Fabius (Livy 22.25). Standing follows the family's offices in the Fasti (no consulship in the Fasti)."
+    sources: ["Livy 22.25", "Fasti Capitolini"]
+    confidence: medium
+  - id: minucii
+    name: Minucii
+    nomen: Minucius
+    order: plebeian
+    praenomina: [Marcus, Quintus, Lucius, Publius, Tiberius]
+    branches:
+      - {cognomen: "Augurinus", from_year: -522, to_year: -265, plebeian: false}
+      - {cognomen: "Esquilinus", from_year: -483, to_year: -410, plebeian: false}
+      - {cognomen: "Rufus", from_year: -281, to_year: -70}
+      - {cognomen: "Thermus", from_year: -218, to_year: -153}
+    extinct_after: -40
+    standing:
+      - {from_year: -509, dignitas_bp: 1570, auctoritas_bp: 1150, wealth: 250, clients: 210}
+      - {from_year: -448, dignitas_bp: 2626, auctoritas_bp: 1870, wealth: 418, clients: 354}
+      - {from_year: -366, dignitas_bp: 976, auctoritas_bp: 961, wealth: 155, clients: 129}
+      - {from_year: -286, dignitas_bp: 1046, auctoritas_bp: 1009, wealth: 166, clients: 138}
+      - {from_year: -200, dignitas_bp: 2278, auctoritas_bp: 1888, wealth: 362, clients: 306}
+      - {from_year: -133, dignitas_bp: 1838, auctoritas_bp: 1721, wealth: 292, clients: 246}
+      - {from_year: -79, dignitas_bp: 1638, auctoritas_bp: 1584, wealth: 260, clients: 219}
+    stances: {war: 2500, peace: 0, land: 1000, colony: 500, building: 1000, idea: 0, debt: 1000, citizenship: 0}
+    popular_lean_bp: 5500
+    notes: "L. Minucius as prefect of the grain supply denounced Sp. Maelius (Livy 4.12-16); the patrician Augurini of the fifth century are overridden; the Minucii Rufi of the Hannibalic war were plebeian. Standing follows the family's offices in the Fasti (10 consulships in the Fasti)."
+    sources: ["Livy 4.12-16", "Livy 22.25-30", "Fasti Capitolini"]
+    confidence: medium
+  - id: mucii
+    name: Mucii
+    nomen: Mucius
+    order: plebeian
+    praenomina: [Quintus, Publius]
+    branches:
+      - {cognomen: "Scaevola", from_year: -200, to_year: -55}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 60, clients: 30}
+      - {from_year: -200, dignitas_bp: 1130, auctoritas_bp: 850, wealth: 270, clients: 150}
+      - {from_year: -133, dignitas_bp: 2450, auctoritas_bp: 1750, wealth: 585, clients: 330}
+      - {from_year: -79, dignitas_bp: 1790, auctoritas_bp: 1420, wealth: 427, clients: 240}
+    stances: {war: 500, peace: 2000, land: 1500, colony: 0, building: 500, idea: 3000, debt: 0, citizenship: -1500}
+    popular_lean_bp: 4000
+    notes: "The Mucii Scaevolae were the jurists of Rome (Cicero, Brutus 102, 145-152); P. Mucius helped draft Tiberius Gracchus' law (Cicero, Academica 2.13) and the Lex Licinia Mucia of 95 drove out false citizens. Standing follows the family's offices in the Fasti (5 consulships in the Fasti)."
+    sources: ["Cicero, Brutus 102, 145-152", "Cicero, Academica 2.13", "Fasti Capitolini"]
+    confidence: medium
+  - id: mummii
+    name: Mummii
+    nomen: Mummius
+    order: plebeian
+    praenomina: [Lucius]
+    branches:
+      - {cognomen: "Achaicus", from_year: -183, to_year: -102}
+    extinct_after: -72
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -133, dignitas_bp: 1042, auctoritas_bp: 790, wealth: 166, clients: 138}
+      - {from_year: -79, dignitas_bp: 646, auctoritas_bp: 592, wealth: 103, clients: 84}
+    stances: {war: 3000, peace: 0, land: 500, colony: 500, building: 2000, idea: -500, debt: 500, citizenship: 500}
+    popular_lean_bp: 5000
+    notes: "L. Mummius destroyed Corinth and filled Italy with its statues (Polybius 39.2-6; Velleius 1.13). Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Polybius 39.2-6", "Velleius Paterculus 1.13", "Fasti Capitolini"]
+    confidence: medium
+  - id: munatii
+    name: Munatii
+    nomen: Munatius
+    order: plebeian
+    praenomina: [Lucius, Titus]
+    branches:
+      - {cognomen: "Plancus", from_year: -77}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -79, dignitas_bp: 778, auctoritas_bp: 610, wealth: 124, clients: 102}
+    stances: {war: 2500, peace: 1000, land: 1500, colony: 2000, building: 1500, idea: 500, debt: 500, citizenship: 1500}
+    popular_lean_bp: 5500
+    notes: "L. Munatius Plancus, the founder of Lugdunum and Raurica who changed sides thrice (Velleius 2.63, 2.83). Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Velleius Paterculus 2.63, 2.83", "Fasti Capitolini"]
+    confidence: medium
+  - id: nautii
+    name: Nautii
+    nomen: Nautius
+    order: patrician
+    praenomina: [Spurius, Gaius]
+    branches:
+      - {cognomen: "Rutilus", from_year: -513, to_year: -247}
+    extinct_after: -217
+    standing:
+      - {from_year: -509, dignitas_bp: 1130, auctoritas_bp: 850, wealth: 180, clients: 150}
+      - {from_year: -448, dignitas_bp: 2802, auctoritas_bp: 1990, wealth: 446, clients: 378}
+      - {from_year: -366, dignitas_bp: 1988, auctoritas_bp: 1603, wealth: 316, clients: 267}
+      - {from_year: -286, dignitas_bp: 1644, auctoritas_bp: 1457, wealth: 261, clients: 220}
+      - {from_year: -200, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 0, land: -2500, colony: 500, building: 500, idea: 0, debt: -2000, citizenship: -1500}
+    popular_lean_bp: 3500
+    notes: "Inferred from its record: a patrician family with 6 consulships in the Fasti, first attested 488 BC; stances are the order's. Standing follows the family's offices in the Fasti (6 consulships in the Fasti)."
+    sources: ["Fasti Capitolini"]
+    confidence: low
+  - id: nonii
+    name: Nonii
+    nomen: Nonius
+    order: plebeian
+    praenomina: [Lucius]
+    branches:
+      - {cognomen: "Asprenas", from_year: -61}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+    stances: {war: 2500, peace: 500, land: 1000, colony: 500, building: 0, idea: 0, debt: 500, citizenship: 1000}
+    popular_lean_bp: 5500
+    notes: "L. Nonius Asprenas, suffect consul 36, Octavian's man. Politics inferred. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Fasti Capitolini"]
+    confidence: medium
+  - id: norbani
+    name: Norbani
+    nomen: Norbanus
+    order: plebeian
+    praenomina: [Gaius]
+    branches:
+      - {cognomen: "Flaccus", from_year: -63}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -79, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+    stances: {war: 3000, peace: -500, land: 2500, colony: 1000, building: 0, idea: 0, debt: 2000, citizenship: 1500}
+    popular_lean_bp: 7500
+    notes: "C. Norbanus, the tribune of 103 who prosecuted Caepio (Cicero, De oratore 2.197-203), later Marian consul (Appian, Civil Wars 1.82-91). Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Cicero, De oratore 2.197-203", "Appian, Civil Wars 1.82-91", "Fasti Capitolini"]
+    confidence: medium
+  - id: numicii
+    name: Numicii
+    nomen: Numicius
+    order: patrician
+    praenomina: [Titus]
+    branches:
+      - {cognomen: "Priscus", from_year: -494, to_year: -429}
+    extinct_after: -399
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -448, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -366, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 0, land: -2500, colony: 500, building: 500, idea: 0, debt: -2000, citizenship: -1500}
+    popular_lean_bp: 3500
+    notes: "Inferred from its record: a patrician family with 1 consulship in the Fasti, first attested 469 BC; stances are the order's. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Fasti Capitolini"]
+    confidence: low
+  - id: numitorii
+    name: Numitorii
+    nomen: Numitorius
+    order: plebeian
+    praenomina: [Publius]
+    extinct_after: -379
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -448, dignitas_bp: 338, auctoritas_bp: 310, wealth: 54, clients: 42}
+      - {from_year: -366, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 1500, peace: 500, land: 2500, colony: 500, building: 0, idea: 0, debt: 2500, citizenship: 1500}
+    popular_lean_bp: 8000
+    notes: "P. Numitorius, Verginia's uncle, tribune of 449 (Livy 3.45, 3.54). Standing follows the family's offices in the Fasti (no consulship in the Fasti)."
+    sources: ["Livy 3.45", "Livy 3.54", "Fasti Capitolini"]
+    confidence: medium
+  - id: octavii
+    name: Octavii
+    nomen: Octavius
+    order: plebeian
+    praenomina: [Gnaeus, Marcus, Lucius]
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 60, clients: 30}
+      - {from_year: -200, dignitas_bp: 690, auctoritas_bp: 550, wealth: 165, clients: 90}
+      - {from_year: -133, dignitas_bp: 1218, auctoritas_bp: 910, wealth: 291, clients: 162}
+      - {from_year: -79, dignitas_bp: 2274, auctoritas_bp: 1678, wealth: 543, clients: 306}
+    stances: {war: 2500, peace: 0, land: -1000, colony: 1500, building: 3000, idea: 1000, debt: -1000, citizenship: 0}
+    popular_lean_bp: 4000
+    notes: "M. Octavius vetoed Tiberius Gracchus' law (Plutarch, Tiberius Gracchus 10-12); Cn. Octavius the consul of 87 died for the Senate (Appian, Civil Wars 1.71). Octavian is carried as a person with his own lean. Standing follows the family's offices in the Fasti (5 consulships in the Fasti)."
+    sources: ["Plutarch, Tiberius Gracchus 10-12", "Appian, Civil Wars 1.71", "Fasti Capitolini"]
+    confidence: medium
+  - id: ogulnii
+    name: Ogulnii
+    nomen: Ogulnius
+    order: plebeian
+    praenomina: [Quintus]
+    branches:
+      - {cognomen: "Gallus", from_year: -294, to_year: -229}
+    extinct_after: -199
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -286, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -200, dignitas_bp: 470, auctoritas_bp: 440, wealth: 75, clients: 60}
+      - {from_year: -133, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2000, peace: 500, land: 1500, colony: 500, building: 1500, idea: 1000, debt: 1000, citizenship: 2500}
+    popular_lean_bp: 7000
+    notes: "The Ogulnii's law of 300 opened the pontificate and augurate to plebeians (Livy 10.6-9). Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Livy 10.6-9", "Fasti Capitolini"]
+    confidence: medium
+  - id: opimii
+    name: Opimii
+    nomen: Opimius
+    order: plebeian
+    praenomina: [Lucius, Quintus]
+    extinct_after: -51
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -133, dignitas_bp: 1130, auctoritas_bp: 850, wealth: 180, clients: 150}
+      - {from_year: -79, dignitas_bp: 910, auctoritas_bp: 740, wealth: 145, clients: 120}
+    stances: {war: 3000, peace: -500, land: -4000, colony: -1000, building: 1500, idea: 0, debt: -3000, citizenship: -2500}
+    popular_lean_bp: 1000
+    notes: "L. Opimius destroyed Fregellae and killed Gaius Gracchus' followers, then built the temple of Concord (Plutarch, Gaius Gracchus 14-17). Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Plutarch, Gaius Gracchus 14-17", "Appian, Civil Wars 1.25-26", "Fasti Capitolini"]
+    confidence: medium
+  - id: oppii
+    name: Oppii
+    nomen: Oppius
+    order: plebeian
+    praenomina: [Spurius]
+    branches:
+      - {cognomen: "Cornicen", from_year: -475, to_year: -410}
+    extinct_after: -380
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -448, dignitas_bp: 426, auctoritas_bp: 370, wealth: 68, clients: 54}
+      - {from_year: -366, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2000, peace: 0, land: 500, colony: 500, building: 0, idea: 0, debt: 1000, citizenship: 500}
+    popular_lean_bp: 6000
+    notes: "Sp. Oppius Cornicen the decemvir (Livy 3.35, 3.58); C. Oppius' sumptuary law of 215 (Livy 34.1). Standing follows the family's offices in the Fasti (no consulship in the Fasti)."
+    sources: ["Livy 3.35", "Livy 3.58", "Livy 34.1", "Fasti Capitolini"]
+    confidence: medium
+  - id: otacilii
+    name: Otacilii
+    nomen: Otacilius
+    order: plebeian
+    praenomina: [Manius, Titus]
+    branches:
+      - {cognomen: "Crassus", from_year: -288, to_year: -206}
+    extinct_after: -176
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -286, dignitas_bp: 1130, auctoritas_bp: 850, wealth: 180, clients: 150}
+      - {from_year: -200, dignitas_bp: 1130, auctoritas_bp: 930, wealth: 180, clients: 150}
+      - {from_year: -133, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 3500, peace: -500, land: 500, colony: 500, building: 500, idea: 0, debt: 500, citizenship: 500}
+    popular_lean_bp: 5500
+    notes: "The Otacilii Crassi, plebeian consuls of the First Punic War (Polybius 1.16, 1.20). Politics inferred from the record. Standing follows the family's offices in the Fasti (3 consulships in the Fasti)."
+    sources: ["Polybius 1.16", "Polybius 1.20", "Fasti Capitolini"]
+    confidence: medium
+  - id: papirii
+    name: Papirii
+    nomen: Papirius
+    order: patrician
+    praenomina: [Lucius, Gaius, Gnaeus, Marcus, Manius, Spurius, Tiberius]
+    branches:
+      - {cognomen: "Mugillanus", from_year: -469, to_year: -336}
+      - {cognomen: "Crassus", from_year: -466, to_year: -290}
+      - {cognomen: "Cursor", from_year: -412, to_year: -232}
+      - {cognomen: "Maso", from_year: -256, to_year: -191}
+      - {cognomen: "Carbo", from_year: -184, to_year: -42, plebeian: true}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 60, clients: 45}
+      - {from_year: -448, dignitas_bp: 3814, auctoritas_bp: 2680, wealth: 910, clients: 774}
+      - {from_year: -366, dignitas_bp: 6000, auctoritas_bp: 4575, wealth: 1482, clients: 1264}
+      - {from_year: -286, dignitas_bp: 6000, auctoritas_bp: 5719, wealth: 1778, clients: 1517}
+      - {from_year: -200, dignitas_bp: 3589, auctoritas_bp: 3575, wealth: 856, clients: 728}
+      - {from_year: -133, dignitas_bp: 3167, auctoritas_bp: 3327, wealth: 756, clients: 641}
+      - {from_year: -79, dignitas_bp: 4289, auctoritas_bp: 4100, wealth: 1023, clients: 871}
+    stances: {war: 3500, peace: -1000, land: -2000, colony: 500, building: 500, idea: 1000, debt: -1000, citizenship: 0}
+    popular_lean_bp: 3500
+    notes: "The Papirii Cursores and Crassi were the patrician generals of the Samnite wars (Livy 9.16); the plebeian Carbones were populares (Cicero, De legibus 3.35; Appian, Civil Wars 1.92-96), carried as persons. Standing follows the family's offices in the Fasti (21 consulships in the Fasti)."
+    sources: ["Livy 9.16", "Cicero, De legibus 3.35", "Appian, Civil Wars 1.92-96", "Fasti Capitolini"]
+    confidence: medium
+  - id: pedii
+    name: Pedii
+    nomen: Pedius
+    order: plebeian
+    praenomina: [Quintus]
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -79, dignitas_bp: 470, auctoritas_bp: 400, wealth: 75, clients: 60}
+    stances: {war: 2500, peace: 500, land: 1500, colony: 1000, building: 500, idea: 0, debt: 1000, citizenship: 1000}
+    popular_lean_bp: 6000
+    notes: "Q. Pedius, Caesar's nephew, consul with Octavian in 43 and author of the law against Caesar's killers (Appian, Civil Wars 3.94-95). Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Appian, Civil Wars 3.94-95", "Fasti Capitolini"]
+    confidence: medium
+  - id: peducaei
+    name: Peducaei
+    nomen: Peducaeus
+    order: plebeian
+    praenomina: [Titus]
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+    stances: {war: 2000, peace: 500, land: 500, colony: 500, building: 0, idea: 500, debt: 500, citizenship: 500}
+    popular_lean_bp: 5500
+    notes: "Sex. Peducaeus, Cicero's friend (Cicero, Ad Atticum passim) and a Caesarian; a tribune Peducaeus brought the Vestals' case before the people in 113 (Cicero, De natura deorum 3.74). Politics inferred. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Cicero, De natura deorum 3.74", "Fasti Capitolini"]
+    confidence: medium
+  - id: perpernae
+    name: Perpernae
+    nomen: Perperna
+    order: plebeian
+    praenomina: [Marcus]
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -133, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -79, dignitas_bp: 1262, auctoritas_bp: 980, wealth: 201, clients: 168}
+    stances: {war: 2500, peace: 0, land: 1500, colony: 500, building: 0, idea: 0, debt: 1000, citizenship: 2000}
+    popular_lean_bp: 6000
+    notes: "M. Perperna, consul 130, censor 86, of Etruscan stock whose citizenship was questioned (Valerius Maximus 3.4.5  # unverified); M. Perperna Veiento the Marian who murdered Sertorius (Plutarch, Sertorius 26). Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Plutarch, Sertorius 26", "Fasti Capitolini"]
+    confidence: medium
+  - id: petillii
+    name: Petillii
+    nomen: Petillius
+    order: plebeian
+    praenomina: [Quintus]
+    branches:
+      - {cognomen: "Spurinus", from_year: -201, to_year: -136}
+    extinct_after: -106
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -200, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -79, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 1500, peace: 500, land: 1500, colony: 500, building: 0, idea: 0, debt: 1500, citizenship: 500}
+    popular_lean_bp: 7000
+    notes: "The Petillii, tribunes of 187, brought the Scipios to trial (Livy 38.50-54). Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Livy 38.50-54", "Fasti Capitolini"]
+    confidence: medium
+  - id: pinarii
+    name: Pinarii
+    nomen: Pinarius
+    order: patrician
+    praenomina: [Lucius, Publius]
+    branches:
+      - {cognomen: "Mamercinus", from_year: -514, to_year: -392}
+      - {cognomen: "Natta", from_year: -388, to_year: -323}
+    extinct_after: -293
+    standing:
+      - {from_year: -509, dignitas_bp: 1130, auctoritas_bp: 850, wealth: 180, clients: 150}
+      - {from_year: -448, dignitas_bp: 1394, auctoritas_bp: 1030, wealth: 222, clients: 186}
+      - {from_year: -366, dignitas_bp: 800, auctoritas_bp: 729, wealth: 127, clients: 105}
+      - {from_year: -286, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 0, land: -2500, colony: 500, building: 500, idea: 0, debt: -2000, citizenship: -1500}
+    popular_lean_bp: 3500
+    notes: "Inferred from its record: a patrician family with 2 consulships in the Fasti, first attested 489 BC; stances are the order's. Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Fasti Capitolini"]
+    confidence: low
+  - id: plautii
+    name: Plautii
+    nomen: Plautius
+    order: plebeian
+    praenomina: [Gaius, Lucius, Marcus, Publius]
+    branches:
+      - {cognomen: "Proculus", from_year: -383, to_year: -288}
+      - {cognomen: "Venox", from_year: -372, to_year: -272}
+      - {cognomen: "Decianus", from_year: -354, to_year: -289}
+      - {cognomen: "Hypsaeus", from_year: -150, to_year: -85}
+    extinct_after: -55
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -366, dignitas_bp: 3022, auctoritas_bp: 2140, wealth: 481, clients: 408}
+      - {from_year: -286, dignitas_bp: 3087, auctoritas_bp: 2317, wealth: 491, clients: 416}
+      - {from_year: -200, dignitas_bp: 1061, auctoritas_bp: 1127, wealth: 169, clients: 140}
+      - {from_year: -133, dignitas_bp: 1224, auctoritas_bp: 1238, wealth: 195, clients: 162}
+    stances: {war: 2000, peace: 500, land: 1500, colony: 1000, building: 500, idea: 0, debt: 1500, citizenship: 2500}
+    popular_lean_bp: 6000
+    notes: "The Plautii were plebeian consuls of the fourth century (Livy 7.12, 8.1); the Lex Plautia Papiria of 89 gave citizenship to the allies (Cicero, Pro Archia 7). Standing follows the family's offices in the Fasti (8 consulships in the Fasti)."
+    sources: ["Livy 7.12", "Livy 8.1", "Cicero, Pro Archia 7", "Fasti Capitolini"]
+    confidence: medium
+  - id: poetelii
+    name: Poetelii
+    nomen: Poetelius
+    order: plebeian
+    praenomina: [Gaius, Marcus, Quintus]
+    branches:
+      - {cognomen: "Libo", from_year: -475, to_year: -274}
+    extinct_after: -244
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -448, dignitas_bp: 426, auctoritas_bp: 370, wealth: 68, clients: 54}
+      - {from_year: -366, dignitas_bp: 1218, auctoritas_bp: 926, wealth: 194, clients: 162}
+      - {from_year: -286, dignitas_bp: 1596, auctoritas_bp: 1264, wealth: 254, clients: 213}
+      - {from_year: -200, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 1500, peace: 500, land: 1500, colony: 500, building: 0, idea: 0, debt: 4000, citizenship: 500}
+    popular_lean_bp: 7000
+    notes: "The Poetelian law of 326 ended debt bondage (Livy 8.28); the Poetelian law of 358 against canvassing (Livy 7.15). Standing follows the family's offices in the Fasti (4 consulships in the Fasti)."
+    sources: ["Livy 7.15", "Livy 8.28", "Fasti Capitolini"]
+    confidence: medium
+  - id: pompeii
+    name: Pompeii
+    nomen: Pompeius
+    order: plebeian
+    praenomina: [Gnaeus, Quintus, Sextus]
+    branches:
+      - {cognomen: "Rufus", from_year: -153}
+      - {cognomen: "Strabo", from_year: -152, to_year: -49}
+      - {cognomen: "Magnus", from_year: -95}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 80, clients: 60}
+      - {from_year: -133, dignitas_bp: 1042, auctoritas_bp: 790, wealth: 332, clients: 276}
+      - {from_year: -79, dignitas_bp: 2934, auctoritas_bp: 2152, wealth: 934, clients: 792}
+    stances: {war: 3500, peace: 0, land: 1500, colony: 1500, building: 3000, idea: 500, debt: -500, citizenship: 1500}
+    popular_lean_bp: 4000
+    notes: "Pompeius Strabo gave Latin rights to the Transpadanes (Asconius 3C  # unverified); Pompey settled his veterans on land, built the first stone theatre and cleared the sea (Plutarch, Pompey 25-45, 52); he joined the optimates in 52 (Plutarch, Pompey 54-55). Standing follows the family's offices in the Fasti (8 consulships in the Fasti)."
+    sources: ["Plutarch, Pompey 25-45, 52-55", "Appian, Civil Wars 1.121", "Fasti Capitolini"]
+    confidence: medium
+  - id: pomponii
+    name: Pomponii
+    nomen: Pomponius
+    order: plebeian
+    praenomina: [Marcus, Manius]
+    branches:
+      - {cognomen: "Rufus", from_year: -424, to_year: -359}
+      - {cognomen: "Matho", from_year: -258, to_year: -177}
+    extinct_after: -147
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -366, dignitas_bp: 514, auctoritas_bp: 430, wealth: 82, clients: 66}
+      - {from_year: -286, dignitas_bp: 382, auctoritas_bp: 364, wealth: 61, clients: 48}
+      - {from_year: -200, dignitas_bp: 1301, auctoritas_bp: 990, wealth: 207, clients: 173}
+      - {from_year: -133, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2000, peace: 500, land: 1000, colony: 500, building: 500, idea: 1500, debt: 1000, citizenship: 500}
+    popular_lean_bp: 5500
+    notes: "M. Pomponius Matho, consul 233 and 231; the Pomponii were tribunes in 362 (Livy 7.4). Politics inferred. Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Livy 7.4", "Fasti Capitolini"]
+    confidence: medium
+  - id: popillii
+    name: Popillii
+    nomen: Popillius
+    order: plebeian
+    praenomina: [Marcus, Gaius, Publius]
+    branches:
+      - {cognomen: "Laenas", from_year: -384, to_year: -92}
+    extinct_after: -62
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -366, dignitas_bp: 2010, auctoritas_bp: 1450, wealth: 320, clients: 270}
+      - {from_year: -286, dignitas_bp: 1570, auctoritas_bp: 1310, wealth: 250, clients: 210}
+      - {from_year: -200, dignitas_bp: 1614, auctoritas_bp: 1380, wealth: 257, clients: 216}
+      - {from_year: -133, dignitas_bp: 3132, auctoritas_bp: 2415, wealth: 498, clients: 423}
+      - {from_year: -79, dignitas_bp: 1856, auctoritas_bp: 1777, wealth: 295, clients: 249}
+    stances: {war: 2500, peace: 0, land: -2500, colony: 0, building: 1500, idea: 0, debt: -1500, citizenship: -1500}
+    popular_lean_bp: 2500
+    notes: "P. Popillius Laenas (consul 132) sat in judgement on Tiberius Gracchus' followers and was exiled for it by Gaius (Plutarch, Gaius Gracchus 4); the Via Popillia. Standing follows the family's offices in the Fasti (10 consulships in the Fasti)."
+    sources: ["Plutarch, Gaius Gracchus 4", "Cicero, Brutus 95", "Fasti Capitolini"]
+    confidence: medium
+  - id: porcii
+    name: Porcii
+    nomen: Porcius
+    order: plebeian
+    praenomina: [Marcus, Lucius, Gaius]
+    branches:
+      - {cognomen: "Cato", from_year: -220}
+      - {cognomen: "Licinus", from_year: -209, to_year: -144}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 45}
+      - {from_year: -200, dignitas_bp: 1482, auctoritas_bp: 1090, wealth: 236, clients: 297}
+      - {from_year: -133, dignitas_bp: 1746, auctoritas_bp: 1382, wealth: 278, clients: 351}
+      - {from_year: -79, dignitas_bp: 2274, auctoritas_bp: 1742, wealth: 362, clients: 459}
+    stances: {war: 3500, peace: -2000, land: 0, colony: 500, building: 1500, idea: -2500, debt: -1500, citizenship: -1500}
+    popular_lean_bp: 2500
+    notes: "Cato the Censor demanded Carthage's destruction, built the Basilica Porcia and distrusted Greek learning (Plutarch, Cato Maior 22-23, 27; Livy 39.44); Cato Uticensis was the Stoic optimate (Plutarch, Cato Minor). Standing follows the family's offices in the Fasti (5 consulships in the Fasti)."
+    sources: ["Plutarch, Cato Maior 22-23, 27", "Livy 39.44", "Plutarch, Cato Minor 26-33", "Fasti Capitolini"]
+    confidence: medium
+  - id: postumii
+    name: Postumii
+    nomen: Postumius
+    order: patrician
+    praenomina: [Aulus, Lucius, Spurius, Publius, Marcus]
+    branches:
+      - {cognomen: "Tubertus", from_year: -530, to_year: -391}
+      - {cognomen: "Albus", from_year: -526, to_year: -392}
+      - {cognomen: "Albinus", from_year: -451, to_year: -59}
+      - {cognomen: "Megellus", from_year: -330, to_year: -222}
+    extinct_after: -29
+    standing:
+      - {from_year: -509, dignitas_bp: 1922, auctoritas_bp: 1390, wealth: 459, clients: 387}
+      - {from_year: -448, dignitas_bp: 3637, auctoritas_bp: 2672, wealth: 868, clients: 737}
+      - {from_year: -366, dignitas_bp: 4042, auctoritas_bp: 3176, wealth: 965, clients: 820}
+      - {from_year: -286, dignitas_bp: 4458, auctoritas_bp: 3635, wealth: 1064, clients: 905}
+      - {from_year: -200, dignitas_bp: 6000, auctoritas_bp: 4942, wealth: 1433, clients: 1222}
+      - {from_year: -133, dignitas_bp: 6000, auctoritas_bp: 5472, wealth: 1548, clients: 1321}
+      - {from_year: -79, dignitas_bp: 4377, auctoritas_bp: 4304, wealth: 1044, clients: 889}
+    stances: {war: 3000, peace: -500, land: -2500, colony: 1000, building: 500, idea: 0, debt: -2000, citizenship: -1500}
+    popular_lean_bp: 3000
+    notes: "Patrician generals from Lake Regillus (Livy 2.19-20) to the Caudine Forks (Livy 9.1-11); the Postumii Albini were proud of their birth (Livy 42.1.6-12 on the consul of 173 at Praeneste). Standing follows the family's offices in the Fasti (24 consulships in the Fasti)."
+    sources: ["Livy 2.19-20", "Livy 9.1-11", "Livy 42.1.6-12", "Fasti Capitolini"]
+    confidence: medium
+  - id: publicii
+    name: Publicii
+    nomen: Publicius
+    order: plebeian
+    praenomina: [Marcus]
+    branches:
+      - {cognomen: "Malleolus", from_year: -257, to_year: -192}
+    extinct_after: -162
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -200, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -133, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2000, peace: 500, land: 1500, colony: 500, building: 1500, idea: 500, debt: 1000, citizenship: 500}
+    popular_lean_bp: 6500
+    notes: "The Publicii Malleoli, aediles of 238, built the Clivus Publicius and the temple of Flora from fines on graziers (Ovid, Fasti 5.279-294  # unverified). Politics inferred. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Fasti Capitolini"]
+    confidence: medium
+  - id: publilii
+    name: Publilii
+    nomen: Publilius
+    order: plebeian
+    praenomina: [Quintus, Volero, Lucius]
+    branches:
+      - {cognomen: "Philo", from_year: -425, to_year: -275}
+    extinct_after: -245
+    standing:
+      - {from_year: -509, dignitas_bp: 426, auctoritas_bp: 370, wealth: 68, clients: 54}
+      - {from_year: -366, dignitas_bp: 2230, auctoritas_bp: 1616, wealth: 355, clients: 300}
+      - {from_year: -286, dignitas_bp: 2388, auctoritas_bp: 1843, wealth: 380, clients: 321}
+      - {from_year: -200, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 0, land: 2500, colony: 1000, building: 500, idea: 0, debt: 2500, citizenship: 1000}
+    popular_lean_bp: 7000
+    notes: "Volero Publilius' law of 471 and Q. Publilius Philo's laws of 339 strengthened the plebs (Livy 2.56-58, 8.12.14-16). Standing follows the family's offices in the Fasti (4 consulships in the Fasti)."
+    sources: ["Livy 2.56-58", "Livy 8.12.14-16", "Fasti Capitolini"]
+    confidence: medium
+  - id: pupii
+    name: Pupii
+    nomen: Pupius
+    order: plebeian
+    praenomina: [Marcus]
+    branches:
+      - {cognomen: "Piso", from_year: -86}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -79, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+    stances: {war: 2500, peace: 500, land: 0, colony: 0, building: 0, idea: 0, debt: 0, citizenship: 0}
+    popular_lean_bp: 4000
+    notes: "M. Pupius Piso Frugi Calpurnianus, consul 61, Pompey's man (Cicero, Ad Atticum 1.13-14). Politics inferred. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Cicero, Ad Atticum 1.13-14", "Fasti Capitolini"]
+    confidence: medium
+  - id: quinctii
+    name: Quinctii
+    nomen: Quinctius
+    order: patrician
+    praenomina: [Titus, Lucius, Quintus, Gaius, Gnaeus]
+    branches:
+      - {cognomen: "Cincinnatus", from_year: -504, to_year: -327}
+      - {cognomen: "Capitolinus", from_year: -501, to_year: -291}
+      - {cognomen: "Poenus", from_year: -456, to_year: -311}
+      - {cognomen: "Pennus", from_year: -386, to_year: -320}
+      - {cognomen: "Claudus", from_year: -296, to_year: -231}
+      - {cognomen: "Crispinus", from_year: -233, to_year: -168}
+      - {cognomen: "Flamininus", from_year: -223, to_year: -83}
+    extinct_after: -53
+    standing:
+      - {from_year: -509, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 135}
+      - {from_year: -448, dignitas_bp: 6000, auctoritas_bp: 4570, wealth: 1048, clients: 1341}
+      - {from_year: -366, dignitas_bp: 6000, auctoritas_bp: 6000, wealth: 1412, clients: 1809}
+      - {from_year: -286, dignitas_bp: 4478, auctoritas_bp: 4161, wealth: 712, clients: 909}
+      - {from_year: -200, dignitas_bp: 3890, auctoritas_bp: 3832, wealth: 619, clients: 789}
+      - {from_year: -133, dignitas_bp: 3781, auctoritas_bp: 3909, wealth: 601, clients: 767}
+      - {from_year: -79, dignitas_bp: 3406, auctoritas_bp: 3694, wealth: 542, clients: 690}
+    stances: {war: 2500, peace: 500, land: -3000, colony: 0, building: 500, idea: 500, debt: -2000, citizenship: -1000}
+    popular_lean_bp: 2500
+    notes: "Cincinnatus and Capitolinus fought the tribunes' Terentilian law for years (Livy 3.11-21); Flamininus the philhellene is the family's one taste for Greek ways (Polybius 18.46). Standing follows the family's offices in the Fasti (18 consulships in the Fasti)."
+    sources: ["Livy 3.11-21", "Polybius 18.46", "Fasti Capitolini"]
+    confidence: medium
+  - id: quinctilii
+    name: Quinctilii
+    nomen: Quinctilius
+    order: patrician
+    praenomina: [Marcus, Sextus]
+    branches:
+      - {cognomen: "Varus", from_year: -478, to_year: -363}
+    extinct_after: -333
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -448, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -366, dignitas_bp: 734, auctoritas_bp: 620, wealth: 117, clients: 96}
+      - {from_year: -286, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 0, land: -2500, colony: 500, building: 500, idea: 0, debt: -2000, citizenship: -1500}
+    popular_lean_bp: 3500
+    notes: "Inferred from its record: a patrician family with 1 consulship in the Fasti, first attested 453 BC; stances are the order's. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Fasti Capitolini"]
+    confidence: low
+  - id: rabuleii
+    name: Rabuleii
+    nomen: Rabuleius
+    order: plebeian
+    praenomina: [Manius]
+    extinct_after: -380
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -448, dignitas_bp: 426, auctoritas_bp: 370, wealth: 68, clients: 54}
+      - {from_year: -366, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 1500, peace: 500, land: 1000, colony: 500, building: 0, idea: 0, debt: 1000, citizenship: 500}
+    popular_lean_bp: 6000
+    notes: "M'. Rabuleius, decemvir of 450 (Livy 3.35.11). Politics inferred from the record. Standing follows the family's offices in the Fasti (no consulship in the Fasti)."
+    sources: ["Livy 3.35.11", "Fasti Capitolini"]
+    confidence: medium
+  - id: romilii
+    name: Romilii
+    nomen: Romilius
+    order: patrician
+    praenomina: [Titus]
+    branches:
+      - {cognomen: "Rocus", from_year: -480, to_year: -411}
+    extinct_after: -381
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -448, dignitas_bp: 866, auctoritas_bp: 670, wealth: 138, clients: 114}
+      - {from_year: -366, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 0, land: -2500, colony: 500, building: 500, idea: 0, debt: -2000, citizenship: -1500}
+    popular_lean_bp: 3500
+    notes: "Inferred from its record: a patrician family with 1 consulship in the Fasti, first attested 455 BC; stances are the order's. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Fasti Capitolini"]
+    confidence: low
+  - id: rupilii
+    name: Rupilii
+    nomen: Rupilius
+    order: plebeian
+    praenomina: [Publius]
+    extinct_after: -62
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -133, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -79, dignitas_bp: 470, auctoritas_bp: 440, wealth: 75, clients: 60}
+    stances: {war: 2500, peace: 0, land: -3000, colony: 0, building: 0, idea: 0, debt: -2000, citizenship: -1500}
+    popular_lean_bp: 2000
+    notes: "P. Rupilius (consul 132) prosecuted Tiberius Gracchus' friends and organised Sicily (Plutarch, Tiberius Gracchus 20; Cicero, Verrines 2.2.32). Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Plutarch, Tiberius Gracchus 20", "Cicero, Verrines 2.2.32", "Fasti Capitolini"]
+    confidence: medium
+  - id: rutilii
+    name: Rutilii
+    nomen: Rutilius
+    order: plebeian
+    praenomina: [Publius]
+    branches:
+      - {cognomen: "Rufus", from_year: -166, to_year: -65}
+      - {cognomen: "Lupus", from_year: -115, to_year: -50}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -133, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -79, dignitas_bp: 1130, auctoritas_bp: 850, wealth: 180, clients: 150}
+    stances: {war: 2000, peace: 500, land: -1500, colony: 0, building: 0, idea: 2000, debt: -500, citizenship: 0}
+    popular_lean_bp: 3000
+    notes: "P. Rutilius Rufus, the honest Stoic condemned by the equestrian court (Cicero, Brutus 113-116). Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Cicero, Brutus 113-116", "Fasti Capitolini"]
+    confidence: medium
+  - id: saenii
+    name: Saenii
+    nomen: Saenius
+    order: plebeian
+    praenomina: [Lucius]
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+    stances: {war: 2000, peace: 500, land: 1000, colony: 500, building: 0, idea: 0, debt: 500, citizenship: 1000}
+    popular_lean_bp: 5500
+    notes: "L. Saenius, suffect consul 30, an Octavian partisan (Cassius Dio 51.20  # unverified). Politics inferred. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Fasti Capitolini"]
+    confidence: medium
+  - id: scribonii
+    name: Scribonii
+    nomen: Scribonius
+    order: plebeian
+    praenomina: [Gaius, Lucius]
+    branches:
+      - {cognomen: "Curio", from_year: -101}
+      - {cognomen: "Libo", from_year: -59}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -79, dignitas_bp: 778, auctoritas_bp: 610, wealth: 124, clients: 102}
+    stances: {war: 2500, peace: 0, land: 2000, colony: 1500, building: 500, idea: 500, debt: 2500, citizenship: 1000}
+    popular_lean_bp: 6500
+    notes: "C. Scribonius Curio the tribune of 50 served Caesar (Appian, Civil Wars 2.26-30); the Scribonii Libones were Pompey's kin. Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Appian, Civil Wars 2.26-30", "Fasti Capitolini"]
+    confidence: medium
+  - id: sempronii
+    name: Sempronii
+    nomen: Sempronius
+    order: plebeian
+    praenomina: [Tiberius, Aulus, Gaius, Lucius, Publius, Marcus]
+    branches:
+      - {cognomen: "Atratinus", from_year: -522, plebeian: false}
+      - {cognomen: "Sophus", from_year: -329, to_year: -228}
+      - {cognomen: "Blaesus", from_year: -278, to_year: -204}
+      - {cognomen: "Gracchus", from_year: -277, to_year: -74}
+      - {cognomen: "Tuditanus", from_year: -265, to_year: -89}
+      - {cognomen: "Longus", from_year: -248, to_year: -154}
+    standing:
+      - {from_year: -509, dignitas_bp: 1130, auctoritas_bp: 850, wealth: 270, clients: 300}
+      - {from_year: -448, dignitas_bp: 3198, auctoritas_bp: 2260, wealth: 763, clients: 864}
+      - {from_year: -366, dignitas_bp: 1679, auctoritas_bp: 1469, wealth: 401, clients: 449}
+      - {from_year: -286, dignitas_bp: 2078, auctoritas_bp: 1776, wealth: 496, clients: 558}
+      - {from_year: -200, dignitas_bp: 6000, auctoritas_bp: 5045, wealth: 1598, clients: 1818}
+      - {from_year: -133, dignitas_bp: 5046, auctoritas_bp: 4292, wealth: 1204, clients: 1368}
+      - {from_year: -79, dignitas_bp: 3107, auctoritas_bp: 3090, wealth: 741, clients: 839}
+    stances: {war: 1500, peace: 1000, land: 4500, colony: 4000, building: 1500, idea: 1500, debt: 4000, citizenship: 4000}
+    popular_lean_bp: 8000
+    notes: "Ti. Gracchus the elder was the Spaniards' protector (Livy 40.47-50); his sons carried the land law, the grain law, colonies and the bill for the allies (Plutarch, Tiberius Gracchus 8-9; Gaius Gracchus 4-12; Appian, Civil Wars 1.9-24); the Basilica Sempronia (Livy 44.16.10). The patrician Atratini of the fifth century are overridden in the Fasti. Standing follows the family's offices in the Fasti (20 consulships in the Fasti)."
+    sources: ["Livy 40.47-50", "Livy 44.16.10", "Plutarch, Tiberius Gracchus 8-9", "Plutarch, Gaius Gracchus 4-12", "Appian, Civil Wars 1.9-24", "Fasti Capitolini"]
+    confidence: medium
+  - id: sergii
+    name: Sergii
+    nomen: Sergius
+    order: patrician
+    praenomina: [Lucius, Gnaeus, Manius, Marcus]
+    branches:
+      - {cognomen: "Esquilinus", from_year: -475, to_year: -410}
+      - {cognomen: "Fidenas", from_year: -462, to_year: -340}
+      - {cognomen: "Catilina", from_year: -93, to_year: -28}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -448, dignitas_bp: 2098, auctoritas_bp: 1510, wealth: 334, clients: 282}
+      - {from_year: -366, dignitas_bp: 2757, auctoritas_bp: 2128, wealth: 438, clients: 371}
+      - {from_year: -286, dignitas_bp: 1319, auctoritas_bp: 1291, wealth: 210, clients: 175}
+      - {from_year: -200, dignitas_bp: 764, auctoritas_bp: 913, wealth: 121, clients: 100}
+    stances: {war: 2500, peace: 0, land: -2500, colony: 500, building: 500, idea: 0, debt: -2000, citizenship: -1500}
+    popular_lean_bp: 3500
+    notes: "Inferred from its record: a patrician family with 2 consulships in the Fasti, first attested 450 BC; stances are the order's. Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Fasti Capitolini"]
+    confidence: low
+  - id: sertorii
+    name: Sertorii
+    nomen: Sertorius
+    order: plebeian
+    praenomina: [Quintus]
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+    stances: {war: 3000, peace: 0, land: 2500, colony: 1500, building: 500, idea: 1000, debt: 1500, citizenship: 3000}
+    popular_lean_bp: 7500
+    notes: "Q. Sertorius, the Marian who gave the Spaniards a Senate and a school (Plutarch, Sertorius 14, 22). Standing follows the family's offices in the Fasti (no consulship in the Fasti)."
+    sources: ["Plutarch, Sertorius 14, 22", "Fasti Capitolini"]
+    confidence: medium
+  - id: servilii
+    name: Servilii
+    nomen: Servilius
+    order: patrician
+    praenomina: [Quintus, Gaius, Publius, Gnaeus, Marcus, Spurius]
+    branches:
+      - {cognomen: "Priscus", from_year: -520, to_year: -378}
+      - {cognomen: "Structus", from_year: -503, to_year: -328}
+      - {cognomen: "Axilla", from_year: -452, to_year: -377}
+      - {cognomen: "Ahala", from_year: -433, to_year: -302}
+      - {cognomen: "Fidenas", from_year: -427, to_year: -329}
+      - {cognomen: "Tucca", from_year: -309, to_year: -244}
+      - {cognomen: "Caepio", from_year: -278, to_year: -66}
+      - {cognomen: "Geminus", from_year: -277, to_year: -162}
+      - {cognomen: "Pulex", from_year: -228, to_year: -162}
+      - {cognomen: "Glaucia", from_year: -126, to_year: -61, plebeian: true}
+      - {cognomen: "Vatia", from_year: -104}
+      - {cognomen: "Rullus", from_year: -88, plebeian: true}
+    standing:
+      - {from_year: -509, dignitas_bp: 1702, auctoritas_bp: 1240, wealth: 406, clients: 342}
+      - {from_year: -448, dignitas_bp: 5222, auctoritas_bp: 3640, wealth: 1246, clients: 1062}
+      - {from_year: -366, dignitas_bp: 6000, auctoritas_bp: 6000, wealth: 1917, clients: 1637}
+      - {from_year: -286, dignitas_bp: 5274, auctoritas_bp: 4628, wealth: 1259, clients: 1072}
+      - {from_year: -200, dignitas_bp: 5736, auctoritas_bp: 5063, wealth: 1369, clients: 1167}
+      - {from_year: -133, dignitas_bp: 5934, auctoritas_bp: 5454, wealth: 1416, clients: 1207}
+      - {from_year: -79, dignitas_bp: 5741, auctoritas_bp: 5442, wealth: 1370, clients: 1168}
+    stances: {war: 3000, peace: -500, land: -2500, colony: 500, building: 500, idea: 0, debt: -2500, citizenship: -1500}
+    popular_lean_bp: 3000
+    notes: "C. Servilius Ahala killed Sp. Maelius for the Senate (Livy 4.14); the Servilii Caepiones were optimates, Caepio in 106 moving the courts back to the Senate (Cicero, Brutus 161). Glaucia and Rullus (plebeian Servilii) are the exceptions. Standing follows the family's offices in the Fasti (25 consulships in the Fasti)."
+    sources: ["Livy 4.14", "Cicero, Brutus 161", "Fasti Capitolini"]
+    confidence: medium
+  - id: sestii
+    name: Sestii
+    nomen: Sestius
+    order: patrician
+    praenomina: [Publius]
+    branches:
+      - {cognomen: "Capitolinus", from_year: -477, to_year: -411}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -448, dignitas_bp: 866, auctoritas_bp: 670, wealth: 138, clients: 114}
+      - {from_year: -366, dignitas_bp: 558, auctoritas_bp: 516, wealth: 89, clients: 72}
+      - {from_year: -286, dignitas_bp: 342, auctoritas_bp: 369, wealth: 54, clients: 42}
+      - {from_year: -79, dignitas_bp: 430, auctoritas_bp: 429, wealth: 68, clients: 54}
+    stances: {war: 2000, peace: 500, land: -1500, colony: 0, building: 0, idea: 500, debt: -1000, citizenship: 0}
+    popular_lean_bp: 3000
+    notes: "P. Sestius Capitolinus, consul 452 and decemvir (Livy 3.32-33); P. Sestius the tribune of 57 worked for Cicero's recall (Cicero, Pro Sestio). Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Livy 3.32-33", "Cicero, Pro Sestio", "Fasti Capitolini"]
+    confidence: medium
+  - id: sextii
+    name: Sextii
+    nomen: Sextius
+    order: plebeian
+    praenomina: [Lucius, Gaius]
+    branches:
+      - {cognomen: "Sextinus", from_year: -406, to_year: -326}
+      - {cognomen: "Calvinus", from_year: -149, to_year: -84}
+    extinct_after: -54
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -366, dignitas_bp: 866, auctoritas_bp: 670, wealth: 138, clients: 114}
+      - {from_year: -286, dignitas_bp: 558, auctoritas_bp: 516, wealth: 89, clients: 72}
+      - {from_year: -200, dignitas_bp: 342, auctoritas_bp: 369, wealth: 54, clients: 42}
+      - {from_year: -133, dignitas_bp: 782, auctoritas_bp: 669, wealth: 124, clients: 102}
+    stances: {war: 2000, peace: 500, land: 1500, colony: 1500, building: 500, idea: 500, debt: 1500, citizenship: 1000}
+    popular_lean_bp: 5500
+    notes: "Inferred from its record: a plebeian family with 2 consulships in the Fasti, first attested 381 BC; stances are the order's. Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Fasti Capitolini"]
+    confidence: low
+  - id: sextilii
+    name: Sextilii
+    nomen: Sextilius
+    order: plebeian
+    praenomina: [Gaius]
+    extinct_after: -309
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -366, dignitas_bp: 514, auctoritas_bp: 430, wealth: 82, clients: 66}
+      - {from_year: -286, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 0, land: 500, colony: 500, building: 0, idea: 0, debt: 500, citizenship: 500}
+    popular_lean_bp: 5500
+    notes: "C. Sextilius, consular tribune 379 (Livy 6.30). Politics inferred from the record. Standing follows the family's offices in the Fasti (no consulship in the Fasti)."
+    sources: ["Livy 6.30", "Fasti Capitolini"]
+    confidence: medium
+  - id: sicinii
+    name: Sicinii
+    nomen: Sicinius
+    order: plebeian
+    praenomina: [Titus]
+    branches:
+      - {cognomen: "Sabinus", from_year: -512, to_year: -447}
+    extinct_after: -417
+    standing:
+      - {from_year: -509, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -366, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 1500, peace: 500, land: 3000, colony: 1000, building: 0, idea: 0, debt: 3500, citizenship: 1500}
+    popular_lean_bp: 8500
+    notes: "Sicinius led the plebs to the Sacred Mount (Livy 2.32) and the Sicinii were tribunes for generations (Livy 2.58, 3.54). Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Livy 2.32", "Livy 2.58", "Livy 3.54", "Fasti Capitolini"]
+    confidence: medium
+  - id: sosii
+    name: Sosii
+    nomen: Sosius
+    order: plebeian
+    praenomina: [Gaius]
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+    stances: {war: 3000, peace: 0, land: 1000, colony: 500, building: 1500, idea: 500, debt: 500, citizenship: 1000}
+    popular_lean_bp: 5500
+    notes: "C. Sosius, Antony's general who took Jerusalem (37) and consul 32, rebuilt the temple of Apollo (Cassius Dio 49.22, 50.2). Politics inferred. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Cassius Dio 49.22", "Cassius Dio 50.2", "Fasti Capitolini"]
+    confidence: medium
+  - id: statilii
+    name: Statilii
+    nomen: Statilius
+    order: plebeian
+    praenomina: [Titus]
+    branches:
+      - {cognomen: "Taurus", from_year: -62}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+    stances: {war: 3500, peace: 0, land: 1000, colony: 1500, building: 2500, idea: 0, debt: 500, citizenship: 1000}
+    popular_lean_bp: 6000
+    notes: "T. Statilius Taurus, Octavian's general, built the first stone amphitheatre (Cassius Dio 51.23). Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Cassius Dio 51.23", "Fasti Capitolini"]
+    confidence: medium
+  - id: sulpicii
+    name: Sulpicii
+    nomen: Sulpicius
+    order: patrician
+    praenomina: [Servius, Gaius, Publius, Quintus]
+    branches:
+      - {cognomen: "Camerinus", from_year: -525, to_year: -305}
+      - {cognomen: "Longus", from_year: -415, to_year: -272}
+      - {cognomen: "Rufus", from_year: -413}
+      - {cognomen: "Praetextatus", from_year: -402, to_year: -328}
+      - {cognomen: "Peticus", from_year: -389, to_year: -311}
+      - {cognomen: "Saverrio", from_year: -329, to_year: -239}
+      - {cognomen: "Paterculus", from_year: -283, to_year: -218}
+      - {cognomen: "Gallus", from_year: -268, to_year: -203}
+      - {cognomen: "Galba", from_year: -236, to_year: -68}
+      - {cognomen: "Galus", from_year: -191, to_year: -126}
+    standing:
+      - {from_year: -509, dignitas_bp: 1130, auctoritas_bp: 850, wealth: 270, clients: 225}
+      - {from_year: -448, dignitas_bp: 1790, auctoritas_bp: 1340, wealth: 427, clients: 360}
+      - {from_year: -366, dignitas_bp: 6000, auctoritas_bp: 5600, wealth: 1876, clients: 1602}
+      - {from_year: -286, dignitas_bp: 6000, auctoritas_bp: 5370, wealth: 1572, clients: 1341}
+      - {from_year: -200, dignitas_bp: 4804, auctoritas_bp: 4387, wealth: 1146, clients: 976}
+      - {from_year: -133, dignitas_bp: 4108, auctoritas_bp: 4065, wealth: 980, clients: 834}
+      - {from_year: -79, dignitas_bp: 3611, auctoritas_bp: 3806, wealth: 862, clients: 732}
+    stances: {war: 2500, peace: 500, land: -1500, colony: 500, building: 1000, idea: 1500, debt: -1500, citizenship: 1000}
+    popular_lean_bp: 4000
+    notes: "A patrician house of generals and, late, of the jurist Ser. Sulpicius Rufus (Cicero, Brutus 150-157); P. Sulpicius the tribune of 88 fought for the new citizens (Appian, Civil Wars 1.55-56). Standing follows the family's offices in the Fasti (23 consulships in the Fasti)."
+    sources: ["Cicero, Brutus 150-157", "Appian, Civil Wars 1.55-56", "Fasti Capitolini"]
+    confidence: medium
+  - id: tarpeii
+    name: Tarpeii
+    nomen: Tarpeius
+    order: patrician
+    praenomina: [Spurius]
+    branches:
+      - {cognomen: "Montanus", from_year: -479, to_year: -414}
+    extinct_after: -384
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -448, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -366, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 0, land: -2500, colony: 500, building: 500, idea: 0, debt: -2000, citizenship: -1500}
+    popular_lean_bp: 3500
+    notes: "Inferred from its record: a patrician family with 1 consulship in the Fasti, first attested 454 BC; stances are the order's. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Fasti Capitolini"]
+    confidence: low
+  - id: tarquinii
+    name: Tarquinii
+    nomen: Tarquinius
+    order: patrician
+    praenomina: [Lucius]
+    branches:
+      - {cognomen: "Collatinus", from_year: -539, to_year: -469}
+    extinct_after: -439
+    standing:
+      - {from_year: -509, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -448, dignitas_bp: 470, auctoritas_bp: 440, wealth: 75, clients: 60}
+      - {from_year: -366, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 0, land: -2500, colony: 500, building: 500, idea: 0, debt: -2000, citizenship: -1500}
+    popular_lean_bp: 3500
+    notes: "Inferred from its record: a patrician family with 1 consulship in the Fasti, first attested 514 BC; stances are the order's. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Fasti Capitolini"]
+    confidence: low
+  - id: tarquitii
+    name: Tarquitii
+    nomen: Tarquitius
+    order: patrician
+    praenomina: [Lucius]
+    branches:
+      - {cognomen: "Flaccus", from_year: -483, to_year: -418}
+    extinct_after: -388
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -448, dignitas_bp: 382, auctoritas_bp: 340, wealth: 61, clients: 48}
+      - {from_year: -366, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 0, land: -2500, colony: 500, building: 500, idea: 0, debt: -2000, citizenship: -1500}
+    popular_lean_bp: 3500
+    notes: "Inferred from its record: a patrician family with no consulship in the Fasti, first attested 458 BC; stances are the order's. Standing follows the family's offices in the Fasti (no consulship in the Fasti)."
+    sources: ["Fasti Capitolini"]
+    confidence: low
+  - id: terentii
+    name: Terentii
+    nomen: Terentius
+    order: plebeian
+    praenomina: [Gaius, Marcus]
+    branches:
+      - {cognomen: "Varro", from_year: -246, to_year: -33}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -200, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -133, dignitas_bp: 470, auctoritas_bp: 440, wealth: 75, clients: 60}
+      - {from_year: -79, dignitas_bp: 756, auctoritas_bp: 635, wealth: 120, clients: 99}
+    stances: {war: 3500, peace: -1000, land: 2000, colony: 1000, building: 500, idea: 1500, debt: 1500, citizenship: 1000}
+    popular_lean_bp: 7000
+    notes: "C. Terentius Varro, the people's consul of 216 against the nobles (Livy 22.25-26, 22.34-35). Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Livy 22.25-26", "Livy 22.34-35", "Fasti Capitolini"]
+    confidence: medium
+  - id: terentilii
+    name: Terentilii
+    nomen: Terentilius
+    order: plebeian
+    praenomina: [Gaius]
+    branches:
+      - {cognomen: "Harsa", from_year: -487, to_year: -422}
+    extinct_after: -392
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -448, dignitas_bp: 338, auctoritas_bp: 310, wealth: 54, clients: 42}
+      - {from_year: -366, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 1000, peace: 1000, land: 2500, colony: 500, building: 0, idea: 1500, debt: 2500, citizenship: 1500}
+    popular_lean_bp: 8500
+    notes: "C. Terentilius Harsa's bill of 462 to limit the consuls' power led to the Twelve Tables (Livy 3.9-10). Standing follows the family's offices in the Fasti (no consulship in the Fasti)."
+    sources: ["Livy 3.9-10", "Fasti Capitolini"]
+    confidence: medium
+  - id: titii
+    name: Titii
+    nomen: Titius
+    order: plebeian
+    praenomina: [Marcus]
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+    stances: {war: 2500, peace: 500, land: 1000, colony: 500, building: 500, idea: 0, debt: 500, citizenship: 1000}
+    popular_lean_bp: 5500
+    notes: "M. Titius, Antony's officer who killed Sextus Pompey and deserted to Octavian (Cassius Dio 49.18, 50.3). Politics inferred. Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Cassius Dio 49.18", "Cassius Dio 50.3", "Fasti Capitolini"]
+    confidence: medium
+  - id: titinii
+    name: Titinii
+    nomen: Titinius
+    order: plebeian
+    praenomina: [Lucius, Marcus]
+    branches:
+      - {cognomen: "Pansa", from_year: -425, to_year: -356}
+    extinct_after: -232
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -366, dignitas_bp: 778, auctoritas_bp: 610, wealth: 124, clients: 102}
+      - {from_year: -286, dignitas_bp: 646, auctoritas_bp: 568, wealth: 103, clients: 84}
+      - {from_year: -200, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 1500, peace: 500, land: 1500, colony: 500, building: 0, idea: 0, debt: 1500, citizenship: 1000}
+    popular_lean_bp: 7000
+    notes: "Sex. Titinius, tribune 439, called the people to avenge Maelius (Livy 4.16); the Titinii were tribunes repeatedly. Politics inferred. Standing follows the family's offices in the Fasti (no consulship in the Fasti)."
+    sources: ["Livy 4.16", "Fasti Capitolini"]
+    confidence: medium
+  - id: trebonii
+    name: Trebonii
+    nomen: Trebonius
+    order: plebeian
+    praenomina: [Gaius, Marcus]
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -366, dignitas_bp: 514, auctoritas_bp: 430, wealth: 82, clients: 66}
+      - {from_year: -286, dignitas_bp: 382, auctoritas_bp: 364, wealth: 61, clients: 48}
+      - {from_year: -200, dignitas_bp: 289, auctoritas_bp: 301, wealth: 46, clients: 35}
+      - {from_year: -79, dignitas_bp: 597, auctoritas_bp: 511, wealth: 95, clients: 77}
+    stances: {war: 2500, peace: 0, land: 1500, colony: 1000, building: 500, idea: 500, debt: 1000, citizenship: 1000}
+    popular_lean_bp: 6000
+    notes: "C. Trebonius' law of 55 for Pompey and Crassus (Cassius Dio 39.33); a Trebonius was tribune in 448 (Livy 3.65). Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Cassius Dio 39.33", "Livy 3.65", "Fasti Capitolini"]
+    confidence: medium
+  - id: tullii
+    name: Tullii
+    nomen: Tullius
+    order: plebeian
+    praenomina: [Marcus, Manius]
+    branches:
+      - {cognomen: "Longus", from_year: -525, to_year: -460, plebeian: false}
+      - {cognomen: "Decula", from_year: -106, to_year: -41}
+      - {cognomen: "Cicero", from_year: -91}
+    standing:
+      - {from_year: -509, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 135}
+      - {from_year: -448, dignitas_bp: 470, auctoritas_bp: 440, wealth: 75, clients: 90}
+      - {from_year: -366, dignitas_bp: 316, auctoritas_bp: 335, wealth: 50, clients: 58}
+      - {from_year: -79, dignitas_bp: 1196, auctoritas_bp: 935, wealth: 190, clients: 238}
+    stances: {war: 1000, peace: 2500, land: -2500, colony: -1000, building: 1500, idea: 3500, debt: -2500, citizenship: 1000}
+    popular_lean_bp: 2500
+    notes: "M'. Tullius Longus (consul 500) was a patrician of the first years (Livy 2.19); the plebeian Tullii of Arpinum give the family Cicero's politics: against Rullus' land law and Catiline's debt cancellation (Cicero, De lege agraria; In Catilinam 2.18-21), for learning and for the enfranchised (Pro Archia, Pro Balbo). Standing follows the family's offices in the Fasti (4 consulships in the Fasti)."
+    sources: ["Livy 2.19", "Cicero, De lege agraria 2", "Cicero, In Catilinam 2.18-21", "Cicero, Pro Archia", "Fasti Capitolini"]
+    confidence: medium
+  - id: valerii
+    name: Valerii
+    nomen: Valerius
+    order: patrician
+    praenomina: [Marcus, Lucius, Publius, Gaius, Manius, Potitus, Quintus]
+    branches:
+      - {cognomen: "Publicola", from_year: -568, to_year: -292}
+      - {cognomen: "Volusus", from_year: -530, to_year: -465}
+      - {cognomen: "Maximus", from_year: -519, to_year: -223}
+      - {cognomen: "Potitus", from_year: -508, to_year: -291}
+      - {cognomen: "Lactucinus", from_year: -423, to_year: -355}
+      - {cognomen: "Corvus", from_year: -373, to_year: -259}
+      - {cognomen: "Flaccus", from_year: -346, to_year: -42}
+      - {cognomen: "Laevinus", from_year: -305, to_year: -136}
+      - {cognomen: "Falto", from_year: -264, to_year: -198}
+      - {cognomen: "Messalla", from_year: -251}
+    standing:
+      - {from_year: -509, dignitas_bp: 3902, auctoritas_bp: 2740, wealth: 931, clients: 1056}
+      - {from_year: -448, dignitas_bp: 5200, auctoritas_bp: 3805, wealth: 1241, clients: 1410}
+      - {from_year: -366, dignitas_bp: 6000, auctoritas_bp: 6000, wealth: 3188, clients: 3635}
+      - {from_year: -286, dignitas_bp: 6000, auctoritas_bp: 6000, wealth: 2539, clients: 2893}
+      - {from_year: -200, dignitas_bp: 6000, auctoritas_bp: 6000, wealth: 2064, clients: 2350}
+      - {from_year: -133, dignitas_bp: 6000, auctoritas_bp: 6000, wealth: 1832, clients: 2086}
+      - {from_year: -79, dignitas_bp: 6000, auctoritas_bp: 6000, wealth: 1906, clients: 2170}
+    stances: {war: 2000, peace: 1000, land: 1500, colony: 1500, building: 1000, idea: 500, debt: 2000, citizenship: 1000}
+    popular_lean_bp: 6000
+    notes: "Publicola's laws of appeal (Livy 2.8.1-2; Plutarch, Publicola 11-12), the Valerio-Horatian laws of 449 (Livy 3.55), and the Valerian law of 300 (Livy 10.9.3-6) made the Valerii the patrician friends of the plebs; M. Valerius Corvus was beloved of the soldiers (Livy 7.33). L. Valerius Flaccus was Cato's patron. Standing follows the family's offices in the Fasti (47 consulships in the Fasti)."
+    sources: ["Livy 2.8.1-2", "Livy 3.55", "Livy 7.33", "Livy 10.9.3-6", "Plutarch, Publicola 11-12", "Fasti Capitolini"]
+    confidence: medium
+  - id: vatinii
+    name: Vatinii
+    nomen: Vatinius
+    order: plebeian
+    praenomina: [Publius]
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -79, dignitas_bp: 778, auctoritas_bp: 610, wealth: 124, clients: 102}
+    stances: {war: 2500, peace: 0, land: 2000, colony: 1500, building: 500, idea: 0, debt: 1500, citizenship: 1500}
+    popular_lean_bp: 7000
+    notes: "P. Vatinius, the tribune of 59 who gave Caesar Gaul (Cassius Dio 38.8). Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Cassius Dio 38.8", "Fasti Capitolini"]
+    confidence: medium
+  - id: ventidii
+    name: Ventidii
+    nomen: Ventidius
+    order: plebeian
+    praenomina: [Publius]
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -79, dignitas_bp: 470, auctoritas_bp: 400, wealth: 75, clients: 60}
+    stances: {war: 3500, peace: 0, land: 2000, colony: 1000, building: 0, idea: 0, debt: 1500, citizenship: 2000}
+    popular_lean_bp: 7500
+    notes: "P. Ventidius, led in Pompeius Strabo's triumph as a child, muleteer, Caesar's officer, consul and conqueror of the Parthians (Cassius Dio 43.51, 49.19-21; Gellius 15.4). Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Cassius Dio 43.51, 49.19-21", "Gellius 15.4  # unverified", "Fasti Capitolini"]
+    confidence: medium
+  - id: verginii
+    name: Verginii
+    nomen: Verginius
+    order: patrician
+    praenomina: [Aulus, Lucius, Titus, Opiter, Proculus, Spurius]
+    branches:
+      - {cognomen: "Tricostus", from_year: -527, to_year: -349}
+      - {cognomen: "Esquilinus", from_year: -503, to_year: -438}
+      - {cognomen: "Caeliomontanus", from_year: -494, to_year: -429}
+    extinct_after: -319
+    standing:
+      - {from_year: -509, dignitas_bp: 3110, auctoritas_bp: 2200, wealth: 495, clients: 420}
+      - {from_year: -448, dignitas_bp: 4826, auctoritas_bp: 3410, wealth: 768, clients: 654}
+      - {from_year: -366, dignitas_bp: 2714, auctoritas_bp: 2366, wealth: 432, clients: 366}
+      - {from_year: -286, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 0, land: -2500, colony: 0, building: 0, idea: -500, debt: -2000, citizenship: -1500}
+    popular_lean_bp: 3000
+    notes: "Patrician Verginii Tricosti of the fifth century (Livy 2.17, 2.48, 3.65); the Verginius whose daughter the decemvir claimed was a plebeian of another family (Livy 3.44). Standing follows the family's offices in the Fasti (11 consulships in the Fasti)."
+    sources: ["Livy 2.17", "Livy 3.44", "Livy 3.65", "Fasti Capitolini"]
+    confidence: medium
+  - id: veturii
+    name: Veturii
+    nomen: Veturius
+    order: patrician
+    praenomina: [Lucius, Titus, Gaius, Marcus, Spurius]
+    branches:
+      - {cognomen: "Geminus", from_year: -524, to_year: -411}
+      - {cognomen: "Cicurinus", from_year: -480, to_year: -415}
+      - {cognomen: "Crassus", from_year: -442, to_year: -327}
+      - {cognomen: "Calvinus", from_year: -359, to_year: -281}
+      - {cognomen: "Philo", from_year: -245, to_year: -165}
+    extinct_after: -135
+    standing:
+      - {from_year: -509, dignitas_bp: 1130, auctoritas_bp: 850, wealth: 180, clients: 150}
+      - {from_year: -448, dignitas_bp: 2230, auctoritas_bp: 1640, wealth: 355, clients: 300}
+      - {from_year: -366, dignitas_bp: 2802, auctoritas_bp: 2190, wealth: 446, clients: 378}
+      - {from_year: -286, dignitas_bp: 2120, auctoritas_bp: 1845, wealth: 337, clients: 285}
+      - {from_year: -200, dignitas_bp: 2626, auctoritas_bp: 2270, wealth: 418, clients: 354}
+      - {from_year: -133, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 3000, peace: 0, land: -2500, colony: 0, building: 0, idea: -500, debt: -2000, citizenship: -1500}
+    popular_lean_bp: 3000
+    notes: "Patrician consuls and consular tribunes of the fifth and fourth centuries (Livy 2.30, 4.17, 9.1); politics inferred from the order and the record. Standing follows the family's offices in the Fasti (8 consulships in the Fasti)."
+    sources: ["Livy 2.30", "Livy 4.17", "Livy 9.1", "Fasti Capitolini"]
+    confidence: medium
+  - id: vibii
+    name: Vibii
+    nomen: Vibius
+    order: plebeian
+    praenomina: [Gaius]
+    branches:
+      - {cognomen: "Pansa", from_year: -108}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -79, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+    stances: {war: 2000, peace: 1000, land: 1500, colony: 1000, building: 500, idea: 500, debt: 1000, citizenship: 1000}
+    popular_lean_bp: 6000
+    notes: "C. Vibius Pansa, Caesarian tribune and consul (Appian, Civil Wars 3.50-75). Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Appian, Civil Wars 3.50-75", "Fasti Capitolini"]
+    confidence: medium
+  - id: villii
+    name: Villii
+    nomen: Villius
+    order: plebeian
+    praenomina: [Publius]
+    branches:
+      - {cognomen: "Tappulus", from_year: -224, to_year: -159}
+    extinct_after: -129
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -200, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -133, dignitas_bp: 470, auctoritas_bp: 440, wealth: 75, clients: 60}
+      - {from_year: -79, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 1500, peace: 500, land: 0, colony: 0, building: 0, idea: 1500, debt: 0, citizenship: 0}
+    popular_lean_bp: 5000
+    notes: "L. Villius' law of 180 fixed the ages and order of the offices (Livy 40.44.1). Standing follows the family's offices in the Fasti (1 consulship in the Fasti)."
+    sources: ["Livy 40.44.1", "Fasti Capitolini"]
+    confidence: medium
+  - id: vipsanii
+    name: Vipsanii
+    nomen: Vipsanius
+    order: plebeian
+    praenomina: [Marcus]
+    branches:
+      - {cognomen: "Agrippa", from_year: -62}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+    stances: {war: 3500, peace: 0, land: 1500, colony: 2000, building: 4000, idea: 2000, debt: 1000, citizenship: 1500}
+    popular_lean_bp: 6500
+    notes: "M. Agrippa, the builder of aqueducts, baths and the Pantheon (Cassius Dio 49.43, 53.27). Standing follows the family's offices in the Fasti (3 consulships in the Fasti)."
+    sources: ["Cassius Dio 49.43", "Cassius Dio 53.27", "Fasti Capitolini"]
+    confidence: medium
+  - id: volcacii
+    name: Volcacii
+    nomen: Volcacius
+    order: plebeian
+    praenomina: [Lucius]
+    branches:
+      - {cognomen: "Tullus", from_year: -91}
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -79, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+    stances: {war: 2000, peace: 1000, land: 0, colony: 0, building: 0, idea: 500, debt: 0, citizenship: 0}
+    popular_lean_bp: 4500
+    notes: "L. Volcacius Tullus, consul 66 and 33 (the son); the elder a neutral in 49 (Cicero, Ad Atticum 8.15). Politics inferred. Standing follows the family's offices in the Fasti (2 consulships in the Fasti)."
+    sources: ["Cicero, Ad Atticum 8.15", "Fasti Capitolini"]
+    confidence: medium
+  - id: volumnii
+    name: Volumnii
+    nomen: Volumnius
+    order: plebeian
+    praenomina: [Lucius, Publius]
+    branches:
+      - {cognomen: "Amintinus", from_year: -486, to_year: -421, plebeian: false}
+      - {cognomen: "Flamma", from_year: -332, to_year: -256}
+    extinct_after: -226
+    standing:
+      - {from_year: -509, dignitas_bp: 250, auctoritas_bp: 250, wealth: 40, clients: 30}
+      - {from_year: -448, dignitas_bp: 690, auctoritas_bp: 550, wealth: 110, clients: 90}
+      - {from_year: -366, dignitas_bp: 470, auctoritas_bp: 440, wealth: 75, clients: 60}
+      - {from_year: -286, dignitas_bp: 1196, auctoritas_bp: 935, wealth: 190, clients: 159}
+      - {from_year: -200, dignitas_bp: 100, auctoritas_bp: 100, wealth: 20, clients: 10}
+    stances: {war: 2500, peace: 500, land: 1000, colony: 500, building: 0, idea: 0, debt: 1000, citizenship: 500}
+    popular_lean_bp: 5500
+    notes: "L. Volumnius Flamma Violens, plebeian consul 307 and 296 (Livy 9.42, 10.15); the patrician Volumnius of 461 is overridden. Standing follows the family's offices in the Fasti (3 consulships in the Fasti)."
+    sources: ["Livy 9.42", "Livy 10.15", "Fasti Capitolini"]
+    confidence: medium

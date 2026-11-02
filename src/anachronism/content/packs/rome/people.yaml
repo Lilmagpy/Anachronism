@@ -1,86 +1,1538 @@
 schema_version: 1
-# Historical persons seeded into the game. Sample pack. Birth years are mostly unknown (the engine
-# estimates them from the first recorded office).
+# Historical persons of the Republic, 509-27 BC (F1). Birth, death and its cause, gens, offices
+# by year, traits, with sources; `# unverified` inside a source means the passage was not re-read.
+# The senior offices come from data/rome/fasti.yaml (the Fasti name these men by id); the
+# lower ones (quaestor, aedile, tribune, praetor) are entered here from the sources given.
+# Legendary persons (the first century of the Republic) say so. Generated at build time from a
+# hand-authored source; edit this file directly, it is the data the game reads.
 people:
-  - id: l_iunius_brutus
-    name: Lucius Iunius Brutus
-    gens: iunii
-    died: -509
-    offices: [{office: consul, year: -509}]
+  - id: a_atilius_caiatinus
+    name: "Aulus Atilius Caiatinus"
+    gens: atilii
+    offices: [{office: consul, year: -258}, {office: consul, year: -254}, {office: dictator, year: -249}]
+    traits: [general]
+    notes: "Twice consul; as dictator in 249 the first to lead an army outside Italy (Livy, Periochae 19); censor 247."
+    sources: ["Livy, Periochae 19", "Fasti Capitolini"]
+    confidence: medium
+  - id: a_gabinius
+    name: "Aulus Gabinius"
+    gens: gabinii
+    died: -47
+    died_of: "illness"
+    offices: [{office: tribune_plebs, year: -67}, {office: praetor, year: -61}, {office: consul, year: -58}]
+    traits: [popular, general]
+    popular: true
+    notes: "Tribune 67: the law giving Pompey the command against the pirates (Plutarch, Pompey 25; Cassius Dio 36.23-37); consul 58, governor of Syria, restored Ptolemy Auletes for a bribe, condemned for extortion (54), recalled by Caesar and died at Salona (Cassius Dio 39.55-63, 42.11-12)."
+    sources: ["Plutarch, Pompey 25", "Cassius Dio 36.23-37, 39.55-63, 42.11-12", "Fasti Capitolini"]
+    confidence: high
+  - id: a_hirtius
+    name: "Aulus Hirtius"
+    gens: hirtii
+    died: -43
+    died_of: "battle"
+    offices: [{office: praetor, year: -46}, {office: consul, year: -43}]
+    traits: [learned, cautious]
+    popular: true
+    notes: "Caesar's officer and friend, author of the eighth book of the Gallic War; consul 43 with Pansa, fell storming Antony's camp at Mutina (Appian, Civil Wars 3.65-71; Cicero, Philippics 14; Velleius 2.61)."
+    sources: ["Appian, Civil Wars 3.65-71", "Cicero, Philippics 14", "Velleius Paterculus 2.61", "Fasti Capitolini"]
+    confidence: high
+  - id: a_postumius_albus_regillensis
+    name: "Aulus Postumius Albus Regillensis"
+    gens: postumii
+    offices: [{office: dictator, year: -499}, {office: consul, year: -496}, {office: consul, year: -464}]
+    traits: [general, pious]
     legendary: true
-    notes: "Livy 2.1.7; Livy 2.6.9 (killed in the battle against Arruns Tarquinius)"
-    sources: ["Livy 2.1.7", "Livy 2.6.9"]
-  - id: l_tarquinius_collatinus
-    name: Lucius Tarquinius Collatinus
-    gens: tarquinii
-    offices: [{office: consul, year: -509}]
+    notes: "Dictator at Lake Regillus (Livy 2.19-20, who puts the battle in 499; the Fasti and others in 496); vowed the temple of Castor (Livy 2.20.12, 2.42.5)."
+    sources: ["Livy 2.19.3", "Livy 2.20.12", "Livy 2.42.5"]
+    confidence: low
+  - id: agrippa_menenius_lanatus
+    name: "Agrippa Menenius Lanatus"
+    gens: menenii
+    died: -493
+    died_of: "natural"
+    offices: [{office: consul, year: -503}]
+    traits: [orator, conciliator]
     legendary: true
-    notes: "Resigned and left Rome (Livy 2.2.3-11)."
-    sources: ["Livy 2.2.11"]
-  - id: p_valerius_publicola
-    name: Publius Valerius Publicola
-    gens: valerii
-    died: -503
-    offices: [{office: consul, year: -509}, {office: consul, year: -508}, {office: consul, year: -507}, {office: consul, year: -504}]
-    legendary: true
-    notes: "Died 503 (Livy 2.16.7). The consulships beyond 508 follow the Fasti and are not checked here."
-    sources: ["Livy 2.15.1", "Livy 2.16.7"]
-  - id: t_lucretius_tricipitinus
-    name: Titus Lucretius Tricipitinus
-    gens: lucretii
-    offices: [{office: consul, year: -508}]
-    sources: ["Livy 2.15.1"]
-  - id: m_horatius_pulvillus
-    name: Marcus Horatius Pulvillus
-    gens: horatii
-    offices: [{office: consul, year: -509}]
-    notes: "Suffect consul after Lucretius, dedicated the Capitoline temple (Livy 2.8.6)."
-    sources: ["Livy 2.8.6"]
-  - id: t_larcius_flavus
-    name: Titus Larcius Flavus
-    gens: larcii
-    offices: [{office: consul, year: -501}, {office: dictator, year: -501}]
-    notes: "The year he was dictator is disputed (Livy 2.18.1-5)."
-    sources: ["Livy 2.18.4"]
-  - id: sp_cassius_vecellinus
-    name: Spurius Cassius Vecellinus
-    gens: cassii
-    died: -485
-    offices: [{office: consul, year: -502}, {office: magister_equitum, year: -501}]
-    notes: "Executed on a charge of aiming at kingship, traditionally 485 (Livy 2.41.10-11)."
-    sources: ["Livy 2.16.8", "Livy 2.18.4", "Livy 2.41.10"]
+    notes: "Told the plebs the fable of the belly and the limbs at the first secession (Livy 2.32.8-12); died so poor that the plebs paid for his funeral (Livy 2.33.10-11)."
+    sources: ["Livy 2.16.1", "Livy 2.32.8-12", "Livy 2.33.10-11"]
+    confidence: low
+  - id: ap_claudius_caecus
+    name: "Appius Claudius Caecus"
+    gens: claudii
+    died_of: "natural"
+    alive_until: -280
+    offices: [{office: censor, year: -312}, {office: consul, year: -307}, {office: consul, year: -296}, {office: praetor, year: -295}]
+    traits: [builder, orator, conservative, stern]
+    notes: "As censor (312) built the Via Appia and the Aqua Appia and enrolled the sons of freedmen (Livy 9.29.5-8, 9.46.10-11); twice consul, praetor in 295 (Livy 10.22.9); blind in old age, he persuaded the Senate to refuse Pyrrhus' peace (280: Plutarch, Pyrrhus 18-19). Death unknown."
+    sources: ["Livy 9.29.5-8", "Livy 9.46.10-11", "Livy 10.22.9", "Plutarch, Pyrrhus 18-19"]
+    confidence: medium
   - id: ap_claudius_caudex
-    name: Appius Claudius Caudex
+    name: "Appius Claudius Caudex"
     gens: claudii
     offices: [{office: consul, year: -264}]
-    notes: "Took the army to Sicily at the start of the First Punic War (Polybius 1.11)."
-    sources: ["Polybius 1.11", "Fasti Capitolini"]
-  - id: m_fulvius_flaccus
-    name: Marcus Fulvius Flaccus
-    gens: fulvii
-    offices: [{office: consul, year: -264}]
-    sources: ["Polybius 1.11", "Fasti Capitolini"]
+    traits: [bold]
+    notes: "Consul 264; carried the army over to Sicily to help the Mamertines and opened the First Punic War (Polybius 1.11-12)."
+    sources: ["Polybius 1.11-12", "Fasti Capitolini"]
+    confidence: high
+  - id: ap_claudius_crassus_decemvir
+    name: "Appius Claudius Crassus Inregillensis Sabinus"
+    gens: claudii
+    died: -449
+    died_of: "suicide"
+    offices: [{office: consul, year: -471}, {office: consul, year: -451}, {office: decemvir, year: -451}, {office: decemvir, year: -450}]
+    traits: [cruel, proud, lawgiver]
+    notes: "Head of both colleges of decemvirs (Livy 3.33, 3.35); his claim on Verginia brought the decemvirate down (Livy 3.44-48); died in prison before trial, by his own hand in Livy's account (Livy 3.58.6)."
+    sources: ["Livy 3.33.3", "Livy 3.35", "Livy 3.44-48", "Livy 3.58.6"]
+    confidence: low
+  - id: ap_claudius_pulcher_143
+    name: "Appius Claudius Pulcher"
+    gens: claudii
+    died: -130
+    died_of: "natural"
+    offices: [{office: consul, year: -185}, {office: consul, year: -143}, {office: censor, year: -136}, {office: consul, year: -130}]
+    traits: [proud, popular]
+    notes: "Consul 143, censor 136, princeps senatus; father-in-law of Tiberius Gracchus and his supporter on the land commission (Plutarch, Tiberius Gracchus 4, 9, 13); died about 130."
+    sources: ["Plutarch, Tiberius Gracchus 4, 9, 13", "Appian, Civil Wars 1.13", "Fasti Capitolini"]
+    confidence: medium
+  - id: ap_claudius_sabinus
+    name: "Appius Claudius Sabinus Inregillensis"
+    gens: claudii
+    died_of: "natural"
+    alive_until: -480
+    offices: [{office: consul, year: -495}]
+    traits: [stern, conservative]
+    legendary: true
+    notes: "Attus Clausus of Regillum, who came to Rome with his clients in 504 and founded the Claudii (Livy 2.16.4-5); as consul in 495 he was harsh over debt (Livy 2.23-27)."
+    sources: ["Livy 2.16.4-5", "Livy 2.21.5", "Livy 2.27"]
+    confidence: low
+  - id: c_antonius_hybrida
+    name: "Gaius Antonius Hybrida"
+    gens: antonii
+    alive_until: -42
+    offices: [{office: praetor, year: -66}, {office: consul, year: -63}]
+    traits: [greedy]
+    notes: "Cicero's colleague as consul 63, bought off with Macedonia; condemned for extortion 59 and later censor 42 (Cassius Dio 38.10; Cicero, In Catilinam 3.14)."
+    sources: ["Cassius Dio 38.10", "Sallust, Bellum Catilinae 21, 26", "Fasti Capitolini"]
+    confidence: medium
+  - id: c_asinius_pollio
+    name: "Gaius Asinius Pollio"
+    gens: asinii
+    born: -76
+    died: 4
+    died_of: "natural"
+    offices: [{office: tribune_plebs, year: -47}, {office: praetor, year: -45}, {office: consul, year: -40}]
+    traits: [learned, orator, honest]
+    popular: true
+    notes: "Crossed the Rubicon with Caesar; praetor 45; consul 40, when he brokered the pact of Brundisium between Antony and Octavian (Appian, Civil Wars 5.64; Virgil's fourth Eclogue is addressed to his consulship); triumphed over the Parthini 39, founded the first public library in Rome in the Atrium Libertatis (Pliny, Natural History 7.115, 35.10  # unverified), wrote the history of the civil wars; died AD 4."
+    sources: ["Appian, Civil Wars 2.40, 5.64", "Velleius Paterculus 2.63, 2.76, 2.86", "Fasti Capitolini"]
+    confidence: high
+  - id: c_canuleius
+    name: "Gaius Canuleius"
+    gens: canuleii
+    offices: [{office: tribune_plebs, year: -445}]
+    traits: [popular, reformer]
+    popular: true
+    notes: "Tribune of 445 whose law allowed marriage between the orders (Livy 4.1-6)."
+    sources: ["Livy 4.1.1", "Livy 4.6.1-3"]
+    confidence: low
+  - id: c_cassius_longinus
+    name: "Gaius Cassius Longinus"
+    gens: cassii
+    born: -86
+    died: -42
+    died_of: "suicide"
+    offices: [{office: consul, year: -73}, {office: quaestor, year: -53}, {office: tribune_plebs, year: -49}, {office: praetor, year: -44}]
+    traits: [general, stern, bold]
+    popular: false
+    notes: "Crassus' quaestor who brought the survivors of Carrhae back to Syria and held it against the Parthians (Plutarch, Crassus 18-29; Cassius Dio 40.28-29); tribune 49, Pompeian, pardoned; peregrine praetor 44 and the mover of the conspiracy (Plutarch, Brutus 8-10); had himself killed by his freedman after the first battle of Philippi, thinking the day lost (Plutarch, Brutus 43)."
+    sources: ["Plutarch, Crassus 18-29", "Plutarch, Brutus 8-10, 43", "Cassius Dio 40.28-29", "Appian, Civil Wars 4.113"]
+    confidence: high
+  - id: c_claudius_marcellus_49
+    name: "Gaius Claudius Marcellus"
+    gens: claudii
+    order: plebeian
+    died: -40
+    died_of: "natural"
+    offices: [{office: consul, year: -50}, {office: consul, year: -49}]
+    traits: [conservative]
+    popular: false
+    notes: "Consul 49 (his cousin held 50 and his brother 51); the optimate consul when Caesar crossed the Rubicon (Caesar, Bellum Civile 1.1-6); stayed in Italy, was pardoned, and married Octavia, Octavian's sister; died 40 (Appian, Civil Wars 5.64)."
+    sources: ["Caesar, Bellum Civile 1.1-6", "Appian, Civil Wars 5.64", "Fasti Capitolini"]
+    confidence: medium
+  - id: c_claudius_nero
+    name: "Gaius Claudius Nero"
+    gens: claudii
+    offices: [{office: praetor, year: -212}, {office: consul, year: -207}, {office: censor, year: -204}]
+    traits: [bold, general]
+    notes: "Praetor 212, consul 207: marched north to join Livius and beat Hasdrubal at the Metaurus, then threw Hasdrubal's head into Hannibal's camp (Livy 27.43-51); censor 204."
+    sources: ["Livy 27.43-51", "Fasti Capitolini"]
+    confidence: high
   - id: c_duilius
-    name: Gaius Duilius
+    name: "Gaius Duilius"
     gens: duilii
-    offices: [{office: consul, year: -260}, {office: censor, year: -258}]
-    notes: "Victor at Mylae 260 (Polybius 1.22-23)."
+    offices: [{office: consul, year: -260}, {office: dictator, year: -231}]
+    traits: [admiral, bold]
+    notes: "Won Rome's first naval victory at Mylae with the boarding-bridge (260: Polybius 1.22-23); his column of beaks stood in the Forum; censor 258, dictator 231."
     sources: ["Polybius 1.22-23", "Fasti Capitolini"]
+    confidence: high
+  - id: c_fabricius_luscinus
+    name: "Gaius Fabricius Luscinus"
+    gens: fabricii
+    offices: [{office: consul, year: -282}, {office: consul, year: -278}, {office: censor, year: -275}]
+    traits: [frugal, honest, general]
+    notes: "Twice consul, censor 275; refused Pyrrhus' gold and sent back the physician who offered to poison the king (Plutarch, Pyrrhus 20-21); as censor expelled P. Cornelius Rufinus from the Senate for owning ten pounds of silver plate (Livy, Periochae 14)."
+    sources: ["Plutarch, Pyrrhus 20-21", "Livy, Periochae 14", "Cicero, Cato Maior 43"]
+    confidence: medium
+  - id: c_flaminius
+    name: "Gaius Flaminius"
+    gens: flaminii
+    died: -217
+    died_of: "battle"
+    offices: [{office: tribune_plebs, year: -232}, {office: praetor, year: -227}, {office: consul, year: -223}, {office: magister_equitum, year: -221}, {office: censor, year: -220}, {office: consul, year: -217}]
+    traits: [popular, reformer, bold]
+    popular: true
+    notes: "As tribune carried the division of the Picene and Gallic land against the Senate (232: Polybius 2.21.7-8); praetor in Sicily 227; consul 223 beat the Insubres; censor 220, built the Via Flaminia and the Circus Flaminius (Livy, Periochae 20); consul again 217 and killed at Trasimene (Polybius 3.84; Livy 22.6)."
+    sources: ["Polybius 2.21.7-8", "Polybius 3.84", "Livy 22.6", "Livy, Periochae 20"]
+    confidence: high
+  - id: c_hostilius_mancinus
+    name: "Gaius Hostilius Mancinus"
+    gens: hostilii
+    offices: [{office: consul, year: -137}]
+    traits: [cautious]
+    notes: "Consul 137; surrounded before Numantia, made the treaty his quaestor Tiberius Gracchus negotiated; the Senate repudiated it and handed him naked to the Numantines, who refused him (Plutarch, Tiberius Gracchus 5-7; Appian, Hispanica 80, 83)."
+    sources: ["Plutarch, Tiberius Gracchus 5-7", "Appian, Hispanica 80, 83", "Fasti Capitolini"]
+    confidence: medium
+  - id: c_iulius_caesar
+    name: "Gaius Iulius Caesar"
+    gens: iulii
+    born: -100
+    died: -44
+    died_of: "murdered"
+    offices: [{office: quaestor, year: -69}, {office: aedile_curule, year: -65}, {office: praetor, year: -62}, {office: consul, year: -59}, {office: dictator, year: -49}, {office: consul, year: -48}, {office: dictator, year: -48}, {office: dictator, year: -47}, {office: consul, year: -46}, {office: dictator, year: -46}, {office: consul, year: -45}, {office: dictator, year: -45}, {office: consul, year: -44}, {office: dictator, year: -44}]
+    traits: [general, bold, popular, orator, clement]
+    popular: true
+    notes: "Quaestor 69 (Suetonius, Divus Julius 7), curule aedile 65 (the games and the restored trophies of Marius: Suetonius 10-11), pontifex maximus 63 (Suetonius 13), praetor 62; consul 59 with Pompey and Crassus behind him (the agrarian laws: Suetonius 19-20); conquered Gaul 58-50 (Caesar, Bellum Gallicum); crossed the Rubicon January 49, won the civil war (Pharsalus 48, Thapsus 46, Munda 45); dictator 49, 48, 46 and for life 44; killed in the Curia of Pompey on the Ides of March 44 in his 56th year (Suetonius 76-82, 88; Plutarch, Caesar 60-66)."
+    sources: ["Suetonius, Divus Julius 7-13, 19-20, 76-82, 88", "Plutarch, Caesar 60-66", "Caesar, Bellum Civile", "Appian, Civil Wars 2", "Fasti Capitolini"]
+    confidence: high
+  - id: c_iulius_caesar_octavianus
+    name: "Gaius Iulius Caesar Octavianus"
+    gens: iulii
+    born: -63
+    died: 14
+    died_of: "natural"
+    offices: [{office: consul, year: -43}, {office: triumvir, year: -43}, {office: consul, year: -33}, {office: consul, year: -31}, {office: consul, year: -30}, {office: consul, year: -29}, {office: censor, year: -28}, {office: consul, year: -28}, {office: consul, year: -27}]
+    traits: [cautious, patient, pious, builder]
+    popular: true
+    notes: "Caesar's great-nephew and heir, born 23 September 63 (Suetonius, Divus Augustus 5); marched on Rome and was made suffect consul at nineteen (43: Appian, Civil Wars 3.88-94); triumvir 43, Philippi 42, Perusia 41, Naulochus 36, Actium 31; consul every year 31-23; censor 28 with Agrippa; took the name Augustus on 16 January 27 (Suetonius, Divus Augustus 7; Cassius Dio 53.16); died AD 14 (Suetonius 100)."
+    sources: ["Suetonius, Divus Augustus 5, 7, 26-27, 100", "Appian, Civil Wars 3.88-94", "Cassius Dio 53.16", "Res Gestae Divi Augusti 1-8", "Fasti Capitolini"]
+    confidence: high
+  - id: c_laelius_sapiens
+    name: "Gaius Laelius Sapiens"
+    gens: laelii
+    offices: [{office: tribune_plebs, year: -151}, {office: praetor, year: -145}, {office: consul, year: -140}]
+    traits: [learned, orator, cautious]
+    notes: "Friend of Scipio Aemilianus; praetor 145, consul 140; proposed an agrarian law and withdrew it, whence (Plutarch says) his name Sapiens (Plutarch, Tiberius Gracchus 8.4); Cicero's spokesman in the Laelius."
+    sources: ["Plutarch, Tiberius Gracchus 8.4", "Cicero, Laelius de amicitia", "Fasti Capitolini"]
+    confidence: medium
+  - id: c_licinius_stolo
+    name: "Gaius Licinius Stolo"
+    gens: licinii
+    offices: [{office: tribune_plebs, year: -376}, {office: tribune_plebs, year: -367}, {office: consul, year: -361}]
+    traits: [popular, reformer]
+    popular: true
+    notes: "With L. Sextius, tribune for ten years (376-367) until the Licinian-Sextian laws passed: one consul might be plebeian, no one might hold more than 500 iugera of public land (Livy 6.35, 6.42.9-11); himself later fined under his own law (Livy 7.16.9)."
+    sources: ["Livy 6.35.4-5", "Livy 6.42.9", "Livy 7.16.9"]
+    confidence: low
+  - id: c_lutatius_catulus
+    name: "Gaius Lutatius Catulus"
+    gens: lutatii
+    offices: [{office: consul, year: -242}, {office: consul, year: -220}]
+    traits: [admiral]
+    notes: "Consul 242; won the battle of the Aegates Islands that ended the First Punic War and made the peace (Polybius 1.59-63)."
+    sources: ["Polybius 1.59-63", "Fasti Capitolini"]
+    confidence: high
+  - id: c_maenius
+    name: "Gaius Maenius"
+    gens: maenii
+    offices: [{office: consul, year: -338}, {office: dictator, year: -320}, {office: dictator, year: -314}]
+    traits: [general, builder]
+    notes: "Consul of 338 who ended the Latin War and set the beaks of the Antiate ships on the speaker's platform, the Rostra (Livy 8.13-14); censor 318; twice dictator."
+    sources: ["Livy 8.13.1-9", "Livy 8.14.12", "Livy 9.26.7"]
+    confidence: medium
+  - id: c_marcius_rutilus
+    name: "Gaius Marcius Rutilus"
+    gens: marcii
+    offices: [{office: consul, year: -357}, {office: dictator, year: -356}, {office: consul, year: -352}, {office: censor, year: -351}, {office: consul, year: -344}, {office: consul, year: -342}]
+    traits: [general]
+    notes: "The first plebeian dictator (356: Livy 7.17.6) and the first plebeian censor (351: Livy 7.22.7-10); four times consul."
+    sources: ["Livy 7.17.6", "Livy 7.22.7-10"]
+    confidence: medium
+  - id: c_marius
+    name: "Gaius Marius"
+    gens: marii
+    born: -157
+    died: -86
+    died_of: "illness"
+    offices: [{office: quaestor, year: -121}, {office: tribune_plebs, year: -119}, {office: praetor, year: -115}, {office: consul, year: -86}]
+    traits: [general, novus_homo, popular, bold, cruel]
+    popular: true
+    notes: "A new man of Arpinum: tribune 119, praetor 115, consul 107 against Jugurtha, whom Sulla captured (Sallust, Jugurtha 63-65, 73, 84-86, 113); enrolled the propertyless in the legions (Sallust, Jugurtha 86.2); consul five years running 104-100 against the Cimbri and Teutones, beaten at Aquae Sextiae and Vercellae (Plutarch, Marius 18-27); seventh consulship 86 after Cinna's return, died in its first days of pleurisy at about seventy (Plutarch, Marius 45-46)."
+    sources: ["Sallust, Bellum Iugurthinum 63-65, 73, 84-86, 113", "Plutarch, Marius 18-27, 41-46", "Appian, Civil Wars 1.55-75", "Fasti Capitolini"]
+    confidence: high
+  - id: c_marius_minor
+    name: "Gaius Marius"
+    gens: marii
+    born: -109
+    died: -82
+    died_of: "suicide"
+    offices: [{office: consul, year: -107}, {office: consul, year: -104}, {office: consul, year: -103}, {office: consul, year: -102}, {office: consul, year: -101}, {office: consul, year: -100}, {office: consul, year: -82}]
+    traits: [popular, cruel, bold]
+    popular: true
+    notes: "Son of Marius; consul 82 at 27 against the law; beaten by Sulla at Sacriportus, besieged in Praeneste and killed himself when it fell (Appian, Civil Wars 1.87-94; Velleius 2.26-27)."
+    sources: ["Appian, Civil Wars 1.87-94", "Velleius Paterculus 2.26-27", "Fasti Capitolini"]
+    confidence: high
+  - id: c_papirius_carbo_120
+    name: "Gaius Papirius Carbo"
+    gens: papirii
+    died: -119
+    died_of: "suicide"
+    offices: [{office: tribune_plebs, year: -131}, {office: consul, year: -120}]
+    traits: [popular, orator]
+    popular: true
+    notes: "Tribune 131: the ballot law for legislation and a bill to allow re-election as tribune (Cicero, De legibus 3.35; Livy, Periochae 59); land commissioner; went over to the optimates, consul 120, defended Opimius; prosecuted by the young Crassus and killed himself (Cicero, Brutus 103)."
+    sources: ["Cicero, De legibus 3.35", "Cicero, Brutus 103", "Livy, Periochae 59  # unverified"]
+    confidence: medium
+  - id: c_scribonius_curio
+    name: "Gaius Scribonius Curio"
+    gens: scribonii
+    born: -84
+    died: -49
+    died_of: "battle"
+    offices: [{office: consul, year: -76}, {office: quaestor, year: -54}, {office: tribune_plebs, year: -50}]
+    traits: [orator, bold, greedy]
+    popular: true
+    notes: "Tribune 50, bought for Caesar by the payment of his debts; proposed that both Caesar and Pompey lay down their commands, and carried the Senate 370 to 22 (Appian, Civil Wars 2.26-30; Plutarch, Pompey 58); as Caesar's commander in Africa was killed with his army by Juba at the Bagradas (Caesar, Bellum Civile 2.23-44)."
+    sources: ["Appian, Civil Wars 2.26-30", "Plutarch, Pompey 58", "Caesar, Bellum Civile 2.23-44"]
+    confidence: high
+  - id: c_sempronius_gracchus
+    name: "Gaius Sempronius Gracchus"
+    gens: sempronii
+    born: -154
+    died: -121
+    died_of: "suicide"
+    offices: [{office: quaestor, year: -126}, {office: tribune_plebs, year: -123}, {office: tribune_plebs, year: -122}]
+    traits: [popular, reformer, orator, bold]
+    popular: true
+    notes: "Quaestor in Sardinia 126; tribune 123 and 122: grain sold at a fixed price, the land law renewed, colonies (Carthage), the courts given to the equites, and citizenship for the allies, which failed (Plutarch, Gaius Gracchus 4-12; Appian, Civil Wars 1.21-24); killed, by a slave at his order, in the fighting of 121 after Opimius' decree (Plutarch, Gaius Gracchus 17; Appian, Civil Wars 1.26). Nine years younger than Tiberius (Plutarch, Tiberius Gracchus 2)."
+    sources: ["Plutarch, Tiberius Gracchus 2", "Plutarch, Gaius Gracchus 4-17", "Appian, Civil Wars 1.21-26"]
+    confidence: high
+  - id: c_terentius_varro
+    name: "Gaius Terentius Varro"
+    gens: terentii
+    alive_until: -200
+    offices: [{office: consul, year: -216}]
+    traits: [popular, bold]
+    popular: true
+    notes: "Consul 216, the son of a butcher in the hostile tradition; gave battle at Cannae (Livy 22.25-26, 22.44-45) and was thanked by the Senate for not despairing of the Republic (Livy 22.61.14); still an envoy in 200 (Livy 31.11.4-18)."
+    sources: ["Livy 22.25-26", "Livy 22.44-49", "Livy 22.61.14", "Livy 31.11.4-18"]
+    confidence: high
+  - id: c_trebonius
+    name: "Gaius Trebonius"
+    gens: trebonii
+    died: -43
+    died_of: "murdered"
+    offices: [{office: quaestor, year: -60}, {office: tribune_plebs, year: -55}, {office: praetor, year: -48}, {office: consul, year: -45}]
+    traits: [general]
+    popular: true
+    notes: "Tribune 55: the Lex Trebonia gave Pompey and Crassus their five-year provinces (Cassius Dio 39.33-36); Caesar's legate at Massilia, urban praetor 48, suffect consul 45; kept Antony talking outside the Curia on the Ides; as governor of Asia was murdered at Smyrna by Dolabella, the first of the conspirators to die (Appian, Civil Wars 3.26; Cicero, Philippics 11.5)."
+    sources: ["Cassius Dio 39.33-36", "Appian, Civil Wars 2.113-117, 3.26", "Cicero, Philippics 11.5", "Fasti Capitolini"]
+    confidence: high
+  - id: c_vibius_pansa
+    name: "Gaius Vibius Pansa Caetronianus"
+    gens: vibii
+    died: -43
+    died_of: "battle"
+    offices: [{office: tribune_plebs, year: -51}, {office: praetor, year: -48}, {office: consul, year: -43}]
+    traits: [cautious]
+    popular: true
+    notes: "Tribune 51 (vetoed measures against Caesar), praetor 48, consul 43; wounded at Forum Gallorum and died at Bononia days later (Appian, Civil Wars 3.66-75; Cicero, Philippics 14)."
+    sources: ["Appian, Civil Wars 3.66-75", "Cicero, Philippics 14", "Fasti Capitolini"]
+    confidence: high
   - id: cn_cornelius_scipio_asina
-    name: Gnaeus Cornelius Scipio Asina
+    name: "Gnaeus Cornelius Scipio Asina"
     gens: cornelii
     offices: [{office: consul, year: -260}, {office: consul, year: -254}]
-    notes: "Captured by the Carthaginians at Lipara in 260 (Polybius 1.21)."
-    sources: ["Polybius 1.21", "Fasti Capitolini"]
+    notes: "Consul 260: captured with his ships at Lipara (Polybius 1.21.4-8), whence the name Asina; consul again 254."
+    sources: ["Polybius 1.21.4-8", "Fasti Capitolini"]
+    confidence: high
+  - id: cn_cornelius_scipio_calvus
+    name: "Gnaeus Cornelius Scipio Calvus"
+    gens: cornelii
+    died: -211
+    died_of: "battle"
+    offices: [{office: consul, year: -222}]
+    traits: [general]
+    notes: "Consul 222, won Spain for Rome with his brother and fell there 211 (Livy 25.36)."
+    sources: ["Polybius 3.76", "Livy 25.36", "Fasti Capitolini"]
+    confidence: high
+  - id: cn_domitius_ahenobarbus_32
+    name: "Gnaeus Domitius Ahenobarbus"
+    gens: domitii
+    died: -31
+    died_of: "illness"
+    offices: [{office: consul, year: -96}, {office: censor, year: -92}, {office: consul, year: -32}]
+    traits: [bold, honest]
+    popular: false
+    notes: "Son of the consul of 54; condemned with the conspirators, commanded a fleet for Brutus, joined Antony; consul 32, fled with his colleague Sosius to Antony's camp; deserted to Octavian before Actium and died of fever within days (Plutarch, Antony 63; Velleius 2.84; Suetonius, Nero 3)."
+    sources: ["Plutarch, Antony 63", "Velleius Paterculus 2.84", "Suetonius, Nero 3", "Fasti Capitolini"]
+    confidence: high
+  - id: cn_flavius
+    name: "Gnaeus Flavius"
+    gens: flavii
+    offices: [{office: aedile_curule, year: -304}]
+    traits: [popular, learned]
+    popular: true
+    notes: "A scribe, son of a freedman, who as curule aedile published the calendar and the forms of action (Livy 9.46.1-7)."
+    sources: ["Livy 9.46.1-7"]
+    confidence: medium
+  - id: cn_marcius_coriolanus
+    name: "Gnaeus Marcius Coriolanus"
+    gens: marcii
+    order: patrician
+    died: -488
+    died_of: "unknown"
+    traits: [bold, proud]
+    legendary: true
+    notes: "Took Corioli (Livy 2.33.5-9), was exiled for opposing the plebs over grain, led the Volsci against Rome and was turned back by his mother (Livy 2.39-40). Livy 2.40.10-11: killed by the Volsci in one account, lived to old age in Fabius Pictor's. He held no magistracy; the date of death is a convention."
+    sources: ["Livy 2.33.5-9", "Livy 2.35", "Livy 2.39-40", "Plutarch, Coriolanus"]
+    confidence: low
+  - id: cn_octavius_87
+    name: "Gnaeus Octavius"
+    gens: octavii
+    died: -87
+    died_of: "murdered"
+    offices: [{office: consul, year: -165}, {office: consul, year: -128}, {office: praetor, year: -90}, {office: consul, year: -87}]
+    traits: [conservative, pious]
+    popular: false
+    notes: "Consul 87; drove out his colleague Cinna and was killed in his consular robes on the Janiculum when Cinna and Marius took the city (Appian, Civil Wars 1.64-71; Plutarch, Marius 42)."
+    sources: ["Appian, Civil Wars 1.64-71", "Plutarch, Marius 42", "Fasti Capitolini"]
+    confidence: high
+  - id: cn_papirius_carbo_85
+    name: "Gnaeus Papirius Carbo"
+    gens: papirii
+    died: -82
+    died_of: "executed"
+    offices: [{office: consul, year: -113}, {office: tribune_plebs, year: -92}, {office: praetor, year: -89}, {office: consul, year: -85}, {office: consul, year: -84}, {office: consul, year: -82}]
+    traits: [popular, general]
+    popular: true
+    notes: "Consul 85, 84 and 82, the Marian leader against Sulla; fled to Africa and was put to death by Pompey at Lilybaeum (Appian, Civil Wars 1.92-96; Plutarch, Pompey 10)."
+    sources: ["Appian, Civil Wars 1.92-96", "Plutarch, Pompey 10", "Fasti Capitolini"]
+    confidence: high
+  - id: cn_pompeius_magnus
+    name: "Gnaeus Pompeius Magnus"
+    gens: pompeii
+    born: -106
+    died: -48
+    died_of: "murdered"
+    offices: [{office: consul, year: -70}, {office: consul, year: -55}, {office: consul, year: -52}]
+    traits: [general, proud, cautious]
+    popular: false
+    notes: "Raised an army for Sulla at 23, the 'young butcher'; triumphed as a knight (81); finished the Sertorian and Spartacus wars; consul 70 at 36 without having held any office (Plutarch, Pompey 22; Appian, Civil Wars 1.121); cleared the sea of pirates (67) and beat Mithridates (66-62); triumvir with Caesar and Crassus (60); consul 55 and sole consul 52; beaten at Pharsalus and stabbed to death on landing in Egypt the day before his 58th birthday (Plutarch, Pompey 77-79; Velleius 2.53)."
+    sources: ["Plutarch, Pompey 22, 25-45, 77-79", "Appian, Civil Wars 1.121", "Velleius Paterculus 2.53", "Caesar, Bellum Civile 3.86-104", "Fasti Capitolini"]
+    confidence: high
+  - id: cn_pompeius_strabo
+    name: "Gnaeus Pompeius Strabo"
+    gens: pompeii
+    died: -87
+    died_of: "illness"
+    offices: [{office: quaestor, year: -104}, {office: praetor, year: -92}, {office: consul, year: -89}]
+    traits: [general, greedy]
+    notes: "Consul 89: took Asculum in the Social War and gave Latin rights to the Transpadanes (Asconius 3C  # unverified); kept his army in 87 and died in the plague (or struck by lightning) during the siege of Rome by Cinna (Appian, Civil Wars 1.68; Velleius 2.21.4). Father of Pompey."
+    sources: ["Appian, Civil Wars 1.47-52, 1.68", "Velleius Paterculus 2.21.4", "Fasti Capitolini"]
+    confidence: high
+  - id: d_iunius_brutus_albinus
+    name: "Decimus Iunius Brutus Albinus"
+    gens: iunii
+    born: -81
+    died: -43
+    died_of: "executed"
+    offices: [{office: praetor, year: -45}]
+    traits: [general, bold]
+    popular: false
+    notes: "Caesar's legate in Gaul and admiral at Massilia (Caesar, Bellum Civile 1.56-58, 2.3-7); praetor 45, consul designate for 42 and named in Caesar's will, yet led him to the Senate on the Ides; held Mutina against Antony; deserted by his troops, was caught in the Alps and killed on Antony's order (Appian, Civil Wars 3.97-98; Velleius 2.64)."
+    sources: ["Caesar, Bellum Civile 1.56-58, 2.3-7", "Appian, Civil Wars 2.111-117, 3.97-98", "Velleius Paterculus 2.64"]
+    confidence: high
+  - id: l_aemilius_paullus_216
+    name: "Lucius Aemilius Paullus"
+    gens: aemilii
+    died: -216
+    died_of: "battle"
+    offices: [{office: consul, year: -219}, {office: consul, year: -216}]
+    traits: [cautious, general]
+    notes: "Consul 219 (the Illyrian war) and 216; fell at Cannae refusing a horse to escape (Polybius 3.116; Livy 22.49)."
+    sources: ["Polybius 3.116", "Livy 22.49", "Fasti Capitolini"]
+    confidence: high
+  - id: l_aemilius_paullus_macedonicus
+    name: "Lucius Aemilius Paullus"
+    gens: aemilii
+    born: -229
+    died: -160
+    died_of: "illness"
+    offices: [{office: aedile_curule, year: -193}, {office: praetor, year: -191}, {office: consul, year: -182}, {office: consul, year: -168}, {office: censor, year: -164}]
+    traits: [general, pious, learned, stern]
+    notes: "Son of the consul who fell at Cannae; curule aedile 193, praetor in Farther Spain 191; consul 182 and 168: beat Perseus at Pydna (Livy 44.36-42; Plutarch, Aemilius 15-22) and lost his two younger sons in the days of his triumph (Livy 45.40-41); censor 164; died 160, when his sons gave the games at which Terence's Adelphoe was played (Plutarch, Aemilius 39). Born about 229 (sixty at Pydna: Plutarch, Aemilius 10)."
+    sources: ["Livy 44.36-42", "Livy 45.40-41", "Plutarch, Aemilius 10, 15-22, 39", "Fasti Capitolini"]
+    confidence: high
+  - id: l_appuleius_saturninus
+    name: "Lucius Appuleius Saturninus"
+    gens: appuleii
+    died: -100
+    died_of: "murdered"
+    offices: [{office: quaestor, year: -104}, {office: tribune_plebs, year: -103}, {office: tribune_plebs, year: -100}]
+    traits: [popular, bold, violent]
+    popular: true
+    notes: "Tribune 103 and 100: land for Marius' veterans, grain and a treason court; had a rival killed, was besieged on the Capitol and stoned to death in the Curia after surrendering to Marius (Appian, Civil Wars 1.28-33; Plutarch, Marius 28-30)."
+    sources: ["Appian, Civil Wars 1.28-33", "Plutarch, Marius 28-30"]
+    confidence: high
+  - id: l_caecilius_metellus_251
+    name: "Lucius Caecilius Metellus"
+    gens: caecilii
+    died: -221
+    died_of: "natural"
+    offices: [{office: consul, year: -251}, {office: magister_equitum, year: -249}, {office: consul, year: -247}, {office: dictator, year: -224}]
+    traits: [general, pious]
+    notes: "Consul 251 and 247; beat Hasdrubal at Panormus and showed captured elephants in his triumph (Polybius 1.40); pontifex maximus from 243, said to have lost his sight saving the Palladium from the fire of Vesta's temple in 241 (Pliny, Natural History 7.141  # unverified); dictator 224."
+    sources: ["Polybius 1.40", "Livy, Periochae 19", "Fasti Capitolini"]
+    confidence: medium
+  - id: l_calpurnius_piso_caesoninus
+    name: "Lucius Calpurnius Piso Caesoninus"
+    gens: calpurnii
+    died_of: "natural"
+    alive_until: -43
+    offices: [{office: praetor, year: -61}, {office: consul, year: -58}, {office: censor, year: -50}]
+    traits: [learned, cautious]
+    popular: true
+    notes: "Caesar's father-in-law; consul 58 (Cicero's In Pisonem is the revenge for his exile), censor 50; in 44-43 worked for peace between the Senate and Antony (Cicero, Philippics 1.10, 12.1); the Epicurean of the Villa of the Papyri at Herculaneum by the usual identification."
+    sources: ["Cicero, In Pisonem", "Cicero, Philippics 1.10, 12.1", "Fasti Capitolini"]
+    confidence: medium
+  - id: l_calpurnius_piso_frugi
+    name: "Lucius Calpurnius Piso Frugi"
+    gens: calpurnii
+    offices: [{office: tribune_plebs, year: -149}, {office: consul, year: -133}]
+    traits: [conservative, learned, honest]
+    popular: false
+    notes: "As tribune in 149 set up the first standing court, on extortion (Cicero, Brutus 106); consul 133 in Sicily against the slaves; censor 120; wrote annals."
+    sources: ["Cicero, Brutus 106", "Livy, Periochae 58  # unverified", "Fasti Capitolini"]
+    confidence: medium
+  - id: l_cornelius_cinna
+    name: "Lucius Cornelius Cinna"
+    gens: cornelii
+    died: -84
+    died_of: "murdered"
+    offices: [{office: consul, year: -127}, {office: praetor, year: -90}, {office: consul, year: -87}, {office: consul, year: -86}, {office: consul, year: -85}, {office: consul, year: -84}]
+    traits: [popular, bold]
+    popular: true
+    notes: "Consul 87 and, without election, 86, 85 and 84; took Rome with Marius and ruled it until his soldiers at Ancona killed him as he prepared to face Sulla (Appian, Civil Wars 1.64-78; Velleius 2.20-24). Caesar married his daughter."
+    sources: ["Appian, Civil Wars 1.64-78", "Velleius Paterculus 2.20-24", "Fasti Capitolini"]
+    confidence: high
+  - id: l_cornelius_lentulus_crus
+    name: "Lucius Cornelius Lentulus Crus"
+    gens: cornelii
+    died: -48
+    died_of: "executed"
+    offices: [{office: praetor, year: -58}, {office: consul, year: -49}]
+    traits: [conservative, proud]
+    popular: false
+    notes: "Consul 49 who drove the tribunes Antony and Cassius from the Senate (Caesar, Bellum Civile 1.1-5); fled with Pompey and was put to death in Egypt after Pharsalus (Caesar, Bellum Civile 3.104; Plutarch, Pompey 80)."
+    sources: ["Caesar, Bellum Civile 1.1-5, 3.104", "Plutarch, Pompey 80", "Fasti Capitolini"]
+    confidence: high
+  - id: l_cornelius_scipio_asiaticus
+    name: "Lucius Cornelius Scipio Asiaticus"
+    gens: cornelii
+    offices: [{office: praetor, year: -193}, {office: consul, year: -190}]
+    traits: [general]
+    notes: "Brother of Africanus; praetor 193, consul 190: beat Antiochus at Magnesia with his brother as legate (Livy 37.37-44); later condemned for taking Antiochus' money (Livy 38.55-60)."
+    sources: ["Livy 37.37-44", "Livy 38.55-60", "Fasti Capitolini"]
+    confidence: high
+  - id: l_cornelius_sulla
+    name: "Lucius Cornelius Sulla"
+    gens: cornelii
+    born: -138
+    died: -78
+    died_of: "illness"
+    offices: [{office: quaestor, year: -107}, {office: praetor, year: -97}, {office: consul, year: -88}, {office: dictator, year: -82}, {office: dictator, year: -81}, {office: consul, year: -80}, {office: dictator, year: -80}, {office: dictator, year: -79}]
+    traits: [general, bold, cruel, conservative, lucky]
+    popular: false
+    notes: "Quaestor to Marius, took Jugurtha from Bocchus (Sallust, Jugurtha 102-113); praetor 97; consul 88, marched on Rome; beat Mithridates (Chaeronea, Orchomenus: Plutarch, Sulla 15-21); won the civil war at the Colline Gate (82), proscribed his enemies and as dictator (82-79) remade the constitution: the tribunate shackled, the Senate doubled, the courts restored to it (Appian, Civil Wars 1.95-103); resigned, and died in 78 aged sixty (Plutarch, Sulla 34-38; Appian, Civil Wars 1.105)."
+    sources: ["Sallust, Bellum Iugurthinum 102-113", "Plutarch, Sulla 5, 15-21, 34-38", "Appian, Civil Wars 1.55-105", "Fasti Capitolini"]
+    confidence: high
+  - id: l_domitius_ahenobarbus_54
+    name: "Lucius Domitius Ahenobarbus"
+    gens: domitii
+    died: -48
+    died_of: "battle"
+    offices: [{office: consul, year: -94}, {office: aedile_curule, year: -61}, {office: praetor, year: -58}, {office: consul, year: -54}]
+    traits: [conservative, proud, stubborn]
+    popular: false
+    notes: "Cato's brother-in-law and Caesar's bitterest enemy; consul 54; surrendered at Corfinium and was pardoned (49: Caesar, Bellum Civile 1.15-23); commanded Pompey's left at Pharsalus and was killed in the rout (Caesar, Bellum Civile 3.99; Cicero, Philippics 2.71)."
+    sources: ["Caesar, Bellum Civile 1.15-23, 3.99", "Cicero, Philippics 2.71", "Fasti Capitolini"]
+    confidence: high
+  - id: l_icilius
+    name: "Lucius Icilius"
+    gens: icilii
+    offices: [{office: tribune_plebs, year: -456}, {office: tribune_plebs, year: -449}]
+    traits: [popular, orator]
+    popular: true
+    notes: "Carried the Lex Icilia giving the Aventine to the plebs (456: Livy 3.31.1, Dionysius 10.31-32); betrothed to Verginia and a leader of the second secession (Livy 3.44-54)."
+    sources: ["Livy 3.31.1", "Livy 3.44.3", "Livy 3.54"]
+    confidence: low
+  - id: l_iunius_brutus
+    name: "Lucius Iunius Brutus"
+    gens: iunii
+    order: patrician
+    died: -509
+    died_of: "battle"
+    offices: [{office: consul, year: -509}]
+    traits: [stern, founder]
+    legendary: true
+    notes: "Drove out the kings and was first consul; fell fighting Arruns Tarquinius at the Silva Arsia (Livy 2.6.9). The later Iunii Bruti were plebeian; the tradition made him a patrician."
+    sources: ["Livy 2.1.7", "Livy 2.6.9", "Dionysius of Halicarnassus 5.15"]
+    confidence: low
+  - id: l_licinius_crassus_orator
+    name: "Lucius Licinius Crassus"
+    gens: licinii
+    born: -140
+    died: -91
+    died_of: "illness"
+    offices: [{office: quaestor, year: -109}, {office: tribune_plebs, year: -107}, {office: aedile_curule, year: -103}, {office: praetor, year: -98}, {office: consul, year: -95}, {office: censor, year: -92}]
+    traits: [orator, conservative, learned]
+    popular: false
+    notes: "The greatest orator before Cicero (Cicero, Brutus 143-165); consul 95 with Scaevola (the Lex Licinia Mucia expelling Latins claiming citizenship), censor 92; died of a fever days after his last speech for Drusus (Cicero, De oratore 3.1-6)."
+    sources: ["Cicero, Brutus 143-165", "Cicero, De oratore 3.1-6", "Fasti Capitolini"]
+    confidence: high
+  - id: l_licinius_lucullus
+    name: "Lucius Licinius Lucullus"
+    gens: licinii
+    born: -118
+    died: -56
+    died_of: "illness"
+    offices: [{office: quaestor, year: -88}, {office: aedile_curule, year: -79}, {office: praetor, year: -78}, {office: consul, year: -74}]
+    traits: [general, wealthy, learned, conservative]
+    popular: false
+    notes: "Sulla's quaestor 88 and his literary executor; curule aedile 79 (splendid games), praetor 78, consul 74: beat Mithridates and Tigranes (Tigranocerta 69) until his army mutinied and Pompey took the command (Plutarch, Lucullus 1, 5-36); retired to gardens and dinners, and died in 57 or 56 out of his mind (Plutarch, Lucullus 43)."
+    sources: ["Plutarch, Lucullus 1, 5-36, 43", "Appian, Mithridatica 72-91", "Fasti Capitolini"]
+    confidence: high
+  - id: l_marcius_philippus_91
+    name: "Lucius Marcius Philippus"
+    gens: marcii
+    offices: [{office: tribune_plebs, year: -104}, {office: praetor, year: -96}, {office: consul, year: -91}, {office: censor, year: -86}, {office: consul, year: -56}]
+    traits: [orator, conservative]
+    popular: false
+    notes: "Consul 91, Drusus' enemy, who had his laws annulled (Cicero, De oratore 3.2; Appian, Civil Wars 1.35-36); censor 86 under Cinna; as tribune in 104 had proposed a land law and withdrawn it (Cicero, De officiis 2.73)."
+    sources: ["Cicero, De oratore 3.2", "Cicero, De officiis 2.73", "Appian, Civil Wars 1.35-36", "Fasti Capitolini"]
+    confidence: medium
+  - id: l_mummius_achaicus
+    name: "Lucius Mummius Achaicus"
+    gens: mummii
+    offices: [{office: praetor, year: -153}, {office: consul, year: -146}, {office: censor, year: -142}]
+    traits: [general, novus_homo]
+    notes: "Praetor in Spain 153; consul 146: destroyed Corinth and dissolved the Achaean league (Polybius 39.2-6; Livy, Periochae 52); censor 142 with Scipio Aemilianus."
+    sources: ["Polybius 39.2-6", "Livy, Periochae 52", "Fasti Capitolini"]
+    confidence: medium
+  - id: l_munatius_plancus
+    name: "Lucius Munatius Plancus"
+    gens: munatii
+    born: -87
+    died: -15
+    died_of: "natural"
+    offices: [{office: consul, year: -42}]
+    traits: [cautious, orator]
+    popular: true
+    notes: "Caesar's legate; governor of Transalpine Gaul who founded Lugdunum (43) and went over to Antony; consul 42, censor 22; deserted Antony before Actium and in 27 proposed the name Augustus (Velleius 2.63, 2.83, 2.91; Suetonius, Divus Augustus 7)."
+    sources: ["Velleius Paterculus 2.63, 2.83, 2.91", "Suetonius, Divus Augustus 7", "Fasti Capitolini"]
+    confidence: high
+  - id: l_opimius
+    name: "Lucius Opimius"
+    gens: opimii
+    died_of: "natural"
+    alive_until: -109
+    offices: [{office: praetor, year: -125}, {office: consul, year: -121}]
+    traits: [conservative, cruel]
+    popular: false
+    notes: "As praetor destroyed Fregellae (125); consul 121: under the first 'last decree' of the Senate killed Gaius Gracchus' followers, built the temple of Concord (Plutarch, Gaius Gracchus 14-17; Appian, Civil Wars 1.25-26); condemned in 109 for taking Jugurtha's money and died in exile at Dyrrhachium (Cicero, Pro Sestio 140; Plutarch, Gaius Gracchus 18)."
+    sources: ["Plutarch, Gaius Gracchus 14-18", "Appian, Civil Wars 1.25-26", "Cicero, Pro Sestio 140", "Fasti Capitolini"]
+    confidence: high
+  - id: l_papirius_cursor
+    name: "Lucius Papirius Cursor"
+    gens: papirii
+    offices: [{office: magister_equitum, year: -340}, {office: consul, year: -326}, {office: dictator, year: -325}, {office: consul, year: -320}, {office: consul, year: -319}, {office: consul, year: -315}, {office: consul, year: -313}, {office: dictator, year: -310}, {office: consul, year: -293}]
+    traits: [stern, general]
+    notes: "Five times consul, twice dictator; nearly had his master of the horse Fabius executed for fighting against orders (325: Livy 8.30-35); Livy thought him the Roman who could have faced Alexander (Livy 9.16.11-19)."
+    sources: ["Livy 8.29.9", "Livy 8.30-35", "Livy 9.16.11-19", "Livy 9.38.9-15"]
+    confidence: medium
+  - id: l_postumius_megellus
+    name: "Lucius Postumius Megellus"
+    gens: postumii
+    offices: [{office: consul, year: -305}, {office: consul, year: -294}, {office: consul, year: -291}, {office: consul, year: -262}]
+    notes: "Consul 262 with Q. Mamilius Vitulus; took Agrigentum after a long siege (Polybius 1.17-19). Not the Megellus who was consul in 305, 294 and 291."
+    sources: ["Polybius 1.17-19", "Fasti Capitolini"]
+    confidence: high
+  - id: l_quinctius_cincinnatus
+    name: "Lucius Quinctius Cincinnatus"
+    gens: quinctii
+    born: -519
+    died_of: "natural"
+    offices: [{office: consul, year: -460}, {office: dictator, year: -458}, {office: dictator, year: -439}, {office: consular_tribune, year: -438}, {office: magister_equitum, year: -437}, {office: consular_tribune, year: -425}, {office: consular_tribune, year: -420}, {office: consular_tribune, year: -386}, {office: consular_tribune, year: -377}]
+    traits: [stern, frugal, general]
+    legendary: true
+    notes: "Called from the plough to the dictatorship in 458 and saved the army of Minucius on Mount Algidus (Livy 3.26-29); dictator again in 439 against Sp. Maelius, when Livy makes him over eighty (Livy 4.13.12). The birth year is taken from that; the death is unknown."
+    sources: ["Livy 3.26.7-12", "Livy 3.29", "Livy 4.13.12", "Livy 4.14"]
+    confidence: low
+  - id: l_sergius_catilina
+    name: "Lucius Sergius Catilina"
+    gens: sergii
+    born: -108
+    died: -62
+    died_of: "battle"
+    offices: [{office: quaestor, year: -77}, {office: praetor, year: -68}]
+    traits: [bold, violent, popular]
+    popular: true
+    notes: "Praetor 68, governor of Africa; twice beaten for the consulship, conspired to seize the state (63), was denounced by Cicero and fell fighting at Pistoria (Sallust, Bellum Catilinae 5, 17-61; Cicero, In Catilinam)."
+    sources: ["Sallust, Bellum Catilinae 5, 17-61", "Cicero, In Catilinam"]
+    confidence: high
+  - id: l_sextius_lateranus
+    name: "Lucius Sextius Sextinus Lateranus"
+    gens: sextii
+    offices: [{office: tribune_plebs, year: -376}, {office: tribune_plebs, year: -367}, {office: consul, year: -366}]
+    traits: [popular, reformer]
+    popular: true
+    notes: "The first plebeian consul (366: Livy 7.1.2), after ten years as tribune with Licinius."
+    sources: ["Livy 6.35.5", "Livy 6.42.9", "Livy 7.1.2"]
+    confidence: low
+  - id: l_tarquinius_collatinus
+    name: "Lucius Tarquinius Collatinus"
+    gens: tarquinii
+    died_of: "natural"
+    alive_until: -509
+    offices: [{office: consul, year: -509}]
+    legendary: true
+    notes: "Husband of Lucretia; resigned the consulship because of his name and left Rome for Lavinium (Livy 2.2.3-11)."
+    sources: ["Livy 2.2.3-11"]
+    confidence: low
+  - id: l_valerius_potitus_449
+    name: "Lucius Valerius Potitus"
+    gens: valerii
+    offices: [{office: consul, year: -483}, {office: consul, year: -470}, {office: consul, year: -449}, {office: consular_tribune, year: -414}, {office: consular_tribune, year: -406}]
+    traits: [popular, lawgiver]
+    notes: "Consul of 449 with Horatius: the Valerio-Horatian laws made plebiscites binding, restored the appeal and made the tribunes inviolable (Livy 3.55)."
+    sources: ["Livy 3.55.1-13"]
+    confidence: low
+  - id: m_aemilius_lepidus_187
+    name: "Marcus Aemilius Lepidus"
+    gens: aemilii
+    died: -152
+    died_of: "natural"
+    offices: [{office: consul, year: -232}, {office: aedile_curule, year: -193}, {office: praetor, year: -191}, {office: consul, year: -187}, {office: censor, year: -179}, {office: consul, year: -175}, {office: consul, year: -158}]
+    traits: [conservative, builder, pious]
+    notes: "Consul 187 and 175, censor 179 (the Basilica Aemilia and the Pons Aemilius: Livy 40.51), pontifex maximus from 180, chosen princeps senatus six times (Livy 40.42.12, 40.51.1); died 152 (Livy, Periochae 48)."
+    sources: ["Livy 40.42.12", "Livy 40.51", "Livy, Periochae 48", "Fasti Capitolini"]
+    confidence: high
+  - id: m_aemilius_lepidus_78
+    name: "Marcus Aemilius Lepidus"
+    gens: aemilii
+    died: -77
+    died_of: "illness"
+    offices: [{office: consul, year: -126}, {office: praetor, year: -81}, {office: consul, year: -78}]
+    traits: [bold, greedy]
+    popular: true
+    notes: "Consul 78; tried to undo Sulla's settlement, marched on Rome and was beaten by Catulus and Pompey, dying in Sardinia (Appian, Civil Wars 1.105-107; Plutarch, Pompey 16). Father of the triumvir."
+    sources: ["Appian, Civil Wars 1.105-107", "Plutarch, Pompey 16", "Fasti Capitolini"]
+    confidence: high
+  - id: m_aemilius_lepidus_triumvir
+    name: "Marcus Aemilius Lepidus"
+    gens: aemilii
+    born: -89
+    died: -12
+    died_of: "natural"
+    offices: [{office: aedile_curule, year: -53}, {office: praetor, year: -49}, {office: consul, year: -46}, {office: magister_equitum, year: -46}, {office: magister_equitum, year: -45}, {office: magister_equitum, year: -44}, {office: triumvir, year: -43}, {office: consul, year: -42}]
+    traits: [cautious, wealthy, pious]
+    popular: true
+    notes: "Praetor 49, Caesar's master of the horse 46-44 and consul 46; pontifex maximus 44 after Caesar; triumvir with Antony and Octavian (43), consul 42; stripped of his provinces by Octavian in 36 and kept as pontifex maximus until his death in 13 or 12 (Appian, Civil Wars 2.107, 4.2-3, 5.122-126; Cassius Dio 49.12, 54.27)."
+    sources: ["Appian, Civil Wars 2.107, 4.2-3, 5.122-126", "Cassius Dio 49.12, 54.27", "Fasti Capitolini"]
+    confidence: high
+  - id: m_aemilius_scaurus
+    name: "Marcus Aemilius Scaurus"
+    gens: aemilii
+    born: -163
+    died: -89
+    died_of: "natural"
+    offices: [{office: aedile_curule, year: -122}, {office: praetor, year: -119}, {office: consul, year: -115}, {office: censor, year: -109}]
+    traits: [conservative, proud, orator]
+    popular: false
+    notes: "Consul 115, censor 109, princeps senatus for a generation; built the Pons Milvius and the Via Aemilia Scauri (Aurelius Victor, De viris illustribus 72  # unverified); charged over Jugurtha and acquitted; Sallust's picture of a proud noble (Sallust, Jugurtha 15, 25, 28-29)."
+    sources: ["Sallust, Bellum Iugurthinum 15, 25, 28-29", "Cicero, Brutus 110-112", "Fasti Capitolini"]
+    confidence: medium
+  - id: m_antonius
+    name: "Marcus Antonius"
+    gens: antonii
+    born: -83
+    died: -30
+    died_of: "suicide"
+    offices: [{office: quaestor, year: -52}, {office: tribune_plebs, year: -49}, {office: magister_equitum, year: -48}, {office: magister_equitum, year: -47}, {office: consul, year: -44}, {office: triumvir, year: -43}, {office: consul, year: -34}, {office: consul, year: -31}]
+    traits: [general, bold, popular, reckless]
+    popular: true
+    notes: "Caesar's quaestor in Gaul (52), tribune 49 whose expulsion from the Senate gave Caesar his pretext (Caesar, Bellum Civile 1.2-8); master of the horse 48-47, consul with Caesar 44 (the funeral speech: Plutarch, Antony 14); triumvir 43 (the proscriptions, Cicero's head: Plutarch, Antony 19-20); won Philippi (42), took the East and Cleopatra, lost Actium (31) and killed himself in Alexandria (Plutarch, Antony 76-77). Plutarch gives his age as 56 or 53 (Antony 86)."
+    sources: ["Caesar, Bellum Civile 1.2-8", "Plutarch, Antony 14, 19-20, 76-77, 86", "Appian, Civil Wars 3-5", "Cassius Dio 50-51", "Fasti Capitolini"]
+    confidence: high
+  - id: m_antonius_orator
+    name: "Marcus Antonius"
+    gens: antonii
+    born: -143
+    died: -87
+    died_of: "murdered"
+    offices: [{office: quaestor, year: -113}, {office: praetor, year: -102}, {office: consul, year: -99}, {office: censor, year: -97}]
+    traits: [orator, conservative]
+    popular: false
+    notes: "The orator; praetor 102 against the pirates, consul 99, censor 97; killed in the Marian massacre of 87 and his head set up on the Rostra (Plutarch, Marius 44; Appian, Civil Wars 1.72; Cicero, De oratore 3.10). Grandfather of the triumvir."
+    sources: ["Plutarch, Marius 44", "Appian, Civil Wars 1.72", "Cicero, De oratore 3.10", "Fasti Capitolini"]
+    confidence: high
+  - id: m_atilius_regulus
+    name: "Marcus Atilius Regulus"
+    gens: atilii
+    died: -250
+    died_of: "executed"
+    offices: [{office: consul, year: -294}, {office: consul, year: -267}, {office: consul, year: -256}]
+    traits: [stern, bold]
+    notes: "Consul 267 and (suffect) 256; won at Ecnomus, invaded Africa, was beaten by Xanthippus and captured (255: Polybius 1.25-34). The tradition that he was sent to Rome on parole, argued against peace and went back to die under torture is Cicero's (De officiis 3.99-100) and Horace's; the year of death is a convention."
+    sources: ["Polybius 1.25-34", "Cicero, De officiis 3.99-100", "Fasti Capitolini"]
+    confidence: medium
+  - id: m_calpurnius_bibulus
+    name: "Marcus Calpurnius Bibulus"
+    gens: calpurnii
+    died: -48
+    died_of: "illness"
+    offices: [{office: aedile_curule, year: -65}, {office: praetor, year: -62}, {office: consul, year: -59}]
+    traits: [conservative, stubborn, pious]
+    popular: false
+    notes: "Caesar's colleague as aedile, praetor and consul (59), who shut himself at home watching the sky to make Caesar's acts void ('the consulship of Julius and Caesar': Suetonius, Divus Julius 20); commanded Pompey's fleet and died worn out off Corcyra (Caesar, Bellum Civile 3.18)."
+    sources: ["Suetonius, Divus Julius 20", "Caesar, Bellum Civile 3.18", "Fasti Capitolini"]
+    confidence: high
+  - id: m_claudius_marcellus
+    name: "Marcus Claudius Marcellus"
+    gens: claudii
+    order: plebeian
+    born: -268
+    died: -208
+    died_of: "battle"
+    offices: [{office: consul, year: -222}, {office: praetor, year: -216}, {office: consul, year: -215}, {office: consul, year: -214}, {office: consul, year: -210}, {office: consul, year: -208}]
+    traits: [bold, general]
+    notes: "Won the spolia opima at Clastidium (222: Plutarch, Marcellus 7); five times consul; checked Hannibal at Nola (Livy 23.16), took Syracuse (212: Livy 25.23-31; Polybius 8.3-7); killed in an ambush near Venusia (Livy 27.26-27). Plutarch (Marcellus 28) makes him over sixty at his death."
+    sources: ["Plutarch, Marcellus 7, 28", "Livy 23.16", "Livy 25.23-31", "Livy 27.26-27", "Polybius 8.3-7"]
+    confidence: high
+  - id: m_curius_dentatus
+    name: "Manius Curius Dentatus"
+    gens: curii
+    died: -270
+    died_of: "natural"
+    offices: [{office: consul, year: -290}, {office: consul, year: -275}, {office: consul, year: -274}, {office: censor, year: -272}]
+    traits: [frugal, general, popular]
+    notes: "A new man; ended the Samnite wars (290), beat Pyrrhus at Beneventum (275: Plutarch, Pyrrhus 25), as censor began the Anio Vetus (272: Frontinus, Aqueducts 1.6); the model of old frugality (Cicero, Cato Maior 55-56). Died about 270 (Livy, Periochae 14 omits the year  # unverified)."
+    sources: ["Plutarch, Pyrrhus 25", "Frontinus, De aquaeductu 1.6", "Cicero, Cato Maior 55-56", "Cicero, De re publica 3.40  # unverified"]
+    confidence: medium
+  - id: m_fulvius_flaccus_125
+    name: "Marcus Fulvius Flaccus"
+    gens: fulvii
+    died: -121
+    died_of: "murdered"
+    offices: [{office: consul, year: -125}, {office: tribune_plebs, year: -122}]
+    traits: [popular, bold]
+    popular: true
+    notes: "Land commissioner from 130; as consul in 125 proposed citizenship for the allies and was sent against the Salluvii instead (Appian, Civil Wars 1.21, 1.34); tribune 122 with Gaius Gracchus; killed with his elder son in 121 (Plutarch, Gaius Gracchus 16; Appian, Civil Wars 1.26)."
+    sources: ["Appian, Civil Wars 1.21, 1.26, 1.34", "Plutarch, Gaius Gracchus 16", "Fasti Capitolini"]
+    confidence: high
+  - id: m_fulvius_flaccus_264
+    name: "Marcus Fulvius Flaccus"
+    gens: fulvii
+    offices: [{office: consul, year: -264}, {office: magister_equitum, year: -246}]
+    notes: "Consul 264 with Ap. Claudius Caudex; took Volsinii (Fasti Triumphales  # unverified)."
+    sources: ["Polybius 1.11", "Fasti Capitolini"]
+    confidence: high
+  - id: m_fulvius_nobilior
+    name: "Marcus Fulvius Nobilior"
+    gens: fulvii
+    offices: [{office: aedile_curule, year: -195}, {office: praetor, year: -193}, {office: consul, year: -189}, {office: censor, year: -179}, {office: consul, year: -159}]
+    traits: [general, philhellene, builder]
+    notes: "Consul 189, took Ambracia and brought the poet Ennius with him (Livy 38.3-9; Cicero, Pro Archia 27); censor 179 with M. Aemilius Lepidus, his old enemy, built the Basilica Fulvia (Livy 40.45-46, 40.51); temple of Hercules of the Muses."
+    sources: ["Livy 38.3-9", "Livy 40.45-46", "Livy 40.51", "Cicero, Pro Archia 27"]
+    confidence: high
+  - id: m_furius_camillus
+    name: "Marcus Furius Camillus"
+    gens: furii
+    born: -446
+    died: -365
+    died_of: "illness"
+    offices: [{office: censor, year: -403}, {office: consular_tribune, year: -401}, {office: consular_tribune, year: -398}, {office: dictator, year: -396}, {office: consular_tribune, year: -394}, {office: dictator, year: -390}, {office: dictator, year: -389}, {office: consular_tribune, year: -386}, {office: consular_tribune, year: -384}, {office: consular_tribune, year: -381}, {office: dictator, year: -368}, {office: dictator, year: -367}]
+    traits: [general, pious, conservative]
+    notes: "Took Veii as dictator (396: Livy 5.19-22), went into exile, returned as dictator to drive out the Gauls (390: Livy 5.46, 5.49), five times dictator and six times consular tribune; died in the plague of 365 (Livy 7.1.8-10). The birth year is a convention from Plutarch's remark that he was old in 367."
+    sources: ["Livy 5.19.2", "Livy 5.32.8-9", "Livy 5.46.10-11", "Livy 6.42", "Livy 7.1.8-10", "Plutarch, Camillus 40-43"]
+    confidence: low
+  - id: m_horatius_barbatus
+    name: "Marcus Horatius Barbatus"
+    gens: horatii
+    offices: [{office: consul, year: -449}]
+    traits: [popular, lawgiver]
+    notes: "Consul of 449 with L. Valerius Potitus; beat the Sabines and triumphed by vote of the people (Livy 3.55, 3.63)."
+    sources: ["Livy 3.55.1-13", "Livy 3.63.8-11"]
+    confidence: low
+  - id: m_horatius_pulvillus
+    name: "Marcus Horatius Pulvillus"
+    gens: horatii
+    offices: [{office: consul, year: -509}, {office: consul, year: -507}]
+    traits: [pious]
+    legendary: true
+    notes: "Dedicated the temple of Jupiter on the Capitol (Livy 2.8.6-8); consul again in 507 in the Fasti (Livy omits that year)."
+    sources: ["Livy 2.8.6-8", "Fasti Capitolini"]
+    confidence: low
+  - id: m_iunius_brutus
+    name: "Marcus Iunius Brutus"
+    gens: iunii
+    born: -85
+    died: -42
+    died_of: "suicide"
+    offices: [{office: quaestor, year: -53}, {office: praetor, year: -44}]
+    traits: [learned, honest, conservative, stubborn]
+    popular: false
+    notes: "Cato's nephew and son-in-law; quaestor in Cilicia 53; fought for Pompey at Pharsalus and was pardoned; urban praetor 44 and head of the conspiracy against Caesar (Plutarch, Brutus 7-18); raised the East, and after the second battle of Philippi fell on his sword (Plutarch, Brutus 50-52; Appian, Civil Wars 4.128-131)."
+    sources: ["Plutarch, Brutus 7-18, 50-52", "Appian, Civil Wars 4.128-131", "Suetonius, Divus Julius 80-82"]
+    confidence: high
+  - id: m_licinius_crassus
+    name: "Marcus Licinius Crassus"
+    gens: licinii
+    born: -115
+    died: -53
+    died_of: "battle"
+    offices: [{office: praetor, year: -73}, {office: consul, year: -70}, {office: censor, year: -65}, {office: consul, year: -55}]
+    traits: [wealthy, greedy, general]
+    popular: false
+    notes: "Grew rich in Sulla's proscriptions and in buying burning houses (Plutarch, Crassus 2); praetor 73, crushed Spartacus (71); consul 70 and 55 with Pompey; censor 65; triumvir 60; invaded Parthia and died after Carrhae, killed at a parley (Plutarch, Crassus 8-11, 23-31). Over sixty at his death (Plutarch, Crassus 17)."
+    sources: ["Plutarch, Crassus 2, 8-11, 17, 23-31", "Appian, Civil Wars 1.116-121", "Fasti Capitolini"]
+    confidence: high
+  - id: m_livius_drusus_122
+    name: "Marcus Livius Drusus"
+    gens: livii
+    died: -109
+    died_of: "natural"
+    offices: [{office: tribune_plebs, year: -122}, {office: consul, year: -112}, {office: censor, year: -109}]
+    traits: [conservative, orator]
+    popular: false
+    notes: "Tribune 122, put up by the Senate to outbid Gaius Gracchus with twelve colonies and rent-free land (Plutarch, Gaius Gracchus 8-9; Appian, Civil Wars 1.23); consul 112, censor 109, died in office."
+    sources: ["Plutarch, Gaius Gracchus 8-9", "Appian, Civil Wars 1.23", "Fasti Capitolini"]
+    confidence: medium
+  - id: m_livius_drusus_91
+    name: "Marcus Livius Drusus"
+    gens: livii
+    died: -91
+    died_of: "murdered"
+    offices: [{office: quaestor, year: -102}, {office: aedile_curule, year: -94}, {office: tribune_plebs, year: -91}]
+    traits: [reformer, proud, orator]
+    popular: false
+    notes: "Tribune 91: proposed to give the courts back to the Senate (enlarged with equites), land and grain for the people and citizenship for the Italians; his laws were annulled and he was stabbed at his own door, which set off the Social War (Appian, Civil Wars 1.35-38; Velleius 2.13-14)."
+    sources: ["Appian, Civil Wars 1.35-38", "Velleius Paterculus 2.13-14"]
+    confidence: high
+  - id: m_livius_salinator
+    name: "Marcus Livius Salinator"
+    gens: livii
+    offices: [{office: consul, year: -219}, {office: consul, year: -207}, {office: dictator, year: -207}, {office: censor, year: -204}]
+    traits: [proud, general]
+    notes: "Consul 219, condemned afterwards and kept from public life until 210; consul again 207 and, with Nero, destroyed Hasdrubal at the Metaurus (Livy 27.34, 27.46-49); censor 204, when his salt tax earned him his name (Livy 29.37)."
+    sources: ["Livy 27.34", "Livy 27.46-49", "Livy 29.37", "Fasti Capitolini"]
+    confidence: high
+  - id: m_manlius_capitolinus
+    name: "Marcus Manlius Capitolinus"
+    gens: manlii
+    died: -384
+    died_of: "executed"
+    offices: [{office: consul, year: -392}]
+    traits: [bold, popular]
+    popular: true
+    notes: "Saved the Capitol from the Gauls (Livy 5.47); took up the cause of the debtors, was tried for aiming at kingship and thrown from the Tarpeian rock (Livy 6.11-20)."
+    sources: ["Livy 5.47.4", "Livy 6.11", "Livy 6.20.12"]
+    confidence: low
+  - id: m_minucius_rufus
+    name: "Marcus Minucius Rufus"
+    gens: minucii
+    died: -216
+    died_of: "battle"
+    offices: [{office: consul, year: -221}, {office: magister_equitum, year: -217}]
+    traits: [bold]
+    notes: "Consul 221; master of the horse to Fabius in 217, made his equal by the people, rescued by him from Hannibal (Polybius 3.103-105; Livy 22.25-30); fell at Cannae (Livy 22.49.16)."
+    sources: ["Polybius 3.103-105", "Livy 22.25-30", "Livy 22.49.16"]
+    confidence: high
+  - id: m_octavius_133
+    name: "Marcus Octavius"
+    gens: octavii
+    offices: [{office: tribune_plebs, year: -133}]
+    traits: [conservative, stubborn]
+    popular: false
+    notes: "Tribune 133 who vetoed Tiberius Gracchus' land law and was deposed by vote of the tribes (Plutarch, Tiberius Gracchus 10-12; Appian, Civil Wars 1.12)."
+    sources: ["Plutarch, Tiberius Gracchus 10-12", "Appian, Civil Wars 1.12"]
+    confidence: high
+  - id: m_porcius_cato
+    name: "Marcus Porcius Cato"
+    gens: porcii
+    born: -234
+    died: -149
+    died_of: "natural"
+    offices: [{office: quaestor, year: -204}, {office: aedile_plebeian, year: -199}, {office: praetor, year: -198}, {office: consul, year: -195}, {office: censor, year: -184}]
+    traits: [stern, frugal, orator, conservative, novus_homo]
+    notes: "A new man from Tusculum: quaestor under Scipio in 204 (Livy 29.25.10), plebeian aedile 199, praetor in Sardinia 198 (Livy 32.27.3-4), consul 195 in Spain (Livy 34.8-21), censor 184 with L. Valerius Flaccus, the Censor (Livy 39.40-44); built the Basilica Porcia (Livy 39.44.7); ended every speech with the destruction of Carthage (Plutarch, Cato Maior 27); died 149 aged 85 (Cicero, Brutus 61, 80; Livy, Periochae 49)."
+    sources: ["Livy 29.25.10", "Livy 32.27.3-4", "Livy 34.8-21", "Livy 39.40-44", "Plutarch, Cato Maior 27", "Cicero, Brutus 61, 80", "Livy, Periochae 49"]
+    confidence: high
+  - id: m_porcius_cato_uticensis
+    name: "Marcus Porcius Cato"
+    gens: porcii
+    born: -95
+    died: -46
+    died_of: "suicide"
+    offices: [{office: quaestor, year: -64}, {office: tribune_plebs, year: -62}, {office: praetor, year: -54}]
+    traits: [stern, honest, conservative, stubborn]
+    popular: false
+    notes: "Great-grandson of the Censor; quaestor 64 (reformed the treasury), tribune 62, praetor 54; the Stoic conscience of the optimates, who argued for the execution of the Catilinarians (Sallust, Bellum Catilinae 52) and fought Caesar at every turn; killed himself at Utica after Thapsus rather than accept Caesar's pardon (Plutarch, Cato Minor 16-21, 44, 66-70)."
+    sources: ["Sallust, Bellum Catilinae 52", "Plutarch, Cato Minor 16-21, 44, 66-70", "Appian, Civil Wars 2.98-99"]
+    confidence: high
+  - id: m_tullius_cicero
+    name: "Marcus Tullius Cicero"
+    gens: tullii
+    born: -106
+    died: -43
+    died_of: "proscribed"
+    offices: [{office: quaestor, year: -75}, {office: aedile_curule, year: -69}, {office: praetor, year: -66}, {office: consul, year: -63}]
+    traits: [orator, novus_homo, learned, cautious, conservative]
+    popular: false
+    notes: "A new man of Arpinum: quaestor in Sicily 75, curule aedile 69, praetor 66 (spoke for the Manilian law), consul 63 at the earliest legal age, suppressed Catiline and had the conspirators executed (Sallust, Bellum Catilinae 46-55); exiled 58-57 by Clodius; proconsul of Cilicia 51; attacked Antony in the Philippics and was proscribed and killed on 7 December 43, his head and hands nailed to the Rostra (Plutarch, Cicero 47-49; Appian, Civil Wars 4.19-20)."
+    sources: ["Sallust, Bellum Catilinae 46-55", "Plutarch, Cicero 3-9, 30-33, 47-49", "Appian, Civil Wars 4.19-20", "Fasti Capitolini"]
+    confidence: high
+  - id: m_valerius_corvus
+    name: "Marcus Valerius Corvus"
+    gens: valerii
+    born: -370
+    died: -270
+    died_of: "natural"
+    offices: [{office: consul, year: -348}, {office: consul, year: -346}, {office: consul, year: -343}, {office: dictator, year: -342}, {office: consul, year: -335}, {office: consul, year: -312}, {office: dictator, year: -301}, {office: consul, year: -300}, {office: consul, year: -299}]
+    traits: [general, popular, bold]
+    notes: "Won his name fighting a Gaul with a raven on his helmet (349: Livy 7.26); consul at 23 (348), six times consul in all and twice dictator; lived to a hundred (Cicero, Cato Maior 60; Pliny, Natural History 7.157). Birth and death years follow those statements."
+    sources: ["Livy 7.26", "Livy 7.32", "Cicero, Cato Maior 60", "Pliny, Natural History 7.157  # unverified"]
+    confidence: medium
   - id: m_valerius_maximus_messalla
-    name: Manius Valerius Maximus Messalla
+    name: "Manius Valerius Maximus Messalla"
     gens: valerii
     offices: [{office: consul, year: -263}]
-    notes: "Relieved Messana and took many Sicilian towns (Polybius 1.16)."
-    sources: ["Polybius 1.16"]
-  - id: l_postumius_megellus
-    name: Lucius Postumius Megellus
+    traits: [general]
+    notes: "Consul 263: relieved Messana, made Hiero of Syracuse an ally (Polybius 1.16), and hung a painting of his victory in the Curia Hostilia (Pliny, Natural History 35.22  # unverified)."
+    sources: ["Polybius 1.16", "Fasti Capitolini"]
+    confidence: high
+  - id: m_valerius_messalla_corvinus
+    name: "Marcus Valerius Messalla Corvinus"
+    gens: valerii
+    born: -64
+    died: 8
+    died_of: "natural"
+    offices: [{office: consul, year: -31}]
+    traits: [orator, learned, general]
+    popular: false
+    notes: "Proscribed in 43, fought for Brutus at Philippi, then for Antony and finally Octavian; suffect consul 31 in Antony's place, fought at Actium; triumphed over the Aquitani 27; patron of Tibullus and Ovid; died AD 8 (Appian, Civil Wars 4.38; Velleius 2.71; Tacitus, Dialogus 17-18  # unverified)."
+    sources: ["Appian, Civil Wars 4.38", "Velleius Paterculus 2.71", "Cassius Dio 51.7", "Fasti Capitolini"]
+    confidence: high
+  - id: m_vipsanius_agrippa
+    name: "Marcus Vipsanius Agrippa"
+    gens: vipsanii
+    born: -63
+    died: -12
+    died_of: "illness"
+    offices: [{office: tribune_plebs, year: -43}, {office: praetor, year: -40}, {office: consul, year: -37}, {office: aedile_curule, year: -33}, {office: censor, year: -28}, {office: consul, year: -28}, {office: consul, year: -27}]
+    traits: [general, admiral, builder, honest, novus_homo]
+    popular: true
+    notes: "Octavian's friend from boyhood; praetor 40, consul 37, built the fleet that won Naulochus (36) and commanded at Actium (31); aedile 33 after his consulship, repairing the aqueducts and sewers and building the Aqua Julia (Cassius Dio 49.42-43; Frontinus, De aquaeductu 1.9); consul 28 and 27, censor 28 with Octavian; built the first Pantheon and the Baths; died in Campania in 12 (Cassius Dio 54.28)."
+    sources: ["Cassius Dio 49.42-43, 54.28", "Frontinus, De aquaeductu 1.9", "Velleius Paterculus 2.79, 2.127", "Fasti Capitolini"]
+    confidence: high
+  - id: p_claudius_pulcher_249
+    name: "Publius Claudius Pulcher"
+    gens: claudii
+    died: -246
+    died_of: "unknown"
+    offices: [{office: consul, year: -249}]
+    traits: [proud, impious]
+    notes: "Consul 249; drowned the sacred chickens before Drepana ('let them drink') and lost the fleet (Polybius 1.49-51; Cicero, De natura deorum 2.7); fined, he died soon after, perhaps by his own hand (Valerius Maximus 1.4.3  # unverified)."
+    sources: ["Polybius 1.49-51", "Cicero, De natura deorum 2.7", "Fasti Capitolini"]
+    confidence: medium
+  - id: p_clodius_pulcher
+    name: "Publius Clodius Pulcher"
+    gens: claudii
+    order: plebeian
+    born: -93
+    died: -52
+    died_of: "murdered"
+    offices: [{office: quaestor, year: -61}, {office: tribune_plebs, year: -58}, {office: aedile_curule, year: -56}]
+    traits: [popular, violent, bold]
+    popular: true
+    notes: "A patrician Claudius adopted into a plebeian family (59) to become tribune; tribune 58: free grain, the guilds restored, Cicero exiled, Cato sent to Cyprus (Cassius Dio 38.12-17; Plutarch, Cicero 30-31); aedile 56; ran the street gangs until Milo's men killed him on the Appian Way at Bovillae (18 January 52), and the mob burnt the Curia Hostilia as his pyre (Asconius, In Milonianam 31-33C; Cassius Dio 40.48-49)."
+    sources: ["Cassius Dio 38.12-17, 40.48-49", "Plutarch, Cicero 30-31", "Asconius, In Milonianam 31-33C  # unverified", "Cicero, Pro Milone"]
+    confidence: high
+  - id: p_cornelius_dolabella
+    name: "Publius Cornelius Dolabella"
+    gens: cornelii
+    born: -70
+    died: -43
+    died_of: "suicide"
+    offices: [{office: tribune_plebs, year: -47}, {office: consul, year: -44}]
+    traits: [reckless, greedy]
+    popular: true
+    notes: "Cicero's son-in-law; tribune 47 (debt cancellation, riots put down by Antony: Cassius Dio 42.29-33); suffect consul 44 after the Ides; murdered Trebonius in Asia, was declared a public enemy and had himself killed at Laodicea when Cassius besieged him (Appian, Civil Wars 4.60-62; Cassius Dio 47.30)."
+    sources: ["Cassius Dio 42.29-33, 47.30", "Appian, Civil Wars 3.7-8, 4.60-62", "Fasti Capitolini"]
+    confidence: high
+  - id: p_cornelius_scipio_218
+    name: "Publius Cornelius Scipio"
+    gens: cornelii
+    died: -211
+    died_of: "battle"
+    offices: [{office: consul, year: -218}]
+    traits: [general]
+    notes: "Consul 218, wounded at the Ticinus (Polybius 3.65); fought in Spain with his brother for seven years and fell there in 211 (Livy 25.34). Father of Africanus."
+    sources: ["Polybius 3.65", "Livy 25.34", "Fasti Capitolini"]
+    confidence: high
+  - id: p_cornelius_scipio_aemilianus
+    name: "Publius Cornelius Scipio Aemilianus"
+    gens: cornelii
+    born: -185
+    died: -129
+    died_of: "murdered"
+    offices: [{office: consul, year: -147}, {office: censor, year: -142}, {office: consul, year: -134}]
+    traits: [general, learned, philhellene, conservative]
+    notes: "Son of Aemilius Paullus, adopted by the son of Africanus; elected consul for 147 while standing for the aedileship and under age (Appian, Punica 112); destroyed Carthage 146 (Polybius 38.19-22); censor 142; consul 134, took Numantia 133 (Appian, Hispanica 84-98); opposed the Gracchan land commission and was found dead in his bed in 129, murder suspected (Appian, Civil Wars 1.19-20; Plutarch, Gaius Gracchus 10)."
+    sources: ["Polybius 38.19-22", "Appian, Punica 112", "Appian, Hispanica 84-98", "Appian, Civil Wars 1.19-20", "Plutarch, Gaius Gracchus 10"]
+    confidence: high
+  - id: p_cornelius_scipio_africanus
+    name: "Publius Cornelius Scipio Africanus"
+    gens: cornelii
+    born: -236
+    died: -183
+    died_of: "natural"
+    offices: [{office: aedile_curule, year: -213}, {office: consul, year: -205}, {office: censor, year: -199}, {office: consul, year: -194}]
+    traits: [bold, general, pious, popular]
+    notes: "Saved his father at the Ticinus (Polybius 10.3); curule aedile 213 under age (Livy 25.2.6-8); given Spain by the people at 24 (Livy 26.18) or 27 (Polybius 10.6.10), took New Carthage (209) and won at Ilipa (206); consul 205, beat Hannibal at Zama (202: Polybius 15.9-16); censor 199, consul 194; withdrew to Liternum after the trials of the Scipios and died there in 183 (Livy 39.52)."
+    sources: ["Polybius 10.3", "Polybius 10.6.10", "Polybius 15.9-16", "Livy 25.2.6-8", "Livy 26.18", "Livy 30.32-35", "Livy 39.52"]
+    confidence: high
+  - id: p_cornelius_scipio_nasica_corculum
+    name: "Publius Cornelius Scipio Nasica Corculum"
+    gens: cornelii
+    died: -141
+    died_of: "natural"
+    offices: [{office: consul, year: -162}, {office: censor, year: -159}, {office: consul, year: -155}]
+    traits: [conservative, pious, jurist]
+    notes: "Consul 162 (resigned for a fault in the auspices) and 155; censor 159; pontifex maximus 150, princeps senatus; opposed Cato on the destruction of Carthage (Plutarch, Cato Maior 27; Appian, Punic Wars 69) and had a stone theatre pulled down (Livy, Periochae 48)."
+    sources: ["Plutarch, Cato Maior 27", "Appian, Punica 69", "Livy, Periochae 48", "Fasti Capitolini"]
+    confidence: medium
+  - id: p_cornelius_scipio_nasica_serapio
+    name: "Publius Cornelius Scipio Nasica Serapio"
+    gens: cornelii
+    died: -132
+    died_of: "natural"
+    offices: [{office: consul, year: -138}]
+    traits: [conservative, bold]
+    popular: false
+    notes: "Consul 138, pontifex maximus; led the senators who killed Tiberius Gracchus (Plutarch, Tiberius Gracchus 19); sent to Asia to escape the people's anger and died at Pergamum (Plutarch, Tiberius Gracchus 21)."
+    sources: ["Plutarch, Tiberius Gracchus 19, 21", "Appian, Civil Wars 1.16", "Fasti Capitolini"]
+    confidence: high
+  - id: p_decius_mus_295
+    name: "Publius Decius Mus"
+    gens: decii
+    died: -295
+    died_of: "battle"
+    offices: [{office: consul, year: -312}, {office: consul, year: -308}, {office: magister_equitum, year: -306}, {office: censor, year: -304}, {office: consul, year: -297}, {office: consul, year: -295}]
+    traits: [pious, bold, general]
+    notes: "Son of the Decius of 340; four times consul, censor 304; devoted himself at Sentinum (Livy 10.28)."
+    sources: ["Livy 9.41.1", "Livy 10.28.12-18"]
+    confidence: medium
+  - id: p_decius_mus_340
+    name: "Publius Decius Mus"
+    gens: decii
+    died: -340
+    died_of: "battle"
+    offices: [{office: consul, year: -340}]
+    traits: [pious, bold]
+    notes: "Saved the army in Samnium as military tribune (343: Livy 7.34-36); as consul in 340 devoted himself and rode into the Latin line at the Veseris (Livy 8.9)."
+    sources: ["Livy 7.34-36", "Livy 8.9.1-12"]
+    confidence: medium
+  - id: p_mucius_scaevola_133
+    name: "Publius Mucius Scaevola"
+    gens: mucii
+    alive_until: -115
+    offices: [{office: consul, year: -175}, {office: consul, year: -133}]
+    traits: [jurist, cautious]
+    notes: "Consul 133; refused Nasica's demand to act against Tiberius Gracchus, yet defended his killers afterwards (Plutarch, Tiberius Gracchus 19; Cicero, De domo 91); pontifex maximus after Nasica; published the annales maximi (Cicero, De oratore 2.52)."
+    sources: ["Plutarch, Tiberius Gracchus 19", "Cicero, De domo sua 91", "Cicero, De oratore 2.52", "Fasti Capitolini"]
+    confidence: medium
+  - id: p_rutilius_rufus
+    name: "Publius Rutilius Rufus"
+    gens: rutilii
+    offices: [{office: tribune_plebs, year: -136}, {office: praetor, year: -118}, {office: consul, year: -105}]
+    traits: [honest, learned, stern]
+    popular: false
+    notes: "Consul 105 (reformed the drill of the legions: Valerius Maximus 2.3.2  # unverified); as legate in Asia protected the provincials from the tax-farmers and was condemned by an equestrian court for extortion (92), living out his life at Smyrna (Cicero, Brutus 113-116; Velleius 2.13.2)."
+    sources: ["Cicero, Brutus 113-116", "Velleius Paterculus 2.13.2", "Fasti Capitolini"]
+    confidence: medium
+  - id: p_sulpicius_rufus
+    name: "Publius Sulpicius Rufus"
+    gens: sulpicii
+    born: -124
+    died: -88
+    died_of: "executed"
+    offices: [{office: tribune_plebs, year: -88}]
+    traits: [orator, popular, bold]
+    popular: true
+    notes: "Tribune 88: carried the distribution of the new citizens through all the tribes and the transfer of the Mithridatic command from Sulla to Marius; Sulla marched on Rome, and Sulpicius was betrayed by a slave and killed (Plutarch, Sulla 8-10; Appian, Civil Wars 1.55-60; Cicero, Brutus 203-205)."
+    sources: ["Plutarch, Sulla 8-10", "Appian, Civil Wars 1.55-60", "Cicero, Brutus 203-205"]
+    confidence: high
+  - id: p_valerius_publicola
+    name: "Publius Valerius Publicola"
+    gens: valerii
+    died: -503
+    died_of: "natural"
+    offices: [{office: consul, year: -509}, {office: consul, year: -508}, {office: consul, year: -507}, {office: consul, year: -504}]
+    traits: [popular, lawgiver]
+    legendary: true
+    notes: "Four times consul; his laws gave appeal to the people (provocatio) and lowered the fasces before the assembly, whence the name Publicola (Livy 2.8.1-2). Died 503 so poor that he was buried at public cost (Livy 2.16.7)."
+    sources: ["Livy 2.8.1-2", "Livy 2.16.7", "Plutarch, Publicola 11-12, 23"]
+    confidence: low
+  - id: p_vatinius
+    name: "Publius Vatinius"
+    gens: vatinii
+    alive_until: -42
+    offices: [{office: quaestor, year: -63}, {office: tribune_plebs, year: -59}, {office: praetor, year: -55}, {office: consul, year: -47}]
+    traits: [popular, bold]
+    popular: true
+    notes: "Tribune 59: the Lex Vatinia gave Caesar Cisalpine Gaul and Illyricum for five years (Suetonius, Divus Julius 22; Cassius Dio 38.8); praetor 55 by bribery, consul 47 for a few days; triumphed 42 (Cicero, In Vatinium)."
+    sources: ["Suetonius, Divus Julius 22", "Cassius Dio 38.8", "Cicero, In Vatinium", "Fasti Capitolini"]
+    confidence: medium
+  - id: q_caecilius_metellus_macedonicus
+    name: "Quintus Caecilius Metellus Macedonicus"
+    gens: caecilii
+    died: -115
+    died_of: "natural"
+    offices: [{office: praetor, year: -148}, {office: consul, year: -143}, {office: censor, year: -131}]
+    traits: [general, conservative, builder]
+    notes: "Praetor 148: crushed Andriscus and made Macedon a province (Livy, Periochae 50); consul 143 in Spain; censor 131; built the Porticus Metelli with the first marble temple in Rome (Velleius 1.11.3-5); four sons were consuls; died 115 (Velleius 1.11.6-7)."
+    sources: ["Livy, Periochae 50", "Velleius Paterculus 1.11", "Fasti Capitolini"]
+    confidence: medium
+  - id: q_caecilius_metellus_numidicus
+    name: "Quintus Caecilius Metellus Numidicus"
+    gens: caecilii
+    died_of: "natural"
+    alive_until: -99
+    offices: [{office: consul, year: -109}, {office: censor, year: -102}]
+    traits: [conservative, general, stern]
+    popular: false
+    notes: "Consul 109: fought Jugurtha, with Marius as his legate, until Marius took his command (Sallust, Jugurtha 43-88); censor 102; refused the oath to Saturninus' land law and went into exile 100, recalled 99 (Appian, Civil Wars 1.29-33; Plutarch, Marius 29-31)."
+    sources: ["Sallust, Bellum Iugurthinum 43-88", "Appian, Civil Wars 1.29-33", "Plutarch, Marius 29-31", "Fasti Capitolini"]
+    confidence: high
+  - id: q_caecilius_metellus_pius
+    name: "Quintus Caecilius Metellus Pius"
+    gens: caecilii
+    died: -63
+    died_of: "natural"
+    offices: [{office: praetor, year: -89}, {office: consul, year: -80}]
+    traits: [conservative, general, pious]
+    popular: false
+    notes: "Won his name begging for his father's recall from exile (99); praetor 89 in the Social War; Sulla's colleague as consul 80, fought Sertorius in Spain (Plutarch, Sertorius 12-22); pontifex maximus until his death in 63, when Caesar succeeded him (Cassius Dio 37.37)."
+    sources: ["Plutarch, Sertorius 12-22", "Appian, Civil Wars 1.80-97", "Cassius Dio 37.37", "Fasti Capitolini"]
+    confidence: high
+  - id: q_caecilius_metellus_pius_scipio
+    name: "Quintus Caecilius Metellus Pius Scipio"
+    gens: caecilii
+    died: -46
+    died_of: "suicide"
+    offices: [{office: tribune_plebs, year: -59}, {office: praetor, year: -55}, {office: consul, year: -52}]
+    traits: [conservative, proud]
+    popular: false
+    notes: "A Scipio Nasica adopted by Metellus Pius; Pompey's father-in-law and colleague as consul 52; commanded at Pharsalus and in Africa; after Thapsus stabbed himself on his sinking ship with the words 'the general is well' (Caesar, Bellum Civile 3.4, 3.31-33; Appian, Civil Wars 2.100; Livy, Periochae 114)."
+    sources: ["Caesar, Bellum Civile 3.4, 3.31-33", "Appian, Civil Wars 2.100", "Livy, Periochae 114", "Fasti Capitolini"]
+    confidence: high
+  - id: q_fabius_maximus_cunctator
+    name: "Quintus Fabius Maximus Verrucosus"
+    gens: fabii
+    born: -280
+    died: -203
+    died_of: "natural"
+    offices: [{office: consul, year: -233}, {office: consul, year: -228}, {office: dictator, year: -221}, {office: dictator, year: -217}, {office: consul, year: -215}, {office: consul, year: -214}, {office: consul, year: -209}]
+    traits: [cautious, pious, conservative, general]
+    notes: "Five times consul, censor 230, twice dictator; as dictator in 217 wore Hannibal down by refusing battle, the Delayer (Polybius 3.87-94; Livy 22.8-30); retook Tarentum 209 (Livy 27.15-16); opposed Scipio's African plan (Livy 28.40-42); died 203 (Livy 30.26.7). The birth year is a convention (he was old in 209: Plutarch, Fabius 1, 27)."
+    sources: ["Polybius 3.87-94", "Livy 22.8-30", "Livy 27.15-16", "Livy 28.40-42", "Livy 30.26.7", "Plutarch, Fabius"]
+    confidence: high
+  - id: q_fabius_maximus_rullianus
+    name: "Quintus Fabius Maximus Rullianus"
+    gens: fabii
+    died_of: "natural"
+    offices: [{office: magister_equitum, year: -325}, {office: consul, year: -322}, {office: dictator, year: -315}, {office: consul, year: -310}, {office: consul, year: -308}, {office: censor, year: -304}, {office: consul, year: -297}, {office: consul, year: -295}]
+    traits: [general, bold]
+    notes: "Five times consul; as master of the horse beat the Samnites against orders (325: Livy 8.30); won at Sentinum with Decius (295: Livy 10.27-29); as censor in 304 confined the city rabble to four tribes (Livy 9.46.14)."
+    sources: ["Livy 8.30", "Livy 9.46.14", "Livy 10.27-29"]
+    confidence: medium
+  - id: q_fulvius_flaccus_237
+    name: "Quintus Fulvius Flaccus"
+    gens: fulvii
+    offices: [{office: consul, year: -237}, {office: consul, year: -224}, {office: magister_equitum, year: -213}, {office: consul, year: -212}, {office: dictator, year: -210}, {office: consul, year: -209}]
+    traits: [general, stern]
+    notes: "Four times consul, censor 231, dictator 210; retook Capua and had the Campanian senators beheaded (211: Livy 26.14-16)."
+    sources: ["Livy 26.14-16", "Livy 27.6.2", "Fasti Capitolini"]
+    confidence: high
+  - id: q_hortensius_hortalus
+    name: "Quintus Hortensius Hortalus"
+    gens: hortensii
+    born: -114
+    died: -50
+    died_of: "natural"
+    offices: [{office: quaestor, year: -81}, {office: aedile_curule, year: -75}, {office: praetor, year: -72}, {office: consul, year: -69}]
+    traits: [orator, wealthy, conservative]
+    popular: false
+    notes: "The leading advocate of the 80s and 70s until Cicero beat him in the Verres case (70); consul 69; famous for his fishponds; died 50 (Cicero, Brutus 1-6, 301-329)."
+    sources: ["Cicero, Brutus 1-6, 301-329", "Cicero, In Verrem 1", "Fasti Capitolini"]
+    confidence: high
+  - id: q_lutatius_catulus_102
+    name: "Quintus Lutatius Catulus"
+    gens: lutatii
+    died: -87
+    died_of: "suicide"
+    offices: [{office: consul, year: -102}]
+    traits: [learned, general, conservative]
+    popular: false
+    notes: "Consul 102 with Marius, shared the victory of Vercellae (101: Plutarch, Marius 25-27); took the side of Sulla and, proscribed by Marius and Cinna, suffocated himself with charcoal fumes (Appian, Civil Wars 1.74; Plutarch, Marius 44)."
+    sources: ["Plutarch, Marius 25-27, 44", "Appian, Civil Wars 1.74", "Fasti Capitolini"]
+    confidence: high
+  - id: q_lutatius_catulus_78
+    name: "Quintus Lutatius Catulus"
+    gens: lutatii
+    died: -61
+    died_of: "natural"
+    offices: [{office: praetor, year: -81}, {office: consul, year: -78}, {office: censor, year: -65}]
+    traits: [conservative, honest, builder]
+    popular: false
+    notes: "Consul 78, put down Lepidus; censor 65; rebuilt the Capitoline temple after the fire of 83 and dedicated it in 69 (Cicero, Verrines 2.4.69); the leader of the optimates until his death in 61 (Cassius Dio 37.46)."
+    sources: ["Appian, Civil Wars 1.105-107", "Cicero, Verrines 2.4.69", "Cassius Dio 37.46", "Fasti Capitolini"]
+    confidence: high
+  - id: q_mucius_scaevola_pontifex
+    name: "Quintus Mucius Scaevola"
+    gens: mucii
+    born: -140
+    died: -82
+    died_of: "murdered"
+    offices: [{office: consul, year: -117}, {office: tribune_plebs, year: -106}, {office: aedile_curule, year: -104}, {office: praetor, year: -98}, {office: consul, year: -95}]
+    traits: [jurist, honest, pious]
+    popular: false
+    notes: "Pontifex maximus and the founder of systematic Roman law (Pomponius, Digest 1.2.2.41  # unverified); consul 95; governed Asia with Rutilius so well that the province kept a festival for him (Cicero, Verrines 2.2.51); killed in the temple of Vesta on the order of the younger Marius (Appian, Civil Wars 1.88)."
+    sources: ["Cicero, Verrines 2.2.51", "Appian, Civil Wars 1.88", "Fasti Capitolini"]
+    confidence: high
+  - id: q_pompeius_rufus_88
+    name: "Quintus Pompeius Rufus"
+    gens: pompeii
+    died: -88
+    died_of: "murdered"
+    offices: [{office: tribune_plebs, year: -100}, {office: praetor, year: -91}, {office: consul, year: -88}]
+    traits: [conservative]
+    popular: false
+    notes: "Consul 88 with Sulla; sent to take over Pompeius Strabo's army and killed by its soldiers (Appian, Civil Wars 1.63; Velleius 2.20.1)."
+    sources: ["Appian, Civil Wars 1.63", "Velleius Paterculus 2.20.1", "Fasti Capitolini"]
+    confidence: high
+  - id: q_publilius_philo
+    name: "Quintus Publilius Philo"
+    gens: publilii
+    offices: [{office: consul, year: -339}, {office: dictator, year: -339}, {office: praetor, year: -337}, {office: magister_equitum, year: -335}, {office: consul, year: -327}, {office: consul, year: -320}, {office: consul, year: -315}]
+    traits: [popular, lawgiver, general]
+    popular: true
+    notes: "As dictator in 339 carried the Publilian laws (Livy 8.12.14-16); the first plebeian praetor (337: Livy 8.15.9); four times consul and the first to have his command prorogued (Livy 8.23.12, 8.26.7)."
+    sources: ["Livy 8.12.14-16", "Livy 8.15.9", "Livy 8.26.7"]
+    confidence: medium
+  - id: q_sertorius
+    name: "Quintus Sertorius"
+    gens: sertorii
+    born: -123
+    died: -73
+    died_of: "murdered"
+    offices: [{office: quaestor, year: -90}, {office: praetor, year: -83}]
+    traits: [general, bold, honest]
+    popular: true
+    notes: "Quaestor 90, praetor 83; held Spain for the Marian cause for eight years against Metellus and Pompey, with a Senate of his own, and was murdered at a banquet by Perperna (Plutarch, Sertorius 6, 22-26; Appian, Civil Wars 1.108-115)."
+    sources: ["Plutarch, Sertorius 6, 22-26", "Appian, Civil Wars 1.108-115"]
+    confidence: high
+  - id: ser_sulpicius_rufus
+    name: "Servius Sulpicius Rufus"
+    gens: sulpicii
+    born: -106
+    died: -43
+    died_of: "illness"
+    offices: [{office: quaestor, year: -74}, {office: praetor, year: -65}, {office: consul, year: -51}]
+    traits: [jurist, learned, cautious]
+    popular: false
+    notes: "The great jurist, Cicero's friend and contemporary; consul 51; died on the embassy to Antony at Mutina in 43 and was honoured with a public statue on the Rostra (Cicero, Philippics 9; Cicero, Brutus 150-157)."
+    sources: ["Cicero, Philippics 9", "Cicero, Brutus 150-157", "Fasti Capitolini"]
+    confidence: high
+  - id: sex_pompeius
+    name: "Sextus Pompeius"
+    gens: pompeii
+    born: -67
+    died: -35
+    died_of: "executed"
+    offices: [{office: consul, year: -35}]
+    traits: [admiral, bold]
+    popular: false
+    notes: "Pompey's younger son; held Sicily with his fleet and starved Rome until the pact of Misenum (39) made him consul designate for 35; beaten by Agrippa at Naulochus (36), fled to Asia and was put to death at Miletus by Antony's officer Titius (Appian, Civil Wars 5.67-74, 5.118-122, 5.133-144; Cassius Dio 49.17-18)."
+    sources: ["Appian, Civil Wars 5.67-74, 5.118-122, 5.133-144", "Cassius Dio 49.17-18", "Velleius Paterculus 2.72-73, 2.79"]
+    confidence: high
+  - id: sp_cassius_vecellinus
+    name: "Spurius Cassius Vecellinus"
+    gens: cassii
+    order: patrician
+    died: -485
+    died_of: "executed"
+    offices: [{office: consul, year: -502}, {office: magister_equitum, year: -501}, {office: consul, year: -493}, {office: consul, year: -486}]
+    traits: [popular, reformer]
+    popular: true
+    legendary: true
+    notes: "Three times consul; made the treaty with the Latins (493, the foedus Cassianum: Livy 2.33.4); proposed the first agrarian law and was put to death for aiming at kingship (Livy 2.41)."
+    sources: ["Livy 2.33.4", "Livy 2.41.1-11", "Dionysius of Halicarnassus 8.69-80"]
+    confidence: low
+  - id: sp_maelius
+    name: "Spurius Maelius"
+    gens: maelii
+    died: -439
+    died_of: "murdered"
+    traits: [popular, wealthy]
+    popular: true
+    notes: "A rich plebeian who sold grain cheap in the famine of 440-439, was accused of aiming at kingship and killed by C. Servilius Ahala, master of the horse (Livy 4.13-14). Held no office."
+    sources: ["Livy 4.13.1-14.7"]
+    confidence: low
+  - id: sp_postumius_albinus_321
+    name: "Spurius Postumius Albinus Caudinus"
     gens: postumii
-    offices: [{office: consul, year: -305}, {office: consul, year: -294}, {office: consul, year: -262}]
-    notes: "Earlier consulships follow the Fasti Capitolini."
-    sources: ["Polybius 1.17", "Fasti Capitolini"]
+    offices: [{office: consul, year: -334}, {office: magister_equitum, year: -327}, {office: consul, year: -321}]
+    traits: [cautious]
+    notes: "Consul in 334 and 321; passed under the yoke at the Caudine Forks and proposed that he and his colleague be handed over to the Samnites (Livy 9.1-11)."
+    sources: ["Livy 9.1.1", "Livy 9.5-6", "Livy 9.8-10"]
+    confidence: medium
+  - id: t_annius_milo
+    name: "Titus Annius Milo"
+    gens: annii
+    died: -48
+    died_of: "killed"
+    offices: [{office: tribune_plebs, year: -57}, {office: praetor, year: -55}]
+    traits: [violent, bold]
+    popular: false
+    notes: "Tribune 57, fought Clodius' gangs with his own and carried Cicero's recall; praetor 55; killed Clodius (52), was defended by Cicero and condemned, exiled to Massilia; joined Caelius' rising in 48 and was killed at Compsa (Caesar, Bellum Civile 3.21-22; Cassius Dio 42.24-25)."
+    sources: ["Cicero, Pro Milone", "Caesar, Bellum Civile 3.21-22", "Cassius Dio 42.24-25"]
+    confidence: high
+  - id: t_labienus
+    name: "Titus Labienus"
+    gens: labieni
+    died: -45
+    died_of: "battle"
+    offices: [{office: tribune_plebs, year: -63}]
+    traits: [general, bold]
+    popular: true
+    notes: "Tribune 63 (prosecuted Rabirius, carried the election of the pontiffs back to the people: Cassius Dio 37.26-28, 37.37); Caesar's best legate in Gaul (Caesar, Bellum Gallicum); went over to Pompey in 49 and fell at Munda (Caesar's continuator, Bellum Hispaniense 31)."
+    sources: ["Cassius Dio 37.26-28, 37.37", "Caesar, Bellum Gallicum", "Bellum Hispaniense 31"]
+    confidence: high
+  - id: t_larcius_flavus
+    name: "Titus Larcius Flavus"
+    gens: larcii
+    offices: [{office: consul, year: -501}, {office: dictator, year: -501}, {office: consul, year: -498}]
+    traits: [stern]
+    legendary: true
+    notes: "The first dictator in the oldest authorities (Livy 2.18.4-5); the year (501 or 498) is disputed."
+    sources: ["Livy 2.18.4-5", "Livy 2.21.1"]
+    confidence: low
+  - id: t_lucretius_tricipitinus
+    name: "Titus Lucretius Tricipitinus"
+    gens: lucretii
+    offices: [{office: consul, year: -508}, {office: consul, year: -504}]
+    legendary: true
+    notes: "Brother of Lucretia; consul with Publicola in 508 and 504 (Livy 2.8.9, 2.16.2)."
+    sources: ["Livy 2.8.9", "Livy 2.16.2"]
+    confidence: low
+  - id: t_manlius_torquatus
+    name: "Titus Manlius Imperiosus Torquatus"
+    gens: manlii
+    died_of: "natural"
+    offices: [{office: dictator, year: -353}, {office: dictator, year: -349}, {office: consul, year: -347}, {office: consul, year: -344}, {office: consul, year: -340}]
+    traits: [stern, general]
+    notes: "Took the torque from a Gaul he killed in single combat (361: Livy 7.10); three times dictator and three times consul; in 340 had his own son executed for fighting against orders (Livy 8.7)."
+    sources: ["Livy 7.10", "Livy 8.3.5", "Livy 8.7.13-22"]
+    confidence: medium
+  - id: t_quinctius_capitolinus_barbatus
+    name: "Titus Quinctius Capitolinus Barbatus"
+    gens: quinctii
+    died_of: "natural"
+    offices: [{office: consul, year: -471}, {office: consul, year: -468}, {office: consul, year: -465}, {office: consul, year: -446}, {office: consul, year: -443}, {office: consul, year: -439}]
+    traits: [general, conciliator]
+    notes: "Six times consul between 471 and 439 (Livy 2.56.5, 2.64.1, 3.2.2, 3.66.1, 4.8.1, 4.13.6)."
+    sources: ["Livy 2.56.5", "Livy 3.2.2", "Livy 3.66.1", "Livy 4.13.6"]
+    confidence: low
+  - id: t_quinctius_flamininus
+    name: "Titus Quinctius Flamininus"
+    gens: quinctii
+    born: -229
+    died: -174
+    died_of: "natural"
+    offices: [{office: quaestor, year: -205}, {office: consul, year: -198}, {office: censor, year: -189}]
+    traits: [bold, orator, philhellene]
+    notes: "Consul at about thirty, not having been aedile or praetor (198: Livy 32.7.8-12); beat Philip V at Cynoscephalae (197: Polybius 18.20-27) and proclaimed the freedom of Greece at the Isthmian games (196: Polybius 18.46); censor 189; died 174 (Livy 41.28.11  # unverified)."
+    sources: ["Livy 32.7.8-12", "Polybius 18.20-27", "Polybius 18.46", "Plutarch, Flamininus 2"]
+    confidence: high
+  - id: ti_coruncanius
+    name: "Tiberius Coruncanius"
+    gens: coruncanii
+    died: -243
+    died_of: "natural"
+    offices: [{office: consul, year: -280}, {office: dictator, year: -246}]
+    traits: [jurist, pious]
+    notes: "Consul 280 against Pyrrhus and the Etruscans; the first plebeian pontifex maximus (254) and the first to teach law publicly (Livy, Periochae 18; Cicero, Brutus 55; Pomponius, Digest 1.2.2.35, 38)."
+    sources: ["Livy, Periochae 18", "Cicero, Brutus 55", "Pomponius, Digest 1.2.2.35  # unverified"]
+    confidence: medium
+  - id: ti_sempronius_gracchus_133
+    name: "Tiberius Sempronius Gracchus"
+    gens: sempronii
+    born: -163
+    died: -133
+    died_of: "murdered"
+    offices: [{office: consul, year: -163}, {office: quaestor, year: -137}, {office: tribune_plebs, year: -133}]
+    traits: [popular, reformer, orator]
+    popular: true
+    notes: "Quaestor under Mancinus at Numantia (137); tribune 133: carried the agrarian law over the veto of his colleague Octavius, whom he had deposed, stood again and was clubbed to death by senators led by Scipio Nasica (Plutarch, Tiberius Gracchus 8-19; Appian, Civil Wars 1.9-17). Not yet thirty when he died (Plutarch, Tiberius Gracchus 3)."
+    sources: ["Plutarch, Tiberius Gracchus 3, 8-19", "Appian, Civil Wars 1.9-17", "Velleius Paterculus 2.2-3"]
+    confidence: high
+  - id: ti_sempronius_gracchus_177
+    name: "Tiberius Sempronius Gracchus"
+    gens: sempronii
+    died: -154
+    died_of: "natural"
+    offices: [{office: tribune_plebs, year: -187}, {office: aedile_curule, year: -182}, {office: praetor, year: -180}, {office: consul, year: -177}, {office: censor, year: -169}]
+    traits: [honest, general, stern]
+    notes: "As tribune in 187 shielded the Scipios from prosecution (Livy 38.52-53, 38.60); praetor in Nearer Spain 180-178, made the settlement the Spaniards long honoured (Livy 40.47-50); consul 177 (Sardinia) and 163; censor 169; married Cornelia, daughter of Africanus; father of the Gracchi (Plutarch, Tiberius Gracchus 1). Died about 154."
+    sources: ["Livy 38.52-53", "Livy 40.47-50", "Livy 41.28", "Plutarch, Tiberius Gracchus 1"]
+    confidence: high
+  - id: ti_sempronius_gracchus_215
+    name: "Tiberius Sempronius Gracchus"
+    gens: sempronii
+    died: -212
+    died_of: "murdered"
+    offices: [{office: consul, year: -238}, {office: magister_equitum, year: -216}, {office: consul, year: -215}, {office: consul, year: -213}]
+    traits: [general, popular]
+    notes: "Master of the horse 216, consul 215 and 213; led the slave volunteers (volones) to victory at Beneventum (Livy 24.14-16); killed in a Lucanian ambush through treachery (Livy 25.16-17)."
+    sources: ["Livy 24.14-16", "Livy 25.16-17", "Fasti Capitolini"]
+    confidence: high
+  - id: ti_sempronius_longus
+    name: "Tiberius Sempronius Longus"
+    gens: sempronii
+    offices: [{office: consul, year: -218}, {office: consul, year: -194}]
+    traits: [bold]
+    notes: "Consul 218; lost the battle of the Trebia to Hannibal (Polybius 3.68-74; Livy 21.52-56)."
+    sources: ["Polybius 3.68-74", "Livy 21.52-56"]
+    confidence: high

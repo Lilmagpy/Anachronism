@@ -128,6 +128,25 @@ class Standing(Frozen):
     clients: Annotated[int, Field(ge=0)] = 100
 
 
+class Branch(Frozen):
+    """A branch (stirps) of a family, known by its cognomen, and when it is attested.
+
+    The game names the men it generates from the branches alive in the year, so a Cominius
+    Auruncus of 501 BC cannot turn up as a consul of 49 BC.
+    """
+
+    cognomen: str
+    from_year: int
+    to_year: int | None = None
+    """Last year the branch is attested (inclusive); ``None``: to the end of the game."""
+    plebeian: bool | None = None
+    """When the branch is of the other order than its gens (the Claudii Marcelli)."""
+
+    def covers(self, year: int) -> bool:
+        """True if the branch is alive in ``year``."""
+        return year >= self.from_year and (self.to_year is None or year <= self.to_year)
+
+
 class Gens(Frozen):
     """A Roman family (gens)."""
 
@@ -140,7 +159,11 @@ class Gens(Frozen):
     praenomina: tuple[str, ...] = ()
     """First names the family used (for children the game generates)."""
     cognomina: tuple[str, ...] = ()
-    """Family branches, for generated persons."""
+    """Family branches, for generated persons (used when no ``branches`` cover the year)."""
+    branches: tuple[Branch, ...] = ()
+    """The branches by the years they are attested; preferred over ``cognomina`` when set."""
+    extinct_after: int | None = None
+    """No child of the family is born after this year (a family that died out)."""
     standing: tuple[Standing, ...] = Field(min_length=1)
     stances: dict[Issue, Annotated[int, Field(ge=-10_000, le=10_000)]] = Field(default_factory=dict)
     """Disposition on each issue, -10000 (against) to 10000 (for)."""
@@ -149,6 +172,17 @@ class Gens(Frozen):
     notes: str = ""
     sources: Sources
     confidence: Confidence = Confidence.LOW
+
+    def cognomina_at(self, year: int) -> tuple[str, ...]:
+        """The cognomina a child of the family may carry in ``year``."""
+        alive = tuple(b.cognomen for b in self.branches if b.covers(year))
+        if alive:
+            return alive
+        return self.cognomina if not self.branches else ()
+
+    def alive_in(self, year: int) -> bool:
+        """True while the family can still have children."""
+        return self.extinct_after is None or year <= self.extinct_after
 
     def standing_at(self, year: int) -> Standing:
         """The latest standing at or before ``year`` (the first one if none is earlier)."""
@@ -179,6 +213,12 @@ class HistoricalPerson(Frozen):
     """Only if it differs from the family's."""
     born: int | None = None
     died: int | None = None
+    died_of: str = ""
+    """How he died, in a word or two (``battle``, ``murdered``, ``suicide``, ``illness``,
+    ``executed``, ``proscribed``, ``natural``); empty when unknown."""
+    alive_until: int | None = None
+    """A year he was certainly alive (a speech, an embassy) when his death is unknown: in a
+    chronicle no natural death comes before it."""
     father: Identifier | None = None
     offices: tuple[OfficeHeld, ...] = ()
     traits: tuple[Identifier, ...] = ()
@@ -193,7 +233,24 @@ class HistoricalPerson(Frozen):
     def _datable(self) -> HistoricalPerson:
         if self.born is None and self.died is None and not self.offices:
             raise ValueError("a person needs a birth, a death or an office to be dated by")
+        if self.born is not None and self.died is not None and self.died < self.born:
+            raise ValueError("dies before being born")
+        for held in self.offices:
+            if self.born is not None and held.year < self.born:
+                raise ValueError(f"holds the {held.office} before being born")
+            if self.died is not None and held.year > self.died:
+                raise ValueError(f"holds the {held.office} after dying")
         return self
+
+    @property
+    def last_known_alive(self) -> int | None:
+        """The last year he is known alive: his death, else ``alive_until`` or his last office."""
+        if self.died is not None:
+            return self.died
+        years = [h.year for h in self.offices]
+        if self.alive_until is not None:
+            years.append(self.alive_until)
+        return max(years) if years else None
 
     def birth_year(self, age_at_first_office: int) -> int:
         """When he was born: known, or estimated from his first office or his death."""
@@ -231,14 +288,38 @@ class College(Frozen):
 
 
 class FastiYear(Frozen):
-    """One year of the Fasti: who held which office."""
+    """One year of the Fasti: who held which office.
+
+    A ``gap`` year is one the Varronian count leaves without curule magistrates: the anarchy
+    of 375-371 (Livy 6.35.10) and the four "dictator years" (333, 324, 309, 301), which
+    most scholars take for later padding of the list. In a gap year the engine seats only
+    the colleges listed here (if any) and the plebeian offices; no consuls are chosen.
+    """
 
     id: Identifier
     year: int
-    colleges: tuple[College, ...] = Field(min_length=1)
+    colleges: tuple[College, ...] = ()
+    gap: str = ""
+    """``anarchy`` or ``dictator_year`` when the year has no regular curule magistrates."""
     notes: str = ""
     sources: Sources
     confidence: Confidence = Confidence.LOW
+
+    @model_validator(mode="after")
+    def _filled(self) -> FastiYear:
+        if not self.colleges and not self.gap:
+            raise ValueError("a year of the Fasti needs colleges, or a gap kind")
+        if self.gap and self.gap not in ("anarchy", "dictator_year"):
+            raise ValueError("gap must be 'anarchy' or 'dictator_year'")
+        offices = [c.office for c in self.colleges]
+        if len(offices) != len(set(offices)):
+            raise ValueError("an office is listed twice in one year")
+        return self
+
+    @property
+    def disputed(self) -> bool:
+        """True when the year's list is doubtful (low confidence): the view says so."""
+        return self.confidence is Confidence.LOW
 
 
 class Faction(Frozen):
@@ -253,6 +334,10 @@ class Faction(Frozen):
     populist: bool | None = None
     """Members are the families leaning this way (``True`` populares, ``False`` optimates)."""
     # neither set: every family belongs (the nobility of the middle Republic)
+    stances: dict[Issue, Annotated[int, Field(ge=-10_000, le=10_000)]] = Field(default_factory=dict)
+    """The bloc's own lean on each issue in its era, added to every member family's stance:
+    the patricians against land laws in the Struggle of the Orders, the populares for them."""
+    sources: tuple[str, ...] = ()
 
     def covers(self, year: int) -> bool:
         """True if the faction exists in ``year``."""
@@ -325,7 +410,21 @@ class RepublicRules(Frozen):
     age_at_first_listed_office: int = 40
     """Assumed when a person's birth is unknown: their age at their first recorded office."""
     pre_villia_min_age: int = 30
+    max_office_age: int = 70
+    """No one older stands for election or is named dictator (the Fasti may still seat him)."""
+    namesake_max_age: int = 72
+    """A man the Fasti names only by name is the same as an earlier namesake while the earlier
+    one would be younger than this; else he is a new man of the family (a son)."""
+    senator_weight_bp: Rate = 2500
+    """Each living member of a family who has held office adds this share of the family's
+    weight to its vote in the Senate (the family's senators)."""
     births_per_gens_per_year_bp: Rate = 3000
+    """Chance of a son for a family of ``birth_reference_dignitas_bp``; larger families
+    have more, smaller fewer (between a quarter and two and a half times this)."""
+    birth_reference_dignitas_bp: Annotated[int, Field(ge=1)] = 1000
+    office_dignitas_share_bp: Rate = 5000
+    """Share of an office's glory that goes to the family's dignitas when a member takes it:
+    a family's standing tracks its consulships."""
     death_bp_by_age: tuple[tuple[int, int], ...] = (
         (0, 300),
         (17, 120),

@@ -297,9 +297,11 @@ def _parse_file(
         # The Empire file also carries `events_on_republican` (later fires and rebuilds of
         # the Republic's buildings), which the client reads and the engine does not need.
         raw = {key: value for key, value in raw.items() if key != "events_on_republican"}
-        if list(raw) != ["monuments"]:
+        if list(raw) not in (["monuments"], ["fasti"]):  # F1 republic: data/rome/fasti.yaml
             issues.append(
-                ContentIssue(relative, "", f"expected only 'monuments'; found {list(raw)}")
+                ContentIssue(
+                    relative, "", f"expected 'monuments' or 'fasti' alone; found {list(raw)}"
+                )
             )
             return None
     elif version != CURRENT_SCHEMA_VERSION:

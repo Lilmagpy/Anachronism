@@ -105,3 +105,23 @@ magistracies:
     eras:
       - {from_year: -501, to_year: -202, seats: 1, term_months: 6, appointed: true, sources: ["Livy 2.18.4"]}
     sources: ["Livy 2.18.4"]
+  - id: decemvir
+    name: Decemvir
+    rank: 7
+    cursus: false
+    glory: 300
+    eras:
+      - {from_year: -451, to_year: -450, seats: 10, sources: ["Livy 3.32.6-3.33.3", "Livy 3.35"]}
+    notes: "The board of ten with consular power that wrote the Twelve Tables, in place of the consuls and tribunes (Livy 3.32-33); the second college held on into 449 until overthrown (Livy 3.36-54). The Fasti seat them; outside those two years the office does not exist."
+    sources: ["Livy 3.32.6-3.33.3", "Livy 3.35", "Livy 3.54"]
+    confidence: medium
+  - id: triumvir
+    name: Triumvir for the ordering of the state
+    rank: 9
+    cursus: false
+    glory: 500
+    eras:
+      - {from_year: -43, to_year: -33, seats: 3, term_months: 60, appointed: true, sources: ["Appian, Civil Wars 4.2-7", "Cassius Dio 46.54-56"]}
+    notes: "Antony, Octavian and Lepidus, by the Lex Titia of 27 November 43, for five years and renewed in 37 (Appian, Civil Wars 4.2-7, 5.95). Seated only from the Fasti; never appointed by the engine's dictator rule (it is not a dictatorship: no companion office)."
+    sources: ["Appian, Civil Wars 4.2-7", "Appian, Civil Wars 5.95", "Cassius Dio 46.54-56"]
+    confidence: high

@@ -49,7 +49,7 @@ class PackManifest(Frozen):
     depends_on: tuple[Identifier, ...] = ()
     external: tuple[str, ...] = ()
     """Glob patterns (relative to the pack folder) for dataset files outside the pack that hold
-    one list kind keyed by name and no ``schema_version``: ``monuments`` (U7)."""
+    one list kind keyed by name and no ``schema_version``: ``monuments`` (U7) or ``fasti`` (F1)."""
 
 
 SINGLE_KINDS: dict[str, TypeAdapter[Any]] = {
