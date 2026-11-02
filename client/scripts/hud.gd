@@ -1237,12 +1237,13 @@ func _fill_world() -> void:
 	var status: Dictionary = view["status"]
 	if status.has("festival_cost"):
 		_side_body.add_child(_label("Decrees" if view.get("republic") != null else "Royal decrees", 17, GOLD))   # F1 client: Rome has no king
-		var decrees := HBoxContainer.new()
-		decrees.add_theme_constant_override("separation", 6)
+		var decrees := HFlowContainer.new()
+		decrees.add_theme_constant_override("h_separation", 6)
+		decrees.add_theme_constant_override("v_separation", 4)
 		var rich: int = int(status["stores"]["wealth"])
 		var feast := _small_button("Hold a festival (%s)" % number(int(status["festival_cost"])), {"kind": "festival"})
 		feast.disabled = rich < int(status["festival_cost"])
-		feast.tooltip_text = "Feasts and games: legitimacy +%d%%, unrest -%d%%. Use it when unrest is high (riots, revolts and lost work) or before a hard war: a trusted throne fields stronger armies and its stories about your strange new arts are believed." % [int(status.get("festival_legitimacy_bp", 0)) / 100, int(status.get("festival_unrest_bp", 0)) / 100]
+		feast.tooltip_text = "Feasts and games: legitimacy +%d%%, unrest -%d%%. Use it when unrest is high (riots, revolts and lost work) or before a hard war: a trusted state fields stronger armies and its stories about your strange new arts are believed." % [int(status.get("festival_legitimacy_bp", 0)) / 100, int(status.get("festival_unrest_bp", 0)) / 100]
 		decrees.add_child(feast)
 		var hire := _small_button("Hire mercenaries (%s)" % number(int(status["mercenary_cost"])), {"kind": "mercenaries"})
 		hire.disabled = rich < int(status["mercenary_cost"]) or int(status["mercenaries"]) > 0
@@ -1250,10 +1251,11 @@ func _fill_world() -> void:
 		decrees.add_child(hire)
 		_side_body.add_child(decrees)
 		if int(status["mercenaries"]) > 0:
-			_side_body.add_child(_label("Mercenaries serve for %d more turn(s)" % int(status["mercenaries"]), 12, DIM))
+			_side_body.add_child(_wrapped("Mercenaries serve for %d more turn(s)" % int(status["mercenaries"]), 12, DIM))
 		if status.has("sealed"):
-			var secrets := HBoxContainer.new()
-			secrets.add_theme_constant_override("separation", 6)
+			var secrets := HFlowContainer.new()
+			secrets.add_theme_constant_override("h_separation", 6)
+			secrets.add_theme_constant_override("v_separation", 4)
 			var seal := _small_button("Seal the borders", {"kind": "seal"})
 			seal.disabled = int(status["sealed"]) > 0
 			var on_road: int = int(status["news_on_the_road"])
@@ -1262,26 +1264,27 @@ func _fill_world() -> void:
 			secrets.add_child(seal)
 			_side_body.add_child(secrets)
 			if int(status["sealed"]) > 0:
-				_side_body.add_child(_label("Borders sealed for %d more turn(s): no trade" % int(status["sealed"]), 12, DIM))
+				_side_body.add_child(_wrapped("Borders sealed for %d more turn(s): no trade" % int(status["sealed"]), 12, DIM))
 			if on_road > 0:
-				_side_body.add_child(_label("Word of your inventions is on the road to %d court(s)" % on_road, 12, DIM))
+				_side_body.add_child(_wrapped("Word of your inventions is on the road to %d court(s)" % on_road, 12, DIM))
 		if status.has("explain_costs") and int(status["suspicion_bp"]) > 0:
 			var costs: Array = status["explain_costs"]
 			var wait: int = int(status["explain_ready_in"])
-			var stories := HBoxContainer.new()
-			stories.add_theme_constant_override("separation", 6)
+			var stories := HFlowContainer.new()
+			stories.add_theme_constant_override("h_separation", 6)
+			stories.add_theme_constant_override("v_separation", 4)
 			var divine := _small_button("Divine gift (%s)" % number(int(costs[0])), {"kind": "explain", "story": "divine"})
 			divine.disabled = wait > 0 or rich < int(costs[0])
-			divine.tooltip_text = "Priests proclaim the new arts divine: suspicion down. If the people trust the throne, talk of witchcraft or fraud turns to awe"
+			divine.tooltip_text = "Priests proclaim the new arts divine: suspicion down. If the people trust the state, talk of witchcraft or fraud turns to awe"
 			stories.add_child(divine)
 			var sages := _small_button("Foreign sages (%s knowledge)" % number(int(costs[1])), {"kind": "explain", "story": "sages"})
 			sages.disabled = wait > 0 or int(status["stores"]["knowledge"]) < int(costs[1])
 			sages.tooltip_text = "Blame wise strangers from distant lands: suspicion falls further, but rivals hear of your arts at once"
 			stories.add_child(sages)
-			_side_body.add_child(_label("People ask where the court's new arts come from", 13, INK))
+			_side_body.add_child(_wrapped("People ask where the court's new arts come from", 13, INK))
 			_side_body.add_child(stories)
 			if wait > 0:
-				_side_body.add_child(_label("The court's last story is still fresh: wait %d turn(s)" % wait, 12, DIM))
+				_side_body.add_child(_wrapped("The court's last story is still fresh: wait %d turn(s)" % wait, 12, DIM))
 	_side_body.add_child(_label("The powers of the world", 17, GOLD))
 	_side_body.add_child(_wrapped("On the map, lines from your capital: gold to trading partners, green to allies, purple to tributaries.", 12, DIM))
 	var me: Dictionary = {}
