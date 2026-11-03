@@ -2756,3 +2756,41 @@ bridges; and the Senate's crowd and camera landed inside the Basilica Porcia. (T
 instruction quoted the island's position with a wrong conversion, (-630, 211) instead of
 (-646, 211); the agent caught it.)
 
+
+## D-300 Rome's allies, colonies and provinces as engine systems (R3, F1) — DELEGATED (2026-11-02)
+
+**Decision.** (1) Each civ allied to Rome holds a *treaty* (`rome/treaties.yaml`; defaults for a
+civ without one): a levy obligation whose proportions follow Polybius 2.24 (read), a place on the
+ladder ally / Latin / citizenship without the vote / citizen, booty and land shares, and the steps
+history gave it (Caere 353: Livy 7.20 for the pardon, Gellius 16.13.7 unverified for the status;
+the Campanians, Fundi and Formiae 338: Livy 8.14.10; the Hernici 306: Livy 9.43.24; Arpinum, Fundi
+and Formiae given the vote 188: Livy 38.36.7-9; all read). (2) At war the allies' contingents join
+Rome's armies at home up to 1.2 allied men per citizen soldier (Polybius 2.24.3-4: 30,000 allied
+foot beside 20,800 Roman in a consular army), drawn from each ally pro rata and sent home at peace;
+they are tracked per army in `republic.italy.levies`, not on `Army` (a shared model). (3) Loyalty
+falls with Roman defeats, with citizenship refused once the law is open (125: Appian 1.34) and with
+confiscations after an agrarian law (Appian 1.18-21, unverified), rises with victories and grants.
+If by 91 at least half the Italian allies are disaffected they rise as a bloc (Appian 1.38-39;
+Velleius 2.15.1, read); default history then passes the Lex Iulia in 90 for the loyal (Appian 1.49;
+Velleius 2.16.4) and the risen lay down their arms for it afterwards (Velleius 2.17.1), each year
+by a draw. A player who passes `grant_citizenship` earlier averts the war. (4) Citizenship without
+the vote adds a people's adult men to the census through `allies.citizens_added`; full citizenship
+makes its land and people Roman (its civ collapses). (5) A colony is a real thing (`engine/
+colonies.py`): settlers leave Rome's provinces for the site (2,500 for a Latin colony: Livy 8.16.14,
+9.26.5; 300 for a citizen colony: Livy 34.45.1), unowned land becomes Roman, a colony in an ally's
+country costs its loyalty; `rome/colonies.yaml` founds the historical colonies in their years
+(Livy's notices and Velleius 1.14-15, read) unless the land is in enemy hands or the Senate planted
+its own there first; the Senate's `colony:` proposal founds one, Latin until 180 (Velleius 1.15.2).
+(6) From 227 (Livy, Periochae 20.7, read) an overseas region Rome holds is a *provincia*
+(`rome/provinces.yaml`) governed by one of the year's praetors, else by last year's man prorogued
+or a former magistrate; it pays tribute, the governor may extort (a draw: the sum goes to his
+family's `wealth`, loyalty falls), from 149 he may be prosecuted when he lays down the province
+(lex Calpurnia: Cicero, Brutus 106, read), a disaffected province may revolt, and a governor may
+provoke a neighbour for a triumph, which raises that neighbour's grievance (the rivals' hook).
+(7) Every number is in `rome/italy_rules.yaml`; game balance except where a source is named.
+
+**Why.** D-287 made the socii separate civs allied to Rome; this gives the alliance its terms and
+its history. The allied share is Polybius' own; the Social War is the test of the whole system,
+so it is a rule, not a chapter. Cisalpine Gaul waits for its own year (81) because it is not
+overseas; every other provincia may come early if the player conquers early, since conquest in
+the engine is annexation. Unread passages are marked `unverified` in the YAML for the R6 pass.

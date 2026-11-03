@@ -7,6 +7,7 @@ from anachronism.content.loader import Content
 from anachronism.content.schema import (
     CityTimeline,
     CivDefinition,
+    ItalyRules,  # F1 italy
     ProvinceGeography,
     RelationStatus,
     RepublicRules,
@@ -139,6 +140,11 @@ def build_state(
             for c, start in sorted(scenario.civs.items())
             if start.leader_died is not None
         },
+        # F1 italy
+        italy_rules=content.italy_rules if scenario.republic else ItalyRules(),
+        treaties=dict(sorted(content.treaties.items())) if scenario.republic else {},
+        colonies=dict(sorted(content.colonies.items())) if scenario.republic else {},
+        provinciae=dict(sorted(content.provinciae.items())) if scenario.republic else {},
     )
     needs = {node_id: set(node.prerequisites) for node_id, node in content.techs.items()}
     civs = {
