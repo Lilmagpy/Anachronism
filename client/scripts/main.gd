@@ -506,6 +506,7 @@ func _enter_urbs(instant := false) -> void:
 	_in_urbs = true
 	_map_shown(false)
 	var city_events: Array = (view.get("city", {}) as Dictionary).get("events", []) if view.get("city") is Dictionary else []
+	urbs.city_view = view.get("city", {}) if view.get("city") is Dictionary else {}   # F1 ideas: anachronisms
 	urbs.open(int(options.get("year", view.get("year", -300))), local, options if instant else {}, city_events)
 	_urbs_busy = false
 	if not instant:
