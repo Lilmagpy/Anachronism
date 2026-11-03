@@ -18,7 +18,7 @@ from anachronism.engine.republic import (
     senate_vote,
     year_label,
 )
-from anachronism.engine.republic_state import Person
+from anachronism.engine.republic_state import Ballot, Person
 from anachronism.engine.senate import Interposition, available, interposition
 from anachronism.engine.state import GameState
 
@@ -110,9 +110,56 @@ def _last_votes(state: GameState) -> list[dict[str, Any]]:
                 "house": e.monument,
                 "proposal": ballot.proposal if ballot else "",
                 "outcome": ballot.outcome if ballot else "",
+                "label": _vote_label(state, e.turn, e.ref, ballot),
             }
         )
     return out
+
+
+def _vote_label(state: GameState, turn: int, issue: str, ballot: Ballot | None) -> str:
+    """What the vote was about.
+
+    The player's proposal, or the Senate's own business (a war declared on Rome, a war Rome's
+    own court or a script began), from the turn's war events.
+    """
+    if ballot is not None:
+        return ballot.label or ballot.proposal
+    me = state.player_civ
+    if issue == "war":
+        for ev in state.events:
+            if ev.turn != turn or ev.kind != "war" or ev.civ != me:
+                continue
+            if ev.message.startswith("War:"):
+                return f"war declared on {ev.subject}"
+            return f"war declared by {ev.subject}"
+        return "a war that reached Rome"
+    return f"the Senate's own business: {issue}"
+
+
+def _persuaded(state: GameState) -> dict[str, list[str]]:
+    """Families the player has won over, by issue (from the state, so a load keeps it)."""
+    rep = state.republic
+    assert rep is not None
+    out: dict[str, list[str]] = {}
+    for fid in sorted(rep.families):
+        issues = [i for i, v in sorted(rep.families[fid].favour.items()) if v > 0]
+        if issues:
+            out[fid] = issues
+    return out
+
+
+def _event_names(state: GameState) -> dict[str, str]:
+    """Names of the persons the turn's city events refer to.
+
+    A dead man honoured by a munus is not in ``notable``.
+    """
+    rep = state.republic
+    assert rep is not None
+    names: dict[str, str] = {}
+    for e in state.city.events if state.city is not None else []:
+        if e.person and e.person in rep.people:
+            names[e.person] = rep.people[e.person].name
+    return names
 
 
 def _disputed(state: GameState, year: int) -> bool:
@@ -146,6 +193,8 @@ def republic_view(state: GameState) -> dict[str, Any] | None:
         },
         "proposals": _proposals(state),
         "last_votes": _last_votes(state),
+        "persuaded": _persuaded(state),
+        "event_names": _event_names(state),
         "laws": [{"id": lid, "year": year} for lid, year in sorted(rep.laws.items())],
         "colonies": [{"province": pid, "year": year} for pid, year in sorted(rep.colonies.items())],
         "emergency_bp": rep.emergency_bp,

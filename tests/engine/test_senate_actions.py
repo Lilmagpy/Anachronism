@@ -451,6 +451,7 @@ def test_the_view_lists_proposals_with_the_senates_forecast(content: Content) ->
             "house": view["last_votes"][0]["house"],
             "proposal": "war_with:carthage",
             "outcome": "passed",
+            "label": "Declare war on Carthage",
         }
     ]
     assert view["last_votes"][0]["yes_bp"] > view["last_votes"][0]["no_bp"]

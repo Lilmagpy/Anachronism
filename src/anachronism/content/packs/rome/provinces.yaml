@@ -1,0 +1,127 @@
+schema_version: 1
+# The provinciae (content/schema/italy.py: ProvinciaDefinition): the overseas regions Rome governed
+# through a magistrate, each made of map provinces (provinces_italy.yaml, provinces_ancient.yaml).
+# The engine makes one a provincia when Rome holds any of its land and the age of provinces has come
+# (227 BC: the praetors raised to four, Livy, Periochae 20.7, read on livius.org; Pomponius, Digest
+# 1.2.2.32, unverified) and from_year (default 227) is reached. historical_year is the year history
+# gave each its governor, for the view; Cisalpine Gaul alone waits for its own year (81).
+provinciae:
+  - id: sicilia
+    name: Sicily
+    provinces: [si_messana, si_catana, si_syracuse, si_enna, si_akragas, si_gela, si_halaesa, si_panormus, si_lilybaeum]
+    historical_year: -227
+    notes: "Carthage gave up all Sicily in 241 (Polybius 1.62.8-9, unverified); a praetor from 227 (Periochae 20.7); Syracuse's kingdom added after 212 (Livy 25.31, unverified)."
+    sources: ["Livy, Periochae 20.7 (read)", "Polybius 1.62.8-9 (unverified)", "Livy 25.31 (unverified)"]
+    confidence: medium
+  - id: sardinia_corsica
+    name: Sardinia and Corsica
+    provinces: [sa_sardinia, sa_barbagia, co_corsica]
+    historical_year: -227
+    notes: "Seized from Carthage during the Mercenary War, 238 (Polybius 1.88.8-12, unverified); the Sardinian and Corsican revolts suppressed (Periochae 20.4, read); a praetor from 227 (Periochae 20.7)."
+    sources: ["Livy, Periochae 20.4, 20.7 (read)", "Polybius 1.88.8-12 (unverified)"]
+    confidence: medium
+  - id: hispania_citerior
+    name: Nearer Spain
+    provinces: [east_iberia, celtiberia]
+    historical_year: -197
+    notes: "Two praetors added for the Spains, 197 (Livy 32.27.6, unverified: cited in magistracies.yaml)."
+    sources: ["Livy 32.27.6 (unverified)", "Livy 32.28.11 (unverified)"]
+    confidence: medium
+  - id: hispania_ulterior
+    name: Further Spain
+    provinces: [car_gades, lusitania]
+    historical_year: -197
+    sources: ["Livy 32.27.6 (unverified)", "Livy 32.28.11 (unverified)"]
+    confidence: medium
+  - id: macedonia
+    name: Macedonia and Achaea
+    provinces: [mac_macedonia, mac_thessaly, epi_epirus, mac_corinth, ach_achaea, aet_aetolia, ath_attica, spa_laconia]
+    historical_year: -146
+    notes: "Macedon cut into four republics after Pydna, 167 (Livy 45.29, unverified); made a province after Andriscus, 148-146 (Livy, Periochae 50, 52, unverified); Corinth sacked and Greece put under the governor of Macedonia, 146 (Pausanias 7.16.9-10, unverified)."
+    sources: ["Livy, Periochae 50, 52 (unverified)", "Livy 45.29 (unverified)", "Pausanias 7.16.9-10 (unverified)"]
+    confidence: low
+  - id: africa
+    name: Africa
+    provinces: [car_carthage, car_byzacena, car_emporia]
+    historical_year: -146
+    notes: "Carthage destroyed and its land made a province, 146 (Appian, Punica 135, unverified; Livy, Periochae 51, unverified)."
+    sources: ["Appian, Punica 135 (unverified)", "Livy, Periochae 51 (unverified)"]
+    confidence: medium
+  - id: asia
+    name: Asia
+    provinces: [per_pergamon, sel_asia]
+    historical_year: -129
+    notes: "Attalus III leaves his kingdom to Rome, 133 (Livy, Periochae 58-59, unverified); organised as a province by M'. Aquillius, 129 (Strabo 14.1.38, unverified)."
+    sources: ["Livy, Periochae 58-59 (unverified)", "Strabo 14.1.38 (unverified)"]
+    confidence: low
+  - id: gallia_narbonensis
+    name: Transalpine Gaul
+    provinces: [southern_gaul]
+    historical_year: -121
+    notes: "The Allobroges and Arverni beaten, 121 (Livy, Periochae 61, unverified); Narbo founded 118 (Velleius 1.15.5, read)."
+    sources: ["Livy, Periochae 61 (unverified)", "Velleius Paterculus 1.15.5 (read)"]
+    confidence: low
+  - id: cilicia
+    name: Cilicia
+    provinces: [sel_cilicia]
+    historical_year: -102
+    notes: "M. Antonius' command against the pirates, 102 (Livy, Periochae 68, unverified)."
+    sources: ["Livy, Periochae 68 (unverified)"]
+    confidence: low
+  - id: gallia_cisalpina
+    name: Cisalpine Gaul
+    provinces: [it_boii, it_insubres, it_cenomani, it_veneti, it_liguria, it_ligures_apuani, it_taurini, it_salassi]
+    from_year: -81
+    historical_year: -81
+    notes: "Governed as a province from Sulla's time; Caesar's province in 58 (Suetonius, Divus Iulius 22.1, unverified). Not overseas, but beyond the Rubicon and Italy's allied peoples."
+    sources: ["Suetonius, Divus Iulius 22.1 (unverified)", "Caesar, Bellum Gallicum 1.7 (unverified)"]
+    confidence: low
+  - id: bithynia_pontus
+    name: Bithynia and Pontus
+    provinces: [bit_bithynia, pon_pontus]
+    historical_year: -74
+    notes: "Nicomedes IV's bequest, 74 (Livy, Periochae 93, unverified); Pompey's settlement joins Pontus, 63 (Appian, Mithridatica 114-115, unverified)."
+    sources: ["Livy, Periochae 93 (unverified)", "Appian, Mithridatica 114-115 (unverified)"]
+    confidence: low
+  - id: creta_cyrenaica
+    name: Cyrenaica and Crete
+    provinces: [pto_cyrenaica]
+    historical_year: -74
+    notes: "Ptolemy Apion's bequest, 96 (Livy, Periochae 70, unverified); a quaestor sent 74 (Sallust, Histories 2.43 Maurenbrecher, unverified)."
+    sources: ["Livy, Periochae 70 (unverified)", "Sallust, Histories 2.43 (unverified)"]
+    confidence: low
+  - id: syria
+    name: Syria
+    provinces: [sel_syria, pto_coele_syria, sel_upper_mesopotamia]
+    historical_year: -64
+    notes: "Pompey ends the Seleucid kingdom and makes Syria a province, 64 (Appian, Syriaca 49-51, unverified; Plutarch, Pompey 39, unverified)."
+    sources: ["Appian, Syriaca 49-51 (unverified)", "Plutarch, Pompey 39 (unverified)"]
+    confidence: low
+  - id: cyprus
+    name: Cyprus
+    provinces: [pto_cyprus]
+    historical_year: -58
+    notes: "Annexed by Cato's mission under the Clodian law, 58 (Livy, Periochae 104, unverified; Plutarch, Cato Minor 34-36, unverified)."
+    sources: ["Livy, Periochae 104 (unverified)", "Plutarch, Cato Minor 34-36 (unverified)"]
+    confidence: low
+  - id: illyricum
+    name: Illyricum
+    provinces: [illyria]
+    historical_year: -59
+    notes: "Given to Caesar with the two Gauls by the Vatinian law, 59 (Suetonius, Divus Iulius 22.1, unverified)."
+    sources: ["Suetonius, Divus Iulius 22.1 (unverified)"]
+    confidence: low
+  - id: gallia_comata
+    name: Gaul beyond the Province
+    provinces: [central_gaul, belgic_gaul]
+    historical_year: -51
+    notes: "Caesar's conquest complete, 51 (Hirtius, Bellum Gallicum 8.49, unverified)."
+    sources: ["Hirtius, Bellum Gallicum 8.49 (unverified)"]
+    confidence: low
+  - id: aegyptus
+    name: Egypt
+    provinces: [pto_delta, pto_middle, pto_thebaid]
+    historical_year: -30
+    notes: "Octavian makes Egypt a province under a prefect after Actium, 30 (Cassius Dio 51.17, unverified)."
+    sources: ["Cassius Dio 51.17 (unverified)"]
+    confidence: low

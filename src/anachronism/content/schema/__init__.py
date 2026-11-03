@@ -15,6 +15,17 @@ from anachronism.content.schema.dialogue import MOMENTS, SPECIAL_SPEAKERS, Dialo
 from anachronism.content.schema.dilemmas import Choice, Dilemma
 from anachronism.content.schema.formations import Formation
 from anachronism.content.schema.happenings import Happening
+
+# F1 italy: allies, colonies and provinces (R3)
+from anachronism.content.schema.italy import (
+    AllyStatus,
+    AllyTreaty,
+    ColonyFoundation,
+    ColonyKind,
+    ItalyRules,
+    ProvinciaDefinition,
+    StatusStep,
+)
 from anachronism.content.schema.monuments import (
     CityRules,
     CityTimeline,
@@ -97,6 +108,8 @@ __all__ = [
     "SINGLE_KINDS",
     "SPECIAL_SPEAKERS",
     "Access",
+    "AllyStatus",
+    "AllyTreaty",
     "AlmanacEntry",
     "Battle",
     "BattleSide",
@@ -110,6 +123,8 @@ __all__ = [
     "CityTimeline",
     "CivDefinition",
     "College",
+    "ColonyFoundation",
+    "ColonyKind",
     "Confidence",
     "Deeds",
     "Dialogue",
@@ -131,6 +146,7 @@ __all__ = [
     "Holder",
     "Identifier",
     "Issue",
+    "ItalyRules",
     "Ludus",
     "Magistracy",
     "MagistracyEra",
@@ -144,6 +160,7 @@ __all__ = [
     "Preconditions",
     "Provenance",
     "ProvinceGeography",
+    "ProvinciaDefinition",
     "Rate",
     "RelationStatus",
     "RepublicRules",
@@ -166,6 +183,7 @@ __all__ = [
     "StartingRelation",
     "StartingStats",
     "StartingStockpiles",
+    "StatusStep",
     "Successor",
     "Symbol",
     "Tactic",

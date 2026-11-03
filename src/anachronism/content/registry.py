@@ -5,12 +5,14 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 from anachronism.content.schema import (
+    AllyTreaty,
     AlmanacEntry,
     Battle,
     Building,
     Chapter,
     CityTimeline,
     CivDefinition,
+    ColonyFoundation,
     Dialogue,
     Dilemma,
     EffectType,
@@ -20,11 +22,13 @@ from anachronism.content.schema import (
     Gens,
     Happening,
     HistoricalPerson,
+    ItalyRules,
     Magistracy,
     MapResource,
     Monument,
     PackManifest,
     ProvinceGeography,
+    ProvinciaDefinition,
     RepublicRules,
     Rules,
     Scenario,
@@ -76,6 +80,11 @@ class Registry:
     battles: dict[str, Battle] = field(default_factory=dict)
     monuments: dict[str, Monument] = field(default_factory=dict)
     city_timeline: dict[str, CityTimeline] = field(default_factory=dict)
+    # F1 italy: allies, colonies and provinces (R3)
+    italy_rules: ItalyRules | None = None
+    treaties: dict[str, AllyTreaty] = field(default_factory=dict)
+    colonies: dict[str, ColonyFoundation] = field(default_factory=dict)
+    provinciae: dict[str, ProvinciaDefinition] = field(default_factory=dict)
     origins: dict[tuple[str, str], str] = field(default_factory=dict)
     invalid: dict[str, set[str]] = field(default_factory=dict)
     """Ids of items that exist but failed validation (already reported), per kind."""

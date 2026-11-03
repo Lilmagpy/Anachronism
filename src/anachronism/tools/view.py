@@ -58,6 +58,7 @@ from anachronism.engine.victory import progress
 from anachronism.engine.war import defence_bp, fronts
 from anachronism.tools.city_view import city_view
 from anachronism.tools.console import describe_effect
+from anachronism.tools.italy_view import italy_view  # F1 italy
 from anachronism.tools.republic_view import republic_view
 
 TRENDED = ("population", "food", "literacy_bp", "unrest_bp", "legitimacy_bp", "suspicion_bp")
@@ -160,6 +161,7 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
         ],
         "republic": republic_view(state),
         "city": city_view(state),
+        "italy": italy_view(state),  # F1 italy
         "wars": fronts(state),
         "armies": _armies(state),
         "tactics": _tactics(state),

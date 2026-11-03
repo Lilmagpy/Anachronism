@@ -47,6 +47,7 @@ from anachronism.content.schema import (
     RepublicRules,
 )
 from anachronism.engine import city as city_module
+from anachronism.engine import italy as italy_module  # F1 italy
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import BP
 from anachronism.engine.republic_state import (
@@ -349,6 +350,7 @@ def start_republic(state: GameState, rng: GameRng) -> None:
     events = EventLog(turn=state.turn, year=state.year)
     _hold_year(state, rep, rng, events, state.year)
     _deaths_in_office(state, rep, events, state.year)  # Brutus falls in 509 itself
+    italy_module.start(state)  # F1 italy
     city_module.start_city(state, events.turn)
     state.events.extend(events.items)
 
@@ -401,6 +403,7 @@ def run_year(state: GameState, rng: GameRng, events: EventLog, year: int) -> Non
     _fade(state, rep, year)
     _hold_year(state, rep, rng, events, year)
     _deaths_in_office(state, rep, events, year)
+    italy_module.run_year(state, rng, events, year)  # F1 italy
     city_module.run_year(state, events, year)
 
 
@@ -1069,9 +1072,9 @@ def _take_census(state: GameState, rep: RepublicState, year: int) -> None:
     for m in rep.magistrates:
         if mags[m.office].census and m.year == year:
             share = state.world.republic_rules.census_citizen_share_bp
-            rep.census.append(
-                CensusRecord(year=year, citizens=state.population(state.player_civ) * share // BP)
-            )
+            citizens = state.population(state.player_civ) * share // BP
+            citizens += italy_module.extra_citizens(state)  # F1 italy
+            rep.census.append(CensusRecord(year=year, citizens=citizens))
             return
 
 

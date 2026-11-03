@@ -53,7 +53,7 @@ republic_rules:
     # can carry a refused matter to the plebs. The chance of either is a SMALL game-balance number
     # from how much more popular one side of the vote is than the other (popular_lean_bp).
     sources: ["Polybius 6.13.5-9", "Polybius 6.14.10-12", "Polybius 6.16.4", "Livy 2.33.1-3", "Livy 3.55.6-10", "Aulus Gellius 14.7.9 (unverified: passage not re-read)"]
-    costs: {war_with: 200, peace_with: 150, law: 300, fund: 200, colony: 250}
+    costs: {war_with: 200, peace_with: 150, law: 300, fund: 200, colony: 250, rights: 300}
     fail_influence_loss: 50
     fail_legitimacy_bp: 200
     opposed_favour_shift: 1000

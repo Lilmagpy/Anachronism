@@ -273,7 +273,10 @@ def hire_company(state: GameState, civ_id: str, turns: int) -> Army | None:
 def release(state: GameState, army: Army) -> None:
     """A general whose army is gone returns to the court, free for another command."""
     civ = state.civs[army.owner]
-    if army.general and army.general != civ.ruler:
+    # F1 italy: a Republic's ruler string is two consuls joined and changes yearly; it is not a
+    # commander to keep (General.name is at most 60 characters)
+    named = army.general and army.general != civ.ruler and len(army.general) <= 60
+    if named:
         trait = army.trait if army.trait in TRAITS else None
         civ.generals.insert(0, General(name=army.general, skill=army.skill, trait=trait))
     army.general, army.skill, army.trait = "", 1, ""
