@@ -1,0 +1,75 @@
+schema_version: 1
+# Meanwhile in the world (D-120) for the scenario rome_340: what really happened elsewhere,
+# told in its year in chronicle mode. Every entry was written from a passage read in
+# translation (Livy, Polybius, Plutarch, Diodorus 16 and 20, Cassius Dio with Zonaras); the
+# passages are listed under `sources`. Dates are those of the sources, several of which are
+# disputed by a year or two.
+almanac:
+  - id: r340_crimisus
+    scenario: rome_340
+    year: -340
+    needs_alive: [syracuse, carthage]
+    text: "In Sicily, Timoleon of Corinth, leading a small army of mercenaries and Syracusans against a Carthaginian host of seventy thousand, wins a storm-swept battle at the river Crimisus. Diodorus dates it to the year 340-339."
+    sources: ["Diodorus 16.77-16.80", "Plutarch, Timoleon 25-29"]
+  - id: r340_alexander_epirus
+    scenario: rome_340
+    year: -340
+    needs_alive: [epirus]
+    text: "Livy says that in this year Alexander, king of Epirus, landed in Italy with a fleet, at the call of the Tarentines - the same time, he notes, as the exploits of his nephew Alexander the Great in another part of the world."
+    sources: ["Livy 8.3", "Livy 8.17 and 8.24"]
+  - id: r339_lycus_peace
+    scenario: rome_340
+    year: -339
+    needs_alive: [syracuse, carthage]
+    text: "After the Crimisus, Timoleon makes peace with Carthage: all the Greek cities of Sicily to be free, the river Lycus to be the boundary, and Carthage not to help any tyrant who fights Syracuse. Settlers then stream into the empty cities of the island."
+    sources: ["Diodorus 16.82-16.83", "Plutarch, Timoleon 35"]
+  - id: r338_chaeronea
+    scenario: rome_340
+    year: -338
+    needs_alive: [macedon]
+    text: "In Greece, Philip II of Macedon seizes Elateia and goes to war with Athens, which has trusted to its peace treaty and is unprepared. Diodorus tells of his victory at Chaeronea soon after."
+    sources: ["Diodorus 16.84-16.86", "Diodorus 16.95"]
+  - id: r336_philip_dies
+    scenario: rome_340
+    year: -336
+    needs_alive: [macedon]
+    text: "Philip II of Macedon is murdered in the theatre during the wedding festivities for his daughter Cleopatra and Alexander of Epirus, by Pausanias, one of his bodyguards."
+    sources: ["Diodorus 16.91-16.94"]
+  - id: r322_alexander_digression
+    scenario: rome_340
+    year: -322
+    text: "Livy stops his account of Rome's wars to ask what would have happened if Alexander the Great, instead of attacking Asia, had turned his arms on Italy. His answer is that Rome would not have been beaten, and he gives the generals Rome could have set against him."
+    sources: ["Livy 9.17-9.19"]
+  - id: r310_agathocles_africa
+    scenario: rome_340
+    year: -310
+    needs_alive: [syracuse, carthage]
+    text: "Agathocles of Syracuse, hard pressed in Sicily, sails across to Africa and takes the war to Carthage's own land. Diodorus tells how his fleet sighted the Carthaginian ships at dawn after six days at sea."
+    sources: ["Diodorus 20.3-20.18", "Diodorus 20.29-20.30"]
+  - id: r306_carthage_treaty
+    scenario: rome_340
+    year: -306
+    needs_alive: [carthage]
+    text: "Rome renews its treaty with Carthage for the third time, and makes presents to the Carthaginians."
+    sources: ["Livy 9.43"]
+  - id: r281_rhegium
+    scenario: rome_340
+    year: -281
+    text: "At Rhegium, in the far south, a Roman garrison of Campanian soldiers - four thousand men sent to guard the town against Pyrrhus - turns on the townspeople, kills or drives them out, and holds the city for itself, copying the Campanian mercenaries who had taken Messana across the strait."
+    sources: ["Polybius 1.7.1-1.7.8", "Livy, Periochae 12"]
+  - id: r279_delphi
+    scenario: rome_340
+    year: -279
+    text: "A great army of Gauls invades Greece and is destroyed at Delphi. Polybius dates it five years after the Boii and Etruscans made peace with Rome, and tells of the Gauls that they seemed visited at this time with a sort of epidemic of war."
+    sources: ["Polybius 1.6.5", "Polybius 2.20.6-2.20.7"]
+  - id: r273_ptolemy
+    scenario: rome_340
+    year: -273
+    text: "Ptolemy II of Egypt, who has heard that Pyrrhus has fared badly and that Rome is growing strong, sends her gifts and makes a compact. The Romans send envoys in return, and refuse to put the gifts they are offered into the treasury."
+    sources: ["Cassius Dio 10, fragments (Zonaras)", "Livy, Periochae 14"]
+  - id: r272_pyrrhus_dies
+    scenario: rome_340
+    year: -272
+    needs_alive: [epirus]
+    text: "At Argos, Pyrrhus is fighting in the streets by night when an old woman watching from a rooftop throws a tile that strikes him on the neck, so that he falls from his horse. He is recognised and killed; Antigonus Gonatas, seeing his head, weeps at the reversal of fortune."
+    sources: ["Plutarch, Pyrrhus 34", "Livy, Periochae 14"]

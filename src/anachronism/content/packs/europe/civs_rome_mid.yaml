@@ -1,0 +1,226 @@
+schema_version: 1
+# The peoples of Italy around the Latin War and the Samnite and Pyrrhic wars (340-270 BC), for
+# the scenario rome_340 (mid-Republic start). ids carry the prefix e3_ (D-286). Each people
+# is one "state" for the game, though most were leagues or loose clusters of tribes and cities:
+# the notes under `sources` say what is being simplified. Colours are chosen to be distinct
+# from every civilisation in civs_ancient.yaml and from each other.
+# Every source listed was read in translation while this file was written (Livy in the
+# Gutenberg translation; Plutarch, Polybius, Diodorus and Cassius Dio on LacusCurtius).
+civs:
+  - id: e3_latins
+    name: The Latin League
+    adjective: Latin
+    lineage: latins
+    colour: "#d96a8a"
+    symbol: wolf
+    emblem: LAT
+    portrait: roman
+    description: >-
+      The old cities of Latium - Tibur, Praeneste, Lanuvium, Aricia, Pedum, Velitrae and the rest - Rome's cousins in language, religion and even army drill, who fought beside her for two centuries and now ask for an equal share.
+    sources:
+      - "Livy 8.3-8.6 (the Latin demand for a consul and half the Senate, 340 BC; the Latins armed and drilled like the Romans)"
+      - "Livy 8.12-8.14 (the end of the war and the settlement, 339-338 BC)"
+    confidence: medium
+  - id: e3_samnites
+    name: The Samnites
+    adjective: Samnite
+    lineage: samnites
+    colour: "#9bd45a"
+    symbol: bull
+    emblem: SAM
+    portrait: roman
+    description: >-
+      The mountain peoples of Samnium, the hardest soldiers in Italy, newly at peace with Rome after a short war, with the rich plains of Campania below them and Rome as their only rival for Italy.
+    sources:
+      - "Livy 8.1-8.2 (the Samnites' peace and renewed treaty with Rome, 341 BC; their war on the Sidicini)"
+      - "Livy 9.1-9.12 (Gaius Pontius and the Caudine Forks, 321 BC)"
+    confidence: medium
+  - id: e3_campanians
+    name: The Campanians
+    adjective: Campanian
+    lineage: campanians
+    colour: "#f2c4a0"
+    symbol: laurel
+    emblem: CAM
+    portrait: greek
+    description: >-
+      The people of Capua and the Falernian plain, who gave themselves to Rome's protection against the Samnites, and then, remembering the Samnites' injuries more than Rome's kindness, joined the Latins against her.
+    sources:
+      - "Livy 8.2 (the Campanians join the Latins, 340 BC; Capua came under Rome 'by surrender, not by treaty')"
+      - "Livy 8.11 (the Campanian horsemen who did not revolt; the Falernian land taken)"
+      - "Livy 8.14 (Capua, Cumae and Suessula given the same rights)"
+    confidence: medium
+  - id: e3_volsci
+    name: The Volsci
+    adjective: Volscian
+    lineage: volsci
+    colour: "#6d8ea0"
+    symbol: stag
+    emblem: VOL
+    portrait: roman
+    description: >-
+      The Volscians of Antium and the coast, allied with the Latins, with a fleet of warships and fields that Rome's farmers have long wanted.
+    sources:
+      - "Livy 8.3 (the Volscians stirred up with the Latins, 340 BC)"
+      - "Livy 8.12-8.14 (Antium: its ships taken and the Rostra, 338 BC)"
+      - "Livy 8.19-8.21 (Privernum, 330-329 BC)"
+    confidence: medium
+  - id: e3_aurunci
+    name: The Aurunci and Sidicini
+    adjective: Auruncan
+    lineage: aurunci
+    colour: "#c9a0dc"
+    symbol: pine
+    emblem: AUR
+    portrait: roman
+    description: >-
+      The small peoples between Latium and Campania: the Sidicini, whom the Samnites are attacking, and the Aurunci and Ausonian towns of the coast.
+    sources:
+      - "Livy 8.1-8.2 (the Sidicini attacked by the Samnites and seeking help, 341-340 BC)"
+      - "Livy 8.14-8.16 (Fundi and Formiae given Roman citizenship; the Sidicini and Aurunci at war; the Ausonians of Cales, 338-335 BC)"
+      - "A simplification: two or three peoples treated as one state, placed in the province on the Campanian border"
+    confidence: low
+  - id: e3_hernici
+    name: The Hernici
+    adjective: Hernican
+    lineage: hernici
+    colour: "#e8e07a"
+    symbol: bear
+    emblem: HER
+    portrait: roman
+    description: >-
+      The hill-towns of the Hernici, with Anagnia at their head, who prefer their own laws to Roman citizenship and stand between Latium and the Samnites.
+    sources:
+      - "Livy 9.42-9.43 (the Hernici and Anagnia at war with Rome, 306 BC)"
+      - "Livy 9.45 (the Aequi speaking of what the Hernici chose)"
+    confidence: medium
+  - id: e3_sabellians
+    name: The Sabines and Central Apennine Peoples
+    adjective: Sabellian
+    lineage: sabellians
+    colour: "#283593"
+    symbol: hawk
+    emblem: SAB
+    portrait: roman
+    description: >-
+      The small hill peoples of the central Apennines - Marsi, Paeligni, Vestini, Marrucini and their neighbours - who have no common government and are courted by both Rome and Samnium.
+    sources:
+      - "Livy 8.6 (Rome marches through the Marsi and Paeligni, 340 BC)"
+      - "Livy 8.29 (the Vestini join the Samnites; the Marsi, Paeligni and Marrucini named with them)"
+      - "Livy 9.41 and 9.45 (the Marsi in arms, then the Marrucini, Marsi, Paeligni and Ferentani sue for peace, 308 and 304 BC)"
+      - "A simplification: the Sabines and Frentani are folded in with no source of their own for 340 BC"
+    confidence: low
+  - id: e3_etruscans
+    name: The Etruscan Cities
+    adjective: Etruscan
+    lineage: etruscans
+    colour: "#1a1a40"
+    symbol: tower
+    emblem: ETR
+    portrait: greek
+    description: >-
+      The walled cities of Etruria, proud of their gods and divided against each other, at peace with Rome for now but watching her grow.
+    sources:
+      - "Livy 9.32-9.41 (Rome's Etruscan war: Sutrium, the Ciminian forest, truce with Tarquinii, 311-308 BC)"
+      - "Livy 10.27-10.30 (the Etruscans and Sentinum, 295 BC)"
+      - "A simplification: the Etruscan cities seldom acted together"
+    confidence: medium
+  - id: e3_umbrians
+    name: The Umbrians
+    adjective: Umbrian
+    lineage: umbrians
+    colour: "#7fd0c0"
+    symbol: raven
+    emblem: UMB
+    portrait: roman
+    description: >-
+      The Umbrian towns of the upper Tiber and the Apennine passes, such as the Camertes, who would rather have Rome as a friend than as a neighbour.
+    sources:
+      - "Livy 9.36 (the Camertian Umbrians treat with Fabius, 310 BC)"
+      - "Livy 9.41 (the Umbrian rising, 308 BC) and Livy 10.27 (Umbrians at Sentinum, 295 BC)"
+    confidence: low
+  - id: e3_senones
+    name: The Senones
+    adjective: Senonian
+    lineage: senones
+    colour: "#e0ddd0"
+    symbol: carnyx
+    emblem: SEN
+    portrait: celtic
+    description: >-
+      The Gauls of the Adriatic coast, the last of the Celtic settlers of the Po plain, whose ancestors took Rome itself; they will sell their swords to any enemy of hers.
+    sources:
+      - "Polybius 2.17.7 (the Senones, the last of the Gaulish tribes towards the sea)"
+      - "Polybius 2.18.2 and 2.19.5-2.19.13 (the Gauls take Rome; the Gauls at Camerinum, Sentinum and Arretium; the Senones driven out and Sena founded)"
+      - "Livy 10.26-10.30 (the Gauls at Sentinum, 295 BC)"
+    confidence: medium
+  - id: e3_boii
+    name: The Boii
+    adjective: Boian
+    lineage: boii
+    colour: "#3f9bd6"
+    symbol: torc
+    emblem: BOI
+    portrait: celtic
+    description: >-
+      The Gauls south of the Po, who live in unwalled villages, count wealth in cattle and gold, and will call on the Etruscans when Rome comes near.
+    sources:
+      - "Polybius 2.17.7 and 2.17.9-2.17.12 (the Boii and the Gauls' way of life)"
+      - "Polybius 2.20.1-2.20.6 (the Boii and Etruscans at Lake Vadimo, 283-282 BC)"
+    confidence: medium
+  - id: e3_insubres
+    name: The Insubres
+    adjective: Insubrian
+    lineage: insubres
+    colour: "#e91e63"
+    symbol: boar
+    emblem: INS
+    portrait: celtic
+    description: >-
+      The Gauls of the western Po plain, the largest of the Celtic tribes of Italy, far from Rome and so far untouched by her.
+    sources:
+      - "Polybius 2.17.4 (the Insubres, the largest tribe of all)"
+    confidence: medium
+  - id: e3_tarentum
+    name: Tarentum
+    adjective: Tarentine
+    lineage: tarentum
+    colour: "#00c2a8"
+    symbol: wave
+    emblem: ΤΑΡ
+    portrait: greek
+    description: >-
+      The richest Greek city of southern Italy, with a navy and a taste for festivals, which prefers to hire kings and captains to fight its wars.
+    sources:
+      - "Livy 8.24 (Alexander of Epirus invited by the Tarentines) and Livy 8.27 (Tarentum and Palaepolis)"
+      - "Plutarch, Pyrrhus 13 (the Tarentines and Pyrrhus) and Cassius Dio 9.39 (the Tarentines in the theatre, the Roman ships and Postumius)"
+    confidence: medium
+  - id: e3_lucanians
+    name: The Lucanians
+    adjective: Lucanian
+    lineage: lucanians
+    colour: "#f4511e"
+    symbol: griffin
+    emblem: LUC
+    portrait: roman
+    description: >-
+      The hill people of Lucania, who press on the Greek cities of the south, are pressed by the Samnites in turn, and have made and broken more than one alliance with Rome.
+    sources:
+      - "Livy 8.24 (Alexander of Epirus's war with the Lucanians and Bruttians)"
+      - "Livy 8.25 and 8.29 (a treaty of friendship with Rome, then their defection)"
+      - "Livy 10.11-10.12 (their appeal to Rome against the Samnites, 298 BC)"
+    confidence: medium
+  - id: e3_bruttii
+    name: The Bruttii
+    adjective: Bruttian
+    lineage: bruttii
+    colour: "#4e342e"
+    symbol: falcon
+    emblem: BRU
+    portrait: roman
+    description: >-
+      A people of the far south of Italy, who rose out of a mixed crowd of runaways in Lucania and took Terina, Hipponium, Thurii and other Greek cities in the 350s.
+    sources:
+      - "Diodorus 16.15.1-16.15.2 (the origin of the Bruttians and their conquests, 356 BC)"
+      - "Livy 8.24 (Alexander of Epirus against the Bruttians)"
+    confidence: medium

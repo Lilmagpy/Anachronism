@@ -1,0 +1,16 @@
+schema_version: 1
+# The voices of the Roman game (F1 ideas). The four old ids stay, because the code's adviser
+# roles (advisers.py, rulings.Role) and the client's portraits are keyed on them; their titles
+# are Roman. The other four are Roman offices the dialogue gives particular moments to.
+# Names: tools/roman_speakers.py gives each a name of the year from the magistrates in office
+# (state.republic.magistrates) or, for offices the engine does not seat, from the gentes of the
+# year; the lead wires it in tools/voices.py (one line, see the F1 report).
+speakers:
+  - {id: scholar, title: Greek freedman scholar, portrait: scholar}
+  - {id: steward, title: Quaestor of the treasury, portrait: steward}
+  - {id: general, title: General, portrait: general}
+  - {id: diviner, title: Augur, portrait: diviner}
+  - {id: pontifex, title: Pontifex maximus, portrait: diviner}
+  - {id: censor, title: Censor, portrait: steward}
+  - {id: princeps, title: Princeps senatus, portrait: steward}
+  - {id: tribune, title: Tribune of the plebs, portrait: general}

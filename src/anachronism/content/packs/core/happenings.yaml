@@ -1,0 +1,341 @@
+schema_version: 1
+# Chance events of the Roman world (content/schema/happenings.py). chance_bp is per decade per
+# state; changes are in basis points (population/stores: shares; unrest/legitimacy: points
+# x100). The sources for each are in the comments (F1 ideas).
+happenings:
+  - id: plague   # Livy 3.6-7 (the pestilence of 463), 4.21, 10.47
+    name: Pestilence
+    kind: disaster
+    message: "Pestilence sweeps through {province}. The dead are carried out by cartloads and the Sibylline Books are opened."
+    chance_bp: 700
+    population_bp: -1200
+    unrest_bp: 400
+    softened_by: health
+
+  - id: flood   # Livy 24.9.6, 30.38.10-12, 35.9.2-3 (Tiber floods)
+    name: The Tiber floods
+    kind: disaster
+    message: "The river bursts its banks in {province}; the low streets, fields and granaries are drowned."
+    chance_bp: 900
+    river: true
+    population_bp: -200
+    food_bp: -2500
+    unrest_bp: 200
+    softened_by: storage
+
+  - id: drought   # Livy 4.30.7-8 (the drought of 428)
+    name: Drought
+    kind: disaster
+    message: "No rain falls on {province}. The springs run dry, the cattle die and the crops wither."
+    chance_bp: 700
+    terrain: [plains, steppe, desert, hills]
+    food_bp: -2500
+    unrest_bp: 300
+    softened_by: storage
+
+  - id: locusts   # Livy 42.10.7 (locusts in Apulia, 173 BC)
+    name: Locusts
+    kind: disaster
+    message: "A cloud of locusts darkens the sky over {province} and strips the fields bare."
+    chance_bp: 500
+    terrain: [plains, river_plains, steppe]
+    food_bp: -2000
+    unrest_bp: 200
+
+  - id: earthquake   # Livy 22.5.8 (the earthquake during Trasimene), 34.55.1-4
+    name: Earthquake
+    kind: disaster
+    message: "The earth shakes in {province}; walls and houses fall, and the Senate decrees a holiday for expiation."
+    chance_bp: 300
+    terrain: [mountains, hills]
+    population_bp: -200
+    materials_bp: -2000
+    legitimacy_bp: -200
+
+  - id: fire   # Livy 24.47.15-16 (the fire of 210), 26.27.1-5
+    name: A great fire
+    kind: disaster
+    message: "A fire rages through {province} for three days; the shops round the Forum and whole streets of tenements burn."
+    chance_bp: 300
+    wealth_bp: -1500
+    materials_bp: -1000
+    unrest_bp: 100
+
+  - id: bandits   # Livy 39.29.8-9, 39.41.6 (herdsmen's brigandage in Apulia, 185-184 BC)
+    name: Brigands
+    kind: disaster
+    message: "Runaway herdsmen and brigands hold the roads of {province}; merchants dare not travel and the praetor is sent against them."
+    chance_bp: 500
+    terrain: [hills, forest, mountains, marsh]
+    wealth_bp: -1000
+    unrest_bp: 300
+
+  - id: storm   # Polybius 1.37 (the fleet wrecked off Camarina, 255 BC)
+    name: A storm at sea
+    kind: disaster
+    message: "A storm wrecks the ships and harbours of {province}; grain and timber are lost."
+    chance_bp: 500
+    coastal: true
+    wealth_bp: -800
+    food_bp: -800
+
+  - id: bumper_harvest
+    name: A bumper harvest
+    kind: blessing
+    message: "The harvest in {province} is the best in living memory, and grain sells at the Forum for a fraction of its price."
+    chance_bp: 800
+    food_bp: 2500
+    legitimacy_bp: 200
+
+  - id: silver_strike   # Polybius 34.9.8-11 (the silver mines of New Carthage); Livy 34.21.7
+    name: A silver strike
+    kind: blessing
+    message: "Prospectors strike a rich vein of silver in {province}, and the quaestors count the revenue."
+    chance_bp: 300
+    terrain: [hills, mountains]
+    needs_adopted: [ore_prospecting]
+    wealth_bp: 3000
+
+  - id: wandering_sage   # Suet. Gramm. 2 (Crates of Mallos at Rome, 168 BC)
+    name: A Greek scholar arrives
+    kind: blessing
+    message: "A famous Greek scholar, come on an embassy, breaks his leg in {province} and stays to lecture; the young men gather round him."
+    chance_bp: 500
+    needs_adopted: [writing]
+    knowledge_bp: 2500
+
+  - id: good_omen   # Livy 21.62 (prodigies and their happy expiation)
+    name: A favourable omen
+    kind: blessing
+    message: "The birds feed well before the consul's departure in {province}; the augurs declare the gods favour the magistrates."
+    chance_bp: 400
+    legitimacy_bp: 400
+    unrest_bp: -300
+
+  # --- Consequences: second-order effects of advancements (brief §6.7) ---------------------
+  # Things the Senate did not plan for. kind: consequence needs the advancement it follows.
+
+  - id: grain_dole_crowds   # Appian, BC 2.120; Sallust, Cat. 37.7 (the plebs drawn to Rome)
+    name: The city fills
+    kind: consequence
+    message: "Cheap grain draws the landless of {province} into Rome; the tenements fill and the tribes of the city grow unruly."
+    chance_bp: 800
+    needs_adopted: [grain_dole]
+    population_bp: 300
+    unrest_bp: 400
+    influence: {nobility: -300}
+
+  - id: latifundia_ruin   # Appian, BC 1.7; Plutarch, Ti. Gracchus 8
+    name: The small farms vanish
+    kind: consequence
+    message: "In {province} the slave estates have bought out the free farmers; the levy finds fewer men with land enough to serve."
+    chance_bp: 800
+    needs_adopted: [slave_estates]
+    unrest_bp: 500
+    influence: {nobility: 400}
+
+  - id: theatre_morals   # Livy, Periochae 48; Tacitus, Annales 14.20
+    name: The old men and the theatre
+    kind: consequence
+    message: "The elders of {province} say a seated people grows idle and Greek; the young fill the stone theatre every festival."
+    chance_bp: 600
+    needs_adopted: [stone_theatre]
+    influence: {nobility: -400}
+    unrest_bp: -200
+    knowledge_bp: 300
+
+  - id: ballot_patrons   # Cicero, De legibus 3.34-39
+    name: The patrons lose their grip
+    kind: consequence
+    message: "With the written ballot the clients of {province} vote as they please; the great houses find their tribes no longer theirs to deliver."
+    chance_bp: 700
+    needs_adopted: [secret_ballot]
+    influence: {nobility: -800, guilds: 300}
+    legitimacy_bp: 200
+
+  - id: philosophers_idle_youth   # Plutarch, Cato Maior 22; Gellius 15.11
+    name: The young men argue
+    kind: consequence
+    message: "The young nobles of {province} neglect the Forum and the camp to hear Greek philosophers argue both sides of justice."
+    chance_bp: 500
+    needs_adopted: [greek_philosophy]
+    knowledge_bp: 1000
+    unrest_bp: 300
+    influence: {clergy: -300}
+
+  - id: juries_quarrel   # Appian, BC 1.22, 1.35
+    name: Whose juries?
+    kind: consequence
+    message: "Senators and equestrians of {province} fight over who may sit on the standing courts; a governor is condemned and another acquitted for money."
+    chance_bp: 600
+    needs_adopted: [jury_courts]
+    influence: {guilds: 500, nobility: -300}
+    legitimacy_bp: -200
+
+  - id: baths_idleness   # Seneca, Epistulae 56.1-2, 86.4-12
+    name: Afternoons at the baths
+    kind: consequence
+    message: "The baths of {province} are full from noon; the old complain that men who once scraped off a day's dust now soak away a day's work."
+    chance_bp: 500
+    needs_adopted: [public_baths]
+    unrest_bp: -300
+    materials_bp: -300
+
+  - id: calendar_confusion   # Suetonius, Iulius 40; Macrobius, Saturnalia 1.14.13-15 (the pontiffs' error after Caesar)
+    name: The pontiffs miscount
+    kind: consequence
+    message: "The pontiffs of {province} add the extra day every third year instead of every fourth; the new calendar drifts until someone notices."
+    chance_bp: 400
+    needs_adopted: [julian_calendar]
+    knowledge_bp: 300
+    legitimacy_bp: -100
+
+  - id: acta_gossip   # Cicero, Ad familiares 8.1.1 (Caelius on the acta)
+    name: The city reads the acta
+    kind: consequence
+    message: "The posted acta of {province} are copied and sent to every governor; the Senate finds its quarrels read aloud in Spain."
+    chance_bp: 600
+    needs_adopted: [acta_diurna]
+    legitimacy_bp: -200
+    influence: {guilds: 300, nobility: -200}
+    knowledge_bp: 300
+
+  - id: fire_watch_catches   # Dio 55.26.4-5
+    name: The watch earns its keep
+    kind: consequence
+    message: "The night watch of {province} catches a fire in the tenements before it spreads; the Senate, which meant to disband them, keeps them."
+    chance_bp: 700
+    needs_adopted: [vigiles]
+    wealth_bp: 500
+    legitimacy_bp: 200
+
+  - id: pamphlet_wars
+    name: Pamphlet wars
+    kind: consequence
+    message: "Printed lampoons mocking the pontiffs pass from hand to hand in {province}. The colleges are furious."
+    chance_bp: 900
+    needs_adopted: [printing_press]
+    unrest_bp: 500
+    influence: {clergy: -800, guilds: 300}
+
+  - id: scripture_for_all
+    name: Cheap books
+    kind: consequence
+    message: "Cheap printed books reach the market towns of {province}. Every farmer now argues law and philosophy."
+    chance_bp: 600
+    needs_adopted: [printing_press]
+    knowledge_bp: 500
+    influence: {clergy: -500}
+    unrest_bp: 300
+
+  - id: gunpowder_levels_knights
+    name: The end of the horsemen
+    kind: consequence
+    message: "A farmer with a handgun shot an equestrian off his horse in {province}. The nobles feel the ground shift."
+    chance_bp: 700
+    needs_adopted: [gunpowder]
+    influence: {nobility: -900}
+    legitimacy_bp: -300
+
+  - id: paper_money_inflation
+    name: Inflation
+    kind: consequence
+    message: "The mints print too freely: prices in {province} double in a season, and savings melt away."
+    chance_bp: 800
+    needs_adopted: [paper_money]
+    wealth_bp: -2000
+    unrest_bp: 600
+
+  - id: clock_discipline
+    name: The tyranny of the clock
+    kind: consequence
+    message: "Workshops in {province} now ring a bell for every hour. Work is steadier; the workers grumble."
+    chance_bp: 500
+    needs_adopted: [mechanical_clock]
+    materials_bp: 1000
+    unrest_bp: 200
+    influence: {guilds: 400}
+
+  - id: telescope_heresy
+    name: The heavens are wrong
+    kind: consequence
+    message: "Astronomers in {province} say the heavens are not as the augurs taught. The colleges answer them."
+    chance_bp: 600
+    needs_adopted: [telescope]
+    influence: {clergy: -600}
+    suspicion_bp: 500
+    knowledge_bp: 800
+
+  - id: newspapers_opinion
+    name: Public opinion
+    kind: consequence
+    message: "The news-sheets of {province} criticise the Senate. A magistrate must now win arguments, not just battles."
+    chance_bp: 700
+    needs_adopted: [newspapers]
+    legitimacy_bp: -400
+    influence: {guilds: 500, nobility: -300}
+
+  - id: schools_restless_youth
+    name: Restless scholars
+    kind: consequence
+    message: "Students of {province} who learned to read have read things the Senate would rather they had not."
+    chance_bp: 500
+    needs_adopted: [universities]
+    knowledge_bp: 1000
+    unrest_bp: 400
+
+  - id: steam_unemployment
+    name: Machine breakers
+    kind: consequence
+    message: "Hand weavers in {province}, put out of work by machines, smash the new engines by night."
+    chance_bp: 800
+    needs_adopted: [spinning_machine]
+    unrest_bp: 700
+    materials_bp: -800
+    influence: {guilds: -700}
+
+  - id: railway_boom
+    name: Railway fever
+    kind: consequence
+    message: "Everyone in {province} wants shares in the new railways. Fortunes are made, and some are lost."
+    chance_bp: 600
+    needs_adopted: [railways]
+    wealth_bp: 1500
+    influence: {guilds: 500}
+
+  - id: quarantine_trade_loss
+    name: Ships held at the harbour
+    kind: consequence
+    message: "Quarantine keeps the merchant ships of {province} waiting forty days. The merchants count their losses."
+    chance_bp: 600
+    coastal: true
+    needs_adopted: [quarantine]
+    wealth_bp: -800
+    influence: {guilds: -300}
+
+  - id: vaccination_fear
+    name: Fear of the needle
+    kind: consequence
+    message: "Rumours in {province} say the cowpox cure turns children into cattle. Mothers hide from the doctors."
+    chance_bp: 700
+    needs_adopted: [vaccination]
+    unrest_bp: 400
+    suspicion_bp: 600
+
+  - id: compass_adventurers
+    name: Adventurers sail
+    kind: consequence
+    message: "With the compass, captains from {province} sail beyond sight of land, and some come back rich."
+    chance_bp: 500
+    coastal: true
+    needs_adopted: [compass]
+    wealth_bp: 1200
+
+  - id: written_law_lawyers   # Cicero, De legibus 2.59; Livy 9.46 (Cn. Flavius publishes the legal calendar)
+    name: Lawyers
+    kind: consequence
+    message: "Now that the laws stand in bronze in the Forum of {province}, clever men argue about every word of them, and a clerk publishes the days for lawsuits."
+    chance_bp: 400
+    needs_adopted: [written_law]
+    legitimacy_bp: 300
+    influence: {nobility: -300, guilds: 300}

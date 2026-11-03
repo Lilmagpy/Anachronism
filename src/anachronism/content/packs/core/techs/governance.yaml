@@ -1,7 +1,9 @@
 schema_version: 1
+# Governance and trade, in Roman terms (see agriculture.yaml for the dating rule).
 techs:
   - id: standard_measures
     name: Standard weights and measures
+    keywords: [standard weights, measures, units, standardise, standardize, weights and measures, metric, roman foot, libra, pound, modius, the as]
     category: governance
     year: -2500
     complexity: 2
@@ -10,30 +12,42 @@ techs:
       - {type: trade_income, bp: 800}
       - {type: wealth_output, bp: 500}
       - {type: labour_output, bp: 200}
-    flavour: One measure of grain means the same in every market.
+    flavour: One modius of grain means the same in every market.
+    history: "The Twelve Tables (450 BC) set fines in pounds of bronze (asses), so weight was already a public standard (Gellius 20.1.12-13); the Roman foot, the libra of twelve ounces and the modius were kept as public standards, later on the Capitol (CIL VI 282, the mensa ponderaria)."
+    sources: ["Gellius 20.1.12-13 # unverified", "Festus s.v. publica pondera # unverified"]
+    confidence: medium
 
   - id: coinage
     name: Coinage
+    keywords: [coins, coinage, money, currency, mint, minting, silver coin, didrachm, aes grave, bronze money, struck money]
     category: trade
-    year: -600
+    year: -269
     complexity: 2
     prerequisites: [bronze_working, standard_measures]
     effects: [{type: trade_income, bp: 1000}, {type: wealth_output, bp: 800}]
-    flavour: Metal of known weight, stamped with the king's promise.
+    flavour: Metal of known weight, stamped with the Republic's promise.
+    history: "Rome long paid in weighed bronze; Servius Tullius was said to have stamped it first (Pliny NH 33.43). Cast bronze bars and the first struck silver didrachms came with the Pyrrhic war, and Pliny dates Rome's first silver coin to 269 BC, five years before the First Punic war (Pliny NH 33.44). Lydia had struck coins since about 600 BC."
+    sources: ["Pliny NH 33.42-44 # unverified", "Livy, Periochae 15 (silver first coined) # unverified"]
+    confidence: medium
 
   - id: postal_relay
-    name: Postal relay stations
+    name: Relay post (cursus publicus)
+    keywords: [post, postal, messengers, relay stations, courier, mail, cursus publicus, posting stations, tabellarii, fresh horses, dispatch riders]
     category: governance
-    year: -550
+    year: -20
     complexity: 2
     prerequisites: [roads, horse_riding]
     effects: [{type: information_speed, bp: 1200}, {type: legitimacy, bp: 100}]
-    flavour: Fresh horses every day's ride, and the king's word outruns rumour.
+    flavour: Fresh horses at every station, and the Senate's word outruns rumour.
+    history: "The Republic had no public post: magistrates and the tax companies sent their own couriers (tabellarii; Cicero, Att. 1.13.1). Augustus first stationed young men at short intervals along the military roads, then carriages, so that news from the provinces reached him quickly (Suet. Aug. 49.3), about 20 BC. Persia's Royal Road had relays by 500 BC."
+    sources: ["Suetonius, Augustus 49.3", "Cicero, Ad Atticum 1.13.1 # unverified"]
+    confidence: medium
 
   - id: civil_service
-    name: Merit-based civil service
+    name: Salaried officials (a civil service)
+    keywords: [civil service, exams, examinations, bureaucracy, officials, merit, clerks, scribae, paid officials, procurators]
     category: governance
-    year: -130
+    year: 41
     complexity: 3
     prerequisites: [writing, schools]
     requires: {literacy_bp: 400}
@@ -42,26 +56,37 @@ techs:
       - {type: wealth_output, bp: 700}
       - {type: legitimacy, bp: 150}
       - {type: unrest, bp: -100}
-    flavour: Offices won by examination, not by birth.
+    flavour: Offices held by trained men for pay, not by senators for a year.
+    history: "The Republic ran on yearly magistrates and their clerks (scribae), a paid guild of humble standing (Cicero, Verr. 2.3.182-184). A standing administration of paid men came only under Claudius, whose freedmen ran the treasury and the petitions (Suet. Claud. 28), from AD 41. Han China chose officials by examination from 165 BC; Rome never did."
+    sources: ["Cicero, In Verrem 2.3.182-184 # unverified", "Suetonius, Claudius 28 # unverified"]
+    confidence: medium
 
   - id: paper_money
     name: Paper money
+    keywords: [paper money, banknotes, notes, credit, bills]
     category: trade
-    year: 1024
+    year: 1661
     complexity: 3
     prerequisites: [paper, woodblock_printing, coinage]
     requires: {widespread: [coinage]}
     resistance: [{group: guilds, level: 1}]
     effects: [{type: trade_income, bp: 1200}, {type: wealth_output, bp: 800}]
     flavour: A printed promise, worth as much as the state that backs it.
+    history: "Roman credit ran on bankers' ledgers and letters (Cicero, Att. 12.24.1), never on paper that passed from hand to hand. Song China printed money in 1024; Europe's first banknotes were Stockholm's in 1661."
+    sources: ["Cicero, Ad Atticum 12.24.1 # unverified"]
+    confidence: medium
 
   - id: bookkeeping
-    name: Double-entry bookkeeping
+    name: Account books (tabulae accepti et expensi)
+    keywords: [bookkeeping, accounting, ledgers, accounts, audit, account books, tabulae, codex accepti, keep accounts, steward's accounts]
     category: trade
-    year: 1300
+    year: -200
     complexity: 2
     visibility: 1
-    prerequisites: [place_value_numerals]
-    requires: {literacy_bp: 500}
+    prerequisites: [writing]
+    requires: {literacy_bp: 200}
     effects: [{type: wealth_output, bp: 1000}, {type: trade_income, bp: 500}]
-    flavour: Every debit has its credit, and every theft leaves a trace.
+    flavour: Every coin written in, every coin written out, and the steward cannot cheat.
+    history: "A Roman head of household kept a day-book and a ledger of receipts and payments (tabulae accepti et expensi), which stood as evidence in court (Cicero, Pro Roscio Comoedo 4-9); Cato tells the master to go over his steward's accounts on every visit (Cato 2.5-6). Double entry with its balancing credits was Italian, about 1300."
+    sources: ["Cicero, Pro Roscio Comoedo 4-9 # unverified", "Cato, De agri cultura 2.5-6"]
+    confidence: medium

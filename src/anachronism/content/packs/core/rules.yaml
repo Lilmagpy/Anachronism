@@ -63,6 +63,11 @@ rules:
     riot_chance_per_excess_bp: 20000
     riot_loss_bp: 2000
     riot_legitimacy_bp: 400
+    death_chance_per_year_of_age_bp: 70
+    succession_legitimacy_bp: 800
+    succession_crisis_below_bp: 4000
+    succession_crisis_unrest_bp: 1500
+    happening_frequency_bp: 10000
     revolt_threshold_bp: 8000
     revolt_chance_per_excess_bp: 20000
     revolt_unrest_release_bp: 2000
@@ -83,3 +88,72 @@ rules:
     witchcraft_unrest_bp: 1500
     fraud_legitimacy_bp: 1500
     inspired_legitimacy_bp: 800
+    explain_wealth_per_1000: 60
+    explain_suspicion_bp: 2000
+    explain_belief_legitimacy_bp: 5000
+    sages_knowledge_per_1000: 30
+    sages_suspicion_bp: 3500
+    explain_cooldown_turns: 3
+  rulings:
+    max_ideas_per_message: 3
+    max_effects: 3
+    max_stubs: 3
+    max_prerequisites: 4
+    adviser_unrest_bp: 200
+    adviser_suspicion_bp: 300
+    min_complexity_per_prerequisite_tier: 1
+  rivals:
+    news_ahead_years: 150
+    news_years_per_hop: 6
+    garble_per_hop_bp: 1500
+    clarify_years: 20
+    free_agent_grievance_bp: 4000
+    imitation_chance_bp: 3000
+    strength_per_worker_bp: 10000
+    capture_per_excess_bp: 4000
+    max_capture_bp: 5000
+    capital_defence_bp: 20000
+    last_stand_defence_bp: 30000
+    player_grace_turns: 2
+    war_losses_bp: 150
+    war_unrest_bp: 300
+    weariness_per_turn_bp: 1200
+    weariness_per_loss_bp: 1500
+    peace_weariness_bp: 8000
+    war_grievance_bp: 3000
+    grievance_fade_bp: 1000
+    aggressive_war_chance_bp: 2500
+    trade_wealth_per_1000_bp: 300
+    faith_spread_bp: 800
+    faith_rooted_resistance_bp: 1000
+    missionary_wealth: 40
+    missionary_chance_bp: 3500
+    missionary_rooted_bp: 3000
+    shared_faith_fade_bp: 1000
+    festival_wealth_per_1000: 60
+    festival_legitimacy_bp: 600
+    festival_unrest_bp: 800
+    mercenary_wealth_per_1000: 150
+    mercenary_strength_bp: 3000
+    mercenary_turns: 2
+    seal_turns: 3
+    seal_news_bp: 10000
+    rumour_wealth_per_1000: 80
+    envoy_wealth: 60
+    capital_loss_legitimacy_bp: 1500
+    military_victory_share_bp: 5000
+    economic_victory_share_bp: 6000
+    economic_trading_weight_bp: 5000
+    economic_income_share_bp: 5000
+    economic_partners_share_bp: 5000
+    alliance_trust_turns: 2
+    coalition_share_bp: 3500
+    tribute_strength_ratio_bp: 25000
+    coalition_chance_bp: 1500
+    cultural_victory_share_bp: 4000
+    cultural_influence_needed_bp: 1000
+    victory_margin_bp: 2000
+  # Difficulty levels: overrides to the rival rules above ("normal" is the rules as written).
+  difficulty:
+    easy: {aggressive_war_chance_bp: 1200, capture_per_excess_bp: 2500, player_grace_turns: 5, coalition_chance_bp: 700}
+    hard: {aggressive_war_chance_bp: 3500, capture_per_excess_bp: 5000, player_grace_turns: 1, coalition_chance_bp: 2500}

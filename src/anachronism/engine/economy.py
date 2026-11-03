@@ -11,6 +11,9 @@ from dataclasses import dataclass
 from itertools import groupby
 
 from anachronism.content.schema import Access, EffectType
+from anachronism.engine.actions import Priority
+from anachronism.engine.buildings import Bonus, bonus, with_building
+from anachronism.engine.buildings import upkeep as building_upkeep
 from anachronism.engine.effects import Effects
 from anachronism.engine.fixed import BP, apply_bp, div_round, ratio_bp, with_bonus
 from anachronism.engine.state import GameState, Project, Stockpiles
@@ -104,7 +107,13 @@ def project_costs(state: GameState, node_id: str) -> Costs:
         materials = apply_bp(materials, rules.heavy_materials_bp)
     years_ahead = max(0, node.year - state.year)
     premium = min(rules.anachronism_cap_bp, years_ahead * rules.anachronism_bp_per_century // 100)
-    base = Costs(rules.labour[index], materials, rules.knowledge[index], rules.wealth[index])
+    scale = state.world.cost_scale
+    base = Costs(
+        rules.labour[index] * scale,
+        materials * scale,
+        rules.knowledge[index] * scale,
+        rules.wealth[index] * scale,
+    )
     return Costs(*(per_turn(state, with_bonus(base.get(r), premium)) for r in RESOURCES))
 
 
@@ -125,8 +134,14 @@ def active_projects(state: GameState, civ_id: str) -> list[Project]:
     return sorted(projects, key=lambda p: (p.priority.rank, p.started_turn, p.node_id))
 
 
-def allocate(state: GameState, civ_id: str, workforce: int, stock: Stockpiles) -> Allocation:
-    """Fund active projects from the workforce and start-of-turn stockpiles (no mutation)."""
+def allocate(
+    state: GameState, civ_id: str, workforce: int, stock: Stockpiles, surplus: int | None = None
+) -> Allocation:
+    """Fund active projects from the workforce and start-of-turn stockpiles (no mutation).
+
+    Low-priority projects are steady work (D-112): they take only spare hands, the
+    ``surplus`` left after higher tiers, never farmers from the fields.
+    """
     available = {
         "labour": workforce,
         "materials": stock.materials,
@@ -136,8 +151,12 @@ def allocate(state: GameState, civ_id: str, workforce: int, stock: Stockpiles) -
     funding: dict[str, int] = {}
     requested = Costs()
     used = Costs()
-    for _, tier_projects in groupby(active_projects(state, civ_id), key=lambda p: p.priority):
+    tiers = groupby(active_projects(state, civ_id), key=lambda p: p.priority)
+    for priority, tier_projects in tiers:
         tier = list(tier_projects)
+        steady = priority is Priority.LOW and surplus is not None
+        if steady and surplus is not None:
+            available["labour"] = min(available["labour"], max(0, surplus - used.labour))
         requests = {p.node_id: project_costs(state, p.node_id) for p in tier}
         totals = sum(requests.values(), Costs())
         fraction = {
@@ -152,35 +171,53 @@ def allocate(state: GameState, civ_id: str, workforce: int, stock: Stockpiles) -
             for resource in RESOURCES:
                 available[resource] -= spent.get(resource)
             funding[project.node_id] = share
-            requested += request
+            # steady work asks only for what spare hands give: going slowly strains no one
+            requested += spent if steady else request
             used += spent
     return Allocation(funding, requested, used)
 
 
-def production(state: GameState, civ_id: str, effects: Effects, production_bp: int) -> Production:
-    """What owned provinces produce this turn, after effects and labour diversion."""
+def _province_raw(
+    state: GameState, civ_id: str, province_id: str, built: Bonus
+) -> tuple[int, int, int, int, int, int]:
+    """One province's raw yield (food, materials, taxes, trade, knowledge, flat materials)."""
     economy = state.world.rules.economy
     literacy = state.civs[civ_id].stats.literacy_bp
-    food = materials = taxes = trade = knowledge = flat_materials = 0
-    for province_id in state.owned_provinces(civ_id):
-        province = state.provinces[province_id]
-        geography = state.world.geography[province_id]
-        terrain = state.world.terrain[geography.terrain]
-        people = province.population
-        food += people * terrain.food_bp
-        materials += people * terrain.materials_bp
-        taxes += people * economy.wealth_per_1000_bp
-        trade_bp = economy.base_trade_bp
-        trade_bp += economy.coastal_trade_bp if geography.coastal else 0
-        trade_bp += economy.river_trade_bp if geography.river else 0
-        trade += people * economy.wealth_per_1000_bp * trade_bp // BP
-        knowledge += people * economy.knowledge_per_1000_bp
-        knowledge += people * literacy // BP * economy.knowledge_per_1000_literate_bp
-        for access in province.resources.values():
-            if access is Access.ACCESSIBLE:
-                flat_materials += economy.resource_materials_accessible
-            elif access is Access.LIMITED:
-                flat_materials += economy.resource_materials_limited
+    province = state.provinces[province_id]
+    geography = state.world.geography[province_id]
+    terrain = state.world.terrain[geography.terrain]
+    people = province.population
+    ruin = 2 if province.ravaged else 1  # pillaged fields and burned workshops
+    food = with_bonus(people * terrain.food_bp // ruin, built.food_bp)
+    materials = with_bonus(people * terrain.materials_bp // ruin, built.materials_bp)
+    taxes = with_bonus(people * economy.wealth_per_1000_bp // ruin, built.wealth_bp)
+    trade_bp = economy.base_trade_bp
+    trade_bp += economy.coastal_trade_bp if geography.coastal else 0
+    trade_bp += economy.river_trade_bp if geography.river else 0
+    if province.blockaded:  # enemy warships close the harbours (D-107)
+        blockade = state.world.rules.armies.blockade_trade_bp
+        trade_bp -= economy.coastal_trade_bp if geography.coastal else 0
+        trade_bp -= apply_bp(trade_bp, blockade)
+    trade = with_bonus(people * economy.wealth_per_1000_bp * trade_bp // BP, built.wealth_bp)
+    learned = people * economy.knowledge_per_1000_bp
+    learned += people * literacy // BP * economy.knowledge_per_1000_literate_bp
+    knowledge = with_bonus(learned, built.knowledge_bp)
+    flat = 0
+    for access in province.resources.values():
+        if access is Access.ACCESSIBLE:
+            flat += economy.resource_materials_accessible
+        elif access is Access.LIMITED:
+            flat += economy.resource_materials_limited
+    return food, materials, taxes, trade, knowledge, flat
+
+
+def _finish(
+    state: GameState,
+    raw: tuple[int, int, int, int, int, int],
+    effects: Effects,
+    production_bp: int,
+) -> Production:
+    food, materials, taxes, trade, knowledge, flat_materials = raw
 
     def finish(total: int, effect: EffectType, diverted: bool = True) -> int:
         amount = with_bonus(div_round(total, _PER_1000), effects[effect])
@@ -202,6 +239,35 @@ def production(state: GameState, civ_id: str, effects: Effects, production_bp: i
     )
 
 
+def production(state: GameState, civ_id: str, effects: Effects, production_bp: int) -> Production:
+    """What owned provinces produce this turn, after effects and labour diversion."""
+    totals = [0, 0, 0, 0, 0, 0]
+    for province_id in state.owned_provinces(civ_id):
+        # its markets, workshops, granaries (D-111)
+        raw = _province_raw(state, civ_id, province_id, bonus(state, province_id))
+        totals = [a + b for a, b in zip(totals, raw, strict=True)]
+    food, materials, taxes, trade, knowledge, flat = totals
+    return _finish(state, (food, materials, taxes, trade, knowledge, flat), effects, production_bp)
+
+
+def province_output(
+    state: GameState, civ_id: str, province_id: str, effects: Effects, extra: str = ""
+) -> Production:
+    """What one province makes in a turn, before work is diverted to projects.
+
+    With the building ``extra`` added, what it would make: so the player can see what a
+    building is worth here, in plain numbers (D-127).
+    """
+    built = bonus(state, province_id)
+    if extra and extra in state.world.buildings:
+        kind = state.world.buildings[extra]
+        replaced = kind.replaces if kind.replaces in state.provinces[province_id].buildings else ""
+        built = with_building(
+            built, kind, state.world.buildings.get(replaced) if replaced else None
+        )
+    return _finish(state, _province_raw(state, civ_id, province_id, built), effects, BP)
+
+
 def granary_capacity(state: GameState, civ_id: str, effects: Effects) -> int:
     """Food the civilisation can store."""
     per_1000 = state.world.rules.economy.granary_per_1000_bp
@@ -215,7 +281,7 @@ def run_economy(state: GameState, civ_id: str, effects: Effects) -> EconomyOutco
     civ = state.civs[civ_id]
     stock = civ.stockpiles
     work = labour(state, civ_id, effects)
-    allocation = allocate(state, civ_id, work.workforce, stock)
+    allocation = allocate(state, civ_id, work.workforce, stock, work.surplus)
     stock.materials -= allocation.used.materials
     stock.knowledge -= allocation.used.knowledge
     stock.wealth -= allocation.used.wealth
@@ -231,6 +297,7 @@ def run_economy(state: GameState, civ_id: str, effects: Effects) -> EconomyOutco
     upkeep = per_turn(
         state, rules.economy.admin_upkeep_per_province * len(state.owned_provinces(civ_id))
     )
+    upkeep += building_upkeep(state, civ_id)
     wealth_balance = stock.wealth + produced.wealth - upkeep
     wealth_shortfall_bp = ratio_bp(-wealth_balance, upkeep) if wealth_balance < 0 else 0
     stock.wealth = max(0, wealth_balance)
@@ -246,6 +313,7 @@ def run_economy(state: GameState, civ_id: str, effects: Effects) -> EconomyOutco
         deaths = min(state.population(civ_id), missing * rules.population.deaths_per_missing_food)
         _apply_deaths(state, civ_id, deaths)
 
+    _waste_hoards(state, stock, produced)
     capacity = granary_capacity(state, civ_id, effects)
     half = capacity // 2
     if stock.food > half:
@@ -263,6 +331,17 @@ def run_economy(state: GameState, civ_id: str, effects: Effects) -> EconomyOutco
         deaths=deaths,
         wealth_shortfall_bp=min(BP, wealth_shortfall_bp),
     )
+
+
+def _waste_hoards(state: GameState, stock: Stockpiles, produced: Production) -> None:
+    """Stores far beyond what a realm uses waste away: a share of the excess each decade."""
+    rules = state.world.rules.economy
+    loss = rate_per_turn(state, rules.hoard_loss_bp)
+    for name in ("materials", "knowledge", "wealth"):
+        keep = getattr(produced, name) * rules.hoard_turns
+        held: int = getattr(stock, name)
+        if held > keep > 0:
+            setattr(stock, name, held - apply_bp(held - keep, loss))
 
 
 def _apply_deaths(state: GameState, civ_id: str, deaths: int) -> None:

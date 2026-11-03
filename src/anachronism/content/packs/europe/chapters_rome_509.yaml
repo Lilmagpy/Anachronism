@@ -1,0 +1,1147 @@
+schema_version: 1
+# Chronicle mode: Rome from the Republic's first year to the eve of the Gallic sack, 509-391 BC.
+# Rome had no king and no single ruler: two consuls a year, a Senate, dictators in emergencies, and
+# from 451 and 444 other boards. So the "ruler" of each scene is the leading magistrate of the crisis.
+# Every fact below was read against Livy (English text on Perseus), with Polybius, Dionysius of
+# Halicarnassus, Herodotus, Tacitus and Pliny where named, in October 2026. Livy's dates before about
+# 300 BC are the traditional ones and are often doubtful by a year or more; each scene says where the
+# sources disagree. Names and numbers that Livy flags as uncertain (the first dictator, Cossus's rank,
+# the place of the secession) are told as uncertain. benchmark_provinces counts the provinces of this
+# map the real Rome held at that date.
+chapters:
+  - id: r509_collatinus
+    scenario: rome_509
+    civ: rome
+    year: -509
+    until_year: -508
+    title: "The Name of Tarquin"
+    place: "The assembly, Rome"
+    speaker: ruler
+    speaker_name: "Lucius Junius Brutus"
+    speaker_title: "Consul"
+    benchmark_provinces: 1
+    story: >-
+      The kings are gone. Tarquinius the Proud was shut out of the city, the centuries have chosen
+      two consuls in his place, and every Roman has sworn that no king shall ever reign here again.
+      One of the two consuls is Lucretia's husband, Lucius Tarquinius Collatinus.
+
+
+      But men are muttering in the Forum. His family has ruled Rome since Tarquinius Priscus; the
+      Tarquins, they say, never learned to live as private citizens, and the name itself is a danger
+      to liberty. You, Brutus, have called the people together to speak of it. You do not like to
+      accuse a man who has done no wrong. Collatinus's father-in-law, Spurius Lucretius, and the
+      leading senators are already pleading with him. What does the assembly ask of him?
+    choices:
+      - label: "Ask him to resign, and let his goods go with him"
+        historical: true
+        legitimacy_bp: 400
+        unrest_bp: -200
+        influence: {nobility: -200}
+        outcome: >-
+          Collatinus is afraid that his goods will be taken from him, and he lays down the consulship
+          and goes to Lavinium with all he owns. The Senate decrees exile for the whole Tarquin family.
+          The centuries elect Publius Valerius, who helped drive out the kings, to be Brutus's colleague.
+      - label: "Let him serve out his year"
+        legitimacy_bp: -400
+        unrest_bp: 600
+        influence: {nobility: 200}
+        outcome: >-
+          Collatinus keeps the fasces. The talk in the Forum does not stop, and every plot to bring the
+          Tarquins back now has a name in the consulship to point to.
+      - label: "Send him away, and strip the whole family of its property"
+        legitimacy_bp: 100
+        unrest_bp: 300
+        outcome: >-
+          The Senate and the people agree, and Collatinus goes. The royal family's property is not
+          returned, but nor is it spared; the Tarquins have nothing to lose by war.
+        deeds: {grudges: {e5_tarquinii: 1500}}
+    history: >-
+      In Livy's account (2.2) Brutus asked Collatinus to resign in the assembly; Collatinus, fearing
+      the loss of his property, laid down the consulship and moved all his goods to Lavinium. The people
+      decreed the exile of the whole Tarquin family and the centuries elected Publius Valerius in his
+      place. Polybius (3.22) names the consuls of this first year as Brutus and Marcus Horatius, which is
+      the name Livy gives to the consul who later dedicated the temple of Jupiter on the Capitol, so the
+      lists of the earliest consuls already differed in antiquity.
+    sources: ["Livy 1.60.3-4", "Livy 2.2.3-11", "Polybius 3.22.1"]
+
+  - id: r509_conspiracy
+    scenario: rome_509
+    civ: rome
+    year: -509
+    until_year: -507
+    after: [r509_collatinus]
+    title: "The Consul's Sons"
+    place: "The tribunal, Rome"
+    speaker: ruler
+    speaker_name: "Lucius Junius Brutus"
+    speaker_title: "Consul"
+    benchmark_provinces: 1
+    story: >-
+      Envoys have come from the Tarquins. They say they ask only for the royal family's property; the Senate
+      has debated it for days, and has been inclined to give it back. While they wait, the envoys have been
+      sounding out the young nobles who liked the old days: men who found equal law dull, and who miss a
+      king who could be asked for a favour.
+
+
+      A slave has overheard a supper at the house of the Vitellii, where the plot was talked over, and when
+      the letters for Tarquin had been handed to the envoys he went to the consuls. Everything has been
+      seized: the letters, the envoys and the conspirators. Among the prisoners are your own two sons,
+      Titus and Tiberius, whose mother was a sister of the Vitellii. The whole city has come to watch what
+      the consul will do.
+    choices:
+      - label: "Let the law take its course on all of them"
+        historical: true
+        legitimacy_bp: 800
+        unrest_bp: 300
+        influence: {nobility: -300}
+        outcome: >-
+          The prisoners are tied to the stake. The consul himself has to order the sentence, and his
+          face, Livy says, shows every man the father's grief. They are scourged and beheaded; the slave
+          who informed is paid from the treasury and freed, and is said to be the first man freed by the
+          rod. The Tarquins' goods are given to the people to plunder, so that no one can hope to make his
+          peace with the exiles.
+      - label: "Exile the young men, and spare your sons"
+        legitimacy_bp: -800
+        unrest_bp: 500
+        influence: {nobility: 300}
+        outcome: >-
+          The young nobles are sent out of Rome. The people ask why the consul's blood should be
+          cheaper than theirs, and the next plot meets less fear of the law.
+      - label: "Execute the others, but spare your own sons"
+        legitimacy_bp: -1200
+        unrest_bp: 800
+        outcome: >-
+          The sons of the consul walk free while their friends die. The Republic is two months old, and
+          already the law has two faces.
+    history: >-
+      Livy (2.3-2.5) tells that the sons of Brutus were scourged and beheaded with the other conspirators,
+      and that the consul himself carried out the sentence. The slave who informed was rewarded with money,
+      freedom and citizenship; the royal property was handed to the plebs to plunder, and the Tarquins'
+      land between the city and the Tiber was consecrated to Mars and became the Campus Martius. Tarquin
+      then went round the Etruscan cities seeking help, and found it at Veii and Tarquinii (2.6).
+    sources: ["Livy 2.3.1-2.5.10", "Livy 2.6.2-6"]
+
+  - id: r509_porsenna
+    scenario: rome_509
+    civ: rome
+    year: -508
+    until_year: -505
+    needs_alive: [e5_clusium]
+    title: "Porsenna at the Janiculum"
+    place: "The Sublician bridge, Rome"
+    speaker: ruler
+    speaker_name: "Publius Valerius Publicola"
+    speaker_title: "Consul"
+    benchmark_provinces: 1
+    story: >-
+      The Tarquins have taken refuge with Lars Porsenna, king of Clusium, and told him that if kings
+      can be driven out the idea will spread. He has marched an army to the Janiculum hill, and the
+      Romans have crowded inside their walls with the Tiber behind them. Never, Livy says, had the
+      Senate been so afraid. It is afraid of the enemy outside, and of its own people, who might
+      let the princes in for the sake of peace.
+
+
+      The corn is short and dear. A single man on the wooden bridge, Horatius Cocles, has bought time
+      for his friends to cut it down behind him. A young noble, Gaius Mucius, has crept into the
+      Etruscan camp to kill the king, killed his secretary by mistake, and held his own right hand in the
+      fire in front of Porsenna to show him what the Romans will endure. Porsenna has sent envoys to talk
+      of peace. What will you give him?
+    choices:
+      - label: "Refuse the Tarquins, give hostages and return Veii's land"
+        historical: true
+        wealth_bp: -300
+        legitimacy_bp: 600
+        outcome: >-
+          Porsenna asks for the Tarquins to be restored, and is refused. He gets the lands that had been
+          taken from Veii, and hostages from Rome, and then he marches away. The hostage Cloelia slips her
+          guards and swims the Tiber with a band of girls; Rome sends her back as the treaty requires, and
+          Porsenna, admiring her, gives her half the hostages to choose from.
+        deeds: {peace_with: [e5_clusium]}
+      - label: "Take the Tarquins back to end the siege"
+        legitimacy_bp: -3000
+        unrest_bp: 1500
+        influence: {nobility: 300}
+        outcome: >-
+          The gates open. Rome has a king again, and an Etruscan army on the Janiculum to defend him.
+          The oath of the previous year has lasted less than a twelvemonth.
+        deeds: {tributaries: [e5_clusium]}
+      - label: "Fight on, and stake everything on the walls"
+        food_bp: -1500
+        materials_bp: -1000
+        legitimacy_bp: 200
+        unrest_bp: 800
+        outcome: >-
+          The corn runs out and the consuls ration the last of it. The siege can be held for a while, but
+          the cost of holding it falls on the poorest.
+        deeds: {war_with: [e5_clusium], men: 4000}
+    history: >-
+      Livy (2.9-2.15) says Porsenna made peace on condition that Rome return the land taken from Veii and
+      give hostages; he failed to get the Tarquins restored, withdrew from the Janiculum, and sent part of
+      his army under his son Arruns to attack Aricia, where Latin and Cumaean troops cut it to pieces and
+      Arruns died. Livy admits that a Roman custom of selling "the goods of King Porsenna" does not fit a
+      defeated enemy. Tacitus (Histories 3.72) speaks of Porsenna as receiving the city when it was
+      surrendered, and Pliny (Natural History 34.139) says Porsenna's treaty allowed iron to be used only
+      for farming, which does not sound like a Roman victory.
+    sources: ["Livy 2.9.1-2.15.6", "Tacitus, Histories 3.72", "Pliny, Natural History 34.139 (older numbering 34.39)"]
+
+  - id: r509_clausus
+    scenario: rome_509
+    civ: rome
+    year: -504
+    until_year: -500
+    title: "A Sabine Comes to Rome"
+    place: "The Senate house, Rome"
+    speaker: ruler
+    speaker_name: "Publius Valerius Publicola"
+    speaker_title: "Consul"
+    benchmark_provinces: 1
+    story: >-
+      The Sabines are in two minds about war with Rome, and have split. Attius Clausus, who argued for
+      peace, has been shouted down by the war party and cannot stand against them. He has come to Rome
+      with a large band of clients and asks to be received.
+
+
+      Rome is poor in men and has enemies on every side. A noble house with its own followers might be
+      worth more than a legion. The old families may not welcome a new patrician.
+    choices:
+      - label: "Give them citizenship, land across the Anio and a place in the Senate"
+        historical: true
+        legitimacy_bp: 300
+        influence: {nobility: 200}
+        volunteers_bp: 20
+        outcome: >-
+          The newcomers are made citizens and given land across the Anio. Their district becomes the Old
+          Claudian tribe, and Attius, now called Appius Claudius, is enrolled in the Senate and soon counts
+          among its leaders. The Sabine war party, deprived of its opponents, is left to the consuls.
+      - label: "Admit the clients as citizens, but not Attius to the Senate"
+        legitimacy_bp: 100
+        influence: {nobility: 300}
+        outcome: >-
+          The followers are settled, but the old families keep their order closed. Attius is a rich man
+          with no voice, which is a dangerous thing to leave in any republic.
+      - label: "Turn them away"
+        legitimacy_bp: -100
+        outcome: >-
+          The Sabine exiles go elsewhere. The Sabines' war party takes the field against Rome unopposed
+          at home.
+        deeds: {war_with: [e5_sabines]}
+    history: >-
+      Livy (2.16) records that Attius Clausus, later known at Rome as Appius Claudius, left Inregillus with a
+      large band of clients and was made a citizen with land across the Anio, giving rise to the "Old
+      Claudian tribe"; he entered the Senate and soon stood among its leaders. The consuls then crushed
+      the Sabines and triumphed. The same chapter says that Publius Valerius Publicola died soon after,
+      so poor that the state paid for his funeral.
+    sources: ["Livy 2.16.1-7"]
+
+  - id: r509_regillus
+    scenario: rome_509
+    civ: rome
+    year: -496
+    until_year: -492
+    needs_alive: [e5_latins]
+    title: "Lake Regillus"
+    place: "The Roman camp above the lake"
+    speaker: general
+    speaker_name: "Aulus Postumius"
+    speaker_title: "Dictator"
+    benchmark_provinces: 1
+    story: >-
+      The Latin war has smouldered for years. Octavius Mamilius of Tusculum, Tarquin's son-in-law and the
+      first man among the Latins, has gathered the thirty Latin cities and joined them to the exiles. Praeneste
+      has gone over to Rome, but the rest hold. Tarquinius himself, old and weak, is with their army.
+
+
+      The Senate has named you dictator, and Titus Aebutius is your master of the horse. You meet the
+      Latins at Lake Regillus in the land of Tusculum. The nobles on both sides are in the front rank, and
+      the exiles' cohort, with the king's son at its head, is fighting like men who have lost everything.
+      The line is wavering. What does the dictator do?
+    choices:
+      - label: "Bid the knights dismount, and vow a temple to Castor"
+        historical: true
+        legitimacy_bp: 600
+        influence: {clergy: 300, nobility: 200}
+        outcome: >-
+          The young nobles leap from their horses and cover the front rank with their shields, and the
+          foot see them sharing the danger and take heart. Mamilius is killed by Titus Herminius, who dies
+          of a javelin as he strips the body. The Latin line breaks and the camp is taken. The dictator
+          and his master of the horse return and triumph.
+        deeds: {war_with: [e5_latins], men: 3000}
+      - label: "Hold the camp and ask the Latins for a truce"
+        legitimacy_bp: -300
+        unrest_bp: 300
+        outcome: >-
+          The Latins have their allies and their pride, and the exiles are with them. A truce is easily
+          granted, and as easily broken in the spring.
+        deeds: {peace_with: [e5_latins]}
+      - label: "Offer the Latins equal terms before the armies meet"
+        legitimacy_bp: -200
+        wealth_bp: -300
+        influence: {nobility: -300}
+        outcome: >-
+          Mamilius is not listening. The Latins smell weakness, and the Roman nobility, angry at a dictator
+          who bargains before battle, hold his offer against him.
+    history: >-
+      Livy (2.19-2.20) tells the battle under the dictator Aulus Postumius and master of the horse Titus
+      Aebutius: Mamilius wounded Aebutius and was killed by Herminius, the knights dismounted at the dictator's
+      word, and the dictator vowed a temple to Castor and rewards for the first men into the Latin camp. Livy
+      puts it about 499 BC, but admits that others place it two years later, under the consuls Postumius and
+      Verginius (2.21.3); Dionysius (6.2) dates the battle to that later year, which is why this chapter stands
+      at 496. In either account Tarquin, after the Latin defeat, went to Aristodemus at Cumae and died there
+      (Livy 2.21.5). Dionysius also reports that the Dioscuri were seen fighting for Rome, which is the origin of
+      the temple of Castor.
+    sources: ["Livy 2.19.1-2.21.5", "Dionysius of Halicarnassus 6.2-6.4"]
+
+  - id: r509_secession
+    scenario: rome_509
+    civ: rome
+    year: -494
+    until_year: -491
+    title: "The Plebs on the Sacred Mount"
+    place: "The Forum, Rome"
+    speaker: ruler
+    speaker_name: "Menenius Agrippa"
+    speaker_title: "Envoy of the Senate"
+    benchmark_provinces: 1
+    story: >-
+      The poor of Rome are heavily in debt, and the law lets a creditor chain his debtor. An old soldier
+      has run into the Forum in rags, thin as a corpse, showing the scars on his chest and the marks of
+      the chains. When the Volsci, Aequi and Sabines took the field at once, the Senate named Manius
+      Valerius dictator, a man of mild temper whose brother gave the plebs the right of appeal. Valerius
+      promised the debtors relief, and the Senate then refused to confirm it.
+
+
+      Now the army has been ordered out under the consuls' oath, and the soldiers have marched off to the
+      Sacred Mount across the Anio and fortified a camp, taking only what they need. Rome is silent. You,
+      Menenius, are sent to them as the plebs' kinsman by birth and the Senate's best speaker. What can you
+      offer?
+    choices:
+      - label: "Offer two inviolable magistrates of their own, the tribunes of the plebs"
+        historical: true
+        legitimacy_bp: 700
+        unrest_bp: -900
+        influence: {nobility: -500, guilds: 300}
+        outcome: >-
+          Menenius tells them the old tale of the limbs that went on strike against the belly, and starved
+          themselves. The compromise is struck: the plebs shall have magistrates of their own, who are
+          inviolable and can protect any citizen against the consuls, and no patrician may hold the office.
+          Two tribunes are chosen, Gaius Licinius and Lucius Albinus, and they add three colleagues.
+      - label: "Cancel the debts and nothing else"
+        wealth_bp: -800
+        unrest_bp: -400
+        influence: {nobility: -200, guilds: 100}
+        outcome: >-
+          The debtors go home free. The rich are furious and the poor wonder what will protect them next
+          year, when the lenders find new ways.
+      - label: "Hold the line: send the consuls' army out against the Aequi"
+        legitimacy_bp: -800
+        unrest_bp: 1500
+        influence: {nobility: 300}
+        outcome: >-
+          The army will not march. There is talk of killing the consuls to free the men from their oath, and
+          one of the plebs' leaders answers that no oath is undone by a crime. The Senate has chosen
+          to wait, and found out how long Rome can last without a people.
+    history: >-
+      Livy (2.23-2.33) tells the debt crisis, the dictator Manius Valerius's failed promise, the secession
+      to the Sacred Mount (the other tradition, from Piso, said the Aventine), and Menenius Agrippa's fable.
+      The settlement created inviolable plebeian magistrates; the first tribunes were Gaius Licinius and Lucius
+      Albinus, who co-opted three more, among them Sicinius, the promoter of the revolt. Some held that only
+      two were elected on the Mount. Agrippa died the same year, too poor to pay for his own funeral; the plebs
+      each gave a small coin to bury him.
+    sources: ["Livy 2.23.1-2.24", "Livy 2.30.4-2.33.11"]
+
+  - id: r509_cassian
+    scenario: rome_509
+    civ: rome
+    year: -493
+    until_year: -490
+    needs_alive: [e5_latins]
+    title: "The Treaty with the Latins"
+    place: "The Senate house, Rome"
+    speaker: ruler
+    speaker_name: "Spurius Cassius"
+    speaker_title: "Consul"
+    benchmark_provinces: 1
+    story: >-
+      The Latin cities beaten at Lake Regillus have been quiet. They did nothing while Rome was split in
+      two, and they sent men to help against the rebels. The Senate must decide what to make of this
+      loyalty.
+
+
+      Cassius, one of the consuls of the year, is the man who will draw up the terms; his colleague will
+      take the army against the Volsci of Antium. A permanent peace would stop the wars with Latium, and
+      give Rome thirty cities' armies as allies. But the Latins are proud, and see themselves as Rome's
+      equals. What are the terms?
+    choices:
+      - label: "A treaty between equals, with a share of spoils for each side"
+        historical: true
+        legitimacy_bp: 600
+        wealth_bp: 200
+        outcome: >-
+          Rome and the Latin cities swear perpetual peace, to help one another with all their forces if
+          attacked, never to let an enemy of one pass through the land of the other, and to share equally in
+          the spoils of common wars. The treaty is cut on a bronze column. The Roman senate adds a day to
+          the Latin festival to give thanks.
+        deeds: {ally_with: [e5_latins]}
+      - label: "Demand submission, as a defeated people"
+        legitimacy_bp: -300
+        unrest_bp: 300
+        outcome: >-
+          The Latin cities refuse to be told that Regillus made them subjects. The talks break down in
+          insults and each side sharpens its spears for the next war.
+        deeds: {tributaries: [e5_latins], grudges: {e5_latins: 2500}}
+      - label: "No treaty: keep Latium divided"
+        wealth_bp: -400
+        outcome: >-
+          Rome has no allies in the next Volscian war. The thirty cities look on, with no oath to keep.
+    history: >-
+      Livy (2.33.4, 2.33.9) records a treaty with the Latins in the year of the secession, struck by Spurius
+      Cassius alone while his colleague Postumus Cominius was fighting the Volsci, and kept on a bronze
+      column. Dionysius (6.95) gives the terms: peace "as long as the heavens and the earth shall remain where
+      they are", no war between them and no passage for either's enemies, help with all forces for either if
+      attacked, an equal share of the spoils, private lawsuits settled in ten days where the contract was made, and
+      no change to the treaty without the consent of both. It was the basis of Rome's relations with
+      Latium until the Latin War.
+    sources: ["Livy 2.33.4-9", "Dionysius of Halicarnassus 6.95"]
+
+  - id: r509_coriolanus
+    scenario: rome_509
+    civ: rome
+    year: -491
+    until_year: -487
+    title: "Corn from Sicily"
+    place: "The Senate house, Rome"
+    speaker: ruler
+    speaker_name: "A senator"
+    speaker_title: "Of the old families"
+    benchmark_provinces: 1
+    story: >-
+      A famine has followed the secession, for the fields were left unsown. Agents have bought grain up and
+      down the coast, from Etruria, from Cumae, and from as far as Sicily. The Cumaean ships were held
+      back by the tyrant Aristodemus, who claims the Tarquins' property for his own; the Volsci would not sell
+      at all; the Etruscan grain came by the Tiber. A large cargo has now arrived from Sicily, and the Senate is
+      debating the price at which it should be sold to the people.
+
+
+      Gnaeus Marcius, the young noble who stormed Corioli two years ago, says that now is the time to
+      take back what the plebs wrung from the Senate: if they want corn at the old price, they should
+      give back the tribunes. The plebs, hearing of it, are on the verge of arms.
+    choices:
+      - label: "Reject Marcius, but let the tribunes try him"
+        historical: true
+        legitimacy_bp: 300
+        unrest_bp: -300
+        influence: {nobility: -300}
+        outcome: >-
+          Even the Senate thinks his proposal too harsh. The tribunes name a day for his trial; Marcius
+          does not appear, and is condemned in his absence. He goes into exile among the Volsci, where Attius
+          Tullius, the foremost man of their name, takes him in. In time the Volsci choose the two of them as
+          generals.
+        deeds: {war_with: [e5_volsci]}
+      - label: "Adopt his plan: no cheap corn until the tribunes yield"
+        food_bp: -800
+        unrest_bp: 2000
+        legitimacy_bp: -600
+        influence: {nobility: 400}
+        outcome: >-
+          The commons go to the Sacred Mount again, and this time there is no Menenius to talk them back.
+          The Volsci, who had been waiting for just such a division, take the field.
+        deeds: {war_with: [e5_volsci]}
+      - label: "Sell at a low price and protect Marcius from the tribunes"
+        wealth_bp: -600
+        unrest_bp: 300
+        influence: {nobility: 300}
+        outcome: >-
+          The plebs get their corn. The Senate stands behind Marcius against the tribunes, which his
+          friends call firmness and the plebs call contempt.
+    history: >-
+      Livy (2.34-2.40) tells that the Senate rejected Marcius's plan, that the tribunes tried him, and that he was
+      condemned in his absence and went into exile with the Volsci. Attius Tullius and Marcius were chosen as the
+      Volscian generals, and Marcius led them to the walls of Rome, where his mother Veturia and his wife Volumnia
+      persuaded him to withdraw. The temple of Fortuna Muliebris was built in memory of the women. Livy adds that
+      the oldest historian, Fabius Pictor, says that Coriolanus lived to old age in exile, and the death in the Volscian
+      country is told in several ways. The story is Roman patriotic tradition and may be largely legend.
+    sources: ["Livy 2.33.5-9", "Livy 2.34.1-2.40.12"]
+
+  - id: r509_cassius
+    scenario: rome_509
+    civ: rome
+    year: -486
+    until_year: -484
+    title: "Land for the People"
+    place: "The Forum, Rome"
+    speaker: ruler
+    speaker_name: "Spurius Cassius"
+    speaker_title: "Consul"
+    benchmark_provinces: 1
+    story: >-
+      A treaty has been struck with the Hernici, and two-thirds of their land taken from them. You,
+      Cassius, propose to give half of that land to the Latins and half to the plebs, and to add some of
+      the state land that powerful families hold as if it were their own. It is the first proposal of its
+      kind in Rome's history.
+
+
+      Many of the senators hold such land themselves. They also say that a consul who gives away so much will
+      build up a following dangerous to liberty, and that giving land to Latins and Hernici makes strangers
+      the people's partners. His colleague Verginius has offered a different course: land for citizens only,
+      and not the public land.
+    choices:
+      - label: "Let the law drop, and let Cassius be called to account"
+        historical: true
+        legitimacy_bp: 100
+        unrest_bp: 300
+        influence: {nobility: 300, guilds: -200}
+        outcome: >-
+          The plebs turn on the proposal as a bribe for royal power. Cassius leaves office and is condemned and
+          put to death. The land law returns to the Forum again and again.
+      - label: "Pass the law as Cassius drew it"
+        wealth_bp: -300
+        unrest_bp: -600
+        legitimacy_bp: 200
+        influence: {nobility: -700, guilds: 300}
+        outcome: >-
+          Latin and Roman farmers settle the Hernician fields and the old families lose land they thought was
+          theirs. The Senate does not forgive it.
+      - label: "Give the conquered land to Roman citizens only"
+        legitimacy_bp: 300
+        unrest_bp: -200
+        influence: {nobility: -100, guilds: 200}
+        outcome: >-
+          The land is divided among Roman plebs, and Latins and Hernici are left with the treaty. The
+          allies remember that they did the fighting and got nothing.
+    history: >-
+      Livy (2.41) says that the Hernici were made to give up two-thirds of their land, that Cassius proposed
+      to divide it half to the Latins and half to the plebs, and that this was the first agrarian proposal ever
+      made; it has been a cause of unrest ever since. The people, suspicious of royal power, refused what
+      Cassius offered. As soon as he laid down office he was condemned and executed. In one account his father
+      tried him at home and scourged and killed him; in another, which Livy thinks more credible, the quaestors
+      Caeso Fabius and Lucius Valerius brought him before the people on a charge of treason and his house
+      was pulled down.
+    sources: ["Livy 2.41.1-12"]
+
+  - id: r509_cremera
+    scenario: rome_509
+    civ: rome
+    year: -477
+    until_year: -475
+    needs_alive: [e5_veii]
+    title: "The Fabii at the Cremera"
+    place: "The Senate house, Rome"
+    speaker: ruler
+    speaker_name: "A senator"
+    speaker_title: "Of the old families"
+    benchmark_provinces: 1
+    story: >-
+      Two years ago the consul Caeso Fabius stood in the Senate and said that for the war with Veii a standing
+      band was better than a great army. Let the Senate see to the Volsci, the Aequi and the Sabines; the
+      Fabian clan would fight Veii on its own account and at its own cost. The Senate gave its thanks. Three
+      hundred and six Fabii marched out through the Porta Carmentalis, all patricians, all of one blood, each
+      fit to command, with the people cheering them on and promising them consulships and triumphs.
+
+
+      They built a fort on the Cremera, and for two years they have raided Veii's land and beaten whoever
+      came out. Now the Veientes have changed their tactics. They drive herds of cattle across the plain in
+      front of the fort, flee from the farmers as if in a panic, and the Fabii have grown so sure of
+      themselves that scouts say they now chase stray herds far from their wall. Will Rome send help?
+    choices:
+      - label: "Trust the Fabii, and look to the other wars"
+        historical: true
+        legitimacy_bp: -600
+        unrest_bp: 400
+        influence: {nobility: -500}
+        outcome: >-
+          The Fabii run down after a herd, pass an ambush on both sides of the road, and are surrounded.
+          They cut their way up to a small hill and for a time hold it, until a force sent round by the ridge
+          appears behind them. They die to a man, and their fort is stormed.
+        deeds: {war_with: [e5_veii]}
+      - label: "Recall them to Rome and garrison the Cremera with the legions"
+        wealth_bp: -400
+        materials_bp: -300
+        legitimacy_bp: 200
+        influence: {nobility: -300}
+        outcome: >-
+          The Fabii, angry at being told to come home, obey. The legions hold the fort at the Cremera with
+          far less style and some profit. The Fabian name is not made immortal, and Rome keeps a family that
+          would have been lost.
+        deeds: {war_with: [e5_veii], men: 4000}
+      - label: "Send the consul with an army to stand beside them"
+        materials_bp: -600
+        unrest_bp: 300
+        influence: {nobility: 200}
+        outcome: >-
+          The legions arrive at the Cremera, and the Veientes, who count on weakness, find themselves
+          outnumbered. The war with Veii is not won, but the Fabii are not lost.
+        deeds: {war_with: [e5_veii], men: 6000}
+    history: >-
+      Livy (2.48-2.50) says the Fabii went out in 479 BC and were killed in an ambush in 477: three hundred
+      and six patricians were lost, and one boy survived to keep the Fabian line. The new consuls, Gaius Horatius
+      and Titus Menenius, were beaten when Menenius went against the Etruscans, and the Veientes took the
+      Janiculum; they were driven off after fighting at the temple of Hope and the Colline Gate. Menenius was
+      tried by the tribunes for the loss of the post on the Cremera. In 474 Veii asked for a truce, and was
+      granted one for forty years.
+    sources: ["Livy 2.48.8-2.54.1"]
+
+  - id: r509_publilian
+    scenario: rome_509
+    civ: rome
+    year: -471
+    until_year: -469
+    title: "Tribunes by Tribe"
+    place: "The Forum, Rome"
+    speaker: ruler
+    speaker_name: "Appius Claudius"
+    speaker_title: "Consul"
+    benchmark_provinces: 1
+    story: >-
+      Volero Publilius, a plebeian who had been a centurion and denied the consuls' right to make him a common
+      soldier, was beat off a lictor in the Forum and was later elected tribune of the plebs. Everyone expected him to prosecute the consuls. Instead he has put a bill before
+      the people: that the plebs' magistrates should be chosen in the assembly of the tribes.
+
+
+      It seems a dull proposal, and it is not. The patricians have been using their clients' votes to decide who
+      is elected; in the tribal assembly that would end. The Senate cannot find a tribune to veto it, and the
+      matter has dragged through the year, with Volero re-elected tribune and you, the haughty son of old
+      Appius Claudius, elected consul to resist him. His colleague Laetorius speaks for the bill with
+      even more fury.
+    choices:
+      - label: "Let the law pass, and give up the clients' votes"
+        historical: true
+        legitimacy_bp: 400
+        unrest_bp: -500
+        influence: {nobility: -500, guilds: 400}
+        outcome: >-
+          In the end the law passes. For the first time the tribunes are elected in the tribal assembly, and
+          according to one old writer their number is raised to five. Appius, who has hated the plebs more than his
+          father did, takes the army out against the Volsci and finds that his soldiers will not obey him.
+      - label: "Break the assembly with the consuls' lictors"
+        legitimacy_bp: -800
+        unrest_bp: 1500
+        influence: {nobility: 400}
+        outcome: >-
+          The tribes are scattered, and the tribunes called sacrosanct are dragged from the platform. The
+          next secession will be armed.
+      - label: "Win over a tribune to veto the bill"
+        wealth_bp: -300
+        legitimacy_bp: -200
+        unrest_bp: 500
+        influence: {nobility: 300}
+        outcome: >-
+          A tribune's veto stops the bill, for one year. The plebs, who now know exactly what they
+          want, re-elect Volero a third time.
+    history: >-
+      Livy (2.56-2.58) says that tribunes were elected for the first time in the tribal assembly after Volero's
+      law was passed; Piso, he adds, gave their number as five and named them. The consul Appius Claudius, sent
+      against the Volsci, found his army deliberately slow and disobedient.
+    sources: ["Livy 2.56.1-2.58.9"]
+
+  - id: r509_terentilius
+    scenario: rome_509
+    civ: rome
+    year: -462
+    until_year: -458
+    title: "Five Men to Write the Law"
+    place: "The Forum, Rome"
+    speaker: ruler
+    speaker_name: "Quintus Fabius"
+    speaker_title: "Prefect of the City"
+    benchmark_provinces: 1
+    story: >-
+      The consuls are away at war, and one of the tribunes, Gaius Terentilius Harsa, has seized the
+      chance. He speaks for days in the Forum about the pride of the patricians and about the consuls' power,
+      which he calls a king's under another name, and now worse, since there are two masters in place of
+      one, free of all restraint. He proposes a law to appoint five men to write down what the consuls may
+      lawfully do. Their power should be what the people give them, and no more.
+
+
+      As Prefect of the City you have called the Senate. In the absence of the consuls you cannot stand to
+      lose the argument. The tribunes will propose it again every year, and the plebs are following the debate
+      closely.
+    choices:
+      - label: "Resist, and keep finding wars to put it off"
+        historical: true
+        legitimacy_bp: -200
+        unrest_bp: 600
+        influence: {nobility: 400, guilds: -300}
+        outcome: >-
+          The law is proposed again every year, and every year the Senate finds enough foreign trouble to
+          call the army out. The tribunes are re-elected for the same reason. It will take nearly ten years.
+      - label: "Agree to a commission of five"
+        legitimacy_bp: 500
+        unrest_bp: -500
+        influence: {nobility: -600, guilds: 400}
+        outcome: >-
+          The five men sit and write. The consuls' power is defined, and the nobles who had hoped to use
+          it freely have to read a limit written down in the Forum.
+      - label: "Offer a joint commission of patricians and plebeians"
+        legitimacy_bp: 300
+        unrest_bp: -200
+        influence: {nobility: -300, guilds: 200}
+        outcome: >-
+          Plebeians and patricians both write laws. The patricians, who have always held that no one else
+          can interpret custom, are outraged at the compromise.
+    history: >-
+      Livy (3.9-3.10, 3.31) tells that Terentilius proposed five men to draw up the laws on consular power
+      in 462, that the Senate resisted for years, and that the tribunes finally dropped their own bill and
+      offered a joint commission. The patricians accepted codification, but insisted that only a patrician
+      should propose the laws; they sent Spurius Postumius Albus, Aulus Manlius and Publius Sulpicius
+      Camerinus to Athens to copy Solon's laws and study the institutions of the other Greek states.
+    sources: ["Livy 3.9.1-3.10", "Livy 3.31.1-8"]
+
+  - id: r509_cincinnatus
+    scenario: rome_509
+    civ: rome
+    year: -458
+    until_year: -456
+    needs_alive: [e5_aequi]
+    title: "The Dictator from the Plough"
+    place: "The Senate house, Rome"
+    speaker: ruler
+    speaker_name: "A senator"
+    speaker_title: "Of the old families"
+    benchmark_provinces: 1
+    story: >-
+      The Sabines have raided almost to the walls, and the plebs, despite their tribunes' objections, have
+      enlisted. One army has marched against the Sabines; the other, under the consul Lucius Minucius, has been
+      sent against the Aequi under Cloelius Gracchus, who had broken the treaty of the year before. On
+      Mount Algidus Minucius has stayed timidly behind his breastworks. The Aequi have surrounded the camp with
+      earthworks. Five horsemen have slipped through the lines to carry the news to Rome.
+
+
+      The Senate feels as if the city itself were besieged. The other consul, Nautius, is thought not equal to the
+      rescue. The senators agree on one man for dictator, Lucius Quinctius Cincinnatus, who farms four acres
+      across the Tiber, and is a patrician whom the plebs mistrust.
+    choices:
+      - label: "Name Cincinnatus dictator"
+        historical: true
+        legitimacy_bp: 800
+        unrest_bp: -200
+        influence: {nobility: 200}
+        outcome: >-
+          Envoys find him at the plough or the ditch, and he asks for his toga. The next day he names
+          Lucius Tarquitius, a patrician too poor to own a horse, master of the horse, shuts the courts and
+          orders every man of military age to the Campus Martius with five days' bread and twelve stakes. He
+          marches by night, throws a ring of earth round the Aequi, and the besiegers become the besieged. The
+          Aequi surrender, and their leaders are brought to Rome in chains.
+        deeds: {war_with: [e5_aequi]}
+      - label: "Send the other consul's army instead"
+        materials_bp: -500
+        legitimacy_bp: -400
+        unrest_bp: 300
+        outcome: >-
+          Nautius's army marches from Eretum, and arrives late. The camp holds, but not well, and the men
+          who were trapped will not forget who left them there.
+        deeds: {war_with: [e5_aequi]}
+      - label: "Buy the Aequi off and abandon the camp"
+        wealth_bp: -800
+        legitimacy_bp: -800
+        unrest_bp: 800
+        outcome: >-
+          The ransom is paid. The Aequi take it and, the following spring, come back at the same pass.
+    history: >-
+      Livy (3.25-3.29) tells that Cincinnatus was called from his four-acre field and made dictator, that he
+      relieved the consul Minucius on Algidus, sent the Aequi under the yoke after trapping them, and held a
+      triumph; the consul Minucius was made his lieutenant, and Cloelius Gracchus and the other Aequian commanders
+      were brought in chains. Cincinnatus gave up the dictatorship on the sixteenth day, though he had it
+      for six months. The same year Lucius Mamilius of Tusculum was given Roman citizenship, which Livy notes
+      as the first recorded grant of citizenship for service to the state.
+    sources: ["Livy 3.25.5-9", "Livy 3.26.1-3.29.7"]
+
+  - id: r509_decemvirs
+    scenario: rome_509
+    civ: rome
+    year: -451
+    until_year: -449
+    title: "Ten Men with the Power of Kings"
+    place: "The Senate house, Rome"
+    speaker: ruler
+    speaker_name: "Appius Claudius"
+    speaker_title: "Consul-elect"
+    benchmark_provinces: 1
+    story: >-
+      The three envoys have come back from Athens with the laws of Solon, and the tribunes are pressing harder
+      than ever for the codification to begin. A famine and a plague have emptied the city for two years, and
+      they have kept the tribunes quiet. Now it is settled that ten men will be chosen, subject to no appeal, to
+      write the law, and that no other magistrates will sit that year. The only argument left is whether plebeians
+      may sit among them.
+
+
+      The patricians insist that they will not. The plebs, tired of the dispute, are willing to bargain for a
+      single thing: that the law establishing the tribunate, and the other sacred laws, shall not be taken
+      away. The man who has been leading the debate for the patricians is you, Appius Claudius, who for years
+      was the plebs' bitterest enemy.
+    choices:
+      - label: "Ten patricians, with the tribunes' sacred laws left alone"
+        historical: true
+        legitimacy_bp: 400
+        unrest_bp: -400
+        influence: {nobility: 400, guilds: -200}
+        outcome: >-
+          The ten are Appius Claudius, Titus Genucius, Publius Sestius, Lucius Veturius, Gaius Julius, Aulus
+          Manlius, Publius Sulpicius, Publius Curiatius, Titus Romilius and Spurius Postumius; Postumius, Manlius and
+          Sulpicius are the envoys who went to Athens. The ten sit in turn, one day in ten, as judges with the twelve
+          rods. They behave with striking fairness and unanimity. Before the year is out they publish ten
+          tables of laws and ask the whole people to read and amend them.
+      - label: "Plebeians on the commission as well"
+        legitimacy_bp: 200
+        unrest_bp: -600
+        influence: {nobility: -600, guilds: 500}
+        outcome: >-
+          Plebeians sit alongside the patricians. The code is slower in coming and broader in what it
+          covers; the old families say it will contradict ancestral custom.
+      - label: "Keep the consuls, and send the draft laws to the assembly"
+        legitimacy_bp: -200
+        unrest_bp: 500
+        influence: {nobility: 300}
+        outcome: >-
+          The consuls draft, the Senate trims, and the plebs have little confidence in the result. The
+          tribunes announce that they will begin again next year.
+    history: >-
+      Livy (3.31-3.34, 3.37) says the commissioners returned with the laws of Athens, and that decemvirs with no
+      appeal and no other magistrates were appointed; the plebs yielded on the point of patrician-only
+      membership on condition that the Icilian law on the Aventine and the other sacred laws should stand. The
+      ten were elected in the 302nd year from the founding of Rome; they set up ten tables of laws, which the
+      centuriate assembly passed, and it was felt that two tables were missing. The second year of the decemvirate
+      added them, and then did not give up power. Livy calls the Ten Tables the fountain-head of all public and private law (3.34.6).
+    sources: ["Livy 3.31.8-3.34.7", "Livy 3.37.4"]
+
+  - id: r509_verginia
+    scenario: rome_509
+    civ: rome
+    year: -449
+    until_year: -446
+    title: "Verginia and the Fall of the Ten"
+    place: "The Forum, Rome"
+    speaker: ruler
+    speaker_name: "Lucius Valerius"
+    speaker_title: "Senator"
+    benchmark_provinces: 1
+    story: >-
+      The second decemvirate has not given up power when the year ended, and its members have turned into
+      tyrants. A client of Appius Claudius has laid hands on Verginia, a plebeian girl, in the Forum, claiming
+      she is the daughter of one of his slaves. Appius has given judgment for him in his absence from the army,
+      and her father, a centurion, has come back from the camp. He has asked leave to speak with his daughter
+      and nurse apart by the booths near the shrine of Cloacina, and killed her with a butcher's knife
+      to keep her free.
+
+
+      The soldiers who heard of it have left the army, marched into Rome, and taken the Aventine. The
+      Senate sent three consulars to them with nothing to offer, and the soldiers have moved to the
+      Sacred Mount. No consul sits, and no tribune.
+    choices:
+      - label: "Restore the consuls and tribunes, and guarantee appeal"
+        historical: true
+        legitimacy_bp: 1200
+        unrest_bp: -1500
+        influence: {nobility: -500, guilds: 500}
+        outcome: >-
+          The decemvirs resign; Appius Claudius and Spurius Oppius are put in prison, and Appius kills himself
+          before the day of his trial. The consuls elected are Lucius Valerius and Marcus Horatius. They carry
+          laws that the people's decisions in the tribal assembly bind the whole people, that appeal to the
+          people must always be allowed, that no magistrate may be made without appeal, and that
+          the tribunes, aediles and decemviral judges are sacrosanct. The Ten Tables and the two that the
+          decemvirs added, the Twelve Tables, are cut on bronze and set up in a public place.
+      - label: "Keep the decemvirs and offer the soldiers terms"
+        legitimacy_bp: -1500
+        unrest_bp: 1500
+        influence: {nobility: 500, guilds: -400}
+        outcome: >-
+          The soldiers are not interested in terms. The city has two camps and neither answers to the
+          ten, who find they have only their lictors.
+      - label: "Name a dictator to settle things"
+        legitimacy_bp: -300
+        unrest_bp: 500
+        outcome: >-
+          The plebs refuse to believe that a dictator will do what the decemvirs would not, and refuse
+          to return until the tribunes are back.
+    history: >-
+      Livy (3.44-3.58) tells the story of Verginia, the plebeian secession first to the Aventine and then to
+      the Sacred Mount, and the resignation of the decemvirs. The consuls Lucius Valerius and Marcus Horatius
+      passed the laws that restored the tribunes' sacrosanctity and the right of appeal, and made the tribal
+      assembly's decisions binding (Livy 3.55); the Twelve Tables were engraved on bronze and set up (3.57.10), though
+      some writers say the aediles did it on the tribunes' orders. Appius, cut off from hope, killed himself
+      before his trial (3.58.6).
+    sources: ["Livy 3.44.1-3.58.11"]
+
+  - id: r509_canuleian
+    scenario: rome_509
+    civ: rome
+    year: -445
+    until_year: -442
+    title: "Marriage and the Consulship"
+    place: "The Forum, Rome"
+    speaker: ruler
+    speaker_name: "Gaius Curtius"
+    speaker_title: "Consul"
+    benchmark_provinces: 1
+    story: >-
+      The year starts with quarrels at home and abroad. Gaius Canuleius, tribune of the plebs, proposes that
+      patricians and plebeians be allowed to marry each other, which the patricians see as polluting their blood
+      and unsettling the order of their families. His colleagues propose that the people should be free to elect
+      consuls from either order.
+
+
+      Ardea has revolted, Veii has raided the border, and the Volsci and Aequi are grumbling about the fort at
+      Verrugo. The Senate has been glad of every war threat, because it drowns the tribunes. You, a consul, are
+      asked in the assembly why a plebeian should not be consul. You answer that no plebeian has the auspices,
+      which is why the decemvirs forbade intermarriage. The crowd is furious.
+    choices:
+      - label: "Allow intermarriage, and open the supreme office as military tribunes"
+        historical: true
+        legitimacy_bp: 600
+        unrest_bp: -600
+        influence: {nobility: -300, guilds: 300}
+        outcome: >-
+          The patricians pass the marriage law, hoping the tribunes will drop the consulship. When they do
+          not, a compromise is found: military tribunes with consular power may be chosen from either
+          order, and the consulship itself is left unchanged. At the election the people choose only patricians.
+      - label: "Allow both marriage and plebeian consuls"
+        legitimacy_bp: 600
+        unrest_bp: -1000
+        influence: {nobility: -900, guilds: 600}
+        outcome: >-
+          The plebs get everything they asked at once. The nobles say the auspices will be confounded; the
+          augurs have little to say, and the plebs elect their first consul twice as fast as history did.
+      - label: "Refuse both and arm the consuls against the tribunes"
+        legitimacy_bp: -1000
+        unrest_bp: 1500
+        influence: {nobility: 500}
+        outcome: >-
+          Gaius Claudius's view prevails, and blood is shed in the Forum. The tribunes who were inviolable
+          by treaty are not inviolable now, and the plebs are not to be raised for the levy.
+    history: >-
+      Livy (4.1-4.7) says the Canuleian law on intermarriage was passed after the patricians gave way; they
+      hoped the tribunes would then drop the demand for plebeian consuls, and when they did not, they agreed
+      that military tribunes with consular authority might be elected from either order, while the consulship stayed
+      as it was. The first military tribunes took office in 444, though Livy notes some writers say they were created
+      because of the several wars at once and mention no law at all. The people at first elected only
+      patricians.
+    sources: ["Livy 4.1.1-4.7.3"]
+
+  - id: r509_fidenae
+    scenario: rome_509
+    civ: rome
+    year: -438
+    until_year: -435
+    needs_alive: [e5_veii]
+    title: "The Murdered Envoys of Fidenae"
+    place: "The Senate house, Rome"
+    speaker: ruler
+    speaker_name: "A senator"
+    speaker_title: "Of the old families"
+    benchmark_provinces: 1
+    story: >-
+      Fidenae, a Roman colony a few miles up the Tiber, has gone over to Lars Tolumnius, the king of Veii.
+      Worse, when four Roman envoys, Gaius Fulcinius, Cloelius Tullus, Spurius Antius and Lucius Roscius,
+      came to ask why, Tolumnius had them put to death. Some say it was an accident, a careless word at a
+      throw of the dice. Livy thinks it was meant to make Fidenae's guilt so great that no reconciliation
+      was possible.
+
+
+      The envoys are to have statues on the Rostra. The plebeians and tribunes, for once, are quiet, and the
+      consuls Marcus Geganius Macerinus and Lucius Sergius Fidenas have already fought the king's army on this
+      side of the Anio, at heavy cost. The Senate is calling for a dictator.
+    choices:
+      - label: "Name Mamercus Aemilius dictator and give battle"
+        historical: true
+        legitimacy_bp: 500
+        influence: {nobility: 200}
+        outcome: >-
+          Mamercus Aemilius names Lucius Quinctius Cincinnatus the younger as master of the horse and takes
+          the army to the Anio. The Veientes and Fidenates draw up in a battle line, with the Faliscans demanding
+          battle. In the fight a cavalry tribune, Aulus Cornelius Cossus, rides down King Tolumnius, strips him
+          and carries his head back on a spear.
+        deeds: {war_with: [e5_veii]}
+      - label: "Send the fetials to demand redress"
+        wealth_bp: -200
+        legitimacy_bp: -100
+        outcome: >-
+          The fetials are turned back at the gates of Fidenae. The war comes anyway, a season later, and
+          with the Faliscans on the other side.
+        deeds: {war_with: [e5_veii]}
+      - label: "Leave a garrison on the Anio and avoid a pitched battle"
+        materials_bp: -300
+        legitimacy_bp: -400
+        unrest_bp: 300
+        outcome: >-
+          The Veientes are happy with a war of raids. The Senate learns the price of waiting on the border.
+        deeds: {war_with: [e5_veii]}
+    history: >-
+      Livy (4.17-4.20) tells that Tolumnius, king of Veii, had the four Roman envoys killed at Fidenae, that the
+      dictator Mamercus Aemilius defeated the Veientes, Fidenates and Faliscans, and that Cossus killed the king in single
+      combat. Cossus dedicated the spoils (spolia opima) to Jupiter Feretrius, the second man ever to do so. Livy
+      follows earlier writers in calling Cossus a tribune of the soldiers in this battle, but says that Augustus,
+      who had read the inscription on the linen breastplate in the restored temple, said that Cossus was consul;
+      some annals put Cossus's consulship seven years later (4.20.8), so the exact year of the battle is
+      uncertain. Fidenae itself was taken only later.
+    sources: ["Livy 4.17.1-4.20.11"]
+
+  - id: r509_pay
+    scenario: rome_509
+    civ: rome
+    year: -406
+    until_year: -403
+    title: "Pay for the Soldiers"
+    place: "The Senate house, Rome"
+    speaker: ruler
+    speaker_name: "A military tribune"
+    speaker_title: "With consular power"
+    benchmark_provinces: 1
+    story: >-
+      The truce with Veii has run out, and Rome has declared war. The army has just taken Anxur from the
+      Volsci, by a flank attack from the hill above the town. Rome's soldiers are citizens who serve at their
+      own expense and go home for the harvest, and Veii, standing on a rock behind strong walls, will not
+      fall in a single summer.
+
+
+      The Senate has thought of something new. It is willing to pay the soldiers from the public
+      treasury, without any request from the plebs or their tribunes. But the pay must be raised by a
+      tax, and the tribunes are already muttering that this is a trap.
+    choices:
+      - label: "Pay the soldiers from a general tax"
+        historical: true
+        wealth_bp: -800
+        legitimacy_bp: 800
+        unrest_bp: -400
+        influence: {nobility: -200, guilds: 200}
+        outcome: >-
+          The Senate gives. There is as yet no silver coinage, so some senators bring uncoined bronze to the
+          treasury in wagons. Once the best of the plebs follow, the rest of the people rush to pay, and the
+          tribunes' protection is no longer wanted. An army largely of volunteers marches on Veii.
+        deeds: {men: 6000}
+      - label: "Keep unpaid summer service"
+        legitimacy_bp: -200
+        unrest_bp: 300
+        outcome: >-
+          Veii will not be taken in a summer. Each autumn the army goes home and the siege lines
+          have to be rebuilt in spring.
+      - label: "Make the rich pay for the army alone"
+        wealth_bp: 600
+        legitimacy_bp: -400
+        unrest_bp: 700
+        influence: {nobility: -800, guilds: 300}
+        outcome: >-
+          The richest families bear the cost, and do not forget it. The army is paid, but the Senate
+          is not united behind it.
+        deeds: {men: 6000}
+    history: >-
+      Livy (4.59.11-4.60) records that in 406 the Senate decreed pay for soldiers from the public treasury,
+      "whereas till then every man had served at his own cost", and called it the most welcome gift ever made
+      to the people. The tribunes opposed the tax; the senators contributed first, some of them with
+      uncoined bronze in wagons, since there was as yet no silver coinage, and the people followed. In the
+      following winter the generals built winter huts at Veii for the first time (Livy 5.2), and the tribunes
+      attacked this as the price of the new pay. In a later year the knights who had no public horses offered to serve on their own (5.7).
+    sources: ["Livy 4.58.1-4.60.9", "Livy 5.2.1-6", "Livy 5.7.4-9"]
+
+  - id: r509_veii
+    scenario: rome_509
+    civ: rome
+    year: -396
+    until_year: -394
+    needs_alive: [e5_veii]
+    title: "The Mine under Veii"
+    place: "The Roman camp before Veii"
+    speaker: general
+    speaker_name: "Marcus Furius Camillus"
+    speaker_title: "Dictator"
+    benchmark_provinces: 2
+    story: >-
+      Veii has a king now, which the other Etruscan states disliked so much that the council at the Fanum
+      Voltumnae refused to help it. It stands alone, but the siege has gone badly. There have been quarrels
+      between the Roman commanders, and when the army fled in a panic the Senate named you dictator, with
+      Publius Cornelius Scipio as master of the horse.
+
+
+      You have punished the runaways, raised new levies from the Latins and Hernici, and built forts. The soldiers
+      are restless, and skirmishes along the wall are costing men. The greatest work is a mine, begun to run under
+      the enemy citadel, worked in six shifts of six hours, day and night, until it reaches inside. You have
+      to choose how to use it.
+    choices:
+      - label: "Assault the walls to draw the defenders, and let the mine do its work"
+        historical: true
+        legitimacy_bp: 1000
+        wealth_bp: 1200
+        influence: {nobility: 200, clergy: 200}
+        outcome: >-
+          Before the assault you pray to Apollo and vow a tenth of the spoil, and ask Juno of Veii to
+          come with the victors to Rome, where a temple worthy of her will wait. The soldiers storm the walls
+          on every side, and the defenders, who have been told by their own prophets that the city is doomed,
+          run to the ramparts while the citadel fills with Romans from below. All human wealth is carried away,
+          and then the goddess: young men washed and dressed in white lift her statue, which seems to nod
+          assent, and she is carried to the Aventine.
+        deeds: {take: [it_veii], conquer: [e5_veii]}
+      - label: "Starve the city out"
+        materials_bp: -500
+        legitimacy_bp: -200
+        outcome: >-
+          Veii holds another winter, and then another, while the tribunes complain about soldiers who
+          never go home. When it falls the army is tired, and its general has less to give the gods.
+        deeds: {take: [it_veii], conquer: [e5_veii]}
+      - label: "Offer Veii terms of surrender"
+        wealth_bp: 300
+        legitimacy_bp: -500
+        influence: {nobility: -300}
+        outcome: >-
+          Veii refuses. A city that has elected a king and been abandoned by its own people does not trust Roman
+          promises, and the walls hold.
+    history: >-
+      Livy (5.1, 5.19-5.22) tells that Veii elected a king, which offended the Etruscan states; they refused it help
+      at the council at the Fanum Voltumnae (5.1.3-6). Camillus was named dictator, drove the siege, dug a mine
+      into the enemy citadel, vowed a tenth of the spoil to Apollo and invited Juno to Rome. The city was taken and
+      plundered, the free inhabitants were sold and the proceeds were the only money applied to public use, which the
+      people resented. The ancient statue of Juno Regina was carried to the Aventine. The traditional date of the fall is 396.
+    sources: ["Livy 5.1.1-7", "Livy 5.17.6-5.22.8", "Livy 5.30.8"]
+
+  - id: r509_clusium
+    scenario: rome_509
+    civ: rome
+    year: -391
+    until_year: -390
+    title: "The Embassy to Clusium"
+    place: "The Senate house, Rome"
+    speaker: ruler
+    speaker_name: "A senator"
+    speaker_title: "Of the old families"
+    benchmark_provinces: 2
+    story: >-
+      Veii and its land are in Roman hands. Now, from the north, a new people has appeared. Senonian Gauls,
+      the latest to cross the Alps, have taken the Adriatic coast between the Utens and the Aesis and have come
+      to besiege Clusium. Its people, terrified at the sight of such men and such arms, have sent to ask Rome for
+      help, though they have no claim of alliance or friendship, except that they did not defend their kinsmen the
+      Veientes against you.
+
+
+      The Senate does not send an army. It sends three ambassadors, the sons of Marcus Fabius Ambustus, to ask
+      the Gauls not to attack allies of Rome. They are young, noble and hot-tempered, and they have been
+      told that the Romans would rather make the Gauls known by peace than by war.
+    choices:
+      - label: "Send three Fabii as envoys"
+        historical: true
+        legitimacy_bp: -500
+        unrest_bp: 200
+        outcome: >-
+          The Gauls answer that they ask only the land that the Clusians cannot work, and that what they
+          carry is in their swords. In the battle that follows the three envoys, against all the law of nations,
+          fight in front of the Etruscans, and Quintus Fabius kills a Gaul chieftain and is recognised while
+          stripping the body. The Gauls withdraw in fury and send to Rome to demand the Fabii for punishment.
+          The Senate will not decide, and the people elect the three Fabii military tribunes for the next year.
+      - label: "Send the consul with a legion to Clusium"
+        materials_bp: -600
+        unrest_bp: 300
+        legitimacy_bp: 200
+        outcome: >-
+          An army reaches Clusium in time to meet the Gauls, who are twice as many as expected. The war
+          with the Senones begins a year early and on the Etruscans' ground.
+        deeds: {men: 6000}
+      - label: "Refuse to interfere"
+        legitimacy_bp: -200
+        outcome: >-
+          Clusium is left to fend for itself. The Gauls, with their hunger unsatisfied, look south from
+          Etruria toward a city that has just taken Veii.
+    history: >-
+      Livy (5.35-5.36) says the Clusians sent to Rome although they had no claim of alliance or friendship;
+      the Senate sent the three sons of Marcus Fabius Ambustus, who took up arms against the Gauls in violation of
+      the law of nations. The Gauls sent envoys to demand their surrender, the Senate referred it to the people,
+      and the people elected the Fabii military tribunes for the next year, along with Quintus Sulpicius Longus, Quintus
+      Servilius and Servius Cornelius Maluginensis. Plutarch (Camillus 17) tells the same story with Brennus as the
+      Gaulish king. In Livy's account the Gauls then marched on Rome. Polybius (2.18) says only that they took
+      the city and left when the Veneti invaded their country.
+    sources: ["Livy 5.35.1-5.37.3", "Plutarch, Camillus 17", "Polybius 2.18.2-3"]

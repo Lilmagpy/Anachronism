@@ -1,0 +1,104 @@
+schema_version: 1
+# The Fasti (who held which office in each year). Sample pack: 509-500 and 264-260 BC only.
+# A holder is a person id (people.yaml) or a name and gens for a man not modelled.
+fasti:
+  - id: fasti_509bc
+    year: -509
+    colleges:
+      - office: consul
+        holders:
+          - {person: l_iunius_brutus}
+          - {person: l_tarquinius_collatinus, note: "resigned"}
+          - {person: p_valerius_publicola, suffect: true}
+          - {name: "Spurius Lucretius Tricipitinus", gens: lucretii, suffect: true, note: "died within days (Livy 2.8.4)"}
+          - {person: m_horatius_pulvillus, suffect: true}
+    notes: "Livy 2.1-2.8; Fasti Capitolini. Brutus fell in battle; Collatinus resigned; the suffects follow Livy 2.8.4-6."
+    sources: ["Livy 2.1.7", "Livy 2.2.11", "Livy 2.8.4", "Fasti Capitolini"]
+  - id: fasti_508bc
+    year: -508
+    colleges:
+      - office: consul
+        holders:
+          - {person: p_valerius_publicola}
+          - {person: t_lucretius_tricipitinus}
+    sources: ["Livy 2.15.1", "Fasti Capitolini"]
+  - id: fasti_503bc
+    year: -503
+    colleges:
+      - office: consul
+        holders:
+          - {name: "Agrippa Menenius Lanatus", gens: menenii}
+          - {name: "Publius Postumius Tubertus", gens: postumii}
+    sources: ["Livy 2.16.1", "Fasti Capitolini"]
+  - id: fasti_502bc
+    year: -502
+    colleges:
+      - office: consul
+        holders:
+          - {name: "Opiter Verginius Tricostus", gens: verginii}
+          - {person: sp_cassius_vecellinus}
+    sources: ["Livy 2.16.8", "Fasti Capitolini"]
+  - id: fasti_501bc
+    year: -501
+    colleges:
+      - office: consul
+        holders:
+          - {name: "Postumus Cominius Auruncus", gens: cominii}
+          - {person: t_larcius_flavus}
+      - office: dictator
+        holders:
+          - {person: t_larcius_flavus, note: "first dictator; year disputed"}
+      - office: magister_equitum
+        holders:
+          - {person: sp_cassius_vecellinus}
+    notes: "The first dictator: Livy 2.18.4 names T. Larcius with Sp. Cassius as master of the horse; the year is disputed (Livy 2.18.1-5)."
+    sources: ["Livy 2.18.1", "Livy 2.18.4"]
+  - id: fasti_500bc
+    year: -500
+    colleges:
+      - office: consul
+        holders:
+          - {name: "Servius Sulpicius Camerinus", gens: sulpicii}
+          - {name: "Manius Tullius Longus", gens: tullii}
+    sources: ["Livy 2.19.1", "Fasti Capitolini"]
+  - id: fasti_264bc
+    year: -264
+    colleges:
+      - office: consul
+        holders:
+          - {person: ap_claudius_caudex}
+          - {person: m_fulvius_flaccus}
+    notes: "First year of the First Punic War."
+    sources: ["Polybius 1.11", "Fasti Capitolini"]
+  - id: fasti_263bc
+    year: -263
+    colleges:
+      - office: consul
+        holders:
+          - {name: "Manius Otacilius Crassus", gens: otacilii}
+          - {person: m_valerius_maximus_messalla}
+    sources: ["Polybius 1.16", "Fasti Capitolini"]
+  - id: fasti_262bc
+    year: -262
+    colleges:
+      - office: consul
+        holders:
+          - {person: l_postumius_megellus}
+          - {name: "Quintus Mamilius Vitulus", gens: mamilii}
+    sources: ["Polybius 1.17", "Fasti Capitolini"]
+  - id: fasti_261bc
+    year: -261
+    colleges:
+      - office: consul
+        holders:
+          - {name: "Lucius Valerius Flaccus", gens: valerii}
+          - {name: "Titus Otacilius Crassus", gens: otacilii}
+    sources: ["Fasti Capitolini"]
+  - id: fasti_260bc
+    year: -260
+    colleges:
+      - office: consul
+        holders:
+          - {person: cn_cornelius_scipio_asina}
+          - {person: c_duilius}
+    sources: ["Polybius 1.21-22", "Fasti Capitolini"]

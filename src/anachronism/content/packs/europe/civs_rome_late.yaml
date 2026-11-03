@@ -1,0 +1,135 @@
+schema_version: 1
+# Civilisations of the late Republic, 133-27 BC (R1, late agent; ids prefixed e1_).
+# Civs reused from civs_ancient.yaml: rome, numidia, pontus, ptolemaic, seleucid, bithynia, massalia.
+civs:
+  - id: e1_socii
+    name: The Italian allies
+    adjective: Italian
+    lineage: e1_socii
+    colour: "#c7792b"
+    symbol: bull
+    emblem: ITA
+    portrait: roman
+    description: >-
+      The Latin and Italian peoples (the socii) bound to Rome by treaty: Samnites, Marsi, Picentes,
+      Lucanians and the rest, who fill half of every Roman army and share neither its citizenship nor its spoils.
+    sources:
+      - "Polybius 6.21 and 6.26 (the allies' contingents equal the Romans' infantry and outnumber the cavalry)"
+      - "Appian, Civil Wars 1.19 and 1.34 (the allies' grievances over land and citizenship)"
+      - "Velleius Paterculus 2.15 (the allies fill half the armies)"
+      - "Strabo 5.4.2 (the rebel capital Corfinium renamed Italica)"
+    confidence: medium
+  - id: e1_parthia
+    name: Parthia
+    adjective: Parthian
+    lineage: e1_parthia
+    colour: "#2e7d6b"
+    symbol: bow
+    emblem: ARS
+    portrait: hellenistic
+    description: >-
+      The Arsacid kings, horse-archers from the Iranian plateau who have taken Babylonia and Media from the
+      Seleucids and rule a loose empire of satraps and vassal kings.
+    sources:
+      - "Justin 41.1-6 and 42.1-2 (Epitome of Trogus: rise of the Arsacids, Mithridates I, Phraates II)"
+      - "Strabo 16.1.16 (Parthian possession of Seleucia on the Tigris)"
+      - "Plutarch, Crassus 17-33 (Carrhae, 53 BC; the Surena)"
+    confidence: medium
+  - id: e1_armenia
+    name: Armenia
+    adjective: Armenian
+    lineage: e1_armenia
+    colour: "#7a4f9a"
+    symbol: crown
+    emblem: ARM
+    portrait: hellenistic
+    description: >-
+      The highland kingdom of the Artaxiad dynasty, sitting between Parthia, Pontus and Rome, which under
+      Tigranes the Great will briefly hold Syria.
+    sources:
+      - "Strabo 11.14.5 and 11.14.15 (Artaxias and Tigranes)"
+      - "Appian, Mithridatic Wars 104-105 (Tigranes' age, titles and conquests)"
+      - "Plutarch, Lucullus 21-29 (Tigranocerta, 69 BC)"
+    confidence: medium
+  - id: e1_arverni
+    name: The Arverni
+    adjective: Arvernian
+    lineage: e1_arverni
+    colour: "#2f6f4f"
+    symbol: torc
+    emblem: ARV
+    portrait: celtic
+    description: >-
+      The richest and strongest people of central Gaul, whose kings once ruled from the Atlantic to the Rhine and
+      who trade with Massalia and the Roman merchants.
+    sources:
+      - "Strabo 4.2.3 (Luernius, Bituitus and the Arvernian empire)"
+      - "Livy, Periochae 61 (Bituitus defeated by Q. Fabius Maximus, 121 BC)"
+      - "Caesar, Gallic War 7.4 and 7.63 (Gergovia, Vercingetorix)"
+    confidence: medium
+  - id: e1_allobroges
+    name: The Allobroges and the Gauls of the south
+    adjective: Allobrogian
+    lineage: e1_allobroges
+    colour: "#4a8f9a"
+    symbol: boar
+    emblem: ALL
+    portrait: celtic
+    description: >-
+      The Gaulish peoples between the Rhône and the Alps, who shelter Rome's enemies and stand in the way of the
+      road to Spain. The province's 'southern Gaul' stands for them here.
+    sources:
+      - "Livy, Periochae 61 (Allobroges and Arverni defeated 121 BC)"
+      - "Strabo 4.1.11 (Fabius at the confluence of the Isère and Rhône; Domitius at Vindalium)"
+      - "Velleius Paterculus 2.10.2"
+      - "The province standing for the Allobroges is a simplification: their land lies north of 'southern_gaul' on this map"
+    confidence: medium
+  - id: e1_cimbri
+    name: The Cimbri and Teutones
+    adjective: Cimbrian
+    lineage: e1_cimbri
+    colour: "#6b6f3a"
+    symbol: bear
+    emblem: CIM
+    portrait: celtic
+    description: >-
+      Peoples from the northern sea whose wandering bands, wagons and families will drive south in the 110s BC
+      and destroy five Roman armies.
+    sources:
+      - "Livy, Periochae 63, 65, 67, 68 (Noreia 113; Arausio 105; Aquae Sextiae 102; Vercellae 101)"
+      - "Plutarch, Marius 11 and 15-27"
+      - "Strabo 7.2.1-2 (their homeland on the Jutland coast)"
+      - "Res Gestae 26.4 (the Cimbri sent envoys to Augustus)"
+    confidence: medium
+  - id: e1_numantia
+    name: Numantia and the Celtiberians
+    adjective: Celtiberian
+    lineage: e1_numantia
+    colour: "#9a3b3b"
+    symbol: tower
+    emblem: NUM
+    portrait: celtic
+    description: >-
+      The hill-fort city on the Douro that has defied Rome for twenty years, with its Arevaci and their allies.
+    sources:
+      - "Appian, Spanish Wars 76-98"
+      - "Plutarch, Tiberius Gracchus 5-7 (the Mancinus treaty of 137)"
+      - "Polybius 35.1-4 and 35.5-6 (Celtiberian wars, in fragments)"
+    confidence: medium
+  - id: e1_caesar
+    name: Caesar's provinces
+    adjective: Caesarian
+    lineage: e1_caesar
+    colour: "#8b1e5a"
+    symbol: eagle
+    emblem: CAE
+    portrait: roman
+    description: >-
+      Gaul, Cisalpine Gaul and Illyricum, with the ten veteran legions of Gaius Julius Caesar, who stands at the
+      end of his command with the Senate demanding that he lay it down.
+    sources:
+      - "Caesar, Civil War 1.1-9 (the Senate's demands; the legions on the Rubicon)"
+      - "Suetonius, Divus Iulius 29-32"
+      - "Plutarch, Caesar 28-32"
+      - "Appian, Civil Wars 2.25-35"
+    confidence: medium

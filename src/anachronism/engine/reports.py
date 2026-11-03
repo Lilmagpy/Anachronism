@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from anachronism.engine.actions import Priority
 from anachronism.engine.economy import Costs, active_projects, labour, project_costs
 from anachronism.engine.effects import civ_effects
 from anachronism.engine.state import GameState, Snapshot
@@ -32,9 +33,17 @@ def capacity(state: GameState, civ_id: str) -> Capacity:
     """Summarise workforce, commitments and stockpiles for one civilisation."""
     civ = state.civs[civ_id]
     work = labour(state, civ_id, civ_effects(state, civ_id))
+    projects = active_projects(state, civ_id)
     committed = sum(
-        (project_costs(state, p.node_id) for p in active_projects(state, civ_id)), Costs()
+        (project_costs(state, p.node_id) for p in projects if p.priority is not Priority.LOW),
+        Costs(),
     )
+    # steady (low-priority) work takes only the spare hands that are left (D-112)
+    steady = sum(
+        (project_costs(state, p.node_id) for p in projects if p.priority is Priority.LOW), Costs()
+    )
+    spare = max(0, work.surplus - committed.labour)
+    committed += Costs(min(steady.labour, spare), steady.materials, steady.knowledge, steady.wealth)
     stock = civ.stockpiles
     return Capacity(
         workforce=work.workforce,

@@ -60,12 +60,25 @@ Every stat keeps a short history so the UI shows **trends**, not just values.
   riots, then revolts (a province breaks away; the capital never does). Losing half the
   starting provinces is collapse. None of this is a special rule: it emerges.
 - Underfunded projects progress slower; projects starved for 3+ turns begin to decay.
+- **Hasten** (D-119): once a turn a project can be pushed on by a turn's work, paid from
+  the stores (wealth for hired craftsmen at three times the labour and wealth of a turn's
+  work, and twice its materials and knowledge). Stores beyond ten turns' production waste
+  away (a fifth of the excess each decade), so hoards are worth spending.
+- **Low priority is steady work** (D-112): it takes only the spare hands left after other
+  projects (the surplus), never farmers, so it cannot cause diversion, famine or strain;
+  and while it keeps moving, however slowly, it does not decay. A small state can still
+  pursue a great idea, slowly. Rival courts start what they cannot staff at full pace as
+  steady work, one at a time, instead of starving themselves.
 - Tested: a player who starts everything at once collapses within about 30 turns; a
   player who respects free capacity stays stable and keeps advancing.
 
 ## 6. Feasibility: what makes an idea buildable
 Tech nodes carry **structured requirements**, checked by code:
 - `materials`: map-resource access flags (e.g. `saltpetre: accessible`).
+- `buildings` (D-114): infrastructure that must stand somewhere in the realm (printing
+  needs workshops, blast furnaces and cannon need forges, steam engines and railways need
+  mines, universities a school, banking a market, hospitals a temple, ocean ships a
+  harbour). An upgrade counts for what it replaced.
 - `skills`: literacy thresholds, specialist pools (smiths, masons, scribes, engineers).
 - `infrastructure`: other adopted nodes/buildings (roads, workshops, standard measures).
 - `acceptance`: groups that resist (clergy, nobles, guilds) and how strongly.
@@ -91,6 +104,10 @@ resources committed until the player pursues them.
 - Framing: **inspired** (legitimacy bonus), **witchcraft** (clergy hostility, unrest),
   **fraud** (nobles plot). Framing drifts according to religion, events and advisors.
 - High suspicion also makes news of your inventions travel faster to rivals.
+- Explanations (a royal decree, D-092): proclaim the new arts **a gift of the gods**
+  (wealth; turns witchcraft or fraud talk into awe if legitimacy is high) or **credit
+  foreign sages** (knowledge; quiets more, but rivals hear of your arts at once). Once
+  every few turns.
 
 ## 8. The idea pipeline (online "Free Thought" mode)
 1. **Interpret** player text → one or more candidate concepts, matched to existing nodes
@@ -141,6 +158,57 @@ marsh), coastal flag, river flag, climate band, map resources with access level
 (`accessible` / `limited` / `unexplored`), population, owner, culture/religion shares,
 buildings. Edges: land, river, sea lane, mountain pass (with movement costs).
 
+### Buildings (D-111)
+Each province holds a few buildings: two, plus one for every 250,000 people, up to eight,
+so growing cities hold more. Kinds are content (`core/buildings.yaml`): a granary, market,
+temple, workshops, barracks, mines, harbour, irrigation works, school, observatory, forges,
+water mill, windmills, courthouse, aqueduct, printing house, hospital, and upgrades that
+take an older building's place (bank for market, academy for school, manufactory for
+workshops), up to the railway station. Each needs its advancements and sometimes a coast,
+a river or ore; it costs materials and wealth up front (a quarter more for each building
+already standing), takes one or two decades, and costs wealth to keep. It raises its
+province's food, materials, wealth or knowledge, its growth or the people it can hold;
+temples and courts calm the realm and schools teach reading (weighted by the province's
+share of the people); barracks train the soldiers raised there. Pillage burns the newest
+building. Rival courts build one a turn in their largest cities when their stores hold
+three times the cost. This is where the "boring" force multipliers of brief §5.5 pay off
+province by province, and the cities on the map grow and show what stands in them.
+
+## 10b. War: armies, battles, sieges and supply (D-099)
+Wars end on terms (D-118): the side that tires first cedes the provinces the enemy's
+armies stand in, or becomes its tributary if that is all it has left.
+- **Armies** stand in provinces: men of several kinds (levies, spearmen, heavy infantry,
+  archers, crossbowmen, chariots, cavalry, horse archers, armoured horsemen, war elephants,
+  siege engines, cannon, musketeers - content in `core/units.yaml`), each needing its
+  advancements and map resources (no horses, no cavalry; elephants only where they live).
+  Raised from a province's people (costing food, materials and wealth, and labour lost to
+  the fields), kept at a cost each turn, and capped by the state's mobilisation.
+- **Orders**: march to a province (one to four provinces a turn, faster with roads, a sea
+  crossing with sailing ends the march), hold, defend (meet invaders of your own land),
+  disband.
+- **Battles** when enemies meet: each kind's attack or defence, match-ups (spears stop
+  horse, horse rides down archers and siege trains, archers shred infantry, elephants
+  terrify), the ground (chariots founder in hills, horse archers rule the steppe), the
+  defender's hills and walls, morale, the general's skill, and fortune. The beaten army
+  falls back the way it came; a surrounded one surrenders. Named battles go in the
+  chronicle; generals can fall.
+- **Sieges**: an army alone in an enemy province besieges it; walls (terrain, capital,
+  last stand) take turns to fall, faster with siege engines and cannon; then it changes
+  hands.
+- **Supply**: armies waste away a little at home, more abroad, more in desert, mountains
+  and marsh, and fast when a province cannot feed them; unpaid armies lose heart and desert.
+- **Weariness**: wars grind on until one side tires; the side losing battles and provinces
+  tires faster, and carries the grievance away.
+- **Battle plans** (D-108): each army fights with a plan (line, charge, shield wall,
+  skirmish, envelopment, feigned retreat, ambush) that beats some and loses to others;
+  great generals read the enemy's plan. Victories make veterans.
+- **The sea** (D-107): fleets of warships (galleys to gun ships, content in
+  `core/ships.yaml`) are built on your coasts, sail two seas a turn and fight enemy fleets
+  they meet. Whoever commands a sea decides which armies may cross it; enemy fleets that
+  command every sea on a province's shore blockade it (most of its trade lost, its people
+  tiring of the war). Fleets cost wealth every turn. Seafaring states (Carthage, Venice, the
+  Norse) start with strong fleets; others must build them.
+
 ## 11. Rival civilisations
 - **Scripts** are conditional intentions with preconditions and triggers, not dated events.
 - **Awareness states**: on-script (engine only, no API cost) → aware (LLM consults ruler
@@ -152,8 +220,19 @@ buildings. Edges: land, river, sea lane, mountain pass (with movement costs).
 - **Relations**: pairwise, only for plausible contact pairs; statuses (unknown, contact,
   trading, allied, tributary, hostile, at war) plus grievance/legitimacy memory entries with
   decay rates. Religion, script and trade flows are first-class.
-- **Intelligence** about rivals is imperfect (D-013).
+- **Intelligence** about rivals is imperfect (D-013, D-115): each turn the player hears
+  what each court in touch intends (its pending scripts), from allied envoys, tribute
+  bearers, merchants or captured soldiers - the closer the tie and the nearer the court,
+  the likelier each line is true; wrong lines are not marked, but the panel says how
+  reliable the source tends to be. **Spies** (a decree, wealth, five turns) make reports
+  near-certain and add the court's current projects and its men under arms; now and then
+  they steal an advancement's methods (a 30% head start), and sometimes they are caught
+  (a lasting grudge).
 - Rivals can learn your inventions once news reaches them (D-024).
+
+Once a court's scripted intentions are spent it acts on its ruler's temperament, as a
+free agent does (D-116): aggressive rulers attack weaker neighbours, others only over a
+deep grudge against a far weaker one, mercantile ones open trade.
 
 ## 12. Scenarios and timeline
 Scrollable timeline of named moments. Each moment is assembled from layered timeline data
@@ -162,9 +241,26 @@ states, and the player civ's ruler, resources and threats. A disclaimer screen p
 this is a good-faith simulation, not a re-enactment. Contested facts are not flagged in game;
 source notes and confidence live in data files only.
 
-## 13. Dynasties (D-011)
-Polities are separate entries linked by lineage. The player's hand follows the lineage across
-dynastic change; the player picks the successor to continue with when their polity falls.
+### Chronicle mode (D-120)
+A scenario may also be played as a chronicle: chapters along what really happened, told at
+some length, each a turning point with a choice history made and others it did not. History
+bends, then catches up: the turning points still come while their conditions hold, and are
+passed over (with a note of how history turned) once the player's world has left them
+behind. After each choice the player reads what really happened and how their state stands
+against the real one; the aim is not to win but to outdo history. Ideas ahead of their time
+open choices history never had. Turns are two years long.
+
+## 13. Dynasties (D-011, D-113)
+Polities are separate entries linked by lineage. In play, the fall is not the end:
+- A state that **collapses** from within (half its starting provinces lost to revolt) but
+  still holds land passes to a **new dynasty**: revolts are counted afresh, half the unrest
+  is released, and the new house starts with an untested mandate (40% legitimacy).
+- A state **destroyed** by conquest lives on while its people remember it (the conquered
+  provinces' `people`). Where they rise against an unguarded conqueror (twice as eagerly as
+  other peoples), the state is **restored** with that province as its capital.
+- The player is defeated only when no province anywhere still remembers their state
+  (assimilation erases the memory after some generations). Meanwhile the game shows where
+  the people remember it, and the player waits for them to rise.
 
 ## 14. Offline "Historical Advisors" mode
 Each turn scholars offer 3–6 curated ideas suited to the civ's situation, drawn from the
@@ -176,4 +272,4 @@ Tiered region → hemisphere → world; military, economic or cultural paths, me
 of population or trade.
 
 ## 16. Out of scope until later phases
-Tactical battles, multiplayer, sound, final art, non-East-Asian content before Phase 6.
+Multiplayer, sound, final art, non-East-Asian content before Phase 6.

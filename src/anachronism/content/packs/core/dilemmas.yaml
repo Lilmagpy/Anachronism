@@ -1,0 +1,103 @@
+schema_version: 1
+# Choices put to the consuls and the Senate (content/schema/dilemmas.py, D-104), each from a
+# moment the sources record (F1 ideas). chance_bp is per decade once the conditions hold.
+# Stores change by shares (bp); unrest, legitimacy and suspicion by points x100; influence of
+# the priesthoods (clergy), the nobility and the trading orders (guilds) by points x100.
+# No person is named: the magistrates of the year speak, and the sources are in the comments.
+dilemmas:
+  - id: comet   # (id kept for the engine tests) Livy 22.1.8-20 (the prodigies of 217 and their expiation); Livy 43.13 on prodigies
+    title: A prodigy is reported
+    text: "It has rained stones in the ager Romanus and a cow has spoken in the Forum Boarium. The pontiffs wait to hear whether {ruler} will refer the prodigy to the Senate."
+    chance_bp: 800
+    choices:
+      - {label: "A sign of the gods' favour", outcome: "The augurs read it well; the people take heart that the gods are with the magistrates.", legitimacy_bp: 600, influence: {clergy: -300}}
+      - {label: "Let the decemvirs open the Sibylline Books", outcome: "A nine-day festival is held and new rites are ordered; the priests read it gravely, and their temples fill.", influence: {clergy: 600}, unrest_bp: 200, wealth_bp: -400}
+      - {label: "Have it measured", outcome: "A Greek in the consul's house notes the night it fell and where, and learns a great deal.", knowledge_bp: 1500, suspicion_bp: 200}
+
+  - id: open_the_granaries   # Livy 4.12-16 (the grain crisis of 440-439 and Spurius Maelius)
+    title: The plebs are hungry
+    text: "The harvest failed, grain is dear and crowds fill the Forum. A rich man is buying up corn to give the plebs for nothing, and the Senate fears what he wants for it."
+    chance_bp: 2500
+    min_unrest_bp: 2500
+    choices:
+      - {label: "Buy grain abroad and open the public stores", outcome: "The praefectus annonae sends to Etruria and Sicily. Bread is sold cheap at the gates, and the crowds bless the Senate's name.", food_bp: -2500, unrest_bp: -1200, legitimacy_bp: 300}
+      - {label: "Let the markets decide", outcome: "Grain merchants grow rich; the poor grow angry and remember who fed them.", wealth_bp: 1000, unrest_bp: 800, influence: {guilds: 500}}
+      - {label: "Name a dictator against the corn-giver", outcome: "The master of the horse cuts the man down in the Forum as a would-be king. The crowds scatter. They will remember.", unrest_bp: -400, legitimacy_bp: -600}
+
+  - id: the_preacher   # Livy 39.8-19 (the Bacchanalia of 186 BC)
+    title: The secret rites
+    text: "A freedwoman has told a consul of night rites of Bacchus spreading through the city and Italy: oaths, initiations, crimes hidden by the cult. The Senate must decide what Rome will tolerate."
+    chance_bp: 900
+    choices:
+      - {label: "Suppress the cult", outcome: "The Senate's decree is read out; thousands are hunted through Italy. The pontiffs are grateful; the initiates are not.", influence: {clergy: 800}, unrest_bp: 400}
+      - {label: "Let them worship", outcome: "New gods run through the markets, and the old temples empty a little.", influence: {clergy: -700}, knowledge_bp: 800}
+      - {label: "Regulate it by decree", outcome: "No more than five may meet, with the praetor's leave. The whole city talks of the consul's speech.", legitimacy_bp: 300, suspicion_bp: 300}
+
+  - id: sorcery_rumours   # Livy 8.18 (the poisonings of 331 BC); Pliny NH 28.17-18 (the Twelve Tables on charms)
+    title: Whispers of strange arts
+    text: "In the taverns of {civ} they say the Senate's new arts come from Etruscan books or Greek charms. The Twelve Tables forbid spiriting away another man's crops, and some remember it."
+    chance_bp: 3000
+    min_suspicion_bp: 2500
+    choices:
+      - {label: "A great public sacrifice", outcome: "The consuls lead the whole Senate to the Capitol with the white oxen. The whispers quieten.", wealth_bp: -1500, suspicion_bp: -1500, influence: {clergy: 400}}
+      - {label: "Punish the rumourmongers", outcome: "An inquiry is voted and a few are scourged. The talk goes underground.", suspicion_bp: -600, unrest_bp: 700}
+      - {label: "Let them talk", outcome: "Talk is only talk. For now.", suspicion_bp: 300}
+
+  - id: merchants_charter   # Livy 23.48.10-49.4 (the publicani supply Spain on credit, 215 BC)
+    title: The contractors ask for terms
+    text: "The companies that supply the army and farm the harbour dues ask the Senate for terms: payment deferred until the treasury can pay, and the state to bear the loss of ships wrecked by storm or enemy."
+    chance_bp: 700
+    needs_adopted: [coinage]
+    choices:
+      - {label: "Grant the terms", outcome: "The army is supplied on the companies' credit. The contractors prosper; the senators grind their teeth.", wealth_bp: 1500, influence: {guilds: 1200, nobility: -800}}
+      - {label: "Sell them the contracts dear", outcome: "The censors let the contracts at a high price. The companies pay handsomely, once.", wealth_bp: 3000, influence: {guilds: 300}}
+      - {label: "Refuse", outcome: "The Senate approves. The companies take their ships and their silver to Puteoli and wait.", influence: {nobility: 600, guilds: -600}}
+
+  - id: lost_books   # Livy 40.29 (the books of Numa found in 181 BC and burned)
+    title: The books in the stone chest
+    text: "Men digging on the Janiculum have found two stone chests: one empty, inscribed as King Numa's tomb, the other holding Latin books on the pontifical law and Greek books of philosophy. The praetor has read them and says they would undo the state religion."
+    chance_bp: 700
+    needs_adopted: [writing]
+    choices:
+      - {label: "Buy the finder's silence and keep the books", outcome: "The scribes copy them by lamplight for a year. What they find!", wealth_bp: -1200, knowledge_bp: 2500}
+      - {label: "Keep only the Latin books", outcome: "The law of the pontiffs is read and kept; the Greek books are sealed away.", wealth_bp: -500, knowledge_bp: 1000, food_bp: 500}
+      - {label: "Burn them in the Comitium", outcome: "The books are burned in sight of the people by the victimarii. The pontiffs agree.", influence: {clergy: 300}}
+
+  - id: deserters   # Livy 4.1-5, 5.10 (tribunes obstruct the levy); Livy 2.23-24 (debtors refuse to enlist)
+    title: The tribunes block the levy
+    text: "The consuls have called the levy and the tribunes of the plebs forbid it: no plebeian will give his name until the Senate hears the debtors. Whole tribes have stayed in the hills."
+    chance_bp: 3000
+    at_war: true
+    min_unrest_bp: 2000
+    choices:
+      - {label: "Fine the defaulters and seize their goods", outcome: "The consuls' lictors bring them in. Every tribe is watching.", unrest_bp: 800, legitimacy_bp: -300, volunteers_bp: 40}
+      - {label: "Promise the debtors relief", outcome: "The consul swears before the Senate that no soldier's farm will be seized while he serves. They come down from the hills.", unrest_bp: -800, food_bp: 500}
+
+  - id: veterans_land   # Appian, BC 1.7-13 (the ager publicus and the law of Tiberius Gracchus, 133 BC)
+    title: The soldiers want land
+    text: "The men who fought for {civ} come home to find their farms bought up and worked by slaves. A tribune proposes to take back the public land the rich hold beyond the legal limit and give it to them."
+    chance_bp: 1200
+    at_war: false
+    needs_adopted: [iron_working]
+    choices:
+      - {label: "Back the land law", outcome: "Three commissioners survey the public land and settle the veterans. The great families call it robbery.", influence: {nobility: -1200}, legitimacy_bp: 800, volunteers_bp: 30}
+      - {label: "Pay them off", outcome: "Silver from the spoils instead of soil. They grumble, but go home.", wealth_bp: -2000}
+      - {label: "Refuse", outcome: "Angry old soldiers in every tavern of the Subura. Dangerous.", unrest_bp: 1000, influence: {nobility: 400}}
+
+  - id: foreign_envoys   # Livy, Periochae 14 (the embassy from Ptolemy, 273 BC); Dion. Hal. 20.14
+    title: Envoys from Alexandria
+    text: "Ambassadors of the king of Egypt arrive with gifts for the Senate and the consuls: gold, strange animals and stranger stories of a city with a library and a lighthouse."
+    chance_bp: 500
+    choices:
+      - {label: "Feast them and ask questions", outcome: "They talk for weeks. The scribes fill whole books, and the Senate sends an embassy back.", wealth_bp: -500, knowledge_bp: 1500}
+      - {label: "Trade with them", outcome: "Their goods sell for a fortune in the Forum Boarium.", wealth_bp: 1500, influence: {guilds: 400}}
+      - {label: "Return the gifts", outcome: "The envoys are told that Romans do not take a king's gold. Strangers bring strange ideas. Better not.", influence: {clergy: 300}}
+
+  - id: plague_doctors   # Livy 10.47.6-7 (the pestilence of 293 and the embassy for Aesculapius); Pliny NH 29.12-13
+    title: The pestilence
+    text: "A sickness runs through the poorest streets of Rome and the Sibylline Books are consulted. A Greek physician offers his services for a fee; the elders say Rome did without doctors for six hundred years."
+    chance_bp: 600
+    choices:
+      - {label: "Close the quarter", outcome: "The aediles shut the streets below the Esquiline. It is cruel, and the fever stops spreading.", unrest_bp: 600, food_bp: -300}
+      - {label: "Send for Aesculapius", outcome: "An embassy sails to Epidaurus and brings the god's serpent home to the Tiber island. Great processions fill the streets. So does the fever.", influence: {clergy: 600}, unrest_bp: 300}
+      - {label: "Let the Greek try", outcome: "Some cures work, most do not, and much is learned.", knowledge_bp: 800, wealth_bp: -400, idea: greek_medicine}

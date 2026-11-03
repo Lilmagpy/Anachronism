@@ -1,0 +1,107 @@
+schema_version: 1
+magistracies:
+  - id: quaestor
+    name: Quaestor
+    rank: 1
+    glory: 40
+    eras:
+      - {from_year: -509, to_year: -422, seats: 2, sources: ["Tacitus, Annals 11.22"]}
+      - {from_year: -421, to_year: -268, seats: 4, sources: ["Livy 4.43.3"]}
+      - {from_year: -267, to_year: -82, seats: 8, sources: ["Lydus, De magistratibus 1.27"]}
+      - {from_year: -81, to_year: -46, seats: 20, min_age: 30, sources: ["Tacitus, Annals 11.22"]}
+      - {from_year: -45, seats: 40, min_age: 30, sources: ["Suetonius, Divus Julius 41.1"]}
+    notes: "Under the kings quaestors served the consuls; their number and the dates are those given by later writers and are uncertain before 421."
+    sources: ["Tacitus, Annals 11.22", "Livy 4.43.3"]
+  - id: tribune_plebs
+    name: Tribune of the plebs
+    rank: 0
+    cursus: false
+    glory: 80
+    eras:
+      - {from_year: -494, to_year: -458, seats: 2, plebeians_only: true, sources: ["Livy 2.33.2-3"]}
+      - {from_year: -457, seats: 10, plebeians_only: true, sources: ["Livy 3.30.7"]}
+    notes: "Created at the first secession of the plebs (traditionally 494); the numbers in the early years are disputed (Livy 2.33.3, 2.58)."
+    sources: ["Livy 2.33.2-3", "Livy 3.30.7"]
+  - id: aedile_plebeian
+    name: Plebeian aedile
+    rank: 2
+    cursus: false
+    glory: 60
+    eras:
+      - {from_year: -494, seats: 2, plebeians_only: true, sources: ["Livy 2.33.3"]}
+    sources: ["Livy 2.33.3", "Dionysius of Halicarnassus 6.90.2"]
+  - id: aedile_curule
+    name: Curule aedile
+    rank: 2
+    glory: 100
+    eras:
+      - {from_year: -366, to_year: -181, seats: 2, sources: ["Livy 6.42.13"]}
+      - {from_year: -180, seats: 2, min_age: 36, interval_years: 2, sources: ["Livy 40.44.1"]}
+    notes: "At first only patricians stood (Livy 6.42.13); later the post alternated, then opened to all."
+    sources: ["Livy 6.42.13", "Livy 7.1.6"]
+  - id: praetor
+    name: Praetor
+    rank: 4
+    glory: 200
+    eras:
+      - {from_year: -366, to_year: -243, seats: 1, sources: ["Livy 7.1.1"]}
+      - {from_year: -242, to_year: -228, seats: 2, sources: ["Livy, Periochae 19"]}
+      - {from_year: -227, to_year: -198, seats: 4, sources: ["Pomponius, Digest 1.2.2.32"]}
+      - {from_year: -197, to_year: -181, seats: 6, sources: ["Livy 32.27.6"]}
+      - {from_year: -180, to_year: -82, seats: 6, min_age: 39, interval_years: 2, sources: ["Livy 40.44.1"]}
+      - {from_year: -81, to_year: -46, seats: 8, min_age: 39, interval_years: 2, prior_office: quaestor, sources: ["Pomponius, Digest 1.2.2.32"]}
+      - {from_year: -45, seats: 16, min_age: 39, interval_years: 2, prior_office: quaestor, sources: ["Suetonius, Divus Julius 41.1"]}
+    notes: "The second praetor (for foreigners) is dated 242 by Lydus and the Periochae; later increases follow Pomponius."
+    sources: ["Livy 7.1.1", "Pomponius, Digest 1.2.2.32"]
+  - id: consul
+    name: Consul
+    rank: 5
+    glory: 400
+    eras:
+      - {from_year: -509, to_year: -445, seats: 2, patricians_only: true, sources: ["Livy 2.1.7-9", "Livy 4.1"]}
+      - {from_year: -444, to_year: -367, seats: 2, patricians_only: true, replaced_by: consular_tribune, replaced_bp: 6500, sources: ["Livy 4.7.1-2", "Fasti Capitolini"]}
+      - {from_year: -366, to_year: -343, seats: 2, plebeian_max: 1, sources: ["Livy 6.35.5", "Livy 6.42.9"]}
+      - {from_year: -342, to_year: -181, seats: 2, reelect_gap_years: 10, sources: ["Livy 7.42.2"]}
+      - {from_year: -180, seats: 2, min_age: 42, interval_years: 2, reelect_gap_years: 10, prior_office: praetor, sources: ["Livy 40.44.1", "Livy 7.42.2"]}
+    notes: "The share of years with consular tribunes instead of consuls (replaced_bp) is a rough figure from the Fasti. The Licinian-Sextian laws (367) opened one place to plebeians; the first plebeian consul was L. Sextius Lateranus (366). In 342 a plebiscite let both be plebeian (Livy 7.42.2)."
+    sources: ["Livy 2.1", "Livy 6.42.9", "Livy 7.42.2", "Livy 40.44.1", "Fasti Capitolini"]
+  - id: consular_tribune
+    name: Consular tribune
+    rank: 5
+    glory: 300
+    eras:
+      - {from_year: -444, to_year: -427, seats: 3, patricians_only: true, sources: ["Livy 4.7.1"]}
+      - {from_year: -426, to_year: -406, seats: 4, patricians_only: true, sources: ["Livy 4.31.1"]}
+      - {from_year: -405, to_year: -401, seats: 6, patricians_only: true, sources: ["Livy 5.1.2"]}
+      - {from_year: -400, to_year: -367, seats: 6, sources: ["Livy 5.12.11"]}
+    notes: "Open to plebeians in law from 444 (Livy 4.6.8), but none was elected before 400 (Livy 5.12.11)."
+    sources: ["Livy 4.6.8", "Livy 4.7.1", "Livy 5.12.11"]
+  - id: censor
+    name: Censor
+    rank: 6
+    cursus: false
+    census: true
+    glory: 300
+    eras:
+      - {from_year: -443, to_year: -352, seats: 2, every: 5, term_months: 18, patricians_only: true, sources: ["Livy 4.8.2", "Livy 4.24.5"]}
+      - {from_year: -351, to_year: -340, seats: 2, every: 5, term_months: 18, plebeian_max: 1, sources: ["Livy 7.22.7"]}
+      - {from_year: -339, seats: 2, every: 5, term_months: 18, plebeian_min: 1, sources: ["Livy 8.12.14"]}
+    notes: "The five-year rhythm is the ideal of the lustrum; real censorships were irregular, and the Fasti decide in a chronicle."
+    sources: ["Livy 4.8.2", "Livy 7.22.7", "Livy 8.12.14"]
+  - id: dictator
+    name: Dictator
+    rank: 9
+    cursus: false
+    glory: 500
+    eras:
+      - {from_year: -501, to_year: -202, seats: 1, term_months: 6, appointed: true, companion: magister_equitum, sources: ["Livy 2.18.4", "Livy 30.39.8"]}
+    notes: "Named by a consul on the Senate's advice, for six months at most. The first, T. Larcius, is dated 501 by Livy, with other traditions later (Livy 2.18.1-5). The last of the old kind was in 202; Sulla and Caesar come through the Fasti only."
+    sources: ["Livy 2.18.4", "Livy 30.39.8"]
+  - id: magister_equitum
+    name: Master of the horse
+    rank: 8
+    cursus: false
+    glory: 200
+    eras:
+      - {from_year: -501, to_year: -202, seats: 1, term_months: 6, appointed: true, sources: ["Livy 2.18.4"]}
+    sources: ["Livy 2.18.4"]

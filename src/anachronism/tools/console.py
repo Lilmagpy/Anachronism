@@ -21,14 +21,13 @@ from anachronism.engine.actions import (
     StartProject,
 )
 from anachronism.engine.bots import BOTS, Bot, make_bot
-from anachronism.engine.commands import describe_blockers
 from anachronism.engine.economy import project_costs
 from anachronism.engine.game import apply_action, end_turn, new_game
 from anachronism.engine.projects import project_turns
 from anachronism.engine.reports import capacity
 from anachronism.engine.save import SaveError, dumps, loads
 from anachronism.engine.state import Event, GameState, Snapshot
-from anachronism.engine.tech import feasibility
+from anachronism.engine.tech import describe_blockers, feasibility
 
 Reader = Callable[[str], str]
 Writer = Callable[[str], None]

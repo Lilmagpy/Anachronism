@@ -1,0 +1,177 @@
+schema_version: 1
+# Battle plans (content/schema/tactics.py, D-108). Each army goes into battle with a plan:
+# its own general's choice, or the one its ruler ordered. A plan that "beats" the enemy's
+# gives its side the edge (rules.armies.tactic_edge_bp); a general with the plan's gift
+# (trait) doubles that edge. Plans may need soldiers of certain kinds (needs_units, at least
+# needs_share_bp of the side's men), certain ground (needs_terrain) or a side (when).
+tactics:
+  - id: line
+    name: Steady line
+    note: "Meet them line against line, and let the stronger and braver win."
+    beats: []
+  - id: charge
+    name: Headlong charge
+    note: "Close at a run before they are ready. Bloody for both sides; it breaks a steady line and rides through skirmishers - but spears and a feigned retreat punish it."
+    power_bp: 1000
+    losses_bp: 4000
+    terrain_bp: {marsh: -2000, forest: -1500, mountains: -1500}
+    skirmish_bp: -3000
+    beats: [line, skirmish]
+    trait: bold
+  - id: hold
+    name: Shield wall
+    note: "Stand on the best ground and let them come: shields locked, spears out. It breaks a charge and will not chase a feigned retreat - but arrows and a flank attack undo it."
+    when: defending
+    power_bp: 1000
+    losses_bp: -2000
+    terrain_bp: {hills: 1500, mountains: 2000, forest: 500}
+    beats: [charge, feint]
+    trait: shield
+  - id: skirmish
+    name: Skirmishing
+    note: "Never close: shoot, fall back, shoot again. Few die on either side; it wears down a line that stands still - but a charge catches the archers."
+    needs_units: [archers, crossbowmen, horse_archers, musketeers, cretan_archers, balearic_slingers, parthian_horse_archers, iberian_caetrati]
+    needs_share_bp: 3000
+    skirmish_bp: 6000
+    losses_bp: -3500
+    terrain_bp: {steppe: 1500, desert: 1500, plains: 500, forest: -2000}
+    beats: [hold, ambush, elephant_charge, orbis]
+  - id: flank
+    name: Envelopment
+    note: "Thin the centre and send horsemen round both wings. If it works the enemy is surrounded and destroyed (think of Cannae) - but a feigned retreat draws the wings away."
+    needs_units: [cavalry, horse_archers, heavy_cavalry, chariots, roman_equites, socii_cavalry, extraordinarii_horse, gallic_horse, germanic_horse, numidian_horse, cataphracts, parthian_cataphracts, parthian_horse_archers]
+    needs_share_bp: 2000
+    rout_bp: 2500
+    terrain_bp: {plains: 1000, steppe: 1000, river_plains: 500, hills: -1000, mountains: -2500, forest: -1500, marsh: -1500}
+    beats: [line, hold, testudo, parthian_shot, relieve_lines, phalanx_charge]
+    trait: horse
+  - id: feint
+    name: Feigned retreat
+    note: "Horsemen turn and flee - or seem to - and draw the enemy into a broken pursuit and a trap. It beats a charge and an envelopment; a host that holds fast does not take the bait."
+    needs_units: [cavalry, horse_archers, heavy_cavalry, numidian_horse, gallic_horse, germanic_horse, roman_equites, parthian_horse_archers]
+    needs_share_bp: 4000
+    rout_bp: 1500
+    terrain_bp: {steppe: 1500, plains: 500, forest: -2500, mountains: -2500, marsh: -2000}
+    beats: [charge, flank, double_envelopment]
+    trait: horse
+  - id: ambush
+    name: Ambush
+    note: "Hide the army in the woods, hills or marshes and fall on the enemy's column on the march. It beats a line, a charge or an envelopment - unless skirmishers find it first."
+    when: defending
+    needs_terrain: [forest, hills, mountains, marsh]
+    power_bp: 1500
+    rout_bp: 2000
+    skirmish_bp: 3000
+    beats: [line, charge, flank, phalanx_charge]
+    trait: quartermaster
+
+# --- The Roman world, 509-27 BC (R4) ---------------------------------------------------------
+  - id: relieve_lines
+    name: Relief of the lines
+    note: "Hastati, then principes, then triarii: each line fights, falls back through the gaps and is replaced by fresh men. It wears down a charge and a plain line - but an envelopment cuts it off from behind."
+    needs_units: [hastati, principes, triarii, socii_infantry, extraordinarii, cohort_legionaries]
+    needs_share_bp: 5000
+    power_bp: 500
+    losses_bp: -1000
+    terrain_bp: {hills: 500, forest: 500, marsh: -1000}
+    beats: [line, charge]
+    trait: shield
+    sources:
+      - "Livy 8.8.9-13 (the hastati retire through the gaps; the triarii rise: 'it has come down to the triarii')"
+      - "Polybius 6.21-23 (the three lines)"
+
+  - id: double_envelopment
+    name: Double envelopment (Cannae)
+    note: "Let the centre bow and yield while strong horse on both wings sweep round and meet behind the enemy: a few men of the army live to tell it. It needs open ground and many horse - and a feigned retreat draws the wings off."
+    needs_units: [cavalry, heavy_cavalry, roman_equites, socii_cavalry, extraordinarii_horse, gallic_horse, germanic_horse, numidian_horse, cataphracts, parthian_cataphracts]
+    needs_share_bp: 3000
+    needs_terrain: [plains, river_plains, steppe]
+    power_bp: 500
+    rout_bp: 5000
+    losses_bp: 2000
+    beats: [line, hold, relieve_lines]
+    trait: horse
+    sources:
+      - "Polybius 3.113-117 (Cannae)"
+      - "Polybius 3.117.4 (the lesson of horse)"
+
+  - id: testudo
+    name: Shield roof (testudo)
+    note: "Kneel in close order with the shields held over the heads: arrows glide off. It beats skirmishers and horse archers, but it cannot move far or hit back, and a flank attack rolls it up."
+    needs_units: [hastati, principes, triarii, socii_infantry, extraordinarii, cohort_legionaries]
+    needs_share_bp: 5000
+    power_bp: -500
+    losses_bp: -2500
+    beats: [skirmish]
+    trait: shield
+    sources:
+      - "Plutarch, Antony 45.2-3 (36 BC, in Media: the shield-bearers kneel and make a roof against the Parthians' arrows)"
+
+  - id: orbis
+    name: Hollow square
+    note: "Form a square with the horse and baggage inside, and march or stand: no flank to turn, no rear to reach. It beats a charge and an envelopment, but archers and horse archers shoot it to pieces at leisure (Carrhae)."
+    needs_units: [hastati, principes, triarii, socii_infantry, extraordinarii, cohort_legionaries]
+    needs_share_bp: 5000
+    power_bp: -500
+    losses_bp: -1000
+    beats: [charge, flank]
+    sources:
+      - "Plutarch, Crassus 23.3-4 (the hollow square of four fronts, twelve cohorts to a side)"
+      - "Plutarch, Crassus 24.4-25.1 (shot to pieces)"
+
+  - id: parthian_shot
+    name: Horse archers (Parthian shot)
+    note: "Surround the enemy at a distance and shoot, withdrawing and shooting again, resupplied from camels. It beats a steady line, a shield wall, a square and a shield roof alike - unless the enemy has horse to ride the archers down."
+    needs_units: [horse_archers, parthian_horse_archers]
+    needs_share_bp: 5000
+    power_bp: 500
+    skirmish_bp: 6000
+    losses_bp: -3500
+    terrain_bp: {steppe: 2000, desert: 1500, plains: 1000, hills: -1500, forest: -3000, mountains: -3000, marsh: -3000}
+    beats: [line, hold, testudo, orbis]
+    trait: horse
+    sources:
+      - "Plutarch, Crassus 24.3-6, 25.1 (Carrhae: they surround the square and shoot from all sides, refilling from the camels)"
+      - "Plutarch, Antony 45.1-3 (the shield roof, and the Parthians' habit of shooting while retreating)"
+
+  - id: elephant_charge
+    name: Elephant charge
+    note: "Send the elephants first: horses bolt from them and infantry flinch. It breaks a steady line and a charging line - but spearmen, javelins and trumpets turn them back on their own side, and they are useless in rough ground."
+    needs_units: [african_elephants, indian_elephants, war_elephants]
+    needs_share_bp: 300
+    power_bp: 1500
+    losses_bp: 2000
+    rout_bp: 1000
+    terrain_bp: {plains: 1000, river_plains: 1000, hills: -2000, forest: -2500, marsh: -4500, mountains: -5000}
+    beats: [line, charge]
+    sources:
+      - "Plutarch, Pyrrhus 17.3 (Heraclea: the Romans' horses bolted from the elephants)"
+      - "Polybius 15.12.1-4 (Zama: the elephants panic and run back on their own wing)"
+      - "Livy 37.40-41 (Magnesia: elephants in the gaps of the phalanx)"
+
+  - id: open_lanes
+    name: Lanes for the elephants
+    note: "Leave straight lanes between the maniples and the skirmishers in front: the elephants charge through the gaps, are harried with javelins and noise, and do little harm. It beats the elephant charge and costs few lives."
+    needs_units: [velites, census_skirmishers]
+    needs_share_bp: 1000
+    power_bp: 0
+    losses_bp: -1000
+    skirmish_bp: 2000
+    beats: [elephant_charge]
+    trait: quartermaster
+    sources:
+      - "Polybius 15.9.7-10 (Scipio's lanes)"
+      - "Polybius 15.12.3-4 (the result)"
+
+  - id: phalanx_charge
+    name: Pike charge
+    note: "Level the pikes and charge on flat ground: nothing withstands it at the front, and the rear ranks add weight. It beats a line, a charge and a shield wall but fails on broken ground and is rolled up from the flank and rear."
+    needs_units: [macedonian_phalangites, pontic_phalanx, servian_hoplites, etruscan_hoplites, carthaginian_citizens, libyan_spearmen]
+    needs_share_bp: 5000
+    power_bp: 1500
+    losses_bp: 1000
+    terrain_bp: {plains: 1000, river_plains: 1000, hills: -3000, forest: -4000, marsh: -4000, mountains: -4000}
+    beats: [line, charge, hold]
+    sources:
+      - "Polybius 18.29-31 (the phalanx's strength and its need for level, clear ground)"
+      - "Polybius 18.24-26 (Cynoscephalae)"

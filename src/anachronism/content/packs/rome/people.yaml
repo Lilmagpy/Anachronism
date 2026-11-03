@@ -1,0 +1,86 @@
+schema_version: 1
+# Historical persons seeded into the game. Sample pack. Birth years are mostly unknown (the engine
+# estimates them from the first recorded office).
+people:
+  - id: l_iunius_brutus
+    name: Lucius Iunius Brutus
+    gens: iunii
+    died: -509
+    offices: [{office: consul, year: -509}]
+    legendary: true
+    notes: "Livy 2.1.7; Livy 2.6.9 (killed in the battle against Arruns Tarquinius)"
+    sources: ["Livy 2.1.7", "Livy 2.6.9"]
+  - id: l_tarquinius_collatinus
+    name: Lucius Tarquinius Collatinus
+    gens: tarquinii
+    offices: [{office: consul, year: -509}]
+    legendary: true
+    notes: "Resigned and left Rome (Livy 2.2.3-11)."
+    sources: ["Livy 2.2.11"]
+  - id: p_valerius_publicola
+    name: Publius Valerius Publicola
+    gens: valerii
+    died: -503
+    offices: [{office: consul, year: -509}, {office: consul, year: -508}, {office: consul, year: -507}, {office: consul, year: -504}]
+    legendary: true
+    notes: "Died 503 (Livy 2.16.7). The consulships beyond 508 follow the Fasti and are not checked here."
+    sources: ["Livy 2.15.1", "Livy 2.16.7"]
+  - id: t_lucretius_tricipitinus
+    name: Titus Lucretius Tricipitinus
+    gens: lucretii
+    offices: [{office: consul, year: -508}]
+    sources: ["Livy 2.15.1"]
+  - id: m_horatius_pulvillus
+    name: Marcus Horatius Pulvillus
+    gens: horatii
+    offices: [{office: consul, year: -509}]
+    notes: "Suffect consul after Lucretius, dedicated the Capitoline temple (Livy 2.8.6)."
+    sources: ["Livy 2.8.6"]
+  - id: t_larcius_flavus
+    name: Titus Larcius Flavus
+    gens: larcii
+    offices: [{office: consul, year: -501}, {office: dictator, year: -501}]
+    notes: "The year he was dictator is disputed (Livy 2.18.1-5)."
+    sources: ["Livy 2.18.4"]
+  - id: sp_cassius_vecellinus
+    name: Spurius Cassius Vecellinus
+    gens: cassii
+    died: -485
+    offices: [{office: consul, year: -502}, {office: magister_equitum, year: -501}]
+    notes: "Executed on a charge of aiming at kingship, traditionally 485 (Livy 2.41.10-11)."
+    sources: ["Livy 2.16.8", "Livy 2.18.4", "Livy 2.41.10"]
+  - id: ap_claudius_caudex
+    name: Appius Claudius Caudex
+    gens: claudii
+    offices: [{office: consul, year: -264}]
+    notes: "Took the army to Sicily at the start of the First Punic War (Polybius 1.11)."
+    sources: ["Polybius 1.11", "Fasti Capitolini"]
+  - id: m_fulvius_flaccus
+    name: Marcus Fulvius Flaccus
+    gens: fulvii
+    offices: [{office: consul, year: -264}]
+    sources: ["Polybius 1.11", "Fasti Capitolini"]
+  - id: c_duilius
+    name: Gaius Duilius
+    gens: duilii
+    offices: [{office: consul, year: -260}, {office: censor, year: -258}]
+    notes: "Victor at Mylae 260 (Polybius 1.22-23)."
+    sources: ["Polybius 1.22-23", "Fasti Capitolini"]
+  - id: cn_cornelius_scipio_asina
+    name: Gnaeus Cornelius Scipio Asina
+    gens: cornelii
+    offices: [{office: consul, year: -260}, {office: consul, year: -254}]
+    notes: "Captured by the Carthaginians at Lipara in 260 (Polybius 1.21)."
+    sources: ["Polybius 1.21", "Fasti Capitolini"]
+  - id: m_valerius_maximus_messalla
+    name: Manius Valerius Maximus Messalla
+    gens: valerii
+    offices: [{office: consul, year: -263}]
+    notes: "Relieved Messana and took many Sicilian towns (Polybius 1.16)."
+    sources: ["Polybius 1.16"]
+  - id: l_postumius_megellus
+    name: Lucius Postumius Megellus
+    gens: postumii
+    offices: [{office: consul, year: -305}, {office: consul, year: -294}, {office: consul, year: -262}]
+    notes: "Earlier consulships follow the Fasti Capitolini."
+    sources: ["Polybius 1.17", "Fasti Capitolini"]

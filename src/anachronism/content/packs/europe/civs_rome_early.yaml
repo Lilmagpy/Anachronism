@@ -1,0 +1,239 @@
+schema_version: 1
+# The peoples around early Rome, 509-338 BC (D-286). Every `sources` line was checked against the ancient text (Livy,
+# Polybius, Plutarch, Herodotus, Diodorus, Strabo on Perseus/LacusCurtius, Oct 2026); passage numbers follow the English
+# translations there, which differ a little from the Latin numbering. Ids start with e5_ (early agent).
+# Rome, Carthage, Syracuse and the Cisalpine Gauls are the existing civs of civs_ancient.yaml.
+civs:
+  - id: e5_latins
+    name: "The Latin League"
+    adjective: Latin
+    lineage: e5_latins
+    colour: "#6f9c3a"
+    symbol: laurel
+    emblem: "LAT"
+    portrait: roman
+    description: "The Latin cities of the plain south of the Tiber, kin to Rome in speech and cult, which met in council at the grove of Ferentina and fought beside Rome and against it by turns."
+    sources:
+      - "Livy 1.50-52 (the Latins summoned to the grove of Ferentina; Tarquin's treaty with them)"
+      - "Livy 2.18.3 and 2.19-20 (the thirty Latin cities and Octavius Mamilius; Lake Regillus)"
+      - "Dionysius of Halicarnassus 6.95.2 (the text of the Cassian treaty, as he gives it)"
+      - "Livy 8.3-8.14 (the Latin War and the dissolution of the League)"
+    confidence: medium
+  - id: e5_veii
+    name: "Veii"
+    adjective: Veientine
+    lineage: e5_veii
+    colour: "#d46a2c"
+    symbol: tower
+    emblem: "VEI"
+    portrait: hellenistic
+    description: "The Etruscan city nearest to Rome, a few miles up the Tiber: rich, well walled, and Rome's oldest rival for the river and the salt road."
+    sources:
+      - "Livy 2.6.4 (Veientine grievances over lost land, 509)"
+      - "Livy 2.48.8-2.54.1 (the Fabii, the Cremera and the forty-year truce)"
+      - "Livy 4.17-20 (Lars Tolumnius, king of Veii, killed by Cossus)"
+      - "Livy 5.1 (Veii elects a king; the Etruscans refuse help); 5.19-22 (Camillus takes the city)"
+    confidence: medium
+  - id: e5_falisci
+    name: "The Faliscans"
+    adjective: Faliscan
+    lineage: e5_falisci
+    colour: "#b48ac0"
+    symbol: star
+    emblem: "FAL"
+    portrait: roman
+    description: "The people of Falerii and Capena north of Veii: Italic by language, Etruscan in much of their culture, and often Veii's allies in war."
+    sources:
+      - "Livy 4.17.1-4.18.1 (Faliscans beside Veii and Fidenae)"
+      - "Livy 5.24.2 (Capena sues for peace) and 5.27 (the schoolmaster of Falerii, and Camillus's answer)"
+      - "Livy 7.22.5 (forty-year truce with Falerii and Tarquinii, 351)"
+    confidence: medium
+  - id: e5_caere
+    name: "Caere"
+    adjective: Caeretan
+    lineage: e5_caere
+    colour: "#23a094"
+    symbol: moon
+    emblem: "CAI"
+    portrait: hellenistic
+    description: "The wealthiest Etruscan port on the Tyrrhenian coast, with a treasury at Delphi, and a long friend of Rome. It sheltered the exiled Tarquins, and later Rome's Vestals."
+    sources:
+      - "Livy 1.60.2 (the Tarquin princes go to Caere)"
+      - "Herodotus 1.167 (Agylla stones the Phocaean prisoners and makes amends at Delphi); Strabo 5.2.3 (Caere's treasury; the Vestals sheltered; the Gauls' ransom taken back)"
+      - "Livy 5.40 (the Vestals carried to Caere, 390); Livy 7.19.6-7.20.9 (353: Caere pardoned in memory of its hospitality)"
+    confidence: medium
+  - id: e5_tarquinii
+    name: "Tarquinii"
+    adjective: Tarquinian
+    lineage: e5_tarquinii
+    colour: "#9a1f5a"
+    symbol: winged
+    emblem: "TAR"
+    portrait: hellenistic
+    description: "The great Etruscan city of the painted tombs, kin to the Tarquin kings, which sent an army to put them back on Rome's throne."
+    sources:
+      - "Livy 2.6.2-7 (Tarquinii and Veii march with the exiled king; Silva Arsia, 509)"
+      - "Livy 7.15.10 (307 Roman prisoners sacrificed, 358); Livy 7.22.5 (forty-year truce, 351)"
+    confidence: medium
+  - id: e5_clusium
+    name: "Clusium and Volsinii"
+    adjective: Clusine
+    lineage: e5_clusium
+    colour: "#5457b5"
+    symbol: lion
+    emblem: "CLV"
+    portrait: hellenistic
+    description: "The inland Etruscan cities of the Clanis valley and Lake Bolsena: Clusium of Lars Porsenna, who marched on Rome to restore the Tarquins."
+    sources:
+      - "Livy 2.9-2.15 (Porsenna's war and its sequel)"
+      - "Tacitus, Histories 3.72 (Porsenna, when the city was surrendered); Pliny, Natural History 34.139 (the iron clause of his treaty)"
+      - "Livy 5.35-5.36 (the Gauls besiege Clusium and Rome sends envoys, 391-390)"
+    confidence: medium
+  - id: e5_etruscan_league
+    name: "The Etruscan League"
+    adjective: Etruscan
+    lineage: e5_etruscan_league
+    colour: "#7b5b3a"
+    symbol: fire
+    emblem: "ETR"
+    portrait: hellenistic
+    description: "The northern and coastal Etruscan cities, whose twelve peoples met each year at the Fanum Voltumnae and could rarely agree on one war."
+    sources:
+      - "Livy 4.23.5 and 5.1.5-6 (the council at the Fanum Voltumnae refuses help to Veii)"
+      - "Livy 6.2.2 (a conspiracy of the leading Etruscans at the Fanum Voltumnae, 389)"
+      - "Polybius 2.17.1 (the Etruscans once held the Po plain and the plains round Capua and Nola)"
+    confidence: medium
+  - id: e5_sabines
+    name: "The Sabines"
+    adjective: Sabine
+    lineage: e5_sabines
+    colour: "#8e8e3a"
+    symbol: stag
+    emblem: "SAB"
+    portrait: roman
+    description: "Hill farmers of the Apennine foothills north-east of Rome, close neighbours on the Anio, from whom the Claudian family came to Rome."
+    sources:
+      - "Livy 2.16.1-6 (the Sabine war of 505-503; Attius Clausus comes to Rome)"
+      - "Livy 2.31.1 (the Sabines routed by the dictator, 494); Livy 3.26.1-2 and 3.29.7 (Sabine raid to Eretum, 458)"
+    confidence: medium
+  - id: e5_volsci
+    name: "The Volsci"
+    adjective: Volscian
+    lineage: e5_volsci
+    colour: "#6d4c41"
+    symbol: boar
+    emblem: "VOL"
+    portrait: roman
+    description: "A hill people of the Liri valley and the Pomptine coast, owners of Antium, who raided Rome's border for a century and a half."
+    sources:
+      - "Livy 2.22 (the first Volscian war in these books); Livy 2.30-31 (Volscian war of 494)"
+      - "Livy 2.33.4-2.40 (Corioli, Coriolanus and the Volscian generals Attius Tullius and Gnaeus Marcius)"
+      - "Livy 6.2-6.4 (Camillus beats the Volsci, 389)"
+    confidence: medium
+  - id: e5_aequi
+    name: "The Aequi"
+    adjective: Aequian
+    lineage: e5_aequi
+    colour: "#55705e"
+    symbol: bear
+    emblem: "AEQ"
+    portrait: roman
+    description: "Mountain raiders of the Anio uplands who came down each summer to Mount Algidus."
+    sources:
+      - "Livy 2.30.3 (Aequi in arms, 494)"
+      - "Livy 3.25.5-9 and 3.26-3.29 (Cloelius Gracchus at Algidus; Cincinnatus, 458)"
+      - "Livy 6.2-6.4 (the Aequi again, 389-388)"
+    confidence: medium
+  - id: e5_hernici
+    name: "The Hernici"
+    adjective: Hernican
+    lineage: e5_hernici
+    colour: "#8892a6"
+    symbol: ram
+    emblem: "HER"
+    portrait: roman
+    description: "A small mountain people of the upper Trerus valley, wedged between the Volsci and the Aequi, friends of Rome in the common wars."
+    sources:
+      - "Livy 2.41.1 (treaty with the Hernici, two-thirds of their land taken, 486)"
+      - "Livy 5.19.6 (Hernici volunteer for the siege of Veii); Livy 7.6-7.8 (Rome declares war on them, 362)"
+    confidence: medium
+  - id: e5_cumae
+    name: "Cumae and the Bay of Naples"
+    adjective: Cumaean
+    lineage: e5_cumae
+    colour: "#2b8a3e"
+    symbol: dolphin
+    emblem: "KYM"
+    portrait: greek
+    description: "The oldest Greek colony in Italy, ruled in this age by the tyrant Aristodemus, who gave the exiled Tarquin his last home."
+    sources:
+      - "Livy 2.14.5-9 (Cumaean troops help Aricia against Porsenna's son); Livy 2.21.5 (Tarquin dies at Cumae); Livy 2.34.4 (Aristodemus holds Rome's grain ships)"
+      - "Dionysius of Halicarnassus 7.2.4 (Aristodemus, called Malacus)"
+      - "Diodorus 11.51 (Hieron's fleet beats the Etruscans off Cumae, 474); Livy 4.44.12 (Cumae taken by the Campanians, c. 420)"
+    confidence: medium
+  - id: e5_croton
+    name: "Croton and the Italiote Greeks"
+    adjective: Crotoniate
+    lineage: e5_croton
+    colour: "#c24a3b"
+    symbol: lyre
+    emblem: "KRO"
+    portrait: greek
+    description: "The Achaean cities of the toe of Italy: Croton of Milo the athlete and of Pythagoras, with Locri and Thurii, later joined against Dionysius of Syracuse."
+    sources:
+      - "Diodorus 12.9 (Croton, Pythagoras's advice and Milo the athlete at the war with Sybaris)"
+      - "Diodorus 14.100-14.111 (Dionysius against the Italiote Greeks; the Elleporus; the fall of Rhegium); Polybius 1.6.2"
+    confidence: medium
+  - id: e5_tarentum
+    name: "Tarentum"
+    adjective: Tarentine
+    lineage: e5_tarentum
+    colour: "#3a6ea5"
+    symbol: trident
+    emblem: "TAR"
+    portrait: greek
+    description: "The Spartan colony on the Gulf of Taranto: a fine harbour and good cavalry, and the Greek city of Italy that Rome would one day have to fight."
+    sources:
+      - "Herodotus 3.136 (Aristophilides, king of the Tarentines)"
+      - "Herodotus 7.170 (the Tarentines' disaster against the Iapygians)"
+    confidence: low
+  - id: e5_senones
+    name: "The Senones"
+    adjective: Senonian
+    lineage: e5_senones
+    colour: "#2e7d32"
+    symbol: torc
+    emblem: "SEN"
+    portrait: celtic
+    description: "The latest Gauls to cross the Alps, settled on the Adriatic coast between the Utens and the Aesis, who marched on Rome in the war that followed."
+    sources:
+      - "Livy 5.35.2-3 (the Senones the latest arrivals, from the Utens to the Aesis); Livy 5.36-5.49"
+      - "Polybius 2.17.7 and 2.18.2-3; Plutarch, Camillus 17 (Brennus at Clusium)"
+      - "Diodorus 14.113-14.116"
+    confidence: medium
+  - id: e5_campanians
+    name: "The Campanians"
+    adjective: Campanian
+    lineage: e5_campanians
+    colour: "#e0b030"
+    symbol: horse
+    emblem: "CAP"
+    portrait: hellenistic
+    description: "The Oscan-speaking lords of Capua and the fertile Campanian plain, rich in grain and wine, with the best cavalry in Italy and the fewest friends."
+    sources:
+      - "Livy 4.37.1 (Volturnum, the Etruscan city now Capua, taken by the Samnites) and 4.44.12 (Cumae, c. 420)"
+      - "Livy 7.29-7.31 (Capua appeals to Rome and surrenders to it, 343)"
+    confidence: medium
+  - id: e5_samnites
+    name: "The Samnites"
+    adjective: Samnite
+    lineage: e5_samnites
+    colour: "#a04a2c"
+    symbol: bull
+    emblem: "SAM"
+    portrait: roman
+    description: "The cantons of the central Apennines, which spill into the plains of Campania and Apulia: Rome's most stubborn rival for Italy."
+    sources:
+      - "Livy 7.29 (the Samnites attack the Sidicines, 343)"
+      - "Livy 8.1-8.2 (the Samnites sue for peace, 341)"
+    confidence: medium
