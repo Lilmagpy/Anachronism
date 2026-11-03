@@ -1,32 +1,37 @@
 schema_version: 1
+# The sea, in Roman terms (see agriculture.yaml for the dating rule).
 techs:
   - id: sailing
-    name: Sailing boats
-    keywords: [sail, sails, sailing, boats, ships, seafaring]
+    name: Sailing ships
+    keywords: [sail, sails, sailing, boats, ships, seafaring, merchant ships, navis, fleet, triremes]
     category: maritime
     year: -4000
     complexity: 1
     effects: [{type: trade_income, bp: 500}, {type: naval_strength, bp: 500}]
     flavour: A sheet of cloth, and the wind rows for you.
-    history: "The earliest known sails are painted on Egyptian pottery from about 3500 BC; boats on the Nile carried them earlier still."
+    history: "Rome's first treaty with Carthage, in the first year of the Republic, already rules where Roman ships may sail and trade (Polybius 3.22.4-13); two naval officers (duoviri navales) were first chosen in 311 BC to fit out a fleet (Livy 9.30.4). Egypt painted sails on its pots three thousand years earlier."
+    sources: ["Polybius 3.22.4-13 # unverified", "Livy 9.30.4 # unverified"]
+    confidence: high
 
   - id: sternpost_rudder
     name: Sternpost rudder
-    keywords: [rudder, sternpost, steering, helm]
+    keywords: [rudder, sternpost, steering, helm, steering oar]
     category: maritime
-    year: 100
+    year: 1180
     complexity: 2
     prerequisites: [sailing]
     requires: {buildings: [harbour]}
     effects: [{type: naval_strength, bp: 800}, {type: trade_income, bp: 500}]
     flavour: One hinged board steers a ship far bigger than any oar could.
-    history: "Chinese ships had sternpost rudders by the 1st century AD; Europe adopted them around 1180."
+    history: "Roman ships were steered with two great oars (gubernacula) over the quarters, as on every Mediterranean ship of the age. Chinese ships hung a rudder on the sternpost by the 1st century AD; northern Europe adopted it about 1180."
+    sources: ["Lucan, Pharsalia 8.193-194 (the gubernaculum) # unverified"]
+    confidence: medium
 
   - id: compass
     name: Magnetic compass
-    keywords: [compass, magnet, lodestone, navigation, north]
+    keywords: [compass, magnet, lodestone, navigation, north, magnetic needle]
     category: maritime
-    year: 1040
+    year: 1190
     complexity: 3
     prerequisites: [sailing, iron_working]
     requires: {literacy_bp: 200}
@@ -34,5 +39,7 @@ techs:
       - {type: naval_strength, bp: 800}
       - {type: trade_income, bp: 800}
       - {type: information_speed, bp: 300}
-    flavour: A needle that always points south, even under clouds.
-    history: "Shen Kuo described the magnetic needle compass in 1088; Chinese sailors used it by about 1100."
+    flavour: A needle that always points north, even under clouds.
+    history: "Romans knew the lodestone drew iron (Lucretius 6.906-1089; Pliny NH 36.126-130) and never thought to steer by it; they sailed by landmarks and stars and laid up for winter. Chinese sailors used the needle by about 1100; Alexander Neckam first describes it in Europe about 1190."
+    sources: ["Lucretius 6.906-916 # unverified", "Pliny NH 36.126-130 # unverified", "Alexander Neckam, De naturis rerum 2.98 # unverified"]
+    confidence: medium

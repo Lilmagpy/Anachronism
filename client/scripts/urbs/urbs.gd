@@ -62,6 +62,8 @@ var chunks := UrbsChunks.new()
 var cam := UrbsCamera.new()
 var hud := UrbsHud.new()
 var life := UrbsLife.new()          ## U8 life: people, stalls, carts, smoke, lamps (life.gd)
+var anachronisms := UrbsAnachronisms.new()   # F1 ideas: the player's early works (anachronisms.gd)
+var city_view: Dictionary = {}      ## F1 ideas: view["city"] (main.gd sets it before open)
 var spectacle: Node3D               ## the spectacle playing, if any (spectacles/spectacles.gd)
 var events: Array = []              ## the turn's city events (view["city"]["events"])
 var sun := DirectionalLight3D.new()
@@ -121,6 +123,8 @@ func _ready() -> void:
 ## point to open over (default the Forum); `flags` are the command-line options.
 func open(new_year: int, at := Vector3.ZERO, flags := {}, new_events: Array = []) -> void:
 	year = new_year
+	if flags.has("anachronisms"):   # F1 ideas: --anachronisms=<builds>:<tech>[:<year>],... for renders
+		city_view = UrbsAnachronisms.from_flag(str(flags["anachronisms"]), year)
 	if _built_year != year:
 		_rebuild()
 	events = new_events
@@ -185,6 +189,7 @@ func _rebuild() -> void:
 	var height := Callable(self, "height_at")
 	streets.build(self, year, height)
 	monuments.build(self, year, height)
+	anachronisms.build(self, city_view)   # F1 ideas: the player's works, before the houses fill in
 	fill.build(self, year, height)
 	life.build(self, year, hour, height)   # after the streets and monuments it walks among
 	for node in get_children():

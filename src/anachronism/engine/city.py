@@ -14,6 +14,7 @@ Integers and ids only; every loop runs in sorted order; no randomness is needed.
 from __future__ import annotations
 
 from collections.abc import Iterable
+from dataclasses import dataclass
 
 from anachronism.content.schema import CityTimeline, Monument
 from anachronism.engine.city_state import (
@@ -211,6 +212,323 @@ def _funerals(state: GameState, city: CityState, year: int, turn: int) -> None:
                     person=pid,
                 )
             )
+
+
+# --- F1 ideas: the works an idea raises in the city, and where they stand -------------------
+
+
+@dataclass(frozen=True)
+class WorkForm:
+    """How the 3D city draws the work a ``builds`` kind raises, and where (F1 ideas).
+
+    The work stands on the site of the real building that history raised later, with that
+    building's dimensions (``twin``: the dataset monument whose site it takes and which
+    replaces it when history catches up; drawn only while the twin is absent). ``lat``/``lon``
+    and ``offset`` are the site, ``bearing`` the compass bearing of the front, ``model`` the
+    Urbs kit form (monument_forms.gd / anachronisms.gd), ``route_of`` a dataset monument whose
+    route a linear work follows. ``site`` and ``source`` say which real building the place and
+    size come from; the client's card shows them.
+    """
+
+    model: str
+    latin: str
+    english: str
+    lat: float
+    lon: float
+    bearing: int = 0
+    offset: tuple[int, int] = (0, 0)
+    length: float = 0.0
+    width: float = 0.0
+    radius: float = 0.0
+    height: float = 0.0
+    twin: str = ""
+    route_of: str = ""
+    arcade_m: int = 0
+    site: str = ""
+    source: str = ""
+
+
+BUILD_FORMS: dict[str, WorkForm] = {
+    "aqueduct": WorkForm(
+        "aqueduct",
+        "Aqua nova",
+        "An aqueduct",
+        41.889,
+        12.48,
+        height=8.0,
+        twin="aqua_appia",
+        route_of="aqua_appia",
+        arcade_m=300,
+        site="the course of the Aqua Appia (312 BC), on arches for its last 300 m",
+        source="Frontinus, De aquaeductu 5; Livy 9.29.6",
+    ),
+    "road": WorkForm(
+        "road_paved",
+        "Via lapide strata",
+        "A paved road",
+        41.8855,
+        12.4885,
+        bearing=135,
+        length=600.0,
+        width=4.1,
+        route_of="via_appia",
+        site="the first 600 m of the Via Appia outside the Porta Capena, paved 296 BC",
+        source="Livy 9.29.6; Livy 10.23.12",
+    ),
+    "concrete_hall": WorkForm(
+        "long_hall",
+        "Porticus caementicia",
+        "A vaulted concrete hall",
+        41.88,
+        12.4736,
+        bearing=45,
+        length=60.0,
+        width=200.0,
+        height=9.0,
+        twin="porticus_aemilia",
+        site="the Emporium, where the Porticus Aemilia (193 BC) stood, at a third of its length",
+        source="Livy 35.10.12; Platner-Ashby s.v. Porticus Aemilia",
+    ),
+    "basilica": WorkForm(
+        "basilica",
+        "Basilica",
+        "A basilica",
+        41.893004,
+        12.484902,
+        bearing=196,
+        length=16.0,
+        width=26.0,
+        twin="basilica_porcia",
+        site="the site of the Basilica Porcia (184 BC) beside the Curia",
+        source="Livy 39.44.7; Platner-Ashby s.v. Basilica Porcia",
+    ),
+    "bridge_stone": WorkForm(
+        "bridge_stone",
+        "Pons lapideus",
+        "A stone bridge",
+        41.8884,
+        12.4789,
+        bearing=255,
+        length=100.0,
+        width=8.0,
+        height=11.0,
+        twin="pons_aemilius",
+        site="the crossing of the Pons Aemilius (piers 179 BC, arches 142 BC)",
+        source="Livy 40.51.4; Platner-Ashby s.v. Pons Aemilius",
+    ),
+    "theatre_stone": WorkForm(
+        "theatre_stone",
+        "Theatrum lapideum",
+        "A stone theatre",
+        41.8958,
+        12.4743,
+        bearing=134,
+        offset=(-58, -56),
+        radius=77.5,
+        twin="theatrum_pompei",
+        site="the site and size of the Theatre of Pompey (55 BC), 150 m across",
+        source="Plutarch, Pompey 42.4; Platner-Ashby s.v. Theatrum Pompei",
+    ),
+    "amphitheatre": WorkForm(
+        "amphitheatre_flavian",
+        "Amphitheatrum",
+        "A stone amphitheatre",
+        41.8902,
+        12.4922,
+        bearing=120,
+        length=188.0,
+        width=156.0,
+        height=48.5,
+        twin="amphitheatrum_flavium",
+        site="the valley where the Flavian Amphitheatre (AD 80) rose, at its size, 188 by 156 m",
+        source="Dio 51.23.1; Platner-Ashby s.v. Amphitheatrum Flavium",
+    ),
+    "baths": WorkForm(
+        "baths",
+        "Thermae",
+        "Public baths with a hypocaust",
+        41.898,
+        12.478,
+        bearing=180,
+        offset=(-83, -121),
+        length=100.0,
+        width=80.0,
+        height=20.0,
+        twin="thermae_agrippae",
+        site="the site of the Baths of Agrippa (25 BC) in the Campus Martius",
+        source="Dio 53.27.1; Platner-Ashby s.v. Thermae Agrippae",
+    ),
+    "dome": WorkForm(
+        "rotunda_dome",
+        "Tholus caementicius",
+        "A concrete dome",
+        41.8986,
+        12.4768,
+        bearing=0,
+        radius=21.6,
+        height=43.2,
+        twin="pantheon_agrippae",
+        site="the site of the Pantheon, at the rotunda's size: 43.2 m across and as high",
+        source="Platner-Ashby s.v. Pantheon; Dio 53.27.2",
+    ),
+    "harbour": WorkForm(
+        "quay",
+        "Portus",
+        "A stone harbour quay",
+        41.8823,
+        12.475185,
+        bearing=270,
+        length=500.0,
+        width=40.0,
+        twin="emporium",
+        site="the Tiber bank below the Aventine where the Emporium's quays (193 BC) stood",
+        source="Livy 35.10.12; Livy 41.27.8",
+    ),
+    "granary": WorkForm(
+        "horrea",
+        "Horrea publica",
+        "Public granaries",
+        41.883,
+        12.478,
+        bearing=45,
+        length=100.0,
+        width=120.0,
+        height=12.0,
+        twin="horrea_sempronia",
+        site="the site of the Horrea Sempronia (123 BC) by the Aventine, at half the Galbae's size",
+        source="Plutarch, C. Gracchus 6.3; Platner-Ashby s.v. Horrea Galbae",
+    ),
+    "library": WorkForm(
+        "archive_hall",
+        "Bibliotheca publica",
+        "A public library",
+        41.8947,
+        12.4852,
+        bearing=178,
+        offset=(60, -40),
+        length=30.0,
+        width=40.0,
+        height=10.0,
+        site="beside the Atrium Libertatis, where Pollio opened the first public library (39 BC)",
+        source="Pliny NH 7.115; Platner-Ashby s.v. Atrium Libertatis",
+    ),
+    "sundial": WorkForm(
+        "sundial",
+        "Solarium",
+        "A sundial",
+        41.8926,
+        12.4846,
+        bearing=196,
+        offset=(46, 10),
+        length=3.0,
+        width=3.0,
+        height=2.5,
+        site="by the Rostra, where Valerius Messalla's sundial from Catania stood (263 BC)",
+        source="Pliny NH 7.214; Censorinus 23.6",
+    ),
+    "water_clock": WorkForm(
+        "water_clock",
+        "Horologium ex aqua",
+        "A water clock",
+        41.8926,
+        12.4846,
+        bearing=196,
+        offset=(46, -14),
+        length=4.0,
+        width=4.0,
+        height=6.0,
+        site="by the Rostra, near Scipio Nasica's roofed water clock (159 BC)",
+        source="Pliny NH 7.215; Censorinus 23.7",
+    ),
+    "fire_station": WorkForm(
+        "statio_vigilum",
+        "Statio vigilum",
+        "A fire station",
+        41.8925,
+        12.4853,
+        bearing=270,
+        offset=(260, -150),
+        length=30.0,
+        width=36.0,
+        height=9.0,
+        site="at the edge of the Subura, where the vigiles' stations (AD 6) kept their pumps",
+        source="Dio 55.26.4-5; Suetonius, Augustus 30.1",
+    ),
+    "sewer_outfall": WorkForm(
+        "sewer",
+        "Cloaca Aventina",
+        "A vaulted sewer's outfall",
+        41.888,
+        12.479662,
+        bearing=250,
+        offset=(-70, 10),
+        width=3.2,
+        height=4.2,
+        site="the Tiber bank by the Porta Trigemina, for the Aventine's sewers (184 BC)",
+        source="Livy 39.44.5; Platner-Ashby s.v. Cloaca Maxima",
+    ),
+    "mill": WorkForm(
+        "mill",
+        "Mola aquaria",
+        "A water mill",
+        41.8884,
+        12.4789,
+        bearing=165,
+        offset=(70, 30),
+        length=10.0,
+        width=8.0,
+        height=7.0,
+        site="the Tiber bank below the Pons Aemilius; Rome's own mills stood on the Janiculum",
+        source="Vitruvius 10.5.2",
+    ),
+    "arch": WorkForm(
+        "arch",
+        "Fornix",
+        "A commemorative arch",
+        41.8921,
+        12.487,
+        bearing=106,
+        length=6.0,
+        width=12.0,
+        height=12.0,
+        twin="fornix_fabianus",
+        site="the Sacra Via where the Fornix Fabianus (121 BC) spanned it",
+        source="Cicero, In Verrem 1.19; Platner-Ashby s.v. Fornix Fabianus",
+    ),
+    "temple_marble": WorkForm(
+        "temple_hexastyle_corinthian_marble",
+        "Aedes marmorea",
+        "A marble temple",
+        41.8923,
+        12.4793,
+        bearing=225,
+        length=35.0,
+        width=20.0,
+        twin="aedes_iovis_statoris_metelli",
+        site="the site of Metellus' marble temple of Jupiter Stator (146 BC)",
+        source="Velleius 1.11.3-5; Vitruvius 3.2.5",
+    ),
+    "portico": WorkForm(
+        "portico_enclosure",
+        "Porticus",
+        "A colonnaded portico",
+        41.8925,
+        12.4786,
+        bearing=225,
+        length=130.0,
+        width=118.0,
+        height=10.0,
+        twin="porticus_octaviae",
+        site="the site of the Porticus Metelli (146 BC) by the Circus Flaminius",
+        source="Velleius 1.11.3; Platner-Ashby s.v. Porticus Octaviae",
+    ),
+}
+"""Every ``builds`` kind in the content maps here (tests enforce it)."""
+
+
+def work_form(builds: str) -> WorkForm | None:
+    """The form and site for a ``builds`` kind, if the city can draw it."""
+    return BUILD_FORMS.get(builds)
 
 
 def _anachronisms(state: GameState, city: CityState, events: EventLog) -> None:
