@@ -245,8 +245,8 @@ func _year_card(s: Dictionary) -> Control:
 	title.custom_minimum_size.x = text_width
 	body.add_child(title)
 	var pitch_text := str(rome.get("pitch", ""))
-	if pitch_text != "" and card_width >= 190:   # the narrowest cards keep the year and the title
-		var pitch := UiStyle.wrapped(pitch_text, 16 if card_width >= 300 else 14, Color(0.98, 0.90, 0.62), text_width)
+	if pitch_text != "":
+		var pitch := UiStyle.wrapped(pitch_text, 16 if card_width >= 300 else (14 if card_width >= 190 else 12), Color(0.98, 0.90, 0.62), text_width)
 		pitch.add_theme_font_override("font", UiStyle.font("body", 800))
 		pitch.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		body.add_child(pitch)

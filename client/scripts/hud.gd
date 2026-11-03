@@ -692,7 +692,9 @@ func _fill_top_bar() -> void:
 	_stat("materials", "Materials: stone, timber and metal for building and experiments (%s)" % number(stores["materials"]), compact(stores["materials"]), 0, true)
 	_stat("wealth", "Wealth: pays for experiments, embassies, games and decrees (%s)" % number(stores["wealth"]), compact(stores["wealth"]), 0, true)
 	_stat("knowledge", "Knowledge: your scholars' learning, spent on every new idea (%s)" % number(stores["knowledge"]), compact(stores["knowledge"]), 0, true)
-	if width < 1700:   # F1 client: the bar must fit with every trend arrow showing; free hands are in the Projects tab too
+	if width < 1400:   # F1 client: a small window shows the people's temper rather than the workforce (the Projects tab has it)
+		pass
+	elif width < 1700:   # F1 client: the bar must fit with every trend arrow showing; free hands are in the Projects tab too
 		_stat("labour", "Labour: your workforce, of whom %s are free for experiments (the Projects tab says more)" % number(status["free_labour"]), compact(status["workforce"]), 0, true)
 	else:
 		_stat("labour", "Labour: your workforce, and in brackets how many are free for experiments (%s, %s free)" % [number(status["workforce"]), number(status["free_labour"])], "%s (%s)" % [compact(status["workforce"]), compact(status["free_labour"])], 0, true)
