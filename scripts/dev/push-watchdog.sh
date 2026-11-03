@@ -7,7 +7,7 @@
 # Run it in the background: nohup scripts/dev/push-watchdog.sh >/tmp/claude-0/watchdog.log 2>&1 &
 # Recover a snapshot: git fetch origin <branch>-wip && git checkout origin/<branch>-wip -- .
 while true; do
-  for wt in /home/user/anachronism /home/user/u8-* /home/user/r*-*; do
+  for wt in /home/user/anachronism /home/user/u8-* /home/user/f1-* /home/user/r*-*; do
     [ -e "$wt/.git" ] || continue
     br=$(git -C "$wt" rev-parse --abbrev-ref HEAD 2>/dev/null)
     case "$br" in claude/*) ;; *) continue ;; esac

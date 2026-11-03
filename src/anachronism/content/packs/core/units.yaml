@@ -61,7 +61,7 @@ units:
     note: "Horn, wood and sinew: the composite bow throws death beyond the reach of spears."
 
   - id: crossbowmen
-    name: Crossbowmen
+    name: Scorpio crews
     kind: missile
     attack: 9
     defence: 6

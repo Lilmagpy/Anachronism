@@ -1,0 +1,424 @@
+{
+ "forms": {
+  "amphitheatre": {
+   "model": "amphitheatre_flavian",
+   "latin": "Amphitheatrum",
+   "english": "A stone amphitheatre",
+   "lat": 41.8902,
+   "lon": 12.4922,
+   "bearing": 120,
+   "offset": [
+    0,
+    0
+   ],
+   "length": 188.0,
+   "width": 156.0,
+   "radius": 0.0,
+   "height": 48.5,
+   "twin": "amphitheatrum_flavium",
+   "route_of": "",
+   "arcade_m": 0,
+   "site": "the valley where the Flavian Amphitheatre (AD 80) rose, at its size, 188 by 156 m",
+   "source": "Dio 51.23.1; Platner-Ashby s.v. Amphitheatrum Flavium"
+  },
+  "aqueduct": {
+   "model": "aqueduct",
+   "latin": "Aqua nova",
+   "english": "An aqueduct",
+   "lat": 41.889,
+   "lon": 12.48,
+   "bearing": 0,
+   "offset": [
+    0,
+    0
+   ],
+   "length": 0.0,
+   "width": 0.0,
+   "radius": 0.0,
+   "height": 8.0,
+   "twin": "aqua_appia",
+   "route_of": "aqua_appia",
+   "arcade_m": 300,
+   "site": "the course of the Aqua Appia (312 BC), on arches for its last 300 m",
+   "source": "Frontinus, De aquaeductu 5; Livy 9.29.6"
+  },
+  "arch": {
+   "model": "arch",
+   "latin": "Fornix",
+   "english": "A commemorative arch",
+   "lat": 41.8921,
+   "lon": 12.487,
+   "bearing": 106,
+   "offset": [
+    0,
+    0
+   ],
+   "length": 6.0,
+   "width": 12.0,
+   "radius": 0.0,
+   "height": 12.0,
+   "twin": "fornix_fabianus",
+   "route_of": "",
+   "arcade_m": 0,
+   "site": "the Sacra Via where the Fornix Fabianus (121 BC) spanned it",
+   "source": "Cicero, In Verrem 1.19; Platner-Ashby s.v. Fornix Fabianus"
+  },
+  "basilica": {
+   "model": "basilica",
+   "latin": "Basilica",
+   "english": "A basilica",
+   "lat": 41.893004,
+   "lon": 12.484902,
+   "bearing": 196,
+   "offset": [
+    0,
+    0
+   ],
+   "length": 16.0,
+   "width": 26.0,
+   "radius": 0.0,
+   "height": 0.0,
+   "twin": "basilica_porcia",
+   "route_of": "",
+   "arcade_m": 0,
+   "site": "the site of the Basilica Porcia (184 BC) beside the Curia",
+   "source": "Livy 39.44.7; Platner-Ashby s.v. Basilica Porcia"
+  },
+  "baths": {
+   "model": "baths",
+   "latin": "Thermae",
+   "english": "Public baths with a hypocaust",
+   "lat": 41.898,
+   "lon": 12.478,
+   "bearing": 180,
+   "offset": [
+    -83,
+    -121
+   ],
+   "length": 100.0,
+   "width": 80.0,
+   "radius": 0.0,
+   "height": 20.0,
+   "twin": "thermae_agrippae",
+   "route_of": "",
+   "arcade_m": 0,
+   "site": "the site of the Baths of Agrippa (25 BC) in the Campus Martius",
+   "source": "Dio 53.27.1; Platner-Ashby s.v. Thermae Agrippae"
+  },
+  "bridge_stone": {
+   "model": "bridge_stone",
+   "latin": "Pons lapideus",
+   "english": "A stone bridge",
+   "lat": 41.8884,
+   "lon": 12.4789,
+   "bearing": 255,
+   "offset": [
+    0,
+    0
+   ],
+   "length": 100.0,
+   "width": 8.0,
+   "radius": 0.0,
+   "height": 11.0,
+   "twin": "pons_aemilius",
+   "route_of": "",
+   "arcade_m": 0,
+   "site": "the crossing of the Pons Aemilius (piers 179 BC, arches 142 BC)",
+   "source": "Livy 40.51.4; Platner-Ashby s.v. Pons Aemilius"
+  },
+  "concrete_hall": {
+   "model": "long_hall",
+   "latin": "Porticus caementicia",
+   "english": "A vaulted concrete hall",
+   "lat": 41.88,
+   "lon": 12.4736,
+   "bearing": 45,
+   "offset": [
+    0,
+    0
+   ],
+   "length": 60.0,
+   "width": 200.0,
+   "radius": 0.0,
+   "height": 9.0,
+   "twin": "porticus_aemilia",
+   "route_of": "",
+   "arcade_m": 0,
+   "site": "the Emporium, where the Porticus Aemilia (193 BC) stood, at a third of its length",
+   "source": "Livy 35.10.12; Platner-Ashby s.v. Porticus Aemilia"
+  },
+  "dome": {
+   "model": "rotunda_dome",
+   "latin": "Tholus caementicius",
+   "english": "A concrete dome",
+   "lat": 41.8986,
+   "lon": 12.4768,
+   "bearing": 0,
+   "offset": [
+    0,
+    0
+   ],
+   "length": 0.0,
+   "width": 0.0,
+   "radius": 21.6,
+   "height": 43.2,
+   "twin": "pantheon_agrippae",
+   "route_of": "",
+   "arcade_m": 0,
+   "site": "the site of the Pantheon, at the rotunda's size: 43.2 m across and as high",
+   "source": "Platner-Ashby s.v. Pantheon; Dio 53.27.2"
+  },
+  "fire_station": {
+   "model": "statio_vigilum",
+   "latin": "Statio vigilum",
+   "english": "A fire station",
+   "lat": 41.8925,
+   "lon": 12.4853,
+   "bearing": 270,
+   "offset": [
+    260,
+    -150
+   ],
+   "length": 30.0,
+   "width": 36.0,
+   "radius": 0.0,
+   "height": 9.0,
+   "twin": "",
+   "route_of": "",
+   "arcade_m": 0,
+   "site": "at the edge of the Subura, where the vigiles' stations (AD 6) kept their pumps",
+   "source": "Dio 55.26.4-5; Suetonius, Augustus 30.1"
+  },
+  "granary": {
+   "model": "horrea",
+   "latin": "Horrea publica",
+   "english": "Public granaries",
+   "lat": 41.883,
+   "lon": 12.478,
+   "bearing": 45,
+   "offset": [
+    0,
+    0
+   ],
+   "length": 100.0,
+   "width": 120.0,
+   "radius": 0.0,
+   "height": 12.0,
+   "twin": "horrea_sempronia",
+   "route_of": "",
+   "arcade_m": 0,
+   "site": "the site of the Horrea Sempronia (123 BC) by the Aventine, at half the Galbae's size",
+   "source": "Plutarch, C. Gracchus 6.3; Platner-Ashby s.v. Horrea Galbae"
+  },
+  "harbour": {
+   "model": "quay",
+   "latin": "Portus",
+   "english": "A stone harbour quay",
+   "lat": 41.8823,
+   "lon": 12.475185,
+   "bearing": 270,
+   "offset": [
+    0,
+    0
+   ],
+   "length": 500.0,
+   "width": 40.0,
+   "radius": 0.0,
+   "height": 0.0,
+   "twin": "emporium",
+   "route_of": "",
+   "arcade_m": 0,
+   "site": "the Tiber bank below the Aventine where the Emporium's quays (193 BC) stood",
+   "source": "Livy 35.10.12; Livy 41.27.8"
+  },
+  "library": {
+   "model": "archive_hall",
+   "latin": "Bibliotheca publica",
+   "english": "A public library",
+   "lat": 41.8947,
+   "lon": 12.4852,
+   "bearing": 178,
+   "offset": [
+    60,
+    -40
+   ],
+   "length": 30.0,
+   "width": 40.0,
+   "radius": 0.0,
+   "height": 10.0,
+   "twin": "",
+   "route_of": "",
+   "arcade_m": 0,
+   "site": "beside the Atrium Libertatis, where Pollio opened the first public library (39 BC)",
+   "source": "Pliny NH 7.115; Platner-Ashby s.v. Atrium Libertatis"
+  },
+  "mill": {
+   "model": "mill",
+   "latin": "Mola aquaria",
+   "english": "A water mill",
+   "lat": 41.8884,
+   "lon": 12.4789,
+   "bearing": 165,
+   "offset": [
+    70,
+    30
+   ],
+   "length": 10.0,
+   "width": 8.0,
+   "radius": 0.0,
+   "height": 7.0,
+   "twin": "",
+   "route_of": "",
+   "arcade_m": 0,
+   "site": "the Tiber bank below the Pons Aemilius; Rome's own mills stood on the Janiculum",
+   "source": "Vitruvius 10.5.2"
+  },
+  "portico": {
+   "model": "portico_enclosure",
+   "latin": "Porticus",
+   "english": "A colonnaded portico",
+   "lat": 41.8925,
+   "lon": 12.4786,
+   "bearing": 225,
+   "offset": [
+    0,
+    0
+   ],
+   "length": 130.0,
+   "width": 118.0,
+   "radius": 0.0,
+   "height": 10.0,
+   "twin": "porticus_octaviae",
+   "route_of": "",
+   "arcade_m": 0,
+   "site": "the site of the Porticus Metelli (146 BC) by the Circus Flaminius",
+   "source": "Velleius 1.11.3; Platner-Ashby s.v. Porticus Octaviae"
+  },
+  "road": {
+   "model": "road_paved",
+   "latin": "Via lapide strata",
+   "english": "A paved road",
+   "lat": 41.8855,
+   "lon": 12.4885,
+   "bearing": 135,
+   "offset": [
+    0,
+    0
+   ],
+   "length": 600.0,
+   "width": 4.1,
+   "radius": 0.0,
+   "height": 0.0,
+   "twin": "",
+   "route_of": "via_appia",
+   "arcade_m": 0,
+   "site": "the first 600 m of the Via Appia outside the Porta Capena, paved 296 BC",
+   "source": "Livy 9.29.6; Livy 10.23.12"
+  },
+  "sewer_outfall": {
+   "model": "sewer",
+   "latin": "Cloaca Aventina",
+   "english": "A vaulted sewer's outfall",
+   "lat": 41.888,
+   "lon": 12.479662,
+   "bearing": 250,
+   "offset": [
+    -70,
+    10
+   ],
+   "length": 0.0,
+   "width": 3.2,
+   "radius": 0.0,
+   "height": 4.2,
+   "twin": "",
+   "route_of": "",
+   "arcade_m": 0,
+   "site": "the Tiber bank by the Porta Trigemina, for the Aventine's sewers (184 BC)",
+   "source": "Livy 39.44.5; Platner-Ashby s.v. Cloaca Maxima"
+  },
+  "sundial": {
+   "model": "sundial",
+   "latin": "Solarium",
+   "english": "A sundial",
+   "lat": 41.8926,
+   "lon": 12.4846,
+   "bearing": 196,
+   "offset": [
+    46,
+    10
+   ],
+   "length": 3.0,
+   "width": 3.0,
+   "radius": 0.0,
+   "height": 2.5,
+   "twin": "",
+   "route_of": "",
+   "arcade_m": 0,
+   "site": "by the Rostra, where Valerius Messalla's sundial from Catania stood (263 BC)",
+   "source": "Pliny NH 7.214; Censorinus 23.6"
+  },
+  "temple_marble": {
+   "model": "temple_hexastyle_corinthian_marble",
+   "latin": "Aedes marmorea",
+   "english": "A marble temple",
+   "lat": 41.8923,
+   "lon": 12.4793,
+   "bearing": 225,
+   "offset": [
+    0,
+    0
+   ],
+   "length": 35.0,
+   "width": 20.0,
+   "radius": 0.0,
+   "height": 0.0,
+   "twin": "aedes_iovis_statoris_metelli",
+   "route_of": "",
+   "arcade_m": 0,
+   "site": "the site of Metellus' marble temple of Jupiter Stator (146 BC)",
+   "source": "Velleius 1.11.3-5; Vitruvius 3.2.5"
+  },
+  "theatre_stone": {
+   "model": "theatre_stone",
+   "latin": "Theatrum lapideum",
+   "english": "A stone theatre",
+   "lat": 41.8958,
+   "lon": 12.4743,
+   "bearing": 134,
+   "offset": [
+    -58,
+    -56
+   ],
+   "length": 0.0,
+   "width": 0.0,
+   "radius": 77.5,
+   "height": 0.0,
+   "twin": "theatrum_pompei",
+   "route_of": "",
+   "arcade_m": 0,
+   "site": "the site and size of the Theatre of Pompey (55 BC), 150 m across",
+   "source": "Plutarch, Pompey 42.4; Platner-Ashby s.v. Theatrum Pompei"
+  },
+  "water_clock": {
+   "model": "water_clock",
+   "latin": "Horologium ex aqua",
+   "english": "A water clock",
+   "lat": 41.8926,
+   "lon": 12.4846,
+   "bearing": 196,
+   "offset": [
+    46,
+    -14
+   ],
+   "length": 4.0,
+   "width": 4.0,
+   "radius": 0.0,
+   "height": 6.0,
+   "twin": "",
+   "route_of": "",
+   "arcade_m": 0,
+   "site": "by the Rostra, near Scipio Nasica's roofed water clock (159 BC)",
+   "source": "Pliny NH 7.215; Censorinus 23.7"
+  }
+ }
+}

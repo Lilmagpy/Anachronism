@@ -169,10 +169,11 @@ def test_a_project_that_builds_leaves_an_anachronism(content: Content) -> None:
     state, _ = end_turn(state)
     assert state.city is not None
     (work,) = state.city.anachronisms
-    assert (work.builds, work.tech, work.year) == ("dome", "concrete", -509)
+    # F1 ideas: concrete (200 BC) raises a vaulted hall; the dome is its own, later idea
+    assert (work.builds, work.tech, work.year) == ("concrete_hall", "concrete", -509)
     assert work.ahead == 309
     view = build_view(state)["city"]
-    assert view["anachronisms"][0]["name"] == "Hydraulic concrete"
+    assert view["anachronisms"][0]["name"] == "Roman concrete (opus caementicium)"
     assert any(e["monument"] == work.id for e in view["events"])
     state, _ = end_turn(state)
     assert state.city is not None
@@ -227,3 +228,37 @@ def test_view_has_top_level_year_and_dataset_ids(content: Content) -> None:
     shown = {m["id"] for m in view["city"]["monuments"]}
     assert shown
     assert shown <= ids
+
+
+# --- F1 ideas: the works an idea builds are placed on the site of the real building --------
+
+
+def test_three_early_works_get_a_form_a_site_and_a_twin(content: Content) -> None:
+    state = new_game(content, "rome_509", seed=1)
+    for tech in ("aqueduct", "stone_theatre", "sundial"):
+        state.civs["rome"].tech[tech] = TechState(stage=Stage.ADOPTED, adopted_year=state.year)
+    state, _ = end_turn(state)
+    view = build_view(state)["city"]
+    works = {w["tech"]: w for w in view["anachronisms"]}
+    assert set(works) == {"aqueduct", "stone_theatre", "sundial"}
+    assert works["aqueduct"]["ahead"] == 197  # the Aqua Appia, 312 BC
+    assert works["stone_theatre"]["ahead"] == 454  # the Theatre of Pompey, 55 BC
+    assert works["aqueduct"]["form"]["twin"] == "aqua_appia"
+    assert works["aqueduct"]["form"]["route_of"] == "aqua_appia"
+    assert works["stone_theatre"]["form"]["twin"] == "theatrum_pompei"
+    assert works["stone_theatre"]["form"]["radius"] == 77.5  # Pompey's theatre, 150 m across
+    assert works["sundial"]["form"]["twin"] == ""  # a small work with no later building
+    assert works["sundial"]["form"]["model"] == "sundial"
+    for work in works.values():
+        assert work["history"]
+        assert work["sources"]
+        assert work["form"]["site"]
+        assert "#" not in " ".join(work["sources"])  # the card shows citations, not review notes
+
+
+def test_every_building_idea_maps_to_a_city_form(content: Content) -> None:
+    from anachronism.engine.city import work_form
+
+    for node in content.techs.values():
+        if node.builds:
+            assert work_form(node.builds) is not None, node.id

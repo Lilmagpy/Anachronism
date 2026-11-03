@@ -1,19 +1,22 @@
 schema_version: 1
+# Crafts, dated by their first Roman attestation (see agriculture.yaml for the rule).
 techs:
   - id: pottery_kiln
     name: Kiln-fired pottery
-    keywords: [kiln, pottery, ceramics, porcelain, firing, glaze]
+    keywords: [kiln, pottery, ceramics, porcelain, firing, glaze, amphora, amphorae, dolia, jars, terracotta]
     category: craft
     year: -6000
     complexity: 1
     visibility: 1
     effects: [{type: storage, bp: 1000}]
     flavour: Sealed jars keep grain from damp and mice.
-    history: "Kilns that fired pottery hard were in use in the Near East by about 6000 BC."
+    history: "Latins and Etruscans fired pottery hard long before the Republic: the black bucchero of the 7th century, the storage jars (dolia) sunk in every farm's floor (Cato 10-11) and the amphorae that carried Italy's wine across the sea."
+    sources: ["Cato, De agri cultura 10-11", "Pliny NH 35.159-160 (terracotta, the Etruscan potters)"] # unverified
+    confidence: high
 
   - id: charcoal_burning
     name: Charcoal burning
-    keywords: [charcoal, charcoal burning, fuel, coke]
+    keywords: [charcoal, charcoal burning, fuel, coke, carbo, kiln for charcoal]
     category: craft
     year: -4000
     complexity: 1
@@ -21,59 +24,72 @@ techs:
     requires: {materials: [timber]}
     effects: [{type: materials_output, bp: 300}]
     flavour: Wood smothered in earth becomes a fuel fit for metal.
-    history: "Charcoal, made by smothering wood as it burns, fuelled the first metalworkers' furnaces from about 4000 BC."
+    history: "Charcoal fed every Italian smith's forge and lime kiln from the beginning; Cato tells how to build and fire a lime kiln (Cato 38) and Pliny names the woods that make the best charcoal (Pliny NH 16.23)."
+    sources: ["Cato, De agri cultura 38", "Pliny NH 16.23"] # unverified
+    confidence: high
 
   - id: wheel
     name: The wheel
-    keywords: [wheel, wheels, cart, carts, wagon]
+    keywords: [wheel, wheels, cart, carts, wagon, plaustrum, axle]
     category: craft
     year: -3500
     complexity: 1
     effects: [{type: mobility, bp: 500}, {type: labour_output, bp: 300}]
     flavour: A round slab and an axle, and loads roll instead of drag.
-    history: "The wheel appears around 3500 BC in Mesopotamia and on the steppes north of the Black Sea - first for pottery, then for carts."
+    history: "Etruscan chariots and Latin farm carts (plaustra) rolled before Rome was founded; Cato counts the carts a farm needs (Cato 10.2) and Caesar's law kept wheeled traffic out of the city by day (Lex Iulia municipalis, CIL I2 593, 56-61)."
+    sources: ["Cato, De agri cultura 10.2", "Lex Iulia municipalis (CIL I2 593) lines 56-61"] # unverified
+    confidence: high
 
   - id: piston_bellows
-    name: Piston bellows
-    keywords: [bellows, piston bellows, forced air, blowing air]
+    name: Smiths' bellows (folles)
+    keywords: [bellows, piston bellows, forced air, blowing air, folles, box bellows]
     category: craft
-    year: -450
+    year: -753
     complexity: 2
     prerequisites: [charcoal_burning]
     effects: [{type: materials_output, bp: 400}]
     flavour: A steady blast of air on the push and on the pull.
-    history: "Chinese smiths used double-acting piston bellows by the 4th century BC."
+    history: "Italian forges blew their fires with leather bellows (folles), a puff and then a pause, before Rome was founded (Virgil, Aeneid 8.449; Georgics 4.171). China's double-acting piston bellows (4th c. BC) gave a steady blast; Europe had nothing like it before the box bellows of the 16th century."
+    sources: ["Virgil, Aeneid 8.449-450", "Virgil, Georgics 4.171-172", "Needham on the Chinese box bellows (modern) # unverified"]
+    confidence: medium
 
   - id: water_wheel
-    name: Water wheel
-    keywords: [water wheel, watermill, water mill, mill, water power, trip hammer]
+    name: Water mill
+    keywords: [water wheel, watermill, water mill, mill, water power, trip hammer, grind grain by water, mola aquaria]
     category: craft
-    year: -250
+    builds: mill
+    year: -25
     complexity: 3
     prerequisites: [wheel, masonry]
     effects: [{type: labour_output, bp: 800}, {type: materials_output, bp: 500}]
-    flavour: The river grinds the grain while the miller sleeps.
-    history: "Water wheels grinding grain are described by Philo of Byzantium around 250 BC; China had them by the 1st century BC."
+    flavour: The river grinds the grain while the slaves sleep.
+    history: "Vitruvius describes the undershot wheel whose toothed drum turns a millstone, 'and meal is produced by the same revolution' (Vitr. 10.5.2, about 25 BC); Strabo saw a water mill at Mithridates' palace of Cabira (Strabo 12.3.30). Rome's own mills on the Janiculum, fed by an aqueduct, are imperial. Until then donkeys and slaves turned the stones."
+    sources: ["Vitruvius 10.5.2", "Strabo 12.3.30 # unverified", "Antipater of Thessalonica, Anth. Pal. 9.418 # unverified"]
+    confidence: high
 
   - id: windmill
     name: Windmill
     keywords: [windmill, wind power, wind mill, sails]
     category: craft
-    year: 900
+    year: 1180
     complexity: 3
     prerequisites: [water_wheel]
     effects: [{type: labour_output, bp: 600}, {type: food_output, bp: 300}]
     flavour: Where no river runs, the wind will do.
-    history: "Windmills ground grain in Persia by the 9th century; Europe's post mills appeared around 1180."
+    history: "No Roman harnessed the wind on land; Hero's wind-driven organ (Pneumatica 1.43) was a toy. Windmills ground grain in Persia by the 9th century and Europe's post mills appeared about 1180."
+    sources: ["Hero of Alexandria, Pneumatica 1.43 # unverified"]
+    confidence: medium
 
   - id: paper
     name: Paper
-    keywords: [paper, papermaking, pulp, writing material]
+    keywords: [paper, papermaking, pulp, writing material, rag paper, cheaper than papyrus]
     category: craft
-    year: -100
+    year: 1150
     complexity: 2
     prerequisites: [writing]
     requires: {materials: [timber]}
     effects: [{type: knowledge_gain, bp: 800}, {type: literacy_growth, bp: 20}]
-    flavour: Bark and rags beaten to pulp, dried into sheets lighter than any tablet.
-    history: "Paper was made in China by about 100 BC; Cai Lun improved it in AD 105. Europe began making it around 1150."
+    flavour: Rags beaten to pulp, dried into sheets lighter than any tablet.
+    history: "Rome wrote on Egyptian papyrus and waxed wooden tablets (Pliny NH 13.68-89 on the making of papyrus); paper of pulped rags, made in China from the 1st century, reached the Mediterranean through the Arabs and Europe's first mill, at Xativa in Spain, about 1150. Rome never had it."
+    sources: ["Pliny NH 13.68-89 # unverified", "Hou Hanshu on Cai Lun (AD 105) # unverified"]
+    confidence: medium

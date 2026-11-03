@@ -12,6 +12,7 @@ from typing import Any
 
 from anachronism.content.loader import Content
 from anachronism.engine.state import Event, GameState
+from anachronism.tools.roman_speakers import speaker_name  # F1 ideas: Roman voices
 
 PRIORITY = (
     "victory", "defeat", "restoration", "dynasty", "collapse", "ruler_died", "capital_lost", "war",
@@ -60,8 +61,9 @@ def speak(
         portrait = civ_def.portrait
     else:
         adviser = content.speakers[dialogue.speaker]
-        name = adviser.title
-        title = f"{content.civs[player].adjective} court"
+        name = speaker_name(content, state, dialogue.speaker) or adviser.title  # F1 ideas
+        court = f"{content.civs[player].adjective} court"
+        title = f"{adviser.title} · {court}" if name != adviser.title else court
         portrait = adviser.portrait or civ_def.portrait
     key = f"{state.seed}:{state.turn}:{moment}:{speaker_civ}:{subject}".encode()
     line = dialogue.lines[zlib.crc32(key) % len(dialogue.lines)]
