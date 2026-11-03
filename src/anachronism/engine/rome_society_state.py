@@ -9,6 +9,8 @@ from __future__ import annotations
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from anachronism.engine.rng import RngState
+
 
 class _Mutable(BaseModel):
     model_config = ConfigDict(extra="forbid")
@@ -160,6 +162,9 @@ class RomeSocietyState(_Mutable):
 
     year: int = 0
     """The last year the society was brought up to."""
+    rng: RngState = Field(default_factory=lambda: RngState(state=0, inc=1))
+    """The society's own random stream (seeded from the game's seed), so its draws never
+    shift the rest of the game's."""
     religion: ReligionState = Field(default_factory=ReligionState)
     land: LandState = Field(default_factory=LandState)
     grain: GrainState = Field(default_factory=GrainState)

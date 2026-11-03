@@ -132,7 +132,7 @@ def test_the_ludi_plebeii_begin_in_216(content: Content) -> None:
     state.city.year = -217  # type: ignore[union-attr]
     state, _ = end_turn(state)
     assert state.city is not None
-    refs = {e.ref: e.monument for e in state.city.events if e.ref != "munus"}
+    refs = {e.ref: e.monument for e in state.city.events if e.kind == "games" and e.ref != "munus"}
     assert refs == {"ludi_romani": "circus_maximus", "ludi_plebeii": "circus_flaminius"}
 
 

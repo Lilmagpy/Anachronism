@@ -315,6 +315,7 @@ def auspices(
     if society is None or not state.world.rome_society.present:
         return morale
     rules = state.world.rome_society.rites.auspices
+    rng = GameRng(society.rng)  # the society's own stream, never the battle's
     out = list(morale)
     place = state.world.geography[province_id].name.split(" (")[0]
     for i, side in ((0, attackers), (1, defenders)):

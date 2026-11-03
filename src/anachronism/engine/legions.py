@@ -122,6 +122,7 @@ def _switch_era(state: GameState, events: EventLog, year: int) -> None:
     for era in eras(state):
         # history's year has come: the idea the era rests on is in use, pursued or not
         if era.from_year <= year and not is_adopted(civ, era.tech) and era.tech in state.tech_nodes:
+            civ.projects.pop(era.tech, None)  # a trial of it under way ends: it is in use
             civ.tech[era.tech] = TechState(
                 stage=Stage.ADOPTED,
                 spread_bp=state.world.rules.spread.baseline_adopted_bp,

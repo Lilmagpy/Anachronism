@@ -18,6 +18,9 @@ from anachronism.engine.rng import GameRng
 from anachronism.engine.rome_society_state import RomeSocietyState
 from anachronism.engine.state import GameState
 
+SOCIETY_STREAM = 91
+"""PCG stream of the society's own random numbers (the game's is ``rng.DEFAULT_STREAM``)."""
+
 
 def active(state: GameState) -> bool:
     """True when the society runs in this game."""
@@ -32,7 +35,10 @@ def start(state: GameState, rng: GameRng, events: EventLog) -> None:
     """Create the society's state at the scenario's start (Republic scenarios with content)."""
     if state.republic is None or not state.world.rome_society.present:
         return
-    state.rome_society = RomeSocietyState(year=state.year)
+    state.rome_society = RomeSocietyState(
+        year=state.year, rng=GameRng.from_seed(state.seed, stream=SOCIETY_STREAM).state
+    )
+    rng = GameRng(state.rome_society.rng)  # the society's own stream
     religion.start(state, rng, events)
     roman_economy.start(state)
     legions.start(state, events)
@@ -46,6 +52,7 @@ def run_year(state: GameState, rng: GameRng, events: EventLog, year: int) -> Non
     assert society is not None
     if year <= society.year:
         return
+    rng = GameRng(society.rng)  # the society's own stream: the game's draws are untouched
     religion.run_year(state, rng, events, year)
     roman_economy.run_year(state, rng, events, year)
     legions.run_year(state, events, year)
