@@ -119,6 +119,10 @@ def test_nobody_starves_when_left_alone(content: Content, scenario: str) -> None
         famines |= {e.civ for e in events if e.kind == "famine" and e.civ}
     assert not famines, f"famine in {sorted(famines)}"
     for civ_id in initial.civs:
+        # F1 italy: a people given full citizenship is Rome's own now (its civ is absorbed)
+        treaty = state.republic.italy.treaties.get(civ_id) if state.republic else None
+        if treaty is not None and treaty.status.value == "citizen":
+            continue
         assert state.population(civ_id) >= initial.population(civ_id) * 0.9, civ_id
 
 

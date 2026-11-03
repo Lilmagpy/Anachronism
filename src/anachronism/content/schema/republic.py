@@ -374,6 +374,8 @@ class SenateCosts(Frozen):
     law: Annotated[int, Field(ge=0)] = 300
     fund: Annotated[int, Field(ge=0)] = 200
     colony: Annotated[int, Field(ge=0)] = 250
+    rights: Annotated[int, Field(ge=0)] = 300
+    """Raising an ally one step up the ladder of rights (F1: ``rights:<civ>``)."""
 
 
 class SenateRules(Frozen):

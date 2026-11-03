@@ -243,6 +243,17 @@ def test_one_office_per_man_unique_names_and_plausible_ages(
                 assert rules.adult_age <= age <= rules.max_office_age, (m.name, age)
         for m in rep.magistrates:
             assert year - rep.people[m.person].born < 90, m.name
+        # one college per office: never two sets of tribunes at once (dead men excepted)
+        for office in {m.office for m in rep.magistrates}:
+            era = mags[office].era_at(year)
+            seated = [
+                m for m in rep.magistrates if m.office == office and rep.people[m.person].alive
+            ]
+            if era is not None and not any(m.by_fasti for m in seated):
+                assert len(seated) <= era.seats, (year, office, len(seated))
+        # twin namesakes a year apart are not two men: no two living generated men share a name
+        pairs = {(p.name, p.born) for p in living if not p.historical}
+        assert len(pairs) == len({n for n, _ in pairs}), year
 
 
 def test_generated_men_are_of_their_era(content: Content) -> None:
@@ -324,6 +335,35 @@ def test_families_weigh_by_their_senators(content: Content) -> None:
     senators = sum(1 for p in rep.people.values() if p.alive and p.gens == fid and p.offices)
     assert senators >= 1
     assert weights[fid] > family_weight(rep.families[fid])
+
+
+def test_rights_for_an_ally_go_through_the_senate(content: Content) -> None:
+    from anachronism.engine import allies
+    from anachronism.engine.actions import ProposeToSenate
+    from anachronism.engine.game import apply_action
+
+    state = new_game(content, "rome_264", seed=1, chronicle=True)
+    rep = _all_people(state)
+    treaties = allies.italy_of(state).treaties
+    assert treaties, "the 264 start has allies"
+    civ = sorted(treaties)[0]
+    offered = {p.proposal: p for p in available(state)}
+    assert f"rights:{civ}" in offered and offered[f"rights:{civ}"].issue is Issue.CITIZENSHIP
+    rep.influence = 10_000
+    for fid in sorted(rep.families):
+        rep.families[fid].favour["citizenship"] = 10_000
+    before = treaties[civ].status
+    state, logged = apply_action(
+        state, ProposeToSenate(civ="rome", issue="citizenship", proposal=f"rights:{civ}")
+    )
+    assert logged.ok and "receives" in logged.message, logged.message
+    after = allies.italy_of(state).treaties[civ].status
+    assert after.rank == before.rank + 1
+    view = republic_view(state)
+    assert view is not None
+    assert view["persuaded"] and all("citizenship" in v for v in view["persuaded"].values())
+    assert view["last_votes"][0]["label"].startswith("Grant ")
+    assert "event_names" in view
 
 
 def test_war_is_only_proposed_against_states_rome_has_met(content: Content) -> None:

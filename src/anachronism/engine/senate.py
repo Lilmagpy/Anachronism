@@ -23,6 +23,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from anachronism.content.schema import Issue, RelationStatus, Stage
+from anachronism.content.schema.italy import AllyStatus
+from anachronism.engine import allies
 from anachronism.engine.actions import (
     BackCandidate,
     DeclareWar,
@@ -48,8 +50,9 @@ from anachronism.engine.rng import GameRng
 from anachronism.engine.state import GameState
 from anachronism.engine.tech import describe_blockers, feasibility, is_adopted
 
-KINDS = ("war_with", "peace_with", "law", "fund", "colony")
+KINDS = ("war_with", "peace_with", "law", "fund", "colony", "rights")
 """The kinds of proposal: the part of ``proposal`` before the colon."""
+LADDER = (AllyStatus.ALLY, AllyStatus.LATIN, AllyStatus.SINE_SUFFRAGIO, AllyStatus.CITIZEN)
 FUND_LIST = 12
 COLONY_LIST = 10
 BALLOTS_KEPT = 20
@@ -181,6 +184,8 @@ def resolve(state: GameState, proposal: str) -> tuple[Proposal | None, str]:
             return None, f"{node.name} cannot be begun: {describe_blockers(state, result)}"
         issue = Issue.BUILDING if node.builds else Issue.IDEA
         return Proposal(issue, f"fund:{arg}", f"Fund {node.name}", cost), ""
+    if kind == "rights":
+        return _resolve_rights(state, arg, cost)
     province = state.provinces.get(arg)
     if province is None:
         return None, f"unknown province {arg!r}"
@@ -192,12 +197,37 @@ def resolve(state: GameState, proposal: str) -> tuple[Proposal | None, str]:
     return Proposal(Issue.COLONY, f"colony:{arg}", label, cost), ""
 
 
+def next_right(state: GameState, civ_id: str) -> AllyStatus | None:
+    """The next step up the ladder of rights for an ally, or ``None`` (no treaty, or at the top)."""
+    treaty = allies.italy_of(state).treaties.get(civ_id)
+    if treaty is None or treaty.revolted or treaty.status is AllyStatus.CITIZEN:
+        return None
+    return LADDER[treaty.status.rank + 1]
+
+
+def _resolve_rights(state: GameState, civ_id: str, cost: int) -> tuple[Proposal | None, str]:
+    """``rights:<civ>``: raise an ally one step up the ladder of rights.
+
+    Ally -> Latin right -> citizenship without the vote -> citizenship, through
+    ``allies.grant_status``; a question of ``citizenship`` for the Senate.
+    """
+    other = state.civs.get(civ_id)
+    if other is None or civ_id == state.player_civ:
+        return None, f"unknown state {civ_id!r}"
+    new = next_right(state, civ_id)
+    if new is None:
+        return None, f"{other.name} is not an ally Rome can raise"
+    label = f"Grant {other.name} {allies.STATUS_NAMES[new]}"
+    return Proposal(Issue.CITIZENSHIP, f"rights:{civ_id}", label, cost), ""
+
+
 def available(state: GameState) -> list[Proposal]:
     """What the player can put to the Senate now (the view lists these), in a stable order."""
     rules = state.world.republic_rules.senate
     civ = state.civs[state.player_civ]
     wanted = [f"{kind}:{cid}" for kind in ("war_with", "peace_with") for cid in sorted(state.civs)]
     wanted += [f"law:{law.id}" for law in sorted(rules.laws, key=lambda x: x.id)]
+    wanted += [f"rights:{cid}" for cid in sorted(allies.italy_of(state).treaties)]
     funds = [
         nid
         for nid in sorted(state.tech_nodes)
@@ -299,6 +329,13 @@ def _enact(state: GameState, found: Proposal) -> str:
     if kind == "colony":
         rep.colonies[arg] = state.year
         return f"A colony is resolved in {_place(state, arg)}."
+    if kind == "rights":
+        new = next_right(state, arg)
+        assert new is not None
+        events = EventLog(turn=state.turn, year=state.year)
+        allies.grant_status(state, arg, new, state.year, events)
+        state.events.extend(events.items)
+        return f"{state.civs[arg].name} receives {allies.STATUS_NAMES[new]}."
     return begin_project(state, me, arg)[1]
 
 
