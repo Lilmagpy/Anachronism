@@ -222,7 +222,7 @@ techs:
     confidence: high
 
   - id: banking
-    name: Bankers and bills of exchange (argentarii)
+    name: Banks and bills of exchange
     keywords: [bank, banking, bills of exchange, credit, loans, letters of credit, interest, argentarii, bankers, moneylenders, permutatio]
     category: trade
     year: -269
