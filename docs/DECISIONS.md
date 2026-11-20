@@ -2875,3 +2875,15 @@ interact with, not only look at.
   temple of Magna Mater stands from 191, not 111).
 - **Balance**: every cost and effect is game balance in `republic_rules.yaml` except where a
   source is named; passages not re-read are marked unverified for the R6 source pass.
+- **For the client** (lead's note): an election plays as the voting units for and against the
+  backed man (193 centuries; the tribes 21 to 35 by Livy's dates), his share of the draw's
+  weights, with a majority exactly when he was elected (the centuries stopped at a majority:
+  Livy 1.43.11); a levy counts legions (4,200 men: Polybius 6.20.8-9); `expiate` and `sibyl` are
+  logged actions over religion's rites; the centuries vote at the Villa Publica from 435 (the
+  Campus is not a building; Varro sets RR 3 there on an election day); workshops offer the
+  client's idea box (`{"kind": "idea"}`, not an engine action).
+- **History's college at the start of every game**: the start year seats the Fasti's
+  magistrates in any mode, not only in a chronicle (264 opens with Ap. Claudius Caudex and
+  M. Fulvius Flaccus, who presides), and a family has sons only from 60 years before its first
+  attestation (earliest branch, Fasti holder or modelled person; `attested_margin_years`), so
+  no Calvisius (first consul 39) is a tribune in 264.
