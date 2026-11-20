@@ -1,0 +1,37 @@
+# Curated verdicts and measurements for the city audit (F2; src/anachronism/tools/city_audit.py).
+# Edit this file, not the report: then run `uv run anachronism-city-audit`.
+#
+# verdicts.<pleiades|platner>.<key>: {match: id | [ids], note} or {skip: "reason"}.
+#   Keys are Pleiades place ids and Platner-Ashby keys (LacusCurtius page#anchor, as listed in the
+#   report). A skip says why the entry is not drawn (after AD 120, a district not a building, no
+#   location in any source, a duplicate of another entry ...).
+# measured.<monument id>: published orientation and size, each with its source:
+#   {bearing: front faces this compass bearing | axis_only: true when only the axis is known,
+#    length, width (m, length along the axis), source: "..."}.
+# explained.<positions|outlines|scene|dates>.<id>: why a remaining flag is not an error.
+# outline_skip.<monument id>: reason the outline of the remains is not comparable.
+# {missing: "why"} corrects an automatic match that was wrong: the entry counts as missing.
+verdicts:
+  pleiades: {}
+  platner:
+    Aedes_Castoris#in_Circo_Flaminio: {missing: "the temple of Castor in circo Flaminio (Vitruvius 4.8.4) is not the Forum temple"}
+    Aedes_Martis#in_via_Appia: {missing: "the temple of Mars outside the Porta Capena on the Via Appia (vowed 388 BC, Livy 6.5.8) is not the Campus Martius temple"}
+    Aedes_Fortunae#Apotropaios: {missing: "a different Fortuna from the Forum Boarium temple"}
+    Aedes_Fortunae#Euelpis: {missing: "a different Fortuna"}
+    Aedes_Dianae#p151: {missing: "the Dianium on the Esquiline (Livy 1.48.6), not the Aventine temple"}
+    Domus_Valeriorum.html: {missing: "a house, not the Via Valeria"}
+    Statuae#Valeriana: {missing: "a statue, not the Via Valeria"}
+    Statuae#Romuli: {missing: "a statue, not the hut of Romulus"}
+    R#Templum_Divi_Romuli: {missing: "the temple of Divus Romulus (Maxentius' son) on the Sacra Via, not the hut of Romulus"}
+    arcus#Traiani2: {missing: "an arch, not the column of Trajan"}
+    curiae#Pompiliana: {missing: "not the Curia of Pompey"}
+    domus#Flaminia: {missing: "a house, not the Via Flaminia"}
+    domus#L.Caecilius_Metellus: {missing: "a house, not the tomb of Caecilia Metella"}
+    domus#M.Aemilius_Scaurus: {missing: "Scaurus' house on the Palatine, not his theatre"}
+    horrea#Agrippiana: {missing: "the Horrea Agrippiana by the Vicus Tuscus, not the baths of Agrippa"}
+    horrea#Nervae: {missing: "a granary, not the Forum of Nerva"}
+    porticus#Catuli: {missing: "Catulus' portico on the site of Fulvius Flaccus' house, not Catulus' house"}
+    Aemiliana.html: {skip: "a district of the Campus Martius (Varro RR 3.2.6), not a building"}
+measured: {}
+explained: {}
+outline_skip: {}
