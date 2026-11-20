@@ -100,3 +100,143 @@ republic_rules:
       - {id: ludi_plebeii, name: "Ludi Plebeii", kind: circus, month: 11, from_year: -216, venue: circus_flaminius, sources: ["Livy 23.30.17 (first attested; unverified: passage not re-read)"]}
       - {id: ludi_apollinares, name: "Ludi Apollinares", kind: circus, month: 7, from_year: -208, venue: circus_maximus, sources: ["Livy 27.23.5 (made annual 208; unverified: passage not re-read)"]}
       - {id: ludi_megalenses, name: "Ludi Megalenses", kind: scaenic, month: 4, from_year: -204, venue: aedes_magnae_matris, sources: ["Livy 34.54.3 (games before the temple, 194; unverified: passage not re-read)"]}
+    # F2 places (D-304): the building that serves each role in each year, and the numbers of the
+    # actions taken there (tools/places_view.py, engine/city_acts.py). Numbers are GAME BALANCE
+    # unless a source is named. Passages marked unverified were not re-read for this pass.
+    places:
+      sources: ["Platner-Ashby, A Topographical Dictionary of Ancient Rome (1929), s.vv. cited per entry"]
+      senate_houses:
+        - {monument: curia_hostilia, name: "Curia Hostilia", to_year: -81, blurb: "The Senate's house on the north side of the Comitium, ascribed to Tullus Hostilius.",
+           sources: ["Livy 1.30.2 (unverified: passage not re-read)", "Varro, De lingua latina 5.155 (unverified: passage not re-read)", "Platner-Ashby s.v. Curia Hostilia"]}
+        - {monument: curia_hostilia, name: "Curia Cornelia", from_year: -80, to_year: -53, blurb: "Sulla's enlarged Curia on the old site, for his Senate of six hundred.",
+           sources: ["Pliny NH 34.26 (Sulla's rebuilding; unverified: passage not re-read)", "Cicero, De finibus 5.2 (the Curia seems smaller since it was made larger; unverified: passage not re-read)", "Dio 40.50.2-3 (the name Cornelia, given to Faustus Sulla's rebuilding after 52; unverified: passage not re-read)", "Platner-Ashby s.v. Curia Hostilia"]}
+        - {monument: curia_pompeia, name: "Curia Pompeia", from_year: -52, to_year: -45, blurb: "The hall in Pompey's portico, where the Senate meets while the Curia lies burnt.",
+           sources: ["Cicero, De divinatione 2.23 (unverified: passage not re-read)", "Plutarch, Brutus 14.1 (unverified: passage not re-read)", "Suetonius, Divus Iulius 80.4, 88 (unverified: passage not re-read)", "Dio 40.49.2 (the fire of 52; unverified: passage not re-read)"]}
+        - {monument: curia_iulia, name: "Curia Iulia", from_year: -44, while_building: true, blurb: "Caesar's new Curia, begun in 44 and dedicated by Octavian in 29.",
+           sources: ["Dio 44.5.2", "Dio 51.22.1", "Res Gestae 19.1", "Platner-Ashby s.v. Curia Iulia"]}
+      rostra:
+        - {monument: comitium, name: "The speakers' platform of the Comitium", to_year: -339, blurb: "A low platform between the Comitium and the Forum, before it was hung with the beaks of the Antiate ships.",
+           sources: ["Platner-Ashby s.v. Rostra (a platform from the mid fifth century, raised after 390)"]}
+        - {monument: rostra_republic, name: "Rostra", from_year: -338, to_year: -45, blurb: "The speakers' platform between the Comitium and the Forum, hung with the beaks of the ships taken at Antium (338).",
+           sources: ["Livy 8.14.12", "Pliny NH 34.20 (unverified: passage not re-read)", "Platner-Ashby s.v. Rostra"]}
+        - {monument: rostra_augusti, name: "Rostra of Caesar", from_year: -44, while_building: true, blurb: "Caesar moved the Rostra to the north-west end of the Forum; Augustus finished them.",
+           sources: ["Dio 43.49.1 (unverified: passage not re-read)", "Platner-Ashby s.v. Rostra Augusti"]}
+      assemblies:
+        - id: centuriata
+          name: "The assembly of the centuries"
+          offices: [consul, consular_tribune, praetor, censor]
+          sources: ["Aulus Gellius 13.15.4 (Messalla: the greater magistrates are elected by the centuries, the lesser by the tribes; unverified: passage not re-read)", "Livy 1.43 (the Servian centuries)"]
+          places:
+            - {monument: campus_martius, name: "The Saepta (ovile) on the Campus Martius", to_year: -27, blurb: "The centuries vote in the wooden pens on the Campus, outside the sacred boundary.",
+               sources: ["Livy 26.22.11 (the centuries called into the ovile, 211; unverified: passage not re-read)", "Cicero, Ad Atticum 4.16.8 (Caesar's marble Saepta planned in 54 to replace them; unverified: passage not re-read)"]}
+            - {monument: saepta_iulia, name: "Saepta Iulia", from_year: -26, blurb: "The marble voting enclosure Caesar began and Agrippa dedicated.",
+               sources: ["Dio 53.23.1 (unverified: passage not re-read)", "Platner-Ashby s.v. Saepta Iulia"]}
+        - id: tributa
+          name: "The assembly of the tribes"
+          offices: [tribune_plebs, aedile_plebeian, aedile_curule, quaestor]
+          sources: ["Aulus Gellius 13.15.4 (unverified: passage not re-read)"]
+          places:
+            - {monument: comitium, name: "The Comitium", to_year: -146, blurb: "The tribes meet in the Comitium below the Curia.",
+               sources: ["Varro, De lingua latina 5.155 (unverified: passage not re-read)", "Platner-Ashby s.v. Comitium"]}
+            - {monument: forum_romanum, name: "The Forum", from_year: -145, blurb: "Since the tribune C. Licinius Crassus (145) the people are led out of the Comitium into the Forum.",
+               sources: ["Cicero, Laelius 96 (unverified: passage not re-read)", "Varro, De re rustica 1.2.9 (unverified: passage not re-read)", "Platner-Ashby s.v. Comitium"]}
+      treasury:
+        - {monument: aedes_saturni, name: "Temple of Saturn: the aerarium", blurb: "The state treasury and its records are kept in the temple of Saturn, in the quaestors' charge.",
+           sources: ["Plutarch, Publicola 12.3 (unverified: passage not re-read)", "Platner-Ashby s.v. Saturnus, Aedes"]}
+      vow_place:
+        - {monument: aedes_iovis_capitolini, name: "Temple of Jupiter Best and Greatest", while_building: true, blurb: "Consuls take up office with vows to Jupiter on the Capitol; here the state's vows are pronounced.",
+           sources: ["Livy 21.63.7-9 (Flaminius blamed for leaving without the vows on the Capitol; unverified: passage not re-read)", "Platner-Ashby s.v. Iuppiter Optimus Maximus Capitolinus, Aedes"]}
+      levy:
+        - {monument: campus_martius, name: "The Campus Martius", to_year: -436, blurb: "The men of military age gather on the Campus.",
+           sources: ["Livy 2.5.2 (the Campus consecrated to Mars)", "Polybius 6.19.5-6.20.9 (the dilectus; unverified: passage not re-read)"]}
+        - {monument: villa_publica, name: "The Villa Publica on the Campus Martius", from_year: -435, blurb: "Built for the census; here the cohorts brought to the consul for the levy sit and the arms are shown.",
+           sources: ["Livy 4.22.7", "Varro, De re rustica 3.2.4 (unverified: passage not re-read)", "Polybius 6.19.5-6.20.9 (the tribunes choose the men tribe by tribe; unverified: passage not re-read)"]}
+      gates:
+        - {monument: porta_capena, name: "Porta Capena", blurb: "The gate of the Via Appia: armies march south from here.",
+           sources: ["Platner-Ashby s.v. Porta Capena"]}
+      trade:
+        - {monument: forum_boarium, name: "The Forum Boarium", role: workshop, categories: [trade, agriculture], blurb: "The cattle market by the river harbour: traders and farmers.",
+           sources: ["Platner-Ashby s.v. Forum Boarium"]}
+        - {monument: vicus_tuscus, name: "The shops of the Vicus Tuscus", role: workshop, categories: [craft, metallurgy, construction, knowledge, health], blurb: "The street of shops from the Forum to the Velabrum.",
+           sources: ["Plautus, Curculio 482 (unverified: passage not re-read)", "Platner-Ashby s.v. Vicus Tuscus"]}
+        - {monument: navalia, name: "The Navalia", role: harbour, categories: [maritime, military], blurb: "The ship sheds on the Tiber bank of the Campus Martius.",
+           sources: ["Platner-Ashby s.v. Navalia"]}
+        - {monument: emporium, name: "The Emporium", role: harbour, categories: [trade, maritime], from_year: -193, blurb: "The river port below the Aventine.",
+           sources: ["Livy 35.10.12"]}
+      # Houses of the dataset (monuments.yaml, owned by the accuracy pass) and the years a gens
+      # held them; the houses this pass adds carry their gens in monuments_domus.yaml.
+      domus:
+        - {monument: domus_ciceronis, gens: tullii, owner: "M. Tullius Cicero", from_year: -62, to_year: -43, sources: ["Cicero, Ad familiares 5.6.2 (unverified: passage not re-read)", "Platner-Ashby s.v. Domus M. Tulli Ciceronis"]}
+        - {monument: domus_catuli, gens: lutatii, owner: "Q. Lutatius Catulus", from_year: -101, to_year: -61, sources: ["Cicero, De domo sua 102 (unverified: passage not re-read)", "Platner-Ashby s.v. Domus Q. Lutatius Catulus"]}
+        - {monument: domus_clodii, gens: claudii, owner: "P. Clodius Pulcher", from_year: -57, to_year: -52, sources: ["Cicero, De domo sua 115-116 (unverified: passage not re-read)", "Platner-Ashby s.v. Domus (Clodius)"]}
+        - {monument: domus_pompeii_carinae, gens: pompeii, owner: "Cn. Pompeius Magnus", from_year: -70, to_year: -48, sources: ["Cicero, De haruspicum responso 49 (unverified: passage not re-read)", "Platner-Ashby s.v. Domus Cn. Pompei (the year of purchase is unknown: the game opens it with his first consulship)"]}
+        - {monument: domus_pompeii_carinae, gens: antonii, owner: "M. Antonius", from_year: -47, to_year: -31, sources: ["Cicero, Philippics 2.64-68 (unverified: passage not re-read)", "Dio 48.38 (unverified: passage not re-read)"]}
+        - {monument: domus_hortensii_augusti, gens: hortensii, owner: "Q. Hortensius Hortalus", from_year: -95, to_year: -50, sources: ["Suetonius, Augustus 72 (unverified: passage not re-read)", "Platner-Ashby s.v. Domus Augusti (the years are his public life, approximate)"]}
+        - {monument: domus_hortensii_augusti, gens: iulii, owner: "Octavian (C. Iulius Caesar by adoption)", from_year: -42, sources: ["Suetonius, Augustus 72 (unverified: passage not re-read)", "Platner-Ashby s.v. Domus Augusti (the year he moved in is not recorded; approximate)"]}
+        - {monument: domus_livii_drusi, gens: licinii, owner: "M. Licinius Crassus", from_year: -90, to_year: -63, sources: ["Cicero, Ad familiares 5.6.2 (Cicero bought it from Crassus; unverified: passage not re-read)", "Platner-Ashby s.v. Domus M. Tulli Ciceronis (it had been Drusus' house)"]}
+      persuade_listed: 3
+      back_listed: 4
+      start_listed: 6
+      contio:
+        # A contio is called by a magistrate; a law or a candidate is argued before the people
+        # (Cicero's three speeches against Rullus' land bill, 63; Tiberius Gracchus for his land
+        # law, 133). Favour among the families who court the people moves most. GAME BALANCE.
+        cost: 150
+        shift_bp: 1000
+        others_share_bp: 3000
+        popular_from_bp: 5000
+        candidate_bp: 3000
+        speakers: {dictator: 15000, consul: 15000, tribune_plebs: 15000, consular_tribune: 12000, praetor: 10000, censor: 8000}
+        sources: ["Cicero, De lege agraria 1-3 (a consul's contiones against a land law, 63; unverified: passage not re-read)", "Plutarch, Tiberius Gracchus 9.4-5 (a tribune's speech for his land law, 133; unverified: passage not re-read)", "Plutarch, Gaius Gracchus 5.3 (unverified: passage not re-read)", "Aulus Gellius 13.16.1-3 (who may call the people to a contio; unverified: passage not re-read)"]
+      vow:
+        # A general or a magistrate vows a temple in battle or in a plague; the Senate lets the
+        # contract and the temple is dedicated some years later (Juno Moneta: vowed 345,
+        # dedicated 344; Fortuna Equestris: vowed 180, dedicated 173). The interval and costs
+        # are GAME BALANCE.
+        cost: 200
+        wealth_per_1000: 40
+        build_years: 5
+        window_years: 60
+        offered: 6
+        vowers: [dictator, consul, consular_tribune, praetor]
+        sources: ["Livy 7.28.4-6", "Livy 10.19.17-21 (Bellona, vowed in battle 296; unverified: passage not re-read)", "Livy 10.36.11 (Jupiter Stator, vowed in battle 294; unverified: passage not re-read)", "Livy 4.25.3 (Apollo, vowed for the people's health 433; unverified: passage not re-read)", "Livy 40.44.8-10, 42.10.5 (Fortuna Equestris; unverified: passage not re-read)"]
+        causes:
+          - {id: battle, name: "for victory in battle", needs_war: true, legitimacy_bp: 300, unrest_bp: 0, sources: ["Livy 10.19.17-21 (unverified: passage not re-read)"]}
+          - {id: pestilence, name: "for the end of a plague", legitimacy_bp: 100, unrest_bp: -400, sources: ["Livy 4.25.3 (unverified: passage not re-read)"]}
+      games:
+        # The aediles gave the regular games and paid much of them themselves, for the people's
+        # favour and their own careers; a munus was given by a dead noble's sons. The first munus
+        # was in the Forum Boarium (264), from 216 in the Forum. Costs per 1,000 people (as a
+        # festival) and effects are GAME BALANCE.
+        ludi_wealth_per_1000: 40
+        ludi_legitimacy_bp: 300
+        ludi_unrest_bp: -500
+        givers: [aedile_curule, aedile_plebeian]
+        giver_dignitas_bp: 300
+        giver_glory: 20
+        munus_wealth_per_1000: 30
+        munus_unrest_bp: -300
+        munus_dignitas_bp: 400
+        munus_window_years: 10
+        arena_builds: amphitheatre
+        per_venue_per_year: 1
+        sources: ["Livy Per. 16", "Livy 23.30.15 (unverified: passage not re-read)", "Livy 31.50.4 (unverified: passage not re-read)", "Polybius 31.28.5-6 (a munus cost thirty talents; unverified: passage not re-read)", "Cicero, De officiis 2.55-58 (the aediles' outlays; unverified: passage not re-read)"]
+        circus:
+          - {monument: circus_maximus, name: "Circus Maximus", blurb: "The races of the Ludi Romani between the Palatine and the Aventine.", sources: ["Livy 1.35.8-9 (unverified: passage not re-read)", "Platner-Ashby s.v. Circus Maximus"]}
+          - {monument: circus_flaminius, name: "Circus Flaminius", from_year: -220, blurb: "C. Flaminius' circus in the Prata Flaminia.", sources: ["Livy Per. 20 (unverified: passage not re-read)", "Platner-Ashby s.v. Circus Flaminius"]}
+        munus_venues:
+          - {monument: forum_boarium, name: "The Forum Boarium", from_year: -264, to_year: -217, blurb: "The first munus: three pairs of gladiators for D. Iunius Brutus Pera (264).", sources: ["Livy Per. 16", "Valerius Maximus 2.4.7 (unverified: passage not re-read)"]}
+          - {monument: forum_romanum, name: "Wooden stands in the Forum", from_year: -216, blurb: "Munera are given in the Forum, with stands put up for the day.", sources: ["Livy 23.30.15 (unverified: passage not re-read)", "Livy 31.50.4 (unverified: passage not re-read)"]}
+          - {monument: amphitheatrum_tauri, name: "Amphitheatre of Statilius Taurus", from_year: -29, blurb: "Rome's first stone amphitheatre, on the Campus Martius.", sources: ["Dio 51.23.1 (unverified: passage not re-read)"]}
+      site:
+        # Where a great work rises: history's site (engine/city.py BUILD_FORMS) or one of these.
+        cost: 50
+        sources: ["game balance; each site's source is the real building whose ground it takes"]
+        sites:
+          - {id: amphitheatre_campus, builds: amphitheatre, name: "The Campus Martius, where Statilius Taurus built Rome's first stone amphitheatre (29 BC)", at: amphitheatrum_tauri, source: "Dio 51.23.1"}
+          - {id: amphitheatre_boarium, builds: amphitheatre, name: "The Forum Boarium, where the first munus was given (264 BC)", at: forum_boarium, source: "Livy Per. 16"}
+          - {id: theatre_apollo, builds: theatre_stone, name: "By the temple of Apollo, where the censors of 179 let a theatre and stage", at: aedes_apollinis_medici, offset_m: [-40, 0], source: "Livy 40.51.3 (unverified: passage not re-read)"}
+          - {id: harbour_navalia, builds: harbour, name: "The Navalia on the Campus Martius", at: navalia, source: "Platner-Ashby s.v. Navalia"}
+          - {id: arch_circus, builds: arch, name: "The Circus Maximus, where L. Stertinius set up an arch (196 BC)", at: circus_maximus, source: "Livy 33.27.4 (unverified: passage not re-read)"}
+          - {id: basilica_aemilia_site, builds: basilica, name: "The north side of the Forum, where the Basilica Aemilia rose (179 BC)", at: basilica_aemilia, source: "Livy 40.51.5 (unverified: passage not re-read)"}
+          - {id: granary_galbae, builds: granary, name: "Below the Aventine, where the Horrea Galbae stood", at: horrea_galbae, source: "Platner-Ashby s.v. Horrea Galbae"}

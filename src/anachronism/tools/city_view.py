@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import asdict
 from typing import Any
 
-from anachronism.engine.city import senate_house, work_form
+from anachronism.engine.city import senate_house, site_form
 from anachronism.engine.state import GameState
 
 
@@ -58,7 +58,7 @@ def _anachronism(state: GameState, work: dict[str, Any]) -> dict[str, Any]:
     when the city has no form for the kind); ``history`` and ``sources`` come from the idea.
     """
     node = state.tech_nodes.get(work["tech"])
-    form = work_form(work["builds"])
+    form = site_form(state, work["tech"], work["builds"])  # F2 places: the site the player chose
     work["form"] = asdict(form) if form is not None else None
     work["history"] = node.history if node is not None else ""
     work["sources"] = [s.split(" # ")[0] for s in node.sources] if node is not None else []

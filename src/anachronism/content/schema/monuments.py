@@ -14,6 +14,7 @@ from typing import Any, Literal
 from pydantic import ConfigDict, Field
 
 from anachronism.content.schema.base import Frozen, Identifier
+from anachronism.content.schema.places import PlacesRules
 
 
 class _Open(Frozen):
@@ -112,3 +113,5 @@ class CityRules(Frozen):
     """A notable who held an office of at least this rank is given funeral games when he dies."""
     senate_houses: tuple[Identifier, ...] = ()
     """Monument ids in order of preference: where the Senate meets is the first that stands."""
+    places: PlacesRules = PlacesRules()
+    """F2: the places of the year and the actions taken there (D-304)."""

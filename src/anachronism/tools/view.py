@@ -59,6 +59,7 @@ from anachronism.engine.war import defence_bp, fronts
 from anachronism.tools.city_view import city_view
 from anachronism.tools.console import describe_effect
 from anachronism.tools.italy_view import italy_view  # F1 italy
+from anachronism.tools.places_view import places_view  # F2 places
 from anachronism.tools.republic_view import republic_view
 from anachronism.tools.rome_society_view import rome_society_view  # F1 rome_society (R4)
 
@@ -164,6 +165,7 @@ def build_view(state: GameState, events: list[Event] | None = None) -> dict[str,
         "city": city_view(state),
         "rome_society": rome_society_view(state),  # F1 rome_society (R4)
         "italy": italy_view(state),  # F1 italy
+        "places": places_view(state),  # F2 places: what the player can do where in Rome (D-304)
         "wars": fronts(state),
         "armies": _armies(state),
         "tactics": _tactics(state),

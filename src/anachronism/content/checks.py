@@ -498,6 +498,50 @@ def _city_issues(registry: Registry) -> list[ContentIssue]:
     for label, monument in refs:
         if registry.is_unknown("monuments", monument):
             issues.append(ContentIssue(where, f"city.{label}", f"unknown monument {monument!r}"))
+    issues += _places_issues(registry, where)
+    return issues
+
+
+def _places_issues(registry: Registry, where: str) -> list[ContentIssue]:
+    """F2 places (D-304): every monument, office and gens the places name must exist."""
+    rules = registry.republic_rules
+    assert rules is not None
+    places = rules.city.places
+    entries = [
+        *(("senate_houses", e) for e in places.senate_houses),
+        *(("rostra", e) for e in places.rostra),
+        *((f"assemblies ({a.id})", e) for a in places.assemblies for e in a.places),
+        *(("treasury", e) for e in places.treasury),
+        *(("vow_place", e) for e in places.vow_place),
+        *(("levy", e) for e in places.levy),
+        *(("gates", e) for e in places.gates),
+        *(("trade", e) for e in places.trade),
+        *(("games.circus", e) for e in (places.games.circus if places.games else ())),
+        *(("games.munus_venues", e) for e in (places.games.munus_venues if places.games else ())),
+    ]
+    monuments = [(label, e.monument) for label, e in entries]
+    monuments += [("domus", d.monument) for d in places.domus]
+    monuments += [(f"site.sites ({s.id})", s.at) for s in places.site.sites]
+    offices = [(f"assemblies ({a.id})", o) for a in places.assemblies for o in a.offices]
+    offices += [("contio.speakers", o) for o in sorted(places.contio.speakers)]
+    offices += [("vow.vowers", o) for o in (places.vow.vowers if places.vow else ())]
+    offices += [("games.givers", o) for o in (places.games.givers if places.games else ())]
+    gentes = [("domus", d.gens) for d in places.domus]
+    for monument in registry.monuments.values():  # the houses of the families (role: domus)
+        extra = monument.model_extra or {}
+        if extra.get("role") == "domus":
+            gentes.append((f"monuments ({monument.id})", str(extra.get("gens", ""))))
+    issues: list[ContentIssue] = []
+    for kind, refs, noun in (
+        ("monuments", monuments, "monument"),
+        ("magistracies", offices, "office"),
+        ("gentes", gentes, "gens"),
+    ):
+        for label, ref in refs:
+            if registry.is_unknown(kind, ref):
+                issues.append(
+                    ContentIssue(where, f"city.places.{label}", f"unknown {noun} {ref!r}")
+                )
     return issues
 
 

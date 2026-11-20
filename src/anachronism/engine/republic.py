@@ -33,6 +33,7 @@ the year (orders until 287, the nobility, optimates and populares from 133).
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 
 from anachronism.content.schema import (
@@ -405,6 +406,7 @@ def run_year(state: GameState, rng: GameRng, events: EventLog, year: int) -> Non
     _fade(state, rep, year)
     _hold_year(state, rep, rng, events, year)
     _deaths_in_office(state, rep, events, year)
+    city_module.election_events(state, events, year)  # F2 places: the elections the player watched
     italy_module.run_year(state, rng, events, year)  # F1 italy
     city_module.run_year(state, events, year)
     rome_society.run_year(state, rng, events, year)  # F1 rome_society (R4)
@@ -607,7 +609,7 @@ def _weight(
     fid = faction_of(state, person.order, _person_popular(state, person), year)
     bloc = shares.get(fid, 0) * rules.faction_weight_bp // BP
     backed = sum(
-        rules.backing_bp
+        b.bp or rules.backing_bp  # F2 places: a contio's backing carries its own weight
         for b in rep.backing
         if b.person == person.id and b.office == office and b.year == year
     )
@@ -1165,6 +1167,7 @@ def senate_vote(
     record: bool = False,
     turn: int | None = None,
     year: int | None = None,
+    extra: Mapping[str, int] | None = None,
 ) -> Vote:
     """The Senate's will: a vote weighted by the families' standing and their senators.
 
@@ -1173,7 +1176,8 @@ def senate_vote(
     the yes side. So the forecast differs by issue and by era, and a house of one mind is rare.
     With ``record`` the vote is a real one: it becomes a ``senate`` event in the city (U7).
     Looking at the Senate's mood (a view, a forecast) leaves ``record`` off. A vote recorded
-    while a turn resolves passes that turn's ``turn`` and ``year``.
+    while a turn resolves passes that turn's ``turn`` and ``year``. ``extra`` (F2 places) adds
+    to families' leanings for a forecast: what the Senate would do after a speech.
     """
     rep = _rep(state)
     yes = no = total = 0
@@ -1181,7 +1185,7 @@ def senate_vote(
     weights = senate_weights(state)
     for fid in sorted(rep.families):
         weight = weights[fid]
-        lean = family_leaning(state, fid, issue)
+        lean = family_leaning(state, fid, issue) + (extra.get(fid, 0) if extra else 0)
         leanings[fid] = lean
         total += weight
         # a family's senators split by the strength of its lean: +10000 is every man for,
@@ -1281,7 +1285,10 @@ def back_candidate(
             False,
             f"{person.name} cannot stand for the {mag.name.lower()} in {year_label(target)}",
         )
-    if any(b.person == person_id and b.office == office and b.year == target for b in rep.backing):
+    if any(
+        b.person == person_id and b.office == office and b.year == target and not b.bp
+        for b in rep.backing
+    ):
         return False, "already backed"
     if rep.influence < rules.back_cost:
         return False, "not enough influence with the Senate"

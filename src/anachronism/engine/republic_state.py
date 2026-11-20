@@ -92,6 +92,9 @@ class Backing(_Mutable):
     person: str
     office: str
     year: int
+    bp: int = 0
+    """F2 places: the election weight this backing adds; 0 is ``backing_bp`` (a ``back``).
+    A contio for a candidate adds its own, smaller weight."""
 
 
 class Ballot(_Mutable):
