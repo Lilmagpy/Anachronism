@@ -27,7 +27,7 @@ streets:
   english: Sacred Way
   kind: street
   direction: "from the top of the Velia (Arch of Titus site) to the Forum"
-  points: [[41.890673, 12.488583], [41.89088, 12.488571], [41.890988, 12.488402], [41.891114, 12.48833], [41.891456, 12.487847], [41.891654, 12.487328], [41.89196, 12.486748], [41.892032, 12.486386], [41.892275, 12.486024], [41.892365, 12.485783], [41.892698, 12.485095], [41.892698, 12.4846]]  # F2: summa Sacra via at the arch of Titus (Pleiades 236855821) and down the Velia on the excavated line (Pleiades 434423626, OpenStreetMap) to the Regia, past its north front (Platner-Ashby s.v. Sacra Via, read); the first point was 180 m too far east, near the later Meta Sudans
+  points: [[41.890673, 12.488583], [41.89088, 12.488571], [41.890988, 12.488402], [41.891114, 12.48833], [41.891456, 12.487847], [41.891654, 12.487328], [41.89196, 12.486748], [41.892032, 12.486386], [41.892275, 12.486024], [41.892365, 12.485783]]  # F2: summa Sacra via at the arch of Titus (Pleiades 236855821) and down the Velia on the excavated line (Pleiades 434423626, OpenStreetMap) past the north front of the Regia to the east end of the Forum, where Platner-Ashby s.v. Sacra Via (read) ends it; the first point was 180 m too far east, near the later Meta Sudans, and the line used to cross the square through the Graecostasis
   precision: approx
   width_m: 5.0
   width_source: "P-A s.v. Sacra Via: Augustan pavement 5 m wide"
@@ -40,7 +40,7 @@ streets:
   english: Capitoline Hill road
   kind: clivus
   direction: "from the west corner of the Forum, past the temple of Saturn, up to the Asylum / Capitol"
-  points: [[41.892536, 12.484552], [41.892563, 12.484443], [41.892653, 12.484371], [41.892671, 12.484238], [41.892653, 12.484141], [41.892185, 12.483598], [41.891978, 12.483212], [41.89178, 12.48262], [41.891618, 12.482101]]  # F2: lower course = the excavated pavement (Pleiades 152699900, OpenStreetMap) past the north front and west side of Saturn; end at the main entrance of the Area Capitolina in the middle of its south-east side opposite the temple front, 40-45 m in front of it (Platner-Ashby s.v. Area Capitolina, read); the stretch between is unexcavated (location_confidence low)
+  points: [[41.892446, 12.484528], [41.892563, 12.484443], [41.892653, 12.484371], [41.892671, 12.484238], [41.892653, 12.484141], [41.892185, 12.483598], [41.891978, 12.483212], [41.89178, 12.48262], [41.891618, 12.482101]]  # F2: lower course = the excavated pavement (Pleiades 152699900, OpenStreetMap) past the north front and west side of Saturn, starting at the Forum south of the Augustan Rostra; end at the main entrance of the Area Capitolina in the middle of its south-east side opposite the temple front, 40-45 m in front of it (Platner-Ashby s.v. Area Capitolina, read); the stretch between is unexcavated
   precision: approx
   width_m: 5.0
   width_source: assumed
@@ -53,7 +53,7 @@ streets:
   english: Silversmiths' slope
   kind: clivus
   direction: "from the Forum between Curia and Carcer, along the Capitoline slope toward the Campus Martius"
-  points: [[41.8937, 12.4852], [41.8942, 12.4846], [41.8948, 12.4839], [41.8953, 12.4832], [41.8955, 12.4828]]
+  points: [[41.893148, 12.484938], [41.8934, 12.484721], [41.89385, 12.484214], [41.894435, 12.483731], [41.895199, 12.4832], [41.896, 12.483]]  # F2: leaves the Forum between the Curia and the Carcer (Platner-Ashby s.v. Clivus Argentarius, read) and runs along the south-west side of the Forum of Caesar to the Porta Fontinalis; it started before inside the Forum of Caesar and crossed the temple of Venus Genetrix
   precision: approx
   width_m: 4.0
   width_source: assumed
@@ -66,7 +66,7 @@ streets:
   english: Etruscans' Street
   kind: vicus
   direction: "from the Forum between the Basilica Iulia and the temple of Castor, south along the west flank of the Palatine to the Forum Boarium"
-  points: [[41.8919, 12.4855], [41.8912, 12.4851], [41.8904, 12.4847], [41.8897, 12.4842], [41.8890, 12.4836], [41.8884, 12.4829], [41.8883, 12.4818]]
+  points: [[41.892068, 12.485324], [41.891825, 12.485397], [41.8912, 12.4851], [41.8904, 12.4847], [41.8897, 12.4842], [41.889, 12.4836], [41.8884, 12.4829], [41.8883, 12.4818]]  # F2: from the Forum between the Basilica Iulia and the temple of Castor (Platner-Ashby s.v. Vicus Tuscus, read), in the 6 m between their excavated outlines (Pleiades 173078007, 157276290); the old first point lay inside the temple of Castor
   precision: approx
   width_m: 4.0
   width_source: assumed
@@ -78,7 +78,7 @@ streets:
   english: Yoke Street
   kind: vicus
   direction: "from the Forum between the Basilica Iulia and the temple of Castor, west along the foot of the Capitol to the Porta Carmentalis"
-  points: [[41.892455, 12.484576], [41.892338, 12.484286], [41.892194, 12.484177], [41.89196, 12.484033], [41.8916, 12.4832], [41.891501, 12.482295], [41.8916, 12.481401]]  # F2: from the Forum between the temple of Saturn and the Basilica Iulia (the modern path, which Platner-Ashby says preserves the line after the basilica was built), then along the southern edge of the Capitol; the old first point ran through the middle of the Basilica Iulia
+  points: [[41.892455, 12.484576], [41.892374, 12.48431], [41.89223, 12.48422], [41.892086, 12.484129], [41.89196, 12.484033], [41.8916, 12.4832], [41.891501, 12.482295], [41.8916, 12.481401]]  # F2: from the Forum between the temple of Saturn and the Basilica Iulia (the modern path, which Platner-Ashby says preserves the line after the basilica was built), then along the southern edge of the Capitol; the old first point ran through the middle of the Basilica Iulia
   precision: approx
   width_m: 4.0
   width_source: assumed
@@ -128,7 +128,7 @@ streets:
   english: Suburan slope
   kind: clivus
   direction: "from the Subura east between the Oppius and the Cispius to the Porta Esquilina"
-  points: [[41.8963, 12.4930], [41.8965, 12.4945], [41.8964, 12.4960], [41.8960, 12.4975], [41.8954, 12.4988], [41.8949, 12.4998]]
+  points: [[41.8963, 12.493], [41.8965, 12.4945], [41.8964, 12.496], [41.896, 12.4975], [41.8954, 12.4988], [41.895778, 12.501358]]  # F2: ends at the Porta Esquilina (the Arch of Gallienus)
   precision: approx
   width_m: 4.0
   width_source: assumed
@@ -166,7 +166,7 @@ streets:
   english: High Path
   kind: street
   direction: "north-east along the ridge of the Quirinal (modern Via del Quirinale, Via XX Settembre) to the Porta Collina"
-  points: [[41.8991, 12.4860], [41.8996, 12.4872], [41.9004, 12.4893], [41.9017, 12.4917], [41.9030, 12.4940], [41.9044, 12.4952], [41.9056, 12.4962]]
+  points: [[41.8991, 12.486], [41.8996, 12.4872], [41.9004, 12.4893], [41.9017, 12.4917], [41.903, 12.494], [41.9044, 12.4952], [41.907325, 12.498679]]  # F2: ends at the Porta Collina, moved to its site (Pleiades 268637493)
   precision: approx
   width_m: 5.0
   width_source: assumed
@@ -204,7 +204,7 @@ streets:
   english: Broad Way (Flaminian Way in the city)
   kind: road
   direction: "from the Porta Fontinalis on the east slope of the Capitol north across the Campus Martius (modern Via del Corso) to the Porta Flaminia site; then on to the Pons Mulvius"
-  points: [[41.8955, 12.4828], [41.8960, 12.4824], [41.8985, 12.4810], [41.9007, 12.4800], [41.9040, 12.4787], [41.9070, 12.4776], [41.9092, 12.4768], [41.9108, 12.4763], [41.9150, 12.4745], [41.9200, 12.4728], [41.9270, 12.4710], [41.9347, 12.4693]]
+  points: [[41.896, 12.483], [41.896, 12.4824], [41.8985, 12.481], [41.9007, 12.48], [41.904, 12.4787], [41.907, 12.4776], [41.9092, 12.4768], [41.9108, 12.4763], [41.915, 12.4745], [41.92, 12.4728], [41.927, 12.471], [41.9347, 12.4693]]  # F2: starts at the Porta Fontinalis
   precision: approx
   width_m: 7.0
   width_source: assumed
@@ -294,7 +294,7 @@ streets:
   english: Ostian Way
   kind: road
   direction: "from the Porta Trigemina along the north-west and south-west sides of the Aventine, then south (modern Via Marmorata, Via Ostiense)"
-  points: [[41.8875, 12.4795], [41.8856, 12.4784], [41.8825, 12.4774], [41.8795, 12.4785], [41.8764, 12.4807], [41.8700, 12.4800], [41.8640, 12.4782], [41.8587, 12.4764], [41.8480, 12.4720]]
+  points: [[41.888, 12.479662], [41.8856, 12.4784], [41.8825, 12.4774], [41.8795, 12.4785], [41.8764, 12.4807], [41.87, 12.48], [41.864, 12.4782], [41.8587, 12.4764], [41.848, 12.472]]  # F2: starts at the Porta Trigemina
   precision: approx
   width_m: 4.5
   width_source: assumed
@@ -307,7 +307,7 @@ streets:
   english: Salt Way
   kind: road
   direction: "north from the Porta Collina (modern Via Salaria begins at the Aurelian Porta Salaria)"
-  points: [[41.9058, 12.4963], [41.9100, 12.4976], [41.9159, 12.4989], [41.9230, 12.5015], [41.9290, 12.5050]]
+  points: [[41.907325, 12.498679], [41.91, 12.4976], [41.9159, 12.4989], [41.923, 12.5015], [41.929, 12.505]]  # F2: starts at the Porta Collina, moved to its site (Pleiades 268637493)
   precision: rough
   width_m: 4.2
   width_source: assumed
@@ -319,7 +319,7 @@ streets:
   english: Nomentan Way
   kind: road
   direction: "from just outside the Porta Collina north-east (Via Ficulensis) to the later Porta Nomentana and Nomentum"
-  points: [[41.9058, 12.4963], [41.9078, 12.5015], [41.9098, 12.5068], [41.9140, 12.5130], [41.9180, 12.5190]]
+  points: [[41.907325, 12.498679], [41.9078, 12.5015], [41.9098, 12.5068], [41.914, 12.513], [41.918, 12.519]]  # F2: starts at the Porta Collina, moved to its site (Pleiades 268637493)
   precision: rough
   width_m: 4.2
   width_source: assumed
@@ -331,7 +331,7 @@ streets:
   english: Tiburtine Way
   kind: road
   direction: "from the Porta Esquilina east-north-east to Tibur"
-  points: [[41.8947, 12.4998], [41.8953, 12.5040], [41.8958, 12.5090], [41.8960, 12.5150], [41.8993, 12.5195], [41.9040, 12.5300], [41.9110, 12.5440], [41.9170, 12.5565]]
+  points: [[41.895778, 12.501358], [41.8953, 12.504], [41.8958, 12.509], [41.896, 12.515], [41.8993, 12.5195], [41.904, 12.53], [41.911, 12.544], [41.917, 12.5565]]  # F2: starts at the Porta Esquilina (the Arch of Gallienus)
   precision: rough
   width_m: 4.2
   width_source: assumed
@@ -344,7 +344,7 @@ streets:
   english: Praenestine Way
   kind: road
   direction: "from the Porta Esquilina east to the Porta Praenestina (Porta Maggiore) and on to Gabii and Praeneste"
-  points: [[41.8949, 12.4998], [41.8948, 12.5020], [41.8944, 12.5042], [41.8928, 12.5095], [41.8905, 12.5158], [41.8905, 12.5250], [41.8892, 12.5385], [41.8880, 12.5520]]
+  points: [[41.895778, 12.501358], [41.8948, 12.502], [41.8944, 12.5042], [41.8928, 12.5095], [41.8905, 12.5158], [41.8905, 12.525], [41.8892, 12.5385], [41.888, 12.552]]  # F2: starts at the Porta Esquilina (the Arch of Gallienus)
   precision: rough
   width_m: 4.2
   width_source: assumed

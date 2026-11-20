@@ -241,10 +241,12 @@
 "model"
 ],
 "id": "aedes_veiovis",
-"lat": 41.8928,
+"lat": 41.892916,
 "latin": "Aedes Vediovis",
 "location": "Capitol, in the saddle (Asylum) between the Arx and the Capitolium; remains under the Tabularium side, near Piazza del Campidoglio",
-"lon": 12.4836,
+"location_confidence": "low",
+"location_source": "F2: Platner-Ashby s.v. Veiovis, Aedes (read): inter duos lucos, in the saddle between the two summits (Vitr. 4.8.4; Gell. 5.12.5); placed 35 m behind (west-north-west of) the Tabularium, which faces the Forum from the saddle's east edge. Pleiades 243075423 gives only an imagery point good to 2 km, which coincided with the Tabularium's centre, so the two were drawn inside each other",
+"lon": 12.483224,
 "model": "temple_tetrastyle_ionic_travertine",
 "notes": "CORRECTED. P&A treats two temples of Vediovis. (1) On the Tiber island, known only from an emended text of Liv. 34.53.7 (194 BC: dedicated by the duumvir C. Servilius, vowed six years earlier in the Gallic war by L. Furius Purpurio as praetor, the contract let by him as consul). (2) The Capitoline temple 'inter duos lucos' (Vitr. 4.8.4; Gell. 5.12.5), dedicated on 7 March (Ov. Fast. 3.429-430): Liv. 35.41.8 (192 BC) says Q. Marcius Ralla, duumvir, dedicated a temple vowed by Purpurio, but the MSS read 'aedes duae Iovi' and the emendation to Vediovis is conjectural. P&A says the matter cannot be settled. The previous entry's 'contracted 194; dedicated 192 (Livy 34.53.7)' mixed the island temple with the Capitoline one. Livy 31.21.12 is the vow of 200 (MSS 'deo Iovi'). Pleiades 243075423 gives the standing remains by the Tabularium side.",
 "pleiades": 243075423,
@@ -369,10 +371,12 @@
 "model"
 ],
 "id": "aedes_veneris_erycinae_collina",
-"lat": 41.9072,
+"lat": 41.9093,
 "latin": "Aedes Veneris Erycinae ad Portam Collinam",
 "location": "outside the Porta Collina, probably on the west side of the Via Salaria near the modern Via Belisario (P&A)",
-"lon": 12.4968,
+"location_confidence": "low",
+"location_source": "F2: Platner-Ashby s.v. Venus Erucina, Aedes (read): outside the Porta Collina, probably on the west side of the Via Salaria near the modern Via Belisario; placed there. The earlier point stood on the road 230 m short of it",
+"lon": 12.498505,
 "model": "temple_tetrastyle_ionic",
 "notes": "Not in Pleiades. Verified against Livy 40.34.4 (Latin text) and P&A 'Venus Erucina': vowed by the consul L. Porcius Licinus in the Ligurian war (184 per P&A; Livy calls him L. Porcius Ligustinus there), dedicated by his son L. Porcius Licinus as duumvir in 181 BC. Site: outside the Porta Collina, probably west of the Via Salaria near the modern Via Belisario (P&A); precision rough. Strabo 6.2.6 says it was a copy of the temple at Eryx with a noteworthy portico. Festivals 23 April (Vinalia) and 24 October.",
 "pleiades": null,
@@ -1156,7 +1160,7 @@
 "verified": "platner-ashby"
 },
 {
-"bearing_deg": 196,
+"bearing_deg": 106,
 "built": {
 "by": "probably built by the consul L. Opimius in 121 when he restored the temple of Concord (Varro LL 5.156; Cic. Sest. 140; P&A)",
 "certainty": "probable",
@@ -1164,8 +1168,8 @@
 },
 "english": "Basilica Opimia",
 "footprint_m": {
-"length": 40,
-"width": 20
+"length": 15,
+"width": 25
 },
 "geometry_source": "Basilica Opimia beside the temple of Concord (Platner-Ashby s.v. Basilica Opimia); size unknown",
 "geometry_unverified": [
@@ -1174,16 +1178,14 @@
 "height_m"
 ],
 "id": "basilica_opimia",
-"lat": 41.8921,
+"lat": 41.89322,
 "latin": "Basilica Opimia",
 "location": "Forum, beside the temple of Concord",
-"lon": 12.4863,
+"location_confidence": "low",
+"location_source": "F2: Platner-Ashby s.v. Basilica Opimia: just north of the temple of Concord, between it and the Tullianum (Varro LL 5.156); placed there. The earlier point lay across the Clivus Argentarius",
+"lon": 12.48431,
 "model": "basilica",
 "notes": "P&A: erected 'probably' by the consul L. Opimius in 121 BC when he restored the temple of Concord; stood just north of the temple between it and the Tullianum (Varro LL 5.156); probably removed when Tiberius rebuilt the temple (not mentioned after). The 'celeberrimum monumentum Opimi' of Cic. Sest. 140 probably refers to both temple and basilica. Date 121 is therefore probable, not certain. Pleiades 913111964 is a 'related' point only.",
-"offset_m": [
--128,
-139
-],
 "pleiades": 913111964,
 "precision": "rough",
 "regio": 8,
@@ -2246,10 +2248,12 @@
 ],
 "height_m": 1.5,
 "id": "ara_maxima_herculis",
-"lat": 41.8887,
+"lat": 41.888127,
 "latin": "Ara Maxima Herculis",
 "location": "Forum Boarium, near the Circus Maximus end; under S. Maria in Cosmedin",
-"lon": 12.4825,
+"location_confidence": "medium",
+"location_source": "F2: under S. Maria in Cosmedin (the record's own location; Wikipedia it: 41.888123, 12.481567), in the Forum Boarium behind the carceres of the Circus Maximus (Platner-Ashby s.v. Herculis Invicti Ara Maxima, read: post ianuas circi Maximi, iuxta circum). It stood before 100 m north-east of the church, across the street through the Velabrum",
+"lon": 12.48157,
 "model": "altar",
 "notes": "P&A: earliest cult centre of Hercules in Rome, raised, by tradition, after Hercules slew Cacus and Evander recognised his divinity (Livy 1.7.10-11; Dion. Hal. 1.40.6; Fest. 237; Serv. Aen. 8.269-271); one tradition ascribes the dedication to Evander (Dion. Hal.; Macrob. 3.11.7). Livy 9.29.9: Appius Claudius's censorship (312) hands the rites to public slaves. Burned in Nero's fire (Tac. Ann. 15.41) but restored. Site north-west of the probable ara; relations between the Hercules shrines 'by no means clear'. Pleiades 207271757 has only a 'related' location, not adopted.",
 "pleiades": 207271757,
@@ -2483,7 +2487,7 @@
 "verified": "platner-ashby+pleiades"
 },
 {
-"bearing_deg": 304,
+"bearing_deg": 251,
 "built": {
 "by": "C. Duilius, after Mylae (Tac. Ann. 2.49); dedication day 17 August (fasti)",
 "certainty": "probable",
@@ -2500,10 +2504,12 @@
 "height_m"
 ],
 "id": "aedes_ianus_holitorium",
-"lat": 41.8911,
+"lat": 41.890957,
 "latin": "Aedes Iani",
 "location": "Forum Holitorium, next to Spes and Juno Sospita",
-"lon": 12.4799,
+"location_confidence": "medium",
+"location_source": "F2: the southern of the three temples side by side with the same orientation facing the Forum Holitorium (Platner-Ashby s.v. Ianus, Aedes, and s.v. Spes, Aedes: Spes the middle and largest); the church of S. Nicola in Carcere stands on the middle one (Pleiades 872350435, OpenStreetMap outline, centre and axis); 14 m between centres. Which god had the northern and which the southern temple is disputed; the dataset's earlier order is kept",
+"lon": 12.480012,
 "model": "temple_tetrastyle_ionic_travertine",
 "notes": "Not in Pleiades as a separate place. P&A: temple in the forum Holitorium built by C. Duilius after Mylae (Tac. Ann. 2.49), ad theatrum Marcelli (Fast. Allif.), extra portam Carmentalem (Fest. 285); dedication day 17 August; restoration begun by Augustus, completed by Tiberius AD 17 (outside range). Augustus placed a statue of Janus from Egypt in it (Plin. NH 36.28). The three temples under S. Nicola in Carcere (Pleiades church point 41.8911, 12.4799) cannot be assigned individually with certainty: P&A (1929) tentatively follows Delbrueck/Frank (south = Spes; central = about 90 BC; Doric 'smallest' = Juno Sospita), while later scholarship generally calls the northern Doric one Janus and the central Ionic one Juno Sospita; coordinates here are therefore at the church only.",
 "pleiades": null,
@@ -2519,7 +2525,7 @@
 "verified": "platner-ashby"
 },
 {
-"bearing_deg": 315,
+"bearing_deg": 251,
 "built": {
 "by": "A. Atilius Calatinus in the First Punic War, as consul 258 or 254 (Cic. Leg. 2.28; Tac. Ann. 2.49); dedication day 1 August",
 "certainty": "probable",
@@ -2549,10 +2555,12 @@
 "bearing_deg"
 ],
 "id": "aedes_spei",
-"lat": 41.891,
+"lat": 41.891076,
 "latin": "Aedes Spei",
 "location": "Forum Holitorium, by the Tiber",
-"lon": 12.4798,
+"location_confidence": "medium",
+"location_source": "F2: the middle of the three temples side by side with the same orientation facing the Forum Holitorium (Platner-Ashby s.v. Ianus, Aedes, and s.v. Spes, Aedes: Spes the middle and largest); the church of S. Nicola in Carcere stands on the middle one (Pleiades 872350435, OpenStreetMap outline, centre and axis); 14 m between centres. Which god had the northern and which the southern temple is disputed; the dataset's earlier order is kept",
+"lon": 12.479957,
 "model": "temple_tetrastyle_ionic_travertine",
 "notes": "CORRECTED events: Livy 21.62.4 is the lightning strike of 218, not a fire. P&A: built and dedicated by A. Atilius Calatinus in the First Punic War (Cic. Leg. 2.28; Tac. Ann. 2.49); struck by lightning 218 (Livy 21.62.4); burned 213 and restored next year by a commission (Livy 24.47.15-16, 25.7.6); burned again in 31 (Dio 50.10.3); rebuilt later (Germanicus dedicated AD 17); dedication day 1 August. Existing remains (about 30 x 10 m, Ionic, amphiprostyle hexastyle; three travertine columns 8.70 m high built into S. Nicola) are attributed by Frank to Augustus's rebuilding. Not in Pleiades. The three temples under S. Nicola in Carcere (Pleiades church point 41.8911, 12.4799) cannot be assigned individually with certainty: P&A (1929) tentatively follows Delbrueck/Frank (south = Spes; central = about 90 BC; Doric 'smallest' = Juno Sospita), while later scholarship generally calls the northern Doric one Janus and the central Ionic one Juno Sospita; coordinates here are therefore at the church only.",
 "pleiades": null,
@@ -2571,7 +2579,7 @@
 "verified": "platner-ashby"
 },
 {
-"bearing_deg": 318,
+"bearing_deg": 251,
 "built": {
 "by": "vowed by C. Cornelius Cethegus 197 against the Insubres; dedicated 194 (Livy 32.30.10, 34.53.3)",
 "certainty": "certain",
@@ -2598,10 +2606,12 @@
 "height_m"
 ],
 "id": "aedes_iunonis_sospitae",
-"lat": 41.8913,
+"lat": 41.891196,
 "latin": "Aedes Iunonis Sospitae",
 "location": "Forum Holitorium",
-"lon": 12.4797,
+"location_confidence": "medium",
+"location_source": "F2: the northern of the three temples side by side with the same orientation facing the Forum Holitorium (Platner-Ashby s.v. Ianus, Aedes, and s.v. Spes, Aedes: Spes the middle and largest); the church of S. Nicola in Carcere stands on the middle one (Pleiades 872350435, OpenStreetMap outline, centre and axis); 14 m between centres. Which god had the northern and which the southern temple is disputed; the dataset's earlier order is kept",
+"lon": 12.479902,
 "model": "temple_tetrastyle_ionic_travertine",
 "notes": "Verified: P&A: vowed 197 by the consul C. Cornelius Cethegus in the Insubrian war (Livy 32.30.10) and dedicated in 194 (Livy 34.53.3; P&A's text prints '104', a misprint) on 1 February; restored by L. Julius (Caesar), consul 90, after Cornelia's dream (Cic. Div. 1.4, 1.99; Obseq. 75). Not in Pleiades. The three temples under S. Nicola in Carcere (Pleiades church point 41.8911, 12.4799) cannot be assigned individually with certainty: P&A (1929) tentatively follows Delbrueck/Frank (south = Spes; central = about 90 BC; Doric 'smallest' = Juno Sospita), while later scholarship generally calls the northern Doric one Janus and the central Ionic one Juno Sospita; coordinates here are therefore at the church only.",
 "pleiades": null,
@@ -2625,6 +2635,10 @@
 "certainty": "certain",
 "year": -181
 },
+"ended": {
+"what": "destroyed by Caesar when he began the preparations for the theatre of Marcellus (Platner-Ashby s.v. Pietas, Aedes, read; Pliny NH 7.121; Dio 43.49.3 # unverified)",
+"year": -44
+},
 "english": "Temple of Pietas",
 "events": [
 {
@@ -2646,15 +2660,10 @@
 "lat": 41.892,
 "latin": "Aedes Pietatis",
 "location": "Forum Holitorium",
+"location_source": "F2: Platner-Ashby s.v. Pietas, Aedes (read): at the east end of the area later occupied by the theatre of Marcellus",
 "lon": 12.4795,
 "model": "temple_tetrastyle_ionic",
 "notes": "Verified: P&A: vowed by M'. Acilius Glabrio at Thermopylae (191), begun by him, dedicated in 181 by his son as duumvir (Livy 40.34.4-5; the Latin text reads 'altera in foro holitorio Pietatis; eam aedem dedicauit M'. Acilius Glabrio duumuir', with the first gilded statue in Italy for his father); at the east end of the area later occupied by the Theatre of Marcellus; destroyed by Caesar in 44 for the theatre (Plin. NH 7.121). Dedication day 1 December per fasti is for the other (Circus Flaminius) temple of Pietas, not this one. Not in Pleiades.",
-"phases": [
-{
-"from": -13,
-"state": "gone"
-}
-],
 "pleiades": null,
 "precision": "rough",
 "regio": 9,
@@ -2831,10 +2840,12 @@
 ],
 "height_m": 10,
 "id": "porticus_octaviae",
-"lat": 41.8925,
+"lat": 41.892941,
 "latin": "Porticus Octaviae (Porticus Metelli)",
 "location": "Campus Martius, between the Theatre of Marcellus and the Circus Flaminius",
-"lon": 12.4786,
+"location_confidence": "high",
+"location_source": "F2: Pleiades 236573248 maps the propylon, which stood in the middle of the south-west side (Platner-Ashby s.v. Porticus Octaviae, read: main axis NE-SW, entrance in the middle of the SW side); the centre of the 130 m long enclosure is 65 m north-east of it. The earlier point was the propylon itself",
+"lon": 12.479132,
 "model": "portico_enclosure",
 "notes": "CORRECTED. The YAML event 'rebuilt -33 with Dalmatian spoils (RG 19; Dio 49.43.8)' conflated two buildings. P&A: the Porticus Octaviae was built by Augustus and dedicated in his sister's name 'at some time after 27 B.C.' (Suet. Aug. 29; Liv. Ep. 140.2; Vitr. 3.2.5), replacing the Porticus Metelli around the temples of Jupiter Stator and Juno (Plin. NH 36.42); Dio's statement that it was built after 33 from the Dalmatian spoils is a confusion with the Porticus Octavia (the Res Gestae 19.1 portico 'ad circum Flaminium ... ex nomine eius qui priorem eodem in solo fecerat Octaviam'). Porticus Metelli: built with the two temples by Q. Caecilius Metellus Macedonicus after his triumph in 146 (Vell. 1.11.2-5). P&A: burned in AD 80, restored again after 203. Enclosure 118 m wide, double colonnade of granite columns. Library (Suet. Gramm. 21; Plut. Marc. 30) and curia Octaviae inside. Pleiades 236573248 (precise).",
 "pleiades": 236573248,
@@ -2870,10 +2881,12 @@
 "footprint_m"
 ],
 "id": "aedes_iovis_statoris_metelli",
-"lat": 41.8923,
+"lat": 41.89313,
 "latin": "Aedes Iovis Statoris (Metelli)",
 "location": "inside the Porticus Metelli",
-"lon": 12.4793,
+"location_confidence": "medium",
+"location_source": "F2: Platner-Ashby s.v. Iuppiter Stator, Aedes (in circo, read): its exact site is known, beneath the church of S. Maria in Campitelli (Wikipedia it: 41.893127, 12.479498); inside the porticus Metelli / Octaviae (Vitr. 3.2.5). Moved 95 m north",
+"lon": 12.479494,
 "model": "temple_hexastyle_corinthian_marble",
 "notes": "P&A: temple (with that of Juno Regina and the enclosing Porticus Metelli) built by Q. Caecilius Metellus Macedonicus after his triumph in 146 (Vell. 1.11.3-5), 'not stated in so many words' by Velleius but a natural inference; Vell. 1.11.5 calls them the first marble temples; Hermodorus of Salamis as architect from Vitr. 3.2.5. Not to be confused with the Palatine temple vowed by Romulus and made by M. Atilius Regulus in 294 (Livy 1.12.3-6; 10.36.11). Not in Pleiades separately.",
 "pleiades": null,
@@ -2910,10 +2923,12 @@
 "height_m"
 ],
 "id": "aedes_iunonis_reginae_circus",
-"lat": 41.8924,
+"lat": 41.89313,
 "latin": "Aedes Iunonis Reginae (Circo Flaminio)",
 "location": "in the Porticus Metelli / Octavia",
-"lon": 12.4789,
+"location_confidence": "low",
+"location_source": "F2: Platner-Ashby s.v. Iuppiter Stator, Aedes (read): the temple of Juno was just west of Jupiter's, on the opposite side of the Via della Tribuna di Campitelli; placed 33 m west of it, inside the porticus. Platner-Ashby also places three standing columns of Juno in Via di S. Angelo in Pescheria 11, further south-west: the two statements disagree",
+"lon": 12.479096,
 "model": "temple_tetrastyle_ionic_marble",
 "notes": "Verified in Livy 39.2.11 (vow of 187 in the Ligurian war) and 40.52.1-2 (Latin: Lepidus as censor dedicates both temples 'utramque in circo Flaminio' eight years after the vow, with scenic games). P&A: temple near the Circus Flaminius. Not in Pleiades. Note: P&A also has Juno Regina on the Aventine (see aedes_iunonis_reginae_aventine).",
 "pleiades": null,
@@ -3426,10 +3441,12 @@
 ],
 "height_m": 9,
 "id": "domus_ciceronis",
-"lat": 41.8908,
+"lat": 41.89043,
 "latin": "Domus M. Tulli Ciceronis",
 "location": "Palatine, north-west corner, overlooking the Forum, near the house of Catulus",
-"lon": 12.486,
+"location_confidence": "low",
+"location_source": "F2: on the Palatine overlooking the Forum, near the house of Catulus (Cic. Dom. 100, 116; Plut. Cic. 33 # unverified); no remains. Moved 40 m south onto the hill: the earlier point straddled the north slope (27 m of fall under its footprint) and the Nova Via",
+"lon": 12.486048,
 "model": "domus",
 "notes": "Verified: P&A: on the north-east side of the Palatine overlooking the Forum (Cic. Dom. 100; Plut. Cic. 8), bought in 62 for HS 3,500,000 from Marcus Crassus (Cic. Fam. 5.6.2; Gell. 12.12); adjoined the Porticus Catuli. CORRECTED: Clodius BURNED it (not 'demolished'), enlarged the portico of Catulus and built a shrine of Libertas (Cic. Dom. 62, 116; App.); after Cicero's recall he recovered the site and damages enough to partially rebuild (Dio 39.11, 39.20; Cic. Att. 4.1.7, 4.2.5, 4.3.2). Later owned by L. Marcius Censorinus (cos. 39) and Statilius Sisenna. Pleiades 233061795 is only a 'related' point at the hill's centre and was not adopted.",
 "phases": [
@@ -3463,7 +3480,7 @@
 "verified": "platner-ashby"
 },
 {
-"bearing_deg": 16,
+"bearing_deg": 139,
 "built": {
 "by": "originally the house of the orator Q. Hortensius Hortalus (d. 50), later Augustus's residence 'aedes Hortensianae' (Suet. Aug. 72); enlarged after the Apollo temple was built (Dio 49.15.5); the oak crown decreed 13 Jan 27 (Dio 53.16.4)",
 "certainty": "uncertain",
@@ -3471,8 +3488,8 @@
 },
 "english": "House of Hortensius, later of Augustus",
 "footprint_m": {
-"length": 45,
-"width": 30
+"length": 38.5,
+"width": 31.2
 },
 "geometry_source": "form assumed from date and type, native kit size (no measured plan); Suet. Aug. 72",
 "geometry_unverified": [
@@ -3883,10 +3900,12 @@
 "model"
 ],
 "id": "aedes_veneris_obsequentis",
-"lat": 41.8868,
+"lat": 41.887517,
 "latin": "Aedes Veneris Obsequentis",
 "location": "by the Circus Maximus, at the foot of the Aventine",
-"lon": 12.4838,
+"location_confidence": "low",
+"location_source": "F2: near the Circus Maximus at the foot of the Aventine (Livy 10.31.9); placed just outside the stands on the Aventine side, where it stood before inside the arena",
+"lon": 12.48474,
 "model": "temple_tetrastyle_ionic",
 "notes": "Verified: P&A: built by Q. Fabius Maximus Gurges out of fines on women convicted of adultery; 'begun in 295 B.C. and dedicated after the close of the third Samnite war' (Livy 10.31.9; Serv. Aen. 1.720), ad circum Maximum (Livy 29.37.2: the censors of 204 built a road to the temple of Venus); dedication day 19 August (Vinalia rustica). The dedication year is not given, so 295 is the begun year and the entry was only 'probable'. Not in Pleiades.",
 "pleiades": null,
@@ -3917,10 +3936,12 @@
 "model"
 ],
 "id": "aedes_iuventatis",
-"lat": 41.8862,
+"lat": 41.888179,
 "latin": "Aedes Iuventatis",
 "location": "Circus Maximus, near the Carceres",
-"lon": 12.4842,
+"location_confidence": "low",
+"location_source": "F2: in the Circus Maximus (Livy 36.36.5-6), beside the carceres per the record's location; placed just outside the stands at the carceres end on the Aventine side. It stood before inside the stands",
+"lon": 12.483786,
 "model": "temple_tetrastyle_ionic",
 "notes": "Verified in Livy 36.36.5-6 (Latin text): 'Iuuentatis aedem in circo maximo C. Licinius Lucullus duumuir dedicauit. uouerat eam sexdecim annis ante M. Liuius consul' (so 191; vow 207 at the Metaurus; Livius as censor contracted for it in 204). P&A prints '193' for the dedication, which does not match Livy's year; 191 kept. Burned 16 BC (Dio 54.19.7), restored by Augustus (Mon. Anc. 4.8 = RG 19.2). Site by the Circus Maximus, rough. Not in Pleiades.",
 "pleiades": null,
@@ -4751,7 +4772,7 @@
 },
 "english": "Theatre of Marcellus",
 "footprint_m": {
-"radius": 75
+"radius": 61
 },
 "geometry_note": "bearing: scaena toward the river (west-southwest), axis NNE-SSW so the open side faces NNE; the dataset radius 65 comes from the 130 m published diameter, Platner says 150 m",
 "geometry_source": "Platner-Ashby s.v. Theatrum Marcelli (diameter about 150 m, scaena about 80-90 m long and 20 deep, apsidal halls 25 x 15 m at its ends; stage toward the river, main axis NNE-SSW; thirteen piers 3 m wide and 2 deep; three open arcades, Doric then Ionic)",
@@ -4760,10 +4781,12 @@
 ],
 "height_m": 32.6,
 "id": "theatrum_marcelli",
-"lat": 41.8919,
+"lat": 41.891687,
 "latin": "Theatrum Marcelli",
 "location": "between the Capitol and the Tiber, Forum Holitorium",
-"lon": 12.4796,
+"location_confidence": "high",
+"location_source": "F2: centre of the circle fitted to the surviving outer arcades (OpenStreetMap outline of the visible remains, Pleiades 300583267): radius 60 m. The earlier point was the centre of the remains' bounding box, 35 m north-east of the orchestra",
+"lon": 12.479283,
 "model": "theatre_stone",
 "pleiades": 300583267,
 "precision": "exact",
@@ -5249,10 +5272,12 @@
 "model"
 ],
 "id": "aedes_veneris_verticordiae",
-"lat": 41.8862,
+"lat": 41.886967,
 "latin": "Aedes Veneris Verticordiae",
 "location": "Circus Maximus area (Murcia valley)",
-"lon": 12.4845,
+"location_confidence": "low",
+"location_source": "F2: near the Circus Maximus in the Vallis Murcia (record's location); placed just outside the stands on the Aventine side, where it stood before inside the arena",
+"lon": 12.485504,
 "model": "temple_tetrastyle_ionic",
 "precision": "rough",
 "regio": 11,
@@ -5283,10 +5308,12 @@
 ],
 "height_m": 1.2,
 "id": "aedes_dei_consi",
-"lat": 41.8869,
+"lat": 41.886854,
 "latin": "Ara Consi",
 "location": "underground in the Circus Maximus",
-"lon": 12.4851,
+"location_confidence": "low",
+"location_source": "F2: the underground altar of Consus was in the arena of the Circus Maximus, ad primas metas (Platner-Ashby s.v. Consus, Ara # unverified passage; Tertullian, De spect. 5 as quoted there); placed beside the spina at the turning post nearer the carceres. It stood before in the seating on the Palatine side",
+"lon": 12.484167,
 "model": "altar",
 "precision": "rough",
 "regio": 11,

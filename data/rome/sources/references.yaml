@@ -44,6 +44,10 @@ explained:
     pons_fabricius: "as pons_cestius: kept where D-299 fitted the island to it (21 m from the remains)"
     emporium: "Pleiades outlines the excavated 165 m of the quay; our record is the whole 500 m river front of the Emporium"
     basilica_ulpia: "Pleiades outlines only the excavated eastern part (57 x 56 m); our record is the whole basilica, 130 m across the north-west end of the forum"
+    theatrum_marcelli: "Pleiades' best location is the bounding box of the visible arcades, an arc on the north-east of the cavea; our point is the centre of the circle fitted to that arc (radius 60 m), the centre of the theatre"
+    theatrum_marcelli_empire: "the same building as theatrum_marcelli (twin_of): see there"
+    porticus_octaviae: "Pleiades maps the surviving propylon, in the middle of the south-west side; our point is the centre of the 130 m enclosure behind it (Platner-Ashby s.v. Porticus Octaviae, read)"
+    porticus_octaviae_empire: "the same building as porticus_octaviae (twin_of): see there"
     forum_romanum: "the Pleiades outline (OpenStreetMap) is the whole archaeological area of the Forum, from the Capitol foot to the Velia, so its centre lies 180 m east of the square; our point is the centre of the paved square (the origin of the frame)"
   lines:
     street:vicus_iugarius: "the OpenStreetMap line Pleiades gives runs along the south side of the Basilica Iulia, where no ancient street is attested; Platner-Ashby s.v. Vicus Iugarius (read) says the present pavement preserves the line after the basilica was built, which is the path between the basilica and the temple of Saturn that we follow"

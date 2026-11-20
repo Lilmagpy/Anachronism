@@ -14,16 +14,16 @@ References: **Pleiades** (CC BY 3.0; places within 3.5 km of the Forum with a pe
 | **missing** (all; of them dated before 27 BC) | **568** (337) |
 | **misplaced** (beyond tolerance and beyond the reference's own accuracy) | **0** |
 | orientation or size against published measurements | 0 |
-| orientation or size against the outline of the remains | 52 |
+| orientation or size against the outline of the remains | 51 |
 | relations the sources fix, failed | 6 |
-| date issues | 25 |
-| scene: monuments whose solids overlap another standing monument (all years) | 54 |
-| scene: monuments whose base is more than 0.5 m above the ground under a corner (all years) | 36 |
-| scene: monuments whose base is more than 1 m below the ground under a corner (all years) | 109 |
-| scene: houses standing inside a monument's footprint (all years) | 212 |
-| scene: houses standing on a street (all years) | 17 |
-| scene: monuments standing in the river (all years) | 3 |
-| scene: streets passing through a monument (all years) | 29 |
+| date issues | 23 |
+| scene: monuments whose solids overlap another standing monument (all years) | 13 |
+| scene: monuments whose base is more than 0.5 m above the ground under a corner (all years) | 42 |
+| scene: monuments whose base is more than 1 m below the ground under a corner (all years) | 112 |
+| scene: houses standing inside a monument's footprint (all years) | 223 |
+| scene: houses standing on a street (all years) | 21 |
+| scene: monuments standing in the river (all years) | 5 |
+| scene: streets passing through a monument (all years) | 1 |
 
 ## 1. Completeness
 
@@ -952,14 +952,19 @@ Our placed centre (`lat`/`lon` plus `offset_m`, as `monuments.gd` places it) aga
 | domus_aurea | [410440793](https://pleiades.stoa.org/places/410440793) Domus Aurea | 153.1 (towards 264) | 20 | 20.0 | misplaced | Pleiades outlines only the surviving Esquiline wing; our point is the centre of the drawn palace grounds, which ran from the Palatine to the Esquiline |
 | aedes_divi_augusti | [434772637](https://pleiades.stoa.org/places/434772637) Temple of Divus Augustus (Rome) | 133.8 (towards 300) | 10 | 1000.0 | within reference accuracy |  |
 | colossus_neronis | [527986452](https://pleiades.stoa.org/places/527986452) Colossus Neronis | 109.6 (towards 89) | 20 | 20.0 | misplaced | Pleiades maps the base by the Flavian amphitheatre, where Hadrian moved the statue after AD 120; until then it stood in the vestibule of the Domus Aurea on the site of the later temple of Venus and Rome, where we place it |
+| porticus_octaviae | [236573248](https://pleiades.stoa.org/places/236573248) Porticus Octaviae | 65.6 (towards 225) | 20 | 20.0 | misplaced | Pleiades maps the surviving propylon, in the middle of the south-west side; our point is the centre of the 130 m enclosure behind it (Platner-Ashby s.v. Porticus Octaviae, read) |
+| porticus_octaviae_empire | [236573248](https://pleiades.stoa.org/places/236573248) Porticus Octaviae | 65.6 (towards 225) | 20 | 20.0 | misplaced | the same building as porticus_octaviae (twin_of): see there |
 | horologium_augusti | [986274170](https://pleiades.stoa.org/places/986274170) Horologium Augusti | 50.5 (towards 215) | 20 | 5.0 | misplaced | Pleiades' best point is the excavated stretch of the meridian line under Via di Campo Marzio 48; our point is the middle of the paved dial, between it and the obelisk's site |
 | pons_cestius | [211668069](https://pleiades.stoa.org/places/211668069) Pons Cestius | 47.8 (towards 162) | 20 | 20.0 | misplaced | kept where the U8 island pass fitted it (D-299): tiber.gd fits the island between the dataset's two bridges, and with the bridges on their remains the 67 m island does not fit the course drawn there; moving the bridges needs the island refitted in tiber.gd (hook for the lead) |
+| theatrum_marcelli | [300583267](https://pleiades.stoa.org/places/300583267) Theatrum Marcelli | 44.9 (towards 49) | 20 | 20.0 | misplaced | Pleiades' best location is the bounding box of the visible arcades, an arc on the north-east of the cavea; our point is the centre of the circle fitted to that arc (radius 60 m), the centre of the theatre |
+| theatrum_marcelli_empire | [300583267](https://pleiades.stoa.org/places/300583267) Theatrum Marcelli | 44.9 (towards 49) | 20 | 20.0 | misplaced | the same building as theatrum_marcelli (twin_of): see there |
 | emporium | [937921711](https://pleiades.stoa.org/places/937921711) Emporium | 43.2 (towards 280) | 20 | 20.0 | misplaced | Pleiades outlines the excavated 165 m of the quay; our record is the whole 500 m river front of the Emporium |
 | porta_capena | [27164982](https://pleiades.stoa.org/places/27164982) Porta Capena | 41.9 (towards 81) | 20 | 2000.0 | within reference accuracy |  |
 | basilica_ulpia | [629324739](https://pleiades.stoa.org/places/629324739) Basilica Ulpia | 35.9 (towards 216) | 20 | 20.0 | misplaced | Pleiades outlines only the excavated eastern part (57 x 56 m); our record is the whole basilica, 130 m across the north-west end of the forum |
+| aedes_veiovis | [243075423](https://pleiades.stoa.org/places/243075423) Temple of Veiovis | 35.5 (towards 116) | 10 | 2000.0 | within reference accuracy |  |
 | pons_fabricius | [68481414](https://pleiades.stoa.org/places/68481414) Pons Fabricius | 21.4 (towards 128) | 20 | 20.0 | misplaced | as pons_cestius: kept where D-299 fitted the island to it (21 m from the remains) |
 
-68 of 80 compared records are within tolerance.
+63 of 80 compared records are within tolerance.
 
 ### Streets, walls and aqueducts against the Pleiades lines
 
@@ -970,11 +975,11 @@ How far the mapped line (Pleiades, inside the audited radius) lies from ours.
 | cloaca_maxima | 867802692 Cloaca Maxima | 95.0 | 95.0 | 20.0 |  |
 | aqua_appia | 423562 Aqua Appia | 92.3 | 201.3 | 5.0 |  |
 | murus_servianus | 103808101 Murus Servii Tullii | 55.1 | 150.2 | 20.0 |  |
-| street:vicus_iugarius | 889101791 Vicus Iugarius | 50.0 | 112.1 | 20.0 | the OpenStreetMap line Pleiades gives runs along the south side of the Basilica Iulia, where no ancient street is attested; Platner-Ashby s.v. Vicus Iugarius (read) says the present pavement preserves the line after the basilica was built, which is the path between the basilica and the temple of Saturn that we follow |
+| street:vicus_iugarius | 889101791 Vicus Iugarius | 50.0 | 111.9 | 20.0 | the OpenStreetMap line Pleiades gives runs along the south side of the Basilica Iulia, where no ancient street is attested; Platner-Ashby s.v. Vicus Iugarius (read) says the present pavement preserves the line after the basilica was built, which is the path between the basilica and the temple of Saturn that we follow |
 | aqua_virgo | 423568 Aqua Virgo | 40.2 | 44.1 | 20.0 |  |
 | aqua_virgo_empire | 423568 Aqua Virgo | 40.2 | 44.1 | 20.0 |  |
+| street:clivus_capitolinus | 152699900 Clivus Capitolinus | 0.3 | 0.6 | 20.0 |  |
 | street:argiletum | 451243813 Argiletum | 0.3 | 0.5 | 20.0 |  |
-| street:clivus_capitolinus | 152699900 Clivus Capitolinus | 0.2 | 0.4 | 20.0 |  |
 
 ### Orientation and size: published measurements
 
@@ -1011,7 +1016,6 @@ The smallest rectangle round the remains as mapped; the remains may be only part
 | curia_iulia | 30.0 x 26.5, 49.9 | 25.2 x 17.6, 45.0 | None | size |  |
 | curia_iulia_empire | 30.0 x 26.5, 49.9 | 25.2 x 17.6, 135.0 | None | size |  |
 | domus_aurea | 122.3 x 110.6, 138.1 | 500.0 x 250.0, None | None | size |  |
-| domus_hortensii_augusti | 38.5 x 31.2, 138.8 | 45.0 x 30.0, 16.0 | 57.2 | axis, size |  |
 | emporium | 164.6 x 20.4, 46.3 | 500.0 x 40.0, 90.0 | 43.7 | axis, size |  |
 | forum_augusti | 117.7 x 95.7, 133.4 | 125.0 x 90.0, 45.0 | 88.4 | axis |  |
 | forum_boarium | 140.0 x 63.1, 163.0 | 90.0 x 70.0, 100.0 | 63.0 | axis, size |  |
@@ -1035,13 +1039,14 @@ The smallest rectangle round the remains as mapped; the remains may be only part
 | rostra_augusti | 29.7 x 18.2, 25.1 | 24.0 x 14.0, 16.0 | 9.1 | size |  |
 | stadium_palatinum | 167.6 x 69.6, 41.5 | 160.0 x 50.0, 41.5 | 0.0 | size |  |
 | templum_pacis | 166.4 x 56.0, 121.7 | 145.0 x 97.0, None | None | size |  |
-| theatrum_marcelli | 77.7 x 30.4, 144.3 | 150.0 x 150.0, 22.5 | 58.2 | axis, size |  |
+| theatrum_marcelli | 77.7 x 30.4, 144.3 | 122.0 x 122.0, 22.5 | 58.2 | axis, size |  |
 | theatrum_marcelli_empire | 77.7 x 30.4, 144.3 | 150.0 x 150.0, 22.5 | 58.2 | axis, size |  |
 | theatrum_pompei | 45.0 x 16.5, 146.6 | 155.0 x 155.0, 134.0 | 12.6 | axis, size |  |
 | thermae_traiani | 172.6 x 35.5, 54.1 | 340.0 x 330.0, 30.0 | 24.1 | axis, size |  |
 | aedes_veneris_et_romae | 155.1 x 101.4, 110.6 | 145.0 x 100.0, 120.0 | 9.4 |  |  |
 | amphitheatrum_flavium | 170.0 x 148.3, 82.8 | 188.0 x 156.0, 120.0 | None |  |  |
 | basilica_iulia | 108.2 x 56.6, 114.5 | 101.0 x 49.0, 106.0 | 8.5 |  |  |
+| domus_hortensii_augusti | 38.5 x 31.2, 138.8 | 38.5 x 31.2, 139.0 | 0.2 |  |  |
 | forum_iulium | 164.5 x 83.6, 135.2 | 160.0 x 75.0, 140.0 | 4.8 |  |  |
 | forum_traiani | 219.2 x 121.5, 143.3 | 220.0 x 120.0, 143.0 | 0.3 |  |  |
 
@@ -1049,7 +1054,7 @@ The smallest rectangle round the remains as mapped; the remains may be only part
 
 | relation | result | detail | source |
 |---|---|---|---|
-| Saturn at the foot of the Clivus Capitolinus | ok | 18 m from the clivus, 36 m from its foot | Platner-Ashby s.v. Saturnus, Aedes; Clivus Capitolinus |
+| Saturn at the foot of the Clivus Capitolinus | ok | 18 m from the clivus, 31 m from its foot | Platner-Ashby s.v. Saturnus, Aedes; Clivus Capitolinus |
 | Castor beside the Lacus Iuturnae (east of it) | ok | 35 m apart, the Lacus at bearing 109 from Castor | Platner-Ashby s.v. Iuturnae Lacus; Castor, Aedes |
 | The Regia and Vesta where the Sacra Via reaches the Forum's east end | ok | Regia 14 m and Vesta 40 m from the Sacra Via; 91 and 75 m east of the Forum's centre | Platner-Ashby s.v. Sacra Via; Regia; Vesta, Aedes |
 | The Curia Hostilia on the Comitium's north side | ok | Curia 33 m from the Comitium's centre at bearing 48 | Platner-Ashby s.v. Comitium; Curia Hostilia |
@@ -1105,38 +1110,22 @@ The repository has no modern elevation model; the ground is built from `topograp
 
 | year | overlaps | floating | buried | houses_in_monuments | houses_on_streets | in_river | streets_through |
 |---|---|---|---|---|---|---|---|
-| 509 BC | 2 | 0 | 5 | 6 | 1 | 0 | 1 |
-| 390 BC | 2 | 0 | 6 | 14 | 0 | 0 | 3 |
-| 264 BC | 3 | 5 | 20 | 41 | 2 | 0 | 3 |
-| 133 BC | 7 | 11 | 23 | 43 | 4 | 1 | 4 |
-| 44 BC | 19 | 10 | 27 | 51 | 5 | 1 | 9 |
-| 27 BC | 21 | 10 | 28 | 57 | 5 | 1 | 9 |
+| 509 BC | 0 | 0 | 5 | 6 | 1 | 0 | 0 |
+| 390 BC | 0 | 0 | 6 | 14 | 0 | 0 | 0 |
+| 264 BC | 0 | 5 | 20 | 41 | 2 | 0 | 0 |
+| 133 BC | 1 | 13 | 24 | 49 | 4 | 1 | 1 |
+| 44 BC | 5 | 12 | 28 | 52 | 7 | 2 | 0 |
+| 27 BC | 7 | 12 | 29 | 61 | 7 | 2 | 0 |
 
 **monuments whose solids overlap another standing monument**
 
-- aedes_apollinis_medici overlaps aedes_iovis_statoris_metelli by 10.4 m (27 BC)
-- aedes_apollinis_medici overlaps aedes_iovis_statoris_metelli by 9.2 m (133 BC, 44 BC)
-- aedes_apollinis_medici overlaps theatrum_marcelli by 37.5 m (44 BC)
-- aedes_apollinis_medici overlaps theatrum_marcelli by 38.2 m (27 BC)
 - aedes_apollinis_palatini overlaps casa_romuli by 3.4 m (27 BC)
-- aedes_apollinis_palatini overlaps domus_hortensii_augusti by 8.6 m (27 BC)
+- aedes_apollinis_palatini overlaps domus_hortensii_augusti by 3.7 m (27 BC)
+- aedes_concordiae_forum overlaps basilica_opimia by 6.1 m (27 BC, 44 BC)
 - aedes_concordiae_forum overlaps tabularium by 3.2 m (27 BC, 44 BC)
-- aedes_dei_consi overlaps circus_maximus by 9.1 m (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC)
-- aedes_ianus_holitorium overlaps theatrum_marcelli by 9.1 m (27 BC, 44 BC)
-- aedes_iovis_statoris_metelli overlaps theatrum_marcelli by 51.0 m (27 BC, 44 BC)
-- aedes_iunonis_reginae_circus overlaps theatrum_marcelli by 13.7 m (27 BC, 44 BC)
-- aedes_iunonis_sospitae overlaps theatrum_marcelli by 23.8 m (27 BC, 44 BC)
-- aedes_iuventatis overlaps circus_maximus by 6.0 m (133 BC, 27 BC, 44 BC)
-- aedes_pietatis overlaps theatrum_marcelli by 69.6 m (27 BC, 44 BC)
-- aedes_veiovis overlaps tabularium by 23.1 m (27 BC, 44 BC)
-- aedes_veneris_obsequentis overlaps circus_maximus by 5.8 m (133 BC, 264 BC, 27 BC, 44 BC)
-- aedes_veneris_verticordiae overlaps circus_maximus by 17.7 m (27 BC, 44 BC)
-- casa_romuli overlaps domus_hortensii_augusti by 1.5 m (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC)
 - horrea_galbae overlaps porticus_aemilia by 52.5 m (133 BC, 27 BC, 44 BC)
-- porta_carmentalis overlaps theatrum_marcelli by 17.5 m (27 BC, 44 BC)
-- porta_flumentana overlaps porticus_octaviae by 7.3 m (133 BC, 27 BC, 44 BC)
-- porta_flumentana overlaps theatrum_marcelli by 4.3 m (27 BC, 44 BC)
-- porticus_octaviae overlaps theatrum_marcelli by 87.0 m (27 BC, 44 BC)
+- porta_flumentana overlaps theatrum_marcelli by 7.9 m (27 BC, 44 BC)
+- porticus_octaviae overlaps theatrum_marcelli by 19.7 m (27 BC, 44 BC)
 
 **monuments whose base is more than 0.5 m above the ground under a corner**
 
@@ -1149,7 +1138,9 @@ The repository has no modern elevation model; the ground is built from `topograp
 - aedes_quirini base 1.6 m above the ground at a corner (133 BC, 264 BC)
 - aedes_salutis base 0.7 m above the ground at a corner (133 BC, 264 BC, 27 BC, 44 BC)
 - aedes_telluris base 3.4 m above the ground at a corner (133 BC, 264 BC, 27 BC, 44 BC)
+- aedes_veiovis base 4.6 m above the ground at a corner (133 BC, 27 BC, 44 BC)
 - aedes_veneris_erycinae_capitol base 1.3 m above the ground at a corner (133 BC, 27 BC, 44 BC)
+- aedes_veneris_erycinae_collina base 3.1 m above the ground at a corner (133 BC, 27 BC, 44 BC)
 - macellum base 4.8 m above the ground at a corner (133 BC, 27 BC, 44 BC)
 
 **monuments whose base is more than 1 m below the ground under a corner**
@@ -1160,29 +1151,30 @@ The repository has no modern elevation model; the ground is built from `topograp
 - aedes_iovis_statoris_palatine ground 10.0 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
 - aedes_iunonis_monetae ground 1.2 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
 - aedes_quirini ground 1.2 m above its base at a corner (133 BC, 264 BC)
-- aedes_veiovis ground 4.0 m above its base at a corner (133 BC, 27 BC, 44 BC)
+- aedes_veiovis ground 8.3 m above its base at a corner (133 BC, 27 BC, 44 BC)
+- aedes_veneris_erycinae_collina ground 2.1 m above its base at a corner (133 BC, 27 BC, 44 BC)
 - atrium_libertatis ground 9.3 m above its base at a corner (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC)
 - domus_catuli ground 15.7 m above its base at a corner (27 BC, 44 BC)
-- domus_ciceronis ground 27.3 m above its base at a corner (27 BC, 44 BC)
+- domus_ciceronis ground 2.4 m above its base at a corner (27 BC, 44 BC)
 - domus_clodii ground 3.4 m above its base at a corner (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC)
-- domus_hortensii_augusti ground 1.1 m above its base at a corner (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC)
+- domus_hortensii_augusti ground 1.0 m above its base at a corner (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC)
 - domus_pompeii_carinae ground 1.0 m above its base at a corner (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC)
 - emporium ground 6.6 m above its base at a corner (133 BC, 27 BC, 44 BC)
 - horrea_sempronia ground 3.2 m above its base at a corner (27 BC, 44 BC)
 - macellum ground 5.7 m above its base at a corner (133 BC, 27 BC, 44 BC)
 - porta_caelimontana ground 9.5 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
 - porta_capena ground 15.7 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
-- porta_collina ground 6.0 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
+- porta_collina ground 6.9 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
 - porta_esquilina ground 7.2 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
-- porta_fontinalis ground 6.8 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
+- porta_fontinalis ground 7.1 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
 - porta_lavernalis ground 14.7 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
 - porta_querquetulana ground 6.7 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
 - porta_quirinalis ground 11.8 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
-- porta_salutaris ground 2.3 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
+- porta_salutaris ground 2.4 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
 - porta_sanqualis ground 5.6 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
 - porta_viminalis ground 5.7 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
 - tabularium ground 1.8 m above its base at a corner (27 BC, 44 BC)
-- theatrum_marcelli ground 10.7 m above its base at a corner (27 BC, 44 BC)
+- theatrum_marcelli ground 4.5 m above its base at a corner (27 BC, 44 BC)
 
 **houses standing inside a monument's footprint**
 
@@ -1196,8 +1188,8 @@ The repository has no modern elevation model; the ground is built from `topograp
 - forum_boarium has a casa:shingle lot inside it at (-352, 427), 25.0 m deep (264 BC, 390 BC)
 - forum_boarium has a casa:shingle lot inside it at (-384, 400), 29.7 m deep (133 BC, 264 BC, 27 BC, 44 BC)
 - forum_boarium has a casa:shingle lot inside it at (-384, 407), 32.9 m deep (264 BC)
-- forum_boarium has a casa:shingle lot inside it at (-384, 426), 18.7 m deep (133 BC)
-- forum_boarium has a casa:shingle lot inside it at (-392, 414), 25.6 m deep (27 BC, 44 BC)
+- forum_boarium has a casa:shingle lot inside it at (-384, 426), 18.7 m deep (27 BC)
+- forum_boarium has a casa:shingle lot inside it at (-392, 414), 25.6 m deep (133 BC, 27 BC, 44 BC)
 - forum_boarium has a casa:thatch lot inside it at (-398, 399), 17.7 m deep (390 BC)
 - forum_boarium has a casa:thatch lot inside it at (-405, 421), 15.9 m deep (390 BC, 509 BC)
 - forum_boarium has a casa:thatch lot inside it at (-407, 430), 13.3 m deep (390 BC, 509 BC)
@@ -1211,34 +1203,34 @@ The repository has no modern elevation model; the ground is built from `topograp
 - forum_boarium has a casa:tile lot inside it at (-384, 394), 24.5 m deep (133 BC, 27 BC, 44 BC)
 - forum_boarium has a casa:tile lot inside it at (-384, 408), 31.2 m deep (133 BC, 27 BC, 44 BC)
 - forum_boarium has a casa:tile lot inside it at (-384, 414), 30.7 m deep (133 BC, 27 BC, 44 BC)
-- forum_boarium has a casa:tile lot inside it at (-384, 434), 11.9 m deep (133 BC)
-- forum_boarium has a casa:tile lot inside it at (-389, 380), 11.9 m deep (133 BC)
-- forum_boarium has a casa:tile lot inside it at (-389, 384), 16.0 m deep (27 BC)
-- forum_boarium has a casa:tile lot inside it at (-390, 384), 16.1 m deep (44 BC)
+- forum_boarium has a casa:tile lot inside it at (-384, 434), 11.9 m deep (27 BC)
+- forum_boarium has a casa:tile lot inside it at (-384, 440), 5.3 m deep (133 BC)
+- forum_boarium has a casa:tile lot inside it at (-389, 384), 15.6 m deep (27 BC)
 - forum_boarium has a casa:tile lot inside it at (-392, 392), 21.7 m deep (264 BC)
-- forum_boarium has a casa:tile lot inside it at (-392, 400), 23.3 m deep (264 BC)
-- forum_boarium has a casa:tile lot inside it at (-393, 395), 21.6 m deep (133 BC)
-- forum_boarium has a casa:tile lot inside it at (-393, 396), 21.6 m deep (27 BC)
-- forum_boarium has a casa:tile lot inside it at (-393, 396), 21.9 m deep (44 BC)
+- forum_boarium has a casa:tile lot inside it at (-392, 400), 23.3 m deep (264 BC, 44 BC)
+- forum_boarium has a casa:tile lot inside it at (-392, 426), 17.7 m deep (27 BC)
+- forum_boarium has a casa:tile lot inside it at (-392, 434), 10.3 m deep (27 BC)
+- forum_boarium has a casa:tile lot inside it at (-393, 394), 21.1 m deep (44 BC)
+- forum_boarium has a casa:tile lot inside it at (-393, 396), 21.6 m deep (133 BC, 27 BC)
 - forum_boarium has a casa:tile lot inside it at (-398, 434), 9.4 m deep (264 BC)
-- forum_boarium has a casa:tile lot inside it at (-400, 422), 18.9 m deep (133 BC)
 - forum_boarium has a casa:tile lot inside it at (-406, 423), 15.2 m deep (264 BC)
 - forum_boarium has a casa:tile lot inside it at (-409, 433), 9.8 m deep (264 BC)
-- forum_boarium has a domus lot inside it at (-395, 448), 5.2 m deep (27 BC)
-- forum_boarium has a domus lot inside it at (-417, 357), 2.8 m deep (27 BC, 44 BC)
+- forum_boarium has a domus lot inside it at (-395, 448), 5.7 m deep (27 BC)
+- forum_boarium has a domus lot inside it at (-425, 385), 2.3 m deep (27 BC, 44 BC)
+- forum_boarium has a insula:gable:3:0:1:n lot inside it at (-402, 439), 4.6 m deep (44 BC)
 - forum_boarium has a insula:gable:3:1:1:n lot inside it at (-321, 394), 8.1 m deep (133 BC, 27 BC, 44 BC)
 - forum_boarium has a insula:gable:3:1:1:n lot inside it at (-322, 400), 7.1 m deep (133 BC, 27 BC, 44 BC)
-- forum_boarium has a insula:gable:4:0:0:n lot inside it at (-388, 434), 12.4 m deep (27 BC, 44 BC)
-- forum_boarium has a insula:gable:4:0:0:n lot inside it at (-389, 427), 18.5 m deep (27 BC, 44 BC)
+- forum_boarium has a insula:gable:4:0:0:n lot inside it at (-388, 434), 12.4 m deep (133 BC, 44 BC)
+- forum_boarium has a insula:gable:4:0:0:n lot inside it at (-389, 427), 18.5 m deep (133 BC, 27 BC, 44 BC)
 - forum_boarium has a insula:gable:4:1:0:n lot inside it at (-369, 386), 16.3 m deep (133 BC, 27 BC, 44 BC)
 - forum_boarium has a insula:gable:4:1:0:n lot inside it at (-370, 380), 9.6 m deep (133 BC, 27 BC, 44 BC)
+- forum_boarium has a insula:gable:4:1:1:n lot inside it at (-402, 439), 4.0 m deep (133 BC)
 - forum_boarium has a insula:gable:5:0:1:n lot inside it at (-369, 393), 23.2 m deep (133 BC, 27 BC, 44 BC)
 - forum_boarium has a insula:gable:5:0:1:n lot inside it at (-369, 400), 29.8 m deep (133 BC, 27 BC, 44 BC)
-- forum_boarium has a insula:gable:5:0:1:n lot inside it at (-412, 373), 2.6 m deep (27 BC, 44 BC)
 - forum_boarium has a insula:hip:3:0:0:n lot inside it at (-352, 383), 11.7 m deep (133 BC, 27 BC, 44 BC)
 - forum_boarium has a insula:hip:3:0:0:n lot inside it at (-358, 383), 12.6 m deep (133 BC, 27 BC, 44 BC)
-- forum_boarium has a insula:hip:3:0:1 lot inside it at (-384, 374), 8.5 m deep (44 BC)
-- forum_boarium has a insula:hip:3:1:1 lot inside it at (-383, 371), 5.3 m deep (133 BC)
+- forum_boarium has a insula:stepped:4:1:1 lot inside it at (-410, 369), 2.8 m deep (133 BC)
+- forum_boarium has a insula:stepped:5:2:0 lot inside it at (-411, 371), 2.8 m deep (27 BC, 44 BC)
 - forum_boarium has a taberna:0 lot inside it at (-395, 380), 11.9 m deep (133 BC, 27 BC, 44 BC)
 - forum_boarium has a taberna:0 lot inside it at (-397, 387), 15.2 m deep (133 BC, 27 BC, 44 BC)
 - forum_boarium has a taberna:0 lot inside it at (-411, 436), 4.5 m deep (133 BC, 27 BC, 44 BC)
@@ -1253,46 +1245,52 @@ The repository has no modern elevation model; the ground is built from `topograp
 - forum_boarium has a workshop:0 lot inside it at (-341, 383), 11.4 m deep (133 BC, 264 BC, 27 BC, 44 BC)
 - forum_boarium has a workshop:0 lot inside it at (-341, 431), 21.4 m deep (133 BC, 264 BC, 27 BC, 390 BC, 44 BC)
 - forum_boarium has a workshop:0 lot inside it at (-342, 411), 26.1 m deep (133 BC, 264 BC, 27 BC, 390 BC, 44 BC)
-- forum_boarium has a workshop:0 lot inside it at (-385, 374), 8.8 m deep (27 BC)
-- forum_boarium has a workshop:0 lot inside it at (-400, 411), 19.3 m deep (44 BC)
+- forum_boarium has a workshop:0 lot inside it at (-385, 373), 8.4 m deep (27 BC)
+- forum_boarium has a workshop:0 lot inside it at (-401, 411), 18.7 m deep (133 BC)
+- forum_boarium has a workshop:0 lot inside it at (-405, 427), 18.4 m deep (44 BC)
 - forum_boarium has a workshop:0 lot inside it at (-413, 384), 2.3 m deep (264 BC)
 - forum_boarium has a workshop:0 lot inside it at (-415, 394), 1.4 m deep (390 BC, 509 BC)
-- forum_boarium has a workshop:0 lot inside it at (-417, 397), 1.1 m deep (27 BC, 44 BC)
 - forum_boarium has a workshop:1 lot inside it at (-322, 412), 6.1 m deep (133 BC, 264 BC, 27 BC, 390 BC, 44 BC)
 - forum_boarium has a workshop:1 lot inside it at (-323, 431), 3.5 m deep (264 BC, 390 BC)
 - forum_boarium has a workshop:1 lot inside it at (-341, 444), 13.1 m deep (133 BC, 264 BC, 27 BC, 44 BC)
 - forum_boarium has a workshop:1 lot inside it at (-368, 443), 9.3 m deep (264 BC)
-- forum_boarium has a workshop:1 lot inside it at (-405, 425), 17.7 m deep (27 BC)
-- forum_boarium has a workshop:1 lot inside it at (-405, 425), 18.2 m deep (44 BC)
-- forum_boarium has a workshop:1 lot inside it at (-409, 364), 2.8 m deep (133 BC)
+- forum_boarium has a workshop:1 lot inside it at (-405, 424), 17.7 m deep (27 BC)
+- forum_boarium has a workshop:1 lot inside it at (-405, 426), 17.2 m deep (133 BC)
 - forum_boarium has a workshop:1 lot inside it at (-410, 369), 2.8 m deep (264 BC)
-- forum_boarium has a workshop:1 lot inside it at (-411, 377), 2.7 m deep (133 BC)
 - forum_boarium has a workshop:1 lot inside it at (-412, 378), 2.8 m deep (390 BC, 509 BC)
 - forum_boarium has a workshop:2 lot inside it at (-342, 397), 24.5 m deep (133 BC, 264 BC, 27 BC, 44 BC)
 - forum_boarium has a workshop:2 lot inside it at (-355, 397), 27.3 m deep (133 BC, 264 BC, 27 BC, 44 BC)
 - forum_boarium has a workshop:2 lot inside it at (-355, 410), 39.2 m deep (133 BC, 264 BC, 27 BC, 44 BC)
 - forum_boarium has a workshop:2 lot inside it at (-355, 444), 11.5 m deep (264 BC)
+- forum_boarium has a workshop:2 lot inside it at (-383, 367), 1.7 m deep (133 BC)
+- forum_boarium has a workshop:2 lot inside it at (-386, 377), 11.7 m deep (44 BC)
+- forum_boarium has a workshop:2 lot inside it at (-386, 380), 15.0 m deep (133 BC)
 - forum_boarium has a workshop:2 lot inside it at (-386, 383), 18.4 m deep (264 BC)
-- forum_boarium has a workshop:2 lot inside it at (-388, 445), 5.2 m deep (133 BC, 264 BC, 390 BC, 44 BC)
+- forum_boarium has a workshop:2 lot inside it at (-388, 445), 5.2 m deep (264 BC, 390 BC, 44 BC)
 - forum_boarium has a workshop:2 lot inside it at (-400, 410), 19.1 m deep (27 BC)
-- forum_boarium has a workshop:2 lot inside it at (-400, 411), 19.8 m deep (133 BC)
 - forum_boarium has a workshop:2 lot inside it at (-400, 412), 21.1 m deep (264 BC)
-- forum_boarium has a workshop:2 lot inside it at (-401, 434), 13.8 m deep (133 BC)
-- forum_boarium has a workshop:2 lot inside it at (-404, 441), 5.9 m deep (44 BC)
-- forum_boarium has a workshop:2 lot inside it at (-413, 383), 2.3 m deep (27 BC, 44 BC)
-- forum_boarium has a workshop:2 lot inside it at (-415, 388), 1.8 m deep (133 BC)
+- forum_boarium has a workshop:2 lot inside it at (-401, 412), 19.2 m deep (44 BC)
+- forum_boarium has a workshop:2 lot inside it at (-417, 396), 1.1 m deep (133 BC)
 - forum_holitorium has a casa:tile lot inside it at (-462, 130), 17.1 m deep (264 BC)
 - forum_holitorium has a casa:tile lot inside it at (-470, 136), 18.7 m deep (264 BC)
-- forum_holitorium has a domus lot inside it at (-400, 172), 17.4 m deep (133 BC)
+- forum_holitorium has a insula:gable:4:0:0:n lot inside it at (-477, 125), 11.7 m deep (133 BC)
+- forum_holitorium has a insula:gable:4:0:0:n lot inside it at (-479, 132), 11.9 m deep (133 BC)
 - forum_holitorium has a insula:hip:2:0:1 lot inside it at (-489, 143), 5.3 m deep (264 BC)
+- forum_holitorium has a insula:hip:3:2:1:n lot inside it at (-463, 133), 23.3 m deep (133 BC)
+- forum_holitorium has a insula:hip:3:2:1:n lot inside it at (-470, 131), 17.7 m deep (133 BC)
 - forum_holitorium has a insula:hip:4:0:1:n lot inside it at (-486, 144), 7.0 m deep (133 BC)
-- forum_holitorium has a workshop:1 lot inside it at (-409, 181), 3.0 m deep (27 BC, 44 BC)
+- forum_holitorium has a insula:hip:5:0:0:n lot inside it at (-408, 163), 17.8 m deep (133 BC)
+- forum_holitorium has a insula:hip:5:0:0:n lot inside it at (-409, 170), 10.8 m deep (133 BC)
+- forum_holitorium has a insula:stepped:3:2:0 lot inside it at (-392, 174), 1.2 m deep (27 BC, 44 BC)
+- forum_holitorium has a workshop:1 lot inside it at (-409, 181), 3.0 m deep (133 BC, 27 BC, 44 BC)
 - forum_holitorium has a workshop:1 lot inside it at (-457, 150), 15.7 m deep (264 BC)
 - forum_iulium has a casa:shingle lot inside it at (32, -135), 3.0 m deep (27 BC, 44 BC)
 - forum_iulium has a casa:tile lot inside it at (31, -128), 8.0 m deep (27 BC, 44 BC)
 - forum_iulium has a insula:gable:3:2:0:n lot inside it at (-38, -209), 11.6 m deep (27 BC, 44 BC)
 - forum_iulium has a insula:gable:4:0:0:n lot inside it at (32, -131), 8.2 m deep (27 BC, 44 BC)
 - forum_iulium has a taberna:0 lot inside it at (48, -106), 8.2 m deep (27 BC, 44 BC)
+- forum_iulium has a taberna:3 lot inside it at (-79, -148), 1.4 m deep (27 BC, 44 BC)
+- forum_iulium has a taberna:4 lot inside it at (-85, -156), 2.2 m deep (27 BC, 44 BC)
 - forum_iulium has a taberna:5 lot inside it at (35, -109), 16.5 m deep (27 BC, 44 BC)
 - forum_iulium has a taberna:5 lot inside it at (39, -118), 7.4 m deep (27 BC, 44 BC)
 - pantheon_agrippae has a casa:shingle lot inside it at (-687, -661), 6.5 m deep (27 BC)
@@ -1307,6 +1305,8 @@ The repository has no modern elevation model; the ground is built from `topograp
 - via_aurelia insula:hip:3:0:0:n lot at (-1068, 433) 5.0 m into the carriageway (133 BC, 27 BC, 44 BC)
 - via_sacra casa:shingle lot at (257, 172) 3.5 m into the carriageway (133 BC, 264 BC, 509 BC)
 - via_sacra insula:gable:4:0:1:n lot at (268, 209) 2.2 m into the carriageway (133 BC, 27 BC, 44 BC)
+- via_velabrum domus lot at (-293, 442) 10.8 m into the carriageway (27 BC, 44 BC)
+- vicus_iugarius domus lot at (-158, 77) 6.9 m into the carriageway (27 BC, 44 BC)
 - vicus_longus casa:tile lot at (223, -285) 2.0 m into the carriageway (27 BC, 44 BC)
 - vicus_longus insula:hip:5:0:1:n lot at (872, -1207) 1.4 m into the carriageway (27 BC, 44 BC)
 - vicus_patricius casa:shingle lot at (418, -383) 1.2 m into the carriageway (264 BC)
@@ -1314,18 +1314,11 @@ The repository has no modern elevation model; the ground is built from `topograp
 **monuments standing in the river**
 
 - porticus_aemilia 3 of 25 footprint points in the water (133 BC, 27 BC, 44 BC)
+- theatrum_marcelli 1 of 25 footprint points in the water (27 BC, 44 BC)
 
 **streets passing through a monument**
 
-- aedes_castoris passes through street vicus_tuscus at (17, 67) (133 BC, 264 BC, 27 BC, 390 BC, 44 BC)
-- aedes_saturni passes through street vicus_iugarius at (-91, 31) (133 BC, 264 BC, 27 BC, 390 BC, 44 BC)
-- aedes_veneris_erycinae_collina passes through street via_salaria at (946, -1630) (133 BC, 27 BC, 44 BC)
-- aedes_veneris_genetricis passes through street clivus_argentarius at (-40, -169) (27 BC, 44 BC)
-- ara_maxima_herculis passes through street via_velabrum at (-232, 420) (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC)
-- domus_ciceronis passes through street nova_via at (69, 170) (27 BC, 44 BC)
-- rostra_augusti passes through street clivus_capitolinus at (-62, -4) (27 BC, 44 BC)
-- rostra_augusti passes through street via_sacra at (-55, -22) (27 BC, 44 BC)
-- theatrum_marcelli passes through street via_flumentana at (-401, 16) (27 BC, 44 BC)
+- basilica_sempronia passes through street vicus_tuscus at (2, 48) (133 BC)
 
 ## 4. Time
 
@@ -1337,15 +1330,13 @@ Monuments drawn in each standard year (`monuments.gd` `state_at`, ported to Pyth
 | 390 BC | 46 | 0 | 0 | 46 | 0 |
 | 264 BC | 80 | 0 | 0 | 80 | 0 |
 | 133 BC | 112 | 0 | 0 | 112 | 0 |
-| 44 BC | 131 | 3 | 1 | 126 | 1 |
-| 27 BC | 138 | 2 | 2 | 134 | 0 |
+| 44 BC | 130 | 3 | 1 | 125 | 1 |
+| 27 BC | 137 | 2 | 2 | 133 | 0 |
 | AD 80 | 163 | 0 | 1 | 162 | 0 |
 | AD 120 | 179 | 0 | 1 | 178 | 0 |
 
-### Date issues (25)
+### Date issues (23)
 
-- `aedes_pietatis`: AD 80: engine standing, drawn absent
-- `aedes_pietatis`: AD 120: engine standing, drawn absent
 - `arcus_claudii_lata`: event in 46 before it was built (52): a different arch of the Aqua Virgo, in Via del Nazareno, was restored monumental
 - `basilica_porcia`: 44 BC: engine burnt, drawn absent
 - `basilica_porcia`: 27 BC: engine burnt, drawn absent

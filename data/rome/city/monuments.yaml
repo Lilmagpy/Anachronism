@@ -103,8 +103,8 @@ monuments:
   english: Temple of Vediovis
   type: temple
   regio: 8
-  lat: 41.8928
-  lon: 12.4836
+  lat: 41.892916
+  lon: 12.483224
   precision: exact
   location: Capitol, in the saddle (Asylum) between the Arx and the Capitolium; remains under the Tabularium side, near Piazza del Campidoglio
   built: {year: -192, certainty: probable, by: "vowed by L. Furius Purpurio as praetor in the Gallic war of 200 (Livy 31.21.12, emended text); dedicated by the duumvir Q. Marcius Ralla in 192 (Livy 35.41.8, emended text); P&A treats the identification as unsettled"}
@@ -118,6 +118,8 @@ monuments:
   construction: {begun: -194, completed: -192}  # work years; see geometry_source
   geometry_source: "form assumed from date and type, native kit size (no measured plan); Platner-Ashby s.v. Vediovis, Aedes (cella wider than deep, unusual orientation: not read, not reproduced)"
   geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Veiovis, Aedes (read): inter duos lucos, in the saddle between the two summits (Vitr. 4.8.4; Gell. 5.12.5); placed 35 m behind (west-north-west of) the Tabularium, which faces the Forum from the saddle's east edge. Pleiades 243075423 gives only an imagery point good to 2 km, which coincided with the Tabularium's centre, so the two were drawn inside each other"
 - id: aedes_mentis
   latin: Aedes Mentis
   english: Temple of Mens
@@ -163,8 +165,8 @@ monuments:
   english: Temple of Venus Erycina outside the Colline Gate
   type: temple
   regio: 6
-  lat: 41.9072
-  lon: 12.4968
+  lat: 41.9093
+  lon: 12.498505
   precision: rough
   location: "outside the Porta Collina, probably on the west side of the Via Salaria near the modern Via Belisario (P&A)"
   built: {year: -181, certainty: certain, by: "vowed by the consul L. Porcius Licinus in the war with the Ligurians in 184; dedicated by his son L. Porcius Licinus as duumvir in 181 (Livy 40.34.4)"}
@@ -177,6 +179,8 @@ monuments:
   construction: {begun: -184, completed: -181}  # work years; see geometry_source
   geometry_source: "form assumed from date and type, native kit size (no measured plan); Livy 40.34.4"
   geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Venus Erucina, Aedes (read): outside the Porta Collina, probably on the west side of the Via Salaria near the modern Via Belisario; placed there. The earlier point stood on the road 230 m short of it"
 - id: aedes_fidei
   latin: Aedes Fidei
   english: Temple of Fides (Fides Publica)
@@ -533,8 +537,8 @@ monuments:
   english: Basilica Opimia
   type: basilica
   regio: 8
-  lat: 41.8921
-  lon: 12.4863
+  lat: 41.89322
+  lon: 12.48431
   precision: rough
   location: Forum, beside the temple of Concord
   built: {year: -121, certainty: probable, by: "probably built by the consul L. Opimius in 121 when he restored the temple of Concord (Varro LL 5.156; Cic. Sest. 140; P&A)"}
@@ -543,11 +547,12 @@ monuments:
   pleiades: 913111964
   verified: platner-ashby
   model: basilica
-  offset_m: [-128, 139]  # east, north metres added to lat/lon; unverified: placed beside the temple of Concord (Platner-Ashby s.v. Basilica Opimia); the exact spot is a guess
-  bearing_deg: 196  # unverified
-  footprint_m: {length: 40, width: 20}  # unverified
+  bearing_deg: 106  # unverified
+  footprint_m: {length: 15, width: 25}  # unverified: size unknown; reduced so that it fits between the temple of Concord and the Tullianum
   geometry_source: "Basilica Opimia beside the temple of Concord (Platner-Ashby s.v. Basilica Opimia); size unknown"
   geometry_unverified: [bearing_deg, footprint_m, height_m]
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Basilica Opimia: just north of the temple of Concord, between it and the Tullianum (Varro LL 5.156); placed there. The earlier point lay across the Clivus Argentarius"
 - id: basilica_iulia
   latin: Basilica Iulia
   english: Basilica Iulia
@@ -1038,8 +1043,8 @@ monuments:
   english: Great Altar of Hercules
   type: altar
   regio: 11
-  lat: 41.8887
-  lon: 12.4825
+  lat: 41.888127
+  lon: 12.48157
   precision: approx
   location: Forum Boarium, near the Circus Maximus end; under S. Maria in Cosmedin
   built: {year: null, certainty: traditional, by: "Evander, according to tradition (Livy 1.7.3-15)"}
@@ -1055,6 +1060,8 @@ monuments:
   height_m: 1.5  # unverified
   geometry_source: "Platner-Ashby s.v. Ara Maxima Herculis (altar of Hercules, in the Forum Boarium); size assumed"
   geometry_unverified: [bearing_deg, footprint_m, height_m]
+  location_confidence: medium
+  location_source: "F2: under S. Maria in Cosmedin (the record's own location; Wikipedia it: 41.888123, 12.481567), in the Forum Boarium behind the carceres of the Circus Maximus (Platner-Ashby s.v. Herculis Invicti Ara Maxima, read: post ianuas circi Maximi, iuxta circum). It stood before 100 m north-east of the church, across the street through the Velabrum"
 - id: aedes_fortunae_matris_matutae
   latin: Aedes Fortunae et Matris Matutae (Sant'Omobono)
   english: Temples of Fortuna and Mater Matuta
@@ -1169,8 +1176,8 @@ monuments:
   english: Temple of Janus (Forum Holitorium)
   type: temple
   regio: 9
-  lat: 41.8911
-  lon: 12.4799
+  lat: 41.890957
+  lon: 12.480012
   precision: approx
   location: Forum Holitorium, next to Spes and Juno Sospita
   built: {year: -260, certainty: probable, by: "C. Duilius, after Mylae (Tac. Ann. 2.49); dedication day 17 August (fasti)"}
@@ -1179,17 +1186,19 @@ monuments:
   pleiades: null
   verified: platner-ashby
   model: temple_tetrastyle_ionic_travertine
-  bearing_deg: 304
+  bearing_deg: 251  # F2: the axis of the church of S. Nicola in Carcere built on the middle temple (Pleiades 872350435 outline, 71/251 degrees), facing the Forum Holitorium to the west
   footprint_m: {length: 22, width: 12}  # unverified
   geometry_source: "Platner-Ashby s.v. Aedes Iani: three temples side by side with the same orientation facing the Forum Holitorium"
   geometry_unverified: [footprint_m, height_m]
+  location_confidence: medium
+  location_source: "F2: the southern of the three temples side by side with the same orientation facing the Forum Holitorium (Platner-Ashby s.v. Ianus, Aedes, and s.v. Spes, Aedes: Spes the middle and largest); the church of S. Nicola in Carcere stands on the middle one (Pleiades 872350435, OpenStreetMap outline, centre and axis); 14 m between centres. Which god had the northern and which the southern temple is disputed; the dataset's earlier order is kept"
 - id: aedes_spei
   latin: Aedes Spei
   english: Temple of Hope
   type: temple
   regio: 9
-  lat: 41.891
-  lon: 12.4798
+  lat: 41.891076
+  lon: 12.479957
   precision: approx
   location: Forum Holitorium, by the Tiber
   built: {year: -254, certainty: probable, by: "A. Atilius Calatinus in the First Punic War, as consul 258 or 254 (Cic. Leg. 2.28; Tac. Ann. 2.49); dedication day 1 August"}
@@ -1202,17 +1211,19 @@ monuments:
   pleiades: null
   verified: platner-ashby
   model: temple_tetrastyle_ionic_travertine
-  bearing_deg: 315  # unverified
+  bearing_deg: 251  # F2: the axis of the church of S. Nicola in Carcere built on the middle temple (Pleiades 872350435 outline, 71/251 degrees), facing the Forum Holitorium to the west
   footprint_m: {length: 30, width: 10}
   geometry_source: "Platner-Ashby s.v. Spes, Aedes (about 30 m long and 10 wide, Ionic amphiprostyle hexastyle, twelve or thirteen steps; middle and largest of the three)"
   geometry_unverified: [bearing_deg]
+  location_confidence: medium
+  location_source: "F2: the middle of the three temples side by side with the same orientation facing the Forum Holitorium (Platner-Ashby s.v. Ianus, Aedes, and s.v. Spes, Aedes: Spes the middle and largest); the church of S. Nicola in Carcere stands on the middle one (Pleiades 872350435, OpenStreetMap outline, centre and axis); 14 m between centres. Which god had the northern and which the southern temple is disputed; the dataset's earlier order is kept"
 - id: aedes_iunonis_sospitae
   latin: Aedes Iunonis Sospitae
   english: Temple of Juno Sospita
   type: temple
   regio: 9
-  lat: 41.8913
-  lon: 12.4797
+  lat: 41.891196
+  lon: 12.479902
   precision: approx
   location: Forum Holitorium
   built: {year: -194, certainty: certain, by: "vowed by C. Cornelius Cethegus 197 against the Insubres; dedicated 194 (Livy 32.30.10, 34.53.3)"}
@@ -1223,11 +1234,13 @@ monuments:
   pleiades: null
   verified: platner-ashby
   model: temple_tetrastyle_ionic_travertine
-  bearing_deg: 318
+  bearing_deg: 251  # F2: the axis of the church of S. Nicola in Carcere built on the middle temple (Pleiades 872350435 outline, 71/251 degrees), facing the Forum Holitorium to the west
   footprint_m: {length: 22, width: 12}  # unverified
   construction: {begun: -197, completed: -194}  # work years; see geometry_source
   geometry_source: "Platner-Ashby s.v. Aedes Iani (three temples same orientation facing the Forum Holitorium); Juno Sospita by Livy 34.53.3"
   geometry_unverified: [footprint_m, height_m]
+  location_confidence: medium
+  location_source: "F2: the northern of the three temples side by side with the same orientation facing the Forum Holitorium (Platner-Ashby s.v. Ianus, Aedes, and s.v. Spes, Aedes: Spes the middle and largest); the church of S. Nicola in Carcere stands on the middle one (Pleiades 872350435, OpenStreetMap outline, centre and axis); 14 m between centres. Which god had the northern and which the southern temple is disputed; the dataset's earlier order is kept"
 - id: aedes_pietatis
   latin: Aedes Pietatis
   english: Temple of Pietas
@@ -1247,9 +1260,10 @@ monuments:
   model: temple_tetrastyle_ionic
   bearing_deg: 20  # unverified
   footprint_m: {length: 22, width: 12}  # unverified
-  phases: [{from: -13, state: gone}]
   geometry_source: "Platner-Ashby s.v. Pietas, Aedes (in the Forum Holitorium, site of the later Theatre of Marcellus); size assumed"
   geometry_unverified: [bearing_deg, footprint_m, height_m]
+  ended: {year: -44, what: "destroyed by Caesar when he began the preparations for the theatre of Marcellus (Platner-Ashby s.v. Pietas, Aedes, read; Pliny NH 7.121; Dio 43.49.3 # unverified)"}
+  location_source: "F2: Platner-Ashby s.v. Pietas, Aedes (read): at the east end of the area later occupied by the theatre of Marcellus"
 - id: aedes_apollinis_medici
   latin: Aedes Apollinis (Medici)
   english: Temple of Apollo (Medicus, later Sosianus)
@@ -1318,8 +1332,8 @@ monuments:
   english: Portico of Octavia (replacing the Portico of Metellus)
   type: portico
   regio: 9
-  lat: 41.8925
-  lon: 12.4786
+  lat: 41.892941
+  lon: 12.479132
   precision: exact
   location: Campus Martius, between the Theatre of Marcellus and the Circus Flaminius
   built: {year: -146, certainty: probable, by: "Porticus Metelli built by Q. Caecilius Metellus Macedonicus after his triumph of 146 (Vell. Pat. 1.11.2-5), enclosing the temples of Jupiter Stator and Juno Regina; replaced by Augustus's Porticus Octaviae after 27 BC (Suet. Aug. 29; Plin. NH 36.42; P&A)"}
@@ -1336,13 +1350,15 @@ monuments:
   height_m: 10  # unverified
   geometry_source: "Platner-Ashby s.v. Porticus Octaviae (rectangle 118 m wide and somewhat longer, double colonnade of granite columns, 28 in a row at the front; main axis NE-SW, entrance in the middle of the SW side; pronaos columns 8.6 m); the Metellus portico of 146 BC enclosed two temples"
   geometry_unverified: [height_m]
+  location_confidence: high
+  location_source: "F2: Pleiades 236573248 maps the propylon, which stood in the middle of the south-west side (Platner-Ashby s.v. Porticus Octaviae, read: main axis NE-SW, entrance in the middle of the SW side); the centre of the 130 m long enclosure is 65 m north-east of it. The earlier point was the propylon itself"
 - id: aedes_iovis_statoris_metelli
   latin: Aedes Iovis Statoris (Metelli)
   english: Temple of Jupiter Stator (Metellus)
   type: temple
   regio: 9
-  lat: 41.8923
-  lon: 12.4793
+  lat: 41.89313
+  lon: 12.479494
   precision: approx
   location: inside the Porticus Metelli
   built: {year: -146, certainty: probable, by: "Q. Caecilius Metellus Macedonicus; marble, architect Hermodorus of Salamis (Vell. 1.11.3-5)"}
@@ -1355,13 +1371,15 @@ monuments:
   footprint_m: {length: 35, width: 20}  # unverified
   geometry_source: "Vell. Pat. 1.11.3-5 (first all-marble temple, Metellus 146 BC); in the middle of the porticus (Platner-Ashby s.v. Porticus Metelli); size assumed"
   geometry_unverified: [bearing_deg, footprint_m]
+  location_confidence: medium
+  location_source: "F2: Platner-Ashby s.v. Iuppiter Stator, Aedes (in circo, read): its exact site is known, beneath the church of S. Maria in Campitelli (Wikipedia it: 41.893127, 12.479498); inside the porticus Metelli / Octaviae (Vitr. 3.2.5). Moved 95 m north"
 - id: aedes_iunonis_reginae_circus
   latin: Aedes Iunonis Reginae (Circo Flaminio)
   english: Temple of Juno Regina (Circus Flaminius)
   type: temple
   regio: 9
-  lat: 41.8924
-  lon: 12.4789
+  lat: 41.89313
+  lon: 12.479096
   precision: approx
   location: in the Porticus Metelli / Octavia
   built: {year: -179, certainty: certain, by: "vowed by M. Aemilius Lepidus 187 against the Ligurians, dedicated 179 (Livy 39.2.11, 40.52.1-2)"}
@@ -1375,6 +1393,8 @@ monuments:
   construction: {begun: -187, completed: -179}  # work years; see geometry_source
   geometry_source: "Vell. Pat. 1.11.3 (Juno Regina marble temple in the Metellus portico); size assumed"
   geometry_unverified: [bearing_deg, footprint_m, height_m]
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Iuppiter Stator, Aedes (read): the temple of Juno was just west of Jupiter's, on the opposite side of the Via della Tribuna di Campitelli; placed 33 m west of it, inside the porticus. Platner-Ashby also places three standing columns of Juno in Via di S. Angelo in Pescheria 11, further south-west: the two statements disagree"
 - id: aedes_dianae_circus_flaminius
   latin: Aedes Dianae (Circo Flaminio)
   english: Temple of Diana (Circus Flaminius)
@@ -1619,8 +1639,8 @@ monuments:
   english: House of Cicero on the Palatine
   type: house
   regio: 10
-  lat: 41.8908
-  lon: 12.4860
+  lat: 41.89043
+  lon: 12.486048
   precision: rough
   location: Palatine, north-west corner, overlooking the Forum, near the house of Catulus
   built: {year: -62, certainty: certain, by: "bought from M. Licinius Crassus for HS 3,500,000 in 62 (Cic. Fam. 5.6.2; Gell. 12.12; Plut. Cic. 8); it had stood on the site of the house of the tribune M. Livius Drusus (P&A)"}
@@ -1638,6 +1658,8 @@ monuments:
   phases: [{from: -58, state: gone}, {from: -57, state: building}, {from: -55, state: standing}]
   geometry_source: "form assumed from date and type, native kit size (no measured plan); Cic. Dom. 100; Plut. Cic. 33"
   geometry_unverified: [bearing_deg, footprint_m, height_m]
+  location_confidence: low
+  location_source: "F2: on the Palatine overlooking the Forum, near the house of Catulus (Cic. Dom. 100, 116; Plut. Cic. 33 # unverified); no remains. Moved 40 m south onto the hill: the earlier point straddled the north slope (27 m of fall under its footprint) and the Nova Via"
 - id: domus_hortensii_augusti
   latin: Domus Hortensii (Domus Augusti)
   english: House of Hortensius, later of Augustus
@@ -1653,8 +1675,8 @@ monuments:
   pleiades: 250568480
   verified: platner-ashby+pleiades
   model: domus
-  bearing_deg: 16  # unverified
-  footprint_m: {length: 45, width: 30}  # unverified
+  bearing_deg: 139  # F2: long axis of the excavated house (Pleiades 250568480 outline, 38.5 x 31.2 m at 139 degrees)
+  footprint_m: {length: 38.5, width: 31.2}  # F2: the excavated house (Pleiades 250568480 outline)
   height_m: 9  # unverified
   geometry_source: "form assumed from date and type, native kit size (no measured plan); Suet. Aug. 72"
   geometry_unverified: [bearing_deg, footprint_m, height_m]
@@ -1844,8 +1866,8 @@ monuments:
   english: Temple of Venus Obsequens
   type: temple
   regio: 11
-  lat: 41.8868
-  lon: 12.4838
+  lat: 41.887517
+  lon: 12.48474
   precision: rough
   location: by the Circus Maximus, at the foot of the Aventine
   built: {year: -295, certainty: probable, by: "begun by Q. Fabius Maximus Gurges as aedile in 295 from fines on adulteresses; dedicated after the end of the Third Samnite War (Livy 10.31.9; Serv. Aen. 1.720); dedication day 19 August"}
@@ -1857,13 +1879,15 @@ monuments:
   bearing_deg: 126  # unverified
   geometry_source: "form assumed from date and type, native kit size (no measured plan); near the Circus (Livy 10.31.9)"
   geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+  location_confidence: low
+  location_source: "F2: near the Circus Maximus at the foot of the Aventine (Livy 10.31.9); placed just outside the stands on the Aventine side, where it stood before inside the arena"
 - id: aedes_iuventatis
   latin: Aedes Iuventatis
   english: Temple of Juventas
   type: temple
   regio: 11
-  lat: 41.8862
-  lon: 12.4842
+  lat: 41.888179
+  lon: 12.483786
   precision: rough
   location: Circus Maximus, near the Carceres
   built: {year: -191, certainty: certain, by: "vowed by the consul M. Livius Salinator at the Metaurus (207); contracted by him as censor in 204; dedicated in 191 by C. Licinius Lucullus, duumvir (Livy 36.36.5-6)"}
@@ -1875,6 +1899,8 @@ monuments:
   bearing_deg: 98  # unverified
   geometry_source: "form assumed from date and type, native kit size (no measured plan); Platner-Ashby s.v. Iuventas (in the Circus Maximus, beside the carceres)"
   geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+  location_confidence: low
+  location_source: "F2: in the Circus Maximus (Livy 36.36.5-6), beside the carceres per the record's location; placed just outside the stands at the carceres end on the Aventine side. It stood before inside the stands"
 - id: circus_maximus
   latin: Circus Maximus
   english: Circus Maximus
@@ -2271,21 +2297,23 @@ monuments:
   english: Theatre of Marcellus
   type: theatre
   regio: 9
-  lat: 41.8919
-  lon: 12.4796
+  lat: 41.891687
+  lon: 12.479283
   precision: exact
   location: between the Capitol and the Tiber, Forum Holitorium
   built: {year: -13, certainty: certain, by: "begun by Julius Caesar, who cleared the site (Suet. Iul. 44); built by Augustus, dedicated 13 or 11 BC (Dio 43.49.2, 54.26.1)"}
   sources: ["Suet. Iul. 44", "Dio 43.49.2", "Dio 54.26.1", "Platner-Ashby s.v. Theatrum Marcelli"]
   model: theatre_stone
   bearing_deg: 202.5  # unverified: Platner-Ashby: stage toward the river, main axis NNE-SSW; front = scaena side (SSW)
-  footprint_m: {radius: 75}
+  footprint_m: {radius: 61}  # F2: the surviving outer arcades lie on a circle of 60 m radius (fitted to the OpenStreetMap outline in Pleiades 300583267); Platner-Ashby gives the diameter as about 150 m, which the remains do not bear out
   height_m: 32.6  # unverified
   construction: {begun: -44, completed: -13}  # work years; see geometry_source
   geometry_source: "Platner-Ashby s.v. Theatrum Marcelli (diameter about 150 m, scaena about 80-90 m long and 20 deep, apsidal halls 25 x 15 m at its ends; stage toward the river, main axis NNE-SSW; thirteen piers 3 m wide and 2 deep; three open arcades, Doric then Ionic)"
   geometry_note: "bearing: scaena toward the river (west-southwest), axis NNE-SSW so the open side faces NNE; the dataset radius 65 comes from the 130 m published diameter, Platner says 150 m"
   geometry_unverified: [height_m]
   pleiades: 300583267
+  location_confidence: high
+  location_source: "F2: centre of the circle fitted to the surviving outer arcades (OpenStreetMap outline of the visible remains, Pleiades 300583267): radius 60 m. The earlier point was the centre of the remains' bounding box, 35 m north-east of the orchestra"
 - id: amphitheatrum_tauri
   latin: Amphitheatrum Statili Tauri
   english: Amphitheatre of Statilius Taurus
@@ -2525,8 +2553,8 @@ monuments:
   english: Temple of Venus Verticordia
   type: temple
   regio: 11
-  lat: 41.8862
-  lon: 12.4845
+  lat: 41.886967
+  lon: 12.485504
   precision: rough
   location: Circus Maximus area (Murcia valley)
   built: {year: -114, certainty: probable, by: "after the Vestal scandal, on Sibylline advice (Val. Max. 8.15.12; Ovid Fasti 4.157-160)"}
@@ -2535,13 +2563,15 @@ monuments:
   bearing_deg: 103  # unverified
   geometry_source: "form assumed from date and type, native kit size (no measured plan)"
   geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+  location_confidence: low
+  location_source: "F2: near the Circus Maximus in the Vallis Murcia (record's location); placed just outside the stands on the Aventine side, where it stood before inside the arena"
 - id: aedes_dei_consi
   latin: Ara Consi
   english: Altar of Consus
   type: altar
   regio: 11
-  lat: 41.8869
-  lon: 12.4851
+  lat: 41.886854
+  lon: 12.484167
   precision: rough
   location: underground in the Circus Maximus
   built: {year: null, certainty: traditional, by: "Romulus (Livy 1.9.6; Dion. Hal. 2.31)"}
@@ -2552,6 +2582,8 @@ monuments:
   height_m: 1.2  # unverified
   geometry_source: "Ara Consi (underground altar in the Circus, uncovered only on 21 Aug and 15 Dec; Platner-Ashby s.v. Aedes Consi)"
   geometry_unverified: [bearing_deg, footprint_m, height_m]
+  location_confidence: low
+  location_source: "F2: the underground altar of Consus was in the arena of the Circus Maximus, ad primas metas (Platner-Ashby s.v. Consus, Ara # unverified passage; Tertullian, De spect. 5 as quoted there); placed beside the spina at the turning post nearer the carceres. It stood before in the seating on the Palatine side"
 - id: macellum
   latin: Macellum
   english: Macellum (market)

@@ -11,8 +11,8 @@
   "27 BC": {
    "building": 2,
    "burnt": 2,
-   "standing": 134,
-   "total": 138
+   "standing": 133,
+   "total": 137
   },
   "390 BC": {
    "standing": 46,
@@ -21,9 +21,9 @@
   "44 BC": {
    "building": 3,
    "burnt": 1,
-   "standing": 126,
+   "standing": 125,
    "standing_scaffold": 1,
-   "total": 131
+   "total": 130
   },
   "509 BC": {
    "standing": 38,
@@ -41,14 +41,6 @@
   }
  },
  "dates": [
-  {
-   "id": "aedes_pietatis",
-   "issue": "AD 80: engine standing, drawn absent"
-  },
-  {
-   "id": "aedes_pietatis",
-   "issue": "AD 120: engine standing, drawn absent"
-  },
   {
    "id": "arcus_claudii_lata",
    "issue": "event in 46 before it was built (52): a different arch of the Aqua Virgo, in Via del Nazareno, was restored monumental"
@@ -295,7 +287,7 @@
   {
    "accuracy_m": 20.0,
    "id": "street:vicus_iugarius",
-   "max_m": 112.1,
+   "max_m": 111.9,
    "mean_m": 50.0,
    "pleiades": "889101791",
    "points": 4,
@@ -321,21 +313,21 @@
   },
   {
    "accuracy_m": 20.0,
+   "id": "street:clivus_capitolinus",
+   "max_m": 0.6,
+   "mean_m": 0.3,
+   "pleiades": "152699900",
+   "points": 6,
+   "title": "Clivus Capitolinus"
+  },
+  {
+   "accuracy_m": 20.0,
    "id": "street:argiletum",
    "max_m": 0.5,
    "mean_m": 0.3,
    "pleiades": "451243813",
    "points": 3,
    "title": "Argiletum"
-  },
-  {
-   "accuracy_m": 20.0,
-   "id": "street:clivus_capitolinus",
-   "max_m": 0.4,
-   "mean_m": 0.2,
-   "pleiades": "152699900",
-   "points": 6,
-   "title": "Clivus Capitolinus"
   }
  ],
  "matched": [
@@ -8526,23 +8518,6 @@
    "short_ratio": 2.26
   },
   {
-   "axis_diff": 57.2,
-   "flags": [
-    "axis",
-    "size"
-   ],
-   "id": "domus_hortensii_augusti",
-   "long_ratio": 1.17,
-   "ours_axis": 16.0,
-   "ours_long_m": 45.0,
-   "ours_short_m": 30.0,
-   "outline_axis": 138.8,
-   "outline_long_m": 38.5,
-   "outline_short_m": 31.2,
-   "pleiades": "250568480",
-   "short_ratio": 0.96
-  },
-  {
    "axis_diff": 43.7,
    "flags": [
     "axis",
@@ -8926,15 +8901,15 @@
     "size"
    ],
    "id": "theatrum_marcelli",
-   "long_ratio": 1.93,
+   "long_ratio": 1.57,
    "ours_axis": 22.5,
-   "ours_long_m": 150.0,
-   "ours_short_m": 150.0,
+   "ours_long_m": 122.0,
+   "ours_short_m": 122.0,
    "outline_axis": 144.3,
    "outline_long_m": 77.7,
    "outline_short_m": 30.4,
    "pleiades": "300583267",
-   "short_ratio": 4.93
+   "short_ratio": 4.01
   },
   {
    "axis_diff": 58.2,
@@ -9028,6 +9003,20 @@
    "outline_short_m": 56.6,
    "pleiades": "173078007",
    "short_ratio": 0.87
+  },
+  {
+   "axis_diff": 0.2,
+   "flags": [],
+   "id": "domus_hortensii_augusti",
+   "long_ratio": 1.0,
+   "ours_axis": 139.0,
+   "ours_long_m": 38.5,
+   "ours_short_m": 31.2,
+   "outline_axis": 138.8,
+   "outline_long_m": 38.5,
+   "outline_short_m": 31.2,
+   "pleiades": "250568480",
+   "short_ratio": 1.0
   },
   {
    "axis_diff": 4.8,
@@ -9458,6 +9447,44 @@
    "tolerance_m": 20.0
   },
   {
+   "bearing_to_reference": 225,
+   "distance_m": 65.6,
+   "id": "porticus_octaviae",
+   "ours": [
+    -511.0,
+    -49.0
+   ],
+   "overrides": "exact",
+   "pleiades": "236573248",
+   "reference": [
+    -557.3,
+    -2.6
+   ],
+   "reference_accuracy_m": 20.0,
+   "status": "misplaced",
+   "title": "Porticus Octaviae",
+   "tolerance_m": 20.0
+  },
+  {
+   "bearing_to_reference": 225,
+   "distance_m": 65.6,
+   "id": "porticus_octaviae_empire",
+   "ours": [
+    -511.0,
+    -49.0
+   ],
+   "overrides": "approx",
+   "pleiades": "236573248",
+   "reference": [
+    -557.3,
+    -2.6
+   ],
+   "reference_accuracy_m": 20.0,
+   "status": "misplaced",
+   "title": "Porticus Octaviae",
+   "tolerance_m": 20.0
+  },
+  {
    "bearing_to_reference": 215,
    "distance_m": 50.5,
    "id": "horologium_augusti",
@@ -9493,6 +9520,44 @@
    "reference_accuracy_m": 20.0,
    "status": "misplaced",
    "title": "Pons Cestius",
+   "tolerance_m": 20.0
+  },
+  {
+   "bearing_to_reference": 49,
+   "distance_m": 44.9,
+   "id": "theatrum_marcelli",
+   "ours": [
+    -498.5,
+    90.4
+   ],
+   "overrides": "exact",
+   "pleiades": "300583267",
+   "reference": [
+    -464.7,
+    60.9
+   ],
+   "reference_accuracy_m": 20.0,
+   "status": "misplaced",
+   "title": "Theatrum Marcelli",
+   "tolerance_m": 20.0
+  },
+  {
+   "bearing_to_reference": 49,
+   "distance_m": 44.9,
+   "id": "theatrum_marcelli_empire",
+   "ours": [
+    -498.5,
+    90.4
+   ],
+   "overrides": "exact",
+   "pleiades": "300583267",
+   "reference": [
+    -464.7,
+    60.9
+   ],
+   "reference_accuracy_m": 20.0,
+   "status": "misplaced",
+   "title": "Theatrum Marcelli",
    "tolerance_m": 20.0
   },
   {
@@ -9551,6 +9616,25 @@
    "status": "misplaced",
    "title": "Basilica Ulpia",
    "tolerance_m": 20.0
+  },
+  {
+   "bearing_to_reference": 116,
+   "distance_m": 35.5,
+   "id": "aedes_veiovis",
+   "ours": [
+    -172.0,
+    -46.2
+   ],
+   "overrides": "exact",
+   "pleiades": "243075423",
+   "reference": [
+    -139.9,
+    -30.9
+   ],
+   "reference_accuracy_m": 2000.0,
+   "status": "within reference accuracy",
+   "title": "Temple of Veiovis",
+   "tolerance_m": 10.0
   },
   {
    "bearing_to_reference": 128,
@@ -9721,44 +9805,6 @@
    "reference_accuracy_m": 20.0,
    "status": "ok",
    "title": "Forum Augusti",
-   "tolerance_m": 20.0
-  },
-  {
-   "bearing_to_reference": 53,
-   "distance_m": 9.5,
-   "id": "theatrum_marcelli",
-   "ours": [
-    -472.2,
-    66.7
-   ],
-   "overrides": "exact",
-   "pleiades": "300583267",
-   "reference": [
-    -464.7,
-    60.9
-   ],
-   "reference_accuracy_m": 20.0,
-   "status": "ok",
-   "title": "Theatrum Marcelli",
-   "tolerance_m": 20.0
-  },
-  {
-   "bearing_to_reference": 53,
-   "distance_m": 9.5,
-   "id": "theatrum_marcelli_empire",
-   "ours": [
-    -472.2,
-    66.7
-   ],
-   "overrides": "exact",
-   "pleiades": "300583267",
-   "reference": [
-    -464.7,
-    60.9
-   ],
-   "reference_accuracy_m": 20.0,
-   "status": "ok",
-   "title": "Theatrum Marcelli",
    "tolerance_m": 20.0
   },
   {
@@ -10218,44 +10264,6 @@
    "tolerance_m": 10.0
   },
   {
-   "bearing_to_reference": 319,
-   "distance_m": 3.4,
-   "id": "porticus_octaviae",
-   "ours": [
-    -555.1,
-    -0.0
-   ],
-   "overrides": "exact",
-   "pleiades": "236573248",
-   "reference": [
-    -557.3,
-    -2.6
-   ],
-   "reference_accuracy_m": 20.0,
-   "status": "ok",
-   "title": "Porticus Octaviae",
-   "tolerance_m": 20.0
-  },
-  {
-   "bearing_to_reference": 319,
-   "distance_m": 3.4,
-   "id": "porticus_octaviae_empire",
-   "ours": [
-    -555.1,
-    -0.0
-   ],
-   "overrides": "approx",
-   "pleiades": "236573248",
-   "reference": [
-    -557.3,
-    -2.6
-   ],
-   "reference_accuracy_m": 20.0,
-   "status": "ok",
-   "title": "Porticus Octaviae",
-   "tolerance_m": 20.0
-  },
-  {
    "bearing_to_reference": 203,
    "distance_m": 3.4,
    "id": "arcus_titi",
@@ -10387,25 +10395,6 @@
    "status": "ok",
    "title": "Templum Pacis",
    "tolerance_m": 20.0
-  },
-  {
-   "bearing_to_reference": 160,
-   "distance_m": 2.6,
-   "id": "aedes_veiovis",
-   "ours": [
-    -140.8,
-    -33.3
-   ],
-   "overrides": "exact",
-   "pleiades": "243075423",
-   "reference": [
-    -139.9,
-    -30.9
-   ],
-   "reference_accuracy_m": 2000.0,
-   "status": "ok",
-   "title": "Temple of Veiovis",
-   "tolerance_m": 10.0
   },
   {
    "bearing_to_reference": 176,
@@ -10866,7 +10855,7 @@
  ],
  "relations": [
   {
-   "detail": "18 m from the clivus, 36 m from its foot",
+   "detail": "18 m from the clivus, 31 m from its foot",
    "name": "Saturn at the foot of the Clivus Capitolinus",
    "ok": true,
    "source": "Platner-Ashby s.v. Saturnus, Aedes; Clivus Capitolinus"
@@ -11052,12 +11041,12 @@
    "monuments": 163,
    "streets": 28
   },
-  "date_issues": 25,
+  "date_issues": 23,
   "measured_flags": 0,
   "misplaced": 0,
   "missing": 568,
   "missing_republic": 337,
-  "outline_flags": 52,
+  "outline_flags": 51,
   "references": {
    "platner": {
     "excluded": 1,
@@ -11071,13 +11060,13 @@
    }
   },
   "relations_failed": 6,
-  "scene_buried": 109,
-  "scene_floating": 36,
-  "scene_houses_in_monuments": 212,
-  "scene_houses_on_streets": 17,
-  "scene_in_river": 3,
-  "scene_overlaps": 54,
-  "scene_streets_through": 29
+  "scene_buried": 112,
+  "scene_floating": 42,
+  "scene_houses_in_monuments": 223,
+  "scene_houses_on_streets": 21,
+  "scene_in_river": 5,
+  "scene_overlaps": 13,
+  "scene_streets_through": 1
  },
  "topography": [
   {
