@@ -13,7 +13,7 @@
 ##     workshop or the harbour opens;
 ##   - set_watching(true) clears the screen for the moments (moments.gd).
 ## Keys (all also by mouse): 1-9 pick an action on the card or panel (then Enter does it; Tab
-## moves between them), L opens or closes "Rome this year" (1-9 then fly to a place), Enter with
+## moves between them), E goes inside the building of the card, L opens or closes "Rome this year" (1-9 then fly to a place), Enter with
 ## nothing picked asks to end the year, Esc closes what is open (the camera's Esc steps back).
 class_name UrbsHud
 extends CanvasLayer
@@ -49,6 +49,7 @@ var _title := Label.new()
 var _mode := UrbsCamera.Mode.CITY
 var _rows: Array = []                # the ActionRows on the card or the panel, by number
 var _card_place := ""                # the place whose actions the card shows
+var _card_enterable := false
 var _list := PanelContainer.new()
 var _list_body := VBoxContainer.new()
 var _list_open := true
@@ -200,6 +201,7 @@ func show_card(info: Dictionary, place: Dictionary = {}, result: Dictionary = {}
 		child.queue_free()
 	_rows.clear()
 	_card_place = place_id
+	_card_enterable = bool(info.get("enterable", false))
 	var latin := str(info.get("latin", ""))
 	var title := UiStyle.wrapped(latin if latin != "" else str(info.get("english", "")), 22, UiStyle.INK, CARD_W)
 	title.add_theme_font_override("font", UiStyle.font("title", 800))
@@ -229,7 +231,7 @@ func show_card(info: Dictionary, place: Dictionary = {}, result: Dictionary = {}
 	row.add_theme_constant_override("separation", 10)
 	if bool(info.get("enterable", false)):
 		var enter := UiStyle.big_button("Enter", 18)
-		enter.tooltip_text = "Go inside" + (": the same actions wait for you there" if not acts.is_empty() else "")
+		enter.tooltip_text = "Go inside (E)" + (": the same actions wait for you there" if not acts.is_empty() else "")
 		enter.pressed.connect(func() -> void: enter_pressed.emit())
 		row.add_child(enter)
 	var close := UiStyle.big_button("Close", 14, UiStyle.PARCHMENT)
@@ -641,6 +643,10 @@ func _unhandled_key_input(event: InputEvent) -> void:
 			end_year_confirmed.emit()
 		elif key == KEY_ESCAPE:
 			_close_confirm()
+		get_viewport().set_input_as_handled()
+		return
+	if key == KEY_E and _card.visible and _card_enterable:
+		enter_pressed.emit()
 		get_viewport().set_input_as_handled()
 		return
 	if key == KEY_L and not _inside:

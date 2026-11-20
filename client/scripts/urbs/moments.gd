@@ -50,6 +50,7 @@ var _count := Label.new()
 var _heading := Label.new()
 var _sentence := Label.new()
 var _numbers := Label.new()
+var _tween: Tween
 
 
 func _ready() -> void:
@@ -71,6 +72,7 @@ func _ready() -> void:
 	_card.offset_right = 330
 	_card.offset_top = 72
 	_card.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	_card.custom_minimum_size.x = 660
 	root.add_child(_card)
 	var col := VBoxContainer.new()
 	col.add_theme_constant_override("separation", 3)
@@ -248,12 +250,20 @@ func _title(e: Dictionary, index: int, total: int, watch: bool) -> void:
 	_sentence.text = str(told[1])
 	_numbers.text = numbers(e)
 	_numbers.visible = _numbers.text != ""
+	_sentence.visible = true
 	_card.visible = true
 	_card.modulate.a = 0.0
-	var tw := _card.create_tween()
-	tw.tween_property(_card, "modulate:a", 1.0, 0.35)
-	tw.tween_interval(7.0)
-	tw.tween_property(_card, "modulate:a", 0.72, 0.8)   # then let the spectacle be seen
+	_card.reset_size()
+	if _tween != null and _tween.is_valid():
+		_tween.kill()
+	_tween = _card.create_tween()
+	_tween.tween_property(_card, "modulate:a", 1.0, 0.35)
+	_tween.tween_interval(6.0 / speed)
+	_tween.tween_property(_card, "modulate:a", 0.0, 0.3)
+	_tween.tween_callback(func() -> void:   # then only the heading and the numbers stay, so the spectacle is seen
+		_sentence.visible = false
+		_card.reset_size())
+	_tween.tween_property(_card, "modulate:a", 0.9, 0.3)
 
 
 ## [heading, sentence, colour] for a moment: CityFeed's words, and the moments' own kinds.
@@ -388,7 +398,8 @@ static func gathering(e: Dictionary, u) -> Node3D:
 		out = out.normalized() if out.length() > 0.01 else Vector3(0, 0, 1)
 		var at := Vector3(c.x, 0, c.z)
 		if kind == "contio":
-			params["stage_h"] = clampf(box.size.y, 1.2, 3.6)
+			# the platform's top: the Rostra's box includes the statues standing on it (~3.2 m)
+			params["stage_h"] = clampf(box.size.y - (3.2 if mon.contains("rostra") else 0.0), 1.2, 4.0)
 		elif kind == "levy" or kind == "election":
 			# out on the open ground in front of the venue, not inside its walls
 			at = Vector3(door.origin.x, 0, door.origin.z) + out * 30.0
@@ -473,10 +484,10 @@ class Gathering extends "res://scripts/urbs/spectacles/base.gd":
 		c.build()
 		add_child(c)
 		_crowd = c
-		_label = make_label("%s speaks %s" % [str(params.get("who", "")), _issue()], 0.9, Color(1, 0.95, 0.8))
-		_label.position = Vector3(0, stage_h + 3.0, 0.6)
-		_tally = make_label("", 1.0, Color(0.8, 1.0, 0.7))
-		_tally.position = Vector3(0, 4.0, 9.0)
+		_label = make_label("%s speaks %s" % [str(params.get("who", "")), _issue()], 1.6, Color(1, 0.95, 0.8))
+		_label.position = Vector3(0, stage_h + 3.2, 0.6)
+		_tally = make_label("", 1.8, Color(0.8, 1.0, 0.7))
+		_tally.position = Vector3(0, stage_h + 2.4, 0.6)
 
 	func _issue() -> String:
 		var ref := str(params.get("ref", ""))
@@ -513,9 +524,9 @@ class Gathering extends "res://scripts/urbs/spectacles/base.gd":
 		c.build()
 		add_child(c)
 		_crowd = c
-		_label = make_label("The vote: %s" % str(params.get("ref", "")).replace("_plebs", " of the plebs").replace("_", " "), 0.9, Color(1, 0.95, 0.8))
+		_label = make_label("The vote: %s" % str(params.get("ref", "")).replace("_plebs", " of the plebs").replace("_", " "), 1.4, Color(1, 0.95, 0.8))
 		_label.position = Vector3(2, 5.0, 0)
-		_tally = make_label("", 1.0, Color(0.8, 1.0, 0.7))
+		_tally = make_label("", 1.5, Color(0.8, 1.0, 0.7))
 		_tally.position = Vector3(2, 3.6, 0)
 
 	func _build_levy() -> void:
@@ -550,9 +561,9 @@ class Gathering extends "res://scripts/urbs/spectacles/base.gd":
 			s.equip_helmet("samnis", Color(0.72, 0.6, 0.3), Color(0.72, 0.1, 0.1))
 			add_child(s)
 			_walkers.append(s)
-		_label = make_label("The levy", 0.9, Color(1, 0.95, 0.8))
+		_label = make_label("The levy", 1.6, Color(1, 0.95, 0.8))
 		_label.position = Vector3(0, 6.0, -13.6)
-		_tally = make_label("", 1.0, Color(0.8, 1.0, 0.7))
+		_tally = make_label("", 1.6, Color(0.8, 1.0, 0.7))
 		_tally.position = Vector3(0, 4.6, -13.6)
 
 	func _apply(time: float) -> void:
@@ -599,6 +610,7 @@ class Gathering extends "res://scripts/urbs/spectacles/base.gd":
 		var out: Array[Transform3D] = []
 		match kind:
 			"contio":
+				out.append(look(Vector3(3.5, stage_h + 2.6, 14.0), Vector3(0, stage_h + 1.0, 0)))
 				out.append(look(Vector3(2.5, 2.6, 25.0), Vector3(0, stage_h + 1.4, 0)))
 				out.append(look(Vector3(-2.0, stage_h + 2.4, -3.5), Vector3(0, 1.0, 16.0)))
 			"election":

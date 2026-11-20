@@ -45,7 +45,8 @@
 ##   --spectacle-view=N    put the camera at the spectacle's Nth own view
 ##   F2 play (places.gd, moments.gd): --places-fixture  use client/data/fixtures/places_264.json
 ##   even when the view has places; --moments  play the fixture's year of events as moments;
-##   --list-closed  start with "Rome this year" folded; --moment-speed=X  moments X times faster. main.gd's --then=act|moments|endyear
+##   --list-closed  start with "Rome this year" folded; --moment-speed=X  moments X times faster;
+##   --moments-pick=i,j  only those of the fixture's events (0-based). main.gd's --then=act|moments|endyear
 ##   (with --act=<action id> at --at=<monument>) drive them for screenshots.
 class_name Urbs
 extends Node3D
@@ -98,6 +99,7 @@ var _results := {}               ## place id -> the last action's {accepted, mes
 var _result_for := ""            ## the place of the last action
 var _idea_place := ""
 var _acting := false
+var _fixture_pick: Array = []    ## --moments-pick=i,j: which of the fixture's events --moments plays
 # --- F2 play (end) ---------------------------------------------------------------------------
 
 
@@ -163,6 +165,8 @@ func open(new_year: int, at := Vector3.ZERO, flags := {}, new_events: Array = []
 		hud.toggle_list(false)
 	if flags.has("moment-speed"):
 		moments.speed = maxf(0.1, float(flags["moment-speed"]))
+	if flags.has("moments-pick"):
+		_fixture_pick = Array(str(flags["moments-pick"]).split(",")).map(func(i): return int(i))
 	_refresh_play()
 	# --- F2 play (end)
 	life.set_events(events)
@@ -729,7 +733,10 @@ func tour_places(step := 8.0) -> void:
 
 ## --moments: the fixture's year of events (its venues standing in this year's city).
 func play_fixture_moments() -> void:
-	await moments.play(places.fixture_events)
+	var list: Array = places.fixture_events
+	if not _fixture_pick.is_empty():
+		list = _fixture_pick.filter(func(i): return i >= 0 and i < list.size()).map(func(i): return list[i])
+	await moments.play(list)
 
 
 ## Spectacle for one event (U6's, or a gathering), placed and playing; null if none.
