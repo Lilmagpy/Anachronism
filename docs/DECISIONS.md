@@ -2813,3 +2813,31 @@ it is in the right place ... and you've also fallen short on implementing the ga
 want you to create." His original request (2026-10-29) was a city whose buildings you enter and
 interact with, not only look at.
 
+## D-302 The Roman state as Rome had it: the full Fasti, families, people and a Senate that splits (R2, F1) — DELEGATED (2026-11-20)
+- **The Fasti** of every year 509-27 BC (from the `claude/r1-fasti` draft) are `data/rome/fasti.yaml`, read in place by the rome pack like the city dataset. The anarchy (375-371) and the four dictator years (333, 324, 309, 301) are `gap:` years: no consuls are seated. Each year keeps its confidence; the view says "disputed" for `low`. Consul names were checked against Wikipedia's list of consuls (after Broughton): 456 years agree, 8 in part, 9 differ in a spelling, noted per year. Passages not re-read stay `# unverified`.
+- **Families:** every gens the Fasti name (160): order, praenomina and cognomina by era (branches) from the Fasti; standing by era derived from the family's offices (a family's dignitas tracks its consulships); stances on all eight issues hand-authored with a source for 141 families and inferred from the order for the rest. Numbers are game balance.
+- **People:** 148 real persons with birth, death and its cause, gens, offices, traits and sources. A chronicle seats them by the Fasti, honours their lower offices, and lets them die in their year (after taking office, if they held one that year: Caesar in 44).
+- **Bugs fixed:** no man holds two offices in a year; generated men never take a living man's or a modelled person's name, nor a name the Fasti give to a man of their generation; no one over 70 stands; the pool of generated men is named from the branches alive in their year, so 49 BC no longer elects a Cominius Auruncus; a seeded population with careers at the start.
+- **Senate:** a family's weight grows with its living senators; each era's bloc (orders to 287, nobility, optimates and populares from 133) adds its lean; a family's men divide by the strength of its lean, so forecasts differ by issue and era. War can be proposed only against states Rome has met (neighbour, tie or grudge, at war with an ally, or a scripted casus belli). The forecast names the tribune and says why none will act. `rights:<civ>` raises an ally one step through `allies.grant_status`.
+- `rome_340` now has `republic: true`.
+
+## D-303 Religion, land, grain, coin, debt and the army's three systems (R4, F1) — DELEGATED (2026-11-20)
+- **Religion:** five priestly colleges filled from the Republic's people (patrician until the Lex
+  Ogulnia, 300 BC: Livy 10.6-9); auspices before the player's battles move morale (Livy 22.3, 22.42;
+  Suetonius, Tiberius 2.2 on Pulcher); 106 dated prodigies from Livy and Obsequens with the
+  expiation the Senate ordered (unexpiated ones breed unrest); the Sibylline Books consulted on
+  disasters, burnt 83 and restored 76; eight new cults in their years (Aesculapius 291, Magna Mater
+  204...), each playing its sacrifice at its temple.
+- **Economy:** public land grows with conquest and the rich occupy it, shrinking the small farmers
+  the levy needs unless a land law passes (367, 133); slaves from conquest, with the Sicilian and
+  Spartacan revolts; the grain supply from Latium and then the provinces, with the dole (123, free
+  from 58); silver coin from 269 and the denarius from 211; debt and the secessions of the plebs.
+- **Army:** the phalanx of the classes, the manipular legion from 340, the cohort legion of the
+  capite censi from 107 (or earlier by the player's idea); the levy capped by the census property
+  threshold as it fell (11,000, 4,000, 1,500 asses, then none); after Marius soldiers' loyalty
+  shifts to their general, which the civil-war chapters can read.
+- **Balance:** the society's numbers are per year and tuned for ten-year turns; marked as game
+  balance in the YAML. One RNG stream of its own, so the rest of the game's draws are unchanged.
+- **Prorogation cap:** governors are prorogued at most three years (`PROROGUE_MAX_YEARS`), because
+  six praetors serve seven provinces and one man was otherwise held for a decade.
+

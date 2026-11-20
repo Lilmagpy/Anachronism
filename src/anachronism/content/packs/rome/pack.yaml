@@ -7,3 +7,5 @@ pack:
   external:
     # the city dataset lives in data/, shared with the 3D client; it is read in place, not copied
     - ../../../../../data/rome/city/monuments*.yaml
+    # F1 republic: the Fasti of every year 509-27 BC live in data/, documented in data/rome/README.md
+    - ../../../../../data/rome/fasti*.yaml
