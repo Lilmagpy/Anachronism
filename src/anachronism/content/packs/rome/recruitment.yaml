@@ -56,7 +56,7 @@ recruitment:
       sources: ["Sallust, Jugurtha 86.2"]
   service_years: 16
   max_age: 46
-  levy_share_bp: 2500
+  levy_share_bp: 6000
   citizen_share_bp: 1800
   loyalty:
     # From the cohort era a soldier's loyalty shifts to his general: victories, years of service,

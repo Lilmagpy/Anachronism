@@ -3,8 +3,10 @@ schema_version: 1
 # need is its people (the dataset's modern estimates); Latium feeds a falling share as the city
 # grows, and the provinces feed the rest while the state holds them. Shares are GAME BALANCE.
 grain:
-  home_share_bp: 6000
-  home_fade_per_100k_bp: 400
+  # Latium and Italy feed the whole of the early city; each 100,000 people it grows past its
+  # first estimate takes away this share, and the provinces must make it up (GAME BALANCE).
+  home_share_bp: 10000
+  home_fade_per_100k_bp: 1200
   supplies:
     - id: sicily
       provincia: sicilia
@@ -49,16 +51,16 @@ grain:
     - {year: -130, people: 300000, sources: ["modern estimate (Hopkins 1978; Lo Cascio 1994 argues higher)"]}
     - {year: -50, people: 750000, sources: ["modern estimate (Hopkins 1978; Morley 1996; Lo Cascio 1994)"]}
     - {year: -27, people: 900000, sources: ["modern estimate from the 200,000 dole recipients of 2 BC (Res Gestae 15) (Hopkins 1978; Scheidel 2007)"]}
-  shortage_unrest_bp: 1500
-  surplus_calm_bp: 100
+  shortage_unrest_bp: 150
+  surplus_calm_bp: 20
   dole:
     # Gaius Gracchus' grain law of 123 sold grain to the citizens below the market price (Plutarch,
     # C. Gracchus 5.2: a law 'relating to the supplies of grain, and lowered the market price to
     # the poor'); Clodius made it free in 58 (Dio 38.13.1: 'he straightway went to distributing
     # free corn'). The law is the Senate's `grain_dole` (republic_rules.yaml, from 123).
     law: grain_dole
-    cost_per_1000: 1
-    unrest_relief_bp: 300
+    cost_per_10000: 1
+    unrest_relief_bp: 40
     shortage_relief_bp: 5000
     free_from_year: -58
     free_cost_bp: 10000

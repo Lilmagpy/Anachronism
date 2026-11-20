@@ -18,6 +18,7 @@ from anachronism.engine.legions import (
     assidui,
     era_at,
     threshold_at,
+    under_arms,
     would_march_on_rome,
 )
 from anachronism.engine.rome_society_state import RomeSocietyState
@@ -110,7 +111,8 @@ def test_the_levy_is_made_up_as_the_eras_legion_and_capped_by_the_pool(content: 
     assert {"hastati", "principes", "triarii", "velites"} <= set(army.troops)
     pool = society(state).legions.assidui
     big, _ = raise_army(state, "rome", civ.capital, pool)
-    assert big is None or big.men <= pool * 2500 // 10_000
+    share = state.world.rome_society.recruitment.levy_share_bp
+    assert big is None or under_arms(state) <= pool * share // 10_000 + 1
 
 
 def test_the_latifundia_shrink_the_pool_and_a_land_law_restores_it(content: Content) -> None:

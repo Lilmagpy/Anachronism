@@ -237,7 +237,7 @@ def _grain_year(state: GameState, year: int, pay: bool = True) -> None:
         return
     relief_share = 0
     if dole:
-        cost = grain.city_people // 1000 * rules.dole.cost_per_1000
+        cost = grain.city_people // 10_000 * rules.dole.cost_per_10000
         free = rules.dole.free_from_year is not None and year >= rules.dole.free_from_year
         if free:
             cost += apply_bp(cost, rules.dole.free_cost_bp)
@@ -340,10 +340,9 @@ def _debt_year(state: GameState, rng: GameRng, events: EventLog, year: int) -> N
         growth += rules.famine_bp
     if grain.shortfall_bp:
         growth += rules.shortage_bp
-    if growth:
-        land.debt_bp = clamp(land.debt_bp + growth, 0, BP)
-    else:
-        land.debt_bp -= apply_bp(land.debt_bp, rules.peace_relief_bp)
+    # a share is repaid every year; war, famine and short grain add to what is owed
+    land.debt_bp -= apply_bp(land.debt_bp, rules.peace_relief_bp)
+    land.debt_bp = clamp(land.debt_bp + growth, 0, BP)
     passed = _law_year(state, rules.law)
     if passed is not None and passed != land.relief_applied:
         land.relief_applied = passed

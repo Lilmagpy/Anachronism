@@ -27,10 +27,10 @@ rites:
     # the novemdiale sacrum for a rain of stones: Livy 23.31.15 'ut adsolet'), which costs the
     # treasury; one it cannot pay for leaves the people afraid until it is.
     yearly_chance_bp: 3000
-    default_cost: 15
+    default_cost: 4
     default_monument: aedes_iovis_capitolini
-    unexpiated_unrest_bp: 250
-    expiation_unrest_relief_bp: 100
+    unexpiated_unrest_bp: 50
+    expiation_unrest_relief_bp: 20
     kept: 30
     sources: ["Livy 23.31.15", "Livy 43.13.1-2 (Livy on why he records them)"]
   sibylline:
@@ -41,7 +41,7 @@ rites:
     # new collection was gathered after 76 BC (Tac. Ann. 6.12; the year 76 is Fenestella's, in
     # Lactantius, Div. Inst. 1.6.14 # unverified: passage not read).
     consult_on: [famine, disaster, battle_lost]
-    cost: 40
+    cost: 10
     unrest_relief_bp: 600
     legitimacy_bp: 200
     lost_from_year: -83

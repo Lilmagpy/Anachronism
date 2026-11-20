@@ -8,10 +8,10 @@ land:
   start_ager_per_1000: 60
   start_latifundia_bp: 2500
   ager_per_1000_conquered: 120
-  occupation_bp: 400
+  occupation_bp: 200
   assidui_start_bp: 7000
   assidui_floor_bp: 2500
-  assidui_decline_bp: 120
+  assidui_decline_bp: 40
   reforms:
     - id: lex_licinia
       name: The Licinian-Sextian law on the land
@@ -39,7 +39,7 @@ land:
     sacked_enslaved_bp: 10000
     estate_wealth_per_1000: 2
     revolt_threshold_bp: 1500
-    revolt_chance_bp: 400
+    revolt_chance_bp: 200
     revolt_unrest_bp: 1200
     revolt_wealth_loss_bp: 1000
     revolt_slaves_lost_bp: 2500
@@ -71,15 +71,15 @@ land:
     # propter nexos ob aes alienum'); the Poetelian law ended nexum in 326 (Livy 8.28.1-2, 'velut
     # aliud initium libertatis'). The game's debt level rises with war years and bad harvests and
     # is cut by the Senate's `debt_relief` law.
-    war_bp_per_year: 300
+    war_bp_per_year: 150
     famine_bp: 600
-    shortage_bp: 300
+    shortage_bp: 100
     peace_relief_bp: 500
     law: debt_relief
     relief_cut_bp: 6000
-    unrest_per_debt_bp: 800
+    unrest_per_debt_bp: 80
     secession_threshold_bp: 6000
-    secession_chance_bp: 1500
+    secession_chance_bp: 500
     secession_unrest_bp: 1500
     secession_legitimacy_bp: 800
     secession_relief_bp: 5000

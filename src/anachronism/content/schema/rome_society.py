@@ -251,7 +251,7 @@ class DebtRules(Frozen):
     shortage_bp: NonNegative = 300
     """Added in a year the grain supply fell short."""
     peace_relief_bp: Rate = 500
-    """Share of the debt paid off in a year of peace."""
+    """Share of the debt repaid each year (war, famine and short grain add to it)."""
     law: Identifier = "debt_relief"
     relief_cut_bp: Rate = 6000
     """Share of the debt the law wipes out."""
@@ -322,8 +322,8 @@ class DoleRules(Frozen):
     """The grain dole: what the law costs and what it steadies."""
 
     law: Identifier = "grain_dole"
-    cost_per_1000: NonNegative = 1
-    """Wealth a year per 1,000 people of the city while the law stands."""
+    cost_per_10000: NonNegative = 1
+    """Wealth a year per 10,000 people of the city while the law stands."""
     unrest_relief_bp: NonNegative = 300
     shortage_relief_bp: Rate = 5000
     """Share of a shortage's unrest the dole absorbs."""
