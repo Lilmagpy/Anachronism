@@ -33,6 +33,8 @@ scenarios:
         disposition: cautious
         navy_bp: 500
         scripts:
+          - {id: "r509_vs_tarentum", goal: "conquer", target: "e5_tarentum", preconditions: {after_year: -283}, note: "The Tarentines sink Roman ships and insult the envoys (282); Rome declares war (Cassius Dio 9.39; Livy, Periochae 12; unverified: not re-read)."}
+          - {id: "r509_first_punic_war", goal: "conquer", target: "carthage", preconditions: {after_year: -266}, note: "Rome crosses to Sicily at the Mamertines' call; the First Punic War, 264-241 (Polybius 1.10-1.63; unverified: not re-read for this entry)."}
           - {id: "r509_cassian_treaty", goal: "ally", target: "e5_latins", preconditions: {after_year: -497}, depends_on: ["r509_regillus"], note: "Treaty with the Latin cities, struck by Spurius Cassius alone (493): Livy 2.33.4 and 2.33.9; text in Dionysius 6.95.2."}
           - {id: "r509_hernici_treaty", goal: "ally", target: "e5_hernici", preconditions: {after_year: -487}, note: "Treaty with the Hernici, two-thirds of their land taken (486): Livy 2.41.1."}
           - {id: "r509_vs_volsci", goal: "conquer", target: "e5_volsci", preconditions: {after_year: -496}, note: "Wars with the Volsci: Livy 2.22, 2.30-31 (494), 2.33-40 (Coriolanus, 491-488); they go on to 338 (Livy 8.14)."}
@@ -287,6 +289,8 @@ scenarios:
         influence: {clergy: 3500, nobility: 4000, guilds: 2500}
         techs: {agriculture: widespread, alphabet: widespread, astronomy_calendar: adopted, bronze_working: widespread, charcoal_burning: widespread, chariot: adopted, copper_smelting: widespread, fortification: widespread, herbal_medicine: adopted, horse_riding: widespread, iron_plough: adopted, iron_working: widespread, irrigation: adopted, masonry: widespread, ore_prospecting: concept, ox_plough: widespread, piston_bellows: adopted, pottery_kiln: widespread, roads: concept, sailing: widespread, schools: widespread, standard_measures: widespread, surveying: adopted, wheel: widespread, writing: widespread}
       e5_tarentum:
+        scripts:
+          - {id: "r509_tarentum_vs_rome", goal: "conquer", target: "rome", preconditions: {after_year: -283}, note: "The Tarentines sink Roman ships and insult the envoys (282); Rome declares war (Cassius Dio 9.39; Livy, Periochae 12; unverified: not re-read)."}
         # Herodotus 3.136 names Aristophilides as king of the Tarentines (c. 517).
         disposition: mercantile
         navy_bp: 12000
@@ -306,6 +310,8 @@ scenarios:
         disposition: cautious
         navy_bp: 15000
         scripts:
+          - {id: "r509_dionysius_vs_carthage", goal: "conquer", target: "carthage", preconditions: {after_year: -398, before_year: -390}, note: "Dionysius I of Syracuse declares war on Carthage and takes Motya (397); Himilco besieges Syracuse and his army is destroyed by plague (396) (Diodorus 14.41-77; unverified)."}
+          - {id: "r509_hiero_joins_rome", goal: "ally", target: "rome", preconditions: {after_year: -265}, depends_on: ["r509_first_punic_war"], note: "Hiero II of Syracuse leaves Carthage for Rome and is its loyal ally from 263 (Polybius 1.16.9-11; unverified: not re-read)."}
           - {id: "r509_hieron_cumae", goal: "conquer", target: "e5_etruscan_league", preconditions: {after_year: -479, before_year: -471}, note: "Hieron sends a fleet to Cumae and beats the Tyrrhenians (474): Diodorus 11.51."}
         capital: si_syracuse
         generals:
@@ -328,6 +334,9 @@ scenarios:
         navy_bp: 30000
         music: near_east
         scripts:
+          - {id: "r509_carthage_vs_syracuse_409", goal: "conquer", target: "syracuse", preconditions: {after_year: -410, before_year: -395}, note: "Hannibal, son of Gisgo, takes Selinus and Himera (409) and with Himilco Akragas (406); Dionysius makes peace in 405 (Diodorus 13.43-62, 13.80-96, 13.114; unverified)."}
+          - {id: "r509_carthage_defends_sicily", goal: "conquer", target: "rome", preconditions: {after_year: -266}, note: "Carthage, holding western Sicily, goes to war with Rome over Messana; the First Punic War, 264-241 (Polybius 1.11-1.63; unverified: not re-read for this entry)."}
+          - {id: "r509_hannibals_war", goal: "conquer", target: "rome", preconditions: {after_year: -222}, depends_on: ["r509_first_punic_war"], note: "Saguntum falls (219); Hannibal crosses the Alps and wins at the Ticinus, Trebia, Trasimene and Cannae, 218-216 (Polybius 3.6-17, 3.33-118; unverified: not re-read for this entry)."}
           - {id: "r509_himera", goal: "conquer", target: "syracuse", preconditions: {after_year: -483, before_year: -478}, note: "Hamilcar, son of Hanno, lands in Sicily and is defeated at Himera by Gelon and Theron (480): Herodotus 7.165-7.167."}
         capital: car_carthage
         generals:

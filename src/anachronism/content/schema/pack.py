@@ -15,6 +15,12 @@ from anachronism.content.schema.dialogue import Dialogue, Speaker
 from anachronism.content.schema.dilemmas import Dilemma
 from anachronism.content.schema.formations import Formation
 from anachronism.content.schema.happenings import Happening
+from anachronism.content.schema.italy import (  # F1 italy
+    AllyTreaty,
+    ColonyFoundation,
+    ItalyRules,
+    ProvinciaDefinition,
+)
 from anachronism.content.schema.monuments import CityTimeline, Monument
 from anachronism.content.schema.republic import (
     FastiYear,
@@ -66,6 +72,7 @@ SINGLE_KINDS: dict[str, TypeAdapter[Any]] = {
     "pack": TypeAdapter(PackManifest),
     "rules": TypeAdapter(Rules),
     "republic_rules": TypeAdapter(RepublicRules),
+    "italy_rules": TypeAdapter(ItalyRules),  # F1 italy
     "eras": TypeAdapter(tuple[Era, ...]),
     "effect_caps": TypeAdapter(dict[EffectType, dict[Identifier, int]]),
     # F1 rome_society: religion's numbers, land, grain, coinage and the legion's eras (R4)
@@ -109,6 +116,10 @@ LIST_KINDS: dict[str, type[Frozen]] = {
     "priesthoods": Priesthood,
     "prodigies": Prodigy,
     "cults": Cult,
+    # F1 italy: allies, colonies and provinces (R3)
+    "treaties": AllyTreaty,
+    "colonies": ColonyFoundation,
+    "provinciae": ProvinciaDefinition,
 }
 """Kinds holding a list of items with ids; each item is validated on its own."""
 

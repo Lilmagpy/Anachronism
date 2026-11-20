@@ -302,6 +302,9 @@ class GrainSupply(Frozen):
     """How much of the city's need it covers when every listed province is held."""
     from_year: int | None = None
     """The first year the supply counts (``None``: whenever held)."""
+    provincia: Identifier | None = None
+    """The Italy agent's *provincia* (provinces.yaml) for this region: once Rome has made it a
+    province, the supply counts the parts of it Rome holds (``provinces_rome.held``)."""
     sources: Sources
     notes: str = ""
     confidence: Confidence = Confidence.LOW
@@ -536,6 +539,14 @@ def issues(registry: _Registry) -> list[tuple[str, str, str]]:
     if grain is not None:
         where = registry.origin("grain", "grain")
         for supply in grain.supplies:
+            if supply.provincia is not None and registry.is_unknown("provinciae", supply.provincia):
+                found.append(
+                    (
+                        where,
+                        f"grain.supplies ({supply.id})",
+                        f"unknown provincia {supply.provincia!r}",
+                    )
+                )
             for pid in supply.provinces:
                 if registry.is_unknown("provinces", pid):
                     found.append(

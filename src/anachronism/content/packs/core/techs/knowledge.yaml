@@ -1,40 +1,47 @@
 schema_version: 1
+# Letters and learning, in Roman terms (see agriculture.yaml for the dating rule).
 techs:
   - id: writing
     name: Writing
-    keywords: [writing, script, scribes, records, letters, written]
+    keywords: [writing, script, scribes, records, letters, written, inscriptions, tablets, wax tablets, stylus]
     category: knowledge
     year: -3200
     complexity: 2
     effects: [{type: knowledge_gain, bp: 1000}, {type: literacy_growth, bp: 30}]
     flavour: Words that outlive the breath that spoke them.
-    history: "Writing was invented in Sumer around 3200 BC, as tallies of grain and beer on clay; separately in Egypt soon after, in China by 1200 BC, and in Mesoamerica."
+    history: "Legend had Evander bring letters to Latium (Livy 1.7.8); in fact the Latins learned to write from the Etruscans and the Greeks of Cumae in the 7th century BC. The oldest Roman inscription, the stone under the Lapis Niger in the Forum, is of about 570-550 BC, and Tacitus has Claudius trace Latin letters to Demaratus and Evander (Tac. Ann. 11.14)."
+    sources: ["Livy 1.7.8", "Tacitus, Annales 11.14.3", "Platner-Ashby s.v. Niger Lapis"] # unverified
+    confidence: high
 
   - id: surveying
-    name: Surveying and geometry
-    keywords: [surveying, maps, mapping, measuring land, geometry, cartography]
+    name: Surveying (the groma)
+    keywords: [surveying, maps, mapping, measuring land, geometry, cartography, groma, agrimensor, surveyor, level, chorobates]
     category: knowledge
     year: -2500
     complexity: 2
     prerequisites: [writing]
     effects: [{type: labour_output, bp: 300}, {type: knowledge_gain, bp: 300}]
-    flavour: Rope, stakes and a right angle measure a kingdom.
-    history: "Egyptian 'rope-stretchers' re-measured the fields after every Nile flood, from around 2500 BC."
+    flavour: A cross of sighting cords on a staff, and a right angle runs across a province.
+    history: "Roman surveyors laid out camps, colonies and roads with the groma, a cross of plumb-lines on a staff, and levelled aqueducts with the chorobates (Vitr. 8.5.1-3); Frontinus traced the drawing of boundaries to Etruscan ritual (Frontinus, De limitibus). The Egyptians' rope-stretchers measured fields two thousand years earlier."
+    sources: ["Vitruvius 8.5.1-3 # unverified", "Frontinus, De limitibus (Lachmann p. 27) # unverified", "Hyginus Gromaticus, Constitutio limitum # unverified"]
+    confidence: medium
 
   - id: astronomy_calendar
-    name: Astronomical calendar
-    keywords: [astronomy, calendar, stars, observatory, planets, seasons]
+    name: The calendar of the pontiffs
+    keywords: [astronomy, calendar, stars, observatory, planets, seasons, kalends, nones, ides, intercalation, fasti, months]
     category: knowledge
     year: -2000
     complexity: 2
     prerequisites: [writing]
     effects: [{type: food_output, bp: 400}, {type: legitimacy, bp: 100}]
-    flavour: The court that predicts the floods commands the fields.
-    history: "The Egyptians fixed a 365-day calendar by the rising of Sirius; Babylonian astronomers kept records of the heavens from about 2000 BC."
+    flavour: The pontiffs name the days, and the days obey, mostly.
+    history: "Numa was credited with the twelve-month calendar and the intercalary month that kept it to the sun (Livy 1.19.6-7; Plutarch, Numa 18). The pontiffs kept the fasti and inserted the extra month, often for politics, until by Caesar's day the civil year ran three months ahead of the seasons (Suet. Iul. 40.1)."
+    sources: ["Livy 1.19.6-7", "Plutarch, Numa 18-19 # unverified", "Suetonius, Iulius 40.1", "Censorinus, De die natali 20 # unverified"]
+    confidence: high
 
   - id: alphabet
     name: Phonetic alphabet
-    keywords: [alphabet, phonetic, letters, spelling, simple script, hangul]
+    keywords: [alphabet, phonetic, letters, spelling, simple script, abc, latin letters, twenty-one letters]
     category: knowledge
     year: -1050
     complexity: 2
@@ -42,50 +49,58 @@ techs:
     prerequisites: [writing]
     resistance: [{group: clergy, level: 1}]
     effects: [{type: literacy_growth, bp: 40}, {type: knowledge_gain, bp: 800}]
-    flavour: Two dozen signs instead of thousands. Any merchant's child can learn it.
-    history: "The Phoenicians' alphabet of 22 letters (about 1050 BC) is the ancestor of Greek, Latin, Arabic and Hebrew script."
+    flavour: Twenty-one signs any merchant's child can learn.
+    history: "The Latins took their letters from the Greeks of Cumae through Etruria in the 7th century; the Praeneste fibula and the Lapis Niger show the archaic alphabet. Spurius Carvilius Ruga is said to have added the letter G about 230 BC (Plutarch, Quaestiones Romanae 54, 59), and Claudius tried three letters of his own (Tac. Ann. 11.14)."
+    sources: ["Plutarch, Quaestiones Romanae 54 and 59 # unverified", "Tacitus, Annales 11.14.1", "Pliny NH 7.192-193 # unverified"]
+    confidence: high
 
   - id: place_value_numerals
     name: Place-value numerals with zero
-    keywords: [numerals, zero, number zero, numbers, decimal, place value, arabic numerals, arithmetic, maths, math]
+    keywords: [numerals, zero, number zero, numbers, decimal, place value, arabic numerals, arithmetic, maths, math, abacus, counting board]
     category: knowledge
-    year: 500
+    year: 1202
     complexity: 2
     visibility: 1
     prerequisites: [writing]
     effects: [{type: knowledge_gain, bp: 1200}, {type: wealth_output, bp: 500}]
     flavour: Ten signs and a circle for nothing, and arithmetic becomes easy.
-    history: "Indian mathematicians wrote numbers with place value and a zero by about AD 500; Brahmagupta set out its rules in 628."
+    history: "Romans reckoned on a counting board with pebbles (calculi) and wrote the result in letters, I, V, X, L, C, D, M (Horace, Sat. 1.6.74 on schoolboys with their tablets). India had place value and zero by AD 500; Fibonacci's Liber Abaci brought them to Italy in 1202."
+    sources: ["Horace, Satires 1.6.72-75 # unverified", "Fibonacci, Liber Abaci (1202) # unverified"]
+    confidence: medium
 
   - id: alchemy
     name: Alchemy
-    keywords: [alchemy, chemistry, elements, distillation, experiments]
+    keywords: [alchemy, chemistry, elements, distillation, experiments, quicksilver, transmutation]
     category: knowledge
-    year: -300
+    year: -200
     complexity: 2
     prerequisites: [writing, pottery_kiln]
     resistance: [{group: clergy, level: 1}]
     effects: [{type: knowledge_gain, bp: 400}, {type: health, bp: 300}]
     flavour: Furnaces, flasks and patient notes on what changes into what.
-    history: "Alchemy grew in Hellenistic Egypt and in China around 300 BC, and flourished in the Islamic world after AD 800."
+    history: "The art began in Hellenistic Egypt: Bolus of Mendes wrote on dyes and metals about 200 BC under the name of Democritus, and Pliny quotes him and describes quicksilver and the refining of gold (Pliny NH 33.99, 24.160). Rome's world knew it as Greek learning."
+    sources: ["Pliny NH 24.160 # unverified", "Pliny NH 33.99 # unverified"]
+    confidence: medium
 
   - id: schools
-    name: Public schools
-    keywords: [schools, school, education, teaching, teach, academy, teachers, read, reading, literacy, learn to read]
+    name: Schools of letters (ludus litterarius)
+    keywords: [schools, school, education, teaching, teach, academy, teachers, read, reading, literacy, learn to read, grammaticus, schoolmaster, ludus]
     category: knowledge
-    year: -500
+    year: -449
     complexity: 3
     prerequisites: [writing]
     requires: {literacy_bp: 300}
     effects: [{type: literacy_growth, bp: 60}]
     flavour: Letters taught to many, not handed down to a few.
-    history: "Schools for scribes existed in Sumer; schooling for many citizens came to Greece and China around 500 BC."
+    history: "Verginia was seized on her way to the schools of letters in the Forum in 449 BC (Livy 3.44.6); Roman schools were private, run by freedmen for fees. Greek grammar came with Livius Andronicus (240 BC) and Crates of Mallos (168; Suet. Gramm. 1-2). Vespasian first paid teachers from the treasury (Suet. Vesp. 18)."
+    sources: ["Livy 3.44.6", "Suetonius, De grammaticis 1-2 # unverified", "Suetonius, Vespasianus 18 # unverified"]
+    confidence: high
 
   - id: woodblock_printing
     name: Woodblock printing
-    keywords: [woodblock, block printing, printing, prints]
+    keywords: [woodblock, block printing, printing, prints, stamp a page]
     category: knowledge
-    year: 650
+    year: 1400
     complexity: 3
     prerequisites: [paper]
     requires: {literacy_bp: 500}
@@ -94,13 +109,15 @@ techs:
       - {type: knowledge_gain, bp: 800}
       - {type: cultural_influence, bp: 600}
     flavour: Carve a page once, print it a thousand times.
-    history: "China printed with carved woodblocks by about AD 650; the Diamond Sutra of 868 is the oldest dated printed book."
+    history: "Roman books were copied by hand, by slaves in the workshops of booksellers like Atticus (Cornelius Nepos, Atticus 13.3); a stamp on bricks and lamps was as far as printing went. China printed with carved blocks by AD 650; Europe printed cards and saints' pictures from blocks about 1400."
+    sources: ["Cornelius Nepos, Atticus 13.3 # unverified"]
+    confidence: medium
 
   - id: movable_type
     name: Movable-type printing
-    keywords: [movable type, printing press, press, printing, books, gutenberg]
+    keywords: [movable type, printing press, press, printing, books, gutenberg, cast letters]
     category: knowledge
-    year: 1040
+    year: 1440
     complexity: 4
     visibility: 3
     prerequisites: [woodblock_printing, bronze_working]
@@ -111,4 +128,6 @@ techs:
       - {type: knowledge_gain, bp: 1500}
       - {type: cultural_influence, bp: 1000}
     flavour: Letters cast one by one, set in any order, used again tomorrow.
-    history: "Bi Sheng made movable type of baked clay in China around 1040; Korea cast metal type by 1234."
+    history: "Cicero once imagined letters of gold shaken out at random to form the Annals of Ennius, only to say it could not happen (Cicero, De natura deorum 2.93): the idea of loose type was thinkable and never tried. Bi Sheng made clay type in China about 1040; Gutenberg cast metal type in Mainz about 1440."
+    sources: ["Cicero, De natura deorum 2.93 # unverified"]
+    confidence: medium

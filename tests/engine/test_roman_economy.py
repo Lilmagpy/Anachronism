@@ -175,3 +175,29 @@ def test_the_economy_is_deterministic_and_keeps_the_invariants(content: Content,
     assert land.slaves >= 0 and land.latifundia <= land.ager_publicus
     assert 0 <= land.debt_bp <= 10_000 and 0 <= land.assidui_bp <= 10_000
     assert first.civs["rome"].stockpiles.wealth >= 0
+
+
+def test_grain_and_tribute_read_the_italy_agents_provinciae(content: Content) -> None:
+    from anachronism.engine.italy_state import Provincia
+    from anachronism.engine.roman_economy import taxed_by_provinciae
+
+    state = new_game(content, "rome_264", seed=1)
+    assert state.republic is not None
+    for pid in ("si_syracuse", "si_catana"):
+        state.provinces[pid].owner = "syracuse"
+    base, _ = supply_bp(state, -200)
+    for pid in ("si_syracuse", "si_catana"):
+        state.provinces[pid].owner = "rome"
+        state.provinces[pid].people = "syracuse"
+    # not yet a provincia: ownership of the listed provinces counts, and Rome taxes them itself
+    owned, held = supply_bp(state, -200)
+    assert "sicily" in held and owned > base
+    assert tribute_due(state) > 0
+    # a provincia: Italy's held parts feed the city, and Italy (not this module) taxes them
+    state.republic.italy.provinciae["sicilia"] = Provincia(id="sicilia", name="Sicily", since=-227)
+    via_italy, held = supply_bp(state, -200)
+    assert "sicily" in held
+    definition = state.world.provinciae["sicilia"]
+    assert via_italy == base + 4000 * 2 // len(definition.provinces)
+    assert {"si_syracuse", "si_catana"} <= taxed_by_provinciae(state)
+    assert tribute_due(state) == 0

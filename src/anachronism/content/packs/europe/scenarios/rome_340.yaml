@@ -38,6 +38,11 @@ scenarios:
         navy_bp: 500
         disposition: aggressive
         scripts:
+          - {id: "first_punic_war", goal: "conquer", target: "carthage", preconditions: {after_year: -266}, note: "Rome crosses to Sicily at the Mamertines' call; the First Punic War, 264-241 (Polybius 1.10-1.63; unverified: not re-read for this entry)."}
+          - {id: "first_macedonian_war", goal: "conquer", target: "macedon", preconditions: {after_year: -216}, depends_on: ["hannibals_war"], note: "Philip V allies with Hannibal (215); Rome keeps him busy in Greece with the Aetolians, 214-205 (Polybius 7.9; Livy 26.24; unverified: not re-read)."}
+          - {id: "second_macedonian_war", goal: "conquer", target: "macedon", preconditions: {after_year: -201}, depends_on: ["first_macedonian_war"], note: "Flamininus defeats Philip V at Cynoscephalae (197) and proclaims the freedom of Greece (Polybius 18.20-27, 18.46; Livy 33.7-10; unverified: not re-read)."}
+          - {id: "third_macedonian_war", goal: "conquer", target: "macedon", preconditions: {after_year: -173}, depends_on: ["second_macedonian_war"], note: "Aemilius Paullus defeats Perseus at Pydna (168); Macedon cut into four republics (Livy 44.40-42, 45.29; unverified: not re-read)."}
+          - {id: "third_punic_war", goal: "conquer", target: "carthage", preconditions: {after_year: -151}, depends_on: ["hannibals_war"], note: "Rome demands the surrender of Carthage and destroys it, 149-146 (Appian, Punica 74-135; unverified: not re-read)."}
           - {id: "rome_latin_war", goal: "conquer", target: "e3_latins", preconditions: {after_year: -341}, note: "The Latin War (340-338 BC): Livy 8.3-8.14."}
           - {id: "rome_second_samnite_war", goal: "conquer", target: "e3_samnites", preconditions: {after_year: -328}, depends_on: ["rome_latin_war"], note: "Rome declares war on the Samnites after Palaepolis (Livy 8.23-8.25); the Caudine Forks, 321 BC (Livy 9.1-9.12)."}
           - {id: "rome_roads", goal: "adopt", target: "roads", preconditions: {after_year: -313}, note: "Appius Claudius, as censor, makes the road later called the Appian (Livy 9.29)."}
@@ -655,6 +660,8 @@ scenarios:
         navy_bp: 20000
         disposition: cautious
         scripts:
+          - {id: "hiero_joins_rome", goal: "ally", target: "rome", preconditions: {after_year: -265}, depends_on: ["first_punic_war"], note: "Hiero II of Syracuse leaves Carthage for Rome and is its loyal ally from 263 (Polybius 1.16.9-11; unverified: not re-read)."}
+          - {id: "hieronymus_to_carthage", goal: "ally", target: "carthage", preconditions: {after_year: -216}, depends_on: ["hannibals_war"], note: "Hieronymus, Hiero's grandson, breaks with Rome and allies with Carthage, 215 (Livy 24.4-6; unverified: not re-read)."}
           - {id: "timoleon_vs_carthage", goal: "conquer", target: "carthage", preconditions: {after_year: -340}, note: "Timoleon beats the Carthaginians at the Crimisus (340 or 339 BC), and a peace is made on the river Lycus (Diodorus 16.77-16.82)."}
           - {id: "agathocles_in_africa", goal: "conquer", target: "carthage", preconditions: {after_year: -311}, depends_on: ["timoleon_vs_carthage"], note: "Agathocles invades Africa (310 BC): Diodorus 20.3-20.18."}
         capital: si_syracuse
@@ -705,6 +712,8 @@ scenarios:
         navy_bp: 40000
         disposition: mercantile
         scripts:
+          - {id: "carthage_defends_sicily", goal: "conquer", target: "rome", preconditions: {after_year: -266}, note: "Carthage, holding western Sicily, goes to war with Rome over Messana; the First Punic War, 264-241 (Polybius 1.11-1.63; unverified: not re-read for this entry)."}
+          - {id: "hannibals_war", goal: "conquer", target: "rome", preconditions: {after_year: -222}, depends_on: ["first_punic_war"], note: "Saguntum falls (219); Hannibal crosses the Alps and wins at the Ticinus, Trebia, Trasimene and Cannae, 218-216 (Polybius 3.6-17, 3.33-118; unverified: not re-read for this entry)."}
           - {id: "carthage_vs_syracuse", goal: "conquer", target: "syracuse", preconditions: {after_year: -311}, note: "Carthage and Syracuse fight over Sicily again under Agathocles (Diodorus 20)."}
           - {id: "carthage_allies_rome", goal: "ally", target: "rome", preconditions: {after_year: -280}, note: "A further treaty between Rome and Carthage, in the time of Pyrrhus's invasion (Polybius 3.25)."}
         capital: car_carthage
@@ -755,6 +764,7 @@ scenarios:
         navy_bp: 3000
         disposition: aggressive
         scripts:
+          - {id: "philip_allies_hannibal", goal: "ally", target: "carthage", preconditions: {after_year: -216}, depends_on: ["hannibals_war"], note: "Philip V of Macedon makes a treaty with Hannibal after Cannae, 215 (Polybius 7.9; Livy 23.33; unverified: not re-read)."}
           - {id: "macedon_vs_epirus", goal: "conquer", target: "epirus", preconditions: {after_year: -290}, note: "Demetrius drives Pyrrhus out of Macedonia and the two kings fight over it (Plutarch, Pyrrhus 10-12)."}
         capital: mac_macedonia
         leader: "Philip II"

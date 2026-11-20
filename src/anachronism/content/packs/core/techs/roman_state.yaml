@@ -1,0 +1,392 @@
+schema_version: 1
+# Rome's own ideas: institutions, money, letters (F1 ideas, docs/plans/rome.md target 8).
+# A player who starts in 509 BC can bring any of these forward; the year is when Rome really
+# got there. Dating rule and conventions: agriculture.yaml.
+techs:
+  - id: tribunate
+    name: Tribunes of the plebs
+    keywords: [tribune, tribunes, tribune of the plebs, protect the plebs, veto, intercessio, sacrosanct, secession, plebeian officers]
+    category: governance
+    year: -494
+    complexity: 2
+    prerequisites: [republic]
+    resistance: [{group: nobility, level: 2}]
+    effects: [{type: unrest, bp: -200}, {type: legitimacy, bp: 100}]
+    flavour: "Two men the plebs may run to, whom no patrician may touch."
+    history: "After the plebs marched out to the Sacred Mount in 494 BC, the patricians agreed that the plebs should have magistrates of their own, sacrosanct, with the power to help a plebeian against a consul (Livy 2.33.1-3). Their veto later stopped Senate and magistrates alike (Polybius 6.16.4)."
+    sources: ["Livy 2.33.1-3", "Polybius 6.16.4", "Dionysius of Halicarnassus 6.89 # unverified"]
+    confidence: high
+
+  - id: censorship
+    name: The censors' office
+    keywords: [censor, censors, censorship, census reform, lustrum, public contracts, let contracts, morals, review the senate, lectio senatus]
+    category: governance
+    year: -443
+    complexity: 2
+    prerequisites: [census, republic]
+    effects: [{type: wealth_output, bp: 500}, {type: legitimacy, bp: 100}, {type: unrest, bp: -100}]
+    flavour: "Two old consulars count the citizens, let the contracts and shame the unworthy."
+    history: "In 443 BC the census was taken from the consuls and given to two censors, an office that began small and grew to govern the Senate's roll, public morals, the contracts for every public work and the farming of the taxes (Livy 4.8.2-7; Polybius 6.17). Appius Claudius built his road and aqueduct as censor."
+    sources: ["Livy 4.8.2-7 # unverified", "Polybius 6.17.2-4 # unverified", "Livy 9.29.5-6"]
+    confidence: high
+
+  - id: praetor_peregrinus
+    name: A court for foreigners (ius gentium)
+    keywords: [praetor peregrinus, foreigners court, law for foreigners, ius gentium, law of nations, praetor, edict, commercial law, merchants law]
+    category: governance
+    year: -242
+    complexity: 2
+    prerequisites: [written_law, republic]
+    effects: [{type: trade_income, bp: 600}, {type: legitimacy, bp: 100}]
+    flavour: "A judge for suits between Romans and strangers, and a law all peoples share."
+    history: "A second praetor was created in 242 BC to judge suits between citizens and foreigners (Livy, Per. 19; Pomponius in Digest 1.2.2.28); from his edicts grew the ius gentium, the law common to all peoples that Gaius later set beside the civil law (Gaius, Inst. 1.1)."
+    sources: ["Livy, Periochae 19 # unverified", "Digest 1.2.2.28 (Pomponius) # unverified", "Gaius, Institutiones 1.1 # unverified"]
+    confidence: medium
+
+  - id: cursus_honorum
+    name: The ladder of offices (lex Villia annalis)
+    keywords: [cursus honorum, ladder of offices, minimum age, age for office, lex villia, annalis, order of magistracies, career of honours, term limits]
+    category: governance
+    year: -180
+    complexity: 2
+    prerequisites: [republic]
+    resistance: [{group: nobility, level: 1}]
+    effects: [{type: legitimacy, bp: 150}, {type: unrest, bp: -100}]
+    flavour: "Quaestor, then aedile, then praetor, then consul, and not before your fortieth year."
+    history: "The tribune L. Villius carried a law in 180 BC fixing the age at which each office might be sought and held, and his family took the name Annales from it (Livy 40.44.1). Sulla restated the ladder in 81: quaestorship, praetorship, consulship, with ten years between a man's consulships."
+    sources: ["Livy 40.44.1 # unverified", "Appian, Bella civilia 1.100 (Sulla) # unverified"]
+    confidence: high
+
+  - id: jury_courts
+    name: Standing courts (quaestio de repetundis)
+    keywords: [jury, juries, jury courts, quaestio, extortion court, repetundae, try the governors, standing court, prosecute governors, corruption trials]
+    category: governance
+    year: -149
+    complexity: 3
+    prerequisites: [written_law, republic]
+    effects: [{type: legitimacy, bp: 150}, {type: unrest, bp: -100}, {type: wealth_output, bp: 300}]
+    flavour: "A governor who robs his province will answer to fifty jurors in Rome."
+    history: "The lex Calpurnia of 149 BC set up the first permanent court, where provincials could sue a governor for money extorted (Cicero, Brutus 106; De officiis 2.75); Gaius Gracchus gave its juries to the equestrians in 123, and the quarrel over who sat on them ran to the end of the Republic."
+    sources: ["Cicero, Brutus 106 # unverified", "Cicero, De officiis 2.75 # unverified", "Appian, Bella civilia 1.22 # unverified"]
+    confidence: high
+
+  - id: secret_ballot
+    name: The secret ballot (leges tabellariae)
+    keywords: [secret ballot, ballot, written vote, voting tablets, tabella, lex gabinia, vote in secret, free vote, ballot laws]
+    category: governance
+    year: -139
+    complexity: 2
+    prerequisites: [citizen_assembly]
+    resistance: [{group: nobility, level: 3}]
+    effects: [{type: unrest, bp: -200}, {type: legitimacy, bp: 100}, {type: cultural_influence, bp: 300}]
+    flavour: "A tablet dropped in a basket, and no patron sees how his client voted."
+    history: "The lex Gabinia of 139 BC brought the written ballot to elections, the lex Cassia of 137 to trials and the lex Papiria of 131 to laws (Cicero, De legibus 3.35-37); the nobles hated the tablets that freed the voter from his patron's eye, and Cicero's Laelius called the ballot the law that broke the Senate's power (Cicero, De amicitia 41)."
+    sources: ["Cicero, De legibus 3.35-37 # unverified", "Cicero, De amicitia 41 # unverified"]
+    confidence: high
+
+  - id: provincial_governor
+    name: Provinces under governors
+    keywords: [province, provinces, governor, governors, proconsul, propraetor, rule the province, tribute, provincia, tax the provinces]
+    category: governance
+    year: -227
+    complexity: 3
+    prerequisites: [republic]
+    effects: [{type: wealth_output, bp: 800}, {type: trade_income, bp: 400}]
+    flavour: "A praetor and a quaestor, a legion and a tax: a province."
+    history: "Sicily and Sardinia, taken from Carthage, were the first lands Rome ruled rather than allied: two new praetors were created for them in 227 BC (Livy, Per. 20; Solinus 5.1). Spain got two more in 197 (Livy 32.27.6). Governors held power for a year and were tried, sometimes, when they came home."
+    sources: ["Livy, Periochae 20 # unverified", "Solinus 5.1 # unverified", "Livy 32.27.6 # unverified"]
+    confidence: medium
+
+  - id: grain_dole
+    name: Cheap grain for citizens (lex frumentaria)
+    keywords: [grain dole, free grain, cheap grain, bread for the people, frumentatio, lex frumentaria, grain law, feed the plebs, corn dole, annona]
+    category: governance
+    year: -123
+    complexity: 2
+    prerequisites: [census, coinage]
+    resistance: [{group: nobility, level: 2}]
+    effects: [{type: unrest, bp: -300}, {type: population_cap, bp: 400}]
+    flavour: "A modius of grain a month at a fixed price, for every citizen who asks."
+    history: "Gaius Gracchus' grain law of 123 BC sold grain to the poor of Rome below the market price (Plutarch, C. Gracchus 5.2; Appian, BC 1.21); Clodius made it free in 58 (Dio 38.13.1), and by Caesar's day 320,000 drew it (Suet. Iul. 41.3). The Senate called it a bribe and never dared end it."
+    sources: ["Plutarch, C. Gracchus 5.2", "Appian, Bella civilia 1.21 # unverified", "Dio 38.13.1 # unverified", "Suetonius, Iulius 41.3 # unverified"]
+    confidence: high
+
+  - id: acta_diurna
+    name: Published proceedings (acta diurna)
+    keywords: [acta diurna, acta, daily record, publish the senate's debates, public record, gazette, proceedings posted, news posted in the forum]
+    category: knowledge
+    year: -59
+    complexity: 1
+    prerequisites: [writing, republic]
+    effects: [{type: information_speed, bp: 800}, {type: cultural_influence, bp: 300}, {type: legitimacy, bp: 100}]
+    flavour: "What the Senate said yesterday, posted in the Forum today and copied for the provinces."
+    history: "Caesar's first act as consul in 59 BC was to order that the proceedings of Senate and people be compiled and published day by day (Suet. Iul. 20.1). Copies travelled to governors abroad (Cicero, Fam. 8.1.1); Augustus stopped the publication of the Senate's debates (Suet. Aug. 36)."
+    sources: ["Suetonius, Iulius 20.1", "Cicero, Ad familiares 8.1.1 # unverified", "Suetonius, Augustus 36 # unverified"]
+    confidence: high
+
+  - id: military_pay
+    name: Pay for soldiers (stipendium)
+    keywords: [soldiers pay, pay the army, stipendium, military pay, wages for soldiers, paid soldiers, war tax, tributum]
+    category: military
+    year: -406
+    complexity: 2
+    prerequisites: [standard_measures, census]
+    effects: [{type: military_strength, bp: 600}, {type: unrest, bp: -100}]
+    flavour: "Men who are paid can stay in the field through the winter."
+    history: "During the siege of Veii the Senate decreed, before the plebs or their tribunes asked, that soldiers should receive pay from the treasury; nothing was ever welcomed with such delight, though the tribunes asked where the money would come from but a war tax (Livy 4.59.11-60.8, 406 BC). The pay was weighed bronze until coins came."
+    sources: ["Livy 4.59.11-4.60.8", "Diodorus 14.16.5 # unverified"]
+    confidence: high
+
+  - id: denarius
+    name: The denarius
+    keywords: [denarius, denarii, silver denarius, new silver coin, ten asses, sestertius, reform the coinage, silver standard]
+    category: trade
+    year: -211
+    complexity: 2
+    prerequisites: [coinage]
+    effects: [{type: trade_income, bp: 800}, {type: wealth_output, bp: 600}]
+    flavour: "A silver coin worth ten asses, stamped with Roma and the Dioscuri, that the whole world will take."
+    history: "In the crisis of the Hannibalic war Rome recast its money: the silver denarius of ten asses, with the quinarius and sestertius, replacing the old didrachm (Pliny NH 33.44-46 puts the denarius in 269; the hoards of Morgantina date it about 211 BC). It stayed Rome's coin for four hundred years."
+    sources: ["Pliny NH 33.44-46 # unverified", "Crawford, Roman Republican Coinage, on the Morgantina hoards (modern dating, c. 211) # unverified"]
+    confidence: medium
+
+  - id: provincial_coinage
+    name: Coin for the provinces
+    keywords: [provincial coinage, provincial mint, mint abroad, cistophori, coin for the provinces, local coinage, mints in the provinces, roman mint in spain]
+    category: trade
+    year: -133
+    complexity: 2
+    prerequisites: [denarius, provincial_governor]
+    effects: [{type: trade_income, bp: 600}, {type: wealth_output, bp: 400}]
+    flavour: "Let the provinces strike their own silver, as long as the tax comes to Rome in ours."
+    history: "When Rome took Asia in 133 BC it kept the cistophoric tetradrachms of the Attalid cities in circulation and struck them under its governors; Cicero counted his province's money in cistophori (Cicero, Att. 2.6.2, 2.16.4). Rome's moneyers in Spain had struck silver during the Hannibalic war."
+    sources: ["Cicero, Ad Atticum 2.6.2 and 2.16.4 # unverified", "Crawford, Roman Republican Coinage, on the Spanish issues (modern) # unverified"]
+    confidence: low
+
+  - id: grain_fleet
+    name: The grain supply by sea (annona)
+    keywords: [grain fleet, grain ships, grain supply, annona, import grain, sicilian grain, egyptian grain, cura annonae, feed the city by sea, grain from sicily]
+    category: trade
+    year: -57
+    complexity: 3
+    prerequisites: [sailing, standard_measures]
+    effects: [{type: food_output, bp: 800}, {type: storage, bp: 600}]
+    flavour: "Sicily's tithe, Africa's harvest and Egypt's, in ships that must land before the winter closes the sea."
+    history: "Rome lived on grain shipped from Sicily and Sardinia (Cicero, Verr. 2.3 on the Sicilian tithe) and, after 30 BC, Egypt. In 57 BC the Senate gave Pompey charge of the grain supply for five years with power over every harbour (Plutarch, Pompey 49.4-50.1; Cicero, Att. 4.1.7); Augustus made it a standing office under a prefect."
+    sources: ["Cicero, In Verrem 2.3.11-15 # unverified", "Plutarch, Pompey 49.4-50.1 # unverified", "Cicero, Ad Atticum 4.1.7 # unverified", "Dio 39.9.3 # unverified"]
+    confidence: medium
+
+  - id: slave_estates
+    name: Slave-run estates (latifundia)
+    keywords: [latifundia, slave estates, slave labour, slaves on the land, great estates, plantation, ranch, chained slaves, villa estate]
+    category: agriculture
+    year: -200
+    complexity: 2
+    prerequisites: [agriculture]
+    effects: [{type: food_output, bp: 600}, {type: wealth_output, bp: 400}, {type: unrest, bp: 200}]
+    flavour: "Cheap captives work the land the small farmers lost, and the small farmers crowd into Rome."
+    history: "After Hannibal's war the rich bought up the land of ruined farmers and worked it with slaves (Appian, BC 1.7); Cato's handbook staffs an olive farm with thirteen slaves (Cato 10). Pliny said the great estates had ruined Italy (Pliny NH 18.35), and the Gracchi rose against them."
+    sources: ["Appian, Bella civilia 1.7 # unverified", "Cato, De agri cultura 10", "Pliny NH 18.35 # unverified"]
+    confidence: high
+
+  - id: greek_medicine
+    name: Greek physicians
+    keywords: [greek doctor, greek doctors, physician, physicians, greek medicine, hippocrates, surgeon, surgery, asclepiades, medicus]
+    category: health
+    year: -219
+    complexity: 2
+    prerequisites: [herbal_medicine, writing]
+    resistance: [{group: clergy, level: 1}]
+    effects: [{type: health, bp: 600}, {type: knowledge_gain, bp: 200}]
+    flavour: "A Greek with a knife and a fee, whom old Cato calls a murderer."
+    history: "Archagathus of the Peloponnese, the first physician at Rome, was given citizenship and a surgery at the crossroads in 219 BC, and was soon called 'the butcher' for his knife (Pliny NH 29.12-13). Cato warned his son that the Greeks had sworn to kill all barbarians with their medicine (Pliny NH 29.14); Asclepiades made Greek medicine fashionable about 90 BC."
+    sources: ["Pliny NH 29.12-14 # unverified", "Cato in Pliny NH 29.14 # unverified"]
+    confidence: high
+
+  - id: julian_calendar
+    name: The solar calendar (Julian reform)
+    keywords: [julian calendar, leap year, 365 days, fix the calendar, solar year, reform the calendar, calendar reform, intercalate, extra day every four years, sosigenes]
+    category: knowledge
+    year: -46
+    complexity: 2
+    prerequisites: [astronomy_calendar]
+    effects: [{type: food_output, bp: 300}, {type: legitimacy, bp: 150}, {type: knowledge_gain, bp: 300}]
+    flavour: "Three hundred and sixty-five days, and one more every fourth year, whatever the pontiffs say."
+    history: "The pontiffs' intercalations had left the civil year three months ahead of the seasons; Caesar, as pontifex maximus, with the Alexandrian astronomer Sosigenes, made 46 BC a year of 445 days and fixed the year at 365 days with a day added every fourth year (Suet. Iul. 40.1; Plutarch, Caesar 59; Censorinus 20.8-11)."
+    sources: ["Suetonius, Iulius 40.1", "Plutarch, Caesar 59 # unverified", "Censorinus, De die natali 20.8-11 # unverified", "Pliny NH 18.211 (Sosigenes) # unverified"]
+    confidence: high
+
+  - id: shorthand
+    name: Shorthand (notae Tironianae)
+    keywords: [shorthand, tironian notes, notae, stenography, write as fast as speech, take down speeches, signs for words, tiro]
+    category: knowledge
+    year: -63
+    complexity: 1
+    prerequisites: [alphabet]
+    effects: [{type: knowledge_gain, bp: 400}, {type: information_speed, bp: 300}, {type: literacy_growth, bp: 10}]
+    flavour: "Small quick signs that hold a whole word, and a speech is on the tablet before the speaker sits."
+    history: "When Cato spoke on the Catilinarians in 63 BC, Cicero had clerks trained in signs 'which in small and short figures comprised the force of many letters' posted about the Senate house, and so the speech survived (Plutarch, Cato Minor 23.3). The system was credited to Cicero's freedman Tiro; Dio gives it to Maecenas' freedman Aquila (Dio 55.7.6)."
+    sources: ["Plutarch, Cato Minor 23.3", "Dio 55.7.6"]
+    confidence: high
+
+  - id: codex
+    name: The bound book (codex)
+    keywords: [codex, bound book, pages, parchment book, book with pages, turn the pages, membranae, notebook, replace the scroll]
+    category: knowledge
+    year: 85
+    complexity: 1
+    prerequisites: [writing]
+    effects: [{type: knowledge_gain, bp: 500}, {type: literacy_growth, bp: 20}]
+    flavour: "Leaves of parchment sewn at the spine: the whole of Virgil in one hand."
+    history: "Caesar is said to have been the first to fold his dispatches to the Senate into pages like a notebook instead of writing across one sheet (Suet. Iul. 56.6). Martial advertised parchment codices of Virgil, Livy and Cicero that fit one hand (Martial 14.184-192, AD 84-86); the scroll gave way to the book only in the 4th century."
+    sources: ["Suetonius, Iulius 56.6", "Martial 14.184-192 # unverified", "Martial 1.2 # unverified"]
+    confidence: high
+
+  - id: greek_library
+    name: Greek libraries at Rome
+    keywords: [library, libraries, greek books, book collection, scrolls, bibliotheca, collect books, greek learning, perseus library]
+    category: knowledge
+    year: -168
+    complexity: 2
+    prerequisites: [writing, alphabet]
+    effects: [{type: knowledge_gain, bp: 800}, {type: cultural_influence, bp: 300}]
+    flavour: "A king's books, carried home from Macedon in the triumph."
+    history: "Aemilius Paullus, who gave the whole treasure of Macedon to the state in 168 BC, kept for his bookish sons only the books of King Perseus (Plutarch, Aemilius 28.11): the first great library in a Roman house. Sulla brought Aristotle's own books from Athens in 86 (Plutarch, Sulla 26.1) and Lucullus opened his to every Greek in Rome (Plutarch, Lucullus 42.1)."
+    sources: ["Plutarch, Aemilius Paullus 28.11", "Plutarch, Sulla 26.1 # unverified", "Plutarch, Lucullus 42.1 # unverified"]
+    confidence: high
+
+  - id: public_library
+    name: A public library
+    keywords: [public library, library for all, open the library, bibliotheca publica, asinius pollio, atrium libertatis, books for the people, library]
+    category: knowledge
+    builds: library
+    year: -39
+    complexity: 3
+    prerequisites: [greek_library, masonry]
+    effects: [{type: knowledge_gain, bp: 600}, {type: literacy_growth, bp: 20}, {type: cultural_influence, bp: 500}]
+    flavour: "Greek books in one hall, Latin in the other, and the doors open to anyone who can read."
+    history: "Caesar planned public libraries of Greek and Latin books under Varro (Suet. Iul. 44.2) and died first; Asinius Pollio built the first, in the Atrium Libertatis, from the spoils of his Illyrian triumph of 39 BC, and was the first 'to make men's talents public property' (Pliny NH 7.115, 35.10). Augustus added two more. Alexandria's Museum had kept books for three centuries."
+    sources: ["Suetonius, Iulius 44.2", "Pliny NH 7.115 # unverified", "Pliny NH 35.10 # unverified", "Isidore, Etymologiae 6.5.2 # unverified"]
+    confidence: high
+
+  - id: sundial
+    name: The sundial (solarium)
+    keywords: [sundial, solarium, sun dial, gnomon, tell the time, hours of the day, horologium, clock]
+    category: knowledge
+    builds: sundial
+    year: -293
+    complexity: 2
+    prerequisites: [astronomy_calendar, masonry]
+    effects: [{type: knowledge_gain, bp: 300}, {type: labour_output, bp: 200}]
+    flavour: "A shadow on a marked stone, and the city has hours instead of morning and evening."
+    history: "The Twelve Tables knew only sunrise and sunset; the first sundial at Rome was set up by L. Papirius Cursor at the temple of Quirinus in 293 BC, and the one M'. Valerius Messalla brought from Catania in 263 stood by the Rostra and told the wrong time for 99 years, being cut for Sicily's latitude, until Q. Marcius Philippus set a correct one beside it in 164 (Pliny NH 7.212-215; Censorinus 23.6-7)."
+    sources: ["Pliny NH 7.212-215 # unverified", "Censorinus, De die natali 23.6-7 # unverified", "Varro in Pliny NH 7.213 # unverified"]
+    confidence: high
+
+  - id: water_clock
+    name: The water clock (clepsydra)
+    keywords: [water clock, clepsydra, hours at night, time by water, dripping water, clock, horologium ex aqua, ctesibius]
+    category: knowledge
+    builds: water_clock
+    year: -159
+    complexity: 3
+    prerequisites: [sundial]
+    effects: [{type: knowledge_gain, bp: 300}, {type: labour_output, bp: 200}]
+    flavour: "Water dripping into a marked jar tells the hour under a roof, at night and in cloud."
+    history: "Scipio Nasica as censor in 159 BC set up the first water clock at Rome, roofed, that divided the hours of night as well as day (Pliny NH 7.215; Censorinus 23.7); Ctesibius of Alexandria had built the float-and-gear clock Vitruvius describes a century before (Vitr. 9.8.4-7). Roman courts timed speeches by the clepsydra (Pliny, Ep. 2.11.14)."
+    sources: ["Pliny NH 7.215 # unverified", "Censorinus, De die natali 23.7 # unverified", "Vitruvius 9.8.4-7 # unverified", "Pliny, Epistulae 2.11.14 # unverified"]
+    confidence: high
+
+  - id: latin_literature
+    name: Latin letters (poets and plays)
+    keywords: [latin literature, poetry, poets, plays, theatre plays, drama, comedy, tragedy, livius andronicus, plautus, ennius, write in latin, epic]
+    category: knowledge
+    year: -240
+    complexity: 2
+    prerequisites: [alphabet, schools]
+    effects: [{type: cultural_influence, bp: 800}, {type: literacy_growth, bp: 20}, {type: knowledge_gain, bp: 300}]
+    flavour: "A Greek freedman puts Homer into Latin, and Rome discovers it has a literature."
+    history: "Livius Andronicus, a freedman from Tarentum, staged the first Latin play at the games of 240 BC and translated the Odyssey (Cicero, Brutus 72; Gellius 17.21.42); Plautus and Ennius followed within a generation. Before him Rome had songs at banquets and the rough Fescennine verses (Livy 7.2.4-8)."
+    sources: ["Cicero, Brutus 72 # unverified", "Gellius 17.21.42 # unverified", "Livy 7.2.4-8"]
+    confidence: high
+
+  - id: annals
+    name: Written history (the annalists)
+    keywords: [history, historians, annals, annalist, chronicle, write the history of rome, fabius pictor, record the past, annales maximi]
+    category: knowledge
+    year: -200
+    complexity: 2
+    prerequisites: [latin_literature]
+    effects: [{type: knowledge_gain, bp: 500}, {type: legitimacy, bp: 100}, {type: cultural_influence, bp: 300}]
+    flavour: "What the pontiffs wrote on their white board, a senator now writes as a book."
+    history: "The pontifex maximus had posted the year's events on a whitened board since the kings (Cicero, De oratore 2.52); Q. Fabius Pictor, a senator who fought Hannibal, wrote the first history of Rome about 200 BC, in Greek (Livy 1.44.2; Polybius 1.14.1), and Cato's Origines was the first in Latin."
+    sources: ["Cicero, De oratore 2.52 # unverified", "Livy 1.44.2", "Polybius 1.14.1-3 # unverified", "Cornelius Nepos, Cato 3.3 # unverified"]
+    confidence: high
+
+  - id: greek_philosophy
+    name: Greek philosophy at Rome
+    keywords: [philosophy, philosophers, greek philosophy, stoics, epicureans, academy, carneades, teach philosophy, wisdom, lucretius]
+    category: knowledge
+    year: -155
+    complexity: 3
+    prerequisites: [greek_library]
+    resistance: [{group: clergy, level: 1}, {group: nobility, level: 2}]
+    effects: [{type: knowledge_gain, bp: 1000}, {type: cultural_influence, bp: 500}, {type: unrest, bp: 100}]
+    flavour: "Carneades argues for justice one day and against it the next, and Cato wants him gone."
+    history: "The Senate expelled philosophers and rhetors in 161 BC (Gellius 15.11.1). When Athens sent Carneades, Diogenes and Critolaus as envoys in 155, the young flocked to hear them and Cato had the embassy sent home before they corrupted Rome's youth (Plutarch, Cato Maior 22; Pliny NH 7.112). A century later Lucretius and Cicero wrote philosophy in Latin."
+    sources: ["Gellius 15.11.1 # unverified", "Plutarch, Cato Maior 22.1-5 # unverified", "Pliny NH 7.112 # unverified"]
+    confidence: high
+
+  - id: rhetoric_school
+    name: Schools of Latin rhetoric
+    keywords: [rhetoric, rhetoric school, oratory, orators, public speaking, rhetors, teach speaking, latin rhetors, declamation, eloquence]
+    category: knowledge
+    year: -93
+    complexity: 2
+    prerequisites: [schools, latin_literature]
+    resistance: [{group: nobility, level: 2}]
+    effects: [{type: literacy_growth, bp: 20}, {type: legitimacy, bp: 100}, {type: cultural_influence, bp: 400}]
+    flavour: "Any man's son may learn to sway the Forum, and the censors do not like it."
+    history: "Greek rhetors taught at Rome from the 2nd century; when Latin teachers of rhetoric opened schools, the censors of 92 BC, Crassus and Domitius, issued an edict against them as a novelty 'contrary to the custom of our ancestors' (Suet. De rhetoribus 1; Gellius 15.11.2). The schools won: Cicero studied under them."
+    sources: ["Suetonius, De rhetoribus 1 # unverified", "Gellius 15.11.2 # unverified", "Cicero, De oratore 3.93-94 # unverified"]
+    confidence: high
+
+  - id: centuriation
+    name: Land survey and allotment (centuriation)
+    keywords: [centuriation, land survey, survey the land, allot land, land allotment, iugera, limites, centuria, divide the land, settle colonists, land grid]
+    category: agriculture
+    year: -329
+    complexity: 3
+    prerequisites: [surveying]
+    effects: [{type: food_output, bp: 500}, {type: legitimacy, bp: 100}, {type: population_cap, bp: 300}]
+    flavour: "A grid of roads and ditches across the conquered plain, and two iugera to every settler."
+    history: "Roman surveyors cut conquered land into squares of 200 iugera (centuriae) along two great axes and allotted it to colonists: Tarracina received 300 settlers with two iugera each in 329 BC (Livy 8.21.11). Frontinus and Hyginus wrote the surveyors' handbooks; the grids still mark the Po valley."
+    sources: ["Livy 8.21.11 # unverified", "Frontinus, De limitibus # unverified", "Hyginus Gromaticus, Constitutio limitum # unverified", "Siculus Flaccus, De condicionibus agrorum # unverified"]
+    confidence: high
+
+  - id: veteran_colonies
+    name: Land for veterans
+    keywords: [veterans, veteran colonies, land for soldiers, settle the veterans, discharge grant, soldiers farms, colonies of veterans, agrarian law for soldiers]
+    category: governance
+    year: -100
+    complexity: 3
+    prerequisites: [centuriation, military_pay]
+    resistance: [{group: nobility, level: 2}]
+    effects: [{type: military_strength, bp: 400}, {type: population_cap, bp: 300}]
+    flavour: "A farm for every man who served, and an army that follows the general who promises it."
+    history: "Saturninus carried a law in 100 BC giving Marius' veterans land in Africa and Gaul, 100 iugera each (Appian, BC 1.29-30); Sulla settled twenty-three legions on confiscated Italian land in 81 (Appian, BC 1.100). From then on soldiers looked to their general, not the Senate, for their farms."
+    sources: ["Appian, Bella civilia 1.29-30 # unverified", "Appian, Bella civilia 1.100 # unverified", "Plutarch, Marius 29 # unverified"]
+    confidence: high
+
+  - id: street_paving
+    name: Paved city streets
+    keywords: [pave the streets, street paving, paved streets, flint paving, silex, pavements, clean streets, gravel roads, city streets]
+    category: construction
+    year: -174
+    complexity: 2
+    prerequisites: [roads]
+    effects: [{type: health, bp: 300}, {type: trade_income, bp: 300}, {type: mobility, bp: 200}]
+    flavour: "Basalt blocks under the carts, and the mud of the Subura becomes a street."
+    history: "The censors of 174 BC, Q. Fulvius Flaccus and A. Postumius Albinus, were the first to contract for paving the streets of the city with flint (silex) and the roads outside with gravel, with footpaths and the stone steps at the Tiber (Livy 41.27.5-8). The Via Appia had been paved outside the gate since 296 (Livy 10.23.12)."
+    sources: ["Livy 41.27.5-8", "Livy 10.23.12 # unverified"]
+    confidence: high

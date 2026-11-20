@@ -192,3 +192,35 @@ tales:
     terrain: [forest]
     lines:
       - "In the forest at {place} the {loser} column, three miles long and slowed by its baggage, was cut to pieces from the trees over three days of rain."
+
+  # --- Roman tales (F1 ideas): how the legions' battles are told, from the sources ---------
+  - id: roman_lines_relieve   # Livy 8.8.9-13 (the hastati, principes and triarii relieving one another)
+    civs: [rome]
+    kind: infantry
+    rout: false
+    lines:
+      - "At {place} the {winner} hastati fought until they tired, then fell back through the gaps and the principes took up the fight; when it came to the triarii, the {loser} line was already wavering."
+      - "Line by line the {winner} {unit} relieved one another at {place}, and the {loser} host, which had no second line, broke against the third."
+  - id: roman_pila   # Polybius 6.23; Caesar, BG 1.25 (the pila at Bibracte)
+    civs: [rome]
+    kind: infantry
+    rout: true
+    lines:
+      - "The {winner} {unit} threw their pila at fifteen paces at {place}; the {loser} shields, pinned together by the bent iron, were thrown down, and the swords finished it."
+  - id: roman_camp_sally   # Polybius 6.27-42; Plutarch, Pyrrhus 16.5
+    civs: [rome]
+    terrain: [hills, plains, river_plains]
+    rout: false
+    lines:
+      - "The {loser} host found the {winner} camp at {place} ditched and palisaded in a night; they attacked it at dawn and were beaten from the rampart and then from the field."
+  - id: roman_siege_lines   # Caesar, BG 7.69-88 (Alesia); Livy 5.19-21 (Veii)
+    civs: [rome]
+    kind: siege
+    lines:
+      - "The {winner} ringed {place} with ditch and rampart and waited; when hunger drove the {loser} out against the lines they died on the stakes."
+  - id: roman_cavalry_wings   # Polybius 15.12-14 (Zama); Livy 30.34-35
+    civs: [rome]
+    kind: mounted
+    lines:
+      - "The {winner} horse drove the {loser} wings from the field at {place}, and came back in time to fall on the rear of a line that was still holding."
+

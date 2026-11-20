@@ -27,6 +27,7 @@ from anachronism.content.schema.rome_society import Grain, Land
 from anachronism.engine.culture import trade_income
 from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import BP, apply_bp, clamp
+from anachronism.engine.provinces_rome import held as provincia_held
 from anachronism.engine.rivals import at_war
 from anachronism.engine.rng import GameRng
 from anachronism.engine.rome_society_state import RomeSocietyState
@@ -197,13 +198,20 @@ def supply_bp(state: GameState, year: int) -> tuple[int, list[str]]:
     total = max(0, rules.home_share_bp - grown * rules.home_fade_per_100k_bp)
     held: list[str] = []
     owner = state.player_civ
+    provinciae = _provinciae(state)
     for supply in sorted(rules.supplies, key=lambda s: s.id):
         if supply.from_year is not None and year < supply.from_year:
             continue
-        mine = [p for p in supply.provinces if p in state.provinces]
+        definition = state.world.provinciae.get(supply.provincia or "")
+        if definition is not None and supply.provincia in provinciae:
+            # the Italy agent's province: the parts of it Rome holds feed the city
+            mine = [p for p in definition.provinces if p in state.provinces]
+            have = len(provincia_held(state, definition))
+        else:
+            mine = [p for p in supply.provinces if p in state.provinces]
+            have = sum(1 for p in mine if state.provinces[p].owner == owner)
         if not mine:
             continue
-        have = sum(1 for p in mine if state.provinces[p].owner == owner)
         if have:
             total += supply.share_bp * have // len(mine)
             held.append(supply.id)
@@ -262,14 +270,37 @@ def _trade_bonus_bp(state: GameState, year: int) -> int:
     return sum(r.trade_bonus_bp for r in reforms if r.year <= year)
 
 
+def _provinciae(state: GameState) -> set[str]:
+    """The provinciae the Italy agent has constituted (empty without its state)."""
+    rep = state.republic
+    return set(rep.italy.provinciae) if rep is not None else set()
+
+
+def taxed_by_provinciae(state: GameState) -> set[str]:
+    """Map provinces inside a constituted provincia: Italy's ``_tribute`` taxes these."""
+    out: set[str] = set()
+    for pid in sorted(_provinciae(state)):
+        definition = state.world.provinciae.get(pid)
+        if definition is not None:
+            out.update(definition.provinces)
+    return out
+
+
+def provincial_tribute(state: GameState) -> int:
+    """What the provinciae paid last year (the Italy agent's figure, for the view)."""
+    rep = state.republic
+    return sum(p.tribute for p in rep.italy.provinciae.values()) if rep is not None else 0
+
+
 def tribute_due(state: GameState) -> int:
-    """What the conquered provinces pay this year."""
+    """What conquered land outside the provinciae pays this year (they pay through Italy)."""
     rules = state.world.rome_society.coinage.tribute
     owner = state.player_civ
+    skip = taxed_by_provinciae(state)
     total = 0
     for pid in state.owned_provinces(owner):
         province = state.provinces[pid]
-        if province.people in (None, owner) or pid in rules.exempt:
+        if province.people in (None, owner) or pid in rules.exempt or pid in skip:
             continue
         total += province.population // 1000 * rules.per_1000
     return total

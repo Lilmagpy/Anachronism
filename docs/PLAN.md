@@ -24,6 +24,12 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
   - [x] Persuade, back a candidate and put matters to the Senate as replay-safe actions (`engine/senate.py`, D-286.1)
   - [ ] Client panel for the Republic view and the Senate proposals
 - [ ] R3 Italy and the world: peoples of Italy, allies, citizenship, colonies, overseas powers, provinces and governors
+  - [x] F1: treaties and levies of the socii, the ladder of rights and the census, the Social War and the Lex Iulia (`engine/allies.py`, D-300)
+  - [x] F1: real colonies by history and by the Senate's vote (`engine/colonies.py`, `rome/colonies.yaml`)
+  - [x] F1: provinciae from 227 with yearly governors, tribute, extortion, the lex Calpurnia, revolts (`engine/provinces_rome.py`)
+  - [x] F1: the overseas powers' missing scripts in `rome_509/390/340/264` (Punic, Samnite, Macedonian, Jugurthine, Mithridatic wars)
+  - [ ] Pyrrhus, Macedon and the eastern kingdoms as civs in the 509 and 390 starts (no civs there yet: scripts cannot be added)
+  - [ ] Client panels for the `italy` view (allies, colonies, provinces, prosecutions in the Senate tab)
 - [ ] R4 Army, economy, religion
   - [x] Army groundwork: 8 army techs, 36 units, 5 formations, 8 tactics, 15 sourced battles (D-288)
 - [ ] R5 The city of Rome: topography, dated monuments, Roman kit forms, the city visit

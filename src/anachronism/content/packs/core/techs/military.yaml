@@ -1,77 +1,91 @@
 schema_version: 1
+# Arms, in Roman terms (see agriculture.yaml for the dating rule; the Roman army's own
+# systems are in army_rome.yaml).
 techs:
   - id: horse_riding
-    name: Horse riding
-    keywords: [horse riding, cavalry, horses, riders, mounted]
+    name: Horsemen (equites)
+    keywords: [horse riding, cavalry, horses, riders, mounted, equites, celeres, knights, horsemen]
     category: military
     year: -3500
     complexity: 1
     requires: {materials: [horses]}
     effects: [{type: mobility, bp: 800}, {type: military_strength, bp: 500}]
     flavour: On horseback, a day's walk becomes an hour's ride.
-    history: "Horses were tamed on the Eurasian steppes, perhaps by 3500 BC; mounted warriors came much later, around 900 BC."
+    history: "Romulus' bodyguard of three hundred Celeres rode (Livy 1.15.8) and Servius Tullius enrolled eighteen centuries of horsemen, each given a public horse (Livy 1.43.8-9). Rome's horse was never its strength: the allies gave three times as many riders (Polybius 6.26.7)."
+    sources: ["Livy 1.15.8", "Livy 1.43.8-9", "Polybius 6.26.7"] # unverified
+    confidence: high
 
   - id: composite_bow
-    name: Composite bow
-    keywords: [composite bow, bows, archery, archers]
+    name: Archers (Cretan auxiliaries)
+    keywords: [composite bow, bows, archery, archers, cretan archers, sagittarii, bowmen]
     category: military
     year: -2000
     complexity: 2
     effects: [{type: military_strength, bp: 800}]
-    flavour: Horn, wood and sinew glued into a bow small enough to shoot from the saddle.
-    history: "Bows of horn, wood and sinew were in use on the steppes and in Mesopotamia by 2000 BC."
+    flavour: Horn, wood and sinew glued into a bow, drawn by hired islanders.
+    history: "Romans despised the bow and hired it: Cretan archers served with Rome from the Hannibalic war and stood in the line at Magnesia (Livy 37.41.9, 190 BC) and Pydna. The composite bow of horn and sinew was two thousand years old on the steppes."
+    sources: ["Livy 37.41.9 # unverified", "Polybius 10.29 (Cretan archers) # unverified"]
+    confidence: medium
 
   - id: chariot
-    name: War chariot
-    keywords: [chariot, chariots, war cart]
+    name: The chariot (racing and triumph)
+    keywords: [chariot, chariots, war cart, quadriga, biga, racing chariot, circus chariot]
     category: military
     year: -2000
     complexity: 2
     prerequisites: [wheel, horse_riding, bronze_working]
     requires: {materials: [horses]}
     effects: [{type: military_strength, bp: 1000}]
-    flavour: Two horses, two wheels, one archer and a terrified enemy.
-    history: "Light spoked chariots appeared around 2000 BC near the Urals (the Sintashta culture) and swept across the Near East."
+    flavour: Two horses, two wheels, and a crowd of two hundred thousand.
+    history: "Rome's chariots raced in the Circus and carried the triumphing general in his quadriga (Livy 1.35.8-9 on the first games; Livy 10.7.10); as a weapon Rome met them only among the Britons (Caesar, BG 4.33). The war chariot had swept the Near East about 2000 BC."
+    sources: ["Livy 1.35.8-9", "Livy 10.7.10 # unverified", "Caesar, De bello Gallico 4.33"]
+    confidence: high
 
   - id: fortification
-    name: Stone fortifications
-    keywords: [walls, fortification, fort, forts, castle, defences, defenses, great wall]
+    name: City walls (the Servian wall)
+    keywords: [walls, fortification, fort, forts, castle, defences, defenses, great wall, city wall, servian wall, agger, rampart, gates]
     category: military
     year: -3000
     complexity: 2
     prerequisites: [masonry]
     effects: [{type: military_strength, bp: 600}]
     flavour: Walls turn a raid into a siege, and a siege into a gamble.
-    history: "Jericho had a stone wall and tower by 8000 BC; walled cities were common across the Near East by 3000 BC."
+    history: "After the Gauls sacked Rome, the censors of 378 BC contracted for a wall of squared stone (Livy 6.32.1), the circuit of about 11 km with its earth rampart (agger) on the east that tradition called Servius Tullius' (Livy 1.44.3). Jericho was walled seven thousand years before."
+    sources: ["Livy 6.32.1", "Livy 1.44.3", "Platner-Ashby s.v. Murus Servii Tullii"] # unverified
+    confidence: high
 
   - id: crossbow
-    name: Crossbow
-    keywords: [crossbow, crossbows, trigger, bolts]
+    name: Torsion artillery (scorpio, ballista)
+    keywords: [crossbow, crossbows, trigger, bolts, scorpio, scorpion, ballista, catapult, catapults, artillery, gastraphetes, torsion, siege engines, stone thrower]
     category: military
-    year: -600
+    year: -212
     complexity: 3
     prerequisites: [bronze_working]
     effects: [{type: military_strength, bp: 1200}]
-    flavour: A peasant with a month's drill can kill a noble with a lifetime's.
-    history: "Crossbows were in use in China by the 5th century BC; Europe only took them up widely in the Middle Ages."
+    flavour: Sinew springs wound in a frame, and a bolt that goes through two men.
+    history: "Dionysius of Syracuse's engineers invented the catapult in 399 BC (Diodorus 14.42.1); Archimedes' engines held Syracuse against Marcellus (Polybius 8.5-7, 212 BC) and Scipio took 120 catapults and 281 ballistae at New Carthage (Livy 26.47.5-6, 209). Vitruvius gives the Roman proportions (Vitr. 10.10-11). The hand crossbow was Chinese; the Roman manuballista is imperial."
+    sources: ["Diodorus 14.42.1 # unverified", "Polybius 8.5-7 # unverified", "Livy 26.47.5-6 # unverified", "Vitruvius 10.10-11 # unverified"]
+    confidence: medium
 
   - id: stirrup
     name: Stirrups
-    keywords: [stirrup, stirrups, saddle, lance]
+    keywords: [stirrup, stirrups, saddle, lance, foot loops]
     category: military
-    year: 300
+    year: 700
     complexity: 1
     prerequisites: [horse_riding]
     requires: {materials: [horses]}
     effects: [{type: military_strength, bp: 1000}, {type: mobility, bp: 400}]
     flavour: Two loops of leather, and the rider stops falling off.
-    history: "Paired stirrups were used in China by about AD 300 and reached Europe in the 700s."
+    history: "Roman horsemen rode on a four-horned saddle with no stirrups and vaulted up by a mounting stone, as the ones Gaius Gracchus set by his roads (Plut. C. Gracchus 7.2). Paired stirrups were Chinese by AD 300 and reached Europe with the Avars about 700."
+    sources: ["Plutarch, C. Gracchus 7.2", "Vegetius 1.18 (vaulting onto the horse) # unverified"]
+    confidence: medium
 
   - id: gunpowder
     name: Gunpowder
     keywords: [gunpowder, black powder, explosives, fire powder, saltpetre, saltpeter, bombs, cannon, guns]
     category: military
-    year: 850
+    year: 1267
     complexity: 4
     visibility: 3
     prerequisites: [alchemy, charcoal_burning]
@@ -79,4 +93,6 @@ techs:
     resistance: [{group: clergy, level: 1}]
     effects: [{type: military_strength, bp: 1500}]
     flavour: Saltpetre, sulphur and charcoal. The alchemists wanted eternal life.
-    history: "Chinese alchemists searching for an elixir of life found gunpowder around AD 850; weapons followed by 1000."
+    history: "Rome's fire weapons were pitch, tow and sulphur in pots (Livy 21.8.10-12, the falarica at Saguntum); the powder that explodes was found by Chinese alchemists about AD 850 and first written down in Europe by Roger Bacon in 1267."
+    sources: ["Livy 21.8.10-12 # unverified", "Roger Bacon, Opus Maius (1267) # unverified"]
+    confidence: medium

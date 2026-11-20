@@ -44,6 +44,9 @@ scenarios:
         navy_bp: 500
         disposition: aggressive
         scripts:
+          - {id: "jugurthine_war", goal: "conquer", target: "numidia", preconditions: {after_year: -112}, note: "The Senate goes to war after the massacre at Cirta (112); Metellus and then Marius wear Jugurtha down; Sulla takes him (105) (Sallust, Jugurtha 26-27, 43-114; unverified: not re-read)."}
+          - {id: "first_mithridatic_war", goal: "conquer", target: "pontus", preconditions: {after_year: -89}, note: "Mithridates VI overruns Asia (88); Sulla beats his armies at Chaeronea and Orchomenus and makes peace at Dardanus (85) (Appian, Mithridatica 22-23, 41-49, 55-58; unverified: not re-read)."}
+          - {id: "third_mithridatic_war", goal: "conquer", target: "pontus", preconditions: {after_year: -74}, depends_on: ["first_mithridatic_war"], note: "Nicomedes IV's bequest of Bithynia (74) sets off the war; Lucullus, then Pompey by the Manilian law (66), finish Mithridates (Appian, Mithridatica 70-121; unverified: not re-read)."}
           - {id: "first_punic_war", goal: "conquer", target: "carthage", preconditions: {after_year: -266}, note: "Rome crosses to Sicily and the First Punic War begins (264-241 BC). Polybius 1.11-1.63."}
           - {id: "seize_sardinia", goal: "conquer", target: "carthage", preconditions: {after_year: -240, before_year: -232}, depends_on: ["first_punic_war"], note: "Rome takes Sardinia from a Carthage crippled by the Mercenary War and adds 1,200 talents (238 BC). Polybius 1.88.8-12."}
           - {id: "first_illyrian_war", goal: "conquer", target: "e2_illyrians", preconditions: {after_year: -231}, depends_on: ["first_punic_war"], note: "Rome sends fleet and legions across the Adriatic against Queen Teuta (229 BC). Polybius 2.8-12."}
@@ -732,6 +735,7 @@ scenarios:
         navy_bp: 0
         disposition: aggressive
         scripts:
+          - {id: "jugurtha_vs_rome", goal: "conquer", target: "rome", preconditions: {after_year: -112, before_year: -104}, note: "Jugurtha bribes his way past the Senate and sends Aulus Albinus' army under the yoke at Suthul (110) (Sallust, Jugurtha 28-39; unverified: not re-read)."}
           - {id: "masinissa_joins_rome", goal: "ally", target: "rome", preconditions: {after_year: -206}, depends_on: ["scipio_in_africa"], note: "Masinissa leaves Carthage for Scipio and fights at Zama (206-202 BC). Livy 28.35, 30.29-35."}
           - {id: "masinissa_vs_carthage", goal: "conquer", target: "carthage", preconditions: {after_year: -170}, note: "Masinissa's Numidia nibbles at Carthage's lands (from 160 BC)."}
         capital: num_massyli
@@ -770,6 +774,7 @@ scenarios:
       macedon:
         disposition: aggressive
         scripts:
+          - {id: "philip_allies_hannibal", goal: "ally", target: "carthage", preconditions: {after_year: -216}, depends_on: ["hannibals_war"], note: "Philip V of Macedon makes a treaty with Hannibal after Cannae, 215 (Polybius 7.9; Livy 23.33; unverified: not re-read)."}
           - {id: "chremonidean_war", goal: "conquer", target: "athens", preconditions: {after_year: -266}, note: "Antigonus Gonatas besieges Athens, which surrenders in 261 BC."}
           - {id: "macedon_vs_achaea", goal: "conquer", target: "achaea", preconditions: {after_year: -245}, note: "Macedon and the Achaean League struggle for the Peloponnese."}
         capital: mac_macedonia
@@ -917,6 +922,7 @@ scenarios:
         # are the chapter years, and each leaves office in his chapter.
         successors: [{name: "Scopas", age: 40, disposition: "aggressive", until: -218}, {name: "Agelaus of Naupactus", age: 45, disposition: "cautious", until: -216}, {name: "Scopas", age: 46, disposition: "aggressive", until: -210}, {name: "Pyrrhias", age: 40, until: -206}, {name: "Phaeneas", age: 45, until: -198}, {name: "Thoas", age: 45, disposition: "aggressive", until: -192}, {name: "Phaeneas", age: 52, disposition: "cautious", until: -150}]
         scripts:
+          - {id: "aetolia_calls_antiochus", goal: "ally", target: "seleucid", preconditions: {after_year: -193}, note: "The Aetolians, cheated of their hopes after Cynoscephalae, call in Antiochus (192) (Livy 35.32-33, 35.43; unverified: not re-read)."}
           - {id: "aetolian_raids", goal: "conquer", target: "achaea", preconditions: {after_year: -230}, note: "The Aetolian League raids the Peloponnese (220s BC)."}
         capital: aet_aetolia
         pitch: "Mountain warriors and a federal league: lead Greece your own way."
@@ -1172,6 +1178,9 @@ scenarios:
           roads: adopted
           piston_bellows: adopted
       pontus:
+        scripts:
+          - {id: "mithridates_vs_bithynia", goal: "conquer", target: "bithynia", preconditions: {after_year: -91}, note: "The war over the Bithynian throne (91-90), where Roman legates restore Nicomedes IV (Appian, Mithridatica 10-11; unverified: not re-read)."}
+          - {id: "mithridates_invades_asia", goal: "conquer", target: "rome", preconditions: {after_year: -89}, depends_on: ["mithridates_vs_bithynia"], note: "Mithridates invades Asia (88) and has all Italians in its cities killed in one day (Appian, Mithridatica 22-23; unverified: not re-read)."}
         disposition: cautious
         capital: pon_pontus
         leader: Ariobarzanes
@@ -1276,6 +1285,7 @@ scenarios:
       seleucid:
         disposition: aggressive
         scripts:
+          - {id: "antiochus_in_greece", goal: "conquer", target: "rome", preconditions: {after_year: -193, before_year: -188}, note: "Antiochus III crosses to Greece at the Aetolians' call (192), is beaten at Thermopylae (191) and at Magnesia (190) (Livy 35.43-36.19, 37.37-44; unverified: not re-read)."}
           - {id: "second_syrian_war", goal: "conquer", target: "ptolemaic", preconditions: {after_year: -262}, note: "Antiochus II fights Ptolemy II for Syria (260-253 BC)."}
           - {id: "seleucids_vs_pergamon", goal: "conquer", target: "pergamon", preconditions: {after_year: -240}, note: "Attalus I defeats the Seleucids and Galatians (c. 230 BC)."}
         capital: sel_syria

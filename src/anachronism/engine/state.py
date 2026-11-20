@@ -13,10 +13,12 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from anachronism.content.schema import (
     Access,
+    AllyTreaty,
     AlmanacEntry,
     Building,
     Chapter,
     CityTimeline,
+    ColonyFoundation,
     Dilemma,
     Disposition,
     EffectType,
@@ -29,10 +31,12 @@ from anachronism.content.schema import (
     Gens,
     Happening,
     HistoricalPerson,
+    ItalyRules,
     Magistracy,
     MapResource,
     Monument,
     ProvinceGeography,
+    ProvinciaDefinition,
     RelationStatus,
     RepublicRules,
     Rules,
@@ -141,6 +145,11 @@ class World(Frozen):
     """The Fasti by year: whom history elected."""
     rome_society: RomeSociety = Field(default_factory=RomeSociety)  # F1 rome_society (R4)
     """Priesthoods, prodigies, cults, land, grain, coin and the legion's eras."""
+    # F1 italy: allies, colonies and provinces (R3), only in Republic scenarios
+    italy_rules: ItalyRules = Field(default_factory=ItalyRules)
+    treaties: dict[str, AllyTreaty] = Field(default_factory=dict)
+    colonies: dict[str, ColonyFoundation] = Field(default_factory=dict)
+    provinciae: dict[str, ProvinciaDefinition] = Field(default_factory=dict)
 
 
 class Construction(Mutable):

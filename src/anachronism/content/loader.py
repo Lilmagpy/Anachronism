@@ -21,12 +21,14 @@ from anachronism.content.schema import (
     CURRENT_SCHEMA_VERSION,
     LIST_KINDS,
     SINGLE_KINDS,
+    AllyTreaty,
     AlmanacEntry,
     Battle,
     Building,
     Chapter,
     CityTimeline,
     CivDefinition,
+    ColonyFoundation,
     Dialogue,
     Dilemma,
     EffectType,
@@ -36,11 +38,13 @@ from anachronism.content.schema import (
     Gens,
     Happening,
     HistoricalPerson,
+    ItalyRules,
     Magistracy,
     MapResource,
     Monument,
     PackManifest,
     ProvinceGeography,
+    ProvinciaDefinition,
     RepublicRules,
     Rules,
     Scenario,
@@ -102,6 +106,11 @@ class Content:
     city_timeline: Mapping[str, CityTimeline] = field(default_factory=dict)
     """Chance events (plague, flood, bumper harvests...)."""
     rome_society: RomeSociety = field(default_factory=RomeSociety)  # F1 rome_society (R4)
+    # F1 italy: allies, colonies and provinces (R3)
+    italy_rules: ItalyRules = field(default_factory=ItalyRules)
+    treaties: Mapping[str, AllyTreaty] = field(default_factory=dict)
+    colonies: Mapping[str, ColonyFoundation] = field(default_factory=dict)
+    provinciae: Mapping[str, ProvinciaDefinition] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
@@ -203,6 +212,11 @@ def load_content(pack_ids: Sequence[str] | None = None, root: Path = PACKS_DIR) 
         monuments=registry.monuments,
         city_timeline=registry.city_timeline,
         rome_society=bundle_rome_society(registry),  # F1 rome_society (R4)
+        # F1 italy
+        italy_rules=registry.italy_rules or ItalyRules(),
+        treaties=registry.treaties,
+        colonies=registry.colonies,
+        provinciae=registry.provinciae,
         digest=digest.hexdigest(),
     )
 

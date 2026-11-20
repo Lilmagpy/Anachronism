@@ -6,7 +6,7 @@ from typing import Any
 
 from anachronism.engine.legions import era_at, would_march_on_rome
 from anachronism.engine.religion import books_open, year_label
-from anachronism.engine.roman_economy import estates_bp
+from anachronism.engine.roman_economy import estates_bp, provincial_tribute
 from anachronism.engine.state import GameState
 
 
@@ -103,6 +103,7 @@ def rome_society_view(state: GameState) -> dict[str, Any] | None:
             "trade_bonus_bp": coin.trade_bonus_bp,
             "trade_bonus": coin.trade_bonus,
             "tribute": coin.tribute,
+            "provincial_tribute": provincial_tribute(state),
         },
         "debt": {
             "debt_bp": land.debt_bp,

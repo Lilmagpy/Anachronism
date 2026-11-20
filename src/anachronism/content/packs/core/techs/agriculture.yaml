@@ -1,43 +1,56 @@
 schema_version: 1
-# year = approximate first historical appearance anywhere (placeholder values pending the
-# Phase 5 source review, see DECISIONS D-040). complexity 1-5 drives cost and duration.
+# Ideas measured against what Rome knew (docs/plans/rome.md, target 8; F1 ideas).
+# year = the year ROME had the idea (negative = BC): its first attested Roman use, or the year
+# it reached the Mediterranean world Rome could learn from; where Rome never had it, the year
+# it reached Europe. What Rome already had when the Republic began (509 BC) keeps the old
+# world's first date, since nothing a game starts with can be ahead of its time. Suspicion
+# and "N years ahead of its time" are measured against it.
+# history = our history told in Roman terms (shown to the player); sources = the passages
+# (author and section; "# unverified" where the passage was not re-read this round).
+# complexity 1-5 is the Roman engineer's difficulty and drives cost and duration.
 techs:
   - id: agriculture
     name: Agriculture
-    keywords: [farming, farms, crops, planting, sowing, seeds, harvest, grain]
+    keywords: [farming, farms, crops, planting, sowing, seeds, harvest, grain, wheat, spelt, far, villa, farm]
     category: agriculture
     year: -9500
     complexity: 1
     visibility: 1
     effects: [{type: food_output, bp: 1000}]
     flavour: Seed saved is a harvest promised.
-    history: "First in the Fertile Crescent, around 9500 BC: wheat, barley and lentils sown by villagers along the Levant and upper Euphrates."
+    history: "Latium was farmed long before Rome: spelt (far) was the old Roman grain, and the first Roman prose book is Cato's On Agriculture (about 160 BC), a landowner's handbook of ploughing, vines and olives."
+    sources: ["Cato, De agri cultura, praef. and 1-3", "Pliny NH 18.62 (far the first food of the Latins)"] # unverified
+    confidence: high
 
   - id: irrigation
-    name: Irrigation canals
-    keywords: [irrigate, irrigation, canals, ditches, watering, river water, river, rivers, floodwater, channels, dykes, rice paddies, paddy, paddies]
+    name: Drainage and irrigation channels
+    keywords: [irrigate, irrigation, canals, ditches, watering, river water, river, rivers, floodwater, channels, dykes, drainage, drain the fields, drain the marsh, cuniculi, cuniculus, pomptine marshes, rice paddies, paddy, paddies]
     category: agriculture
     year: -6000
     complexity: 2
     prerequisites: [agriculture]
     effects: [{type: food_output, bp: 1000}, {type: population_cap, bp: 500}]
-    flavour: The river is taught to walk into the fields.
-    history: "In Mesopotamia by about 6000 BC, farmers led the Tigris and Euphrates into their fields through dug channels."
+    flavour: The water is taught where to go, out of the fields or into them.
+    history: "Latins and Etruscans drained rather than watered: the cuniculi, rock-cut tunnels that drain the valleys of Latium, date from about the 6th century, and Tarquin drained the Forum valley into the Tiber (Livy 1.38.6). Cato tells the farmer to keep his ditches open (Cato 155). Caesar planned to drain the Pomptine marshes (Suet. Iul. 44.3)."
+    sources: ["Livy 1.38.6", "Cato, De agri cultura 155", "Suetonius, Iulius 44.3", "the cuniculi of Latium: archaeology, 6th-5th c. (unverified date)"]
+    confidence: medium
 
   - id: ox_plough
     name: Ox-drawn plough
-    keywords: [plough, plow, oxen, ox, tilling, furrows]
+    keywords: [plough, plow, oxen, ox, tilling, furrows, aratrum, yoke]
     category: agriculture
     year: -4000
     complexity: 2
     prerequisites: [agriculture]
     effects: [{type: food_output, bp: 800}, {type: labour_output, bp: 400}]
     flavour: One ox does the digging of ten men.
-    history: "Ox-drawn ploughs were turning the soil of Mesopotamia by about 4000 BC."
+    history: "Romulus marked the city's boundary with a bronze ploughshare drawn by a bull and a cow (Plutarch, Romulus 11.2; Varro LL 5.143): the ox-plough is as old as Rome's own founding legend. Cato lists the ploughs to buy at Rome and Suessa (Cato 135)."
+    sources: ["Plutarch, Romulus 11.2", "Varro, De lingua Latina 5.143", "Cato, De agri cultura 135"] # unverified
+    confidence: high
 
   - id: iron_plough
     name: Iron-tipped plough
-    keywords: [iron plough, iron plow, ploughshare, mouldboard]
+    keywords: [iron plough, iron plow, ploughshare, vomer, mouldboard, iron share]
     category: agriculture
     year: -500
     complexity: 2
@@ -45,35 +58,41 @@ techs:
     requires: {materials: [iron]}
     effects: [{type: food_output, bp: 1000}, {type: labour_output, bp: 500}]
     flavour: An iron share bites where wood only scratches.
-    history: "Iron ploughshares were common in China and the Mediterranean by about 500 BC."
+    history: "Italian farmers tipped the plough with iron from the early Republic; Pliny describes the kinds of share (vomer), including one with a coulter that cuts the sod before the share lifts it (Pliny NH 18.171-172)."
+    sources: ["Pliny NH 18.171-172"] # unverified
+    confidence: medium
 
   - id: heavy_plough
-    name: Heavy mouldboard plough
-    keywords: [heavy plough, wheeled plough, clay soil, mouldboard plough]
+    name: Wheeled heavy plough
+    keywords: [heavy plough, wheeled plough, clay soil, mouldboard plough, plaumoratum]
     category: agriculture
-    year: 600
+    year: 77
     complexity: 3
     prerequisites: [iron_plough]
     requires: {materials: [iron]}
     effects: [{type: food_output, bp: 1200}]
     flavour: It turns the heavy wet soils nobody could farm before.
-    history: "The heavy wheeled mouldboard plough opened the wet clay soils of northern Europe from about AD 600."
+    history: "Pliny reports a plough on two small wheels, the plaumoratum, 'invented not long ago in Raetian Gaul' (Pliny NH 18.172, AD 77): the Po valley knew the wheeled plough in the Empire. The true mouldboard plough that opened northern Europe came only about AD 600."
+    sources: ["Pliny NH 18.172"] # unverified
+    confidence: medium
 
   - id: horse_collar
     name: Horse collar
     keywords: [horse collar, harness, draught horse, padded collar]
     category: agriculture
-    year: 500
+    year: 900
     complexity: 2
     prerequisites: [ox_plough, horse_riding]
     requires: {materials: [horses]}
     effects: [{type: labour_output, bp: 600}, {type: food_output, bp: 600}, {type: mobility, bp: 500}]
     flavour: A padded collar, and suddenly the horse can pull without choking.
-    history: "The padded horse collar was developed in China by the 5th century AD and reached Europe around AD 900."
+    history: "Roman horses pulled with a yoke and a throat strap that choked them under a heavy load, so oxen drew the carts and ploughs; the law of Theodosius limited a carriage team's load to 1,000 Roman pounds (Cod. Theod. 8.5.8). The padded collar came from China (5th c.) and reached Europe about AD 900."
+    sources: ["Codex Theodosianus 8.5.8 (AD 357)", "Lefebvre des Noettes on the ancient harness (modern, disputed)"] # unverified
+    confidence: medium
 
   - id: crop_rotation
     name: Three-field crop rotation
-    keywords: [crop rotation, rotate crops, fallow, three field, legumes, clover, rotation]
+    keywords: [crop rotation, rotate crops, fallow, three field, legumes, clover, rotation, lupines, beans, manure the soil]
     category: agriculture
     year: 800
     complexity: 2
@@ -81,4 +100,6 @@ techs:
     prerequisites: [ox_plough]
     effects: [{type: food_output, bp: 1200}, {type: population_cap, bp: 600}]
     flavour: Beans one year, grain the next, rest the third. The soil remembers.
-    history: "Three-field rotation spread across Frankish Europe from about AD 800."
+    history: "Romans fallowed every other year and knew that lupines and beans ploughed in fed the soil (Varro RR 1.44.2-3; Columella 2.10.1; Pliny NH 18.187). The regular three-field cycle, with a spring sowing, came only in Frankish Europe about AD 800."
+    sources: ["Varro, De re rustica 1.44.2-3", "Columella 2.10.1", "Pliny NH 18.187"] # unverified
+    confidence: medium

@@ -25,7 +25,8 @@ const U := 10.0   ## metres per kit unit
 ## Models drawn in this file (everything else in Roman.KINDS comes from the kit, roman.gd).
 const OWN := ["plaza", "comitium", "aedicula", "altar", "altar_enclosure", "basin", "arch", "column_monument",
 	"hut", "bridge_stone", "bridge_timber", "sewer", "circus_maximus", "quay", "long_hall", "shipsheds",
-	"tomb_drum", "tomb_pyramid", "tomb_rock", "wall", "aqueduct", "portico_enclosure"]
+	"tomb_drum", "tomb_pyramid", "tomb_rock", "wall", "aqueduct", "portico_enclosure",
+	"sundial", "water_clock", "statio_vigilum", "mill", "rotunda_dome", "road_paved"]   # F1 ideas: the anachronisms' forms
 
 ## What is still missing from roman.gd (nothing from the original list; kept for the report).
 const TODO_KIT := {}
@@ -125,8 +126,12 @@ static func _dims(model: String, st: Dictionary) -> Dictionary:
 
 static func _default_height(model: String, w: float, l: float) -> float:
 	match model:
-		"plaza", "quay": return 0.0
+		"plaza", "quay", "road_paved": return 0.0
 		"platform": return 2.0
+		"sundial": return 2.5   # F1 ideas
+		"water_clock": return 6.0
+		"statio_vigilum": return 9.0
+		"mill": return 7.0
 		"comitium": return 1.5
 		"aedicula": return 4.0
 		"altar", "altar_enclosure": return 1.5
@@ -321,6 +326,12 @@ static func _standing(out: Dictionary, rec: Dictionary, st: Dictionary, d: Dicti
 		"tomb_drum": _tomb_drum(out, d)
 		"tomb_pyramid": _tomb_pyramid(out, d)
 		"tomb_rock": _tomb_rock(out, d)
+		"sundial": _sundial(out, d)   # F1 ideas: the works the player's ideas raise (anachronisms.gd)
+		"water_clock": _water_clock(out, d)
+		"statio_vigilum": _statio_vigilum(out, d)
+		"mill": _mill(out, d)
+		"rotunda_dome": _rotunda_dome(out, d)
+		"road_paved": _road_paved(out, d, route, ground)
 		_:
 			if Roman.KINDS.has(model):
 				_kit(out, model, d, float(UNIFORM_DIAM.get(model, 0.0)))
@@ -1109,3 +1120,167 @@ static func to_library(mesh: ArrayMesh, unit := U) -> ArrayMesh:
 		out.surface_set_material(out.get_surface_count() - 1, UrbsMaterials.get_material(name))
 	_lib_cache[key] = out
 	return out
+
+
+# ---------------------------------------------------------------------------------------------
+# F1 ideas: the forms of the works the player's ideas raise before their time (anachronisms.gd).
+# Each is a plain Kit form in metres, centred, front +z, like the own forms above.
+# ---------------------------------------------------------------------------------------------
+
+
+## A sundial on a pillar by the Rostra (Pliny NH 7.213-215): three steps, a short column, a
+## sloping dial slab with its hour lines and a bronze gnomon.
+static func _sundial(out: Dictionary, d: Dictionary) -> void:
+	var k := Kit.new()
+	var w := maxf(float(d.w), 2.5)
+	var h := maxf(float(d.h), 2.2)
+	var c := Roman.TRAVERT
+	k.box(Vector3.ZERO, Vector3(w * 1.4, 0.25, w * 1.4), c.darkened(0.05), Kit.STONE)
+	k.box(Vector3(0, 0.25, 0), Vector3(w * 1.1, 0.25, w * 1.1), c, Kit.STONE)
+	k.frustum(Vector3(0, 0.5, 0), w * 0.18, w * 0.16, h - 1.1, Roman.PEPERINO, Kit.STONE, 10)
+	k.box(Vector3(0, h - 0.6, 0), Vector3(w * 0.9, 0.15, w * 0.9), c, Kit.STONE)
+	# the dial: a slab sloping down towards the front (south), the hour lines as thin dark strips
+	k.wedge(Vector3(0, h - 0.45, -w * 0.4), w * 0.8, w * 0.8, 0.35, Roman.MARBLE, Kit.STONE)
+	for i in 5:
+		var a := -0.9 + 0.45 * i
+		k.box(Vector3(sin(a) * w * 0.3, h - 0.42 + 0.17 * absf(cos(a)), -w * 0.1 + cos(a) * w * 0.12),
+			Vector3(0.03, 0.03, w * 0.3), Roman.DARK_C, Kit.DARK, a)
+	k.rod(Vector3(0, h - 0.3, -w * 0.25), Vector3(0, h + 0.15, w * 0.1), 0.03, Roman.BRONZE, Kit.GOLD)
+	_add(out, k.finish())
+	_box_shape(out, Vector3(0, h * 0.5, 0), Vector3(w * 1.4, h, w * 1.4))
+
+
+## Scipio Nasica's roofed water clock (Pliny NH 7.215): a square aedicula of four columns under
+## a tiled hip roof, the tall clock jar inside with its float rod and the hour drum.
+static func _water_clock(out: Dictionary, d: Dictionary) -> void:
+	var k := Kit.new()
+	var w := maxf(float(d.w), 4.0)
+	var h := maxf(float(d.h), 5.5)
+	var c := Roman.TRAVERT
+	k.box(Vector3.ZERO, Vector3(w * 1.2, 0.4, w * 1.2), c, Kit.STONE)
+	for sx: float in [-1.0, 1.0]:
+		for sz: float in [-1.0, 1.0]:
+			Roman._col(k, Vector3(sx * w * 0.45, 0.4, sz * w * 0.45), h * 0.62, "tuscan", Roman.PEPERINO, Kit.STONE, 0)
+	k.box(Vector3(0, 0.4 + h * 0.62, 0), Vector3(w * 1.15, 0.3, w * 1.15), c, Kit.STONE)
+	k.hip_roof(Vector3(0, 0.7 + h * 0.62, 0), w * 1.3, w * 1.3, h * 0.25, 0.3, 0.15, Roman.TERRA, Kit.TILE)
+	k.cylinder(Vector3(0, 0.4, 0), w * 0.22, h * 0.5, Roman.BRONZE, Kit.GOLD, 12)   # the jar
+	k.rod(Vector3(0, 0.4 + h * 0.5, 0), Vector3(0, 0.4 + h * 0.6, 0), 0.03, Roman.BRONZE, Kit.GOLD)
+	k.cylinder(Vector3(w * 0.3, 0.4, 0), w * 0.1, h * 0.45, Roman.MARBLE, Kit.STONE, 10)   # the hour drum
+	_add(out, k.finish())
+	_box_shape(out, Vector3(0, h * 0.5, 0), Vector3(w * 1.3, h, w * 1.3))
+
+
+## A station of the vigiles: a courtyard block of two storeys, a wide gate on the front for the
+## pump carts, a tiled roof on the four wings and a water tank in the court.
+static func _statio_vigilum(out: Dictionary, d: Dictionary) -> void:
+	var k := Kit.new()
+	var w := maxf(float(d.w), 24.0)
+	var l := maxf(float(d.l), 20.0)
+	var h := maxf(float(d.h), 8.0)
+	var t := 4.5
+	Roman._ring(k, 0.0, 0.0, w / 2, l / 2, t, 0.0, h, Roman.BRICK_C, Kit.BRICK)
+	k.box(Vector3(0, h, -l / 2 + t / 2), Vector3(w, 0.3, t), Roman.PEPERINO, Kit.STONE)
+	for wing in [[0.0, -l / 2 + t / 2, w, t], [0.0, l / 2 - t / 2, w, t], [-w / 2 + t / 2, 0.0, t, l], [w / 2 - t / 2, 0.0, t, l]]:
+		k.gable_roof(Vector3(wing[0], h, wing[1]), wing[2], wing[3], 1.6, 0.4, 0.15, Roman.TERRA, Kit.TILE)
+	var gate := minf(5.0, w * 0.25)
+	k.box(Vector3(0, 0.0, l / 2 - t / 2), Vector3(gate, h * 0.55, t + 0.2), Roman.DARK_C, Kit.DARK)
+	k.box(Vector3(0, 0.0, 0), Vector3(w * 0.25, 1.0, l * 0.2), Roman.TRAVERT, Kit.STONE)   # the tank
+	k.box(Vector3(0, 0.6, 0), Vector3(w * 0.22, 0.35, l * 0.17), Roman.WATER_C, Kit.WATER)
+	_add(out, k.finish())
+	_box_shape(out, Vector3(0, h * 0.5, 0), Vector3(w, h + 1.6, l))
+
+
+## A water mill on the bank (Vitruvius 10.5.2): a small block under a tiled roof, the undershot
+## wheel on its right flank, a leat beside it.
+static func _mill(out: Dictionary, d: Dictionary) -> void:
+	var k := Kit.new()
+	var w := maxf(float(d.w), 7.0)
+	var l := maxf(float(d.l), 9.0)
+	var h := maxf(float(d.h), 6.0)
+	k.box(Vector3.ZERO, Vector3(w, h * 0.7, l), Roman.STUCCO, Kit.PLASTER)
+	k.gable_roof(Vector3(0, h * 0.7, 0), w, l, h * 0.3, 0.5, 0.15, Roman.TERRA, Kit.TILE)
+	k.door(Vector3(0, 0, l / 2), 0.0, 1.6, 2.4, Roman.DWOOD)
+	var r := h * 0.42
+	var cx := w / 2 + 0.6
+	k.push(Kit.at(Vector3(cx, r + 0.2, 0), 0.0))
+	k.push(Transform3D(Basis(Vector3.FORWARD, 0.0) * Basis(Vector3.UP, PI / 2.0), Vector3.ZERO))
+	for i in 12:   # the wheel: twelve paddles round an axle
+		var a := i * TAU / 12.0
+		k.box(Vector3(cos(a) * r * 0.85, sin(a) * r * 0.85 - 0.15, 0), Vector3(0.9, 0.3, 1.6), Roman.DWOOD, Kit.TIMBER, 0.0)
+		k.rod(Vector3.ZERO, Vector3(cos(a) * r, sin(a) * r, 0), 0.06, Roman.WOOD, Kit.TIMBER)
+	k.pop()
+	k.pop()
+	k.rod(Vector3(w / 2 - 0.5, r + 0.2, 0), Vector3(cx + 1.0, r + 0.2, 0), 0.18, Roman.DWOOD, Kit.TIMBER)
+	k.box(Vector3(cx, 0, 0), Vector3(2.2, 0.4, l * 1.6), Roman.PEPERINO, Kit.STONE)   # the leat
+	k.box(Vector3(cx, 0.25, 0), Vector3(1.6, 0.2, l * 1.55), Roman.WATER_C, Kit.WATER)
+	_add(out, k.finish())
+	_box_shape(out, Vector3(0, h * 0.5, 0), Vector3(w, h, l))
+
+
+## A concrete rotunda under a hemispherical dome with an oculus and a columned porch in front
+## (the Pantheon's plan: drum as high as the dome's rise, the whole as high as it is wide).
+static func _rotunda_dome(out: Dictionary, d: Dictionary) -> void:
+	var k := Kit.new()
+	var r := maxf(float(d.r), maxf(float(d.w), 10.0) * 0.5)
+	var h := maxf(float(d.h), r * 2.0)
+	var drum := h - r
+	var c := Roman.BRICK_C
+	k.cylinder(Vector3.ZERO, r, drum, c, Kit.BRICK, 32)
+	k.cylinder(Vector3(0, drum * 0.45, 0), r + 0.6, 0.5, Roman.TRAVERT, Kit.STONE, 32)   # a string course
+	k.dome(Vector3(0, drum, 0), r, Roman.STUCCO_W, Kit.PLASTER, 1.0, 7, 32)
+	k.cylinder(Vector3(0, drum + r * 0.93, 0), r * 0.2, 0.6, Roman.BRONZE, Kit.GOLD, 16)   # the oculus ring
+	var pw := minf(r * 1.6, 34.0)
+	var pd := minf(r * 0.65, 14.0)
+	var ph := drum * 0.75
+	k.box(Vector3(0, 0, r + pd / 2), Vector3(pw, 1.5, pd), Roman.TRAVERT, Kit.STONE)
+	for i in 8:
+		var x := -pw / 2 + pw * 0.06 + (pw * 0.88) * i / 7.0
+		Roman._col(k, Vector3(x, 1.5, r + pd - 1.5), ph - 3.0, "corinthian", Roman.MARBLE, Kit.STONE, 1)
+	k.box(Vector3(0, ph - 1.5, r + pd / 2), Vector3(pw, 1.5, pd), Roman.MARBLE, Kit.STONE)
+	k.gable_roof(Vector3(0, ph, r + pd / 2), pw, pd, pw * 0.14, 0.4, 0.25, Roman.BRONZE, Kit.GOLD)
+	k.box(Vector3(0, 0, r), Vector3(6.0, ph * 0.7, 2.0), Roman.DARK_C, Kit.DARK)   # the doorway
+	_add(out, k.finish())
+	_box_shape(out, Vector3(0, h * 0.5, 0), Vector3(r * 2.0, h, r * 2.0))
+	_box_shape(out, Vector3(0, ph * 0.5, r + pd / 2), Vector3(pw, ph + pw * 0.14, pd))
+
+
+## A paved road along a route (the Via Appia outside the Porta Capena): basalt slabs 4.1 m wide
+## for `d.l` metres from the route's start, with a kerb and a milestone at the end. World frame.
+static func _road_paved(out: Dictionary, d: Dictionary, route: PackedVector2Array, ground: Callable) -> void:
+	out.world = true
+	if route.size() < 2:
+		return
+	var total := _route_length(route)
+	var length := minf(maxf(float(d.l), 100.0), total)
+	var w := maxf(float(d.w), 4.1)
+	var k := Kit.new()
+	var s := 0.0
+	var seg := 10.0
+	var last := Vector2.ZERO
+	var last_dir := Vector2.DOWN
+	while s < length:
+		var a := _route_at(route, s)
+		var b := _route_at(route, minf(s + seg, length))
+		var pa: Vector2 = a.pos
+		var pb: Vector2 = b.pos
+		var len := pa.distance_to(pb)
+		if len < 0.5:
+			break
+		var dir := (pb - pa) / len
+		var y: float = maxf(float(ground.call(pa.x, pa.y)), float(ground.call(pb.x, pb.y))) if ground.is_valid() else 10.0
+		var mid := (pa + pb) * 0.5
+		k.push(Kit.at(Vector3(mid.x, y + 0.05, mid.y), Roman.yaw_z(dir)))
+		k.box(Vector3.ZERO, Vector3(w, 0.25, len + 0.2), Roman.DARK_C.lightened(0.18), Kit.STONE)
+		k.box(Vector3(-w / 2 - 0.3, 0, 0), Vector3(0.6, 0.35, len + 0.2), Roman.TRAVERT.darkened(0.1), Kit.STONE)
+		k.box(Vector3(w / 2 + 0.3, 0, 0), Vector3(0.6, 0.35, len + 0.2), Roman.TRAVERT.darkened(0.1), Kit.STONE)
+		k.pop()
+		last = pb
+		last_dir = dir
+		s += seg
+	var side := Vector2(-last_dir.y, last_dir.x) * (w / 2 + 1.2)
+	var ly: float = float(ground.call(last.x + side.x, last.y + side.y)) if ground.is_valid() else 10.0
+	k.cylinder(Vector3(last.x + side.x, ly, last.y + side.y), 0.35, 2.2, Roman.TRAVERT, Kit.STONE, 10)   # the milestone
+	var mesh := k.finish()
+	_add(out, mesh)
+	var aabb := mesh.get_aabb()
+	_box_shape(out, aabb.get_center(), aabb.size)

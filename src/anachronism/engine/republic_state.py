@@ -8,6 +8,7 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field
 
 from anachronism.content.schema import Order
+from anachronism.engine.italy_state import ItalyState  # F1 italy
 
 
 class _Mutable(BaseModel):
@@ -132,3 +133,4 @@ class RepublicState(_Mutable):
     colonies of its own yet, so this is a flag)."""
     ballots: list[Ballot] = Field(default_factory=list)
     """The most recent matters the player put to the Senate, oldest first."""
+    italy: ItalyState = Field(default_factory=ItalyState)  # F1 italy: allies, colonies, provinces

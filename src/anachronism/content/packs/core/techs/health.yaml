@@ -1,19 +1,22 @@
 schema_version: 1
+# Health, in Roman terms (see agriculture.yaml for the dating rule).
 techs:
   - id: herbal_medicine
-    name: Herbal medicine
-    keywords: [medicine, herbs, herbal, remedies, doctors, healing]
+    name: Household medicine
+    keywords: [medicine, herbs, herbal, remedies, doctors, healing, cabbage, cures, medicus]
     category: health
     year: -2500
     complexity: 1
     visibility: 1
     effects: [{type: health, bp: 500}]
-    flavour: Willow bark for fever, honey for wounds.
-    history: "Egyptian and Mesopotamian healers wrote down hundreds of remedies; the Ebers papyrus (about 1550 BC) lists over 700."
+    flavour: Cabbage for every ailment, wine for the rest.
+    history: "For six hundred years Rome had no physicians (Pliny NH 29.12); the father of the house healed with charms and herbs, and Cato's book prescribes cabbage, wine and incantations for a dislocation (Cato 156-160). The first Greek doctor, Archagathus, came in 219 BC."
+    sources: ["Pliny NH 29.11-13 # unverified", "Cato, De agri cultura 156-160"]
+    confidence: high
 
   - id: quarantine
     name: Quarantine
-    keywords: [quarantine, isolation, isolate the sick, plague, contagion]
+    keywords: [quarantine, isolation, isolate the sick, plague, contagion, pestilence]
     category: health
     year: 1377
     complexity: 2
@@ -21,25 +24,30 @@ techs:
     resistance: [{group: guilds, level: 1}]
     effects: [{type: health, bp: 1000}]
     flavour: Forty days at anchor before the ship may land.
-    history: "Ragusa (Dubrovnik) ordered ships from plague ports to wait forty days in 1377 - 'quaranta giorni'."
+    history: "Rome met pestilence with vows, lectisternia and the Sibylline Books (Livy 7.2.1-3, 7.27.1), never by shutting the sick away. Ragusa first held ships from plague ports forty days in 1377, 'quaranta giorni'."
+    sources: ["Livy 7.2.1-3", "Livy 7.27.1"] # unverified
+    confidence: medium
 
   - id: sanitation
-    name: Sanitation
-    keywords: [sanitation, sewers, sewage, latrines, hygiene, drains, wash hands, soap]
+    name: Sewers and public latrines (cloacae)
+    keywords: [sanitation, sewers, sewage, latrines, hygiene, drains, wash hands, soap, cloaca, cloaca maxima, great sewer, drain the city, public latrine, sewers under the streets, sewer, underground drains]
     category: health
-    year: 1850
+    builds: sewer_outfall
+    year: -184
     complexity: 3
     prerequisites: [masonry]
     requires: {widespread: [masonry]}
-    effects: [{type: health, bp: 1500}, {type: population_cap, bp: 600}]
-    flavour: Keep the drains away from the wells, and whole plagues simply stop.
-    history: "After cholera and the 'Great Stink' of 1858, London built sewers that kept waste from drinking water."
+    effects: [{type: health, bp: 1000}, {type: population_cap, bp: 600}]
+    flavour: Keep the filth under the streets and in the river, and the city breathes.
+    history: "The Cloaca Maxima that drained the Forum was the kings' work (Livy 1.38.6, 1.56.2); the censors of 184, Cato and Flaccus, had the sewers cleaned, new ones dug under the Aventine and the public water cut off from private houses (Livy 39.44.5). Vaulting them in stone and the public latrines came with the 2nd century; London's sewers against cholera came in 1858."
+    sources: ["Livy 1.38.6", "Livy 1.56.2", "Livy 39.44.5", "Platner-Ashby s.v. Cloaca Maxima"]
+    confidence: high
 
   - id: inoculation
     name: Inoculation
     keywords: [inoculation, vaccine, vaccination, variolation, smallpox, immunity]
     category: health
-    year: 1500
+    year: 1721
     complexity: 3
     visibility: 3
     prerequisites: [herbal_medicine]
@@ -47,4 +55,6 @@ techs:
     resistance: [{group: clergy, level: 2}]
     effects: [{type: health, bp: 1500}, {type: population_cap, bp: 300}]
     flavour: A scratch of mild pox today spares a child the deadly kind tomorrow.
-    history: "Variolation against smallpox was practised in China and India by the 1500s; Lady Mary Wortley Montagu brought it to England in 1721."
+    history: "The Antonine plague of AD 165 killed Romans by the thousand and Galen could only describe it (Galen, Meth. med. 5.12). Variolation was practised in China and India by the 1500s; Lady Mary Wortley Montagu brought it to England in 1721."
+    sources: ["Galen, Methodus medendi 5.12 # unverified"]
+    confidence: medium
