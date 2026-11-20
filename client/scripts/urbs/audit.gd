@@ -71,6 +71,23 @@ func _initialize() -> void:
 	var houses := _houses(height, radius)
 	out.year.houses_in_monuments = houses[0]
 	out.year.houses_on_streets = houses[1]
+	# F2: monuments standing on a foundation or terrace where the ground falls more than 1 m under them
+	var founded := []
+	var slopes := []
+	var fids: Array = _mon.ids()
+	fids.sort()
+	for id in fids:
+		var pl: Dictionary = _mon._placed.get(id, {})
+		if float(pl.get("drop", 0.0)) > 1.0 and not bool(pl.get("world", false)):
+			founded.append("%s on a %.1f m foundation (%s)" % [id, float(pl.drop), _model(id)])
+			var c: Vector2 = pl.centre
+			var hf: Vector2 = pl.get("half", Vector2.ZERO)
+			slopes.append({"id": id, "model": _model(id), "x": snappedf(c.x, 0.01), "z": snappedf(c.y, 0.01),
+				"yaw": float(pl.yaw), "hx": snappedf(hf.x, 0.01), "hz": snappedf(hf.y, 0.01),
+				"drop": snappedf(float(pl.drop), 0.01), "ground": snappedf(UrbsTerrain.height_at(c.x, c.y), 0.01),
+				"platform": UrbsSite.platform_at(c.x, c.y)})
+	out.year["founded"] = founded
+	out.year["slopes"] = slopes   # for city_audit.py --terraces
 	out.year["seconds"] = (Time.get_ticks_msec() - t0) / 1000.0
 	print("URBS_AUDIT " + JSON.stringify(out))
 	quit()
@@ -105,6 +122,10 @@ func _footprint(id: String) -> Dictionary:
 	var c: Vector2 = p.centre
 	var w := float(p.width)
 	var l := float(p.length)
+	var hf: Vector2 = p.get("half", Vector2.ZERO)   # the plan size monuments.gd placed it by
+	if hf.x > 0.0 and hf.y > 0.0:
+		w = hf.x * 2.0
+		l = hf.y * 2.0
 	if w <= 0.0 or l <= 0.0:
 		var n: Vector3 = p.native
 		w = n.x
@@ -196,7 +217,7 @@ func _ground() -> Array:
 		var founded := bool(p.get("skirted", false)) or str(p.get("base_mode", "lo")) == "hi"
 		if base - lo > FLOAT_M and not founded:
 			floating.append("%s base %.1f m above the ground at a corner" % [id, base - lo])
-		if hi - base > BURY_M:
+		if hi - base > BURY_M and not bool(p.get("retains", false)):   # F2: built against the hill
 			buried.append("%s ground %.1f m above its base at a corner" % [id, hi - base])
 	return [floating, buried]
 
@@ -272,6 +293,7 @@ func _houses(height: Callable, radius: float) -> Array:
 			continue
 		fps.append(Rect2(b.position.x, b.position.z, b.size.x, b.size.z))
 	fill.footprints = fps
+	fill.obstacles = _mon.oriented_footprints()   # as UrbsFill.build does
 	fill.prepare()
 	var rects := {}
 	for id in _mon.ids():

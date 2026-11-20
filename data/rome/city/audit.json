@@ -1,75 +1,46 @@
 {
  "counts": {
   "133 BC": {
-   "standing": 150,
-   "total": 150
+   "standing": 152,
+   "total": 152
   },
   "264 BC": {
-   "standing": 108,
-   "total": 108
+   "standing": 109,
+   "total": 109
   },
   "27 BC": {
    "building": 2,
    "burnt": 2,
-   "standing": 178,
-   "total": 182
+   "standing": 181,
+   "total": 185
   },
   "390 BC": {
-   "standing": 71,
-   "total": 71
+   "standing": 73,
+   "total": 73
   },
   "44 BC": {
    "building": 3,
    "burnt": 1,
-   "standing": 167,
+   "standing": 170,
    "standing_scaffold": 1,
-   "total": 172
+   "total": 175
   },
   "509 BC": {
-   "standing": 62,
-   "total": 62
+   "standing": 66,
+   "total": 66
   },
   "AD 120": {
    "burnt": 1,
-   "standing": 228,
-   "total": 229
+   "standing": 231,
+   "total": 232
   },
   "AD 80": {
    "burnt": 1,
-   "standing": 211,
-   "total": 212
+   "standing": 214,
+   "total": 215
   }
  },
- "dates": [
-  {
-   "id": "forum_romanum",
-   "issue": "509 BC: engine planned, drawn standing"
-  },
-  {
-   "id": "forum_romanum",
-   "issue": "390 BC: engine planned, drawn standing"
-  },
-  {
-   "id": "forum_romanum",
-   "issue": "264 BC: engine planned, drawn standing"
-  },
-  {
-   "id": "theatrum_scauri",
-   "issue": "44 BC: engine standing, drawn absent"
-  },
-  {
-   "id": "theatrum_scauri",
-   "issue": "27 BC: engine standing, drawn absent"
-  },
-  {
-   "id": "theatrum_scauri",
-   "issue": "AD 80: engine standing, drawn absent"
-  },
-  {
-   "id": "theatrum_scauri",
-   "issue": "AD 120: engine standing, drawn absent"
-  }
- ],
+ "dates": [],
  "excluded": [
   {
    "key": "A#Adonidis_Aula",
@@ -4668,6 +4639,7 @@
    "source": "platner",
    "targets": [
     "basilica_sempronia",
+    "domus_scipionis_africani",
     "horrea_sempronia"
    ],
    "title": "Basilica Sempronia"
@@ -4746,11 +4718,11 @@
    "title": "P. Scipio Africanus"
   },
   {
-   "how": "name",
+   "how": "P-A citation",
    "key": "domus#Q.Lutatius_Catulus",
    "source": "platner",
    "targets": [
-    "domus_catuli"
+    "domus_fulvii_flacci"
    ],
    "title": "Q. Lutatius Catulus"
   },
@@ -6353,13 +6325,13 @@
    "short_ratio": 1.31
   },
   {
-   "axis_diff": 3.9,
+   "axis_diff": 0.0,
    "flags": [
     "size"
    ],
    "id": "pons_fabricius",
    "long_ratio": 0.94,
-   "ours_axis": 38.0,
+   "ours_axis": 41.9,
    "ours_long_m": 62.0,
    "ours_short_m": 5.5,
    "outline_axis": 41.9,
@@ -6945,6 +6917,15 @@
    ]
   },
   {
+   "built": -205,
+   "id": "domus_scipionis_africani",
+   "pa": "Basilica Sempronia",
+   "pa_key": "basilicae#Sempronia",
+   "pa_years": [
+    -170
+   ]
+  },
+  {
    "built": -123,
    "id": "horrea_sempronia",
    "pa": "Basilica Sempronia",
@@ -6963,8 +6944,8 @@
    ]
   },
   {
-   "built": -101,
-   "id": "domus_catuli",
+   "built": -130,
+   "id": "domus_fulvii_flacci",
    "pa": "Q. Lutatius Catulus",
    "pa_key": "domus#Q.Lutatius_Catulus",
    "pa_years": [
@@ -7176,25 +7157,6 @@
    "tolerance_m": 20.0
   },
   {
-   "bearing_to_reference": 162,
-   "distance_m": 47.8,
-   "id": "pons_cestius",
-   "ours": [
-    -679.0,
-    227.8
-   ],
-   "overrides": "exact",
-   "pleiades": "211668069",
-   "reference": [
-    -664.0,
-    273.2
-   ],
-   "reference_accuracy_m": 20.0,
-   "status": "misplaced",
-   "title": "Pons Cestius",
-   "tolerance_m": 20.0
-  },
-  {
    "bearing_to_reference": 49,
    "distance_m": 44.9,
    "id": "theatrum_marcelli",
@@ -7309,25 +7271,6 @@
    "tolerance_m": 10.0
   },
   {
-   "bearing_to_reference": 128,
-   "distance_m": 21.4,
-   "id": "pons_fabricius",
-   "ours": [
-    -602.2,
-    144.7
-   ],
-   "overrides": "exact",
-   "pleiades": "68481414",
-   "reference": [
-    -585.2,
-    157.7
-   ],
-   "reference_accuracy_m": 20.0,
-   "status": "misplaced",
-   "title": "Pons Fabricius",
-   "tolerance_m": 20.0
-  },
-  {
    "bearing_to_reference": 304,
    "distance_m": 20.0,
    "id": "mausoleum_augusti",
@@ -7401,6 +7344,25 @@
    "reference_accuracy_m": 20.0,
    "status": "ok",
    "title": "Theatrum Pompei",
+   "tolerance_m": 20.0
+  },
+  {
+   "bearing_to_reference": 199,
+   "distance_m": 17.2,
+   "id": "pons_cestius",
+   "ours": [
+    -658.5,
+    256.9
+   ],
+   "overrides": "exact",
+   "pleiades": "211668069",
+   "reference": [
+    -664.0,
+    273.2
+   ],
+   "reference_accuracy_m": 20.0,
+   "status": "ok",
+   "title": "Pons Cestius",
    "tolerance_m": 20.0
   },
   {
@@ -8392,6 +8354,25 @@
    "tolerance_m": 20.0
   },
   {
+   "bearing_to_reference": 237,
+   "distance_m": 0.1,
+   "id": "pons_fabricius",
+   "ours": [
+    -585.2,
+    157.7
+   ],
+   "overrides": "exact",
+   "pleiades": "68481414",
+   "reference": [
+    -585.2,
+    157.7
+   ],
+   "reference_accuracy_m": 20.0,
+   "status": "ok",
+   "title": "Pons Fabricius",
+   "tolerance_m": 20.0
+  },
+  {
    "bearing_to_reference": 225,
    "distance_m": 0.0,
    "id": "porta_esquilina",
@@ -8733,9 +8714,9 @@
    "source": "Platner-Ashby s.v. Circus Maximus"
   },
   {
-   "detail": "up to 68 m from the drawn wall, at (1361, -1033); 7 m from the measured line (route_measured)",
+   "detail": "up to 7 m from the drawn wall, at (1361, -1033); 7 m from the measured line (route_measured)",
    "name": "surviving stretch 1 of the Servian wall (near porta_viminalis) on the wall drawn through the gates",
-   "ok": false,
+   "ok": true,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
@@ -8757,25 +8738,25 @@
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 85 m from the drawn wall, at (1332, -152); 0 m from the measured line (route_measured)",
+   "detail": "up to 0 m from the drawn wall, at (1332, -152); 0 m from the measured line (route_measured)",
    "name": "surviving stretch 5 of the Servian wall (near porta_esquilina) on the wall drawn through the gates",
-   "ok": false,
+   "ok": true,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 95 m from the drawn wall, at (1419, -610); 10 m from the measured line (route_measured)",
+   "detail": "up to 10 m from the drawn wall, at (1419, -610); 10 m from the measured line (route_measured)",
    "name": "surviving stretch 6 of the Servian wall (near porta_esquilina) on the wall drawn through the gates",
-   "ok": false,
+   "ok": true,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 129 m from the drawn wall, at (752, -1523); 0 m from the measured line (route_measured)",
+   "detail": "up to 0 m from the drawn wall, at (752, -1523); 0 m from the measured line (route_measured)",
    "name": "surviving stretch 7 of the Servian wall (near porta_collina) on the wall drawn through the gates",
-   "ok": false,
+   "ok": true,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 46 m from the drawn wall, at (697, -1367); 48 m from the measured line (route_measured)",
+   "detail": "up to 48 m from the drawn wall, at (697, -1367); 48 m from the measured line (route_measured)",
    "name": "surviving stretch 8 of the Servian wall (near porta_quirinalis) on the wall drawn through the gates",
    "ok": true,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
@@ -8787,9 +8768,9 @@
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 72 m from the drawn wall, at (1262, -23); 4 m from the measured line (route_measured)",
+   "detail": "up to 4 m from the drawn wall, at (1262, -23); 4 m from the measured line (route_measured)",
    "name": "surviving stretch 10 of the Servian wall (near porta_esquilina) on the wall drawn through the gates",
-   "ok": false,
+   "ok": true,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
@@ -8799,21 +8780,21 @@
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 7 m from the drawn wall, at (1337, -396); 3 m from the measured line (route_measured)",
+   "detail": "up to 3 m from the drawn wall, at (1337, -396); 3 m from the measured line (route_measured)",
    "name": "surviving stretch 12 of the Servian wall (near porta_esquilina) on the wall drawn through the gates",
    "ok": true,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 44 m from the drawn wall, at (1357, -977); 22 m from the measured line (route_measured)",
+   "detail": "up to 22 m from the drawn wall, at (1357, -977); 22 m from the measured line (route_measured)",
    "name": "surviving stretch 13 of the Servian wall (near porta_viminalis) on the wall drawn through the gates",
    "ok": true,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 150 m from the drawn wall, at (747, -1545); 7 m from the measured line (route_measured)",
+   "detail": "up to 7 m from the drawn wall, at (747, -1545); 7 m from the measured line (route_measured)",
    "name": "surviving stretch 14 of the Servian wall (near porta_collina) on the wall drawn through the gates",
-   "ok": false,
+   "ok": true,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
@@ -8823,13 +8804,13 @@
    "source": "topography.yaml tiber.course; Platner-Ashby s.v. Pons Aemilius"
   },
   {
-   "detail": "centre 40 m from the river's line (half width 45 m), length 48 m",
+   "detail": "centre 50 m from the river's line (half width 45 m), length 48 m",
    "name": "pons_cestius spans the Tiber",
    "ok": true,
    "source": "topography.yaml tiber.course; Platner-Ashby s.v. Pons Cestius"
   },
   {
-   "detail": "centre 66 m from the river's line (half width 45 m), length 62 m",
+   "detail": "centre 68 m from the river's line (half width 45 m), length 62 m",
    "name": "pons_fabricius spans the Tiber",
    "ok": true,
    "source": "topography.yaml tiber.course; Platner-Ashby s.v. Pons Fabricius"
@@ -8862,10 +8843,10 @@
  "summary": {
   "dataset": {
    "empire": 64,
-   "monuments": 206,
-   "streets": 28
+   "monuments": 218,
+   "streets": 30
   },
-  "date_issues": 7,
+  "date_issues": 0,
   "measured_flags": 0,
   "misplaced": 0,
   "missing": 0,
@@ -8883,13 +8864,13 @@
     "missing": 0
    }
   },
-  "relations_failed": 6,
-  "scene_buried": 154,
-  "scene_floating": 58,
-  "scene_houses_in_monuments": 333,
-  "scene_houses_on_streets": 13,
-  "scene_in_river": 9,
-  "scene_overlaps": 16,
+  "relations_failed": 0,
+  "scene_buried": 0,
+  "scene_floating": 0,
+  "scene_houses_in_monuments": 0,
+  "scene_houses_on_streets": 0,
+  "scene_in_river": 7,
+  "scene_overlaps": 14,
   "scene_streets_through": 0
  },
  "topography": [
@@ -8995,7 +8976,7 @@
    "id": "forum_valley",
    "kind": "valleys",
    "scene_m": 11.0,
-   "scene_max_m": 38.1
+   "scene_max_m": 38.0
   },
   {
    "diff_m": -0.2,

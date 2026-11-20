@@ -228,9 +228,10 @@ func _project(route: PackedVector2Array, p: Vector2) -> Dictionary:
 	return best
 
 
-## The Servian circuit as the 16 gates in order round the city (the dataset's own `route` for the
-## wall has 13 rough points and cuts across the Circus Maximus, so the wall here is threaded
-## through the gates instead). Returns {ids: Array, pos: PackedVector2Array (closed)}.
+## The Servian circuit: the gates in order round the city, threaded along the wall's measured
+## line (`route_measured` of murus_servianus: the gate circuit with the bends of the surviving
+## stretches between the gates; F2). Without it the wall runs straight from gate to gate.
+## Returns {ids: Array (gates in order), pos: PackedVector2Array (closed), at: {gate id: index}}.
 func _circuit() -> Dictionary:
 	if not _circ.is_empty():
 		return _circ
@@ -247,12 +248,43 @@ func _circuit() -> Dictionary:
 	list.sort_custom(func(a, b): return a.ang < b.ang)
 	var ids := []
 	var pos := PackedVector2Array()
+	var at := {}
 	for e in list:
+		at[e.id] = ids.size()
 		ids.append(e.id)
 		pos.append(e.pos)
 	if pos.size() > 0:
 		pos.append(pos[0])
-	_circ = {"ids": ids, "pos": pos}
+	# F2: the measured line, if every gate is one of its points and they come in the same order
+	var meas: Variant = _recs.get("murus_servianus", {}).get("route_measured")
+	if meas is Array and (meas as Array).size() > ids.size():
+		var mp := PackedVector2Array()
+		for ll in meas:
+			mp.append(UrbsGeo.to_local(float(ll[0]), float(ll[1])))
+		if mp[0].distance_to(mp[mp.size() - 1]) > 0.5:
+			mp.append(mp[0])
+		var mat := {}
+		var ok := true
+		var last := -1
+		for e in list:
+			var best := -1
+			var bd := INF
+			for k in mp.size() - 1:
+				var d: float = mp[k].distance_to(e.pos)
+				if d < bd:
+					bd = d
+					best = k
+			if bd > 2.0 or best <= last:
+				ok = false
+				break
+			mat[e.id] = best
+			last = best
+		if ok:
+			pos = mp
+			at = mat
+		else:
+			push_warning("murus_servianus.route_measured does not pass through the gates in order; the wall runs gate to gate")
+	_circ = {"ids": ids, "pos": pos, "at": at}
 	return _circ
 
 
@@ -279,12 +311,12 @@ func _make(id: String, st: Dictionary) -> void:
 	var snap := str(m.get("snap_to", ""))
 	if snap != "" and not _circuit().ids.is_empty() and (_circuit().ids as Array).has(id):
 		var circ := _circuit()
-		var ids: Array = circ.ids
 		var pts: PackedVector2Array = circ.pos
-		var i := ids.find(id)
+		var n := pts.size() - 1   # the line is closed: the last point is the first
+		var i := int(circ.at[id])
 		centre = pts[i]
-		var prev := pts[(i - 1 + ids.size()) % ids.size()]
-		var next := pts[(i + 1) % ids.size()]
+		var prev := pts[(i - 1 + n) % n]
+		var next := pts[(i + 1) % n]
 		var dir := (next - prev).normalized()
 		var out_n := Vector2(-dir.y, dir.x) * (1.0 if _is_clockwise(pts) else -1.0)
 		yaw = atan2(out_n.x, out_n.y)
@@ -325,7 +357,17 @@ func _make(id: String, st: Dictionary) -> void:
 		_todo[model] = str(res.todo)
 	var base_y := 10.0
 	var skirt := 0.0
+	var found := false   # F2: a foundation (the form's own or ours) reaches the lowest ground
 	var half := Vector2(maxf(float(st.width), float(st.radius) * 2.0), maxf(float(st.length), float(st.radius) * 2.0)) * 0.5
+	# F2: a form drawn at its own size (no footprint in the data): its solids' extent in plan
+	if not world and (half.x <= 0.0 or half.y <= 0.0):
+		var ext := Vector2.ZERO
+		for bx in res.boxes:
+			var c3: Vector3 = bx.centre
+			var s3: Vector3 = bx.size
+			ext.x = maxf(ext.x, absf(c3.x) + s3.x * 0.5)
+			ext.y = maxf(ext.y, absf(c3.z) + s3.z * 0.5)
+		half = Vector2(half.x if half.x > 0.0 else ext.x, half.y if half.y > 0.0 else ext.y)
 	if model == "bridge_stone" or model == "bridge_timber":
 		var axis := Vector2(sin(yaw), cos(yaw))
 		base_y = maxf(_ground_at(centre + axis * half.y), _ground_at(centre - axis * half.y))
@@ -333,20 +375,39 @@ func _make(id: String, st: Dictionary) -> void:
 		var lo := INF
 		var hi := -INF
 		var rot := Basis(Vector3.UP, yaw)
-		for off in [Vector2.ZERO, Vector2(1, 1), Vector2(-1, 1), Vector2(1, -1), Vector2(-1, -1)]:
-			var lp := Vector3(off.x * half.x, 0, off.y * half.y)
-			var wp := rot * lp
+		for off in [Vector2.ZERO, Vector2(1, 1), Vector2(-1, 1), Vector2(1, -1), Vector2(-1, -1),
+				Vector2(1, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, -1)]:
+			var wp := rot * Vector3(off.x * half.x, 0, off.y * half.y)
 			var gy := _ground_at(centre + Vector2(wp.x, wp.z))
 			lo = minf(lo, gy)
 			hi = maxf(hi, gy)
-		base_y = lo
 		skirt = hi - lo
-		if str(res.get("base", "lo")) == "hi":
-			base_y = maxf(hi, hi0)
-		elif str(res.get("base", "lo")) == "centre":
+		var mode := str(res.get("base", "lo"))
+		if mode == "centre":
 			# built into a valley against the hills (the circus): the floor at the centre's
 			# ground, the foundation down to the lowest point, the slopes over the outer seats
 			base_y = _ground_at(centre)
+			found = true
+		elif model == "plaza" and UrbsSite.platform_at(centre.x, centre.y) != "":
+			# F2: open paving on a built platform (the Area Capitolina, the Forum Iulium): its floor
+			base_y = UrbsSite.terrace_height_at(centre.x, centre.y)
+			found = true
+		elif model in AGAINST_HILL:
+			# F2: built against the hillside (the Tabularium's back is the Capitol's rock): it stands
+			# on its lowest ground and its own form walls the hill behind it
+			base_y = lo
+			found = true
+		elif model == "plaza" or (mode == "lo" and skirt <= LEVEL_OK_M):
+			# open paving, or ground level enough: it sits on its lowest point
+			base_y = lo
+			found = true
+		else:
+			# F2: on a slope every monument stands on a podium or platform that reaches down to the
+			# lowest ground under it, its floor at the highest corner, so no corner is buried and
+			# none floats (a steep site is cut and terraced in topography.yaml terrain_model.platforms,
+			# where UrbsSite builds the retaining walls; what is left is this foundation)
+			base_y = hi
+			found = mode == "hi" and not bool(res.get("no_skirt", false)) and float(form_st.get("skirt", 0.0)) >= skirt - 0.2
 	if world:
 		node.position = Vector3.ZERO
 	else:
@@ -378,13 +439,14 @@ func _make(id: String, st: Dictionary) -> void:
 		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
 		_set_range(mmi, inst.range)
 		node.add_child(mmi)
-	if skirt > 0.3 and not world and model != "plaza" and not bool(res.get("no_skirt", false)):
-		# a foundation down to the lowest ground under the footprint
+	if not world and not found and skirt > 0.05:
+		# F2: the foundation down to the lowest ground under the footprint (and 0.5 m into it)
 		var fm := UrbsMonumentMesh.new()
-		fm.box(Vector3(0, -skirt - 0.4, 0), Vector3(half.x * 1.9, skirt + 0.4, half.y * 1.9), "opus_quadratum")
+		fm.box(Vector3(0, -skirt - 0.5, 0), Vector3(half.x * 2.0, skirt + 0.52, half.y * 2.0), "opus_quadratum")
 		var mi := MeshInstance3D.new()
 		mi.mesh = fm.finish_mesh()
 		node.add_child(mi)
+		found = true
 	# collision and picking: boxes in the monument's frame (exact solids from the new forms;
 	# the older forms' boxes are kept at least 3 m on a side)
 	var body := StaticBody3D.new()
@@ -436,9 +498,9 @@ func _make(id: String, st: Dictionary) -> void:
 	_placed[id] = {"centre": centre, "yaw": yaw, "y": base_y, "length": maxf(float(st.length), float(st.radius) * 2.0),
 		"width": maxf(float(st.width), float(st.radius) * 2.0), "radius": float(st.radius), "model": model, "state": st.state,
 		"native": aabb.size, "door": res.get("door", null),
-		# F2 audit (audit.gd): how the base meets the ground
-		"base_mode": str(res.get("base", "lo")), "world": world,
-		"skirted": skirt > 0.3 and not world and model != "plaza" and not bool(res.get("no_skirt", false))}
+		# F2 audit (audit.gd): how the base meets the ground, and the plan size used for it
+		"base_mode": str(res.get("base", "lo")), "world": world, "skirted": found and not world, "drop": skirt, "retains": model in AGAINST_HILL,
+		"half": half}
 
 
 ## Metres per mesh unit of an old kit part: the length of its transform's x axis (kit meshes
@@ -483,13 +545,15 @@ func _wall_extras(st: Dictionary, route: PackedVector2Array) -> void:
 		return
 	var circ := _circuit()
 	var ids: Array = circ.ids
+	var cum := PackedFloat32Array([0.0])   # distance along the line to each of its points
+	for k in range(1, route.size()):
+		cum.append(cum[k - 1] + route[k].distance_to(route[k - 1]))
+	var total: float = cum[cum.size() - 1]
 	var gates: Array = []
 	var dist := {}
-	var acc := 0.0
-	for i in ids.size():
-		if i > 0:
-			acc += route[i].distance_to(route[i - 1])
-		dist[ids[i]] = acc
+	for gid in ids:
+		var acc: float = cum[int(circ.at[gid])]
+		dist[gid] = acc
 		gates.append(acc)
 	st["gates"] = gates
 	# stretches drawn without a wall (the record's `open_between`: pairs of neighbouring gates)
@@ -505,7 +569,7 @@ func _wall_extras(st: Dictionary, route: PackedVector2Array) -> void:
 				gaps.append(Vector2(minf(float(dist[a]), float(dist[b])), maxf(float(dist[a]), float(dist[b]))))
 			elif (ia == 0 and ib == ids.size() - 1) or (ib == 0 and ia == ids.size() - 1):
 				var last := maxf(float(dist[a]), float(dist[b]))
-				gaps.append(Vector2(last, acc + route[route.size() - 1].distance_to(route[route.size() - 2])))
+				gaps.append(Vector2(last, total))
 	st["gaps"] = gaps
 	if dist.has("porta_collina") and dist.has("porta_esquilina"):
 		var a := float(dist["porta_collina"])
@@ -734,6 +798,34 @@ func footprints() -> Array:
 		if r <= 0.0:
 			r = 0.5 * Vector2((p.native as Vector3).x, (p.native as Vector3).z).length()
 		res.append({"id": id, "centre": p.centre, "radius": r})
+	return res
+
+
+## F2: the oriented footprints of everything standing that houses must keep off, for the fill:
+## {id, c: Vector2, ax, az: unit axes (local x, z), hx, hz: half sizes}. Plazas and precincts
+## count (their record size: the Forum Boarium, the Area Capitolina); routes and bridges do not
+## (the wall is kept clear along its line, the river by the terrain).
+const _NOT_OBSTACLES := ["wall", "aqueduct", "sewer", "bridge_stone", "bridge_timber", "road_paved"]
+## F2: a monument whose ground falls less than this across its footprint sits on its lowest point
+const LEVEL_OK_M := 1.0
+## F2: forms built against a hillside, whose back is the hill (not buried: retaining)
+const AGAINST_HILL := ["tabularium"]
+
+
+func oriented_footprints() -> Array:
+	var res := []
+	for id in _placed:
+		var p: Dictionary = _placed[id]
+		if str(p.model) in _NOT_OBSTACLES or bool(p.get("world", false)):
+			continue
+		var hf: Vector2 = p.get("half", Vector2.ZERO)
+		var w := hf.x * 2.0
+		var l := hf.y * 2.0
+		if w <= 0.0 or l <= 0.0:
+			continue
+		var yaw := float(p.yaw)
+		res.append({"id": id, "c": p.centre, "ax": Vector2(cos(yaw), -sin(yaw)), "az": Vector2(sin(yaw), cos(yaw)),
+			"hx": w * 0.5, "hz": l * 0.5})
 	return res
 
 

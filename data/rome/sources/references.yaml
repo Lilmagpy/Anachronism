@@ -1233,8 +1233,6 @@ measured:
   pons_fabricius: {length: 62, source: "Platner-Ashby s.v. Pons Fabricius: 62 m long"}
   rostra_augusti: {width: 24, source: "Platner-Ashby s.v. Rostra Augusti: the front about 24 m long"}
 explained:
-  relations:
-    "of the Servian wall": "UNRESOLVED, hook for the lead: monuments.gd draws the Servian wall as straight runs from gate to gate (its _circuit), so where the real wall bends between two gates (the agger on the Esquiline and Viminal, the salient by the Porta Collina) the drawn line cuts the corner. The gates themselves are on the wall line. The data is ready: murus_servianus.route_measured is the gate circuit with the bends of the surviving stretches (Pleiades 103808101), within 10 m of every stretch; _circuit (and fill.gd, which keeps houses off `route`) should thread the gates along it; not a data error"
   dates:
     aedes_bellonae: "the matched article is the shrine of Bellona on the Capitol; the temple by the Circus Flaminius was vowed in 296 (Livy 10.19.17) (unverified: passage not re-read)"
     aedes_castoris: "Platner-Ashby: vowed 499, dedicated in 484"
@@ -1260,7 +1258,6 @@ explained:
     curia_iulia: "the matched article (Curia Pompiliana) is another building"
     domus_catuli: "Platner-Ashby: built by Catulus after his victory over the Cimbri (101)"
     fornix_scipionis: "the matched article is the house of Scipio Africanus; the arch was built in 190 (Livy 37.3.7) (unverified: passage not re-read)"
-    forum_romanum: "ENGINE/TIMELINE (hook for the lead): the content timeline marks the rebuilding after the fire of 210 BC as forum_romanum_completed_210; marks_for() takes that as the first completion and drops built.year (-600), so the engine has the Forum \"planned\" before 210 BC while the client draws it. The timeline entry should be a rebuild (or marks_for should treat a completion in the year of a fire as a rebuild); not a data error"
     horrea_sempronia: "the matched article (Basilica Sempronia) is another building"
     lares_permarini: "Platner-Ashby: vowed 190, dedicated 22 December 179"
     macellum: "Platner-Ashby s.v. Forum Piscarium: incorporated in the Macellum built by Fulvius Nobilior in 179"
@@ -1268,20 +1265,13 @@ explained:
     porticus_minucia_vetus: "Platner-Ashby: built by M. Minucius Rufus, consul 110, from the spoils of his triumph of 106"
     porticus_octaviae: "the matched articles are the Porticus Octavia of Cn. Octavius (168 BC, another portico) and the library founded in 23 BC; the record is the Porticus Metelli of 146 BC, rebuilt by Augustus as the Porticus Octaviae"
     regia: "the matched article (Atrium Regium) is another building"
-    theatrum_scauri: "ENGINE (hook for the lead): a temporary theatre built and dismantled in the same year (58 BC); within one year marks_for() orders the demolition before the completion, so the engine keeps it standing for ever; the client draws it only in 58 BC, which is right"
   scene:
-    "buried:*": "a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error"
-    "floating:*": "a monument on a slope: the form sits on its highest corner and the open side is not walled down to the ground; a renderer matter (a terrace or foundation skirt in monuments.gd/forms) - hook for the lead, not a data error"
-    "houses_in_monuments:*": "the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead"
-    "houses_on_streets:*": "a fill lot reaching into a street; the fill is not this work package (hook for the lead)"
     "in_river:porta_flumentana": "the river gate stood at the bank (Platner-Ashby s.v. Porta Flumentana); one sample point touches the modelled river"
     "in_river:porticus_aemilia": "the hall stood on the river bank; the modelled Tiber (tiber.gd) is an approximation of the ancient bank, a few points touch it"
-    "in_river:theatrum_marcelli": "as porticus_aemilia: the theatre stood near the bank; one sample point touches the modelled river"
     "overlaps:aedes_concordiae_forum": "the Augustan temple of Concord was built against the substructure of the Tabularium, its cella under the Tabularium front (the remains); a 3 m contact is the real arrangement"
     "overlaps:aedes_herculis_musarum": "the temple stood inside the Porticus Philippi, which was built round it (Platner-Ashby s.v. Porticus Philippi); not an error"
     "overlaps:circus_maximus": "the shrine of Murcia stood inside the circus valley, by the turning post (Platner-Ashby s.v. Murcia, sacellum); not an error"
     "overlaps:horrea_galbae": "UNRESOLVED: the Marble Plan puts the Horrea Galbae right behind the great hall identified as the Porticus Aemilia (Tucci 2012 argues the hall is the navalia); our 487 x 60 m hall centred on its remains and the 200 x 155 m horrea at their Wikipedia point (+-30 m) overlap by 52 m. A measured plan of both is needed before either is moved"
-    "overlaps:pons_fabricius": "the bridge lands on the left bank beside the Porta Flumentana; the gate block includes its flanking wall stubs; a 3.6 m contact"
     "overlaps:porticus_octaviae": "the portico and the theatre stood side by side with a narrow street between; 2.8 m is within the precision of the reconstructed portico corner (Pleiades outlines only its propylon)"
   outlines:
     aedes_apollinis_palatini: "the remains are the concrete core of the podium, stripped of its facing; our 50 x 25 m is not verified and is kept, not shrunk to the core"
@@ -1307,8 +1297,6 @@ explained:
     domus_aurea: "Pleiades outlines only the surviving Esquiline wing; our point is the centre of the drawn palace grounds, which ran from the Palatine to the Esquiline"
     colossus_neronis: "Pleiades maps the base by the Flavian amphitheatre, where Hadrian moved the statue after AD 120; until then it stood in the vestibule of the Domus Aurea on the site of the later temple of Venus and Rome, where we place it"
     horologium_augusti: "Pleiades' best point is the excavated stretch of the meridian line under Via di Campo Marzio 48; our point is the middle of the paved dial, between it and the obelisk's site"
-    pons_cestius: "kept where the U8 island pass fitted it (D-299): tiber.gd fits the island between the dataset's two bridges, and with the bridges on their remains the 67 m island does not fit the course drawn there; moving the bridges needs the island refitted in tiber.gd (hook for the lead)"
-    pons_fabricius: "as pons_cestius: kept where D-299 fitted the island to it (21 m from the remains)"
     emporium: "Pleiades outlines the excavated 165 m of the quay; our record is the whole 500 m river front of the Emporium"
     basilica_ulpia: "Pleiades outlines only the excavated eastern part (57 x 56 m); our record is the whole basilica, 130 m across the north-west end of the forum"
     theatrum_marcelli: "Pleiades' best location is the bounding box of the visible arcades, an arc on the north-east of the cavea; our point is the centre of the circle fitted to that arc (radius 60 m), the centre of the theatre"
@@ -1339,7 +1327,7 @@ outline_skip:
   pantheon_agrippae_empire: "the outline is Hadrian's building (AD 125)"
   pantheon_hadriani: "the outline includes the porch and the intermediate block"
   pons_aemilius: "the outline is the single surviving arch"
-  pons_cestius: "the island bridges are fitted by tiber.gd (D-299)"
+  pons_cestius: "the outline is the 1892 rebuilding (82 m); the ancient bridge was 48 m (Platner-Ashby), drawn from the island end"
   porta_esquilina: "the outline is the arch of Gallienus, the later gate"
   porticus_aemilia: "Pleiades outlines only one section of the hall"
   porticus_octaviae: "Pleiades outlines only the propylon"
