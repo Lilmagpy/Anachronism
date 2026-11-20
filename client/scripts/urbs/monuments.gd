@@ -21,7 +21,7 @@ extends RefCounted
 const Forms := preload("res://scripts/urbs/monument_forms.gd")
 const Kit := preload("res://scripts/models/kit.gd")
 
-const FILES := ["res://data/city/monuments.json", "res://data/city/monuments_empire.json"]
+const FILES := ["res://data/city/monuments.json", "res://data/city/monuments_empire.json", "res://data/city/monuments_domus.json"]   # F2 play: the houses of the great families
 const PICK_LAYER := 20
 const FAR := -100000   ## year of a monument whose date is unknown: it stands from the start
 
