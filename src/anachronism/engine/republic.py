@@ -33,6 +33,7 @@ the year (orders until 287, the nobility, optimates and populares from 133).
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 
 from anachronism.content.schema import (
@@ -349,12 +350,82 @@ def start_republic(state: GameState, rng: GameRng) -> None:
             _spawn_historical(state, rep, hp, state.year)
     _seed_population(state, rep, rng, state.year)
     events = EventLog(turn=state.turn, year=state.year)
-    _hold_year(state, rep, rng, events, state.year)
+    _hold_year(state, rep, rng, events, state.year, start=True)  # F2: history's college
     _deaths_in_office(state, rep, events, state.year)  # Brutus falls in 509 itself
     italy_module.start(state)  # F1 italy
     city_module.start_city(state, events.turn)
     rome_society.start(state, rng, events)  # F1 rome_society (R4): religion, land, legions
     state.events.extend(events.items)
+
+
+def present_from(state: GameState) -> dict[str, int]:
+    """F2: the first year each family may have sons: its first attestation less the margin.
+
+    A family is attested by its earliest branch (the Fasti's cognomina by era), its first
+    holder in the Fasti and its earliest modelled person; a family attested by none of these
+    is present throughout. Without ``attested_margin_years`` every family is present.
+    """
+    margin = state.world.republic_rules.attested_margin_years
+    if margin is None:
+        return {}
+    first: dict[str, int] = {}
+
+    def seen(gid: str | None, year: int | None) -> None:
+        if gid and year is not None:
+            first[gid] = min(first.get(gid, year), year)
+
+    for gid in sorted(state.world.gentes):
+        for branch in state.world.gentes[gid].branches:
+            seen(gid, branch.from_year)
+    people = state.world.people
+    for pid in sorted(people):
+        seen(people[pid].gens, people[pid].born)
+    for year in sorted(state.world.fasti):
+        for college in state.world.fasti[year].colleges:
+            for holder in college.holders:
+                gens = holder.gens or (
+                    people[holder.person].gens if holder.person in people else None
+                )
+                seen(gens, year)
+    return {gid: year - margin for gid, year in sorted(first.items())}
+
+
+def _ordinary(fasti: FastiYear) -> FastiYear:
+    """F2: a year of the Fasti with only its ordinary holders (the college that opened it)."""
+    colleges = [
+        college.model_copy(update={"holders": tuple(h for h in college.holders if not h.suffect)})
+        for college in fasti.colleges
+        if any(not h.suffect for h in college.holders)
+    ]
+    return fasti.model_copy(update={"colleges": tuple(colleges)})
+
+
+def backed_shares(state: GameState, year: int) -> dict[tuple[str, str], int]:
+    """F2: (office, person) -> the share (bp) of the vote each man the player backed can expect.
+
+    His weight in the draw against all who may stand, times the seats (capped at the whole):
+    the same weights the election draws by, so the count shown is the election's own odds.
+    """
+    rep = _rep(state)
+    mags = state.world.magistracies
+    shares = faction_shares(state, year)
+    out: dict[tuple[str, str], int] = {}
+    for backing in sorted(rep.backing, key=lambda b: (b.office, b.person)):
+        key = (backing.office, backing.person)
+        mag = mags.get(backing.office)
+        era = mag.era_at(year) if mag is not None else None
+        if backing.year != year or key in out or mag is None or era is None or era.appointed:
+            continue
+        pool = [
+            p
+            for pid in sorted(rep.people)
+            if (p := rep.people[pid]).alive and eligible(state, p, mag, era, year)
+        ]
+        weights = {p.id: _weight(state, rep, p, mag.id, year, shares) for p in pool}
+        total = sum(weights.values())
+        mine = weights.get(backing.person, 0)
+        out[key] = min(BP, era.seats * mine * BP // total) if total else 0
+    return out
 
 
 SEED_YEARS = 65
@@ -374,10 +445,13 @@ def _seed_population(state: GameState, rep: RepublicState, rng: GameRng, year: i
     """
     rules = state.world.republic_rules
     mags = state.world.magistracies
+    floors = present_from(state)  # F2: no man of a family before its time
     for gid in sorted(state.world.gentes):
         gens = state.world.gentes[gid]
         family = rep.families.get(gid)
         for born in range(year - SEED_YEARS, year):
+            if born < floors.get(gid, born):
+                continue
             if not gens.alive_in(born) or not rng.chance(_birth_bp(rules, family)):
                 continue
             if any(rng.chance(death_bp(rules, age)) for age in range(year - born)):
@@ -403,8 +477,10 @@ def run_year(state: GameState, rng: GameRng, events: EventLog, year: int) -> Non
     _close_year(state, rep, events, year)
     _life(state, rep, rng, events, year)
     _fade(state, rep, year)
+    backed = backed_shares(state, year)  # F2 places: the vote the player's men can expect
     _hold_year(state, rep, rng, events, year)
     _deaths_in_office(state, rep, events, year)
+    city_module.election_events(state, events, year, backed)  # F2 places: elections watched
     italy_module.run_year(state, rng, events, year)  # F1 italy
     city_module.run_year(state, events, year)
     rome_society.run_year(state, rng, events, year)  # F1 rome_society (R4)
@@ -451,8 +527,11 @@ def _life(state: GameState, rep: RepublicState, rng: GameRng, events: EventLog, 
                 dies = roll and year > person.protected_until
         if dies:
             _die(state, rep, person, year, events)
+    floors = present_from(state)  # F2: no man of a family before its time
     for gid in sorted(state.world.gentes):
         gens = state.world.gentes[gid]
+        if year < floors.get(gid, year):
+            continue
         if gens.alive_in(year) and rng.chance(_birth_bp(rules, rep.families.get(gid))):
             _spawn_man(state, rep, rng, gens, year)
     for hid in sorted(state.world.people):
@@ -607,7 +686,7 @@ def _weight(
     fid = faction_of(state, person.order, _person_popular(state, person), year)
     bloc = shares.get(fid, 0) * rules.faction_weight_bp // BP
     backed = sum(
-        rules.backing_bp
+        b.bp or rules.backing_bp  # F2 places: a contio's backing carries its own weight
         for b in rep.backing
         if b.person == person.id and b.office == office and b.year == year
     )
@@ -747,16 +826,28 @@ def _new_man(
 
 
 def _hold_year(
-    state: GameState, rep: RepublicState, rng: GameRng, events: EventLog, year: int
+    state: GameState,
+    rep: RepublicState,
+    rng: GameRng,
+    events: EventLog,
+    year: int,
+    *,
+    start: bool = False,
 ) -> None:
-    """Choose the year's magistrates: the Fasti first (in a chronicle), then elections."""
+    """Choose the year's magistrates: the Fasti first (in a chronicle), then elections.
+
+    F2: the start year of any game seats history's college (``start``): the game begins in
+    history's year, with its consuls (Ap. Claudius Caudex and M. Fulvius Flaccus in 264).
+    """
     mags = state.world.magistracies
     if not mags:
         return
     shares = faction_shares(state, year)
     taken: set[str] = {m.person for m in rep.magistrates if m.office in mags}
     handled: set[str] = set()
-    fasti = state.world.fasti.get(year) if state.chronicle_mode else None
+    fasti = state.world.fasti.get(year) if state.chronicle_mode or start else None
+    if fasti is not None and not state.chronicle_mode:  # F2: the opening college, no suffects
+        fasti = _ordinary(fasti)
     if fasti is not None:
         handled = _apply_fasti(state, rep, rng, events, fasti, taken, shares)
         if fasti.gap:
@@ -1165,6 +1256,7 @@ def senate_vote(
     record: bool = False,
     turn: int | None = None,
     year: int | None = None,
+    extra: Mapping[str, int] | None = None,
 ) -> Vote:
     """The Senate's will: a vote weighted by the families' standing and their senators.
 
@@ -1173,7 +1265,8 @@ def senate_vote(
     the yes side. So the forecast differs by issue and by era, and a house of one mind is rare.
     With ``record`` the vote is a real one: it becomes a ``senate`` event in the city (U7).
     Looking at the Senate's mood (a view, a forecast) leaves ``record`` off. A vote recorded
-    while a turn resolves passes that turn's ``turn`` and ``year``.
+    while a turn resolves passes that turn's ``turn`` and ``year``. ``extra`` (F2 places) adds
+    to families' leanings for a forecast: what the Senate would do after a speech.
     """
     rep = _rep(state)
     yes = no = total = 0
@@ -1181,7 +1274,7 @@ def senate_vote(
     weights = senate_weights(state)
     for fid in sorted(rep.families):
         weight = weights[fid]
-        lean = family_leaning(state, fid, issue)
+        lean = family_leaning(state, fid, issue) + (extra.get(fid, 0) if extra else 0)
         leanings[fid] = lean
         total += weight
         # a family's senators split by the strength of its lean: +10000 is every man for,
@@ -1281,7 +1374,10 @@ def back_candidate(
             False,
             f"{person.name} cannot stand for the {mag.name.lower()} in {year_label(target)}",
         )
-    if any(b.person == person_id and b.office == office and b.year == target for b in rep.backing):
+    if any(
+        b.person == person_id and b.office == office and b.year == target and not b.bp
+        for b in rep.backing
+    ):
         return False, "already backed"
     if rep.influence < rules.back_cost:
         return False, "not enough influence with the Senate"

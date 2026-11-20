@@ -439,6 +439,82 @@ class ProposeToSenate(Frozen):
     proposal: str
 
 
+# --- F2 places (D-304): what the player does at the places of Rome (engine/city_acts.py) ------
+
+
+class Contio(Frozen):
+    """Address the people from the Rostra of the year (F2).
+
+    ``issue`` is a Senate issue (``land``, ``war`` ...) and ``side`` ``for`` or ``against``;
+    or ``issue`` is ``candidate``, ``side`` the person id of a man standing next year and
+    ``office`` the office he stands for. ``speaker`` is the magistrate who calls the people (a
+    person id); empty: the weightiest voice in office (a consul or a tribune).
+    """
+
+    kind: Literal["contio"] = "contio"
+    civ: str
+    issue: str
+    side: str = "for"
+    office: str = ""
+    speaker: str = ""
+
+
+class VowTemple(Frozen):
+    """Vow a temple history built later, at the Capitol (F2): it is dedicated years early.
+
+    ``temple`` is a monument id (a temple the view offers), ``cause`` ``battle`` (Rome must be
+    at war) or ``pestilence``; ``by`` the magistrate with imperium who vows (empty: the senior).
+    """
+
+    kind: Literal["vow"] = "vow"
+    civ: str
+    temple: str
+    cause: str = "battle"
+    by: str = ""
+
+
+class GiveGames(Frozen):
+    """Give games (F2): ``ludi`` (races in a circus, by an aedile) or a ``munus`` for a dead man.
+
+    ``venue`` is a monument id (a circus, or a munus venue: the Forum Boarium, the Forum, an
+    amphitheatre); ``honour`` the dead man of a munus (a person id); ``giver`` the aedile or
+    the kinsman who gives them (empty: the first who may).
+    """
+
+    kind: Literal["games"] = "games"
+    civ: str
+    games: Literal["ludi", "munus"] = "ludi"
+    venue: str
+    honour: str = ""
+    giver: str = ""
+
+
+class ChooseSite(Frozen):
+    """Choose where an idea's great work rises in the city (F2): ``history`` or a site id."""
+
+    kind: Literal["site"] = "site"
+    civ: str
+    tech: str
+    site: str
+
+
+class Expiate(Frozen):
+    """Expiate the prodigies the treasury could not yet pay for (F2; religion's rites)."""
+
+    kind: Literal["expiate"] = "expiate"
+    civ: str
+
+
+class ConsultBooks(Frozen):
+    """Bid the decemviri consult the Sibylline Books (F2; religion's ``consult_books``)."""
+
+    kind: Literal["sibyl"] = "sibyl"
+    civ: str
+
+
+CityActs = Contio | VowTemple | GiveGames | ChooseSite | Expiate | ConsultBooks
+
+
 Orders = (
     RaiseArmy
     | MarchArmy
@@ -512,7 +588,13 @@ Action = Annotated[
     | AnswerEnvoy
     | Persuade
     | BackCandidate
-    | ProposeToSenate,
+    | ProposeToSenate
+    | Contio
+    | VowTemple
+    | GiveGames
+    | ChooseSite
+    | Expiate
+    | ConsultBooks,
     Field(discriminator="kind"),
 ]
 

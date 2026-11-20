@@ -267,3 +267,20 @@ A burnt monument keeps its state while it is rebuilt; `years_left` tells how lon
 `{year, senate_house, monuments: [{id, status, years_left}], changed: [id], anachronisms:
 [{id, tech, name, builds, year, ahead}], events: [{kind, year, ref, monument, person, value,
 other}]}`. `monuments` lists everything not still `planned`.
+
+**Places (F2, D-304).** The city is the interface: `republic_rules.city.places`
+(`content/schema/places.py`) says which building serves each role in each year (the Senate's
+house of the year, the Rostra before and after 44, where the centuries and the tribes vote,
+the aerarium, the Capitol for vows, the levy, gates, workshops and harbours, circus and munus
+venues, owners of the dataset's houses) and the numbers of the actions taken there. Houses of
+great families are dataset records with `role: domus`, `gens`, `owner`
+(`data/rome/city/monuments_domus.yaml`). `engine/city_acts.py` holds the logged actions
+`contio`, `vow`, `games` and `site` (each a `plan_*` the view also uses for its forecast, and an
+`apply_*`); every action with a spectacle adds a `CityEvent` of its `watch` kind (`contio`,
+`sacrifice` with `ref: vow`, `race`, `munus`, `building`); the player's `raise` adds `levy`;
+the year's elections add `election` for each man the player backed. `CityState` keeps `vows`
+(temples rising early: `status_map` takes them as timeline entries), `given` (games given) and
+`sites` (where an idea's work rises; `city.site_form` places it). The view
+`tools/places_view.py` (key `places`) maps each place of the year to `{role, roles, title,
+blurb, actions: [{id, label, action, cost: {influence, wealth}, forecast, enabled, why, watch}],
+info: [{label, value, tip}]}`; the contract is in `docs/plans/briefs/f2_play.md`.

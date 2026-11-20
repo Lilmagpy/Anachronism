@@ -2841,3 +2841,49 @@ interact with, not only look at.
 - **Prorogation cap:** governors are prorogued at most three years (`PROROGUE_MAX_YEARS`), because
   six praetors serve seven provinces and one man was otherwise held for a decade.
 
+
+## D-304 The places of Rome and what the player does there (F2 engine) — DELEGATED (2026-11-20)
+- **`view["places"]`** (`tools/places_view.py`) maps each building that served a role in the
+  year to its actions, costs, forecasts (the Senate's own `senate_vote`/`interposition`, and
+  the actions' own `plan_*` checks), `enabled`/`why`, `watch` and `info`. Roles by year from
+  `republic_rules.city.places`: the Curia Hostilia; Sulla's enlarged house as the Curia
+  Cornelia 80-53 (the name is Dio's for Faustus Sulla's rebuilding after 52; modern writers
+  give it to Sulla's, and the owner's brief does too); the Curia Pompeia 52-45; the Curia Iulia
+  from 44 while it rises. The Rostra: the Comitium's platform before 338, the beaked Rostra to
+  45, Caesar's from 44. The centuries vote in the ovile on the Campus Martius (the Saepta Iulia
+  from 26); the tribes in the Comitium until 146 and in the Forum from 145 (C. Licinius Crassus).
+  The aerarium in Saturn; vows on the Capitol; the levy on the Campus, at the Villa Publica from
+  435 (Livy 4.22.7; Varro, RR 3.2.4; Polybius 6.19-20); every standing temple is a place.
+  The engine's `senate_house` follows the same table, so a Senate vote plays where the place is.
+- **New logged actions** (`engine/city_acts.py`): `contio` (a magistrate's speech for or
+  against a matter moves the families that court the people most; a consul's or tribune's
+  voice weighs 1.5x; or a speech for a candidate adds half a backing's weight), `vow` (a temple
+  history dedicated later is vowed by a magistrate with imperium, for a battle in war or for a
+  plague, and dedicated five years later in the city timeline: the vow becomes timeline
+  entries in `status_map`), `games` (races by an aedile in a circus, or a munus for a man who
+  died in the last ten years, given by his kin at the venue of the year: the Forum Boarium from
+  264, the Forum from 216, Taurus' amphitheatre from 29 or the player's own), `site` (where an
+  idea's great work rises: history's site or one of a sourced list). **No new `levy`**: the
+  existing `raise` in Rome's province is the levy, and the player's `raise` now plays the
+  dilectus as a `levy` event. A backed man's election plays an `election` event.
+- **Houses of the families**: twelve new houses with `role: domus`, `gens`, `owner` in
+  `data/rome/city/monuments_domus.yaml` (a new file, so the accuracy pass's `monuments.yaml` is
+  untouched); the owners and years of that file's houses (Cicero, Catulus, Clodius, Pompey then
+  Antony, Hortensius then Octavian, and Crassus in Drusus' house) are in the rules.
+- **Bug fixed**: a fire and a completion in the same year are a rebuilding, so the timeline's
+  "Forum shops burned and rebuilt in 210" no longer made the Forum absent before 210 (and the
+  temple of Magna Mater stands from 191, not 111).
+- **Balance**: every cost and effect is game balance in `republic_rules.yaml` except where a
+  source is named; passages not re-read are marked unverified for the R6 source pass.
+- **For the client** (lead's note): an election plays as the voting units for and against the
+  backed man (193 centuries; the tribes 21 to 35 by Livy's dates), his share of the draw's
+  weights, with a majority exactly when he was elected (the centuries stopped at a majority:
+  Livy 1.43.11); a levy counts legions (4,200 men: Polybius 6.20.8-9); `expiate` and `sibyl` are
+  logged actions over religion's rites; the centuries vote at the Villa Publica from 435 (the
+  Campus is not a building; Varro sets RR 3 there on an election day); workshops offer the
+  client's idea box (`{"kind": "idea"}`, not an engine action).
+- **History's college at the start of every game**: the start year seats the Fasti's
+  magistrates in any mode, not only in a chronicle (264 opens with Ap. Claudius Caudex and
+  M. Fulvius Flaccus, who presides), and a family has sons only from 60 years before its first
+  attestation (earliest branch, Fasti holder or modelled person; `attested_margin_years`), so
+  no Calvisius (first consul 39) is a tribune in 264.

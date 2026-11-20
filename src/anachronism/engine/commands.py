@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from anachronism.content.schema import Stage
+from anachronism.engine import city_acts  # F2 places
 from anachronism.engine.actions import (
     Action,
     AnswerEnvoy,
@@ -18,12 +19,17 @@ from anachronism.engine.actions import (
     CancelProject,
     ChooseChapter,
     ChooseDilemma,
+    ChooseSite,
     ComeToAid,
+    ConsultBooks,
+    Contio,
     DeclareWar,
     DemandTribute,
     DisbandArmy,
+    Expiate,
     Explain,
     Fortify,
+    GiveGames,
     HastenProject,
     HireMercenaries,
     HoldFestival,
@@ -48,6 +54,7 @@ from anachronism.engine.actions import (
     SpreadRumours,
     StartProject,
     Unqueue,
+    VowTemple,
 )
 from anachronism.engine.armies import apply_orders
 from anachronism.engine.buildings import queue as queue_building
@@ -102,7 +109,21 @@ def _apply(state: GameState, action: Action) -> tuple[bool, str]:
         | SailFleet
         | ScuttleFleet,
     ):
+        if isinstance(action, RaiseArmy) and civ.id == state.player_civ:  # F2 places: the dilectus
+            return _levy(state, action)
         return apply_orders(state, action)
+    if isinstance(action, Contio):  # F2 places
+        return city_acts.apply_contio(state, action)
+    if isinstance(action, VowTemple):
+        return city_acts.apply_vow(state, action)
+    if isinstance(action, GiveGames):
+        return city_acts.apply_games(state, action)
+    if isinstance(action, ChooseSite):
+        return city_acts.apply_site(state, action)
+    if isinstance(action, Expiate):
+        return city_acts.apply_expiate(state, action)
+    if isinstance(action, ConsultBooks):
+        return city_acts.apply_sibyl(state, action)
     if isinstance(action, Build):
         return queue_building(state, action.civ, action.province, action.building)
     if isinstance(action, Unqueue):
@@ -184,3 +205,15 @@ def _apply(state: GameState, action: Action) -> tuple[bool, str]:
         project.priority = action.priority
         return True, f"{node.name} now has {action.priority} priority."
     raise AssertionError(f"unhandled action {action!r}")
+
+
+def _levy(state: GameState, action: RaiseArmy) -> tuple[bool, str]:
+    """The player's levy (F2 places): the order as ever, then the dilectus played on the Campus."""
+    before = {a.id: a.men for a in state.armies.values() if a.owner == action.civ}
+    ok, message = apply_orders(state, action)
+    if ok:
+        for army_id in sorted(state.armies):
+            army = state.armies[army_id]
+            if army.owner == action.civ and army.men > before.get(army_id, 0):
+                city_acts.levy_event(state, army_id, army.men - before.get(army_id, 0))
+    return ok, message

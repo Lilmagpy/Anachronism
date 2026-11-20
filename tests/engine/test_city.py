@@ -216,13 +216,15 @@ def test_monument_schema_keeps_fields_the_client_adds() -> None:
 
 
 def test_view_has_top_level_year_and_dataset_ids(content: Content) -> None:
+    import glob
+
     import yaml
 
     state = new_game(content, "rome_264", seed=1)
     view = build_view(state)
     assert view["year"] == -264
     ids: set[str] = set()
-    for path in ("data/rome/city/monuments.yaml", "data/rome/city/monuments_empire.yaml"):
+    for path in sorted(glob.glob("data/rome/city/monuments*.yaml")):  # F2: + the domus file
         with open(path, encoding="utf-8") as f:
             ids |= {m["id"] for m in yaml.safe_load(f)["monuments"]}
     shown = {m["id"] for m in view["city"]["monuments"]}
