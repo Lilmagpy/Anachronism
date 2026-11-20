@@ -35,6 +35,15 @@ verdicts:
 measured: {}
 explained:
   positions:
+    horti_sallustiani: "a garden estate of many hectares drawn as an area (model none); our point is its middle between the Pincian and the Quirinal, Pleiades outlines the one surviving pavilion in Piazza Sallustio"
+    thermae_traiani: "Pleiades outlines only the surviving exedrae on the north-east side (173 x 36 m); our point is the centre of the whole 340 x 330 m precinct"
+    domus_aurea: "Pleiades outlines only the surviving Esquiline wing; our point is the centre of the drawn palace grounds, which ran from the Palatine to the Esquiline"
+    colossus_neronis: "Pleiades maps the base by the Flavian amphitheatre, where Hadrian moved the statue after AD 120; until then it stood in the vestibule of the Domus Aurea on the site of the later temple of Venus and Rome, where we place it"
+    horologium_augusti: "Pleiades' best point is the excavated stretch of the meridian line under Via di Campo Marzio 48; our point is the middle of the paved dial, between it and the obelisk's site"
+    pons_cestius: "kept where the U8 island pass fitted it (D-299): tiber.gd fits the island between the dataset's two bridges, and with the bridges on their remains the 67 m island does not fit the course drawn there; moving the bridges needs the island refitted in tiber.gd (hook for the lead)"
+    pons_fabricius: "as pons_cestius: kept where D-299 fitted the island to it (21 m from the remains)"
+    emporium: "Pleiades outlines the excavated 165 m of the quay; our record is the whole 500 m river front of the Emporium"
+    basilica_ulpia: "Pleiades outlines only the excavated eastern part (57 x 56 m); our record is the whole basilica, 130 m across the north-west end of the forum"
     forum_romanum: "the Pleiades outline (OpenStreetMap) is the whole archaeological area of the Forum, from the Capitol foot to the Velia, so its centre lies 180 m east of the square; our point is the centre of the paved square (the origin of the frame)"
   lines:
     street:vicus_iugarius: "the OpenStreetMap line Pleiades gives runs along the south side of the Basilica Iulia, where no ancient street is attested; Platner-Ashby s.v. Vicus Iugarius (read) says the present pavement preserves the line after the basilica was built, which is the path between the basilica and the temple of Saturn that we follow"

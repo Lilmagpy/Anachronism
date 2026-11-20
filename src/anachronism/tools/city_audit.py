@@ -2209,6 +2209,21 @@ def check_dates(ds: Dataset) -> list[dict[str, Any]]:
         by_mon.setdefault(t.monument, []).append(t)
         if t.monument not in ds.recs:
             rows.append({"id": t.monument, "issue": f"timeline entry {t.id} names no monument"})
+    # the same building in both files must be drawn once (twin_of), never twice
+    for mid in sorted(ds.empire):
+        rid = str(ds.recs[mid].get("republican_id") or "")
+        if rid in ds.recs:
+            both = [
+                y for y in COUNT_YEARS if state_at(mid, y, ds.recs) and state_at(rid, y, ds.recs)
+            ]
+            if both:
+                rows.append(
+                    {
+                        "id": mid,
+                        "issue": f"drawn twice with {rid} in "
+                        f"{', '.join(_yr(y) for y in both)} (no twin_of)",
+                    }
+                )
     for mid in sorted(ds.recs):
         rec = ds.recs[mid]
         built = rec.get("built") if isinstance(rec.get("built"), dict) else {}

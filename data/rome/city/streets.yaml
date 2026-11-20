@@ -369,7 +369,7 @@ streets:
   english: Aurelian Way
   kind: road
   direction: "from the pons Aemilius across Trastevere and up the Janiculum, then west"
-  points: [[41.8879, 12.4789], [41.8884, 12.4750], [41.8886, 12.4715], [41.8895, 12.4685], [41.8908, 12.4663], [41.8921, 12.4645], [41.8922, 12.4600], [41.8935, 12.4525]]
+  points: [[41.889243, 12.478782], [41.8884, 12.4750], [41.8886, 12.4715], [41.8895, 12.4685], [41.8908, 12.4663], [41.8921, 12.4645], [41.8922, 12.4600], [41.8935, 12.4525]]  # F2: starts at the west end of the Pons Aemilius, moved to the Ponte Rotto
   precision: rough
   width_m: 4.2
   width_source: assumed

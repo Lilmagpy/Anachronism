@@ -11,8 +11,8 @@
   "27 BC": {
    "building": 2,
    "burnt": 2,
-   "standing": 137,
-   "total": 141
+   "standing": 134,
+   "total": 138
   },
   "390 BC": {
    "standing": 46,
@@ -31,13 +31,13 @@
   },
   "AD 120": {
    "burnt": 1,
-   "standing": 184,
-   "total": 185
+   "standing": 178,
+   "total": 179
   },
   "AD 80": {
    "burnt": 1,
-   "standing": 168,
-   "total": 169
+   "standing": 162,
+   "total": 163
   }
  },
  "dates": [
@@ -294,21 +294,21 @@
   },
   {
    "accuracy_m": 20.0,
-   "id": "aqua_virgo",
-   "max_m": 54.4,
-   "mean_m": 52.1,
-   "pleiades": "423568",
-   "points": 5,
-   "title": "Aqua Virgo"
-  },
-  {
-   "accuracy_m": 20.0,
    "id": "street:vicus_iugarius",
    "max_m": 112.1,
    "mean_m": 50.0,
    "pleiades": "889101791",
    "points": 4,
    "title": "Vicus Iugarius"
+  },
+  {
+   "accuracy_m": 20.0,
+   "id": "aqua_virgo",
+   "max_m": 44.1,
+   "mean_m": 40.2,
+   "pleiades": "423568",
+   "points": 5,
+   "title": "Aqua Virgo"
   },
   {
    "accuracy_m": 20.0,
@@ -8225,7 +8225,7 @@
    ],
    "id": "aedes_divi_iulii_empire",
    "long_ratio": 0.76,
-   "ours_axis": 110.0,
+   "ours_axis": 106.0,
    "ours_long_m": 30.0,
    "ours_short_m": 26.0,
    "outline_axis": 120.4,
@@ -8626,23 +8626,6 @@
    "short_ratio": 0.23
   },
   {
-   "axis_diff": 81.7,
-   "flags": [
-    "axis",
-    "size"
-   ],
-   "id": "forum_traiani",
-   "long_ratio": 1.41,
-   "ours_axis": 45.0,
-   "ours_long_m": 310.0,
-   "ours_short_m": 185.0,
-   "outline_axis": 143.3,
-   "outline_long_m": 219.2,
-   "outline_short_m": 121.5,
-   "pleiades": "250091860",
-   "short_ratio": 1.52
-  },
-  {
    "axis_diff": 4.8,
    "flags": [
     "size"
@@ -8758,13 +8741,13 @@
    "short_ratio": 0.74
   },
   {
-   "axis_diff": 2.2,
+   "axis_diff": 0.2,
    "flags": [
     "size"
    ],
    "id": "pons_aemilius",
    "long_ratio": 3.64,
-   "ours_axis": 75.0,
+   "ours_axis": 77.0,
    "ours_long_m": 100.0,
    "ours_short_m": 8.0,
    "outline_axis": 77.2,
@@ -8905,13 +8888,13 @@
    "short_ratio": 0.77
   },
   {
-   "axis_diff": null,
+   "axis_diff": 0.0,
    "flags": [
     "size"
    ],
    "id": "stadium_palatinum",
    "long_ratio": 0.95,
-   "ours_axis": null,
+   "ours_axis": 41.5,
    "ours_long_m": 160.0,
    "ours_short_m": 50.0,
    "outline_axis": 41.5,
@@ -9059,6 +9042,20 @@
    "outline_short_m": 83.6,
    "pleiades": "445545537",
    "short_ratio": 0.9
+  },
+  {
+   "axis_diff": 0.3,
+   "flags": [],
+   "id": "forum_traiani",
+   "long_ratio": 1.0,
+   "ours_axis": 143.0,
+   "ours_long_m": 220.0,
+   "ours_short_m": 120.0,
+   "outline_axis": 143.3,
+   "outline_long_m": 219.2,
+   "outline_short_m": 121.5,
+   "pleiades": "250091860",
+   "short_ratio": 0.99
   }
  ],
  "pa_dates": [
@@ -9347,25 +9344,6 @@
  ],
  "positions": [
   {
-   "bearing_to_reference": 158,
-   "distance_m": 476.4,
-   "id": "sepulcrum_scipionum",
-   "ours": [
-    1060.5,
-    1411.4
-   ],
-   "overrides": "exact",
-   "pleiades": "999196280",
-   "reference": [
-    1240.9,
-    1852.2
-   ],
-   "reference_accuracy_m": 5.0,
-   "status": "misplaced",
-   "title": "Sep. Scipionum",
-   "tolerance_m": 20.0
-  },
-  {
    "bearing_to_reference": 135,
    "distance_m": 222.9,
    "id": "horti_sallustiani",
@@ -9423,44 +9401,6 @@
    "tolerance_m": 20.0
   },
   {
-   "bearing_to_reference": 256,
-   "distance_m": 158.7,
-   "id": "domus_augustana",
-   "ours": [
-    298.3,
-    455.6
-   ],
-   "overrides": "approx",
-   "pleiades": "792237246",
-   "reference": [
-    144.1,
-    493.2
-   ],
-   "reference_accuracy_m": 20.0,
-   "status": "misplaced",
-   "title": "Domus Augustana",
-   "tolerance_m": 20.0
-  },
-  {
-   "bearing_to_reference": 266,
-   "distance_m": 153.7,
-   "id": "stadium_palatinum",
-   "ours": [
-    339.7,
-    544.5
-   ],
-   "overrides": "approx",
-   "pleiades": "132886213",
-   "reference": [
-    186.4,
-    555.1
-   ],
-   "reference_accuracy_m": 20.0,
-   "status": "misplaced",
-   "title": "Palatine Stadium",
-   "tolerance_m": 20.0
-  },
-  {
    "bearing_to_reference": 264,
    "distance_m": 153.1,
    "id": "domus_aurea",
@@ -9499,12 +9439,12 @@
    "tolerance_m": 10.0
   },
   {
-   "bearing_to_reference": 19,
-   "distance_m": 125.6,
+   "bearing_to_reference": 89,
+   "distance_m": 109.6,
    "id": "colossus_neronis",
    "ours": [
-    430.8,
-    300.1
+    362.0,
+    183.0
    ],
    "overrides": "approx",
    "pleiades": "527986452",
@@ -9515,101 +9455,6 @@
    "reference_accuracy_m": 20.0,
    "status": "misplaced",
    "title": "Colossus Neronis",
-   "tolerance_m": 20.0
-  },
-  {
-   "bearing_to_reference": 254,
-   "distance_m": 120.6,
-   "id": "domus_flavia",
-   "ours": [
-    223.7,
-    377.8
-   ],
-   "overrides": "approx",
-   "pleiades": "564783056",
-   "reference": [
-    107.9,
-    411.7
-   ],
-   "reference_accuracy_m": 20.0,
-   "status": "misplaced",
-   "title": "Domus Flavia",
-   "tolerance_m": 20.0
-  },
-  {
-   "bearing_to_reference": 21,
-   "distance_m": 111.3,
-   "id": "pons_aemilius",
-   "ours": [
-    -530.2,
-    455.6
-   ],
-   "overrides": "exact",
-   "pleiades": "425068",
-   "reference": [
-    -491.1,
-    351.5
-   ],
-   "reference_accuracy_m": 20.0,
-   "status": "misplaced",
-   "title": "Pons Aemilius",
-   "tolerance_m": 20.0
-  },
-  {
-   "bearing_to_reference": 108,
-   "distance_m": 91.2,
-   "id": "forum_traiani",
-   "ours": [
-    -91.1,
-    -344.5
-   ],
-   "overrides": "approx",
-   "pleiades": "250091860",
-   "reference": [
-    -4.6,
-    -315.6
-   ],
-   "reference_accuracy_m": 20.0,
-   "status": "misplaced",
-   "title": "Forum Traiani",
-   "tolerance_m": 20.0
-  },
-  {
-   "bearing_to_reference": 238,
-   "distance_m": 56.7,
-   "id": "aedes_divi_iulii_empire",
-   "ours": [
-    107.7,
-    22.2
-   ],
-   "overrides": "exact",
-   "pleiades": "277569430",
-   "reference": [
-    59.7,
-    52.5
-   ],
-   "reference_accuracy_m": 20.0,
-   "status": "misplaced",
-   "title": "Temple of Divus Iulius",
-   "tolerance_m": 10.0
-  },
-  {
-   "bearing_to_reference": 16,
-   "distance_m": 54.8,
-   "id": "meta_sudans",
-   "ours": [
-    430.8,
-    322.3
-   ],
-   "overrides": "approx",
-   "pleiades": "419380619",
-   "reference": [
-    445.7,
-    269.5
-   ],
-   "reference_accuracy_m": 20.0,
-   "status": "misplaced",
-   "title": "Meta Sudans",
    "tolerance_m": 20.0
   },
   {
@@ -9670,25 +9515,6 @@
    "tolerance_m": 20.0
   },
   {
-   "bearing_to_reference": 303,
-   "distance_m": 43.1,
-   "id": "forum_boarium",
-   "ours": [
-    -331.4,
-    433.4
-   ],
-   "overrides": "approx",
-   "pleiades": "207271756",
-   "reference": [
-    -367.7,
-    410.2
-   ],
-   "reference_accuracy_m": 20.0,
-   "status": "misplaced",
-   "title": "Forum Boarium (at Rome)",
-   "tolerance_m": 20.0
-  },
-  {
    "bearing_to_reference": 81,
    "distance_m": 41.9,
    "id": "porta_capena",
@@ -9708,25 +9534,6 @@
    "tolerance_m": 20.0
   },
   {
-   "bearing_to_reference": 174,
-   "distance_m": 37.7,
-   "id": "domus_hortensii_augusti",
-   "ours": [
-    0.1,
-    399.6
-   ],
-   "overrides": "approx",
-   "pleiades": "250568480",
-   "reference": [
-    4.1,
-    437.1
-   ],
-   "reference_accuracy_m": 20.0,
-   "status": "misplaced",
-   "title": "House of Augustus",
-   "tolerance_m": 20.0
-  },
-  {
    "bearing_to_reference": 216,
    "distance_m": 35.9,
    "id": "basilica_ulpia",
@@ -9743,25 +9550,6 @@
    "reference_accuracy_m": 20.0,
    "status": "misplaced",
    "title": "Basilica Ulpia",
-   "tolerance_m": 20.0
-  },
-  {
-   "bearing_to_reference": 146,
-   "distance_m": 25.6,
-   "id": "columna_traiani",
-   "ours": [
-    -99.4,
-    -389.0
-   ],
-   "overrides": "exact",
-   "pleiades": "783489695",
-   "reference": [
-    -85.1,
-    -367.7
-   ],
-   "reference_accuracy_m": 20.0,
-   "status": "misplaced",
-   "title": "Column of Trajan",
    "tolerance_m": 20.0
   },
   {
@@ -10240,25 +10028,6 @@
    "tolerance_m": 10.0
   },
   {
-   "bearing_to_reference": 355,
-   "distance_m": 4.7,
-   "id": "ara_pacis_augustae_empire",
-   "ours": [
-    -513.7,
-    -1144.7
-   ],
-   "overrides": "exact",
-   "pleiades": "816091000",
-   "reference": [
-    -514.1,
-    -1149.4
-   ],
-   "reference_accuracy_m": 5.0,
-   "status": "ok",
-   "title": "Ara Pacis Augustae",
-   "tolerance_m": 20.0
-  },
-  {
    "bearing_to_reference": 59,
    "distance_m": 4.4,
    "id": "porticus_aemilia",
@@ -10414,6 +10183,25 @@
    "bearing_to_reference": 29,
    "distance_m": 3.5,
    "id": "aedes_divi_iulii",
+   "ours": [
+    58.0,
+    55.6
+   ],
+   "overrides": "exact",
+   "pleiades": "277569430",
+   "reference": [
+    59.7,
+    52.5
+   ],
+   "reference_accuracy_m": 20.0,
+   "status": "ok",
+   "title": "Temple of Divus Iulius",
+   "tolerance_m": 10.0
+  },
+  {
+   "bearing_to_reference": 29,
+   "distance_m": 3.5,
+   "id": "aedes_divi_iulii_empire",
    "ours": [
     58.0,
     55.6
@@ -10734,6 +10522,82 @@
    "tolerance_m": 20.0
   },
   {
+   "bearing_to_reference": 329,
+   "distance_m": 0.6,
+   "id": "meta_sudans",
+   "ours": [
+    446.0,
+    270.1
+   ],
+   "overrides": "approx",
+   "pleiades": "419380619",
+   "reference": [
+    445.7,
+    269.5
+   ],
+   "reference_accuracy_m": 20.0,
+   "status": "ok",
+   "title": "Meta Sudans",
+   "tolerance_m": 20.0
+  },
+  {
+   "bearing_to_reference": 191,
+   "distance_m": 0.5,
+   "id": "pons_aemilius",
+   "ours": [
+    -491.0,
+    351.0
+   ],
+   "overrides": "exact",
+   "pleiades": "425068",
+   "reference": [
+    -491.1,
+    351.5
+   ],
+   "reference_accuracy_m": 20.0,
+   "status": "ok",
+   "title": "Pons Aemilius",
+   "tolerance_m": 20.0
+  },
+  {
+   "bearing_to_reference": 135,
+   "distance_m": 0.5,
+   "id": "forum_traiani",
+   "ours": [
+    -5.0,
+    -315.9
+   ],
+   "overrides": "approx",
+   "pleiades": "250091860",
+   "reference": [
+    -4.6,
+    -315.6
+   ],
+   "reference_accuracy_m": 20.0,
+   "status": "ok",
+   "title": "Forum Traiani",
+   "tolerance_m": 20.0
+  },
+  {
+   "bearing_to_reference": 111,
+   "distance_m": 0.4,
+   "id": "stadium_palatinum",
+   "ours": [
+    186.0,
+    555.0
+   ],
+   "overrides": "approx",
+   "pleiades": "132886213",
+   "reference": [
+    186.4,
+    555.1
+   ],
+   "reference_accuracy_m": 20.0,
+   "status": "ok",
+   "title": "Palatine Stadium",
+   "tolerance_m": 20.0
+  },
+  {
    "bearing_to_reference": 255,
    "distance_m": 0.4,
    "id": "pyramis_cestii",
@@ -10750,6 +10614,101 @@
    "reference_accuracy_m": 5.0,
    "status": "ok",
    "title": "Pyramid of Cestius",
+   "tolerance_m": 20.0
+  },
+  {
+   "bearing_to_reference": 126,
+   "distance_m": 0.4,
+   "id": "forum_boarium",
+   "ours": [
+    -368.0,
+    410.0
+   ],
+   "overrides": "approx",
+   "pleiades": "207271756",
+   "reference": [
+    -367.7,
+    410.2
+   ],
+   "reference_accuracy_m": 20.0,
+   "status": "ok",
+   "title": "Forum Boarium (at Rome)",
+   "tolerance_m": 20.0
+  },
+  {
+   "bearing_to_reference": 333,
+   "distance_m": 0.3,
+   "id": "domus_flavia",
+   "ours": [
+    108.0,
+    412.0
+   ],
+   "overrides": "approx",
+   "pleiades": "564783056",
+   "reference": [
+    107.9,
+    411.7
+   ],
+   "reference_accuracy_m": 20.0,
+   "status": "ok",
+   "title": "Domus Flavia",
+   "tolerance_m": 20.0
+  },
+  {
+   "bearing_to_reference": 194,
+   "distance_m": 0.3,
+   "id": "columna_traiani",
+   "ours": [
+    -85.0,
+    -368.0
+   ],
+   "overrides": "exact",
+   "pleiades": "783489695",
+   "reference": [
+    -85.1,
+    -367.7
+   ],
+   "reference_accuracy_m": 20.0,
+   "status": "ok",
+   "title": "Column of Trajan",
+   "tolerance_m": 20.0
+  },
+  {
+   "bearing_to_reference": 130,
+   "distance_m": 0.2,
+   "id": "domus_hortensii_augusti",
+   "ours": [
+    4.0,
+    437.0
+   ],
+   "overrides": "approx",
+   "pleiades": "250568480",
+   "reference": [
+    4.1,
+    437.1
+   ],
+   "reference_accuracy_m": 20.0,
+   "status": "ok",
+   "title": "House of Augustus",
+   "tolerance_m": 20.0
+  },
+  {
+   "bearing_to_reference": 161,
+   "distance_m": 0.2,
+   "id": "domus_augustana",
+   "ours": [
+    144.0,
+    493.0
+   ],
+   "overrides": "approx",
+   "pleiades": "792237246",
+   "reference": [
+    144.1,
+    493.2
+   ],
+   "reference_accuracy_m": 20.0,
+   "status": "ok",
+   "title": "Domus Augustana",
    "tolerance_m": 20.0
   },
   {
@@ -10864,6 +10823,44 @@
    "reference_accuracy_m": 20.0,
    "status": "ok",
    "title": "Semo Sancus, Aedes",
+   "tolerance_m": 20.0
+  },
+  {
+   "bearing_to_reference": 340,
+   "distance_m": 0.0,
+   "id": "ara_pacis_augustae_empire",
+   "ours": [
+    -514.1,
+    -1149.3
+   ],
+   "overrides": "exact",
+   "pleiades": "816091000",
+   "reference": [
+    -514.1,
+    -1149.4
+   ],
+   "reference_accuracy_m": 5.0,
+   "status": "ok",
+   "title": "Ara Pacis Augustae",
+   "tolerance_m": 20.0
+  },
+  {
+   "bearing_to_reference": 180,
+   "distance_m": 0.0,
+   "id": "sepulcrum_scipionum",
+   "ours": [
+    1240.9,
+    1852.2
+   ],
+   "overrides": "exact",
+   "pleiades": "999196280",
+   "reference": [
+    1240.9,
+    1852.2
+   ],
+   "reference_accuracy_m": 5.0,
+   "status": "ok",
+   "title": "Sep. Scipionum",
    "tolerance_m": 20.0
   }
  ],
@@ -11007,7 +11004,7 @@
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "centre 9 m from the river's line (half width 45 m), length 100 m",
+   "detail": "centre 34 m from the river's line (half width 45 m), length 100 m",
    "name": "pons_aemilius spans the Tiber",
    "ok": true,
    "source": "topography.yaml tiber.course; Platner-Ashby s.v. Pons Aemilius"
@@ -11057,10 +11054,10 @@
   },
   "date_issues": 25,
   "measured_flags": 0,
-  "misplaced": 20,
+  "misplaced": 0,
   "missing": 568,
   "missing_republic": 337,
-  "outline_flags": 53,
+  "outline_flags": 52,
   "references": {
    "platner": {
     "excluded": 1,
@@ -11074,12 +11071,12 @@
    }
   },
   "relations_failed": 6,
-  "scene_buried": 108,
+  "scene_buried": 109,
   "scene_floating": 36,
-  "scene_houses_in_monuments": 166,
-  "scene_houses_on_streets": 14,
-  "scene_in_river": 4,
-  "scene_overlaps": 49,
+  "scene_houses_in_monuments": 212,
+  "scene_houses_on_streets": 17,
+  "scene_in_river": 3,
+  "scene_overlaps": 54,
   "scene_streets_through": 29
  },
  "topography": [

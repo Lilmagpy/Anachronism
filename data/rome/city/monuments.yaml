@@ -1015,8 +1015,8 @@ monuments:
   english: Cattle Market
   type: market
   regio: 11
-  lat: 41.8886
-  lon: 12.4813
+  lat: 41.888811
+  lon: 12.480858
   precision: approx
   location: between the Capitol, Palatine, Aventine and the Tiber, near the Pons Sublicius
   built: {year: null, certainty: traditional, by: "early market by the river port"}
@@ -1031,6 +1031,8 @@ monuments:
   surface: earth
   geometry_source: "open ground between the Tiber, the Palatine and the Capitol; extent assumed (Platner-Ashby s.v. Forum Boarium)"
   geometry_unverified: [bearing_deg, footprint_m]
+  location_confidence: medium
+  location_source: "F2: centre of the open square as mapped (Pleiades 207271756, OpenStreetMap), between the temples of Hercules Victor and Portunus and the Velabrum; moved 43 m west"
 - id: ara_maxima_herculis
   latin: Ara Maxima Herculis
   english: Great Altar of Hercules
@@ -1641,8 +1643,8 @@ monuments:
   english: House of Hortensius, later of Augustus
   type: house
   regio: 10
-  lat: 41.8884
-  lon: 12.4850
+  lat: 41.888568
+  lon: 12.485348
   precision: approx
   location: Palatine, south-west, over the Scalae Caci
   built: {year: null, certainty: uncertain, by: "originally the house of the orator Q. Hortensius Hortalus (d. 50), later Augustus's residence 'aedes Hortensianae' (Suet. Aug. 72); enlarged after the Apollo temple was built (Dio 49.15.5); the oak crown decreed 13 Jan 27 (Dio 53.16.4)"}
@@ -1651,12 +1653,13 @@ monuments:
   pleiades: 250568480
   verified: platner-ashby+pleiades
   model: domus
-  offset_m: [25, 56]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 61 m off
   bearing_deg: 16  # unverified
   footprint_m: {length: 45, width: 30}  # unverified
   height_m: 9  # unverified
   geometry_source: "form assumed from date and type, native kit size (no measured plan); Suet. Aug. 72"
   geometry_unverified: [bearing_deg, footprint_m, height_m]
+  location_confidence: high
+  location_source: "F2: the excavated house (Pleiades 250568480, OpenStreetMap outline of the Casa di Augusto); moved 38 m south"
 - id: domus_catuli
   latin: Domus Q. Lutatii Catuli
   english: House of Catulus (with Porticus Catuli)
@@ -2288,8 +2291,8 @@ monuments:
   english: Amphitheatre of Statilius Taurus
   type: amphitheatre
   regio: 9
-  lat: 41.8910
-  lon: 12.4740
+  lat: 41.8955
+  lon: 12.479
   precision: rough
   location: Campus Martius
   built: {year: -29, certainty: certain, by: "T. Statilius Taurus, dedicated 29 (Dio 51.23.1)"}
@@ -2300,6 +2303,8 @@ monuments:
   height_m: 20  # unverified
   geometry_source: "Dio 51.23.1; Suet. Aug. 29 (stone amphitheatre of Statilius Taurus in the Campus Martius, 29 BC); dimensions not given"
   geometry_unverified: [bearing_deg, footprint_m, height_m]
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Amphitheatrum Statilii Tauri (read): probably in the southern part of the Campus Martius (after Huelsen-Jordan 496); exact site lost. The Empire record's representative point is used for both; the earlier Republican point stood in the Tiber"
 - id: saepta_iulia
   latin: Saepta (Iulia)
   english: Saepta (voting enclosure)
@@ -2360,19 +2365,20 @@ monuments:
   english: Baths of Agrippa
   type: baths
   regio: 9
-  lat: 41.8980
-  lon: 12.4780
+  lat: 41.8975
+  lon: 12.477
   precision: approx
   location: Campus Martius, near the Pantheon
   built: {year: -25, certainty: certain, by: "Agrippa 25 BC (Dio 53.27.1); with the Stagnum and Euripus (Aqua Virgo)"}
   sources: ["Dio 53.27.1", "Platner-Ashby s.v. Thermae Agrippae"]
   model: baths
-  offset_m: [-83, -121]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 147 m off
   bearing_deg: 180  # unverified
   footprint_m: {length: 100, width: 80}  # unverified
   height_m: 20  # unverified
   geometry_source: "Platner-Ashby s.v. Thermae Agrippae (25 BC, Dio 53.27.1); the plan is not measured: assumed"
   geometry_unverified: [bearing_deg, footprint_m, height_m]
+  location_confidence: medium
+  location_source: "F2: centred on the great round hall whose wall survives as the Arco della Ciambella, south of the Pantheon (Platner-Ashby s.v. Thermae Agrippae: remains in the Via dell'Arco della Ciambella # unverified passage); the two records were 87 m apart"
 - id: aedes_isidis_serapis
   latin: Aedes Isidis et Serapis
   english: Temple of Isis and Serapis (triumviral vow)
@@ -2393,12 +2399,14 @@ monuments:
   english: Altar of Augustan Peace
   type: altar
   regio: 9
-  lat: 41.9063
-  lon: 12.4753
+  lat: 41.902842
+  lon: 12.479095
   precision: exact
   location: northern Campus Martius, near the Via Flaminia
   built: {year: -9, certainty: certain, by: "voted by the senate 13 BC, dedicated 30 Jan 9 BC (Res Gestae 12) - outside the 27 BC limit, included as a feature of the Augustan city"}
   sources: ["Res Gestae 12", "Platner-Ashby s.v. Ara Pacis Augustae"]
+  location_confidence: high
+  location_source: "F2: the original site under Palazzo Fiano at the corner of the Corso and Via in Lucina (Platner-Ashby s.v. Ara Pacis Augustae; Pleiades 816091000, imagery point of the original position). The earlier point (41.9063, 12.4753) was the modern museum on the Lungotevere, 500 m away"
 # ---------------------------------------------------------------- QUIRINAL / VIMINAL / ESQUILINE / CAELIAN
   model: altar_enclosure
   bearing_deg: 90  # unverified
@@ -2599,8 +2607,8 @@ monuments:
   english: Tomb of the Scipios
   type: tomb
   regio: 1
-  lat: 41.8798
-  lon: 12.4981
+  lat: 41.875833
+  lon: 12.500278
   precision: exact
   location: Via Appia, first mile
   built: {year: -298, certainty: probable, by: "tomb of L. Cornelius Scipio Barbatus, consul 298 (CIL I 6-7, Elogia)"}
@@ -2612,6 +2620,8 @@ monuments:
   geometry_source: "tomb of the Scipios (Platner-Ashby s.v. Sepulcrum Scipionum, rock-cut, tufa facade added in the 2nd century BC); size assumed"
   geometry_unverified: [bearing_deg, footprint_m, height_m]
   pleiades: 999196280
+  location_confidence: high
+  location_source: "F2: the excavated tomb inside the Porta S. Sebastiano, Via di Porta S. Sebastiano (Pleiades 999196280, imagery point good to 5 m). The earlier point was 476 m north-west, on the Via Appia near the Porta Capena"
 - id: sepulcrum_caeciliae_metellae
   latin: Sepulcrum Caeciliae Metellae
   english: Tomb of Caecilia Metella
@@ -3004,8 +3014,8 @@ monuments:
   english: Pons Aemilius (Ponte Rotto)
   type: bridge
   regio: 11
-  lat: 41.8884
-  lon: 12.4789
+  lat: 41.889342
+  lon: 12.479374
   precision: exact
   location: Tiber, by the Forum Boarium
   built: {year: -179, certainty: certain, by: "piers contracted by the censors M. Aemilius Lepidus and M. Fulvius Nobilior (Livy 40.51.4); arches added 142 by Scipio Aemilianus and L. Mummius (Platner-Ashby)"}
@@ -3014,13 +3024,15 @@ monuments:
   materials: [tufa, travertine]
   sources: ["Livy 40.51.4", "Platner-Ashby s.v. Pons Aemilius"]
   model: bridge_stone
-  bearing_deg: 255  # unverified
+  bearing_deg: 257  # F2: the axis of the surviving arch (Pleiades outline, 77/257 degrees)
   footprint_m: {length: 100, width: 8}  # unverified
   height_m: 11  # unverified
   phases: [{from: -179, state: standing, variant: timber_deck}, {from: -142, state: standing, variant: arches}]
   geometry_source: "Platner-Ashby s.v. Pons Aemilius (stone piers 179 BC, arches 142 BC Livy 40.51.4; the Ponte Rotto); length and width assumed from the river width"
   geometry_unverified: [bearing_deg, footprint_m, height_m]
   pleiades: 425068
+  location_confidence: high
+  location_source: "F2: the surviving arch, the Ponte Rotto (Pleiades 425068, OpenStreetMap; its axis at 77 degrees); moved 111 m north-north-east, where the earlier point lay downstream of the remains"
 - id: pons_mulvius
   latin: Pons Mulvius
   english: Milvian Bridge
@@ -3254,7 +3266,7 @@ monuments:
   precision: rough
   location: from springs on the Via Collatina to the Campus Martius baths of Agrippa
   built: {year: -19, certainty: certain, by: "M. Agrippa, dedicated 19 BC (Frontin. Aq. 10; Dio 54.11.7)"}
-  route: [[41.9080,12.6240],[41.9100,12.5400],[41.9100,12.4900],[41.8985,12.4790]]
+  route: [[41.8960, 12.6250], [41.9220, 12.5300], [41.9080, 12.4900], [41.8995, 12.4790]]  # F2: the Empire record's route, closer to the surviving arches in Via del Nazareno (Pleiades 423568)
   sources: ["Frontin. Aq. 10", "Dio 54.11.7", "Platner-Ashby s.v. Aqua Virgo"]
   pleiades: 423568
 # ---------------------------------------------------------------- LATE REPUBLIC OTHER

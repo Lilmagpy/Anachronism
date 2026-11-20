@@ -2199,10 +2199,12 @@
 ],
 "height_m": 0,
 "id": "forum_boarium",
-"lat": 41.8886,
+"lat": 41.888811,
 "latin": "Forum Boarium",
 "location": "between the Capitol, Palatine, Aventine and the Tiber, near the Pons Sublicius",
-"lon": 12.4813,
+"location_confidence": "medium",
+"location_source": "F2: centre of the open square as mapped (Pleiades 207271756, OpenStreetMap), between the temples of Hercules Victor and Portunus and the Velabrum; moved 43 m west",
+"lon": 12.480858,
 "model": "plaza",
 "notes": "P&A: the cattle market of Rome (Cic. Scaur. 23; Dion. Hal. 1.40, 4.27), extending from the boundary of the Velabrum to the Tiber; monuments include the two fornices of L. Stertinius (196 BC), the Busta Gallica and Doliola (probably primitive tombs). Pleiades 207271756.",
 "pleiades": 207271756,
@@ -3480,16 +3482,14 @@
 ],
 "height_m": 9,
 "id": "domus_hortensii_augusti",
-"lat": 41.8884,
+"lat": 41.888568,
 "latin": "Domus Hortensii (Domus Augusti)",
 "location": "Palatine, south-west, over the Scalae Caci",
-"lon": 12.485,
+"location_confidence": "high",
+"location_source": "F2: the excavated house (Pleiades 250568480, OpenStreetMap outline of the Casa di Augusto); moved 38 m south",
+"lon": 12.485348,
 "model": "domus",
 "notes": "CORRECTED: the old 'built -50 probable, acquired after the 40s (Dio 53.16.5)' was invented. P&A: Augustus lived 'in aedibus modicis Hortensianis' (Suet. Aug. 72); the house was the house of Hortensius, close to the temple of Apollo; a part was struck by lightning and the temple of Apollo erected on the site (Suet. Aug. 29), the Senate voting him a house at public expense (Dio 49.15.5); the oak crown was decreed over the door on 13 Jan 27 (Fasti Praen.; Mon. Anc. 6.13 = RG 34.2; Dio 53.16.4); he also acquired the house of Q. Lutatius Catulus. The house burned in AD 3 (outside range). P&A identifies Hortensius's house with the 'House of Livia' on the Palatine (conjecture, depending on where the temple of Apollo stood); the building Pleiades calls 'House of Augustus' (250568480) is a modern identification. The birthplace 'ad capita bubula' is a different house (Suet. Aug. 5).",
-"offset_m": [
-25,
-56
-],
 "pleiades": 250568480,
 "precision": "approx",
 "regio": 10,
@@ -4796,10 +4796,12 @@
 ],
 "height_m": 20,
 "id": "amphitheatrum_tauri",
-"lat": 41.891,
+"lat": 41.8955,
 "latin": "Amphitheatrum Statili Tauri",
 "location": "Campus Martius",
-"lon": 12.474,
+"location_confidence": "low",
+"location_source": "F2: Platner-Ashby s.v. Amphitheatrum Statilii Tauri (read): probably in the southern part of the Campus Martius (after Huelsen-Jordan 496); exact site lost. The Empire record's representative point is used for both; the earlier Republican point stood in the Tiber",
+"lon": 12.479,
 "model": "amphitheatre_small",
 "precision": "rough",
 "regio": 9,
@@ -4932,15 +4934,13 @@
 ],
 "height_m": 20,
 "id": "thermae_agrippae",
-"lat": 41.898,
+"lat": 41.8975,
 "latin": "Thermae Agrippae",
 "location": "Campus Martius, near the Pantheon",
-"lon": 12.478,
+"location_confidence": "medium",
+"location_source": "F2: centred on the great round hall whose wall survives as the Arco della Ciambella, south of the Pantheon (Platner-Ashby s.v. Thermae Agrippae: remains in the Via dell'Arco della Ciambella # unverified passage); the two records were 87 m apart",
+"lon": 12.477,
 "model": "baths",
-"offset_m": [
--83,
--121
-],
 "precision": "approx",
 "regio": 9,
 "sources": [
@@ -5003,10 +5003,12 @@
 ],
 "height_m": 3.7,
 "id": "ara_pacis_augustae",
-"lat": 41.9063,
+"lat": 41.902842,
 "latin": "Ara Pacis Augustae",
 "location": "northern Campus Martius, near the Via Flaminia",
-"lon": 12.4753,
+"location_confidence": "high",
+"location_source": "F2: the original site under Palazzo Fiano at the corner of the Corso and Via in Lucina (Platner-Ashby s.v. Ara Pacis Augustae; Pleiades 816091000, imagery point of the original position). The earlier point (41.9063, 12.4753) was the modern museum on the Lungotevere, 500 m away",
+"lon": 12.479095,
 "model": "altar_enclosure",
 "precision": "exact",
 "regio": 9,
@@ -5407,10 +5409,12 @@
 ],
 "height_m": 6,
 "id": "sepulcrum_scipionum",
-"lat": 41.8798,
+"lat": 41.875833,
 "latin": "Sepulcrum Scipionum",
 "location": "Via Appia, first mile",
-"lon": 12.4981,
+"location_confidence": "high",
+"location_source": "F2: the excavated tomb inside the Porta S. Sebastiano, Via di Porta S. Sebastiano (Pleiades 999196280, imagery point good to 5 m). The earlier point was 476 m north-west, on the Via Appia near the Porta Capena",
+"lon": 12.500278,
 "model": "tomb_rock",
 "pleiades": 999196280,
 "precision": "exact",
@@ -6179,7 +6183,7 @@
 "type": "bridge"
 },
 {
-"bearing_deg": 255,
+"bearing_deg": 257,
 "built": {
 "by": "piers contracted by the censors M. Aemilius Lepidus and M. Fulvius Nobilior (Livy 40.51.4); arches added 142 by Scipio Aemilianus and L. Mummius (Platner-Ashby)",
 "certainty": "certain",
@@ -6204,10 +6208,12 @@
 ],
 "height_m": 11,
 "id": "pons_aemilius",
-"lat": 41.8884,
+"lat": 41.889342,
 "latin": "Pons Aemilius",
 "location": "Tiber, by the Forum Boarium",
-"lon": 12.4789,
+"location_confidence": "high",
+"location_source": "F2: the surviving arch, the Ponte Rotto (Pleiades 425068, OpenStreetMap; its axis at 77 degrees); moved 111 m north-north-east, where the earlier point lay downstream of the remains",
+"lon": 12.479374,
 "materials": [
 "tufa",
 "travertine"
@@ -6778,19 +6784,19 @@
 "regio": 9,
 "route": [
 [
+41.896,
+12.625
+],
+[
+41.922,
+12.53
+],
+[
 41.908,
-12.624
-],
-[
-41.91,
-12.54
-],
-[
-41.91,
 12.49
 ],
 [
-41.8985,
+41.8995,
 12.479
 ]
 ],

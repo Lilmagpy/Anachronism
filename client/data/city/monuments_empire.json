@@ -434,6 +434,7 @@
 "Ov. Fast. 1.709-722",
 "Platner-Ashby s.v. Ara Pacis Augustae (read)"
 ],
+"twin_of": "ara_pacis_augustae",
 "type": "altar",
 "unverified_fields": [
 "built"
@@ -614,6 +615,7 @@
 "Plin. NH 35.26",
 "Platner-Ashby s.v. Thermae Agrippae (read)"
 ],
+"twin_of": "thermae_agrippae",
 "type": "baths",
 "unverified_fields": [
 "lat",
@@ -869,6 +871,7 @@
 "Suet. Caes. 85",
 "Platner-Ashby s.v. Iulius, Divus, aedes (read)"
 ],
+"twin_of": "aedes_divi_iulii",
 "type": "temple",
 "unverified_fields": [
 "bearing_deg",
@@ -1030,6 +1033,7 @@
 "CIL VI 31563c",
 "Platner-Ashby s.v. Aqua Iulia (read)"
 ],
+"twin_of": "aqua_iulia",
 "type": "aqueduct",
 "unverified_fields": [
 "lat",
@@ -1095,6 +1099,7 @@
 "CIL VI 1252",
 "Platner-Ashby s.v. Aqua Virgo (read)"
 ],
+"twin_of": "aqua_virgo",
 "type": "aqueduct",
 "unverified_fields": [
 "route",
@@ -1328,6 +1333,7 @@
 "Dio 62.18.2",
 "Suet. Aug. 29"
 ],
+"twin_of": "amphitheatrum_tauri",
 "type": "amphitheatre",
 "unverified_fields": [
 "lat",
@@ -1682,10 +1688,12 @@
 "form": "colossal bronze statue of Nero, 120 feet (about 35.5 m) high (Suet. Nero 31)",
 "height_m": 35,
 "id": "colossus_neronis",
-"lat": 41.8898,
+"lat": 41.890853,
 "latin": "Colossus Neronis (Solis)",
 "location": "Vestibule of the Domus Aurea on the Velia; base later beside the Temple of Venus and Roma, near the Colosseum",
-"lon": 12.4905,
+"location_confidence": "medium",
+"location_source": "F2: until Hadrian it stood in the vestibule of the Domus Aurea on the Velia, where Hadrian then built the temple of Venus and Rome and moved the statue to the base by the Flavian amphitheatre that survives (Platner-Ashby s.v. Colossus Neronis # unverified passage; Pleiades 527986452 maps that later base, 472, 181). Placed at the centre of the temple of Venus and Rome (Pleiades 261794683)",
+"lon": 12.489669,
 "model": "colossus",
 "notes": "Platner-Ashby gives 120 feet and the Vespasianic conversion into the Sun; the Pliny figure of 106.5 feet is quoted from memory and not re-read. Pleiades 527986452 (Colossus Neronis, 41.8909, 12.491) is a place near the Velia; the base position is approximate.",
 "pleiades": 527986452,
@@ -2090,10 +2098,12 @@
 "form": "the state apartments in the NW half of the Domus Augustiana, entered from the north-west with a lofty facade and colonnade in front (later propped by Hadrianic walls); Suetonius has Domitian line the walks with selenite (Suet. Dom. 14); 'Domus Flavia' is a modern term for Domitian's part (Platner-Ashby)",
 "height_m": null,
 "id": "domus_flavia",
-"lat": 41.8891,
+"lat": 41.888793,
 "latin": "Domus Flavia",
 "location": "Central Palatine, over the earlier Neronian structures",
-"lon": 12.488,
+"location_confidence": "high",
+"location_source": "F2: centre of the excavated wing (Pleiades 564783056, OpenStreetMap outline 152 x 100 m); moved 121 m west",
+"lon": 12.486604,
 "model": "palace",
 "notes": "Platner-Ashby does not separate the Flavia and Augustana by size; first-draft footprints removed. Pleiades 564783056 Domus Flavia (41.8888, 12.4866).",
 "pleiades": 564783056,
@@ -2128,10 +2138,12 @@
 "form": "the SE half of Domitian's palace of the Palatine; 'Domus Augustiana' (CIL VI 8640, 8647) denoted the whole imperial residence apart from the Domus Tiberiana at any given period; the Villa Mills lies on solid rock over part of it",
 "height_m": null,
 "id": "domus_augustana",
-"lat": 41.8884,
+"lat": 41.888064,
 "latin": "Domus Augustana",
 "location": "South-east Palatine, over the Circus Maximus side; two-storey peristyle with a pool in maze form",
-"lon": 12.4889,
+"location_confidence": "high",
+"location_source": "F2: centre of the excavated wing (Pleiades 792237246, OpenStreetMap outline 225 x 86 m); moved 159 m west-south-west",
+"lon": 12.487038,
 "model": "palace",
 "notes": "First-draft footprint and the island-pool claim are not in Platner-Ashby and are removed. Pleiades 155566866 is titled Paedagogium and 792237246 is an OSM location of Domus Augustana (not retrieved); none adopted.",
 "pleiades": 792237246,
@@ -2154,7 +2166,7 @@
 "verified": true
 },
 {
-"bearing_deg": null,
+"bearing_deg": 41.5,
 "built": {
 "by": "part of Domitian's palace complex; the name hippodromus is as old as Pliny the Younger (Ep. 5.6.19, 40) for a garden shaped like a circus or stadium (Platner-Ashby)",
 "certainty": "uncertain",
@@ -2168,10 +2180,12 @@
 "form": "long narrow garden court shaped like a stadium, 160 m long and 50 m wide, with arcades; white marble path edgings and gutter found (Platner-Ashby)",
 "height_m": null,
 "id": "stadium_palatinum",
-"lat": 41.8876,
+"lat": 41.887506,
 "latin": "Hippodromus Palatii",
 "location": "South-east of the Domus Augustana, Palatine",
-"lon": 12.4894,
+"location_confidence": "high",
+"location_source": "F2: the excavated garden stadium (Pleiades 132886213, OpenStreetMap outline 168 x 70 m, long axis at 41.5 degrees); moved 154 m west",
+"lon": 12.487545,
 "model": "stadium",
 "notes": "First-draft Suet. Dom. 4 citation removed. Platner-Ashby does not date the stadium (Domitianic palace phase assumed). Pleiades 132886213 Palatine Stadium (41.8876, 12.4875).",
 "pleiades": 132886213,
@@ -2333,10 +2347,12 @@
 "form": "large conical fountain just south-west of the Colosseum, meeting-point of five Augustan regions (I, II, III, IV, X); resembled a goal (meta) of the circus; shown on a coin of Alexander Severus; Seneca Ep. 56.4 uses the name for a fountain at Baiae",
 "height_m": 17,
 "id": "meta_sudans",
-"lat": 41.8896,
+"lat": 41.89007,
 "latin": "Meta Sudans",
 "location": "Between the Palatine and the Colosseum; base partially excavated",
-"lon": 12.4905,
+"location_confidence": "high",
+"location_source": "F2: the excavated foundation of the fountain by the Colosseum (Pleiades 419380619); moved 55 m north-north-east",
+"lon": 12.490683,
 "model": "fountain",
 "notes": "First-draft date 80 corrected to 96 (Platner-Ashby). Size/height (17 m) from memory. Pleiades 419380619 OSM location of Meta Sudans (41.8901, 12.4907).",
 "pleiades": 419380619,
@@ -2355,7 +2371,7 @@
 "verified": true
 },
 {
-"bearing_deg": 45,
+"bearing_deg": 143,
 "built": {
 "by": "Trajan with the Greek architect Apollodorus, dedicated at least in part about AD 113 (Dio 68.16.3, read; Dio 69.4.1; Aur. Vict. Caes. 13.5 suggests Domitian may have planned or begun it)",
 "certainty": "certain",
@@ -2373,16 +2389,18 @@
 }
 ],
 "footprint_m": {
-"length": 310,
-"width": 185
+"length": 220,
+"width": 120
 },
 "form": "the last, largest and most magnificent imperial forum: space 185 m wide, about 310 m long including the temple precinct; forum court 116 m wide and 95 long enclosed in a marble-faced wall with two hemicycles 45 m deep; double colonnades on three sides; gilded horses and standards on the colonnade roof; bronze equestrian statue of Trajan in the middle; Basilica Ulpia on the NW side; two libraries and the Column behind (Platner-Ashby)",
 "height_m": null,
 "id": "forum_traiani",
-"lat": 41.8956,
+"lat": 41.895343,
 "latin": "Forum Traiani",
 "location": "Between the Capitol/Quirinal saddle and the Forum of Augustus; Via dei Fori Imperiali and the Column",
-"lon": 12.4842,
+"location_confidence": "high",
+"location_source": "F2: centre of the excavated forum (Pleiades 250091860, OpenStreetMap outline 219 x 121 m, long axis 143 degrees: the entrance on the south-east towards the Forum of Augustus, the Basilica Ulpia across the north-west end); moved 91 m east",
+"lon": 12.48524,
 "model": "forum",
 "notes": "Size read in Platner-Ashby. Pleiades 250091860 Forum Traiani (41.8952, 12.4853). The Dio 68.16 / 68.29 references were checked against the Dio text read only in part (book 68 downloaded; passages located by Platner-Ashby quotations).",
 "pleiades": 250091860,
@@ -2458,10 +2476,12 @@
 "form": "column of Parian marble; shaft and base of 18 blocks 3.70 m in diameter; with capital and plinth 100 Roman feet (29.77 m); with pedestal 38 m (the Notitia says 128.5 feet); surmounted by a gilt bronze statue of Trajan; stood in a small court 24 x 16 m between the Basilica Ulpia and the libraries (Platner-Ashby)",
 "height_m": 38,
 "id": "columna_traiani",
-"lat": 41.896,
+"lat": 41.895811,
 "latin": "Columna Traiani",
 "location": "Between the Basilica Ulpia and the two libraries in the Forum of Trajan",
-"lon": 12.4841,
+"location_confidence": "high",
+"location_source": "F2: the standing column (Pleiades 783489695); moved 26 m",
+"lon": 12.484274,
 "model": "column",
 "notes": "First-draft 35 m corrected to 38 m (with pedestal; 29.77 m without). Radius is the shaft diameter 3.70 m halved, plus pedestal approximated. The 12 May dedication date of the first draft is not in Platner-Ashby and is removed. Pleiades 783489695 Column of Trajan (41.8958, 12.4843).",
 "pleiades": 783489695,
