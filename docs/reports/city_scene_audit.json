@@ -208,7 +208,7 @@
     "circus_maximus overlaps sacellum_murciae by 5.1 m",
     "horrea_galbae overlaps porticus_aemilia by 52.5 m"
    ],
-   "seconds": 25.102,
+   "seconds": 21.613,
    "standing": 150,
    "streets_through": [],
    "year": -133
@@ -309,7 +309,7 @@
    "overlaps": [
     "circus_maximus overlaps sacellum_murciae by 5.1 m"
    ],
-   "seconds": 12.964,
+   "seconds": 11.944,
    "standing": 108,
    "streets_through": [],
    "year": -264
@@ -496,7 +496,7 @@
     "pons_fabricius overlaps porta_flumentana by 3.6 m",
     "porticus_octaviae overlaps theatrum_marcelli by 2.8 m"
    ],
-   "seconds": 28.002,
+   "seconds": 27.55,
    "standing": 182,
    "streets_through": [],
    "year": -27
@@ -540,7 +540,7 @@
    "overlaps": [
     "circus_maximus overlaps sacellum_murciae by 5.1 m"
    ],
-   "seconds": 8.634,
+   "seconds": 7.261,
    "standing": 71,
    "streets_through": [],
    "year": -390
@@ -718,7 +718,7 @@
     "pons_fabricius overlaps porta_flumentana by 3.6 m",
     "porticus_octaviae overlaps theatrum_marcelli by 2.8 m"
    ],
-   "seconds": 31.913,
+   "seconds": 24.915,
    "standing": 172,
    "streets_through": [],
    "year": -44
@@ -755,7 +755,7 @@
    "overlaps": [
     "circus_maximus overlaps sacellum_murciae by 5.1 m"
    ],
-   "seconds": 6.743,
+   "seconds": 12.346,
    "standing": 62,
    "streets_through": [],
    "year": -509

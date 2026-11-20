@@ -413,9 +413,11 @@ default:
 # Flumentana, Fontinalis, Ratumena, Collina, Viminalis, Esquilina, Caelimontana, Capena, Naevia,
 # Lavernalis, Trigemina...) and Platner-Ashby s.v. Murus Servii Tullii / Regiones: the wall enclosed
 # the Capitol, Palatine, Quirinal, Viminal, Esquiline, a corner of the Caelian and the Aventine.
-# About 4.0 km2 (the sources give 426 ha: population.yaml built_up_area). The `route` of
-# murus_servianus in monuments.yaml is a coarser 13-point line of only 2.8 km2 and is used only to
-# keep houses off the drawn wall; THIS polygon decides what counts as "inside the walls". Rough.
+# About 4.0 km2 (the sources give 426 ha: population.yaml built_up_area). F2: the polygon is
+# the gate circuit monuments.gd draws (the gates moved to their remains), the same line as the
+# `route` of murus_servianus, which keeps houses off the drawn wall; THIS polygon decides what
+# counts as "inside the walls". `route_measured` adds the bends of the surviving stretches (not
+# yet drawn). Rough.
 servian_circuit:
   polygon: [[41.89165, 12.47836], [41.89140, 12.48028], [41.89600, 12.48300], [41.89646, 12.48680], [41.89940, 12.48675], [41.90244, 12.49066], [41.90733, 12.49868], [41.90250, 12.50111], [41.89578, 12.50136], [41.88730, 12.49650], [41.88418, 12.49667], [41.88394, 12.49050], [41.87895, 12.48960], [41.87970, 12.48350], [41.88250, 12.48100], [41.88800, 12.47966]]  # F2: the circuit monuments.gd draws through the gates (gate points as corrected in the F2 audit)
   precision: rough

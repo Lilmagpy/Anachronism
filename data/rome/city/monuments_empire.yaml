@@ -658,11 +658,9 @@ monuments:
   model: arch
   sources: ["CIL VI 920-923", "Suet. Claud. 17", "Dio 60.19-22", "CIL VI 1252", "Platner-Ashby s.v. Arcus Claudii (read)"]
   verified: true
-  events:
-  - {year: 46, what: "a different arch of the Aqua Virgo, in Via del Nazareno, was restored monumentally by Claudius in AD 46 (CIL VI 1252) - the Arcus Claudii (1), which survives"}
   unverified_fields: [lat, lon]
   pleiades: null
-  notes: "Platner-Ashby distinguishes two Arcus Claudii; this is no. 2. Coins of 46-47 may show a different arch. Position is a guess on the Corso north of the Saepta. No Pleiades id found."
+  notes: "Platner-Ashby distinguishes two Arcus Claudii; this is no. 2. (F2: moved from events, as it is another monument:) a different arch of the Aqua Virgo, in Via del Nazareno, was restored monumentally by Claudius in AD 46 (CIL VI 1252) - the Arcus Claudii (1), which survives. Coins of 46-47 may show a different arch. Position is a guess on the Corso north of the Saepta. No Pleiades id found."
 - id: domus_transitoria
   latin: Domus Transitoria
   english: Domus Transitoria (Nero's first palace)

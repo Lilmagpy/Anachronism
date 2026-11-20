@@ -42,50 +42,6 @@
  },
  "dates": [
   {
-   "id": "arcus_claudii_lata",
-   "issue": "event in 46 before it was built (52): a different arch of the Aqua Virgo, in Via del Nazareno, was restored monumental"
-  },
-  {
-   "id": "basilica_porcia",
-   "issue": "44 BC: engine burnt, drawn absent"
-  },
-  {
-   "id": "basilica_porcia",
-   "issue": "27 BC: engine burnt, drawn absent"
-  },
-  {
-   "id": "basilica_porcia",
-   "issue": "AD 80: engine burnt, drawn absent"
-  },
-  {
-   "id": "basilica_porcia",
-   "issue": "AD 120: engine burnt, drawn absent"
-  },
-  {
-   "id": "basilica_porcia",
-   "issue": "timeline fire 52 BC is in neither its events nor its phases"
-  },
-  {
-   "id": "comitium",
-   "issue": "44 BC: engine standing, drawn absent"
-  },
-  {
-   "id": "comitium",
-   "issue": "27 BC: engine standing, drawn absent"
-  },
-  {
-   "id": "comitium",
-   "issue": "AD 80: engine standing, drawn absent"
-  },
-  {
-   "id": "comitium",
-   "issue": "AD 120: engine standing, drawn absent"
-  },
-  {
-   "id": "curia_iulia",
-   "issue": "construction completed -29 but built.year -44"
-  },
-  {
    "id": "forum_romanum",
    "issue": "509 BC: engine planned, drawn standing"
   },
@@ -96,26 +52,6 @@
   {
    "id": "forum_romanum",
    "issue": "264 BC: engine planned, drawn standing"
-  },
-  {
-   "id": "rostra_republic",
-   "issue": "44 BC: engine standing, drawn absent"
-  },
-  {
-   "id": "rostra_republic",
-   "issue": "27 BC: engine standing, drawn absent"
-  },
-  {
-   "id": "rostra_republic",
-   "issue": "AD 80: engine standing, drawn absent"
-  },
-  {
-   "id": "rostra_republic",
-   "issue": "AD 120: engine standing, drawn absent"
-  },
-  {
-   "id": "theatrum_marcelli_empire",
-   "issue": "event in -17 before it was built (-13): part of the Ludi Saeculares was held in the unfinished theatre (CIL VI 32323)"
   },
   {
    "id": "theatrum_scauri",
@@ -6741,18 +6677,6 @@
    ]
   },
   {
-   "built": -221,
-   "id": "aedes_herculis_custodis",
-   "pa": "Hercules Custos, aedes:*",
-   "pa_key": "Aedes_Herculis_Custodis.html",
-   "pa_years": [
-    -400,
-    -218,
-    -179,
-    -82
-   ]
-  },
-  {
    "built": -294,
    "id": "aedes_iovis_statoris_palatine",
    "pa": "Iuppiter Stator, aedes",
@@ -7002,16 +6926,6 @@
    ]
   },
   {
-   "built": -44,
-   "id": "curia_iulia",
-   "pa": "Victoria, ara",
-   "pa_key": "V#ara_Victoriae",
-   "pa_years": [
-    -29,
-    -27
-   ]
-  },
-  {
    "built": -181,
    "id": "aedes_veneris_erycinae_collina",
    "pa": "Venus Erucina",
@@ -7040,7 +6954,7 @@
    ]
   },
   {
-   "built": -44,
+   "built": -29,
    "id": "curia_iulia",
    "pa": "Curia Pompiliana",
    "pa_key": "curiae#Pompiliana",
@@ -8819,85 +8733,85 @@
    "source": "Platner-Ashby s.v. Circus Maximus"
   },
   {
-   "detail": "up to 68 m from the drawn wall, at (1361, -1033)",
+   "detail": "up to 68 m from the drawn wall, at (1361, -1033); 7 m from the measured line (route_measured)",
    "name": "surviving stretch 1 of the Servian wall (near porta_viminalis) on the wall drawn through the gates",
    "ok": false,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 3 m from the drawn wall, at (127, -438)",
+   "detail": "up to 3 m from the drawn wall, at (127, -438); 3 m from the measured line (route_measured)",
    "name": "surviving stretch 2 of the Servian wall (near porta_sanqualis) on the wall drawn through the gates",
    "ok": true,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 22 m from the drawn wall, at (-175, 1362)",
+   "detail": "up to 22 m from the drawn wall, at (-175, 1362); 22 m from the measured line (route_measured)",
    "name": "surviving stretch 3 of the Servian wall (near porta_lavernalis) on the wall drawn through the gates",
    "ok": true,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 56 m from the drawn wall, at (-242, 1349)",
+   "detail": "up to 56 m from the drawn wall, at (-242, 1349); 56 m from the measured line (route_measured)",
    "name": "surviving stretch 4 of the Servian wall (near porta_lavernalis) on the wall drawn through the gates",
    "ok": true,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 85 m from the drawn wall, at (1332, -152)",
+   "detail": "up to 85 m from the drawn wall, at (1332, -152); 0 m from the measured line (route_measured)",
    "name": "surviving stretch 5 of the Servian wall (near porta_esquilina) on the wall drawn through the gates",
    "ok": false,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 95 m from the drawn wall, at (1419, -610)",
+   "detail": "up to 95 m from the drawn wall, at (1419, -610); 10 m from the measured line (route_measured)",
    "name": "surviving stretch 6 of the Servian wall (near porta_esquilina) on the wall drawn through the gates",
    "ok": false,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 129 m from the drawn wall, at (752, -1523)",
+   "detail": "up to 129 m from the drawn wall, at (752, -1523); 0 m from the measured line (route_measured)",
    "name": "surviving stretch 7 of the Servian wall (near porta_collina) on the wall drawn through the gates",
    "ok": false,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 46 m from the drawn wall, at (697, -1367)",
+   "detail": "up to 46 m from the drawn wall, at (697, -1367); 48 m from the measured line (route_measured)",
    "name": "surviving stretch 8 of the Servian wall (near porta_quirinalis) on the wall drawn through the gates",
    "ok": true,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 36 m from the drawn wall, at (1239, -1209)",
+   "detail": "up to 36 m from the drawn wall, at (1239, -1209); 36 m from the measured line (route_measured)",
    "name": "surviving stretch 9 of the Servian wall (near porta_viminalis) on the wall drawn through the gates",
    "ok": true,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 72 m from the drawn wall, at (1262, -23)",
+   "detail": "up to 72 m from the drawn wall, at (1262, -23); 4 m from the measured line (route_measured)",
    "name": "surviving stretch 10 of the Servian wall (near porta_esquilina) on the wall drawn through the gates",
    "ok": false,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 27 m from the drawn wall, at (-59, -438)",
+   "detail": "up to 27 m from the drawn wall, at (-59, -438); 27 m from the measured line (route_measured)",
    "name": "surviving stretch 11 of the Servian wall (near porta_fontinalis) on the wall drawn through the gates",
    "ok": true,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 7 m from the drawn wall, at (1337, -396)",
+   "detail": "up to 7 m from the drawn wall, at (1337, -396); 3 m from the measured line (route_measured)",
    "name": "surviving stretch 12 of the Servian wall (near porta_esquilina) on the wall drawn through the gates",
    "ok": true,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 44 m from the drawn wall, at (1357, -977)",
+   "detail": "up to 44 m from the drawn wall, at (1357, -977); 22 m from the measured line (route_measured)",
    "name": "surviving stretch 13 of the Servian wall (near porta_viminalis) on the wall drawn through the gates",
    "ok": true,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 150 m from the drawn wall, at (747, -1545)",
+   "detail": "up to 150 m from the drawn wall, at (747, -1545); 7 m from the measured line (route_measured)",
    "name": "surviving stretch 14 of the Servian wall (near porta_collina) on the wall drawn through the gates",
    "ok": false,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
@@ -8951,7 +8865,7 @@
    "monuments": 206,
    "streets": 28
   },
-  "date_issues": 23,
+  "date_issues": 7,
   "measured_flags": 0,
   "misplaced": 0,
   "missing": 0,

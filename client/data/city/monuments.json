@@ -509,6 +509,10 @@
 "certainty": "traditional",
 "year": null
 },
+"ended": {
+"what": "Caesar's replanning of the Forum's north-west end reduces the old Comitium and moves the Rostra (Dio 43.49.1); drawn absent from 44 BC as before",
+"year": -44
+},
 "english": "Comitium",
 "events": [
 {
@@ -544,12 +548,6 @@
 "lon": 12.485,
 "model": "comitium",
 "notes": "Not in Pleiades. P&A: the Comitium was an open, inaugurated templum (Cic. Rep. 2.11), oriented to the cardinal points, with the Curia on the north side, the Carcer and Basilica Porcia on the west, the Rostra and Graecostasis on the south; five successive levels from c. 390 (after the Gallic fire) to the Caesarian travertine/marble pavement. It was the political centre until the 2nd c. BC; C. Licinius Crassus (tribune 145) first led the assembly from the Comitium to the Forum (Cic. Lael. 25, 96; Varro RR 1.2.9). Faustus Sulla's travertine pavement (12.63 m) is attributed to his restoration after 52 BC. The earlier claim that Sulla 'levelled and rebuilt' the Comitium in 80 BC is not in P&A (it only says Sulla restored the Curia and Rostra) and has been replaced. Dio 43.49.1 not checked here against Dio.",
-"phases": [
-{
-"from": -44,
-"state": "gone"
-}
-],
 "pleiades": null,
 "precision": "approx",
 "regio": 8,
@@ -609,6 +607,10 @@
 "certainty": "certain",
 "year": -338
 },
+"ended": {
+"what": "the Republican Rostra were removed when Caesar moved the Rostra to the north-west end of the Forum (Dio 43.49.1)",
+"year": -44
+},
 "english": "Rostra (speakers' platform)",
 "events": [
 {
@@ -642,12 +644,6 @@
 "offset_m": [
 28,
 0
-],
-"phases": [
-{
-"from": -44,
-"state": "gone"
-}
 ],
 "pleiades": null,
 "precision": "exact",
@@ -862,9 +858,9 @@
 {
 "bearing_deg": 135,
 "built": {
-"by": "begun by Caesar in 44 to replace the Curia Hostilia (Dio 44.5.2), continued by the triumvirs (Dio 45.17, 47.19); completed and dedicated by Octavian in 29 (Dio 51.22.1; Res Gestae 19.1)",
+"by": "(F2: built.year is the dedication; it was -44, the year it was begun) begun by Caesar in 44 to replace the Curia Hostilia (Dio 44.5.2), continued by the triumvirs (Dio 45.17, 47.19); completed and dedicated by Octavian in 29 (Dio 51.22.1; Res Gestae 19.1)",
 "certainty": "certain",
-"year": -44
+"year": -29
 },
 "construction": {
 "begun": -44,
@@ -5638,6 +5634,112 @@
 12.478364
 ]
 ],
+"route_measured": [
+[
+41.8916,
+12.478179
+],
+[
+41.891395,
+12.480278
+],
+[
+41.896,
+12.483
+],
+[
+41.896459,
+12.486797
+],
+[
+41.8994,
+12.48675
+],
+[
+41.902443,
+12.490659
+],
+[
+41.906203,
+12.494373
+],
+[
+41.906339,
+12.49431
+],
+[
+41.907325,
+12.498679
+],
+[
+41.9025,
+12.501111
+],
+[
+41.902158,
+12.501432
+],
+[
+41.901802,
+12.5018
+],
+[
+41.901393,
+12.501929
+],
+[
+41.897993,
+12.502427
+],
+[
+41.897867,
+12.502133
+],
+[
+41.895778,
+12.501358
+],
+[
+41.893866,
+12.501375
+],
+[
+41.892792,
+12.500537
+],
+[
+41.8873,
+12.4965
+],
+[
+41.884177,
+12.49667
+],
+[
+41.883944,
+12.4905
+],
+[
+41.878948,
+12.489596
+],
+[
+41.8797,
+12.4835
+],
+[
+41.8825,
+12.481
+],
+[
+41.888,
+12.479662
+],
+[
+41.8916,
+12.478179
+]
+],
 "sources": [
 "Livy 6.32.1",
 "Dion. Hal. 4.13",
@@ -7965,9 +8067,9 @@
 {
 "bearing_deg": 32,
 "built": {
-"by": "probably about the time of the circus (221 BC), on the Sibyl's command; restored by Sulla (Ov. Fast. 6.209-212)",
-"certainty": "probable",
-"year": -221
+"by": "built on the Sibyl's command (Ov. Fast. 6.209-212); the building date is not known: drawn from 218 BC, its first mention, when a supplicatio was decreed ad aedem Herculis (Platner-Ashby s.v. Hercules Custos, read, citing Livy; the passage, Livy 21.62.9, unverified); restored by Sulla (Ov. Fast. 6.209-212). F2: it was 221, the year of the Circus Flaminius, an inference",
+"certainty": "uncertain",
+"year": -218
 },
 "english": "Temple of Hercules Custos",
 "geometry_source": "form assumed from date and type (no measured plan)",

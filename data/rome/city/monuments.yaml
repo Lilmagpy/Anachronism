@@ -254,7 +254,7 @@ monuments:
   bearing_deg: 196
   footprint_m: {radius: 21}  # unverified
   height_m: 1.2
-  phases: [{from: -44, state: gone}]
+  ended: {year: -44, what: "Caesar's replanning of the Forum's north-west end reduces the old Comitium and moves the Rostra (Dio 43.49.1); drawn absent from 44 BC as before"}  # F2: was phases gone from -44; the engine reads ended, not phases
   geometry_source: "Platner-Ashby s.v. Comitium (circular, rostra vetera on the south edge facing due south, levels 10.4-13.5 m); radius from the Comitium steps, not measured in PA"
   geometry_unverified: [footprint_m]
 - id: lapis_niger
@@ -302,7 +302,7 @@ monuments:
   offset_m: [28, 0]  # unverified: moved east to the Comitium's south edge, west of the Lapis Niger
   footprint_m: {length: 8, width: 12}  # unverified
   height_m: 3.5
-  phases: [{from: -44, state: gone}]
+  ended: {year: -44, what: "the Republican Rostra were removed when Caesar moved the Rostra to the north-west end of the Forum (Dio 43.49.1)"}  # F2: was phases gone from -44; the engine reads ended, not phases
   geometry_source: "dataset form: 3.5 m high, 12 m long; Platner-Ashby s.v. Rostra (read, U8): on the south side of the Comitium in front of the Curia Hostilia, between the Comitium and the Forum; the Sullan platform lay to the west of the niger lapis, about one metre above the Comitium floor, with two curved steps about 35 cm high; a straight flight of steps up from the Comitium. The dataset's point (the remains of the Augustan Rostra) is kept for rostra_augusti and this platform is shifted 28 m east"
   geometry_unverified: [footprint_m, height_m, offset_m]
 - id: rostra_augusti
@@ -403,7 +403,7 @@ monuments:
   lon: 12.4854
   precision: exact
   location: north-east side of the Forum, now the standing brick Curia (a Diocletianic rebuild)
-  built: {year: -44, certainty: certain, by: "begun by Caesar in 44 to replace the Curia Hostilia (Dio 44.5.2), continued by the triumvirs (Dio 45.17, 47.19); completed and dedicated by Octavian in 29 (Dio 51.22.1; Res Gestae 19.1)"}
+  built: {year: -29, certainty: certain, by: "(F2: built.year is the dedication; it was -44, the year it was begun) begun by Caesar in 44 to replace the Curia Hostilia (Dio 44.5.2), continued by the triumvirs (Dio 45.17, 47.19); completed and dedicated by Octavian in 29 (Dio 51.22.1; Res Gestae 19.1)"}
   events:
   - {year: -29, what: "dedicated by Octavian (Dio 51.22.1)"}
   sources: ["Dio 44.5.2", "Dio 45.17", "Dio 51.22.1", "Res Gestae 19", "Platner-Ashby s.v. Curia Iulia"]
@@ -2720,6 +2720,7 @@ monuments:
   materials: [Grotta Oscura tufa (from Veii territory, after 396), cappellaccio in earlier phases]
   form: "agger on the Esquiline-Viminal-Quirinal plateau (Servian Rampart) 10 m high, 3.6 m wide stone wall, with a ditch"
   route: [[41.891645,12.478364],[41.891395,12.480278],[41.896000,12.483000],[41.896459,12.486797],[41.899400,12.486750],[41.902443,12.490659],[41.907325,12.498679],[41.902500,12.501111],[41.895778,12.501358],[41.887300,12.496500],[41.884177,12.496670],[41.883944,12.490500],[41.878948,12.489596],[41.879700,12.483500],[41.882500,12.481000],[41.888000,12.479662],[41.891645,12.478364]]  # F2: the circuit monuments.gd draws through the gates in order round (150, 350); fill.gd keeps houses off this line
+  route_measured: [[41.891600,12.478179],[41.891395,12.480278],[41.896000,12.483000],[41.896459,12.486797],[41.899400,12.486750],[41.902443,12.490659],[41.906203,12.494373],[41.906339,12.494310],[41.907325,12.498679],[41.902500,12.501111],[41.902158,12.501432],[41.901802,12.501800],[41.901393,12.501929],[41.897993,12.502427],[41.897867,12.502133],[41.895778,12.501358],[41.893866,12.501375],[41.892792,12.500537],[41.887300,12.496500],[41.884177,12.496670],[41.883944,12.490500],[41.878948,12.489596],[41.879700,12.483500],[41.882500,12.481000],[41.888000,12.479662],[41.891600,12.478179]]  # F2: the gate circuit (route) with the bends of the surviving stretches between the gates (Pleiades 103808101, OpenStreetMap tracts, simplified to 10 m); not yet drawn: monuments.gd _circuit and fill.gd read `route` (hook for the lead)
   sources: ["Livy 6.32.1", "Dion. Hal. 4.13", "Platner-Ashby s.v. Murus Servii Tullii"]
   model: wall
   open_between: [[porta_flumentana, porta_trigemina]]  # U8: the riverside between these gates is drawn without a wall. Platner-Ashby s.v. Porta Trigemina (read): 'the line of the wall has not yet been determined in this quarter'; a straight run between the gates would cross the Tiber's bend and the island; # unverified
@@ -3944,7 +3945,7 @@ monuments:
   location_confidence: low
   location_source: "F2: Platner-Ashby s.v. Hercules Custos, Aedes (read): near the circus Flaminius, of which Hercules was the guardian (Ov. Fast. 6.209-212: altera pars Circi Custode sub Hercule tuta est); placed at the circus's west end"
   location: "Circus Flaminius, west end"
-  built: {year: -221, certainty: probable, by: "probably about the time of the circus (221 BC), on the Sibyl's command; restored by Sulla (Ov. Fast. 6.209-212)"}
+  built: {year: -218, certainty: uncertain, by: "built on the Sibyl's command (Ov. Fast. 6.209-212); the building date is not known: drawn from 218 BC, its first mention, when a supplicatio was decreed ad aedem Herculis (Platner-Ashby s.v. Hercules Custos, read, citing Livy; the passage, Livy 21.62.9, unverified); restored by Sulla (Ov. Fast. 6.209-212). F2: it was 221, the year of the Circus Flaminius, an inference"}
   sources: ["Platner-Ashby s.v. Hercules Custos, Aedes (read)", "Ovid Fasti 6.209-212"]
   pleiades: null
   verified: platner-ashby

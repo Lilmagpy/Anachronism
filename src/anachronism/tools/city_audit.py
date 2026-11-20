@@ -2070,6 +2070,8 @@ def check_relations(
     # the Servian wall: monuments.gd threads it through the gates in order round the city, so
     # every stretch of it that survives (Pleiades, from OpenStreetMap) should lie on that line
     circ = gate_circuit(ds)
+    wall = ds.recs.get("murus_servianus") or {}
+    measured_wall = [to_local(float(a), float(b)) for a, b in wall.get("route_measured") or []]
     for k, stretch in enumerate(pl_lines.get("103808101", [])):
         if not circ:
             break
@@ -2079,6 +2081,10 @@ def check_relations(
             (g for g in ds.recs if ds.recs[g].get("snap_to") == "murus_servianus"),
             key=lambda g: dist(placed_centre(ds.recs[g], ds.recs), c),
         )
+        detail = f"up to {d:.0f} m from the drawn wall, at ({c[0]:.0f}, {c[1]:.0f})"
+        if measured_wall:
+            dm = max(line_dist(q, measured_wall) for q in stretch)
+            detail += f"; {dm:.0f} m from the measured line (route_measured)"
         out.append(
             Relation(
                 f"surviving stretch {k + 1} of the Servian wall (near {near}) on the wall "
@@ -2086,7 +2092,7 @@ def check_relations(
                 "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby "
                 "s.v. Murus Servii Tullii",
                 d <= 60.0,
-                f"up to {d:.0f} m from the drawn wall, at ({c[0]:.0f}, {c[1]:.0f})",
+                detail,
             )
         )
 
@@ -2261,7 +2267,7 @@ def check_dates(ds: Dataset) -> list[dict[str, Any]]:
                 ey = int(e["year"])
                 if ey < int(year) - 2 and not re.search(
                     r"vow|contract|begun|begin|start|site|land|bought|first|earlier|old|"
-                    r"origin|founded|consecrat|carceres|wood|prodig|before",
+                    r"origin|founded|consecrat|carceres|wood|prodig|before|unfinished",
                     str(e["what"]),
                     re.I,
                 ):
@@ -2289,6 +2295,10 @@ def check_dates(ds: Dataset) -> list[dict[str, Any]]:
             cli_up = cli != ""
             if eng == "ruined" and not cli_up:
                 continue
+            # burned and never rebuilt: the engine keeps a burnt shell, the client draws nothing
+            ended = (rec.get("ended") or {}).get("year")
+            if eng == "burnt" and not cli_up and ended is not None and int(ended) <= y:
+                continue
             if eng_up != cli_up:
                 rows.append(
                     {"id": mid, "issue": f"{_yr(y)}: engine {eng}, drawn {cli or 'absent'}"}
@@ -2296,7 +2306,8 @@ def check_dates(ds: Dataset) -> list[dict[str, Any]]:
         for t in by_mon.get(mid, []):
             in_events = any(e.get("year") == t.year for e in rec.get("events", []) or [])
             in_phases = any(int(p["from"]) == t.year for p in rec.get("phases", []) or [])
-            if t.kind == "fire" and not in_events and not in_phases:
+            in_ended = (rec.get("ended") or {}).get("year") == t.year
+            if t.kind == "fire" and not in_events and not in_phases and not in_ended:
                 issue = f"timeline fire {_yr(t.year)} is in neither its events nor its phases"
                 rows.append({"id": mid, "issue": issue})
     return rows
@@ -2722,11 +2733,19 @@ def render_markdown(a: Audit) -> str:
     w("")
     w("### Relations the sources fix")
     w("")
-    w("| relation | result | detail | source |")
-    w("|---|---|---|---|")
+    w("| relation | result | detail | source | note |")
+    w("|---|---|---|---|---|")
+    rel_notes = ex.get("relations") or {}
     for r in a.relations:
         res = "ok" if r.ok else ("FAILED" if r.ok is False else "not checked")
-        w(f"| {_md_escape(r.name)} | {res} | {_md_escape(r.detail)} | {_md_escape(r.source)} |")
+        # a note applies to every relation whose name contains its key
+        note = (
+            next((v for k, v in sorted(rel_notes.items()) if k in r.name), "") if not r.ok else ""
+        )
+        w(
+            f"| {_md_escape(r.name)} | {res} | {_md_escape(r.detail)} | {_md_escape(r.source)} | "
+            f"{_md_escape(str(note))} |"
+        )
     w("")
     w("### Ground")
     w("")
@@ -2796,7 +2815,8 @@ def render_markdown(a: Audit) -> str:
     w(f"### Date issues ({len(a.dates)})")
     w("")
     for d in a.dates:
-        w(f"- `{d['id']}`: {_md_escape(d['issue'])}")
+        note = (ex.get("dates") or {}).get(d["id"], "")
+        w(f"- `{d['id']}`: {_md_escape(d['issue'])}{' - ' + _md_escape(str(note)) if note else ''}")
     w("")
     w(f"### Building years not named in the matched Platner-Ashby article ({len(a.pa_dates)})")
     w("")

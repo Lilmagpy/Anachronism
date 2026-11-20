@@ -16,7 +16,7 @@ References: **Pleiades** (CC BY 3.0; places within 3.5 km of the Forum with a pe
 | orientation or size against published measurements | 0 |
 | orientation or size against the outline of the remains | 17 |
 | relations the sources fix, failed | 6 |
-| date issues | 23 |
+| date issues | 7 |
 | scene: monuments whose solids overlap another standing monument (all years) | 16 |
 | scene: monuments whose base is more than 0.5 m above the ground under a corner (all years) | 58 |
 | scene: monuments whose base is more than 1 m below the ground under a corner (all years) | 154 |
@@ -624,38 +624,38 @@ The smallest rectangle round the remains as mapped; the remains may be only part
 
 ### Relations the sources fix
 
-| relation | result | detail | source |
-|---|---|---|---|
-| Saturn at the foot of the Clivus Capitolinus | ok | 19 m from the clivus, 34 m from its foot | Platner-Ashby s.v. Saturnus, Aedes; Clivus Capitolinus |
-| Castor beside the Lacus Iuturnae (east of it) | ok | 35 m apart, the Lacus at bearing 109 from Castor | Platner-Ashby s.v. Iuturnae Lacus; Castor, Aedes |
-| The Regia and Vesta where the Sacra Via reaches the Forum's east end | ok | Regia 14 m and Vesta 40 m from the Sacra Via; 91 and 75 m east of the Forum's centre | Platner-Ashby s.v. Sacra Via; Regia; Vesta, Aedes |
-| The Curia Hostilia on the Comitium's north side | ok | Curia 33 m from the Comitium's centre at bearing 48 | Platner-Ashby s.v. Comitium; Curia Hostilia |
-| The Curia Iulia on the Comitium's north side | ok | Curia 40 m from the Comitium's centre at bearing 56 | Platner-Ashby s.v. Curia Iulia |
-| The Republican Rostra between the Comitium and the Forum | ok | 12 m off the Comitium-Forum line, at 0.38 of the way | Platner-Ashby s.v. Rostra |
-| The Basilica Aemilia north and the Iulia south of the Forum | ok | Aemilia 50 m north of the Forum's axis, Iulia 50 m south | Platner-Ashby s.v. Basilica Aemilia; Basilica Iulia |
-| The Carcer under the Capitol, at the Forum's north-west corner | ok | 58 m west of the Forum centre, 260 m from the Capitol | Platner-Ashby s.v. Carcer |
-| The Circus Maximus between Palatine and Aventine, carceres at the west | ok | 48 m off the Palatine-Aventine line; carceres face 314 | Platner-Ashby s.v. Circus Maximus |
-| surviving stretch 1 of the Servian wall (near porta_viminalis) on the wall drawn through the gates | FAILED | up to 68 m from the drawn wall, at (1361, -1033) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii |
-| surviving stretch 2 of the Servian wall (near porta_sanqualis) on the wall drawn through the gates | ok | up to 3 m from the drawn wall, at (127, -438) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii |
-| surviving stretch 3 of the Servian wall (near porta_lavernalis) on the wall drawn through the gates | ok | up to 22 m from the drawn wall, at (-175, 1362) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii |
-| surviving stretch 4 of the Servian wall (near porta_lavernalis) on the wall drawn through the gates | ok | up to 56 m from the drawn wall, at (-242, 1349) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii |
-| surviving stretch 5 of the Servian wall (near porta_esquilina) on the wall drawn through the gates | FAILED | up to 85 m from the drawn wall, at (1332, -152) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii |
-| surviving stretch 6 of the Servian wall (near porta_esquilina) on the wall drawn through the gates | FAILED | up to 95 m from the drawn wall, at (1419, -610) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii |
-| surviving stretch 7 of the Servian wall (near porta_collina) on the wall drawn through the gates | FAILED | up to 129 m from the drawn wall, at (752, -1523) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii |
-| surviving stretch 8 of the Servian wall (near porta_quirinalis) on the wall drawn through the gates | ok | up to 46 m from the drawn wall, at (697, -1367) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii |
-| surviving stretch 9 of the Servian wall (near porta_viminalis) on the wall drawn through the gates | ok | up to 36 m from the drawn wall, at (1239, -1209) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii |
-| surviving stretch 10 of the Servian wall (near porta_esquilina) on the wall drawn through the gates | FAILED | up to 72 m from the drawn wall, at (1262, -23) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii |
-| surviving stretch 11 of the Servian wall (near porta_fontinalis) on the wall drawn through the gates | ok | up to 27 m from the drawn wall, at (-59, -438) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii |
-| surviving stretch 12 of the Servian wall (near porta_esquilina) on the wall drawn through the gates | ok | up to 7 m from the drawn wall, at (1337, -396) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii |
-| surviving stretch 13 of the Servian wall (near porta_viminalis) on the wall drawn through the gates | ok | up to 44 m from the drawn wall, at (1357, -977) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii |
-| surviving stretch 14 of the Servian wall (near porta_collina) on the wall drawn through the gates | FAILED | up to 150 m from the drawn wall, at (747, -1545) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii |
-| pons_aemilius spans the Tiber | ok | centre 34 m from the river's line (half width 45 m), length 100 m | topography.yaml tiber.course; Platner-Ashby s.v. Pons Aemilius |
-| pons_cestius spans the Tiber | ok | centre 40 m from the river's line (half width 45 m), length 48 m | topography.yaml tiber.course; Platner-Ashby s.v. Pons Cestius |
-| pons_fabricius spans the Tiber | ok | centre 66 m from the river's line (half width 45 m), length 62 m | topography.yaml tiber.course; Platner-Ashby s.v. Pons Fabricius |
-| pons_mulvius spans the Tiber | ok | centre 0 m from the river's line (half width 45 m), length 136 m | topography.yaml tiber.course; Platner-Ashby s.v. Pons Mulvius |
-| pons_sublicius spans the Tiber | ok | centre 6 m from the river's line (half width 45 m), length 100 m | topography.yaml tiber.course; Platner-Ashby s.v. Pons Sublicius |
-| aqua_appia reaches the Porta Capena | ok | route passes 0 m from it | Frontinus 1.5 (Platner-Ashby s.v. Aqua Appia) |
-| aqua_appia ends ad Salinas by the Porta Trigemina | ok | its end is 57 m from the Porta Trigemina | Frontinus 1.5 (Platner-Ashby s.v. Aqua Appia) |
+| relation | result | detail | source | note |
+|---|---|---|---|---|
+| Saturn at the foot of the Clivus Capitolinus | ok | 19 m from the clivus, 34 m from its foot | Platner-Ashby s.v. Saturnus, Aedes; Clivus Capitolinus |  |
+| Castor beside the Lacus Iuturnae (east of it) | ok | 35 m apart, the Lacus at bearing 109 from Castor | Platner-Ashby s.v. Iuturnae Lacus; Castor, Aedes |  |
+| The Regia and Vesta where the Sacra Via reaches the Forum's east end | ok | Regia 14 m and Vesta 40 m from the Sacra Via; 91 and 75 m east of the Forum's centre | Platner-Ashby s.v. Sacra Via; Regia; Vesta, Aedes |  |
+| The Curia Hostilia on the Comitium's north side | ok | Curia 33 m from the Comitium's centre at bearing 48 | Platner-Ashby s.v. Comitium; Curia Hostilia |  |
+| The Curia Iulia on the Comitium's north side | ok | Curia 40 m from the Comitium's centre at bearing 56 | Platner-Ashby s.v. Curia Iulia |  |
+| The Republican Rostra between the Comitium and the Forum | ok | 12 m off the Comitium-Forum line, at 0.38 of the way | Platner-Ashby s.v. Rostra |  |
+| The Basilica Aemilia north and the Iulia south of the Forum | ok | Aemilia 50 m north of the Forum's axis, Iulia 50 m south | Platner-Ashby s.v. Basilica Aemilia; Basilica Iulia |  |
+| The Carcer under the Capitol, at the Forum's north-west corner | ok | 58 m west of the Forum centre, 260 m from the Capitol | Platner-Ashby s.v. Carcer |  |
+| The Circus Maximus between Palatine and Aventine, carceres at the west | ok | 48 m off the Palatine-Aventine line; carceres face 314 | Platner-Ashby s.v. Circus Maximus |  |
+| surviving stretch 1 of the Servian wall (near porta_viminalis) on the wall drawn through the gates | FAILED | up to 68 m from the drawn wall, at (1361, -1033); 7 m from the measured line (route_measured) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii | UNRESOLVED, hook for the lead: monuments.gd draws the Servian wall as straight runs from gate to gate (its _circuit), so where the real wall bends between two gates (the agger on the Esquiline and Viminal, the salient by the Porta Collina) the drawn line cuts the corner. The gates themselves are on the wall line. The data is ready: murus_servianus.route_measured is the gate circuit with the bends of the surviving stretches (Pleiades 103808101), within 10 m of every stretch; _circuit (and fill.gd, which keeps houses off `route`) should thread the gates along it; not a data error |
+| surviving stretch 2 of the Servian wall (near porta_sanqualis) on the wall drawn through the gates | ok | up to 3 m from the drawn wall, at (127, -438); 3 m from the measured line (route_measured) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii |  |
+| surviving stretch 3 of the Servian wall (near porta_lavernalis) on the wall drawn through the gates | ok | up to 22 m from the drawn wall, at (-175, 1362); 22 m from the measured line (route_measured) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii |  |
+| surviving stretch 4 of the Servian wall (near porta_lavernalis) on the wall drawn through the gates | ok | up to 56 m from the drawn wall, at (-242, 1349); 56 m from the measured line (route_measured) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii |  |
+| surviving stretch 5 of the Servian wall (near porta_esquilina) on the wall drawn through the gates | FAILED | up to 85 m from the drawn wall, at (1332, -152); 0 m from the measured line (route_measured) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii | UNRESOLVED, hook for the lead: monuments.gd draws the Servian wall as straight runs from gate to gate (its _circuit), so where the real wall bends between two gates (the agger on the Esquiline and Viminal, the salient by the Porta Collina) the drawn line cuts the corner. The gates themselves are on the wall line. The data is ready: murus_servianus.route_measured is the gate circuit with the bends of the surviving stretches (Pleiades 103808101), within 10 m of every stretch; _circuit (and fill.gd, which keeps houses off `route`) should thread the gates along it; not a data error |
+| surviving stretch 6 of the Servian wall (near porta_esquilina) on the wall drawn through the gates | FAILED | up to 95 m from the drawn wall, at (1419, -610); 10 m from the measured line (route_measured) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii | UNRESOLVED, hook for the lead: monuments.gd draws the Servian wall as straight runs from gate to gate (its _circuit), so where the real wall bends between two gates (the agger on the Esquiline and Viminal, the salient by the Porta Collina) the drawn line cuts the corner. The gates themselves are on the wall line. The data is ready: murus_servianus.route_measured is the gate circuit with the bends of the surviving stretches (Pleiades 103808101), within 10 m of every stretch; _circuit (and fill.gd, which keeps houses off `route`) should thread the gates along it; not a data error |
+| surviving stretch 7 of the Servian wall (near porta_collina) on the wall drawn through the gates | FAILED | up to 129 m from the drawn wall, at (752, -1523); 0 m from the measured line (route_measured) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii | UNRESOLVED, hook for the lead: monuments.gd draws the Servian wall as straight runs from gate to gate (its _circuit), so where the real wall bends between two gates (the agger on the Esquiline and Viminal, the salient by the Porta Collina) the drawn line cuts the corner. The gates themselves are on the wall line. The data is ready: murus_servianus.route_measured is the gate circuit with the bends of the surviving stretches (Pleiades 103808101), within 10 m of every stretch; _circuit (and fill.gd, which keeps houses off `route`) should thread the gates along it; not a data error |
+| surviving stretch 8 of the Servian wall (near porta_quirinalis) on the wall drawn through the gates | ok | up to 46 m from the drawn wall, at (697, -1367); 48 m from the measured line (route_measured) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii |  |
+| surviving stretch 9 of the Servian wall (near porta_viminalis) on the wall drawn through the gates | ok | up to 36 m from the drawn wall, at (1239, -1209); 36 m from the measured line (route_measured) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii |  |
+| surviving stretch 10 of the Servian wall (near porta_esquilina) on the wall drawn through the gates | FAILED | up to 72 m from the drawn wall, at (1262, -23); 4 m from the measured line (route_measured) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii | UNRESOLVED, hook for the lead: monuments.gd draws the Servian wall as straight runs from gate to gate (its _circuit), so where the real wall bends between two gates (the agger on the Esquiline and Viminal, the salient by the Porta Collina) the drawn line cuts the corner. The gates themselves are on the wall line. The data is ready: murus_servianus.route_measured is the gate circuit with the bends of the surviving stretches (Pleiades 103808101), within 10 m of every stretch; _circuit (and fill.gd, which keeps houses off `route`) should thread the gates along it; not a data error |
+| surviving stretch 11 of the Servian wall (near porta_fontinalis) on the wall drawn through the gates | ok | up to 27 m from the drawn wall, at (-59, -438); 27 m from the measured line (route_measured) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii |  |
+| surviving stretch 12 of the Servian wall (near porta_esquilina) on the wall drawn through the gates | ok | up to 7 m from the drawn wall, at (1337, -396); 3 m from the measured line (route_measured) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii |  |
+| surviving stretch 13 of the Servian wall (near porta_viminalis) on the wall drawn through the gates | ok | up to 44 m from the drawn wall, at (1357, -977); 22 m from the measured line (route_measured) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii |  |
+| surviving stretch 14 of the Servian wall (near porta_collina) on the wall drawn through the gates | FAILED | up to 150 m from the drawn wall, at (747, -1545); 7 m from the measured line (route_measured) | Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii | UNRESOLVED, hook for the lead: monuments.gd draws the Servian wall as straight runs from gate to gate (its _circuit), so where the real wall bends between two gates (the agger on the Esquiline and Viminal, the salient by the Porta Collina) the drawn line cuts the corner. The gates themselves are on the wall line. The data is ready: murus_servianus.route_measured is the gate circuit with the bends of the surviving stretches (Pleiades 103808101), within 10 m of every stretch; _circuit (and fill.gd, which keeps houses off `route`) should thread the gates along it; not a data error |
+| pons_aemilius spans the Tiber | ok | centre 34 m from the river's line (half width 45 m), length 100 m | topography.yaml tiber.course; Platner-Ashby s.v. Pons Aemilius |  |
+| pons_cestius spans the Tiber | ok | centre 40 m from the river's line (half width 45 m), length 48 m | topography.yaml tiber.course; Platner-Ashby s.v. Pons Cestius |  |
+| pons_fabricius spans the Tiber | ok | centre 66 m from the river's line (half width 45 m), length 62 m | topography.yaml tiber.course; Platner-Ashby s.v. Pons Fabricius |  |
+| pons_mulvius spans the Tiber | ok | centre 0 m from the river's line (half width 45 m), length 136 m | topography.yaml tiber.course; Platner-Ashby s.v. Pons Mulvius |  |
+| pons_sublicius spans the Tiber | ok | centre 6 m from the river's line (half width 45 m), length 100 m | topography.yaml tiber.course; Platner-Ashby s.v. Pons Sublicius |  |
+| aqua_appia reaches the Porta Capena | ok | route passes 0 m from it | Frontinus 1.5 (Platner-Ashby s.v. Aqua Appia) |  |
+| aqua_appia ends ad Salinas by the Porta Trigemina | ok | its end is 57 m from the Porta Trigemina | Frontinus 1.5 (Platner-Ashby s.v. Aqua Appia) |  |
 
 ### Ground
 
@@ -971,76 +971,58 @@ Monuments drawn in each standard year (`monuments.gd` `state_at`, ported to Pyth
 | AD 80 | 212 | 0 | 1 | 211 | 0 |
 | AD 120 | 229 | 0 | 1 | 228 | 0 |
 
-### Date issues (23)
+### Date issues (7)
 
-- `arcus_claudii_lata`: event in 46 before it was built (52): a different arch of the Aqua Virgo, in Via del Nazareno, was restored monumental
-- `basilica_porcia`: 44 BC: engine burnt, drawn absent
-- `basilica_porcia`: 27 BC: engine burnt, drawn absent
-- `basilica_porcia`: AD 80: engine burnt, drawn absent
-- `basilica_porcia`: AD 120: engine burnt, drawn absent
-- `basilica_porcia`: timeline fire 52 BC is in neither its events nor its phases
-- `comitium`: 44 BC: engine standing, drawn absent
-- `comitium`: 27 BC: engine standing, drawn absent
-- `comitium`: AD 80: engine standing, drawn absent
-- `comitium`: AD 120: engine standing, drawn absent
-- `curia_iulia`: construction completed -29 but built.year -44
-- `forum_romanum`: 509 BC: engine planned, drawn standing
-- `forum_romanum`: 390 BC: engine planned, drawn standing
-- `forum_romanum`: 264 BC: engine planned, drawn standing
-- `rostra_republic`: 44 BC: engine standing, drawn absent
-- `rostra_republic`: 27 BC: engine standing, drawn absent
-- `rostra_republic`: AD 80: engine standing, drawn absent
-- `rostra_republic`: AD 120: engine standing, drawn absent
-- `theatrum_marcelli_empire`: event in -17 before it was built (-13): part of the Ludi Saeculares was held in the unfinished theatre (CIL VI 32323)
-- `theatrum_scauri`: 44 BC: engine standing, drawn absent
-- `theatrum_scauri`: 27 BC: engine standing, drawn absent
-- `theatrum_scauri`: AD 80: engine standing, drawn absent
-- `theatrum_scauri`: AD 120: engine standing, drawn absent
+- `forum_romanum`: 509 BC: engine planned, drawn standing - ENGINE/TIMELINE (hook for the lead): the content timeline marks the rebuilding after the fire of 210 BC as forum_romanum_completed_210; marks_for() takes that as the first completion and drops built.year (-600), so the engine has the Forum "planned" before 210 BC while the client draws it. The timeline entry should be a rebuild (or marks_for should treat a completion in the year of a fire as a rebuild); not a data error
+- `forum_romanum`: 390 BC: engine planned, drawn standing - ENGINE/TIMELINE (hook for the lead): the content timeline marks the rebuilding after the fire of 210 BC as forum_romanum_completed_210; marks_for() takes that as the first completion and drops built.year (-600), so the engine has the Forum "planned" before 210 BC while the client draws it. The timeline entry should be a rebuild (or marks_for should treat a completion in the year of a fire as a rebuild); not a data error
+- `forum_romanum`: 264 BC: engine planned, drawn standing - ENGINE/TIMELINE (hook for the lead): the content timeline marks the rebuilding after the fire of 210 BC as forum_romanum_completed_210; marks_for() takes that as the first completion and drops built.year (-600), so the engine has the Forum "planned" before 210 BC while the client draws it. The timeline entry should be a rebuild (or marks_for should treat a completion in the year of a fire as a rebuild); not a data error
+- `theatrum_scauri`: 44 BC: engine standing, drawn absent - ENGINE (hook for the lead): a temporary theatre built and dismantled in the same year (58 BC); within one year marks_for() orders the demolition before the completion, so the engine keeps it standing for ever; the client draws it only in 58 BC, which is right
+- `theatrum_scauri`: 27 BC: engine standing, drawn absent - ENGINE (hook for the lead): a temporary theatre built and dismantled in the same year (58 BC); within one year marks_for() orders the demolition before the completion, so the engine keeps it standing for ever; the client draws it only in 58 BC, which is right
+- `theatrum_scauri`: AD 80: engine standing, drawn absent - ENGINE (hook for the lead): a temporary theatre built and dismantled in the same year (58 BC); within one year marks_for() orders the demolition before the completion, so the engine keeps it standing for ever; the client draws it only in 58 BC, which is right
+- `theatrum_scauri`: AD 120: engine standing, drawn absent - ENGINE (hook for the lead): a temporary theatre built and dismantled in the same year (58 BC); within one year marks_for() orders the demolition before the completion, so the engine keeps it standing for ever; the client draws it only in 58 BC, which is right
 
-### Building years not named in the matched Platner-Ashby article (40)
+### Building years not named in the matched Platner-Ashby article (38)
 
 A pointer to re-read the article, not an error: P-A often gives the date only through the consul's name, or the record's year comes from another source.
 
 | id | our year | P-A entry | years P-A names | note |
 |---|---|---|---|---|
-| aedes_castoris | 484 BC | Castor, aedes, templum | 499 BC, 340 BC, 300 BC, 117 BC, 82 BC, 27 BC |  |
-| aedes_dianae_circus_flaminius | 179 BC | Diana, aedes | 187 BC |  |
-| aedes_dianae_circus_flaminius | 179 BC | Diana, sacellum | 58 BC |  |
-| aedes_fidei | 254 BC | Fides, aedes | 715 BC, 250 BC, 115 BC, 43 BC |  |
-| aedes_fortunae_equestris | 173 BC | Fortuna Equestris, aedes | 180 BC, 92 BC, 55 BC |  |
-| aedes_fortunae_primigeniae | 194 BC | Fortuna Primigenia | 578 BC |  |
-| aedes_herculis_custodis | 221 BC | Hercules Custos, aedes:* | 400 BC, 218 BC, 179 BC, 82 BC |  |
-| aedes_iovis_statoris_palatine | 294 BC | Iuppiter Stator, aedes | 146 BC, 27 BC, 14 BC |  |
-| aedes_iuventatis | 191 BC | Iuventas, aedes | 578 BC, 207 BC, 27 BC, 16 BC |  |
-| aedes_martis_appia | 388 BC | Mars, aedes | 138 BC, 55 BC |  |
-| aedes_pietatis | 181 BC | Pietas, aedes | 91 BC |  |
-| aedes_pietatis | 181 BC | Pietas, aedes | 191 BC, 46 BC, 44 BC |  |
-| aedes_salutis | 302 BC | Salus, ara | 311 BC, 206 BC, 113 BC |  |
-| aedes_summani | 278 BC | Summanus, aedes | 197 BC |  |
-| aedes_libertatis_aventine | 238 BC | Atrium Libertatis | 212 BC, 194 BC, 46 BC |  |
-| aedes_bellonae | 296 BC | Bellona, sacellum | 48 BC |  |
-| porticus_octaviae | 146 BC | Bibliotheca Porticus Octaviae | 23 BC |  |
-| circus_maximus | 600 BC | Circus Maximus | 753 BC, 329 BC, 204 BC, 196 BC, 189 BC, 174 BC, 100 BC, 55 BC |  |
-| aedes_concordiae_forum | 367 BC | Concordia, aedes | 218 BC |  |
-| aedes_concordiae_forum | 367 BC | Concordia, aedicula | 304 BC, 121 BC |  |
-| aedes_concordiae_forum | 367 BC | Concordia Nova | 46 BC, 44 BC |  |
-| aedes_florae | 238 BC | Flora, templum | 715 BC |  |
-| aedes_honoris_virtutis | 205 BC | Honos et Virtus, Aedes | 715 BC, 496 BC, 304 BC, 234 BC, 222 BC |  |
-| aedes_iunonis_reginae_aventine | 392 BC | Iuno Regina, templum | 396 BC, 207 BC, 27 BC |  |
-| aedes_iunonis_reginae_circus | 179 BC | Iuno Regina, templum | 396 BC, 207 BC, 27 BC |  |
-| aedes_iunonis_reginae_aventine | 392 BC | Iuno Regina, aedes | 187 BC |  |
-| aedes_iunonis_reginae_circus | 179 BC | Iuno Regina, aedes | 187 BC |  |
-| lares_permarini | 179 BC | Lares Permarini, Aedes | 190 BC |  |
-| porta_fontinalis | 378 BC | Porta Fontinalis | 193 BC |  |
-| porticus_minucia_vetus | 106 BC | Porticus Minucia | 578 BC, 110 BC |  |
-| aedes_fortunae_primigeniae | 194 BC | Fortunae (tres), aedes | 204 BC, 169 BC, 47 BC, 46 BC |  |
-| curia_iulia | 44 BC | Victoria, ara | 29 BC, 27 BC |  |
-| aedes_veneris_erycinae_collina | 181 BC | Venus Erucina | 217 BC, 184 BC |  |
-| regia | 600 BC | Atrium Regium | 210 BC |  |
-| horrea_sempronia | 123 BC | Basilica Sempronia | 170 BC |  |
-| curia_iulia | 44 BC | Curia Pompiliana | 715 BC |  |
-| domus_catuli | 101 BC | Q. Lutatius Catulus | 27 BC, 20 BC |  |
-| fornix_scipionis | 190 BC | P. Scipio Africanus | 169 BC |  |
-| macellum | 179 BC | Forum Piscarium | 210 BC |  |
-| porticus_octaviae | 146 BC | Porticus Octavia | 168 BC, 55 BC, 33 BC, 27 BC |  |
+| aedes_castoris | 484 BC | Castor, aedes, templum | 499 BC, 340 BC, 300 BC, 117 BC, 82 BC, 27 BC | Platner-Ashby: vowed 499, dedicated in 484 |
+| aedes_dianae_circus_flaminius | 179 BC | Diana, aedes | 187 BC | Platner-Ashby s.v. Diana, aedes: vowed 187, dedicated 179; the second matched article (the sacellum) is another shrine |
+| aedes_dianae_circus_flaminius | 179 BC | Diana, sacellum | 58 BC | Platner-Ashby s.v. Diana, aedes: vowed 187, dedicated 179; the second matched article (the sacellum) is another shrine |
+| aedes_fidei | 254 BC | Fides, aedes | 715 BC, 250 BC, 115 BC, 43 BC | Platner-Ashby: dedicated by A. Atilius Calatinus in 254 or 250; the record takes 254 |
+| aedes_fortunae_equestris | 173 BC | Fortuna Equestris, aedes | 180 BC, 92 BC, 55 BC | Platner-Ashby: vowed 180, dedicated in 173 |
+| aedes_fortunae_primigeniae | 194 BC | Fortuna Primigenia | 578 BC | Platner-Ashby s.v. Fortunae (tres): vowed 204, dedicated in 194 |
+| aedes_iovis_statoris_palatine | 294 BC | Iuppiter Stator, aedes | 146 BC, 27 BC, 14 BC | the matched article is the other temple of Iuppiter Stator (by the Circus Flaminius, 146 BC); the Palatine temple is Livy 10.37.15 (294 BC) (unverified: passage not re-read) |
+| aedes_iuventatis | 191 BC | Iuventas, aedes | 578 BC, 207 BC, 27 BC, 16 BC | Platner-Ashby: vowed 207, begun 204, dedicated by C. Licinius Lucullus (191, Livy 36.36.5-6) (unverified: passage not re-read) |
+| aedes_martis_appia | 388 BC | Mars, aedes | 138 BC, 55 BC | the matched article is the temple of Mars in circo Flaminio (138 BC); the temple on the Via Appia was dedicated in 388 (Livy 6.5.8) |
+| aedes_pietatis | 181 BC | Pietas, aedes | 91 BC | Platner-Ashby: vowed 191, dedicated in 181 |
+| aedes_pietatis | 181 BC | Pietas, aedes | 191 BC, 46 BC, 44 BC | Platner-Ashby: vowed 191, dedicated in 181 |
+| aedes_salutis | 302 BC | Salus, ara | 311 BC, 206 BC, 113 BC | Platner-Ashby gives the dedication as 303 BC; the record follows Livy 10.1.9 in the Varronian year 302 (the year of Bubulcus's dictatorship); a one-year difference of chronology, kept |
+| aedes_summani | 278 BC | Summanus, aedes | 197 BC | Platner-Ashby: built during the war with Pyrrhus (280-275); 278 is the usual year (certainty: probable) |
+| aedes_libertatis_aventine | 238 BC | Atrium Libertatis | 212 BC, 194 BC, 46 BC | the matched article is the Atrium Libertatis, another building; the Aventine temple of Libertas is dated by Livy 24.16.19 (# unverified passage) |
+| aedes_bellonae | 296 BC | Bellona, sacellum | 48 BC | the matched article is the shrine of Bellona on the Capitol; the temple by the Circus Flaminius was vowed in 296 (Livy 10.19.17) (unverified: passage not re-read) |
+| porticus_octaviae | 146 BC | Bibliotheca Porticus Octaviae | 23 BC | the matched articles are the Porticus Octavia of Cn. Octavius (168 BC, another portico) and the library founded in 23 BC; the record is the Porticus Metelli of 146 BC, rebuilt by Augustus as the Porticus Octaviae |
+| circus_maximus | 600 BC | Circus Maximus | 753 BC, 329 BC, 204 BC, 196 BC, 189 BC, 174 BC, 100 BC, 55 BC | the traditional date of the first circus under Tarquinius Priscus; Platner-Ashby: nothing permanent before the carceres of 329 |
+| aedes_concordiae_forum | 367 BC | Concordia, aedes | 218 BC | Platner-Ashby: vowed by Camillus in 367, the date of building not known; the record draws it from the vow (certainty: traditional, as stated in the record) |
+| aedes_concordiae_forum | 367 BC | Concordia, aedicula | 304 BC, 121 BC | Platner-Ashby: vowed by Camillus in 367, the date of building not known; the record draws it from the vow (certainty: traditional, as stated in the record) |
+| aedes_concordiae_forum | 367 BC | Concordia Nova | 46 BC, 44 BC | Platner-Ashby: vowed by Camillus in 367, the date of building not known; the record draws it from the vow (certainty: traditional, as stated in the record) |
+| aedes_florae | 238 BC | Flora, templum | 715 BC | the temple by the Circus Maximus, built in 241/238 on the Sibyl's command (Pliny NH 18.286; Vell. 1.14.8); the matched article is the Quirinal temple (unverified: passage not re-read) |
+| aedes_honoris_virtutis | 205 BC | Honos et Virtus, Aedes | 715 BC, 496 BC, 304 BC, 234 BC, 222 BC | Marcellus's rebuilding, dedicated by his son in 205 (Livy 29.11.13) (unverified: passage not re-read) |
+| aedes_iunonis_reginae_aventine | 392 BC | Iuno Regina, templum | 396 BC, 207 BC, 27 BC | one of the matched articles is the other temple of Iuno Regina (by the Circus Flaminius, 179 BC); the Aventine temple was dedicated by Camillus in 392 (Platner-Ashby) |
+| aedes_iunonis_reginae_circus | 179 BC | Iuno Regina, templum | 396 BC, 207 BC, 27 BC | one of the matched articles is the Aventine temple (392 BC); this one was dedicated in 179 (Platner-Ashby s.v. Iuno Regina, aedes) |
+| aedes_iunonis_reginae_aventine | 392 BC | Iuno Regina, aedes | 187 BC | one of the matched articles is the other temple of Iuno Regina (by the Circus Flaminius, 179 BC); the Aventine temple was dedicated by Camillus in 392 (Platner-Ashby) |
+| aedes_iunonis_reginae_circus | 179 BC | Iuno Regina, aedes | 187 BC | one of the matched articles is the Aventine temple (392 BC); this one was dedicated in 179 (Platner-Ashby s.v. Iuno Regina, aedes) |
+| lares_permarini | 179 BC | Lares Permarini, Aedes | 190 BC | Platner-Ashby: vowed 190, dedicated 22 December 179 |
+| porta_fontinalis | 378 BC | Porta Fontinalis | 193 BC | the gate of the Servian wall as rebuilt from 378 (Livy 6.32.1); Platner-Ashby names only 193 (unverified: passage not re-read) |
+| porticus_minucia_vetus | 106 BC | Porticus Minucia | 578 BC, 110 BC | Platner-Ashby: built by M. Minucius Rufus, consul 110, from the spoils of his triumph of 106 |
+| aedes_fortunae_primigeniae | 194 BC | Fortunae (tres), aedes | 204 BC, 169 BC, 47 BC, 46 BC | Platner-Ashby s.v. Fortunae (tres): vowed 204, dedicated in 194 |
+| aedes_veneris_erycinae_collina | 181 BC | Venus Erucina | 217 BC, 184 BC | Platner-Ashby s.v. Venus Erucina: vowed 184, dedicated 181 |
+| regia | 600 BC | Atrium Regium | 210 BC | the matched article (Atrium Regium) is another building |
+| horrea_sempronia | 123 BC | Basilica Sempronia | 170 BC | the matched article (Basilica Sempronia) is another building |
+| curia_iulia | 29 BC | Curia Pompiliana | 715 BC | the matched article (Curia Pompiliana) is another building |
+| domus_catuli | 101 BC | Q. Lutatius Catulus | 27 BC, 20 BC | Platner-Ashby: built by Catulus after his victory over the Cimbri (101) |
+| fornix_scipionis | 190 BC | P. Scipio Africanus | 169 BC | the matched article is the house of Scipio Africanus; the arch was built in 190 (Livy 37.3.7) (unverified: passage not re-read) |
+| macellum | 179 BC | Forum Piscarium | 210 BC | Platner-Ashby s.v. Forum Piscarium: incorporated in the Macellum built by Fulvius Nobilior in 179 |
+| porticus_octaviae | 146 BC | Porticus Octavia | 168 BC, 55 BC, 33 BC, 27 BC | the matched articles are the Porticus Octavia of Cn. Octavius (168 BC, another portico) and the library founded in 23 BC; the record is the Porticus Metelli of 146 BC, rebuilt by Augustus as the Porticus Octaviae |
 
