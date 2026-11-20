@@ -134,7 +134,10 @@ def test_a_flamen_may_not_command_and_an_augur_shapes_the_odds(content: Content)
     plain = Army(
         id="x", owner="rome", name="x", province=state.civs["rome"].capital, troops={"levy": 1000}
     )
-    led = plain.model_copy(update={"general": state.republic.people[augur.person].name})
+    # the augur's own piety would move the odds too (real persons carry traits): judge the seat
+    person = state.republic.people[augur.person]
+    state.republic.people[augur.person] = person.model_copy(update={"traits": []})
+    led = plain.model_copy(update={"general": person.name})
     assert auspice_chance_bp(state, led) == auspice_chance_bp(state, plain) + rules.augur_bp
 
 
