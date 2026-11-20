@@ -1,0 +1,95 @@
+schema_version: 1
+# New gods received at Rome, and one rite put down (content/schema/rome_society.py: Cult), read by
+# engine/religion.py. Each comes on history's date; one the Sibylline Books ordered comes early if
+# the Books are opened within `window_years` before its year. The `monument` is the temple in
+# data/rome/city/monuments.yaml, whose own dates (and city_timeline.yaml) say when it stands: the
+# city plays the god's reception as a `sacrifice` there. unrest/legitimacy effects are GAME BALANCE.
+cults:
+  - id: ceres_liber_libera
+    name: Ceres, Liber and Libera
+    year: -496
+    trigger: sibylline
+    window_years: 2
+    monument: aedes_cereris_liberi_liberae
+    unrest_bp: -300
+    notes: "Vowed in the famine of 496 by the dictator A. Postumius on the Books' advice and dedicated in 493 by Sp. Cassius; the plebeian cult centre on the Aventine."
+    sources: ["Dionysius of Halicarnassus 6.17.2-4 # unverified: passage not re-read", "Dionysius of Halicarnassus 6.94.3 # unverified: passage not re-read", "Platner-Ashby s.v. Ceres, Liber, Libera, Aedes (as read for the city dataset)"]
+    confidence: medium
+
+  - id: apollo_medicus
+    name: Apollo the Healer
+    year: -433
+    trigger: vow
+    monument: aedes_apollinis_medici
+    unrest_bp: -200
+    notes: "Vowed in the pestilence of 433 for the people's health (Livy 4.25.3) and dedicated in 431 (Livy 4.29.7); Rome's first temple of a Greek god."
+    sources: ["Livy 4.25.3 # unverified: passage not re-read", "Livy 4.29.7 # unverified: passage not re-read"]
+    confidence: medium
+
+  - id: aesculapius
+    name: Aesculapius
+    year: -291
+    trigger: sibylline
+    window_years: 2
+    monument: aedes_aesculapii
+    unrest_bp: -300
+    legitimacy_bp: 100
+    notes: "In the plague of 293 the Books were consulted and ordered Aesculapius brought from Epidaurus; the consuls, busy with the war, did no more that year than a supplicatio (Livy 10.47.6-7). The embassy brought the god's serpent in 291 and the temple rose on the Tiber island (Val. Max. 1.8.2; Livy, Periochae 11 # unverified; Ovid, Met. 15.622-744 # unverified)."
+    sources: ["Livy 10.47.6-7", "Valerius Maximus 1.8.2", "Livy, Periochae 11 # unverified: passage not re-read"]
+    confidence: high
+
+  - id: venus_erycina
+    name: Venus Erycina
+    year: -217
+    trigger: sibylline
+    window_years: 1
+    monument: aedes_veneris_erycinae_capitol
+    unrest_bp: -200
+    notes: "After Trasimene the dictator Q. Fabius Maximus had the Books opened: temples were to be vowed to Venus Erycina and to Mens, with great games to Jupiter, a supplicatio, a lectisternium and a sacred spring (Livy 22.9.7-10; 22.10.10). Fabius dedicated the temple on the Capitol as duumvir in 215 (Livy 23.30.13-14, 23.31.9); the city dataset dates it so."
+    sources: ["Livy 22.9.7-10", "Livy 22.10.10", "Livy 23.31.9 # unverified: passage not re-read"]
+    confidence: high
+
+  - id: mens
+    name: Mens
+    year: -217
+    trigger: sibylline
+    window_years: 1
+    monument: aedes_mentis
+    unrest_bp: -100
+    notes: "Vowed with Venus Erycina on the Books' order after Trasimene by the praetor T. Otacilius (Livy 22.9.10, 22.10.10); dedicated 215 (Livy 23.31.9, 23.32.20 # unverified)."
+    sources: ["Livy 22.9.10", "Livy 22.10.10"]
+    confidence: high
+
+  - id: magna_mater
+    name: the Great Mother of Ida (Magna Mater)
+    year: -204
+    trigger: sibylline
+    window_years: 1
+    monument: aedes_magnae_matris
+    unrest_bp: -200
+    legitimacy_bp: 200
+    notes: "Showers of stones in 205 sent the decemviri to the Books, where they found that a foreign enemy would be driven from Italy if the Idaean Mother were brought from Pessinus to Rome (Livy 29.10.4-6); the embassy went by way of Delphi and King Attalus (29.11), and the black stone came to Rome in 204, received by P. Scipio Nasica and the matrons (29.14.5-14). The temple was contracted in 204 (29.37.2) and dedicated in 191 (36.36.3-4): the city dataset dates it so."
+    sources: ["Livy 29.10.4-6", "Livy 29.11.1-8", "Livy 29.14.5-14", "Livy 29.37.2 # unverified: passage not re-read"]
+    confidence: high
+
+  - id: bacchanalia
+    name: Bacchanalia
+    year: -186
+    kind: suppressed
+    trigger: senate
+    unrest_bp: 300
+    legitimacy_bp: 300
+    notes: "The consuls Sp. Postumius Albinus and Q. Marcius Philippus were turned from the wars to a domestic conspiracy (Livy 39.8.1-3); after the informers Aebutius and Hispala, Postumius laid the matter before the Senate (39.14.3-8), the consuls' inquiry reached across Italy and the flight from the city was so great that the praetors postponed the courts for thirty days (39.18.1-3). The decree (the senatus consultum de Bacchanalibus) survives on bronze."
+    sources: ["Livy 39.8.1-3", "Livy 39.14.3-8", "Livy 39.18.1-3"]
+    confidence: high
+
+  - id: venus_verticordia
+    name: Venus Verticordia
+    year: -114
+    trigger: sibylline
+    window_years: 0
+    monument: aedes_veneris_verticordiae
+    unrest_bp: -100
+    notes: "After the lightning death of a knight's daughter in 114 the haruspices foretold disgrace for the Vestals and the equestrian order; three Vestals were tried and the Books ordered a temple to Venus Verticordia (Obsequens 37; Val. Max. 8.15.12 # unverified: passage not read)."
+    sources: ["Julius Obsequens 37", "Valerius Maximus 8.15.12 # unverified: passage not read"]
+    confidence: low
