@@ -344,11 +344,29 @@ static func triumph_route(urbs: Node3D, height: Callable) -> PackedVector3Array:
 		return Vector2(c.x, c.z)
 	var legs: Array = []   # [Vector2 point, bool keep to the valley floor]
 	var add := func(p: Vector2, valley := false) -> void: legs.append([p, valley])
+	var streets: Variant = urbs.get("streets")
+	var has_street := func(sid: String) -> bool:
+		return streets != null and (streets.street_ids() as Array).has(sid)
+	# walk a whole street, starting from the end nearer where the procession is (F2 accuracy:
+	# the triumph streets via_triumphi_campi and via_inter_palatium_caelium in streets.yaml)
+	var follow := func(sid: String, samples: int) -> void:
+		var here: Vector2 = legs[legs.size() - 1][0] if not legs.is_empty() else Vector2.ZERO
+		var a3: Vector3 = streets.along(sid, 0.0)
+		var b3: Vector3 = streets.along(sid, 1.0)
+		var forward := legs.is_empty() or Vector2(a3.x, a3.z).distance_to(here) <= Vector2(b3.x, b3.z).distance_to(here)
+		for k in samples + 1:
+			var t := float(k) / samples
+			var q: Vector3 = streets.along(sid, t if forward else 1.0 - t)
+			legs.append([Vector2(q.x, q.z), false])
 	for id in ["villa_publica", "campus_martius"]:
 		if ids.has(id):
 			add.call(centre.call(id))
 			break
-	if ids.has("circus_flaminius") and placed is Dictionary and (placed as Dictionary).has("circus_flaminius"):
+	var campus_street: bool = has_street.call("via_triumphi_campi")
+	if campus_street:
+		# Villa Publica, past the Circus Flaminius, round the north of the Porticus Octaviae
+		follow.call("via_triumphi_campi", 40)
+	elif ids.has("circus_flaminius") and placed is Dictionary and (placed as Dictionary).has("circus_flaminius"):
 		var pl: Dictionary = placed["circus_flaminius"]
 		var ax := Vector2(sin(float(pl["yaw"])), cos(float(pl["yaw"])))
 		var c: Vector2 = pl["centre"]
@@ -362,7 +380,7 @@ static func triumph_route(urbs: Node3D, height: Callable) -> PackedVector3Array:
 			b = t
 		add.call(a)
 		add.call(b)
-	if ids.has("porta_carmentalis"):
+	if ids.has("porta_carmentalis") and not campus_street:
 		add.call(centre.call("porta_carmentalis"))
 	# by the Forum Holitorium to the Forum Boarium on the Via Flumentana's streets data (its
 	# stretch under the Capitol by the river), so the way keeps to a street, not through houses
@@ -408,11 +426,11 @@ static func triumph_route(urbs: Node3D, height: Callable) -> PackedVector3Array:
 		add.call(c + ax * (half - w * 0.5 - 10.0) + lane)
 		add.call(c + ax * (half - 20.0) + side * w * 0.6 * signf(lane.dot(side) + 0.0001), true)
 	# round the Palatine under the Caelian, to the top of the Sacra Via on the Velia
-	for p in [Vector2(318, 760), Vector2(335, 560), Vector2(342, 380), Vector2(318, 262)]:
-		add.call(p, true)
-	var streets: Variant = urbs.get("streets")
-	var has_street := func(sid: String) -> bool:
-		return streets != null and (streets.street_ids() as Array).has(sid)
+	if has_street.call("via_inter_palatium_caelium"):
+		follow.call("via_inter_palatium_caelium", 30)
+	else:
+		for p in [Vector2(318, 760), Vector2(335, 560), Vector2(342, 380), Vector2(318, 262)]:
+			add.call(p, true)
 	if has_street.call("via_sacra"):
 		for k in 21:
 			var q: Vector3 = streets.along("via_sacra", k / 20.0)

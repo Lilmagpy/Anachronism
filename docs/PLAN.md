@@ -1,10 +1,13 @@
 # Anachronism — Plan
 
 **Current phase:** Phase 2 — 3D world (Godot) on the Phase 1 engine (branch `claude/phase-2-3d`).
-**Next action:** round F1 (2026-11-01, owner: "build the functionality of the game"): five
-parallel passes on R2 (Fasti, people, families, Senate), R3 (allies, citizenship, colonies,
-provinces), R4 (religion, land and grain, coinage, the army's eras), the Roman ideas library and
-ideas in the city, and a client playthrough with a city-events feed. Brief: `plans/briefs/f1.md`.
+**Next action:** the owner plays the new build (a year played from inside Rome). Done since
+2026-11-01: F1 (the Fasti 509-27, 160 families, 148 people, the Senate; allies, colonies,
+provinces; religion, land, grain, coin, debt, the army's eras; Roman ideas and ideas in the
+city; the client playthrough) and F2 (the city audit: nothing missing or misplaced against
+Pleiades and Platner-Ashby, nothing buried, floating or built over; the Republic played from
+the city's places with End Year and the year's moments). Left: sound, night, the Empire
+decision, U9 beyond the first slice, R6 balance by played chapters.
 
 Each phase ends at a **gate**: Claude stops, summarises, shows how to run it, lists known
 problems, and waits for approval (D-002: approval = merging the phase PR).
