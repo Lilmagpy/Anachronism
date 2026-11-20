@@ -691,7 +691,9 @@ def load_dataset(city: Path = CITY, timeline: Path = TIMELINE) -> Dataset:
 
     recs: dict[str, dict[str, Any]] = {}
     empire: set[str] = set()
-    for name in ("monuments.yaml", "monuments_empire.yaml"):
+    # monuments.yaml first, then every other monuments_*.yaml (the Empire, the great houses...)
+    names = ["monuments.yaml", *sorted(p.name for p in city.glob("monuments_*.yaml"))]
+    for name in names:
         for m in (load(name) or {}).get("monuments", []) or []:
             recs[str(m["id"])] = m
             if "empire" in name:
