@@ -8,7 +8,7 @@ References: **Pleiades** (CC BY 3.0; places within 3.5 km of the Forum with a pe
 
 | check | count |
 |---|---|
-| dataset: Republican records / Empire records / streets | 206 / 64 / 28 |
+| dataset: Republican records / Empire records / streets | 206 / 64 / 30 |
 | Pleiades places: matched / excluded with a reason / missing | 120 / 137 / 0 |
 | Platner-Ashby entries: matched / excluded with a reason / missing | 200 / 360 / 0 |
 | **missing** (all; of them dated before 27 BC) | **0** (0) |
@@ -699,6 +699,53 @@ The repository has no modern elevation model; the ground is built from `topograp
 
 - porta_flumentana 1 of 25 footprint points in the water (133 BC, 264 BC, 27 BC, 44 BC) - the river gate stood at the bank (Platner-Ashby s.v. Porta Flumentana); one sample point touches the modelled river
 - porticus_aemilia 3 of 25 footprint points in the water (133 BC, 27 BC, 44 BC) - the hall stood on the river bank; the modelled Tiber (tiber.gd) is an approximation of the ancient bank, a few points touch it
+
+**monuments on sloping ground, 27 BC** (41): each stands on a
+podium or foundation down to its lowest ground (monuments.gd), and where the ground
+falls more than 3 m on a terrace cut into the hill with retaining walls
+(topography.yaml `F2 TERRACES`, `--terraces`); the figure is the fall that is left.
+
+- aedes_apollinis_palatini on a 1.2 m foundation (temple_hexastyle_corinthian_marble)
+- aedes_dei_fidii on a 1.8 m foundation (temple_tuscan_small)
+- aedes_felicitatis on a 2.3 m foundation (temple_tetrastyle_ionic)
+- aedes_fortunae_matris_matutae on a 2.1 m foundation (temple_tetrastyle_ionic)
+- aedes_herculis_collina on a 1.4 m foundation (temple_tuscan_small)
+- aedes_honoris_virtutis on a 1.9 m foundation (temple_tetrastyle_ionic)
+- aedes_iovis_feretri on a 1.1 m foundation (aedicula)
+- aedes_iunonis_monetae on a 1.5 m foundation (temple_tuscan_small)
+- aedes_larum on a 5.0 m foundation (temple_tuscan_small)
+- aedes_mentis on a 1.1 m foundation (temple_tetrastyle_ionic)
+- aedes_portuni on a 1.0 m foundation (temple_tetrastyle_ionic_travertine)
+- aedes_veneris_erycinae_capitol on a 1.9 m foundation (temple_tetrastyle_ionic)
+- ara_vermini on a 1.5 m foundation (altar)
+- area_capitolina on a 21.8 m foundation (plaza)
+- curia_iulia on a 1.9 m foundation (curia)
+- delubrum_fontis on a 1.1 m foundation (aedicula)
+- domus_catuli on a 14.2 m foundation (domus)
+- domus_ciceronis on a 1.7 m foundation (domus)
+- domus_hortensii_augusti on a 1.0 m foundation (domus)
+- domus_pompeii_carinae on a 1.0 m foundation (domus)
+- domus_publica on a 1.0 m foundation (domus)
+- emporium on a 3.4 m foundation (quay)
+- fornix_scipionis on a 2.4 m foundation (arch)
+- forum_boarium on a 2.4 m foundation (plaza)
+- forum_holitorium on a 2.3 m foundation (plaza)
+- forum_iulium on a 7.2 m foundation (plaza)
+- horrea_agrippiana on a 3.5 m foundation (horrea)
+- horrea_sempronia on a 1.5 m foundation (horrea)
+- macellum on a 1.5 m foundation (macellum)
+- nymphaeum_annibaldi on a 1.3 m foundation (basin)
+- porta_capena on a 8.8 m foundation (servian_gate)
+- porta_collina on a 2.5 m foundation (servian_gate)
+- porta_esquilina on a 3.5 m foundation (servian_gate)
+- porta_flumentana on a 7.6 m foundation (servian_gate)
+- porta_fontinalis on a 6.4 m foundation (servian_gate)
+- porta_pandana on a 2.9 m foundation (arch)
+- porta_salutaris on a 2.4 m foundation (servian_gate)
+- porta_sanqualis on a 4.2 m foundation (servian_gate)
+- porticus_catuli on a 2.0 m foundation (portico_enclosure)
+- sacellum_volupiae on a 1.7 m foundation (aedicula)
+- tabularium on a 7.2 m foundation (tabularium)
 
 ## 4. Time
 

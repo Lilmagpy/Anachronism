@@ -3609,11 +3609,11 @@ monuments:
   english: "Portico of Catulus"
   type: portico
   regio: 10
-  lat: 41.890826
-  lon: 12.48594
+  lat: 41.890178
+  lon: 12.48565
   precision: rough
   location_confidence: low
-  location_source: "F2: Platner-Ashby s.v. Porticus Catuli (read): next to Catulus' house on the Palatine (Cic. Dom. 102, 114); placed against the north side of the house, towards the Forum (the side is a guess; on its west side it stood in the Horrea Agrippiana below)"
+  location_source: "F2: Platner-Ashby s.v. Porticus Catuli (read): next to Catulus' house on the Palatine (Cic. Dom. 102, 114); placed against the south side of the house, on the summit (the side is a guess; west of the house it stood in the Horrea Agrippiana at the foot of the hill)"
   location: "Palatine, next to the house of Catulus"
   built: {year: -101, certainty: certain, by: "Q. Lutatius Catulus after his victory over the Cimbri in 101 BC, on the site of the house of M. Fulvius Flaccus (Cic. Dom. 102; Val. Max. 6.3.1)"}
   sources: ["Platner-Ashby s.v. Porticus Catuli (read)", "Cic. Dom. 62, 102, 114", "Val. Max. 6.3.1"]

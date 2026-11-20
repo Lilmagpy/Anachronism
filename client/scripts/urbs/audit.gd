@@ -217,7 +217,7 @@ func _ground() -> Array:
 		var founded := bool(p.get("skirted", false)) or str(p.get("base_mode", "lo")) == "hi"
 		if base - lo > FLOAT_M and not founded:
 			floating.append("%s base %.1f m above the ground at a corner" % [id, base - lo])
-		if hi - base > BURY_M:
+		if hi - base > BURY_M and not bool(p.get("retains", false)):   # F2: built against the hill
 			buried.append("%s ground %.1f m above its base at a corner" % [id, hi - base])
 	return [floating, buried]
 

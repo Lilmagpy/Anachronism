@@ -224,6 +224,32 @@ streets:
   exists_from: null
   paved_from: -174
   sources: ["Platner-Ashby s.v. Forum Boarium (read): 'the road which ran from the campus Martius between the Capitol and the river, passing through the porta Carmentalis and the porta Flumentana, and on to the porta Trigemina'", "Platner-Ashby s.v. Vicus Iugarius (read)"]
+- id: via_triumphi_campi
+  latin: "Way of the triumph through the Campus Martius (name not attested)"
+  english: Triumphal way from the Villa Publica through the Circus Flaminius
+  kind: street
+  direction: "from the Villa Publica south through the Campus, along the Circus Flaminius, round the north side of the Porticus Octaviae to the road through the Porta Carmentalis (via_flumentana)"
+  points: [[41.898277, 12.475499], [41.897899, 12.476127], [41.895199, 12.476187], [41.893625, 12.475946], [41.893058, 12.475934], [41.892905, 12.476042], [41.892095, 12.477780], [41.892752, 12.477732], [41.893904, 12.478517], [41.893562, 12.479603]]  # F2: the modeller's line (rough), joining the places the sources name and keeping off the monuments; no ancient street is known on it
+  precision: rough
+  width_m: 6.0
+  width_source: assumed
+  exists_from: -221
+  paved_from: null
+  sources: ["Livy 45.39 (read, spectacles.yaml): the captives and spoils of a triumph wait in the Circus Flaminius; the Porta Triumphalis is closed against a general refused his triumph", "Josephus BJ 7.5.4 (read, spectacles.yaml): the assembly by the Porticus Octaviae, the Porta Triumphalis, the way through the theatres", "Platner-Ashby s.v. Forum Boarium (read): the road from the Campus Martius through the Porta Carmentalis (via_flumentana, which this joins)"]
+  notes: "F2: added so the fill keeps houses off the triumphal way (the triumph of the 3D city walks it). Exists from the Circus Flaminius (221 BC); the Villa Publica is older. The site of the Porta Triumphalis is argued (by the Porta Carmentalis or in the Campus) and not drawn; the line is not attested."
+- id: via_inter_palatium_caelium
+  latin: "Road between the Palatine and the Caelian (name not attested)"
+  english: Valley road from the Circus Maximus to the Meta Sudans and the Sacra Via
+  kind: street
+  direction: "from the curved end of the Circus Maximus north up the valley between the Palatine and the Caelian to the Meta Sudans, then west up to the top of the Sacra Via at the Arch of Titus"
+  points: [[41.884024, 12.488752], [41.883997, 12.489295], [41.885796, 12.489802], [41.887596, 12.490297], [41.889000, 12.490502], [41.890070, 12.490683], [41.890088, 12.489645], [41.890673, 12.488583]]  # F2: the course of the modern Via di San Gregorio, which keeps the line of the valley (# unverified: traced from the modern plan, not surveyed), to the Meta Sudans (Pleiades) and the arch of Titus (Pleiades 236855821), passing south of the later temple of Venus and Rome
+  precision: approx
+  width_m: 6.0
+  width_source: assumed
+  exists_from: null
+  paved_from: -174
+  sources: ["spectacles.yaml (triumph route: the Circus Maximus, the Via Sacra and the Forum; the usual reconstruction, Cic. Pis. 55 not read) # unverified", "the valley between the Palatine and the Caelian: topography.yaml (Vallis Murcia and the Palatine/Caelian plateaus)"]
+  notes: "F2: the triumph left the Circus Maximus at its curved end and went round the Palatine to the Sacra Via; added so the fill keeps houses off it. Name and ancient paving not attested."
 - id: clivus_publicius
   latin: Clivus Publicius
   english: Publicius' slope
