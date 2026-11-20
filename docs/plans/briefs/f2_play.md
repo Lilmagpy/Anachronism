@@ -75,3 +75,38 @@ numbers in `republic_rules.yaml`; views carry what the cards need. Client change
 blocks in shared files. Screenshots of each place's card and spectacle. Commit and push after
 every commit. Trailer: `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>` then
 `Claude-Session: https://claude.ai/code/session_01S4H1oAxyYWS6R8Xwk3CuAJ`.
+
+## The contract between the two halves (engine and client work in parallel)
+**Engine** (agent `f2-engine`): a new `tools/places_view.py` adds `view["places"]`:
+```
+{ "<monument id>": {
+    "role": "senate_house|rostra|assembly|treasury|temple|circus|arena|campus|gate|workshop|harbour|domus|anachronism",
+    "title": "Curia Hostilia", "blurb": "Where the Senate meets this year",
+    "actions": [ { "id": "senate:law:land_reform", "label": "Propose: a land law",
+                   "action": {"kind": "senate", "issue": "land", "proposal": "law:land_reform"},
+                   "cost": {"influence": 300, "wealth": 0}, "forecast": {"yes_bp": 4100, "no_bp": 5900,
+                   "tribune": "veto", "tribune_bp": 1200, "note": "..."},
+                   "enabled": true, "why": "", "watch": "senate" } ],
+    "info": [ {"label": "Treasury", "value": "12,400", "tip": "..."} ] } }
+```
+`action` is exactly what the client sends to `act`; `watch` names the spectacle kind the result
+plays (`senate`, `contio`, `election`, `sacrifice`, `race`, `munus`, `levy`, `triumph`, `building`, or
+empty). Every action the engine applies that has a `watch` also emits a city event of that kind
+with the real numbers, so the client plays it from `view["city"]["events"]`. New logged actions:
+`contio` (issue, side), `vow` (god or temple id, cause), `games` (festival or munus, venue), `levy`
+(if the army pass lacks one usable from Rome), `site` (choose where an anachronism rises). Places
+for families (`domus` of a gens) come from a small sourced table of known houses (Cicero's,
+Crassus', Clodius', Scaurus' on the Palatine; Pompey's in the Carinae...) placed in
+`data/rome/city/` as records with `role: domus` and `gens`. Tests across seeds; replay-safe.
+
+**Client** (agent `f2-client`): Urbs reads `view["places"]`: a building with actions shows them
+on its card (outside) and in its interior (a panel at the spot: the Curia's floor, the Rostra's
+front, the temple's altar, the Circus' box); pressing one sends `action` through the bridge
+(Urbs gets a `bridge` hook from `main.gd` in a marked block), shows the result line, refreshes the
+view, and when the turn's city events gain a matching `watch` event, plays that spectacle there
+with the real numbers. An **End year** button in the Urbs HUD ends the turn without leaving Rome,
+then plays the year's events in order as moments (U9 first slice: camera flight from where you
+stand to each place, a title card, the spectacle, skip with Esc), then returns you where you were.
+A "Rome this year" list in the Urbs HUD shows the places with actions available (a short to-do of
+the year) and flies you there. Until the engine half lands, build against a fixture
+`client/data/fixtures/places_264.json` written to the contract above.
