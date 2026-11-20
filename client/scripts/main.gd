@@ -498,6 +498,7 @@ func _enter_urbs(instant := false) -> void:
 		urbs = Urbs.new()
 		add_child(urbs)
 		urbs.exit_requested.connect(_leave_urbs)
+		_wire_urbs()   # F2 play
 	if not instant:
 		await _veil_to(1.0, 0.45)
 	var frame := _rome_frame()
@@ -511,6 +512,7 @@ func _enter_urbs(instant := false) -> void:
 	_map_shown(false)
 	var city_events: Array = (view.get("city", {}) as Dictionary).get("events", []) if view.get("city") is Dictionary else []
 	urbs.city_view = view.get("city", {}) if view.get("city") is Dictionary else {}   # F1 ideas: anachronisms
+	urbs.set_play_view(view)   # F2 play: the places' actions, End year
 	urbs.open(int(options.get("year", view.get("year", -300))), local, options if instant else {}, city_events)
 	_urbs_busy = false
 	if not instant:
@@ -539,12 +541,74 @@ func _watch_city_event(event: Dictionary, events: Array) -> void:
 		urbs = Urbs.new()
 		add_child(urbs)
 		urbs.exit_requested.connect(_leave_urbs)
+		_wire_urbs()   # F2 play
 	await _veil_to(1.0, 0.45)
 	_in_urbs = true
 	_map_shown(false)
+	urbs.set_play_view(view)   # F2 play
 	urbs.open(int(event.get("year", view.get("year", -300))), Vector3.ZERO, flags, ordered)
 	_urbs_busy = false
 	await _veil_to(0.0, 0.7)
+
+
+# --- F2 play (begin): Urbs plays the Republic from the city (urbs.gd "F2 play") -------------
+
+func _wire_urbs() -> void:
+	urbs.act_hook = _urbs_act
+	urbs.end_year_hook = _urbs_end_year
+	urbs.idea_hook = _urbs_idea
+
+
+## An action pressed at a place in Rome: the engine's `act`, as the map's panels send it.
+func _urbs_act(action: Dictionary) -> Variant:
+	if bridge.busy:
+		return {"accepted": false, "message": "The engine is busy; try again in a moment."}
+	audio.play("click")
+	var reply: Variant = bridge.request("act", {"action": action})
+	if reply == null:
+		return {"accepted": false, "message": bridge.last_error}
+	view = reply["view"]
+	hud.message = str(reply["message"])
+	_draw_armies()
+	hud.show_view(view)
+	return reply
+
+
+## End the turn from Rome: the engine's `end_turn`; the map takes the turn's changes now (it
+## shows them when you go back to it), but the turn's replay and the city feed give way to the
+## moments Urbs plays.
+func _urbs_end_year() -> Variant:
+	if bridge.busy or _replay != null:
+		return null
+	audio.play("end_turn")
+	hud.rulings = []
+	var reply: Variant = bridge.request("end_turn")
+	if reply == null:
+		hud.message = bridge.last_error
+		return null
+	hud.message = ""
+	view = reply
+	_apply_turn_map()
+	hud.show_view(view)
+	hud.city_feed_seen(view)   # the moments are the year in Rome
+	hud.show_breakthroughs(view.get("replay", {}).get("breakthroughs", []))
+	hud.show_conquests(view.get("events", []).filter(func(e): return str(e["kind"]) == "spoils" and e.get("civ") == view["player"]))
+	return view
+
+
+## An idea whispered at a place in Rome (a forge, the harbour): the court rules as on the map.
+func _urbs_idea(text: String, context: String, done: Callable) -> void:
+	if bridge.busy:
+		done.call(null)
+		return
+	var words := text if context == "" else "%s (said to the %s)" % [text, {"harbour": "shipwrights at the harbour", "workshop": "craftsmen at their forge"}.get(context, context)]
+	bridge.request_async("idea", {"text": words, "answer": ""}, func(reply: Variant) -> void:
+		if reply is Dictionary and reply.has("view"):
+			view = reply["view"]
+			hud.show_view(view)
+			hud.show_rulings(reply)
+		done.call(reply))
+# --- F2 play (end) ---------------------------------------------------------------------------
 
 
 ## Fade from the city back to the map, over the place the city was looking at.
@@ -930,6 +994,9 @@ func _take_screenshot(path: String) -> void:
 				"street": c.go_street(c.target)
 				"city": c.go_city(c.pos + Vector3(-sin(c.yaw), 0, -cos(c.yaw)) * 80.0, 260.0)
 				"inside": urbs.enter_monument(str(options.get("at", "")))
+				"act": urbs.act_by_id(str(options.get("at", "")), str(options.get("act", "")))   # F2 play: --act=<action id>
+				"moments": urbs.play_fixture_moments()   # F2 play: the fixture's year as moments
+				"endyear": urbs.end_year()   # F2 play: End year in Rome (the real engine turn)
 		var elapsed := 0.0
 		for t in str(options["urbs-shots"]).split(","):
 			while elapsed < float(t):

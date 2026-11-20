@@ -1,0 +1,211 @@
+{
+ "_about": "F2 client fixture, written to the contract in docs/plans/briefs/f2_play.md (view[\"places\"]) until the engine half (tools/places_view.py) lands. The Curia's and the Treasury's proposals, costs and forecasts are copied from the real view[\"republic\"][\"proposals\"] of a headless rome_264 game (seed 1); the consuls, tribunes and candidates are that game's people. Actions of kinds the engine does not know yet (contio, vow, games, levy, expiate) are answered by the engine with an error until the engine half lands. `events` are the year's city events the --moments test flag plays (the engine's city-event shape). Historical colour: the first munus at Rome, given by the sons of D. Iunius Brutus Pera in the Forum Boarium in 264 BC (Livy Per. 16; Val. Max. 2.4.7); M. Fulvius Flaccus' triumph over the Volsinians, 264 BC (Fasti Triumphales); the colony of Firmum in Picenum, 264 BC (Vell. Pat. 1.14.8).",
+ "year": -264,
+ "places": {
+  "curia_hostilia": {
+   "role": "senate_house",
+   "title": "Curia Hostilia",
+   "blurb": "Where the Senate meets this year. Put a matter to the fathers, win a family over, and watch the division.",
+   "actions": [
+    {"id": "senate:war_with:carthage", "label": "Propose: war with Carthage",
+     "action": {"kind": "senate", "issue": "war", "proposal": "war_with:carthage"},
+     "cost": {"influence": 200, "wealth": 0},
+     "forecast": {"yes_bp": 6633, "no_bp": 3366, "tribune": "", "tribune_bp": 0, "note": "no tribune will act: the house is of one mind"},
+     "enabled": true, "why": "", "watch": "senate"},
+    {"id": "senate:law:debt_relief", "label": "Propose: a law to ease debt",
+     "action": {"kind": "senate", "issue": "debt", "proposal": "law:debt_relief"},
+     "cost": {"influence": 300, "wealth": 0},
+     "forecast": {"yes_bp": 4772, "no_bp": 5227, "tribune": "force", "tribune_bp": 1553, "note": "Gaius Calvisius may carry it to the people over the Senate's refusal (15% chance)"},
+     "enabled": true, "why": "", "watch": "senate"},
+    {"id": "senate:law:land_reform", "label": "Propose: an agrarian law",
+     "action": {"kind": "senate", "issue": "land", "proposal": "law:land_reform"},
+     "cost": {"influence": 300, "wealth": 0},
+     "forecast": {"yes_bp": 4636, "no_bp": 5363, "tribune": "force", "tribune_bp": 1506, "note": "Gaius Calvisius may carry it to the people over the Senate's refusal (15% chance)"},
+     "enabled": true, "why": "", "watch": "senate"},
+    {"id": "senate:colony:it_picenum", "label": "Propose: a colony in Picenum (Firmum)",
+     "action": {"kind": "senate", "issue": "colony", "proposal": "colony:it_picenum"},
+     "cost": {"influence": 250, "wealth": 0},
+     "forecast": {"yes_bp": 5478, "no_bp": 4521, "tribune": "", "tribune_bp": 0, "note": "no tribune will act: the losing side is not the more popular one"},
+     "enabled": true, "why": "", "watch": "senate"},
+    {"id": "senate:rights:e2_etruscans", "label": "Propose: the Latin right for the Etruscan and Faliscan cities",
+     "action": {"kind": "senate", "issue": "citizenship", "proposal": "rights:e2_etruscans"},
+     "cost": {"influence": 300, "wealth": 0},
+     "forecast": {"yes_bp": 5005, "no_bp": 4994, "tribune": "", "tribune_bp": 0, "note": "a knife-edge: one family's change of mind turns it"},
+     "enabled": true, "why": "", "watch": "senate"},
+    {"id": "persuade:claudii:war", "label": "Persuade the Claudii on war",
+     "action": {"kind": "persuade", "family": "claudii", "issue": "war"},
+     "cost": {"influence": 150, "wealth": 0},
+     "forecast": {"note": "the Claudii lean further for war: the next war vote gains their men"},
+     "enabled": true, "why": "", "watch": ""},
+    {"id": "senate:peace_with:carthage", "label": "Propose: peace with Carthage",
+     "action": {"kind": "senate", "issue": "peace", "proposal": "peace_with:carthage"},
+     "cost": {"influence": 200, "wealth": 0},
+     "forecast": {"yes_bp": 4908, "no_bp": 5091, "tribune": "", "tribune_bp": 0, "note": ""},
+     "enabled": false, "why": "Rome is not at war with Carthage", "watch": "senate"}
+   ],
+   "info": [
+    {"label": "Your influence", "value": "300", "tip": "Spent to put matters to the Senate (200-300), persuade a family (150) or back a candidate (250)."},
+    {"label": "Presiding", "value": "Q. Aemilius Lepidus, consul", "tip": "The consul who lays matters before the house (relatio)."},
+    {"label": "The house", "value": "the nobility, 300 senators", "tip": "One bloc in 264 BC: the patricio-plebeian nobility."}
+   ]
+  },
+  "rostra_republic": {
+   "role": "rostra",
+   "title": "Rostra",
+   "blurb": "The speakers' platform with the beaks of the ships of Antium. Address the people (contio) for a law or a man.",
+   "actions": [
+    {"id": "contio:war:for", "label": "Address the people: for war with Carthage",
+     "action": {"kind": "contio", "issue": "war", "side": "for"},
+     "cost": {"influence": 100, "wealth": 0},
+     "forecast": {"favour_bp": 600, "note": "from a consul's mouth: the people's favour for war rises about 6%"},
+     "enabled": true, "why": "", "watch": "contio"},
+    {"id": "contio:land:for", "label": "Address the people: for the agrarian law",
+     "action": {"kind": "contio", "issue": "land", "side": "for"},
+     "cost": {"influence": 100, "wealth": 0},
+     "forecast": {"favour_bp": 900, "note": "the plebs want land: a tribune's speech would carry further still"},
+     "enabled": true, "why": "", "watch": "contio"}
+   ],
+   "info": [
+    {"label": "Speaker", "value": "Q. Aemilius Lepidus, consul", "tip": "A consul's or a tribune's speech carries furthest."}
+   ]
+  },
+  "comitium": {
+   "role": "assembly",
+   "title": "Comitium",
+   "blurb": "The tribes vote here: the plebeian assembly elects the tribunes and the aediles.",
+   "actions": [
+    {"id": "back:p00281:aedile_curule", "label": "Back Decimus Iunius Brutus for aedile",
+     "action": {"kind": "back", "person": "p00281", "office": "aedile_curule"},
+     "cost": {"influence": 250, "wealth": 0},
+     "forecast": {"note": "his chance at the next election rises; an aedile gives the games"},
+     "enabled": true, "why": "", "watch": "election"}
+   ],
+   "info": [
+    {"label": "Assembly", "value": "comitia tributa, 35 tribes", "tip": "Each tribe casts one vote, the majority of its members deciding."}
+   ]
+  },
+  "campus_martius": {
+   "role": "campus",
+   "title": "Campus Martius",
+   "blurb": "The field of Mars: the centuries vote for consuls here, and the army musters.",
+   "actions": [
+    {"id": "back:p00043:consul", "label": "Back Aulus Atilius Regulus for consul",
+     "action": {"kind": "back", "person": "p00043", "office": "consul"},
+     "cost": {"influence": 250, "wealth": 0},
+     "forecast": {"note": "the first class votes first: a man the knights favour is half elected"},
+     "enabled": true, "why": "", "watch": "election"},
+    {"id": "levy:2", "label": "Hold the levy: two legions",
+     "action": {"kind": "levy", "legions": 2},
+     "cost": {"influence": 0, "wealth": 120},
+     "forecast": {"note": "about 8,400 citizens of the census classes and their allies are enrolled"},
+     "enabled": true, "why": "", "watch": "levy"}
+   ],
+   "info": [
+    {"label": "Census", "value": "226,080 citizens", "tip": "The census of 264 BC in this game."}
+   ]
+  },
+  "aedes_saturni": {
+   "role": "treasury",
+   "title": "Temple of Saturn (Aerarium)",
+   "blurb": "The state treasury lies under the temple's podium. Fund a work from it, with the Senate's leave.",
+   "actions": [
+    {"id": "senate:fund:granary", "label": "Fund public granaries (horrea)",
+     "action": {"kind": "senate", "issue": "building", "proposal": "fund:granary"},
+     "cost": {"influence": 200, "wealth": 0},
+     "forecast": {"yes_bp": 5590, "no_bp": 4409, "tribune": "", "tribune_bp": 0, "note": "the Senate votes the money"},
+     "enabled": true, "why": "", "watch": "senate"},
+    {"id": "senate:fund:stone_bridge", "label": "Fund the stone bridge",
+     "action": {"kind": "senate", "issue": "building", "proposal": "fund:stone_bridge"},
+     "cost": {"influence": 200, "wealth": 0},
+     "forecast": {"yes_bp": 5590, "no_bp": 4409, "tribune": "", "tribune_bp": 0, "note": "the Senate votes the money"},
+     "enabled": true, "why": "", "watch": "senate"},
+    {"id": "senate:fund:sanitation", "label": "Fund sewers and public latrines",
+     "action": {"kind": "senate", "issue": "building", "proposal": "fund:sanitation"},
+     "cost": {"influence": 200, "wealth": 0},
+     "forecast": {"yes_bp": 5590, "no_bp": 4409, "tribune": "", "tribune_bp": 0, "note": "the Senate votes the money"},
+     "enabled": true, "why": "", "watch": "senate"}
+   ],
+   "info": [
+    {"label": "Treasury", "value": "628", "tip": "Wealth in the aerarium (the engine's stores)."},
+    {"label": "Income", "value": "+64 a year", "tip": "Tributum, rents of public land, harbour dues (fixture)."},
+    {"label": "Spending", "value": "-51 a year", "tip": "The legions' pay, works, the games (fixture)."}
+   ]
+  },
+  "aedes_iovis_capitolini": {
+   "role": "temple",
+   "title": "Temple of Jupiter Optimus Maximus",
+   "blurb": "The Capitol's great temple: vows are made here before a war and kept after it.",
+   "actions": [
+    {"id": "vow:iuppiter:war", "label": "Vow a temple for victory over Carthage",
+     "action": {"kind": "vow", "god": "iuppiter", "cause": "war"},
+     "cost": {"influence": 100, "wealth": 0, "favour": 0},
+     "forecast": {"note": "the gods' favour rises; a won war obliges you to build the temple"},
+     "enabled": true, "why": "", "watch": "sacrifice"},
+    {"id": "expiate", "label": "Expiate a prodigy",
+     "action": {"kind": "expiate"},
+     "cost": {"influence": 0, "wealth": 30},
+     "forecast": {"note": ""},
+     "enabled": false, "why": "No prodigy has been reported this year", "watch": "sacrifice"},
+    {"id": "sibyl", "label": "Consult the Sibylline Books",
+     "action": {"kind": "sibyl"},
+     "cost": {"influence": 150, "wealth": 0},
+     "forecast": {"note": ""},
+     "enabled": false, "why": "Only on the Senate's order, in a crisis (the decemviri)", "watch": ""}
+   ],
+   "info": [
+    {"label": "The gods' favour", "value": "steady", "tip": "Religion's view (fixture)."}
+   ]
+  },
+  "circus_maximus": {
+   "role": "circus",
+   "title": "Circus Maximus",
+   "blurb": "The Ludi Romani run here each September. An aedile who gives fine games wins the people.",
+   "actions": [
+    {"id": "games:ludi_romani", "label": "Give the Roman Games as aedile",
+     "action": {"kind": "games", "festival": "ludi_romani", "venue": "circus_maximus"},
+     "cost": {"influence": 0, "wealth": 150},
+     "forecast": {"favour_bp": 800, "note": "popular favour and your family's standing rise"},
+     "enabled": true, "why": "", "watch": "race"}
+   ],
+   "info": [
+    {"label": "Next games", "value": "Ludi Romani, September", "tip": "Livy 1.35.9: the games of Tarquin, kept every year."}
+   ]
+  },
+  "forum_boarium": {
+   "role": "arena",
+   "title": "Forum Boarium",
+   "blurb": "The cattle market by the river: in 264 BC the first gladiators at Rome fought here, at a funeral.",
+   "actions": [
+    {"id": "games:munus:d_iunius_brutus_pera", "label": "Give a munus for D. Iunius Brutus Pera",
+     "action": {"kind": "games", "festival": "munus", "venue": "forum_boarium", "person": "d_iunius_brutus_pera"},
+     "cost": {"influence": 0, "wealth": 100},
+     "forecast": {"favour_bp": 500, "note": "three pairs of gladiators, as his sons gave (Livy Per. 16)"},
+     "enabled": true, "why": "", "watch": "munus"}
+   ],
+   "info": []
+  },
+  "navalia": {
+   "role": "harbour",
+   "title": "Navalia",
+   "blurb": "The shipsheds on the Tiber. The shipwrights would listen to an idea about ships.",
+   "actions": [
+    {"id": "idea:harbour", "label": "Whisper an idea to the shipwrights",
+     "action": {"kind": "idea", "context": "harbour"},
+     "cost": {"influence": 0, "wealth": 0},
+     "forecast": {"note": "opens the idea box: the shipwrights hear it"},
+     "enabled": true, "why": "", "watch": ""}
+   ],
+   "info": []
+  }
+ },
+ "events": [
+  {"kind": "senate", "year": -264, "ref": "war", "monument": "curia_hostilia", "person": "", "person_name": "", "value": 6633, "other": 3366},
+  {"kind": "contio", "year": -264, "ref": "war", "monument": "rostra_republic", "person": "p00006", "person_name": "Quintus Aemilius Lepidus", "value": 600, "other": 0},
+  {"kind": "games", "year": -264, "ref": "munus", "monument": "forum_boarium", "person": "d_iunius_brutus_pera", "person_name": "Decimus Iunius Brutus Pera", "value": 3, "other": 0},
+  {"kind": "triumph", "year": -264, "ref": "battle", "monument": "", "person": "m_fulvius_flaccus_264", "person_name": "Marcus Fulvius Flaccus", "value": 0, "other": 0},
+  {"kind": "levy", "year": -264, "ref": "legions", "monument": "campus_martius", "person": "p00219", "person_name": "Quintus Fulvius Paetinus", "value": 8400, "other": 2},
+  {"kind": "games", "year": -264, "ref": "ludi_romani", "monument": "circus_maximus", "person": "", "person_name": "", "value": 9, "other": 0},
+  {"kind": "election", "year": -264, "ref": "consul", "monument": "campus_martius", "person": "p00043", "person_name": "Aulus Atilius Regulus", "value": 112, "other": 81},
+  {"kind": "sacrifice", "year": -264, "ref": "vow", "monument": "aedes_iovis_capitolini", "person": "p00006", "person_name": "Quintus Aemilius Lepidus", "value": 0, "other": 0}
+ ]
+}
