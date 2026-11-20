@@ -366,6 +366,25 @@ def test_rights_for_an_ally_go_through_the_senate(content: Content) -> None:
     assert "event_names" in view
 
 
+def test_every_proposal_has_a_real_forecast_and_340_is_a_republic(content: Content) -> None:
+    from anachronism.engine.save import dumps, loads
+
+    for scenario in STARTS:
+        state = new_game(content, scenario, seed=2, chronicle=True)
+        view = republic_view(state)
+        assert view is not None, scenario
+        for p in view["proposals"]:
+            assert p["forecast_yes_bp"] + p["forecast_no_bp"] >= 9_990, (scenario, p["proposal"])
+    rep = _all_people(state)
+    rep.influence = 10_000
+    from anachronism.engine.republic import persuade
+
+    assert persuade(state, "cornelii", Issue.IDEA)[0]
+    again = loads(dumps(state))
+    view = republic_view(again)
+    assert view is not None and view["persuaded"].get("cornelii") == ["idea"]
+
+
 def test_war_is_only_proposed_against_states_rome_has_met(content: Content) -> None:
     state = new_game(content, "rome_509", seed=1, chronicle=True)
     offered = {p.proposal for p in available(state) if p.issue is Issue.WAR}
