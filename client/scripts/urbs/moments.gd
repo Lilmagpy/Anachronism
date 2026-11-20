@@ -23,13 +23,13 @@ signal finished
 
 const MAX_MOMENTS := 8
 const FLY := 2.6
-## [start, length] of each spectacle in a year's moments, and when watching one action's result.
-const SPANS_YEAR := {"senate": [60.0, 34.0], "race": [2.0, 30.0], "sacrifice": [28.0, 30.0], "munus": [1.0, 34.0],
-	"triumph": [10.0, 34.0], "gathering": [0.0, 24.0]}
-const SPANS_WATCH := {"senate": [26.0, 70.0], "race": [0.0, 92.0], "sacrifice": [8.0, 64.0], "munus": [0.0, 70.0],
-	"triumph": [0.0, 90.0], "gathering": [0.0, 30.0]}
-## Which of a spectacle's own camera views a moment watches from.
-const VIEW := {"senate": 0, "race": 0, "sacrifice": 0, "munus": 0, "triumph": 0, "gathering": 0}
+## [start, length, camera] of each spectacle in a year's moments, and when watching one action's
+## result. camera: the index of the spectacle's own view (seat_views), or -1 to follow the
+## action with its cinematic camera (the leading chariot, the pair fighting).
+const SPANS_YEAR := {"senate": [60.0, 34.0, 0], "race": [6.0, 30.0, -1], "sacrifice": [28.0, 30.0, 0], "munus": [2.0, 34.0, -1],
+	"triumph": [55.0, 30.0, 1], "gathering": [0.0, 24.0, 0]}
+const SPANS_WATCH := {"senate": [26.0, 70.0, 0], "race": [0.0, 92.0, 0], "sacrifice": [8.0, 64.0, 0], "munus": [0.0, 70.0, -1],
+	"triumph": [12.0, 90.0, 0], "gathering": [0.0, 30.0, 0]}
 ## The order of importance when a turn brings more than MAX_MOMENTS (lower first).
 const PRIORITY := {"triumph": 0, "anachronism": 1, "sacrifice": 2, "senate": 3, "election": 4, "contio": 5,
 	"look": 6, "levy": 7, "games": 8, "building": 9, "fire": 10, "flood": 11}
@@ -219,26 +219,48 @@ func _moment(e: Dictionary, index: int, total: int, watch: bool) -> void:
 		sp.seek(float(cut[0]))
 		sp.time_scale = speed
 		var views: Array = sp.camera_views()
-		if not views.is_empty():
-			var v: Transform3D = views[clampi(int(VIEW.get(sp_kind, 0)), 0, views.size() - 1)]
-			if urbs.interior != null:
-				urbs.cam.snap_inside(v)
-				urbs.fade_to(0.0, 0.4)
-			else:
-				urbs.cam.go_inside(v, 1.8 / speed)
-		await _wait(minf(float(cut[1]), maxf(4.0, sp.duration - float(cut[0]))))
+		var which := int(cut[2]) if cut.size() > 2 else 0
+		var follow := Callable()
+		var v := Transform3D()
+		if which < 0 or views.is_empty():
+			v = _above_ground(sp.cine_camera(sp.t))
+			follow = func() -> void: urbs.cam.snap_inside(_above_ground(sp.cine_camera(sp.t)))
+		else:
+			v = _above_ground(views[clampi(which, 0, views.size() - 1)])
+		if urbs.interior != null:
+			urbs.cam.snap_inside(v)
+			urbs.fade_to(0.0, 0.4)
+		else:
+			urbs.cam.go_inside(v, 1.8 / speed)
+			if follow.is_valid():
+				await _wait(1.8)
+				follow.call()
+		await _wait(minf(float(cut[1]), maxf(4.0, sp.duration - float(cut[0]))), follow)
 	else:
 		if urbs.interior != null:
 			urbs.fade_to(0.0, 0.4)
 		await _wait(5.0 if kind in ["look", "anachronism", "building", "fire", "flood"] else 4.0)
 
 
-func _wait(seconds: float) -> void:
+func _wait(seconds: float, each_frame := Callable()) -> void:
 	var t := 0.0
 	seconds /= maxf(speed, 0.01)
 	while t < seconds and not _skip and is_inside_tree():
 		await get_tree().process_frame
 		t += get_process_delta_time()
+		if each_frame.is_valid() and not urbs.cam.is_gliding():
+			each_frame.call()
+
+
+## A camera pose kept out of the ground (the spectacles' views are laid out on flat ground; the
+## triumph's route crosses the hills).
+func _above_ground(v: Transform3D) -> Transform3D:
+	if urbs.interior != null:
+		return v
+	var ground := float(urbs.height_at(v.origin.x, v.origin.z))
+	if v.origin.y < ground + 1.6:
+		v.origin.y = ground + 1.6
+	return v
 
 
 ## The title card for a moment.
@@ -485,9 +507,9 @@ class Gathering extends "res://scripts/urbs/spectacles/base.gd":
 		add_child(c)
 		_crowd = c
 		_label = make_label("%s speaks %s" % [str(params.get("who", "")), _issue()], 1.6, Color(1, 0.95, 0.8))
-		_label.position = Vector3(0, stage_h + 3.2, 0.6)
+		_label.position = Vector3(0, stage_h + 5.0, 0.6)
 		_tally = make_label("", 1.8, Color(0.8, 1.0, 0.7))
-		_tally.position = Vector3(0, stage_h + 2.4, 0.6)
+		_tally.position = Vector3(0, stage_h + 4.1, 0.6)
 
 	func _issue() -> String:
 		var ref := str(params.get("ref", ""))

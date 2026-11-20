@@ -326,6 +326,7 @@ func list_open() -> bool:
 
 func _layout_list() -> void:
 	for child in _list_body.get_children():
+		_list_body.remove_child(child)   # now, so the panel shrinks to the new rows
 		child.queue_free()
 	_list.visible = not _todo.is_empty() and not _watching and not _inside
 	if not _list.visible:
@@ -342,14 +343,12 @@ func _layout_list() -> void:
 	head.tooltip_text = "What you can do in Rome this year, place by place (L). Press a place to fly there."
 	head.pressed.connect(func() -> void: toggle_list())
 	_list_body.add_child(head)
-	if not _list_open:
-		_list.reset_size()
-		return
-	var n := 1
-	for item in _todo:
-		_list_body.add_child(_list_row(item, n))
-		n += 1
-	_list.reset_size()
+	if _list_open:
+		var n := 1
+		for item in _todo:
+			_list_body.add_child(_list_row(item, n))
+			n += 1
+	_list.reset_size.call_deferred()
 
 
 func _list_row(item: Dictionary, n: int) -> Control:
