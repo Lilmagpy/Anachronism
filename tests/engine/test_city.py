@@ -9,8 +9,8 @@ import dataclasses
 import pytest
 
 from anachronism.content.loader import Content, load_content
-from anachronism.content.schema import Issue, Stage
-from anachronism.engine.city import status_at, status_map
+from anachronism.content.schema import CityTimeline, Issue, Monument, Stage
+from anachronism.engine.city import marks_for, status_at, status_map
 from anachronism.engine.events import EventLog
 from anachronism.engine.game import end_turn, new_game
 from anachronism.engine.republic import kill_person, senate_vote
@@ -262,3 +262,62 @@ def test_every_building_idea_maps_to_a_city_form(content: Content) -> None:
     for node in content.techs.values():
         if node.builds:
             assert work_form(node.builds) is not None, node.id
+
+
+# --- F2 city accuracy: timeline fixes -----------------------------------------------------------
+
+
+def _mon(**kw: object) -> Monument:
+    return Monument.model_validate({"id": "m", **kw})
+
+
+def _tl(year: int, kind: str) -> CityTimeline:
+    return CityTimeline.model_validate(
+        {"id": f"m_{kind}_{-year}", "monument": "m", "year": year, "kind": kind, "source": "test"}
+    )
+
+
+def test_a_later_completion_keeps_an_earlier_built_year() -> None:
+    """A rebuilding after a fire does not make the first building disappear (the Forum, 210 BC)."""
+    marks = marks_for(_mon(built={"year": -600}), [_tl(-210, "fire"), _tl(-210, "completed")])
+    assert status_at(marks, -509, built_known=True).state == "standing"
+    assert status_at(marks, -210, built_known=True).state == "standing"
+    # but a dataset year that is the start of the same work is replaced (begun 44, done 29)
+    marks = marks_for(_mon(built={"year": -44}), [_tl(-44, "begun"), _tl(-29, "completed")])
+    assert status_at(marks, -40, built_known=True).state == "building"
+    assert status_at(marks, -29, built_known=True).state == "standing"
+
+
+def test_built_and_removed_in_one_year_ends() -> None:
+    marks = marks_for(_mon(built={"year": -58}, ended={"year": -58, "what": "dismantled"}), [])
+    assert status_at(marks, -58, built_known=True).state == "ruined"
+    assert status_at(marks, -44, built_known=True).state == "ruined"
+
+
+def test_phases_count_in_the_engine() -> None:
+    m = _mon(
+        built={"year": -200},
+        phases=[
+            {"from": -100, "state": "standing", "model": "x"},  # a new form, not a break
+            {"from": -83, "state": "burnt"},
+            {"from": -78, "state": "building"},
+            {"from": -69, "state": "standing"},
+            {"from": -50, "state": "gone"},
+        ],
+    )
+    marks = marks_for(m, [_tl(-83, "fire")])
+    assert [k for y, _, k in marks].count("fire") == 1  # the timeline's fire is not doubled
+    assert status_at(marks, -90, built_known=True).state == "standing"
+    assert status_at(marks, -80, built_known=True).state == "burnt"
+    assert status_at(marks, -69, built_known=True).state == "standing"
+    assert status_at(marks, -40, built_known=True).state == "ruined"
+
+
+def test_the_dataset_monuments_follow_the_fixes(content: Content) -> None:
+    state = new_game(content, "rome_509", seed=1)
+    assert state_in(state, -509, "forum_romanum") == "standing"
+    assert state_in(state, -44, "theatrum_scauri") == "ruined"
+    assert state_in(state, -50, "basilica_sempronia") == "ruined"
+
+
+# --- end F2 timeline fixes ------------------------------------------------------------------------

@@ -708,7 +708,7 @@
 ]
 },
 {
-"blend": 20,
+"blend": 6,
 "id": "forum_iulium",
 "level": [
 13.0,
@@ -717,25 +717,26 @@
 "note": "the floor of Caesar's forum, a little above the Forum Romanum on the saddle toward the Quirinal; level # unverified",
 "polygon": [
 [
-41.89331,
-12.48446
+41.89293,
+12.48537
 ],
 [
-41.8934,
-12.48566
+41.89403,
+12.48413
 ],
 [
-41.89439,
-12.48542
+41.89447,
+12.48483
 ],
 [
-41.8943,
-12.48433
+41.89337,
+12.48607
 ]
 ],
 "sources": [
 "Platner-Ashby s.v. Forum Iulium # unverified, not read"
-]
+],
+"walls": true
 },
 {
 "blend": 6,
@@ -747,20 +748,20 @@
 "note": "the terrace of the temple of Jupiter on the Capitolium summit; level set 4 m below the summit figure so the 4-5 m podium (P-A s.v. Iuppiter Optimus Maximus) stands clear. Extent # unverified",
 "polygon": [
 [
-41.89254,
-12.48108
+41.89137,
+12.48143
 ],
 [
-41.89268,
-12.48228
+41.89224,
+12.48085
 ],
 [
-41.89192,
-12.48243
+41.89273,
+12.48217
 ],
 [
-41.89174,
-12.48126
+41.89186,
+12.48275
 ]
 ],
 "sources": [
@@ -799,6 +800,818 @@
 "Dion. Hal. 3.68 (read, monuments.yaml)",
 "Platner-Ashby s.v. Circus Maximus (read on LacusCurtius, U2)"
 ]
+},
+{
+"blend": 4,
+"id": "f2_terrace_aedes_fortunae_primigeniae",
+"level": [
+54.7,
+54.7
+],
+"monument": "aedes_fortunae_primigeniae",
+"note": "F2: the ground fell 3.8 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.906907,
+12.497688
+],
+[
+41.907152,
+12.497789
+],
+[
+41.907189,
+12.497628
+],
+[
+41.906944,
+12.497527
+]
+],
+"walls": true
+},
+{
+"blend": 4,
+"id": "f2_terrace_aedes_iovis_statoris_palatine",
+"level": [
+23.2,
+23.2
+],
+"monument": "aedes_iovis_statoris_palatine",
+"note": "F2: the ground fell 14.8 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.890835,
+12.486648
+],
+[
+41.890682,
+12.48678
+],
+[
+41.890765,
+12.486952
+],
+[
+41.890918,
+12.48682
+]
+],
+"walls": true
+},
+{
+"blend": 4,
+"id": "f2_terrace_aedes_larum",
+"level": [
+28.3,
+28.3
+],
+"monument": "aedes_larum",
+"note": "F2: the ground fell 11.2 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.890669,
+12.488721
+],
+[
+41.890731,
+12.48895
+],
+[
+41.890875,
+12.48888
+],
+[
+41.890813,
+12.48865
+]
+],
+"walls": true
+},
+{
+"blend": 4,
+"id": "f2_terrace_aedes_telluris",
+"level": [
+23.5,
+23.5
+],
+"monument": "aedes_telluris",
+"note": "F2: the ground fell 4.2 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.891948,
+12.492821
+],
+[
+41.891926,
+12.493164
+],
+[
+41.892052,
+12.493179
+],
+[
+41.892074,
+12.492836
+]
+],
+"walls": true
+},
+{
+"blend": 4,
+"id": "f2_terrace_aedes_veiovis",
+"level": [
+17.8,
+17.8
+],
+"monument": "aedes_veiovis",
+"note": "F2: the ground fell 11.6 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.892847,
+12.483392
+],
+[
+41.893057,
+12.483194
+],
+[
+41.892985,
+12.483056
+],
+[
+41.892775,
+12.483254
+]
+],
+"walls": true
+},
+{
+"blend": 4,
+"id": "f2_terrace_aedes_veneris_erycinae_collina",
+"level": [
+48.0,
+48.0
+],
+"monument": "aedes_veneris_erycinae_collina",
+"note": "F2: the ground fell 4.7 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.909157,
+12.498492
+],
+[
+41.90938,
+12.498664
+],
+[
+41.909443,
+12.498518
+],
+[
+41.90922,
+12.498346
+]
+],
+"walls": true
+},
+{
+"blend": 4,
+"id": "f2_terrace_aedes_vortumni",
+"level": [
+14.0,
+14.0
+],
+"monument": "aedes_vortumni",
+"note": "F2: the ground fell 4.9 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.884514,
+12.478595
+],
+[
+41.884423,
+12.478384
+],
+[
+41.88429,
+12.478487
+],
+[
+41.884381,
+12.478698
+]
+],
+"walls": true
+},
+{
+"blend": 4,
+"id": "f2_terrace_atrium_libertatis",
+"level": [
+33.8,
+33.8
+],
+"monument": "atrium_libertatis",
+"note": "F2: the ground fell 9.3 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.894567,
+12.485454
+],
+[
+41.894846,
+12.485441
+],
+[
+41.894833,
+12.484946
+],
+[
+41.894554,
+12.484959
+]
+],
+"walls": true
+},
+{
+"blend": 4,
+"id": "f2_terrace_auditorium_maecenatis",
+"level": [
+57.8,
+57.8
+],
+"monument": "auditorium_maecenatis",
+"note": "F2: the ground fell 6.0 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.894038,
+12.501153
+],
+[
+41.893907,
+12.501414
+],
+[
+41.893996,
+12.501495
+],
+[
+41.894127,
+12.501234
+]
+],
+"walls": true
+},
+{
+"blend": 4,
+"id": "f2_terrace_curiae_veteres",
+"level": [
+31.3,
+31.3
+],
+"monument": "curiae_veteres",
+"note": "F2: the ground fell 7.5 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.889721,
+12.490099
+],
+[
+41.889847,
+12.490161
+],
+[
+41.889881,
+12.490037
+],
+[
+41.889754,
+12.489975
+]
+],
+"walls": true
+},
+{
+"blend": 4,
+"id": "f2_terrace_domus_catuli",
+"level": [
+43.5,
+43.5
+],
+"monument": "domus_catuli",
+"note": "F2: the ground fell 15.7 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.89071,
+12.485717
+],
+[
+41.890355,
+12.485581
+],
+[
+41.89029,
+12.485883
+],
+[
+41.890645,
+12.486019
+]
+],
+"walls": true
+},
+{
+"blend": 4,
+"id": "f2_terrace_domus_clodii",
+"level": [
+47.0,
+47.0
+],
+"monument": "domus_clodii",
+"note": "F2: the ground fell 3.4 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.88981,
+12.487917
+],
+[
+41.889455,
+12.487781
+],
+[
+41.88939,
+12.488083
+],
+[
+41.889745,
+12.488219
+]
+],
+"walls": true
+},
+{
+"blend": 4,
+"id": "f2_terrace_fornix_scipionis",
+"level": [
+25.9,
+25.9
+],
+"monument": "fornix_scipionis",
+"note": "F2: the ground fell 8.3 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.891664,
+12.482111
+],
+[
+41.891648,
+12.482054
+],
+[
+41.891572,
+12.482091
+],
+[
+41.891588,
+12.482148
+]
+],
+"walls": true
+},
+{
+"blend": 4,
+"id": "f2_terrace_forum_esquilinum",
+"level": [
+43.9,
+43.9
+],
+"monument": "forum_esquilinum",
+"note": "F2: the ground fell 9.5 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.895792,
+12.500317
+],
+[
+41.895334,
+12.500317
+],
+[
+41.895334,
+12.500811
+],
+[
+41.895792,
+12.500811
+]
+],
+"walls": true
+},
+{
+"blend": 4,
+"id": "f2_terrace_horrea_agrippiana",
+"level": [
+23.6,
+23.6
+],
+"monument": "horrea_agrippiana",
+"note": "F2: the ground fell 32.7 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.890507,
+12.485051
+],
+[
+41.89082,
+12.48545
+],
+[
+41.891151,
+12.484981
+],
+[
+41.890838,
+12.484582
+]
+],
+"walls": true
+},
+{
+"blend": 4,
+"id": "f2_terrace_porta_caelimontana",
+"level": [
+29.4,
+29.4
+],
+"monument": "porta_caelimontana",
+"note": "F2: the ground fell 9.7 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.887189,
+12.496278
+],
+[
+41.887112,
+12.496587
+],
+[
+41.887411,
+12.496722
+],
+[
+41.887488,
+12.496413
+]
+],
+"walls": true
+},
+{
+"blend": 4,
+"id": "f2_terrace_porta_capena",
+"level": [
+42.3,
+42.3
+],
+"monument": "porta_capena",
+"note": "F2: the ground fell 15.7 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.883919,
+12.490235
+],
+[
+41.883747,
+12.490465
+],
+[
+41.883969,
+12.490765
+],
+[
+41.884141,
+12.490535
+]
+],
+"walls": true
+},
+{
+"blend": 4,
+"id": "f2_terrace_porta_collina",
+"level": [
+49.1,
+49.1
+],
+"monument": "porta_collina",
+"note": "F2: the ground fell 6.8 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.907133,
+12.498749
+],
+[
+41.907327,
+12.498946
+],
+[
+41.907517,
+12.498609
+],
+[
+41.907323,
+12.498412
+]
+],
+"walls": true
+},
+{
+"blend": 4,
+"id": "f2_terrace_porta_esquilina",
+"level": [
+30.2,
+30.2
+],
+"monument": "porta_esquilina",
+"note": "F2: the ground fell 6.8 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.895639,
+12.501167
+],
+[
+41.895605,
+12.50149
+],
+[
+41.895917,
+12.501549
+],
+[
+41.895951,
+12.501226
+]
+],
+"walls": true
+},
+{
+"blend": 4,
+"id": "f2_terrace_porta_flumentana",
+"level": [
+12.5,
+12.5
+],
+"monument": "porta_flumentana",
+"note": "F2: the ground fell 7.6 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.89174,
+12.478369
+],
+[
+41.891772,
+12.478046
+],
+[
+41.89146,
+12.477989
+],
+[
+41.891428,
+12.478312
+]
+],
+"walls": true
+},
+{
+"blend": 4,
+"id": "f2_terrace_porta_fontinalis",
+"level": [
+31.3,
+31.3
+],
+"monument": "porta_fontinalis",
+"note": "F2: the ground fell 7.1 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.896029,
+12.483264
+],
+[
+41.896198,
+12.483029
+],
+[
+41.89597,
+12.482736
+],
+[
+41.895802,
+12.482971
+]
+],
+"walls": true
+},
+{
+"blend": 4,
+"id": "f2_terrace_porta_lavernalis",
+"level": [
+37.0,
+37.0
+],
+"monument": "porta_lavernalis",
+"note": "F2: the ground fell 14.8 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.879883,
+12.483394
+],
+[
+41.87967,
+12.483236
+],
+[
+41.879517,
+12.483606
+],
+[
+41.87973,
+12.483764
+]
+],
+"walls": true
+},
+{
+"blend": 4,
+"id": "f2_terrace_porta_querquetulana",
+"level": [
+32.0,
+32.0
+],
+"monument": "porta_querquetulana",
+"note": "F2: the ground fell 7.9 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.88418,
+12.496403
+],
+[
+41.883985,
+12.496599
+],
+[
+41.884174,
+12.496937
+],
+[
+41.884369,
+12.496741
+]
+],
+"walls": true
+},
+{
+"blend": 4,
+"id": "f2_terrace_porta_quirinalis",
+"level": [
+46.0,
+46.0
+],
+"monument": "porta_quirinalis",
+"note": "F2: the ground fell 14.4 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.902486,
+12.490919
+],
+[
+41.902642,
+12.490669
+],
+[
+41.9024,
+12.490398
+],
+[
+41.902244,
+12.490649
+]
+],
+"walls": true
+},
+{
+"blend": 4,
+"id": "f2_terrace_porta_sanqualis",
+"level": [
+36.9,
+36.9
+],
+"monument": "porta_sanqualis",
+"note": "F2: the ground fell 6.3 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.896503,
+12.487057
+],
+[
+41.896658,
+12.486805
+],
+[
+41.896415,
+12.486537
+],
+[
+41.89626,
+12.486789
+]
+],
+"walls": true
+},
+{
+"blend": 4,
+"id": "f2_terrace_porta_viminalis",
+"level": [
+53.4,
+53.4
+],
+"monument": "porta_viminalis",
+"note": "F2: the ground fell 7.2 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.902309,
+12.501038
+],
+[
+41.902398,
+12.50134
+],
+[
+41.902691,
+12.501184
+],
+[
+41.902602,
+12.500882
+]
+],
+"walls": true
+},
+{
+"blend": 4,
+"id": "f2_terrace_porticus_catuli",
+"level": [
+26.3,
+26.3
+],
+"monument": "porticus_catuli",
+"note": "F2: the ground fell 25.6 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.89102,
+12.48582
+],
+[
+41.890709,
+12.4857
+],
+[
+41.890632,
+12.48606
+],
+[
+41.890943,
+12.48618
+]
+],
+"walls": true
+},
+{
+"blend": 4,
+"id": "f2_terrace_tabularium",
+"level": [
+10.5,
+10.5
+],
+"monument": "tabularium",
+"note": "F2: the ground fell 4.0 m under the monument; cut and built up to the level at its centre, walled",
+"polygon": [
+[
+41.893014,
+12.483958
+],
+[
+41.893131,
+12.483618
+],
+[
+41.892552,
+12.483256
+],
+[
+41.892435,
+12.483595
+]
+],
+"walls": true
 }
 ],
 "quays": [

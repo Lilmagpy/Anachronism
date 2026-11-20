@@ -35,27 +35,69 @@ Mark = tuple[int, int, str]
 """(year, order within the year, kind)."""
 
 
+# --- F2 city accuracy: timeline fixes (marks_for) -----------------------------------------
+# Three rules (F2, see docs/reports/city_audit.md section 4):
+# - a timeline ``completed`` never erases an earlier, separate ``built.year``: it replaces it
+#   only when the dataset year is the start of that same work (a ``begun`` on or before it) or
+#   is not earlier than the completion (the Forum, finished c. 600 BC, rebuilt after the fire
+#   of 210, stays standing before 210);
+# - ``ended`` is the last thing in its year, so a building put up and removed in one year (a
+#   temporary theatre) ends;
+# - the dataset's ``phases`` (the client's form changes) count: ``gone`` is a demolition,
+#   ``burnt`` a fire, ``building`` new work, and ``standing`` after one of those a completion.
+_ORDER_END = 4
+"""``ended`` sorts after everything else in its year."""
+
+_PHASE_KIND = {"gone": "demolished", "burnt": "fire", "building": "begun"}
+
+
+def phase_marks(monument: Monument) -> list[Mark]:
+    """The marks the dataset's ``phases`` imply (a standing phase only after a break)."""
+    phases = (monument.model_extra or {}).get("phases") or []
+    out: list[Mark] = []
+    broken = False
+    for ph in sorted(phases, key=lambda p: int(p["from"])):
+        year, state = int(ph["from"]), str(ph.get("state", ""))
+        kind = _PHASE_KIND.get(state)
+        if kind is not None:
+            out.append((year, _ORDER[kind], kind))
+            broken = True
+        elif state.startswith("standing") and broken:
+            out.append((year, _ORDER["completed"], "completed"))
+            broken = False
+    return out
+
+
 def marks_for(monument: Monument, timeline: Iterable[CityTimeline]) -> list[Mark]:
     """Every turning point of a monument, sorted: its dataset dates and its timeline entries.
 
-    The dataset's ``built.year`` is a completion unless the timeline gives an explicit one
-    that is not a rebuilding (no fire or demolition before it): then the explicit year
-    replaces it (a building begun by Caesar and dedicated by Augustus). ``ended`` is a
-    demolition.
+    The dataset's ``built.year`` is a completion. A timeline completion replaces it only when
+    the dataset year is the start of that same work (a building begun by Caesar and dedicated
+    by Augustus) or is not earlier than it, and never across a fire or demolition. ``ended`` is
+    a demolition, the last event of its year. The dataset's ``phases`` add their own marks
+    where the timeline does not already have them.
     """
     explicit = [t for t in timeline if t.monument == monument.id]
     marks: list[Mark] = [(t.year, _ORDER[t.kind], t.kind) for t in explicit]
-    destroyed = [t.year for t in explicit if t.kind in ("fire", "demolished")]
+    have = {(y, k) for y, _, k in marks}
+    marks += [m for m in phase_marks(monument) if (m[0], m[2]) not in have]
+    destroyed = [y for y, _, k in marks if k in ("fire", "demolished")]
     if monument.ended is not None and monument.ended.year is not None:
         destroyed.append(monument.ended.year)
-        marks.append((monument.ended.year, _ORDER["demolished"], "demolished"))
+        marks.append((monument.ended.year, _ORDER_END, "demolished"))
     built = first_year(monument)
     if built is not None:
         first_done = min((t.year for t in explicit if t.kind == "completed"), default=None)
-        replaced = first_done is not None and not any(y < first_done for y in destroyed)
+        replaced = False
+        if first_done is not None and not any(y < first_done for y in destroyed):
+            same_work = any(t.kind == "begun" and t.year <= built for t in explicit)
+            replaced = built >= first_done or same_work
         if not replaced:
             marks.append((built, _ORDER["completed"], "completed"))
     return sorted(marks)
+
+
+# --- end F2 timeline fixes -------------------------------------------------------------------
 
 
 def first_year(monument: Monument) -> int | None:

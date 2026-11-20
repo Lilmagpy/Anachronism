@@ -3096,15 +3096,15 @@ monuments:
   english: Pons Fabricius
   type: bridge
   regio: 14
-  lat: 41.891198  # U8 island pass: the Wikipedia point of the remains (the former offset), moved 27 m (within its +-30 m) 11 m towards the Pons Cestius and 25 m upstream so that the island's 67 m fits between the two bridges' ends; # unverified
-  lon: 12.478031
+  lat: 41.891081  # F2: on its remains: the centre of the standing bridge as mapped (Pleiades 68481414, OpenStreetMap outline 66 x 7.5 m); tiber.gd fits the island to it
+  lon: 12.478237
   precision: exact
   location: from Forum Holitorium to Tiber Island
   built: {year: -62, certainty: certain, by: "L. Fabricius, curator viarum (CIL VI 1305; Dio 37.45.3)"}
   materials: [tufa, travertine]
   sources: ["CIL VI 1305", "Dio 37.45.3", "Platner-Ashby s.v. Pons Fabricius"]
   model: bridge_stone
-  bearing_deg: 38
+  bearing_deg: 41.9  # F2: the axis of the standing bridge (Pleiades 68481414 outline)
   footprint_m: {length: 62, width: 5.5}
   height_m: 10  # unverified
   geometry_source: "Platner-Ashby s.v. Pons Fabricius (62 m long, two semicircular arches of 24.25 and 24.50 m with a small one between, tufa and peperino faced with travertine; oriented somewhat north of northeast: Thayer note); width assumed"
@@ -3115,8 +3115,8 @@ monuments:
   english: Pons Cestius
   type: bridge
   regio: 14
-  lat: 41.890450  # U8 island pass: the Wikipedia point of the remains (the former offset), moved 27 m (within its +-30 m) 11 m towards the Pons Fabricius and 25 m upstream so that the island's 67 m fits between the two bridges' ends; # unverified
-  lon: 12.477104
+  lat: 41.890188  # F2: on its remains: the mapped bridge (Pleiades 211668069, OpenStreetMap, 82 m) is the 1892 rebuilding, lengthened on the Trastevere side when the river was embanked; the 48 m ancient bridge (Platner-Ashby) is drawn from its island end; tiber.gd fits the island to it
+  lon: 12.477352
   precision: exact
   location: from Tiber Island to Trastevere
   built: {year: -46, certainty: uncertain, by: "probably L. Cestius, praetor c. 46-44 (Platner-Ashby); some say 60s BC"}
@@ -3124,11 +3124,10 @@ monuments:
   pleiades: 211668069
 # ---------------------------------------------------------------- ROADS
   model: bridge_stone
-  bearing_deg: 252  # unverified
+  bearing_deg: 18.8  # F2: the axis of the standing bridge (Pleiades 211668069 outline)
   footprint_m: {length: 48, width: 8.2}
   height_m: 10
   geometry_source: "Platner-Ashby s.v. Pons Cestius (the Pons Gratiani on its site: 48 m long, 8.20 wide, central arch 23.65 m, side arches 5.80 m); the republican plan is inferred"
-  geometry_unverified: [bearing_deg]
 - id: via_appia
   latin: Via Appia
   english: Appian Way
@@ -3610,11 +3609,11 @@ monuments:
   english: "Portico of Catulus"
   type: portico
   regio: 10
-  lat: 41.890599
-  lon: 12.485336
+  lat: 41.890826
+  lon: 12.48594
   precision: rough
   location_confidence: low
-  location_source: "F2: Platner-Ashby s.v. Porticus Catuli (read): next to Catulus' house on the Palatine (Cic. Dom. 102, 114); placed beside the house"
+  location_source: "F2: Platner-Ashby s.v. Porticus Catuli (read): next to Catulus' house on the Palatine (Cic. Dom. 102, 114); placed against the north side of the house, towards the Forum (the side is a guess; on its west side it stood in the Horrea Agrippiana below)"
   location: "Palatine, next to the house of Catulus"
   built: {year: -101, certainty: certain, by: "Q. Lutatius Catulus after his victory over the Cimbri in 101 BC, on the site of the house of M. Fulvius Flaccus (Cic. Dom. 102; Val. Max. 6.3.1)"}
   sources: ["Platner-Ashby s.v. Porticus Catuli (read)", "Cic. Dom. 62, 102, 114", "Val. Max. 6.3.1"]

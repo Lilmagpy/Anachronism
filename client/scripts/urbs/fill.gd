@@ -67,6 +67,11 @@ var year := -300
 var _palette: Array[Color] = UrbsFillMeshes.plaster_palette()   ## plaster colours (stucco_* of UrbsMaterials)
 var height: Callable = func(_x: float, _z: float) -> float: return 10.0
 var footprints: Array = []           ## Rect2 in local metres: monuments and anything else to avoid
+## F2: the oriented footprints of the monuments standing (UrbsMonuments.oriented_footprints:
+## {c, ax, az, hx, hz}), plazas and precincts included; no lot may overlap one
+var obstacles: Array = []
+var _obst_grid := {}                 ## 30 m cell -> indices into obstacles
+const OBSTACLE_MARGIN := 1.0         ## metres kept clear round a monument's footprint
 var sync_chunks := false             ## true: build_chunk finishes the chunk before returning
 var count_stats := {}
 var reject_stats := {}               ## why lattice lots were refused (diagnostics)                ## lot counts of the street layer, for reports
@@ -119,6 +124,7 @@ func build(urbs: Node3D, new_year: int, new_height: Callable) -> void:
 			if maxf(b.size.x, b.size.z) > 120.0 and UrbsSite.platform_at(bc.x, bc.z) != "":
 				continue
 			footprints.append(Rect2(b.position.x, b.position.z, b.size.x, b.size.z))
+	obstacles = mon.oriented_footprints() if mon != null and mon.has_method("oriented_footprints") else []
 	prepare()
 
 
@@ -134,6 +140,7 @@ func prepare() -> void:
 	_chunk_cache = {}
 	_lot_grid = {}
 	_tree_cache = {}
+	_index_obstacles()
 	_stamp_mask()
 	_gen_street_lots()
 	if not _warm:
@@ -171,7 +178,8 @@ func _load() -> void:
 	if mons is Dictionary:
 		for m in mons["monuments"]:
 			if str(m["id"]) == "murus_servianus" and m.has("route"):
-				for ll in m["route"]:
+				# F2: the measured line is the one UrbsMonuments draws (see its _circuit)
+				for ll in m.get("route_measured", m["route"]):
 					_wall.append(UrbsGeo.to_local(float(ll[0]), float(ll[1])))
 
 
@@ -384,12 +392,99 @@ func _stamp_mask() -> void:
 	_site_mask.resize(MASK_N * MASK_N)
 	for f in footprints:
 		_mask_rect((f as Rect2).grow(2.0), M_FOOT)
+	for o in obstacles:   # F2: the monuments' own oriented footprints
+		_mask_obb(o, 0.0, M_FOOT)
 	if year >= -378:    # the Servian wall (Livy 6.32.1: begun 378 BC)
-		_mask_line(_wall, 6.0, 8.0, M_FOOT)
+		_mask_line(_wall, 3.0, 8.0, M_FOOT)
 	for st in _streets.streets:
 		var pts: PackedVector2Array = st["pts"]
 		_mask_line(pts, 2.2, float(st["hw"]) + KERB + FOOTPATH, M_WALK)
 		_mask_line(pts, 2.2, float(st["hw"]) + 0.2, M_STREET)
+
+
+# F2: the monuments' oriented footprints -------------------------------------------------------
+
+## Mark every mask cell whose centre lies in footprint `o` grown by `grow` metres.
+func _mask_obb(o: Dictionary, grow: float, bit: int) -> void:
+	var c: Vector2 = o.c
+	var ax: Vector2 = o.ax
+	var az: Vector2 = o.az
+	var hx := float(o.hx) + grow
+	var hz := float(o.hz) + grow
+	var ext := Vector2(absf(ax.x) * hx + absf(az.x) * hz, absf(ax.y) * hx + absf(az.y) * hz)
+	var x0 := int((c.x - ext.x + MASK_HALF) / MASK_RES)
+	var x1 := int((c.x + ext.x + MASK_HALF) / MASK_RES)
+	var z0 := int((c.y - ext.y + MASK_HALF) / MASK_RES)
+	var z1 := int((c.y + ext.y + MASK_HALF) / MASK_RES)
+	# a cell counts if any part of it may be inside: test its centre against the box grown by half a cell
+	var pad := MASK_RES * 0.71
+	for iz in range(maxi(z0, 0), mini(z1, MASK_N - 1) + 1):
+		var pz := (float(iz) + 0.5) * MASK_RES - MASK_HALF
+		for ix in range(maxi(x0, 0), mini(x1, MASK_N - 1) + 1):
+			var d := Vector2((float(ix) + 0.5) * MASK_RES - MASK_HALF, pz) - c
+			if absf(d.dot(ax)) <= hx + pad and absf(d.dot(az)) <= hz + pad:
+				_mask[iz * MASK_N + ix] |= bit
+
+
+func _index_obstacles() -> void:
+	_obst_grid = {}
+	for i in obstacles.size():
+		var o: Dictionary = obstacles[i]
+		var c: Vector2 = o.c
+		var r := Vector2(float(o.hx), float(o.hz)).length() + OBSTACLE_MARGIN
+		for gz in range(floori((c.y - r) / 30.0), floori((c.y + r) / 30.0) + 1):
+			for gx in range(floori((c.x - r) / 30.0), floori((c.x + r) / 30.0) + 1):
+				var k := Vector2i(gx, gz)
+				if not _obst_grid.has(k):
+					_obst_grid[k] = []
+				_obst_grid[k].append(i)
+
+
+## True if `lot` overlaps a monument's footprint (exact, separating axes; OBSTACLE_MARGIN kept).
+func _hits_obstacle(lot: Dictionary) -> bool:
+	if obstacles.is_empty():
+		return false
+	var c: Vector2 = lot["c"]
+	var la := _axes(lot)
+	var lhx := float(lot["hx"])
+	var lhz := float(lot["hz"])
+	var reach := Vector2(lhx, lhz).length()
+	var seen := {}
+	for gz in range(floori((c.y - reach) / 30.0), floori((c.y + reach) / 30.0) + 1):
+		for gx in range(floori((c.x - reach) / 30.0), floori((c.x + reach) / 30.0) + 1):
+			for i in _obst_grid.get(Vector2i(gx, gz), []):
+				if seen.has(i):
+					continue
+				seen[i] = true
+				var o: Dictionary = obstacles[i]
+				var ohx := float(o.hx) + OBSTACLE_MARGIN
+				var ohz := float(o.hz) + OBSTACLE_MARGIN
+				var dc: Vector2 = (o.c as Vector2) - c
+				var apart := false
+				for axis: Vector2 in [la[0], la[1], o.ax, o.az]:
+					var ra := absf(axis.dot(la[0])) * lhx + absf(axis.dot(la[1])) * lhz
+					var rb := absf(axis.dot(o.ax)) * ohx + absf(axis.dot(o.az)) * ohz
+					if absf(dc.dot(axis)) >= ra + rb:
+						apart = true
+						break
+				if not apart:
+					return true
+	return false
+
+
+## True if `lot` reaches into the carriageway of its nearest street (a lattice lot's corners
+## can straddle a narrow street between the mask samples).
+func _on_street(lot: Dictionary, tolerance := 0.25) -> bool:
+	var ns := _streets.nearest_street(lot["c"])
+	if ns.is_empty() or str(ns.get("kind", "")) == "stairs":
+		return false
+	var la := _axes(lot)
+	var nrm: Vector2 = ns["normal"]
+	var reach := absf(nrm.dot(la[0])) * float(lot["hx"]) + absf(nrm.dot(la[1])) * float(lot["hz"])
+	return float(ns["distance"]) - reach - float(ns["half_width"]) < -tolerance
+
+
+# --- end F2 ---------------------------------------------------------------------------------------
 
 
 func _hazard(p: Vector2) -> int:
@@ -881,6 +976,10 @@ func _add_street_lot(lot: Dictionary, own: String, margin: float, force_ok := fa
 	for p in pts:
 		if _hazard(p) & (M_FOOT | M_WATER):
 			return false
+	if _hits_obstacle(lot):   # F2
+		return false
+	if str(lot["kind"]) not in ["furn", "prop"] and _on_street(lot, 0.5):   # F2: into another street
+		return false
 	if not force_ok or str(lot["kind"]) != "furn":
 		var near := _streets.nearest_street(c)
 		if not near.is_empty() and near["distance"] < maxf(lot["hx"], lot["hz"]) * 1.42 + 14.0:
@@ -1155,6 +1254,9 @@ func _lattice_verdict(lot: Dictionary, rk: Vector2i, neigh: Array) -> int:
 			var rk2 := "hazard_%d" % hz
 			reject_stats[rk2] = int(reject_stats.get(rk2, 0)) + 1
 			return 1
+	if _hits_obstacle(lot) or _on_street(lot):   # F2: exact tests the 3 m mask can miss
+		reject_stats["monument_or_street"] = int(reject_stats.get("monument_or_street", 0)) + 1
+		return 1
 	if not _ground_ok(lot, pts):
 		reject_stats["slope"] = int(reject_stats.get("slope", 0)) + 1
 		return 1
