@@ -2794,3 +2794,22 @@ its history. The allied share is Polybius' own; the Social War is the test of th
 so it is a rule, not a chapter. Cisalpine Gaul waits for its own year (81) because it is not
 overseas; every other provincia may come early if the player conquers early, since conquest in
 the engine is annexation. Unread passages are marked `unverified` in the YAML for the R6 pass.
+
+## D-301 The city is where the Republic is played — DELEGATED (2026-11-20)
+
+**Decision.** The owner's priority is that everything in Rome is present and correctly placed,
+and that the gameplay he asked for works, ahead of graphical polish. Two consequences. (1) An
+accuracy audit, as re-runnable code, checks the city against Pleiades and Platner-Ashby for
+completeness, position, orientation, size, placement in the built scene and dates, and its
+findings are fixed (`docs/plans/briefs/f2_accuracy.md`). (2) Once the Roman state and the
+religion, economy and army passes are merged, the city becomes the interface: the Senate is
+played at the Curia, speeches at the Rostra, elections at the Saepta, the treasury at Saturn,
+vows and sacrifices at the temples, games and fights in the Circus and the arenas, the levy and
+triumphs on the Campus Martius, ideas at the workshops, with the moments (U9) played where they
+happen (`docs/plans/briefs/f2_play.md`).
+
+**Why.** The owner (2026-11-20): "I care that everything that is meant to be there is there and
+it is in the right place ... and you've also fallen short on implementing the gameplay that I
+want you to create." His original request (2026-10-29) was a city whose buildings you enter and
+interact with, not only look at.
+
