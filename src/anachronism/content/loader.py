@@ -58,6 +58,8 @@ from anachronism.content.schema import (
     Terrain,
     Unit,
 )
+from anachronism.content.schema.rome_society import RomeSociety  # F1 rome_society (R4)
+from anachronism.content.schema.rome_society import bundle as bundle_rome_society
 
 PACKS_DIR = Path(__file__).parent / "packs"
 MANIFEST = "pack.yaml"
@@ -103,6 +105,7 @@ class Content:
     """The city of Rome (U7), read from the dataset the rome pack points at."""
     city_timeline: Mapping[str, CityTimeline] = field(default_factory=dict)
     """Chance events (plague, flood, bumper harvests...)."""
+    rome_society: RomeSociety = field(default_factory=RomeSociety)  # F1 rome_society (R4)
     # F1 italy: allies, colonies and provinces (R3)
     italy_rules: ItalyRules = field(default_factory=ItalyRules)
     treaties: Mapping[str, AllyTreaty] = field(default_factory=dict)
@@ -208,6 +211,7 @@ def load_content(pack_ids: Sequence[str] | None = None, root: Path = PACKS_DIR) 
         battles=registry.battles,
         monuments=registry.monuments,
         city_timeline=registry.city_timeline,
+        rome_society=bundle_rome_society(registry),  # F1 rome_society (R4)
         # F1 italy
         italy_rules=registry.italy_rules or ItalyRules(),
         treaties=registry.treaties,
@@ -311,9 +315,11 @@ def _parse_file(
         # The Empire file also carries `events_on_republican` (later fires and rebuilds of
         # the Republic's buildings), which the client reads and the engine does not need.
         raw = {key: value for key, value in raw.items() if key != "events_on_republican"}
-        if list(raw) != ["monuments"]:
+        if list(raw) not in (["monuments"], ["fasti"]):  # F1 republic: data/rome/fasti.yaml
             issues.append(
-                ContentIssue(relative, "", f"expected only 'monuments'; found {list(raw)}")
+                ContentIssue(
+                    relative, "", f"expected 'monuments' or 'fasti' alone; found {list(raw)}"
+                )
             )
             return None
     elif version != CURRENT_SCHEMA_VERSION:

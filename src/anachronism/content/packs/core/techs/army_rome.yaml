@@ -39,7 +39,7 @@ techs:
     effects: [{type: military_strength, bp: 1500}]
     flavour: "Three lines, each with gaps, each able to relieve the last. The army bends and does not break."
     history: "Livy dates the break-up of the phalanx into maniples and the three lines to the Latin War (340 BC); the full system of Polybius' account is that of about 220 BC. Some modern scholars date the change later, to the Samnite wars."
-    sources: ["Livy 8.8", "Polybius 6.19-26", "Polybius 18.28-32", "Livy 9.19.7-8"]
+    sources: ["Livy 8.8 (read)", "Polybius 6.19-26 (read: 6.19.2 service terms and the 400-drachma threshold; 6.21.9 the lines)", "Polybius 18.28-32", "Livy 9.19.7-8"]
     confidence: medium
 
   - id: gladius_hispaniensis
@@ -66,7 +66,7 @@ techs:
     flavour: "One kind of soldier, one kind of drill, ten cohorts to a legion, and a general to be loyal to."
     history: "Gaius Marius enrolled men without property as consul in 107 BC (Sallust). The cohort as the legion's main unit appears in Caesar's day; whether Marius or earlier generals made it so, and the 'Marian reform' as one act, is debated. Most modern scholars see a slow change."
     sources:
-      - "Sallust, Jugurtha 86" # unverified
+      - "Sallust, Jugurtha 86.2 (read: enrolled not from the classes but capite censi for the most part)"
       - "Plutarch, Marius 13 (Marius trains his army; the 'Marian mules')"
       - "Caesar, Gallic War, passim (cohorts)" # unverified
     confidence: low

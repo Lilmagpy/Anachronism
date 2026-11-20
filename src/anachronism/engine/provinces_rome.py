@@ -91,6 +91,12 @@ def _alive(state: GameState, person_id: str) -> bool:
     return person is not None and person.alive
 
 
+PROROGUE_MAX_YEARS = 3
+"""F1 republic: a command was prorogued for a year or two, rarely more (Livy 8.23.12 for
+the first, Publilius Philo in 326; the Sicilian and Spanish governors of Livy's later books
+are prorogued a year at a time), so after three years a former magistrate is sent instead."""
+
+
 def assign_governors(
     state: GameState, rng: GameRng | None, events: EventLog | None, year: int
 ) -> None:
@@ -113,7 +119,12 @@ def assign_governors(
         if fresh:
             chosen = fresh[0]
             _seat(provincia, chosen.person, chosen.name, definition.office, year, taken)
-        elif old and _alive(state, old) and old not in taken:
+        elif (
+            old
+            and _alive(state, old)
+            and old not in taken
+            and year - provincia.governor_since < PROROGUE_MAX_YEARS  # F1 republic
+        ):
             provincia.office = f"pro{definition.office}"
             taken.add(old)
         else:

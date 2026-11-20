@@ -45,7 +45,8 @@ class Person(_Mutable):
     protected_until: int | None = None
     """In a chronicle, no natural death before this year (his last recorded office)."""
     history_died: int | None = None
-    """The year he really died, when known (a chronicle keeps to it)."""
+    """The year he really died, when known (a chronicle keeps to it; if he held office that
+    year he dies after taking it)."""
 
 
 class Family(_Mutable):
@@ -100,6 +101,8 @@ class Ballot(_Mutable):
     year: int
     issue: str
     proposal: str
+    label: str = ""
+    """The proposal as the player saw it ("Declare war on Carthage")."""
     yes_bp: int
     no_bp: int
     outcome: str

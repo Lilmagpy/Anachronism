@@ -10,6 +10,12 @@ weighted by the families' standing; here are the proposals, the tribune and what
 Every action here is an ordinary logged action, so a replay applies it again. The only
 randomness is the tribune's chance, drawn from the state's ``GameRng`` and only when it is
 above zero. Numbers are in ``republic_rules.senate`` (content), none are hard-coded.
+
+F1: a war can only be put to the Senate against a state Rome has met (``has_met``: a
+neighbour, a tie or grudge, a state at war with an ally, or a scripted casus belli), never
+Parthia in 509 BC; and the forecast is honest about the tribune (``Interposition.why`` says
+why none will act: no tribune in office, the law not yet passed, the losing side the less
+popular one).
 """
 
 from __future__ import annotations
@@ -17,6 +23,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from anachronism.content.schema import Issue, RelationStatus, Stage
+from anachronism.content.schema.italy import AllyStatus
+from anachronism.engine import allies
 from anachronism.engine.actions import (
     BackCandidate,
     DeclareWar,
@@ -31,18 +39,20 @@ from anachronism.engine.projects import begin_project
 from anachronism.engine.republic import (
     Vote,
     back_candidate,
-    family_weight,
     persuade,
     senate_vote,
+    senate_weights,
+    year_label,
 )
 from anachronism.engine.republic_state import Ballot, RepublicState
-from anachronism.engine.rivals import alive, status
+from anachronism.engine.rivals import alive, at_war, contact_pairs, pending_scripts, status
 from anachronism.engine.rng import GameRng
 from anachronism.engine.state import GameState
 from anachronism.engine.tech import describe_blockers, feasibility, is_adopted
 
-KINDS = ("war_with", "peace_with", "law", "fund", "colony")
+KINDS = ("war_with", "peace_with", "law", "fund", "colony", "rights")
 """The kinds of proposal: the part of ``proposal`` before the colon."""
+LADDER = (AllyStatus.ALLY, AllyStatus.LATIN, AllyStatus.SINE_SUFFRAGIO, AllyStatus.CITIZEN)
 FUND_LIST = 12
 COLONY_LIST = 10
 BALLOTS_KEPT = 20
@@ -71,6 +81,9 @@ class Interposition:
     chance_bp: int
     tribune: str = ""
     """The name of the tribune."""
+    why: str = ""
+    """Why no tribune acts, when none does: no tribune in office, the law not yet passed, or
+    the losing side the less popular one. The forecast says so honestly."""
 
 
 def _rep(state: GameState) -> RepublicState:
@@ -89,6 +102,36 @@ def split_proposal(state: GameState, proposal: str) -> tuple[str, str]:
     if not arg and any(law.id == kind for law in state.world.republic_rules.senate.laws):
         return "law", kind
     return kind, arg
+
+
+def has_met(state: GameState, me: str, other: str) -> bool:
+    """Whether Rome has met a state well enough for the Senate to debate war on it.
+
+    A neighbour by land or across a shared sea; a state with which there is already a tie or a
+    grudge (a treaty, trade, a past war); a state at war with an ally of Rome; or a state a
+    script of the scenario names as Rome's target (a casus belli history knows). Parthia in
+    509 BC is none of these.
+    """
+    owners = {pid: state.provinces[pid].owner for pid in sorted(state.provinces)}
+    if (min(me, other), max(me, other)) in contact_pairs(state.world, owners):
+        return True
+    rel = state.relations.get(f"{min(me, other)}|{max(me, other)}")
+    if rel is not None and (
+        rel.status is not RelationStatus.NEUTRAL or any(rel.grievance.values()) or rel.losses
+    ):
+        return True
+    allies = [
+        cid
+        for cid in sorted(state.civs)
+        if cid != me and status(state, me, cid) in (RelationStatus.ALLIED, RelationStatus.TRIBUTARY)
+    ]
+    if any(other in at_war(state, ally) for ally in allies):
+        return True
+    for script in pending_scripts(state, me):
+        after = script.preconditions.after_year
+        if script.target == other and (after is None or after <= state.year):
+            return True
+    return False
 
 
 def resolve(state: GameState, proposal: str) -> tuple[Proposal | None, str]:
@@ -112,6 +155,8 @@ def resolve(state: GameState, proposal: str) -> tuple[Proposal | None, str]:
         if kind == "war_with":
             if current is RelationStatus.WAR:
                 return None, f"already at war with {other.name}"
+            if not has_met(state, me, arg):
+                return None, f"Rome has no quarrel with {other.name}, a people it has barely met"
             return Proposal(Issue.WAR, f"war_with:{arg}", f"Declare war on {other.name}", cost), ""
         if current is not RelationStatus.WAR:
             return None, f"not at war with {other.name}"
@@ -139,6 +184,8 @@ def resolve(state: GameState, proposal: str) -> tuple[Proposal | None, str]:
             return None, f"{node.name} cannot be begun: {describe_blockers(state, result)}"
         issue = Issue.BUILDING if node.builds else Issue.IDEA
         return Proposal(issue, f"fund:{arg}", f"Fund {node.name}", cost), ""
+    if kind == "rights":
+        return _resolve_rights(state, arg, cost)
     province = state.provinces.get(arg)
     if province is None:
         return None, f"unknown province {arg!r}"
@@ -150,12 +197,37 @@ def resolve(state: GameState, proposal: str) -> tuple[Proposal | None, str]:
     return Proposal(Issue.COLONY, f"colony:{arg}", label, cost), ""
 
 
+def next_right(state: GameState, civ_id: str) -> AllyStatus | None:
+    """The next step up the ladder of rights for an ally, or ``None`` (no treaty, or at the top)."""
+    treaty = allies.italy_of(state).treaties.get(civ_id)
+    if treaty is None or treaty.revolted or treaty.status is AllyStatus.CITIZEN:
+        return None
+    return LADDER[treaty.status.rank + 1]
+
+
+def _resolve_rights(state: GameState, civ_id: str, cost: int) -> tuple[Proposal | None, str]:
+    """``rights:<civ>``: raise an ally one step up the ladder of rights.
+
+    Ally -> Latin right -> citizenship without the vote -> citizenship, through
+    ``allies.grant_status``; a question of ``citizenship`` for the Senate.
+    """
+    other = state.civs.get(civ_id)
+    if other is None or civ_id == state.player_civ:
+        return None, f"unknown state {civ_id!r}"
+    new = next_right(state, civ_id)
+    if new is None:
+        return None, f"{other.name} is not an ally Rome can raise"
+    label = f"Grant {other.name} {allies.STATUS_NAMES[new]}"
+    return Proposal(Issue.CITIZENSHIP, f"rights:{civ_id}", label, cost), ""
+
+
 def available(state: GameState) -> list[Proposal]:
     """What the player can put to the Senate now (the view lists these), in a stable order."""
     rules = state.world.republic_rules.senate
     civ = state.civs[state.player_civ]
     wanted = [f"{kind}:{cid}" for kind in ("war_with", "peace_with") for cid in sorted(state.civs)]
     wanted += [f"law:{law.id}" for law in sorted(rules.laws, key=lambda x: x.id)]
+    wanted += [f"rights:{cid}" for cid in sorted(allies.italy_of(state).treaties)]
     funds = [
         nid
         for nid in sorted(state.tech_nodes)
@@ -184,11 +256,11 @@ def available(state: GameState) -> list[Proposal]:
 
 def _side_lean(state: GameState, vote: Vote, sign: int) -> int | None:
     """How popular (``popular_lean_bp``, weighted) the families on one side of a vote are."""
-    rep = _rep(state)
+    weights = senate_weights(state)
     total = weight = 0
     for fid in sorted(vote.by_family):
         if vote.by_family[fid] * sign > 0:
-            w = family_weight(rep.families[fid])
+            w = weights[fid]
             total += w * state.world.gentes[fid].popular_lean_bp
             weight += w
     return total // weight if weight else None
@@ -208,18 +280,23 @@ def interposition(state: GameState, vote: Vote) -> Interposition:
         (m for m in rep.magistrates if m.office == rules.veto_office), key=lambda m: m.person
     )
     if not tribunes:
-        return Interposition("", 0)
+        return Interposition("", 0, why="no tribune of the plebs is in office")
     yes, no = _side_lean(state, vote, 1), _side_lean(state, vote, -1)
     if yes is None or no is None:
-        return Interposition("", 0)
+        return Interposition("", 0, why="the house is of one mind")
     if vote.passes:
         kind, edge, from_year = "veto", no - yes, rules.veto_from_year
     else:
         kind, edge, from_year = "force", yes - no, rules.force_from_year
-    if state.year < from_year or edge <= 0:
-        return Interposition("", 0)
+    if state.year < from_year:
+        what = "block the Senate" if kind == "veto" else "carry a matter to the people"
+        return Interposition("", 0, why=f"a tribune cannot yet {what} ({year_label(from_year)})")
+    if edge <= 0:
+        return Interposition("", 0, why="the losing side is not the more popular one")
     chance = min(rules.veto_max_bp, edge * rules.veto_scale_bp // BP)
-    return Interposition(kind, chance, tribunes[0].name) if chance > 0 else Interposition("", 0)
+    if chance <= 0:
+        return Interposition("", 0, why="the two sides are equally popular")
+    return Interposition(kind, chance, tribunes[0].name)
 
 
 def _punish(state: GameState, vote: Vote, issue: Issue, shift: int, *, lose_standing: bool) -> None:
@@ -252,6 +329,13 @@ def _enact(state: GameState, found: Proposal) -> str:
     if kind == "colony":
         rep.colonies[arg] = state.year
         return f"A colony is resolved in {_place(state, arg)}."
+    if kind == "rights":
+        new = next_right(state, arg)
+        assert new is not None
+        events = EventLog(turn=state.turn, year=state.year)
+        allies.grant_status(state, arg, new, state.year, events)
+        state.events.extend(events.items)
+        return f"{state.civs[arg].name} receives {allies.STATUS_NAMES[new]}."
     return begin_project(state, me, arg)[1]
 
 
@@ -308,6 +392,7 @@ def propose_to_senate(state: GameState, action: ProposeToSenate) -> tuple[bool, 
             year=state.year,
             issue=issue.value,
             proposal=found.proposal,
+            label=found.label,
             yes_bp=vote.yes_bp,
             no_bp=vote.no_bp,
             outcome=outcome,

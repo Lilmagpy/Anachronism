@@ -29,6 +29,16 @@ from anachronism.content.schema.republic import (
     Magistracy,
     RepublicRules,
 )
+from anachronism.content.schema.rome_society import (  # F1 rome_society: R4 content kinds
+    Coinage,
+    Cult,
+    Grain,
+    Land,
+    Priesthood,
+    Prodigy,
+    Recruitment,
+    Rites,
+)
 from anachronism.content.schema.rules import Rules
 from anachronism.content.schema.scenario import Scenario
 from anachronism.content.schema.ships import Ship
@@ -55,7 +65,7 @@ class PackManifest(Frozen):
     depends_on: tuple[Identifier, ...] = ()
     external: tuple[str, ...] = ()
     """Glob patterns (relative to the pack folder) for dataset files outside the pack that hold
-    one list kind keyed by name and no ``schema_version``: ``monuments`` (U7)."""
+    one list kind keyed by name and no ``schema_version``: ``monuments`` (U7) or ``fasti`` (F1)."""
 
 
 SINGLE_KINDS: dict[str, TypeAdapter[Any]] = {
@@ -65,6 +75,12 @@ SINGLE_KINDS: dict[str, TypeAdapter[Any]] = {
     "italy_rules": TypeAdapter(ItalyRules),  # F1 italy
     "eras": TypeAdapter(tuple[Era, ...]),
     "effect_caps": TypeAdapter(dict[EffectType, dict[Identifier, int]]),
+    # F1 rome_society: religion's numbers, land, grain, coinage and the legion's eras (R4)
+    "rites": TypeAdapter(Rites),
+    "land": TypeAdapter(Land),
+    "grain": TypeAdapter(Grain),
+    "coinage": TypeAdapter(Coinage),
+    "recruitment": TypeAdapter(Recruitment),
 }
 """Kinds defined once, as a whole."""
 
@@ -96,6 +112,10 @@ LIST_KINDS: dict[str, type[Frozen]] = {
     "battles": Battle,
     "monuments": Monument,
     "city_timeline": CityTimeline,
+    # F1 rome_society: priesthoods, prodigies and cults (R4)
+    "priesthoods": Priesthood,
+    "prodigies": Prodigy,
+    "cults": Cult,
     # F1 italy: allies, colonies and provinces (R3)
     "treaties": AllyTreaty,
     "colonies": ColonyFoundation,

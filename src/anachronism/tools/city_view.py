@@ -35,12 +35,20 @@ def city_view(state: GameState) -> dict[str, Any] | None:
                 "ref": e.ref,
                 "monument": e.monument,
                 "person": e.person,
+                "person_name": _person_name(state, e.person),  # F1 republic: munus honourees
                 "value": e.value,
                 "other": e.other,
             }
             for e in city.events
         ],
     }
+
+
+def _person_name(state: GameState, person_id: str) -> str:
+    """The name of a person an event names, dead or alive (F1 republic)."""
+    rep = state.republic
+    person = rep.people.get(person_id) if rep is not None and person_id else None
+    return person.name if person is not None else ""
 
 
 def _anachronism(state: GameState, work: dict[str, Any]) -> dict[str, Any]:
