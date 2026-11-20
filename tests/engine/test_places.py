@@ -13,8 +13,10 @@ from anachronism.engine import city_acts
 from anachronism.engine.actions import (
     Action,
     ChooseSite,
+    ConsultBooks,
     Contio,
     DeclareWar,
+    Expiate,
     GiveGames,
     RaiseArmy,
     StartProject,
@@ -23,7 +25,7 @@ from anachronism.engine.actions import (
 from anachronism.engine.city import senate_house, status_map
 from anachronism.engine.events import EventLog
 from anachronism.engine.game import apply_action, end_turn, new_game, replay
-from anachronism.engine.republic import kill_person, senate_vote
+from anachronism.engine.republic import kill_person, present_from, senate_vote
 from anachronism.engine.rivals import declare_war
 from anachronism.engine.save import dumps, loads
 from anachronism.engine.state import GameState, Project, TechState
@@ -140,6 +142,9 @@ def test_every_start_has_places_to_the_contract(content: Content, scenario: str)
             assert entry["watch"] in WATCHES
             assert set(entry["cost"]) == {"influence", "wealth"}
             assert entry["enabled"] == (entry["why"] == "")
+            if entry["action"]["kind"] == "idea":  # the client's idea box, not an engine action
+                assert entry["action"]["context"] in ("workshop", "harbour")
+                continue
             ACTION.validate_python({**entry["action"], "civ": state.player_civ})
         ids = [a["id"] for a in place["actions"]]
         assert len(ids) == len(set(ids)), mid
@@ -152,7 +157,7 @@ def test_every_enabled_action_of_264_is_accepted(content: Content) -> None:
     tried = 0
     for place in places.values():
         for entry in place["actions"]:
-            if not entry["enabled"]:
+            if not entry["enabled"] or entry["action"]["kind"] == "idea":
                 continue
             action = ACTION.validate_python({**entry["action"], "civ": state.player_civ})
             _, ok, message = act(state, action)
@@ -201,12 +206,12 @@ def test_the_senate_meets_in_the_house_of_the_year(
     ("year", "rostra", "tribes", "centuries", "levy", "treasury"),
     [
         (-440, "comitium", "comitium", "campus_martius", "campus_martius", "aedes_saturni"),
-        (-264, "rostra_republic", "comitium", "campus_martius", "villa_publica", "aedes_saturni"),
+        (-264, "rostra_republic", "comitium", "villa_publica", "villa_publica", "aedes_saturni"),
         (
             -145,
             "rostra_republic",
             "forum_romanum",
-            "campus_martius",
+            "villa_publica",
             "villa_publica",
             "aedes_saturni",
         ),
@@ -214,7 +219,7 @@ def test_the_senate_meets_in_the_house_of_the_year(
             -44,
             "rostra_augusti",
             "forum_romanum",
-            "campus_martius",
+            "villa_publica",
             "villa_publica",
             "aedes_saturni",
         ),
@@ -349,7 +354,7 @@ def test_a_contio_needs_a_magistrate_and_influence(content: Content) -> None:
 def _candidate(state: GameState, office: str = "consul") -> str:
     places = places_view(state)
     assert places is not None
-    for entry in places["campus_martius"]["actions"]:
+    for entry in places["villa_publica"]["actions"]:
         if entry["action"]["kind"] == "back" and entry["action"]["office"] == office:
             return str(entry["action"]["person"])
     raise AssertionError("no candidate offered")
@@ -375,15 +380,15 @@ def test_a_contio_for_a_candidate_weighs_in_the_election(content: Content) -> No
     assert ended.city is not None
     elections = [e for e in ended.city.events if e.kind == "election"]
     assert [e.person for e in elections] == [man]
-    assert elections[0].monument == "campus_martius"
+    assert elections[0].monument == "villa_publica"
     assert elections[0].year == state.year + 1
-    assert elections[0].value in (0, 1)
+    assert elections[0].value + elections[0].other == 193  # the centuries
     holders = [
         m.person
         for m in ended.republic.record + ended.republic.magistrates  # type: ignore[union-attr]
         if m.office == "consul" and m.year == state.year + 1
     ]
-    assert elections[0].value == int(man in holders)
+    assert (elections[0].value > elections[0].other) == (man in holders)
 
 
 # ---------------------------------------------------------------- vow
@@ -563,6 +568,7 @@ def test_the_players_levy_plays_on_the_campus(content: Content) -> None:
     (event,) = turn_events(new, "levy")
     assert event.monument == "villa_publica"  # type: ignore[attr-defined]
     assert event.value == entry["forecast"]["men"]  # type: ignore[attr-defined]
+    assert event.other == entry["forecast"]["legions"] >= 1  # type: ignore[attr-defined]
     assert event.ref in new.armies  # type: ignore[attr-defined]
 
 
@@ -627,3 +633,58 @@ def test_the_places_actions_are_deterministic(content: Content) -> None:
     for seed in SEEDS[:2]:
         assert dumps(_play(content, seed)[1]) == first[seed]
     assert first[1] != first[2]
+
+
+# ------------------------------------------------------ the rites, the chair, the idea box
+
+
+def test_prodigies_are_expiated_and_the_books_consulted_at_the_capitol(content: Content) -> None:
+    state = fresh(content)
+    assert state.rome_society is not None
+    places = places_view(state)
+    assert places is not None
+    capitol = {a["id"]: a for a in places["aedes_iovis_capitolini"]["actions"]}
+    assert not capitol["expiate"]["enabled"]  # nothing awaits expiation
+    assert capitol["sibyl"]["enabled"]
+    state.rome_society.religion.unexpiated = 3
+    unrest = state.civs["rome"].stats.unrest_bp
+    new, ok, message = act(state, Expiate(civ="rome"))
+    assert ok, message
+    assert new.rome_society is not None
+    assert new.rome_society.religion.unexpiated == 0
+    assert new.civs["rome"].stats.unrest_bp <= unrest
+    (event,) = [e for e in turn_events(new, "sacrifice") if e.ref == "expiation"]  # type: ignore[attr-defined]
+    assert event.monument == "aedes_iovis_capitolini"  # type: ignore[attr-defined]
+    new, ok, message = act(new, ConsultBooks(civ="rome"))
+    assert ok, message
+    assert [e.ref for e in turn_events(new, "sacrifice")][-1] == "lectisternium"  # type: ignore[attr-defined]
+    _, ok, why = act(new, ConsultBooks(civ="rome"))
+    assert not ok and "this year" in why  # noqa: PT018
+
+
+def test_the_senior_consul_presides_and_tribunes_come_of_attested_families(
+    content: Content,
+) -> None:
+    state = new_game(content, "rome_264", seed=1)
+    assert state.republic is not None
+    places = places_view(state)
+    assert places is not None
+    info = {i["label"]: i["value"] for i in places["curia_hostilia"]["info"]}
+    assert info["Presiding"] == "Appius Claudius Caudex, consul"
+    floors = present_from(state)
+    for seed in SEEDS:
+        game = new_game(content, "rome_264", seed=seed)
+        assert game.republic is not None
+        for man in game.republic.people.values():
+            assert man.born >= floors.get(man.gens, man.born) or man.historical, man.name
+        assert all(p.gens != "calvisii" for p in game.republic.people.values())
+
+
+def test_workshops_and_harbours_open_the_idea_box(content: Content) -> None:
+    places = places_view(new_game(content, "rome_264", seed=1))
+    assert places is not None
+    boxes = [
+        a["action"] for p in places.values() for a in p["actions"] if a["action"]["kind"] == "idea"
+    ]
+    assert {"kind": "idea", "context": "harbour"} in boxes
+    assert {"kind": "idea", "context": "workshop"} in boxes

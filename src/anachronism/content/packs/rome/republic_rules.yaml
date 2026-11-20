@@ -9,6 +9,10 @@ republic_rules:
   # Maior, is the plea of the old; the Fasti seat whom they list regardless). A man the Fasti
   # name only by name is the earlier namesake while he would be under namesake_max_age.
   max_office_age: 70
+  # F2: no generated man of a family before its time: a family has sons only from 60 years
+  # (two generations) before its first attestation (its earliest branch in the Fasti, its first
+  # Fasti entry or its earliest modelled person), so 264 BC has no Calvisius (first consul 39).
+  attested_margin_years: 60
   namesake_max_age: 72
   # Births: the base chance is for a family of dignitas 1000; scaled by dignitas, between a
   # quarter and two and a half times. With 160 families this gives Rome roughly fifteen sons a
@@ -126,15 +130,33 @@ republic_rules:
           name: "The assembly of the centuries"
           offices: [consul, consular_tribune, praetor, censor]
           sources: ["Aulus Gellius 13.15.4 (Messalla: the greater magistrates are elected by the centuries, the lesser by the tribes; unverified: passage not re-read)", "Livy 1.43 (the Servian centuries)"]
+          unit_name: centuries
+          units:
+            - {count: 193, source: "Livy 1.43.1-11; Dion. Hal. 4.16-21 (193 centuries; voting stopped once a majority was reached: Livy 1.43.11; unverified: passage not re-read)"}
+          # The centuries vote in the wooden pens (ovile, saepta) on the Campus, beside the Villa
+          # Publica, where candidates and voters wait during the comitia (Varro sets De re rustica
+          # 3 there on an election day). The Campus itself is ground, not a building the city can
+          # enter, so from 435 the Villa Publica stands for the voting place.
           places:
-            - {monument: campus_martius, name: "The Saepta (ovile) on the Campus Martius", to_year: -27, blurb: "The centuries vote in the wooden pens on the Campus, outside the sacred boundary.",
-               sources: ["Livy 26.22.11 (the centuries called into the ovile, 211; unverified: passage not re-read)", "Cicero, Ad Atticum 4.16.8 (Caesar's marble Saepta planned in 54 to replace them; unverified: passage not re-read)"]}
+            - {monument: campus_martius, name: "The Saepta (ovile) on the Campus Martius", to_year: -436, blurb: "The centuries vote in the wooden pens on the Campus, outside the sacred boundary.",
+               sources: ["Livy 26.22.11 (the centuries called into the ovile, 211; unverified: passage not re-read)"]}
+            - {monument: villa_publica, name: "The Villa Publica, beside the Saepta", from_year: -435, to_year: -27, blurb: "Candidates and voters wait at the Villa Publica while the centuries vote in the pens beside it.",
+               sources: ["Varro, De re rustica 3.2.1-2 (unverified: passage not re-read)", "Livy 26.22.11 (unverified: passage not re-read)", "Cicero, Ad Atticum 4.16.8 (Caesar's marble Saepta planned in 54; unverified: passage not re-read)"]}
             - {monument: saepta_iulia, name: "Saepta Iulia", from_year: -26, blurb: "The marble voting enclosure Caesar began and Agrippa dedicated.",
                sources: ["Dio 53.23.1 (unverified: passage not re-read)", "Platner-Ashby s.v. Saepta Iulia"]}
         - id: tributa
           name: "The assembly of the tribes"
           offices: [tribune_plebs, aedile_plebeian, aedile_curule, quaestor]
           sources: ["Aulus Gellius 13.15.4 (unverified: passage not re-read)"]
+          unit_name: tribes
+          units:
+            - {count: 21, to_year: -388, source: "Livy 2.21.7 (21 tribes, 495; unverified: passage not re-read)"}
+            - {count: 25, from_year: -387, to_year: -359, source: "Livy 6.5.8 (unverified: passage not re-read)"}
+            - {count: 27, from_year: -358, to_year: -333, source: "Livy 7.15.11 (unverified: passage not re-read)"}
+            - {count: 29, from_year: -332, to_year: -319, source: "Livy 8.17.11 (unverified: passage not re-read)"}
+            - {count: 31, from_year: -318, to_year: -300, source: "Livy 9.20.6 (unverified: passage not re-read)"}
+            - {count: 33, from_year: -299, to_year: -242, source: "Livy 10.9.14 (unverified: passage not re-read)"}
+            - {count: 35, from_year: -241, source: "Livy, Periochae 19 (unverified: passage not re-read)"}
           places:
             - {monument: comitium, name: "The Comitium", to_year: -146, blurb: "The tribes meet in the Comitium below the Curia.",
                sources: ["Varro, De lingua latina 5.155 (unverified: passage not re-read)", "Platner-Ashby s.v. Comitium"]}
@@ -151,6 +173,7 @@ republic_rules:
            sources: ["Livy 2.5.2 (the Campus consecrated to Mars)", "Polybius 6.19.5-6.20.9 (the dilectus; unverified: passage not re-read)"]}
         - {monument: villa_publica, name: "The Villa Publica on the Campus Martius", from_year: -435, blurb: "Built for the census; here the cohorts brought to the consul for the levy sit and the arms are shown.",
            sources: ["Livy 4.22.7", "Varro, De re rustica 3.2.4 (unverified: passage not re-read)", "Polybius 6.19.5-6.20.9 (the tribunes choose the men tribe by tribe; unverified: passage not re-read)"]}
+      legion_men: 4200  # Polybius 6.20.8-9: 4,200 foot to a legion, 5,000 in time of danger (unverified: passage not re-read)
       gates:
         - {monument: porta_capena, name: "Porta Capena", blurb: "The gate of the Via Appia: armies march south from here.",
            sources: ["Platner-Ashby s.v. Porta Capena"]}
@@ -174,6 +197,9 @@ republic_rules:
         - {monument: domus_hortensii_augusti, gens: hortensii, owner: "Q. Hortensius Hortalus", from_year: -95, to_year: -50, sources: ["Suetonius, Augustus 72 (unverified: passage not re-read)", "Platner-Ashby s.v. Domus Augusti (the years are his public life, approximate)"]}
         - {monument: domus_hortensii_augusti, gens: iulii, owner: "Octavian (C. Iulius Caesar by adoption)", from_year: -42, sources: ["Suetonius, Augustus 72 (unverified: passage not re-read)", "Platner-Ashby s.v. Domus Augusti (the year he moved in is not recorded; approximate)"]}
         - {monument: domus_livii_drusi, gens: licinii, owner: "M. Licinius Crassus", from_year: -90, to_year: -63, sources: ["Cicero, Ad familiares 5.6.2 (Cicero bought it from Crassus; unverified: passage not re-read)", "Platner-Ashby s.v. Domus M. Tulli Ciceronis (it had been Drusus' house)"]}
+      # Who presides over the Senate: the dictator, else the consuls (or consular tribunes), else
+      # the praetor (Aulus Gellius 14.7.4-5 on who may convene it; unverified: passage not re-read).
+      presiding: [dictator, consul, consular_tribune, decemvir, triumvir, praetor]
       persuade_listed: 3
       back_listed: 4
       start_listed: 6

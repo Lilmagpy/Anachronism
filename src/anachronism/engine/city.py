@@ -18,7 +18,7 @@ from collections.abc import Iterable
 from dataclasses import dataclass, replace
 
 from anachronism.content.schema import CityTimeline, Monument
-from anachronism.content.schema.places import PlaceOfYear
+from anachronism.content.schema.places import Assembly, PlaceOfYear
 from anachronism.engine.city_state import (
     Anachronism,
     CityEvent,
@@ -55,7 +55,7 @@ def marks_for(monument: Monument, timeline: Iterable[CityTimeline]) -> list[Mark
     built = first_year(monument)
     if built is not None:
         first_done = min((t.year for t in explicit if t.kind == "completed"), default=None)
-        # a fire and a rebuilding in the same year is a rebuilding (F2: the Forum's shops, 210)
+        # F2 places: a fire and a rebuilding in one year is a rebuilding (the Forum's shops, 210)
         replaced = first_done is not None and not any(y <= first_done for y in destroyed)
         if not replaced:
             marks.append((built, _ORDER["completed"], "completed"))
@@ -102,47 +102,12 @@ def status_at(marks: list[Mark], year: int, built_known: bool) -> MonumentStatus
     return MonumentStatus(state=state, years_left=left, since=since)
 
 
-def timelines(world: World, vows: Iterable[Vow] = ()) -> dict[str, list[CityTimeline]]:
-    """Each monument's timeline: the content's, with the player's vows (F2) in place.
-
-    A temple the player vowed is begun the year after the vow and dedicated in the vow's
-    ``completes`` year; history's own vow, building and dedication of it after the player's
-    vow are dropped (the player's vow has taken their place). Fires and floods stay.
-    """
-    by_monument: dict[str, list[CityTimeline]] = {}
-    for turn in world.city_timeline:
-        by_monument.setdefault(turn.monument, []).append(turn)
-    for vow in vows:
-        kept = [
-            t
-            for t in by_monument.get(vow.monument, [])
-            if t.kind not in ("vowed", "begun", "completed") or t.year < vow.year
-        ]
-        source = "the player's vow (F2)"
-        kept += [
-            CityTimeline(
-                id=f"vow_{vow.monument}_{kind}",
-                monument=vow.monument,
-                year=year,
-                kind=kind,
-                source=source,
-            )
-            for year, kind in (
-                (vow.year, "vowed"),
-                (min(vow.year + 1, vow.completes), "begun"),
-                (vow.completes, "completed"),
-            )
-        ]
-        by_monument[vow.monument] = kept
-    return by_monument
-
-
 def status_map(world: World, year: int, vows: Iterable[Vow] = ()) -> dict[str, MonumentStatus]:
     """The status of every monument in ``year`` (sorted by id), from the dataset and timeline.
 
     F2: ``vows`` are the player's vowed temples (``CityState.vows``), which rise early.
     """
-    by_monument = timelines(world, vows)
+    by_monument = timelines(world, vows)  # F2 places: the content's timeline + the player's vows
     return {
         mid: status_at(
             marks_for(world.monuments[mid], by_monument.get(mid, [])),
@@ -172,11 +137,11 @@ def run_year(state: GameState, events: EventLog, year: int) -> None:
     if city is None or year <= city.year:
         return
     city.events = [e for e in city.events if e.turn >= events.turn]
-    new = status_map(state.world, year, city.vows)
+    new = status_map(state.world, year, city.vows)  # F2 places: + vows
     city.changed = [mid for mid in sorted(new) if new[mid].state != city.standing[mid].state]
     city.standing = new
     first = city.year + 1
-    by_monument = timelines(state.world, city.vows)
+    by_monument = timelines(state.world, city.vows)  # F2 places: + vows
     for mid in sorted(state.world.monuments):
         monument = state.world.monuments[mid]
         for y, _, kind in marks_for(monument, by_monument.get(mid, [])):
@@ -184,8 +149,7 @@ def run_year(state: GameState, events: EventLog, year: int) -> None:
                 continue
             if kind == "completed":
                 _add(city, "sacrifice", y, events, ref="dedication", monument=mid)
-            elif kind == "vowed" and not any(v.monument == mid and v.year == y for v in city.vows):
-                # (a player's vow played its sacrifice when it was pronounced)
+            elif kind == "vowed" and not _vowed_by_player(city, mid, y):  # F2 places
                 _add(city, "sacrifice", y, events, ref="vow", monument=mid)
             elif kind == "fire":
                 _add(city, "fire", y, events, monument=mid)
@@ -570,43 +534,6 @@ def work_form(builds: str) -> WorkForm | None:
     return BUILD_FORMS.get(builds)
 
 
-METRES_PER_DEGREE_LAT = 111_320.0
-"""For placing a site's offset (display only: the engine's state holds ids, not positions)."""
-
-
-def site_form(state: GameState, tech: str, builds: str) -> WorkForm | None:
-    """The form of an idea's work at the site the player chose (F2 ``site``), else history's.
-
-    A chosen site takes the ground of a dataset monument (plus its offset in metres); the work
-    no longer stands in for history's building there, so it has no ``twin`` or route.
-    """
-    form = work_form(builds)
-    city = state.city
-    if form is None or city is None or tech not in city.sites:
-        return form
-    site = next(
-        (s for s in state.world.republic_rules.city.places.site.sites if s.id == city.sites[tech]),
-        None,
-    )
-    ground = state.world.monuments.get(site.at) if site is not None else None
-    if site is None or ground is None:
-        return form
-    east, north = site.offset_m
-    lat = ground.lat + north / METRES_PER_DEGREE_LAT
-    lon = ground.lon + east / (METRES_PER_DEGREE_LAT * math.cos(math.radians(ground.lat)))
-    return replace(
-        form,
-        lat=round(lat, 6),
-        lon=round(lon, 6),
-        bearing=site.bearing if site.bearing is not None else form.bearing,
-        offset=(0, 0),
-        twin="",
-        route_of="",
-        site=site.name,
-        source=site.source,
-    )
-
-
 def _anachronisms(state: GameState, city: CityState, events: EventLog) -> None:
     """A project with ``builds`` that has been adopted raises its work in the city."""
     civ = state.civs.get(state.player_civ)
@@ -634,29 +561,6 @@ def _anachronisms(state: GameState, city: CityState, events: EventLog) -> None:
         _add(city, "sacrifice", state.year, events, ref="dedication", monument=mid)
 
 
-def place_of_year(
-    state: GameState, entries: Iterable[PlaceOfYear], year: int | None = None
-) -> PlaceOfYear | None:
-    """The first building of ``entries`` serving in the year (F2 places, D-304).
-
-    It must be in the year's span and standing (or, for one that serves ``while_building``,
-    being built or rebuilt).
-    """
-    city = state.city
-    if city is None:
-        return None
-    when = state.year if year is None else year
-    for entry in entries:
-        status = city.standing.get(entry.monument)
-        if status is None or not entry.holds(when):
-            continue
-        if status.state == "standing" or (
-            entry.while_building and status.state in ("building", "burnt")
-        ):
-            return entry
-    return None
-
-
 def senate_house(state: GameState) -> str:
     """The building where the Senate sits, else ``""``.
 
@@ -667,8 +571,8 @@ def senate_house(state: GameState) -> str:
     city = state.city
     if city is None:
         return ""
-    found = place_of_year(state, state.world.republic_rules.city.places.senate_houses)
-    if found is not None:
+    found = place_of_year(state, state.world.republic_rules.city.places.senate_houses)  # F2
+    if found is not None:  # F2 places: the house of the year
         return found.monument
     for mid in state.world.republic_rules.city.senate_houses:
         status = city.standing.get(mid)
@@ -740,7 +644,103 @@ def _triumphs(state: GameState, city: CityState, events: EventLog) -> None:
             )
 
 
-# --- F2 places (D-304): the spectacles of the player's actions ------------------------------
+# --- F2 places (D-304): one block, apart from the timeline and the rest of the city ----------
+# (in-body hooks elsewhere are single lines marked "F2 places")
+
+
+def timelines(world: World, vows: Iterable[Vow] = ()) -> dict[str, list[CityTimeline]]:
+    """Each monument's timeline: the content's, with the player's vows (F2) in place.
+
+    A temple the player vowed is begun the year after the vow and dedicated in the vow's
+    ``completes`` year; history's own vow, building and dedication of it after the player's
+    vow are dropped (the player's vow has taken their place). Fires and floods stay.
+    """
+    by_monument: dict[str, list[CityTimeline]] = {}
+    for turn in world.city_timeline:
+        by_monument.setdefault(turn.monument, []).append(turn)
+    for vow in vows:
+        kept = [
+            t
+            for t in by_monument.get(vow.monument, [])
+            if t.kind not in ("vowed", "begun", "completed") or t.year < vow.year
+        ]
+        source = "the player's vow (F2)"
+        kept += [
+            CityTimeline(
+                id=f"vow_{vow.monument}_{kind}",
+                monument=vow.monument,
+                year=year,
+                kind=kind,
+                source=source,
+            )
+            for year, kind in (
+                (vow.year, "vowed"),
+                (min(vow.year + 1, vow.completes), "begun"),
+                (vow.completes, "completed"),
+            )
+        ]
+        by_monument[vow.monument] = kept
+    return by_monument
+
+
+def place_of_year(
+    state: GameState, entries: Iterable[PlaceOfYear], year: int | None = None
+) -> PlaceOfYear | None:
+    """The first building of ``entries`` serving in the year (F2 places, D-304).
+
+    It must be in the year's span and standing (or, for one that serves ``while_building``,
+    being built or rebuilt).
+    """
+    city = state.city
+    if city is None:
+        return None
+    when = state.year if year is None else year
+    for entry in entries:
+        status = city.standing.get(entry.monument)
+        if status is None or not entry.holds(when):
+            continue
+        if status.state == "standing" or (
+            entry.while_building and status.state in ("building", "burnt")
+        ):
+            return entry
+    return None
+
+
+METRES_PER_DEGREE_LAT = 111_320.0
+"""For placing a site's offset (display only: the engine's state holds ids, not positions)."""
+
+
+def site_form(state: GameState, tech: str, builds: str) -> WorkForm | None:
+    """The form of an idea's work at the site the player chose (F2 ``site``), else history's.
+
+    A chosen site takes the ground of a dataset monument (plus its offset in metres); the work
+    no longer stands in for history's building there, so it has no ``twin`` or route.
+    """
+    form = work_form(builds)
+    city = state.city
+    if form is None or city is None or tech not in city.sites:
+        return form
+    site = next(
+        (s for s in state.world.republic_rules.city.places.site.sites if s.id == city.sites[tech]),
+        None,
+    )
+    ground = state.world.monuments.get(site.at) if site is not None else None
+    if site is None or ground is None:
+        return form
+    east, north = site.offset_m
+    lat = ground.lat + north / METRES_PER_DEGREE_LAT
+    lon = ground.lon + east / (METRES_PER_DEGREE_LAT * math.cos(math.radians(ground.lat)))
+    return replace(
+        form,
+        lat=round(lat, 6),
+        lon=round(lon, 6),
+        bearing=site.bearing if site.bearing is not None else form.bearing,
+        offset=(0, 0),
+        twin="",
+        route_of="",
+        site=site.name,
+        source=site.source,
+    )
 
 
 def assembly_place(state: GameState, office: str, year: int | None = None) -> str:
@@ -761,11 +761,37 @@ def add_event(state: GameState, kind: EventKind, **fields: str | int) -> None:
     )
 
 
-def election_events(state: GameState, events: EventLog, year: int) -> None:
+def assembly_of(state: GameState, office: str) -> Assembly | None:
+    """The assembly that elects ``office``."""
+    for assembly in state.world.republic_rules.city.places.assemblies:
+        if office in assembly.offices:
+            return assembly
+    return None
+
+
+def votes(state: GameState, office: str, year: int, share_bp: int, won: bool) -> tuple[int, int]:
+    """The voting units for and against a man.
+
+    His expected share of them, and a majority if he was elected (the centuries voted until a
+    majority was reached: Livy 1.43.11), short of one if he was not. Without an assembly for
+    the office: his share in bp.
+    """
+    assembly = assembly_of(state, office)
+    units = assembly.units_in(year) if assembly is not None else 10_000
+    majority = units // 2 + 1
+    count = units * share_bp // 10_000
+    count = max(count, majority) if won else min(count, majority - 1)
+    return count, units - count
+
+
+def election_events(
+    state: GameState, events: EventLog, year: int, shares: dict[tuple[str, str], int]
+) -> None:
     """After a year's elections, an ``election`` for each man the player backed (F2).
 
-    Called from ``republic.run_year`` once the year's magistrates are chosen: ``value`` is 1
-    when the backed man was elected, ``other`` the seats filled.
+    Called from ``republic.run_year`` once the year's magistrates are chosen, with each man's
+    expected share of the vote (``republic.backed_shares``): ``value``/``other`` are the voting
+    units (centuries, tribes) for and against him; he was elected when ``value > other``.
     """
     rep = state.republic
     city = state.city
@@ -779,6 +805,7 @@ def election_events(state: GameState, events: EventLog, year: int) -> None:
         seen.add(key)
         holders = [m for m in rep.magistrates if m.office == backing.office and m.year == year]
         won = any(m.person == backing.person for m in holders)
+        yes, no = votes(state, backing.office, year, shares.get(key, 0), won)
         city.events.append(
             CityEvent(
                 kind="election",
@@ -787,7 +814,12 @@ def election_events(state: GameState, events: EventLog, year: int) -> None:
                 ref=backing.office,
                 monument=assembly_place(state, backing.office, year),
                 person=backing.person,
-                value=1 if won else 0,
-                other=len(holders),
+                value=yes,
+                other=no,
             )
         )
+
+
+def _vowed_by_player(city: CityState, monument: str, year: int) -> bool:
+    """A player's vow played its sacrifice when it was pronounced, not again at year's end."""
+    return any(v.monument == monument and v.year == year for v in city.vows)

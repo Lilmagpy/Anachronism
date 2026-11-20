@@ -28,11 +28,20 @@ from dataclasses import dataclass, field
 from anachronism.content.schema import Issue
 from anachronism.content.schema.monuments import Monument
 from anachronism.content.schema.places import PlaceOfYear, PlacesRules, VowCause
-from anachronism.engine.actions import ChooseSite, Contio, GiveGames, VowTemple
+from anachronism.engine.actions import (
+    ChooseSite,
+    ConsultBooks,
+    Contio,
+    Expiate,
+    GiveGames,
+    VowTemple,
+)
 from anachronism.engine.city import add_event, first_year, place_of_year, work_form
 from anachronism.engine.city_state import GamesGiven, Vow
 from anachronism.engine.decrees import cost as wealth_cost
+from anachronism.engine.events import EventLog
 from anachronism.engine.fixed import BP, clamp
+from anachronism.engine.religion import books_open, consult_books
 from anachronism.engine.republic import eligible, year_label
 from anachronism.engine.republic_state import Backing, Magistrate, Person
 from anachronism.engine.rivals import at_war
@@ -681,13 +690,101 @@ def levy_event(state: GameState, army: str, men: int) -> None:
     if state.city is None or state.republic is None or men <= 0:
         return
     place = levy_place(state)
-    society = state.rome_society
-    pool = society.legions.assidui if society is not None else 0
     add_event(
         state,
         "levy",
         ref=army,
         monument=place.monument if place is not None else "",
         value=men,
-        other=pool,
+        other=legions_of(state, men),
     )
+
+
+def legions_of(state: GameState, men: int) -> int:
+    """How many legions a levy makes (to the nearest, at least one)."""
+    size = _places(state).legion_men
+    return max(1, (men + size // 2) // size)
+
+
+# ---------------------------------------------------------------- the rites (religion's API)
+
+
+def rites_place(state: GameState, sibyl: bool) -> str:
+    """The temple where prodigies are expiated, or where the Books are kept, if it stands."""
+    rites = state.world.rome_society.rites
+    monument = rites.sibylline.monument if sibyl else rites.prodigies.default_monument
+    city = state.city
+    status = city.standing.get(monument or "") if city is not None else None
+    return monument if monument and status is not None and status.state == "standing" else ""
+
+
+def plan_expiate(state: GameState, action: Expiate) -> Plan:
+    """Check an expiation of the prodigies left unexpiated."""
+    why = _common(state, action.civ)
+    if why:
+        return _no(why)
+    society = state.rome_society
+    if society is None:
+        return _no("Rome's rites are not in this game")
+    owed = society.religion.unexpiated
+    if owed <= 0:
+        return _no("no prodigy awaits expiation")
+    rules = state.world.rome_society.rites.prodigies
+    wealth = owed * rules.default_cost
+    if state.civs[state.player_civ].stockpiles.wealth < wealth:
+        return _no(f"the treasury cannot pay for the rites ({wealth} wealth needed)")
+    return Plan(
+        wealth=wealth,
+        place=rites_place(state, sibyl=False),
+        numbers={"prodigies": owed, "unrest_bp": -owed * rules.expiation_unrest_relief_bp},
+    )
+
+
+def apply_expiate(state: GameState, action: Expiate) -> tuple[bool, str]:
+    """Pay for every prodigy left unexpiated: the fear eases and the sacrifice is played."""
+    plan = plan_expiate(state, action)
+    if not plan.ok:
+        return False, plan.why
+    society = state.rome_society
+    assert society is not None
+    civ = state.civs[state.player_civ]
+    civ.stockpiles.wealth -= plan.wealth
+    society.religion.unexpiated = 0
+    civ.stats.unrest_bp = clamp(civ.stats.unrest_bp + plan.numbers["unrest_bp"], 0, BP)
+    add_event(state, "sacrifice", ref="expiation", monument=plan.place, value=plan.wealth)
+    owed = plan.numbers["prodigies"]
+    return True, f"The pontiffs expiate {owed} prodigies ({plan.wealth} wealth); the fear eases."
+
+
+def plan_sibyl(state: GameState, action: ConsultBooks) -> Plan:
+    """Check a consultation of the Sibylline Books."""
+    why = _common(state, action.civ)
+    if why:
+        return _no(why)
+    society = state.rome_society
+    if society is None:
+        return _no("Rome's rites are not in this game")
+    if not books_open(state, state.year):
+        return _no("the Sibylline Books burned with the Capitol")
+    if state.year in society.religion.consultations:
+        return _no("the Books have been consulted this year")
+    rules = state.world.rome_society.rites.sibylline
+    if state.civs[state.player_civ].stockpiles.wealth < rules.cost:
+        return _no(f"the treasury cannot pay for the rites ({rules.cost} wealth needed)")
+    return Plan(
+        wealth=rules.cost,
+        place=rites_place(state, sibyl=True),
+        numbers={"unrest_bp": -rules.unrest_relief_bp, "legitimacy_bp": rules.legitimacy_bp},
+    )
+
+
+def apply_sibyl(state: GameState, action: ConsultBooks) -> tuple[bool, str]:
+    """The decemviri open the Books: a lectisternium, and a cult due soon may come early."""
+    plan = plan_sibyl(state, action)
+    if not plan.ok:
+        return False, plan.why
+    events = EventLog(turn=state.turn, year=state.year)
+    if not consult_books(state, events, state.year, "the people's fear"):
+        return False, "the Books could not be consulted"
+    state.events.extend(events.items)
+    return True, "The decemviri consult the Sibylline Books; a lectisternium is held."

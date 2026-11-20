@@ -526,6 +526,7 @@ def _places_issues(registry: Registry, where: str) -> list[ContentIssue]:
     offices += [("contio.speakers", o) for o in sorted(places.contio.speakers)]
     offices += [("vow.vowers", o) for o in (places.vow.vowers if places.vow else ())]
     offices += [("games.givers", o) for o in (places.games.givers if places.games else ())]
+    offices += [("presiding", o) for o in places.presiding]
     gentes = [("domus", d.gens) for d in places.domus]
     for monument in registry.monuments.values():  # the houses of the families (role: domus)
         extra = monument.model_extra or {}

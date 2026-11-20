@@ -21,10 +21,12 @@ from anachronism.engine.actions import (
     ChooseDilemma,
     ChooseSite,
     ComeToAid,
+    ConsultBooks,
     Contio,
     DeclareWar,
     DemandTribute,
     DisbandArmy,
+    Expiate,
     Explain,
     Fortify,
     GiveGames,
@@ -118,6 +120,10 @@ def _apply(state: GameState, action: Action) -> tuple[bool, str]:
         return city_acts.apply_games(state, action)
     if isinstance(action, ChooseSite):
         return city_acts.apply_site(state, action)
+    if isinstance(action, Expiate):
+        return city_acts.apply_expiate(state, action)
+    if isinstance(action, ConsultBooks):
+        return city_acts.apply_sibyl(state, action)
     if isinstance(action, Build):
         return queue_building(state, action.civ, action.province, action.building)
     if isinstance(action, Unqueue):

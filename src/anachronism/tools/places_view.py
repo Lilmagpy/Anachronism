@@ -21,7 +21,14 @@ from typing import Any
 from anachronism.content.schema import Issue, Stage
 from anachronism.content.schema.places import PlacesRules
 from anachronism.engine import city_acts
-from anachronism.engine.actions import ChooseSite, Contio, GiveGames, VowTemple
+from anachronism.engine.actions import (
+    ChooseSite,
+    ConsultBooks,
+    Contio,
+    Expiate,
+    GiveGames,
+    VowTemple,
+)
 from anachronism.engine.armies import (
     composition,
     levy_size,
@@ -211,6 +218,10 @@ def _curia(state: GameState, places: dict[str, Place], proposals: list[dict[str,
     issues = sorted({Issue(a["action"]["issue"]) for a in actions}, key=list(Issue).index)
     actions += _persuade_actions(state, issues)
     info = [_info("Influence", _num(rep.influence), "what the player can spend in the Senate")]
+    chair = presiding(state)
+    if chair is not None:
+        office = state.world.magistracies[chair.office].name.lower()
+        info.append(_info("Presiding", f"{chair.name}, {office}", "he brings matters to the house"))
     for mood in senate_mood(state):
         info.append(
             _info(
@@ -234,6 +245,21 @@ def _curia(state: GameState, places: dict[str, Place], proposals: list[dict[str,
     if status is not None and status.state != "standing":
         blurb += f" (still {status.state}; the Senate meets in it as it rises)"
     _put(places, monument, "senate_house", title, blurb, actions, info)
+
+
+def presiding(state: GameState) -> Any:
+    """The magistrate who presides over the Senate.
+
+    The first office of ``places.presiding`` that is filled, and of its holders the first the
+    year lists (the Fasti's order: Ap. Claudius Caudex in 264).
+    """
+    rep = state.republic
+    assert rep is not None
+    for office in _rules(state).presiding:
+        for m in rep.magistrates:
+            if m.office == office:
+                return m
+    return None
 
 
 def _treasury(state: GameState, places: dict[str, Place], proposals: list[dict[str, Any]]) -> None:
@@ -466,6 +492,33 @@ def _temples(state: GameState, places: dict[str, Place]) -> None:
         title = monument.english or monument.latin or mid
         _put(places, mid, "temple", title, blurb, [], info)
     _vow_place(state, places)
+    _rites(state, places)
+
+
+def _rites(state: GameState, places: dict[str, Place]) -> None:
+    """Expiate the prodigies left unexpiated, and consult the Sibylline Books (religion's API)."""
+    for sibyl, kind, label in (
+        (False, "expiate", "Expiate the prodigies left unexpiated"),
+        (True, "sibyl", "Bid the decemviri consult the Sibylline Books"),
+    ):
+        monument = city_acts.rites_place(state, sibyl)
+        if not monument:
+            continue
+        if sibyl:
+            plan = city_acts.plan_sibyl(state, ConsultBooks(civ=state.player_civ))
+        else:
+            plan = city_acts.plan_expiate(state, Expiate(civ=state.player_civ))
+        title = state.world.monuments[monument].english or monument
+        action = _act(
+            kind,
+            label,
+            {"kind": kind},
+            wealth=plan.wealth,
+            forecast={**plan.numbers, "note": plan.why},
+            why=plan.why,
+            watch="sacrifice",
+        )
+        _put(places, monument, "temple", title, "", [action], [])
 
 
 def _vow_place(state: GameState, places: dict[str, Place]) -> None:
@@ -616,7 +669,14 @@ def _levy_forecast(state: GameState, size: str) -> tuple[dict[str, Any], str, in
         f"{n:,} {state.world.units[u].name.lower()}" for u, n in sorted(troops.items())
     )
     return (
-        {"men": men, "food": food, "materials": materials, "wealth": wealth, "note": units},
+        {
+            "men": men,
+            "legions": city_acts.legions_of(state, men),
+            "food": food,
+            "materials": materials,
+            "wealth": wealth,
+            "note": units,
+        },
         why,
         wealth,
     )
@@ -714,6 +774,14 @@ def _trade(state: GameState, places: dict[str, Place]) -> None:
                     watch="building" if node.builds else "",
                 )
             )
+        actions.append(  # the client opens the idea box with the place as context
+            _act(
+                f"idea:{entry.monument}",
+                "Whisper an idea to the people who could make it",
+                {"kind": "idea", "context": entry.role},
+                forecast={"categories": [c.value for c in entry.categories], "note": ""},
+            )
+        )
         info = [
             _info("Ideas worked here", ", ".join(c.value for c in entry.categories), ""),
             _info("Works under way", _num(len(civ.projects)), ""),

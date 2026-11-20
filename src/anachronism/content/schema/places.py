@@ -45,6 +45,13 @@ class PlaceOfYear(YearSpan):
     sources: Sources
 
 
+class VotingUnits(YearSpan):
+    """How many voting units (centuries, tribes) an assembly has in some years."""
+
+    count: Annotated[int, Field(ge=1)]
+    source: str = Field(min_length=1)
+
+
 class Assembly(Frozen):
     """One of the people's assemblies: which magistrates it elects, and where it meets."""
 
@@ -52,7 +59,15 @@ class Assembly(Frozen):
     name: str = Field(min_length=1)
     offices: tuple[Identifier, ...] = Field(min_length=1)
     places: tuple[PlaceOfYear, ...] = Field(min_length=1)
+    units: tuple[VotingUnits, ...] = Field(min_length=1)
+    """The voting units by years; each unit's vote is one vote in the count."""
+    unit_name: str = "units"
     sources: Sources
+
+    def units_in(self, year: int) -> int:
+        """The voting units in ``year`` (the latest entry whose span holds, else the first)."""
+        found = [u.count for u in self.units if u.holds(year)]
+        return found[-1] if found else self.units[0].count
 
 
 class TradePlace(PlaceOfYear):
@@ -173,9 +188,13 @@ class PlacesRules(Frozen):
     treasury: tuple[PlaceOfYear, ...] = ()
     vow_place: tuple[PlaceOfYear, ...] = ()
     levy: tuple[PlaceOfYear, ...] = ()
+    legion_men: Annotated[int, Field(ge=1)] = 4200
+    """Men to a legion, to count a levy in legions."""
     gates: tuple[PlaceOfYear, ...] = ()
     trade: tuple[TradePlace, ...] = ()
     domus: tuple[DomusOwner, ...] = ()
+    presiding: tuple[Identifier, ...] = ()
+    """Offices whose holder presides over the Senate, in order of precedence."""
     temple_types: tuple[str, ...] = ("temple",)
     """Dataset ``type`` values that are temples."""
     persuade_listed: Annotated[int, Field(ge=0)] = 3

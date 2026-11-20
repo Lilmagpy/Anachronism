@@ -498,7 +498,21 @@ class ChooseSite(Frozen):
     site: str
 
 
-CityActs = Contio | VowTemple | GiveGames | ChooseSite
+class Expiate(Frozen):
+    """Expiate the prodigies the treasury could not yet pay for (F2; religion's rites)."""
+
+    kind: Literal["expiate"] = "expiate"
+    civ: str
+
+
+class ConsultBooks(Frozen):
+    """Bid the decemviri consult the Sibylline Books (F2; religion's ``consult_books``)."""
+
+    kind: Literal["sibyl"] = "sibyl"
+    civ: str
+
+
+CityActs = Contio | VowTemple | GiveGames | ChooseSite | Expiate | ConsultBooks
 
 
 Orders = (
@@ -578,7 +592,9 @@ Action = Annotated[
     | Contio
     | VowTemple
     | GiveGames
-    | ChooseSite,
+    | ChooseSite
+    | Expiate
+    | ConsultBooks,
     Field(discriminator="kind"),
 ]
 

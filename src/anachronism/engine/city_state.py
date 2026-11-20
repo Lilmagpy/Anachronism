@@ -74,13 +74,15 @@ class CityEvent:
     ``value`` the favour moved (bp, signed: negative is a speech against), ``other`` how many
     families it reached (for a candidate: the election weight added). ``election``: ``ref``
     the office, ``monument`` the assembly's place, ``person`` the man the player backed,
-    ``value`` 1 if he was elected else 0, ``other`` the seats filled. ``race``: games in a
+    ``value``/``other`` the voting units (centuries, tribes) for and against him (elected
+    when ``value > other``). ``race``: games in a
     circus, ``ref`` ``ludi``, ``person`` the giver, ``value`` the wealth spent, ``other`` the
     unrest relieved (bp). ``munus``: ``person`` the dead man honoured, ``ref`` the giver,
     ``value`` the wealth spent, ``other`` the unrest relieved (bp). ``levy``: ``monument`` the
-    levy's place, ``ref`` the army id, ``value`` the men levied, ``other`` the pool of assidui
-    left. ``building``: ``ref`` the idea, ``monument`` the work (``anachronism_<idea>``),
-    ``value`` the work's progress (bp), ``other`` 1 when its site was chosen anew. A vow is a
+    levy's place, ``ref`` the army id, ``value`` the men levied, ``other`` the legions they
+    make (``places.legion_men`` to a legion, at least one). ``building``: ``ref`` the idea,
+    ``monument`` the work (``anachronism_<idea>``), ``value`` the work's progress (bp),
+    ``other`` 1 when its site was chosen anew. A vow is a
     ``sacrifice`` with ``ref`` ``vow``, ``value`` the dedication year, ``person`` the vower.
     """
 

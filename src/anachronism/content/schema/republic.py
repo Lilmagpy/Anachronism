@@ -456,6 +456,9 @@ class RepublicRules(Frozen):
     """Adult male citizens as a share of the people, for the census."""
     spawn_new_men: bool = True
     """When too few men are eligible, new men (novi homines) stand."""
+    attested_margin_years: Annotated[int, Field(ge=0)] | None = None
+    """F2: a family has sons only from this many years before it is first attested (its
+    earliest branch, Fasti entry or modelled person); ``None``: from the start of the game."""
     factions: tuple[Faction, ...] = ()
     senate: SenateRules = SenateRules()
     """What the player may put to the Senate, and the tribune's veto."""
