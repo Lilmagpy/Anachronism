@@ -85,6 +85,9 @@ def found(
     rules = rules_of(state)
     if colony_id in italy.colonies:
         return None
+    me_civ = state.civs.get(state.player_civ)
+    if me_civ is None or state.provinces[me_civ.capital].owner != state.player_civ:
+        return None  # colonists are sent out from Rome: a Rome that has lost the city sends none
     holder = may_found(state, province_id)
     if holder is None:
         return None
