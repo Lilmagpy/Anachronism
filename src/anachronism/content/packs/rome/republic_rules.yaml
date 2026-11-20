@@ -194,7 +194,7 @@ republic_rules:
         # dedicated 344; Fortuna Equestris: vowed 180, dedicated 173). The interval and costs
         # are GAME BALANCE.
         cost: 200
-        wealth_per_1000: 40
+        wealth_per_1000: 30
         build_years: 5
         window_years: 60
         offered: 6
@@ -208,13 +208,13 @@ republic_rules:
         # favour and their own careers; a munus was given by a dead noble's sons. The first munus
         # was in the Forum Boarium (264), from 216 in the Forum. Costs per 1,000 people (as a
         # festival) and effects are GAME BALANCE.
-        ludi_wealth_per_1000: 40
+        ludi_wealth_per_1000: 20
         ludi_legitimacy_bp: 300
         ludi_unrest_bp: -500
         givers: [aedile_curule, aedile_plebeian]
         giver_dignitas_bp: 300
         giver_glory: 20
-        munus_wealth_per_1000: 30
+        munus_wealth_per_1000: 15
         munus_unrest_bp: -300
         munus_dignitas_bp: 400
         munus_window_years: 10
