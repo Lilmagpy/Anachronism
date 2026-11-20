@@ -110,3 +110,48 @@ stand to each place, a title card, the spectacle, skip with Esc), then returns y
 A "Rome this year" list in the Urbs HUD shows the places with actions available (a short to-do of
 the year) and flies you there. Until the engine half lands, build against a fixture
 `client/data/fixtures/places_264.json` written to the contract above.
+
+### The engine half as built (f2-engine, 2026-11-20): additions to the contract
+Nothing in the contract above changed; these are additions and the exact shapes.
+- **Place keys**: as above, plus `roles` (every role the building serves this year; `role` is
+  the first: the Comitium before 338 is both the speakers' platform and the tribes' assembly)
+  and, on a `domus`, `gens`. Keys are monument ids; an idea's work is `anachronism_<idea>`, both
+  for a standing work and for a work under way (where its `site` actions are). Roles in use:
+  `senate_house rostra assembly treasury temple circus arena campus gate workshop harbour domus
+  anachronism`. The forum of the tribes from 145 and the Forum's wooden stands for munera (from
+  216) are one place, `forum_romanum`.
+- **`forecast`** is always a dict with a `note` (a sentence, or why not when disabled). Senate
+  proposals: `yes_bp no_bp passes tribune tribune_bp tribune_name`. `persuade`: `lean_bp after_bp
+  yes_bp no_bp passes weight_bp`. `contio` on an issue: `yes_bp no_bp passes before_yes_bp shift_bp
+  families speaker tribune tribune_bp`; for a candidate: `election_bp weight_bp year speaker`.
+  `back`: `chance_bp after_bp seats`. `vow`: `dedicated history ahead legitimacy_bp unrest_bp vower`.
+  `games`: `legitimacy_bp unrest_bp dignitas_bp glory giver`. `raise` (the levy): `men food
+  materials wealth` (the note lists the soldiers). `start`: `history_year ahead builds`. `site`:
+  `progress_bp`.
+- **Action shapes** (`civ` is added by the server): `{"kind":"contio","issue":"land","side":"for"}`
+  (side `for`/`against`; optional `speaker`: a magistrate's person id), or for a candidate
+  `{"kind":"contio","issue":"candidate","side":"<person id>","office":"consul"}`;
+  `{"kind":"vow","temple":"<monument id>","cause":"battle"|"pestilence"}` (optional `by`);
+  `{"kind":"games","games":"ludi"|"munus","venue":"<monument id>","honour":"<dead person id>"}`
+  (`honour` for a munus; optional `giver`); `{"kind":"site","tech":"<idea>","site":"history"|"<site id>"}`.
+  **The levy is the existing `raise`**, `{"kind":"raise","province":"<Rome's province>","size":
+  "small"|"medium"|"large"}`: no new `levy` action was needed.
+- **Events by `watch`** (in `view["city"]["events"]`, this turn's): `senate` as before (`ref`
+  issue, `value`/`other` yes/no bp, `monument` the house of the year). `contio`: `ref` issue or
+  `candidate:<office>`, `monument` the Rostra of the year, `person` the speaker, `value` the
+  favour moved (bp, negative for a speech against) or the election weight added, `other` the
+  families reached. `election` (when the year's elections are held, for each man the player
+  backed): `ref` office, `monument` the assembly's place, `person` the man, `value` 1 elected / 0
+  not, `other` the seats filled. `sacrifice` with `ref` `vow`: `monument` the temple, `person` the
+  vower, `value` the dedication year; its dedication later is `sacrifice`/`dedication` as ever.
+  `race`: `ref` `ludi`, `monument` the circus, `person` the giver, `value` wealth spent, `other`
+  unrest relieved (bp). `munus`: `monument` the venue, `person` the dead man, `ref` the giver's
+  person id, `value` wealth, `other` unrest relieved. `levy`: `monument` the levy's place (the
+  Villa Publica from 435, else the Campus), `ref` the army id, `value` men, `other` the pool of
+  assidui. `building`: `ref` the idea, `monument` `anachronism_<idea>`, `value` progress (bp),
+  `other` 1 (its site was chosen). `triumph` is the engine's own, as before.
+- **The houses** this pass added are in `data/rome/city/monuments_domus.yaml` →
+  `client/data/city/monuments_domus.json`: the client's `monuments.gd` `FILES` must list it for
+  Urbs to draw them (the engine's places already include them).
+- **A chosen site** moves the work: `view["city"]["anachronisms"][].form` carries the chosen
+  site's `lat`/`lon`, `site`, `source`, and no `twin`.

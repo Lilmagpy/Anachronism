@@ -23,6 +23,8 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
   - [x] Engine: magistracies, yearly elections, Senate votes, families, the Fasti as default history (`engine/republic.py`)
   - [ ] Full Fasti 509-27 BC (draft of every year on branch claude/r1-fasti), people and families with stances
   - [x] Persuade, back a candidate and put matters to the Senate as replay-safe actions (`engine/senate.py`, D-286.1)
+  - [x] F2 engine: `view["places"]` (the places of the year with their actions, forecasts and spectacles) and the actions `contio`, `vow`, `games`, `site`; houses of the families (`monuments_domus.yaml`) (D-304)
+  - [ ] F2 client: Urbs cards and interiors play the places' actions and their spectacles; End year from Urbs (`plans/briefs/f2_play.md`)
   - [ ] Client panel for the Republic view and the Senate proposals
 - [ ] R3 Italy and the world: peoples of Italy, allies, citizenship, colonies, overseas powers, provinces and governors
   - [x] F1: treaties and levies of the socii, the ladder of rights and the census, the Social War and the Lex Iulia (`engine/allies.py`, D-300)
