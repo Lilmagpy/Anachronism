@@ -229,6 +229,11 @@ func view_names() -> PackedStringArray:
 	return PackedStringArray(["from the door", "the chair", "a bench"])
 
 
+## F2 play: the hall (life.gd keeps out of it).
+func clear_area() -> Array:
+	return [zone_circle(Vector3.ZERO, maxf(hall.x, hall.y) * 0.5 + 4.0)]
+
+
 func seat_views() -> Array[Transform3D]:
 	var out: Array[Transform3D] = []
 	out.append(look(Vector3(0, 3.5, hall.y / 2.0 - 1.0), Vector3(0, 1.5, -hall.y / 2.0 + 5.0)))

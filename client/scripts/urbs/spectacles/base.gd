@@ -63,6 +63,26 @@ func view_names() -> PackedStringArray:
 	return PackedStringArray()
 
 
+## F2 play: the ground the spectacle takes, as capsules [Vector2 a, Vector2 b, radius] in world x,
+## z (a == b is a circle): the street life (life.gd set_clear_zone) keeps out of it while it
+## plays. Default: 30 m round the origin; each spectacle gives its own.
+func clear_area() -> Array:
+	return [zone_circle(Vector3.ZERO, 30.0)]
+
+
+## A circle of `r` metres round local point `p`, for clear_area.
+func zone_circle(p: Vector3, r: float) -> Array:
+	return zone_capsule(p, p, r)
+
+
+## A capsule from local `a` to local `b`, `r` metres wide each side, for clear_area.
+func zone_capsule(a: Vector3, b: Vector3, r: float) -> Array:
+	var g := global_transform if is_inside_tree() else transform
+	var wa := g * a
+	var wb := g * b
+	return [Vector2(wa.x, wa.z), Vector2(wb.x, wb.z), r]
+
+
 ## A floating text line (speech, a label) that faces the camera.
 func make_label(text: String, size := 0.5, col := Color(1, 1, 1)) -> Label3D:
 	var l := Label3D.new()

@@ -26,8 +26,10 @@
 ##                                                 passes: value > other}
 ##   sacrifice / vow | dedication      sacrifice   e.monument (the temple); favourable = true
 ##                                                 (the engine records only the vow kept)
-##   triumph / battle | capital        triumph     the route Campus Martius - Circus Maximus -
-##                                                 Via Sacra - Capitol (triumph_route)
+##   triumph / battle | capital        triumph     the triumphal way (triumph_route): Villa
+##                                                 Publica - Circus Flaminius - Porta Carmentalis -
+##                                                 Velabrum - Circus Maximus - round the Palatine -
+##                                                 Sacra Via - Clivus Capitolinus - Area Capitolina
 ##                                                 general = person, spoils by ref (the
 ##                                                 engine's value, its wealth, is not shown)
 ##   fire, flood                       none        (the monuments show the burnt state; no
@@ -235,8 +237,17 @@ static func place(kind: String, id: String, urbs: Node3D, params: Dictionary = {
 				var inward := -e.basis.z
 				inward.y = 0.0
 				if kind == "sacrifice":
-					# the altar stands before the doorway; local -z points into the temple
-					var at: Vector3 = e.origin - inward * 12.0
+					# F2 play: the altar stands in the open before the temple's steps, clear of the
+					# porch roof (the doorway of a deep pronaos, like the Capitoline's, is far back
+					# under it): out from the door past the front of the monument's box, then 7 m on.
+					# The great altar of Jupiter stood in the Area Capitolina (Platner-Ashby s.v.
+					# Area Capitolina, read: "the great altar of Jupiter" among its altars; where in
+					# the area it stood is not said, so before the steps is the modeller's choice).
+					var outward := -inward.normalized() if inward.length() > 0.01 else Vector3(0, 0, 1)
+					var front := 0.0
+					for i in 8:
+						front = maxf(front, (box.get_endpoint(i) - e.origin).dot(outward))
+					var at: Vector3 = e.origin + outward * (front + 7.0)
 					xf = Transform3D(Basis.looking_at(inward, Vector3.UP), Vector3(at.x, height.call(at.x, at.z), at.z))
 				else:
 					xf = Transform3D(Basis.looking_at(inward, Vector3.UP), Vector3(c.x, y, c.z))
@@ -245,6 +256,13 @@ static func place(kind: String, id: String, urbs: Node3D, params: Dictionary = {
 				params["route"] = triumph_route(urbs, height)
 	elif kind == "triumph":
 		params["route"] = triumph_route(urbs, height)
+	if kind == "triumph":   # F2 play: a walking pace on the long way, and the ground for its cameras
+		var r: PackedVector3Array = params["route"]
+		var total := 0.0
+		for i in range(1, r.size()):
+			total += r[i].distance_to(r[i - 1])
+		params["march_seconds"] = clampf(total / 6.0, 110.0, 700.0)
+		params["height"] = height
 	var sp := play(kind, params, urbs)
 	if sp == null:
 		return null
@@ -252,22 +270,130 @@ static func place(kind: String, id: String, urbs: Node3D, params: Dictionary = {
 	return sp
 
 
-## The triumph's way through the dataset: Campus Martius, the Forum, the Via Sacra, the Capitol,
-## as a polyline in local metres with the ground height under each point (steps of 15 m).
+## F2 play: the triumph's way (Platner-Ashby s.v. Porta Triumphalis, read: the general passed
+## the gate "at the beginning of his march", a gate or arch in the Campus Martius near the
+## Circus Flaminius and the Villa Publica, the accepted view resting on Josephus BJ 7.5.4
+## [7.123-157], the one source with topographical indications; Plutarch Aem. 32.1, read: stands
+## in the circuses, round the Forum and wherever the procession could be seen). Josephus and
+## Plutarch describe later triumphs; the order of places is the standard reconstruction:
+##   the Campus Martius at the Villa Publica - the Porta Triumphalis by the Circus Flaminius -
+##   through the Circus Flaminius (from 220 BC) - into the city by the Porta Carmentalis (the
+##   gate's site is disputed: P-A's first view puts it between the Flumentana and the
+##   Carmentalis) - the Forum Holitorium and the Velabrum to the Forum Boarium - the length of
+##   the Circus Maximus from the carceres to the curved end - north round the Palatine in the
+##   valley under the Caelian (the line of the modern Via di San Gregorio, not in the streets
+##   data: the modeller's line, kept on the valley floor) - the Sacra Via from the Velia down
+##   through the Forum - the Clivus Capitolinus up to the Area Capitolina before Jupiter's temple.
+## The Sacra Via and the Clivus Capitolinus follow the streets data; the other stretches run
+## between the places' own footprints. Every point lies on the ground (steps of 12 m).
 static func triumph_route(urbs: Node3D, height: Callable) -> PackedVector3Array:
-	var ids := ["campus_martius", "circus_flaminius", "circus_maximus", "via_sacra", "forum_romanum", "aedes_iovis_capitolini"]
-	var pts: Array[Vector2] = []
-	for id in ids:
-		if urbs.monuments.ids().has(id):
-			var c: Vector3 = (urbs.monuments.bounds(id) as AABB).get_center()
-			pts.append(Vector2(c.x, c.z))
-	var out := PackedVector3Array()
-	for i in range(pts.size() - 1):
-		var n := maxi(1, int(pts[i].distance_to(pts[i + 1]) / 15.0))
+	var ids: Array = urbs.monuments.ids()
+	var placed: Variant = urbs.monuments.get("_placed")
+	var centre := func(id: String) -> Vector2:
+		var c: Vector3 = (urbs.monuments.bounds(id) as AABB).get_center()
+		return Vector2(c.x, c.z)
+	var legs: Array = []   # [Vector2 point, bool keep to the valley floor]
+	var add := func(p: Vector2, valley := false) -> void: legs.append([p, valley])
+	for id in ["villa_publica", "campus_martius"]:
+		if ids.has(id):
+			add.call(centre.call(id))
+			break
+	if ids.has("circus_flaminius") and placed is Dictionary and (placed as Dictionary).has("circus_flaminius"):
+		var pl: Dictionary = placed["circus_flaminius"]
+		var ax := Vector2(sin(float(pl["yaw"])), cos(float(pl["yaw"])))
+		var c: Vector2 = pl["centre"]
+		var half := float(pl["length"]) * 0.5 - 15.0
+		# in at the end nearer the Campus, out at the end nearer the city
+		var a := c - ax * half
+		var b := c + ax * half
+		if a.distance_to(Vector2(-381, 78)) < b.distance_to(Vector2(-381, 78)):
+			var t := a
+			a = b
+			b = t
+		add.call(a)
+		add.call(b)
+	for id in ["porta_carmentalis", "forum_holitorium", "forum_boarium"]:
+		if ids.has(id):
+			add.call(centre.call(id))
+	if ids.has("circus_maximus") and placed is Dictionary and (placed as Dictionary).has("circus_maximus"):
+		var pl: Dictionary = placed["circus_maximus"]
+		var ax := Vector2(sin(float(pl["yaw"])), cos(float(pl["yaw"])))
+		var side := Vector2(-ax.y, ax.x)
+		var c: Vector2 = pl["centre"]
+		var half := float(pl["length"]) * 0.5
+		var w := float(pl["width"])
+		# the carceres at -L/2 (spectacles.gd place: race); along the track beside the spina
+		var lane := side * w * 0.2
+		if (c - ax * half).distance_to(Vector2(-368, 410)) > (c + ax * half).distance_to(Vector2(-368, 410)):
+			ax = -ax
+			lane = -lane
+		add.call(c - ax * (half - 25.0) + lane)
+		add.call(c + ax * (half - w * 0.5 - 10.0) + lane)
+		add.call(c + ax * (half - 20.0) + side * w * 0.6 * signf(lane.dot(side) + 0.0001), true)
+	# round the Palatine under the Caelian, to the top of the Sacra Via on the Velia
+	for p in [Vector2(318, 760), Vector2(335, 560), Vector2(342, 380), Vector2(318, 262)]:
+		add.call(p, true)
+	var streets: Variant = urbs.get("streets")
+	var has_street := func(sid: String) -> bool:
+		return streets != null and (streets.street_ids() as Array).has(sid)
+	if has_street.call("via_sacra"):
+		for k in 21:
+			var q: Vector3 = streets.along("via_sacra", k / 20.0)
+			add.call(Vector2(q.x, q.z))
+	elif ids.has("forum_romanum"):
+		add.call(centre.call("forum_romanum"))
+	if has_street.call("clivus_capitolinus"):
+		for k in 13:
+			var q: Vector3 = streets.along("clivus_capitolinus", k / 12.0)
+			add.call(Vector2(q.x, q.z))
+	# the end: in the Area Capitolina, 13 m before the steps (the sacrifice is 6 m on, at the
+	# altar sacrifice placement uses: 7 m out from the front of the temple's box)
+	if ids.has("aedes_iovis_capitolini"):
+		var door: Transform3D = urbs.monuments.entrance("aedes_iovis_capitolini")
+		var outward := door.basis.z
+		outward.y = 0.0
+		outward = outward.normalized() if outward.length() > 0.01 else Vector3(0, 0, 1)
+		var box: AABB = urbs.monuments.bounds("aedes_iovis_capitolini")
+		var front := 0.0
+		for i in 8:
+			front = maxf(front, (box.get_endpoint(i) - door.origin).dot(outward))
+		var end := door.origin + outward * (front + 13.0)
+		add.call(Vector2(end.x, end.z))
+	# sample every 12 m; on the valley stretches each sample moves to the lowest ground within
+	# 30 m across the way, then the line is smoothed so it does not zigzag
+	var flat: Array[Vector2] = []
+	var vals: Array[bool] = []
+	for i in range(legs.size() - 1):
+		var a: Vector2 = legs[i][0]
+		var b: Vector2 = legs[i + 1][0]
+		var valley: bool = legs[i][1] or legs[i + 1][1]
+		var n := maxi(1, int(a.distance_to(b) / 12.0))
+		var side := (b - a).normalized()
+		side = Vector2(-side.y, side.x)
 		for k in n:
-			var p := pts[i].lerp(pts[i + 1], float(k) / n)
-			out.append(Vector3(p.x, height.call(p.x, p.y), p.y))
-	if pts.size() > 0:
-		var q: Vector2 = pts[pts.size() - 1]
-		out.append(Vector3(q.x, height.call(q.x, q.y), q.y))
+			var p := a.lerp(b, float(k) / n)
+			if valley:
+				var best := p
+				var lo := float(height.call(p.x, p.y))
+				for off in [-30.0, -20.0, -10.0, 10.0, 20.0, 30.0]:
+					var q: Vector2 = p + side * off
+					var hq := float(height.call(q.x, q.y))
+					if hq < lo - 0.5:
+						lo = hq
+						best = q
+				p = best
+			flat.append(p)
+			vals.append(valley)
+	if not legs.is_empty():
+		flat.append(legs[legs.size() - 1][0])
+		vals.append(false)
+	for round_i in 3:
+		var smoothed := flat.duplicate()
+		for i in range(1, flat.size() - 1):
+			if vals[i]:
+				smoothed[i] = (flat[i - 1] + flat[i] * 2.0 + flat[i + 1]) * 0.25
+		flat = smoothed
+	var out := PackedVector3Array()
+	for p in flat:
+		out.append(Vector3(p.x, float(height.call(p.x, p.y)), p.y))
 	return out

@@ -325,6 +325,11 @@ func view_names() -> PackedStringArray:
 	return PackedStringArray(["editor's seat", "arena rail", "high seat"])
 
 
+## F2 play: the arena and the ring of spectators round it (life.gd keeps out of it).
+func clear_area() -> Array:
+	return [zone_circle(Vector3.ZERO, maxf(rx, rz) + 18.0)]
+
+
 func seat_views() -> Array[Transform3D]:
 	var out: Array[Transform3D] = []
 	out.append(look(Vector3(0, 4.0, rz + 5.0), Vector3(0, 1.0, 0)))

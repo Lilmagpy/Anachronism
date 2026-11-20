@@ -435,6 +435,11 @@ func view_names() -> PackedStringArray:
 	return PackedStringArray(["pulvinar", "turn", "carceres", "finish"])
 
 
+## F2 play: the track and the stands' foot (life.gd keeps out of it).
+func clear_area() -> Array:
+	return [zone_capsule(Vector3(-length * 0.5, 0, 0), Vector3(length * 0.5, 0, 0), width * 0.5 + 12.0)]
+
+
 func seat_views() -> Array[Transform3D]:
 	var out: Array[Transform3D] = []
 	out.append(look(Vector3(0, 13.0, -(width / 2.0 + 7.0)), Vector3(-30.0, 0.5, 14.0)))

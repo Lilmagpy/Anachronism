@@ -251,6 +251,9 @@ func clear() -> void:
 	_lamp_node = null
 	_venue_crowd = null
 	_senate_crowd = null
+	_stall_inst.clear()   # F2 play
+	_zone.clear()
+	_zone_grid.clear()
 	built = false
 
 
@@ -763,15 +766,19 @@ func _make_stalls() -> void:
 		var xf := Transform3D(Basis(Vector3.UP, float(pl["yaw"])), Vector3(c.x, y, c.y))
 		var w := 1 if pl.get("wall", false) else 0
 		(mm_frame[w] as MultiMesh).set_instance_transform(k_frame[w], xf)
+		_stall_inst.append([mm_frame[w], k_frame[w], xf, c])   # F2 play: cleared for a spectacle
 		k_frame[w] += 1
 		if _rng.randf() < 0.55:
 			(mm_canvas[w] as MultiMesh).set_instance_transform(k_canvas[w], xf)
+			_stall_inst.append([mm_canvas[w], k_canvas[w], xf, c])
 			k_canvas[w] += 1
 		else:
 			(mm_striped[w] as MultiMesh).set_instance_transform(k_striped[w], xf)
+			_stall_inst.append([mm_striped[w], k_striped[w], xf, c])
 			k_striped[w] += 1
 		var g: int = pl["goods"]
 		(mm_goods[g] as MultiMesh).set_instance_transform(k_goods[g], xf)
+		_stall_inst.append([mm_goods[g], k_goods[g], xf, c])
 		k_goods[g] += 1
 		# the stallholder behind the table and a shopper or two in front
 		var back := Vector2(sin(float(pl["yaw"])), cos(float(pl["yaw"])))
@@ -1674,7 +1681,7 @@ func _lod_classify(k: int) -> void:
 	for i in range(n * k / LOD_SLICES, n * (k + 1) / LOD_SLICES):
 		var a := _agents[i]
 		var lod := HIDDEN
-		if a["active"]:
+		if a["active"] and not (_has_zone and in_clear_zone(Vector2((a["pos"] as Vector3).x, (a["pos"] as Vector3).z))):   # F2 play
 			var dd := (a["pos"] as Vector3).distance_squared_to(_lod_cam)
 			if a.get("rig", false):
 				lod = 1 if dd < 160.0 * 160.0 else HIDDEN
@@ -1831,6 +1838,59 @@ func _take_fig(kind: String, a: Dictionary) -> int:
 	rig.set_colour("c_face", skin)
 	node.scale = Vector3.ONE * float(a["scale"])
 	return pick
+
+
+# --- F2 play (begin): the spectacle's ground cleared of the street's life --------------------
+# While a spectacle plays, the people, stalls, carts, mules and litters standing or passing in its
+# area are not drawn (urbs.gd sets the area from the spectacle's clear_area(), base.gd) and come
+# back when it ends. Walkers keep walking unseen, so the street is as it was afterwards.
+const ZONE_CELL := 40.0
+var _zone: Array = []            ## capsules [Vector2 a, Vector2 b, float radius] (a == b: a circle)
+var _zone_grid := {}             ## Vector2i cell -> indices into _zone
+var _has_zone := false
+var _stall_inst: Array = []      ## [MultiMesh, index, Transform3D, Vector2 position] of every stall part
+
+
+## Clear `parts` (capsules [a, b, radius] in local metres x, z) of street life; [] restores it.
+func set_clear_zone(parts: Array) -> void:
+	_zone = parts.duplicate()
+	_zone_grid.clear()
+	_has_zone = not _zone.is_empty()
+	for i in _zone.size():
+		var a: Vector2 = _zone[i][0]
+		var b: Vector2 = _zone[i][1]
+		var r := float(_zone[i][2])
+		var lo := Vector2i(floori((minf(a.x, b.x) - r) / ZONE_CELL), floori((minf(a.y, b.y) - r) / ZONE_CELL))
+		var hi := Vector2i(floori((maxf(a.x, b.x) + r) / ZONE_CELL), floori((maxf(a.y, b.y) + r) / ZONE_CELL))
+		for cx in range(lo.x, hi.x + 1):
+			for cz in range(lo.y, hi.y + 1):
+				var key := Vector2i(cx, cz)
+				if not _zone_grid.has(key):
+					_zone_grid[key] = []
+				(_zone_grid[key] as Array).append(i)
+	var away := Basis().scaled(Vector3.ONE * 0.0001)
+	for it in _stall_inst:
+		var xf: Transform3D = it[2]
+		var mm: MultiMesh = it[0]
+		mm.set_instance_transform(int(it[1]), Transform3D(away, xf.origin - Vector3(0, 400, 0)) if _has_zone and in_clear_zone(it[3]) else xf)
+	if built:   # sort the people again now, not at the next pass
+		_update_lod(_cam if _cam.x < 1e8 else _lod_cam)
+
+
+## Whether local point `p` (x, z) lies in the cleared area.
+func in_clear_zone(p: Vector2) -> bool:
+	var list: Variant = _zone_grid.get(Vector2i(floori(p.x / ZONE_CELL), floori(p.y / ZONE_CELL)))
+	if list == null:
+		return false
+	for i in list:
+		var a: Vector2 = _zone[i][0]
+		var b: Vector2 = _zone[i][1]
+		var ab := b - a
+		var t := 0.0 if ab.length_squared() < 0.0001 else clampf((p - a).dot(ab) / ab.length_squared(), 0.0, 1.0)
+		if p.distance_to(a + ab * t) <= float(_zone[i][2]):
+			return true
+	return false
+# --- F2 play (end) ---------------------------------------------------------------------------
 
 
 ## While a spectacle plays, the street gives up most of its skinned bodies: every skinned body

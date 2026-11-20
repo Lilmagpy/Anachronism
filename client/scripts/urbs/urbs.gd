@@ -366,6 +366,7 @@ func _start_spectacle(flags: Dictionary) -> void:
 				break
 	spectacle = sp
 	life.set_spectacle(spectacle != null)
+	_clear_life_for(spectacle)   # F2 play
 
 
 func _stop_spectacle() -> void:
@@ -375,6 +376,12 @@ func _stop_spectacle() -> void:
 			spectacle.queue_free()
 	spectacle = null
 	life.set_spectacle(false)
+	life.set_clear_zone([])   # F2 play: the street comes back
+
+
+## F2 play: the street life keeps out of the spectacle's ground while it plays.
+func _clear_life_for(sp: Node3D) -> void:
+	life.set_clear_zone(sp.clear_area() if sp != null and sp.has_method("clear_area") else [])
 
 
 # --- picking and the monument card ---------------------------------------------------------
@@ -751,6 +758,7 @@ func play_watch(e: Dictionary) -> Node3D:
 		sp = UrbsMoments.gathering(e, self)
 	spectacle = sp
 	life.set_spectacle(sp != null)
+	_clear_life_for(sp)
 	return sp
 
 

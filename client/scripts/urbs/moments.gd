@@ -25,11 +25,12 @@ const MAX_MOMENTS := 8
 const FLY := 2.6
 ## [start, length, camera] of each spectacle in a year's moments, and when watching one action's
 ## result. camera: the index of the spectacle's own view (seat_views), or -1 to follow the
-## action with its cinematic camera (the leading chariot, the pair fighting).
+## action with its cinematic camera (the leading chariot, the pair fighting). The triumph's
+## start is a share of its route (its march is long): the head of the procession is there.
 const SPANS_YEAR := {"senate": [60.0, 34.0, 0], "race": [6.0, 30.0, -1], "sacrifice": [28.0, 30.0, 0], "munus": [2.0, 34.0, -1],
-	"triumph": [55.0, 30.0, 1], "gathering": [0.0, 24.0, 0]}
+	"triumph": [0.5, 30.0, 1], "gathering": [0.0, 24.0, 0]}
 const SPANS_WATCH := {"senate": [26.0, 70.0, 0], "race": [0.0, 92.0, 0], "sacrifice": [8.0, 64.0, 0], "munus": [0.0, 70.0, -1],
-	"triumph": [12.0, 90.0, 0], "gathering": [0.0, 30.0, 0]}
+	"triumph": [0.14, 90.0, 0], "gathering": [0.0, 30.0, 0]}
 ## The order of importance when a turn brings more than MAX_MOMENTS (lower first).
 const PRIORITY := {"triumph": 0, "anachronism": 1, "sacrifice": 2, "senate": 3, "election": 4, "contio": 5,
 	"look": 6, "levy": 7, "games": 8, "building": 9, "fire": 10, "flood": 11}
@@ -223,7 +224,11 @@ func _moment(e: Dictionary, index: int, total: int, watch: bool) -> void:
 	if sp != null:
 		var spans: Dictionary = SPANS_WATCH if watch else SPANS_YEAR
 		var cut: Array = spans.get(sp_kind, [0.0, 24.0])
-		sp.seek(float(cut[0]))
+		var start := float(cut[0])
+		if sp_kind == "triumph" and start < 1.0 and sp.get("length") != null:
+			start = float(sp.get("length")) * start / maxf(float(sp.get("speed")), 0.1)
+		cut = [start, cut[1], cut[2] if cut.size() > 2 else 0]
+		sp.seek(start)
 		sp.time_scale = speed
 		var views: Array = sp.camera_views()
 		var which := int(cut[2]) if cut.size() > 2 else 0
@@ -644,6 +649,15 @@ class Gathering extends "res://scripts/urbs/spectacles/base.gd":
 				if _speaker != null:
 					_speaker.pose_arms(-1.2 * smoothstep(15.0, 17.0, tt), 0.0, 0.2, 0.0)
 				_tally.text = "%s men enrolled%s" % [GameHud.number(roundi(lerpf(0.0, float(v), k))), " · %d legions" % o if o > 0 else ""] if v > 0 else ""
+
+	## The crowd's ground (life.gd keeps out of it while the gathering plays).
+	func clear_area() -> Array:
+		match kind:
+			"contio":
+				return [zone_circle(Vector3(0, 0, 10.0), 28.0)]
+			"election":
+				return [zone_capsule(Vector3(-32.0, 0, 0), Vector3(11.0, 0, 0), 12.0)]
+		return [zone_circle(Vector3(0, 0, 8.0), 50.0)]
 
 	func seat_views() -> Array[Transform3D]:
 		var out: Array[Transform3D] = []

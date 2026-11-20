@@ -248,6 +248,11 @@ func view_names() -> PackedStringArray:
 	return PackedStringArray(["the altar", "from the crowd", "the temple steps"])
 
 
+## F2 play: the altar and the way the procession comes to it from +z (life.gd keeps out of it).
+func clear_area() -> Array:
+	return [zone_capsule(Vector3(0, 0, -4.0), Vector3(0, 0, 30.0), 11.0)]
+
+
 func seat_views() -> Array[Transform3D]:
 	var out: Array[Transform3D] = []
 	out.append(look(Vector3(8.0, 2.2, 8.0), Vector3(0.5, 1.2, 0.5)))

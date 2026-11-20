@@ -344,6 +344,20 @@ func view_names() -> PackedStringArray:
 	return PackedStringArray(["the street", "the quadriga", "the Clivus", "the sacrifice"])
 
 
+## F2 play: the whole way and the crowd lining it, and the altar at the top (life.gd keeps out).
+func clear_area() -> Array:
+	var out: Array = []
+	var step := maxi(1, route.size() / 400)
+	var i := 0
+	while i < route.size() - 1:
+		var j := mini(i + step, route.size() - 1)
+		out.append(zone_capsule(route[i], route[j], 10.0))
+		i = j
+	if _sacrifice != null:
+		out.append(zone_circle(_sacrifice.position, 16.0))
+	return out
+
+
 func seat_views() -> Array[Transform3D]:
 	var out: Array[Transform3D] = []
 	for f in [0.18, 0.55, 0.9]:
@@ -353,8 +367,8 @@ func seat_views() -> Array[Transform3D]:
 		dir.y = 0.0
 		dir = dir.normalized()
 		var side := Vector3(-dir.z, 0, dir.x)
-		var from: Vector3 = (r[0] as Vector3) + side * 9.0 + Vector3(0, 5.0, 0) - dir * 4.0
-		out.append(look(from, (r[0] as Vector3) + dir * 10.0 + Vector3(0, 1.5, 0)))
+		var at: Vector3 = (r[0] as Vector3) + dir * 10.0 + Vector3(0, 1.5, 0)
+		out.append(_clear_view((r[0] as Vector3) - dir * 4.0, side, 9.0, 5.0, at))
 	out.append(_sacrifice.transform * look(Vector3(8.0, 2.4, 9.0), Vector3(0.5, 1.2, 0.5)))
 	return out
 
@@ -381,4 +395,30 @@ func cine_view(time: float) -> Transform3D:
 			d.y = 0.0
 			d = d.normalized()
 	var side := Vector3(-d.z, 0, d.x)
-	return look(g + d * 1.2 + side * 5.2 + Vector3(0, 1.5, 0), g + Vector3(0, 1.55, 0) + d * 0.2)
+	return _clear_view(g + d * 1.2, side, 5.2, 1.5, g + Vector3(0, 1.55, 0) + d * 0.2)
+
+
+## F2 play: a camera `out` metres to one side of `base` and `up` above it, looking at `at`, never
+## in a hill: on the side where the ground is lower, at least 2 m above the ground there, and
+## raised until nothing of the ground stands between it and `at` (params.height, the terrain;
+## the route crosses the slopes of the Palatine and the Capitol).
+func _clear_view(base: Vector3, side: Vector3, out: float, up: float, at: Vector3) -> Transform3D:
+	var h: Variant = params.get("height")
+	if not (h is Callable) or not (h as Callable).is_valid():
+		return look(base + side * out + Vector3(0, up, 0), at)
+	var ground := func(p: Vector3) -> float: return float((h as Callable).call(p.x, p.z))
+	var a := base + side * out
+	var b := base - side * out
+	var from := a if float(ground.call(a)) <= float(ground.call(b)) else b
+	from.y = maxf(base.y + up, float(ground.call(from)) + 2.0)
+	for lift in 16:
+		var blocked := false
+		for k in range(1, 8):
+			var q := from.lerp(at, k / 8.0)
+			if q.y < float(ground.call(q)) + 0.4:
+				blocked = true
+				break
+		if not blocked:
+			break
+		from.y += 2.0
+	return look(from, at)
