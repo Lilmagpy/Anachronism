@@ -44,6 +44,53 @@ const PRAYER := [
 ]
 
 
+## The gods of Rome's temples, from the temple's Latin name (the genitive in "aedes X"), with the
+## title the prayer gives them: Pater for Jupiter, Mars, Janus, Saturn, Neptune and Liber (Cato
+## Agr. 141 "Mars pater"; Gellius 5.12.5 on "Diespiter" and the fathers among the gods: # unverified),
+## Mater for the Magna Mater, Mater Matuta and Ceres. A temple of no named god keeps Cato's form.
+const GODS := [
+	["iovis", "Jupiter Best and Greatest", "Father"], ["iuppiter", "Jupiter", "Father"],
+	["iunonis", "Juno", "Queen"], ["minervae", "Minerva", ""], ["martis", "Mars", "Father"],
+	["saturni", "Saturn", "Father"], ["iani", "Janus", "Father"], ["neptuni", "Neptune", "Father"],
+	["castoris", "Castor and Pollux", ""], ["vestae", "Vesta", "Mother"], ["apollinis", "Apollo", ""],
+	["cereris", "Ceres", "Mother"], ["dianae", "Diana", ""], ["herculis", "Hercules", ""],
+	["fortunae", "Fortuna", ""], ["veneris", "Venus", ""], ["quirini", "Quirinus", "Father"],
+	["bellonae", "Bellona", ""], ["salutis", "Salus", ""], ["concordiae", "Concord", ""],
+	["fidei", "Fides", ""], ["spei", "Spes", ""], ["victoriae", "Victoria", ""],
+	["aesculapii", "Aesculapius", ""], ["magnae matris", "Great Mother of the gods", ""],
+	["matris magnae", "Great Mother of the gods", ""], ["portuni", "Portunus", "Father"],
+	["mercurii", "Mercury", ""], ["telluris", "Tellus", "Mother"], ["florae", "Flora", "Mother"],
+	["summani", "Summanus", ""], ["vortumni", "Vortumnus", ""], ["penatium", "the Penates", ""],
+	["larum", "the Lares", ""], ["iuturnae", "Juturna", ""], ["volcani", "Vulcan", "Father"],
+	["honoris", "Honos and Virtus", ""], ["pietatis", "Pietas", ""], ["semonis", "Semo Sancus", ""],
+	["dei fidii", "Semo Sancus Dius Fidius", ""], ["veiovis", "Veiovis", ""],
+]
+
+
+## The prayer of a state sacrifice at this temple: Cato's form (Agr. 132, 139, 141: the god named in
+## the second person, "be honoured by this offering", "be willing and propitious") made for the
+## Roman people as the vows in Livy are (22.10.2 "populi Romani Quiritium"): a paraphrase, not the
+## words of a recorded state prayer.
+static func prayer_for(latin: String) -> Array:
+	var low := latin.to_lower()
+	for g in GODS:
+		if low.contains(str(g[0])):
+			var name := str(g[1])
+			var title := str(g[2])
+			var call := ("%s %s" % [title, name]) if title != "" else name
+			return [
+				"%s, be honoured by this offering," % call,
+				"and be willing and propitious to the Senate and the Roman people.",
+				"If anything here was amiss, we shall do it again.",
+			]
+	# a god not named: Cato's formula for a god unknown, "si deus, si dea es" (Agr. 139)
+	return [
+		"Whether you are god or goddess to whom this place is sacred,",
+		"be honoured by this offering, and be propitious to the Roman people.",
+		"If anything here was amiss, we shall do it again.",
+	]
+
+
 func _init(p: Dictionary = {}) -> void:
 	params = p
 

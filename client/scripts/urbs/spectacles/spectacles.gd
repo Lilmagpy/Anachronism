@@ -267,6 +267,10 @@ static func place(kind: String, id: String, urbs: Node3D, params: Dictionary = {
 		params["height"] = height
 		if urbs.has_method("push_out"):
 			params["push"] = Callable(urbs, "push_out")
+	if kind == "sacrifice" and not params.has("prayer") and id != "":
+		# the prayer names the temple's own god (sacrifice.gd prayer_for)
+		var mi: Dictionary = urbs.monuments.info(id)
+		params["prayer"] = load(PATHS["sacrifice"]).prayer_for(str(mi.get("latin", "")) + " " + str(mi.get("english", "")))
 	var sp := play(kind, params, urbs)
 	if sp == null:
 		return null
