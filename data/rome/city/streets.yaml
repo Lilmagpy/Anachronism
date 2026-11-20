@@ -27,7 +27,7 @@ streets:
   english: Sacred Way
   kind: street
   direction: "from the top of the Velia (Arch of Titus site) to the Forum"
-  points: [[41.8905, 12.4908], [41.8909, 12.4897], [41.8913, 12.4886], [41.8917, 12.4876], [41.8921, 12.4867], [41.8925, 12.4859], [41.8927, 12.4851], [41.8927, 12.4846]]
+  points: [[41.890673, 12.488583], [41.89088, 12.488571], [41.890988, 12.488402], [41.891114, 12.48833], [41.891456, 12.487847], [41.891654, 12.487328], [41.89196, 12.486748], [41.892032, 12.486386], [41.892275, 12.486024], [41.892365, 12.485783], [41.892698, 12.485095], [41.892698, 12.4846]]  # F2: summa Sacra via at the arch of Titus (Pleiades 236855821) and down the Velia on the excavated line (Pleiades 434423626, OpenStreetMap) to the Regia, past its north front (Platner-Ashby s.v. Sacra Via, read); the first point was 180 m too far east, near the later Meta Sudans
   precision: approx
   width_m: 5.0
   width_source: "P-A s.v. Sacra Via: Augustan pavement 5 m wide"
@@ -40,7 +40,7 @@ streets:
   english: Capitoline Hill road
   kind: clivus
   direction: "from the west corner of the Forum, past the temple of Saturn, up to the Asylum / Capitol"
-  points: [[41.8926, 12.4852], [41.8928, 12.4845], [41.8927, 12.4839], [41.8930, 12.4834], [41.8934, 12.4831], [41.8938, 12.4834], [41.8940, 12.4839]]
+  points: [[41.892536, 12.484552], [41.892563, 12.484443], [41.892653, 12.484371], [41.892671, 12.484238], [41.892653, 12.484141], [41.892185, 12.483598], [41.891978, 12.483212], [41.89178, 12.48262], [41.891618, 12.482101]]  # F2: lower course = the excavated pavement (Pleiades 152699900, OpenStreetMap) past the north front and west side of Saturn; end at the main entrance of the Area Capitolina in the middle of its south-east side opposite the temple front, 40-45 m in front of it (Platner-Ashby s.v. Area Capitolina, read); the stretch between is unexcavated (location_confidence low)
   precision: approx
   width_m: 5.0
   width_source: assumed
@@ -78,7 +78,7 @@ streets:
   english: Yoke Street
   kind: vicus
   direction: "from the Forum between the Basilica Iulia and the temple of Castor, west along the foot of the Capitol to the Porta Carmentalis"
-  points: [[41.8921, 12.4850], [41.8919, 12.4841], [41.8916, 12.4832], [41.8915, 12.4823], [41.8916, 12.4814]]
+  points: [[41.892455, 12.484576], [41.892338, 12.484286], [41.892194, 12.484177], [41.89196, 12.484033], [41.8916, 12.4832], [41.891501, 12.482295], [41.8916, 12.481401]]  # F2: from the Forum between the temple of Saturn and the Basilica Iulia (the modern path, which Platner-Ashby says preserves the line after the basilica was built), then along the southern edge of the Capitol; the old first point ran through the middle of the Basilica Iulia
   precision: approx
   width_m: 4.0
   width_source: assumed
@@ -104,7 +104,7 @@ streets:
   english: Argiletum
   kind: street
   direction: "from the Forum between Curia and Basilica Aemilia north-east to the Subura"
-  points: [[41.8934, 12.4857], [41.8940, 12.4863], [41.8946, 12.4870], [41.8951, 12.4877], [41.8954, 12.4885]]
+  points: [[41.892608, 12.485216], [41.89277, 12.485384], [41.892959, 12.485674], [41.8934, 12.485698], [41.894003, 12.486302], [41.894597, 12.487002], [41.895101, 12.487702], [41.895397, 12.488499]]  # F2: lower end between the Curia and the Basilica Aemilia from the excavated line (Pleiades 451243813, OpenStreetMap); it started 90 m up the street before
   precision: approx
   width_m: 5.0
   width_source: assumed

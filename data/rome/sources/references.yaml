@@ -33,5 +33,9 @@ verdicts:
     porticus#Catuli: {missing: "Catulus' portico on the site of Fulvius Flaccus' house, not Catulus' house"}
     Aemiliana.html: {skip: "a district of the Campus Martius (Varro RR 3.2.6), not a building"}
 measured: {}
-explained: {}
+explained:
+  positions:
+    forum_romanum: "the Pleiades outline (OpenStreetMap) is the whole archaeological area of the Forum, from the Capitol foot to the Velia, so its centre lies 180 m east of the square; our point is the centre of the paved square (the origin of the frame)"
+  lines:
+    street:vicus_iugarius: "the OpenStreetMap line Pleiades gives runs along the south side of the Basilica Iulia, where no ancient street is attested; Platner-Ashby s.v. Vicus Iugarius (read) says the present pavement preserves the line after the basilica was built, which is the path between the basilica and the temple of Saturn that we follow"
 outline_skip: {}

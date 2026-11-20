@@ -1818,7 +1818,10 @@ def check_lines(ds: Dataset, verdicts: list[Verdict]) -> list[dict[str, Any]]:
         r = v.ref
         if r.source != "pleiades" or v.status != "matched" or not r.lines:
             continue
-        theirs = [p for ln in r.lines for p in ln]
+        # inside the audited radius only: an aqueduct's mapped line runs 20 km out
+        theirs = [p for ln in r.lines for p in ln if math.hypot(*p) <= RADIUS_M]
+        if not theirs:
+            continue
         for tid in v.targets:
             pts: list[tuple[float, float]] = []
             if tid.startswith("street:"):
@@ -1828,21 +1831,16 @@ def check_lines(ds: Dataset, verdicts: list[Verdict]) -> list[dict[str, Any]]:
                 pts = [to_local(float(a), float(b)) for a, b in ds.recs[tid]["route"]]
             if len(pts) < 2:
                 continue
-            # only where the two overlap: our points within 400 m of theirs
-            ds_ = [min(line_dist(p, ln) for ln in r.lines) for p in pts]
-            near = [d for d in ds_ if d < 400.0]
+            # how far the mapped line (theirs) lies from ours, point by point
             back = [line_dist(q, pts) for q in theirs]
-            if not near:
-                continue
             rows.append(
                 {
                     "id": tid,
                     "pleiades": r.key,
                     "title": r.title,
-                    "mean_m": round(sum(near) / len(near), 1),
-                    "max_m": round(max(near), 1),
-                    "theirs_to_ours_max_m": round(max(back), 1),
-                    "points": len(pts),
+                    "mean_m": round(sum(back) / len(back), 1),
+                    "max_m": round(max(back), 1),
+                    "points": len(theirs),
                     "accuracy_m": r.accuracy,
                 }
             )
@@ -1955,16 +1953,16 @@ def check_relations(
         if not sacra:
             return (False, "no Via Sacra in streets.yaml")
         dr, dv = line_dist(r, sacra), line_dist(v, sacra)
-        forum_end = min(sacra, key=lambda p: dist(p, (0.0, 0.0)))
-        de = dist(r, forum_end)
+        # P-A s.v. Sacra Via: from the summa Sacra via (the Velia) down to the east end of the
+        # Forum, "near the regia, the temple of Vesta, or the arch of Fabius"
         return (
-            dr <= 35.0 and dv <= 45.0 and de <= 130.0 and r[0] > 20.0,
-            f"Regia {dr:.0f} m and Vesta {dv:.0f} m from the Via Sacra; Regia {de:.0f} m "
-            f"from its Forum end, {r[0]:.0f} m east of the Forum centre",
+            dr <= 35.0 and dv <= 45.0 and r[0] > 40.0 and v[0] > 40.0,
+            f"Regia {dr:.0f} m and Vesta {dv:.0f} m from the Sacra Via; {r[0]:.0f} and "
+            f"{v[0]:.0f} m east of the Forum's centre",
         )
 
     rel(
-        "The Regia and Vesta on the Sacra Via at the Forum's east end",
+        "The Regia and Vesta where the Sacra Via reaches the Forum's east end",
         "Platner-Ashby s.v. Sacra Via; Regia; Vesta, Aedes",
         ["regia", "aedes_vestae"],
         sacra_end,
@@ -2659,12 +2657,15 @@ def render_markdown(a: Audit) -> str:
     w("")
     w("### Streets, walls and aqueducts against the Pleiades lines")
     w("")
-    w("| id | Pleiades | mean m | max m | accuracy m |")
-    w("|---|---|---|---|---|")
+    w("How far the mapped line (Pleiades, inside the audited radius) lies from ours.")
+    w("")
+    w("| id | Pleiades | mean m | max m | accuracy m | note |")
+    w("|---|---|---|---|---|---|")
     for ln in a.lines:
+        note = (ex.get("lines") or {}).get(ln["id"], "")
         w(
             f"| {ln['id']} | {ln['pleiades']} {_md_escape(ln['title'])} | {ln['mean_m']} | "
-            f"{ln['max_m']} | {ln['accuracy_m']} |"
+            f"{ln['max_m']} | {ln['accuracy_m']} | {_md_escape(str(note))} |"
         )
     w("")
     w("### Orientation and size: published measurements")

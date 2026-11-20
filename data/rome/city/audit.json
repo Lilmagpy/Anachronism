@@ -266,73 +266,75 @@
  ],
  "lines": [
   {
-   "accuracy_m": null,
-   "id": "aqua_anio_vetus",
-   "max_m": 248.6,
-   "mean_m": 248.6,
-   "pleiades": "423560",
-   "points": 5,
-   "theirs_to_ours_max_m": 20493.1,
-   "title": "Aqua Anio Vetus"
+   "accuracy_m": 20.0,
+   "id": "cloaca_maxima",
+   "max_m": 95.0,
+   "mean_m": 95.0,
+   "pleiades": "867802692",
+   "points": 1,
+   "title": "Cloaca Maxima"
   },
   {
    "accuracy_m": 5.0,
    "id": "aqua_appia",
-   "max_m": 365.4,
-   "mean_m": 242.7,
+   "max_m": 201.3,
+   "mean_m": 92.3,
    "pleiades": "423562",
-   "points": 5,
-   "theirs_to_ours_max_m": 101.0,
+   "points": 14,
    "title": "Aqua Appia"
   },
   {
    "accuracy_m": 20.0,
-   "id": "street:argiletum",
-   "max_m": 358.5,
-   "mean_m": 207.9,
-   "pleiades": "451243813",
-   "points": 5,
-   "theirs_to_ours_max_m": 97.0,
-   "title": "Argiletum"
-  },
-  {
-   "accuracy_m": 20.0,
    "id": "murus_servianus",
-   "max_m": 394.5,
-   "mean_m": 202.2,
+   "max_m": 150.2,
+   "mean_m": 55.1,
    "pleiades": "103808101",
-   "points": 13,
-   "theirs_to_ours_max_m": 213.9,
+   "points": 58,
    "title": "Murus Servii Tullii"
   },
   {
    "accuracy_m": 20.0,
-   "id": "cloaca_maxima",
-   "max_m": 267.0,
-   "mean_m": 166.6,
-   "pleiades": "867802692",
+   "id": "aqua_virgo",
+   "max_m": 54.4,
+   "mean_m": 52.1,
+   "pleiades": "423568",
    "points": 5,
-   "theirs_to_ours_max_m": 95.0,
-   "title": "Cloaca Maxima"
+   "title": "Aqua Virgo"
   },
   {
    "accuracy_m": 20.0,
    "id": "street:vicus_iugarius",
-   "max_m": 232.9,
-   "mean_m": 109.1,
+   "max_m": 112.1,
+   "mean_m": 50.0,
    "pleiades": "889101791",
-   "points": 5,
-   "theirs_to_ours_max_m": 68.2,
+   "points": 4,
    "title": "Vicus Iugarius"
   },
   {
    "accuracy_m": 20.0,
+   "id": "aqua_virgo_empire",
+   "max_m": 44.1,
+   "mean_m": 40.2,
+   "pleiades": "423568",
+   "points": 5,
+   "title": "Aqua Virgo"
+  },
+  {
+   "accuracy_m": 20.0,
+   "id": "street:argiletum",
+   "max_m": 0.5,
+   "mean_m": 0.3,
+   "pleiades": "451243813",
+   "points": 3,
+   "title": "Argiletum"
+  },
+  {
+   "accuracy_m": 20.0,
    "id": "street:clivus_capitolinus",
-   "max_m": 150.2,
-   "mean_m": 83.6,
+   "max_m": 0.4,
+   "mean_m": 0.2,
    "pleiades": "152699900",
-   "points": 7,
-   "theirs_to_ours_max_m": 98.1,
+   "points": 6,
    "title": "Clivus Capitolinus"
   }
  ],
@@ -1071,6 +1073,15 @@
   },
   {
    "how": "P-A citation",
+   "key": "Porta_Quirinalis.html",
+   "source": "platner",
+   "targets": [
+    "porta_quirinalis"
+   ],
+   "title": "Porta Quirinalis"
+  },
+  {
+   "how": "P-A citation",
    "key": "Porta_Sanqualis.html",
    "source": "platner",
    "targets": [
@@ -1494,7 +1505,7 @@
    "title": "Sacred Area of S. Omobono"
   },
   {
-   "how": "name",
+   "how": "pleiades id",
    "key": "103808101",
    "source": "pleiades",
    "targets": [
@@ -1507,6 +1518,7 @@
    "key": "128044615",
    "source": "pleiades",
    "targets": [
+    "pantheon_agrippae",
     "pantheon_agrippae_empire",
     "pantheon_hadriani"
    ],
@@ -1558,18 +1570,16 @@
    "title": "Circus Flaminius"
   },
   {
-   "how": "name",
+   "how": "pleiades id",
    "key": "165546433",
    "source": "pleiades",
    "targets": [
-    "curia_pompeia",
-    "porticus_pompeiana",
-    "theatrum_pompei"
+    "porticus_pompeiana"
    ],
    "title": "Porticus Pompei"
   },
   {
-   "how": "name",
+   "how": "pleiades id",
    "key": "166405461",
    "source": "pleiades",
    "targets": [
@@ -1615,7 +1625,7 @@
    "title": "Temple of Vespasian and Titus"
   },
   {
-   "how": "name",
+   "how": "pleiades id",
    "key": "195092807",
    "source": "pleiades",
    "targets": [
@@ -1642,7 +1652,7 @@
    "title": "Ara Maxima Herculis"
   },
   {
-   "how": "name",
+   "how": "pleiades id",
    "key": "211668069",
    "source": "pleiades",
    "targets": [
@@ -1716,7 +1726,7 @@
    "title": "Templum Veneris et Romae"
   },
   {
-   "how": "name",
+   "how": "pleiades id",
    "key": "268637493",
    "source": "pleiades",
    "targets": [
@@ -1725,7 +1735,7 @@
    "title": "Porta Collina"
   },
   {
-   "how": "name",
+   "how": "pleiades id",
    "key": "27164982",
    "source": "pleiades",
    "targets": [
@@ -1748,6 +1758,7 @@
    "key": "281368358",
    "source": "pleiades",
    "targets": [
+    "mausoleum_augusti",
     "mausoleum_augusti_empire"
    ],
    "title": "Mausoleum Augusti"
@@ -1762,7 +1773,7 @@
    "title": "Amphitheatrum Flavium"
   },
   {
-   "how": "name",
+   "how": "pleiades id",
    "key": "29110684",
    "source": "pleiades",
    "targets": [
@@ -1775,6 +1786,7 @@
    "key": "300583267",
    "source": "pleiades",
    "targets": [
+    "theatrum_marcelli",
     "theatrum_marcelli_empire"
    ],
    "title": "Theatrum Marcelli"
@@ -1807,7 +1819,7 @@
    "title": "Capitolinus Mons"
   },
   {
-   "how": "name",
+   "how": "pleiades id",
    "key": "349235208",
    "source": "pleiades",
    "targets": [
@@ -1816,7 +1828,7 @@
    "title": "Porta Querquetulana"
   },
   {
-   "how": "name",
+   "how": "pleiades id",
    "key": "354601172",
    "source": "pleiades",
    "targets": [
@@ -1825,7 +1837,7 @@
    "title": "Porta Rauduscula"
   },
   {
-   "how": "name",
+   "how": "pleiades id",
    "key": "37637607",
    "source": "pleiades",
    "targets": [
@@ -1834,7 +1846,7 @@
    "title": "Porta Naevia"
   },
   {
-   "how": "name",
+   "how": "pleiades id",
    "key": "377055053",
    "source": "pleiades",
    "targets": [
@@ -1870,7 +1882,7 @@
    "title": "Meta Sudans"
   },
   {
-   "how": "name",
+   "how": "pleiades id",
    "key": "423560",
    "source": "pleiades",
    "targets": [
@@ -1879,7 +1891,7 @@
    "title": "Aqua Anio Vetus"
   },
   {
-   "how": "name",
+   "how": "pleiades id",
    "key": "423562",
    "source": "pleiades",
    "targets": [
@@ -1901,12 +1913,13 @@
    "key": "423568",
    "source": "pleiades",
    "targets": [
+    "aqua_virgo",
     "aqua_virgo_empire"
    ],
    "title": "Aqua Virgo"
   },
   {
-   "how": "name",
+   "how": "pleiades id",
    "key": "425068",
    "source": "pleiades",
    "targets": [
@@ -1960,7 +1973,7 @@
    "title": "Argiletum"
   },
   {
-   "how": "name",
+   "how": "pleiades id",
    "key": "455817200",
    "source": "pleiades",
    "targets": [
@@ -2023,7 +2036,7 @@
    "title": "Forum Romanum"
   },
   {
-   "how": "name",
+   "how": "pleiades id",
    "key": "502889801",
    "source": "pleiades",
    "targets": [
@@ -2032,7 +2045,7 @@
    "title": "Porta Flumentana"
   },
   {
-   "how": "name",
+   "how": "pleiades id",
    "key": "504705904",
    "source": "pleiades",
    "targets": [
@@ -2050,7 +2063,7 @@
    "title": "Porticus Aemilia"
   },
   {
-   "how": "name",
+   "how": "pleiades id",
    "key": "524616090",
    "source": "pleiades",
    "targets": [
@@ -2068,12 +2081,10 @@
    "title": "Colossus Neronis"
   },
   {
-   "how": "name",
+   "how": "pleiades id",
    "key": "541950317",
    "source": "pleiades",
    "targets": [
-    "curia_pompeia",
-    "porticus_pompeiana",
     "theatrum_pompei"
    ],
    "title": "Theatrum Pompei"
@@ -2160,7 +2171,7 @@
    "title": "Esquilinus Mons"
   },
   {
-   "how": "name",
+   "how": "pleiades id",
    "key": "68481414",
    "source": "pleiades",
    "targets": [
@@ -2259,12 +2270,11 @@
    "title": "Column of Trajan"
   },
   {
-   "how": "name",
+   "how": "pleiades id",
    "key": "792237246",
    "source": "pleiades",
    "targets": [
-    "domus_augustana",
-    "rostra_augusti"
+    "domus_augustana"
    ],
    "title": "Domus Augustana"
   },
@@ -2282,7 +2292,7 @@
    "key": "796942355",
    "source": "pleiades",
    "targets": [
-    "rostra_republic"
+    "rostra_augusti"
    ],
    "title": "Rostra"
   },
@@ -2337,6 +2347,7 @@
    "key": "854946506",
    "source": "pleiades",
    "targets": [
+    "saepta_iulia",
     "saepta_iulia_empire"
    ],
    "title": "Saepta Iulia"
@@ -2432,7 +2443,7 @@
    "title": "Porta Collina"
   },
   {
-   "how": "name",
+   "how": "pleiades id",
    "key": "999196280",
    "source": "pleiades",
    "targets": [
@@ -4741,16 +4752,6 @@
    "source": "platner",
    "title": "Pons Agrippae",
    "url": "https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Pons_Agrippae.html",
-   "zone": ""
-  },
-  {
-   "earliest": null,
-   "key": "Porta_Quirinalis.html",
-   "kind": "gate",
-   "score": 2.5,
-   "source": "platner",
-   "title": "Porta Quirinalis",
-   "url": "https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Porta_Quirinalis.html",
    "zone": ""
   },
   {
@@ -8509,23 +8510,6 @@
    "short_ratio": 0.66
   },
   {
-   "axis_diff": 33.4,
-   "flags": [
-    "axis",
-    "size"
-   ],
-   "id": "curia_pompeia",
-   "long_ratio": 0.67,
-   "ours_axis": 0.0,
-   "ours_long_m": 30.0,
-   "ours_short_m": 20.0,
-   "outline_axis": 146.6,
-   "outline_long_m": 45.0,
-   "outline_short_m": 16.5,
-   "pleiades": "541950317",
-   "short_ratio": 1.21
-  },
-  {
    "axis_diff": null,
    "flags": [
     "size"
@@ -8725,6 +8709,23 @@
    "short_ratio": 6.19
   },
   {
+   "axis_diff": 86.1,
+   "flags": [
+    "axis",
+    "size"
+   ],
+   "id": "pantheon_agrippae",
+   "long_ratio": 0.53,
+   "ours_axis": 90.0,
+   "ours_long_m": 43.8,
+   "ours_short_m": 41.1,
+   "outline_axis": 176.1,
+   "outline_long_m": 82.8,
+   "outline_short_m": 58.1,
+   "pleiades": "128044615",
+   "short_ratio": 0.71
+  },
+  {
    "axis_diff": 3.9,
    "flags": [
     "size"
@@ -8872,23 +8873,6 @@
    "short_ratio": 9.21
   },
   {
-   "axis_diff": 77.4,
-   "flags": [
-    "axis",
-    "size"
-   ],
-   "id": "porticus_pompeiana",
-   "long_ratio": 4.0,
-   "ours_axis": 44.0,
-   "ours_long_m": 180.0,
-   "ours_short_m": 135.0,
-   "outline_axis": 146.6,
-   "outline_long_m": 45.0,
-   "outline_short_m": 16.5,
-   "pleiades": "541950317",
-   "short_ratio": 8.2
-  },
-  {
    "axis_diff": null,
    "flags": [
     "size"
@@ -8905,38 +8889,20 @@
    "short_ratio": 0.27
   },
   {
-   "axis_diff": 28.3,
+   "axis_diff": 9.1,
    "flags": [
-    "axis",
     "size"
    ],
    "id": "rostra_augusti",
-   "long_ratio": 0.11,
+   "long_ratio": 0.81,
    "ours_axis": 16.0,
    "ours_long_m": 24.0,
    "ours_short_m": 14.0,
-   "outline_axis": 44.3,
-   "outline_long_m": 224.7,
-   "outline_short_m": 86.4,
-   "pleiades": "792237246",
-   "short_ratio": 0.16
-  },
-  {
-   "axis_diff": 80.9,
-   "flags": [
-    "axis",
-    "size"
-   ],
-   "id": "rostra_republic",
-   "long_ratio": 0.4,
-   "ours_axis": 106.0,
-   "ours_long_m": 12.0,
-   "ours_short_m": 8.0,
    "outline_axis": 25.1,
    "outline_long_m": 29.7,
    "outline_short_m": 18.2,
    "pleiades": "796942355",
-   "short_ratio": 0.44
+   "short_ratio": 0.77
   },
   {
    "axis_diff": null,
@@ -8969,6 +8935,23 @@
    "outline_short_m": 56.0,
    "pleiades": "152567558",
    "short_ratio": 1.73
+  },
+  {
+   "axis_diff": 58.2,
+   "flags": [
+    "axis",
+    "size"
+   ],
+   "id": "theatrum_marcelli",
+   "long_ratio": 1.93,
+   "ours_axis": 22.5,
+   "ours_long_m": 150.0,
+   "ours_short_m": 150.0,
+   "outline_axis": 144.3,
+   "outline_long_m": 77.7,
+   "outline_short_m": 30.4,
+   "pleiades": "300583267",
+   "short_ratio": 4.93
   },
   {
    "axis_diff": 58.2,
@@ -9364,6 +9347,44 @@
  ],
  "positions": [
   {
+   "bearing_to_reference": 158,
+   "distance_m": 476.4,
+   "id": "sepulcrum_scipionum",
+   "ours": [
+    1060.5,
+    1411.4
+   ],
+   "overrides": "exact",
+   "pleiades": "999196280",
+   "reference": [
+    1240.9,
+    1852.2
+   ],
+   "reference_accuracy_m": 5.0,
+   "status": "misplaced",
+   "title": "Sep. Scipionum",
+   "tolerance_m": 20.0
+  },
+  {
+   "bearing_to_reference": 135,
+   "distance_m": 222.9,
+   "id": "horti_sallustiani",
+   "ours": [
+    803.6,
+    -1889.2
+   ],
+   "overrides": "rough",
+   "pleiades": "166405461",
+   "reference": [
+    960.8,
+    -1731.2
+   ],
+   "reference_accuracy_m": 20.0,
+   "status": "misplaced",
+   "title": "Horti Sallustiani",
+   "tolerance_m": 20.0
+  },
+  {
    "bearing_to_reference": 123,
    "distance_m": 181.8,
    "id": "forum_romanum",
@@ -9399,6 +9420,25 @@
    "reference_accuracy_m": 20.0,
    "status": "misplaced",
    "title": "Thermae Traiani",
+   "tolerance_m": 20.0
+  },
+  {
+   "bearing_to_reference": 256,
+   "distance_m": 158.7,
+   "id": "domus_augustana",
+   "ours": [
+    298.3,
+    455.6
+   ],
+   "overrides": "approx",
+   "pleiades": "792237246",
+   "reference": [
+    144.1,
+    493.2
+   ],
+   "reference_accuracy_m": 20.0,
+   "status": "misplaced",
+   "title": "Domus Augustana",
    "tolerance_m": 20.0
   },
   {
@@ -9497,6 +9537,25 @@
    "tolerance_m": 20.0
   },
   {
+   "bearing_to_reference": 21,
+   "distance_m": 111.3,
+   "id": "pons_aemilius",
+   "ours": [
+    -530.2,
+    455.6
+   ],
+   "overrides": "exact",
+   "pleiades": "425068",
+   "reference": [
+    -491.1,
+    351.5
+   ],
+   "reference_accuracy_m": 20.0,
+   "status": "misplaced",
+   "title": "Pons Aemilius",
+   "tolerance_m": 20.0
+  },
+  {
    "bearing_to_reference": 108,
    "distance_m": 91.2,
    "id": "forum_traiani",
@@ -9573,6 +9632,25 @@
    "tolerance_m": 20.0
   },
   {
+   "bearing_to_reference": 162,
+   "distance_m": 47.8,
+   "id": "pons_cestius",
+   "ours": [
+    -679.0,
+    227.8
+   ],
+   "overrides": "exact",
+   "pleiades": "211668069",
+   "reference": [
+    -664.0,
+    273.2
+   ],
+   "reference_accuracy_m": 20.0,
+   "status": "misplaced",
+   "title": "Pons Cestius",
+   "tolerance_m": 20.0
+  },
+  {
    "bearing_to_reference": 280,
    "distance_m": 43.2,
    "id": "emporium",
@@ -9608,6 +9686,25 @@
    "reference_accuracy_m": 20.0,
    "status": "misplaced",
    "title": "Forum Boarium (at Rome)",
+   "tolerance_m": 20.0
+  },
+  {
+   "bearing_to_reference": 81,
+   "distance_m": 41.9,
+   "id": "porta_capena",
+   "ours": [
+    430.8,
+    950.8
+   ],
+   "overrides": "approx",
+   "pleiades": "27164982",
+   "reference": [
+    472.2,
+    944.6
+   ],
+   "reference_accuracy_m": 2000.0,
+   "status": "within reference accuracy",
+   "title": "Porta Capena",
    "tolerance_m": 20.0
   },
   {
@@ -9668,23 +9765,42 @@
    "tolerance_m": 20.0
   },
   {
-   "bearing_to_reference": 274,
-   "distance_m": 25.1,
-   "id": "rostra_republic",
+   "bearing_to_reference": 128,
+   "distance_m": 21.4,
+   "id": "pons_fabricius",
    "ours": [
-    -30.0,
-    -11.1
+    -602.2,
+    144.7
    ],
    "overrides": "exact",
-   "pleiades": "796942355",
+   "pleiades": "68481414",
    "reference": [
-    -55.0,
-    -12.8
+    -585.2,
+    157.7
    ],
    "reference_accuracy_m": 20.0,
    "status": "misplaced",
-   "title": "Rostra",
-   "tolerance_m": 10.0
+   "title": "Pons Fabricius",
+   "tolerance_m": 20.0
+  },
+  {
+   "bearing_to_reference": 304,
+   "distance_m": 20.0,
+   "id": "mausoleum_augusti",
+   "ours": [
+    -720.8,
+    -1489.2
+   ],
+   "overrides": "exact",
+   "pleiades": "281368358",
+   "reference": [
+    -737.4,
+    -1500.3
+   ],
+   "reference_accuracy_m": 5.0,
+   "status": "ok",
+   "title": "Mausoleum Augusti",
+   "tolerance_m": 20.0
   },
   {
    "bearing_to_reference": 304,
@@ -9722,6 +9838,25 @@
    "reference_accuracy_m": 20.0,
    "status": "ok",
    "title": "Sacred Area of S. Omobono",
+   "tolerance_m": 20.0
+  },
+  {
+   "bearing_to_reference": 132,
+   "distance_m": 17.7,
+   "id": "theatrum_pompei",
+   "ours": [
+    -969.4,
+    -310.7
+   ],
+   "overrides": "exact",
+   "pleiades": "541950317",
+   "reference": [
+    -956.1,
+    -299.0
+   ],
+   "reference_accuracy_m": 20.0,
+   "status": "ok",
+   "title": "Theatrum Pompei",
    "tolerance_m": 20.0
   },
   {
@@ -9803,6 +9938,25 @@
   {
    "bearing_to_reference": 53,
    "distance_m": 9.5,
+   "id": "theatrum_marcelli",
+   "ours": [
+    -472.2,
+    66.7
+   ],
+   "overrides": "exact",
+   "pleiades": "300583267",
+   "reference": [
+    -464.7,
+    60.9
+   ],
+   "reference_accuracy_m": 20.0,
+   "status": "ok",
+   "title": "Theatrum Marcelli",
+   "tolerance_m": 20.0
+  },
+  {
+   "bearing_to_reference": 53,
+   "distance_m": 9.5,
    "id": "theatrum_marcelli_empire",
    "ours": [
     -472.2,
@@ -9856,6 +10010,25 @@
    "status": "ok",
    "title": "Lacus Iuturnae",
    "tolerance_m": 10.0
+  },
+  {
+   "bearing_to_reference": 298,
+   "distance_m": 6.8,
+   "id": "pantheon_agrippae",
+   "ours": [
+    -695.9,
+    -677.9
+   ],
+   "overrides": "exact",
+   "pleiades": "128044615",
+   "reference": [
+    -702.0,
+    -681.1
+   ],
+   "reference_accuracy_m": 20.0,
+   "status": "ok",
+   "title": "Pantheon",
+   "tolerance_m": 20.0
   },
   {
    "bearing_to_reference": 298,
@@ -10314,6 +10487,25 @@
    "tolerance_m": 20.0
   },
   {
+   "bearing_to_reference": 60,
+   "distance_m": 3.4,
+   "id": "rostra_augusti",
+   "ours": [
+    -58.0,
+    -11.1
+   ],
+   "overrides": "approx",
+   "pleiades": "796942355",
+   "reference": [
+    -55.0,
+    -12.8
+   ],
+   "reference_accuracy_m": 20.0,
+   "status": "ok",
+   "title": "Rostra",
+   "tolerance_m": 10.0
+  },
+  {
    "bearing_to_reference": 127,
    "distance_m": 3.2,
    "id": "regia",
@@ -10542,6 +10734,63 @@
    "tolerance_m": 20.0
   },
   {
+   "bearing_to_reference": 255,
+   "distance_m": 0.4,
+   "id": "pyramis_cestii",
+   "ours": [
+    -369.7,
+    1790.3
+   ],
+   "overrides": "exact",
+   "pleiades": "195092807",
+   "reference": [
+    -370.1,
+    1790.4
+   ],
+   "reference_accuracy_m": 5.0,
+   "status": "ok",
+   "title": "Pyramid of Cestius",
+   "tolerance_m": 20.0
+  },
+  {
+   "bearing_to_reference": 225,
+   "distance_m": 0.0,
+   "id": "porta_esquilina",
+   "ours": [
+    1330.4,
+    -364.3
+   ],
+   "overrides": "approx",
+   "pleiades": "29110684",
+   "reference": [
+    1330.4,
+    -364.3
+   ],
+   "reference_accuracy_m": 20.0,
+   "status": "ok",
+   "title": "Arch of Gallienus",
+   "tolerance_m": 20.0
+  },
+  {
+   "bearing_to_reference": 180,
+   "distance_m": 0.0,
+   "id": "porta_naevia",
+   "ours": [
+    355.9,
+    1506.1
+   ],
+   "overrides": "rough",
+   "pleiades": "37637607",
+   "reference": [
+    355.9,
+    1506.1
+   ],
+   "reference_accuracy_m": 5.0,
+   "status": "ok",
+   "title": "Porta Naevia",
+   "tolerance_m": 20.0
+  },
+  {
    "bearing_to_reference": 180,
    "distance_m": 0.0,
    "id": "aedes_vestae",
@@ -10561,6 +10810,25 @@
    "tolerance_m": 10.0
   },
   {
+   "bearing_to_reference": 236,
+   "distance_m": 0.0,
+   "id": "porta_collina",
+   "ours": [
+    1108.5,
+    -1647.5
+   ],
+   "overrides": "approx",
+   "pleiades": "268637493",
+   "reference": [
+    1108.4,
+    -1647.5
+   ],
+   "reference_accuracy_m": 20.0,
+   "status": "ok",
+   "title": "Porta Collina",
+   "tolerance_m": 20.0
+  },
+  {
    "bearing_to_reference": 180,
    "distance_m": 0.0,
    "id": "ianus_geminus",
@@ -10578,13 +10846,32 @@
    "status": "ok",
    "title": "The Temple of Janus (Rome)",
    "tolerance_m": 10.0
+  },
+  {
+   "bearing_to_reference": 0,
+   "distance_m": 0.0,
+   "id": "aedes_dei_fidii",
+   "ours": [
+    104.9,
+    -529.9
+   ],
+   "overrides": "approx",
+   "pleiades": "504705904",
+   "reference": [
+    104.9,
+    -529.9
+   ],
+   "reference_accuracy_m": 20.0,
+   "status": "ok",
+   "title": "Semo Sancus, Aedes",
+   "tolerance_m": 20.0
   }
  ],
  "relations": [
   {
-   "detail": "41 m from the clivus, 73 m from its foot",
+   "detail": "18 m from the clivus, 36 m from its foot",
    "name": "Saturn at the foot of the Clivus Capitolinus",
-   "ok": false,
+   "ok": true,
    "source": "Platner-Ashby s.v. Saturnus, Aedes; Clivus Capitolinus"
   },
   {
@@ -10594,9 +10881,9 @@
    "source": "Platner-Ashby s.v. Iuturnae Lacus; Castor, Aedes"
   },
   {
-   "detail": "Regia 32 m and Vesta 60 m from the Via Sacra; Regia 140 m from its Forum end, 91 m east of the Forum centre",
-   "name": "The Regia and Vesta on the Sacra Via at the Forum's east end",
-   "ok": false,
+   "detail": "Regia 14 m and Vesta 40 m from the Sacra Via; 91 and 75 m east of the Forum's centre",
+   "name": "The Regia and Vesta where the Sacra Via reaches the Forum's east end",
+   "ok": true,
    "source": "Platner-Ashby s.v. Sacra Via; Regia; Vesta, Aedes"
   },
   {
@@ -10636,15 +10923,15 @@
    "source": "Platner-Ashby s.v. Circus Maximus"
   },
   {
-   "detail": "up to 376 m from the drawn wall, at (1361, -1033)",
+   "detail": "up to 68 m from the drawn wall, at (1361, -1033)",
    "name": "surviving stretch 1 of the Servian wall (near porta_viminalis) on the wall drawn through the gates",
    "ok": false,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 312 m from the drawn wall, at (127, -438)",
-   "name": "surviving stretch 2 of the Servian wall (near porta_fontinalis) on the wall drawn through the gates",
-   "ok": false,
+   "detail": "up to 3 m from the drawn wall, at (127, -438)",
+   "name": "surviving stretch 2 of the Servian wall (near porta_sanqualis) on the wall drawn through the gates",
+   "ok": true,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
@@ -10660,61 +10947,61 @@
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 94 m from the drawn wall, at (1332, -152)",
+   "detail": "up to 85 m from the drawn wall, at (1332, -152)",
    "name": "surviving stretch 5 of the Servian wall (near porta_esquilina) on the wall drawn through the gates",
    "ok": false,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 190 m from the drawn wall, at (1419, -610)",
+   "detail": "up to 95 m from the drawn wall, at (1419, -610)",
    "name": "surviving stretch 6 of the Servian wall (near porta_esquilina) on the wall drawn through the gates",
    "ok": false,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 52 m from the drawn wall, at (752, -1523)",
+   "detail": "up to 129 m from the drawn wall, at (752, -1523)",
    "name": "surviving stretch 7 of the Servian wall (near porta_collina) on the wall drawn through the gates",
-   "ok": true,
-   "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
-  },
-  {
-   "detail": "up to 15 m from the drawn wall, at (697, -1367)",
-   "name": "surviving stretch 8 of the Servian wall (near porta_collina) on the wall drawn through the gates",
-   "ok": true,
-   "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
-  },
-  {
-   "detail": "up to 280 m from the drawn wall, at (1239, -1209)",
-   "name": "surviving stretch 9 of the Servian wall (near porta_viminalis) on the wall drawn through the gates",
    "ok": false,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 110 m from the drawn wall, at (1262, -23)",
+   "detail": "up to 46 m from the drawn wall, at (697, -1367)",
+   "name": "surviving stretch 8 of the Servian wall (near porta_quirinalis) on the wall drawn through the gates",
+   "ok": true,
+   "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
+  },
+  {
+   "detail": "up to 36 m from the drawn wall, at (1239, -1209)",
+   "name": "surviving stretch 9 of the Servian wall (near porta_viminalis) on the wall drawn through the gates",
+   "ok": true,
+   "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
+  },
+  {
+   "detail": "up to 72 m from the drawn wall, at (1262, -23)",
    "name": "surviving stretch 10 of the Servian wall (near porta_esquilina) on the wall drawn through the gates",
    "ok": false,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 150 m from the drawn wall, at (-59, -438)",
+   "detail": "up to 27 m from the drawn wall, at (-59, -438)",
    "name": "surviving stretch 11 of the Servian wall (near porta_fontinalis) on the wall drawn through the gates",
-   "ok": false,
+   "ok": true,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 4 m from the drawn wall, at (1337, -396)",
+   "detail": "up to 7 m from the drawn wall, at (1337, -396)",
    "name": "surviving stretch 12 of the Servian wall (near porta_esquilina) on the wall drawn through the gates",
    "ok": true,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 338 m from the drawn wall, at (1357, -977)",
+   "detail": "up to 44 m from the drawn wall, at (1357, -977)",
    "name": "surviving stretch 13 of the Servian wall (near porta_viminalis) on the wall drawn through the gates",
-   "ok": false,
+   "ok": true,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
   },
   {
-   "detail": "up to 72 m from the drawn wall, at (747, -1545)",
+   "detail": "up to 150 m from the drawn wall, at (747, -1545)",
    "name": "surviving stretch 14 of the Servian wall (near porta_collina) on the wall drawn through the gates",
    "ok": false,
    "source": "Pleiades 103808101 (Murus Servii Tullii, OpenStreetMap tracts); Platner-Ashby s.v. Murus Servii Tullii"
@@ -10750,7 +11037,7 @@
    "source": "topography.yaml tiber.course; Platner-Ashby s.v. Pons Sublicius"
   },
   {
-   "detail": "route passes 56 m from it",
+   "detail": "route passes 0 m from it",
    "name": "aqua_appia reaches the Porta Capena",
    "ok": true,
    "source": "Frontinus 1.5 (Platner-Ashby s.v. Aqua Appia)"
@@ -10765,20 +11052,20 @@
  "summary": {
   "dataset": {
    "empire": 55,
-   "monuments": 162,
+   "monuments": 163,
    "streets": 28
   },
   "date_issues": 25,
   "measured_flags": 0,
-  "misplaced": 16,
-  "missing": 569,
+  "misplaced": 20,
+  "missing": 568,
   "missing_republic": 337,
-  "outline_flags": 54,
+  "outline_flags": 53,
   "references": {
    "platner": {
     "excluded": 1,
-    "matched": 123,
-    "missing": 436
+    "matched": 124,
+    "missing": 435
    },
    "pleiades": {
     "excluded": 19,
@@ -10786,14 +11073,14 @@
     "missing": 133
    }
   },
-  "relations_failed": 11,
-  "scene_buried": 110,
-  "scene_floating": 48,
-  "scene_houses_in_monuments": 205,
+  "relations_failed": 6,
+  "scene_buried": 108,
+  "scene_floating": 36,
+  "scene_houses_in_monuments": 166,
   "scene_houses_on_streets": 14,
   "scene_in_river": 4,
-  "scene_overlaps": 52,
-  "scene_streets_through": 42
+  "scene_overlaps": 49,
+  "scene_streets_through": 29
  },
  "topography": [
   {
@@ -10854,13 +11141,13 @@
    "scene_max_m": 56.6
   },
   {
-   "diff_m": 1.6,
+   "diff_m": 1.9,
    "expected_m": 61,
    "flag": false,
    "id": "quirinalis",
    "kind": "hills",
    "scene_m": 61.8,
-   "scene_max_m": 62.6
+   "scene_max_m": 62.9
   },
   {
    "diff_m": -1.5,
@@ -10898,7 +11185,7 @@
    "id": "forum_valley",
    "kind": "valleys",
    "scene_m": 11.0,
-   "scene_max_m": 36.4
+   "scene_max_m": 38.1
   },
   {
    "diff_m": -0.2,

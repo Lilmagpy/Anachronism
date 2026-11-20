@@ -291,7 +291,7 @@ monuments:
   form: "platform with a curved front adorned with the ships' beaks; steps up from the Comitium (P&A); curved steps of Monte Verde tufa on cappellaccio, with a canalis 9 m behind them"
   sources: ["Livy 8.14.12", "Pliny NH 34.20", "Dio 43.49.1", "Suetonius Aug. 100", "Platner-Ashby s.v. Rostra"]
   notes: "CORRECTED: the previous 'tufa platform about 3.5 m high, 12 m long' is not in P&A and has been removed. P&A: a low platform in the mid 5th c. separated Comitium and Forum; after the Gallic fire (390) replaced by a higher one reached by steps; later rebuilt on a new curved plan (canalis, two curved steps, suggestus; coin of 45 BC of Lollius Palikanus). Name from the beaks of the Antium ships, 338 BC (Pliny NH 34.20; Livy 8.14.12). Restored by Sulla; moved by Caesar to the north-west end of the Forum (Suet. Aug. 100 'rostra veteres'; Dio 43.49.1). Livy 8.14.12 verified in the Latin text."
-  pleiades: 796942355
+  pleiades: null  # F2: Pleiades 796942355 maps the Augustan Rostra (OSM "Rostra Vetera" remains), kept on rostra_augusti
   verified: platner-ashby+pleiades
   model: rostra
   bearing_deg: 196
@@ -316,7 +316,7 @@ monuments:
   form: "Caesar's concrete core 3.50 m high, over 13 m long; Augustus enclosed it in a larger core carrying a curved flight of steps on the west across the whole length; the platform extended 10 m forward from the western brick wall, its front about 24 m long and 3 m high; front and side walls of tufa blocks faced with marble, bronze beaks in two rows let into the facing; travertine paving on travertine beams and piers; a marble balustrade along the sides and front with an opening in the middle (Platner-Ashby s.v. Rostra Augusti)"
   materials: [tufa, marble, travertine, bronze, brick]
   sources: ["Dio 43.49", "Pomponius, Dig. 1.2.2", "Suetonius Aug. 100", "Tacitus Ann. 4.67", "Platner-Ashby s.v. Rostra Augusti"]
-  pleiades: null
+  pleiades: 796942355
   notes: "Added in U8 so that the Forum has its Rostra after 44 BC (rostra_republic is gone from 44 BC). Mark Antony's funeral speech for Caesar was probably made from here (Platner-Ashby). Statues stood on it (Tac. Ann. 4.67, Augustus; Amm. Marc. 16.10.13); which ones in each year is not known, so the figures are generic."
   model: rostra_augusti
   bearing_deg: 106
@@ -576,8 +576,8 @@ monuments:
   english: Temple of Saturn (and Aerarium)
   type: temple
   regio: 8
-  lat: 41.892
-  lon: 12.484
+  lat: 41.89241
+  lon: 12.484153
   precision: exact
   location: west end of the Forum, at the foot of the Capitol (Clivus Capitolinus); the Aerarium was in its podium
   built: {year: -497, certainty: traditional, by: "dedication ascribed to the first years of the Republic: T. Larcius as dictator (501, Macrob. Sat. 1.8.1), begun 498 (Dion. Hal. 6.1.4), dedicated 497 (Livy 2.21.2); other traditions credit Tullus Hostilius or the last Tarquin (Varro)"}
@@ -596,12 +596,13 @@ monuments:
         about 40 long, travertine and peperino walls with concrete filling, marble facing; Ionic hexastyle prostyle with
         two columns on each side besides the corners; columns 11 m high and 1.43 m thick at the base (the surviving
         4th-century columns)", unverified: [podium_h_m]}
-  offset_m: [30, 44]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 53 m off
-  bearing_deg: 80  # unverified
+  bearing_deg: 20  # F2: front faces NNE (see location_source)
   footprint_m: {length: 40, width: 22.5}
   phases: [{from: -42, state: standing, model: temple_hexastyle_ionic}]
-  geometry_source: "Platner-Ashby s.v. Saturnus, Aedes (podium 22.50 m wide, about 40 long; Ionic hexastyle prostyle, columns 11 m high; Plancus phase drawn as the kit Ionic hexastyle); front faces the Forum (east); archaic phase small Tuscan"
-  geometry_unverified: [bearing_deg, model]
+  geometry_source: "Platner-Ashby s.v. Saturnus, Aedes (podium 22.50 m wide, about 40 long; Ionic hexastyle prostyle, columns 11 m high; Plancus phase drawn as the kit Ionic hexastyle); the front faces north-north-east (F2, see location_source); archaic phase small Tuscan"
+  geometry_unverified: [model]
+  location_confidence: high
+  location_source: "F2: Platner-Ashby s.v. Saturnus, Aedes (read): the clivus Capitolinus skirts the north front and west side of the temple (s.v. Clivus Capitolinus), and its front and east side rise very high above the Forum, so the front faces north (NNE, like the other buildings across the Forum axis), the 40 m length running north-south. The north front is set just south of the excavated pavement of the clivus (Pleiades 152699900, OpenStreetMap) and the east side 7 m west of the Basilica Iulia (Pleiades 173078007, OpenStreetMap), the width of the Vicus Iugarius between them; Wikipedia (it) s.v. Tempio di Saturno (41.892428, 12.484111) lies 4 m away. Moved 17 m west from the earlier point, front turned from east (80) to NNE (20)"
 - id: aedes_castoris
   latin: Aedes Castoris
   english: Temple of Castor and Pollux
@@ -1463,7 +1464,7 @@ monuments:
   built: {year: -194, certainty: certain, by: "vowed 196 by the aediles Cn. Domitius Ahenobarbus and C. Scribonius Curio, built from fines (Livy 33.42.10); dedicated 194 by Domitius (Livy 34.53.4), on 13 February (Ov. Fast. 2.193)"}
   sources: ["Livy 33.42.10", "Livy 34.53.4", "Ovid Fasti 2.193-194", "Vitruvius 3.2.3", "Platner-Ashby s.v. Faunus, Aedes"]
   notes: "Verified: P&A: the only temple of Faunus in Rome, at the north end of the Tiber island (Ov. Fast. 2.193-194), vowed in 196 by the aediles Cn. Domitius Ahenobarbus and C. Scribonius Curio out of fines from three pecuarii (Livy 33.42.10), dedicated two years later by Domitius (Livy 34.53.4) on the Ides (of February); prostyle (Vitr. 3.2.3). Not in Pleiades separately."
-  pleiades: null
+  pleiades: 455817200
   verified: platner-ashby
   model: temple_tetrastyle_ionic
   bearing_deg: 90  # unverified
@@ -2205,6 +2206,7 @@ monuments:
   geometry_source: "Platner-Ashby s.v. Theatrum Pompei (diameter 150-160 m, scaena about 95 m long; facade of three arcades Doric/Ionic/Corinthian, 24 peperino arches in the lowest; temple of Venus Victrix at the top of the cavea, Gell. NA 10.1.7)"
   geometry_note: "cavea opens toward the north (scaena to the south); the temple on the axis faces the stage"
   geometry_unverified: [bearing_deg]
+  pleiades: 541950317
 - id: curia_pompeia
   latin: Curia Pompeia
   english: Curia of Pompey
@@ -2242,6 +2244,7 @@ monuments:
   height_m: 11  # unverified
   geometry_source: "Platner-Ashby s.v. Porticus Pompei (rectangular court about 180 m long and 135 wide, four rows of columns)"
   geometry_unverified: [bearing_deg, height_m]
+  pleiades: 165546433
 - id: theatrum_scauri
   latin: Theatrum M. Aemilii Scauri
   english: Temporary theatre of Scaurus
@@ -2279,6 +2282,7 @@ monuments:
   geometry_source: "Platner-Ashby s.v. Theatrum Marcelli (diameter about 150 m, scaena about 80-90 m long and 20 deep, apsidal halls 25 x 15 m at its ends; stage toward the river, main axis NNE-SSW; thirteen piers 3 m wide and 2 deep; three open arcades, Doric then Ionic)"
   geometry_note: "bearing: scaena toward the river (west-southwest), axis NNE-SSW so the open side faces NNE; the dataset radius 65 comes from the 130 m published diameter, Platner says 150 m"
   geometry_unverified: [height_m]
+  pleiades: 300583267
 - id: amphitheatrum_tauri
   latin: Amphitheatrum Statili Tauri
   english: Amphitheatre of Statilius Taurus
@@ -2315,6 +2319,7 @@ monuments:
   construction: {begun: -54, completed: -26}  # work years; see geometry_source
   geometry_source: "Platner-Ashby s.v. Saepta Julia (piers 1.70 m square, 6.20 m apart; enclosure about 300 m long on the Via Lata side, Diribitorium beside); Cic. Att. 4.16.8"
   geometry_unverified: [bearing_deg, footprint_m, height_m]
+  pleiades: 854946506
 - id: pantheon_agrippae
   latin: Pantheum Agrippae
   english: Pantheon of Agrippa (first Pantheon)
@@ -2331,6 +2336,7 @@ monuments:
   footprint_m: {length: 41.1, width: 43.76}  # unverified
   geometry_source: "Platner-Ashby s.v. Pantheon (Agrippa podium 43.76 m wide, 19.82 deep, faced south, pronaos 21.26 m); rotunda is Hadrianic and absent"
   geometry_unverified: [footprint_m]
+  pleiades: 128044615
 - id: mausoleum_augusti
   latin: Mausoleum Augusti
   english: Mausoleum of Augustus
@@ -2348,6 +2354,7 @@ monuments:
   height_m: 45  # unverified
   geometry_source: "Platner-Ashby s.v. Mausoleum Augusti (drum of 87 m external diameter at the base, faced with travertine; entrance on the south; Strabo 5.3.8 mound planted with evergreens)"
   geometry_unverified: [height_m]
+  pleiades: 281368358
 - id: thermae_agrippae
   latin: Thermae Agrippae
   english: Baths of Agrippa
@@ -2419,14 +2426,15 @@ monuments:
   phases: [{from: -49, state: burnt}, {from: -16, state: standing}]
   geometry_source: "form assumed from date and type, native kit size (no measured plan); Vitr. 3.2.7 (dipteral, Doric)"
   geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+  pleiades: 524616090
 - id: aedes_salutis
   latin: Aedes Salutis
   english: Temple of Salus
   type: temple
   regio: 6
-  lat: 41.9005
-  lon: 12.4880
-  precision: approx
+  lat: 41.8999
+  lon: 12.4872
+  precision: rough
   location: Quirinal
   built: {year: -302, certainty: certain, by: "vowed by C. Iunius Bubulcus 311; dedicated 302 (Livy 9.43.25, 10.1.9)"}
   form: "painted by C. Fabius Pictor"
@@ -2436,13 +2444,16 @@ monuments:
   construction: {begun: -307, completed: -302}  # work years; see geometry_source
   geometry_source: "form assumed from date and type, native kit size (no measured plan)"
   geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+  pleiades: 377055053
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Salus, Aedes (read): no traces; near the temple of Quirinus and the house of Atticus, probably on or near the Clivus Salutis, near the west end of the present royal palace (after Huelsen-Jordan); placed at the west end of the Palazzo del Quirinale. Moved 100 m west"
 - id: aedes_dei_fidii
   latin: Aedes Semonis Sanci Dei Fidii
   english: Temple of Semo Sancus Dius Fidius
   type: temple
   regio: 6
-  lat: 41.9010
-  lon: 12.4870
+  lat: 41.897268
+  lon: 12.486566
   precision: approx
   location: Quirinal, Mons Sanqualis
   built: {year: -466, certainty: probable, by: "vowed by Tarquinius Superbus, dedicated by Sp. Postumius 466 (Dion. Hal. 9.60.8; Livy 8.20.8)"}
@@ -2451,6 +2462,9 @@ monuments:
   bearing_deg: 188  # unverified
   geometry_source: "form assumed from date and type, native kit size (no measured plan)"
   geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+  pleiades: 504705904
+  location_confidence: medium
+  location_source: "F2: Platner-Ashby s.v. Semo Sancus, Aedes (read): on the Collis Mucialis a little north of the porta Sanqualis, in the angle between Via Nazionale and Via del Quirinale, where a base dedicated to Semo Sancus was found in the gardens of S. Silvestro; Pleiades 504705904 (OpenStreetMap outline of S. Silvestro al Quirinale). Moved 410 m south"
 - id: aedes_fortunae_primigeniae
   latin: Aedes Fortunae Primigeniae
   english: Temple of Fortuna Primigenia
@@ -2579,6 +2593,7 @@ monuments:
   height_m: 27
   geometry_source: "Platner-Ashby s.v. Sepulcrum C. Cestii (brick-faced concrete covered with white marble slabs, 27 m high, about 22 m square, on a travertine foundation)"
   geometry_unverified: [bearing_deg]
+  pleiades: 195092807
 - id: sepulcrum_scipionum
   latin: Sepulcrum Scipionum
   english: Tomb of the Scipios
@@ -2596,6 +2611,7 @@ monuments:
   height_m: 6  # unverified
   geometry_source: "tomb of the Scipios (Platner-Ashby s.v. Sepulcrum Scipionum, rock-cut, tufa facade added in the 2nd century BC); size assumed"
   geometry_unverified: [bearing_deg, footprint_m, height_m]
+  pleiades: 999196280
 - id: sepulcrum_caeciliae_metellae
   latin: Sepulcrum Caeciliae Metellae
   english: Tomb of Caecilia Metella
@@ -2637,6 +2653,7 @@ monuments:
   location: between Pincian and Quirinal
   built: {year: -40, certainty: probable, by: "C. Sallustius Crispus (the historian), with Caesar's proceeds"}
   sources: ["Platner-Ashby s.v. Horti Sallustiani"]
+  pleiades: 166405461
 # ---------------------------------------------------------------- WALLS AND GATES
   model: none
   geometry_source: "gardens: an area (fill agent)"
@@ -2652,7 +2669,7 @@ monuments:
   built: {year: -378, certainty: certain, by: "censors' contracts for a wall of squared stone, 378 BC (Livy 6.32.1; Dion. Hal. 4.13 attributes it to Servius Tullius; archaeology confirms 4th century)"}
   materials: [Grotta Oscura tufa (from Veii territory, after 396), cappellaccio in earlier phases]
   form: "agger on the Esquiline-Viminal-Quirinal plateau (Servian Rampart) 10 m high, 3.6 m wide stone wall, with a ditch"
-  route: [[41.8885,12.4885],[41.8845,12.4850],[41.8800,12.4850],[41.8795,12.4790],[41.8880,12.4793],[41.8920,12.4807],[41.8957,12.4830],[41.9000,12.4870],[41.9068,12.4960],[41.9015,12.5000],[41.8957,12.5017],[41.8900,12.4995],[41.8885,12.4885]]
+  route: [[41.891645,12.478364],[41.891395,12.480278],[41.896000,12.483000],[41.896459,12.486797],[41.899400,12.486750],[41.902443,12.490659],[41.907325,12.498679],[41.902500,12.501111],[41.895778,12.501358],[41.887300,12.496500],[41.884177,12.496670],[41.883944,12.490500],[41.878948,12.489596],[41.879700,12.483500],[41.882500,12.481000],[41.888000,12.479662],[41.891645,12.478364]]  # F2: the circuit monuments.gd draws through the gates in order round (150, 350); fill.gd keeps houses off this line
   sources: ["Livy 6.32.1", "Dion. Hal. 4.13", "Platner-Ashby s.v. Murus Servii Tullii"]
   model: wall
   open_between: [[porta_flumentana, porta_trigemina]]  # U8: the riverside between these gates is drawn without a wall. Platner-Ashby s.v. Porta Trigemina (read): 'the line of the wall has not yet been determined in this quarter'; a straight run between the gates would cross the Tiber's bend and the island; # unverified
@@ -2660,13 +2677,14 @@ monuments:
   thickness_m: 3.6
   geometry_source: "dataset form: wall 3.6 m thick and 10 m high; Platner-Ashby s.v. Murus Servii Tullii (ashlar of Grotta Oscura tufa 2 ft courses; the agger on the Esquiline 7 stades long, 50 ft thick with a ditch 30 ft deep and 100 ft wide, Dion. Hal. 9.68)"
   geometry_unverified: [height_m]
+  pleiades: 103808101
 - id: porta_capena
   latin: Porta Capena
   english: Porta Capena
   type: gate
   regio: 1
-  lat: 41.8855
-  lon: 12.4885
+  lat: 41.883944
+  lon: 12.4905
   precision: approx
   location: Servian Wall, south-east of the Palatine, start of the Via Appia
   built: {year: -378, certainty: certain, by: "with the Servian Wall"}
@@ -2677,14 +2695,17 @@ monuments:
   snap_to: murus_servianus
   geometry_source: "Platner-Ashby s.v. Porta Capena (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
   geometry_unverified: [footprint_m, height_m]
+  pleiades: 27164982
+  location_confidence: medium
+  location_source: "F2: Wikipedia (it) s.v. Porta Capena (41.883944, 12.4905), the remains in the Passeggiata archeologica which Platner-Ashby s.v. Porta Capena (read) says definitely established its site (a pier of the gate; the wall found 1867-68). Pleiades 27164982 has only a GeoHack point good to 2 km. Moved 240 m south-east from the Septizonium corner"
 - id: porta_collina
   latin: Porta Collina
   english: Porta Collina
   type: gate
   regio: 6
-  lat: 41.9068
-  lon: 12.4960
-  precision: rough
+  lat: 41.907325
+  lon: 12.498679
+  precision: approx
   location: Servian Wall, north-east, on the Quirinal; start of the Via Nomentana / Salaria
   built: {year: -378, certainty: certain, by: "with the Servian Wall; battle of the Colline Gate 82 BC (Plut. Sulla 29-30)"}
   sources: ["Plut. Sulla 29", "Platner-Ashby s.v. Porta Collina"]
@@ -2694,14 +2715,17 @@ monuments:
   snap_to: murus_servianus
   geometry_source: "Platner-Ashby s.v. Porta Collina (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
   geometry_unverified: [footprint_m, height_m]
+  pleiades: 268637493
+  location_confidence: medium
+  location_source: "F2: Pleiades 268637493 (OpenStreetMap point of the gate's site, under the Via XX Settembre); Wikipedia (it) s.v. Porta Collina gives 41.907222 12.498889, 22 m away. Moved 230 m east-north-east from the earlier rough point"
 - id: porta_esquilina
   latin: Porta Esquilina
   english: Porta Esquilina
   type: gate
   regio: 5
-  lat: 41.8957
-  lon: 12.5017
-  precision: rough
+  lat: 41.895778
+  lon: 12.501358
+  precision: approx
   location: Servian Wall, east, near the Arch of Gallienus
   built: {year: -378, certainty: certain, by: "with the Servian Wall"}
   sources: ["Platner-Ashby s.v. Porta Esquilina"]
@@ -2711,14 +2735,17 @@ monuments:
   snap_to: murus_servianus
   geometry_source: "Platner-Ashby s.v. Porta Esquilina (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
   geometry_unverified: [footprint_m, height_m]
+  pleiades: 29110684
+  location_confidence: high
+  location_source: "F2: the Arch of Gallienus, the Augustan rebuilding of the Porta Esquilina (Pleiades 29110684, OpenStreetMap outline of the arch); moved 30 m west"
 - id: porta_viminalis
   latin: Porta Viminalis
   english: Porta Viminalis
   type: gate
   regio: 5
-  lat: 41.9005
-  lon: 12.4975
-  precision: rough
+  lat: 41.9025
+  lon: 12.501111
+  precision: approx
   location: Servian Wall, north-east
   built: {year: -378, certainty: certain, by: "with the Servian Wall"}
   sources: ["Platner-Ashby s.v. Porta Viminalis"]
@@ -2728,6 +2755,8 @@ monuments:
   snap_to: murus_servianus
   geometry_source: "Platner-Ashby s.v. Porta Viminalis (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
   geometry_unverified: [footprint_m, height_m]
+  location_confidence: medium
+  location_source: "F2: Wikipedia (it) s.v. Porta Viminale (41.9025, 12.501111), on the line of the agger between the surviving tracts in Via Gaeta and Piazza dei Cinquecento (Pleiades 103808101, OpenStreetMap); Platner-Ashby s.v. Porta Viminalis (read): in the middle of the agger, remains just north of the railway station. Moved 360 m north-east from the earlier rough point"
 - id: porta_caelimontana
   latin: Porta Caelimontana
   english: Porta Caelimontana
@@ -2750,8 +2779,8 @@ monuments:
   english: Porta Naevia
   type: gate
   regio: 13
-  lat: 41.8795
-  lon: 12.4845
+  lat: 41.878948
+  lon: 12.489596
   precision: rough
   location: Servian Wall, Aventine, south
   built: {year: -378, certainty: certain, by: "with the Servian Wall"}
@@ -2762,6 +2791,9 @@ monuments:
   snap_to: murus_servianus
   geometry_source: "Platner-Ashby s.v. Porta Naevia (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
   geometry_unverified: [footprint_m, height_m]
+  pleiades: 37637607
+  location_confidence: low
+  location_source: "F2: argued location of Pleiades 37637607 (an imagery point placed by its editors; no remains). Platner-Ashby s.v. Porta Naevia not read # unverified. Moved 420 m east from the earlier rough point, which had no stated argument"
 - id: porta_raudusculana
   latin: Porta Raudusculana
   english: Porta Raudusculana
@@ -2779,6 +2811,7 @@ monuments:
   snap_to: murus_servianus
   geometry_source: "Platner-Ashby s.v. Porta Raudusculana (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
   geometry_unverified: [footprint_m, height_m]
+  pleiades: 354601172
 - id: porta_lavernalis
   latin: Porta Lavernalis
   english: Porta Lavernalis
@@ -2832,6 +2865,7 @@ monuments:
   snap_to: murus_servianus
   geometry_source: "Platner-Ashby s.v. Porta Flumentana (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
   geometry_unverified: [footprint_m, height_m]
+  pleiades: 502889801
 - id: porta_fontinalis
   latin: Porta Fontinalis
   english: Porta Fontinalis
@@ -2860,19 +2894,20 @@ monuments:
   location: Servian Wall, between the Capitol and Quirinal
   built: {year: -378, certainty: certain, by: "with the Servian Wall"}
   sources: ["Platner-Ashby s.v. Porta Ratumena"]
-  model: servian_gate
+  model: none  # F2: not drawn (see notes)
   footprint_m: {length: 26, width: 34}  # unverified
   height_m: 16  # unverified
-  snap_to: murus_servianus
   geometry_source: "Platner-Ashby s.v. Porta Ratumena (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
   geometry_unverified: [footprint_m, height_m]
+  location_confidence: none
+  notes: "F2: Platner-Ashby s.v. Porta Ratumenna (read): explained by some as a gate of the Servian wall between the Capitoline and the Quirinal, by others as an entrance to the Capitoline enclosure; its site is entirely a matter of conjecture and it was probably not a city gate at all. So it is not drawn and not threaded on the wall: its earlier point, 500 m north of the Capitol in the Campus Martius, pulled the drawn wall far off its known course."
 - id: porta_sanqualis
   latin: Porta Sanqualis
   english: Porta Sanqualis
   type: gate
   regio: 6
-  lat: 41.9000
-  lon: 12.4875
+  lat: 41.896459
+  lon: 12.486797
   precision: rough
   location: Servian Wall, Quirinal
   built: {year: -378, certainty: certain, by: "with the Servian Wall"}
@@ -2883,13 +2918,15 @@ monuments:
   snap_to: murus_servianus
   geometry_source: "Platner-Ashby s.v. Porta Sanqualis (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
   geometry_unverified: [footprint_m, height_m]
+  location_confidence: medium
+  location_source: "F2: Platner-Ashby s.v. Porta Sanqualis (read): south of the temple of Semo Sancus, near the present Piazza Magnanapoli; placed on the surviving wall tract at Largo Magnanapoli (Pleiades 103808101, OpenStreetMap). Moved 390 m south"
 - id: porta_salutaris
   latin: Porta Salutaris
   english: Porta Salutaris
   type: gate
   regio: 6
-  lat: 41.9008
-  lon: 12.4884
+  lat: 41.8994
+  lon: 12.48675  # F2: 12 m east of the end of Via della Dataria, so that monuments.gd, which threads the wall through the gates by their angle round (150, 350), meets it after the Porta Sanqualis
   precision: rough
   location: Servian Wall, Quirinal
   built: {year: -378, certainty: certain, by: "with the Servian Wall"}
@@ -2900,17 +2937,43 @@ monuments:
   snap_to: murus_servianus
   geometry_source: "Platner-Ashby s.v. Porta Salutaris (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
   geometry_unverified: [footprint_m, height_m]
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Porta Salutaris (read): just south-west of the temple of Salus, at the upper end of the present Via della Dataria (after Jordan, Huelsen-Jordan); placed where Via della Dataria reaches Piazza del Quirinale (modern street plan). Moved 210 m west-south-west"
+- id: porta_quirinalis
+  latin: Porta Quirinalis
+  english: Porta Quirinalis
+  type: gate
+  regio: 6
+  lat: 41.902443
+  lon: 12.490659
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Porta Quirinalis (read): mentioned only once (Festus 255); probably just north of the temple of Quirinus, where an ancient street corresponding to the modern Via delle Quattro Fontane crossed the line of the wall; remains of steps found there may belong to the approach (after Jordan, Huelsen-Jordan, BC 1892). Placed where Via delle Quattro Fontane crosses the line between the surviving wall tract at Largo Santa Susanna (Pleiades 103808101) and the Porta Salutaris"
+  location: Servian Wall, Quirinal, north of the temple of Quirinus
+  built: {year: -378, certainty: certain, by: "with the Servian Wall"}
+  sources: ["Platner-Ashby s.v. Porta Quirinalis (read)", "Festus 255 (as quoted in Platner-Ashby) # unverified"]
+  pleiades: null
+  model: servian_gate
+  footprint_m: {length: 26, width: 34}  # unverified
+  height_m: 16  # unverified
+  snap_to: murus_servianus
+  geometry_source: "the gate with its flanking towers is the standard form of the dataset's Servian gates, size assumed"
+  geometry_unverified: [footprint_m, height_m]
+  verified: platner-ashby
 - id: porta_querquetulana
   latin: Porta Querquetulana
   english: Porta Querquetulana
   type: gate
   regio: 2
-  lat: 41.8885
-  lon: 12.4950
+  lat: 41.884177
+  lon: 12.49667
   precision: rough
   location: Servian Wall, Caelian
   built: {year: -378, certainty: certain, by: "with the Servian Wall"}
   sources: ["Platner-Ashby s.v. Porta Querquetulana"]
+  pleiades: 349235208
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Porta Querquetulana (read): 'very likely between the porta Capena and the porta Caelimontana, where an ancient road issued from the city, just south of the present S. Stefano Rotondo' (after Jordan and Huelsen-Jordan); placed 30 m south of S. Stefano Rotondo (Wikipedia it: 41.884444, 12.496667). Moved 490 m south-east"
 # ---------------------------------------------------------------- BRIDGES
   model: servian_gate
   footprint_m: {length: 26, width: 34}  # unverified
@@ -2957,6 +3020,7 @@ monuments:
   phases: [{from: -179, state: standing, variant: timber_deck}, {from: -142, state: standing, variant: arches}]
   geometry_source: "Platner-Ashby s.v. Pons Aemilius (stone piers 179 BC, arches 142 BC Livy 40.51.4; the Ponte Rotto); length and width assumed from the river width"
   geometry_unverified: [bearing_deg, footprint_m, height_m]
+  pleiades: 425068
 - id: pons_mulvius
   latin: Pons Mulvius
   english: Milvian Bridge
@@ -2992,6 +3056,7 @@ monuments:
   height_m: 10  # unverified
   geometry_source: "Platner-Ashby s.v. Pons Fabricius (62 m long, two semicircular arches of 24.25 and 24.50 m with a small one between, tufa and peperino faced with travertine; oriented somewhat north of northeast: Thayer note); width assumed"
   geometry_unverified: [height_m]
+  pleiades: 68481414
 - id: pons_cestius
   latin: Pons Cestius
   english: Pons Cestius
@@ -3003,6 +3068,7 @@ monuments:
   location: from Tiber Island to Trastevere
   built: {year: -46, certainty: uncertain, by: "probably L. Cestius, praetor c. 46-44 (Platner-Ashby); some say 60s BC"}
   sources: ["Platner-Ashby s.v. Pons Cestius"]
+  pleiades: 211668069
 # ---------------------------------------------------------------- ROADS
   model: bridge_stone
   bearing_deg: 252  # unverified
@@ -3020,7 +3086,7 @@ monuments:
   precision: exact
   location: from Porta Capena southeast to Capua
   built: {year: -312, certainty: certain, by: "censor Ap. Claudius Caecus (Livy 9.29.5-6; Diod. 20.36)"}
-  route: [[41.8855,12.4885],[41.8798,12.4981],[41.8559,12.5226],[41.7600,12.6050],[41.6700,12.7100]]
+  route: [[41.883944,12.4905],[41.8798,12.4981],[41.8559,12.5226],[41.76,12.605],[41.67,12.71]]  # F2: starts at the Porta Capena (moved to its remains)
   sources: ["Livy 9.29.5-6", "Diod. 20.36", "Platner-Ashby s.v. Via Appia"]
   model: none
   geometry_source: "street (see streets.yaml)"
@@ -3102,13 +3168,14 @@ monuments:
   location: from the springs near the 8th mile of the Via Praenestina, almost wholly underground, ending at the Salinae by the Porta Trigemina
   built: {year: -312, certainty: certain, by: "Ap. Claudius Caecus and C. Plautius Venox as censors (Frontin. Aq. 5; Livy 9.29.6)"}
   form: "about 16.4 km, 16 km underground, only 60 paces on arches; first aqueduct of Rome"
-  route: [[41.8840,12.5970],[41.8907,12.5158],[41.8865,12.5000],[41.8860,12.4885],[41.8875,12.4795]]
+  route: [[41.884,12.597],[41.8907,12.5158],[41.8865,12.5],[41.883944,12.4905],[41.8875,12.4795]]  # F2: the point at the Porta Capena follows the gate to its remains (Frontinus 1.5)
   sources: ["Frontin. Aq. 5", "Livy 9.29.6", "Platner-Ashby s.v. Aqua Appia"]
   model: aqueduct
   height_m: 6  # unverified
   arcade_m: 60
   geometry_source: "Frontin. Aq. 5 (Appia: 11,190 paces underground, 60 paces on arches at the Porta Capena, 312 BC); the rest underground"
   geometry_unverified: [height_m]
+  pleiades: 423562
 - id: aqua_anio_vetus
   latin: Aqua Anio Vetus
   english: Old Anio Aqueduct
@@ -3127,6 +3194,7 @@ monuments:
   height_m: 12  # unverified
   geometry_source: "Frontin. Aq. 6 (Anio Vetus, 272 BC, 43 miles, mostly underground, 221 paces on arches in the last miles); arch height assumed"
   geometry_unverified: [height_m]
+  pleiades: 423560
 - id: aqua_marcia
   latin: Aqua Marcia
   english: Marcian Aqueduct
@@ -3188,6 +3256,7 @@ monuments:
   built: {year: -19, certainty: certain, by: "M. Agrippa, dedicated 19 BC (Frontin. Aq. 10; Dio 54.11.7)"}
   route: [[41.9080,12.6240],[41.9100,12.5400],[41.9100,12.4900],[41.8985,12.4790]]
   sources: ["Frontin. Aq. 10", "Dio 54.11.7", "Platner-Ashby s.v. Aqua Virgo"]
+  pleiades: 423568
 # ---------------------------------------------------------------- LATE REPUBLIC OTHER
   model: aqueduct
   arcade_m: 1000  # unverified: arches in the Campus Martius (Frontin. Aq. 10)

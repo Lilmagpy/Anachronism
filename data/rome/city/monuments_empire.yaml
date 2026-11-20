@@ -971,7 +971,7 @@ monuments:
   sources: ["Mart. 7.56.2", "CIL VI 8640", "CIL VI 8647-9", "Platner-Ashby s.v. Domus Augustiana (read)"]
   verified: true
   unverified_fields: [lat, lon, footprint_m, bearing_deg, height_m]
-  pleiades: null
+  pleiades: 792237246
   notes: "First-draft footprint and the island-pool claim are not in Platner-Ashby and are removed. Pleiades 155566866 is titled Paedagogium and 792237246 is an OSM location of Domus Augustana (not retrieved); none adopted."
 - id: stadium_palatinum
   latin: Hippodromus Palatii

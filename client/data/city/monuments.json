@@ -645,7 +645,7 @@
 "state": "gone"
 }
 ],
-"pleiades": 796942355,
+"pleiades": null,
 "precision": "exact",
 "regio": 8,
 "sources": [
@@ -697,7 +697,7 @@
 ],
 "model": "rostra_augusti",
 "notes": "Added in U8 so that the Forum has its Rostra after 44 BC (rostra_republic is gone from 44 BC). Mark Antony's funeral speech for Caesar was probably made from here (Platner-Ashby). Statues stood on it (Tac. Ann. 4.67, Augustus; Amm. Marc. 16.10.13); which ones in each year is not known, so the figures are generic.",
-"pleiades": null,
+"pleiades": 796942355,
 "precision": "approx",
 "regio": 8,
 "sources": [
@@ -1258,7 +1258,7 @@
 ]
 }
 },
-"bearing_deg": 80,
+"bearing_deg": 20,
 "built": {
 "by": "dedication ascribed to the first years of the Republic: T. Larcius as dictator (501, Macrob. Sat. 1.8.1), begun 498 (Dion. Hal. 6.1.4), dedicated 497 (Livy 2.21.2); other traditions credit Tullus Hostilius or the last Tarquin (Varro)",
 "certainty": "traditional",
@@ -1280,22 +1280,19 @@
 "width": 22.5
 },
 "form": "temple at the foot of the Capitoline hill on the Clivus Capitolinus, housing the state treasury (aerarium); blocks of the original podium and an early stone-arched drain survive; the eight standing columns (11 m high, granite) belong to the 4th-century AD restoration",
-"geometry_source": "Platner-Ashby s.v. Saturnus, Aedes (podium 22.50 m wide, about 40 long; Ionic hexastyle prostyle, columns 11 m high; Plancus phase drawn as the kit Ionic hexastyle); front faces the Forum (east); archaic phase small Tuscan",
+"geometry_source": "Platner-Ashby s.v. Saturnus, Aedes (podium 22.50 m wide, about 40 long; Ionic hexastyle prostyle, columns 11 m high; Plancus phase drawn as the kit Ionic hexastyle); the front faces north-north-east (F2, see location_source); archaic phase small Tuscan",
 "geometry_unverified": [
-"bearing_deg",
 "model"
 ],
 "id": "aedes_saturni",
-"lat": 41.892,
+"lat": 41.89241,
 "latin": "Aedes Saturni",
 "location": "west end of the Forum, at the foot of the Capitol (Clivus Capitolinus); the Aerarium was in its podium",
-"lon": 12.484,
+"location_confidence": "high",
+"location_source": "F2: Platner-Ashby s.v. Saturnus, Aedes (read): the clivus Capitolinus skirts the north front and west side of the temple (s.v. Clivus Capitolinus), and its front and east side rise very high above the Forum, so the front faces north (NNE, like the other buildings across the Forum axis), the 40 m length running north-south. The north front is set just south of the excavated pavement of the clivus (Pleiades 152699900, OpenStreetMap) and the east side 7 m west of the Basilica Iulia (Pleiades 173078007, OpenStreetMap), the width of the Vicus Iugarius between them; Wikipedia (it) s.v. Tempio di Saturno (41.892428, 12.484111) lies 4 m away. Moved 17 m west from the earlier point, front turned from east (80) to NNE (20)",
+"lon": 12.484153,
 "model": "temple_tuscan_small",
 "notes": "No Pleiades place for the Temple of Saturn found in the Pleiades dump. P&A: dedication tradition varies: Tullus Hostilius, begun by the last Tarquin, or dedicated by T. Larcius as dictator in 501 (Macrob. 1.8.1; Dion. Hal. 6.1.4 says begun 498 in Larcius's second consulship); P&A says the dedication 'may safely be assigned to the beginning of the republic'. Livy 2.21.2 (497 BC, consuls A. Sempronius and M. Minucius) is the usual year. Dedication day: Saturnalia, 17 December. 174 BC: porticus built from the temple up the Clivus Capitolinus (Liv. 41.27.7). Rebuilt by L. Munatius Plancus in 42 (Suet. Aug. 29). Standing columns (8, granite) are a 4th-c. AD restoration. The state treasury (aerarium) was in it; the Tabularium (78) took over some records. Original podium blocks survive.",
-"offset_m": [
-30,
-44
-],
 "phases": [
 {
 "from": -42,
@@ -3104,7 +3101,7 @@
 "lon": 12.476767,
 "model": "temple_tetrastyle_ionic",
 "notes": "Verified: P&A: the only temple of Faunus in Rome, at the north end of the Tiber island (Ov. Fast. 2.193-194), vowed in 196 by the aediles Cn. Domitius Ahenobarbus and C. Scribonius Curio out of fines from three pecuarii (Livy 33.42.10), dedicated two years later by Domitius (Livy 34.53.4) on the Ides (of February); prostyle (Vitr. 3.2.3). Not in Pleiades separately.",
-"pleiades": null,
+"pleiades": 455817200,
 "precision": "approx",
 "regio": 14,
 "sources": [
@@ -4614,6 +4611,7 @@
 -58,
 -56
 ],
+"pleiades": 541950317,
 "precision": "exact",
 "regio": 9,
 "sources": [
@@ -4695,6 +4693,7 @@
 -26,
 -88
 ],
+"pleiades": 165546433,
 "precision": "exact",
 "regio": 9,
 "sources": [
@@ -4766,6 +4765,7 @@
 "location": "between the Capitol and the Tiber, Forum Holitorium",
 "lon": 12.4796,
 "model": "theatre_stone",
+"pleiades": 300583267,
 "precision": "exact",
 "regio": 9,
 "sources": [
@@ -4839,6 +4839,7 @@
 "location": "Campus Martius, east of the Pantheon area, along the Via Lata",
 "lon": 12.48,
 "model": "portico_enclosure",
+"pleiades": 854946506,
 "precision": "approx",
 "regio": 9,
 "sources": [
@@ -4870,6 +4871,7 @@
 "location": "Campus Martius, under the present Pantheon",
 "lon": 12.4769,
 "model": "temple_hexastyle_corinthian_marble",
+"pleiades": 128044615,
 "precision": "exact",
 "regio": 9,
 "sources": [
@@ -4900,6 +4902,7 @@
 "location": "northern Campus Martius, by the Via Flaminia",
 "lon": 12.4766,
 "model": "tomb_drum",
+"pleiades": 281368358,
 "precision": "exact",
 "regio": 9,
 "sources": [
@@ -5054,6 +5057,7 @@
 "state": "standing"
 }
 ],
+"pleiades": 524616090,
 "precision": "approx",
 "regio": 6,
 "sources": [
@@ -5084,12 +5088,15 @@
 "model"
 ],
 "id": "aedes_salutis",
-"lat": 41.9005,
+"lat": 41.8999,
 "latin": "Aedes Salutis",
 "location": "Quirinal",
-"lon": 12.488,
+"location_confidence": "low",
+"location_source": "F2: Platner-Ashby s.v. Salus, Aedes (read): no traces; near the temple of Quirinus and the house of Atticus, probably on or near the Clivus Salutis, near the west end of the present royal palace (after Huelsen-Jordan); placed at the west end of the Palazzo del Quirinale. Moved 100 m west",
+"lon": 12.4872,
 "model": "temple_tetrastyle_ionic",
-"precision": "approx",
+"pleiades": 377055053,
+"precision": "rough",
 "regio": 6,
 "sources": [
 "Livy 9.43.25",
@@ -5114,11 +5121,14 @@
 "model"
 ],
 "id": "aedes_dei_fidii",
-"lat": 41.901,
+"lat": 41.897268,
 "latin": "Aedes Semonis Sanci Dei Fidii",
 "location": "Quirinal, Mons Sanqualis",
-"lon": 12.487,
+"location_confidence": "medium",
+"location_source": "F2: Platner-Ashby s.v. Semo Sancus, Aedes (read): on the Collis Mucialis a little north of the porta Sanqualis, in the angle between Via Nazionale and Via del Quirinale, where a base dedicated to Semo Sancus was found in the gardens of S. Silvestro; Pleiades 504705904 (OpenStreetMap outline of S. Silvestro al Quirinale). Moved 410 m south",
+"lon": 12.486566,
 "model": "temple_tuscan_small",
+"pleiades": 504705904,
 "precision": "approx",
 "regio": 6,
 "sources": [
@@ -5368,6 +5378,7 @@
 -30,
 10
 ],
+"pleiades": 195092807,
 "precision": "exact",
 "regio": 13,
 "sources": [
@@ -5401,6 +5412,7 @@
 "location": "Via Appia, first mile",
 "lon": 12.4981,
 "model": "tomb_rock",
+"pleiades": 999196280,
 "precision": "exact",
 "regio": 1,
 "sources": [
@@ -5476,6 +5488,7 @@
 "location": "between Pincian and Quirinal",
 "lon": 12.495,
 "model": "none",
+"pleiades": 166405461,
 "precision": "rough",
 "regio": 6,
 "sources": [
@@ -5513,60 +5526,77 @@
 "porta_trigemina"
 ]
 ],
+"pleiades": 103808101,
 "precision": "approx",
 "regio": 0,
 "route": [
 [
-41.8885,
-12.4885
+41.891645,
+12.478364
 ],
 [
-41.8845,
-12.485
+41.891395,
+12.480278
 ],
 [
-41.88,
-12.485
-],
-[
-41.8795,
-12.479
-],
-[
-41.888,
-12.4793
-],
-[
-41.892,
-12.4807
-],
-[
-41.8957,
+41.896,
 12.483
 ],
 [
-41.9,
-12.487
+41.896459,
+12.486797
 ],
 [
-41.9068,
-12.496
+41.8994,
+12.48675
 ],
 [
-41.9015,
-12.5
+41.902443,
+12.490659
 ],
 [
-41.8957,
-12.5017
+41.907325,
+12.498679
 ],
 [
-41.89,
-12.4995
+41.9025,
+12.501111
 ],
 [
-41.8885,
-12.4885
+41.895778,
+12.501358
+],
+[
+41.8873,
+12.4965
+],
+[
+41.884177,
+12.49667
+],
+[
+41.883944,
+12.4905
+],
+[
+41.878948,
+12.489596
+],
+[
+41.8797,
+12.4835
+],
+[
+41.8825,
+12.481
+],
+[
+41.888,
+12.479662
+],
+[
+41.891645,
+12.478364
 ]
 ],
 "sources": [
@@ -5595,11 +5625,14 @@
 ],
 "height_m": 16,
 "id": "porta_capena",
-"lat": 41.8855,
+"lat": 41.883944,
 "latin": "Porta Capena",
 "location": "Servian Wall, south-east of the Palatine, start of the Via Appia",
-"lon": 12.4885,
+"location_confidence": "medium",
+"location_source": "F2: Wikipedia (it) s.v. Porta Capena (41.883944, 12.4905), the remains in the Passeggiata archeologica which Platner-Ashby s.v. Porta Capena (read) says definitely established its site (a pier of the gate; the wall found 1867-68). Pleiades 27164982 has only a GeoHack point good to 2 km. Moved 240 m south-east from the Septizonium corner",
+"lon": 12.4905,
 "model": "servian_gate",
+"pleiades": 27164982,
 "precision": "approx",
 "regio": 1,
 "snap_to": "murus_servianus",
@@ -5626,12 +5659,15 @@
 ],
 "height_m": 16,
 "id": "porta_collina",
-"lat": 41.9068,
+"lat": 41.907325,
 "latin": "Porta Collina",
 "location": "Servian Wall, north-east, on the Quirinal; start of the Via Nomentana / Salaria",
-"lon": 12.496,
+"location_confidence": "medium",
+"location_source": "F2: Pleiades 268637493 (OpenStreetMap point of the gate's site, under the Via XX Settembre); Wikipedia (it) s.v. Porta Collina gives 41.907222 12.498889, 22 m away. Moved 230 m east-north-east from the earlier rough point",
+"lon": 12.498679,
 "model": "servian_gate",
-"precision": "rough",
+"pleiades": 268637493,
+"precision": "approx",
 "regio": 6,
 "snap_to": "murus_servianus",
 "sources": [
@@ -5658,12 +5694,15 @@
 ],
 "height_m": 16,
 "id": "porta_esquilina",
-"lat": 41.8957,
+"lat": 41.895778,
 "latin": "Porta Esquilina",
 "location": "Servian Wall, east, near the Arch of Gallienus",
-"lon": 12.5017,
+"location_confidence": "high",
+"location_source": "F2: the Arch of Gallienus, the Augustan rebuilding of the Porta Esquilina (Pleiades 29110684, OpenStreetMap outline of the arch); moved 30 m west",
+"lon": 12.501358,
 "model": "servian_gate",
-"precision": "rough",
+"pleiades": 29110684,
+"precision": "approx",
 "regio": 5,
 "snap_to": "murus_servianus",
 "sources": [
@@ -5689,12 +5728,14 @@
 ],
 "height_m": 16,
 "id": "porta_viminalis",
-"lat": 41.9005,
+"lat": 41.9025,
 "latin": "Porta Viminalis",
 "location": "Servian Wall, north-east",
-"lon": 12.4975,
+"location_confidence": "medium",
+"location_source": "F2: Wikipedia (it) s.v. Porta Viminale (41.9025, 12.501111), on the line of the agger between the surviving tracts in Via Gaeta and Piazza dei Cinquecento (Pleiades 103808101, OpenStreetMap); Platner-Ashby s.v. Porta Viminalis (read): in the middle of the agger, remains just north of the railway station. Moved 360 m north-east from the earlier rough point",
+"lon": 12.501111,
 "model": "servian_gate",
-"precision": "rough",
+"precision": "approx",
 "regio": 5,
 "snap_to": "murus_servianus",
 "sources": [
@@ -5751,11 +5792,14 @@
 ],
 "height_m": 16,
 "id": "porta_naevia",
-"lat": 41.8795,
+"lat": 41.878948,
 "latin": "Porta Naevia",
 "location": "Servian Wall, Aventine, south",
-"lon": 12.4845,
+"location_confidence": "low",
+"location_source": "F2: argued location of Pleiades 37637607 (an imagery point placed by its editors; no remains). Platner-Ashby s.v. Porta Naevia not read # unverified. Moved 420 m east from the earlier rough point, which had no stated argument",
+"lon": 12.489596,
 "model": "servian_gate",
+"pleiades": 37637607,
 "precision": "rough",
 "regio": 13,
 "snap_to": "murus_servianus",
@@ -5787,6 +5831,7 @@
 "location": "Servian Wall, Aventine, west",
 "lon": 12.481,
 "model": "servian_gate",
+"pleiades": 354601172,
 "precision": "rough",
 "regio": 13,
 "snap_to": "murus_servianus",
@@ -5889,6 +5934,7 @@
 113,
 -95
 ],
+"pleiades": 502889801,
 "precision": "rough",
 "regio": 9,
 "snap_to": "murus_servianus",
@@ -5950,11 +5996,12 @@
 "lat": 41.9005,
 "latin": "Porta Ratumena",
 "location": "Servian Wall, between the Capitol and Quirinal",
+"location_confidence": "none",
 "lon": 12.4835,
-"model": "servian_gate",
+"model": "none",
+"notes": "F2: Platner-Ashby s.v. Porta Ratumenna (read): explained by some as a gate of the Servian wall between the Capitoline and the Quirinal, by others as an entrance to the Capitoline enclosure; its site is entirely a matter of conjecture and it was probably not a city gate at all. So it is not drawn and not threaded on the wall: its earlier point, 500 m north of the Capitol in the Campus Martius, pulled the drawn wall far off its known course.",
 "precision": "rough",
 "regio": 6,
-"snap_to": "murus_servianus",
 "sources": [
 "Platner-Ashby s.v. Porta Ratumena"
 ],
@@ -5978,10 +6025,12 @@
 ],
 "height_m": 16,
 "id": "porta_sanqualis",
-"lat": 41.9,
+"lat": 41.896459,
 "latin": "Porta Sanqualis",
 "location": "Servian Wall, Quirinal",
-"lon": 12.4875,
+"location_confidence": "medium",
+"location_source": "F2: Platner-Ashby s.v. Porta Sanqualis (read): south of the temple of Semo Sancus, near the present Piazza Magnanapoli; placed on the surviving wall tract at Largo Magnanapoli (Pleiades 103808101, OpenStreetMap). Moved 390 m south",
+"lon": 12.486797,
 "model": "servian_gate",
 "precision": "rough",
 "regio": 6,
@@ -6009,10 +6058,12 @@
 ],
 "height_m": 16,
 "id": "porta_salutaris",
-"lat": 41.9008,
+"lat": 41.8994,
 "latin": "Porta Salutaris",
 "location": "Servian Wall, Quirinal",
-"lon": 12.4884,
+"location_confidence": "low",
+"location_source": "F2: Platner-Ashby s.v. Porta Salutaris (read): just south-west of the temple of Salus, at the upper end of the present Via della Dataria (after Jordan, Huelsen-Jordan); placed where Via della Dataria reaches Piazza del Quirinale (modern street plan). Moved 210 m west-south-west",
+"lon": 12.48675,
 "model": "servian_gate",
 "precision": "rough",
 "regio": 6,
@@ -6021,6 +6072,42 @@
 "Platner-Ashby s.v. Porta Salutaris"
 ],
 "type": "gate"
+},
+{
+"built": {
+"by": "with the Servian Wall",
+"certainty": "certain",
+"year": -378
+},
+"english": "Porta Quirinalis",
+"footprint_m": {
+"length": 26,
+"width": 34
+},
+"geometry_source": "the gate with its flanking towers is the standard form of the dataset's Servian gates, size assumed",
+"geometry_unverified": [
+"footprint_m",
+"height_m"
+],
+"height_m": 16,
+"id": "porta_quirinalis",
+"lat": 41.902443,
+"latin": "Porta Quirinalis",
+"location": "Servian Wall, Quirinal, north of the temple of Quirinus",
+"location_confidence": "low",
+"location_source": "F2: Platner-Ashby s.v. Porta Quirinalis (read): mentioned only once (Festus 255); probably just north of the temple of Quirinus, where an ancient street corresponding to the modern Via delle Quattro Fontane crossed the line of the wall; remains of steps found there may belong to the approach (after Jordan, Huelsen-Jordan, BC 1892). Placed where Via delle Quattro Fontane crosses the line between the surviving wall tract at Largo Santa Susanna (Pleiades 103808101) and the Porta Salutaris",
+"lon": 12.490659,
+"model": "servian_gate",
+"pleiades": null,
+"precision": "rough",
+"regio": 6,
+"snap_to": "murus_servianus",
+"sources": [
+"Platner-Ashby s.v. Porta Quirinalis (read)",
+"Festus 255 (as quoted in Platner-Ashby) # unverified"
+],
+"type": "gate",
+"verified": "platner-ashby"
 },
 {
 "built": {
@@ -6040,11 +6127,14 @@
 ],
 "height_m": 16,
 "id": "porta_querquetulana",
-"lat": 41.8885,
+"lat": 41.884177,
 "latin": "Porta Querquetulana",
 "location": "Servian Wall, Caelian",
-"lon": 12.495,
+"location_confidence": "low",
+"location_source": "F2: Platner-Ashby s.v. Porta Querquetulana (read): 'very likely between the porta Capena and the porta Caelimontana, where an ancient road issued from the city, just south of the present S. Stefano Rotondo' (after Jordan and Huelsen-Jordan); placed 30 m south of S. Stefano Rotondo (Wikipedia it: 41.884444, 12.496667). Moved 490 m south-east",
+"lon": 12.49667,
 "model": "servian_gate",
+"pleiades": 349235208,
 "precision": "rough",
 "regio": 2,
 "snap_to": "murus_servianus",
@@ -6135,6 +6225,7 @@
 "variant": "arches"
 }
 ],
+"pleiades": 425068,
 "precision": "exact",
 "regio": 11,
 "sources": [
@@ -6205,6 +6296,7 @@
 "travertine"
 ],
 "model": "bridge_stone",
+"pleiades": 68481414,
 "precision": "exact",
 "regio": 14,
 "sources": [
@@ -6237,6 +6329,7 @@
 "location": "from Tiber Island to Trastevere",
 "lon": 12.477104,
 "model": "bridge_stone",
+"pleiades": 211668069,
 "precision": "exact",
 "regio": 14,
 "sources": [
@@ -6262,8 +6355,8 @@
 "regio": 1,
 "route": [
 [
-41.8855,
-12.4885
+41.883944,
+12.4905
 ],
 [
 41.8798,
@@ -6435,6 +6528,7 @@
 "location": "from the springs near the 8th mile of the Via Praenestina, almost wholly underground, ending at the Salinae by the Porta Trigemina",
 "lon": 12.48,
 "model": "aqueduct",
+"pleiades": 423562,
 "precision": "rough",
 "regio": 0,
 "route": [
@@ -6451,8 +6545,8 @@
 12.5
 ],
 [
-41.886,
-12.4885
+41.883944,
+12.4905
 ],
 [
 41.8875,
@@ -6486,6 +6580,7 @@
 "location": "from the Anio above Tibur (Tivoli) to the Esquiline",
 "lon": 12.5,
 "model": "aqueduct",
+"pleiades": 423560,
 "precision": "rough",
 "regio": 0,
 "route": [
@@ -6678,6 +6773,7 @@
 "location": "from springs on the Via Collatina to the Campus Martius baths of Agrippa",
 "lon": 12.479,
 "model": "aqueduct",
+"pleiades": 423568,
 "precision": "rough",
 "regio": 9,
 "route": [

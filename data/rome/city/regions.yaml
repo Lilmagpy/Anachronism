@@ -417,7 +417,7 @@ default:
 # murus_servianus in monuments.yaml is a coarser 13-point line of only 2.8 km2 and is used only to
 # keep houses off the drawn wall; THIS polygon decides what counts as "inside the walls". Rough.
 servian_circuit:
-  polygon: [[41.8925, 12.4770], [41.8945, 12.4812], [41.8960, 12.4830], [41.9005, 12.4835], [41.9040, 12.4890], [41.9072, 12.4962], [41.9010, 12.5000], [41.8960, 12.5035], [41.8905, 12.5010], [41.8862, 12.4990], [41.8845, 12.4940], [41.8852, 12.4890], [41.8815, 12.4865], [41.8790, 12.4850], [41.8790, 12.4825], [41.8805, 12.4785], [41.8880, 12.4785], [41.8905, 12.4772]]
+  polygon: [[41.89165, 12.47836], [41.89140, 12.48028], [41.89600, 12.48300], [41.89646, 12.48680], [41.89940, 12.48675], [41.90244, 12.49066], [41.90733, 12.49868], [41.90250, 12.50111], [41.89578, 12.50136], [41.88730, 12.49650], [41.88418, 12.49667], [41.88394, 12.49050], [41.87895, 12.48960], [41.87970, 12.48350], [41.88250, 12.48100], [41.88800, 12.47966]]  # F2: the circuit monuments.gd draws through the gates (gate points as corrected in the F2 audit)
   precision: rough
   sources: ["monuments.yaml gates (rough)", "Platner-Ashby s.v. Murus Servii Tullii", "population.yaml built_up_area (426 ha)"]
 
