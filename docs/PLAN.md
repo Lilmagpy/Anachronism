@@ -19,6 +19,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
   - [ ] Retire `punic_wars` and the old overlapping provinces (tests still use them)
   - [ ] Check every start in the client; owner plays one
 - [ ] R2 The Roman state: yearly magistrates, Senate, families and factions, orders, cursus honorum, the Fasti
+  - [x] F1: the full Fasti 509-27 BC in play (`data/rome/fasti.yaml`, gap years), 160 gentes with stances on every issue, 148 people, era names, ages, one office a man, senators and era blocs in the Senate, war only on states met, `rights:<civ>` (D-301)
   - [x] Engine: magistracies, yearly elections, Senate votes, families, the Fasti as default history (`engine/republic.py`)
   - [ ] Full Fasti 509-27 BC (draft of every year on branch claude/r1-fasti), people and families with stances
   - [x] Persuade, back a candidate and put matters to the Senate as replay-safe actions (`engine/senate.py`, D-286.1)
