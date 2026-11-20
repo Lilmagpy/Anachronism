@@ -128,7 +128,9 @@ func stop_all() -> void:
 static func pick(city: Dictionary, now: int, span: int) -> Array:
 	var out: Array = []
 	var festivals := {}
-	for e in city.get("events", []):
+	var per_kind := {}
+	var all: Array = city.get("events", [])
+	for e in all:
 		if not (e is Dictionary):
 			continue
 		var kind := str(e.get("kind", ""))
@@ -137,6 +139,11 @@ static func pick(city: Dictionary, now: int, span: int) -> Array:
 			if festivals.has(ref) or ref == "ludi_megalenses":
 				continue
 			festivals[ref] = true
+		# a long turn brings many of a kind (a dedication every few years): two of each
+		# kind, the triumphs all, when there are more than the moments can show
+		per_kind[kind] = int(per_kind.get(kind, 0)) + 1
+		if all.size() > MAX_MOMENTS and kind != "triumph" and int(per_kind[kind]) > 2:
+			continue
 		out.append(e)
 	var statuses := {}
 	for m in city.get("monuments", []):
@@ -222,11 +229,12 @@ func _moment(e: Dictionary, index: int, total: int, watch: bool) -> void:
 		var which := int(cut[2]) if cut.size() > 2 else 0
 		var follow := Callable()
 		var v := Transform3D()
+		var focus := sp.global_position
 		if which < 0 or views.is_empty():
-			v = _above_ground(sp.cine_camera(sp.t))
-			follow = func() -> void: urbs.cam.snap_inside(_above_ground(sp.cine_camera(sp.t)))
+			v = _above_ground(sp.cine_camera(sp.t), focus)
+			follow = func() -> void: urbs.cam.snap_inside(_above_ground(sp.cine_camera(sp.t), focus))
 		else:
-			v = _above_ground(views[clampi(which, 0, views.size() - 1)])
+			v = _above_ground(views[clampi(which, 0, views.size() - 1)], focus)
 		if urbs.interior != null:
 			urbs.cam.snap_inside(v)
 			urbs.fade_to(0.0, 0.4)
@@ -253,14 +261,23 @@ func _wait(seconds: float, each_frame := Callable()) -> void:
 
 
 ## A camera pose kept out of the ground (the spectacles' views are laid out on flat ground; the
-## triumph's route crosses the hills).
-func _above_ground(v: Transform3D) -> Transform3D:
+## triumph's route and some temples' forecourts meet the hills): a view under the ground by a
+## little is lifted; by more, it becomes a raised look down on `focus` from the same side.
+func _above_ground(v: Transform3D, focus: Vector3) -> Transform3D:
 	if urbs.interior != null:
 		return v
 	var ground := float(urbs.height_at(v.origin.x, v.origin.z))
-	if v.origin.y < ground + 1.6:
+	if v.origin.y >= ground + 1.6:
+		return v
+	if v.origin.y > ground - 0.5:
 		v.origin.y = ground + 1.6
-	return v
+		return v
+	var back := v.origin - focus
+	back.y = 0.0
+	back = back.normalized() if back.length() > 0.1 else Vector3(0, 0, 1)
+	var from := focus + back * 18.0
+	from.y = maxf(float(urbs.height_at(from.x, from.z)), focus.y) + 11.0
+	return Transform3D(Basis.looking_at(focus + Vector3(0, 1.2, 0) - from, Vector3.UP), from)
 
 
 ## The title card for a moment.

@@ -582,6 +582,8 @@ func _show_spot() -> void:
 		if spot == "":
 			spot = here
 		var words := str(UrbsPlaces.SPOT_WORDS.get(here if here != "" else str(UrbsPlaces.SPOTS.get(_interior_kind(), "")), "Here"))
+		if pid != interior_id and here == "":
+			words = "Close by"   # a neighbour the interior offers (the Comitium beside the Rostra)
 		sections.append([pid, p, words])
 	var at: Vector3 = interior.call("action_spot", spot) if interior.has_method("action_spot") else interior.global_position
 	hud.show_spot(sections, at, _results.get(_result_for, {}), _result_for)

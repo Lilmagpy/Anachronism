@@ -998,6 +998,7 @@ func _take_screenshot(path: String) -> void:
 				"moments": urbs.play_fixture_moments()   # F2 play: the fixture's year as moments
 				"endyear": urbs.end_year()   # F2 play: End year in Rome (the real engine turn)
 				"tour": urbs.tour_places(float(options.get("step", "8")))   # F2 play: each place's card in turn
+				"confirm": urbs.hud.ask_end_year()   # F2 play: the End year question
 		var elapsed := 0.0
 		for t in str(options["urbs-shots"]).split(","):
 			while elapsed < float(t):
