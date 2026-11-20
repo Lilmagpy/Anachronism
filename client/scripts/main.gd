@@ -997,6 +997,7 @@ func _take_screenshot(path: String) -> void:
 				"act": urbs.act_by_id(str(options.get("at", "")), str(options.get("act", "")))   # F2 play: --act=<action id>
 				"moments": urbs.play_fixture_moments()   # F2 play: the fixture's year as moments
 				"endyear": urbs.end_year()   # F2 play: End year in Rome (the real engine turn)
+				"tour": urbs.tour_places(float(options.get("step", "8")))   # F2 play: each place's card in turn
 		var elapsed := 0.0
 		for t in str(options["urbs-shots"]).split(","):
 			while elapsed < float(t):

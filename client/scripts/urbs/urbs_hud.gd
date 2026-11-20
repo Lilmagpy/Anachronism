@@ -57,6 +57,7 @@ var _spot := PanelContainer.new()
 var _spot_body := VBoxContainer.new()
 var _spot_mark := Label.new()
 var _spot_at := Vector3.ZERO
+var _spot_has := false
 var _confirm: Control
 var _busy := Control.new()
 var _busy_label := Label.new()
@@ -420,6 +421,7 @@ func show_spot(sections: Array, at: Vector3, result: Dictionary = {}, result_for
 		hide_spot()
 		return
 	_spot_at = at
+	_spot_has = true
 	for s in sections:
 		var place: Dictionary = (s[1] as Dictionary).duplicate()
 		place["_id"] = s[0]
@@ -432,13 +434,14 @@ func show_spot(sections: Array, at: Vector3, result: Dictionary = {}, result_for
 
 
 func _fit_spot() -> void:
-	var room := _root.get_viewport_rect().size.y - 160.0
+	var room := minf(_root.get_viewport_rect().size.y - 160.0, 560.0)
 	var scroll: ScrollContainer = _spot.get_node("Scroll")
 	scroll.custom_minimum_size = Vector2(314, minf(_spot_body.get_combined_minimum_size().y + 4.0, room))
 	_spot.reset_size()
 
 
 func hide_spot() -> void:
+	_spot_has = false
 	_spot.visible = false
 	_spot_mark.visible = false
 
@@ -606,6 +609,8 @@ func set_watching(on: bool) -> void:
 		_spot.visible = false
 		_spot_mark.visible = false
 		_close_confirm()
+	elif _spot_has and _inside:
+		_spot.visible = true
 	_hint_box.visible = not on
 	_back.visible = not on
 	_end.visible = not on and bool(_end.get_meta("shown", false))

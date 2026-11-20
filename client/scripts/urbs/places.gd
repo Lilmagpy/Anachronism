@@ -200,8 +200,8 @@ static func forecast_text(f: Variant) -> String:
 		bits.append("popular favour %+d%%" % roundi(int(d["favour_bp"]) / 100.0))
 	var note := str(d.get("note", ""))
 	if note != "":
-		bits.append(note)
-	return ". ".join(bits)
+		bits.append(note.left(1).to_upper() + note.substr(1))
+	return ". ".join(bits) + ("." if not bits.is_empty() and not bits[bits.size() - 1].ends_with(".") and not bits[bits.size() - 1].ends_with(")") else "")
 
 
 static func role_words(role: String) -> String:

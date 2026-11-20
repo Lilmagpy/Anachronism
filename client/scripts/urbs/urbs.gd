@@ -619,6 +619,8 @@ func _on_place_action(place_id: String, entry: Dictionary) -> void:
 			result = {"accepted": false, "message": "The engine did not answer."}
 		else:
 			result = {"accepted": bool(reply.get("accepted", false)), "message": str(reply.get("message", ""))}
+			if str(result["message"]).begins_with("bad action"):   # a kind the engine half has not added yet
+				result["message"] = "The engine does not know this action yet (%s): it comes with the engine half of F2." % str(action.get("kind", ""))
 			if reply.get("view") is Dictionary:
 				set_play_view(reply["view"])
 		_results[place_id] = result
@@ -713,6 +715,14 @@ func end_year() -> void:
 		return
 	await moments.play(list, false, pose)
 	_refresh_play()
+
+
+## For screenshots (main.gd --then=tour): fly to each place of "Rome this year" in turn,
+## `step` seconds apart, its card open.
+func tour_places(step := 8.0) -> void:
+	for item in places.todo(monuments.ids()):
+		fly_to_place(str(item["id"]))
+		await get_tree().create_timer(step).timeout
 
 
 ## --moments: the fixture's year of events (its venues standing in this year's city).

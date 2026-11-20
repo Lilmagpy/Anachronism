@@ -35,8 +35,8 @@ const PRIORITY := {"triumph": 0, "anachronism": 1, "sacrifice": 2, "senate": 3, 
 	"look": 6, "levy": 7, "games": 8, "building": 9, "fire": 10, "flood": 11}
 ## Where a gathering stands when the event names no standing monument.
 const GATHERING_AT := {"contio": ["rostra_republic", "rostra_augusti", "comitium", "forum_romanum"],
-	"election": ["saepta_iulia", "campus_martius", "comitium", "forum_romanum"],
-	"levy": ["campus_martius", "villa_publica", "forum_romanum"]}
+	"election": ["saepta_iulia", "villa_publica", "campus_martius", "comitium", "forum_romanum"],
+	"levy": ["villa_publica", "campus_martius", "forum_romanum"]}
 
 var urbs: Urbs                      ## the Urbs scene (cam, hud, monuments, play_watch...)
 var busy := false
@@ -100,7 +100,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	if not busy or not (event is InputEventKey) or not event.pressed or event.echo:
 		return
 	match (event as InputEventKey).keycode:
-		KEY_ESCAPE, KEY_SPACE, KEY_RIGHT:
+		KEY_ESCAPE, KEY_SPACE:
 			skip_moment()
 			get_viewport().set_input_as_handled()
 		KEY_Q:
@@ -192,22 +192,23 @@ func _moment(e: Dictionary, index: int, total: int, watch: bool) -> void:
 	var mon := _venue(e)
 	_title(e, index, total, watch)
 	urbs._stop_spectacle()
-	if urbs.interior != null:
-		await urbs.fade_to(1.0, 0.25)
-		urbs._leave_interior_now()
-		urbs.fade_to(0.0, 0.4)
-	# the flight: from wherever the camera is to an orbit over the place
-	var at := _centre(mon)
-	urbs.cam.go_city(at, _orbit(mon), FLY)
-	await _wait(FLY + 0.3)
-	if _skip:
-		return
-	# the spectacle: the Senate inside its house, the rest in the open
 	var sp_kind := _spectacle_kind(e)
-	if sp_kind == "senate" and urbs.monuments.ids().has(mon) and bool(urbs.monuments.info(mon).get("enterable", false)):
-		await urbs.fade_to(1.0, 0.3)
-		urbs._enter_interior_now(mon)
-		urbs.hud.set_watching(true)   # entering re-labels the HUD
+	# already in the house where it happens (a vote called from the Curia's floor): stay
+	var stay := sp_kind == "senate" and urbs.interior != null and urbs.interior_id == mon
+	if not stay:
+		if urbs.interior != null:
+			await urbs.fade_to(1.0, 0.25)
+			urbs._leave_interior_now()
+			urbs.fade_to(0.0, 0.4)
+		# the flight: from wherever the camera is to an orbit over the place
+		urbs.cam.go_city(_centre(mon), _orbit(mon), FLY)
+		await _wait(FLY + 0.3)
+		if _skip:
+			return
+		# the spectacle: the Senate inside its house, the rest in the open
+		if sp_kind == "senate" and urbs.monuments.ids().has(mon) and bool(urbs.monuments.info(mon).get("enterable", false)):
+			await urbs.fade_to(1.0, 0.3)
+			urbs._enter_interior_now(mon)
 	var sp: Node3D = urbs.play_watch(e) if sp_kind != "" else null
 	if sp != null:
 		var spans: Dictionary = SPANS_WATCH if watch else SPANS_YEAR
