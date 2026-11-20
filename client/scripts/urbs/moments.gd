@@ -552,8 +552,8 @@ class Gathering extends "res://scripts/urbs/spectacles/base.gd":
 		_tally.position = Vector3(2, 3.6, 0)
 
 	func _build_levy() -> void:
-		_box(Vector3(5, 1.6, 3.2), Vector3(0, 0, -14), Color(0.6, 0.54, 0.44))
-		_speaker = _magistrate(Vector3(0, 1.6, -13.6), 71)
+		_box(Vector3(4, 1.4, 2.6), Vector3(0, 0, -14), Color(0.46, 0.33, 0.2))   # a wooden tribunal
+		_speaker = _magistrate(Vector3(0, 1.4, -13.6), 71)
 		F.face(_speaker, Vector3(0, 0, 1))
 		var legions := clampi(int(params.get("other", 2)), 1, 4)
 		var blocks := legions * 6
@@ -583,10 +583,10 @@ class Gathering extends "res://scripts/urbs/spectacles/base.gd":
 			s.equip_helmet("samnis", Color(0.72, 0.6, 0.3), Color(0.72, 0.1, 0.1))
 			add_child(s)
 			_walkers.append(s)
-		_label = make_label("The levy", 1.6, Color(1, 0.95, 0.8))
-		_label.position = Vector3(0, 6.0, -13.6)
-		_tally = make_label("", 1.6, Color(0.8, 1.0, 0.7))
-		_tally.position = Vector3(0, 4.6, -13.6)
+		_label = make_label("The levy", 1.1, Color(1, 0.95, 0.8))
+		_label.position = Vector3(0, 5.8, -13.6)
+		_tally = make_label("", 1.1, Color(0.8, 1.0, 0.7))
+		_tally.position = Vector3(0, 4.9, -13.6)
 
 	func _apply(time: float) -> void:
 		var tt := clampf(time, 0.0, duration)
@@ -639,7 +639,7 @@ class Gathering extends "res://scripts/urbs/spectacles/base.gd":
 				out.append(look(Vector3(-2.0, 4.5, 15.0), Vector3(1.0, 1.0, 0.0)))
 				out.append(look(Vector3(12.0, 3.0, 6.0), Vector3(-6.0, 1.0, 0.0)))
 			_:
-				out.append(look(Vector3(0.0, 4.2, -21.0), Vector3(0, 1.0, 8.0)))
+				out.append(look(Vector3(-6.0, 7.5, -27.0), Vector3(0, 0.5, 10.0)))
 				out.append(look(Vector3(-40.0, 9.0, 40.0), Vector3(0, 0.0, 6.0)))
 		return out
 

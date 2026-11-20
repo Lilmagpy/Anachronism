@@ -271,7 +271,9 @@ func _place_section(place: Dictionary, result: Dictionary, width: float, numbere
 	var role := str(place.get("role", ""))
 	var kicker := heading if heading != "" else UrbsPlaces.role_words(role)
 	if kicker != "":
-		box.add_child(UiStyle.label(kicker.to_upper(), 13, UiStyle.RED, "body", 900))
+		var k := UiStyle.wrapped(kicker.to_upper(), 13, UiStyle.RED, width)
+		k.add_theme_font_override("font", UiStyle.font("body", 900))
+		box.add_child(k)
 	var blurb := str(place.get("blurb", ""))
 	if blurb != "":
 		box.add_child(UiStyle.wrapped(blurb, 14, UiStyle.INK_SOFT, width))

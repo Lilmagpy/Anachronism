@@ -201,6 +201,8 @@ static func forecast_text(f: Variant) -> String:
 	var note := str(d.get("note", ""))
 	if note != "":
 		bits.append(note.left(1).to_upper() + note.substr(1))
+	if not bits.is_empty():
+		bits[0] = bits[0].left(1).to_upper() + bits[0].substr(1)
 	return ". ".join(bits) + ("." if not bits.is_empty() and not bits[bits.size() - 1].ends_with(".") and not bits[bits.size() - 1].ends_with(")") else "")
 
 
