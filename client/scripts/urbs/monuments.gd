@@ -392,6 +392,11 @@ func _make(id: String, st: Dictionary) -> void:
 			# F2: open paving on a built platform (the Area Capitolina, the Forum Iulium): its floor
 			base_y = UrbsSite.terrace_height_at(centre.x, centre.y)
 			found = true
+		elif model in AGAINST_HILL:
+			# F2: built against the hillside (the Tabularium's back is the Capitol's rock): it stands
+			# on its lowest ground and its own form walls the hill behind it
+			base_y = lo
+			found = true
 		elif model == "plaza" or (mode == "lo" and skirt <= LEVEL_OK_M):
 			# open paving, or ground level enough: it sits on its lowest point
 			base_y = lo
@@ -494,7 +499,7 @@ func _make(id: String, st: Dictionary) -> void:
 		"width": maxf(float(st.width), float(st.radius) * 2.0), "radius": float(st.radius), "model": model, "state": st.state,
 		"native": aabb.size, "door": res.get("door", null),
 		# F2 audit (audit.gd): how the base meets the ground, and the plan size used for it
-		"base_mode": str(res.get("base", "lo")), "world": world, "skirted": found and not world, "drop": skirt,
+		"base_mode": str(res.get("base", "lo")), "world": world, "skirted": found and not world, "drop": skirt, "retains": model in AGAINST_HILL,
 		"half": half}
 
 
@@ -803,6 +808,8 @@ func footprints() -> Array:
 const _NOT_OBSTACLES := ["wall", "aqueduct", "sewer", "bridge_stone", "bridge_timber", "road_paved"]
 ## F2: a monument whose ground falls less than this across its footprint sits on its lowest point
 const LEVEL_OK_M := 1.0
+## F2: forms built against a hillside, whose back is the hill (not buried: retaining)
+const AGAINST_HILL := ["tabularium"]
 
 
 func oriented_footprints() -> Array:

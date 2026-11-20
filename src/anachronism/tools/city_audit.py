@@ -2459,9 +2459,10 @@ TERRACE_DROP_M = 3.0
 """Where the ground falls more than this under a monument, it stands on a terrace cut into the
 hill (a platform of topography.yaml, with retaining and substructure walls); below it, on a
 podium or foundation of its own (monuments.gd)."""
-TERRACE_MARGIN_M = 0.5
-TERRACE_SKIP = {"area_capitolina", "forum_iulium"}
-"""Plazas whose own platform in topography.yaml is their outline (edited by hand)."""
+TERRACE_MARGIN_M = 6.0
+TERRACE_SKIP = {"area_capitolina", "forum_iulium", "tabularium"}
+"""Plazas whose own platform in topography.yaml is their outline (edited by hand), and the
+Tabularium, built against the hill (monuments.gd AGAINST_HILL)."""
 TERRACE_SKIP_MODELS = {"quay", "bridge_stone", "bridge_timber", "circus_maximus"}
 """Built on the bank or across the river, or in the valley: no terrace."""
 _TERRACE_START = (
@@ -2540,7 +2541,18 @@ def update_terraces(scene: dict[str, Any], path: Path = TOPOGRAPHY) -> int:
             f"fell {e['drop']:.1f} m under the monument; cut and built up to the level at its "
             f'centre, walled"}}'
         )
-    block = [_TERRACE_START, *(kept[k] for k in sorted(kept)), _TERRACE_END]
+
+    # the lower terraces first: where two meet, the higher one keeps its edge (terrain.gd stamps
+    # the platforms in order) and the lower is walled against it
+    def level_of(line: str) -> float:
+        m = re.search(r"level: \[([-0-9.]+)", line)
+        return float(m.group(1)) if m else 0.0
+
+    block = [
+        _TERRACE_START,
+        *sorted(kept.values(), key=lambda ln: (level_of(ln), ln)),
+        _TERRACE_END,
+    ]
     lines[i:i] = block
     path.write_text("\n".join(lines), encoding="utf-8")
     return len(kept)
