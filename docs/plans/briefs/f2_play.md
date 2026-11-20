@@ -133,7 +133,13 @@ Nothing in the contract above changed; these are additions and the exact shapes.
   `{"kind":"contio","issue":"candidate","side":"<person id>","office":"consul"}`;
   `{"kind":"vow","temple":"<monument id>","cause":"battle"|"pestilence"}` (optional `by`);
   `{"kind":"games","games":"ludi"|"munus","venue":"<monument id>","honour":"<dead person id>"}`
-  (`honour` for a munus; optional `giver`); `{"kind":"site","tech":"<idea>","site":"history"|"<site id>"}`.
+  (`honour` for a munus; optional `giver`); `{"kind":"site","tech":"<idea>","site":"history"|"<site id>"}`;
+  `{"kind":"expiate"}` and `{"kind":"sibyl"}` at the Capitol (religion's rites: pay for the
+  prodigies left unexpiated; the decemviri consult the Books once a year). Workshops and
+  harbours also list `{"kind":"idea","context":"workshop"|"harbour"}` (enabled, no cost): not an
+  engine action, the client opens its idea box with it. The fixture's `{"kind":"vow","god":...}`,
+  `{"kind":"games","festival":...}` and `{"kind":"levy","legions":2}` are not the engine's
+  shapes: send the view's `action` as it is.
   **The levy is the existing `raise`**, `{"kind":"raise","province":"<Rome's province>","size":
   "small"|"medium"|"large"}`: no new `levy` action was needed.
 - **Events by `watch`** (in `view["city"]["events"]`, this turn's): `senate` as before (`ref`
@@ -141,15 +147,23 @@ Nothing in the contract above changed; these are additions and the exact shapes.
   `candidate:<office>`, `monument` the Rostra of the year, `person` the speaker, `value` the
   favour moved (bp, negative for a speech against) or the election weight added, `other` the
   families reached. `election` (when the year's elections are held, for each man the player
-  backed): `ref` office, `monument` the assembly's place, `person` the man, `value` 1 elected / 0
-  not, `other` the seats filled. `sacrifice` with `ref` `vow`: `monument` the temple, `person` the
+  backed): `ref` office, `monument` the assembly's place, `person` the man, `value`/`other` the
+  voting units for and against him (193 centuries; 21 to 35 tribes by the year), from his share
+  of the draw's weights; he was elected exactly when `value > other` (a majority of units). `sacrifice` with `ref` `vow`: `monument` the temple, `person` the
   vower, `value` the dedication year; its dedication later is `sacrifice`/`dedication` as ever.
   `race`: `ref` `ludi`, `monument` the circus, `person` the giver, `value` wealth spent, `other`
   unrest relieved (bp). `munus`: `monument` the venue, `person` the dead man, `ref` the giver's
   person id, `value` wealth, `other` unrest relieved. `levy`: `monument` the levy's place (the
-  Villa Publica from 435, else the Campus), `ref` the army id, `value` men, `other` the pool of
-  assidui. `building`: `ref` the idea, `monument` `anachronism_<idea>`, `value` progress (bp),
+  Villa Publica from 435, else the Campus), `ref` the army id, `value` men, `other` legions
+  (4,200 men to a legion: Polybius 6.20.8-9; at least one). `building`: `ref` the idea, `monument` `anachronism_<idea>`, `value` progress (bp),
   `other` 1 (its site was chosen). `triumph` is the engine's own, as before.
+- **The centuries' election and the levy are at the Villa Publica** from 435 (the client's
+  choice, kept: the Campus is ground, not a building; voters and candidates waited at the Villa
+  Publica beside the pens: Varro, RR 3.2.1-2), the Campus Martius before 435.
+- **The Curia's info** has `Presiding`: the first of dictator, consul, consular tribune...
+  in office, in the year's own order (Ap. Claudius Caudex, consul, in 264). Every game's start
+  year now seats the Fasti's college (it did only in a chronicle), and a family has sons only
+  from 60 years before its first attestation, so no Calvisius stands in 264.
 - **The houses** this pass added are in `data/rome/city/monuments_domus.yaml` →
   `client/data/city/monuments_domus.json`: the client's `monuments.gd` `FILES` must list it for
   Urbs to draw them (the engine's places already include them).

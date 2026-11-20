@@ -390,6 +390,16 @@ def present_from(state: GameState) -> dict[str, int]:
     return {gid: year - margin for gid, year in sorted(first.items())}
 
 
+def _ordinary(fasti: FastiYear) -> FastiYear:
+    """F2: a year of the Fasti with only its ordinary holders (the college that opened it)."""
+    colleges = [
+        college.model_copy(update={"holders": tuple(h for h in college.holders if not h.suffect)})
+        for college in fasti.colleges
+        if any(not h.suffect for h in college.holders)
+    ]
+    return fasti.model_copy(update={"colleges": tuple(colleges)})
+
+
 def backed_shares(state: GameState, year: int) -> dict[tuple[str, str], int]:
     """F2: (office, person) -> the share (bp) of the vote each man the player backed can expect.
 
@@ -836,6 +846,8 @@ def _hold_year(
     taken: set[str] = {m.person for m in rep.magistrates if m.office in mags}
     handled: set[str] = set()
     fasti = state.world.fasti.get(year) if state.chronicle_mode or start else None
+    if fasti is not None and not state.chronicle_mode:  # F2: the opening college, no suffects
+        fasti = _ordinary(fasti)
     if fasti is not None:
         handled = _apply_fasti(state, rep, rng, events, fasti, taken, shares)
         if fasti.gap:
