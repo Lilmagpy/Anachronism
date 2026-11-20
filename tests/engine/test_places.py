@@ -26,7 +26,7 @@ from anachronism.engine.game import apply_action, end_turn, new_game, replay
 from anachronism.engine.republic import kill_person, senate_vote
 from anachronism.engine.rivals import declare_war
 from anachronism.engine.save import dumps, loads
-from anachronism.engine.state import GameState, TechState
+from anachronism.engine.state import GameState, Project, TechState
 from anachronism.tools.city_view import city_view
 from anachronism.tools.places_view import domus_owner, places_view
 
@@ -509,8 +509,6 @@ def _with_project(state: GameState, tech: str) -> GameState:
     civ.tech[tech] = TechState(stage=Stage.CONCEPT)
     new, logged = apply_action(state, StartProject(civ="rome", node_id=tech))
     if not logged.ok:  # not feasible yet: force the work under way for the test
-        from anachronism.engine.state import Project
-
         new.civs["rome"].tech[tech] = TechState(stage=Stage.EXPERIMENTING)
         new.civs["rome"].projects[tech] = Project(node_id=tech, started_turn=new.turn)
     return new
@@ -573,6 +571,9 @@ def test_the_players_levy_plays_on_the_campus(content: Content) -> None:
 
 def _play(content: Content, seed: int) -> tuple[GameState, GameState]:
     state = fresh(content, seed)
+    # the start of the game, not actions: an amphitheatre under way, so its site can be chosen
+    state.civs["rome"].tech["amphitheatre"] = TechState(stage=Stage.EXPERIMENTING)
+    state.civs["rome"].projects["amphitheatre"] = Project(node_id="amphitheatre", started_turn=0)
     initial = state.model_copy(deep=True)
     temple = city_acts.vow_candidates(state)[0].id
     man = _candidate(state)
@@ -584,6 +585,7 @@ def _play(content: Content, seed: int) -> tuple[GameState, GameState]:
             VowTemple(civ="rome", temple=temple, cause="pestilence"),
             GiveGames(civ="rome", games="ludi", venue="circus_maximus"),
             RaiseArmy(civ="rome", province=capital, size="small"),
+            ChooseSite(civ="rome", tech="amphitheatre", site="amphitheatre_campus"),
         ],
         1: [
             DeclareWar(civ="rome", target="carthage"),
@@ -594,6 +596,11 @@ def _play(content: Content, seed: int) -> tuple[GameState, GameState]:
     for turn in range(3):
         for action in script.get(turn, []):
             state, _ = apply_action(state, action)
+        dead = city_acts.honourees(state)
+        venue = city_acts.venues(state, "munus")
+        if turn and dead and venue:  # a munus for the first great man the turn's years took
+            honour = GiveGames(civ="rome", games="munus", venue=venue[0][0], honour=dead[0].id)
+            state, _ = apply_action(state, honour)
         state, _ = end_turn(state)
     return initial, state
 
@@ -602,7 +609,10 @@ def _play(content: Content, seed: int) -> tuple[GameState, GameState]:
 def test_the_places_actions_replay_exactly_and_save_cleanly(content: Content, seed: int) -> None:
     initial, final = _play(content, seed)
     kinds = {e.action.kind for e in final.action_log if e.ok}
-    assert {"contio", "vow", "games", "raise"} <= kinds
+    assert {"contio", "vow", "games", "raise", "site"} <= kinds
+    assert any(
+        e.action.kind == "games" and e.action.games == "munus" for e in final.action_log if e.ok
+    )
     assert final.city is not None
     assert final.city.vows
     rebuilt = replay(initial, final.action_log, until_turn=final.turn)
