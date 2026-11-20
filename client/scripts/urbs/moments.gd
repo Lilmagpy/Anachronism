@@ -40,6 +40,7 @@ const GATHERING_AT := {"contio": ["rostra_republic", "rostra_augusti", "comitium
 
 var urbs: Urbs                      ## the Urbs scene (cam, hud, monuments, play_watch...)
 var busy := false
+var speed := 1.0                   ## test flag --moment-speed: everything plays this much faster
 var people := {}                   ## person id -> name (from the republic view)
 var _skip := false
 var _stop := false
@@ -68,7 +69,7 @@ func _ready() -> void:
 	_card.set_anchors_preset(Control.PRESET_CENTER_TOP)
 	_card.offset_left = -330
 	_card.offset_right = 330
-	_card.offset_top = 16
+	_card.offset_top = 72
 	_card.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	root.add_child(_card)
 	var col := VBoxContainer.new()
@@ -201,7 +202,7 @@ func _moment(e: Dictionary, index: int, total: int, watch: bool) -> void:
 			urbs._leave_interior_now()
 			urbs.fade_to(0.0, 0.4)
 		# the flight: from wherever the camera is to an orbit over the place
-		urbs.cam.go_city(_centre(mon), _orbit(mon), FLY)
+		urbs.cam.go_city(_centre(mon), _orbit(mon), FLY / speed)
 		await _wait(FLY + 0.3)
 		if _skip:
 			return
@@ -214,6 +215,7 @@ func _moment(e: Dictionary, index: int, total: int, watch: bool) -> void:
 		var spans: Dictionary = SPANS_WATCH if watch else SPANS_YEAR
 		var cut: Array = spans.get(sp_kind, [0.0, 24.0])
 		sp.seek(float(cut[0]))
+		sp.time_scale = speed
 		var views: Array = sp.camera_views()
 		if not views.is_empty():
 			var v: Transform3D = views[clampi(int(VIEW.get(sp_kind, 0)), 0, views.size() - 1)]
@@ -221,7 +223,7 @@ func _moment(e: Dictionary, index: int, total: int, watch: bool) -> void:
 				urbs.cam.snap_inside(v)
 				urbs.fade_to(0.0, 0.4)
 			else:
-				urbs.cam.go_inside(v, 1.8)
+				urbs.cam.go_inside(v, 1.8 / speed)
 		await _wait(minf(float(cut[1]), maxf(4.0, sp.duration - float(cut[0]))))
 	else:
 		if urbs.interior != null:
@@ -231,6 +233,7 @@ func _moment(e: Dictionary, index: int, total: int, watch: bool) -> void:
 
 func _wait(seconds: float) -> void:
 	var t := 0.0
+	seconds /= maxf(speed, 0.01)
 	while t < seconds and not _skip and is_inside_tree():
 		await get_tree().process_frame
 		t += get_process_delta_time()

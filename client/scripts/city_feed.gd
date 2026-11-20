@@ -305,7 +305,7 @@ static func describe(e: Dictionary, people: Dictionary = {}) -> Array:
 		"senate":
 			var carried := value > other
 			return ["THE SENATE", "The Senate meets%s and votes on %s: %d%% for, %d%% against. The motion is %s." % [
-				" in the " + venue if venue != "" else "", str(ISSUE_NAMES.get(ref, ref.replace("_", " "))), value / 100, other / 100, "carried" if carried else "refused"],
+				" in the " + venue if venue != "" else "", str(ISSUE_NAMES.get(ref, ref.replace("_", " "))), roundi(value / 100.0), roundi(other / 100.0), "carried" if carried else "refused"],   # F2 play: rounded, as the moments show it
 				GOOD if carried else BAD]
 		"sacrifice":
 			if ref == "dedication":

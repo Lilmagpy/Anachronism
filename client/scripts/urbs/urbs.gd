@@ -45,7 +45,7 @@
 ##   --spectacle-view=N    put the camera at the spectacle's Nth own view
 ##   F2 play (places.gd, moments.gd): --places-fixture  use client/data/fixtures/places_264.json
 ##   even when the view has places; --moments  play the fixture's year of events as moments;
-##   --list-closed  start with "Rome this year" folded. main.gd's --then=act|moments|endyear
+##   --list-closed  start with "Rome this year" folded; --moment-speed=X  moments X times faster. main.gd's --then=act|moments|endyear
 ##   (with --act=<action id> at --at=<monument>) drive them for screenshots.
 class_name Urbs
 extends Node3D
@@ -161,6 +161,8 @@ func open(new_year: int, at := Vector3.ZERO, flags := {}, new_events: Array = []
 		places.set_view(play_view, true)
 	if flags.has("list-closed"):
 		hud.toggle_list(false)
+	if flags.has("moment-speed"):
+		moments.speed = maxf(0.1, float(flags["moment-speed"]))
 	_refresh_play()
 	# --- F2 play (end)
 	life.set_events(events)
@@ -733,11 +735,35 @@ func play_fixture_moments() -> void:
 ## Spectacle for one event (U6's, or a gathering), placed and playing; null if none.
 func play_watch(e: Dictionary) -> Node3D:
 	_stop_spectacle()
-	var sp: Node3D = UrbsSpectacles.play_event(e, self)
+	var sp: Node3D = _senate_inside(e)
+	if sp == null:
+		sp = UrbsSpectacles.play_event(e, self)
 	if sp == null:
 		sp = UrbsMoments.gathering(e, self)
 	spectacle = sp
 	life.set_spectacle(sp != null)
+	return sp
+
+
+## The Senate's vote inside the Curia's interior when it is open: the division fitted to the
+## hall (its floor, its length and width), so the senators walk the real floor.
+func _senate_inside(e: Dictionary) -> Node3D:
+	if interior == null or str(e.get("kind", "")) != "senate" or _interior_kind() != "curia":
+		return null
+	var sp_def := UrbsSpectacles.from_event(e)
+	var r: Dictionary = interior.get("result")
+	var anchors: Dictionary = r.get("anchors", {})
+	if sp_def.is_empty() or not anchors.has("door"):
+		return null
+	var m: Dictionary = monuments.entry(interior_id)
+	var kv: Array = UrbsInteriors.kind_of(m)
+	var size := UrbsInteriors.size_of(m, str(kv[0]), str(kv[1]))   # (length, width)
+	var params: Dictionary = (sp_def["params"] as Dictionary).duplicate()
+	params["hall"] = Vector2(maxf(size.y - 1.6, 8.0), maxf(size.x - 1.2, 12.0))
+	var sp := UrbsSpectacles.play("senate", params, self)
+	if sp != null:
+		var door: Vector3 = anchors["door"]
+		sp.transform = (interior.get("xf") as Transform3D) * Transform3D(Basis(), Vector3(0, door.y, 0))
 	return sp
 
 
