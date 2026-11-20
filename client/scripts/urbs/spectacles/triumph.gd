@@ -394,9 +394,15 @@ func seat_views() -> Array[Transform3D]:
 		var dir: Vector3 = r[1]
 		dir.y = 0.0
 		dir = dir.normalized()
-		var side := Vector3(-dir.z, 0, dir.x)
-		var at: Vector3 = (r[0] as Vector3) + dir * 10.0 + Vector3(0, 1.5, 0)
-		out.append(_clear_view((r[0] as Vector3) - dir * 4.0, side, 7.0, 5.0, at))
+		# F2 play: on the way itself, 4.5 m up, looking back down it at the procession coming: the
+		# street is open where the houses and monuments beside it are not; the sides if not
+		var at: Vector3 = (sample(maxf(s - 35.0, 0.0))[0] as Vector3) + Vector3(0, 1.6, 0)
+		var on_way: Vector3 = (r[0] as Vector3) + Vector3(0, 4.5, 0)
+		if _free(on_way) and _sees(on_way, at, _ground_fn()):
+			out.append(look(on_way, at))
+		else:
+			var side := Vector3(-dir.z, 0, dir.x)
+			out.append(_clear_view(r[0] as Vector3, side, 7.0, 5.0, at))
 	out.append(_sacrifice.transform * look(Vector3(8.0, 2.4, 9.0), Vector3(0.5, 1.2, 0.5)))
 	return out
 
@@ -427,26 +433,53 @@ func cine_view(time: float) -> Transform3D:
 
 
 ## F2 play: a camera `out` metres to one side of `base` and `up` above it, looking at `at`, never
-## in a hill: on the side where the ground is lower, at least 2 m above the ground there, and
-## raised until nothing of the ground stands between it and `at` (params.height, the terrain;
-## the route crosses the slopes of the Palatine and the Capitol).
+## in a hill: the side where the ground is lower first, then the other, each at least 2 m above
+## its ground and raised (by 6 m at most) until no ground stands between it and `at`; if neither
+## side sees it, the camera stands on the way itself, 12 m back, which always does (params.height,
+## the terrain; the way crosses the slopes of the Palatine, the Velia and the Capitol).
 func _clear_view(base: Vector3, side: Vector3, out: float, up: float, at: Vector3) -> Transform3D:
 	var h: Variant = params.get("height")
 	if not (h is Callable) or not (h as Callable).is_valid():
 		return look(base + side * out + Vector3(0, up, 0), at)
-	var ground := func(p: Vector3) -> float: return float((h as Callable).call(p.x, p.z))
+	var ground := _ground_fn()
 	var a := base + side * out
 	var b := base - side * out
-	var from := a if float(ground.call(a)) <= float(ground.call(b)) else b
-	from.y = maxf(base.y + up, float(ground.call(from)) + 2.0)
-	for lift in 16:
-		var blocked := false
-		for k in range(1, 8):
-			var q := from.lerp(at, k / 8.0)
-			if q.y < float(ground.call(q)) + 0.4:
-				blocked = true
-				break
-		if not blocked:
-			break
-		from.y += 2.0
-	return look(from, at)
+	var sides := [a, b] if float(ground.call(a)) <= float(ground.call(b)) else [b, a]
+	for cand in sides:
+		var from: Vector3 = cand
+		from.y = maxf(base.y + up, float(ground.call(from)) + 2.0)
+		for lift in 4:
+			if _free(from) and _sees(from, at, ground):
+				return look(from, at)
+			from.y += 2.0
+	var back := at - base
+	back.y = 0.0
+	back = back.normalized() if back.length() > 0.01 else Vector3(0, 0, 1)
+	var on_way := base - back * 12.0
+	on_way.y = float(ground.call(on_way)) + 3.2
+	return look(on_way, at)
+
+
+func _ground_fn() -> Callable:
+	var h: Variant = params.get("height")
+	if h is Callable and (h as Callable).is_valid():
+		return func(p: Vector3) -> float: return float((h as Callable).call(p.x, p.z))
+	return func(p: Vector3) -> float: return p.y - 10.0
+
+
+## Not inside a house or a monument (params.push: Urbs.push_out, which moves a point out of them).
+func _free(p: Vector3) -> bool:
+	var push: Variant = params.get("push")
+	if not (push is Callable) or not (push as Callable).is_valid():
+		return true
+	var g := float(_ground_fn().call(p))
+	var q: Vector2 = (push as Callable).call(Vector2(p.x, p.z), 0.8, p.y - g)
+	return q.distance_to(Vector2(p.x, p.z)) < 0.05
+
+
+func _sees(from: Vector3, at: Vector3, ground: Callable) -> bool:
+	for k in range(1, 8):
+		var q := from.lerp(at, k / 8.0)
+		if q.y < float(ground.call(q)) + 0.4:
+			return false
+	return true

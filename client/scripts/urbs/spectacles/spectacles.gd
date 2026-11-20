@@ -265,6 +265,8 @@ static func place(kind: String, id: String, urbs: Node3D, params: Dictionary = {
 			total += r[i].distance_to(r[i - 1])
 		params["march_seconds"] = clampf(total / 6.0, 110.0, 700.0)
 		params["height"] = height
+		if urbs.has_method("push_out"):
+			params["push"] = Callable(urbs, "push_out")
 	var sp := play(kind, params, urbs)
 	if sp == null:
 		return null
@@ -321,12 +323,14 @@ static func _top_under(table: Dictionary, frames: Dictionary, x: float, y: float
 ##   the Campus Martius at the Villa Publica - the Porta Triumphalis by the Circus Flaminius -
 ##   through the Circus Flaminius (from 220 BC) - into the city by the Porta Carmentalis (the
 ##   gate's site is disputed: P-A's first view puts it between the Flumentana and the
-##   Carmentalis) - the Forum Holitorium and the Velabrum to the Forum Boarium - the length of
+##   Carmentalis) - by the Forum Holitorium to the Forum Boarium (the Via Flumentana's line
+##   under the Capitol, from the streets data; the Velabrum valley opens beside it) - the length of
 ##   the Circus Maximus from the carceres to the curved end - north round the Palatine in the
 ##   valley under the Caelian (the line of the modern Via di San Gregorio, not in the streets
 ##   data: the modeller's line, kept on the valley floor) - the Sacra Via from the Velia down
 ##   through the Forum - the Clivus Capitolinus up to the Area Capitolina before Jupiter's temple.
-## The Sacra Via and the Clivus Capitolinus follow the streets data; the other stretches run
+## The Via Flumentana, the Sacra Via and the Clivus Capitolinus follow the streets data; the
+## Circus Maximus its own track; the others (the Campus, the valley under the Caelian) run
 ## between the places' own footprints. Every point lies on the ground (steps of 12 m).
 static func triumph_route(urbs: Node3D, height: Callable) -> PackedVector3Array:
 	var ids: Array = urbs.monuments.ids()
@@ -354,9 +358,36 @@ static func triumph_route(urbs: Node3D, height: Callable) -> PackedVector3Array:
 			b = t
 		add.call(a)
 		add.call(b)
-	for id in ["porta_carmentalis", "forum_holitorium", "forum_boarium"]:
-		if ids.has(id):
-			add.call(centre.call(id))
+	if ids.has("porta_carmentalis"):
+		add.call(centre.call("porta_carmentalis"))
+	# by the Forum Holitorium to the Forum Boarium on the Via Flumentana's streets data (its
+	# stretch under the Capitol by the river), so the way keeps to a street, not through houses
+	var streets_v: Variant = urbs.get("streets")
+	var flum := streets_v != null and (streets_v.street_ids() as Array).has("via_flumentana") and ids.has("forum_boarium")
+	if flum:
+		var from_p: Vector2 = legs[legs.size() - 1][0] if not legs.is_empty() else Vector2.ZERO
+		var to_p: Vector2 = centre.call("forum_boarium")
+		var pts: Array[Vector2] = []
+		for k in 61:
+			var q: Vector3 = streets_v.along("via_flumentana", k / 60.0)
+			pts.append(Vector2(q.x, q.z))
+		var i0 := 0
+		var i1 := 0
+		for k in pts.size():
+			if pts[k].distance_to(from_p) < pts[i0].distance_to(from_p):
+				i0 = k
+			if pts[k].distance_to(to_p) < pts[i1].distance_to(to_p):
+				i1 = k
+		var step := 1 if i1 >= i0 else -1
+		var k := i0
+		while k != i1 + step:
+			add.call(pts[k])
+			k += step
+		add.call(to_p)
+	else:
+		for id in ["forum_holitorium", "forum_boarium"]:
+			if ids.has(id):
+				add.call(centre.call(id))
 	if ids.has("circus_maximus") and placed is Dictionary and (placed as Dictionary).has("circus_maximus"):
 		var pl: Dictionary = placed["circus_maximus"]
 		var ax := Vector2(sin(float(pl["yaw"])), cos(float(pl["yaw"])))
