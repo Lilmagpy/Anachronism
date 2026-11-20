@@ -12,28 +12,1259 @@
 # outline_skip.<monument id>: reason the outline of the remains is not comparable.
 # {missing: "why"} corrects an automatic match that was wrong: the entry counts as missing.
 verdicts:
-  pleiades: {}
   platner:
-    Aedes_Castoris#in_Circo_Flaminio: {missing: "the temple of Castor in circo Flaminio (Vitruvius 4.8.4) is not the Forum temple"}
-    Aedes_Martis#in_via_Appia: {missing: "the temple of Mars outside the Porta Capena on the Via Appia (vowed 388 BC, Livy 6.5.8) is not the Campus Martius temple"}
-    Aedes_Fortunae#Apotropaios: {missing: "a different Fortuna from the Forum Boarium temple"}
-    Aedes_Fortunae#Euelpis: {missing: "a different Fortuna"}
-    Aedes_Dianae#p151: {missing: "the Dianium on the Esquiline (Livy 1.48.6), not the Aventine temple"}
-    Domus_Valeriorum.html: {missing: "a house, not the Via Valeria"}
-    Statuae#Valeriana: {missing: "a statue, not the Via Valeria"}
-    Statuae#Romuli: {missing: "a statue, not the hut of Romulus"}
-    R#Templum_Divi_Romuli: {missing: "the temple of Divus Romulus (Maxentius' son) on the Sacra Via, not the hut of Romulus"}
-    arcus#Traiani2: {missing: "an arch, not the column of Trajan"}
-    curiae#Pompiliana: {missing: "not the Curia of Pompey"}
-    domus#Flaminia: {missing: "a house, not the Via Flaminia"}
-    domus#L.Caecilius_Metellus: {missing: "a house, not the tomb of Caecilia Metella"}
-    domus#M.Aemilius_Scaurus: {missing: "Scaurus' house on the Palatine, not his theatre"}
-    horrea#Agrippiana: {missing: "the Horrea Agrippiana by the Vicus Tuscus, not the baths of Agrippa"}
-    horrea#Nervae: {missing: "a granary, not the Forum of Nerva"}
-    porticus#Catuli: {missing: "Catulus' portico on the site of Fulvius Flaccus' house, not Catulus' house"}
-    Aemiliana.html: {skip: "a district of the Campus Martius (Varro RR 3.2.6), not a building"}
-measured: {}
+    A#Adonidis_Aula:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    A#Aedes_Tensarum:
+      skip: only the hill or district is given (capitol, Platner-Ashby); no site on it argued, so not placed
+    A#Ager_L_Petilii:
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    A#Albionarum_Lucus:
+      skip: 'a grove: the client has no grove form (trees are drawn by site_flora); not added'
+    A#Apollo_Sandaliarius:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    A#p5:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    Ad_Malum_Punicum.html:
+      skip: 'a minor street or locality: streets.yaml carries the main streets; not added in F2'
+    Aedes_Castoris#in_Circo_Flaminio:
+      match: aedes_castoris_circo_flaminio
+      note: added in F2
+    Aedes_Consi.html:
+      skip: only the hill or district is given (aventine, Platner-Ashby); no site on it argued, so not placed
+    Aedes_Deorum_Penatium.html:
+      match: aedes_penatium
+      note: added in F2
+    Aedes_Dianae#p151:
+      skip: a shrine already gone by the time Livy mentions it (Livy 1.48.6)
+    Aedes_Fortunae#Apotropaios:
+      skip: known only by name from Plutarch; site unknown
+    Aedes_Fortunae#Equestris:
+      match: aedes_fortunae_equestris
+      note: added in F2
+    Aedes_Fortunae#Euelpis:
+      skip: known only by name from Plutarch, on the Vicus Longus; site unknown
+    Aedes_Fortunae#Mala:
+      skip: only the hill or district is given (esquiline, Platner-Ashby); no site on it argued, so not placed
+    Aedes_Fortunae#Obsequens:
+      skip: known only by name from Plutarch; somewhere in Region I
+    Aedes_Fortunae#Privata:
+      skip: only the hill or district is given (palatine, Platner-Ashby); no site on it argued, so not placed
+    Aedes_Fortunae#Respiciens1:
+      skip: its site is unknown (Platner-Ashby); not placed
+    Aedes_Fortunae#Stata:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    Aedes_Fortunae#Tulliana:
+      skip: known only from one inscription; no site
+    Aedes_Fortunae#Virgo:
+      skip: known only by name from Plutarch; site unknown
+    Aedes_Fortunae#Virilis:
+      skip: site unknown, existence questioned (P-A)
+    Aedes_Fortunae#Viscata:
+      skip: its site is unknown (Platner-Ashby); not placed
+    Aedes_Fortunae#p219:
+      match: domus_aurea
+      note: inside the Domus Aurea (Pliny NH 36.163)
+    Aedes_Herculis_Custodis.html:
+      match: aedes_herculis_custodis
+      note: added in F2
+    Aedes_Isidis.html:
+      match: aedes_isidis_serapis
+    Aedes_Martis#Invictus:
+      skip: known only from the calendars; nothing more is known (P-A)
+    Aedes_Martis#in_via_Appia:
+      match: aedes_martis_appia
+      note: added in F2
+    Aedes_Matris_Deum.html:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    Aedes_Matris_Matutae.html:
+      match: aedes_fortunae_matris_matutae
+      note: the twin temples at S. Omobono
+    Aedes_Minervae.html:
+      match: aedes_minervae_aventine
+      note: added in F2
+    Aedes_Salutis#Ara:
+      match: aedes_salutis
+      note: the entry also covers the temple
+    Aedes_Summani.html:
+      match: aedes_summani
+      note: added in F2
+    Aedes_Veiovis.html:
+      match: aedes_veiovis
+    Aedes_Veneris#Felix:
+      skip: its site is unknown (Platner-Ashby); not placed
+    Aedes_Veneris#Hortorum_Sallustianorum:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    Aedes_Veneris#Libitina:
+      skip: only the hill or district is given (esquiline, Platner-Ashby); no site on it argued, so not placed
+    Aedes_Veneris#aedes:
+      skip: its site is unknown (Platner-Ashby); not placed
+    Aedes_Vortumni.html:
+      match: aedes_vortumni
+      note: added in F2
+    Aemiliana.html:
+      skip: a district of the Campus Martius (Varro RR 3.2.6), not a building
+    Aequimelium.html:
+      skip: 'a minor street or locality: streets.yaml carries the main streets; not added in F2'
+    Aesculetum.html:
+      skip: 'a grove: the client has no grove form (trees are drawn by site_flora); not added'
+    Aius_Locutius.html:
+      match: ara_aii_locutii
+      note: added in F2
+    Amnis_Petronia#Cati_fons:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    Amnis_Petronia#amnis:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    Ara_Gentis_Juliae.html:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    Ara_Pacis.html:
+      match: ara_pacis_augustae
+    Arcus_Constantini.html:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    Arcus_Neroniani.html:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    Arcus_Tiberii#in_Foro_Romano:
+      match: arcus_tiberii
+      note: added in F2
+    Area_Capitolina.html:
+      match: area_capitolina
+      note: added in F2
+    Asylum#Cereris:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    Athenaeum.html:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    Auditorium_Maecenatis.html:
+      match: auditorium_maecenatis
+      note: added in F2
+    Auguraculum#in_Arce:
+      match: auguraculum
+      note: added in F2
+    B#Basis_Q.Marci_Regis:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    B#Bona_Dea:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    B#templum_Boni_Eventus:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    Basilica_Aemilia.html:
+      match: basilica_aemilia
+      note: 'Paulli: the basilica''s later name'
+    Basilica_Argentaria.html:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    Basilicae_Marc.-et-Matid.html:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    Bibliothecae#Apollinis_Palatini:
+      match: aedes_apollinis_palatini
+      note: the library in the temple's portico
+    Bibliothecae#Asini_Pollionis:
+      match: atrium_libertatis
+      note: the library in the Atrium Libertatis
+    Bibliothecae#Porticus_Octaviae:
+      match: porticus_octaviae
+      note: the library in the porticus
+    Bibliothecae#templi_Divi_Augusti:
+      match: aedes_divi_augusti
+      note: the library in the temple
+    Busta_Gallica.html:
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    C#Capita_Bubula:
+      skip: only the hill or district is given (palatine, Platner-Ashby); no site on it argued, so not placed
+    C#Caprae_Palus:
+      skip: only the hill or district is given (campus martius, Platner-Ashby); no site on it argued, so not placed
+    C#Cati_Fons:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    C#Cincia:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    C#Circus_Mecinus:
+      skip: a corruption for circus Maximus in Varro (P-A)
+    C#Columna_Bellica:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    C#Corniscae:
+      skip: 'a grove: the client has no grove form (trees are drawn by site_flora); not added'
+    C#aedes_Clementiae_Caesaris:
+      skip: probably never built (P-A)
+    C#ara_Clementiae:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    C#p111:
+      skip: 'a minor street or locality: streets.yaml carries the main streets; not added in F2'
+    Camenae#amnis:
+      match: fons_camenarum
+      note: added in F2
+    Carcer.html:
+      match: carcer
+    Carmentis.html:
+      match: sacellum_carmentis
+      note: added in F2
+    Castra#Misenatium:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    Circus_Gai_et_Neronis.html:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    Codeta#Codeta:
+      skip: its site is unknown (Platner-Ashby); not placed
+    Codeta#Minor:
+      skip: a part of the Campus Martius (a district), not a building
+    Columna_Antonini_Pii.html:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    Columna_M.Aurelii.html:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    Columna_Minucia.html:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    Compita#Acilii:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    Compita#Fabricium:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    Concordia.html:
+      match: aedes_concordiae_forum
+      note: the temple at the north-west corner of the Forum
+    Curia_Calabra.html:
+      skip: only the hill or district is given (capitol, Platner-Ashby); no site on it argued, so not placed
+    D#Dea_Naenia:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    Diribitorium.html:
+      match: diribitorium
+      note: added in F2
+    Ditis_Patris-Proserpinae.html:
+      match: ara_ditis_proserpinae
+      note: added in F2
+    Divorum#templum:
+      skip: only the hill or district is given (campus martius, Platner-Ashby); no site on it argued, so not placed
+    Doliola.html:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    Domus_Laterani.html:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    Domus_Valeriorum.html:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    E#Ara_Evandri:
+      match: ara_evandri
+      note: added in F2
+    E#Equus_Caesaris:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    E#Equus_Tiridatis:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    Equus_Domitiani.html:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    F#Aedes_Florae:
+      match: aedes_florae
+      note: added in F2
+    F#Faustinae_Aedicula:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    F#Fecunditas:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    F#Ficus_Navia:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    Felicitas#aedes:
+      match: aedes_felicitatis
+      note: added in F2
+    Felicitas#in_Capitolio:
+      skip: only the hill or district is given (capitol, Platner-Ashby); no site on it argued, so not placed
+    Felicitas#sacellum_or_ara:
+      skip: its site is unknown (Platner-Ashby); not placed
+    Feronia.html:
+      skip: 'a grove: the client has no grove form (trees are drawn by site_flora); not added'
+    Ficus_Ruminalis.html:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    Fortuna_Redux#ara:
+      match: ara_fortunae_reducis
+      note: added in F2
+    Fortuna_Redux#templum:
+      skip: only the hill or district is given (campus martius, Platner-Ashby); no site on it argued, so not placed
+    Forum_Tauri.html:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    Gymnasium_Neronis.html:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    H#Hecatostylon:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    H#Hercules_Fundanus:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    H#Hercules_Sullanus:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    H#Herculis_templa:
+      match: aedes_herculis_collina
+      note: added in F2
+    IJ#Janus_Curiatius:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    IJ#Statuae_Jani_et_al:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    IJ#p283:
+      skip: a district (the scythe-makers' quarter), not a building
+    Insulae#Bolani:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    Isis#Aedes_Isidis:
+      match: aedes_isidis_serapis
+    Isis#Athenodoria:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    Isis#et_Serapis_in_Capitolio:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    Janus.html:
+      skip: its site is unknown (Platner-Ashby); not placed
+    Janus_Quadrifrons.html:
+      skip: Domitianic shrine in the Forum Transitorium (after the period of the Republic file; minor)
+    Jupiter_Libertas.html:
+      match: aedes_libertatis_aventine
+      note: as sacella_Jovis#Libertas
+    Jupiter_Ultor.html:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    Jupiter_Victor.html:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    L#Lavacrum_Agrippinae:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    L#Templum_Lunae_Noctilucae:
+      skip: only the hill or district is given (palatine, Platner-Ashby); no site on it argued, so not placed
+    Lares#Querquetulani:
+      skip: only the hill or district is given (esquiline, Platner-Ashby); no site on it argued, so not placed
+    Lares.html:
+      match: aedes_larum
+      note: added in F2
+    Lautumiae.html:
+      skip: 'the quarries in the Capitol slope above the Carcer: ground, not a building'
+    Loretum.html:
+      skip: 'a grove: the client has no grove form (trees are drawn by site_flora); not added'
+    M#Mansiones_Saliorum_Palatinorum:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    M#Minerva_Chalcidica:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    M#Murus_Terreus:
+      skip: the earthen wall of the Carinae, known only from Varro, not located
+    M#Templum_Divi_Marci:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    M#ref4:
+      skip: only the hill or district is given (velia, Platner-Ashby); no site on it argued, so not placed
+    Manalis_Lapis.html:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    Mefitis.html:
+      skip: 'a grove: the client has no grove form (trees are drawn by site_flora); not added'
+    Meta_Romuli.html:
+      skip: a pyramid tomb near the Vatican, imperial (P-A)
+    Milliarium_Aureum.html:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    Minerva_Capta.html:
+      skip: only the hill or district is given (caelian, Platner-Ashby); no site on it argued, so not placed
+    Minerva_Chalcidica.html:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    Minerva_Medica.html:
+      skip: only the hill or district is given (esquiline, Platner-Ashby); no site on it argued, so not placed
+    Mundus#p346:
+      skip: 'the mundus: its site is disputed (P-A gives no reliable identification)'
+    Murcia.html:
+      match: sacellum_murciae
+      note: added in F2
+    N#Naevia_Nemora:
+      skip: only the hill or district is given (aventine, Platner-Ashby); no site on it argued, so not placed
+    N#ad_Numfium:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    N#aedes_Nymphae:
+      skip: its site is unknown (Platner-Ashby); not placed
+    Naumachiae#Caesaris:
+      skip: only the hill or district is given (campus martius, Platner-Ashby); no site on it argued, so not placed
+    Naumachiae#Domitiani:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    Naumachiae#Vaticana:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    Neptunus#ara:
+      match: aedes_neptuni_flaminium
+      note: the altar of the temple in circo Flaminio
+    O#Fanum_Orbonae:
+      skip: its site is unknown (Platner-Ashby); not placed
+    O#Officinae_Minii:
+      skip: only the hill or district is given (quirinal, Platner-Ashby); no site on it argued, so not placed
+    P#Pales:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    P#Pavor_et_Pallor:
+      skip: probably never existed or never built (Platner-Ashby)
+    P#Pietas_Augusta:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    P#Platea_Traiani:
+      skip: 'a minor street or locality: streets.yaml carries the main streets; not added in F2'
+    P#Portus_Parrae:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    P#Privata_Hadriani:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    P#Privata_Traiani:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    P#Providentia_Augusta:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    P#Pudicitia:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    P#Pudicitia_Plebeia:
+      skip: only the hill or district is given (quirinal, Platner-Ashby); no site on it argued, so not placed
+    Pila_Horatia.html:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    Pincius_Mons.html:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    Pomerium.html:
+      skip: the augural boundary of the city, not a building
+    Pons_Aelius.html:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    Pons_Agrippae.html:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    Pons_Caligulae.html:
+      skip: its site is unknown (Platner-Ashby); not placed
+    Porta_Minucia.html:
+      skip: its site is unknown (Platner-Ashby); not placed
+    Porta_Praenestina.html:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    Porticus_Argonautarum.html:
+      skip: 'Augustan (25 BC); near the later temple of Hadrian, extent unknown: not placed in F2 (to do)'
+    Porticus_Liviae.html:
+      match: porticus_liviae
+      note: added in F2
+    Porticus_Margaritaria.html:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    Porticus_Vipsania.html:
+      skip: 'Augustan; along the east side of the Via Lata, extent unknown: not placed in F2 (to do)'
+    Puticuli.html:
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    R#Ripa_Veientana:
+      skip: the right bank of the Tiber, not a structure
+    R#Templum_Divi_Romuli:
+      skip: built by Maxentius (4th century AD)
+    S#Salinae:
+      match: salinae
+      note: added in F2
+    Sacella_Silvani.html:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    Sacrum_Cloacinae.html:
+      match: sacrum_cloacinae
+      note: added in F2
+    Sepulcretum.html:
+      skip: the Iron Age cemetery by the Sacra Via, out of use long before 509 BC
+    Sessorium.html:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    Spes_Vetus.html:
+      match: spes_vetus
+      note: added in F2
+    Stationes_Vigilum#in_Circo_Flaminio:
+      skip: 'Augustan barracks of the vigiles (AD 6): four sites known, deferred (not a major building)'
+    Statuae#Antonii_Musae:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    Statuae#Atti_Navi:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    Statuae#Cloeliae:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    Statuae#Horatii_Coclitis:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    Statuae#Marsyae:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    Statuae#Pompeii:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    Statuae#Regum_Romanorum:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    Statuae#Romuli:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    Statuae#Sullae:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    Statuae#Tiberis:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    Statuae#Valeriana:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    Statuae#Valerii_Corvini:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    Statuae#note:Ara_Gentis_Juliae:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    T#Aedes_Tempestatum:
+      match: aedes_tempestatum
+      note: added in F2
+    T#Fanum_Termini:
+      skip: 'inside the cella of the temple of Jupiter Capitolinus (Dion. Hal. 3.69): part of that building'
+    T#Tiberinus:
+      skip: its site is unknown (Platner-Ashby); not placed
+    T#Tifata_Curia:
+      skip: only the hill or district is given (quirinal, Platner-Ashby); no site on it argued, so not placed
+    T#Tifata_Mancina:
+      skip: 'a grove: the client has no grove form (trees are drawn by site_flora); not added'
+    T#Tria_Fata:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    T#Tribunal_Vespasiani_Titi_Domitiani:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    T#Tropaea_Neronis:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    T#Tumulus_Octaviorum:
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    Tabernae_circa_Forum.html:
+      skip: 'the shops lining the Forum (veteres on the south, novae on the north): part of forum_romanum and, from 184-170 BC, the fronts of the basilicas; not a separate building'
+    Tarentum.html:
+      skip: a district at the west of the Campus Martius (its altar is ara_ditis_proserpinae)
+    Templum_Deae_Suriae.html:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    Templum_Febris.html:
+      skip: its site is unknown (Platner-Ashby); not placed
+    Templum_Gentis_Flaviae.html:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    Templum_Juturnae.html:
+      match: area_sacra_argentina_a
+      note: 'Pleiades and later scholarship identify Temple A at Largo Argentina as Catulus'' temple of Juturna; Platner-Ashby placed it near Piazza di S. Ignazio (where the Aqua Virgo ended): the scholars
+        disagree'
+    Templum_Matidiae#ara:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    Templum_Matidiae#templum:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    Thermae_Agrippae#Stagnum_Agrippae:
+      skip: 'Augustan pool beside the baths of Agrippa; size and outline unknown: not placed in F2 (to do)'
+    Tres_Fortunae.html:
+      match: aedes_fortunae_primigeniae
+      note: the principal of the three, Fortuna Primigenia; the other two are not drawn (names and sites unknown)
+    Tribunal_Praetoris.html:
+      skip: a movable wooden platform (Platner-Ashby)
+    Tumulus_Juliae.html:
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    Ustrinum_Domus_Augustae.html:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    V#Verminus:
+      match: ara_vermini
+      note: added in F2
+    V#Victoria_Virgo:
+      match: aedicula_victoriae_virginis
+      note: added in F2
+    V#Vinea_Publica:
+      skip: a public vineyard, not a building
+    V#Volupia:
+      match: sacellum_volupiae
+      note: added in F2
+    V#ara_Victoriae:
+      match: curia_iulia
+      note: the altar inside the Curia Iulia
+    Venus_Victrix#in_Capitolio:
+      skip: only the hill or district is given (capitol, Platner-Ashby); no site on it argued, so not placed
+    Vesta#aedicula-ara:
+      match: aedicula_vestae_palatina
+      note: added in F2
+    Vesta#lucus:
+      skip: 'a grove: the client has no grove form (trees are drawn by site_flora); not added'
+    Vicus_Sandaliarius.html:
+      skip: 'a minor street or locality: streets.yaml carries the main streets; not added in F2'
+    Volcanal.html:
+      match: volcanal
+      note: added in F2
+    amphitheatra#Caligulae:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    amphitheatra#Neronis:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    aquae#Mercurii:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    arcus#Dolabellae_et_Silani:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    arcus#Germanici:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    arcus#Latronis:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    arcus#Neronis:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    arcus#Octavii:
+      skip: only the hill or district is given (palatine, Platner-Ashby); no site on it argued, so not placed
+    arcus#Pompeii:
+      skip: known only from a 12th-century description; doubtful
+    arcus#Tiberii:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    arcus#Traiani2:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    atria#Atria_Licinia:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    atria#Atria_septem:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    atria#Maenium:
+      skip: bought and pulled down for the Basilica Porcia in 184 BC (Livy 39.44)
+    atria#Minervae:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    atria#Sutorium:
+      skip: its site is unknown (Platner-Ashby); not placed
+    balnea#Balineum_Bolani:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    balnea#Balneum_Abascanti:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    balnea#Balneum_Tigellini:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    basilicae#Alexandrina:
+      skip: probably never existed or never built (Platner-Ashby)
+    basilicae#Julia_Aquiliana:
+      skip: its site is unknown (Platner-Ashby); not placed
+    basilicae#Neptuni:
+      match: basilica_neptuni
+      note: added in F2
+    cliva#Mamuri:
+      skip: 'a minor street or locality: streets.yaml carries the main streets; not added in F2'
+    cliva#Martis:
+      skip: 'a minor street or locality: streets.yaml carries the main streets; not added in F2'
+    cliva#Sacer:
+      skip: 'a minor street or locality: streets.yaml carries the main streets; not added in F2'
+    cliva#Victoriae:
+      skip: 'a minor street or locality: streets.yaml carries the main streets; not added in F2'
+    curiae#Acculeia:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    curiae#Pompiliana:
+      match: curia_iulia
+      note: a late name of the Curia Iulia (HA)
+    curiae#Saliorum:
+      skip: its site is unknown (Platner-Ashby); not placed
+    curiae#Veteres:
+      match: curiae_veteres
+      note: added in F2
+    domus#A.Annius_Plocamus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#A.Hortensius_Licinianus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Aelii:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Ancus_Martius:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#App._Silvius_Iunius_Silvinus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Appius_Claudius_Martialis:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Appius_Claudius_Pulcher:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Arpius_Claudius:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Arruntius_Stella:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Avianus_Vindicianus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Bibulus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Bruttius_Praesens:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#C.Aquilius_Gallus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#C.Cassius_Longinus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#C.Licinius_Calvius:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#C.Stertinius_Xenophon:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Caesar:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Claudii:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Claudius_Centumalus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Cn._Domitius_Calvinus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Cn._Octavius:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Daphnis:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Domitiana:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Flamen_Quirinalis:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Flaminia:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Gelotiana:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Germanicus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Iulia_Vitalis:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Iulius_Pompeius_Rusonianus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Johannes_et_Paulus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#L.Appuleius_Saturninus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#L.Bellienus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#L.Caecilius_Metellus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#L.Cornelius_Pusio:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#L.Crassus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#L.Piso:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#L.Vagellius:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#L.Volumnius:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Lenaeus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Luciniana:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#M.Aemilius_Scaurus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#M.Antonius_2:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#M.Caelius:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#M.Cocceius_Nerva:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#M.Curius_Dentatus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#M.Fulvius_Flaccus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#M.Livius_Drusus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#M.Manlius:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#M.Manlius_Capitolinus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Octavius:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#P.Sulla:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#P.Vergilius_Maro:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Paciliana:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Pomponii:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Postumii:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Q.Blaesius_Justus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Q.Cicero:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Q.Seius_Postumus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Q.Valerius_Vegetus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Roius_Hilario:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Scipio_Nasica:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Spurius_Cassius:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#T.Annius_Milo_Papinianus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#T.Avidius_Quietus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#T.Flavius_Sabinus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#T.Marcius_Figulus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#T.Sextius_Africanus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Tarquinius_Priscus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Terentius_Culleo:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Titus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Tullus_Hostilius:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Vedius_Pollio:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    domus#Vitruvius_Vaccus:
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    fontes#Delubrum:
+      match: delubrum_fontis
+      note: added in F2
+    fora#Cuppedinis:
+      match: macellum
+      note: absorbed into the Macellum in 179 BC
+    fora#Esquilinum:
+      match: forum_esquilinum
+      note: added in F2
+    fora#Piscarium:
+      match: macellum
+      note: absorbed into the Macellum in 179 BC (Livy 40.51.5)
+    fornices#Fornices_Stertinii:
+      match: fornices_stertinii
+      note: added in F2
+    fornices#Fornix_Stertinii:
+      skip: in the Circus Maximus; its place in the circus is not known (Livy 33.27.4)
+    fornices#Scipionis:
+      match: fornix_scipionis
+      note: added in F2
+    gradus_scalaeque#Gradus_Heliogabali:
+      skip: 'a minor street or locality: streets.yaml carries the main streets; not added in F2'
+    gradus_scalaeque#Scalae_Anulariae:
+      skip: 'a minor street or locality: streets.yaml carries the main streets; not added in F2'
+    gradus_scalaeque#Scalae_Tarquitiae:
+      skip: 'a minor street or locality: streets.yaml carries the main streets; not added in F2'
+    horrea#Agrippiana:
+      match: horrea_agrippiana
+      note: added in F2
+    horrea#Faeniana:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    horrea#Nervae:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    horrea#Petroniana:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    horrea#Piperataria:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    horrea#Vespasiani:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    lacus#Servilius:
+      match: lacus_servilius
+      note: added in F2
+    luci#Albionarum:
+      skip: 'a grove: the client has no grove form (trees are drawn by site_flora); not added'
+    luci#Esquilinus:
+      skip: 'a grove: the client has no grove form (trees are drawn by site_flora); not added'
+    luci#Libitinae:
+      skip: 'a grove: the client has no grove form (trees are drawn by site_flora); not added'
+    luci#Petelinus:
+      skip: 'a grove: the client has no grove form (trees are drawn by site_flora); not added'
+    luci#Stimulae:
+      skip: 'a grove: the client has no grove form (trees are drawn by site_flora); not added'
+    ludi#Aemilius:
+      skip: its site is unknown (Platner-Ashby); not placed
+    ludi#Matutinus:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    obelisci#Antinoi:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    obelisci#Capitolinus:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    obelisci#Mausolei_Augusti:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    portae#Cornelia:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    portae#Fenestella:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    portae#Mugonia:
+      match: porta_mugonia
+      note: added in F2
+    portae#Pandana:
+      match: porta_pandana
+      note: added in F2
+    portae#Piacularis:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    portae#Stercoraria:
+      match: porta_stercoraria
+      note: added in F2
+    porticus#Absidata:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    porticus#Boni_Eventus:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    porticus#Catuli:
+      match: porticus_catuli
+      note: added in F2
+    porticus#Gordiani:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    porticus#Metelli:
+      match: porticus_octaviae
+      note: the Porticus Metelli of 146 BC, replaced by the Porticus Octaviae on the same site
+    porticus#Miliaria:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    porticus#Philippi:
+      match: porticus_philippi
+      note: added in F2
+    porticus#Quirini:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    porticus#Triumphi:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    porticus#ad_Nationes:
+      skip: its site is unknown (Platner-Ashby); not placed
+    porticus#inter_Lignarios:
+      match: porticus_inter_lignarios
+      note: added in F2
+    porticus#porticus:
+      skip: the general article on porticoes
+    porticus#post_Navalia:
+      skip: 'behind the Navalia, whose own site is argued (rough): not placed'
+    porticus#post_Spei:
+      skip: its course (from the Tiber to the temple of Apollo across the later theatre site) is a conjecture of P-A; not placed
+    sacella_Jovis#Africus:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    sacella_Jovis#Conservator:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    sacella_Jovis#Depulsor:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    sacella_Jovis#Elicius:
+      skip: only the hill or district is given (aventine, Platner-Ashby); no site on it argued, so not placed
+    sacella_Jovis#Fulgur:
+      skip: only the hill or district is given (campus martius, Platner-Ashby); no site on it argued, so not placed
+    sacella_Jovis#Inventor:
+      match: ara_iovis_inventoris
+      note: added in F2
+    sacella_Jovis#Libertas:
+      match: aedes_libertatis_aventine
+      note: Iuppiter Libertas on the Aventine (RG 19); taken as the temple of Libertas of 238 BC, which most identify with it
+    sacella_Jovis#Pistor:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    sacella_Jovis#Tragoedus:
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    sacella_Jovis#Viminus:
+      skip: only the hill or district is given (viminal, Platner-Ashby); no site on it argued, so not placed
+    scholae#Fabrum_Soliarium_Baxiarium:
+      skip: 'not placed in F2: no site argued in the passage read (to review)'
+    scholae#Xanthi:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    sepulcra#Accae_Larentiae:
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    sepulcra#Agrippae:
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    sepulcra#Arruntiorum:
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    sepulcra#Caesaris:
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    sepulcra#Cinciorum:
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    sepulcra#Corneliae:
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    sepulcra#Galbae:
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    sepulcra#Galloniorum:
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    sepulcra#Getae:
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    sepulcra#Hirtii:
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    sepulcra#Horatii:
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    sepulcra#Lucilii_Paeti:
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    sepulcra#Mariae:
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    sepulcra#Numae:
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    sepulcra#Pallantis:
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    sepulcra#Pansae:
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    sepulcra#Pomponii_Hylae:
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    sepulcra#Severi:
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    sepulcra#Statiliorum:
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    sepulcra#Sullae:
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    sepulcra#Titi_Tatii:
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    thermae#Domitii:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    thermae#Etrusci:
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    viae#Fornicata:
+      skip: 'a minor street or locality: streets.yaml carries the main streets; not added in F2'
+    viae#Gabina:
+      skip: 'a minor street or locality: streets.yaml carries the main streets; not added in F2'
+    vici#Africus:
+      skip: 'a minor street or locality: streets.yaml carries the main streets; not added in F2'
+    vici#Cuprius:
+      skip: 'a minor street or locality: streets.yaml carries the main streets; not added in F2'
+    vici#Insteius:
+      skip: 'a minor street or locality: streets.yaml carries the main streets; not added in F2'
+    vici#Jovis_Fagutalis:
+      skip: 'a minor street or locality: streets.yaml carries the main streets; not added in F2'
+    vici#Raciliani:
+      skip: 'a minor street or locality: streets.yaml carries the main streets; not added in F2'
+    vici#Statae_Matris:
+      skip: 'a minor street or locality: streets.yaml carries the main streets; not added in F2'
+    vici#Vestae:
+      skip: 'a minor street or locality: streets.yaml carries the main streets; not added in F2'
+  pleiades:
+    '100447491':
+      skip: 'built after AD 120 or not a monument of the period: Nero''s bridge to the Vatican, after the period covered'
+    '116905947':
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    '125119394':
+      skip: 'ground: the hills are in topography.yaml'
+    '155566866':
+      skip: 'built after AD 120 or not a monument of the period: the Paedagogium, Domitianic-later'
+    '157710058':
+      skip: 'ground: the hills are in topography.yaml'
+    '158092964':
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    '159953179':
+      skip: 'built after AD 120 or not a monument of the period: the arch of Dolabella and Silanus (AD 10), a carrier of an aqueduct branch, not drawn'
+    '182591943':
+      skip: 'built after AD 120 or not a monument of the period: the so-called arch of Drusus, a carrier of the Aqua Antoniniana (3rd century AD)'
+    '194913213':
+      skip: 'built after AD 120 or not a monument of the period: the Capitolium Vetus on the Quirinal: site unknown (Pleiades has no location)'
+    '201442266':
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    '226302607':
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    '245668206':
+      skip: 'built after AD 120 or not a monument of the period: the Porticus Absidata, Domitianic'
+    '251058809':
+      match: casa_romuli
+      note: the Tugurium Romuli is the hut of Romulus
+    '254273447':
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    '267702571':
+      skip: 'a minor street or locality: streets.yaml carries the main streets; not added in F2'
+    '277030428':
+      skip: 'a garden estate: drawn by the fill (horti), not a monument'
+    '298528190':
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    '305841487':
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    '307446389':
+      match: arcus_tiberii
+      note: added in F2
+    '322942899':
+      skip: 'built after AD 120 or not a monument of the period: the baths of Caracalla, AD 216'
+    '334776903':
+      skip: 'built after AD 120 or not a monument of the period: the bridge of Hadrian''s mausoleum, AD 134'
+    '335461216':
+      skip: 'built after AD 120 or not a monument of the period: the arch of the argentarii, AD 204'
+    '346055018':
+      match: porticus_philippi
+      note: added in F2
+    '354249963':
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    '355242955':
+      skip: 'built after AD 120 or not a monument of the period: the temple of Hercules Pompeianus: site unknown (Pleiades has no location)'
+    '358004061':
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    '360837130':
+      match: basilica_neptuni
+      note: added in F2
+    '361831195':
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    '364530240':
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    '370240026':
+      skip: 'built after AD 120 or not a monument of the period: the arch of Septimius Severus, AD 203'
+    '375710890':
+      skip: 'ground: the hills are in topography.yaml'
+    '376850631':
+      skip: 'a garden estate: drawn by the fill (horti), not a monument'
+    '377181898':
+      skip: 'built after AD 120 or not a monument of the period: the Colonnacce, Domitianic, part of the Forum of Nerva'
+    '390937014':
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    '395487201':
+      skip: 'built after AD 120 or not a monument of the period: the circus of Gaius and Nero on the Vatican, outside the dataset''s city'
+    '397225738':
+      skip: 'built after AD 120 or not a monument of the period: the Basilica Argentaria, Trajanic-Hadrianic hall of the Forum of Caesar'
+    '400889194':
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    '402082165':
+      skip: 'built after AD 120 or not a monument of the period: the nymphaeum of Alexander Severus, 3rd century AD'
+    '406270378':
+      skip: 'built after AD 120 or not a monument of the period: Nero''s theatre on the Vatican, outside the dataset''s city'
+    '418356677':
+      skip: 'a garden estate: drawn by the fill (horti), not a monument'
+    '420447351':
+      match: nymphaeum_annibaldi
+      note: added in F2
+    '420615524':
+      skip: 'built after AD 120 or not a monument of the period: the baths of Diocletian, AD 298-306'
+    '422983':
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    '423043':
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    '423045':
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    '423046':
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    '423065':
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    '423126':
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    '423132':
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    '423133':
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    '423561':
+      skip: 'built after AD 120 or not a monument of the period: the aqueduct of Caracalla, 3rd century AD'
+    '426586':
+      skip: 'built after AD 120 or not a monument of the period: a minor road bridge over the Almo, 2.9 km out'
+    '426587':
+      skip: 'built after AD 120 or not a monument of the period: a minor bridge 3 km out (Barrington Atlas)'
+    '426596':
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    '430827518':
+      skip: 'ground: the hills are in topography.yaml'
+    '432336962':
+      skip: 'built after AD 120 or not a monument of the period: the excavated sanctuary on the Janiculum is of the late 1st century AD and after'
+    '445192365':
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    '446459843':
+      skip: 'built after AD 120 or not a monument of the period: a late antique arch'
+    '451696383':
+      skip: 'ground: the valleys are in topography.yaml'
+    '45530496':
+      match: arcus_titi_circo
+      note: added in F2
+    '462454014':
+      skip: 'built after AD 120 or not a monument of the period: a Mithraeum, 2nd-3rd century AD'
+    '4672323':
+      skip: 'a minor street or locality: streets.yaml carries the main streets; not added in F2'
+    '471592763':
+      match: horrea_agrippiana
+      note: added in F2
+    '47784682':
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    '492046782':
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    '495155542':
+      skip: 'built after AD 120 or not a monument of the period: a gate of the Aurelian wall (AD 271)'
+    '495489059':
+      skip: 'built after AD 120 or not a monument of the period: the excubitorium of the 7th cohort of vigiles, 2nd-3rd century AD'
+    '499652704':
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    '503777175':
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    '50864839':
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    '520255117':
+      skip: 'built after AD 120 or not a monument of the period: a gate of the Aurelian wall (AD 271)'
+    '52385300':
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    '525081443':
+      skip: 'built after AD 120 or not a monument of the period: the Horrea Piperataria, Domitianic, under the basilica of Maxentius'
+    '527986453':
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    '529700371':
+      skip: 'built after AD 120 or not a monument of the period: the Aurelian wall, AD 271-275'
+    '531536067':
+      skip: not a structure (a district, a locality or a general article)
+    '537585744':
+      skip: 'built after AD 120 or not a monument of the period: the Amphitheatrum Castrense, 3rd century AD'
+    '540898685':
+      skip: 'a statue, column or honorific monument: not in the F2 add list'
+    '547584100':
+      match: porta_mugonia
+      note: added in F2
+    '555157618':
+      skip: 'built after AD 120 or not a monument of the period: the baths of Helena, 3rd-4th century AD'
+    '565793497':
+      match: lupercal
+      note: added in F2
+    '576179783':
+      skip: 'built after AD 120 or not a monument of the period: a late antique hall'
+    '578501279':
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    '582254847':
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    '582924414':
+      skip: 'built after AD 120 or not a monument of the period: the Schola Praeconum, 2nd-3rd century AD'
+    '593462325':
+      match: area_sacra_argentina_d
+      note: Temple D, Largo Argentina
+    '623982917':
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    '624604510':
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    '635795593':
+      match: area_sacra_argentina_b
+      note: Temple B, Largo Argentina
+    '646121066':
+      skip: not a structure (a district, a locality or a general article)
+    '65898660':
+      skip: imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120
+    '661181629':
+      skip: 'built after AD 120 or not a monument of the period: a gate of the Aurelian wall (AD 271)'
+    '666765291':
+      skip: 'built after AD 120 or not a monument of the period: the temple of Hadrian, AD 145'
+    '668537796':
+      skip: 'a minor street or locality: streets.yaml carries the main streets; not added in F2'
+    '674507252':
+      match: sacrum_cloacinae
+      note: added in F2
+    '697163696':
+      skip: 'built after AD 120 or not a monument of the period: the Porta Maggiore, arches of the Aqua Claudia (AD 52) made a gate in AD 271; the Claudia record draws its arches'
+    '698502930':
+      skip: 'built after AD 120 or not a monument of the period: the archaic wall of the Palatine, long superseded before 509 BC'
+    '705506085':
+      skip: 'built after AD 120 or not a monument of the period: the Septizodium of Septimius Severus, AD 203'
+    '70865871':
+      skip: 'built after AD 120 or not a monument of the period: the Circus Varianus, 3rd century AD'
+    '710588450':
+      skip: 'built after AD 120 or not a monument of the period: baths of the 3rd century AD'
+    '710588451':
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    '711164402':
+      skip: 'built after AD 120 or not a monument of the period: the Basilica Hilariana, 2nd century AD'
+    '711765706':
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    '732617291':
+      skip: 'built after AD 120 or not a monument of the period: a gate of the Aurelian wall (AD 271)'
+    '758962698':
+      skip: 'built after AD 120 or not a monument of the period: a gate of the Aurelian wall (AD 271)'
+    '782843285':
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    '806345695':
+      skip: 'built after AD 120 or not a monument of the period: the underground basilica at Porta Maggiore, below ground (not visible)'
+    '809448306':
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    '809771016':
+      skip: 'built after AD 120 or not a monument of the period: the Chalcidicum, Domitianic'
+    '817164756':
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    '820369854':
+      match: area_sacra_argentina_a
+      note: Temple A, Largo Argentina
+    '832482572':
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    '839719167':
+      skip: 'a minor street or locality: streets.yaml carries the main streets; not added in F2'
+    '841475483':
+      skip: 'built after AD 120 or not a monument of the period: the Sessorian palace, 3rd century AD'
+    '845751045':
+      skip: 'built after AD 120 or not a monument of the period: the Horrea Vespasiani, Flavian'
+    '866548110':
+      match: auditorium_maecenatis
+      note: added in F2
+    '870073463':
+      skip: 'built after AD 120 or not a monument of the period: a gate of the Aurelian wall (AD 271)'
+    '874332557':
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    '894727084':
+      skip: 'a minor street or locality: streets.yaml carries the main streets; not added in F2'
+    '904782880':
+      skip: 'a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district'
+    '91325207':
+      skip: 'ground: the hills are in topography.yaml'
+    '914715153':
+      skip: 'built after AD 120 or not a monument of the period: Hadrian''s Athenaeum, after AD 135'
+    '914763973':
+      skip: 'built after AD 120 or not a monument of the period: the Castra Peregrina, 2nd century AD'
+    '928849659':
+      skip: 'ground: the hills are in topography.yaml'
+    '942692312':
+      skip: 'a minor street or locality: streets.yaml carries the main streets; not added in F2'
+    '952198991':
+      skip: 'built after AD 120 or not a monument of the period: the column of Marcus Aurelius, AD 180-193'
+    '958548506':
+      skip: 'built after AD 120 or not a monument of the period: a gate of the Aurelian wall (AD 271)'
+    '960323262':
+      skip: 'built after AD 120 or not a monument of the period: a Mithraeum, 2nd-3rd century AD'
+    '97074052':
+      skip: 'built after AD 120 or not a monument of the period: the Divorum of Domitian, after AD 81'
+    '975276180':
+      skip: 'a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset'
+    '978725164':
+      skip: 'a grove: the client has no grove form (trees are drawn by site_flora); not added'
+    '980748445':
+      match: volcanal
+      note: added in F2
+    '987812398':
+      skip: 'built after AD 120 or not a monument of the period: the earthen wall of the Carinae, an early work known only from Varro, not located'
+measured:
+  # published measurements (Platner-Ashby, read); the audit compares our footprint and bearing with them
+  aedes_castoris: {length: 50, width: 30, source: "Platner-Ashby s.v. Castor, Aedes: the whole about 50 x 30 m (the Augustan temple)"}
+  aedes_divi_iulii: {length: 30, width: 26, source: "Platner-Ashby s.v. Divus Iulius, Aedes: podium 3.5 m high, 26 m wide, about 30 m long"}
+  carcer: {length: 7, width: 7, source: "Platner-Ashby s.v. Carcer: the lower chamber nearly 7 m in diameter"}
+  lacus_curtius: {length: 10, width: 9, source: "Platner-Ashby s.v. Lacus Curtius: a trapezoidal paved field about 10 m long and 9 m wide"}
+  pons_fabricius: {length: 62, source: "Platner-Ashby s.v. Pons Fabricius: 62 m long"}
+  rostra_augusti: {width: 24, source: "Platner-Ashby s.v. Rostra Augusti: the front about 24 m long"}
 explained:
+  scene:
+    "buried:*": "a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error"
+    "floating:*": "a monument on a slope: the form sits on its highest corner and the open side is not walled down to the ground; a renderer matter (a terrace or foundation skirt in monuments.gd/forms) - hook for the lead, not a data error"
+    "houses_in_monuments:*": "the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead"
+    "houses_on_streets:*": "a fill lot reaching into a street; the fill is not this work package (hook for the lead)"
+    "in_river:porta_flumentana": "the river gate stood at the bank (Platner-Ashby s.v. Porta Flumentana); one sample point touches the modelled river"
+    "in_river:porticus_aemilia": "the hall stood on the river bank; the modelled Tiber (tiber.gd) is an approximation of the ancient bank, a few points touch it"
+    "in_river:theatrum_marcelli": "as porticus_aemilia: the theatre stood near the bank; one sample point touches the modelled river"
+    "overlaps:aedes_concordiae_forum": "the Augustan temple of Concord was built against the substructure of the Tabularium, its cella under the Tabularium front (the remains); a 3 m contact is the real arrangement"
+    "overlaps:aedes_herculis_musarum": "the temple stood inside the Porticus Philippi, which was built round it (Platner-Ashby s.v. Porticus Philippi); not an error"
+    "overlaps:circus_maximus": "the shrine of Murcia stood inside the circus valley, by the turning post (Platner-Ashby s.v. Murcia, sacellum); not an error"
+    "overlaps:horrea_galbae": "UNRESOLVED: the Marble Plan puts the Horrea Galbae right behind the great hall identified as the Porticus Aemilia (Tucci 2012 argues the hall is the navalia); our 487 x 60 m hall centred on its remains and the 200 x 155 m horrea at their Wikipedia point (+-30 m) overlap by 52 m. A measured plan of both is needed before either is moved"
+    "overlaps:pons_fabricius": "the bridge lands on the left bank beside the Porta Flumentana; the gate block includes its flanking wall stubs; a 3.6 m contact"
+    "overlaps:porticus_octaviae": "the portico and the theatre stood side by side with a narrow street between; 2.8 m is within the precision of the reconstructed portico corner (Pleiades outlines only its propylon)"
+  outlines:
+    aedes_apollinis_palatini: "the remains are the concrete core of the podium, stripped of its facing; our 50 x 25 m is not verified and is kept, not shrunk to the core"
+    aedes_castoris: "the outline includes the platform and stairs in front; our 50 x 30 m is Platner-Ashby's measurement"
+    aedes_divi_iulii: "the outline includes the later platform round the podium; our 30 x 26 m is Platner-Ashby's podium"
+    aedes_divi_iulii_empire: "as aedes_divi_iulii"
+    aedes_herculis_victoris: "the outline includes the steps round the podium; our circle is the stylobate (14.8 m)"
+    aedes_vespasiani: "the remains are cut by the Clivus Capitolinus and the modern road; ours is the restored plan (33 x 22 m)"
+    arcus_titi: "the arch is 13.5 m wide and 4.75 m deep; the outline includes the plinth and Valadier's 1821 restoration"
+    area_sacra_argentina_b: "the outline includes the front stair; the circle is the round cella and colonnade"
+    area_sacra_argentina_c: "the outline is the surviving podium core; our 30 x 14 m is not verified and is kept"
+    area_sacra_argentina_d: "temple D is mostly under Via Florida; the outline is the excavated strip"
+    auditorium_maecenatis: "the outline includes the walls and the apse; ours is the hall"
+    carcer: "the outline is the church of S. Giuseppe dei Falegnami over the prison; ours is the lower chamber (Platner-Ashby nearly 7 m)"
+    forum_transitorium: "the outline is the excavated area including the Subura end; our 120 x 40 m is the paved forum between the porticoes"
+    lacus_curtius: "the outline includes the later curb and pavement round the field (Platner-Ashby 10 x 9 m)"
+    pons_fabricius: "the outline includes the abutments on both banks; Platner-Ashby gives 62 m"
+    rostra_augusti: "the outline includes the curved steps behind; the front is 24 m (Platner-Ashby)"
+    stadium_palatinum: "the outline includes the two-storey portico round the arena; ours is the arena, about 160 x 50 m"
   positions:
     horti_sallustiani: "a garden estate of many hectares drawn as an area (model none); our point is its middle between the Pincian and the Quirinal, Pleiades outlines the one surviving pavilion in Piazza Sallustio"
     thermae_traiani: "Pleiades outlines only the surviving exedrae on the north-east side (173 x 36 m); our point is the centre of the whole 340 x 330 m precinct"
@@ -51,4 +1282,35 @@ explained:
     forum_romanum: "the Pleiades outline (OpenStreetMap) is the whole archaeological area of the Forum, from the Capitol foot to the Velia, so its centre lies 180 m east of the square; our point is the centre of the paved square (the origin of the frame)"
   lines:
     street:vicus_iugarius: "the OpenStreetMap line Pleiades gives runs along the south side of the Basilica Iulia, where no ancient street is attested; Platner-Ashby s.v. Vicus Iugarius (read) says the present pavement preserves the line after the basilica was built, which is the path between the basilica and the temple of Saturn that we follow"
-outline_skip: {}
+outline_skip:
+  aedes_concordiae_forum: "the record's base footprint is the early shrine; the Augustan temple is drawn by its phases"
+  atrium_vestae: "the outline is the imperial House of the Vestals, larger than the Republican atrium (the axis is taken from it)"
+  basilica_ulpia: "Pleiades outlines only the excavated eastern part"
+  casa_romuli: "the outline is the area of the excavated Iron Age huts, not one hut"
+  circus_maximus: "the outline is the modern park; the size is Dionysius' (621 x 118 m)"
+  colossus_neronis: "the outline is the later base by the amphitheatre"
+  curia_iulia: "the outline includes the walls; the record gives the hall (25.2 x 17.6 m, P-A)"
+  curia_iulia_empire: "as curia_iulia"
+  domus_aurea: "Pleiades outlines only the Esquiline wing"
+  emporium: "Pleiades outlines only 165 m of the quay"
+  forum_boarium: "the outline is the modern piazza; the ancient square's extent is not known"
+  forum_holitorium: "the outline is part of the area by S. Nicola in Carcere"
+  forum_romanum: "the outline is the whole archaeological area"
+  horrea_agrippiana: "the outline is the excavated part"
+  lacus_iuturnae: "the outline is one wall of the basin"
+  ludus_magnus: "the outline is the excavated corner"
+  pantheon_agrippae: "the outline is Hadrian's rotunda and porch (AD 125), not Agrippa's building"
+  pantheon_agrippae_empire: "the outline is Hadrian's building (AD 125)"
+  pantheon_hadriani: "the outline includes the porch and the intermediate block"
+  pons_aemilius: "the outline is the single surviving arch"
+  pons_cestius: "the island bridges are fitted by tiber.gd (D-299)"
+  porta_esquilina: "the outline is the arch of Gallienus, the later gate"
+  porticus_aemilia: "Pleiades outlines only one section of the hall"
+  porticus_octaviae: "Pleiades outlines only the propylon"
+  porticus_octaviae_empire: "Pleiades outlines only the propylon"
+  regia: "the outline includes the precinct round the building"
+  templum_pacis: "the outline is the excavated part"
+  theatrum_marcelli: "Pleiades outlines only the arc of surviving arcades (the centre is fitted to it)"
+  theatrum_marcelli_empire: "as theatrum_marcelli"
+  theatrum_pompei: "Pleiades outlines only a fragment of the remains"
+  thermae_traiani: "Pleiades outlines only the surviving exedrae"

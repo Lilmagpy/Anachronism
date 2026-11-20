@@ -40,7 +40,7 @@ streets:
   english: Capitoline Hill road
   kind: clivus
   direction: "from the west corner of the Forum, past the temple of Saturn, up to the Asylum / Capitol"
-  points: [[41.892446, 12.484528], [41.892563, 12.484443], [41.892653, 12.484371], [41.892671, 12.484238], [41.892653, 12.484141], [41.892185, 12.483598], [41.891978, 12.483212], [41.89178, 12.48262], [41.891618, 12.482101]]  # F2: lower course = the excavated pavement (Pleiades 152699900, OpenStreetMap) past the north front and west side of Saturn, starting at the Forum south of the Augustan Rostra; end at the main entrance of the Area Capitolina in the middle of its south-east side opposite the temple front, 40-45 m in front of it (Platner-Ashby s.v. Area Capitolina, read); the stretch between is unexcavated
+  points: [[41.892446, 12.484528], [41.892563, 12.484443], [41.892653, 12.484371], [41.892671, 12.484238], [41.892689, 12.484105], [41.892185, 12.483598], [41.891978, 12.483212], [41.89178, 12.48262], [41.891618, 12.482101]]  # F2: lower course = the excavated pavement (Pleiades 152699900, OpenStreetMap, good to 20 m) past the north front and west side of Saturn, starting at the Forum south of the Augustan Rostra; end at the main entrance of the Area Capitolina in the middle of its south-east side opposite the temple front, 40-45 m in front of it (Platner-Ashby s.v. Area Capitolina, read); the stretch between is unexcavated
   precision: approx
   width_m: 5.0
   width_source: assumed
@@ -66,7 +66,7 @@ streets:
   english: Etruscans' Street
   kind: vicus
   direction: "from the Forum between the Basilica Iulia and the temple of Castor, south along the west flank of the Palatine to the Forum Boarium"
-  points: [[41.892068, 12.485324], [41.891825, 12.485397], [41.8912, 12.4851], [41.8904, 12.4847], [41.8897, 12.4842], [41.889, 12.4836], [41.8884, 12.4829], [41.8883, 12.4818]]  # F2: from the Forum between the Basilica Iulia and the temple of Castor (Platner-Ashby s.v. Vicus Tuscus, read), in the 6 m between their excavated outlines (Pleiades 173078007, 157276290); the old first point lay inside the temple of Castor
+  points: [[41.892077, 12.485499], [41.891825, 12.485397], [41.8916, 12.485336], [41.8911, 12.4846], [41.8904, 12.4843], [41.8897, 12.4842], [41.889, 12.4836], [41.8884, 12.4829], [41.8883, 12.4818]]  # F2: from the Forum through the gap between the Basilica Iulia and Castor (the start is between their fronts; the bend past the basilica's south-east corner), then along the west front of the excavated Horrea Agrippiana (Pleiades 471592763 outline; Platner-Ashby s.v. Horrea Agrippiana: between the Vicus Tuscus and the Clivus Victoriae), to the Velabrum and the Forum Boarium
   precision: approx
   width_m: 4.0
   width_source: assumed
@@ -78,7 +78,7 @@ streets:
   english: Yoke Street
   kind: vicus
   direction: "from the Forum between the Basilica Iulia and the temple of Castor, west along the foot of the Capitol to the Porta Carmentalis"
-  points: [[41.892455, 12.484576], [41.892374, 12.48431], [41.89223, 12.48422], [41.892086, 12.484129], [41.89196, 12.484033], [41.8916, 12.4832], [41.891501, 12.482295], [41.8916, 12.481401]]  # F2: from the Forum between the temple of Saturn and the Basilica Iulia (the modern path, which Platner-Ashby says preserves the line after the basilica was built), then along the southern edge of the Capitol; the old first point ran through the middle of the Basilica Iulia
+  points: [[41.892455, 12.484576], [41.892374, 12.48431], [41.89232, 12.48425], [41.892221, 12.484202], [41.892086, 12.484105], [41.89196, 12.484033], [41.8916, 12.4832], [41.891501, 12.482295], [41.8916, 12.481401]]  # F2: from the Forum through the arch of Tiberius (Pleiades 307446389) between the temple of Saturn and the Basilica Iulia (the modern path, which Platner-Ashby says preserves the line after the basilica was built), then along the southern edge of the Capitol; the old first point ran through the middle of the Basilica Iulia
   precision: approx
   width_m: 4.0
   width_source: assumed
@@ -178,7 +178,7 @@ streets:
   english: New Way
   kind: street
   direction: "from the Sacra via at the north-east corner of the Palatine, along the north slope of the hill to the Velabrum"
-  points: [[41.8906, 12.4900], [41.8908, 12.4889], [41.8910, 12.4878], [41.8911, 12.4867], [41.8909, 12.4858], [41.8903, 12.4852], [41.8898, 12.4848]]
+  points: [[41.890556, 12.488462], [41.891, 12.4878], [41.8911, 12.4867], [41.8909, 12.4858], [41.8903, 12.4852], [41.8898, 12.4848]]  # F2: begins at the north-east corner of the Palatine where it branched off from the Sacra Via near the temple of Jupiter Stator (Platner-Ashby s.v. Nova Via, read), by the arch of Titus; it started before 125 m further east, at the old (wrong) top of the Sacra Via
   precision: approx
   width_m: 4.0
   width_source: assumed
@@ -191,7 +191,7 @@ streets:
   english: Palatine slope
   kind: clivus
   direction: "from the Sacra via near the arch of Titus up to the Porta Mugonia and the Palatine"
-  points: [[41.8903, 12.4903], [41.8897, 12.4899], [41.8892, 12.4894], [41.8888, 12.4888]]
+  points: [[41.890592, 12.488535], [41.890205, 12.488197], [41.889801, 12.487774], [41.889486, 12.487352]]  # F2: starts at the Sacra Via by the arch of Titus (Platner-Ashby s.v. Clivus Palatinus and Sacra Via, read) and climbs south-west to the Palatine; it started before 140 m further east, at the old (wrong) top of the Sacra Via
   precision: rough
   width_m: 4.0
   width_source: assumed

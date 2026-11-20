@@ -829,7 +829,7 @@ def extract_pleiades_place(
         "title": row["title"],
         "names": [n for n in names if n],
         "feature_types": [t.strip() for t in row["featureTypes"].split(",") if t.strip()],
-        "periods": [t.strip() for t in row["timePeriods"].split(",") if t.strip()],
+        "periods": [t.strip() for t in row["timePeriodsKeys"].split(",") if t.strip()],
         "min_date": int(float(row["minDate"])) if row["minDate"] else None,
         "max_date": int(float(row["maxDate"])) if row["maxDate"] else None,
         "precision": row["locationPrecision"],
@@ -1359,6 +1359,9 @@ def pleiades_refs(doc: dict[str, Any]) -> list[Ref]:
         if point is None:
             point = to_local(float(p["repr"][0]), float(p["repr"][1]))
         names = [tokens(n) for n in [p["title"], *p.get("names", [])]]
+        earliest = p.get("min_date")
+        if earliest == -30:
+            earliest = 1  # the start of Pleiades' 'roman' period (30 BC - AD 300), no building date
         out.append(
             Ref(
                 source="pleiades",
@@ -1366,7 +1369,7 @@ def pleiades_refs(doc: dict[str, Any]) -> list[Ref]:
                 title=str(p["title"]),
                 kind=kind,
                 names=[n for n in names if n],
-                earliest=p.get("min_date"),
+                earliest=earliest,
                 text=str(p.get("description", "")),
                 point=point,
                 accuracy=(best or {}).get("accuracy_m"),
@@ -2772,7 +2775,11 @@ def render_markdown(a: Audit) -> str:
             w(f"**{label}**")
             w("")
             for txt, years in sorted(items.items()):
-                note = (ex.get("scene") or {}).get(txt.split(" ")[0], "")
+                # a note is keyed "kind:id" (one kind of finding), "id" (all of them) or
+                # "kind:*" (every finding of that kind)
+                first = txt.split(" ")[0]
+                sc = ex.get("scene") or {}
+                note = sc.get(f"{key}:{first}", sc.get(first, sc.get(f"{key}:*", "")))
                 w(f"- {_md_escape(txt)} ({', '.join(years)}){' - ' + note if note else ''}")
             w("")
     # --- time

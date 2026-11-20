@@ -460,7 +460,7 @@ monuments:
   verified: platner-ashby+pleiades
   model: temple_octastyle_pycnostyle  # unverified
   bearing_deg: 140
-  footprint_m: {length: 30, width: 16}  # unverified
+  footprint_m: {length: 36, width: 27}  # F2: the smallest rectangle round the remains as mapped (Pleiades outline from OpenStreetMap), 35.9 x 26.9 m (the Trajanic rebuilding on the Caesarian podium)
   construction: {begun: -48, completed: -46}  # work years; see geometry_source
   geometry_source: "Platner-Ashby s.v. Forum Julium (on the NW axis, facing SE); octostyle Corinthian, pycnostyle (kit temple_octastyle_pycnostyle: columns 1.5 d apart, Vitr. 3.3.2)"
   geometry_unverified: [footprint_m, height_m, model]
@@ -504,8 +504,8 @@ monuments:
   pleiades: 417632343
   verified: platner-ashby+pleiades
   model: basilica
-  bearing_deg: 196
-  footprint_m: {length: 29, width: 70}  # unverified
+  bearing_deg: 212.6  # F2: axis of the excavated remains as mapped (Pleiades outline, OpenStreetMap), long side at 122.6 degrees; the front faces the Forum (SSW)
+  footprint_m: {length: 27, width: 99}  # F2: the smallest rectangle round the remains as mapped (Pleiades outline from OpenStreetMap), 99.3 x 27.0 m: the Augustan rebuilding; the extent of the 179 BC building is not known and is drawn on the same plan # unverified
   phases: [{from: -54, state: standing_scaffold}, {from: -34, state: standing, model: basilica_travertine}]
   geometry_source: "Platner-Ashby s.v. Basilica Aemilia (main hall c. 90 m long and 27 wide for the Augustan building; earlier Fulvia of 179 smaller); 70 x 29 as in the Republican plan (unverified); long axis parallel with the Forum, front on the Sacra Via side faces south"
   geometry_unverified: [footprint_m]
@@ -537,7 +537,7 @@ monuments:
   english: Basilica Opimia
   type: basilica
   regio: 8
-  lat: 41.89322
+  lat: 41.893292
   lon: 12.48431
   precision: rough
   location: Forum, beside the temple of Concord
@@ -582,7 +582,7 @@ monuments:
   type: temple
   regio: 8
   lat: 41.89241
-  lon: 12.484153
+  lon: 12.484117
   precision: exact
   location: west end of the Forum, at the foot of the Capitol (Clivus Capitolinus); the Aerarium was in its podium
   built: {year: -497, certainty: traditional, by: "dedication ascribed to the first years of the Republic: T. Larcius as dictator (501, Macrob. Sat. 1.8.1), begun 498 (Dion. Hal. 6.1.4), dedicated 497 (Livy 2.21.2); other traditions credit Tullus Hostilius or the last Tarquin (Varro)"}
@@ -607,7 +607,7 @@ monuments:
   geometry_source: "Platner-Ashby s.v. Saturnus, Aedes (podium 22.50 m wide, about 40 long; Ionic hexastyle prostyle, columns 11 m high; Plancus phase drawn as the kit Ionic hexastyle); the front faces north-north-east (F2, see location_source); archaic phase small Tuscan"
   geometry_unverified: [model]
   location_confidence: high
-  location_source: "F2: Platner-Ashby s.v. Saturnus, Aedes (read): the clivus Capitolinus skirts the north front and west side of the temple (s.v. Clivus Capitolinus), and its front and east side rise very high above the Forum, so the front faces north (NNE, like the other buildings across the Forum axis), the 40 m length running north-south. The north front is set just south of the excavated pavement of the clivus (Pleiades 152699900, OpenStreetMap) and the east side 7 m west of the Basilica Iulia (Pleiades 173078007, OpenStreetMap), the width of the Vicus Iugarius between them; Wikipedia (it) s.v. Tempio di Saturno (41.892428, 12.484111) lies 4 m away. Moved 17 m west from the earlier point, front turned from east (80) to NNE (20)"
+  location_source: "F2: Platner-Ashby s.v. Saturnus, Aedes (read): the clivus Capitolinus skirts the north front and west side of the temple (s.v. Clivus Capitolinus), and its front and east side rise very high above the Forum, so the front faces north (NNE, like the other buildings across the Forum axis), the 40 m length running north-south. The north front is set just south of the excavated pavement of the clivus (Pleiades 152699900, OpenStreetMap) and the east side west of the excavated arch of Tiberius (Pleiades 307446389) which spanned the Vicus Iugarius between the temple and the Basilica Iulia (Pleiades 173078007); Wikipedia (it) s.v. Tempio di Saturno (41.892428, 12.484111) lies 2 m away. Moved 23 m west from the earlier point, front turned from east (80) to NNE (20)"
 - id: aedes_castoris
   latin: Aedes Castoris
   english: Temple of Castor and Pollux
@@ -685,7 +685,7 @@ monuments:
   pleiades: 795139357
   verified: platner-ashby+pleiades
   model: domus
-  bearing_deg: 16  # unverified
+  bearing_deg: 294.7  # F2: axis of the excavated remains as mapped (Pleiades outline, OpenStreetMap), 114.7 degrees for the imperial House of the Vestals; the long side now runs WNW-ESE as there, the entrance towards the Forum
   footprint_m: {length: 45, width: 24}  # unverified
   height_m: 9  # unverified
   geometry_source: "Platner-Ashby s.v. Atrium Vestae (courtyard 24 m wide; 69 m long only after Julia Domna); Republican length assumed"
@@ -805,7 +805,7 @@ monuments:
   pleiades: 459049147
   verified: platner-ashby+pleiades
   model: lacus_curtius
-  bearing_deg: 0
+  bearing_deg: 134  # F2: axis of the excavated remains as mapped (Pleiades outline, OpenStreetMap), 134 degrees
   footprint_m: {length: 10, width: 9}
   height_m: 0
   surface: travertine
@@ -1125,7 +1125,7 @@ monuments:
   pleiades: 494660670
   verified: platner-ashby+pleiades
   model: temple_tetrastyle_ionic_travertine
-  bearing_deg: 270  # unverified
+  bearing_deg: 343  # F2: axis of the excavated remains as mapped (Pleiades outline, OpenStreetMap), 163/343 degrees; the steps are on the north, towards the river crossing
   footprint_m: {length: 20, width: 12}  # unverified
   geometry_source: "Platner-Ashby s.v. Aedes Portuni (tetrastyle Ionic pseudoperipteral on a podium); front toward the Tiber assumed"
   geometry_unverified: [bearing_deg, footprint_m]
@@ -1283,8 +1283,8 @@ monuments:
   pleiades: 740034026
   verified: platner-ashby+pleiades
   model: temple_tetrastyle_ionic  # unverified
-  bearing_deg: 270  # unverified
-  footprint_m: {length: 30, width: 17}  # unverified
+  bearing_deg: 180  # F2: axis of the excavated remains as mapped (Pleiades outline, OpenStreetMap), 178 degrees: the temple faced south towards the Circus Flaminius; it faced west before
+  footprint_m: {length: 36, width: 22}  # F2: the excavated podium as mapped (Pleiades 740034026 outline 35.8 x 21.7 m)
   construction: {begun: -433, completed: -431}  # work years; see geometry_source
   phases: [{from: -34, state: standing, model: temple_hexastyle_corinthian_marble}]
   geometry_source: "Platner-Ashby s.v. Apollo in Campo Martio (podium wall 13 m long, 4 m high, 2 m thick under S. Maria in Campitelli); the Sosian marble temple of 34 BC: octostyle? kit stand-in"
@@ -1332,8 +1332,8 @@ monuments:
   english: Portico of Octavia (replacing the Portico of Metellus)
   type: portico
   regio: 9
-  lat: 41.892941
-  lon: 12.479132
+  lat: 41.893043
+  lon: 12.478945
   precision: exact
   location: Campus Martius, between the Theatre of Marcellus and the Circus Flaminius
   built: {year: -146, certainty: probable, by: "Porticus Metelli built by Q. Caecilius Metellus Macedonicus after his triumph of 146 (Vell. Pat. 1.11.2-5), enclosing the temples of Jupiter Stator and Juno Regina; replaced by Augustus's Porticus Octaviae after 27 BC (Suet. Aug. 29; Plin. NH 36.42; P&A)"}
@@ -1345,13 +1345,13 @@ monuments:
   pleiades: 236573248
   verified: platner-ashby+pleiades
   model: portico_enclosure
-  bearing_deg: 225
+  bearing_deg: 208  # F2: the entrance faces SSW: the surviving propylon on the SW side lies along 118 degrees (Pleiades 236573248 outline), so the main axis runs 28/208
   footprint_m: {length: 130, width: 118}
   height_m: 10  # unverified
   geometry_source: "Platner-Ashby s.v. Porticus Octaviae (rectangle 118 m wide and somewhat longer, double colonnade of granite columns, 28 in a row at the front; main axis NE-SW, entrance in the middle of the SW side; pronaos columns 8.6 m); the Metellus portico of 146 BC enclosed two temples"
   geometry_unverified: [height_m]
   location_confidence: high
-  location_source: "F2: Pleiades 236573248 maps the propylon, which stood in the middle of the south-west side (Platner-Ashby s.v. Porticus Octaviae, read: main axis NE-SW, entrance in the middle of the SW side); the centre of the 130 m long enclosure is 65 m north-east of it. The earlier point was the propylon itself"
+  location_source: "F2: Pleiades 236573248 maps the surviving propylon, in the middle of the south-west side (Platner-Ashby s.v. Porticus Octaviae, read: entrance in the middle of the SW side); the propylon's outline lies along 118 degrees, so the enclosure's axis runs 28/208 and its centre is 65 m north-north-east of the propylon. The earlier point was the propylon itself, and the axis 45/225"
 - id: aedes_iovis_statoris_metelli
   latin: Aedes Iovis Statoris (Metelli)
   english: Temple of Jupiter Stator (Metellus)
@@ -1550,7 +1550,7 @@ monuments:
   pleiades: 192818177
   verified: platner-ashby+pleiades
   model: temple_hexastyle_corinthian  # unverified
-  bearing_deg: 180  # unverified
+  bearing_deg: 203  # F2: axis of the excavated remains as mapped (Pleiades outline, OpenStreetMap), 23/203 degrees; front to the south-south-west
   footprint_m: {length: 33.18, width: 17.1}
   construction: {begun: -205, completed: -191}  # work years; see geometry_source
   geometry_source: "Platner-Ashby s.v. Aedes Matris Deum (total length 33.18 m, width 17.10 m, prostyle hexastyle, Corinthian; rear wall double); the east end faces the Circus side assumed"
@@ -1607,7 +1607,7 @@ monuments:
   pleiades: 257097394
   verified: platner-ashby+pleiades
   model: temple_hexastyle_corinthian_marble
-  bearing_deg: 90  # unverified
+  bearing_deg: 228  # F2: axis of the excavated remains as mapped (Pleiades outline, OpenStreetMap), 48/228 degrees; front to the south-west, over the Circus valley (assumed)
   footprint_m: {length: 50, width: 25}  # unverified
   construction: {begun: -36, completed: -28}  # work years; see geometry_source
   geometry_source: "Vell. Pat. 2.81, Suet. Aug. 29 (marble temple with porticoes and libraries); Platner-Ashby s.v. Apollo, Palatinus aedes; size assumed"
@@ -1617,8 +1617,8 @@ monuments:
   english: Hut of Romulus
   type: shrine
   regio: 10
-  lat: 41.8887
-  lon: 12.4856
+  lat: 41.889255
+  lon: 12.4848819
   precision: approx
   location: Palatine, south-west (Germalus)
   built: {year: null, certainty: traditional, by: "preserved hut said to be Romulus' (Dion. Hal. 1.79; Plut. Romulus 20)"}
@@ -1626,7 +1626,7 @@ monuments:
   events:
   - {year: -38, what: "hut damaged by fire and restored in the same style (Dio 48.43)"}
   notes: "Verified: P&A: hut of straw with a thatched roof on the south-west corner of the Palatine near the top of the Scalae Caci, venerated and restored in the same style whenever damaged by fire (Dion. Hal. 1.79; Plut. Rom. 20; Dio 48.43, 54.29); 'no exact identification with any existing remains is possible'; perhaps the tugurium Faustuli; last mentioned in 78 AD. The fires of 38 BC (Dio 48.43) and 12 BC (Dio 54.29) are recorded. Not in Pleiades."
-  pleiades: null
+  pleiades: 251058809
   verified: platner-ashby
   model: hut
   bearing_deg: 90  # unverified
@@ -1634,13 +1634,15 @@ monuments:
   height_m: 3  # unverified
   geometry_source: "Vitr. 2.1.5, Dion. Hal. 1.79 (thatched hut of Romulus on the Palatine); size assumed"
   geometry_unverified: [bearing_deg, footprint_m, height_m]
+  location_confidence: low
+  location_source: "F2: Platner-Ashby (read) puts the hut at the south-west corner of the Palatine near the top of the Scalae Caci and says no existing remains can be identified with it; it is placed at the excavated Iron Age huts there (Pleiades 251058809 Tugurium Romuli, marked unlocated), the usual identification of the modern excavators (argued). It stood before inside the temple of Apollo"
 - id: domus_ciceronis
   latin: Domus M. Tulli Ciceronis
   english: House of Cicero on the Palatine
   type: house
   regio: 10
-  lat: 41.89043
-  lon: 12.486048
+  lat: 41.89034
+  lon: 12.48641
   precision: rough
   location: Palatine, north-west corner, overlooking the Forum, near the house of Catulus
   built: {year: -62, certainty: certain, by: "bought from M. Licinius Crassus for HS 3,500,000 in 62 (Cic. Fam. 5.6.2; Gell. 12.12; Plut. Cic. 8); it had stood on the site of the house of the tribune M. Livius Drusus (P&A)"}
@@ -1866,8 +1868,8 @@ monuments:
   english: Temple of Venus Obsequens
   type: temple
   regio: 11
-  lat: 41.887517
-  lon: 12.48474
+  lat: 41.886559
+  lon: 12.483499
   precision: rough
   location: by the Circus Maximus, at the foot of the Aventine
   built: {year: -295, certainty: probable, by: "begun by Q. Fabius Maximus Gurges as aedile in 295 from fines on adulteresses; dedicated after the end of the Third Samnite War (Livy 10.31.9; Serv. Aen. 1.720); dedication day 19 August"}
@@ -1886,8 +1888,8 @@ monuments:
   english: Temple of Juventas
   type: temple
   regio: 11
-  lat: 41.888179
-  lon: 12.483786
+  lat: 41.887247
+  lon: 12.482578
   precision: rough
   location: Circus Maximus, near the Carceres
   built: {year: -191, certainty: certain, by: "vowed by the consul M. Livius Salinator at the Metaurus (207); contracted by him as censor in 204; dedicated in 191 by C. Licinius Lucullus, duumvir (Livy 36.36.5-6)"}
@@ -2117,8 +2119,8 @@ monuments:
   english: Temple of Hercules of the Muses
   type: temple
   regio: 9
-  lat: 41.8960
-  lon: 12.4752
+  lat: 41.893997
+  lon: 12.477665
   precision: rough
   location: Campus Martius, near the Circus Flaminius
   built: {year: -187, certainty: probable, by: "M. Fulvius Nobilior, probably after his triumph in 187, from the spoils of Ambracia (taken 189) (Cic. Arch. 27; Eumenius, Pro restaurandis scholis 7.8); dedicated 30 June (Ov. Fast. 6.797)"}
@@ -2132,6 +2134,8 @@ monuments:
   bearing_deg: 90  # unverified
   geometry_source: "form assumed from date and type, native kit size (no measured plan); Platner-Ashby s.v. Hercules Musarum, Aedes (Fulvius Nobilior, 187)"
   geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+  location_confidence: medium
+  location_source: "F2: Platner-Ashby s.v. Hercules Musarum, Aedes (read): its site is ascertained from fragment 33 of the Marble Plan, close to the south-west part of the circus Flaminius and north-west of the porticus Octaviae, where remains probably of it were found (NS 1890); placed 150 m north-west of the porticus Octaviae. The earlier point lay 300 m further north-west, by the theatre of Pompey"
 - id: area_sacra_argentina_a
   latin: Aedes (Area Sacra di Largo Argentina A)
   english: Temple A, Largo Argentina (probably Juno Curritis)
@@ -2150,7 +2154,7 @@ monuments:
   model: temple_tetrastyle_ionic  # unverified
   offset_m: [4, -80]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); the dataset point is 80 m off
   bearing_deg: 90  # unverified
-  footprint_m: {length: 23, width: 13}  # unverified
+  footprint_m: {length: 27.5, width: 16.8}  # F2: the smallest rectangle round the remains as mapped (Pleiades outline from OpenStreetMap), 27.5 x 16.8 m
   geometry_source: "excavated Area Sacra di Largo Argentina, Temple A (temples face east onto a paved court); size from the plan, not read in PA"
   geometry_unverified: [bearing_deg, footprint_m, height_m, model]
 - id: area_sacra_argentina_b
@@ -2365,7 +2369,7 @@ monuments:
   built: {year: -27, certainty: certain, by: "M. Agrippa, consul 27 (Dio 53.27.2; the inscription records M. Agrippa L.f. cos tertium)"}
   sources: ["Dio 53.27.2", "Platner-Ashby s.v. Pantheon"]
   model: temple_hexastyle_corinthian_marble
-  bearing_deg: 180
+  bearing_deg: 180  # F2: Agrippa's building faced south, the opposite way to Hadrian's (the 1892-93 excavations # unverified passage); axis as the remains, 176 degrees
   footprint_m: {length: 41.1, width: 43.76}  # unverified
   geometry_source: "Platner-Ashby s.v. Pantheon (Agrippa podium 43.76 m wide, 19.82 deep, faced south, pronaos 21.26 m); rotunda is Hadrianic and absent"
   geometry_unverified: [footprint_m]
@@ -2506,8 +2510,8 @@ monuments:
   english: Temple of Fortuna Primigenia
   type: temple
   regio: 6
-  lat: 41.9007
-  lon: 12.4887
+  lat: 41.907048
+  lon: 12.497658
   precision: approx
   location: Quirinal
   built: {year: -194, certainty: certain, by: "vowed by P. Sempronius Sophus as consul 204 (Livy 29.36.8); dedicated 194 (Livy 34.53.5)"}
@@ -2517,6 +2521,8 @@ monuments:
   construction: {begun: -204, completed: -194}  # work years; see geometry_source
   geometry_source: "form assumed from date and type, native kit size (no measured plan)"
   geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Fortunae (tres), aedes (read): three temples of Fortuna just inside the porta Collina, the principal that of Fortuna Primigenia (Vitr. 3.2.2); placed 90 m inside the gate. The earlier point lay 1.1 km from it"
 - id: aedes_telluris
   latin: Aedes Telluris
   english: Temple of Tellus
@@ -2553,8 +2559,8 @@ monuments:
   english: Temple of Venus Verticordia
   type: temple
   regio: 11
-  lat: 41.886967
-  lon: 12.485504
+  lat: 41.886009
+  lon: 12.484263
   precision: rough
   location: Circus Maximus area (Murcia valley)
   built: {year: -114, certainty: probable, by: "after the Vestal scandal, on Sibylline advice (Val. Max. 8.15.12; Ovid Fasti 4.157-160)"}
@@ -2589,12 +2595,14 @@ monuments:
   english: Macellum (market)
   type: market
   regio: 3
-  lat: 41.8912
-  lon: 12.4935
+  lat: 41.893145
+  lon: 12.486522
   precision: rough
   location: Esquiline slope near the Velia
   built: {year: -179, certainty: probable, by: "mentioned by Plautus; formal macellum built by the censors 179 (Livy 40.51.5)"}
   sources: ["Livy 40.51.5", "Platner-Ashby s.v. Macellum"]
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Macellum (read): just north of the forum, on the north-east side of the basilica Aemilia (179 BC, absorbing the forum piscarium and forum cuppedinis); placed there. The earlier point lay 650 m east, beyond the Velia"
 # ---------------------------------------------------------------- TRANSTIBERINE / TOMBS / MISC
   model: macellum
   bearing_deg: 90  # unverified
@@ -2894,20 +2902,20 @@ monuments:
   english: Porta Flumentana
   type: gate
   regio: 9
-  lat: 41.8925
-  lon: 12.4770
+  lat: 41.8916
+  lon: 12.478179
   precision: rough
   location: Servian Wall, between the Capitol and the Tiber
   built: {year: -378, certainty: certain, by: "with the Servian Wall"}
   sources: ["Livy 35.9.2", "Platner-Ashby s.v. Porta Flumentana"]
   model: servian_gate
-  offset_m: [113, -95]  # east, north metres added to lat/lon; U8 island pass: the old offset put the gate on the Tiber Island. Platner-Ashby s.v. Porta Flumentana (read 2026-10-30): in the part of the wall joining the Capitoline to the river, near the Tiber (Fest. 89), the district outside it in the southern Campus Martius; placed on the left bank south of the Theatre of Marcellus, beside the bank end of the Pons Fabricius; # unverified spot
   footprint_m: {length: 26, width: 34}  # unverified
   height_m: 16  # unverified
   snap_to: murus_servianus
   geometry_source: "Platner-Ashby s.v. Porta Flumentana (site only; a single arch of cut tufa 3.3 m wide is the only gate found, 40 m south of S. Maria in Cosmedin, s.v. Porta Trigemina); the gate with its flanking towers is the standard form, size assumed"
   geometry_unverified: [footprint_m, height_m]
   pleiades: 502889801
+  location_source: "F2: Platner-Ashby s.v. Porta Flumentana (read 2026-10-30, U8): in the part of the wall joining the Capitoline to the river, near the Tiber (Fest. 89); placed on the left bank west of the Theatre of Marcellus; the U8 offset is folded into the point and the gate moved 15 m west, clear of the theatre"
 - id: porta_fontinalis
   latin: Porta Fontinalis
   english: Porta Fontinalis
@@ -3320,3 +3328,898 @@ monuments:
   sources: ["Suet. Iul. 83", "Cic. Phil. 2.109"]
   model: none
   geometry_source: "gardens: an area (fill agent)"
+# ---------------------------------------------------------------- F2: ADDED FROM THE CITY AUDIT
+# Missing monuments found by `uv run anachronism-city-audit` (docs/reports/city_audit.md), most
+# important first. Each carries location_confidence and location_source (whose argument).
+- id: area_capitolina
+  latin: "Area Capitolina"
+  english: "Area Capitolina (the precinct of the Capitoline temple)"
+  type: forum
+  regio: 8
+  lat: 41.892051
+  lon: 12.481800
+  precision: approx
+  location_confidence: medium
+  location_source: "F2: Platner-Ashby s.v. Area Capitolina (read): a platform levelled round the temple of Jupiter on the south summit, reaching about 35 m from the temple's east side, at most 30 m on the west, 40-45 m in front and a narrow space behind; centred accordingly on the temple's position (Pleiades 871801169)"
+  location: "Capitol, south summit, round the temple of Jupiter Optimus Maximus"
+  built: {year: null, certainty: traditional, by: "levelled with the substructures of the temple of Jupiter (regal); enlarged in 388 BC (Livy 6.4.12)"}
+  events:
+  - {year: -388, what: "enlarged with substructures of squared stone (Livy 6.4.12, as quoted in Platner-Ashby)"}
+  - {year: -159, what: "a porticus built on the inner side of its wall (Vell. 2.1.2, 3.1)"}
+  sources: ["Platner-Ashby s.v. Area Capitolina (read)", "Livy 6.4.12", "Vell. 2.1.2"]
+  pleiades: null
+  verified: platner-ashby
+  model: plaza
+  bearing_deg: 153.5
+  footprint_m: {length: 108, width: 122}
+  surface: travertine
+  geometry_source: "Platner-Ashby s.v. Area Capitolina (read): 35 m east, up to 30 m west, 40-45 m in front and a narrow space behind the 61 x 57 m temple"
+  geometry_unverified: [height_m]
+- id: volcanal
+  latin: "Volcanal (Area Volcani)"
+  english: "Volcanal (shrine of Vulcan)"
+  type: altar
+  regio: 8
+  lat: 41.892780
+  lon: 12.484642
+  precision: approx
+  location_confidence: medium
+  location_source: "F2: Platner-Ashby s.v. Volcanal (read): at the foot of the Capitoline at the north-west corner of the forum, an uncovered altar in an area about 5 m higher than the comitium; placed beside the later arch of Septimius Severus (Pleiades 370240026), where the rock-cut remains identified as the Volcanal lie behind the Rostra # unverified"
+  location: "north-west corner of the Forum at the foot of the Capitol, above the Comitium"
+  built: {year: null, certainty: traditional, by: "ascribed to Titus Tatius (Dion. Hal. 2.50.3; Varro LL 5.74)"}
+  sources: ["Platner-Ashby s.v. Volcanal (read)", "Dion. Hal. 2.50.3", "Varro LL 5.74"]
+  pleiades: 980748445
+  verified: platner-ashby
+  model: altar_enclosure
+  bearing_deg: 106  # unverified
+  footprint_m: {length: 8, width: 10}  # unverified
+  height_m: 1.5  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: sacrum_cloacinae
+  latin: "Sacrum Cloacinae"
+  english: "Shrine of Venus Cloacina"
+  type: shrine
+  regio: 8
+  lat: 41.892559
+  lon: 12.485444
+  precision: exact
+  location_confidence: high
+  location_source: "F2: the extant round foundation in front of the Basilica Aemilia (Pleiades 674507252, OpenStreetMap); Platner-Ashby s.v. Cloacina, Sacrum (read): in the forum near the Tabernae novae (Livy 3.48)"
+  location: "Forum, in front of the Basilica Aemilia, over the line of the Cloaca Maxima"
+  built: {year: null, certainty: traditional, by: "tradition of the reconciliation of Romans and Sabines (Pliny NH 15.119)"}
+  sources: ["Platner-Ashby s.v. Cloacina, Sacrum (read)", "Livy 3.48", "Plautus Curculio 471", "Pliny NH 15.119"]
+  pleiades: 674507252
+  verified: platner-ashby+pleiades
+  model: altar_enclosure
+  bearing_deg: 106  # unverified
+  footprint_m: {radius: 2.4}  # unverified
+  height_m: 1.2  # unverified
+  geometry_source: "a small round precinct on a travertine base, about 4.8 m across (the extant foundation; size from the remains as mapped, not measured in P-A)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: fornix_scipionis
+  latin: "Fornix Scipionis"
+  english: "Arch of Scipio Africanus"
+  type: arch
+  regio: 8
+  lat: 41.891618
+  lon: 12.482101
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Fornix Scipionis (read): at the top of the clivus Capitolinus (Livy 37.3.7); placed on the clivus just below the entrance to the Area Capitolina"
+  location: "top of the Clivus Capitolinus"
+  built: {year: -190, certainty: certain, by: "P. Cornelius Scipio Africanus (Livy 37.3.7)"}
+  sources: ["Livy 37.3.7", "Platner-Ashby s.v. Fornix Scipionis (read)"]
+  pleiades: null
+  verified: platner-ashby
+  model: arch
+  bearing_deg: 70  # unverified
+  footprint_m: {length: 4, width: 8}  # unverified
+  height_m: 8  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+  notes: "In front of it stood seven gilded statues and two marble basins (Livy 37.3.7, as quoted in P-A)."
+- id: porta_stercoraria
+  latin: "Porta Stercoraria"
+  english: "Porta Stercoraria"
+  type: gate
+  regio: 8
+  lat: 41.891999
+  lon: 12.483252
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Porta Stercoraria (read): a gate on the clivus Capitolinus opening into an alley, probably about halfway up the clivus"
+  location: "halfway up the Clivus Capitolinus"
+  built: {year: null, certainty: uncertain, by: "unknown; opened once a year on 15 June for the refuse of the temple of Vesta (Festus 344; Varro LL 6.32)"}
+  sources: ["Platner-Ashby s.v. Porta Stercoraria (read)", "Festus 344", "Varro LL 6.32"]
+  pleiades: null
+  verified: platner-ashby
+  model: arch
+  bearing_deg: 60  # unverified
+  footprint_m: {length: 3, width: 5}  # unverified
+  height_m: 5  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: porta_pandana
+  latin: "Porta Pandana"
+  english: "Porta Pandana (gate of the Capitoline precinct)"
+  type: gate
+  regio: 8
+  lat: 41.891584
+  lon: 12.482305
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Area Capitolina (read): a little south of the main entrance in the middle of the south-east side, near the corner of the area, was the Porta Pandana"
+  location: "south-east side of the Area Capitolina, near its corner"
+  built: {year: null, certainty: traditional, by: "in the fortifications of the Capitol (Varro LL 5.42; Solinus 1.13)"}
+  sources: ["Platner-Ashby s.v. Porta Pandana (read)", "Platner-Ashby s.v. Area Capitolina (read)", "Varro LL 5.42"]
+  pleiades: null
+  verified: platner-ashby
+  model: arch
+  bearing_deg: 153.5  # unverified
+  footprint_m: {length: 4, width: 6}  # unverified
+  height_m: 6  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: auguraculum
+  latin: "Auguraculum"
+  english: "Auguraculum (the augurs' hut on the Arx)"
+  type: shrine
+  regio: 8
+  lat: 41.894852
+  lon: 12.483638
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Arx (read): the Auguraculum lay at the north-east corner of the Arx; s.v. Auguraculum: an open space with the thatched hut of the observer in its centre; placed 40 m north-east of the Arx point"
+  location: "Capitol, north-east corner of the Arx"
+  built: {year: null, certainty: traditional, by: "early; the thatched hut kept in its primitive form to Augustus (Vitr. 2.1.5)"}
+  sources: ["Platner-Ashby s.v. Auguraculum (read)", "Platner-Ashby s.v. Arx (read)", "Vitr. 2.1.5", "Varro LL 7.8"]
+  pleiades: null
+  verified: platner-ashby
+  model: hut
+  bearing_deg: 180  # unverified
+  footprint_m: {length: 5, width: 4}  # unverified
+  height_m: 4  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: lacus_servilius
+  latin: "Lacus Servilius"
+  english: "Lacus Servilius (fountain)"
+  type: fountain
+  regio: 8
+  lat: 41.892473
+  lon: 12.484455
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Lacus Servilius (read): in the forum, at the end of the vicus Iugarius and near the basilica Iulia (Festus 290); placed where the vicus Iugarius leaves the Forum"
+  location: "Forum, at the head of the Vicus Iugarius"
+  built: {year: null, certainty: uncertain, by: "unknown; the heads of the senators killed in Sulla's proscriptions were set over it in 82 BC (Cic. Rosc. Am. 89)"}
+  sources: ["Platner-Ashby s.v. Lacus Servilius (read)", "Festus 290", "Cic. Rosc. Am. 89"]
+  pleiades: null
+  verified: platner-ashby
+  model: basin
+  bearing_deg: 16  # unverified
+  footprint_m: {radius: 2.5}  # unverified
+  height_m: 1.0  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: aedes_penatium
+  latin: "Aedes Deum Penatium"
+  english: "Temple of the Penates"
+  type: temple
+  regio: 4
+  lat: 41.891348
+  lon: 12.488535
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Penates Dei, Aedes (read): on the Velia, on the site of the house of Tullus Hostilius, not far from the forum on a short street leading to the Carinae (Dion. Hal. 1.68.1); placed on the Velia north of the summa Sacra via, where that street went north"
+  location: "Velia, north of the Sacra Via, on the way to the Carinae"
+  built: {year: null, certainty: traditional, by: "on the site of the house of Tullus Hostilius (Varro ap. Non. 531; Solinus 1.22)"}
+  sources: ["Platner-Ashby s.v. Penates Dei, Aedes (read)", "Dion. Hal. 1.68.1", "Varro ap. Non. 531"]
+  pleiades: null
+  verified: platner-ashby
+  model: temple_tuscan_small
+  bearing_deg: 200  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: aedes_larum
+  latin: "Aedes Larum (in summa Sacra via)"
+  english: "Temple of the Lares"
+  type: temple
+  regio: 4
+  lat: 41.890772
+  lon: 12.488800
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Lares, Aedes (read): in summa sacra via (Solinus 1.23); placed on the Velia beside the top of the Sacra Via, east of the later arch of Titus"
+  location: "summa Sacra via, on the Velia"
+  built: {year: null, certainty: uncertain, by: "unknown; first mentioned among the prodigies of 106 BC (Obsequens 41), restored by Augustus (RG 19)"}
+  sources: ["Platner-Ashby s.v. Lares, Aedes (read)", "Solinus 1.23", "Obsequens 41", "Res Gestae 19"]
+  pleiades: null
+  verified: platner-ashby
+  model: temple_tuscan_small
+  bearing_deg: 250  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: porta_mugonia
+  latin: "Porta Mugonia"
+  english: "Porta Mugonia (old gate of the Palatine)"
+  type: gate
+  regio: 10
+  lat: 41.890367
+  lon: 12.488342
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Porta Mugonia (read): on the north side of the Palatine near the temple of Jupiter Stator, where the ridge of the Velia joins the hill; the imperial street (Clivus Palatinus) follows the early one. Placed 30 m up the Clivus Palatinus"
+  location: "Palatine, north side, at the head of the Clivus Palatinus"
+  built: {year: null, certainty: traditional, by: "a gate of the early Palatine city (Varro LL 5.164; Livy 1.12)"}
+  sources: ["Platner-Ashby s.v. Porta Mugonia (read)", "Varro LL 5.164", "Livy 1.12.3"]
+  pleiades: 547584100
+  verified: platner-ashby
+  model: arch
+  bearing_deg: 200  # unverified
+  footprint_m: {length: 4, width: 6}  # unverified
+  height_m: 6  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: ara_aii_locutii
+  latin: "Ara Aii Locutii"
+  english: "Altar of Aius Locutius"
+  type: altar
+  regio: 10
+  lat: 41.891240
+  lon: 12.486145
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Aius Locutius, Ara (read): at the north corner of the Palatine in infima Nova via, opposite the grove of Vesta; placed on the Nova Via below the Atrium Vestae"
+  location: "lower Nova Via at the north corner of the Palatine"
+  built: {year: -390, certainty: certain, by: "by order of the senate after the Gallic sack (Cic. Div. 1.101; Livy 5.50.5)"}
+  sources: ["Platner-Ashby s.v. Aius Locutius, Ara (read)", "Livy 5.32.6", "Livy 5.50.5", "Cic. Div. 1.101"]
+  pleiades: null
+  verified: platner-ashby
+  model: altar
+  bearing_deg: 16  # unverified
+  footprint_m: {length: 3, width: 2}  # unverified
+  height_m: 1.2  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: aedicula_victoriae_virginis
+  latin: "Aedicula Victoriae Virginis"
+  english: "Shrine of Victoria Virgo"
+  type: shrine
+  regio: 10
+  lat: 41.889114
+  lon: 12.487018
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Victoria Virgo, Aedicula (read): dedicated by Cato prope aedem Victoriae (Livy 35.9.6); placed beside the temple of Victory"
+  location: "Palatine, beside the temple of Victory"
+  built: {year: -193, certainty: certain, by: "M. Porcius Cato, dedicated 1 August 193 BC (Livy 35.9.6)"}
+  sources: ["Livy 35.9.6", "Platner-Ashby s.v. Victoria Virgo, Aedicula (read)"]
+  pleiades: null
+  verified: platner-ashby
+  model: aedicula
+  bearing_deg: 201  # unverified
+  footprint_m: {length: 4, width: 3}  # unverified
+  height_m: 4  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: porticus_catuli
+  latin: "Porticus Catuli"
+  english: "Portico of Catulus"
+  type: portico
+  regio: 10
+  lat: 41.890599
+  lon: 12.485336
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Porticus Catuli (read): next to Catulus' house on the Palatine (Cic. Dom. 102, 114); placed beside the house"
+  location: "Palatine, next to the house of Catulus"
+  built: {year: -101, certainty: certain, by: "Q. Lutatius Catulus after his victory over the Cimbri in 101 BC, on the site of the house of M. Fulvius Flaccus (Cic. Dom. 102; Val. Max. 6.3.1)"}
+  sources: ["Platner-Ashby s.v. Porticus Catuli (read)", "Cic. Dom. 62, 102, 114", "Val. Max. 6.3.1"]
+  pleiades: null
+  verified: platner-ashby
+  model: portico_enclosure
+  bearing_deg: 16  # unverified
+  footprint_m: {length: 35, width: 30}  # unverified
+  height_m: 7  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+  notes: "Clodius enlarged it during Cicero's exile (58 BC); the senate had it restored to its old size (Cic. Dom. 116)."
+- id: curiae_veteres
+  latin: "Curiae Veteres"
+  english: "Old Curiae (sanctuary of the curiae)"
+  type: shrine
+  regio: 10
+  lat: 41.889801
+  lon: 12.490068
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Curiae Veteres (read): probably at the north-east corner of the Palatine (Not. Reg. X), one point of the Palatine pomerium (Tac. Ann. 12.24); placed at that corner, west of the later Meta Sudans"
+  location: "Palatine, north-east corner"
+  built: {year: null, certainty: traditional, by: "the earliest sanctuary of the curiae (Varro LL 5.155; Festus 174)"}
+  sources: ["Platner-Ashby s.v. Curiae Veteres (read)", "Varro LL 5.155", "Tac. Ann. 12.24"]
+  pleiades: null
+  verified: platner-ashby
+  model: long_hall
+  bearing_deg: 200  # unverified
+  footprint_m: {length: 14, width: 10}  # unverified
+  height_m: 6  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: lupercal
+  latin: "Lupercal"
+  english: "Lupercal (the cave of the she-wolf)"
+  type: shrine
+  regio: 10
+  lat: 41.888376
+  lon: 12.485093
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Pleiades 565793497 (no own location: at the foot of the Palatine); placed at the south-west foot of the hill below the hut of Romulus and the Scalae Caci, where the sources put it (Dion. Hal. 1.32.3-5, 1.79.8 # unverified)"
+  location: "south-west foot of the Palatine, below the Germalus"
+  built: {year: null, certainty: traditional, by: "the cave where the twins were found; restored by Augustus (RG 19)"}
+  sources: ["Dion. Hal. 1.32.3-5 # unverified", "Dion. Hal. 1.79.8 # unverified", "Res Gestae 19"]
+  pleiades: 565793497
+  verified: pleiades
+  model: aedicula
+  bearing_deg: 240  # unverified
+  footprint_m: {length: 5, width: 6}  # unverified
+  height_m: 4  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+  notes: "Starting point of the Lupercalia (15 February). Platner-Ashby s.v. Lupercal not in the audited extract (not read)."
+- id: sacellum_carmentis
+  latin: "Carmentis (sacellum)"
+  english: "Shrine of Carmenta"
+  type: shrine
+  regio: 8
+  lat: 41.891446
+  lon: 12.480534
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Carmentis (read): at the foot of the Capitoline near the Porta Carmentalis, named from the shrine, probably within the forum Holitorium (Solinus 1.13); placed just inside the gate"
+  location: "foot of the Capitol by the Porta Carmentalis"
+  built: {year: null, certainty: traditional, by: "early cult of Carmenta (Solinus 1.13; Dion. Hal. 1.32.2)"}
+  sources: ["Platner-Ashby s.v. Carmentis (read)", "Solinus 1.13"]
+  pleiades: null
+  verified: platner-ashby
+  model: aedicula
+  bearing_deg: 250  # unverified
+  footprint_m: {length: 4, width: 3}  # unverified
+  height_m: 4  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: fornices_stertinii
+  latin: "Fornices Stertinii"
+  english: "Arches of Stertinius (Forum Boarium)"
+  type: arch
+  regio: 11
+  lat: 41.890519
+  lon: 12.480666
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Fornices Stertinii (read): two arches in the Forum Boarium in front of the temples of Fortuna and Mater Matuta (Livy 33.27.4); placed in front of the twin temples at S. Omobono (Pleiades 103123065); the dataset draws them as one record"
+  location: "Forum Boarium, in front of the temples of Fortuna and Mater Matuta"
+  built: {year: -196, certainty: certain, by: "L. Stertinius from his Spanish spoils, with gilded statues (Livy 33.27.4)"}
+  sources: ["Livy 33.27.4", "Platner-Ashby s.v. Fornices Stertinii (read)"]
+  pleiades: null
+  verified: platner-ashby
+  model: arch
+  bearing_deg: 180  # unverified
+  footprint_m: {length: 4, width: 7}  # unverified
+  height_m: 8  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: aedes_felicitatis
+  latin: "Aedes Felicitatis"
+  english: "Temple of Felicitas"
+  type: temple
+  regio: 8
+  lat: 41.890251
+  lon: 12.483615
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Felicitas, Aedes (read): Caesar broke the axle of his chariot in front of it at his triumph of 46 BC, Velabrum praetervehens (Suet. Iul. 37); no other detail of its site; placed beside the street through the Velabrum"
+  location: "Velabrum"
+  built: {year: null, not_before: -146, certainty: probable, by: "L. Licinius Lucullus from his Spanish booty of 151-150 BC, dedicated after 146 (Strabo 8.6.23; Dio fr. 76.2)"}
+  sources: ["Platner-Ashby s.v. Felicitas, Aedes (read)", "Suet. Iul. 37", "Strabo 8.6.23"]
+  pleiades: null
+  verified: platner-ashby
+  model: temple_tetrastyle_ionic
+  bearing_deg: 90  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+  notes: "Burned in the reign of Claudius (P-A). The statues of the Muses by Praxiteles from Thespiae stood in front of it."
+- id: ara_iovis_inventoris
+  latin: "Ara Iovis Inventoris"
+  english: "Altar of Jupiter Inventor"
+  type: altar
+  regio: 13
+  lat: 41.887843
+  lon: 12.480028
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Iuppiter Inventor, Ara (read): at the foot of the Aventine near the porta Trigemina (Dion. Hal. 1.39); placed just inside the gate"
+  location: "foot of the Aventine by the Porta Trigemina"
+  built: {year: null, certainty: traditional, by: "said to have been set up by Hercules after finding his cattle (Dion. Hal. 1.39; Ov. Fast. 1.579-580)"}
+  sources: ["Platner-Ashby s.v. Iuppiter Inventor, Ara (read)", "Dion. Hal. 1.39", "Ovid Fasti 1.579-580"]
+  pleiades: null
+  verified: platner-ashby
+  model: altar
+  bearing_deg: 270  # unverified
+  footprint_m: {length: 3, width: 2}  # unverified
+  height_m: 1.2  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: ara_evandri
+  latin: "Ara Evandri"
+  english: "Altar of Evander"
+  type: altar
+  regio: 13
+  lat: 41.887455
+  lon: 12.480084
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Evander, Ara (read): on the slope of the Aventine not far from the porta Trigemina (Dion. Hal. 1.32.2); placed on the slope above the gate"
+  location: "slope of the Aventine near the Porta Trigemina"
+  built: {year: null, certainty: traditional, by: "believed very ancient; still standing under Augustus (Dion. Hal. 1.32.2)"}
+  sources: ["Platner-Ashby s.v. Evander, Ara (read)", "Dion. Hal. 1.32.2"]
+  pleiades: null
+  verified: platner-ashby
+  model: altar
+  bearing_deg: 270  # unverified
+  footprint_m: {length: 3, width: 2}  # unverified
+  height_m: 1.2  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: salinae
+  latin: "Salinae"
+  english: "Salt warehouses"
+  type: horrea
+  regio: 13
+  lat: 41.88769
+  lon: 12.479069
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Salinae (read): on and adjacent to the site of the porta Trigemina (Solinus 1.8; Frontinus 1.5; Livy 24.47.15), probably outside the gate; placed outside it towards the river"
+  location: "by the Porta Trigemina, on the river"
+  built: {year: null, certainty: traditional, by: "the salt trade up the Tiber, the oldest traffic of Rome (P-A)"}
+  sources: ["Platner-Ashby s.v. Salinae (read)", "Frontinus Aq. 1.5", "Livy 24.47.15"]
+  pleiades: null
+  verified: platner-ashby
+  model: long_hall
+  bearing_deg: 160  # unverified
+  footprint_m: {length: 40, width: 15}  # unverified
+  height_m: 7  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: porticus_inter_lignarios
+  latin: "Porticus inter Lignarios"
+  english: "Portico of the timber merchants"
+  type: portico
+  regio: 13
+  lat: 41.886937
+  lon: 12.479914
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Porticus inter Lignarios (read): built extra portam Trigeminam (Livy 35.41.10) for the timber trade on the river bank; placed outside the gate along the river"
+  location: "outside the Porta Trigemina, on the river bank"
+  built: {year: -192, certainty: certain, by: "the aediles M. Aemilius Lepidus and L. Aemilius Paullus from usurers' fines (Livy 35.10.12, 35.41.10)"}
+  sources: ["Livy 35.41.10", "Platner-Ashby s.v. Porticus inter Lignarios (read)"]
+  pleiades: null
+  verified: platner-ashby
+  model: long_hall
+  bearing_deg: 160  # unverified
+  footprint_m: {length: 60, width: 10}  # unverified
+  height_m: 6  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: aedes_vortumni
+  latin: "Aedes Vortumni"
+  english: "Temple of Vortumnus"
+  type: temple
+  regio: 13
+  lat: 41.884402
+  lon: 12.478541
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Vortumnus, Aedes (read): in the Vicus Loreti Maioris on the Aventine; the Loretum lay on the north-west of the hill (P-A s.v. Loretum # unverified); placed there"
+  location: "Aventine, Vicus Loreti Maioris"
+  built: {year: -264, certainty: probable, by: "M. Fulvius Flaccus after his triumph over Volsinii in 264 BC (inferred in P-A from his portrait in it, Festus 209)"}
+  sources: ["Platner-Ashby s.v. Vortumnus, Aedes (read)", "Festus 209"]
+  pleiades: null
+  verified: platner-ashby
+  model: temple_tuscan_small
+  bearing_deg: 60  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: aedes_minervae_aventine
+  latin: "Aedes Minervae (Aventinus)"
+  english: "Temple of Minerva on the Aventine"
+  type: temple
+  regio: 13
+  lat: 41.881893
+  lon: 12.482252
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Minerva, Aedes (read): on the Aventine, between the temples of Luna and Diana; peripteral hexastyle about 22 m wide on the Marble Plan; placed 60 m from the temple of Diana"
+  location: "Aventine, between the temples of Luna and Diana"
+  built: {year: null, certainty: uncertain, by: "foundation date unknown; headquarters of the scribes and actors in the Second Punic War (Festus 333); restored by Augustus (RG 19)"}
+  sources: ["Platner-Ashby s.v. Minerva, Aedes (read)", "Festus 333", "Res Gestae 19"]
+  pleiades: null
+  verified: platner-ashby
+  model: temple_tetrastyle_ionic
+  bearing_deg: 60  # unverified
+  footprint_m: {length: 35, width: 22}  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: sacellum_murciae
+  latin: "Sacellum Murciae"
+  english: "Shrine of Murcia"
+  type: shrine
+  regio: 11
+  lat: 41.884177
+  lon: 12.487746
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Murcia (read): kept its place within the circus at the south-east end of the course on the Aventine side (Varro LL 5.154); placed at the arena's edge by the eastern turning post"
+  location: "Circus Maximus, south-east end of the course, Aventine side"
+  built: {year: null, certainty: traditional, by: "an early shrine of the valley, older than the circus (Varro LL 5.154; Livy 1.33.5)"}
+  sources: ["Platner-Ashby s.v. Murcia (read)", "Varro LL 5.154", "Livy 1.33.5"]
+  pleiades: null
+  verified: platner-ashby
+  model: aedicula
+  bearing_deg: 314  # unverified
+  footprint_m: {length: 3, width: 3}  # unverified
+  height_m: 3  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: aedes_summani
+  latin: "Aedes Summani"
+  english: "Temple of Summanus"
+  type: temple
+  regio: 11
+  lat: 41.886895
+  lon: 12.482962
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Summanus, Aedes (read): ad circum Maximum (Fasti), between the temples of Iuventas and Summanus (Pliny NH 29.57); placed beside the temple of Iuventas on the Aventine side of the circus"
+  location: "by the Circus Maximus, Aventine side"
+  built: {year: -278, certainty: probable, by: "during the war with Pyrrhus (Ov. Fast. 6.731-732), probably dedicated 20 June 278 BC"}
+  sources: ["Platner-Ashby s.v. Summanus, Aedes (read)", "Ovid Fasti 6.731-732", "Pliny NH 29.57"]
+  pleiades: null
+  verified: platner-ashby
+  model: temple_tuscan_small
+  bearing_deg: 44  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: aedes_florae
+  latin: "Aedes Florae"
+  english: "Temple of Flora"
+  type: temple
+  regio: 11
+  lat: 41.887160
+  lon: 12.482299
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Flora, Aedes (read): on the slope of the Aventine at the west end of the circus Maximus, probably on the Clivus Publicius built by the same aediles; placed there"
+  location: "slope of the Aventine at the west end of the Circus Maximus"
+  built: {year: -238, certainty: probable, by: "the aediles L. and M. Publicius (240 or 238 BC); restored by Augustus and dedicated by Tiberius in AD 17 (Tac. Ann. 2.49)"}
+  sources: ["Platner-Ashby s.v. Flora, Aedes (read)", "Tac. Ann. 2.49"]
+  pleiades: null
+  verified: platner-ashby
+  model: temple_tetrastyle_ionic
+  bearing_deg: 44  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: aedes_castoris_circo_flaminio
+  latin: "Aedes Castoris in Circo Flaminio"
+  english: "Temple of Castor (Circus Flaminius)"
+  type: temple
+  regio: 9
+  lat: 41.892995
+  lon: 12.477454
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Castor, Aedes (in circo Flaminio, read): in circo Flaminio, Region IX (Fasti; Vitr. 4.8.4); no closer site in the sources; placed on the north side of the circus"
+  location: "Circus Flaminius"
+  built: {year: null, certainty: uncertain, by: "unknown; dedicated 13 August (Fasti)"}
+  sources: ["Platner-Ashby s.v. Castor, Aedes (read)", "Vitr. 4.8.4"]
+  pleiades: null
+  verified: platner-ashby
+  model: temple_tetrastyle_ionic
+  bearing_deg: 212  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+  notes: "Vitruvius 4.8.4 gives it as an unusual plan with columns added at the sides of the pronaos."
+- id: aedes_herculis_custodis
+  latin: "Aedes Herculis Custodis"
+  english: "Temple of Hercules Custos"
+  type: temple
+  regio: 9
+  lat: 41.89268
+  lon: 12.476006
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Hercules Custos, Aedes (read): near the circus Flaminius, of which Hercules was the guardian (Ov. Fast. 6.209-212: altera pars Circi Custode sub Hercule tuta est); placed at the circus's west end"
+  location: "Circus Flaminius, west end"
+  built: {year: -221, certainty: probable, by: "probably about the time of the circus (221 BC), on the Sibyl's command; restored by Sulla (Ov. Fast. 6.209-212)"}
+  sources: ["Platner-Ashby s.v. Hercules Custos, Aedes (read)", "Ovid Fasti 6.209-212"]
+  pleiades: null
+  verified: platner-ashby
+  model: temple_tetrastyle_ionic
+  bearing_deg: 32  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: aedes_fortunae_equestris
+  latin: "Aedes Fortunae Equestris"
+  english: "Temple of Fortuna Equestris"
+  type: temple
+  regio: 9
+  lat: 41.894773
+  lon: 12.475528
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Fortuna Equestris, Aedes (read): near the theatre of Pompey (Vitr. 3.3.2: ad theatrum lapideum); placed east of the theatre"
+  location: "near the Theatre of Pompey"
+  built: {year: -173, certainty: certain, by: "vowed by Q. Fulvius Flaccus in Spain in 180 BC, dedicated 173 (Livy 40.40, 42.10)"}
+  ended: {year: 22, what: "no temple of Fortuna Equestris remained in Rome by AD 22 (Tac. Ann. 3.71, as cited in P-A)"}
+  sources: ["Livy 40.40", "Livy 42.10", "Vitr. 3.3.2", "Platner-Ashby s.v. Fortuna Equestris, Aedes (read)"]
+  pleiades: null
+  verified: platner-ashby
+  model: temple_tetrastyle_ionic
+  bearing_deg: 90  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: porticus_philippi
+  latin: "Porticus Philippi"
+  english: "Portico of Philippus"
+  type: portico
+  regio: 9
+  lat: 41.893997
+  lon: 12.477665
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Porticus Philippi (read): built round the temple of Hercules Musarum; centred on the temple, which stands north-west of the porticus Octaviae (P-A s.v. Hercules Musarum)"
+  location: "round the temple of Hercules Musarum"
+  built: {year: -29, certainty: probable, by: "L. Marcius Philippus, Augustus' stepfather, when he rebuilt the temple (Suet. Aug. 29.5 # unverified)"}
+  sources: ["Platner-Ashby s.v. Porticus Philippi (read)", "Mart. 5.49.11-12"]
+  pleiades: 346055018
+  verified: platner-ashby
+  model: portico_enclosure
+  bearing_deg: 0  # unverified
+  footprint_m: {length: 80, width: 70}  # unverified: size not in Platner-Ashby
+  height_m: 7  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+  notes: "Represented on the Marble Plan (fr. 33); size not given in P-A: assumed."
+- id: ara_ditis_proserpinae
+  latin: "Ara Ditis Patris et Proserpinae"
+  english: "Altar of Dis Pater and Proserpina (Tarentum)"
+  type: altar
+  regio: 9
+  lat: 41.897900
+  lon: 12.468800
+  precision: approx
+  location_confidence: medium
+  location_source: "F2: Platner-Ashby s.v. Dis Pater et Proserpina, Ara and s.v. Tarentum (read): found in 1888 between the Chiesa Nuova and the Piazza Sforza-Cesarini, in the Tarentum at the far west of the Campus Martius; placed between them (modern street plan)"
+  location: "Tarentum, western Campus Martius"
+  built: {year: null, certainty: traditional, by: "the altar of the Ludi Tarentini, said found by the Sabine Valesius (Val. Max. 2.4.5)"}
+  sources: ["Platner-Ashby s.v. Dis Pater et Proserpina, Ara (read)", "Val. Max. 2.4.5", "Festus 329"]
+  pleiades: null
+  verified: platner-ashby
+  model: altar_enclosure
+  bearing_deg: 90  # unverified
+  footprint_m: {length: 6, width: 6}  # unverified
+  height_m: 1.5  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+  notes: "It lay about 20 ft below the ground and was uncovered for the games (Val. Max. 2.4.5)."
+- id: aedes_martis_appia
+  latin: "Aedes Martis (via Appia)"
+  english: "Temple of Mars on the Via Appia"
+  type: temple
+  regio: 1
+  lat: 41.868330
+  lon: 12.507066
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Mars, Aedes (read): on the left side of the Via Appia between the first and second milestones (CIL VI 10234), at the top of the Clivus Martis; placed 2.2 km out from the Porta Capena on the left"
+  location: "Via Appia, between the first and second milestones"
+  built: {year: -388, certainty: certain, by: "vowed in the Gallic war, dedicated by T. Quinctius, duumvir (Livy 6.5.8)"}
+  sources: ["Livy 6.5.8", "Platner-Ashby s.v. Mars, Aedes (in via Appia, read)"]
+  pleiades: null
+  verified: platner-ashby
+  model: temple_tuscan_small
+  bearing_deg: 45  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+  notes: "The army mustered here before campaigns; the transvectio equitum started from it (Dion. Hal. 6.13.4 # unverified)."
+- id: aedes_tempestatum
+  latin: "Aedes Tempestatum"
+  english: "Temple of the Tempests"
+  type: temple
+  regio: 1
+  lat: 41.877513
+  lon: 12.497290
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Tempestates, Aedes (read): in Region I, probably between the porta Capena and the temple of Mars (after Huelsen-Jordan 217); placed beside the Via Appia between them"
+  location: "Via Appia, between the Porta Capena and the temple of Mars"
+  built: {year: -259, certainty: certain, by: "L. Cornelius Scipio, vowed in a storm off Corsica in 259 BC (CIL I2 9)"}
+  sources: ["Platner-Ashby s.v. Tempestates, Aedes (read)", "CIL I2 9", "Ovid Fasti 6.193-194"]
+  pleiades: null
+  verified: platner-ashby
+  model: temple_tuscan_small
+  bearing_deg: 45  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: fons_camenarum
+  latin: "Fons Camenarum"
+  english: "Spring of the Camenae"
+  type: fountain
+  regio: 1
+  lat: 41.883819
+  lon: 12.491451
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Camenae (read): the valley, grove and spring of the Camenae, near the porta Capena (Livy 1.21.3; Juv. 3.13); placed outside the gate"
+  location: "outside the Porta Capena"
+  built: {year: null, certainty: traditional, by: "the grove where Numa met Egeria (Livy 1.21.3)"}
+  sources: ["Platner-Ashby s.v. Camenae (read)", "Livy 1.21.3", "Juvenal 3.13"]
+  pleiades: null
+  verified: platner-ashby
+  model: basin
+  bearing_deg: 0  # unverified
+  footprint_m: {radius: 3}  # unverified
+  height_m: 1  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: aedes_herculis_collina
+  latin: "Aedes Herculis (extra portam Collinam)"
+  english: "Temple of Hercules outside the Porta Collina"
+  type: temple
+  regio: 6
+  lat: 41.908572
+  lon: 12.499645
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Hercules, Templum (read): outside the porta Collina, where Hannibal advanced in 211 BC (Livy 26.10.3); nothing more is known; placed outside the gate by the Via Nomentana"
+  location: "outside the Porta Collina"
+  built: {year: null, certainty: uncertain, by: "unknown; standing in 211 BC (Livy 26.10.3)"}
+  sources: ["Livy 26.10.3", "Platner-Ashby s.v. Hercules, Templum (read)"]
+  pleiades: null
+  verified: platner-ashby
+  model: temple_tuscan_small
+  bearing_deg: 210  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: ara_vermini
+  latin: "Ara Vermini"
+  english: "Altar of Verminus"
+  type: altar
+  regio: 5
+  lat: 41.902754
+  lon: 12.501235
+  precision: approx
+  location_confidence: medium
+  location_source: "F2: Platner-Ashby s.v. Verminus, Ara (read): found in 1876 just north of the porta Viminalis while part of the agger was removed; placed just north of the gate"
+  location: "just north of the Porta Viminalis"
+  built: {year: null, not_before: -100, certainty: probable, by: "the duumvir A. Postumius under a lex Plaetoria, first century BC (CIL I2 804)"}
+  sources: ["Platner-Ashby s.v. Verminus, Ara (read)", "CIL I2 804"]
+  pleiades: null
+  verified: platner-ashby
+  model: altar
+  bearing_deg: 270  # unverified
+  footprint_m: {length: 2, width: 1.5}  # unverified
+  height_m: 1.2  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: delubrum_fontis
+  latin: "Delubrum Fontis"
+  english: "Shrine of Fons"
+  type: shrine
+  regio: 9
+  lat: 41.896202
+  lon: 12.482530
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Fons, Delubrum (read): probably just outside the porta Fontinalis in the extreme south of the Campus Martius; placed outside the gate"
+  location: "outside the Porta Fontinalis"
+  built: {year: -231, certainty: certain, by: "Cn. Papirius Maso from his Corsican booty (Cic. Nat. D. 3.52)"}
+  sources: ["Cic. Nat. D. 3.52", "Platner-Ashby s.v. Fons, Delubrum (read)"]
+  pleiades: null
+  verified: platner-ashby
+  model: aedicula
+  bearing_deg: 120  # unverified
+  footprint_m: {length: 5, width: 4}  # unverified
+  height_m: 4  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: spes_vetus
+  latin: "Spes Vetus"
+  english: "Old shrine of Hope"
+  type: shrine
+  regio: 5
+  lat: 41.890160
+  lon: 12.507630
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Spes Vetus (read): an ancient shrine on the Esquiline, which gave its name ad Spem veterem to its neighbourhood, where the aqueducts entered the city (Frontinus); placed at that point, inside the later Porta Maggiore"
+  location: "Esquiline, ad Spem Veterem"
+  built: {year: null, certainty: traditional, by: "mentioned with the battle of 477 BC (Livy 2.51.2; Dion. Hal. 9.24)"}
+  sources: ["Livy 2.51.2", "Dion. Hal. 9.24", "Platner-Ashby s.v. Spes Vetus (read)"]
+  pleiades: null
+  verified: platner-ashby
+  model: aedicula
+  bearing_deg: 270  # unverified
+  footprint_m: {length: 5, width: 4}  # unverified
+  height_m: 4  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: sacellum_volupiae
+  latin: "Sacellum Volupiae"
+  english: "Shrine of Volupia"
+  type: shrine
+  regio: 10
+  lat: 41.889890
+  lon: 12.484998
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Volupia, Sacellum (read): near the Porta Romanula, where the Nova via entered the Velabrum (Varro LL 5.164); placed at the lower end of the Nova Via"
+  location: "where the Nova Via enters the Velabrum"
+  built: {year: null, certainty: traditional, by: "early; the statue of Angerona stood in it (Pliny NH 3.65)"}
+  sources: ["Platner-Ashby s.v. Volupia, Sacellum (read)", "Varro LL 5.164", "Macrob. 1.10.7"]
+  pleiades: null
+  verified: platner-ashby
+  model: aedicula
+  bearing_deg: 300  # unverified
+  footprint_m: {length: 4, width: 3}  # unverified
+  height_m: 4  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: forum_esquilinum
+  latin: "Forum Esquilinum"
+  english: "Esquiline market"
+  type: market
+  regio: 5
+  lat: 41.895563
+  lon: 12.500564
+  precision: rough
+  location_confidence: low
+  location_source: "F2: Platner-Ashby s.v. Forum Esquilinum (read): an open area on the Esquiline, known from inscriptions, one found near the arch of Gallienus (the Porta Esquilina); probably the forum Esquilinum of Appian BC 1.58 (88 BC); placed inside the gate"
+  location: "Esquiline, inside the Porta Esquilina"
+  built: {year: null, not_before: -88, certainty: uncertain, by: "unknown; Sulla fought in it in 88 BC if Appian BC 1.58 means it"}
+  sources: ["Platner-Ashby s.v. Forum Esquilinum (read)", "Appian BC 1.58"]
+  pleiades: null
+  verified: platner-ashby
+  model: plaza
+  bearing_deg: 0  # unverified
+  footprint_m: {length: 50, width: 40}  # unverified
+  height_m: 0  # unverified
+  surface: earth
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]
+- id: nymphaeum_annibaldi
+  latin: "Nymphaeum (via degli Annibaldi)"
+  english: "Late Republican nymphaeum on the Oppian"
+  type: fountain
+  regio: 3
+  lat: 41.891664
+  lon: 12.492121
+  precision: exact
+  location_confidence: high
+  location_source: "F2: the excavated nymphaeum (Pleiades 420447351, OpenStreetMap), found in 1895"
+  location: "Oppian, by the Via degli Annibaldi"
+  built: {year: null, not_before: -100, certainty: probable, by: "late Republican (Pleiades)"}
+  ended: {year: 64, what: "partly destroyed for Nero's Domus Aurea (Pleiades)"}
+  sources: ["Pleiades 420447351"]
+  pleiades: 420447351
+  verified: pleiades
+  model: basin
+  bearing_deg: 0  # unverified
+  footprint_m: {length: 10, width: 6}  # unverified
+  height_m: 3  # unverified
+  geometry_source: "form assumed from date and type (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m, model]

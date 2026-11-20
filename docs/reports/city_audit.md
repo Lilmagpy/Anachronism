@@ -8,937 +8,528 @@ References: **Pleiades** (CC BY 3.0; places within 3.5 km of the Forum with a pe
 
 | check | count |
 |---|---|
-| dataset: Republican records / Empire records / streets | 163 / 55 / 28 |
-| Pleiades places: matched / excluded with a reason / missing | 105 / 19 / 133 |
-| Platner-Ashby entries: matched / excluded with a reason / missing | 124 / 1 / 435 |
-| **missing** (all; of them dated before 27 BC) | **568** (337) |
+| dataset: Republican records / Empire records / streets | 206 / 64 / 28 |
+| Pleiades places: matched / excluded with a reason / missing | 120 / 137 / 0 |
+| Platner-Ashby entries: matched / excluded with a reason / missing | 200 / 360 / 0 |
+| **missing** (all; of them dated before 27 BC) | **0** (0) |
 | **misplaced** (beyond tolerance and beyond the reference's own accuracy) | **0** |
 | orientation or size against published measurements | 0 |
-| orientation or size against the outline of the remains | 51 |
+| orientation or size against the outline of the remains | 17 |
 | relations the sources fix, failed | 6 |
 | date issues | 23 |
-| scene: monuments whose solids overlap another standing monument (all years) | 13 |
-| scene: monuments whose base is more than 0.5 m above the ground under a corner (all years) | 42 |
-| scene: monuments whose base is more than 1 m below the ground under a corner (all years) | 112 |
-| scene: houses standing inside a monument's footprint (all years) | 223 |
-| scene: houses standing on a street (all years) | 21 |
-| scene: monuments standing in the river (all years) | 5 |
-| scene: streets passing through a monument (all years) | 1 |
+| scene: monuments whose solids overlap another standing monument (all years) | 16 |
+| scene: monuments whose base is more than 0.5 m above the ground under a corner (all years) | 58 |
+| scene: monuments whose base is more than 1 m below the ground under a corner (all years) | 154 |
+| scene: houses standing inside a monument's footprint (all years) | 333 |
+| scene: houses standing on a street (all years) | 13 |
+| scene: monuments standing in the river (all years) | 9 |
+| scene: streets passing through a monument (all years) | 0 |
 
 ## 1. Completeness
 
-568 reference entries have no record in the dataset. Ranked by importance (sources citing it, in the Forum / Capitol / Palatine / Circus / Campus Martius core, named by the game's events, in both references, dated in the campaign), grouped by period and kind.
+0 reference entries have no record in the dataset. Ranked by importance (sources citing it, in the Forum / Capitol / Palatine / Circus / Campus Martius core, named by the game's events, in both references, dated in the campaign), grouped by period and kind.
 
-### Missing: regal (before 509 BC) (51)
-
-**temple** (16)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 9.0 | Mater Matuta, Aedes | platner | 578 BC |  | [Aedes_Matris_Matutae.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Matris_Matutae.html) |
-| 9.0 | Penates Dei, Aedes | platner | 673 BC | Forum | [Aedes_Deorum_Penatium.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Deorum_Penatium.html) |
-| 7.5 | Volcanus, aedes | platner | 753 BC |  | [Aedes_Volcani.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Volcani.html) |
-| 7.0 | Pomerium | platner | 753 BC |  | [Pomerium.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Pomerium.html) |
-| 4.5 | Fortuna Privata | platner | 578 BC | Palatine | [Aedes_Fortunae#Privata](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Fortunae.html#Privata) |
-| 4.0 | Fortuna Viscata | platner | 578 BC | Palatine | [Aedes_Fortunae#Viscata](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Fortunae.html#Viscata) |
-| 3.5 | Romulus Divus, templum:* | platner | 753 BC |  | [R#Templum_Divi_Romuli](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/R.html#Templum_Divi_Romuli) |
-| 3.0 | Flora, templum | platner | 715 BC |  | [F#Templum_Florae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/F.html#Templum_Florae) |
-| 3.0 | Sepulcretum | platner | 600 BC |  | [Sepulcretum.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Sepulcretum.html) |
-| 2.5 | Fortuna Seiani, aedes | platner | 578 BC |  | [Aedes_Fortunae#p219](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Fortunae.html#p219) |
-| 2.5 | Lucus Furrinae | pleiades | 750 BC |  | [432336962](https://pleiades.stoa.org/places/432336962) |
-| 2.0 | Fortuna Respiciens | platner | 578 BC |  | [Aedes_Fortunae#Respiciens1](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Fortunae.html#Respiciens1) |
-| 2.0 | Fortuna Virgo | platner | 578 BC |  | [Aedes_Fortunae#Virgo](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Fortunae.html#Virgo) |
-| 2.0 | Fortuna Virilis * | platner | 578 BC |  | [Aedes_Fortunae#Virilis](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Fortunae.html#Virilis) |
-| 1.5 | Fortuna Tulliana | platner | 578 BC |  | [Aedes_Fortunae#Tulliana](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Fortunae.html#Tulliana) |
-| 1.5 | Pavor et Pallor, fanum | platner | 673 BC |  | [P#Pavor_et_Pallor](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/P.html#Pavor_et_Pallor) |
-
-**shrine** (6)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 6.0 | Shrine of Venus Cloacina | pleiades | 550 BC | Forum | [674507252](https://pleiades.stoa.org/places/674507252) |
-| 4.0 | Mundus | platner | 753 BC |  | [Mundus#p346](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Mundus.html#p346) |
-| 3.2 | Doliola | platner | 715 BC |  | [Doliola.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Doliola.html) |
-| 2.4 | Fortuna = | platner | 578 BC |  | [Aedes_Fortunae#Euelpis](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Fortunae.html#Euelpis) |
-| 2.4 | Fortuna, | platner | 578 BC |  | [Aedes_Fortunae#Apotropaios](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Fortunae.html#Apotropaios) |
-| 0.8 | Fortuna Obsequens | platner | 578 BC |  | [Aedes_Fortunae#Obsequens](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Fortunae.html#Obsequens) |
-
-**statue** (6)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 3.75 | Ficus Navia | platner | 753 BC | Forum | [F#Ficus_Navia](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/F.html#Ficus_Navia) |
-| 3.25 | Statua Romuli | platner | 753 BC | Capitol | [Statuae#Romuli](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Statuae.html#Romuli) |
-| 3.0 | Statua Regum Romanorum | platner | 753 BC | Capitol | [Statuae#Regum_Romanorum](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Statuae.html#Regum_Romanorum) |
-| 2.0 | Ficus Ruminalis | platner | 753 BC |  | [Ficus_Ruminalis.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Ficus_Ruminalis.html) |
-| 0.75 | Tria Fata | platner | 616 BC |  | [T#Tria_Fata](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/T.html#Tria_Fata) |
-| 0.5 | Gens Iulia, ara | platner | 715 BC |  | [Statuae#note:Ara_Gentis_Juliae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Statuae.html#note:Ara_Gentis_Juliae) |
-
-**building** (5)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 10.0 | Tabernae circa Forum | platner | 534 BC | Forum | [Tabernae_circa_Forum.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Tabernae_circa_Forum.html) |
-| 9.0 | Carcer | platner | 640 BC | Capitol | [Carcer.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Carcer.html) |
-| 7.5 | Tugurium Romuli | pleiades | 750 BC | Palatine | [251058809](https://pleiades.stoa.org/places/251058809) |
-| 7.0 | Curia Saliorum | platner | 753 BC | Palatine | [curiae#Saliorum](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/curiae.html#Saliorum) |
-| 4.0 | Curia Pompiliana | platner | 715 BC |  | [curiae#Pompiliana](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/curiae.html#Pompiliana) |
-
-**tomb** (4)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 3.75 | Sepulcretum | pleiades | 1000 BC | Forum | [832482572](https://pleiades.stoa.org/places/832482572) |
-| 2.5 | Sepulcrum Numae | platner | 715 BC |  | [sepulcra#Numae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sepulcra.html#Numae) |
-| 1.25 | Ager L. Petilii | platner | 715 BC |  | [A#Ager_L_Petilii](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/A.html#Ager_L_Petilii) |
-| 1.25 | Mira Lanza | pleiades | 750 BC |  | [782843285](https://pleiades.stoa.org/places/782843285) |
-
-**street** (4)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 3.15 | Scalae Tarquitiae | platner | 534 BC | Capitol | [gradus_scalaeque#Scalae_Tarquitiae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/gradus_scalaeque.html#Scalae_Tarquitiae) |
-| 2.45 | Clivus Mamuri | platner | 715 BC |  | [cliva#Mamuri](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/cliva.html#Mamuri) |
-| 1.75 | Via Triumphalis | pleiades | 750 BC |  | [839719167](https://pleiades.stoa.org/places/839719167) |
-| 1.75 | Vicus Cuprius | platner | 578 BC |  | [vici#Cuprius](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/vici.html#Cuprius) |
-
-**house** (3)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 1.25 | Domus Aventino | pleiades | 1000 BC |  | [809448306](https://pleiades.stoa.org/places/809448306) |
-| 0.75 | Iulia Vitalis | platner | 578 BC |  | [domus#Iulia_Vitalis](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Iulia_Vitalis) |
-| 0.75 | Q. Blaesius Iustus | platner | 753 BC |  | [domus#Q.Blaesius_Justus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Q.Blaesius_Justus) |
-
-**fountain** (3)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 4.9 | Camenae | platner | 715 BC |  | [Camenae#amnis](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Camenae.html#amnis) |
-| 2.45 | Caprae Palus | platner | 753 BC |  | [C#Caprae_Palus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/C.html#Caprae_Palus) |
-| 2.1 | Meta Romuli | platner | 753 BC |  | [Meta_Romuli.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Meta_Romuli.html) |
-
-**altar** (2)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 10.8 | Volcanal | platner | 753 BC | Capitol | [Volcanal.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Volcanal.html) |
-| 3.15 | Iuppiter Elicius, ara | platner | 715 BC |  | [sacella_Jovis#Elicius](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sacella_Jovis.html#Elicius) |
-
-**grove** (1)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 2.45 | Lucus Libitinae | platner | 715 BC |  | [luci#Libitinae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/luci.html#Libitinae) |
-
-**gate** (1)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 5.0 | Porta Pandana | platner | 753 BC | Capitol | [portae#Pandana](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/portae.html#Pandana) |
-
-### Missing: Republic (509-27 BC) (286)
-
-**temple** (42)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 12.0 | Area Capitolina | platner | 388 BC | Capitol | [Area_Capitolina.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Area_Capitolina.html) |
-| 10.0 | Terminus, fanum | platner | 200 BC | Capitol | [T#Fanum_Termini](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/T.html#Fanum_Termini) |
-| 9.0 | Mars, aedes | platner | 388 BC |  | [Aedes_Martis#in_via_Appia](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Martis.html#in_via_Appia) |
-| 7.5 | Temple A | pleiades | 330 BC | Campus Martius | [820369854](https://pleiades.stoa.org/places/820369854) |
-| 7.5 | Temple B | pleiades | 330 BC | Campus Martius | [635795593](https://pleiades.stoa.org/places/635795593) |
-| 7.0 | Fortunae (tres), aedes | platner | 204 BC |  | [Tres_Fortunae.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Tres_Fortunae.html) |
-| 7.0 | Isis, aedes | platner | 43 BC |  | [Aedes_Isidis.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Isidis.html) |
-| 7.0 | Minerva, Aedes | platner | 27 BC |  | [Aedes_Minervae.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Minervae.html) |
-| 7.0 | Tempestates, aedes | platner | 259 BC |  | [T#Aedes_Tempestatum](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/T.html#Aedes_Tempestatum) |
-| 6.5 | Auguraculum | platner | 27 BC | Capitol | [Auguraculum#in_Arce](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Auguraculum.html#in_Arce) |
-| 6.5 | Iuturna, templum | platner | 82 BC |  | [Templum_Juturnae.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Templum_Juturnae.html) |
-| 6.5 | Lares, Aedes | platner | 106 BC |  | [Lares.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Lares.html) |
-| 6.5 | Venus, aedes | platner | 178 BC | Forum | [Aedes_Veneris#aedes](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Veneris.html#aedes) |
-| 6.0 | Summanus, aedes | platner | 197 BC |  | [Aedes_Summani.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Summani.html) |
-| 5.5 | Circus Maximus Mithraeum | pleiades | 30 BC | Circus | [960323262](https://pleiades.stoa.org/places/960323262) |
-| 5.5 | Temple D | pleiades | 330 BC | Campus Martius | [593462325](https://pleiades.stoa.org/places/593462325) |
-| 5.0 | Felicitas, Aedes | platner | 151 BC |  | [Felicitas#aedes](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Felicitas.html#aedes) |
-| 5.0 | Veiovis, aedes, in Capitolio | platner | 192 BC | Capitol | [Aedes_Veiovis.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Veiovis.html) |
-| 4.5 | Divorum Templum | platner | 27 BC |  | [Divorum#templum](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Divorum.html#templum) |
-| 4.5 | Fortuna Equestris, aedes | platner | 180 BC |  | [Aedes_Fortunae#Equestris](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Fortunae.html#Equestris) |
-| 4.5 | Hercules Custos, aedes:* | platner | 400 BC |  | [Aedes_Herculis_Custodis.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Herculis_Custodis.html) |
-| 4.5 | Pales, templum | platner | 267 BC | Palatine | [P#Pales](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/P.html#Pales) |
-| 4.5 | Volcanal | pleiades | 30 BC |  | [980748445](https://pleiades.stoa.org/places/980748445) |
-| 4.0 | Iuppiter Libertas, aedes | platner | 238 BC |  | [Jupiter_Libertas.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Jupiter_Libertas.html) |
-| 4.0 | Iuppiter Libertas, aedes | platner | 238 BC |  | [sacella_Jovis#Libertas](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sacella_Jovis.html#Libertas) |
-| 4.0 | Minerva, templum:* | platner | 27 BC |  | [Templum_Minervae.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Templum_Minervae.html) |
-| 4.0 | Vortumnus, Aedes | platner | 264 BC |  | [Aedes_Vortumni.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Vortumni.html) |
-| 3.5 | Consus, Aedes | platner | 272 BC |  | [Aedes_Consi.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Consi.html) |
-| 3.0 | Ianus Quadrifrons, templum | platner | 214 BC |  | [Janus_Quadrifrons.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Janus_Quadrifrons.html) |
-| 2.5 | Aedes Herculis Pompeiani | pleiades | 30 BC |  | [355242955](https://pleiades.stoa.org/places/355242955) |
-| 2.5 | Capitolium Vetus | pleiades | 30 BC |  | [194913213](https://pleiades.stoa.org/places/194913213) |
-| 2.5 | Clementia Caesaris, aedes | platner | 46 BC |  | [C#aedes_Clementiae_Caesaris](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/C.html#aedes_Clementiae_Caesaris) |
-| 2.5 | Flora, aedes | platner | 238 BC |  | [F#Aedes_Florae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/F.html#Aedes_Florae) |
-| 2.5 | Temple of Jupiter Tonans | pleiades | 30 BC |  | [354249963](https://pleiades.stoa.org/places/354249963) |
-| 2.0 | Hercules, templum | platner | 211 BC |  | [H#Herculis_templa](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/H.html#Herculis_templa) |
-| 2.0 | Minerva Chalcidica | platner | 55 BC |  | [Minerva_Chalcidica.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Minerva_Chalcidica.html) |
-| 1.5 | Concordia Nova | platner | 46 BC |  | [Concordia.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Concordia.html) |
-| 1.5 | Fortuna Redux, templum | platner | 27 BC |  | [Fortuna_Redux#templum](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Fortuna_Redux.html#templum) |
-| 1.5 | Minerva Chalcidica | platner | 55 BC |  | [M#Minerva_Chalcidica](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/M.html#Minerva_Chalcidica) |
-| 1.5 | Minerva, delubrum | platner | 55 BC |  | [M#Delubrum_Minervae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/M.html#Delubrum_Minervae) |
-| 1.5 | Venus Felix, aedes | platner | 82 BC |  | [Aedes_Veneris#Felix](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Veneris.html#Felix) |
-| 1.0 | Bonus Eventus, templum | platner | 27 BC |  | [B#templum_Boni_Eventus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/B.html#templum_Boni_Eventus) |
-
-**building** (41)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 10.0 | Paulli | platner | 200 BC | Forum | [Basilica_Aemilia.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Basilica_Aemilia.html) |
-| 7.5 | Divorum | pleiades | 30 BC | Campus Martius | [97074052](https://pleiades.stoa.org/places/97074052) |
-| 7.5 | Horrea Vespasiani | pleiades | 30 BC | Palatine | [845751045](https://pleiades.stoa.org/places/845751045) |
-| 7.0 | Capita Bubula, ad | platner | 27 BC | Palatine | [C#Capita_Bubula](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/C.html#Capita_Bubula) |
-| 7.0 | Cohortium Vigilum Stationes | platner | 27 BC |  | [Stationes_Vigilum#in_Circo_Flaminio](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Stationes_Vigilum.html#in_Circo_Flaminio) |
-| 7.0 | Forum Esquilinum | platner | 88 BC | Forum | [fora#Esquilinum](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/fora.html#Esquilinum) |
-| 6.5 | Bibliotheca Apollinis Palatini: * | platner | 27 BC |  | [Bibliothecae#Apollinis_Palatini](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Bibliothecae.html#Apollinis_Palatini) |
-| 6.5 | Curiae Veteres | platner | 27 BC | Palatine | [curiae#Veteres](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/curiae.html#Veteres) |
-| 6.0 | Tribunal Praetoris | platner | 200 BC | Forum | [Tribunal_Praetoris.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Tribunal_Praetoris.html) |
-| 5.5 | Forum Piscarium | platner | 210 BC | Forum | [fora#Piscarium](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/fora.html#Piscarium) |
-| 5.5 | Paedagogium | pleiades | 30 BC | Palatine | [155566866](https://pleiades.stoa.org/places/155566866) |
-| 5.5 | Schola Praeconum | pleiades | 30 BC | Circus | [582924414](https://pleiades.stoa.org/places/582924414) |
-| 5.0 | Forum Cuppedinis | platner | 179 BC | Forum | [fora#Cuppedinis](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/fora.html#Cuppedinis) |
-| 4.5 | Atrium Minervae | platner | 214 BC | Capitol | [atria#Minervae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/atria.html#Minervae) |
-| 4.5 | Auditorium Maecenatis | pleiades | 30 BC |  | [866548110](https://pleiades.stoa.org/places/866548110) |
-| 4.5 | Circus Gaii et Neronis | pleiades | 30 BC |  | [395487201](https://pleiades.stoa.org/places/395487201) |
-| 4.5 | Horrea Agrippiana | pleiades | 30 BC |  | [471592763](https://pleiades.stoa.org/places/471592763) |
-| 4.5 | Horrea Agrippiana | platner | 27 BC |  | [horrea#Agrippiana](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/horrea.html#Agrippiana) |
-| 4.5 | Horrea Piperataria | pleiades | 30 BC |  | [525081443](https://pleiades.stoa.org/places/525081443) |
-| 4.5 | Porticus Philippi | pleiades | 30 BC |  | [346055018](https://pleiades.stoa.org/places/346055018) |
-| 4.5 | Thermae Antoninianae | pleiades | 30 BC |  | [322942899](https://pleiades.stoa.org/places/322942899) |
-| 4.0 | Diribitorium | platner | 27 BC |  | [Diribitorium.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Diribitorium.html) |
-| 3.5 | Naumachia Caesaris | platner | 46 BC |  | [Naumachiae#Caesaris](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Naumachiae.html#Caesaris) |
-| 3.0 | Auditorium Maecenatis | platner | 27 BC |  | [Auditorium_Maecenatis.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Auditorium_Maecenatis.html) |
-| 2.5 | Amphitheatrum Castrense | pleiades | 30 BC |  | [537585744](https://pleiades.stoa.org/places/537585744) |
-| 2.5 | Athenaeum of Hadrian (Rome) | pleiades | 30 BC |  | [914715153](https://pleiades.stoa.org/places/914715153) |
-| 2.5 | Baths of Pozzo Pantaleo | pleiades | 30 BC |  | [710588450](https://pleiades.stoa.org/places/710588450) |
-| 2.5 | Castra Peregrina | pleiades | 30 BC |  | [914763973](https://pleiades.stoa.org/places/914763973) |
-| 2.5 | Circus Varianus | pleiades | 30 BC |  | [70865871](https://pleiades.stoa.org/places/70865871) |
-| 2.5 | Excubitorium | pleiades | 30 BC |  | [495489059](https://pleiades.stoa.org/places/495489059) |
-| 2.5 | Palatium Sessorianum | pleiades | 30 BC |  | [841475483](https://pleiades.stoa.org/places/841475483) |
-| 2.5 | So-called Tempio di Venere e Cupido | pleiades | 30 BC |  | [576179783](https://pleiades.stoa.org/places/576179783) |
-| 2.5 | Theater of Nero | pleiades | 30 BC |  | [406270378](https://pleiades.stoa.org/places/406270378) |
-| 2.5 | Thermae Diocletiani | pleiades | 30 BC |  | [420615524](https://pleiades.stoa.org/places/420615524) |
-| 2.5 | Thermae Helenianae  | pleiades | 30 BC |  | [555157618](https://pleiades.stoa.org/places/555157618) |
-| 2.5 | balneum Caesaris | pleiades | 30 BC |  | [623982917](https://pleiades.stoa.org/places/623982917) |
-| 2.0 | Ad Numfium | platner | 100 BC |  | [N#ad_Numfium](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/N.html#ad_Numfium) |
-| 2.0 | Bibliotheca Templi d. Augusti | platner | 27 BC |  | [Bibliothecae#templi_Divi_Augusti](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Bibliothecae.html#templi_Divi_Augusti) |
-| 1.5 | Codeta Minor | platner | 46 BC |  | [Codeta#Minor](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Codeta.html#Minor) |
-| 1.5 | Schola Fabrum Soliarium Baxiarium | platner | 55 BC |  | [scholae#Fabrum_Soliarium_Baxiarium](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/scholae.html#Fabrum_Soliarium_Baxiarium) |
-| 1.0 | Inter Falcarios | platner | 82 BC |  | [IJ#p283](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/IJ.html#p283) |
-
-**house** (39)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 4.25 | M. Antonius | platner | 29 BC | Palatine | [domus#M.Antonius_2](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#M.Antonius_2) |
-| 3.75 | House of Livia | pleiades | 330 BC | Palatine | [904782880](https://pleiades.stoa.org/places/904782880) |
-| 3.5 | Domus Valeriorum | platner | 509 BC |  | [Domus_Valeriorum.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Domus_Valeriorum.html) |
-| 3.5 | M. Fulvius Flaccus | platner | 121 BC | Palatine | [domus#M.Fulvius_Flaccus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#M.Fulvius_Flaccus) |
-| 3.0 | Caesar | platner | 46 BC |  | [domus#Caesar](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Caesar) |
-| 3.0 | Scipio Nasica | platner | 191 BC | Forum | [domus#Scipio_Nasica](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Scipio_Nasica) |
-| 2.75 | Casa dei Grifi | pleiades | 330 BC | Palatine | [817164756](https://pleiades.stoa.org/places/817164756) |
-| 2.5 | M. Aemilius Scaurus | platner | 58 BC | Forum | [domus#M.Aemilius_Scaurus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#M.Aemilius_Scaurus) |
-| 2.5 | Roius Hilario | platner | 27 BC | Palatine | [domus#Roius_Hilario](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Roius_Hilario) |
-| 2.5 | Spurius Cassius | platner | 485 BC |  | [domus#Spurius_Cassius](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Spurius_Cassius) |
-| 2.5 | Vitruvius Vaccus | platner | 330 BC | Palatine | [domus#Vitruvius_Vaccus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Vitruvius_Vaccus) |
-| 2.25 | C. Licinius Calvius | platner | 27 BC | Forum | [domus#C.Licinius_Calvius](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#C.Licinius_Calvius) |
-| 2.25 | Cn. Octavius | platner | 165 BC | Palatine | [domus#Cn._Octavius](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Cn._Octavius) |
-| 2.25 | L. Bellienus | platner | 46 BC | Forum | [domus#L.Bellienus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#L.Bellienus) |
-| 2.25 | P. Scipio Africanus | platner | 169 BC | Forum | [domus#P.Scipio_Africanus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#P.Scipio_Africanus) |
-| 2.25 | P. Sulla | platner | 57 BC | Palatine | [domus#P.Sulla](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#P.Sulla) |
-| 2.25 | domus Gelotiana | pleiades | 30 BC |  | [364530240](https://pleiades.stoa.org/places/364530240) |
-| 2.0 | Aelii | platner | 200 BC |  | [domus#Aelii](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Aelii) |
-| 1.25 | Case Romane del Celio | pleiades | 30 BC |  | [445192365](https://pleiades.stoa.org/places/445192365) |
-| 1.25 | Domus Romane di Palazzo Valentini | pleiades | 30 BC |  | [158092964](https://pleiades.stoa.org/places/158092964) |
-| 1.25 | Domus di Vigna Guidi | pleiades | 30 BC |  | [298528190](https://pleiades.stoa.org/places/298528190) |
-| 1.25 | House of Aufidia Cornelia Valentinilla | pleiades | 30 BC |  | [624604510](https://pleiades.stoa.org/places/624604510) |
-| 1.25 | L. Piso | platner | 53 BC |  | [domus#L.Piso](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#L.Piso) |
-| 1.25 | M. Manlius Capitolinus | platner | 384 BC |  | [domus#M.Manlius_Capitolinus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#M.Manlius_Capitolinus) |
-| 1.25 | Naumachia | pleiades | 30 BC |  | [422983](https://pleiades.stoa.org/places/422983) |
-| 1.25 | Privata domus Traiani | pleiades | 30 BC |  | [254273447](https://pleiades.stoa.org/places/254273447) |
-| 1.25 | Vedius Pollio | platner | 27 BC |  | [domus#Vedius_Pollio](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Vedius_Pollio) |
-| 1.25 | Villa Esmeade | pleiades | 30 BC |  | [423126](https://pleiades.stoa.org/places/423126) |
-| 1.0 | Avianus Vindicianus | platner | 27 BC |  | [domus#Avianus_Vindicianus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Avianus_Vindicianus) |
-| 1.0 | Iulius Pompeius Rusonianus | platner | 55 BC |  | [domus#Iulius_Pompeius_Rusonianus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Iulius_Pompeius_Rusonianus) |
-| 1.0 | Ustrinum Domus Augustae | platner | 27 BC |  | [Ustrinum_Domus_Augustae.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Ustrinum_Domus_Augustae.html) |
-| 0.75 | C. Aquilius Gallus | platner | 100 BC |  | [domus#C.Aquilius_Gallus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#C.Aquilius_Gallus) |
-| 0.75 | Cn. Domitius Calvinus | platner | 27 BC |  | [domus#Cn._Domitius_Calvinus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Cn._Domitius_Calvinus) |
-| 0.75 | L. Appuleius Saturninus | platner | 100 BC |  | [domus#L.Appuleius_Saturninus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#L.Appuleius_Saturninus) |
-| 0.75 | L. Volumnius | platner | 296 BC |  | [domus#L.Volumnius](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#L.Volumnius) |
-| 0.75 | Lenaeus | platner | 55 BC |  | [domus#Lenaeus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Lenaeus) |
-| 0.75 | M. Manlius | platner | 149 BC |  | [domus#M.Manlius](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#M.Manlius) |
-| 0.75 | T. Marcius Figulus | platner | 169 BC |  | [domus#T.Marcius_Figulus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#T.Marcius_Figulus) |
-| 0.5 | Bibulus | platner | 59 BC |  | [domus#Bibulus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Bibulus) |
-
-**tomb** (32)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 3.75 | Sepulcrum Sullae | platner | 82 BC | Capitol | [sepulcra#Sullae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sepulcra.html#Sullae) |
-| 2.25 | Meta Romuli | pleiades | 100 BC |  | [52385300](https://pleiades.stoa.org/places/52385300) |
-| 2.25 | S. Felicita | pleiades | 30 BC |  | [423043](https://pleiades.stoa.org/places/423043) |
-| 2.25 | Sepulcrum Caesaris | platner | 46 BC |  | [sepulcra#Caesaris](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sepulcra.html#Caesaris) |
-| 2.25 | Tumulus Iuliae | platner | 55 BC |  | [Tumulus_Juliae.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Tumulus_Juliae.html) |
-| 2.0 | Sepulcrum Agrippae | platner | 27 BC |  | [sepulcra#Agrippae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sepulcra.html#Agrippae) |
-| 1.5 | Busta Gallica | platner | 396 BC |  | [Busta_Gallica.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Busta_Gallica.html) |
-| 1.25 | Cemetery of Gordianus, Epimachus, Apronianus | pleiades | 30 BC |  | [426596](https://pleiades.stoa.org/places/426596) |
-| 1.25 | Columbarium of Pomponius Hylas | pleiades | 30 BC |  | [390937014](https://pleiades.stoa.org/places/390937014) |
-| 1.25 | Hypogeum of Trebius Giustus | pleiades | 30 BC |  | [874332557](https://pleiades.stoa.org/places/874332557) |
-| 1.25 | Hypogeum of the Aurelii | pleiades | 30 BC |  | [361831195](https://pleiades.stoa.org/places/361831195) |
-| 1.25 | Mausoleum of Lucilius Peto | pleiades | 30 BC |  | [400889194](https://pleiades.stoa.org/places/400889194) |
-| 1.25 | Pozzo Pantaleo | pleiades | 30 BC |  | [710588451](https://pleiades.stoa.org/places/710588451) |
-| 1.25 | S. Ippolito | pleiades | 30 BC |  | [423045](https://pleiades.stoa.org/places/423045) |
-| 1.25 | Sep. Bibuli | pleiades | 30 BC |  | [503777175](https://pleiades.stoa.org/places/503777175) |
-| 1.25 | Sep. Eurysacis | pleiades | 30 BC |  | [226302607](https://pleiades.stoa.org/places/226302607) |
-| 1.25 | Sep. Geta | pleiades | 30 BC |  | [423065](https://pleiades.stoa.org/places/423065) |
-| 1.25 | Sepulcrum Pansae | platner | 55 BC |  | [sepulcra#Pansae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sepulcra.html#Pansae) |
-| 1.25 | Tomb of Priscilla | pleiades | 30 BC |  | [50864839](https://pleiades.stoa.org/places/50864839) |
-| 1.25 | Tomba della Medusa (Roma) | pleiades | 30 BC |  | [305841487](https://pleiades.stoa.org/places/305841487) |
-| 1.25 | Torre Dell'Angelo | pleiades | 30 BC |  | [201442266](https://pleiades.stoa.org/places/201442266) |
-| 1.25 | Vatican necropolis | pleiades | 30 BC |  | [975276180](https://pleiades.stoa.org/places/975276180) |
-| 1.25 | Via Statilia tombs | pleiades | 330 BC |  | [711765706](https://pleiades.stoa.org/places/711765706) |
-| 1.25 | Via Taranto columbaria | pleiades | 30 BC |  | [499652704](https://pleiades.stoa.org/places/499652704) |
-| 1.25 | Via Triumphalis necropolis | pleiades | 30 BC |  | [578501279](https://pleiades.stoa.org/places/578501279) |
-| 1.25 | Villa Pamphili | pleiades | 30 BC |  | [423132](https://pleiades.stoa.org/places/423132) |
-| 1.25 | Villa Torlonia | pleiades | 30 BC |  | [423133](https://pleiades.stoa.org/places/423133) |
-| 1.25 | via Taranto columbaria | pleiades | 30 BC |  | [116905947](https://pleiades.stoa.org/places/116905947) |
-| 1.0 | Sepulcrum Hirtii | platner | 43 BC |  | [sepulcra#Hirtii](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sepulcra.html#Hirtii) |
-| 1.0 | Sepulcrum Statiliorum | platner | 27 BC |  | [sepulcra#Statiliorum](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sepulcra.html#Statiliorum) |
-| 0.75 | Sepulcrum Galbae | platner | 108 BC |  | [sepulcra#Galbae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sepulcra.html#Galbae) |
-| 0.75 | Sepulcrum Lucilii Paeti | platner | 27 BC |  | [sepulcra#Lucilii_Paeti](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sepulcra.html#Lucilii_Paeti) |
-
-**statue** (20)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 5.0 | Statua Marsyae | platner | 400 BC | Forum | [Statuae#Marsyae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Statuae.html#Marsyae) |
-| 3.0 | Statua Pompeii | platner | 82 BC |  | [Statuae#Pompeii](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Statuae.html#Pompeii) |
-| 2.75 | Septizonium | pleiades | 30 BC | Circus | [705506085](https://pleiades.stoa.org/places/705506085) |
-| 2.25 | Statua Valerii Corvini | platner | 27 BC | Forum | [Statuae#Valerii_Corvini](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Statuae.html#Valerii_Corvini) |
-| 2.25 | Temple of Minerva Medica | pleiades | 30 BC |  | [540898685](https://pleiades.stoa.org/places/540898685) |
-| 2.0 | Milliarium Aureum | platner | 27 BC |  | [Milliarium_Aureum.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Milliarium_Aureum.html) |
-| 2.0 | Obeliscus Capitolinus | platner | 27 BC | Capitol | [obelisci#Capitolinus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/obelisci.html#Capitolinus) |
-| 2.0 | Statua Sullae | platner | 79 BC |  | [Statuae#Sullae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Statuae.html#Sullae) |
-| 1.25 | Ianus, Concordia, Salus, Pax, statuae | platner | 27 BC |  | [IJ#Statuae_Jani_et_al](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/IJ.html#Statuae_Jani_et_al) |
-| 1.25 | Sororium Tigillum | pleiades | 330 BC |  | [527986453](https://pleiades.stoa.org/places/527986453) |
-| 1.0 | Columna Minucia | platner | 439 BC |  | [Columna_Minucia.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Columna_Minucia.html) |
-| 1.0 | Equus Caesaris | platner | 46 BC |  | [E#Equus_Caesaris](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/E.html#Equus_Caesaris) |
-| 1.0 | Obelisci Mausolei Augusti | platner | 27 BC |  | [obelisci#Mausolei_Augusti](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/obelisci.html#Mausolei_Augusti) |
-| 1.0 | Statua Horatii Coclitis | platner | 46 BC |  | [Statuae#Horatii_Coclitis](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Statuae.html#Horatii_Coclitis) |
-| 0.75 | Apollo Sandaliarius | platner | 27 BC |  | [A#Apollo_Sandaliarius](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/A.html#Apollo_Sandaliarius) |
-| 0.75 | Columna Antonini Pii | platner | 27 BC |  | [Columna_Antonini_Pii.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Columna_Antonini_Pii.html) |
-| 0.75 | Iuppiter Tragoedus, statua | platner | 27 BC |  | [sacella_Jovis#Tragoedus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sacella_Jovis.html#Tragoedus) |
-| 0.75 | Statua Antonii Musae | platner | 27 BC |  | [Statuae#Antonii_Musae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Statuae.html#Antonii_Musae) |
-| 0.5 | Hercules Sullanus | platner | 82 BC |  | [H#Hercules_Sullanus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/H.html#Hercules_Sullanus) |
-| 0.5 | Isis Athenodoria | platner | 100 BC |  | [Isis#Athenodoria](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Isis.html#Athenodoria) |
-
-**arch** (16)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 8.1 | Ianus | platner | 174 BC |  | [Janus.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Janus.html) |
-| 6.75 | Arcus Tiberii | pleiades | 30 BC | Forum | [307446389](https://pleiades.stoa.org/places/307446389) |
-| 6.3 | Arcus Octavii | platner | 29 BC | Palatine | [arcus#Octavii](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/arcus.html#Octavii) |
-| 5.85 | Fornix Scipionis | platner | 190 BC | Capitol | [fornices#Scipionis](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/fornices.html#Scipionis) |
-| 4.95 | Arch of Septimius Severus | pleiades | 30 BC | Forum | [370240026](https://pleiades.stoa.org/places/370240026) |
-| 4.95 | Arch of Titus (Circus Maximus) | pleiades | 30 BC | Circus | [45530496](https://pleiades.stoa.org/places/45530496) |
-| 4.5 | Arcus Pompeii | platner | 61 BC |  | [arcus#Pompeii](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/arcus.html#Pompeii) |
-| 4.05 | Arcus Argentariorum | pleiades | 30 BC |  | [335461216](https://pleiades.stoa.org/places/335461216) |
-| 4.05 | Arcus Dolabellae et Silani | pleiades | 30 BC |  | [159953179](https://pleiades.stoa.org/places/159953179) |
-| 4.05 | Iuppiter Victor. | platner | 295 BC |  | [Jupiter_Victor.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Jupiter_Victor.html) |
-| 2.25 | Arco di San Lazzaro | pleiades | 30 BC |  | [446459843](https://pleiades.stoa.org/places/446459843) |
-| 2.25 | So-called Arco di Druso | pleiades | 30 BC |  | [182591943](https://pleiades.stoa.org/places/182591943) |
-| 1.35 | Arcus Latronis | platner | 27 BC |  | [arcus#Latronis](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/arcus.html#Latronis) |
-| 1.35 | Fornices Stertinii | platner | 196 BC |  | [fornices#Fornices_Stertinii](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/fornices.html#Fornices_Stertinii) |
-| 1.35 | Fornix Stertinii | platner | 196 BC |  | [fornices#Fornix_Stertinii](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/fornices.html#Fornix_Stertinii) |
-| 1.35 | Vinea Publica | platner | 46 BC |  | [V#Vinea_Publica](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/V.html#Vinea_Publica) |
-
-**shrine** (14)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 7.2 | Venus Victrix | platner | 55 BC | Capitol | [Venus_Victrix#in_Capitolio](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Venus_Victrix.html#in_Capitolio) |
-| 6.4 | Cloacina, sacrum | platner | 82 BC | Forum | [Sacrum_Cloacinae.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Sacrum_Cloacinae.html) |
-| 4.0 | Mansiones Saliorum Palatinorum | platner | 27 BC | Forum | [M#Mansiones_Saliorum_Palatinorum](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/M.html#Mansiones_Saliorum_Palatinorum) |
-| 2.8 | Isis et Serapis in Capitolio | platner | 48 BC |  | [Isis#et_Serapis_in_Capitolio](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Isis.html#et_Serapis_in_Capitolio) |
-| 2.8 | Minerva Capta (Minervium) | platner | 214 BC |  | [Minerva_Capta.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Minerva_Capta.html) |
-| 2.4 | Spes Vetus | platner | 477 BC |  | [Spes_Vetus.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Spes_Vetus.html) |
-| 2.0 | Compitum Acilii | platner | 229 BC |  | [Compita#Acilii](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Compita.html#Acilii) |
-| 2.0 | Compitum Fabricium | platner | 278 BC |  | [Compita#Fabricium](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Compita.html#Fabricium) |
-| 2.0 | Lupercal | pleiades | 330 BC |  | [565793497](https://pleiades.stoa.org/places/565793497) |
-| 2.0 | Palazzo Barberini Mithraeum | pleiades | 30 BC |  | [462454014](https://pleiades.stoa.org/places/462454014) |
-| 2.0 | Pudicitia Plebeia, sacellum | platner | 296 BC |  | [P#Pudicitia_Plebeia](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/P.html#Pudicitia_Plebeia) |
-| 2.0 | Shrine of Strenia | pleiades | 30 BC |  | [582254847](https://pleiades.stoa.org/places/582254847) |
-| 2.0 | Victoria Virgo, aedicula | platner | 193 BC |  | [V#Victoria_Virgo](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/V.html#Victoria_Virgo) |
-| 1.2 | sacellum | platner | 27 BC |  | [M#ref4](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/M.html#ref4) |
-
-**portico** (14)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 7.5 | Porticus Liviae | platner | 27 BC |  | [Porticus_Liviae.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Porticus_Liviae.html) |
-| 7.0 | Porticus Catuli | platner | 101 BC | Palatine | [porticus#Catuli](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/porticus.html#Catuli) |
-| 6.5 | Porticus Absidata | platner | 27 BC | Forum | [porticus#Absidata](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/porticus.html#Absidata) |
-| 5.5 | Porticus Quirini | platner | 27 BC |  | [porticus#Quirini](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/porticus.html#Quirini) |
-| 5.0 | Porticus Philippi | platner | 27 BC |  | [porticus#Philippi](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/porticus.html#Philippi) |
-| 4.5 | Porticus Vipsania | platner | 27 BC |  | [Porticus_Vipsania.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Porticus_Vipsania.html) |
-| 3.0 | Porticus Argonautarum | platner | 27 BC |  | [Porticus_Argonautarum.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Porticus_Argonautarum.html) |
-| 3.0 | Porticus Boni Eventus | platner | 27 BC |  | [porticus#Boni_Eventus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/porticus.html#Boni_Eventus) |
-| 3.0 | Porticus ad Nationes | platner | 55 BC |  | [porticus#ad_Nationes](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/porticus.html#ad_Nationes) |
-| 2.5 | Porticus Metelli | platner | 147 BC |  | [porticus#Metelli](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/porticus.html#Metelli) |
-| 1.5 | Porticus | platner | 193 BC |  | [porticus#porticus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/porticus.html#porticus) |
-| 1.5 | Porticus inter Lignarios | platner | 192 BC |  | [porticus#inter_Lignarios](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/porticus.html#inter_Lignarios) |
-| 1.5 | Porticus post Navalia | platner | 179 BC |  | [porticus#post_Navalia](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/porticus.html#post_Navalia) |
-| 1.5 | Porticus post Spei | platner | 179 BC |  | [porticus#post_Spei](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/porticus.html#post_Spei) |
-
-**street** (11)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 6.3 | Clivus Martis | platner | 296 BC |  | [cliva#Martis](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/cliva.html#Martis) |
-| 5.25 | Clivus Victoriae | pleiades | 30 BC | Palatine | [668537796](https://pleiades.stoa.org/places/668537796) |
-| 3.15 | Ad Malum Punicum | pleiades | 30 BC |  | [4672323](https://pleiades.stoa.org/places/4672323) |
-| 3.15 | Scalae Anulariae | platner | 27 BC | Forum | [gradus_scalaeque#Scalae_Anulariae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/gradus_scalaeque.html#Scalae_Anulariae) |
-| 3.15 | Via Fornicata | platner | 216 BC | Campus Martius | [viae#Fornicata](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/viae.html#Fornicata) |
-| 3.15 | Vicus Statae Matris | platner | 82 BC | Forum | [vici#Statae_Matris](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/vici.html#Statae_Matris) |
-| 2.1 | Vicus Sandaliarius | platner | 27 BC |  | [Vicus_Sandaliarius.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Vicus_Sandaliarius.html) |
-| 1.75 | Clivus Scauri | pleiades | 30 BC |  | [267702571](https://pleiades.stoa.org/places/267702571) |
-| 1.75 | Vicus Censorius | pleiades | 30 BC |  | [894727084](https://pleiades.stoa.org/places/894727084) |
-| 1.75 | Vicus Drusianus | pleiades | 30 BC |  | [942692312](https://pleiades.stoa.org/places/942692312) |
-| 1.05 | Insteianus | platner | 214 BC |  | [vici#Insteius](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/vici.html#Insteius) |
-
-**altar** (11)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 8.55 | Vesta, aedicula, ara | platner | 27 BC | Palatine | [Vesta#aedicula-ara](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Vesta.html#aedicula-ara) |
-| 8.1 | Salus, ara | platner | 311 BC |  | [Aedes_Salutis#Ara](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Salutis.html#Ara) |
-| 7.2 | Aius Locutius, Ara | platner | 390 BC | Palatine | [Aius_Locutius.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aius_Locutius.html) |
-| 6.75 | Ara Pacis | platner | 27 BC |  | [Ara_Pacis.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Ara_Pacis.html) |
-| 6.3 | Neptunus, ara | platner | 206 BC | Campus Martius | [Neptunus#ara](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Neptunus.html#ara) |
-| 4.5 | Victoria, ara | platner | 29 BC |  | [V#ara_Victoriae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/V.html#ara_Victoriae) |
-| 4.05 | Fortuna Redux, ara | platner | 27 BC |  | [Fortuna_Redux#ara](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Fortuna_Redux.html#ara) |
-| 3.6 | Dis Pater et Proserpina, Ara | platner | 27 BC |  | [Ditis_Patris-Proserpinae.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Ditis_Patris-Proserpinae.html) |
-| 3.15 | Felicitas (sacellum, ara?) | platner | 82 BC |  | [Felicitas#sacellum_or_ara](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Felicitas.html#sacellum_or_ara) |
-| 1.35 | Evander, ara | platner | 27 BC |  | [E#Ara_Evandri](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/E.html#Ara_Evandri) |
-| 1.35 | Verminus, ara | platner | 100 BC |  | [V#Verminus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/V.html#Verminus) |
-
-**gate** (9)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 6.5 | Porta Latina | pleiades | 30 BC |  | [870073463](https://pleiades.stoa.org/places/870073463) |
-| 4.5 | Porta Appia | pleiades | 30 BC |  | [661181629](https://pleiades.stoa.org/places/661181629) |
-| 4.5 | Porta Maggiore | pleiades | 30 BC |  | [697163696](https://pleiades.stoa.org/places/697163696) |
-| 4.5 | Porta Mugonia | pleiades | 30 BC |  | [547584100](https://pleiades.stoa.org/places/547584100) |
-| 4.5 | Porta Salaria | pleiades | 30 BC |  | [758962698](https://pleiades.stoa.org/places/758962698) |
-| 2.5 | Porta Ardeatina | pleiades | 30 BC |  | [495155542](https://pleiades.stoa.org/places/495155542) |
-| 2.5 | Porta Asinaria | pleiades | 30 BC |  | [958548506](https://pleiades.stoa.org/places/958548506) |
-| 2.5 | Porta Aurelia | pleiades | 30 BC |  | [732617291](https://pleiades.stoa.org/places/732617291) |
-| 2.5 | Porta Ostiensis | pleiades | 30 BC |  | [520255117](https://pleiades.stoa.org/places/520255117) |
-
-**basilica** (6)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 7.5 | Basilica Neptuni | pleiades | 330 BC | Campus Martius | [360837130](https://pleiades.stoa.org/places/360837130) |
-| 4.5 | Basilica Neptuni | platner | 27 BC |  | [basilicae#Neptuni](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/basilicae.html#Neptuni) |
-| 2.5 | Basilica Hilariana | pleiades | 30 BC |  | [711164402](https://pleiades.stoa.org/places/711164402) |
-| 2.5 | Porta Maggiore Basilica | pleiades | 100 BC |  | [806345695](https://pleiades.stoa.org/places/806345695) |
-| 2.5 | S. Laurentius | pleiades | 30 BC |  | [423046](https://pleiades.stoa.org/places/423046) |
-| 1.0 | Basilica Iulia Aquiliana | platner | 46 BC |  | [basilicae#Julia_Aquiliana](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/basilicae.html#Julia_Aquiliana) |
-
-**fountain** (6)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 3.85 | Lacus Servilius | platner | 82 BC | Forum | [lacus#Servilius](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/lacus.html#Servilius) |
-| 1.75 | Fons, Delubrum | platner | 231 BC |  | [fontes#Delubrum](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/fontes.html#Delubrum) |
-| 1.75 | Nymphaeum divi Alexandri | pleiades | 30 BC |  | [402082165](https://pleiades.stoa.org/places/402082165) |
-| 1.75 | Nymphaeum of via degli Annibaldi | pleiades | 100 BC |  | [420447351](https://pleiades.stoa.org/places/420447351) |
-| 1.75 | Sette Sale | pleiades | 30 BC |  | [65898660](https://pleiades.stoa.org/places/65898660) |
-| 1.05 | Stagnum Agrippae | platner | 27 BC |  | [Thermae_Agrippae#Stagnum_Agrippae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Thermae_Agrippae.html#Stagnum_Agrippae) |
-
-**hill** (6)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 2.7 | Quirinal Hill | pleiades | 30 BC |  | [125119394](https://pleiades.stoa.org/places/125119394) |
-| 1.5 | Janiculum | pleiades | 30 BC |  | [430827518](https://pleiades.stoa.org/places/430827518) |
-| 1.5 | Monte Testaccio | pleiades | 30 BC |  | [375710890](https://pleiades.stoa.org/places/375710890) |
-| 1.5 | Oppius Mons | pleiades | 30 BC |  | [91325207](https://pleiades.stoa.org/places/91325207) |
-| 1.5 | Tarpeian Rock | pleiades | 330 BC |  | [928849659](https://pleiades.stoa.org/places/928849659) |
-| 1.5 | Velia | pleiades | 330 BC |  | [157710058](https://pleiades.stoa.org/places/157710058) |
-
-**bridge** (5)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 4.5 | Pons Aelius | pleiades | 30 BC |  | [334776903](https://pleiades.stoa.org/places/334776903) |
-| 4.5 | Pons Caligulae | platner | 27 BC | Capitol | [Pons_Caligulae.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Pons_Caligulae.html) |
-| 4.5 | Pons Neronianus | pleiades | 30 BC |  | [100447491](https://pleiades.stoa.org/places/100447491) |
-| 2.5 | Unnamed bridge in the Piazza Eugenio Biffi | pleiades | 330 BC |  | [426586](https://pleiades.stoa.org/places/426586) |
-| 2.5 | Untitled | pleiades | 330 BC |  | [426587](https://pleiades.stoa.org/places/426587) |
-
-**grove** (4)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 4.55 | Lucus Stimulae | platner | 186 BC |  | [luci#Stimulae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/luci.html#Stimulae) |
-| 3.85 | Lucus Petelinus | platner | 342 BC | Capitol | [luci#Petelinus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/luci.html#Petelinus) |
-| 3.15 | Lucus Stimulae | pleiades | 30 BC |  | [978725164](https://pleiades.stoa.org/places/978725164) |
-| 1.05 | Aesculetum | platner | 287 BC |  | [Aesculetum.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aesculetum.html) |
-
-**garden** (3)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 1.0 | Horti Lucull(i)ani | pleiades | 30 BC |  | [418356677](https://pleiades.stoa.org/places/418356677) |
-| 1.0 | Horti Maiani | pleiades | 30 BC |  | [376850631](https://pleiades.stoa.org/places/376850631) |
-| 1.0 | Praedia Galbana | pleiades | 30 BC |  | [277030428](https://pleiades.stoa.org/places/277030428) |
-
-**wall** (3)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 4.5 | Murus Terreus Carinarum | pleiades | 30 BC |  | [987812398](https://pleiades.stoa.org/places/987812398) |
-| 2.5 | Aurelian Walls | pleiades | 30 BC |  | [529700371](https://pleiades.stoa.org/places/529700371) |
-| 2.5 | Murus Romuli | pleiades | 30 BC |  | [698502930](https://pleiades.stoa.org/places/698502930) |
-
-**other** (2)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 1.35 | Aequimelium | pleiades | 30 BC |  | [646121066](https://pleiades.stoa.org/places/646121066) |
-| 0.75 | tribus Ramnes | pleiades | 330 BC |  | [531536067](https://pleiades.stoa.org/places/531536067) |
-
-**aqueduct** (1)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 4.5 | Aqua Antoniniana | pleiades | 30 BC |  | [423561](https://pleiades.stoa.org/places/423561) |
-
-**valley** (1)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 2.7 | Subura | pleiades | 30 BC |  | [451696383](https://pleiades.stoa.org/places/451696383) |
-
-### Missing: Empire to AD 120 (135)
-
-**house** (32)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 3.0 | Gelotiana | platner | AD 37 | Palatine | [domus#Gelotiana](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Gelotiana) |
-| 2.75 | L. Crassus | platner | AD 54 | Palatine | [domus#L.Crassus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#L.Crassus) |
-| 2.25 | Claudii | platner | AD 41 |  | [domus#Claudii](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Claudii) |
-| 2.0 | Domitiana | platner | AD 40 | Forum | [domus#Domitiana](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Domitiana) |
-| 1.75 | Domus Clementis | pleiades | AD 100 |  | [47784682](https://pleiades.stoa.org/places/47784682) |
-| 1.5 | Germanicus | platner | AD 37 | Palatine | [domus#Germanicus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Germanicus) |
-| 1.5 | Pomponii | platner | AD 98 |  | [domus#Pomponii](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Pomponii) |
-| 1.5 | Postumii | platner | AD 14 |  | [domus#Postumii](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Postumii) |
-| 1.0 | C. Cassius Longinus | platner | AD 54 |  | [domus#C.Cassius_Longinus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#C.Cassius_Longinus) |
-| 1.0 | C. Stertinius Xenophon | platner | AD 41 |  | [domus#C.Stertinius_Xenophon](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#C.Stertinius_Xenophon) |
-| 0.75 | A. Annius Plocamus | platner | AD 41 |  | [domus#A.Annius_Plocamus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#A.Annius_Plocamus) |
-| 0.75 | Domus Laterani | platner | AD 54 |  | [Domus_Laterani.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Domus_Laterani.html) |
-| 0.75 | Titus Flavius Vespasianus | platner | AD 54 |  | [domus#Titus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Titus) |
-| 0.5 | T. Avidius Quietus | platner | AD 82 |  | [domus#T.Avidius_Quietus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#T.Avidius_Quietus) |
-| 0.5 | T. Flavius Sabinus | platner | AD 69 |  | [domus#T.Flavius_Sabinus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#T.Flavius_Sabinus) |
-| 0.25 | A. Hortensius Licinianus | platner | AD 117 |  | [domus#A.Hortensius_Licinianus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#A.Hortensius_Licinianus) |
-| 0.25 | App. Silvius Iunius Silvinus | platner | AD 41 |  | [domus#App._Silvius_Iunius_Silvinus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#App._Silvius_Iunius_Silvinus) |
-| 0.25 | Appius Claudius Martialis | platner | AD 41 |  | [domus#Appius_Claudius_Martialis](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Appius_Claudius_Martialis) |
-| 0.25 | Arruntius Stella | platner | AD 101 |  | [domus#Arruntius_Stella](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Arruntius_Stella) |
-| 0.25 | Daphnis | platner | AD 88 |  | [domus#Daphnis](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Daphnis) |
-| 0.25 | Insula Bolani | platner | AD 69 |  | [Insulae#Bolani](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Insulae.html#Bolani) |
-| 0.25 | L. Cornelius Pusio | platner | AD 41 |  | [domus#L.Cornelius_Pusio](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#L.Cornelius_Pusio) |
-| 0.25 | L. Vagellius | platner | AD 46 |  | [domus#L.Vagellius](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#L.Vagellius) |
-| 0.25 | M. Cocceius Nerva | platner | AD 34 |  | [domus#M.Cocceius_Nerva](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#M.Cocceius_Nerva) |
-| 0.25 | Privata (Domus) | platner | AD 117 |  | [P#Privata_Hadriani](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/P.html#Privata_Hadriani) |
-| 0.25 | Q. Valerius Vegetus | platner | AD 91 |  | [domus#Q.Valerius_Vegetus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Q.Valerius_Vegetus) |
-| 0.25 | T. Sextius Africanus | platner | AD 59 |  | [domus#T.Sextius_Africanus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#T.Sextius_Africanus) |
-| 0.25 | Terentius Culleo | platner | AD 40 |  | [domus#Terentius_Culleo](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Terentius_Culleo) |
-| 0.0 | Appius Claudius Pulcher | platner | AD 41 |  | [domus#Appius_Claudius_Pulcher](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Appius_Claudius_Pulcher) |
-| 0.0 | Bruttius Praesens | platner | AD 98 |  | [domus#Bruttius_Praesens](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Bruttius_Praesens) |
-| 0.0 | Iohannes et Paulus | platner | AD 41 |  | [domus#Johannes_et_Paulus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Johannes_et_Paulus) |
-| 0.0 | Privata (Domus) | platner | AD 96 |  | [P#Privata_Traiani](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/P.html#Privata_Traiani) |
-
-**building** (32)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 6.5 | Basilica Argentaria | pleiades | AD 100 | Capitol | [397225738](https://pleiades.stoa.org/places/397225738) |
-| 3.5 | Forum Tauri | platner | AD 44 | Forum | [Forum_Tauri.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Forum_Tauri.html) |
-| 3.5 | Ludus Matutinus | platner | AD 81 |  | [ludi#Matutinus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/ludi.html#Matutinus) |
-| 3.5 | Porticus Absidata | pleiades | AD 1 |  | [245668206](https://pleiades.stoa.org/places/245668206) |
-| 3.5 | Thermae Domitii | platner | AD 54 | Forum | [thermae#Domitii](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/thermae.html#Domitii) |
-| 3.5 | Tribunal Vespasiani Titi Domitiani | platner | AD 82 | Capitol | [T#Tribunal_Vespasiani_Titi_Domitiani](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/T.html#Tribunal_Vespasiani_Titi_Domitiani) |
-| 3.0 | Bibliotheca Porticus Octaviae | platner | 23 BC |  | [Bibliothecae#Porticus_Octaviae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Bibliothecae.html#Porticus_Octaviae) |
-| 3.0 | Circus Gai et Neronis | platner | AD 37 |  | [Circus_Gai_et_Neronis.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Circus_Gai_et_Neronis.html) |
-| 3.0 | Gymnasium Neronis | platner | AD 54 |  | [Gymnasium_Neronis.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Gymnasium_Neronis.html) |
-| 3.0 | Horrea Nervae | platner | AD 96 |  | [horrea#Nervae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/horrea.html#Nervae) |
-| 2.5 | Horrea Petroniana | platner | AD 54 |  | [horrea#Petroniana](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/horrea.html#Petroniana) |
-| 2.5 | Horrea Piperataria | platner | AD 81 |  | [horrea#Piperataria](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/horrea.html#Piperataria) |
-| 2.0 | Horrea Vespasiani | platner | AD 81 |  | [horrea#Vespasiani](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/horrea.html#Vespasiani) |
-| 2.0 | Naumachia Domitiani | platner | AD 81 |  | [Naumachiae#Domitiani](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Naumachiae.html#Domitiani) |
-| 1.5 | Chalcidicum | pleiades | AD 1 |  | [809771016](https://pleiades.stoa.org/places/809771016) |
-| 1.5 | Colonnacce | pleiades | AD 1 |  | [377181898](https://pleiades.stoa.org/places/377181898) |
-| 1.0 | Amphitheatrum Neronis | platner | AD 54 |  | [amphitheatra#Neronis](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/amphitheatra.html#Neronis) |
-| 1.0 | Athenaeum | platner | AD 117 |  | [Athenaeum.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Athenaeum.html) |
-| 1.0 | Balineum Bolani | platner | AD 69 |  | [balnea#Balineum_Bolani](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/balnea.html#Balineum_Bolani) |
-| 1.0 | Castra Misenatium | platner | AD 79 |  | [Castra#Misenatium](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Castra.html#Misenatium) |
-| 1.0 | Lavacrum Agrippinae | platner | AD 117 |  | [L#Lavacrum_Agrippinae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/L.html#Lavacrum_Agrippinae) |
-| 0.5 | Amphitheatrum Caligulae | platner | AD 37 |  | [amphitheatra#Caligulae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/amphitheatra.html#Caligulae) |
-| 0.5 | Portus Parrae | platner | AD 117 |  | [P#Portus_Parrae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/P.html#Portus_Parrae) |
-| 0.5 | Schola Xanthi | platner | AD 14 |  | [scholae#Xanthi](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/scholae.html#Xanthi) |
-| 0.5 | Sessorium | platner | AD 69 |  | [Sessorium.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Sessorium.html) |
-| 0.0 | Adonidis aula | platner | AD 81 |  | [A#Adonidis_Aula](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/A.html#Adonidis_Aula) |
-| 0.0 | Atria Septem | platner | AD 81 |  | [atria#Atria_septem](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/atria.html#Atria_septem) |
-| 0.0 | Balneum Abascanti | platner | AD 81 |  | [balnea#Balneum_Abascanti](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/balnea.html#Balneum_Abascanti) |
-| 0.0 | Balneum Tigellini | platner | AD 54 |  | [balnea#Balneum_Tigellini](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/balnea.html#Balneum_Tigellini) |
-| 0.0 | Horrea Faeniana | platner | AD 55 |  | [horrea#Faeniana](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/horrea.html#Faeniana) |
-| 0.0 | Naumachia Vaticana | platner | AD 81 |  | [Naumachiae#Vaticana](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Naumachiae.html#Vaticana) |
-| 0.0 | Thermae Etrusci | platner | AD 41 |  | [thermae#Etrusci](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/thermae.html#Etrusci) |
-
-**tomb** (12)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 1.0 | Sepulcrum Accae Larentiae | platner | AD 117 |  | [sepulcra#Accae_Larentiae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sepulcra.html#Accae_Larentiae) |
-| 0.75 | Sepulcrum Titi Tatii | platner | AD 79 |  | [sepulcra#Titi_Tatii](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sepulcra.html#Titi_Tatii) |
-| 0.75 | Tomb of Quintus Sulpicius Maximus | pleiades | AD 1 |  | [358004061](https://pleiades.stoa.org/places/358004061) |
-| 0.5 | Sepulcrum Corneliae | platner | AD 54 |  | [sepulcra#Corneliae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sepulcra.html#Corneliae) |
-| 0.5 | Sepulcrum Pallantis | platner | AD 41 |  | [sepulcra#Pallantis](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sepulcra.html#Pallantis) |
-| 0.5 | Sepulcrum Pomponii Hylae | platner | AD 14 |  | [sepulcra#Pomponii_Hylae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sepulcra.html#Pomponii_Hylae) |
-| 0.25 | Sepulcrum Arruntiorum | platner | AD 6 |  | [sepulcra#Arruntiorum](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sepulcra.html#Arruntiorum) |
-| 0.25 | Sepulcrum Galloniorum | platner | AD 117 |  | [sepulcra#Galloniorum](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sepulcra.html#Galloniorum) |
-| 0.25 | Sepulcrum Getae | platner | AD 26 |  | [sepulcra#Getae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sepulcra.html#Getae) |
-| 0.25 | Sepulcrum Mariae | platner | AD 6 |  | [sepulcra#Mariae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sepulcra.html#Mariae) |
-| 0.25 | Sepulcrum Severi | platner | AD 117 |  | [sepulcra#Severi](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sepulcra.html#Severi) |
-| 0.25 | Tumulus Octaviorum | platner | AD 25 |  | [T#Tumulus_Octaviorum](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/T.html#Tumulus_Octaviorum) |
-
-**temple** (10)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 6.0 | Gens Flavia, templum | platner | AD 41 |  | [Templum_Gentis_Flaviae.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Templum_Gentis_Flaviae.html) |
-| 5.0 | Divus Marcus, templum | platner | AD 98 |  | [M#Templum_Divi_Marci](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/M.html#Templum_Divi_Marci) |
-| 4.0 | Magna Mater, tholus | platner | AD 79 | Forum | [Aedes_Matris_Deum.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Matris_Deum.html) |
-| 2.0 | Hercules Fundan(i)us, templum | platner | AD 41 |  | [H#Hercules_Fundanus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/H.html#Hercules_Fundanus) |
-| 1.5 | Dea Suria, templum | platner | AD 54 |  | [Templum_Deae_Suriae.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Templum_Deae_Suriae.html) |
-| 1.5 | Isis | platner | AD 98 |  | [Isis#Aedes_Isidis](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Isis.html#Aedes_Isidis) |
-| 1.5 | Temple of Hadrian | pleiades | AD 100 |  | [666765291](https://pleiades.stoa.org/places/666765291) |
-| 1.0 | Fecunditas, templum | platner | AD 54 |  | [F#Fecunditas](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/F.html#Fecunditas) |
-| 0.5 | Iuppiter Ultor. | platner | AD 81 |  | [Jupiter_Ultor.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Jupiter_Ultor.html) |
-| 0.5 | Matidia, templum | platner | AD 117 |  | [Templum_Matidiae#templum](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Templum_Matidiae.html#templum) |
-
-**statue** (10)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 2.5 | Statua Tiberis | platner | AD 98 | Capitol | [Statuae#Tiberis](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Statuae.html#Tiberis) |
-| 1.75 | Basis Q. Marci Regis | platner | AD 64 | Capitol | [B#Basis_Q.Marci_Regis](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/B.html#Basis_Q.Marci_Regis) |
-| 1.75 | Column of Marcus Aurelius | pleiades | AD 100 |  | [952198991](https://pleiades.stoa.org/places/952198991) |
-| 1.75 | Equus Domitiani | platner | AD 81 | Forum | [Equus_Domitiani.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Equus_Domitiani.html) |
-| 1.75 | Iuppiter Africus | platner | AD 85 | Capitol | [sacella_Jovis#Africus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sacella_Jovis.html#Africus) |
-| 1.75 | Tropaea Neronis | platner | AD 54 | Capitol | [T#Tropaea_Neronis](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/T.html#Tropaea_Neronis) |
-| 0.75 | Statua Valeriana | platner | AD 64 |  | [Statuae#Valeriana](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Statuae.html#Valeriana) |
-| 0.25 | Columna M. Aurelii Antonini | platner | AD 98 |  | [Columna_M.Aurelii.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Columna_M.Aurelii.html) |
-| 0.25 | Equus Tiridatis Regis Armeniorum | platner | AD 54 |  | [E#Equus_Tiridatis](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/E.html#Equus_Tiridatis) |
-| 0.0 | Obeliscus Antinoi | platner | AD 117 |  | [obelisci#Antinoi](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/obelisci.html#Antinoi) |
-
-**altar** (8)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 3.6 | Gens Iulia, ara | platner | AD 71 | Capitol | [Ara_Gentis_Juliae.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Ara_Gentis_Juliae.html) |
-| 2.7 | Iuppiter Depulsor | platner | AD 41 | Capitol | [sacella_Jovis#Depulsor](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sacella_Jovis.html#Depulsor) |
-| 2.25 | Clementia, ara | platner | AD 14 |  | [C#ara_Clementiae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/C.html#ara_Clementiae) |
-| 0.9 | Pietas Augusta, ara | platner | AD 22 |  | [P#Pietas_Augusta](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/P.html#Pietas_Augusta) |
-| 0.9 | Providentia Augusta, ara | platner | AD 38 |  | [P#Providentia_Augusta](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/P.html#Providentia_Augusta) |
-| 0.45 | Amicitia, ara | platner | AD 14 |  | [A#p5](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/A.html#p5) |
-| 0.45 | Matidia, ara | platner | AD 117 |  | [Templum_Matidiae#ara](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Templum_Matidiae.html#ara) |
-| 0.0 | Pudicitia, ara | platner | AD 98 |  | [P#Pudicitia](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/P.html#Pudicitia) |
-
-**arch** (8)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 5.4 | Arcus Neronis | platner | AD 54 | Capitol | [arcus#Neronis](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/arcus.html#Neronis) |
-| 5.4 | Arcus Tiberii | platner | AD 9 | Forum | [Arcus_Tiberii#in_Foro_Romano](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Arcus_Tiberii.html#in_Foro_Romano) |
-| 3.15 | Arcus Dolabellae et Silani | platner | AD 10 |  | [arcus#Dolabellae_et_Silani](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/arcus.html#Dolabellae_et_Silani) |
-| 2.7 | Arcus Neroniani | platner | AD 41 |  | [Arcus_Neroniani.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Arcus_Neroniani.html) |
-| 1.8 | Arcus Tiberii | platner | AD 81 |  | [arcus#Tiberii](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/arcus.html#Tiberii) |
-| 1.8 | Arcus Traiani | platner | AD 112 |  | [arcus#Traiani2](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/arcus.html#Traiani2) |
-| 0.9 | Arcus Constantini | platner | AD 41 |  | [Arcus_Constantini.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Arcus_Constantini.html) |
-| 0.0 | Arcus Germanici | platner | AD 19 |  | [arcus#Germanici](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/arcus.html#Germanici) |
-
-**shrine** (6)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 3.6 | Iuppiter Conservator, sacellum | platner | AD 69 | Capitol | [sacella_Jovis#Conservator](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sacella_Jovis.html#Conservator) |
-| 2.4 | Faustinae Aedicula | platner | AD 69 | Capitol | [F#Faustinae_Aedicula](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/F.html#Faustinae_Aedicula) |
-| 1.6 | Silvanus, sacella | platner | AD 97 |  | [Sacella_Silvani.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Sacella_Silvani.html) |
-| 1.2 | Bona Dea | platner | AD 69 |  | [B#Bona_Dea](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/B.html#Bona_Dea) |
-| 1.2 | Magna Mater (in Vaticano) | platner | AD 37 |  | [Aedes_Matris_Deum.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Matris_Deum.html) |
-| 0.4 | Fortuna Stata | platner | AD 112 |  | [Aedes_Fortunae#Stata](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Fortunae.html#Stata) |
-
-**portico** (5)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 4.0 | Porticus Margaritaria | platner | AD 54 | Forum | [Porticus_Margaritaria.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Porticus_Margaritaria.html) |
-| 1.0 | Porticus Gordiani | platner | AD 54 |  | [porticus#Gordiani](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/porticus.html#Gordiani) |
-| 1.0 | Porticus Tri(umphi) | platner | AD 117 |  | [porticus#Triumphi](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/porticus.html#Triumphi) |
-| 0.5 | Hecatostylon | platner | AD 117 |  | [H#Hecatostylon](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/H.html#Hecatostylon) |
-| 0.5 | Porticus Miliaria | platner | AD 54 |  | [porticus#Miliaria](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/porticus.html#Miliaria) |
-
-**street** (3)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 2.1 | Malum Punicum, ad | platner | AD 81 |  | [Ad_Malum_Punicum.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Ad_Malum_Punicum.html) |
-| 2.1 | Platea Traiani | platner | AD 98 | Forum | [P#Platea_Traiani](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/P.html#Platea_Traiani) |
-| 0.35 | Vicus Iovis Fagutalis | platner | AD 109 |  | [vici#Jovis_Fagutalis](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/vici.html#Jovis_Fagutalis) |
-
-**gate** (3)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 3.0 | Porta Praenestina | platner | AD 41 |  | [Porta_Praenestina.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Porta_Praenestina.html) |
-| 2.0 | Porta Cornelia | platner | AD 117 |  | [portae#Cornelia](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/portae.html#Cornelia) |
-| 1.0 | Pincius Mons | platner | AD 54 |  | [Pincius_Mons.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Pincius_Mons.html) |
-
-**basilica** (2)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 5.0 | Basilica Argentaria | platner | AD 98 | Capitol | [Basilica_Argentaria.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Basilica_Argentaria.html) |
-| 0.0 | Basilica Matidiae | platner | AD 117 |  | [Basilicae_Marc.-et-Matid.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Basilicae_Marc.-et-Matid.html) |
-
-**bridge** (2)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 2.5 | Pons Agrippae | platner | AD 41 |  | [Pons_Agrippae.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Pons_Agrippae.html) |
-| 2.5 | Pons Ælius | platner | AD 117 |  | [Pons_Aelius.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Pons_Aelius.html) |
-
-**fountain** (1)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 1.05 | Vigna Cartoni cistern | pleiades | AD 100 |  | [492046782](https://pleiades.stoa.org/places/492046782) |
-
-**grove** (1)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 2.45 | Loretum | platner | AD 79 |  | [Loretum.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Loretum.html) |
-
-### Missing: undated (attested by an early author) (96)
-
-**house** (18)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 2.75 | L. Caecilius Metellus | platner | ? | Palatine | [domus#L.Caecilius_Metellus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#L.Caecilius_Metellus) |
-| 2.75 | M. Caelius | platner | ? | Palatine | [domus#M.Caelius](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#M.Caelius) |
-| 2.75 | Octavius | platner | ? | Forum | [domus#Octavius](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Octavius) |
-| 2.75 | Paciliana | platner | ? | Palatine | [domus#Paciliana](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Paciliana) |
-| 2.75 | Q. Cicero | platner | ? | Palatine | [domus#Q.Cicero](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Q.Cicero) |
-| 2.25 | T. Annius Milo Papinianus | platner | ? | Capitol | [domus#T.Annius_Milo_Papinianus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#T.Annius_Milo_Papinianus) |
-| 2.0 | Ancus Martius | platner | ? | Forum | [domus#Ancus_Martius](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Ancus_Martius) |
-| 2.0 | Flaminia | platner | ? |  | [domus#Flaminia](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Flaminia) |
-| 1.75 | Arpius Claudius | platner | ? | Forum | [domus#Arpius_Claudius](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Arpius_Claudius) |
-| 1.75 | Q. Seius Postumus | platner | ? | Palatine | [domus#Q.Seius_Postumus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Q.Seius_Postumus) |
-| 1.5 | Tarquinius Priscus | platner | ? |  | [domus#Tarquinius_Priscus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Tarquinius_Priscus) |
-| 1.25 | M. Curius Dentatus | platner | ? |  | [domus#M.Curius_Dentatus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#M.Curius_Dentatus) |
-| 1.25 | Tullus Hostilius | platner | ? |  | [domus#Tullus_Hostilius](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Tullus_Hostilius) |
-| 0.5 | Claudius Centumalus | platner | ? |  | [domus#Claudius_Centumalus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Claudius_Centumalus) |
-| 0.25 | Flamen Quirinalis | platner | ? |  | [domus#Flamen_Quirinalis](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Flamen_Quirinalis) |
-| 0.25 | Luciniana | platner | ? |  | [domus#Luciniana](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#Luciniana) |
-| 0.25 | M. Livius Drusus | platner | ? |  | [domus#M.Livius_Drusus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#M.Livius_Drusus) |
-| 0.25 | P. Vergilius Maro | platner | ? |  | [domus#P.Vergilius_Maro](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/domus.html#P.Vergilius_Maro) |
-
-**building** (13)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 8.0 | Tarentum | platner | ? |  | [Tarentum.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Tarentum.html) |
-| 6.0 | Curia Calabra | platner | ? | Capitol | [Curia_Calabra.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Curia_Calabra.html) |
-| 5.0 | Lautumiae | platner | ? | Capitol | [Lautumiae.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Lautumiae.html) |
-| 1.5 | Atrium Maenium | platner | ? |  | [atria#Maenium](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/atria.html#Maenium) |
-| 1.5 | Bibliotheca Asini Pollionis | platner | ? |  | [Bibliothecae#Asini_Pollionis](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Bibliothecae.html#Asini_Pollionis) |
-| 1.5 | Curia Acculeia | platner | ? |  | [curiae#Acculeia](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/curiae.html#Acculeia) |
-| 1.5 | Salinae | platner | ? |  | [S#Salinae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/S.html#Salinae) |
-| 1.0 | Atria Licinia | platner | ? |  | [atria#Atria_Licinia](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/atria.html#Atria_Licinia) |
-| 1.0 | Atrium Sutorium | platner | ? |  | [atria#Sutorium](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/atria.html#Sutorium) |
-| 1.0 | Codeta | platner | ? |  | [Codeta#Codeta](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Codeta.html#Codeta) |
-| 1.0 | Ludus Aemilius | platner | ? |  | [ludi#Aemilius](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/ludi.html#Aemilius) |
-| 1.0 | Tifata Curia | platner | ? |  | [T#Tifata_Curia](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/T.html#Tifata_Curia) |
-| 0.5 | Circus Mecinus | platner | ? |  | [C#Circus_Mecinus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/C.html#Circus_Mecinus) |
-
-**temple** (12)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 6.5 | Castor, aedes | platner | ? | Campus Martius | [Aedes_Castoris#in_Circo_Flaminio](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Castoris.html#in_Circo_Flaminio) |
-| 4.5 | Aedes Tensarum | platner | ? | Capitol | [A#Aedes_Tensarum](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/A.html#Aedes_Tensarum) |
-| 4.5 | Luna Noctiluca, templum | platner | ? | Palatine | [L#Templum_Lunae_Noctilucae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/L.html#Templum_Lunae_Noctilucae) |
-| 3.5 | Minerva Medica | platner | ? |  | [Minerva_Medica.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Minerva_Medica.html) |
-| 2.0 | Febris, templum | platner | ? |  | [Templum_Febris.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Templum_Febris.html) |
-| 2.0 | Nymphae, aedes | platner | ? |  | [N#aedes_Nymphae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/N.html#aedes_Nymphae) |
-| 1.5 | Mars Invictus | platner | ? |  | [Aedes_Martis#Invictus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Martis.html#Invictus) |
-| 1.0 | Orbona, fanum | platner | ? |  | [O#Fanum_Orbonae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/O.html#Fanum_Orbonae) |
-| 1.0 | Venus (Libitina), templum | platner | ? |  | [Aedes_Veneris#Libitina](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Veneris.html#Libitina) |
-| 1.0 | Venus Hortorum Sallustianorum, aedes | platner | ? |  | [Aedes_Veneris#Hortorum_Sallustianorum](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Veneris.html#Hortorum_Sallustianorum) |
-| 0.5 | Asylum Cereris | platner | ? |  | [Asylum#Cereris](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Asylum.html#Cereris) |
-| 0.5 | Officinae Minii | platner | ? |  | [O#Officinae_Minii](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/O.html#Officinae_Minii) |
-
-**shrine** (9)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 7.2 | Carmentis | platner | ? | Capitol | [Carmentis.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Carmentis.html) |
-| 5.6 | Murcia | platner | ? | Palatine | [Murcia.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Murcia.html) |
-| 3.6 | Felicitas in Capitolio | platner | ? | Capitol | [Felicitas#in_Capitolio](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Felicitas.html#in_Capitolio) |
-| 2.8 | Tiberinus | platner | ? |  | [T#Tiberinus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/T.html#Tiberinus) |
-| 1.6 | Iuppiter Fulgur | platner | ? |  | [sacella_Jovis#Fulgur](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sacella_Jovis.html#Fulgur) |
-| 0.8 | Dianium | platner | ? |  | [Aedes_Dianae#p151](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Dianae.html#p151) |
-| 0.8 | Manalis Lapis | platner | ? |  | [Manalis_Lapis.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Manalis_Lapis.html) |
-| 0.4 | Dea Naenia, sacellum | platner | ? |  | [D#Dea_Naenia](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/D.html#Dea_Naenia) |
-| 0.4 | Lares Querquetulani, sacellum | platner | ? |  | [Lares#Querquetulani](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Lares.html#Querquetulani) |
-
-**street** (9)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 5.25 | Aequimelium | platner | ? | Capitol | [Aequimelium.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aequimelium.html) |
-| 4.55 | Vicus Vestae | platner | ? | Palatine | [vici#Vestae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/vici.html#Vestae) |
-| 4.2 | Cermalus | platner | ? | Palatine | [C#p111](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/C.html#p111) |
-| 4.2 | Clivus Victoriae | platner | ? | Palatine | [cliva#Victoriae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/cliva.html#Victoriae) |
-| 2.8 | Clivus Sacer | platner | ? | Forum | [cliva#Sacer](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/cliva.html#Sacer) |
-| 2.45 | Gradus Heliogabali | platner | ? | Palatine | [gradus_scalaeque#Gradus_Heliogabali](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/gradus_scalaeque.html#Gradus_Heliogabali) |
-| 1.05 | Vicus Raciliani Maioris — Minoris | platner | ? |  | [vici#Raciliani](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/vici.html#Raciliani) |
-| 0.35 | Via Gabina | platner | ? |  | [viae#Gabina](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/viae.html#Gabina) |
-| 0.35 | Vicus Africus | platner | ? |  | [vici#Africus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/vici.html#Africus) |
-
-**grove** (8)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 3.85 | Vesta, lucus | platner | ? | Palatine | [Vesta#lucus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Vesta.html#lucus) |
-| 1.75 | Lucus Esquilinus | platner | ? |  | [luci#Esquilinus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/luci.html#Esquilinus) |
-| 1.4 | Feronia, Lucus in Campo Martio | platner | ? |  | [Feronia.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Feronia.html) |
-| 0.7 | Corniscae | platner | ? |  | [C#Corniscae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/C.html#Corniscae) |
-| 0.7 | Mefitis, aedes, lucus | platner | ? |  | [Mefitis.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Mefitis.html) |
-| 0.35 | Albionarum lucus | platner | ? |  | [A#Albionarum_Lucus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/A.html#Albionarum_Lucus) |
-| 0.35 | Lucus Albionarum | platner | ? |  | [luci#Albionarum](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/luci.html#Albionarum) |
-| 0.35 | Tifata Mancina | platner | ? |  | [T#Tifata_Mancina](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/T.html#Tifata_Mancina) |
-
-**altar** (6)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 2.25 | Volupia, scaellum | platner | ? |  | [V#Volupia](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/V.html#Volupia) |
-| 1.8 | Iuppiter Inventor, ara | platner | ? |  | [sacella_Jovis#Inventor](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sacella_Jovis.html#Inventor) |
-| 0.9 | Fortuna Mala, ara | platner | ? |  | [Aedes_Fortunae#Mala](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Aedes_Fortunae.html#Mala) |
-| 0.9 | Ianus Curiatius, ara | platner | ? |  | [IJ#Janus_Curiatius](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/IJ.html#Janus_Curiatius) |
-| 0.9 | Iuppiter Pistor, ara | platner | ? |  | [sacella_Jovis#Pistor](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sacella_Jovis.html#Pistor) |
-| 0.45 | Iuppiter Viminus, ara | platner | ? |  | [sacella_Jovis#Viminus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sacella_Jovis.html#Viminus) |
-
-**gate** (6)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 8.0 | Porta Mugonia | platner | ? | Palatine | [portae#Mugonia](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/portae.html#Mugonia) |
-| 5.5 | Porta Stercoraria | platner | ? | Capitol | [portae#Stercoraria](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/portae.html#Stercoraria) |
-| 4.5 | Porta Fenestella | platner | ? | Forum | [portae#Fenestella](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/portae.html#Fenestella) |
-| 1.5 | Naevia Nemora | platner | ? |  | [N#Naevia_Nemora](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/N.html#Naevia_Nemora) |
-| 0.5 | Porta Minucia | platner | ? |  | [Porta_Minucia.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Porta_Minucia.html) |
-| 0.5 | Porta Piacularis | platner | ? |  | [portae#Piacularis](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/portae.html#Piacularis) |
-
-**statue** (5)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 2.5 | Statua Cloeliae | platner | ? |  | [Statuae#Cloeliae](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Statuae.html#Cloeliae) |
-| 2.0 | Cincia | platner | ? | Palatine | [C#Cincia](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/C.html#Cincia) |
-| 1.25 | Columna Bellica | platner | ? |  | [C#Columna_Bellica](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/C.html#Columna_Bellica) |
-| 1.25 | Statua Atti Navi | platner | ? |  | [Statuae#Atti_Navi](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Statuae.html#Atti_Navi) |
-| 0.75 | Pila Horatia | platner | ? |  | [Pila_Horatia.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Pila_Horatia.html) |
-
-**fountain** (3)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 0.35 | Cati Fons | platner | ? |  | [Amnis_Petronia#Cati_fons](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Amnis_Petronia.html#Cati_fons) |
-| 0.35 | Cati Fons | platner | ? |  | [C#Cati_Fons](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/C.html#Cati_Fons) |
-| 0.35 | Petronia, Amnis | platner | ? |  | [Amnis_Petronia#amnis](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Amnis_Petronia.html#amnis) |
-
-**tomb** (3)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 1.25 | Puticuli | platner | ? |  | [Puticuli.html](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Puticuli.html) |
-| 1.25 | Sepulcrum Horatii | platner | ? |  | [sepulcra#Horatii](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sepulcra.html#Horatii) |
-| 1.0 | Sepulcrum Cinciorum | platner | ? |  | [sepulcra#Cinciorum](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/sepulcra.html#Cinciorum) |
-
-**wall** (1)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 2.5 | Murus Terreus | platner | ? |  | [M#Murus_Terreus](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/M.html#Murus_Terreus) |
-
-**bridge** (1)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 1.5 | Ripa Veientana:* | platner | ? |  | [R#Ripa_Veientana](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/R.html#Ripa_Veientana) |
-
-**aqueduct** (1)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 1.0 | Aqua Mercurii | platner | ? |  | [aquae#Mercurii](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/aquae.html#Mercurii) |
-
-**basilica** (1)
-
-| score | entry | source | earliest | zone | link |
-|---|---|---|---|---|---|
-| 1.0 | Basilica Alexandrina | platner | ? |  | [basilicae#Alexandrina](https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/basilicae.html#Alexandrina) |
-
-### Excluded with a reason (20)
+### Excluded with a reason (497)
 
 | entry | source | reason |
 |---|---|---|
+| A. Annius Plocamus | platner domus#A.Annius_Plocamus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| A. Hortensius Licinianus | platner domus#A.Hortensius_Licinianus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Ad Numfium | platner N#ad_Numfium | not placed in F2: no site argued in the passage read (to review) |
+| Adonidis aula | platner A#Adonidis_Aula | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Aedes Tensarum | platner A#Aedes_Tensarum | only the hill or district is given (capitol, Platner-Ashby); no site on it argued, so not placed |
+| Aelii | platner domus#Aelii | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
 | Aemiliana | platner Aemiliana.html | a district of the Campus Martius (Varro RR 3.2.6), not a building |
+| Aequimelium | platner Aequimelium.html | a minor street or locality: streets.yaml carries the main streets; not added in F2 |
+| Aesculetum | platner Aesculetum.html | a grove: the client has no grove form (trees are drawn by site_flora); not added |
+| Ager L. Petilii | platner A#Ager_L_Petilii | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Albionarum lucus | platner A#Albionarum_Lucus | a grove: the client has no grove form (trees are drawn by site_flora); not added |
+| Amicitia, ara | platner A#p5 | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Amphitheatrum Caligulae | platner amphitheatra#Caligulae | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Amphitheatrum Neronis | platner amphitheatra#Neronis | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Ancus Martius | platner domus#Ancus_Martius | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Apollo Sandaliarius | platner A#Apollo_Sandaliarius | a statue, column or honorific monument: not in the F2 add list |
+| App. Silvius Iunius Silvinus | platner domus#App._Silvius_Iunius_Silvinus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Appius Claudius Martialis | platner domus#Appius_Claudius_Martialis | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Appius Claudius Pulcher | platner domus#Appius_Claudius_Pulcher | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Aqua Mercurii | platner aquae#Mercurii | not placed in F2: no site argued in the passage read (to review) |
+| Arcus Constantini | platner Arcus_Constantini.html | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Arcus Dolabellae et Silani | platner arcus#Dolabellae_et_Silani | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Arcus Germanici | platner arcus#Germanici | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Arcus Latronis | platner arcus#Latronis | not placed in F2: no site argued in the passage read (to review) |
+| Arcus Neroniani | platner Arcus_Neroniani.html | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Arcus Neronis | platner arcus#Neronis | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Arcus Octavii | platner arcus#Octavii | only the hill or district is given (palatine, Platner-Ashby); no site on it argued, so not placed |
+| Arcus Pompeii | platner arcus#Pompeii | known only from a 12th-century description; doubtful |
+| Arcus Tiberii | platner arcus#Tiberii | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Arcus Traiani | platner arcus#Traiani2 | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Arpius Claudius | platner domus#Arpius_Claudius | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Arruntius Stella | platner domus#Arruntius_Stella | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Asylum Cereris | platner Asylum#Cereris | not placed in F2: no site argued in the passage read (to review) |
+| Athenaeum | platner Athenaeum.html | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Atria Licinia | platner atria#Atria_Licinia | not placed in F2: no site argued in the passage read (to review) |
+| Atria Septem | platner atria#Atria_septem | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Atrium Maenium | platner atria#Maenium | bought and pulled down for the Basilica Porcia in 184 BC (Livy 39.44) |
+| Atrium Minervae | platner atria#Minervae | not placed in F2: no site argued in the passage read (to review) |
+| Atrium Sutorium | platner atria#Sutorium | its site is unknown (Platner-Ashby); not placed |
+| Avianus Vindicianus | platner domus#Avianus_Vindicianus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Balineum Bolani | platner balnea#Balineum_Bolani | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Balneum Abascanti | platner balnea#Balneum_Abascanti | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Balneum Tigellini | platner balnea#Balneum_Tigellini | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Basilica Alexandrina | platner basilicae#Alexandrina | probably never existed or never built (Platner-Ashby) |
+| Basilica Argentaria | platner Basilica_Argentaria.html | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Basilica Iulia Aquiliana | platner basilicae#Julia_Aquiliana | its site is unknown (Platner-Ashby); not placed |
+| Basilica Matidiae | platner Basilicae_Marc.-et-Matid.html | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Basis Q. Marci Regis | platner B#Basis_Q.Marci_Regis | a statue, column or honorific monument: not in the F2 add list |
+| Bibulus | platner domus#Bibulus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Bona Dea | platner B#Bona_Dea | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Bonus Eventus, templum | platner B#templum_Boni_Eventus | not placed in F2: no site argued in the passage read (to review) |
+| Bruttius Praesens | platner domus#Bruttius_Praesens | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Busta Gallica | platner Busta_Gallica.html | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| C. Aquilius Gallus | platner domus#C.Aquilius_Gallus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| C. Cassius Longinus | platner domus#C.Cassius_Longinus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| C. Licinius Calvius | platner domus#C.Licinius_Calvius | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| C. Stertinius Xenophon | platner domus#C.Stertinius_Xenophon | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Caesar | platner domus#Caesar | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Capita Bubula, ad | platner C#Capita_Bubula | only the hill or district is given (palatine, Platner-Ashby); no site on it argued, so not placed |
+| Caprae Palus | platner C#Caprae_Palus | only the hill or district is given (campus martius, Platner-Ashby); no site on it argued, so not placed |
+| Castra Misenatium | platner Castra#Misenatium | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Cati Fons | platner Amnis_Petronia#Cati_fons | not placed in F2: no site argued in the passage read (to review) |
+| Cati Fons | platner C#Cati_Fons | not placed in F2: no site argued in the passage read (to review) |
+| Cermalus | platner C#p111 | a minor street or locality: streets.yaml carries the main streets; not added in F2 |
+| Cincia | platner C#Cincia | a statue, column or honorific monument: not in the F2 add list |
+| Circus Gai et Neronis | platner Circus_Gai_et_Neronis.html | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Circus Mecinus | platner C#Circus_Mecinus | a corruption for circus Maximus in Varro (P-A) |
+| Claudii | platner domus#Claudii | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Claudius Centumalus | platner domus#Claudius_Centumalus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Clementia Caesaris, aedes | platner C#aedes_Clementiae_Caesaris | probably never built (P-A) |
+| Clementia, ara | platner C#ara_Clementiae | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Clivus Mamuri | platner cliva#Mamuri | a minor street or locality: streets.yaml carries the main streets; not added in F2 |
+| Clivus Martis | platner cliva#Martis | a minor street or locality: streets.yaml carries the main streets; not added in F2 |
+| Clivus Sacer | platner cliva#Sacer | a minor street or locality: streets.yaml carries the main streets; not added in F2 |
+| Clivus Victoriae | platner cliva#Victoriae | a minor street or locality: streets.yaml carries the main streets; not added in F2 |
+| Cn. Domitius Calvinus | platner domus#Cn._Domitius_Calvinus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Cn. Octavius | platner domus#Cn._Octavius | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Codeta | platner Codeta#Codeta | its site is unknown (Platner-Ashby); not placed |
+| Codeta Minor | platner Codeta#Minor | a part of the Campus Martius (a district), not a building |
+| Cohortium Vigilum Stationes | platner Stationes_Vigilum#in_Circo_Flaminio | Augustan barracks of the vigiles (AD 6): four sites known, deferred (not a major building) |
+| Columna Antonini Pii | platner Columna_Antonini_Pii.html | a statue, column or honorific monument: not in the F2 add list |
+| Columna Bellica | platner C#Columna_Bellica | a statue, column or honorific monument: not in the F2 add list |
+| Columna M. Aurelii Antonini | platner Columna_M.Aurelii.html | a statue, column or honorific monument: not in the F2 add list |
+| Columna Minucia | platner Columna_Minucia.html | a statue, column or honorific monument: not in the F2 add list |
+| Compitum Acilii | platner Compita#Acilii | not placed in F2: no site argued in the passage read (to review) |
+| Compitum Fabricium | platner Compita#Fabricium | not placed in F2: no site argued in the passage read (to review) |
+| Consus, Aedes | platner Aedes_Consi.html | only the hill or district is given (aventine, Platner-Ashby); no site on it argued, so not placed |
+| Corniscae | platner C#Corniscae | a grove: the client has no grove form (trees are drawn by site_flora); not added |
+| Curia Acculeia | platner curiae#Acculeia | not placed in F2: no site argued in the passage read (to review) |
+| Curia Calabra | platner Curia_Calabra.html | only the hill or district is given (capitol, Platner-Ashby); no site on it argued, so not placed |
+| Curia Saliorum | platner curiae#Saliorum | its site is unknown (Platner-Ashby); not placed |
+| Daphnis | platner domus#Daphnis | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Dea Naenia, sacellum | platner D#Dea_Naenia | not placed in F2: no site argued in the passage read (to review) |
+| Dea Suria, templum | platner Templum_Deae_Suriae.html | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Dianium | platner Aedes_Dianae#p151 | a shrine already gone by the time Livy mentions it (Livy 1.48.6) |
+| Divorum Templum | platner Divorum#templum | only the hill or district is given (campus martius, Platner-Ashby); no site on it argued, so not placed |
+| Divus Marcus, templum | platner M#Templum_Divi_Marci | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Doliola | platner Doliola.html | not placed in F2: no site argued in the passage read (to review) |
+| Domitiana | platner domus#Domitiana | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Domus Laterani | platner Domus_Laterani.html | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Domus Valeriorum | platner Domus_Valeriorum.html | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Equus Caesaris | platner E#Equus_Caesaris | a statue, column or honorific monument: not in the F2 add list |
+| Equus Domitiani | platner Equus_Domitiani.html | a statue, column or honorific monument: not in the F2 add list |
+| Equus Tiridatis Regis Armeniorum | platner E#Equus_Tiridatis | a statue, column or honorific monument: not in the F2 add list |
+| Faustinae Aedicula | platner F#Faustinae_Aedicula | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Febris, templum | platner Templum_Febris.html | its site is unknown (Platner-Ashby); not placed |
+| Fecunditas, templum | platner F#Fecunditas | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Felicitas (sacellum, ara?) | platner Felicitas#sacellum_or_ara | its site is unknown (Platner-Ashby); not placed |
+| Felicitas in Capitolio | platner Felicitas#in_Capitolio | only the hill or district is given (capitol, Platner-Ashby); no site on it argued, so not placed |
+| Feronia, Lucus in Campo Martio | platner Feronia.html | a grove: the client has no grove form (trees are drawn by site_flora); not added |
+| Ficus Navia | platner F#Ficus_Navia | a statue, column or honorific monument: not in the F2 add list |
+| Ficus Ruminalis | platner Ficus_Ruminalis.html | a statue, column or honorific monument: not in the F2 add list |
+| Flamen Quirinalis | platner domus#Flamen_Quirinalis | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Flaminia | platner domus#Flaminia | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Fornix Stertinii | platner fornices#Fornix_Stertinii | in the Circus Maximus; its place in the circus is not known (Livy 33.27.4) |
+| Fortuna = | platner Aedes_Fortunae#Euelpis | known only by name from Plutarch, on the Vicus Longus; site unknown |
+| Fortuna Mala, ara | platner Aedes_Fortunae#Mala | only the hill or district is given (esquiline, Platner-Ashby); no site on it argued, so not placed |
+| Fortuna Obsequens | platner Aedes_Fortunae#Obsequens | known only by name from Plutarch; somewhere in Region I |
+| Fortuna Privata | platner Aedes_Fortunae#Privata | only the hill or district is given (palatine, Platner-Ashby); no site on it argued, so not placed |
+| Fortuna Redux, templum | platner Fortuna_Redux#templum | only the hill or district is given (campus martius, Platner-Ashby); no site on it argued, so not placed |
+| Fortuna Respiciens | platner Aedes_Fortunae#Respiciens1 | its site is unknown (Platner-Ashby); not placed |
+| Fortuna Stata | platner Aedes_Fortunae#Stata | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Fortuna Tulliana | platner Aedes_Fortunae#Tulliana | known only from one inscription; no site |
+| Fortuna Virgo | platner Aedes_Fortunae#Virgo | known only by name from Plutarch; site unknown |
+| Fortuna Virilis * | platner Aedes_Fortunae#Virilis | site unknown, existence questioned (P-A) |
+| Fortuna Viscata | platner Aedes_Fortunae#Viscata | its site is unknown (Platner-Ashby); not placed |
+| Fortuna, | platner Aedes_Fortunae#Apotropaios | known only by name from Plutarch; site unknown |
+| Forum Tauri | platner Forum_Tauri.html | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Gelotiana | platner domus#Gelotiana | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Gens Flavia, templum | platner Templum_Gentis_Flaviae.html | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Gens Iulia, ara | platner Ara_Gentis_Juliae.html | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Gens Iulia, ara | platner Statuae#note:Ara_Gentis_Juliae | a statue, column or honorific monument: not in the F2 add list |
+| Germanicus | platner domus#Germanicus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Gradus Heliogabali | platner gradus_scalaeque#Gradus_Heliogabali | a minor street or locality: streets.yaml carries the main streets; not added in F2 |
+| Gymnasium Neronis | platner Gymnasium_Neronis.html | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Hecatostylon | platner H#Hecatostylon | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Hercules Fundan(i)us, templum | platner H#Hercules_Fundanus | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Hercules Sullanus | platner H#Hercules_Sullanus | a statue, column or honorific monument: not in the F2 add list |
+| Horrea Faeniana | platner horrea#Faeniana | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Horrea Nervae | platner horrea#Nervae | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Horrea Petroniana | platner horrea#Petroniana | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Horrea Piperataria | platner horrea#Piperataria | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Horrea Vespasiani | platner horrea#Vespasiani | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Ianus | platner Janus.html | its site is unknown (Platner-Ashby); not placed |
+| Ianus Curiatius, ara | platner IJ#Janus_Curiatius | not placed in F2: no site argued in the passage read (to review) |
+| Ianus Quadrifrons, templum | platner Janus_Quadrifrons.html | Domitianic shrine in the Forum Transitorium (after the period of the Republic file; minor) |
+| Ianus, Concordia, Salus, Pax, statuae | platner IJ#Statuae_Jani_et_al | a statue, column or honorific monument: not in the F2 add list |
+| Insteianus | platner vici#Insteius | a minor street or locality: streets.yaml carries the main streets; not added in F2 |
+| Insula Bolani | platner Insulae#Bolani | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Inter Falcarios | platner IJ#p283 | a district (the scythe-makers' quarter), not a building |
+| Iohannes et Paulus | platner domus#Johannes_et_Paulus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Isis Athenodoria | platner Isis#Athenodoria | a statue, column or honorific monument: not in the F2 add list |
+| Isis et Serapis in Capitolio | platner Isis#et_Serapis_in_Capitolio | not placed in F2: no site argued in the passage read (to review) |
+| Iulia Vitalis | platner domus#Iulia_Vitalis | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Iulius Pompeius Rusonianus | platner domus#Iulius_Pompeius_Rusonianus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Iuppiter Africus | platner sacella_Jovis#Africus | a statue, column or honorific monument: not in the F2 add list |
+| Iuppiter Conservator, sacellum | platner sacella_Jovis#Conservator | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Iuppiter Depulsor | platner sacella_Jovis#Depulsor | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Iuppiter Elicius, ara | platner sacella_Jovis#Elicius | only the hill or district is given (aventine, Platner-Ashby); no site on it argued, so not placed |
+| Iuppiter Fulgur | platner sacella_Jovis#Fulgur | only the hill or district is given (campus martius, Platner-Ashby); no site on it argued, so not placed |
+| Iuppiter Pistor, ara | platner sacella_Jovis#Pistor | not placed in F2: no site argued in the passage read (to review) |
+| Iuppiter Tragoedus, statua | platner sacella_Jovis#Tragoedus | a statue, column or honorific monument: not in the F2 add list |
+| Iuppiter Ultor. | platner Jupiter_Ultor.html | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Iuppiter Victor. | platner Jupiter_Victor.html | not placed in F2: no site argued in the passage read (to review) |
+| Iuppiter Viminus, ara | platner sacella_Jovis#Viminus | only the hill or district is given (viminal, Platner-Ashby); no site on it argued, so not placed |
+| L. Appuleius Saturninus | platner domus#L.Appuleius_Saturninus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| L. Bellienus | platner domus#L.Bellienus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| L. Caecilius Metellus | platner domus#L.Caecilius_Metellus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| L. Cornelius Pusio | platner domus#L.Cornelius_Pusio | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| L. Crassus | platner domus#L.Crassus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| L. Piso | platner domus#L.Piso | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| L. Vagellius | platner domus#L.Vagellius | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| L. Volumnius | platner domus#L.Volumnius | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Lares Querquetulani, sacellum | platner Lares#Querquetulani | only the hill or district is given (esquiline, Platner-Ashby); no site on it argued, so not placed |
+| Lautumiae | platner Lautumiae.html | the quarries in the Capitol slope above the Carcer: ground, not a building |
+| Lavacrum Agrippinae | platner L#Lavacrum_Agrippinae | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Lenaeus | platner domus#Lenaeus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Loretum | platner Loretum.html | a grove: the client has no grove form (trees are drawn by site_flora); not added |
+| Luciniana | platner domus#Luciniana | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Lucus Albionarum | platner luci#Albionarum | a grove: the client has no grove form (trees are drawn by site_flora); not added |
+| Lucus Esquilinus | platner luci#Esquilinus | a grove: the client has no grove form (trees are drawn by site_flora); not added |
+| Lucus Libitinae | platner luci#Libitinae | a grove: the client has no grove form (trees are drawn by site_flora); not added |
+| Lucus Petelinus | platner luci#Petelinus | a grove: the client has no grove form (trees are drawn by site_flora); not added |
+| Lucus Stimulae | platner luci#Stimulae | a grove: the client has no grove form (trees are drawn by site_flora); not added |
+| Ludus Aemilius | platner ludi#Aemilius | its site is unknown (Platner-Ashby); not placed |
+| Ludus Matutinus | platner ludi#Matutinus | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Luna Noctiluca, templum | platner L#Templum_Lunae_Noctilucae | only the hill or district is given (palatine, Platner-Ashby); no site on it argued, so not placed |
+| M. Aemilius Scaurus | platner domus#M.Aemilius_Scaurus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| M. Antonius | platner domus#M.Antonius_2 | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| M. Caelius | platner domus#M.Caelius | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| M. Cocceius Nerva | platner domus#M.Cocceius_Nerva | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| M. Curius Dentatus | platner domus#M.Curius_Dentatus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| M. Fulvius Flaccus | platner domus#M.Fulvius_Flaccus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| M. Livius Drusus | platner domus#M.Livius_Drusus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| M. Manlius | platner domus#M.Manlius | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| M. Manlius Capitolinus | platner domus#M.Manlius_Capitolinus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Magna Mater (in Vaticano) | platner Aedes_Matris_Deum.html | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Magna Mater, aedes * | platner Aedes_Matris_Deum.html | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Magna Mater, sacellum (?) | platner Aedes_Matris_Deum.html | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Magna Mater, tholus | platner Aedes_Matris_Deum.html | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Malum Punicum, ad | platner Ad_Malum_Punicum.html | a minor street or locality: streets.yaml carries the main streets; not added in F2 |
+| Manalis Lapis | platner Manalis_Lapis.html | not placed in F2: no site argued in the passage read (to review) |
+| Mansiones Saliorum Palatinorum | platner M#Mansiones_Saliorum_Palatinorum | not placed in F2: no site argued in the passage read (to review) |
+| Mars Invictus | platner Aedes_Martis#Invictus | known only from the calendars; nothing more is known (P-A) |
+| Matidia, ara | platner Templum_Matidiae#ara | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Matidia, templum | platner Templum_Matidiae#templum | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Mefitis, aedes, lucus | platner Mefitis.html | a grove: the client has no grove form (trees are drawn by site_flora); not added |
+| Meta Romuli | platner Meta_Romuli.html | a pyramid tomb near the Vatican, imperial (P-A) |
+| Milliarium Aureum | platner Milliarium_Aureum.html | a statue, column or honorific monument: not in the F2 add list |
+| Minerva Capta (Minervium) | platner Minerva_Capta.html | only the hill or district is given (caelian, Platner-Ashby); no site on it argued, so not placed |
+| Minerva Chalcidica | platner M#Minerva_Chalcidica | not placed in F2: no site argued in the passage read (to review) |
+| Minerva Chalcidica | platner Minerva_Chalcidica.html | not placed in F2: no site argued in the passage read (to review) |
+| Minerva Medica | platner Minerva_Medica.html | only the hill or district is given (esquiline, Platner-Ashby); no site on it argued, so not placed |
+| Mundus | platner Mundus#p346 | the mundus: its site is disputed (P-A gives no reliable identification) |
+| Murus Terreus | platner M#Murus_Terreus | the earthen wall of the Carinae, known only from Varro, not located |
+| Naevia Nemora | platner N#Naevia_Nemora | only the hill or district is given (aventine, Platner-Ashby); no site on it argued, so not placed |
+| Naumachia Caesaris | platner Naumachiae#Caesaris | only the hill or district is given (campus martius, Platner-Ashby); no site on it argued, so not placed |
+| Naumachia Domitiani | platner Naumachiae#Domitiani | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Naumachia Vaticana | platner Naumachiae#Vaticana | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Nymphae, aedes | platner N#aedes_Nymphae | its site is unknown (Platner-Ashby); not placed |
+| Obelisci Mausolei Augusti | platner obelisci#Mausolei_Augusti | a statue, column or honorific monument: not in the F2 add list |
+| Obeliscus Antinoi | platner obelisci#Antinoi | a statue, column or honorific monument: not in the F2 add list |
+| Obeliscus Capitolinus | platner obelisci#Capitolinus | a statue, column or honorific monument: not in the F2 add list |
+| Octavius | platner domus#Octavius | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Officinae Minii | platner O#Officinae_Minii | only the hill or district is given (quirinal, Platner-Ashby); no site on it argued, so not placed |
+| Orbona, fanum | platner O#Fanum_Orbonae | its site is unknown (Platner-Ashby); not placed |
+| P. Sulla | platner domus#P.Sulla | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| P. Vergilius Maro | platner domus#P.Vergilius_Maro | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Paciliana | platner domus#Paciliana | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Pales, templum | platner P#Pales | not placed in F2: no site argued in the passage read (to review) |
+| Pavor et Pallor, fanum | platner P#Pavor_et_Pallor | probably never existed or never built (Platner-Ashby) |
+| Petronia, Amnis | platner Amnis_Petronia#amnis | not placed in F2: no site argued in the passage read (to review) |
+| Pietas Augusta, ara | platner P#Pietas_Augusta | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Pila Horatia | platner Pila_Horatia.html | a statue, column or honorific monument: not in the F2 add list |
+| Pincius Mons | platner Pincius_Mons.html | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Platea Traiani | platner P#Platea_Traiani | a minor street or locality: streets.yaml carries the main streets; not added in F2 |
+| Pomerium | platner Pomerium.html | the augural boundary of the city, not a building |
+| Pomponii | platner domus#Pomponii | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Pons Agrippae | platner Pons_Agrippae.html | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Pons Caligulae | platner Pons_Caligulae.html | its site is unknown (Platner-Ashby); not placed |
+| Pons Ælius | platner Pons_Aelius.html | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Porta Cornelia | platner portae#Cornelia | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Porta Fenestella | platner portae#Fenestella | not placed in F2: no site argued in the passage read (to review) |
+| Porta Minucia | platner Porta_Minucia.html | its site is unknown (Platner-Ashby); not placed |
+| Porta Piacularis | platner portae#Piacularis | not placed in F2: no site argued in the passage read (to review) |
+| Porta Praenestina | platner Porta_Praenestina.html | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Porticus | platner porticus#porticus | the general article on porticoes |
+| Porticus Absidata | platner porticus#Absidata | not placed in F2: no site argued in the passage read (to review) |
+| Porticus Argonautarum | platner Porticus_Argonautarum.html | Augustan (25 BC); near the later temple of Hadrian, extent unknown: not placed in F2 (to do) |
+| Porticus Boni Eventus | platner porticus#Boni_Eventus | not placed in F2: no site argued in the passage read (to review) |
+| Porticus Gordiani | platner porticus#Gordiani | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Porticus Margaritaria | platner Porticus_Margaritaria.html | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Porticus Miliaria | platner porticus#Miliaria | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Porticus Quirini | platner porticus#Quirini | not placed in F2: no site argued in the passage read (to review) |
+| Porticus Tri(umphi) | platner porticus#Triumphi | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Porticus Vipsania | platner Porticus_Vipsania.html | Augustan; along the east side of the Via Lata, extent unknown: not placed in F2 (to do) |
+| Porticus ad Nationes | platner porticus#ad_Nationes | its site is unknown (Platner-Ashby); not placed |
+| Porticus post Navalia | platner porticus#post_Navalia | behind the Navalia, whose own site is argued (rough): not placed |
+| Porticus post Spei | platner porticus#post_Spei | its course (from the Tiber to the temple of Apollo across the later theatre site) is a conjecture of P-A; not placed |
+| Portus Parrae | platner P#Portus_Parrae | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Postumii | platner domus#Postumii | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Privata (Domus) | platner P#Privata_Hadriani | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Privata (Domus) | platner P#Privata_Traiani | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Providentia Augusta, ara | platner P#Providentia_Augusta | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Pudicitia Plebeia, sacellum | platner P#Pudicitia_Plebeia | only the hill or district is given (quirinal, Platner-Ashby); no site on it argued, so not placed |
+| Pudicitia, ara | platner P#Pudicitia | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Puticuli | platner Puticuli.html | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Q. Blaesius Iustus | platner domus#Q.Blaesius_Justus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Q. Cicero | platner domus#Q.Cicero | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Q. Seius Postumus | platner domus#Q.Seius_Postumus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Q. Valerius Vegetus | platner domus#Q.Valerius_Vegetus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Ripa Veientana:* | platner R#Ripa_Veientana | the right bank of the Tiber, not a structure |
+| Roius Hilario | platner domus#Roius_Hilario | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Romulus Divus, templum:* | platner R#Templum_Divi_Romuli | built by Maxentius (4th century AD) |
+| Scalae Anulariae | platner gradus_scalaeque#Scalae_Anulariae | a minor street or locality: streets.yaml carries the main streets; not added in F2 |
+| Scalae Tarquitiae | platner gradus_scalaeque#Scalae_Tarquitiae | a minor street or locality: streets.yaml carries the main streets; not added in F2 |
+| Schola Fabrum Soliarium Baxiarium | platner scholae#Fabrum_Soliarium_Baxiarium | not placed in F2: no site argued in the passage read (to review) |
+| Schola Xanthi | platner scholae#Xanthi | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Scipio Nasica | platner domus#Scipio_Nasica | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Sepulcretum | platner Sepulcretum.html | the Iron Age cemetery by the Sacra Via, out of use long before 509 BC |
+| Sepulcrum Accae Larentiae | platner sepulcra#Accae_Larentiae | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Sepulcrum Agrippae | platner sepulcra#Agrippae | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Sepulcrum Arruntiorum | platner sepulcra#Arruntiorum | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Sepulcrum Caesaris | platner sepulcra#Caesaris | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Sepulcrum Cinciorum | platner sepulcra#Cinciorum | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Sepulcrum Corneliae | platner sepulcra#Corneliae | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Sepulcrum Galbae | platner sepulcra#Galbae | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Sepulcrum Galloniorum | platner sepulcra#Galloniorum | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Sepulcrum Getae | platner sepulcra#Getae | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Sepulcrum Hirtii | platner sepulcra#Hirtii | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Sepulcrum Horatii | platner sepulcra#Horatii | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Sepulcrum Lucilii Paeti | platner sepulcra#Lucilii_Paeti | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Sepulcrum Mariae | platner sepulcra#Mariae | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Sepulcrum Numae | platner sepulcra#Numae | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Sepulcrum Pallantis | platner sepulcra#Pallantis | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Sepulcrum Pansae | platner sepulcra#Pansae | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Sepulcrum Pomponii Hylae | platner sepulcra#Pomponii_Hylae | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Sepulcrum Severi | platner sepulcra#Severi | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Sepulcrum Statiliorum | platner sepulcra#Statiliorum | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Sepulcrum Sullae | platner sepulcra#Sullae | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Sepulcrum Titi Tatii | platner sepulcra#Titi_Tatii | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Sessorium | platner Sessorium.html | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Silvanus, sacella | platner Sacella_Silvani.html | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Spurius Cassius | platner domus#Spurius_Cassius | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Stagnum Agrippae | platner Thermae_Agrippae#Stagnum_Agrippae | Augustan pool beside the baths of Agrippa; size and outline unknown: not placed in F2 (to do) |
+| Statua Antonii Musae | platner Statuae#Antonii_Musae | a statue, column or honorific monument: not in the F2 add list |
+| Statua Atti Navi | platner Statuae#Atti_Navi | a statue, column or honorific monument: not in the F2 add list |
+| Statua Cloeliae | platner Statuae#Cloeliae | a statue, column or honorific monument: not in the F2 add list |
+| Statua Horatii Coclitis | platner Statuae#Horatii_Coclitis | a statue, column or honorific monument: not in the F2 add list |
+| Statua Marsyae | platner Statuae#Marsyae | a statue, column or honorific monument: not in the F2 add list |
+| Statua Pompeii | platner Statuae#Pompeii | a statue, column or honorific monument: not in the F2 add list |
+| Statua Regum Romanorum | platner Statuae#Regum_Romanorum | a statue, column or honorific monument: not in the F2 add list |
+| Statua Romuli | platner Statuae#Romuli | a statue, column or honorific monument: not in the F2 add list |
+| Statua Sullae | platner Statuae#Sullae | a statue, column or honorific monument: not in the F2 add list |
+| Statua Tiberis | platner Statuae#Tiberis | a statue, column or honorific monument: not in the F2 add list |
+| Statua Valeriana | platner Statuae#Valeriana | a statue, column or honorific monument: not in the F2 add list |
+| Statua Valerii Corvini | platner Statuae#Valerii_Corvini | a statue, column or honorific monument: not in the F2 add list |
+| T. Annius Milo Papinianus | platner domus#T.Annius_Milo_Papinianus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| T. Avidius Quietus | platner domus#T.Avidius_Quietus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| T. Flavius Sabinus | platner domus#T.Flavius_Sabinus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| T. Marcius Figulus | platner domus#T.Marcius_Figulus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| T. Sextius Africanus | platner domus#T.Sextius_Africanus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Tabernae circa Forum | platner Tabernae_circa_Forum.html | the shops lining the Forum (veteres on the south, novae on the north): part of forum_romanum and, from 184-170 BC, the fronts of the basilicas; not a separate building |
+| Tarentum | platner Tarentum.html | a district at the west of the Campus Martius (its altar is ara_ditis_proserpinae) |
+| Tarquinius Priscus | platner domus#Tarquinius_Priscus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Terentius Culleo | platner domus#Terentius_Culleo | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Terminus, fanum | platner T#Fanum_Termini | inside the cella of the temple of Jupiter Capitolinus (Dion. Hal. 3.69): part of that building |
+| Thermae Domitii | platner thermae#Domitii | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Thermae Etrusci | platner thermae#Etrusci | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Tiberinus | platner T#Tiberinus | its site is unknown (Platner-Ashby); not placed |
+| Tifata Curia | platner T#Tifata_Curia | only the hill or district is given (quirinal, Platner-Ashby); no site on it argued, so not placed |
+| Tifata Mancina | platner T#Tifata_Mancina | a grove: the client has no grove form (trees are drawn by site_flora); not added |
+| Titus Flavius Vespasianus | platner domus#Titus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Tria Fata | platner T#Tria_Fata | a statue, column or honorific monument: not in the F2 add list |
+| Tribunal Praetoris | platner Tribunal_Praetoris.html | a movable wooden platform (Platner-Ashby) |
+| Tribunal Vespasiani Titi Domitiani | platner T#Tribunal_Vespasiani_Titi_Domitiani | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Tropaea Neronis | platner T#Tropaea_Neronis | a statue, column or honorific monument: not in the F2 add list |
+| Tullus Hostilius | platner domus#Tullus_Hostilius | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Tumulus Iuliae | platner Tumulus_Juliae.html | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Tumulus Octaviorum | platner T#Tumulus_Octaviorum | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Ustrinum Domus Augustae | platner Ustrinum_Domus_Augustae.html | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Vedius Pollio | platner domus#Vedius_Pollio | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Venus (Libitina), templum | platner Aedes_Veneris#Libitina | only the hill or district is given (esquiline, Platner-Ashby); no site on it argued, so not placed |
+| Venus Felix, aedes | platner Aedes_Veneris#Felix | its site is unknown (Platner-Ashby); not placed |
+| Venus Hortorum Sallustianorum, aedes | platner Aedes_Veneris#Hortorum_Sallustianorum | not placed in F2: no site argued in the passage read (to review) |
+| Venus Victrix | platner Venus_Victrix#in_Capitolio | only the hill or district is given (capitol, Platner-Ashby); no site on it argued, so not placed |
+| Venus, aedes | platner Aedes_Veneris#aedes | its site is unknown (Platner-Ashby); not placed |
+| Vesta, lucus | platner Vesta#lucus | a grove: the client has no grove form (trees are drawn by site_flora); not added |
+| Via Fornicata | platner viae#Fornicata | a minor street or locality: streets.yaml carries the main streets; not added in F2 |
+| Via Gabina | platner viae#Gabina | a minor street or locality: streets.yaml carries the main streets; not added in F2 |
+| Vicus Africus | platner vici#Africus | a minor street or locality: streets.yaml carries the main streets; not added in F2 |
+| Vicus Cuprius | platner vici#Cuprius | a minor street or locality: streets.yaml carries the main streets; not added in F2 |
+| Vicus Iovis Fagutalis | platner vici#Jovis_Fagutalis | a minor street or locality: streets.yaml carries the main streets; not added in F2 |
+| Vicus Raciliani Maioris — Minoris | platner vici#Raciliani | a minor street or locality: streets.yaml carries the main streets; not added in F2 |
+| Vicus Sandaliarius | platner Vicus_Sandaliarius.html | a minor street or locality: streets.yaml carries the main streets; not added in F2 |
+| Vicus Statae Matris | platner vici#Statae_Matris | a minor street or locality: streets.yaml carries the main streets; not added in F2 |
+| Vicus Vestae | platner vici#Vestae | a minor street or locality: streets.yaml carries the main streets; not added in F2 |
+| Vinea Publica | platner V#Vinea_Publica | a public vineyard, not a building |
+| Vitruvius Vaccus | platner domus#Vitruvius_Vaccus | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| sacellum | platner M#ref4 | only the hill or district is given (velia, Platner-Ashby); no site on it argued, so not placed |
+| Ad Malum Punicum | pleiades 4672323 | a minor street or locality: streets.yaml carries the main streets; not added in F2 |
+| Aedes Herculis Pompeiani | pleiades 355242955 | built after AD 120 or not a monument of the period: the temple of Hercules Pompeianus: site unknown (Pleiades has no location) |
+| Aequimelium | pleiades 646121066 | not a structure (a district, a locality or a general article) |
 | Ager Romanus | pleiades 607225751 | not a structure (region) |
+| Amphitheatrum Castrense | pleiades 537585744 | built after AD 120 or not a monument of the period: the Amphitheatrum Castrense, 3rd century AD |
+| Aqua Antoniniana | pleiades 423561 | built after AD 120 or not a monument of the period: the aqueduct of Caracalla, 3rd century AD |
+| Arch of Septimius Severus | pleiades 370240026 | built after AD 120 or not a monument of the period: the arch of Septimius Severus, AD 203 |
+| Arco di San Lazzaro | pleiades 446459843 | built after AD 120 or not a monument of the period: a late antique arch |
+| Arcus Argentariorum | pleiades 335461216 | built after AD 120 or not a monument of the period: the arch of the argentarii, AD 204 |
+| Arcus Dolabellae et Silani | pleiades 159953179 | built after AD 120 or not a monument of the period: the arch of Dolabella and Silanus (AD 10), a carrier of an aqueduct branch, not drawn |
+| Athenaeum of Hadrian (Rome) | pleiades 914715153 | built after AD 120 or not a monument of the period: Hadrian's Athenaeum, after AD 135 |
+| Aurelian Walls | pleiades 529700371 | built after AD 120 or not a monument of the period: the Aurelian wall, AD 271-275 |
+| Basilica Argentaria | pleiades 397225738 | built after AD 120 or not a monument of the period: the Basilica Argentaria, Trajanic-Hadrianic hall of the Forum of Caesar |
+| Basilica Hilariana | pleiades 711164402 | built after AD 120 or not a monument of the period: the Basilica Hilariana, 2nd century AD |
 | Basilica of Santa Pudenziana | pleiades 626333929 | a church (after AD 120) |
+| Baths of Pozzo Pantaleo | pleiades 710588450 | built after AD 120 or not a monument of the period: baths of the 3rd century AD |
 | Campus Martius | pleiades 422863 | not a structure (plain) |
+| Capitolium Vetus | pleiades 194913213 | built after AD 120 or not a monument of the period: the Capitolium Vetus on the Quirinal: site unknown (Pleiades has no location) |
+| Casa dei Grifi | pleiades 817164756 | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Case Romane del Celio | pleiades 445192365 | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Castra Peregrina | pleiades 914763973 | built after AD 120 or not a monument of the period: the Castra Peregrina, 2nd century AD |
+| Cemetery of Gordianus, Epimachus, Apronianus | pleiades 426596 | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Chalcidicum | pleiades 809771016 | built after AD 120 or not a monument of the period: the Chalcidicum, Domitianic |
+| Circus Gaii et Neronis | pleiades 395487201 | built after AD 120 or not a monument of the period: the circus of Gaius and Nero on the Vatican, outside the dataset's city |
+| Circus Maximus Mithraeum | pleiades 960323262 | built after AD 120 or not a monument of the period: a Mithraeum, 2nd-3rd century AD |
+| Circus Varianus | pleiades 70865871 | built after AD 120 or not a monument of the period: the Circus Varianus, 3rd century AD |
 | Claudia | pleiades 571649387 | not a structure (tribus) |
+| Clivus Scauri | pleiades 267702571 | a minor street or locality: streets.yaml carries the main streets; not added in F2 |
+| Clivus Victoriae | pleiades 668537796 | a minor street or locality: streets.yaml carries the main streets; not added in F2 |
+| Colonnacce | pleiades 377181898 | built after AD 120 or not a monument of the period: the Colonnacce, Domitianic, part of the Forum of Nerva |
+| Columbarium of Pomponius Hylas | pleiades 390937014 | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Column of Marcus Aurelius | pleiades 952198991 | built after AD 120 or not a monument of the period: the column of Marcus Aurelius, AD 180-193 |
+| Divorum | pleiades 97074052 | built after AD 120 or not a monument of the period: the Divorum of Domitian, after AD 81 |
+| Domus Aventino | pleiades 809448306 | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Domus Clementis | pleiades 47784682 | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Domus Romane di Palazzo Valentini | pleiades 158092964 | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Domus di Vigna Guidi | pleiades 298528190 | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Excubitorium | pleiades 495489059 | built after AD 120 or not a monument of the period: the excubitorium of the 7th cohort of vigiles, 2nd-3rd century AD |
+| Horrea Piperataria | pleiades 525081443 | built after AD 120 or not a monument of the period: the Horrea Piperataria, Domitianic, under the basilica of Maxentius |
+| Horrea Vespasiani | pleiades 845751045 | built after AD 120 or not a monument of the period: the Horrea Vespasiani, Flavian |
+| Horti Lucull(i)ani | pleiades 418356677 | a garden estate: drawn by the fill (horti), not a monument |
+| Horti Maiani | pleiades 376850631 | a garden estate: drawn by the fill (horti), not a monument |
+| House of Aufidia Cornelia Valentinilla | pleiades 624604510 | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| House of Livia | pleiades 904782880 | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Hypogeum of Trebius Giustus | pleiades 874332557 | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Hypogeum of the Aurelii | pleiades 361831195 | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Janiculum | pleiades 430827518 | ground: the hills are in topography.yaml |
+| Lucus Furrinae | pleiades 432336962 | built after AD 120 or not a monument of the period: the excavated sanctuary on the Janiculum is of the late 1st century AD and after |
+| Lucus Stimulae | pleiades 978725164 | a grove: the client has no grove form (trees are drawn by site_flora); not added |
+| Mausoleum of Lucilius Peto | pleiades 400889194 | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Meta Romuli | pleiades 52385300 | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Mira Lanza | pleiades 782843285 | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Monte Testaccio | pleiades 375710890 | ground: the hills are in topography.yaml |
 | Monteverde | pleiades 422978 | not a structure (quarry) |
+| Murus Romuli | pleiades 698502930 | built after AD 120 or not a monument of the period: the archaic wall of the Palatine, long superseded before 509 BC |
+| Murus Terreus Carinarum | pleiades 987812398 | built after AD 120 or not a monument of the period: the earthen wall of the Carinae, an early work known only from Varro, not located |
 | Mutatorium Caesaris | pleiades 851128107 | not a structure (unknown) |
+| Naumachia | pleiades 422983 | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Nymphaeum divi Alexandri | pleiades 402082165 | built after AD 120 or not a monument of the period: the nymphaeum of Alexander Severus, 3rd century AD |
+| Oppius Mons | pleiades 91325207 | ground: the hills are in topography.yaml |
+| Paedagogium | pleiades 155566866 | built after AD 120 or not a monument of the period: the Paedagogium, Domitianic-later |
+| Palatium Sessorianum | pleiades 841475483 | built after AD 120 or not a monument of the period: the Sessorian palace, 3rd century AD |
+| Palazzo Barberini Mithraeum | pleiades 462454014 | built after AD 120 or not a monument of the period: a Mithraeum, 2nd-3rd century AD |
 | Pietra Papa | pleiades 423000 | not a structure (station) |
+| Pons Aelius | pleiades 334776903 | built after AD 120 or not a monument of the period: the bridge of Hadrian's mausoleum, AD 134 |
+| Pons Neronianus | pleiades 100447491 | built after AD 120 or not a monument of the period: Nero's bridge to the Vatican, after the period covered |
+| Porta Appia | pleiades 661181629 | built after AD 120 or not a monument of the period: a gate of the Aurelian wall (AD 271) |
+| Porta Ardeatina | pleiades 495155542 | built after AD 120 or not a monument of the period: a gate of the Aurelian wall (AD 271) |
+| Porta Asinaria | pleiades 958548506 | built after AD 120 or not a monument of the period: a gate of the Aurelian wall (AD 271) |
+| Porta Aurelia | pleiades 732617291 | built after AD 120 or not a monument of the period: a gate of the Aurelian wall (AD 271) |
+| Porta Latina | pleiades 870073463 | built after AD 120 or not a monument of the period: a gate of the Aurelian wall (AD 271) |
+| Porta Maggiore | pleiades 697163696 | built after AD 120 or not a monument of the period: the Porta Maggiore, arches of the Aqua Claudia (AD 52) made a gate in AD 271; the Claudia record draws its arches |
+| Porta Maggiore Basilica | pleiades 806345695 | built after AD 120 or not a monument of the period: the underground basilica at Porta Maggiore, below ground (not visible) |
+| Porta Ostiensis | pleiades 520255117 | built after AD 120 or not a monument of the period: a gate of the Aurelian wall (AD 271) |
+| Porta Salaria | pleiades 758962698 | built after AD 120 or not a monument of the period: a gate of the Aurelian wall (AD 271) |
+| Porticus Absidata | pleiades 245668206 | built after AD 120 or not a monument of the period: the Porticus Absidata, Domitianic |
 | Porticus Boni Eventus | pleiades 635256113 | not a structure (unknown) |
+| Pozzo Pantaleo | pleiades 710588451 | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Praedia Galbana | pleiades 277030428 | a garden estate: drawn by the fill (horti), not a monument |
+| Privata domus Traiani | pleiades 254273447 | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Quirinal Hill | pleiades 125119394 | ground: the hills are in topography.yaml |
 | Roma | pleiades 423025 | not a structure (urban, settlement) |
+| S. Felicita | pleiades 423043 | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| S. Ippolito | pleiades 423045 | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| S. Laurentius | pleiades 423046 | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
 | S. Petrus | pleiades 423053 | a church (after AD 120) |
 | San Nicola in Carcere | pleiades 872350435 | a church (after AD 120) |
 | Santa Sabina | pleiades 715215852 | a church (after AD 120) |
+| Schola Praeconum | pleiades 582924414 | built after AD 120 or not a monument of the period: the Schola Praeconum, 2nd-3rd century AD |
+| Sep. Bibuli | pleiades 503777175 | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Sep. Eurysacis | pleiades 226302607 | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Sep. Geta | pleiades 423065 | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Septizonium | pleiades 705506085 | built after AD 120 or not a monument of the period: the Septizodium of Septimius Severus, AD 203 |
+| Sepulcretum | pleiades 832482572 | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Sette Sale | pleiades 65898660 | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Shrine of Strenia | pleiades 582254847 | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| So-called Arco di Druso | pleiades 182591943 | built after AD 120 or not a monument of the period: the so-called arch of Drusus, a carrier of the Aqua Antoniniana (3rd century AD) |
+| So-called Tempio di Venere e Cupido | pleiades 576179783 | built after AD 120 or not a monument of the period: a late antique hall |
+| Sororium Tigillum | pleiades 527986453 | a statue, column or honorific monument: not in the F2 add list |
+| Subura | pleiades 451696383 | ground: the valleys are in topography.yaml |
+| Tarpeian Rock | pleiades 928849659 | ground: the hills are in topography.yaml |
+| Temple of Hadrian | pleiades 666765291 | built after AD 120 or not a monument of the period: the temple of Hadrian, AD 145 |
+| Temple of Jupiter Tonans | pleiades 354249963 | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Temple of Minerva Medica | pleiades 540898685 | a statue, column or honorific monument: not in the F2 add list |
+| Theater of Nero | pleiades 406270378 | built after AD 120 or not a monument of the period: Nero's theatre on the Vatican, outside the dataset's city |
+| Thermae Antoninianae | pleiades 322942899 | built after AD 120 or not a monument of the period: the baths of Caracalla, AD 216 |
+| Thermae Diocletiani | pleiades 420615524 | built after AD 120 or not a monument of the period: the baths of Diocletian, AD 298-306 |
+| Thermae Helenianae  | pleiades 555157618 | built after AD 120 or not a monument of the period: the baths of Helena, 3rd-4th century AD |
+| Tomb of Priscilla | pleiades 50864839 | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Tomb of Quintus Sulpicius Maximus | pleiades 358004061 | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Tomba della Medusa (Roma) | pleiades 305841487 | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Torre Dell'Angelo | pleiades 201442266 | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Unnamed bridge in the Piazza Eugenio Biffi | pleiades 426586 | built after AD 120 or not a monument of the period: a minor road bridge over the Almo, 2.9 km out |
+| Untitled | pleiades 426587 | built after AD 120 or not a monument of the period: a minor bridge 3 km out (Barrington Atlas) |
+| Vatican necropolis | pleiades 975276180 | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
 | Vaticanus Ager | pleiades 104629751 | not a structure (region) |
+| Velia | pleiades 157710058 | ground: the hills are in topography.yaml |
+| Via Statilia tombs | pleiades 711765706 | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Via Taranto columbaria | pleiades 499652704 | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Via Triumphalis | pleiades 839719167 | a minor street or locality: streets.yaml carries the main streets; not added in F2 |
+| Via Triumphalis necropolis | pleiades 578501279 | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Vicus Censorius | pleiades 894727084 | a minor street or locality: streets.yaml carries the main streets; not added in F2 |
+| Vicus Drusianus | pleiades 942692312 | a minor street or locality: streets.yaml carries the main streets; not added in F2 |
+| Vigna Cartoni cistern | pleiades 492046782 | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| Villa Esmeade | pleiades 423126 | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
+| Villa Pamphili | pleiades 423132 | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
+| Villa Torlonia | pleiades 423133 | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
 | ad Capita bubula | pleiades 20202878 | not a structure (unknown) |
+| balneum Caesaris | pleiades 623982917 | imperial (after 27 BC) and not one of the major imperial buildings the dataset covers to AD 120 |
+| domus Gelotiana | pleiades 364530240 | a private house: not in the F2 add list (temples, altars, shrines, basilicas, porticoes, arches, gates, bridges, public buildings); the fill draws the houses of each district |
 | tribus Camilia | pleiades 752122699 | not a structure (tribus) |
 | tribus Galeria | pleiades 986788581 | not a structure (tribus) |
 | tribus Menenia | pleiades 177623366 | not a structure (tribus) |
 | tribus Pollia | pleiades 484501230 | not a structure (tribus) |
+| tribus Ramnes | pleiades 531536067 | not a structure (a district, a locality or a general article) |
 | tribus Tities | pleiades 640011069 | not a structure (tribus) |
+| via Taranto columbaria | pleiades 116905947 | a tomb: not in the F2 add list; the fill lines the roads outside the gates with tombs (D-291); the major tombs are in the dataset |
 
 ## 2. Position
 
@@ -952,8 +543,8 @@ Our placed centre (`lat`/`lon` plus `offset_m`, as `monuments.gd` places it) aga
 | domus_aurea | [410440793](https://pleiades.stoa.org/places/410440793) Domus Aurea | 153.1 (towards 264) | 20 | 20.0 | misplaced | Pleiades outlines only the surviving Esquiline wing; our point is the centre of the drawn palace grounds, which ran from the Palatine to the Esquiline |
 | aedes_divi_augusti | [434772637](https://pleiades.stoa.org/places/434772637) Temple of Divus Augustus (Rome) | 133.8 (towards 300) | 10 | 1000.0 | within reference accuracy |  |
 | colossus_neronis | [527986452](https://pleiades.stoa.org/places/527986452) Colossus Neronis | 109.6 (towards 89) | 20 | 20.0 | misplaced | Pleiades maps the base by the Flavian amphitheatre, where Hadrian moved the statue after AD 120; until then it stood in the vestibule of the Domus Aurea on the site of the later temple of Venus and Rome, where we place it |
-| porticus_octaviae | [236573248](https://pleiades.stoa.org/places/236573248) Porticus Octaviae | 65.6 (towards 225) | 20 | 20.0 | misplaced | Pleiades maps the surviving propylon, in the middle of the south-west side; our point is the centre of the 130 m enclosure behind it (Platner-Ashby s.v. Porticus Octaviae, read) |
-| porticus_octaviae_empire | [236573248](https://pleiades.stoa.org/places/236573248) Porticus Octaviae | 65.6 (towards 225) | 20 | 20.0 | misplaced | the same building as porticus_octaviae (twin_of): see there |
+| porticus_octaviae | [236573248](https://pleiades.stoa.org/places/236573248) Porticus Octaviae | 65.5 (towards 208) | 20 | 20.0 | misplaced | Pleiades maps the surviving propylon, in the middle of the south-west side; our point is the centre of the 130 m enclosure behind it (Platner-Ashby s.v. Porticus Octaviae, read) |
+| porticus_octaviae_empire | [236573248](https://pleiades.stoa.org/places/236573248) Porticus Octaviae | 65.5 (towards 208) | 20 | 20.0 | misplaced | the same building as porticus_octaviae (twin_of): see there |
 | horologium_augusti | [986274170](https://pleiades.stoa.org/places/986274170) Horologium Augusti | 50.5 (towards 215) | 20 | 5.0 | misplaced | Pleiades' best point is the excavated stretch of the meridian line under Via di Campo Marzio 48; our point is the middle of the paved dial, between it and the obelisk's site |
 | pons_cestius | [211668069](https://pleiades.stoa.org/places/211668069) Pons Cestius | 47.8 (towards 162) | 20 | 20.0 | misplaced | kept where the U8 island pass fitted it (D-299): tiber.gd fits the island between the dataset's two bridges, and with the bridges on their remains the 67 m island does not fit the course drawn there; moving the bridges needs the island refitted in tiber.gd (hook for the lead) |
 | theatrum_marcelli | [300583267](https://pleiades.stoa.org/places/300583267) Theatrum Marcelli | 44.9 (towards 49) | 20 | 20.0 | misplaced | Pleiades' best location is the bounding box of the visible arcades, an arc on the north-east of the cavea; our point is the centre of the circle fitted to that arc (radius 60 m), the centre of the theatre |
@@ -964,7 +555,7 @@ Our placed centre (`lat`/`lon` plus `offset_m`, as `monuments.gd` places it) aga
 | aedes_veiovis | [243075423](https://pleiades.stoa.org/places/243075423) Temple of Veiovis | 35.5 (towards 116) | 10 | 2000.0 | within reference accuracy |  |
 | pons_fabricius | [68481414](https://pleiades.stoa.org/places/68481414) Pons Fabricius | 21.4 (towards 128) | 20 | 20.0 | misplaced | as pons_cestius: kept where D-299 fitted the island to it (21 m from the remains) |
 
-63 of 80 compared records are within tolerance.
+71 of 88 compared records are within tolerance.
 
 ### Streets, walls and aqueducts against the Pleiades lines
 
@@ -975,16 +566,22 @@ How far the mapped line (Pleiades, inside the audited radius) lies from ours.
 | cloaca_maxima | 867802692 Cloaca Maxima | 95.0 | 95.0 | 20.0 |  |
 | aqua_appia | 423562 Aqua Appia | 92.3 | 201.3 | 5.0 |  |
 | murus_servianus | 103808101 Murus Servii Tullii | 55.1 | 150.2 | 20.0 |  |
-| street:vicus_iugarius | 889101791 Vicus Iugarius | 50.0 | 111.9 | 20.0 | the OpenStreetMap line Pleiades gives runs along the south side of the Basilica Iulia, where no ancient street is attested; Platner-Ashby s.v. Vicus Iugarius (read) says the present pavement preserves the line after the basilica was built, which is the path between the basilica and the temple of Saturn that we follow |
+| street:vicus_iugarius | 889101791 Vicus Iugarius | 50.0 | 112.1 | 20.0 | the OpenStreetMap line Pleiades gives runs along the south side of the Basilica Iulia, where no ancient street is attested; Platner-Ashby s.v. Vicus Iugarius (read) says the present pavement preserves the line after the basilica was built, which is the path between the basilica and the temple of Saturn that we follow |
 | aqua_virgo | 423568 Aqua Virgo | 40.2 | 44.1 | 20.0 |  |
 | aqua_virgo_empire | 423568 Aqua Virgo | 40.2 | 44.1 | 20.0 |  |
-| street:clivus_capitolinus | 152699900 Clivus Capitolinus | 0.3 | 0.6 | 20.0 |  |
+| street:clivus_capitolinus | 152699900 Clivus Capitolinus | 0.8 | 3.6 | 20.0 |  |
 | street:argiletum | 451243813 Argiletum | 0.3 | 0.5 | 20.0 |  |
 
 ### Orientation and size: published measurements
 
 | id | bearing ours / ref (diff) | length ours / ref | width ours / ref | flags | source |
 |---|---|---|---|---|---|
+| aedes_castoris |  | 50.0 / 50 | 30.0 / 30 |  | Platner-Ashby s.v. Castor, Aedes: the whole about 50 x 30 m (the Augustan temple) |
+| aedes_divi_iulii |  | 30.0 / 30 | 26.0 / 26 |  | Platner-Ashby s.v. Divus Iulius, Aedes: podium 3.5 m high, 26 m wide, about 30 m long |
+| carcer |  | 7.0 / 7 | 7.0 / 7 |  | Platner-Ashby s.v. Carcer: the lower chamber nearly 7 m in diameter |
+| lacus_curtius |  | 10.0 / 10 | 9.0 / 9 |  | Platner-Ashby s.v. Lacus Curtius: a trapezoidal paved field about 10 m long and 9 m wide |
+| pons_fabricius |  | 62.0 / 62 |  |  | Platner-Ashby s.v. Pons Fabricius: 62 m long |
+| rostra_augusti |  |  | 24.0 / 24 |  | Platner-Ashby s.v. Rostra Augusti: the front about 24 m long |
 
 ### Orientation and size: the outline of the remains (Pleiades / OpenStreetMap)
 
@@ -992,61 +589,36 @@ The smallest rectangle round the remains as mapped; the remains may be only part
 
 | id | outline long x short, axis | ours long x short, axis | axis diff | flags | note |
 |---|---|---|---|---|---|
-| aedes_apollinis_medici | 35.8 x 21.7, 178.2 | 30.0 x 17.0, 90.0 | 88.2 | axis, size |  |
-| aedes_apollinis_palatini | 38.4 x 17.7, 48.0 | 50.0 x 25.0, 90.0 | 42.0 | axis, size |  |
-| aedes_castoris | 55.2 x 39.6, 24.6 | 50.0 x 30.0, 16.0 | 8.6 | size |  |
-| aedes_concordiae_forum | 44.6 x 41.7, 122.2 | 3.5 x 3.0, 78.0 | None | size |  |
-| aedes_divi_iulii | 39.3 x 34.3, 120.4 | 30.0 x 26.0, 106.0 | None | size |  |
-| aedes_divi_iulii_empire | 39.3 x 34.3, 120.4 | 30.0 x 26.0, 106.0 | None | size |  |
-| aedes_herculis_victoris | 19.2 x 18.4, 56.3 | 14.8 x 14.8, 90.0 | None | size |  |
-| aedes_magnae_matris | 31.3 x 17.7, 23.0 | 33.2 x 17.1, 0.0 | 23.0 | axis |  |
-| aedes_martis_ultoris | 50.4 x 33.3, 49.7 | 35.0 x 23.0, 45.0 | 4.7 | size |  |
-| aedes_portuni | 23.3 x 11.6, 162.7 | 20.0 x 12.0, 90.0 | 72.7 | axis |  |
-| aedes_veneris_genetricis | 35.9 x 26.9, 139.8 | 30.0 x 16.0, 140.0 | 0.2 | size |  |
-| aedes_vespasiani | 28.3 x 24.7, 123.2 | 33.0 x 22.0, 135.0 | None | size |  |
-| arcus_titi | 14.3 x 6.7, 22.5 | 13.5 x 4.8, 110.0 | 87.5 | axis, size |  |
-| area_sacra_argentina_c | 22.4 x 15.6, 84.9 | 30.0 x 14.0, 90.0 | 5.1 | size |  |
-| atrium_vestae | 104.1 x 54.7, 114.7 | 45.0 x 24.0, 16.0 | 81.3 | axis, size |  |
-| basilica_aemilia | 99.3 x 27.0, 122.6 | 70.0 x 29.0, 106.0 | 16.6 | axis, size |  |
-| basilica_iulia_empire | 108.2 x 56.6, 114.5 | 101.0 x 49.0, 16.0 | 81.5 | axis |  |
-| basilica_ulpia | 57.2 x 56.0, 48.9 | 130.0 x 60.0, 135.0 | None | size |  |
-| carcer | 12.2 x 11.1, 4.6 | 7.0 x 7.0, 16.0 | None | size |  |
-| circus_maximus | 596.2 x 149.3, 126.3 | 621.0 x 118.0, 134.0 | 7.7 | size |  |
-| colossus_neronis | 16.5 x 13.7, 110.4 | 7.0 x 7.0, None | None | size |  |
-| curia_iulia | 30.0 x 26.5, 49.9 | 25.2 x 17.6, 45.0 | None | size |  |
-| curia_iulia_empire | 30.0 x 26.5, 49.9 | 25.2 x 17.6, 135.0 | None | size |  |
-| domus_aurea | 122.3 x 110.6, 138.1 | 500.0 x 250.0, None | None | size |  |
-| emporium | 164.6 x 20.4, 46.3 | 500.0 x 40.0, 90.0 | 43.7 | axis, size |  |
-| forum_augusti | 117.7 x 95.7, 133.4 | 125.0 x 90.0, 45.0 | 88.4 | axis |  |
-| forum_boarium | 140.0 x 63.1, 163.0 | 90.0 x 70.0, 100.0 | 63.0 | axis, size |  |
-| forum_holitorium | 48.8 x 27.7, 75.8 | 95.0 x 40.0, 110.0 | 34.2 | axis, size |  |
-| forum_romanum | 627.2 x 244.6, 111.7 | 120.0 x 56.0, 106.0 | 5.7 | size |  |
-| forum_transitorium | 172.3 x 45.2, 49.8 | 120.0 x 40.0, 45.0 | 4.8 | size |  |
-| lacus_curtius | 12.1 x 6.9, 134.2 | 10.0 x 9.0, 0.0 | 45.8 | axis, size |  |
-| lacus_iuturnae | 11.7 x 3.7, 53.3 | 10.0 x 10.0, 0.0 | 53.3 | axis, size |  |
-| ludus_magnus | 36.0 x 9.7, 135.0 | 90.0 x 60.0, None | None | size |  |
-| pantheon_agrippae | 82.8 x 58.1, 176.1 | 43.8 x 41.1, 90.0 | 86.1 | axis, size |  |
-| pantheon_agrippae_empire | 82.8 x 58.1, 176.1 | 43.8 x 19.8, 0.0 | 3.9 | size |  |
-| pantheon_hadriani | 82.8 x 58.1, 176.1 | 43.2 x 43.2, 0.0 | 3.9 | size |  |
-| pons_aemilius | 27.5 x 9.7, 77.2 | 100.0 x 8.0, 77.0 | 0.2 | size |  |
-| pons_cestius | 81.9 x 12.1, 18.8 | 48.0 x 8.2, 72.0 | 53.2 | axis, size |  |
-| pons_fabricius | 66.0 x 7.5, 41.9 | 62.0 x 5.5, 38.0 | 3.9 | size |  |
-| porta_esquilina | 11.7 x 4.7, 177.8 | 34.0 x 26.0, None | None | size |  |
-| porticus_aemilia | 45.6 x 21.9, 136.9 | 487.0 x 60.0, 135.0 | 1.9 | size |  |
-| porticus_octaviae | 19.9 x 12.9, 117.7 | 130.0 x 118.0, 45.0 | 72.7 | axis, size |  |
-| porticus_octaviae_empire | 19.9 x 12.9, 117.7 | 135.0 x 119.0, 45.0 | 72.7 | axis, size |  |
-| regia | 30.1 x 29.1, 17.8 | 22.0 x 8.0, 16.0 | None | size |  |
-| rostra_augusti | 29.7 x 18.2, 25.1 | 24.0 x 14.0, 16.0 | 9.1 | size |  |
-| stadium_palatinum | 167.6 x 69.6, 41.5 | 160.0 x 50.0, 41.5 | 0.0 | size |  |
-| templum_pacis | 166.4 x 56.0, 121.7 | 145.0 x 97.0, None | None | size |  |
-| theatrum_marcelli | 77.7 x 30.4, 144.3 | 122.0 x 122.0, 22.5 | 58.2 | axis, size |  |
-| theatrum_marcelli_empire | 77.7 x 30.4, 144.3 | 150.0 x 150.0, 22.5 | 58.2 | axis, size |  |
-| theatrum_pompei | 45.0 x 16.5, 146.6 | 155.0 x 155.0, 134.0 | 12.6 | axis, size |  |
-| thermae_traiani | 172.6 x 35.5, 54.1 | 340.0 x 330.0, 30.0 | 24.1 | axis, size |  |
+| aedes_apollinis_palatini | 38.4 x 17.7, 48.0 | 50.0 x 25.0, 48.0 | 0.0 | size | the remains are the concrete core of the podium, stripped of its facing; our 50 x 25 m is not verified and is kept, not shrunk to the core |
+| aedes_castoris | 55.2 x 39.6, 24.6 | 50.0 x 30.0, 16.0 | 8.6 | size | the outline includes the platform and stairs in front; our 50 x 30 m is Platner-Ashby's measurement |
+| aedes_divi_iulii | 39.3 x 34.3, 120.4 | 30.0 x 26.0, 106.0 | None | size | the outline includes the later platform round the podium; our 30 x 26 m is Platner-Ashby's podium |
+| aedes_divi_iulii_empire | 39.3 x 34.3, 120.4 | 30.0 x 26.0, 106.0 | None | size | as aedes_divi_iulii |
+| aedes_herculis_victoris | 19.2 x 18.4, 56.3 | 14.8 x 14.8, 90.0 | None | size | the outline includes the steps round the podium; our circle is the stylobate (14.8 m) |
+| aedes_vespasiani | 28.3 x 24.7, 123.2 | 33.0 x 22.0, 135.0 | None | size | the remains are cut by the Clivus Capitolinus and the modern road; ours is the restored plan (33 x 22 m) |
+| arcus_titi | 14.3 x 6.7, 22.5 | 13.5 x 4.8, 22.5 | 0.0 | size | the arch is 13.5 m wide and 4.75 m deep; the outline includes the plinth and Valadier's 1821 restoration |
+| area_sacra_argentina_b | 22.0 x 16.9, 82.0 | 17.0 x 17.0, 90.0 | 8.0 | size | the outline includes the front stair; the circle is the round cella and colonnade |
+| area_sacra_argentina_c | 22.4 x 15.6, 84.9 | 30.0 x 14.0, 90.0 | 5.1 | size | the outline is the surviving podium core; our 30 x 14 m is not verified and is kept |
+| area_sacra_argentina_d | 20.1 x 4.7, 88.0 | 38.0 x 20.0, 90.0 | 2.0 | size | temple D is mostly under Via Florida; the outline is the excavated strip |
+| auditorium_maecenatis | 27.0 x 19.8, 124.0 | 25.0 x 11.0, 124.0 | 0.0 | size | the outline includes the walls and the apse; ours is the hall |
+| carcer | 12.2 x 11.1, 4.6 | 7.0 x 7.0, 16.0 | None | size | the outline is the church of S. Giuseppe dei Falegnami over the prison; ours is the lower chamber (Platner-Ashby nearly 7 m) |
+| forum_transitorium | 172.3 x 45.2, 49.8 | 120.0 x 40.0, 45.0 | 4.8 | size | the outline is the excavated area including the Subura end; our 120 x 40 m is the paved forum between the porticoes |
+| lacus_curtius | 12.1 x 6.9, 134.2 | 10.0 x 9.0, 134.0 | 0.2 | size | the outline includes the later curb and pavement round the field (Platner-Ashby 10 x 9 m) |
+| pons_fabricius | 66.0 x 7.5, 41.9 | 62.0 x 5.5, 38.0 | 3.9 | size | the outline includes the abutments on both banks; Platner-Ashby gives 62 m |
+| rostra_augusti | 29.7 x 18.2, 25.1 | 24.0 x 14.0, 16.0 | 9.1 | size | the outline includes the curved steps behind; the front is 24 m (Platner-Ashby) |
+| stadium_palatinum | 167.6 x 69.6, 41.5 | 160.0 x 50.0, 41.5 | 0.0 | size | the outline includes the two-storey portico round the arena; ours is the arena, about 160 x 50 m |
+| aedes_apollinis_medici | 35.8 x 21.7, 178.2 | 36.0 x 22.0, 0.0 | 1.8 |  |  |
+| aedes_magnae_matris | 31.3 x 17.7, 23.0 | 33.2 x 17.1, 23.0 | 0.0 |  |  |
+| aedes_martis_ultoris | 50.4 x 33.3, 49.7 | 50.0 x 33.0, 45.0 | 4.7 |  |  |
+| aedes_portuni | 23.3 x 11.6, 162.7 | 20.0 x 12.0, 163.0 | 0.3 |  |  |
 | aedes_veneris_et_romae | 155.1 x 101.4, 110.6 | 145.0 x 100.0, 120.0 | 9.4 |  |  |
+| aedes_veneris_genetricis | 35.9 x 26.9, 139.8 | 36.0 x 27.0, 140.0 | 0.2 |  |  |
 | amphitheatrum_flavium | 170.0 x 148.3, 82.8 | 188.0 x 156.0, 120.0 | None |  |  |
+| area_sacra_argentina_a | 27.5 x 16.8, 86.2 | 27.5 x 16.8, 90.0 | 3.8 |  |  |
+| basilica_aemilia | 99.3 x 27.0, 122.6 | 99.0 x 27.0, 122.6 | 0.0 |  |  |
 | basilica_iulia | 108.2 x 56.6, 114.5 | 101.0 x 49.0, 106.0 | 8.5 |  |  |
+| basilica_iulia_empire | 108.2 x 56.6, 114.5 | 101.0 x 49.0, 106.0 | 8.5 |  |  |
 | domus_hortensii_augusti | 38.5 x 31.2, 138.8 | 38.5 x 31.2, 139.0 | 0.2 |  |  |
+| forum_augusti | 117.7 x 95.7, 133.4 | 125.0 x 90.0, 135.0 | 1.6 |  |  |
 | forum_iulium | 164.5 x 83.6, 135.2 | 160.0 x 75.0, 140.0 | 4.8 |  |  |
 | forum_traiani | 219.2 x 121.5, 143.3 | 220.0 x 120.0, 143.0 | 0.3 |  |  |
 
@@ -1054,7 +626,7 @@ The smallest rectangle round the remains as mapped; the remains may be only part
 
 | relation | result | detail | source |
 |---|---|---|---|
-| Saturn at the foot of the Clivus Capitolinus | ok | 18 m from the clivus, 31 m from its foot | Platner-Ashby s.v. Saturnus, Aedes; Clivus Capitolinus |
+| Saturn at the foot of the Clivus Capitolinus | ok | 19 m from the clivus, 34 m from its foot | Platner-Ashby s.v. Saturnus, Aedes; Clivus Capitolinus |
 | Castor beside the Lacus Iuturnae (east of it) | ok | 35 m apart, the Lacus at bearing 109 from Castor | Platner-Ashby s.v. Iuturnae Lacus; Castor, Aedes |
 | The Regia and Vesta where the Sacra Via reaches the Forum's east end | ok | Regia 14 m and Vesta 40 m from the Sacra Via; 91 and 75 m east of the Forum's centre | Platner-Ashby s.v. Sacra Via; Regia; Vesta, Aedes |
 | The Curia Hostilia on the Comitium's north side | ok | Curia 33 m from the Comitium's centre at bearing 48 | Platner-Ashby s.v. Comitium; Curia Hostilia |
@@ -1110,215 +682,279 @@ The repository has no modern elevation model; the ground is built from `topograp
 
 | year | overlaps | floating | buried | houses_in_monuments | houses_on_streets | in_river | streets_through |
 |---|---|---|---|---|---|---|---|
-| 509 BC | 0 | 0 | 5 | 6 | 1 | 0 | 0 |
-| 390 BC | 0 | 0 | 6 | 14 | 0 | 0 | 0 |
-| 264 BC | 0 | 5 | 20 | 41 | 2 | 0 | 0 |
-| 133 BC | 1 | 13 | 24 | 49 | 4 | 1 | 1 |
-| 44 BC | 5 | 12 | 28 | 52 | 7 | 2 | 0 |
-| 27 BC | 7 | 12 | 29 | 61 | 7 | 2 | 0 |
+| 509 BC | 1 | 2 | 9 | 7 | 1 | 0 | 0 |
+| 390 BC | 1 | 2 | 10 | 15 | 0 | 0 | 0 |
+| 264 BC | 1 | 8 | 26 | 46 | 1 | 1 | 0 |
+| 133 BC | 2 | 16 | 32 | 69 | 2 | 2 | 0 |
+| 44 BC | 5 | 15 | 37 | 96 | 4 | 3 | 0 |
+| 27 BC | 6 | 15 | 40 | 100 | 5 | 3 | 0 |
 
 **monuments whose solids overlap another standing monument**
 
-- aedes_apollinis_palatini overlaps casa_romuli by 3.4 m (27 BC)
-- aedes_apollinis_palatini overlaps domus_hortensii_augusti by 3.7 m (27 BC)
-- aedes_concordiae_forum overlaps basilica_opimia by 6.1 m (27 BC, 44 BC)
-- aedes_concordiae_forum overlaps tabularium by 3.2 m (27 BC, 44 BC)
-- horrea_galbae overlaps porticus_aemilia by 52.5 m (133 BC, 27 BC, 44 BC)
-- porta_flumentana overlaps theatrum_marcelli by 7.9 m (27 BC, 44 BC)
-- porticus_octaviae overlaps theatrum_marcelli by 19.7 m (27 BC, 44 BC)
+- aedes_concordiae_forum overlaps tabularium by 3.2 m (27 BC, 44 BC) - the Augustan temple of Concord was built against the substructure of the Tabularium, its cella under the Tabularium front (the remains); a 3 m contact is the real arrangement
+- aedes_herculis_musarum overlaps porticus_philippi by 6.9 m (27 BC) - the temple stood inside the Porticus Philippi, which was built round it (Platner-Ashby s.v. Porticus Philippi); not an error
+- circus_maximus overlaps sacellum_murciae by 5.1 m (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC) - the shrine of Murcia stood inside the circus valley, by the turning post (Platner-Ashby s.v. Murcia, sacellum); not an error
+- horrea_galbae overlaps porticus_aemilia by 52.5 m (133 BC, 27 BC, 44 BC) - UNRESOLVED: the Marble Plan puts the Horrea Galbae right behind the great hall identified as the Porticus Aemilia (Tucci 2012 argues the hall is the navalia); our 487 x 60 m hall centred on its remains and the 200 x 155 m horrea at their Wikipedia point (+-30 m) overlap by 52 m. A measured plan of both is needed before either is moved
+- pons_fabricius overlaps porta_flumentana by 3.6 m (27 BC, 44 BC) - the bridge lands on the left bank beside the Porta Flumentana; the gate block includes its flanking wall stubs; a 3.6 m contact
+- porticus_octaviae overlaps theatrum_marcelli by 2.8 m (27 BC, 44 BC) - the portico and the theatre stood side by side with a narrow street between; 2.8 m is within the precision of the reconstructed portico corner (Pleiades outlines only its propylon)
 
 **monuments whose base is more than 0.5 m above the ground under a corner**
 
-- aedes_aesculapii base 1.0 m above the ground at a corner (133 BC, 264 BC, 27 BC, 44 BC)
-- aedes_fidei base 0.5 m above the ground at a corner (133 BC, 27 BC, 44 BC)
-- aedes_fortunae_primigeniae base 0.8 m above the ground at a corner (133 BC, 27 BC, 44 BC)
-- aedes_honoris_virtutis base 1.0 m above the ground at a corner (133 BC, 27 BC, 44 BC)
-- aedes_iovis_statoris_palatine base 8.7 m above the ground at a corner (133 BC, 264 BC, 27 BC, 44 BC)
-- aedes_mentis base 0.7 m above the ground at a corner (133 BC, 27 BC, 44 BC)
-- aedes_quirini base 1.6 m above the ground at a corner (133 BC, 264 BC)
-- aedes_salutis base 0.7 m above the ground at a corner (133 BC, 264 BC, 27 BC, 44 BC)
-- aedes_telluris base 3.4 m above the ground at a corner (133 BC, 264 BC, 27 BC, 44 BC)
-- aedes_veiovis base 4.6 m above the ground at a corner (133 BC, 27 BC, 44 BC)
-- aedes_veneris_erycinae_capitol base 1.3 m above the ground at a corner (133 BC, 27 BC, 44 BC)
-- aedes_veneris_erycinae_collina base 3.1 m above the ground at a corner (133 BC, 27 BC, 44 BC)
-- macellum base 4.8 m above the ground at a corner (133 BC, 27 BC, 44 BC)
+- aedes_aesculapii base 1.0 m above the ground at a corner (133 BC, 264 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its highest corner and the open side is not walled down to the ground; a renderer matter (a terrace or foundation skirt in monuments.gd/forms) - hook for the lead, not a data error
+- aedes_fidei base 0.5 m above the ground at a corner (133 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its highest corner and the open side is not walled down to the ground; a renderer matter (a terrace or foundation skirt in monuments.gd/forms) - hook for the lead, not a data error
+- aedes_fortunae_primigeniae base 2.0 m above the ground at a corner (133 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its highest corner and the open side is not walled down to the ground; a renderer matter (a terrace or foundation skirt in monuments.gd/forms) - hook for the lead, not a data error
+- aedes_herculis_collina base 0.8 m above the ground at a corner (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC) - a monument on a slope: the form sits on its highest corner and the open side is not walled down to the ground; a renderer matter (a terrace or foundation skirt in monuments.gd/forms) - hook for the lead, not a data error
+- aedes_honoris_virtutis base 1.0 m above the ground at a corner (133 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its highest corner and the open side is not walled down to the ground; a renderer matter (a terrace or foundation skirt in monuments.gd/forms) - hook for the lead, not a data error
+- aedes_iovis_statoris_palatine base 8.7 m above the ground at a corner (133 BC, 264 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its highest corner and the open side is not walled down to the ground; a renderer matter (a terrace or foundation skirt in monuments.gd/forms) - hook for the lead, not a data error
+- aedes_larum base 11.5 m above the ground at a corner (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC) - a monument on a slope: the form sits on its highest corner and the open side is not walled down to the ground; a renderer matter (a terrace or foundation skirt in monuments.gd/forms) - hook for the lead, not a data error
+- aedes_mentis base 0.7 m above the ground at a corner (133 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its highest corner and the open side is not walled down to the ground; a renderer matter (a terrace or foundation skirt in monuments.gd/forms) - hook for the lead, not a data error
+- aedes_quirini base 1.6 m above the ground at a corner (133 BC, 264 BC) - a monument on a slope: the form sits on its highest corner and the open side is not walled down to the ground; a renderer matter (a terrace or foundation skirt in monuments.gd/forms) - hook for the lead, not a data error
+- aedes_salutis base 0.7 m above the ground at a corner (133 BC, 264 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its highest corner and the open side is not walled down to the ground; a renderer matter (a terrace or foundation skirt in monuments.gd/forms) - hook for the lead, not a data error
+- aedes_telluris base 3.4 m above the ground at a corner (133 BC, 264 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its highest corner and the open side is not walled down to the ground; a renderer matter (a terrace or foundation skirt in monuments.gd/forms) - hook for the lead, not a data error
+- aedes_veiovis base 4.6 m above the ground at a corner (133 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its highest corner and the open side is not walled down to the ground; a renderer matter (a terrace or foundation skirt in monuments.gd/forms) - hook for the lead, not a data error
+- aedes_veneris_erycinae_capitol base 1.3 m above the ground at a corner (133 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its highest corner and the open side is not walled down to the ground; a renderer matter (a terrace or foundation skirt in monuments.gd/forms) - hook for the lead, not a data error
+- aedes_veneris_erycinae_collina base 3.1 m above the ground at a corner (133 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its highest corner and the open side is not walled down to the ground; a renderer matter (a terrace or foundation skirt in monuments.gd/forms) - hook for the lead, not a data error
+- aedes_vortumni base 2.1 m above the ground at a corner (133 BC, 264 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its highest corner and the open side is not walled down to the ground; a renderer matter (a terrace or foundation skirt in monuments.gd/forms) - hook for the lead, not a data error
+- macellum base 1.3 m above the ground at a corner (133 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its highest corner and the open side is not walled down to the ground; a renderer matter (a terrace or foundation skirt in monuments.gd/forms) - hook for the lead, not a data error
 
 **monuments whose base is more than 1 m below the ground under a corner**
 
-- aedes_apollinis_palatini ground 1.4 m above its base at a corner (27 BC)
-- aedes_dei_fidii ground 1.2 m above its base at a corner (133 BC, 264 BC, 27 BC, 390 BC, 44 BC)
-- aedes_iovis_feretri ground 1.1 m above its base at a corner (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC)
-- aedes_iovis_statoris_palatine ground 10.0 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
-- aedes_iunonis_monetae ground 1.2 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
-- aedes_quirini ground 1.2 m above its base at a corner (133 BC, 264 BC)
-- aedes_veiovis ground 8.3 m above its base at a corner (133 BC, 27 BC, 44 BC)
-- aedes_veneris_erycinae_collina ground 2.1 m above its base at a corner (133 BC, 27 BC, 44 BC)
-- atrium_libertatis ground 9.3 m above its base at a corner (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC)
-- domus_catuli ground 15.7 m above its base at a corner (27 BC, 44 BC)
-- domus_ciceronis ground 2.4 m above its base at a corner (27 BC, 44 BC)
-- domus_clodii ground 3.4 m above its base at a corner (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC)
-- domus_hortensii_augusti ground 1.0 m above its base at a corner (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC)
-- domus_pompeii_carinae ground 1.0 m above its base at a corner (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC)
-- emporium ground 6.6 m above its base at a corner (133 BC, 27 BC, 44 BC)
-- horrea_sempronia ground 3.2 m above its base at a corner (27 BC, 44 BC)
-- macellum ground 5.7 m above its base at a corner (133 BC, 27 BC, 44 BC)
-- porta_caelimontana ground 9.5 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
-- porta_capena ground 15.7 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
-- porta_collina ground 6.9 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
-- porta_esquilina ground 7.2 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
-- porta_fontinalis ground 7.1 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
-- porta_lavernalis ground 14.7 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
-- porta_querquetulana ground 6.7 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
-- porta_quirinalis ground 11.8 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
-- porta_salutaris ground 2.4 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
-- porta_sanqualis ground 5.6 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
-- porta_viminalis ground 5.7 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC)
-- tabularium ground 1.8 m above its base at a corner (27 BC, 44 BC)
-- theatrum_marcelli ground 4.5 m above its base at a corner (27 BC, 44 BC)
+- aedes_apollinis_palatini ground 1.2 m above its base at a corner (27 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- aedes_dei_fidii ground 1.2 m above its base at a corner (133 BC, 264 BC, 27 BC, 390 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- aedes_fortunae_primigeniae ground 2.2 m above its base at a corner (133 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- aedes_iovis_feretri ground 1.1 m above its base at a corner (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- aedes_iovis_statoris_palatine ground 10.0 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- aedes_iunonis_monetae ground 1.2 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- aedes_portuni ground 1.0 m above its base at a corner (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- aedes_quirini ground 1.2 m above its base at a corner (133 BC, 264 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- aedes_veiovis ground 8.3 m above its base at a corner (133 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- aedes_veneris_erycinae_collina ground 2.1 m above its base at a corner (133 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- aedes_vortumni ground 3.7 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- atrium_libertatis ground 9.3 m above its base at a corner (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- auditorium_maecenatis ground 5.9 m above its base at a corner (27 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- curiae_veteres ground 7.5 m above its base at a corner (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- delubrum_fontis ground 1.0 m above its base at a corner (133 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- domus_catuli ground 15.7 m above its base at a corner (27 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- domus_ciceronis ground 1.7 m above its base at a corner (27 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- domus_clodii ground 3.4 m above its base at a corner (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- domus_hortensii_augusti ground 1.0 m above its base at a corner (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- domus_pompeii_carinae ground 1.0 m above its base at a corner (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- emporium ground 6.6 m above its base at a corner (133 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- fornix_scipionis ground 3.8 m above its base at a corner (133 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- horrea_agrippiana ground 32.7 m above its base at a corner (27 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- horrea_sempronia ground 3.2 m above its base at a corner (27 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- nymphaeum_annibaldi ground 1.3 m above its base at a corner (27 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- porta_caelimontana ground 9.5 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- porta_capena ground 15.7 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- porta_collina ground 6.9 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- porta_esquilina ground 7.2 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- porta_flumentana ground 7.6 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- porta_fontinalis ground 7.1 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- porta_lavernalis ground 14.7 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- porta_pandana ground 2.8 m above its base at a corner (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- porta_querquetulana ground 6.7 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- porta_quirinalis ground 11.8 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- porta_salutaris ground 2.4 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- porta_sanqualis ground 5.6 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- porta_viminalis ground 5.7 m above its base at a corner (133 BC, 264 BC, 27 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- sacellum_volupiae ground 1.7 m above its base at a corner (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- tabularium ground 1.8 m above its base at a corner (27 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
+- theatrum_marcelli ground 4.5 m above its base at a corner (27 BC, 44 BC) - a monument on a slope: the form sits on its lowest corner and the hill rises over the uphill corners; the Romans terraced such sites. The gates in the Servian wall stand at saddles and slopes by their sources. A renderer matter (cut a terrace or set the form on the uphill side) - hook for the lead, not a data error
 
 **houses standing inside a monument's footprint**
 
-- aedes_apollinis_palatini has a domus lot inside it at (67, 399), 3.7 m deep (27 BC)
-- aedes_apollinis_palatini has a insula:hip:4:0:1:n lot inside it at (61, 420), 1.0 m deep (27 BC)
-- aedes_iovis_statoris_palatine has a casa:tile lot inside it at (125, 172), 2.3 m deep (264 BC)
-- aedes_iunonis_reginae_aventine has a insula:gable:3:2:1:n lot inside it at (-211, 995), 1.9 m deep (133 BC, 27 BC, 44 BC)
-- aedes_mercurii has a insula:gable:4:0:0:n lot inside it at (-135, 719), 1.3 m deep (27 BC, 44 BC)
-- aedes_veneris_erycinae_capitol has a casa:tile lot inside it at (-167, -120), 1.8 m deep (133 BC, 27 BC, 44 BC)
-- aedes_victoriae has a casa:shingle lot inside it at (120, 383), 1.8 m deep (133 BC, 264 BC)
-- forum_boarium has a casa:shingle lot inside it at (-352, 427), 25.0 m deep (264 BC, 390 BC)
-- forum_boarium has a casa:shingle lot inside it at (-384, 400), 29.7 m deep (133 BC, 264 BC, 27 BC, 44 BC)
-- forum_boarium has a casa:shingle lot inside it at (-384, 407), 32.9 m deep (264 BC)
-- forum_boarium has a casa:shingle lot inside it at (-384, 426), 18.7 m deep (27 BC)
-- forum_boarium has a casa:shingle lot inside it at (-392, 414), 25.6 m deep (133 BC, 27 BC, 44 BC)
-- forum_boarium has a casa:thatch lot inside it at (-398, 399), 17.7 m deep (390 BC)
-- forum_boarium has a casa:thatch lot inside it at (-405, 421), 15.9 m deep (390 BC, 509 BC)
-- forum_boarium has a casa:thatch lot inside it at (-407, 430), 13.3 m deep (390 BC, 509 BC)
-- forum_boarium has a casa:thatch lot inside it at (-411, 438), 4.2 m deep (390 BC, 509 BC)
-- forum_boarium has a casa:tile lot inside it at (-326, 401), 9.1 m deep (264 BC)
-- forum_boarium has a casa:tile lot inside it at (-352, 380), 6.8 m deep (264 BC)
-- forum_boarium has a casa:tile lot inside it at (-358, 386), 14.0 m deep (264 BC)
-- forum_boarium has a casa:tile lot inside it at (-365, 393), 21.9 m deep (264 BC)
-- forum_boarium has a casa:tile lot inside it at (-366, 379), 7.8 m deep (264 BC)
-- forum_boarium has a casa:tile lot inside it at (-372, 393), 22.0 m deep (264 BC)
-- forum_boarium has a casa:tile lot inside it at (-384, 394), 24.5 m deep (133 BC, 27 BC, 44 BC)
-- forum_boarium has a casa:tile lot inside it at (-384, 408), 31.2 m deep (133 BC, 27 BC, 44 BC)
-- forum_boarium has a casa:tile lot inside it at (-384, 414), 30.7 m deep (133 BC, 27 BC, 44 BC)
-- forum_boarium has a casa:tile lot inside it at (-384, 434), 11.9 m deep (27 BC)
-- forum_boarium has a casa:tile lot inside it at (-384, 440), 5.3 m deep (133 BC)
-- forum_boarium has a casa:tile lot inside it at (-389, 384), 15.6 m deep (27 BC)
-- forum_boarium has a casa:tile lot inside it at (-392, 392), 21.7 m deep (264 BC)
-- forum_boarium has a casa:tile lot inside it at (-392, 400), 23.3 m deep (264 BC, 44 BC)
-- forum_boarium has a casa:tile lot inside it at (-392, 426), 17.7 m deep (27 BC)
-- forum_boarium has a casa:tile lot inside it at (-392, 434), 10.3 m deep (27 BC)
-- forum_boarium has a casa:tile lot inside it at (-393, 394), 21.1 m deep (44 BC)
-- forum_boarium has a casa:tile lot inside it at (-393, 396), 21.6 m deep (133 BC, 27 BC)
-- forum_boarium has a casa:tile lot inside it at (-398, 434), 9.4 m deep (264 BC)
-- forum_boarium has a casa:tile lot inside it at (-406, 423), 15.2 m deep (264 BC)
-- forum_boarium has a casa:tile lot inside it at (-409, 433), 9.8 m deep (264 BC)
-- forum_boarium has a domus lot inside it at (-395, 448), 5.7 m deep (27 BC)
-- forum_boarium has a domus lot inside it at (-425, 385), 2.3 m deep (27 BC, 44 BC)
-- forum_boarium has a insula:gable:3:0:1:n lot inside it at (-402, 439), 4.6 m deep (44 BC)
-- forum_boarium has a insula:gable:3:1:1:n lot inside it at (-321, 394), 8.1 m deep (133 BC, 27 BC, 44 BC)
-- forum_boarium has a insula:gable:3:1:1:n lot inside it at (-322, 400), 7.1 m deep (133 BC, 27 BC, 44 BC)
-- forum_boarium has a insula:gable:4:0:0:n lot inside it at (-388, 434), 12.4 m deep (133 BC, 44 BC)
-- forum_boarium has a insula:gable:4:0:0:n lot inside it at (-389, 427), 18.5 m deep (133 BC, 27 BC, 44 BC)
-- forum_boarium has a insula:gable:4:1:0:n lot inside it at (-369, 386), 16.3 m deep (133 BC, 27 BC, 44 BC)
-- forum_boarium has a insula:gable:4:1:0:n lot inside it at (-370, 380), 9.6 m deep (133 BC, 27 BC, 44 BC)
-- forum_boarium has a insula:gable:4:1:1:n lot inside it at (-402, 439), 4.0 m deep (133 BC)
-- forum_boarium has a insula:gable:5:0:1:n lot inside it at (-369, 393), 23.2 m deep (133 BC, 27 BC, 44 BC)
-- forum_boarium has a insula:gable:5:0:1:n lot inside it at (-369, 400), 29.8 m deep (133 BC, 27 BC, 44 BC)
-- forum_boarium has a insula:hip:3:0:0:n lot inside it at (-352, 383), 11.7 m deep (133 BC, 27 BC, 44 BC)
-- forum_boarium has a insula:hip:3:0:0:n lot inside it at (-358, 383), 12.6 m deep (133 BC, 27 BC, 44 BC)
-- forum_boarium has a insula:stepped:4:1:1 lot inside it at (-410, 369), 2.8 m deep (133 BC)
-- forum_boarium has a insula:stepped:5:2:0 lot inside it at (-411, 371), 2.8 m deep (27 BC, 44 BC)
-- forum_boarium has a taberna:0 lot inside it at (-395, 380), 11.9 m deep (133 BC, 27 BC, 44 BC)
-- forum_boarium has a taberna:0 lot inside it at (-397, 387), 15.2 m deep (133 BC, 27 BC, 44 BC)
-- forum_boarium has a taberna:0 lot inside it at (-411, 436), 4.5 m deep (133 BC, 27 BC, 44 BC)
-- forum_boarium has a taberna:2 lot inside it at (-396, 381), 13.3 m deep (264 BC)
-- forum_boarium has a taberna:2 lot inside it at (-398, 390), 15.0 m deep (390 BC, 509 BC)
-- forum_boarium has a taberna:3 lot inside it at (-394, 373), 5.6 m deep (264 BC)
-- forum_boarium has a taberna:3 lot inside it at (-401, 401), 14.0 m deep (133 BC, 264 BC, 27 BC, 44 BC)
-- forum_boarium has a taberna:5 lot inside it at (-394, 372), 4.2 m deep (133 BC, 27 BC, 44 BC)
-- forum_boarium has a taberna:5 lot inside it at (-395, 377), 9.9 m deep (390 BC)
-- forum_boarium has a taberna:5 lot inside it at (-399, 392), 14.7 m deep (264 BC)
-- forum_boarium has a workshop:0 lot inside it at (-322, 382), 6.8 m deep (133 BC, 264 BC, 27 BC, 44 BC)
-- forum_boarium has a workshop:0 lot inside it at (-341, 383), 11.4 m deep (133 BC, 264 BC, 27 BC, 44 BC)
-- forum_boarium has a workshop:0 lot inside it at (-341, 431), 21.4 m deep (133 BC, 264 BC, 27 BC, 390 BC, 44 BC)
-- forum_boarium has a workshop:0 lot inside it at (-342, 411), 26.1 m deep (133 BC, 264 BC, 27 BC, 390 BC, 44 BC)
-- forum_boarium has a workshop:0 lot inside it at (-385, 373), 8.4 m deep (27 BC)
-- forum_boarium has a workshop:0 lot inside it at (-401, 411), 18.7 m deep (133 BC)
-- forum_boarium has a workshop:0 lot inside it at (-405, 427), 18.4 m deep (44 BC)
-- forum_boarium has a workshop:0 lot inside it at (-413, 384), 2.3 m deep (264 BC)
-- forum_boarium has a workshop:0 lot inside it at (-415, 394), 1.4 m deep (390 BC, 509 BC)
-- forum_boarium has a workshop:1 lot inside it at (-322, 412), 6.1 m deep (133 BC, 264 BC, 27 BC, 390 BC, 44 BC)
-- forum_boarium has a workshop:1 lot inside it at (-323, 431), 3.5 m deep (264 BC, 390 BC)
-- forum_boarium has a workshop:1 lot inside it at (-341, 444), 13.1 m deep (133 BC, 264 BC, 27 BC, 44 BC)
-- forum_boarium has a workshop:1 lot inside it at (-368, 443), 9.3 m deep (264 BC)
-- forum_boarium has a workshop:1 lot inside it at (-405, 424), 17.7 m deep (27 BC)
-- forum_boarium has a workshop:1 lot inside it at (-405, 426), 17.2 m deep (133 BC)
-- forum_boarium has a workshop:1 lot inside it at (-410, 369), 2.8 m deep (264 BC)
-- forum_boarium has a workshop:1 lot inside it at (-412, 378), 2.8 m deep (390 BC, 509 BC)
-- forum_boarium has a workshop:2 lot inside it at (-342, 397), 24.5 m deep (133 BC, 264 BC, 27 BC, 44 BC)
-- forum_boarium has a workshop:2 lot inside it at (-355, 397), 27.3 m deep (133 BC, 264 BC, 27 BC, 44 BC)
-- forum_boarium has a workshop:2 lot inside it at (-355, 410), 39.2 m deep (133 BC, 264 BC, 27 BC, 44 BC)
-- forum_boarium has a workshop:2 lot inside it at (-355, 444), 11.5 m deep (264 BC)
-- forum_boarium has a workshop:2 lot inside it at (-383, 367), 1.7 m deep (133 BC)
-- forum_boarium has a workshop:2 lot inside it at (-386, 377), 11.7 m deep (44 BC)
-- forum_boarium has a workshop:2 lot inside it at (-386, 380), 15.0 m deep (133 BC)
-- forum_boarium has a workshop:2 lot inside it at (-386, 383), 18.4 m deep (264 BC)
-- forum_boarium has a workshop:2 lot inside it at (-388, 445), 5.2 m deep (264 BC, 390 BC, 44 BC)
-- forum_boarium has a workshop:2 lot inside it at (-400, 410), 19.1 m deep (27 BC)
-- forum_boarium has a workshop:2 lot inside it at (-400, 412), 21.1 m deep (264 BC)
-- forum_boarium has a workshop:2 lot inside it at (-401, 412), 19.2 m deep (44 BC)
-- forum_boarium has a workshop:2 lot inside it at (-417, 396), 1.1 m deep (133 BC)
-- forum_holitorium has a casa:tile lot inside it at (-462, 130), 17.1 m deep (264 BC)
-- forum_holitorium has a casa:tile lot inside it at (-470, 136), 18.7 m deep (264 BC)
-- forum_holitorium has a insula:gable:4:0:0:n lot inside it at (-477, 125), 11.7 m deep (133 BC)
-- forum_holitorium has a insula:gable:4:0:0:n lot inside it at (-479, 132), 11.9 m deep (133 BC)
-- forum_holitorium has a insula:hip:2:0:1 lot inside it at (-489, 143), 5.3 m deep (264 BC)
-- forum_holitorium has a insula:hip:3:2:1:n lot inside it at (-463, 133), 23.3 m deep (133 BC)
-- forum_holitorium has a insula:hip:3:2:1:n lot inside it at (-470, 131), 17.7 m deep (133 BC)
-- forum_holitorium has a insula:hip:4:0:1:n lot inside it at (-486, 144), 7.0 m deep (133 BC)
-- forum_holitorium has a insula:hip:5:0:0:n lot inside it at (-408, 163), 17.8 m deep (133 BC)
-- forum_holitorium has a insula:hip:5:0:0:n lot inside it at (-409, 170), 10.8 m deep (133 BC)
-- forum_holitorium has a insula:stepped:3:2:0 lot inside it at (-392, 174), 1.2 m deep (27 BC, 44 BC)
-- forum_holitorium has a workshop:1 lot inside it at (-409, 181), 3.0 m deep (133 BC, 27 BC, 44 BC)
-- forum_holitorium has a workshop:1 lot inside it at (-457, 150), 15.7 m deep (264 BC)
-- forum_iulium has a casa:shingle lot inside it at (32, -135), 3.0 m deep (27 BC, 44 BC)
-- forum_iulium has a casa:tile lot inside it at (31, -128), 8.0 m deep (27 BC, 44 BC)
-- forum_iulium has a insula:gable:3:2:0:n lot inside it at (-38, -209), 11.6 m deep (27 BC, 44 BC)
-- forum_iulium has a insula:gable:4:0:0:n lot inside it at (32, -131), 8.2 m deep (27 BC, 44 BC)
-- forum_iulium has a taberna:0 lot inside it at (48, -106), 8.2 m deep (27 BC, 44 BC)
-- forum_iulium has a taberna:3 lot inside it at (-79, -148), 1.4 m deep (27 BC, 44 BC)
-- forum_iulium has a taberna:4 lot inside it at (-85, -156), 2.2 m deep (27 BC, 44 BC)
-- forum_iulium has a taberna:5 lot inside it at (35, -109), 16.5 m deep (27 BC, 44 BC)
-- forum_iulium has a taberna:5 lot inside it at (39, -118), 7.4 m deep (27 BC, 44 BC)
-- pantheon_agrippae has a casa:shingle lot inside it at (-687, -661), 6.5 m deep (27 BC)
-- pantheon_agrippae has a casa:tile lot inside it at (-677, -658), 4.3 m deep (27 BC)
-- pantheon_agrippae has a casa:tile lot inside it at (-681, -664), 9.9 m deep (27 BC)
-- pantheon_agrippae has a insula:hip:3:0:0:n lot inside it at (-696, -655), 4.0 m deep (27 BC)
-- pantheon_agrippae has a insula:hip:3:0:0:n lot inside it at (-699, -661), 9.9 m deep (27 BC)
+- aedes_iunonis_reginae_aventine has a insula:gable:3:2:1:n lot inside it at (-211, 995), 1.9 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- aedes_mercurii has a insula:gable:4:0:0:n lot inside it at (-135, 719), 1.3 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- aedes_minervae_aventine has a insula:gable:5:1:1:n lot inside it at (-231, 1174), 2.8 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- aedes_veneris_erycinae_capitol has a casa:tile lot inside it at (-167, -120), 1.8 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- aedes_victoriae has a casa:shingle lot inside it at (120, 383), 1.8 m deep (133 BC, 264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- ara_iovis_inventoris has a domus lot inside it at (-428, 525), 7.0 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a casa:shingle lot inside it at (-297, 118), 2.8 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a casa:tile lot inside it at (-223, 49), 5.2 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a casa:tile lot inside it at (-278, 94), 12.8 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a casa:tile lot inside it at (-278, 94), 13.6 m deep (133 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a casa:tile lot inside it at (-317, 94), 21.8 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a casa:tile lot inside it at (-327, 107), 6.2 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a casa:tile lot inside it at (-328, 114), 1.7 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a domus lot inside it at (-294, 131), 2.4 m deep (133 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a domus lot inside it at (-347, 107), 3.6 m deep (133 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a domus lot inside it at (-348, 104), 3.0 m deep (44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a domus lot inside it at (-348, 105), 2.6 m deep (27 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a insula:gable:3:0:0:n lot inside it at (-306, 118), 6.8 m deep (133 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a insula:gable:3:0:0:n lot inside it at (-320, 117), 11.1 m deep (133 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a insula:gable:3:0:0:n lot inside it at (-352, 28), 14.5 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a insula:gable:3:0:0:n lot inside it at (-358, 27), 10.5 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a insula:gable:3:0:1:n lot inside it at (-313, 117), 11.4 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a insula:gable:3:2:0:n lot inside it at (-307, 118), 7.7 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a insula:gable:4:0:0:n lot inside it at (-291, 95), 21.3 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a insula:gable:4:0:0:n lot inside it at (-306, 118), 6.9 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a insula:gable:5:0:0:n lot inside it at (-225, 59), 12.4 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a insula:gable:5:0:0:n lot inside it at (-298, 93), 26.5 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a insula:hip:3:0:0:n lot inside it at (-313, 116), 11.0 m deep (133 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a insula:hip:3:1:0:n lot inside it at (-299, 118), 3.0 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a insula:hip:3:1:1:n lot inside it at (-321, 116), 10.2 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a insula:hip:5:0:1:n lot inside it at (-271, 84), 20.6 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a insula:stepped:5:0:0 lot inside it at (-301, 94), 27.6 m deep (133 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a taberna:0 lot inside it at (-305, 109), 11.1 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a taberna:1 lot inside it at (-276, 101), 5.8 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a taberna:1 lot inside it at (-285, 99), 11.0 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a taberna:2 lot inside it at (-293, 111), 4.6 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a taberna:3 lot inside it at (-287, 111), 1.4 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a taberna:3 lot inside it at (-319, 107), 12.6 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a taberna:4 lot inside it at (-296, 110), 5.7 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a taberna:4 lot inside it at (-308, 109), 12.6 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a taberna:4 lot inside it at (-313, 108), 15.9 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a taberna:4 lot inside it at (-313, 95), 22.8 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_capitolina has a taberna:4 lot inside it at (-320, 107), 11.8 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- area_sacra_argentina_a has a workshop:1 lot inside it at (-675, -319), 2.2 m deep (133 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a casa:shingle lot inside it at (-352, 427), 25.0 m deep (264 BC, 390 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a casa:shingle lot inside it at (-384, 400), 29.7 m deep (133 BC, 264 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a casa:shingle lot inside it at (-384, 407), 32.9 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a casa:shingle lot inside it at (-392, 414), 25.6 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a casa:thatch lot inside it at (-398, 399), 17.7 m deep (390 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a casa:thatch lot inside it at (-405, 421), 15.9 m deep (390 BC, 509 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a casa:thatch lot inside it at (-407, 430), 13.3 m deep (390 BC, 509 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a casa:thatch lot inside it at (-411, 438), 4.2 m deep (390 BC, 509 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a casa:tile lot inside it at (-326, 401), 9.1 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a casa:tile lot inside it at (-358, 386), 14.0 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a casa:tile lot inside it at (-365, 393), 21.9 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a casa:tile lot inside it at (-372, 393), 22.0 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a casa:tile lot inside it at (-384, 394), 24.5 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a casa:tile lot inside it at (-384, 408), 31.2 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a casa:tile lot inside it at (-384, 414), 30.7 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a casa:tile lot inside it at (-392, 392), 21.7 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a casa:tile lot inside it at (-392, 400), 23.3 m deep (264 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a casa:tile lot inside it at (-393, 394), 21.1 m deep (44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a casa:tile lot inside it at (-393, 395), 21.1 m deep (27 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a casa:tile lot inside it at (-393, 396), 21.6 m deep (133 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a casa:tile lot inside it at (-398, 434), 9.4 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a casa:tile lot inside it at (-406, 423), 15.2 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a casa:tile lot inside it at (-409, 433), 9.8 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a insula:gable:3:0:1:n lot inside it at (-402, 439), 4.6 m deep (44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a insula:gable:3:0:1:n lot inside it at (-403, 440), 3.7 m deep (27 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a insula:gable:3:1:1:n lot inside it at (-321, 394), 8.1 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a insula:gable:3:1:1:n lot inside it at (-322, 400), 7.1 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a insula:gable:4:0:0:n lot inside it at (-388, 434), 12.4 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a insula:gable:4:0:0:n lot inside it at (-389, 427), 18.5 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a insula:gable:4:0:0:n lot inside it at (-414, 385), 1.9 m deep (133 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a insula:gable:4:1:0:n lot inside it at (-369, 386), 16.3 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a insula:gable:5:0:1:n lot inside it at (-369, 393), 23.2 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a insula:gable:5:0:1:n lot inside it at (-369, 400), 29.8 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a taberna:0 lot inside it at (-395, 380), 11.9 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a taberna:0 lot inside it at (-397, 387), 15.2 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a taberna:0 lot inside it at (-411, 436), 4.5 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a taberna:2 lot inside it at (-396, 381), 13.3 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a taberna:2 lot inside it at (-398, 390), 15.0 m deep (390 BC, 509 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a taberna:3 lot inside it at (-394, 373), 5.6 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a taberna:3 lot inside it at (-401, 401), 14.0 m deep (133 BC, 264 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a taberna:5 lot inside it at (-394, 372), 4.2 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a taberna:5 lot inside it at (-395, 377), 9.9 m deep (390 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a taberna:5 lot inside it at (-399, 392), 14.7 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:0 lot inside it at (-322, 382), 6.8 m deep (133 BC, 264 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:0 lot inside it at (-341, 383), 11.4 m deep (133 BC, 264 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:0 lot inside it at (-341, 431), 21.4 m deep (133 BC, 264 BC, 27 BC, 390 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:0 lot inside it at (-342, 411), 26.1 m deep (133 BC, 264 BC, 27 BC, 390 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:0 lot inside it at (-405, 427), 18.3 m deep (27 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:0 lot inside it at (-405, 427), 18.4 m deep (44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:0 lot inside it at (-406, 426), 17.0 m deep (133 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:0 lot inside it at (-410, 373), 2.8 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:0 lot inside it at (-413, 384), 2.3 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:0 lot inside it at (-415, 394), 1.4 m deep (390 BC, 509 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:1 lot inside it at (-322, 412), 6.1 m deep (133 BC, 264 BC, 27 BC, 390 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:1 lot inside it at (-323, 431), 3.5 m deep (264 BC, 390 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:1 lot inside it at (-341, 444), 13.1 m deep (133 BC, 264 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:1 lot inside it at (-368, 443), 9.3 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:1 lot inside it at (-405, 442), 4.2 m deep (133 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:1 lot inside it at (-410, 369), 2.8 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:1 lot inside it at (-412, 378), 2.8 m deep (390 BC, 509 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:1 lot inside it at (-416, 397), 1.1 m deep (133 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:2 lot inside it at (-342, 397), 24.5 m deep (133 BC, 264 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:2 lot inside it at (-355, 397), 27.3 m deep (133 BC, 264 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:2 lot inside it at (-355, 410), 39.2 m deep (133 BC, 264 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:2 lot inside it at (-355, 444), 11.5 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:2 lot inside it at (-383, 369), 3.9 m deep (133 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:2 lot inside it at (-386, 377), 11.7 m deep (44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:2 lot inside it at (-386, 378), 12.6 m deep (27 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:2 lot inside it at (-386, 383), 18.4 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:2 lot inside it at (-387, 382), 17.5 m deep (133 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:2 lot inside it at (-388, 445), 5.2 m deep (133 BC, 264 BC, 27 BC, 390 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:2 lot inside it at (-400, 412), 20.6 m deep (133 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:2 lot inside it at (-400, 412), 21.1 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:2 lot inside it at (-401, 412), 19.2 m deep (44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:2 lot inside it at (-401, 413), 19.2 m deep (27 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:2 lot inside it at (-411, 373), 2.8 m deep (133 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_boarium has a workshop:2 lot inside it at (-414, 387), 2.0 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_esquilinum has a casa:shingle lot inside it at (1282, -342), 6.6 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_esquilinum has a casa:tile lot inside it at (1248, -367), 2.0 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_esquilinum has a casa:tile lot inside it at (1254, -364), 5.0 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_esquilinum has a casa:tile lot inside it at (1259, -323), 10.9 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_esquilinum has a casa:tile lot inside it at (1265, -321), 8.5 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_esquilinum has a casa:tile lot inside it at (1268, -327), 15.2 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_esquilinum has a casa:tile lot inside it at (1282, -328), 6.0 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_esquilinum has a casa:tile lot inside it at (1285, -335), 3.2 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_esquilinum has a insula:gable:3:0:1 lot inside it at (1281, -318), 10.5 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_esquilinum has a insula:gable:3:0:1:n lot inside it at (1276, -370), 2.9 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_esquilinum has a insula:gable:4:1:0:n lot inside it at (1274, -343), 14.7 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_esquilinum has a insula:gable:5:0:0:n lot inside it at (1250, -365), 5.7 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_esquilinum has a insula:gable:5:0:1 lot inside it at (1285, -371), 1.6 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_esquilinum has a insula:gable:5:1:0:n lot inside it at (1285, -327), 6.9 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_esquilinum has a insula:hip:3:0:0:n lot inside it at (1242, -337), 1.6 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_esquilinum has a insula:hip:3:0:1:n lot inside it at (1246, -312), 3.7 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_esquilinum has a insula:hip:5:2:0:n lot inside it at (1263, -361), 11.2 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_esquilinum has a taberna:0 lot inside it at (1272, -359), 9.3 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_esquilinum has a taberna:0 lot inside it at (1281, -361), 6.3 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_esquilinum has a taberna:1 lot inside it at (1257, -356), 12.4 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_esquilinum has a taberna:2 lot inside it at (1248, -342), 6.2 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_esquilinum has a taberna:2 lot inside it at (1279, -348), 8.1 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_esquilinum has a taberna:4 lot inside it at (1248, -354), 6.5 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_holitorium has a casa:tile lot inside it at (-462, 130), 17.1 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_holitorium has a casa:tile lot inside it at (-470, 136), 18.7 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_holitorium has a insula:gable:4:0:0:n lot inside it at (-477, 125), 11.7 m deep (133 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_holitorium has a insula:gable:4:0:0:n lot inside it at (-479, 132), 11.9 m deep (133 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_holitorium has a insula:hip:2:0:1 lot inside it at (-489, 143), 5.3 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_holitorium has a insula:hip:3:2:1:n lot inside it at (-463, 133), 23.3 m deep (133 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_holitorium has a insula:hip:3:2:1:n lot inside it at (-470, 131), 17.7 m deep (133 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_holitorium has a insula:hip:4:0:1:n lot inside it at (-486, 144), 7.0 m deep (133 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_holitorium has a insula:hip:5:0:0:n lot inside it at (-408, 163), 17.8 m deep (133 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_holitorium has a insula:hip:5:0:0:n lot inside it at (-409, 170), 10.8 m deep (133 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_holitorium has a workshop:1 lot inside it at (-409, 181), 3.0 m deep (133 BC, 27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_holitorium has a workshop:1 lot inside it at (-457, 150), 15.7 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_iulium has a casa:shingle lot inside it at (32, -135), 3.0 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_iulium has a casa:tile lot inside it at (31, -128), 8.0 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_iulium has a insula:gable:3:2:0:n lot inside it at (-38, -209), 11.6 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_iulium has a insula:gable:4:0:0:n lot inside it at (32, -131), 8.2 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_iulium has a taberna:0 lot inside it at (48, -106), 8.2 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_iulium has a taberna:3 lot inside it at (-79, -148), 1.4 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_iulium has a taberna:4 lot inside it at (-85, -156), 2.2 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_iulium has a taberna:5 lot inside it at (35, -109), 16.5 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- forum_iulium has a taberna:5 lot inside it at (39, -118), 7.4 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- pantheon_agrippae has a casa:shingle lot inside it at (-687, -661), 6.5 m deep (27 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- pantheon_agrippae has a casa:tile lot inside it at (-677, -658), 4.3 m deep (27 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- pantheon_agrippae has a casa:tile lot inside it at (-681, -664), 9.9 m deep (27 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- pantheon_agrippae has a insula:hip:3:0:0:n lot inside it at (-696, -655), 4.0 m deep (27 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- pantheon_agrippae has a insula:hip:3:0:0:n lot inside it at (-699, -661), 9.9 m deep (27 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- sacellum_volupiae has a domus lot inside it at (-13, 292), 7.2 m deep (133 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- sacellum_volupiae has a domus lot inside it at (-16, 297), 7.5 m deep (27 BC, 44 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- sacellum_volupiae has a domus lot inside it at (-17, 297), 7.5 m deep (264 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- sacellum_volupiae has a domus lot inside it at (-18, 301), 7.0 m deep (390 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
+- sacellum_volupiae has a domus lot inside it at (-19, 301), 6.5 m deep (509 BC) - the house fill (fill.gd) does not keep plazas (zero-size bounds), small shrines and the edges of temple footprints clear; hook for the lead
 
 **houses standing on a street**
 
-- nova_via insula:gable:3:0:1:n lot at (394, 214) 3.3 m into the carriageway (133 BC, 27 BC, 44 BC)
-- via_aurelia insula:hip:3:0:0:n lot at (-1068, 433) 5.0 m into the carriageway (133 BC, 27 BC, 44 BC)
-- via_sacra casa:shingle lot at (257, 172) 3.5 m into the carriageway (133 BC, 264 BC, 509 BC)
-- via_sacra insula:gable:4:0:1:n lot at (268, 209) 2.2 m into the carriageway (133 BC, 27 BC, 44 BC)
-- via_velabrum domus lot at (-293, 442) 10.8 m into the carriageway (27 BC, 44 BC)
-- vicus_iugarius domus lot at (-158, 77) 6.9 m into the carriageway (27 BC, 44 BC)
-- vicus_longus casa:tile lot at (223, -285) 2.0 m into the carriageway (27 BC, 44 BC)
-- vicus_longus insula:hip:5:0:1:n lot at (872, -1207) 1.4 m into the carriageway (27 BC, 44 BC)
-- vicus_patricius casa:shingle lot at (418, -383) 1.2 m into the carriageway (264 BC)
+- via_aurelia insula:hip:3:0:0:n lot at (-1068, 433) 5.0 m into the carriageway (133 BC, 27 BC, 44 BC) - a fill lot reaching into a street; the fill is not this work package (hook for the lead)
+- via_sacra casa:shingle lot at (257, 172) 3.5 m into the carriageway (509 BC) - a fill lot reaching into a street; the fill is not this work package (hook for the lead)
+- via_velabrum insula:gable:4:2:0:n lot at (-276, 449) 6.1 m into the carriageway (133 BC) - a fill lot reaching into a street; the fill is not this work package (hook for the lead)
+- vicus_iugarius domus lot at (-164, 80) 7.9 m into the carriageway (27 BC, 44 BC) - a fill lot reaching into a street; the fill is not this work package (hook for the lead)
+- vicus_longus casa:tile lot at (223, -285) 2.0 m into the carriageway (27 BC, 44 BC) - a fill lot reaching into a street; the fill is not this work package (hook for the lead)
+- vicus_longus insula:hip:5:0:1:n lot at (872, -1207) 1.4 m into the carriageway (27 BC, 44 BC) - a fill lot reaching into a street; the fill is not this work package (hook for the lead)
+- vicus_patricius casa:shingle lot at (418, -383) 1.2 m into the carriageway (264 BC) - a fill lot reaching into a street; the fill is not this work package (hook for the lead)
+- vicus_tuscus insula:hip:5:0:0:n lot at (-298, 464) 1.1 m into the carriageway (27 BC) - a fill lot reaching into a street; the fill is not this work package (hook for the lead)
 
 **monuments standing in the river**
 
-- porticus_aemilia 3 of 25 footprint points in the water (133 BC, 27 BC, 44 BC)
-- theatrum_marcelli 1 of 25 footprint points in the water (27 BC, 44 BC)
-
-**streets passing through a monument**
-
-- basilica_sempronia passes through street vicus_tuscus at (2, 48) (133 BC)
+- porta_flumentana 1 of 25 footprint points in the water (133 BC, 264 BC, 27 BC, 44 BC) - the river gate stood at the bank (Platner-Ashby s.v. Porta Flumentana); one sample point touches the modelled river
+- porticus_aemilia 3 of 25 footprint points in the water (133 BC, 27 BC, 44 BC) - the hall stood on the river bank; the modelled Tiber (tiber.gd) is an approximation of the ancient bank, a few points touch it
+- theatrum_marcelli 1 of 25 footprint points in the water (27 BC, 44 BC) - as porticus_aemilia: the theatre stood near the bank; one sample point touches the modelled river
 
 ## 4. Time
 
@@ -1326,14 +962,14 @@ Monuments drawn in each standard year (`monuments.gd` `state_at`, ported to Pyth
 
 | year | total | building | burnt | standing | standing_scaffold |
 |---|---|---|---|---|---|
-| 509 BC | 38 | 0 | 0 | 38 | 0 |
-| 390 BC | 46 | 0 | 0 | 46 | 0 |
-| 264 BC | 80 | 0 | 0 | 80 | 0 |
-| 133 BC | 112 | 0 | 0 | 112 | 0 |
-| 44 BC | 130 | 3 | 1 | 125 | 1 |
-| 27 BC | 137 | 2 | 2 | 133 | 0 |
-| AD 80 | 163 | 0 | 1 | 162 | 0 |
-| AD 120 | 179 | 0 | 1 | 178 | 0 |
+| 509 BC | 62 | 0 | 0 | 62 | 0 |
+| 390 BC | 71 | 0 | 0 | 71 | 0 |
+| 264 BC | 108 | 0 | 0 | 108 | 0 |
+| 133 BC | 150 | 0 | 0 | 150 | 0 |
+| 44 BC | 172 | 3 | 1 | 167 | 1 |
+| 27 BC | 182 | 2 | 2 | 178 | 0 |
+| AD 80 | 212 | 0 | 1 | 211 | 0 |
+| AD 120 | 229 | 0 | 1 | 228 | 0 |
 
 ### Date issues (23)
 
@@ -1361,7 +997,7 @@ Monuments drawn in each standard year (`monuments.gd` `state_at`, ported to Pyth
 - `theatrum_scauri`: AD 80: engine standing, drawn absent
 - `theatrum_scauri`: AD 120: engine standing, drawn absent
 
-### Building years not named in the matched Platner-Ashby article (27)
+### Building years not named in the matched Platner-Ashby article (40)
 
 A pointer to re-read the article, not an error: P-A often gives the date only through the consul's name, or the record's year comes from another source.
 
@@ -1371,16 +1007,24 @@ A pointer to re-read the article, not an error: P-A often gives the date only th
 | aedes_dianae_circus_flaminius | 179 BC | Diana, aedes | 187 BC |  |
 | aedes_dianae_circus_flaminius | 179 BC | Diana, sacellum | 58 BC |  |
 | aedes_fidei | 254 BC | Fides, aedes | 715 BC, 250 BC, 115 BC, 43 BC |  |
+| aedes_fortunae_equestris | 173 BC | Fortuna Equestris, aedes | 180 BC, 92 BC, 55 BC |  |
 | aedes_fortunae_primigeniae | 194 BC | Fortuna Primigenia | 578 BC |  |
+| aedes_herculis_custodis | 221 BC | Hercules Custos, aedes:* | 400 BC, 218 BC, 179 BC, 82 BC |  |
 | aedes_iovis_statoris_palatine | 294 BC | Iuppiter Stator, aedes | 146 BC, 27 BC, 14 BC |  |
 | aedes_iuventatis | 191 BC | Iuventas, aedes | 578 BC, 207 BC, 27 BC, 16 BC |  |
+| aedes_martis_appia | 388 BC | Mars, aedes | 138 BC, 55 BC |  |
 | aedes_pietatis | 181 BC | Pietas, aedes | 91 BC |  |
 | aedes_pietatis | 181 BC | Pietas, aedes | 191 BC, 46 BC, 44 BC |  |
+| aedes_salutis | 302 BC | Salus, ara | 311 BC, 206 BC, 113 BC |  |
+| aedes_summani | 278 BC | Summanus, aedes | 197 BC |  |
 | aedes_libertatis_aventine | 238 BC | Atrium Libertatis | 212 BC, 194 BC, 46 BC |  |
 | aedes_bellonae | 296 BC | Bellona, sacellum | 48 BC |  |
+| porticus_octaviae | 146 BC | Bibliotheca Porticus Octaviae | 23 BC |  |
 | circus_maximus | 600 BC | Circus Maximus | 753 BC, 329 BC, 204 BC, 196 BC, 189 BC, 174 BC, 100 BC, 55 BC |  |
 | aedes_concordiae_forum | 367 BC | Concordia, aedes | 218 BC |  |
 | aedes_concordiae_forum | 367 BC | Concordia, aedicula | 304 BC, 121 BC |  |
+| aedes_concordiae_forum | 367 BC | Concordia Nova | 46 BC, 44 BC |  |
+| aedes_florae | 238 BC | Flora, templum | 715 BC |  |
 | aedes_honoris_virtutis | 205 BC | Honos et Virtus, Aedes | 715 BC, 496 BC, 304 BC, 234 BC, 222 BC |  |
 | aedes_iunonis_reginae_aventine | 392 BC | Iuno Regina, templum | 396 BC, 207 BC, 27 BC |  |
 | aedes_iunonis_reginae_circus | 179 BC | Iuno Regina, templum | 396 BC, 207 BC, 27 BC |  |
@@ -1389,9 +1033,14 @@ A pointer to re-read the article, not an error: P-A often gives the date only th
 | lares_permarini | 179 BC | Lares Permarini, Aedes | 190 BC |  |
 | porta_fontinalis | 378 BC | Porta Fontinalis | 193 BC |  |
 | porticus_minucia_vetus | 106 BC | Porticus Minucia | 578 BC, 110 BC |  |
+| aedes_fortunae_primigeniae | 194 BC | Fortunae (tres), aedes | 204 BC, 169 BC, 47 BC, 46 BC |  |
+| curia_iulia | 44 BC | Victoria, ara | 29 BC, 27 BC |  |
 | aedes_veneris_erycinae_collina | 181 BC | Venus Erucina | 217 BC, 184 BC |  |
 | regia | 600 BC | Atrium Regium | 210 BC |  |
 | horrea_sempronia | 123 BC | Basilica Sempronia | 170 BC |  |
+| curia_iulia | 44 BC | Curia Pompiliana | 715 BC |  |
 | domus_catuli | 101 BC | Q. Lutatius Catulus | 27 BC, 20 BC |  |
+| fornix_scipionis | 190 BC | P. Scipio Africanus | 169 BC |  |
+| macellum | 179 BC | Forum Piscarium | 210 BC |  |
 | porticus_octaviae | 146 BC | Porticus Octavia | 168 BC, 55 BC, 33 BC, 27 BC |  |
 
