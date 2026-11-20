@@ -140,6 +140,8 @@ static func handle_flags(flags: Dictionary, urbs: Node3D) -> Node3D:
 	var extra := {}
 	if flags.has("seed"):
 		extra["seed"] = int(flags["seed"])
+	if flags.has("route-line"):   # F2 play: --route-line draws the triumph's way (renders)
+		extra["show_route"] = true
 	if flags.has("event"):
 		# --event=kind:ref[:monument]: play an engine event as the city would (U8)
 		var f := str(flags["event"]).split(":")
@@ -248,7 +250,7 @@ static func place(kind: String, id: String, urbs: Node3D, params: Dictionary = {
 					for i in 8:
 						front = maxf(front, (box.get_endpoint(i) - e.origin).dot(outward))
 					var at: Vector3 = e.origin + outward * (front + 7.0)
-					xf = Transform3D(Basis.looking_at(inward, Vector3.UP), Vector3(at.x, height.call(at.x, at.z), at.z))
+					xf = Transform3D(Basis.looking_at(inward, Vector3.UP), Vector3(at.x, floor_at(urbs, at.x, at.z), at.z))
 				else:
 					xf = Transform3D(Basis.looking_at(inward, Vector3.UP), Vector3(c.x, y, c.z))
 			"triumph":
@@ -268,6 +270,46 @@ static func place(kind: String, id: String, urbs: Node3D, params: Dictionary = {
 		return null
 	sp.transform = xf
 	return sp
+
+
+## F2 play: the floor a spectacle stands on at (x, z): the ground, or the top of a platform built
+## on it (the Area Capitolina's terrace stands above the hill): the highest solid box of a
+## monument under the point that is broad (15 m or more) and less than 30 m above the ground (the
+## terrace stands up to ~20 m over the modelled hill's slope there), so a statue base does not
+## count; the ray starts 31 m up, under any roof.
+static func floor_at(urbs: Node3D, x: float, z: float) -> float:
+	var y := float(urbs.terrain.height_at(x, z))
+	var mon: Variant = urbs.get("monuments")
+	var frames: Variant = mon.get("_xf") if mon != null else null
+	if not (frames is Dictionary):
+		return y
+	var best := y
+	# the solids, and the open courts and terraces walked on (monuments.gd _opens)
+	for table_name in ["_solids", "_opens"]:
+		var table: Variant = mon.get(table_name)
+		if table is Dictionary:
+			best = maxf(best, _top_under(table, frames, x, y, z))
+	return best
+
+
+static func _top_under(table: Dictionary, frames: Dictionary, x: float, y: float, z: float) -> float:
+	var best := y
+	for id in table:
+		if not frames.has(id):
+			continue
+		var inv: Transform3D = (frames[id] as Transform3D).affine_inverse()
+		var o := inv * Vector3(x, y + 31.0, z)
+		var d := inv.basis * Vector3.DOWN
+		for b in table[id]:
+			var box: AABB = b
+			if maxf(box.size.x, box.size.z) < 15.0:
+				continue
+			var hit: Variant = box.intersects_ray(o, d)
+			if hit != null:
+				var top := ((frames[id] as Transform3D) * (hit as Vector3)).y
+				if top > best and top < y + 30.0:
+					best = top
+	return best
 
 
 ## F2 play: the triumph's way (Platner-Ashby s.v. Porta Triumphalis, read: the general passed
@@ -394,6 +436,9 @@ static func triumph_route(urbs: Node3D, height: Callable) -> PackedVector3Array:
 				smoothed[i] = (flat[i - 1] + flat[i] * 2.0 + flat[i + 1]) * 0.25
 		flat = smoothed
 	var out := PackedVector3Array()
+	var last: Vector2 = flat[flat.size() - 1] if not flat.is_empty() else Vector2.ZERO
 	for p in flat:
-		out.append(Vector3(p.x, float(height.call(p.x, p.y)), p.y))
+		# the last stretch is on the Area Capitolina's terrace, above the hill's ground
+		var y := floor_at(urbs, p.x, p.y) if p.distance_to(last) < 70.0 else float(height.call(p.x, p.y))
+		out.append(Vector3(p.x, y, p.y))
 	return out

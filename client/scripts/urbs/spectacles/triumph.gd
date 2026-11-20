@@ -82,7 +82,33 @@ func _ready() -> void:
 	_sacrifice.position = route[route.size() - 1] + d_end.normalized() * 6.0
 	_sacrifice.transform.basis = Basis.looking_at(d_end.normalized(), Vector3.UP)
 	duration = march + 12.0 + 75.0
+	if bool(params.get("show_route", false)):
+		_draw_route()
 	seek(float(params.get("start_at", 0.0)))
+
+
+## F2 play: the way as a red band 6 m wide, 2 m above the ground (--route-line, for renders).
+func _draw_route() -> void:
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	for i in range(route.size() - 1):
+		var a := route[i] + Vector3(0, 2.0, 0)
+		var b := route[i + 1] + Vector3(0, 2.0, 0)
+		var d := (b - a)
+		d.y = 0.0
+		if d.length() < 0.01:
+			continue
+		var s := Vector3(-d.z, 0, d.x).normalized() * 3.0
+		for v in [a - s, a + s, b + s, a - s, b + s, b - s]:
+			st.add_vertex(v)
+	var mi := MeshInstance3D.new()
+	mi.mesh = st.commit()
+	var m := StandardMaterial3D.new()
+	m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	m.cull_mode = BaseMaterial3D.CULL_DISABLED
+	m.albedo_color = Color(0.9, 0.1, 0.1)
+	mi.material_override = m
+	add_child(mi)
 
 
 func _add_member(node: Node3D, along: float, lat: float, kind: String, stop := 0.0) -> int:
@@ -338,10 +364,10 @@ func _apply(time: float) -> void:
 		_sacrifice.seek(tt - ts0)
 
 
-## The cameras: at a stand a third of the way, by the Forum end, and at the foot of the ascent
-## looking up; plus one at the sacrifice.
+## The cameras: in the Velabrum, on the Sacra Via, and on the Clivus Capitolinus looking up;
+## plus one at the sacrifice.
 func view_names() -> PackedStringArray:
-	return PackedStringArray(["the street", "the quadriga", "the Clivus", "the sacrifice"])
+	return PackedStringArray(["the Velabrum", "the Sacra Via", "the Clivus", "the sacrifice"])
 
 
 ## F2 play: the whole way and the crowd lining it, and the altar at the top (life.gd keeps out).
@@ -360,7 +386,9 @@ func clear_area() -> Array:
 
 func seat_views() -> Array[Transform3D]:
 	var out: Array[Transform3D] = []
-	for f in [0.18, 0.55, 0.9]:
+	# F2 play: on the open streets of the way (the Velabrum, the Sacra Via, the Clivus), not in
+	# the Circus' stands (triumph_route: the Campus is the first fifth, the Circus about 0.34-0.49)
+	for f in [0.3, 0.8, 0.93]:
 		var s: float = length * f
 		var r := sample(s)
 		var dir: Vector3 = r[1]
@@ -368,7 +396,7 @@ func seat_views() -> Array[Transform3D]:
 		dir = dir.normalized()
 		var side := Vector3(-dir.z, 0, dir.x)
 		var at: Vector3 = (r[0] as Vector3) + dir * 10.0 + Vector3(0, 1.5, 0)
-		out.append(_clear_view((r[0] as Vector3) - dir * 4.0, side, 9.0, 5.0, at))
+		out.append(_clear_view((r[0] as Vector3) - dir * 4.0, side, 7.0, 5.0, at))
 	out.append(_sacrifice.transform * look(Vector3(8.0, 2.4, 9.0), Vector3(0.5, 1.2, 0.5)))
 	return out
 

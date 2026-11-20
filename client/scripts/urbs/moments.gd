@@ -28,9 +28,9 @@ const FLY := 2.6
 ## action with its cinematic camera (the leading chariot, the pair fighting). The triumph's
 ## start is a share of its route (its march is long): the head of the procession is there.
 const SPANS_YEAR := {"senate": [60.0, 34.0, 0], "race": [6.0, 30.0, -1], "sacrifice": [28.0, 30.0, 0], "munus": [2.0, 34.0, -1],
-	"triumph": [0.5, 30.0, 1], "gathering": [0.0, 24.0, 0]}
+	"triumph": [0.78, 30.0, 1], "gathering": [0.0, 24.0, 0]}
 const SPANS_WATCH := {"senate": [26.0, 70.0, 0], "race": [0.0, 92.0, 0], "sacrifice": [8.0, 64.0, 0], "munus": [0.0, 70.0, -1],
-	"triumph": [0.14, 90.0, 0], "gathering": [0.0, 30.0, 0]}
+	"triumph": [0.28, 90.0, 0], "gathering": [0.0, 30.0, 0]}
 ## The order of importance when a turn brings more than MAX_MOMENTS (lower first).
 const PRIORITY := {"triumph": 0, "anachronism": 1, "sacrifice": 2, "senate": 3, "election": 4, "contio": 5,
 	"look": 6, "levy": 7, "games": 8, "building": 9, "fire": 10, "flood": 11}
