@@ -10787,117 +10787,145 @@
    }
   },
   "relations_failed": 11,
-  "scene_buried": 0,
-  "scene_floating": 0,
-  "scene_houses_in_monuments": 0,
-  "scene_houses_on_streets": 0,
-  "scene_in_river": 0,
-  "scene_overlaps": 0,
-  "scene_streets_through": 0
+  "scene_buried": 110,
+  "scene_floating": 48,
+  "scene_houses_in_monuments": 205,
+  "scene_houses_on_streets": 14,
+  "scene_in_river": 4,
+  "scene_overlaps": 52,
+  "scene_streets_through": 42
  },
  "topography": [
   {
-   "diff_m": null,
+   "diff_m": -2.6,
    "expected_m": 46,
    "flag": false,
    "id": "capitolinus",
-   "kind": "hills"
+   "kind": "hills",
+   "scene_m": 38.3,
+   "scene_max_m": 43.4
   },
   {
-   "diff_m": null,
+   "diff_m": -0.7,
    "expected_m": 51,
    "flag": false,
    "id": "palatinus",
-   "kind": "hills"
+   "kind": "hills",
+   "scene_m": 48.7,
+   "scene_max_m": 50.3
   },
   {
-   "diff_m": null,
+   "diff_m": 0.0,
    "expected_m": 46,
    "flag": false,
    "id": "aventinus",
-   "kind": "hills"
+   "kind": "hills",
+   "scene_m": 41.4,
+   "scene_max_m": 46.0
   },
   {
-   "diff_m": null,
+   "diff_m": 2.0,
    "expected_m": 50,
    "flag": false,
    "id": "caelius",
    "kind": "hills",
-   "ridge_top_m": 55.0
+   "ridge_top_m": 55.0,
+   "scene_m": 50.5,
+   "scene_max_m": 52.0
   },
   {
-   "diff_m": null,
+   "diff_m": 1.5,
    "expected_m": 60,
    "flag": false,
    "id": "esquilinus",
    "kind": "hills",
-   "ridge_top_m": 62.0
+   "ridge_top_m": 62.0,
+   "scene_m": 59.9,
+   "scene_max_m": 61.5
   },
   {
-   "diff_m": null,
+   "diff_m": -0.4,
    "expected_m": 57,
    "flag": false,
    "id": "viminalis",
    "kind": "hills",
-   "ridge_top_m": 57.0
+   "ridge_top_m": 57.0,
+   "scene_m": 50.4,
+   "scene_max_m": 56.6
   },
   {
-   "diff_m": null,
+   "diff_m": 1.6,
    "expected_m": 61,
    "flag": false,
    "id": "quirinalis",
-   "kind": "hills"
+   "kind": "hills",
+   "scene_m": 61.8,
+   "scene_max_m": 62.6
   },
   {
-   "diff_m": null,
+   "diff_m": -1.5,
    "expected_m": 63,
    "flag": false,
    "id": "pincius",
    "kind": "other_heights",
-   "ridge_top_m": 62.0
+   "ridge_top_m": 62.0,
+   "scene_m": 22.4,
+   "scene_max_m": 61.5
   },
   {
-   "diff_m": null,
+   "diff_m": 1.0,
    "expected_m": 82,
    "flag": false,
    "id": "ianiculum",
    "kind": "other_heights",
-   "ridge_top_m": 82.0
+   "ridge_top_m": 82.0,
+   "scene_m": 82.6,
+   "scene_max_m": 83.0
   },
   {
-   "diff_m": null,
+   "diff_m": -11.7,
    "expected_m": 75,
-   "flag": false,
+   "flag": true,
    "id": "vaticanus",
-   "kind": "other_heights"
+   "kind": "other_heights",
+   "scene_m": 60.1,
+   "scene_max_m": 63.3
   },
   {
-   "diff_m": null,
+   "diff_m": 0.0,
    "expected_m": 11,
    "flag": false,
    "id": "forum_valley",
-   "kind": "valleys"
+   "kind": "valleys",
+   "scene_m": 11.0,
+   "scene_max_m": 36.4
   },
   {
-   "diff_m": null,
+   "diff_m": -0.2,
    "expected_m": 10,
    "flag": false,
    "id": "velabrum",
-   "kind": "valleys"
+   "kind": "valleys",
+   "scene_m": 9.8,
+   "scene_max_m": 47.6
   },
   {
-   "diff_m": null,
+   "diff_m": 0.0,
    "expected_m": 12,
    "flag": false,
    "id": "vallis_murcia",
-   "kind": "valleys"
+   "kind": "valleys",
+   "scene_m": 12.0,
+   "scene_max_m": 46.8
   },
   {
-   "diff_m": null,
+   "diff_m": -0.1,
    "expected_m": 18,
    "flag": false,
    "id": "subura_argiletum",
-   "kind": "valleys"
+   "kind": "valleys",
+   "scene_m": 17.9,
+   "scene_max_m": 21.4
   }
  ]
 }

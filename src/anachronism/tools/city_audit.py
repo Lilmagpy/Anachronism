@@ -2716,7 +2716,8 @@ def render_markdown(a: Audit) -> str:
     for t in a.topography:
         w(
             f"| {t['id']} | {t['expected_m']} | {t.get('ridge_top_m', '')} | "
-            f"{t.get('scene_max_m', t.get('scene_m', ''))} | {t.get('diff_m')} | "
+            f"{t.get('scene_m' if t['kind'] == 'valleys' else 'scene_max_m', '')} | "
+            f"{t.get('diff_m')} | "
             f"{'FLAG' if t['flag'] else ''} |"
         )
     w("")

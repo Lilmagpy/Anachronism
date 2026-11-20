@@ -435,7 +435,10 @@ func _make(id: String, st: Dictionary) -> void:
 	_tris[id] = res.get("tris", [0, 0, 0])
 	_placed[id] = {"centre": centre, "yaw": yaw, "y": base_y, "length": maxf(float(st.length), float(st.radius) * 2.0),
 		"width": maxf(float(st.width), float(st.radius) * 2.0), "radius": float(st.radius), "model": model, "state": st.state,
-		"native": aabb.size, "door": res.get("door", null)}
+		"native": aabb.size, "door": res.get("door", null),
+		# F2 audit (audit.gd): how the base meets the ground
+		"base_mode": str(res.get("base", "lo")), "world": world,
+		"skirted": skirt > 0.3 and not world and model != "plaza" and not bool(res.get("no_skirt", false))}
 
 
 ## Metres per mesh unit of an old kit part: the length of its transform's x axis (kit meshes
