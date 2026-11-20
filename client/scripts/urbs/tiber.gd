@@ -28,6 +28,7 @@ static var _cum: PackedFloat32Array = PackedFloat32Array()
 static var _island_c: Vector2 = Vector2.ZERO
 static var _island_dir: Vector2 = Vector2.RIGHT     ## long axis, pointing downstream
 static var _island_n: Vector2 = Vector2.UP          ## across, pointing to the first bridge's bank
+static var _half_wide := ISLAND_HALF_WIDE            ## F2: as wide as the bridges' island ends need (>= 67 m)
 static var _band := Vector2(0.0, 80.0)              ## the water across the island reach: (centre, half-width) along _island_n
 static var _quays: Array = []
 static var _turn: PackedFloat32Array = PackedFloat32Array()   ## how sharply the river turns at each point (+ left / - right), -1..1
@@ -122,18 +123,16 @@ static func _fit_island() -> void:
 		return
 	var p1: Vector2 = ends[0][0]
 	var p2: Vector2 = ends[1][0]
-	var diff := p1 - p2
-	var sep := ISLAND_HALF_WIDE * 2.0 - 2.0 * abut
-	var theta := acos(clampf(sep / maxf(diff.length(), 0.001), -1.0, 1.0))
-	var best := Vector2.ZERO
-	var best_dot := -1.0
-	for sgn: float in [1.0, -1.0]:
-		var nn := diff.normalized().rotated(theta * sgn)
-		var aa := Vector2(-nn.y, nn.x)
-		var al := absf(aa.dot(tangent))
-		if al > best_dot:
-			best_dot = al
-			best = nn
+	# F2: the island lies across the bridges as they stand on their remains: its short axis is the
+	# bridges' mean direction (each from its island end to its bank), its long axis square to that
+	# (the remains give about 126 degrees, as the island itself), and it is as wide as the two island
+	# ends need (at least the 67 m of topography.yaml). The U8 fit turned the island until a 67 m
+	# width fitted between the ends, which put its axis 25 degrees off when the bridges were moved
+	# onto their remains.
+	var d1 := ((ends[0][1] as Vector2) - p1).normalized()
+	var d2 := ((ends[1][1] as Vector2) - p2).normalized()
+	var best := (d1 - d2).normalized()
+	_half_wide = maxf(ISLAND_HALF_WIDE, absf(best.dot(p1 - p2)) * 0.5 + 1.0)
 	_island_n = best
 	_island_dir = Vector2(-best.y, best.x)
 	if _island_dir.dot(tangent) < 0.0:
@@ -246,7 +245,7 @@ static func island_r(x: float, z: float) -> float:
 	_ensure()
 	var d := Vector2(x, z) - _island_c
 	var u := d.dot(_island_dir) / ISLAND_HALF_LONG
-	var v := d.dot(_island_n) / ISLAND_HALF_WIDE
+	var v := d.dot(_island_n) / _half_wide
 	var taper := 1.0 - (0.55 if u > 0.0 else 0.32) * smoothstep(0.25, 1.0, absf(u))
 	return sqrt(u * u + (v / taper) * (v / taper))
 
@@ -256,7 +255,7 @@ static func island_r(x: float, z: float) -> float:
 static func island() -> Dictionary:
 	_ensure()
 	return {"center": _island_c, "dir": _island_dir, "across": _island_n, "half_long": ISLAND_HALF_LONG,
-		"half_wide": ISLAND_HALF_WIDE, "band": _band}
+		"half_wide": _half_wide, "band": _band}
 
 
 ## The quays: [{id, s0, s1, side, rise, from}].

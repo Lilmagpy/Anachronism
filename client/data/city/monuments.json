@@ -6410,7 +6410,7 @@
 "type": "bridge"
 },
 {
-"bearing_deg": 38,
+"bearing_deg": 41.9,
 "built": {
 "by": "L. Fabricius, curator viarum (CIL VI 1305; Dio 37.45.3)",
 "certainty": "certain",
@@ -6427,10 +6427,10 @@
 ],
 "height_m": 10,
 "id": "pons_fabricius",
-"lat": 41.891198,
+"lat": 41.891081,
 "latin": "Pons Fabricius",
 "location": "from Forum Holitorium to Tiber Island",
-"lon": 12.478031,
+"lon": 12.478237,
 "materials": [
 "tufa",
 "travertine"
@@ -6447,7 +6447,7 @@
 "type": "bridge"
 },
 {
-"bearing_deg": 252,
+"bearing_deg": 18.8,
 "built": {
 "by": "probably L. Cestius, praetor c. 46-44 (Platner-Ashby); some say 60s BC",
 "certainty": "uncertain",
@@ -6459,15 +6459,12 @@
 "width": 8.2
 },
 "geometry_source": "Platner-Ashby s.v. Pons Cestius (the Pons Gratiani on its site: 48 m long, 8.20 wide, central arch 23.65 m, side arches 5.80 m); the republican plan is inferred",
-"geometry_unverified": [
-"bearing_deg"
-],
 "height_m": 10,
 "id": "pons_cestius",
-"lat": 41.89045,
+"lat": 41.890188,
 "latin": "Pons Cestius",
 "location": "from Tiber Island to Trastevere",
-"lon": 12.477104,
+"lon": 12.477352,
 "model": "bridge_stone",
 "pleiades": 211668069,
 "precision": "exact",
@@ -7489,12 +7486,12 @@
 ],
 "height_m": 7,
 "id": "porticus_catuli",
-"lat": 41.890599,
+"lat": 41.890178,
 "latin": "Porticus Catuli",
 "location": "Palatine, next to the house of Catulus",
 "location_confidence": "low",
-"location_source": "F2: Platner-Ashby s.v. Porticus Catuli (read): next to Catulus' house on the Palatine (Cic. Dom. 102, 114); placed beside the house",
-"lon": 12.485336,
+"location_source": "F2: Platner-Ashby s.v. Porticus Catuli (read): next to Catulus' house on the Palatine (Cic. Dom. 102, 114); placed against the south side of the house, on the summit (the side is a guess; west of the house it stood in the Horrea Agrippiana at the foot of the hill)",
+"lon": 12.48565,
 "model": "portico_enclosure",
 "notes": "Clodius enlarged it during Cicero's exile (58 BC); the senate had it restored to its old size (Cic. Dom. 116).",
 "pleiades": null,

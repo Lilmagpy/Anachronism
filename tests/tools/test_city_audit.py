@@ -198,3 +198,39 @@ def test_curated_references_name_real_records() -> None:
                 assert mid in tg, (key, mid)
     for mid in refs.get("measured") or {}:
         assert mid in ds.recs, mid
+
+
+def test_terraces_cover_steep_monuments_only() -> None:
+    """A terrace is cut under a monument on steep ground, once, round its footprint."""
+    slope = {"id": "t", "model": "temple", "x": 0.0, "z": 0.0, "yaw": 0.0, "hx": 10.0, "hz": 20.0}
+    scene = {
+        "years": {
+            "-100": {"slopes": [{**slope, "drop": 5.0, "ground": 20.0, "platform": ""}]},
+            "-44": {"slopes": [{**slope, "drop": 6.0, "ground": 21.0, "platform": ""}]},
+            "-27": {
+                "slopes": [
+                    {**slope, "id": "flat", "drop": 2.0, "ground": 9.0, "platform": ""},
+                    {**slope, "id": "on_forum", "drop": 9.0, "ground": 9.0, "platform": "x"},
+                ]
+            },
+        }
+    }
+    out = ca.terrace_entries(scene)
+    assert list(out) == ["t"]
+    assert out["t"]["level"] == 21.0  # the year where the ground falls most
+    xs = [ca.to_local(*p)[0] for p in out["t"]["polygon"]]
+    assert math.isclose(max(xs), 10.0 + ca.TERRACE_MARGIN_M, abs_tol=0.1)
+
+
+def test_the_wall_follows_its_measured_line() -> None:
+    """With route_measured the drawn wall passes the gates and the surviving stretches."""
+    ds = ca.load_dataset()
+    wall = ca.gate_circuit(ds)
+    gates = [
+        ca.placed_centre(r, ds.recs)
+        for r in ds.recs.values()
+        if r.get("snap_to") == "murus_servianus"
+    ]
+    assert len(wall) > len(gates) + 1
+    for g in gates:
+        assert ca.line_dist(g, wall) < 2.0
