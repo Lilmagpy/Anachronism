@@ -84,13 +84,43 @@ func person_name(id: String) -> String:
 	return " ".join(words)
 
 
-## Whether Urbs has a spectacle for this event (see urbs/spectacles/spectacles.gd).
+## A person's short name: the event's own name if it gives one, else `people`'s, else from the id.
+static func name_of(id: String, given: String, people: Dictionary) -> String:
+	if given != "":
+		return RepublicPanel.short_name(given)
+	if id == "":
+		return "a man of rank"
+	if people.has(id):
+		return RepublicPanel.short_name(str(people[id]))
+	if id.begins_with("p0"):
+		return "a magistrate"
+	var bits := id.split("_")
+	var words := PackedStringArray()
+	for i in bits.size():
+		var bit: String = bits[i]
+		if bit.is_valid_int():
+			continue
+		if i == 0 and bit.length() <= 3 and bits.size() > 1:
+			words.append(bit.capitalize() + ".")
+		else:
+			words.append(bit.capitalize())
+	return " ".join(words)
+
+
+## "for war", "on public land" (contio and Senate matters, F2 play).
+static func _issue_words(issue: String, side_for := true) -> String:
+	var what := str(ISSUE_NAMES.get(issue, issue.replace("_", " ")))
+	return ("for " if side_for else "against ") + what
+
+
+## Whether Urbs has a spectacle for this event (see urbs/spectacles/spectacles.gd; the F2
+## gatherings, a speech, an election and a levy, are urbs/moments.gd's).
 static func watchable(e: Dictionary) -> bool:
 	var kind := str(e.get("kind", ""))
 	var ref := str(e.get("ref", ""))
 	if kind == "games":
 		return ref != "ludi_megalenses"
-	return kind in ["senate", "sacrifice", "triumph"]
+	return kind in ["senate", "sacrifice", "triumph", "contio", "election", "levy"]   # F2 play: the gatherings
 
 
 func _ready() -> void:
@@ -253,10 +283,16 @@ func _fill(list: VBoxContainer, city: Dictionary, events: Array, years: Array, w
 
 ## [heading, sentence, colour] for one city event, in plain words.
 func _words(e: Dictionary) -> Array:
+	return describe(e, _people)
+
+
+## [heading, sentence, colour] for one city event, in plain words; `people` maps person ids to
+## names (the event's own `person_name` is used first). Also the moments' title cards (F2 play).
+static func describe(e: Dictionary, people: Dictionary = {}) -> Array:
 	var kind := str(e.get("kind", ""))
 	var ref := str(e.get("ref", ""))
 	var venue := monument_name(str(e.get("monument", "")) if e.get("monument") != null else "")
-	var who := person_name(str(e.get("person", "")) if e.get("person") != null else "")
+	var who := name_of(str(e.get("person", "")) if e.get("person") != null else "", str(e.get("person_name", "")) if e.get("person_name") != null else "", people)
 	var value := int(e.get("value", 0)) if e.get("value") != null else 0
 	var other := int(e.get("other", 0)) if e.get("other") != null else 0
 	match kind:
@@ -269,7 +305,7 @@ func _words(e: Dictionary) -> Array:
 		"senate":
 			var carried := value > other
 			return ["THE SENATE", "The Senate meets%s and votes on %s: %d%% for, %d%% against. The motion is %s." % [
-				" in the " + venue if venue != "" else "", str(ISSUE_NAMES.get(ref, ref.replace("_", " "))), value / 100, other / 100, "carried" if carried else "refused"],
+				" in the " + venue if venue != "" else "", str(ISSUE_NAMES.get(ref, ref.replace("_", " "))), roundi(value / 100.0), roundi(other / 100.0), "carried" if carried else "refused"],   # F2 play: rounded, as the moments show it
 				GOOD if carried else BAD]
 		"sacrifice":
 			if ref == "dedication":
@@ -278,6 +314,19 @@ func _words(e: Dictionary) -> Array:
 		"triumph":
 			var over := "over the enemy" if ref == "" else ("for the taking of the enemy's capital" if ref == "capital" else "for the victory at " + ref.replace("_", " ").capitalize())
 			return ["TRIUMPH", "%s rides in triumph %s: the procession enters by the Campus Martius, rounds the Circus Maximus and climbs the Via Sacra to the Capitol." % [who, over], Color(0.62, 0.20, 0.12)]
+		"contio":   # F2 play: a speech to the people from the Rostra
+			return ["A SPEECH TO THE PEOPLE", "%s addresses the people from the %s %s: the crowd's favour moves %+d%%." % [
+				who, venue if venue != "" else "Rostra", _issue_words(ref, true), roundi(value / 100.0)], Color(0.55, 0.35, 0.15)]
+		"election":   # F2 play: the assembly votes
+			var office := ref.replace("_plebs", " of the plebs").replace("_", " ")
+			var won := value > other
+			return ["THE ASSEMBLY VOTES", "The people vote for %s at the %s: %s %s, %d votes to %d." % [
+				office, venue if venue != "" else "Campus Martius", who, "is elected" if won else "is not elected", value, other], GOOD if won else BAD]
+		"levy":   # F2 play: the dilectus and the muster
+			return ["THE LEVY", "%s holds the levy on the %s: %s men are enrolled%s and muster on the field of Mars." % [
+				who, venue if venue != "" else "Campus Martius", GameHud.number(value), " in %d legions" % other if other > 0 else ""], Color(0.50, 0.22, 0.14)]
+		"building":   # F2 play: a great work rises
+			return ["A WORK RISES", "The %s is being built: scaffolding and cranes on the site." % venue, Color(0.40, 0.36, 0.20)]
 		"fire":
 			return ["FIRE", "Fire in the city: the %s burns." % venue, BAD]
 		"flood":

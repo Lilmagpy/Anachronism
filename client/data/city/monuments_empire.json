@@ -194,8 +194,8 @@
 }
 ],
 "footprint_m": {
-"length": 125,
-"width": 90
+"length": 90,
+"width": 125
 },
 "form": "rectangular forum about 125 x 90 m (Platner-Ashby) with an exedra on each long side and one at the NE end; huge firewall (peperino with travertine courses) shutting off the Subura; arched gateway (Arco dei Pantani) survives",
 "height_m": 33,
@@ -252,8 +252,8 @@
 }
 ],
 "footprint_m": {
-"length": 35,
-"width": 23
+"length": 50,
+"width": 33
 },
 "form": "octastyle Corinthian temple, peripteral except at its NE end where it abuts the forum wall; Greek-marble columns 15.30 m high and 1.76 m in diameter (three stand); peperino cella lined with marble, nave and two aisles; octostyle front; cult statues of Mars and Venus (Ov. Fast. 5.551-568)",
 "height_m": 33,
@@ -434,6 +434,7 @@
 "Ov. Fast. 1.709-722",
 "Platner-Ashby s.v. Ara Pacis Augustae (read)"
 ],
+"twin_of": "ara_pacis_augustae",
 "type": "altar",
 "unverified_fields": [
 "built"
@@ -614,6 +615,7 @@
 "Plin. NH 35.26",
 "Platner-Ashby s.v. Thermae Agrippae (read)"
 ],
+"twin_of": "thermae_agrippae",
 "type": "baths",
 "unverified_fields": [
 "lat",
@@ -869,6 +871,7 @@
 "Suet. Caes. 85",
 "Platner-Ashby s.v. Iulius, Divus, aedes (read)"
 ],
+"twin_of": "aedes_divi_iulii",
 "type": "temple",
 "unverified_fields": [
 "bearing_deg",
@@ -877,7 +880,7 @@
 "verified": true
 },
 {
-"bearing_deg": 30,
+"bearing_deg": 45,
 "built": {
 "by": "begun by Caesar, completed and dedicated by Augustus 29 BC with the adjoining Chalcidicum (Dio 47.19, 51.22; Mon. Anc. 4.1)",
 "certainty": "certain",
@@ -949,8 +952,8 @@
 }
 ],
 "footprint_m": {
-"length": 101,
-"width": 49
+"length": 49,
+"width": 101
 },
 "form": "basilica 101 x 49 m bounded by streets; central court 82 x 16 m surrounded by two aisles each 7.50 m wide with galleries above; seat of the centumviral court (Quint. 12.5.6)",
 "height_m": 24,
@@ -1030,6 +1033,7 @@
 "CIL VI 31563c",
 "Platner-Ashby s.v. Aqua Iulia (read)"
 ],
+"twin_of": "aqua_iulia",
 "type": "aqueduct",
 "unverified_fields": [
 "lat",
@@ -1095,6 +1099,7 @@
 "CIL VI 1252",
 "Platner-Ashby s.v. Aqua Virgo (read)"
 ],
+"twin_of": "aqua_virgo",
 "type": "aqueduct",
 "unverified_fields": [
 "route",
@@ -1328,6 +1333,7 @@
 "Dio 62.18.2",
 "Suet. Aug. 29"
 ],
+"twin_of": "amphitheatrum_tauri",
 "type": "amphitheatre",
 "unverified_fields": [
 "lat",
@@ -1505,12 +1511,6 @@
 "year": 52
 },
 "english": "Arch of Claudius on the Via Lata",
-"events": [
-{
-"what": "a different arch of the Aqua Virgo, in Via del Nazareno, was restored monumentally by Claudius in AD 46 (CIL VI 1252) - the Arcus Claudii (1), which survives",
-"year": 46
-}
-],
 "footprint_m": null,
 "form": "arch over the Via Lata; fragments of the inscription and sculpture found in 1562, 1641 and 1869; in ruins by the eighth century",
 "height_m": null,
@@ -1520,7 +1520,7 @@
 "location": "Via Lata (Corso), where the Aqua Virgo crossed it; site approximate",
 "lon": 12.481,
 "model": "arch",
-"notes": "Platner-Ashby distinguishes two Arcus Claudii; this is no. 2. Coins of 46-47 may show a different arch. Position is a guess on the Corso north of the Saepta. No Pleiades id found.",
+"notes": "Platner-Ashby distinguishes two Arcus Claudii; this is no. 2. (F2: moved from events, as it is another monument:) a different arch of the Aqua Virgo, in Via del Nazareno, was restored monumentally by Claudius in AD 46 (CIL VI 1252) - the Arcus Claudii (1), which survives. Coins of 46-47 may show a different arch. Position is a guess on the Corso north of the Saepta. No Pleiades id found.",
 "pleiades": null,
 "precision": "rough",
 "regio": 7,
@@ -1682,10 +1682,12 @@
 "form": "colossal bronze statue of Nero, 120 feet (about 35.5 m) high (Suet. Nero 31)",
 "height_m": 35,
 "id": "colossus_neronis",
-"lat": 41.8898,
+"lat": 41.890853,
 "latin": "Colossus Neronis (Solis)",
 "location": "Vestibule of the Domus Aurea on the Velia; base later beside the Temple of Venus and Roma, near the Colosseum",
-"lon": 12.4905,
+"location_confidence": "medium",
+"location_source": "F2: until Hadrian it stood in the vestibule of the Domus Aurea on the Velia, where Hadrian then built the temple of Venus and Rome and moved the statue to the base by the Flavian amphitheatre that survives (Platner-Ashby s.v. Colossus Neronis # unverified passage; Pleiades 527986452 maps that later base, 472, 181). Placed at the centre of the temple of Venus and Rome (Pleiades 261794683)",
+"lon": 12.489669,
 "model": "colossus",
 "notes": "Platner-Ashby gives 120 feet and the Vespasianic conversion into the Sun; the Pliny figure of 106.5 feet is quoted from memory and not re-read. Pleiades 527986452 (Colossus Neronis, 41.8909, 12.491) is a place near the Velia; the base position is approximate.",
 "pleiades": 527986452,
@@ -1957,7 +1959,7 @@
 "verified": true
 },
 {
-"bearing_deg": 110,
+"bearing_deg": 112.5,
 "built": {
 "by": "begun in honour of Titus and the siege of Jerusalem but not finished and dedicated until after his death (CIL VI 945); no ancient literary mention (Platner-Ashby); the Nerva/Trajan theory is improbable",
 "certainty": "probable",
@@ -1965,8 +1967,8 @@
 },
 "english": "Arch of Titus",
 "footprint_m": {
-"length": 13.5,
-"width": 4.75
+"length": 4.75,
+"width": 13.5
 },
 "form": "single-bay arch of Pentelic marble 13.50 m wide, 15.40 m high, 4.75 m deep; archway 8.30 m high and 5.36 m wide; attic 4.40 m high; engaged fluted Corinthian columns",
 "height_m": 15.4,
@@ -2090,10 +2092,12 @@
 "form": "the state apartments in the NW half of the Domus Augustiana, entered from the north-west with a lofty facade and colonnade in front (later propped by Hadrianic walls); Suetonius has Domitian line the walks with selenite (Suet. Dom. 14); 'Domus Flavia' is a modern term for Domitian's part (Platner-Ashby)",
 "height_m": null,
 "id": "domus_flavia",
-"lat": 41.8891,
+"lat": 41.888793,
 "latin": "Domus Flavia",
 "location": "Central Palatine, over the earlier Neronian structures",
-"lon": 12.488,
+"location_confidence": "high",
+"location_source": "F2: centre of the excavated wing (Pleiades 564783056, OpenStreetMap outline 152 x 100 m); moved 121 m west",
+"lon": 12.486604,
 "model": "palace",
 "notes": "Platner-Ashby does not separate the Flavia and Augustana by size; first-draft footprints removed. Pleiades 564783056 Domus Flavia (41.8888, 12.4866).",
 "pleiades": 564783056,
@@ -2128,13 +2132,15 @@
 "form": "the SE half of Domitian's palace of the Palatine; 'Domus Augustiana' (CIL VI 8640, 8647) denoted the whole imperial residence apart from the Domus Tiberiana at any given period; the Villa Mills lies on solid rock over part of it",
 "height_m": null,
 "id": "domus_augustana",
-"lat": 41.8884,
+"lat": 41.888064,
 "latin": "Domus Augustana",
 "location": "South-east Palatine, over the Circus Maximus side; two-storey peristyle with a pool in maze form",
-"lon": 12.4889,
+"location_confidence": "high",
+"location_source": "F2: centre of the excavated wing (Pleiades 792237246, OpenStreetMap outline 225 x 86 m); moved 159 m west-south-west",
+"lon": 12.487038,
 "model": "palace",
 "notes": "First-draft footprint and the island-pool claim are not in Platner-Ashby and are removed. Pleiades 155566866 is titled Paedagogium and 792237246 is an OSM location of Domus Augustana (not retrieved); none adopted.",
-"pleiades": null,
+"pleiades": 792237246,
 "precision": "approx",
 "regio": 10,
 "sources": [
@@ -2154,7 +2160,7 @@
 "verified": true
 },
 {
-"bearing_deg": null,
+"bearing_deg": 41.5,
 "built": {
 "by": "part of Domitian's palace complex; the name hippodromus is as old as Pliny the Younger (Ep. 5.6.19, 40) for a garden shaped like a circus or stadium (Platner-Ashby)",
 "certainty": "uncertain",
@@ -2168,10 +2174,12 @@
 "form": "long narrow garden court shaped like a stadium, 160 m long and 50 m wide, with arcades; white marble path edgings and gutter found (Platner-Ashby)",
 "height_m": null,
 "id": "stadium_palatinum",
-"lat": 41.8876,
+"lat": 41.887506,
 "latin": "Hippodromus Palatii",
 "location": "South-east of the Domus Augustana, Palatine",
-"lon": 12.4894,
+"location_confidence": "high",
+"location_source": "F2: the excavated garden stadium (Pleiades 132886213, OpenStreetMap outline 168 x 70 m, long axis at 41.5 degrees); moved 154 m west",
+"lon": 12.487545,
 "model": "stadium",
 "notes": "First-draft Suet. Dom. 4 citation removed. Platner-Ashby does not date the stadium (Domitianic palace phase assumed). Pleiades 132886213 Palatine Stadium (41.8876, 12.4875).",
 "pleiades": 132886213,
@@ -2333,10 +2341,12 @@
 "form": "large conical fountain just south-west of the Colosseum, meeting-point of five Augustan regions (I, II, III, IV, X); resembled a goal (meta) of the circus; shown on a coin of Alexander Severus; Seneca Ep. 56.4 uses the name for a fountain at Baiae",
 "height_m": 17,
 "id": "meta_sudans",
-"lat": 41.8896,
+"lat": 41.89007,
 "latin": "Meta Sudans",
 "location": "Between the Palatine and the Colosseum; base partially excavated",
-"lon": 12.4905,
+"location_confidence": "high",
+"location_source": "F2: the excavated foundation of the fountain by the Colosseum (Pleiades 419380619); moved 55 m north-north-east",
+"lon": 12.490683,
 "model": "fountain",
 "notes": "First-draft date 80 corrected to 96 (Platner-Ashby). Size/height (17 m) from memory. Pleiades 419380619 OSM location of Meta Sudans (41.8901, 12.4907).",
 "pleiades": 419380619,
@@ -2355,7 +2365,7 @@
 "verified": true
 },
 {
-"bearing_deg": 45,
+"bearing_deg": 143,
 "built": {
 "by": "Trajan with the Greek architect Apollodorus, dedicated at least in part about AD 113 (Dio 68.16.3, read; Dio 69.4.1; Aur. Vict. Caes. 13.5 suggests Domitian may have planned or begun it)",
 "certainty": "certain",
@@ -2373,16 +2383,18 @@
 }
 ],
 "footprint_m": {
-"length": 310,
-"width": 185
+"length": 220,
+"width": 120
 },
 "form": "the last, largest and most magnificent imperial forum: space 185 m wide, about 310 m long including the temple precinct; forum court 116 m wide and 95 long enclosed in a marble-faced wall with two hemicycles 45 m deep; double colonnades on three sides; gilded horses and standards on the colonnade roof; bronze equestrian statue of Trajan in the middle; Basilica Ulpia on the NW side; two libraries and the Column behind (Platner-Ashby)",
 "height_m": null,
 "id": "forum_traiani",
-"lat": 41.8956,
+"lat": 41.895343,
 "latin": "Forum Traiani",
 "location": "Between the Capitol/Quirinal saddle and the Forum of Augustus; Via dei Fori Imperiali and the Column",
-"lon": 12.4842,
+"location_confidence": "high",
+"location_source": "F2: centre of the excavated forum (Pleiades 250091860, OpenStreetMap outline 219 x 121 m, long axis 143 degrees: the entrance on the south-east towards the Forum of Augustus, the Basilica Ulpia across the north-west end); moved 91 m east",
+"lon": 12.48524,
 "model": "forum",
 "notes": "Size read in Platner-Ashby. Pleiades 250091860 Forum Traiani (41.8952, 12.4853). The Dio 68.16 / 68.29 references were checked against the Dio text read only in part (book 68 downloaded; passages located by Platner-Ashby quotations).",
 "pleiades": 250091860,
@@ -2458,10 +2470,12 @@
 "form": "column of Parian marble; shaft and base of 18 blocks 3.70 m in diameter; with capital and plinth 100 Roman feet (29.77 m); with pedestal 38 m (the Notitia says 128.5 feet); surmounted by a gilt bronze statue of Trajan; stood in a small court 24 x 16 m between the Basilica Ulpia and the libraries (Platner-Ashby)",
 "height_m": 38,
 "id": "columna_traiani",
-"lat": 41.896,
+"lat": 41.895811,
 "latin": "Columna Traiani",
 "location": "Between the Basilica Ulpia and the two libraries in the Forum of Trajan",
-"lon": 12.4841,
+"location_confidence": "high",
+"location_source": "F2: the standing column (Pleiades 783489695); moved 26 m",
+"lon": 12.484274,
 "model": "column",
 "notes": "First-draft 35 m corrected to 38 m (with pedestal; 29.77 m without). Radius is the shaft diameter 3.70 m halved, plus pedestal approximated. The 12 May dedication date of the first draft is not in Platner-Ashby and is removed. Pleiades 783489695 Column of Trajan (41.8958, 12.4843).",
 "pleiades": 783489695,
@@ -2686,6 +2700,413 @@
 "bearing_deg"
 ],
 "verified": true
+},
+{
+"bearing_deg": 220,
+"built": {
+"by": "for the recovery of the standards lost with Varus (Tac. Ann. 2.41)",
+"certainty": "certain",
+"year": 16
+},
+"english": "Arch of Tiberius",
+"footprint_m": {
+"length": 4,
+"width": 9
+},
+"geometry_source": "form assumed from date and type (no measured plan)",
+"geometry_unverified": [
+"bearing_deg",
+"footprint_m",
+"height_m",
+"model"
+],
+"height_m": 12,
+"id": "arcus_tiberii",
+"lat": 41.892339,
+"latin": "Arcus Tiberii",
+"location": "Forum, at the head of the Vicus Iugarius between the Rostra and the temple of Saturn",
+"location_confidence": "high",
+"location_source": "F2: the excavated foundation by the Rostra and the temple of Saturn (Pleiades 307446389, OpenStreetMap)",
+"lon": 12.484253,
+"model": "arch",
+"pleiades": 307446389,
+"precision": "exact",
+"regio": 8,
+"sources": [
+"Tac. Ann. 2.41",
+"Platner-Ashby s.v. Arcus Tiberii (in Foro Romano) # unverified"
+],
+"type": "arch",
+"unverified_fields": [
+"location",
+"footprint_m",
+"bearing_deg",
+"height_m"
+],
+"verified": "pleiades"
+},
+{
+"bearing_deg": 134,
+"built": {
+"by": "the senate for Titus' capture of Jerusalem (CIL VI 944)",
+"certainty": "certain",
+"year": 81
+},
+"english": "Arch of Titus in the Circus Maximus",
+"footprint_m": {
+"length": 15,
+"width": 17
+},
+"geometry_source": "form assumed from date and type (no measured plan)",
+"geometry_unverified": [
+"bearing_deg",
+"footprint_m",
+"height_m",
+"model"
+],
+"height_m": 15,
+"id": "arcus_titi_circo",
+"lat": 41.884444,
+"latin": "Arcus Titi (in Circo Maximo)",
+"location": "Circus Maximus, middle of the curved end",
+"location_confidence": "high",
+"location_source": "F2: the excavated triple arch in the curved end of the Circus Maximus (Pleiades 45530496, OpenStreetMap)",
+"lon": 12.488333,
+"model": "arch",
+"pleiades": 45530496,
+"precision": "exact",
+"regio": 11,
+"sources": [
+"CIL VI 944",
+"Platner-Ashby s.v. Arcus Titi (in Circo Maximo) # unverified"
+],
+"type": "arch",
+"unverified_fields": [
+"location",
+"footprint_m",
+"bearing_deg",
+"height_m"
+],
+"verified": "pleiades"
+},
+{
+"bearing_deg": 0,
+"built": {
+"by": "M. Agrippa (Dio 53.27.1)",
+"certainty": "certain",
+"year": -25
+},
+"english": "Basilica of Neptune",
+"events": [
+{
+"what": "burned in the fire under Titus (Dio 66.24)",
+"year": 80
+}
+],
+"footprint_m": {
+"length": 20,
+"width": 45
+},
+"geometry_source": "form assumed from date and type (no measured plan)",
+"geometry_unverified": [
+"bearing_deg",
+"footprint_m",
+"height_m",
+"model"
+],
+"height_m": 14,
+"id": "basilica_neptuni",
+"lat": 41.898235,
+"latin": "Basilica Neptuni (Stoa Poseidonos)",
+"location": "Campus Martius, behind the Pantheon",
+"location_confidence": "high",
+"location_source": "F2: the excavated hall behind the Pantheon (Pleiades 360837130, OpenStreetMap); Platner-Ashby s.v. Basilica Neptuni (read): the stoa of Poseidon built by Agrippa in 25 BC (Dio 53.27)",
+"lon": 12.476789,
+"model": "basilica",
+"notes": "Restored by Hadrian (HA Hadr. 19).",
+"pleiades": 360837130,
+"precision": "approx",
+"regio": 9,
+"sources": [
+"Dio 53.27.1",
+"Platner-Ashby s.v. Basilica Neptuni (read)"
+],
+"type": "basilica",
+"unverified_fields": [
+"location",
+"footprint_m",
+"bearing_deg",
+"height_m"
+],
+"verified": "platner-ashby+pleiades"
+},
+{
+"bearing_deg": 223.5,
+"built": {
+"by": "presumably M. Agrippa (P-A)",
+"certainty": "probable",
+"not_before": -27,
+"year": null
+},
+"english": "Warehouses of Agrippa",
+"footprint_m": {
+"length": 47,
+"width": 52.5
+},
+"geometry_source": "form assumed from date and type (no measured plan)",
+"geometry_unverified": [
+"bearing_deg",
+"footprint_m",
+"height_m",
+"model"
+],
+"height_m": 10,
+"id": "horrea_agrippiana",
+"lat": 41.890829,
+"latin": "Horrea Agrippiana",
+"location": "between the Clivus Victoriae and the Vicus Tuscus",
+"location_confidence": "high",
+"location_source": "F2: the excavated warehouses between the Clivus Victoriae and the Vicus Tuscus (Pleiades 471592763, OpenStreetMap); Platner-Ashby s.v. Horrea Agrippiana (read): three courts on the Marble Plan there",
+"lon": 12.485016,
+"model": "horrea",
+"pleiades": 471592763,
+"precision": "exact",
+"regio": 8,
+"sources": [
+"Platner-Ashby s.v. Horrea Agrippiana (read)"
+],
+"type": "horrea",
+"unverified_fields": [
+"location",
+"footprint_m",
+"bearing_deg",
+"height_m"
+],
+"verified": "platner-ashby+pleiades"
+},
+{
+"bearing_deg": 20,
+"built": {
+"by": "Augustus on the site of Vedius Pollio's house, begun 15 BC, dedicated to Livia in 7 BC (Dio 54.23, 55.8)",
+"certainty": "certain",
+"year": -7
+},
+"english": "Portico of Livia",
+"footprint_m": {
+"length": 115,
+"width": 75
+},
+"geometry_source": "form assumed from date and type (no measured plan)",
+"geometry_unverified": [
+"bearing_deg",
+"footprint_m",
+"height_m",
+"model"
+],
+"height_m": 8,
+"id": "porticus_liviae",
+"lat": 41.8935,
+"latin": "Porticus Liviae",
+"location": "Oppian, south side of the Clivus Suburanus",
+"location_confidence": "low",
+"location_source": "F2: Platner-Ashby s.v. Porticus Liviae (read): on the north slope of the Oppius on the south side of the clivus Suburanus, between this street and the later baths of Trajan; placed there",
+"lon": 12.4985,
+"model": "portico_enclosure",
+"notes": "On the Marble Plan (fr. 10, 11, 109).",
+"pleiades": null,
+"precision": "rough",
+"regio": 3,
+"sources": [
+"Dio 54.23",
+"Dio 55.8",
+"Suet. Aug. 29",
+"Platner-Ashby s.v. Porticus Liviae (read)"
+],
+"type": "portico",
+"unverified_fields": [
+"location",
+"footprint_m",
+"bearing_deg",
+"height_m"
+],
+"verified": "platner-ashby"
+},
+{
+"bearing_deg": 90,
+"built": {
+"by": "begun by Agrippa, opened by Augustus in 7 BC (Dio 55.8)",
+"certainty": "certain",
+"year": -7
+},
+"english": "Diribitorium (vote-counting hall)",
+"footprint_m": {
+"length": 40,
+"width": 90
+},
+"geometry_source": "form assumed from date and type (no measured plan)",
+"geometry_unverified": [
+"bearing_deg",
+"footprint_m",
+"height_m",
+"model"
+],
+"height_m": 16,
+"id": "diribitorium",
+"lat": 41.89588,
+"latin": "Diribitorium",
+"location": "Campus Martius, beside the Saepta",
+"location_confidence": "low",
+"location_source": "F2: Platner-Ashby s.v. Diribitorium (read): in the Campus Martius where the votes cast, presumably in the Saepta, were counted; placed south of the Saepta # unverified (the site beside the Saepta is the usual reading, not stated in the passage read)",
+"lon": 12.48,
+"model": "long_hall",
+"notes": "Its roof had the widest span of any building in Rome before AD 230 (P-A).",
+"pleiades": null,
+"precision": "rough",
+"regio": 9,
+"sources": [
+"Dio 55.8",
+"Platner-Ashby s.v. Diribitorium (read)"
+],
+"type": "public_building",
+"unverified_fields": [
+"location",
+"footprint_m",
+"bearing_deg",
+"height_m"
+],
+"verified": "platner-ashby"
+},
+{
+"bearing_deg": 304,
+"built": {
+"by": "opus reticulatum of the time of Augustus (P-A)",
+"certainty": "probable",
+"not_before": -30,
+"year": null
+},
+"english": "Auditorium of Maecenas",
+"footprint_m": {
+"length": 25,
+"width": 11
+},
+"geometry_source": "form assumed from date and type (no measured plan)",
+"geometry_unverified": [
+"bearing_deg",
+"footprint_m",
+"height_m",
+"model"
+],
+"height_m": 9,
+"id": "auditorium_maecenatis",
+"lat": 41.894017,
+"latin": "Auditorium Maecenatis",
+"location": "Esquiline, Horti Maecenatis",
+"location_confidence": "high",
+"location_source": "F2: the standing hall in the angle of Via Merulana and Via Leopardi (Pleiades 866548110; Platner-Ashby s.v. Auditorium Maecenatis, read)",
+"lon": 12.501324,
+"model": "long_hall",
+"pleiades": 866548110,
+"precision": "exact",
+"regio": 5,
+"sources": [
+"Platner-Ashby s.v. Auditorium Maecenatis (read)"
+],
+"type": "public_building",
+"unverified_fields": [
+"location",
+"footprint_m",
+"bearing_deg",
+"height_m"
+],
+"verified": "platner-ashby+pleiades"
+},
+{
+"bearing_deg": 16,
+"built": {
+"by": "Augustus as pontifex maximus, dedicated 28 April 12 BC (Ov. Fast. 4.951)",
+"certainty": "certain",
+"year": -12
+},
+"english": "Shrine of Vesta on the Palatine",
+"footprint_m": {
+"length": 5,
+"width": 5
+},
+"geometry_source": "form assumed from date and type (no measured plan)",
+"geometry_unverified": [
+"bearing_deg",
+"footprint_m",
+"height_m",
+"model"
+],
+"height_m": 5,
+"id": "aedicula_vestae_palatina",
+"lat": 41.888568,
+"latin": "Aedicula et Ara Vestae (in Palatio)",
+"location": "Palatine, by the house of Augustus",
+"location_confidence": "low",
+"location_source": "F2: Platner-Ashby s.v. Vesta, Aedicula, Ara (read): close to or within Augustus' house on the Palatine; placed beside it",
+"lon": 12.48571,
+"model": "aedicula",
+"pleiades": null,
+"precision": "rough",
+"regio": 10,
+"sources": [
+"Ovid Fasti 4.951",
+"Platner-Ashby s.v. Vesta, Aedicula, Ara (read)"
+],
+"type": "shrine",
+"unverified_fields": [
+"location",
+"footprint_m",
+"bearing_deg",
+"height_m"
+],
+"verified": "platner-ashby"
+},
+{
+"bearing_deg": 310,
+"built": {
+"by": "the senate, for Augustus' return from the east, 12 October 19 BC (RG 11)",
+"certainty": "certain",
+"year": -19
+},
+"english": "Altar of Fortuna Redux",
+"footprint_m": {
+"length": 6,
+"width": 6
+},
+"geometry_source": "form assumed from date and type (no measured plan)",
+"geometry_unverified": [
+"bearing_deg",
+"footprint_m",
+"height_m",
+"model"
+],
+"height_m": 1.5,
+"id": "ara_fortunae_reducis",
+"lat": 41.884118,
+"latin": "Ara Fortunae Reducis",
+"location": "near the Porta Capena",
+"location_confidence": "low",
+"location_source": "F2: Platner-Ashby s.v. Fortuna Redux, Ara (read): near the porta Capena (RG 11); placed just inside the gate",
+"lon": 12.490223,
+"model": "altar_enclosure",
+"pleiades": null,
+"precision": "rough",
+"regio": 1,
+"sources": [
+"Res Gestae 11",
+"Platner-Ashby s.v. Fortuna Redux, Ara (read)"
+],
+"type": "altar",
+"unverified_fields": [
+"location",
+"footprint_m",
+"bearing_deg",
+"height_m"
+],
+"verified": "platner-ashby"
 }
 ]
 }

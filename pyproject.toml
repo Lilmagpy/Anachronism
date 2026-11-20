@@ -15,6 +15,7 @@ anachronism-console = "anachronism.tools.console:main"
 anachronism-draft = "anachronism.tools.draft:main"
 anachronism-lint = "anachronism.tools.lint_content:main"
 anachronism-city-export = "anachronism.tools.city_export:main"
+anachronism-city-audit = "anachronism.tools.city_audit:main"  # F2 city accuracy audit
 anachronism-server = "anachronism.tools.server:main"
 anachronism-sim = "anachronism.tools.simulate:main"
 

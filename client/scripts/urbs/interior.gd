@@ -38,6 +38,7 @@ func build(urbs: Node3D, id: String, year: int) -> Node3D:
 	holder.name = node.name
 	holder.xf = node.transform
 	holder.result = node.get_meta("result")
+	holder.kind = str(Interiors.kind_of(m)[0])   # F2 play: where its action panel stands
 	node.transform = Transform3D.IDENTITY
 	holder.transform = holder.xf
 	for c in node.get_children():
@@ -64,6 +65,7 @@ func _record(urbs: Node3D, id: String) -> Dictionary:
 class Holder extends Node3D:
 	var xf := Transform3D.IDENTITY
 	var result: Dictionary = {}
+	var kind := ""   # F2 play: the interior kind (interiors.gd kind_of)
 
 	## Where the camera starts (world).
 	func spawn() -> Transform3D:
@@ -92,3 +94,32 @@ class Holder extends Node3D:
 
 	func notes() -> Array:
 		return result.get("notes", [])
+
+	# --- F2 play (begin): the spot where the place's action panel stands -----------------------
+	## The world point of the action panel inside: the Curia's floor before the tribunal, the
+	## temple's altar, the Circus' magistrates' box (pulvinar), the Rostra in the Forum, the
+	## domus' tablinum, a basilica's tribunal; else a few metres ahead of where you come in.
+	## `spot` overrides the kind's default (a name of UrbsPlaces.SPOTS).
+	func action_spot(spot := "") -> Vector3:
+		var a: Dictionary = result.get("anchors", {})
+		var seats: Dictionary = result.get("seats", {})
+		var want := spot if spot != "" else str(UrbsPlaces.SPOTS.get(kind, ""))
+		match want:
+			"floor":
+				if a.has("tribunal") and a.has("door"):
+					var t: Vector3 = a["tribunal"]
+					var d: Vector3 = a["door"]
+					var p := t.lerp(d, 0.3)
+					return xf * Vector3(p.x, d.y + 1.3, p.z)
+			"pulvinar":
+				if seats.has("pulvinar"):
+					return xf * ((seats["pulvinar"] as Transform3D).origin + Vector3(0, -0.4, 0))
+			"altar":
+				if a.has("altar"):
+					return xf * ((a["altar"] as Vector3) + Vector3(0, 0.6, 0))
+			_:
+				if want != "" and a.has(want):
+					return xf * ((a[want] as Vector3) + Vector3(0, 1.2, 0))
+		var s: Transform3D = result.get("spawn", Transform3D.IDENTITY)
+		return xf * (s.origin - s.basis.z * 5.0)
+	# --- F2 play (end) -----------------------------------------------------------------------

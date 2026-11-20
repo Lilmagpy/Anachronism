@@ -2631,6 +2631,13 @@ func show_city_feed(new_view: Dictionary, by_request := false) -> void:
 	_feed = feed
 
 
+# --- F2 play (begin): a year ended from Rome played its events as moments there; the feed
+# does not pop up for that turn when the map comes back (R still opens it).
+func city_feed_seen(new_view: Dictionary) -> void:
+	_feed_turn = int(new_view.get("turn", 0))
+# --- F2 play (end)
+
+
 ## The fights the player's armies will likely meet this turn: storms of besieged cities, and
 ## battles with enemy armies where they stand or are marching.
 func imminent_battles() -> Array:
