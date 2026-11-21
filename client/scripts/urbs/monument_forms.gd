@@ -924,7 +924,10 @@ static func _site_round(out: Dictionary, k: Kit, r: float, h: float, top: float,
 			k.rod(Vector3(cx + s * 2.0, 0.8, 0), Vector3(cx, h * 0.7, 0), 0.2, Roman.DWOOD, Kit.TIMBER)
 		k.rod(Vector3(cx, h * 0.7, 0), Vector3(cx + 5.0, h * 0.62, 2.0), 0.18, Roman.DWOOD, Kit.TIMBER)
 	_add(out, k.finish())
-	_box_shape(out, Vector3(0, h * 0.4, 0), Vector3(r * 1.42, h * 0.8, r * 1.42))
+	# the solids hold what is drawn: the footing disc and the ring of piers inside it
+	_box_shape(out, Vector3(0, 0.4, 0), Vector3(r * 2.0, 0.8, r * 2.0))
+	_box_shape(out, Vector3(0, (0.8 + h * 0.18) * 0.5, 0), Vector3(r * 1.6, 0.8 + h * 0.18, r * 1.6))
+	_box_shape(out, Vector3(0, top * 0.5, 0), Vector3(r * 1.42, top, r * 1.42))
 
 
 ## A burnt shell: charred footing, ragged wall stumps round the edge, fallen column drums.

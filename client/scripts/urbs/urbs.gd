@@ -274,6 +274,7 @@ func _apply_flags(flags: Dictionary) -> void:
 				stand = view.stand
 				if not yaw_set:
 					facing = float(view.facing)
+				height = maxf(height, (view.eye as Vector3).y - height_at(stand.x, stand.z))   # on a court's floor
 			cam.snap_street(stand, facing, maxf(height, UrbsCamera.EYE), deg_to_rad(float(flags.get("pitch", "3"))))
 		"inside":
 			if at != "" and not at.contains(","):

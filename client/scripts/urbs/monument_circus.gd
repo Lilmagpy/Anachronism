@@ -133,7 +133,8 @@ static func _flank(mm: UrbsMonumentMesh, sx: float, aw: float, cav: float, zc: f
 	var xo := x0 + sx * x
 	var xw := x0 + sx * cav
 	mm.ext(minf(xo, xw), 0.0, z0, maxf(xo, xw), y + 1.2, z1, "tufa_yellow" if not stone else "travertine")
-	mm.solid(Vector3(x0 + sx * cav * 0.5, 0.0, (z0 + z1) * 0.5), Vector3(cav, y + 1.2, z1 - z0))
+	var reach := maxf(cav, x) + 0.4   # F3: the solid holds the rows and the façade's pilasters
+	mm.solid(Vector3(x0 + sx * reach * 0.5, 0.0, (z0 + z1) * 0.5), Vector3(reach, maxf(y + 1.2, 7.6), z1 - z0))
 	var bay := 6.0
 	var n_arch := int((z1 - z0) / bay)
 	var face := x0 + sx * cav
