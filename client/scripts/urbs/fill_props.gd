@@ -104,10 +104,10 @@ static func tomb(kind: String, lod: int) -> MB:
 	var b := MB.new()
 	match kind:
 		"altar":
-			b.box(Vector3(-1.5, -3.0, -1.5), Vector3(1.5, 0.5, 1.5), P.PLINTH)   # F3: footings 3 m deep (slopes)
+			b.box(Vector3(-1.5, -4.0, -1.5), Vector3(1.5, 0.5, 1.5), P.PLINTH)   # F3: footings 4 m deep (slopes)
 			b.box(Vector3(-1.2, 0.5, -1.2), Vector3(1.2, 1.9, 1.2), MARBLE)
 			b.box(Vector3(-1.45, 1.9, -1.45), Vector3(1.45, 2.3, 1.45), P.STONE)
-			b.rect_on(0, -0.8, 0.8, 0.9, 1.6, 3.0, 3.0, 0.62, P.SIGN)
+			b.rect_on(0, -0.8, 0.8, 0.9, 1.6, 3.0, 3.0, -0.29, P.SIGN)   # F3: on the marble face (it hung 0.9 m in front of it)
 		"columbarium":
 			P.walls(b, 5.0, 5.0, 3.4, [[P.door_hole(0.0, 1.2, 2.2)], [], [], []], P.PLASTER, lod)
 			P.door(b, 0, 0.0, 1.2, 2.2, 5.0, 5.0, lod, 71)
@@ -117,15 +117,15 @@ static func tomb(kind: String, lod: int) -> MB:
 					for j in 2:
 						b.rect_on(2, -1.6 + 1.6 * float(i) - 0.35, -1.6 + 1.6 * float(i) + 0.35, 1.0 + 1.0 * float(j), 1.5 + 1.0 * float(j), 5.0, 5.0, 0.03, P.LATTICE)
 		"round":
-			b.cone(0, 0, -3.0, 1.5, 4.0, 3.9, 10, P.PLINTH)
+			b.cone(0, 0, -4.0, 1.5, 4.0, 3.9, 10, P.PLINTH)
 			b.cone(0, 0, 1.5, 5.0, 3.8, 3.6, 10, MARBLE)
 			b.cone(0, 0, 5.0, 5.4, 3.9, 3.9, 10, P.STONE)
 			b.cone(0, 0, 5.4, 7.2, 3.0, 0.1, 10, Color(0.40, 0.46, 0.25, 0.05))
 		"tumulus":
-			b.cone(0, 0, -2.5, 0.2, 4.5, 4.3, 12, P.PLINTH)
+			b.cone(0, 0, -4.0, 0.2, 4.5, 4.3, 12, P.PLINTH)
 			b.cone(0, 0, 0.2, 3.2, 4.3, 0.2, 12, Color(0.40, 0.48, 0.26, 0.05))
 		_:
-			b.box(Vector3(-0.5, -0.5, -0.25), Vector3(0.5, 2.0, 0.25), MARBLE)
+			b.box(Vector3(-0.5, -1.5, -0.25), Vector3(0.5, 2.0, 0.25), MARBLE)
 	return b
 
 

@@ -675,9 +675,11 @@ func _corners(lot: Dictionary) -> Array:
 ## houses whose floor was at the ramp's height.
 func _clear_at(p: Vector2) -> float:
 	var hh: float = height.call(p.x, p.y)
-	if UrbsTerrain.terrace_at(p.x, p.y) > 0.5:
+	if UrbsTerrain.terrace_at(p.x, p.y) > 0.4:
 		var step := UrbsTerrain.TERRACE_M
-		return maxf(hh, step * ceilf((hh - 0.3) / step) + UrbsSite.WALL_UP)
+		# the wall's top follows the ground 3.5 m up the slope (UrbsSite.build_chunk_walls), a
+		# little over the tread's level: 0.35 m kept in hand
+		return maxf(hh, step * ceilf((hh - 0.3) / step) + UrbsSite.WALL_UP + 0.35)
 	return hh
 
 
@@ -697,10 +699,17 @@ func _ground_ok(lot: Dictionary, pts: Array) -> bool:
 	if str(lot.get("kind", "")) == "tomb" and hi - lo > 2.5:
 		return false   # F3: deeper than a tomb's footings (3 m): it hung over the slope
 	if str(lot.get("kind", "")) != "furn":
-		# F3: clear the terrace walls and stand over everything the mesh builds (stairs, awnings)
+		# F3: clear the terrace walls and stand over everything the mesh builds (stairs, awnings),
+		# on a 5 x 5 grid over the envelope (a riser between the corners went unseen)
 		var e := _env(lot)
-		for q in pts + _corners({"c": e["c"], "th": lot["th"], "hx": e["hx"], "hz": e["hz"]}):
+		var ea: Vector2 = e["ax"]
+		var ez: Vector2 = e["az"]
+		for q in pts:
 			hi = maxf(hi, _clear_at(q))
+		for i in 5:
+			for j in 5:
+				var q: Vector2 = (e["c"] as Vector2) + ea * (float(e["hx"]) * (i / 2.0 - 1.0)) + ez * (float(e["hz"]) * (j / 2.0 - 1.0))
+				hi = maxf(hi, _clear_at(q))
 		if hi - lo > MAX_STEP:
 			return false
 	# one base per building: the floor at the highest of the corners, so no part is buried, and
@@ -1457,6 +1466,11 @@ func _lattice_verdict(lot: Dictionary, rk: Vector2i, st: Dictionary) -> int:
 		if hz != 0:
 			var rk2 := "hazard_%d" % hz
 			reject_stats[rk2] = int(reject_stats.get(rk2, 0)) + 1
+			return 1
+	var ev := _env(lot)
+	for q in _corners({"c": ev["c"], "th": lot["th"], "hx": ev["hx"], "hz": ev["hz"]}):
+		if _hazard(q) & (M_WALK | M_WATER | M_FOOT):   # F3: the envelope too (eaves, stairs, amphorae)
+			reject_stats["envelope"] = int(reject_stats.get("envelope", 0)) + 1
 			return 1
 	if _hits_obstacle(lot) or _on_street(lot):   # F2: exact tests the 3 m mask can miss
 		reject_stats["monument_or_street"] = int(reject_stats.get("monument_or_street", 0)) + 1
