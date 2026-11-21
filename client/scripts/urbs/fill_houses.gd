@@ -83,6 +83,8 @@ static func insula(shape: String, storeys: int, feature: int, pitch: int, lod: i
 	back_holes.append(P.door_hole(0.0, 1.1, 2.3))
 	P.walls(m, w, md, h, [front_holes, back_holes, [], []], P.PLASTER, lod)
 	for i in shops.size():
+		# feature 3 (F3): the plain front of a house behind a row of lean-to shops: no awnings, no
+		# balconies (they ran through the shops' roofs)
 		var awn := i if (feature == 2 or (feature == 0 and i % 2 == 1)) else -1
 		P.shop_front(m, 0, shops[i], shop_w, w, md, lod, seed * 5 + i, awn, true)
 	P.door(m, 1, 0.0, 1.1, 2.3, w, md, lod, seed + 2)
@@ -112,7 +114,7 @@ static func insula(shape: String, storeys: int, feature: int, pitch: int, lod: i
 				if not narrow:
 					P.window_flat(m, 3, zz, y0 + 1.0, 1.0, 1.2, w, md, seed * 19 + s * 19 + i, lod)
 		# timber galleries (maeniana) with railings on the street face
-		if lod == 0 and s >= 2 and (feature != 1 or s % 2 == 0):
+		if lod == 0 and s >= 2 and feature != 3 and (feature != 1 or s % 2 == 0):
 			var full := feature == 2
 			var xs: Array = [-6.5, 0.0, 6.5] if full else [-4.2 if s % 2 == 0 else 3.6]
 			var hw := 2.3 if full else 2.0
@@ -121,7 +123,7 @@ static func insula(shape: String, storeys: int, feature: int, pitch: int, lod: i
 				hw = 2.9
 			for bx: float in xs:
 				P.balcony(m, 0, bx, hw, y0 + 0.08, w, md, seed * 23 + s * 7 + int(bx), feature == 1 or (feature == 0 and s % 2 == 1), s == storeys - 1 and feature == 1)
-		elif lod == 1 and s >= 2 and feature != 1 and not narrow:
+		elif lod == 1 and s >= 2 and feature != 1 and feature != 3 and not narrow:
 			m.on_wall(0, -4.2 if s % 2 == 0 else 3.6, y0 + 0.08, 4.0, 0.14, 1.1, w, md, 0.0, P.WOOD)
 	# an outside stair to the first floor on the right flank
 	if lod == 0 and not narrow and storeys >= 3 and P.fr(seed, 8) < 0.55:
@@ -312,7 +314,7 @@ static func casa(roof_kind: String, lod: int) -> MB:
 	if lod == 0:
 		P.window(b, 0, 2.1, 1.2, 0.9, 0.9, w, d, 0, 52)
 		P.window_flat(b, 2, -1.0, 1.3, 0.8, 0.8, w, d, 53, lod)
-		P.amphora(b, -2.6, 0.0, d * 0.5 + 0.4, 0.9)
+		P.amphora(b, -2.6, 0.0, d * 0.5 + 0.28, 0.9)
 		# the woodpile against the flank, on a footing that goes down to the ground (F3: it hung
 		# in the air on a slope)
 		b.box(Vector3(-w * 0.5 - 0.5, -P.SKIRT, -2.0), Vector3(-w * 0.5, 0.0, 0.5), P.PLINTH, false)
@@ -363,7 +365,8 @@ static func taberna(variant: int, lod: int) -> MB:
 		else:
 			P.window_flat(b, 0, 0.0, 4.4, 1.2, 1.3, w, d, 77, lod)
 	if variant == 5 and lod == 0:
-		b.box(Vector3(-w * 0.5 + 0.5, 0.0, d * 0.5 - 0.1), Vector3(w * 0.5 - 0.5, 1.0, d * 0.5 + 0.55), P.STONE)
+		# the counter's masonry goes down to the ground in front (F3: it hung over a falling street)
+		b.box(Vector3(-w * 0.5 + 0.5, -P.SKIRT, d * 0.5 - 0.1), Vector3(w * 0.5 - 0.5, 1.0, d * 0.5 + 0.55), P.STONE)
 		for i in 5:
 			P.amphora(b, -1.6 + 0.8 * float(i), 1.0, d * 0.5 + 0.2, 0.7)
 		# F3: no stock of amphorae against the flank any more: it stood inside the next shop of

@@ -48,7 +48,7 @@ static var _material: ShaderMaterial
 # ---------------------------------------------------------------- public
 
 ## Mesh for `key` at detail `lod` (0 full, 1 simplified, 2 walls and roof). Keys:
-##   insula:<shape gable|hip|stepped>:<storeys 2-5>:<feature 0-2>:<pitch 0|1>[:n  narrow, 7 m wide]
+##   insula:<shape gable|hip|stepped>:<storeys 2-5>:<feature 0-3; 3 plain front behind shops>:<pitch 0|1>[:n  narrow, 7 m wide]
 ##   domus[:1  no awning: behind a row of tabernae]  casa:<tile|thatch|shingle>  taberna:<0-5>  workshop:<0 potter|1 carpenter|2 fullonica>
 ##   horrea  horti  tree:<cypress|pine|round|fruit>  prop:<cart|amph|sacks|crates>
 ##   furn:<fountain|well|shrine>  tomb:<altar|columbarium|round|tumulus|stele>  rural:<vines|beds|farm>
@@ -127,7 +127,8 @@ static func lod_key(key: String, lod: int) -> String:
 			if lod >= 2:
 				shape = "hip" if shape == "hip" else "gable"
 				pitch = "0"
-			return "insula:%s:%s:0:%s%s" % [shape, p[2], pitch, ":n" if narrow else ""]
+			var feat := "3" if p[3] == "3" else "0"   # F3: the plain front keeps its plainness far away
+			return "insula:%s:%s:%s:%s%s" % [shape, p[2], feat, pitch, ":n" if narrow else ""]
 		"taberna":
 			return "taberna:4" if p[1] == "4" else "taberna:0"
 		"workshop":

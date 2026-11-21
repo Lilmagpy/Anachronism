@@ -710,6 +710,17 @@ func _f3_carriageway(p: Vector2) -> Array:
 	return [best, sid]
 
 
+## The top of what is walked on at `p`: the ground, a carriageway's paving or a raised footway.
+func _f3_ground(p: Vector2) -> float:
+	var gy := UrbsTerrain.height_at(p.x, p.y)
+	var cw := _f3_carriageway(p)
+	if float(cw[0]) > 0.0:
+		return gy + UrbsStreets.SURFACE_LIFT
+	if float(cw[0]) > -(UrbsFill.KERB + UrbsFill.FOOTPATH) and _f3_footway(cw[1]):
+		return gy + UrbsStreets.SURFACE_LIFT + UrbsStreets.FOOTWAY_H
+	return gy
+
+
 ## Whether the street `sid` has a raised footway (UrbsFill._has_footway).
 func _f3_footway(sid: String) -> bool:
 	for s in _streets.streets:
@@ -792,11 +803,13 @@ func _f3_check_houses() -> void:
 			for p in _f3_corners(g0):
 				if UrbsTerrain.in_river(p.x, p.y) or UrbsTerrain.height_at(p.x, p.y) < UrbsTerrain.river_level(p.x, p.y) + 0.2:
 					wet += 1
-				var gy := UrbsTerrain.height_at(p.x, p.y)
+				var gy := _f3_ground(p)
 				var at_front: bool = (p - (g0.c as Vector2)).dot(az) > float(g0.hz) * 0.5 and str(a.kind) not in ["tomb", "farm"]
 				var over := gy - float(a.y) - (0.0 if at_front else UrbsFill.BURY_BACK)
 				buried = maxf(buried, over)
 				var bottom := float(a.y)
+				if str(a.kind) in ["farm", "horti"]:
+					continue   # sparse plans: the corners of their box are open yard (every part has a footing)
 				for f: Dictionary in a.feet:
 					if _f3_inside(f, p, -0.5):   # thresholds, steps and amphorae at the walls' foot
 						bottom = minf(bottom, float(f.y0))
@@ -878,20 +891,20 @@ func _f3_check_trees(radius: float) -> void:
 			for item: Array in UrbsSiteFlora.spots(rect, lod, _year):
 				var xf: Transform3D = item[1]
 				var bb: AABB = xf * (tall[item[0]] as AABB)
-				_f3_tree(str(item[0]), xf.origin, bb, lod, false)
+				_f3_tree(str(item[0]), xf.origin, bb, lod, false, UrbsSiteFlora.crown_radius(item[0]) * xf.basis.get_scale().x)
 	for t in _f3_trees_extra:
 		var p: Vector3 = t.pos
 		var r := float(t.radius)
-		_f3_tree(str(t.kind), p, AABB(p + Vector3(-r, 2.0, -r), Vector3(2 * r, 6.0, 2 * r)), 0, true)
+		_f3_tree(str(t.kind), p, AABB(p + Vector3(-r, 2.0, -r), Vector3(2 * r, 6.0, 2 * r)), 0, true, r)
 
 
-func _f3_tree(kind: String, p: Vector3, bb: AABB, lod: int, garden: bool) -> void:
+func _f3_tree(kind: String, p: Vector3, bb: AABB, lod: int, garden: bool, radius: float) -> void:
 	var p2 := Vector2(p.x, p.z)
 	var tag := "%s tree at (%.0f, %.0f)%s" % [kind, p.x, p.z, "" if lod == 0 else " (lod %d)" % lod]
-	# the crown: the inscribed box of the tree's bounds above its trunk
-	var cr := minf(bb.size.x, bb.size.z) * 0.35
+	# the crown: round, of the kind's radius (half its mesh's width) at the tree's scale
+	var cr := radius
 	var cy0 := bb.position.y + bb.size.y * 0.35
-	var crown := {"c": p2, "ax": Vector2.RIGHT, "az": Vector2.DOWN, "hx": cr, "hz": cr, "y0": cy0, "y1": bb.end.y}
+	var crown := {"y0": cy0, "y1": bb.end.y}
 	var worst := 0.0
 	var where := ""
 	for k in _f3_near(p2, cr + 1.0):
@@ -910,7 +923,10 @@ func _f3_tree(kind: String, p: Vector3, bb: AABB, lod: int, garden: bool) -> voi
 				break
 			if minf(float(o.y1), crown.y1) - maxf(float(o.y0), crown.y0) < 0.3 or str(it.kind) == "horti":
 				continue
-			var d := _depth(o, crown)
+			var rel := p2 - (o.c as Vector2)
+			var ox := maxf(absf(rel.dot(o.ax)) - float(o.hx), 0.0)
+			var oz := maxf(absf(rel.dot(o.az)) - float(o.hz), 0.0)
+			var d := cr - sqrt(ox * ox + oz * oz)
 			if d > 0.6 and d > worst:
 				worst = d
 				where = "crown %.1f m through %s" % [d, _f3_name(it)]
@@ -1045,6 +1061,9 @@ func _f3_check_life_once(life: UrbsLife, hour: float) -> void:
 						break
 				if wall:
 					break
+			for post in life._lamp_posts:
+				if Vector2(post.x, post.z).distance_to(p2) < 0.6:
+					wall = true
 			if not wall and _f3_mon_at(p2, lp.y - 0.5, lp.y + 0.5, -0.7).is_empty():
 				_f3_note("lamp_smoke", 1.0, "lamp at (%.0f, %.0f) %.1f m up on no wall" % [lp.x, lp.z, lp.y - UrbsTerrain.height_at(lp.x, lp.z)])
 	else:
@@ -1057,7 +1076,7 @@ func _f3_check_life_once(life: UrbsLife, hour: float) -> void:
 				for ob in it.bands:
 					if _f3_inside(ob, p2, 0.0):
 						top = maxf(top, float(ob.y1))
-				if o.y > top - 0.3 and o.y < top + 1.6:
+				if o.y > top - 1.0 and o.y < top + 1.6:
 					roof = true
 					break
 			if not roof:
