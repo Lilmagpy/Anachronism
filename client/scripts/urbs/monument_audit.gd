@@ -1,0 +1,672 @@
+## Urbs F3 (monuments): the checks that see a monument as the player sees it, by geometry. Run
+## by audit.gd (`# F3 monuments`) after it has built the year's monuments; the findings go into
+## its URBS_AUDIT line and from there into city_audit.py's report.
+##
+## The PARTS of a monument are its real mesh pieces at the nearest level of detail: every
+## connected run of triangles of one material in its meshes (a step, a wall, a column drum, a
+## roof plane), and every instanced part (a column) as its mesh's box under its transform. Each
+## part is a box in the monument's own frame (turned only about the vertical), so in the world
+## it is an oriented box: these are the "real mesh AABBs" the checks use, not one box per
+## monument.
+##
+## Findings (lists of strings "<id> ..." so the report can quote them):
+##   part_overlaps    parts of one standing monument inside another's (deeper than PART_M), not
+##                    hidden in the ground; one line per pair with the deepest and the count
+##   parts_floating   parts (or clusters of touching parts) of a monument resting on nothing:
+##                    neither the ground nor another of its parts
+##   parts_sunk       columns (instanced parts) whose foot is below the top of what they stand
+##                    on by more than SUNK_M (a column sunk into its podium or stylobate)
+##   coplanar         faces of two different materials in the same plane and overlapping:
+##                    they flicker (z-fighting), within one monument or between two
+##   view_inside      the `--at=<id>` street camera inside a solid (any monument's part)
+##   view_misses      the `--at=<id>` camera not looking at its monument's front: standing
+##                    behind or beside it, turned away from it, or with another monument between
+## and `parts`: the number of parts checked.
+class_name UrbsMonumentAudit
+extends RefCounted
+
+const PART_M := 0.10       ## overlaps shallower than this are parts touching, not through
+const TOUCH_M := 0.03      ## gap within which two parts touch (support)
+const GROUND_M := 0.15     ## a part whose foot is this close to the ground stands on it
+const SUNK_M := 0.10
+const CELL := 4.0          ## grid cell for the part searches (metres)
+const QUANT := 100.0       ## vertex welding for the connected runs: 1 cm
+const COPLANAR_MIN_AREA := 0.05   ## m²: smaller faces flicker too little to see
+## Monuments whose parts are open ground (pavings): standing on them is not an overlap.
+const PAVINGS := ["plaza", "road_paved", "lacus_curtius", "comitium"]
+## Routes whose parts run through the city by design (their meeting with a gate is the gate's).
+const ROUTES := ["wall", "aqueduct", "sewer"]
+## Models with no `--at` street view of a front (routes, pavings, the river works).
+const NO_VIEW := ["wall", "aqueduct", "sewer", "road_paved", "bridge_stone", "bridge_timber", "quay"]
+
+var mon: UrbsMonuments
+var height := Callable()
+var parts := {}            ## id -> Array of part dictionaries (see _part)
+var _grid := {}            ## Vector2i -> Array of [id, index]: every part, by world cell
+
+
+func _init(monuments: UrbsMonuments, ground: Callable) -> void:
+	mon = monuments
+	height = ground
+
+
+## Every check: {part_overlaps, parts_floating, parts_sunk, coplanar, view_inside, view_misses, parts}.
+func run(with_coplanar := true) -> Dictionary:
+	var ids: Array = mon.ids()
+	ids.sort()
+	var n := 0
+	for id in ids:
+		parts[id] = _parts_of(id)
+		n += (parts[id] as Array).size()
+	_index(ids)
+	var out := {"parts": n, "part_overlaps": _part_overlaps(ids), "parts_floating": [], "parts_sunk": [],
+		"coplanar": [], "view_inside": [], "view_misses": []}
+	for id in ids:
+		var fl := _floating(id)
+		if fl != "":
+			out.parts_floating.append(fl)
+		var sk := _sunk(id)
+		if sk != "":
+			out.parts_sunk.append(sk)
+	if with_coplanar:
+		out.coplanar = _coplanar(ids)
+	var views := _views(ids)
+	out.view_inside = views[0]
+	out.view_misses = views[1]
+	return out
+
+
+# ---------------------------------------------------------------------------------------------
+# Parts
+# ---------------------------------------------------------------------------------------------
+
+
+## A part: lo/hi its box in the monument's frame; c, ax, az, hx, hz its oriented rectangle on
+## the ground (world); y0, y1 its height range (world); mat the material's id; inst true for an
+## instanced part; area its horizontal top's area.
+## tv: its triangles (3 vertices each, the monument's frame; for an instance built on demand
+## from `mesh` under `t`); comp: the triangles of the whole connected run it was cut from (a
+## closed solid, for the inside test); wb: its world box; xf: the monument's frame.
+func _part(xf: Transform3D, lo: Vector3, hi: Vector3, mat: int, inst: bool, tv := PackedVector3Array(),
+		comp := PackedVector3Array()) -> Dictionary:
+	var c3 := xf * ((lo + hi) * 0.5)
+	var ax3 := xf.basis * Vector3(1, 0, 0)
+	var az3 := xf.basis * Vector3(0, 0, 1)
+	var wb := AABB(xf * lo, Vector3.ZERO)
+	for i in 8:
+		wb = wb.expand(xf * AABB(lo, hi - lo).get_endpoint(i))
+	return {"lo": lo, "hi": hi, "c": Vector2(c3.x, c3.z), "ax": Vector2(ax3.x, ax3.z).normalized(),
+		"az": Vector2(az3.x, az3.z).normalized(), "hx": (hi.x - lo.x) * 0.5, "hz": (hi.z - lo.z) * 0.5,
+		"y0": xf.origin.y + lo.y, "y1": xf.origin.y + hi.y, "mat": mat, "inst": inst, "tv": tv, "comp": comp,
+		"wb": wb, "xf": xf}
+
+
+## A part's triangles in world coordinates (cached).
+func _world_tris(p: Dictionary, key := "tv") -> PackedVector3Array:
+	var wk := "w_" + key
+	if p.has(wk):
+		return p[wk]
+	var src: PackedVector3Array = p[key]
+	if src.is_empty() and p.has("mesh"):
+		src = _mesh_tris(p.mesh, p.t)
+		p["tv"] = src
+		p["comp"] = src
+	var xf: Transform3D = p.xf
+	var out := PackedVector3Array()
+	out.resize(src.size())
+	for i in src.size():
+		out[i] = xf * src[i]
+	p[wk] = out
+	return out
+
+
+## Every triangle of a mesh under `t`, 3 vertices each.
+static func _mesh_tris(mesh: Mesh, t: Transform3D) -> PackedVector3Array:
+	var out := PackedVector3Array()
+	for s in mesh.get_surface_count():
+		var arr := mesh.surface_get_arrays(s)
+		var verts: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
+		var idx: PackedInt32Array = arr[Mesh.ARRAY_INDEX] if arr[Mesh.ARRAY_INDEX] != null else PackedInt32Array()
+		if idx.size() > 0:
+			for i in idx.size():
+				out.append(t * verts[idx[i]])
+		else:
+			for v in verts:
+				out.append(t * v)
+	return out
+
+
+## The box round `b` under `t` (corners transformed), as [lo, hi].
+static func _box_under(t: Transform3D, b: AABB) -> Array:
+	var lo := Vector3(INF, INF, INF)
+	var hi := Vector3(-INF, -INF, -INF)
+	for i in 8:
+		var p := t * b.get_endpoint(i)
+		lo = lo.min(p)
+		hi = hi.max(p)
+	return [lo, hi]
+
+
+## The nearest level of detail's meshes and instances of a monument, as parts.
+func _parts_of(id: String) -> Array:
+	var out: Array = []
+	var node: Node3D = mon._nodes.get(id)
+	if node == null:
+		return out
+	var xf: Transform3D = mon._xf.get(id, Transform3D.IDENTITY)
+	# the frame audit.gd and push_out use: yaw and position of the node (routes: identity)
+	for ch in node.get_children():
+		if ch is MeshInstance3D:
+			var mi: MeshInstance3D = ch
+			if mi.visibility_range_begin > 0.0 or mi.mesh == null:
+				continue   # a farther level of detail
+			_mesh_parts(out, xf, mi.transform, mi.mesh)
+		elif ch is MultiMeshInstance3D:
+			var mmi: MultiMeshInstance3D = ch
+			if mmi.visibility_range_begin > 0.0 or mmi.multimesh == null or mmi.multimesh.mesh == null:
+				continue
+			var mm := mmi.multimesh
+			var mb := mm.mesh.get_aabb()
+			var mat := mm.mesh.get_instance_id()
+			for k in mm.instance_count:
+				var it := mmi.transform * mm.get_instance_transform(k)
+				var bx := _box_under(it, mb)
+				var ip := _part(xf, bx[0], bx[1], mat, true)
+				ip["mesh"] = mm.mesh
+				ip["t"] = it
+				out.append(ip)
+	return out
+
+
+## Connected runs of triangles, one material at a time (vertices welded at 1 cm).
+func _mesh_parts(out: Array, xf: Transform3D, local: Transform3D, mesh: Mesh) -> void:
+	for s in mesh.get_surface_count():
+		var arr := mesh.surface_get_arrays(s)
+		var verts: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
+		var idx: PackedInt32Array = arr[Mesh.ARRAY_INDEX] if arr[Mesh.ARRAY_INDEX] != null else PackedInt32Array()
+		var nv := idx.size() if idx.size() > 0 else verts.size()
+		var ntri := nv / 3
+		if ntri == 0:
+			continue
+		var m: Material = mesh.surface_get_material(s)
+		var mat := m.get_instance_id() if m != null else s
+		# welding by position: one id per distinct (rounded) vertex
+		var vid := PackedInt32Array()
+		vid.resize(verts.size())
+		var seen := {}
+		for v in verts.size():
+			var p := verts[v]
+			var key := Vector3i(roundi(p.x * QUANT), roundi(p.y * QUANT), roundi(p.z * QUANT))
+			var got: Variant = seen.get(key)
+			if got == null:
+				seen[key] = v
+				vid[v] = v
+			else:
+				vid[v] = int(got)
+		var parent := PackedInt32Array()
+		parent.resize(verts.size())
+		for v in verts.size():
+			parent[v] = v
+		for t in ntri:
+			var a := vid[idx[t * 3] if idx.size() > 0 else t * 3]
+			for k in [1, 2]:
+				var b := vid[idx[t * 3 + k] if idx.size() > 0 else t * 3 + k]
+				var ra := _find(parent, a)
+				var rb := _find(parent, b)
+				if ra != rb:
+					parent[rb] = ra
+		var groups := {}   # root -> PackedVector3Array of its triangles (monument frame)
+		for t in ntri:
+			var r := _find(parent, vid[idx[t * 3] if idx.size() > 0 else t * 3])
+			if not groups.has(r):
+				groups[r] = PackedVector3Array()
+			var g: PackedVector3Array = groups[r]
+			for k in 3:
+				g.append(local * verts[idx[t * 3 + k] if idx.size() > 0 else t * 3 + k])
+			groups[r] = g
+		for r in groups:
+			_add_component(out, xf, groups[r], mat)
+
+
+## One connected run as parts: whole when small; cut by CELL squares (each triangle by its
+## centre) when it spans more, so a ring (a portico round its court) or an L is not one box
+## over everything inside it.
+func _add_component(out: Array, xf: Transform3D, g: PackedVector3Array, mat: int) -> void:
+	var lo := g[0]
+	var hi := g[0]
+	for v in g:
+		lo = lo.min(v)
+		hi = hi.max(v)
+	if (hi.x - lo.x <= 2.0 * CELL and hi.z - lo.z <= 2.0 * CELL) or g.size() <= 6:
+		out.append(_part(xf, lo, hi, mat, false, g, g))
+		return
+	var cells := {}
+	for i in range(0, g.size(), 3):
+		var c := (g[i] + g[i + 1] + g[i + 2]) / 3.0
+		var key := Vector2i(floori(c.x / CELL), floori(c.z / CELL))
+		if not cells.has(key):
+			cells[key] = PackedVector3Array()
+		var arr: PackedVector3Array = cells[key]
+		arr.append(g[i])
+		arr.append(g[i + 1])
+		arr.append(g[i + 2])
+		cells[key] = arr
+	for key in cells:
+		var arr: PackedVector3Array = cells[key]
+		var l2 := arr[0]
+		var h2 := arr[0]
+		for v in arr:
+			l2 = l2.min(v)
+			h2 = h2.max(v)
+		out.append(_part(xf, l2, h2, mat, false, arr, g))
+
+
+static func _find(parent: PackedInt32Array, i: int) -> int:
+	var r := i
+	while parent[r] != r:
+		r = parent[r]
+	while parent[i] != r:   # path compression
+		var nx := parent[i]
+		parent[i] = r
+		i = nx
+	return r
+
+
+## The world cells a part's rectangle covers.
+static func _cells(p: Dictionary) -> Array:
+	var c: Vector2 = p.c
+	var ex := absf((p.ax as Vector2).x) * float(p.hx) + absf((p.az as Vector2).x) * float(p.hz)
+	var ez := absf((p.ax as Vector2).y) * float(p.hx) + absf((p.az as Vector2).y) * float(p.hz)
+	var out: Array = []
+	var x0 := floori((c.x - ex) / CELL)
+	var x1 := floori((c.x + ex) / CELL)
+	var z0 := floori((c.y - ez) / CELL)
+	var z1 := floori((c.y + ez) / CELL)
+	if (x1 - x0 + 1) * (z1 - z0 + 1) > 4000:
+		return out   # a route's whole-city run: checked by its own segments
+	for i in range(x0, x1 + 1):
+		for j in range(z0, z1 + 1):
+			out.append(Vector2i(i, j))
+	return out
+
+
+func _index(ids: Array) -> void:
+	_grid.clear()
+	for id in ids:
+		var ps: Array = parts[id]
+		for k in ps.size():
+			for cell in _cells(ps[k]):
+				if not _grid.has(cell):
+					_grid[cell] = []
+				(_grid[cell] as Array).append([id, k])
+
+
+## Overlap depth of two oriented rectangles along the axis of least overlap (<= 0: apart).
+static func _depth(a: Dictionary, b: Dictionary) -> float:
+	var dc: Vector2 = (b.c as Vector2) - (a.c as Vector2)
+	var best := INF
+	for ax in [a.ax, a.az, b.ax, b.az]:
+		var axis: Vector2 = ax
+		var ra := absf(axis.dot(a.ax)) * float(a.hx) + absf(axis.dot(a.az)) * float(a.hz)
+		var rb := absf(axis.dot(b.ax)) * float(b.hx) + absf(axis.dot(b.az)) * float(b.hz)
+		best = minf(best, ra + rb - absf(dc.dot(axis)))
+	return best
+
+
+func _model(id: String) -> String:
+	return str(mon._placed.get(id, {}).get("model", ""))
+
+
+static func _fmt(p: Dictionary) -> String:
+	return "%.1fx%.1fx%.1f m at (%.0f, %.0f) y %.1f-%.1f" % [float(p.hx) * 2.0, float(p.y1) - float(p.y0),
+		float(p.hz) * 2.0, (p.c as Vector2).x, (p.c as Vector2).y, float(p.y0), float(p.y1)]
+
+
+# ---------------------------------------------------------------------------------------------
+# Checks
+# ---------------------------------------------------------------------------------------------
+
+
+## Parts of one monument inside another's: [id_a, id_b] -> deepest, count; skips meetings hidden
+## in the ground and a monument standing on a paving (unless the paving covers its part).
+func _part_overlaps(_ids: Array) -> Array:
+	var pairs := {}   # "a|b" -> {depth, n, pa, pb}
+	for cell in _grid:
+		var lst: Array = _grid[cell]
+		if lst.size() < 2:
+			continue
+		for i in lst.size():
+			var ia: String = lst[i][0]
+			for j in range(i + 1, lst.size()):
+				var ib: String = lst[j][0]
+				if ia == ib:
+					continue
+				var a := ia
+				var b := ib
+				var pa: Dictionary = parts[ia][lst[i][1]]
+				var pb: Dictionary = parts[ib][lst[j][1]]
+				if a > b:
+					a = ib
+					b = ia
+					var t := pa
+					pa = pb
+					pb = t
+				var ma := _model(a)
+				var mb := _model(b)
+				if ma in ROUTES and mb in ROUTES:
+					continue
+				var y0 := maxf(float(pa.y0), float(pb.y0))
+				var y1 := minf(float(pa.y1), float(pb.y1))
+				if y1 - y0 <= PART_M:
+					continue
+				var d := _depth(pa, pb)
+				if d <= PART_M:
+					continue
+				# where they meet: hidden in the ground?
+				var mid: Vector2 = ((pa.c as Vector2) + (pb.c as Vector2)) * 0.5
+				if y1 <= float(height.call(mid.x, mid.y)) + 0.05:
+					continue
+				var pave_a := ma in PAVINGS
+				var pave_b := mb in PAVINGS
+				if pave_a != pave_b:
+					var pv: Dictionary = pa if pave_a else pb
+					var ot: Dictionary = pb if pave_a else pa
+					if float(ot.y1) > float(pv.y1) + 0.02:
+						continue   # it stands on (or through) the paving: the paving meets its foot
+				var key := a + "|" + b
+				var rec: Dictionary = pairs.get(key, {})
+				var depth := minf(d, y1 - y0)
+				if rec.is_empty():
+					rec = {"depth": 0.0, "n": 0, "pa": pa, "pb": pb, "seen": {}}
+					pairs[key] = rec
+				var pk := "%d,%d" % [lst[i][1], lst[j][1]]
+				if (rec.seen as Dictionary).has(pk):
+					continue
+				rec.seen[pk] = true
+				rec.n = int(rec.n) + 1
+				if depth > float(rec.depth):
+					rec.depth = depth
+					rec.pa = pa
+					rec.pb = pb
+	var keys: Array = pairs.keys()
+	keys.sort()
+	var out: Array = []
+	for key in keys:
+		var r: Dictionary = pairs[key]
+		var ab: PackedStringArray = (key as String).split("|")
+		out.append("%s parts inside %s: %d, deepest %.2f m (%s / %s)" % [ab[0], ab[1], int(r.n), float(r.depth),
+			_fmt(r.pa), _fmt(r.pb)])
+	return out
+
+
+## Parts resting on nothing: those not reached from the ground through touching parts.
+func _floating(id: String) -> String:
+	var ps: Array = parts.get(id, [])
+	if ps.is_empty() or _model(id) in ROUTES:
+		return ""
+	var n := ps.size()
+	# a local grid in the monument's frame
+	var grid := {}
+	for k in n:
+		var p: Dictionary = ps[k]
+		var lo: Vector3 = p.lo
+		var hi: Vector3 = p.hi
+		for i in range(floori(lo.x / CELL), floori(hi.x / CELL) + 1):
+			for j in range(floori(lo.z / CELL), floori(hi.z / CELL) + 1):
+				var cell := Vector2i(i, j)
+				if not grid.has(cell):
+					grid[cell] = []
+				(grid[cell] as Array).append(k)
+	var held := PackedByteArray()
+	held.resize(n)
+	var queue: Array = []
+	for k in n:
+		var p: Dictionary = ps[k]
+		var c: Vector2 = p.c
+		var g := INF
+		# the lowest ground under its rectangle (centre and corners)
+		for s in [Vector2.ZERO, Vector2(1, 1), Vector2(-1, 1), Vector2(1, -1), Vector2(-1, -1)]:
+			var q: Vector2 = c + (p.ax as Vector2) * float(p.hx) * s.x + (p.az as Vector2) * float(p.hz) * s.y
+			g = minf(g, float(height.call(q.x, q.y)))
+		if float(p.y0) <= g + GROUND_M:
+			held[k] = 1
+			queue.append(k)
+	while not queue.is_empty():
+		var k: int = queue.pop_back()
+		var p: Dictionary = ps[k]
+		var lo: Vector3 = (p.lo as Vector3) - Vector3.ONE * TOUCH_M
+		var hi: Vector3 = (p.hi as Vector3) + Vector3.ONE * TOUCH_M
+		for i in range(floori(lo.x / CELL), floori(hi.x / CELL) + 1):
+			for j in range(floori(lo.z / CELL), floori(hi.z / CELL) + 1):
+				for q in grid.get(Vector2i(i, j), []):
+					if held[q] == 1:
+						continue
+					var o: Dictionary = ps[q]
+					var olo: Vector3 = o.lo
+					var ohi: Vector3 = o.hi
+					if olo.x <= hi.x and ohi.x >= lo.x and olo.y <= hi.y and ohi.y >= lo.y and olo.z <= hi.z and ohi.z >= lo.z:
+						held[q] = 1
+						queue.append(q)
+	var free := 0
+	var worst: Dictionary = {}
+	var vol := 0.0
+	for k in n:
+		if held[k] == 0:
+			free += 1
+			var p: Dictionary = ps[k]
+			var v := float(p.hx) * float(p.hz) * (float(p.y1) - float(p.y0))
+			if worst.is_empty() or v > vol:
+				worst = p
+				vol = v
+	if free == 0:
+		return ""
+	return "%s %d of %d parts rest on nothing, largest %s" % [id, free, n, _fmt(worst)]
+
+
+## Columns sunk into what they stand on: the top of the highest part under the column's foot.
+func _sunk(id: String) -> String:
+	var ps: Array = parts.get(id, [])
+	var worst := 0.0
+	var count := 0
+	var at: Dictionary = {}
+	for k in ps.size():
+		var p: Dictionary = ps[k]
+		if not bool(p.inst):
+			continue
+		var plo: Vector3 = p.lo
+		var phi: Vector3 = p.hi
+		var foot := Vector2((plo.x + phi.x) * 0.5, (plo.z + phi.z) * 0.5)
+		var h := phi.y - plo.y
+		var seat := -INF
+		for q in ps.size():
+			if q == k:
+				continue
+			var o: Dictionary = ps[q]
+			if bool(o.inst):
+				continue
+			var olo: Vector3 = o.lo
+			var ohi: Vector3 = o.hi
+			if foot.x < olo.x or foot.x > ohi.x or foot.y < olo.z or foot.y > ohi.z:
+				continue
+			if olo.y < plo.y and ohi.y <= plo.y + h * 0.5 and ohi.y > seat:
+				seat = ohi.y
+		if seat > -INF and seat - plo.y > SUNK_M:
+			count += 1
+			if seat - plo.y > worst:
+				worst = seat - plo.y
+				at = p
+	if count == 0:
+		return ""
+	return "%s %d columns sunk into what they stand on, deepest %.2f m (%s)" % [id, count, worst, _fmt(at)]
+
+
+## Faces of two materials in one plane, overlapping (they flicker). Faces of at least
+## COPLANAR_MIN_AREA, the nearest level of detail, in world coordinates.
+func _coplanar(ids: Array) -> Array:
+	var planes := {}   # [normal key, offset key] -> Array of [id, mat, Rect2 in the plane, dir]
+	for id in ids:
+		var node: Node3D = mon._nodes.get(id)
+		if node == null:
+			continue
+		for ch in node.get_children():
+			if not ch is MeshInstance3D:
+				continue
+			var mi: MeshInstance3D = ch
+			if mi.visibility_range_begin > 0.0 or mi.mesh == null:
+				continue
+			var t: Transform3D = node.transform * mi.transform
+			for s in mi.mesh.get_surface_count():
+				var arr := mi.mesh.surface_get_arrays(s)
+				var verts: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
+				var idx: PackedInt32Array = arr[Mesh.ARRAY_INDEX] if arr[Mesh.ARRAY_INDEX] != null else PackedInt32Array()
+				var m: Material = mi.mesh.surface_get_material(s)
+				var mat := m.get_instance_id() if m != null else -1 - s
+				var nv := idx.size() if idx.size() > 0 else verts.size()
+				for i in range(0, nv - 2, 3):
+					var a := t * verts[idx[i] if idx.size() > 0 else i]
+					var b := t * verts[idx[i + 1] if idx.size() > 0 else i + 1]
+					var c := t * verts[idx[i + 2] if idx.size() > 0 else i + 2]
+					var nrm := (b - a).cross(c - a)
+					var area := nrm.length() * 0.5
+					if area < COPLANAR_MIN_AREA:
+						continue
+					nrm = nrm / (area * 2.0)
+					# only the axis planes (floors, walls along the frame): most z-fighting is there
+					var axis := -1
+					if absf(nrm.y) > 0.999:
+						axis = 1
+					elif absf(nrm.x) > 0.999:
+						axis = 0
+					elif absf(nrm.z) > 0.999:
+						axis = 2
+					if axis < 0:
+						continue
+					var off := a[axis]
+					var key := Vector3i(axis, signi(roundi(nrm[axis])), roundi(off * 200.0))
+					var u := 0 if axis != 0 else 2
+					var v := 2 if axis == 1 else 1
+					var lo := Vector2(minf(minf(a[u], b[u]), c[u]), minf(minf(a[v], b[v]), c[v]))
+					var hi := Vector2(maxf(maxf(a[u], b[u]), c[u]), maxf(maxf(a[v], b[v]), c[v]))
+					if not planes.has(key):
+						planes[key] = []
+					(planes[key] as Array).append([id, mat, Rect2(lo, hi - lo)])
+	var found := {}
+	for key in planes:
+		var lst: Array = planes[key]
+		if lst.size() < 2 or lst.size() > 4000:
+			continue
+		for i in lst.size():
+			for j in range(i + 1, lst.size()):
+				if lst[i][1] == lst[j][1]:
+					continue
+				var ra: Rect2 = lst[i][2]
+				var rb: Rect2 = lst[j][2]
+				var x := ra.intersection(rb)
+				if x.size.x < 0.05 or x.size.y < 0.05:
+					continue
+				var a: String = lst[i][0]
+				var b: String = lst[j][0]
+				var pk := (a + "|" + b) if a <= b else (b + "|" + a)
+				var k3: Vector3i = key
+				var rec: Dictionary = found.get(pk, {"n": 0, "area": 0.0, "at": Vector3.ZERO})
+				rec.n = int(rec.n) + 1
+				var ar := x.size.x * x.size.y
+				if ar > float(rec.area):
+					rec.area = ar
+					var off := k3.z / 200.0
+					var cu := x.get_center()
+					rec.at = Vector3(off, cu.x, cu.y) if k3.x == 0 else (Vector3(cu.x, off, cu.y) if k3.x == 1 else Vector3(cu.x, cu.y, off))
+				found[pk] = rec
+	var keys: Array = found.keys()
+	keys.sort()
+	var out: Array = []
+	for pk in keys:
+		var r: Dictionary = found[pk]
+		var ab: PackedStringArray = (pk as String).split("|")
+		var who := ab[0] if ab[0] == ab[1] else "%s and %s" % [ab[0], ab[1]]
+		out.append("%s: %d coplanar face pairs, largest %.1f m² at (%.0f, %.0f) y %.1f" % [who, int(r.n), float(r.area),
+			(r.at as Vector3).x, (r.at as Vector3).z, (r.at as Vector3).y])
+	return out
+
+
+## The `--at` street camera of every monument: inside a solid, or not seeing the front.
+func _views(ids: Array) -> Array:
+	var inside: Array = []
+	var misses: Array = []
+	for id in ids:
+		if _model(id) in NO_VIEW or bool(mon._placed.get(id, {}).get("world", false)):
+			continue
+		var v: Dictionary = Urbs.monument_view(mon, id)
+		var stand: Vector3 = v.stand
+		var eye := Vector3(stand.x, float(height.call(stand.x, stand.z)) + UrbsCamera.EYE, stand.z)
+		var facing := float(v.facing)
+		var look := Vector3(-sin(facing), 0, -cos(facing))
+		# inside a solid?
+		var e2 := Vector2(eye.x, eye.z)
+		var cell := Vector2i(floori(eye.x / CELL), floori(eye.z / CELL))
+		for ref in _grid.get(cell, []):
+			var p: Dictionary = parts[ref[0]][ref[1]]
+			if float(p.y0) > eye.y + 0.2 or float(p.y1) < eye.y - 0.2:
+				continue
+			var d := e2 - (p.c as Vector2)
+			if absf(d.dot(p.ax)) <= float(p.hx) + 0.2 and absf(d.dot(p.az)) <= float(p.hz) + 0.2:
+				inside.append("%s camera at (%.0f, %.0f) inside %s (%s)" % [id, eye.x, eye.z, ref[0], _fmt(p)])
+				break
+		if bool(v.open_air):
+			continue   # it looks in from the entrance: the front is behind it
+		# the front: the door, and the monument's front direction
+		var door: Transform3D = mon.entrance(id)
+		var outward := door.basis.z
+		outward.y = 0.0
+		outward = outward.normalized()
+		var p0: Dictionary = mon._placed.get(id, {})
+		var yaw := float(p0.get("yaw", 0.0))
+		var front := Vector3(sin(yaw), 0, cos(yaw))   # the form's +z: where its steps and door face
+		var target := Vector3(door.origin.x, eye.y, door.origin.z)
+		var to := target - eye
+		to.y = 0.0
+		var dist := to.length()
+		var why: Array = []
+		if outward.dot(front) < 0.9:
+			why.append("the door faces %.0f° off the front" % rad_to_deg(acos(clampf(outward.dot(front), -1.0, 1.0))))
+		if dist > 0.5:
+			var ang := rad_to_deg(acos(clampf(look.dot(to / dist), -1.0, 1.0)))
+			if ang > 20.0:
+				why.append("looks %.0f° away from the door" % ang)
+			var from_front := (-to / dist).dot(front)
+			if from_front < 0.85:
+				why.append("stands %.0f° off the front axis" % rad_to_deg(acos(clampf(from_front, -1.0, 1.0))))
+		var block := _blocked(eye, Vector3(door.origin.x, door.origin.y, door.origin.z), id)
+		if block != "":
+			why.append("%s between the camera and the door" % block)
+		if not why.is_empty():
+			misses.append("%s view from (%.0f, %.0f): %s" % [id, eye.x, eye.z, ", ".join(why)])
+	return [inside, misses]
+
+
+## The first other monument whose part a sight line from `a` to `b` passes through ("" if none).
+func _blocked(a: Vector3, b: Vector3, own: String) -> String:
+	var len := a.distance_to(b)
+	var steps := int(len / 1.0)
+	var seen := {}
+	for s in range(1, steps):
+		var t := float(s) / float(steps)
+		var p := a.lerp(b, t)
+		if p.distance_to(b) < 3.0:
+			break
+		var cell := Vector2i(floori(p.x / CELL), floori(p.z / CELL))
+		for ref in _grid.get(cell, []):
+			var id: String = ref[0]
+			if id == own or _model(id) in PAVINGS:
+				continue
+			var key := "%s:%d" % [id, ref[1]]
+			if seen.has(key):
+				continue
+			var q: Dictionary = parts[id][ref[1]]
+			if p.y < float(q.y0) or p.y > float(q.y1):
+				continue
+			var d := Vector2(p.x, p.z) - (q.c as Vector2)
+			if absf(d.dot(q.ax)) <= float(q.hx) and absf(d.dot(q.az)) <= float(q.hz):
+				return id
+			seen[key] = true
+	return ""

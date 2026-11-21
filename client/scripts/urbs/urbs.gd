@@ -270,30 +270,10 @@ func _apply_flags(flags: Dictionary) -> void:
 			var stand := spot
 			var facing := yaw
 			if at != "" and not at.contains(","):
-				# stand out in front of the doorway, looking back at the façade
-				var door: Transform3D = monuments.entrance(at)
-				var model := str(monuments.entry(at).get("model", ""))
-				var open_air := false
-				var into := 0.0   # how far in from the entrance: past the stands to the arena's edge
-				for k in ["circus", "theatre", "amphitheatre", "stadium", "plaza", "forum"]:
-					if model.contains(k):
-						open_air = true
-						into = 0.0 if k in ["plaza", "forum"] else 35.0
-				var outward := door.basis.z
-				outward.y = 0.0
-				outward = outward.normalized() if outward.length() > 0.01 else Vector3(0, 0, 1)
-				# from the door out to the front of the steps, then far enough back to frame the façade
-				var b := monuments.bounds(at)
-				var front := 0.0
-				for i in 8:
-					var corner := b.get_endpoint(i) - door.origin
-					front = maxf(front, corner.x * outward.x + corner.z * outward.z)
-				var back := front + clampf(b.size.y * 1.8, 22.0, 60.0)
-				stand = Vector3(door.origin.x, 0, door.origin.z) + outward * back
-				if open_air:   # a venue open to the sky: stand at its entrance, looking in
-					stand = Vector3(door.origin.x, 0, door.origin.z) - outward * into   # facing still looks in
+				var view := monument_view(monuments, at)   # F3 monuments
+				stand = view.stand
 				if not yaw_set:
-					facing = atan2(outward.x, outward.z)   # looks along -outward, at the door
+					facing = float(view.facing)
 			cam.snap_street(stand, facing, maxf(height, UrbsCamera.EYE), deg_to_rad(float(flags.get("pitch", "3"))))
 		"inside":
 			if at != "" and not at.contains(","):
@@ -302,6 +282,39 @@ func _apply_flags(flags: Dictionary) -> void:
 			cam.snap_city(spot, height if height > 0.0 else 320.0, yaw if yaw_set else 0.3)
 	if selected != "" and mode != "inside":
 		_show_card(selected)   # F2 play: with the place's actions
+
+
+# --- F3 monuments (begin): the street view of a monument (`--at=<id> --mode=street`) ----------
+
+## Where `--at=<id> --mode=street` stands and which way it looks: {stand: Vector3 (y 0),
+## facing: camera yaw}. Out in front of the doorway, far enough back to frame the façade; a
+## venue open to the sky (circus, theatre, plaza) from its entrance, looking in. audit.gd's
+## F3 checks call it too (the camera inside a solid, not seeing its monument's front).
+static func monument_view(mons: UrbsMonuments, id: String) -> Dictionary:
+	var door: Transform3D = mons.entrance(id)
+	var model := str(mons.entry(id).get("model", ""))
+	var open_air := false
+	var into := 0.0   # how far in from the entrance: past the stands to the arena's edge
+	for k in ["circus", "theatre", "amphitheatre", "stadium", "plaza", "forum"]:
+		if model.contains(k):
+			open_air = true
+			into = 0.0 if k in ["plaza", "forum"] else 35.0
+	var outward := door.basis.z
+	outward.y = 0.0
+	outward = outward.normalized() if outward.length() > 0.01 else Vector3(0, 0, 1)
+	# from the door out to the front of the steps, then far enough back to frame the façade
+	var b := mons.bounds(id)
+	var front := 0.0
+	for i in 8:
+		var corner := b.get_endpoint(i) - door.origin
+		front = maxf(front, corner.x * outward.x + corner.z * outward.z)
+	var back := front + clampf(b.size.y * 1.8, 22.0, 60.0)
+	var stand := Vector3(door.origin.x, 0, door.origin.z) + outward * back
+	if open_air:   # a venue open to the sky: stand at its entrance, looking in
+		stand = Vector3(door.origin.x, 0, door.origin.z) - outward * into   # facing still looks in
+	return {"stand": stand, "facing": atan2(outward.x, outward.z), "open_air": open_air}   # looks along -outward, at the door
+
+# --- F3 monuments (end) ----------------------------------------------------------------------
 
 
 # --- the world ---------------------------------------------------------------------------
