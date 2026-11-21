@@ -27,6 +27,7 @@ var mons: UrbsMonuments
 var height := Callable()
 var fill: UrbsFill = null
 var _lots: Array = []
+var _trees: Array = []   ## {c: crown centre, r, foot}
 var _lots_at := Vector2(INF, INF)
 
 
@@ -159,6 +160,12 @@ func _load_lots(c: Vector2, r: float) -> void:
 				_lots.append({"c": lc, "ax": Vector2(cos(th), -sin(th)), "az": Vector2(sin(th), cos(th)),
 					"hx": float(lot["hx"]), "hz": float(lot["hz"]), "y0": _ground(lc.x, lc.y) - 1.0,
 					"y1": _ground(lc.x, lc.y) + float(lot.get("top", 6.0))})
+	# the trees: a crown (a sphere of the crown radius above a trunk) that hides what is behind it
+	_trees = []
+	for t in UrbsSite.tree_spots(Rect2(c.x - r, c.y - r, r * 2.0, r * 2.0)):
+		var tp: Vector3 = t.pos
+		var tr := float(t.radius)
+		_trees.append({"c": Vector3(tp.x, _ground(tp.x, tp.z) + 1.5 + tr * 1.2, tp.z), "r": tr * 0.85, "foot": tp})
 
 
 ## The house lot holding `p` (within `grow`), {} if none.
@@ -177,6 +184,9 @@ func house_at(p: Vector3, grow := 0.3) -> Dictionary:
 func is_free(p: Vector3) -> bool:
 	if not house_at(p, 0.4).is_empty():
 		return false
+	for t in _trees:   # not in a tree's crown
+		if p.distance_to(t.c) < float(t.r) + 0.3:
+			return false
 	if monument_at(p, 0.3) != "":
 		return false
 	for mid in mons._solids:
@@ -244,6 +254,10 @@ func is_clear(a: Vector3, b: Vector3, own: String) -> bool:
 				return false
 	for lot in _lots:
 		if _segment_hits_lot(a, end, lot):
+			return false
+	for t in _trees:
+		var q := Geometry3D.get_closest_point_to_segment(t.c, a, end)
+		if q.distance_to(t.c) < float(t.r):
 			return false
 	return true
 
