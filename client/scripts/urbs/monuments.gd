@@ -99,12 +99,14 @@ func set_year(year: int) -> void:
 		return
 	# F3 monuments: the routes (the wall, the aqueducts) after everything else, so they stop where
 	# a standing monument stands on their line (route_cuts)
-	for pass_ in 2:
+	# and a monument that yields to another (`yields_to`, monument_clip.gd) after that one
+	for pass_ in 3:
 		for id in _order:
 			var is_route := str(_recs[id].get("model", "")) in ROUTE_CUT
-			if is_route != (pass_ == 1):
-				continue
-			_set_one(id, year)
+			var yields: bool = not is_route and _recs[id].get("yields_to") is Array
+			var want := 2 if is_route else (1 if yields else 0)
+			if want == pass_:
+				_set_one(id, year)
 
 
 ## F3 monuments: one monument brought to `year` (the body of set_year's loop).
@@ -112,6 +114,12 @@ func _set_one(id: String, year: int) -> void:
 	var st := state_at(id, year)
 	if not st.is_empty() and str(st.model) in ROUTE_CUT:   # F3 monuments
 		st["cuts"] = route_cuts(id, str(st.model))
+	if not st.is_empty() and _recs[id].get("yields_to") is Array:   # F3 monuments
+		var ys: Array = []
+		for oid in _recs[id]["yields_to"]:
+			if _solids.has(str(oid)):
+				ys.append({"id": "%s=%s" % [oid, _keys.get(str(oid), "")], "oid": str(oid)})
+		st["yields"] = ys
 	var key := _key(st)
 	if key == _keys.get(id, "|absent"):
 		return
@@ -133,8 +141,8 @@ func _set_one(id: String, year: int) -> void:
 func _key(st: Dictionary) -> String:
 	if st.is_empty():
 		return "|absent"
-	var cut := ""   # F3 monuments: the monuments a route stops at
-	for c in st.get("cuts", []):
+	var cut := ""   # F3 monuments: the monuments a route stops at, or this one yields to
+	for c in st.get("cuts", []) + st.get("yields", []):
 		cut += "|" + str(c.id)
 	return "%s|%s|%s|%s|%s|%s|%s%s" % [st.state, st.model, st.variant, st.length, st.width, st.radius, st.height, cut]
 
@@ -415,6 +423,17 @@ func _make(id: String, st: Dictionary) -> void:
 			hi0 = maxf(hi0, gy0)
 		form_st["skirt"] = hi0 - lo0
 	form_st["year"] = _year
+	if model == "plaza" and not kind_route:
+		# F3 monuments: a paving is laid where the ground under it is near its level; where the
+		# ground falls away (the Area Capitolina's edge over the Clivus cutting) it stops at the
+		# platform's own retaining wall instead of hanging a bed down the slope
+		var p_base := lo0
+		if UrbsSite.platform_at(centre.x, centre.y) != "":
+			p_base = UrbsSite.terrace_height_at(centre.x, centre.y)
+		var rot_p := Basis(Vector3.UP, yaw)
+		form_st["drop_at"] = func(lx: float, lz: float) -> float:
+			var w := rot_p * Vector3(lx, 0, lz)
+			return p_base - _ground_at(centre + Vector2(w.x, w.z))
 	var res: Dictionary = Forms.make(m, form_st, route, Callable(self, "_ground"))
 	world = bool(res.get("world", false))
 	_kinds[id] = str(res.kind)
@@ -560,6 +579,13 @@ func _make(id: String, st: Dictionary) -> void:
 	_opens[id] = opens
 	_xf[id] = xf
 	_tris[id] = res.get("tris", [0, 0, 0])
+	# F3 monuments: where it truly overlaps a sourced building it yields to, it abuts it instead
+	for y in st.get("yields", []):
+		var boxes: Array = []
+		for b in _solids.get(str(y.oid), []):   # grown 1.2 m: its cornices stand out of its solids
+			var gb: AABB = b
+			boxes.append({"xf": _xf[str(y.oid)], "box": AABB(gb.position - Vector3(1.2, 0, 1.2), gb.size + Vector3(2.4, 1.0, 2.4))})
+		UrbsMonumentClip.clip(node, boxes)
 	_placed[id] = {"centre": centre, "yaw": yaw, "y": base_y, "length": maxf(float(st.length), float(st.radius) * 2.0),
 		"width": maxf(float(st.width), float(st.radius) * 2.0), "radius": float(st.radius), "model": model, "state": st.state,
 		"native": aabb.size, "door": res.get("door", null),

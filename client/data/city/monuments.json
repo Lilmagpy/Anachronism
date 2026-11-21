@@ -950,7 +950,11 @@
 ],
 "surface": "travertine",
 "type": "forum",
-"verified": "platner-ashby+pleiades"
+"verified": "platner-ashby+pleiades",
+"yields_note": "F3: the forum's reconstructed colonnade (form assumed) runs into the Curia's sourced footprint; it stops at the senate house",
+"yields_to": [
+"curia_iulia"
+]
 },
 {
 "bearing_deg": 140,
@@ -1617,7 +1621,11 @@
 "Platner-Ashby s.v. Concordia, Aedes"
 ],
 "type": "temple",
-"verified": "platner-ashby+pleiades"
+"verified": "platner-ashby+pleiades",
+"yields_note": "F3: the temple was built against the substructure of the Tabularium, its cella under the Tabularium's front (the remains); its back stops at that wall",
+"yields_to": [
+"tabularium"
+]
 },
 {
 "architecture": {
@@ -2857,7 +2865,11 @@
 "Platner-Ashby s.v. Porticus Octaviae; Porticus Metelli"
 ],
 "type": "portico",
-"verified": "platner-ashby+pleiades"
+"verified": "platner-ashby+pleiades",
+"yields_note": "F3: the portico's corner is reconstructed (Pleiades outlines only its propylon); where it reaches the temple of Apollo beside it, its wing stops at the temple",
+"yields_to": [
+"aedes_apollinis_medici"
+]
 },
 {
 "bearing_deg": 225,
@@ -4194,7 +4206,11 @@
 "Platner-Ashby s.v. Porticus Aemilia"
 ],
 "type": "horrea",
-"verified": "platner-ashby+pleiades"
+"verified": "platner-ashby+pleiades",
+"yields_note": "F3: the 487 x 60 m hall (its remains, Pleiades) and the Horrea Galbae (Platner-Ashby's 200 x 155 m at its approximate point) overlap by about 50 m; neither is moved: the hall stops at the horrea's outer wall (monument_clip.gd). A measured plan of both would settle it (F2 audit, unresolved)",
+"yields_to": [
+"horrea_galbae"
+]
 },
 {
 "bearing_deg": 270,
@@ -8170,7 +8186,11 @@
 "Mart. 5.49.11-12"
 ],
 "type": "portico",
-"verified": "platner-ashby"
+"verified": "platner-ashby",
+"yields_note": "F3: the Porticus Philippi was built round the temple of Hercules Musarum (Platner-Ashby s.v. Porticus Philippi); its colonnade stops at the temple",
+"yields_to": [
+"aedes_herculis_musarum"
+]
 },
 {
 "bearing_deg": 90,

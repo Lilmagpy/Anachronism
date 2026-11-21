@@ -435,6 +435,8 @@ monuments:
   pleiades: 445545537
   verified: platner-ashby+pleiades
   model: plaza
+  yields_to: [curia_iulia]   # F3 monuments: monument_clip.gd
+  yields_note: "F3: the forum's reconstructed colonnade (form assumed) runs into the Curia's sourced footprint; it stops at the senate house"
   bearing_deg: 140  # unverified
   footprint_m: {length: 160, width: 75}  # unverified
   height_m: 0
@@ -734,6 +736,8 @@ monuments:
   pleiades: 694134032
   verified: platner-ashby+pleiades
   model: aedicula  # unverified
+  yields_to: [tabularium]   # F3 monuments: monument_clip.gd
+  yields_note: "F3: the temple was built against the substructure of the Tabularium, its cella under the Tabularium's front (the remains); its back stops at that wall"
   bearing_deg: 78  # unverified
   footprint_m: {length: 3.5, width: 3}
   phases: [{from: -121, state: standing, model: temple_concord, footprint_m: {length: 38, width: 45}}]
@@ -1345,6 +1349,8 @@ monuments:
   pleiades: 236573248
   verified: platner-ashby+pleiades
   model: portico_enclosure
+  yields_to: [aedes_apollinis_medici]   # F3 monuments: monument_clip.gd
+  yields_note: "F3: the portico's corner is reconstructed (Pleiades outlines only its propylon); where it reaches the temple of Apollo beside it, its wing stops at the temple"
   bearing_deg: 208  # F2: the entrance faces SSW: the surviving propylon on the SW side lies along 118 degrees (Pleiades 236573248 outline), so the main axis runs 28/208
   footprint_m: {length: 130, width: 118}
   height_m: 10  # unverified
@@ -2010,6 +2016,8 @@ monuments:
   pleiades: 51787060
   verified: platner-ashby+pleiades
   model: long_hall
+  yields_to: [horrea_galbae]   # F3 monuments: monument_clip.gd
+  yields_note: "F3: the 487 x 60 m hall (its remains, Pleiades) and the Horrea Galbae (Platner-Ashby's 200 x 155 m at its approximate point) overlap by about 50 m; neither is moved: the hall stops at the horrea's outer wall (monument_clip.gd). A measured plan of both would settle it (F2 audit, unresolved)"
   bearing_deg: 45  # unverified
   footprint_m: {length: 60, width: 487}
   height_m: 9  # unverified
@@ -3988,6 +3996,8 @@ monuments:
   pleiades: 346055018
   verified: platner-ashby
   model: portico_enclosure
+  yields_to: [aedes_herculis_musarum]   # F3 monuments: monument_clip.gd
+  yields_note: "F3: the Porticus Philippi was built round the temple of Hercules Musarum (Platner-Ashby s.v. Porticus Philippi); its colonnade stops at the temple"
   bearing_deg: 0  # unverified
   footprint_m: {length: 80, width: 70}  # unverified: size not in Platner-Ashby
   height_m: 7  # unverified

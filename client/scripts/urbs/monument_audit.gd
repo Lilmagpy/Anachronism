@@ -29,6 +29,8 @@ const PART_M := 0.10       ## overlaps shallower than this are parts touching, n
 const TOUCH_M := 0.03      ## gap within which two parts touch (support)
 const GROUND_M := 0.15     ## a part whose foot is this close to the ground stands on it
 const SUNK_M := 0.10
+const REST_M := 0.15       ## parts overlapping less than this in height rest one on the other
+const FLAT_M := 0.5        ## a part this thin and wide is a floor: standing on it is not through it
 const CELL := 4.0          ## grid cell for the part searches (metres)
 const QUANT := 100.0       ## vertex welding for the connected runs: 1 cm
 const COPLANAR_MIN_AREA := 0.05   ## m²: smaller faces flicker too little to see
@@ -284,10 +286,16 @@ static func _cells(p: Dictionary) -> Array:
 	var x1 := floori((c.x + ex) / CELL)
 	var z0 := floori((c.y - ez) / CELL)
 	var z1 := floori((c.y + ez) / CELL)
-	if (x1 - x0 + 1) * (z1 - z0 + 1) > 4000:
+	if (x1 - x0 + 1) * (z1 - z0 + 1) > 250000:
 		return out   # a route's whole-city run: checked by its own segments
+	var thin := (x1 - x0 + 1) * (z1 - z0 + 1) > 16
+	var reach := CELL * 0.71
 	for i in range(x0, x1 + 1):
 		for j in range(z0, z1 + 1):
+			if thin:   # a long part on the diagonal: only the cells its rectangle crosses
+				var d := Vector2((i + 0.5) * CELL, (j + 0.5) * CELL) - c
+				if absf(d.dot(p.ax)) > float(p.hx) + reach or absf(d.dot(p.az)) > float(p.hz) + reach:
+					continue
 			out.append(Vector2i(i, j))
 	return out
 
@@ -369,16 +377,17 @@ func _part_overlaps(_ids: Array) -> Array:
 				var y1 := minf(float(pa.y1), float(pb.y1))
 				if y1 - y0 <= 0.0:
 					continue
+				if y1 - y0 <= REST_M:
+					continue   # one rests on the other (set into it a few centimetres)
 				var d := _depth(pa, pb)
-				if d <= PART_M and y1 - y0 <= PART_M:
+				if d <= PART_M:
 					continue
-				var pave_a := ma in PAVINGS
-				var pave_b := mb in PAVINGS
-				if pave_a != pave_b:
-					var pv: Dictionary = pa if pave_a else pb
-					var ot: Dictionary = pb if pave_a else pa
-					if float(ot.y1) > float(pv.y1) + 0.02:
-						continue   # it stands on (or through) the paving: the paving meets its foot
+				# a paving, or any flat part (a court's floor, a platform's top): what stands on it
+				# meets it at its foot
+				var pave_a := ma in PAVINGS or float(pa.y1) - float(pa.y0) <= FLAT_M
+				var pave_b := mb in PAVINGS or float(pb.y1) - float(pb.y0) <= FLAT_M
+				if (pave_a and float(pb.y1) > float(pa.y1) + 0.02) or (pave_b and float(pa.y1) > float(pb.y1) + 0.02):
+					continue   # it stands on (or through) the paving: the paving meets its foot
 				if rec.is_empty():
 					rec = {"depth": 0.0, "n": 0, "pa": pa, "pb": pb, "at": Vector3.ZERO, "seen": {}}
 					pairs[key] = rec

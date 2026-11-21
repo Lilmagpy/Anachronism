@@ -871,6 +871,9 @@ static func _site(out: Dictionary, d: Dictionary, model: String, overlay := fals
 		k.box(Vector3(0, 0.8, 0), Vector3(w * 0.8, h * 0.18, l * 0.8), Roman.GROTTA, Kit.STONE)
 		k.box(Vector3(w * 0.25, 0.8, l * 0.3), Vector3(3, 1.2, 3), Roman.TRAVERT, Kit.STONE)   # stacked blocks
 	var top := h * (0.9 if overlay else 0.55)
+	if float(d.r) > 0.0:   # F3 monuments: a round building's site is round (the theatre's), not its square
+		_site_round(out, k, float(d.r), h, top, overlay)
+		return
 	var nx := maxi(2, int(w / 6.0))
 	var nz := maxi(2, int(l / 6.0))
 	for i in nx + 1:
@@ -891,6 +894,37 @@ static func _site(out: Dictionary, d: Dictionary, model: String, overlay := fals
 		k.rod(Vector3(cx, h * 0.7, 0), Vector3(cx + 5.0, h * 0.62, 2.0), 0.18, Roman.DWOOD, Kit.TIMBER)
 	_add(out, k.finish())
 	_box_shape(out, Vector3(0, h * 0.4, 0), Vector3(w, h * 0.8, l))
+
+
+## F3 monuments: the site of a round building: the footing disc, the first ring of piers, the
+## scaffold poles and rails round its edge, the crane.
+static func _site_round(out: Dictionary, k: Kit, r: float, h: float, top: float, overlay: bool) -> void:
+	var sides := clampi(int(r * TAU / 8.0), 12, 48)
+	if not overlay:
+		k.cylinder(Vector3.ZERO, r, 0.8, Roman.CAPPELLACCIO, Kit.STONE, sides)
+		k.cylinder(Vector3(0, 0.8, 0), r * 0.8, h * 0.18, Roman.GROTTA, Kit.STONE, sides)
+		k.box(Vector3(r * 0.25, 0.8, r * 0.3), Vector3(3, 1.2, 3), Roman.TRAVERT, Kit.STONE)   # stacked blocks
+	var n := maxi(8, int(r * TAU / 6.0))
+	var pr := r - 0.2
+	for i in n:
+		var a := TAU * i / n
+		k.box(Vector3(cos(a) * pr, 0, sin(a) * pr), Vector3(0.25, top, 0.25), Roman.WOOD, Kit.TIMBER)
+	for lv in range(1, 4):
+		var y := top * lv / 3.5
+		for i in n:
+			var a0 := TAU * i / n
+			var a1 := TAU * (i + 1) / n
+			var p0 := Vector2(cos(a0), sin(a0)) * pr
+			var p1 := Vector2(cos(a1), sin(a1)) * pr
+			var m := (p0 + p1) * 0.5
+			k.box(Vector3(m.x, y, m.y), Vector3(p0.distance_to(p1), 0.15, 0.2), Roman.DWOOD, Kit.TIMBER, -atan2(p1.y - p0.y, p1.x - p0.x))
+	if not overlay:
+		var cx := -r * 0.3
+		for s: float in [-1.0, 1.0]:   # the crane: two legs and a jib
+			k.rod(Vector3(cx + s * 2.0, 0.8, 0), Vector3(cx, h * 0.7, 0), 0.2, Roman.DWOOD, Kit.TIMBER)
+		k.rod(Vector3(cx, h * 0.7, 0), Vector3(cx + 5.0, h * 0.62, 2.0), 0.18, Roman.DWOOD, Kit.TIMBER)
+	_add(out, k.finish())
+	_box_shape(out, Vector3(0, h * 0.4, 0), Vector3(r * 1.42, h * 0.8, r * 1.42))
 
 
 ## A burnt shell: charred footing, ragged wall stumps round the edge, fallen column drums.

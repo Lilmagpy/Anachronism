@@ -53,7 +53,7 @@ static func spec(model: String, rec: Dictionary, st: Dictionary) -> Dictionary:
 	var s := {"model": model, "id": str(rec.get("id", "")), "W": float(st.get("width", 0.0)), "L": float(st.get("length", 0.0)),
 		"R": float(st.get("radius", 0.0)), "H": float(st.get("height", 0.0)), "year": int(st.get("year", 0)),
 		"variant": str(st.get("variant", "")), "skirt": float(st.get("skirt", 0.0)), "state": str(st.get("state", "standing")),
-		"surface": str(rec.get("surface", "travertine"))}
+		"surface": str(rec.get("surface", "travertine")), "drop_at": st.get("drop_at", Callable())}
 	var arch: Variant = rec.get("architecture")
 	if arch is Dictionary and (arch as Dictionary).has(model):
 		for k in (arch[model] as Dictionary):
@@ -106,6 +106,18 @@ static func _plaza(mm: UrbsMonumentMesh, s: Dictionary, lod: int) -> void:
 		mm.open(Vector3(0, -skirt, 0), Vector3(W, skirt, L))
 		return
 	var tones := ["forum_travertine", "travertine", "limestone_steps"]
+	# F3 monuments: where the ground falls away more than DROP_M under the paving (`drop_at`,
+	# metres below the paving at a local point), no slab is laid: the paving stops at the edge
+	# of its platform; the bed reaches only DROP_M down
+	var drop_at: Callable = s.get("drop_at", Callable())
+	if drop_at.is_valid():
+		var falls := false
+		for q in [Vector2(-1, -1), Vector2(1, -1), Vector2(-1, 1), Vector2(1, 1), Vector2(0, -1), Vector2(0, 1), Vector2(-1, 0), Vector2(1, 0)]:
+			if float(drop_at.call(q.x * W * 0.5, q.y * L * 0.5)) > DROP_M:
+				falls = true
+		if falls:
+			_plaza_on_slope(mm, s, lod, W, L, drop_at, tones)
+			return
 	# the bed and the kerb
 	mm.ext(-W / 2, -skirt, -L / 2, W / 2, -0.02, L / 2, "earth_packed")
 	mm.ring(0.0, 0.0, W / 2 + 0.3, L / 2 + 0.3, 0.3, -skirt, 0.08, "travertine")
@@ -132,6 +144,52 @@ static func _plaza(mm: UrbsMonumentMesh, s: Dictionary, lod: int) -> void:
 				z += sl
 				j += 1
 	mm.open(Vector3(0, -skirt, 0), Vector3(W, skirt + 0.08, L))
+
+
+## F3 monuments: how far the ground may fall under a paving before the paving stops there.
+const DROP_M := 1.2
+
+
+## F3 monuments: a paving whose ground falls away at its edges (a platform smaller than the
+## footprint): slabs (cells of 6 x 6 m, staggered courses within them at lod 0) only where the
+## ground is within DROP_M of the paving, each on its own bed down to that ground.
+static func _plaza_on_slope(mm: UrbsMonumentMesh, s: Dictionary, lod: int, W: float, L: float, drop_at: Callable, tones: Array) -> void:
+	var cell := 6.0
+	var nx := int(ceil(W / cell))
+	var nz := int(ceil(L / cell))
+	var sw := 1.5 if lod == 0 else 6.0
+	var sl := 3.0 if lod == 0 else 6.0
+	var joint := 0.035 if lod == 0 else 0.0
+	for i in nx:
+		for j in nz:
+			var x0 := -W / 2 + i * cell
+			var x1 := minf(W / 2, x0 + cell)
+			var z0 := -L / 2 + j * cell
+			var z1 := minf(L / 2, z0 + cell)
+			var worst := -INF
+			for q in [Vector2(x0, z0), Vector2(x1, z0), Vector2(x0, z1), Vector2(x1, z1), Vector2((x0 + x1) * 0.5, (z0 + z1) * 0.5)]:
+				worst = maxf(worst, float(drop_at.call(q.x, q.y)))
+			if worst > DROP_M:
+				continue
+			mm.ext(x0, -maxf(worst, 0.0) - 0.3, z0, x1, -0.02, z1, "earth_packed")
+			if lod >= 2:
+				mm.ext(x0, -0.02, z0, x1, 0.08, z1, "forum_travertine")
+				continue
+			var x := x0
+			var a := 0
+			while x < x1 - 0.01:
+				var xe := minf(x1, x + sw)
+				var z := z0
+				var b := 0
+				while z < z1 - 0.01:
+					var ze := minf(z1, z + sl)
+					var tone: String = tones[_h(i * 8 + a, j * 8 + b, 7) % 3]
+					mm.ext(x + joint * 0.5, -0.02, z + joint * 0.5, xe - joint * 0.5, 0.08, ze - joint * 0.5, tone)
+					z = ze
+					b += 1
+				x = xe
+				a += 1
+			mm.open(Vector3((x0 + x1) * 0.5, -0.3, (z0 + z1) * 0.5), Vector3(x1 - x0, 0.38, z1 - z0))
 
 
 ## The Lacus Curtius (Platner-Ashby s.v., read): an irregularly trapezoidal field about 10 m long
@@ -680,7 +738,7 @@ static func _tabularium(mm: UrbsMonumentMesh, s: Dictionary, lod: int) -> void:
 		var xc := -W / 2 + (i + 0.5) * bay
 		var xa := xc - aw * 0.5
 		var xb := xc + aw * 0.5
-		mm.ext(xb, gy, gz - 1.6, xc + bay - aw * 0.5, gy + gh, gz, stone)
+		mm.ext(xb, gy, gz - 1.6, minf(xc + bay - aw * 0.5, W / 2), gy + gh, gz, stone)   # F3: the last pier ends with the wall
 		if i == 0:
 			mm.ext(-W / 2, gy, gz - 1.6, xa, gy + gh, gz, stone)
 		mm.arch(xa, xb, gy + ah - aw * 0.5, gy + gh, gz - 1.6, gz, stone, 8 if lod == 0 else 4)
@@ -692,7 +750,11 @@ static func _tabularium(mm: UrbsMonumentMesh, s: Dictionary, lod: int) -> void:
 			mm.instance("tcol|%d" % maxi(lod, 1), Orders.column_mesh("doric", gh - 1.0, "tufa_grey", maxi(lod, 1), 1.0), Transform3D(Basis.IDENTITY, Vector3(x, gy, gz + 0.3)))
 	var col_xs := PackedFloat32Array()
 	var ytop := Orders.entablature(mm, "doric", gh - 1.0, 1.0, -W / 2 - 0.1, W / 2 + 0.1, gz - 1.6, gz + 0.8, gy + gh - 1.0, "tufa_grey", "tufa_grey", lod, false, col_xs)
-	mm.solid(Vector3(0, gy, gz - 3.0), Vector3(W, 0.01, 6.0))
+	# F3 monuments: the gallery (its arcade, entablature, lean-to roof and upper arcade) is solid
+	# too, so what meets the Tabularium (the temple of Concord against it) stops at its front
+	var g_roof := gy + gh + 1.2 + 1.5   # the lean-to roof's top at the halls (hy + 1.5 below)
+	var g_top := maxf(g_roof, ytop + 7.4) if int(s.year) >= 70 else g_roof
+	mm.solid(Vector3(0, gy, gz - 2.55), Vector3(W, g_top - gy, 6.7))
 	mm.solid(Vector3(0, gy, -L / 2 + (L - 6.0) * 0.5 - 1.0), Vector3(W, gh + 1.2, L - 7.0))
 	# the halls behind, rising up the hill, under a tiled roof
 	var hy := gy + gh + 1.2
