@@ -741,10 +741,15 @@ static func _cut_streets(cfg: Dictionary, h: PackedFloat32Array) -> void:
 		var pin0: Variant = _pin_level(entry.get("start_level"))
 		var pin1: Variant = _pin_level(entry.get("end_level"))
 		if pin0 != null or pin1 != null:
-			var d0 := 0.0 if pin0 == null else float(pin0) - prof[0]
-			var d1 := 0.0 if pin1 == null else float(pin1) - prof[ns - 1]
+			# the road follows its ground until it has to climb (or fall) to the pinned floor, then
+			# does so at the steepest gradient allowed: an embankment or a cutting only near the end
+			var st := length / float(ns - 1)
 			for i in ns:
-				prof[i] += lerpf(d0, d1, float(i) / float(ns - 1))
+				if pin0 != null:
+					prof[i] = clampf(prof[i], float(pin0) - i * st * max_grad, float(pin0) + i * st * max_grad)
+				if pin1 != null:
+					var dist := float(ns - 1 - i) * st
+					prof[i] = clampf(prof[i], float(pin1) - dist * max_grad, float(pin1) + dist * max_grad)
 		var sp := PackedVector2Array()
 		for i in ns:
 			sp.append(_polyline_at(pts, cum, length * float(i) / float(ns - 1)))
