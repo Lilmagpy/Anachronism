@@ -30,6 +30,14 @@ func build(urbs: Node3D, id: String, year: int) -> Node3D:
 		var door: Transform3D = urbs.monuments.entrance(id)
 		var out := door.basis.z
 		yaw = atan2(out.x, out.z)
+	# F3 monuments: the inside is as big as the building drawn outside (every temple without a
+	# size in its record had the same default inside, whatever its footprint)
+	if urbs != null and urbs.get("monuments") != null and not m.has("size"):
+		var pl: Dictionary = urbs.monuments._placed.get(id, {})
+		var hf: Vector2 = pl.get("half", Vector2.ZERO)
+		if hf.x > 1.0 and hf.y > 1.0:
+			m = m.duplicate()
+			m["size"] = [hf.y * 2.0, hf.x * 2.0]
 	var node := Interiors.build_node(m, Transform3D(Basis(Vector3.UP, yaw), Vector3(p.x, y, p.y)), year)
 	if node == null:
 		return null

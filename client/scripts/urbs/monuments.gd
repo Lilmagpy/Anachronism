@@ -942,7 +942,7 @@ func info(id: String) -> Dictionary:
 		"by": str(built.get("by", "")), "form": str(m.get("form", "")),
 		"type": str(m.get("type", "")), "location": str(m.get("location", "")),
 		"events": events, "sources": m.get("sources", []), "state": str(st.get("state", "")),
-		"model": str(st.get("model", "")), "enterable": _enterable(m),
+		"model": str(st.get("model", "")), "enterable": _enterable(m) and str(st.get("state", "")) in ["standing", "standing_scaffold"],   # F3: not a building site
 		"geometry_source": str(m.get("geometry_source", "")),
 		"geometry_unverified": m.get("geometry_unverified", [])}
 
