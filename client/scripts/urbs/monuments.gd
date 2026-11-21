@@ -622,7 +622,8 @@ func _make(id: String, st: Dictionary) -> void:
 	if not world and not found and skirt > 0.05:
 		# F2: the foundation down to the lowest ground under the footprint (and 0.5 m into it)
 		var fm := UrbsMonumentMesh.new()
-		fm.box(Vector3(0, -skirt - 0.5, 0), Vector3(half.x * 2.0, skirt + 0.52, half.y * 2.0), "opus_quadratum")
+		# (F3: 3 cm outside the footprint, so a form's own bed under it is not flush with it)
+		fm.box(Vector3(0, -skirt - 0.5, 0), Vector3(half.x * 2.0 + 0.06, skirt + 0.52, half.y * 2.0 + 0.06), "opus_quadratum")
 		var mi := MeshInstance3D.new()
 		mi.mesh = fm.finish_mesh()
 		node.add_child(mi)

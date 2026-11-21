@@ -823,7 +823,8 @@ static func _portico_enclosure(mm: UrbsMonumentMesh, s: Dictionary, lod: int) ->
 	var d := col_h / (9.0 if marble else 7.0)
 	var sp := 3.5
 	# the court, open
-	mm.ext(-W / 2, -skirt, -L / 2, W / 2, 0.05, L / 2, "gravel" if not marble else "forum_travertine")
+	# (F3: 2 cm inside the outer faces, which stand over it: flush, they flickered)
+	mm.ext(-W / 2 + 0.02, -skirt, -L / 2 + 0.02, W / 2 - 0.02, 0.05, L / 2 - 0.02, "gravel" if not marble else "forum_travertine")
 	mm.open(Vector3(0, -skirt, 0), Vector3(W - 2.0 * depth, skirt + 0.05, L - 2.0 * depth))
 	var gate := minf(14.0, W * 0.25)
 	# four wings: each (centre, yaw, length); local +z of a wing faces the court
@@ -840,10 +841,12 @@ static func _portico_enclosure(mm: UrbsMonumentMesh, s: Dictionary, lod: int) ->
 			var b := float(sg[1])
 			# the stylobate, the outer wall, the roof
 			mm.ext(a, 0.0, -depth * 0.5, b, 0.4, depth * 0.5, "travertine")
-			mm.ext(a, 0.0, -depth * 0.5, b, col_h + 2.6, -depth * 0.5 + 0.8, wall)
+			mm.ext(a, 0.4, -depth * 0.5, b, col_h + 2.6, -depth * 0.5 + 0.8, wall)   # F3: on the stylobate (its face flush with the wall's flickered)
 			mm.solid(Vector3((a + b) * 0.5, 0.0, -depth * 0.5 + 0.4), Vector3(b - a, col_h + 2.6, 0.8))
-			mm.slab([Vector3(a, col_h + 1.6, depth * 0.5 + 0.4), Vector3(b, col_h + 1.6, depth * 0.5 + 0.4),
-				Vector3(b, col_h + 3.4, -depth * 0.5), Vector3(a, col_h + 3.4, -depth * 0.5)], 0.25, "tegulae", "timber_oak")
+			var ra := a - 0.05   # F3: the roof's ends stand 5 cm past the wall's (flush, they flickered)
+			var rb := b + 0.05
+			mm.slab([Vector3(ra, col_h + 1.6, depth * 0.5 + 0.4), Vector3(rb, col_h + 1.6, depth * 0.5 + 0.4),
+				Vector3(rb, col_h + 3.4, -depth * 0.5), Vector3(ra, col_h + 3.4, -depth * 0.5)], 0.25, "tegulae", "timber_oak")
 			# the beam over the columns
 			mm.ext(a, col_h + 0.4, depth * 0.5 - d * 0.7, b, col_h + 1.6, depth * 0.5 + 0.1, col_mat if marble else "stucco_white")
 			if lod < 2:

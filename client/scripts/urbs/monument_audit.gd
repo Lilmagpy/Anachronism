@@ -594,7 +594,7 @@ func _coplanar(ids: Array) -> Array:
 					var a := t * verts[idx[i] if idx.size() > 0 else i]
 					var b := t * verts[idx[i + 1] if idx.size() > 0 else i + 1]
 					var c := t * verts[idx[i + 2] if idx.size() > 0 else i + 2]
-					var nrm := (b - a).cross(c - a)
+					var nrm := (c - a).cross(b - a)   # the faces are wound clockwise (Godot front faces)
 					var area := nrm.length() * 0.5
 					if area < COPLANAR_MIN_AREA:
 						continue
@@ -634,22 +634,47 @@ func _coplanar(ids: Array) -> Array:
 				if x.size.x < 0.05 or x.size.y < 0.05:
 					continue
 				var ar := 0.0
+				var k0: Vector3i = key
+				var back: Array = planes.get(Vector3i(k0.x, -k0.y, k0.z), [])
 				for poly in Geometry2D.intersect_polygons(lst[i][3], lst[j][3]):
-					ar += absf(_area(poly))
+					# covered by a face turned the other way in the same plane (something set on it,
+					# a cornice on a frieze's top): enclosed, never seen
+					var cen := Vector2.ZERO
+					for q in poly:
+						cen += q
+					cen /= maxf(poly.size(), 1)
+					var covered := false
+					for t in back:
+						if (t[2] as Rect2).grow(0.01).has_point(cen) and Geometry2D.is_point_in_polygon(cen, t[3]):
+							covered = true
+							break
+					if not covered:
+						# or facing into a solid of its own monument (the inside of a closed cella)
+						var off0 := k0.z / 200.0
+						var p3 := Vector3(off0, cen.y, cen.x) if k0.x == 0 else (Vector3(cen.x, off0, cen.y) if k0.x == 1 else Vector3(cen.x, cen.y, off0))
+						p3[k0.x] += 0.03 * float(k0.y)
+						if _in_solid(str(lst[i][0]), p3) and _in_solid(str(lst[j][0]), p3):
+							covered = true
+						# or in the ground (a floor's underside on the earth, a top under it)
+						if k0.x == 1 and off0 <= float(height.call(p3.x, p3.z)) + 0.05 and (k0.y < 0 or off0 < float(height.call(p3.x, p3.z)) - 0.05):
+							covered = true
+					if not covered:
+						ar += absf(_area(poly))
 				if ar < 0.02:
 					continue
 				var a: String = lst[i][0]
 				var b: String = lst[j][0]
 				var pk := (a + "|" + b) if a <= b else (b + "|" + a)
 				var k3: Vector3i = key
-				var rec: Dictionary = found.get(pk, {"n": 0, "area": 0.0, "at": Vector3.ZERO, "mats": ""})
+				var rec: Dictionary = found.get(pk, {"n": 0, "area": 0.0, "at": Vector3.ZERO, "mats": "", "axis": 1})
 				rec.n = int(rec.n) + 1
 				if ar > float(rec.area):
 					rec.area = ar
 					rec.mats = "%s/%s" % [_mat_name(lst[i][1]), _mat_name(lst[j][1])]
 					var off := k3.z / 200.0
 					var cu := x.get_center()
-					rec.at = Vector3(off, cu.x, cu.y) if k3.x == 0 else (Vector3(cu.x, off, cu.y) if k3.x == 1 else Vector3(cu.x, cu.y, off))
+					rec.at = Vector3(off, cu.y, cu.x) if k3.x == 0 else (Vector3(cu.x, off, cu.y) if k3.x == 1 else Vector3(cu.x, cu.y, off))
+					rec.axis = k3.x
 				found[pk] = rec
 	var keys: Array = found.keys()
 	keys.sort()
@@ -658,9 +683,19 @@ func _coplanar(ids: Array) -> Array:
 		var r: Dictionary = found[pk]
 		var ab: PackedStringArray = (pk as String).split("|")
 		var who := ab[0] if ab[0] == ab[1] else "%s and %s" % [ab[0], ab[1]]
-		out.append("%s: %d coplanar face pairs, largest %.1f m² (%s) at (%.0f, %.0f) y %.1f" % [who, int(r.n), float(r.area),
-			r.mats, (r.at as Vector3).x, (r.at as Vector3).z, (r.at as Vector3).y])
+		out.append("%s: %d coplanar face pairs, largest %.1f m² (%s, %s) at (%.1f, %.1f) y %.1f" % [who, int(r.n), float(r.area),
+			r.mats, ["facing x", "level", "facing z"][int(r.axis)], (r.at as Vector3).x, (r.at as Vector3).z, (r.at as Vector3).y])
 	return out
+
+
+## Whether world point `p` stands inside one of monument `id`'s solids.
+func _in_solid(id: String, p: Vector3) -> bool:
+	var xf: Transform3D = mon._xf.get(id, Transform3D.IDENTITY)
+	var lp := xf.affine_inverse() * p
+	for b in mon._solids.get(id, []):
+		if (b as AABB).has_point(lp):
+			return true
+	return false
 
 
 static func _mat_name(mat: int) -> String:
