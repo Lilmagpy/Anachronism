@@ -721,6 +721,7 @@
 13.0
 ],
 "note": "the floor of Caesar's forum, a little above the Forum Romanum on the saddle toward the Quirinal; level # unverified",
+"outline": "monument",
 "polygon": [
 [
 41.89293,
@@ -745,13 +746,14 @@
 "walls": true
 },
 {
-"blend": 25,
+"blend": 6,
 "id": "area_capitolina",
 "level": [
 42.0,
 42.0
 ],
 "note": "the terrace of the temple of Jupiter on the Capitolium summit; level set 4 m below the summit figure so the 4-5 m podium (P-A s.v. Iuppiter Optimus Maximus) stands clear. Extent # unverified",
+"outline": "monument",
 "polygon": [
 [
 41.89137,
@@ -1035,64 +1037,6 @@
 [
 41.890836,
 12.484489
-]
-],
-"walls": true
-},
-{
-"blend": 4,
-"id": "f2_terrace_porta_pandana",
-"level": [
-24.4,
-24.4
-],
-"monument": "porta_pandana",
-"note": "F2: the ground fell 7.8 m under the monument; cut and built up to the level at its centre, walled",
-"polygon": [
-[
-41.891556,
-12.482445
-],
-[
-41.891685,
-12.482359
-],
-[
-41.891612,
-12.482165
-],
-[
-41.891483,
-12.482251
-]
-],
-"walls": true
-},
-{
-"blend": 4,
-"id": "f2_terrace_fornix_scipionis",
-"level": [
-27.1,
-27.1
-],
-"monument": "fornix_scipionis",
-"note": "F2: the ground fell 6.0 m under the monument; cut and built up to the level at its centre, walled",
-"polygon": [
-[
-41.891727,
-12.48215
-],
-[
-41.891678,
-12.481969
-],
-[
-41.891509,
-12.482052
-],
-[
-41.891558,
-12.482233
 ]
 ],
 "walls": true
@@ -1944,8 +1888,9 @@
 ],
 "street_cuts": {
 "blend_m": 9.0,
+"clivus_shoulder_m": 4.0,
 "max_gradient": 0.16,
-"shoulder_m": 2.0,
+"shoulder_m": 5.0,
 "smooth_m": 36.0
 },
 "valleys": [

@@ -290,6 +290,10 @@ terrain_model:
   # PLATFORMS: polygons carved flat (the built floors), `level` in metres a.s.l. (two values =
   # a gradient from the west end to the east end), blended into the ground over `blend` m;
   # `walls: true` stands substructure / retaining walls on the edges where the ground falls or rises.
+  # F3: a platform that names a monument (its id, or `monument`) is cut only in the years that
+  # monument stands (terrain.gd platforms()); `outline: monument` makes its polygon the monument's
+  # footprint; a monument's terrace (f2_terrace_*) runs down in front of the monument as a 1 in 4
+  # ramp instead of a substructure wall, so it never stands over the ground it faces.
   platforms:
   - id: forum_romanum
     polygon: [[41.89317, 12.48379], [41.89174, 12.48379], [41.8916, 12.48482], [41.89115, 12.48578], [41.89115, 12.48711], [41.89196, 12.48735], [41.89277, 12.48687], [41.89317, 12.48602], [41.89349, 12.48554], [41.89349, 12.48458]]
@@ -298,6 +302,7 @@ terrain_model:
     note: "the whole piazza and the buildings round it, from the foot of the Tabularium to the Regia and the Atrium Vestae, dead flat so the paving (monuments.yaml forum_romanum, 120 x 56 m) and every building on it meet the ground; the early floor was about 10 m a.s.l., the Sullan pavement 11.90-12.50 m by the temple of Caesar (P-A s.v. Sacra Via): 11 m is the modeller's middle value for the late Republic"
     sources: ["Platner-Ashby s.v. Forum Romanum (read on LacusCurtius, U2)", "Platner-Ashby s.v. Sacra Via (read, streets.yaml)"]
   - id: forum_iulium
+    outline: monument   # F3: the platform is the monument's own footprint as monuments.gd draws it that year (terrain.gd), so its floor and its paving always coincide
     polygon: [[41.89293, 12.48537], [41.89403, 12.48413], [41.89447, 12.48483], [41.89337, 12.48607]]  # F2: the outline is the forum as monuments.yaml draws it (160 x 75 m, unverified there), cut into the saddle toward the Quirinal with retaining walls
     level: [13.0, 13.0]
     blend: 6
@@ -305,9 +310,10 @@ terrain_model:
     note: "the floor of Caesar's forum, a little above the Forum Romanum on the saddle toward the Quirinal; level # unverified"
     sources: ["Platner-Ashby s.v. Forum Iulium # unverified, not read"]
   - id: area_capitolina
+    outline: monument   # F3: the platform is the monument's own footprint as monuments.gd draws it that year (terrain.gd), so its floor and its paving always coincide
     polygon: [[41.89137, 12.48143], [41.89224, 12.48085], [41.89273, 12.48217], [41.89186, 12.48275]]  # F2: the outline is the Area Capitolina as monuments.yaml draws it from Platner-Ashby (35 m east of the temple, up to 30 m west, 40-45 m in front, a narrow space behind); it was the unverified 4-point extent
     level: [42.0, 42.0]
-    blend: 25   # F2: the platform falls to the hill round it over 25 m (an embankment behind its substructure walls) instead of standing 20 m over the modelled slope at its front corner; the substructures of squared stone: Livy 6.4.12, as quoted in Platner-Ashby s.v. Area Capitolina (read)
+    blend: 6   # F3: back to a short blend: its substructure walls (squared stone: Livy 6.4.12, as quoted in Platner-Ashby s.v. Area Capitolina, read) stand where the hill falls away, and the Clivus Capitolinus now climbs to the floor at the gate (streets.yaml end_level). F2 had blended it over 25 m, an earth bank that the Vicus Iugarius, passing under the Capitol's south face, climbed onto.
     walls: true
     note: "the terrace of the temple of Jupiter on the Capitolium summit; level set 4 m below the summit figure so the 4-5 m podium (P-A s.v. Iuppiter Optimus Maximus) stands clear. Extent # unverified"
     sources: ["Platner-Ashby s.v. Iuppiter Optimus Maximus Capitolinus, Aedes (read, monuments.yaml)", "Platner-Ashby s.v. Area Capitolina # unverified, not read"]
@@ -326,8 +332,6 @@ terrain_model:
   - {id: f2_terrace_aedes_iovis_statoris_palatine, monument: aedes_iovis_statoris_palatine, polygon: [[41.890849, 12.486556], [41.890614, 12.486761], [41.890751, 12.487044], [41.890986, 12.486839]], level: [23.2, 23.2], blend: 4, walls: true, note: "F2: the ground fell 14.8 m under the monument; cut and built up to the level at its centre, walled"}
   - {id: f2_terrace_aedes_telluris, monument: aedes_telluris, polygon: [[41.891903, 12.492749], [41.891872, 12.493225], [41.892097, 12.493251], [41.892128, 12.492775]], level: [23.5, 23.5], blend: 4, walls: true, note: "F2: the ground fell 4.2 m under the monument; cut and built up to the level at its centre, walled"}
   - {id: f2_terrace_horrea_agrippiana, monument: horrea_agrippiana, polygon: [[41.890437, 12.485053], [41.890822, 12.485543], [41.891221, 12.484979], [41.890836, 12.484489]], level: [23.6, 23.6], blend: 4, walls: true, note: "F2: the ground fell 32.7 m under the monument; cut and built up to the level at its centre, walled"}
-  - {id: f2_terrace_porta_pandana, monument: porta_pandana, polygon: [[41.891556, 12.482445], [41.891685, 12.482359], [41.891612, 12.482165], [41.891483, 12.482251]], level: [24.4, 24.4], blend: 4, walls: true, note: "F2: the ground fell 7.8 m under the monument; cut and built up to the level at its centre, walled"}
-  - {id: f2_terrace_fornix_scipionis, monument: fornix_scipionis, polygon: [[41.891727, 12.48215], [41.891678, 12.481969], [41.891509, 12.482052], [41.891558, 12.482233]], level: [27.1, 27.1], blend: 4, walls: true, note: "F2: the ground fell 6.0 m under the monument; cut and built up to the level at its centre, walled"}
   - {id: f2_terrace_aedes_larum, monument: aedes_larum, polygon: [[41.890606, 12.488681], [41.890702, 12.489035], [41.890938, 12.488919], [41.890842, 12.488565]], level: [28.3, 28.3], blend: 4, walls: true, note: "F2: the ground fell 13.7 m under the monument; cut and built up to the level at its centre, walled"}
   - {id: f2_terrace_porta_caelimontana, monument: porta_caelimontana, polygon: [[41.887158, 12.496194], [41.887049, 12.496629], [41.887442, 12.496806], [41.88755, 12.496371]], level: [29.4, 29.4], blend: 4, walls: true, note: "F2: the ground fell 9.7 m under the monument; cut and built up to the level at its centre, walled"}
   - {id: f2_terrace_porta_esquilina, monument: porta_esquilina, polygon: [[41.895597, 12.501092], [41.895549, 12.501546], [41.895959, 12.501624], [41.896007, 12.50117]], level: [30.2, 30.2], blend: 4, walls: true, note: "F2: the ground fell 6.8 m under the monument; cut and built up to the level at its centre, walled"}
@@ -347,10 +351,13 @@ terrain_model:
   - {id: f2_terrace_porta_viminalis, monument: porta_viminalis, polygon: [[41.902245, 12.501], [41.902371, 12.501427], [41.902755, 12.501222], [41.902629, 12.500795]], level: [53.4, 53.4], blend: 4, walls: true, note: "F2: the ground fell 7.2 m under the monument; cut and built up to the level at its centre, walled"}
   - {id: f2_terrace_aedes_fortunae_primigeniae, monument: aedes_fortunae_primigeniae, polygon: [[41.906845, 12.497733], [41.907185, 12.497872], [41.907251, 12.497583], [41.906911, 12.497444]], level: [54.7, 54.7], blend: 4, walls: true, note: "F2: the ground fell 3.8 m under the monument; cut and built up to the level at its centre, walled"}
   - {id: f2_terrace_auditorium_maecenatis, monument: auditorium_maecenatis, polygon: [[41.894024, 12.501061], [41.893838, 12.501432], [41.89401, 12.501587], [41.894196, 12.501217]], level: [57.8, 57.8], blend: 4, walls: true, note: "F2: the ground fell 6.0 m under the monument; cut and built up to the level at its centre, walled"}
+  # (F3: the arches across the Clivus Capitolinus, the Fornix Scipionis and the Porta Pandana, have
+  # no terrace: an arch stands across its street and follows it; their terraces stood 15-18 m
+  # below the clivus once it climbs to the Area Capitolina. city_audit.py TERRACE_SKIP_MODELS)
   # END F2 TERRACES
   # STREET CUTS: every street in streets.yaml is cut into the ground with a smoothed profile
   # (a hill road becomes a ramp notched into the slope; a `stairs` street keeps its slope).
-  street_cuts: {shoulder_m: 2.0, blend_m: 9.0, smooth_m: 36.0, max_gradient: 0.16}   # a clivus: shoulder 1.6, blend 4 (a sharp cutting, walled); max_gradient 0.16 against P-A's 1:8 (0.125) for the Clivus Capitolinus, a little steeper so the cut stays shallow
+  street_cuts: {shoulder_m: 5.0, blend_m: 9.0, smooth_m: 36.0, max_gradient: 0.16, clivus_shoulder_m: 4.0}   # a clivus: blend 4 (a sharp cutting, walled at the edge of its shoulder); max_gradient 0.16 against P-A's 1:8 (0.125) for the Clivus Capitolinus, a little steeper so the cut stays shallow. F3: the level shoulder beside each carriageway is 5 m (4 m on a clivus), at least one cell of the 5 m ground mesh, so the mesh lies flat under the whole street (with 2 m and 1.6 m the cut fell between the mesh's vertices and the ground rose through the street's edges)
   # GROVES and gardens inside the city (trees the sources place), each a disc: kinds are pine
   # (umbrella pine), cypress, plane, olive, fig, oak, laurel; `from` = first year (null: always).
   groves:

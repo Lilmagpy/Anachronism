@@ -21,6 +21,9 @@ const ISLAND_RAISE := 3.4       ## island top above the water, m (about 9 m a.s.
 const ISLAND_HALF_LONG := 135.0 ## 270 m long (topography.yaml)
 const ISLAND_HALF_WIDE := 33.5  ## 67 m wide (topography.yaml)
 const ISLAND_ZONE := Vector2(150.0, 300.0)   ## along the island's axis: fitted channel inside x, course beyond y
+const BANK_BAND := 10.0         ## F3: metres either side of the water line where a bank is a plane
+const BANK_SLOPE := Vector2(0.07, 0.2)   ## F3: its slope on the inside of a bend (x) and elsewhere (y)
+const ISLAND_SHORE := 0.97      ## F3: the island's water line in island_r units (its facing stands at 0.95)
 
 static var _topo: Dictionary = {}
 static var _course: PackedVector2Array = PackedVector2Array()
@@ -356,6 +359,8 @@ static func carve(h: PackedFloat32Array, n: int, origin: float, cell: float) -> 
 			var qw := 0.0
 			var qrise := 0.0
 			for qy: Dictionary in _quays:
+				if UrbsTerrain.year < int(qy["from"]):
+					continue   # F3: before its quay was built the bank is the river's own
 				if side[idx] == float(qy["side"]):
 					var w := smoothstep(float(qy["s0"]) - 30.0, float(qy["s0"]), s) * (1.0 - smoothstep(float(qy["s1"]), float(qy["s1"]) + 30.0, s))
 					if w > qw:
@@ -368,30 +373,40 @@ static func carve(h: PackedFloat32Array, n: int, origin: float, cell: float) -> 
 			inner[idx] = inn
 			var cut := _bank_cut() + 26.0 * inn - 8.0 * outr
 			cut = lerpf(cut, 5.0, maxf(iw, qw))   # the island reach and the quays: steep, built banks
+			# F3: across the water line the bank is a plane (height linear in the distance from the
+			# channel's edge, BANK_BAND m either side), so the 5 m ground mesh draws a straight shore
+			# instead of a saw-tooth; it shelves gently on the inside of a bend (a gravel beach) and
+			# more steeply on the outside, then rises to the ground over `cut` metres.
+			var k := lerpf(lerpf(BANK_SLOPE.y, BANK_SLOPE.x, inn), BANK_SLOPE.y * 1.6, maxf(iw, qw))
+			var e := dd - hw
 			var terr := h[idx]
 			var out := terr
-			if dd <= hw + cut:
-				var bed := wl - depth + (depth - 0.6) * pow(minf(dd / hw, 1.0), 2.0)
-				bed = lerpf(bed, wl + 0.35, smoothstep(0.72, 1.0, dd / hw) * inn * 0.9)   # gravel bar
-				if dd <= hw:
-					out = minf(terr, bed)
-				else:
-					var tt := smoothstep(hw, hw + cut, dd)
-					var bank := lerpf(wl + 0.2 if inn > 0.3 else wl - 0.6, terr, pow(tt, 1.0 + 0.7 * inn - 0.45 * outr))
-					out = minf(terr, bank)
+			if e <= BANK_BAND + cut:
+				var bank := wl + k * clampf(e, -BANK_BAND, BANK_BAND)
+				if e < -BANK_BAND:
+					var inner_w := maxf(hw - BANK_BAND, 1.0)
+					bank = wl - depth + (depth - k * BANK_BAND) * pow(clampf(dd / inner_w, 0.0, 1.0), 2.0)
+				elif e > BANK_BAND:
+					var tt := smoothstep(0.0, 1.0, (e - BANK_BAND) / cut)
+					var yb := wl + k * BANK_BAND
+					bank = yb + maxf(terr - yb, 0.0) * pow(tt, 1.0 + 0.7 * inn - 0.45 * outr)
+				out = minf(terr, bank)
 			if qw > 0.0 and dd > hw - 1.0:
 				var top := wl + qrise
 				var keep := 1.0 - smoothstep(hw + 60.0, hw + 110.0, dd)
 				out = lerpf(out, top, qw * keep)
 			var r := island_r(x, z)
-			if r < 1.12:
-				var top := wl + ISLAND_RAISE * (1.0 - 0.15 * r * r)
-				var v := clampf((1.08 - r) / 0.18, 0.0, 1.0)
-				var stepped := clampf(floorf(v * 3.0 + 0.5 * _noise.get_noise_2d(x / 9.0, z / 9.0)) / 3.0, 0.0, 1.0)
-				var ih := wl - 0.8 + (top - wl + 0.8) * clampf(0.2 * v + 0.8 * stepped, 0.0, 1.0)
-				if r < 0.9:
-					ih = top   # the island's top is level ground
-				out = maxf(out, ih)
+			if r < 1.35:
+				# the island's shore the same way: a plane across its water line, then up to its top
+				var top := wl + ISLAND_RAISE * (1.0 - 0.15 * minf(r * r, 1.0))
+				var gr := Vector2(island_r(x + 1.0, z) - island_r(x - 1.0, z), island_r(x, z + 1.0) - island_r(x, z - 1.0)).length() * 0.5
+				var ei := (ISLAND_SHORE - r) / maxf(gr, 1e-4)   # metres inside the shore
+				var ki := BANK_SLOPE.y * 1.1
+				var ih := wl + ki * clampf(ei, -BANK_BAND, BANK_BAND)
+				if ei > BANK_BAND:
+					var yb := wl + ki * BANK_BAND
+					ih = yb + maxf(top - yb, 0.0) * smoothstep(BANK_BAND, BANK_BAND + 12.0, ei)
+				out = lerpf(out, maxf(out, ih), 1.0 - smoothstep(1.2, 1.35, r))
 			h[idx] = out
 	return {"dist": dist, "level": level, "hw": hwr, "inner": inner}
 

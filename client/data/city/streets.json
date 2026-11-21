@@ -63,6 +63,7 @@
 },
 {
 "direction": "from the west corner of the Forum, past the temple of Saturn, up to the Asylum / Capitol",
+"end_level": "area_capitolina",
 "english": "Capitoline Hill road",
 "exists_from": null,
 "id": "clivus_capitolinus",
@@ -100,8 +101,12 @@
 12.483212
 ],
 [
-41.89178,
-12.48262
+41.891696,
+12.482576
+],
+[
+41.891568,
+12.482204
 ],
 [
 41.891618,

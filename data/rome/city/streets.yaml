@@ -19,6 +19,8 @@
 #               censors Fulvius Flaccus and Postumius Albinus "were the first of all to contract for
 #               paving the streets in the city with silex and for gravelling and edging the roads
 #               outside the city" -> every street inside the Servian walls is paved from 174.
+#   end_level / start_level  (F3) a platform id (topography.yaml) or metres: the street's end is
+#               pinned to that floor (it leads up to it) and its cut rises evenly to it (terrain.gd).
 #   sources     ancient authors and Platner-Ashby entries; entries without an online article are
 #               marked "# unverified" (LacusCurtius has no separate article for them).
 streets:
@@ -40,12 +42,13 @@ streets:
   english: Capitoline Hill road
   kind: clivus
   direction: "from the west corner of the Forum, past the temple of Saturn, up to the Asylum / Capitol"
-  points: [[41.892446, 12.484528], [41.892563, 12.484443], [41.892653, 12.484371], [41.892671, 12.484238], [41.892689, 12.484105], [41.892185, 12.483598], [41.891978, 12.483212], [41.89178, 12.48262], [41.891618, 12.482101]]  # F2: lower course = the excavated pavement (Pleiades 152699900, OpenStreetMap, good to 20 m) past the north front and west side of Saturn, starting at the Forum south of the Augustan Rostra; end at the main entrance of the Area Capitolina in the middle of its south-east side opposite the temple front, 40-45 m in front of it (Platner-Ashby s.v. Area Capitolina, read); the stretch between is unexcavated
+  points: [[41.892446, 12.484528], [41.892563, 12.484443], [41.892653, 12.484371], [41.892671, 12.484238], [41.892689, 12.484105], [41.892185, 12.483598], [41.891978, 12.483212], [41.891696, 12.482576], [41.891568, 12.482204], [41.891618, 12.482101]]  # F3: the last stretch comes up to the gate from in front of the area (its point 10 m before the end was 0-3 m off the area's front, so the road ran half inside the Area Capitolina's floor; the stretch is unexcavated, see notes). F2: lower course = the excavated pavement (Pleiades 152699900, OpenStreetMap, good to 20 m) past the north front and west side of Saturn, starting at the Forum south of the Augustan Rostra; end at the main entrance of the Area Capitolina in the middle of its south-east side opposite the temple front, 40-45 m in front of it (Platner-Ashby s.v. Area Capitolina, read); the stretch between is unexcavated
   precision: approx
   width_m: 5.0
   width_source: assumed
   exists_from: null
   paved_from: -174
+  end_level: area_capitolina  # F3: the road climbs to the floor of the Area Capitolina at its gate (it ends at the area's main entrance, Platner-Ashby s.v. Area Capitolina, read in F2); from the Forum (11 m) to the area (42 m) over its 250 m it rises at about 1:8, the gradient Platner-Ashby gives. Before, it followed the ground and ended 14 m below the area's front.
   sources: ["Platner-Ashby s.v. Clivus Capitolinus (read): a path continuing the Sacra via, made a cart road at the end of the regal period; paved in 174 BC by the censors Fulvius Flaccus and Postumius Albinus; starts near the corner of the Basilica Iulia, skirts the north front and west side of the temple of Saturn, ascends to the Asylum with a gradient of about 1:8", "Livy 41.27.7 (paved with silex, 174 BC)", "Livy 37.3 (Scipio's arch at the top, 190 BC)", "Cic. pro Mil. 64 (houses on the clivus)"]
   notes: "Upper course lost (P-A: no trace of the upper part or the branch to the Arx); the end point at the Asylum is the line P-A gives, the last turn toward the temple of Jupiter is conjecture."
 - id: clivus_argentarius

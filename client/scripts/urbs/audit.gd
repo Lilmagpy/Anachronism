@@ -369,8 +369,9 @@ func _terrain() -> Array:
 # ---------------------------------------------------------------------------------------------
 # F3 ground (begin): the ground and what is laid on it, as the chunk meshes draw it. Each check
 # returns a list of findings "<what> ..."; the counts go to city_audit.py (SCENE_KINDS, F3 ground).
-#   bank_sawtooth    100 m stretches of a Tiber bank whose water line turns more than 15 degrees
-#                    within 2 m at least 3 times (the 5 m grid drawn across a steep bank)
+#   bank_sawtooth    100 m squares where the water's edge (the ground mesh crossing the water
+#                    surface, traced triangle by triangle) turns more than 25 degrees within 2 m at
+#                    least 3 times: a saw-tooth (the 5 m grid drawn across a curved bank)
 #   zfight           two surfaces within 5 cm of each other over the same spot (paving over the
 #                    ground, a street over a paving, two streets, a quay over the ground, the
 #                    water over a flat bank), or the ground poking through a paving
@@ -388,7 +389,6 @@ func _terrain() -> Array:
 #                    above it
 # ---------------------------------------------------------------------------------------------
 
-const F3_KINK_DEG := 15.0
 const F3_ZF_M := 0.05
 
 
@@ -497,76 +497,120 @@ static func _f3_xy(p: Vector2) -> String:
 
 # --- the Tiber's banks ---
 
-## Where the water line crosses the ray from the course at `s` out to `side`, or null.
-func _f3_shore(s: float, side: float) -> Variant:
-	var a := UrbsTiber.at_s(s)
-	var c: Vector2 = a[0]
-	var t: Vector2 = a[1]
-	var nrm := Vector2(-t.y, t.x) * side
-	var wl := UrbsTiber.water_level_at_s(s)
-	var wet := false
-	var prev := 0.0
-	var d := 0.0
-	while d <= 220.0:
-		var q := c + nrm * d
-		var g := _f3_ground_y(q.x, q.y)
-		if g < wl:
-			wet = true
-		elif wet:
-			var lo := prev
-			var hi := d
-			for _i in 12:
-				var mid := (lo + hi) * 0.5
-				var qm := c + nrm * mid
-				if _f3_ground_y(qm.x, qm.y) < wl:
-					lo = mid
+## The water's edge as the meshes draw it: in each triangle of the lod-0 ground mesh (near the
+## river) the line where the ground crosses the water surface (both linear on the same triangles),
+## chained into polylines. Returns Array of PackedVector2Array.
+func _f3_shorelines() -> Array:
+	var segs := []
+	for kx in range(-10, 10):
+		for kz in range(-10, 10):
+			var rect := Rect2(Vector2(kx, kz) * 250.0, Vector2(250.0, 250.0))
+			var c := rect.get_center()
+			if UrbsTerrain.river_distance(c.x, c.y) > 400.0:
+				continue
+			var step := _f3_step(c.x, c.y)
+			var cell := UrbsTerrain.CELL_M * step
+			var nq := int(250.0 / cell)
+			for j in nq:
+				for i in nq:
+					var x0 := rect.position.x + i * cell
+					var z0 := rect.position.y + j * cell
+					if UrbsTerrain.river_distance(x0, z0) > 220.0:
+						continue
+					var q := [Vector2(x0, z0), Vector2(x0 + cell, z0), Vector2(x0 + cell, z0 + cell), Vector2(x0, z0 + cell)]
+					var f := []
+					for v: Vector2 in q:
+						f.append(UrbsTerrain.mesh_height_at(v.x, v.y, step) - UrbsTerrain.river_level(v.x, v.y))
+					for tri in [[0, 1, 3], [1, 2, 3]]:
+						var pts := []
+						for e in 3:
+							var ia: int = tri[e]
+							var ib: int = tri[(e + 1) % 3]
+							var fa: float = f[ia]
+							var fb: float = f[ib]
+							if (fa < 0.0) != (fb < 0.0):
+								pts.append((q[ia] as Vector2).lerp(q[ib], fa / (fa - fb)))
+						if pts.size() == 2:
+							segs.append(pts)
+	# chain the segments by their shared ends
+	var ends := {}
+	for k in segs.size():
+		for e in 2:
+			var key := Vector2i(roundi(segs[k][e].x * 100.0), roundi(segs[k][e].y * 100.0))
+			if not ends.has(key):
+				ends[key] = []
+			ends[key].append(k)
+	var used := {}
+	var lines := []
+	for k0 in segs.size():
+		if used.has(k0):
+			continue
+		used[k0] = true
+		var line: Array = [segs[k0][0], segs[k0][1]]
+		for dirn in 2:
+			while true:
+				var tip: Vector2 = line[line.size() - 1] if dirn == 0 else line[0]
+				var key := Vector2i(roundi(tip.x * 100.0), roundi(tip.y * 100.0))
+				var nxt := -1
+				for k in ends.get(key, []):
+					if not used.has(k):
+						nxt = k
+						break
+				if nxt < 0:
+					break
+				used[nxt] = true
+				var a2: Vector2 = segs[nxt][0]
+				var b2: Vector2 = segs[nxt][1]
+				var other := b2 if a2.distance_to(tip) < 0.02 else a2
+				if dirn == 0:
+					line.append(other)
 				else:
-					hi = mid
-			return c + nrm * hi
-		prev = d
-		d += 1.0
-	return null
+					line.push_front(other)
+		lines.append(PackedVector2Array(line))
+	return lines
 
 
 func _f3_bank_sawtooth() -> Array:
 	var out := []
-	var length := UrbsTiber.length()
 	var facing: Dictionary = UrbsTiber.topography().get("terrain_model", {}).get("island_facing", {})
 	var faced := not facing.is_empty() and _year >= int(facing.get("from", 0))
-	for side: float in [1.0, -1.0]:
-		var pts := []
-		var s := 0.0
-		while s <= length:
-			var p: Variant = null
-			var centre: Vector2 = UrbsTiber.at_s(s)[0]
-			if absf(centre.x) < 2400.0 and absf(centre.y) < 2400.0:
-				p = _f3_shore(s, side)
-				for q: Dictionary in UrbsTiber.quays():
-					if _year >= int(q["from"]) and float(q["side"]) == side and s > float(q["s0"]) - 5.0 and s < float(q["s1"]) + 5.0:
-						p = null
-				if p != null and faced and UrbsTiber.island_r((p as Vector2).x, (p as Vector2).y) < 1.2:
-					p = null
-			pts.append(p)
-			s += 1.0
-		var kinks := {}
-		var where := {}
-		for k in range(2, pts.size() - 2):
-			if pts[k - 2] == null or pts[k] == null or pts[k + 2] == null:
-				continue
-			var a: Vector2 = pts[k - 2]
-			var b: Vector2 = pts[k]
-			var c: Vector2 = pts[k + 2]
-			if a.distance_to(b) > 6.0 or b.distance_to(c) > 6.0 or a.distance_to(b) < 0.3 or b.distance_to(c) < 0.3:
-				continue
-			if rad_to_deg(absf((b - a).angle_to(c - b))) > F3_KINK_DEG:
-				var st := k / 100
-				kinks[st] = int(kinks.get(st, 0)) + 1
-				where[st] = b
-		var keys := kinks.keys()
-		keys.sort()
-		for st: int in keys:
-			if int(kinks[st]) >= 3:
-				out.append("tiber %s bank %d-%d m along the course near %s: %d kinks" % ["left" if side > 0 else "right", st * 100, st * 100 + 100, _f3_xy(where[st]), kinks[st]])
+	var kinks := {}
+	var where := {}
+	for line: PackedVector2Array in _f3_shorelines():
+		# resample every 2 m along the line, then the turn at each point over 2 m either side
+		var pts := PackedVector2Array([line[0]])
+		var carry := 0.0
+		for k in range(1, line.size()):
+			var a := line[k - 1]
+			var b := line[k]
+			var l := a.distance_to(b)
+			var t := 2.0 - carry
+			while t <= l:
+				pts.append(a.lerp(b, t / l))
+				t += 2.0
+			carry = l - (t - 2.0)
+		for k in range(1, pts.size() - 1):
+			var p := pts[k]
+			if UrbsTiber.island_r(p.x, p.y) < 1.2 and faced:
+				continue   # the island's travertine facing stands at its edge
+			var quay := false
+			for q: Dictionary in UrbsTiber.quays():
+				if _year >= int(q["from"]):
+					var s0 := UrbsTiber.bank_point(float(q["s0"]), float(q["side"]))
+					var s1 := UrbsTiber.bank_point(float(q["s1"]), float(q["side"]))
+					if Geometry2D.get_closest_point_to_segment(p, s0, s1).distance_to(p) < 12.0:
+						quay = true
+			if quay:
+				continue   # a quay's wall stands at the water
+			if rad_to_deg(absf((pts[k] - pts[k - 1]).angle_to(pts[k + 1] - pts[k]))) > 25.0:
+				var key := Vector2i(floori(p.x / 100.0), floori(p.y / 100.0))
+				kinks[key] = int(kinks.get(key, 0)) + 1
+				where[key] = p
+	var keys := kinks.keys()
+	keys.sort()
+	for key: Vector2i in keys:
+		if int(kinks[key]) >= 3:
+			out.append("the water's edge turns more than 25 degrees within 2 m %d times in the 100 m square near %s" % [kinks[key], _f3_xy(where[key])])
 	return out
 
 
@@ -596,13 +640,13 @@ func _f3_zfight(st: UrbsStreets) -> Array:
 		var under := 0
 		var worst := INF
 		var at := Vector2.ZERO
-		var i := -float(r.hx) + 0.5
-		while i < float(r.hx):
-			var j := -float(r.hz) + 0.5
-			while j < float(r.hz):
+		var i := -float(r.hx) + 1.0   # from 1 m inside its edge (at the edge the two only meet)
+		while i < float(r.hx) - 0.99:
+			var j := -float(r.hz) + 1.0
+			while j < float(r.hz) - 0.99:
 				var p: Vector2 = (r.c as Vector2) + (r.ax as Vector2) * i + (r.az as Vector2) * j
 				var top := _f3_top(plazas[id], p)
-				if top > -INF:
+				if top > -INF and UrbsTerrain.ground_drawn_at(p.x, p.y, _f3_step(p.x, p.y)):
 					var gap := top - _f3_ground_y(p.x, p.y)
 					if gap < worst:
 						worst = gap
@@ -623,6 +667,7 @@ func _f3_zfight(st: UrbsStreets) -> Array:
 		if mi is MeshInstance3D:
 			strips[str(mi.name)] = _f3_tris([mi], 0)
 	var seen := {}
+	var hits := {}   # a pair counts once it is within 5 cm at two neighbouring samples (not where two surfaces merely cross)
 	for si in st.streets.size():
 		var s: Dictionary = st.streets[si]
 		if bool(s.get("stairs", false)) or not strips.has(str(s.id)):
@@ -640,8 +685,12 @@ func _f3_zfight(st: UrbsStreets) -> Array:
 						continue
 					var top := _f3_top(plazas[pid], p)
 					if top > -INF and absf(top - y) < F3_ZF_M:
-						seen[key] = true
-						out.append("street %s within 5 cm of the %s paving at %s" % [s.id, pid, _f3_xy(p)])
+						hits[key] = int(hits.get(key, 0)) + 1
+						if int(hits[key]) >= 2:
+							seen[key] = true
+							out.append("street %s within 5 cm of the %s paving at %s" % [s.id, pid, _f3_xy(p)])
+					else:
+						hits[key] = 0
 				for oid: String in strips:
 					if oid == str(s.id):
 						continue
@@ -650,8 +699,12 @@ func _f3_zfight(st: UrbsStreets) -> Array:
 						continue
 					var y2 := _f3_top(strips[oid], p)
 					if y2 > -INF and absf(y2 - y) < F3_ZF_M:
-						seen[key] = true
-						out.append("streets %s and %s within 5 cm of each other at %s" % [s.id, oid, _f3_xy(p)])
+						hits[key] = int(hits.get(key, 0)) + 1
+						if int(hits[key]) >= 2:
+							seen[key] = true
+							out.append("streets %s and %s within 5 cm of each other at %s" % [s.id, oid, _f3_xy(p)])
+					else:
+						hits[key] = 0
 			d += 2.0
 	# the quays' paving over the ground; the water over a flat bank
 	var works := Node3D.new()
@@ -748,19 +801,24 @@ func _f3_empty_terraces() -> Array:
 		var lv: Array = pf.get("level", [0.0])
 		if absf(UrbsTerrain.height_at(c.x, c.y) - float(lv[0])) < 0.3 and UrbsTerrain.built_at(c.x, c.y) > 0.9:
 			out.append("terrace %s cut and walled, but %s does not stand in %d" % [pf.id, mid, _year])
-	# hillside terrace walls with nothing on the tread above
-	var segs := []
+	# hillside terrace walls with nothing on the tread above: the walls as UrbsChunks stands them
+	# (UrbsSite.build_chunk_walls with the houses of the chunk and its neighbours)
 	var keys := {}
 	for kx in range(-10, 10):
 		for kz in range(-10, 10):
-			var rect := Rect2(Vector2(kx, kz) * 250.0, Vector2(250.0, 250.0))
-			var ss := UrbsSite.terrace_wall_segments(rect)
-			if not ss.is_empty():
-				segs.append_array(ss)
+			if not UrbsSite.terrace_wall_segments(Rect2(Vector2(kx, kz) * 250.0, Vector2(250.0, 250.0))).is_empty():
 				keys[Vector2i(kx, kz)] = true
-	if segs.is_empty():
+	if keys.is_empty():
 		return out
-	var lots := _f3_lots(keys.keys())
+	var lf := _f3_lots(keys.keys())
+	var lots: Dictionary = lf[0]
+	var segs := []
+	for key: Vector2i in keys:
+		var near: Array = []
+		for dx in range(-1, 2):
+			for dz in range(-1, 2):
+				near.append(key + Vector2i(dx, dz))
+		segs.append_array(UrbsSite.terrace_wall_segments(Rect2(Vector2(key) * 250.0, Vector2(250.0, 250.0)), UrbsSite.wall_uses(lf[1], near)))
 	var fps := []
 	for id in _mon.ids():
 		var r := _footprint(id)
@@ -799,8 +857,8 @@ func _f3_empty_terraces() -> Array:
 	return out
 
 
-## The fill's house lots in these 250 m chunks, as rectangles bucketed on a 20 m grid.
-func _f3_lots(chunk_keys: Array) -> Dictionary:
+## The fill's house lots in these 250 m chunks, as rectangles bucketed on a 20 m grid, and the fill.
+func _f3_lots(chunk_keys: Array) -> Array:
 	var fill := UrbsFill.new()
 	fill.year = _year
 	fill.height = Callable(UrbsTerrain, "height_at")
@@ -831,7 +889,7 @@ func _f3_lots(chunk_keys: Array) -> Dictionary:
 					if not grid.has(g):
 						grid[g] = []
 					grid[g].append(lr)
-	return grid
+	return [grid, fill]
 
 
 # --- platforms against what leads to them ---
@@ -841,13 +899,14 @@ func _f3_platform_steps() -> Array:
 	for pid: String in UrbsSite.platform_ids():
 		var pf := UrbsSite.platform(pid)
 		var poly: PackedVector2Array = pf.polygon
-		# streets that end at the platform
+		# streets that end at the platform (and at no other floor of their own level)
 		for s: Dictionary in _streets.streets:
 			var pts: PackedVector2Array = s.pts
 			for e in [pts[0], pts[pts.size() - 1]]:
 				var p: Vector2 = e
 				if Geometry2D.is_point_in_polygon(p, poly):
 					continue
+				var road := _f3_ground_y(p.x, p.y)
 				var near := INF
 				var edge := p
 				for i in poly.size():
@@ -858,8 +917,18 @@ func _f3_platform_steps() -> Array:
 				if near > 15.0:
 					continue
 				var lvl := UrbsSite.platform_level(pf, edge.x)
-				var road := _f3_ground_y(p.x, p.y)
-				if absf(lvl - road) > 1.0:
+				var other := false   # the street leads to another floor at its own level
+				for oid: String in UrbsSite.platform_ids():
+					if oid == pid:
+						continue
+					var opf := UrbsSite.platform(oid)
+					var opoly: PackedVector2Array = opf.polygon
+					var od := 0.0 if Geometry2D.is_point_in_polygon(p, opoly) else INF
+					for i in opoly.size():
+						od = minf(od, Geometry2D.get_closest_point_to_segment(p, opoly[i], opoly[(i + 1) % opoly.size()]).distance_to(p))
+					if od < 15.0 and absf(UrbsSite.platform_level(opf, p.x) - road) <= 1.0:
+						other = true
+				if not other and absf(lvl - road) > 1.0:
 					out.append("platform %s stands %.1f m %s the end of street %s at %s" % [pid, absf(lvl - road), "above" if lvl > road else "below", s.id, _f3_xy(p)])
 		# the ground in front of the monument it carries
 		var mid := pid if _mon.ids().has(pid) else ""
@@ -882,6 +951,8 @@ func _f3_platform_steps() -> Array:
 		lvl = UrbsSite.platform_level(pf, p.x)
 		var q := p + dir * 4.0
 		var g := _f3_ground_y(q.x, q.y)
+		if UrbsTerrain.river_distance(q.x, q.y) < UrbsTerrain.river_half_width(q.x, q.y) + 40.0:
+			continue   # it faces the river: the ground falls to the water (the Theatre of Marcellus)
 		if lvl - g > 1.0:
 			out.append("platform %s stands %.1f m over the ground in front of %s at %s" % [pid, lvl - g, mid, _f3_xy(q)])
 	return out
@@ -996,11 +1067,16 @@ func _f3_chunk_seams() -> Array:
 
 func _f3_streets_ground(st: UrbsStreets) -> Array:
 	var out := []
+	var strips := {}
+	for mi: Node in st._root.get_children():
+		if mi is MeshInstance3D:
+			strips[str(mi.name)] = _f3_tris([mi], 0)
+	var plazas := _f3_plazas()
 	for mi: Node in st._root.get_children():
 		if not mi is MeshInstance3D:
 			continue
 		var sid := str(mi.name)
-		var tris := _f3_tris([mi], 0)
+		var tris: Dictionary = strips[sid]
 		var idx := -1
 		for i in st.streets.size():
 			if str(st.streets[i].id) == sid:
@@ -1018,6 +1094,9 @@ func _f3_streets_ground(st: UrbsStreets) -> Array:
 		var d := 0.5
 		while d < float(s.len):
 			var arr := st.sample_at(idx, d)
+			if absf((arr[0] as Vector2).x) > 2450.0 or absf((arr[0] as Vector2).y) > 2450.0:
+				d += 1.0
+				continue   # beyond the heightfield (ground_holes)
 			var c: Vector2 = arr[0]
 			var t: Vector2 = arr[1]
 			var nrm := Vector2(-t.y, t.x)
@@ -1026,7 +1105,16 @@ func _f3_streets_ground(st: UrbsStreets) -> Array:
 			for off in [-hw + 0.3, -hw * 0.5, 0.0, hw * 0.5, hw - 0.3]:
 				var p: Vector2 = c + nrm * off
 				var y := _f3_top(tris, p)
-				if y == -INF:
+				if y == -INF or not UrbsTerrain.ground_drawn_at(p.x, p.y, _f3_step(p.x, p.y)):
+					continue
+				var hidden := false   # another street or a paving lies over this one here
+				for oid: String in strips:
+					if oid != sid and _f3_top(strips[oid], p) > y + 0.02:
+						hidden = true
+				for pid: String in plazas:
+					if _f3_top(plazas[pid], p) > y:
+						hidden = true
+				if hidden:
 					continue
 				var g := _f3_ground_y(p.x, p.y)
 				if y - g < 0.02:

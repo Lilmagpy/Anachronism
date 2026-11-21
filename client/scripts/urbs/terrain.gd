@@ -27,6 +27,13 @@
 ## The frame is UrbsGeo's (x east, z south, y a.s.l.); the Forum floor is y = 10.
 ## Vegetation is UrbsSiteFlora's (site_flora.gd); terraces, walls, steps and quays UrbsSite's.
 ## Everything is deterministic: no random numbers.
+##
+## F3: the ground belongs to its YEAR (`year`, set before the first height_at): a platform that
+## names a monument (its id or `monument`) is cut only while that monument stands; the hillside
+## terraces only where the city's districts are built up that year (UrbsFill's occupancy), so the
+## empty hills of 509 BC keep their natural slope; every paving (a `plaza` monument standing) is
+## carved level under its footprint and the ground mesh is left out beneath it (no z-fighting);
+## the quays level the bank only from their year. The cache is keyed on what the year changes.
 class_name UrbsTerrain
 
 const HALF_M := 2500.0                    ## the field spans -HALF_M .. +HALF_M in x and z
@@ -34,18 +41,24 @@ const CELL_M := 5.0
 const CELLS := 1000                       ## cells per side
 const VERTS := CELLS + 1
 const CHUNK_CELLS := 50                   ## 250 m chunks
-const NEAR_M := 2000.0                    ## within this of the Forum, lod 0 uses every 5 m cell
+const NEAR_M := 4000.0                    ## within this of the Forum, lod 0 uses every 5 m cell (F3: the whole field, so every street's cut is drawn)
 const WARP_M := 38.0                      ## how far hill and valley outlines wander from their ideal line
 const FORUM_FLOOR_M := 10.0               ## ancient Forum floor, m a.s.l.
 const TERRACE_M := 4.0                    ## height of one hillside terrace
-const CACHE_VERSION := "u8-site-12-f2a"    ## bump when the model code changes (F2: the island refit)
+const CACHE_VERSION := "f3-ground-1"       ## bump when the model code changes (F3: the ground of the year)
 const STREETS_PATH := "res://data/city/streets.json"
 const REGIONS_PATH := "res://data/city/regions.json"
 const RURAL_CELL := 25.0                  ## resolution of the farmland weight raster
 const MAP_CELL := 10.0                    ## resolution of the baked ground colour maps
 const MAP_N := 501                        ## texels per side of the ground colour maps
+const FRONT_RAMP := 0.25                  ## F3: slope of the ramp in front of a monument's terrace (1 in 4)
+const PAVE_BLEND := 6.0                   ## F3: a paving's carved floor blends into the ground over this
+const PAVE_INSET := 0.6                   ## F3: no ground drawn this far inside a paving's edge
+const PAVE_DIP := 0.5                     ## F3: ground vertices under a paving are drawn this much lower
+const TERRACE_OCC := Vector2(0.35, 0.75)  ## F3: terraced from this built-up share (none) to this (full)
 
 static var year := -44                    ## the year being shown (set by build); flora and site works read it
+static var walls_later := false           ## F3: UrbsChunks stands the terrace walls once the houses are laid out
 static var _h: PackedFloat32Array = PackedFloat32Array()
 static var _river_dist: PackedFloat32Array = PackedFloat32Array()
 static var _river_level: PackedFloat32Array = PackedFloat32Array()
@@ -63,18 +76,151 @@ static var _circuit: PackedVector2Array = PackedVector2Array()
 static var _warp: FastNoiseLite = null
 static var _warp2: FastNoiseLite = null
 static var _material: ShaderMaterial = null
+static var _street_w: PackedFloat32Array = PackedFloat32Array()  ## street cuts' weight (while computing)
+static var _cover: PackedByteArray = PackedByteArray()          ## 1 under a paving, 2 well inside it (no ground drawn)
+static var _occ: PackedFloat32Array = PackedFloat32Array()      ## built-up share of the year, RURAL_CELL grid
+static var _built_year := 999999                                 ## the year the field was computed for
+static var _sig := ""                                            ## what that year changed (see _signature)
+static var _mons: UrbsMonuments = null
+static var _plat_year := 999999
+static var _plat: Array = []
+static var _pave_year := 999999
+static var _pave: Array = []
 
 
 ## Computes the heightfield if that has not been done yet (several seconds the first time).
 ## height_at and build_chunk call this themselves; call it early to choose when the cost falls.
 static func prepare() -> void:
-	if not _h.is_empty():
+	if not _h.is_empty() and _built_year == year:
 		return
-	var key := "%x" % hash(JSON.stringify(UrbsTiber.topography()) + FileAccess.get_file_as_string(STREETS_PATH) + FileAccess.get_file_as_string(UrbsTiber.MONUMENTS_PATH).md5_text() + CACHE_VERSION)
+	var sig := _signature()
+	_built_year = year
+	if not _h.is_empty() and sig == _sig:
+		return   # this year's ground is the same as the one already computed
+	_sig = sig
+	_material = null
+	# (the builders' own code is part of the key too, so an edit to them never reads a stale cache)
+	var code := FileAccess.get_file_as_string("res://scripts/urbs/terrain.gd") + FileAccess.get_file_as_string("res://scripts/urbs/tiber.gd")
+	var key := "%x" % hash(JSON.stringify(UrbsTiber.topography()) + FileAccess.get_file_as_string(STREETS_PATH) + FileAccess.get_file_as_string(UrbsTiber.MONUMENTS_PATH).md5_text() + CACHE_VERSION + sig + code.md5_text())
 	if _load_cache(key):
 		return
 	_compute()
 	_save_cache(key)
+
+
+## What the year changes in the ground: the platforms and pavings standing, the quays, and the
+## built-up share of each district (rounded), as one string.
+static func _signature() -> String:
+	var parts: Array = []
+	for pf: Dictionary in platforms():
+		parts.append(str(pf["id"]) + str(pf["poly"]))
+	for pv: Dictionary in pavings():
+		parts.append(str(pv["id"]) + str(pv["poly"]))
+	for q: Dictionary in topography_quays():
+		parts.append(str(q.get("id", "")))
+	var f := _fill_probe()
+	for d: Dictionary in f._districts + [f._default_inside, f._default]:
+		parts.append("%s%.2f" % [d["id"], snappedf(f._occupancy(d), 0.02)])
+	parts.append(str(year >= -378))
+	return JSON.stringify(parts).md5_text()
+
+
+## The quays of topography.yaml standing in the year.
+static func topography_quays() -> Array:
+	var out := []
+	for q: Dictionary in UrbsTiber.topography().get("terrain_model", {}).get("quays", []):
+		var from_y: Variant = q.get("from")
+		if from_y == null or int(from_y) <= year:
+			out.append(q)
+	return out
+
+
+## An UrbsFill set to the year, to ask its districts how built up they are (fill.gd `_occupancy`).
+static func _fill_probe() -> UrbsFill:
+	var f := UrbsFill.new()
+	f.year = year
+	f._load()
+	return f
+
+
+static func _monuments() -> UrbsMonuments:
+	if _mons == null:
+		_mons = UrbsMonuments.new()
+	return _mons
+
+
+## Monument `id` as monuments.gd places it in the year: {centre, yaw, ax, az, half (x across,
+## y along), model}, or {} when it does not stand. (The frame of monuments.gd `_make`.)
+static func monument_plan(id: String) -> Dictionary:
+	var st := _monuments().state_at(id, year)
+	if st.is_empty():
+		return {}
+	var m: Dictionary = _monuments().entry(id)
+	if not m.has("lat") or m.get("lat") == null:
+		return {}
+	var c := UrbsGeo.to_local(float(m["lat"]), float(m["lon"]))
+	var off: Variant = m.get("offset_m")
+	if off is Array:
+		c += Vector2(float(off[0]), -float(off[1]))
+	var br: Variant = m.get("bearing_deg")
+	var yaw := UrbsGeo.yaw_from_bearing(float(br)) if br != null else 0.0
+	return {"centre": c, "yaw": yaw, "ax": Vector2(cos(yaw), -sin(yaw)), "az": Vector2(sin(yaw), cos(yaw)),
+		"half": Vector2(float(st.width), float(st.length)) * 0.5, "model": str(st.model)}
+
+
+## The plan's rectangle grown by `grow` metres, as a polygon.
+static func plan_rect(pl: Dictionary, grow := 0.0) -> PackedVector2Array:
+	var c: Vector2 = pl["centre"]
+	var hx := float(pl["half"].x) + grow
+	var hz := float(pl["half"].y) + grow
+	var ax: Vector2 = pl["ax"]
+	var az: Vector2 = pl["az"]
+	return PackedVector2Array([c + ax * hx + az * hz, c + ax * hx - az * hz, c - ax * hx - az * hz, c - ax * hx + az * hz])
+
+
+## The platforms of the year (topography.yaml terrain_model.platforms), each the yaml entry plus
+## "poly" (local metres). A platform that names a monument (its own id, or `monument`) is cut only
+## while that monument stands; with `outline: monument` its polygon is that monument's footprint.
+static func platforms() -> Array:
+	if _plat_year == year:
+		return _plat
+	_plat_year = year
+	_plat = []
+	var model: Dictionary = UrbsTiber.topography().get("terrain_model", {})
+	for pf: Dictionary in model.get("platforms", []):
+		var mid := str(pf.get("monument", pf.get("id", "")))
+		var known := _monuments().entry(mid).size() > 0
+		var pl := monument_plan(mid) if known else {}
+		if known and pl.is_empty():
+			continue
+		var e := pf.duplicate()
+		var poly := PackedVector2Array()
+		if str(pf.get("outline", "")) == "monument" and not pl.is_empty():
+			poly = plan_rect(pl, 0.5)
+		else:
+			for ll: Array in pf.get("polygon", []):
+				poly.append(UrbsGeo.to_local(float(ll[0]), float(ll[1])))
+		e["poly"] = poly
+		if not pl.is_empty():
+			e["front"] = Vector2(pl["az"])
+		_plat.append(e)
+	return _plat
+
+
+## The pavings of the year: every `plaza` monument standing, {id, poly (its footprint), centre}.
+static func pavings() -> Array:
+	if _pave_year == year:
+		return _pave
+	_pave_year = year
+	_pave = []
+	var ids: Array = _monuments()._recs.keys()
+	ids.sort()
+	for id: String in ids:
+		var pl := monument_plan(id)
+		if pl.is_empty() or str(pl["model"]) != "plaza" or float(pl["half"].x) <= 0.0 or float(pl["half"].y) <= 0.0:
+			continue
+		_pave.append({"id": id, "poly": plan_rect(pl), "centre": pl["centre"]})
+	return _pave
 
 
 ## The heightfield and its companion rasters are kept in user:// after the first run (keyed on a
@@ -96,6 +242,7 @@ static func _save_cache(key: String) -> void:
 	f.store_buffer(_rural.to_byte_array())
 	f.store_buffer(_map_col)
 	f.store_buffer(_map_w)
+	f.store_buffer(_cover)
 
 
 static func _load_cache(key: String) -> bool:
@@ -104,7 +251,7 @@ static func _load_cache(key: String) -> bool:
 		return false
 	var bytes := VERTS * VERTS * 4
 	var rn := _rural_n()
-	if f.get_length() != bytes * 9 + rn * rn * 4 + MAP_N * MAP_N * 8:
+	if f.get_length() != bytes * 9 + rn * rn * 4 + MAP_N * MAP_N * 8 + VERTS * VERTS:
 		return false
 	_h = f.get_buffer(bytes).to_float32_array()
 	_river_dist = f.get_buffer(bytes).to_float32_array()
@@ -118,6 +265,7 @@ static func _load_cache(key: String) -> bool:
 	_rural = f.get_buffer(rn * rn * 4).to_float32_array()
 	_map_col = f.get_buffer(MAP_N * MAP_N * 4)
 	_map_w = f.get_buffer(MAP_N * MAP_N * 4)
+	_cover = f.get_buffer(VERTS * VERTS)
 	return true
 
 
@@ -196,12 +344,13 @@ static func _compute() -> void:
 		if wgrid[k] > 0.0:
 			h[k] = lerpf(h[k], fgrid[k], wgrid[k])
 	_valley_w = wgrid
-	# 5b. the built platforms, dead flat
+	# 5b. the built platforms of the year, dead flat
 	_built_w = PackedFloat32Array()
 	_built_w.resize(n * n)
-	for pf: Dictionary in model.get("platforms", []):
+	for pf: Dictionary in platforms():
 		_stamp_platform(pf, h)
-	# 6. terraces on the built-up hillsides
+	# 6. terraces on the hillsides built up in the year
+	_compute_occupancy()
 	_terrace(h)
 	# 7. the streets cut into the ground
 	_cut_streets(model.get("street_cuts", {}), h)
@@ -211,6 +360,12 @@ static func _compute() -> void:
 	_river_level = riv["level"]
 	_river_hw = riv["hw"]
 	_river_inner = riv["inner"]
+	# 9. F3: every paving of the year carved level under its footprint (at the level monuments.gd
+	# lays it: its platform's floor, else the ground at its centre), the ground mesh left out under it
+	_cover = PackedByteArray()
+	_cover.resize(n * n)
+	for pv: Dictionary in pavings():
+		_stamp_paving(pv, h)
 	_h = h
 	_compute_rural()
 	_bake_maps()
@@ -348,14 +503,32 @@ static func _stamp_plateau(plateau: Dictionary, h: PackedFloat32Array) -> void:
 
 
 ## A built floor: the polygon carved to `level` (a gradient between two values along x), blended
-## into the ground over `blend` metres beyond its edge.
+## into the ground over `blend` metres beyond its edge. F3: a platform carrying a monument
+## (`front`, the monument's facing) falls in front of it as a ramp of FRONT_RAMP (1 in 4) to the
+## ground, so its front never stands over the street or the ground it faces (UrbsSite leaves the
+## wall off that side).
 static func _stamp_platform(pf: Dictionary, h: PackedFloat32Array) -> void:
-	var poly := _poly2(_pts(pf, "polygon"))
+	var poly: PackedVector2Array = pf["poly"] if pf.has("poly") else _poly2(_pts(pf, "polygon"))
+	if poly.size() < 3:
+		return
 	var lv: Array = pf.get("level", [10.0, 10.0])
 	var l0 := float(lv[0])
 	var l1 := float(lv[lv.size() - 1])
 	var blend := float(pf.get("blend", 25.0))
-	var bb := _bbox(poly, blend)
+	var front: Vector2 = pf.get("front", Vector2.ZERO)
+	var ramp := 0.0
+	if front != Vector2.ZERO and str(pf.get("id", "")).begins_with("f2_terrace_"):
+		# how far the ground in front lies below the floor, read before the cut
+		var c := Vector2.ZERO
+		for q in poly:
+			c += q / poly.size()
+		var far := 0.0
+		while far < 200.0 and Geometry2D.is_point_in_polygon(c + front * far, poly):
+			far += 1.0
+		var q := c + front * (far + 6.0)
+		ramp = clampf((l0 - _sample(h, q.x, q.y)) / FRONT_RAMP, blend, 60.0)
+	var reach := maxf(blend, ramp)
+	var bb := _bbox(poly, reach)
 	var lo: Vector2 = bb[4]
 	var hi: Vector2 = bb[5]
 	for j in range(bb[2], bb[3] + 1):
@@ -365,10 +538,63 @@ static func _stamp_platform(pf: Dictionary, h: PackedFloat32Array) -> void:
 			var level := lerpf(l0, l1, clampf((p.x - lo.x) / maxf(hi.x - lo.x, 1.0), 0.0, 1.0))
 			var w := 1.0
 			if not Geometry2D.is_point_in_polygon(p, poly):
-				var d: float = _poly_edge(poly, p)[1]
-				if d >= blend:
+				var e := _poly_edge(poly, p)
+				var d: float = e[1]
+				var b := blend
+				if ramp > 0.0:
+					var side := ((p - (e[0] as Vector2)).normalized()).dot(front)
+					b = lerpf(blend, ramp, smoothstep(0.35, 0.75, side))
+				if d >= b:
 					continue
-				w = 1.0 - smoothstep(0.0, blend, d)
+				w = 1.0 - (d / b if ramp > 0.0 and b > blend + 0.5 else smoothstep(0.0, b, d))
+			h[idx] = lerpf(h[idx], level, w)
+			_built_w[idx] = maxf(_built_w[idx], w)
+
+
+## F3: a paving's footprint carved level (cut and filled, blended over PAVE_BLEND m) and marked in
+## `_cover` where the paving hides the ground (its footprint less PAVE_INSET), so the ground mesh
+## leaves those triangles out.
+static func _stamp_paving(pv: Dictionary, h: PackedFloat32Array) -> void:
+	var poly: PackedVector2Array = pv["poly"]
+	var c: Vector2 = pv["centre"]
+	var level := _sample(h, c.x, c.y)
+	var on_platform := false
+	for pf: Dictionary in platforms():
+		if Geometry2D.is_point_in_polygon(c, pf["poly"]):
+			var lv: Array = pf.get("level", [10.0])
+			level = float(lv[0])
+			on_platform = true
+	# off a platform monuments.gd lays the paving on the lowest ground under its corners and the
+	# middles of its sides: those spots stay level whatever passes there
+	var spots := PackedVector2Array()
+	if not on_platform:
+		for k in poly.size():
+			spots.append(poly[k])
+			spots.append((poly[k] + poly[(k + 1) % poly.size()]) * 0.5)
+	# level to a cell and a half beyond the edge, so the ground under the paving's corners and edges
+	# (where monuments.gd reads its lowest point) is the floor itself; then the blend
+	var flat := CELL_M * 1.5
+	var bb := _bbox(poly, flat + PAVE_BLEND)
+	for j in range(bb[2], bb[3] + 1):
+		for i in range(bb[0], bb[1] + 1):
+			var p := Vector2(-HALF_M + i * CELL_M, -HALF_M + j * CELL_M)
+			var idx := j * VERTS + i
+			var w := 1.0
+			if Geometry2D.is_point_in_polygon(p, poly):
+				_cover[idx] = 2 if _poly_edge(poly, p)[1] > PAVE_INSET else maxi(_cover[idx], 1)
+			else:
+				var d: float = _poly_edge(poly, p)[1]
+				if d >= flat + PAVE_BLEND:
+					continue
+				# beyond its first cell a paving's floor gives way to a street's own cut, but at its
+				# spots (the first cell stays level, so no slope of ground rises through the paving's
+				# edge; a walled platform's wall hides the step beyond it)
+				w = 1.0 - smoothstep(flat, flat + PAVE_BLEND, d)
+				var spot := d <= CELL_M + 0.5
+				for q in spots:
+					spot = spot or q.distance_to(p) < flat
+				if not spot:
+					w *= 1.0 - _street_w[idx]
 			h[idx] = lerpf(h[idx], level, w)
 			_built_w[idx] = maxf(_built_w[idx], w)
 
@@ -404,6 +630,9 @@ static func _terrace(h: PackedFloat32Array) -> void:
 			var w := smoothstep(0.08, 0.14, g) * (1.0 - smoothstep(0.4, 0.6, g)) * (1.0 - smoothstep(0.1, 0.6, _built_w[k]))
 			if w <= 0.0:
 				continue
+			w *= smoothstep(TERRACE_OCC.x, TERRACE_OCC.y, _occ_at(-HALF_M + i * CELL_M, -HALF_M + j * CELL_M))
+			if w <= 0.0:
+				continue
 			if not Geometry2D.is_point_in_polygon(Vector2(-HALF_M + i * CELL_M, -HALF_M + j * CELL_M), poly):
 				continue
 			var q := src[k] / TERRACE_M
@@ -413,10 +642,41 @@ static func _terrace(h: PackedFloat32Array) -> void:
 			_terrace_w[k] = w
 
 
+## F3: how built up the city is in the year (UrbsFill's district occupancy) on the RURAL_CELL grid.
+static func _compute_occupancy() -> void:
+	var f := _fill_probe()
+	var rn := _rural_n()
+	_occ = PackedFloat32Array()
+	_occ.resize(rn * rn)
+	for j in rn:
+		for i in rn:
+			var p := Vector2(-HALF_M + i * RURAL_CELL, -HALF_M + j * RURAL_CELL)
+			if p.length() > 2600.0:
+				continue
+			_occ[j * rn + i] = f._occupancy_at(f._district_at(p), p)
+
+
+static func _occ_at(x: float, z: float) -> float:
+	if _occ.is_empty():
+		return 1.0
+	var rn := _rural_n()
+	var fx := clampf((x + HALF_M) / RURAL_CELL, 0.0, rn - 1.001)
+	var fz := clampf((z + HALF_M) / RURAL_CELL, 0.0, rn - 1.001)
+	var i := int(fx)
+	var j := int(fz)
+	var k := j * rn + i
+	return lerpf(lerpf(_occ[k], _occ[k + 1], fx - i), lerpf(_occ[k + rn], _occ[k + rn + 1], fx - i), fz - j)
+
+
 ## Streets cut into the ground: the profile along each street is sampled from the field, smoothed
 ## (and held to `max_gradient` on a hill road), then stamped back over the street's width plus a
 ## shoulder, blending out over `blend_m` (a clivus is cut sharply, its sides walled by UrbsSite).
-## A `stairs` street keeps its slope (the steps follow it).
+## A `stairs` street keeps its slope (the steps follow it). F3: only the streets of the year; one
+## street after another, the narrower first, each sampling the ground the earlier ones left and
+## blended into it, so where two streets meet or cross they share one surface (before, every
+## profile was read from the uncut ground and the strongest won, leaving steps of up to 2 m where
+## two met); `end_level`/`start_level` (a platform id or metres) pin a street's end to the floor
+## it leads to (the Clivus Capitolinus to the Area Capitolina).
 static func _cut_streets(cfg: Dictionary, h: PackedFloat32Array) -> void:
 	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(STREETS_PATH))
 	if typeof(parsed) != TYPE_DICTIONARY:
@@ -428,7 +688,18 @@ static func _cut_streets(cfg: Dictionary, h: PackedFloat32Array) -> void:
 	wgrid.resize(VERTS * VERTS)
 	var pgrid := PackedFloat32Array()
 	pgrid.resize(VERTS * VERTS)
-	for entry in parsed.get("streets", []):
+	_street_w = PackedFloat32Array()
+	_street_w.resize(VERTS * VERTS)
+	var entries: Array = []
+	for entry: Dictionary in parsed.get("streets", []):
+		var from_y: Variant = entry.get("exists_from")
+		if from_y == null or int(from_y) <= year:
+			entries.append(entry)
+	entries.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		var wa := float(a.get("width_m", 4.0))
+		var wb := float(b.get("width_m", 4.0))
+		return wa < wb if wa != wb else str(a["id"]) < str(b["id"]))
+	for entry: Dictionary in entries:
 		var raw := PackedVector2Array()
 		for ll in entry["points"]:
 			raw.append(UrbsGeo.to_local(float(ll[0]), float(ll[1])))
@@ -438,7 +709,7 @@ static func _cut_streets(cfg: Dictionary, h: PackedFloat32Array) -> void:
 		var shoulder := float(cfg.get("shoulder_m", 2.0))
 		var blend := float(cfg.get("blend_m", 9.0))
 		if kind == "clivus":
-			shoulder = 1.6
+			shoulder = float(cfg.get("clivus_shoulder_m", 1.6))
 			blend = 4.0
 		var cum := PackedFloat32Array([0.0])
 		for i in range(1, pts.size()):
@@ -448,10 +719,18 @@ static func _cut_streets(cfg: Dictionary, h: PackedFloat32Array) -> void:
 			continue
 		var prof := street_profile(h, pts, cum, kind == "stairs", smooth_m, max_grad, step)
 		var ns := prof.size()
+		var pin0: Variant = _pin_level(entry.get("start_level"))
+		var pin1: Variant = _pin_level(entry.get("end_level"))
+		if pin0 != null or pin1 != null:
+			var d0 := 0.0 if pin0 == null else float(pin0) - prof[0]
+			var d1 := 0.0 if pin1 == null else float(pin1) - prof[ns - 1]
+			for i in ns:
+				prof[i] += lerpf(d0, d1, float(i) / float(ns - 1))
 		var sp := PackedVector2Array()
 		for i in ns:
 			sp.append(_polyline_at(pts, cum, length * float(i) / float(ns - 1)))
 		var reach := hw + shoulder + blend
+		var touched := PackedInt32Array()
 		for i in range(ns - 1):
 			var a := sp[i]
 			var b := sp[i + 1]
@@ -470,13 +749,29 @@ static func _cut_streets(cfg: Dictionary, h: PackedFloat32Array) -> void:
 						continue
 					var w := 1.0 - smoothstep(hw + shoulder, reach, d)
 					var idx := j * VERTS + ii
+					if wgrid[idx] == 0.0:
+						touched.append(idx)
 					if w > wgrid[idx]:
 						wgrid[idx] = w
 						pgrid[idx] = lerpf(prof[i], prof[i + 1], t)
-	for k in VERTS * VERTS:
-		if wgrid[k] > 0.0:
-			h[k] = lerpf(h[k], pgrid[k], wgrid[k])
-			_built_w[k] = maxf(_built_w[k], wgrid[k])
+		for idx in touched:
+			h[idx] = lerpf(h[idx], pgrid[idx], wgrid[idx])
+			_built_w[idx] = maxf(_built_w[idx], wgrid[idx])
+			_street_w[idx] = maxf(_street_w[idx], wgrid[idx])
+			wgrid[idx] = 0.0
+
+
+## A pinned street end: a platform id (its floor) or a height in metres; null when not pinned.
+static func _pin_level(v: Variant) -> Variant:
+	if v == null:
+		return null
+	if v is float or v is int:
+		return float(v)
+	for pf: Dictionary in platforms():
+		if str(pf["id"]) == str(v):
+			var lv: Array = pf.get("level", [10.0])
+			return float(lv[0])
+	return null
 
 
 ## The height profile of a street (one value every `step` metres along it): sampled from `h`,
@@ -671,13 +966,22 @@ static func mesh_height_at(x: float, z: float, step := 1) -> float:
 	var j := int(fz)
 	var u := fx - i
 	var v := fz - j
-	var h10 := _h[_gi(j * step) * VERTS + _gi((i + 1) * step)]
-	var h01 := _h[_gi((j + 1) * step) * VERTS + _gi(i * step)]
+	var h10 := _mesh_y(_gi(j * step) * VERTS + _gi((i + 1) * step))
+	var h01 := _mesh_y(_gi((j + 1) * step) * VERTS + _gi(i * step))
 	if u + v <= 1.0:
-		var h00 := _h[_gi(j * step) * VERTS + _gi(i * step)]
+		var h00 := _mesh_y(_gi(j * step) * VERTS + _gi(i * step))
 		return h00 + u * (h10 - h00) + v * (h01 - h00)
-	var h11 := _h[_gi((j + 1) * step) * VERTS + _gi((i + 1) * step)]
+	var h11 := _mesh_y(_gi((j + 1) * step) * VERTS + _gi((i + 1) * step))
 	return h11 + (1.0 - u) * (h01 - h11) + (1.0 - v) * (h10 - h11)
+
+
+## The height a mesh vertex is drawn at: the field, dipped PAVE_DIP under a paving's edge (F3:
+## where a paving covers only part of a quad, the ground slopes down beneath the slab instead of
+## meeting it within a few centimetres).
+static func _mesh_y(k: int) -> float:
+	if not _cover.is_empty() and _cover[k] > 0:
+		return _h[k] - (PAVE_DIP if _cover[k] == 2 else PAVE_DIP * 0.2)
+	return _h[k]
 
 
 ## Unit surface normal at local (x, z).
@@ -810,7 +1114,7 @@ static func build_chunk(rect: Rect2, lod: int) -> Node3D:
 		body.scale = Vector3(CELL_M * step, 1.0, CELL_M * step)
 		body.position = Vector3(rect.position.x + nx * step * CELL_M * 0.5, 0.0, rect.position.y + nz * step * CELL_M * 0.5)
 		node.add_child(body)
-	if lod <= 1:
+	if lod <= 1 and not walls_later:
 		var walls := UrbsSite.build_chunk_walls(rect, lod, year)
 		if walls != null:
 			node.add_child(walls)
@@ -862,6 +1166,8 @@ static func _chunk_mesh(i0: int, j0: int, ci: int, cj: int, step: int) -> ArrayM
 	for dj in nz:
 		for di in nx:
 			var a := dj * stride + di
+			if not _cover.is_empty() and _covered(i0 + di * step, j0 + dj * step, step):
+				continue   # F3: under a paving, which hides the ground
 			idx.append_array([a, a + 1, a + stride, a + 1, a + stride + 1, a + stride])
 	# the skirt ring: the same x, z, lowered 4 m, drawn double sided
 	var ring: Array[Vector2i] = []
@@ -897,6 +1203,31 @@ static func _chunk_mesh(i0: int, j0: int, ci: int, cj: int, step: int) -> ArrayM
 ## The Tiber's surface over this chunk: a quad at the water level (per vertex, it falls gently
 ## downstream) over every cell where the ground dips below it. Follows the banks, the island and
 ## the quays exactly, whatever the river's shape.
+## True when the quad at grid (i, j) of `step` cells lies wholly under a paving.
+static func _covered(i: int, j: int, step: int) -> bool:
+	for c: Vector2i in [Vector2i(0, 0), Vector2i(step, 0), Vector2i(0, step), Vector2i(step, step)]:
+		if _cover[_gi(j + c.y) * VERTS + _gi(i + c.x)] < 2:
+			return false
+	return true
+
+
+## True where a paving lies on the ground (the ground mesh is not drawn there).
+static func covered_at(x: float, z: float) -> bool:
+	prepare()
+	return not _cover.is_empty() and _cover[_cell(x, z)] == 2
+
+
+## True where the chunk mesh of `step` draws the ground at (x, z) (it leaves out what pavings cover).
+static func ground_drawn_at(x: float, z: float, step := 1) -> bool:
+	prepare()
+	if _cover.is_empty():
+		return true
+	var c := CELL_M * step
+	var i := clampi(int(floor((x + HALF_M) / c)), 0, CELLS / step - 1) * step
+	var j := clampi(int(floor((z + HALF_M) / c)), 0, CELLS / step - 1) * step
+	return not _covered(i, j, step)
+
+
 static func _water_mesh(i0: int, j0: int, ci: int, cj: int, step: int) -> ArrayMesh:
 	var nx := maxi(ci / step, 1)
 	var nz := maxi(cj / step, 1)
@@ -947,7 +1278,7 @@ static func _add_vertex(i: int, j: int, drop: float, step: int, pp: PackedVector
 	i = _gi(i)
 	j = _gi(j)
 	var k := j * VERTS + i
-	pp.append(Vector3(-HALF_M + i * CELL_M, _h[k] - drop, -HALF_M + j * CELL_M))
+	pp.append(Vector3(-HALF_M + i * CELL_M, _mesh_y(k) - drop, -HALF_M + j * CELL_M))
 	pn.append(vertex_normal(i, j, step))
 
 
