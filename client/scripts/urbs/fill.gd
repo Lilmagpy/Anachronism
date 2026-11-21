@@ -1165,6 +1165,7 @@ func _add_street_lot(lot: Dictionary, own: String, margin: float, force_ok := fa
 		return false
 	var lk := str(lot["kind"])
 	var fc: Vector2 = c + _axes(lot)[1] * float(lot["hz"])
+	var front_g: float = height.call(fc.x, fc.y)   # the ground along the front (F3: its highest)
 	if lk != "furn" and lk != "tomb" and lk != "prop":
 		# F3: a house on the street has its floor at the street, its back cut into the slope where
 		# the ground rises behind it (up to BURY_BACK); its door no longer stands over the footway
@@ -1174,6 +1175,7 @@ func _add_street_lot(lot: Dictionary, own: String, margin: float, force_ok := fa
 		var fx: Vector2 = (ef["ax"] as Vector2) * float(ef["hx"])
 		var fe: Vector2 = (ef["c"] as Vector2) + (ef["az"] as Vector2) * float(ef["hz"])
 		var front := maxf(_clear_at(fc), maxf(_clear_at(fe + fx), _clear_at(fe - fx)))
+		front_g = maxf(front_g, maxf(float(height.call(fe.x + fx.x, fe.y + fx.y)), float(height.call(fe.x - fx.x, fe.y - fx.y))))
 		if _on_clivus and float(lot["y"]) > front + 1.0:
 			# a clivus cut into the hill: the bank is held by a wall along the street (UrbsSite
 			# _clivus_walls) and the house stands on the bank, over the top of that wall
@@ -1187,7 +1189,7 @@ func _add_street_lot(lot: Dictionary, own: String, margin: float, force_ok := fa
 		# the street has a raised footway: the fronts (and anything standing on it) start at its top
 		# (F3: the footway's top is SURFACE_LIFT + FOOTWAY_H over the ground; doors stood 0.14 m
 		# below it)
-		var top: float = float(height.call(fc.x, fc.y)) + UrbsStreets.SURFACE_LIFT + FOOTWAY_H
+		var top: float = front_g + UrbsStreets.SURFACE_LIFT + FOOTWAY_H
 		lot["y"] = maxf(float(lot["y"]), top - 0.02) if lk != "furn" else float(lot["y"]) + UrbsStreets.SURFACE_LIFT + FOOTWAY_H
 	_street_hash[key] = _street_hash.get(key, [])
 	_street_hash[key].append(_street_lots.size())
