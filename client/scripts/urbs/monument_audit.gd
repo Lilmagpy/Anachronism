@@ -172,8 +172,8 @@ func _parts_of(id: String) -> Array:
 			var mm := mmi.multimesh
 			var mb := mm.mesh.get_aabb()
 			var mat := mm.mesh.get_instance_id()
-			for k in mm.instance_count:
-				var it := mmi.transform * mm.get_instance_transform(k)
+			for itv in UrbsMonumentClip.instance_xforms(mmi):
+				var it: Transform3D = mmi.transform * (itv as Transform3D)
 				var bx := _box_under(it, mb)
 				var ip := _part(xf, bx[0], bx[1], mat, true)
 				ip["mesh"] = mm.mesh
@@ -523,7 +523,8 @@ func _floating(id: String) -> String:
 				vol = v
 	if free == 0:
 		return ""
-	return "%s %d of %d parts rest on nothing, largest %s" % [id, free, n, _fmt(worst)]
+	return "%s %d of %d parts rest on nothing, largest %s (its own frame %s to %s)" % [id, free, n, _fmt(worst),
+		str((worst.lo as Vector3).snapped(Vector3.ONE * 0.1)), str((worst.hi as Vector3).snapped(Vector3.ONE * 0.1))]
 
 
 ## Columns sunk into what they stand on: the top of the highest part under the column's foot.
@@ -532,6 +533,8 @@ func _sunk(id: String) -> String:
 	var worst := 0.0
 	var count := 0
 	var at: Dictionary = {}
+	var at_seat: Dictionary = {}
+	var seat_part: Dictionary = {}
 	for k in ps.size():
 		var p: Dictionary = ps[k]
 		if not bool(p.inst):
@@ -553,14 +556,16 @@ func _sunk(id: String) -> String:
 				continue
 			if olo.y < plo.y and ohi.y <= plo.y + h * 0.5 and ohi.y > seat:
 				seat = ohi.y
+				seat_part = o
 		if seat > -INF and seat - plo.y > SUNK_M:
 			count += 1
 			if seat - plo.y > worst:
 				worst = seat - plo.y
 				at = p
+				at_seat = seat_part
 	if count == 0:
 		return ""
-	return "%s %d columns sunk into what they stand on, deepest %.2f m (%s)" % [id, count, worst, _fmt(at)]
+	return "%s %d columns sunk into what they stand on, deepest %.2f m (%s, in %s)" % [id, count, worst, _fmt(at), _fmt(at_seat)]
 
 
 ## Faces of two materials in one plane, overlapping (they flicker). Faces of at least

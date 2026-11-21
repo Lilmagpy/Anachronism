@@ -8148,6 +8148,7 @@
 "pleiades": null,
 "precision": "rough",
 "regio": 9,
+"size_fits": true,
 "sources": [
 "Livy 40.40",
 "Livy 42.10",

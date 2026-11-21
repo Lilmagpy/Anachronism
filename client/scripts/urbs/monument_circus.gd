@@ -241,7 +241,7 @@ static func _spina(mm: UrbsMonumentMesh, zg: float, zcurve: float, v: String, ye
 	if v == "eggs" or stone:
 		var ze := za + 40.0
 		for sx: float in [-1.0, 1.0]:
-			mm.box(Vector3(sx * 4.6, 1.45, ze), Vector3(0.5, 4.2, 0.5), "travertine" if stone else "timber_painted")
+			mm.box(Vector3(sx * 4.0, 1.45, ze), Vector3(0.5, 4.2, 0.5), "travertine" if stone else "timber_painted")
 		mm.ext(-5.0, 5.65, ze - 0.3, 5.0, 6.05, ze + 0.3, "timber_painted")
 		for i in 7:
 			var x := -4.2 + i * 1.4
@@ -250,7 +250,7 @@ static func _spina(mm: UrbsMonumentMesh, zg: float, zcurve: float, v: String, ye
 	if v == "augustan":
 		var zd := zb - 40.0
 		for sx: float in [-1.0, 1.0]:
-			mm.box(Vector3(sx * 4.6, 1.45, zd), Vector3(0.5, 4.2, 0.5), "travertine")
+			mm.box(Vector3(sx * 4.0, 1.45, zd), Vector3(0.5, 4.2, 0.5), "travertine")
 		mm.ext(-5.0, 5.65, zd - 0.3, 5.0, 6.05, zd + 0.3, "travertine")
 		for i in 7:
 			var x := -4.2 + i * 1.4

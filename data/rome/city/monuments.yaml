@@ -3983,6 +3983,7 @@ monuments:
   pleiades: null
   verified: platner-ashby
   model: temple_tetrastyle_ionic
+  size_fits: true   # F3 monuments: its size is assumed (no measured plan); it is made smaller where it runs into a neighbour (monuments.gd _fit_sizes)
   bearing_deg: 90  # unverified
   geometry_source: "form assumed from date and type (no measured plan)"
   geometry_unverified: [bearing_deg, footprint_m, height_m, model]

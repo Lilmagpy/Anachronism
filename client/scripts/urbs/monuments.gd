@@ -227,8 +227,8 @@ func _drawn_box(id: String) -> AABB:
 		elif ch is MultiMeshInstance3D and (ch as MultiMeshInstance3D).visibility_range_begin <= 0.0:
 			var mm := (ch as MultiMeshInstance3D).multimesh
 			if mm != null and mm.mesh != null:
-				for k in mm.instance_count:
-					boxes.append((ch as MultiMeshInstance3D).transform * mm.get_instance_transform(k) * mm.mesh.get_aabb())
+				for it in UrbsMonumentClip.instance_xforms(ch):
+					boxes.append((ch as MultiMeshInstance3D).transform * (it as Transform3D) * mm.mesh.get_aabb())
 		for b in boxes:
 			out = b if first else out.merge(b)
 			first = false
@@ -542,6 +542,11 @@ func _make(id: String, st: Dictionary) -> void:
 			ext.x = maxf(ext.x, absf(c3.x) + s3.x * 0.5)
 			ext.y = maxf(ext.y, absf(c3.z) + s3.z * 0.5)
 		half = Vector2(half.x if half.x > 0.0 else ext.x, half.y if half.y > 0.0 else ext.y)
+	# F3 monuments: a kit form fitted evenly can be drawn bigger than its record's footprint (the
+	# Atrium Libertatis's front stair stood out over the falling ground with nothing under it): the
+	# ground is read, and the foundation built, under what is drawn
+	if not world and str(res.get("base", "lo")) != "centre" and model not in ["plaza", "bridge_stone", "bridge_timber"]:
+		half = half.max(_drawn_half(res))
 	if model == "bridge_stone" or model == "bridge_timber":
 		var axis := Vector2(sin(yaw), cos(yaw))
 		base_y = maxf(_ground_at(centre + axis * half.y), _ground_at(centre - axis * half.y))
@@ -610,6 +615,7 @@ func _make(id: String, st: Dictionary) -> void:
 			mmesh.set_instance_color(k, Color.WHITE)
 		var mmi := MultiMeshInstance3D.new()
 		mmi.multimesh = mmesh
+		mmi.set_meta("xforms", xfs)   # F3 monuments: the transforms (a headless MultiMesh keeps none)
 		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
 		_set_range(mmi, inst.range)
 		node.add_child(mmi)
@@ -682,6 +688,29 @@ func _make(id: String, st: Dictionary) -> void:
 		# F2 audit (audit.gd): how the base meets the ground, and the plan size used for it
 		"base_mode": str(res.get("base", "lo")), "world": world, "skirted": found and not world, "drop": skirt, "retains": model in AGAINST_HILL,
 		"half": half}
+
+
+## F3 monuments: the half extents in plan (x, z) of what a form draws at its nearest level of
+## detail (its parts and instances, about the origin).
+static func _drawn_half(res: Dictionary) -> Vector2:
+	var h := Vector2.ZERO
+	var boxes: Array = []
+	for part in res.parts:
+		var r: Vector2 = part.get("range", Vector2.ZERO)
+		if r.x > 0.0 or part.mesh == null:
+			continue
+		boxes.append((part.xform as Transform3D) * (part.mesh as Mesh).get_aabb())
+	for inst in res.get("instances", []):
+		var r: Vector2 = inst.get("range", Vector2.ZERO)
+		if r.x > 0.0 or inst.mesh == null:
+			continue
+		var mb: AABB = (inst.mesh as Mesh).get_aabb()
+		for xf in inst.xforms:
+			boxes.append((xf as Transform3D) * mb)
+	for b in boxes:
+		var bb: AABB = b
+		h = h.max(Vector2(maxf(absf(bb.position.x), absf(bb.end.x)), maxf(absf(bb.position.z), absf(bb.end.z))))
+	return h
 
 
 ## Metres per mesh unit of an old kit part: the length of its transform's x axis (kit meshes

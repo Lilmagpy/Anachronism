@@ -264,8 +264,8 @@ static func _clip_multimesh(mmi: MultiMeshInstance3D, to_world: Transform3D, box
 		return 0
 	var c0 := mm.mesh.get_aabb().get_center()
 	var keep: Array = []
-	for k in mm.instance_count:
-		var it := mm.get_instance_transform(k)
+	for itv in instance_xforms(mmi):
+		var it: Transform3D = itv
 		var w := to_world * (it * c0)
 		var inside := false
 		for b in boxes:
@@ -289,4 +289,17 @@ static func _clip_multimesh(mmi: MultiMeshInstance3D, to_world: Transform3D, box
 		if nm.use_colors:
 			nm.set_instance_color(k, Color.WHITE)
 	mmi.multimesh = nm
+	mmi.set_meta("xforms", keep)
 	return dropped
+
+
+## The instance transforms of a MultiMeshInstance3D: its "xforms" meta when UrbsMonuments set
+## one (a MultiMesh under the headless renderer keeps no transforms), else the MultiMesh's own.
+static func instance_xforms(mmi: MultiMeshInstance3D) -> Array:
+	if mmi.has_meta("xforms"):
+		return mmi.get_meta("xforms")
+	var out: Array = []
+	if mmi.multimesh != null:
+		for k in mmi.multimesh.instance_count:
+			out.append(mmi.multimesh.get_instance_transform(k))
+	return out

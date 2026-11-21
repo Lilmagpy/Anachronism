@@ -671,8 +671,10 @@ static func _arcade_wall(mm: UrbsMonumentMesh, len: float, n: int, pod: float, h
 			var x := -len / 2 + i * bay
 			mm.box(Vector3(x, yb, -depth * 0.5), Vector3(pw, hh, depth), str(m.pier))
 			if lod < 2:
+				# F3 monuments: the upper columns stand on the lower storey's cornice (0.75 m), not in it
+				var foot := yb + (0.75 if st == 1 else 0.0)
 				mm.instance("bcol|%s|%.2f|%.2f|%d" % [order, col_h, d, maxi(lod, 1)], Orders.column_mesh(order, col_h, str(m.col), maxi(lod, 1), d),
-					Transform3D(Basis.IDENTITY, Vector3(x, yb, d * 0.15)))
+					Transform3D(Basis.IDENTITY, Vector3(x, foot, d * 0.15)))
 		for i in n - 1:
 			var xa := -len / 2 + i * bay + pw * 0.5
 			var xb := -len / 2 + (i + 1) * bay - pw * 0.5
@@ -685,10 +687,11 @@ static func _arcade_wall(mm: UrbsMonumentMesh, len: float, n: int, pod: float, h
 					mm.ext(xa, yb, -depth * 0.6, xb, yb + bh, -depth * 0.4, str(m.trim))
 			if shields and st == 1 and lod < 2:
 				# a round shield about 1.1 m across hung in the arch (# unverified size)
-				mm.push(Transform3D(Basis(Vector3.RIGHT, PI / 2.0), Vector3((xa + xb) * 0.5, spring + 0.4, 0.05)))
+				# (F3: its back against the hanger, which reaches up into the arch's crown)
+				mm.push(Transform3D(Basis(Vector3.RIGHT, PI / 2.0), Vector3((xa + xb) * 0.5, spring + 0.4, -0.04)))
 				mm.frustum(Vector3.ZERO, 0.55, 0.5, 0.1, "bronze", 12, true, true)
 				mm.pop()
-				mm.rod(Vector3((xa + xb) * 0.5, spring + 0.95, 0.0), Vector3((xa + xb) * 0.5, spring + (xb - xa) * 0.5, -0.3), 0.02, "iron")
+				mm.rod(Vector3((xa + xb) * 0.5, spring + 0.9, -0.02), Vector3((xa + xb) * 0.5, spring + (xb - xa) * 0.5 + 0.1, -0.3), 0.02, "iron")
 		# the entablature of the storey
 		mm.ext(-len / 2 - pw * 0.5, yb + hh - 0.2, -depth, len / 2 + pw * 0.5, yb + hh + 0.5, d * 0.7, str(m.trim))
 		mm.ext(-len / 2 - pw * 0.5 - 0.1, yb + hh + 0.5, -depth, len / 2 + pw * 0.5 + 0.1, yb + hh + 0.75, d * 0.95, str(m.trim))
