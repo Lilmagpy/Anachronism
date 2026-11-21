@@ -354,6 +354,7 @@ static func carve(h: PackedFloat32Array, n: int, origin: float, cell: float) -> 
 			# the bank wanders a few metres off the line (F3: over about 80 m, not 22 m, so the bank is
 			# a plane across each 5 m cell and the water's edge drawn on it stays smooth)
 			var dd := d + 4.0 * _noise.get_noise_2d(x / 80.0, z / 80.0)
+			var e_course := dd - hw   # F3: the course's own channel, kept wherever the island reach fades
 			var ib := _island_band(x, z)
 			var iw: float = ib[0]
 			if iw > 0.0:   # the island reach: the fitted channel, straight banks
@@ -385,6 +386,8 @@ static func carve(h: PackedFloat32Array, n: int, origin: float, cell: float) -> 
 			# more steeply on the outside, then rises to the ground over `cut` metres.
 			var k := lerpf(lerpf(BANK_SLOPE.y, BANK_SLOPE.x, inn), BANK_SLOPE.y * 1.6, maxf(iw, qw))
 			var e := dd - hw
+			if iw > 0.0:
+				e = minf(e, e_course)   # the fitted reach may widen the river, never pinch it
 			var terr := h[idx]
 			var out := terr
 			if e <= BANK_BAND + cut:
