@@ -400,6 +400,10 @@ const F3_KINDS := ["house_house", "house_monument", "house_wall", "house_street"
 	"tree_building", "tree_street", "tree_river", "life_solid", "stall_street", "lamp_smoke"]
 const F3_TOL := 0.2            ## interpenetration below this is two walls touching
 const F3_CART_HW := 1.05       ## half the width of an ox cart with its pair of oxen (life.gd)
+const F3_AWNING_OUT := 1.2     ## = UrbsFillParts.AWNING_OUT: awning poles stand on the footway
+const F3_BURY_BACK := 2.5      ## = UrbsFill.BURY_BACK: a street house may be cut this far into the slope
+## (the F3 checks run on older checkouts too, for the before/after counts: they only call what
+## those had, or ask first)
 
 var _f3_prof := {}             ## mesh key -> {bands: [[y0, y1, x0, x1, z0, z1]], plinth: [x0, x1, z0, z1]}
 var _f3_found := {}            ## kind -> Array of [score, text]
@@ -653,8 +657,9 @@ func _f3_lay_fill(height: Callable, radius: float) -> void:
 				_f3_trees_extra.append({"pos": Vector3((t.c as Vector2).x, float(t.y), (t.c as Vector2).y), "kind": tk, "radius": 2.5 * float(t.sx), "garden": true})
 		var st := {}
 		fill.rural_step(key, st, Time.get_ticks_usec() + 1000000000)
-		for lot in fill.rural_lots(st.get("parcels", [])):
-			_f3_add("rural:farm", "farm", lot["c"], float(lot["th"]), float(lot["sx"]), 1.0, float(lot["sz"]), float(lot["y"]))
+		if fill.has_method("rural_lots"):
+			for lot in fill.rural_lots(st.get("parcels", [])):
+				_f3_add("rural:farm", "farm", lot["c"], float(lot["th"]), float(lot["sx"]), 1.0, float(lot["sz"]), float(lot["y"]))
 
 
 var _f3_trees_extra: Array = []
@@ -783,7 +788,7 @@ func _f3_check_houses() -> void:
 				var dep: float = cw[0]
 				if low and dep > -(UrbsFill.KERB + UrbsFill.FOOTPATH) and _f3_footway(cw[1]):
 					var into: float = dep + UrbsFill.KERB + UrbsFill.FOOTPATH
-					if into > UrbsFillParts.AWNING_OUT + 0.15 and into > worst_s:   # awnings may shade the footway
+					if into > F3_AWNING_OUT + 0.15 and into > worst_s:   # awnings may shade the footway
 						worst_s = into
 						what = "on the footway of %s" % cw[1]
 				if dep > 0.1 and dep > worst_s:
@@ -805,7 +810,7 @@ func _f3_check_houses() -> void:
 					wet += 1
 				var gy := _f3_ground(p)
 				var at_front: bool = (p - (g0.c as Vector2)).dot(az) > float(g0.hz) * 0.5 and str(a.kind) not in ["tomb", "farm"]
-				var over := gy - float(a.y) - (0.0 if at_front else UrbsFill.BURY_BACK)
+				var over := gy - float(a.y) - (0.0 if at_front else F3_BURY_BACK)
 				buried = maxf(buried, over)
 				var bottom := float(a.y)
 				if str(a.kind) in ["farm", "horti"]:
@@ -1004,15 +1009,22 @@ func _f3_check_life_once(life: UrbsLife, hour: float) -> void:
 				var q: Vector2 = sp[0]
 				var tg: Vector2 = sp[1]
 				var nrm := Vector2(-tg.y, tg.x)
-				for lat in [0.85 * hw, -0.85 * hw, minf(F3_CART_HW, hw), -minf(F3_CART_HW, hw)]:
-					var pp: Vector2 = q + nrm * float(lat)
+				# the walkers' lanes as life.gd narrows them (UrbsLife.lane_lat), the carts' width
+				var wl := absf(life.lane_lat(si, d, 0.85 * hw)) if life.has_method("lane_lat") else 0.85 * hw
+				for li in 4:
+					var lat: float = [wl, -wl, minf(F3_CART_HW, hw), -minf(F3_CART_HW, hw)][li]
+					var pp: Vector2 = q + nrm * lat
 					var gy := UrbsTerrain.height_at(pp.x, pp.y)
 					var s := _f3_solid_at(pp, gy, 1.7)
+					if s != "" and _model(s) in PASSABLE:
+						continue   # a gate's or an arch's passage: the street runs through it
+					if li >= 2 and life.has_method("cart_street") and not life.cart_street(si):
+						continue   # no carts on this street (UrbsLife.cart_street)
 					if s != "":
 						var k := "%s|%s" % [st.id, s]
 						if not seen.has(k):
 							seen[k] = true
-							_f3_note("life_solid", 0.5, "lane of %s at (%.0f, %.0f) through %s" % [st.id, pp.x, pp.y, s])
+							_f3_note("life_solid", 0.5, "%s lane of %s at (%.0f, %.0f) through %s (%.1f m from its middle)" % ["a walkers'" if li < 2 else "the carts'", st.id, pp.x, pp.y, s, absf(lat)])
 				d += 2.0
 	# stalls
 	var done := {}
@@ -1028,8 +1040,9 @@ func _f3_check_life_once(life: UrbsLife, hour: float) -> void:
 		var gy := UrbsTerrain.height_at(c.x, c.y)
 		var worst := ""
 		var score := 0.0
+		var wall_stall: bool = e.size() > 4 and bool(e[4])
 		for u in [-1.1, 0.0, 1.1]:
-			for v in [-0.9, 0.0, 1.05]:
+			for v in [-0.2 if wall_stall else -0.9, 0.0, 1.05]:
 				var p: Vector2 = c + side * float(u) + fwd * float(v)
 				var s := _f3_solid_at(p, xf.origin.y - 0.1, 2.4)
 				if s != "" and score < 2.0:
@@ -1045,7 +1058,7 @@ func _f3_check_life_once(life: UrbsLife, hour: float) -> void:
 		var cw2 := _f3_carriageway(c)
 		var on_fw := float(cw2[0]) > -(UrbsFill.KERB + UrbsFill.FOOTPATH) and float(cw2[0]) < -UrbsFill.KERB and _f3_footway(cw2[1])
 		var ground := gy + (UrbsStreets.SURFACE_LIFT + UrbsStreets.FOOTWAY_H if on_fw else 0.0)
-		if absf(xf.origin.y - ground) > 0.08:
+		if absf(xf.origin.y - ground) > (0.16 if xf.origin.y > ground else 0.08):   # a market's paving: 0.07-0.14 m
 			_f3_note("stall_street", absf(xf.origin.y - ground), "%s stall at (%.0f, %.0f) %.2f m %s the %s" % [tag, c.x, c.y, absf(xf.origin.y - ground),
 				"under" if xf.origin.y < ground else "over", "footway" if on_fw else "ground"])
 	# lamps on walls, smoke from roofs (only at night for lamps; smoke by day)
@@ -1061,23 +1074,26 @@ func _f3_check_life_once(life: UrbsLife, hour: float) -> void:
 						break
 				if wall:
 					break
-			for post in life._lamp_posts:
+			for post in (life.get("_lamp_posts") if life.get("_lamp_posts") != null else []):
 				if Vector2(post.x, post.z).distance_to(p2) < 0.6:
 					wall = true
 			if not wall and _f3_mon_at(p2, lp.y - 0.5, lp.y + 0.5, -0.7).is_empty():
 				_f3_note("lamp_smoke", 1.0, "lamp at (%.0f, %.0f) %.1f m up on no wall" % [lp.x, lp.z, lp.y - UrbsTerrain.height_at(lp.x, lp.z)])
 	else:
-		for o: Vector3 in life._smoke_at:
+		for o: Vector3 in (life.get("_smoke_at") if life.get("_smoke_at") != null else []):
 			var p2 := Vector2(o.x, o.z)
 			var roof := false
+			var near := ""
 			for kk in _f3_near(p2, 0.0):
 				var it: Dictionary = _f3_inst[kk]
 				var top := -INF
 				for ob in it.bands:
-					if _f3_inside(ob, p2, 0.0):
+					if _f3_inside(ob, p2, -0.3):
 						top = maxf(top, float(ob.y1))
-				if o.y > top - 1.0 and o.y < top + 1.6:
+				if o.y > top - 1.4 and o.y < top + 1.6:   # bands are 1 m: the ridge lies in the top one
 					roof = true
 					break
+				if top > -INF:
+					near = " (%s's roof %.1f m away)" % [_f3_name(it), o.y - top]
 			if not roof:
-				_f3_note("lamp_smoke", 0.5, "smoke at (%.0f, %.0f) %.1f m up rises from no roof" % [o.x, o.z, o.y - UrbsTerrain.height_at(o.x, o.z)])
+				_f3_note("lamp_smoke", 0.5, "smoke at (%.0f, %.0f) %.1f m up rises from no roof%s" % [o.x, o.z, o.y - UrbsTerrain.height_at(o.x, o.z), near])

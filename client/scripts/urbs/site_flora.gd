@@ -159,6 +159,11 @@ static func spots(rect: Rect2, lod: int, year: int) -> Array:
 	var cells := _blockers(year)
 	var l := clampi(lod, 0, 2)
 	_level = l
+	if _streets_year != year or _streets == null:   # F3: no trunk in a carriageway
+		_streets = UrbsStreets.new()
+		_streets.height = Callable(UrbsTerrain, "height_at")
+		_streets.load_data(year)
+		_streets_year = year
 	_keep = [1.0, 0.5, 0.33][l]
 	_grow = [1.0, 1.0, 1.1][l]   # no bigger than the houses (UrbsFill.TREE_CLEAR) allow for
 	_spots_woods(out, rect, 0)
@@ -176,11 +181,17 @@ static func spots(rect: Rect2, lod: int, year: int) -> Array:
 static var _keep := 1.0   ## F3: share of the full level's trees planted (spots)
 static var _grow := 1.0   ## F3: their scale at this level
 static var _level := 0    ## F3: the level being planted
+static var _streets: UrbsStreets = null   ## F3: the year's streets (index only)
+static var _streets_year := 999999
 
 
 static func _plant(out: Array, kind: String, x: float, z: float, seed_a: int, seed_b: int, scale := 1.0) -> void:
 	if _keep < 1.0 and _hash(seed_a, seed_b, 13) >= _keep:
 		return
+	if _streets != null:
+		var ns := _streets.nearest_street(Vector2(x, z))
+		if not ns.is_empty() and float(ns["distance"]) < float(ns["half_width"]) + 0.6:
+			return   # F3: trees stood in the roads (the cut weight is 0 on flat ground)
 	scale *= _grow
 	var y := UrbsTerrain.height_at(x, z)
 	var sc := (0.78 + 0.5 * _hash(seed_a, seed_b, 5)) * scale

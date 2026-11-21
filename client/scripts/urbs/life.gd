@@ -163,6 +163,12 @@ var _rigs: Array = []              # {node, kind, agent, animals: Array, extra: 
 var _venue_crowd: Node3D
 var _senate_crowd: Node3D
 var _forum: Dictionary = {}        # {c: Vector2, u: Vector2, v: Vector2, hl, hw, y}
+var _lane_max: Array = []          # F3: per street, the widest lateral offset clear of solids every LANE_STEP m
+var _cart_ok := PackedByteArray()  # F3: per street, 1 if an ox cart fits all along it
+var _blocker_pass: Array[bool] = []  # F3: the blocker is a gate's or an arch's: its passage is the street
+const LANE_STEP := 2.0
+const CART_HW := 1.05              ## F3: half the width of an ox cart with its pair of oxen
+const PASSABLE_MODELS := ["servian_gate", "arch", "bridge_stone", "bridge_timber", "wall", "aqueduct"]
 var _blockers: Array = []          # AABBs of monuments' solids people must not stand in
 var _block_grid := {}              # Vector2i cell -> indices into _blockers
 const BLOCK_CELL := 40.0
@@ -195,6 +201,7 @@ func build(urbs_node: Node3D, new_year: int, new_hour: float, height_fn: Callabl
 	# what people must not stand in: the monuments' real solids (UrbsMonuments.solid_boxes),
 	# not plazas or routes (no bounds), not steps and low platforms (1.3 m or less)
 	_blockers.clear()
+	_blocker_pass.clear()
 	_block_grid.clear()
 	var mb: Variant = urbs.monuments.get("_bounds")
 	for id in urbs.monuments.ids():
@@ -207,6 +214,7 @@ func build(urbs_node: Node3D, new_year: int, new_hour: float, height_fn: Callabl
 			if bb.size.y <= 0.3 or bb.size.x > 400.0 or bb.size.z > 400.0:
 				continue
 			_blockers.append(bb)
+			_blocker_pass.append(str((urbs.monuments.get("_placed") as Dictionary).get(id, {}).get("model", "")) in PASSABLE_MODELS)
 			var k := _blockers.size() - 1
 			for gx in range(floori((bb.position.x - 1.0) / BLOCK_CELL), floori((bb.end.x + 1.0) / BLOCK_CELL) + 1):
 				for gz in range(floori((bb.position.z - 1.0) / BLOCK_CELL), floori((bb.end.z + 1.0) / BLOCK_CELL) + 1):
@@ -214,6 +222,7 @@ func build(urbs_node: Node3D, new_year: int, new_hour: float, height_fn: Callabl
 					if not _block_grid.has(key):
 						_block_grid[key] = []
 					(_block_grid[key] as Array).append(k)
+	_lane_limits()
 	_vcol_mat = StandardMaterial3D.new()
 	_vcol_mat.vertex_color_use_as_albedo = true
 	_vcol_mat.roughness = 0.95
@@ -343,6 +352,67 @@ static func _population(y: int) -> float:
 
 
 # ---- streets --------------------------------------------------------------------------------
+
+## F3: how far from its middle a walker may keep along each stretch of each street (every
+## LANE_STEP m): where a gate's piers, a monument's steps or a house narrow the street, the lane
+## closes in (walkers and carts went through the piers of the gates and the Temple of Concord).
+func _lane_limits() -> void:
+	_lane_max.clear()
+	_cart_ok.resize(_streets.size())
+	for si in _streets.size():
+		var s: Dictionary = _streets[si]
+		var hw := float(s["hw"])
+		var n := int(float(s["len"]) / LANE_STEP) + 2
+		var lim := PackedFloat32Array()
+		lim.resize(n)
+		for k in n:
+			var sp: Array = urbs.streets.sample_at(si, minf(float(k) * LANE_STEP, float(s["len"])))
+			var q: Vector2 = sp[0]
+			var tg: Vector2 = sp[1]
+			var nrm := Vector2(-tg.y, tg.x)
+			var best := 0.0
+			for f: float in [0.85, 0.6, 0.35, 0.0]:
+				var l: float = hw * f
+				if not _blocked_lane(q + nrm * l, 0.45) and not _blocked_lane(q - nrm * l, 0.45):
+					best = l
+					break
+			lim[k] = best
+		_lane_max.append(lim)
+		var narrow := hw < CART_HW
+		for k in n:
+			if not narrow and lim[k] < hw * 0.85 and not (not _blocked_lane((urbs.streets.sample_at(si, minf(float(k) * LANE_STEP, float(s["len"])))[0] as Vector2), CART_HW)):
+				narrow = true
+		_cart_ok[si] = 0 if narrow else 1
+
+
+## A monument's solid within `r` of `p` (the houses keep off the carriageways: UrbsFill); a gate's
+## or an arch's is its passage.
+func _blocked_lane(p: Vector2, r: float) -> bool:
+	var key := Vector2i(floori(p.x / BLOCK_CELL), floori(p.y / BLOCK_CELL))
+	for k in _block_grid.get(key, []):
+		if _blocker_pass[k]:
+			continue
+		var bb: AABB = _blockers[k]
+		if p.x > bb.position.x - r and p.x < bb.end.x + r and p.y > bb.position.z - r and p.y < bb.end.z + r:
+			return true
+	return false
+
+
+## The lateral offset an agent at arc length `d` of street `si` may keep (its own, or the lane's
+## limit there).
+func lane_lat(si: int, d: float, lat: float) -> float:
+	if si < 0 or si >= _lane_max.size():
+		return lat
+	var lim: PackedFloat32Array = _lane_max[si]
+	var k := clampi(int(d / LANE_STEP), 0, lim.size() - 1)
+	var m := minf(lim[k], lim[mini(k + 1, lim.size() - 1)])
+	return clampf(lat, -m, m)
+
+
+## F3: whether ox carts may use street `si` (narrower than a cart, or a monument narrowing it: no).
+func cart_street(si: int) -> bool:
+	return si >= 0 and si < _cart_ok.size() and _cart_ok[si] == 1
+
 
 func _link_streets() -> void:
 	_links = []
@@ -736,7 +806,7 @@ func _make_stalls() -> void:
 				var syaw: float = yaw + PI / 2.0 + (PI if r % 2 == 1 else 0.0) + _rng.randf_range(-0.12, 0.12)
 				if not _stall_clear(c, syaw, false):
 					continue   # F3: not in a street running across the market, a house or a monument
-				places.append({"p": c, "yaw": syaw, "goods": _rng.randi() % 3, "floor": float(p["y"]) + 0.14})
+				places.append({"p": c, "yaw": syaw, "goods": _rng.randi() % 3, "floor": float(p["y"]) + 0.07})
 	# the Macellum (Livy 40.51.5; Varro LL 5.146): stalls round the market hall
 	if placed.has("macellum"):
 		var p: Dictionary = placed["macellum"]
@@ -799,7 +869,7 @@ func _make_stalls() -> void:
 		var xf := Transform3D(Basis(Vector3.UP, float(pl["yaw"])), Vector3(c.x, y, c.y))
 		var w := 1 if pl.get("wall", false) else 0
 		(mm_frame[w] as MultiMesh).set_instance_transform(k_frame[w], xf)
-		_stall_inst.append([mm_frame[w], k_frame[w], xf, c])   # F2 play: cleared for a spectacle
+		_stall_inst.append([mm_frame[w], k_frame[w], xf, c, w == 1])   # F2 play: cleared for a spectacle (F3: and whether it stands against a wall)
 		k_frame[w] += 1
 		if _rng.randf() < 0.55:
 			(mm_canvas[w] as MultiMesh).set_instance_transform(k_canvas[w], xf)
@@ -1122,6 +1192,8 @@ func _place_vehicle(a: Dictionary, cart: bool) -> void:
 			continue
 		if not roads_only and cart and _streets[si]["kind"] == "road" and _rng.randf() < 0.5:
 			continue
+		if cart and not cart_street(si):
+			continue   # F3: a cart and its oxen are 2.1 m wide: they went through temples' steps
 		options.append(si)
 	if options.is_empty():
 		for si in _streets.size():
@@ -1327,7 +1399,7 @@ func _make_smoke() -> void:
 		var dens := float(d.get("max_density", 0.5)) * pow(clampf(population / float(d.get("saturates_at", 100000.0)), 0.0, 1.0), 0.7)
 		if _rng.randf() > dens or str(d.get("id", "")) in ["forum", "capitol"]:
 			continue
-		pos.append(Vector3(c.x, UrbsFill.roof_top(lot) - 0.4, c.y))
+		pos.append(UrbsFill.roof_point(lot) - Vector3(0, 0.3, 0))
 	while homes.is_empty() and pos.size() < n_col and tries < n_col * 20:
 		tries += 1
 		var d: Dictionary = districts[_rng.randi() % districts.size()]
@@ -1626,6 +1698,8 @@ func _step_street(a: Dictionary, dt: float, exact := true) -> void:
 			if int(l[0]) == end:
 				if bool(a.get("roads_only", false)) and _streets[int(l[1])]["kind"] != "road":
 					continue
+				if str(a["mode"]) == "cart" and not cart_street(int(l[1])):
+					continue
 				choices.append(l)
 		if choices.is_empty() or _rng.randf() < 0.15:
 			a["dir"] = -int(a["dir"])
@@ -1654,7 +1728,7 @@ func _step_street(a: Dictionary, dt: float, exact := true) -> void:
 	var seg_len := maxf(cum[k + 1] - cum[k], 0.0001)
 	var q := pts[k].lerp(pts[k + 1], clampf((d - cum[k]) / seg_len, 0.0, 1.0))
 	var tg := (pts[k + 1] - pts[k]) / seg_len
-	q += Vector2(-tg.y, tg.x) * float(a["lat"])
+	q += Vector2(-tg.y, tg.x) * lane_lat(si, d, float(a["lat"]))   # F3: the lane narrows at gates
 	var gy: float
 	if exact:
 		gy = float(height.call(q.x, q.y))

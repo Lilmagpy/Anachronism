@@ -1027,8 +1027,10 @@ func _street_rows(si: int) -> void:
 			var lot := _lot_of(type, np + nn * (rowdist + depth * 0.5), -nn, sh, item, side * 31 + 3)
 			if behind:
 				_no_awnings(lot)
-				if type == "casa":   # its eaves stood in the shops' back wall
-					lot["c"] = (lot["c"] as Vector2) + nn * (float(_env(lot)["hz"]) - float(lot["hz"]) + 0.1)
+				# set back by its front eaves, which stood in the shops' high back wall
+				var ev := _env(lot)
+				var eaves := ((ev["c"] as Vector2) - (lot["c"] as Vector2)).dot(-nn) + float(ev["hz"]) - float(lot["hz"])
+				lot["c"] = (lot["c"] as Vector2) + nn * maxf(eaves, 0.0)
 			var ok := _add_street_lot(lot, sid, 0.25)
 			if not ok and type != "casa":
 				# a big house does not fit here: try a small one at the same spot before leaving a gap
@@ -1919,10 +1921,12 @@ func walk_height(p: Vector2) -> float:
 	return g
 
 
-## The top of a building's roof (its mesh at full detail, scaled to the lot).
-static func roof_top(lot: Dictionary) -> float:
-	var b := UrbsFillMeshes.get_mesh(str(lot["mesh"]), 0).get_aabb()
-	return float(lot["y"]) + b.end.y * float(lot.get("sy", 1.0))
+## The top of a building's roof, where its smoke is seen to rise (UrbsFillMeshes.ridge, placed).
+static func roof_point(lot: Dictionary) -> Vector3:
+	var r := UrbsFillMeshes.ridge(str(lot["mesh"]))
+	var ax := _axes(lot)
+	var p: Vector2 = (lot["c"] as Vector2) + ax[0] * (r.x * float(lot["sx"])) + ax[1] * (r.z * float(lot["sz"]))
+	return Vector3(p.x, float(lot["y"]) + r.y * float(lot.get("sy", 1.0)), p.y)
 
 
 # ---------------------------------------------------------------- collision for the walking camera
@@ -1930,31 +1934,45 @@ static func roof_top(lot: Dictionary) -> float:
 ## Push `p` (x, z) out of any building footprint, keeping `radius` clear. `h` is the eye height;
 ## above a building's roof nothing blocks. Works on finished chunks.
 func push_out(p: Vector2, radius: float, h: float) -> Vector2:
+	# F3: the chunks round `p` are laid out now if they are not built yet (the sweep's and the
+	# card views' cameras were placed before their chunks were, and stood inside houses); and
+	# pushed again until clear, since leaving one house can lead into the next
 	var key := Vector2i(floori(p.x / CHUNK), floori(p.y / CHUNK))
+	var lots: Array = []
 	for dz in range(-1, 2):
 		for dx in range(-1, 2):
 			var k2 := key + Vector2i(dx, dz)
-			if not _chunk_cache.has(k2):
+			if _chunk_cache.has(k2):
+				lots.append_array(_chunk_cache[k2])
 				continue
-			for lot in _chunk_cache[k2]:
-				var kind := str(lot["kind"])
-				if kind == "horti" or kind == "prop" or kind == "tree":
-					continue
-				var ground: float = float(lot["y"])
-				if h > ground + float(lot["top"]) + 0.5:
-					continue
-				var ax := _axes(lot)
-				var rel: Vector2 = p - lot["c"]
-				if rel.length() > maxf(lot["hx"], lot["hz"]) * 1.5 + radius:
-					continue
-				var lx: float = rel.dot(ax[0])
-				var lz: float = rel.dot(ax[1])
-				var ex: float = lot["hx"] + radius
-				var ez: float = lot["hz"] + radius
-				if absf(lx) < ex and absf(lz) < ez:
-					if ex - absf(lx) < ez - absf(lz):
-						lx = signf(lx) * ex if lx != 0.0 else ex
-					else:
-						lz = signf(lz) * ez if lz != 0.0 else ez
-					p = lot["c"] + ax[0] * lx + ax[1] * lz
+			for rk in regions_for_chunk(k2):
+				while not advance_region(rk, Time.get_ticks_usec() + 1000000000):
+					pass
+			lots.append_array(lots_for_chunk(k2))
+	for _pass in 4:
+		var moved := false
+		for lot in lots:
+			var kind := str(lot["kind"])
+			if kind == "horti" or kind == "prop" or kind == "tree" or kind == "rural":
+				continue
+			var ground: float = float(lot["y"])
+			if h > ground + float(lot["top"]) + 0.5:
+				continue
+			var ax := _axes(lot)
+			var rel: Vector2 = p - lot["c"]
+			if rel.length() > maxf(lot["hx"], lot["hz"]) * 1.5 + radius:
+				continue
+			var lx: float = rel.dot(ax[0])
+			var lz: float = rel.dot(ax[1])
+			var ex: float = lot["hx"] + radius
+			var ez: float = lot["hz"] + radius
+			if absf(lx) < ex and absf(lz) < ez:
+				if ex - absf(lx) < ez - absf(lz):
+					lx = signf(lx) * ex if lx != 0.0 else ex
+				else:
+					lz = signf(lz) * ez if lz != 0.0 else ez
+				p = lot["c"] + ax[0] * lx + ax[1] * lz
+				moved = true
+		if not moved:
+			break
 	return p

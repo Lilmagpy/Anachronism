@@ -42,6 +42,7 @@ const SURFACES: Array[String] = [
 
 static var _cache := {}
 static var _footprints := {}
+static var _ridges := {}
 static var _material: ShaderMaterial
 
 
@@ -77,6 +78,26 @@ static func footprint(key: String) -> Rect2:
 			hi = Vector2(maxf(hi.x, p.x), maxf(hi.y, p.z))
 	var r := Rect2(lo, hi - lo) if hi.x >= lo.x else Rect2(-1, -1, 2, 2)
 	_footprints[key] = r
+	return r
+
+
+## F3: the top of the roof of `key` (local metres): the middle of its highest vertices, where a
+## kitchen's smoke is seen to rise (UrbsLife).
+static func ridge(key: String) -> Vector3:
+	if _ridges.has(key):
+		return _ridges[key]
+	var mb := build(key, 0)
+	var top := -INF
+	for p in mb.v:
+		top = maxf(top, p.y)
+	var sum := Vector3.ZERO
+	var n := 0
+	for p in mb.v:
+		if p.y > top - 0.3:
+			sum += p
+			n += 1
+	var r := sum / float(maxi(n, 1))
+	_ridges[key] = r
 	return r
 
 
