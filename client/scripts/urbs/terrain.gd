@@ -658,6 +658,28 @@ static func height_at(x: float, z: float) -> float:
 	return _sample(_h, x, z)
 
 
+## The ground as a chunk mesh draws it with `step` cells per quad (1: lod 0 within NEAR_M of the
+## Forum, 2 beyond it, 5 lod 1, 10 lod 2): each quad split into two triangles along its
+## (i+1, j)-(i, j+1) diagonal, as _chunk_mesh does. (F3: the audit compares surfaces with this.)
+static func mesh_height_at(x: float, z: float, step := 1) -> float:
+	prepare()
+	var c := CELL_M * step
+	var nq := CELLS / step
+	var fx := clampf((x + HALF_M) / c, 0.0, nq - 0.0001)
+	var fz := clampf((z + HALF_M) / c, 0.0, nq - 0.0001)
+	var i := int(fx)
+	var j := int(fz)
+	var u := fx - i
+	var v := fz - j
+	var h10 := _h[_gi(j * step) * VERTS + _gi((i + 1) * step)]
+	var h01 := _h[_gi((j + 1) * step) * VERTS + _gi(i * step)]
+	if u + v <= 1.0:
+		var h00 := _h[_gi(j * step) * VERTS + _gi(i * step)]
+		return h00 + u * (h10 - h00) + v * (h01 - h00)
+	var h11 := _h[_gi((j + 1) * step) * VERTS + _gi((i + 1) * step)]
+	return h11 + (1.0 - u) * (h01 - h11) + (1.0 - v) * (h10 - h11)
+
+
 ## Unit surface normal at local (x, z).
 static func normal_at(x: float, z: float) -> Vector3:
 	var e := CELL_M
@@ -757,7 +779,7 @@ static func build_chunk(rect: Rect2, lod: int) -> Node3D:
 	node.name = "Ground_%d_%d_L%d" % [i0, j0, lod]
 	var mi := MeshInstance3D.new()
 	mi.name = "Mesh"
-	mi.mesh = _chunk_mesh(i0, j0, ci, cj, step)
+	mi.mesh = chunk_mesh(rect, lod)
 	mi.material_override = _ground_material()
 	node.add_child(mi)
 	var water := _water_mesh(i0, j0, ci, cj, step)
@@ -794,6 +816,18 @@ static func build_chunk(rect: Rect2, lod: int) -> Node3D:
 			node.add_child(walls)
 	UrbsSiteFlora.build_chunk(node, rect, lod, year)
 	return node
+
+
+## The ground mesh alone of the chunk covering `rect` at `lod` (as build_chunk draws it).
+static func chunk_mesh(rect: Rect2, lod: int) -> ArrayMesh:
+	prepare()
+	var near := rect.get_center().length() < NEAR_M
+	var step := (1 if near else 2) if lod <= 0 else (5 if lod == 1 else 10)
+	var i0 := roundi((rect.position.x + HALF_M) / CELL_M)
+	var j0 := roundi((rect.position.y + HALF_M) / CELL_M)
+	var ci := maxi(roundi(rect.size.x / CELL_M), 1)
+	var cj := maxi(roundi(rect.size.y / CELL_M), 1)
+	return _chunk_mesh(i0, j0, ci, cj, step)
 
 
 ## Builds the whole field at once (400 chunks of 250 m, with collision) plus the river, under a
@@ -913,14 +947,19 @@ static func _add_vertex(i: int, j: int, drop: float, step: int, pp: PackedVector
 	i = _gi(i)
 	j = _gi(j)
 	var k := j * VERTS + i
+	pp.append(Vector3(-HALF_M + i * CELL_M, _h[k] - drop, -HALF_M + j * CELL_M))
+	pn.append(vertex_normal(i, j, step))
+
+
+## The normal a chunk mesh of `step` gives its vertex at grid (i, j).
+static func vertex_normal(i: int, j: int, step: int) -> Vector3:
 	# the normal over the mesh's own spacing (at least two cells): an even shading on the slopes
 	var e := maxi(step, 2)
-	var hl := _h[j * VERTS + _gi(i - e)]
-	var hr := _h[j * VERTS + _gi(i + e)]
-	var hu := _h[_gi(j - e) * VERTS + i]
-	var hd := _h[_gi(j + e) * VERTS + i]
-	pp.append(Vector3(-HALF_M + i * CELL_M, _h[k] - drop, -HALF_M + j * CELL_M))
-	pn.append(Vector3(hl - hr, 2.0 * e * CELL_M, hu - hd).normalized())
+	var hl := _h[_gi(j) * VERTS + _gi(i - e)]
+	var hr := _h[_gi(j) * VERTS + _gi(i + e)]
+	var hu := _h[_gi(j - e) * VERTS + _gi(i)]
+	var hd := _h[_gi(j + e) * VERTS + _gi(i)]
+	return Vector3(hl - hr, 2.0 * e * CELL_M, hu - hd).normalized()
 
 
 ## Ground colour and material weights at a vertex. Returns [colour (alpha = farmland), (grass,

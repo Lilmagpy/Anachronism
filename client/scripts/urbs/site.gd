@@ -475,6 +475,25 @@ static func _down(p: Vector2) -> Vector2:
 ## The retaining walls of the hillside terraces in `rect` (a contour walk at the middle of each
 ## riser), or null. lod 0 and 1 only.
 static func build_chunk_walls(rect: Rect2, lod: int, year: int) -> Node3D:
+	var m := Mesher.new()
+	var mat := wall_material(year)
+	var any := false
+	for w: Array in terrace_wall_segments(rect):
+		m.wall(mat, w[0], w[1], w[2], w[3], w[4], w[5], w[6], 0.9)
+		any = true
+	if not any:
+		return null
+	var mi := m.finish("TerraceWalls")
+	if mi != null:
+		mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON if lod == 0 else GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		mi.visibility_range_end = 1600.0
+	return mi
+
+
+## The terrace walls in `rect` as segments [a: Vector2, b: Vector2, out: Vector2 (downhill), ya0,
+## ya1, yb0, yb1 (foot and top at a and b)]: what build_chunk_walls stands, and what the audit
+## (audit.gd, F3 ground) checks against what stands on the terraces.
+static func terrace_wall_segments(rect: Rect2) -> Array:
 	var h := UrbsTerrain.field()
 	var n := UrbsTerrain.VERTS
 	var cell := UrbsTerrain.CELL_M
@@ -484,9 +503,7 @@ static func build_chunk_walls(rect: Rect2, lod: int, year: int) -> Node3D:
 	var j0 := clampi(roundi((rect.position.y + half) / cell), 1, n - 2)
 	var i1 := clampi(roundi((rect.end.x + half) / cell), 1, n - 2)
 	var j1 := clampi(roundi((rect.end.y + half) / cell), 1, n - 2)
-	var m := Mesher.new()
-	var mat := wall_material(year)
-	var any := false
+	var out := []
 	for j in range(j0, j1):
 		for i in range(i0, i1):
 			var x := -half + i * cell
@@ -523,13 +540,6 @@ static func build_chunk_walls(rect: Rect2, lod: int, year: int) -> Node3D:
 							var ya1 := UrbsTerrain.height_at(a.x - da.x * 3.5, a.y - da.y * 3.5) + WALL_UP
 							var yb1 := UrbsTerrain.height_at(b.x - db.x * 3.5, b.y - db.y * 3.5) + WALL_UP
 							if ya1 - ya0 > 1.0 and yb1 - yb0 > 1.0:
-								m.wall(mat, a, b, (da + db).normalized(), ya0, ya1, yb0, yb1, 0.9)
-								any = true
+								out.append([a, b, (da + db).normalized(), ya0, ya1, yb0, yb1])
 				lvl += step
-	if not any:
-		return null
-	var mi := m.finish("TerraceWalls")
-	if mi != null:
-		mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON if lod == 0 else GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-		mi.visibility_range_end = 1600.0
-	return mi
+	return out

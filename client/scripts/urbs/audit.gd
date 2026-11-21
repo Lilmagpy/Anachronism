@@ -88,6 +88,7 @@ func _initialize() -> void:
 				"platform": UrbsSite.platform_at(c.x, c.y)})
 	out.year["founded"] = founded
 	out.year["slopes"] = slopes   # for city_audit.py --terraces
+	out.year.merge(_f3_ground())   # F3 ground (the checks at the end of this file)
 	out.year["seconds"] = (Time.get_ticks_msec() - t0) / 1000.0
 	print("URBS_AUDIT " + JSON.stringify(out))
 	quit()
@@ -363,3 +364,687 @@ func _terrain() -> Array:
 						top = maxf(top, UrbsTerrain.height_at(q.x + dx, q.y + dz))
 			out.append({"id": str(h["id"]), "height": snappedf(UrbsTerrain.height_at(c.x, c.y), 0.1), "max": snappedf(top, 0.1)})
 	return out
+
+
+# ---------------------------------------------------------------------------------------------
+# F3 ground (begin): the ground and what is laid on it, as the chunk meshes draw it. Each check
+# returns a list of findings "<what> ..."; the counts go to city_audit.py (SCENE_KINDS, F3 ground).
+#   bank_sawtooth    100 m stretches of a Tiber bank whose water line turns more than 15 degrees
+#                    within 2 m at least 3 times (the 5 m grid drawn across a steep bank)
+#   zfight           two surfaces within 5 cm of each other over the same spot (paving over the
+#                    ground, a street over a paving, two streets, a quay over the ground, the
+#                    water over a flat bank), or the ground poking through a paving
+#   ground_holes     ground missing where the camera can see it: chunks the loader asks for
+#                    outside the heightfield, NaN heights, cracks between chunks deeper than the skirt
+#   empty_terraces   terrace walls with nothing standing on the tread above them in that year
+#                    (per 50 m square), and monument terraces whose monument does not stand
+#   platform_steps   a platform more than 1 m above (or below) the street that leads to it or
+#                    the ground in front of its monument
+#   stair_ends       steps that do not meet the ground at both ends
+#   chunk_seams      edges between chunks (within 1.5 km of the Forum) where the meshes of two
+#                    neighbouring levels of detail differ by more than 0.25 m in height or 6
+#                    degrees in their normals (a step or a seam in the light)
+#   streets_ground   stretches of a street strip that sink under the ground mesh or float 0.5 m
+#                    above it
+# ---------------------------------------------------------------------------------------------
+
+const F3_KINK_DEG := 15.0
+const F3_ZF_M := 0.05
+
+
+func _f3_ground() -> Dictionary:
+	var t0 := Time.get_ticks_msec()
+	var root := Node3D.new()
+	get_root().add_child(root)
+	var st := UrbsStreets.new()
+	st.build(root, _year, Callable(UrbsTerrain, "height_at"))
+	var res := {
+		"bank_sawtooth": _f3_bank_sawtooth(),
+		"zfight": _f3_zfight(st),
+		"ground_holes": _f3_holes(),
+		"empty_terraces": _f3_empty_terraces(),
+		"platform_steps": _f3_platform_steps(),
+		"stair_ends": _f3_stair_ends(),
+		"chunk_seams": _f3_chunk_seams(),
+		"streets_ground": _f3_streets_ground(st),
+	}
+	res["f3_ground_seconds"] = (Time.get_ticks_msec() - t0) / 1000.0
+	return res
+
+
+## The step of the lod-0 chunk mesh at (x, z) (UrbsTerrain.build_chunk).
+static func _f3_step(x: float, z: float) -> int:
+	var key := Vector2i(floori(x / 250.0), floori(z / 250.0))
+	var c := Vector2(key) * 250.0 + Vector2(125.0, 125.0)
+	return 1 if c.length() < UrbsTerrain.NEAR_M else 2
+
+
+static func _f3_ground_y(x: float, z: float) -> float:
+	return UrbsTerrain.mesh_height_at(x, z, _f3_step(x, z))
+
+
+## Upward-facing triangles of some meshes, bucketed on a 4 m grid: {f: PackedVector3Array, g: {}}.
+static func _f3_tris(mis: Array, surface := -1) -> Dictionary:
+	var faces := PackedVector3Array()
+	var grid := {}
+	for mi: MeshInstance3D in mis:
+		if mi.mesh == null:
+			continue
+		var xf := _f3_xf(mi)
+		for s in mi.mesh.get_surface_count():
+			if surface >= 0 and s != surface:
+				continue
+			var arr := mi.mesh.surface_get_arrays(s)
+			var vs: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
+			var ix: PackedInt32Array = arr[Mesh.ARRAY_INDEX] if arr[Mesh.ARRAY_INDEX] != null else PackedInt32Array()
+			var n := ix.size() if ix.size() > 0 else vs.size()
+			for t in range(0, n - 2, 3):
+				var a := xf * vs[ix[t] if ix.size() > 0 else t]
+				var b := xf * vs[ix[t + 1] if ix.size() > 0 else t + 1]
+				var c := xf * vs[ix[t + 2] if ix.size() > 0 else t + 2]
+				var nrm := (b - a).cross(c - a)
+				if nrm.length() < 1e-6 or absf(nrm.normalized().y) < 0.6:
+					continue
+				var k := faces.size()
+				faces.append_array([a, b, c])
+				for gx in range(floori(minf(a.x, minf(b.x, c.x)) / 4.0), floori(maxf(a.x, maxf(b.x, c.x)) / 4.0) + 1):
+					for gz in range(floori(minf(a.z, minf(b.z, c.z)) / 4.0), floori(maxf(a.z, maxf(b.z, c.z)) / 4.0) + 1):
+						var key := Vector2i(gx, gz)
+						if not grid.has(key):
+							grid[key] = PackedInt32Array()
+						grid[key].append(k)
+	return {"f": faces, "g": grid}
+
+
+## A node's transform in the scene (the audit runs before the tree is live: no global_transform).
+static func _f3_xf(n: Node3D) -> Transform3D:
+	var xf := n.transform
+	var p := n.get_parent()
+	while p is Node3D:
+		xf = (p as Node3D).transform * xf
+		p = p.get_parent()
+	return xf
+
+
+## The highest of the triangles over (x, z), or -INF.
+static func _f3_top(tris: Dictionary, p: Vector2) -> float:
+	var key := Vector2i(floori(p.x / 4.0), floori(p.y / 4.0))
+	var best := -INF
+	if not (tris.g as Dictionary).has(key):
+		return best
+	var f: PackedVector3Array = tris.f
+	for k: int in tris.g[key]:
+		var a := f[k]
+		var b := f[k + 1]
+		var c := f[k + 2]
+		var v0 := Vector2(b.x - a.x, b.z - a.z)
+		var v1 := Vector2(c.x - a.x, c.z - a.z)
+		var v2 := Vector2(p.x - a.x, p.y - a.z)
+		var den := v0.x * v1.y - v1.x * v0.y
+		if absf(den) < 1e-9:
+			continue
+		var u := (v2.x * v1.y - v1.x * v2.y) / den
+		var v := (v0.x * v2.y - v2.x * v0.y) / den
+		if u < -1e-4 or v < -1e-4 or u + v > 1.0001:
+			continue
+		best = maxf(best, a.y + u * (b.y - a.y) + v * (c.y - a.y))
+	return best
+
+
+static func _f3_xy(p: Vector2) -> String:
+	return "(%.0f, %.0f)" % [p.x, p.y]
+
+
+# --- the Tiber's banks ---
+
+## Where the water line crosses the ray from the course at `s` out to `side`, or null.
+func _f3_shore(s: float, side: float) -> Variant:
+	var a := UrbsTiber.at_s(s)
+	var c: Vector2 = a[0]
+	var t: Vector2 = a[1]
+	var nrm := Vector2(-t.y, t.x) * side
+	var wl := UrbsTiber.water_level_at_s(s)
+	var wet := false
+	var prev := 0.0
+	var d := 0.0
+	while d <= 220.0:
+		var q := c + nrm * d
+		var g := _f3_ground_y(q.x, q.y)
+		if g < wl:
+			wet = true
+		elif wet:
+			var lo := prev
+			var hi := d
+			for _i in 12:
+				var mid := (lo + hi) * 0.5
+				var qm := c + nrm * mid
+				if _f3_ground_y(qm.x, qm.y) < wl:
+					lo = mid
+				else:
+					hi = mid
+			return c + nrm * hi
+		prev = d
+		d += 1.0
+	return null
+
+
+func _f3_bank_sawtooth() -> Array:
+	var out := []
+	var length := UrbsTiber.length()
+	var facing: Dictionary = UrbsTiber.topography().get("terrain_model", {}).get("island_facing", {})
+	var faced := not facing.is_empty() and _year >= int(facing.get("from", 0))
+	for side: float in [1.0, -1.0]:
+		var pts := []
+		var s := 0.0
+		while s <= length:
+			var p: Variant = null
+			var centre: Vector2 = UrbsTiber.at_s(s)[0]
+			if absf(centre.x) < 2400.0 and absf(centre.y) < 2400.0:
+				p = _f3_shore(s, side)
+				for q: Dictionary in UrbsTiber.quays():
+					if _year >= int(q["from"]) and float(q["side"]) == side and s > float(q["s0"]) - 5.0 and s < float(q["s1"]) + 5.0:
+						p = null
+				if p != null and faced and UrbsTiber.island_r((p as Vector2).x, (p as Vector2).y) < 1.2:
+					p = null
+			pts.append(p)
+			s += 1.0
+		var kinks := {}
+		var where := {}
+		for k in range(2, pts.size() - 2):
+			if pts[k - 2] == null or pts[k] == null or pts[k + 2] == null:
+				continue
+			var a: Vector2 = pts[k - 2]
+			var b: Vector2 = pts[k]
+			var c: Vector2 = pts[k + 2]
+			if a.distance_to(b) > 6.0 or b.distance_to(c) > 6.0 or a.distance_to(b) < 0.3 or b.distance_to(c) < 0.3:
+				continue
+			if rad_to_deg(absf((b - a).angle_to(c - b))) > F3_KINK_DEG:
+				var st := k / 100
+				kinks[st] = int(kinks.get(st, 0)) + 1
+				where[st] = b
+		var keys := kinks.keys()
+		keys.sort()
+		for st: int in keys:
+			if int(kinks[st]) >= 3:
+				out.append("tiber %s bank %d-%d m along the course near %s: %d kinks" % ["left" if side > 0 else "right", st * 100, st * 100 + 100, _f3_xy(where[st]), kinks[st]])
+	return out
+
+
+# --- surfaces on top of one another ---
+
+func _f3_plazas() -> Dictionary:
+	var out := {}
+	var ids: Array = _mon.ids()
+	ids.sort()
+	for id: String in ids:
+		if _model(id) != "plaza" or not _mon._nodes.has(id):
+			continue
+		var mis: Array = (_mon._nodes[id] as Node).find_children("*", "MeshInstance3D", true, false)
+		out[id] = _f3_tris(mis)
+	return out
+
+
+func _f3_zfight(st: UrbsStreets) -> Array:
+	var out := []
+	var plazas := _f3_plazas()
+	# paving over the ground: within 5 cm, or under it
+	for id: String in plazas:
+		var r := _footprint(id)
+		if r.is_empty():
+			continue
+		var close := 0
+		var under := 0
+		var worst := INF
+		var at := Vector2.ZERO
+		var i := -float(r.hx) + 0.5
+		while i < float(r.hx):
+			var j := -float(r.hz) + 0.5
+			while j < float(r.hz):
+				var p: Vector2 = (r.c as Vector2) + (r.ax as Vector2) * i + (r.az as Vector2) * j
+				var top := _f3_top(plazas[id], p)
+				if top > -INF:
+					var gap := top - _f3_ground_y(p.x, p.y)
+					if gap < worst:
+						worst = gap
+						at = p
+					if gap < 0.0:
+						under += 1
+					elif gap < F3_ZF_M:
+						close += 1
+				j += 1.0
+			i += 1.0
+		if close > 2:
+			out.append("%s paving within 5 cm of the ground over %d m2 near %s" % [id, close, _f3_xy(at)])
+		if under > 2:
+			out.append("%s paving under the ground over %d m2 (worst %.2f m) near %s" % [id, under, -worst, _f3_xy(at)])
+	# streets: over a paving, over another street
+	var strips := {}
+	for mi: Node in st._root.get_children():
+		if mi is MeshInstance3D:
+			strips[str(mi.name)] = _f3_tris([mi], 0)
+	var seen := {}
+	for si in st.streets.size():
+		var s: Dictionary = st.streets[si]
+		if bool(s.get("stairs", false)) or not strips.has(str(s.id)):
+			continue
+		var own: Dictionary = strips[str(s.id)]
+		var d := 0.0
+		while d <= float(s.len):
+			var arr := st.sample_at(si, d)
+			var p: Vector2 = arr[0]
+			var y := _f3_top(own, p)
+			if y > -INF:
+				for pid: String in plazas:
+					var key := "%s|%s" % [s.id, pid]
+					if seen.has(key):
+						continue
+					var top := _f3_top(plazas[pid], p)
+					if top > -INF and absf(top - y) < F3_ZF_M:
+						seen[key] = true
+						out.append("street %s within 5 cm of the %s paving at %s" % [s.id, pid, _f3_xy(p)])
+				for oid: String in strips:
+					if oid == str(s.id):
+						continue
+					var key := "%s|%s" % [oid, s.id] if oid < str(s.id) else "%s|%s" % [s.id, oid]
+					if seen.has(key):
+						continue
+					var y2 := _f3_top(strips[oid], p)
+					if y2 > -INF and absf(y2 - y) < F3_ZF_M:
+						seen[key] = true
+						out.append("streets %s and %s within 5 cm of each other at %s" % [s.id, oid, _f3_xy(p)])
+			d += 2.0
+	# the quays' paving over the ground; the water over a flat bank
+	var works := Node3D.new()
+	get_root().add_child(works)
+	UrbsSite.build(works, _year, Callable(UrbsTerrain, "height_at"))
+	var quay_mis: Array = works.find_children("*", "MeshInstance3D", true, false)
+	var qt := _f3_tris(quay_mis)
+	for q: Dictionary in UrbsTiber.quays():
+		if _year < int(q["from"]):
+			continue
+		var bad := 0
+		var at := Vector2.ZERO
+		var s := float(q["s0"])
+		while s < float(q["s1"]):
+			for off in [6.0, 15.0, 25.0, 34.0]:
+				var p := UrbsTiber.bank_point(s, float(q["side"]), off)
+				var top := _f3_top(qt, p)
+				if top > -INF and top - _f3_ground_y(p.x, p.y) < F3_ZF_M:
+					bad += 1
+					at = p
+			s += 2.0
+		if bad > 2:
+			out.append("quay %s paving within 5 cm of (or under) the ground at %d points near %s" % [q["id"], bad, _f3_xy(at)])
+	works.queue_free()
+	var flat := {}
+	var where := {}
+	var x := -2400.0
+	while x < 2400.0:
+		var z := -2400.0
+		while z < 2400.0:
+			if UrbsTerrain.river_distance(x, z) < 200.0:
+				var wl := UrbsTerrain.river_level(x, z)
+				var g := _f3_ground_y(x, z)
+				if absf(g - wl) < F3_ZF_M:
+					var gx := absf(_f3_ground_y(x + 1.0, z) - _f3_ground_y(x - 1.0, z)) * 0.5
+					var gz := absf(_f3_ground_y(x, z + 1.0) - _f3_ground_y(x, z - 1.0)) * 0.5
+					if gx < 0.03 and gz < 0.03:
+						var key := Vector2i(floori(x / 100.0), floori(z / 100.0))
+						flat[key] = int(flat.get(key, 0)) + 1
+						where[key] = Vector2(x, z)
+			z += 2.0
+		x += 2.0
+	var fk := flat.keys()
+	fk.sort()
+	for key: Vector2i in fk:
+		if int(flat[key]) * 4 >= 40:
+			out.append("tiber water within 5 cm of a flat bank over %d m2 near %s" % [int(flat[key]) * 4, _f3_xy(where[key])])
+	return out
+
+
+# --- holes ---
+
+func _f3_holes() -> Array:
+	var out := []
+	var h := UrbsTerrain.field()
+	var nan := 0
+	for v in h:
+		if is_nan(v) or is_inf(v):
+			nan += 1
+	if nan > 0:
+		out.append("heightfield: %d NaN or infinite heights" % nan)
+	# the loader asks for chunks within UrbsGeo.RADIUS_M (+ a chunk) of the Forum (chunks.gd _plan)
+	var reach := int(ceil((UrbsGeo.RADIUS_M + 250.0) / 250.0))
+	var b := UrbsTerrain.bounds()
+	var missing := 0
+	for kx in range(-reach, reach):
+		for kz in range(-reach, reach):
+			var r := Rect2(Vector2(kx, kz) * 250.0, Vector2(250.0, 250.0))
+			if r.get_center().length() > UrbsGeo.RADIUS_M + 250.0:
+				continue
+			if not b.encloses(r):
+				missing += 1
+	if missing > 0:
+		out.append("%d chunks the loader can ask for lie outside the heightfield (%s): no ground there" % [missing, b])
+	return out
+
+
+# --- terraces ---
+
+func _f3_empty_terraces() -> Array:
+	var out := []
+	# monument terraces (topography.yaml platforms with `monument`) stamped while their monument is absent
+	var model: Dictionary = UrbsTiber.topography().get("terrain_model", {})
+	for pf: Dictionary in model.get("platforms", []):
+		var mid := str(pf.get("monument", ""))
+		if mid == "" or _mon.ids().has(mid):
+			continue
+		var poly := PackedVector2Array()
+		for ll: Array in pf.get("polygon", []):
+			poly.append(UrbsGeo.to_local(float(ll[0]), float(ll[1])))
+		var c := Vector2.ZERO
+		for q in poly:
+			c += q / poly.size()
+		var lv: Array = pf.get("level", [0.0])
+		if absf(UrbsTerrain.height_at(c.x, c.y) - float(lv[0])) < 0.3 and UrbsTerrain.built_at(c.x, c.y) > 0.9:
+			out.append("terrace %s cut and walled, but %s does not stand in %d" % [pf.id, mid, _year])
+	# hillside terrace walls with nothing on the tread above
+	var segs := []
+	var keys := {}
+	for kx in range(-10, 10):
+		for kz in range(-10, 10):
+			var rect := Rect2(Vector2(kx, kz) * 250.0, Vector2(250.0, 250.0))
+			var ss := UrbsSite.terrace_wall_segments(rect)
+			if not ss.is_empty():
+				segs.append_array(ss)
+				keys[Vector2i(kx, kz)] = true
+	if segs.is_empty():
+		return out
+	var lots := _f3_lots(keys.keys())
+	var fps := []
+	for id in _mon.ids():
+		var r := _footprint(id)
+		if not r.is_empty() and _model(id) not in ["wall", "aqueduct", "sewer"]:
+			fps.append(r)
+	var empty := {}
+	var where := {}
+	for w: Array in segs:
+		var a: Vector2 = w[0]
+		var bb: Vector2 = w[1]
+		var dn: Vector2 = w[2]
+		var mid := (a + bb) * 0.5
+		var tread := mid - dn * 4.0
+		var used := false
+		for lr: Dictionary in lots.get(Vector2i(floori(tread.x / 20.0), floori(tread.y / 20.0)), []):
+			if _contains(lr, tread, -4.0):
+				used = true
+				break
+		if not used:
+			for r: Dictionary in fps:
+				if (r.c as Vector2).distance_to(tread) < float(r.hx) + float(r.hz) + 6.0 and _contains(r, tread, -6.0):
+					used = true
+					break
+		if not used:
+			var ns := _streets.nearest_street(tread)
+			used = not ns.is_empty() and float(ns.distance) < float(ns.half_width) + 4.0
+		if not used:
+			var key := Vector2i(floori(mid.x / 50.0), floori(mid.y / 50.0))
+			empty[key] = float(empty.get(key, 0.0)) + a.distance_to(bb)
+			where[key] = mid
+	var ek := empty.keys()
+	ek.sort()
+	for key: Vector2i in ek:
+		if float(empty[key]) >= 5.0:
+			out.append("terrace walls across empty ground near %s: %.0f m" % [_f3_xy(where[key]), empty[key]])
+	return out
+
+
+## The fill's house lots in these 250 m chunks, as rectangles bucketed on a 20 m grid.
+func _f3_lots(chunk_keys: Array) -> Dictionary:
+	var fill := UrbsFill.new()
+	fill.year = _year
+	fill.height = Callable(UrbsTerrain, "height_at")
+	var fps := []
+	for id in _mon.ids():
+		var b: AABB = _mon.bounds(id)
+		if minf(b.size.x, b.size.z) >= 600.0:
+			continue
+		var bc := b.get_center()
+		if maxf(b.size.x, b.size.z) > 120.0 and UrbsSite.platform_at(bc.x, bc.z) != "":
+			continue
+		fps.append(Rect2(b.position.x, b.position.z, b.size.x, b.size.z))
+	fill.footprints = fps
+	fill.obstacles = _mon.oriented_footprints()
+	fill.prepare()
+	var grid := {}
+	for key: Vector2i in chunk_keys:
+		for rk in fill.regions_for_chunk(key):
+			while not fill.advance_region(rk, Time.get_ticks_usec() + 1000000000):
+				pass
+		for lot in fill.lots_for_chunk(key):
+			var lr := _lot_rect(lot)
+			var c: Vector2 = lot["c"]
+			var reach := float(lr.hx) + float(lr.hz) + 4.0
+			for gx in range(floori((c.x - reach) / 20.0), floori((c.x + reach) / 20.0) + 1):
+				for gz in range(floori((c.y - reach) / 20.0), floori((c.y + reach) / 20.0) + 1):
+					var g := Vector2i(gx, gz)
+					if not grid.has(g):
+						grid[g] = []
+					grid[g].append(lr)
+	return grid
+
+
+# --- platforms against what leads to them ---
+
+func _f3_platform_steps() -> Array:
+	var out := []
+	for pid: String in UrbsSite.platform_ids():
+		var pf := UrbsSite.platform(pid)
+		var poly: PackedVector2Array = pf.polygon
+		# streets that end at the platform
+		for s: Dictionary in _streets.streets:
+			var pts: PackedVector2Array = s.pts
+			for e in [pts[0], pts[pts.size() - 1]]:
+				var p: Vector2 = e
+				if Geometry2D.is_point_in_polygon(p, poly):
+					continue
+				var near := INF
+				var edge := p
+				for i in poly.size():
+					var q := Geometry2D.get_closest_point_to_segment(p, poly[i], poly[(i + 1) % poly.size()])
+					if q.distance_to(p) < near:
+						near = q.distance_to(p)
+						edge = q
+				if near > 15.0:
+					continue
+				var lvl := UrbsSite.platform_level(pf, edge.x)
+				var road := _f3_ground_y(p.x, p.y)
+				if absf(lvl - road) > 1.0:
+					out.append("platform %s stands %.1f m %s the end of street %s at %s" % [pid, absf(lvl - road), "above" if lvl > road else "below", s.id, _f3_xy(p)])
+		# the ground in front of the monument it carries
+		var mid := pid if _mon.ids().has(pid) else ""
+		for rec: Dictionary in (UrbsTiber.topography().get("terrain_model", {}) as Dictionary).get("platforms", []):
+			if str(rec.get("id", "")) == pid and str(rec.get("monument", "")) != "":
+				mid = str(rec["monument"]) if _mon.ids().has(str(rec["monument"])) else ""
+		if mid == "" or _model(mid) in ["servian_gate", "arch", "plaza"]:
+			continue
+		var r := _footprint(mid)
+		if r.is_empty():
+			continue
+		# the front: monuments.gd turns a model's +z (az) to its bearing
+		var dir: Vector2 = r.az
+		var far := 0.0
+		var lvl := 0.0
+		var p := r.c as Vector2
+		while far < 200.0 and Geometry2D.is_point_in_polygon(p, poly):
+			far += 1.0
+			p = (r.c as Vector2) + dir * far
+		lvl = UrbsSite.platform_level(pf, p.x)
+		var q := p + dir * 4.0
+		var g := _f3_ground_y(q.x, q.y)
+		if lvl - g > 1.0:
+			out.append("platform %s stands %.1f m over the ground in front of %s at %s" % [pid, lvl - g, mid, _f3_xy(q)])
+	return out
+
+
+# --- steps ---
+
+func _f3_stair_ends() -> Array:
+	var out := []
+	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(UrbsTerrain.STREETS_PATH))
+	if not parsed is Dictionary:
+		return out
+	for entry: Dictionary in parsed.get("streets", []):
+		if str(entry.get("kind", "")) != "stairs":
+			continue
+		var from_y: Variant = entry.get("exists_from")
+		if from_y != null and int(from_y) > _year:
+			continue
+		var raw := PackedVector2Array()
+		for ll in entry["points"]:
+			raw.append(UrbsGeo.to_local(float(ll[0]), float(ll[1])))
+		var pts := UrbsStreets._smooth(raw, 2)
+		for end in 2:
+			var p := pts[0] if end == 0 else pts[pts.size() - 1]
+			var q := pts[1] if end == 0 else pts[pts.size() - 2]
+			var beyond := p + (p - q).normalized() * 2.0
+			var step_y := UrbsTerrain.height_at(p.x, p.y)
+			var g := _f3_ground_y(beyond.x, beyond.y)
+			if absf(step_y - g) > 0.35:
+				out.append("stairs %s %s step %.1f m %s the ground beyond it at %s" % [entry.id, "first" if end == 0 else "last", absf(step_y - g), "above" if step_y > g else "below", _f3_xy(p)])
+	return out
+
+
+# --- chunk seams ---
+
+## The top vertices of a chunk mesh on one side (0 east x = end, 1 west x = start, 2 south z = end,
+## 3 north z = start), sorted along it: [[t, y, normal]].
+func _f3_edge(mesh: ArrayMesh, rect: Rect2, side: int) -> Array:
+	var arr := mesh.surface_get_arrays(0)
+	var vs: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
+	var ns: PackedVector3Array = arr[Mesh.ARRAY_NORMAL]
+	var line := rect.end.x if side == 0 else (rect.position.x if side == 1 else (rect.end.y if side == 2 else rect.position.y))
+	var best := {}
+	for k in vs.size():
+		var v := vs[k]
+		var on := v.x if side <= 1 else v.z
+		if absf(on - line) > 0.01:
+			continue
+		var t := snappedf(v.z if side <= 1 else v.x, 0.01)
+		if not best.has(t) or float(best[t][1]) < v.y:
+			best[t] = [t, v.y, ns[k]]
+	var out := best.values()
+	out.sort_custom(func(a, b): return a[0] < b[0])
+	return out
+
+
+## [y, normal] on an edge polyline at t (linear between its vertices, as the GPU draws it).
+static func _f3_edge_at(e: Array, t: float) -> Array:
+	for k in range(e.size() - 1):
+		if t <= float(e[k + 1][0]) + 1e-4:
+			var f := clampf((t - float(e[k][0])) / maxf(float(e[k + 1][0]) - float(e[k][0]), 1e-4), 0.0, 1.0)
+			return [lerpf(e[k][1], e[k + 1][1], f), (e[k][2] as Vector3).lerp(e[k + 1][2], f).normalized()]
+	return [e[e.size() - 1][1], e[e.size() - 1][2]]
+
+
+func _f3_chunk_seams() -> Array:
+	var out := []
+	var meshes := {}
+	var mesh_of := func(key: Vector2i, lod: int) -> ArrayMesh:
+		var mk := Vector3i(key.x, key.y, lod)
+		if not meshes.has(mk):
+			meshes[mk] = UrbsTerrain.chunk_mesh(Rect2(Vector2(key) * 250.0, Vector2(250.0, 250.0)), lod)
+		return meshes[mk]
+	for kx in range(-6, 6):
+		for kz in range(-6, 6):
+			var ka := Vector2i(kx, kz)
+			var ra := Rect2(Vector2(ka) * 250.0, Vector2(250.0, 250.0))
+			for edge in 2:   # the east and the south neighbour
+				var kb := ka + (Vector2i(1, 0) if edge == 0 else Vector2i(0, 1))
+				var rb := Rect2(Vector2(kb) * 250.0, Vector2(250.0, 250.0))
+				var gap := 0.0
+				var ang := 0.0
+				var at := Vector2.ZERO
+				var lods := [[0, 1], [1, 0], [1, 2], [2, 1]]
+				if (ra.get_center().length() < UrbsTerrain.NEAR_M) != (rb.get_center().length() < UrbsTerrain.NEAR_M):
+					lods.append([0, 0])
+				for lp: Array in lods:
+					var ea := _f3_edge(mesh_of.call(ka, lp[0]), ra, 0 if edge == 0 else 2)
+					var eb := _f3_edge(mesh_of.call(kb, lp[1]), rb, 1 if edge == 0 else 3)
+					if ea.size() < 2 or eb.size() < 2:
+						continue
+					var ts := {}
+					for v in ea:
+						ts[v[0]] = true
+					for v in eb:
+						ts[v[0]] = true
+					for t: float in ts:
+						var a := _f3_edge_at(ea, t)
+						var b := _f3_edge_at(eb, t)
+						var g := absf(float(a[0]) - float(b[0]))
+						var an := rad_to_deg((a[1] as Vector3).angle_to(b[1]))
+						if g > gap or an > ang:
+							at = Vector2(ra.end.x, t) if edge == 0 else Vector2(t, ra.end.y)
+						gap = maxf(gap, g)
+						ang = maxf(ang, an)
+				if gap > 0.25 or ang > 6.0:
+					out.append("chunk edge %s-%s near %s: levels of detail differ by %.2f m and %.0f degrees" % [ka, kb, _f3_xy(at), gap, ang])
+	return out
+
+
+# --- streets on the ground ---
+
+func _f3_streets_ground(st: UrbsStreets) -> Array:
+	var out := []
+	for mi: Node in st._root.get_children():
+		if not mi is MeshInstance3D:
+			continue
+		var sid := str(mi.name)
+		var tris := _f3_tris([mi], 0)
+		var idx := -1
+		for i in st.streets.size():
+			if str(st.streets[i].id) == sid:
+				idx = i
+		if idx < 0:
+			continue
+		var s: Dictionary = st.streets[idx]
+		var hw := float(s.hw)
+		var sunk := 0
+		var floating := 0
+		var worst_s := 0.0
+		var worst_f := 0.0
+		var at_s := Vector2.ZERO
+		var at_f := Vector2.ZERO
+		var d := 0.5
+		while d < float(s.len):
+			var arr := st.sample_at(idx, d)
+			var c: Vector2 = arr[0]
+			var t: Vector2 = arr[1]
+			var nrm := Vector2(-t.y, t.x)
+			var bad_s := false
+			var bad_f := false
+			for off in [-hw + 0.3, -hw * 0.5, 0.0, hw * 0.5, hw - 0.3]:
+				var p: Vector2 = c + nrm * off
+				var y := _f3_top(tris, p)
+				if y == -INF:
+					continue
+				var g := _f3_ground_y(p.x, p.y)
+				if y - g < 0.02:
+					bad_s = true
+					if g - y > worst_s:
+						worst_s = g - y
+						at_s = p
+				elif y - g > 0.5:
+					bad_f = true
+					if y - g > worst_f:
+						worst_f = y - g
+						at_f = p
+			sunk += 1 if bad_s else 0
+			floating += 1 if bad_f else 0
+			d += 1.0
+		if sunk >= 2:
+			out.append("street %s under the ground over %d m (worst %.2f m) near %s" % [sid, sunk, worst_s, _f3_xy(at_s)])
+		if floating >= 2:
+			out.append("street %s floating over the ground over %d m (worst %.2f m) near %s" % [sid, floating, worst_f, _f3_xy(at_f)])
+	return out
+# F3 ground (end)

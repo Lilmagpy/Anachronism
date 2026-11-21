@@ -2571,6 +2571,19 @@ SCENE_KINDS = [
     ("streets_through", "streets passing through a monument"),
 ]
 
+# F3 ground (begin): the ground and what is laid on it (audit.gd, the F3 ground checks)
+SCENE_KINDS += [
+    ("bank_sawtooth", "F3 ground: 100 m stretches of a Tiber bank with a saw-toothed water line"),
+    ("zfight", "F3 ground: surfaces within 5 cm of each other (paving, streets, quays, water)"),
+    ("ground_holes", "F3 ground: ground missing where the camera can see it"),
+    ("empty_terraces", "F3 ground: terrace walls with nothing standing on the terrace"),
+    ("platform_steps", "F3 ground: platforms more than 1 m off the street or ground in front"),
+    ("stair_ends", "F3 ground: steps that do not meet the ground at both ends"),
+    ("chunk_seams", "F3 ground: chunk edges where two levels of detail do not meet"),
+    ("streets_ground", "F3 ground: stretches of street sunk under or floating over the ground"),
+]
+# F3 ground (end)
+
 
 # =============================================================================================
 # The audit and its report
