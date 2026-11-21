@@ -1,0 +1,361 @@
+schema_version: 1
+# What the Roman court says, by moment (content/schema/dialogue.py). One line is picked each
+# time. Placeholders: {civ} {ruler} {subject} {year} {rival} {rival_ruler} {adjective}.
+# The ruler is the senior consul; the speakers are the offices in speakers.yaml. The Roman
+# colour comes from the sources named in the comments; nothing here invents a person.
+dialogue:
+  - id: game_start
+    speaker: ruler
+    lines:
+      - "The year is {year}. The fasces are mine for twelve months, and the Senate watches every one of them. Whisper your ideas; I will find a way to put them to the Fathers."
+      - "Two consuls, three hundred senators and a people that votes by centuries: nothing in {civ} is done by one man. Tell me what should be done, and we shall see who can be brought to propose it."
+      - "Our rivals sharpen swords. Let us sharpen minds instead. What should the {adjective} people learn first?"
+
+  - id: project_started
+    speaker: scholar
+    lines:
+      - "{subject}? Fascinating. I have read of nothing like it in the Greeks. The workshops begin at once, though the old craftsmen are already muttering about the custom of the ancestors."
+      - "I have taken a house on the Argiletum for {subject}. The tablets are waxed and the apprentices are nervous. Excellent."
+      - "We start on {subject} today. Give us hands and patience, and do not ask me how long."
+
+  - id: breakthrough
+    speaker: scholar
+    lines:
+      - "A breakthrough with {subject}! One of the apprentices spilled something, and suddenly it all made sense."
+      - "{subject} leaps ahead. I would take the credit, but in truth it was Fortuna. Mostly Fortuna."
+
+  - id: setback
+    speaker: scholar
+    lines:
+      - "The {subject} trials went badly. We have lost a month and a workshop roof on the Aventine."
+      - "A setback with {subject}. The craftsmen swear the omens were against it. I suspect the craftsmen."
+
+  - id: stalled
+    speaker: censor
+    lines:
+      - "Work on {subject} has stalled. The contractors have not been paid and the treasury cannot feed every clever idea at once."
+      - "We are spreading ourselves too thin. {subject} gathers dust while the fields go untended, and the census will show it."
+
+  - id: adopted
+    speaker: scholar
+    lines:
+      - "It works. {subject} is ours. Athens and Carthage will spend a generation wondering how."
+      - "{subject} is no longer a dream but a craft. Let the pontiffs write on their board that Rome did it first."
+      - "We have mastered {subject}. I have not slept in a month, and I have never been happier."
+
+  - id: widespread
+    speaker: censor
+    lines:
+      - "{subject}: once a marvel, now a habit. Every farm in Latium uses it without a second thought."
+      - "Good news from the tribes: {subject} is everywhere now. The clerks of the treasury are delighted."
+
+  - id: resistance
+    speaker: pontifex
+    lines:
+      - "Some grumble against the new {subject}. The custom of the ancestors has loud friends in the Senate."
+      - "The elders call {subject} a thing against the mos maiorum. Give them time, or give them something else to worry about."
+
+  - id: suspicion
+    speaker: pontifex
+    lines:
+      - "People ask where Rome learned {subject}. Some say from a Greek. Some say from the Etruscan books, or worse."
+      - "Whispers in the Forum, consul. {subject} came too soon, they say. Nobody invents that from nothing, and a prodigy must be expiated."
+
+  - id: framing
+    speaker: pontifex
+    lines:
+      - "The people have decided what our cleverness means. Pray they decided kindly; the Sibylline Books are not cheap to consult."
+      - "A story is spreading about Rome and its uncanny knowledge. Stories are hard to kill in a city of rumours."
+
+  - id: discovery
+    speaker: steward
+    lines:
+      - "{subject}! The prospectors found it where nobody thought to look. Our new arts pay for themselves."
+      - "We have found {subject} in our own hills. The smiths are already arguing over it, and the Senate over who owns it."
+
+  - id: riot
+    speaker: general
+    lines:
+      - "Riots! They looted the granaries at the Porta Trigemina. We ask too much of the plebs: too many works, too little bread."
+      - "The crowds are angry, and angry crowds do not care about progress. Ease the burden, or I will have to clear the Forum."
+
+  - id: revolt
+    speaker: general
+    lines:
+      - "{subject} has risen against us and broken away. We pushed too hard."
+      - "We have lost {subject}. The rebels fly their own standards now."
+
+  - id: famine
+    speaker: tribune
+    lines:
+      - "Famine. The plebs are dying, and they know exactly whose works ate the harvest. I will not hold them back."
+      - "The granaries are empty. Whatever the Senate is building, it will not feed a single child this winter. Open the public stores."
+
+  - id: collapse
+    speaker: general
+    lines:
+      - "The old order is finished: half the allies have thrown off the city. Whoever holds the fasces next must begin again, and more carefully."
+
+  - id: dynasty
+    speaker: ruler
+    lines:
+      - "The old order fell because it reached for everything at once. We will not. Let the people see that the magistrates govern again in {civ}."
+      - "A new beginning, a new mandate. The people will forgive the past once the granaries are full again."
+
+  - id: restoration
+    speaker: general
+    lines:
+      - "They never forgot us. {subject} has risen, and the {adjective} standards fly again. Now we must hold it."
+
+  - id: rival_adopted
+    speaker: rival
+    lines:
+      - "Do not imagine Rome alone dreams of new things. The {rival_adjective} court has mastered {subject}."
+      - "{subject} is ours now. Let the Romans wonder how {rival} managed it."
+      - "Greetings from {rival}. We thought you should hear it from us: we have {subject}."
+
+  - id: rival_war
+    speaker: rival
+    lines:
+      - "You heard right. {rival} marches against {civ}. Your clever ideas will not stop our spears."
+      - "There is no shame in war, only in losing it. {rival} is coming, and we do not intend to lose."
+      - "We sent envoys; you sent the fetials with their spear. Now {rival} sends its armies."
+
+  - id: rival_peace
+    speaker: rival
+    lines:
+      - "Enough. The fields need hands more than the battlefield needs bodies. {rival} accepts peace, for now."
+      - "Let it be peace. {rival} will remember this war, and so, I think, will {civ}."
+      - "We lay down our arms. Do not mistake this for friendship."
+
+  - id: rival_tribute
+    speaker: rival
+    lines:
+      - "Take your indemnity, then. {rival} pays, and counts every talent."
+      - "The {rival_adjective} court bows. Bowing is not kneeling; remember that."
+
+  - id: consequence
+    speaker: scholar
+    lines:
+      - "{subject}. Nobody warned us of this. New things have a way of changing more than they were meant to."
+      - "Ah. {subject}. I did say every invention has a second edge, did I not? I meant to."
+      - "{subject}: the world bends around our new arts in ways no philosopher foresaw."
+
+  # --- Counsel: each adviser recommends one idea a turn (Historical Advisors, DESIGN §14) ---
+  - id: advise_steward
+    speaker: steward
+    lines:
+      - "If you want my counsel: {subject}. More in the public granaries, fewer complaints at the gates."
+      - "The treasury's tablets say {subject}. Wealth today is legions and temples tomorrow."
+  - id: advise_steward_urgent
+    speaker: steward
+    lines:
+      - "The granaries are thin and the plebs know it. {subject}, and soon."
+      - "We cannot feed ambition on empty stores. Begin {subject} before the next lean year."
+  - id: advise_general
+    speaker: general
+    lines:
+      - "Peace is only the time between wars. {subject} would make the next one shorter."
+      - "My centurions ask for {subject}. Centurions rarely ask for anything sensible, but they are right this time."
+  - id: advise_general_urgent
+    speaker: general
+    lines:
+      - "The enemy is at the gates, or soon will be. Give me {subject}, and give it to me now."
+      - "We are outmatched. {subject} is the cheapest way I know to change that."
+  - id: advise_scholar
+    speaker: scholar
+    lines:
+      - "Knowledge grows knowledge. {subject} would open doors we cannot yet see."
+      - "If I may: {subject}. The young men who read Greek talk of nothing else."
+  - id: advise_diviner
+    speaker: diviner
+    lines:
+      - "The birds favour {subject}. A contented people is a quiet people."
+      - "The gods smile on magistrates who care for their own. {subject} would show that you do."
+  - id: advise_diviner_urgent
+    speaker: diviner
+    lines:
+      - "The Forum mutters and the pontiffs whisper. {subject} would calm them, before they find a reason to rise."
+      - "People fear what they do not understand, and lately they fear the Senate. {subject} would win them back."
+
+  - id: battle_won
+    speaker: general
+    lines:
+      - "Victory at {subject}! They broke on our line like a wave on rock. The men are singing and asking for a triumph."
+      - "{subject} is ours. Bury the dead, feed the living, and let us march before they recover."
+      - "They will tell of {subject} for a hundred years. I intend to be in it, and the Senate will vote me a triumph or hear why."
+  - id: battle_lost
+    speaker: general
+    lines:
+      - "We were beaten at {subject}. I take the blame, and I ask the Senate for more men."
+      - "{subject}: a black day. We fell back in good order, mostly. Give me time to rebuild."
+      - "They had the ground, the numbers and the luck at {subject}. Next time we choose the field."
+  - id: siege
+    speaker: general
+    lines:
+      - "They have ringed {subject} with trenches. The walls will hold a while, but only a while. Send an army."
+      - "{subject} is under siege. Every season we wait, the walls grow weaker and the people hungrier."
+  - id: army_lost
+    speaker: general
+    lines:
+      - "The {subject} is gone, surrounded and sent under the yoke. I have no words. Only a request for vengeance."
+
+  - id: pillaged
+    speaker: steward
+    lines:
+      - "They are burning the villages of {subject}. The harvest is gone, and the people flee to the walls. Drive them out!"
+      - "Smoke over {subject}. Raiders are taking everything that can be carried and burning the rest."
+  - id: pillage
+    speaker: general
+    lines:
+      - "We have stripped {subject} bare. The men eat well, and the enemy's purse is lighter."
+      - "{subject} burns. Ugly work, but every barn we empty is one less that feeds their army."
+
+  - id: uprising
+    speaker: general
+    lines:
+      - "{subject} has risen against us. I told the Senate: a conquered people must be watched, and watching takes a garrison."
+      - "We lost {subject} without a battle, to its own people. Next time, leave a garrison."
+  - id: uprising_won
+    speaker: steward
+    lines:
+      - "Our people in {subject} have thrown out the foreigners and come home to us! The temples are full."
+  - id: sea_battle_won
+    speaker: general
+    lines:
+      - "Our fleet has won on the {subject}! Their ships are sunk or fled, and the sea is ours to cross."
+      - "Victory on the {subject}. Every shore of it lies open to us now, and closed to them. Hang the beaks on the Rostra."
+  - id: sea_battle_lost
+    speaker: general
+    lines:
+      - "Our fleet is beaten on the {subject}. What ships we have left are running for harbour."
+      - "The {subject} belongs to them now. Until we build again, our legions cannot cross it."
+  - id: blockade
+    speaker: steward
+    lines:
+      - "Their warships lie off {subject}. No grain ship comes in, no ship goes out, and the merchants are ruined."
+      - "{subject} is blockaded. Grain rots on the quays and the customs house is empty."
+  - id: crossing_barred
+    speaker: general
+    lines:
+      - "The legions wait on the shore, but their fleet commands the water. Win the sea first; then we cross to {subject}."
+
+  - id: quiet
+    speaker: censor
+    lines:
+      - "A quiet lustrum. The harvest was fair and nobody burned anything down. I call that a triumph."
+      - "Nothing of note to report, which, in these times, is the best report of all."
+      - "The city is calm. Perhaps too calm for a consul with ideas."
+
+  - id: idea_feasible
+    speaker: scholar
+    lines:
+      - "{subject}! Yes, I see how it would work. Give the word and the workshops will try it."
+      - "An idea with legs. {subject} is within our reach, if the Senate will pay for it."
+      - "I have turned {subject} over all night. It can be done. Expensive, but it can be done."
+
+  - id: idea_blocked
+    speaker: censor
+    lines:
+      - "{subject} is a fine dream, but we cannot build a roof before the walls. I have listed what must come first."
+      - "Before {subject}, consul, we need other things. The clerks have written them down as goals."
+      - "{subject}? In time. First the groundwork; I have marked it on the tablets."
+
+  - id: idea_implausible
+    speaker: diviner
+    lines:
+      - "The birds are silent on this. Our people have no words for what you describe, yet."
+      - "The Greeks stared at your drawings and saw only riddles. Perhaps something simpler first?"
+      - "Even the Sibyl could not say what that is. Give our craftsmen something they can hold."
+
+  - id: war
+    speaker: general
+    lines:
+      - "War with {subject}! The fetial has thrown his spear and the levy is called. Give me men and iron, and trust me with the rest."
+      - "So it is {subject}. I have walked their roads in my dreams for years. Now I shall walk them in caligae."
+      - "{subject} wants war? Then we give them war: short, sharp, and on our terms."
+
+  - id: conquest
+    speaker: general
+    lines:
+      - "{subject} is ours! The standards are up and the looters are being flogged. Mostly."
+      - "We hold {subject}. Their garrison ran faster than our scouts could count."
+      - "{subject} has fallen to us. The people there watch us warily; treat them as allies and they may yet send us soldiers."
+
+  - id: province_lost
+    speaker: general
+    lines:
+      - "We have lost {subject}. I take the blame, and I will take it back."
+      - "{subject} is in enemy hands. Our lines bent, then broke. Send more men, or send for peace."
+
+  - id: capital_lost
+    speaker: ruler
+    lines:
+      - "They have taken {subject}, the seat of our ancestors. The Senate sits elsewhere, and we remember."
+
+  - id: ruler_died
+    speaker: princeps
+    lines:
+      - "{subject} is dead. The mourning will last a month. And now, {ruler}, the Senate looks to you."
+      - "We have buried {subject}; the ancestors' masks walked before the bier. The great families are already measuring you, {ruler}. Let them see a consul."
+      - "{subject} has gone to the ancestors. The fasces pass to {ruler}. Everything we began goes on, if you will it."
+
+  - id: peace
+    speaker: steward
+    lines:
+      - "Peace with {subject}. The fields will be ploughed again and the quaestors can stop weeping."
+      - "The war with {subject} is over. I have already started counting what it cost us. Do not ask."
+
+  - id: news
+    speaker: diviner
+    lines:
+      - "The winds carry our name: {subject} has heard of what we do. Secrets travel faster than horses."
+      - "Traders speak of us in the markets of {subject}. They are curious. Curiosity becomes envy; envy becomes war."
+      - "Word has reached {subject}. I read unease in the birds."
+
+  - id: imitation
+    speaker: scholar
+    lines:
+      - "{subject} is trying to copy our work! Imitation is flattery, and also theft."
+      - "Spies say the scholars of {subject} are fumbling with our ideas. Let them fumble."
+
+  - id: victory
+    speaker: ruler
+    lines:
+      - "Look at what the {adjective} people have become. No one from the Pillars to the Euphrates can stand against us now. The annals will remember, and wonder how."
+
+  - id: defeat
+    speaker: ruler
+    lines:
+      - "It is over. The {adjective} state falls. Perhaps we reached too far, too fast. Perhaps the world was not ready."
+
+  - id: ally_attacked
+    speaker: general
+    lines:
+      - "{subject} is under attack and invokes the treaty. Say the word and we march; the World tab has the war drums."
+      - "Our allies in {subject} are bleeding. If we stand aside, who will send us soldiers next year?"
+
+  - id: coalition
+    speaker: princeps
+    lines:
+      - "{subject} have joined hands against us. When a city grows this great, its neighbours stop competing and start counting."
+      - "A league against us: {subject}. Strike one and the others will come. Perhaps an embassy first?"
+
+  - id: disaster
+    speaker: steward
+    lines:
+      - "{subject}! I have opened the granaries and sent every clerk I can spare. We will count the cost when the worst is over."
+      - "{subject} has struck us. The people look to the magistrates; let them see them act."
+      - "A black day: {subject}. Had we known what I suspect you know, we might have been ready."
+
+  - id: blessing
+    speaker: diviner
+    lines:
+      - "{subject}! The gods smile on us. Spend the gift wisely; smiles do not last."
+      - "{subject}: the birds were right. The people will say it is your doing. Let them."
+
+  - id: faith
+    speaker: pontifex
+    lines:
+      - "{subject} is on the move. A cult travels where armies cannot, and it remembers who welcomed it."
+      - "The priests of {subject} have a new flock. Watch who prays with whom, consul; it will tell you who fights with whom."

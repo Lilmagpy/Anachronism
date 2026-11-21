@@ -1,51 +1,76 @@
 schema_version: 1
+# Rome's building arts, dated by the Roman work that first shows them (see agriculture.yaml
+# for the dating rule). `builds` names the work the idea raises in the 3D city when adopted.
 techs:
   - id: masonry
-    name: Masonry
+    name: Ashlar masonry (opus quadratum)
+    keywords: [stone, masonry, stonework, cut stone, bricks, mortar, ashlar, tufa, opus quadratum, squared stone, quarry]
     category: construction
     year: -3000
     complexity: 2
     requires: {materials: [stone]}
     effects: [{type: population_cap, bp: 400}, {type: military_strength, bp: 300}]
-    flavour: Dressed stone, fitted tight, outlasts its builders.
+    flavour: Dressed tufa, laid in courses without mortar, outlasts its builders.
+    history: "Rome built in squared blocks of grey cappellaccio tufa from the kings' time: the podium of the Capitoline temple (dedicated 509) and the Servian wall of 378, 'of squared stone' (Livy 6.32.1). Vitruvius weighs the tufas and travertine of Latium (Vitr. 2.7)."
+    sources: ["Livy 6.32.1", "Vitruvius 2.7.1-2", "Platner-Ashby s.v. Murus Servii Tullii"] # unverified
+    confidence: high
 
   - id: roads
-    name: Paved roads
+    name: Paved roads (viae munitae)
+    keywords: [roads, paved roads, highways, road network, paving, via, via appia, appian way, basalt road, silex, milestones, road, pave a road, road to capua, capua, highway]
     category: construction
-    year: -500
+    builds: road
+    year: -312
     complexity: 3
     prerequisites: [masonry, wheel]
     effects:
       - {type: mobility, bp: 1000}
       - {type: trade_income, bp: 600}
       - {type: information_speed, bp: 800}
-    flavour: A road is an order from the capital that never stops being obeyed.
+    flavour: A road is an order from the Senate that never stops being obeyed.
+    history: "Appius Claudius as censor laid the Via Appia from Rome to Capua in 312 BC (Livy 9.29.5-6); it was paved with squared stone from the Porta Capena to the temple of Mars in 296 (Livy 10.23.12) and the city's streets were first paved with flint in 174 (Livy 41.27.5). Gaius Gracchus set up milestones (Plut. C. Gracchus 7.2)."
+    sources: ["Livy 9.29.5-6", "Livy 10.23.12 # unverified", "Livy 41.27.5", "Plutarch, C. Gracchus 7.1-2", "Diodorus 20.36.2 # unverified"]
+    confidence: high
 
   - id: concrete
-    name: Hydraulic concrete
+    name: Roman concrete (opus caementicium)
+    keywords: [concrete, cement, lime mortar, pozzolana, pozzuolana, volcanic ash, rubble and mortar, caementicium, vaults, vault, vaulted]
     category: construction
+    builds: concrete_hall
     year: -200
     complexity: 3
     prerequisites: [masonry]
     requires: {materials: [stone]}
     effects: [{type: population_cap, bp: 600}, {type: military_strength, bp: 300}]
-    flavour: Lime and ash that harden even under the sea.
+    flavour: Lime, rubble and the ash of Puteoli, which hardens even under the sea.
+    history: "Roman builders mixed lime with volcanic ash (pulvis Puteolanus) and rubble from about 200 BC; the great vaulted warehouse hall at the Emporium (the Porticus Aemilia, 193 BC, rebuilt in concrete in the 2nd century) is the first monument of it. Vitruvius explains the ash that sets under water (Vitr. 2.6.1) and the rubble walls (Vitr. 2.8)."
+    sources: ["Vitruvius 2.6.1", "Vitruvius 2.8.1", "Livy 35.10.12 (the Porticus Aemilia)", "Platner-Ashby s.v. Porticus Aemilia"] # unverified
+    confidence: medium
 
   - id: aqueduct
     name: Aqueducts
+    keywords: [aqueduct, aqueducts, clean water, water supply, pipes, arches, aqua, bring water to the city, spring water, fountains, water channel]
     category: construction
-    year: -700
+    builds: aqueduct
+    year: -312
     complexity: 4
     prerequisites: [masonry, surveying]
     requires: {widespread: [masonry]}
     effects: [{type: population_cap, bp: 1000}, {type: health, bp: 1000}]
-    flavour: Clean water carried across valleys on arches of stone.
+    flavour: Spring water carried under the fields and over the last valley on arches.
+    history: "For 441 years Rome drank from wells, springs and the Tiber; in 312 BC the censors Appius Claudius and C. Plautius brought the Aqua Appia from the 8th mile of the Via Praenestina, 16 km almost wholly underground and only 60 paces on arches by the Porta Capena (Frontinus, Aq. 4-5; Livy 9.29.6). The Anio Vetus followed in 272 and the Marcia, on tall arcades, in 144."
+    sources: ["Frontinus, De aquaeductu 4-5", "Livy 9.29.6", "Frontinus, De aquaeductu 6-7 (Anio Vetus, Marcia) # unverified"]
+    confidence: high
 
   - id: canals
-    name: Canals and locks
+    name: Navigable canals (fossae)
+    keywords: [canal, canals, locks, waterway, barge, fossa, cut a channel, drain the lake, emissary, tunnel]
     category: construction
-    year: -500
+    year: -102
     complexity: 4
     prerequisites: [irrigation, surveying]
     effects: [{type: trade_income, bp: 1000}, {type: mobility, bp: 600}]
     flavour: Barges carry in a day what carts carry in a month.
+    history: "Marius had his soldiers cut a canal from the Rhone to the sea while waiting for the Cimbri, the Fossa Mariana (102 BC; Plutarch, Marius 15.2-3). Caesar planned to cut the Isthmus of Corinth and drain the Fucine lake (Suet. Iul. 44.3); Claudius' tunnel drained it in AD 52 (Suet. Claud. 20.1-2). Lock gates were never Roman: China built them in AD 984."
+    sources: ["Plutarch, Marius 15.2-3 # unverified", "Suetonius, Iulius 44.3", "Suetonius, Claudius 20.1-2 # unverified"]
+    confidence: medium

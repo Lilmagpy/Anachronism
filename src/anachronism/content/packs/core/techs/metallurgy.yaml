@@ -1,16 +1,22 @@
 schema_version: 1
+# Metals, in Roman terms (see agriculture.yaml for the dating rule).
 techs:
   - id: copper_smelting
     name: Copper smelting
+    keywords: [copper, smelting, smelt, aes, cyprian copper]
     category: metallurgy
     year: -5000
     complexity: 1
     requires: {materials: [copper]}
     effects: [{type: materials_output, bp: 500}]
     flavour: Green stone in the fire, red metal in the ashes.
+    history: "Copper and bronze (aes) were Italy's metal before iron: Etruria's mines at Populonia and the Tolfa hills fed the smiths of the 8th century, and 'aes' remained the Roman word for money. Pliny gives the best copper to Cyprus (Pliny NH 34.2)."
+    sources: ["Pliny NH 34.2 # unverified", "Pliny NH 3.138 (the Senate and Italy's mines) # unverified"]
+    confidence: high
 
   - id: bronze_working
     name: Bronze working
+    keywords: [bronze, tin, alloy, casting, cast bronze, statues]
     category: metallurgy
     year: -3300
     complexity: 2
@@ -18,9 +24,13 @@ techs:
     requires: {materials: [copper, tin]}
     effects: [{type: materials_output, bp: 600}, {type: military_strength, bp: 800}]
     flavour: A little tin makes copper hard enough to hold an edge.
+    history: "Etruscan and Latin smiths cast bronze helmets, shields and the Capitoline wolf before the Republic; the Servian army's first class fought in bronze helmet, shield, greaves and cuirass (Livy 1.43.2). The Twelve Tables were engraved on bronze (Livy 3.57.10)."
+    sources: ["Livy 1.43.2", "Livy 3.57.10 # unverified"]
+    confidence: high
 
   - id: ore_prospecting
     name: Ore prospecting
+    keywords: [prospecting, ore, mining, mines, surveying ore, geology, gold, silver, gold mining, silver mines, metalla, quarries]
     category: metallurgy
     year: -2000
     complexity: 2
@@ -28,9 +38,13 @@ techs:
     prerequisites: [copper_smelting]
     effects: [{type: unlocks_resource, target: iron}]
     flavour: Rust-red streams and bitter springs point to iron below.
+    history: "Etruria's miners read the hills for ore before Rome existed. Rome itself preferred to take mines abroad: Spain's silver after 206 BC (Polybius 34.9.8-11, 40,000 men at New Carthage), while an old decree of the Senate forbade mining in Italy (Pliny NH 3.138, 33.78)."
+    sources: ["Polybius 34.9.8-11 (Strabo 3.2.10) # unverified", "Pliny NH 3.138 # unverified", "Pliny NH 33.78 # unverified"]
+    confidence: medium
 
   - id: iron_working
     name: Iron working
+    keywords: [iron, ironworking, smithing, blacksmith, forge, ferrum, elba, bloomery]
     category: metallurgy
     year: -1200
     complexity: 3
@@ -38,32 +52,47 @@ techs:
     requires: {materials: [iron]}
     effects: [{type: materials_output, bp: 800}, {type: military_strength, bp: 1000}]
     flavour: Hammered, folded, quenched. The bloom becomes a blade.
+    history: "Etruria smelted the iron of Elba at Populonia from the 7th century (Diodorus 5.13.1-2); Latin graves hold iron swords of the same age. Roman smiths never cast iron: every blade and tool was hammered from a bloom."
+    sources: ["Diodorus 5.13.1-2 # unverified", "Pliny NH 34.138-149 (the kinds of iron) # unverified"]
+    confidence: high
 
   - id: coal_mining
-    name: Coal mining
+    name: Coal as fuel
+    keywords: [coal, coal mining, collieries, fossil fuel, stone that burns]
     category: metallurgy
     year: -300
     complexity: 2
     prerequisites: [ore_prospecting]
     effects: [{type: unlocks_resource, target: coal}, {type: materials_output, bp: 300}]
     flavour: Black stone that burns hotter and longer than wood.
+    history: "Theophrastus knew of stones that burn like charcoal, which smiths used in Liguria and Elis (Theophrastus, On Stones 16, about 300 BC); Roman Britain burned coal in the villas and at Bath in the 1st century AD. Rome's own forges burned charcoal to the end."
+    sources: ["Theophrastus, De lapidibus 16 # unverified", "Solinus 22.10 (coal at Bath) # unverified"]
+    confidence: low
 
   - id: blast_furnace
     name: Blast furnace
+    keywords: [blast furnace, cast iron, furnace, pig iron, molten iron]
     category: metallurgy
-    year: -400
+    year: 1150
     complexity: 4
     prerequisites: [iron_working, piston_bellows]
-    requires: {materials: [iron], widespread: [charcoal_burning]}
+    requires: {materials: [iron], widespread: [charcoal_burning], buildings: [forge]}
     effects: [{type: materials_output, bp: 1500}, {type: military_strength, bp: 600}]
     flavour: Iron poured like water instead of beaten like dough.
+    history: "No Roman ever saw iron run molten: the bloomery gave a spongy lump to hammer. China poured cast iron by the 5th century BC; Europe's first blast furnaces, in Sweden and the Rhineland, are of about 1150."
+    sources: ["Pliny NH 34.143-144 (iron worked hot from the bloom) # unverified"]
+    confidence: medium
 
   - id: crucible_steel
-    name: Crucible steel
+    name: Fine steel blades (Noric and Seric iron)
+    keywords: [steel, crucible steel, damascus, hardened steel, swords, sword, blades, better swords, sharper blades, noric steel, chalybs, seric iron, tempering]
     category: metallurgy
-    year: -300
+    year: -50
     complexity: 4
     prerequisites: [iron_working, pottery_kiln]
-    requires: {materials: [iron]}
+    requires: {materials: [iron], buildings: [forge]}
     effects: [{type: military_strength, bp: 1200}, {type: materials_output, bp: 500}]
-    flavour: Sealed in clay and fired for days, the steel comes out patterned like water.
+    flavour: Iron that takes an edge and keeps it, from Noricum or from the Seres.
+    history: "Horace's 'Noric sword' (Odes 1.16.9) was the Roman byword for a hard blade: Noricum's ores gave a natural steel from the 1st century BC. Pliny ranks the iron of the Seres first, Parthian second (Pliny NH 34.145), and tells how smiths quenched and tempered (34.146-149). The sealed crucibles of India made wootz by 300 BC."
+    sources: ["Horace, Odes 1.16.9 # unverified", "Pliny NH 34.145-149 # unverified"]
+    confidence: medium

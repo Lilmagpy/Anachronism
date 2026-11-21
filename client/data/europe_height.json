@@ -1,0 +1,11 @@
+{
+  "east": 61.875,
+  "height": 1664,
+  "km_per_pixel_equator": 4.8919677734375,
+  "north": 66.5132604431119,
+  "source": "Terrarium elevation tiles (Mapzen / AWS Open Data: SRTM, GMTED, ETOPO1, others)",
+  "south": 16.6361918783977,
+  "west": -11.25,
+  "width": 1664,
+  "zoom": 6
+}

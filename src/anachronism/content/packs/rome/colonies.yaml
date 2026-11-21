@@ -1,0 +1,525 @@
+schema_version: 1
+# Rome's colonies, each in its year and on the map province that holds its site
+# (content/schema/italy.py: ColonyFoundation). Default history founds each in its year unless the
+# player's history has turned there. "(read)" marks a passage read for this file: Livy on Perseus
+# (the Roberts and Foster translations), the Periochae on livius.org, Velleius and Appian on
+# LacusCurtius. Velleius 1.14-15 dates the colonies relative to one another; the years given are
+# the tradition's (cross-checked against the consular dates, not against a modern handbook).
+# Numbers are men ("names enrolled") unless notes say families. The province is the map grain's
+# nearest: a modelling choice, noted where the site lies on a border.
+colonies:
+  # ---- after the Latin settlement of 338 -----------------------------------------------------------
+  - id: col_cales
+    name: Cales
+    province: it_campania
+    kind: latin
+    year: -334
+    settlers: 2500
+    notes: "2,500 names enrolled by the Senate's resolution after the Ausones' city was taken."
+    sources: ["Livy 8.16.13-14 (read)", "Velleius Paterculus 1.14.3 (read)"]
+    confidence: high
+  - id: col_fregellae
+    name: Fregellae
+    province: it_volsci
+    kind: latin
+    year: -328
+    notes: "On land that had been the Sidicines' and then the Volscians' (Livy 8.22.2). Destroyed after its revolt in 125 (Livy, Periochae 60, unverified)."
+    sources: ["Livy 8.22.2 (read)", "Velleius Paterculus 1.14.4 (read)"]
+    confidence: high
+  - id: col_tarracina
+    name: Tarracina (Anxur)
+    province: it_volsci
+    kind: citizen
+    year: -329
+    settlers: 300
+    notes: "300 colonists with two iugera each; the sea-coast citizen colony (Livy 8.21.11, unverified: the Perseus page did not load)."
+    sources: ["Livy 8.21.11 (unverified)", "Velleius Paterculus 1.14.4 (read)"]
+    confidence: medium
+  - id: col_luceria
+    name: Luceria
+    province: it_apulia
+    kind: latin
+    year: -314
+    settlers: 2500
+    notes: "2,500 sent after the debate whether to destroy the city instead (Livy 9.26.3-5)."
+    sources: ["Livy 9.26.3-5 (read)", "Velleius Paterculus 1.14.4 (read)"]
+    confidence: high
+  - id: col_suessa
+    name: Suessa Aurunca
+    province: it_aurunci
+    kind: latin
+    year: -313
+    notes: "Suessa had been the Aurunci's (Livy 9.28.7)."
+    sources: ["Livy 9.28.7 (read)", "Velleius Paterculus 1.14.4 (read)"]
+    confidence: high
+  - id: col_pontiae
+    name: Pontiae
+    province: it_volsci
+    kind: latin
+    year: -313
+    notes: "An island the Volscians had held, within sight of their shore (Livy 9.28.7); placed with the Volscian coast at this grain."
+    sources: ["Livy 9.28.7 (read)"]
+    confidence: medium
+  - id: col_saticula
+    name: Saticula
+    province: it_campania
+    kind: latin
+    year: -313
+    notes: "Velleius names Saticula with Suessa; on the Samnite border of Campania, placed in Campania at this grain."
+    sources: ["Velleius Paterculus 1.14.4 (read)", "Festus 458L (unverified)"]
+    confidence: low
+  - id: col_interamna
+    name: Interamna Lirenas
+    province: it_aurunci
+    kind: latin
+    year: -312
+    settlers: 4000
+    notes: "The Senate decreed colonies for Interamna and Casinum; 4,000 colonists were sent by the next consuls (Livy 9.28.8: one figure for both). On the Liris, placed with the Aurunci."
+    sources: ["Livy 9.28.8 (read)", "Velleius Paterculus 1.14.4 (read)"]
+    confidence: medium
+  - id: col_sora
+    name: Sora
+    province: it_volsci
+    kind: latin
+    year: -303
+    settlers: 4000
+    notes: "4,000 men sent to Sora (Livy 10.1.2); upper Liris, Volscian country."
+    sources: ["Livy 10.1.2 (read)", "Velleius Paterculus 1.14.5 (read)"]
+    confidence: high
+  - id: col_alba_fucens
+    name: Alba Fucens
+    province: it_aequi
+    kind: latin
+    year: -303
+    settlers: 6000
+    notes: "6,000 settlers enrolled for Alba in the Aequian country (Livy 10.1.2)."
+    sources: ["Livy 10.1.2 (read)", "Velleius Paterculus 1.14.5 (read)"]
+    confidence: high
+  - id: col_narnia
+    name: Narnia
+    province: it_umbria
+    kind: latin
+    year: -299
+    notes: "Sent to Nequinum after its fall, to make head against the Umbrians, and named from the river Nar (Livy 10.10.5)."
+    sources: ["Livy 10.10.5 (read)"]
+    confidence: high
+  - id: col_carseoli
+    name: Carseoli
+    province: it_aequi
+    kind: latin
+    year: -298
+    settlers: 4000
+    notes: "Founded in the land of the Aequicoli (Livy 10.13.1); the 4,000 colonists are Livy 10.3.2 (unverified: not read)."
+    sources: ["Livy 10.13.1 (read)", "Livy 10.3.2 (unverified)", "Velleius Paterculus 1.14.5 (read)"]
+    confidence: medium
+  - id: col_minturnae
+    name: Minturnae
+    province: it_aurunci
+    kind: citizen
+    year: -296
+    notes: "Two colonies in the Vescian and Falernian country to guard the land the Samnites had wasted; men were hard to find for a perpetual outpost (Livy 10.21.8-10). Citizen colonies by Velleius' placing."
+    sources: ["Livy 10.21.8-10 (read)", "Velleius Paterculus 1.14.6 (read)"]
+    confidence: high
+  - id: col_sinuessa
+    name: Sinuessa
+    province: it_aurunci
+    kind: citizen
+    year: -296
+    notes: "Where the Greek Sinope was said to have stood (Livy 10.21.8)."
+    sources: ["Livy 10.21.8 (read)", "Velleius Paterculus 1.14.6 (read)"]
+    confidence: high
+  - id: col_venusia
+    name: Venusia
+    province: it_apulia
+    kind: latin
+    year: -291
+    settlers: 20000
+    notes: "Four years after Minturnae and Sinuessa (Velleius 1.14.6). The 20,000 colonists are Dionysius 17/18.5 (unverified). On the Apulian-Lucanian border; Daunia at this grain."
+    sources: ["Velleius Paterculus 1.14.6 (read)", "Dionysius of Halicarnassus 17/18.5 (unverified)"]
+    confidence: medium
+  - id: col_hadria
+    name: Hadria
+    province: it_picenum
+    kind: latin
+    year: -289
+    notes: "Colonies at Castrum, Sena and Hadria (Livy, Periochae 11.7); the year is the tradition's."
+    sources: ["Livy, Periochae 11.7 (read)"]
+    confidence: medium
+  - id: col_sena
+    name: Sena Gallica
+    province: it_senones
+    kind: citizen
+    year: -283
+    notes: "The first colony in the Senones' land after they were driven out (Polybius 2.19.12, unverified; Livy, Periochae 11.7, read)."
+    sources: ["Livy, Periochae 11.7 (read)", "Polybius 2.19.12 (unverified)"]
+    confidence: medium
+  - id: col_castrum_novum
+    name: Castrum Novum
+    province: it_caere
+    kind: citizen
+    year: -283
+    notes: "The Castrum of Periochae 11.7, on the Etruscan coast near Caere (Velleius 1.14.8 names Castrum again with Firmum, 264)."
+    sources: ["Livy, Periochae 11.7 (read)", "Velleius Paterculus 1.14.8 (read)"]
+    confidence: low
+  - id: col_paestum
+    name: Paestum
+    province: it_picentini
+    kind: latin
+    year: -273
+    notes: "In the consulship of Fabius Dorso and Claudius Canina (Velleius 1.14.7)."
+    sources: ["Velleius Paterculus 1.14.7 (read)"]
+    confidence: medium
+  - id: col_cosa
+    name: Cosa
+    province: it_tarquinii
+    kind: latin
+    year: -273
+    notes: "With Paestum (Velleius 1.14.7); on the coast of Vulci's land."
+    sources: ["Velleius Paterculus 1.14.7 (read)"]
+    confidence: medium
+  - id: col_ariminum
+    name: Ariminum
+    province: it_senones
+    kind: latin
+    year: -268
+    notes: "Colonies at Ariminum in Picenum and Beneventum in Samnium (Livy, Periochae 15.5); five years after Cosa, under Sempronius Sophus and Appius (Velleius 1.14.7)."
+    sources: ["Livy, Periochae 15.5 (read)", "Velleius Paterculus 1.14.7 (read)"]
+    confidence: high
+  - id: col_beneventum
+    name: Beneventum
+    province: it_hirpini
+    kind: latin
+    year: -268
+    notes: "Maleventum renamed; in the Hirpini's country (Livy, Periochae 15.5)."
+    sources: ["Livy, Periochae 15.5 (read)", "Velleius Paterculus 1.14.7 (read)"]
+    confidence: high
+  - id: col_firmum
+    name: Firmum
+    province: it_picenum
+    kind: latin
+    year: -264
+    notes: "At the outbreak of the First Punic War (Velleius 1.14.8)."
+    sources: ["Velleius Paterculus 1.14.8 (read)"]
+    confidence: medium
+  - id: col_aesernia
+    name: Aesernia
+    province: it_samnium
+    kind: latin
+    year: -263
+    notes: "A year after Firmum (Velleius 1.14.8); Livy, Periochae 16.7."
+    sources: ["Livy, Periochae 16.7 (read)", "Velleius Paterculus 1.14.8 (read)"]
+    confidence: high
+  - id: col_alsium
+    name: Alsium
+    province: it_caere
+    kind: citizen
+    year: -247
+    notes: "Seventeen years after Aesernia (Velleius 1.14.8); on Caere's coast."
+    sources: ["Velleius Paterculus 1.14.8 (read)"]
+    confidence: medium
+  - id: col_fregenae
+    name: Fregenae
+    province: it_caere
+    kind: citizen
+    year: -245
+    notes: "Colonies at Fregenae and Brundisium (Livy, Periochae 19.5)."
+    sources: ["Livy, Periochae 19.5 (read)", "Velleius Paterculus 1.14.8 (read)"]
+    confidence: high
+  - id: col_brundisium
+    name: Brundisium
+    province: it_messapia
+    kind: latin
+    year: -244
+    notes: "In the Sallentines' country (Livy, Periochae 19.5); under Torquatus and Sempronius (Velleius 1.14.8)."
+    sources: ["Livy, Periochae 19.5 (read)", "Velleius Paterculus 1.14.8 (read)"]
+    confidence: high
+  - id: col_spoletium
+    name: Spoletium
+    province: it_umbria
+    kind: latin
+    year: -241
+    notes: "The year the Floralia were instituted (Velleius 1.14.8)."
+    sources: ["Velleius Paterculus 1.14.8 (read)"]
+    confidence: medium
+  - id: col_valentia
+    name: Valentia (Vibo)
+    province: it_bruttium
+    kind: latin
+    year: -239
+    notes: "Two years after Spoletium (Velleius 1.14.8); Livy 35.40.5-6 puts the colony at Vibo in 192 (unverified): Velleius' date is kept, the later one noted."
+    sources: ["Velleius Paterculus 1.14.8 (read)", "Livy 35.40.5-6 (unverified)"]
+    confidence: low
+  - id: col_placentia
+    name: Placentia
+    province: it_boii
+    kind: latin
+    year: -218
+    settlers: 6000
+    notes: "Colonies in the conquered Gallic land (Livy, Periochae 20.18); just before Hannibal's arrival (Velleius 1.14.8). 6,000 colonists each: Polybius 3.40.4 and Livy 21.25.2 (unverified)."
+    sources: ["Livy, Periochae 20.18 (read)", "Velleius Paterculus 1.14.8 (read)", "Livy 21.25.2 (unverified)", "Polybius 3.40.4 (unverified)"]
+    confidence: medium
+  - id: col_cremona
+    name: Cremona
+    province: it_cenomani
+    kind: latin
+    year: -218
+    settlers: 6000
+    notes: "With Placentia; on the Cenomani's side of the Po."
+    sources: ["Livy, Periochae 20.18 (read)", "Velleius Paterculus 1.14.8 (read)", "Livy 21.25.2 (unverified)"]
+    confidence: medium
+  # ---- after Hannibal: the citizen colonies of 194 and the north -------------------------------------
+  - id: col_puteoli
+    name: Puteoli
+    province: it_neapolis
+    kind: citizen
+    year: -194
+    settlers: 300
+    notes: "300 Roman citizens to each of Puteoli, Volturnum and Liternum (Livy 34.45.1)."
+    sources: ["Livy 34.45.1 (read)", "Velleius Paterculus 1.15.3 (read)"]
+    confidence: high
+  - id: col_volturnum
+    name: Volturnum
+    province: it_campania
+    kind: citizen
+    year: -194
+    settlers: 300
+    sources: ["Livy 34.45.1 (read)"]
+    confidence: high
+  - id: col_liternum
+    name: Liternum
+    province: it_campania
+    kind: citizen
+    year: -194
+    settlers: 300
+    sources: ["Livy 34.45.1 (read)"]
+    confidence: high
+  - id: col_salernum
+    name: Salernum
+    province: it_picentini
+    kind: citizen
+    year: -194
+    settlers: 300
+    notes: "On land of Capua's domain (Livy 34.45.2); the number is the first three colonies' (Livy gives none for Salernum)."
+    sources: ["Livy 34.45.2 (read)", "Velleius Paterculus 1.15.3 (read)"]
+    confidence: medium
+  - id: col_buxentum
+    name: Buxentum
+    province: it_lucania
+    kind: citizen
+    year: -194
+    settlers: 300
+    sources: ["Livy 34.45.2 (read)", "Velleius Paterculus 1.15.3 (read)"]
+    confidence: medium
+  - id: col_sipontum
+    name: Sipontum
+    province: it_apulia
+    kind: citizen
+    year: -194
+    settlers: 300
+    notes: "On land that had been Arpi's (Livy 34.45.3)."
+    sources: ["Livy 34.45.3 (read)"]
+    confidence: medium
+  - id: col_tempsa
+    name: Tempsa
+    province: it_bruttium
+    kind: citizen
+    year: -194
+    settlers: 300
+    notes: "Land taken from the Bruttii (Livy 34.45.4)."
+    sources: ["Livy 34.45.4 (read)"]
+    confidence: medium
+  - id: col_croton
+    name: Croton
+    province: it_bruttium
+    kind: citizen
+    year: -194
+    settlers: 300
+    notes: "Still held by Greeks when the colony was sent (Livy 34.45.4-5)."
+    sources: ["Livy 34.45.4-5 (read)"]
+    confidence: medium
+  - id: col_copia
+    name: Copia (Thurii)
+    province: it_bruttium
+    kind: latin
+    year: -193
+    notes: "A Latin colony in the Thurine country (Livy 35.9.7-8, unverified)."
+    sources: ["Livy 35.9.7-8 (unverified)"]
+    confidence: low
+  - id: col_bononia
+    name: Bononia
+    province: it_boii
+    kind: latin
+    year: -189
+    settlers: 3000
+    notes: "3,000 men led to Bononia by the triumvirs Flaccus, Serranus and Tappo; seventy iugera to a horseman, fifty to the rest; land taken from the Boii (Livy 37.57.7-8)."
+    sources: ["Livy 37.57.7-8 (read)", "Velleius Paterculus 1.15.2 (read)"]
+    confidence: high
+  - id: col_potentia
+    name: Potentia
+    province: it_picenum
+    kind: citizen
+    year: -184
+    notes: "Potentia in Picenum and Pisaurum in the Gallic land, six iugera each (Livy 39.44.10)."
+    sources: ["Livy 39.44.10 (read)", "Velleius Paterculus 1.15.2 (read)"]
+    confidence: high
+  - id: col_pisaurum
+    name: Pisaurum
+    province: it_senones
+    kind: citizen
+    year: -184
+    sources: ["Livy 39.44.10 (read)", "Velleius Paterculus 1.15.2 (read)"]
+    confidence: high
+  - id: col_mutina
+    name: Mutina
+    province: it_boii
+    kind: citizen
+    year: -183
+    settlers: 2000
+    notes: "Mutina and Parma colonised by Roman citizens, 2,000 men each, five iugera at Mutina and eight at Parma (Livy 39.55.6-7)."
+    sources: ["Livy 39.55.6-7 (read)"]
+    confidence: high
+  - id: col_parma
+    name: Parma
+    province: it_boii
+    kind: citizen
+    year: -183
+    settlers: 2000
+    sources: ["Livy 39.55.6-7 (read)"]
+    confidence: high
+  - id: col_saturnia
+    name: Saturnia
+    province: it_volsinii
+    kind: citizen
+    year: -183
+    notes: "A colony of Roman citizens, ten iugera each (Livy 39.55.9)."
+    sources: ["Livy 39.55.9 (read)"]
+    confidence: high
+  - id: col_aquileia
+    name: Aquileia
+    province: it_veneti
+    kind: latin
+    year: -181
+    settlers: 3000
+    notes: "3,000 foot settled, fifty iugera each, centurions a hundred and horsemen a hundred and forty, under Scipio Nasica, Flaminius and Acidinus (Livy 40.34.2); the Senate had debated whether to make it Latin or citizen and chose Latin (Livy 39.55.5-6)."
+    sources: ["Livy 40.34.2 (read)", "Livy 39.55.5-6 (read)", "Velleius Paterculus 1.15.2 (read)"]
+    confidence: high
+  - id: col_graviscae
+    name: Graviscae
+    province: it_tarquinii
+    kind: citizen
+    year: -181
+    notes: "With Aquileia (Velleius 1.15.2); Livy 40.29.1-2 (unverified)."
+    sources: ["Velleius Paterculus 1.15.2 (read)", "Livy 40.29.1-2 (unverified)"]
+    confidence: medium
+  - id: col_luca
+    name: Luca
+    province: it_ligures_apuani
+    kind: latin
+    year: -180
+    notes: "Four years after Aquileia (Velleius 1.15.2), the last Latin colony; Pisae offered the land (Livy 40.43.1, read: the offer; the foundation is Velleius')."
+    sources: ["Velleius Paterculus 1.15.2 (read)", "Livy 40.43.1 (read)"]
+    confidence: medium
+  - id: col_auximum
+    name: Auximum
+    province: it_picenum
+    kind: citizen
+    year: -157
+    notes: "Velleius 1.15.3 dates it 185 years before his own time and says the date is questioned."
+    sources: ["Velleius Paterculus 1.15.3 (read)"]
+    confidence: low
+  # ---- the Gracchan colonies ------------------------------------------------------------------------
+  - id: col_fabrateria
+    name: Fabrateria Nova
+    province: it_hernici
+    kind: citizen
+    year: -124
+    notes: "Under Cassius Longinus and Sextius Calvinus (Velleius 1.15.4), on the Liris after Fregellae's destruction."
+    sources: ["Velleius Paterculus 1.15.4 (read)"]
+    confidence: medium
+  - id: col_scolacium
+    name: Scolacium Minervium
+    province: it_bruttium
+    kind: citizen
+    year: -123
+    notes: "The year after Fabrateria, with Neptunia and Carthage (Velleius 1.15.4); Gaius Gracchus' colonies (Plutarch, Gaius Gracchus 8.3, read: Tarentum and Capua proposed)."
+    sources: ["Velleius Paterculus 1.15.4 (read)", "Plutarch, Gaius Gracchus 8.3 (read)"]
+    confidence: medium
+  - id: col_neptunia
+    name: Neptunia (Tarentum)
+    province: it_tarentum
+    kind: citizen
+    year: -123
+    sources: ["Velleius Paterculus 1.15.4 (read)", "Plutarch, Gaius Gracchus 8.3 (read)"]
+    confidence: medium
+  - id: col_junonia
+    name: Junonia (Carthage)
+    province: car_carthage
+    kind: citizen
+    year: -122
+    settlers: 6000
+    notes: "Rubrius' law for a colony on the site of Carthage; Gaius Gracchus named it Junonia and laid it out in seventy days amid ill omens (Plutarch, Gaius Gracchus 10.2, 11.1-2, read). The 6,000 colonists are Appian, Civil Wars 1.24 (unverified). Annulled after his death."
+    sources: ["Plutarch, Gaius Gracchus 10-11 (read)", "Velleius Paterculus 1.15.4 (read)", "Appian, Civil Wars 1.24 (unverified)"]
+    confidence: medium
+  - id: col_narbo
+    name: Narbo Martius
+    province: southern_gaul
+    kind: citizen
+    year: -118
+    notes: "Under Porcius and Marcius (Velleius 1.15.5): the first citizen colony beyond the Alps."
+    sources: ["Velleius Paterculus 1.15.5 (read)"]
+    confidence: medium
+  - id: col_eporedia
+    name: Eporedia
+    province: it_salassi
+    kind: citizen
+    year: -100
+    notes: "Under Marius, consul for the sixth time, and Valerius Flaccus (Velleius 1.15.5); in the Salassi's valley."
+    sources: ["Velleius Paterculus 1.15.5 (read)"]
+    confidence: medium
+  # ---- Sulla's veteran colonies ---------------------------------------------------------------------
+  - id: col_sulla_praeneste
+    name: Praeneste (Sulla's veterans)
+    province: it_latium
+    kind: citizen
+    year: -81
+    settlers: 3000
+    notes: "Sulla placed colonies of his soldiers in most of the Italian towns he punished, to hold Italy under garrisons, on land and houses taken from the Marians (Appian, Civil Wars 1.96, read); land for twenty-three legions (1.100, read). Praeneste's fate: 1.94 (read in part). The settlers per town are GAME BALANCE."
+    sources: ["Appian, Civil Wars 1.94, 1.96, 1.100 (read)"]
+    confidence: medium
+  - id: col_sulla_pompeii
+    name: Pompeii (Colonia Veneria Cornelia)
+    province: it_neapolis
+    kind: citizen
+    year: -80
+    settlers: 3000
+    notes: "Sulla's colony at Pompeii: Cicero, Pro Sulla 60-62 (unverified)."
+    sources: ["Appian, Civil Wars 1.96, 1.100 (read)", "Cicero, Pro Sulla 60-62 (unverified)"]
+    confidence: low
+  - id: col_sulla_faesulae
+    name: Faesulae (Sulla's veterans)
+    province: it_arretium
+    kind: citizen
+    year: -80
+    settlers: 3000
+    notes: "Sullan colonists at Faesulae, later Catiline's men: Sallust, Catiline 28.4 (unverified); Cicero, In Catilinam 2.20 (unverified)."
+    sources: ["Appian, Civil Wars 1.96, 1.100 (read)", "Sallust, Catiline 28.4 (unverified)", "Cicero, In Catilinam 2.20 (unverified)"]
+    confidence: low
+  - id: col_sulla_nola
+    name: Nola (Sulla's veterans)
+    province: it_campania
+    kind: citizen
+    year: -80
+    settlers: 3000
+    notes: "Nola, the last Italian town in arms (Velleius 2.17.1, read), among the towns Sulla garrisoned with colonists (Appian 1.96)."
+    sources: ["Appian, Civil Wars 1.96 (read)", "Velleius Paterculus 2.17.1 (read)"]
+    confidence: low
+  # ---- Caesar ----------------------------------------------------------------------------------------
+  - id: col_capua_caesar
+    name: Capua (Caesar's law)
+    province: it_campania
+    kind: citizen
+    year: -59
+    settlers: 20000
+    notes: "Caesar's agrarian law of 59 settled 20,000 citizens with three or more children on the Campanian land (Suetonius, Divus Iulius 20.3, unverified; Velleius 2.44.4, unverified)."
+    sources: ["Suetonius, Divus Iulius 20.3 (unverified)", "Velleius Paterculus 2.44.4 (unverified)"]
+    confidence: low
