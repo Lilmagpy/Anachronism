@@ -2571,6 +2571,21 @@ SCENE_KINDS = [
     ("streets_through", "streets passing through a monument"),
 ]
 
+# F3 monuments (begin): the checks of client/scripts/urbs/monument_audit.gd (audit.gd runs them)
+F3_MONUMENT_KINDS = [
+    ("part_overlaps", "monuments whose parts (real mesh pieces) run through another's"),
+    ("parts_floating", "monuments with parts resting on nothing"),
+    ("parts_sunk", "monuments with columns sunk into what they stand on"),
+    ("coplanar", "faces of two materials in one plane that can be seen (they flicker)"),
+    ("view_inside", "monuments whose --at street camera stands inside a solid or a house"),
+    ("view_misses", "monuments whose --at street camera does not see the front"),
+    ("interior_voids", "interiors with sight lines from the door that meet nothing (black)"),
+    ("interior_figures", "interiors with figures through a wall or floor"),
+    ("interior_missing", "enterable monuments with no interior"),
+]
+SCENE_KINDS.extend(F3_MONUMENT_KINDS)
+# F3 monuments (end)
+
 
 # =============================================================================================
 # The audit and its report
