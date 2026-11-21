@@ -38,7 +38,7 @@ const SURFACE_LIFT := 0.12  ## strips float this far above the terrain to avoid 
 const FOOTWAY_W := 1.25     ## the raised footway behind the kerb, inside the walls (reaches the fill's frontage, FOOTPATH 1 m + a little under the walls)
 const FOOTWAY_H := 0.22
 const SEARCH_RINGS := 7
-const SINK := 0.15          ## F3: a strip's edge sinks this far where a wider street or a paving lies over it
+const SINK := 0.5           ## F3: a strip's edge sinks this far where a wider street or a paving lies over it
 
 var year := -300
 var height: Callable = func(_x: float, _z: float) -> float: return 10.0

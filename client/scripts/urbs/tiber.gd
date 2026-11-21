@@ -283,6 +283,10 @@ static func _island_band(x: float, z: float) -> Array:
 	if w <= 0.0:
 		return [0.0, 0.0, 0.0]
 	var n := p.dot(_island_n)
+	# F3: and only near the island across its axis too (the reach's band is a strip square to the
+	# axis; unbounded, it straightened the river 800 m downstream at the Emporium, where the course
+	# runs across that axis, and left part of its bed as dry ground 6 m above the water)
+	w *= 1.0 - smoothstep(_band.y + 80.0, _band.y + 200.0, absf(n - _band.x))
 	return [w, absf(n - _band.x), _band.y]
 
 
@@ -347,7 +351,9 @@ static func carve(h: PackedFloat32Array, n: int, origin: float, cell: float) -> 
 			var hw := half_width_at_s(s)
 			var inn := clampf(side[idx] * turn[idx] * 1.5, 0.0, 1.0)
 			var outr := clampf(-side[idx] * turn[idx] * 1.5, 0.0, 1.0)
-			var dd := d + 3.5 * _noise.get_noise_2d(x / 22.0, z / 22.0)
+			# the bank wanders a few metres off the line (F3: over about 80 m, not 22 m, so the bank is
+			# a plane across each 5 m cell and the water's edge drawn on it stays smooth)
+			var dd := d + 4.0 * _noise.get_noise_2d(x / 80.0, z / 80.0)
 			var ib := _island_band(x, z)
 			var iw: float = ib[0]
 			if iw > 0.0:   # the island reach: the fitted channel, straight banks

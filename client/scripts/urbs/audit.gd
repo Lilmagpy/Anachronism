@@ -576,6 +576,15 @@ func _f3_bank_sawtooth() -> Array:
 	var faced := not facing.is_empty() and _year >= int(facing.get("from", 0))
 	var kinks := {}
 	var where := {}
+	var quay_lines := []   # the quays' walls (UrbsSite._quays) as polylines
+	for q: Dictionary in UrbsTiber.quays():
+		if _year >= int(q["from"]):
+			var ql := PackedVector2Array()
+			var sq := float(q["s0"])
+			while sq <= float(q["s1"]):
+				ql.append(UrbsTiber.bank_point(sq, float(q["side"]), 0.5))
+				sq += 5.0
+			quay_lines.append(ql)
 	for line: PackedVector2Array in _f3_shorelines():
 		# resample every 2 m along the line, then the turn at each point over 2 m either side
 		var pts := PackedVector2Array([line[0]])
@@ -594,12 +603,11 @@ func _f3_bank_sawtooth() -> Array:
 			if UrbsTiber.island_r(p.x, p.y) < 1.2 and faced:
 				continue   # the island's travertine facing stands at its edge
 			var quay := false
-			for q: Dictionary in UrbsTiber.quays():
-				if _year >= int(q["from"]):
-					var s0 := UrbsTiber.bank_point(float(q["s0"]), float(q["side"]))
-					var s1 := UrbsTiber.bank_point(float(q["s1"]), float(q["side"]))
-					if Geometry2D.get_closest_point_to_segment(p, s0, s1).distance_to(p) < 12.0:
+			for ql: PackedVector2Array in quay_lines:
+				for k2 in range(ql.size() - 1):
+					if Geometry2D.get_closest_point_to_segment(p, ql[k2], ql[k2 + 1]).distance_to(p) < 6.0:
 						quay = true
+						break
 			if quay:
 				continue   # a quay's wall stands at the water
 			if rad_to_deg(absf((pts[k] - pts[k - 1]).angle_to(pts[k + 1] - pts[k]))) > 25.0:
@@ -775,10 +783,14 @@ func _f3_holes() -> Array:
 			var r := Rect2(Vector2(kx, kz) * 250.0, Vector2(250.0, 250.0))
 			if r.get_center().length() > UrbsGeo.RADIUS_M + 250.0:
 				continue
-			if not b.encloses(r):
+			if b.encloses(r):
+				continue
+			var m := UrbsTerrain.chunk_mesh(r, 2)
+			var ab := m.get_aabb() if m != null and m.get_surface_count() > 0 else AABB()
+			if ab.size.x < 249.0 or ab.size.z < 249.0:
 				missing += 1
 	if missing > 0:
-		out.append("%d chunks the loader can ask for lie outside the heightfield (%s): no ground there" % [missing, b])
+		out.append("%d chunks the loader can ask for lie outside the heightfield (%s) and have no ground" % [missing, b])
 	return out
 
 

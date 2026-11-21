@@ -292,7 +292,7 @@ terrain_model:
   # `walls: true` stands substructure / retaining walls on the edges where the ground falls or rises.
   # F3: a platform that names a monument (its id, or `monument`) is cut only in the years that
   # monument stands (terrain.gd platforms()); `outline: monument` makes its polygon the monument's
-  # footprint; a monument's terrace (f2_terrace_*) runs down in front of the monument as a 1 in 4
+  # footprint; a monument's terrace (f2_terrace_*) runs down in front of the monument as a 1 in 5
   # ramp instead of a substructure wall, so it never stands over the ground it faces.
   platforms:
   - id: forum_romanum

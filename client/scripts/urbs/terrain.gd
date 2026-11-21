@@ -45,13 +45,14 @@ const NEAR_M := 4000.0                    ## within this of the Forum, lod 0 use
 const WARP_M := 38.0                      ## how far hill and valley outlines wander from their ideal line
 const FORUM_FLOOR_M := 10.0               ## ancient Forum floor, m a.s.l.
 const TERRACE_M := 4.0                    ## height of one hillside terrace
+const CACHE_KEEP := 8                     ## F3: terrain caches kept in user:// (one per year shown, ~40 MB each)
 const CACHE_VERSION := "f3-ground-1"       ## bump when the model code changes (F3: the ground of the year)
 const STREETS_PATH := "res://data/city/streets.json"
 const REGIONS_PATH := "res://data/city/regions.json"
 const RURAL_CELL := 25.0                  ## resolution of the farmland weight raster
 const MAP_CELL := 10.0                    ## resolution of the baked ground colour maps
 const MAP_N := 501                        ## texels per side of the ground colour maps
-const FRONT_RAMP := 0.25                  ## F3: slope of the ramp in front of a monument's terrace (1 in 4)
+const FRONT_RAMP := 0.2                   ## F3: slope of the ramp in front of a monument's terrace (1 in 5)
 const PAVE_BLEND := 6.0                   ## F3: a paving's carved floor blends into the ground over this
 const PAVE_INSET := 0.6                   ## F3: no ground drawn this far inside a paving's edge
 const PAVE_DIP := 0.5                     ## F3: ground vertices under a paving are drawn this much lower
@@ -234,6 +235,7 @@ static func _rural_n() -> int:
 
 
 static func _save_cache(key: String) -> void:
+	_prune_cache(CACHE_KEEP - 1)
 	var f := FileAccess.open(_cache_path(key), FileAccess.WRITE)
 	if f == null:
 		return
@@ -243,6 +245,21 @@ static func _save_cache(key: String) -> void:
 	f.store_buffer(_map_col)
 	f.store_buffer(_map_w)
 	f.store_buffer(_cover)
+
+
+## F3: the ground now differs by year, so caches pile up (about 40 MB each): keep the `keep` most
+## recently written and delete the rest.
+static func _prune_cache(keep: int) -> void:
+	var dir := DirAccess.open("user://")
+	if dir == null:
+		return
+	var found: Array = []
+	for name in dir.get_files():
+		if name.begins_with("urbs_terrain_") and name.ends_with(".bin"):
+			found.append([FileAccess.get_modified_time("user://" + name), name])
+	found.sort_custom(func(a: Array, b: Array) -> bool: return a[0] > b[0])
+	for k in range(keep, found.size()):
+		dir.remove(found[k][1])
 
 
 static func _load_cache(key: String) -> bool:
@@ -504,7 +521,7 @@ static func _stamp_plateau(plateau: Dictionary, h: PackedFloat32Array) -> void:
 
 ## A built floor: the polygon carved to `level` (a gradient between two values along x), blended
 ## into the ground over `blend` metres beyond its edge. F3: a platform carrying a monument
-## (`front`, the monument's facing) falls in front of it as a ramp of FRONT_RAMP (1 in 4) to the
+## (`front`, the monument's facing) falls in front of it as a ramp of FRONT_RAMP (1 in 5) to the
 ## ground, so its front never stands over the street or the ground it faces (UrbsSite leaves the
 ## wall off that side).
 static func _stamp_platform(pf: Dictionary, h: PackedFloat32Array) -> void:
@@ -526,7 +543,7 @@ static func _stamp_platform(pf: Dictionary, h: PackedFloat32Array) -> void:
 		while far < 200.0 and Geometry2D.is_point_in_polygon(c + front * far, poly):
 			far += 1.0
 		var q := c + front * (far + 6.0)
-		ramp = clampf((l0 - _sample(h, q.x, q.y)) / FRONT_RAMP, blend, 60.0)
+		ramp = clampf((l0 - _sample(h, q.x, q.y)) / FRONT_RAMP, blend, 80.0)
 	var reach := maxf(blend, ramp)
 	var bb := _bbox(poly, reach)
 	var lo: Vector2 = bb[4]
@@ -1084,6 +1101,18 @@ static func build_chunk(rect: Rect2, lod: int) -> Node3D:
 	var mi := MeshInstance3D.new()
 	mi.name = "Mesh"
 	mi.mesh = chunk_mesh(rect, lod)
+	if not bounds().encloses(rect):
+		mi.material_override = _ground_material()
+		node.add_child(mi)
+		var ow := _outer_water(rect)
+		if ow != null:
+			var wmi := MeshInstance3D.new()
+			wmi.name = "Water"
+			wmi.mesh = ow
+			wmi.material_override = UrbsMaterials.get_material("tiber_water")
+			wmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			node.add_child(wmi)
+		return node   # F3: beyond the heightfield, the ground carried on (no flora, no walls)
 	mi.material_override = _ground_material()
 	node.add_child(mi)
 	var water := _water_mesh(i0, j0, ci, cj, step)
@@ -1125,6 +1154,8 @@ static func build_chunk(rect: Rect2, lod: int) -> Node3D:
 ## The ground mesh alone of the chunk covering `rect` at `lod` (as build_chunk draws it).
 static func chunk_mesh(rect: Rect2, lod: int) -> ArrayMesh:
 	prepare()
+	if not bounds().encloses(rect):
+		return _outer_mesh(rect)
 	var near := rect.get_center().length() < NEAR_M
 	var step := (1 if near else 2) if lod <= 0 else (5 if lod == 1 else 10)
 	var i0 := roundi((rect.position.x + HALF_M) / CELL_M)
@@ -1153,43 +1184,98 @@ static func _gi(i: int) -> int:
 	return clampi(i, 0, CELLS)
 
 
+## F3: a chunk's border is always drawn at every cell (5 m), whatever its level of detail, with
+## the normals of the finest mesh, so two neighbours of different detail share the very same edge
+## (no step and no seam in the light where they meet); a coarser chunk's inner grid is zipped to
+## that border. The skirt stays as a guard.
 static func _chunk_mesh(i0: int, j0: int, ci: int, cj: int, step: int) -> ArrayMesh:
 	var nx := maxi(ci / step, 1)
 	var nz := maxi(cj / step, 1)
 	var pp := PackedVector3Array()
 	var pn := PackedVector3Array()
-	var stride := nx + 1
-	for dj in nz + 1:
-		for di in nx + 1:
-			_add_vertex(i0 + di * step, j0 + dj * step, 0.0, step, pp, pn)
 	var idx := PackedInt32Array()
-	for dj in nz:
+	var outer: Array[Vector2i] = []   # the border ring, in cells from (i0, j0), corner (0, 0) first
+	if step == 1 or nx < 3 or nz < 3:
+		var stride := nx + 1
+		for dj in nz + 1:
+			for di in nx + 1:
+				_add_vertex(i0 + di * step, j0 + dj * step, 0.0, step if (di > 0 and dj > 0 and di < nx and dj < nz) else 1, pp, pn)
+		for dj in nz:
+			for di in nx:
+				var a := dj * stride + di
+				if not _cover.is_empty() and _covered(i0 + di * step, j0 + dj * step, step):
+					continue   # F3: under a paving, which hides the ground
+				idx.append_array([a, a + 1, a + stride, a + 1, a + stride + 1, a + stride])
+		var ring_idx := []
 		for di in nx:
-			var a := dj * stride + di
-			if not _cover.is_empty() and _covered(i0 + di * step, j0 + dj * step, step):
-				continue   # F3: under a paving, which hides the ground
-			idx.append_array([a, a + 1, a + stride, a + 1, a + stride + 1, a + stride])
-	# the skirt ring: the same x, z, lowered 4 m, drawn double sided
-	var ring: Array[Vector2i] = []
-	for di in nx:
-		ring.append(Vector2i(di, 0))
-	for dj in nz:
-		ring.append(Vector2i(nx, dj))
-	for di in range(nx, 0, -1):
-		ring.append(Vector2i(di, nz))
-	for dj in range(nz, 0, -1):
-		ring.append(Vector2i(0, dj))
-	var base := pp.size()
-	for r in ring:
-		_add_vertex(i0 + r.x * step, j0 + r.y * step, 4.0, step, pp, pn)
-	for k in ring.size():
-		var r0: Vector2i = ring[k]
-		var r1: Vector2i = ring[(k + 1) % ring.size()]
-		var t0 := r0.y * stride + r0.x
-		var t1 := r1.y * stride + r1.x
-		var s0 := base + k
-		var s1 := base + (k + 1) % ring.size()
-		idx.append_array([t0, t1, s0, t1, s1, s0, t0, s0, t1, t1, s0, s1])
+			ring_idx.append(di)
+		for dj in nz:
+			ring_idx.append(dj * stride + nx)
+		for di in range(nx, 0, -1):
+			ring_idx.append(nz * stride + di)
+		for dj in range(nz, 0, -1):
+			ring_idx.append(dj * stride)
+		_skirt(ring_idx, pp, pn, idx)
+	else:
+		# the inner grid, (1..nx-1) x (1..nz-1) coarse vertices
+		var stride := nx - 1
+		var gi := func(a: int, b: int) -> int: return (b - 1) * stride + (a - 1)
+		for b in range(1, nz):
+			for a in range(1, nx):
+				_add_vertex(i0 + a * step, j0 + b * step, 0.0, step, pp, pn)
+		for b in range(1, nz - 1):
+			for a in range(1, nx - 1):
+				if not _cover.is_empty() and _covered(i0 + a * step, j0 + b * step, step):
+					continue
+				var k: int = gi.call(a, b)
+				idx.append_array([k, k + 1, k + stride, k + 1, k + stride + 1, k + stride])
+		# the inner ring and the fine border, each walked the same way round with a parameter
+		# 0..4 (one per side), zipped together
+		var inner := []
+		for a in range(1, nx):
+			inner.append([gi.call(a, 1), float(a - 1) / float(nx - 2)])
+		for b in range(2, nz):
+			inner.append([gi.call(nx - 1, b), 1.0 + float(b - 1) / float(nz - 2)])
+		for a in range(nx - 2, 0, -1):
+			inner.append([gi.call(a, nz - 1), 2.0 + float(nx - 1 - a) / float(nx - 2)])
+		for b in range(nz - 2, 1, -1):
+			inner.append([gi.call(1, b), 3.0 + float(nz - 1 - b) / float(nz - 2)])
+		var border := []
+		var base := pp.size()
+		var cells := []
+		for i in ci:
+			cells.append([Vector2i(i, 0), float(i) / ci])
+		for j in cj:
+			cells.append([Vector2i(ci, j), 1.0 + float(j) / cj])
+		for i in range(ci, 0, -1):
+			cells.append([Vector2i(i, cj), 2.0 + float(ci - i) / ci])
+		for j in range(cj, 0, -1):
+			cells.append([Vector2i(0, j), 3.0 + float(cj - j) / cj])
+		for c: Array in cells:
+			var v: Vector2i = c[0]
+			_add_vertex(i0 + v.x, j0 + v.y, 0.0, 1, pp, pn)
+			border.append([base + border.size(), float(c[1])])
+		var ii := 0
+		var oi := 0
+		var ni := inner.size()
+		var no := border.size()
+		while ii < ni or oi < no:
+			var a_in: Array = inner[ii % ni]
+			var a_out: Array = border[oi % no]
+			var t_in := float(inner[(ii + 1) % ni][1]) + (4.0 if ii + 1 >= ni else 0.0)
+			var t_out := float(border[(oi + 1) % no][1]) + (4.0 if oi + 1 >= no else 0.0)
+			var c_idx: int
+			if oi < no and (ii >= ni or t_out <= t_in):
+				c_idx = border[(oi + 1) % no][0]
+				oi += 1
+			else:
+				c_idx = inner[(ii + 1) % ni][0]
+				ii += 1
+			_tri(int(a_in[0]), int(a_out[0]), c_idx, pp, idx)
+		var ring_idx := []
+		for o: Array in border:
+			ring_idx.append(o[0])
+		_skirt(ring_idx, pp, pn, idx)
 	var arr: Array = []
 	arr.resize(Mesh.ARRAY_MAX)
 	arr[Mesh.ARRAY_VERTEX] = pp
@@ -1198,6 +1284,95 @@ static func _chunk_mesh(i0: int, j0: int, ci: int, cj: int, step: int) -> ArrayM
 	var mesh := ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
 	return mesh
+
+
+## F3: the ground beyond the heightfield (the loader asks for chunks up to UrbsGeo.RADIUS_M from
+## the Forum, the field ends at HALF_M): the field's edge carried on outwards at 25 m cells
+## (height_at clamps to the edge), so the far hills and fields never end in a void.
+static func _outer_mesh(rect: Rect2) -> ArrayMesh:
+	var n := 10
+	var c := rect.size.x / n
+	var pp := PackedVector3Array()
+	var pn := PackedVector3Array()
+	for j in n + 1:
+		for i in n + 1:
+			var x := rect.position.x + i * c
+			var z := rect.position.y + j * c
+			pp.append(Vector3(x, height_at(x, z), z))
+			var dx := height_at(x + c, z) - height_at(x - c, z)
+			var dz := height_at(x, z + c) - height_at(x, z - c)
+			pn.append(Vector3(-dx, 2.0 * c, -dz).normalized())
+	var idx := PackedInt32Array()
+	for j in n:
+		for i in n:
+			var a := j * (n + 1) + i
+			idx.append_array([a, a + 1, a + n + 1, a + 1, a + n + 2, a + n + 1])
+	var arr: Array = []
+	arr.resize(Mesh.ARRAY_MAX)
+	arr[Mesh.ARRAY_VERTEX] = pp
+	arr[Mesh.ARRAY_NORMAL] = pn
+	arr[Mesh.ARRAY_INDEX] = idx
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
+	return mesh
+
+
+## F3: the Tiber carried on beyond the heightfield, over the cells of _outer_mesh below its level.
+static func _outer_water(rect: Rect2) -> ArrayMesh:
+	var n := 10
+	var c := rect.size.x / n
+	var verts := PackedVector3Array()
+	var idx := PackedInt32Array()
+	for j in n:
+		for i in n:
+			var q: Array[Vector2] = []
+			var wet := false
+			for v: Vector2 in [Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1)]:
+				var p := rect.position + (Vector2(i, j) + v) * c
+				q.append(p)
+				if river_distance(p.x, p.y) < 400.0 and height_at(p.x, p.y) < river_level(p.x, p.y) + 0.05:
+					wet = true
+			if not wet:
+				continue
+			var b := verts.size()
+			for p: Vector2 in q:
+				verts.append(Vector3(p.x, river_level(p.x, p.y), p.y))
+			idx.append_array([b, b + 1, b + 3, b + 1, b + 2, b + 3])
+	if idx.is_empty():
+		return null
+	var normals := PackedVector3Array()
+	normals.resize(verts.size())
+	normals.fill(Vector3.UP)
+	var arr: Array = []
+	arr.resize(Mesh.ARRAY_MAX)
+	arr[Mesh.ARRAY_VERTEX] = verts
+	arr[Mesh.ARRAY_NORMAL] = normals
+	arr[Mesh.ARRAY_INDEX] = idx
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
+	return mesh
+
+
+## A ground triangle, wound to face up (as the grid's own: (b - a) x (c - a) points down).
+static func _tri(a: int, b: int, c: int, pp: PackedVector3Array, idx: PackedInt32Array) -> void:
+	if (pp[b] - pp[a]).cross(pp[c] - pp[a]).y > 0.0:
+		idx.append_array([a, c, b])
+	else:
+		idx.append_array([a, b, c])
+
+
+## The skirt round a chunk: its border vertices (`ring`, in order) again 4 m lower, double sided.
+static func _skirt(ring: Array, pp: PackedVector3Array, pn: PackedVector3Array, idx: PackedInt32Array) -> void:
+	var base := pp.size()
+	for k: int in ring:
+		pp.append(pp[k] - Vector3(0.0, 4.0, 0.0))
+		pn.append(pn[k])
+	for k in ring.size():
+		var t0: int = ring[k]
+		var t1: int = ring[(k + 1) % ring.size()]
+		var s0 := base + k
+		var s1 := base + (k + 1) % ring.size()
+		idx.append_array([t0, t1, s0, t1, s1, s0, t0, s0, t1, t1, s0, s1])
 
 
 ## The Tiber's surface over this chunk: a quad at the water level (per vertex, it falls gently
