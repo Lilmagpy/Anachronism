@@ -982,6 +982,11 @@ func _take_screenshot(path: String) -> void:
 		while waited < 1.2:
 			await get_tree().process_frame
 			waited += get_process_delta_time()
+	if options.has("sweep") and urbs != null:   # F3: --sweep=<poses.json> --sweep-out=<dir> (urbs/sweep.gd)
+		await UrbsSweep.run(urbs, get_tree(), str(options["sweep"]), str(options.get("sweep-out", "user://sweep")))
+		bridge.stop()
+		get_tree().quit()
+		return
 	if options.has("urbs-shots"):   # Urbs (D-289): --urbs-shots=t1,t2 pictures while --then=... glides
 		var then := str(options.get("then", ""))
 		if then == "enter":

@@ -43,6 +43,7 @@
 ##   --event=kind:ref[:monument]  play an engine event's spectacle (spectacles.gd header)
 ##   --spectacle=race|munus|senate|sacrifice|triumph  play one directly (with --at=<monument>)
 ##   --spectacle-view=N    put the camera at the spectacle's Nth own view
+##   F3: --sweep=<poses.json> --sweep-out=<dir>  photograph many viewpoints in one run (sweep.gd)
 ##   F2 play (places.gd, moments.gd): --places-fixture  use client/data/fixtures/places_264.json
 ##   even when the view has places; --moments  play the fixture's year of events as moments;
 ##   --list-closed  start with "Rome this year" folded; --moment-speed=X  moments X times faster;
