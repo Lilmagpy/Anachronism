@@ -26,6 +26,7 @@
 class_name UrbsFillParts
 extends RefCounted
 
+const AWNING_OUT := 1.2   ## F3: awning poles stand on the footway behind the kerb (UrbsFill KERB + FOOTPATH = 1.53 m)
 const SKIRT := 10.0   ## the masonry base below the floor: up to 9 m shows on a steep downhill side
 
 # surface ids (vertex alpha * 20)
@@ -524,7 +525,7 @@ static func shop_front(b: MB, face: int, h: float, wid: float, w: float, d: floa
 		b.rect_on(face, h0 - 0.25, h1 + 0.25, tall, tall + 0.3, w, d, 0.03, WOOD)
 		if awning >= 0 and face == 0:
 			var ca: Color = AWNINGS[awning % AWNINGS.size()]
-			b.shed(h0 - 0.3, h1 + 0.3, d * 0.5 + 0.05, d * 0.5 + 1.7, 3.2, 2.5, ca, 2)
+			b.shed(h0 - 0.3, h1 + 0.3, d * 0.5 + 0.05, d * 0.5 + AWNING_OUT, 3.2, 2.6, ca, 2)
 		return
 	var r := fr(k, 5)
 	var deep := 1.2    # how far inside the opening we model
@@ -568,17 +569,19 @@ static func shop_front(b: MB, face: int, h: float, wid: float, w: float, d: floa
 		# inn), 1 a table of goods, 2 a workbench
 		var trade := 0.0 if r < 0.45 else (1.0 if r < 0.8 else 2.0)
 		b.sign_panel(face, h0 - 0.1, h1 + 0.1, tall + 0.4, tall + 0.95, w, d, 0.012, trade * 100.0 + float(int((h + 20.0) * 2.0 + 0.5) % 100))
-	# awning: a cloth from a timber bar over the opening down to two poles at the kerb
+	# awning: a cloth from a timber bar over the opening down to two poles on the footway, behind
+	# the kerb (F3: they stood 0.3 m into the carriageway); the poles reach down a plinth's depth
+	# so they meet the ground where it falls away in front of the house
 	if awning >= 0 and face == 0:
 		var ca: Color = AWNINGS[awning % AWNINGS.size()]
 		var z0 := d * 0.5 + 0.08
-		var z1 := d * 0.5 + 1.8
-		b.shed(h0 - 0.3, h1 + 0.3, z0, z1, 3.15, 2.45, ca, 0)
+		var z1 := d * 0.5 + AWNING_OUT
+		b.shed(h0 - 0.3, h1 + 0.3, z0, z1, 3.15, 2.6, ca, 0)
 		b.box(Vector3(h0 - 0.35, 3.1, z0 - 0.04), Vector3(h1 + 0.35, 3.2, z0 + 0.06), WOOD)
 		for sx in [h0 - 0.25, h1 + 0.25]:
-			b.box(Vector3(sx - 0.04, 0.0, z1 - 0.08), Vector3(sx + 0.04, 2.5, z1), WOOD, false)
+			b.box(Vector3(sx - 0.04, -SKIRT, z1 - 0.08), Vector3(sx + 0.04, 2.65, z1), WOOD, false)
 		# a scalloped edge: a hanging flap
-		b.quad(Vector3(h0 - 0.3, 2.45, z1), Vector3(h1 + 0.3, 2.45, z1), Vector3(h1 + 0.3, 2.2, z1 + 0.02), Vector3(h0 - 0.3, 2.2, z1 + 0.02), ca, Vector3(0, 0, 1))
+		b.quad(Vector3(h0 - 0.3, 2.6, z1), Vector3(h1 + 0.3, 2.6, z1), Vector3(h1 + 0.3, 2.35, z1 + 0.02), Vector3(h0 - 0.3, 2.35, z1 + 0.02), ca, Vector3(0, 0, 1))
 
 
 static func shop_hole(h: float, wid: float) -> Rect2:
@@ -667,8 +670,11 @@ static func stair(b: MB, face: int, h_start: float, y_top: float, w: float, d: f
 	var b0 := p_hi
 	var b1 := p_hi + out * width
 	b.quad(a0, a1, b1, b0, STONE, Vector3.UP)       # the slope (treads read via the shader)
-	b.quad(a1, b1, Vector3(b1.x, 0.0, b1.z), Vector3(a1.x, 0.0, a1.z), PLINTH, out)
-	b.quad(b0, b1, Vector3(b1.x, 0.0, b1.z), Vector3(b0.x, 0.0, b0.z), PLINTH, al)
+	# the masonry under the flight goes down a plinth's depth (F3: it hung in the air where the
+	# ground falls away along the flank)
+	b.quad(a1, b1, Vector3(b1.x, -SKIRT, b1.z), Vector3(a1.x, -SKIRT, a1.z), PLINTH, out)
+	b.quad(b0, b1, Vector3(b1.x, -SKIRT, b1.z), Vector3(b0.x, -SKIRT, b0.z), PLINTH, al)
+	b.quad(a1, a0, Vector3(a0.x, -SKIRT, a0.z), Vector3(a1.x, -SKIRT, a1.z), PLINTH, -al)
 	if lod == 0:
 		var n_steps := int(y_top / 0.26)
 		for i in n_steps:

@@ -135,13 +135,16 @@ static func insula(shape: String, storeys: int, feature: int, pitch: int, lod: i
 			m.box(Vector3(bx - 0.1, top_y - 0.5, md * 0.5), Vector3(bx + 0.1, top_y + 0.2, md * 0.5 + 0.55), P.WOOD, false, true)
 	b.append(m, Vector3(0, 0, mz))
 	var ov := 0.55
+	# F3: the narrow-fronted houses stand in terraces, party wall to party wall: no eaves over the
+	# flanks (theirs ran 0.5 m into the next house's roof)
+	var ovx := 0.0 if narrow else ov
 	var jetty := 0.6 if feature == 2 else 0.0
 	var roof := MB.new()
 	var rh := P.rise(md * 0.5 + ov, deg)
 	if shape == "hip":
-		roof.hip(-w * 0.5 - ov, w * 0.5 + ov, -md * 0.5 - ov, md * 0.5 + ov + jetty, h, rh, P.TILE, lod)
+		roof.hip(-w * 0.5 - ovx, w * 0.5 + ovx, -md * 0.5 - ov, md * 0.5 + ov + jetty, h, rh, P.TILE, lod)
 	else:
-		roof.gable(-w * 0.5 - ov, w * 0.5 + ov, -md * 0.5 - ov, md * 0.5 + ov + jetty, h, rh, P.TILE, P.PLASTER, lod)
+		roof.gable(-w * 0.5 - ovx, w * 0.5 + ovx, -md * 0.5 - ov, md * 0.5 + ov + jetty, h, rh, P.TILE, P.PLASTER, lod)
 	# the kitchens' smoke holes on the back slope
 	if lod == 0:
 		var zs := -md * 0.25
@@ -158,7 +161,7 @@ static func insula(shape: String, storeys: int, feature: int, pitch: int, lod: i
 ## Atrium house of the Republican type, nominal 20 x 34 m, the street at +z: a blank front wall with
 ## the tall door (fauces) in the middle and a taberna either side; the atrium roof falls inward to
 ## the compluvium over the impluvium; the tablinum; the peristyle garden with its colonnade behind.
-static func domus(lod: int) -> MB:
+static func domus(lod: int, awning := true) -> MB:
 	var w := 20.0
 	var d := 34.0
 	var b := MB.new()
@@ -172,7 +175,7 @@ static func domus(lod: int) -> MB:
 	b.rect_on(0, -hx, hx, -P.SKIRT, 0.0, w, d, 0.0, P.PLINTH)
 	b.face_with_holes(0, -hx, hx, 0.0, h0, w, d, front_holes if lod == 0 else [], P.PLASTER)
 	P.door(b, 0, 0.0, 1.8, 3.4, w, d, lod, 31, true)
-	P.shop_front(b, 0, -5.4, 2.6, w, d, lod, 32, 3 if lod == 0 else -1, true)
+	P.shop_front(b, 0, -5.4, 2.6, w, d, lod, 32, 3 if lod == 0 and awning else -1, true)
 	P.shop_front(b, 0, 5.4, 2.6, w, d, lod, 33, -1, true)
 	if lod < 2:
 		for sx in [-8.2, -2.6, 2.6, 8.2]:
@@ -310,6 +313,9 @@ static func casa(roof_kind: String, lod: int) -> MB:
 		P.window(b, 0, 2.1, 1.2, 0.9, 0.9, w, d, 0, 52)
 		P.window_flat(b, 2, -1.0, 1.3, 0.8, 0.8, w, d, 53, lod)
 		P.amphora(b, -2.6, 0.0, d * 0.5 + 0.4, 0.9)
+		# the woodpile against the flank, on a footing that goes down to the ground (F3: it hung
+		# in the air on a slope)
+		b.box(Vector3(-w * 0.5 - 0.5, -P.SKIRT, -2.0), Vector3(-w * 0.5, 0.0, 0.5), P.PLINTH, false)
 		b.box(Vector3(-w * 0.5 - 0.5, 0.0, -2.0), Vector3(-w * 0.5, 0.8, 0.5), P.WOOD)
 	elif lod == 1:
 		P.window_flat(b, 0, 2.1, 1.2, 0.9, 0.9, w, d, 52, lod)
@@ -360,10 +366,12 @@ static func taberna(variant: int, lod: int) -> MB:
 		b.box(Vector3(-w * 0.5 + 0.5, 0.0, d * 0.5 - 0.1), Vector3(w * 0.5 - 0.5, 1.0, d * 0.5 + 0.55), P.STONE)
 		for i in 5:
 			P.amphora(b, -1.6 + 0.8 * float(i), 1.0, d * 0.5 + 0.2, 0.7)
-		for i in 3:
-			P.amphora(b, w * 0.5 + 0.35, 0.0, d * 0.5 - 0.6 - 0.6 * float(i), 1.0)
+		# F3: no stock of amphorae against the flank any more: it stood inside the next shop of
+		# the row
+	# F3: the shed roof stops at the flanks, so the roofs of a row of shops meet without overlapping
+	# (their eaves ran 0.4 m into each other, at the same height: flicker)
 	var rh := P.rise(d + 0.7)
-	b.shed(-w * 0.5 - 0.2, w * 0.5 + 0.2, -d * 0.5 - 0.3, d * 0.5 + 0.4, h + rh, h, P.TILE, lod)
+	b.shed(-w * 0.5, w * 0.5, -d * 0.5 - 0.3, d * 0.5 + 0.4, h + rh, h, P.TILE, lod)
 	b.tri(Vector3(w * 0.5, h, d * 0.5), Vector3(w * 0.5, h, -d * 0.5), Vector3(w * 0.5, h + rh, -d * 0.5), P.PLASTER, Vector3(1, 0, 0))
 	b.tri(Vector3(-w * 0.5, h, -d * 0.5), Vector3(-w * 0.5, h, d * 0.5), Vector3(-w * 0.5, h + rh, -d * 0.5), P.PLASTER, Vector3(-1, 0, 0))
 	return b

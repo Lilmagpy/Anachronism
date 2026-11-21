@@ -104,7 +104,7 @@ static func tomb(kind: String, lod: int) -> MB:
 	var b := MB.new()
 	match kind:
 		"altar":
-			b.box(Vector3(-1.5, -1.0, -1.5), Vector3(1.5, 0.5, 1.5), P.PLINTH)
+			b.box(Vector3(-1.5, -3.0, -1.5), Vector3(1.5, 0.5, 1.5), P.PLINTH)   # F3: footings 3 m deep (slopes)
 			b.box(Vector3(-1.2, 0.5, -1.2), Vector3(1.2, 1.9, 1.2), MARBLE)
 			b.box(Vector3(-1.45, 1.9, -1.45), Vector3(1.45, 2.3, 1.45), P.STONE)
 			b.rect_on(0, -0.8, 0.8, 0.9, 1.6, 3.0, 3.0, 0.62, P.SIGN)
@@ -117,12 +117,12 @@ static func tomb(kind: String, lod: int) -> MB:
 					for j in 2:
 						b.rect_on(2, -1.6 + 1.6 * float(i) - 0.35, -1.6 + 1.6 * float(i) + 0.35, 1.0 + 1.0 * float(j), 1.5 + 1.0 * float(j), 5.0, 5.0, 0.03, P.LATTICE)
 		"round":
-			b.cone(0, 0, -1.0, 1.5, 4.0, 3.9, 10, P.PLINTH)
+			b.cone(0, 0, -3.0, 1.5, 4.0, 3.9, 10, P.PLINTH)
 			b.cone(0, 0, 1.5, 5.0, 3.8, 3.6, 10, MARBLE)
 			b.cone(0, 0, 5.0, 5.4, 3.9, 3.9, 10, P.STONE)
 			b.cone(0, 0, 5.4, 7.2, 3.0, 0.1, 10, Color(0.40, 0.46, 0.25, 0.05))
 		"tumulus":
-			b.cone(0, 0, -0.5, 0.2, 4.5, 4.3, 12, P.PLINTH)
+			b.cone(0, 0, -2.5, 0.2, 4.5, 4.3, 12, P.PLINTH)
 			b.cone(0, 0, 0.2, 3.2, 4.3, 0.2, 12, Color(0.40, 0.48, 0.26, 0.05))
 		_:
 			b.box(Vector3(-0.5, -0.5, -0.25), Vector3(0.5, 2.0, 0.25), MARBLE)
@@ -170,9 +170,11 @@ static func rural(kind: String, lod: int) -> MB:
 			barn.rect_on(0, -2.0, 2.0, 0.0, 3.4, 14.0, 9.0, -0.3, P.SHADE)
 			barn.gable(-7.6, 7.6, -5.0, 5.0, 4.2, P.rise(5.0, 30.0), P.SHINGLE, P.WOOD, 2)
 			b.append(barn, Vector3(-3.0, 0.0, 10.0))
+			# the stacks and the woodpile stand on footings that reach the ground on a slope (F3)
 			for s in [Vector2(14.0, 10.0), Vector2(15.5, 4.0)]:
-				b.cone(s.x, s.y, 0.0, 2.2, 1.9, 1.4, 8, P.THATCH)
+				b.cone(s.x, s.y, -2.0, 2.2, 1.9, 1.4, 8, P.THATCH)
 				b.cone(s.x, s.y, 2.2, 3.4, 1.4, 0.1, 8, P.THATCH)
+			b.box(Vector3(12.0, -2.0, -14.0), Vector3(15.0, 0.0, -10.5), P.PLINTH)
 			b.box(Vector3(12.0, 0.0, -14.0), Vector3(15.0, 1.0, -10.5), P.WOOD)   # woodpile
 			if lod == 0:
 				P.amphora(b, 3.5, 0.0, -5.0, 1.3)

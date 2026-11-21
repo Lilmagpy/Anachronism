@@ -155,6 +155,7 @@ var _lamp_node: Node3D
 var _smoke: MultiMeshInstance3D
 var _smoke_mat: ShaderMaterial
 var _smoke_count := 0
+var _smoke_at := PackedVector3Array()
 var _stalls: Node3D
 var _stall_open: Array[MultiMeshInstance3D] = []
 var _rigs: Array = []              # {node, kind, agent, animals: Array, extra: Array}
@@ -1260,6 +1261,7 @@ func _make_smoke() -> void:
 		if _blocked(p) or UrbsTerrain.in_river(p.x, p.y):
 			continue
 		pos.append(Vector3(p.x, float(height.call(p.x, p.y)) + _rng.randf_range(6.0, 13.0), p.y))
+	_smoke_at = pos   # F3: where each column rises (the scene audit checks it against the roofs)
 	if pos.is_empty():
 		return
 	var puffs := 9
