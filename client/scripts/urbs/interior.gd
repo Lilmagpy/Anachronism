@@ -35,7 +35,7 @@ func build(urbs: Node3D, id: String, year: int) -> Node3D:
 	if urbs != null and urbs.get("monuments") != null and not m.has("size"):
 		var pl: Dictionary = urbs.monuments._placed.get(id, {})
 		var hf: Vector2 = pl.get("half", Vector2.ZERO)
-		if hf.x > 1.0 and hf.y > 1.0:
+		if hf.x >= 4.0 and hf.y >= 5.0:   # a shrine smaller than this keeps the walk-in default
 			m = m.duplicate()
 			m["size"] = [hf.y * 2.0, hf.x * 2.0]
 	var node := Interiors.build_node(m, Transform3D(Basis(Vector3.UP, yaw), Vector3(p.x, y, p.y)), year)
