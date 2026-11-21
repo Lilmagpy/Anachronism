@@ -6,7 +6,8 @@
 ##   F3 monuments: {"kind": "inside", "id": "<monument id>"}  inside it, from its spawn (as
 ##   --mode=inside); {"kind": "all_interiors"} expands to every enterable monument standing;
 ##   "from"/"count" on all_monuments / all_interiors take a slice of the sorted list (batches);
-##   an inside pose may add "look": [yaw, pitch] in degrees to turn from the spawn (0,0 = as spawned)
+##   an inside pose may add "look": [yaw, pitch] in degrees to turn from the spawn (0,0 = as spawned);
+##   any pose may set "life": false to skip ticking the street life before the shot (faster)
 ##   {"kind": "street", "x": 0, "z": 0, "yaw": 90}        eye height, compass bearing in degrees
 ##   {"kind": "air", "x": 0, "z": 0, "h": 120, "yaw": 0, "pitch": -35}   a low aerial
 ##   optional "name" (file name) and "pitch" for street views.
@@ -119,7 +120,7 @@ static func run(urbs: Node3D, tree: SceneTree, poses_path: String, out_dir: Stri
 			urbs.fill.sync_chunks = true
 			urbs.chunks.load_all_now()
 			urbs.fill.sync_chunks = false
-			for i in 20:
+			for i in (20 if bool(d.get("life", true)) else 0):   # F3 monuments: "life": false skips the street life
 				urbs.life.tick(1.0 / 30.0, urbs.cam.camera.global_position)
 		for i in 5:
 			await tree.process_frame
@@ -127,6 +128,7 @@ static func run(urbs: Node3D, tree: SceneTree, poses_path: String, out_dir: Stri
 		tree.root.get_viewport().get_texture().get_image().save_png(path)
 		var at: Vector3 = urbs.cam.camera.global_position
 		print("SWEEP %s %.0f %.0f %.0f" % [name, at.x, at.z, at.y])
+		print("SWEEP_MS %d" % Time.get_ticks_msec())   # F3 monuments: when each shot was taken
 		n += 1
 	if urbs.interior != null:   # F3 monuments
 		urbs._leave_interior_now()

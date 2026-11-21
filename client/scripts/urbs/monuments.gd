@@ -957,8 +957,11 @@ func _date_text(yr: Variant, built: Dictionary) -> String:
 
 
 func _enterable(m: Dictionary) -> bool:
+	# F3 monuments: only where there is an inside to enter (UrbsInteriors.kind_of): the card's
+	# Enter on a portico, a market or a tomb glided the camera into its wall and stopped there
 	return str(m.get("type", "")) in ["temple", "basilica", "curia", "theatre", "circus", "amphitheatre", "portico",
-		"horrea", "public_building", "archive", "house", "baths", "prison", "market", "rostra", "comitium", "forum", "tomb"]
+		"horrea", "public_building", "archive", "house", "baths", "prison", "market", "rostra", "comitium", "forum", "tomb"] \
+		and str(UrbsInteriors.kind_of(m)[0]) != ""
 
 
 ## A transform at the door looking inwards: the middle of the front, at eye height above the

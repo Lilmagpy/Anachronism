@@ -97,8 +97,9 @@ func _initialize() -> void:
 # F3 monuments (begin) ---------------------------------------------------------------------------
 ## The monuments as the player sees them, part by part (monument_audit.gd): parts of one inside
 ## another's, parts resting on nothing, columns sunk, coplanar faces (z-fighting), and the
-## `--at` street camera inside a solid or not seeing its monument's front. --f3-coplanar=0 skips
-## the slowest (the coplanar faces).
+## `--at` street camera inside a solid or not seeing its monument's front; every enterable
+## monument entered: black voids, figures through walls, no interior. --f3-coplanar=0 and
+## --f3-interiors=0 skip the slowest.
 func _f3_monuments(year_out: Dictionary, args: Dictionary) -> void:
 	var t := Time.get_ticks_msec()
 	var height := Callable(UrbsTerrain, "height_at")
@@ -119,6 +120,8 @@ func _f3_monuments(year_out: Dictionary, args: Dictionary) -> void:
 	fill.prepare()
 	var ma := UrbsMonumentAudit.new(_mon, height, fill)
 	var res := ma.run(str(args.get("f3-coplanar", "1")) != "0")
+	if str(args.get("f3-interiors", "1")) != "0":
+		res.merge(ma.interiors(_year))
 	for k in res:
 		year_out[k] = res[k]
 	year_out["f3_monuments_seconds"] = (Time.get_ticks_msec() - t) / 1000.0

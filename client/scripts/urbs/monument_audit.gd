@@ -798,3 +798,169 @@ func _blocked(a: Vector3, b: Vector3, own: String) -> String:
 					if Geometry3D.segment_intersects_triangle(a, end, t[i], t[i + 1], t[i + 2]) != null:
 						return id
 	return ""
+
+
+# ---------------------------------------------------------------------------------------------
+# Interiors
+# ---------------------------------------------------------------------------------------------
+
+
+## Stands in for the Urbs scene when an interior is built for the audit (interior.gd asks the
+## scene for its monuments and its ground).
+class AuditUrbs extends Node3D:
+	var monuments: UrbsMonuments
+	var ground := Callable()
+
+	func height_at(x: float, z: float) -> float:
+		return float(ground.call(x, z))
+
+
+const RAY_M := 500.0
+const ICELL := 4.0
+
+
+## Every enterable monument standing, entered: {interior_voids, interior_figures, interior_missing}.
+##   interior_voids    sight lines from where the visitor stands that meet nothing (the scene
+##                     hides the city inside: they show the black background), for a roofed
+##                     interior any, under the open sky those below the horizon
+##   interior_figures  statues and figures whose body a wall or floor passes through
+##   interior_missing  enterable monuments with no interior (entering does nothing)
+func interiors(year: int) -> Dictionary:
+	var out := {"interior_voids": [], "interior_figures": [], "interior_missing": []}
+	var fake := AuditUrbs.new()
+	fake.monuments = mon
+	fake.ground = height
+	var ib := UrbsInterior.new()
+	var ids: Array = mon.ids()
+	ids.sort()
+	for id in ids:
+		if not bool(mon.info(id).get("enterable", false)):
+			continue
+		var node: Node3D = ib.build(fake, id, year)
+		if node == null:
+			out.interior_missing.append("%s (%s) has no interior" % [id, str(mon.entry(id).get("type", ""))])
+			continue
+		var tris := PackedVector3Array()
+		for nm in ["Body", "Cover", "Ground", "Backdrop", "BackdropGround"]:
+			if node.has_node(nm):
+				var mi: MeshInstance3D = node.get_node(nm)
+				if mi.mesh == null:
+					continue
+				var xf := node.transform * mi.transform
+				for v in mi.mesh.get_faces():
+					tris.append(xf * v)
+		var grid := _tri_grid(tris)
+		var res: Dictionary = node.get("result")
+		var open_sky := bool(res.get("open_sky", false))
+		var ground_y := node.transform.origin.y - 0.03 if bool(res.get("ground", false)) else -INF
+		var spawn: Transform3D = node.call("spawn")
+		var eye := spawn.origin
+		var escaped: Array = []
+		var n := 0
+		for pitch in [-10.0, 0.0, 25.0, 60.0]:
+			for yaw in range(0, 360, 20):
+				if pitch >= 60.0 and yaw % 90 != 0:
+					continue
+				var dir := Vector3(-sin(deg_to_rad(yaw)) * cos(deg_to_rad(pitch)), sin(deg_to_rad(pitch)), -cos(deg_to_rad(yaw)) * cos(deg_to_rad(pitch)))
+				dir = spawn.basis * Vector3(dir.x, 0, dir.z) + Vector3(0, dir.y, 0)
+				n += 1
+				var t := _first_hit(tris, grid, eye, dir.normalized())
+				if t < INF:
+					continue
+				if dir.y < 0.0 and ground_y > -INF:
+					continue   # the ground plane under it
+				if open_sky and dir.y >= 0.0:
+					continue   # the sky
+				escaped.append("%d/%d" % [yaw, int(pitch)])
+		if not escaped.is_empty():
+			out.interior_voids.append("%s: %d of %d sight lines from the door meet nothing (yaw/pitch %s)" % [id, escaped.size(), n,
+				", ".join(escaped.slice(0, 8))])
+		# figures: a wall through the body (the body's box: a third of its height across)
+		var bad := 0
+		var where := ""
+		for spec in res.get("statues", []):
+			var h := float(spec["h"])
+			# a seated figure sits on its stool or throne: only its upper body is tested
+			var seated := str(spec.get("pose", "")) == "seated"
+			var c: Vector3 = node.transform * ((spec["foot"] as Vector3) + Vector3(0, h * (0.75 if seated else 0.55), 0))
+			var r := h * 0.1
+			for ax in [Vector3(r, 0, 0), Vector3(0, 0, r), Vector3(0, h * (0.2 if seated else 0.4), 0)]:
+				var a3: Vector3 = c - (ax as Vector3)
+				var b3: Vector3 = c + (ax as Vector3)
+				if _segment_hits(tris, grid, a3, b3):
+					bad += 1
+					where = "%s %.1f m at (%.0f, %.0f) y %.1f" % [str(spec.get("style", "")), h, c.x, c.z, c.y]
+					break
+		if bad > 0:
+			out.interior_figures.append("%s: %d figures through a wall or floor, e.g. %s" % [id, bad, where])
+		node.free()
+	fake.free()
+	return out
+
+
+## Triangles (3 vertices each) by the ICELL cubes their boxes cover.
+static func _tri_grid(t: PackedVector3Array) -> Dictionary:
+	var g := {}
+	for i in range(0, t.size(), 3):
+		var lo := t[i].min(t[i + 1]).min(t[i + 2])
+		var hi := t[i].max(t[i + 1]).max(t[i + 2])
+		var a := Vector3i(floori(lo.x / ICELL), floori(lo.y / ICELL), floori(lo.z / ICELL))
+		var b := Vector3i(floori(hi.x / ICELL), floori(hi.y / ICELL), floori(hi.z / ICELL))
+		if (b.x - a.x + 1) * (b.y - a.y + 1) * (b.z - a.z + 1) > 64:
+			if not g.has("big"):
+				g["big"] = PackedInt32Array()
+			var bg: PackedInt32Array = g["big"]
+			bg.append(i)
+			g["big"] = bg   # a big triangle (a floor, the sky dome): tested by every ray
+			continue
+		for x in range(a.x, b.x + 1):
+			for y in range(a.y, b.y + 1):
+				for z in range(a.z, b.z + 1):
+					var k := Vector3i(x, y, z)
+					if not g.has(k):
+						g[k] = PackedInt32Array()
+					var arr: PackedInt32Array = g[k]
+					arr.append(i)
+					g[k] = arr
+	return g
+
+
+## The distance to the first triangle along a ray (INF: none within RAY_M).
+static func _first_hit(t: PackedVector3Array, g: Dictionary, o: Vector3, d: Vector3) -> float:
+	var best := INF
+	var seen := {}
+	for i in g.get("big", PackedInt32Array()):
+		var hb: Variant = Geometry3D.ray_intersects_triangle(o, d, t[i], t[i + 1], t[i + 2])
+		if hb != null:
+			best = minf(best, o.distance_to(hb))
+	var s := 0.0
+	while s < RAY_M and s < best:
+		var p := o + d * s
+		var k := Vector3i(floori(p.x / ICELL), floori(p.y / ICELL), floori(p.z / ICELL))
+		if g.has(k) and not seen.has(k):
+			seen[k] = true
+			for i in g[k]:
+				var hit: Variant = Geometry3D.ray_intersects_triangle(o, d, t[i], t[i + 1], t[i + 2])
+				if hit != null:
+					best = minf(best, o.distance_to(hit))
+		s += ICELL * 0.5
+	return best
+
+
+static func _segment_hits(t: PackedVector3Array, g: Dictionary, a: Vector3, b: Vector3) -> bool:
+	var len := a.distance_to(b)
+	var seen := {}
+	for j in g.get("big", PackedInt32Array()):
+		if Geometry3D.segment_intersects_triangle(a, b, t[j], t[j + 1], t[j + 2]) != null:
+			return true
+	var steps := maxi(1, int(len / (ICELL * 0.5)) + 1)
+	for i in steps + 1:
+		var p := a.lerp(b, float(i) / steps)
+		var k := Vector3i(floori(p.x / ICELL), floori(p.y / ICELL), floori(p.z / ICELL))
+		if not g.has(k) or seen.has(k):
+			continue
+		seen[k] = true
+		for j in g[k]:
+			if Geometry3D.segment_intersects_triangle(a, b, t[j], t[j + 1], t[j + 2]) != null:
+				return true
+	return false
