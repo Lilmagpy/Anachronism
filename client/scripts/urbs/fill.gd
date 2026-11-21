@@ -99,6 +99,7 @@ var _chunk_cache := {}               ## finished chunks: Vector2i -> Array of lo
 var _warm := false
 var _footway_on := false             ## the street being laid out has a raised footway (UrbsStreets)
 var _on_clivus := false              ## F3: the street being laid out is a clivus (its cuts are walled)
+var _footway_ids := {}               ## F3: street id -> has a raised footway
 var _site_mask := PackedByteArray()  ## per mask cell, lazily: 0 unknown, 1 clear, 2 river, 3 platform
 var _tree_cache := {}                ## Vector2i(chunk) -> UrbsSite.tree_spots of that chunk
 
@@ -137,6 +138,7 @@ func prepare() -> void:
 		_load()
 	_streets.height = height
 	_streets.load_data(year)
+	_footway_ids = {}
 	_region_cache = {}
 	_region_state = {}
 	_region_by_chunk = {}
@@ -589,12 +591,28 @@ static func _axes(lot: Dictionary) -> Array:
 
 
 ## True if two lots come closer than `margin`. F3: by their envelopes (`_env`: everything the
-## meshes build, eaves, stairs, balconies and awnings included), except a shop's lean-to against
-## the house behind it, which is built to touch it (nominal rectangles).
+## meshes build, eaves, stairs, balconies and awnings included), except at the back of a shop's
+## lean-to, which is built to touch the house behind it: there the shop's rectangle stops
+## BACK_TRIM short (the house behind is set back by its own eaves, `_street_rows`).
 static func _overlap(a: Dictionary, b: Dictionary, margin: float) -> bool:
-	if (str(a.get("kind", "")) == "taberna") != (str(b.get("kind", "")) == "taberna"):
-		return _rects_overlap(_nominal(a), _nominal(b), margin)
+	var ta := str(a.get("kind", "")) == "taberna"
+	var tb := str(b.get("kind", "")) == "taberna"
+	if ta != tb:
+		var shop := a if ta else b
+		var other := b if ta else a
+		return _rects_overlap(_lean_to(shop), _env(other), margin)
 	return _rects_overlap(_env(a), _env(b), margin)
+
+
+const BACK_TRIM := 0.7
+
+
+## A shop's envelope with its back trimmed by BACK_TRIM (see `_overlap`).
+static func _lean_to(lot: Dictionary) -> Dictionary:
+	var e := _env(lot)
+	e["c"] = (e["c"] as Vector2) + (e["az"] as Vector2) * (BACK_TRIM * 0.5)
+	e["hz"] = float(e["hz"]) - BACK_TRIM * 0.5
+	return e
 
 
 static func _rects_overlap(a: Dictionary, b: Dictionary, margin: float) -> bool:
@@ -934,6 +952,16 @@ func _street_context(p: Vector2, road: bool) -> Dictionary:
 	return {"era": _era(d), "occ": _occupancy_at(d, p)}
 
 
+## F3: whether the street with id `sid` has a raised footway (cached by id).
+func _footway_of(sid: String) -> bool:
+	if not _footway_ids.has(sid):
+		_footway_ids[sid] = false
+		for st in _streets.streets:
+			if str(st["id"]) == sid:
+				_footway_ids[sid] = _has_footway(st)
+	return _footway_ids[sid]
+
+
 ## Whether UrbsStreets gives street `st` a raised footway: paved, not a country road, inside the walls.
 func _has_footway(st: Dictionary) -> bool:
 	if not bool(st.get("paved", false)) or str(st["kind"]) == "road" or _circuit.is_empty():
@@ -1100,6 +1128,7 @@ func _add_street_lot(lot: Dictionary, own: String, margin: float, force_ok := fa
 		return false
 	if str(lot["kind"]) not in ["furn", "prop"] and _on_street(lot, 0.5):   # F2: into another street
 		return false
+	var lk_house := str(lot["kind"]) not in ["furn", "prop", "tomb"]
 	if not force_ok or str(lot["kind"]) != "furn":
 		var near := _streets.nearest_street(c)
 		if not near.is_empty() and near["distance"] < maxf(lot["hx"], lot["hz"]) * 1.42 + 14.0:
@@ -1108,6 +1137,10 @@ func _add_street_lot(lot: Dictionary, own: String, margin: float, force_ok := fa
 				if ns.is_empty():
 					continue
 				var lim := float(ns["half_width"]) + (0.15 if str(ns["id"]) == own else 0.7)
+				if _footway_of(str(ns["id"])) and lk_house:
+					# F3: a house stays off the footway, its own (where the street bends towards it)
+					# or a side street's
+					lim = float(ns["half_width"]) + KERB + FOOTPATH - (0.3 if str(ns["id"]) == own else 0.1)
 				if ns["distance"] < lim:
 					return false
 	if not _ground_ok(lot, pts):
