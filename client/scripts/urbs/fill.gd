@@ -1138,6 +1138,14 @@ func _add_street_lot(lot: Dictionary, own: String, margin: float, force_ok := fa
 	if str(lot["kind"]) not in ["furn", "prop"] and _on_street(lot, 0.5):   # F2: into another street
 		return false
 	var lk_house := str(lot["kind"]) not in ["furn", "prop", "tomb"]
+	if lk_house:
+		# F3: a 5 x 5 grid over the envelope (a wall of the site works ran between the corners)
+		var ev := _env(lot)
+		for i in 5:
+			for j in 5:
+				var q: Vector2 = (ev["c"] as Vector2) + (ev["ax"] as Vector2) * (float(ev["hx"]) * (i / 2.0 - 1.0)) + (ev["az"] as Vector2) * (float(ev["hz"]) * (j / 2.0 - 1.0))
+				if _hazard(q) & (M_FOOT | M_WATER):
+					return false
 	if not force_ok or str(lot["kind"]) != "furn":
 		var near := _streets.nearest_street(c)
 		if not near.is_empty() and near["distance"] < maxf(lot["hx"], lot["hz"]) * 1.42 + 14.0:
@@ -1160,8 +1168,11 @@ func _add_street_lot(lot: Dictionary, own: String, margin: float, force_ok := fa
 		# F3: a house on the street has its floor at the street, its back cut into the slope where
 		# the ground rises behind it (up to BURY_BACK); its door no longer stands over the footway
 		# on a wall of plinth where the back corner was the highest
-		var fx: Vector2 = _axes(lot)[0] * float(lot["hx"])
-		var front := maxf(_clear_at(fc), maxf(_clear_at(fc + fx), _clear_at(fc - fx)))
+		# the front edge of its envelope (eaves and awnings reach further along a sloping street)
+		var ef := _env(lot)
+		var fx: Vector2 = (ef["ax"] as Vector2) * float(ef["hx"])
+		var fe: Vector2 = (ef["c"] as Vector2) + (ef["az"] as Vector2) * float(ef["hz"])
+		var front := maxf(_clear_at(fc), maxf(_clear_at(fe + fx), _clear_at(fe - fx)))
 		if _on_clivus and float(lot["y"]) > front + 1.0:
 			# a clivus cut into the hill: the bank is held by a wall along the street (UrbsSite
 			# _clivus_walls) and the house stands on the bank, over the top of that wall
@@ -1883,9 +1894,10 @@ func floor_step(node: Node3D, _key: Vector2i, lots: Array, _lod: int, _st: Dicti
 		for b in 4:
 			for a in 4:
 				var q0 := base + b * 5 + a
-				# not over the street, its kerb or its footway
+				# not over the street, its kerb or its footway; F3: nor over a monument's paving or a
+				# platform (it lay at the same height as the paving: flicker), nor the river
 				var mid := (verts[q0] + verts[q0 + 6]) * 0.5
-				if _hazard(Vector2(mid.x, mid.z)) & M_WALK:
+				if _hazard(Vector2(mid.x, mid.z)) & (M_WALK | M_FOOT | M_WATER):
 					continue
 				idx.append_array([q0, q0 + 1, q0 + 6, q0, q0 + 6, q0 + 5])
 	if idx.is_empty():
