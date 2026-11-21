@@ -6,6 +6,7 @@ Writes monuments.json (every standing monument's front), street_NN.json (a grid 
 views inside the Servian circuit and the Campus Martius, two bearings each, in batches) and
 air_NN.json (a grid of low aerials looking four ways). Local metres: x east, z south.
 """
+
 import json
 import sys
 from pathlib import Path
