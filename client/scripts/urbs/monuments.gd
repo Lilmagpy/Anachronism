@@ -107,6 +107,7 @@ func set_year(year: int) -> void:
 			var want := 2 if is_route else (1 if yields else 0)
 			if want == pass_:
 				_set_one(id, year)
+	_fit_sizes()   # F3 monuments
 
 
 ## F3 monuments: one monument brought to `year` (the body of set_year's loop).
@@ -158,6 +159,10 @@ const ROUTE_PASS := ["wall", "aqueduct", "sewer", "road_paved", "plaza", "lacus_
 	"bridge_stone", "bridge_timber", "quay"]
 
 
+## Footprints an assumed size does not have to clear: open pavings, routes, the river works.
+const FIT_PASS := ["wall", "aqueduct", "sewer", "road_paved", "plaza", "bridge_stone", "bridge_timber", "quay"]
+
+
 ## The oriented footprints of the standing monuments within 60 m of route `id`'s line, sorted by
 ## id: {id, c, ax, az, hx, hz}. The route's tiles keep off them (monument_forms.gd _route_runs).
 func route_cuts(id: String, model: String) -> Array:
@@ -179,6 +184,91 @@ func route_cuts(id: String, model: String) -> Array:
 				out.append(f)
 				break
 	return out
+
+
+## F3 monuments: a monument whose size is ASSUMED (its record's `size_fits: true`: no measured
+## plan, the kit's or the model's default size) and that runs into a standing neighbour is made
+## smaller, evenly, in steps of 5 % down to 70 %, until it clears every other standing
+## monument's drawn footprint (pavings and routes aside). Its centre, bearing and form stay.
+func _fit_sizes() -> void:
+	for id in _order:
+		if not bool(_recs[id].get("size_fits", false)) or not _placed.has(id):
+			continue
+		var st := state_at(id, _year)
+		if st.is_empty() or str(st.state) != "standing":
+			continue
+		var me := _my_rect(id)
+		if _worst_depth(id, me) <= 0.05:
+			continue
+		var w0 := float(me.hx) * 2.0
+		var l0 := float(me.hz) * 2.0
+		for k in [0.95, 0.9, 0.85, 0.8, 0.75, 0.7]:
+			var st2 := st.duplicate()
+			st2.width = w0 * float(k)
+			st2.length = l0 * float(k)
+			_unmake(id)
+			_make(id, st2)
+			_keys[id] = _key(st) + "|fit%.2f" % float(k)
+			if _worst_depth(id, _my_rect(id)) <= 0.05:
+				break
+
+
+## The box of a monument as drawn at the nearest level of detail (every mesh and instance), in
+## its frame (AABB() when it has nothing drawn).
+func _drawn_box(id: String) -> AABB:
+	var out := AABB()
+	var first := true
+	if not _nodes.has(id):
+		return out
+	for ch in (_nodes[id] as Node3D).get_children():
+		var boxes: Array = []
+		if ch is MeshInstance3D and (ch as MeshInstance3D).visibility_range_begin <= 0.0 and (ch as MeshInstance3D).mesh != null:
+			boxes.append((ch as MeshInstance3D).transform * (ch as MeshInstance3D).mesh.get_aabb())
+		elif ch is MultiMeshInstance3D and (ch as MultiMeshInstance3D).visibility_range_begin <= 0.0:
+			var mm := (ch as MultiMeshInstance3D).multimesh
+			if mm != null and mm.mesh != null:
+				for k in mm.instance_count:
+					boxes.append((ch as MultiMeshInstance3D).transform * mm.get_instance_transform(k) * mm.mesh.get_aabb())
+		for b in boxes:
+			out = b if first else out.merge(b)
+			first = false
+	return out
+
+
+## Its plan as drawn at the nearest level of detail (every mesh and instance), in its frame.
+func _my_rect(id: String) -> Dictionary:
+	var p: Dictionary = _placed[id]
+	var yaw := float(p.yaw)
+	var db := _drawn_box(id)
+	var lo := Vector2(db.position.x, db.position.z) if db.size != Vector3.ZERO else Vector2(INF, INF)
+	var hi := Vector2(db.end.x, db.end.z)
+	if lo.x == INF:
+		return _drawn_rect({"id": id, "c": p.centre, "ax": Vector2(cos(yaw), -sin(yaw)), "az": Vector2(sin(yaw), cos(yaw)),
+			"hx": 0.0, "hz": 0.0})
+	var ax := Vector2(cos(yaw), -sin(yaw))
+	var az := Vector2(sin(yaw), cos(yaw))
+	var mid := (lo + hi) * 0.5
+	return {"id": id, "c": (p.centre as Vector2) + ax * mid.x + az * mid.y, "ax": ax, "az": az,
+		"hx": (hi.x - lo.x) * 0.5, "hz": (hi.y - lo.y) * 0.5}
+
+
+func _worst_depth(id: String, me: Dictionary) -> float:
+	var worst := 0.0
+	for f in oriented_footprints():
+		if f.id == id or str(_placed.get(f.id, {}).get("model", "")) in FIT_PASS:
+			continue
+		var o := _my_rect(str(f.id))
+		if (o.c as Vector2).distance_to(me.c) > float(o.hx) + float(o.hz) + float(me.hx) + float(me.hz):
+			continue
+		worst = maxf(worst, Forms._rect_depth(me, o))
+	return worst
+
+
+func _unmake(id: String) -> void:
+	if _nodes.has(id):
+		(_nodes[id] as Node3D).free()
+	for d in [_nodes, _placed, _bounds, _boxes, _solids, _opens, _xf, _tris]:
+		(d as Dictionary).erase(id)
 
 
 ## A footprint grown to what is drawn: the plan extent of the monument's solids (a kit form
@@ -581,10 +671,10 @@ func _make(id: String, st: Dictionary) -> void:
 	_tris[id] = res.get("tris", [0, 0, 0])
 	# F3 monuments: where it truly overlaps a sourced building it yields to, it abuts it instead
 	for y in st.get("yields", []):
-		var boxes: Array = []
-		for b in _solids.get(str(y.oid), []):   # grown 1.2 m: its cornices stand out of its solids
-			var gb: AABB = b
-			boxes.append({"xf": _xf[str(y.oid)], "box": AABB(gb.position - Vector3(1.2, 0, 1.2), gb.size + Vector3(2.4, 1.0, 2.4))})
+		# the other as drawn (every mesh and instance at the nearest level of detail: its steps and
+		# cornices too), 0.3 m round: yields are set between compact buildings, so its box is its body
+		var gb := _drawn_box(str(y.oid))
+		var boxes := [{"xf": _xf[str(y.oid)], "box": AABB(gb.position - Vector3(0.3, 0, 0.3), gb.size + Vector3(0.6, 0.5, 0.6))}]
 		UrbsMonumentClip.clip(node, boxes)
 	_placed[id] = {"centre": centre, "yaw": yaw, "y": base_y, "length": maxf(float(st.length), float(st.radius) * 2.0),
 		"width": maxf(float(st.width), float(st.radius) * 2.0), "radius": float(st.radius), "model": model, "state": st.state,

@@ -251,6 +251,8 @@ monuments:
   pleiades: null
   verified: platner-ashby
   model: comitium
+  yields_to: [basilica_porcia]   # F3 monuments: monument_clip.gd
+  yields_note: "F3: the Basilica Porcia (184 BC, size assumed, Platner-Ashby s.v. Basilica Porcia) stood beside the Curia at the Comitium's edge; where the two meet, the Comitium's steps stop at the basilica's wall"
   bearing_deg: 196
   footprint_m: {radius: 21}  # unverified
   height_m: 1.2
@@ -343,6 +345,7 @@ monuments:
   pleiades: 780447855
   verified: platner-ashby+pleiades
   model: platform_portico
+  size_fits: true   # F3 monuments: its size is assumed (no measured plan); it is made smaller where it runs into a neighbour (monuments.gd _fit_sizes)
   bearing_deg: 196  # unverified
   footprint_m: {length: 8, width: 12}  # unverified
   height_m: 3  # unverified
@@ -1683,6 +1686,7 @@ monuments:
   pleiades: 250568480
   verified: platner-ashby+pleiades
   model: domus
+  size_fits: true   # F3 monuments: its size is assumed (no measured plan); it is made smaller where it runs into a neighbour (monuments.gd _fit_sizes)
   bearing_deg: 139  # F2: long axis of the excavated house (Pleiades 250568480 outline, 38.5 x 31.2 m at 139 degrees)
   footprint_m: {length: 38.5, width: 31.2}  # F2: the excavated house (Pleiades 250568480 outline)
   height_m: 9  # unverified
@@ -1904,6 +1908,7 @@ monuments:
   pleiades: null
   verified: platner-ashby
   model: temple_tetrastyle_ionic  # unverified
+  size_fits: true   # F3 monuments: its size is assumed (no measured plan); it is made smaller where it runs into a neighbour (monuments.gd _fit_sizes)
   bearing_deg: 98  # unverified
   geometry_source: "form assumed from date and type, native kit size (no measured plan); Platner-Ashby s.v. Iuventas (in the Circus Maximus, beside the carceres)"
   geometry_unverified: [bearing_deg, footprint_m, height_m, model]
@@ -3918,6 +3923,7 @@ monuments:
   pleiades: null
   verified: platner-ashby
   model: temple_tetrastyle_ionic
+  size_fits: true   # F3 monuments: its size is assumed (no measured plan); it is made smaller where it runs into a neighbour (monuments.gd _fit_sizes)
   bearing_deg: 44  # unverified
   geometry_source: "form assumed from date and type (no measured plan)"
   geometry_unverified: [bearing_deg, footprint_m, height_m, model]

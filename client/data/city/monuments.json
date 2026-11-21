@@ -562,7 +562,11 @@
 "Platner-Ashby s.v. Comitium"
 ],
 "type": "comitium",
-"verified": "platner-ashby"
+"verified": "platner-ashby",
+"yields_note": "F3: the Basilica Porcia (184 BC, size assumed, Platner-Ashby s.v. Basilica Porcia) stood beside the Curia at the Comitium's edge; where the two meet, the Comitium's steps stop at the basilica's wall",
+"yields_to": [
+"basilica_porcia"
+]
 },
 {
 "bearing_deg": 196,
@@ -738,6 +742,7 @@
 "pleiades": 780447855,
 "precision": "approx",
 "regio": 8,
+"size_fits": true,
 "sources": [
 "Pliny NH 33.19",
 "Pliny NH 7.212",
@@ -3520,6 +3525,7 @@
 "pleiades": 250568480,
 "precision": "approx",
 "regio": 10,
+"size_fits": true,
 "sources": [
 "Suetonius Aug. 5",
 "Suetonius Aug. 29",
@@ -3957,6 +3963,7 @@
 "pleiades": null,
 "precision": "rough",
 "regio": 11,
+"size_fits": true,
 "sources": [
 "Livy 36.36.5-6",
 "Dio 54.19.7",
@@ -8036,6 +8043,7 @@
 "pleiades": null,
 "precision": "rough",
 "regio": 11,
+"size_fits": true,
 "sources": [
 "Platner-Ashby s.v. Flora, Aedes (read)",
 "Tac. Ann. 2.49"
