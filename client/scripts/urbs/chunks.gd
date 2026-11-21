@@ -103,6 +103,20 @@ func _build(key: Vector2i, lod: int) -> void:
 		_walls_for(key)
 
 
+## F3: the twilight's light on the ground follows the sun (UrbsTerrain.set_sky_fill).
+var _fill := -1.0
+
+
+func _sky_fill() -> void:
+	var atm: Variant = get_parent().get("atmosphere") if get_parent() != null else null
+	if atm == null:
+		return
+	var f := UrbsTerrain.sky_fill_for(float(atm.get("elevation")))
+	if absf(f - _fill) > 0.001:
+		_fill = f
+		UrbsTerrain.set_sky_fill(f)
+
+
 ## F3: the terrace walls of a chunk wait for its houses: only the walls holding up a tread that
 ## something stands on are built (UrbsSite.build_chunk_walls with wall_uses).
 func _walls_step() -> void:
@@ -133,6 +147,7 @@ func _walls_for(key: Vector2i) -> void:
 
 func _process(_delta: float) -> void:
 	_walls_step()
+	_sky_fill()
 	var started := Time.get_ticks_usec()
 	while not _wanted.is_empty():
 		var next: Array = _wanted.pop_front()

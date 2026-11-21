@@ -56,6 +56,7 @@ const FRONT_RAMP := 0.2                   ## F3: slope of the ramp in front of a
 const PAVE_BLEND := 6.0                   ## F3: a paving's carved floor blends into the ground over this
 const PAVE_INSET := 0.6                   ## F3: no ground drawn this far inside a paving's edge
 const PAVE_DIP := 0.5                     ## F3: ground vertices under a paving are drawn this much lower
+const SKY_FILL := 0.12                    ## F3: the twilight sky's fill on the ground at its strongest
 const TERRACE_OCC := Vector2(0.35, 0.75)  ## F3: terraced from this built-up share (none) to this (full)
 
 static var year := -44                    ## the year being shown (set by build); flora and site works read it
@@ -77,6 +78,7 @@ static var _circuit: PackedVector2Array = PackedVector2Array()
 static var _warp: FastNoiseLite = null
 static var _warp2: FastNoiseLite = null
 static var _material: ShaderMaterial = null
+static var _sky_fill := 0.0                                      ## the twilight fill (set_sky_fill)
 static var _street_w: PackedFloat32Array = PackedFloat32Array()  ## street cuts' weight (while computing)
 static var _cover: PackedByteArray = PackedByteArray()          ## 1 under a paving, 2 well inside it (no ground drawn)
 static var _occ: PackedFloat32Array = PackedFloat32Array()      ## built-up share of the year, RURAL_CELL grid
@@ -1509,7 +1511,7 @@ static func _ground_weights(x: float, z: float, y: float, ny: float, k: int) -> 
 	var tufa := Color(0.60, 0.50, 0.36).lerp(Color(0.42, 0.44, 0.26), 0.35 * urban)
 	var c := grass.lerp(tufa, steep)
 	c = c.lerp(dust_c, dust * (1.0 - steep))
-	c = c.lerp(Color(0.33, 0.28, 0.19), mud)
+	c = c.lerp(Color(0.40, 0.34, 0.25), mud)
 	c = c.lerp(Color(0.48, 0.44, 0.36).lerp(Color(0.44, 0.42, 0.37), stone), maxf(gravel, stone))
 	var wg := clampf(1.0 - maxf(maxf(dust, mud), maxf(maxf(gravel, stone), steep)), 0.0, 1.0)
 	c.a = _rural_raw(x, z) * flat * (1.0 - dust)
@@ -1524,6 +1526,21 @@ static func _rural_raw(x: float, z: float) -> float:
 	var j := int(fz)
 	var k := j * rn + i
 	return lerpf(lerpf(_rural[k], _rural[k + 1], fx - i), lerpf(_rural[k + rn], _rural[k + rn + 1], fx - i), fz - j)
+
+
+## F3: between sunset and night the ground (dark grass and earth, albedo about 0.1-0.2) fell
+## under the tone mapper's toe and drew black while the stone round it stayed grey. The light of
+## the twilight sky, which the sky's radiance gives the ground too faintly, is added back as a
+## glow in proportion to the ground's own colour: `fill` 0 by day and at full night (UrbsChunks
+## sets it from the sun's height).
+static func set_sky_fill(fill: float) -> void:
+	_sky_fill = fill
+	_ground_material().set_shader_parameter("sky_fill", fill)
+
+
+## The share of sky fill for the sun at `elevation` degrees (see set_sky_fill).
+static func sky_fill_for(elevation: float) -> float:
+	return SKY_FILL * (1.0 - smoothstep(-1.0, 10.0, elevation)) * smoothstep(-15.0, -6.0, elevation)
 
 
 ## The ground's shader. The farmland parcels use the same integer hash and frame as
@@ -1541,6 +1558,7 @@ uniform sampler2D ground_w : filter_linear, repeat_disable;
 uniform float map_half = 2500.0;
 uniform float map_cell = 10.0;
 uniform float map_n = 501.0;
+uniform float sky_fill = 0.0;   // F3: the twilight sky's light on the ground (set_sky_fill)
 float hash(vec3 p) { p = fract(p * 0.3183099 + 0.1); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
 float vnoise(vec3 x) {
 	vec3 i = floor(x); vec3 f = fract(x);
@@ -1603,8 +1621,8 @@ void fragment() {
 	col *= 1.0 + (micro - 0.5) * 0.3 * wg;
 	// trodden earth and dust: lighter on the high spots, scuffed
 	col *= 1.0 + ((fine - 0.5) * 0.35 + (mid - 0.5) * 0.2) * wd;
-	// mud: darker and wet
-	col = mix(col, col * 0.6, wm);
+	// mud: darker and wet (F3: not near-black: wet silt is still a mid brown)
+	col = mix(col, col * 0.82, wm);
 	// gravel and stone: pebbles
 	float peb = vnoise(wpos * 2.3);
 	col = mix(col, mix(col * 0.82, col * 1.15, step(0.55, peb)), wgr * 0.85);
@@ -1623,6 +1641,7 @@ void fragment() {
 	st *= 0.95 + 0.05 * smoothstep(0.0, 0.15, bf) * smoothstep(1.0, 0.85, bf);
 	col = mix(col, st, steep * 0.85);
 	ALBEDO = col;
+	EMISSION = col * sky_fill;
 	ROUGHNESS = mix(1.0, 0.55, wm);
 	SPECULAR = mix(0.05, 0.3, wm);
 }
@@ -1634,4 +1653,5 @@ void fragment() {
 	_material.set_shader_parameter("map_half", HALF_M)
 	_material.set_shader_parameter("map_cell", MAP_CELL)
 	_material.set_shader_parameter("map_n", float(MAP_N))
+	_material.set_shader_parameter("sky_fill", _sky_fill)
 	return _material

@@ -804,15 +804,9 @@ func _f3_empty_terraces() -> Array:
 		var mid := str(pf.get("monument", ""))
 		if mid == "" or _mon.ids().has(mid):
 			continue
-		var poly := PackedVector2Array()
-		for ll: Array in pf.get("polygon", []):
-			poly.append(UrbsGeo.to_local(float(ll[0]), float(ll[1])))
-		var c := Vector2.ZERO
-		for q in poly:
-			c += q / poly.size()
-		var lv: Array = pf.get("level", [0.0])
-		if absf(UrbsTerrain.height_at(c.x, c.y) - float(lv[0])) < 0.3 and UrbsTerrain.built_at(c.x, c.y) > 0.9:
-			out.append("terrace %s cut and walled, but %s does not stand in %d" % [pf.id, mid, _year])
+		for live: Dictionary in UrbsTerrain.platforms():
+			if str(live["id"]) == str(pf.id):
+				out.append("terrace %s cut and walled, but %s does not stand in %d" % [pf.id, mid, _year])
 	# hillside terrace walls with nothing on the tread above: the walls as UrbsChunks stands them
 	# (UrbsSite.build_chunk_walls with the houses of the chunk and its neighbours)
 	var keys := {}

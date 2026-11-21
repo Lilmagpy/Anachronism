@@ -42,7 +42,7 @@ streets:
   english: Capitoline Hill road
   kind: clivus
   direction: "from the west corner of the Forum, past the temple of Saturn, up to the Asylum / Capitol"
-  points: [[41.892446, 12.484528], [41.892563, 12.484443], [41.892653, 12.484371], [41.892671, 12.484238], [41.892689, 12.484105], [41.892185, 12.483598], [41.891978, 12.483212], [41.891696, 12.482576], [41.891568, 12.482204], [41.891618, 12.482101]]  # F3: the last stretch comes up to the gate from in front of the area (its point 10 m before the end was 0-3 m off the area's front, so the road ran half inside the Area Capitolina's floor; the stretch is unexcavated, see notes). F2: lower course = the excavated pavement (Pleiades 152699900, OpenStreetMap, good to 20 m) past the north front and west side of Saturn, starting at the Forum south of the Augustan Rostra; end at the main entrance of the Area Capitolina in the middle of its south-east side opposite the temple front, 40-45 m in front of it (Platner-Ashby s.v. Area Capitolina, read); the stretch between is unexcavated
+  points: [[41.892446, 12.484528], [41.892563, 12.484443], [41.892653, 12.484371], [41.892671, 12.484238], [41.892689, 12.484105], [41.892185, 12.483598], [41.891978, 12.483212], [41.891632, 12.482619], [41.891568, 12.482204], [41.891618, 12.482101]]  # F3: the last stretch comes up to the gate from in front of the area, 18 m clear of its corner (its point 10 m before the end was 0-3 m off the area's front, so the road ran half inside the Area Capitolina's floor; the stretch is unexcavated, see notes). F2: lower course = the excavated pavement (Pleiades 152699900, OpenStreetMap, good to 20 m) past the north front and west side of Saturn, starting at the Forum south of the Augustan Rostra; end at the main entrance of the Area Capitolina in the middle of its south-east side opposite the temple front, 40-45 m in front of it (Platner-Ashby s.v. Area Capitolina, read); the stretch between is unexcavated
   precision: approx
   width_m: 5.0
   width_source: assumed
@@ -56,7 +56,7 @@ streets:
   english: Silversmiths' slope
   kind: clivus
   direction: "from the Forum between Curia and Carcer, along the Capitoline slope toward the Campus Martius"
-  points: [[41.893148, 12.484938], [41.8934, 12.484721], [41.89385, 12.484214], [41.894435, 12.483731], [41.895199, 12.4832], [41.896, 12.483]]  # F2: leaves the Forum between the Curia and the Carcer (Platner-Ashby s.v. Clivus Argentarius, read) and runs along the south-west side of the Forum of Caesar to the Porta Fontinalis; it started before inside the Forum of Caesar and crossed the temple of Venus Genetrix
+  points: [[41.893148, 12.484938], [41.893339, 12.484624], [41.893789, 12.484117], [41.894435, 12.483731], [41.895199, 12.4832], [41.896, 12.483]]  # F3: the two points beside the Forum of Caesar 10.5 m further out (18.5 m from its side instead of 8): the forum's floor is cut 3-5 m below the road there and the two need a cell of the ground mesh between them. F2: leaves the Forum between the Curia and the Carcer (Platner-Ashby s.v. Clivus Argentarius, read) and runs along the south-west side of the Forum of Caesar to the Porta Fontinalis; it started before inside the Forum of Caesar and crossed the temple of Venus Genetrix
   precision: approx
   width_m: 4.0
   width_source: assumed
@@ -81,7 +81,7 @@ streets:
   english: Yoke Street
   kind: vicus
   direction: "from the Forum between the Basilica Iulia and the temple of Castor, west along the foot of the Capitol to the Porta Carmentalis"
-  points: [[41.892455, 12.484576], [41.892374, 12.48431], [41.89232, 12.48425], [41.892221, 12.484202], [41.892086, 12.484105], [41.89196, 12.484033], [41.8916, 12.4832], [41.891501, 12.482295], [41.8916, 12.481401]]  # F2: from the Forum through the arch of Tiberius (Pleiades 307446389) between the temple of Saturn and the Basilica Iulia (the modern path, which Platner-Ashby says preserves the line after the basilica was built), then along the southern edge of the Capitol; the old first point ran through the middle of the Basilica Iulia
+  points: [[41.892455, 12.484576], [41.892374, 12.48431], [41.89232, 12.48425], [41.892221, 12.484202], [41.892086, 12.484105], [41.89196, 12.484033], [41.8916, 12.4832], [41.891405, 12.48236], [41.89115, 12.481317], [41.891375, 12.480327]]  # F3: the western stretch under the Capitol's south face, 26-30 m clear of the Area Capitolina's front (it ran 13 m from the area's gate and its last point lay 24 m inside the area as monuments.yaml draws it, on the summit 20 m above the road), and on to the Porta Carmentalis (monuments.yaml, with its offset) where Platner-Ashby ends it; it stopped 95 m short of the gate. F2: from the Forum through the arch of Tiberius (Pleiades 307446389) between the temple of Saturn and the Basilica Iulia (the modern path, which Platner-Ashby says preserves the line after the basilica was built), then along the southern edge of the Capitol; the old first point ran through the middle of the Basilica Iulia
   precision: approx
   width_m: 4.0
   width_source: assumed
