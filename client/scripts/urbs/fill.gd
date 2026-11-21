@@ -679,9 +679,24 @@ func _clear_at(p: Vector2) -> float:
 	if UrbsTerrain.terrace_at(p.x, p.y) > 0.4:
 		var step := UrbsTerrain.TERRACE_M
 		# the wall's top follows the ground 3.5 m up the slope (UrbsSite.build_chunk_walls), a
-		# little over the tread's level: 0.35 m kept in hand
-		return maxf(hh, step * ceilf((hh - 0.3) / step) + UrbsSite.WALL_UP + 0.35)
+		# little over the tread's level (0.35 m kept in hand), or the open hillside above the
+		# last tread
+		var up: Vector2 = p - UrbsSite._down(p) * 4.5
+		var above: float = float(height.call(up.x, up.y)) + UrbsSite.WALL_UP + 0.1
+		return maxf(maxf(hh, above), step * ceilf((hh - 0.3) / step) + UrbsSite.WALL_UP + 0.35)
 	return hh
+
+
+## F3: the highest terrace wall top under the lot's envelope (5 x 5 grid), or -INF.
+func _terrace_top(lot: Dictionary) -> float:
+	var e := _env(lot)
+	var top := -INF
+	for i in 5:
+		for j in 5:
+			var q: Vector2 = (e["c"] as Vector2) + (e["ax"] as Vector2) * (float(e["hx"]) * (i / 2.0 - 1.0)) + (e["az"] as Vector2) * (float(e["hz"]) * (j / 2.0 - 1.0))
+			if UrbsTerrain.terrace_at(q.x, q.y) > 0.4:
+				top = maxf(top, _clear_at(q))
+	return top
 
 
 ## Slope test and ground height of a lot; sets lot.y. False if too steep.
@@ -1184,6 +1199,8 @@ func _add_street_lot(lot: Dictionary, own: String, margin: float, force_ok := fa
 			# lot.y is the highest the house must clear (_ground_ok), terrace walls included
 			if float(lot["y"]) + 0.04 - front > BURY_BACK:
 				return false
+			if _terrace_top(lot) > front + 0.3:
+				return false   # F3: a terrace's retaining wall would rise inside it (the ground may, not a wall)
 			lot["y"] = front - 0.04
 	if _footway_on and lk != "tomb" and lk != "prop":
 		# the street has a raised footway: the fronts (and anything standing on it) start at its top
@@ -1854,6 +1871,12 @@ func rural_lots(parcels: Array) -> Array:
 			top = maxf(top, gq)
 		if top - lo > 2.0:   # F3: too steep for the stacks' footings: they hung in the air
 			continue
+		var on_way := false
+		for q in _corners({"c": ev["c"], "th": th, "hx": ev["hx"], "hz": ev["hz"]}):
+			if _hazard(q) & (M_STREET | M_WALK | M_FOOT | M_WATER):
+				on_way = true
+		if on_way or _on_street(lot, 0.0):
+			continue   # F3: a steading stood over the Via Triumphi
 		# F3: the floor at the highest ground under the house and the barn (their plinths reach
 		# down; the stacks and the woodpile have footings of their own): parts were buried
 		var hi := -1.0e9

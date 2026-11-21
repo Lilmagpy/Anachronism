@@ -55,7 +55,7 @@ def test_rows_and_section_name_every_kind_and_the_worst() -> None:
 
 
 def test_nothing_when_the_checks_have_not_run() -> None:
-    scene = {"years": {"-44": {"overlaps": []}}}
+    scene: dict[str, Any] = {"years": {"-44": {"overlaps": []}}}
     assert ca.f3_houses_rows(scene) == []
     assert ca.f3_houses_section(scene) == []
     assert ca.f3_houses_counts({}) == {k: 0 for k, _ in ca.F3_HOUSES_KINDS}
