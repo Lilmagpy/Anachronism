@@ -166,12 +166,16 @@ static func spots(rect: Rect2, lod: int, year: int) -> Array:
 		_streets_year = year
 	_keep = [1.0, 0.5, 0.33][l]
 	_grow = [1.0, 1.0, 1.1][l]   # no bigger than the houses (UrbsFill.TREE_CLEAR) allow for
+	_wild = true
 	_spots_woods(out, rect, 0)
+	_wild = false
 	_spots_groves(out, rect, 0, year, cells)
+	_wild = true
 	_keep = [1.0, 0.55, 0.3][l]
 	_spots_hills(out, rect, 0, cells)
 	_keep = [1.0, 0.45, 0.25][l]
 	_spots_farms(out, rect, 0)
+	_wild = false
 	_keep = 1.0
 	_grow = 1.0
 	_level = 0
@@ -179,6 +183,37 @@ static func spots(rect: Rect2, lod: int, year: int) -> Array:
 
 
 static var _keep := 1.0   ## F3: share of the full level's trees planted (spots)
+## F3: the monuments' oriented footprints standing this year ({c, ax, az, hx, hz}; UrbsFill sets
+## them from UrbsMonuments.oriented_footprints): the woods, the hills' green and the farm trees keep
+## out of them (olives and hedgerows stood inside the Emporium and the Horrea Galbae, scrub inside the
+## Tabularium); the groves of the sources are planted where the sources put them.
+static var _obstacles: Array = []
+static var _obst_grid := {}
+static var _wild := false   ## planting a generator that keeps out of the monuments
+
+
+static func set_obstacles(list: Array) -> void:
+	_obstacles = list
+	_obst_grid = {}
+	for i in list.size():
+		var o: Dictionary = list[i]
+		var c: Vector2 = o["c"]
+		var r := Vector2(float(o["hx"]), float(o["hz"])).length() + 2.0
+		for gz in range(floori((c.y - r) / 50.0), floori((c.y + r) / 50.0) + 1):
+			for gx in range(floori((c.x - r) / 50.0), floori((c.x + r) / 50.0) + 1):
+				var k := Vector2i(gx, gz)
+				if not _obst_grid.has(k):
+					_obst_grid[k] = []
+				(_obst_grid[k] as Array).append(i)
+
+
+static func _in_monument(p: Vector2, pad: float) -> bool:
+	for i in _obst_grid.get(Vector2i(floori(p.x / 50.0), floori(p.y / 50.0)), []):
+		var o: Dictionary = _obstacles[i]
+		var d: Vector2 = p - (o["c"] as Vector2)
+		if absf(d.dot(o["ax"])) <= float(o["hx"]) + pad and absf(d.dot(o["az"])) <= float(o["hz"]) + pad:
+			return true
+	return false
 static var _grow := 1.0   ## F3: their scale at this level
 static var _level := 0    ## F3: the level being planted
 static var _streets: UrbsStreets = null   ## F3: the year's streets (index only)
@@ -187,6 +222,8 @@ static var _streets_year := 999999
 
 static func _plant(out: Array, kind: String, x: float, z: float, seed_a: int, seed_b: int, scale := 1.0) -> void:
 	if _keep < 1.0 and _hash(seed_a, seed_b, 13) >= _keep:
+		return
+	if _wild and _in_monument(Vector2(x, z), 1.5):
 		return
 	if _streets != null:
 		var ns := _streets.nearest_street(Vector2(x, z))

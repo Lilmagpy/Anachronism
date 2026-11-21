@@ -136,6 +136,7 @@ func build(urbs: Node3D, new_year: int, new_height: Callable) -> void:
 func prepare() -> void:
 	if not _loaded:
 		_load()
+	UrbsSiteFlora.set_obstacles(obstacles)   # F3: the trees keep out of the monuments too
 	_streets.height = height
 	_streets.load_data(year)
 	_footway_ids = {}

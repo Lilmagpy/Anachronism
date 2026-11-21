@@ -383,7 +383,8 @@ func _terrain() -> Array:
 #   house_base       a building's floor under the ground at its front (more than BURY_BACK at the
 #                    back: a house on a street is cut into the slope behind it), or a part of it
 #                    (plinth, footings) not reaching the ground
-#   tree_building    a tree's trunk inside a building, or its crown through a wall or roof
+#   tree_building    a tree's trunk inside a building or a monument's solid, or its crown through a
+#                    building's wall or roof
 #   tree_street      a tree standing in a carriageway
 #   tree_river       a tree standing in the river
 #   life_solid       a person, stall, cart, mule or litter (or a walker's or cart's lane) inside a
@@ -935,6 +936,12 @@ func _f3_tree(kind: String, p: Vector3, bb: AABB, lod: int, garden: bool, radius
 			if d > 0.6 and d > worst:
 				worst = d
 				where = "crown %.1f m through %s" % [d, _f3_name(it)]
+	if worst == 0.0:
+		# a monument's solid round the trunk (temples stand in groves: their crowns may overhang)
+		var hm := _f3_mon_at(p2, p.y + 0.3, p.y + 3.0, 0.2)
+		if not hm.is_empty():
+			worst = 5.0
+			where = "trunk inside %s" % hm[0][0]
 	if worst > 0.0:
 		_f3_note("tree_building", worst + (0.0 if lod == 0 else -0.01 * lod), "%s: %s" % [tag, where])
 	var cw := _f3_carriageway(p2)
