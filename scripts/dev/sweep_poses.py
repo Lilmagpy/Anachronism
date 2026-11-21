@@ -12,6 +12,7 @@ from pathlib import Path
 
 
 def main() -> None:
+    """Write the pose files into the folder given on the command line."""
     out = Path(sys.argv[1])
     args = sys.argv[2:]
     opt = {args[i].lstrip("-"): float(args[i + 1]) for i in range(0, len(args), 2)}
@@ -33,7 +34,8 @@ def main() -> None:
             z += street_step
         x += street_step
     for i in range(0, len(street), batch):
-        (out / f"street_{i // batch:02d}.json").write_text(json.dumps({"poses": street[i : i + batch]}))
+        poses = street[i : i + batch]
+        (out / f"street_{i // batch:02d}.json").write_text(json.dumps({"poses": poses}))
     air = []
     x = -1600.0
     while x <= 1600.0:
