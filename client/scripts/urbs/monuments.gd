@@ -97,30 +97,95 @@ func set_year(year: int) -> void:
 	_year = year
 	if _root == null:
 		return
-	for id in _order:
-		var st := state_at(id, year)
-		var key := _key(st)
-		if key == _keys.get(id, "|absent"):
-			continue
-		if _nodes.has(id):
-			(_nodes[id] as Node3D).queue_free()
-			_nodes.erase(id)
-			_placed.erase(id)
-			_bounds.erase(id)
-			_boxes.erase(id)
-			_solids.erase(id)
-			_opens.erase(id)
-			_xf.erase(id)
-			_tris.erase(id)
-		_keys[id] = key
-		if not st.is_empty():
-			_make(id, st)
+	# F3 monuments: the routes (the wall, the aqueducts) after everything else, so they stop where
+	# a standing monument stands on their line (route_cuts)
+	for pass_ in 2:
+		for id in _order:
+			var is_route := str(_recs[id].get("model", "")) in ROUTE_CUT
+			if is_route != (pass_ == 1):
+				continue
+			_set_one(id, year)
+
+
+## F3 monuments: one monument brought to `year` (the body of set_year's loop).
+func _set_one(id: String, year: int) -> void:
+	var st := state_at(id, year)
+	if not st.is_empty() and str(st.model) in ROUTE_CUT:   # F3 monuments
+		st["cuts"] = route_cuts(id, str(st.model))
+	var key := _key(st)
+	if key == _keys.get(id, "|absent"):
+		return
+	if _nodes.has(id):
+		(_nodes[id] as Node3D).queue_free()
+		_nodes.erase(id)
+		_placed.erase(id)
+		_bounds.erase(id)
+		_boxes.erase(id)
+		_solids.erase(id)
+		_opens.erase(id)
+		_xf.erase(id)
+		_tris.erase(id)
+	_keys[id] = key
+	if not st.is_empty():
+		_make(id, st)
 
 
 func _key(st: Dictionary) -> String:
 	if st.is_empty():
 		return "|absent"
-	return "%s|%s|%s|%s|%s|%s|%s" % [st.state, st.model, st.variant, st.length, st.width, st.radius, st.height]
+	var cut := ""   # F3 monuments: the monuments a route stops at
+	for c in st.get("cuts", []):
+		cut += "|" + str(c.id)
+	return "%s|%s|%s|%s|%s|%s|%s%s" % [st.state, st.model, st.variant, st.length, st.width, st.radius, st.height, cut]
+
+
+# F3 monuments (begin) ----------------------------------------------------------------------------
+## Route forms that stop where a standing monument stands on their line: the Servian wall at its
+## gates and at the buildings later raised over it (the Theatre of Marcellus, the Porticus inter
+## lignarios, the temples by the Quirinal gates), the Appia's arches at the Porta Capena.
+const ROUTE_CUT := ["wall", "aqueduct"]
+## Footprints a route does not stop at: open pavings (the route stands on them), the river works,
+## other routes.
+const ROUTE_PASS := ["wall", "aqueduct", "sewer", "road_paved", "plaza", "lacus_curtius", "comitium",
+	"bridge_stone", "bridge_timber", "quay"]
+
+
+## The oriented footprints of the standing monuments within 60 m of route `id`'s line, sorted by
+## id: {id, c, ax, az, hx, hz}. The route's tiles keep off them (monument_forms.gd _route_runs).
+func route_cuts(id: String, model: String) -> Array:
+	var route: PackedVector2Array = _circuit().pos if model == "wall" else _routes.get(id, PackedVector2Array())
+	var out: Array = []
+	if route.size() < 2:
+		return out
+	var fps := oriented_footprints()
+	fps.sort_custom(func(a, b): return str(a.id) < str(b.id))
+	for f0 in fps:
+		if str(_placed.get(f0.id, {}).get("model", "")) in ROUTE_PASS:
+			continue
+		var f := _drawn_rect(f0)
+		var r := Vector2(float(f.hx), float(f.hz)).length() + 60.0
+		var c: Vector2 = f.c
+		for k in range(1, route.size()):
+			var q := Geometry2D.get_closest_point_to_segment(c, route[k - 1], route[k])
+			if q.distance_to(c) <= r:
+				out.append(f)
+				break
+	return out
+
+
+## A footprint grown to what is drawn: the plan extent of the monument's solids (a kit form
+## scaled evenly can be wider than its record's footprint), in the same frame.
+func _drawn_rect(f: Dictionary) -> Dictionary:
+	var lo := Vector2(-float(f.hx), -float(f.hz))
+	var hi := Vector2(float(f.hx), float(f.hz))
+	for b in _solids.get(f.id, []):
+		var bb: AABB = b
+		lo = lo.min(Vector2(bb.position.x, bb.position.z))
+		hi = hi.max(Vector2(bb.end.x, bb.end.z))
+	var mid := (lo + hi) * 0.5
+	var c: Vector2 = (f.c as Vector2) + (f.ax as Vector2) * mid.x + (f.az as Vector2) * mid.y
+	return {"id": f.id, "c": c, "ax": f.ax, "az": f.az, "hx": (hi.x - lo.x) * 0.5, "hz": (hi.y - lo.y) * 0.5}
+# F3 monuments (end) ------------------------------------------------------------------------------
 
 
 # ---------------------------------------------------------------------------------------------

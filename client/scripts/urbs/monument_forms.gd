@@ -966,43 +966,125 @@ static func _wall(out: Dictionary, st: Dictionary, route: PackedVector2Array, gr
 		area += route[i].x * route[i + 1].y - route[i + 1].x * route[i].y
 	var sign_out := 1.0 if area > 0.0 else -1.0
 	var agger: Vector2 = st.get("agger", Vector2(-1, -1))
-	var gates: Array = st.get("gates", [])
 	var plain := _kit_mesh("servian_wall")
 	var banked := _kit_mesh("servian_wall_agger")
 	var tower := _kit_mesh("servian_tower")
+	# F3 monuments: the wall runs where nothing stands on its line: it stops at the sides of its
+	# gates and of the monuments later built over it (st.cuts, monuments.gd route_cuts), within a
+	# metre, so the meeting looks built; the open stretches (st.gaps) as before
+	var blocked: Array = []
+	for gap: Vector2 in st.get("gaps", []):
+		blocked.append(Vector2(gap.x + 18.0, gap.y - 18.0))
+	var runs := _route_runs(route, total, st.get("cuts", []), -1.8, 1.8, sign_out, blocked, agger)
 	var sb := SurfaceTool.new()
 	var acc := 0.0
-	var s := 0.0
 	var next_tower := 45.0
-	while s < total:
-		var seg := minf(10.0, total - s)
-		var a := _route_at(route, s)
-		var b := _route_at(route, s + seg)
-		var pa: Vector2 = a.pos
-		var pb: Vector2 = b.pos
-		var dir := (pb - pa).normalized()
-		var out_n := Vector2(-dir.y, dir.x) * sign_out
-		var mid := (pa + pb) * 0.5
-		var skip := false
-		for g in gates:
-			if absf(float(g) - (s + seg * 0.5)) < 18.0:
-				skip = true
-		for gap: Vector2 in st.get("gaps", []):
-			if s + seg * 0.5 > gap.x + 18.0 and s + seg * 0.5 < gap.y - 18.0:
-				skip = true
-		if not skip and seg > 0.5:
-			var y: float = minf(float(ground.call(pa.x, pa.y)), float(ground.call(pb.x, pb.y))) if ground.is_valid() else 10.0
-			var on_agger := s >= agger.x and s <= agger.y
-			_tile(sb, banked if on_agger else plain, mid, y, dir, out_n, seg)
-			if s >= next_tower and not on_agger:
-				_tile(sb, tower, mid + out_n * 0.8, y, dir, out_n, 10.0)
-				next_tower = s + 90.0
-		acc += seg
-		s += seg
-		if acc >= 250.0 or s >= total:
-			_flush(out, sb)
-			sb = SurfaceTool.new()
-			acc = 0.0
+	for run: Vector2 in runs:
+		var s := run.x
+		while s < run.y - 0.05:
+			var seg := minf(10.0, run.y - s)
+			if run.y - (s + seg) < 2.0 and run.y - s <= 12.0:
+				seg = run.y - s   # no sliver at the end of a run
+			var a := _route_at(route, s)
+			var b := _route_at(route, s + seg)
+			var pa: Vector2 = a.pos
+			var pb: Vector2 = b.pos
+			var dir := (pb - pa).normalized()
+			var out_n := Vector2(-dir.y, dir.x) * sign_out
+			var mid := (pa + pb) * 0.5
+			if seg > 0.5:
+				var y: float = minf(float(ground.call(pa.x, pa.y)), float(ground.call(pb.x, pb.y))) if ground.is_valid() else 10.0
+				var on_agger := s >= agger.x and s <= agger.y
+				_tile(sb, banked if on_agger else plain, mid, y, dir, out_n, seg)
+				var tower_rect := {"c": mid + out_n * 0.8, "ax": dir, "az": out_n, "hx": 4.4, "hz": 4.4}
+				var tower_ok := true
+				for f in st.get("cuts", []):
+					if (f.c as Vector2).distance_to(mid) < float(f.hx) + float(f.hz) + 10.0 and _rect_depth(tower_rect, f) > 0.0:
+						tower_ok = false
+				if s >= next_tower and not on_agger and seg >= 9.0 and tower_ok:
+					_tile(sb, tower, mid + out_n * 0.8, y, dir, out_n, 10.0)
+					next_tower = s + 90.0
+			acc += seg
+			s += seg
+			if acc >= 250.0:
+				_flush(out, sb)
+				sb = SurfaceTool.new()
+				acc = 0.0
+	_flush(out, sb)
+
+
+# F3 monuments (begin) ----------------------------------------------------------------------------
+## The stretches [a, b] (route distances) of a route left free by the monuments standing on it
+## (`cuts`: oriented footprints {c, ax, az, hx, hz}) and by the `blocked` intervals, at 1 m: a
+## metre is taken when the route's band (z0..z1 metres across it, + outward; on the agger
+## stretch the bank inside, 16.8 m) overlaps a footprint by more than 5 cm.
+static func _route_runs(route: PackedVector2Array, total: float, cuts: Array, z0: float, z1: float, sign_out: float,
+		blocked := [], agger := Vector2(-1, -1), s_from := 0.0, s_to := -1.0) -> Array:
+	var end := total if s_to < 0.0 else s_to
+	var runs: Array = []
+	var start := -1.0
+	var acc := 0.0
+	for k in range(1, route.size()):
+		var pa := route[k - 1]
+		var pb := route[k]
+		var L := pa.distance_to(pb)
+		if acc + L <= s_from or acc >= end or L < 0.0001:
+			acc += L
+			continue
+		var dir := (pb - pa) / L
+		var n := Vector2(-dir.y, dir.x) * sign_out
+		var near: Array = []
+		for f in cuts:
+			var q := Geometry2D.get_closest_point_to_segment(f.c, pa, pb)
+			if q.distance_to(f.c) <= float(f.hx) + float(f.hz) + 20.0:
+				near.append(f)
+		var t := maxf(0.0, s_from - acc)
+		while t < L and acc + t < end:
+			var seg := minf(minf(1.0, L - t), end - (acc + t))
+			var s := acc + t
+			var free := true
+			for iv: Vector2 in blocked:
+				if s + seg * 0.5 > iv.x and s + seg * 0.5 < iv.y:
+					free = false
+			if free and not near.is_empty():
+				var lo := -16.8 if s >= agger.x and s <= agger.y else z0
+				var mid := pa + dir * (t + seg * 0.5)
+				var band := {"c": mid + n * (lo + z1) * 0.5, "ax": dir, "az": n, "hx": seg * 0.5, "hz": (z1 - lo) * 0.5}
+				for f in near:
+					if _rect_depth(band, f) > 0.05:
+						free = false
+						break
+			if free and start < 0.0:
+				start = s
+			elif not free and start >= 0.0:
+				runs.append(Vector2(start, s))
+				start = -1.0
+			t += seg
+		acc += L
+	if start >= 0.0:
+		runs.append(Vector2(start, minf(end, acc)))
+	# a tile is a straight chord and its stones overhang its length a little: keep 0.75 m clear of
+	# what stopped the run
+	var out: Array = []
+	for r: Vector2 in runs:
+		var a := r.x + (0.75 if r.x > s_from + 0.01 else 0.0)
+		var b := r.y - (0.75 if r.y < end - 0.01 else 0.0)
+		if b - a > 0.5:
+			out.append(Vector2(a, b))
+	return out
+
+
+## Overlap depth of two oriented rectangles {c, ax, az, hx, hz} (<= 0: apart).
+static func _rect_depth(a: Dictionary, b: Dictionary) -> float:
+	var dc: Vector2 = (b.c as Vector2) - (a.c as Vector2)
+	var best := INF
+	for ax in [a.ax, a.az, b.ax, b.az]:
+		var axis: Vector2 = ax
+		var ra := absf(axis.dot(a.ax)) * float(a.hx) + absf(axis.dot(a.az)) * float(a.hz)
+		var rb := absf(axis.dot(b.ax)) * float(b.hx) + absf(axis.dot(b.az)) * float(b.hz)
+		best = minf(best, ra + rb - absf(dc.dot(axis)))
+	return best
+# F3 monuments (end) ------------------------------------------------------------------------------
 
 
 ## Aqueduct arcades as kit tiles along the route over the intervals st.arcade (route distances);
@@ -1011,12 +1093,16 @@ static func _aqueduct(out: Dictionary, d: Dictionary, st: Dictionary, route: Pac
 	out.world = true
 	var tile := _kit_mesh("aqueduct_arcade_tall")
 	var sy := maxf(float(d.h), 6.0) / 20.0
+	var runs: Array = []   # F3 monuments: the arches stop at a monument on their line (st.cuts)
 	for iv in st.get("arcade", []):
+		runs.append_array(_route_runs(route, _route_length(route), st.get("cuts", []), -1.4, 1.4, 1.0, [], Vector2(-1, -1),
+			float(iv[0]), float(iv[1])))
+	for iv: Vector2 in runs:
 		var sb := SurfaceTool.new()
-		var s := float(iv[0])
-		var s1 := float(iv[1])
+		var s := iv.x
+		var s1 := iv.y
 		var acc := 0.0
-		while s < s1:
+		while s < s1 - 0.05:
 			var seg := minf(10.0, s1 - s)
 			var a := _route_at(route, s)
 			var b := _route_at(route, s + seg)

@@ -88,9 +88,41 @@ func _initialize() -> void:
 				"platform": UrbsSite.platform_at(c.x, c.y)})
 	out.year["founded"] = founded
 	out.year["slopes"] = slopes   # for city_audit.py --terraces
+	_f3_monuments(out.year, args)   # F3 monuments
 	out.year["seconds"] = (Time.get_ticks_msec() - t0) / 1000.0
 	print("URBS_AUDIT " + JSON.stringify(out))
 	quit()
+
+
+# F3 monuments (begin) ---------------------------------------------------------------------------
+## The monuments as the player sees them, part by part (monument_audit.gd): parts of one inside
+## another's, parts resting on nothing, columns sunk, coplanar faces (z-fighting), and the
+## `--at` street camera inside a solid or not seeing its monument's front. --f3-coplanar=0 skips
+## the slowest (the coplanar faces).
+func _f3_monuments(year_out: Dictionary, args: Dictionary) -> void:
+	var t := Time.get_ticks_msec()
+	var height := Callable(UrbsTerrain, "height_at")
+	var fill := UrbsFill.new()   # the houses, as _houses sets them up (for the camera checks)
+	fill.year = _year
+	fill.height = height
+	var fps := []
+	for id in _mon.ids():
+		var b: AABB = _mon.bounds(id)
+		if minf(b.size.x, b.size.z) >= 600.0:
+			continue
+		var bc := b.get_center()
+		if maxf(b.size.x, b.size.z) > 120.0 and UrbsSite.platform_at(bc.x, bc.z) != "":
+			continue
+		fps.append(Rect2(b.position.x, b.position.z, b.size.x, b.size.z))
+	fill.footprints = fps
+	fill.obstacles = _mon.oriented_footprints()
+	fill.prepare()
+	var ma := UrbsMonumentAudit.new(_mon, height, fill)
+	var res := ma.run(str(args.get("f3-coplanar", "1")) != "0")
+	for k in res:
+		year_out[k] = res[k]
+	year_out["f3_monuments_seconds"] = (Time.get_ticks_msec() - t) / 1000.0
+# F3 monuments (end) -----------------------------------------------------------------------------
 
 
 # ---------------------------------------------------------------------------------------------
