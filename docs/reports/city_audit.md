@@ -27,11 +27,23 @@ References: **Pleiades** (CC BY 3.0; places within 3.5 km of the Forum with a pe
 | scene: F3 ground: 100 m stretches of a Tiber bank with a saw-toothed water line (all years) | 13 |
 | scene: F3 ground: surfaces within 5 cm of each other (paving, streets, quays, water) (all years) | 2 |
 | scene: F3 ground: ground missing where the camera can see it (all years) | 0 |
-| scene: F3 ground: terrace walls with nothing standing on the terrace (all years) | 6 |
+| scene: F3 ground: terrace walls with nothing standing on the terrace (all years) | 10 |
 | scene: F3 ground: platforms more than 1 m off the street or ground in front (all years) | 24 |
 | scene: F3 ground: steps that do not meet the ground at both ends (all years) | 0 |
 | scene: F3 ground: chunk edges where two levels of detail do not meet (all years) | 0 |
 | scene: F3 ground: stretches of street sunk under or floating over the ground (all years) | 143 |
+| scene (F3 houses): buildings of the fill interpenetrating (all years) | 8 |
+| scene (F3 houses): buildings of the fill inside a monument's solids (all years) | 0 |
+| scene (F3 houses): terrace, platform or clivus walls, steps or quays inside a building (all years) | 16 |
+| scene (F3 houses): buildings on a footway (beyond awning poles) or over a carriageway (all years) | 8 |
+| scene (F3 houses): buildings in the river (all years) | 0 |
+| scene (F3 houses): buildings whose floor is under the ground at the front or whose parts float (all years) | 0 |
+| scene (F3 houses): trees with their trunk inside a building or their crown through it (all years) | 10 |
+| scene (F3 houses): trees in a carriageway (all years) | 0 |
+| scene (F3 houses): trees in the river (all years) | 0 |
+| scene (F3 houses): people, stalls or the walkers' and carts' lanes inside a solid (all years) | 6 |
+| scene (F3 houses): stalls in a carriageway, or sunk into or floating over their ground (all years) | 0 |
+| scene (F3 houses): lamps on no wall, kitchen smoke rising from no roof (all years) | 0 |
 
 ## 1. Completeness
 
@@ -692,8 +704,8 @@ The repository has no modern elevation model; the ground is built from `topograp
 | 390 BC | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 3 | 0 | 0 | 21 |
 | 264 BC | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 4 | 0 | 0 | 22 |
 | 133 BC | 2 | 0 | 0 | 0 | 0 | 1 | 0 | 3 | 0 | 0 | 2 | 4 | 0 | 0 | 25 |
-| 44 BC | 4 | 0 | 0 | 0 | 0 | 1 | 0 | 2 | 1 | 0 | 2 | 5 | 0 | 0 | 27 |
-| 27 BC | 5 | 0 | 0 | 0 | 0 | 1 | 0 | 2 | 1 | 0 | 2 | 5 | 0 | 0 | 27 |
+| 44 BC | 4 | 0 | 0 | 0 | 0 | 1 | 0 | 2 | 1 | 0 | 4 | 5 | 0 | 0 | 27 |
+| 27 BC | 5 | 0 | 0 | 0 | 0 | 1 | 0 | 2 | 1 | 0 | 4 | 5 | 0 | 0 | 27 |
 
 **monuments whose solids overlap another standing monument**
 
@@ -719,10 +731,11 @@ The repository has no modern elevation model; the ground is built from `topograp
 
 **F3 ground: terrace walls with nothing standing on the terrace**
 
-- terrace walls across empty ground near (1203, -352): 11 m (27 BC, 44 BC)
-- terrace walls across empty ground near (1249, -334): 16 m (133 BC)
-- terrace walls across empty ground near (1253, -323): 14 m (133 BC)
-- terrace walls across empty ground near (833, -813): 30 m (27 BC, 44 BC)
+- terrace walls across empty ground near (1198, -323): 23 m (27 BC, 44 BC)
+- terrace walls across empty ground near (1200, -364): 31 m (133 BC, 27 BC, 44 BC)
+- terrace walls across empty ground near (1203, -352): 13 m (27 BC, 44 BC)
+- terrace walls across empty ground near (1203, -352): 37 m (133 BC)
+- terrace walls across empty ground near (1207, -307): 13 m (27 BC, 44 BC)
 
 **F3 ground: platforms more than 1 m off the street or ground in front**
 
@@ -837,6 +850,58 @@ falls more than 3 m on a terrace cut into the hill with retaining walls
 - salinae on a 3.8 m foundation (long_hall)
 - tabularium on a 7.4 m foundation (tabularium)
 - theatrum_marcelli on a 5.1 m foundation (theatre_stone)
+
+### The fill, the trees and the street life (F3 houses)
+
+`audit.gd` `_f3_houses`: every building of the fill (houses, shops, workshops, horrea,
+horti, tombs, farm steadings), every tree (all three levels of detail) and the street
+life (people, stalls, the walkers' and carts' lanes, lamps, smoke), tested by their real
+meshes (each mesh's triangles clipped into 1 m height bands).
+
+| year | buildings | house_house | house_monument | house_wall | house_street | house_river | house_base | tree_building | tree_street | tree_river | life_solid | stall_street | lamp_smoke |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 509 BC | 2131 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 |
+| 390 BC | 3952 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 |
+| 264 BC | 10321 | 0 | 0 | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 |
+| 133 BC | 19148 | 1 | 0 | 3 | 3 | 0 | 0 | 1 | 0 | 0 | 2 | 0 | 0 |
+| 44 BC | 20446 | 3 | 0 | 6 | 3 | 0 | 0 | 1 | 0 | 0 | 2 | 0 | 0 |
+| 27 BC | 20087 | 4 | 0 | 6 | 2 | 0 | 0 | 5 | 0 | 0 | 2 | 0 | 0 |
+
+**buildings of the fill interpenetrating** (the worst, at most 10 a year)
+
+- taberna:0@60,-125 overlaps domus:1@80,-122 by 0.2 m (6 m up) (27 BC, 44 BC)
+- taberna:2@-149,-266 overlaps domus:1@-136,-282 by 0.4 m (6 m up) (27 BC, 44 BC)
+- taberna:4@470,-380 overlaps domus:1@477,-360 by 0.2 m (8 m up) (133 BC, 27 BC, 44 BC)
+- taberna:5@-90,249 overlaps casa:tile@-96,245 by 0.3 m (5 m up) (27 BC)
+
+**terrace, platform or clivus walls, steps or quays inside a building** (the worst, at most 10 a year)
+
+- casa:tile@-177,-350 has the site works (Works) 0.3 m above its floor inside it (27 BC, 44 BC)
+- casa:tile@393,1026 has a terrace wall 0.1 m above its floor inside it (27 BC, 44 BC)
+- domus@-378,771 has the site works (Works) 0.2 m above its floor inside it (133 BC, 27 BC, 44 BC)
+- insula:hip:4:0:0:n@1041,-1256 has a terrace wall 0.2 m above its floor inside it (27 BC, 44 BC)
+- insula:stepped:3:0:0@1182,-1093 has a terrace wall 0.3 m above its floor inside it (133 BC, 27 BC, 44 BC)
+- taberna:1@729,-444 has the site works (Works) 1.4 m above its floor inside it (264 BC)
+- taberna:4@730,-444 has the site works (Works) 1.1 m above its floor inside it (133 BC, 27 BC, 44 BC)
+
+**buildings on a footway (beyond awning poles) or over a carriageway** (the worst, at most 10 a year)
+
+- taberna:0@-229,408 on the footway of via_velabrum by 1.4 m (133 BC, 27 BC, 44 BC)
+- taberna:1@-43,153 on the footway of vicus_tuscus by 1.4 m (133 BC, 44 BC)
+- taberna:2@-31,139 on the footway of vicus_tuscus by 1.4 m (133 BC, 27 BC, 44 BC)
+
+**trees with their trunk inside a building or their crown through it** (the worst, at most 10 a year)
+
+- laurel tree at (1316, -182): trunk inside auditorium_maecenatis (27 BC)
+- oak tree at (392, 314): trunk inside curiae_veteres (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC)
+- pine tree at (1328, -178): trunk inside auditorium_maecenatis (27 BC)
+- pine tree at (1339, -170): trunk inside auditorium_maecenatis (27 BC)
+- pine tree at (1341, -157): trunk inside auditorium_maecenatis (27 BC)
+
+**people, stalls or the walkers' and carts' lanes inside a solid** (the worst, at most 10 a year)
+
+- a walkers' lane of via_flumentana at (-461, -99) through porticus_octaviae (0.0 m from its middle) (133 BC, 27 BC, 44 BC)
+- a walkers' lane of via_triumphi_campi at (-539, -140) through porticus_octaviae (0.0 m from its middle) (133 BC, 27 BC, 44 BC)
 
 ## 4. Time
 

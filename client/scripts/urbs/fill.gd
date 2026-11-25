@@ -535,7 +535,8 @@ func _hazard(p: Vector2) -> int:
 		var cx := (float(i % MASK_N) + 0.5) * MASK_RES - MASK_HALF
 		var cz := (float(i / MASK_N) + 0.5) * MASK_RES - MASK_HALF
 		sm = 1
-		if UrbsTerrain.in_river(cx, cz) or UrbsTerrain.river_distance(cx, cz) < UrbsTerrain.river_half_width(cx, cz) + RIVER_CLEAR:
+		if UrbsTerrain.in_river(cx, cz) or UrbsTerrain.river_distance(cx, cz) < UrbsTerrain.river_half_width(cx, cz) + RIVER_CLEAR \
+				or UrbsTerrain.height_at(cx, cz) < UrbsTerrain.river_level(cx, cz) + 0.4:   # F3: the low banks the river floods
 			sm = 2
 		elif UrbsSite.platform_at(cx, cz) != "":
 			sm = 3
