@@ -81,10 +81,57 @@
    "buried": [],
    "chunk_seams": [],
    "empty_terraces": [
-    "terrace walls across empty ground near (1249, -334): 16 m",
-    "terrace walls across empty ground near (1253, -323): 14 m"
+    "terrace walls across empty ground near (1200, -364): 31 m",
+    "terrace walls across empty ground near (1203, -352): 37 m"
    ],
-   "f3_ground_seconds": 26.634,
+   "f3_ground_seconds": 30.865,
+   "f3_houses": {
+    "buildings": 19148,
+    "counts": {
+     "house_base": 0,
+     "house_house": 1,
+     "house_monument": 0,
+     "house_river": 0,
+     "house_street": 3,
+     "house_wall": 3,
+     "lamp_smoke": 0,
+     "life_solid": 2,
+     "stall_street": 0,
+     "tree_building": 1,
+     "tree_river": 0,
+     "tree_street": 0
+    },
+    "seconds": 63.12,
+    "worst": {
+     "house_base": [],
+     "house_house": [
+      "taberna:4@470,-380 overlaps domus:1@477,-360 by 0.2 m (8 m up)"
+     ],
+     "house_monument": [],
+     "house_river": [],
+     "house_street": [
+      "taberna:0@-229,408 on the footway of via_velabrum by 1.4 m",
+      "taberna:1@-43,153 on the footway of vicus_tuscus by 1.4 m",
+      "taberna:2@-31,139 on the footway of vicus_tuscus by 1.4 m"
+     ],
+     "house_wall": [
+      "taberna:4@730,-444 has the site works (Works) 1.1 m above its floor inside it",
+      "insula:stepped:3:0:0@1182,-1093 has a terrace wall 0.3 m above its floor inside it",
+      "domus@-378,771 has the site works (Works) 0.2 m above its floor inside it"
+     ],
+     "lamp_smoke": [],
+     "life_solid": [
+      "a walkers' lane of via_flumentana at (-461, -99) through porticus_octaviae (0.0 m from its middle)",
+      "a walkers' lane of via_triumphi_campi at (-539, -140) through porticus_octaviae (0.0 m from its middle)"
+     ],
+     "stall_street": [],
+     "tree_building": [
+      "oak tree at (392, 314): trunk inside curiae_veteres"
+     ],
+     "tree_river": [],
+     "tree_street": []
+    }
+   },
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.8 m foundation (temple_tuscan_small)",
@@ -136,7 +183,7 @@
     "platform f2_terrace_aedes_larum stands 1.2 m below the end of street clivus_palatinus at (268, 212)",
     "platform f2_terrace_aedes_larum stands 1.1 m below the end of street via_inter_palatium_caelium at (272, 203)"
    ],
-   "seconds": 53.905,
+   "seconds": 128.669,
    "slopes": [
     {
      "drop": 1.8,
@@ -564,7 +611,43 @@
    "buried": [],
    "chunk_seams": [],
    "empty_terraces": [],
-   "f3_ground_seconds": 18.102,
+   "f3_ground_seconds": 20.937,
+   "f3_houses": {
+    "buildings": 10321,
+    "counts": {
+     "house_base": 0,
+     "house_house": 0,
+     "house_monument": 0,
+     "house_river": 0,
+     "house_street": 0,
+     "house_wall": 1,
+     "lamp_smoke": 0,
+     "life_solid": 0,
+     "stall_street": 0,
+     "tree_building": 1,
+     "tree_river": 0,
+     "tree_street": 0
+    },
+    "seconds": 45.585,
+    "worst": {
+     "house_base": [],
+     "house_house": [],
+     "house_monument": [],
+     "house_river": [],
+     "house_street": [],
+     "house_wall": [
+      "taberna:1@729,-444 has the site works (Works) 1.4 m above its floor inside it"
+     ],
+     "lamp_smoke": [],
+     "life_solid": [],
+     "stall_street": [],
+     "tree_building": [
+      "oak tree at (392, 314): trunk inside curiae_veteres"
+     ],
+     "tree_river": [],
+     "tree_street": []
+    }
+   },
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.8 m foundation (temple_tuscan_small)",
@@ -605,7 +688,7 @@
     "platform f2_terrace_aedes_larum stands 1.2 m below the end of street clivus_palatinus at (268, 212)",
     "platform f2_terrace_aedes_larum stands 1.1 m below the end of street via_inter_palatium_caelium at (272, 203)"
    ],
-   "seconds": 36.569,
+   "seconds": 87.989,
    "slopes": [
     {
      "drop": 1.8,
@@ -934,10 +1017,68 @@
    "buried": [],
    "chunk_seams": [],
    "empty_terraces": [
-    "terrace walls across empty ground near (833, -813): 30 m",
-    "terrace walls across empty ground near (1203, -352): 11 m"
+    "terrace walls across empty ground near (1200, -364): 31 m",
+    "terrace walls across empty ground near (1198, -323): 23 m",
+    "terrace walls across empty ground near (1203, -352): 13 m",
+    "terrace walls across empty ground near (1207, -307): 13 m"
    ],
-   "f3_ground_seconds": 27.202,
+   "f3_ground_seconds": 34.748,
+   "f3_houses": {
+    "buildings": 20087,
+    "counts": {
+     "house_base": 0,
+     "house_house": 4,
+     "house_monument": 0,
+     "house_river": 0,
+     "house_street": 2,
+     "house_wall": 6,
+     "lamp_smoke": 0,
+     "life_solid": 2,
+     "stall_street": 0,
+     "tree_building": 5,
+     "tree_river": 0,
+     "tree_street": 0
+    },
+    "seconds": 70.294,
+    "worst": {
+     "house_base": [],
+     "house_house": [
+      "taberna:2@-149,-266 overlaps domus:1@-136,-282 by 0.4 m (6 m up)",
+      "taberna:5@-90,249 overlaps casa:tile@-96,245 by 0.3 m (5 m up)",
+      "taberna:4@470,-380 overlaps domus:1@477,-360 by 0.2 m (8 m up)",
+      "taberna:0@60,-125 overlaps domus:1@80,-122 by 0.2 m (6 m up)"
+     ],
+     "house_monument": [],
+     "house_river": [],
+     "house_street": [
+      "taberna:0@-229,408 on the footway of via_velabrum by 1.4 m",
+      "taberna:2@-31,139 on the footway of vicus_tuscus by 1.4 m"
+     ],
+     "house_wall": [
+      "taberna:4@730,-444 has the site works (Works) 1.1 m above its floor inside it",
+      "insula:stepped:3:0:0@1182,-1093 has a terrace wall 0.3 m above its floor inside it",
+      "casa:tile@-177,-350 has the site works (Works) 0.3 m above its floor inside it",
+      "insula:hip:4:0:0:n@1041,-1256 has a terrace wall 0.2 m above its floor inside it",
+      "domus@-378,771 has the site works (Works) 0.2 m above its floor inside it",
+      "casa:tile@393,1026 has a terrace wall 0.1 m above its floor inside it"
+     ],
+     "lamp_smoke": [],
+     "life_solid": [
+      "a walkers' lane of via_flumentana at (-461, -99) through porticus_octaviae (0.0 m from its middle)",
+      "a walkers' lane of via_triumphi_campi at (-539, -140) through porticus_octaviae (0.0 m from its middle)"
+     ],
+     "stall_street": [],
+     "tree_building": [
+      "laurel tree at (1316, -182): trunk inside auditorium_maecenatis",
+      "oak tree at (392, 314): trunk inside curiae_veteres",
+      "pine tree at (1328, -178): trunk inside auditorium_maecenatis",
+      "pine tree at (1339, -170): trunk inside auditorium_maecenatis",
+      "pine tree at (1341, -157): trunk inside auditorium_maecenatis"
+     ],
+     "tree_river": [],
+     "tree_street": []
+    }
+   },
    "floating": [],
    "founded": [
     "aedes_apollinis_palatini on a 1.2 m foundation (temple_hexastyle_corinthian_marble)",
@@ -1005,7 +1146,7 @@
     "platform f2_terrace_aedes_larum stands 1.1 m below the end of street via_inter_palatium_caelium at (272, 203)",
     "platform f2_terrace_domus_catuli stands 10.3 m over the ground in front of domus_catuli at (50, 192)"
    ],
-   "seconds": 58.707,
+   "seconds": 147.623,
    "slopes": [
     {
      "drop": 1.2,
@@ -1581,7 +1722,41 @@
    "buried": [],
    "chunk_seams": [],
    "empty_terraces": [],
-   "f3_ground_seconds": 13.242,
+   "f3_ground_seconds": 14.299,
+   "f3_houses": {
+    "buildings": 3952,
+    "counts": {
+     "house_base": 0,
+     "house_house": 0,
+     "house_monument": 0,
+     "house_river": 0,
+     "house_street": 0,
+     "house_wall": 0,
+     "lamp_smoke": 0,
+     "life_solid": 0,
+     "stall_street": 0,
+     "tree_building": 1,
+     "tree_river": 0,
+     "tree_street": 0
+    },
+    "seconds": 37.45,
+    "worst": {
+     "house_base": [],
+     "house_house": [],
+     "house_monument": [],
+     "house_river": [],
+     "house_street": [],
+     "house_wall": [],
+     "lamp_smoke": [],
+     "life_solid": [],
+     "stall_street": [],
+     "tree_building": [
+      "oak tree at (392, 314): trunk inside curiae_veteres"
+     ],
+     "tree_river": [],
+     "tree_street": []
+    }
+   },
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.8 m foundation (temple_tuscan_small)",
@@ -1611,7 +1786,7 @@
     "platform f2_terrace_aedes_larum stands 1.2 m below the end of street clivus_palatinus at (268, 212)",
     "platform f2_terrace_aedes_larum stands 1.1 m below the end of street via_inter_palatium_caelium at (272, 203)"
    ],
-   "seconds": 25.212,
+   "seconds": 65.909,
    "slopes": [
     {
      "drop": 1.8,
@@ -1819,10 +1994,64 @@
    "buried": [],
    "chunk_seams": [],
    "empty_terraces": [
-    "terrace walls across empty ground near (833, -813): 30 m",
-    "terrace walls across empty ground near (1203, -352): 11 m"
+    "terrace walls across empty ground near (1200, -364): 31 m",
+    "terrace walls across empty ground near (1198, -323): 23 m",
+    "terrace walls across empty ground near (1203, -352): 13 m",
+    "terrace walls across empty ground near (1207, -307): 13 m"
    ],
-   "f3_ground_seconds": 26.273,
+   "f3_ground_seconds": 34.421,
+   "f3_houses": {
+    "buildings": 20446,
+    "counts": {
+     "house_base": 0,
+     "house_house": 3,
+     "house_monument": 0,
+     "house_river": 0,
+     "house_street": 3,
+     "house_wall": 6,
+     "lamp_smoke": 0,
+     "life_solid": 2,
+     "stall_street": 0,
+     "tree_building": 1,
+     "tree_river": 0,
+     "tree_street": 0
+    },
+    "seconds": 69.62,
+    "worst": {
+     "house_base": [],
+     "house_house": [
+      "taberna:2@-149,-266 overlaps domus:1@-136,-282 by 0.4 m (6 m up)",
+      "taberna:4@470,-380 overlaps domus:1@477,-360 by 0.2 m (8 m up)",
+      "taberna:0@60,-125 overlaps domus:1@80,-122 by 0.2 m (6 m up)"
+     ],
+     "house_monument": [],
+     "house_river": [],
+     "house_street": [
+      "taberna:0@-229,408 on the footway of via_velabrum by 1.4 m",
+      "taberna:1@-43,153 on the footway of vicus_tuscus by 1.4 m",
+      "taberna:2@-31,139 on the footway of vicus_tuscus by 1.4 m"
+     ],
+     "house_wall": [
+      "taberna:4@730,-444 has the site works (Works) 1.1 m above its floor inside it",
+      "insula:stepped:3:0:0@1182,-1093 has a terrace wall 0.3 m above its floor inside it",
+      "casa:tile@-177,-350 has the site works (Works) 0.3 m above its floor inside it",
+      "insula:hip:4:0:0:n@1041,-1256 has a terrace wall 0.2 m above its floor inside it",
+      "domus@-378,771 has the site works (Works) 0.2 m above its floor inside it",
+      "casa:tile@393,1026 has a terrace wall 0.1 m above its floor inside it"
+     ],
+     "lamp_smoke": [],
+     "life_solid": [
+      "a walkers' lane of via_flumentana at (-461, -99) through porticus_octaviae (0.0 m from its middle)",
+      "a walkers' lane of via_triumphi_campi at (-539, -140) through porticus_octaviae (0.0 m from its middle)"
+     ],
+     "stall_street": [],
+     "tree_building": [
+      "oak tree at (392, 314): trunk inside curiae_veteres"
+     ],
+     "tree_river": [],
+     "tree_street": []
+    }
+   },
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.8 m foundation (temple_tuscan_small)",
@@ -1887,7 +2116,7 @@
     "platform f2_terrace_aedes_larum stands 1.1 m below the end of street via_inter_palatium_caelium at (272, 203)",
     "platform f2_terrace_domus_catuli stands 10.3 m over the ground in front of domus_catuli at (50, 192)"
    ],
-   "seconds": 50.91,
+   "seconds": 144.305,
    "slopes": [
     {
      "drop": 1.8,
@@ -2439,7 +2668,41 @@
    "buried": [],
    "chunk_seams": [],
    "empty_terraces": [],
-   "f3_ground_seconds": 13.538,
+   "f3_ground_seconds": 13.813,
+   "f3_houses": {
+    "buildings": 2131,
+    "counts": {
+     "house_base": 0,
+     "house_house": 0,
+     "house_monument": 0,
+     "house_river": 0,
+     "house_street": 0,
+     "house_wall": 0,
+     "lamp_smoke": 0,
+     "life_solid": 0,
+     "stall_street": 0,
+     "tree_building": 1,
+     "tree_river": 0,
+     "tree_street": 0
+    },
+    "seconds": 35.594,
+    "worst": {
+     "house_base": [],
+     "house_house": [],
+     "house_monument": [],
+     "house_river": [],
+     "house_street": [],
+     "house_wall": [],
+     "lamp_smoke": [],
+     "life_solid": [],
+     "stall_street": [],
+     "tree_building": [
+      "oak tree at (392, 314): trunk inside curiae_veteres"
+     ],
+     "tree_river": [],
+     "tree_street": []
+    }
+   },
    "floating": [],
    "founded": [
     "aedes_fortunae_matris_matutae on a 1.5 m foundation (temple_tetrastyle_ionic)",
@@ -2470,7 +2733,7 @@
     "platform f2_terrace_aedes_larum stands 1.2 m below the end of street clivus_palatinus at (268, 212)",
     "platform f2_terrace_aedes_larum stands 1.1 m below the end of street via_inter_palatium_caelium at (272, 203)"
    ],
-   "seconds": 18.701,
+   "seconds": 56.525,
    "slopes": [
     {
      "drop": 1.48,

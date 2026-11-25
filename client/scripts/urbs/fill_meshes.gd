@@ -41,14 +41,16 @@ const SURFACES: Array[String] = [
 ]
 
 static var _cache := {}
+static var _footprints := {}
+static var _ridges := {}
 static var _material: ShaderMaterial
 
 
 # ---------------------------------------------------------------- public
 
 ## Mesh for `key` at detail `lod` (0 full, 1 simplified, 2 walls and roof). Keys:
-##   insula:<shape gable|hip|stepped>:<storeys 2-5>:<feature 0-2>:<pitch 0|1>[:n  narrow, 7 m wide]
-##   domus  casa:<tile|thatch|shingle>  taberna:<0-5>  workshop:<0 potter|1 carpenter|2 fullonica>
+##   insula:<shape gable|hip|stepped>:<storeys 2-5>:<feature 0-3; 3 plain front behind shops>:<pitch 0|1>[:n  narrow, 7 m wide]
+##   domus[:1  no awning: behind a row of tabernae]  casa:<tile|thatch|shingle>  taberna:<0-5>  workshop:<0 potter|1 carpenter|2 fullonica>
 ##   horrea  horti  tree:<cypress|pine|round|fruit>  prop:<cart|amph|sacks|crates>
 ##   furn:<fountain|well|shrine>  tomb:<altar|columbarium|round|tumulus|stele>  rural:<vines|beds|farm>
 static func get_mesh(key: String, lod := 0) -> ArrayMesh:
@@ -61,6 +63,44 @@ static func get_mesh(key: String, lod := 0) -> ArrayMesh:
 	return mesh
 
 
+## F3: the ground plan of everything `key` builds above its feet at lod 0 (walls, eaves,
+## balconies, stairs, awnings, counters), local metres before the lot's scale: the rectangle the
+## layout (fill.gd) keeps clear of every other building, so no two buildings interpenetrate.
+static func footprint(key: String) -> Rect2:
+	if _footprints.has(key):
+		return _footprints[key]
+	var mb := build(key, 0)
+	var lo := Vector2(INF, INF)
+	var hi := Vector2(-INF, -INF)
+	for p in mb.v:
+		if p.y > 0.01:
+			lo = Vector2(minf(lo.x, p.x), minf(lo.y, p.z))
+			hi = Vector2(maxf(hi.x, p.x), maxf(hi.y, p.z))
+	var r := Rect2(lo, hi - lo) if hi.x >= lo.x else Rect2(-1, -1, 2, 2)
+	_footprints[key] = r
+	return r
+
+
+## F3: the top of the roof of `key` (local metres): the middle of its highest vertices, where a
+## kitchen's smoke is seen to rise (UrbsLife).
+static func ridge(key: String) -> Vector3:
+	if _ridges.has(key):
+		return _ridges[key]
+	var mb := build(key, 0)
+	var top := -INF
+	for p in mb.v:
+		top = maxf(top, p.y)
+	var sum := Vector3.ZERO
+	var n := 0
+	for p in mb.v:
+		if p.y > top - 0.3:
+			sum += p
+			n += 1
+	var r := sum / float(maxi(n, 1))
+	_ridges[key] = r
+	return r
+
+
 ## The builder of `key` at `lod` (for counts and tests).
 static func build(key: String, lod: int) -> PA.MB:
 	var p := key.split(":")
@@ -68,7 +108,7 @@ static func build(key: String, lod: int) -> PA.MB:
 		"insula":
 			return H.insula(p[1], int(p[2]), int(p[3]), int(p[4]), lod, p.size() > 5 and p[5] == "n")
 		"domus":
-			return H.domus(lod)
+			return H.domus(lod, p.size() < 2 or p[1] != "1")
 		"casa":
 			return H.casa(p[1], lod)
 		"taberna":
@@ -108,7 +148,8 @@ static func lod_key(key: String, lod: int) -> String:
 			if lod >= 2:
 				shape = "hip" if shape == "hip" else "gable"
 				pitch = "0"
-			return "insula:%s:%s:0:%s%s" % [shape, p[2], pitch, ":n" if narrow else ""]
+			var feat := "3" if p[3] == "3" else "0"   # F3: the plain front keeps its plainness far away
+			return "insula:%s:%s:%s:%s%s" % [shape, p[2], feat, pitch, ":n" if narrow else ""]
 		"taberna":
 			return "taberna:4" if p[1] == "4" else "taberna:0"
 		"workshop":

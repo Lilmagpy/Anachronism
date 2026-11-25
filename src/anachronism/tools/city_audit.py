@@ -2562,6 +2562,93 @@ def update_terraces(scene: dict[str, Any], path: Path = TOPOGRAPHY) -> int:
 # --- end F2 terraces ---------------------------------------------------------------------------
 
 
+# --- F3 houses --------------------------------------------------------------------------------
+# What the F3 houses checks of audit.gd (``_f3_houses``: the fill, the trees and the street life by
+# their real meshes) found, in the summary and in section 3 of the report.
+
+F3_HOUSES_KINDS = [
+    ("house_house", "buildings of the fill interpenetrating"),
+    ("house_monument", "buildings of the fill inside a monument's solids"),
+    ("house_wall", "terrace, platform or clivus walls, steps or quays inside a building"),
+    ("house_street", "buildings on a footway (beyond awning poles) or over a carriageway"),
+    ("house_river", "buildings in the river"),
+    ("house_base", "buildings whose floor is under the ground at the front or whose parts float"),
+    ("tree_building", "trees with their trunk inside a building or their crown through it"),
+    ("tree_street", "trees in a carriageway"),
+    ("tree_river", "trees in the river"),
+    ("life_solid", "people, stalls or the walkers' and carts' lanes inside a solid"),
+    ("stall_street", "stalls in a carriageway, or sunk into or floating over their ground"),
+    ("lamp_smoke", "lamps on no wall, kitchen smoke rising from no roof"),
+]
+"""``audit.gd`` F3 houses kinds: key in ``f3_houses.counts`` and a label for the report."""
+
+
+def f3_houses_counts(scene: dict[str, Any]) -> dict[str, int]:
+    """Totals of the F3 houses findings over the audited years, by kind."""
+    out = {k: 0 for k, _ in F3_HOUSES_KINDS}
+    for data in (scene.get("years") or {}).values():
+        counts = (data.get("f3_houses") or {}).get("counts") or {}
+        for k in out:
+            out[k] += int(counts.get(k, 0))
+    return out
+
+
+def f3_houses_rows(scene: dict[str, Any]) -> list[str]:
+    """Rows of the summary table (one per kind), or none when the checks have not run."""
+    if not any((d.get("f3_houses") or {}) for d in (scene.get("years") or {}).values()):
+        return []
+    totals = f3_houses_counts(scene)
+    return [
+        f"| scene (F3 houses): {label} (all years) | {totals[k]} |" for k, label in F3_HOUSES_KINDS
+    ]
+
+
+def f3_houses_section(scene: dict[str, Any], keep: int = 10) -> list[str]:
+    """Section 3's part on the F3 houses checks: counts by year and the worst findings."""
+    years = {
+        y: d["f3_houses"]
+        for y, d in (scene.get("years") or {}).items()
+        if isinstance(d.get("f3_houses"), dict)
+    }
+    if not years:
+        return []
+    out = [
+        "### The fill, the trees and the street life (F3 houses)",
+        "",
+        "`audit.gd` `_f3_houses`: every building of the fill (houses, shops, workshops, horrea,",
+        "horti, tombs, farm steadings), every tree (all three levels of detail) and the street",
+        "life (people, stalls, the walkers' and carts' lanes, lamps, smoke), tested by their real",
+        "meshes (each mesh's triangles clipped into 1 m height bands).",
+        "",
+        "| year | buildings | " + " | ".join(k for k, _ in F3_HOUSES_KINDS) + " |",
+        "|---|---|" + "---|" * len(F3_HOUSES_KINDS),
+    ]
+    for y, f in sorted(years.items(), key=lambda kv: int(kv[0])):
+        counts = f.get("counts") or {}
+        out.append(
+            f"| {_yr(int(y))} | {f.get('buildings', '')} | "
+            + " | ".join(str(counts.get(k, 0)) for k, _ in F3_HOUSES_KINDS)
+            + " |"
+        )
+    out.append("")
+    for k, label in F3_HOUSES_KINDS:
+        items: dict[str, list[str]] = {}
+        for y, f in years.items():
+            for txt in ((f.get("worst") or {}).get(k) or [])[:keep]:
+                items.setdefault(str(txt), []).append(_yr(int(y)))
+        if not items:
+            continue
+        out.append(f"**{label}** (the worst, at most {keep} a year)")
+        out.append("")
+        for txt, ys in sorted(items.items()):
+            out.append(f"- {_md_escape(txt)} ({', '.join(ys)})")
+        out.append("")
+    return out
+
+
+# --- end F3 houses -----------------------------------------------------------------------------
+
+
 SCENE_KINDS = [
     ("overlaps", "monuments whose solids overlap another standing monument"),
     ("floating", "monuments whose base is more than 0.5 m above the ground under a corner"),
@@ -2639,6 +2726,7 @@ class Audit:
             s[f"scene_{key}"] = sum(
                 len(y.get(key, [])) for y in self.scene.get("years", {}).values()
             )
+        s.update({f"f3_{k}": v for k, v in f3_houses_counts(self.scene).items()})  # F3 houses
         return s
 
 
@@ -2748,6 +2836,8 @@ def render_markdown(a: Audit) -> str:
     w(f"| date issues | {s['date_issues']} |")
     for key, label in SCENE_KINDS:
         w(f"| scene: {label} (all years) | {s.get('scene_' + key, 0)} |")
+    for row in f3_houses_rows(a.scene):  # F3 houses
+        w(row)
     if not a.scene.get("years"):
         w("| scene audit | not run (`--scene`) |")
     w("")
@@ -2958,6 +3048,8 @@ def render_markdown(a: Audit) -> str:
             for txt in founded:
                 w(f"- {_md_escape(str(txt))}")
             w("")
+        for row in f3_houses_section(a.scene):  # F3 houses
+            w(row)
     # --- time
     w("## 4. Time")
     w("")

@@ -150,17 +150,25 @@ var _fig_free: Array[int] = []
 var _cam := Vector3(1e9, 0, 1e9)
 var _lod_timer := 0.0
 var _lamps: PackedVector3Array = PackedVector3Array()
+var _lamp_posts: PackedVector3Array = PackedVector3Array()   ## F3: the feet of the lamps on posts
 var _lights: Array[OmniLight3D] = []
 var _lamp_node: Node3D
 var _smoke: MultiMeshInstance3D
 var _smoke_mat: ShaderMaterial
 var _smoke_count := 0
+var _smoke_at := PackedVector3Array()
 var _stalls: Node3D
 var _stall_open: Array[MultiMeshInstance3D] = []
 var _rigs: Array = []              # {node, kind, agent, animals: Array, extra: Array}
 var _venue_crowd: Node3D
 var _senate_crowd: Node3D
 var _forum: Dictionary = {}        # {c: Vector2, u: Vector2, v: Vector2, hl, hw, y}
+var _lane_max: Array = []          # F3: per street, the widest lateral offset clear of solids every LANE_STEP m
+var _cart_ok := PackedByteArray()  # F3: per street, 1 if an ox cart fits all along it
+var _blocker_pass: Array[bool] = []  # F3: the blocker is a gate's or an arch's: its passage is the street
+const LANE_STEP := 2.0
+const CART_HW := 1.05              ## F3: half the width of an ox cart with its pair of oxen
+const PASSABLE_MODELS := ["servian_gate", "arch", "bridge_stone", "bridge_timber", "wall", "aqueduct"]
 var _blockers: Array = []          # AABBs of monuments' solids people must not stand in
 var _block_grid := {}              # Vector2i cell -> indices into _blockers
 const BLOCK_CELL := 40.0
@@ -193,6 +201,7 @@ func build(urbs_node: Node3D, new_year: int, new_hour: float, height_fn: Callabl
 	# what people must not stand in: the monuments' real solids (UrbsMonuments.solid_boxes),
 	# not plazas or routes (no bounds), not steps and low platforms (1.3 m or less)
 	_blockers.clear()
+	_blocker_pass.clear()
 	_block_grid.clear()
 	var mb: Variant = urbs.monuments.get("_bounds")
 	for id in urbs.monuments.ids():
@@ -201,9 +210,11 @@ func build(urbs_node: Node3D, new_year: int, new_hour: float, height_fn: Callabl
 		var boxes: Array = urbs.monuments.solid_boxes(id) if urbs.monuments.has_method("solid_boxes") else [urbs.monuments.bounds(id)]
 		for b in boxes:
 			var bb: AABB = b
-			if bb.size.y <= 1.3 or bb.size.x > 400.0 or bb.size.z > 400.0:
+			# F3: steps and low podia too (0.3 m and up): people stood with their legs in them
+			if bb.size.y <= 0.3 or bb.size.x > 400.0 or bb.size.z > 400.0:
 				continue
 			_blockers.append(bb)
+			_blocker_pass.append(str((urbs.monuments.get("_placed") as Dictionary).get(id, {}).get("model", "")) in PASSABLE_MODELS)
 			var k := _blockers.size() - 1
 			for gx in range(floori((bb.position.x - 1.0) / BLOCK_CELL), floori((bb.end.x + 1.0) / BLOCK_CELL) + 1):
 				for gz in range(floori((bb.position.z - 1.0) / BLOCK_CELL), floori((bb.end.z + 1.0) / BLOCK_CELL) + 1):
@@ -211,6 +222,7 @@ func build(urbs_node: Node3D, new_year: int, new_hour: float, height_fn: Callabl
 					if not _block_grid.has(key):
 						_block_grid[key] = []
 					(_block_grid[key] as Array).append(k)
+	_lane_limits()
 	_vcol_mat = StandardMaterial3D.new()
 	_vcol_mat.vertex_color_use_as_albedo = true
 	_vcol_mat.roughness = 0.95
@@ -340,6 +352,67 @@ static func _population(y: int) -> float:
 
 
 # ---- streets --------------------------------------------------------------------------------
+
+## F3: how far from its middle a walker may keep along each stretch of each street (every
+## LANE_STEP m): where a gate's piers, a monument's steps or a house narrow the street, the lane
+## closes in (walkers and carts went through the piers of the gates and the Temple of Concord).
+func _lane_limits() -> void:
+	_lane_max.clear()
+	_cart_ok.resize(_streets.size())
+	for si in _streets.size():
+		var s: Dictionary = _streets[si]
+		var hw := float(s["hw"])
+		var n := int(float(s["len"]) / LANE_STEP) + 2
+		var lim := PackedFloat32Array()
+		lim.resize(n)
+		for k in n:
+			var sp: Array = urbs.streets.sample_at(si, minf(float(k) * LANE_STEP, float(s["len"])))
+			var q: Vector2 = sp[0]
+			var tg: Vector2 = sp[1]
+			var nrm := Vector2(-tg.y, tg.x)
+			var best := 0.0
+			for f: float in [0.85, 0.6, 0.35, 0.0]:
+				var l: float = hw * f
+				if not _blocked_lane(q + nrm * l, 0.45) and not _blocked_lane(q - nrm * l, 0.45):
+					best = l
+					break
+			lim[k] = best
+		_lane_max.append(lim)
+		var narrow := hw < CART_HW
+		for k in n:
+			if not narrow and lim[k] < hw * 0.85 and not (not _blocked_lane((urbs.streets.sample_at(si, minf(float(k) * LANE_STEP, float(s["len"])))[0] as Vector2), CART_HW)):
+				narrow = true
+		_cart_ok[si] = 0 if narrow else 1
+
+
+## A monument's solid within `r` of `p` (the houses keep off the carriageways: UrbsFill); a gate's
+## or an arch's is its passage.
+func _blocked_lane(p: Vector2, r: float) -> bool:
+	var key := Vector2i(floori(p.x / BLOCK_CELL), floori(p.y / BLOCK_CELL))
+	for k in _block_grid.get(key, []):
+		if _blocker_pass[k]:
+			continue
+		var bb: AABB = _blockers[k]
+		if p.x > bb.position.x - r and p.x < bb.end.x + r and p.y > bb.position.z - r and p.y < bb.end.z + r:
+			return true
+	return false
+
+
+## The lateral offset an agent at arc length `d` of street `si` may keep (its own, or the lane's
+## limit there).
+func lane_lat(si: int, d: float, lat: float) -> float:
+	if si < 0 or si >= _lane_max.size():
+		return lat
+	var lim: PackedFloat32Array = _lane_max[si]
+	var k := clampi(int(d / LANE_STEP), 0, lim.size() - 1)
+	var m := minf(lim[k], lim[mini(k + 1, lim.size() - 1)])
+	return clampf(lat, -m, m)
+
+
+## F3: whether ox carts may use street `si` (narrower than a cart, or a monument narrowing it: no).
+func cart_street(si: int) -> bool:
+	return si >= 0 and si < _cart_ok.size() and _cart_ok[si] == 1
+
 
 func _link_streets() -> void:
 	_links = []
@@ -488,6 +561,8 @@ func _make_people() -> void:
 				var a := _new_agent(str(spot["kind"]) if spot["kind"] != "" and _rng.randf() < 0.4 else _pick_kind("forum"))
 				var ang := TAU * g / group + _rng.randf() * 0.4
 				var p := c + Vector2(cos(ang), sin(ang)) * (ring if group > 1 else 0.0)
+				if _occupied(p):
+					continue   # F3: each of the group clear of the buildings, not only its centre
 				a["mode"] = "stand"
 				a["amp"] = 0.0
 				a["pos"] = _forum_point(p)
@@ -662,6 +737,26 @@ func _forum_spots() -> Array:
 	return out
 
 
+## F3: a monument's solid (with its margin) or a house of the fill (UrbsFill.building_at) at `p`.
+func _occupied(p: Vector2, margin := 0.3) -> bool:
+	if _blocked(p):
+		return true
+	var fill: Variant = urbs.get("fill") if urbs != null else null
+	return fill != null and not (fill.building_at(p, margin) as Dictionary).is_empty()
+
+
+## F3: the height of what is walked on at `p` (a raised footway's top, UrbsFill.walk_height).
+func _walk_y(p: Vector2) -> float:
+	var fill: Variant = urbs.get("fill") if urbs != null else null
+	return float(fill.walk_height(p)) if fill != null else float(height.call(p.x, p.y))
+
+
+## F3: true if `p` lies in the carriageway of a street (with `margin` m round it).
+func _in_carriageway(p: Vector2, margin := 0.0) -> bool:
+	var ns: Dictionary = urbs.streets.nearest_street(p) if urbs.streets != null else {}
+	return not ns.is_empty() and str(ns.get("kind", "")) != "stairs" and float(ns["distance"]) < float(ns["half_width"]) + margin
+
+
 func _blocked(p: Vector2) -> bool:
 	var key := Vector2i(floori(p.x / BLOCK_CELL), floori(p.y / BLOCK_CELL))
 	if not _block_grid.has(key):
@@ -707,10 +802,11 @@ func _make_stalls() -> void:
 				if _rng.randf() < 0.18:
 					continue
 				var c: Vector2 = p["centre"] + u * (-hl + 2.1 + i * 4.2) + v * off
-				if _blocked(c):
-					continue
 				c += Vector2(_rng.randf_range(-0.6, 0.6), _rng.randf_range(-0.6, 0.6))
-				places.append({"p": c, "yaw": yaw + PI / 2.0 + (PI if r % 2 == 1 else 0.0) + _rng.randf_range(-0.12, 0.12), "goods": _rng.randi() % 3})
+				var syaw: float = yaw + PI / 2.0 + (PI if r % 2 == 1 else 0.0) + _rng.randf_range(-0.12, 0.12)
+				if not _stall_clear(c, syaw, false):
+					continue   # F3: not in a street running across the market, a house or a monument
+				places.append({"p": c, "yaw": syaw, "goods": _rng.randi() % 3, "floor": float(p["y"]) + 0.07})
 	# the Macellum (Livy 40.51.5; Varro LL 5.146): stalls round the market hall
 	if placed.has("macellum"):
 		var p: Dictionary = placed["macellum"]
@@ -723,7 +819,10 @@ func _make_stalls() -> void:
 		for i in n:
 			for side in [-1.0, 1.0]:
 				var c: Vector2 = p["centre"] + u * (-hl + 2.0 + i * 4.5) + v * hw * side
-				places.append({"p": c, "yaw": yaw + (0.0 if side > 0 else PI), "goods": _rng.randi() % 3})
+				var syaw: float = yaw + (0.0 if side > 0 else PI)
+				if not _stall_clear(c, syaw, false):
+					continue   # F3: stalls stood in the houses and the streets round the hall
+				places.append({"p": c, "yaw": syaw, "goods": _rng.randi() % 3})
 	# the Argiletum and the Vicus Tuscus: stalls on the footpaths (Plautus Curc. 483; the
 	# Argiletum's shops: Martial 1.3, # unverified)
 	for sid in ["argiletum", "vicus_tuscus"]:
@@ -738,12 +837,14 @@ func _make_stalls() -> void:
 				var pt: Array = urbs.streets.sample_at(si, 4.0 + i * 9.0 + _rng.randf_range(-1.5, 1.5))
 				var tg: Vector2 = pt[1]
 				var nrm := Vector2(-tg.y, tg.x)
-				# against the house fronts (the kerb and the footpath are 1.3 m: fill.gd), table
-				# back to the wall, the awning reaching to the street's edge
-				var c: Vector2 = pt[0] + nrm * (hw + 1.05) * side
-				if _blocked(c):
+				# against the house fronts (the kerb and the footway are 1.53 m: fill.gd), table
+				# back to the wall, the awning reaching to the kerb (F3: its poles stood in the
+				# gutter; and only where the front has no shop with its own awning)
+				var c: Vector2 = pt[0] + nrm * (hw + 1.17) * side
+				var syaw := atan2(-nrm.x * side, -nrm.y * side)
+				if not _stall_clear(c, syaw, true):
 					continue
-				places.append({"p": c, "yaw": atan2(-nrm.x * side, -nrm.y * side), "goods": _rng.randi() % 3, "wall": true})
+				places.append({"p": c, "yaw": syaw, "goods": _rng.randi() % 3, "wall": true})
 	if places.is_empty():
 		_stalls.set_meta("count", 0)
 		return
@@ -762,11 +863,13 @@ func _make_stalls() -> void:
 	for i in n_all:
 		var pl: Dictionary = places[i]
 		var c: Vector2 = pl["p"]
-		var y := float(height.call(c.x, c.y)) + 0.2
+		# F3: on what is walked on there (a raised footway's top, a market's paving); stalls
+		# stood 0.2 m over the ground and 0.14 m sunk into the footways
+		var y := maxf(_walk_y(c), float(pl.get("floor", -1.0e9)))
 		var xf := Transform3D(Basis(Vector3.UP, float(pl["yaw"])), Vector3(c.x, y, c.y))
 		var w := 1 if pl.get("wall", false) else 0
 		(mm_frame[w] as MultiMesh).set_instance_transform(k_frame[w], xf)
-		_stall_inst.append([mm_frame[w], k_frame[w], xf, c])   # F2 play: cleared for a spectacle
+		_stall_inst.append([mm_frame[w], k_frame[w], xf, c, w == 1])   # F2 play: cleared for a spectacle (F3: and whether it stands against a wall)
 		k_frame[w] += 1
 		if _rng.randf() < 0.55:
 			(mm_canvas[w] as MultiMesh).set_instance_transform(k_canvas[w], xf)
@@ -789,7 +892,8 @@ func _make_stalls() -> void:
 		v["pos"] = Vector3(vp.x, y - 0.07, vp.y)
 		v["yaw"] = atan2(back.x, back.y)
 		v["market"] = true
-		_agents.append(v)
+		if not _occupied(vp, 0.25):   # F3: stallholders stood inside the Macellum's walls
+			_agents.append(v)
 		for s in (_rng.randi() % 3):
 			var sh := _new_agent(_pick_kind("street"))
 			sh["mode"] = "stand"
@@ -799,7 +903,8 @@ func _make_stalls() -> void:
 			sh["pos"] = Vector3(sp.x, y - 0.07, sp.y)
 			sh["yaw"] = atan2(-back.x, -back.y) + _rng.randf_range(-0.3, 0.3)
 			sh["market"] = true
-			_agents.append(sh)
+			if not _occupied(sp, 0.25):
+				_agents.append(sh)
 	for w in 2:
 		(mm_frame[w] as MultiMesh).visible_instance_count = k_frame[w]
 		(mm_canvas[w] as MultiMesh).visible_instance_count = k_canvas[w]
@@ -812,6 +917,21 @@ func _make_stalls() -> void:
 	for g in 3:
 		_stall_open.append(_add_mm(_stalls, mm_goods[g], _vcol_mat, "Goods%d" % g))
 	_stalls.set_meta("count", n_all)
+
+
+## F3: whether a stall (a free-standing one, or `wall` against a house front) at `c` turned to `yaw`
+## stands clear of the monuments, the houses and (free-standing) the carriageways.
+func _stall_clear(c: Vector2, yaw: float, wall: bool) -> bool:
+	var ax := Vector2(cos(yaw), -sin(yaw))
+	var az := Vector2(sin(yaw), cos(yaw))
+	for u in [-1.15, 0.0, 1.15]:
+		for v in [-0.27 if wall else -0.98, 0.4, 1.08]:
+			var q: Vector2 = c + ax * float(u) + az * float(v)
+			if _occupied(q, 0.0 if wall else 0.1):
+				return false
+			if _in_carriageway(q, -0.05 if wall else 0.6):
+				return false
+	return true
 
 
 func _plain_mm(mesh: Mesh, n: int) -> MultiMesh:
@@ -1072,6 +1192,8 @@ func _place_vehicle(a: Dictionary, cart: bool) -> void:
 			continue
 		if not roads_only and cart and _streets[si]["kind"] == "road" and _rng.randf() < 0.5:
 			continue
+		if cart and not cart_street(si):
+			continue   # F3: a cart and its oxen are 2.1 m wide: they went through temples' steps
 		options.append(si)
 	if options.is_empty():
 		for si in _streets.size():
@@ -1149,44 +1271,58 @@ func _litter_mesh(root: Node3D) -> void:
 
 # ---- lamps and smoke ----------------------------------------------------------------------------
 
-## Lamps at doorways along the streets inside the city, every ~45 m, with a light at the nearest
-## eight. Few on purpose: Juvenal 3.268-277 (read) knows no street lighting (# unverified).
+## Lamps at doorways along the streets inside the city, on about one house front in five, with a
+## light at the nearest eight. Few on purpose: Juvenal 3.268-277 (read) knows no street lighting
+## (# unverified). F3: each hangs on its bracket from a real house front (UrbsFill's street-front
+## buildings), 2.3 m up, under the awnings; they floated over the footways, turned any way. The
+## few round the Comitium stand on posts.
 func _make_lamps() -> void:
 	_lamp_node = Node3D.new()
 	_lamp_node.name = "Lamps"
 	add_child(_lamp_node)
 	_lamps = PackedVector3Array()
-	for si in _streets.size():
-		var s: Dictionary = _streets[si]
-		if s["kind"] == "road":
-			continue
-		var n := int(float(s["len"]) / 45.0)
-		for i in n:
-			var pt: Array = urbs.streets.sample_at(si, 20.0 + i * 45.0)
-			var p: Vector2 = pt[0]
-			if p.length() > 1300.0:
+	_lamp_posts = PackedVector3Array()
+	var yaws := PackedFloat32Array()
+	var fill: Variant = urbs.get("fill")
+	if fill != null:
+		for lot: Dictionary in fill.street_buildings():
+			var c: Vector2 = lot["c"]
+			if c.length() > 1300.0 or not str(lot["kind"]) in ["insula", "domus", "taberna", "casa", "workshop"]:
 				continue
-			var tg: Vector2 = pt[1]
-			var side := 1.0 if i % 2 == 0 else -1.0
-			var q: Vector2 = p + Vector2(-tg.y, tg.x) * (float(s["hw"]) + 1.0) * side
-			_lamps.append(Vector3(q.x, float(height.call(q.x, q.y)) + 2.5, q.y))
-	# a few more round the Comitium and the Rostra
+			if UrbsSite.ihash(roundi(c.x), roundi(c.y), 401) >= 0.2:
+				continue
+			var th := float(lot["th"])
+			var az := Vector2(sin(th), cos(th))
+			var q: Vector2 = c + az * (float(lot["hz"]) + 0.42)
+			_lamps.append(Vector3(q.x, float(lot["y"]) + 2.3, q.y))
+			yaws.append(th)
+	# a few more round the Comitium and the Rostra, on posts
 	if urbs.monuments.ids().has("comitium"):
 		var b: AABB = urbs.monuments.bounds("comitium")
 		var c := b.get_center()
 		for k in 4:
 			var ang := TAU * k / 4.0
 			var q := Vector2(c.x + cos(ang) * (b.size.x * 0.5 + 2.0), c.z + sin(ang) * (b.size.z * 0.5 + 2.0))
-			_lamps.append(Vector3(q.x, float(height.call(q.x, q.y)) + 2.3, q.y))
+			var out := Vector2(cos(ang), sin(ang))
+			var lq := q + out * 0.42
+			_lamp_posts.append(Vector3(q.x, float(height.call(q.x, q.y)), q.y))
+			_lamps.append(Vector3(lq.x, float(height.call(q.x, q.y)) + 2.3, lq.y))
+			yaws.append(atan2(out.x, out.y))
 	if _lamps.is_empty():
 		return
 	var lamp_mesh := M.merge([[M.box(Vector3(0.18, 0.26, 0.18)), Transform3D(), 0.0], [M.box(Vector3(0.05, 0.05, 0.5)), Transform3D(Basis(), Vector3(0, 0.16, -0.25)), 0.0]])
 	var glass := _plain_mm(M.box(Vector3(0.16, 0.22, 0.16)), _lamps.size())
 	var brackets := _plain_mm(lamp_mesh, _lamps.size())
 	for i in _lamps.size():
-		var xf := Transform3D(Basis(Vector3.UP, _rng.randf() * TAU), _lamps[i])
+		# the bracket (local -z) reaches back to the wall or the post
+		var xf := Transform3D(Basis(Vector3.UP, yaws[i]), _lamps[i])
 		glass.set_instance_transform(i, xf)
 		brackets.set_instance_transform(i, xf)
+	if not _lamp_posts.is_empty():
+		var posts := _plain_mm(M.box(Vector3(0.12, 2.5, 0.12)), _lamp_posts.size())
+		for i in _lamp_posts.size():
+			posts.set_instance_transform(i, Transform3D(Basis(), _lamp_posts[i] + Vector3(0, 1.25, 0)))
+		_add_mm(_lamp_node, posts, UrbsMaterials.get_material("timber_oak"), "LampPosts")
 	_add_mm(_lamp_node, brackets, UrbsMaterials.get_material("iron"), "LampBrackets")
 	_add_mm(_lamp_node, glass, UrbsMaterials.get_material("glass_lamp"), "LampGlass")
 	for i in 8:
@@ -1247,7 +1383,24 @@ func _make_smoke() -> void:
 	var n_col := clampi(int(population / 3500.0), 24, 240)
 	var pos: PackedVector3Array = PackedVector3Array()
 	var tries := 0
-	while pos.size() < n_col and tries < n_col * 20:
+	# F3: each column rises from a house's roof (UrbsFill's street-front houses, the busiest ones
+	# by their district's density): the columns rose out of empty air, streets and walls
+	var fill: Variant = urbs.get("fill")
+	var homes: Array = []
+	if fill != null:
+		for lot: Dictionary in fill.street_buildings():
+			if str(lot["kind"]) in ["insula", "casa", "domus", "taberna", "workshop"] and not UrbsTerrain.in_river((lot["c"] as Vector2).x, (lot["c"] as Vector2).y):
+				homes.append(lot)
+	while not homes.is_empty() and pos.size() < n_col and tries < n_col * 20:
+		tries += 1
+		var lot: Dictionary = homes[_rng.randi() % homes.size()]
+		var c: Vector2 = lot["c"]
+		var d := _district_near(districts, c)
+		var dens := float(d.get("max_density", 0.5)) * pow(clampf(population / float(d.get("saturates_at", 100000.0)), 0.0, 1.0), 0.7)
+		if _rng.randf() > dens or str(d.get("id", "")) in ["forum", "capitol"]:
+			continue
+		pos.append(UrbsFill.roof_point(lot) - Vector3(0, 0.3, 0))
+	while homes.is_empty() and pos.size() < n_col and tries < n_col * 20:
 		tries += 1
 		var d: Dictionary = districts[_rng.randi() % districts.size()]
 		var dens := float(d.get("max_density", 0.5)) * pow(clampf(population / float(d.get("saturates_at", 100000.0)), 0.0, 1.0), 0.7)
@@ -1260,6 +1413,7 @@ func _make_smoke() -> void:
 		if _blocked(p) or UrbsTerrain.in_river(p.x, p.y):
 			continue
 		pos.append(Vector3(p.x, float(height.call(p.x, p.y)) + _rng.randf_range(6.0, 13.0), p.y))
+	_smoke_at = pos   # F3: where each column rises (the scene audit checks it against the roofs)
 	if pos.is_empty():
 		return
 	var puffs := 9
@@ -1297,6 +1451,20 @@ func _make_smoke() -> void:
 
 ## Share of kitchens smoking by the hour: bakers before dawn, the prandium about the sixth hour,
 ## the cena from the ninth (Martial 4.8, read).
+## F3: the district (regions.json) whose centre is nearest `p`, weighed by its radius.
+static func _district_near(districts: Array, p: Vector2) -> Dictionary:
+	var best: Dictionary = {}
+	var best_d := INF
+	for d: Dictionary in districts:
+		if not d.has("lat"):
+			continue
+		var dd := UrbsGeo.to_local(float(d["lat"]), float(d["lon"])).distance_to(p) / maxf(float(d.get("radius_m", 200.0)), 1.0)
+		if dd < best_d:
+			best_d = dd
+			best = d
+	return best
+
+
 static func smoke_at(h: float) -> float:
 	var hh := fposmod(h, 24.0)
 	var v := 0.12
@@ -1530,6 +1698,8 @@ func _step_street(a: Dictionary, dt: float, exact := true) -> void:
 			if int(l[0]) == end:
 				if bool(a.get("roads_only", false)) and _streets[int(l[1])]["kind"] != "road":
 					continue
+				if str(a["mode"]) == "cart" and not cart_street(int(l[1])):
+					continue
 				choices.append(l)
 		if choices.is_empty() or _rng.randf() < 0.15:
 			a["dir"] = -int(a["dir"])
@@ -1558,7 +1728,7 @@ func _step_street(a: Dictionary, dt: float, exact := true) -> void:
 	var seg_len := maxf(cum[k + 1] - cum[k], 0.0001)
 	var q := pts[k].lerp(pts[k + 1], clampf((d - cum[k]) / seg_len, 0.0, 1.0))
 	var tg := (pts[k + 1] - pts[k]) / seg_len
-	q += Vector2(-tg.y, tg.x) * float(a["lat"])
+	q += Vector2(-tg.y, tg.x) * lane_lat(si, d, float(a["lat"]))   # F3: the lane narrows at gates
 	var gy: float
 	if exact:
 		gy = float(height.call(q.x, q.y))
