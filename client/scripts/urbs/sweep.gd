@@ -219,9 +219,35 @@ static func _stand_ok(view: UrbsMonumentView, q: Vector2, yaw: float) -> bool:
 	var eye := Vector3(q.x, view.floor_at(Vector3(q.x, 0.0, q.y)) + UrbsCamera.EYE, q.y)
 	if not view.is_free(eye):
 		return false
+	# the site works (quays, clivus and platform walls, the steps' side walls: UrbsFill keeps
+	# their faces): the stand 1 m clear of them, the view rays 0.3 m (the camera stood between
+	# a quay wall and the Pons Aemilius's abutment at -604,100)
+	if view.fill != null:
+		if _works_near(view.fill, q, 1.0):
+			return false
+		for ray: Array in RAYS:
+			var a: float = yaw + float(ray[0])
+			var dir := Vector2(-sin(a), -cos(a))
+			for s in int(float(ray[1]) / 0.5):
+				if _works_near(view.fill, q + dir * (0.5 * float(s + 1)), 0.3):
+					return false
 	for ray: Array in RAYS:
 		var a: float = yaw + float(ray[0])
 		var ahead := eye + Vector3(-sin(a), 0.0, -cos(a)) * (float(ray[1]) + 1.5)   # is_clear spares the last 1.5 m
 		if not view.is_clear(eye, ahead, ""):
 			return false
 	return true
+
+
+## Whether a wall face of the site works (UrbsFill._works_grid, 2D) lies within `r` of `p`.
+static func _works_near(fill: UrbsFill, p: Vector2, r: float) -> bool:
+	var cell := UrbsFill.WORKS_CELL
+	for gz in range(floori((p.y - r) / cell), floori((p.y + r) / cell) + 1):
+		for gx in range(floori((p.x - r) / cell), floori((p.x + r) / cell) + 1):
+			for tri: PackedVector2Array in fill._works_grid.get(Vector2i(gx, gz), []):
+				if Geometry2D.point_is_inside_triangle(p, tri[0], tri[1], tri[2]):
+					return true
+				for i in 3:
+					if Geometry2D.get_closest_point_to_segment(p, tri[i], tri[(i + 1) % 3]).distance_to(p) < r:
+						return true
+	return false
