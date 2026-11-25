@@ -98,9 +98,10 @@ static func grove_weight(x: float, z: float) -> float:
 	return best
 
 
-## Approximate crown radius of a kind at scale 1, metres.
+## Crown radius of a kind at scale 1, metres: half the width of its mesh (F3: the radii were up to
+## 0.7 m short, and the houses kept clear by them had crowns through their roofs).
 static func crown_radius(kind: String) -> float:
-	return {"pine": 5.0, "cypress": 1.3, "plane": 6.0, "olive": 2.6, "fig": 3.2, "oak": 3.6, "laurel": 2.0, "scrub": 1.5, "hedge": 1.0}.get(kind, 2.0)
+	return {"pine": 5.9, "cypress": 1.4, "plane": 6.3, "olive": 2.9, "fig": 3.3, "oak": 3.9, "laurel": 2.2, "scrub": 1.8, "hedge": 1.7}.get(kind, 2.0)
 
 
 # ---------------------------------------------------------------- where the monuments stand
@@ -149,18 +150,86 @@ static func _blocked_at(cells: Dictionary, p: Vector2, pad: float) -> bool:
 # ---------------------------------------------------------------- where the trees stand
 
 ## The trees of `rect` at `lod` in `year`: [[kind, Transform3D, Color tint], ...].
+## F3: the coarser levels are a thinned share of the full level's trees (KEEP), drawn a little
+## bigger (GROW), never trees of their own: the houses (UrbsFill) keep clear of the full level's
+## trees, and the coarser levels' own trees stood inside them, crowns through their roofs.
 static func spots(rect: Rect2, lod: int, year: int) -> Array:
 	_load()
 	var out: Array = []
 	var cells := _blockers(year)
-	_spots_woods(out, rect, lod)
-	_spots_groves(out, rect, lod, year, cells)
-	_spots_hills(out, rect, lod, cells)
-	_spots_farms(out, rect, lod)
+	var l := clampi(lod, 0, 2)
+	_level = l
+	if _streets_year != year or _streets == null:   # F3: no trunk in a carriageway
+		_streets = UrbsStreets.new()
+		_streets.height = Callable(UrbsTerrain, "height_at")
+		_streets.load_data(year)
+		_streets_year = year
+	_keep = [1.0, 0.5, 0.33][l]
+	_grow = [1.0, 1.0, 1.1][l]   # no bigger than the houses (UrbsFill.TREE_CLEAR) allow for
+	_wild = true
+	_spots_woods(out, rect, 0)
+	_wild = false
+	_spots_groves(out, rect, 0, year, cells)
+	_wild = true
+	_keep = [1.0, 0.55, 0.3][l]
+	_spots_hills(out, rect, 0, cells)
+	_keep = [1.0, 0.45, 0.25][l]
+	_spots_farms(out, rect, 0)
+	_wild = false
+	_keep = 1.0
+	_grow = 1.0
+	_level = 0
 	return out
 
 
+static var _keep := 1.0   ## F3: share of the full level's trees planted (spots)
+## F3: the monuments' oriented footprints standing this year ({c, ax, az, hx, hz}; UrbsFill sets
+## them from UrbsMonuments.oriented_footprints): the woods, the hills' green and the farm trees keep
+## out of them (olives and hedgerows stood inside the Emporium and the Horrea Galbae, scrub inside the
+## Tabularium); the groves of the sources are planted where the sources put them.
+static var _obstacles: Array = []
+static var _obst_grid := {}
+static var _wild := false   ## planting a generator that keeps out of the monuments
+
+
+static func set_obstacles(list: Array) -> void:
+	_obstacles = list
+	_obst_grid = {}
+	for i in list.size():
+		var o: Dictionary = list[i]
+		var c: Vector2 = o["c"]
+		var r := Vector2(float(o["hx"]), float(o["hz"])).length() + 2.0
+		for gz in range(floori((c.y - r) / 50.0), floori((c.y + r) / 50.0) + 1):
+			for gx in range(floori((c.x - r) / 50.0), floori((c.x + r) / 50.0) + 1):
+				var k := Vector2i(gx, gz)
+				if not _obst_grid.has(k):
+					_obst_grid[k] = []
+				(_obst_grid[k] as Array).append(i)
+
+
+static func _in_monument(p: Vector2, pad: float) -> bool:
+	for i in _obst_grid.get(Vector2i(floori(p.x / 50.0), floori(p.y / 50.0)), []):
+		var o: Dictionary = _obstacles[i]
+		var d: Vector2 = p - (o["c"] as Vector2)
+		if absf(d.dot(o["ax"])) <= float(o["hx"]) + pad and absf(d.dot(o["az"])) <= float(o["hz"]) + pad:
+			return true
+	return false
+static var _grow := 1.0   ## F3: their scale at this level
+static var _level := 0    ## F3: the level being planted
+static var _streets: UrbsStreets = null   ## F3: the year's streets (index only)
+static var _streets_year := 999999
+
+
 static func _plant(out: Array, kind: String, x: float, z: float, seed_a: int, seed_b: int, scale := 1.0) -> void:
+	if _keep < 1.0 and _hash(seed_a, seed_b, 13) >= _keep:
+		return
+	if _wild and _in_monument(Vector2(x, z), 1.5):
+		return
+	if _streets != null:
+		var ns := _streets.nearest_street(Vector2(x, z))
+		if not ns.is_empty() and float(ns["distance"]) < float(ns["half_width"]) + 0.6:
+			return   # F3: trees stood in the roads (the cut weight is 0 on flat ground)
+	scale *= _grow
 	var y := UrbsTerrain.height_at(x, z)
 	var sc := (0.78 + 0.5 * _hash(seed_a, seed_b, 5)) * scale
 	var basis := Basis(Vector3.UP, _hash(seed_a, seed_b, 6) * TAU).scaled(Vector3(sc, sc * (0.9 + 0.22 * _hash(seed_a, seed_b, 7)), sc))
@@ -195,7 +264,7 @@ static func _spots_woods(out: Array, rect: Rect2, lod: int) -> void:
 			var p := dens * (spacing * spacing / 100.0) * centre * clump / (comp * comp) * comp
 			if _hash(gx, gz, 3) > p or not _ok_ground(x, z, 0.72):
 				continue
-			if UrbsTerrain.built_at(x, z) > 0.4:
+			if UrbsTerrain.built_at(x, z) > 0.2:   # F3: 0.4 left trees in the roads' carriageways
 				continue
 			var kinds: Array = (wood["w"] as Dictionary)["kinds"]
 			var kind: String = kinds[int(_hash(gx, gz, 4) * kinds.size()) % kinds.size()]
@@ -239,6 +308,8 @@ static func _spots_groves(out: Array, rect: Rect2, lod: int, year: int, cells: D
 					continue   # a street
 				if _blocked_at(cells, p, 1.0) or not _ok_ground(x, z, 0.75):
 					continue
+				if _in_monument(p, 0.5):
+					continue   # F3: a garden's trees round its pavilion, not through it (Auditorium of Maecenas)
 				var kind: String = kinds[int(_hash(gx, gz, 24 + gh) * kinds.size()) % kinds.size()]
 				_plant(out, kind, x, z, gx + gh, gz, 1.0)
 
@@ -280,9 +351,11 @@ static func _spots_hills(out: Array, rect: Rect2, lod: int, cells: Dictionary) -
 			_plant(out, kind, x, z, gx, gz, 1.0)
 
 
-## Olive groves in rows, hedgerows and field trees on the farmland.
+## Olive groves in rows, hedgerows and field trees on the farmland. F3: the olives of a parcel are
+## laid out parcel by parcel (its 9 m rows), so every level plants the same ones (`spots` thins
+## them); the hedgerows and field trees on the same 5 m grid, the hashes that thin them tested
+## first (the coarsest level has the olive groves only).
 static func _spots_farms(out: Array, rect: Rect2, lod: int) -> void:
-	var c := rect.get_center()
 	var any := false
 	for sx in 3:
 		for sz in 3:
@@ -290,10 +363,32 @@ static func _spots_farms(out: Array, rect: Rect2, lod: int) -> void:
 				any = true
 	if not any:
 		return
-	var step := 5.0 if lod <= 0 else (8.0 if lod == 1 else 12.0)
-	var seen := {}
+	var full := _keep >= 1.0
+	var step := 5.0
+	# the olive parcels touching the rect, found on a 10 m grid
+	var seen_parcels := {}
+	var probe := 25.0   # parcels are 54 x 92 m: a sliver narrower than this keeps no olive row
+	for gz in range(floori(rect.position.y / probe), ceili(rect.end.y / probe) + 1):
+		for gx in range(floori(rect.position.x / probe), ceili(rect.end.x / probe) + 1):
+			var x := minf(gx * probe, rect.end.x - 0.01)
+			var z := minf(gz * probe, rect.end.y - 0.01)
+			if UrbsTerrain.rural_at(x, z) < 0.35:
+				continue
+			var pc := UrbsSite.parcel_at(x, z)
+			if pc["kind"] != "olive" or seen_parcels.has(pc["id"]):
+				continue
+			seen_parcels[pc["id"]] = true
+			_olive_rows(out, rect, pc)
+	if _level >= 2:
+		return   # far away: the olive groves only
 	for gz in range(floori(rect.position.y / step), ceili(rect.end.y / step)):
 		for gx in range(floori(rect.position.x / step), ceili(rect.end.x / step)):
+			var oak := _hash(gx, gz, 42) < 0.004 * step * step / 25.0
+			var hedge_ok := _level <= 1 and _hash(gx, gz, 41) < 0.75
+			if not full and _hash(gx, gz, 13) >= _keep:
+				continue   # thinned away at this level (the test _plant makes, made first: cheap)
+			if not oak and not hedge_ok:
+				continue
 			var x := (gx + 0.5) * step
 			var z := (gz + 0.5) * step
 			var rural := UrbsTerrain.rural_at(x, z)
@@ -301,33 +396,40 @@ static func _spots_farms(out: Array, rect: Rect2, lod: int) -> void:
 				continue
 			var pc := UrbsSite.parcel_at(x, z)
 			var kind: String = pc["kind"]
-			var q: Vector2 = pc["local"]
-			var pid: Vector2i = pc["id"]
 			if kind == "olive":
-				var row := 9.0 if lod <= 1 else 18.0
-				var cell := Vector2i(floori(q.x / row), floori(q.y / row))
-				var key := "%d,%d,%d,%d" % [pid.x, pid.y, cell.x, cell.y]
-				if seen.has(key):
-					continue
-				seen[key] = true
-				var lq := (Vector2(cell) + Vector2(0.5, 0.5)) * row
-				var size: Vector2 = pc["size"]
-				var inside := Vector2(fposmod(lq.x, size.x), fposmod(lq.y, size.y))
-				if inside.x < 3.0 or inside.x > size.x - 3.0 or inside.y < 3.0 or inside.y > size.y - 3.0:
-					continue
-				var w := UrbsSite.parcel_to_world(pc["angle"], pc["origin"], lq)
-				if not rect.has_point(w) or UrbsTerrain.rural_at(w.x, w.y) < 0.35 or not _ok_ground(w.x, w.y, 0.85):
-					continue
-				_plant(out, "olive", w.x, w.y, pid.x * 97 + cell.x, pid.y * 89 + cell.y, 1.0 if lod <= 1 else 1.3)
-			elif bool(pc["hedge"]) and float(pc["edge"]) < step * 0.5 and lod <= 1:
+				continue
+			if hedge_ok and bool(pc["hedge"]) and float(pc["edge"]) < step * 0.5:
 				# a hedgerow: an uneven line of shrubs with a tree now and then
 				var hr := _hash(gx, gz, 41)
-				if hr < (0.75 if lod == 0 else 0.55) and _ok_ground(x, z, 0.85) and UrbsTerrain.built_at(x, z) < 0.3:
+				if hr < 0.75 and _ok_ground(x, z, 0.85) and UrbsTerrain.built_at(x, z) < 0.2:
 					var hk := "hedge" if hr < 0.66 else ("oak" if hr < 0.71 else "laurel")
-					_plant(out, hk, x + (_hash(gx, gz, 43) - 0.5) * 2.0, z + (_hash(gx, gz, 44) - 0.5) * 2.0, gx, gz, (0.8 + 0.9 * _hash(gx, gz, 45)) * (1.0 if lod == 0 else 1.4))
-			elif kind == "pasture" and _hash(gx, gz, 42) < 0.004 * step * step / 25.0 and _ok_ground(x, z, 0.85):
+					_plant(out, hk, x + (_hash(gx, gz, 43) - 0.5) * 2.0, z + (_hash(gx, gz, 44) - 0.5) * 2.0, gx, gz, 0.8 + 0.9 * _hash(gx, gz, 45))
+			elif kind == "pasture" and oak and _ok_ground(x, z, 0.85) and UrbsTerrain.built_at(x, z) < 0.2:
 				_plant(out, "oak", x, z, gx, gz, 1.1)
-	var _unused := c
+
+
+## The olive trees of parcel `pc` (UrbsSite.parcel_at) that stand in `rect`: one to each 9 m row cell
+## of the parcel, 3 m in from its edges.
+static func _olive_rows(out: Array, rect: Rect2, pc: Dictionary) -> void:
+	var row := 9.0
+	var size: Vector2 = pc["size"]
+	var q: Vector2 = pc["local"]
+	var pid: Vector2i = pc["id"]
+	var c0 := Vector2(floorf(q.x / size.x) * size.x, floorf(q.y / size.y) * size.y)
+	for cy in range(floori(c0.y / row), floori((c0.y + size.y) / row) + 1):
+		for cx in range(floori(c0.x / row), floori((c0.x + size.x) / row) + 1):
+			var lq := (Vector2(cx, cy) + Vector2(0.5, 0.5)) * row
+			var inside := lq - c0
+			if inside.x < 3.0 or inside.x > size.x - 3.0 or inside.y < 3.0 or inside.y > size.y - 3.0:
+				continue
+			var w := UrbsSite.parcel_to_world(pc["angle"], pc["origin"], lq)
+			if not rect.has_point(w) or UrbsTerrain.rural_at(w.x, w.y) < 0.35 or not _ok_ground(w.x, w.y, 0.85):
+				continue
+			if UrbsTerrain.built_at(w.x, w.y) > 0.2:
+				continue   # F3: a road through the grove (olives stood in the Via Appia)
+			if UrbsSite.parcel_at(w.x, w.y)["id"] != pid:
+				continue   # cut off by the edge of the parcels' region
+			_plant(out, "olive", w.x, w.y, pid.x * 97 + cx, pid.y * 89 + cy, 1.0)
 
 
 # ---------------------------------------------------------------- meshes
