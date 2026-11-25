@@ -184,6 +184,11 @@ func house_at(p: Vector3, grow := 0.3) -> Dictionary:
 func is_free(p: Vector3) -> bool:
 	if not house_at(p, 0.4).is_empty():
 		return false
+	# not at the foot of a terrace wall or a cut in the hill (the eye in the drawn bank)
+	var g := _ground(p.x, p.z)
+	for dv in [Vector2(2.5, 0), Vector2(-2.5, 0), Vector2(0, 2.5), Vector2(0, -2.5)]:
+		if _ground(p.x + dv.x, p.z + dv.y) - g > 1.5:
+			return false
 	for t in _trees:   # not in a tree's crown
 		if p.distance_to(t.c) < float(t.r) + 0.3:
 			return false
