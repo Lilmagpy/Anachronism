@@ -81,7 +81,6 @@ static var _warp: FastNoiseLite = null
 static var _warp2: FastNoiseLite = null
 static var _material: ShaderMaterial = null
 static var _street_dc: PackedFloat32Array   ## F3: (during _compute) a street vertex's distance from its carriageway
-static var _dbg_street := ""   ## (debug: print this street's pins and profile)
 static var _sky_fill := 0.0                                      ## the twilight fill (set_sky_fill)
 static var _street_w: PackedFloat32Array = PackedFloat32Array()  ## street cuts' weight (while computing)
 static var _cover: PackedByteArray = PackedByteArray()          ## 1 under a paving, 2 well inside it (no ground drawn)
@@ -780,9 +779,6 @@ static func _cut_streets(cfg: Dictionary, h: PackedFloat32Array) -> void:
 					if v != null:
 						pins.append([i, float(v)])
 			_pin_profile(prof, pins, float(rec["st"]), max_grad)
-		if str((rec["entry"] as Dictionary)["id"]) == _dbg_street:
-			print("DBGPINS ", pins)
-			print("DBGPROF ", prof)
 		rec["prof"] = prof
 		for i in range(sp.size() - 1):
 			var a := sp[i]
