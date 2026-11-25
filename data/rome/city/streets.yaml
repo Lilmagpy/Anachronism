@@ -220,7 +220,7 @@ streets:
   english: Road along the Tiber side of the Capitol to the Forum Boarium and Porta Trigemina
   kind: road
   direction: "from the Campus Martius south between the Capitol and the river, through the Porta Carmentalis and Porta Flumentana, to the Porta Trigemina"
-  points: [[41.8962, 12.4776], [41.8945, 12.4789], [41.8929, 12.4801], [41.8917, 12.4809], [41.8906, 12.4807], [41.8895, 12.4806], [41.8884, 12.4802], [41.8875, 12.4796]]
+  points: [[41.8962, 12.4776], [41.8945, 12.4789], [41.8929, 12.4801], [41.892158, 12.480255], [41.891375, 12.480327], [41.8906, 12.4807], [41.8895, 12.4806], [41.8884, 12.4802], [41.8875, 12.4796]]  # F3 round 2: through the Porta Carmentalis (monuments.yaml, with its offset), as Platner-Ashby has it, between the Theatre of Marcellus and the Capitol; the fourth point lay 42 m east of the gate on the Capitol's flank, 6-17 m above the Forum Holitorium
   precision: rough
   width_m: 5.0
   width_source: assumed

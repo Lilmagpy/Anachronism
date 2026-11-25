@@ -53,6 +53,7 @@ const RURAL_CELL := 25.0                  ## resolution of the farmland weight r
 const MAP_CELL := 10.0                    ## resolution of the baked ground colour maps
 const MAP_N := 501                        ## texels per side of the ground colour maps
 const FRONT_RAMP := 0.2                   ## F3: slope of the ramp in front of a monument's terrace (1 in 5)
+const STREET_LEVEL_M := 0.28 + 1.25 + 0.2 + CELL_M * 1.415   ## F3: a narrower street runs level across a wider one's level ground (its kerbs, footway and the triangles round them)
 const END_MEET_M := 15.0                 ## F3: a street end this near another street is pinned to its level
 const PAVE_BLEND := 6.0                   ## F3: a paving's carved floor blends into the ground over this
 const PAVE_INSET := 0.6                   ## F3: no ground drawn this far inside a paving's edge
@@ -765,7 +766,7 @@ static func _cut_streets(cfg: Dictionary, h: PackedFloat32Array) -> void:
 		var pins: Array = rec["pins"]
 		if str(rec["kind"]) != "stairs":
 			for i in sp.size():
-				var v: Variant = _street_level_near(index, recs, sp[i], 0.5)
+				var v: Variant = _street_level_near(index, recs, sp[i], STREET_LEVEL_M)
 				if v != null:
 					pins.append([i, float(v)])
 			# an end that stops short of the street it meets (its point a few metres off the other's
