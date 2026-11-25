@@ -318,6 +318,7 @@
 "precision": "rough",
 "regio": 10,
 "role": "domus",
+"size_fits": true,
 "sources": [
 "Pliny NH 17.2-6",
 "Pliny NH 36.7",

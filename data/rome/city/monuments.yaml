@@ -251,6 +251,8 @@ monuments:
   pleiades: null
   verified: platner-ashby
   model: comitium
+  yields_to: [basilica_porcia]   # F3 monuments: monument_clip.gd
+  yields_note: "F3: the Basilica Porcia (184 BC, size assumed, Platner-Ashby s.v. Basilica Porcia) stood beside the Curia at the Comitium's edge; where the two meet, the Comitium's steps stop at the basilica's wall"
   bearing_deg: 196
   footprint_m: {radius: 21}  # unverified
   height_m: 1.2
@@ -343,6 +345,7 @@ monuments:
   pleiades: 780447855
   verified: platner-ashby+pleiades
   model: platform_portico
+  size_fits: true   # F3 monuments: its size is assumed (no measured plan); it is made smaller where it runs into a neighbour (monuments.gd _fit_sizes)
   bearing_deg: 196  # unverified
   footprint_m: {length: 8, width: 12}  # unverified
   height_m: 3  # unverified
@@ -435,6 +438,8 @@ monuments:
   pleiades: 445545537
   verified: platner-ashby+pleiades
   model: plaza
+  yields_to: [curia_iulia]   # F3 monuments: monument_clip.gd
+  yields_note: "F3: the forum's reconstructed colonnade (form assumed) runs into the Curia's sourced footprint; it stops at the senate house"
   bearing_deg: 140  # unverified
   footprint_m: {length: 160, width: 75}  # unverified
   height_m: 0
@@ -734,6 +739,8 @@ monuments:
   pleiades: 694134032
   verified: platner-ashby+pleiades
   model: aedicula  # unverified
+  yields_to: [tabularium]   # F3 monuments: monument_clip.gd
+  yields_note: "F3: the temple was built against the substructure of the Tabularium, its cella under the Tabularium's front (the remains); its back stops at that wall"
   bearing_deg: 78  # unverified
   footprint_m: {length: 3.5, width: 3}
   phases: [{from: -121, state: standing, model: temple_concord, footprint_m: {length: 38, width: 45}}]
@@ -1345,6 +1352,8 @@ monuments:
   pleiades: 236573248
   verified: platner-ashby+pleiades
   model: portico_enclosure
+  yields_to: [aedes_apollinis_medici]   # F3 monuments: monument_clip.gd
+  yields_note: "F3: the portico's corner is reconstructed (Pleiades outlines only its propylon); where it reaches the temple of Apollo beside it, its wing stops at the temple"
   bearing_deg: 208  # F2: the entrance faces SSW: the surviving propylon on the SW side lies along 118 degrees (Pleiades 236573248 outline), so the main axis runs 28/208
   footprint_m: {length: 130, width: 118}
   height_m: 10  # unverified
@@ -1677,6 +1686,7 @@ monuments:
   pleiades: 250568480
   verified: platner-ashby+pleiades
   model: domus
+  size_fits: true   # F3 monuments: its size is assumed (no measured plan); it is made smaller where it runs into a neighbour (monuments.gd _fit_sizes)
   bearing_deg: 139  # F2: long axis of the excavated house (Pleiades 250568480 outline, 38.5 x 31.2 m at 139 degrees)
   footprint_m: {length: 38.5, width: 31.2}  # F2: the excavated house (Pleiades 250568480 outline)
   height_m: 9  # unverified
@@ -1699,6 +1709,8 @@ monuments:
   pleiades: null
   verified: platner-ashby
   model: domus
+  yields_to: [porticus_catuli]   # F3 monuments: monument_clip.gd
+  yields_note: "F3: the record's house and its Porticus Catuli stand side by side on the Palatine; the house (its form assumed) stops at the portico"
   bearing_deg: 16  # unverified
   footprint_m: {length: 40, width: 25}  # unverified
   height_m: 9  # unverified
@@ -1898,6 +1910,7 @@ monuments:
   pleiades: null
   verified: platner-ashby
   model: temple_tetrastyle_ionic  # unverified
+  size_fits: true   # F3 monuments: its size is assumed (no measured plan); it is made smaller where it runs into a neighbour (monuments.gd _fit_sizes)
   bearing_deg: 98  # unverified
   geometry_source: "form assumed from date and type, native kit size (no measured plan); Platner-Ashby s.v. Iuventas (in the Circus Maximus, beside the carceres)"
   geometry_unverified: [bearing_deg, footprint_m, height_m, model]
@@ -2010,6 +2023,8 @@ monuments:
   pleiades: 51787060
   verified: platner-ashby+pleiades
   model: long_hall
+  yields_to: [horrea_galbae]   # F3 monuments: monument_clip.gd
+  yields_note: "F3: the 487 x 60 m hall (its remains, Pleiades) and the Horrea Galbae (Platner-Ashby's 200 x 155 m at its approximate point) overlap by about 50 m; neither is moved: the hall stops at the horrea's outer wall (monument_clip.gd). A measured plan of both would settle it (F2 audit, unresolved)"
   bearing_deg: 45  # unverified
   footprint_m: {length: 60, width: 487}
   height_m: 9  # unverified
@@ -2308,6 +2323,8 @@ monuments:
   built: {year: -13, certainty: certain, by: "begun by Julius Caesar, who cleared the site (Suet. Iul. 44); built by Augustus, dedicated 13 or 11 BC (Dio 43.49.2, 54.26.1)"}
   sources: ["Suet. Iul. 44", "Dio 43.49.2", "Dio 54.26.1", "Platner-Ashby s.v. Theatrum Marcelli"]
   model: theatre_stone
+  yields_to: [aedes_apollinis_medici, aedes_iunonis_sospitae, porticus_octaviae, forum_holitorium]   # F3 monuments: monument_clip.gd
+  yields_note: "F3: the theatre's site (from 44 BC) and its stage end reach the temples of Apollo and Juno Sospita, the Porticus Octaviae and the Forum Holitorium beside it; it stops at them"
   bearing_deg: 202.5  # unverified: Platner-Ashby: stage toward the river, main axis NNE-SSW; front = scaena side (SSW)
   footprint_m: {radius: 61}  # F2: the surviving outer arcades lie on a circle of 60 m radius (fitted to the OpenStreetMap outline in Pleiades 300583267); Platner-Ashby gives the diameter as about 150 m, which the remains do not bear out
   height_m: 32.6  # unverified
@@ -2892,6 +2909,8 @@ monuments:
   built: {year: -378, certainty: certain, by: "with the Servian Wall"}
   sources: ["Livy 2.49.8", "Platner-Ashby s.v. Porta Carmentalis"]
   model: servian_gate
+  yields_to: [sacellum_carmentis]   # F3 monuments: monument_clip.gd
+  yields_note: "F3: the shrine of Carmenta and the gate named after her stand side by side (both records); the gate's wall stops at the shrine"
   offset_m: [-35, -45]  # east, north metres added to lat/lon; unverified: Wikipedia coordinates of the Carmental Gate (41.8914, 12.4803), 57 m from the dataset point; Platner-Ashby: near Via della Consolazione x Via della Bocca della Verita, SW corner of the Capitol
   footprint_m: {length: 26, width: 34}  # unverified
   height_m: 16  # unverified
@@ -3911,6 +3930,7 @@ monuments:
   pleiades: null
   verified: platner-ashby
   model: temple_tetrastyle_ionic
+  size_fits: true   # F3 monuments: its size is assumed (no measured plan); it is made smaller where it runs into a neighbour (monuments.gd _fit_sizes)
   bearing_deg: 44  # unverified
   geometry_source: "form assumed from date and type (no measured plan)"
   geometry_unverified: [bearing_deg, footprint_m, height_m, model]
@@ -3970,6 +3990,7 @@ monuments:
   pleiades: null
   verified: platner-ashby
   model: temple_tetrastyle_ionic
+  size_fits: true   # F3 monuments: its size is assumed (no measured plan); it is made smaller where it runs into a neighbour (monuments.gd _fit_sizes)
   bearing_deg: 90  # unverified
   geometry_source: "form assumed from date and type (no measured plan)"
   geometry_unverified: [bearing_deg, footprint_m, height_m, model]
@@ -3989,6 +4010,8 @@ monuments:
   pleiades: 346055018
   verified: platner-ashby
   model: portico_enclosure
+  yields_to: [aedes_herculis_musarum]   # F3 monuments: monument_clip.gd
+  yields_note: "F3: the Porticus Philippi was built round the temple of Hercules Musarum (Platner-Ashby s.v. Porticus Philippi); its colonnade stops at the temple"
   bearing_deg: 0  # unverified
   footprint_m: {length: 80, width: 70}  # unverified: size not in Platner-Ashby
   height_m: 7  # unverified

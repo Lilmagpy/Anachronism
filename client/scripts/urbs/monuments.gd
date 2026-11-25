@@ -97,30 +97,195 @@ func set_year(year: int) -> void:
 	_year = year
 	if _root == null:
 		return
-	for id in _order:
-		var st := state_at(id, year)
-		var key := _key(st)
-		if key == _keys.get(id, "|absent"):
-			continue
-		if _nodes.has(id):
-			(_nodes[id] as Node3D).queue_free()
-			_nodes.erase(id)
-			_placed.erase(id)
-			_bounds.erase(id)
-			_boxes.erase(id)
-			_solids.erase(id)
-			_opens.erase(id)
-			_xf.erase(id)
-			_tris.erase(id)
-		_keys[id] = key
-		if not st.is_empty():
-			_make(id, st)
+	# F3 monuments: the routes (the wall, the aqueducts) after everything else, so they stop where
+	# a standing monument stands on their line (route_cuts)
+	# and a monument that yields to another (`yields_to`, monument_clip.gd) after that one
+	for pass_ in 3:
+		if pass_ == 2:
+			_fit_sizes()   # F3 monuments: before the routes, which stop at what stands
+			_all_terrace_steps()
+		for id in _order:
+			var is_route := str(_recs[id].get("model", "")) in ROUTE_CUT
+			var yields: bool = not is_route and _recs[id].get("yields_to") is Array
+			var want := 2 if is_route else (1 if yields else 0)
+			if want == pass_:
+				_set_one(id, year)
+
+
+## F3 monuments: one monument brought to `year` (the body of set_year's loop).
+func _set_one(id: String, year: int) -> void:
+	var st := state_at(id, year)
+	if not st.is_empty() and str(st.model) in ROUTE_CUT:   # F3 monuments
+		st["cuts"] = route_cuts(id, str(st.model))
+	if not st.is_empty() and _recs[id].get("yields_to") is Array:   # F3 monuments
+		var ys: Array = []
+		for oid in _recs[id]["yields_to"]:
+			if _solids.has(str(oid)):
+				ys.append({"id": "%s=%s" % [oid, _keys.get(str(oid), "")], "oid": str(oid)})
+		st["yields"] = ys
+	var key := _key(st)
+	if key == _keys.get(id, "|absent"):
+		return
+	if _nodes.has(id):
+		(_nodes[id] as Node3D).queue_free()
+		_nodes.erase(id)
+		_placed.erase(id)
+		_bounds.erase(id)
+		_boxes.erase(id)
+		_solids.erase(id)
+		_opens.erase(id)
+		_xf.erase(id)
+		_tris.erase(id)
+	_keys[id] = key
+	if not st.is_empty():
+		_make(id, st)
 
 
 func _key(st: Dictionary) -> String:
 	if st.is_empty():
 		return "|absent"
-	return "%s|%s|%s|%s|%s|%s|%s" % [st.state, st.model, st.variant, st.length, st.width, st.radius, st.height]
+	var cut := ""   # F3 monuments: the monuments a route stops at, or this one yields to
+	for c in st.get("cuts", []) + st.get("yields", []):
+		cut += "|" + str(c.id)
+	return "%s|%s|%s|%s|%s|%s|%s%s" % [st.state, st.model, st.variant, st.length, st.width, st.radius, st.height, cut]
+
+
+# F3 monuments (begin) ----------------------------------------------------------------------------
+## Route forms that stop where a standing monument stands on their line: the Servian wall at its
+## gates and at the buildings later raised over it (the Theatre of Marcellus, the Porticus inter
+## lignarios, the temples by the Quirinal gates), the Appia's arches at the Porta Capena.
+const ROUTE_CUT := ["wall", "aqueduct"]
+## Footprints a route does not stop at: open pavings (the route stands on them), the river works,
+## other routes.
+const ROUTE_PASS := ["wall", "aqueduct", "sewer", "road_paved", "plaza", "lacus_curtius", "comitium",
+	"bridge_stone", "bridge_timber", "quay"]
+
+
+## Footprints an assumed size does not have to clear: open pavings, routes, the river works.
+const FIT_PASS := ["wall", "aqueduct", "sewer", "road_paved", "plaza", "bridge_stone", "bridge_timber", "quay"]
+
+
+## The oriented footprints of the standing monuments within 60 m of route `id`'s line, sorted by
+## id: {id, c, ax, az, hx, hz}. The route's tiles keep off them (monument_forms.gd _route_runs).
+func route_cuts(id: String, model: String) -> Array:
+	var route: PackedVector2Array = _circuit().pos if model == "wall" else _routes.get(id, PackedVector2Array())
+	var out: Array = []
+	if route.size() < 2:
+		return out
+	var fps := oriented_footprints()
+	fps.sort_custom(func(a, b): return str(a.id) < str(b.id))
+	for f0 in fps:
+		if str(_placed.get(f0.id, {}).get("model", "")) in ROUTE_PASS:
+			continue
+		var f := _drawn_rect(f0)
+		var r := Vector2(float(f.hx), float(f.hz)).length() + 60.0
+		var c: Vector2 = f.c
+		for k in range(1, route.size()):
+			var q := Geometry2D.get_closest_point_to_segment(c, route[k - 1], route[k])
+			if q.distance_to(c) <= r:
+				out.append(f)
+				break
+	return out
+
+
+## F3 monuments: a monument whose size is ASSUMED (its record's `size_fits: true`: no measured
+## plan, the kit's or the model's default size) and that runs into a standing neighbour is made
+## smaller, evenly, in steps of 5 % down to 70 %, until it clears every other standing
+## monument's drawn footprint (pavings and routes aside). Its centre, bearing and form stay.
+func _fit_sizes() -> void:
+	for id in _order:
+		if not bool(_recs[id].get("size_fits", false)) or not _placed.has(id):
+			continue
+		var st := state_at(id, _year)
+		if st.is_empty() or str(st.state) != "standing":
+			continue
+		var me := _my_rect(id)
+		if _worst_depth(id, me) <= 0.05:
+			continue
+		var w0 := float(me.hx) * 2.0
+		var l0 := float(me.hz) * 2.0
+		for k in [0.95, 0.9, 0.85, 0.8, 0.75, 0.7]:
+			var st2 := st.duplicate()
+			st2.width = w0 * float(k)
+			st2.length = l0 * float(k)
+			_unmake(id)
+			_make(id, st2)
+			_keys[id] = _key(st) + "|fit%.2f" % float(k)
+			if _worst_depth(id, _my_rect(id)) <= 0.05:
+				break
+
+
+## The box of a monument as drawn at the nearest level of detail (every mesh and instance), in
+## its frame (AABB() when it has nothing drawn).
+func _drawn_box(id: String) -> AABB:
+	var out := AABB()
+	var first := true
+	if not _nodes.has(id):
+		return out
+	for ch in (_nodes[id] as Node3D).get_children():
+		var boxes: Array = []
+		if ch is MeshInstance3D and (ch as MeshInstance3D).visibility_range_begin <= 0.0 and (ch as MeshInstance3D).mesh != null:
+			boxes.append((ch as MeshInstance3D).transform * (ch as MeshInstance3D).mesh.get_aabb())
+		elif ch is MultiMeshInstance3D and (ch as MultiMeshInstance3D).visibility_range_begin <= 0.0:
+			var mm := (ch as MultiMeshInstance3D).multimesh
+			if mm != null and mm.mesh != null:
+				for it in UrbsMonumentClip.instance_xforms(ch):
+					boxes.append((ch as MultiMeshInstance3D).transform * (it as Transform3D) * mm.mesh.get_aabb())
+		for b in boxes:
+			out = b if first else out.merge(b)
+			first = false
+	return out
+
+
+## Its plan as drawn at the nearest level of detail (every mesh and instance), in its frame.
+func _my_rect(id: String) -> Dictionary:
+	var p: Dictionary = _placed[id]
+	var yaw := float(p.yaw)
+	var db := _drawn_box(id)
+	var lo := Vector2(db.position.x, db.position.z) if db.size != Vector3.ZERO else Vector2(INF, INF)
+	var hi := Vector2(db.end.x, db.end.z)
+	if lo.x == INF:
+		return _drawn_rect({"id": id, "c": p.centre, "ax": Vector2(cos(yaw), -sin(yaw)), "az": Vector2(sin(yaw), cos(yaw)),
+			"hx": 0.0, "hz": 0.0})
+	var ax := Vector2(cos(yaw), -sin(yaw))
+	var az := Vector2(sin(yaw), cos(yaw))
+	var mid := (lo + hi) * 0.5
+	return {"id": id, "c": (p.centre as Vector2) + ax * mid.x + az * mid.y, "ax": ax, "az": az,
+		"hx": (hi.x - lo.x) * 0.5, "hz": (hi.y - lo.y) * 0.5}
+
+
+func _worst_depth(id: String, me: Dictionary) -> float:
+	var worst := 0.0
+	for f in oriented_footprints():
+		if f.id == id or str(_placed.get(f.id, {}).get("model", "")) in FIT_PASS:
+			continue
+		var o := _my_rect(str(f.id))
+		if (o.c as Vector2).distance_to(me.c) > float(o.hx) + float(o.hz) + float(me.hx) + float(me.hz):
+			continue
+		worst = maxf(worst, Forms._rect_depth(me, o))
+	return worst
+
+
+func _unmake(id: String) -> void:
+	if _nodes.has(id):
+		(_nodes[id] as Node3D).free()
+	for d in [_nodes, _placed, _bounds, _boxes, _solids, _opens, _xf, _tris]:
+		(d as Dictionary).erase(id)
+
+
+## A footprint grown to what is drawn: the plan extent of the monument's solids (a kit form
+## scaled evenly can be wider than its record's footprint), in the same frame.
+func _drawn_rect(f: Dictionary) -> Dictionary:
+	var lo := Vector2(-float(f.hx), -float(f.hz))
+	var hi := Vector2(float(f.hx), float(f.hz))
+	for b in _solids.get(f.id, []):
+		var bb: AABB = b
+		lo = lo.min(Vector2(bb.position.x, bb.position.z))
+		hi = hi.max(Vector2(bb.end.x, bb.end.z))
+	var mid := (lo + hi) * 0.5
+	var c: Vector2 = (f.c as Vector2) + (f.ax as Vector2) * mid.x + (f.az as Vector2) * mid.y
+	return {"id": f.id, "c": c, "ax": f.ax, "az": f.az, "hx": (hi.x - lo.x) * 0.5, "hz": (hi.y - lo.y) * 0.5}
+# F3 monuments (end) ------------------------------------------------------------------------------
 
 
 # ---------------------------------------------------------------------------------------------
@@ -350,6 +515,17 @@ func _make(id: String, st: Dictionary) -> void:
 			hi0 = maxf(hi0, gy0)
 		form_st["skirt"] = hi0 - lo0
 	form_st["year"] = _year
+	if model == "plaza" and not kind_route:
+		# F3 monuments: a paving is laid where the ground under it is near its level; where the
+		# ground falls away (the Area Capitolina's edge over the Clivus cutting) it stops at the
+		# platform's own retaining wall instead of hanging a bed down the slope
+		var p_base := lo0
+		if UrbsSite.platform_at(centre.x, centre.y) != "":
+			p_base = UrbsSite.terrace_height_at(centre.x, centre.y)
+		var rot_p := Basis(Vector3.UP, yaw)
+		form_st["drop_at"] = func(lx: float, lz: float) -> float:
+			var w := rot_p * Vector3(lx, 0, lz)
+			return p_base - _ground_at(centre + Vector2(w.x, w.z))
 	var res: Dictionary = Forms.make(m, form_st, route, Callable(self, "_ground"))
 	world = bool(res.get("world", false))
 	_kinds[id] = str(res.kind)
@@ -368,6 +544,11 @@ func _make(id: String, st: Dictionary) -> void:
 			ext.x = maxf(ext.x, absf(c3.x) + s3.x * 0.5)
 			ext.y = maxf(ext.y, absf(c3.z) + s3.z * 0.5)
 		half = Vector2(half.x if half.x > 0.0 else ext.x, half.y if half.y > 0.0 else ext.y)
+	# F3 monuments: a kit form fitted evenly can be drawn bigger than its record's footprint (the
+	# Atrium Libertatis's front stair stood out over the falling ground with nothing under it): the
+	# ground is read, and the foundation built, under what is drawn
+	if not world and str(res.get("base", "lo")) != "centre" and model not in ["plaza", "bridge_stone", "bridge_timber"]:
+		half = half.max(_drawn_half(res))
 	if model == "bridge_stone" or model == "bridge_timber":
 		var axis := Vector2(sin(yaw), cos(yaw))
 		base_y = maxf(_ground_at(centre + axis * half.y), _ground_at(centre - axis * half.y))
@@ -436,13 +617,15 @@ func _make(id: String, st: Dictionary) -> void:
 			mmesh.set_instance_color(k, Color.WHITE)
 		var mmi := MultiMeshInstance3D.new()
 		mmi.multimesh = mmesh
+		mmi.set_meta("xforms", xfs)   # F3 monuments: the transforms (a headless MultiMesh keeps none)
 		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
 		_set_range(mmi, inst.range)
 		node.add_child(mmi)
 	if not world and not found and skirt > 0.05:
 		# F2: the foundation down to the lowest ground under the footprint (and 0.5 m into it)
 		var fm := UrbsMonumentMesh.new()
-		fm.box(Vector3(0, -skirt - 0.5, 0), Vector3(half.x * 2.0, skirt + 0.52, half.y * 2.0), "opus_quadratum")
+		# (F3: 3 cm outside the footprint, so a form's own bed under it is not flush with it)
+		fm.box(Vector3(0, -skirt - 0.5, 0), Vector3(half.x * 2.0 + 0.06, skirt + 0.52, half.y * 2.0 + 0.06), "opus_quadratum")
 		var mi := MeshInstance3D.new()
 		mi.mesh = fm.finish_mesh()
 		node.add_child(mi)
@@ -495,12 +678,181 @@ func _make(id: String, st: Dictionary) -> void:
 	_opens[id] = opens
 	_xf[id] = xf
 	_tris[id] = res.get("tris", [0, 0, 0])
+	# F3 monuments: a street running through a portico passes through an opening in it
+	if model == "portico_enclosure" and not world:
+		_street_openings(id, node, centre, yaw, half, base_y)
+	# F3 monuments: where it truly overlaps a sourced building it yields to, it abuts it instead
+	for y in st.get("yields", []):
+		# the other as drawn (every mesh and instance at the nearest level of detail: its steps and
+		# cornices too), 0.3 m round: yields are set between compact buildings, so its box is its body
+		var gb := _drawn_box(str(y.oid))
+		var boxes := [{"xf": _xf[str(y.oid)], "box": AABB(gb.position - Vector3(0.3, 0, 0.3), gb.size + Vector3(0.6, 0.5, 0.6))}]
+		UrbsMonumentClip.clip(node, boxes)
 	_placed[id] = {"centre": centre, "yaw": yaw, "y": base_y, "length": maxf(float(st.length), float(st.radius) * 2.0),
 		"width": maxf(float(st.width), float(st.radius) * 2.0), "radius": float(st.radius), "model": model, "state": st.state,
 		"native": aabb.size, "door": res.get("door", null),
 		# F2 audit (audit.gd): how the base meets the ground, and the plan size used for it
 		"base_mode": str(res.get("base", "lo")), "world": world, "skirted": found and not world, "drop": skirt, "retains": model in AGAINST_HILL,
 		"half": half}
+
+
+## F3 monuments: steps from a terrace's edge in front of the monument down to the ground below
+## it, where the ground in front falls more than 0.8 m within 15 m of the front (and less than
+## 14 m: a cliff is not climbed). The flight is as wide as the front (3 to 12 m).
+## Every standing monument's terrace steps, made again (a neighbour may have come or gone);
+## a flight that would run into another standing monument is not built.
+func _all_terrace_steps() -> void:
+	for id in _order:
+		if not _nodes.has(id):
+			continue
+		var node: Node3D = _nodes[id]
+		if node.has_node("TerraceSteps"):
+			var old: Node = node.get_node("TerraceSteps")
+			node.remove_child(old)
+			old.free()
+			if node.has_meta("steps_box"):
+				var sbx: AABB = node.get_meta("steps_box")
+				_solids[id] = (_solids[id] as Array).filter(func(b): return b != sbx)
+				node.remove_meta("steps_box")
+		var p: Dictionary = _placed.get(id, {})
+		if p.is_empty() or bool(p.get("world", false)) or str(p.model) in ["plaza", "circus_maximus"] + ROUTE_PASS:
+			continue
+		if str(p.get("base_mode", "lo")) == "centre":
+			continue
+		_terrace_steps(id, node, p.centre, float(p.yaw), float(p.y), p.get("half", Vector2.ZERO))
+
+
+func _terrace_steps(id: String, node: Node3D, centre: Vector2, yaw: float, base_y: float, half: Vector2) -> void:
+	var fr := Vector2(sin(yaw), cos(yaw))
+	var edge := -1.0
+	var z := half.y + 0.5
+	while z <= half.y + 15.0:
+		if base_y - _ground_at(centre + fr * z) > 0.8:
+			edge = z
+			break
+		z += 0.5
+	if edge < 0.0:
+		return
+	# the terrace's edge: back to where the ground is still at the floor
+	var top := edge - 0.5
+	var drop := base_y - _ground_at(centre + fr * (edge + 2.5))
+	for it in 2:   # the foot of the flight: where it ends on the slope
+		var n := maxi(1, int(round(drop / 0.24)))
+		drop = maxf(drop, base_y - _ground_at(centre + fr * (top + (n | 1) * 0.35)))
+	if drop <= 0.8 or drop >= 14.0:
+		return
+	var w := clampf(half.x * 1.2, 3.0, 12.0)
+	var n_st := maxi(1, int(round(drop / 0.24))) | 1
+	var rect := {"c": centre + fr * (top + n_st * 0.35 * 0.5), "ax": Vector2(cos(yaw), -sin(yaw)), "az": fr,
+		"hx": w * 0.5 + 0.5, "hz": n_st * 0.35 * 0.5}
+	for oid in _placed:
+		if oid == id or str(_placed[oid].model) in FIT_PASS:
+			continue
+		var o := _my_rect(oid)
+		if (o.c as Vector2).distance_to(rect.c) < float(o.hx) + float(o.hz) + 40.0 and Forms._rect_depth(rect, o) > 0.0:
+			return   # it would run into a neighbour
+	var mm := UrbsMonumentMesh.new()
+	mm.push(Transform3D(Basis.IDENTITY, Vector3(0, -drop, 0)))
+	var depth := mm.stair(0.0, w, top, drop, "limestone_steps", 0.35)
+	for sx: float in [-1.0, 1.0]:   # cheek walls down the slope beside the flight
+		mm.ext(sx * w * 0.5, 0.0, top, sx * (w * 0.5 + 0.5), drop, top + depth, "opus_quadratum")
+	mm.pop()
+	var mi := MeshInstance3D.new()
+	mi.name = "TerraceSteps"
+	mi.mesh = mm.finish_mesh()
+	node.add_child(mi)
+	# its box, so the wall and the aqueducts stop at it too (its marker: the steps' box is the
+	# last solid; _all_terrace_steps drops it again by rebuilding the list without it)
+	var sb := AABB(Vector3(-w * 0.5 - 0.5, -drop, top), Vector3(w + 1.0, drop, depth))
+	(_solids[id] as Array).append(sb)
+	node.set_meta("steps_box", sb)
+
+
+var _streets_cache: UrbsStreets = null
+var _streets_year := 1
+
+
+## F3 monuments: openings in a portico where a street of the year runs through it (the
+## carriageway and a metre either side, every height): the walkers' lanes along Via
+## Flumentana and the triumphal way ran through the Porticus Octaviae's columns.
+func _street_openings(id: String, node: Node3D, centre: Vector2, yaw: float, half: Vector2, base_y: float) -> void:
+	if _streets_cache == null or _streets_year != _year:
+		_streets_cache = UrbsStreets.new()
+		_streets_cache.height = _height
+		_streets_cache.load_data(_year)
+		_streets_year = _year
+	var rect := {"c": centre, "ax": Vector2(cos(yaw), -sin(yaw)), "az": Vector2(sin(yaw), cos(yaw)), "hx": half.x + 2.0, "hz": half.y + 2.0}
+	var boxes: Array = []
+	for st in _streets_cache.streets:
+		if bool(st.get("stairs", false)):
+			continue
+		var pts: PackedVector2Array = st.pts
+		var w := float(st.hw) + 1.0
+		for k in range(pts.size() - 1):
+			var a := pts[k]
+			var b := pts[k + 1]
+			var ln := a.distance_to(b)
+			if ln < 0.01:
+				continue
+			var d := (b - a) / ln
+			var seg := {"c": (a + b) * 0.5, "ax": d, "az": Vector2(-d.y, d.x), "hx": ln * 0.5 + 0.5, "hz": w}
+			if Forms._rect_depth(seg, rect) <= 0.0:
+				continue
+			var xf := Transform3D(Basis(Vector3.UP, atan2(-d.y, d.x)), Vector3((a.x + b.x) * 0.5, base_y - 50.0, (a.y + b.y) * 0.5))
+			boxes.append({"xf": xf, "box": AABB(Vector3(-ln * 0.5 - 2.0, 0.0, -w), Vector3(ln + 4.0, 200.0, w * 2.0))})   # past the joints: no sliver left between two cuts
+	if boxes.is_empty():
+		return
+	UrbsMonumentClip.clip(node, boxes)
+	# and its solids part there (the walkers and the carts pass): a solid the street crosses is
+	# split along its length into the pieces either side of the street
+	var mxf: Transform3D = _xf.get(id, Transform3D(Basis(Vector3.UP, yaw), Vector3(centre.x, base_y, centre.y)))
+	var inv := mxf.affine_inverse()
+	var out: Array = []
+	for sb in _solids.get(id, []):
+		var pieces := [sb as AABB]
+		for b in boxes:
+			var cut := UrbsMonumentClip._aabb_under(inv * (b.xf as Transform3D), b.box)
+			var nxt: Array = []
+			for pc: AABB in pieces:
+				if not pc.intersects(cut):
+					nxt.append(pc)
+					continue
+				var ax := 0 if pc.size.x >= pc.size.z else 2
+				if cut.position[ax] > pc.position[ax]:
+					var a := pc
+					a.size[ax] = cut.position[ax] - pc.position[ax]
+					nxt.append(a)
+				if cut.end[ax] < pc.end[ax]:
+					var c := pc
+					c.position[ax] = cut.end[ax]
+					c.size[ax] = pc.end[ax] - cut.end[ax]
+					nxt.append(c)
+			pieces = nxt
+		out.append_array(pieces)
+	_solids[id] = out
+
+
+## F3 monuments: the half extents in plan (x, z) of what a form draws at its nearest level of
+## detail (its parts and instances, about the origin).
+static func _drawn_half(res: Dictionary) -> Vector2:
+	var h := Vector2.ZERO
+	var boxes: Array = []
+	for part in res.parts:
+		var r: Vector2 = part.get("range", Vector2.ZERO)
+		if r.x > 0.0 or part.mesh == null:
+			continue
+		boxes.append((part.xform as Transform3D) * (part.mesh as Mesh).get_aabb())
+	for inst in res.get("instances", []):
+		var r: Vector2 = inst.get("range", Vector2.ZERO)
+		if r.x > 0.0 or inst.mesh == null:
+			continue
+		var mb: AABB = (inst.mesh as Mesh).get_aabb()
+		for xf in inst.xforms:
+			boxes.append((xf as Transform3D) * mb)
+	for b in boxes:
+		var bb: AABB = b
+		h = h.max(Vector2(maxf(absf(bb.position.x), absf(bb.end.x)), maxf(absf(bb.position.z), absf(bb.end.z))))
+	return h
 
 
 ## Metres per mesh unit of an old kit part: the length of its transform's x axis (kit meshes
@@ -731,7 +1083,7 @@ func info(id: String) -> Dictionary:
 		"by": str(built.get("by", "")), "form": str(m.get("form", "")),
 		"type": str(m.get("type", "")), "location": str(m.get("location", "")),
 		"events": events, "sources": m.get("sources", []), "state": str(st.get("state", "")),
-		"model": str(st.get("model", "")), "enterable": _enterable(m),
+		"model": str(st.get("model", "")), "enterable": _enterable(m) and str(st.get("state", "")) in ["standing", "standing_scaffold"],   # F3: not a building site
 		"geometry_source": str(m.get("geometry_source", "")),
 		"geometry_unverified": m.get("geometry_unverified", [])}
 
@@ -746,8 +1098,11 @@ func _date_text(yr: Variant, built: Dictionary) -> String:
 
 
 func _enterable(m: Dictionary) -> bool:
+	# F3 monuments: only where there is an inside to enter (UrbsInteriors.kind_of): the card's
+	# Enter on a portico, a market or a tomb glided the camera into its wall and stopped there
 	return str(m.get("type", "")) in ["temple", "basilica", "curia", "theatre", "circus", "amphitheatre", "portico",
-		"horrea", "public_building", "archive", "house", "baths", "prison", "market", "rostra", "comitium", "forum", "tomb"]
+		"horrea", "public_building", "archive", "house", "baths", "prison", "market", "rostra", "comitium", "forum", "tomb"] \
+		and str(UrbsInteriors.kind_of(m)[0]) != ""
 
 
 ## A transform at the door looking inwards: the middle of the front, at eye height above the

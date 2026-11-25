@@ -133,7 +133,8 @@ static func _flank(mm: UrbsMonumentMesh, sx: float, aw: float, cav: float, zc: f
 	var xo := x0 + sx * x
 	var xw := x0 + sx * cav
 	mm.ext(minf(xo, xw), 0.0, z0, maxf(xo, xw), y + 1.2, z1, "tufa_yellow" if not stone else "travertine")
-	mm.solid(Vector3(x0 + sx * cav * 0.5, 0.0, (z0 + z1) * 0.5), Vector3(cav, y + 1.2, z1 - z0))
+	var reach := maxf(cav, x) + 0.4   # F3: the solid holds the rows and the façade's pilasters
+	mm.solid(Vector3(x0 + sx * reach * 0.5, 0.0, (z0 + z1) * 0.5), Vector3(reach, maxf(y + 1.2, 7.6), z1 - z0))
 	var bay := 6.0
 	var n_arch := int((z1 - z0) / bay)
 	var face := x0 + sx * cav
@@ -241,7 +242,7 @@ static func _spina(mm: UrbsMonumentMesh, zg: float, zcurve: float, v: String, ye
 	if v == "eggs" or stone:
 		var ze := za + 40.0
 		for sx: float in [-1.0, 1.0]:
-			mm.box(Vector3(sx * 4.6, 1.45, ze), Vector3(0.5, 4.2, 0.5), "travertine" if stone else "timber_painted")
+			mm.box(Vector3(sx * 4.0, 1.45, ze), Vector3(0.5, 4.2, 0.5), "travertine" if stone else "timber_painted")
 		mm.ext(-5.0, 5.65, ze - 0.3, 5.0, 6.05, ze + 0.3, "timber_painted")
 		for i in 7:
 			var x := -4.2 + i * 1.4
@@ -250,7 +251,7 @@ static func _spina(mm: UrbsMonumentMesh, zg: float, zcurve: float, v: String, ye
 	if v == "augustan":
 		var zd := zb - 40.0
 		for sx: float in [-1.0, 1.0]:
-			mm.box(Vector3(sx * 4.6, 1.45, zd), Vector3(0.5, 4.2, 0.5), "travertine")
+			mm.box(Vector3(sx * 4.0, 1.45, zd), Vector3(0.5, 4.2, 0.5), "travertine")
 		mm.ext(-5.0, 5.65, zd - 0.3, 5.0, 6.05, zd + 0.3, "travertine")
 		for i in 7:
 			var x := -4.2 + i * 1.4

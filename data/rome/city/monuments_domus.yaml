@@ -187,6 +187,7 @@ monuments:
   pleiades: null
   verified: none
   model: domus
+  size_fits: true   # F3 monuments: its size is assumed (no measured plan); it is made smaller where it runs into a neighbour (monuments.gd _fit_sizes)
   bearing_deg: 16  # unverified
   footprint_m: {length: 40, width: 28}  # unverified
   height_m: 9  # unverified

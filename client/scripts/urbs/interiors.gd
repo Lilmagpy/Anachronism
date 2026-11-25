@@ -185,6 +185,11 @@ static func _attach(root: Node3D, r: Dictionary) -> void:
 		ground.material_override = gm
 		ground.position.y = -0.03
 		root.add_child(ground)
+	# F3 monuments: the scene hides the city inside, so what the doors, the porch between the
+	# columns and the compluvium look out on was the black of the empty background: a sky dome
+	# and the ground round a roofed interior (one under the open sky keeps the scene's own sky)
+	if not bool(r.get("open_sky", false)):
+		_backdrop(root, not bool(r.get("ground", false)))
 	# The scene turns its own sun off while inside, so the interior brings the sun that comes
 	# through its real openings (doors, windows, the compluvium, the open sky).
 	var sun := DirectionalLight3D.new()
@@ -205,6 +210,47 @@ static func _attach(root: Node3D, r: Dictionary) -> void:
 		light.omni_attenuation = 1.4
 		light.shadow_enabled = false
 		root.add_child(light)
+
+
+# F3 monuments (begin) --------------------------------------------------------------------------
+static var _dome_mat: StandardMaterial3D = null
+static var _earth_mat: StandardMaterial3D = null
+
+
+## A sky dome (unlit, so the dim interior light does not darken it) and, if `ground`, the
+## ground out to its rim, both under the interior's root.
+static func _backdrop(root: Node3D, ground: bool) -> void:
+	if _dome_mat == null:
+		_dome_mat = StandardMaterial3D.new()
+		_dome_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		_dome_mat.albedo_color = Color(0.60, 0.72, 0.86)
+		_dome_mat.cull_mode = BaseMaterial3D.CULL_DISABLED
+		_earth_mat = StandardMaterial3D.new()
+		_earth_mat.albedo_color = Color(0.50, 0.45, 0.35)
+		_earth_mat.roughness = 1.0
+	var dome := MeshInstance3D.new()
+	dome.name = "Backdrop"
+	var sm := SphereMesh.new()
+	sm.radius = 380.0
+	sm.height = 760.0
+	sm.radial_segments = 24
+	sm.rings = 12
+	dome.mesh = sm
+	dome.material_override = _dome_mat
+	dome.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	root.add_child(dome)
+	if not ground:
+		return
+	var earth := MeshInstance3D.new()
+	earth.name = "BackdropGround"
+	var plane := PlaneMesh.new()
+	plane.size = Vector2(800, 800)
+	earth.mesh = plane
+	earth.material_override = _earth_mat
+	earth.position.y = -0.05
+	earth.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	root.add_child(earth)
+# F3 monuments (end) ----------------------------------------------------------------------------
 
 
 static var _statue_mats: Dictionary = {}

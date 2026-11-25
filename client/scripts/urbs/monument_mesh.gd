@@ -324,13 +324,22 @@ func instance(key: String, mesh: ArrayMesh, xform: Transform3D) -> void:
 ## A solid box (collision and picking) in the current frame: `foot` = the middle of its base.
 func solid(foot: Vector3, size: Vector3) -> void:
 	var f := _frames[-1]
-	_solids.append({"centre": f * (foot + Vector3(0, size.y * 0.5, 0)), "size": size})
+	_solids.append({"centre": f * (foot + Vector3(0, size.y * 0.5, 0)), "size": _turned(f.basis, size)})
 
 
 ## An open footprint (a court, a plaza): walked on, never picked.
 func open(foot: Vector3, size: Vector3) -> void:
 	var f := _frames[-1]
-	_opens.append({"centre": f * (foot + Vector3(0, size.y * 0.5, 0)), "size": size})
+	_opens.append({"centre": f * (foot + Vector3(0, size.y * 0.5, 0)), "size": _turned(f.basis, size)})
+
+
+## F3 monuments: the size, in the monument's axes, of a box of `size` turned by `b` (the box
+## round it). A solid set in a turned frame (a portico's side wing, a basilica's flank) kept its
+## unturned size: an invisible wall ran across the court.
+static func _turned(b: Basis, size: Vector3) -> Vector3:
+	return Vector3(absf(b.x.x) * size.x + absf(b.y.x) * size.y + absf(b.z.x) * size.z,
+		absf(b.x.y) * size.x + absf(b.y.y) * size.y + absf(b.z.y) * size.z,
+		absf(b.x.z) * size.x + absf(b.y.z) * size.y + absf(b.z.z) * size.z)
 
 
 # --- output -------------------------------------------------------------------------------------
