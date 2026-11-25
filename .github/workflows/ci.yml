@@ -57,7 +57,7 @@ jobs:
           path: |
             ~/godot
             ~/.local/share/godot/export_templates
-          key: godot-${{ env.GODOT_VERSION }}
+          key: godot-${{ env.GODOT_VERSION }}-windows
       - name: Download Godot
         if: steps.godot-cache.outputs.cache-hit != 'true'
         run: |
@@ -67,7 +67,8 @@ jobs:
           unzip -q /tmp/godot.zip -d ~/godot
           mv ~/godot/Godot_v${GODOT_VERSION}-stable_linux.x86_64 ~/godot/godot
           curl -sSL -o /tmp/templates.tpz "$base/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
-          unzip -q /tmp/templates.tpz 'templates/macos.zip' 'templates/linux_release.x86_64' 'templates/version.txt' -d /tmp/tpl
+          unzip -q /tmp/templates.tpz 'templates/macos.zip' 'templates/linux_release.x86_64' \
+            'templates/windows_release_x86_64.exe' 'templates/version.txt' -d /tmp/tpl
           mkdir -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
           mv /tmp/tpl/templates/* ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
       - name: Package for Linux and start it as a brand-new user
@@ -84,3 +85,33 @@ jobs:
           name: Meritus-mac
           path: build/Meritus-mac.zip
           retention-days: 30
+      - name: Package for Windows
+        run: scripts/package.sh windows ~/godot/godot
+      - uses: actions/upload-artifact@v7
+        with:
+          name: Meritus-windows
+          path: build/Meritus-windows.zip
+          retention-days: 30
+
+  windows:
+    name: Windows app (started on Windows)
+    # Nobody on the project has a PC to hand (D-306), so a real Windows machine unzips the
+    # download as a brand-new user and starts it: the engine unpacks, Python is fetched, a
+    # game begins and answers.
+    needs: app
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: Meritus-windows
+      - name: Start the game as a brand-new user
+        shell: bash
+        run: |
+          unzip -q Meritus-windows.zip
+          mkdir fresh-home
+          export APPDATA="$(cygpath -w "$PWD/fresh-home")"
+          Meritus/Meritus.exe --headless --log-file "$(cygpath -w "$PWD/smoke.log")" -- --smoke > smoke.txt 2>&1 || true
+          cat smoke.txt
+          [ -f smoke.log ] && cat smoke.log
+          cat smoke.txt smoke.log 2>/dev/null | grep -q "SMOKE OK"
