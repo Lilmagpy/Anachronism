@@ -12,7 +12,10 @@
 ## Scalae Caci) is built as steps by UrbsSite and has no strip here. Surfaces come from
 ## UrbsMaterials: street_basalt, gravel, earth_packed, tufa_grey (kerbs and footway slabs), the modeller's choice,
 ## basalt (stepping stones). U8: the ground under every street is cut level across it by
-## UrbsTerrain, so the strip lies flat.
+## UrbsTerrain, so the strip lies flat. F3: where two streets meet or cross, the narrower one
+## (UrbsTerrain cuts the wider last: width, then id) dips SINK under the wider one's carriageway,
+## and every street dips under a paving (UrbsTerrain.pavings), so no two surfaces lie within a few
+## centimetres of each other; its kerbs and footways stop at the other's edge.
 ##
 ## API (the spectacles and the camera use these):
 ##   build(parent, year, height)       make the meshes under `parent`; `height` is (x, z) -> y
@@ -35,6 +38,7 @@ const SURFACE_LIFT := 0.12  ## strips float this far above the terrain to avoid 
 const FOOTWAY_W := 1.25     ## the raised footway behind the kerb, inside the walls (reaches the fill's frontage, FOOTPATH 1 m + a little under the walls)
 const FOOTWAY_H := 0.22
 const SEARCH_RINGS := 7
+const SINK := 0.5           ## F3: a strip's edge sinks this far where a wider street or a paving lies over it
 
 var year := -300
 var height: Callable = func(_x: float, _z: float) -> float: return 10.0
@@ -233,11 +237,44 @@ func _street_mesh(s: Dictionary, lift: float, surface: Material, kerb_mat: Mater
 		return null
 	var hw: float = s["hw"]
 	footway = footway and bool(s["paved"])
-	var n := maxi(2, int(ceil(length / STEP)) + 1)
+	var n0 := maxi(2, int(ceil(length / STEP)) + 1)
+	# F3: where the strip (its centre or either edge) passes under a wider street or a paving, two
+	# extra samples 0.25 m either side of that edge, so it dips there at once instead of over a
+	# whole 4 m step
+	var dists := PackedFloat32Array()
+	for i in n0:
+		dists.append(length * float(i) / float(n0 - 1))
+	var extra := PackedFloat32Array()
+	for off: float in [-hw, 0.0, hw]:
+		var prev_under := _under(_lat_point(s, 0.0, off), s)
+		for i in range(1, n0):
+			var d := dists[i]
+			var under := _under(_lat_point(s, d, off), s)
+			if under != prev_under:
+				var lo := dists[i - 1]
+				var hi := d
+				for _it in 8:
+					var mid := (lo + hi) * 0.5
+					if _under(_lat_point(s, mid, off), s) == prev_under:
+						lo = mid
+					else:
+						hi = mid
+				var edge := (lo + hi) * 0.5
+				extra.append(clampf(edge - 0.25, 0.0, length))
+				extra.append(clampf(edge + 0.25, 0.0, length))
+			prev_under = under
+	if not extra.is_empty():
+		var all := Array(dists) + Array(extra)
+		all.sort()
+		dists = PackedFloat32Array()
+		for d: float in all:
+			if dists.is_empty() or d - dists[dists.size() - 1] > 0.05:
+				dists.append(d)
+	var n := dists.size()
 	var samples := PackedVector2Array()
 	var tangents := PackedVector2Array()
 	for i in n:
-		var d := length * float(i) / float(n - 1)
+		var d := dists[i]
 		var q := _point_at(s, d)
 		samples.append(q)
 		var q2 := _point_at(s, minf(d + 1.5, length))
@@ -262,9 +299,9 @@ func _street_mesh(s: Dictionary, lift: float, surface: Material, kerb_mat: Mater
 		var nrm := Vector2(-t.y, t.x)
 		var l := samples[i] + nrm * hw
 		var r := samples[i] - nrm * hw
-		var yl := float(height.call(l.x, l.y)) + SURFACE_LIFT + lift
-		var yr := float(height.call(r.x, r.y)) + SURFACE_LIFT + lift
-		var yc := float(height.call(samples[i].x, samples[i].y)) + SURFACE_LIFT + lift + 0.04   # slight camber
+		var yl := float(height.call(l.x, l.y)) + SURFACE_LIFT + lift - (SINK if _under(l, s) else 0.0)
+		var yr := float(height.call(r.x, r.y)) + SURFACE_LIFT + lift - (SINK if _under(r, s) else 0.0)
+		var yc := float(height.call(samples[i].x, samples[i].y)) + SURFACE_LIFT + lift + 0.04 - (SINK if _under(samples[i], s) else 0.0)   # slight camber
 		verts.append(Vector3(l.x, yl, l.y)); normals.append(Vector3.UP); uvs.append(Vector2(run / 3.0, hw / 1.5))
 		verts.append(Vector3(samples[i].x, yc, samples[i].y)); normals.append(Vector3.UP); uvs.append(Vector2(run / 3.0, 0.0))
 		verts.append(Vector3(r.x, yr, r.y)); normals.append(Vector3.UP); uvs.append(Vector2(run / 3.0, -hw / 1.5))
@@ -275,8 +312,11 @@ func _street_mesh(s: Dictionary, lift: float, surface: Material, kerb_mat: Mater
 				idx.append_array([a0, a0 + 3, a0 + 1, a0 + 1, a0 + 3, a0 + 4])
 		if bool(s["paved"]):
 			# no kerb or footway where the street crosses a paved platform (the Forum, the Circus)
-			var on := 0.0 if UrbsSite.platform_at(samples[i].x, samples[i].y) != "" else 1.0
+			var on0 := 0.0 if UrbsSite.platform_at(samples[i].x, samples[i].y) != "" else 1.0
 			for side: float in [1.0, -1.0]:
+				var on := on0
+				if on > 0.0 and _under(samples[i] + nrm * ((hw + KERB_W * 0.5) * side), s):
+					on = 0.0   # F3: no kerb across another street's carriageway or a paving
 				var inner := samples[i] + nrm * (hw * side)
 				var outer := samples[i] + nrm * ((hw + KERB_W * on) * side)
 				var y_in := float(height.call(inner.x, inner.y)) + SURFACE_LIFT + lift
@@ -320,7 +360,7 @@ func _street_mesh(s: Dictionary, lift: float, surface: Material, kerb_mat: Mater
 			var tg := (q2 - q).normalized()
 			var nr := Vector2(-tg.y, tg.x)
 			var hs := float(s["hw"])
-			for off: float in ([-hs * 0.55, 0.0, hs * 0.55] if UrbsSite.platform_at(q.x, q.y) == "" else []):
+			for off: float in ([-hs * 0.55, 0.0, hs * 0.55] if UrbsSite.platform_at(q.x, q.y) == "" and not _under(q, s) else []):
 				var c2 := q + nr * off
 				var yb := float(height.call(c2.x, c2.y)) + SURFACE_LIFT + lift
 				_box_into(kv, kn, ki, Vector3(c2.x, yb, c2.y), tg, nr, Vector2(0.45, 0.7), 0.26)
@@ -353,6 +393,43 @@ func _street_mesh(s: Dictionary, lift: float, surface: Material, kerb_mat: Mater
 		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, fa)
 		mesh.surface_set_material(mesh.get_surface_count() - 1, foot_mat)
 	return mesh
+
+
+## The point `off` metres to the left of street `s` at `d` metres along it.
+func _lat_point(s: Dictionary, d: float, off: float) -> Vector2:
+	var length: float = s["len"]
+	var t := (_point_at(s, minf(d + 1.5, length)) - _point_at(s, maxf(d - 1.5, 0.0))).normalized()
+	return _point_at(s, d) + Vector2(-t.y, t.x) * off
+
+
+## True where `p` lies under a wider street's carriageway (and its kerbs) or a paving: the strip of
+## street `s` dips there (see the header).
+func _under(p: Vector2, s: Dictionary) -> bool:
+	for pv: Dictionary in UrbsTerrain.pavings():
+		var poly: PackedVector2Array = pv["poly"]
+		var c: Vector2 = pv["centre"]
+		if p.distance_to(c) < poly[0].distance_to(c) + 1.0:
+			# the paving and the kerb round it (0.3 m: monument_civic.gd), with a margin
+			if Geometry2D.is_point_in_polygon(p, poly) or UrbsTerrain._poly_edge(poly, p)[1] < 0.6:
+				return true
+	var key := Vector2i(floori(p.x / CELL), floori(p.y / CELL))
+	var me := _rank(s)
+	for dx in range(-1, 2):
+		for dz in range(-1, 2):
+			for ref in _grid.get(key + Vector2i(dx, dz), []):
+				var o: Dictionary = streets[ref[0]]
+				if bool(o.get("stairs", false)) or _rank(o) <= me:
+					continue
+				var pts: PackedVector2Array = o["pts"]
+				var q := Geometry2D.get_closest_point_to_segment(p, pts[ref[1]], pts[ref[1] + 1])
+				if q.distance_to(p) < float(o["hw"]) + KERB_W + 0.05:
+					return true
+	return false
+
+
+## The order UrbsTerrain cuts the streets in (the wider last): a street ranked higher lies on top.
+static func _rank(s: Dictionary) -> String:
+	return "%06.2f|%s" % [float(s["hw"]), s["id"]]
 
 
 ## A box (stepping stone) standing on the road: centre on the ground, `u` along, `v` across.

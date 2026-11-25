@@ -21,24 +21,25 @@
 class_name UrbsSite
 
 const WALL_UP := 0.15            ## a terrace wall's top stands this far above the upper tread
+const TREAD_M := 4.0             ## F3: the tread a wall holds up is judged this far uphill of it
+const USE_REACH := 4.0           ## F3: ... and is in use when a house lot comes this close to that point
 const PARCEL_REGION := 420.0     ## farmland: square regions, each with its own field orientation
 const PARCEL_CELL := Vector2(54.0, 92.0)   ## a field, metres (about 2 x 3.5 actus; the actus of 120 ft is 35.5 m)
 const PARCEL_KINDS := ["ploughed", "crop", "stubble", "pasture", "olive", "vineyard"]
 const M32 := 0xFFFFFFFF
 
 static var _platforms: Dictionary = {}
-static var _loaded := false
+static var _loaded_year := 999999
 
 
+## The platforms of the year (UrbsTerrain.platforms: a monument's platform only while it stands).
 static func _load() -> void:
-	if _loaded:
+	if _loaded_year == UrbsTerrain.year:
 		return
-	_loaded = true
-	var model: Dictionary = UrbsTiber.topography().get("terrain_model", {})
-	for pf: Dictionary in model.get("platforms", []):
-		var poly := PackedVector2Array()
-		for ll: Array in pf.get("polygon", []):
-			poly.append(UrbsGeo.to_local(float(ll[0]), float(ll[1])))
+	_loaded_year = UrbsTerrain.year
+	_platforms = {}
+	for pf: Dictionary in UrbsTerrain.platforms():
+		var poly: PackedVector2Array = pf["poly"]
 		var lo := Vector2(INF, INF)
 		var hi := Vector2(-INF, -INF)
 		for q in poly:
@@ -46,7 +47,8 @@ static func _load() -> void:
 			hi = Vector2(maxf(hi.x, q.x), maxf(hi.y, q.y))
 		var lv: Array = pf.get("level", [10.0, 10.0])
 		_platforms[str(pf["id"])] = {"id": str(pf["id"]), "polygon": poly, "level": [float(lv[0]), float(lv[lv.size() - 1])],
-			"blend": float(pf.get("blend", 25.0)), "walls": bool(pf.get("walls", false)), "lo": lo, "hi": hi}
+			"blend": float(pf.get("blend", 25.0)), "walls": bool(pf.get("walls", false)), "lo": lo, "hi": hi,
+			"front": pf.get("front", Vector2.ZERO), "ramp": str(pf["id"]).begins_with("f2_terrace_")}
 
 
 # ---------------------------------------------------------------- queries
@@ -272,11 +274,13 @@ static func _platform_walls(m: Mesher, year: int, height: Callable) -> void:
 			continue
 		var poly: PackedVector2Array = pf["polygon"]
 		var ccw := _signed_area(poly) > 0.0
+		var front: Vector2 = pf["front"]
 		for i in poly.size():
 			var a := poly[i]
 			var b := poly[(i + 1) % poly.size()]
 			var e := (b - a).normalized()
 			var out := Vector2(e.y, -e.x) if ccw else Vector2(-e.y, e.x)
+			var ramp_side := bool(pf["ramp"]) and out.dot(front) > 0.5   # F3: falls as a ramp (UrbsTerrain)
 			var length := a.distance_to(b)
 			var n := maxi(int(ceil(length / 3.0)), 1)
 			for k in n:
@@ -286,6 +290,8 @@ static func _platform_walls(m: Mesher, year: int, height: Callable) -> void:
 				var l1 := platform_level(pf, p1.x)
 				var g0: float = height.call(p0.x + out.x * 9.0, p0.y + out.y * 9.0)
 				var g1: float = height.call(p1.x + out.x * 9.0, p1.y + out.y * 9.0)
+				if ramp_side and (l0 - g0 > 1.2 or l1 - g1 > 1.2):
+					continue   # F3: in front of its monument the floor runs down to the ground as a ramp
 				if l0 - g0 > 1.2 or l1 - g1 > 1.2:   # the platform stands up: a substructure with a parapet
 					m.wall(mat, p0 + out * 1.0, p1 + out * 1.0, out, minf(g0, l0) - 1.5, l0 + 0.9, minf(g1, l1) - 1.5, l1 + 0.9, 3.0)
 				elif g0 - l0 > 1.2 or g1 - l1 > 1.2:   # the hill above it: a retaining wall
@@ -331,7 +337,9 @@ static func _clivus_walls(m: Mesher, pts: PackedVector2Array, hw: float, height:
 		cum.append(cum[i - 1] + pts[i].distance_to(pts[i - 1]))
 	var length := cum[cum.size() - 1]
 	var n := maxi(int(ceil(length / 3.0)), 1)
-	var edge := hw + 1.4
+	# F3: at the edge of the level shoulder UrbsTerrain cuts beside the carriageway
+	var cuts: Dictionary = UrbsTiber.topography().get("terrain_model", {}).get("street_cuts", {})
+	var edge := hw + float(cuts.get("clivus_shoulder_m", 1.6)) - 0.2
 	for side: float in [1.0, -1.0]:
 		var prev := {}
 		for i in n + 1:
@@ -473,8 +481,29 @@ static func _down(p: Vector2) -> Vector2:
 
 
 ## The retaining walls of the hillside terraces in `rect` (a contour walk at the middle of each
-## riser), or null. lod 0 and 1 only.
-static func build_chunk_walls(rect: Rect2, lod: int, year: int) -> Node3D:
+## riser), or null. lod 0 and 1 only. F3: with `uses` (wall_uses) only the walls holding up a tread
+## something stands on that year: a house, a monument or a street (a terrace is cut to carry
+## something; under open ground the riser is left as a grassy bank).
+static func build_chunk_walls(rect: Rect2, lod: int, year: int, uses: Dictionary = {}) -> Node3D:
+	var m := Mesher.new()
+	var mat := wall_material(year)
+	var any := false
+	for w: Array in terrace_wall_segments(rect, uses):
+		m.wall(mat, w[0], w[1], w[2], w[3], w[4], w[5], w[6], 0.9)
+		any = true
+	if not any:
+		return null
+	var mi := m.finish("TerraceWalls")
+	if mi != null:
+		mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON if lod == 0 else GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		mi.visibility_range_end = 1600.0
+	return mi
+
+
+## The terrace walls in `rect` as segments [a: Vector2, b: Vector2, out: Vector2 (downhill), ya0,
+## ya1, yb0, yb1 (foot and top at a and b)]: what build_chunk_walls stands, and what the audit
+## (audit.gd, F3 ground) checks against what stands on the terraces.
+static func terrace_wall_segments(rect: Rect2, uses: Dictionary = {}) -> Array:
 	var h := UrbsTerrain.field()
 	var n := UrbsTerrain.VERTS
 	var cell := UrbsTerrain.CELL_M
@@ -484,9 +513,7 @@ static func build_chunk_walls(rect: Rect2, lod: int, year: int) -> Node3D:
 	var j0 := clampi(roundi((rect.position.y + half) / cell), 1, n - 2)
 	var i1 := clampi(roundi((rect.end.x + half) / cell), 1, n - 2)
 	var j1 := clampi(roundi((rect.end.y + half) / cell), 1, n - 2)
-	var m := Mesher.new()
-	var mat := wall_material(year)
-	var any := false
+	var out := []
 	for j in range(j0, j1):
 		for i in range(i0, i1):
 			var x := -half + i * cell
@@ -523,13 +550,50 @@ static func build_chunk_walls(rect: Rect2, lod: int, year: int) -> Node3D:
 							var ya1 := UrbsTerrain.height_at(a.x - da.x * 3.5, a.y - da.y * 3.5) + WALL_UP
 							var yb1 := UrbsTerrain.height_at(b.x - db.x * 3.5, b.y - db.y * 3.5) + WALL_UP
 							if ya1 - ya0 > 1.0 and yb1 - yb0 > 1.0:
-								m.wall(mat, a, b, (da + db).normalized(), ya0, ya1, yb0, yb1, 0.9)
-								any = true
+								var dn := (da + db).normalized()
+								if uses.is_empty() or tread_used((a + b) * 0.5 - dn * TREAD_M, uses):
+									out.append([a, b, dn, ya0, ya1, yb0, yb1])
 				lvl += step
-	if not any:
-		return null
-	var mi := m.finish("TerraceWalls")
-	if mi != null:
-		mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON if lod == 0 else GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-		mi.visibility_range_end = 1600.0
-	return mi
+	return out
+
+
+## F3: what stands on the terraces near `keys` (250 m chunks) in the fill's year: {lots: 20 m grid
+## of lot rectangles {c, ax, az, hx, hz}, obstacles: the monuments' footprints, streets: UrbsStreets}.
+## `fill` is an UrbsFill whose regions for those chunks are laid out.
+static func wall_uses(fill: Object, keys: Array) -> Dictionary:
+	var grid := {}
+	for key: Vector2i in keys:
+		var lots: Array = []
+		lots.append_array(fill.get("_street_by_chunk").get(key, []))
+		lots.append_array(fill.get("_region_by_chunk").get(key, []))
+		for lot: Dictionary in lots:
+			var th := float(lot.get("th", 0.0))
+			var r := {"c": lot["c"], "ax": Vector2(cos(th), -sin(th)), "az": Vector2(sin(th), cos(th)),
+				"hx": float(lot.get("hx", 2.0)), "hz": float(lot.get("hz", 2.0))}
+			var c: Vector2 = r.c
+			var reach := float(r.hx) + float(r.hz) + USE_REACH
+			for gx in range(floori((c.x - reach) / 20.0), floori((c.x + reach) / 20.0) + 1):
+				for gz in range(floori((c.y - reach) / 20.0), floori((c.y + reach) / 20.0) + 1):
+					var g := Vector2i(gx, gz)
+					if not grid.has(g):
+						grid[g] = []
+					grid[g].append(r)
+	return {"lots": grid, "obstacles": fill.get("obstacles"), "streets": fill.get("_streets")}
+
+
+## F3: does something stand at tread point `p` (see wall_uses)?
+static func tread_used(p: Vector2, uses: Dictionary) -> bool:
+	for r: Dictionary in (uses.get("lots", {}) as Dictionary).get(Vector2i(floori(p.x / 20.0), floori(p.y / 20.0)), []):
+		var d := p - (r.c as Vector2)
+		if absf(d.dot(r.ax)) <= float(r.hx) + USE_REACH and absf(d.dot(r.az)) <= float(r.hz) + USE_REACH:
+			return true
+	for o: Dictionary in uses.get("obstacles", []):
+		var d := p - (o.c as Vector2)
+		if absf(d.dot(o.ax)) <= float(o.hx) + 6.0 and absf(d.dot(o.az)) <= float(o.hz) + 6.0:
+			return true
+	var st: Variant = uses.get("streets")
+	if st != null:
+		var ns: Dictionary = st.nearest_street(p)
+		if not ns.is_empty() and float(ns.distance) < float(ns.half_width) + USE_REACH:
+			return true
+	return false
