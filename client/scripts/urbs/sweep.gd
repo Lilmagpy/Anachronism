@@ -75,6 +75,7 @@ static func run(urbs: Node3D, tree: SceneTree, poses_path: String, out_dir: Stri
 	for layer in tree.root.find_children("*", "CanvasLayer", true, false):
 		(layer as CanvasLayer).hide()
 	var n := 0
+	var view: UrbsMonumentView = null
 	for p in poses:
 		var d: Dictionary = p
 		var kind := str(d.get("kind", ""))
@@ -102,6 +103,9 @@ static func run(urbs: Node3D, tree: SceneTree, poses_path: String, out_dir: Stri
 				var z := float(d.get("z", 0.0))
 				var yaw := -deg_to_rad(float(d.get("yaw", 0.0)))
 				var p2: Vector2 = urbs.push_out(Vector2(x, z), 0.6, 1.7)
+				if view == null:
+					view = UrbsMonumentView.new(urbs.monuments, Callable(urbs, "height_at"), urbs.fill)
+				p2 = clear_stand(view, p2, yaw)
 				urbs.cam.snap_street(Vector3(p2.x, 0, p2.y), yaw, UrbsCamera.EYE, deg_to_rad(float(d.get("pitch", -3.0))))
 				if name == "":
 					name = "s_%d_%d_%d" % [int(x), int(z), int(d.get("yaw", 0))]
@@ -133,3 +137,77 @@ static func run(urbs: Node3D, tree: SceneTree, poses_path: String, out_dir: Stri
 	if urbs.interior != null:   # F3 monuments
 		urbs._leave_interior_now()
 	print("SWEEP DONE %d" % n)
+
+
+## F3: the sight distance a street pose must have straight ahead (and 20 degrees either side).
+const CLEAR_AHEAD := 6.0
+
+
+## F3: where a street pose stands: `p` (already pushed out of the houses and monuments) when the
+## eye there is free (UrbsMonumentView.is_free: not in a house, a monument's solid or drawn body, a
+## tree's crown, at the foot of a bank) and sees CLEAR_AHEAD m along the view and 20 degrees either
+## side (UrbsMonumentView.is_clear: the ground, the monuments' solids, the wall's stones, the
+## houses, the trees); else the nearest stand that does, on rings 1.5 m apart out to 45 m. The
+## camera stood in the 1.4 m slot between two insulae looking at a side wall (-603, -499, 44 BC).
+static func clear_stand(view: UrbsMonumentView, p: Vector2, yaw: float) -> Vector2:
+	view._load_lots(p, 60.0)
+	# the houses' envelopes (eaves, balconies, awnings and their poles): the eye stays out of them
+	_envs = []
+	if view.fill != null:
+		for lot in view.fill.lots_for_chunk(Vector2i(floori(p.x / UrbsFill.CHUNK), floori(p.y / UrbsFill.CHUNK))) \
+				+ _near_chunks(view.fill, p):
+			if str(lot.get("kind", "")) in ["prop", "tree", "furn"] or (lot["c"] as Vector2).distance_to(p) > 80.0:
+				continue
+			_envs.append(view.fill._env(lot))
+	if _stand_ok(view, p, yaw):
+		return p
+	for ring in range(1, 31):
+		var r := 1.5 * ring
+		var steps := maxi(8, int(TAU * r / 1.5))
+		for k in steps:
+			var a := TAU * float(k) / float(steps)
+			var q := p + Vector2(cos(a), sin(a)) * r
+			if _stand_ok(view, q, yaw):
+				return q
+	return p
+
+
+static var _envs: Array = []
+
+
+static func _near_chunks(fill: UrbsFill, p: Vector2) -> Array:
+	var out: Array = []
+	var k0 := Vector2i(floori(p.x / UrbsFill.CHUNK), floori(p.y / UrbsFill.CHUNK))
+	for dz in range(-1, 2):
+		for dx in range(-1, 2):
+			if dx == 0 and dz == 0:
+				continue
+			var k := k0 + Vector2i(dx, dz)
+			if (Vector2(k) * UrbsFill.CHUNK + Vector2(UrbsFill.CHUNK, UrbsFill.CHUNK) * 0.5).distance_to(p) > UrbsFill.CHUNK:
+				continue
+			for rk in fill.regions_for_chunk(k):
+				while not fill.advance_region(rk, Time.get_ticks_usec() + 1000000000):
+					pass
+			out.append_array(fill.lots_for_chunk(k))
+	return out
+
+
+## The view's rays: straight ahead CLEAR_AHEAD m, and 3 m out to the frame's sides (the picture is
+## about 105 degrees wide).
+const RAYS := [[0.0, CLEAR_AHEAD], [-0.4, CLEAR_AHEAD], [0.4, CLEAR_AHEAD], [-0.8, 3.0], [0.8, 3.0]]
+
+
+static func _stand_ok(view: UrbsMonumentView, q: Vector2, yaw: float) -> bool:
+	for e: Dictionary in _envs:
+		var r: Vector2 = q - (e["c"] as Vector2)
+		if absf(r.dot(e["ax"])) < float(e["hx"]) + 0.6 and absf(r.dot(e["az"])) < float(e["hz"]) + 0.6:
+			return false
+	var eye := Vector3(q.x, view.floor_at(Vector3(q.x, 0.0, q.y)) + UrbsCamera.EYE, q.y)
+	if not view.is_free(eye):
+		return false
+	for ray: Array in RAYS:
+		var a: float = yaw + float(ray[0])
+		var ahead := eye + Vector3(-sin(a), 0.0, -cos(a)) * (float(ray[1]) + 1.5)   # is_clear spares the last 1.5 m
+		if not view.is_clear(eye, ahead, ""):
+			return false
+	return true
