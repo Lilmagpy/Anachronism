@@ -24,6 +24,10 @@ var _focus := Vector3.ZERO
 var _orbit := true
 
 
+func _ready() -> void:
+	UrbsTerrain.walls_later = true   # F3: the walls follow the houses (_walls_step)
+
+
 ## Chunk coordinates containing local point (x, z).
 static func key_of(x: float, z: float) -> Vector2i:
 	return Vector2i(floori(x / SIZE), floori(z / SIZE))
@@ -92,10 +96,58 @@ func _build(key: Vector2i, lod: int) -> void:
 		if houses != null:
 			node.add_child(houses)
 	add_child(node)
-	loaded[key] = {"node": node, "lod": lod}
+	loaded[key] = {"node": node, "lod": lod, "ground": node.get_child(0) if terrain != null and node.get_child_count() > 0 else null,
+		"houses": node.get_child(node.get_child_count() - 1) if fill != null and node.get_child_count() > 0 else null,
+		"walls": lod > 1 or fill == null}
+	if fill != null and fill.get("sync_chunks"):
+		_walls_for(key)
+
+
+## F3: the twilight's light on the ground follows the sun (UrbsTerrain.set_sky_fill).
+var _fill := -1.0
+
+
+func _sky_fill() -> void:
+	var atm: Variant = get_parent().get("atmosphere") if get_parent() != null else null
+	if atm == null:
+		return
+	var f := UrbsTerrain.sky_fill_for(float(atm.get("elevation")))
+	if absf(f - _fill) > 0.001:
+		_fill = f
+		UrbsTerrain.set_sky_fill(f)
+
+
+## F3: the terrace walls of a chunk wait for its houses: only the walls holding up a tread that
+## something stands on are built (UrbsSite.build_chunk_walls with wall_uses).
+func _walls_step() -> void:
+	for key: Vector2i in loaded:
+		var e: Dictionary = loaded[key]
+		if not bool(e["walls"]):
+			var houses: Variant = e["houses"]
+			if houses == null or not is_instance_valid(houses) or bool(houses.get("done")):
+				_walls_for(key)
+				return   # one chunk a frame
+
+
+func _walls_for(key: Vector2i) -> void:
+	var e: Dictionary = loaded[key]
+	e["walls"] = true
+	var ground: Variant = e["ground"]
+	if ground == null or not is_instance_valid(ground):
+		return
+	var keys: Array = []
+	for dx in range(-1, 2):
+		for dz in range(-1, 2):
+			keys.append(key + Vector2i(dx, dz))
+	var uses := UrbsSite.wall_uses(fill, keys)
+	var walls := UrbsSite.build_chunk_walls(rect_of(key), int(e["lod"]), UrbsTerrain.year, uses)
+	if walls != null:
+		(ground as Node3D).add_child(walls)
 
 
 func _process(_delta: float) -> void:
+	_walls_step()
+	_sky_fill()
 	var started := Time.get_ticks_usec()
 	while not _wanted.is_empty():
 		var next: Array = _wanted.pop_front()
