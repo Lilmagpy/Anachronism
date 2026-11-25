@@ -635,6 +635,8 @@ func _on_loaded(new_view: Dictionary) -> void:
 		child.queue_free()
 	earth = null
 	provinces = null
+	if settlements != null:
+		settlements.release()
 	settlements = null
 	await get_tree().process_frame
 	_build_earth(holder, str(view["map"]))
@@ -1081,8 +1083,14 @@ func _take_screenshot(path: String) -> void:
 
 func _exit_tree() -> void:
 	bridge.stop()
+	if settlements != null:
+		settlements.release()
 	UiStyle.release()
 	Lod.release()
+	StaticCaches.release()   # every other script's caches (D-306: Windows crashed on quitting)
+	if _veil.get_parent() == null:
+		_veil.free()   # never shown in this run: nothing else would free it
+
 
 
 ## Buttons swell a little under the mouse and give when pressed (D-274), from their middle.
