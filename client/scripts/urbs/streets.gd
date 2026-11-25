@@ -421,7 +421,13 @@ func _under(p: Vector2, s: Dictionary) -> bool:
 				if bool(o.get("stairs", false)) or _rank(o) <= me:
 					continue
 				var pts: PackedVector2Array = o["pts"]
-				var q := Geometry2D.get_closest_point_to_segment(p, pts[ref[1]], pts[ref[1] + 1])
+				var k := int(ref[1])
+				var q := Geometry2D.get_closest_point_to_segment(p, pts[k], pts[k + 1])
+				# F3: not past the other street's ends (its strip ends square there, with no cap)
+				var ab := pts[k + 1] - pts[k]
+				var t := (p - pts[k]).dot(ab) / maxf(ab.length_squared(), 0.0001)
+				if (k == 0 and t < 0.0) or (k == pts.size() - 2 and t > 1.0):
+					continue
 				if q.distance_to(p) < float(o["hw"]) + KERB_W + 0.05:
 					return true
 	return false

@@ -1850,9 +1850,11 @@ func _f3_chunk_seams() -> Array:
 func _f3_streets_ground(st: UrbsStreets) -> Array:
 	var out := []
 	var strips := {}
+	var covers := {}   # a street's whole drawn top (carriageway, kerbs, footway): what hides another
 	for mi: Node in st._root.get_children():
 		if mi is MeshInstance3D:
 			strips[str(mi.name)] = _f3_tris([mi], 0)
+			covers[str(mi.name)] = _f3_tris([mi])
 	var plazas := _f3_plazas()
 	for mi: Node in st._root.get_children():
 		if not mi is MeshInstance3D:
@@ -1890,8 +1892,8 @@ func _f3_streets_ground(st: UrbsStreets) -> Array:
 				if y == -INF or not UrbsTerrain.ground_drawn_at(p.x, p.y, _f3_step(p.x, p.y)):
 					continue
 				var hidden := false   # another street or a paving lies over this one here
-				for oid: String in strips:
-					if oid != sid and _f3_top(strips[oid], p) > y + 0.02:
+				for oid: String in covers:
+					if oid != sid and _f3_top(covers[oid], p) > y + 0.02:
 						hidden = true
 				for pid: String in plazas:
 					if _f3_top(plazas[pid], p) > y:
