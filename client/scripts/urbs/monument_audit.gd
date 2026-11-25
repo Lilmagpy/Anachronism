@@ -510,6 +510,10 @@ func _floating(id: String) -> String:
 					if olo.x <= hi.x and ohi.x >= lo.x and olo.y <= hi.y and ohi.y >= lo.y and olo.z <= hi.z and ohi.z >= lo.z:
 						held[q] = 1
 						queue.append(q)
+	_last_free = []
+	for k in n:
+		if held[k] == 0:
+			_last_free.append(ps[k])
 	var free := 0
 	var worst: Dictionary = {}
 	var vol := 0.0
@@ -525,6 +529,17 @@ func _floating(id: String) -> String:
 		return ""
 	return "%s %d of %d parts rest on nothing, largest %s (its own frame %s to %s)" % [id, free, n, _fmt(worst),
 		str((worst.lo as Vector3).snapped(Vector3.ONE * 0.1)), str((worst.hi as Vector3).snapped(Vector3.ONE * 0.1))]
+
+
+var _last_free: Array = []   ## the parts the last _floating call found resting on nothing
+
+
+## F3 monuments: the parts of monument `id` resting on nothing (as _floating judges them), each
+## {lo, hi} in its frame. UrbsMonuments uses it to drop what a cut left hanging.
+func floating_parts(id: String) -> Array:
+	parts[id] = _parts_of(id)
+	_floating(id)
+	return _last_free
 
 
 ## Columns sunk into what they stand on: the top of the highest part under the column's foot.

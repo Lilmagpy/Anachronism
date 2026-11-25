@@ -151,7 +151,7 @@ static func _plaza(mm: UrbsMonumentMesh, s: Dictionary, lod: int) -> void:
 					var up := _rise(drop_at, (x0 + x1) * 0.5, (z0 + z1) * 0.5)
 					mm.ext(x0 + joint * 0.5, -0.02 + up, z0 + joint * 0.5, x1 - joint * 0.5, 0.08 + up, z1 - joint * 0.5, tone)
 					if up > 0.0:
-						mm.ext(x0, -0.3, z0, x1, up - 0.02, z1, "earth_packed")
+						mm.ext(x0, -0.3, z0, x1, up - 0.04, z1, "earth_packed")
 				z += sl
 				j += 1
 	mm.open(Vector3(0, -skirt, 0), Vector3(W, skirt + 0.08, L))
@@ -207,7 +207,7 @@ static func _plaza_on_slope(mm: UrbsMonumentMesh, s: Dictionary, lod: int, W: fl
 					var up2 := _rise(drop_at, (x + xe) * 0.5, (z + ze) * 0.5)
 					mm.ext(x + joint * 0.5, -0.02 + up2, z + joint * 0.5, xe - joint * 0.5, 0.08 + up2, ze - joint * 0.5, tone)
 					if up2 > 0.0:
-						mm.ext(x, -0.3, z, xe, up2 - 0.02, ze, "earth_packed")
+						mm.ext(x, -0.3, z, xe, up2 - 0.04, ze, "earth_packed")
 					z = ze
 					b += 1
 				x = xe
@@ -864,14 +864,15 @@ static func _portico_enclosure(mm: UrbsMonumentMesh, s: Dictionary, lod: int) ->
 			var b := float(sg[1])
 			# the stylobate, the outer wall, the roof
 			mm.ext(a, 0.0, -depth * 0.5, b, 0.4, depth * 0.5, "travertine")
-			mm.ext(a, 0.4, -depth * 0.5, b, col_h + 2.6, -depth * 0.5 + 0.8, wall)   # F3: on the stylobate (its face flush with the wall's flickered)
+			mm.ext(a + 0.05, 0.4, -depth * 0.5, b - 0.05, col_h + 2.6, -depth * 0.5 + 0.8, wall)   # F3: on the stylobate (its face flush with the wall's flickered)
 			mm.solid(Vector3((a + b) * 0.5, 0.0, -depth * 0.5 + 0.4), Vector3(b - a, col_h + 2.6, 0.8))
-			var ra := a - 0.05   # F3: the roof's ends stand 5 cm past the wall's (flush, they flickered)
-			var rb := b + 0.05
+			var ra := a + 0.1   # F3: the roof's ends 5 cm inside the wall's, the wall's 5 cm inside the wing's
+			var rb := b - 0.1   # (flush, they flickered on the next wing's wall and on each other)
 			mm.slab([Vector3(ra, col_h + 1.6, depth * 0.5 + 0.4), Vector3(rb, col_h + 1.6, depth * 0.5 + 0.4),
 				Vector3(rb, col_h + 3.4, -depth * 0.5), Vector3(ra, col_h + 3.4, -depth * 0.5)], 0.25, "tegulae", "timber_oak")
 			# the beam over the columns
-			mm.ext(a, col_h + 0.4, depth * 0.5 - d * 0.7, b, col_h + 1.6, depth * 0.5 + 0.1, col_mat if marble else "stucco_white")
+			# (F3: 5 cm short of the wing's ends, inside the next wing's wall: flush, they flickered)
+			mm.ext(a + 0.05, col_h + 0.4, depth * 0.5 - d * 0.7, b - 0.05, col_h + 1.6, depth * 0.5 + 0.1, col_mat if marble else "stucco_white")
 			if lod < 2:
 				var n := maxi(1, int((b - a) / sp))
 				for i in n:

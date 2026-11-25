@@ -303,3 +303,109 @@ static func instance_xforms(mmi: MultiMeshInstance3D) -> Array:
 		for k in mmi.multimesh.instance_count:
 			out.append(mmi.multimesh.get_instance_transform(k))
 	return out
+
+
+## F3 monuments: after a cut, drops what is left resting on nothing: the connected runs of
+## triangles (welded at 1 cm, every surface of a mesh together) not reached from the foot of the
+## mesh (y <= floor_y + 0.2) through runs whose boxes touch. Returns the triangles dropped.
+static func drop_floating(node: Node3D, floor_y := INF) -> int:
+	var dropped := 0
+	for ch in node.get_children():
+		if not ch is MeshInstance3D or not ((ch as MeshInstance3D).mesh is ArrayMesh):
+			continue
+		var mi: MeshInstance3D = ch
+		var mesh: ArrayMesh = mi.mesh
+		var fy := floor_y if floor_y < INF else mesh.get_aabb().position.y
+		var runs: Array = []   # {s: surface, tris: PackedInt32Array (first vertex of each), lo, hi}
+		var all_arrays: Array = []
+		for s in mesh.get_surface_count():
+			var arr := mesh.surface_get_arrays(s)
+			all_arrays.append(arr)
+			if arr[Mesh.ARRAY_INDEX] != null and (arr[Mesh.ARRAY_INDEX] as PackedInt32Array).size() > 0:
+				return dropped   # an indexed mesh: not one of ours
+			var v: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
+			var id_of := {}
+			var parent := PackedInt32Array()
+			parent.resize(v.size() / 3)
+			for t in parent.size():
+				parent[t] = t
+			for i in v.size():
+				var key := Vector3i(roundi(v[i].x * 100.0), roundi(v[i].y * 100.0), roundi(v[i].z * 100.0))
+				var t := i / 3
+				if id_of.has(key):
+					var ra := _root(parent, int(id_of[key]))
+					var rb := _root(parent, t)
+					if ra != rb:
+						parent[rb] = ra
+				else:
+					id_of[key] = t
+			var groups := {}
+			for t in parent.size():
+				var r := _root(parent, t)
+				if not groups.has(r):
+					groups[r] = {"s": s, "tris": PackedInt32Array(), "lo": v[t * 3], "hi": v[t * 3]}
+				var g: Dictionary = groups[r]
+				(g.tris as PackedInt32Array).append(t)
+				for k in 3:
+					g.lo = (g.lo as Vector3).min(v[t * 3 + k])
+					g.hi = (g.hi as Vector3).max(v[t * 3 + k])
+			runs.append_array(groups.values())
+		var held := PackedByteArray()
+		held.resize(runs.size())
+		var queue: Array = []
+		for k in runs.size():
+			if float((runs[k].lo as Vector3).y) <= fy + 0.2:
+				held[k] = 1
+				queue.append(k)
+		while not queue.is_empty():
+			var k: int = queue.pop_back()
+			var lo: Vector3 = (runs[k].lo as Vector3) - Vector3.ONE * 0.03
+			var hi: Vector3 = (runs[k].hi as Vector3) + Vector3.ONE * 0.03
+			for q in runs.size():
+				if held[q] == 1:
+					continue
+				var olo: Vector3 = runs[q].lo
+				var ohi: Vector3 = runs[q].hi
+				if olo.x <= hi.x and ohi.x >= lo.x and olo.y <= hi.y and ohi.y >= lo.y and olo.z <= hi.z and ohi.z >= lo.z:
+					held[q] = 1
+					queue.append(q)
+		var drop := {}
+		for k in runs.size():
+			if held[k] == 0:
+				for t in runs[k].tris:
+					drop["%d:%d" % [int(runs[k].s), t]] = true
+		if drop.is_empty():
+			continue
+		var out := ArrayMesh.new()
+		for s in mesh.get_surface_count():
+			var arr: Array = all_arrays[s]
+			var have: Array = []
+			for a in ATTRS:
+				if arr[a] != null and _len(arr[a], a) > 0:
+					have.append(a)
+			var dst := {}
+			for a in have:
+				dst[a] = _empty(a)
+			var n := (arr[Mesh.ARRAY_VERTEX] as PackedVector3Array).size() / 3
+			for t in n:
+				if drop.has("%d:%d" % [s, t]):
+					dropped += 1
+					continue
+				_emit(dst, have, [_vertex(arr, have, t * 3), _vertex(arr, have, t * 3 + 1), _vertex(arr, have, t * 3 + 2)])
+			if (dst[Mesh.ARRAY_VERTEX] as PackedVector3Array).is_empty():
+				continue
+			var na := []
+			na.resize(Mesh.ARRAY_MAX)
+			for a in have:
+				na[a] = dst[a]
+			out.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, na)
+			out.surface_set_material(out.get_surface_count() - 1, mesh.surface_get_material(s))
+		mi.mesh = out
+	return dropped
+
+
+static func _root(parent: PackedInt32Array, i: int) -> int:
+	while parent[i] != i:
+		parent[i] = parent[parent[i]]
+		i = parent[i]
+	return i
