@@ -56,7 +56,7 @@ const FRONT_RAMP := 0.2                   ## F3: slope of the ramp in front of a
 const PAVE_BLEND := 6.0                   ## F3: a paving's carved floor blends into the ground over this
 const PAVE_INSET := 0.6                   ## F3: no ground drawn this far inside a paving's edge
 const PAVE_DIP := 0.5                     ## F3: ground vertices under a paving are drawn this much lower
-const SKY_FILL := 0.12                    ## F3: the twilight sky's fill on the ground at its strongest
+const SKY_FILL := 0.35                    ## F3: the twilight sky's fill on the ground at its strongest
 const TERRACE_OCC := Vector2(0.35, 0.75)  ## F3: terraced from this built-up share (none) to this (full)
 
 static var year := -44                    ## the year being shown (set by build); flora and site works read it
@@ -1536,7 +1536,7 @@ static func _rural_raw(x: float, z: float) -> float:
 ## F3: between sunset and night the ground (dark grass and earth, albedo about 0.1-0.2) fell
 ## under the tone mapper's toe and drew black while the stone round it stayed grey. The light of
 ## the twilight sky, which the sky's radiance gives the ground too faintly, is added back as a
-## glow in proportion to the ground's own colour: `fill` 0 by day and at full night (UrbsChunks
+## glow that follows the ground's own colour (compressed, so dark grass is lifted more than pale earth): `fill` 0 by day and at full night (UrbsChunks
 ## sets it from the sun's height).
 static func set_sky_fill(fill: float) -> void:
 	_sky_fill = fill
@@ -1646,7 +1646,8 @@ void fragment() {
 	st *= 0.95 + 0.05 * smoothstep(0.0, 0.15, bf) * smoothstep(1.0, 0.85, bf);
 	col = mix(col, st, steep * 0.85);
 	ALBEDO = col;
-	EMISSION = col * sky_fill;
+	// the fill lifts dark grass more than pale earth (pow 0.6), or green meadows stay black at dusk
+	EMISSION = pow(col, vec3(0.6)) * sky_fill;
 	ROUGHNESS = mix(1.0, 0.55, wm);
 	SPECULAR = mix(0.05, 0.3, wm);
 }
