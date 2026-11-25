@@ -872,7 +872,21 @@ func _ground_ok(lot: Dictionary, pts: Array) -> bool:
 	# on a platform or a hillside terrace stand at its level (UrbsSite), never below a corner
 	var c: Vector2 = lot["c"]
 	lot["y"] = maxf(hi, UrbsSite.terrace_height_at(c.x, c.y)) - 0.04
+	_awnings_reach(lot)
 	return true
+
+
+## F3: no awning where the ground falls away in front of the door: its poles stood 5 m tall over
+## a plinth on a steep alley (sweep, 44 BC, 596,-792). Where the ground at the poles lies more
+## than 0.8 m under the floor the house shows a plain front (_no_awnings).
+func _awnings_reach(lot: Dictionary) -> void:
+	var ax: Array = _axes(lot)
+	var out: Vector2 = (lot["c"] as Vector2) + (ax[1] as Vector2) * (float(lot["hz"]) + UrbsFillParts.AWNING_OUT)
+	for t in [-0.8, 0.0, 0.8]:
+		var q: Vector2 = out + (ax[0] as Vector2) * (float(lot["hx"]) * t)
+		if float(lot["y"]) - float(height.call(q.x, q.y)) > 0.8:
+			_no_awnings(lot)
+			return
 
 
 func _pick_type(era: Dictionary, roll: float) -> String:
@@ -1252,6 +1266,8 @@ static func _no_awnings(lot: Dictionary) -> void:
 		lot["mesh"] = ":".join(p)
 	elif mk == "domus":
 		lot["mesh"] = "domus:1"
+	elif p[0] == "taberna" and p.size() == 2 and int(p[1]) < 4:
+		lot["mesh"] = "taberna:5"   # F3: the open counter (variants 0-3 have the awnings)
 
 
 ## Heaps, carts and sacks on the footpath in front of a shop.
@@ -1350,6 +1366,8 @@ func _add_street_lot(lot: Dictionary, own: String, margin: float, force_ok := fa
 		# below it)
 		var top: float = front_g + UrbsStreets.SURFACE_LIFT + FOOTWAY_H
 		lot["y"] = maxf(float(lot["y"]), top - 0.02) if lk != "furn" else float(lot["y"]) + UrbsStreets.SURFACE_LIFT + FOOTWAY_H
+	if lk != "furn" and lk != "tomb" and lk != "prop":
+		_awnings_reach(lot)
 	_street_hash[key] = _street_hash.get(key, [])
 	_street_hash[key].append(_street_lots.size())
 	_street_lots.append(lot)

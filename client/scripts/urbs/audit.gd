@@ -426,6 +426,7 @@ func _terrain() -> Array:
 #   tree_street      a tree standing in a carriageway
 #   tree_river       a tree standing in the river
 #   tree_wall        a tree's trunk or crown in the Servian wall
+#   awning_pole      a shop awning whose poles stand over ground falling more than 0.8 m under the floor
 #   life_solid       a person, stall, cart, mule or litter (or a walker's or cart's lane) inside a
 #                    monument's solid or a building
 #   stall_street     a stall in a carriageway, or sunk into or floating over its footway
@@ -437,7 +438,7 @@ const F3_NB := 24
 const F3_KEEP := 60
 const F3_BUILDINGS := ["insula", "domus", "casa", "taberna", "workshop", "horrea", "horti", "tomb", "farm"]
 const F3_KINDS := ["house_house", "house_monument", "house_wall", "house_street", "house_river", "house_base",
-	"tree_building", "tree_street", "tree_river", "tree_wall", "life_solid", "stall_street", "lamp_smoke"]
+	"awning_pole", "tree_building", "tree_street", "tree_river", "tree_wall", "life_solid", "stall_street", "lamp_smoke"]
 const F3_TOL := 0.2            ## interpenetration below this is two walls touching
 const F3_CART_HW := 1.05       ## half the width of an ox cart with its pair of oxen (life.gd)
 const F3_AWNING_OUT := 1.2     ## = UrbsFillParts.AWNING_OUT: awning poles stand on the footway
@@ -775,6 +776,17 @@ func _f3_footway(sid: String) -> bool:
 	return false
 
 
+## Whether a fill mesh carries shop awnings on poles (UrbsFillHouses: tabernae 0-3, an insula
+## with feature 2, the domus with its shop).
+static func _f3_has_awning(key: String) -> bool:
+	var p := key.split(":")
+	if p[0] == "taberna":
+		return p.size() == 2 and int(p[1]) < 4
+	if p[0] == "insula":
+		return p.size() >= 4 and p[3] == "2"
+	return key == "domus"
+
+
 func _f3_check_houses() -> void:
 	var n := _f3_inst.size()
 	for i in n:
@@ -862,6 +874,23 @@ func _f3_check_houses() -> void:
 				floats = maxf(floats, bottom - gy)
 		if wet > 0:
 			_f3_note("house_river", float(wet), "%s %d of 9 points in the river" % [name_a, wet])
+		# --- an awning's poles: the ground at them no more than 0.8 m under the floor (the poles
+		# reach down a plinth's depth: over a falling alley they stood 5 m tall)
+		if _f3_has_awning(str(a.key)):
+			var az2: Vector2 = a.az
+			var ax2: Vector2 = a.ax
+			for o in a.bands:
+				if float(o.y0) - float(a.y) > 2.6 or float(o.y1) - float(a.y) < 2.6:
+					continue
+				var front := ((o.c as Vector2) - ca).dot(az2) + float(o.hz)
+				var along := ((o.c as Vector2) - ca).dot(ax2)
+				var drop := 0.0
+				for t in [-1.0, 1.0]:
+					var q: Vector2 = ca + az2 * front + ax2 * (along + t * maxf(float(o.hx) - 0.3, 0.0))
+					drop = maxf(drop, float(a.y) - UrbsTerrain.height_at(q.x, q.y))
+				if drop > 1.1:
+					_f3_note("awning_pole", drop, "%s's awning poles stand %.1f m tall over falling ground" % [name_a, drop + 2.65])
+				break
 		if buried > 0.35:
 			_f3_note("house_base", buried, "%s floor %.1f m under the ground at a corner" % [name_a, buried])
 		if floats > 0.3:
