@@ -88,7 +88,7 @@ func pick(id: String) -> Dictionary:
 			var dist := maxf(back * float(DISTS[di]), front + 4.0)
 			var st := d0 + dir * dist
 			var eye := Vector3(st.x, floor_at(st) + EYE, st.z)
-			if not is_free(eye):
+			if not is_free(eye) or _in_drawn(id, eye, 0.5):   # not on its own steps either
 				continue
 			var seen := 0
 			for t in targets:
@@ -205,6 +205,16 @@ func is_free(p: Vector3) -> bool:
 
 
 var _drawn := {}   ## monument id -> its drawn box in its frame (UrbsMonuments._drawn_box)
+
+
+## Whether `p` stands within monument `mid`'s drawn box (grown by `grow`).
+func _in_drawn(mid: String, p: Vector3, grow: float) -> bool:
+	if not mons._xf.has(mid):
+		return false
+	if not _drawn.has(mid):
+		_drawn[mid] = mons._drawn_box(mid)
+	var db: AABB = _drawn[mid]
+	return db.size != Vector3.ZERO and db.grow(grow).has_point((mons._xf[mid] as Transform3D).affine_inverse() * p)
 
 
 ## The monument whose solid holds `p` (within `grow`), "" if none (the routes' boxes span
