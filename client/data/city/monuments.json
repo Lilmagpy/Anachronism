@@ -4173,7 +4173,7 @@
 "verified": "platner-ashby+pleiades"
 },
 {
-"bearing_deg": 45,
+"bearing_deg": 303,
 "built": {
 "by": "built by the aediles M. Aemilius Lepidus and L. Aemilius Paullus in 193 outside the Porta Trigemina (Livy 35.10.12); restored by the censors of 174 (Livy 41.27.8)",
 "certainty": "certain",
@@ -6110,6 +6110,10 @@
 "location_source": "F2: Platner-Ashby s.v. Porta Flumentana (read 2026-10-30, U8): in the part of the wall joining the Capitoline to the river, near the Tiber (Fest. 89); placed on the left bank west of the Theatre of Marcellus; the U8 offset is folded into the point and the gate moved 15 m west, clear of the theatre",
 "lon": 12.478179,
 "model": "servian_gate",
+"offset_m": [
+2.5,
+2.5
+],
 "pleiades": 502889801,
 "precision": "rough",
 "regio": 9,
