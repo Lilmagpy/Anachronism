@@ -400,7 +400,15 @@ static func carve(h: PackedFloat32Array, n: int, origin: float, cell: float) -> 
 					var yb := wl + k * BANK_BAND
 					bank = yb + maxf(terr - yb, 0.0) * pow(tt, 1.0 + 0.7 * inn - 0.45 * outr)
 				out = minf(terr, bank)
-			if qw > 0.0 and dd > hw - 1.0:
+				if absf(e) <= BANK_BAND:
+					# F3 round 2: across the water line the bank IS the plane, ground lower than it
+					# (a flood plain at the water's level) filled up to it: where the field lay within
+					# centimetres of the water the shore followed the 5 m cells' edges in steps
+					out = bank
+			# (F3 round 2: where the quay fades out at its ends, no wall is drawn: there it rises only
+			# behind the bank plane, so the water's edge stays on the plane instead of stepping
+			# round the 5 m cells beyond the quay's line)
+			if qw > 0.0 and dd > hw - 1.0 and (qw >= 0.999 or e > BANK_BAND):
 				var top := wl + qrise
 				var keep := 1.0 - smoothstep(hw + 60.0, hw + 110.0, dd)
 				out = lerpf(out, top, qw * keep)
