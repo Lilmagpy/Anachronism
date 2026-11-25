@@ -467,7 +467,7 @@
 ],
 "footprint_m": {
 "length": 120,
-"width": 56
+"width": 64
 },
 "geometry_source": "paved open area between the Rostra and the Regia/Divus Iulius, long axis ESE (the Sacra Via line); size from the plan of the excavated paving (not measured in Platner-Ashby s.v. Forum Romanum, which gives levels: 10.6-10.9 m archaic, 11.8 Sullan, 14 m Caesarian)",
 "geometry_unverified": [
@@ -483,8 +483,8 @@
 "model": "plaza",
 "notes": "CORRECTED: Livy 1.38.6 says Tarquinius Priscus DRAINED the low ground round the forum with sewers (cloacis fastigio in Tiberim ductis) and gave out building plots; it does not say he paved it, so 'paved' was removed. P&A: the first open area with fixed limits is marked by cappellaccio pavements at 10.60-10.90 m above sea level (c. 6th c.); a new level c. 174 BC; a level attributed to Sulla (Van Deman, uncertain); the Cloaca Maxima credited to the Tarquins (excavations support a 6th-c. date). Livy 26.27.1-4 is the fire of 210 (verified). The plot of land is Pleiades 502866838 (archaeological site; its representative point is about 120 m ESE of the plaza centre used here).",
 "offset_m": [
--8,
--15
+-7,
+-11
 ],
 "pleiades": 502866838,
 "precision": "approx",
@@ -7797,7 +7797,7 @@
 "verified": "platner-ashby"
 },
 {
-"bearing_deg": 160,
+"bearing_deg": 31,
 "built": {
 "by": "the salt trade up the Tiber, the oldest traffic of Rome (P-A)",
 "certainty": "traditional",
@@ -7824,6 +7824,10 @@
 "location_source": "F2: Platner-Ashby s.v. Salinae (read): on and adjacent to the site of the porta Trigemina (Solinus 1.8; Frontinus 1.5; Livy 24.47.15), probably outside the gate; placed outside it towards the river",
 "lon": 12.479069,
 "model": "long_hall",
+"offset_m": [
+14,
+-8
+],
 "pleiades": null,
 "precision": "rough",
 "regio": 13,

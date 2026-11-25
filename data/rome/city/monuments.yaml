@@ -223,9 +223,9 @@ monuments:
   pleiades: 502866838
   verified: platner-ashby+pleiades
   model: plaza
-  offset_m: [-8, -15]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); U8 moved the centre 7 m north to sit between the two basilicas' fronts
+  offset_m: [-7, -11]  # east, north metres added to lat/lon; unverified: placement correction from the English Wikipedia coordinates of the identified remains (+-30 m); U8 moved the centre 7 m north to sit between the two basilicas' fronts; F3: 4 m further NNE with the wider paving below
   bearing_deg: 106  # unverified
-  footprint_m: {length: 120, width: 56}  # unverified: the open paved area between the two basilicas' steps, from the Rostra to the Regia
+  footprint_m: {length: 120, width: 64}  # unverified: the open paved area between the two basilicas' steps, from the Rostra to the Regia. F3: 64 m across (was 56) so the paving meets both fronts as monuments.yaml draws them (F2, from the outlines of the remains): it runs 4 m under the Basilica Iulia's front (across the axis 23.8 m SSW of the old centre) and now reaches the Basilica Aemilia's (32.6 m NNE at the paving's east end, 46.8 m at the basilica's west end, which the paving still stops short of: the Aemilia's remains lie at 122.6 degrees, 16.6 degrees off this paving's unverified 106, and a rectangle at 106 cannot meet both without covering the Comitium)
   height_m: 0
   surface: travertine
   geometry_source: "paved open area between the Rostra and the Regia/Divus Iulius, long axis ESE (the Sacra Via line); size from the plan of the excavated paving (not measured in Platner-Ashby s.v. Forum Romanum, which gives levels: 10.6-10.9 m archaic, 11.8 Sullan, 14 m Caesarian)"
@@ -3802,7 +3802,8 @@ monuments:
   pleiades: null
   verified: platner-ashby
   model: long_hall
-  bearing_deg: 160  # unverified
+  offset_m: [14, -8]  # east, north metres added to lat/lon; F3: 16 m inland from the modelled bank (the smoothed bank of F3 put the centre at the water's edge and 9 of 25 footprint points in the river); the location is rough (P-A: by the Porta Trigemina, towards the river)
+  bearing_deg: 31  # unverified; F3: the hall laid along the bank (it was 160, end-on to the river, its far end 15 m out in the water)
   footprint_m: {length: 40, width: 15}  # unverified
   height_m: 7  # unverified
   geometry_source: "form assumed from date and type (no measured plan)"
