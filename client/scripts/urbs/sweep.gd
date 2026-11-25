@@ -236,6 +236,11 @@ static func _stand_ok(view: UrbsMonumentView, q: Vector2, yaw: float) -> bool:
 		var ahead := eye + Vector3(-sin(a), 0.0, -cos(a)) * (float(ray[1]) + 1.5)   # is_clear spares the last 1.5 m
 		if not view.is_clear(eye, ahead, ""):
 			return false
+	# and at chest height straight ahead: a podium or a barrier whose top is at the eye's level
+	# (the Circus's arena wall stood 1 m before the camera, its coping filling the picture)
+	var low := eye - Vector3(0.0, 0.8, 0.0)
+	if not view.is_clear(low, low + Vector3(-sin(yaw), 0.0, -cos(yaw)) * (CLEAR_AHEAD + 1.5), ""):
+		return false
 	return true
 
 
