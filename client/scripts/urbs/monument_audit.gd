@@ -840,8 +840,11 @@ const ICELL := 4.0
 ##                     interior any, under the open sky those below the horizon
 ##   interior_figures  statues and figures whose body a wall or floor passes through
 ##   interior_missing  enterable monuments with no interior (entering does nothing)
+##   interior_starts   where the visitor starts: outside the building (a roofed hall with no roof
+##                     overhead, or sight lines out to the open), against a wall, a pier or a door
+##                     leaf, or facing one rather than the room
 func interiors(year: int) -> Dictionary:
-	var out := {"interior_voids": [], "interior_figures": [], "interior_missing": []}
+	var out := {"interior_voids": [], "interior_figures": [], "interior_missing": [], "interior_starts": []}
 	var fake := AuditUrbs.new()
 	fake.monuments = mon
 	fake.ground = height
@@ -856,6 +859,7 @@ func interiors(year: int) -> Dictionary:
 			out.interior_missing.append("%s (%s) has no interior" % [id, str(mon.entry(id).get("type", ""))])
 			continue
 		var tris := PackedVector3Array()
+		var built := PackedVector3Array()   # the building alone, without the backdrop's sky and ground
 		for nm in ["Body", "Cover", "Ground", "Backdrop", "BackdropGround"]:
 			if node.has_node(nm):
 				var mi: MeshInstance3D = node.get_node(nm)
@@ -864,6 +868,8 @@ func interiors(year: int) -> Dictionary:
 				var xf := node.transform * mi.transform
 				for v in mi.mesh.get_faces():
 					tris.append(xf * v)
+					if not nm.begins_with("Backdrop"):
+						built.append(xf * v)
 		var grid := _tri_grid(tris)
 		var res: Dictionary = node.get("result")
 		var open_sky := bool(res.get("open_sky", false))
@@ -893,6 +899,12 @@ func interiors(year: int) -> Dictionary:
 		if not escaped.is_empty():
 			out.interior_voids.append("%s: %d of %d sight lines from the door meet nothing (yaw/pitch %s)" % [id, escaped.size(), n,
 				", ".join(escaped.slice(0, 8))])
+		var gods: Array = []   # [foot in world, radius]: a statue (with its base) ahead is what the room is for
+		for spec in res.get("statues", []):
+			gods.append([node.transform * (spec["foot"] as Vector3), maxf(2.2, float(spec["h"]) * 0.4)])
+		var start := _start_fault(built, _tri_grid(built), node.call("spawn"), bool(res.get("open_sky", false)), gods)
+		if start != "":
+			out.interior_starts.append("%s: %s" % [id, start])
 		# figures: a wall through the body (the body's box: a third of its height across)
 		var bad := 0
 		var where := ""
@@ -914,6 +926,55 @@ func interiors(year: int) -> Dictionary:
 		node.free()
 	fake.free()
 	return out
+
+
+## What is wrong with where the visitor starts ("" for nothing): outside (under a roofed hall's
+## open sky, or with more than a quarter of the level sight lines leaving the building), against something (within 0.5 m),
+## in a doorway (both sides within 2 m with the way ahead and behind open), or facing a wall,
+## a pier or a leaf (the way ahead closed within 4 m by anything but a statue and its base). `t`/`g` hold the building alone.
+func _start_fault(t: PackedVector3Array, g: Dictionary, spawn: Transform3D, open_sky: bool, gods := []) -> String:
+	var eye := spawn.origin
+	var dir_of := func(yaw: float, pitch: float) -> Vector3:
+		var ya := deg_to_rad(yaw + 0.37)
+		var pa := deg_to_rad(pitch + 0.21)
+		var fw := spawn.basis * Vector3(-sin(ya), 0, -cos(ya))
+		fw.y = 0.0
+		if fw.length() < 0.001:
+			return Vector3.UP if pitch > 0.0 else Vector3.DOWN
+		return (fw.normalized() * cos(pa) + Vector3(0, sin(pa), 0)).normalized()
+	var ray := func(yaw: float, pitch: float) -> float:
+		return _first_hit(t, g, eye, dir_of.call(yaw, pitch))
+	var out_n := 0
+	var near := INF
+	for yaw in range(0, 360, 15):
+		var h: float = ray.call(float(yaw), 2.0)
+		near = minf(near, h)
+		if h == INF:
+			out_n += 1
+	if not open_sky and float(ray.call(0.0, 89.0)) == INF:
+		return "starts outside: no roof overhead"
+	if out_n > 5:   # an open door behind (up to 75° of a narrow cella's view) is not outside
+		return "starts outside: %d of 24 level sight lines leave the building" % out_n
+	if near < 0.5:
+		return "starts against something (%.2f m away)" % near
+	var left: float = ray.call(90.0, 0.0)
+	var right: float = ray.call(270.0, 0.0)
+	if left < 2.0 and right < 2.0 and float(ray.call(0.0, 0.0)) > 4.0 and float(ray.call(180.0, 0.0)) > 4.0:
+		return "starts in a doorway (sides %.1f and %.1f m)" % [left, right]
+	var ahead := INF
+	for yaw: float in [-12.0, 0.0, 12.0]:
+		var d: float = ray.call(yaw, -3.0)
+		if d < 4.0:
+			var hit: Vector3 = eye + (dir_of.call(yaw, -3.0) as Vector3) * d
+			for gd: Array in gods:
+				var foot: Vector3 = gd[0]
+				if Vector2(hit.x - foot.x, hit.z - foot.z).length() < float(gd[1]):
+					d = INF   # the god and the base: what the room is for
+					break
+		ahead = minf(ahead, d)
+	if ahead < 4.0:
+		return "starts facing something %.1f m ahead" % ahead
+	return ""
 
 
 ## Triangles (3 vertices each) by the ICELL cubes their boxes cover.

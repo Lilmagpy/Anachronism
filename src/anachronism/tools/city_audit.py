@@ -2670,6 +2670,7 @@ F3_MONUMENT_KINDS = [
     ("interior_voids", "interiors with sight lines from the door that meet nothing (black)"),
     ("interior_figures", "interiors with figures through a wall or floor"),
     ("interior_missing", "enterable monuments with no interior"),
+    ("interior_starts", "interiors whose visitor starts outside, against or facing a wall"),
 ]
 SCENE_KINDS.extend(F3_MONUMENT_KINDS)
 # F3 monuments (end)
