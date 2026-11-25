@@ -126,6 +126,9 @@ jobs:
           Meritus/Meritus.exe --headless -- --smoke > again.txt 2>&1 || again=$?
           grep "SMOKE OK" again.txt
           echo "exit code of the second smoke test: $again"
+          # leaving must be clean too: it crashed here until the city builder let go of its
+          # modules on quitting (D-306)
+          [ "$code" = 0 ] && [ "$quit" = 0 ] && [ "$again" = 0 ]
       - name: Open a window and take pictures
         # A real window drawn by the machine's own graphics (software here: the runner has no
         # graphics card). The pictures are what a player would see; this step never fails the job.

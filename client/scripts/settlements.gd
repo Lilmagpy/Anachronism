@@ -68,6 +68,17 @@ var _recent: Array = []   ## the last few house kinds placed, so neighbours diff
 func remove() -> void:
 	if holder != null and is_instance_valid(holder):
 		holder.queue_free()
+	release()
+
+
+## Let go of the four builders. Each holds this object back, so until they are dropped neither
+## it nor any mesh it made is ever freed: every regrowth of the cities kept the old ones in
+## memory, and on quitting they outlived the renderer (D-306: Windows crashed on its way out).
+func release() -> void:
+	city = null
+	rural = null
+	ground = null
+	dressing = null
 
 
 func _init(province_map: ProvinceMap) -> void:

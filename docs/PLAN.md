@@ -6,8 +6,11 @@
 provinces; religion, land, grain, coin, debt, the army's eras; Roman ideas and ideas in the
 city; the client playthrough) and F2 (the city audit: nothing missing or misplaced against
 Pleiades and Platner-Ashby, nothing buried, floating or built over; the Republic played from
-the city's places with End Year and the year's moments). Left: sound, night, the Empire
-decision, U9 beyond the first slice, R6 balance by played chapters.
+the city's places with End Year and the year's moments); F3 (2026-11-25, D-305: the visual
+fix — ground, houses, monuments and interiors audited by code for every year and fixed) and a
+Windows version started and pictured on a Windows machine by CI (D-306). Left: the F3
+leftovers listed in D-305, sound, night, the Empire decision, U9 beyond the first slice, R6
+balance by played chapters.
 
 Each phase ends at a **gate**: Claude stops, summarises, shows how to run it, lists known
 problems, and waits for approval (D-002: approval = merging the phase PR).
