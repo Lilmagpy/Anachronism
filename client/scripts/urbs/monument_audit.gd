@@ -902,7 +902,8 @@ func interiors(year: int) -> Dictionary:
 		var gods: Array = []   # [foot in world, radius]: a statue (with its base) ahead is what the room is for
 		for spec in res.get("statues", []):
 			gods.append([node.transform * (spec["foot"] as Vector3), maxf(2.2, float(spec["h"]) * 0.4)])
-		var start := _start_fault(built, _tri_grid(built), node.call("spawn"), bool(res.get("open_sky", false)), gods)
+		var halls := str(node.get("kind")) in ["temple", "curia", "basilica"]   # no court open to the sky by design
+		var start := _start_fault(built, _tri_grid(built), node.call("spawn"), bool(res.get("open_sky", false)), gods, halls)
 		if start != "":
 			out.interior_starts.append("%s: %s" % [id, start])
 		# figures: a wall through the body (the body's box: a third of its height across)
@@ -929,10 +930,11 @@ func interiors(year: int) -> Dictionary:
 
 
 ## What is wrong with where the visitor starts ("" for nothing): outside (under a roofed hall's
-## open sky, or with more than a quarter of the level sight lines leaving the building), against something (within 0.5 m),
+## open sky, or with more than a quarter of the level sight lines leaving the building, or a
+## hall's (temple, curia, basilica) sky seen down the room: a gap under its roof), against something (within 0.5 m),
 ## in a doorway (both sides within 2 m with the way ahead and behind open), or facing a wall,
 ## a pier or a leaf (the way ahead closed within 4 m by anything but a statue and its base). `t`/`g` hold the building alone.
-func _start_fault(t: PackedVector3Array, g: Dictionary, spawn: Transform3D, open_sky: bool, gods := []) -> String:
+func _start_fault(t: PackedVector3Array, g: Dictionary, spawn: Transform3D, open_sky: bool, gods := [], hall := false) -> String:
 	var eye := spawn.origin
 	var dir_of := func(yaw: float, pitch: float) -> Vector3:
 		var ya := deg_to_rad(yaw + 0.37)
@@ -961,6 +963,14 @@ func _start_fault(t: PackedVector3Array, g: Dictionary, spawn: Transform3D, open
 	var right: float = ray.call(270.0, 0.0)
 	if left < 2.0 and right < 2.0 and float(ray.call(0.0, 0.0)) > 4.0 and float(ray.call(180.0, 0.0)) > 4.0:
 		return "starts in a doorway (sides %.1f and %.1f m)" % [left, right]
+	if hall and not open_sky:   # down the room, a roofed hall shows no sky (a gap under its roof, a missing wall)
+		var gaps := 0
+		for yaw: float in [-15.0, 0.0, 15.0]:
+			for pitch: float in [5.0, 12.0, 20.0]:
+				if float(ray.call(yaw, pitch)) == INF:
+					gaps += 1
+		if gaps > 0:
+			return "sees the sky down the room (%d of 9 sight lines)" % gaps
 	var ahead := INF
 	for yaw: float in [-12.0, 0.0, 12.0]:
 		var d: float = ray.call(yaw, -3.0)

@@ -776,6 +776,9 @@ static func _basilica(sz: Vector2, year: int, variant := "") -> Dictionary:
 			_span(k, x - 0.5, yu, s * m * 0.5 - 0.5, x + 0.5, yr, s * m * 0.5 + 0.5, col, Kit.STONE)
 	for s: float in [-1.0, 1.0]:
 		_span(kc, -L * 0.5 + wt - cd, yr, s * m * 0.5 - 0.6, L * 0.5 - wt + cd, yr + 0.9, s * m * 0.5 + 0.6, WOOD_D, Kit.TIMBER)
+	# the nave's end walls go on up to the roof (the outer walls stop at the galleries' top)
+	for s: float in [-1.0, 1.0]:
+		_span(k, s * L * 0.5 - wt * 0.5, yu, -m * 0.5 - 0.6, s * L * 0.5 + wt * 0.5, yr + 0.9, m * 0.5 + 0.6, wallc, Kit.PLASTER)
 	# roofs: the nave gable, the aisles' sloping roofs, a plank ceiling over the aisle galleries
 	kc.gable_roof(Vector3(0, yr + 0.9, 0), L + 1.0, m + 3.0, m * 0.22, 0.6, 0.3, TILE_C, Kit.TILE, wallc, Kit.PLASTER)
 	for s: float in [-1.0, 1.0]:
