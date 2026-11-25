@@ -762,7 +762,7 @@ func _views(ids: Array) -> Array:
 			why.append("sees %d of 5 façade points" % int(v.seen))
 		if to.length() > 0.5:
 			var off := rad_to_deg(acos(clampf((-to.normalized()).dot(outward), -1.0, 1.0)))
-			if off > 60.0:
+			if off > 60.0 and not bool(v.get("all_round", false)):   # a column has no front
 				why.append("stands %.0f° off the front axis" % off)
 		var block := _blocked(eye, target, id)
 		if block != "":

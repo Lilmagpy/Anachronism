@@ -21,7 +21,7 @@ const NO_HOUSE := ["horti", "prop", "tree", "furn", "tomb"]   ## lots a camera m
 ## Turns off the front axis tried, in degrees, in order of preference (the flank last).
 const TURNS := [0.0, -20.0, 20.0, -35.0, 35.0, -55.0, 55.0, -80.0, 80.0, -110.0, 110.0, 180.0]
 ## Distances tried, as shares of the framing distance.
-const DISTS := [1.0, 0.7, 1.35, 0.45, 0.25, 2.0]
+const DISTS := [1.0, 0.7, 1.35, 0.45, 0.25, 2.0, 3.0]
 
 var mons: UrbsMonuments
 var height := Callable()
@@ -58,11 +58,18 @@ func pick(id: String) -> Dictionary:
 		var oa := _open_air(id, kind, d0, outward, p)
 		if not oa.is_empty():
 			return oa
+	var all_round := model.begins_with("column") or model.begins_with("statue") or model.begins_with("temple_round")   # no front: a column, a statue, a tholos (the same all round)
 	# the façade: from the door out to the front of the steps; its width and height
 	var b := mons.bounds(id)
 	var front := 0.0
+	# from the door out to the front of what is drawn (the drawn box in its own frame: the world box
+	# of a building turned on the diagonal reached far out in front of it)
+	if not _drawn.has(id):
+		_drawn[id] = mons._drawn_box(id)
+	var dbx: AABB = _drawn[id]
+	var mxf: Transform3D = mons._xf.get(id, Transform3D.IDENTITY)
 	for i in 8:
-		var corner := b.get_endpoint(i) - door.origin
+		var corner := (mxf * dbx.get_endpoint(i) if dbx.size != Vector3.ZERO else b.get_endpoint(i)) - door.origin
 		front = maxf(front, corner.x * outward.x + corner.z * outward.z)
 	var half: Vector2 = p.get("half", Vector2.ZERO)
 	var w := maxf(half.x * 2.0, 2.0)
@@ -95,6 +102,7 @@ func pick(id: String) -> Dictionary:
 		stands.append([st, lat, off, 1.0])
 	var best := {}
 	var best_cost := INF
+	var ranked: Array = []   # [cost, pose]: the best few are checked against the meshes at the end
 	for sd: Array in stands:
 		var st: Vector3 = sd[0]
 		var lat := float(sd[1])
@@ -110,21 +118,51 @@ func pick(id: String) -> Dictionary:
 		for t in targets:
 			if is_clear(eye, t, id):
 				seen += 1
+		var hi_target := false
+		if not is_clear(eye, target, id) and is_clear(eye, c + Vector3(0, high, 0), id):
+			# the door hidden (a temple's podium before the Tabularium): its upper front in view
+			target = c + Vector3(0, high, 0)
+			hi_target = true
 		var to: Vector3 = target - eye
 		to.y = 0.0
 		var off := rad_to_deg(acos(clampf((-to.normalized()).dot(outward), -1.0, 1.0)))
-		var cost := float(5 - seen) * 10.0 + off / 15.0 + float(sd[3]) * 0.8 + absf(lat) / 20.0
+		if all_round:
+			off = 0.0
+		var cost := float(5 - seen) * 10.0 + off / 15.0 + float(sd[3]) * 0.8 + absf(lat) / 20.0 + (5.0 if hi_target else 0.0)
 		if off > 60.0:
 			cost += 20.0   # beside it or behind it: the front not in view
 		if seen == 0 or not is_clear(eye, target, id):
 			cost += 100.0   # the door (or the part of the front looked at) hidden
+		var tl: Vector3 = target - eye
+		var pose := {"stand": st, "eye": eye, "facing": atan2(-tl.x, -tl.z), "open_air": false, "seen": seen,
+			"target": target, "all_round": all_round}
+		ranked.append([cost, pose])
 		if cost < best_cost:
 			best_cost = cost
-			var tl: Vector3 = target - eye
-			best = {"stand": st, "eye": eye, "facing": atan2(-tl.x, -tl.z), "open_air": false, "seen": seen,
-				"target": target}
-		if seen == 5 and off < 10.0 and lat == 0.0 and float(sd[3]) == 0.0:
+			best = pose
+		if seen == 5 and off < 10.0 and lat == 0.0 and float(sd[3]) == 0.0 and not _mesh_blocks(eye, target, id):
 			return best
+	# the best stands in order, the first whose line to the front no other monument's mesh crosses
+	# (a column of a porch, a cornice: the solids are coarser than what is drawn)
+	ranked.sort_custom(func(x, y): return float(x[0]) < float(y[0]))
+	for k in mini(ranked.size(), 40):
+		var ps: Dictionary = ranked[k][1]
+		if not _mesh_blocks(ps.eye, ps.target, id):
+			return ps
+	# none sees its door or upper front past the others: the part of the front each sees best (a
+	# point of the façade, nearest its middle first), looked at instead
+	var grid: Array = []
+	for fy in [0.75, 0.45, 0.95]:
+		for fx in [0.0, -0.2, 0.2, -0.4, 0.4]:
+			grid.append(face + right * w * float(fx) + Vector3(0, base + (top - base) * float(fy), 0))
+	for k in mini(ranked.size(), 60):
+		var ps: Dictionary = ranked[k][1]
+		for t: Vector3 in grid:
+			if is_clear(ps.eye, t, id) and not _mesh_blocks(ps.eye, t, id):
+				var tl: Vector3 = t - ps.eye
+				ps.target = t
+				ps.facing = atan2(-tl.x, -tl.z)
+				return ps
 	if best.is_empty():   # nowhere free: the plain framing distance on the axis
 		var st := d0 + outward * back
 		best = {"stand": st, "eye": Vector3(st.x, floor_at(st) + EYE, st.z),
@@ -190,6 +228,24 @@ func _street_points(c: Vector2, r0: float, r1: float) -> Array:
 ## `opens`: the Porticus Octaviae's court, the Area Capitolina), whichever is higher.
 func floor_at(p: Vector3) -> float:
 	var y := _ground(p.x, p.z)
+	var g := y
+	# a podium or platform a person can stand on: a solid at least 4 m across whose top is 0.3 to
+	# 6 m over the ground (the steps of a neighbouring temple, a raised floor)
+	for mid in mons._solids:
+		if bool(mons._placed.get(mid, {}).get("world", false)):
+			continue
+		var wb: AABB = mons._bounds.get(mid, AABB())
+		if wb.size == Vector3.ZERO or p.x < wb.position.x or p.x > wb.end.x or p.z < wb.position.z or p.z > wb.end.z:
+			continue
+		var xf0: Transform3D = mons._xf[mid]
+		var lp0 := xf0.affine_inverse() * Vector3(p.x, g, p.z)
+		for bx in mons._solids[mid]:
+			var bb: AABB = bx
+			var top := xf0.origin.y + bb.end.y
+			if bb.size.x < 4.0 or bb.size.z < 4.0 or top - g < 0.3 or top - g > 6.0:
+				continue
+			if lp0.x >= bb.position.x and lp0.x <= bb.end.x and lp0.z >= bb.position.z and lp0.z <= bb.end.z:
+				y = maxf(y, top)
 	for mid in mons._opens:
 		var xf: Transform3D = mons._xf.get(mid, Transform3D.IDENTITY)
 		var lp := xf.affine_inverse() * Vector3(p.x, y, p.z)
@@ -279,7 +335,7 @@ func is_free(p: Vector3) -> bool:
 				return false
 			continue
 		var wb: AABB = mons._bounds.get(mid, AABB())
-		if wb.size == Vector3.ZERO or not wb.grow(3.0).has_point(p):
+		if wb.size == Vector3.ZERO or not wb.grow(15.0).has_point(p):   # its steps reach out of its solids
 			continue
 		var rad := float(mons._placed.get(mid, {}).get("radius", 0.0))
 		if rad > 0.0:   # a round building: its circle, not the square round it
@@ -389,6 +445,54 @@ func is_clear(a: Vector3, b: Vector3, own: String) -> bool:
 
 
 static var _faces := {}   ## mesh instance id -> PackedVector3Array of its triangles
+
+
+## Whether a drawn triangle of another monument (its nearest level of detail, its columns too)
+## lies across the line from `a` to the last 1.5 m before `b`. Pavings are walked on.
+func _mesh_blocks(a: Vector3, b: Vector3, own: String) -> bool:
+	var len := a.distance_to(b)
+	if len < 0.1:
+		return false
+	var end := a.lerp(b, maxf(0.0, 1.0 - 1.5 / len))
+	var seg := AABB(a, Vector3.ZERO).expand(end)
+	for mid in mons._nodes:
+		if mid == own or str(mons._placed.get(mid, {}).get("model", "")) in ["plaza", "road_paved", "lacus_curtius", "comitium"]:
+			continue
+		var node: Node3D = mons._nodes[mid]
+		var wb: AABB = mons._bounds.get(mid, AABB())
+		if wb.size != Vector3.ZERO and not wb.grow(2.0).intersects(seg):
+			continue
+		for ch in node.get_children():
+			var meshes: Array = []   # [mesh, transform to world]
+			if ch is MeshInstance3D and (ch as MeshInstance3D).visibility_range_begin <= 0.0 and (ch as MeshInstance3D).mesh != null:
+				meshes.append([(ch as MeshInstance3D).mesh, node.transform * (ch as MeshInstance3D).transform])
+			elif ch is MultiMeshInstance3D and (ch as MultiMeshInstance3D).visibility_range_begin <= 0.0:
+				var mm := (ch as MultiMeshInstance3D).multimesh
+				if mm != null and mm.mesh != null:
+					for it in UrbsMonumentClip.instance_xforms(ch):
+						meshes.append([mm.mesh, node.transform * (ch as MultiMeshInstance3D).transform * (it as Transform3D)])
+			for me: Array in meshes:
+				var xf: Transform3D = me[1]
+				var mesh: Mesh = me[0]
+				if not (xf * mesh.get_aabb()).intersects(seg):
+					continue
+				var key := mesh.get_instance_id()
+				if not _faces.has(key):
+					_faces[key] = mesh.get_faces()
+				var f: PackedVector3Array = _faces[key]
+				var inv := xf.affine_inverse()
+				var la := inv * a
+				var lb := inv * end
+				var lseg := AABB(la, Vector3.ZERO).expand(lb)
+				for i in range(0, f.size(), 3):
+					var lo := f[i].min(f[i + 1]).min(f[i + 2])
+					var hi := f[i].max(f[i + 1]).max(f[i + 2])
+					if hi.x < lseg.position.x or lo.x > lseg.end.x or hi.z < lseg.position.z or lo.z > lseg.end.z \
+							or hi.y < lseg.position.y or lo.y > lseg.end.y:
+						continue
+					if Geometry3D.segment_intersects_triangle(la, lb, f[i], f[i + 1], f[i + 2]) != null:
+						return true
+	return false
 
 
 ## Whether the segment a-b passes through a triangle of route monument `mid` (world meshes).
