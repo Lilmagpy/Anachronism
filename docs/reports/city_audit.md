@@ -29,25 +29,25 @@ References: **Pleiades** (CC BY 3.0; places within 3.5 km of the Forum with a pe
 | scene: monuments with columns sunk into what they stand on (all years) | 0 |
 | scene: faces of two materials in one plane that can be seen (they flicker) (all years) | 14 |
 | scene: monuments whose --at street camera stands inside a solid or a house (all years) | 2 |
-| scene: monuments whose --at street camera does not see the front (all years) | 47 |
+| scene: monuments whose --at street camera does not see the front (all years) | 40 |
 | scene: interiors with sight lines from the door that meet nothing (black) (all years) | 0 |
 | scene: interiors with figures through a wall or floor (all years) | 1 |
 | scene: enterable monuments with no interior (all years) | 0 |
 | scene: F3 ground: 100 m stretches of a Tiber bank with a saw-toothed water line (all years) | 13 |
 | scene: F3 ground: surfaces within 5 cm of each other (paving, streets, quays, water) (all years) | 0 |
 | scene: F3 ground: ground missing where the camera can see it (all years) | 0 |
-| scene: F3 ground: terrace walls with nothing standing on the terrace (all years) | 10 |
+| scene: F3 ground: terrace walls with nothing standing on the terrace (all years) | 6 |
 | scene: F3 ground: platforms more than 1 m off the street or ground in front (all years) | 24 |
 | scene: F3 ground: steps that do not meet the ground at both ends (all years) | 0 |
 | scene: F3 ground: chunk edges where two levels of detail do not meet (all years) | 0 |
 | scene: F3 ground: stretches of street sunk under or floating over the ground (all years) | 143 |
-| scene (F3 houses): buildings of the fill interpenetrating (all years) | 10 |
-| scene (F3 houses): buildings of the fill inside a monument's solids (all years) | 6 |
-| scene (F3 houses): terrace, platform or clivus walls, steps or quays inside a building (all years) | 13 |
-| scene (F3 houses): buildings on a footway (beyond awning poles) or over a carriageway (all years) | 8 |
+| scene (F3 houses): buildings of the fill interpenetrating (all years) | 0 |
+| scene (F3 houses): buildings of the fill inside a monument's solids (all years) | 0 |
+| scene (F3 houses): terrace, platform or clivus walls, steps or quays inside a building (all years) | 0 |
+| scene (F3 houses): buildings on a footway (beyond awning poles) or over a carriageway (all years) | 0 |
 | scene (F3 houses): buildings in the river (all years) | 0 |
 | scene (F3 houses): buildings whose floor is under the ground at the front or whose parts float (all years) | 0 |
-| scene (F3 houses): trees with their trunk inside a building or their crown through it (all years) | 2 |
+| scene (F3 houses): trees with their trunk inside a building or their crown through it (all years) | 0 |
 | scene (F3 houses): trees in a carriageway (all years) | 0 |
 | scene (F3 houses): trees in the river (all years) | 0 |
 | scene (F3 houses): people, stalls or the walkers' and carts' lanes inside a solid (all years) | 0 |
@@ -712,9 +712,9 @@ The repository has no modern elevation model; the ground is built from `topograp
 | 509 BC | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 1 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 3 | 0 | 0 | 21 |
 | 390 BC | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 1 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 3 | 0 | 0 | 21 |
 | 264 BC | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 2 | 0 | 5 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 4 | 0 | 0 | 22 |
-| 133 BC | 3 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 1 | 0 | 2 | 0 | 11 | 0 | 0 | 0 | 3 | 0 | 0 | 2 | 4 | 0 | 0 | 25 |
-| 44 BC | 5 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 1 | 0 | 3 | 1 | 14 | 0 | 0 | 0 | 2 | 0 | 0 | 4 | 5 | 0 | 0 | 27 |
-| 27 BC | 5 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 1 | 0 | 4 | 1 | 15 | 0 | 1 | 0 | 2 | 0 | 0 | 4 | 5 | 0 | 0 | 27 |
+| 133 BC | 3 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 1 | 0 | 2 | 0 | 8 | 0 | 0 | 0 | 3 | 0 | 0 | 2 | 4 | 0 | 0 | 25 |
+| 44 BC | 5 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 1 | 0 | 3 | 1 | 12 | 0 | 0 | 0 | 2 | 0 | 0 | 2 | 5 | 0 | 0 | 27 |
+| 27 BC | 5 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 1 | 0 | 4 | 1 | 13 | 0 | 1 | 0 | 2 | 0 | 0 | 2 | 5 | 0 | 0 | 27 |
 
 **monuments whose solids overlap another standing monument**
 
@@ -752,20 +752,16 @@ The repository has no modern elevation model; the ground is built from `topograp
 - aedes_fortunae_equestris view from (-781, -253): porticus_pompeiana across the line to the door (27 BC, 44 BC)
 - aedes_pietatis view from (-468, 20): aedes_apollinis_medici across the line to the door (133 BC)
 - area_sacra_argentina_b view from (-674, -269): stands 80° off the front axis (27 BC, 44 BC)
-- atrium_libertatis view from (-56, -245): stands 110° off the front axis (133 BC)
 - basilica_iulia view from (49, 41): stands 80° off the front axis (44 BC)
 - columna_maenia view from (-50, -75): stands 110° off the front axis (133 BC)
 - comitium view from (15, -16): stands 110° off the front axis, rostra_republic across the line to the door (133 BC, 264 BC)
 - curia_iulia view from (36, -4): basilica_aemilia across the line to the door (27 BC)
-- domus_cn_octavii view from (99, 228): stands 80° off the front axis (133 BC)
 - domus_scauri view from (188, 260): stands 80° off the front axis (27 BC, 44 BC)
 - horrea_agrippiana view from (-80, 245): sees 2 of 5 façade points, a house or the ground across the line to the door (27 BC)
-- porta_caelimontana view from (896, 609): stands 80° off the front axis (133 BC, 27 BC, 44 BC)
 - porta_caelimontana view from (917, 614): stands 110° off the front axis (264 BC)
 - porta_flumentana view from (-588, 53): stands 110° off the front axis (133 BC, 264 BC, 27 BC, 44 BC)
 - porta_quirinalis view from (439, -1071): stands 80° off the front axis (264 BC)
 - porta_quirinalis view from (471, -1111): stands 80° off the front axis (133 BC, 27 BC, 44 BC)
-- porta_trigemina view from (-440, 532): stands 80° off the front axis (27 BC, 44 BC)
 - porticus_aemilia view from (-704, 1325): horrea_galbae across the line to the door (133 BC, 27 BC, 44 BC)
 - porticus_catuli view from (-7, 244): stands 110° off the front axis (27 BC)
 - porticus_catuli view from (15, 243): stands 110° off the front axis (44 BC)
@@ -785,11 +781,9 @@ The repository has no modern elevation model; the ground is built from `topograp
 
 **F3 ground: terrace walls with nothing standing on the terrace**
 
-- terrace walls across empty ground near (1198, -323): 23 m (27 BC, 44 BC)
-- terrace walls across empty ground near (1200, -364): 31 m (133 BC, 27 BC, 44 BC)
-- terrace walls across empty ground near (1203, -352): 13 m (27 BC, 44 BC)
-- terrace walls across empty ground near (1203, -352): 37 m (133 BC)
-- terrace walls across empty ground near (1207, -307): 13 m (27 BC, 44 BC)
+- terrace walls across empty ground near (-3, -213): 19 m (133 BC)
+- terrace walls across empty ground near (-3, -213): 30 m (27 BC, 44 BC)
+- terrace walls across empty ground near (605, 46): 9 m (133 BC, 27 BC, 44 BC)
 
 **F3 ground: platforms more than 1 m off the street or ground in front**
 
@@ -918,48 +912,12 @@ meshes (each mesh's triangles clipped into 1 m height bands).
 
 | year | buildings | house_house | house_monument | house_wall | house_street | house_river | house_base | tree_building | tree_street | tree_river | life_solid | stall_street | lamp_smoke |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 509 BC | 2131 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 390 BC | 3952 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 264 BC | 10320 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 133 BC | 19167 | 1 | 3 | 2 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 44 BC | 20508 | 4 | 1 | 5 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 27 BC | 20154 | 5 | 1 | 5 | 2 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 |
-
-**buildings of the fill interpenetrating** (the worst, at most 10 a year)
-
-- taberna:0@-380,128 overlaps casa:tile@-379,121 by 0.2 m (5 m up) (27 BC, 44 BC)
-- taberna:0@60,-125 overlaps domus:1@80,-122 by 0.2 m (6 m up) (27 BC, 44 BC)
-- taberna:2@-149,-266 overlaps domus:1@-136,-282 by 0.4 m (6 m up) (27 BC, 44 BC)
-- taberna:4@470,-380 overlaps domus:1@477,-360 by 0.2 m (8 m up) (133 BC, 27 BC, 44 BC)
-- taberna:5@-90,249 overlaps casa:tile@-96,245 by 0.3 m (5 m up) (27 BC)
-
-**buildings of the fill inside a monument's solids** (the worst, at most 10 a year)
-
-- casa:shingle@105,168 inside aedes_iovis_statoris_palatine by 0.4 m (264 BC)
-- casa:shingle@109,168 inside aedes_iovis_statoris_palatine by 3.7 m (133 BC)
-- casa:tile@110,168 inside aedes_iovis_statoris_palatine by 3.2 m (27 BC, 44 BC)
-- casa:tile@121,226 inside domus_cn_octavii by 1.6 m (133 BC)
-- casa:tile@128,227 inside domus_cn_octavii by 3.0 m (133 BC)
-
-**terrace, platform or clivus walls, steps or quays inside a building** (the worst, at most 10 a year)
-
-- casa:tile@-177,-350 has the site works (Works) 0.3 m above its floor inside it (27 BC, 44 BC)
-- casa:tile@393,1026 has a terrace wall 0.1 m above its floor inside it (27 BC, 44 BC)
-- insula:hip:4:0:0:n@1041,-1256 has a terrace wall 0.2 m above its floor inside it (27 BC, 44 BC)
-- insula:stepped:3:0:0@1182,-1093 has a terrace wall 0.3 m above its floor inside it (133 BC, 27 BC, 44 BC)
-- taberna:1@729,-444 has the site works (Works) 1.4 m above its floor inside it (264 BC)
-- taberna:4@730,-444 has the site works (Works) 1.1 m above its floor inside it (133 BC, 27 BC, 44 BC)
-
-**buildings on a footway (beyond awning poles) or over a carriageway** (the worst, at most 10 a year)
-
-- taberna:0@-229,408 on the footway of via_velabrum by 1.4 m (133 BC, 27 BC, 44 BC)
-- taberna:1@-43,153 on the footway of vicus_tuscus by 1.4 m (133 BC, 44 BC)
-- taberna:2@-31,139 on the footway of vicus_tuscus by 1.4 m (133 BC, 27 BC, 44 BC)
-
-**trees with their trunk inside a building or their crown through it** (the worst, at most 10 a year)
-
-- pine tree at (1296, -182) (lod 1): trunk inside auditorium_maecenatis (27 BC)
-- pine tree at (1296, -182): trunk inside auditorium_maecenatis (27 BC)
+| 509 BC | 2111 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 390 BC | 3932 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 264 BC | 10277 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 133 BC | 19059 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 44 BC | 20475 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 27 BC | 20137 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
 ## 4. Time
 
