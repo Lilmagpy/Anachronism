@@ -2887,3 +2887,61 @@ interact with, not only look at.
   M. Fulvius Flaccus, who presides), and a family has sons only from 60 years before its first
   attestation (earliest branch, Fasti holder or modelled person; `attested_margin_years`), so
   no Calvisius (first consul 39) is a tribune in 264.
+
+## D-305 The visual fix: faults found by code, not by eye (F3) — DELEGATED (2026-11-25)
+The owner: "so many screenshots where there are clear overlaps in buildings and the graphics
+are glitched, go through everything and ensure that this is fixed fully."
+- **How**: a sweep tool photographs the city from hundreds of poses in one run
+  (`client/scripts/urbs/sweep.gd`, poses from `scripts/dev/sweep_poses.py`), and every kind of
+  fault seen in the pictures became a check in code that counts it over the whole city for
+  each year (`client/scripts/urbs/audit.gd`, `monument_audit.gd`, reported by
+  `anachronism-city-audit --scene`). Fixes go to causes; a fault is done when its count is.
+- **Ground** (F3 ground): the ground is built for the year (roads of 220 BC are not in 509);
+  the Tiber's banks are planar and the island reach never pinches the river; chunk borders are
+  stitched; terrace walls stand only where something stands above them; pinned streets follow
+  their ground and climb to their floor only near the end; a twilight fill so the ground is
+  not black at dusk. The Salinae (location "rough") moved 16 m inland off the water.
+- **Houses, trees, street life** (F3 houses): houses never run into each other, a monument,
+  a wall, a footway or the river (ground under 0.4 m above the river counts as water); floors
+  are set by the front of the lot; trees keep out of buildings and carriageways; walkers,
+  carts, stalls, lamps and smoke are placed by the real meshes. About 8% fewer fill houses in
+  the later years is the price.
+- **Monuments and interiors** (F3 monuments): positions never move. Where two sourced
+  buildings truly overlap, one `yields_to` the other and is cut at its drawn body
+  (`monument_clip.gd`: Porticus Aemilia/Horrea Galbae, Concord/Tabularium, Porticus
+  Octaviae/Apollo, Forum Iulium/Curia, Porticus Philippi/Hercules Musarum, Comitium/Basilica
+  Porcia and others); monuments whose size is assumed may shrink up to 30% to clear a
+  neighbour (`size_fits`); streets cut openings through porticoes; the `--at` view is chosen
+  by sight lines to the façade (`monument_view.gd`); an interior is as big as the building
+  drawn outside, has a sky and ground, and Enter is offered only where an interior exists and
+  the building is standing.
+- **Left open** (in the reports): 21-27 street stretches a little off the ground, three
+  terrace heights that need a source, a few shops on a footway, small flicker at three
+  porticoes, the theatres' card views, the interiors' start positions.
+
+## D-306 A Windows version, proved on a Windows machine nobody has — DELEGATED (2026-11-25)
+The owner asked for a Windows version. Nobody on the project has a PC to hand.
+- **Build**: `scripts/package.sh windows` exports one `Meritus.exe` (data inside, icon and
+  name written in) with uv for Windows bundled, zipped as `Meritus-windows.zip`; CI uploads it
+  beside the Mac app. One x86-64 build for every PC. Unsigned, like the Mac app (SmartScreen:
+  More info → Run anyway).
+- **Windows differences handled**: the bundled helper is `uv.exe` and needs no chmod; uv runs
+  `--quiet` there (a Windows pipe holds 4 KB of unread progress lines before the writer
+  blocks, which would hang the first launch); the engine is told `PYTHONUTF8=1` and the
+  server reads and writes UTF-8 with bare newlines on every machine (Windows would otherwise
+  read the player's text in cp1252).
+- **Proof**: a CI job on `windows-latest` unzips the download as a brand-new user, starts it
+  (engine unpacked, Python fetched, a game begun), starts it again as a returning user, and
+  requires a clean exit each time. A second step opens a real window (Direct3D 12, software
+  rendering on the runner) and uploads pictures of the title, the map and Rome
+  (`windows-pictures`), so the Windows build can be looked at without a PC.
+- **Bug found by it**: once a game was loaded the program crashed on its way out on Windows.
+  Cause: `Settlements` and its four builder modules held each other, so they and every mesh
+  they made were never freed — on every machine each regrowth of the cities kept the old ones
+  in memory, and at quit they outlived the renderer. `Settlements.release()` breaks the loop
+  and `StaticCaches.release()` empties script caches on quitting (leaked objects at exit in
+  the smoke test: 922 → 124).
+- **Also fixed**: packaged builds showed "Version 1" (CI's shallow checkout has one commit);
+  the app job now fetches the full history.
+- **Not proved**: speed on a real graphics card, sound (the runner has no audio device), and
+  play by a person on Windows.
