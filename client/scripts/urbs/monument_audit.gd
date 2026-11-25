@@ -755,7 +755,7 @@ func _views(ids: Array) -> Array:
 		var outward := door.basis.z
 		outward.y = 0.0
 		outward = outward.normalized()
-		var target := door.origin
+		var target: Vector3 = v.get("target", door.origin)   # the part of the front it looks at
 		var to := Vector3(target.x - eye.x, 0, target.z - eye.z)
 		var why: Array = []
 		if int(v.seen) < 3:
@@ -766,9 +766,9 @@ func _views(ids: Array) -> Array:
 				why.append("stands %.0f° off the front axis" % off)
 		var block := _blocked(eye, target, id)
 		if block != "":
-			why.append("%s across the line to the door" % block)
+			why.append("%s across the line to the front" % block)
 		elif not mv.is_clear(eye, target, id):
-			why.append("a house or the ground across the line to the door")
+			why.append("a house or the ground across the line to the front")
 		if not why.is_empty():
 			misses.append("%s view from (%.0f, %.0f): %s" % [id, eye.x, eye.z, ", ".join(why)])
 	return [inside, misses]

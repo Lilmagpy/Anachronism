@@ -196,7 +196,16 @@ static func _sphendone(mm: UrbsMonumentMesh, aw: float, cav: float, zcurve: floa
 			y += 0.6
 	_ring_step(mm, zcurve, rr, r + cav, y + 1.2, "tufa_yellow" if not stone else "travertine", segs)
 	_ring_step(mm, zcurve, r, r + 1.0, 2.5, "travertine" if stone else "timber_weathered", segs)
-	mm.solid(Vector3(0, 0, zcurve + (r + cav) * 0.5), Vector3(aw + cav * 2.0, y + 1.2, r + cav))
+	# F3 monuments: the solid follows the half-ring (small boxes round it), not one box over the
+	# arena's end too (a box held the shrine of Murcia standing in the arena)
+	var layers := 3
+	for li in layers:
+		var ra := r + cav * (li + 0.5) / layers
+		var n := int(ceil(PI * ra / 6.0))
+		for k in n:
+			var a := PI * (k + 0.5) / n
+			var side := maxf(PI * ra / n, cav / layers) + 0.5
+			mm.solid(Vector3(cos(a) * ra, 0, zcurve + sin(a) * ra), Vector3(side, y + 1.2, side))
 
 
 ## A half-ring step from radius r0 to r1 round (0, zc) on the +z side, `top` high, in segments.

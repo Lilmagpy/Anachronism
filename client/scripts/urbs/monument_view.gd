@@ -45,69 +45,145 @@ func _ground(x: float, z: float) -> float:
 func pick(id: String) -> Dictionary:
 	var door: Transform3D = mons.entrance(id)
 	var model := str(mons.entry(id).get("model", ""))
-	var open_air := false
-	var into := 0.0   # how far in from the entrance: past the stands to the arena's edge
-	for k in ["circus", "theatre", "amphitheatre", "stadium", "plaza", "forum"]:
-		if model.contains(k):
-			open_air = true
-			into = 0.0 if k in ["plaza", "forum"] else 35.0
 	var outward := door.basis.z
 	outward.y = 0.0
 	outward = outward.normalized() if outward.length() > 0.01 else Vector3(0, 0, 1)
 	var d0 := Vector3(door.origin.x, 0, door.origin.z)
-	if open_air:   # a venue open to the sky: stand at its entrance, looking in (facing still looks in)
-		var st := d0 - outward * into
-		return {"stand": st, "eye": Vector3(st.x, floor_at(st) + EYE, st.z),
-			"facing": atan2(outward.x, outward.z), "open_air": true, "seen": 5}
+	var p: Dictionary = mons._placed.get(id, {})
+	var kind := ""
+	for k in ["circus", "theatre", "amphitheatre", "stadium", "plaza", "forum", "comitium"]:
+		if model.contains(k):
+			kind = k
+	if kind != "":
+		var oa := _open_air(id, kind, d0, outward, p)
+		if not oa.is_empty():
+			return oa
 	# the façade: from the door out to the front of the steps; its width and height
 	var b := mons.bounds(id)
 	var front := 0.0
 	for i in 8:
 		var corner := b.get_endpoint(i) - door.origin
 		front = maxf(front, corner.x * outward.x + corner.z * outward.z)
-	var p: Dictionary = mons._placed.get(id, {})
 	var half: Vector2 = p.get("half", Vector2.ZERO)
 	var w := maxf(half.x * 2.0, 2.0)
 	var base := float(p.get("y", b.position.y))
 	var top := b.end.y if b.size.y > 0.0 else base + 6.0
-	var back := front + clampf(maxf((top - base) * 1.8, w * 1.1), 12.0, 60.0)
-	_load_lots(Vector2(d0.x, d0.z), back * 1.5 + 40.0)
+	var back := front + clampf(maxf((top - base) * 1.8, minf(w, 60.0) * 1.1), 12.0, 60.0)
+	_load_lots(Vector2(d0.x, d0.z), back * 2.2 + 40.0)
 	var right := Vector3(outward.z, 0, -outward.x)
 	var face := d0 + outward * maxf(front - 1.0, 0.0)
 	var low := base + 1.0
 	var high := base + (top - base) * 0.75
-	var targets := [Vector3(door.origin.x, door.origin.y, door.origin.z),
-		face + right * w * 0.4 + Vector3(0, high, 0), face - right * w * 0.4 + Vector3(0, high, 0),
-		face + right * w * 0.4 + Vector3(0, low, 0), face - right * w * 0.4 + Vector3(0, low, 0)]
+	var door_dy := door.origin.y
+	# the stands tried: round the front (turned, nearer, farther), on the streets in front of it,
+	# and for a wide front the same again before each part of it
+	var stands: Array = []   # [stand, lateral offset of the façade point looked at, turn degrees]
+	var laterals := [0.0] if w < 40.0 else [0.0, -0.3 * w, 0.3 * w]
+	for lat: float in laterals:
+		for ti in TURNS.size():
+			var dir := outward.rotated(Vector3.UP, deg_to_rad(float(TURNS[ti])))
+			for di in DISTS.size():
+				var dist := maxf(back * float(DISTS[di]), front + 4.0)
+				stands.append([d0 + right * lat + dir * dist, lat, float(TURNS[ti]), float(di)])
+	for sp in _street_points(Vector2(d0.x, d0.z), front + 4.0, back * 2.2):
+		var st := Vector3(sp.x, 0, sp.y)
+		var rel := st - d0
+		if rel.dot(outward) <= front + 2.0:
+			continue
+		var lat := clampf(rel.dot(right), -0.4 * w, 0.4 * w)
+		var off := rad_to_deg(acos(clampf((st - (d0 + right * lat)).normalized().dot(outward), -1.0, 1.0)))
+		stands.append([st, lat, off, 1.0])
 	var best := {}
 	var best_cost := INF
-	for ti in TURNS.size():
-		var turn := deg_to_rad(float(TURNS[ti]))
-		var dir := outward.rotated(Vector3.UP, turn)
-		for di in DISTS.size():
-			var dist := maxf(back * float(DISTS[di]), front + 4.0)
-			var st := d0 + dir * dist
-			var eye := Vector3(st.x, floor_at(st) + EYE, st.z)
-			if not is_free(eye) or _in_drawn(id, eye, 0.5):   # not on its own steps either
-				continue
-			var seen := 0
-			for t in targets:
-				if is_clear(eye, t, id):
-					seen += 1
-			var cost := float(5 - seen) * 10.0 + absf(float(TURNS[ti])) / 15.0 + float(di) * 0.8
-			if seen == 0:
-				cost += 100.0   # nothing of it in sight: any stand that sees some of it is better
-			if cost < best_cost:
-				best_cost = cost
-				var to: Vector3 = targets[0] - eye
-				best = {"stand": st, "eye": eye, "facing": atan2(-to.x, -to.z), "open_air": false, "seen": seen}
-			if seen == 5 and ti == 0 and di == 0:
-				return best
+	for sd: Array in stands:
+		var st: Vector3 = sd[0]
+		var lat := float(sd[1])
+		var eye := Vector3(st.x, floor_at(st) + EYE, st.z)
+		if not is_free(eye) or _in_drawn(id, eye, 0.5):   # not on its own steps either
+			continue
+		var c := face + right * lat
+		var target := Vector3(d0.x + right.x * lat, door_dy, d0.z + right.z * lat)
+		var reach := minf(w * 0.4, 18.0)
+		var targets := [target, c + right * reach + Vector3(0, high, 0), c - right * reach + Vector3(0, high, 0),
+			c + right * reach + Vector3(0, low, 0), c - right * reach + Vector3(0, low, 0)]
+		var seen := 0
+		for t in targets:
+			if is_clear(eye, t, id):
+				seen += 1
+		var to: Vector3 = target - eye
+		to.y = 0.0
+		var off := rad_to_deg(acos(clampf((-to.normalized()).dot(outward), -1.0, 1.0)))
+		var cost := float(5 - seen) * 10.0 + off / 15.0 + float(sd[3]) * 0.8 + absf(lat) / 20.0
+		if off > 60.0:
+			cost += 20.0   # beside it or behind it: the front not in view
+		if seen == 0 or not is_clear(eye, target, id):
+			cost += 100.0   # the door (or the part of the front looked at) hidden
+		if cost < best_cost:
+			best_cost = cost
+			var tl: Vector3 = target - eye
+			best = {"stand": st, "eye": eye, "facing": atan2(-tl.x, -tl.z), "open_air": false, "seen": seen,
+				"target": target}
+		if seen == 5 and off < 10.0 and lat == 0.0 and float(sd[3]) == 0.0:
+			return best
 	if best.is_empty():   # nowhere free: the plain framing distance on the axis
 		var st := d0 + outward * back
 		best = {"stand": st, "eye": Vector3(st.x, floor_at(st) + EYE, st.z),
-			"facing": atan2(outward.x, outward.z), "open_air": false, "seen": 0}
+			"facing": atan2(outward.x, outward.z), "open_air": false, "seen": 0, "target": door.origin}
 	return best
+
+
+## A venue open to the sky. The circus, a stadium, a plaza or a forum: from its entrance, a few
+## metres in, looking in. A theatre or an amphitheatre: from the middle of its orchestra or arena,
+## looking at the stage (its front). The Comitium: from its edge before the front, looking in.
+## {} when no free stand is found (the caller frames it like a building).
+func _open_air(id: String, kind: String, d0: Vector3, outward: Vector3, p: Dictionary) -> Dictionary:
+	var c2: Vector2 = p.get("centre", Vector2(d0.x, d0.z))
+	var tries: Array = []
+	if kind in ["theatre", "amphitheatre"]:
+		var cc := Vector3(c2.x, 0, c2.y)
+		for k in [0.0, -4.0, 4.0, -8.0]:
+			tries.append([cc + outward * k, -1.0])
+	else:
+		var into := 35.0 if kind in ["circus", "stadium"] else 6.0
+		var right := Vector3(outward.z, 0, -outward.x)
+		for lat in [0.0, -8.0, 8.0, -16.0, 16.0]:
+			for k in [into, into + 6.0, maxf(into - 4.0, 2.0), into + 14.0, into + 24.0]:
+				tries.append([d0 - outward * k + right * lat, 1.0])
+	for tr: Array in tries:
+		var st: Vector3 = tr[0]
+		var eye := Vector3(st.x, floor_at(st) + EYE, st.z)
+		if not is_free(eye):
+			continue
+		if kind in ["theatre", "amphitheatre"]:   # looking at the stage
+			return {"stand": st, "eye": eye, "facing": atan2(-outward.x, -outward.z), "open_air": true, "seen": 5,
+				"target": d0}
+		return {"stand": st, "eye": eye, "facing": atan2(outward.x, outward.z), "open_air": true, "seen": 5, "target": d0}
+	return {}
+
+
+## Points every 6 m on the year's streets between `r0` and `r1` metres from `c`.
+func _street_points(c: Vector2, r0: float, r1: float) -> Array:
+	var out: Array = []
+	if mons._streets_cache == null or mons._streets_year != mons._year:
+		mons._streets_cache = UrbsStreets.new()
+		mons._streets_cache.height = height
+		mons._streets_cache.load_data(mons._year)
+		mons._streets_year = mons._year
+	for stt in mons._streets_cache.streets:
+		var pts: PackedVector2Array = stt.pts
+		for k in range(pts.size() - 1):
+			var a := pts[k]
+			var b := pts[k + 1]
+			var ln := a.distance_to(b)
+			if Geometry2D.get_closest_point_to_segment(c, a, b).distance_to(c) > r1:
+				continue
+			var n := maxi(1, int(ln / 6.0))
+			for i in n + 1:
+				var q := a.lerp(b, float(i) / n)
+				var d := q.distance_to(c)
+				if d >= r0 and d <= r1:
+					out.append(q)
+	return out
 
 
 ## What a walker at `p` stands on: the ground, or a court or paving over it (a monument's
@@ -195,10 +271,21 @@ func is_free(p: Vector3) -> bool:
 	if monument_at(p, 0.3) != "":
 		return false
 	for mid in mons._solids:
-		if bool(mons._placed.get(mid, {}).get("world", false)) or not (mons._opens.get(mid, []) as Array).is_empty():
-			continue   # routes, and buildings round a court (their box holds the court)
+		if bool(mons._placed.get(mid, {}).get("world", false)):
+			continue   # routes
+		if not (mons._opens.get(mid, []) as Array).is_empty():
+			# a building round a court (a portico): its court is free, its wings are not
+			if _in_drawn(mid, p, 0.3) and not _in_open(mid, p):
+				return false
+			continue
 		var wb: AABB = mons._bounds.get(mid, AABB())
 		if wb.size == Vector3.ZERO or not wb.grow(3.0).has_point(p):
+			continue
+		var rad := float(mons._placed.get(mid, {}).get("radius", 0.0))
+		if rad > 0.0:   # a round building: its circle, not the square round it
+			var cc: Vector2 = mons._placed[mid].centre
+			if Vector2(p.x, p.z).distance_to(cc) < rad + 0.3:
+				return false
 			continue
 		if not _drawn.has(mid):
 			_drawn[mid] = mons._drawn_box(mid)
@@ -210,6 +297,16 @@ func is_free(p: Vector3) -> bool:
 
 
 var _drawn := {}   ## monument id -> its drawn box in its frame (UrbsMonuments._drawn_box)
+
+
+## Whether `p` stands over one of monument `mid`'s courts (its `opens`).
+func _in_open(mid: String, p: Vector3) -> bool:
+	var lp := (mons._xf[mid] as Transform3D).affine_inverse() * p
+	for o in mons._opens.get(mid, []):
+		var ob: AABB = o
+		if lp.x >= ob.position.x and lp.x <= ob.end.x and lp.z >= ob.position.z and lp.z <= ob.end.z:
+			return true
+	return false
 
 
 ## Whether `p` stands within monument `mid`'s drawn box (grown by `grow`).
@@ -231,11 +328,24 @@ func monument_at(p: Vector3, grow := 0.0) -> String:
 		var wb: AABB = mons._bounds.get(mid, AABB())
 		if wb.size != Vector3.ZERO and not wb.grow(grow + 0.5).has_point(p):
 			continue
+		if _yielded_at(mid, p):
+			continue   # cut away there: it gives way to the building it meets (yields_to)
 		var lp := (mons._xf[mid] as Transform3D).affine_inverse() * p
 		for bx in mons._solids[mid]:
 			if (bx as AABB).grow(grow).has_point(lp):
 				return mid
 	return ""
+
+
+## Whether `p` stands where monument `mid` was cut away for a building it yields to.
+func _yielded_at(mid: String, p: Vector3) -> bool:
+	var ys: Variant = mons.entry(mid).get("yields_to")
+	if not ys is Array:
+		return false
+	for oid in ys:
+		if mons._xf.has(str(oid)) and _in_drawn(str(oid), p, 0.3):
+			return true
+	return false
 
 
 ## Whether the sight line from `a` to `b` is clear of the ground, the other monuments' solids
@@ -249,7 +359,7 @@ func is_clear(a: Vector3, b: Vector3, own: String) -> bool:
 	var n := int(len / 2.0)
 	for i in range(1, n):
 		var q := a.lerp(end, float(i) / float(n))
-		if q.y < _ground(q.x, q.z) - 0.05:
+		if q.y < _ground(q.x, q.z) - 0.05 and q.y < floor_at(q) - 0.05:
 			return false
 	for mid in mons._solids:
 		if mid == own:
@@ -265,7 +375,8 @@ func is_clear(a: Vector3, b: Vector3, own: String) -> bool:
 		var la := inv * a
 		var le := inv * end
 		for bx in mons._solids[mid]:
-			if (bx as AABB).intersects_segment(la, le) != null:
+			var hit: Variant = (bx as AABB).intersects_segment(la, le)
+			if hit != null and not _yielded_at(mid, (mons._xf[mid] as Transform3D) * (hit as Vector3)):
 				return false
 	for lot in _lots:
 		if _segment_hits_lot(a, end, lot):
