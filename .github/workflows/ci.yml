@@ -124,3 +124,28 @@ jobs:
           Meritus/Meritus.exe --headless -- --smoke > again.txt 2>&1 || again=$?
           grep "SMOKE OK" again.txt
           echo "exit code of the second smoke test: $again"
+      - name: Open a window and take pictures
+        # A real window drawn by the machine's own graphics (software here: the runner has no
+        # graphics card). The pictures are what a player would see; this step never fails the job.
+        if: always()
+        continue-on-error: true
+        shell: bash
+        run: |
+          mkdir shots
+          export APPDATA="$(cygpath -w "$PWD/fresh-home")"
+          shot() {
+            name=$1; shift; code=0
+            timeout 420 Meritus/Meritus.exe "$@" --screenshot="$(cygpath -w "$PWD/shots/$name.png")" \
+              > "shots/$name.txt" 2>&1 || code=$?
+            echo "== $name: exit code $code"; head -8 "shots/$name.txt"
+          }
+          shot title -- --screen=title
+          shot map -- --seed=1
+          shot rome -- --urbs --year=-44 --mode=street --at=aedes_saturni
+          ls -la shots
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: windows-pictures
+          path: shots
+          retention-days: 7
