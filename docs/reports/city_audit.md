@@ -28,7 +28,7 @@ References: **Pleiades** (CC BY 3.0; places within 3.5 km of the Forum with a pe
 | scene: monuments with parts resting on nothing (all years) | 3 |
 | scene: monuments with columns sunk into what they stand on (all years) | 0 |
 | scene: faces of two materials in one plane that can be seen (they flicker) (all years) | 14 |
-| scene: monuments whose --at street camera stands inside a solid or a house (all years) | 0 |
+| scene: monuments whose --at street camera stands inside a solid or a house (all years) | 2 |
 | scene: monuments whose --at street camera does not see the front (all years) | 47 |
 | scene: interiors with sight lines from the door that meet nothing (black) (all years) | 0 |
 | scene: interiors with figures through a wall or floor (all years) | 1 |
@@ -50,7 +50,7 @@ References: **Pleiades** (CC BY 3.0; places within 3.5 km of the Forum with a pe
 | scene (F3 houses): trees with their trunk inside a building or their crown through it (all years) | 2 |
 | scene (F3 houses): trees in a carriageway (all years) | 0 |
 | scene (F3 houses): trees in the river (all years) | 0 |
-| scene (F3 houses): people, stalls or the walkers' and carts' lanes inside a solid (all years) | 6 |
+| scene (F3 houses): people, stalls or the walkers' and carts' lanes inside a solid (all years) | 0 |
 | scene (F3 houses): stalls in a carriageway, or sunk into or floating over their ground (all years) | 0 |
 | scene (F3 houses): lamps on no wall, kitchen smoke rising from no roof (all years) | 0 |
 
@@ -713,8 +713,8 @@ The repository has no modern elevation model; the ground is built from `topograp
 | 390 BC | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 1 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 3 | 0 | 0 | 21 |
 | 264 BC | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 2 | 0 | 5 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 4 | 0 | 0 | 22 |
 | 133 BC | 3 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 1 | 0 | 2 | 0 | 11 | 0 | 0 | 0 | 3 | 0 | 0 | 2 | 4 | 0 | 0 | 25 |
-| 44 BC | 5 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 1 | 0 | 3 | 0 | 14 | 0 | 0 | 0 | 2 | 0 | 0 | 4 | 5 | 0 | 0 | 27 |
-| 27 BC | 5 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 1 | 0 | 4 | 0 | 15 | 0 | 1 | 0 | 2 | 0 | 0 | 4 | 5 | 0 | 0 | 27 |
+| 44 BC | 5 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 1 | 0 | 3 | 1 | 14 | 0 | 0 | 0 | 2 | 0 | 0 | 4 | 5 | 0 | 0 | 27 |
+| 27 BC | 5 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 1 | 0 | 4 | 1 | 15 | 0 | 1 | 0 | 2 | 0 | 0 | 4 | 5 | 0 | 0 | 27 |
 
 **monuments whose solids overlap another standing monument**
 
@@ -742,10 +742,14 @@ The repository has no modern elevation model; the ground is built from `topograp
 - villa_publica: 17 coplanar face pairs, largest 0.4 m² (stucco_cream/stucco_white, facing z) at (-825.1, -691.8) y 18.0 (264 BC, 390 BC)
 - villa_publica: 19 coplanar face pairs, largest 0.4 m² (stucco_cream/stucco_white, facing z) at (-825.1, -691.8) y 18.0 (133 BC, 27 BC, 44 BC)
 
+**monuments whose --at street camera stands inside a solid or a house**
+
+- aedes_fortunae_equestris camera at (-781, -253) inside porticus_pompeiana (0.8x10.3x135.0 m at (-817, -288) y 12.4-22.7) (27 BC, 44 BC)
+
 **monuments whose --at street camera does not see the front**
 
 - aedes_concordiae_forum view from (-67, -34): stands 80° off the front axis (27 BC, 44 BC)
-- aedes_fortunae_equestris view from (-789, -253): porticus_pompeiana across the line to the door (27 BC, 44 BC)
+- aedes_fortunae_equestris view from (-781, -253): porticus_pompeiana across the line to the door (27 BC, 44 BC)
 - aedes_pietatis view from (-468, 20): aedes_apollinis_medici across the line to the door (133 BC)
 - area_sacra_argentina_b view from (-674, -269): stands 80° off the front axis (27 BC, 44 BC)
 - atrium_libertatis view from (-56, -245): stands 110° off the front axis (133 BC)
@@ -917,9 +921,9 @@ meshes (each mesh's triangles clipped into 1 m height bands).
 | 509 BC | 2131 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | 390 BC | 3952 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | 264 BC | 10320 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 133 BC | 19167 | 1 | 3 | 2 | 3 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 |
-| 44 BC | 20508 | 4 | 1 | 5 | 3 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 |
-| 27 BC | 20154 | 5 | 1 | 5 | 2 | 0 | 0 | 2 | 0 | 0 | 2 | 0 | 0 |
+| 133 BC | 19167 | 1 | 3 | 2 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 44 BC | 20508 | 4 | 1 | 5 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 27 BC | 20154 | 5 | 1 | 5 | 2 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 |
 
 **buildings of the fill interpenetrating** (the worst, at most 10 a year)
 
@@ -956,11 +960,6 @@ meshes (each mesh's triangles clipped into 1 m height bands).
 
 - pine tree at (1296, -182) (lod 1): trunk inside auditorium_maecenatis (27 BC)
 - pine tree at (1296, -182): trunk inside auditorium_maecenatis (27 BC)
-
-**people, stalls or the walkers' and carts' lanes inside a solid** (the worst, at most 10 a year)
-
-- a walkers' lane of via_flumentana at (-461, -99) through porticus_octaviae (0.0 m from its middle) (133 BC, 27 BC, 44 BC)
-- a walkers' lane of via_triumphi_campi at (-551, -140) through porticus_octaviae (0.0 m from its middle) (133 BC, 27 BC, 44 BC)
 
 ## 4. Time
 

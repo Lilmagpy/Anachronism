@@ -680,7 +680,7 @@ func _make(id: String, st: Dictionary) -> void:
 	_tris[id] = res.get("tris", [0, 0, 0])
 	# F3 monuments: a street running through a portico passes through an opening in it
 	if model == "portico_enclosure" and not world:
-		_street_openings(node, centre, yaw, half, base_y)
+		_street_openings(id, node, centre, yaw, half, base_y)
 	# F3 monuments: where it truly overlaps a sourced building it yields to, it abuts it instead
 	for y in st.get("yields", []):
 		# the other as drawn (every mesh and instance at the nearest level of detail: its steps and
@@ -775,7 +775,7 @@ var _streets_year := 1
 ## F3 monuments: openings in a portico where a street of the year runs through it (the
 ## carriageway and a metre either side, every height): the walkers' lanes along Via
 ## Flumentana and the triumphal way ran through the Porticus Octaviae's columns.
-func _street_openings(node: Node3D, centre: Vector2, yaw: float, half: Vector2, base_y: float) -> void:
+func _street_openings(id: String, node: Node3D, centre: Vector2, yaw: float, half: Vector2, base_y: float) -> void:
 	if _streets_cache == null or _streets_year != _year:
 		_streets_cache = UrbsStreets.new()
 		_streets_cache.height = _height
@@ -800,8 +800,36 @@ func _street_openings(node: Node3D, centre: Vector2, yaw: float, half: Vector2, 
 				continue
 			var xf := Transform3D(Basis(Vector3.UP, atan2(-d.y, d.x)), Vector3((a.x + b.x) * 0.5, base_y - 50.0, (a.y + b.y) * 0.5))
 			boxes.append({"xf": xf, "box": AABB(Vector3(-ln * 0.5 - 2.0, 0.0, -w), Vector3(ln + 4.0, 200.0, w * 2.0))})   # past the joints: no sliver left between two cuts
-	if not boxes.is_empty():
-		UrbsMonumentClip.clip(node, boxes)
+	if boxes.is_empty():
+		return
+	UrbsMonumentClip.clip(node, boxes)
+	# and its solids part there (the walkers and the carts pass): a solid the street crosses is
+	# split along its length into the pieces either side of the street
+	var mxf: Transform3D = _xf.get(id, Transform3D(Basis(Vector3.UP, yaw), Vector3(centre.x, base_y, centre.y)))
+	var inv := mxf.affine_inverse()
+	var out: Array = []
+	for sb in _solids.get(id, []):
+		var pieces := [sb as AABB]
+		for b in boxes:
+			var cut := UrbsMonumentClip._aabb_under(inv * (b.xf as Transform3D), b.box)
+			var nxt: Array = []
+			for pc: AABB in pieces:
+				if not pc.intersects(cut):
+					nxt.append(pc)
+					continue
+				var ax := 0 if pc.size.x >= pc.size.z else 2
+				if cut.position[ax] > pc.position[ax]:
+					var a := pc
+					a.size[ax] = cut.position[ax] - pc.position[ax]
+					nxt.append(a)
+				if cut.end[ax] < pc.end[ax]:
+					var c := pc
+					c.position[ax] = cut.end[ax]
+					c.size[ax] = pc.end[ax] - cut.end[ax]
+					nxt.append(c)
+			pieces = nxt
+		out.append_array(pieces)
+	_solids[id] = out
 
 
 ## F3 monuments: the half extents in plan (x, z) of what a form draws at its nearest level of
