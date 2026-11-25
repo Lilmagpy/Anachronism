@@ -244,13 +244,13 @@ func is_clear(a: Vector3, b: Vector3, own: String) -> bool:
 				return false
 			continue
 		var wb: AABB = mons._bounds.get(mid, AABB())
-		if wb.size != Vector3.ZERO and not wb.intersects_segment(a, end):
+		if wb.size != Vector3.ZERO and wb.intersects_segment(a, end) == null:
 			continue
 		var inv := (mons._xf[mid] as Transform3D).affine_inverse()
 		var la := inv * a
 		var le := inv * end
 		for bx in mons._solids[mid]:
-			if (bx as AABB).intersects_segment(la, le):
+			if (bx as AABB).intersects_segment(la, le) != null:
 				return false
 	for lot in _lots:
 		if _segment_hits_lot(a, end, lot):
@@ -310,4 +310,4 @@ static func _segment_hits_lot(a: Vector3, b: Vector3, lot: Dictionary) -> bool:
 	var lb := Vector3(b2.dot(ax), b.y, b2.dot(az))
 	var box := AABB(Vector3(-float(lot.hx), float(lot.y0), -float(lot.hz)),
 		Vector3(float(lot.hx) * 2.0, float(lot.y1) - float(lot.y0), float(lot.hz) * 2.0))
-	return box.intersects_segment(la, lb)
+	return box.intersects_segment(la, lb) != null

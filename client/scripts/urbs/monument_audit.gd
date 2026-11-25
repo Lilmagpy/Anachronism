@@ -792,7 +792,7 @@ func _blocked(a: Vector3, b: Vector3, own: String) -> String:
 				continue
 			seen[key] = true
 			var q: Dictionary = parts[id][ref[1]]
-			if (q.wb as AABB).intersects_segment(a, end):
+			if (q.wb as AABB).intersects_segment(a, end) != null:
 				var t := _world_tris(q)
 				for i in range(0, t.size(), 3):
 					if Geometry3D.segment_intersects_triangle(a, end, t[i], t[i + 1], t[i + 2]) != null:
