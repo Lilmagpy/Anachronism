@@ -410,7 +410,9 @@ func _under(p: Vector2, s: Dictionary) -> bool:
 		var c: Vector2 = pv["centre"]
 		if p.distance_to(c) < poly[0].distance_to(c) + 1.0:
 			# the paving and the kerb round it (0.3 m: monument_civic.gd), with a margin
-			if Geometry2D.is_point_in_polygon(p, poly) or UrbsTerrain._poly_edge(poly, p)[1] < 0.6:
+			# F3: 0.25 m, inside the kerb, so the dip is always under the paving (at 0.6 the strip
+			# sank under the ground beside the kerb)
+			if Geometry2D.is_point_in_polygon(p, poly) or UrbsTerrain._poly_edge(poly, p)[1] < 0.25:
 				return true
 	var key := Vector2i(floori(p.x / CELL), floori(p.y / CELL))
 	var me := _rank(s)
@@ -428,7 +430,10 @@ func _under(p: Vector2, s: Dictionary) -> bool:
 				var t := (p - pts[k]).dot(ab) / maxf(ab.length_squared(), 0.0001)
 				if (k == 0 and t < 0.0) or (k == pts.size() - 2 and t > 1.0):
 					continue
-				if q.distance_to(p) < float(o["hw"]) + KERB_W + 0.05:
+				# F3: inside what the other street draws (its kerb only where it has one: paved and
+				# off a platform), so the dip is always covered
+				var kerb := KERB_W if bool(o["paved"]) and UrbsSite.platform_at(p.x, p.y) == "" else 0.0
+				if q.distance_to(p) < float(o["hw"]) + kerb - 0.05:
 					return true
 	return false
 

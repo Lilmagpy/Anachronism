@@ -1735,9 +1735,20 @@ func _f3_platform_steps() -> Array:
 		var g := _f3_ground_y(q.x, q.y)
 		if UrbsTerrain.river_distance(q.x, q.y) < UrbsTerrain.river_half_width(q.x, q.y) + 40.0:
 			continue   # it faces the river: the ground falls to the water (the Theatre of Marcellus)
-		if lvl - g > 1.0:
+		if lvl - g > 1.0 and not _f3_steps_down(mid):
 			out.append("platform %s stands %.1f m over the ground in front of %s at %s" % [pid, lvl - g, mid, _f3_xy(q)])
 	return out
+
+
+## True when monuments.gd drew a flight of steps down the front of monument `mid`'s terrace
+## (TerraceSteps) whose foot meets the ground (within 0.4 m).
+func _f3_steps_down(mid: String) -> bool:
+	var node: Node3D = _mon._nodes.get(mid)
+	if node == null or not node.has_node("TerraceSteps") or not node.has_meta("steps_box"):
+		return false
+	var sb: AABB = node.get_meta("steps_box")
+	var foot := node.global_transform * Vector3(0.0, sb.position.y, sb.end.z + 0.5)
+	return absf(foot.y - _f3_ground_y(foot.x, foot.z)) <= 0.4
 
 
 # --- steps ---

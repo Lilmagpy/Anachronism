@@ -53,6 +53,7 @@ const RURAL_CELL := 25.0                  ## resolution of the farmland weight r
 const MAP_CELL := 10.0                    ## resolution of the baked ground colour maps
 const MAP_N := 501                        ## texels per side of the ground colour maps
 const FRONT_RAMP := 0.2                   ## F3: slope of the ramp in front of a monument's terrace (1 in 5)
+const END_MEET_M := 15.0                 ## F3: a street end this near another street is pinned to its level
 const PAVE_BLEND := 6.0                   ## F3: a paving's carved floor blends into the ground over this
 const PAVE_INSET := 0.6                   ## F3: no ground drawn this far inside a paving's edge
 const PAVE_DIP := 0.5                     ## F3: ground vertices under a paving are drawn this much lower
@@ -78,6 +79,7 @@ static var _circuit: PackedVector2Array = PackedVector2Array()
 static var _warp: FastNoiseLite = null
 static var _warp2: FastNoiseLite = null
 static var _material: ShaderMaterial = null
+static var _dbg_street := ""   ## (debug: print this street's pins and profile)
 static var _sky_fill := 0.0                                      ## the twilight fill (set_sky_fill)
 static var _street_w: PackedFloat32Array = PackedFloat32Array()  ## street cuts' weight (while computing)
 static var _cover: PackedByteArray = PackedByteArray()          ## 1 under a paving, 2 well inside it (no ground drawn)
@@ -705,8 +707,6 @@ static func _cut_streets(cfg: Dictionary, h: PackedFloat32Array) -> void:
 	wgrid.resize(VERTS * VERTS)
 	var pgrid := PackedFloat32Array()
 	pgrid.resize(VERTS * VERTS)
-	var dgrid := PackedFloat32Array()
-	dgrid.resize(VERTS * VERTS)
 	_street_w = PackedFloat32Array()
 	_street_w.resize(VERTS * VERTS)
 	var entries: Array = []
@@ -760,10 +760,23 @@ static func _cut_streets(cfg: Dictionary, h: PackedFloat32Array) -> void:
 		var pins: Array = rec["pins"]
 		if str(rec["kind"]) != "stairs":
 			for i in sp.size():
-				var v: Variant = _street_level_near(index, recs, sp[i])
+				var v: Variant = _street_level_near(index, recs, sp[i], 0.5)
 				if v != null:
 					pins.append([i, float(v)])
+			# an end that stops short of the street it meets (its point a few metres off the other's
+			# line, as at the top of the Sacra Via) is pinned to that street's level there too
+			for i: int in [0, sp.size() - 1]:
+				var pinned := false
+				for pin: Array in pins:
+					pinned = pinned or int(pin[0]) == i
+				if not pinned:
+					var v: Variant = _street_level_near(index, recs, sp[i], END_MEET_M)
+					if v != null:
+						pins.append([i, float(v)])
 			_pin_profile(prof, pins, float(rec["st"]), max_grad)
+		if str((rec["entry"] as Dictionary)["id"]) == _dbg_street:
+			print("DBGPINS ", pins)
+			print("DBGPROF ", prof)
 		rec["prof"] = prof
 		for i in range(sp.size() - 1):
 			var a := sp[i]
@@ -774,8 +787,14 @@ static func _cut_streets(cfg: Dictionary, h: PackedFloat32Array) -> void:
 					if not index.has(key):
 						index[key] = []
 					index[key].append([r, i])
-	# 3. cut, the narrower first, so the wider lie on top
-	for rec: Dictionary in recs:
+	# 3. cut: each ground vertex takes the level of one street, the one it is flattest under (on
+	# its level ground before in a blend), then the nearest carriageway, the wider where it lies
+	# inside two (a crossing); blends never overwrite another street's level ground
+	var kgrid := PackedFloat32Array()
+	kgrid.resize(VERTS * VERTS)
+	var touched := PackedInt32Array()
+	for r in recs.size():
+		var rec: Dictionary = recs[r]
 		var kind := str(rec["kind"])
 		var hw := float(rec["hw"])
 		var shoulder := float(cfg.get("shoulder_m", 2.0))
@@ -791,7 +810,6 @@ static func _cut_streets(cfg: Dictionary, h: PackedFloat32Array) -> void:
 		# the shoulder, or the triangles across its edge tilt through it
 		var ribbon := hw + 0.28 + 1.25 + 0.2
 		var reach := maxf(hw + shoulder, ribbon + CELL_M * 1.415) + blend
-		var touched := PackedInt32Array()
 		for i in range(ns - 1):
 			var a := sp[i]
 			var b := sp[i + 1]
@@ -815,22 +833,20 @@ static func _cut_streets(cfg: Dictionary, h: PackedFloat32Array) -> void:
 					var w := 1.0 - smoothstep(0.0, blend, e)
 					if w <= 0.0:
 						continue
+					var dc := d - hw
+					var key := (1.0 - w) * 1000.0 + (dc if dc > 0.0 else -0.001 * float(r + 1))
 					var idx := j * VERTS + ii
 					if wgrid[idx] == 0.0:
 						touched.append(idx)
-						dgrid[idx] = INF
-					# F3: the profile of the nearest stretch (with the street's flat ground now wider
-					# than a profile step, the first stretch to reach a vertex lent it its end's level
-					# from metres away, a cross-fall of up to a metre on a hill road)
-					if d < dgrid[idx]:
-						dgrid[idx] = d
+						kgrid[idx] = INF
+					if key < kgrid[idx]:
+						kgrid[idx] = key
 						wgrid[idx] = w
 						pgrid[idx] = lerpf(prof[i], prof[i + 1], t)
-		for idx in touched:
-			h[idx] = lerpf(h[idx], pgrid[idx], wgrid[idx])
-			_built_w[idx] = maxf(_built_w[idx], wgrid[idx])
-			_street_w[idx] = maxf(_street_w[idx], wgrid[idx])
-			wgrid[idx] = 0.0
+	for idx in touched:
+		h[idx] = lerpf(h[idx], pgrid[idx], wgrid[idx])
+		_built_w[idx] = maxf(_built_w[idx], wgrid[idx])
+		_street_w[idx] = maxf(_street_w[idx], wgrid[idx])
 
 
 ## F3: how far the ground triangles round a mesh vertex reach towards direction `n` (unit): the
@@ -874,13 +890,17 @@ static func _floor_pins(sp: PackedVector2Array, hw: float) -> Array:
 	return out
 
 
-## F3: the level of the street ground of any wider street (already in `index`) whose carriageway
-## covers `q`, or null.
-static func _street_level_near(index: Dictionary, recs: Array, q: Vector2) -> Variant:
+## F3: the level of the street ground of the wider street (already in `index`) whose carriageway
+## lies nearest `q`, within `margin` m of its edge, or null.
+static func _street_level_near(index: Dictionary, recs: Array, q: Vector2, margin: float) -> Variant:
 	var key := Vector2i(floori(q.x / 32.0), floori(q.y / 32.0))
 	var best := INF
 	var val: Variant = null
-	for ref: Array in index.get(key, []):
+	var refs: Array = []
+	for dx in range(-1, 2):
+		for dz in range(-1, 2):
+			refs.append_array(index.get(key + Vector2i(dx, dz), []))
+	for ref: Array in refs:
 		var rec: Dictionary = recs[ref[0]]
 		var sp: PackedVector2Array = rec["sp"]
 		var prof: PackedFloat32Array = rec["prof"]
@@ -888,8 +908,8 @@ static func _street_level_near(index: Dictionary, recs: Array, q: Vector2) -> Va
 		var ab := sp[i + 1] - sp[i]
 		var t := clampf((q - sp[i]).dot(ab) / maxf(ab.length_squared(), 0.001), 0.0, 1.0)
 		var d := q.distance_to(sp[i] + ab * t)
-		if d < float(rec["hw"]) + 0.5 and d < best:
-			best = d
+		if d < float(rec["hw"]) + margin and d - float(rec["hw"]) < best:
+			best = d - float(rec["hw"])
 			val = lerpf(prof[i], prof[i + 1], t)
 	return val
 
