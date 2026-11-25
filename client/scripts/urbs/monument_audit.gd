@@ -861,7 +861,10 @@ func interiors(year: int) -> Dictionary:
 			for yaw in range(0, 360, 20):
 				if pitch >= 60.0 and yaw % 90 != 0:
 					continue
-				var dir := Vector3(-sin(deg_to_rad(yaw)) * cos(deg_to_rad(pitch)), sin(deg_to_rad(pitch)), -cos(deg_to_rad(yaw)) * cos(deg_to_rad(pitch)))
+				# (a fraction of a degree off the round numbers: a ray along a mesh's seam slips between its triangles)
+				var ya := deg_to_rad(yaw + 0.37)
+				var pa := deg_to_rad(pitch + 0.21)
+				var dir := Vector3(-sin(ya) * cos(pa), sin(pa), -cos(ya) * cos(pa))
 				dir = spawn.basis * Vector3(dir.x, 0, dir.z) + Vector3(0, dir.y, 0)
 				n += 1
 				var t := _first_hit(tris, grid, eye, dir.normalized())
