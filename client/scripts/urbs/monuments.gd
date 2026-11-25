@@ -799,7 +799,7 @@ func _street_openings(node: Node3D, centre: Vector2, yaw: float, half: Vector2, 
 			if Forms._rect_depth(seg, rect) <= 0.0:
 				continue
 			var xf := Transform3D(Basis(Vector3.UP, atan2(-d.y, d.x)), Vector3((a.x + b.x) * 0.5, base_y - 50.0, (a.y + b.y) * 0.5))
-			boxes.append({"xf": xf, "box": AABB(Vector3(-ln * 0.5 - 0.5, 0.0, -w), Vector3(ln + 1.0, 200.0, w * 2.0))})
+			boxes.append({"xf": xf, "box": AABB(Vector3(-ln * 0.5 - 2.0, 0.0, -w), Vector3(ln + 4.0, 200.0, w * 2.0))})   # past the joints: no sliver left between two cuts
 	if not boxes.is_empty():
 		UrbsMonumentClip.clip(node, boxes)
 

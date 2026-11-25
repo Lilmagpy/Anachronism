@@ -17,28 +17,37 @@ References: **Pleiades** (CC BY 3.0; places within 3.5 km of the Forum with a pe
 | orientation or size against the outline of the remains | 17 |
 | relations the sources fix, failed | 0 |
 | date issues | 0 |
-| scene: monuments whose solids overlap another standing monument (all years) | 14 |
+| scene: monuments whose solids overlap another standing monument (all years) | 16 |
 | scene: monuments whose base is more than 0.5 m above the ground under a corner (all years) | 0 |
 | scene: monuments whose base is more than 1 m below the ground under a corner (all years) | 0 |
 | scene: houses standing inside a monument's footprint (all years) | 0 |
 | scene: houses standing on a street (all years) | 0 |
-| scene: monuments standing in the river (all years) | 3 |
+| scene: monuments standing in the river (all years) | 7 |
 | scene: streets passing through a monument (all years) | 0 |
+| scene: monuments whose parts (real mesh pieces) run through another's (all years) | 0 |
+| scene: monuments with parts resting on nothing (all years) | 3 |
+| scene: monuments with columns sunk into what they stand on (all years) | 0 |
+| scene: faces of two materials in one plane that can be seen (they flicker) (all years) | 14 |
+| scene: monuments whose --at street camera stands inside a solid or a house (all years) | 0 |
+| scene: monuments whose --at street camera does not see the front (all years) | 47 |
+| scene: interiors with sight lines from the door that meet nothing (black) (all years) | 0 |
+| scene: interiors with figures through a wall or floor (all years) | 1 |
+| scene: enterable monuments with no interior (all years) | 0 |
 | scene: F3 ground: 100 m stretches of a Tiber bank with a saw-toothed water line (all years) | 13 |
-| scene: F3 ground: surfaces within 5 cm of each other (paving, streets, quays, water) (all years) | 2 |
+| scene: F3 ground: surfaces within 5 cm of each other (paving, streets, quays, water) (all years) | 0 |
 | scene: F3 ground: ground missing where the camera can see it (all years) | 0 |
 | scene: F3 ground: terrace walls with nothing standing on the terrace (all years) | 10 |
 | scene: F3 ground: platforms more than 1 m off the street or ground in front (all years) | 24 |
 | scene: F3 ground: steps that do not meet the ground at both ends (all years) | 0 |
 | scene: F3 ground: chunk edges where two levels of detail do not meet (all years) | 0 |
 | scene: F3 ground: stretches of street sunk under or floating over the ground (all years) | 143 |
-| scene (F3 houses): buildings of the fill interpenetrating (all years) | 8 |
-| scene (F3 houses): buildings of the fill inside a monument's solids (all years) | 0 |
-| scene (F3 houses): terrace, platform or clivus walls, steps or quays inside a building (all years) | 16 |
+| scene (F3 houses): buildings of the fill interpenetrating (all years) | 10 |
+| scene (F3 houses): buildings of the fill inside a monument's solids (all years) | 6 |
+| scene (F3 houses): terrace, platform or clivus walls, steps or quays inside a building (all years) | 13 |
 | scene (F3 houses): buildings on a footway (beyond awning poles) or over a carriageway (all years) | 8 |
 | scene (F3 houses): buildings in the river (all years) | 0 |
 | scene (F3 houses): buildings whose floor is under the ground at the front or whose parts float (all years) | 0 |
-| scene (F3 houses): trees with their trunk inside a building or their crown through it (all years) | 10 |
+| scene (F3 houses): trees with their trunk inside a building or their crown through it (all years) | 2 |
 | scene (F3 houses): trees in a carriageway (all years) | 0 |
 | scene (F3 houses): trees in the river (all years) | 0 |
 | scene (F3 houses): people, stalls or the walkers' and carts' lanes inside a solid (all years) | 6 |
@@ -698,36 +707,77 @@ The repository has no modern elevation model; the ground is built from `topograp
 
 ## 3. Placement in the built scene
 
-| year | overlaps | floating | buried | houses_in_monuments | houses_on_streets | in_river | streets_through | bank_sawtooth | zfight | ground_holes | empty_terraces | platform_steps | stair_ends | chunk_seams | streets_ground |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 509 BC | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 3 | 0 | 0 | 21 |
-| 390 BC | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 3 | 0 | 0 | 21 |
-| 264 BC | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 4 | 0 | 0 | 22 |
-| 133 BC | 2 | 0 | 0 | 0 | 0 | 1 | 0 | 3 | 0 | 0 | 2 | 4 | 0 | 0 | 25 |
-| 44 BC | 4 | 0 | 0 | 0 | 0 | 1 | 0 | 2 | 1 | 0 | 4 | 5 | 0 | 0 | 27 |
-| 27 BC | 5 | 0 | 0 | 0 | 0 | 1 | 0 | 2 | 1 | 0 | 4 | 5 | 0 | 0 | 27 |
+| year | overlaps | floating | buried | houses_in_monuments | houses_on_streets | in_river | streets_through | part_overlaps | parts_floating | parts_sunk | coplanar | view_inside | view_misses | interior_voids | interior_figures | interior_missing | bank_sawtooth | zfight | ground_holes | empty_terraces | platform_steps | stair_ends | chunk_seams | streets_ground |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 509 BC | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 1 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 3 | 0 | 0 | 21 |
+| 390 BC | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 1 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 3 | 0 | 0 | 21 |
+| 264 BC | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 2 | 0 | 5 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 4 | 0 | 0 | 22 |
+| 133 BC | 3 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 1 | 0 | 2 | 0 | 11 | 0 | 0 | 0 | 3 | 0 | 0 | 2 | 4 | 0 | 0 | 25 |
+| 44 BC | 5 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 1 | 0 | 3 | 0 | 14 | 0 | 0 | 0 | 2 | 0 | 0 | 4 | 5 | 0 | 0 | 27 |
+| 27 BC | 5 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 1 | 0 | 4 | 0 | 15 | 0 | 1 | 0 | 2 | 0 | 0 | 4 | 5 | 0 | 0 | 27 |
 
 **monuments whose solids overlap another standing monument**
 
-- aedes_concordiae_forum overlaps tabularium by 3.2 m (27 BC, 44 BC) - the Augustan temple of Concord was built against the substructure of the Tabularium, its cella under the Tabularium front (the remains); a 3 m contact is the real arrangement
-- aedes_herculis_musarum overlaps porticus_philippi by 6.9 m (27 BC) - the temple stood inside the Porticus Philippi, which was built round it (Platner-Ashby s.v. Porticus Philippi); not an error
+- aedes_apollinis_medici overlaps porticus_octaviae by 3.0 m (133 BC, 27 BC, 44 BC) - F3: the reconstructed corner of the Porticus Octaviae reaches the temple of Apollo beside it; drawn abutting (the portico's wing stops at the temple, yields_to, monument_clip.gd); the collision boxes still meet
+- aedes_concordiae_forum overlaps tabularium by 3.7 m (27 BC, 44 BC) - the Augustan temple of Concord was built against the substructure of the Tabularium, its cella under the Tabularium front (the remains); a 3 m contact is the real arrangement. F3: drawn abutting (the temple stops at the Tabularium's front, yields_to)
 - circus_maximus overlaps sacellum_murciae by 5.1 m (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC) - the shrine of Murcia stood inside the circus valley, by the turning post (Platner-Ashby s.v. Murcia, sacellum); not an error
-- horrea_galbae overlaps porticus_aemilia by 52.5 m (133 BC, 27 BC, 44 BC) - UNRESOLVED: the Marble Plan puts the Horrea Galbae right behind the great hall identified as the Porticus Aemilia (Tucci 2012 argues the hall is the navalia); our 487 x 60 m hall centred on its remains and the 200 x 155 m horrea at their Wikipedia point (+-30 m) overlap by 52 m. A measured plan of both is needed before either is moved
+- horrea_galbae overlaps porticus_aemilia by 52.5 m (133 BC, 27 BC, 44 BC) - UNRESOLVED: the Marble Plan puts the Horrea Galbae right behind the great hall identified as the Porticus Aemilia (Tucci 2012 argues the hall is the navalia); our 487 x 60 m hall centred on its remains and the 200 x 155 m horrea at their Wikipedia point (+-30 m) overlap by 52 m. A measured plan of both is needed before either is moved. F3: drawn abutting (the hall stops at the horrea's outer wall, yields_to, monument_clip.gd); the collision boxes still overlap
 - porticus_octaviae overlaps theatrum_marcelli by 2.8 m (27 BC, 44 BC) - the portico and the theatre stood side by side with a narrow street between; 2.8 m is within the precision of the reconstructed portico corner (Pleiades outlines only its propylon)
 
 **monuments standing in the river**
 
+- porta_flumentana 2 of 25 footprint points in the water (133 BC, 264 BC, 27 BC, 44 BC) - the river gate stood at the bank (Platner-Ashby s.v. Porta Flumentana); one sample point touches the modelled river
 - porticus_aemilia 5 of 25 footprint points in the water (133 BC, 27 BC, 44 BC) - the hall stood on the river bank; the modelled Tiber (tiber.gd) is an approximation of the ancient bank, a few points touch it
+
+**monuments with parts resting on nothing**
+
+- porticus_octaviae 4 of 1275 parts rest on nothing, largest 1.5x0.6x0.7 m at (-548, -145) y 22.3-22.9 (its own frame (-59.0, 9.8, -65.1) to (-57.5, 10.4, -64.4)) (27 BC)
+- porticus_octaviae 4 of 1277 parts rest on nothing, largest 1.5x0.6x0.7 m at (-548, -145) y 22.3-22.9 (its own frame (-59.0, 9.8, -65.1) to (-57.5, 10.4, -64.4)) (133 BC, 44 BC)
+
+**faces of two materials in one plane that can be seen (they flicker)**
+
+- area_sacra_argentina_c: 12 coplanar face pairs, largest 0.2 m² (stucco_white/tegulae, facing x) at (-695.8, -249.8) y 20.4 (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC)
+- porticus_minucia_vetus: 12 coplanar face pairs, largest 0.4 m² (stucco_cream/stucco_white, facing x) at (-616.2, -290.1) y 19.7 (27 BC, 44 BC)
+- porticus_philippi: 22 coplanar face pairs, largest 0.4 m² (stucco_cream/stucco_white, facing x) at (-667.6, -133.2) y 18.4 (27 BC)
+- villa_publica: 17 coplanar face pairs, largest 0.4 m² (stucco_cream/stucco_white, facing z) at (-825.1, -691.8) y 18.0 (264 BC, 390 BC)
+- villa_publica: 19 coplanar face pairs, largest 0.4 m² (stucco_cream/stucco_white, facing z) at (-825.1, -691.8) y 18.0 (133 BC, 27 BC, 44 BC)
+
+**monuments whose --at street camera does not see the front**
+
+- aedes_concordiae_forum view from (-67, -34): stands 80° off the front axis (27 BC, 44 BC)
+- aedes_fortunae_equestris view from (-789, -253): porticus_pompeiana across the line to the door (27 BC, 44 BC)
+- aedes_pietatis view from (-468, 20): aedes_apollinis_medici across the line to the door (133 BC)
+- area_sacra_argentina_b view from (-674, -269): stands 80° off the front axis (27 BC, 44 BC)
+- atrium_libertatis view from (-56, -245): stands 110° off the front axis (133 BC)
+- basilica_iulia view from (49, 41): stands 80° off the front axis (44 BC)
+- columna_maenia view from (-50, -75): stands 110° off the front axis (133 BC)
+- comitium view from (15, -16): stands 110° off the front axis, rostra_republic across the line to the door (133 BC, 264 BC)
+- curia_iulia view from (36, -4): basilica_aemilia across the line to the door (27 BC)
+- domus_cn_octavii view from (99, 228): stands 80° off the front axis (133 BC)
+- domus_scauri view from (188, 260): stands 80° off the front axis (27 BC, 44 BC)
+- horrea_agrippiana view from (-80, 245): sees 2 of 5 façade points, a house or the ground across the line to the door (27 BC)
+- porta_caelimontana view from (896, 609): stands 80° off the front axis (133 BC, 27 BC, 44 BC)
+- porta_caelimontana view from (917, 614): stands 110° off the front axis (264 BC)
+- porta_flumentana view from (-588, 53): stands 110° off the front axis (133 BC, 264 BC, 27 BC, 44 BC)
+- porta_quirinalis view from (439, -1071): stands 80° off the front axis (264 BC)
+- porta_quirinalis view from (471, -1111): stands 80° off the front axis (133 BC, 27 BC, 44 BC)
+- porta_trigemina view from (-440, 532): stands 80° off the front axis (27 BC, 44 BC)
+- porticus_aemilia view from (-704, 1325): horrea_galbae across the line to the door (133 BC, 27 BC, 44 BC)
+- porticus_catuli view from (-7, 244): stands 110° off the front axis (27 BC)
+- porticus_catuli view from (15, 243): stands 110° off the front axis (44 BC)
+- porticus_inter_lignarios view from (-465, 646): stands 110° off the front axis (133 BC, 27 BC, 44 BC)
+- sacellum_murciae view from (192, 914): a house or the ground across the line to the door (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC)
+- saepta_iulia view from (-413, -715): stands 80° off the front axis (27 BC, 44 BC)
+
+**interiors with figures through a wall or floor**
+
+- theatrum_pompei: 1 figures through a wall or floor, e.g. marble 2.8 m at (-920, -375) y 16.6 (27 BC)
 
 **F3 ground: 100 m stretches of a Tiber bank with a saw-toothed water line**
 
 - the water's edge turns more than 25 degrees within 2 m 3 times in the 100 m square near (-1043, 1340) (133 BC, 27 BC, 44 BC)
 - the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-1444, -1300) (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC)
 - the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-521, 261) (133 BC, 264 BC, 390 BC, 509 BC)
-
-**F3 ground: surfaces within 5 cm of each other (paving, streets, quays, water)**
-
-- forum_esquilinum paving within 5 cm of the ground over 6 m2 near (1284, -316) (27 BC, 44 BC)
 
 **F3 ground: terrace walls with nothing standing on the terrace**
 
@@ -801,32 +851,35 @@ The repository has no modern elevation model; the ground is built from `topograp
 - street vicus_tuscus under the ground over 43 m (worst 0.09 m) near (-123, 358) (133 BC, 264 BC, 390 BC, 44 BC, 509 BC)
 - street vicus_tuscus under the ground over 43 m (worst 0.13 m) near (-89, 295) (27 BC)
 
-**monuments on sloping ground, 27 BC** (44): each stands on a
+**monuments on sloping ground, 27 BC** (48): each stands on a
 podium or foundation down to its lowest ground (monuments.gd), and where the ground
 falls more than 3 m on a terrace cut into the hill with retaining walls
 (topography.yaml `F2 TERRACES`, `--terraces`); the figure is the fall that is left.
 
 - aedes_apollinis_palatini on a 1.2 m foundation (temple_hexastyle_corinthian_marble)
-- aedes_dei_fidii on a 1.8 m foundation (temple_tuscan_small)
-- aedes_faunus on a 1.1 m foundation (temple_tetrastyle_ionic)
-- aedes_felicitatis on a 2.3 m foundation (temple_tetrastyle_ionic)
+- aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)
+- aedes_faunus on a 1.2 m foundation (temple_tetrastyle_ionic)
+- aedes_felicitatis on a 2.4 m foundation (temple_tetrastyle_ionic)
 - aedes_fortunae_matris_matutae on a 2.1 m foundation (temple_tetrastyle_ionic)
 - aedes_herculis_collina on a 1.4 m foundation (temple_tuscan_small)
 - aedes_honoris_virtutis on a 1.9 m foundation (temple_tetrastyle_ionic)
-- aedes_iovis_feretri on a 1.1 m foundation (aedicula)
-- aedes_iunonis_monetae on a 1.5 m foundation (temple_tuscan_small)
+- aedes_iovis_feretri on a 1.3 m foundation (aedicula)
+- aedes_iunonis_monetae on a 1.7 m foundation (temple_tuscan_small)
 - aedes_larum on a 4.8 m foundation (temple_tuscan_small)
 - aedes_mentis on a 1.1 m foundation (temple_tetrastyle_ionic)
 - aedes_portuni on a 1.3 m foundation (temple_tetrastyle_ionic_travertine)
-- aedes_veneris_erycinae_capitol on a 1.9 m foundation (temple_tetrastyle_ionic)
-- ara_vermini on a 1.5 m foundation (altar)
+- aedes_veneris_erycinae_capitol on a 2.0 m foundation (temple_tetrastyle_ionic)
+- ara_vermini on a 2.0 m foundation (altar)
+- atrium_libertatis on a 7.4 m foundation (archive_hall)
 - atrium_vestae on a 4.2 m foundation (domus)
-- curia_iulia on a 1.7 m foundation (curia)
-- delubrum_fontis on a 1.5 m foundation (aedicula)
+- auditorium_maecenatis on a 4.0 m foundation (long_hall)
+- basilica_opimia on a 1.2 m foundation (basilica)
+- curia_iulia on a 1.8 m foundation (curia)
+- curiae_veteres on a 15.3 m foundation (long_hall)
+- delubrum_fontis on a 1.7 m foundation (aedicula)
 - domus_catuli on a 13.4 m foundation (domus)
 - domus_ciceronis on a 1.7 m foundation (domus)
-- domus_crassi_oratoris on a 20.4 m foundation (domus)
-- domus_hortensii_augusti on a 1.1 m foundation (domus)
+- domus_crassi_oratoris on a 18.6 m foundation (domus)
 - domus_pompeii_carinae on a 1.0 m foundation (domus)
 - domus_publica on a 1.3 m foundation (domus)
 - domus_scauri on a 1.8 m foundation (domus)
@@ -835,20 +888,21 @@ falls more than 3 m on a terrace cut into the hill with retaining walls
 - horrea_sempronia on a 1.5 m foundation (horrea)
 - macellum on a 1.5 m foundation (macellum)
 - nymphaeum_annibaldi on a 1.3 m foundation (basin)
-- porta_capena on a 10.2 m foundation (servian_gate)
+- porta_caelimontana on a 1.2 m foundation (servian_gate)
+- porta_capena on a 9.0 m foundation (servian_gate)
 - porta_carmentalis on a 1.8 m foundation (servian_gate)
-- porta_collina on a 1.9 m foundation (servian_gate)
+- porta_collina on a 2.3 m foundation (servian_gate)
 - porta_esquilina on a 2.3 m foundation (servian_gate)
-- porta_flumentana on a 7.1 m foundation (servian_gate)
-- porta_fontinalis on a 6.4 m foundation (servian_gate)
-- porta_pandana on a 1.3 m foundation (arch)
-- porta_salutaris on a 2.2 m foundation (servian_gate)
-- porta_sanqualis on a 4.8 m foundation (servian_gate)
-- porta_trigemina on a 4.6 m foundation (servian_gate)
+- porta_flumentana on a 8.4 m foundation (servian_gate)
+- porta_fontinalis on a 6.5 m foundation (servian_gate)
+- porta_pandana on a 1.4 m foundation (arch)
+- porta_salutaris on a 2.5 m foundation (servian_gate)
+- porta_sanqualis on a 4.6 m foundation (servian_gate)
+- porta_trigemina on a 5.1 m foundation (servian_gate)
 - porticus_catuli on a 2.1 m foundation (portico_enclosure)
 - sacellum_carmentis on a 2.0 m foundation (aedicula)
-- salinae on a 3.8 m foundation (long_hall)
-- tabularium on a 7.4 m foundation (tabularium)
+- salinae on a 4.4 m foundation (long_hall)
+- tabularium on a 7.7 m foundation (tabularium)
 - theatrum_marcelli on a 5.1 m foundation (theatre_stone)
 
 ### The fill, the trees and the street life (F3 houses)
@@ -860,25 +914,33 @@ meshes (each mesh's triangles clipped into 1 m height bands).
 
 | year | buildings | house_house | house_monument | house_wall | house_street | house_river | house_base | tree_building | tree_street | tree_river | life_solid | stall_street | lamp_smoke |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 509 BC | 2131 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 |
-| 390 BC | 3952 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 |
-| 264 BC | 10321 | 0 | 0 | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 |
-| 133 BC | 19148 | 1 | 0 | 3 | 3 | 0 | 0 | 1 | 0 | 0 | 2 | 0 | 0 |
-| 44 BC | 20446 | 3 | 0 | 6 | 3 | 0 | 0 | 1 | 0 | 0 | 2 | 0 | 0 |
-| 27 BC | 20087 | 4 | 0 | 6 | 2 | 0 | 0 | 5 | 0 | 0 | 2 | 0 | 0 |
+| 509 BC | 2131 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 390 BC | 3952 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 264 BC | 10320 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 133 BC | 19167 | 1 | 3 | 2 | 3 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 |
+| 44 BC | 20508 | 4 | 1 | 5 | 3 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 |
+| 27 BC | 20154 | 5 | 1 | 5 | 2 | 0 | 0 | 2 | 0 | 0 | 2 | 0 | 0 |
 
 **buildings of the fill interpenetrating** (the worst, at most 10 a year)
 
+- taberna:0@-380,128 overlaps casa:tile@-379,121 by 0.2 m (5 m up) (27 BC, 44 BC)
 - taberna:0@60,-125 overlaps domus:1@80,-122 by 0.2 m (6 m up) (27 BC, 44 BC)
 - taberna:2@-149,-266 overlaps domus:1@-136,-282 by 0.4 m (6 m up) (27 BC, 44 BC)
 - taberna:4@470,-380 overlaps domus:1@477,-360 by 0.2 m (8 m up) (133 BC, 27 BC, 44 BC)
 - taberna:5@-90,249 overlaps casa:tile@-96,245 by 0.3 m (5 m up) (27 BC)
 
+**buildings of the fill inside a monument's solids** (the worst, at most 10 a year)
+
+- casa:shingle@105,168 inside aedes_iovis_statoris_palatine by 0.4 m (264 BC)
+- casa:shingle@109,168 inside aedes_iovis_statoris_palatine by 3.7 m (133 BC)
+- casa:tile@110,168 inside aedes_iovis_statoris_palatine by 3.2 m (27 BC, 44 BC)
+- casa:tile@121,226 inside domus_cn_octavii by 1.6 m (133 BC)
+- casa:tile@128,227 inside domus_cn_octavii by 3.0 m (133 BC)
+
 **terrace, platform or clivus walls, steps or quays inside a building** (the worst, at most 10 a year)
 
 - casa:tile@-177,-350 has the site works (Works) 0.3 m above its floor inside it (27 BC, 44 BC)
 - casa:tile@393,1026 has a terrace wall 0.1 m above its floor inside it (27 BC, 44 BC)
-- domus@-378,771 has the site works (Works) 0.2 m above its floor inside it (133 BC, 27 BC, 44 BC)
 - insula:hip:4:0:0:n@1041,-1256 has a terrace wall 0.2 m above its floor inside it (27 BC, 44 BC)
 - insula:stepped:3:0:0@1182,-1093 has a terrace wall 0.3 m above its floor inside it (133 BC, 27 BC, 44 BC)
 - taberna:1@729,-444 has the site works (Works) 1.4 m above its floor inside it (264 BC)
@@ -892,16 +954,13 @@ meshes (each mesh's triangles clipped into 1 m height bands).
 
 **trees with their trunk inside a building or their crown through it** (the worst, at most 10 a year)
 
-- laurel tree at (1316, -182): trunk inside auditorium_maecenatis (27 BC)
-- oak tree at (392, 314): trunk inside curiae_veteres (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC)
-- pine tree at (1328, -178): trunk inside auditorium_maecenatis (27 BC)
-- pine tree at (1339, -170): trunk inside auditorium_maecenatis (27 BC)
-- pine tree at (1341, -157): trunk inside auditorium_maecenatis (27 BC)
+- pine tree at (1296, -182) (lod 1): trunk inside auditorium_maecenatis (27 BC)
+- pine tree at (1296, -182): trunk inside auditorium_maecenatis (27 BC)
 
 **people, stalls or the walkers' and carts' lanes inside a solid** (the worst, at most 10 a year)
 
 - a walkers' lane of via_flumentana at (-461, -99) through porticus_octaviae (0.0 m from its middle) (133 BC, 27 BC, 44 BC)
-- a walkers' lane of via_triumphi_campi at (-539, -140) through porticus_octaviae (0.0 m from its middle) (133 BC, 27 BC, 44 BC)
+- a walkers' lane of via_triumphi_campi at (-551, -140) through porticus_octaviae (0.0 m from its middle) (133 BC, 27 BC, 44 BC)
 
 ## 4. Time
 
