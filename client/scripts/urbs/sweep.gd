@@ -210,8 +210,9 @@ const RAYS := [[0.0, CLEAR_AHEAD], [-0.4, CLEAR_AHEAD], [0.4, CLEAR_AHEAD], [-0.
 
 static func _stand_ok(view: UrbsMonumentView, q: Vector2, yaw: float) -> bool:
 	# not in the river (the camera stood under the Tiber's surface at -900,100)
-	if UrbsTerrain.in_river(q.x, q.y) or UrbsTerrain.height_at(q.x, q.y) < UrbsTerrain.river_level(q.x, q.y) + 0.3:
-		return false
+	if UrbsTerrain.in_river(q.x, q.y) or UrbsTerrain.height_at(q.x, q.y) < UrbsTerrain.river_level(q.x, q.y) + 0.3 \
+			or UrbsTerrain.river_distance(q.x, q.y) < UrbsTerrain.river_half_width(q.x, q.y) + 6.0:
+		return false   # (and off the drawn water's edge: a camera stood in it below the Pons Aemilius)
 	for e: Dictionary in _envs:
 		var r: Vector2 = q - (e["c"] as Vector2)
 		if absf(r.dot(e["ax"])) < float(e["hx"]) + 0.6 and absf(r.dot(e["az"])) < float(e["hz"]) + 0.6:
