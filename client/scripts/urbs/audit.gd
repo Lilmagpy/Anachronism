@@ -1592,7 +1592,12 @@ func _f3_empty_terraces() -> Array:
 				keys[Vector2i(kx, kz)] = true
 	if keys.is_empty():
 		return out
-	var lf := _f3_lots(keys.keys())
+	var with_near := {}   # the lots of the neighbouring chunks too, as UrbsSite.wall_uses reads them
+	for key: Vector2i in keys:
+		for dx in range(-1, 2):
+			for dz in range(-1, 2):
+				with_near[key + Vector2i(dx, dz)] = true
+	var lf := _f3_lots(with_near.keys())
 	var lots: Dictionary = lf[0]
 	var segs := []
 	for key: Vector2i in keys:
@@ -1747,7 +1752,8 @@ func _f3_steps_down(mid: String) -> bool:
 	if node == null or not node.has_node("TerraceSteps") or not node.has_meta("steps_box"):
 		return false
 	var sb: AABB = node.get_meta("steps_box")
-	var foot := node.global_transform * Vector3(0.0, sb.position.y, sb.end.z + 0.5)
+	var xf: Transform3D = _mon._xf.get(mid, node.global_transform)   # the monument's frame
+	var foot := xf * Vector3(0.0, sb.position.y, sb.end.z + 0.5)
 	return absf(foot.y - _f3_ground_y(foot.x, foot.z)) <= 0.4
 
 
