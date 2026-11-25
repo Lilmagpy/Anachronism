@@ -443,6 +443,7 @@ func _stamp_mask() -> void:
 		var pts: PackedVector2Array = st["pts"]
 		_mask_line(pts, 2.2, float(st["hw"]) + KERB + FOOTPATH, M_WALK)
 		_mask_line(pts, 2.2, float(st["hw"]) + 0.2, M_STREET)
+	_works_grid = {}
 	_stamp_site_works()
 
 
@@ -468,10 +469,65 @@ func _stamp_site_works() -> void:
 				var b := xf * (v[idx[t + 1]] if idx.size() > 0 else v[t + 1])
 				var c := xf * (v[idx[t + 2]] if idx.size() > 0 else v[t + 2])
 				var m := (a + b + c) / 3.0
-				if maxf(a.y, maxf(b.y, c.y)) - float(height.call(m.x, m.z)) < 0.6:
+				var up := absf((b - a).cross(c - a).normalized().y)
+				var rise := maxf(a.y - float(height.call(a.x, a.z)), maxf(b.y - float(height.call(b.x, b.z)), c.y - float(height.call(c.x, c.z))))
+				if up > 0.7 and maxf(a.y, maxf(b.y, c.y)) - float(height.call(m.x, m.z)) < 0.6:
 					continue   # treads, paving: walked on, not standing up
+				if rise < 0.05:
+					continue   # F3: a footing under the ground (a wall's face counts wherever it rises over
+					# the ground: a clivus's retaining wall on its bank rose 0.7 m inside a house)
 				_mask_line(PackedVector2Array([Vector2(a.x, a.z), Vector2(b.x, b.z), Vector2(c.x, c.z), Vector2(a.x, a.z)]), 1.5, 0.9, M_FOOT)
+				# F3: and kept exactly (the 3 m mask marks a cell only when its centre lies within
+				# 0.9 m of the wall: thin walls slipped between the cells' centres)
+				var tri := PackedVector2Array([Vector2(a.x, a.z), Vector2(b.x, b.z), Vector2(c.x, c.z)])
+				var lo := Vector2(minf(a.x, minf(b.x, c.x)), minf(a.z, minf(b.z, c.z)))
+				var hi := Vector2(maxf(a.x, maxf(b.x, c.x)), maxf(a.z, maxf(b.z, c.z)))
+				for gz in range(floori(lo.y / WORKS_CELL), floori(hi.y / WORKS_CELL) + 1):
+					for gx in range(floori(lo.x / WORKS_CELL), floori(hi.x / WORKS_CELL) + 1):
+						var k := Vector2i(gx, gz)
+						if not _works_grid.has(k):
+							_works_grid[k] = []
+						(_works_grid[k] as Array).append(tri)
 	tmp.free()
+
+
+const WORKS_CELL := 10.0
+var _works_grid := {}   ## F3: 10 m cell -> the site works' wall faces over it, as 2D triangles
+
+
+## F3: whether a wall face of the site works stands within the lot's envelope (grown by `grow`).
+func _hits_works(lot: Dictionary, grow := 0.15) -> bool:
+	var e := _env(lot)
+	var c: Vector2 = e["c"]
+	var ax: Vector2 = e["ax"]
+	var az: Vector2 = e["az"]
+	var hx := float(e["hx"]) + grow
+	var hz := float(e["hz"]) + grow
+	var rect := Rect2(-hx, -hz, hx * 2.0, hz * 2.0)
+	var corners := PackedVector2Array([Vector2(-hx, -hz), Vector2(hx, -hz), Vector2(hx, hz), Vector2(-hx, hz)])
+	var ext := Vector2(absf(ax.x) * hx + absf(az.x) * hz, absf(ax.y) * hx + absf(az.y) * hz)
+	var seen := {}
+	for gz in range(floori((c.y - ext.y) / WORKS_CELL), floori((c.y + ext.y) / WORKS_CELL) + 1):
+		for gx in range(floori((c.x - ext.x) / WORKS_CELL), floori((c.x + ext.x) / WORKS_CELL) + 1):
+			for tri: PackedVector2Array in _works_grid.get(Vector2i(gx, gz), []):
+				var key := tri[0]
+				if seen.has(key):
+					continue
+				seen[key] = true
+				var lt := PackedVector2Array()
+				for q in tri:
+					var r := q - c
+					lt.append(Vector2(r.dot(ax), r.dot(az)))
+				for q in lt:
+					if rect.has_point(q):
+						return true
+				for i in 3:
+					for j in 4:
+						if Geometry2D.segment_intersects_segment(lt[i], lt[(i + 1) % 3], corners[j], corners[(j + 1) % 4]) != null:
+							return true
+				if Geometry2D.point_is_inside_triangle(Vector2.ZERO, lt[0], lt[1], lt[2]):
+					return true
+	return false
 
 
 # F2: the monuments' oriented footprints -------------------------------------------------------
@@ -723,6 +779,23 @@ func _clear_at(p: Vector2) -> float:
 		var above: float = float(height.call(up.x, up.y)) + UrbsSite.WALL_UP + 0.3
 		return maxf(maxf(hh, above), step * ceilf((hh - 0.3) / step) + UrbsSite.WALL_UP + 0.5)
 	return hh
+
+
+## F3: whether any point of a grid over the lot's envelope (every 1.5 m or so, edges included) is
+## marked with `bits` in the hazard mask: a wall of the site works can run between the corners.
+func _env_hazard(lot: Dictionary, bits: int) -> bool:
+	var e := _env(lot)
+	var c: Vector2 = e["c"]
+	var ax: Vector2 = e["ax"]
+	var az: Vector2 = e["az"]
+	var nx := maxi(2, ceili(float(e["hx"]) * 2.0 / 1.5))
+	var nz := maxi(2, ceili(float(e["hz"]) * 2.0 / 1.5))
+	for i in nx + 1:
+		for j in nz + 1:
+			var q := c + ax * (float(e["hx"]) * (2.0 * i / nx - 1.0)) + az * (float(e["hz"]) * (2.0 * j / nz - 1.0))
+			if _hazard(q) & bits:
+				return true
+	return false
 
 
 ## F3: the highest terrace wall top under the lot's envelope (grown 0.3 m), or -INF: the walls
@@ -1212,13 +1285,17 @@ func _add_street_lot(lot: Dictionary, own: String, margin: float, force_ok := fa
 		return false
 	var lk_house := str(lot["kind"]) not in ["furn", "prop", "tomb"]
 	if lk_house:
-		# F3: a 7 x 7 grid over the envelope (a wall of the site works ran between the corners)
+		# F3: a grid over the envelope (a wall of the site works ran between the corners)
+		if _env_hazard(lot, M_FOOT | M_WATER) or _hits_works(lot):
+			return false
+		# F3: nothing of it beyond an awning's reach over any street's footway (a shop's counter
+		# stood on the Argiletum's footway at a corner)
 		var ev := _env(lot)
-		for i in 7:
-			for j in 7:
-				var q: Vector2 = (ev["c"] as Vector2) + (ev["ax"] as Vector2) * (float(ev["hx"]) * (i / 3.0 - 1.0)) + (ev["az"] as Vector2) * (float(ev["hz"]) * (j / 3.0 - 1.0))
-				if _hazard(q) & (M_FOOT | M_WATER):
-					return false
+		for q in _corners({"c": ev["c"], "th": lot["th"], "hx": ev["hx"], "hz": ev["hz"]}):
+			var nq := _streets.nearest_street(q)
+			if not nq.is_empty() and _footway_of(str(nq["id"])) \
+					and float(nq["distance"]) < float(nq["half_width"]) + KERB + FOOTPATH - UrbsFillParts.AWNING_OUT:
+				return false
 	if not force_ok or str(lot["kind"]) != "furn":
 		var near := _streets.nearest_street(c)
 		if not near.is_empty() and near["distance"] < maxf(lot["hx"], lot["hz"]) * 1.42 + 14.0:
@@ -1551,11 +1628,9 @@ func _lattice_verdict(lot: Dictionary, rk: Vector2i, st: Dictionary) -> int:
 			var rk2 := "hazard_%d" % hz
 			reject_stats[rk2] = int(reject_stats.get(rk2, 0)) + 1
 			return 1
-	var ev := _env(lot)
-	for q in _corners({"c": ev["c"], "th": lot["th"], "hx": ev["hx"], "hz": ev["hz"]}):
-		if _hazard(q) & (M_WALK | M_WATER | M_FOOT):   # F3: the envelope too (eaves, stairs, amphorae)
-			reject_stats["envelope"] = int(reject_stats.get("envelope", 0)) + 1
-			return 1
+	if _env_hazard(lot, M_WALK | M_WATER | M_FOOT) or _hits_works(lot):   # F3: the envelope too (eaves, stairs, amphorae)
+		reject_stats["envelope"] = int(reject_stats.get("envelope", 0)) + 1
+		return 1
 	if _hits_obstacle(lot) or _on_street(lot):   # F2: exact tests the 3 m mask can miss
 		reject_stats["monument_or_street"] = int(reject_stats.get("monument_or_street", 0)) + 1
 		return 1
