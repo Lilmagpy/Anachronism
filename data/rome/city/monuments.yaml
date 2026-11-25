@@ -3639,7 +3639,7 @@ monuments:
   pleiades: null
   verified: platner-ashby
   model: portico_enclosure
-  bearing_deg: 16  # unverified
+  bearing_deg: 196  # unverified; F3 monuments: turned to open south, away from the house it adjoins (at 16 its entrance faced the house's back wall)
   footprint_m: {length: 35, width: 30}  # unverified
   height_m: 7  # unverified
   geometry_source: "form assumed from date and type (no measured plan)"

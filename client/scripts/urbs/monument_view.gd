@@ -444,6 +444,7 @@ func is_clear(a: Vector3, b: Vector3, own: String) -> bool:
 	return true
 
 
+var _mesh_box := {}   # monument id -> world box of all it draws
 static var _faces := {}   ## mesh instance id -> PackedVector3Array of its triangles
 
 
@@ -459,8 +460,20 @@ func _mesh_blocks(a: Vector3, b: Vector3, own: String) -> bool:
 		if mid == own or str(mons._placed.get(mid, {}).get("model", "")) in ["plaza", "road_paved", "lacus_curtius", "comitium"]:
 			continue
 		var node: Node3D = mons._nodes[mid]
-		var wb: AABB = mons._bounds.get(mid, AABB())
-		if wb.size != Vector3.ZERO and not wb.grow(2.0).intersects(seg):
+		if not _mesh_box.has(mid):   # what it draws, steps and all (its bounds may stop at the podium)
+			var wb := AABB()
+			for ch in node.get_children():
+				var bxs: Array = []
+				if ch is MeshInstance3D and (ch as MeshInstance3D).mesh != null:
+					bxs.append((node.transform * (ch as Node3D).transform) * (ch as MeshInstance3D).mesh.get_aabb())
+				elif ch is MultiMeshInstance3D and (ch as MultiMeshInstance3D).multimesh != null and (ch as MultiMeshInstance3D).multimesh.mesh != null:
+					for it in UrbsMonumentClip.instance_xforms(ch):   # a headless MultiMesh keeps no box
+						bxs.append((node.transform * (ch as Node3D).transform * (it as Transform3D)) * (ch as MultiMeshInstance3D).multimesh.mesh.get_aabb())
+				for bx: AABB in bxs:
+					wb = bx if wb.size == Vector3.ZERO else wb.merge(bx)
+			_mesh_box[mid] = wb
+		var mb: AABB = _mesh_box[mid]
+		if mb.size != Vector3.ZERO and not mb.grow(0.5).intersects(seg):
 			continue
 		for ch in node.get_children():
 			var meshes: Array = []   # [mesh, transform to world]
