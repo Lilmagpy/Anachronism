@@ -8866,12 +8866,21 @@
   },
   "relations_failed": 0,
   "scene_buried": 0,
+  "scene_coplanar": 14,
   "scene_floating": 0,
   "scene_houses_in_monuments": 0,
   "scene_houses_on_streets": 0,
   "scene_in_river": 7,
-  "scene_overlaps": 14,
-  "scene_streets_through": 0
+  "scene_interior_figures": 1,
+  "scene_interior_missing": 0,
+  "scene_interior_voids": 0,
+  "scene_overlaps": 16,
+  "scene_part_overlaps": 0,
+  "scene_parts_floating": 0,
+  "scene_parts_sunk": 0,
+  "scene_streets_through": 0,
+  "scene_view_inside": 0,
+  "scene_view_misses": 51
  },
  "topography": [
   {

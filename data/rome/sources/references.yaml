@@ -1268,10 +1268,11 @@ explained:
   scene:
     "in_river:porta_flumentana": "the river gate stood at the bank (Platner-Ashby s.v. Porta Flumentana); one sample point touches the modelled river"
     "in_river:porticus_aemilia": "the hall stood on the river bank; the modelled Tiber (tiber.gd) is an approximation of the ancient bank, a few points touch it"
-    "overlaps:aedes_concordiae_forum": "the Augustan temple of Concord was built against the substructure of the Tabularium, its cella under the Tabularium front (the remains); a 3 m contact is the real arrangement"
+    "overlaps:aedes_concordiae_forum": "the Augustan temple of Concord was built against the substructure of the Tabularium, its cella under the Tabularium front (the remains); a 3 m contact is the real arrangement. F3: drawn abutting (the temple stops at the Tabularium's front, yields_to)"
     "overlaps:aedes_herculis_musarum": "the temple stood inside the Porticus Philippi, which was built round it (Platner-Ashby s.v. Porticus Philippi); not an error"
+    "overlaps:aedes_apollinis_medici": "F3: the reconstructed corner of the Porticus Octaviae reaches the temple of Apollo beside it; drawn abutting (the portico's wing stops at the temple, yields_to, monument_clip.gd); the collision boxes still meet"
     "overlaps:circus_maximus": "the shrine of Murcia stood inside the circus valley, by the turning post (Platner-Ashby s.v. Murcia, sacellum); not an error"
-    "overlaps:horrea_galbae": "UNRESOLVED: the Marble Plan puts the Horrea Galbae right behind the great hall identified as the Porticus Aemilia (Tucci 2012 argues the hall is the navalia); our 487 x 60 m hall centred on its remains and the 200 x 155 m horrea at their Wikipedia point (+-30 m) overlap by 52 m. A measured plan of both is needed before either is moved"
+    "overlaps:horrea_galbae": "UNRESOLVED: the Marble Plan puts the Horrea Galbae right behind the great hall identified as the Porticus Aemilia (Tucci 2012 argues the hall is the navalia); our 487 x 60 m hall centred on its remains and the 200 x 155 m horrea at their Wikipedia point (+-30 m) overlap by 52 m. A measured plan of both is needed before either is moved. F3: drawn abutting (the hall stops at the horrea's outer wall, yields_to, monument_clip.gd); the collision boxes still overlap"
     "overlaps:porticus_octaviae": "the portico and the theatre stood side by side with a narrow street between; 2.8 m is within the precision of the reconstructed portico corner (Pleiades outlines only its propylon)"
   outlines:
     aedes_apollinis_palatini: "the remains are the concrete core of the podium, stripped of its facing; our 50 x 25 m is not verified and is kept, not shrunk to the core"

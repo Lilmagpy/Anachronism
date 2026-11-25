@@ -74,58 +74,73 @@
  "years": {
   "-133": {
    "buried": [],
+   "coplanar": [
+    "area_sacra_argentina_c: 12 coplanar face pairs, largest 0.2 m\u00b2 (stucco_white/tegulae, facing x) at (-695.8, -249.8) y 20.4",
+    "villa_publica: 17 coplanar face pairs, largest 0.4 m\u00b2 (stucco_cream/stucco_white, facing z) at (-825.1, -691.8) y 18.0"
+   ],
+   "f3_monuments_seconds": 35.12,
    "floating": [],
    "founded": [
-    "aedes_dei_fidii on a 1.8 m foundation (temple_tuscan_small)",
-    "aedes_felicitatis on a 2.3 m foundation (temple_tetrastyle_ionic)",
+    "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
+    "aedes_felicitatis on a 2.4 m foundation (temple_tetrastyle_ionic)",
     "aedes_fortunae_matris_matutae on a 2.1 m foundation (temple_tetrastyle_ionic)",
     "aedes_herculis_collina on a 1.4 m foundation (temple_tuscan_small)",
     "aedes_honoris_virtutis on a 1.9 m foundation (temple_tetrastyle_ionic)",
-    "aedes_iovis_feretri on a 1.1 m foundation (aedicula)",
-    "aedes_iunonis_monetae on a 1.5 m foundation (temple_tuscan_small)",
-    "aedes_larum on a 5.0 m foundation (temple_tuscan_small)",
+    "aedes_iovis_feretri on a 1.3 m foundation (aedicula)",
+    "aedes_iunonis_monetae on a 1.7 m foundation (temple_tuscan_small)",
+    "aedes_larum on a 5.8 m foundation (temple_tuscan_small)",
     "aedes_mentis on a 1.1 m foundation (temple_tetrastyle_ionic)",
     "aedes_portuni on a 1.0 m foundation (temple_tetrastyle_ionic_travertine)",
     "aedes_quirini on a 2.5 m foundation (temple_tetrastyle_ionic)",
-    "aedes_veneris_erycinae_capitol on a 1.9 m foundation (temple_tetrastyle_ionic)",
+    "aedes_veneris_erycinae_capitol on a 2.0 m foundation (temple_tetrastyle_ionic)",
     "area_capitolina on a 20.7 m foundation (plaza)",
     "curia_hostilia on a 2.0 m foundation (curia)",
-    "delubrum_fontis on a 1.1 m foundation (aedicula)",
+    "curiae_veteres on a 15.8 m foundation (long_hall)",
+    "delubrum_fontis on a 1.2 m foundation (aedicula)",
     "domus_hortensii_augusti on a 1.0 m foundation (domus)",
     "domus_pompeii_carinae on a 1.0 m foundation (domus)",
     "domus_publica on a 1.0 m foundation (domus)",
     "emporium on a 3.4 m foundation (quay)",
-    "fornix_scipionis on a 2.8 m foundation (arch)",
+    "fornix_scipionis on a 3.2 m foundation (arch)",
     "forum_boarium on a 2.4 m foundation (plaza)",
     "forum_holitorium on a 2.3 m foundation (plaza)",
     "macellum on a 1.5 m foundation (macellum)",
-    "porta_capena on a 8.8 m foundation (servian_gate)",
-    "porta_collina on a 2.5 m foundation (servian_gate)",
+    "porta_caelimontana on a 1.2 m foundation (servian_gate)",
+    "porta_capena on a 4.4 m foundation (servian_gate)",
+    "porta_collina on a 3.1 m foundation (servian_gate)",
     "porta_esquilina on a 3.5 m foundation (servian_gate)",
-    "porta_flumentana on a 7.6 m foundation (servian_gate)",
-    "porta_fontinalis on a 6.4 m foundation (servian_gate)",
-    "porta_pandana on a 3.0 m foundation (arch)",
-    "porta_salutaris on a 2.4 m foundation (servian_gate)",
-    "porta_sanqualis on a 4.2 m foundation (servian_gate)",
-    "sacellum_volupiae on a 1.7 m foundation (aedicula)"
+    "porta_flumentana on a 7.8 m foundation (servian_gate)",
+    "porta_fontinalis on a 5.7 m foundation (servian_gate)",
+    "porta_pandana on a 3.5 m foundation (arch)",
+    "porta_salutaris on a 2.6 m foundation (servian_gate)",
+    "porta_sanqualis on a 3.5 m foundation (servian_gate)",
+    "sacellum_volupiae on a 1.9 m foundation (aedicula)"
    ],
    "houses_in_monuments": [],
    "houses_on_streets": [],
    "in_river": [
-    "porta_flumentana 1 of 25 footprint points in the water",
+    "porta_flumentana 3 of 25 footprint points in the water",
     "porticus_aemilia 3 of 25 footprint points in the water"
    ],
+   "interior_figures": [],
+   "interior_missing": [],
+   "interior_voids": [],
    "overlaps": [
+    "aedes_apollinis_medici overlaps porticus_octaviae by 3.0 m",
     "circus_maximus overlaps sacellum_murciae by 5.1 m",
     "horrea_galbae overlaps porticus_aemilia by 52.5 m"
    ],
-   "seconds": 26.423,
+   "part_overlaps": [],
+   "parts": 93150,
+   "parts_floating": [],
+   "parts_sunk": [],
+   "seconds": 58.96,
    "slopes": [
     {
-     "drop": 1.8,
+     "drop": 1.94,
      "ground": 40.96,
-     "hx": 8.0,
-     "hz": 9.6,
+     "hx": 8.78,
+     "hz": 10.65,
      "id": "aedes_dei_fidii",
      "model": "temple_tuscan_small",
      "platform": "",
@@ -134,10 +149,10 @@
      "z": -529.88
     },
     {
-     "drop": 2.28,
+     "drop": 2.36,
      "ground": 9.8,
-     "hx": 6.5,
-     "hz": 13.77,
+     "hx": 6.76,
+     "hz": 13.98,
      "id": "aedes_felicitatis",
      "model": "temple_tetrastyle_ionic",
      "platform": "",
@@ -146,10 +161,10 @@
      "z": 249.94
     },
     {
-     "drop": 2.09,
+     "drop": 2.07,
      "ground": 10.76,
-     "hx": 6.0,
-     "hz": 13.0,
+     "hx": 6.26,
+     "hz": 13.2,
      "id": "aedes_fortunae_matris_matutae",
      "model": "temple_tetrastyle_ionic",
      "platform": "",
@@ -158,10 +173,10 @@
      "z": 200.04
     },
     {
-     "drop": 1.38,
+     "drop": 1.41,
      "ground": 56.54,
-     "hx": 8.0,
-     "hz": 9.6,
+     "hx": 8.78,
+     "hz": 10.65,
      "id": "aedes_herculis_collina",
      "model": "temple_tuscan_small",
      "platform": "",
@@ -170,10 +185,10 @@
      "z": -1786.11
     },
     {
-     "drop": 1.91,
+     "drop": 1.94,
      "ground": 16.75,
-     "hx": 6.5,
-     "hz": 13.77,
+     "hx": 6.76,
+     "hz": 13.98,
      "id": "aedes_honoris_virtutis",
      "model": "temple_tetrastyle_ionic",
      "platform": "",
@@ -182,10 +197,10 @@
      "z": 777.92
     },
     {
-     "drop": 1.08,
+     "drop": 1.25,
      "ground": 36.83,
-     "hx": 1.5,
-     "hz": 2.2,
+     "hx": 1.65,
+     "hz": 2.43,
      "id": "aedes_iovis_feretri",
      "model": "aedicula",
      "platform": "",
@@ -194,10 +209,10 @@
      "z": -77.79
     },
     {
-     "drop": 1.47,
+     "drop": 1.66,
      "ground": 38.53,
-     "hx": 8.0,
-     "hz": 9.6,
+     "hx": 8.78,
+     "hz": 10.65,
      "id": "aedes_iunonis_monetae",
      "model": "temple_tuscan_small",
      "platform": "",
@@ -206,10 +221,10 @@
      "z": -155.58
     },
     {
-     "drop": 4.96,
+     "drop": 5.85,
      "ground": 28.3,
-     "hx": 8.0,
-     "hz": 9.6,
+     "hx": 8.78,
+     "hz": 10.65,
      "id": "aedes_larum",
      "model": "temple_tuscan_small",
      "platform": "f2_terrace_aedes_larum",
@@ -218,10 +233,10 @@
      "z": 192.04
     },
     {
-     "drop": 1.11,
+     "drop": 1.13,
      "ground": 39.17,
-     "hx": 6.5,
-     "hz": 13.77,
+     "hx": 6.76,
+     "hz": 13.98,
      "id": "aedes_mentis",
      "model": "temple_tetrastyle_ionic",
      "platform": "",
@@ -230,10 +245,10 @@
      "z": -111.13
     },
     {
-     "drop": 1.0,
+     "drop": 1.02,
      "ground": 9.72,
-     "hx": 6.0,
-     "hz": 10.0,
+     "hx": 6.26,
+     "hz": 10.2,
      "id": "aedes_portuni",
      "model": "temple_tetrastyle_ionic_travertine",
      "platform": "",
@@ -242,10 +257,10 @@
      "z": 366.74
     },
     {
-     "drop": 2.52,
+     "drop": 2.55,
      "ground": 53.58,
-     "hx": 6.5,
-     "hz": 13.77,
+     "hx": 6.76,
+     "hz": 13.98,
      "id": "aedes_quirini",
      "model": "temple_tetrastyle_ionic",
      "platform": "",
@@ -254,10 +269,10 @@
      "z": -1000.19
     },
     {
-     "drop": 1.94,
+     "drop": 1.98,
      "ground": 37.92,
-     "hx": 6.5,
-     "hz": 13.77,
+     "hx": 6.76,
+     "hz": 13.98,
      "id": "aedes_veneris_erycinae_capitol",
      "model": "temple_tetrastyle_ionic",
      "platform": "",
@@ -280,8 +295,8 @@
     {
      "drop": 2.0,
      "ground": 13.0,
-     "hx": 12.5,
-     "hz": 9.0,
+     "hx": 14.1,
+     "hz": 9.5,
      "id": "curia_hostilia",
      "model": "curia",
      "platform": "forum_iulium",
@@ -290,10 +305,22 @@
      "z": -55.57
     },
     {
-     "drop": 1.09,
+     "drop": 15.8,
+     "ground": 31.3,
+     "hx": 10.5,
+     "hz": 25.5,
+     "id": "curiae_veteres",
+     "model": "long_hall",
+     "platform": "f2_terrace_curiae_veteres",
+     "x": 395.03,
+     "yaw": -0.349065850398866,
+     "z": 299.95
+    },
+    {
+     "drop": 1.22,
      "ground": 20.2,
-     "hx": 2.0,
-     "hz": 2.5,
+     "hx": 2.2,
+     "hz": 2.77,
      "id": "delubrum_fontis",
      "model": "aedicula",
      "platform": "",
@@ -350,10 +377,10 @@
      "z": 1133.55
     },
     {
-     "drop": 2.77,
+     "drop": 3.23,
      "ground": 28.17,
-     "hx": 4.0,
-     "hz": 2.0,
+     "hx": 4.3,
+     "hz": 2.3,
      "id": "fornix_scipionis",
      "model": "arch",
      "platform": "f2_terrace_fornix_scipionis",
@@ -398,9 +425,21 @@
      "z": -71.68
     },
     {
-     "drop": 8.82,
+     "drop": 1.16,
+     "ground": 29.4,
+     "hx": 21.4,
+     "hz": 13.0,
+     "id": "porta_caelimontana",
+     "model": "servian_gate",
+     "platform": "f2_terrace_porta_caelimontana",
+     "x": 927.92,
+     "yaw": -1.89371856030302,
+     "z": 577.89
+    },
+    {
+     "drop": 4.38,
      "ground": 42.22,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_capena",
      "model": "servian_gate",
@@ -410,9 +449,9 @@
      "z": 950.85
     },
     {
-     "drop": 2.45,
+     "drop": 3.05,
      "ground": 48.78,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_collina",
      "model": "servian_gate",
@@ -424,7 +463,7 @@
     {
      "drop": 3.46,
      "ground": 31.27,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_esquilina",
      "model": "servian_gate",
@@ -434,9 +473,9 @@
      "z": -364.29
     },
     {
-     "drop": 7.56,
+     "drop": 7.81,
      "ground": 12.5,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_flumentana",
      "model": "servian_gate",
@@ -446,9 +485,9 @@
      "z": 100.02
     },
     {
-     "drop": 6.42,
+     "drop": 5.73,
      "ground": 31.57,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_fontinalis",
      "model": "servian_gate",
@@ -458,10 +497,10 @@
      "z": -388.96
     },
     {
-     "drop": 3.04,
+     "drop": 3.47,
      "ground": 21.04,
-     "hx": 3.0,
-     "hz": 2.0,
+     "hx": 3.3,
+     "hz": 2.3,
      "id": "porta_pandana",
      "model": "arch",
      "platform": "f2_terrace_porta_pandana",
@@ -470,9 +509,9 @@
      "z": 101.8
     },
     {
-     "drop": 2.35,
+     "drop": 2.64,
      "ground": 44.88,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_salutaris",
      "model": "servian_gate",
@@ -482,9 +521,9 @@
      "z": -766.81
     },
     {
-     "drop": 4.18,
+     "drop": 3.45,
      "ground": 36.9,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_sanqualis",
      "model": "servian_gate",
@@ -494,10 +533,10 @@
      "z": -439.97
     },
     {
-     "drop": 1.75,
+     "drop": 1.93,
      "ground": 45.46,
-     "hx": 1.5,
-     "hz": 2.0,
+     "hx": 1.65,
+     "hz": 2.25,
      "id": "sacellum_volupiae",
      "model": "aedicula",
      "platform": "",
@@ -506,54 +545,81 @@
      "z": 290.05
     }
    ],
-   "standing": 150,
+   "standing": 152,
    "streets_through": [],
+   "view_inside": [],
+   "view_misses": [
+    "aedes_pietatis view from (-468, 20): aedes_apollinis_medici across the line to the door",
+    "columna_maenia view from (-50, -75): stands 110\u00b0 off the front axis",
+    "comitium view from (15, -16): stands 110\u00b0 off the front axis",
+    "porta_flumentana view from (-588, 53): stands 110\u00b0 off the front axis",
+    "porta_quirinalis view from (404, -1139): stands 180\u00b0 off the front axis",
+    "porta_viminalis view from (1325, -1076): stands 110\u00b0 off the front axis",
+    "porticus_aemilia view from (-704, 1325): horrea_galbae across the line to the door",
+    "porticus_inter_lignarios view from (-465, 646): stands 110\u00b0 off the front axis",
+    "sacellum_murciae view from (192, 914): a house or the ground across the line to the door",
+    "salinae view from (-539, 571): stands 80\u00b0 off the front axis"
+   ],
    "year": -133
   },
   "-264": {
    "buried": [],
+   "coplanar": [
+    "area_sacra_argentina_c: 12 coplanar face pairs, largest 0.2 m\u00b2 (stucco_white/tegulae, facing x) at (-695.8, -249.8) y 20.4",
+    "villa_publica: 17 coplanar face pairs, largest 0.4 m\u00b2 (stucco_cream/stucco_white, facing z) at (-825.1, -691.8) y 18.0"
+   ],
+   "f3_monuments_seconds": 18.94,
    "floating": [],
    "founded": [
-    "aedes_dei_fidii on a 1.8 m foundation (temple_tuscan_small)",
+    "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
     "aedes_fortunae_matris_matutae on a 2.1 m foundation (temple_tetrastyle_ionic)",
     "aedes_herculis_collina on a 1.4 m foundation (temple_tuscan_small)",
-    "aedes_iovis_feretri on a 1.1 m foundation (aedicula)",
-    "aedes_iunonis_monetae on a 1.5 m foundation (temple_tuscan_small)",
-    "aedes_larum on a 5.0 m foundation (temple_tuscan_small)",
+    "aedes_iovis_feretri on a 1.3 m foundation (aedicula)",
+    "aedes_iunonis_monetae on a 1.7 m foundation (temple_tuscan_small)",
+    "aedes_larum on a 5.8 m foundation (temple_tuscan_small)",
     "aedes_portuni on a 1.0 m foundation (temple_tetrastyle_ionic_travertine)",
     "aedes_quirini on a 2.5 m foundation (temple_tetrastyle_ionic)",
     "area_capitolina on a 20.7 m foundation (plaza)",
     "curia_hostilia on a 2.0 m foundation (curia)",
+    "curiae_veteres on a 15.8 m foundation (long_hall)",
     "domus_hortensii_augusti on a 1.0 m foundation (domus)",
     "domus_pompeii_carinae on a 1.0 m foundation (domus)",
     "domus_publica on a 1.0 m foundation (domus)",
     "forum_boarium on a 2.4 m foundation (plaza)",
     "forum_holitorium on a 2.3 m foundation (plaza)",
-    "porta_capena on a 8.8 m foundation (servian_gate)",
-    "porta_collina on a 2.5 m foundation (servian_gate)",
+    "porta_caelimontana on a 1.2 m foundation (servian_gate)",
+    "porta_capena on a 4.4 m foundation (servian_gate)",
+    "porta_collina on a 3.1 m foundation (servian_gate)",
     "porta_esquilina on a 3.5 m foundation (servian_gate)",
-    "porta_flumentana on a 7.6 m foundation (servian_gate)",
-    "porta_fontinalis on a 6.4 m foundation (servian_gate)",
-    "porta_pandana on a 3.0 m foundation (arch)",
-    "porta_salutaris on a 2.4 m foundation (servian_gate)",
-    "porta_sanqualis on a 4.2 m foundation (servian_gate)",
-    "sacellum_volupiae on a 1.7 m foundation (aedicula)"
+    "porta_flumentana on a 7.8 m foundation (servian_gate)",
+    "porta_fontinalis on a 5.7 m foundation (servian_gate)",
+    "porta_pandana on a 3.5 m foundation (arch)",
+    "porta_salutaris on a 2.6 m foundation (servian_gate)",
+    "porta_sanqualis on a 3.5 m foundation (servian_gate)",
+    "sacellum_volupiae on a 1.9 m foundation (aedicula)"
    ],
    "houses_in_monuments": [],
    "houses_on_streets": [],
    "in_river": [
-    "porta_flumentana 1 of 25 footprint points in the water"
+    "porta_flumentana 3 of 25 footprint points in the water"
    ],
+   "interior_figures": [],
+   "interior_missing": [],
+   "interior_voids": [],
    "overlaps": [
     "circus_maximus overlaps sacellum_murciae by 5.1 m"
    ],
-   "seconds": 14.983,
+   "part_overlaps": [],
+   "parts": 52026,
+   "parts_floating": [],
+   "parts_sunk": [],
+   "seconds": 32.451,
    "slopes": [
     {
-     "drop": 1.8,
+     "drop": 1.94,
      "ground": 40.96,
-     "hx": 8.0,
-     "hz": 9.6,
+     "hx": 8.78,
+     "hz": 10.65,
      "id": "aedes_dei_fidii",
      "model": "temple_tuscan_small",
      "platform": "",
@@ -562,10 +628,10 @@
      "z": -529.88
     },
     {
-     "drop": 2.09,
+     "drop": 2.07,
      "ground": 10.76,
-     "hx": 6.0,
-     "hz": 13.0,
+     "hx": 6.26,
+     "hz": 13.2,
      "id": "aedes_fortunae_matris_matutae",
      "model": "temple_tetrastyle_ionic",
      "platform": "",
@@ -574,10 +640,10 @@
      "z": 200.04
     },
     {
-     "drop": 1.38,
+     "drop": 1.41,
      "ground": 56.54,
-     "hx": 8.0,
-     "hz": 9.6,
+     "hx": 8.78,
+     "hz": 10.65,
      "id": "aedes_herculis_collina",
      "model": "temple_tuscan_small",
      "platform": "",
@@ -586,10 +652,10 @@
      "z": -1786.11
     },
     {
-     "drop": 1.08,
+     "drop": 1.25,
      "ground": 36.83,
-     "hx": 1.5,
-     "hz": 2.2,
+     "hx": 1.65,
+     "hz": 2.43,
      "id": "aedes_iovis_feretri",
      "model": "aedicula",
      "platform": "",
@@ -598,10 +664,10 @@
      "z": -77.79
     },
     {
-     "drop": 1.47,
+     "drop": 1.66,
      "ground": 38.53,
-     "hx": 8.0,
-     "hz": 9.6,
+     "hx": 8.78,
+     "hz": 10.65,
      "id": "aedes_iunonis_monetae",
      "model": "temple_tuscan_small",
      "platform": "",
@@ -610,10 +676,10 @@
      "z": -155.58
     },
     {
-     "drop": 4.96,
+     "drop": 5.85,
      "ground": 28.3,
-     "hx": 8.0,
-     "hz": 9.6,
+     "hx": 8.78,
+     "hz": 10.65,
      "id": "aedes_larum",
      "model": "temple_tuscan_small",
      "platform": "f2_terrace_aedes_larum",
@@ -622,10 +688,10 @@
      "z": 192.04
     },
     {
-     "drop": 1.0,
+     "drop": 1.02,
      "ground": 9.72,
-     "hx": 6.0,
-     "hz": 10.0,
+     "hx": 6.26,
+     "hz": 10.2,
      "id": "aedes_portuni",
      "model": "temple_tetrastyle_ionic_travertine",
      "platform": "",
@@ -634,10 +700,10 @@
      "z": 366.74
     },
     {
-     "drop": 2.52,
+     "drop": 2.55,
      "ground": 53.58,
-     "hx": 6.5,
-     "hz": 13.77,
+     "hx": 6.76,
+     "hz": 13.98,
      "id": "aedes_quirini",
      "model": "temple_tetrastyle_ionic",
      "platform": "",
@@ -660,14 +726,26 @@
     {
      "drop": 2.0,
      "ground": 13.0,
-     "hx": 12.5,
-     "hz": 9.0,
+     "hx": 14.1,
+     "hz": 9.5,
      "id": "curia_hostilia",
      "model": "curia",
      "platform": "forum_iulium",
      "x": 0.0,
      "yaw": -0.279252680319093,
      "z": -55.57
+    },
+    {
+     "drop": 15.8,
+     "ground": 31.3,
+     "hx": 10.5,
+     "hz": 25.5,
+     "id": "curiae_veteres",
+     "model": "long_hall",
+     "platform": "f2_terrace_curiae_veteres",
+     "x": 395.03,
+     "yaw": -0.349065850398866,
+     "z": 299.95
     },
     {
      "drop": 1.04,
@@ -730,9 +808,21 @@
      "z": 144.47
     },
     {
-     "drop": 8.82,
+     "drop": 1.16,
+     "ground": 29.4,
+     "hx": 21.4,
+     "hz": 13.0,
+     "id": "porta_caelimontana",
+     "model": "servian_gate",
+     "platform": "f2_terrace_porta_caelimontana",
+     "x": 927.92,
+     "yaw": -1.89371856030302,
+     "z": 577.89
+    },
+    {
+     "drop": 4.38,
      "ground": 42.22,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_capena",
      "model": "servian_gate",
@@ -742,9 +832,9 @@
      "z": 950.85
     },
     {
-     "drop": 2.45,
+     "drop": 3.05,
      "ground": 48.78,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_collina",
      "model": "servian_gate",
@@ -756,7 +846,7 @@
     {
      "drop": 3.46,
      "ground": 31.27,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_esquilina",
      "model": "servian_gate",
@@ -766,9 +856,9 @@
      "z": -364.29
     },
     {
-     "drop": 7.56,
+     "drop": 7.81,
      "ground": 12.5,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_flumentana",
      "model": "servian_gate",
@@ -778,9 +868,9 @@
      "z": 100.02
     },
     {
-     "drop": 6.42,
+     "drop": 5.73,
      "ground": 31.57,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_fontinalis",
      "model": "servian_gate",
@@ -790,10 +880,10 @@
      "z": -388.96
     },
     {
-     "drop": 3.04,
+     "drop": 3.47,
      "ground": 21.04,
-     "hx": 3.0,
-     "hz": 2.0,
+     "hx": 3.3,
+     "hz": 2.3,
      "id": "porta_pandana",
      "model": "arch",
      "platform": "f2_terrace_porta_pandana",
@@ -802,9 +892,9 @@
      "z": 101.8
     },
     {
-     "drop": 2.35,
+     "drop": 2.64,
      "ground": 44.88,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_salutaris",
      "model": "servian_gate",
@@ -814,9 +904,9 @@
      "z": -766.81
     },
     {
-     "drop": 4.18,
+     "drop": 3.45,
      "ground": 36.9,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_sanqualis",
      "model": "servian_gate",
@@ -826,10 +916,10 @@
      "z": -439.97
     },
     {
-     "drop": 1.75,
+     "drop": 1.93,
      "ground": 45.46,
-     "hx": 1.5,
-     "hz": 2.0,
+     "hx": 1.65,
+     "hz": 2.25,
      "id": "sacellum_volupiae",
      "model": "aedicula",
      "platform": "",
@@ -838,37 +928,56 @@
      "z": 290.05
     }
    ],
-   "standing": 108,
+   "standing": 109,
    "streets_through": [],
+   "view_inside": [],
+   "view_misses": [
+    "comitium view from (15, -16): stands 110\u00b0 off the front axis",
+    "porta_carmentalis view from (-438, 188): stands 80\u00b0 off the front axis",
+    "porta_flumentana view from (-588, 53): stands 110\u00b0 off the front axis",
+    "sacellum_murciae view from (192, 914): a house or the ground across the line to the door",
+    "salinae view from (-539, 571): stands 80\u00b0 off the front axis"
+   ],
    "year": -264
   },
   "-27": {
    "buried": [],
+   "coplanar": [
+    "area_sacra_argentina_c: 12 coplanar face pairs, largest 0.2 m\u00b2 (stucco_white/tegulae, facing x) at (-695.8, -249.8) y 20.4",
+    "porticus_minucia_vetus: 16 coplanar face pairs, largest 0.4 m\u00b2 (stucco_cream/stucco_white, facing x) at (-616.2, -290.1) y 19.7",
+    "porticus_philippi: 22 coplanar face pairs, largest 0.4 m\u00b2 (stucco_cream/stucco_white, facing x) at (-667.6, -133.2) y 18.4",
+    "villa_publica: 17 coplanar face pairs, largest 0.4 m\u00b2 (stucco_cream/stucco_white, facing z) at (-825.1, -691.8) y 18.0"
+   ],
+   "f3_monuments_seconds": 46.336,
    "floating": [],
    "founded": [
     "aedes_apollinis_palatini on a 1.2 m foundation (temple_hexastyle_corinthian_marble)",
-    "aedes_dei_fidii on a 1.8 m foundation (temple_tuscan_small)",
-    "aedes_felicitatis on a 2.3 m foundation (temple_tetrastyle_ionic)",
+    "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
+    "aedes_felicitatis on a 2.4 m foundation (temple_tetrastyle_ionic)",
     "aedes_fortunae_matris_matutae on a 2.1 m foundation (temple_tetrastyle_ionic)",
     "aedes_herculis_collina on a 1.4 m foundation (temple_tuscan_small)",
     "aedes_honoris_virtutis on a 1.9 m foundation (temple_tetrastyle_ionic)",
-    "aedes_iovis_feretri on a 1.1 m foundation (aedicula)",
-    "aedes_iunonis_monetae on a 1.5 m foundation (temple_tuscan_small)",
-    "aedes_larum on a 5.0 m foundation (temple_tuscan_small)",
+    "aedes_iovis_feretri on a 1.3 m foundation (aedicula)",
+    "aedes_iunonis_monetae on a 1.7 m foundation (temple_tuscan_small)",
+    "aedes_larum on a 5.8 m foundation (temple_tuscan_small)",
     "aedes_mentis on a 1.1 m foundation (temple_tetrastyle_ionic)",
     "aedes_portuni on a 1.0 m foundation (temple_tetrastyle_ionic_travertine)",
-    "aedes_veneris_erycinae_capitol on a 1.9 m foundation (temple_tetrastyle_ionic)",
-    "ara_vermini on a 1.5 m foundation (altar)",
+    "aedes_veneris_erycinae_capitol on a 2.0 m foundation (temple_tetrastyle_ionic)",
+    "ara_vermini on a 2.0 m foundation (altar)",
     "area_capitolina on a 20.7 m foundation (plaza)",
-    "curia_iulia on a 1.9 m foundation (curia)",
-    "delubrum_fontis on a 1.1 m foundation (aedicula)",
+    "auditorium_maecenatis on a 9.5 m foundation (long_hall)",
+    "basilica_opimia on a 1.2 m foundation (basilica)",
+    "curia_iulia on a 2.0 m foundation (curia)",
+    "curiae_veteres on a 15.8 m foundation (long_hall)",
+    "delubrum_fontis on a 1.2 m foundation (aedicula)",
     "domus_catuli on a 14.2 m foundation (domus)",
     "domus_ciceronis on a 1.7 m foundation (domus)",
-    "domus_hortensii_augusti on a 1.0 m foundation (domus)",
+    "domus_crassi_oratoris on a 19.6 m foundation (domus)",
     "domus_pompeii_carinae on a 1.0 m foundation (domus)",
     "domus_publica on a 1.0 m foundation (domus)",
+    "domus_scauri on a 1.8 m foundation (domus)",
     "emporium on a 3.4 m foundation (quay)",
-    "fornix_scipionis on a 2.8 m foundation (arch)",
+    "fornix_scipionis on a 3.2 m foundation (arch)",
     "forum_boarium on a 2.4 m foundation (plaza)",
     "forum_holitorium on a 2.3 m foundation (plaza)",
     "forum_iulium on a 7.2 m foundation (plaza)",
@@ -876,38 +985,48 @@
     "horrea_sempronia on a 1.5 m foundation (horrea)",
     "macellum on a 1.5 m foundation (macellum)",
     "nymphaeum_annibaldi on a 1.3 m foundation (basin)",
-    "porta_capena on a 8.8 m foundation (servian_gate)",
-    "porta_collina on a 2.5 m foundation (servian_gate)",
+    "porta_caelimontana on a 1.2 m foundation (servian_gate)",
+    "porta_capena on a 4.4 m foundation (servian_gate)",
+    "porta_collina on a 3.1 m foundation (servian_gate)",
     "porta_esquilina on a 3.5 m foundation (servian_gate)",
-    "porta_flumentana on a 7.6 m foundation (servian_gate)",
-    "porta_fontinalis on a 6.4 m foundation (servian_gate)",
-    "porta_pandana on a 3.0 m foundation (arch)",
-    "porta_salutaris on a 2.4 m foundation (servian_gate)",
-    "porta_sanqualis on a 4.2 m foundation (servian_gate)",
-    "porticus_catuli on a 2.0 m foundation (portico_enclosure)",
-    "sacellum_volupiae on a 1.7 m foundation (aedicula)",
-    "tabularium on a 7.2 m foundation (tabularium)"
+    "porta_flumentana on a 7.8 m foundation (servian_gate)",
+    "porta_fontinalis on a 5.7 m foundation (servian_gate)",
+    "porta_pandana on a 3.5 m foundation (arch)",
+    "porta_salutaris on a 2.6 m foundation (servian_gate)",
+    "porta_sanqualis on a 3.5 m foundation (servian_gate)",
+    "porticus_catuli on a 2.1 m foundation (portico_enclosure)",
+    "sacellum_volupiae on a 1.9 m foundation (aedicula)",
+    "tabularium on a 7.7 m foundation (tabularium)"
    ],
    "houses_in_monuments": [],
    "houses_on_streets": [],
    "in_river": [
-    "porta_flumentana 1 of 25 footprint points in the water",
+    "porta_flumentana 3 of 25 footprint points in the water",
     "porticus_aemilia 3 of 25 footprint points in the water"
    ],
+   "interior_figures": [
+    "theatrum_pompei: 1 figures through a wall or floor, e.g. marble 2.8 m at (-920, -375) y 16.6"
+   ],
+   "interior_missing": [],
+   "interior_voids": [],
    "overlaps": [
-    "aedes_concordiae_forum overlaps tabularium by 3.2 m",
-    "aedes_herculis_musarum overlaps porticus_philippi by 6.9 m",
+    "aedes_apollinis_medici overlaps porticus_octaviae by 3.0 m",
+    "aedes_concordiae_forum overlaps tabularium by 3.7 m",
     "circus_maximus overlaps sacellum_murciae by 5.1 m",
     "horrea_galbae overlaps porticus_aemilia by 52.5 m",
     "porticus_octaviae overlaps theatrum_marcelli by 2.8 m"
    ],
-   "seconds": 30.917,
+   "part_overlaps": [],
+   "parts": 138185,
+   "parts_floating": [],
+   "parts_sunk": [],
+   "seconds": 74.438,
    "slopes": [
     {
-     "drop": 1.2,
+     "drop": 1.21,
      "ground": 48.58,
-     "hx": 12.5,
-     "hz": 25.0,
+     "hx": 12.79,
+     "hz": 25.2,
      "id": "aedes_apollinis_palatini",
      "model": "temple_hexastyle_corinthian_marble",
      "platform": "",
@@ -916,10 +1035,10 @@
      "z": 411.19
     },
     {
-     "drop": 1.8,
+     "drop": 1.94,
      "ground": 40.96,
-     "hx": 8.0,
-     "hz": 9.6,
+     "hx": 8.78,
+     "hz": 10.65,
      "id": "aedes_dei_fidii",
      "model": "temple_tuscan_small",
      "platform": "",
@@ -928,10 +1047,10 @@
      "z": -529.88
     },
     {
-     "drop": 2.28,
+     "drop": 2.36,
      "ground": 9.8,
-     "hx": 6.5,
-     "hz": 13.77,
+     "hx": 6.76,
+     "hz": 13.98,
      "id": "aedes_felicitatis",
      "model": "temple_tetrastyle_ionic",
      "platform": "",
@@ -940,10 +1059,10 @@
      "z": 249.94
     },
     {
-     "drop": 2.09,
+     "drop": 2.07,
      "ground": 10.76,
-     "hx": 6.0,
-     "hz": 13.0,
+     "hx": 6.26,
+     "hz": 13.2,
      "id": "aedes_fortunae_matris_matutae",
      "model": "temple_tetrastyle_ionic",
      "platform": "",
@@ -952,10 +1071,10 @@
      "z": 200.04
     },
     {
-     "drop": 1.38,
+     "drop": 1.41,
      "ground": 56.54,
-     "hx": 8.0,
-     "hz": 9.6,
+     "hx": 8.78,
+     "hz": 10.65,
      "id": "aedes_herculis_collina",
      "model": "temple_tuscan_small",
      "platform": "",
@@ -964,10 +1083,10 @@
      "z": -1786.11
     },
     {
-     "drop": 1.91,
+     "drop": 1.94,
      "ground": 16.75,
-     "hx": 6.5,
-     "hz": 13.77,
+     "hx": 6.76,
+     "hz": 13.98,
      "id": "aedes_honoris_virtutis",
      "model": "temple_tetrastyle_ionic",
      "platform": "",
@@ -976,10 +1095,10 @@
      "z": 777.92
     },
     {
-     "drop": 1.08,
+     "drop": 1.25,
      "ground": 36.83,
-     "hx": 1.5,
-     "hz": 2.2,
+     "hx": 1.65,
+     "hz": 2.43,
      "id": "aedes_iovis_feretri",
      "model": "aedicula",
      "platform": "",
@@ -988,10 +1107,10 @@
      "z": -77.79
     },
     {
-     "drop": 1.47,
+     "drop": 1.66,
      "ground": 38.53,
-     "hx": 8.0,
-     "hz": 9.6,
+     "hx": 8.78,
+     "hz": 10.65,
      "id": "aedes_iunonis_monetae",
      "model": "temple_tuscan_small",
      "platform": "",
@@ -1000,10 +1119,10 @@
      "z": -155.58
     },
     {
-     "drop": 4.96,
+     "drop": 5.85,
      "ground": 28.3,
-     "hx": 8.0,
-     "hz": 9.6,
+     "hx": 8.78,
+     "hz": 10.65,
      "id": "aedes_larum",
      "model": "temple_tuscan_small",
      "platform": "f2_terrace_aedes_larum",
@@ -1012,10 +1131,10 @@
      "z": 192.04
     },
     {
-     "drop": 1.11,
+     "drop": 1.13,
      "ground": 39.17,
-     "hx": 6.5,
-     "hz": 13.77,
+     "hx": 6.76,
+     "hz": 13.98,
      "id": "aedes_mentis",
      "model": "temple_tetrastyle_ionic",
      "platform": "",
@@ -1024,10 +1143,10 @@
      "z": -111.13
     },
     {
-     "drop": 1.0,
+     "drop": 1.02,
      "ground": 9.72,
-     "hx": 6.0,
-     "hz": 10.0,
+     "hx": 6.26,
+     "hz": 10.2,
      "id": "aedes_portuni",
      "model": "temple_tetrastyle_ionic_travertine",
      "platform": "",
@@ -1036,10 +1155,10 @@
      "z": 366.74
     },
     {
-     "drop": 1.94,
+     "drop": 1.98,
      "ground": 37.92,
-     "hx": 6.5,
-     "hz": 13.77,
+     "hx": 6.76,
+     "hz": 13.98,
      "id": "aedes_veneris_erycinae_capitol",
      "model": "temple_tetrastyle_ionic",
      "platform": "",
@@ -1048,10 +1167,10 @@
      "z": -122.25
     },
     {
-     "drop": 1.49,
+     "drop": 2.01,
      "ground": 52.41,
-     "hx": 0.75,
-     "hz": 1.0,
+     "hx": 0.98,
+     "hz": 1.3,
      "id": "ara_vermini",
      "model": "altar",
      "platform": "",
@@ -1072,10 +1191,34 @@
      "z": 49.9
     },
     {
-     "drop": 1.9,
+     "drop": 9.49,
+     "ground": 57.8,
+     "hx": 10.5,
+     "hz": 25.5,
+     "id": "auditorium_maecenatis",
+     "model": "long_hall",
+     "platform": "f2_terrace_auditorium_maecenatis",
+     "x": 1327.59,
+     "yaw": -2.16420827247297,
+     "z": -168.59
+    },
+    {
+     "drop": 1.15,
+     "ground": 11.0,
+     "hx": 16.12,
+     "hz": 9.5,
+     "id": "basilica_opimia",
+     "model": "basilica",
+     "platform": "forum_romanum",
+     "x": -82.02,
+     "yaw": 1.2915436464758,
+     "z": -88.02
+    },
+    {
+     "drop": 1.99,
      "ground": 13.0,
-     "hx": 12.6,
-     "hz": 8.81,
+     "hx": 14.2,
+     "hz": 9.31,
      "id": "curia_iulia",
      "model": "curia",
      "platform": "forum_iulium",
@@ -1084,10 +1227,22 @@
      "z": -55.57
     },
     {
-     "drop": 1.09,
+     "drop": 15.8,
+     "ground": 31.3,
+     "hx": 10.5,
+     "hz": 25.5,
+     "id": "curiae_veteres",
+     "model": "long_hall",
+     "platform": "f2_terrace_curiae_veteres",
+     "x": 395.03,
+     "yaw": -0.349065850398866,
+     "z": 299.95
+    },
+    {
+     "drop": 1.22,
      "ground": 20.2,
-     "hx": 2.0,
-     "hz": 2.5,
+     "hx": 2.2,
+     "hz": 2.77,
      "id": "delubrum_fontis",
      "model": "aedicula",
      "platform": "",
@@ -1120,16 +1275,16 @@
      "z": 240.05
     },
     {
-     "drop": 1.04,
-     "ground": 47.69,
-     "hx": 15.6,
-     "hz": 19.25,
-     "id": "domus_hortensii_augusti",
+     "drop": 19.61,
+     "ground": 35.59,
+     "hx": 9.82,
+     "hz": 14.02,
+     "id": "domus_crassi_oratoris",
      "model": "domus",
      "platform": "",
-     "x": 3.98,
-     "yaw": 0.715584993317675,
-     "z": 436.97
+     "x": 0.0,
+     "yaw": 2.8623399732707,
+     "z": 222.26
     },
     {
      "drop": 1.03,
@@ -1156,6 +1311,18 @@
      "z": 100.02
     },
     {
+     "drop": 1.76,
+     "ground": 44.47,
+     "hx": 15.0,
+     "hz": 22.5,
+     "id": "domus_scauri",
+     "model": "domus",
+     "platform": "",
+     "x": 140.85,
+     "yaw": 2.8623399732707,
+     "z": 277.83
+    },
+    {
      "drop": 3.42,
      "ground": 9.98,
      "hx": 20.0,
@@ -1168,10 +1335,10 @@
      "z": 1133.55
     },
     {
-     "drop": 2.77,
+     "drop": 3.23,
      "ground": 28.17,
-     "hx": 4.0,
-     "hz": 2.0,
+     "hx": 4.3,
+     "hz": 2.3,
      "id": "fornix_scipionis",
      "model": "arch",
      "platform": "f2_terrace_fornix_scipionis",
@@ -1264,9 +1431,21 @@
      "z": 92.91
     },
     {
-     "drop": 8.82,
+     "drop": 1.16,
+     "ground": 29.4,
+     "hx": 21.4,
+     "hz": 13.0,
+     "id": "porta_caelimontana",
+     "model": "servian_gate",
+     "platform": "f2_terrace_porta_caelimontana",
+     "x": 927.92,
+     "yaw": -1.89371856030302,
+     "z": 577.89
+    },
+    {
+     "drop": 4.38,
      "ground": 42.22,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_capena",
      "model": "servian_gate",
@@ -1276,9 +1455,9 @@
      "z": 950.85
     },
     {
-     "drop": 2.45,
+     "drop": 3.05,
      "ground": 48.78,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_collina",
      "model": "servian_gate",
@@ -1290,7 +1469,7 @@
     {
      "drop": 3.46,
      "ground": 31.27,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_esquilina",
      "model": "servian_gate",
@@ -1300,9 +1479,9 @@
      "z": -364.29
     },
     {
-     "drop": 7.56,
+     "drop": 7.81,
      "ground": 12.5,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_flumentana",
      "model": "servian_gate",
@@ -1312,9 +1491,9 @@
      "z": 100.02
     },
     {
-     "drop": 6.42,
+     "drop": 5.73,
      "ground": 31.57,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_fontinalis",
      "model": "servian_gate",
@@ -1324,10 +1503,10 @@
      "z": -388.96
     },
     {
-     "drop": 3.04,
+     "drop": 3.47,
      "ground": 21.04,
-     "hx": 3.0,
-     "hz": 2.0,
+     "hx": 3.3,
+     "hz": 2.3,
      "id": "porta_pandana",
      "model": "arch",
      "platform": "f2_terrace_porta_pandana",
@@ -1336,9 +1515,9 @@
      "z": 101.8
     },
     {
-     "drop": 2.35,
+     "drop": 2.64,
      "ground": 44.88,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_salutaris",
      "model": "servian_gate",
@@ -1348,9 +1527,9 @@
      "z": -766.81
     },
     {
-     "drop": 4.18,
+     "drop": 3.45,
      "ground": 36.9,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_sanqualis",
      "model": "servian_gate",
@@ -1360,10 +1539,10 @@
      "z": -439.97
     },
     {
-     "drop": 2.03,
+     "drop": 2.11,
      "ground": 44.56,
-     "hx": 15.0,
-     "hz": 17.5,
+     "hx": 15.05,
+     "hz": 19.63,
      "id": "porticus_catuli",
      "model": "portico_enclosure",
      "platform": "",
@@ -1372,10 +1551,10 @@
      "z": 258.05
     },
     {
-     "drop": 1.75,
+     "drop": 1.93,
      "ground": 45.46,
-     "hx": 1.5,
-     "hz": 2.0,
+     "hx": 1.65,
+     "hz": 2.25,
      "id": "sacellum_volupiae",
      "model": "aedicula",
      "platform": "",
@@ -1384,10 +1563,10 @@
      "z": 290.05
     },
     {
-     "drop": 7.25,
+     "drop": 7.66,
      "ground": 10.5,
-     "hx": 35.0,
-     "hz": 15.0,
+     "hx": 35.72,
+     "hz": 15.93,
      "id": "tabularium",
      "model": "tabularium",
      "platform": "",
@@ -1396,43 +1575,78 @@
      "z": -31.45
     }
    ],
-   "standing": 182,
+   "standing": 185,
    "streets_through": [],
+   "view_inside": [],
+   "view_misses": [
+    "aedes_concordiae_forum view from (-67, -34): stands 80\u00b0 off the front axis",
+    "aedes_fortunae_equestris view from (-789, -253): porticus_pompeiana across the line to the door",
+    "aedicula_victoriae_virginis view from (129, 376): stands 80\u00b0 off the front axis",
+    "area_sacra_argentina_b view from (-674, -269): stands 80\u00b0 off the front axis",
+    "auditorium_maecenatis view from (1295, -153): stands 80\u00b0 off the front axis",
+    "curia_iulia view from (36, -4): basilica_aemilia across the line to the door",
+    "domus_scauri view from (188, 260): stands 80\u00b0 off the front axis",
+    "horrea_agrippiana view from (-80, 245): sees 2 of 5 fa\u00e7ade points, a house or the ground across the line to the door",
+    "porta_flumentana view from (-588, 53): stands 110\u00b0 off the front axis",
+    "porta_quirinalis view from (404, -1139): stands 180\u00b0 off the front axis",
+    "porta_trigemina view from (-440, 532): stands 80\u00b0 off the front axis",
+    "porta_viminalis view from (1325, -1076): stands 110\u00b0 off the front axis",
+    "porticus_aemilia view from (-704, 1325): horrea_galbae across the line to the door",
+    "porticus_catuli view from (15, 243): stands 110\u00b0 off the front axis",
+    "porticus_inter_lignarios view from (-465, 646): stands 110\u00b0 off the front axis",
+    "sacellum_murciae view from (192, 914): a house or the ground across the line to the door",
+    "saepta_iulia view from (-413, -715): stands 80\u00b0 off the front axis",
+    "salinae view from (-539, 571): stands 80\u00b0 off the front axis"
+   ],
    "year": -27
   },
   "-390": {
    "buried": [],
+   "coplanar": [
+    "area_sacra_argentina_c: 12 coplanar face pairs, largest 0.2 m\u00b2 (stucco_white/tegulae, facing x) at (-695.8, -249.8) y 20.4",
+    "villa_publica: 17 coplanar face pairs, largest 0.4 m\u00b2 (stucco_cream/stucco_white, facing z) at (-825.1, -691.8) y 18.0"
+   ],
+   "f3_monuments_seconds": 15.059,
    "floating": [],
    "founded": [
-    "aedes_dei_fidii on a 1.8 m foundation (temple_tuscan_small)",
+    "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
     "aedes_fortunae_matris_matutae on a 2.1 m foundation (temple_tetrastyle_ionic)",
     "aedes_herculis_collina on a 1.4 m foundation (temple_tuscan_small)",
-    "aedes_iovis_feretri on a 1.1 m foundation (aedicula)",
-    "aedes_larum on a 5.0 m foundation (temple_tuscan_small)",
+    "aedes_iovis_feretri on a 1.3 m foundation (aedicula)",
+    "aedes_larum on a 5.8 m foundation (temple_tuscan_small)",
     "aedes_portuni on a 1.0 m foundation (temple_tetrastyle_ionic_travertine)",
     "area_capitolina on a 20.7 m foundation (plaza)",
     "curia_hostilia on a 2.0 m foundation (curia)",
+    "curiae_veteres on a 15.8 m foundation (long_hall)",
     "domus_hortensii_augusti on a 1.0 m foundation (domus)",
+    "domus_manlii_arx on a 2.0 m foundation (domus)",
     "domus_pompeii_carinae on a 1.0 m foundation (domus)",
     "domus_publica on a 1.0 m foundation (domus)",
     "forum_boarium on a 2.4 m foundation (plaza)",
     "forum_holitorium on a 2.3 m foundation (plaza)",
-    "porta_pandana on a 3.0 m foundation (arch)",
-    "sacellum_volupiae on a 1.7 m foundation (aedicula)"
+    "porta_pandana on a 3.5 m foundation (arch)",
+    "sacellum_volupiae on a 1.9 m foundation (aedicula)"
    ],
    "houses_in_monuments": [],
    "houses_on_streets": [],
    "in_river": [],
+   "interior_figures": [],
+   "interior_missing": [],
+   "interior_voids": [],
    "overlaps": [
     "circus_maximus overlaps sacellum_murciae by 5.1 m"
    ],
-   "seconds": 8.525,
+   "part_overlaps": [],
+   "parts": 28045,
+   "parts_floating": [],
+   "parts_sunk": [],
+   "seconds": 24.894,
    "slopes": [
     {
-     "drop": 1.8,
+     "drop": 1.94,
      "ground": 40.96,
-     "hx": 8.0,
-     "hz": 9.6,
+     "hx": 8.78,
+     "hz": 10.65,
      "id": "aedes_dei_fidii",
      "model": "temple_tuscan_small",
      "platform": "",
@@ -1441,10 +1655,10 @@
      "z": -529.88
     },
     {
-     "drop": 2.09,
+     "drop": 2.07,
      "ground": 10.76,
-     "hx": 6.0,
-     "hz": 13.0,
+     "hx": 6.26,
+     "hz": 13.2,
      "id": "aedes_fortunae_matris_matutae",
      "model": "temple_tetrastyle_ionic",
      "platform": "",
@@ -1453,10 +1667,10 @@
      "z": 200.04
     },
     {
-     "drop": 1.38,
+     "drop": 1.41,
      "ground": 56.54,
-     "hx": 8.0,
-     "hz": 9.6,
+     "hx": 8.78,
+     "hz": 10.65,
      "id": "aedes_herculis_collina",
      "model": "temple_tuscan_small",
      "platform": "",
@@ -1465,10 +1679,10 @@
      "z": -1786.11
     },
     {
-     "drop": 1.08,
+     "drop": 1.25,
      "ground": 36.83,
-     "hx": 1.5,
-     "hz": 2.2,
+     "hx": 1.65,
+     "hz": 2.43,
      "id": "aedes_iovis_feretri",
      "model": "aedicula",
      "platform": "",
@@ -1477,10 +1691,10 @@
      "z": -77.79
     },
     {
-     "drop": 4.96,
+     "drop": 5.85,
      "ground": 28.3,
-     "hx": 8.0,
-     "hz": 9.6,
+     "hx": 8.78,
+     "hz": 10.65,
      "id": "aedes_larum",
      "model": "temple_tuscan_small",
      "platform": "f2_terrace_aedes_larum",
@@ -1489,10 +1703,10 @@
      "z": 192.04
     },
     {
-     "drop": 1.0,
+     "drop": 1.02,
      "ground": 9.72,
-     "hx": 6.0,
-     "hz": 10.0,
+     "hx": 6.26,
+     "hz": 10.2,
      "id": "aedes_portuni",
      "model": "temple_tetrastyle_ionic_travertine",
      "platform": "",
@@ -1515,14 +1729,26 @@
     {
      "drop": 2.0,
      "ground": 13.0,
-     "hx": 12.5,
-     "hz": 9.0,
+     "hx": 14.1,
+     "hz": 9.5,
      "id": "curia_hostilia",
      "model": "curia",
      "platform": "forum_iulium",
      "x": 0.0,
      "yaw": -0.279252680319093,
      "z": -55.57
+    },
+    {
+     "drop": 15.8,
+     "ground": 31.3,
+     "hx": 10.5,
+     "hz": 25.5,
+     "id": "curiae_veteres",
+     "model": "long_hall",
+     "platform": "f2_terrace_curiae_veteres",
+     "x": 395.03,
+     "yaw": -0.349065850398866,
+     "z": 299.95
     },
     {
      "drop": 1.04,
@@ -1535,6 +1761,18 @@
      "x": 3.98,
      "yaw": 0.715584993317675,
      "z": 436.97
+    },
+    {
+     "drop": 2.01,
+     "ground": 40.64,
+     "hx": 9.0,
+     "hz": 12.5,
+     "id": "domus_manlii_arx",
+     "model": "domus",
+     "platform": "",
+     "x": -198.84,
+     "yaw": 0.663225115757845,
+     "z": -177.81
     },
     {
      "drop": 1.03,
@@ -1585,10 +1823,10 @@
      "z": 144.47
     },
     {
-     "drop": 3.04,
+     "drop": 3.47,
      "ground": 21.04,
-     "hx": 3.0,
-     "hz": 2.0,
+     "hx": 3.3,
+     "hz": 2.3,
      "id": "porta_pandana",
      "model": "arch",
      "platform": "f2_terrace_porta_pandana",
@@ -1597,10 +1835,10 @@
      "z": 101.8
     },
     {
-     "drop": 1.75,
+     "drop": 1.93,
      "ground": 45.46,
-     "hx": 1.5,
-     "hz": 2.0,
+     "hx": 1.65,
+     "hz": 2.25,
      "id": "sacellum_volupiae",
      "model": "aedicula",
      "platform": "",
@@ -1609,73 +1847,96 @@
      "z": 290.05
     }
    ],
-   "standing": 71,
+   "standing": 73,
    "streets_through": [],
+   "view_inside": [],
+   "view_misses": [
+    "sacellum_murciae view from (192, 914): a house or the ground across the line to the door"
+   ],
    "year": -390
   },
   "-44": {
    "buried": [],
+   "coplanar": [
+    "area_sacra_argentina_c: 12 coplanar face pairs, largest 0.2 m\u00b2 (stucco_white/tegulae, facing x) at (-695.8, -249.8) y 20.4",
+    "porticus_minucia_vetus: 16 coplanar face pairs, largest 0.4 m\u00b2 (stucco_cream/stucco_white, facing x) at (-616.2, -290.1) y 19.7",
+    "villa_publica: 17 coplanar face pairs, largest 0.4 m\u00b2 (stucco_cream/stucco_white, facing z) at (-825.1, -691.8) y 18.0"
+   ],
+   "f3_monuments_seconds": 40.434,
    "floating": [],
    "founded": [
-    "aedes_dei_fidii on a 1.8 m foundation (temple_tuscan_small)",
-    "aedes_felicitatis on a 2.3 m foundation (temple_tetrastyle_ionic)",
+    "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
+    "aedes_felicitatis on a 2.4 m foundation (temple_tetrastyle_ionic)",
     "aedes_fortunae_matris_matutae on a 2.1 m foundation (temple_tetrastyle_ionic)",
     "aedes_herculis_collina on a 1.4 m foundation (temple_tuscan_small)",
     "aedes_honoris_virtutis on a 1.9 m foundation (temple_tetrastyle_ionic)",
-    "aedes_iovis_feretri on a 1.1 m foundation (aedicula)",
-    "aedes_iunonis_monetae on a 1.5 m foundation (temple_tuscan_small)",
-    "aedes_larum on a 5.0 m foundation (temple_tuscan_small)",
+    "aedes_iovis_feretri on a 1.3 m foundation (aedicula)",
+    "aedes_iunonis_monetae on a 1.7 m foundation (temple_tuscan_small)",
+    "aedes_larum on a 5.8 m foundation (temple_tuscan_small)",
     "aedes_mentis on a 1.1 m foundation (temple_tetrastyle_ionic)",
     "aedes_portuni on a 1.0 m foundation (temple_tetrastyle_ionic_travertine)",
-    "aedes_veneris_erycinae_capitol on a 1.9 m foundation (temple_tetrastyle_ionic)",
-    "ara_vermini on a 1.5 m foundation (altar)",
+    "aedes_veneris_erycinae_capitol on a 2.0 m foundation (temple_tetrastyle_ionic)",
+    "ara_vermini on a 2.0 m foundation (altar)",
     "area_capitolina on a 20.7 m foundation (plaza)",
+    "basilica_opimia on a 1.2 m foundation (basilica)",
     "curia_iulia on a 1.9 m foundation (curia)",
-    "delubrum_fontis on a 1.1 m foundation (aedicula)",
+    "curiae_veteres on a 15.8 m foundation (long_hall)",
+    "delubrum_fontis on a 1.2 m foundation (aedicula)",
     "domus_catuli on a 14.2 m foundation (domus)",
     "domus_ciceronis on a 1.7 m foundation (domus)",
+    "domus_crassi_oratoris on a 21.1 m foundation (domus)",
     "domus_hortensii_augusti on a 1.0 m foundation (domus)",
     "domus_pompeii_carinae on a 1.0 m foundation (domus)",
     "domus_publica on a 1.0 m foundation (domus)",
+    "domus_scauri on a 1.8 m foundation (domus)",
     "emporium on a 3.4 m foundation (quay)",
-    "fornix_scipionis on a 2.8 m foundation (arch)",
+    "fornix_scipionis on a 3.2 m foundation (arch)",
     "forum_boarium on a 2.4 m foundation (plaza)",
     "forum_holitorium on a 2.3 m foundation (plaza)",
     "forum_iulium on a 7.2 m foundation (plaza)",
     "horrea_sempronia on a 1.5 m foundation (horrea)",
     "macellum on a 1.5 m foundation (macellum)",
     "nymphaeum_annibaldi on a 1.3 m foundation (basin)",
-    "porta_capena on a 8.8 m foundation (servian_gate)",
-    "porta_collina on a 2.5 m foundation (servian_gate)",
+    "porta_caelimontana on a 1.2 m foundation (servian_gate)",
+    "porta_capena on a 4.4 m foundation (servian_gate)",
+    "porta_collina on a 3.1 m foundation (servian_gate)",
     "porta_esquilina on a 3.5 m foundation (servian_gate)",
-    "porta_flumentana on a 7.6 m foundation (servian_gate)",
-    "porta_fontinalis on a 6.4 m foundation (servian_gate)",
-    "porta_pandana on a 3.0 m foundation (arch)",
-    "porta_salutaris on a 2.4 m foundation (servian_gate)",
-    "porta_sanqualis on a 4.2 m foundation (servian_gate)",
-    "porticus_catuli on a 2.0 m foundation (portico_enclosure)",
-    "sacellum_volupiae on a 1.7 m foundation (aedicula)",
-    "tabularium on a 7.2 m foundation (tabularium)"
+    "porta_flumentana on a 7.8 m foundation (servian_gate)",
+    "porta_fontinalis on a 5.7 m foundation (servian_gate)",
+    "porta_pandana on a 3.5 m foundation (arch)",
+    "porta_salutaris on a 2.6 m foundation (servian_gate)",
+    "porta_sanqualis on a 3.5 m foundation (servian_gate)",
+    "porticus_catuli on a 2.1 m foundation (portico_enclosure)",
+    "sacellum_volupiae on a 1.9 m foundation (aedicula)",
+    "tabularium on a 7.7 m foundation (tabularium)"
    ],
    "houses_in_monuments": [],
    "houses_on_streets": [],
    "in_river": [
-    "porta_flumentana 1 of 25 footprint points in the water",
+    "porta_flumentana 3 of 25 footprint points in the water",
     "porticus_aemilia 3 of 25 footprint points in the water"
    ],
+   "interior_figures": [],
+   "interior_missing": [],
+   "interior_voids": [],
    "overlaps": [
-    "aedes_concordiae_forum overlaps tabularium by 3.2 m",
+    "aedes_apollinis_medici overlaps porticus_octaviae by 3.0 m",
+    "aedes_concordiae_forum overlaps tabularium by 3.7 m",
     "circus_maximus overlaps sacellum_murciae by 5.1 m",
     "horrea_galbae overlaps porticus_aemilia by 52.5 m",
     "porticus_octaviae overlaps theatrum_marcelli by 2.8 m"
    ],
-   "seconds": 30.477,
+   "part_overlaps": [],
+   "parts": 117414,
+   "parts_floating": [],
+   "parts_sunk": [],
+   "seconds": 67.043,
    "slopes": [
     {
-     "drop": 1.8,
+     "drop": 1.94,
      "ground": 40.96,
-     "hx": 8.0,
-     "hz": 9.6,
+     "hx": 8.78,
+     "hz": 10.65,
      "id": "aedes_dei_fidii",
      "model": "temple_tuscan_small",
      "platform": "",
@@ -1684,10 +1945,10 @@
      "z": -529.88
     },
     {
-     "drop": 2.28,
+     "drop": 2.36,
      "ground": 9.8,
-     "hx": 6.5,
-     "hz": 13.77,
+     "hx": 6.76,
+     "hz": 13.98,
      "id": "aedes_felicitatis",
      "model": "temple_tetrastyle_ionic",
      "platform": "",
@@ -1696,10 +1957,10 @@
      "z": 249.94
     },
     {
-     "drop": 2.09,
+     "drop": 2.07,
      "ground": 10.76,
-     "hx": 6.0,
-     "hz": 13.0,
+     "hx": 6.26,
+     "hz": 13.2,
      "id": "aedes_fortunae_matris_matutae",
      "model": "temple_tetrastyle_ionic",
      "platform": "",
@@ -1708,10 +1969,10 @@
      "z": 200.04
     },
     {
-     "drop": 1.38,
+     "drop": 1.41,
      "ground": 56.54,
-     "hx": 8.0,
-     "hz": 9.6,
+     "hx": 8.78,
+     "hz": 10.65,
      "id": "aedes_herculis_collina",
      "model": "temple_tuscan_small",
      "platform": "",
@@ -1720,10 +1981,10 @@
      "z": -1786.11
     },
     {
-     "drop": 1.91,
+     "drop": 1.94,
      "ground": 16.75,
-     "hx": 6.5,
-     "hz": 13.77,
+     "hx": 6.76,
+     "hz": 13.98,
      "id": "aedes_honoris_virtutis",
      "model": "temple_tetrastyle_ionic",
      "platform": "",
@@ -1732,10 +1993,10 @@
      "z": 777.92
     },
     {
-     "drop": 1.08,
+     "drop": 1.25,
      "ground": 36.83,
-     "hx": 1.5,
-     "hz": 2.2,
+     "hx": 1.65,
+     "hz": 2.43,
      "id": "aedes_iovis_feretri",
      "model": "aedicula",
      "platform": "",
@@ -1744,10 +2005,10 @@
      "z": -77.79
     },
     {
-     "drop": 1.47,
+     "drop": 1.66,
      "ground": 38.53,
-     "hx": 8.0,
-     "hz": 9.6,
+     "hx": 8.78,
+     "hz": 10.65,
      "id": "aedes_iunonis_monetae",
      "model": "temple_tuscan_small",
      "platform": "",
@@ -1756,10 +2017,10 @@
      "z": -155.58
     },
     {
-     "drop": 4.96,
+     "drop": 5.85,
      "ground": 28.3,
-     "hx": 8.0,
-     "hz": 9.6,
+     "hx": 8.78,
+     "hz": 10.65,
      "id": "aedes_larum",
      "model": "temple_tuscan_small",
      "platform": "f2_terrace_aedes_larum",
@@ -1768,10 +2029,10 @@
      "z": 192.04
     },
     {
-     "drop": 1.11,
+     "drop": 1.13,
      "ground": 39.17,
-     "hx": 6.5,
-     "hz": 13.77,
+     "hx": 6.76,
+     "hz": 13.98,
      "id": "aedes_mentis",
      "model": "temple_tetrastyle_ionic",
      "platform": "",
@@ -1780,10 +2041,10 @@
      "z": -111.13
     },
     {
-     "drop": 1.0,
+     "drop": 1.02,
      "ground": 9.72,
-     "hx": 6.0,
-     "hz": 10.0,
+     "hx": 6.26,
+     "hz": 10.2,
      "id": "aedes_portuni",
      "model": "temple_tetrastyle_ionic_travertine",
      "platform": "",
@@ -1792,10 +2053,10 @@
      "z": 366.74
     },
     {
-     "drop": 1.94,
+     "drop": 1.98,
      "ground": 37.92,
-     "hx": 6.5,
-     "hz": 13.77,
+     "hx": 6.76,
+     "hz": 13.98,
      "id": "aedes_veneris_erycinae_capitol",
      "model": "temple_tetrastyle_ionic",
      "platform": "",
@@ -1804,10 +2065,10 @@
      "z": -122.25
     },
     {
-     "drop": 1.49,
+     "drop": 2.01,
      "ground": 52.41,
-     "hx": 0.75,
-     "hz": 1.0,
+     "hx": 0.98,
+     "hz": 1.3,
      "id": "ara_vermini",
      "model": "altar",
      "platform": "",
@@ -1828,10 +2089,22 @@
      "z": 49.9
     },
     {
-     "drop": 1.9,
+     "drop": 1.15,
+     "ground": 11.0,
+     "hx": 16.12,
+     "hz": 9.5,
+     "id": "basilica_opimia",
+     "model": "basilica",
+     "platform": "forum_romanum",
+     "x": -82.02,
+     "yaw": 1.2915436464758,
+     "z": -88.02
+    },
+    {
+     "drop": 1.94,
      "ground": 13.0,
-     "hx": 12.6,
-     "hz": 8.81,
+     "hx": 12.73,
+     "hz": 8.93,
      "id": "curia_iulia",
      "model": "curia",
      "platform": "forum_iulium",
@@ -1840,10 +2113,22 @@
      "z": -55.57
     },
     {
-     "drop": 1.09,
+     "drop": 15.8,
+     "ground": 31.3,
+     "hx": 10.5,
+     "hz": 25.5,
+     "id": "curiae_veteres",
+     "model": "long_hall",
+     "platform": "f2_terrace_curiae_veteres",
+     "x": 395.03,
+     "yaw": -0.349065850398866,
+     "z": 299.95
+    },
+    {
+     "drop": 1.22,
      "ground": 20.2,
-     "hx": 2.0,
-     "hz": 2.5,
+     "hx": 2.2,
+     "hz": 2.77,
      "id": "delubrum_fontis",
      "model": "aedicula",
      "platform": "",
@@ -1874,6 +2159,18 @@
      "x": 91.96,
      "yaw": 2.8623399732707,
      "z": 240.05
+    },
+    {
+     "drop": 21.08,
+     "ground": 35.59,
+     "hx": 14.0,
+     "hz": 20.0,
+     "id": "domus_crassi_oratoris",
+     "model": "domus",
+     "platform": "",
+     "x": 0.0,
+     "yaw": 2.8623399732707,
+     "z": 222.26
     },
     {
      "drop": 1.04,
@@ -1912,6 +2209,18 @@
      "z": 100.02
     },
     {
+     "drop": 1.76,
+     "ground": 44.47,
+     "hx": 15.0,
+     "hz": 22.5,
+     "id": "domus_scauri",
+     "model": "domus",
+     "platform": "",
+     "x": 140.85,
+     "yaw": 2.8623399732707,
+     "z": 277.83
+    },
+    {
      "drop": 3.42,
      "ground": 9.98,
      "hx": 20.0,
@@ -1924,10 +2233,10 @@
      "z": 1133.55
     },
     {
-     "drop": 2.77,
+     "drop": 3.23,
      "ground": 28.17,
-     "hx": 4.0,
-     "hz": 2.0,
+     "hx": 4.3,
+     "hz": 2.3,
      "id": "fornix_scipionis",
      "model": "arch",
      "platform": "f2_terrace_fornix_scipionis",
@@ -2008,9 +2317,21 @@
      "z": 92.91
     },
     {
-     "drop": 8.82,
+     "drop": 1.16,
+     "ground": 29.4,
+     "hx": 21.4,
+     "hz": 13.0,
+     "id": "porta_caelimontana",
+     "model": "servian_gate",
+     "platform": "f2_terrace_porta_caelimontana",
+     "x": 927.92,
+     "yaw": -1.89371856030302,
+     "z": 577.89
+    },
+    {
+     "drop": 4.38,
      "ground": 42.22,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_capena",
      "model": "servian_gate",
@@ -2020,9 +2341,9 @@
      "z": 950.85
     },
     {
-     "drop": 2.45,
+     "drop": 3.05,
      "ground": 48.78,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_collina",
      "model": "servian_gate",
@@ -2034,7 +2355,7 @@
     {
      "drop": 3.46,
      "ground": 31.27,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_esquilina",
      "model": "servian_gate",
@@ -2044,9 +2365,9 @@
      "z": -364.29
     },
     {
-     "drop": 7.56,
+     "drop": 7.81,
      "ground": 12.5,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_flumentana",
      "model": "servian_gate",
@@ -2056,9 +2377,9 @@
      "z": 100.02
     },
     {
-     "drop": 6.42,
+     "drop": 5.73,
      "ground": 31.57,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_fontinalis",
      "model": "servian_gate",
@@ -2068,10 +2389,10 @@
      "z": -388.96
     },
     {
-     "drop": 3.04,
+     "drop": 3.47,
      "ground": 21.04,
-     "hx": 3.0,
-     "hz": 2.0,
+     "hx": 3.3,
+     "hz": 2.3,
      "id": "porta_pandana",
      "model": "arch",
      "platform": "f2_terrace_porta_pandana",
@@ -2080,9 +2401,9 @@
      "z": 101.8
     },
     {
-     "drop": 2.35,
+     "drop": 2.64,
      "ground": 44.88,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_salutaris",
      "model": "servian_gate",
@@ -2092,9 +2413,9 @@
      "z": -766.81
     },
     {
-     "drop": 4.18,
+     "drop": 3.45,
      "ground": 36.9,
-     "hx": 17.0,
+     "hx": 21.4,
      "hz": 13.0,
      "id": "porta_sanqualis",
      "model": "servian_gate",
@@ -2104,10 +2425,10 @@
      "z": -439.97
     },
     {
-     "drop": 2.03,
+     "drop": 2.11,
      "ground": 44.56,
-     "hx": 15.0,
-     "hz": 17.5,
+     "hx": 15.05,
+     "hz": 19.63,
      "id": "porticus_catuli",
      "model": "portico_enclosure",
      "platform": "",
@@ -2116,10 +2437,10 @@
      "z": 258.05
     },
     {
-     "drop": 1.75,
+     "drop": 1.93,
      "ground": 45.46,
-     "hx": 1.5,
-     "hz": 2.0,
+     "hx": 1.65,
+     "hz": 2.25,
      "id": "sacellum_volupiae",
      "model": "aedicula",
      "platform": "",
@@ -2128,10 +2449,10 @@
      "z": 290.05
     },
     {
-     "drop": 7.25,
+     "drop": 7.66,
      "ground": 10.5,
-     "hx": 35.0,
-     "hz": 15.0,
+     "hx": 35.72,
+     "hz": 15.93,
      "id": "tabularium",
      "model": "tabularium",
      "platform": "",
@@ -2140,42 +2461,76 @@
      "z": -31.45
     }
    ],
-   "standing": 172,
+   "standing": 175,
    "streets_through": [],
+   "view_inside": [],
+   "view_misses": [
+    "aedes_concordiae_forum view from (-67, -34): stands 80\u00b0 off the front axis",
+    "aedes_fortunae_equestris view from (-789, -253): porticus_pompeiana across the line to the door",
+    "aedicula_victoriae_virginis view from (129, 376): stands 80\u00b0 off the front axis",
+    "area_sacra_argentina_b view from (-674, -269): stands 80\u00b0 off the front axis",
+    "basilica_iulia view from (49, 41): stands 80\u00b0 off the front axis",
+    "domus_scauri view from (188, 260): stands 80\u00b0 off the front axis",
+    "porta_flumentana view from (-588, 53): stands 110\u00b0 off the front axis",
+    "porta_quirinalis view from (404, -1139): stands 180\u00b0 off the front axis",
+    "porta_trigemina view from (-440, 532): stands 80\u00b0 off the front axis",
+    "porta_viminalis view from (1325, -1076): stands 110\u00b0 off the front axis",
+    "porticus_aemilia view from (-704, 1325): horrea_galbae across the line to the door",
+    "porticus_catuli view from (15, 243): stands 110\u00b0 off the front axis",
+    "porticus_inter_lignarios view from (-465, 646): stands 110\u00b0 off the front axis",
+    "sacellum_murciae view from (192, 914): a house or the ground across the line to the door",
+    "saepta_iulia view from (-413, -715): stands 80\u00b0 off the front axis",
+    "salinae view from (-539, 571): stands 80\u00b0 off the front axis"
+   ],
    "year": -44
   },
   "-509": {
    "buried": [],
+   "coplanar": [
+    "area_sacra_argentina_c: 12 coplanar face pairs, largest 0.2 m\u00b2 (stucco_white/tegulae, facing x) at (-695.8, -249.8) y 20.4"
+   ],
+   "f3_monuments_seconds": 10.744,
    "floating": [],
    "founded": [
     "aedes_fortunae_matris_matutae on a 2.1 m foundation (temple_tetrastyle_ionic)",
     "aedes_herculis_collina on a 1.4 m foundation (temple_tuscan_small)",
-    "aedes_iovis_feretri on a 1.1 m foundation (aedicula)",
-    "aedes_larum on a 5.0 m foundation (temple_tuscan_small)",
+    "aedes_iovis_feretri on a 1.3 m foundation (aedicula)",
+    "aedes_larum on a 5.8 m foundation (temple_tuscan_small)",
     "aedes_portuni on a 1.0 m foundation (temple_tetrastyle_ionic_travertine)",
     "area_capitolina on a 20.7 m foundation (plaza)",
     "curia_hostilia on a 2.0 m foundation (curia)",
+    "curiae_veteres on a 15.8 m foundation (long_hall)",
+    "domus_cassii_carinae on a 3.8 m foundation (domus)",
     "domus_hortensii_augusti on a 1.0 m foundation (domus)",
+    "domus_maelii on a 14.9 m foundation (domus)",
+    "domus_manlii_arx on a 2.0 m foundation (domus)",
     "domus_pompeii_carinae on a 1.0 m foundation (domus)",
     "domus_publica on a 1.0 m foundation (domus)",
     "forum_boarium on a 2.4 m foundation (plaza)",
     "forum_holitorium on a 2.3 m foundation (plaza)",
-    "porta_pandana on a 3.0 m foundation (arch)",
-    "sacellum_volupiae on a 1.7 m foundation (aedicula)"
+    "porta_pandana on a 3.5 m foundation (arch)",
+    "sacellum_volupiae on a 1.9 m foundation (aedicula)"
    ],
    "houses_in_monuments": [],
    "houses_on_streets": [],
    "in_river": [],
+   "interior_figures": [],
+   "interior_missing": [],
+   "interior_voids": [],
    "overlaps": [
     "circus_maximus overlaps sacellum_murciae by 5.1 m"
    ],
-   "seconds": 12.257,
+   "part_overlaps": [],
+   "parts": 22128,
+   "parts_floating": [],
+   "parts_sunk": [],
+   "seconds": 17.599,
    "slopes": [
     {
-     "drop": 2.09,
+     "drop": 2.07,
      "ground": 10.76,
-     "hx": 6.0,
-     "hz": 13.0,
+     "hx": 6.26,
+     "hz": 13.2,
      "id": "aedes_fortunae_matris_matutae",
      "model": "temple_tetrastyle_ionic",
      "platform": "",
@@ -2184,10 +2539,10 @@
      "z": 200.04
     },
     {
-     "drop": 1.38,
+     "drop": 1.41,
      "ground": 56.54,
-     "hx": 8.0,
-     "hz": 9.6,
+     "hx": 8.78,
+     "hz": 10.65,
      "id": "aedes_herculis_collina",
      "model": "temple_tuscan_small",
      "platform": "",
@@ -2196,10 +2551,10 @@
      "z": -1786.11
     },
     {
-     "drop": 1.08,
+     "drop": 1.25,
      "ground": 36.83,
-     "hx": 1.5,
-     "hz": 2.2,
+     "hx": 1.65,
+     "hz": 2.43,
      "id": "aedes_iovis_feretri",
      "model": "aedicula",
      "platform": "",
@@ -2208,10 +2563,10 @@
      "z": -77.79
     },
     {
-     "drop": 4.96,
+     "drop": 5.85,
      "ground": 28.3,
-     "hx": 8.0,
-     "hz": 9.6,
+     "hx": 8.78,
+     "hz": 10.65,
      "id": "aedes_larum",
      "model": "temple_tuscan_small",
      "platform": "f2_terrace_aedes_larum",
@@ -2220,10 +2575,10 @@
      "z": 192.04
     },
     {
-     "drop": 1.0,
+     "drop": 1.02,
      "ground": 9.72,
-     "hx": 6.0,
-     "hz": 10.0,
+     "hx": 6.26,
+     "hz": 10.2,
      "id": "aedes_portuni",
      "model": "temple_tetrastyle_ionic_travertine",
      "platform": "",
@@ -2246,14 +2601,38 @@
     {
      "drop": 2.0,
      "ground": 13.0,
-     "hx": 12.5,
-     "hz": 9.0,
+     "hx": 14.1,
+     "hz": 9.5,
      "id": "curia_hostilia",
      "model": "curia",
      "platform": "forum_iulium",
      "x": 0.0,
      "yaw": -0.279252680319093,
      "z": -55.57
+    },
+    {
+     "drop": 15.8,
+     "ground": 31.3,
+     "hx": 10.5,
+     "hz": 25.5,
+     "id": "curiae_veteres",
+     "model": "long_hall",
+     "platform": "f2_terrace_curiae_veteres",
+     "x": 395.03,
+     "yaw": -0.349065850398866,
+     "z": 299.95
+    },
+    {
+     "drop": 3.8,
+     "ground": 16.33,
+     "hx": 10.0,
+     "hz": 15.0,
+     "id": "domus_cassii_carinae",
+     "model": "domus",
+     "platform": "",
+     "x": 604.8,
+     "yaw": 2.8623399732707,
+     "z": 44.45
     },
     {
      "drop": 1.04,
@@ -2266,6 +2645,30 @@
      "x": 3.98,
      "yaw": 0.715584993317675,
      "z": 436.97
+    },
+    {
+     "drop": 14.92,
+     "ground": 17.19,
+     "hx": 9.0,
+     "hz": 12.5,
+     "id": "domus_maelii",
+     "model": "domus",
+     "platform": "",
+     "x": -223.7,
+     "yaw": 2.8623399732707,
+     "z": 100.02
+    },
+    {
+     "drop": 2.01,
+     "ground": 40.64,
+     "hx": 9.0,
+     "hz": 12.5,
+     "id": "domus_manlii_arx",
+     "model": "domus",
+     "platform": "",
+     "x": -198.84,
+     "yaw": 0.663225115757845,
+     "z": -177.81
     },
     {
      "drop": 1.03,
@@ -2316,10 +2719,10 @@
      "z": 144.47
     },
     {
-     "drop": 3.04,
+     "drop": 3.47,
      "ground": 21.04,
-     "hx": 3.0,
-     "hz": 2.0,
+     "hx": 3.3,
+     "hz": 2.3,
      "id": "porta_pandana",
      "model": "arch",
      "platform": "f2_terrace_porta_pandana",
@@ -2328,10 +2731,10 @@
      "z": 101.8
     },
     {
-     "drop": 1.75,
+     "drop": 1.93,
      "ground": 45.46,
-     "hx": 1.5,
-     "hz": 2.0,
+     "hx": 1.65,
+     "hz": 2.25,
      "id": "sacellum_volupiae",
      "model": "aedicula",
      "platform": "",
@@ -2340,8 +2743,12 @@
      "z": 290.05
     }
    ],
-   "standing": 62,
+   "standing": 66,
    "streets_through": [],
+   "view_inside": [],
+   "view_misses": [
+    "sacellum_murciae view from (192, 914): a house or the ground across the line to the door"
+   ],
    "year": -509
   }
  }
