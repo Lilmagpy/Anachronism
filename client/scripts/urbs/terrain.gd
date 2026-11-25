@@ -382,6 +382,9 @@ static func _compute() -> void:
 	_river_level = riv["level"]
 	_river_hw = riv["hw"]
 	_river_inner = riv["inner"]
+	# 8b. F3 round 2: no building of the year stands in the water: under each one's plan (and a
+	# margin for what its form draws past the record's size) the bank is built up above the water
+	_dry_footings(h)
 	# 9. F3: every paving of the year carved level under its footprint (at the level monuments.gd
 	# lays it: its platform's floor, else the ground at its centre), the ground mesh left out under it
 	_cover = PackedByteArray()
@@ -391,6 +394,53 @@ static func _compute() -> void:
 	_h = h
 	_compute_rural()
 	_bake_maps()
+
+
+const WATER_MODELS := ["bridge_stone", "bridge_timber", "quay", "shipsheds", "wall", "aqueduct", "sewer"]
+const FOOTING_GROW := 6.0                 ## F3: margin round a plan kept dry (forms are drawn up to ~25% past the record)
+const FOOTING_RISE := 0.4                 ## F3: a footing's ground stands this far over the water
+const FOOTING_SLOPE := 0.1                ## F3: ... and falls to the water beyond it at this slope
+
+
+## F3 round 2: the ground under every standing building (not bridges, quays, docks, walls,
+## aqueducts or sewers, which stand in or over the water) kept FOOTING_RISE over the river: a
+## river-side gate or warehouse stands on its own built-up bank (a revetment), not in the stream.
+static func _dry_footings(h: PackedFloat32Array) -> void:
+	var ids: Array = _monuments()._recs.keys()
+	ids.sort()
+	for id: String in ids:
+		var pl := monument_plan(id)
+		if pl.is_empty() or str(pl["model"]) in WATER_MODELS:
+			continue
+		if str(_monuments().entry(id).get("type", "")) in ["bridge", "port", "island"]:
+			continue
+		var half: Vector2 = pl["half"]
+		if half.x <= 0.0 or half.y <= 0.0:
+			continue
+		var c: Vector2 = pl["centre"]
+		var ax: Vector2 = pl["ax"]
+		var az: Vector2 = pl["az"]
+		var r := half.length() + FOOTING_GROW
+		var reach := r + FOOTING_RISE / FOOTING_SLOPE + CELL_M
+		var turned := _monuments().entry(id).get("bearing_deg") == null or _monuments().entry(id).has("snap_to")
+		var i0 := maxi(int(floor((c.x - reach + HALF_M) / CELL_M)), 0)
+		var i1 := mini(int(ceil((c.x + reach + HALF_M) / CELL_M)), CELLS)
+		var j0 := maxi(int(floor((c.y - reach + HALF_M) / CELL_M)), 0)
+		var j1 := mini(int(ceil((c.y + reach + HALF_M) / CELL_M)), CELLS)
+		for j in range(j0, j1 + 1):
+			for i in range(i0, i1 + 1):
+				var idx := j * VERTS + i
+				if _river_dist[idx] > 300.0:
+					continue
+				var d := Vector2(-HALF_M + i * CELL_M, -HALF_M + j * CELL_M) - c
+				# how far outside the footing (a gate turned by monuments.gd to its wall: the plan's
+				# whole circle), and the footing's own bank falling from it like the river's
+				var out := d.length() - r
+				if not turned:
+					out = maxf(absf(d.dot(ax)) - half.x, absf(d.dot(az)) - half.y) - FOOTING_GROW
+				var top := _river_level[idx] + FOOTING_RISE - FOOTING_SLOPE * maxf(out, 0.0)
+				if top > h[idx]:
+					h[idx] = top
 
 
 ## Control points (x, z, height) of a terrain_model entry, in local metres.
