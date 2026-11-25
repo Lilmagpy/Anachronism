@@ -159,6 +159,17 @@ static func clear_stand(view: UrbsMonumentView, p: Vector2, yaw: float) -> Vecto
 			if str(lot.get("kind", "")) in ["prop", "tree", "furn"] or (lot["c"] as Vector2).distance_to(p) > 80.0:
 				continue
 			_envs.append(view.fill._env(lot))
+		# the farm steadings of the open country (UrbsFill.rural_step: not among the chunks' lots;
+		# the camera stood inside a barn at -1200,100 in 264 BC), each as its whole steading
+		var k0 := Vector2i(floori(p.x / UrbsFill.CHUNK), floori(p.y / UrbsFill.CHUNK))
+		for dz in range(-1, 2):
+			for dx in range(-1, 2):
+				var st := {}
+				view.fill.rural_step(k0 + Vector2i(dx, dz), st, Time.get_ticks_usec() + 1000000000)
+				for lot in view.fill.rural_lots(st.get("parcels", [])):
+					if (lot["c"] as Vector2).distance_to(p) < 120.0:
+						var ax: Array = view.fill._axes(lot)
+						_envs.append({"c": lot["c"], "ax": ax[0], "az": ax[1], "hx": lot["hx"], "hz": lot["hz"]})
 	if _stand_ok(view, p, yaw):
 		return p
 	for ring in range(1, 31):
@@ -198,6 +209,9 @@ const RAYS := [[0.0, CLEAR_AHEAD], [-0.4, CLEAR_AHEAD], [0.4, CLEAR_AHEAD], [-0.
 
 
 static func _stand_ok(view: UrbsMonumentView, q: Vector2, yaw: float) -> bool:
+	# not in the river (the camera stood under the Tiber's surface at -900,100)
+	if UrbsTerrain.in_river(q.x, q.y) or UrbsTerrain.height_at(q.x, q.y) < UrbsTerrain.river_level(q.x, q.y) + 0.3:
+		return false
 	for e: Dictionary in _envs:
 		var r: Vector2 = q - (e["c"] as Vector2)
 		if absf(r.dot(e["ax"])) < float(e["hx"]) + 0.6 and absf(r.dot(e["az"])) < float(e["hz"]) + 0.6:
