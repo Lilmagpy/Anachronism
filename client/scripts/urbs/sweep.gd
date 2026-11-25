@@ -147,7 +147,7 @@ const CLEAR_AHEAD := 6.0
 ## eye there is free (UrbsMonumentView.is_free: not in a house, a monument's solid or drawn body, a
 ## tree's crown, at the foot of a bank) and sees CLEAR_AHEAD m along the view and 20 degrees either
 ## side (UrbsMonumentView.is_clear: the ground, the monuments' solids, the wall's stones, the
-## houses, the trees); else the nearest stand that does, on rings 1.5 m apart out to 45 m. The
+## houses, the trees); else the nearest stand that does, on rings 1.5 m apart out to 90 m. The
 ## camera stood in the 1.4 m slot between two insulae looking at a side wall (-603, -499, 44 BC).
 static func clear_stand(view: UrbsMonumentView, p: Vector2, yaw: float) -> Vector2:
 	view._load_lots(p, 60.0)
