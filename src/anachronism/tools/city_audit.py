@@ -2576,6 +2576,7 @@ F3_HOUSES_KINDS = [
     ("tree_building", "trees with their trunk inside a building or their crown through it"),
     ("tree_street", "trees in a carriageway"),
     ("tree_river", "trees in the river"),
+    ("tree_wall", "trees with their trunk or crown in the Servian wall"),
     ("life_solid", "people, stalls or the walkers' and carts' lanes inside a solid"),
     ("stall_street", "stalls in a carriageway, or sunk into or floating over their ground"),
     ("lamp_smoke", "lamps on no wall, kitchen smoke rising from no roof"),

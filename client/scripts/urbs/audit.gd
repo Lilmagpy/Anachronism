@@ -119,6 +119,7 @@ func _f3_monuments(year_out: Dictionary, args: Dictionary) -> void:
 		fps.append(Rect2(b.position.x, b.position.z, b.size.x, b.size.z))
 	fill.footprints = fps
 	fill.obstacles = UrbsFill.monument_obstacles(_mon)
+	fill.walls = UrbsFill.monument_walls(_mon)
 	fill.prepare()
 	var ma := UrbsMonumentAudit.new(_mon, height, fill)
 	var res := ma.run(str(args.get("f3-coplanar", "1")) != "0")
@@ -330,7 +331,8 @@ func _houses(height: Callable, radius: float) -> Array:
 			continue
 		fps.append(Rect2(b.position.x, b.position.z, b.size.x, b.size.z))
 	fill.footprints = fps
-	fill.obstacles = UrbsFill.monument_obstacles(_mon)   # as UrbsFill.build does
+	fill.obstacles = UrbsFill.monument_obstacles(_mon)
+	fill.walls = UrbsFill.monument_walls(_mon)   # as UrbsFill.build does
 	fill.prepare()
 	var rects := {}
 	for id in _mon.ids():
@@ -423,6 +425,7 @@ func _terrain() -> Array:
 #                    building's wall or roof
 #   tree_street      a tree standing in a carriageway
 #   tree_river       a tree standing in the river
+#   tree_wall        a tree's trunk or crown in the Servian wall
 #   life_solid       a person, stall, cart, mule or litter (or a walker's or cart's lane) inside a
 #                    monument's solid or a building
 #   stall_street     a stall in a carriageway, or sunk into or floating over its footway
@@ -434,7 +437,7 @@ const F3_NB := 24
 const F3_KEEP := 60
 const F3_BUILDINGS := ["insula", "domus", "casa", "taberna", "workshop", "horrea", "horti", "tomb", "farm"]
 const F3_KINDS := ["house_house", "house_monument", "house_wall", "house_street", "house_river", "house_base",
-	"tree_building", "tree_street", "tree_river", "life_solid", "stall_street", "lamp_smoke"]
+	"tree_building", "tree_street", "tree_river", "tree_wall", "life_solid", "stall_street", "lamp_smoke"]
 const F3_TOL := 0.2            ## interpenetration below this is two walls touching
 const F3_CART_HW := 1.05       ## half the width of an ox cart with its pair of oxen (life.gd)
 const F3_AWNING_OUT := 1.2     ## = UrbsFillParts.AWNING_OUT: awning poles stand on the footway
@@ -673,6 +676,7 @@ func _f3_lay_fill(height: Callable, radius: float) -> void:
 		fps.append(Rect2(b.position.x, b.position.z, b.size.x, b.size.z))
 	fill.footprints = fps
 	fill.obstacles = UrbsFill.monument_obstacles(_mon)
+	fill.walls = UrbsFill.monument_walls(_mon)
 	fill.prepare()
 	_f3_fill = fill
 	for key in fill.chunks_in(radius):
@@ -985,6 +989,10 @@ func _f3_tree(kind: String, p: Vector3, bb: AABB, lod: int, garden: bool, radius
 		_f3_note("tree_street", float(cw[0]) + 0.2, "%s in the carriageway of %s (%.1f m in)" % [tag, cw[1], maxf(float(cw[0]), 0.0)])
 	if UrbsTerrain.in_river(p.x, p.z) or UrbsTerrain.height_at(p.x, p.z) < UrbsTerrain.river_level(p.x, p.z) + 0.3:
 		_f3_note("tree_river", 1.0, "%s in the river" % tag)
+	# the Servian wall's stones (a route: not among the monuments' solids the checks above use)
+	var wd := UrbsSiteFlora.wall_distance(p2) - UrbsSiteFlora.WALL_HALF
+	if wd < cr - 0.3:
+		_f3_note("tree_wall", cr - wd, "%s: %s in the Servian wall (%.1f m)" % [tag, "trunk" if wd < 0.3 else "crown", cr - wd])
 
 
 ## Street life (UrbsLife built as urbs.gd builds it, at the tenth hour and at night).
@@ -1655,6 +1663,7 @@ func _f3_lots(chunk_keys: Array) -> Array:
 		fps.append(Rect2(b.position.x, b.position.z, b.size.x, b.size.z))
 	fill.footprints = fps
 	fill.obstacles = UrbsFill.monument_obstacles(_mon)
+	fill.walls = UrbsFill.monument_walls(_mon)
 	fill.prepare()
 	var grid := {}
 	for key: Vector2i in chunk_keys:

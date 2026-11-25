@@ -72,6 +72,7 @@ var footprints: Array = []           ## Rect2 in local metres: monuments and any
 ## F2: the oriented footprints of the monuments standing (UrbsMonuments.oriented_footprints:
 ## {c, ax, az, hx, hz}), plazas and precincts included; no lot may overlap one
 var obstacles: Array = []
+var walls: Array = []                  ## F3: the Servian wall's line (UrbsFill.monument_walls)
 var _obst_grid := {}                 ## 30 m cell -> indices into obstacles
 const OBSTACLE_MARGIN := 1.0         ## metres kept clear round a monument's footprint
 var sync_chunks := false             ## true: build_chunk finishes the chunk before returning
@@ -136,6 +137,7 @@ func build(urbs: Node3D, new_year: int, new_height: Callable) -> void:
 				continue
 			footprints.append(Rect2(b.position.x, b.position.z, b.size.x, b.size.z))
 	obstacles = monument_obstacles(mon)
+	walls = monument_walls(mon)
 	prepare()
 
 
@@ -166,6 +168,15 @@ static func monument_obstacles(mon: Object) -> Array:
 	return res
 
 
+## F3: the Servian wall's line when it stands (for the trees: UrbsSiteFlora.set_walls).
+static func monument_walls(mon: Object) -> Array:
+	if mon == null or not mon.has_method("_circuit") or not mon.has_method("ids") or not (mon.ids() as Array).has("murus_servianus"):
+		return []
+	var c: Dictionary = mon._circuit()
+	var pos: Variant = c.get("pos")
+	return [pos] if pos is PackedVector2Array and (pos as PackedVector2Array).size() > 1 else []
+
+
 const SOLID_SKIP := ["wall", "aqueduct", "sewer", "plaza", "road_paved", "bridge_stone", "bridge_timber"]
 
 
@@ -174,6 +185,7 @@ func prepare() -> void:
 	if not _loaded:
 		_load()
 	UrbsSiteFlora.set_obstacles(obstacles)   # F3: the trees keep out of the monuments too
+	UrbsSiteFlora.set_walls(walls)
 	_streets.height = height
 	_streets.load_data(year)
 	_footway_ids = {}
