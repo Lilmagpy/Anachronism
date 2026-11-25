@@ -111,7 +111,16 @@ jobs:
           unzip -q Meritus-windows.zip
           mkdir fresh-home
           export APPDATA="$(cygpath -w "$PWD/fresh-home")"
-          Meritus/Meritus.exe --headless --log-file "$(cygpath -w "$PWD/smoke.log")" -- --smoke > smoke.txt 2>&1 || true
+          code=0
+          Meritus/Meritus.exe --headless -- --smoke > smoke.txt 2>&1 || code=$?
           cat smoke.txt
-          [ -f smoke.log ] && cat smoke.log
-          cat smoke.txt smoke.log 2>/dev/null | grep -q "SMOKE OK"
+          echo "exit code after the smoke test: $code"
+          grep -q "SMOKE OK" smoke.txt
+          # how the program leaves: a plain start and quit, then a second start as a returning user
+          quit=0
+          Meritus/Meritus.exe --headless --quit > quit.txt 2>&1 || quit=$?
+          echo "exit code of a plain start and quit: $quit"
+          again=0
+          Meritus/Meritus.exe --headless -- --smoke > again.txt 2>&1 || again=$?
+          grep "SMOKE OK" again.txt
+          echo "exit code of the second smoke test: $again"
