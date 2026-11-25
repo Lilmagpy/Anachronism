@@ -1709,6 +1709,8 @@ monuments:
   pleiades: null
   verified: platner-ashby
   model: domus
+  yields_to: [porticus_catuli]   # F3 monuments: monument_clip.gd
+  yields_note: "F3: the record's house and its Porticus Catuli stand side by side on the Palatine; the house (its form assumed) stops at the portico"
   bearing_deg: 16  # unverified
   footprint_m: {length: 40, width: 25}  # unverified
   height_m: 9  # unverified
@@ -2321,6 +2323,8 @@ monuments:
   built: {year: -13, certainty: certain, by: "begun by Julius Caesar, who cleared the site (Suet. Iul. 44); built by Augustus, dedicated 13 or 11 BC (Dio 43.49.2, 54.26.1)"}
   sources: ["Suet. Iul. 44", "Dio 43.49.2", "Dio 54.26.1", "Platner-Ashby s.v. Theatrum Marcelli"]
   model: theatre_stone
+  yields_to: [aedes_apollinis_medici, aedes_iunonis_sospitae, porticus_octaviae, forum_holitorium]   # F3 monuments: monument_clip.gd
+  yields_note: "F3: the theatre's site (from 44 BC) and its stage end reach the temples of Apollo and Juno Sospita, the Porticus Octaviae and the Forum Holitorium beside it; it stops at them"
   bearing_deg: 202.5  # unverified: Platner-Ashby: stage toward the river, main axis NNE-SSW; front = scaena side (SSW)
   footprint_m: {radius: 61}  # F2: the surviving outer arcades lie on a circle of 60 m radius (fitted to the OpenStreetMap outline in Pleiades 300583267); Platner-Ashby gives the diameter as about 150 m, which the remains do not bear out
   height_m: 32.6  # unverified
@@ -2905,6 +2909,8 @@ monuments:
   built: {year: -378, certainty: certain, by: "with the Servian Wall"}
   sources: ["Livy 2.49.8", "Platner-Ashby s.v. Porta Carmentalis"]
   model: servian_gate
+  yields_to: [sacellum_carmentis]   # F3 monuments: monument_clip.gd
+  yields_note: "F3: the shrine of Carmenta and the gate named after her stand side by side (both records); the gate's wall stops at the shrine"
   offset_m: [-35, -45]  # east, north metres added to lat/lon; unverified: Wikipedia coordinates of the Carmental Gate (41.8914, 12.4803), 57 m from the dataset point; Platner-Ashby: near Via della Consolazione x Via della Bocca della Verita, SW corner of the Capitol
   footprint_m: {length: 26, width: 34}  # unverified
   height_m: 16  # unverified

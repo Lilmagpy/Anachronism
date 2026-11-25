@@ -3575,7 +3575,11 @@
 "Platner-Ashby s.v. Porticus Catuli; Domus Q. Lutatius Catulus"
 ],
 "type": "house",
-"verified": "platner-ashby"
+"verified": "platner-ashby",
+"yields_note": "F3: the record's house and its Porticus Catuli stand side by side on the Palatine; the house (its form assumed) stops at the portico",
+"yields_to": [
+"porticus_catuli"
+]
 },
 {
 "bearing_deg": 16,
@@ -4820,7 +4824,14 @@
 "Dio 54.26.1",
 "Platner-Ashby s.v. Theatrum Marcelli"
 ],
-"type": "theatre"
+"type": "theatre",
+"yields_note": "F3: the theatre's site (from 44 BC) and its stage end reach the temples of Apollo and Juno Sospita, the Porticus Octaviae and the Forum Holitorium beside it; it stops at them",
+"yields_to": [
+"aedes_apollinis_medici",
+"aedes_iunonis_sospitae",
+"porticus_octaviae",
+"forum_holitorium"
+]
 },
 {
 "bearing_deg": 90,
@@ -6069,7 +6080,11 @@
 "Livy 2.49.8",
 "Platner-Ashby s.v. Porta Carmentalis"
 ],
-"type": "gate"
+"type": "gate",
+"yields_note": "F3: the shrine of Carmenta and the gate named after her stand side by side (both records); the gate's wall stops at the shrine",
+"yields_to": [
+"sacellum_carmentis"
+]
 },
 {
 "built": {

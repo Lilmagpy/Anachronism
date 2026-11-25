@@ -101,13 +101,15 @@ func set_year(year: int) -> void:
 	# a standing monument stands on their line (route_cuts)
 	# and a monument that yields to another (`yields_to`, monument_clip.gd) after that one
 	for pass_ in 3:
+		if pass_ == 2:
+			_fit_sizes()   # F3 monuments: before the routes, which stop at what stands
+			_all_terrace_steps()
 		for id in _order:
 			var is_route := str(_recs[id].get("model", "")) in ROUTE_CUT
 			var yields: bool = not is_route and _recs[id].get("yields_to") is Array
 			var want := 2 if is_route else (1 if yields else 0)
 			if want == pass_:
 				_set_one(id, year)
-	_fit_sizes()   # F3 monuments
 
 
 ## F3 monuments: one monument brought to `year` (the body of set_year's loop).
@@ -689,6 +691,78 @@ func _make(id: String, st: Dictionary) -> void:
 		# F2 audit (audit.gd): how the base meets the ground, and the plan size used for it
 		"base_mode": str(res.get("base", "lo")), "world": world, "skirted": found and not world, "drop": skirt, "retains": model in AGAINST_HILL,
 		"half": half}
+
+
+## F3 monuments: steps from a terrace's edge in front of the monument down to the ground below
+## it, where the ground in front falls more than 0.8 m within 15 m of the front (and less than
+## 14 m: a cliff is not climbed). The flight is as wide as the front (3 to 12 m).
+## Every standing monument's terrace steps, made again (a neighbour may have come or gone);
+## a flight that would run into another standing monument is not built.
+func _all_terrace_steps() -> void:
+	for id in _order:
+		if not _nodes.has(id):
+			continue
+		var node: Node3D = _nodes[id]
+		if node.has_node("TerraceSteps"):
+			var old: Node = node.get_node("TerraceSteps")
+			node.remove_child(old)
+			old.free()
+			if node.has_meta("steps_box"):
+				var sbx: AABB = node.get_meta("steps_box")
+				_solids[id] = (_solids[id] as Array).filter(func(b): return b != sbx)
+				node.remove_meta("steps_box")
+		var p: Dictionary = _placed.get(id, {})
+		if p.is_empty() or bool(p.get("world", false)) or str(p.model) in ["plaza", "circus_maximus"] + ROUTE_PASS:
+			continue
+		if str(p.get("base_mode", "lo")) == "centre":
+			continue
+		_terrace_steps(id, node, p.centre, float(p.yaw), float(p.y), p.get("half", Vector2.ZERO))
+
+
+func _terrace_steps(id: String, node: Node3D, centre: Vector2, yaw: float, base_y: float, half: Vector2) -> void:
+	var fr := Vector2(sin(yaw), cos(yaw))
+	var edge := -1.0
+	var z := half.y + 0.5
+	while z <= half.y + 15.0:
+		if base_y - _ground_at(centre + fr * z) > 0.8:
+			edge = z
+			break
+		z += 0.5
+	if edge < 0.0:
+		return
+	# the terrace's edge: back to where the ground is still at the floor
+	var top := edge - 0.5
+	var drop := base_y - _ground_at(centre + fr * (edge + 2.5))
+	for it in 2:   # the foot of the flight: where it ends on the slope
+		var n := maxi(1, int(round(drop / 0.24)))
+		drop = maxf(drop, base_y - _ground_at(centre + fr * (top + (n | 1) * 0.35)))
+	if drop <= 0.8 or drop >= 14.0:
+		return
+	var w := clampf(half.x * 1.2, 3.0, 12.0)
+	var n_st := maxi(1, int(round(drop / 0.24))) | 1
+	var rect := {"c": centre + fr * (top + n_st * 0.35 * 0.5), "ax": Vector2(cos(yaw), -sin(yaw)), "az": fr,
+		"hx": w * 0.5 + 0.5, "hz": n_st * 0.35 * 0.5}
+	for oid in _placed:
+		if oid == id or str(_placed[oid].model) in FIT_PASS:
+			continue
+		var o := _my_rect(oid)
+		if (o.c as Vector2).distance_to(rect.c) < float(o.hx) + float(o.hz) + 40.0 and Forms._rect_depth(rect, o) > 0.0:
+			return   # it would run into a neighbour
+	var mm := UrbsMonumentMesh.new()
+	mm.push(Transform3D(Basis.IDENTITY, Vector3(0, -drop, 0)))
+	var depth := mm.stair(0.0, w, top, drop, "limestone_steps", 0.35)
+	for sx: float in [-1.0, 1.0]:   # cheek walls down the slope beside the flight
+		mm.ext(sx * w * 0.5, 0.0, top, sx * (w * 0.5 + 0.5), drop, top + depth, "opus_quadratum")
+	mm.pop()
+	var mi := MeshInstance3D.new()
+	mi.name = "TerraceSteps"
+	mi.mesh = mm.finish_mesh()
+	node.add_child(mi)
+	# its box, so the wall and the aqueducts stop at it too (its marker: the steps' box is the
+	# last solid; _all_terrace_steps drops it again by rebuilding the list without it)
+	var sb := AABB(Vector3(-w * 0.5 - 0.5, -drop, top), Vector3(w + 1.0, drop, depth))
+	(_solids[id] as Array).append(sb)
+	node.set_meta("steps_box", sb)
 
 
 ## F3 monuments: the half extents in plan (x, z) of what a form draws at its nearest level of

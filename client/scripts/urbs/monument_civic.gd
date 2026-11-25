@@ -140,10 +140,24 @@ static func _plaza(mm: UrbsMonumentMesh, s: Dictionary, lod: int) -> void:
 				var z1 := minf(L / 2, z + sl)
 				if z1 - z0 > 0.05:
 					var tone: String = tones[_h(i, j, 7) % 3]
-					mm.ext(x0 + joint * 0.5, -0.02, z0 + joint * 0.5, x1 - joint * 0.5, 0.08, z1 - joint * 0.5, tone)
+					# F3 monuments: where the ground rises over the paving's level the slab rises with it
+					# (laid level, the ground came up through it and flickered with it)
+					var up := _rise(drop_at, (x0 + x1) * 0.5, (z0 + z1) * 0.5)
+					mm.ext(x0 + joint * 0.5, -0.02 + up, z0 + joint * 0.5, x1 - joint * 0.5, 0.08 + up, z1 - joint * 0.5, tone)
+					if up > 0.0:
+						mm.ext(x0, -0.3, z0, x1, up - 0.02, z1, "earth_packed")
 				z += sl
 				j += 1
 	mm.open(Vector3(0, -skirt, 0), Vector3(W, skirt + 0.08, L))
+
+
+## F3 monuments: how far a slab at local (x, z) is raised so that its top (8 cm over the
+## paving's level) stands 12 cm clear of the ground there: the drawn ground between the terrain's
+## samples can stand a few centimetres above height_at, and a slab within 5 cm of it flickers.
+static func _rise(drop_at: Callable, x: float, z: float) -> float:
+	if not drop_at.is_valid():
+		return 0.0
+	return maxf(0.0, 0.04 - float(drop_at.call(x, z)))
 
 
 ## F3 monuments: how far the ground may fall under a paving before the paving stops there.
@@ -184,7 +198,10 @@ static func _plaza_on_slope(mm: UrbsMonumentMesh, s: Dictionary, lod: int, W: fl
 				while z < z1 - 0.01:
 					var ze := minf(z1, z + sl)
 					var tone: String = tones[_h(i * 8 + a, j * 8 + b, 7) % 3]
-					mm.ext(x + joint * 0.5, -0.02, z + joint * 0.5, xe - joint * 0.5, 0.08, ze - joint * 0.5, tone)
+					var up2 := _rise(drop_at, (x + xe) * 0.5, (z + ze) * 0.5)
+					mm.ext(x + joint * 0.5, -0.02 + up2, z + joint * 0.5, xe - joint * 0.5, 0.08 + up2, ze - joint * 0.5, tone)
+					if up2 > 0.0:
+						mm.ext(x, -0.3, z, xe, up2 - 0.02, ze, "earth_packed")
 					z = ze
 					b += 1
 				x = xe
