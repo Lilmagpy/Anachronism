@@ -503,7 +503,8 @@ static func door(b: MB, face: int, h: float, wid: float, tall: float, w: float, 
 	b.on_wall(face, h, tall, wid + jw * 2.0 + (0.3 if grand else 0.0), 0.3 if grand else 0.2, 0.08 if grand else 0.05, w, d, 0.0, jcol)
 	# threshold: a step whose masonry goes down to the ground (F3: it hung in the air where the
 	# ground falls away in front of the door)
-	b.on_wall(face, h, -SKIRT, wid + jw * 2.0, SKIRT + 0.12, 0.45, w, d, 0.0, STONE)
+	b.on_wall(face, h, -0.3, wid + jw * 2.0, 0.42, 0.45, w, d, 0.0, STONE)
+	b.on_wall(face, h, -SKIRT, wid + jw * 2.0, SKIRT - 0.3, 0.45, w, d, 0.0, PLINTH)   # F3: its footing in the plinth's stone (it stood as a white pillar)
 
 
 static func door_hole(h: float, wid: float, tall: float) -> Rect2:
@@ -537,7 +538,8 @@ static func shop_front(b: MB, face: int, h: float, wid: float, w: float, d: floa
 	b.rect_on(face, h0 - 0.28, h0, 0.0, tall, w, d, 0.06, STONE)
 	b.rect_on(face, h1, h1 + 0.28, 0.0, tall, w, d, 0.06, STONE)
 	# threshold with the groove for the shutter boards
-	b.on_wall(face, h, -SKIRT, wid + 0.6, SKIRT + 0.14, 0.36, w, d, 0.0, STONE)   # F3: down to the ground
+	b.on_wall(face, h, -0.3, wid + 0.6, 0.44, 0.36, w, d, 0.0, STONE)   # F3: down to the ground,
+	b.on_wall(face, h, -SKIRT, wid + 0.6, SKIRT - 0.3, 0.36, w, d, 0.0, PLINTH)   # its footing in the plinth's stone
 	if r < 0.45:
 		# masonry counter: a slab along the front, set back 0.3 m, and a return into the shop
 		b.box_on(face, h0 + 0.15, h1 - 0.15, 0.0, 0.95, -0.85, -0.3, w, d, STONE)
