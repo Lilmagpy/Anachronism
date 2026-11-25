@@ -3789,7 +3789,8 @@ monuments:
   pleiades: null
   verified: platner-ashby
   model: long_hall
-  bearing_deg: 160  # unverified
+  offset_m: [14, -8]  # east, north metres added to lat/lon; F3: 16 m inland from the modelled bank (the smoothed bank of F3 put the centre at the water's edge and 9 of 25 footprint points in the river); the location is rough (P-A: by the Porta Trigemina, towards the river)
+  bearing_deg: 31  # unverified; F3: the hall laid along the bank (it was 160, end-on to the river, its far end 15 m out in the water)
   footprint_m: {length: 40, width: 15}  # unverified
   height_m: 7  # unverified
   geometry_source: "form assumed from date and type (no measured plan)"

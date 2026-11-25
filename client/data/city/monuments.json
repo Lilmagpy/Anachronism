@@ -7774,7 +7774,7 @@
 "verified": "platner-ashby"
 },
 {
-"bearing_deg": 160,
+"bearing_deg": 31,
 "built": {
 "by": "the salt trade up the Tiber, the oldest traffic of Rome (P-A)",
 "certainty": "traditional",
@@ -7801,6 +7801,10 @@
 "location_source": "F2: Platner-Ashby s.v. Salinae (read): on and adjacent to the site of the porta Trigemina (Solinus 1.8; Frontinus 1.5; Livy 24.47.15), probably outside the gate; placed outside it towards the river",
 "lon": 12.479069,
 "model": "long_hall",
+"offset_m": [
+14,
+-8
+],
 "pleiades": null,
 "precision": "rough",
 "regio": 13,
