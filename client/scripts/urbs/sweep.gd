@@ -172,7 +172,7 @@ static func clear_stand(view: UrbsMonumentView, p: Vector2, yaw: float) -> Vecto
 						_envs.append({"c": lot["c"], "ax": ax[0], "az": ax[1], "hx": lot["hx"], "hz": lot["hz"]})
 	if _stand_ok(view, p, yaw):
 		return p
-	for ring in range(1, 31):
+	for ring in range(1, 61):   # out to 90 m (by the Tiber Island every stand within 45 m was in the water)
 		var r := 1.5 * ring
 		var steps := maxi(8, int(TAU * r / 1.5))
 		for k in steps:
