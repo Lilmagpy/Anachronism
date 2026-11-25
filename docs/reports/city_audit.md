@@ -47,9 +47,11 @@ References: **Pleiades** (CC BY 3.0; places within 3.5 km of the Forum with a pe
 | scene (F3 houses): buildings on a footway (beyond awning poles) or over a carriageway (all years) | 0 |
 | scene (F3 houses): buildings in the river (all years) | 0 |
 | scene (F3 houses): buildings whose floor is under the ground at the front or whose parts float (all years) | 0 |
+| scene (F3 houses): shop awnings on tall poles over ground falling away in front (all years) | 0 |
 | scene (F3 houses): trees with their trunk inside a building or their crown through it (all years) | 0 |
 | scene (F3 houses): trees in a carriageway (all years) | 0 |
 | scene (F3 houses): trees in the river (all years) | 0 |
+| scene (F3 houses): trees with their trunk or crown in the Servian wall (all years) | 0 |
 | scene (F3 houses): people, stalls or the walkers' and carts' lanes inside a solid (all years) | 0 |
 | scene (F3 houses): stalls in a carriageway, or sunk into or floating over their ground (all years) | 0 |
 | scene (F3 houses): lamps on no wall, kitchen smoke rising from no roof (all years) | 0 |
@@ -910,14 +912,14 @@ horti, tombs, farm steadings), every tree (all three levels of detail) and the s
 life (people, stalls, the walkers' and carts' lanes, lamps, smoke), tested by their real
 meshes (each mesh's triangles clipped into 1 m height bands).
 
-| year | buildings | house_house | house_monument | house_wall | house_street | house_river | house_base | tree_building | tree_street | tree_river | life_solid | stall_street | lamp_smoke |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 509 BC | 2111 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 390 BC | 3932 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 264 BC | 10277 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 133 BC | 19059 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 44 BC | 20475 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 27 BC | 20137 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| year | buildings | house_house | house_monument | house_wall | house_street | house_river | house_base | awning_pole | tree_building | tree_street | tree_river | tree_wall | life_solid | stall_street | lamp_smoke |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 509 BC | 2112 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 390 BC | 3933 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 264 BC | 10275 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 133 BC | 19088 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 44 BC | 20582 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 27 BC | 20240 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
 ## 4. Time
 

@@ -8847,6 +8847,7 @@
    "streets": 30
   },
   "date_issues": 0,
+  "f3_awning_pole": 0,
   "f3_house_base": 0,
   "f3_house_house": 0,
   "f3_house_monument": 0,
@@ -8859,6 +8860,7 @@
   "f3_tree_building": 0,
   "f3_tree_river": 0,
   "f3_tree_street": 0,
+  "f3_tree_wall": 0,
   "measured_flags": 0,
   "misplaced": 0,
   "missing": 0,

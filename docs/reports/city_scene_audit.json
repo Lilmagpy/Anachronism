@@ -88,10 +88,11 @@
     "terrace walls across empty ground near (-3, -213): 19 m",
     "terrace walls across empty ground near (605, 46): 9 m"
    ],
-   "f3_ground_seconds": 34.86,
+   "f3_ground_seconds": 35.259,
    "f3_houses": {
-    "buildings": 19059,
+    "buildings": 19088,
     "counts": {
+     "awning_pole": 0,
      "house_base": 0,
      "house_house": 0,
      "house_monument": 0,
@@ -103,10 +104,12 @@
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
-     "tree_street": 0
+     "tree_street": 0,
+     "tree_wall": 0
     },
-    "seconds": 67.674,
+    "seconds": 69.426,
     "worst": {
+     "awning_pole": [],
      "house_base": [],
      "house_house": [],
      "house_monument": [],
@@ -118,10 +121,11 @@
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
-     "tree_street": []
+     "tree_street": [],
+     "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 47.94,
+   "f3_monuments_seconds": 46.737,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -186,7 +190,7 @@
     "platform f2_terrace_aedes_larum stands 1.2 m below the end of street clivus_palatinus at (268, 212)",
     "platform f2_terrace_aedes_larum stands 1.1 m below the end of street via_inter_palatium_caelium at (272, 203)"
    ],
-   "seconds": 194.538,
+   "seconds": 195.837,
    "slopes": [
     {
      "drop": 1.94,
@@ -653,10 +657,11 @@
     "villa_publica: 17 coplanar face pairs, largest 0.4 m\u00b2 (stucco_cream/stucco_white, facing z) at (-825.1, -691.8) y 18.0"
    ],
    "empty_terraces": [],
-   "f3_ground_seconds": 22.346,
+   "f3_ground_seconds": 22.515,
    "f3_houses": {
-    "buildings": 10277,
+    "buildings": 10275,
     "counts": {
+     "awning_pole": 0,
      "house_base": 0,
      "house_house": 0,
      "house_monument": 0,
@@ -668,10 +673,12 @@
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
-     "tree_street": 0
+     "tree_street": 0,
+     "tree_wall": 0
     },
-    "seconds": 45.902,
+    "seconds": 48.593,
     "worst": {
+     "awning_pole": [],
      "house_base": [],
      "house_house": [],
      "house_monument": [],
@@ -683,10 +690,11 @@
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
-     "tree_street": []
+     "tree_street": [],
+     "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 23.352,
+   "f3_monuments_seconds": 23.316,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -738,7 +746,7 @@
     "platform f2_terrace_aedes_larum stands 1.2 m below the end of street clivus_palatinus at (268, 212)",
     "platform f2_terrace_aedes_larum stands 1.1 m below the end of street via_inter_palatium_caelium at (272, 203)"
    ],
-   "seconds": 115.632,
+   "seconds": 118.872,
    "slopes": [
     {
      "drop": 1.94,
@@ -1108,10 +1116,11 @@
     "terrace walls across empty ground near (-3, -213): 30 m",
     "terrace walls across empty ground near (605, 46): 9 m"
    ],
-   "f3_ground_seconds": 41.095,
+   "f3_ground_seconds": 40.516,
    "f3_houses": {
-    "buildings": 20137,
+    "buildings": 20240,
     "counts": {
+     "awning_pole": 0,
      "house_base": 0,
      "house_house": 0,
      "house_monument": 0,
@@ -1123,10 +1132,12 @@
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
-     "tree_street": 0
+     "tree_street": 0,
+     "tree_wall": 0
     },
-    "seconds": 76.738,
+    "seconds": 77.334,
     "worst": {
+     "awning_pole": [],
      "house_base": [],
      "house_house": [],
      "house_monument": [],
@@ -1138,10 +1149,11 @@
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
-     "tree_street": []
+     "tree_street": [],
+     "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 63.894,
+   "f3_monuments_seconds": 63.972,
    "floating": [],
    "founded": [
     "aedes_apollinis_palatini on a 1.2 m foundation (temple_hexastyle_corinthian_marble)",
@@ -1225,7 +1237,7 @@
     "platform f2_terrace_aedes_larum stands 1.1 m below the end of street via_inter_palatium_caelium at (272, 203)",
     "platform f2_terrace_domus_catuli stands 10.3 m over the ground in front of domus_catuli at (50, 192)"
    ],
-   "seconds": 234.734,
+   "seconds": 235.557,
    "slopes": [
     {
      "drop": 1.21,
@@ -1869,10 +1881,11 @@
     "villa_publica: 17 coplanar face pairs, largest 0.4 m\u00b2 (stucco_cream/stucco_white, facing z) at (-825.1, -691.8) y 18.0"
    ],
    "empty_terraces": [],
-   "f3_ground_seconds": 14.725,
+   "f3_ground_seconds": 13.796,
    "f3_houses": {
-    "buildings": 3932,
+    "buildings": 3933,
     "counts": {
+     "awning_pole": 0,
      "house_base": 0,
      "house_house": 0,
      "house_monument": 0,
@@ -1884,10 +1897,12 @@
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
-     "tree_street": 0
+     "tree_street": 0,
+     "tree_wall": 0
     },
-    "seconds": 38.195,
+    "seconds": 39.369,
     "worst": {
+     "awning_pole": [],
      "house_base": [],
      "house_house": [],
      "house_monument": [],
@@ -1899,10 +1914,11 @@
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
-     "tree_street": []
+     "tree_street": [],
+     "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 12.729,
+   "f3_monuments_seconds": 14.161,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -1940,7 +1956,7 @@
     "platform f2_terrace_aedes_larum stands 1.2 m below the end of street clivus_palatinus at (268, 212)",
     "platform f2_terrace_aedes_larum stands 1.1 m below the end of street via_inter_palatium_caelium at (272, 203)"
    ],
-   "seconds": 80.475,
+   "seconds": 84.548,
    "slopes": [
     {
      "drop": 1.94,
@@ -2172,10 +2188,11 @@
     "terrace walls across empty ground near (-3, -213): 30 m",
     "terrace walls across empty ground near (605, 46): 9 m"
    ],
-   "f3_ground_seconds": 39.921,
+   "f3_ground_seconds": 39.531,
    "f3_houses": {
-    "buildings": 20475,
+    "buildings": 20582,
     "counts": {
+     "awning_pole": 0,
      "house_base": 0,
      "house_house": 0,
      "house_monument": 0,
@@ -2187,10 +2204,12 @@
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
-     "tree_street": 0
+     "tree_street": 0,
+     "tree_wall": 0
     },
-    "seconds": 75.652,
+    "seconds": 76.029,
     "worst": {
+     "awning_pole": [],
      "house_base": [],
      "house_house": [],
      "house_monument": [],
@@ -2202,10 +2221,11 @@
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
-     "tree_street": []
+     "tree_street": [],
+     "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 55.799,
+   "f3_monuments_seconds": 58.99,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -2285,7 +2305,7 @@
     "platform f2_terrace_aedes_larum stands 1.1 m below the end of street via_inter_palatium_caelium at (272, 203)",
     "platform f2_terrace_domus_catuli stands 10.3 m over the ground in front of domus_catuli at (50, 192)"
    ],
-   "seconds": 216.468,
+   "seconds": 228.621,
    "slopes": [
     {
      "drop": 1.94,
@@ -2903,10 +2923,11 @@
     "area_sacra_argentina_c: 12 coplanar face pairs, largest 0.2 m\u00b2 (stucco_white/tegulae, facing x) at (-695.8, -249.8) y 20.4"
    ],
    "empty_terraces": [],
-   "f3_ground_seconds": 15.788,
+   "f3_ground_seconds": 15.716,
    "f3_houses": {
-    "buildings": 2111,
+    "buildings": 2112,
     "counts": {
+     "awning_pole": 0,
      "house_base": 0,
      "house_house": 0,
      "house_monument": 0,
@@ -2918,10 +2939,12 @@
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
-     "tree_street": 0
+     "tree_street": 0,
+     "tree_wall": 0
     },
-    "seconds": 36.66,
+    "seconds": 37.327,
     "worst": {
+     "awning_pole": [],
      "house_base": [],
      "house_house": [],
      "house_monument": [],
@@ -2933,10 +2956,11 @@
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
-     "tree_street": []
+     "tree_street": [],
+     "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 11.624,
+   "f3_monuments_seconds": 11.62,
    "floating": [],
    "founded": [
     "aedes_fortunae_matris_matutae on a 1.5 m foundation (temple_tetrastyle_ionic)",
@@ -2975,7 +2999,7 @@
     "platform f2_terrace_aedes_larum stands 1.2 m below the end of street clivus_palatinus at (268, 212)",
     "platform f2_terrace_aedes_larum stands 1.1 m below the end of street via_inter_palatium_caelium at (272, 203)"
    ],
-   "seconds": 77.209,
+   "seconds": 77.759,
    "slopes": [
     {
      "drop": 1.53,
