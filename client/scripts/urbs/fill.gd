@@ -99,6 +99,13 @@ var _chunk_cache := {}               ## finished chunks: Vector2i -> Array of lo
 var _warm := false
 var _footway_on := false             ## the street being laid out has a raised footway (UrbsStreets)
 var _on_clivus := false              ## F3: the street being laid out is a clivus (its cuts are walled)
+const CLIVUS_WALL := 1.4             ## F3: a clivus wall's thickness (UrbsSite._clivus_walls: 1.2) and a hand
+
+
+## F3: how far beyond a clivus's half width UrbsSite stands its walls (the level shoulder's edge).
+static func _clivus_edge() -> float:
+	var cuts: Dictionary = UrbsTiber.topography().get("terrain_model", {}).get("street_cuts", {})
+	return float(cuts.get("clivus_shoulder_m", 1.6)) - 0.2
 var _footway_ids := {}               ## F3: street id -> has a raised footway
 var _site_mask := PackedByteArray()  ## per mask cell, lazily: 0 unknown, 1 clear, 2 river, 3 platform
 var _tree_cache := {}                ## Vector2i(chunk) -> UrbsSite.tree_spots of that chunk
@@ -128,8 +135,38 @@ func build(urbs: Node3D, new_year: int, new_height: Callable) -> void:
 			if maxf(b.size.x, b.size.z) > 120.0 and UrbsSite.platform_at(bc.x, bc.z) != "":
 				continue
 			footprints.append(Rect2(b.position.x, b.position.z, b.size.x, b.size.z))
-	obstacles = mon.oriented_footprints() if mon != null and mon.has_method("oriented_footprints") else []
+	obstacles = monument_obstacles(mon)
 	prepare()
+
+
+## F3: what the fill keeps clear of: each monument's oriented plan footprint and each of its solid
+## boxes 0.4 m tall or more (steps, podia, porticoes and wings reach beyond the plan: houses stood
+## in the Temple of Jupiter Stator's steps and in the House of Cn. Octavius).
+static func monument_obstacles(mon: Object) -> Array:
+	if mon == null or not mon.has_method("oriented_footprints"):
+		return []
+	var res: Array = mon.oriented_footprints()
+	var placed: Dictionary = mon.get("_placed") if mon.get("_placed") != null else {}
+	var solids: Dictionary = mon.get("_solids") if mon.get("_solids") != null else {}
+	var xfs: Dictionary = mon.get("_xf") if mon.get("_xf") != null else {}
+	for id in solids:
+		var p: Dictionary = placed.get(id, {})
+		if p.is_empty() or bool(p.get("world", false)) or str(p.get("model", "")) in SOLID_SKIP:
+			continue
+		var xf: Transform3D = xfs.get(id, Transform3D.IDENTITY)
+		var ax3 := xf.basis * Vector3(1, 0, 0)
+		var az3 := xf.basis * Vector3(0, 0, 1)
+		for b in solids[id]:
+			var bb: AABB = b
+			if bb.size.y < 0.4 or bb.size.x > 400.0 or bb.size.z > 400.0:
+				continue
+			var c3 := xf * bb.get_center()
+			res.append({"id": id, "c": Vector2(c3.x, c3.z), "ax": Vector2(ax3.x, ax3.z).normalized(),
+				"az": Vector2(az3.x, az3.z).normalized(), "hx": bb.size.x * 0.5, "hz": bb.size.z * 0.5})
+	return res
+
+
+const SOLID_SKIP := ["wall", "aqueduct", "sewer", "plaza", "road_paved", "bridge_stone", "bridge_timber"]
 
 
 ## Load the data and lay out the street layer for the current `year`, `height`, `footprints`.
@@ -606,7 +643,7 @@ static func _overlap(a: Dictionary, b: Dictionary, margin: float) -> bool:
 	return _rects_overlap(_env(a), _env(b), margin)
 
 
-const BACK_TRIM := 0.7
+const BACK_TRIM := 0.0   # F3: the eaves of shop and house met over the touching walls
 
 
 ## A shop's envelope with its back trimmed by BACK_TRIM (see `_overlap`).
@@ -677,26 +714,38 @@ func _corners(lot: Dictionary) -> Array:
 ## houses whose floor was at the ramp's height.
 func _clear_at(p: Vector2) -> float:
 	var hh: float = height.call(p.x, p.y)
-	if UrbsTerrain.terrace_at(p.x, p.y) > 0.4:
+	if UrbsTerrain.terrace_at(p.x, p.y) > 0.2:   # F3: the walls' ends reach past the 0.4 line
 		var step := UrbsTerrain.TERRACE_M
 		# the wall's top follows the ground 3.5 m up the slope (UrbsSite.build_chunk_walls), a
 		# little over the tread's level (0.35 m kept in hand), or the open hillside above the
 		# last tread
 		var up: Vector2 = p - UrbsSite._down(p) * 4.5
-		var above: float = float(height.call(up.x, up.y)) + UrbsSite.WALL_UP + 0.1
-		return maxf(maxf(hh, above), step * ceilf((hh - 0.3) / step) + UrbsSite.WALL_UP + 0.35)
+		var above: float = float(height.call(up.x, up.y)) + UrbsSite.WALL_UP + 0.3
+		return maxf(maxf(hh, above), step * ceilf((hh - 0.3) / step) + UrbsSite.WALL_UP + 0.5)
 	return hh
 
 
-## F3: the highest terrace wall top under the lot's envelope (5 x 5 grid), or -INF.
+## F3: the highest terrace wall top under the lot's envelope (grown 0.3 m), or -INF: the walls
+## themselves (UrbsSite.terrace_wall_segments, every one, used or not), each sampled every 0.5 m;
+## their ends lie past where UrbsTerrain.terrace_at says terrace, so sampling the ground missed them.
 func _terrace_top(lot: Dictionary) -> float:
 	var e := _env(lot)
+	var c: Vector2 = e["c"]
+	var ax: Vector2 = e["ax"]
+	var az: Vector2 = e["az"]
+	var hx := float(e["hx"]) + 0.3
+	var hz := float(e["hz"]) + 0.3
+	var ext := Vector2(absf(ax.x) * hx + absf(az.x) * hz, absf(ax.y) * hx + absf(az.y) * hz) + Vector2(6, 6)
 	var top := -INF
-	for i in 5:
-		for j in 5:
-			var q: Vector2 = (e["c"] as Vector2) + (e["ax"] as Vector2) * (float(e["hx"]) * (i / 2.0 - 1.0)) + (e["az"] as Vector2) * (float(e["hz"]) * (j / 2.0 - 1.0))
-			if UrbsTerrain.terrace_at(q.x, q.y) > 0.4:
-				top = maxf(top, _clear_at(q))
+	for w: Array in UrbsSite.terrace_wall_segments(Rect2(c - ext, ext * 2.0)):
+		var a: Vector2 = w[0]
+		var b: Vector2 = w[1]
+		var n := maxi(int(a.distance_to(b) / 0.5), 1)
+		for t in n + 1:
+			var q := a.lerp(b, float(t) / n)
+			var r := q - c
+			if absf(r.dot(ax)) < hx and absf(r.dot(az)) < hz:
+				top = maxf(top, lerpf(float(w[4]), float(w[6]), float(t) / n))
 	return top
 
 
@@ -723,10 +772,11 @@ func _ground_ok(lot: Dictionary, pts: Array) -> bool:
 		var ez: Vector2 = e["az"]
 		for q in pts:
 			hi = maxf(hi, _clear_at(q))
-		for i in 5:
-			for j in 5:
-				var q: Vector2 = (e["c"] as Vector2) + ea * (float(e["hx"]) * (i / 2.0 - 1.0)) + ez * (float(e["hz"]) * (j / 2.0 - 1.0))
+		for i in 7:
+			for j in 7:
+				var q: Vector2 = (e["c"] as Vector2) + ea * (float(e["hx"]) * (i / 3.0 - 1.0)) + ez * (float(e["hz"]) * (j / 3.0 - 1.0))
 				hi = maxf(hi, _clear_at(q))
+		hi = maxf(hi, _terrace_top(lot) + 0.05)   # the walls themselves
 		if hi - lo > MAX_STEP:
 			return false
 	# one base per building: the floor at the highest of the corners, so no part is buried, and
@@ -1005,6 +1055,11 @@ func _street_rows(si: int) -> void:
 	var road := str(st["kind"]) == "road"
 	_footway_on = _has_footway(st)
 	_on_clivus = str(st["kind"]) == "clivus"
+	# F3: on a clivus the fronts stand behind the walls UrbsSite builds at the edge of the level
+	# shoulder (they ran through the shops and houses: Clivus Suburanus)
+	var front0 := hw + KERB + FOOTPATH
+	if _on_clivus:
+		front0 = maxf(front0, hw + _clivus_edge() + CLIVUS_WALL)
 	for side in [1, -1]:
 		var stretches: Array = []
 		var s := 0.0
@@ -1033,7 +1088,8 @@ func _street_rows(si: int) -> void:
 				var occ: float = _street_context(mp, road)["occ"]
 				if _r(sh, item, side + 13) < 0.95 and _r(sh, item, side + 15) < clampf(occ * 1.3, 0.0, 1.0):
 					var dd := SHOP_DEPTH + _r(sh, item, side + 17) * 0.4
-					var pos := mp + mn * (hw + KERB + FOOTPATH + dd * 0.5)
+					# F3: on a clivus the counters too stand behind the wall
+					var pos := mp + mn * (front0 + dd * 0.5 + (UrbsFillParts.AWNING_OUT + 0.1 if _on_clivus else 0.0))
 					var variant := int(_r(sh, item, side + 19) * 6.0)
 					var tab := _make_lot("taberna:%d" % variant, Vector2(4.6, 5.2), pos, -mn, tw, dd, Color(_palette[_hash(sh, item, side + 21) % _palette.size()], _r(sh, item, side + 20)), 5.0 if variant != 4 else 7.5, "taberna")
 					if _add_street_lot(tab, sid, 0.2):
@@ -1077,7 +1133,7 @@ func _street_rows(si: int) -> void:
 				if iv.x < s + wide - 0.5 and iv.y > s + 0.5:
 					behind = true
 					break
-			var rowdist := hw + KERB + FOOTPATH + (SHOP_DEPTH + 0.5 if behind else 0.0)
+			var rowdist := front0 + (SHOP_DEPTH + 0.5 if behind else 0.0)
 			var lot := _lot_of(type, np + nn * (rowdist + depth * 0.5), -nn, sh, item, side * 31 + 3)
 			if behind:
 				_no_awnings(lot)
@@ -1091,7 +1147,7 @@ func _street_rows(si: int) -> void:
 				var small := _lot_of("casa", Vector2.ZERO, Vector2.UP, sh, item, side * 31 + 7, true)
 				var mid3 := _streets.sample_at(si, s + small["hx"])
 				var n3 := Vector2(-mid3[1].y, mid3[1].x) * float(side)
-				var rd3 := hw + KERB + FOOTPATH + (SHOP_DEPTH + 0.5 if behind else 0.0)
+				var rd3 := front0 + (SHOP_DEPTH + 0.5 if behind else 0.0)
 				small = _lot_of("casa", mid3[0] + n3 * (rd3 + float(small["hz"])), -n3, sh, item, side * 31 + 7, true)
 				if _add_street_lot(small, sid, 0.25):
 					ok = true
@@ -1156,11 +1212,11 @@ func _add_street_lot(lot: Dictionary, own: String, margin: float, force_ok := fa
 		return false
 	var lk_house := str(lot["kind"]) not in ["furn", "prop", "tomb"]
 	if lk_house:
-		# F3: a 5 x 5 grid over the envelope (a wall of the site works ran between the corners)
+		# F3: a 7 x 7 grid over the envelope (a wall of the site works ran between the corners)
 		var ev := _env(lot)
-		for i in 5:
-			for j in 5:
-				var q: Vector2 = (ev["c"] as Vector2) + (ev["ax"] as Vector2) * (float(ev["hx"]) * (i / 2.0 - 1.0)) + (ev["az"] as Vector2) * (float(ev["hz"]) * (j / 2.0 - 1.0))
+		for i in 7:
+			for j in 7:
+				var q: Vector2 = (ev["c"] as Vector2) + (ev["ax"] as Vector2) * (float(ev["hx"]) * (i / 3.0 - 1.0)) + (ev["az"] as Vector2) * (float(ev["hz"]) * (j / 3.0 - 1.0))
 				if _hazard(q) & (M_FOOT | M_WATER):
 					return false
 	if not force_ok or str(lot["kind"]) != "furn":
@@ -1174,7 +1230,7 @@ func _add_street_lot(lot: Dictionary, own: String, margin: float, force_ok := fa
 				if _footway_of(str(ns["id"])) and lk_house:
 					# F3: a house stays off the footway, its own (where the street bends towards it)
 					# or a side street's
-					lim = float(ns["half_width"]) + KERB + FOOTPATH - (0.3 if str(ns["id"]) == own else 0.1)
+					lim = float(ns["half_width"]) + KERB + FOOTPATH - 0.1   # F3: 0.3 let shops' counters over the footway
 				if ns["distance"] < lim:
 					return false
 	if not _ground_ok(lot, pts):
@@ -1192,15 +1248,11 @@ func _add_street_lot(lot: Dictionary, own: String, margin: float, force_ok := fa
 		var fe: Vector2 = (ef["c"] as Vector2) + (ef["az"] as Vector2) * float(ef["hz"])
 		var front := maxf(_clear_at(fc), maxf(_clear_at(fe + fx), _clear_at(fe - fx)))
 		front_g = maxf(front_g, maxf(float(height.call(fe.x + fx.x, fe.y + fx.y)), float(height.call(fe.x - fx.x, fe.y - fx.y))))
-		if _on_clivus and float(lot["y"]) > front + 1.0:
-			# a clivus cut into the hill: the bank is held by a wall along the street (UrbsSite
-			# _clivus_walls) and the house stands on the bank, over the top of that wall
-			lot["y"] = float(lot["y"]) + UrbsSite.WALL_UP
-		elif float(lot["y"]) > front + 0.3:
+		if float(lot["y"]) > front + 0.3:
 			# lot.y is the highest the house must clear (_ground_ok), terrace walls included
 			if float(lot["y"]) + 0.04 - front > BURY_BACK:
 				return false
-			if _terrace_top(lot) > front + 0.3:
+			if _terrace_top(lot) > front - 0.1:
 				return false   # F3: a terrace's retaining wall would rise inside it (the ground may, not a wall)
 			lot["y"] = front - 0.04
 	if _footway_on and lk != "tomb" and lk != "prop":

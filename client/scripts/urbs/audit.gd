@@ -118,7 +118,7 @@ func _f3_monuments(year_out: Dictionary, args: Dictionary) -> void:
 			continue
 		fps.append(Rect2(b.position.x, b.position.z, b.size.x, b.size.z))
 	fill.footprints = fps
-	fill.obstacles = _mon.oriented_footprints()
+	fill.obstacles = UrbsFill.monument_obstacles(_mon)
 	fill.prepare()
 	var ma := UrbsMonumentAudit.new(_mon, height, fill)
 	var res := ma.run(str(args.get("f3-coplanar", "1")) != "0")
@@ -330,7 +330,7 @@ func _houses(height: Callable, radius: float) -> Array:
 			continue
 		fps.append(Rect2(b.position.x, b.position.z, b.size.x, b.size.z))
 	fill.footprints = fps
-	fill.obstacles = _mon.oriented_footprints()   # as UrbsFill.build does
+	fill.obstacles = UrbsFill.monument_obstacles(_mon)   # as UrbsFill.build does
 	fill.prepare()
 	var rects := {}
 	for id in _mon.ids():
@@ -672,7 +672,7 @@ func _f3_lay_fill(height: Callable, radius: float) -> void:
 			continue
 		fps.append(Rect2(b.position.x, b.position.z, b.size.x, b.size.z))
 	fill.footprints = fps
-	fill.obstacles = _mon.oriented_footprints()
+	fill.obstacles = UrbsFill.monument_obstacles(_mon)
 	fill.prepare()
 	_f3_fill = fill
 	for key in fill.chunks_in(radius):
@@ -1654,7 +1654,7 @@ func _f3_lots(chunk_keys: Array) -> Array:
 			continue
 		fps.append(Rect2(b.position.x, b.position.z, b.size.x, b.size.z))
 	fill.footprints = fps
-	fill.obstacles = _mon.oriented_footprints()
+	fill.obstacles = UrbsFill.monument_obstacles(_mon)
 	fill.prepare()
 	var grid := {}
 	for key: Vector2i in chunk_keys:
