@@ -90,6 +90,25 @@ Your games and the engine live in
 `~/Library/Application Support/Godot/app_userdata/Anachronism` (delete that folder to
 start completely fresh).
 
+## Playing the 3D game on a Windows PC (no setup)
+
+GitHub builds a Windows version next to the Mac one, and starts it on a real Windows
+machine each time to prove that it launches and a game begins (D-306).
+
+1. On the same **Actions** page, open the newest run with a green tick, scroll to
+   **Artifacts** and click **Meritus-windows** to download it.
+2. Right-click the downloaded file and choose **Extract All**; inside is
+   **Meritus-windows.zip** — extract that too. You now have a **Meritus** folder with
+   **Meritus.exe** in it. Keep it anywhere you like (the Desktop is fine).
+3. **The first time only**, Windows shows a blue box, *Windows protected your PC*, because
+   the game isn't signed with a paid certificate. Click **More info**, then **Run anyway**.
+4. The first launch shows *Starting the game engine…* for about a minute while it downloads
+   Python (it needs the internet this once). After that it starts in a few seconds.
+
+The city of Rome is heavy to draw: a PC with its own graphics card (not an old office
+laptop) is what it needs. Your games and the engine live in `%APPDATA%\Anachronism` (paste
+that into the File Explorer address bar; delete the folder to start completely fresh).
+
 ## The text version: one-time setup (about 5 minutes)
 
 1. **Install uv**, the tool that installs Python and the game's libraries for you.

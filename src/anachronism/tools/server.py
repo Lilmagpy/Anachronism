@@ -7,6 +7,7 @@ Nothing else is ever written to stdout, so the client can trust every line.
 
 from __future__ import annotations
 
+import io
 import json
 import os
 import sys
@@ -462,6 +463,11 @@ def main() -> int:
     saves = Path(os.environ.get("ANACHRONISM_SAVES", "saves"))
     config = load_config(Path(os.environ.get("ANACHRONISM_DATA", str(saves.parent))))
     session = Session(load_content(), saves, make_pipeline(config))
+    # The client speaks UTF-8 with bare newlines on every machine; left alone, Windows would
+    # read the player's text in its own code page and end each reply with a carriage return.
+    for stream in (sys.stdin, sys.stdout):
+        if isinstance(stream, io.TextIOWrapper):
+            stream.reconfigure(encoding="utf-8", newline="\n")
     serve(sys.stdin, sys.stdout, session)
     return 0
 
