@@ -678,6 +678,9 @@ func _make(id: String, st: Dictionary) -> void:
 	_opens[id] = opens
 	_xf[id] = xf
 	_tris[id] = res.get("tris", [0, 0, 0])
+	# F3 monuments: a street running through a portico passes through an opening in it
+	if model == "portico_enclosure" and not world:
+		_street_openings(node, centre, yaw, half, base_y)
 	# F3 monuments: where it truly overlaps a sourced building it yields to, it abuts it instead
 	for y in st.get("yields", []):
 		# the other as drawn (every mesh and instance at the nearest level of detail: its steps and
@@ -763,6 +766,42 @@ func _terrace_steps(id: String, node: Node3D, centre: Vector2, yaw: float, base_
 	var sb := AABB(Vector3(-w * 0.5 - 0.5, -drop, top), Vector3(w + 1.0, drop, depth))
 	(_solids[id] as Array).append(sb)
 	node.set_meta("steps_box", sb)
+
+
+var _streets_cache: UrbsStreets = null
+var _streets_year := 1
+
+
+## F3 monuments: openings in a portico where a street of the year runs through it (the
+## carriageway and a metre either side, every height): the walkers' lanes along Via
+## Flumentana and the triumphal way ran through the Porticus Octaviae's columns.
+func _street_openings(node: Node3D, centre: Vector2, yaw: float, half: Vector2, base_y: float) -> void:
+	if _streets_cache == null or _streets_year != _year:
+		_streets_cache = UrbsStreets.new()
+		_streets_cache.height = _height
+		_streets_cache.load_data(_year)
+		_streets_year = _year
+	var rect := {"c": centre, "ax": Vector2(cos(yaw), -sin(yaw)), "az": Vector2(sin(yaw), cos(yaw)), "hx": half.x + 2.0, "hz": half.y + 2.0}
+	var boxes: Array = []
+	for st in _streets_cache.streets:
+		if bool(st.get("stairs", false)):
+			continue
+		var pts: PackedVector2Array = st.pts
+		var w := float(st.hw) + 1.0
+		for k in range(pts.size() - 1):
+			var a := pts[k]
+			var b := pts[k + 1]
+			var ln := a.distance_to(b)
+			if ln < 0.01:
+				continue
+			var d := (b - a) / ln
+			var seg := {"c": (a + b) * 0.5, "ax": d, "az": Vector2(-d.y, d.x), "hx": ln * 0.5 + 0.5, "hz": w}
+			if Forms._rect_depth(seg, rect) <= 0.0:
+				continue
+			var xf := Transform3D(Basis(Vector3.UP, atan2(-d.y, d.x)), Vector3((a.x + b.x) * 0.5, base_y - 50.0, (a.y + b.y) * 0.5))
+			boxes.append({"xf": xf, "box": AABB(Vector3(-ln * 0.5 - 0.5, 0.0, -w), Vector3(ln + 1.0, 200.0, w * 2.0))})
+	if not boxes.is_empty():
+		UrbsMonumentClip.clip(node, boxes)
 
 
 ## F3 monuments: the half extents in plan (x, z) of what a form draws at its nearest level of

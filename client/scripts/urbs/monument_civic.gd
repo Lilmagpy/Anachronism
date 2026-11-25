@@ -102,7 +102,13 @@ static func _plaza(mm: UrbsMonumentMesh, s: Dictionary, lod: int) -> void:
 		mm.open(Vector3(0, -skirt, 0), Vector3(W, skirt, L))
 		return
 	if surf == "earth":
-		mm.ext(-W / 2, -skirt, -L / 2, W / 2, 0.02, L / 2, "earth_packed")
+		# F3 monuments: a beaten floor stands 12 cm over the highest ground under it (2 cm over its
+		# lowest corner flickered with the ground round it)
+		var dra: Callable = s.get("drop_at", Callable())
+		var top := 0.12
+		for q in [Vector2.ZERO, Vector2(-1, -1), Vector2(1, -1), Vector2(-1, 1), Vector2(1, 1), Vector2(0, -1), Vector2(0, 1), Vector2(-1, 0), Vector2(1, 0)]:
+			top = maxf(top, 0.08 + _rise(dra, q.x * W * 0.5, q.y * L * 0.5))
+		mm.ext(-W / 2, -skirt, -L / 2, W / 2, top, L / 2, "earth_packed")
 		mm.open(Vector3(0, -skirt, 0), Vector3(W, skirt, L))
 		return
 	var tones := ["forum_travertine", "travertine", "limestone_steps"]
