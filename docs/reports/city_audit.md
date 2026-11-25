@@ -24,6 +24,18 @@ References: **Pleiades** (CC BY 3.0; places within 3.5 km of the Forum with a pe
 | scene: houses standing on a street (all years) | 0 |
 | scene: monuments standing in the river (all years) | 7 |
 | scene: streets passing through a monument (all years) | 0 |
+| scene (F3 houses): buildings of the fill interpenetrating (all years) | 8 |
+| scene (F3 houses): buildings of the fill inside a monument's solids (all years) | 0 |
+| scene (F3 houses): terrace, platform or clivus walls, steps or quays inside a building (all years) | 11 |
+| scene (F3 houses): buildings on a footway (beyond awning poles) or over a carriageway (all years) | 7 |
+| scene (F3 houses): buildings in the river (all years) | 0 |
+| scene (F3 houses): buildings whose floor is under the ground at the front or whose parts float (all years) | 0 |
+| scene (F3 houses): trees with their trunk inside a building or their crown through it (all years) | 14 |
+| scene (F3 houses): trees in a carriageway (all years) | 0 |
+| scene (F3 houses): trees in the river (all years) | 0 |
+| scene (F3 houses): people, stalls or the walkers' and carts' lanes inside a solid (all years) | 6 |
+| scene (F3 houses): stalls in a carriageway, or sunk into or floating over their ground (all years) | 0 |
+| scene (F3 houses): lamps on no wall, kitchen smoke rising from no roof (all years) | 0 |
 
 ## 1. Completeness
 
@@ -700,7 +712,7 @@ The repository has no modern elevation model; the ground is built from `topograp
 - porta_flumentana 1 of 25 footprint points in the water (133 BC, 264 BC, 27 BC, 44 BC) - the river gate stood at the bank (Platner-Ashby s.v. Porta Flumentana); one sample point touches the modelled river
 - porticus_aemilia 3 of 25 footprint points in the water (133 BC, 27 BC, 44 BC) - the hall stood on the river bank; the modelled Tiber (tiber.gd) is an approximation of the ancient bank, a few points touch it
 
-**monuments on sloping ground, 27 BC** (41): each stands on a
+**monuments on sloping ground, 27 BC** (43): each stands on a
 podium or foundation down to its lowest ground (monuments.gd), and where the ground
 falls more than 3 m on a terrace cut into the hill with retaining walls
 (topography.yaml `F2 TERRACES`, `--terraces`); the figure is the fall that is left.
@@ -723,9 +735,11 @@ falls more than 3 m on a terrace cut into the hill with retaining walls
 - delubrum_fontis on a 1.1 m foundation (aedicula)
 - domus_catuli on a 14.2 m foundation (domus)
 - domus_ciceronis on a 1.7 m foundation (domus)
+- domus_crassi_oratoris on a 21.1 m foundation (domus)
 - domus_hortensii_augusti on a 1.0 m foundation (domus)
 - domus_pompeii_carinae on a 1.0 m foundation (domus)
 - domus_publica on a 1.0 m foundation (domus)
+- domus_scauri on a 1.8 m foundation (domus)
 - emporium on a 3.4 m foundation (quay)
 - fornix_scipionis on a 2.8 m foundation (arch)
 - forum_boarium on a 2.4 m foundation (plaza)
@@ -746,6 +760,60 @@ falls more than 3 m on a terrace cut into the hill with retaining walls
 - porticus_catuli on a 2.0 m foundation (portico_enclosure)
 - sacellum_volupiae on a 1.7 m foundation (aedicula)
 - tabularium on a 7.2 m foundation (tabularium)
+
+### The fill, the trees and the street life (F3 houses)
+
+`audit.gd` `_f3_houses`: every building of the fill (houses, shops, workshops, horrea,
+horti, tombs, farm steadings), every tree (all three levels of detail) and the street
+life (people, stalls, the walkers' and carts' lanes, lamps, smoke), tested by their real
+meshes (each mesh's triangles clipped into 1 m height bands).
+
+| year | buildings | house_house | house_monument | house_wall | house_street | house_river | house_base | tree_building | tree_street | tree_river | life_solid | stall_street | lamp_smoke |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 509 BC | 2086 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 |
+| 390 BC | 3864 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 |
+| 264 BC | 10187 | 0 | 0 | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 |
+| 133 BC | 18970 | 2 | 0 | 2 | 2 | 0 | 0 | 1 | 0 | 0 | 2 | 0 | 0 |
+| 44 BC | 20428 | 3 | 0 | 4 | 2 | 0 | 0 | 1 | 0 | 0 | 2 | 0 | 0 |
+| 27 BC | 20096 | 3 | 0 | 4 | 3 | 0 | 0 | 9 | 0 | 0 | 2 | 0 | 0 |
+
+**buildings of the fill interpenetrating** (the worst, at most 10 a year)
+
+- casa:tile@734,-750 overlaps taberna:1@738,-746 by 0.4 m (5 m up) (27 BC, 44 BC)
+- taberna:0@60,-125 overlaps domus:1@80,-122 by 0.2 m (6 m up) (27 BC, 44 BC)
+- taberna:2@-150,-268 overlaps domus:1@-138,-284 by 0.3 m (6 m up) (133 BC)
+- taberna:4@470,-380 overlaps domus:1@477,-360 by 0.2 m (8 m up) (133 BC, 27 BC, 44 BC)
+
+**terrace, platform or clivus walls, steps or quays inside a building** (the worst, at most 10 a year)
+
+- insula:gable:3:2:1:n@-189,-329 has the site works (Works) 0.2 m above its floor inside it (27 BC, 44 BC)
+- insula:hip:4:0:0:n@1041,-1256 has a terrace wall 0.2 m above its floor inside it (27 BC, 44 BC)
+- insula:stepped:3:0:0@1182,-1093 has a terrace wall 0.3 m above its floor inside it (133 BC, 27 BC, 44 BC)
+- taberna:3@-189,-347 has the site works (Works) 1.0 m above its floor inside it (264 BC)
+- taberna:5@266,226 has the site works (Works) 0.5 m above its floor inside it (133 BC, 27 BC, 44 BC)
+
+**buildings on a footway (beyond awning poles) or over a carriageway** (the worst, at most 10 a year)
+
+- domus@-174,396 on the footway of vicus_tuscus by 1.4 m (27 BC)
+- taberna:0@-229,408 on the footway of via_velabrum by 1.4 m (133 BC, 27 BC, 44 BC)
+- taberna:1@433,315 on the footway of via_inter_palatium_caelium by 1.4 m (133 BC, 27 BC, 44 BC)
+
+**trees with their trunk inside a building or their crown through it** (the worst, at most 10 a year)
+
+- cypress tree at (1326, -166) (lod 1): trunk inside auditorium_maecenatis (27 BC)
+- cypress tree at (1326, -166) (lod 2): trunk inside auditorium_maecenatis (27 BC)
+- cypress tree at (1326, -166): trunk inside auditorium_maecenatis (27 BC)
+- laurel tree at (1316, -182): trunk inside auditorium_maecenatis (27 BC)
+- oak tree at (392, 314): trunk inside curiae_veteres (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC)
+- pine tree at (1316, -171): trunk inside auditorium_maecenatis (27 BC)
+- pine tree at (1328, -178): trunk inside auditorium_maecenatis (27 BC)
+- pine tree at (1339, -170): trunk inside auditorium_maecenatis (27 BC)
+- pine tree at (1341, -157): trunk inside auditorium_maecenatis (27 BC)
+
+**people, stalls or the walkers' and carts' lanes inside a solid** (the worst, at most 10 a year)
+
+- a walkers' lane of via_flumentana at (-461, -99) through porticus_octaviae (0.0 m from its middle) (133 BC, 27 BC, 44 BC)
+- a walkers' lane of via_triumphi_campi at (-539, -140) through porticus_octaviae (0.0 m from its middle) (133 BC, 27 BC, 44 BC)
 
 ## 4. Time
 

@@ -308,6 +308,8 @@ static func _spots_groves(out: Array, rect: Rect2, lod: int, year: int, cells: D
 					continue   # a street
 				if _blocked_at(cells, p, 1.0) or not _ok_ground(x, z, 0.75):
 					continue
+				if _in_monument(p, 0.5):
+					continue   # F3: a garden's trees round its pavilion, not through it (Auditorium of Maecenas)
 				var kind: String = kinds[int(_hash(gx, gz, 24 + gh) * kinds.size()) % kinds.size()]
 				_plant(out, kind, x, z, gx + gh, gz, 1.0)
 

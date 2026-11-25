@@ -74,6 +74,52 @@
  "years": {
   "-133": {
    "buried": [],
+   "f3_houses": {
+    "buildings": 18970,
+    "counts": {
+     "house_base": 0,
+     "house_house": 2,
+     "house_monument": 0,
+     "house_river": 0,
+     "house_street": 2,
+     "house_wall": 2,
+     "lamp_smoke": 0,
+     "life_solid": 2,
+     "stall_street": 0,
+     "tree_building": 1,
+     "tree_river": 0,
+     "tree_street": 0
+    },
+    "seconds": 62.56,
+    "worst": {
+     "house_base": [],
+     "house_house": [
+      "taberna:2@-150,-268 overlaps domus:1@-138,-284 by 0.3 m (6 m up)",
+      "taberna:4@470,-380 overlaps domus:1@477,-360 by 0.2 m (8 m up)"
+     ],
+     "house_monument": [],
+     "house_river": [],
+     "house_street": [
+      "taberna:1@433,315 on the footway of via_inter_palatium_caelium by 1.4 m",
+      "taberna:0@-229,408 on the footway of via_velabrum by 1.4 m"
+     ],
+     "house_wall": [
+      "taberna:5@266,226 has the site works (Works) 0.5 m above its floor inside it",
+      "insula:stepped:3:0:0@1182,-1093 has a terrace wall 0.3 m above its floor inside it"
+     ],
+     "lamp_smoke": [],
+     "life_solid": [
+      "a walkers' lane of via_flumentana at (-461, -99) through porticus_octaviae (0.0 m from its middle)",
+      "a walkers' lane of via_triumphi_campi at (-539, -140) through porticus_octaviae (0.0 m from its middle)"
+     ],
+     "stall_street": [],
+     "tree_building": [
+      "oak tree at (392, 314): trunk inside curiae_veteres"
+     ],
+     "tree_river": [],
+     "tree_street": []
+    }
+   },
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.8 m foundation (temple_tuscan_small)",
@@ -119,7 +165,7 @@
     "circus_maximus overlaps sacellum_murciae by 5.1 m",
     "horrea_galbae overlaps porticus_aemilia by 52.5 m"
    ],
-   "seconds": 26.423,
+   "seconds": 91.537,
    "slopes": [
     {
      "drop": 1.8,
@@ -506,12 +552,48 @@
      "z": 290.05
     }
    ],
-   "standing": 150,
+   "standing": 152,
    "streets_through": [],
    "year": -133
   },
   "-264": {
    "buried": [],
+   "f3_houses": {
+    "buildings": 10187,
+    "counts": {
+     "house_base": 0,
+     "house_house": 0,
+     "house_monument": 0,
+     "house_river": 0,
+     "house_street": 0,
+     "house_wall": 1,
+     "lamp_smoke": 0,
+     "life_solid": 0,
+     "stall_street": 0,
+     "tree_building": 1,
+     "tree_river": 0,
+     "tree_street": 0
+    },
+    "seconds": 46.127,
+    "worst": {
+     "house_base": [],
+     "house_house": [],
+     "house_monument": [],
+     "house_river": [],
+     "house_street": [],
+     "house_wall": [
+      "taberna:3@-189,-347 has the site works (Works) 1.0 m above its floor inside it"
+     ],
+     "lamp_smoke": [],
+     "life_solid": [],
+     "stall_street": [],
+     "tree_building": [
+      "oak tree at (392, 314): trunk inside curiae_veteres"
+     ],
+     "tree_river": [],
+     "tree_street": []
+    }
+   },
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.8 m foundation (temple_tuscan_small)",
@@ -547,7 +629,7 @@
    "overlaps": [
     "circus_maximus overlaps sacellum_murciae by 5.1 m"
    ],
-   "seconds": 14.983,
+   "seconds": 67.413,
    "slopes": [
     {
      "drop": 1.8,
@@ -838,12 +920,70 @@
      "z": 290.05
     }
    ],
-   "standing": 108,
+   "standing": 109,
    "streets_through": [],
    "year": -264
   },
   "-27": {
    "buried": [],
+   "f3_houses": {
+    "buildings": 20096,
+    "counts": {
+     "house_base": 0,
+     "house_house": 3,
+     "house_monument": 0,
+     "house_river": 0,
+     "house_street": 3,
+     "house_wall": 4,
+     "lamp_smoke": 0,
+     "life_solid": 2,
+     "stall_street": 0,
+     "tree_building": 9,
+     "tree_river": 0,
+     "tree_street": 0
+    },
+    "seconds": 82.713,
+    "worst": {
+     "house_base": [],
+     "house_house": [
+      "casa:tile@734,-750 overlaps taberna:1@738,-746 by 0.4 m (5 m up)",
+      "taberna:4@470,-380 overlaps domus:1@477,-360 by 0.2 m (8 m up)",
+      "taberna:0@60,-125 overlaps domus:1@80,-122 by 0.2 m (6 m up)"
+     ],
+     "house_monument": [],
+     "house_river": [],
+     "house_street": [
+      "taberna:1@433,315 on the footway of via_inter_palatium_caelium by 1.4 m",
+      "taberna:0@-229,408 on the footway of via_velabrum by 1.4 m",
+      "domus@-174,396 on the footway of vicus_tuscus by 1.4 m"
+     ],
+     "house_wall": [
+      "taberna:5@266,226 has the site works (Works) 0.5 m above its floor inside it",
+      "insula:stepped:3:0:0@1182,-1093 has a terrace wall 0.3 m above its floor inside it",
+      "insula:hip:4:0:0:n@1041,-1256 has a terrace wall 0.2 m above its floor inside it",
+      "insula:gable:3:2:1:n@-189,-329 has the site works (Works) 0.2 m above its floor inside it"
+     ],
+     "lamp_smoke": [],
+     "life_solid": [
+      "a walkers' lane of via_flumentana at (-461, -99) through porticus_octaviae (0.0 m from its middle)",
+      "a walkers' lane of via_triumphi_campi at (-539, -140) through porticus_octaviae (0.0 m from its middle)"
+     ],
+     "stall_street": [],
+     "tree_building": [
+      "cypress tree at (1326, -166): trunk inside auditorium_maecenatis",
+      "laurel tree at (1316, -182): trunk inside auditorium_maecenatis",
+      "oak tree at (392, 314): trunk inside curiae_veteres",
+      "pine tree at (1316, -171): trunk inside auditorium_maecenatis",
+      "pine tree at (1328, -178): trunk inside auditorium_maecenatis",
+      "pine tree at (1339, -170): trunk inside auditorium_maecenatis",
+      "pine tree at (1341, -157): trunk inside auditorium_maecenatis",
+      "cypress tree at (1326, -166) (lod 1): trunk inside auditorium_maecenatis",
+      "cypress tree at (1326, -166) (lod 2): trunk inside auditorium_maecenatis"
+     ],
+     "tree_river": [],
+     "tree_street": []
+    }
+   },
    "floating": [],
    "founded": [
     "aedes_apollinis_palatini on a 1.2 m foundation (temple_hexastyle_corinthian_marble)",
@@ -864,9 +1004,11 @@
     "delubrum_fontis on a 1.1 m foundation (aedicula)",
     "domus_catuli on a 14.2 m foundation (domus)",
     "domus_ciceronis on a 1.7 m foundation (domus)",
+    "domus_crassi_oratoris on a 21.1 m foundation (domus)",
     "domus_hortensii_augusti on a 1.0 m foundation (domus)",
     "domus_pompeii_carinae on a 1.0 m foundation (domus)",
     "domus_publica on a 1.0 m foundation (domus)",
+    "domus_scauri on a 1.8 m foundation (domus)",
     "emporium on a 3.4 m foundation (quay)",
     "fornix_scipionis on a 2.8 m foundation (arch)",
     "forum_boarium on a 2.4 m foundation (plaza)",
@@ -901,7 +1043,7 @@
     "horrea_galbae overlaps porticus_aemilia by 52.5 m",
     "porticus_octaviae overlaps theatrum_marcelli by 2.8 m"
    ],
-   "seconds": 30.917,
+   "seconds": 119.492,
    "slopes": [
     {
      "drop": 1.2,
@@ -1120,6 +1262,18 @@
      "z": 240.05
     },
     {
+     "drop": 21.08,
+     "ground": 35.59,
+     "hx": 14.0,
+     "hz": 20.0,
+     "id": "domus_crassi_oratoris",
+     "model": "domus",
+     "platform": "",
+     "x": 0.0,
+     "yaw": 2.8623399732707,
+     "z": 222.26
+    },
+    {
      "drop": 1.04,
      "ground": 47.69,
      "hx": 15.6,
@@ -1154,6 +1308,18 @@
      "x": 231.98,
      "yaw": 2.8623399732707,
      "z": 100.02
+    },
+    {
+     "drop": 1.76,
+     "ground": 44.47,
+     "hx": 15.0,
+     "hz": 22.5,
+     "id": "domus_scauri",
+     "model": "domus",
+     "platform": "",
+     "x": 140.85,
+     "yaw": 2.8623399732707,
+     "z": 277.83
     },
     {
      "drop": 3.42,
@@ -1396,12 +1562,46 @@
      "z": -31.45
     }
    ],
-   "standing": 182,
+   "standing": 185,
    "streets_through": [],
    "year": -27
   },
   "-390": {
    "buried": [],
+   "f3_houses": {
+    "buildings": 3864,
+    "counts": {
+     "house_base": 0,
+     "house_house": 0,
+     "house_monument": 0,
+     "house_river": 0,
+     "house_street": 0,
+     "house_wall": 0,
+     "lamp_smoke": 0,
+     "life_solid": 0,
+     "stall_street": 0,
+     "tree_building": 1,
+     "tree_river": 0,
+     "tree_street": 0
+    },
+    "seconds": 39.6,
+    "worst": {
+     "house_base": [],
+     "house_house": [],
+     "house_monument": [],
+     "house_river": [],
+     "house_street": [],
+     "house_wall": [],
+     "lamp_smoke": [],
+     "life_solid": [],
+     "stall_street": [],
+     "tree_building": [
+      "oak tree at (392, 314): trunk inside curiae_veteres"
+     ],
+     "tree_river": [],
+     "tree_street": []
+    }
+   },
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.8 m foundation (temple_tuscan_small)",
@@ -1413,6 +1613,7 @@
     "area_capitolina on a 20.7 m foundation (plaza)",
     "curia_hostilia on a 2.0 m foundation (curia)",
     "domus_hortensii_augusti on a 1.0 m foundation (domus)",
+    "domus_manlii_arx on a 2.0 m foundation (domus)",
     "domus_pompeii_carinae on a 1.0 m foundation (domus)",
     "domus_publica on a 1.0 m foundation (domus)",
     "forum_boarium on a 2.4 m foundation (plaza)",
@@ -1426,7 +1627,7 @@
    "overlaps": [
     "circus_maximus overlaps sacellum_murciae by 5.1 m"
    ],
-   "seconds": 8.525,
+   "seconds": 49.367,
    "slopes": [
     {
      "drop": 1.8,
@@ -1537,6 +1738,18 @@
      "z": 436.97
     },
     {
+     "drop": 2.01,
+     "ground": 40.64,
+     "hx": 9.0,
+     "hz": 12.5,
+     "id": "domus_manlii_arx",
+     "model": "domus",
+     "platform": "",
+     "x": -198.84,
+     "yaw": 0.663225115757845,
+     "z": -177.81
+    },
+    {
      "drop": 1.03,
      "ground": 16.59,
      "hx": 12.5,
@@ -1609,12 +1822,61 @@
      "z": 290.05
     }
    ],
-   "standing": 71,
+   "standing": 73,
    "streets_through": [],
    "year": -390
   },
   "-44": {
    "buried": [],
+   "f3_houses": {
+    "buildings": 20428,
+    "counts": {
+     "house_base": 0,
+     "house_house": 3,
+     "house_monument": 0,
+     "house_river": 0,
+     "house_street": 2,
+     "house_wall": 4,
+     "lamp_smoke": 0,
+     "life_solid": 2,
+     "stall_street": 0,
+     "tree_building": 1,
+     "tree_river": 0,
+     "tree_street": 0
+    },
+    "seconds": 67.053,
+    "worst": {
+     "house_base": [],
+     "house_house": [
+      "casa:tile@734,-750 overlaps taberna:1@738,-746 by 0.4 m (5 m up)",
+      "taberna:4@470,-380 overlaps domus:1@477,-360 by 0.2 m (8 m up)",
+      "taberna:0@60,-125 overlaps domus:1@80,-122 by 0.2 m (6 m up)"
+     ],
+     "house_monument": [],
+     "house_river": [],
+     "house_street": [
+      "taberna:1@433,315 on the footway of via_inter_palatium_caelium by 1.4 m",
+      "taberna:0@-229,408 on the footway of via_velabrum by 1.4 m"
+     ],
+     "house_wall": [
+      "taberna:5@266,226 has the site works (Works) 0.5 m above its floor inside it",
+      "insula:stepped:3:0:0@1182,-1093 has a terrace wall 0.3 m above its floor inside it",
+      "insula:hip:4:0:0:n@1041,-1256 has a terrace wall 0.2 m above its floor inside it",
+      "insula:gable:3:2:1:n@-189,-329 has the site works (Works) 0.2 m above its floor inside it"
+     ],
+     "lamp_smoke": [],
+     "life_solid": [
+      "a walkers' lane of via_flumentana at (-461, -99) through porticus_octaviae (0.0 m from its middle)",
+      "a walkers' lane of via_triumphi_campi at (-539, -140) through porticus_octaviae (0.0 m from its middle)"
+     ],
+     "stall_street": [],
+     "tree_building": [
+      "oak tree at (392, 314): trunk inside curiae_veteres"
+     ],
+     "tree_river": [],
+     "tree_street": []
+    }
+   },
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.8 m foundation (temple_tuscan_small)",
@@ -1634,9 +1896,11 @@
     "delubrum_fontis on a 1.1 m foundation (aedicula)",
     "domus_catuli on a 14.2 m foundation (domus)",
     "domus_ciceronis on a 1.7 m foundation (domus)",
+    "domus_crassi_oratoris on a 21.1 m foundation (domus)",
     "domus_hortensii_augusti on a 1.0 m foundation (domus)",
     "domus_pompeii_carinae on a 1.0 m foundation (domus)",
     "domus_publica on a 1.0 m foundation (domus)",
+    "domus_scauri on a 1.8 m foundation (domus)",
     "emporium on a 3.4 m foundation (quay)",
     "fornix_scipionis on a 2.8 m foundation (arch)",
     "forum_boarium on a 2.4 m foundation (plaza)",
@@ -1669,7 +1933,7 @@
     "horrea_galbae overlaps porticus_aemilia by 52.5 m",
     "porticus_octaviae overlaps theatrum_marcelli by 2.8 m"
    ],
-   "seconds": 30.477,
+   "seconds": 101.449,
    "slopes": [
     {
      "drop": 1.8,
@@ -1876,6 +2140,18 @@
      "z": 240.05
     },
     {
+     "drop": 21.08,
+     "ground": 35.59,
+     "hx": 14.0,
+     "hz": 20.0,
+     "id": "domus_crassi_oratoris",
+     "model": "domus",
+     "platform": "",
+     "x": 0.0,
+     "yaw": 2.8623399732707,
+     "z": 222.26
+    },
+    {
      "drop": 1.04,
      "ground": 47.69,
      "hx": 15.6,
@@ -1910,6 +2186,18 @@
      "x": 231.98,
      "yaw": 2.8623399732707,
      "z": 100.02
+    },
+    {
+     "drop": 1.76,
+     "ground": 44.47,
+     "hx": 15.0,
+     "hz": 22.5,
+     "id": "domus_scauri",
+     "model": "domus",
+     "platform": "",
+     "x": 140.85,
+     "yaw": 2.8623399732707,
+     "z": 277.83
     },
     {
      "drop": 3.42,
@@ -2140,12 +2428,46 @@
      "z": -31.45
     }
    ],
-   "standing": 172,
+   "standing": 175,
    "streets_through": [],
    "year": -44
   },
   "-509": {
    "buried": [],
+   "f3_houses": {
+    "buildings": 2086,
+    "counts": {
+     "house_base": 0,
+     "house_house": 0,
+     "house_monument": 0,
+     "house_river": 0,
+     "house_street": 0,
+     "house_wall": 0,
+     "lamp_smoke": 0,
+     "life_solid": 0,
+     "stall_street": 0,
+     "tree_building": 1,
+     "tree_river": 0,
+     "tree_street": 0
+    },
+    "seconds": 37.851,
+    "worst": {
+     "house_base": [],
+     "house_house": [],
+     "house_monument": [],
+     "house_river": [],
+     "house_street": [],
+     "house_wall": [],
+     "lamp_smoke": [],
+     "life_solid": [],
+     "stall_street": [],
+     "tree_building": [
+      "oak tree at (392, 314): trunk inside curiae_veteres"
+     ],
+     "tree_river": [],
+     "tree_street": []
+    }
+   },
    "floating": [],
    "founded": [
     "aedes_fortunae_matris_matutae on a 2.1 m foundation (temple_tetrastyle_ionic)",
@@ -2155,7 +2477,10 @@
     "aedes_portuni on a 1.0 m foundation (temple_tetrastyle_ionic_travertine)",
     "area_capitolina on a 20.7 m foundation (plaza)",
     "curia_hostilia on a 2.0 m foundation (curia)",
+    "domus_cassii_carinae on a 3.8 m foundation (domus)",
     "domus_hortensii_augusti on a 1.0 m foundation (domus)",
+    "domus_maelii on a 14.9 m foundation (domus)",
+    "domus_manlii_arx on a 2.0 m foundation (domus)",
     "domus_pompeii_carinae on a 1.0 m foundation (domus)",
     "domus_publica on a 1.0 m foundation (domus)",
     "forum_boarium on a 2.4 m foundation (plaza)",
@@ -2169,7 +2494,7 @@
    "overlaps": [
     "circus_maximus overlaps sacellum_murciae by 5.1 m"
    ],
-   "seconds": 12.257,
+   "seconds": 45.946,
    "slopes": [
     {
      "drop": 2.09,
@@ -2256,6 +2581,18 @@
      "z": -55.57
     },
     {
+     "drop": 3.8,
+     "ground": 16.33,
+     "hx": 10.0,
+     "hz": 15.0,
+     "id": "domus_cassii_carinae",
+     "model": "domus",
+     "platform": "",
+     "x": 604.8,
+     "yaw": 2.8623399732707,
+     "z": 44.45
+    },
+    {
      "drop": 1.04,
      "ground": 47.69,
      "hx": 15.6,
@@ -2266,6 +2603,30 @@
      "x": 3.98,
      "yaw": 0.715584993317675,
      "z": 436.97
+    },
+    {
+     "drop": 14.92,
+     "ground": 17.19,
+     "hx": 9.0,
+     "hz": 12.5,
+     "id": "domus_maelii",
+     "model": "domus",
+     "platform": "",
+     "x": -223.7,
+     "yaw": 2.8623399732707,
+     "z": 100.02
+    },
+    {
+     "drop": 2.01,
+     "ground": 40.64,
+     "hx": 9.0,
+     "hz": 12.5,
+     "id": "domus_manlii_arx",
+     "model": "domus",
+     "platform": "",
+     "x": -198.84,
+     "yaw": 0.663225115757845,
+     "z": -177.81
     },
     {
      "drop": 1.03,
@@ -2340,7 +2701,7 @@
      "z": 290.05
     }
    ],
-   "standing": 62,
+   "standing": 66,
    "streets_through": [],
    "year": -509
   }
