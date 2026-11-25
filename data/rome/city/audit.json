@@ -7005,12 +7005,12 @@
    "tolerance_m": 20.0
   },
   {
-   "bearing_to_reference": 123,
-   "distance_m": 181.8,
+   "bearing_to_reference": 124,
+   "distance_m": 183.1,
    "id": "forum_romanum",
    "ours": [
-    -8.0,
-    15.0
+    -7.0,
+    11.0
    ],
    "overrides": "approx",
    "pleiades": "502866838",
@@ -8690,13 +8690,13 @@
    "source": "Platner-Ashby s.v. Curia Iulia"
   },
   {
-   "detail": "12 m off the Comitium-Forum line, at 0.38 of the way",
+   "detail": "13 m off the Comitium-Forum line, at 0.39 of the way",
    "name": "The Republican Rostra between the Comitium and the Forum",
    "ok": true,
    "source": "Platner-Ashby s.v. Rostra"
   },
   {
-   "detail": "Aemilia 50 m north of the Forum's axis, Iulia 50 m south",
+   "detail": "Aemilia 46 m north of the Forum's axis, Iulia 54 m south",
    "name": "The Basilica Aemilia north and the Iulia south of the Forum",
    "ok": true,
    "source": "Platner-Ashby s.v. Basilica Aemilia; Basilica Iulia"
@@ -8865,13 +8865,21 @@
    }
   },
   "relations_failed": 0,
+  "scene_bank_sawtooth": 13,
   "scene_buried": 0,
+  "scene_chunk_seams": 0,
+  "scene_empty_terraces": 6,
   "scene_floating": 0,
+  "scene_ground_holes": 0,
   "scene_houses_in_monuments": 0,
   "scene_houses_on_streets": 0,
-  "scene_in_river": 7,
+  "scene_in_river": 3,
   "scene_overlaps": 14,
-  "scene_streets_through": 0
+  "scene_platform_steps": 24,
+  "scene_stair_ends": 0,
+  "scene_streets_ground": 143,
+  "scene_streets_through": 0,
+  "scene_zfight": 2
  },
  "topography": [
   {

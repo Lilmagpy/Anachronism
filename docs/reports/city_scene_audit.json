@@ -73,53 +73,70 @@
  ],
  "years": {
   "-133": {
+   "bank_sawtooth": [
+    "the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-1444, -1300)",
+    "the water's edge turns more than 25 degrees within 2 m 3 times in the 100 m square near (-1043, 1340)",
+    "the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-521, 261)"
+   ],
    "buried": [],
+   "chunk_seams": [],
+   "empty_terraces": [
+    "terrace walls across empty ground near (1249, -334): 16 m",
+    "terrace walls across empty ground near (1253, -323): 14 m"
+   ],
+   "f3_ground_seconds": 26.634,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.8 m foundation (temple_tuscan_small)",
+    "aedes_faunus on a 1.1 m foundation (temple_tetrastyle_ionic)",
     "aedes_felicitatis on a 2.3 m foundation (temple_tetrastyle_ionic)",
     "aedes_fortunae_matris_matutae on a 2.1 m foundation (temple_tetrastyle_ionic)",
     "aedes_herculis_collina on a 1.4 m foundation (temple_tuscan_small)",
     "aedes_honoris_virtutis on a 1.9 m foundation (temple_tetrastyle_ionic)",
     "aedes_iovis_feretri on a 1.1 m foundation (aedicula)",
     "aedes_iunonis_monetae on a 1.5 m foundation (temple_tuscan_small)",
-    "aedes_larum on a 5.0 m foundation (temple_tuscan_small)",
+    "aedes_larum on a 4.8 m foundation (temple_tuscan_small)",
     "aedes_mentis on a 1.1 m foundation (temple_tetrastyle_ionic)",
-    "aedes_portuni on a 1.0 m foundation (temple_tetrastyle_ionic_travertine)",
+    "aedes_portuni on a 1.3 m foundation (temple_tetrastyle_ionic_travertine)",
     "aedes_quirini on a 2.5 m foundation (temple_tetrastyle_ionic)",
     "aedes_veneris_erycinae_capitol on a 1.9 m foundation (temple_tetrastyle_ionic)",
-    "area_capitolina on a 20.7 m foundation (plaza)",
-    "curia_hostilia on a 2.0 m foundation (curia)",
-    "delubrum_fontis on a 1.1 m foundation (aedicula)",
-    "domus_hortensii_augusti on a 1.0 m foundation (domus)",
+    "atrium_vestae on a 4.2 m foundation (domus)",
+    "delubrum_fontis on a 1.5 m foundation (aedicula)",
+    "domus_hortensii_augusti on a 1.1 m foundation (domus)",
     "domus_pompeii_carinae on a 1.0 m foundation (domus)",
-    "domus_publica on a 1.0 m foundation (domus)",
+    "domus_publica on a 1.3 m foundation (domus)",
     "emporium on a 3.4 m foundation (quay)",
-    "fornix_scipionis on a 2.8 m foundation (arch)",
-    "forum_boarium on a 2.4 m foundation (plaza)",
-    "forum_holitorium on a 2.3 m foundation (plaza)",
     "macellum on a 1.5 m foundation (macellum)",
-    "porta_capena on a 8.8 m foundation (servian_gate)",
-    "porta_collina on a 2.5 m foundation (servian_gate)",
-    "porta_esquilina on a 3.5 m foundation (servian_gate)",
-    "porta_flumentana on a 7.6 m foundation (servian_gate)",
+    "porta_capena on a 10.2 m foundation (servian_gate)",
+    "porta_carmentalis on a 1.8 m foundation (servian_gate)",
+    "porta_collina on a 1.9 m foundation (servian_gate)",
+    "porta_esquilina on a 2.1 m foundation (servian_gate)",
+    "porta_flumentana on a 7.1 m foundation (servian_gate)",
     "porta_fontinalis on a 6.4 m foundation (servian_gate)",
-    "porta_pandana on a 3.0 m foundation (arch)",
-    "porta_salutaris on a 2.4 m foundation (servian_gate)",
-    "porta_sanqualis on a 4.2 m foundation (servian_gate)",
-    "sacellum_volupiae on a 1.7 m foundation (aedicula)"
+    "porta_pandana on a 1.3 m foundation (arch)",
+    "porta_salutaris on a 2.2 m foundation (servian_gate)",
+    "porta_sanqualis on a 4.8 m foundation (servian_gate)",
+    "porta_trigemina on a 4.6 m foundation (servian_gate)",
+    "sacellum_carmentis on a 2.0 m foundation (aedicula)",
+    "salinae on a 3.8 m foundation (long_hall)"
    ],
+   "ground_holes": [],
    "houses_in_monuments": [],
    "houses_on_streets": [],
    "in_river": [
-    "porta_flumentana 1 of 25 footprint points in the water",
-    "porticus_aemilia 3 of 25 footprint points in the water"
+    "porticus_aemilia 5 of 25 footprint points in the water"
    ],
    "overlaps": [
     "circus_maximus overlaps sacellum_murciae by 5.1 m",
     "horrea_galbae overlaps porticus_aemilia by 52.5 m"
    ],
-   "seconds": 26.423,
+   "platform_steps": [
+    "platform f2_terrace_aedes_iovis_statoris_palatine stands 2.8 m over the ground in front of aedes_iovis_statoris_palatine at (113, 172)",
+    "platform f2_terrace_aedes_larum stands 1.1 m below the end of street via_sacra at (272, 203)",
+    "platform f2_terrace_aedes_larum stands 1.2 m below the end of street clivus_palatinus at (268, 212)",
+    "platform f2_terrace_aedes_larum stands 1.1 m below the end of street via_inter_palatium_caelium at (272, 203)"
+   ],
+   "seconds": 53.905,
    "slopes": [
     {
      "drop": 1.8,
@@ -132,6 +149,18 @@
      "x": 104.89,
      "yaw": -0.139626340159546,
      "z": -529.88
+    },
+    {
+     "drop": 1.14,
+     "ground": 8.77,
+     "hx": 4.5,
+     "hz": 7.0,
+     "id": "aedes_faunus",
+     "model": "temple_tetrastyle_ionic",
+     "platform": "",
+     "x": -706.96,
+     "yaw": 1.5707963267949,
+     "z": 165.03
     },
     {
      "drop": 2.28,
@@ -206,7 +235,7 @@
      "z": -155.58
     },
     {
-     "drop": 4.96,
+     "drop": 4.81,
      "ground": 28.3,
      "hx": 8.0,
      "hz": 9.6,
@@ -230,8 +259,8 @@
      "z": -111.13
     },
     {
-     "drop": 1.0,
-     "ground": 9.72,
+     "drop": 1.34,
+     "ground": 10.43,
      "hx": 6.0,
      "hz": 10.0,
      "id": "aedes_portuni",
@@ -266,32 +295,20 @@
      "z": -122.25
     },
     {
-     "drop": 20.67,
-     "ground": 42.0,
-     "hx": 61.0,
-     "hz": 54.0,
-     "id": "area_capitolina",
-     "model": "plaza",
-     "platform": "area_capitolina",
-     "x": -289.98,
-     "yaw": 0.462512251778497,
-     "z": 49.9
+     "drop": 4.21,
+     "ground": 11.0,
+     "hx": 12.0,
+     "hz": 22.5,
+     "id": "atrium_vestae",
+     "model": "domus",
+     "platform": "forum_romanum",
+     "x": 107.71,
+     "yaw": -2.0018926520375,
+     "z": 122.25
     },
     {
-     "drop": 2.0,
-     "ground": 13.0,
-     "hx": 12.5,
-     "hz": 9.0,
-     "id": "curia_hostilia",
-     "model": "curia",
-     "platform": "forum_iulium",
-     "x": 0.0,
-     "yaw": -0.279252680319093,
-     "z": -55.57
-    },
-    {
-     "drop": 1.09,
-     "ground": 20.2,
+     "drop": 1.49,
+     "ground": 20.29,
      "hx": 2.0,
      "hz": 2.5,
      "id": "delubrum_fontis",
@@ -302,7 +319,7 @@
      "z": -411.41
     },
     {
-     "drop": 1.04,
+     "drop": 1.08,
      "ground": 47.69,
      "hx": 15.6,
      "hz": 19.25,
@@ -326,7 +343,7 @@
      "z": 77.79
     },
     {
-     "drop": 1.05,
+     "drop": 1.27,
      "ground": 11.52,
      "hx": 15.0,
      "hz": 22.5,
@@ -350,43 +367,7 @@
      "z": 1133.55
     },
     {
-     "drop": 2.77,
-     "ground": 28.17,
-     "hx": 4.0,
-     "hz": 2.0,
-     "id": "fornix_scipionis",
-     "model": "arch",
-     "platform": "f2_terrace_fornix_scipionis",
-     "x": -265.04,
-     "yaw": 1.91986217719376,
-     "z": 98.02
-    },
-    {
-     "drop": 2.39,
-     "ground": 10.65,
-     "hx": 35.0,
-     "hz": 45.0,
-     "id": "forum_boarium",
-     "model": "plaza",
-     "platform": "",
-     "x": -368.02,
-     "yaw": 1.39626340159546,
-     "z": 409.97
-    },
-    {
-     "drop": 2.26,
-     "ground": 12.5,
-     "hx": 20.0,
-     "hz": 47.5,
-     "id": "forum_holitorium",
-     "model": "plaza",
-     "platform": "",
-     "x": -439.11,
-     "yaw": -1.91986217719376,
-     "z": 144.47
-    },
-    {
-     "drop": 1.54,
+     "drop": 1.5,
      "ground": 11.73,
      "hx": 11.0,
      "hz": 11.0,
@@ -398,8 +379,8 @@
      "z": -71.68
     },
     {
-     "drop": 8.82,
-     "ground": 42.22,
+     "drop": 10.23,
+     "ground": 41.55,
      "hx": 17.0,
      "hz": 13.0,
      "id": "porta_capena",
@@ -410,8 +391,20 @@
      "z": 950.85
     },
     {
-     "drop": 2.45,
-     "ground": 48.78,
+     "drop": 1.76,
+     "ground": 14.26,
+     "hx": 17.0,
+     "hz": 13.0,
+     "id": "porta_carmentalis",
+     "model": "servian_gate",
+     "platform": "f2_terrace_porta_carmentalis",
+     "x": -416.07,
+     "yaw": 0.885870170037023,
+     "z": 122.8
+    },
+    {
+     "drop": 1.88,
+     "ground": 49.65,
      "hx": 17.0,
      "hz": 13.0,
      "id": "porta_collina",
@@ -422,8 +415,8 @@
      "z": -1647.53
     },
     {
-     "drop": 3.46,
-     "ground": 31.27,
+     "drop": 2.1,
+     "ground": 29.36,
      "hx": 17.0,
      "hz": 13.0,
      "id": "porta_esquilina",
@@ -434,7 +427,7 @@
      "z": -364.29
     },
     {
-     "drop": 7.56,
+     "drop": 7.14,
      "ground": 12.5,
      "hx": 17.0,
      "hz": 13.0,
@@ -446,8 +439,8 @@
      "z": 100.02
     },
     {
-     "drop": 6.42,
-     "ground": 31.57,
+     "drop": 6.4,
+     "ground": 28.54,
      "hx": 17.0,
      "hz": 13.0,
      "id": "porta_fontinalis",
@@ -458,20 +451,20 @@
      "z": -388.96
     },
     {
-     "drop": 3.04,
-     "ground": 21.04,
+     "drop": 1.32,
+     "ground": 38.44,
      "hx": 3.0,
      "hz": 2.0,
      "id": "porta_pandana",
      "model": "arch",
-     "platform": "f2_terrace_porta_pandana",
+     "platform": "",
      "x": -248.14,
      "yaw": 0.462512251778497,
      "z": 101.8
     },
     {
-     "drop": 2.35,
-     "ground": 44.88,
+     "drop": 2.22,
+     "ground": 44.77,
      "hx": 17.0,
      "hz": 13.0,
      "id": "porta_salutaris",
@@ -482,7 +475,7 @@
      "z": -766.81
     },
     {
-     "drop": 4.18,
+     "drop": 4.77,
      "ground": 36.9,
      "hx": 17.0,
      "hz": 13.0,
@@ -494,60 +487,125 @@
      "z": -439.97
     },
     {
-     "drop": 1.75,
-     "ground": 45.46,
+     "drop": 4.58,
+     "ground": 11.52,
+     "hx": 17.0,
+     "hz": 13.0,
+     "id": "porta_trigemina",
+     "model": "servian_gate",
+     "platform": "",
+     "x": -467.11,
+     "yaw": 1.79791684231378,
+     "z": 500.09
+    },
+    {
+     "drop": 1.95,
+     "ground": 13.86,
      "hx": 1.5,
      "hz": 2.0,
-     "id": "sacellum_volupiae",
+     "id": "sacellum_carmentis",
      "model": "aedicula",
+     "platform": "f2_terrace_porta_carmentalis",
+     "x": -394.86,
+     "yaw": -1.22173047639603,
+     "z": 117.13
+    },
+    {
+     "drop": 3.78,
+     "ground": 10.78,
+     "hx": 7.5,
+     "hz": 20.0,
+     "id": "salinae",
+     "model": "long_hall",
      "platform": "",
-     "x": -25.02,
-     "yaw": -2.0943951023932,
-     "z": 290.05
+     "x": -502.24,
+     "yaw": 2.60054058547155,
+     "z": 542.54
     }
    ],
-   "standing": 150,
+   "stair_ends": [],
+   "standing": 152,
+   "streets_ground": [
+    "street via_sacra under the ground over 13 m (worst 0.38 m) near (270, 203)",
+    "street clivus_capitolinus under the ground over 14 m (worst 0.36 m) near (-259, 99)",
+    "street clivus_capitolinus floating over the ground over 2 m (worst 0.56 m) near (-256, 101)",
+    "street clivus_argentarius under the ground over 57 m (worst 0.37 m) near (-189, -388)",
+    "street clivus_argentarius floating over the ground over 2 m (worst 0.56 m) near (-187, -380)",
+    "street vicus_tuscus under the ground over 43 m (worst 0.09 m) near (-123, 358)",
+    "street vicus_iugarius under the ground over 35 m (worst 0.73 m) near (-380, 137)",
+    "street vicus_iugarius floating over the ground over 9 m (worst 1.92 m) near (-383, 133)",
+    "street subura under the ground over 3 m (worst 0.35 m) near (265, -324)",
+    "street clivus_suburanus under the ground over 68 m (worst 0.39 m) near (1051, -366)",
+    "street vicus_patricius under the ground over 10 m (worst 0.03 m) near (1005, -1035)",
+    "street vicus_longus under the ground over 4 m (worst 0.02 m) near (157, -382)",
+    "street alta_semita under the ground over 8 m (worst 0.11 m) near (433, -953)",
+    "street nova_via under the ground over 3 m (worst 0.03 m) near (240, 195)",
+    "street clivus_palatinus under the ground over 8 m (worst 0.66 m) near (256, 230)",
+    "street clivus_palatinus floating over the ground over 3 m (worst 0.91 m) near (262, 225)",
+    "street via_lata under the ground over 6 m (worst 0.08 m) near (-222, -394)",
+    "street via_flumentana under the ground over 20 m (worst 0.32 m) near (-470, -119)",
+    "street via_triumphi_campi under the ground over 5 m (worst 0.14 m) near (-628, 6)",
+    "street via_inter_palatium_caelium under the ground over 5 m (worst 0.06 m) near (423, 277)",
+    "street via_salaria under the ground over 3 m (worst 0.28 m) near (1110, -1649)",
+    "street via_nomentana under the ground over 3 m (worst 0.27 m) near (1110, -1646)",
+    "street via_praenestina under the ground over 6 m (worst 0.27 m) near (1329, -363)",
+    "street via_praenestina floating over the ground over 2 m (worst 0.52 m) near (2164, 47)",
+    "street via_aurelia under the ground over 2 m (worst 0.00 m) near (0, 0)"
+   ],
    "streets_through": [],
-   "year": -133
+   "year": -133,
+   "zfight": []
   },
   "-264": {
+   "bank_sawtooth": [
+    "the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-1444, -1300)",
+    "the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-521, 261)"
+   ],
    "buried": [],
+   "chunk_seams": [],
+   "empty_terraces": [],
+   "f3_ground_seconds": 18.102,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.8 m foundation (temple_tuscan_small)",
-    "aedes_fortunae_matris_matutae on a 2.1 m foundation (temple_tetrastyle_ionic)",
+    "aedes_fortunae_matris_matutae on a 1.5 m foundation (temple_tetrastyle_ionic)",
     "aedes_herculis_collina on a 1.4 m foundation (temple_tuscan_small)",
     "aedes_iovis_feretri on a 1.1 m foundation (aedicula)",
     "aedes_iunonis_monetae on a 1.5 m foundation (temple_tuscan_small)",
-    "aedes_larum on a 5.0 m foundation (temple_tuscan_small)",
-    "aedes_portuni on a 1.0 m foundation (temple_tetrastyle_ionic_travertine)",
+    "aedes_larum on a 4.8 m foundation (temple_tuscan_small)",
+    "aedes_portuni on a 1.3 m foundation (temple_tetrastyle_ionic_travertine)",
     "aedes_quirini on a 2.5 m foundation (temple_tetrastyle_ionic)",
-    "area_capitolina on a 20.7 m foundation (plaza)",
-    "curia_hostilia on a 2.0 m foundation (curia)",
-    "domus_hortensii_augusti on a 1.0 m foundation (domus)",
-    "domus_pompeii_carinae on a 1.0 m foundation (domus)",
-    "domus_publica on a 1.0 m foundation (domus)",
-    "forum_boarium on a 2.4 m foundation (plaza)",
-    "forum_holitorium on a 2.3 m foundation (plaza)",
-    "porta_capena on a 8.8 m foundation (servian_gate)",
-    "porta_collina on a 2.5 m foundation (servian_gate)",
-    "porta_esquilina on a 3.5 m foundation (servian_gate)",
-    "porta_flumentana on a 7.6 m foundation (servian_gate)",
-    "porta_fontinalis on a 6.4 m foundation (servian_gate)",
-    "porta_pandana on a 3.0 m foundation (arch)",
-    "porta_salutaris on a 2.4 m foundation (servian_gate)",
-    "porta_sanqualis on a 4.2 m foundation (servian_gate)",
-    "sacellum_volupiae on a 1.7 m foundation (aedicula)"
+    "atrium_vestae on a 4.2 m foundation (domus)",
+    "domus_hortensii_augusti on a 1.1 m foundation (domus)",
+    "domus_pompeii_carinae on a 2.5 m foundation (domus)",
+    "domus_publica on a 1.3 m foundation (domus)",
+    "porta_capena on a 10.2 m foundation (servian_gate)",
+    "porta_carmentalis on a 1.8 m foundation (servian_gate)",
+    "porta_collina on a 1.9 m foundation (servian_gate)",
+    "porta_esquilina on a 2.2 m foundation (servian_gate)",
+    "porta_flumentana on a 7.1 m foundation (servian_gate)",
+    "porta_fontinalis on a 1.4 m foundation (servian_gate)",
+    "porta_pandana on a 1.3 m foundation (arch)",
+    "porta_salutaris on a 2.3 m foundation (servian_gate)",
+    "porta_sanqualis on a 3.5 m foundation (servian_gate)",
+    "porta_trigemina on a 4.6 m foundation (servian_gate)",
+    "sacellum_carmentis on a 2.0 m foundation (aedicula)",
+    "salinae on a 3.8 m foundation (long_hall)"
    ],
+   "ground_holes": [],
    "houses_in_monuments": [],
    "houses_on_streets": [],
-   "in_river": [
-    "porta_flumentana 1 of 25 footprint points in the water"
-   ],
+   "in_river": [],
    "overlaps": [
     "circus_maximus overlaps sacellum_murciae by 5.1 m"
    ],
-   "seconds": 14.983,
+   "platform_steps": [
+    "platform f2_terrace_aedes_iovis_statoris_palatine stands 2.8 m over the ground in front of aedes_iovis_statoris_palatine at (113, 172)",
+    "platform f2_terrace_aedes_larum stands 1.1 m below the end of street via_sacra at (272, 203)",
+    "platform f2_terrace_aedes_larum stands 1.2 m below the end of street clivus_palatinus at (268, 212)",
+    "platform f2_terrace_aedes_larum stands 1.1 m below the end of street via_inter_palatium_caelium at (272, 203)"
+   ],
+   "seconds": 36.569,
    "slopes": [
     {
      "drop": 1.8,
@@ -562,7 +620,7 @@
      "z": -529.88
     },
     {
-     "drop": 2.09,
+     "drop": 1.48,
      "ground": 10.76,
      "hx": 6.0,
      "hz": 13.0,
@@ -610,7 +668,7 @@
      "z": -155.58
     },
     {
-     "drop": 4.96,
+     "drop": 4.81,
      "ground": 28.3,
      "hx": 8.0,
      "hz": 9.6,
@@ -622,8 +680,8 @@
      "z": 192.04
     },
     {
-     "drop": 1.0,
-     "ground": 9.72,
+     "drop": 1.34,
+     "ground": 10.43,
      "hx": 6.0,
      "hz": 10.0,
      "id": "aedes_portuni",
@@ -646,31 +704,19 @@
      "z": -1000.19
     },
     {
-     "drop": 20.67,
-     "ground": 42.0,
-     "hx": 61.0,
-     "hz": 54.0,
-     "id": "area_capitolina",
-     "model": "plaza",
-     "platform": "area_capitolina",
-     "x": -289.98,
-     "yaw": 0.462512251778497,
-     "z": 49.9
+     "drop": 4.21,
+     "ground": 11.0,
+     "hx": 12.0,
+     "hz": 22.5,
+     "id": "atrium_vestae",
+     "model": "domus",
+     "platform": "forum_romanum",
+     "x": 107.71,
+     "yaw": -2.0018926520375,
+     "z": 122.25
     },
     {
-     "drop": 2.0,
-     "ground": 13.0,
-     "hx": 12.5,
-     "hz": 9.0,
-     "id": "curia_hostilia",
-     "model": "curia",
-     "platform": "forum_iulium",
-     "x": 0.0,
-     "yaw": -0.279252680319093,
-     "z": -55.57
-    },
-    {
-     "drop": 1.04,
+     "drop": 1.08,
      "ground": 47.69,
      "hx": 15.6,
      "hz": 19.25,
@@ -682,7 +728,7 @@
      "z": 436.97
     },
     {
-     "drop": 1.03,
+     "drop": 2.52,
      "ground": 16.59,
      "hx": 12.5,
      "hz": 20.0,
@@ -694,7 +740,7 @@
      "z": 77.79
     },
     {
-     "drop": 1.05,
+     "drop": 1.27,
      "ground": 11.52,
      "hx": 15.0,
      "hz": 22.5,
@@ -706,32 +752,8 @@
      "z": 100.02
     },
     {
-     "drop": 2.39,
-     "ground": 10.65,
-     "hx": 35.0,
-     "hz": 45.0,
-     "id": "forum_boarium",
-     "model": "plaza",
-     "platform": "",
-     "x": -368.02,
-     "yaw": 1.39626340159546,
-     "z": 409.97
-    },
-    {
-     "drop": 2.26,
-     "ground": 12.5,
-     "hx": 20.0,
-     "hz": 47.5,
-     "id": "forum_holitorium",
-     "model": "plaza",
-     "platform": "",
-     "x": -439.11,
-     "yaw": -1.91986217719376,
-     "z": 144.47
-    },
-    {
-     "drop": 8.82,
-     "ground": 42.22,
+     "drop": 10.23,
+     "ground": 41.55,
      "hx": 17.0,
      "hz": 13.0,
      "id": "porta_capena",
@@ -742,8 +764,20 @@
      "z": 950.85
     },
     {
-     "drop": 2.45,
-     "ground": 48.78,
+     "drop": 1.76,
+     "ground": 14.26,
+     "hx": 17.0,
+     "hz": 13.0,
+     "id": "porta_carmentalis",
+     "model": "servian_gate",
+     "platform": "f2_terrace_porta_carmentalis",
+     "x": -416.07,
+     "yaw": 0.885870170037023,
+     "z": 122.8
+    },
+    {
+     "drop": 1.88,
+     "ground": 49.71,
      "hx": 17.0,
      "hz": 13.0,
      "id": "porta_collina",
@@ -754,8 +788,8 @@
      "z": -1647.53
     },
     {
-     "drop": 3.46,
-     "ground": 31.27,
+     "drop": 2.24,
+     "ground": 29.39,
      "hx": 17.0,
      "hz": 13.0,
      "id": "porta_esquilina",
@@ -766,7 +800,7 @@
      "z": -364.29
     },
     {
-     "drop": 7.56,
+     "drop": 7.14,
      "ground": 12.5,
      "hx": 17.0,
      "hz": 13.0,
@@ -778,8 +812,8 @@
      "z": 100.02
     },
     {
-     "drop": 6.42,
-     "ground": 31.57,
+     "drop": 1.36,
+     "ground": 32.15,
      "hx": 17.0,
      "hz": 13.0,
      "id": "porta_fontinalis",
@@ -790,20 +824,20 @@
      "z": -388.96
     },
     {
-     "drop": 3.04,
-     "ground": 21.04,
+     "drop": 1.32,
+     "ground": 38.44,
      "hx": 3.0,
      "hz": 2.0,
      "id": "porta_pandana",
      "model": "arch",
-     "platform": "f2_terrace_porta_pandana",
+     "platform": "",
      "x": -248.14,
      "yaw": 0.462512251778497,
      "z": 101.8
     },
     {
-     "drop": 2.35,
-     "ground": 44.88,
+     "drop": 2.29,
+     "ground": 44.82,
      "hx": 17.0,
      "hz": 13.0,
      "id": "porta_salutaris",
@@ -814,7 +848,7 @@
      "z": -766.81
     },
     {
-     "drop": 4.18,
+     "drop": 3.5,
      "ground": 36.9,
      "hx": 17.0,
      "hz": 13.0,
@@ -826,73 +860,136 @@
      "z": -439.97
     },
     {
-     "drop": 1.75,
-     "ground": 45.46,
+     "drop": 4.58,
+     "ground": 11.52,
+     "hx": 17.0,
+     "hz": 13.0,
+     "id": "porta_trigemina",
+     "model": "servian_gate",
+     "platform": "",
+     "x": -467.11,
+     "yaw": 1.79791684231378,
+     "z": 500.09
+    },
+    {
+     "drop": 1.95,
+     "ground": 13.86,
      "hx": 1.5,
      "hz": 2.0,
-     "id": "sacellum_volupiae",
+     "id": "sacellum_carmentis",
      "model": "aedicula",
+     "platform": "f2_terrace_porta_carmentalis",
+     "x": -394.86,
+     "yaw": -1.22173047639603,
+     "z": 117.13
+    },
+    {
+     "drop": 3.78,
+     "ground": 10.78,
+     "hx": 7.5,
+     "hz": 20.0,
+     "id": "salinae",
+     "model": "long_hall",
      "platform": "",
-     "x": -25.02,
-     "yaw": -2.0943951023932,
-     "z": 290.05
+     "x": -502.24,
+     "yaw": 2.60054058547155,
+     "z": 542.54
     }
    ],
-   "standing": 108,
+   "stair_ends": [],
+   "standing": 109,
+   "streets_ground": [
+    "street via_sacra under the ground over 13 m (worst 0.38 m) near (270, 203)",
+    "street clivus_capitolinus under the ground over 14 m (worst 0.36 m) near (-259, 99)",
+    "street clivus_capitolinus floating over the ground over 2 m (worst 0.56 m) near (-256, 101)",
+    "street clivus_argentarius under the ground over 47 m (worst 0.22 m) near (-116, -179)",
+    "street vicus_tuscus under the ground over 43 m (worst 0.09 m) near (-123, 358)",
+    "street vicus_iugarius under the ground over 35 m (worst 0.75 m) near (-380, 137)",
+    "street vicus_iugarius floating over the ground over 9 m (worst 1.92 m) near (-383, 133)",
+    "street subura under the ground over 3 m (worst 0.35 m) near (265, -324)",
+    "street clivus_suburanus under the ground over 68 m (worst 0.39 m) near (1051, -366)",
+    "street vicus_patricius under the ground over 8 m (worst 0.03 m) near (1005, -1035)",
+    "street vicus_longus under the ground over 6 m (worst 0.02 m) near (157, -382)",
+    "street alta_semita under the ground over 8 m (worst 0.11 m) near (433, -953)",
+    "street nova_via under the ground over 3 m (worst 0.03 m) near (240, 195)",
+    "street clivus_palatinus under the ground over 8 m (worst 0.66 m) near (256, 230)",
+    "street clivus_palatinus floating over the ground over 3 m (worst 0.91 m) near (262, 225)",
+    "street via_flumentana under the ground over 12 m (worst 0.24 m) near (-415, 419)",
+    "street via_inter_palatium_caelium under the ground over 6 m (worst 0.06 m) near (432, 288)",
+    "street via_appia under the ground over 2 m (worst 0.02 m) near (464, 1015)",
+    "street via_salaria under the ground over 3 m (worst 0.29 m) near (1110, -1649)",
+    "street via_nomentana under the ground over 3 m (worst 0.29 m) near (1109, -1649)",
+    "street via_praenestina under the ground over 6 m (worst 0.28 m) near (1329, -363)",
+    "street via_praenestina floating over the ground over 2 m (worst 0.50 m) near (2164, 47)"
+   ],
    "streets_through": [],
-   "year": -264
+   "year": -264,
+   "zfight": []
   },
   "-27": {
+   "bank_sawtooth": [
+    "the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-1444, -1300)",
+    "the water's edge turns more than 25 degrees within 2 m 3 times in the 100 m square near (-1043, 1340)"
+   ],
    "buried": [],
+   "chunk_seams": [],
+   "empty_terraces": [
+    "terrace walls across empty ground near (833, -813): 30 m",
+    "terrace walls across empty ground near (1203, -352): 11 m"
+   ],
+   "f3_ground_seconds": 27.202,
    "floating": [],
    "founded": [
     "aedes_apollinis_palatini on a 1.2 m foundation (temple_hexastyle_corinthian_marble)",
     "aedes_dei_fidii on a 1.8 m foundation (temple_tuscan_small)",
+    "aedes_faunus on a 1.1 m foundation (temple_tetrastyle_ionic)",
     "aedes_felicitatis on a 2.3 m foundation (temple_tetrastyle_ionic)",
     "aedes_fortunae_matris_matutae on a 2.1 m foundation (temple_tetrastyle_ionic)",
     "aedes_herculis_collina on a 1.4 m foundation (temple_tuscan_small)",
     "aedes_honoris_virtutis on a 1.9 m foundation (temple_tetrastyle_ionic)",
     "aedes_iovis_feretri on a 1.1 m foundation (aedicula)",
     "aedes_iunonis_monetae on a 1.5 m foundation (temple_tuscan_small)",
-    "aedes_larum on a 5.0 m foundation (temple_tuscan_small)",
+    "aedes_larum on a 4.8 m foundation (temple_tuscan_small)",
     "aedes_mentis on a 1.1 m foundation (temple_tetrastyle_ionic)",
-    "aedes_portuni on a 1.0 m foundation (temple_tetrastyle_ionic_travertine)",
+    "aedes_portuni on a 1.3 m foundation (temple_tetrastyle_ionic_travertine)",
     "aedes_veneris_erycinae_capitol on a 1.9 m foundation (temple_tetrastyle_ionic)",
     "ara_vermini on a 1.5 m foundation (altar)",
-    "area_capitolina on a 20.7 m foundation (plaza)",
-    "curia_iulia on a 1.9 m foundation (curia)",
-    "delubrum_fontis on a 1.1 m foundation (aedicula)",
-    "domus_catuli on a 14.2 m foundation (domus)",
+    "atrium_vestae on a 4.2 m foundation (domus)",
+    "curia_iulia on a 1.7 m foundation (curia)",
+    "delubrum_fontis on a 1.5 m foundation (aedicula)",
+    "domus_catuli on a 13.4 m foundation (domus)",
     "domus_ciceronis on a 1.7 m foundation (domus)",
-    "domus_hortensii_augusti on a 1.0 m foundation (domus)",
+    "domus_crassi_oratoris on a 20.4 m foundation (domus)",
+    "domus_hortensii_augusti on a 1.1 m foundation (domus)",
     "domus_pompeii_carinae on a 1.0 m foundation (domus)",
-    "domus_publica on a 1.0 m foundation (domus)",
+    "domus_publica on a 1.3 m foundation (domus)",
+    "domus_scauri on a 1.8 m foundation (domus)",
     "emporium on a 3.4 m foundation (quay)",
-    "fornix_scipionis on a 2.8 m foundation (arch)",
-    "forum_boarium on a 2.4 m foundation (plaza)",
-    "forum_holitorium on a 2.3 m foundation (plaza)",
-    "forum_iulium on a 7.2 m foundation (plaza)",
-    "horrea_agrippiana on a 3.5 m foundation (horrea)",
+    "horrea_agrippiana on a 5.1 m foundation (horrea)",
     "horrea_sempronia on a 1.5 m foundation (horrea)",
     "macellum on a 1.5 m foundation (macellum)",
     "nymphaeum_annibaldi on a 1.3 m foundation (basin)",
-    "porta_capena on a 8.8 m foundation (servian_gate)",
-    "porta_collina on a 2.5 m foundation (servian_gate)",
-    "porta_esquilina on a 3.5 m foundation (servian_gate)",
-    "porta_flumentana on a 7.6 m foundation (servian_gate)",
+    "porta_capena on a 10.2 m foundation (servian_gate)",
+    "porta_carmentalis on a 1.8 m foundation (servian_gate)",
+    "porta_collina on a 1.9 m foundation (servian_gate)",
+    "porta_esquilina on a 2.3 m foundation (servian_gate)",
+    "porta_flumentana on a 7.1 m foundation (servian_gate)",
     "porta_fontinalis on a 6.4 m foundation (servian_gate)",
-    "porta_pandana on a 3.0 m foundation (arch)",
-    "porta_salutaris on a 2.4 m foundation (servian_gate)",
-    "porta_sanqualis on a 4.2 m foundation (servian_gate)",
-    "porticus_catuli on a 2.0 m foundation (portico_enclosure)",
-    "sacellum_volupiae on a 1.7 m foundation (aedicula)",
-    "tabularium on a 7.2 m foundation (tabularium)"
+    "porta_pandana on a 1.3 m foundation (arch)",
+    "porta_salutaris on a 2.2 m foundation (servian_gate)",
+    "porta_sanqualis on a 4.8 m foundation (servian_gate)",
+    "porta_trigemina on a 4.6 m foundation (servian_gate)",
+    "porticus_catuli on a 2.1 m foundation (portico_enclosure)",
+    "sacellum_carmentis on a 2.0 m foundation (aedicula)",
+    "salinae on a 3.8 m foundation (long_hall)",
+    "tabularium on a 7.4 m foundation (tabularium)",
+    "theatrum_marcelli on a 5.1 m foundation (theatre_stone)"
    ],
+   "ground_holes": [],
    "houses_in_monuments": [],
    "houses_on_streets": [],
    "in_river": [
-    "porta_flumentana 1 of 25 footprint points in the water",
-    "porticus_aemilia 3 of 25 footprint points in the water"
+    "porticus_aemilia 5 of 25 footprint points in the water"
    ],
    "overlaps": [
     "aedes_concordiae_forum overlaps tabularium by 3.2 m",
@@ -901,7 +998,14 @@
     "horrea_galbae overlaps porticus_aemilia by 52.5 m",
     "porticus_octaviae overlaps theatrum_marcelli by 2.8 m"
    ],
-   "seconds": 30.917,
+   "platform_steps": [
+    "platform f2_terrace_aedes_iovis_statoris_palatine stands 2.8 m over the ground in front of aedes_iovis_statoris_palatine at (113, 172)",
+    "platform f2_terrace_aedes_larum stands 1.1 m below the end of street via_sacra at (272, 203)",
+    "platform f2_terrace_aedes_larum stands 1.2 m below the end of street clivus_palatinus at (268, 212)",
+    "platform f2_terrace_aedes_larum stands 1.1 m below the end of street via_inter_palatium_caelium at (272, 203)",
+    "platform f2_terrace_domus_catuli stands 10.3 m over the ground in front of domus_catuli at (50, 192)"
+   ],
+   "seconds": 58.707,
    "slopes": [
     {
      "drop": 1.2,
@@ -926,6 +1030,18 @@
      "x": 104.89,
      "yaw": -0.139626340159546,
      "z": -529.88
+    },
+    {
+     "drop": 1.14,
+     "ground": 8.77,
+     "hx": 4.5,
+     "hz": 7.0,
+     "id": "aedes_faunus",
+     "model": "temple_tetrastyle_ionic",
+     "platform": "",
+     "x": -706.96,
+     "yaw": 1.5707963267949,
+     "z": 165.03
     },
     {
      "drop": 2.28,
@@ -1000,7 +1116,7 @@
      "z": -155.58
     },
     {
-     "drop": 4.96,
+     "drop": 4.81,
      "ground": 28.3,
      "hx": 8.0,
      "hz": 9.6,
@@ -1024,8 +1140,8 @@
      "z": -111.13
     },
     {
-     "drop": 1.0,
-     "ground": 9.72,
+     "drop": 1.34,
+     "ground": 10.43,
      "hx": 6.0,
      "hz": 10.0,
      "id": "aedes_portuni",
@@ -1060,19 +1176,19 @@
      "z": -1139.55
     },
     {
-     "drop": 20.67,
-     "ground": 42.0,
-     "hx": 61.0,
-     "hz": 54.0,
-     "id": "area_capitolina",
-     "model": "plaza",
-     "platform": "area_capitolina",
-     "x": -289.98,
-     "yaw": 0.462512251778497,
-     "z": 49.9
+     "drop": 4.21,
+     "ground": 11.0,
+     "hx": 12.0,
+     "hz": 22.5,
+     "id": "atrium_vestae",
+     "model": "domus",
+     "platform": "forum_romanum",
+     "x": 107.71,
+     "yaw": -2.0018926520375,
+     "z": 122.25
     },
     {
-     "drop": 1.9,
+     "drop": 1.68,
      "ground": 13.0,
      "hx": 12.6,
      "hz": 8.81,
@@ -1084,8 +1200,8 @@
      "z": -55.57
     },
     {
-     "drop": 1.09,
-     "ground": 20.2,
+     "drop": 1.49,
+     "ground": 20.29,
      "hx": 2.0,
      "hz": 2.5,
      "id": "delubrum_fontis",
@@ -1096,7 +1212,7 @@
      "z": -411.41
     },
     {
-     "drop": 14.25,
+     "drop": 13.35,
      "ground": 43.5,
      "hx": 12.5,
      "hz": 20.0,
@@ -1120,7 +1236,19 @@
      "z": 240.05
     },
     {
-     "drop": 1.04,
+     "drop": 20.4,
+     "ground": 36.64,
+     "hx": 14.0,
+     "hz": 20.0,
+     "id": "domus_crassi_oratoris",
+     "model": "domus",
+     "platform": "",
+     "x": 0.0,
+     "yaw": 2.8623399732707,
+     "z": 222.26
+    },
+    {
+     "drop": 1.08,
      "ground": 47.69,
      "hx": 15.6,
      "hz": 19.25,
@@ -1144,7 +1272,7 @@
      "z": 77.79
     },
     {
-     "drop": 1.05,
+     "drop": 1.27,
      "ground": 11.52,
      "hx": 15.0,
      "hz": 22.5,
@@ -1154,6 +1282,18 @@
      "x": 231.98,
      "yaw": 2.8623399732707,
      "z": 100.02
+    },
+    {
+     "drop": 1.76,
+     "ground": 44.47,
+     "hx": 15.0,
+     "hz": 22.5,
+     "id": "domus_scauri",
+     "model": "domus",
+     "platform": "",
+     "x": 140.85,
+     "yaw": 2.8623399732707,
+     "z": 277.83
     },
     {
      "drop": 3.42,
@@ -1168,55 +1308,7 @@
      "z": 1133.55
     },
     {
-     "drop": 2.77,
-     "ground": 28.17,
-     "hx": 4.0,
-     "hz": 2.0,
-     "id": "fornix_scipionis",
-     "model": "arch",
-     "platform": "f2_terrace_fornix_scipionis",
-     "x": -265.04,
-     "yaw": 1.91986217719376,
-     "z": 98.02
-    },
-    {
-     "drop": 2.39,
-     "ground": 10.65,
-     "hx": 35.0,
-     "hz": 45.0,
-     "id": "forum_boarium",
-     "model": "plaza",
-     "platform": "",
-     "x": -368.02,
-     "yaw": 1.39626340159546,
-     "z": 409.97
-    },
-    {
-     "drop": 2.26,
-     "ground": 12.5,
-     "hx": 20.0,
-     "hz": 47.5,
-     "id": "forum_holitorium",
-     "model": "plaza",
-     "platform": "",
-     "x": -439.11,
-     "yaw": -1.91986217719376,
-     "z": 144.47
-    },
-    {
-     "drop": 7.24,
-     "ground": 13.0,
-     "hx": 37.5,
-     "hz": 80.0,
-     "id": "forum_iulium",
-     "model": "plaza",
-     "platform": "forum_iulium",
-     "x": -16.57,
-     "yaw": 0.698131700797732,
-     "z": -133.36
-    },
-    {
-     "drop": 3.5,
+     "drop": 5.09,
      "ground": 23.6,
      "hx": 26.25,
      "hz": 23.5,
@@ -1264,8 +1356,8 @@
      "z": 92.91
     },
     {
-     "drop": 8.82,
-     "ground": 42.22,
+     "drop": 10.23,
+     "ground": 41.55,
      "hx": 17.0,
      "hz": 13.0,
      "id": "porta_capena",
@@ -1276,8 +1368,20 @@
      "z": 950.85
     },
     {
-     "drop": 2.45,
-     "ground": 48.78,
+     "drop": 1.76,
+     "ground": 14.26,
+     "hx": 17.0,
+     "hz": 13.0,
+     "id": "porta_carmentalis",
+     "model": "servian_gate",
+     "platform": "f2_terrace_porta_carmentalis",
+     "x": -416.07,
+     "yaw": 0.885870170037023,
+     "z": 122.8
+    },
+    {
+     "drop": 1.89,
+     "ground": 49.45,
      "hx": 17.0,
      "hz": 13.0,
      "id": "porta_collina",
@@ -1288,8 +1392,8 @@
      "z": -1647.53
     },
     {
-     "drop": 3.46,
-     "ground": 31.27,
+     "drop": 2.28,
+     "ground": 29.39,
      "hx": 17.0,
      "hz": 13.0,
      "id": "porta_esquilina",
@@ -1300,7 +1404,7 @@
      "z": -364.29
     },
     {
-     "drop": 7.56,
+     "drop": 7.14,
      "ground": 12.5,
      "hx": 17.0,
      "hz": 13.0,
@@ -1312,8 +1416,8 @@
      "z": 100.02
     },
     {
-     "drop": 6.42,
-     "ground": 31.57,
+     "drop": 6.4,
+     "ground": 28.54,
      "hx": 17.0,
      "hz": 13.0,
      "id": "porta_fontinalis",
@@ -1324,20 +1428,20 @@
      "z": -388.96
     },
     {
-     "drop": 3.04,
-     "ground": 21.04,
+     "drop": 1.32,
+     "ground": 38.44,
      "hx": 3.0,
      "hz": 2.0,
      "id": "porta_pandana",
      "model": "arch",
-     "platform": "f2_terrace_porta_pandana",
+     "platform": "",
      "x": -248.14,
      "yaw": 0.462512251778497,
      "z": 101.8
     },
     {
-     "drop": 2.35,
-     "ground": 44.88,
+     "drop": 2.22,
+     "ground": 44.77,
      "hx": 17.0,
      "hz": 13.0,
      "id": "porta_salutaris",
@@ -1348,7 +1452,7 @@
      "z": -766.81
     },
     {
-     "drop": 4.18,
+     "drop": 4.77,
      "ground": 36.9,
      "hx": 17.0,
      "hz": 13.0,
@@ -1360,7 +1464,19 @@
      "z": -439.97
     },
     {
-     "drop": 2.03,
+     "drop": 4.58,
+     "ground": 11.52,
+     "hx": 17.0,
+     "hz": 13.0,
+     "id": "porta_trigemina",
+     "model": "servian_gate",
+     "platform": "",
+     "x": -467.11,
+     "yaw": 1.79791684231378,
+     "z": 500.09
+    },
+    {
+     "drop": 2.11,
      "ground": 44.56,
      "hx": 15.0,
      "hz": 17.5,
@@ -1372,20 +1488,32 @@
      "z": 258.05
     },
     {
-     "drop": 1.75,
-     "ground": 45.46,
+     "drop": 1.95,
+     "ground": 13.86,
      "hx": 1.5,
      "hz": 2.0,
-     "id": "sacellum_volupiae",
+     "id": "sacellum_carmentis",
      "model": "aedicula",
-     "platform": "",
-     "x": -25.02,
-     "yaw": -2.0943951023932,
-     "z": 290.05
+     "platform": "f2_terrace_porta_carmentalis",
+     "x": -394.86,
+     "yaw": -1.22173047639603,
+     "z": 117.13
     },
     {
-     "drop": 7.25,
-     "ground": 10.5,
+     "drop": 3.78,
+     "ground": 10.78,
+     "hx": 7.5,
+     "hz": 20.0,
+     "id": "salinae",
+     "model": "long_hall",
+     "platform": "",
+     "x": -502.24,
+     "yaw": 2.60054058547155,
+     "z": 542.54
+    },
+    {
+     "drop": 7.44,
+     "ground": 14.63,
      "hx": 35.0,
      "hz": 15.0,
      "id": "tabularium",
@@ -1394,39 +1522,96 @@
      "x": -140.27,
      "yaw": 1.13446401379631,
      "z": -31.45
+    },
+    {
+     "drop": 5.07,
+     "ground": 12.5,
+     "hx": 61.0,
+     "hz": 61.0,
+     "id": "theatrum_marcelli",
+     "model": "theatre_stone",
+     "platform": "f2_terrace_theatrum_marcelli",
+     "x": -498.51,
+     "yaw": -0.392699081698724,
+     "z": 90.35
     }
    ],
-   "standing": 182,
+   "stair_ends": [],
+   "standing": 185,
+   "streets_ground": [
+    "street via_sacra under the ground over 13 m (worst 0.38 m) near (270, 203)",
+    "street clivus_capitolinus under the ground over 14 m (worst 0.36 m) near (-259, 99)",
+    "street clivus_capitolinus floating over the ground over 2 m (worst 0.56 m) near (-256, 101)",
+    "street clivus_argentarius under the ground over 55 m (worst 0.37 m) near (-189, -388)",
+    "street clivus_argentarius floating over the ground over 2 m (worst 0.56 m) near (-187, -380)",
+    "street vicus_tuscus under the ground over 43 m (worst 0.13 m) near (-89, 295)",
+    "street vicus_iugarius under the ground over 35 m (worst 0.73 m) near (-380, 137)",
+    "street vicus_iugarius floating over the ground over 9 m (worst 1.92 m) near (-383, 133)",
+    "street argiletum under the ground over 8 m (worst 0.17 m) near (32, -69)",
+    "street subura under the ground over 3 m (worst 0.35 m) near (265, -324)",
+    "street clivus_suburanus under the ground over 73 m (worst 1.17 m) near (1290, -355)",
+    "street clivus_suburanus floating over the ground over 4 m (worst 0.78 m) near (1295, -356)",
+    "street vicus_patricius under the ground over 10 m (worst 0.03 m) near (1005, -1035)",
+    "street vicus_longus under the ground over 4 m (worst 0.02 m) near (157, -382)",
+    "street alta_semita under the ground over 8 m (worst 0.11 m) near (433, -953)",
+    "street nova_via under the ground over 3 m (worst 0.03 m) near (240, 195)",
+    "street clivus_palatinus under the ground over 8 m (worst 0.66 m) near (256, 230)",
+    "street clivus_palatinus floating over the ground over 3 m (worst 0.91 m) near (262, 225)",
+    "street via_lata under the ground over 6 m (worst 0.08 m) near (-222, -394)",
+    "street via_flumentana under the ground over 20 m (worst 0.32 m) near (-470, -119)",
+    "street via_triumphi_campi under the ground over 5 m (worst 0.14 m) near (-628, 6)",
+    "street via_inter_palatium_caelium under the ground over 5 m (worst 0.06 m) near (423, 277)",
+    "street via_salaria under the ground over 3 m (worst 0.28 m) near (1110, -1649)",
+    "street via_nomentana under the ground over 3 m (worst 0.27 m) near (1110, -1646)",
+    "street via_praenestina under the ground over 6 m (worst 0.27 m) near (1329, -363)",
+    "street via_praenestina floating over the ground over 2 m (worst 0.52 m) near (2164, 47)",
+    "street via_aurelia under the ground over 2 m (worst 0.00 m) near (0, 0)"
+   ],
    "streets_through": [],
-   "year": -27
+   "year": -27,
+   "zfight": [
+    "forum_esquilinum paving within 5 cm of the ground over 6 m2 near (1284, -316)"
+   ]
   },
   "-390": {
+   "bank_sawtooth": [
+    "the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-1444, -1300)",
+    "the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-521, 261)"
+   ],
    "buried": [],
+   "chunk_seams": [],
+   "empty_terraces": [],
+   "f3_ground_seconds": 13.242,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.8 m foundation (temple_tuscan_small)",
-    "aedes_fortunae_matris_matutae on a 2.1 m foundation (temple_tetrastyle_ionic)",
+    "aedes_fortunae_matris_matutae on a 1.5 m foundation (temple_tetrastyle_ionic)",
     "aedes_herculis_collina on a 1.4 m foundation (temple_tuscan_small)",
     "aedes_iovis_feretri on a 1.1 m foundation (aedicula)",
-    "aedes_larum on a 5.0 m foundation (temple_tuscan_small)",
-    "aedes_portuni on a 1.0 m foundation (temple_tetrastyle_ionic_travertine)",
-    "area_capitolina on a 20.7 m foundation (plaza)",
-    "curia_hostilia on a 2.0 m foundation (curia)",
-    "domus_hortensii_augusti on a 1.0 m foundation (domus)",
-    "domus_pompeii_carinae on a 1.0 m foundation (domus)",
-    "domus_publica on a 1.0 m foundation (domus)",
-    "forum_boarium on a 2.4 m foundation (plaza)",
-    "forum_holitorium on a 2.3 m foundation (plaza)",
-    "porta_pandana on a 3.0 m foundation (arch)",
-    "sacellum_volupiae on a 1.7 m foundation (aedicula)"
+    "aedes_larum on a 4.8 m foundation (temple_tuscan_small)",
+    "aedes_portuni on a 1.3 m foundation (temple_tetrastyle_ionic_travertine)",
+    "domus_hortensii_augusti on a 1.1 m foundation (domus)",
+    "domus_manlii_arx on a 2.0 m foundation (domus)",
+    "domus_pompeii_carinae on a 2.5 m foundation (domus)",
+    "domus_publica on a 1.3 m foundation (domus)",
+    "porta_pandana on a 1.3 m foundation (arch)",
+    "sacellum_carmentis on a 2.1 m foundation (aedicula)",
+    "sacellum_volupiae on a 1.7 m foundation (aedicula)",
+    "salinae on a 3.8 m foundation (long_hall)"
    ],
+   "ground_holes": [],
    "houses_in_monuments": [],
    "houses_on_streets": [],
    "in_river": [],
    "overlaps": [
     "circus_maximus overlaps sacellum_murciae by 5.1 m"
    ],
-   "seconds": 8.525,
+   "platform_steps": [
+    "platform f2_terrace_aedes_larum stands 1.1 m below the end of street via_sacra at (272, 203)",
+    "platform f2_terrace_aedes_larum stands 1.2 m below the end of street clivus_palatinus at (268, 212)",
+    "platform f2_terrace_aedes_larum stands 1.1 m below the end of street via_inter_palatium_caelium at (272, 203)"
+   ],
+   "seconds": 25.212,
    "slopes": [
     {
      "drop": 1.8,
@@ -1441,7 +1626,7 @@
      "z": -529.88
     },
     {
-     "drop": 2.09,
+     "drop": 1.48,
      "ground": 10.76,
      "hx": 6.0,
      "hz": 13.0,
@@ -1477,7 +1662,7 @@
      "z": -77.79
     },
     {
-     "drop": 4.96,
+     "drop": 4.81,
      "ground": 28.3,
      "hx": 8.0,
      "hz": 9.6,
@@ -1489,8 +1674,8 @@
      "z": 192.04
     },
     {
-     "drop": 1.0,
-     "ground": 9.72,
+     "drop": 1.34,
+     "ground": 10.43,
      "hx": 6.0,
      "hz": 10.0,
      "id": "aedes_portuni",
@@ -1501,31 +1686,7 @@
      "z": 366.74
     },
     {
-     "drop": 20.67,
-     "ground": 42.0,
-     "hx": 61.0,
-     "hz": 54.0,
-     "id": "area_capitolina",
-     "model": "plaza",
-     "platform": "area_capitolina",
-     "x": -289.98,
-     "yaw": 0.462512251778497,
-     "z": 49.9
-    },
-    {
-     "drop": 2.0,
-     "ground": 13.0,
-     "hx": 12.5,
-     "hz": 9.0,
-     "id": "curia_hostilia",
-     "model": "curia",
-     "platform": "forum_iulium",
-     "x": 0.0,
-     "yaw": -0.279252680319093,
-     "z": -55.57
-    },
-    {
-     "drop": 1.04,
+     "drop": 1.08,
      "ground": 47.69,
      "hx": 15.6,
      "hz": 19.25,
@@ -1537,7 +1698,19 @@
      "z": 436.97
     },
     {
-     "drop": 1.03,
+     "drop": 2.01,
+     "ground": 40.64,
+     "hx": 9.0,
+     "hz": 12.5,
+     "id": "domus_manlii_arx",
+     "model": "domus",
+     "platform": "",
+     "x": -198.84,
+     "yaw": 0.663225115757845,
+     "z": -177.81
+    },
+    {
+     "drop": 2.52,
      "ground": 16.59,
      "hx": 12.5,
      "hz": 20.0,
@@ -1549,7 +1722,7 @@
      "z": 77.79
     },
     {
-     "drop": 1.05,
+     "drop": 1.27,
      "ground": 11.52,
      "hx": 15.0,
      "hz": 22.5,
@@ -1561,44 +1734,32 @@
      "z": 100.02
     },
     {
-     "drop": 2.39,
-     "ground": 10.65,
-     "hx": 35.0,
-     "hz": 45.0,
-     "id": "forum_boarium",
-     "model": "plaza",
-     "platform": "",
-     "x": -368.02,
-     "yaw": 1.39626340159546,
-     "z": 409.97
-    },
-    {
-     "drop": 2.26,
-     "ground": 12.5,
-     "hx": 20.0,
-     "hz": 47.5,
-     "id": "forum_holitorium",
-     "model": "plaza",
-     "platform": "",
-     "x": -439.11,
-     "yaw": -1.91986217719376,
-     "z": 144.47
-    },
-    {
-     "drop": 3.04,
-     "ground": 21.04,
+     "drop": 1.32,
+     "ground": 38.44,
      "hx": 3.0,
      "hz": 2.0,
      "id": "porta_pandana",
      "model": "arch",
-     "platform": "f2_terrace_porta_pandana",
+     "platform": "",
      "x": -248.14,
      "yaw": 0.462512251778497,
      "z": 101.8
     },
     {
-     "drop": 1.75,
-     "ground": 45.46,
+     "drop": 2.13,
+     "ground": 17.94,
+     "hx": 1.5,
+     "hz": 2.0,
+     "id": "sacellum_carmentis",
+     "model": "aedicula",
+     "platform": "",
+     "x": -394.86,
+     "yaw": -1.22173047639603,
+     "z": 117.13
+    },
+    {
+     "drop": 1.73,
+     "ground": 44.1,
      "hx": 1.5,
      "hz": 2.0,
      "id": "sacellum_volupiae",
@@ -1607,61 +1768,111 @@
      "x": -25.02,
      "yaw": -2.0943951023932,
      "z": 290.05
+    },
+    {
+     "drop": 3.78,
+     "ground": 10.78,
+     "hx": 7.5,
+     "hz": 20.0,
+     "id": "salinae",
+     "model": "long_hall",
+     "platform": "",
+     "x": -502.24,
+     "yaw": 2.60054058547155,
+     "z": 542.54
     }
    ],
-   "standing": 71,
+   "stair_ends": [],
+   "standing": 73,
+   "streets_ground": [
+    "street via_sacra under the ground over 13 m (worst 0.38 m) near (270, 203)",
+    "street clivus_capitolinus under the ground over 14 m (worst 0.36 m) near (-259, 99)",
+    "street clivus_capitolinus floating over the ground over 2 m (worst 0.56 m) near (-256, 101)",
+    "street clivus_argentarius under the ground over 45 m (worst 0.22 m) near (-116, -179)",
+    "street vicus_tuscus under the ground over 43 m (worst 0.09 m) near (-123, 358)",
+    "street vicus_iugarius under the ground over 35 m (worst 0.78 m) near (-380, 137)",
+    "street vicus_iugarius floating over the ground over 10 m (worst 2.16 m) near (-383, 133)",
+    "street subura under the ground over 3 m (worst 0.35 m) near (265, -324)",
+    "street clivus_suburanus under the ground over 69 m (worst 0.35 m) near (1051, -366)",
+    "street clivus_suburanus floating over the ground over 2 m (worst 0.86 m) near (1320, -363)",
+    "street vicus_patricius under the ground over 9 m (worst 0.03 m) near (1005, -1035)",
+    "street vicus_longus under the ground over 6 m (worst 0.02 m) near (157, -382)",
+    "street alta_semita under the ground over 7 m (worst 0.01 m) near (433, -953)",
+    "street nova_via under the ground over 3 m (worst 0.03 m) near (240, 195)",
+    "street clivus_palatinus under the ground over 8 m (worst 0.66 m) near (256, 230)",
+    "street clivus_palatinus floating over the ground over 3 m (worst 0.91 m) near (262, 225)",
+    "street via_flumentana under the ground over 13 m (worst 0.24 m) near (-415, 419)",
+    "street via_inter_palatium_caelium under the ground over 6 m (worst 0.06 m) near (432, 288)",
+    "street via_salaria under the ground over 3 m (worst 0.30 m) near (1110, -1649)",
+    "street via_nomentana under the ground over 3 m (worst 0.30 m) near (1110, -1646)",
+    "street via_praenestina under the ground over 8 m (worst 0.29 m) near (1329, -363)"
+   ],
    "streets_through": [],
-   "year": -390
+   "year": -390,
+   "zfight": []
   },
   "-44": {
+   "bank_sawtooth": [
+    "the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-1444, -1300)",
+    "the water's edge turns more than 25 degrees within 2 m 3 times in the 100 m square near (-1043, 1340)"
+   ],
    "buried": [],
+   "chunk_seams": [],
+   "empty_terraces": [
+    "terrace walls across empty ground near (833, -813): 30 m",
+    "terrace walls across empty ground near (1203, -352): 11 m"
+   ],
+   "f3_ground_seconds": 26.273,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.8 m foundation (temple_tuscan_small)",
+    "aedes_faunus on a 1.1 m foundation (temple_tetrastyle_ionic)",
     "aedes_felicitatis on a 2.3 m foundation (temple_tetrastyle_ionic)",
     "aedes_fortunae_matris_matutae on a 2.1 m foundation (temple_tetrastyle_ionic)",
     "aedes_herculis_collina on a 1.4 m foundation (temple_tuscan_small)",
     "aedes_honoris_virtutis on a 1.9 m foundation (temple_tetrastyle_ionic)",
     "aedes_iovis_feretri on a 1.1 m foundation (aedicula)",
     "aedes_iunonis_monetae on a 1.5 m foundation (temple_tuscan_small)",
-    "aedes_larum on a 5.0 m foundation (temple_tuscan_small)",
+    "aedes_larum on a 4.8 m foundation (temple_tuscan_small)",
     "aedes_mentis on a 1.1 m foundation (temple_tetrastyle_ionic)",
-    "aedes_portuni on a 1.0 m foundation (temple_tetrastyle_ionic_travertine)",
+    "aedes_portuni on a 1.3 m foundation (temple_tetrastyle_ionic_travertine)",
     "aedes_veneris_erycinae_capitol on a 1.9 m foundation (temple_tetrastyle_ionic)",
     "ara_vermini on a 1.5 m foundation (altar)",
-    "area_capitolina on a 20.7 m foundation (plaza)",
-    "curia_iulia on a 1.9 m foundation (curia)",
-    "delubrum_fontis on a 1.1 m foundation (aedicula)",
-    "domus_catuli on a 14.2 m foundation (domus)",
+    "atrium_vestae on a 4.2 m foundation (domus)",
+    "curia_iulia on a 1.7 m foundation (curia)",
+    "delubrum_fontis on a 1.5 m foundation (aedicula)",
+    "domus_catuli on a 13.4 m foundation (domus)",
     "domus_ciceronis on a 1.7 m foundation (domus)",
-    "domus_hortensii_augusti on a 1.0 m foundation (domus)",
+    "domus_crassi_oratoris on a 12.7 m foundation (domus)",
+    "domus_hortensii_augusti on a 1.1 m foundation (domus)",
     "domus_pompeii_carinae on a 1.0 m foundation (domus)",
-    "domus_publica on a 1.0 m foundation (domus)",
+    "domus_publica on a 1.3 m foundation (domus)",
+    "domus_scauri on a 1.8 m foundation (domus)",
     "emporium on a 3.4 m foundation (quay)",
-    "fornix_scipionis on a 2.8 m foundation (arch)",
-    "forum_boarium on a 2.4 m foundation (plaza)",
-    "forum_holitorium on a 2.3 m foundation (plaza)",
-    "forum_iulium on a 7.2 m foundation (plaza)",
     "horrea_sempronia on a 1.5 m foundation (horrea)",
     "macellum on a 1.5 m foundation (macellum)",
     "nymphaeum_annibaldi on a 1.3 m foundation (basin)",
-    "porta_capena on a 8.8 m foundation (servian_gate)",
-    "porta_collina on a 2.5 m foundation (servian_gate)",
-    "porta_esquilina on a 3.5 m foundation (servian_gate)",
-    "porta_flumentana on a 7.6 m foundation (servian_gate)",
+    "porta_capena on a 10.2 m foundation (servian_gate)",
+    "porta_carmentalis on a 1.8 m foundation (servian_gate)",
+    "porta_collina on a 1.9 m foundation (servian_gate)",
+    "porta_esquilina on a 2.3 m foundation (servian_gate)",
+    "porta_flumentana on a 7.1 m foundation (servian_gate)",
     "porta_fontinalis on a 6.4 m foundation (servian_gate)",
-    "porta_pandana on a 3.0 m foundation (arch)",
-    "porta_salutaris on a 2.4 m foundation (servian_gate)",
-    "porta_sanqualis on a 4.2 m foundation (servian_gate)",
-    "porticus_catuli on a 2.0 m foundation (portico_enclosure)",
-    "sacellum_volupiae on a 1.7 m foundation (aedicula)",
-    "tabularium on a 7.2 m foundation (tabularium)"
+    "porta_pandana on a 1.3 m foundation (arch)",
+    "porta_salutaris on a 2.2 m foundation (servian_gate)",
+    "porta_sanqualis on a 4.8 m foundation (servian_gate)",
+    "porta_trigemina on a 4.6 m foundation (servian_gate)",
+    "porticus_catuli on a 2.1 m foundation (portico_enclosure)",
+    "sacellum_carmentis on a 2.0 m foundation (aedicula)",
+    "salinae on a 3.8 m foundation (long_hall)",
+    "tabularium on a 7.4 m foundation (tabularium)",
+    "theatrum_marcelli on a 5.1 m foundation (theatre_stone)"
    ],
+   "ground_holes": [],
    "houses_in_monuments": [],
    "houses_on_streets": [],
    "in_river": [
-    "porta_flumentana 1 of 25 footprint points in the water",
-    "porticus_aemilia 3 of 25 footprint points in the water"
+    "porticus_aemilia 5 of 25 footprint points in the water"
    ],
    "overlaps": [
     "aedes_concordiae_forum overlaps tabularium by 3.2 m",
@@ -1669,7 +1880,14 @@
     "horrea_galbae overlaps porticus_aemilia by 52.5 m",
     "porticus_octaviae overlaps theatrum_marcelli by 2.8 m"
    ],
-   "seconds": 30.477,
+   "platform_steps": [
+    "platform f2_terrace_aedes_iovis_statoris_palatine stands 2.8 m over the ground in front of aedes_iovis_statoris_palatine at (113, 172)",
+    "platform f2_terrace_aedes_larum stands 1.1 m below the end of street via_sacra at (272, 203)",
+    "platform f2_terrace_aedes_larum stands 1.2 m below the end of street clivus_palatinus at (268, 212)",
+    "platform f2_terrace_aedes_larum stands 1.1 m below the end of street via_inter_palatium_caelium at (272, 203)",
+    "platform f2_terrace_domus_catuli stands 10.3 m over the ground in front of domus_catuli at (50, 192)"
+   ],
+   "seconds": 50.91,
    "slopes": [
     {
      "drop": 1.8,
@@ -1682,6 +1900,18 @@
      "x": 104.89,
      "yaw": -0.139626340159546,
      "z": -529.88
+    },
+    {
+     "drop": 1.14,
+     "ground": 8.77,
+     "hx": 4.5,
+     "hz": 7.0,
+     "id": "aedes_faunus",
+     "model": "temple_tetrastyle_ionic",
+     "platform": "",
+     "x": -706.96,
+     "yaw": 1.5707963267949,
+     "z": 165.03
     },
     {
      "drop": 2.28,
@@ -1756,7 +1986,7 @@
      "z": -155.58
     },
     {
-     "drop": 4.96,
+     "drop": 4.81,
      "ground": 28.3,
      "hx": 8.0,
      "hz": 9.6,
@@ -1780,8 +2010,8 @@
      "z": -111.13
     },
     {
-     "drop": 1.0,
-     "ground": 9.72,
+     "drop": 1.34,
+     "ground": 10.43,
      "hx": 6.0,
      "hz": 10.0,
      "id": "aedes_portuni",
@@ -1816,19 +2046,19 @@
      "z": -1139.55
     },
     {
-     "drop": 20.67,
-     "ground": 42.0,
-     "hx": 61.0,
-     "hz": 54.0,
-     "id": "area_capitolina",
-     "model": "plaza",
-     "platform": "area_capitolina",
-     "x": -289.98,
-     "yaw": 0.462512251778497,
-     "z": 49.9
+     "drop": 4.21,
+     "ground": 11.0,
+     "hx": 12.0,
+     "hz": 22.5,
+     "id": "atrium_vestae",
+     "model": "domus",
+     "platform": "forum_romanum",
+     "x": 107.71,
+     "yaw": -2.0018926520375,
+     "z": 122.25
     },
     {
-     "drop": 1.9,
+     "drop": 1.68,
      "ground": 13.0,
      "hx": 12.6,
      "hz": 8.81,
@@ -1840,8 +2070,8 @@
      "z": -55.57
     },
     {
-     "drop": 1.09,
-     "ground": 20.2,
+     "drop": 1.49,
+     "ground": 20.29,
      "hx": 2.0,
      "hz": 2.5,
      "id": "delubrum_fontis",
@@ -1852,7 +2082,7 @@
      "z": -411.41
     },
     {
-     "drop": 14.25,
+     "drop": 13.35,
      "ground": 43.5,
      "hx": 12.5,
      "hz": 20.0,
@@ -1876,7 +2106,19 @@
      "z": 240.05
     },
     {
-     "drop": 1.04,
+     "drop": 12.74,
+     "ground": 36.64,
+     "hx": 14.0,
+     "hz": 20.0,
+     "id": "domus_crassi_oratoris",
+     "model": "domus",
+     "platform": "",
+     "x": 0.0,
+     "yaw": 2.8623399732707,
+     "z": 222.26
+    },
+    {
+     "drop": 1.08,
      "ground": 47.69,
      "hx": 15.6,
      "hz": 19.25,
@@ -1900,7 +2142,7 @@
      "z": 77.79
     },
     {
-     "drop": 1.05,
+     "drop": 1.27,
      "ground": 11.52,
      "hx": 15.0,
      "hz": 22.5,
@@ -1910,6 +2152,18 @@
      "x": 231.98,
      "yaw": 2.8623399732707,
      "z": 100.02
+    },
+    {
+     "drop": 1.76,
+     "ground": 44.47,
+     "hx": 15.0,
+     "hz": 22.5,
+     "id": "domus_scauri",
+     "model": "domus",
+     "platform": "",
+     "x": 140.85,
+     "yaw": 2.8623399732707,
+     "z": 277.83
     },
     {
      "drop": 3.42,
@@ -1922,54 +2176,6 @@
      "x": -838.03,
      "yaw": -1.5707963267949,
      "z": 1133.55
-    },
-    {
-     "drop": 2.77,
-     "ground": 28.17,
-     "hx": 4.0,
-     "hz": 2.0,
-     "id": "fornix_scipionis",
-     "model": "arch",
-     "platform": "f2_terrace_fornix_scipionis",
-     "x": -265.04,
-     "yaw": 1.91986217719376,
-     "z": 98.02
-    },
-    {
-     "drop": 2.39,
-     "ground": 10.65,
-     "hx": 35.0,
-     "hz": 45.0,
-     "id": "forum_boarium",
-     "model": "plaza",
-     "platform": "",
-     "x": -368.02,
-     "yaw": 1.39626340159546,
-     "z": 409.97
-    },
-    {
-     "drop": 2.26,
-     "ground": 12.5,
-     "hx": 20.0,
-     "hz": 47.5,
-     "id": "forum_holitorium",
-     "model": "plaza",
-     "platform": "",
-     "x": -439.11,
-     "yaw": -1.91986217719376,
-     "z": 144.47
-    },
-    {
-     "drop": 7.24,
-     "ground": 13.0,
-     "hx": 37.5,
-     "hz": 80.0,
-     "id": "forum_iulium",
-     "model": "plaza",
-     "platform": "forum_iulium",
-     "x": -16.57,
-     "yaw": 0.698131700797732,
-     "z": -133.36
     },
     {
      "drop": 1.54,
@@ -2008,8 +2214,8 @@
      "z": 92.91
     },
     {
-     "drop": 8.82,
-     "ground": 42.22,
+     "drop": 10.23,
+     "ground": 41.55,
      "hx": 17.0,
      "hz": 13.0,
      "id": "porta_capena",
@@ -2020,8 +2226,20 @@
      "z": 950.85
     },
     {
-     "drop": 2.45,
-     "ground": 48.78,
+     "drop": 1.76,
+     "ground": 14.26,
+     "hx": 17.0,
+     "hz": 13.0,
+     "id": "porta_carmentalis",
+     "model": "servian_gate",
+     "platform": "f2_terrace_porta_carmentalis",
+     "x": -416.07,
+     "yaw": 0.885870170037023,
+     "z": 122.8
+    },
+    {
+     "drop": 1.89,
+     "ground": 49.45,
      "hx": 17.0,
      "hz": 13.0,
      "id": "porta_collina",
@@ -2032,8 +2250,8 @@
      "z": -1647.53
     },
     {
-     "drop": 3.46,
-     "ground": 31.27,
+     "drop": 2.28,
+     "ground": 29.39,
      "hx": 17.0,
      "hz": 13.0,
      "id": "porta_esquilina",
@@ -2044,7 +2262,7 @@
      "z": -364.29
     },
     {
-     "drop": 7.56,
+     "drop": 7.14,
      "ground": 12.5,
      "hx": 17.0,
      "hz": 13.0,
@@ -2056,8 +2274,8 @@
      "z": 100.02
     },
     {
-     "drop": 6.42,
-     "ground": 31.57,
+     "drop": 6.4,
+     "ground": 28.54,
      "hx": 17.0,
      "hz": 13.0,
      "id": "porta_fontinalis",
@@ -2068,20 +2286,20 @@
      "z": -388.96
     },
     {
-     "drop": 3.04,
-     "ground": 21.04,
+     "drop": 1.32,
+     "ground": 38.44,
      "hx": 3.0,
      "hz": 2.0,
      "id": "porta_pandana",
      "model": "arch",
-     "platform": "f2_terrace_porta_pandana",
+     "platform": "",
      "x": -248.14,
      "yaw": 0.462512251778497,
      "z": 101.8
     },
     {
-     "drop": 2.35,
-     "ground": 44.88,
+     "drop": 2.22,
+     "ground": 44.77,
      "hx": 17.0,
      "hz": 13.0,
      "id": "porta_salutaris",
@@ -2092,7 +2310,7 @@
      "z": -766.81
     },
     {
-     "drop": 4.18,
+     "drop": 4.77,
      "ground": 36.9,
      "hx": 17.0,
      "hz": 13.0,
@@ -2104,7 +2322,19 @@
      "z": -439.97
     },
     {
-     "drop": 2.03,
+     "drop": 4.58,
+     "ground": 11.52,
+     "hx": 17.0,
+     "hz": 13.0,
+     "id": "porta_trigemina",
+     "model": "servian_gate",
+     "platform": "",
+     "x": -467.11,
+     "yaw": 1.79791684231378,
+     "z": 500.09
+    },
+    {
+     "drop": 2.11,
      "ground": 44.56,
      "hx": 15.0,
      "hz": 17.5,
@@ -2116,20 +2346,32 @@
      "z": 258.05
     },
     {
-     "drop": 1.75,
-     "ground": 45.46,
+     "drop": 1.95,
+     "ground": 13.86,
      "hx": 1.5,
      "hz": 2.0,
-     "id": "sacellum_volupiae",
+     "id": "sacellum_carmentis",
      "model": "aedicula",
-     "platform": "",
-     "x": -25.02,
-     "yaw": -2.0943951023932,
-     "z": 290.05
+     "platform": "f2_terrace_porta_carmentalis",
+     "x": -394.86,
+     "yaw": -1.22173047639603,
+     "z": 117.13
     },
     {
-     "drop": 7.25,
-     "ground": 10.5,
+     "drop": 3.78,
+     "ground": 10.78,
+     "hx": 7.5,
+     "hz": 20.0,
+     "id": "salinae",
+     "model": "long_hall",
+     "platform": "",
+     "x": -502.24,
+     "yaw": 2.60054058547155,
+     "z": 542.54
+    },
+    {
+     "drop": 7.44,
+     "ground": 14.63,
      "hx": 35.0,
      "hz": 15.0,
      "id": "tabularium",
@@ -2138,41 +2380,100 @@
      "x": -140.27,
      "yaw": 1.13446401379631,
      "z": -31.45
+    },
+    {
+     "drop": 5.07,
+     "ground": 12.5,
+     "hx": 61.0,
+     "hz": 61.0,
+     "id": "theatrum_marcelli",
+     "model": "theatre_stone",
+     "platform": "f2_terrace_theatrum_marcelli",
+     "x": -498.51,
+     "yaw": -0.392699081698724,
+     "z": 90.35
     }
    ],
-   "standing": 172,
+   "stair_ends": [],
+   "standing": 175,
+   "streets_ground": [
+    "street via_sacra under the ground over 13 m (worst 0.38 m) near (270, 203)",
+    "street clivus_capitolinus under the ground over 14 m (worst 0.36 m) near (-259, 99)",
+    "street clivus_capitolinus floating over the ground over 2 m (worst 0.56 m) near (-256, 101)",
+    "street clivus_argentarius under the ground over 55 m (worst 0.37 m) near (-189, -388)",
+    "street clivus_argentarius floating over the ground over 2 m (worst 0.56 m) near (-187, -380)",
+    "street vicus_tuscus under the ground over 43 m (worst 0.09 m) near (-123, 358)",
+    "street vicus_iugarius under the ground over 35 m (worst 0.73 m) near (-380, 137)",
+    "street vicus_iugarius floating over the ground over 9 m (worst 1.92 m) near (-383, 133)",
+    "street argiletum under the ground over 8 m (worst 0.17 m) near (32, -69)",
+    "street subura under the ground over 3 m (worst 0.35 m) near (265, -324)",
+    "street clivus_suburanus under the ground over 73 m (worst 1.17 m) near (1290, -355)",
+    "street clivus_suburanus floating over the ground over 4 m (worst 0.78 m) near (1295, -356)",
+    "street vicus_patricius under the ground over 10 m (worst 0.03 m) near (1005, -1035)",
+    "street vicus_longus under the ground over 4 m (worst 0.02 m) near (157, -382)",
+    "street alta_semita under the ground over 8 m (worst 0.11 m) near (433, -953)",
+    "street nova_via under the ground over 3 m (worst 0.03 m) near (240, 195)",
+    "street clivus_palatinus under the ground over 8 m (worst 0.66 m) near (256, 230)",
+    "street clivus_palatinus floating over the ground over 3 m (worst 0.91 m) near (262, 225)",
+    "street via_lata under the ground over 6 m (worst 0.08 m) near (-222, -394)",
+    "street via_flumentana under the ground over 20 m (worst 0.32 m) near (-470, -119)",
+    "street via_triumphi_campi under the ground over 5 m (worst 0.14 m) near (-628, 6)",
+    "street via_inter_palatium_caelium under the ground over 5 m (worst 0.06 m) near (423, 277)",
+    "street via_salaria under the ground over 3 m (worst 0.28 m) near (1110, -1649)",
+    "street via_nomentana under the ground over 3 m (worst 0.27 m) near (1110, -1646)",
+    "street via_praenestina under the ground over 6 m (worst 0.27 m) near (1329, -363)",
+    "street via_praenestina floating over the ground over 2 m (worst 0.52 m) near (2164, 47)",
+    "street via_aurelia under the ground over 2 m (worst 0.00 m) near (0, 0)"
+   ],
    "streets_through": [],
-   "year": -44
+   "year": -44,
+   "zfight": [
+    "forum_esquilinum paving within 5 cm of the ground over 6 m2 near (1284, -316)"
+   ]
   },
   "-509": {
+   "bank_sawtooth": [
+    "the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-1444, -1300)",
+    "the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-521, 261)"
+   ],
    "buried": [],
+   "chunk_seams": [],
+   "empty_terraces": [],
+   "f3_ground_seconds": 13.538,
    "floating": [],
    "founded": [
-    "aedes_fortunae_matris_matutae on a 2.1 m foundation (temple_tetrastyle_ionic)",
+    "aedes_fortunae_matris_matutae on a 1.5 m foundation (temple_tetrastyle_ionic)",
     "aedes_herculis_collina on a 1.4 m foundation (temple_tuscan_small)",
     "aedes_iovis_feretri on a 1.1 m foundation (aedicula)",
-    "aedes_larum on a 5.0 m foundation (temple_tuscan_small)",
-    "aedes_portuni on a 1.0 m foundation (temple_tetrastyle_ionic_travertine)",
-    "area_capitolina on a 20.7 m foundation (plaza)",
-    "curia_hostilia on a 2.0 m foundation (curia)",
-    "domus_hortensii_augusti on a 1.0 m foundation (domus)",
-    "domus_pompeii_carinae on a 1.0 m foundation (domus)",
-    "domus_publica on a 1.0 m foundation (domus)",
-    "forum_boarium on a 2.4 m foundation (plaza)",
-    "forum_holitorium on a 2.3 m foundation (plaza)",
-    "porta_pandana on a 3.0 m foundation (arch)",
-    "sacellum_volupiae on a 1.7 m foundation (aedicula)"
+    "aedes_larum on a 4.8 m foundation (temple_tuscan_small)",
+    "aedes_portuni on a 1.3 m foundation (temple_tetrastyle_ionic_travertine)",
+    "domus_cassii_carinae on a 4.9 m foundation (domus)",
+    "domus_hortensii_augusti on a 1.1 m foundation (domus)",
+    "domus_maelii on a 26.8 m foundation (domus)",
+    "domus_manlii_arx on a 2.0 m foundation (domus)",
+    "domus_pompeii_carinae on a 2.5 m foundation (domus)",
+    "domus_publica on a 1.3 m foundation (domus)",
+    "porta_pandana on a 1.3 m foundation (arch)",
+    "sacellum_carmentis on a 2.1 m foundation (aedicula)",
+    "sacellum_volupiae on a 1.7 m foundation (aedicula)",
+    "salinae on a 3.8 m foundation (long_hall)"
    ],
+   "ground_holes": [],
    "houses_in_monuments": [],
    "houses_on_streets": [],
    "in_river": [],
    "overlaps": [
     "circus_maximus overlaps sacellum_murciae by 5.1 m"
    ],
-   "seconds": 12.257,
+   "platform_steps": [
+    "platform f2_terrace_aedes_larum stands 1.1 m below the end of street via_sacra at (272, 203)",
+    "platform f2_terrace_aedes_larum stands 1.2 m below the end of street clivus_palatinus at (268, 212)",
+    "platform f2_terrace_aedes_larum stands 1.1 m below the end of street via_inter_palatium_caelium at (272, 203)"
+   ],
+   "seconds": 18.701,
    "slopes": [
     {
-     "drop": 2.09,
+     "drop": 1.48,
      "ground": 10.76,
      "hx": 6.0,
      "hz": 13.0,
@@ -2208,7 +2509,7 @@
      "z": -77.79
     },
     {
-     "drop": 4.96,
+     "drop": 4.81,
      "ground": 28.3,
      "hx": 8.0,
      "hz": 9.6,
@@ -2220,8 +2521,8 @@
      "z": 192.04
     },
     {
-     "drop": 1.0,
-     "ground": 9.72,
+     "drop": 1.34,
+     "ground": 10.43,
      "hx": 6.0,
      "hz": 10.0,
      "id": "aedes_portuni",
@@ -2232,31 +2533,19 @@
      "z": 366.74
     },
     {
-     "drop": 20.67,
-     "ground": 42.0,
-     "hx": 61.0,
-     "hz": 54.0,
-     "id": "area_capitolina",
-     "model": "plaza",
-     "platform": "area_capitolina",
-     "x": -289.98,
-     "yaw": 0.462512251778497,
-     "z": 49.9
+     "drop": 4.87,
+     "ground": 19.0,
+     "hx": 10.0,
+     "hz": 15.0,
+     "id": "domus_cassii_carinae",
+     "model": "domus",
+     "platform": "",
+     "x": 604.8,
+     "yaw": 2.8623399732707,
+     "z": 44.45
     },
     {
-     "drop": 2.0,
-     "ground": 13.0,
-     "hx": 12.5,
-     "hz": 9.0,
-     "id": "curia_hostilia",
-     "model": "curia",
-     "platform": "forum_iulium",
-     "x": 0.0,
-     "yaw": -0.279252680319093,
-     "z": -55.57
-    },
-    {
-     "drop": 1.04,
+     "drop": 1.08,
      "ground": 47.69,
      "hx": 15.6,
      "hz": 19.25,
@@ -2268,7 +2557,31 @@
      "z": 436.97
     },
     {
-     "drop": 1.03,
+     "drop": 26.84,
+     "ground": 34.92,
+     "hx": 9.0,
+     "hz": 12.5,
+     "id": "domus_maelii",
+     "model": "domus",
+     "platform": "",
+     "x": -223.7,
+     "yaw": 2.8623399732707,
+     "z": 100.02
+    },
+    {
+     "drop": 2.01,
+     "ground": 40.64,
+     "hx": 9.0,
+     "hz": 12.5,
+     "id": "domus_manlii_arx",
+     "model": "domus",
+     "platform": "",
+     "x": -198.84,
+     "yaw": 0.663225115757845,
+     "z": -177.81
+    },
+    {
+     "drop": 2.52,
      "ground": 16.59,
      "hx": 12.5,
      "hz": 20.0,
@@ -2280,7 +2593,7 @@
      "z": 77.79
     },
     {
-     "drop": 1.05,
+     "drop": 1.27,
      "ground": 11.52,
      "hx": 15.0,
      "hz": 22.5,
@@ -2292,44 +2605,32 @@
      "z": 100.02
     },
     {
-     "drop": 2.39,
-     "ground": 10.65,
-     "hx": 35.0,
-     "hz": 45.0,
-     "id": "forum_boarium",
-     "model": "plaza",
-     "platform": "",
-     "x": -368.02,
-     "yaw": 1.39626340159546,
-     "z": 409.97
-    },
-    {
-     "drop": 2.26,
-     "ground": 12.5,
-     "hx": 20.0,
-     "hz": 47.5,
-     "id": "forum_holitorium",
-     "model": "plaza",
-     "platform": "",
-     "x": -439.11,
-     "yaw": -1.91986217719376,
-     "z": 144.47
-    },
-    {
-     "drop": 3.04,
-     "ground": 21.04,
+     "drop": 1.32,
+     "ground": 38.44,
      "hx": 3.0,
      "hz": 2.0,
      "id": "porta_pandana",
      "model": "arch",
-     "platform": "f2_terrace_porta_pandana",
+     "platform": "",
      "x": -248.14,
      "yaw": 0.462512251778497,
      "z": 101.8
     },
     {
-     "drop": 1.75,
-     "ground": 45.46,
+     "drop": 2.13,
+     "ground": 17.94,
+     "hx": 1.5,
+     "hz": 2.0,
+     "id": "sacellum_carmentis",
+     "model": "aedicula",
+     "platform": "",
+     "x": -394.86,
+     "yaw": -1.22173047639603,
+     "z": 117.13
+    },
+    {
+     "drop": 1.73,
+     "ground": 44.1,
      "hx": 1.5,
      "hz": 2.0,
      "id": "sacellum_volupiae",
@@ -2338,11 +2639,48 @@
      "x": -25.02,
      "yaw": -2.0943951023932,
      "z": 290.05
+    },
+    {
+     "drop": 3.78,
+     "ground": 10.78,
+     "hx": 7.5,
+     "hz": 20.0,
+     "id": "salinae",
+     "model": "long_hall",
+     "platform": "",
+     "x": -502.24,
+     "yaw": 2.60054058547155,
+     "z": 542.54
     }
    ],
-   "standing": 62,
+   "stair_ends": [],
+   "standing": 66,
+   "streets_ground": [
+    "street via_sacra under the ground over 13 m (worst 0.38 m) near (270, 203)",
+    "street clivus_capitolinus under the ground over 14 m (worst 0.36 m) near (-259, 99)",
+    "street clivus_capitolinus floating over the ground over 2 m (worst 0.56 m) near (-256, 101)",
+    "street clivus_argentarius under the ground over 45 m (worst 0.22 m) near (-116, -179)",
+    "street vicus_tuscus under the ground over 43 m (worst 0.09 m) near (-123, 358)",
+    "street vicus_iugarius under the ground over 35 m (worst 0.78 m) near (-380, 137)",
+    "street vicus_iugarius floating over the ground over 10 m (worst 2.16 m) near (-383, 133)",
+    "street subura under the ground over 3 m (worst 0.35 m) near (265, -324)",
+    "street clivus_suburanus under the ground over 68 m (worst 0.35 m) near (1051, -366)",
+    "street clivus_suburanus floating over the ground over 2 m (worst 0.86 m) near (1320, -363)",
+    "street vicus_patricius under the ground over 9 m (worst 0.03 m) near (1005, -1035)",
+    "street vicus_longus under the ground over 6 m (worst 0.02 m) near (157, -382)",
+    "street alta_semita under the ground over 7 m (worst 0.01 m) near (433, -953)",
+    "street nova_via under the ground over 3 m (worst 0.03 m) near (240, 195)",
+    "street clivus_palatinus under the ground over 8 m (worst 0.66 m) near (256, 230)",
+    "street clivus_palatinus floating over the ground over 3 m (worst 0.91 m) near (262, 225)",
+    "street via_flumentana under the ground over 13 m (worst 0.24 m) near (-415, 419)",
+    "street via_inter_palatium_caelium under the ground over 6 m (worst 0.06 m) near (432, 288)",
+    "street via_salaria under the ground over 3 m (worst 0.30 m) near (1110, -1649)",
+    "street via_nomentana under the ground over 3 m (worst 0.30 m) near (1110, -1646)",
+    "street via_praenestina under the ground over 8 m (worst 0.29 m) near (1329, -363)"
+   ],
    "streets_through": [],
-   "year": -509
+   "year": -509,
+   "zfight": []
   }
  }
 }
