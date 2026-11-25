@@ -49,6 +49,8 @@ jobs:
       GODOT_VERSION: 4.5.1
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0  # the title screen's "Version N" counts commits: it needs them all
       - uses: astral-sh/setup-uv@v10.2.0
       - name: Cache Godot and its export templates
         id: godot-cache
