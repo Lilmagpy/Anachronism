@@ -1882,7 +1882,7 @@ func _f3_streets_ground(st: UrbsStreets) -> Array:
 		var hw := float(s.hw)
 		var sunk := 0
 		var floating := 0
-		var worst_s := 0.0
+		var worst_s := -INF   # (a strip within 2 cm above the ground is sunk too: worst <= 0)
 		var worst_f := 0.0
 		var at_s := Vector2.ZERO
 		var at_f := Vector2.ZERO

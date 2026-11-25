@@ -79,6 +79,7 @@ static var _circuit: PackedVector2Array = PackedVector2Array()
 static var _warp: FastNoiseLite = null
 static var _warp2: FastNoiseLite = null
 static var _material: ShaderMaterial = null
+static var _street_dc: PackedFloat32Array   ## F3: (during _compute) a street vertex's distance from its carriageway
 static var _dbg_street := ""   ## (debug: print this street's pins and profile)
 static var _sky_fill := 0.0                                      ## the twilight fill (set_sky_fill)
 static var _street_w: PackedFloat32Array = PackedFloat32Array()  ## street cuts' weight (while computing)
@@ -612,7 +613,9 @@ static func _stamp_paving(pv: Dictionary, h: PackedFloat32Array) -> void:
 				var spot := d <= CELL_M + 0.5
 				for q in spots:
 					spot = spot or q.distance_to(p) < flat
-				if not spot:
+				# F3: on a street's level ground the paving's ring gives way unless the paving's edge
+				# is the nearer of the two (each keeps the ground its own triangles stand on)
+				if not spot or (_street_w[idx] >= 0.999 and _street_dc[idx] < d):
 					w *= 1.0 - _street_w[idx]
 			h[idx] = lerpf(h[idx], level, w)
 			_built_w[idx] = maxf(_built_w[idx], w)
@@ -709,6 +712,8 @@ static func _cut_streets(cfg: Dictionary, h: PackedFloat32Array) -> void:
 	pgrid.resize(VERTS * VERTS)
 	_street_w = PackedFloat32Array()
 	_street_w.resize(VERTS * VERTS)
+	_street_dc = PackedFloat32Array()
+	_street_dc.resize(VERTS * VERTS)
 	var entries: Array = []
 	for entry: Dictionary in parsed.get("streets", []):
 		var from_y: Variant = entry.get("exists_from")
@@ -843,6 +848,7 @@ static func _cut_streets(cfg: Dictionary, h: PackedFloat32Array) -> void:
 						kgrid[idx] = key
 						wgrid[idx] = w
 						pgrid[idx] = lerpf(prof[i], prof[i + 1], t)
+						_street_dc[idx] = maxf(dc, 0.0)
 	for idx in touched:
 		h[idx] = lerpf(h[idx], pgrid[idx], wgrid[idx])
 		_built_w[idx] = maxf(_built_w[idx], wgrid[idx])
@@ -879,11 +885,14 @@ static func _floor_pins(sp: PackedVector2Array, hw: float) -> Array:
 			var poly: PackedVector2Array = pf["poly"]
 			if poly.size() >= 3 and Geometry2D.is_point_in_polygon(q, poly):
 				v = _platform_level(pf, q)
+		# a paving levels the ground to its own floor out to its first cell (_stamp_paving): a street
+		# running on that ring is pinned to the paving's floor
+		var near := CELL_M + 0.5 + hw
 		for pv: Dictionary in pavings():
 			var poly: PackedVector2Array = pv["poly"]
-			if q.distance_to(pv["centre"]) > poly[0].distance_to(pv["centre"]) + CELL_M + hw + 2.0:
+			if q.distance_to(pv["centre"]) > poly[0].distance_to(pv["centre"]) + near:
 				continue
-			if Geometry2D.is_point_in_polygon(q, poly) or _poly_edge(poly, q)[1] <= CELL_M + 0.5 + hw:
+			if Geometry2D.is_point_in_polygon(q, poly) or _poly_edge(poly, q)[1] <= near:
 				v = float(pv["level"])
 		if v != null:
 			out.append([i, float(v)])

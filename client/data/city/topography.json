@@ -1103,11 +1103,11 @@
 "blend": 4,
 "id": "f2_terrace_porta_esquilina",
 "level": [
-30.2,
-30.2
+37.0,
+37.0
 ],
 "monument": "porta_esquilina",
-"note": "F2: the ground fell 6.8 m under the monument; cut and built up to the level at its centre, walled",
+"note": "F2: the ground fell 6.8 m under the monument; cut and built up to the level at its centre, walled. F3: 37.0 (was 30.2), the level of the Forum Esquilinum beside it: the two terraces, each set to the modelled slope under its own centre, stood 13.7 m apart 45 m from each other, and the Clivus Suburanus, which runs over the market to end at the gate, would have had to fall at 1 in 3 between them. The gate stood on the crest of the agger with the market beside it (Platner-Ashby s.v. Porta Esquilina; Forum Esquilinum); the modelled ground falls eastward through the gate where the real plateau is level, so both are set between their two levels",
 "polygon": [
 [
 41.895597,
@@ -1364,11 +1364,11 @@
 "blend": 4,
 "id": "f2_terrace_forum_esquilinum",
 "level": [
-43.9,
-43.9
+37.0,
+37.0
 ],
 "monument": "forum_esquilinum",
-"note": "F2: the ground fell 9.5 m under the monument; cut and built up to the level at its centre, walled",
+"note": "F2: the ground fell 9.5 m under the monument; cut and built up to the level at its centre, walled. F3: 37.0 (was 43.9), level with the Porta Esquilina beside it (see f2_terrace_porta_esquilina)",
 "polygon": [
 [
 41.895842,
