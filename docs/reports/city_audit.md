@@ -16,7 +16,7 @@ References: **Pleiades** (CC BY 3.0; places within 3.5 km of the Forum with a pe
 | orientation or size against published measurements | 0 |
 | orientation or size against the outline of the remains | 17 |
 | relations the sources fix, failed | 0 |
-| date issues | 0 |
+| date issues | 22 |
 | scene: monuments whose solids overlap another standing monument (all years) | 7 |
 | scene: monuments whose base is more than 0.5 m above the ground under a corner (all years) | 0 |
 | scene: monuments whose base is more than 1 m below the ground under a corner (all years) | 0 |
@@ -35,14 +35,14 @@ References: **Pleiades** (CC BY 3.0; places within 3.5 km of the Forum with a pe
 | scene: interiors with figures through a wall or floor (all years) | 0 |
 | scene: enterable monuments with no interior (all years) | 0 |
 | scene: interiors whose visitor starts outside, against or facing a wall (all years) | 0 |
-| scene: F3 ground: 100 m stretches of a Tiber bank with a saw-toothed water line (all years) | 11 |
+| scene: F3 ground: 100 m stretches of a Tiber bank with a saw-toothed water line (all years) | 0 |
 | scene: F3 ground: surfaces within 5 cm of each other (paving, streets, quays, water) (all years) | 0 |
 | scene: F3 ground: ground missing where the camera can see it (all years) | 0 |
 | scene: F3 ground: terrace walls with nothing standing on the terrace (all years) | 0 |
 | scene: F3 ground: platforms more than 1 m off the street or ground in front (all years) | 0 |
 | scene: F3 ground: steps that do not meet the ground at both ends (all years) | 0 |
 | scene: F3 ground: chunk edges where two levels of detail do not meet (all years) | 0 |
-| scene: F3 ground: stretches of street sunk under or floating over the ground (all years) | 38 |
+| scene: F3 ground: stretches of street sunk under or floating over the ground (all years) | 0 |
 | scene: F3 ground: 100 m squares with walls footed above a level of detail's ground (all years) | 0 |
 | scene: F3 ground: 250 m squares with house or shop lots with meadow at their fronts (all years) | 0 |
 | scene (F3 houses): buildings of the fill interpenetrating (all years) | 0 |
@@ -52,7 +52,6 @@ References: **Pleiades** (CC BY 3.0; places within 3.5 km of the Forum with a pe
 | scene (F3 houses): buildings in the river (all years) | 0 |
 | scene (F3 houses): buildings whose floor is under the ground at the front or whose parts float (all years) | 0 |
 | scene (F3 houses): shop awnings on tall poles over ground falling away in front (all years) | 0 |
-| scene (F3 houses): lean-to shops with no house behind them to lean on (all years) | 0 |
 | scene (F3 houses): trees with their trunk inside a building or their crown through it (all years) | 0 |
 | scene (F3 houses): trees in a carriageway (all years) | 0 |
 | scene (F3 houses): trees in the river (all years) | 0 |
@@ -716,12 +715,12 @@ The repository has no modern elevation model; the ground is built from `topograp
 
 | year | overlaps | floating | buried | houses_in_monuments | houses_on_streets | in_river | streets_through | part_overlaps | parts_floating | parts_sunk | coplanar | view_inside | view_misses | view_close | interior_voids | interior_figures | interior_missing | interior_starts | bank_sawtooth | zfight | ground_holes | empty_terraces | platform_steps | stair_ends | chunk_seams | streets_ground | wall_feet | meadow_fronts |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 509 BC | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 6 | 0 | 0 |
-| 390 BC | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 6 | 0 | 0 |
-| 264 BC | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 5 | 0 | 0 |
-| 133 BC | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 6 | 0 | 0 |
-| 44 BC | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 7 | 0 | 0 |
-| 27 BC | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 2 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 8 | 0 | 0 |
+| 509 BC | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 390 BC | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 264 BC | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 133 BC | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 44 BC | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 27 BC | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
 **monuments whose solids overlap another standing monument**
 
@@ -739,31 +738,6 @@ The repository has no modern elevation model; the ground is built from `topograp
 - aedes_mercurii camera at (-120, 730) so near that the front overfills the frame (27 BC, 44 BC)
 - aedes_minervae_aventine camera at (-234, 1168) so near that the front overfills the frame (133 BC)
 
-**F3 ground: 100 m stretches of a Tiber bank with a saw-toothed water line**
-
-- the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-1444, -1300) (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC)
-- the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-521, 261) (133 BC, 264 BC, 390 BC, 509 BC)
-- the water's edge turns more than 25 degrees within 2 m 7 times in the 100 m square near (-742, 145) (133 BC)
-
-**F3 ground: stretches of street sunk under or floating over the ground**
-
-- street clivus_capitolinus under the ground over 2 m (worst -0.00 m) near (-190, 69) (390 BC, 509 BC)
-- street clivus_suburanus under the ground over 2 m (worst 0.03 m) near (1140, -337) (390 BC, 509 BC)
-- street clivus_suburanus under the ground over 3 m (worst 0.05 m) near (1285, -356) (27 BC, 44 BC)
-- street via_flumentana under the ground over 3 m (worst 0.12 m) near (-418, 436) (264 BC, 390 BC, 509 BC)
-- street via_flumentana under the ground over 7 m (worst 0.11 m) near (-418, 436) (133 BC, 27 BC, 44 BC)
-- street via_lata under the ground over 2 m (worst 0.04 m) near (-223, -393) (133 BC, 27 BC, 44 BC)
-- street via_praenestina under the ground over 2 m (worst 0.00 m) near (1330, -363) (133 BC, 27 BC, 44 BC)
-- street via_praenestina under the ground over 2 m (worst 0.01 m) near (1330, -363) (264 BC)
-- street via_praenestina under the ground over 2 m (worst 0.03 m) near (1330, -363) (390 BC, 509 BC)
-- street via_sacra under the ground over 3 m (worst 0.00 m) near (267, 174) (133 BC, 264 BC, 27 BC, 44 BC)
-- street via_triumphi_campi under the ground over 3 m (worst 0.08 m) near (-628, 6) (133 BC, 27 BC, 44 BC)
-- street vicus_iugarius under the ground over 6 m (worst 0.09 m) near (-405, 132) (390 BC, 509 BC)
-- street vicus_iugarius under the ground over 6 m (worst 0.10 m) near (-411, 127) (133 BC, 264 BC, 27 BC, 44 BC)
-- street vicus_tuscus under the ground over 2 m (worst -0.00 m) near (-89, 295) (390 BC, 509 BC)
-- street vicus_tuscus under the ground over 2 m (worst 0.00 m) near (-89, 295) (264 BC)
-- street vicus_tuscus under the ground over 2 m (worst 0.03 m) near (-88, 290) (27 BC)
-
 **monuments on sloping ground, 27 BC** (47): each stands on a
 podium or foundation down to its lowest ground (monuments.gd), and where the ground
 falls more than 3 m on a terrace cut into the hill with retaining walls
@@ -771,7 +745,7 @@ falls more than 3 m on a terrace cut into the hill with retaining walls
 
 - aedes_apollinis_palatini on a 1.2 m foundation (temple_hexastyle_corinthian_marble)
 - aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)
-- aedes_faunus on a 1.2 m foundation (temple_tetrastyle_ionic)
+- aedes_faunus on a 1.5 m foundation (temple_tetrastyle_ionic)
 - aedes_felicitatis on a 2.4 m foundation (temple_tetrastyle_ionic)
 - aedes_fortunae_matris_matutae on a 3.8 m foundation (temple_tetrastyle_ionic)
 - aedes_herculis_collina on a 1.4 m foundation (temple_tuscan_small)
@@ -809,11 +783,11 @@ falls more than 3 m on a terrace cut into the hill with retaining walls
 - porta_pandana on a 1.2 m foundation (arch)
 - porta_salutaris on a 2.8 m foundation (servian_gate)
 - porta_sanqualis on a 1.1 m foundation (servian_gate)
-- porta_trigemina on a 5.1 m foundation (servian_gate)
+- porta_trigemina on a 5.4 m foundation (servian_gate)
 - porta_viminalis on a 1.2 m foundation (servian_gate)
-- porticus_aemilia on a 5.0 m foundation (long_hall)
+- porticus_aemilia on a 5.4 m foundation (long_hall)
 - porticus_catuli on a 2.1 m foundation (portico_enclosure)
-- salinae on a 4.4 m foundation (long_hall)
+- salinae on a 5.0 m foundation (long_hall)
 - tabularium on a 7.7 m foundation (tabularium)
 - theatrum_marcelli on a 5.1 m foundation (theatre_stone)
 
@@ -824,14 +798,14 @@ horti, tombs, farm steadings), every tree (all three levels of detail) and the s
 life (people, stalls, the walkers' and carts' lanes, lamps, smoke), tested by their real
 meshes (each mesh's triangles clipped into 1 m height bands).
 
-| year | buildings | house_house | house_monument | house_wall | house_street | house_river | house_base | awning_pole | shop_alone | tree_building | tree_street | tree_river | tree_wall | life_solid | stall_street | lamp_smoke |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 509 BC | 2028 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 390 BC | 3830 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 264 BC | 10067 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 133 BC | 18591 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 44 BC | 20034 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 27 BC | 19691 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| year | buildings | house_house | house_monument | house_wall | house_street | house_river | house_base | awning_pole | tree_building | tree_street | tree_river | tree_wall | life_solid | stall_street | lamp_smoke |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 509 BC | 2173 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 390 BC | 3987 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 264 BC | 10371 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 133 BC | 19249 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 44 BC | 20713 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 27 BC | 20363 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
 ## 4. Time
 
@@ -839,19 +813,41 @@ Monuments drawn in each standard year (`monuments.gd` `state_at`, ported to Pyth
 
 | year | total | building | burnt | standing | standing_scaffold |
 |---|---|---|---|---|---|
-| 509 BC | 48 | 0 | 0 | 48 | 0 |
-| 390 BC | 55 | 0 | 0 | 55 | 0 |
-| 264 BC | 97 | 0 | 0 | 97 | 0 |
-| 133 BC | 145 | 0 | 0 | 145 | 0 |
+| 509 BC | 65 | 0 | 0 | 65 | 0 |
+| 390 BC | 72 | 0 | 0 | 72 | 0 |
+| 264 BC | 108 | 0 | 0 | 108 | 0 |
+| 133 BC | 151 | 0 | 0 | 151 | 0 |
 | 44 BC | 175 | 3 | 1 | 170 | 1 |
 | 27 BC | 185 | 2 | 2 | 181 | 0 |
 | AD 80 | 215 | 0 | 1 | 214 | 0 |
 | AD 120 | 232 | 0 | 1 | 231 | 0 |
 
-### Date issues (0)
+### Date issues (22)
 
+- `aedes_herculis_collina`: no built year (uncertain) but drawn from 509 BC
+- `aedes_herculis_victoris`: no built year (uncertain) but drawn from 509 BC
+- `aedes_larum`: no built year (uncertain) but drawn from 509 BC
+- `aedes_minervae_aventine`: no built year (uncertain) but drawn from 509 BC
+- `aedes_neptuni_flaminium`: no built year (uncertain) but drawn from 509 BC
+- `aedes_portuni`: no built year (uncertain) but drawn from 509 BC
+- `area_sacra_argentina_a`: no built year (uncertain) but drawn from 509 BC
+- `area_sacra_argentina_c`: no built year (uncertain) but drawn from 509 BC
+- `area_sacra_argentina_d`: no built year (uncertain) but drawn from 509 BC
+- `atrium_libertatis`: no built year (probable) but drawn from 509 BC
+- `atrium_vestae`: no built year (uncertain) but drawn from 509 BC
+- `domus_clodii`: no built year (uncertain) but drawn from 509 BC
+- `domus_hortensii_augusti`: no built year (uncertain) but drawn from 509 BC
+- `domus_pompeii_carinae`: no built year (uncertain) but drawn from 509 BC
+- `graecostasis`: no built year (uncertain) but drawn from 509 BC
+- `horrea_galbae`: no built year (uncertain) but drawn from 509 BC
+- `lacus_iuturnae`: no built year (uncertain) but drawn from 509 BC
+- `lacus_servilius`: no built year (uncertain) but drawn from 509 BC
+- `lapis_niger`: no built year (probable) but drawn from 509 BC
+- `navalia`: no built year (uncertain) but drawn from 509 BC
+- `porta_stercoraria`: no built year (uncertain) but drawn from 509 BC
+- `senaculum`: no built year (uncertain) but drawn from 509 BC
 
-### Building years not named in the matched Platner-Ashby article (46)
+### Building years not named in the matched Platner-Ashby article (40)
 
 A pointer to re-read the article, not an error: P-A often gives the date only through the consul's name, or the record's year comes from another source.
 
@@ -867,7 +863,6 @@ A pointer to re-read the article, not an error: P-A often gives the date only th
 | aedes_iovis_statoris_palatine | 294 BC | Iuppiter Stator, aedes | 146 BC, 27 BC, 14 BC | the matched article is the other temple of Iuppiter Stator (by the Circus Flaminius, 146 BC); the Palatine temple is Livy 10.37.15 (294 BC) (unverified: passage not re-read) |
 | aedes_iuventatis | 191 BC | Iuventas, aedes | 578 BC, 207 BC, 27 BC, 16 BC | Platner-Ashby: vowed 207, begun 204, dedicated by C. Licinius Lucullus (191, Livy 36.36.5-6) (unverified: passage not re-read) |
 | aedes_martis_appia | 388 BC | Mars, aedes | 138 BC, 55 BC | the matched article is the temple of Mars in circo Flaminio (138 BC); the temple on the Via Appia was dedicated in 388 (Livy 6.5.8) |
-| aedes_minervae_aventine | 207 BC | Minerva, Aedes | 27 BC |  |
 | aedes_pietatis | 181 BC | Pietas, aedes | 91 BC | Platner-Ashby: vowed 191, dedicated in 181 |
 | aedes_pietatis | 181 BC | Pietas, aedes | 191 BC, 46 BC, 44 BC | Platner-Ashby: vowed 191, dedicated in 181 |
 | aedes_salutis | 302 BC | Salus, ara | 311 BC, 206 BC, 113 BC | Platner-Ashby gives the dedication as 303 BC; the record follows Livy 10.1.9 in the Varronian year 302 (the year of Bubulcus's dictatorship); a one-year difference of chronology, kept |
@@ -886,12 +881,8 @@ A pointer to re-read the article, not an error: P-A often gives the date only th
 | aedes_iunonis_reginae_aventine | 392 BC | Iuno Regina, aedes | 187 BC | one of the matched articles is the other temple of Iuno Regina (by the Circus Flaminius, 179 BC); the Aventine temple was dedicated by Camillus in 392 (Platner-Ashby) |
 | aedes_iunonis_reginae_circus | 179 BC | Iuno Regina, aedes | 187 BC | one of the matched articles is the Aventine temple (392 BC); this one was dedicated in 179 (Platner-Ashby s.v. Iuno Regina, aedes) |
 | lares_permarini | 179 BC | Lares Permarini, Aedes | 190 BC | Platner-Ashby: vowed 190, dedicated 22 December 179 |
-| aedes_minervae_aventine | 207 BC | Minerva, delubrum | 55 BC |  |
-| aedes_neptuni_flaminium | 206 BC | Neptunus, aedes, delubrum | 100 BC, 38 BC, 27 BC |  |
 | porta_fontinalis | 378 BC | Porta Fontinalis | 193 BC | the gate of the Servian wall as rebuilt from 378 (Livy 6.32.1); Platner-Ashby names only 193 (unverified: passage not re-read) |
 | porticus_minucia_vetus | 106 BC | Porticus Minucia | 578 BC, 110 BC | Platner-Ashby: built by M. Minucius Rufus, consul 110, from the spoils of his triumph of 106 |
-| area_sacra_argentina_a | 280 BC | Iuturna, templum | 82 BC |  |
-| aedes_minervae_aventine | 207 BC | Minerva, templum:* | 27 BC |  |
 | aedes_fortunae_primigeniae | 194 BC | Fortunae (tres), aedes | 204 BC, 169 BC, 47 BC, 46 BC | Platner-Ashby s.v. Fortunae (tres): vowed 204, dedicated in 194 |
 | aedes_veneris_erycinae_collina | 181 BC | Venus Erucina | 217 BC, 184 BC | Platner-Ashby s.v. Venus Erucina: vowed 184, dedicated 181 |
 | regia | 600 BC | Atrium Regium | 210 BC | the matched article (Atrium Regium) is another building |
@@ -899,7 +890,6 @@ A pointer to re-read the article, not an error: P-A often gives the date only th
 | horrea_sempronia | 123 BC | Basilica Sempronia | 170 BC | the matched article (Basilica Sempronia) is another building |
 | curia_iulia | 29 BC | Curia Pompiliana | 715 BC | the matched article (Curia Pompiliana) is another building |
 | domus_fulvii_flacci | 130 BC | Q. Lutatius Catulus | 27 BC, 20 BC |  |
-| domus_pompeii_carinae | 70 BC | Cn. Pompeius | 55 BC |  |
 | fornix_scipionis | 190 BC | P. Scipio Africanus | 169 BC | the matched article is the house of Scipio Africanus; the arch was built in 190 (Livy 37.3.7) (unverified: passage not re-read) |
 | macellum | 179 BC | Forum Piscarium | 210 BC | Platner-Ashby s.v. Forum Piscarium: incorporated in the Macellum built by Fulvius Nobilior in 179 |
 | porticus_octaviae | 146 BC | Porticus Octavia | 168 BC, 55 BC, 33 BC, 27 BC | the matched articles are the Porticus Octavia of Cn. Octavius (168 BC, another portico) and the library founded in 23 BC; the record is the Porticus Metelli of 146 BC, rebuilt by Augustus as the Porticus Octaviae |

@@ -8952,7 +8952,7 @@
    }
   },
   "relations_failed": 0,
-  "scene_bank_sawtooth": 11,
+  "scene_bank_sawtooth": 0,
   "scene_buried": 0,
   "scene_chunk_seams": 0,
   "scene_coplanar": 0,
@@ -8973,7 +8973,7 @@
   "scene_parts_sunk": 0,
   "scene_platform_steps": 0,
   "scene_stair_ends": 0,
-  "scene_streets_ground": 38,
+  "scene_streets_ground": 0,
   "scene_streets_through": 0,
   "scene_view_close": 4,
   "scene_view_inside": 0,
