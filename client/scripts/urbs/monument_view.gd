@@ -89,7 +89,16 @@ func frame_score(id: String, pose: Dictionary) -> Dictionary:
 	var pts: Array = UrbsMonumentFrame.facade_points(pose.front) if pose.has("front") else []
 	var sc := fr.score(id, eye, float(pose.facing), float(pose.get("pitch", 3.0)), pts)
 	sc["faults"] = UrbsMonumentFrame.faults(sc, is_thin(id))
+	if off_map(id):   # beyond the drawn ground: the backdrop's fields bury it (sweep, 44 BC: the Mulvian bridge)
+		(sc["faults"] as Array).append("beyond the drawn ground")
 	return sc
+
+
+## Whether monument `id` stands beyond the city's drawn ground (UrbsTerrain's field, ±HALF_M):
+## nothing there is drawn but the far backdrop, which has no river and buries what stands on it.
+func off_map(id: String) -> bool:
+	var c: Vector2 = mons._placed.get(id, {}).get("centre", Vector2.ZERO)
+	return absf(c.x) > UrbsTerrain.HALF_M or absf(c.y) > UrbsTerrain.HALF_M
 
 
 ## A column, a statue, a small altar: narrower than 2.5 m (it fills little of any frame).
