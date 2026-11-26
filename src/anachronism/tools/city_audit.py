@@ -2279,6 +2279,23 @@ def check_dates(ds: Dataset) -> list[dict[str, Any]]:
         froms = [int(p["from"]) for p in rec.get("phases", []) or []]
         if froms != sorted(froms):
             rows.append({"id": mid, "issue": "phases out of order"})
+        # F3 monuments: no built year and no tradition of an early founding, yet drawn from the
+        # first year shown (a null year reads as "always there")
+        certainty = str(built.get("certainty", "")) if built else ""
+        if (
+            built
+            and year is None
+            and certainty != "traditional"
+            and not froms
+            and state_at(mid, COUNT_YEARS[0], ds.recs)
+        ):
+            rows.append(
+                {
+                    "id": mid,
+                    "issue": f"no built year ({certainty or 'no certainty'}) but drawn from "
+                    f"{_yr(COUNT_YEARS[0])}",
+                }
+            )
         if year is not None:
             for e in rec.get("events", []) or []:
                 if e.get("year") is None:
@@ -2670,6 +2687,7 @@ F3_MONUMENT_KINDS = [
     ("coplanar", "faces of two materials in one plane that can be seen (they flicker)"),
     ("view_inside", "monuments whose --at street camera stands inside a solid or a house"),
     ("view_misses", "monuments whose --at street camera does not see the front"),
+    ("view_close", "monuments whose --at street camera stands against something or too near"),
     ("interior_voids", "interiors with sight lines from the door that meet nothing (black)"),
     ("interior_figures", "interiors with figures through a wall or floor"),
     ("interior_missing", "enterable monuments with no interior"),

@@ -81,10 +81,14 @@
    "buried": [],
    "chunk_seams": [],
    "coplanar": [],
-   "empty_terraces": [],
-   "f3_ground_seconds": 194.724,
+   "empty_terraces": [
+    "terrace walls across empty ground near (-3, -213): 19 m",
+    "terrace walls across empty ground near (273, 147): 11 m",
+    "terrace walls across empty ground near (605, 46): 9 m"
+   ],
+   "f3_ground_seconds": 69.062,
    "f3_houses": {
-    "buildings": 18541,
+    "buildings": 19241,
     "counts": {
      "awning_pole": 0,
      "house_base": 0,
@@ -95,14 +99,13 @@
      "house_wall": 0,
      "lamp_smoke": 0,
      "life_solid": 0,
-     "shop_alone": 0,
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 168.34,
+    "seconds": 142.956,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -113,7 +116,6 @@
      "house_wall": [],
      "lamp_smoke": [],
      "life_solid": [],
-     "shop_alone": [],
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
@@ -121,7 +123,7 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 163.34,
+   "f3_monuments_seconds": 216.895,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -167,16 +169,15 @@
    "interior_missing": [],
    "interior_starts": [],
    "interior_voids": [],
-   "meadow_fronts": [],
    "overlaps": [
     "aedes_apollinis_medici overlaps porticus_octaviae by 3.0 m"
    ],
    "part_overlaps": [],
-   "parts": 95758,
+   "parts": 94914,
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 637.173,
+   "seconds": 524.869,
    "slopes": [
     {
      "drop": 1.94,
@@ -588,7 +589,7 @@
     }
    ],
    "stair_ends": [],
-   "standing": 152,
+   "standing": 151,
    "streets_ground": [
     "street via_sacra under the ground over 3 m (worst 0.00 m) near (267, 174)",
     "street vicus_iugarius under the ground over 6 m (worst 0.10 m) near (-411, 127)",
@@ -598,9 +599,11 @@
     "street via_praenestina under the ground over 2 m (worst 0.00 m) near (1330, -363)"
    ],
    "streets_through": [],
+   "view_close": [
+    "aedes_minervae_aventine camera at (-234, 1168) so near that the front overfills the frame"
+   ],
    "view_inside": [],
    "view_misses": [],
-   "wall_feet": [],
    "year": -133,
    "zfight": []
   },
@@ -612,10 +615,12 @@
    "buried": [],
    "chunk_seams": [],
    "coplanar": [],
-   "empty_terraces": [],
-   "f3_ground_seconds": 125.581,
+   "empty_terraces": [
+    "terrace walls across empty ground near (273, 147): 9 m"
+   ],
+   "f3_ground_seconds": 48.768,
    "f3_houses": {
-    "buildings": 10005,
+    "buildings": 10368,
     "counts": {
      "awning_pole": 0,
      "house_base": 0,
@@ -626,14 +631,13 @@
      "house_wall": 0,
      "lamp_smoke": 0,
      "life_solid": 0,
-     "shop_alone": 0,
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 128.317,
+    "seconds": 101.889,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -644,7 +648,6 @@
      "house_wall": [],
      "lamp_smoke": [],
      "life_solid": [],
-     "shop_alone": [],
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
@@ -652,7 +655,7 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 83.843,
+   "f3_monuments_seconds": 158.352,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -689,14 +692,13 @@
    "interior_missing": [],
    "interior_starts": [],
    "interior_voids": [],
-   "meadow_fronts": [],
    "overlaps": [],
    "part_overlaps": [],
-   "parts": 53638,
+   "parts": 52794,
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 390.716,
+   "seconds": 370.062,
    "slopes": [
     {
      "drop": 1.94,
@@ -1000,7 +1002,7 @@
     }
    ],
    "stair_ends": [],
-   "standing": 109,
+   "standing": 108,
    "streets_ground": [
     "street via_sacra under the ground over 3 m (worst 0.00 m) near (267, 174)",
     "street vicus_tuscus under the ground over 2 m (worst 0.00 m) near (-89, 295)",
@@ -1009,9 +1011,9 @@
     "street via_praenestina under the ground over 2 m (worst 0.01 m) near (1330, -363)"
    ],
    "streets_through": [],
+   "view_close": [],
    "view_inside": [],
    "view_misses": [],
-   "wall_feet": [],
    "year": -264,
    "zfight": []
   },
@@ -1022,10 +1024,14 @@
    "buried": [],
    "chunk_seams": [],
    "coplanar": [],
-   "empty_terraces": [],
-   "f3_ground_seconds": 167.605,
+   "empty_terraces": [
+    "terrace walls across empty ground near (-3, -213): 30 m",
+    "terrace walls across empty ground near (273, 147): 11 m",
+    "terrace walls across empty ground near (605, 46): 9 m"
+   ],
+   "f3_ground_seconds": 66.567,
    "f3_houses": {
-    "buildings": 19691,
+    "buildings": 20357,
     "counts": {
      "awning_pole": 0,
      "house_base": 0,
@@ -1036,14 +1042,13 @@
      "house_wall": 0,
      "lamp_smoke": 0,
      "life_solid": 0,
-     "shop_alone": 0,
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 117.978,
+    "seconds": 116.71,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -1054,7 +1059,6 @@
      "house_wall": [],
      "lamp_smoke": [],
      "life_solid": [],
-     "shop_alone": [],
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
@@ -1062,7 +1066,7 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 143.291,
+   "f3_monuments_seconds": 202.781,
    "floating": [],
    "founded": [
     "aedes_apollinis_palatini on a 1.2 m foundation (temple_hexastyle_corinthian_marble)",
@@ -1121,7 +1125,6 @@
    "interior_missing": [],
    "interior_starts": [],
    "interior_voids": [],
-   "meadow_fronts": [],
    "overlaps": [
     "aedes_apollinis_medici overlaps porticus_octaviae by 3.0 m",
     "aedes_concordiae_forum overlaps tabularium by 3.7 m",
@@ -1132,7 +1135,7 @@
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 520.455,
+   "seconds": 469.392,
    "slopes": [
     {
      "drop": 1.21,
@@ -1712,9 +1715,14 @@
     "street via_praenestina under the ground over 2 m (worst 0.00 m) near (1330, -363)"
    ],
    "streets_through": [],
+   "view_close": [
+    "aedes_isidis_serapis camera at (-502, -655) so near that the front overfills the frame",
+    "aedes_mercurii camera at (-120, 730) so near that the front overfills the frame"
+   ],
    "view_inside": [],
-   "view_misses": [],
-   "wall_feet": [],
+   "view_misses": [
+    "area_sacra_argentina_a view from (-636, -309): sees 2 of 5 fa\u00e7ade points"
+   ],
    "year": -27,
    "zfight": []
   },
@@ -1727,9 +1735,9 @@
    "chunk_seams": [],
    "coplanar": [],
    "empty_terraces": [],
-   "f3_ground_seconds": 55.581,
+   "f3_ground_seconds": 36.916,
    "f3_houses": {
-    "buildings": 3787,
+    "buildings": 3984,
     "counts": {
      "awning_pole": 0,
      "house_base": 0,
@@ -1740,14 +1748,13 @@
      "house_wall": 0,
      "lamp_smoke": 0,
      "life_solid": 0,
-     "shop_alone": 0,
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 87.2,
+    "seconds": 98.407,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -1758,7 +1765,6 @@
      "house_wall": [],
      "lamp_smoke": [],
      "life_solid": [],
-     "shop_alone": [],
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
@@ -1766,7 +1772,7 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 34.22,
+   "f3_monuments_seconds": 46.676,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -1795,14 +1801,13 @@
    "interior_missing": [],
    "interior_starts": [],
    "interior_voids": [],
-   "meadow_fronts": [],
    "overlaps": [],
    "part_overlaps": [],
-   "parts": 29663,
+   "parts": 28819,
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 212.133,
+   "seconds": 221.551,
    "slopes": [
     {
      "drop": 1.94,
@@ -2010,7 +2015,7 @@
     }
    ],
    "stair_ends": [],
-   "standing": 73,
+   "standing": 72,
    "streets_ground": [
     "street clivus_capitolinus under the ground over 2 m (worst -0.00 m) near (-190, 69)",
     "street vicus_tuscus under the ground over 2 m (worst -0.00 m) near (-89, 295)",
@@ -2020,9 +2025,9 @@
     "street via_praenestina under the ground over 2 m (worst 0.03 m) near (1330, -363)"
    ],
    "streets_through": [],
+   "view_close": [],
    "view_inside": [],
    "view_misses": [],
-   "wall_feet": [],
    "year": -390,
    "zfight": []
   },
@@ -2033,10 +2038,14 @@
    "buried": [],
    "chunk_seams": [],
    "coplanar": [],
-   "empty_terraces": [],
-   "f3_ground_seconds": 174.012,
+   "empty_terraces": [
+    "terrace walls across empty ground near (-3, -213): 30 m",
+    "terrace walls across empty ground near (273, 147): 11 m",
+    "terrace walls across empty ground near (605, 46): 9 m"
+   ],
+   "f3_ground_seconds": 68.273,
    "f3_houses": {
-    "buildings": 20034,
+    "buildings": 20707,
     "counts": {
      "awning_pole": 0,
      "house_base": 0,
@@ -2047,14 +2056,13 @@
      "house_wall": 0,
      "lamp_smoke": 0,
      "life_solid": 0,
-     "shop_alone": 0,
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 149.289,
+    "seconds": 117.884,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -2065,7 +2073,6 @@
      "house_wall": [],
      "lamp_smoke": [],
      "life_solid": [],
-     "shop_alone": [],
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
@@ -2073,7 +2080,7 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 156.553,
+   "f3_monuments_seconds": 204.333,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -2129,7 +2136,6 @@
    "interior_missing": [],
    "interior_starts": [],
    "interior_voids": [],
-   "meadow_fronts": [],
    "overlaps": [
     "aedes_apollinis_medici overlaps porticus_octaviae by 3.0 m",
     "aedes_concordiae_forum overlaps tabularium by 3.7 m",
@@ -2140,7 +2146,7 @@
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 590.897,
+   "seconds": 465.668,
    "slopes": [
     {
      "drop": 1.94,
@@ -2683,9 +2689,13 @@
     "street via_praenestina under the ground over 2 m (worst 0.00 m) near (1330, -363)"
    ],
    "streets_through": [],
+   "view_close": [
+    "aedes_mercurii camera at (-120, 730) so near that the front overfills the frame"
+   ],
    "view_inside": [],
-   "view_misses": [],
-   "wall_feet": [],
+   "view_misses": [
+    "area_sacra_argentina_a view from (-636, -309): sees 2 of 5 fa\u00e7ade points"
+   ],
    "year": -44,
    "zfight": []
   },
@@ -2697,10 +2707,12 @@
    "buried": [],
    "chunk_seams": [],
    "coplanar": [],
-   "empty_terraces": [],
-   "f3_ground_seconds": 54.652,
+   "empty_terraces": [
+    "terrace walls across empty ground near (273, 147): 11 m"
+   ],
+   "f3_ground_seconds": 39.564,
    "f3_houses": {
-    "buildings": 1992,
+    "buildings": 2171,
     "counts": {
      "awning_pole": 0,
      "house_base": 0,
@@ -2711,14 +2723,13 @@
      "house_wall": 0,
      "lamp_smoke": 0,
      "life_solid": 0,
-     "shop_alone": 0,
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 89.153,
+    "seconds": 87.488,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -2729,7 +2740,6 @@
      "house_wall": [],
      "lamp_smoke": [],
      "life_solid": [],
-     "shop_alone": [],
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
@@ -2737,7 +2747,7 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 34.724,
+   "f3_monuments_seconds": 41.005,
    "floating": [],
    "founded": [
     "aedes_fortunae_matris_matutae on a 3.2 m foundation (temple_tetrastyle_ionic)",
@@ -2766,14 +2776,13 @@
    "interior_missing": [],
    "interior_starts": [],
    "interior_voids": [],
-   "meadow_fronts": [],
    "overlaps": [],
    "part_overlaps": [],
-   "parts": 23746,
+   "parts": 22902,
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 217.611,
+   "seconds": 206.208,
    "slopes": [
     {
      "drop": 3.23,
@@ -2981,7 +2990,7 @@
     }
    ],
    "stair_ends": [],
-   "standing": 66,
+   "standing": 65,
    "streets_ground": [
     "street clivus_capitolinus under the ground over 2 m (worst -0.00 m) near (-190, 69)",
     "street vicus_tuscus under the ground over 2 m (worst -0.00 m) near (-89, 295)",
@@ -2991,9 +3000,9 @@
     "street via_praenestina under the ground over 2 m (worst 0.03 m) near (1330, -363)"
    ],
    "streets_through": [],
+   "view_close": [],
    "view_inside": [],
    "view_misses": [],
-   "wall_feet": [],
    "year": -509,
    "zfight": []
   }
