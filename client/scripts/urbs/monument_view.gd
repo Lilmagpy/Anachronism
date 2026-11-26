@@ -99,7 +99,7 @@ func _best_framed(id: String, cands: Array) -> Array:
 	var thin := is_thin(id)
 	for ps: Dictionary in cands:
 		var sc := frame_score(id, ps)
-		var m := UrbsMonumentFrame.merit(sc, thin)
+		var m := UrbsMonumentFrame.merit(sc, thin) - (1.5 if bool(ps.get("over", false)) else 0.0)   # nor so near the front overfills it
 		if m > best_m:
 			best_m = m
 			best = ps
@@ -234,7 +234,7 @@ func _pick(id: String) -> Dictionary:
 	var w := maxf((maxf(half.x, half.y) if bridge else half.x) * 2.0, 2.0)
 	var base := float(p.get("y", b.position.y))
 	var top := b.end.y if b.size.y > 0.0 else base + 6.0
-	var back := front + clampf(maxf((top - base) * 1.8, minf(w, 60.0) * 1.1), 12.0, 60.0)
+	var back := front + clampf(maxf((top - base) * 1.8, minf(w, 60.0) * 1.1), 6.0, 60.0)   # a small altar from nearer
 	_load_lots(Vector2(d0.x, d0.z), back * 2.2 + 40.0)
 	var right := Vector3(outward.z, 0, -outward.x)
 	var face := d0 + outward * maxf(front_b - 1.0, 0.0)
@@ -303,7 +303,7 @@ func _pick(id: String) -> Dictionary:
 			cost += 30.0   # so close that the front overfills the frame
 		var tl: Vector3 = target - eye
 		var pose := {"stand": st, "eye": eye, "facing": atan2(-tl.x, -tl.z), "open_air": false, "seen": seen,
-			"target": target, "all_round": all_round, "front": [face + right * lat, base, top, w, outward]}
+			"target": target, "all_round": all_round, "front": [face + right * lat, base, top, w, outward], "over": over}
 		ranked.append([cost, pose])
 		if cost < best_cost:
 			best_cost = cost
