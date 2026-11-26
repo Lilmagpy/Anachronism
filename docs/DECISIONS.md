@@ -2932,14 +2932,33 @@ are glitched, go through everything and ensure that this is fixed fully."
   turned to face away from Catulus' house; terrace levels at the Aedes Larum, Porta
   Esquilina and Forum Esquilinum. The review camera for street sweeps now finds a clear
   stand instead of landing in a gap between buildings.
-- **Open after round 2** (round 3 running): terrace walls across empty ground came back
-  with the merge (1/0/1/3/3/3); terrace walls hanging over a dip (264 BC, near 925, -480);
-  ground in shadow nearly black; meadow grass in shop-lined lanes of the built-up quarter;
-  pale angular patches near (596, -792); a shading seam near (-1200, -1100); bank kinks
-  2/2/2/3/1/1; about 15 of 80 monument views in 44 BC stand too close to a wall, and five
-  show no front (Navalia, Pons Mulvius, Theatre of Marcellus, Atrium Libertatis, Porta
-  Pandana); a temple's action panel still at the outside altar; Castor in Circo Flaminio
-  has no built year and so appears from 509 BC.
+- **Rounds 3 and 4 (2026-11-26)**, merged at 6ebab80. Ground: every terrace, clivus and quay
+  wall is footed 0.3 m below the ground *as drawn at each level of detail* (they had hung up
+  to 17 m over the coarse far ground; new check `wall_feet`, 276-1106 walls a year -> 0); the
+  ground has the houses' bounce and twilight light (shade was black); ground within 8 m of a
+  house or shop is trodden earth, never meadow (`meadow_fronts`, up to 5506 lots -> 0); the
+  per-house earth aprons are gone; street strips stand on the higher of the height field
+  and the drawn mesh, kerbs end square (streets off the ground -> 0); the bank's kinks -> 0
+  (one Tiber course point added near Ponte Nenni, marked unverified, to ease a 25 m bend;
+  island shore measured exactly; footings have rounded corners and island buildings get
+  none). Houses: a shop with nothing to lean on is removed (`shop_alone`, 179-720 -> 0);
+  plants have the ground's light terms (trees were black at dusk); every house check 0.
+  Dates: the 22 monuments with no built year now have one from the first secure mention
+  (a terminus ante quem, year marked unverified) or are recorded as traditional with the
+  source; Castor in Circo Flaminio about 100 BC (Vitruvius 4.8.4, unverified year); date
+  issues 0. Monuments: a temple's actions are offered before the god in the cella; the
+  Theatre of Marcellus in 44 BC is a scaffolded site; the `--at` camera keeps 1.5 m clear
+  (`view_close`).
+- **Open after round 4**: the agent's review of its own pictures finds about one monument
+  view in five still poor although the checks read near 0 (a wall 2-4 m to one side, a bank
+  or tree in front): a frame-coverage check (rays through the camera's frame) is being built
+  and the camera will choose its stand by it; Navalia, Atrium Libertatis, Pons Mulvius and
+  Pons Sublicius show no proper front; route monuments (aqueducts, walls, bridges) have no
+  view rule; interiors are too dark (pure black floors and walls); street people within a
+  few metres draw as crude tilted shapes; the Curia Iulia is owned from 44 BC but built in
+  29; plan overlaps 0/0/0/1/3/3 (Apollo Medicus / Porticus Octaviae, Concord / Tabularium,
+  Porticus Octaviae / Theatre of Marcellus: abutting buildings whose drawn parts do not
+  interpenetrate, to be either resolved or recorded as abutting with a source).
 
 ## D-306 A Windows version, proved on a Windows machine nobody has — DELEGATED (2026-11-25)
 The owner asked for a Windows version. Nobody on the project has a PC to hand.

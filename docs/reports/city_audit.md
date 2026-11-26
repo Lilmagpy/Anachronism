@@ -16,7 +16,7 @@ References: **Pleiades** (CC BY 3.0; places within 3.5 km of the Forum with a pe
 | orientation or size against published measurements | 0 |
 | orientation or size against the outline of the remains | 17 |
 | relations the sources fix, failed | 0 |
-| date issues | 22 |
+| date issues | 0 |
 | scene: monuments whose solids overlap another standing monument (all years) | 7 |
 | scene: monuments whose base is more than 0.5 m above the ground under a corner (all years) | 0 |
 | scene: monuments whose base is more than 1 m below the ground under a corner (all years) | 0 |
@@ -52,6 +52,7 @@ References: **Pleiades** (CC BY 3.0; places within 3.5 km of the Forum with a pe
 | scene (F3 houses): buildings in the river (all years) | 0 |
 | scene (F3 houses): buildings whose floor is under the ground at the front or whose parts float (all years) | 0 |
 | scene (F3 houses): shop awnings on tall poles over ground falling away in front (all years) | 0 |
+| scene (F3 houses): lean-to shops with no house behind them to lean on (all years) | 0 |
 | scene (F3 houses): trees with their trunk inside a building or their crown through it (all years) | 0 |
 | scene (F3 houses): trees in a carriageway (all years) | 0 |
 | scene (F3 houses): trees in the river (all years) | 0 |
@@ -798,14 +799,14 @@ horti, tombs, farm steadings), every tree (all three levels of detail) and the s
 life (people, stalls, the walkers' and carts' lanes, lamps, smoke), tested by their real
 meshes (each mesh's triangles clipped into 1 m height bands).
 
-| year | buildings | house_house | house_monument | house_wall | house_street | house_river | house_base | awning_pole | tree_building | tree_street | tree_river | tree_wall | life_solid | stall_street | lamp_smoke |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 509 BC | 2173 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 390 BC | 3987 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 264 BC | 10371 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 133 BC | 19249 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 44 BC | 20713 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 27 BC | 20363 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| year | buildings | house_house | house_monument | house_wall | house_street | house_river | house_base | awning_pole | shop_alone | tree_building | tree_street | tree_river | tree_wall | life_solid | stall_street | lamp_smoke |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 509 BC | 2030 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 390 BC | 3833 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 264 BC | 10070 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 133 BC | 18599 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 44 BC | 20040 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 27 BC | 19697 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
 ## 4. Time
 
@@ -813,41 +814,19 @@ Monuments drawn in each standard year (`monuments.gd` `state_at`, ported to Pyth
 
 | year | total | building | burnt | standing | standing_scaffold |
 |---|---|---|---|---|---|
-| 509 BC | 65 | 0 | 0 | 65 | 0 |
-| 390 BC | 72 | 0 | 0 | 72 | 0 |
-| 264 BC | 108 | 0 | 0 | 108 | 0 |
-| 133 BC | 151 | 0 | 0 | 151 | 0 |
+| 509 BC | 48 | 0 | 0 | 48 | 0 |
+| 390 BC | 55 | 0 | 0 | 55 | 0 |
+| 264 BC | 97 | 0 | 0 | 97 | 0 |
+| 133 BC | 145 | 0 | 0 | 145 | 0 |
 | 44 BC | 175 | 3 | 1 | 170 | 1 |
 | 27 BC | 185 | 2 | 2 | 181 | 0 |
 | AD 80 | 215 | 0 | 1 | 214 | 0 |
 | AD 120 | 232 | 0 | 1 | 231 | 0 |
 
-### Date issues (22)
+### Date issues (0)
 
-- `aedes_herculis_collina`: no built year (uncertain) but drawn from 509 BC
-- `aedes_herculis_victoris`: no built year (uncertain) but drawn from 509 BC
-- `aedes_larum`: no built year (uncertain) but drawn from 509 BC
-- `aedes_minervae_aventine`: no built year (uncertain) but drawn from 509 BC
-- `aedes_neptuni_flaminium`: no built year (uncertain) but drawn from 509 BC
-- `aedes_portuni`: no built year (uncertain) but drawn from 509 BC
-- `area_sacra_argentina_a`: no built year (uncertain) but drawn from 509 BC
-- `area_sacra_argentina_c`: no built year (uncertain) but drawn from 509 BC
-- `area_sacra_argentina_d`: no built year (uncertain) but drawn from 509 BC
-- `atrium_libertatis`: no built year (probable) but drawn from 509 BC
-- `atrium_vestae`: no built year (uncertain) but drawn from 509 BC
-- `domus_clodii`: no built year (uncertain) but drawn from 509 BC
-- `domus_hortensii_augusti`: no built year (uncertain) but drawn from 509 BC
-- `domus_pompeii_carinae`: no built year (uncertain) but drawn from 509 BC
-- `graecostasis`: no built year (uncertain) but drawn from 509 BC
-- `horrea_galbae`: no built year (uncertain) but drawn from 509 BC
-- `lacus_iuturnae`: no built year (uncertain) but drawn from 509 BC
-- `lacus_servilius`: no built year (uncertain) but drawn from 509 BC
-- `lapis_niger`: no built year (probable) but drawn from 509 BC
-- `navalia`: no built year (uncertain) but drawn from 509 BC
-- `porta_stercoraria`: no built year (uncertain) but drawn from 509 BC
-- `senaculum`: no built year (uncertain) but drawn from 509 BC
 
-### Building years not named in the matched Platner-Ashby article (40)
+### Building years not named in the matched Platner-Ashby article (46)
 
 A pointer to re-read the article, not an error: P-A often gives the date only through the consul's name, or the record's year comes from another source.
 
@@ -863,6 +842,7 @@ A pointer to re-read the article, not an error: P-A often gives the date only th
 | aedes_iovis_statoris_palatine | 294 BC | Iuppiter Stator, aedes | 146 BC, 27 BC, 14 BC | the matched article is the other temple of Iuppiter Stator (by the Circus Flaminius, 146 BC); the Palatine temple is Livy 10.37.15 (294 BC) (unverified: passage not re-read) |
 | aedes_iuventatis | 191 BC | Iuventas, aedes | 578 BC, 207 BC, 27 BC, 16 BC | Platner-Ashby: vowed 207, begun 204, dedicated by C. Licinius Lucullus (191, Livy 36.36.5-6) (unverified: passage not re-read) |
 | aedes_martis_appia | 388 BC | Mars, aedes | 138 BC, 55 BC | the matched article is the temple of Mars in circo Flaminio (138 BC); the temple on the Via Appia was dedicated in 388 (Livy 6.5.8) |
+| aedes_minervae_aventine | 207 BC | Minerva, Aedes | 27 BC |  |
 | aedes_pietatis | 181 BC | Pietas, aedes | 91 BC | Platner-Ashby: vowed 191, dedicated in 181 |
 | aedes_pietatis | 181 BC | Pietas, aedes | 191 BC, 46 BC, 44 BC | Platner-Ashby: vowed 191, dedicated in 181 |
 | aedes_salutis | 302 BC | Salus, ara | 311 BC, 206 BC, 113 BC | Platner-Ashby gives the dedication as 303 BC; the record follows Livy 10.1.9 in the Varronian year 302 (the year of Bubulcus's dictatorship); a one-year difference of chronology, kept |
@@ -881,8 +861,12 @@ A pointer to re-read the article, not an error: P-A often gives the date only th
 | aedes_iunonis_reginae_aventine | 392 BC | Iuno Regina, aedes | 187 BC | one of the matched articles is the other temple of Iuno Regina (by the Circus Flaminius, 179 BC); the Aventine temple was dedicated by Camillus in 392 (Platner-Ashby) |
 | aedes_iunonis_reginae_circus | 179 BC | Iuno Regina, aedes | 187 BC | one of the matched articles is the Aventine temple (392 BC); this one was dedicated in 179 (Platner-Ashby s.v. Iuno Regina, aedes) |
 | lares_permarini | 179 BC | Lares Permarini, Aedes | 190 BC | Platner-Ashby: vowed 190, dedicated 22 December 179 |
+| aedes_minervae_aventine | 207 BC | Minerva, delubrum | 55 BC |  |
+| aedes_neptuni_flaminium | 206 BC | Neptunus, aedes, delubrum | 100 BC, 38 BC, 27 BC |  |
 | porta_fontinalis | 378 BC | Porta Fontinalis | 193 BC | the gate of the Servian wall as rebuilt from 378 (Livy 6.32.1); Platner-Ashby names only 193 (unverified: passage not re-read) |
 | porticus_minucia_vetus | 106 BC | Porticus Minucia | 578 BC, 110 BC | Platner-Ashby: built by M. Minucius Rufus, consul 110, from the spoils of his triumph of 106 |
+| area_sacra_argentina_a | 280 BC | Iuturna, templum | 82 BC |  |
+| aedes_minervae_aventine | 207 BC | Minerva, templum:* | 27 BC |  |
 | aedes_fortunae_primigeniae | 194 BC | Fortunae (tres), aedes | 204 BC, 169 BC, 47 BC, 46 BC | Platner-Ashby s.v. Fortunae (tres): vowed 204, dedicated in 194 |
 | aedes_veneris_erycinae_collina | 181 BC | Venus Erucina | 217 BC, 184 BC | Platner-Ashby s.v. Venus Erucina: vowed 184, dedicated 181 |
 | regia | 600 BC | Atrium Regium | 210 BC | the matched article (Atrium Regium) is another building |
@@ -890,6 +874,7 @@ A pointer to re-read the article, not an error: P-A often gives the date only th
 | horrea_sempronia | 123 BC | Basilica Sempronia | 170 BC | the matched article (Basilica Sempronia) is another building |
 | curia_iulia | 29 BC | Curia Pompiliana | 715 BC | the matched article (Curia Pompiliana) is another building |
 | domus_fulvii_flacci | 130 BC | Q. Lutatius Catulus | 27 BC, 20 BC |  |
+| domus_pompeii_carinae | 70 BC | Cn. Pompeius | 55 BC |  |
 | fornix_scipionis | 190 BC | P. Scipio Africanus | 169 BC | the matched article is the house of Scipio Africanus; the arch was built in 190 (Livy 37.3.7) (unverified: passage not re-read) |
 | macellum | 179 BC | Forum Piscarium | 210 BC | Platner-Ashby s.v. Forum Piscarium: incorporated in the Macellum built by Fulvius Nobilior in 179 |
 | porticus_octaviae | 146 BC | Porticus Octavia | 168 BC, 55 BC, 33 BC, 27 BC | the matched articles are the Porticus Octavia of Cn. Octavius (168 BC, another portico) and the library founded in 23 BC; the record is the Porticus Metelli of 146 BC, rebuilt by Augustus as the Porticus Octaviae |
