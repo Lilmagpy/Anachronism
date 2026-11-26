@@ -2918,6 +2918,28 @@ are glitched, go through everything and ensure that this is fixed fully."
 - **Left open** (in the reports): 21-27 street stretches a little off the ground, three
   terrace heights that need a source, a few shops on a footway, small flicker at three
   porticoes, the theatres' card views, the interiors' start positions.
+- **Round 2 (2026-11-26)**, merged at 03479c2, counts per year 509/390/264/133/44/27 BC:
+  streets off the ground 21-27 -> 6/6/5/6/7/8 (all under 0.12 m; every street's level is
+  now read from the uncut ground and pinned to the floors and wider streets it meets);
+  platform steps and monuments in the river -> 0; every house check -> 0 (the fill keeps
+  clear of monuments' real solids, retaining walls and footways; two new checks, trees in
+  the Servian wall and awning poles over falling ground); every monument check -> 0
+  (coplanar flicker, floating parts, the `--at` view, interior figures) and a new check,
+  `interior_starts`: every interior starts inside facing the room. Data changed, each with
+  its source in the record: the Vicus Iugarius runs round the Capitol's foot to the Porta
+  Carmentalis; the Via Flumentana passes through that gate; the Porticus Aemilia lies along
+  the quay (bearing 45 -> 303, was unverified); the Porticus Catuli's unverified bearing
+  turned to face away from Catulus' house; terrace levels at the Aedes Larum, Porta
+  Esquilina and Forum Esquilinum. The review camera for street sweeps now finds a clear
+  stand instead of landing in a gap between buildings.
+- **Open after round 2** (round 3 running): terrace walls across empty ground came back
+  with the merge (1/0/1/3/3/3); terrace walls hanging over a dip (264 BC, near 925, -480);
+  ground in shadow nearly black; meadow grass in shop-lined lanes of the built-up quarter;
+  pale angular patches near (596, -792); a shading seam near (-1200, -1100); bank kinks
+  2/2/2/3/1/1; about 15 of 80 monument views in 44 BC stand too close to a wall, and five
+  show no front (Navalia, Pons Mulvius, Theatre of Marcellus, Atrium Libertatis, Porta
+  Pandana); a temple's action panel still at the outside altar; Castor in Circo Flaminio
+  has no built year and so appears from 509 BC.
 
 ## D-306 A Windows version, proved on a Windows machine nobody has — DELEGATED (2026-11-25)
 The owner asked for a Windows version. Nobody on the project has a PC to hand.
