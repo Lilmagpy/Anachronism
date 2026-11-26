@@ -81,7 +81,7 @@ streets:
   english: Yoke Street
   kind: vicus
   direction: "from the Forum between the Basilica Iulia and the temple of Castor, west along the foot of the Capitol to the Porta Carmentalis"
-  points: [[41.892455, 12.484576], [41.892374, 12.48431], [41.89232, 12.48425], [41.892221, 12.484202], [41.892086, 12.484105], [41.89196, 12.484033], [41.8916, 12.4832], [41.891405, 12.48236], [41.89115, 12.481317], [41.891375, 12.480327]]  # F3: the western stretch under the Capitol's south face, 26-30 m clear of the Area Capitolina's front (it ran 13 m from the area's gate and its last point lay 24 m inside the area as monuments.yaml draws it, on the summit 20 m above the road), and on to the Porta Carmentalis (monuments.yaml, with its offset) where Platner-Ashby ends it; it stopped 95 m short of the gate. F2: from the Forum through the arch of Tiberius (Pleiades 307446389) between the temple of Saturn and the Basilica Iulia (the modern path, which Platner-Ashby says preserves the line after the basilica was built), then along the southern edge of the Capitol; the old first point ran through the middle of the Basilica Iulia
+  points: [[41.892455, 12.484576], [41.892374, 12.48431], [41.89232, 12.48425], [41.892221, 12.484202], [41.892086, 12.484105], [41.89196, 12.484033], [41.8915, 12.48322], [41.8912, 12.48275], [41.8906, 12.4816], [41.891375, 12.480327]]  # F3 round 2: the western stretch along the line of the modern Vico Jugario (by Piazza della Consolazione, then past S. Omobono round the Capitol's southern tip, 50 m clear of it) to the gate at the Capitol's south-west foot: the round-1 line ran over the rim of the modelled Capitoline plateau (topography.yaml `capitolinus`, its south edge at 40 m), 16 m above the valley, and fell at 1 in 6 to the gate beside the Forum Holitorium's paving. F3: the western stretch under the Capitol's south face, 26-30 m clear of the Area Capitolina's front (it ran 13 m from the area's gate and its last point lay 24 m inside the area as monuments.yaml draws it, on the summit 20 m above the road), and on to the Porta Carmentalis (monuments.yaml, with its offset) where Platner-Ashby ends it; it stopped 95 m short of the gate. F2: from the Forum through the arch of Tiberius (Pleiades 307446389) between the temple of Saturn and the Basilica Iulia (the modern path, which Platner-Ashby says preserves the line after the basilica was built), then along the southern edge of the Capitol; the old first point ran through the middle of the Basilica Iulia
   precision: approx
   width_m: 4.0
   width_source: assumed
@@ -220,7 +220,7 @@ streets:
   english: Road along the Tiber side of the Capitol to the Forum Boarium and Porta Trigemina
   kind: road
   direction: "from the Campus Martius south between the Capitol and the river, through the Porta Carmentalis and Porta Flumentana, to the Porta Trigemina"
-  points: [[41.8962, 12.4776], [41.8945, 12.4789], [41.8929, 12.4801], [41.8917, 12.4809], [41.8906, 12.4807], [41.8895, 12.4806], [41.8884, 12.4802], [41.8875, 12.4796]]
+  points: [[41.8962, 12.4776], [41.8945, 12.4789], [41.8929, 12.4801], [41.892158, 12.480255], [41.891375, 12.480327], [41.8906, 12.4807], [41.8895, 12.4806], [41.8884, 12.4802], [41.8875, 12.4796]]  # F3 round 2: through the Porta Carmentalis (monuments.yaml, with its offset), as Platner-Ashby has it, between the Theatre of Marcellus and the Capitol; the fourth point lay 42 m east of the gate on the Capitol's flank, 6-17 m above the Forum Holitorium
   precision: rough
   width_m: 5.0
   width_source: assumed

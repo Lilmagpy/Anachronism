@@ -415,7 +415,7 @@
 {
 "flank": 60,
 "id": "capitolinus",
-"note": "460 x 180 m NE-SW, two summits (Capitolium SW, Arx NE) with the saddle of the Asylum between them at about 37 m; steep cliffs all round except toward the Forum, where the Tabularium fills the slope; the Tarpeian rock at the SW. Outline # unverified (modeller's reading of the modern plan). F2: the south-west summit carried out to take the whole Area Capitolina (Platner-Ashby s.v. Area Capitolina, read: 35 m east of the temple, up to 30 m west, 40-45 m in front), which stood on the summit enlarged with substructures of squared stone (Livy 6.4.12, as quoted there); the old outline stopped 40-50 m short of its front, so its terrace stood 20 m over the modelled hill",
+"note": "460 x 180 m NE-SW, two summits (Capitolium SW, Arx NE) with the saddle of the Asylum between them at about 37 m; steep cliffs all round except toward the Forum, where the Tabularium fills the slope; the Tarpeian rock at the SW. Outline # unverified (modeller's reading of the modern plan). F2: the south-west summit carried out to take the whole Area Capitolina (Platner-Ashby s.v. Area Capitolina, read: 35 m east of the temple, up to 30 m west, 40-45 m in front), which stood on the summit enlarged with substructures of squared stone (Livy 6.4.12, as quoted there); the old outline stopped 40-50 m short of its front, so its terrace stood 20 m over the modelled hill F3 round 2: the west vertex (41.8921, 12.4805) drawn 22 m further east, 6 m beyond the Area Capitolina's west corner: with the 60 m flank the Capitol's slope reached the Porta Carmentalis and the road between the Theatre of Marcellus and the hill (Via Flumentana, through the gate: Platner-Ashby s.v. Forum Boarium) ran 6-17 m up its side; the Theatre stands about 100 m from the rock in the modern plan",
 "outline": [
 [
 41.89237,
@@ -434,7 +434,7 @@
 ],
 [
 41.8921,
-12.4805,
+12.48077,
 42
 ],
 [
@@ -1045,11 +1045,11 @@
 "blend": 4,
 "id": "f2_terrace_aedes_larum",
 "level": [
-28.3,
-28.3
+30.8,
+30.8
 ],
 "monument": "aedes_larum",
-"note": "F2: the ground fell 13.7 m under the monument; cut and built up to the level at its centre, walled",
+"note": "F2: the ground fell 13.7 m under the monument; cut and built up to the level at its centre, walled. F3: raised 2.5 m to the top of the Sacra Via where the Via Sacra, the Clivus Palatinus and the street to the Caelian meet beside it (the temple stood in summa sacra via: Res Gestae 19, Platner-Ashby s.v. Lares, Aedes); at 28.3 it lay in a walled pit 2.5 m below that junction",
 "polygon": [
 [
 41.890606,
@@ -1103,11 +1103,11 @@
 "blend": 4,
 "id": "f2_terrace_porta_esquilina",
 "level": [
-30.2,
-30.2
+37.0,
+37.0
 ],
 "monument": "porta_esquilina",
-"note": "F2: the ground fell 6.8 m under the monument; cut and built up to the level at its centre, walled",
+"note": "F2: the ground fell 6.8 m under the monument; cut and built up to the level at its centre, walled. F3: 37.0 (was 30.2), the level of the Forum Esquilinum beside it: the two terraces, each set to the modelled slope under its own centre, stood 13.7 m apart 45 m from each other, and the Clivus Suburanus, which runs over the market to end at the gate, would have had to fall at 1 in 3 between them. The gate stood on the crest of the agger with the market beside it (Platner-Ashby s.v. Porta Esquilina; Forum Esquilinum); the modelled ground falls eastward through the gate where the real plateau is level, so both are set between their two levels",
 "polygon": [
 [
 41.895597,
@@ -1364,11 +1364,11 @@
 "blend": 4,
 "id": "f2_terrace_forum_esquilinum",
 "level": [
-43.9,
-43.9
+37.0,
+37.0
 ],
 "monument": "forum_esquilinum",
-"note": "F2: the ground fell 9.5 m under the monument; cut and built up to the level at its centre, walled",
+"note": "F2: the ground fell 9.5 m under the monument; cut and built up to the level at its centre, walled. F3: 37.0 (was 43.9), level with the Porta Esquilina beside it (see f2_terrace_porta_esquilina)",
 "polygon": [
 [
 41.895842,

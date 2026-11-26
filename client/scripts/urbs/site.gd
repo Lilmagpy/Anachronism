@@ -563,9 +563,8 @@ static func terrace_wall_segments(rect: Rect2, uses: Dictionary = {}) -> Array:
 static func wall_uses(fill: Object, keys: Array) -> Dictionary:
 	var grid := {}
 	for key: Vector2i in keys:
-		var lots: Array = []
-		lots.append_array(fill.get("_street_by_chunk").get(key, []))
-		lots.append_array(fill.get("_region_by_chunk").get(key, []))
+		# the lots that are drawn (a street-front lot that gives way to a tree is not: UrbsFill.lots_for_chunk)
+		var lots: Array = fill.call("lots_for_chunk", key) if fill.has_method("lots_for_chunk") else []
 		for lot: Dictionary in lots:
 			var th := float(lot.get("th", 0.0))
 			var r := {"c": lot["c"], "ax": Vector2(cos(th), -sin(th)), "az": Vector2(sin(th), cos(th)),

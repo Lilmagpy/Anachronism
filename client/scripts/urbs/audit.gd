@@ -1592,7 +1592,12 @@ func _f3_empty_terraces() -> Array:
 				keys[Vector2i(kx, kz)] = true
 	if keys.is_empty():
 		return out
-	var lf := _f3_lots(keys.keys())
+	var with_near := {}   # the lots of the neighbouring chunks too, as UrbsSite.wall_uses reads them
+	for key: Vector2i in keys:
+		for dx in range(-1, 2):
+			for dz in range(-1, 2):
+				with_near[key + Vector2i(dx, dz)] = true
+	var lf := _f3_lots(with_near.keys())
 	var lots: Dictionary = lf[0]
 	var segs := []
 	for key: Vector2i in keys:
@@ -1735,9 +1740,21 @@ func _f3_platform_steps() -> Array:
 		var g := _f3_ground_y(q.x, q.y)
 		if UrbsTerrain.river_distance(q.x, q.y) < UrbsTerrain.river_half_width(q.x, q.y) + 40.0:
 			continue   # it faces the river: the ground falls to the water (the Theatre of Marcellus)
-		if lvl - g > 1.0:
+		if lvl - g > 1.0 and not _f3_steps_down(mid):
 			out.append("platform %s stands %.1f m over the ground in front of %s at %s" % [pid, lvl - g, mid, _f3_xy(q)])
 	return out
+
+
+## True when monuments.gd drew a flight of steps down the front of monument `mid`'s terrace
+## (TerraceSteps) whose foot meets the ground (within 0.4 m).
+func _f3_steps_down(mid: String) -> bool:
+	var node: Node3D = _mon._nodes.get(mid)
+	if node == null or not node.has_node("TerraceSteps") or not node.has_meta("steps_box"):
+		return false
+	var sb: AABB = node.get_meta("steps_box")
+	var xf: Transform3D = _mon._xf.get(mid, node.global_transform)   # the monument's frame
+	var foot := xf * Vector3(0.0, sb.position.y, sb.end.z + 0.5)
+	return absf(foot.y - _f3_ground_y(foot.x, foot.z)) <= 0.4
 
 
 # --- steps ---
@@ -1850,9 +1867,11 @@ func _f3_chunk_seams() -> Array:
 func _f3_streets_ground(st: UrbsStreets) -> Array:
 	var out := []
 	var strips := {}
+	var covers := {}   # a street's whole drawn top (carriageway, kerbs, footway): what hides another
 	for mi: Node in st._root.get_children():
 		if mi is MeshInstance3D:
 			strips[str(mi.name)] = _f3_tris([mi], 0)
+			covers[str(mi.name)] = _f3_tris([mi])
 	var plazas := _f3_plazas()
 	for mi: Node in st._root.get_children():
 		if not mi is MeshInstance3D:
@@ -1869,7 +1888,7 @@ func _f3_streets_ground(st: UrbsStreets) -> Array:
 		var hw := float(s.hw)
 		var sunk := 0
 		var floating := 0
-		var worst_s := 0.0
+		var worst_s := -INF   # (a strip within 2 cm above the ground is sunk too: worst <= 0)
 		var worst_f := 0.0
 		var at_s := Vector2.ZERO
 		var at_f := Vector2.ZERO
@@ -1890,8 +1909,8 @@ func _f3_streets_ground(st: UrbsStreets) -> Array:
 				if y == -INF or not UrbsTerrain.ground_drawn_at(p.x, p.y, _f3_step(p.x, p.y)):
 					continue
 				var hidden := false   # another street or a paving lies over this one here
-				for oid: String in strips:
-					if oid != sid and _f3_top(strips[oid], p) > y + 0.02:
+				for oid: String in covers:
+					if oid != sid and _f3_top(covers[oid], p) > y + 0.02:
 						hidden = true
 				for pid: String in plazas:
 					if _f3_top(plazas[pid], p) > y:

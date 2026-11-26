@@ -2025,7 +2025,7 @@ monuments:
   model: long_hall
   yields_to: [horrea_galbae]   # F3 monuments: monument_clip.gd
   yields_note: "F3: the 487 x 60 m hall (its remains, Pleiades) and the Horrea Galbae (Platner-Ashby's 200 x 155 m at its approximate point) overlap by about 50 m; neither is moved: the hall stops at the horrea's outer wall (monument_clip.gd). A measured plan of both would settle it (F2 audit, unresolved)"
-  bearing_deg: 45  # unverified
+  bearing_deg: 303  # unverified; F3 round 2: the hall's long side along the river (the mean of its course past the hall's 487 m, which bends from 217 to 193 degrees) and its front to the Emporium quay and the water, as geometry_source assumes ('bearing along the quay'): at 45 its long axis ran across the modelled Tiber (the modern bridges as proxies) and its north-west end stood in the middle of the river
   footprint_m: {length: 60, width: 487}
   height_m: 9  # unverified
   geometry_source: "Platner-Ashby s.v. Porticus Aemilia / dataset form (long hall 487 x 60 m, 50 aisles, concrete barrel vaults, 193 BC Livy 35.10.12); bearing along the quay assumed"
