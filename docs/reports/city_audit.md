@@ -16,7 +16,7 @@ References: **Pleiades** (CC BY 3.0; places within 3.5 km of the Forum with a pe
 | orientation or size against published measurements | 0 |
 | orientation or size against the outline of the remains | 17 |
 | relations the sources fix, failed | 0 |
-| date issues | 0 |
+| date issues | 22 |
 | scene: monuments whose solids overlap another standing monument (all years) | 7 |
 | scene: monuments whose base is more than 0.5 m above the ground under a corner (all years) | 0 |
 | scene: monuments whose base is more than 1 m below the ground under a corner (all years) | 0 |
@@ -29,7 +29,8 @@ References: **Pleiades** (CC BY 3.0; places within 3.5 km of the Forum with a pe
 | scene: monuments with columns sunk into what they stand on (all years) | 0 |
 | scene: faces of two materials in one plane that can be seen (they flicker) (all years) | 0 |
 | scene: monuments whose --at street camera stands inside a solid or a house (all years) | 0 |
-| scene: monuments whose --at street camera does not see the front (all years) | 0 |
+| scene: monuments whose --at street camera does not see the front (all years) | 2 |
+| scene: monuments whose --at street camera stands against something or too near (all years) | 4 |
 | scene: interiors with sight lines from the door that meet nothing (black) (all years) | 0 |
 | scene: interiors with figures through a wall or floor (all years) | 0 |
 | scene: enterable monuments with no interior (all years) | 0 |
@@ -712,20 +713,30 @@ The repository has no modern elevation model; the ground is built from `topograp
 
 ## 3. Placement in the built scene
 
-| year | overlaps | floating | buried | houses_in_monuments | houses_on_streets | in_river | streets_through | part_overlaps | parts_floating | parts_sunk | coplanar | view_inside | view_misses | interior_voids | interior_figures | interior_missing | interior_starts | bank_sawtooth | zfight | ground_holes | empty_terraces | platform_steps | stair_ends | chunk_seams | streets_ground | wall_feet | meadow_fronts |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 509 BC | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 6 | 0 | 0 |
-| 390 BC | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 6 | 0 | 0 |
-| 264 BC | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 5 | 0 | 0 |
-| 133 BC | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 6 | 0 | 0 |
-| 44 BC | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 7 | 0 | 0 |
-| 27 BC | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 8 | 0 | 0 |
+| year | overlaps | floating | buried | houses_in_monuments | houses_on_streets | in_river | streets_through | part_overlaps | parts_floating | parts_sunk | coplanar | view_inside | view_misses | view_close | interior_voids | interior_figures | interior_missing | interior_starts | bank_sawtooth | zfight | ground_holes | empty_terraces | platform_steps | stair_ends | chunk_seams | streets_ground | wall_feet | meadow_fronts |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 509 BC | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 6 | 0 | 0 |
+| 390 BC | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 6 | 0 | 0 |
+| 264 BC | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 5 | 0 | 0 |
+| 133 BC | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 6 | 0 | 0 |
+| 44 BC | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 7 | 0 | 0 |
+| 27 BC | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 2 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 8 | 0 | 0 |
 
 **monuments whose solids overlap another standing monument**
 
 - aedes_apollinis_medici overlaps porticus_octaviae by 3.0 m (133 BC, 27 BC, 44 BC) - F3: the reconstructed corner of the Porticus Octaviae reaches the temple of Apollo beside it; drawn abutting (the portico's wing stops at the temple, yields_to, monument_clip.gd); the collision boxes still meet
 - aedes_concordiae_forum overlaps tabularium by 3.7 m (27 BC, 44 BC) - the Augustan temple of Concord was built against the substructure of the Tabularium, its cella under the Tabularium front (the remains); a 3 m contact is the real arrangement. F3: drawn abutting (the temple stops at the Tabularium's front, yields_to)
 - porticus_octaviae overlaps theatrum_marcelli by 2.8 m (27 BC, 44 BC) - the portico and the theatre stood side by side with a narrow street between; 2.8 m is within the precision of the reconstructed portico corner (Pleiades outlines only its propylon)
+
+**monuments whose --at street camera does not see the front**
+
+- area_sacra_argentina_a view from (-636, -309): sees 2 of 5 façade points (27 BC, 44 BC)
+
+**monuments whose --at street camera stands against something or too near**
+
+- aedes_isidis_serapis camera at (-502, -655) so near that the front overfills the frame (27 BC)
+- aedes_mercurii camera at (-120, 730) so near that the front overfills the frame (27 BC, 44 BC)
+- aedes_minervae_aventine camera at (-234, 1168) so near that the front overfills the frame (133 BC)
 
 **F3 ground: 100 m stretches of a Tiber bank with a saw-toothed water line**
 
@@ -814,10 +825,10 @@ meshes (each mesh's triangles clipped into 1 m height bands).
 
 | year | buildings | house_house | house_monument | house_wall | house_street | house_river | house_base | awning_pole | tree_building | tree_street | tree_river | tree_wall | life_solid | stall_street | lamp_smoke |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 509 BC | 2170 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 390 BC | 3983 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 264 BC | 10367 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 133 BC | 19240 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 509 BC | 2171 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 390 BC | 3984 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 264 BC | 10368 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 133 BC | 19241 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | 44 BC | 20707 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | 27 BC | 20357 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
@@ -827,25 +838,48 @@ Monuments drawn in each standard year (`monuments.gd` `state_at`, ported to Pyth
 
 | year | total | building | burnt | standing | standing_scaffold |
 |---|---|---|---|---|---|
-| 509 BC | 66 | 0 | 0 | 66 | 0 |
-| 390 BC | 73 | 0 | 0 | 73 | 0 |
-| 264 BC | 109 | 0 | 0 | 109 | 0 |
-| 133 BC | 152 | 0 | 0 | 152 | 0 |
+| 509 BC | 65 | 0 | 0 | 65 | 0 |
+| 390 BC | 72 | 0 | 0 | 72 | 0 |
+| 264 BC | 108 | 0 | 0 | 108 | 0 |
+| 133 BC | 151 | 0 | 0 | 151 | 0 |
 | 44 BC | 175 | 3 | 1 | 170 | 1 |
 | 27 BC | 185 | 2 | 2 | 181 | 0 |
 | AD 80 | 215 | 0 | 1 | 214 | 0 |
 | AD 120 | 232 | 0 | 1 | 231 | 0 |
 
-### Date issues (0)
+### Date issues (22)
 
+- `aedes_herculis_collina`: no built year (uncertain) but drawn from 509 BC
+- `aedes_herculis_victoris`: no built year (uncertain) but drawn from 509 BC
+- `aedes_larum`: no built year (uncertain) but drawn from 509 BC
+- `aedes_minervae_aventine`: no built year (uncertain) but drawn from 509 BC
+- `aedes_neptuni_flaminium`: no built year (uncertain) but drawn from 509 BC
+- `aedes_portuni`: no built year (uncertain) but drawn from 509 BC
+- `area_sacra_argentina_a`: no built year (uncertain) but drawn from 509 BC
+- `area_sacra_argentina_c`: no built year (uncertain) but drawn from 509 BC
+- `area_sacra_argentina_d`: no built year (uncertain) but drawn from 509 BC
+- `atrium_libertatis`: no built year (probable) but drawn from 509 BC
+- `atrium_vestae`: no built year (uncertain) but drawn from 509 BC
+- `domus_clodii`: no built year (uncertain) but drawn from 509 BC
+- `domus_hortensii_augusti`: no built year (uncertain) but drawn from 509 BC
+- `domus_pompeii_carinae`: no built year (uncertain) but drawn from 509 BC
+- `graecostasis`: no built year (uncertain) but drawn from 509 BC
+- `horrea_galbae`: no built year (uncertain) but drawn from 509 BC
+- `lacus_iuturnae`: no built year (uncertain) but drawn from 509 BC
+- `lacus_servilius`: no built year (uncertain) but drawn from 509 BC
+- `lapis_niger`: no built year (probable) but drawn from 509 BC
+- `navalia`: no built year (uncertain) but drawn from 509 BC
+- `porta_stercoraria`: no built year (uncertain) but drawn from 509 BC
+- `senaculum`: no built year (uncertain) but drawn from 509 BC
 
-### Building years not named in the matched Platner-Ashby article (39)
+### Building years not named in the matched Platner-Ashby article (40)
 
 A pointer to re-read the article, not an error: P-A often gives the date only through the consul's name, or the record's year comes from another source.
 
 | id | our year | P-A entry | years P-A names | note |
 |---|---|---|---|---|
 | aedes_castoris | 484 BC | Castor, aedes, templum | 499 BC, 340 BC, 300 BC, 117 BC, 82 BC, 27 BC | Platner-Ashby: vowed 499, dedicated in 484 |
+| aedes_castoris_circo_flaminio | 100 BC | Castor, aedes, templum | 499 BC, 340 BC, 300 BC, 117 BC, 82 BC, 27 BC |  |
 | aedes_dianae_circus_flaminius | 179 BC | Diana, aedes | 187 BC | Platner-Ashby s.v. Diana, aedes: vowed 187, dedicated 179; the second matched article (the sacellum) is another shrine |
 | aedes_dianae_circus_flaminius | 179 BC | Diana, sacellum | 58 BC | Platner-Ashby s.v. Diana, aedes: vowed 187, dedicated 179; the second matched article (the sacellum) is another shrine |
 | aedes_fidei | 254 BC | Fides, aedes | 715 BC, 250 BC, 115 BC, 43 BC | Platner-Ashby: dedicated by A. Atilius Calatinus in 254 or 250; the record takes 254 |

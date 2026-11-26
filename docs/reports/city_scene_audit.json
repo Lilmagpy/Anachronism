@@ -82,9 +82,9 @@
    "chunk_seams": [],
    "coplanar": [],
    "empty_terraces": [],
-   "f3_ground_seconds": 129.056,
+   "f3_ground_seconds": 277.42,
    "f3_houses": {
-    "buildings": 19240,
+    "buildings": 19241,
     "counts": {
      "awning_pole": 0,
      "house_base": 0,
@@ -101,7 +101,7 @@
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 96.316,
+    "seconds": 155.7,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -119,7 +119,7 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 93.57,
+   "f3_monuments_seconds": 228.598,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -170,11 +170,11 @@
     "aedes_apollinis_medici overlaps porticus_octaviae by 3.0 m"
    ],
    "part_overlaps": [],
-   "parts": 95758,
+   "parts": 94914,
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 378.628,
+   "seconds": 756.288,
    "slopes": [
     {
      "drop": 1.94,
@@ -586,7 +586,7 @@
     }
    ],
    "stair_ends": [],
-   "standing": 152,
+   "standing": 151,
    "streets_ground": [
     "street via_sacra under the ground over 3 m (worst 0.00 m) near (267, 174)",
     "street vicus_iugarius under the ground over 6 m (worst 0.10 m) near (-411, 127)",
@@ -596,6 +596,9 @@
     "street via_praenestina under the ground over 2 m (worst 0.00 m) near (1330, -363)"
    ],
    "streets_through": [],
+   "view_close": [
+    "aedes_minervae_aventine camera at (-234, 1168) so near that the front overfills the frame"
+   ],
    "view_inside": [],
    "view_misses": [],
    "wall_feet": [],
@@ -611,9 +614,9 @@
    "chunk_seams": [],
    "coplanar": [],
    "empty_terraces": [],
-   "f3_ground_seconds": 62.796,
+   "f3_ground_seconds": 108.713,
    "f3_houses": {
-    "buildings": 10367,
+    "buildings": 10368,
     "counts": {
      "awning_pole": 0,
      "house_base": 0,
@@ -630,7 +633,7 @@
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 61.341,
+    "seconds": 109.478,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -648,7 +651,7 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 52.366,
+   "f3_monuments_seconds": 131.154,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -688,11 +691,11 @@
    "meadow_fronts": [],
    "overlaps": [],
    "part_overlaps": [],
-   "parts": 53638,
+   "parts": 52794,
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 210.769,
+   "seconds": 381.724,
    "slopes": [
     {
      "drop": 1.94,
@@ -996,7 +999,7 @@
     }
    ],
    "stair_ends": [],
-   "standing": 109,
+   "standing": 108,
    "streets_ground": [
     "street via_sacra under the ground over 3 m (worst 0.00 m) near (267, 174)",
     "street vicus_tuscus under the ground over 2 m (worst 0.00 m) near (-89, 295)",
@@ -1005,6 +1008,7 @@
     "street via_praenestina under the ground over 2 m (worst 0.01 m) near (1330, -363)"
    ],
    "streets_through": [],
+   "view_close": [],
    "view_inside": [],
    "view_misses": [],
    "wall_feet": [],
@@ -1019,7 +1023,7 @@
    "chunk_seams": [],
    "coplanar": [],
    "empty_terraces": [],
-   "f3_ground_seconds": 142.613,
+   "f3_ground_seconds": 207.097,
    "f3_houses": {
     "buildings": 20357,
     "counts": {
@@ -1038,7 +1042,7 @@
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 101.818,
+    "seconds": 145.12,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -1056,7 +1060,7 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 122.881,
+   "f3_monuments_seconds": 268.743,
    "floating": [],
    "founded": [
     "aedes_apollinis_palatini on a 1.2 m foundation (temple_hexastyle_corinthian_marble)",
@@ -1126,7 +1130,7 @@
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 437.139,
+   "seconds": 730.412,
    "slopes": [
     {
      "drop": 1.21,
@@ -1706,8 +1710,14 @@
     "street via_praenestina under the ground over 2 m (worst 0.00 m) near (1330, -363)"
    ],
    "streets_through": [],
+   "view_close": [
+    "aedes_isidis_serapis camera at (-502, -655) so near that the front overfills the frame",
+    "aedes_mercurii camera at (-120, 730) so near that the front overfills the frame"
+   ],
    "view_inside": [],
-   "view_misses": [],
+   "view_misses": [
+    "area_sacra_argentina_a view from (-636, -309): sees 2 of 5 fa\u00e7ade points"
+   ],
    "wall_feet": [],
    "year": -27,
    "zfight": []
@@ -1721,9 +1731,9 @@
    "chunk_seams": [],
    "coplanar": [],
    "empty_terraces": [],
-   "f3_ground_seconds": 33.549,
+   "f3_ground_seconds": 47.614,
    "f3_houses": {
-    "buildings": 3983,
+    "buildings": 3984,
     "counts": {
      "awning_pole": 0,
      "house_base": 0,
@@ -1740,7 +1750,7 @@
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 50.346,
+    "seconds": 64.901,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -1758,7 +1768,7 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 20.651,
+   "f3_monuments_seconds": 28.192,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -1790,11 +1800,11 @@
    "meadow_fronts": [],
    "overlaps": [],
    "part_overlaps": [],
-   "parts": 29663,
+   "parts": 28819,
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 124.832,
+   "seconds": 162.666,
    "slopes": [
     {
      "drop": 1.94,
@@ -2002,7 +2012,7 @@
     }
    ],
    "stair_ends": [],
-   "standing": 73,
+   "standing": 72,
    "streets_ground": [
     "street clivus_capitolinus under the ground over 2 m (worst -0.00 m) near (-190, 69)",
     "street vicus_tuscus under the ground over 2 m (worst -0.00 m) near (-89, 295)",
@@ -2012,6 +2022,7 @@
     "street via_praenestina under the ground over 2 m (worst 0.03 m) near (1330, -363)"
    ],
    "streets_through": [],
+   "view_close": [],
    "view_inside": [],
    "view_misses": [],
    "wall_feet": [],
@@ -2026,7 +2037,7 @@
    "chunk_seams": [],
    "coplanar": [],
    "empty_terraces": [],
-   "f3_ground_seconds": 148.432,
+   "f3_ground_seconds": 214.759,
    "f3_houses": {
     "buildings": 20707,
     "counts": {
@@ -2045,7 +2056,7 @@
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 101.757,
+    "seconds": 176.632,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -2063,7 +2074,7 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 103.306,
+   "f3_monuments_seconds": 286.291,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -2130,7 +2141,7 @@
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 424.852,
+   "seconds": 804.287,
    "slopes": [
     {
      "drop": 1.94,
@@ -2673,8 +2684,13 @@
     "street via_praenestina under the ground over 2 m (worst 0.00 m) near (1330, -363)"
    ],
    "streets_through": [],
+   "view_close": [
+    "aedes_mercurii camera at (-120, 730) so near that the front overfills the frame"
+   ],
    "view_inside": [],
-   "view_misses": [],
+   "view_misses": [
+    "area_sacra_argentina_a view from (-636, -309): sees 2 of 5 fa\u00e7ade points"
+   ],
    "wall_feet": [],
    "year": -44,
    "zfight": []
@@ -2688,9 +2704,9 @@
    "chunk_seams": [],
    "coplanar": [],
    "empty_terraces": [],
-   "f3_ground_seconds": 30.599,
+   "f3_ground_seconds": 32.274,
    "f3_houses": {
-    "buildings": 2170,
+    "buildings": 2171,
     "counts": {
      "awning_pole": 0,
      "house_base": 0,
@@ -2707,7 +2723,7 @@
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 49.721,
+    "seconds": 56.286,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -2725,7 +2741,7 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 18.661,
+   "f3_monuments_seconds": 22.557,
    "floating": [],
    "founded": [
     "aedes_fortunae_matris_matutae on a 3.2 m foundation (temple_tetrastyle_ionic)",
@@ -2757,11 +2773,11 @@
    "meadow_fronts": [],
    "overlaps": [],
    "part_overlaps": [],
-   "parts": 23746,
+   "parts": 22902,
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 117.295,
+   "seconds": 129.149,
    "slopes": [
     {
      "drop": 3.23,
@@ -2969,7 +2985,7 @@
     }
    ],
    "stair_ends": [],
-   "standing": 66,
+   "standing": 65,
    "streets_ground": [
     "street clivus_capitolinus under the ground over 2 m (worst -0.00 m) near (-190, 69)",
     "street vicus_tuscus under the ground over 2 m (worst -0.00 m) near (-89, 295)",
@@ -2979,6 +2995,7 @@
     "street via_praenestina under the ground over 2 m (worst 0.03 m) near (1330, -363)"
    ],
    "streets_through": [],
+   "view_close": [],
    "view_inside": [],
    "view_misses": [],
    "wall_feet": [],

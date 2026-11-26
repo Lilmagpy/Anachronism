@@ -8073,9 +8073,9 @@
 {
 "bearing_deg": 212,
 "built": {
-"by": "unknown; dedicated 13 August (Fasti)",
+"by": "unknown; dedicated 13 August (Fasti); standing when Vitruvius wrote (4.8.4, about 25 BC) and drawn on the Via Anicia marble plan; about 100 BC is the usual modern dating, given by none of the sources read",
 "certainty": "uncertain",
-"year": null
+"year": -100
 },
 "english": "Temple of Castor (Circus Flaminius)",
 "geometry_source": "form assumed from date and type (no measured plan)",

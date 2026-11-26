@@ -35,9 +35,11 @@ const ROLE_WORDS := {
 	"domus": "A great family's house", "anachronism": "Your idea, built before its time",
 }
 ## Where an interior's panel stands, by the interior kind (interiors.gd kind_of).
-const SPOTS := {"curia": "floor", "temple": "altar", "circus": "pulvinar", "arena": "rostra",
+## F3 monuments: a temple's panel stands in the cella before the god, where the visitor comes in
+## (the altar outside, where sacrifices are made, stays a spot an action may name: "altar").
+const SPOTS := {"curia": "floor", "temple": "cella", "circus": "pulvinar", "arena": "rostra",
 	"domus": "tablinum", "basilica": "tribunal", "theatre": "stage"}
-const SPOT_WORDS := {"floor": "On the floor of the house", "altar": "At the altar", "pulvinar": "In the magistrates' box",
+const SPOT_WORDS := {"floor": "On the floor of the house", "cella": "Before the god", "altar": "At the altar", "pulvinar": "In the magistrates' box",
 	"rostra": "At the Rostra", "tablinum": "In the tablinum", "tribunal": "At the tribunal", "stage": "Before the stage", "": "Here"}
 ## Places whose actions an interior also offers (the Forum's interior has the Rostra at its
 ## "rostra" anchor, and the Comitium beside it).
