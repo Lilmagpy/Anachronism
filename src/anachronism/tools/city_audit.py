@@ -2599,6 +2599,9 @@ F3_HOUSES_KINDS = [
     ("life_solid", "people, stalls or the walkers' and carts' lanes inside a solid"),
     ("stall_street", "stalls in a carriageway, or sunk into or floating over their ground"),
     ("lamp_smoke", "lamps on no wall, kitchen smoke rising from no roof"),
+    ("life_near_mesh", "people near a street camera not drawn as whole figures"),
+    ("life_lean", "people near a street camera leaning more than 5 degrees"),
+    ("life_feet", "people near a street camera with their feet over 5 cm off the drawn ground"),
 ]
 """``audit.gd`` F3 houses kinds: key in ``f3_houses.counts`` and a label for the report."""
 

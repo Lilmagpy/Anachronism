@@ -100,6 +100,17 @@ const REGIONS_PATH := "res://data/city/regions.json"
 ## Walkers nearer than this get a skinned figure; the pool holds `near_figures` of them.
 var near_figures := 32
 var near_distance := 42.0
+## F3 round 4: everyone nearer than this (25 m on the ground, and the eye's height) gets a
+## skinned figure whatever the pool's size (up to FULL_EXTRA more than near_figures): in the
+## Forum's crowd the 33rd person 10 m off was drawn as the level-1 walker. Up to ~200 people
+## stand within 25 m of the Forum's middle in 44 and 27 BC.
+const FULL_M := 26.0
+const FULL_EXTRA := 240
+## F3 round 4: a camera that moved more than this since the last tick jumped (a teleport, a new
+## pose): the whole LOD pass runs at once instead of over LOD_PHASES frames. The sweep's and the
+## ground audit's views were taken within those frames, and the people 3-8 m from the camera
+## were the far level's walker (a kite with a ball on top) chosen from the camera's last place.
+const JUMP_M := 30.0
 ## MultiMesh levels: the detailed walker (with shadows) to near_mm_distance, the middle one to
 ## mid_distance, the far one to cull_distance, nothing beyond.
 var near_mm_distance := 75.0
@@ -148,7 +159,9 @@ var _figs: Array = []              # [{node, kind, agent}]
 var _figs_saved := -1              # near_figures before set_spectacle(true)
 var _fig_free: Array[int] = []
 var _cam := Vector3(1e9, 0, 1e9)
+var _tick_cam := Vector3(1e9, 0, 1e9)   ## F3 round 4: the camera at the last tick
 var _lod_timer := 0.0
+var _ground: UrbsWalkGround = null       ## F3 round 4: what is drawn under the feet
 var _lamps: PackedVector3Array = PackedVector3Array()
 var _lamp_posts: PackedVector3Array = PackedVector3Array()   ## F3: the feet of the lamps on posts
 var _lights: Array[OmniLight3D] = []
@@ -198,6 +211,8 @@ func build(urbs_node: Node3D, new_year: int, new_hour: float, height_fn: Callabl
 		_street_h.append(hs)
 	_link_streets()
 	_find_forum()
+	# F3 round 4: the feet on the drawn strips, pavings and ground (not the height field + 0.22)
+	_ground = UrbsWalkGround.new(urbs.streets.get("_root") if urbs.streets != null else null, urbs.monuments, height)
 	# what people must not stand in: the monuments' real solids (UrbsMonuments.solid_boxes),
 	# not plazas or routes (no bounds), not steps and low platforms (1.3 m or less)
 	_blockers.clear()
@@ -1635,7 +1650,13 @@ func tick(delta: float, cam_pos: Vector3) -> void:
 	if _smoke_mat != null:
 		_smoke_mat.set_shader_parameter("clock", _clock)
 	_lod_timer += delta
-	if _lod_phase >= 0:
+	var jumped := cam_pos.distance_to(_tick_cam) > JUMP_M
+	_tick_cam = cam_pos
+	if jumped:   # F3 round 4: a teleport: the whole LOD pass now, from where the camera is
+		_lod_timer = 0.0
+		_cam = cam_pos
+		_update_lod(cam_pos)
+	elif _lod_phase >= 0:
 		_lod_step()
 	elif _lod_timer > 1.2 or cam_pos.distance_to(_cam) > 12.0:
 		_lod_timer = 0.0
@@ -1680,7 +1701,25 @@ func _step(i: int, dt: float, exact := true) -> void:
 		_:
 			if int(a["lod"]) != 0:
 				return
+	if exact:
+		_settle(a)
 	_write(i, a)
+
+
+## F3 round 4: put agent `a`'s feet on what is drawn under them (UrbsWalkGround.top), from the
+## estimate its mode wrote into pos.y (the height field + 0.22 on a street, the Forum's level +
+## 0.15 on the plaza), read afresh at each step (an offset kept over 0.1-0.35 m of walking left
+## the feet 10-14 cm off at a strip's edge, and cost no less); a pos already settled and not
+## rewritten since is left alone.
+func _settle(a: Dictionary) -> void:
+	if _ground == null or a.get("rig", false):
+		return
+	var p: Vector3 = a["pos"]
+	if p.y == float(a.get("g_fix", INF)):
+		return
+	p.y = _ground.top(Vector2(p.x, p.z), p.y)
+	a["pos"] = p
+	a["g_fix"] = p.y
 
 
 func _step_street(a: Dictionary, dt: float, exact := true) -> void:
@@ -1886,7 +1925,7 @@ func _lod_apply_figures() -> void:
 	for item in _lod_near:
 		var i: int = item[1]
 		var a := _agents[i]
-		if given >= near_figures:
+		if given >= near_figures and (near_figures == 0 or _figs_saved >= 0 or float(item[0]) >= FULL_M * FULL_M):
 			if int(a["fig"]) >= 0:
 				_release_fig(i)
 			a["lod"] = 1
@@ -1913,6 +1952,8 @@ func _lod_apply_lists() -> void:
 		if lod == HIDDEN:
 			continue
 		var moving := str(a["mode"]) != "stand"
+		if lod <= 1:
+			_settle(a)   # F3 round 4: the near ones' feet on the drawn ground
 		if lod == 0:
 			_write(i, a)
 			if moving:
@@ -1978,7 +2019,7 @@ func _take_fig(kind: String, a: Dictionary) -> int:
 			pick = k
 			break
 	if pick < 0:
-		if _figs.size() < near_figures + 6:
+		if _figs.size() < near_figures + FULL_EXTRA:
 			_figs.append({"node": null, "kind": kind, "agent": -1})
 			pick = _figs.size() - 1
 		else:

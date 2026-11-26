@@ -51,6 +51,13 @@ func _initialize() -> void:
 	_streets.load_data(_year)
 	for id in _mon.ids():
 		_obbs[id] = _solid_obbs(id)
+	if args.has("f3-life-near"):   # F3 houses round 4: only the people near a street camera (fast)
+		_f3_index_monuments()
+		_f3_lay_fill(height, radius)
+		_f3_check_life_near(height)
+		print("URBS_AUDIT " + JSON.stringify({"year": {"year": _year, "f3_houses": _f3_report()}}))
+		quit()
+		return
 	var out := {
 		"year": {
 			"year": _year,
@@ -424,6 +431,11 @@ func _terrain() -> Array:
 #                    monument's solid or a building
 #   stall_street     a stall in a carriageway, or sunk into or floating over its footway
 #   lamp_smoke       a lamp not on a wall, or kitchen smoke not rising from a roof
+#   life_near_mesh   a person within F3_NEAR_M of a street camera, the first frame after the camera
+#                    jumped there, not drawn as a skinned figure (the far levels' walkers)
+#   life_lean        such a figure (its body or its torso) leaning more than F3_LEAN_DEG
+#   life_feet        such a person's feet more than F3_FEET_M off what is drawn under them
+#                    (UrbsWalkGround: the street strips, the pavings, the drawn ground)
 # =============================================================================================
 
 const F3_BAND := 1.0
@@ -431,7 +443,11 @@ const F3_NB := 24
 const F3_KEEP := 60
 const F3_BUILDINGS := ["insula", "domus", "casa", "taberna", "workshop", "horrea", "horti", "tomb", "farm"]
 const F3_KINDS := ["house_house", "house_monument", "house_wall", "house_street", "house_river", "house_base",
-	"awning_pole", "shop_alone", "tree_building", "tree_street", "tree_river", "tree_wall", "life_solid", "stall_street", "lamp_smoke"]
+	"awning_pole", "shop_alone", "tree_building", "tree_street", "tree_river", "tree_wall", "life_solid", "stall_street", "lamp_smoke",
+	"life_near_mesh", "life_lean", "life_feet"]
+const F3_NEAR_M := 25.0       ## the people this near a street camera must be whole figures
+const F3_LEAN_DEG := 5.0
+const F3_FEET_M := 0.05
 const F3_TOL := 0.2            ## interpenetration below this is two walls touching
 const F3_CART_HW := 1.05       ## half the width of an ox cart with its pair of oxen (life.gd)
 const F3_AWNING_OUT := 1.2     ## = UrbsFillParts.AWNING_OUT: awning poles stand on the footway
@@ -482,6 +498,7 @@ func _f3_houses(height: Callable, radius: float) -> Dictionary:
 	_f3_check_site_walls()
 	_f3_check_trees(radius)
 	_f3_check_life(height)
+	_f3_check_life_near(height)
 	var rep := _f3_report()
 	var dump := ""
 	for a in OS.get_cmdline_user_args():
@@ -1059,6 +1076,83 @@ func _f3_check_life(height: Callable) -> void:
 		life.build(fake, _year, hour, height)
 		_f3_check_life_once(life, hour)
 		fake.queue_free()
+
+
+## F3 round 4: the people near a street camera, the first frame after it jumped there from 2 km
+## off (as the sweep, the ground audit's views and a teleport do): whole figures, upright, their
+## feet on what is drawn. The life is built as urbs.gd builds it (32 figures, the streets drawn);
+## the stands are the Via Sacra and the Vicus Iugarius by the Forum, the Forum's middle and the
+## twelve busiest 25 m squares of the city.
+func _f3_check_life_near(height: Callable) -> void:
+	var root := Node3D.new()
+	get_root().add_child(root)
+	var st := UrbsStreets.new()
+	st.build(root, _year, height)
+	var fake := F3Urbs.new()
+	fake.streets = st
+	fake.monuments = _mon
+	fake.fill = _f3_fill
+	root.add_child(fake)
+	var life := UrbsLife.new()
+	life.auto_tick = false
+	fake.add_child(life)
+	life.build(fake, _year, 10.0, height)
+	var probe := UrbsWalkGround.new(st.get("_root"), _mon, height)
+	var stands: Array = [Vector2(267, 174), Vector2(-411, 127)]
+	var fo: Dictionary = life.get("_forum") if life.get("_forum") != null else {}
+	if fo.has("c"):
+		stands.append(fo["c"])
+	var cells := {}
+	for a in life._agents:
+		if not bool(a["active"]) or bool(a["dog"]) or a.get("rig", false):
+			continue
+		var p: Vector3 = a["pos"]
+		var key := Vector2i(floori(p.x / F3_NEAR_M), floori(p.z / F3_NEAR_M))
+		if not cells.has(key):
+			cells[key] = [0, Vector2.ZERO]
+		cells[key][0] += 1
+		cells[key][1] += Vector2(p.x, p.z)
+	var keys := cells.keys()
+	keys.sort_custom(func(x: Vector2i, y: Vector2i) -> bool: return int(cells[x][0]) > int(cells[y][0]) or (int(cells[x][0]) == int(cells[y][0]) and (x.x < y.x or (x.x == y.x and x.y < y.y))))
+	for key in keys.slice(0, 12):
+		stands.append((cells[key][1] as Vector2) / float(cells[key][0]))
+	var seen := {}
+	var per: Array = []
+	for s: Vector2 in stands:
+		per.append(0)
+		var eye := Vector3(s.x, float(height.call(s.x, s.y)) + 1.7, s.y)
+		life.tick(1.0 / 30.0, eye + Vector3(2000.0, 0.0, 0.0))   # the camera elsewhere
+		life.tick(1.0 / 30.0, eye)                               # jumped here: this frame is drawn
+		for i in life._agents.size():
+			var a: Dictionary = life._agents[i]
+			if not bool(a["active"]) or bool(a["dog"]) or a.get("rig", false) or seen.has(i):
+				continue
+			var lod := int(a["lod"])
+			var node: Node3D = null
+			if lod == 0 and int(a["fig"]) >= 0:
+				node = life._figs[int(a["fig"])]["node"]
+			var feet: Vector3 = node.position if node != null else (a["pos"] as Vector3)
+			var dist := Vector2(feet.x - eye.x, feet.z - eye.z).length()
+			if dist > F3_NEAR_M:
+				continue
+			seen[i] = true
+			per[per.size() - 1] += 1
+			var tag := "%s person (%s) %.0f m from the camera at (%.0f, %.0f)" % [str(a["kind"]), str(a["mode"]), dist, feet.x, feet.z]
+			if node == null:
+				_f3_note("life_near_mesh", F3_NEAR_M - dist, "%s drawn as %s" % [tag, "nothing" if lod == UrbsLife.HIDDEN else "the level-%d walker" % lod])
+			else:
+				var lean := rad_to_deg(node.transform.basis.y.normalized().angle_to(Vector3.UP))
+				var torso: Variant = node.get("torso")
+				if torso is Node3D:
+					var tx := UrbsWalkGround._xf(torso as Node3D)
+					lean = maxf(lean, rad_to_deg(tx.basis.y.normalized().angle_to(Vector3.UP)))
+				if lean > F3_LEAN_DEG:
+					_f3_note("life_lean", lean, "%s leaning %.0f degrees" % [tag, lean])
+			var top := probe.top(Vector2(feet.x, feet.z), feet.y)
+			if absf(feet.y - top) > F3_FEET_M:
+				_f3_note("life_feet", absf(feet.y - top), "%s with the feet %.2f m %s what is drawn" % [tag, absf(feet.y - top), "over" if feet.y > top else "under"])
+	print("F3_LIFE_NEAR %d stands, %d people within %.0f m %s" % [stands.size(), seen.size(), F3_NEAR_M, per])
+	root.queue_free()
 
 
 ## A point inside a building's walls (between y0 and y1 above the ground): the building, or {}.
