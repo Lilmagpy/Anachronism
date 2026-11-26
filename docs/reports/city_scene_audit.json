@@ -84,55 +84,49 @@
     "area_sacra_argentina_c: 12 coplanar face pairs, largest 0.2 m\u00b2 (stucco_white/tegulae, facing x) at (-695.8, -249.8) y 20.4",
     "villa_publica: 19 coplanar face pairs, largest 0.4 m\u00b2 (stucco_cream/stucco_white, facing z) at (-825.1, -691.8) y 18.0"
    ],
-   "empty_terraces": [],
-   "f3_ground_seconds": 32.931,
+   "empty_terraces": [
+    "terrace walls across empty ground near (-3, -213): 19 m",
+    "terrace walls across empty ground near (273, 147): 11 m",
+    "terrace walls across empty ground near (605, 46): 9 m"
+   ],
+   "f3_ground_seconds": 130.355,
    "f3_houses": {
-    "buildings": 19342,
+    "buildings": 19238,
     "counts": {
+     "awning_pole": 0,
      "house_base": 0,
-     "house_house": 1,
-     "house_monument": 3,
+     "house_house": 0,
+     "house_monument": 0,
      "house_river": 0,
-     "house_street": 4,
-     "house_wall": 2,
+     "house_street": 0,
+     "house_wall": 0,
      "lamp_smoke": 0,
      "life_solid": 0,
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
-     "tree_street": 0
+     "tree_street": 0,
+     "tree_wall": 0
     },
-    "seconds": 62.198,
+    "seconds": 96.891,
     "worst": {
+     "awning_pole": [],
      "house_base": [],
-     "house_house": [
-      "taberna:4@470,-380 overlaps domus:1@477,-360 by 0.2 m (8 m up)"
-     ],
-     "house_monument": [
-      "casa:tile@128,227 inside domus_cn_octavii by 3.0 m",
-      "taberna:4@-141,-250 inside auguraculum by 2.0 m",
-      "casa:tile@121,226 inside domus_cn_octavii by 1.6 m"
-     ],
+     "house_house": [],
+     "house_monument": [],
      "house_river": [],
-     "house_street": [
-      "taberna:1@433,315 on the footway of via_inter_palatium_caelium by 1.4 m",
-      "taberna:0@-229,408 on the footway of via_velabrum by 1.4 m",
-      "taberna:1@-43,153 on the footway of vicus_tuscus by 1.4 m",
-      "taberna:2@-31,139 on the footway of vicus_tuscus by 1.4 m"
-     ],
-     "house_wall": [
-      "taberna:4@730,-444 has the site works (Works) 0.9 m above its floor inside it",
-      "insula:stepped:3:0:0@1182,-1093 has a terrace wall 0.3 m above its floor inside it"
-     ],
+     "house_street": [],
+     "house_wall": [],
      "lamp_smoke": [],
      "life_solid": [],
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
-     "tree_street": []
+     "tree_street": [],
+     "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 40.904,
+   "f3_monuments_seconds": 58.785,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -175,6 +169,7 @@
    "interior_figures": [],
    "interior_missing": [],
    "interior_voids": [],
+   "meadow_fronts": [],
    "overlaps": [
     "aedes_apollinis_medici overlaps porticus_octaviae by 3.0 m",
     "circus_maximus overlaps sacellum_murciae by 5.1 m"
@@ -186,7 +181,7 @@
    ],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 173.129,
+   "seconds": 333.153,
    "slopes": [
     {
      "drop": 1.94,
@@ -587,16 +582,15 @@
    "view_inside": [],
    "view_misses": [
     "aedes_pietatis view from (-468, 20): aedes_apollinis_medici across the line to the door",
-    "atrium_libertatis view from (-56, -245): stands 110\u00b0 off the front axis",
     "columna_maenia view from (-50, -75): stands 110\u00b0 off the front axis",
     "comitium view from (15, -16): stands 110\u00b0 off the front axis, rostra_republic across the line to the door",
-    "domus_cn_octavii view from (99, 228): stands 80\u00b0 off the front axis",
-    "porta_caelimontana view from (896, 609): stands 80\u00b0 off the front axis",
     "porta_flumentana view from (-588, 53): stands 110\u00b0 off the front axis",
     "porta_quirinalis view from (471, -1111): stands 80\u00b0 off the front axis",
+    "porta_salutaris view from (159, -758): a house or the ground across the line to the door",
     "porticus_inter_lignarios view from (-465, 646): stands 110\u00b0 off the front axis",
     "sacellum_murciae view from (192, 914): a house or the ground across the line to the door"
    ],
+   "wall_feet": [],
    "year": -133,
    "zfight": []
   },
@@ -611,43 +605,47 @@
     "area_sacra_argentina_c: 12 coplanar face pairs, largest 0.2 m\u00b2 (stucco_white/tegulae, facing x) at (-695.8, -249.8) y 20.4",
     "villa_publica: 17 coplanar face pairs, largest 0.4 m\u00b2 (stucco_cream/stucco_white, facing z) at (-825.1, -691.8) y 18.0"
    ],
-   "empty_terraces": [],
-   "f3_ground_seconds": 21.368,
+   "empty_terraces": [
+    "terrace walls across empty ground near (273, 147): 9 m"
+   ],
+   "f3_ground_seconds": 64.682,
    "f3_houses": {
-    "buildings": 10366,
+    "buildings": 10368,
     "counts": {
+     "awning_pole": 0,
      "house_base": 0,
      "house_house": 0,
      "house_monument": 0,
      "house_river": 0,
      "house_street": 0,
-     "house_wall": 1,
+     "house_wall": 0,
      "lamp_smoke": 0,
      "life_solid": 0,
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
-     "tree_street": 0
+     "tree_street": 0,
+     "tree_wall": 0
     },
-    "seconds": 43.506,
+    "seconds": 62.603,
     "worst": {
+     "awning_pole": [],
      "house_base": [],
      "house_house": [],
      "house_monument": [],
      "house_river": [],
      "house_street": [],
-     "house_wall": [
-      "taberna:3@725,-443 has the site works (Works) 0.7 m above its floor inside it"
-     ],
+     "house_wall": [],
      "lamp_smoke": [],
      "life_solid": [],
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
-     "tree_street": []
+     "tree_street": [],
+     "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 21.84,
+   "f3_monuments_seconds": 32.373,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -681,6 +679,7 @@
    "interior_figures": [],
    "interior_missing": [],
    "interior_voids": [],
+   "meadow_fronts": [],
    "overlaps": [
     "circus_maximus overlaps sacellum_murciae by 5.1 m"
    ],
@@ -689,7 +688,7 @@
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 110.032,
+   "seconds": 184.944,
    "slopes": [
     {
      "drop": 1.94,
@@ -984,9 +983,9 @@
     "porta_caelimontana view from (917, 614): stands 110\u00b0 off the front axis",
     "porta_flumentana view from (-588, 53): stands 110\u00b0 off the front axis",
     "porta_quirinalis view from (439, -1071): stands 80\u00b0 off the front axis",
-    "porta_trigemina view from (-440, 532): stands 80\u00b0 off the front axis",
     "sacellum_murciae view from (192, 914): a house or the ground across the line to the door"
    ],
+   "wall_feet": [],
    "year": -264,
    "zfight": []
   },
@@ -1002,59 +1001,49 @@
     "porticus_philippi: 22 coplanar face pairs, largest 0.4 m\u00b2 (stucco_cream/stucco_white, facing x) at (-667.6, -133.2) y 18.4",
     "villa_publica: 19 coplanar face pairs, largest 0.4 m\u00b2 (stucco_cream/stucco_white, facing z) at (-825.1, -691.8) y 18.0"
    ],
-   "empty_terraces": [],
-   "f3_ground_seconds": 36.893,
+   "empty_terraces": [
+    "terrace walls across empty ground near (-3, -213): 30 m",
+    "terrace walls across empty ground near (273, 147): 11 m",
+    "terrace walls across empty ground near (605, 46): 9 m"
+   ],
+   "f3_ground_seconds": 151.613,
    "f3_houses": {
-    "buildings": 20318,
+    "buildings": 20356,
     "counts": {
+     "awning_pole": 0,
      "house_base": 0,
-     "house_house": 2,
-     "house_monument": 1,
+     "house_house": 0,
+     "house_monument": 0,
      "house_river": 0,
-     "house_street": 4,
-     "house_wall": 4,
+     "house_street": 0,
+     "house_wall": 0,
      "lamp_smoke": 0,
      "life_solid": 0,
      "stall_street": 0,
-     "tree_building": 2,
+     "tree_building": 0,
      "tree_river": 0,
-     "tree_street": 0
+     "tree_street": 0,
+     "tree_wall": 0
     },
-    "seconds": 67.559,
+    "seconds": 108.117,
     "worst": {
+     "awning_pole": [],
      "house_base": [],
-     "house_house": [
-      "taberna:3@977,-407 overlaps casa:tile@977,-414 by 0.3 m (5 m up)",
-      "taberna:4@470,-380 overlaps domus:1@477,-360 by 0.2 m (8 m up)"
-     ],
-     "house_monument": [
-      "taberna:4@-141,-250 inside auguraculum by 2.0 m"
-     ],
+     "house_house": [],
+     "house_monument": [],
      "house_river": [],
-     "house_street": [
-      "taberna:1@433,315 on the footway of via_inter_palatium_caelium by 1.4 m",
-      "taberna:0@-229,408 on the footway of via_velabrum by 1.4 m",
-      "domus@862,-414 on the footway of clivus_suburanus by 1.4 m",
-      "taberna:2@-31,139 on the footway of vicus_tuscus by 1.4 m"
-     ],
-     "house_wall": [
-      "taberna:4@730,-444 has the site works (Works) 0.9 m above its floor inside it",
-      "insula:stepped:3:0:0@1182,-1093 has a terrace wall 0.3 m above its floor inside it",
-      "insula:hip:4:0:0:n@1041,-1256 has a terrace wall 0.2 m above its floor inside it",
-      "casa:tile@393,1026 has a terrace wall 0.1 m above its floor inside it"
-     ],
+     "house_street": [],
+     "house_wall": [],
      "lamp_smoke": [],
      "life_solid": [],
      "stall_street": [],
-     "tree_building": [
-      "pine tree at (1296, -182): trunk inside auditorium_maecenatis",
-      "pine tree at (1296, -182) (lod 1): trunk inside auditorium_maecenatis"
-     ],
+     "tree_building": [],
      "tree_river": [],
-     "tree_street": []
+     "tree_street": [],
+     "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 55.897,
+   "f3_monuments_seconds": 89.9,
    "floating": [],
    "founded": [
     "aedes_apollinis_palatini on a 1.2 m foundation (temple_hexastyle_corinthian_marble)",
@@ -1112,6 +1101,7 @@
    ],
    "interior_missing": [],
    "interior_voids": [],
+   "meadow_fronts": [],
    "overlaps": [
     "aedes_apollinis_medici overlaps porticus_octaviae by 3.0 m",
     "aedes_concordiae_forum overlaps tabularium by 3.7 m",
@@ -1125,7 +1115,7 @@
    ],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 204.69,
+   "seconds": 420.247,
    "slopes": [
     {
      "drop": 1.21,
@@ -1691,16 +1681,17 @@
     "area_sacra_argentina_b view from (-674, -269): stands 80\u00b0 off the front axis",
     "curia_iulia view from (36, -4): basilica_aemilia across the line to the door",
     "domus_scauri view from (188, 260): stands 80\u00b0 off the front axis",
-    "horrea_agrippiana view from (-80, 245): sees 2 of 5 fa\u00e7ade points, a house or the ground across the line to the door",
-    "porta_caelimontana view from (896, 609): stands 80\u00b0 off the front axis",
+    "horrea_agrippiana view from (-71, 182): stands 80\u00b0 off the front axis",
     "porta_flumentana view from (-588, 53): stands 110\u00b0 off the front axis",
     "porta_quirinalis view from (471, -1111): stands 80\u00b0 off the front axis",
+    "porta_salutaris view from (159, -758): a house or the ground across the line to the door",
     "porticus_catuli view from (-7, 244): stands 110\u00b0 off the front axis",
     "porticus_inter_lignarios view from (-465, 646): stands 110\u00b0 off the front axis",
     "sacellum_murciae view from (192, 914): a house or the ground across the line to the door",
     "saepta_iulia view from (-413, -715): stands 80\u00b0 off the front axis",
     "tabularium view from (-91, -8): sees 2 of 5 fa\u00e7ade points, aedes_saturni across the line to the door"
    ],
+   "wall_feet": [],
    "year": -27,
    "zfight": []
   },
@@ -1716,43 +1707,44 @@
     "villa_publica: 17 coplanar face pairs, largest 0.4 m\u00b2 (stucco_cream/stucco_white, facing z) at (-825.1, -691.8) y 18.0"
    ],
    "empty_terraces": [],
-   "f3_ground_seconds": 14.858,
+   "f3_ground_seconds": 33.217,
    "f3_houses": {
-    "buildings": 3990,
+    "buildings": 3983,
     "counts": {
+     "awning_pole": 0,
      "house_base": 0,
      "house_house": 0,
      "house_monument": 0,
      "house_river": 0,
      "house_street": 0,
-     "house_wall": 2,
+     "house_wall": 0,
      "lamp_smoke": 0,
      "life_solid": 0,
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
-     "tree_street": 0
+     "tree_street": 0,
+     "tree_wall": 0
     },
-    "seconds": 36.832,
+    "seconds": 50.214,
     "worst": {
+     "awning_pole": [],
      "house_base": [],
      "house_house": [],
      "house_monument": [],
      "house_river": [],
      "house_street": [],
-     "house_wall": [
-      "casa:thatch@296,210 has the site works (Works) 0.3 m above its floor inside it",
-      "domus@211,260 has the site works (Works) 0.3 m above its floor inside it"
-     ],
+     "house_wall": [],
      "lamp_smoke": [],
      "life_solid": [],
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
-     "tree_street": []
+     "tree_street": [],
+     "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 13.097,
+   "f3_monuments_seconds": 16.97,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -1780,6 +1772,7 @@
    "interior_figures": [],
    "interior_missing": [],
    "interior_voids": [],
+   "meadow_fronts": [],
    "overlaps": [
     "circus_maximus overlaps sacellum_murciae by 5.1 m"
    ],
@@ -1788,7 +1781,7 @@
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 79.153,
+   "seconds": 113.119,
    "slopes": [
     {
      "drop": 1.94,
@@ -2010,6 +2003,7 @@
    "view_misses": [
     "sacellum_murciae view from (192, 914): a house or the ground across the line to the door"
    ],
+   "wall_feet": [],
    "year": -390,
    "zfight": []
   },
@@ -2024,57 +2018,49 @@
     "porticus_minucia_vetus: 12 coplanar face pairs, largest 0.4 m\u00b2 (stucco_cream/stucco_white, facing x) at (-616.2, -290.1) y 19.7",
     "villa_publica: 19 coplanar face pairs, largest 0.4 m\u00b2 (stucco_cream/stucco_white, facing z) at (-825.1, -691.8) y 18.0"
    ],
-   "empty_terraces": [],
-   "f3_ground_seconds": 37.699,
+   "empty_terraces": [
+    "terrace walls across empty ground near (-3, -213): 30 m",
+    "terrace walls across empty ground near (273, 147): 11 m",
+    "terrace walls across empty ground near (605, 46): 9 m"
+   ],
+   "f3_ground_seconds": 151.723,
    "f3_houses": {
-    "buildings": 20661,
+    "buildings": 20706,
     "counts": {
+     "awning_pole": 0,
      "house_base": 0,
-     "house_house": 2,
-     "house_monument": 1,
+     "house_house": 0,
+     "house_monument": 0,
      "house_river": 0,
-     "house_street": 5,
-     "house_wall": 4,
+     "house_street": 0,
+     "house_wall": 0,
      "lamp_smoke": 0,
      "life_solid": 0,
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
-     "tree_street": 0
+     "tree_street": 0,
+     "tree_wall": 0
     },
-    "seconds": 66.1,
+    "seconds": 106.809,
     "worst": {
+     "awning_pole": [],
      "house_base": [],
-     "house_house": [
-      "taberna:3@977,-407 overlaps casa:tile@977,-414 by 0.3 m (5 m up)",
-      "taberna:4@470,-380 overlaps domus:1@477,-360 by 0.2 m (8 m up)"
-     ],
-     "house_monument": [
-      "taberna:4@-141,-250 inside auguraculum by 2.0 m"
-     ],
+     "house_house": [],
+     "house_monument": [],
      "house_river": [],
-     "house_street": [
-      "taberna:1@433,315 on the footway of via_inter_palatium_caelium by 1.4 m",
-      "taberna:0@-229,408 on the footway of via_velabrum by 1.4 m",
-      "domus@862,-414 on the footway of clivus_suburanus by 1.4 m",
-      "taberna:1@-43,153 on the footway of vicus_tuscus by 1.4 m",
-      "taberna:2@-31,139 on the footway of vicus_tuscus by 1.4 m"
-     ],
-     "house_wall": [
-      "taberna:4@730,-444 has the site works (Works) 0.9 m above its floor inside it",
-      "insula:stepped:3:0:0@1182,-1093 has a terrace wall 0.3 m above its floor inside it",
-      "insula:hip:4:0:0:n@1041,-1256 has a terrace wall 0.2 m above its floor inside it",
-      "casa:tile@393,1026 has a terrace wall 0.1 m above its floor inside it"
-     ],
+     "house_street": [],
+     "house_wall": [],
      "lamp_smoke": [],
      "life_solid": [],
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
-     "tree_street": []
+     "tree_street": [],
+     "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 49.441,
+   "f3_monuments_seconds": 78.531,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -2127,6 +2113,7 @@
    "interior_figures": [],
    "interior_missing": [],
    "interior_voids": [],
+   "meadow_fronts": [],
    "overlaps": [
     "aedes_apollinis_medici overlaps porticus_octaviae by 3.0 m",
     "aedes_concordiae_forum overlaps tabularium by 3.7 m",
@@ -2140,7 +2127,7 @@
    ],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 195.964,
+   "seconds": 412.426,
    "slopes": [
     {
      "drop": 1.94,
@@ -2669,15 +2656,16 @@
     "area_sacra_argentina_b view from (-674, -269): stands 80\u00b0 off the front axis",
     "basilica_iulia view from (49, 41): stands 80\u00b0 off the front axis",
     "domus_scauri view from (188, 260): stands 80\u00b0 off the front axis",
-    "porta_caelimontana view from (896, 609): stands 80\u00b0 off the front axis",
     "porta_flumentana view from (-588, 53): stands 110\u00b0 off the front axis",
     "porta_quirinalis view from (471, -1111): stands 80\u00b0 off the front axis",
+    "porta_salutaris view from (159, -758): a house or the ground across the line to the door",
     "porticus_catuli view from (15, 243): stands 110\u00b0 off the front axis",
     "porticus_inter_lignarios view from (-465, 646): stands 110\u00b0 off the front axis",
     "sacellum_murciae view from (192, 914): a house or the ground across the line to the door",
     "saepta_iulia view from (-413, -715): stands 80\u00b0 off the front axis",
     "tabularium view from (-98, -12): sees 2 of 5 fa\u00e7ade points, aedes_saturni across the line to the door"
    ],
+   "wall_feet": [],
    "year": -44,
    "zfight": []
   },
@@ -2691,44 +2679,47 @@
    "coplanar": [
     "area_sacra_argentina_c: 12 coplanar face pairs, largest 0.2 m\u00b2 (stucco_white/tegulae, facing x) at (-695.8, -249.8) y 20.4"
    ],
-   "empty_terraces": [],
-   "f3_ground_seconds": 14.883,
+   "empty_terraces": [
+    "terrace walls across empty ground near (273, 147): 14 m"
+   ],
+   "f3_ground_seconds": 32.736,
    "f3_houses": {
-    "buildings": 2173,
+    "buildings": 2170,
     "counts": {
+     "awning_pole": 0,
      "house_base": 0,
      "house_house": 0,
      "house_monument": 0,
      "house_river": 0,
      "house_street": 0,
-     "house_wall": 2,
+     "house_wall": 0,
      "lamp_smoke": 0,
      "life_solid": 0,
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
-     "tree_street": 0
+     "tree_street": 0,
+     "tree_wall": 0
     },
-    "seconds": 35.427,
+    "seconds": 51.899,
     "worst": {
+     "awning_pole": [],
      "house_base": [],
      "house_house": [],
      "house_monument": [],
      "house_river": [],
      "house_street": [],
-     "house_wall": [
-      "casa:thatch@296,210 has the site works (Works) 0.3 m above its floor inside it",
-      "domus@211,260 has the site works (Works) 0.3 m above its floor inside it"
-     ],
+     "house_wall": [],
      "lamp_smoke": [],
      "life_solid": [],
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
-     "tree_street": []
+     "tree_street": [],
+     "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 10.896,
+   "f3_monuments_seconds": 16.493,
    "floating": [],
    "founded": [
     "aedes_fortunae_matris_matutae on a 3.2 m foundation (temple_tetrastyle_ionic)",
@@ -2756,6 +2747,7 @@
    "interior_figures": [],
    "interior_missing": [],
    "interior_voids": [],
+   "meadow_fronts": [],
    "overlaps": [
     "circus_maximus overlaps sacellum_murciae by 5.1 m"
    ],
@@ -2764,7 +2756,7 @@
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 73.84,
+   "seconds": 111.9,
    "slopes": [
     {
      "drop": 3.23,
@@ -2986,6 +2978,7 @@
    "view_misses": [
     "sacellum_murciae view from (192, 914): a house or the ground across the line to the door"
    ],
+   "wall_feet": [],
    "year": -509,
    "zfight": []
   }
