@@ -1,0 +1,815 @@
+schema_version: 1
+# Chronicle mode for rome_49: from the crossing of the Rubicon (49 BC) to the settlement of 27 BC.
+# The player's Rome is the Republic (Senate, consuls, Pompey as its general); Caesar is e1_caesar.
+# VERIFIED: every fact in a story/history was checked against a text actually read (cached in
+# /tmp/claude-0/verify_fasti/): Caesar, Civil War 1-3 (Wikisource, McDevitte translation); Suetonius, Divus Iulius and
+# Augustus; Plutarch (Caesar, Pompey, Crassus, Brutus, Antony) on LacusCurtius; Appian, Civil Wars 2 and 4, and
+# Mithridatic Wars; Cassius Dio 40-53 on LacusCurtius (his consul tables give the years). Each chapter's `sources`
+# says what was read. Dates the texts do not give (month and day of the battles, Munda, the Ides) are marked as
+# cross-checked on Wikipedia only, never cited. Anything unread is marked "verified: no" and kept out of the story.
+chapters:
+  - id: r49_rubicon
+    scenario: rome_49
+    civ: rome
+    year: -49
+    title: "The Letter and the River"
+    place: "The Senate House, Rome"
+    speaker: ruler
+    story: >-
+      The consuls of the year, Lucius Lentulus and Gaius Claudius Marcellus, did not want to read Caesar's letter; the
+      tribunes Antony and Cassius made them. It lists the benefits he has conferred on the Republic. In the Senate Lentulus says that if the senators waver and court Caesar, he will take a course of
+      his own and not obey the Senate. Scipio says that Pompey will not abandon the Republic if the Senate backs him.
+
+
+      Marcus Calidius proposes that Pompey go to his own province so that there will be no cause for arms: Caesar fears
+      that Pompey keeps the two legions taken from him near the city. Lentulus rebukes him and refuses to put the motion.
+      Most of the senators vote under threat of the army. The tribunes leave the city.
+    choices:
+      - label: "Refuse the terms and order Caesar to disband by a fixed day"
+        historical: true
+        wealth_bp: -800
+        unrest_bp: 800
+        legitimacy_bp: -300
+        influence: {nobility: 400}
+        outcome: >-
+          The Senate puts through the harsher terms. Caesar overtakes his cohorts at the Rubicon, the boundary of his province,
+          and says: "Even yet we may draw back; but once cross yon little bridge, and the whole issue is with the sword." Then:
+          "The die is cast." The war has begun.
+        deeds: {war_with: [e1_caesar], men: 25000}
+      - label: "Accept Calidius's motion: Pompey leaves for his province"
+        wealth_bp: -300
+        legitimacy_bp: -600
+        influence: {nobility: -500}
+        outcome: >-
+          Caesar's chief grievance, that Pompey keeps troops near the city while he is told to disband, is met. Pompey goes
+          to Spain, and the Senate is in the hands of whoever stays in Rome. Lentulus will not have it put to the vote.
+        deeds: {peace_with: [e1_caesar]}
+      - label: "Put both armies under the Senate and demand that both disband"
+        wealth_bp: -200
+        legitimacy_bp: 200
+        unrest_bp: 300
+        outcome: >-
+          Caesar has already offered something like this; Pompey's friends have replied that it is not equal to ask Caesar to
+          leave Ariminum while Pompey keeps his province and his legions. Without a meeting there is no peace.
+    history: >-
+      The Senate held to the harsh line (Caesar, BC 1.1-6). Caesar's reply to the proposed terms, and Pompey's, are set out in
+      BC 1.9-11 (the proposal that Caesar quit Ariminum while Pompey kept his province was "not an equitable proposal"). Suetonius
+      describes him overtaking his cohorts at the Rubicon, "which was the boundary of his province", and the words about the
+      sword and the die (Div. Iul. 31-32). Plutarch confirms that the Rubicon separates Italy from Cisalpine Gaul (Caesar 20).
+    sources: ["Caesar, Civil War 1.1-11 (read)", "Suetonius, Divus Iulius 31-32 (read)", "Plutarch, Caesar 20 (read)", "Dio 41.1 (read)"]
+
+  - id: r49_flight
+    scenario: rome_49
+    civ: rome
+    year: -49
+    title: "The Retreat from Italy"
+    place: "Brundisium"
+    speaker: ruler
+    after: [r49_rubicon]
+    needs_war_with: [e1_caesar]
+    story: >-
+      A false rumour that Caesar's cavalry is at the gates has panicked the city: when the consul Lentulus came to open the
+      treasury to pay Pompey, he fled as soon as the sacred door was open, and the other magistrates followed. The levies have
+      been stopped. At Capua they begin to rally. Pompey has declared in the open Senate that he will count those who stay in
+      Rome the same as those in Caesar's camp.
+
+
+      At Corfinium Domitius Ahenobarbus has about twenty cohorts. Caesar takes the town, and sends Domitius and the senators back unharmed with their money. Pompey now has twenty cohorts at Brundisium
+      and the consuls have gone across to Dyrrachium. What will the Republic do?
+    choices:
+      - label: "Take the army to Greece and leave Italy to Caesar"
+        historical: true
+        wealth_bp: -600
+        legitimacy_bp: -800
+        unrest_bp: 500
+        influence: {nobility: 200}
+        outcome: >-
+          Pompey blocks the streets of Brundisium with trenches and stakes and embarks his men at nightfall. Caesar's soldiers
+          scale the walls and, led by the townspeople round the hidden traps, take two ships. The Republic and its armies
+          are across the sea, with the fleet and the provinces behind them, and Caesar is master of Italy.
+        deeds: {give: [it_senones, it_picenum, it_marsi], give_to: e1_caesar, men: 15000, ships: 30}
+      - label: "Hold Italy and fight at Brundisium"
+        wealth_bp: -800
+        unrest_bp: 600
+        legitimacy_bp: 200
+        outcome: >-
+          Caesar has begun to wall off the harbour mouth with moles; if the army stays it will be besieged by a general
+          with more veterans than Pompey has.
+        deeds: {men: 10000}
+      - label: "Break up the army and sue for terms from Rome"
+        wealth_bp: -300
+        legitimacy_bp: -1200
+        influence: {nobility: -800}
+        outcome: >-
+          The Republic would be at Caesar's mercy, as Domitius found, and the provinces would be his to take.
+        deeds: {peace_with: [e1_caesar]}
+    history: >-
+      Caesar: panic at Rome and the consul's flight from the treasury (BC 1.14); Domitius at Corfinium with about twenty cohorts
+      and Caesar's clemency to him and the senators (BC 1.15-23); Pompey withdrew from Brundusium with the consuls already at
+      Dyrrachium, stopping the streets with walls and trenches and sailing at nightfall (BC 1.24-28). Caesar then left for Gaul
+      (BC 1.33).
+    sources: ["Caesar, Civil War 1.14-28, 1.33 (read)"]
+
+  - id: r49_spain
+    scenario: rome_49
+    civ: rome
+    year: -49
+    title: "An Army Without a General"
+    place: "Ilerda and Massalia"
+    speaker: ruler
+    after: [r49_flight]
+    needs_war_with: [e1_caesar]
+    story: >-
+      Caesar has gone west to Spain, saying to his friends: "I go to meet an army without a leader, and I shall return to
+      meet a leader without an army." Pompey's strongest forces are in Spain under his three lieutenants, Afranius, Petreius and
+      Varro. Massalia has shut its gates to Caesar at Pompey's urging, and Domitius has gone to hold it with seven galleys he
+      fitted out from his own slaves and freedmen. Caesar has left Trebonius to besiege the city and Decimus Brutus to command
+      the ships built at Arelate in thirty days.
+
+
+      The Spanish legions are the Republic's best chance against Caesar.
+    choices:
+      - label: "Leave the Spanish army to its lieutenants and fight in Greece"
+        historical: true
+        wealth_bp: -300
+        legitimacy_bp: -400
+        outcome: >-
+          Afranius's men are distressed in foraging and have difficulty in finding water. In the end they are glad to be dismissed after a defeat: those with homes in Spain at once, the
+          rest at the river Var. Caesar gives security that they will not be forced to take his oath. Massalia is under siege.
+        deeds: {give: [east_iberia, celtiberia], give_to: e1_caesar}
+      - label: "Order Pompey himself to Spain"
+        wealth_bp: -600
+        unrest_bp: 300
+        outcome: >-
+          The Republic puts its best general where Caesar is going, but the legions on the Adriatic coast and in Greece are
+          left with the consuls.
+        deeds: {men: 10000}
+      - label: "Send reinforcements and fleets to relieve Massalia"
+        wealth_bp: -700
+        legitimacy_bp: 200
+        outcome: >-
+          Pompey's ships are needed on the Adriatic. Whatever goes to Massalia is missing when the fleet is wanted at Dyrrachium.
+        deeds: {ships: 20}
+    history: >-
+      Suetonius quotes Caesar's remark and says that, though his advance was delayed by the siege of Massilia and by scarcity
+      of supplies, he quickly gained a complete victory (Div. Iul. 34). In Caesar's account, Fabius seized the Pyrenean passes
+      against Afranius (BC 1.37) and Afranius's army was dismissed on terms (BC 1.86-87). In Africa Curio, sent by Caesar, was
+      killed with his army by Juba's Numidian horse (BC 2.38-44).
+    sources: ["Suetonius, Divus Iulius 34 (read)", "Caesar, Civil War 1.34-37, 1.86-87, 2.38-44 (read)"]
+
+  - id: r49_pharsalus
+    scenario: rome_49
+    civ: rome
+    year: -48
+    title: "The Plains of Pharsalus"
+    place: "Thessaly"
+    speaker: ruler
+    after: [r49_spain]
+    needs_war_with: [e1_caesar]
+    story: >-
+      Caesar crossed to Greece and, in Suetonius's words, blockaded Pompey for almost four months behind mighty ramparts. Pompey
+      has joined Scipio's legions in Thessaly and shared his honours with him. The fleet, commanded by Bibulus, is far stronger
+      than Caesar's, and Pompey has meant to avoid a battle and starve Caesar's old soldiers with marches and delays.
+
+
+      But the camp is full of confident men who have begun to dispute over priesthoods and consulships and the houses of
+      Caesar's friends. Domitius calls Pompey "Agamemnon, king of kings". Afranius, who lost his army in Spain, says he is
+      astonished that his accusers do not go and fight this trafficker in provinces. A saying has reached Pompey's ears among the
+      cavalry: that as soon as they have routed Caesar they must put down Pompey too.
+    choices:
+      - label: "Give battle at Pharsalus"
+        historical: true
+        unrest_bp: 800
+        legitimacy_bp: -800
+        influence: {nobility: -400}
+        outcome: >-
+          Pompey gives way to his staff. At Pharsalus about fifteen thousand of his army fall and more than twenty-four thousand
+          are taken; nine eagles are brought to Caesar. Lucius Domitius, running to the hills, is killed by the cavalry. Pompey
+          rides to the sea and the Republic's cause in Greece is broken.
+        deeds: {give: [mac_thessaly, mac_macedonia], give_to: e1_caesar, men: 5000}
+      - label: "Keep to the plan: avoid battle and use the fleet"
+        wealth_bp: -500
+        unrest_bp: 600
+        legitimacy_bp: -200
+        influence: {nobility: -300}
+        outcome: >-
+          The fleet can stop Caesar's supplies from the sea while the army stays on high ground. Many of the senators in the
+          camp say Pompey is dragging out the war to stay in command, and the camp divides.
+        deeds: {ships: 40}
+      - label: "Sail for Italy while Caesar is in Thessaly"
+        wealth_bp: -300
+        legitimacy_bp: 300
+        outcome: >-
+          Afranius had urged this: that Italy was the greatest prize of the war and would put Sicily, Sardinia, Spain and all Gaul
+          into the hands of those who held it. The Republic gives up the fight in Greece for the one thing Caesar left behind.
+    history: >-
+      Plutarch: Pompey feared the risk of battle and meant to starve Caesar's veterans by delay, but his followers forced him,
+      with Domitius calling him Agamemnon, Afranius's taunt about "this trafficker in provinces", and the cavalry's saying that
+      Pompey would be put down next (Pompey 66-67). Caesar records the camp's quarrels over rewards and priesthoods (BC 3.82) and the
+      losses: about fifteen thousand fell, upwards of twenty-four thousand were taken, nine eagles, and Domitius was killed
+      by the horse (BC 3.99). Plutarch has Pompey later lament that he had been forced to fight on land with a navy
+      "indisputably superior" (Pompey 76). The date of the battle (9 August) is cross-checked on Wikipedia only.
+    sources: ["Plutarch, Pompey 66-67, 76 (read)", "Caesar, Civil War 3.82, 3.99 (read)", "Suetonius, Divus Iulius 35 (read)"]
+
+  - id: r49_pompey_death
+    scenario: rome_49
+    civ: rome
+    year: -48
+    title: "Where Can Pompey Go?"
+    place: "Pelusium"
+    speaker: ptolemaic
+    after: [r49_pharsalus]
+    needs_alive: [ptolemaic]
+    story: >-
+      Pompey has taken on board his wife and friends and reached Attaleia, where sixty senators join him and triremes from
+      Cilicia. Cato has taken many soldiers to Africa and the fleet still holds together. There seems no province to which he
+      can safely flee. As for the kingdoms, he himself thinks that the Parthian is best able to receive and protect them in
+      their weakness.
+
+
+      But the matter is decided to go to Egypt. Ptolemy is a boy; his tutor Pothinus, with Theodotus the rhetorician and Achillas, has
+      called a council on whether to drive Pompey away or receive him. Theodotus argues that if they receive Pompey, they will
+      have Caesar for an enemy and Pompey for a master; if they reject him, Pompey will blame them and Caesar will pursue them.
+      The king's late father once made a league with the Roman people.
+    choices:
+      - label: "Ask Egypt for refuge, as Pompey's friends advise"
+        historical: true
+        legitimacy_bp: -600
+        unrest_bp: 400
+        outcome: >-
+          Pompey is invited to land. In a small boat with a few attendants he is greeted by Achillas and by Lucius Septimius, who once
+          served under him in the pirate war; he is murdered. Lucius Lentulus is seized by the king's order and
+          put to death in prison.
+        deeds: {grudges: {ptolemaic: 3000}}
+      - label: "Go to Parthia to raise a new army"
+        wealth_bp: -300
+        legitimacy_bp: -900
+        influence: {nobility: -500}
+        outcome: >-
+          Pompey himself had thought the Parthian best able to protect them. But the thought of a Roman general at the head of
+          Parthian horsemen, so soon after Carrhae, divides even his friends.
+        deeds: {ally_with: [e1_parthia]}
+      - label: "Sail for Africa and join Cato, Scipio and King Juba"
+        wealth_bp: -400
+        legitimacy_bp: 200
+        influence: {nobility: 300}
+        outcome: >-
+          The Republic holds a province behind a friendly king with cavalry. The fleet is nearer.
+        deeds: {ally_with: [numidia], men: 5000}
+    history: >-
+      Plutarch records the voyage, the sixty senators at Attaleia, Cato's crossing to Africa, the idea of going to the Parthian, and
+      Theodotus's argument in the council (Pompey 76-77). Caesar says that the king's regents, either from fear or in
+      contempt of his misfortune, had Achillas and Lucius Septimius kill him in a small boat and had Lucius Lentulus put to death in
+      prison (BC 3.104).
+    sources: ["Plutarch, Pompey 76-77 (read)", "Caesar, Civil War 3.104 (read)"]
+
+  - id: r49_egypt
+    scenario: rome_49
+    civ: rome
+    year: -47
+    title: "A Queen in a Carpet, a King at Zela"
+    place: "Alexandria and Pontus"
+    speaker: ptolemaic
+    after: [r49_pompey_death]
+    needs_alive: [ptolemaic]
+    story: >-
+      Caesar, in Egypt, holds that the quarrels of princes are a matter for the Roman people and for him as consul: the late king's
+      league with Rome was made under a law and a decree of the Senate. He orders King Ptolemy and his sister Cleopatra to disband
+      their armies and settle the matter before him. Pothinus calls the army from Pelusium to Alexandria under Achillas.
+      Pothinus had driven Cleopatra out of the country, and the old king's will, with one copy in the treasury and one in Pompey's
+      keeping, named the elder son and elder daughter heirs.
+
+
+      Far to the north, Pharnaces, Mithridates's son, has taken Bithynia and Cappadocia and is rousing the princes of Lesser Armenia,
+      and has beaten Domitius.
+    choices:
+      - label: "Hold Egypt for Cleopatra and the old king's will"
+        historical: true
+        wealth_bp: -400
+        legitimacy_bp: 300
+        outcome: >-
+          The throne is settled on the terms of the will. Egypt stays a client for now, and the grain ships are Rome's friends.
+        deeds: {ally_with: [ptolemaic]}
+      - label: "Support the regents and treat Egypt as an enemy"
+        wealth_bp: -800
+        unrest_bp: 400
+        outcome: >-
+          Some say the Egyptian war was due to Caesar's passion for Cleopatra and was inglorious and perilous; others blame the
+          court's party, and especially Pothinus. A hostile Egypt would hold the grain supply.
+        deeds: {war_with: [ptolemaic]}
+      - label: "Settle the throne and march against Pharnaces at once"
+        wealth_bp: -300
+        legitimacy_bp: 400
+        outcome: >-
+          Three legions and a quick campaign beat the king of the Bosporus near Zela, and a note to a friend at Rome reads: "Came,
+          saw, conquered."
+        deeds: {war_with: [pontus], men: 8000}
+    history: >-
+      Caesar's own account of his claim to settle the dispute, the will, Pothinus and Achillas (BC 3.107-109). Plutarch notes the
+      alternative explanations of the Egyptian war and records the defeat of Pharnaces near Zela and the three words to Amantius
+      (Caesar 49-50). Appian says Pharnaces "died of his wounds" aged fifty after fifteen years as king of the Bosporus, and
+      that Caesar gave his kingdom to Mithridates of Pergamon, while a praetor was sent each year to govern Pontus and Bithynia
+      (Mith. 120-121).
+    sources: ["Caesar, Civil War 3.106-109 (read)", "Plutarch, Caesar 48-50 (read)", "Appian, Mithridatic Wars 120-121 (read)"]
+
+  - id: r49_thapsus
+    scenario: rome_49
+    civ: rome
+    year: -46
+    title: "Thapsus and Utica"
+    place: "Africa"
+    speaker: ruler
+    after: [r49_egypt]
+    needs_war_with: [e1_caesar]
+    story: >-
+      The Republic's remaining armies are in Africa: Scipio, Afranius and King Juba, whose Numidian horse destroyed Curio's army
+      three years ago. Cato holds Utica. Scipio has begun to fortify a camp beyond a lake near the city of Thapsus as a place from which
+      to sally out and a refuge; Afranius and Juba are encamped separately, a short distance away.
+
+
+      Caesar is hurrying through wooded country that Scipio does not know. What does the Republic do?
+    choices:
+      - label: "Keep the camps and give battle at Thapsus"
+        historical: true
+        unrest_bp: 600
+        legitimacy_bp: -600
+        influence: {nobility: -500}
+        outcome: >-
+          Caesar outflanks some and attacks others in front, taking Afranius's camp at the first onset and then the Numidians'. In a
+          short part of a day he is master of three camps (Plutarch counts fifty thousand of the enemy killed for fewer than fifty of
+          his own). Juba and Petreius, with no hope of flight, kill each other with swords at a banquet. Scipio, overtaken
+          by a storm and a hostile fleet, stabs himself and leaps into the sea. Cato is dead at Utica; Caesar says that he grudged
+          him the chance to spare him.
+        deeds: {give: [car_carthage, car_byzacena], give_to: e1_caesar, conquer: [numidia]}
+      - label: "Pull back and split the army to harass Caesar's lines"
+        wealth_bp: -300
+        outcome: >-
+          Smaller bodies may avoid a decisive stroke, but King Juba's horse and the Roman infantry would be under separate commands.
+      - label: "Make terms through Cato and the Uticans"
+        legitimacy_bp: -500
+        influence: {nobility: -300}
+        outcome: >-
+          The town of Utica is spared (it was, in fact, pardoned), but Cato will not accept a pardon.
+        deeds: {peace_with: [e1_caesar]}
+    history: >-
+      Plutarch tells of Scipio fortifying near Thapsus and of Caesar's sudden attack on the three camps, with the caveat that
+      another account says Caesar himself was not in the action (Caesar 53). Appian: Juba and Petreius killed each other at a
+      banquet, Caesar made Juba's kingdom tributary and appointed Sallust governor, pardoned the Uticans, and Cato had a magnificent funeral,
+      Caesar saying Cato had grudged him an act of honour; Scipio stabbed himself and leaped into the sea (BC 2.99-100).
+      Cicero's "Cato" was answered by Caesar's "Anti-Cato" (BC 2.99).
+    sources: ["Plutarch, Caesar 52-53 (read)", "Appian, Civil Wars 2.99-100 (read)"]
+
+  - id: r49_munda
+    scenario: rome_49
+    civ: rome
+    year: -45
+    title: "Munda"
+    place: "Baetica"
+    speaker: ruler
+    after: [r49_thapsus]
+    needs_war_with: [e1_caesar]
+    story: >-
+      The nobles who escaped from Africa have gathered in Spain around Pompey's son, the younger Gnaeus Pompeius, with soldiers from
+      Pharsalus and Africa, Spaniards and Celtiberians, and a great number of freed slaves who have been four years under discipline.
+      Caesar made the journey from Rome in twenty-seven days.
+
+
+      The older men advise wearing him out by delay in a hostile country. Gnaeus is angry and young, and Caesar, reconnoitring,
+      is accused of cowardice. The armies are near Corduba.
+    choices:
+      - label: "Let the younger Pompey give battle"
+        historical: true
+        wealth_bp: -500
+        unrest_bp: 500
+        legitimacy_bp: -400
+        outcome: >-
+          Caesar's army is seized with fear; he takes his helmet off, seizes a shield, and charges ten feet from the enemy,
+          saying "This shall be the end of my life and of your military service." After a day of advance and retreat he wins. Plutarch
+          says the battle was near Munda and that Caesar asked his men if they felt no shame to give him to "boys". The Pompeians
+          flee to Corduba; Labienus and Varus are killed; Gnaeus is cut down in flight.
+        deeds: {give: [car_gades, lusitania], give_to: e1_caesar}
+      - label: "Follow the older men: avoid battle and wear him down"
+        wealth_bp: -400
+        legitimacy_bp: 200
+        outcome: >-
+          Caesar's army is far from home in a hostile country; every week of delay costs him. But the young Pompey will lose the
+          trust of the army.
+      - label: "Open talks with Caesar for the exiles' return"
+        legitimacy_bp: -300
+        outcome: >-
+          Caesar has shown mercy before (Corfinium). Many of those in the camp have gone through it and expect nothing.
+        deeds: {peace_with: [e1_caesar]}
+    history: >-
+      Appian: Caesar, in his fourth consulship, marched against the younger Pompeius in Spain; the older men advised delay; Pompeius,
+      misled by his army's strength, fought at once; battle near Corduba, Caesar's shield and his charge; the Pompeians fled to Corduba,
+      Labienus's and Varus's heads were brought to Caesar, and Pompeius was cut down (BC 2.103-105). Plutarch names Munda, says Caesar slew
+      over thirty thousand and lost one thousand of his best (Caesar 56). The month (March) is cross-checked on Wikipedia only.
+    sources: ["Appian, Civil Wars 2.103-105 (read)", "Plutarch, Caesar 56 (read)"]
+
+  - id: r49_ides
+    scenario: rome_49
+    civ: rome
+    year: -44
+    title: "The Ides of March"
+    place: "The Hall of Pompey"
+    speaker: ruler
+    after: [r49_munda]
+    needs_alive: [e1_caesar]
+    story: >-
+      Caesar has held the dictatorship for life, a statue among those of the kings, a golden throne in the House, temples and altars
+      beside those of the gods, a month named after him, and a priest of his own. He has held consulships in name only, put in
+      substitute consuls for the last three months of the year, and held no elections except for tribunes and plebeian aediles.
+      Suetonius thinks he abused his power and was justly slain.
+
+
+      At the Lupercalia the consul Antony several times offered him a crown from the rostra; he put it aside and had it sent
+      to the Capitol for Jupiter. When the tribunes had a white ribbon taken from his statue's wreath, he deposed them. The verses
+      sung in Rome say the Gauls have put on the senator's broad stripe. Several votes were written for Marullus and Flavus as
+      consuls. A general conspiracy has been formed. The Senate is called for the Ides of March in the Hall of Pompey.
+    choices:
+      - label: "Let the conspirators strike in the Senate"
+        historical: true
+        unrest_bp: 1500
+        legitimacy_bp: -400
+        influence: {nobility: 300, guilds: -600}
+        outcome: >-
+          Tillius Cimber catches Caesar's toga by both shoulders; one of the Cascas stabs him below the throat. He is stabbed with
+          three and twenty wounds and utters not a word but one groan; some write that when Brutus rushed at him he said in Greek,
+          "You too, my child?" The conspirators run. Three slaves carry him home on a litter.
+        
+      - label: "Make him king and have done with it"
+        wealth_bp: 300
+        unrest_bp: -400
+        legitimacy_bp: -1200
+        influence: {nobility: -1000}
+        outcome: >-
+          Caesar's own answer to those who hailed him king was "I am Caesar and no king." A crown would be a break with the whole
+          history of the Republic.
+      - label: "Ask him to restore the elections and give up the dictatorship"
+        wealth_bp: -200
+        legitimacy_bp: 300
+        outcome: >-
+          Suetonius says the conspirators hurried to avoid having to give their assent to a proposal then pending (Div. Iul. 80). A request from the Senate would find Caesar unwilling.
+    history: >-
+      Suetonius lists the honours, the Lupercalia crown, the deposed tribunes, the placards and verses, the plot, and the murder with
+      twenty-three wounds (Div. Iul. 76, 79, 80, 82). The date (15 March 44) is cross-checked on Wikipedia only. The consuls of 44
+      were Caesar and Antony according to Dio's table (Dio 43).
+    sources: ["Suetonius, Divus Iulius 76, 79-82 (read)", "Dio 43 consul table (read)"]
+
+  - id: r49_triumvirate
+    scenario: rome_49
+    civ: rome
+    year: -43
+    title: "Three Men Hold the State"
+    place: "The meeting of the three"
+    speaker: ruler
+    after: [r49_ides]
+    story: >-
+      The consuls of the year are Pansa and Hirtius, and Cicero has spoken against Antony in the Senate. Now Antony, Lepidus and Octavian, the young heir, have met and agreed on the terms of a new magistracy "for quieting the
+      civil dissensions": the three of them are to hold it for five years with consular power. Antony takes all Gaul except the part by
+      the Pyrenees; Lepidus the rest and Spain; Octavian Africa, Sardinia, Sicily and the other islands. The parts across the Adriatic are
+      still held by Brutus and Cassius.
+
+
+      They plan a list of the proscribed. Twelve, or as some say seventeen, of the most important men are to be killed at once, among
+      them Cicero.
+    choices:
+      - label: "Accept the triumvirate and its proscriptions"
+        historical: true
+        wealth_bp: 1500
+        unrest_bp: 1500
+        legitimacy_bp: -1500
+        influence: {nobility: -800, guilds: 300}
+        outcome: >-
+          The commonwealth is divided between three men. Executioners go ahead of the lists. Four are killed at once, at banquets or in the
+          street, and there is a panic as in a captured city lasting through the night. Every man thought that he was the one
+          being sought.
+        deeds: {ally_with: [e1_caesar]}
+      - label: "Refuse and raise armies in Italy and the provinces"
+        wealth_bp: -1000
+        unrest_bp: 800
+        legitimacy_bp: 300
+        influence: {nobility: 500}
+        outcome: >-
+          The armies of the Caesarians are larger and more experienced; the Republic's strength is in the east.
+        deeds: {men: 20000}
+      - label: "Offer to split the state with Brutus and Cassius"
+        legitimacy_bp: 200
+        wealth_bp: -300
+        outcome: >-
+          The provinces across the Adriatic are already in their hands. A treaty would put Rome's two parties side by side.
+    history: >-
+      Appian describes the new magistracy for five years with consular power, the division of the provinces, the plan for
+      the war against Brutus and Cassius, and the first killing of twelve or seventeen, among them Cicero (BC 4.2-3, 4.6). Dio's table
+      names the consuls of 43 as Pansa and Hirtius (Dio 46). The date and place (November, near Bononia) are cross-checked on
+      Wikipedia only.
+    sources: ["Appian, Civil Wars 4.2-6 (read)", "Dio 46 consul table (read)"]
+
+  - id: r49_philippi
+    scenario: rome_49
+    civ: rome
+    year: -42
+    title: "The Plains of Philippi"
+    place: "Philippi"
+    speaker: ruler
+    after: [r49_triumvirate]
+    story: >-
+      Brutus and Cassius have brought their armies to Philippi, where the plains between the armies are called the Campi
+      Philippi, and, Plutarch says, Roman forces of such size had never before met. Octavian's army faces Brutus's, and Antony's faces
+      Cassius's. Brutus's is fewer, but splendid in the decoration of its arms. The watchword Brutus gives for his last battle is "Apollo".
+
+
+      What does the Republic do?
+    choices:
+      - label: "Fight on the plain, as the generals demand"
+        historical: true
+        wealth_bp: -800
+        unrest_bp: 600
+        legitimacy_bp: -1000
+        influence: {nobility: -600}
+        outcome: >-
+          Brutus beats the army facing him and takes three eagles, while Cassius is defeated; each thought the other lost,
+          and neither went to help. "Thus Brutus and Cassius perished", writes Dio, "slain by the swords with which they had
+          murdered Caesar", and most of the other conspirators with them.
+        deeds: {war_with: [e1_caesar]}
+      - label: "Hold back and starve the triumvirs' army with the fleet"
+        wealth_bp: -400
+        legitimacy_bp: 300
+        influence: {nobility: 200}
+        outcome: >-
+          A war of delay is possible if the generals will wait.
+        deeds: {ships: 30}
+      - label: "Offer terms to Octavian and Antony"
+        legitimacy_bp: -700
+        outcome: >-
+          Men with their fathers' murderer in view will not make peace.
+        deeds: {peace_with: [e1_caesar]}
+    history: >-
+      Plutarch: the Campi Philippi, the sizes of the armies, the watchword "Apollo", Brutus's wing victorious and Cassius's
+      routed, with each thinking the other beaten (Brutus 38-43). Dio: Brutus and Cassius perished and the other conspirators were
+      nearly all destroyed (Dio 48.1). The year is confirmed by Dio's table (consuls of 42: Lepidus and Plancus).
+    sources: ["Plutarch, Brutus 38-43 (read)", "Dio 47 consul table and 48.1 (read)"]
+
+  - id: r49_parthians
+    scenario: rome_49
+    civ: rome
+    year: -40
+    title: "The Parthians Cross the Euphrates"
+    place: "Syria"
+    speaker: e1_parthia
+    after: [r49_philippi]
+    needs_alive: [e1_parthia]
+    story: >-
+      Pacorus, son of King Orodes, and Labienus, son of Titus Labienus, have taken the Parthian army over the Euphrates. Labienus was an
+      ally of Brutus and Cassius sent to Orodes before Philippi for reinforcements, and was detained by him while the king hesitated.
+      After the defeat he stayed among the barbarians, choosing to live with them rather than to perish at home. Learning of
+      Antony's demoralisation and his departure for Egypt, he persuaded the king to attack the Romans. Antony's agents had squeezed the provinces for money (Dio 48.24).
+    choices:
+      - label: "Send what legions there are to stop them"
+        historical: true
+        wealth_bp: -800
+        unrest_bp: 500
+        outcome: >-
+          Romans in the east are hard pressed. The Parthians, who had been active before, now attack the Romans more than ever.
+        deeds: {war_with: [e1_parthia], men: 15000}
+      - label: "Buy peace and recall the governors"
+        wealth_bp: -1000
+        legitimacy_bp: -600
+        outcome: >-
+          The standards of Crassus are still in Parthian hands; tribute will not bring them back.
+        deeds: {peace_with: [e1_parthia]}
+      - label: "Ally with Armenia against Parthia"
+        wealth_bp: -400
+        legitimacy_bp: 300
+        outcome: >-
+          Orodes ravaged Armenia to punish King Artavasdes once before; he will not welcome a new bond between Armenia and Rome.
+        deeds: {ally_with: [e1_armenia]}
+    history: >-
+      Dio: Antony's agents had extorted money from the provinces and the Parthians "assailed the Romans more than ever"; their
+      leaders were Labienus and Pacorus; Labienus's story as above (Dio 48.24-26). Dio's table gives the consuls of 40 as Domitius
+      Calvinus and Asinius Pollio. A later campaign by Antony, via Armenia to Praaspa, aimed to recover the standards and prisoners
+      lost in Crassus's disaster (Dio 49.24-25).
+    sources: ["Dio 48.24-26 (read)", "Dio 48 consul table (read)", "Dio 49.24-25 (read)"]
+
+  - id: r49_sextus
+    scenario: rome_49
+    civ: rome
+    year: -36
+    title: "Agrippa's Fleet"
+    place: "Sicily"
+    speaker: ruler
+    after: [r49_parthians]
+    story: >-
+      Sextus Pompeius, the younger son of Pompey, holds Sicily. Caesar's heir has built a fleet
+      with unusually tall, stout ships carrying towers for marines. His admiral, Marcus Vipsanius Agrippa, has been testing the enemy
+      at Mylae, where Sextus's admiral Demochares lies opposite him. Neither side dares to risk everything: each exaggerates
+      the other's fleet. The year's consuls are Gellius and Cocceius Nerva.
+    choices:
+      - label: "Give Agrippa the whole fleet and the decision"
+        historical: true
+        wealth_bp: -800
+        legitimacy_bp: 400
+        outcome: >-
+          Agrippa takes the fleet to battle. By Dio's later account Sextus has "perished" before the Armenian king is taken. The sea is open again.
+                deeds: {ships: 50}
+      - label: "Make peace with Sextus"
+        wealth_bp: -500
+        legitimacy_bp: -300
+        outcome: >-
+          Rome eats while the treaty lasts. Sextus keeps Sicily and Sardinia and his fleet.
+      - label: "Wait for Antony's ships"
+        wealth_bp: -400
+        legitimacy_bp: -200
+        unrest_bp: 400
+        outcome: >-
+          Antony's fleet was short of men (Dio 49.1); help would be thin.
+    history: >-
+      Dio: Caesar set out from Baiae in the spring of the year of Gellius and Cocceius Nerva with tall, strongly built ships;
+      Agrippa was left with the ships at Lipara and later at Mylae against Demochares, and neither side risked a full engagement
+      at first (Dio 49.1-2). Dio says later that Sextus had "perished" by the time of the Armenian king's capture (Dio 50.1).
+      The treaty of Misenum, Sextus's final defeat at sea off Naulochus and Lepidus's fall are not in the texts read here:
+      verified: no.
+    sources: ["Dio 49.1-2, 50.1 (read)"]
+
+  - id: r49_donations
+    scenario: rome_49
+    civ: rome
+    year: -34
+    title: "Queen of Kings"
+    place: "Alexandria"
+    speaker: e1_caesar
+    after: [r49_sextus]
+    needs_alive: [ptolemaic]
+    story: >-
+      In Alexandria Antony feasts the Alexandrians and, in the assembly, makes Cleopatra and her children sit by his side. He commands
+      that she be called Queen of Kings, and her son Ptolemy, whom they call Caesarion, King of Kings. He makes a new distribution of
+      provinces, giving them Egypt and Cyprus in addition, and promises his own children by Cleopatra great districts: Syria and everything west
+      of the Euphrates to the Hellespont for Ptolemy; Cyrenaica for Cleopatra; Armenia and all the lands east of the Euphrates for
+      Alexander. He claims to do this for Caesar's sake, but Dio says the aim was to cast reproach on Octavian as only an adopted
+      son.
+
+
+      Antony has sent word of it to Rome. The Senate's opinion is divided.
+    choices:
+      - label: "Take Octavian's side and have Antony's will read"
+        historical: true
+        wealth_bp: -500
+        legitimacy_bp: 600
+        unrest_bp: -300
+        influence: {nobility: 300}
+        outcome: >-
+          Titius and Plancus, who left Antony, tell Octavian everything, including what is in his will. Octavian seizes the will, carries it to
+          the Senate and then to the assembly and reads it. The clauses, Dio says, were such that this lawless act brought him no reproach.
+        deeds: {war_with: [ptolemaic]}
+      - label: "Keep the peace with Antony and Cleopatra"
+        wealth_bp: -300
+        legitimacy_bp: -400
+        outcome: >-
+          The east stays Antony's, and every general in Rome is pushed by the gift of Roman provinces to a foreign queen.
+        deeds: {ally_with: [ptolemaic]}
+      - label: "Call a conference of the two on neutral ground"
+        legitimacy_bp: 100
+        wealth_bp: -300
+        outcome: >-
+          The two had exchanged envoys for years. Each used the meetings to see the other's forces.
+    history: >-
+      Dio: the Alexandrian assembly, the titles, the distribution of provinces (49.40-41); the reading of Antony's will, and the
+      Senate's decrees declaring war outright on Cleopatra and not on Antony, performed through Caesar as fetialis in the temple
+      of Bellona (50.3-4). The year (34) is from Dio's table of the consuls (34: Antony and Libo).
+    sources: ["Dio 49.40-41 and 50.3-4 (read)", "Dio 49 consul table (read)"]
+
+  - id: r49_actium
+    scenario: rome_49
+    civ: rome
+    year: -31
+    title: "Actium"
+    place: "The Ambracian Gulf"
+    speaker: ruler
+    after: [r49_donations]
+    needs_war_with: [ptolemaic]
+    story: >-
+      Antony lies at anchor off Actium, where Nicopolis now stands. Octavian has crossed the Ionian sea and holds
+      Toruné in Epirus; Cleopatra jests: "What is there dreadful in Caesar's sitting at a ladle?" Antony had once challenged Octavian
+      to fight it out at Pharsalus, as Caesar and Pompey had done. When Octavian's ships sail against him at daybreak, Antony arms
+      his rowers and drops the oars to make a show; Octavian withdraws.
+    choices:
+      - label: "Fight at sea in the gulf"
+        historical: true
+        wealth_bp: -800
+        legitimacy_bp: 400
+        outcome: >-
+          The battle is long and level until Cleopatra's sixty ships hoist their sails and make off through the middle of the fleet. Antony
+          follows her and leaves his own men fighting. Plutarch says no more than five thousand died, but three hundred ships were
+          taken and nineteen undefeated legions left leaderless.
+        deeds: {conquer: [ptolemaic], ships: 60}
+      - label: "Blockade the gulf and wait for the army to desert"
+        wealth_bp: -400
+        legitimacy_bp: 200
+        outcome: >-
+          It would take time, but some of Antony's friends and freedmen are already going over to Octavian.
+        deeds: {ships: 30}
+      - label: "Accept Antony's challenge to settle it by a battle on land"
+        wealth_bp: -600
+        unrest_bp: 600
+        outcome: >-
+          This was Antony's own challenge, which Octavian declined.
+    history: >-
+      Plutarch tells of the challenge to fight at Pharsalus, Toruné, the empty-decked ships made to look manned, the flight of
+      Cleopatra's sixty ships, the five thousand dead, the three hundred ships captured and the nineteen legions (Antony 62-68).
+      Dio dates the battle to the second of September, from which "the years of his reign are properly reckoned" (Dio 51.1).
+    sources: ["Plutarch, Antony 62-68 (read)", "Dio 51.1 (read)"]
+
+  - id: r49_egypt_falls
+    scenario: rome_49
+    civ: rome
+    year: -30
+    title: "The Fall of Alexandria"
+    place: "Alexandria"
+    speaker: ptolemaic
+    after: [r49_actium]
+    needs_alive: [ptolemaic]
+    story: >-
+      Antony has stabbed himself on a false message that Cleopatra is dead. She is in her tomb with a eunuch and two maidservants.
+      Octavian has the city. He will not enter the presence of the Apis bull, saying he is accustomed to worship gods, not cattle; he touches Alexander's body, but declines to view the remains of the Ptolemies: "I wished to see a king, not corpses."
+
+
+      Egypt is richer and more populous than any province: its grain supplies Rome, and its people are, in Dio's phrase, of
+      "facile, fickle character". Who is to hold it?
+    choices:
+      - label: "Make Egypt tributary under a knight, and bar senators from it"
+        historical: true
+        wealth_bp: 2000
+        unrest_bp: 300
+        influence: {nobility: -300}
+        outcome: >-
+          Octavian gives Egypt in charge to Cornelius Gallus and does not allow any senator to live there except by his own
+          personal leave: he dared not trust it to any senator. The Alexandrians are told to govern their city without a council of
+          senators. Cleopatra dies in a way no one knows for certain: the story of the asp is told, with other accounts. The
+          day Alexandria was taken is declared lucky.
+        deeds: {conquer: [ptolemaic], take: [pto_delta, pto_middle, pto_thebaid]}
+      - label: "Leave Cleopatra's heirs on the throne as Rome's clients"
+        wealth_bp: 600
+        legitimacy_bp: -300
+        outcome: >-
+          A client Egypt would still hold the grain, but a king with such wealth would be a rival.
+        deeds: {tributaries: [ptolemaic]}
+      - label: "Give Egypt to the Senate as an ordinary province"
+        wealth_bp: 800
+        legitimacy_bp: 400
+        influence: {nobility: 400}
+        outcome: >-
+          The Senate's governors would be annual and chosen by lot. Whoever held Egypt with an army could starve Rome.
+        deeds: {conquer: [ptolemaic]}
+    history: >-
+      Dio: Antony's attempt on his life and Cleopatra's tomb (51.10); her death by the bite of a serpent "in this or in some very
+      similar way", and Octavian's attempt to revive her with Psylli (51.14); the lucky day (51.19); and Egypt made tributary under
+      Cornelius Gallus, with senators barred (51.17). Plutarch says of the asp that "the truth no one knows" (Antony 85-86).
+    sources: ["Dio 51.10-19 (read)", "Plutarch, Antony 85-86 (read)"]
+
+  - id: r49_settlement
+    scenario: rome_49
+    civ: rome
+    year: -27
+    title: "The Settlement"
+    place: "The Senate House"
+    speaker: ruler
+    after: [r49_egypt_falls]
+    story: >-
+      In the year of Caesar's seventh consulship and Agrippa's third, Octavian is to give up what he holds (Dio gives him a speech to that effect). Dio gives him a speech: Fortune has restored peace
+      without treachery and harmony without faction; "receive back also your liberty and the republic; take over the army and the
+      subject provinces". He has kept his country from perishing; he has taken no gain.
+
+
+      The Senate has heard such words before from Sulla, and from Caesar, who refused a crown. But the army is his, and there are many
+      provinces that cannot be governed except by someone with soldiers.
+    choices:
+      - label: "Give him the dangerous provinces for ten years and the title of Augustus"
+        historical: true
+        wealth_bp: 500
+        legitimacy_bp: 1500
+        unrest_bp: -1500
+        influence: {nobility: 300, guilds: 200}
+        outcome: >-
+          Caesar takes the government of the provinces for only ten years, promising to restore them sooner if pacified. They are
+          Spain, Gaul, Coele-Syria, Phoenicia, Cilicia, Cyprus and Egypt. The senators govern the rest as annual magistrates chosen by lot.
+          When the ten years end, five more are voted, then five, ten and ten again, until by successive terms he is sole ruler for
+          life. He takes the name Augustus.
+      - label: "Accept his offer and restore everything to the Senate"
+        legitimacy_bp: 400
+        unrest_bp: 800
+        influence: {nobility: 600}
+        outcome: >-
+          The soldiers are loyal to him, not to the Senate, and the frontier provinces have no one in command.
+      - label: "Refuse the settlement and demand the army's disbanding"
+        legitimacy_bp: -600
+        unrest_bp: 1200
+        outcome: >-
+          The army has no other pay-master. A fresh civil war would follow, with the winner of the last war on the field.
+    history: >-
+      Dio: the provinces were apportioned, Caesar undertaking the government of those given him for ten years with the promise
+      to give them back sooner (53.12-13); they included Spain, Gaul, Coele-Syria, Phoenicia, Cilicia, Cyprus and Egypt, Egypt
+      alone given to a knight; later he gave back Cyprus and Narbonensis and took Dalmatia (53.12); at each end of a term another
+      was voted, "so that by the succession of ten-year periods he continued to be sole ruler for life" (53.16). Dio's consul
+      table lists 27 BC as Caesar (VII) and Agrippa (III). The title Augustus is the subject of Dio 53.16; the day (16 January)
+      is cross-checked on Wikipedia only.
+    sources: ["Dio 53 consul table and 53.2-16 (read)"]

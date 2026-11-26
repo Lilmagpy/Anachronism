@@ -1,0 +1,507 @@
+schema_version: 1
+# Orders of battle for fifteen battles of the Roman Republic, 509-27 BC (R4): reference data for
+# battle replays and for scenario scripting. Every figure is an ancient author's own and is
+# marked in `sources`; where authors disagree, `disputed` says how. `units` lists the kinds of
+# soldier present (ids in core/units.yaml); `troops` gives numbers only where a source does.
+# Elephant units count animals, not men. Side A is the Roman (or Roman-led) army.
+# Sources read in full for this file: Polybius books 2, 3, 15 and 18; Livy 5.37-38, 8.8, 10.27-29,
+# 22.46-47, 30.33-35, 37.37-44; Plutarch's Pyrrhus, Marius, Aemilius Paulus, Crassus, Pompey,
+# Caesar, Flamininus and Antony; Caesar, Gallic War 7.64-90 and Civil War 3.84-99 (partly).
+battles:
+  - id: allia
+    name: The Allia
+    year: -390
+    place: "The river Allia, about eleven Roman miles north of Rome, where it meets the Tiber"
+    terrain: river_plains
+    war: "Gallic invasion of Latium"
+    side_a:
+      name: "Roman field army under the consular tribunes"
+      civ: rome
+      commanders: ["the consular tribunes of the year (Livy does not name a single commander in the passage cited)"]
+      units: [servian_hoplites, census_skirmishers, roman_equites]
+      formation: balanced
+      tactic: line
+      deployment: "No camp, no entrenchment, no auspices. The line was stretched on both wings to match the Gauls' front and so was thin in the centre; reserves held a small hill on the right."
+    side_b:
+      name: "Senones under Brennus"
+      civ: "gauls"
+      commanders: ["Brennus (Livy writes 'Bennus')"]
+      units: [gallic_warband, gallic_horse]
+      formation: wide_line
+      tactic: charge
+      deployment: "A wide, numerous host that attacked the reserves on the hill first; the Romans' left wing was driven into the Tiber."
+      losses: "Slight."
+    winner: b
+    outcome: "The Romans broke at the first shout. The left wing fled into the Tiber and many drowned; most fugitives ran to Veii; the right made for Rome and the Citadel. Polybius dates the Gauls' capture of Rome to the same year (1.6.2)."
+    notes: "Plutarch (Camillus 18.6-19) says the left wing was driven into the river and the right, less cut up, withdrew from the plain to the hills; the battle fell on the anniversary of the Fabii's defeat (Plutarch, Camillus 19.1). Livy 5.37.3: the levy was no larger than usual."
+    disputed: "The date. The traditional (Varronian) reckoning gives 390 BC; Polybius places the Gallic capture of Rome in the year of the King's Peace, 387/386 BC (Polybius 1.6.1-2). Numbers are not given in the passages read."
+    sources:
+      - "Livy 5.37-38"
+      - "Plutarch, Camillus 18-19"
+      - "Polybius 1.6.1-2 (date)"
+
+  - id: sentinum
+    name: Sentinum
+    year: -295
+    place: "Sentinum in Umbria, near the frontiers of the Gauls and the Etruscans"
+    terrain: plains
+    war: "Third Samnite War"
+    side_a:
+      name: "Roman consular armies"
+      civ: rome
+      commanders: ["Quintus Fabius Maximus Rullianus (consul)", "Publius Decius Mus (consul)"]
+      units: [hastati, principes, triarii, roman_equites, socii_infantry, socii_cavalry]
+      formation: balanced
+      tactic: line
+      deployment: "Fabius on the right with the first and third legions against the Samnites; Decius on the left with the fifth and sixth legions against the Gauls. The second and fourth legions were away in Samnium with the proconsul Volumnius. Reserves (L. Cornelius Scipio, C. Marcius) were held in the rear."
+      losses: "Decius' wing about 7,000 killed; Fabius' about 1,700 (Livy 10.29.17)."
+    side_b:
+      name: "Gauls and Samnites"
+      civ: "samnites and senones (Gauls)"
+      commanders: ["not named in the passages read"]
+      units: [gallic_warband, gallic_horse, samnite_infantry]
+      formation: balanced
+      tactic: line
+      deployment: "Gauls on the right and Samnites on the left; Gallic war chariots and baggage wagons on the wings. The Etruscans and Umbrians, who had planned to join them, were drawn off to defend their own lands and were absent."
+      losses: "25,000 killed and 8,000 captured (Livy 10.29.16)."
+    winner: a
+    outcome: "Decius, the younger consul, attacked with more dash (Livy 10.28.5-6). On the left the Gauls' war chariots scattered Decius' cavalry and drove through the legions; Decius made his devotio and died, the Gauls' close shield wall was broken by javelins thrown from the ground, and the Gauls were attacked in the rear and overpowered (Livy 10.29.16); the Samnites, facing Fabius, also broke."
+    notes: "Livy 10.28.9: 'armed men mounted on chariots and baggage wagons' threw the Roman horse into panic by the noise. 10.29.6-7: javelins from the ground broke the Gauls' shield wall. 10.27.11: the Roman line met the allies' line evenly matched."
+    disputed: "Livy says only that our authorities do not explain why the Umbrians did not fight (Livy 10.27, note). Numbers of the armies are not in the passages read; losses are Livy's."
+    sources:
+      - "Livy 10.27-29"
+
+  - id: heraclea
+    name: Heraclea (the Siris)
+    year: -280
+    place: "Between Heraclea and Pandosia, on the plain by the river Siris in Lucania"
+    terrain: river_plains
+    war: "Pyrrhic War"
+    side_a:
+      name: "Roman army of the consul Laevinus"
+      civ: rome
+      commanders: ["Publius Valerius Laevinus (consul)"]
+      units: [hastati, principes, triarii, roman_equites, socii_infantry]
+      formation: balanced
+      tactic: line
+      deployment: "On the far side of the river Siris from Pyrrhus' camp; their horse took the elephants' first onset and bolted (Plutarch, Pyrrhus 16.4, 17.3)."
+      losses: "Dionysius says nearly 15,000, Hieronymus only 7,000 (Plutarch, Pyrrhus 17.4)."
+    side_b:
+      name: "Pyrrhus of Epirus with Tarentines and allies"
+      civ: epirus
+      commanders: ["Pyrrhus"]
+      units: [macedonian_phalangites, indian_elephants, cavalry, archers]
+      troops: {indian_elephants: 20}
+      formation: phalanx
+      tactic: elephant_charge
+      deployment: "Pyrrhus' own army (Thessalian cavalry, the phalanx, elephants, Italian allies). He began with cavalry; when it was giving way he brought up the phalanx and led it himself. After seven turns of the fight the elephants drove the Roman horse out and the Thessalian cavalry charged them."
+      losses: "13,000 (Dionysius) or fewer than 4,000 (Hieronymus), 'his best troops' (Plutarch, Pyrrhus 17.4)."
+    winner: b
+    outcome: "A costly victory for Pyrrhus. The Romans' horses bolted from the elephants they had never seen; Pyrrhus' Thessalian cavalry then routed them with great slaughter. Pyrrhus took the Roman camp and some allied cities."
+    notes: "Plutarch, Pyrrhus 15.1: Pyrrhus embarked 20 elephants, 3,000 horse, 20,000 foot, 2,000 archers and 500 slingers; a storm scattered the fleet, so not all of this reached Italy (Pyrrhus 15.2-16.1), and the number of elephants at the battle is not given. The troops entry gives the embarked figure."
+    disputed: "Casualties (Dionysius against Hieronymus). Plutarch's account is a Greek tradition; the Roman side is thinly documented."
+    sources:
+      - "Plutarch, Pyrrhus 15-17"
+
+  - id: telamon
+    name: Telamon
+    year: -225
+    place: "Telamon on the coast of Etruria"
+    terrain: plains
+    war: "Gallic War of 225-222 BC"
+    side_a:
+      name: "Roman consular armies"
+      civ: rome
+      commanders: ["Lucius Aemilius Papus (consul)", "Gaius Atilius Regulus (consul, killed)"]
+      units: [hastati, principes, triarii, velites, roman_equites, socii_infantry, socii_cavalry]
+      formation: triplex_acies
+      tactic: relieve_lines
+      deployment: "Atilius' legions, landed from Sardinia at Pisa, met the Gauls head-on and sent cavalry to seize a hill above the road; Aemilius' army came up on the Gauls' rear. The Gauls were caught between two Roman armies."
+      losses: "Atilius fell in the cavalry fight for the hill (Polybius 2.28.10)."
+    side_b:
+      name: "Insubres, Boii, Taurisci and Gaesatae"
+      civ: "cisalpine gauls"
+      commanders: ["the kings Concolitanus and Aneroestes"]
+      units: [gaesatae, gallic_warband, gallic_horse]
+      troops: {gallic_warband: 50000, gallic_horse: 20000}
+      formation: hollow_square
+      tactic: line
+      deployment: "Drawn up facing both ways: the Gaesatae and Insubres facing Aemilius, the Taurisci and Boii facing Atilius' legions; wagons and chariots at the ends; the booty on a nearby hill. The naked Gaesatae stood in front."
+      losses: "About 40,000 killed and at least 10,000 captured (Polybius 2.31.1)."
+    winner: a
+    outcome: "The Roman horse took the hill; the Roman javelin-men then shot down the naked Gaesatae, whose shields did not cover them; the main body of Insubres, Boii and Taurisci fought on hand to hand, almost cut to pieces yet holding, until the Roman cavalry rode down the hill and took them in flank (Polybius 2.30.5-9). Concolitanus was taken, Aneroestes killed himself."
+    notes: "Polybius 2.23.4: the Gauls' whole army was about 50,000 foot and 20,000 horse and chariots. Polybius 2.24 gives a census of Roman and allied manpower: each consul commanded four legions of 5,200 foot and 300 horse with 30,000 allied foot and 2,000 horse, but the numbers actually at Telamon are not stated."
+    disputed: "The numbers on both sides (Polybius gives paper strengths, not battle strengths)."
+    sources:
+      - "Polybius 2.23-31"
+
+  - id: trebia
+    name: The Trebia
+    year: -218
+    place: "The river Trebia near Placentia in the Po valley"
+    terrain: river_plains
+    war: "Second Punic War"
+    side_a:
+      name: "Roman consular army"
+      civ: rome
+      commanders: ["Tiberius Sempronius Longus (consul)"]
+      units: [hastati, principes, triarii, velites, roman_equites, socii_infantry, socii_cavalry]
+      troops: {roman_equites: 4000}
+      total_men: 36000
+      formation: balanced
+      tactic: charge
+      deployment: "About 16,000 Romans and 20,000 allies in the usual order, cavalry (about 4,000) on each wing, 6,000 javelin-men sent ahead; the army crossed the freezing, swollen river, breast-high, before breakfast."
+      losses: "About 10,000 broke through to Placentia; most of the rest were killed (Polybius 3.74.6-7)."
+    side_b:
+      name: "Hannibal's army"
+      civ: carthage
+      commanders: ["Hannibal"]
+      units: [libyan_spearmen, iberian_scutarii, iberian_caetrati, gallic_warband, numidian_horse, gallic_horse, african_elephants]
+      formation: wide_line
+      tactic: ambush
+      deployment: "Numidian horse drew the Romans out; Hannibal's fresh, fed, warmed troops met them in good order; his elephants and light troops pressed both Roman wings; the Numidians, who had been in ambush, attacked the Roman centre from behind (Polybius 3.74.1-2)."
+      losses: "Few Africans and Spaniards; the loss fell chiefly on the Celts; almost all the elephants died of the cold afterwards (Polybius 3.74.10-11)."
+    winner: b
+    outcome: "Both Roman wings were driven back on the river; the centre broke through but, cut off from its camp, retired on Placentia with about 10,000 men; the rest were destroyed."
+    notes: "Polybius 3.72.10-13 gives the Roman figures (16,000 Romans, 20,000 allies, about 4,000 horse). His numbers for Hannibal's army at the Trebia are not in the passages read."
+    disputed: "Hannibal's strength is not given in the passage read; Livy and Polybius differ elsewhere."
+    sources:
+      - "Polybius 3.71-74"
+
+  - id: trasimene
+    name: Lake Trasimene
+    year: -217
+    place: "A defile between the hills and Lake Trasimene in Etruria"
+    terrain: hills
+    war: "Second Punic War"
+    side_a:
+      name: "Roman consular army on the march"
+      civ: rome
+      commanders: ["Gaius Flaminius (consul, killed)"]
+      units: [hastati, principes, triarii, velites, roman_equites, socii_infantry]
+      formation: balanced
+      tactic: line
+      deployment: "In column of march in a morning mist, entering the defile; the head met Hannibal's hill, the rest were struck on both flanks and from the rear."
+      losses: "About 15,000 killed in the valley; more than 15,000 taken in all (Polybius 3.84.7, 3.85.1)."
+    side_b:
+      name: "Hannibal's army"
+      civ: carthage
+      commanders: ["Hannibal"]
+      units: [libyan_spearmen, iberian_scutarii, iberian_caetrati, balearic_slingers, gallic_warband, gallic_horse, numidian_horse]
+      formation: wide_line
+      tactic: ambush
+      deployment: "Spaniards and Africans on the hill ahead; slingers and javelin-men on the hills to the right; Gallic horse and the Celts on the hills to the left, closing the road behind the Romans between hill and lake."
+      losses: "About 1,500, most of them Celts (Polybius 3.85.5)."
+    winner: b
+    outcome: "An ambush that destroyed the Roman army in marching order before it could deploy. Flaminius was killed by Celts."
+    notes: "Hannibal prepared the trap during the night (Polybius 3.83.5). The Roman units named are the standard composition."
+    disputed: "Numbers of the Roman army (not given in the passage read)."
+    sources:
+      - "Polybius 3.82-85"
+
+  - id: cannae
+    name: Cannae
+    year: -216
+    place: "Cannae in Apulia, on the right bank of the Aufidus"
+    terrain: plains
+    war: "Second Punic War"
+    side_a:
+      name: "Roman consular armies"
+      civ: rome
+      commanders: ["Lucius Aemilius Paullus (consul, killed) on the right", "Gaius Terentius Varro (consul) on the left", "Marcus Atilius and Gnaeus Servilius (consuls of 217) in the centre"]
+      units: [hastati, principes, triarii, velites, roman_equites, socii_infantry, socii_cavalry]
+      total_men: 86000
+      formation: strong_centre
+      tactic: line
+      deployment: "Facing south: Roman cavalry by the river on the right, the infantry beside them with the maniples closer than usual and much deeper than wide, the allied horse on the left, the light troops in front. About 80,000 foot and a little over 6,000 horse in all."
+      losses: "About 70,000 dead; some 10,000 captured in the camps; perhaps 3,000 infantry and 370 horse escaped (Polybius 3.117.1-6)."
+    side_b:
+      name: "Hannibal's army"
+      civ: carthage
+      commanders: ["Hannibal (centre)", "Mago (centre)", "Hasdrubal (left, the Spanish and Celtic horse)", "Hanno (right, the Numidians)"]
+      units: [libyan_spearmen, iberian_scutarii, gallic_warband, iberian_caetrati, balearic_slingers, numidian_horse, gallic_horse]
+      total_men: 50000
+      formation: cannae_envelopment
+      tactic: double_envelopment
+      deployment: "On the left by the river the Spanish and Celtic horse, then half the Africans, then the Spanish and Celtic foot in alternating companies, then the other half of the Africans, and the Numidians on the right. The centre advanced in a crescent, giving ground; the Africans, armed with captured Roman equipment, wheeled in on both flanks."
+      losses: "About 4,000 Celts, 1,500 Spaniards and Africans and 200 horse (Polybius 3.117.6)."
+    winner: b
+    outcome: "The Roman cavalry on the right was driven off the field; the Numidians held the allied horse; the legions pressed the weak centre into the crescent and were enveloped by the Africans and then struck from behind by Hasdrubal's horse. The worst defeat in Roman history."
+    notes: "Polybius 3.113.5: the Carthaginian cavalry numbered about ten thousand and the infantry, including the Celts, not much over forty thousand; no split of the horse by people is given. Polybius 3.117.4-5 draws the moral: better to fight with half as many infantry and far more cavalry."
+    disputed: "Roman numbers (Polybius 80,000 foot and over 6,000 horse; Livy gives other figures; unread here) and the exact split of the horse."
+    sources:
+      - "Polybius 3.107-117"
+      - "Livy 22.46-47" # unverified
+
+  - id: zama
+    name: Zama
+    year: -202
+    place: "The plain near Zama in Africa"
+    terrain: plains
+    war: "Second Punic War"
+    side_a:
+      name: "Scipio's army"
+      civ: rome
+      commanders: ["Publius Cornelius Scipio", "Gaius Laelius (left, Italian horse)", "Massinissa (right, Numidians)"]
+      units: [hastati, principes, triarii, velites, roman_equites, socii_cavalry, numidian_horse]
+      formation: zama_lanes
+      tactic: open_lanes
+      deployment: "Hastati in front, principes behind them, triarii last, the maniples not staggered but one directly behind another with straight lanes between; the velites in the lanes, ordered to retire to the rear or run aside along the lanes when the elephants charged. Laelius with the Italian horse on the left, Massinissa with all his Numidians on the right."
+      losses: "About 1,500 (Livy 30.35.3)."
+    side_b:
+      name: "Hannibal's army"
+      civ: carthage
+      commanders: ["Hannibal"]
+      units: [african_elephants, balearic_slingers, gallic_warband, iberian_caetrati, carthaginian_citizens, libyan_spearmen, numidian_horse]
+      troops: {african_elephants: 80}
+      formation: deep_reserve
+      tactic: elephant_charge
+      deployment: "In front, over eighty elephants; behind them about 12,000 mercenaries (Ligurians, Celts, Balearic Islanders, Moors); then the Libyans and Carthaginians; last, more than a stade behind, the veterans he had brought from Italy. The Numidians on the left, the Carthaginian horse on the right."
+      losses: "Over 20,000 killed and nearly as many taken; 11 elephants captured (Livy 30.35.2-3)."
+    winner: a
+    outcome: "Trumpets and the velites turned the elephants back on the Numidians and Carthaginian horse; Laelius and Massinissa routed both wings of cavalry and pursued. The infantry fought to a standstill, the Romans re-formed in a single line over the corpses and Hannibal's veterans, and the returning cavalry took them from behind."
+    notes: "Polybius 15.11.1: Hannibal had over eighty elephants and about 12,000 mercenaries. The mercenaries fought well and were not supported by the Carthaginian line; they broke and fought their own side (Polybius 15.13.3-4)."
+    disputed: "The size of the armies (not in Polybius 15.9-14 as read; Livy and Appian give figures); the place (Zama, Naraggara, Margaron) and the date."
+    sources:
+      - "Polybius 15.9-14"
+      - "Livy 30.33-35"
+
+  - id: cynoscephalae
+    name: Cynoscephalae
+    year: -197
+    place: "The Dog's Heads, a ridge of hills in Thessaly near Scotussa"
+    terrain: hills
+    war: "Second Macedonian War"
+    side_a:
+      name: "Roman army with Aetolian and other allies"
+      civ: rome
+      commanders: ["Titus Quinctius Flamininus (consul)"]
+      units: [hastati, principes, triarii, velites, socii_infantry, roman_equites, socii_cavalry]
+      total_men: 26000
+      formation: triplex_acies
+      tactic: relieve_lines
+      deployment: "Fought piecemeal in fog on broken ridges. Flamininus received his advance force back through the gaps between the maniples. On the right the Romans won; on the left Philip's right pressed them back. An unnamed tribune took about twenty maniples from the victorious wing and hit the phalanx in the rear."
+      losses: "About 700 (Polybius 18.27.6)."
+    side_b:
+      name: "Philip V's army"
+      civ: macedon
+      commanders: ["Philip V of Macedon", "Nicanor 'the elephant'"]
+      units: [macedonian_phalangites]
+      total_men: 26000
+      formation: phalanx
+      tactic: phalanx_charge
+      deployment: "Philip occupied the hills with his peltasts and the right wing of the phalanx, doubled their depth and charged downhill; most of his phalanx was still on the march and his left was scattered along the hills."
+      losses: "About 8,000 killed and at least 5,000 captured (Polybius 18.27.6)."
+    winner: a
+    outcome: "Philip's right wing, charging downhill, drove the Romans back; the rest of his phalanx was caught still arriving on broken ground and was routed, and the tribune's attack on the rear of the pikemen decided the day. Polybius draws the lesson that the phalanx needs level, open ground."
+    notes: "Plutarch (Flamininus 7.2): Flamininus had over 26,000 men, of whom 6,000 foot and 400 horse were Aetolians, and Philip's army was about the same size. Polybius 18.28-32 is the classic comparison of the phalanx and the legion."
+    disputed: "Numbers (Plutarch; Livy 33.4 is unread here)."
+    sources:
+      - "Polybius 18.19-27"
+      - "Polybius 18.28-32"
+      - "Plutarch, Flamininus 7-8"
+
+  - id: magnesia
+    name: Magnesia
+    year: -190
+    place: "The plain near Magnesia ad Sipylum in Lydia (Asia Minor), by the river Phrygius"
+    terrain: river_plains
+    war: "Roman-Seleucid War"
+    side_a:
+      name: "Roman army with Pergamene and other allies"
+      civ: rome
+      commanders: ["Lucius Cornelius Scipio (consul)", "Gnaeus Domitius Ahenobarbus (scouting the ground)", "Eumenes II of Pergamon (right wing)", "Publius Scipio Africanus (ill, advised)"]
+      units: [hastati, principes, triarii, socii_infantry, roman_equites, cretan_archers, african_elephants]
+      troops: {cretan_archers: 500, african_elephants: 16}
+      formation: triplex_acies
+      tactic: relieve_lines
+      deployment: "Two Roman legions in the centre and two Latin/allied brigades on the wings, each of 5,400, in three lines (spearmen, first-rank men, veterans); on the right Eumenes' auxiliaries and Achaean targeteers (about 3,000 foot), somewhat under 3,000 horse (800 Pergamene), and 500 Trallians and 500 Cretans at the end; four troops of horse on the left, protected by a river bank; 16 elephants in reserve behind the veterans; 2,000 Macedonian and Thracian volunteers in the camp."
+      losses: "300 foot and 24 horse; 25 of Eumenes' men (Livy 37.44.2)."
+    side_b:
+      name: "Antiochus III's army"
+      civ: seleucid
+      commanders: ["Antiochus III (right wing)", "Seleucus and Antipater (left)", "Minio, Zeuxis and Philip the master of the elephants (centre)"]
+      units: [macedonian_phalangites, indian_elephants, cataphracts, scythed_chariots, cretan_archers, balearic_slingers, gallic_horse]
+      troops: {macedonian_phalangites: 16000, indian_elephants: 54}
+      total_men: 74000
+      formation: phalanx
+      tactic: elephant_charge
+      deployment: "A phalanx of 16,000 in the centre, in ten blocks with two elephants between each, 32 ranks deep; on each wing 3,000 cataphracts and a royal cavalry guard, then scythed chariots and Arab camel-archers in front, with Gallic and Cappadocian horse, Cretans, Trallians, Mysian archers, slingers and 16 elephants on each end. Total about 62,000 foot and 12,000 horse (Livy 37.37.9)."
+      losses: "Livy: up to 50,000 foot and 3,000 horse killed, 1,400 taken, 15 elephants (37.44.1)."
+    winner: a
+    outcome: "A damp mist slackened the Seleucid bowstrings and slings. Eumenes' Cretans, slingers and javelineers scattered the scythed chariots, which broke back into Antiochus' left; the Roman horse routed that wing; Antiochus' own right wing broke through the Roman left but was checked at the camp; the packed phalanx, unable to move, was cut down."
+    notes: "Livy 37.40.1-14 is the fullest ancient order of battle of a Hellenistic army. Livy 37.39.13: the Romans' 16 African elephants were held back since they could not match Indian elephants."
+    disputed: "Antiochus' casualties (Livy's 50,000 is not corroborated by another source read here) and his total strength."
+    sources:
+      - "Livy 37.37-44"
+
+  - id: pydna
+    name: Pydna
+    year: -168
+    place: "The plain before Pydna, under Mount Olocrus, Macedonia"
+    terrain: plains
+    war: "Third Macedonian War"
+    side_a:
+      name: "Roman army of Aemilius Paullus"
+      civ: rome
+      commanders: ["Lucius Aemilius Paullus (consul)", "Scipio Nasica (flanking force)"]
+      units: [hastati, principes, triarii, socii_infantry, roman_equites, socii_cavalry]
+      formation: triplex_acies
+      tactic: relieve_lines
+      deployment: "The Romans attacked the phalanx on the level; the Paeligni and Marrucini (allied Italians) were cut up on the pikes and fell back towards Mount Olocrus. Aemilius saw gaps open in the phalanx on the uneven ground and ordered the cohorts to split up and enter the gaps."
+      losses: "A hundred (Poseidonius) or eighty (Nasica) (Plutarch, Aemilius 21.7)."
+    side_b:
+      name: "Perseus' Macedonian army"
+      civ: macedon
+      commanders: ["Perseus of Macedon (who rode off early, or was hurt: authors differ)"]
+      units: [macedonian_phalangites, cavalry]
+      troops: {macedonian_phalangites: 40000}
+      total_men: 44000
+      formation: phalanx
+      tactic: phalanx_charge
+      deployment: "A line of battle so long that the shields could not stay locked on the uneven ground; the phalanx made itself 'a dense barricade of long spears'. Perseus' cavalry (4,000) and nearly 40,000 heavy-armed foot (Plutarch, Aemilius 13.4)."
+      losses: "Over 25,000 killed; the picked 3,000 fought on to the last and were cut down (Plutarch, Aemilius 21.6-7)."
+    winner: a
+    outcome: "The phalanx could not stand when its line broke into pieces on the rough ground; the Romans fought many small battles in the gaps. The battle was decided within the hour (begun at three in the afternoon). Macedon fell; Perseus was taken after fleeing."
+    notes: "Plutarch cites Polybius for Perseus' cowardice and Poseidonius for his defence (Aemilius 19.4-9). Livy 44.36-41 is the other main source (not read for this file). Plutarch (Aemilius 12) says Perseus had tried to hire 10,000 Bastarnae horse but would not pay, so they are not in the order of battle."
+    disputed: "Perseus' conduct; the casualties (other accounts differ and are not read here)."
+    sources:
+      - "Plutarch, Aemilius Paulus 13-22"
+      - "Livy 44.36-41 # unverified"
+
+  - id: aquae_sextiae
+    name: Aquae Sextiae
+    year: -102
+    place: "Near the springs of Aquae Sextiae (Aix-en-Provence), Gaul"
+    terrain: hills
+    war: "Cimbrian War"
+    side_a:
+      name: "Marius' army with Ligurian auxiliaries"
+      civ: rome
+      commanders: ["Gaius Marius (consul)", "Claudius Marcellus (ambush force of 3,000)"]
+      units: [cohort_legionaries, roman_equites]
+      formation: strong_centre
+      tactic: ambush
+      deployment: "Marius kept his men inside their fortifications to get them used to the barbarians (Plutarch, Marius 16); the Ligurians and Romans first beat the Ambrones at the river (19-20); in the second day's battle he drew up before the camp, sent Marcellus with 3,000 heavy infantry round through the wooded ravines to appear in the enemy's rear, and told his men to throw their javelins, then draw their swords and push the enemy back with shields on the sloping ground."
+      losses: "Not given in the passage read."
+    side_b:
+      name: "Teutones and Ambrones"
+      civ: "teutones and ambrones (Germanic peoples)"
+      commanders: ["not named in the passages read"]
+      units: [german_warriors]
+      troops: {german_warriors: 30000}
+      formation: wide_line
+      tactic: charge
+      deployment: "The Ambrones (over 30,000, the most warlike) attacked first at the river and were beaten by the Ligurians and the Romans. The Teutones then charged up the hill and were forced back down into the plain."
+      losses: "Over a hundred thousand killed or captured, by Plutarch's reckoning (Marius 21.2)."
+    winner: a
+    outcome: "Marius' men held the slope against the Teutones' uphill charge, crowded them down into the plain, and Marcellus' hidden force hit them from behind. The Cimbri, who had gone by way of Noricum against Catulus, were not present (Plutarch, Marius 15.4)."
+    notes: "The troops figure for the Germans is the Ambrones alone (over 30,000, Plutarch, Marius 19.2). Marcellus' detachment was 3,000 men-at-arms. Plutarch, Marius 11 gives the invaders as 300,000 fighting men; Marius 16.1-2 shows him keeping his men inside their fortifications to get them used to the barbarians' look and cries. The 'cohort legionaries' are the Marian army of Plutarch's account; whether Marius had by then reformed the legion in the way later tradition says is debated."
+    disputed: "The casualty figures ('some writers give a different account of the number of the slain', Plutarch, Marius 21.3), and how far the Marian army was a new thing."
+    sources:
+      - "Plutarch, Marius 11, 15-21"
+
+  - id: carrhae
+    name: Carrhae
+    year: -53
+    place: "A sandy plain near Carrhae (Harran), Mesopotamia, by the stream Balissus"
+    terrain: desert
+    war: "Crassus' Parthian expedition"
+    side_a:
+      name: "Army of Marcus Crassus"
+      civ: rome
+      commanders: ["Marcus Licinius Crassus", "Gaius Cassius (quaestor, a wing)", "Publius Crassus (a wing; killed)"]
+      units: [cohort_legionaries, gallic_horse, archers, roman_equites]
+      troops: {gallic_horse: 1000}
+      formation: hollow_square
+      tactic: orbis
+      deployment: "First a thin line with the horse on the wings, then a hollow square of four fronts, twelve cohorts to a side, a squadron of horse with each cohort; Cassius and young Publius Crassus commanded wings. Seven legions of heavy infantry, nearly 4,000 horse and about as many light-armed troops (Plutarch, Crassus 20.1)."
+      losses: "About 20,000 killed and 10,000 taken in the whole campaign (Plutarch, Crassus 31.7)."
+    side_b:
+      name: "Parthian army of Surena"
+      civ: parthia
+      commanders: ["Surena"]
+      units: [parthian_horse_archers, parthian_cataphracts]
+      troops: {parthian_cataphracts: 1000}
+      formation: cannae_envelopment
+      tactic: parthian_shot
+      deployment: "Surena's own retinue was a thousand mail-clad horsemen and more light horse, ten thousand men with vassals and slaves (Plutarch, Crassus 21.6-7). They hid their armour under coverings, surrounded the square, shot from all sides and refilled their quivers from camels laden with arrows."
+      losses: "Slight."
+    winner: b
+    outcome: "The Roman light troops were driven back into the square by the arrows; the Parthians feigned flight and drew Publius Crassus' cavalry and cohorts out, then surrounded and destroyed them; the rest were shot down and shut in; Crassus was killed and Surena sent his head and hand to Hyrodes (Plutarch, Crassus 32.1)."
+    notes: "Plutarch gives the Roman army only as parts (7 legions, nearly 4,000 horse, about as many light troops), no total. Plutarch Crassus 25.2: Publius took 1,300 horse (1,000 of them from Caesar), 500 archers and eight cohorts. The Parthians used horse archers who shot while retreating (Plutarch 24.6) and camels laden with arrows (25.1); in Publius' fight the mail-clad horse were stationed in front of the Romans (25.4). The Romans in the hollow square could neither hold their ground nor close with the enemy (24.6)."
+    disputed: "The Parthian strength (Plutarch's 10,000 is Surena's own retinue, not the battle army) and the casualty total."
+    sources:
+      - "Plutarch, Crassus 20-31"
+      - "Plutarch, Antony 45 (the shield roof used against the same enemy in 36 BC)"
+
+  - id: alesia
+    name: Alesia
+    year: -52
+    place: "The oppidum of Alesia (Alise-Sainte-Reine), territory of the Mandubii, Gaul"
+    terrain: hills
+    war: "Gallic War"
+    side_a:
+      name: "Caesar's army in the lines of circumvallation and contravallation"
+      civ: rome
+      commanders: ["Gaius Julius Caesar", "Gaius Antistius Reginus and Gaius Caninius Rebilus (legates, two legions in the north camp, Caesar 7.83)"]
+      units: [cohort_legionaries, gallic_horse, germanic_horse, cretan_archers, balearic_slingers]
+      formation: balanced
+      tactic: hold
+      deployment: "Two lines of fortification (an inner one facing the town and an outer one facing the relief army), with Caesar's legions and cavalry between them. The outer line was attacked by the relief army and the inner by the besieged; the weak point was the north camp held by two legions under Antistius Reginus and Caninius Rebilus."
+      losses: "Not given in the passages read."
+    side_b:
+      name: "Gallic confederacy: Vercingetorix besieged, relief army outside"
+      civ: "gauls"
+      commanders: ["Vercingetorix (inside)", "Commius, Viridomarus, Eporedorix and Vercassivellaunus (the relief army)"]
+      units: [gallic_warband, gallic_horse]
+      troops: {gallic_horse: 8000}
+      formation: wide_line
+      tactic: charge
+      deployment: "Inside: 80,000 chosen men (Vercingetorix' own words, Caesar 7.71.3) with grain for thirty days, after he had sent his 15,000 horse away (7.64.1, 7.71). Outside: the relief army of 8,000 horse and about 250,000 foot (Caesar 7.76.3); the assault on the north camp was made by 60,000 picked men (7.83)."
+      losses: "Not given in the passages read. Caesar afterwards restored about 20,000 prisoners to the Aedui and Arverni (7.90)."
+    winner: a
+    outcome: "After the relief army's assaults on the outer lines failed, the relief army broke up and Vercingetorix surrendered (Caesar 7.88-89); Caesar returned about 20,000 Aedui and Arverni prisoners (7.90)."
+    notes: "Plutarch (Caesar 27.3-4) says 300,000 Gauls came to Alesia and not fewer than 170,000 fighting men were inside the city, so the sources disagree widely on numbers. Caesar's own legion strength at Alesia is not given in the passages read."
+    disputed: "All the numbers: Caesar gives 80,000 inside and 250,000 plus 8,000 horse outside; Plutarch gives 170,000 and 300,000."
+    sources:
+      - "Caesar, Gallic War 7.64, 7.71, 7.76, 7.83, 7.90"
+      - "Caesar, Gallic War 7.68-70, 7.72-75, 7.88-89" # unverified
+      - "Plutarch, Caesar 27"
+
+  - id: pharsalus
+    name: Pharsalus
+    year: -48
+    place: "The plain of Pharsalus in Thessaly, with the stream Enipeus on Pompey's right"
+    terrain: river_plains
+    war: "Caesar's Civil War"
+    side_a:
+      name: "Caesar's army"
+      civ: rome
+      commanders: ["Gaius Julius Caesar (right, with the Tenth)", "Marcus Antonius (left)", "Publius Sulla (right)", "Gnaeus Domitius Calvinus (centre)"]
+      units: [cohort_legionaries, gallic_horse, germanic_horse]
+      troops: {cohort_legionaries: 22000}
+      total_men: 23000
+      formation: triplex_acies
+      tactic: relieve_lines
+      deployment: "Eighty cohorts in three lines, 22,000 men, plus seven cohorts left in camp; the Tenth on the right, the Ninth (with the Eighth) on the left. Caesar withdrew six cohorts from the third line to make a fourth line behind his right to face the cavalry, with orders to strike up at the faces of the horse. About 1,000 horse, mixed with picked light infantry."
+      losses: "Not more than 200 men from the ranks and about 30 centurions (Caesar 3.99)."
+    side_b:
+      name: "Pompey's army"
+      civ: rome
+      commanders: ["Gnaeus Pompeius Magnus (right)", "Quintus Metellus Scipio (centre)", "Lucius Domitius Ahenobarbus (left)"]
+      units: [cohort_legionaries, roman_equites, cretan_archers, balearic_slingers, gallic_horse, germanic_horse]
+      troops: {cohort_legionaries: 45000, roman_equites: 7000}
+      total_men: 54000
+      formation: strong_left
+      tactic: flank
+      deployment: "110 cohorts of 45,000 men, with 2,000 recalled veterans spread among them and seven cohorts left in camp. The stream protected the right wing; all the cavalry (7,000, 'the flower of Rome and Italy', mixed with eastern and Gallic auxiliaries) and all the archers and slingers stood on the left. Pompey ordered his front to stand and receive the charge."
+      losses: "About 15,000 killed and more than 24,000 captured (Caesar 3.99)."
+    winner: a
+    outcome: "Pompey's cavalry, crowded on the left to turn Caesar's right, was met and driven off by Caesar's fourth line of six cohorts; the archers and slingers were cut down; the cohorts then rolled up Pompey's left wing from behind while Caesar's third line advanced. Pompey fled."
+    notes: "Plutarch (Caesar 42.3-4, Pompey 69-70) gives the same numbers: infantry 45,000 to 22,000, horse 7,000 to 1,000. Caesar (3.89, 3.93) is the primary account and Plutarch follows it. 'Gallic horse' and 'German horse' are among Pompey's allies and Caesar's cavalry (Caesar, Civil War 3.4)."
+    disputed: "Numbers are Caesar's, a partisan; Appian and Plutarch repeat them. The Roman casualties are from the text as read."
+    sources:
+      - "Caesar, Civil War 3.84, 3.88-89, 3.93, 3.99"
+      - "Plutarch, Caesar 42-45"
+      - "Plutarch, Pompey 69-72"

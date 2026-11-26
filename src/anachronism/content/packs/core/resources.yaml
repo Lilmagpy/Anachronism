@@ -13,3 +13,4 @@ resources:
   - {id: sulphur, name: Sulphur}
   - {id: gold, name: Gold}
   - {id: silver, name: Silver}
+  - {id: elephants, name: Elephants}

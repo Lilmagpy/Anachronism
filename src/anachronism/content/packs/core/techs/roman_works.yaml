@@ -1,0 +1,253 @@
+schema_version: 1
+# Rome's own ideas: the works that changed the city, and the army's inventions (F1 ideas,
+# docs/plans/rome.md target 8). `builds` is the work the 3D city raises, placed by
+# engine/city.py BUILD_FORMS on the site of the real building that came later. Dating rule
+# and conventions: agriculture.yaml.
+techs:
+  - id: basilica
+    name: The basilica
+    keywords: [basilica, covered hall, law court hall, market hall, roofed forum, hall for business, courts under a roof, porcia]
+    category: construction
+    builds: basilica
+    year: -184
+    complexity: 3
+    prerequisites: [masonry, written_law]
+    effects: [{type: trade_income, bp: 500}, {type: legitimacy, bp: 100}, {type: wealth_output, bp: 300}]
+    flavour: "A roofed hall beside the Forum where bankers, pleaders and idlers can get out of the rain."
+    history: "Cato as censor in 184 BC bought two halls and four shops in the Lautumiae and built the first basilica at Rome on the site, called the Porcian (Livy 39.44.7; Plutarch, Cato Maior 19.3). Fulvius Nobilior built the Aemilia behind the bankers' shops in 179 (Livy 40.51.5), and the great halls of Caesar and Trajan followed the plan."
+    sources: ["Livy 39.44.7", "Plutarch, Cato Maior 19.3 # unverified", "Livy 40.51.5", "Platner-Ashby s.v. Basilica Porcia"]
+    confidence: high
+
+  - id: stone_bridge
+    name: The stone bridge
+    keywords: [stone bridge, bridge, bridges, arch bridge, bridge over the tiber, pons, masonry bridge, pons aemilius, replace the wooden bridge]
+    category: construction
+    builds: bridge_stone
+    year: -179
+    complexity: 4
+    prerequisites: [masonry, surveying]
+    effects: [{type: mobility, bp: 500}, {type: trade_income, bp: 500}]
+    flavour: "Stone piers in the Tiber and arches over them, where the old bridge was all timber and no iron."
+    history: "The Pons Sublicius was timber without a nail, by religious law (Pliny NH 36.100); the censor M. Fulvius Nobilior set stone piers in the Tiber in 179 BC (Livy 40.51.4) and the censors of 142, Scipio Aemilianus and Mummius, threw the arches across them: the Pons Aemilius, whose last arch still stands as the Ponte Rotto (Platner-Ashby s.v.). The Mulvian bridge was rebuilt in stone in 109."
+    sources: ["Livy 40.51.4", "Pliny NH 36.100 # unverified", "Platner-Ashby s.v. Pons Aemilius", "Ammianus 27.3.9 (Pons Mulvius) # unverified"]
+    confidence: high
+
+  - id: stone_theatre
+    name: A permanent stone theatre
+    keywords: [theatre, theater, stone theatre, permanent theatre, theatre of pompey, build a theatre, seats for the plays, cavea, scaena, stage building]
+    category: construction
+    builds: theatre_stone
+    year: -55
+    complexity: 4
+    prerequisites: [concrete, masonry]
+    resistance: [{group: nobility, level: 3}, {group: clergy, level: 1}]
+    effects: [{type: cultural_influence, bp: 1000}, {type: unrest, bp: -200}, {type: legitimacy, bp: 100}]
+    flavour: "Seats of stone for forty thousand, which the Senate forbade for a hundred years as a danger to morals."
+    history: "In 154 BC the censors contracted a stone theatre and the Senate, on Scipio Nasica's motion, had it pulled down as 'useless and dangerous to public morals', so that Romans stood to watch plays (Livy, Per. 48). Pompey, who had copied the theatre of Mytilene (Plutarch, Pompey 42.4), built Rome's first in stone in 55 BC, with a temple of Venus on the seats to pass as a shrine (Tertullian, Spect. 10)."
+    sources: ["Livy, Periochae 48", "Velleius Paterculus 1.15.3 # unverified", "Plutarch, Pompey 42.4", "Tertullian, De spectaculis 10 # unverified", "Platner-Ashby s.v. Theatrum Pompei"]
+    confidence: high
+
+  - id: amphitheatre
+    name: The stone amphitheatre
+    keywords: [amphitheatre, amphitheater, arena, stone arena, gladiator arena, colosseum, oval arena, munera in a building, hunting theatre]
+    category: construction
+    builds: amphitheatre
+    year: -30
+    complexity: 5
+    prerequisites: [concrete, stone_theatre]
+    effects: [{type: unrest, bp: -200}, {type: cultural_influence, bp: 600}, {type: legitimacy, bp: 100}]
+    flavour: "Two theatres face to face, an oval of sand between, and the whole people watching men die."
+    history: "Gladiators fought in the Forum in wooden stands from 264 BC (Livy, Per. 16; Vitruvius 5.1.1-2) and Curio built two wooden theatres that swung together into one in 52 (Pliny NH 36.117-120). Pompeii had a stone arena about 70 BC; Rome's first was Statilius Taurus' in the Campus Martius, dedicated with gladiators in Caesar's fourth consulship (Dio 51.23.1). The Colosseum opened in AD 80."
+    sources: ["Dio 51.23.1", "Livy, Periochae 16 # unverified", "Vitruvius 5.1.1-2 # unverified", "Pliny NH 36.117-120 # unverified", "CIL X 852 (Pompeii) # unverified", "Platner-Ashby s.v. Amphitheatrum Flavium"]
+    confidence: high
+
+  - id: hypocaust
+    name: Under-floor heating (hypocaust)
+    keywords: [hypocaust, under-floor heating, heated floor, hot air under the floor, suspended floor, heating, warm baths, pensiles balineae, furnace under the floor]
+    category: construction
+    year: -100
+    complexity: 3
+    prerequisites: [concrete, pottery_kiln]
+    effects: [{type: health, bp: 400}, {type: wealth_output, bp: 300}]
+    flavour: "A floor on little pillars of brick, a furnace beneath, and a warm room in January."
+    history: "C. Sergius Orata, who farmed oysters at Baiae, invented the hanging bath (pensiles balineae) heated from below, about 100 BC, and sold villas fitted with it (Pliny NH 9.168; Valerius Maximus 9.1.1). Vitruvius gives the rule for the suspended floor on brick pillars (Vitr. 5.10.2). Greek baths had been heated by braziers."
+    sources: ["Pliny NH 9.168 # unverified", "Valerius Maximus 9.1.1 # unverified", "Vitruvius 5.10.2 # unverified"]
+    confidence: medium
+
+  - id: public_baths
+    name: Public baths (thermae)
+    keywords: [public baths, baths, thermae, bath house, balneae, bathe, bathing, free baths, hot baths, agrippa's baths]
+    category: health
+    builds: baths
+    year: -25
+    complexity: 4
+    prerequisites: [hypocaust, aqueduct]
+    effects: [{type: health, bp: 800}, {type: unrest, bp: -100}, {type: cultural_influence, bp: 300}]
+    flavour: "Hot room, warm room, cold plunge and a garden, free to every citizen."
+    history: "Rome's private bath-houses (balneae) charged a quadrans (Horace, Sat. 1.3.137); Scipio Africanus' bath at Liternum was small and dark (Seneca, Ep. 86.4-12). Agrippa as aedile in 33 BC opened 170 baths free for a year (Pliny NH 36.121) and built the first great public thermae in the Campus Martius about 25 BC, fed by his Aqua Virgo (Dio 53.27.1)."
+    sources: ["Dio 53.27.1 # unverified", "Pliny NH 36.121 # unverified", "Seneca, Epistulae 86.4-12 # unverified", "Horace, Satires 1.3.137 # unverified", "Platner-Ashby s.v. Thermae Agrippae"]
+    confidence: high
+
+  - id: concrete_dome
+    name: The concrete dome
+    keywords: [dome, domes, concrete dome, rotunda, pantheon, vaulted roof, round roof, cupola, oculus, hemisphere of concrete]
+    category: construction
+    builds: dome
+    year: 126
+    complexity: 5
+    prerequisites: [concrete, hypocaust]
+    effects: [{type: cultural_influence, bp: 800}, {type: legitimacy, bp: 200}, {type: population_cap, bp: 200}]
+    flavour: "A hemisphere of concrete 43 metres across, open to the sky at the top, that no wooden roof could match."
+    history: "Roman builders learned to vault with concrete in the 2nd century BC and threw their first great domes over the hot rooms of baths, the 'Temple of Mercury' at Baiae about the time of Augustus. Agrippa's Pantheon of 27 BC was a rectangular temple (Dio 53.27.2); Hadrian's rotunda, finished about AD 126, is the dome itself, 43.2 m across and as high (Platner-Ashby s.v. Pantheon)."
+    sources: ["Dio 53.27.2 # unverified", "Platner-Ashby s.v. Pantheon", "Historia Augusta, Hadrianus 19.10 # unverified", "the Baiae dome: archaeology, date disputed (unverified)"]
+    confidence: medium
+
+  - id: commemorative_arch
+    name: The commemorative arch (fornix)
+    keywords: [arch, triumphal arch, commemorative arch, fornix, victory arch, arch with statues, monumental arch, gateway arch]
+    category: construction
+    builds: arch
+    year: -196
+    complexity: 2
+    prerequisites: [masonry]
+    effects: [{type: legitimacy, bp: 200}, {type: cultural_influence, bp: 300}]
+    flavour: "A free-standing arch with gilded statues on top, to say for ever who won."
+    history: "L. Stertinius, back from Spain in 196 BC, raised two arches with gilded statues in the Forum Boarium and one in the Circus Maximus from his spoils (Livy 33.27.3-4); Scipio Africanus set one on the Capitol in 190 (Livy 37.3.7) and Fabius Allobrogicus spanned the Sacra Via with his in 121. The Etruscans had taught Rome the true arch two centuries before."
+    sources: ["Livy 33.27.3-4 # unverified", "Livy 37.3.7 # unverified", "Cicero, In Verrem 1.19 (Fornix Fabianus) # unverified", "Platner-Ashby s.v. Fornix Fabianus"]
+    confidence: high
+
+  - id: marble_temple
+    name: A temple of marble
+    keywords: [marble, marble temple, build in marble, white marble, greek marble, pentelic, luna marble, marble columns, marble city]
+    category: construction
+    builds: temple_marble
+    year: -146
+    complexity: 4
+    prerequisites: [masonry, greek_library]
+    requires: {materials: [stone]}
+    effects: [{type: legitimacy, bp: 200}, {type: cultural_influence, bp: 500}]
+    flavour: "Not tufa and stucco any more: a Greek architect, Greek marble and columns that gleam."
+    history: "Republican Rome built its temples of tufa coated in stucco; Q. Caecilius Metellus Macedonicus, after his triumph of 146 BC, raised the first marble temple at Rome, to Jupiter Stator, by the Greek architect Hermodorus of Salamis (Velleius 1.11.3-5; Vitruvius 3.2.5). Augustus boasted he found a city of brick and left one of marble (Suet. Aug. 28.3)."
+    sources: ["Velleius Paterculus 1.11.3-5 # unverified", "Vitruvius 3.2.5 # unverified", "Suetonius, Augustus 28.3 # unverified", "Platner-Ashby s.v. Porticus Metelli"]
+    confidence: high
+
+  - id: portico_hall
+    name: The colonnaded portico (porticus)
+    keywords: [portico, porticus, colonnade, covered walk, colonnaded hall, stoa, shaded walk, portico with shops, aemilian portico]
+    category: construction
+    builds: portico
+    year: -193
+    complexity: 3
+    prerequisites: [masonry]
+    effects: [{type: trade_income, bp: 400}, {type: cultural_influence, bp: 300}, {type: population_cap, bp: 200}]
+    flavour: "A long roof on columns, for merchants in the rain and senators in the sun."
+    history: "The aediles M. Aemilius Lepidus and L. Aemilius Paullus built the Porticus Aemilia outside the Porta Trigemina by the river in 193 BC, with the emporium beside it (Livy 35.10.12), and the censors of 174 repaired it (Livy 41.27.8). Rome's first porticoes, by the Forum Holitorium and in the Campus, came in the same decade; the Greeks had walked in stoas for three centuries."
+    sources: ["Livy 35.10.12 # unverified", "Livy 41.27.8", "Platner-Ashby s.v. Porticus Aemilia"]
+    confidence: high
+
+  - id: granary
+    name: Public granaries (horrea)
+    keywords: [granary, granaries, horrea, store grain, public granary, warehouse, warehouses, grain store, storehouse]
+    category: construction
+    builds: granary
+    year: -123
+    complexity: 3
+    prerequisites: [masonry]
+    effects: [{type: storage, bp: 1500}, {type: food_output, bp: 300}]
+    flavour: "Courtyards of vaulted storerooms by the river, raised floors against the damp and the rats."
+    history: "Gaius Gracchus' laws of 123 BC provided for public granaries to hold the grain his law sold cheap (Plutarch, C. Gracchus 6.3), the Horrea Sempronia below the Aventine (Festus 290L). The vast Horrea Galbae beside the Emporium, courts of storerooms 200 m long, followed in the late Republic (Platner-Ashby s.v. Horrea Galbae)."
+    sources: ["Plutarch, C. Gracchus 6.3", "Festus 290L (Sempronia horrea) # unverified", "Platner-Ashby s.v. Horrea Galbae"]
+    confidence: medium
+
+  - id: harbour_works
+    name: Harbour works (moles of concrete)
+    keywords: [harbour, harbor, port, ostia, portus, mole, breakwater, quay, docks, dock the grain ships, build a harbour, deep harbour]
+    category: construction
+    builds: harbour
+    year: 42
+    complexity: 5
+    prerequisites: [masonry, concrete]
+    effects: [{type: trade_income, bp: 1000}, {type: naval_strength, bp: 500}, {type: food_output, bp: 300}]
+    flavour: "Moles of concrete poured into the sea, and the grain ships no longer wait off the Tiber mouth."
+    history: "Rome's grain ships unloaded into barges at the silting Tiber mouth or at Puteoli; the city's own river port, the Emporium, got stone quays in 193 (Livy 35.10.12). Vitruvius tells how to pour pozzolana concrete in the sea (Vitr. 5.12.2-3). Caesar planned a harbour at Ostia (Plutarch, Caesar 58.8); Claudius built it, with two moles and a lighthouse, from AD 42 (Suet. Claud. 20.3; Dio 60.11.1-5)."
+    sources: ["Vitruvius 5.12.2-3 # unverified", "Plutarch, Caesar 58.8 # unverified", "Suetonius, Claudius 20.3 # unverified", "Dio 60.11.1-5 # unverified", "Livy 35.10.12 # unverified"]
+    confidence: high
+
+  - id: vigiles
+    name: A fire brigade (vigiles)
+    keywords: [fire brigade, firemen, fire fighters, fire watch, vigiles, night watch, put out fires, fire station, buckets and pumps, watchmen]
+    category: governance
+    builds: fire_station
+    year: 6
+    complexity: 2
+    prerequisites: [republic]
+    effects: [{type: unrest, bp: -200}, {type: population_cap, bp: 300}, {type: wealth_output, bp: 200}]
+    flavour: "Seven cohorts of freedmen with buckets, axes and a pump, one for every two regions of the city."
+    history: "The Republic left fires to three minor magistrates and their slaves; Crassus grew rich buying burning houses with 500 builders on hand (Plutarch, Crassus 2.4). After Egnatius Rufus won the people with private firemen (Dio 53.24.4-6), Augustus organised seven divisions of freedmen under a knight in AD 6 against the fires (Dio 55.26.4-5; Suet. Aug. 30.1): the vigiles, which lasted three centuries."
+    sources: ["Dio 55.26.4-5", "Suetonius, Augustus 30.1", "Plutarch, Crassus 2.4 # unverified", "Dio 53.24.4-6 # unverified", "Digest 1.15.1 (Paulus) # unverified"]
+    confidence: high
+
+  - id: marching_camp
+    name: The fortified marching camp (castra)
+    keywords: [camp, marching camp, castra, fortified camp, dig in every night, ditch and rampart, entrench the camp, camp layout, palisade]
+    category: military
+    year: -280
+    complexity: 2
+    prerequisites: [surveying]
+    effects: [{type: military_strength, bp: 800}, {type: mobility, bp: 300}]
+    flavour: "Every night a ditch, a rampart and the same streets, so that each man knows his tent in the dark."
+    history: "Pyrrhus, seeing the Roman camp before Heraclea in 280 BC, said these barbarians had nothing barbarous in their order (Plutarch, Pyrrhus 16.5). Polybius describes the camp laid out the same way every evening, with its streets, its rampart and its watchword (Polybius 6.27-42); Vegetius says the Romans owed their empire to it."
+    sources: ["Plutarch, Pyrrhus 16.5 # unverified", "Polybius 6.27-42 # unverified", "Vegetius 1.21 # unverified"]
+    confidence: high
+
+  - id: siege_works
+    name: Siege lines (circumvallation)
+    keywords: [siege, siege works, circumvallation, siege lines, surround the city, blockade a city, besiege, siege ramp, agger, siege towers, mines under the walls]
+    category: military
+    year: -396
+    complexity: 3
+    prerequisites: [surveying]
+    effects: [{type: military_strength, bp: 600}]
+    flavour: "A ring of ditch and palisade round the city, and a second ring facing outwards, and then wait."
+    history: "Rome besieged Veii through ten winters and took it by a mine dug under the citadel in 396 BC (Livy 5.19-21); Scipio ringed Numantia with seven camps and a wall (Appian, Iberica 90-91) and Caesar built two lines of eleven and fourteen miles round Alesia, one against the town and one against the relief (Caesar, BG 7.69-74)."
+    sources: ["Livy 5.19-21 # unverified", "Appian, Iberica 90-91 # unverified", "Caesar, De bello Gallico 7.69-74 # unverified"]
+    confidence: high
+
+  - id: eagle_standard
+    name: The legion's eagle (aquila)
+    keywords: [eagle, eagle standard, aquila, legion standard, standards, legionary eagle, silver eagle, lose the eagle, one standard for the legion]
+    category: military
+    year: -104
+    complexity: 1
+    prerequisites: [cohort_legion]
+    effects: [{type: military_strength, bp: 400}, {type: legitimacy, bp: 100}]
+    flavour: "One silver eagle for the legion, and men who will die rather than see it taken."
+    history: "The legions had carried five standards, the eagle, wolf, minotaur, horse and boar, one before each line; Marius in his second consulship (104 BC) gave the legion the eagle alone, of silver, and the others were left behind in camp (Pliny NH 10.16). Losing one was the worst disgrace: Augustus struck coins for the eagles recovered from Parthia."
+    sources: ["Pliny NH 10.16 # unverified", "Res Gestae 29 (the standards recovered) # unverified"]
+    confidence: high
+
+  - id: corvus
+    name: The boarding bridge (corvus)
+    keywords: [corvus, boarding bridge, raven, grapple the ships, boarding, board the enemy ship, gangway with a spike, fight at sea like on land]
+    category: military
+    year: -260
+    complexity: 2
+    prerequisites: [sailing, iron_working]
+    effects: [{type: naval_strength, bp: 1000}]
+    flavour: "A gangway on a pole with an iron beak, dropped on the Carthaginian's deck: a sea fight turned into a land fight."
+    history: "Because their new ships were clumsy and slow, the Romans devised the 'raven': a gangway four feet wide and six fathoms long swung round a pole on the prow, with an iron spike that pinned the enemy's deck so that the soldiers could cross two abreast (Polybius 1.22). With it Duilius won at Mylae in 260 BC (Polybius 1.23); it was dropped a generation later, perhaps for making the ships unseaworthy."
+    sources: ["Polybius 1.22-23", "Polybius 1.51 (not used at Drepana) # unverified"]
+    confidence: high
+
+  - id: quinquereme
+    name: A war fleet of quinqueremes
+    keywords: [quinquereme, quinqueremes, war fleet, build a fleet, warships, navy, battle fleet, copy the carthaginian ship, oared warship, five banks]
+    category: maritime
+    year: -261
+    complexity: 4
+    prerequisites: [sailing]
+    effects: [{type: naval_strength, bp: 1000}, {type: trade_income, bp: 200}]
+    flavour: "A hundred quinqueremes built in sixty days from the pattern of one wrecked Carthaginian."
+    history: "In 261 BC the Romans, who had never thought of the sea, resolved to build a hundred quinqueremes and twenty triremes; their shipwrights had never built a quinquereme, and they copied a Carthaginian decked ship that had run aground in the Straits, training rowers on benches ashore while the hulls were built (Polybius 1.20.9-21.3). Rome lost 700 ships in that war and won it."
+    sources: ["Polybius 1.20.9-1.21.3", "Polybius 1.63.6 (700 quinqueremes lost) # unverified"]
+    confidence: high

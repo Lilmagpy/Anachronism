@@ -1,0 +1,1288 @@
+schema_version: 1
+# Chronicle mode (D-120): Rome from the Latin War to the fall of Tarentum, 340-268 BC, for the
+# scenario rome_340. Rome had no king and no single ruler: two consuls a year, a Senate,
+# censors, dictators in an emergency. The "ruler" is the leading magistrate of each crisis,
+# who leaves office in the chapter's outcome (ruler_falls); the order matches the successors
+# list of rome in scenarios/rome_340.yaml.
+#
+# SOURCES. Each chapter was written from a passage that was read in translation while writing
+# it: Livy 8-10 (the Gutenberg translation, with the numbering of the standard text) and the
+# Periochae (printed as the summaries of books 11-15 in the same translation), Polybius 2-3,
+# Plutarch's Pyrrhus and Timoleon, Diodorus 16, and Cassius Dio books 8-10 (with Zonaras).
+# Where a detail comes from a source that was NOT re-read, it is marked "# unverified" and kept
+# out of the story text. Dates are Livy's, which are doubtful by a year or two before 300 BC.
+# benchmark_provinces counts the provinces of the map that Rome held (as citizen land, colony
+# or Roman rule) at that date by this file's own reading; it is approximate.
+chapters:
+  - id: rome_latin_demand
+    scenario: rome_340
+    civ: rome
+    year: -340
+    title: "The Latin Demand"
+    place: "The Capitol, Rome"
+    speaker: e3_latins
+    speaker_name: "Lucius Annius of Setia"
+    speaker_title: "Praetor of the Latins"
+    benchmark_provinces: 2
+    needs_alive: [e3_latins]
+    story: >-
+      You are Titus Manlius Torquatus, consul for the third time, with Publius Decius Mus at
+      your side. The Samnites have complained that the Latins and Campanians are making war on
+      them, and the Senate has called the two Latin praetors, Lucius Annius of Setia and
+      Lucius Numisius of Circeii, to the temple of Jupiter to be told to keep the peace.
+
+
+      Annius does not wait to be told. Latium is strong, he says; the Samnites are beaten, the
+      Campanians and Volscians are allies, and even Rome's own colonies prefer the Latin
+      government to hers. The Latins will make peace on equal terms, but there must be one
+      consul from Rome and one from Latium, half the Senate from each, one people and one
+      republic, and all of them to be called Romans.
+
+
+      The Senate waits on you.
+    choices:
+      - label: "Refuse, and call on Jupiter to witness"
+        historical: true
+        legitimacy_bp: 800
+        unrest_bp: 300
+        influence: {nobility: 300}
+        outcome: >-
+          You tell the Senate that if they take laws from a man of Setia you will come into the
+          House armed and kill the first Latin you see there, and you turn to the statue of
+          Jupiter and ask him whether he will see foreign consuls in his temple. Annius, as he
+          storms out, is heard to speak slightingly of the god, falls down the steps and is
+          knocked senseless. Livy will not say whether he died. You declare that the gods have
+          stirred up a just war, the Senate votes for it, and two armies are raised.
+        deeds: {war_with: [e3_latins, e3_campanians, e3_volsci], men: 10000}
+      - label: "Offer a closer alliance, but no seats in the Senate"
+        legitimacy_bp: 700
+        unrest_bp: 0
+        influence: {nobility: -300}
+        outcome: >-
+          The Latin praetors carry your offer home. Annius has already told their assembly that
+          nothing less than equal government will do, and the offer is not taken up. You have
+          lost a few months and the Senate's patience.
+        deeds: {war_with: [e3_latins]}
+      - label: "Grant the Latins one consul and half the Senate"
+        legitimacy_bp: -2500
+        unrest_bp: 1500
+        influence: {nobility: -1500}
+        outcome: >-
+          The senators will not hear of it. Livy shows them shaken with anger even at the asking,
+          and no vote to give away the Capitol would have passed. If you press it, you will lose
+          the Senate and the city, and the Latins will still be unsatisfied.
+    history: >-
+      The Senate and people chose war. The Latin praetors Annius and Numisius had brought the
+      demand; the consul Manlius Torquatus refused it, and the war with the Latins, Campanians
+      and Volscians followed. The consuls took two armies by way of the country of the Marsi and
+      Paeligni and encamped near Capua.
+    sources: ["Livy 8.2-8.6"]
+
+  - id: rome_manlian_discipline
+    scenario: rome_340
+    civ: rome
+    year: -340
+    title: "Orders Out of Rank"
+    place: "The Roman camp near Capua"
+    speaker: general
+    speaker_name: "Your officers"
+    speaker_title: "In the assembly of the army"
+    benchmark_provinces: 2
+    after: [rome_latin_demand]
+    story: >-
+      The Latins speak your language, wear your armour, fight in your formations and have served
+      beside your soldiers for generations; centurions have been comrades of centurions. So you
+      and Decius have given an order that no man is to fight the enemy out of his post.
+
+
+      Your own son, Titus Manlius, leading a scouting party, has met a troop of Tusculan
+      horse under Geminus Metius, who knew him and taunted him. Your son accepted a challenge,
+      forgetting your order, and killed Metius in single combat. He comes straight to your tent
+      with the spoils: "that all may say I am sprung from your blood".
+
+
+      You turn away from him and call the army.
+    choices:
+      - label: "Have him executed before the army"
+        historical: true
+        legitimacy_bp: 300
+        unrest_bp: 700
+        influence: {nobility: -300}
+        outcome: >-
+          You tell the assembly that either the authority of consuls must be set up by his death
+          or be done away with by his pardon, and you say to the lictor, "Go, bind him to the
+          stake." The army stands in silence until the blood spurts from the neck, and then breaks
+          into lamentation. They burn him with the spoils at a funeral as splendid as any a
+          soldier has had. Manlian orders become a byword for harshness, but the camp is
+          afterwards more obedient, and the guard is kept better.
+        deeds: {martial_bp: 800}
+      - label: "Reprimand him publicly, but let him live"
+        legitimacy_bp: -400
+        unrest_bp: 200
+        outcome: >-
+          Your son's duel is forgiven. The army cheers, and then every officer who ever wants to
+          leave his post for a good reason remembers it. Livy has you say that either the
+          consuls' authority must be set up by his death or be done away with by his pardon.
+        deeds: {martial_bp: -300}
+      - label: "Strip him of his spoils and his rank"
+        legitimacy_bp: 100
+        unrest_bp: 300
+        outcome: >-
+          Your son loses the troop he commanded and the spoils of Metius. The army sees that the
+          order stands, and sees too that a consul will not punish his own family as he would
+          punish another man's.
+    history: >-
+      The elder Manlius had his son bound to the stake and beheaded. The army's obedience was said
+      to have been strengthened, though the young men of Rome hated him for the rest of his life,
+      and when he came home from the war only the old men went out to meet him.
+    sources: ["Livy 8.6-8.8", "Livy 8.12"]
+
+  - id: rome_veseris
+    scenario: rome_340
+    civ: rome
+    year: -340
+    title: "The Veseris"
+    place: "The foot of Vesuvius"
+    speaker: general
+    speaker_name: "Publius Decius Mus"
+    speaker_title: "Your fellow consul"
+    benchmark_provinces: 2
+    after: [rome_manlian_discipline]
+    story: >-
+      The night before, the same dream came to you and to Decius: a man larger than any mortal,
+      saying that of the two sides one general and one army were owed to the gods below, and that
+      whichever general devoted the enemy's army and himself would give his side the victory. The
+      seers read the same thing in the entrails of the victims, and you and Decius agreed that
+      whichever wing began to give way, its consul would devote himself.
+
+
+      The army is drawn up in the new order, not in one block like a Macedonian phalanx but in
+      lines of companies: the hastati in front, the principes behind, and behind them the triarii,
+      kneeling with their spears planted. You command the right, Decius the left. Then the
+      hastati on the left begin to fall back on the principes, and Decius calls for the
+      pontiff.
+    choices:
+      - label: "Let Decius devote himself; keep the triarii back until the Latins tire"
+        historical: true
+        legitimacy_bp: 900
+        unrest_bp: -300
+        influence: {clergy: 300}
+        outcome: >-
+          Decius has the pontiff Marcus Valerius say the words over him, in the purple-edged toga,
+          with his head covered, and rides into the Latin ranks. The Latins give way before him.
+          You hesitate, then judge that the triarii should be kept fresh, and bring up the accensi from
+          the rear first; the Latins in turn call up their own triarii. When both are spent you call,
+          "Arise now, fresh as you are, against men now wearied", and the triarii rise and cut
+          through them, leaving about a quarter alive. The Latins flee towards Minturnae. Next day
+          Decius's body is found under heaps of enemy dead.
+        deeds: {martial_bp: 1500, ruler_falls: "lays down his office at the end of his year"}
+      - label: "Throw in the triarii at once to save the left"
+        legitimacy_bp: 1300
+        unrest_bp: 0
+        outcome: >-
+          The last line goes in while the Latins still have their strength, and when it is spent
+          you have nothing behind it. The battle is won only at much greater cost.
+        deeds: {martial_bp: 300, ruler_falls: "lays down his office at the end of his year"}
+      - label: "Forbid Decius to devote himself"
+        legitimacy_bp: -1000
+        unrest_bp: 800
+        outcome: >-
+          The omens and the dream said that one consul must die. The army hears that you stopped
+          him, and many are afraid; the men on the left, who saw their own consul called back,
+          lose heart.
+        deeds: {ruler_falls: "lays down his office at the end of his year"}
+    history: >-
+      Decius devoted himself and the Latin legions to the gods below; Manlius held the triarii
+      back until the Latins were tired, and then won. The beaten Latins were beaten again at Trifanum
+      between Sinuessa and Minturnae and the Latins and the Campanians surrendered. The Campanian
+      horsemen who had not revolted were made citizens, and 450 denarii a year was exacted of the
+      Campanians for each of them.
+    sources: ["Livy 8.6", "Livy 8.8-8.11"]
+
+  - id: rome_latin_settlement
+    scenario: rome_340
+    civ: rome
+    year: -338
+    title: "The Settlement of Latium"
+    place: "The Senate house, Rome"
+    speaker: steward
+    speaker_name: "A senator"
+    speaker_title: "Of the old families"
+    benchmark_provinces: 4
+    story: >-
+      You are Lucius Furius Camillus, consul, and with your colleague Gaius Maenius you have
+      broken the Latins: Maenius at the river Astura, you at Pedum, which you took by storm the
+      same day you beat its allies. All Latium has been taken by assault or has surrendered, and
+      there are Roman garrisons in every town and in Antium of the Volscians.
+
+
+      Now you put the question to the Senate. The immortal gods, you say, have put it in their
+      power whether Latium is to exist any longer. They may destroy it and make a desert of the
+      place that has supplied so many allies in so many wars, or they may do as their ancestors
+      did and add the conquered to the citizens. Whatever they decide must be decided quickly.
+    choices:
+      - label: "Judge each city on its merits"
+        historical: true
+        legitimacy_bp: 800
+        unrest_bp: -300
+        influence: {nobility: 300}
+        outcome: >-
+          Lanuvium, Aricia, Nomentum and Pedum are made citizens; Tusculum keeps the citizenship it
+          has; Velitrae loses its walls and its senate, which is moved across the Tiber, and
+          colonists are sent. Antium gets a colony, loses its warships, and is forbidden the sea;
+          some of the ships are put in the docks, and the beaks of the others are fixed to the
+          platform in the Forum, which is called the Rostra. Tibur and Praeneste lose land for
+          having once joined the Gauls. The other Latin cities lose the right to marry, trade or
+          hold councils with each other. Capua, Cumae and Suessula, and Fundi and Formiae, are
+          given Roman citizenship (Livy's wording is usually read as citizenship without the vote).
+        deeds: {ruler_falls: "lays down his office at the end of his year", take: [it_latium, it_campania], peace_with: [e3_latins, e3_campanians]}
+      - label: "Destroy the Latin cities that rose against you"
+        legitimacy_bp: -1500
+        unrest_bp: 1000
+        influence: {nobility: 300}
+        outcome: >-
+          Latium becomes the desert you described. Rome has lost the allies who supplied half of
+          every army and has no one left to fight beside her in the next war.
+        deeds: {ruler_falls: "lays down his office at the end of his year", take: [it_latium], peace_with: [e3_campanians]}
+      - label: "Make every Latin a Roman citizen at once"
+        legitimacy_bp: 1500
+        unrest_bp: 0
+        influence: {nobility: -500}
+        outcome: >-
+          Rome's strength rises by the Latin cities; so do the number of voters whose interests
+          the Roman nobility does not share.
+        deeds: {ruler_falls: "lays down his office at the end of his year", take: [it_latium], peace_with: [e3_latins, e3_campanians]}
+    history: >-
+      The Senate had each city's case put separately and decided it on its merits. The Latin
+      League was ended by taking from the Latin cities the rights of intermarriage, commerce and
+      common councils; the Campanian horsemen, the Fundani and the Formiani, and the people of
+      Cumae and Suessula, were given Roman citizenship.
+    diverged: >-
+      The Latin cities no longer stand as a league, and the settlement of Latium is told only
+      by the Rome that came out of it.
+    sources: ["Livy 8.13-8.14"]
+    # unverified: whether Livy 8.14 grants citizenship with or without the vote (the translation read says with; the usual reading of the Latin is without)
+
+  - id: rome_privernum
+    scenario: rome_340
+    civ: rome
+    year: -329
+    title: "Those Who Deserve Freedom"
+    place: "The Senate house, Rome"
+    speaker: steward
+    speaker_name: "A Privernate envoy"
+    speaker_title: "Brought before the Senate"
+    benchmark_provinces: 4
+    story: >-
+      You are Gaius Plautius, consul. Privernum, which Rome had defeated once, rose a second time,
+      with the help of Fundi and its leader Vitruvius Vaccus, a Fundanian with a house on the
+      Palatine. You have taken the town, razed its walls, and watched your Senate put Vaccus in
+      prison until you were home to have him beaten and beheaded. His house on the Palatine has
+      been pulled down and its ground left empty. Your triumph is over.
+
+
+      Now you ask the Senate what to do with the people of Privernum who did not lead the revolt.
+      Someone asks a Privernate envoy what punishment his people deserve. "Such as those deserve,"
+      he says, "who think themselves worthy of liberty."
+    choices:
+      - label: "Ask him what peace Rome could expect if it forgave"
+        historical: true
+        legitimacy_bp: 700
+        unrest_bp: -200
+        outcome: >-
+          "If the peace you grant us is a good one," he answers, "inviolable and eternal; if bad,
+          of no long continuance." Some senators take it as a threat. The better part hear a free
+          man, and say that people who think of nothing but liberty are worthy of being Roman.
+          The Senate carries it, and the people are asked to give Privernum citizenship.
+        deeds: {ruler_falls: "lays down his office at the end of his year", take: [it_volsci]}
+      - label: "Take two thirds of their land, as after the first revolt"
+        legitimacy_bp: -300
+        unrest_bp: 300
+        wealth_bp: 1800
+        outcome: >-
+          Privernum is garrisoned and fined its land, as it was before. It is now twice a town that
+          Rome has beaten and not trusted.
+        deeds: {ruler_falls: "lays down his office at the end of his year", take: [it_volsci]}
+      - label: "Remove the Privernate senate beyond the Tiber"
+        legitimacy_bp: 100
+        unrest_bp: 300
+        outcome: >-
+          The senate of Privernum is moved across the Tiber under the same conditions as that of
+          Velitrae, and the people are left to the Roman governors.
+        deeds: {ruler_falls: "lays down his office at the end of his year", take: [it_volsci]}
+    history: >-
+      The Senate sent word to demolish the walls of Privernum, leave a strong garrison there and
+      beat and kill Vitruvius Vaccus, and then, after Plautius's triumph, voted to give the
+      Privernates citizenship. A colony of three hundred was sent to Anxur the same year.
+    sources: ["Livy 8.1", "Livy 8.19-8.21"]
+
+  - id: rome_palaepolis
+    scenario: rome_340
+    civ: rome
+    year: -327
+    title: "Palaepolis"
+    place: "The coast of Campania"
+    speaker: steward
+    speaker_name: "The heralds"
+    speaker_title: "Just back from the Greek town"
+    benchmark_provinces: 5
+    story: >-
+      You are Quintus Publilius Philo, consul for the second time. Palaepolis, near where
+      Neapolis now stands, has been raiding the Romans who live on the Campanian and Falernian
+      lands. Your heralds went to demand satisfaction and were answered with the boasts of a
+      people who talk bigger than they fight. The people, on the Senate's advice, have ordered
+      war to be declared against the Palaepolitans, and the war has fallen to you.
+
+
+      Now you learn that two thousand men from Nola and four thousand Samnites have been taken
+      into the town. The Samnites, asked about it, protest that they had no hand in it; but they
+      say too that it gives them great offence that Rome has rebuilt Fregellae and sent a colony
+      there on land they say is theirs. "The plains of Campania will settle it," says their
+      magistrate, "between Capua and Suessula."
+    choices:
+      - label: "Besiege both towns, and ask for your command to be prolonged"
+        historical: true
+        legitimacy_bp: 1000
+        unrest_bp: 200
+        influence: {nobility: -200}
+        outcome: >-
+          You take a position between Palaepolis and Neapolis so that neither can help the other.
+          The tribunes carry a proposal that you may go on commanding as proconsul after your year
+          until the war with the Greeks is over - the first time a command has been prolonged. The
+          town falls, through two of its own leading men, Charilaus and Nymphius; the Nolans flee
+          and the Samnites go home stripped. Neapolis makes a treaty with Rome, and you are
+          granted a triumph after your office has ended, another first.
+        deeds: {war_with: [e3_samnites], take: [it_neapolis], ruler_falls: "lays down his office at the end of his command"}
+      - label: "Give up Fregellae to the Samnites to avoid a second war"
+        legitimacy_bp: -1500
+        unrest_bp: 1000
+        influence: {nobility: -500}
+        outcome: >-
+          The Romans of Campania lose their protector and the colony is abandoned. The Samnites do
+          not take it as friendship.
+        deeds: {ruler_falls: "lays down his office at the end of his year"}
+      - label: "Meet the Samnites in the plain at once"
+        legitimacy_bp: 400
+        unrest_bp: 200
+        wealth_bp: 1200
+        outcome: >-
+          Your army is divided between the siege and the field, and neither has enough men.
+        deeds: {war_with: [e3_samnites], men: 5000, ruler_falls: "lays down his office at the end of his year"}
+    history: >-
+      The people voted war on the Samnites in the following year; the Lucanians and Apulians then
+      sent word that they wanted a treaty of friendship with Rome. Livy says there was a second,
+      rival account in which the Samnites betrayed the town, but he prefers the one that has
+      Charilaus and Nymphius open it to the Romans. (Livy dates the war to 327-326.)
+    sources: ["Livy 8.22-8.26"]
+
+  - id: rome_papirius_fabius
+    scenario: rome_340
+    civ: rome
+    year: -325
+    title: "The Dictator and the Master of the Horse"
+    place: "The Roman camp in Samnium"
+    speaker: steward
+    speaker_name: "The tribunes of the plebs"
+    speaker_title: "Come to plead"
+    benchmark_provinces: 5
+    story: >-
+      You are Lucius Papirius Cursor, dictator, called by Livy by far the most celebrated general
+      of the age. You went back to Rome to take the auspices again, and left your master of the
+      horse, Quintus Fabius, with orders to stay in the camp and not engage. Fabius learned that
+      the Samnites were careless, moved to a place called Imbrinium, and beat them. Twenty
+      thousand are said to have fallen. He piled the captured arms and burned them, and wrote his
+      dispatch to the Senate, not to you.
+
+
+      You left the Senate in anger, saying that the Samnites had been no more overthrown than the
+      dictator's authority and the discipline of arms. Fabius has called the soldiers together and appealed
+      to them, and, through his father, who has been consul three times, to the Senate and
+      the tribunes.
+    choices:
+      - label: "Spare him, but forbid him to act as a magistrate"
+        historical: true
+        legitimacy_bp: 900
+        unrest_bp: -400
+        influence: {nobility: 200}
+        outcome: >-
+          When the Senate, the tribunes and the people ask it, and Fabius's father has begged you
+          for his son, you pardon him, saying that the majesty of the dictator has been upheld by
+          the pleading of the Roman people. You leave Rome and take the army back; the soldiers
+          at first refuse to fight to give you the credit, until they see you visiting the wounded
+          by name.
+        deeds: {martial_bp: 500, ruler_falls: "lays down his office at the end of his command"}
+      - label: "Have Fabius beaten and beheaded"
+        legitimacy_bp: -1200
+        unrest_bp: 1500
+        influence: {nobility: -800}
+        outcome: >-
+          The army will not stand for it and neither will Rome. You will have your example, and
+          the army will sulk the whole campaign.
+        deeds: {martial_bp: -400, ruler_falls: "lays down his office at the end of his command"}
+      - label: "Strip Fabius of his command and send him home"
+        legitimacy_bp: 1500
+        unrest_bp: 0
+        outcome: >-
+          Fabius goes home with his father, the victory of Imbrinium unrewarded. The Fabii are not
+          your friends after this.
+        deeds: {men: 1000, ruler_falls: "lays down his office at the end of his command"}
+    history: >-
+      The dictator, after much pleading by the Senate, the tribunes, Fabius's father and the
+      people, pardoned his master of the horse. He then took his army back, forbidding Fabius to
+      act as a magistrate, and won the goodwill of the soldiers by going round the wounded.
+    sources: ["Livy 8.29-8.36"]
+
+  - id: rome_caudine
+    scenario: rome_340
+    civ: rome
+    year: -321
+    title: "The Caudine Forks"
+    place: "A mountain pass in Samnium"
+    speaker: general
+    speaker_name: "Titus Veturius Calvinus"
+    speaker_title: "Your fellow consul"
+    benchmark_provinces: 5
+    needs_alive: [e3_samnites]
+    story: >-
+      You are Spurius Postumius Albinus, consul. Ten Samnite soldiers, dressed as shepherds, let
+      your foragers catch them and told the story they had been given: the Samnite armies are far
+      away in Apulia, besieging Luceria. You could go there by the long road along the coast or by
+      the short one through the Caudine Forks.
+
+
+      You took the short one. The path runs through a narrow wooded glen, a grassy plain, and a
+      second narrow glen. The second was blocked with felled trees and a bank of boulders;
+      when you turned back, the first had been closed behind you, and men in arms were on every
+      ridge.
+
+
+      The Samnite general, Gaius Pontius, asked his father Herennius what to do. The old man
+      said first to let the Romans go home unharmed, and then, when his son sent again, to kill
+      every one of them. Pontius did neither. His envoys now tell you what he will take.
+    choices:
+      - label: "Swear the treaty and send the army under the yoke"
+        historical: true
+        legitimacy_bp: -1800
+        unrest_bp: 1200
+        influence: {nobility: -500}
+        outcome: >-
+          The Samnites ask that Rome withdraw its colonies from Samnite land and that the two
+          states live as equals under a treaty; six hundred knights are to be left as hostages.
+          Your army leaves its arms and passes under the yoke in single garments, you and the
+          other officers first. Rome goes into mourning; and the Senate repudiates the treaty,
+          saying that the consuls swore it under compulsion and gave Rome no right to be bound.
+        deeds: {ruler_falls: "lays down his office at the end of his year", martial_bp: 800}
+      - label: "Break out and fight"
+        legitimacy_bp: -1200
+        unrest_bp: 1500
+        outcome: >-
+          Your men are packed into a valley with no room to form a line and no road home. If they
+          have a chance, it is to die fighting, and you make it.
+        deeds: {ruler_falls: "lays down his office at the end of his year", martial_bp: 300}
+      - label: "Ask for a truce, not a treaty"
+        legitimacy_bp: -800
+        unrest_bp: 500
+        outcome: >-
+          Pontius answers that a war is over when the loser submits. Your envoys come back, and
+          the terms stand as he first gave them.
+        deeds: {ruler_falls: "lays down his office at the end of his year"}
+    history: >-
+      Livy dates the disaster at the Caudine Forks to 321 BC. The consuls Veturius Calvinus and
+      Postumius Albinus swore a treaty and gave six hundred knights as hostages; the army went
+      under the yoke. The Senate refused to be bound, and Postumius himself argued that it
+      should. The consuls and the other guarantors were handed over to the Samnites by a herald,
+      Aulus Cornelius Arvina; Pontius refused to accept them, saying they were not truly
+      surrendered, and the war went on.
+    sources: ["Livy 9.1-9.12", "Cassius Dio 8, fragments"]
+
+  - id: rome_appia
+    scenario: rome_340
+    civ: rome
+    year: -312
+    title: "The Censor Who Would Not Go"
+    place: "The Forum, Rome"
+    speaker: steward
+    speaker_name: "Gaius Plautius"
+    speaker_title: "Your fellow censor"
+    benchmark_provinces: 5
+    story: >-
+      You are Appius Claudius, censor, of the family whose men have always been proud and
+      inflexible. Your colleague Gaius Plautius, mortified by the choice of senators the two of
+      you have made, has resigned. You have not. You have a road to build and water to bring into
+      the city.
+
+
+      The Aemilian law limits a censor's term to eighteen months. You mean to ignore it, as you
+      say the law was passed only for the censors of that day. A tribune, Publius Sempronius, is
+      going to ask you what you would have done if you had been censor when the law was passed.
+    choices:
+      - label: "Stay in office until the road and the water are done"
+        historical: true
+        wealth_bp: -1500
+        legitimacy_bp: 600
+        influence: {nobility: -300}
+        outcome: >-
+          You build the road that will be called the Appian, and bring water into the city. The
+          tribune reminds the people of the decemvir Appius who held on to power and was thrown
+          out of it; you argue that the people's last law is the law that binds, and keep your
+          chair. The next year's consuls ignore your list of senators and call the House by the
+          older list. Years later, says Livy, the gods took your sight.
+        deeds: {ruler_falls: "lays down his office at the end of his term", martial_bp: 500}
+        idea: roads
+      - label: "Resign with Plautius after eighteen months"
+        legitimacy_bp: 500
+        influence: {nobility: 400}
+        outcome: >-
+          You obey the law, and the nobles are pleased. The road and the water are left to later
+          censors who may or may not want them.
+        deeds: {ruler_falls: "lays down his office at the end of his term"}
+      - label: "Build the road first, and resign when it is done"
+        wealth_bp: -1000
+        legitimacy_bp: 300
+        outcome: >-
+          The road is finished within your eighteen months; the water, which takes longer, is left
+          to your successors.
+        deeds: {ruler_falls: "lays down his office at the end of his term", martial_bp: 400}
+        idea: roads
+    history: >-
+      The censor Appius Claudius, in 312 BC, made the road that came to be called the Appian way
+      and brought water into the city, and kept his office after the eighteen months the law
+      allowed and after his colleague had resigned. Other writers give the road's course to
+      Capua and the length of the aqueduct; those passages (Diodorus 20.36 and Frontinus, On
+      the Aqueducts 5) were not re-read here.
+    sources: ["Livy 9.29-9.30", "Livy 9.33-9.34"]
+    # unverified: Diodorus 20.36 (the road to Capua) and Frontinus, De aquaeductu 5 (the aqueduct's length)
+
+  - id: rome_ciminian
+    scenario: rome_340
+    civ: rome
+    year: -310
+    title: "The Ciminian Forest"
+    place: "The Roman camp before Sutrium"
+    speaker: general
+    speaker_name: "Your brother"
+    speaker_title: "Who speaks Etruscan"
+    benchmark_provinces: 5
+    needs_alive: [e3_etruscans]
+    story: >-
+      You are Quintus Fabius Maximus, consul, who took over the army at Sutrium. The Etruscans have
+      come out in strength, and between you and their country lies the Ciminian forest, which men
+      call as impassable and terrifying as the German forests. No trader has ever dared it. Since
+      Caudium, your soldiers are afraid of strange country.
+
+
+      Your brother, who was brought up at Caere and speaks Etruscan (Livy says his name was Marcus
+      or Caeso, or perhaps Gaius Claudius), has offered to go in as a scout in the dress of a
+      shepherd with a single slave. He has gone as far as the Camertian Umbrians, who have
+      promised thirty days' provisions and their young men. The Senate is afraid of the forest
+      and means to forbid you to enter it.
+    choices:
+      - label: "Cross the forest before the Senate's envoys arrive"
+        historical: true
+        legitimacy_bp: 800
+        wealth_bp: 800
+        outcome: >-
+          You send the baggage ahead at the first watch and the legions after it, hold the enemy's
+          posts in play with the cavalry, and ride off to overtake them. At first light you are on
+          the ridge of Mount Ciminius looking over the plains of Etruria, and you let the army
+          loose. Five senators and two tribunes arrive to forbid the crossing, find you have gone,
+          and go home with the news. The war is not shortened: the Etruscans and Umbrians come
+          together against you at Sutrium.
+        deeds: {war_with: [e3_etruscans], ruler_falls: "lays down his office at the end of his term"}
+      - label: "Obey the Senate and stay before Sutrium"
+        legitimacy_bp: 2000
+        wealth_bp: -300
+        outcome: >-
+          The army holds its place at Sutrium, and the war goes on in front of it.
+        deeds: {war_with: [e3_etruscans], ruler_falls: "lays down his office at the end of his term"}
+      - label: "Enter the forest by the Umbrian side, with Camerinum's help"
+        legitimacy_bp: 500
+        outcome: >-
+          Your brother's promise brings the Umbrians in as allies against the Etruscans. The march
+          is longer and the army is thinner for it.
+        deeds: {war_with: [e3_etruscans], men: 2000, ruler_falls: "lays down his office at the end of his term"}
+    history: >-
+      Fabius took the army over Mount Ciminius, plundered the country below and drew the Etruscans
+      and neighbouring Umbrians out to Sutrium in a much larger war. The envoys the Senate sent
+      to forbid the crossing arrived after he had gone.
+    sources: ["Livy 9.32-9.37"]
+
+  - id: rome_flavius
+    scenario: rome_340
+    civ: rome
+    year: -304
+    title: "The Scribe's Calendar"
+    place: "The Forum"
+    speaker: steward
+    speaker_name: "A young noble"
+    speaker_title: "Who will not stand"
+    benchmark_provinces: 5
+    story: >-
+      You are Gnaeus Flavius, son of a freed slave, a scribe, now curule aedile. The nobles
+      sneered at you when you were put up; one story says you threw down your writing tablet and
+      swore never to be a scribe again, and another says you had left it long before.
+
+
+      You know the rules of procedure for the courts, which the pontiffs have kept in their
+      closets, and the calendar that says which days are for business. The nobles prefer
+      to keep both to themselves. You could hang them up in the Forum where all may see.
+    choices:
+      - label: "Publish the rules and the calendar"
+        historical: true
+        legitimacy_bp: 800
+        unrest_bp: -400
+        influence: {nobility: -600, guilds: 400}
+        outcome: >-
+          You hang the calendar on white tablets round the Forum so that all may know when business
+          can be done, and publish the forms of procedure for suits. You also dedicate the temple of
+          Concord in the area of Vulcan's temple, against the nobles' wishes; the chief pontiff,
+          Cornelius Barbatus, has to dictate the form of words to you under pressure from the people,
+          though he says only a consul or general can dedicate. When you call on your sick
+          colleague and the young nobles will not rise, you have your curule chair brought in, and
+          sit.
+        deeds: {ruler_falls: "lays down his office at the end of his term"}
+      - label: "Publish only the calendar"
+        legitimacy_bp: 900
+        unrest_bp: -400
+        influence: {nobility: -200}
+        outcome: >-
+          Business days are known; the forms of suit stay the pontiffs' secret and the nobles keep
+          the power to say how to bring a case.
+        deeds: {martial_bp: 200, ruler_falls: "lays down his office at the end of his term"}
+      - label: "Keep the pontiffs' secrets"
+        legitimacy_bp: -200
+        unrest_bp: 300
+        outcome: >-
+          You stay what you were - a scribe in a curule chair. The nobles accept you more easily,
+          but the people expected something.
+        deeds: {ruler_falls: "lays down his office at the end of his term"}
+    history: >-
+      In the same year Rome beat the Aequi, taking forty-one towns in fifty days, and renewed
+      the old treaty with the Samnites. Flavius published the rules of procedure and the
+      calendar and dedicated the temple of Concord. Quintus Fabius and Publius Decius, later censors, confined the lowest of the people to the four city tribes, and for
+      this Fabius was given the surname Maximus.
+    sources: ["Livy 9.45-9.46"]
+
+  - id: rome_ogulnian
+    scenario: rome_340
+    civ: rome
+    year: -300
+    title: "The Tribunes Ogulnii"
+    place: "The Forum"
+    speaker: steward
+    speaker_name: "The tribunes Quintus and Gnaeus Ogulnius"
+    speaker_title: "Brothers"
+    benchmark_provinces: 5
+    story: >-
+      You are Marcus Valerius Corvus, consul with Quintus Appuleius. Everything that touches the
+      gods is kept by the patricians, who are the pontiffs and the augurs, though plebeians may
+      now be consul and censor. The tribunes Quintus and Gnaeus Ogulnius have put forward a bill
+      to raise the number of pontiffs from four to eight and the augurs from four to nine, and to
+      fill the new places - four pontiffs and five augurs - from the plebeians.
+
+
+      Appius Claudius, the old censor, will speak against it. Publius Decius Mus, a plebeian whose
+      father gave his life at the Veseris, will answer him.
+    choices:
+      - label: "Let the plebeians into both colleges"
+        historical: true
+        legitimacy_bp: 1500
+        unrest_bp: -1000
+        influence: {clergy: -500, nobility: -500}
+        outcome: >-
+          The bill passes with the approval of a great majority. Publius Decius Mus himself, who
+          spoke for it, is made pontiff, with Publius Sempronius Sophus, Gaius Marcius Rutilus and
+          Marcus Livius Denter; five plebeians become augurs. In the same year you carry a law on
+          appeals, with stricter penalties, which forbids a man who has appealed to be beaten or
+          beheaded.
+        deeds: {ruler_falls: "lays down his office at the end of his year"}
+      - label: "Keep the priesthoods for the patricians"
+        legitimacy_bp: -500
+        unrest_bp: 1500
+        outcome: >-
+          The tribunes wait. The plebeians remember.
+        deeds: {ruler_falls: "lays down his office at the end of his year"}
+      - label: "Open the pontiffs' college but not the augurs'"
+        legitimacy_bp: 600
+        unrest_bp: -300
+        influence: {clergy: -300}
+        outcome: >-
+          The pontiffs are enlarged and the plebeians have a seat in one college. The augurs keep
+          their old exclusive right to say what the gods approve.
+        deeds: {ruler_falls: "lays down his office at the end of his year"}
+    history: >-
+      The Ogulnian law (300 BC) raised the pontiffs to eight and the augurs to nine, the new
+      places going to plebeians. The consul Marcus Valerius passed a law on appeals the same year.
+    sources: ["Livy 10.6-10.9"]
+
+  - id: rome_lucania
+    scenario: rome_340
+    civ: rome
+    year: -298
+    title: "Lucania Asks for Help"
+    place: "The Senate house, Rome"
+    speaker: e3_lucanians
+    speaker_name: "A Lucanian envoy"
+    speaker_title: "Before the new consuls"
+    benchmark_provinces: 5
+    needs_alive: [e3_lucanians, e3_samnites]
+    story: >-
+      You are Lucius Cornelius Scipio, consul, with Gnaeus Fulvius. Rome is busy
+      with the Etruscans, and the Picentes, new allies, warn you that the Samnites are arming.
+
+
+      Lucanian envoys come to you. The Samnites, they say, could not tempt Lucania to join a war
+      on Rome, and have marched into their country, laying it waste. The Lucanians have erred in
+      the past; now they would rather endure anything than offend the Roman name again. They ask
+      to be taken under Rome's protection, and offer hostages.
+    choices:
+      - label: "Make the alliance and send heralds to the Samnites"
+        historical: true
+        legitimacy_bp: 800
+        unrest_bp: 300
+        influence: {nobility: 300}
+        outcome: >-
+          The Senate is unanimous. A treaty is made with the Lucanians, and heralds tell the
+          Samnites to leave the country of Rome's allies. The Samnites warn them that if they
+          show themselves at any assembly in Samnium they will not leave alive. The Senate
+          votes and the people order war on the Samnites. Etruria falls to Scipio, Samnium to
+          Fulvius.
+        deeds: {ally_with: [e3_lucanians], war_with: [e3_samnites], men: 6000}
+      - label: "Send heralds to the Samnites first, and take no alliance"
+        legitimacy_bp: 700
+        outcome: >-
+          The Samnites have no reason to believe in a Rome that sends words only. The Lucanians go
+          on suffering.
+        deeds: {war_with: [e3_samnites]}
+      - label: "Refuse; the Samnite peace is worth more"
+        legitimacy_bp: -800
+        unrest_bp: 300
+        outcome: >-
+          Lucania is left to its fate and the Lucanians will remember who helped them.
+        deeds: {peace_with: [e3_samnites]}
+    history: >-
+      The Lucanians were taken into alliance, heralds were sent to demand that the Samnites leave,
+      and when the Samnites threatened them, the senate and people voted war.
+    sources: ["Livy 10.11-10.12"]
+
+  - id: rome_sentinum
+    scenario: rome_340
+    civ: rome
+    year: -295
+    title: "Sentinum"
+    place: "A plain in Umbria"
+    speaker: general
+    speaker_name: "Publius Decius Mus"
+    speaker_title: "Your fellow consul"
+    benchmark_provinces: 5
+    story: >-
+      You are Quintus Fabius Maximus Rullianus, consul with Publius Decius Mus, the son of the man
+      who devoted himself at the Veseris. You have crossed the Apennines and found a larger enemy
+      than Rome has faced: Samnites and Gauls in one camp and Etruscans and Umbrians in another. Their plan is that Samnites and Gauls will fight the main battle
+      while the Etruscans and Umbrians attack your camp.
+
+
+      Three deserters from Clusium come by night and tell you the whole plan. You can send them back
+      with presents, write to the commanders in the Faliscan and Vatican country to move their
+      armies against Clusium, and see whether the Etruscans go home to protect their fields.
+    choices:
+      - label: "Ravage Clusium to draw the Etruscans off, then hold back and tire the enemy"
+        historical: true
+        legitimacy_bp: 1500
+        outcome: >-
+          The Etruscans march from Sentinum to defend their own land. On the day, you hold your
+          wing on the defensive against the Samnites, knowing they are fierce at first and flag
+          later, and the Gauls tire more quickly than any men. Decius, charging with the cavalry on
+          the left, is thrown into disorder by the Gallic war chariots; he cries on his father,
+          has the pontiff Marcus Livius dictate the words, and devotes himself and the enemy
+          legions, as his father did, and rides into the Gauls. You send your reserve to his help
+          and, when the Samnites tire, charge them with cavalry on the flank and the legions in
+          front. Gellius Egnatius falls at the gate of their camp. Livy gives the enemy dead as
+          twenty-five thousand, and eight thousand captured; Roman losses as seven thousand in
+          Decius's army and twelve hundred in yours.
+        deeds: {martial_bp: 1000, ruler_falls: "lays down his office at the end of his year"}
+      - label: "Attack at once with both wings"
+        legitimacy_bp: -500
+        unrest_bp: 500
+        outcome: >-
+          Your men, tired by the march, meet an enemy fresh in the first onset, and with all four
+          armies in the field you are outnumbered.
+        deeds: {martial_bp: 200, ruler_falls: "lays down his office at the end of his year"}
+      - label: "Fight on the defensive on both wings"
+        legitimacy_bp: 1900
+        outcome: >-
+          Decius's wing, which was always the fiercer, is held back. The Gallic chariots find less
+          to scatter, and the battle is slower and costs fewer men.
+        deeds: {martial_bp: 600, ruler_falls: "lays down his office at the end of his year"}
+    history: >-
+      The Romans under Fabius Rullianus and Decius Mus beat the Samnites and Gauls at Sentinum
+      (295 BC); Decius died after devoting himself to the gods below.
+    sources: ["Livy 10.26-10.30", "Polybius 2.19.5-2.19.6"]
+
+  - id: rome_sabines
+    scenario: rome_340
+    civ: rome
+    year: -290
+    title: "The Sabine Triumphs"
+    place: "The Forum"
+    speaker: steward
+    speaker_name: "The people of Rome"
+    speaker_title: "Come to the triumph"
+    benchmark_provinces: 6
+    story: >-
+      You are Manius Curius Dentatus, consul. The Samnites have been fighting Rome for a generation,
+      and this year the Sabines, who were at peace, have rebelled. You have taken the
+      field against both.
+
+
+      When you came home you triumphed twice in one year - once over the Samnites and once over the
+      Sabines. Later you will tell the people that you have won so much land that fewer men
+      than there are could not have farmed it, and taken so many prisoners that fewer fields
+      could not have fed them.
+    choices:
+      - label: "Take the Sabine land and keep it quiet by garrisons"
+        historical: true
+        legitimacy_bp: 1000
+        wealth_bp: 500
+        outcome: >-
+          Curius subdued the Samnites and the Sabines in one year, as the Periochae say, and the
+          Sabine country becomes Roman ground.
+        deeds: {take: [it_sabina], ruler_falls: "lays down his office at the end of his year"}
+      - label: "Make a treaty with the Sabines and ask no land"
+        legitimacy_bp: 1200
+        wealth_bp: 500
+        outcome: >-
+          The Sabines keep their land and become less of a danger. The poor of Rome, who wanted
+          it, say they were not asked.
+        deeds: {men: 1000, ruler_falls: "lays down his office at the end of his year"}
+      - label: "Turn from the Sabines at once and finish the Samnites"
+        legitimacy_bp: 500
+        unrest_bp: 300
+        outcome: >-
+          The Sabine rising is not put out; it spreads.
+        deeds: {war_with: [e3_samnites], ruler_falls: "lays down his office at the end of his year"}
+    history: >-
+      In 290 BC the consul Curius Dentatus subdued the Samnites and the rebellious Sabines and
+      triumphed twice during his year of office. He is also reported to have said that he had won
+      so much land and so many prisoners that fewer men and less land would not have been enough.
+    sources: ["Livy, Periochae 11", "Cassius Dio 8, fragment 37"]
+
+  - id: rome_hortensia
+    scenario: rome_340
+    civ: rome
+    year: -287
+    title: "The Plebeians on the Janiculum"
+    place: "The Janiculum hill"
+    speaker: steward
+    speaker_name: "The leaders of the plebeians"
+    speaker_title: "In their camp across the Tiber"
+    benchmark_provinces: 6
+    story: >-
+      You are Quintus Hortensius, made dictator in an emergency. Years of war have left the poor
+      of Rome deep in debt to the rich, and after a long dispute the plebeians have left the city
+      and gone to the Janiculum, across the Tiber. They will not work or serve.
+
+
+      They already have the rule that plebeians may be consul and censor and sit among the priests.
+      What they want is that their own resolutions, the plebiscites, bind the whole people. A
+      dictator can carry a law, and no one can appeal against one.
+    choices:
+      - label: "Make the plebeians' resolutions law for everyone"
+        historical: true
+        legitimacy_bp: 1000
+        unrest_bp: -1500
+        influence: {nobility: -500}
+        outcome: >-
+          The law passes and the plebeians come down from the hill. A plebiscite now binds every
+          citizen, patrician and plebeian, without needing the Senate's leave; the long quarrel
+          of the orders is over. Later writers say that you died in office the same year.
+        deeds: {ruler_falls: "dies in office"}
+      - label: "Relieve their debts, but keep the Senate's veto"
+        legitimacy_bp: -300
+        unrest_bp: 1000
+        outcome: >-
+          Some debts are eased. The plebeians come home, and are not content.
+        deeds: {ruler_falls: "dies in office"}
+      - label: "Cancel the debts and leave the laws alone"
+        legitimacy_bp: 1800
+        unrest_bp: -1500
+        influence: {guilds: -500}
+        outcome: >-
+          The debts are written off and the plebeians go home. The moneylenders are angry, and the
+          question of whose votes bind the Senate is left for another secession.
+        deeds: {ruler_falls: "dies in office"}
+    history: >-
+      Livy's summary says that after a long sedition over debts the commons withdrew to the
+      Janiculum and were brought back by the dictator Hortensius, who died in office. Later
+      writers make the law he carried the one that made the plebiscites binding on all citizens.
+      Livy himself says that the dictator Publilius Philo had carried a law to that effect in
+      339 BC; the two accounts are not easy to reconcile.
+    sources: ["Livy, Periochae 11", "Livy 8.12"]
+    # unverified: Pliny, Natural History 16.37; Aulus Gellius 15.27; Gaius, Institutes 1.3 (the content of the lex Hortensia)
+
+  - id: rome_senones
+    scenario: rome_340
+    civ: rome
+    year: -283
+    title: "The Envoys of Arretium"
+    place: "The Senate house, Rome"
+    speaker: steward
+    speaker_name: "The Senate"
+    speaker_title: "After the news from Arretium"
+    benchmark_provinces: 7
+    needs_alive: [e3_senones]
+    story: >-
+      You are a consul of the year, and the news from Etruria is bad. The Gauls have besieged
+      Arretium. The Romans who came to its help were beaten in front of the town, and their
+      praetor Lucius Caecilius fell; Manius Curius was named in his place. Curius sent envoys to
+      the Gauls to ask for the prisoners, and the envoys were killed.
+
+
+      The Senones are the Gauls who live on the Adriatic coast, the last of the Celtic tribes to
+      reach that sea. The Senate is angry.
+    choices:
+      - label: "March into their country and drive them out"
+        historical: true
+        legitimacy_bp: 1200
+        wealth_bp: 500
+        outcome: >-
+          The Romans march at once, meet the Senones in battle, kill most of them and drive the
+          rest out of the whole country. A colony is planted there, the first the Romans have
+          founded in the land of the Gauls, and called Sena after the people who lived there.
+        deeds: {conquer: [e3_senones], take: [it_senones], men: 6000, ruler_falls: "lays down his office at the end of his year"}
+      - label: "Demand the killers, and negotiate"
+        legitimacy_bp: 1700
+        unrest_bp: 0
+        outcome: >-
+          The Senones see that Rome has not marched, and behave accordingly.
+        deeds: {peace_with: [e3_senones], ruler_falls: "lays down his office at the end of his year"}
+      - label: "Hire Boian horsemen to attack the Senones"
+        legitimacy_bp: 100
+        wealth_bp: -800
+        outcome: >-
+          The Boii, who have no love for Rome, take the money and turn their attention elsewhere.
+        deeds: {ruler_falls: "lays down his office at the end of his year"}
+    history: >-
+      The Senones were beaten, driven out, and their land taken; Sena was founded. The Boii, afraid
+      of the same fate, called on the Etruscans, and were beaten at Lake Vadimo, and again the
+      following year. This was three years before Pyrrhus crossed to Italy.
+    sources: ["Polybius 2.19.7-2.20.6", "Livy, Periochae 12"]
+
+  - id: rome_tarentine_ships
+    scenario: rome_340
+    civ: rome
+    year: -282
+    title: "The Ships off Tarentum"
+    place: "The Gulf of Tarentum"
+    speaker: general
+    speaker_name: "Postumius"
+    speaker_title: "Rome's envoy"
+    benchmark_provinces: 7
+    needs_alive: [e3_tarentum]
+    story: >-
+      You are a consul of the year. Rome had sent Gaius Fabricius to the allied cities to stop any of
+      them going over to the enemy. The Tarentines are celebrating the festival of Dionysus,
+      and sitting in the theatre half drunk, they have caught sight of a Roman admiral, Lucius
+      Valerius, sailing into their gulf. They put to sea at once and sink his ship and others.
+
+
+      You send envoys to ask for redress. At Tarentum they are laughed at for the togas
+      they wear in the Forum, and a man plants himself in front of Postumius, one of the envoys, and soils his clothes. The Tarentines cheer. Postumius says, "Laugh, laugh while you
+      may. Long will be your weeping, when you wash this garment clean with your blood."
+    choices:
+      - label: "Declare war on Tarentum"
+        historical: true
+        legitimacy_bp: 600
+        unrest_bp: 300
+        outcome: >-
+          The Romans vote for war. The Tarentines, who have begun it, are for a time sheltered
+          from fear, while the Romans are busy with the Samnites, Lucanians, Bruttians and
+          Etruscans, who are rebelling.
+        deeds: {war_with: [e3_tarentum], ruler_falls: "lays down his office at the end of his year"}
+      - label: "Take the insult and accept an apology"
+        legitimacy_bp: 900
+        unrest_bp: -300
+        outcome: >-
+          The Tarentines have been taught that a Roman fleet can be sunk with impunity.
+        deeds: {peace_with: [e3_tarentum], ruler_falls: "lays down his office at the end of his year"}
+      - label: "Send a second embassy and wait"
+        legitimacy_bp: -300
+        unrest_bp: 300
+        outcome: >-
+          The second embassy is received no better than the first.
+        deeds: {war_with: [e3_tarentum], ruler_falls: "lays down his office at the end of his year"}
+    history: >-
+      Rome sent envoys, which Cassius Dio says it did so as not to appear to have passed over the
+      affair in silence; they were insulted, and Rome declared war on Tarentum. The Tarentines called
+      in Pyrrhus.
+    sources: ["Cassius Dio 9.39", "Livy, Periochae 12"]
+
+  - id: rome_heraclea
+    scenario: rome_340
+    civ: rome
+    year: -280
+    title: "The River Siris"
+    place: "The banks of the Siris, near Heraclea"
+    speaker: general
+    speaker_name: "Your scouts"
+    speaker_title: "Just back from the king's camp"
+    needs_alive: [epirus]
+    benchmark_provinces: 7
+    story: >-
+      You are Publius Valerius Laevinus, consul. The Tarentines have hired King Pyrrhus of
+      Epirus, a king who has taken a large part of the Greek world by favours and by fear, and
+      he has crossed with twenty elephants, which no Italian has ever seen. You have marched into
+      Lucania, plundering as you go.
+
+
+      Pyrrhus has sent a herald to ask whether you would rather have satisfaction from the Italian
+      Greeks, with him as arbitrator and mediator. You have replied that the Romans neither choose
+      him as mediator nor fear him as a foe. He is camped on the plain between Pandosia and
+      Heraclea, across the river Siris. His allies have not yet joined him.
+    choices:
+      - label: "Cross the river and fight"
+        historical: true
+        legitimacy_bp: -500
+        outcome: >-
+          Pyrrhus watches your camp from the bank and says, "The discipline of these barbarians
+          is not barbarous; but the result will show us what it amounts to." Your infantry ford the
+          river and your cavalry dash across in front of it. The elephants break your cavalry, and the Thessalian horse finish them. Rome loses the
+          day, but she does not depose her consul; Fabricius says it was Pyrrhus who beat Laevinus
+          and not the Epirotes who beat the Romans, and the legions are filled up again within days.
+        deeds: {ruler_falls: "lays down his office at the end of his year"}
+      - label: "Wait for the other consul and the allies"
+        legitimacy_bp: 300
+        outcome: >-
+          You fall back, joined by more men, and make Pyrrhus come to you. He is glad to wait for
+          his own allies.
+        deeds: {ruler_falls: "lays down his office at the end of his year"}
+      - label: "Hear Pyrrhus's offer to arbitrate"
+        legitimacy_bp: -500
+        wealth_bp: -300
+        outcome: >-
+          The Romans have not asked for an arbiter, and the Senate is not pleased that you
+          listened.
+        deeds: {ruler_falls: "lays down his office at the end of his year"}
+    history: >-
+      Pyrrhus beat the consul Laevinus at Heraclea, the Roman cavalry broken by his elephants
+      (Plutarch 17; the Periochae mention the soldiers' terror at the unusual sight of them). Livy's
+      summary adds that Pyrrhus remarked that the Roman dead all lay with their faces to the enemy.
+    diverged: >-
+      Epirus has no king to bring across the sea.
+    sources: ["Plutarch, Pyrrhus 16-18", "Livy, Periochae 13", "Cassius Dio 9.40"]
+
+  - id: rome_cineas
+    scenario: rome_340
+    civ: rome
+    year: -279
+    title: "Cineas in the Senate"
+    place: "The Senate house"
+    speaker: epirus
+    speaker_name: "Cineas"
+    speaker_title: "Envoy of Pyrrhus"
+    needs_alive: [epirus]
+    benchmark_provinces: 7
+    story: >-
+      You are Appius Claudius, called the Blind, who made the road and brought the water in
+      thirty-three years ago. Age and blindness have long forced you to give up public affairs.
+      Cineas, the Thessalian who was a pupil of Demosthenes, has been among the senators with the
+      king's gifts for their wives and children, which no one would take. His terms are that
+      Pyrrhus will return all the prisoners without ransom and help Rome to subdue Italy;
+      all he asks is friendship for himself and immunity for the Tarentines.
+
+
+      Most of the senators lean towards peace. They have been beaten once and expect a larger army
+      against them, now that the Greeks of Italy have joined Pyrrhus. You order your attendants to
+      carry you through the Forum. At the door your sons and sons-in-law lift you into the House,
+      and the senators fall silent out of respect.
+    choices:
+      - label: "Refuse while Pyrrhus is in Italy"
+        historical: true
+        legitimacy_bp: 900
+        outcome: >-
+          You say that you had borne blindness as an affliction but now wish you were deaf as well,
+          and ask where the boasts went that Alexander himself would have been beaten by Rome. The
+          Senate's mood turns, and Cineas is sent back with the answer that Pyrrhus must leave
+          Italy first and they will talk of friendship afterwards, and not before, even if he
+          routs ten thousand men like Laevinus. He tells the king that the Senate seemed to him a
+          council of many kings and the people a Hydra. Fabricius, sent to treat for the prisoners,
+          refuses the king's gold, and is not frightened by his elephant.
+        deeds: {ruler_falls: "lays down his office at the end of his term", martial_bp: 500}
+      - label: "Accept the king's terms"
+        legitimacy_bp: -1500
+        unrest_bp: 1000
+        outcome: >-
+          The Greeks of Italy keep their king, and Rome keeps what she held before. In every
+          Italian town, people ask whether Rome was ever the master.
+        deeds: {ruler_falls: "lays down his office at the end of his term", peace_with: [epirus]}
+      - label: "Talk, but ask for the Samnites to be included"
+        legitimacy_bp: 1500
+        unrest_bp: 0
+        outcome: >-
+          Cineas carries the answer back, and the king is not satisfied.
+        deeds: {peace_with: [epirus], ruler_falls: "lays down his office at the end of his term"}
+    history: >-
+      After Heraclea Pyrrhus sent Cineas to Rome to treat for peace; the aged, blind Appius Claudius
+      persuaded the Senate to refuse while Pyrrhus remained in Italy. Pyrrhus won a second
+      battle, at Asculum, with great losses; he is said to have answered someone who
+      congratulated him, "If we are victorious in one more battle with the Romans, we shall be
+      utterly ruined."
+    diverged: >-
+      Epirus has no king to bring across the sea.
+    sources: ["Plutarch, Pyrrhus 14", "Plutarch, Pyrrhus 18-21", "Livy, Periochae 13"]
+
+  - id: rome_beneventum
+    scenario: rome_340
+    civ: rome
+    year: -275
+    title: "Pyrrhus Returns"
+    place: "A hill camp near Beneventum"
+    speaker: general
+    speaker_name: "Your tribunes"
+    speaker_title: "Watching the hills"
+    needs_alive: [epirus]
+    benchmark_provinces: 7
+    story: >-
+      You are Manius Curius Dentatus, consul. Pyrrhus has come back from Sicily with the army he
+      took there, and the Samnites, whose power was broken by their many defeats, do not rise
+      eagerly to join him; they hold him partly to blame for his Sicilian adventure. He has divided
+      his army in two, sent one half into Lucania to keep your fellow consul from joining you,
+      and means to attack you before help arrives.
+
+
+      You are camped near Beneventum. Your seers have found the sacrifices unfavourable, and you
+      have so far kept quiet.
+    choices:
+      - label: "Hold the camp, and strike when he arrives at dawn"
+        historical: true
+        legitimacy_bp: 700
+        outcome: >-
+          Pyrrhus takes his best men and his best elephants and sets out by night on a long
+          circuit through wooded country. His torches burn out and his men lose their way. At
+          daybreak he is in plain view above your camp. The sacrifices are now favourable, and you
+          attack the front of his column and put it to flight; some of his elephants are cut off
+          and captured. You come down to give battle on the plain, and are driven back by
+          the elephants upon your camp, where the guards, all in arms and fresh, hurl their javelins
+          at the elephants and force them to turn and run through Pyrrhus's own ranks. The victory is
+          yours, and the Romans, Plutarch says, began to command Italy and soon afterwards
+          Sicily.
+        deeds: {ruler_falls: "lays down his office at the end of his term", martial_bp: 500}
+      - label: "Stay behind the ramparts"
+        legitimacy_bp: -500
+        outcome: >-
+          Pyrrhus waits, then moves on, and tells the world that the Romans would not meet him.
+        deeds: {ruler_falls: "lays down his office at the end of his term"}
+      - label: "Meet him on open ground"
+        legitimacy_bp: 1200
+        unrest_bp: 500
+        outcome: >-
+          You march your army down to meet the king. The plain is the elephants' ground, and the
+          battle is hard.
+        deeds: {men: 2000, ruler_falls: "lays down his office at the end of his term"}
+    history: >-
+      Manius Curius beat Pyrrhus near Beneventum in 275 BC. Pyrrhus left Italy, after six years of
+      war there and in Sicily, leaving a garrison in Tarentum.
+    diverged: >-
+      Epirus has no king to bring across the sea.
+    sources: ["Plutarch, Pyrrhus 25-26", "Livy, Periochae 14"]
+
+  - id: rome_tarentum
+    scenario: rome_340
+    civ: rome
+    year: -272
+    title: "The Fall of Tarentum"
+    place: "Tarentum"
+    speaker: general
+    speaker_name: "Milo"
+    speaker_title: "The king's garrison commander"
+    benchmark_provinces: 8
+    needs_alive: [e3_tarentum]
+    story: >-
+      You are Papirius Cursor, consul. Pyrrhus is dead; he was killed at Argos in Greece. The
+      Romans have beaten the Samnites under your colleague Carvilius and the Lucanians and Bruttians
+      under you. The Tarentines are angry with the garrison Pyrrhus left in the citadel under
+      Milo, who has been in a tight place: Some of them attacked him and have fortified a position in
+      their own country. They have called in the Carthaginians, whose fleet is now in the harbour.
+
+
+      Milo's position is hopeless. The Romans press him on the land side and the Carthaginians on
+      the water front. He is willing to give up the citadel if he and his men may leave with their
+      money.
+    choices:
+      - label: "Take the citadel and disarm the city, but leave it its laws"
+        historical: true
+        legitimacy_bp: 1000
+        wealth_bp: 500
+        outcome: >-
+          Milo gives up the citadel on condition that he may leave unharmed with his followers and
+          his money. The Carthaginians, being at peace with Rome, sail away, and Tarentum
+          surrenders. The Tarentines give up their arms and ships, pull down their walls and
+          agree to pay a tribute; Livy's summary says that they were granted peace and freedom.
+        deeds: {conquer: [e3_tarentum], take: [it_tarentum], ruler_falls: "lays down his office at the end of his year"}
+      - label: "Sack the city"
+        legitimacy_bp: -1000
+        unrest_bp: 1000
+        outcome: >-
+          The treasures of Tarentum come to Rome, and every Greek city of the south sees what to
+          fear.
+        deeds: {conquer: [e3_tarentum], take: [it_tarentum], ruler_falls: "lays down his office at the end of his year"}
+      - label: "Make Tarentum a free ally on easy terms"
+        legitimacy_bp: 1500
+        wealth_bp: 800
+        outcome: >-
+          Tarentum keeps its walls and ships and swears friendship. It pays little, and the
+          Tarentines remember that Rome treated them lightly.
+        deeds: {peace_with: [e3_tarentum], ruler_falls: "lays down his office at the end of his year"}
+    history: >-
+      Tarentum came into Rome's hands in 272 BC after Pyrrhus's death. The Carthaginian fleet's
+      sailing to Tarentum's aid is counted by Livy's summary a breach of the treaty between Rome
+      and Carthage; Milo surrendered the citadel to the consul Papirius.
+    sources: ["Cassius Dio 10, fragments (Zonaras)", "Livy, Periochae 14-15"]
+
+  - id: rome_silver
+    scenario: rome_340
+    civ: rome
+    year: -268
+    title: "Silver for Rome"
+    place: "The Roman treasury"
+    speaker: steward
+    speaker_name: "The quaestors"
+    speaker_title: "Keepers of the treasury"
+    benchmark_provinces: 8
+    story: >-
+      Rome is founding colonies at Ariminum and Beneventum, and she has beaten Pyrrhus. The
+      ancient writers do not say when Rome first made coin of her own; the money in her treasury
+      is bronze of a fixed weight, and the Greek cities of the south have long struck silver.
+
+
+      The quaestors ask whether the city should strike silver coin, like the Greeks.
+    choices:
+      - label: "Strike silver coin for the Roman people"
+        historical: true
+        wealth_bp: 800
+        legitimacy_bp: 300
+        influence: {guilds: 500}
+        outcome: >-
+          Silver coin is struck for the first time in Rome's name. Merchants, soldiers and the
+          treasury all find it easier to count.
+        deeds: {}
+        idea: coinage
+      - label: "Keep to weighed bronze"
+        legitimacy_bp: 200
+        outcome: >-
+          Rome keeps her old money, and trades with Greek coin as before.
+        deeds: {}
+      - label: "Strike bronze coin only, for use at home"
+        wealth_bp: 1500
+        legitimacy_bp: 400
+        outcome: >-
+          Bronze pieces of fixed weight are struck. They serve at home but are not trusted abroad.
+        deeds: {}
+        idea: coinage
+    history: >-
+      Livy's summary notes that silver coin was for the first time used by the Roman people, in
+      the years after the colonies of Ariminum and Beneventum (268 BC by his reckoning). When
+      Rome struck its first cast bronze coins is not told by the ancient authors; modern
+      numismatists date them to the decades before.
+    sources: ["Livy, Periochae 15"]
+    # unverified: Pliny, Natural History 33.42-33.46 (earlier Roman money); Crawford, Roman Republican Coinage (1974) for the bronze dating

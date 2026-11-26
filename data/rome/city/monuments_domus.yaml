@@ -1,0 +1,291 @@
+# Houses of the great families (F2 places, D-304). Same format as monuments.yaml (README.md),
+# plus `role: domus`, `gens` (a gens id of the rome pack's gentes.yaml) and `owner` (the man the
+# sources name). These are places the player visits to see and win over a family. Houses
+# already in monuments.yaml (Cicero, Catulus, Clodius, Pompey, Hortensius) keep their records
+# there; their families and years are in rome/republic_rules.yaml (city.places.domus), which
+# also gives later owners of the houses below. Positions are rough (the site is known only by
+# its hill or district); sizes are the domus kit's, not measured plans.
+monuments:
+- id: domus_valerii_velia
+  latin: Aedes P. Valeri Publicolae
+  english: House of P. Valerius Publicola below the Velia
+  type: house
+  role: domus
+  gens: valerii
+  owner: "P. Valerius Publicola and the Valerii"
+  regio: 4
+  lat: 41.8912
+  lon: 12.4893
+  precision: rough
+  location: at the foot of the Velia, where the temple of Vica Pota later stood
+  built: {year: -509, certainty: traditional, by: "P. Valerius, suspected of aiming at kingship for building on the top of the Velia, had his house pulled down and rebuilt at the foot of the hill (Livy 2.7.5-12; Plut. Publicola 10; Cic. Rep. 2.53)"}
+  sources: ["Livy 2.7.5-12", "Plutarch, Publicola 10", "Cicero, De re publica 2.53", "Platner-Ashby s.v. Vica Pota"]
+  notes: "Passages not re-read for this pass (unverified). How long the Valerii kept the house is not recorded; the game lets it stand as the family's house. Site rough: the foot of the Velia toward the Forum."
+  pleiades: null
+  verified: none
+  model: domus
+  bearing_deg: 16  # unverified
+  footprint_m: {length: 30, width: 20}  # unverified
+  height_m: 8  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
+- id: domus_cassii_carinae
+  latin: Domus Sp. Cassi
+  english: House of Sp. Cassius on the Carinae
+  type: house
+  role: domus
+  gens: cassii
+  owner: "Sp. Cassius Vecellinus"
+  regio: 3
+  lat: 41.8921
+  lon: 12.4926
+  precision: rough
+  location: Carinae, where the temple of Tellus was later built
+  ended: {year: -485, what: "pulled down after Sp. Cassius was condemned for aiming at kingship; the site left open before the temple of Tellus (Livy 2.41.11; Dion. Hal. 8.79.3)"}
+  sources: ["Livy 2.41.11", "Dion. Hal. 8.79.3", "Platner-Ashby s.v. Tellus, Aedes"]
+  notes: "Passages not re-read for this pass (unverified). No building date: it stands from the start of the Republic until 485."
+  pleiades: null
+  verified: none
+  model: domus
+  bearing_deg: 16  # unverified
+  footprint_m: {length: 30, width: 20}  # unverified
+  height_m: 8  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
+- id: domus_maelii
+  latin: Domus Sp. Maeli
+  english: House of Sp. Maelius (the Aequimaelium)
+  type: house
+  role: domus
+  gens: maelii
+  owner: "Sp. Maelius"
+  regio: 8
+  lat: 41.8916
+  lon: 12.4826
+  precision: rough
+  location: below the Capitol by the Vicus Iugarius; the open Aequimaelium afterwards
+  ended: {year: -439, what: "razed after Sp. Maelius was killed for courting the people with grain; the site left empty and called the Aequimaelium (Livy 4.16.1; Varro LL 5.157)"}
+  sources: ["Livy 4.16.1", "Varro, De lingua latina 5.157", "Platner-Ashby s.v. Aequimaelium"]
+  notes: "Passages not re-read for this pass (unverified). No building date: it stands from the start of the Republic until 439."
+  pleiades: null
+  verified: none
+  model: domus
+  bearing_deg: 16  # unverified
+  footprint_m: {length: 25, width: 18}  # unverified
+  height_m: 8  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
+- id: domus_manlii_arx
+  latin: Domus M. Manli Capitolini
+  english: House of M. Manlius Capitolinus on the Arx
+  type: house
+  role: domus
+  gens: manlii
+  owner: "M. Manlius Capitolinus"
+  regio: 8
+  lat: 41.8941
+  lon: 12.4829
+  precision: rough
+  location: Capitol, Arx, where the temple of Juno Moneta was built in 344
+  ended: {year: -384, what: "pulled down after Manlius was condemned; no patrician was to live on the Capitol (Livy 6.20.13)"}
+  sources: ["Livy 6.20.13", "Livy 7.28.5", "Platner-Ashby s.v. Arx"]
+  notes: "Passages not re-read for this pass (unverified). No building date: it stands from the start of the Republic until 384."
+  pleiades: null
+  verified: none
+  model: domus
+  bearing_deg: 142  # unverified
+  footprint_m: {length: 25, width: 18}  # unverified
+  height_m: 8  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
+- id: domus_scipionis_africani
+  latin: Domus P. Corneli Scipionis Africani
+  english: House of Scipio Africanus behind the Tabernae Veteres
+  type: house
+  role: domus
+  gens: cornelii
+  owner: "P. Cornelius Scipio Africanus and his heirs"
+  regio: 8
+  lat: 41.8917
+  lon: 12.4840
+  precision: rough
+  location: south side of the Forum, behind the Old Shops toward the statue of Vortumnus
+  built: {year: -205, certainty: uncertain, by: "date unknown; the game opens it with Scipio's first consulship"}
+  ended: {year: -170, what: "bought by the censor Ti. Sempronius Gracchus with the neighbouring butchers' shops and pulled down for the Basilica Sempronia (Livy 44.16.10)"}
+  sources: ["Livy 44.16.10", "Platner-Ashby s.v. Basilica Sempronia"]
+  notes: "Livy 44.16.10 not re-read for this pass (unverified). Livy dates the purchase to the censorship of 169; the house ends the year before the basilica in the dataset."
+  pleiades: null
+  verified: none
+  model: domus
+  bearing_deg: 16  # unverified
+  footprint_m: {length: 35, width: 22}  # unverified
+  height_m: 9  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
+- id: domus_cn_octavii
+  latin: Domus Cn. Octavi
+  english: House of Cn. Octavius on the Palatine
+  type: house
+  role: domus
+  gens: octavii
+  owner: "Cn. Octavius (consul 165)"
+  regio: 10
+  lat: 41.8902
+  lon: 12.4867
+  precision: rough
+  location: Palatine
+  built: {year: -165, certainty: uncertain, by: "built by Cn. Octavius, the first of his family to be consul, a fine house that was thought to have won him votes (Cic. Off. 1.138); year approximate"}
+  ended: {year: -59, what: "bought and pulled down by M. Aemilius Scaurus to enlarge his own house (Cic. Off. 1.138); year approximate"}
+  sources: ["Cicero, De officiis 1.138", "Platner-Ashby s.v. Domus Cn. Octavii"]
+  notes: "Cicero, De officiis 1.138 not re-read for this pass (unverified). Both years approximate: the consulship and Scaurus' aedileship."
+  pleiades: null
+  verified: none
+  model: domus
+  bearing_deg: 16  # unverified
+  footprint_m: {length: 35, width: 25}  # unverified
+  height_m: 9  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
+- id: domus_scauri
+  latin: Domus M. Aemili Scauri
+  english: House of M. Aemilius Scaurus on the Palatine
+  type: house
+  role: domus
+  gens: aemilii
+  owner: "M. Aemilius Scaurus (aedile 58)"
+  regio: 10
+  lat: 41.8900
+  lon: 12.4870
+  precision: rough
+  location: Palatine, on the slope toward the Sacra Via
+  built: {year: -58, certainty: probable, by: "enlarged over the house of Cn. Octavius; the 38-foot marble columns of his theatre of 58 were set in its atrium (Pliny NH 36.6; Asconius, Pro Scauro 27C)"}
+  sources: ["Pliny NH 36.6", "Pliny NH 36.114", "Asconius, Pro Scauro 27C", "Cicero, De officiis 1.138", "Platner-Ashby s.v. Domus M. Aemilii Scauri"]
+  notes: "Passages not re-read for this pass (unverified). Remains on the Palatine slope have been identified with it by some; not adopted here."
+  pleiades: null
+  verified: none
+  model: domus
+  bearing_deg: 16  # unverified
+  footprint_m: {length: 45, width: 30}  # unverified
+  height_m: 10  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
+- id: domus_crassi_oratoris
+  latin: Domus L. Licini Crassi
+  english: House of L. Licinius Crassus the orator on the Palatine
+  type: house
+  role: domus
+  gens: licinii
+  owner: "L. Licinius Crassus (consul 95)"
+  regio: 10
+  lat: 41.8905
+  lon: 12.4853
+  precision: rough
+  location: Palatine
+  built: {year: -100, certainty: uncertain, by: "the first house in Rome with columns of foreign marble, six of Hymettian marble, and famous lotus trees, the cause of a quarrel with Cn. Domitius in their censorship of 92 (Pliny NH 17.2-6; 36.7); year approximate"}
+  sources: ["Pliny NH 17.2-6", "Pliny NH 36.7", "Valerius Maximus 9.1.4", "Platner-Ashby s.v. Domus L. Licinii Crassi"]
+  notes: "Passages not re-read for this pass (unverified). Crassus died in 91; the house is left to the Licinii after him."
+  pleiades: null
+  verified: none
+  model: domus
+  size_fits: true   # F3 monuments: its size is assumed (no measured plan); it is made smaller where it runs into a neighbour (monuments.gd _fit_sizes)
+  bearing_deg: 16  # unverified
+  footprint_m: {length: 40, width: 28}  # unverified
+  height_m: 9  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
+- id: domus_livii_drusi
+  latin: Domus M. Livi Drusi
+  english: House of M. Livius Drusus on the Palatine (later Crassus', then Cicero's)
+  type: house
+  role: domus
+  gens: livii
+  owner: "M. Livius Drusus (tribune 91)"
+  regio: 10
+  lat: 41.8908
+  lon: 12.4860
+  precision: rough
+  location: Palatine, north-east, overlooking the Forum; the site of Cicero's house
+  built: {year: -95, certainty: uncertain, by: "Drusus bade his architect build so that every citizen could see whatever he did (Velleius 2.14.3); year approximate"}
+  ended: {year: -63, what: "bought by Cicero from M. Licinius Crassus in 62 (Cic. Fam. 5.6.2); it continues as domus_ciceronis"}
+  sources: ["Velleius Paterculus 2.14.3", "Cicero, Ad familiares 5.6.2", "Platner-Ashby s.v. Domus M. Tulli Ciceronis"]
+  notes: "Passages not re-read for this pass (unverified). The same house as domus_ciceronis, which the dataset dates from 62; this record carries it before. Drusus was killed in 91; Crassus' years are in republic_rules.yaml (city.places.domus)."
+  pleiades: null
+  verified: none
+  model: domus
+  bearing_deg: 16  # unverified
+  footprint_m: {length: 45, width: 30}  # unverified
+  height_m: 9  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan); the site of domus_ciceronis"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
+- id: domus_fulvii_flacci
+  latin: Domus M. Fulvi Flacci
+  english: House of M. Fulvius Flaccus on the Palatine
+  type: house
+  role: domus
+  gens: fulvii
+  owner: "M. Fulvius Flaccus (consul 125)"
+  regio: 10
+  lat: 41.8905
+  lon: 12.4858
+  precision: rough
+  location: Palatine, north-west, where Catulus later built
+  built: {year: -130, certainty: uncertain, by: "year unknown; approximate"}
+  ended: {year: -121, what: "razed after Flaccus was killed with C. Gracchus; the site left open until Catulus built there (Cic. Dom. 102; Val. Max. 6.3.1)"}
+  sources: ["Cicero, De domo sua 102", "Valerius Maximus 6.3.1", "Platner-Ashby s.v. Domus Q. Lutatius Catulus"]
+  notes: "Passages not re-read for this pass (unverified)."
+  pleiades: null
+  verified: none
+  model: domus
+  bearing_deg: 16  # unverified
+  footprint_m: {length: 35, width: 22}  # unverified
+  height_m: 9  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
+- id: domus_gracchi
+  latin: Domus C. Semproni Gracchi
+  english: House of C. Gracchus below the Forum
+  type: house
+  role: domus
+  gens: sempronii
+  owner: "C. Sempronius Gracchus"
+  regio: 8
+  lat: 41.8913
+  lon: 12.4855
+  precision: rough
+  location: the district by the Forum where the poor lived, to which Gaius moved from the Palatine
+  built: {year: -123, certainty: probable, by: "Gaius left his house on the Palatine for the quarter below the Forum, to live among the people (Plut. C. Gracchus 12.1)"}
+  ended: {year: -121, what: "Gaius killed; his property confiscated (Plut. C. Gracchus 17)"}
+  sources: ["Plutarch, Gaius Gracchus 12.1", "Plutarch, Gaius Gracchus 17"]
+  notes: "Passages not re-read for this pass (unverified). Site rough."
+  pleiades: null
+  verified: none
+  model: domus
+  bearing_deg: 16  # unverified
+  footprint_m: {length: 25, width: 18}  # unverified
+  height_m: 8  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]
+- id: domus_caesaris_subura
+  latin: Domus C. Iuli Caesaris in Subura
+  english: House of Caesar in the Subura
+  type: house
+  role: domus
+  gens: iulii
+  owner: "C. Iulius Caesar"
+  regio: 4
+  lat: 41.8952
+  lon: 12.4910
+  precision: rough
+  location: Subura
+  built: {year: -100, certainty: uncertain, by: "Caesar lived first in a modest house in the Subura (Suet. Iul. 46); the year is his birth"}
+  ended: {year: -63, what: "as pontifex maximus Caesar moved to the Domus Publica on the Sacra Via (Suet. Iul. 46)"}
+  sources: ["Suetonius, Divus Iulius 46"]
+  notes: "Suetonius, Divus Iulius 46 not re-read for this pass (unverified). Site rough."
+  pleiades: null
+  verified: none
+  model: domus
+  bearing_deg: 16  # unverified
+  footprint_m: {length: 25, width: 18}  # unverified
+  height_m: 8  # unverified
+  geometry_source: "form assumed from date and type, native kit size (no measured plan)"
+  geometry_unverified: [bearing_deg, footprint_m, height_m]

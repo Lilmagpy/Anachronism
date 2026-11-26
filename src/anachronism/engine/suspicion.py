@@ -43,7 +43,12 @@ def on_adoption(state: GameState, civ: CivState, node: TechNode, events: EventLo
         return
     civ.stats.suspicion_bp = clamp(civ.stats.suspicion_bp + gain, 0, BP)
     if gain >= 500:
-        events.add(civ.id, "suspicion", f"Where did {civ.name} learn {node.name}? People wonder.")
+        events.add(
+            civ.id,
+            "suspicion",
+            f"Where did {civ.name} learn {node.name}? People wonder.",
+            node.name,
+        )
 
 
 def update_suspicion(state: GameState, civ: CivState, rng: GameRng, events: EventLog) -> None:
