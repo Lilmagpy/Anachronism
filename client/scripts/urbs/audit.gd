@@ -105,22 +105,14 @@ func _initialize() -> void:
 func _f3_monuments(year_out: Dictionary, args: Dictionary) -> void:
 	var t := Time.get_ticks_msec()
 	var height := Callable(UrbsTerrain, "height_at")
-	var fill := UrbsFill.new()   # the houses, as _houses sets them up (for the camera checks)
-	fill.year = _year
-	fill.height = height
-	var fps := []
-	for id in _mon.ids():
-		var b: AABB = _mon.bounds(id)
-		if minf(b.size.x, b.size.z) >= 600.0:
-			continue
-		var bc := b.get_center()
-		if maxf(b.size.x, b.size.z) > 120.0 and UrbsSite.platform_at(bc.x, bc.z) != "":
-			continue
-		fps.append(Rect2(b.position.x, b.position.z, b.size.x, b.size.z))
-	fill.footprints = fps
-	fill.obstacles = UrbsFill.monument_obstacles(_mon)
-	fill.walls = UrbsFill.monument_walls(_mon)
-	fill.prepare()
+	# the houses exactly as the scene lays them out (UrbsFill.build, with the monuments), so the
+	# street camera picked here is the one the game picks (checked for the Navalia: the same stand)
+	var fill := UrbsFill.new()
+	var stand_in := UrbsMonumentAudit.AuditUrbs.new()
+	stand_in.monuments = _mon
+	stand_in.ground = height
+	fill.build(stand_in, _year, height)
+	stand_in.free()
 	var ma := UrbsMonumentAudit.new(_mon, height, fill)
 	var res := ma.run(str(args.get("f3-coplanar", "1")) != "0")
 	if str(args.get("f3-interiors", "1")) != "0":
