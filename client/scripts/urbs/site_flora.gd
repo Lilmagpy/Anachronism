@@ -192,6 +192,41 @@ static var _obst_grid := {}
 static var _wild := false   ## planting a generator that keeps out of the monuments
 
 
+## F3: the Servian wall's line this year (UrbsMonuments' circuit): no crown through its stones
+## (an oak's crown stood in the wall at 1200,100 in 264 BC).
+static var _walls: Array = []
+static var _wall_grid := {}
+const WALL_HALF := 1.8   ## half the wall's thickness (UrbsMonuments: thickness_m 3.6)
+
+
+static func set_walls(lines: Array) -> void:
+	_walls = []
+	_wall_grid = {}
+	for line: PackedVector2Array in lines:
+		for i in line.size() - 1:
+			var a := line[i]
+			var b := line[i + 1]
+			var idx := _walls.size()
+			_walls.append([a, b])
+			var lo := Vector2(minf(a.x, b.x), minf(a.y, b.y)) - Vector2(10, 10)
+			var hi := Vector2(maxf(a.x, b.x), maxf(a.y, b.y)) + Vector2(10, 10)
+			for gz in range(floori(lo.y / 50.0), floori(hi.y / 50.0) + 1):
+				for gx in range(floori(lo.x / 50.0), floori(hi.x / 50.0) + 1):
+					var k := Vector2i(gx, gz)
+					if not _wall_grid.has(k):
+						_wall_grid[k] = []
+					(_wall_grid[k] as Array).append(idx)
+
+
+## Distance from `p` to the wall's line (INF when there is none within 10 m of its cell).
+static func wall_distance(p: Vector2) -> float:
+	var best := INF
+	for i in _wall_grid.get(Vector2i(floori(p.x / 50.0), floori(p.y / 50.0)), []):
+		var s: Array = _walls[i]
+		best = minf(best, Geometry2D.get_closest_point_to_segment(p, s[0], s[1]).distance_to(p))
+	return best
+
+
 static func set_obstacles(list: Array) -> void:
 	_obstacles = list
 	_obst_grid = {}
@@ -232,6 +267,8 @@ static func _plant(out: Array, kind: String, x: float, z: float, seed_a: int, se
 	scale *= _grow
 	var y := UrbsTerrain.height_at(x, z)
 	var sc := (0.78 + 0.5 * _hash(seed_a, seed_b, 5)) * scale
+	if not _walls.is_empty() and wall_distance(Vector2(x, z)) < WALL_HALF + crown_radius(kind) * sc + 0.3:
+		return   # F3: its crown in the Servian wall
 	var basis := Basis(Vector3.UP, _hash(seed_a, seed_b, 6) * TAU).scaled(Vector3(sc, sc * (0.9 + 0.22 * _hash(seed_a, seed_b, 7)), sc))
 	var tone := 0.86 + 0.28 * _hash(seed_a, seed_b, 8)
 	out.append([kind, Transform3D(basis, Vector3(x, y - 0.15, z)), Color(tone, tone, tone * (0.92 + 0.16 * _hash(seed_a, seed_b, 9)))])

@@ -72,6 +72,7 @@ var footprints: Array = []           ## Rect2 in local metres: monuments and any
 ## F2: the oriented footprints of the monuments standing (UrbsMonuments.oriented_footprints:
 ## {c, ax, az, hx, hz}), plazas and precincts included; no lot may overlap one
 var obstacles: Array = []
+var walls: Array = []                  ## F3: the Servian wall's line (UrbsFill.monument_walls)
 var _obst_grid := {}                 ## 30 m cell -> indices into obstacles
 const OBSTACLE_MARGIN := 1.0         ## metres kept clear round a monument's footprint
 var sync_chunks := false             ## true: build_chunk finishes the chunk before returning
@@ -99,6 +100,13 @@ var _chunk_cache := {}               ## finished chunks: Vector2i -> Array of lo
 var _warm := false
 var _footway_on := false             ## the street being laid out has a raised footway (UrbsStreets)
 var _on_clivus := false              ## F3: the street being laid out is a clivus (its cuts are walled)
+const CLIVUS_WALL := 1.4             ## F3: a clivus wall's thickness (UrbsSite._clivus_walls: 1.2) and a hand
+
+
+## F3: how far beyond a clivus's half width UrbsSite stands its walls (the level shoulder's edge).
+static func _clivus_edge() -> float:
+	var cuts: Dictionary = UrbsTiber.topography().get("terrain_model", {}).get("street_cuts", {})
+	return float(cuts.get("clivus_shoulder_m", 1.6)) - 0.2
 var _footway_ids := {}               ## F3: street id -> has a raised footway
 var _site_mask := PackedByteArray()  ## per mask cell, lazily: 0 unknown, 1 clear, 2 river, 3 platform
 var _tree_cache := {}                ## Vector2i(chunk) -> UrbsSite.tree_spots of that chunk
@@ -128,8 +136,48 @@ func build(urbs: Node3D, new_year: int, new_height: Callable) -> void:
 			if maxf(b.size.x, b.size.z) > 120.0 and UrbsSite.platform_at(bc.x, bc.z) != "":
 				continue
 			footprints.append(Rect2(b.position.x, b.position.z, b.size.x, b.size.z))
-	obstacles = mon.oriented_footprints() if mon != null and mon.has_method("oriented_footprints") else []
+	obstacles = monument_obstacles(mon)
+	walls = monument_walls(mon)
 	prepare()
+
+
+## F3: what the fill keeps clear of: each monument's oriented plan footprint and each of its solid
+## boxes 0.4 m tall or more (steps, podia, porticoes and wings reach beyond the plan: houses stood
+## in the Temple of Jupiter Stator's steps and in the House of Cn. Octavius).
+static func monument_obstacles(mon: Object) -> Array:
+	if mon == null or not mon.has_method("oriented_footprints"):
+		return []
+	var res: Array = mon.oriented_footprints()
+	var placed: Dictionary = mon.get("_placed") if mon.get("_placed") != null else {}
+	var solids: Dictionary = mon.get("_solids") if mon.get("_solids") != null else {}
+	var xfs: Dictionary = mon.get("_xf") if mon.get("_xf") != null else {}
+	for id in solids:
+		var p: Dictionary = placed.get(id, {})
+		if p.is_empty() or bool(p.get("world", false)) or str(p.get("model", "")) in SOLID_SKIP:
+			continue
+		var xf: Transform3D = xfs.get(id, Transform3D.IDENTITY)
+		var ax3 := xf.basis * Vector3(1, 0, 0)
+		var az3 := xf.basis * Vector3(0, 0, 1)
+		for b in solids[id]:
+			var bb: AABB = b
+			if bb.size.y < 0.4 or bb.size.x > 400.0 or bb.size.z > 400.0:
+				continue
+			var c3 := xf * bb.get_center()
+			res.append({"id": id, "c": Vector2(c3.x, c3.z), "ax": Vector2(ax3.x, ax3.z).normalized(),
+				"az": Vector2(az3.x, az3.z).normalized(), "hx": bb.size.x * 0.5, "hz": bb.size.z * 0.5})
+	return res
+
+
+## F3: the Servian wall's line when it stands (for the trees: UrbsSiteFlora.set_walls).
+static func monument_walls(mon: Object) -> Array:
+	if mon == null or not mon.has_method("_circuit") or not mon.has_method("ids") or not (mon.ids() as Array).has("murus_servianus"):
+		return []
+	var c: Dictionary = mon._circuit()
+	var pos: Variant = c.get("pos")
+	return [pos] if pos is PackedVector2Array and (pos as PackedVector2Array).size() > 1 else []
+
+
+const SOLID_SKIP := ["wall", "aqueduct", "sewer", "plaza", "road_paved", "bridge_stone", "bridge_timber"]
 
 
 ## Load the data and lay out the street layer for the current `year`, `height`, `footprints`.
@@ -137,6 +185,7 @@ func prepare() -> void:
 	if not _loaded:
 		_load()
 	UrbsSiteFlora.set_obstacles(obstacles)   # F3: the trees keep out of the monuments too
+	UrbsSiteFlora.set_walls(walls)
 	_streets.height = height
 	_streets.load_data(year)
 	_footway_ids = {}
@@ -406,6 +455,7 @@ func _stamp_mask() -> void:
 		var pts: PackedVector2Array = st["pts"]
 		_mask_line(pts, 2.2, float(st["hw"]) + KERB + FOOTPATH, M_WALK)
 		_mask_line(pts, 2.2, float(st["hw"]) + 0.2, M_STREET)
+	_works_grid = {}
 	_stamp_site_works()
 
 
@@ -431,10 +481,65 @@ func _stamp_site_works() -> void:
 				var b := xf * (v[idx[t + 1]] if idx.size() > 0 else v[t + 1])
 				var c := xf * (v[idx[t + 2]] if idx.size() > 0 else v[t + 2])
 				var m := (a + b + c) / 3.0
-				if maxf(a.y, maxf(b.y, c.y)) - float(height.call(m.x, m.z)) < 0.6:
+				var up := absf((b - a).cross(c - a).normalized().y)
+				var rise := maxf(a.y - float(height.call(a.x, a.z)), maxf(b.y - float(height.call(b.x, b.z)), c.y - float(height.call(c.x, c.z))))
+				if up > 0.7 and maxf(a.y, maxf(b.y, c.y)) - float(height.call(m.x, m.z)) < 0.6:
 					continue   # treads, paving: walked on, not standing up
+				if rise < 0.05:
+					continue   # F3: a footing under the ground (a wall's face counts wherever it rises over
+					# the ground: a clivus's retaining wall on its bank rose 0.7 m inside a house)
 				_mask_line(PackedVector2Array([Vector2(a.x, a.z), Vector2(b.x, b.z), Vector2(c.x, c.z), Vector2(a.x, a.z)]), 1.5, 0.9, M_FOOT)
+				# F3: and kept exactly (the 3 m mask marks a cell only when its centre lies within
+				# 0.9 m of the wall: thin walls slipped between the cells' centres)
+				var tri := PackedVector2Array([Vector2(a.x, a.z), Vector2(b.x, b.z), Vector2(c.x, c.z)])
+				var lo := Vector2(minf(a.x, minf(b.x, c.x)), minf(a.z, minf(b.z, c.z)))
+				var hi := Vector2(maxf(a.x, maxf(b.x, c.x)), maxf(a.z, maxf(b.z, c.z)))
+				for gz in range(floori(lo.y / WORKS_CELL), floori(hi.y / WORKS_CELL) + 1):
+					for gx in range(floori(lo.x / WORKS_CELL), floori(hi.x / WORKS_CELL) + 1):
+						var k := Vector2i(gx, gz)
+						if not _works_grid.has(k):
+							_works_grid[k] = []
+						(_works_grid[k] as Array).append(tri)
 	tmp.free()
+
+
+const WORKS_CELL := 10.0
+var _works_grid := {}   ## F3: 10 m cell -> the site works' wall faces over it, as 2D triangles
+
+
+## F3: whether a wall face of the site works stands within the lot's envelope (grown by `grow`).
+func _hits_works(lot: Dictionary, grow := 0.15) -> bool:
+	var e := _env(lot)
+	var c: Vector2 = e["c"]
+	var ax: Vector2 = e["ax"]
+	var az: Vector2 = e["az"]
+	var hx := float(e["hx"]) + grow
+	var hz := float(e["hz"]) + grow
+	var rect := Rect2(-hx, -hz, hx * 2.0, hz * 2.0)
+	var corners := PackedVector2Array([Vector2(-hx, -hz), Vector2(hx, -hz), Vector2(hx, hz), Vector2(-hx, hz)])
+	var ext := Vector2(absf(ax.x) * hx + absf(az.x) * hz, absf(ax.y) * hx + absf(az.y) * hz)
+	var seen := {}
+	for gz in range(floori((c.y - ext.y) / WORKS_CELL), floori((c.y + ext.y) / WORKS_CELL) + 1):
+		for gx in range(floori((c.x - ext.x) / WORKS_CELL), floori((c.x + ext.x) / WORKS_CELL) + 1):
+			for tri: PackedVector2Array in _works_grid.get(Vector2i(gx, gz), []):
+				var key := tri[0]
+				if seen.has(key):
+					continue
+				seen[key] = true
+				var lt := PackedVector2Array()
+				for q in tri:
+					var r := q - c
+					lt.append(Vector2(r.dot(ax), r.dot(az)))
+				for q in lt:
+					if rect.has_point(q):
+						return true
+				for i in 3:
+					for j in 4:
+						if Geometry2D.segment_intersects_segment(lt[i], lt[(i + 1) % 3], corners[j], corners[(j + 1) % 4]) != null:
+							return true
+				if Geometry2D.point_is_inside_triangle(Vector2.ZERO, lt[0], lt[1], lt[2]):
+					return true
+	return false
 
 
 # F2: the monuments' oriented footprints -------------------------------------------------------
@@ -606,7 +711,7 @@ static func _overlap(a: Dictionary, b: Dictionary, margin: float) -> bool:
 	return _rects_overlap(_env(a), _env(b), margin)
 
 
-const BACK_TRIM := 0.7
+const BACK_TRIM := 0.0   # F3: the eaves of shop and house met over the touching walls
 
 
 ## A shop's envelope with its back trimmed by BACK_TRIM (see `_overlap`).
@@ -677,26 +782,55 @@ func _corners(lot: Dictionary) -> Array:
 ## houses whose floor was at the ramp's height.
 func _clear_at(p: Vector2) -> float:
 	var hh: float = height.call(p.x, p.y)
-	if UrbsTerrain.terrace_at(p.x, p.y) > 0.4:
+	if UrbsTerrain.terrace_at(p.x, p.y) > 0.2:   # F3: the walls' ends reach past the 0.4 line
 		var step := UrbsTerrain.TERRACE_M
 		# the wall's top follows the ground 3.5 m up the slope (UrbsSite.build_chunk_walls), a
 		# little over the tread's level (0.35 m kept in hand), or the open hillside above the
 		# last tread
 		var up: Vector2 = p - UrbsSite._down(p) * 4.5
-		var above: float = float(height.call(up.x, up.y)) + UrbsSite.WALL_UP + 0.1
-		return maxf(maxf(hh, above), step * ceilf((hh - 0.3) / step) + UrbsSite.WALL_UP + 0.35)
+		var above: float = float(height.call(up.x, up.y)) + UrbsSite.WALL_UP + 0.3
+		return maxf(maxf(hh, above), step * ceilf((hh - 0.3) / step) + UrbsSite.WALL_UP + 0.5)
 	return hh
 
 
-## F3: the highest terrace wall top under the lot's envelope (5 x 5 grid), or -INF.
+## F3: whether any point of a grid over the lot's envelope (every 1.5 m or so, edges included) is
+## marked with `bits` in the hazard mask: a wall of the site works can run between the corners.
+func _env_hazard(lot: Dictionary, bits: int) -> bool:
+	var e := _env(lot)
+	var c: Vector2 = e["c"]
+	var ax: Vector2 = e["ax"]
+	var az: Vector2 = e["az"]
+	var nx := maxi(2, ceili(float(e["hx"]) * 2.0 / 1.5))
+	var nz := maxi(2, ceili(float(e["hz"]) * 2.0 / 1.5))
+	for i in nx + 1:
+		for j in nz + 1:
+			var q := c + ax * (float(e["hx"]) * (2.0 * i / nx - 1.0)) + az * (float(e["hz"]) * (2.0 * j / nz - 1.0))
+			if _hazard(q) & bits:
+				return true
+	return false
+
+
+## F3: the highest terrace wall top under the lot's envelope (grown 0.3 m), or -INF: the walls
+## themselves (UrbsSite.terrace_wall_segments, every one, used or not), each sampled every 0.5 m;
+## their ends lie past where UrbsTerrain.terrace_at says terrace, so sampling the ground missed them.
 func _terrace_top(lot: Dictionary) -> float:
 	var e := _env(lot)
+	var c: Vector2 = e["c"]
+	var ax: Vector2 = e["ax"]
+	var az: Vector2 = e["az"]
+	var hx := float(e["hx"]) + 0.3
+	var hz := float(e["hz"]) + 0.3
+	var ext := Vector2(absf(ax.x) * hx + absf(az.x) * hz, absf(ax.y) * hx + absf(az.y) * hz) + Vector2(6, 6)
 	var top := -INF
-	for i in 5:
-		for j in 5:
-			var q: Vector2 = (e["c"] as Vector2) + (e["ax"] as Vector2) * (float(e["hx"]) * (i / 2.0 - 1.0)) + (e["az"] as Vector2) * (float(e["hz"]) * (j / 2.0 - 1.0))
-			if UrbsTerrain.terrace_at(q.x, q.y) > 0.4:
-				top = maxf(top, _clear_at(q))
+	for w: Array in UrbsSite.terrace_wall_segments(Rect2(c - ext, ext * 2.0)):
+		var a: Vector2 = w[0]
+		var b: Vector2 = w[1]
+		var n := maxi(int(a.distance_to(b) / 0.5), 1)
+		for t in n + 1:
+			var q := a.lerp(b, float(t) / n)
+			var r := q - c
+			if absf(r.dot(ax)) < hx and absf(r.dot(az)) < hz:
+				top = maxf(top, lerpf(float(w[4]), float(w[6]), float(t) / n))
 	return top
 
 
@@ -723,10 +857,11 @@ func _ground_ok(lot: Dictionary, pts: Array) -> bool:
 		var ez: Vector2 = e["az"]
 		for q in pts:
 			hi = maxf(hi, _clear_at(q))
-		for i in 5:
-			for j in 5:
-				var q: Vector2 = (e["c"] as Vector2) + ea * (float(e["hx"]) * (i / 2.0 - 1.0)) + ez * (float(e["hz"]) * (j / 2.0 - 1.0))
+		for i in 7:
+			for j in 7:
+				var q: Vector2 = (e["c"] as Vector2) + ea * (float(e["hx"]) * (i / 3.0 - 1.0)) + ez * (float(e["hz"]) * (j / 3.0 - 1.0))
 				hi = maxf(hi, _clear_at(q))
+		hi = maxf(hi, _terrace_top(lot) + 0.05)   # the walls themselves
 		if hi - lo > MAX_STEP:
 			return false
 	# one base per building: the floor at the highest of the corners, so no part is buried, and
@@ -737,7 +872,21 @@ func _ground_ok(lot: Dictionary, pts: Array) -> bool:
 	# on a platform or a hillside terrace stand at its level (UrbsSite), never below a corner
 	var c: Vector2 = lot["c"]
 	lot["y"] = maxf(hi, UrbsSite.terrace_height_at(c.x, c.y)) - 0.04
+	_awnings_reach(lot)
 	return true
+
+
+## F3: no awning where the ground falls away in front of the door: its poles stood 5 m tall over
+## a plinth on a steep alley (sweep, 44 BC, 596,-792). Where the ground at the poles lies more
+## than 0.8 m under the floor the house shows a plain front (_no_awnings).
+func _awnings_reach(lot: Dictionary) -> void:
+	var ax: Array = _axes(lot)
+	var out: Vector2 = (lot["c"] as Vector2) + (ax[1] as Vector2) * (float(lot["hz"]) + UrbsFillParts.AWNING_OUT)
+	for t in [-0.8, 0.0, 0.8]:
+		var q: Vector2 = out + (ax[0] as Vector2) * (float(lot["hx"]) * t)
+		if float(lot["y"]) - float(height.call(q.x, q.y)) > 0.8:
+			_no_awnings(lot)
+			return
 
 
 func _pick_type(era: Dictionary, roll: float) -> String:
@@ -1005,6 +1154,11 @@ func _street_rows(si: int) -> void:
 	var road := str(st["kind"]) == "road"
 	_footway_on = _has_footway(st)
 	_on_clivus = str(st["kind"]) == "clivus"
+	# F3: on a clivus the fronts stand behind the walls UrbsSite builds at the edge of the level
+	# shoulder (they ran through the shops and houses: Clivus Suburanus)
+	var front0 := hw + KERB + FOOTPATH
+	if _on_clivus:
+		front0 = maxf(front0, hw + _clivus_edge() + CLIVUS_WALL)
 	for side in [1, -1]:
 		var stretches: Array = []
 		var s := 0.0
@@ -1033,7 +1187,8 @@ func _street_rows(si: int) -> void:
 				var occ: float = _street_context(mp, road)["occ"]
 				if _r(sh, item, side + 13) < 0.95 and _r(sh, item, side + 15) < clampf(occ * 1.3, 0.0, 1.0):
 					var dd := SHOP_DEPTH + _r(sh, item, side + 17) * 0.4
-					var pos := mp + mn * (hw + KERB + FOOTPATH + dd * 0.5)
+					# F3: on a clivus the counters too stand behind the wall
+					var pos := mp + mn * (front0 + dd * 0.5 + (UrbsFillParts.AWNING_OUT + 0.1 if _on_clivus else 0.0))
 					var variant := int(_r(sh, item, side + 19) * 6.0)
 					var tab := _make_lot("taberna:%d" % variant, Vector2(4.6, 5.2), pos, -mn, tw, dd, Color(_palette[_hash(sh, item, side + 21) % _palette.size()], _r(sh, item, side + 20)), 5.0 if variant != 4 else 7.5, "taberna")
 					if _add_street_lot(tab, sid, 0.2):
@@ -1077,7 +1232,7 @@ func _street_rows(si: int) -> void:
 				if iv.x < s + wide - 0.5 and iv.y > s + 0.5:
 					behind = true
 					break
-			var rowdist := hw + KERB + FOOTPATH + (SHOP_DEPTH + 0.5 if behind else 0.0)
+			var rowdist := front0 + (SHOP_DEPTH + 0.5 if behind else 0.0)
 			var lot := _lot_of(type, np + nn * (rowdist + depth * 0.5), -nn, sh, item, side * 31 + 3)
 			if behind:
 				_no_awnings(lot)
@@ -1091,7 +1246,7 @@ func _street_rows(si: int) -> void:
 				var small := _lot_of("casa", Vector2.ZERO, Vector2.UP, sh, item, side * 31 + 7, true)
 				var mid3 := _streets.sample_at(si, s + small["hx"])
 				var n3 := Vector2(-mid3[1].y, mid3[1].x) * float(side)
-				var rd3 := hw + KERB + FOOTPATH + (SHOP_DEPTH + 0.5 if behind else 0.0)
+				var rd3 := front0 + (SHOP_DEPTH + 0.5 if behind else 0.0)
 				small = _lot_of("casa", mid3[0] + n3 * (rd3 + float(small["hz"])), -n3, sh, item, side * 31 + 7, true)
 				if _add_street_lot(small, sid, 0.25):
 					ok = true
@@ -1111,6 +1266,8 @@ static func _no_awnings(lot: Dictionary) -> void:
 		lot["mesh"] = ":".join(p)
 	elif mk == "domus":
 		lot["mesh"] = "domus:1"
+	elif p[0] == "taberna" and p.size() == 2 and int(p[1]) < 4:
+		lot["mesh"] = "taberna:5"   # F3: the open counter (variants 0-3 have the awnings)
 
 
 ## Heaps, carts and sacks on the footpath in front of a shop.
@@ -1156,13 +1313,17 @@ func _add_street_lot(lot: Dictionary, own: String, margin: float, force_ok := fa
 		return false
 	var lk_house := str(lot["kind"]) not in ["furn", "prop", "tomb"]
 	if lk_house:
-		# F3: a 5 x 5 grid over the envelope (a wall of the site works ran between the corners)
+		# F3: a grid over the envelope (a wall of the site works ran between the corners)
+		if _env_hazard(lot, M_FOOT | M_WATER) or _hits_works(lot):
+			return false
+		# F3: nothing of it beyond an awning's reach over any street's footway (a shop's counter
+		# stood on the Argiletum's footway at a corner)
 		var ev := _env(lot)
-		for i in 5:
-			for j in 5:
-				var q: Vector2 = (ev["c"] as Vector2) + (ev["ax"] as Vector2) * (float(ev["hx"]) * (i / 2.0 - 1.0)) + (ev["az"] as Vector2) * (float(ev["hz"]) * (j / 2.0 - 1.0))
-				if _hazard(q) & (M_FOOT | M_WATER):
-					return false
+		for q in _corners({"c": ev["c"], "th": lot["th"], "hx": ev["hx"], "hz": ev["hz"]}):
+			var nq := _streets.nearest_street(q)
+			if not nq.is_empty() and _footway_of(str(nq["id"])) \
+					and float(nq["distance"]) < float(nq["half_width"]) + KERB + FOOTPATH - UrbsFillParts.AWNING_OUT:
+				return false
 	if not force_ok or str(lot["kind"]) != "furn":
 		var near := _streets.nearest_street(c)
 		if not near.is_empty() and near["distance"] < maxf(lot["hx"], lot["hz"]) * 1.42 + 14.0:
@@ -1174,7 +1335,7 @@ func _add_street_lot(lot: Dictionary, own: String, margin: float, force_ok := fa
 				if _footway_of(str(ns["id"])) and lk_house:
 					# F3: a house stays off the footway, its own (where the street bends towards it)
 					# or a side street's
-					lim = float(ns["half_width"]) + KERB + FOOTPATH - (0.3 if str(ns["id"]) == own else 0.1)
+					lim = float(ns["half_width"]) + KERB + FOOTPATH - 0.1   # F3: 0.3 let shops' counters over the footway
 				if ns["distance"] < lim:
 					return false
 	if not _ground_ok(lot, pts):
@@ -1192,15 +1353,11 @@ func _add_street_lot(lot: Dictionary, own: String, margin: float, force_ok := fa
 		var fe: Vector2 = (ef["c"] as Vector2) + (ef["az"] as Vector2) * float(ef["hz"])
 		var front := maxf(_clear_at(fc), maxf(_clear_at(fe + fx), _clear_at(fe - fx)))
 		front_g = maxf(front_g, maxf(float(height.call(fe.x + fx.x, fe.y + fx.y)), float(height.call(fe.x - fx.x, fe.y - fx.y))))
-		if _on_clivus and float(lot["y"]) > front + 1.0:
-			# a clivus cut into the hill: the bank is held by a wall along the street (UrbsSite
-			# _clivus_walls) and the house stands on the bank, over the top of that wall
-			lot["y"] = float(lot["y"]) + UrbsSite.WALL_UP
-		elif float(lot["y"]) > front + 0.3:
+		if float(lot["y"]) > front + 0.3:
 			# lot.y is the highest the house must clear (_ground_ok), terrace walls included
 			if float(lot["y"]) + 0.04 - front > BURY_BACK:
 				return false
-			if _terrace_top(lot) > front + 0.3:
+			if _terrace_top(lot) > front - 0.1:
 				return false   # F3: a terrace's retaining wall would rise inside it (the ground may, not a wall)
 			lot["y"] = front - 0.04
 	if _footway_on and lk != "tomb" and lk != "prop":
@@ -1209,6 +1366,8 @@ func _add_street_lot(lot: Dictionary, own: String, margin: float, force_ok := fa
 		# below it)
 		var top: float = front_g + UrbsStreets.SURFACE_LIFT + FOOTWAY_H
 		lot["y"] = maxf(float(lot["y"]), top - 0.02) if lk != "furn" else float(lot["y"]) + UrbsStreets.SURFACE_LIFT + FOOTWAY_H
+	if lk != "furn" and lk != "tomb" and lk != "prop":
+		_awnings_reach(lot)
 	_street_hash[key] = _street_hash.get(key, [])
 	_street_hash[key].append(_street_lots.size())
 	_street_lots.append(lot)
@@ -1499,11 +1658,9 @@ func _lattice_verdict(lot: Dictionary, rk: Vector2i, st: Dictionary) -> int:
 			var rk2 := "hazard_%d" % hz
 			reject_stats[rk2] = int(reject_stats.get(rk2, 0)) + 1
 			return 1
-	var ev := _env(lot)
-	for q in _corners({"c": ev["c"], "th": lot["th"], "hx": ev["hx"], "hz": ev["hz"]}):
-		if _hazard(q) & (M_WALK | M_WATER | M_FOOT):   # F3: the envelope too (eaves, stairs, amphorae)
-			reject_stats["envelope"] = int(reject_stats.get("envelope", 0)) + 1
-			return 1
+	if _env_hazard(lot, M_WALK | M_WATER | M_FOOT) or _hits_works(lot):   # F3: the envelope too (eaves, stairs, amphorae)
+		reject_stats["envelope"] = int(reject_stats.get("envelope", 0)) + 1
+		return 1
 	if _hits_obstacle(lot) or _on_street(lot):   # F2: exact tests the 3 m mask can miss
 		reject_stats["monument_or_street"] = int(reject_stats.get("monument_or_street", 0)) + 1
 		return 1
