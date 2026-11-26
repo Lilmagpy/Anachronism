@@ -81,55 +81,49 @@
    "buried": [],
    "chunk_seams": [],
    "coplanar": [],
-   "empty_terraces": [],
-   "f3_ground_seconds": 49.054,
+   "empty_terraces": [
+    "terrace walls across empty ground near (-3, -213): 19 m",
+    "terrace walls across empty ground near (273, 147): 11 m",
+    "terrace walls across empty ground near (605, 46): 9 m"
+   ],
+   "f3_ground_seconds": 54.11,
    "f3_houses": {
-    "buildings": 19344,
+    "buildings": 19240,
     "counts": {
+     "awning_pole": 0,
      "house_base": 0,
-     "house_house": 1,
-     "house_monument": 3,
+     "house_house": 0,
+     "house_monument": 0,
      "house_river": 0,
-     "house_street": 4,
-     "house_wall": 2,
+     "house_street": 0,
+     "house_wall": 0,
      "lamp_smoke": 0,
      "life_solid": 0,
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
-     "tree_street": 0
+     "tree_street": 0,
+     "tree_wall": 0
     },
-    "seconds": 94.557,
+    "seconds": 97.993,
     "worst": {
+     "awning_pole": [],
      "house_base": [],
-     "house_house": [
-      "taberna:4@470,-380 overlaps domus:1@477,-360 by 0.2 m (8 m up)"
-     ],
-     "house_monument": [
-      "casa:tile@128,227 inside domus_cn_octavii by 3.0 m",
-      "taberna:4@-141,-250 inside auguraculum by 2.0 m",
-      "casa:tile@121,226 inside domus_cn_octavii by 1.6 m"
-     ],
+     "house_house": [],
+     "house_monument": [],
      "house_river": [],
-     "house_street": [
-      "taberna:1@433,315 on the footway of via_inter_palatium_caelium by 1.4 m",
-      "taberna:0@-229,408 on the footway of via_velabrum by 1.4 m",
-      "taberna:1@-43,153 on the footway of vicus_tuscus by 1.4 m",
-      "taberna:2@-31,139 on the footway of vicus_tuscus by 1.4 m"
-     ],
-     "house_wall": [
-      "taberna:4@730,-444 has the site works (Works) 0.9 m above its floor inside it",
-      "insula:stepped:3:0:0@1182,-1093 has a terrace wall 0.3 m above its floor inside it"
-     ],
+     "house_street": [],
+     "house_wall": [],
      "lamp_smoke": [],
      "life_solid": [],
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
-     "tree_street": []
+     "tree_street": [],
+     "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 96.355,
+   "f3_monuments_seconds": 93.937,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -183,7 +177,7 @@
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 296.067,
+   "seconds": 307.585,
    "slopes": [
     {
      "drop": 1.94,
@@ -618,43 +612,47 @@
    "buried": [],
    "chunk_seams": [],
    "coplanar": [],
-   "empty_terraces": [],
-   "f3_ground_seconds": 30.942,
+   "empty_terraces": [
+    "terrace walls across empty ground near (273, 147): 9 m"
+   ],
+   "f3_ground_seconds": 32.374,
    "f3_houses": {
-    "buildings": 10365,
+    "buildings": 10367,
     "counts": {
+     "awning_pole": 0,
      "house_base": 0,
      "house_house": 0,
      "house_monument": 0,
      "house_river": 0,
      "house_street": 0,
-     "house_wall": 1,
+     "house_wall": 0,
      "lamp_smoke": 0,
      "life_solid": 0,
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
-     "tree_street": 0
+     "tree_street": 0,
+     "tree_wall": 0
     },
-    "seconds": 69.602,
+    "seconds": 67.727,
     "worst": {
+     "awning_pole": [],
      "house_base": [],
      "house_house": [],
      "house_monument": [],
      "house_river": [],
      "house_street": [],
-     "house_wall": [
-      "taberna:3@725,-443 has the site works (Works) 0.7 m above its floor inside it"
-     ],
+     "house_wall": [],
      "lamp_smoke": [],
      "life_solid": [],
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
-     "tree_street": []
+     "tree_street": [],
+     "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 55.281,
+   "f3_monuments_seconds": 48.78,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -697,7 +695,7 @@
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 189.639,
+   "seconds": 178.629,
    "slopes": [
     {
      "drop": 1.94,
@@ -1022,59 +1020,49 @@
    "buried": [],
    "chunk_seams": [],
    "coplanar": [],
-   "empty_terraces": [],
-   "f3_ground_seconds": 61.868,
+   "empty_terraces": [
+    "terrace walls across empty ground near (-3, -213): 30 m",
+    "terrace walls across empty ground near (273, 147): 11 m",
+    "terrace walls across empty ground near (605, 46): 9 m"
+   ],
+   "f3_ground_seconds": 58.801,
    "f3_houses": {
-    "buildings": 20319,
+    "buildings": 20357,
     "counts": {
+     "awning_pole": 0,
      "house_base": 0,
-     "house_house": 2,
-     "house_monument": 1,
+     "house_house": 0,
+     "house_monument": 0,
      "house_river": 0,
-     "house_street": 4,
-     "house_wall": 4,
+     "house_street": 0,
+     "house_wall": 0,
      "lamp_smoke": 0,
      "life_solid": 0,
      "stall_street": 0,
-     "tree_building": 2,
+     "tree_building": 0,
      "tree_river": 0,
-     "tree_street": 0
+     "tree_street": 0,
+     "tree_wall": 0
     },
-    "seconds": 104.356,
+    "seconds": 104.355,
     "worst": {
+     "awning_pole": [],
      "house_base": [],
-     "house_house": [
-      "taberna:3@977,-407 overlaps casa:tile@977,-414 by 0.3 m (5 m up)",
-      "taberna:4@470,-380 overlaps domus:1@477,-360 by 0.2 m (8 m up)"
-     ],
-     "house_monument": [
-      "taberna:4@-141,-250 inside auguraculum by 2.0 m"
-     ],
+     "house_house": [],
+     "house_monument": [],
      "house_river": [],
-     "house_street": [
-      "taberna:1@433,315 on the footway of via_inter_palatium_caelium by 1.4 m",
-      "taberna:0@-229,408 on the footway of via_velabrum by 1.4 m",
-      "domus@862,-414 on the footway of clivus_suburanus by 1.4 m",
-      "taberna:2@-31,139 on the footway of vicus_tuscus by 1.4 m"
-     ],
-     "house_wall": [
-      "taberna:4@730,-444 has the site works (Works) 0.9 m above its floor inside it",
-      "insula:stepped:3:0:0@1182,-1093 has a terrace wall 0.3 m above its floor inside it",
-      "insula:hip:4:0:0:n@1041,-1256 has a terrace wall 0.2 m above its floor inside it",
-      "casa:tile@393,1026 has a terrace wall 0.1 m above its floor inside it"
-     ],
+     "house_street": [],
+     "house_wall": [],
      "lamp_smoke": [],
      "life_solid": [],
      "stall_street": [],
-     "tree_building": [
-      "pine tree at (1296, -182): trunk inside auditorium_maecenatis",
-      "pine tree at (1296, -182) (lod 1): trunk inside auditorium_maecenatis"
-     ],
+     "tree_building": [],
      "tree_river": [],
-     "tree_street": []
+     "tree_street": [],
+     "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 124.884,
+   "f3_monuments_seconds": 129.791,
    "floating": [],
    "founded": [
     "aedes_apollinis_palatini on a 1.2 m foundation (temple_hexastyle_corinthian_marble)",
@@ -1143,7 +1131,7 @@
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 362.385,
+   "seconds": 371.288,
    "slopes": [
     {
      "drop": 1.21,
@@ -1737,43 +1725,44 @@
    "chunk_seams": [],
    "coplanar": [],
    "empty_terraces": [],
-   "f3_ground_seconds": 21.865,
+   "f3_ground_seconds": 20.079,
    "f3_houses": {
-    "buildings": 3990,
+    "buildings": 3983,
     "counts": {
+     "awning_pole": 0,
      "house_base": 0,
      "house_house": 0,
      "house_monument": 0,
      "house_river": 0,
      "house_street": 0,
-     "house_wall": 2,
+     "house_wall": 0,
      "lamp_smoke": 0,
      "life_solid": 0,
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
-     "tree_street": 0
+     "tree_street": 0,
+     "tree_wall": 0
     },
-    "seconds": 56.1,
+    "seconds": 51.862,
     "worst": {
+     "awning_pole": [],
      "house_base": [],
      "house_house": [],
      "house_monument": [],
      "house_river": [],
      "house_street": [],
-     "house_wall": [
-      "casa:thatch@296,210 has the site works (Works) 0.3 m above its floor inside it",
-      "domus@211,260 has the site works (Works) 0.3 m above its floor inside it"
-     ],
+     "house_wall": [],
      "lamp_smoke": [],
      "life_solid": [],
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
-     "tree_street": []
+     "tree_street": [],
+     "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 20.774,
+   "f3_monuments_seconds": 20.489,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -1808,7 +1797,7 @@
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 120.177,
+   "seconds": 113.246,
    "slopes": [
     {
      "drop": 1.94,
@@ -2038,57 +2027,49 @@
    "buried": [],
    "chunk_seams": [],
    "coplanar": [],
-   "empty_terraces": [],
-   "f3_ground_seconds": 60.299,
+   "empty_terraces": [
+    "terrace walls across empty ground near (-3, -213): 30 m",
+    "terrace walls across empty ground near (273, 147): 11 m",
+    "terrace walls across empty ground near (605, 46): 9 m"
+   ],
+   "f3_ground_seconds": 59.479,
    "f3_houses": {
-    "buildings": 20662,
+    "buildings": 20707,
     "counts": {
+     "awning_pole": 0,
      "house_base": 0,
-     "house_house": 2,
-     "house_monument": 1,
+     "house_house": 0,
+     "house_monument": 0,
      "house_river": 0,
-     "house_street": 5,
-     "house_wall": 4,
+     "house_street": 0,
+     "house_wall": 0,
      "lamp_smoke": 0,
      "life_solid": 0,
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
-     "tree_street": 0
+     "tree_street": 0,
+     "tree_wall": 0
     },
-    "seconds": 102.519,
+    "seconds": 103.172,
     "worst": {
+     "awning_pole": [],
      "house_base": [],
-     "house_house": [
-      "taberna:3@977,-407 overlaps casa:tile@977,-414 by 0.3 m (5 m up)",
-      "taberna:4@470,-380 overlaps domus:1@477,-360 by 0.2 m (8 m up)"
-     ],
-     "house_monument": [
-      "taberna:4@-141,-250 inside auguraculum by 2.0 m"
-     ],
+     "house_house": [],
+     "house_monument": [],
      "house_river": [],
-     "house_street": [
-      "taberna:1@433,315 on the footway of via_inter_palatium_caelium by 1.4 m",
-      "taberna:0@-229,408 on the footway of via_velabrum by 1.4 m",
-      "domus@862,-414 on the footway of clivus_suburanus by 1.4 m",
-      "taberna:1@-43,153 on the footway of vicus_tuscus by 1.4 m",
-      "taberna:2@-31,139 on the footway of vicus_tuscus by 1.4 m"
-     ],
-     "house_wall": [
-      "taberna:4@730,-444 has the site works (Works) 0.9 m above its floor inside it",
-      "insula:stepped:3:0:0@1182,-1093 has a terrace wall 0.3 m above its floor inside it",
-      "insula:hip:4:0:0:n@1041,-1256 has a terrace wall 0.2 m above its floor inside it",
-      "casa:tile@393,1026 has a terrace wall 0.1 m above its floor inside it"
-     ],
+     "house_street": [],
+     "house_wall": [],
      "lamp_smoke": [],
      "life_solid": [],
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
-     "tree_street": []
+     "tree_street": [],
+     "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 106.251,
+   "f3_monuments_seconds": 109.054,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -2154,7 +2135,7 @@
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 340.683,
+   "seconds": 343.965,
    "slopes": [
     {
      "drop": 1.94,
@@ -2710,44 +2691,47 @@
    "buried": [],
    "chunk_seams": [],
    "coplanar": [],
-   "empty_terraces": [],
-   "f3_ground_seconds": 24.577,
+   "empty_terraces": [
+    "terrace walls across empty ground near (273, 147): 11 m"
+   ],
+   "f3_ground_seconds": 19.378,
    "f3_houses": {
-    "buildings": 2173,
+    "buildings": 2170,
     "counts": {
+     "awning_pole": 0,
      "house_base": 0,
      "house_house": 0,
      "house_monument": 0,
      "house_river": 0,
      "house_street": 0,
-     "house_wall": 2,
+     "house_wall": 0,
      "lamp_smoke": 0,
      "life_solid": 0,
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
-     "tree_street": 0
+     "tree_street": 0,
+     "tree_wall": 0
     },
-    "seconds": 56.828,
+    "seconds": 46.056,
     "worst": {
+     "awning_pole": [],
      "house_base": [],
      "house_house": [],
      "house_monument": [],
      "house_river": [],
      "house_street": [],
-     "house_wall": [
-      "casa:thatch@296,210 has the site works (Works) 0.3 m above its floor inside it",
-      "domus@211,260 has the site works (Works) 0.3 m above its floor inside it"
-     ],
+     "house_wall": [],
      "lamp_smoke": [],
      "life_solid": [],
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
-     "tree_street": []
+     "tree_street": [],
+     "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 20.582,
+   "f3_monuments_seconds": 16.984,
    "floating": [],
    "founded": [
     "aedes_fortunae_matris_matutae on a 3.2 m foundation (temple_tetrastyle_ionic)",
@@ -2782,7 +2766,7 @@
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 121.354,
+   "seconds": 99.888,
    "slopes": [
     {
      "drop": 3.23,
