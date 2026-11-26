@@ -756,9 +756,9 @@
 {
 "bearing_deg": 127,
 "built": {
-"by": "where the senators assembled before entering the curia (Varro LL 5.156: senaculum supra Graecostasim ubi aedes Concordiae et basilica Opimia; Val. Max. 2.2.6: antea senatus adsiduam stationem eo loci peragebat, qui hodieque senaculum appellatur, undated); P&A (s.v. Senacula, read): the original building must have been removed when Opimius enlarged the temple of Concord in 121 BC, so it stood before 121: that year is taken as a terminus ante quem",
-"certainty": "uncertain",
-"year": -121
+"by": "where the senators assembled before entering the curia (Varro LL 5.156: senaculum supra Graecostasim ubi aedes Concordiae et basilica Opimia); an old custom of the senate (Val. Max. 2.2.6: antea senatus adsiduam stationem eo loci peragebat, qui hodieque senaculum appellatur), at the curia tradition ascribes to Tullus Hostilius (Livy 1.30.2); no source dates it; P&A (s.v. Senacula, read): probably an open area at first, afterwards a hall, the original building removed when Opimius enlarged the temple of Concord in 121 BC",
+"certainty": "traditional",
+"year": null
 },
 "english": "Senaculum",
 "footprint_m": {
@@ -786,6 +786,7 @@
 "Varro LL 5.156",
 "Valerius Maximus 2.2.6",
 "Festus 470L",
+"Livy 1.30.2",
 "Platner-Ashby s.v. Senacula"
 ],
 "type": "platform",
@@ -2386,9 +2387,9 @@
 {
 "bearing_deg": 343,
 "built": {
-"by": "temple of Portunus in portu Tiberino near the Pons Aemilius, dedicated on 17 August (Varro LL 6.19; fasti, per Platner-Ashby s.v. Portunium); no source gives a building date; standing when Varro wrote LL (about 43 BC); about 100 BC is the usual modern dating of the extant Ionic temple (its masonry), given by none of the sources read",
+"by": "temple of Portunus in portu Tiberino near the Pons Aemilius; Varro ties its founding to the Portunalia of 17 August, a feast of the early calendar with its own flamen (LL 6.19: cui eo die aedes in portu Tiberino facta et feriae institutae; per Platner-Ashby s.v. Portunium, read), but no source dates it: P&A gives no date; the first phase of the standing temple is put in the 4th or 3rd century BC on archaeological grounds, with the extant Ionic temple a rebuilding of about 80-70 BC (modern; Richardson not read), so the player sees a temple here from about 300 BC",
 "certainty": "uncertain",
-"year": -100
+"year": -300
 },
 "english": "Temple of Portunus",
 "footprint_m": {
@@ -7171,9 +7172,9 @@
 {
 "bearing_deg": 60,
 "built": {
-"by": "unknown; a gate on the Clivus Capitolinus opened once a year on 15 June for the refuse of the temple of Vesta (Festus 344, per Platner-Ashby s.v. Porta Stercoraria, read); the rite and its route down the Clivus Capitolinus are first described by Varro (LL 6.32, about 43 BC), the gate itself only by Festus: the year is Varro's, a terminus ante quem",
-"certainty": "uncertain",
-"year": -43
+"by": "the gate on the Clivus Capitolinus opened once a year, on 15 June, for the refuse of the temple of Vesta (Festus 344; Varro LL 6.32: the day Quando stercus delatum fas of the calendar; Platner-Ashby s.v. Porta Stercoraria, read); the rite belongs to the cult of Vesta, whose temple the antiquarians ascribed to Numa (Dion. Hal. 2.65-66; Plut. Numa 11; P&A s.v. Vesta, aedes, read); the gate itself is named only by Festus and its age is not recorded",
+"certainty": "traditional",
+"year": null
 },
 "english": "Porta Stercoraria",
 "footprint_m": {
@@ -7202,7 +7203,10 @@
 "sources": [
 "Platner-Ashby s.v. Porta Stercoraria (read)",
 "Festus 344",
-"Varro LL 6.32"
+"Varro LL 6.32",
+"Dion. Hal. 2.65-66",
+"Plut. Numa 11",
+"Platner-Ashby s.v. Vesta, Aedes (read)"
 ],
 "type": "gate",
 "verified": "platner-ashby"
