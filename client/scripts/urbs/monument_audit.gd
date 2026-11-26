@@ -767,7 +767,7 @@ func _views(ids: Array) -> Array:
 			close.append("%s camera at (%.0f, %.0f) within %.1f m of %s" % [id, eye.x, eye.z, UrbsMonumentView.NEAR_M, near])
 		elif v.has("front"):
 			var fr: Array = v.front
-			if UrbsMonumentView.overfills(eye, fr[0], float(fr[1]), float(fr[2]), float(fr[3])):
+			if UrbsMonumentView.overfills(eye, fr[0], float(fr[1]), float(fr[2]), float(fr[3]), mv.dist_drawn(id, eye)):
 				close.append("%s camera at (%.0f, %.0f) so near that the front overfills the frame" % [id, eye.x, eye.z])
 		if bool(v.open_air):
 			continue   # it looks in from the entrance: the front is behind it

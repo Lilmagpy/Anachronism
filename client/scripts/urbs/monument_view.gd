@@ -23,7 +23,7 @@ const TURNS := [0.0, -20.0, 20.0, -35.0, 35.0, -55.0, 55.0, -80.0, 80.0, -110.0,
 ## Distances tried, as shares of the framing distance.
 const NEAR_M := 1.5      ## a camera nearer than this to a wall, a column or a house stands against it
 const FRAME_H := 64.0    ## the most of the street camera's 70° height a front may fill
-const FRAME_W := 96.0    ## the most of its ~102° width a front (narrower than 60 m) may fill
+const FRAME_W := 104.0   ## the street camera's width (~104° at 16:9): a front (narrower than 60 m) wider than this is cut
 const DISTS := [1.0, 0.7, 1.35, 0.45, 0.25, 2.0, 3.0]
 
 var mons: UrbsMonuments
@@ -171,7 +171,7 @@ func _pick(id: String) -> Dictionary:
 			off = 0.0
 		var cost := float(5 - seen) * 10.0 + off / 15.0 + float(sd[3]) * 0.8 + absf(lat) / 20.0 + (5.0 if hi_target else 0.0)
 		if off > 60.0:
-			cost += 20.0   # beside it or behind it: the front not in view
+			cost += 45.0   # beside it or behind it: the front not in view
 		var tilt := rad_to_deg(atan2(target.y - eye.y, maxf(Vector2(target.x - eye.x, target.z - eye.z).length(), 0.5)))
 		if absf(tilt - 3.0) > 30.0:
 			cost += 40.0   # under a bank or above it: the front out of the street camera's frame (70° high, 3° up)
@@ -180,7 +180,7 @@ func _pick(id: String) -> Dictionary:
 		var near := is_near(eye)
 		if near:
 			cost += 60.0   # against a wall, a column, a house or a tree
-		var over := overfills(eye, face + right * lat, base, top, w)
+		var over := overfills(eye, face + right * lat, base, top, w, dist_drawn(id, eye))
 		if over:
 			cost += 30.0   # so close that the front overfills the frame
 		var tl: Vector3 = target - eye
@@ -257,11 +257,24 @@ func _open_air(id: String, kind: String, d0: Vector3, outward: Vector3, p: Dicti
 ## Whether a front (its middle `face` at the ground, from `base` to `top`, `w` wide) seen from
 ## `eye` is bigger than the street camera's frame: taller than FRAME_H degrees, or wider than
 ## FRAME_W (a front wider than 60 m is framed in parts, so only its height counts).
-static func overfills(eye: Vector3, face: Vector3, base: float, top: float, w: float) -> bool:
-	var d := maxf(Vector2(face.x - eye.x, face.z - eye.z).length(), 0.5)
+static func overfills(eye: Vector3, face: Vector3, base: float, top: float, w: float, d_body := INF) -> bool:
+	var d := maxf(minf(Vector2(face.x - eye.x, face.z - eye.z).length(), d_body), 0.5)
 	var ang_h := rad_to_deg(atan2(top - eye.y, d) - atan2(base - eye.y, d))
 	var ang_w := rad_to_deg(2.0 * atan(w * 0.5 / d))
 	return ang_h > FRAME_H or (w < 60.0 and ang_w > FRAME_W)
+
+
+## How far `p` stands from monument `id`'s body (its placed half-size, on the ground plan, not
+## its steps or terrace): a round temple seen from behind its door is nearer than its door.
+func dist_drawn(id: String, p: Vector3) -> float:
+	if not mons._xf.has(id):
+		return INF
+	var lp := (mons._xf[id] as Transform3D).affine_inverse() * p
+	var hf: Vector2 = mons._placed.get(id, {}).get("half", Vector2.ZERO)   # the building, not its steps
+	if hf == Vector2.ZERO:
+		return INF
+	var q := Vector2(clampf(lp.x, -hf.x, hf.x), clampf(lp.z, -hf.y, hf.y))
+	return q.distance_to(Vector2(lp.x, lp.z))
 
 
 ## Points every 6 m on the year's streets between `r0` and `r1` metres from `c`.
