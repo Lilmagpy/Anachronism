@@ -82,9 +82,9 @@
    "chunk_seams": [],
    "coplanar": [],
    "empty_terraces": [],
-   "f3_ground_seconds": 129.056,
+   "f3_ground_seconds": 194.724,
    "f3_houses": {
-    "buildings": 19240,
+    "buildings": 18541,
     "counts": {
      "awning_pole": 0,
      "house_base": 0,
@@ -95,13 +95,14 @@
      "house_wall": 0,
      "lamp_smoke": 0,
      "life_solid": 0,
+     "shop_alone": 0,
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 96.316,
+    "seconds": 168.34,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -112,6 +113,7 @@
      "house_wall": [],
      "lamp_smoke": [],
      "life_solid": [],
+     "shop_alone": [],
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
@@ -119,7 +121,7 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 93.57,
+   "f3_monuments_seconds": 163.34,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -174,7 +176,7 @@
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 378.628,
+   "seconds": 637.173,
    "slopes": [
     {
      "drop": 1.94,
@@ -611,9 +613,9 @@
    "chunk_seams": [],
    "coplanar": [],
    "empty_terraces": [],
-   "f3_ground_seconds": 62.796,
+   "f3_ground_seconds": 125.581,
    "f3_houses": {
-    "buildings": 10367,
+    "buildings": 10005,
     "counts": {
      "awning_pole": 0,
      "house_base": 0,
@@ -624,13 +626,14 @@
      "house_wall": 0,
      "lamp_smoke": 0,
      "life_solid": 0,
+     "shop_alone": 0,
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 61.341,
+    "seconds": 128.317,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -641,6 +644,7 @@
      "house_wall": [],
      "lamp_smoke": [],
      "life_solid": [],
+     "shop_alone": [],
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
@@ -648,7 +652,7 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 52.366,
+   "f3_monuments_seconds": 83.843,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -692,7 +696,7 @@
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 210.769,
+   "seconds": 390.716,
    "slopes": [
     {
      "drop": 1.94,
@@ -1019,9 +1023,9 @@
    "chunk_seams": [],
    "coplanar": [],
    "empty_terraces": [],
-   "f3_ground_seconds": 142.613,
+   "f3_ground_seconds": 167.605,
    "f3_houses": {
-    "buildings": 20357,
+    "buildings": 19691,
     "counts": {
      "awning_pole": 0,
      "house_base": 0,
@@ -1032,13 +1036,14 @@
      "house_wall": 0,
      "lamp_smoke": 0,
      "life_solid": 0,
+     "shop_alone": 0,
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 101.818,
+    "seconds": 117.978,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -1049,6 +1054,7 @@
      "house_wall": [],
      "lamp_smoke": [],
      "life_solid": [],
+     "shop_alone": [],
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
@@ -1056,7 +1062,7 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 122.881,
+   "f3_monuments_seconds": 143.291,
    "floating": [],
    "founded": [
     "aedes_apollinis_palatini on a 1.2 m foundation (temple_hexastyle_corinthian_marble)",
@@ -1126,7 +1132,7 @@
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 437.139,
+   "seconds": 520.455,
    "slopes": [
     {
      "drop": 1.21,
@@ -1721,9 +1727,9 @@
    "chunk_seams": [],
    "coplanar": [],
    "empty_terraces": [],
-   "f3_ground_seconds": 33.549,
+   "f3_ground_seconds": 55.581,
    "f3_houses": {
-    "buildings": 3983,
+    "buildings": 3787,
     "counts": {
      "awning_pole": 0,
      "house_base": 0,
@@ -1734,13 +1740,14 @@
      "house_wall": 0,
      "lamp_smoke": 0,
      "life_solid": 0,
+     "shop_alone": 0,
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 50.346,
+    "seconds": 87.2,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -1751,6 +1758,7 @@
      "house_wall": [],
      "lamp_smoke": [],
      "life_solid": [],
+     "shop_alone": [],
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
@@ -1758,7 +1766,7 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 20.651,
+   "f3_monuments_seconds": 34.22,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -1794,7 +1802,7 @@
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 124.832,
+   "seconds": 212.133,
    "slopes": [
     {
      "drop": 1.94,
@@ -2026,9 +2034,9 @@
    "chunk_seams": [],
    "coplanar": [],
    "empty_terraces": [],
-   "f3_ground_seconds": 148.432,
+   "f3_ground_seconds": 174.012,
    "f3_houses": {
-    "buildings": 20707,
+    "buildings": 20034,
     "counts": {
      "awning_pole": 0,
      "house_base": 0,
@@ -2039,13 +2047,14 @@
      "house_wall": 0,
      "lamp_smoke": 0,
      "life_solid": 0,
+     "shop_alone": 0,
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 101.757,
+    "seconds": 149.289,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -2056,6 +2065,7 @@
      "house_wall": [],
      "lamp_smoke": [],
      "life_solid": [],
+     "shop_alone": [],
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
@@ -2063,7 +2073,7 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 103.306,
+   "f3_monuments_seconds": 156.553,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -2130,7 +2140,7 @@
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 424.852,
+   "seconds": 590.897,
    "slopes": [
     {
      "drop": 1.94,
@@ -2688,9 +2698,9 @@
    "chunk_seams": [],
    "coplanar": [],
    "empty_terraces": [],
-   "f3_ground_seconds": 30.599,
+   "f3_ground_seconds": 54.652,
    "f3_houses": {
-    "buildings": 2170,
+    "buildings": 1992,
     "counts": {
      "awning_pole": 0,
      "house_base": 0,
@@ -2701,13 +2711,14 @@
      "house_wall": 0,
      "lamp_smoke": 0,
      "life_solid": 0,
+     "shop_alone": 0,
      "stall_street": 0,
      "tree_building": 0,
      "tree_river": 0,
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 49.721,
+    "seconds": 89.153,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -2718,6 +2729,7 @@
      "house_wall": [],
      "lamp_smoke": [],
      "life_solid": [],
+     "shop_alone": [],
      "stall_street": [],
      "tree_building": [],
      "tree_river": [],
@@ -2725,7 +2737,7 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 18.661,
+   "f3_monuments_seconds": 34.724,
    "floating": [],
    "founded": [
     "aedes_fortunae_matris_matutae on a 3.2 m foundation (temple_tetrastyle_ionic)",
@@ -2761,7 +2773,7 @@
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 117.295,
+   "seconds": 217.611,
    "slopes": [
     {
      "drop": 3.23,
