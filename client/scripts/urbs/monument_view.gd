@@ -43,6 +43,31 @@ func _ground(x: float, z: float) -> float:
 
 ## The pose that shows monument `id` best.
 func pick(id: String) -> Dictionary:
+	var v := _pick(id)
+	if int(v.get("seen", 5)) < 3 and not bool(v.get("open_air", false)):
+		# hidden behind its own terrace's walls from below: up on the terrace, before the building
+		_on_terrace = true
+		var v2 := _pick(id)
+		_on_terrace = false
+		if int(v2.get("seen", 0)) > int(v.get("seen", 0)):
+			return v2
+	return v
+
+
+var _on_terrace := false   ## a stand may be on the monument's own terrace (not in the building)
+
+
+## Whether `p` is within the building itself (its placed half-size, in its frame), not its steps
+## or terrace.
+func _in_body(mid: String, p: Vector3, grow: float) -> bool:
+	var hf: Vector2 = mons._placed.get(mid, {}).get("half", Vector2.ZERO)
+	if hf == Vector2.ZERO or not mons._xf.has(mid):
+		return true
+	var lp := (mons._xf[mid] as Transform3D).affine_inverse() * p
+	return absf(lp.x) <= hf.x + grow and absf(lp.z) <= hf.y + grow
+
+
+func _pick(id: String) -> Dictionary:
 	var door: Transform3D = mons.entrance(id)
 	var model := str(mons.entry(id).get("model", ""))
 	var outward := door.basis.z
@@ -68,9 +93,13 @@ func pick(id: String) -> Dictionary:
 		_drawn[id] = mons._drawn_box(id)
 	var dbx: AABB = _drawn[id]
 	var mxf: Transform3D = mons._xf.get(id, Transform3D.IDENTITY)
+	var front_b := 0.0   # the building's own front (its bounds: the porch, not a terrace's stair)
 	for i in 8:
 		var corner := (mxf * dbx.get_endpoint(i) if dbx.size != Vector3.ZERO else b.get_endpoint(i)) - door.origin
 		front = maxf(front, corner.x * outward.x + corner.z * outward.z)
+		var cb := b.get_endpoint(i) - door.origin
+		front_b = maxf(front_b, cb.x * outward.x + cb.z * outward.z)
+	front_b = minf(front_b, front)
 	var half: Vector2 = p.get("half", Vector2.ZERO)
 	var w := maxf(half.x * 2.0, 2.0)
 	var base := float(p.get("y", b.position.y))
@@ -78,7 +107,7 @@ func pick(id: String) -> Dictionary:
 	var back := front + clampf(maxf((top - base) * 1.8, minf(w, 60.0) * 1.1), 12.0, 60.0)
 	_load_lots(Vector2(d0.x, d0.z), back * 2.2 + 40.0)
 	var right := Vector3(outward.z, 0, -outward.x)
-	var face := d0 + outward * maxf(front - 1.0, 0.0)
+	var face := d0 + outward * maxf(front_b - 1.0, 0.0)
 	var low := base + 1.0
 	var high := base + (top - base) * 0.75
 	var door_dy := door.origin.y
@@ -107,7 +136,7 @@ func pick(id: String) -> Dictionary:
 		var st: Vector3 = sd[0]
 		var lat := float(sd[1])
 		var eye := Vector3(st.x, floor_at(st) + EYE, st.z)
-		if not is_free(eye) or _in_drawn(id, eye, 0.5):   # not on its own steps either
+		if not is_free(eye) or (_in_drawn(id, eye, 0.5) and (not _on_terrace or _in_body(id, eye, 1.0))):   # not on its own steps either
 			continue
 		var c := face + right * lat
 		var target := Vector3(d0.x + right.x * lat, door_dy, d0.z + right.z * lat)
@@ -131,6 +160,9 @@ func pick(id: String) -> Dictionary:
 		var cost := float(5 - seen) * 10.0 + off / 15.0 + float(sd[3]) * 0.8 + absf(lat) / 20.0 + (5.0 if hi_target else 0.0)
 		if off > 60.0:
 			cost += 20.0   # beside it or behind it: the front not in view
+		var tilt := rad_to_deg(atan2(target.y - eye.y, maxf(Vector2(target.x - eye.x, target.z - eye.z).length(), 0.5)))
+		if absf(tilt - 3.0) > 30.0:
+			cost += 40.0   # under a bank or above it: the front out of the street camera's frame (70° high, 3° up)
 		if seen == 0 or not is_clear(eye, target, id):
 			cost += 100.0   # the door (or the part of the front looked at) hidden
 		var tl: Vector3 = target - eye
@@ -140,7 +172,7 @@ func pick(id: String) -> Dictionary:
 		if cost < best_cost:
 			best_cost = cost
 			best = pose
-		if seen == 5 and off < 10.0 and lat == 0.0 and float(sd[3]) == 0.0 and not _mesh_blocks(eye, target, id):
+		if seen == 5 and off < 10.0 and lat == 0.0 and float(sd[3]) == 0.0 and absf(tilt - 3.0) <= 30.0 and not _mesh_blocks(eye, target, id):
 			return best
 	# the best stands in order, the first whose line to the front no other monument's mesh crosses
 	# (a column of a porch, a cornice: the solids are coarser than what is drawn)
