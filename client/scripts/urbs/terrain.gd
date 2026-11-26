@@ -1838,6 +1838,7 @@ static func set_sky_fill(fill: float, daylight := 1.0) -> void:
 	_day = daylight
 	_ground_material().set_shader_parameter("sky_fill", fill)
 	_ground_material().set_shader_parameter("day", daylight)
+	UrbsSiteFlora.set_light(fill, daylight)   # F3 houses round 3: the trees get the same fill
 
 
 ## The share of sky fill for the sun at `elevation` degrees (see set_sky_fill).

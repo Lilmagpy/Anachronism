@@ -17,6 +17,14 @@ uniform vec4 base_colour : source_color = vec4(0.30, 0.40, 0.20, 1.0);
 uniform float wind = 1.0;          // sway strength (0: still)
 uniform float translucency = 0.35;
 uniform float rough = 0.85;
+// F3 round 3: the light the ground (terrain.gd) and the houses get back in the shade and at dusk.
+// Crowns and trunks (albedo about 0.1-0.2) fell under the tone mapper's toe and drew as black
+// silhouettes at dusk while the ground and the houses beside them stayed lit. The same terms as
+// the ground's: bounce in the shade following the sun (`day`), the twilight sky's glow
+// (`sky_fill`), both following the plant's own colour, compressed so dark leaves lift more.
+uniform float sky_fill = 0.0;
+uniform float day = 1.0;
+const float PLANT_BOUNCE = 0.22;
 
 varying vec3 tint;
 
@@ -82,4 +90,6 @@ void fragment() {
 	if (grad != vec2(0.0)) {
 		NORMAL = u_bump(n, t, b, grad, MODEL_MATRIX, VIEW_MATRIX);
 	}
+	vec3 a = max(ALBEDO, vec3(0.0));
+	EMISSION = pow(a, vec3(0.6)) * PLANT_BOUNCE * day + pow(a, vec3(0.4)) * sky_fill;
 }
