@@ -1730,7 +1730,7 @@ static func _paint_wall(k: Kit, a: Vector2, b: Vector2, n: Vector2, y0: float, h
 			var sw := length / nb
 			for i in nb:
 				var c := base + dir * (sw * (i + 0.5))
-				var col: Color = cols[(i + zi + tint) % 4] if zi != 0 else Color(0.36, 0.22, 0.2)
+				var col: Color = cols[(i + zi + tint) % 4] if zi != 0 else Color(0.52, 0.30, 0.26)   # (F3: a dado this dark rendered pure black)
 				k.box(Vector3(c.x, y0 + yb + 0.03, c.y), Vector3(sw - 0.05, yt - yb - 0.06, 0.05), col, Kit.PLASTER, yaw, true)
 			zi += 1
 		k.box(Vector3((a + b).x * 0.5 + n.x * (off + 0.035), y0 + h - 0.35, (a + b).y * 0.5 + n.y * (off + 0.035)), Vector3(length, 0.3, 0.14), Color(0.92, 0.88, 0.78), Kit.PLASTER, yaw, true)   # cornice
@@ -1738,7 +1738,7 @@ static func _paint_wall(k: Kit, a: Vector2, b: Vector2, n: Vector2, y0: float, h
 		var np := maxi(2, int(round(length / 2.2)))
 		var sw2 := length / np
 		var zone_top := y0 + h * 0.66
-		k.box(Vector3((a + b).x * 0.5 + n.x * (off + 0.005), y0, (a + b).y * 0.5 + n.y * (off + 0.005)), Vector3(length, 0.95, 0.05), Color(0.30, 0.14, 0.12), Kit.PLASTER, yaw, true)   # dado
+		k.box(Vector3((a + b).x * 0.5 + n.x * (off + 0.005), y0, (a + b).y * 0.5 + n.y * (off + 0.005)), Vector3(length, 0.95, 0.05), Color(0.50, 0.24, 0.20), Kit.PLASTER, yaw, true)   # dado (F3: lighter; it rendered pure black)
 		for i in np:
 			var c := base + dir * (sw2 * (i + 0.5))
 			var red := (i + tint) % 2 == 0
