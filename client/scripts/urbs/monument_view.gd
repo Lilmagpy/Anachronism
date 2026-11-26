@@ -21,6 +21,9 @@ const NO_HOUSE := ["horti", "prop", "tree", "furn", "tomb"]   ## lots a camera m
 ## Turns off the front axis tried, in degrees, in order of preference (the flank last).
 const TURNS := [0.0, -20.0, 20.0, -35.0, 35.0, -55.0, 55.0, -80.0, 80.0, -110.0, 110.0, 180.0]
 ## Distances tried, as shares of the framing distance.
+const NEAR_M := 1.5      ## a camera nearer than this to a wall, a column or a house stands against it
+const FRAME_H := 64.0    ## the most of the street camera's 70° height a front may fill
+const FRAME_W := 96.0    ## the most of its ~102° width a front (narrower than 60 m) may fill
 const DISTS := [1.0, 0.7, 1.35, 0.45, 0.25, 2.0, 3.0]
 
 var mons: UrbsMonuments
@@ -70,6 +73,14 @@ func _in_body(mid: String, p: Vector3, grow: float) -> bool:
 func _pick(id: String) -> Dictionary:
 	var door: Transform3D = mons.entrance(id)
 	var model := str(mons.entry(id).get("model", ""))
+	var p0: Dictionary = mons._placed.get(id, {})
+	var bridge := model.begins_with("bridge")
+	if bridge and p0.has("centre"):
+		# a bridge's front is its side, from the bank or the water: looked at from the middle
+		var side := door.basis.x
+		side.y = 0.0
+		var c2: Vector2 = p0.centre
+		door = Transform3D(Basis(Vector3.UP, atan2(side.x, side.z)), Vector3(c2.x, float(p0.get("y", door.origin.y)) + 3.0, c2.y))
 	var outward := door.basis.z
 	outward.y = 0.0
 	outward = outward.normalized() if outward.length() > 0.01 else Vector3(0, 0, 1)
@@ -79,7 +90,8 @@ func _pick(id: String) -> Dictionary:
 	for k in ["circus", "theatre", "amphitheatre", "stadium", "plaza", "forum", "comitium"]:
 		if model.contains(k):
 			kind = k
-	if kind != "":
+	var standing := str(mons.state_at(id, mons._year).get("state", "standing")) == "standing"
+	if kind != "" and standing:   # a venue being built (a cleared site) is looked at from outside
 		var oa := _open_air(id, kind, d0, outward, p)
 		if not oa.is_empty():
 			return oa
@@ -101,7 +113,7 @@ func _pick(id: String) -> Dictionary:
 		front_b = maxf(front_b, cb.x * outward.x + cb.z * outward.z)
 	front_b = minf(front_b, front)
 	var half: Vector2 = p.get("half", Vector2.ZERO)
-	var w := maxf(half.x * 2.0, 2.0)
+	var w := maxf((maxf(half.x, half.y) if bridge else half.x) * 2.0, 2.0)
 	var base := float(p.get("y", b.position.y))
 	var top := b.end.y if b.size.y > 0.0 else base + 6.0
 	var back := front + clampf(maxf((top - base) * 1.8, minf(w, 60.0) * 1.1), 12.0, 60.0)
@@ -165,14 +177,20 @@ func _pick(id: String) -> Dictionary:
 			cost += 40.0   # under a bank or above it: the front out of the street camera's frame (70° high, 3° up)
 		if seen == 0 or not is_clear(eye, target, id):
 			cost += 100.0   # the door (or the part of the front looked at) hidden
+		var near := is_near(eye)
+		if near:
+			cost += 30.0   # against a wall, a column, a house or a tree
+		var over := overfills(eye, face + right * lat, base, top, w)
+		if over:
+			cost += 30.0   # so close that the front overfills the frame
 		var tl: Vector3 = target - eye
 		var pose := {"stand": st, "eye": eye, "facing": atan2(-tl.x, -tl.z), "open_air": false, "seen": seen,
-			"target": target, "all_round": all_round}
+			"target": target, "all_round": all_round, "front": [face + right * lat, base, top, w]}
 		ranked.append([cost, pose])
 		if cost < best_cost:
 			best_cost = cost
 			best = pose
-		if seen == 5 and off < 10.0 and lat == 0.0 and float(sd[3]) == 0.0 and absf(tilt - 3.0) <= 30.0 and not _mesh_blocks(eye, target, id):
+		if seen == 5 and off < 10.0 and lat == 0.0 and float(sd[3]) == 0.0 and absf(tilt - 3.0) <= 30.0 and not near and not over and not _mesh_blocks(eye, target, id):
 			return best
 	# the best stands in order, the first whose line to the front no other monument's mesh crosses
 	# (a column of a porch, a cornice: the solids are coarser than what is drawn)
@@ -219,16 +237,31 @@ func _open_air(id: String, kind: String, d0: Vector3, outward: Vector3, p: Dicti
 		for lat in [0.0, -8.0, 8.0, -16.0, 16.0]:
 			for k in [into, into + 6.0, maxf(into - 4.0, 2.0), into + 14.0, into + 24.0]:
 				tries.append([d0 - outward * k + right * lat, 1.0])
-	for tr: Array in tries:
-		var st: Vector3 = tr[0]
-		var eye := Vector3(st.x, floor_at(st) + EYE, st.z)
-		if not is_free(eye):
-			continue
-		if kind in ["theatre", "amphitheatre"]:   # looking at the stage
-			return {"stand": st, "eye": eye, "facing": atan2(-outward.x, -outward.z), "open_air": true, "seen": 5,
-				"target": d0}
-		return {"stand": st, "eye": eye, "facing": atan2(outward.x, outward.z), "open_air": true, "seen": 5, "target": d0}
+	_load_lots(Vector2(d0.x, d0.z), 160.0)   # the houses and the trees, for the tests below
+	for pass_i in 2:   # first only stands clear of everything round them, then any free one
+		for tr: Array in tries:
+			var st: Vector3 = tr[0]
+			var eye := Vector3(st.x, floor_at(st) + EYE, st.z)
+			if not is_free(eye) or (pass_i == 0 and is_near(eye)):
+				continue
+			var look := outward * (-1.0 if kind in ["theatre", "amphitheatre"] else 1.0)
+			if pass_i == 0 and not is_clear(eye, eye + look * 10.0, id):
+				continue   # a tree or a wall right in front of it
+			if kind in ["theatre", "amphitheatre"]:   # looking at the stage
+				return {"stand": st, "eye": eye, "facing": atan2(-outward.x, -outward.z), "open_air": true, "seen": 5,
+					"target": d0}
+			return {"stand": st, "eye": eye, "facing": atan2(outward.x, outward.z), "open_air": true, "seen": 5, "target": d0}
 	return {}
+
+
+## Whether a front (its middle `face` at the ground, from `base` to `top`, `w` wide) seen from
+## `eye` is bigger than the street camera's frame: taller than FRAME_H degrees, or wider than
+## FRAME_W (a front wider than 60 m is framed in parts, so only its height counts).
+static func overfills(eye: Vector3, face: Vector3, base: float, top: float, w: float) -> bool:
+	var d := maxf(Vector2(face.x - eye.x, face.z - eye.z).length(), 0.5)
+	var ang_h := rad_to_deg(atan2(top - eye.y, d) - atan2(base - eye.y, d))
+	var ang_w := rad_to_deg(2.0 * atan(w * 0.5 / d))
+	return ang_h > FRAME_H or (w < 60.0 and ang_w > FRAME_W)
 
 
 ## Points every 6 m on the year's streets between `r0` and `r1` metres from `c`.
@@ -260,6 +293,8 @@ func _street_points(c: Vector2, r0: float, r1: float) -> Array:
 ## `opens`: the Porticus Octaviae's court, the Area Capitolina), whichever is higher.
 func floor_at(p: Vector3) -> float:
 	var y := _ground(p.x, p.z)
+	if UrbsTerrain.in_river(p.x, p.z):   # on the water (from a boat): a river front's view
+		y = maxf(y, UrbsTerrain.river_level(p.x, p.z))
 	var g := y
 	# a podium or platform a person can stand on: a solid at least 4 m across whose top is 0.3 to
 	# 6 m over the ground (the steps of a neighbouring temple, a raised floor)
@@ -345,8 +380,8 @@ func house_at(p: Vector3, grow := 0.3) -> Dictionary:
 
 ## Whether an eye at `p` stands clear: not inside a monument's solid nor a house, nor within
 ## the drawn body of a compact monument (its steps and mouldings stand out of its solids).
-func is_free(p: Vector3) -> bool:
-	if not house_at(p, 0.4).is_empty():
+func is_free(p: Vector3, grow := 0.3) -> bool:
+	if not house_at(p, grow + 0.1).is_empty():
 		return false
 	# not at the foot of a terrace wall or a cut in the hill (the eye in the drawn bank)
 	var g := _ground(p.x, p.z)
@@ -354,16 +389,16 @@ func is_free(p: Vector3) -> bool:
 		if _ground(p.x + dv.x, p.z + dv.y) - g > 1.5:
 			return false
 	for t in _trees:   # not in a tree's crown
-		if p.distance_to(t.c) < float(t.r) + 0.3:
+		if p.distance_to(t.c) < float(t.r) + grow:
 			return false
-	if monument_at(p, 0.3) != "":
+	if monument_at(p, grow) != "":
 		return false
 	for mid in mons._solids:
 		if bool(mons._placed.get(mid, {}).get("world", false)):
 			continue   # routes
 		if not (mons._opens.get(mid, []) as Array).is_empty():
 			# a building round a court (a portico): its court is free, its wings are not
-			if _in_drawn(mid, p, 0.3) and not _in_open(mid, p):
+			if _in_drawn(mid, p, grow) and not _in_open(mid, p):
 				return false
 			continue
 		var wb: AABB = mons._bounds.get(mid, AABB())
@@ -372,16 +407,22 @@ func is_free(p: Vector3) -> bool:
 		var rad := float(mons._placed.get(mid, {}).get("radius", 0.0))
 		if rad > 0.0:   # a round building: its circle, not the square round it
 			var cc: Vector2 = mons._placed[mid].centre
-			if Vector2(p.x, p.z).distance_to(cc) < rad + 0.3:
+			if Vector2(p.x, p.z).distance_to(cc) < rad + grow:
 				return false
 			continue
 		if not _drawn.has(mid):
 			_drawn[mid] = mons._drawn_box(mid)
 		var db: AABB = _drawn[mid]
 		var lp := (mons._xf[mid] as Transform3D).affine_inverse() * p
-		if db.grow(0.3).has_point(lp):
+		if db.grow(grow).has_point(lp):
 			return false
 	return true
+
+
+## Whether an eye at `p` stands against something: a monument, a house or a tree within
+## NEAR_M (the picture then shows a wall or a column a step away).
+func is_near(p: Vector3) -> bool:
+	return not is_free(p, NEAR_M)
 
 
 var _drawn := {}   ## monument id -> its drawn box in its frame (UrbsMonuments._drawn_box)

@@ -19,6 +19,8 @@
 ##   coplanar         faces of two different materials in the same plane and overlapping:
 ##                    they flicker (z-fighting), within one monument or between two
 ##   view_inside      the `--at=<id>` street camera inside a solid (any monument's part)
+##   view_close       the `--at=<id>` camera against something (a drawn part, a house or a tree
+##                    within 1.5 m) or so near that the front overfills the frame
 ##   view_misses      the `--at=<id>` camera not looking at its monument's front: standing
 ##                    behind or beside it, turned away from it, or with another monument between
 ## and `parts`: the number of parts checked.
@@ -64,7 +66,7 @@ func run(with_coplanar := true) -> Dictionary:
 		n += (parts[id] as Array).size()
 	_index(ids)
 	var out := {"parts": n, "part_overlaps": _part_overlaps(ids), "parts_floating": [], "parts_sunk": [],
-		"coplanar": [], "view_inside": [], "view_misses": []}
+		"coplanar": [], "view_inside": [], "view_misses": [], "view_close": []}
 	for id in ids:
 		var fl := _floating(id)
 		if fl != "":
@@ -77,6 +79,7 @@ func run(with_coplanar := true) -> Dictionary:
 	var views := _views(ids)
 	out.view_inside = views[0]
 	out.view_misses = views[1]
+	out.view_close = views[2]
 	return out
 
 
@@ -733,6 +736,7 @@ static func _area(poly: PackedVector2Array) -> float:
 func _views(ids: Array) -> Array:
 	var inside: Array = []
 	var misses: Array = []
+	var close: Array = []
 	var mv := UrbsMonumentView.new(mon, height, fill)
 	for id in ids:
 		if _model(id) in NO_VIEW or bool(mon._placed.get(id, {}).get("world", false)):
@@ -750,6 +754,21 @@ func _views(ids: Array) -> Array:
 				break
 		if not mv.house_at(eye, 0.2).is_empty():
 			inside.append("%s camera at (%.0f, %.0f) inside a house" % [id, eye.x, eye.z])
+		# against something: a drawn part, a house or a tree within NEAR_M; or the front overfilling
+		var near := _near_part(eye)
+		if near == "" and not mv.house_at(eye, UrbsMonumentView.NEAR_M).is_empty():
+			near = "a house"
+		if near == "":
+			for t in mv._trees:
+				if eye.distance_to(t.c) < float(t.r) + UrbsMonumentView.NEAR_M:
+					near = "a tree"
+					break
+		if near != "":
+			close.append("%s camera at (%.0f, %.0f) within %.1f m of %s" % [id, eye.x, eye.z, UrbsMonumentView.NEAR_M, near])
+		elif v.has("front"):
+			var fr: Array = v.front
+			if UrbsMonumentView.overfills(eye, fr[0], float(fr[1]), float(fr[2]), float(fr[3])):
+				close.append("%s camera at (%.0f, %.0f) so near that the front overfills the frame" % [id, eye.x, eye.z])
 		if bool(v.open_air):
 			continue   # it looks in from the entrance: the front is behind it
 		var door: Transform3D = mon.entrance(id)
@@ -776,7 +795,35 @@ func _views(ids: Array) -> Array:
 			why.append("a house or the ground across the line to the front")
 		if not why.is_empty():
 			misses.append("%s view from (%.0f, %.0f): %s" % [id, eye.x, eye.z, ", ".join(why)])
-	return [inside, misses]
+	return [inside, misses, close]
+
+
+## The monument a drawn part of which comes within NEAR_M of `p` ("" if none): short sight
+## lines round it at eye height and at the knee, part by part (pavings aside).
+func _near_part(p: Vector3) -> String:
+	var r := UrbsMonumentView.NEAR_M
+	var c0 := Vector2i(floori(p.x / CELL), floori(p.z / CELL))
+	var seen := {}
+	for dx in range(-1, 2):
+		for dz in range(-1, 2):
+			for ref in _grid.get(c0 + Vector2i(dx, dz), []):
+				var key := "%s:%d" % [ref[0], ref[1]]
+				if seen.has(key) or _model(ref[0]) in PAVINGS:
+					continue
+				seen[key] = true
+				var q: Dictionary = parts[ref[0]][ref[1]]
+				if not (q.wb as AABB).grow(r).has_point(p):
+					continue
+				var t := _world_tris(q)
+				for k in 16:
+					var a := TAU * (k + 0.37) / 16.0
+					var d := Vector3(cos(a), 0, sin(a)) * r
+					for h in [0.0, -1.0]:
+						var o := p + Vector3(0, h, 0)
+						for i in range(0, t.size(), 3):
+							if Geometry3D.segment_intersects_triangle(o, o + d, t[i], t[i + 1], t[i + 2]) != null:
+								return str(ref[0])
+	return ""
 
 
 ## Whether the closed run of triangles a part was cut from holds `p`: an odd number of
