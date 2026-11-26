@@ -51,6 +51,10 @@ func pick(id: String) -> Dictionary:
 	var model := str(mons.entry(id).get("model", ""))
 	if model in ROUTES or bool(mons._placed.get(id, {}).get("world", false)):
 		var rv := _pick_route(id, model)
+		if bool(rv.get("underground", false)):   # an aqueduct all underground: nothing drawn to look at
+			var vu := _pick(id)
+			vu["underground"] = true
+			return vu
 		if not rv.is_empty():
 			return rv
 	var v := _pick(id)
@@ -156,10 +160,19 @@ func _pick_route(id: String, model: String) -> Dictionary:
 	var h := 12.0 if model.begins_with("aqueduct") else (10.0 if model == "wall" else (4.0 if model == "quay" else 1.5))
 	var best: Dictionary = {}
 	var best_m := -INF
-	# the stretches inside the drawn city (an aqueduct's line runs out to its springs 30 km off)
+	# the stretches inside the drawn city (an aqueduct's line runs out to its springs 30 km off);
+	# of an aqueduct only its arches are drawn (the rest runs underground)
+	var spans: Array = [Vector2(0.0, total)]
+	if model.begins_with("aqueduct"):
+		spans = []
+		for iv in mons.state_at(id, mons._year).get("arcade", []):
+			spans.append(Vector2(float(iv[0]), float(iv[1])))
+		if spans.is_empty():
+			return {"underground": true}
 	var stations: Array = []
 	for si in 40:
-		var s0 := total * (si + 0.5) / 40.0
+		var sp: Vector2 = spans[si % spans.size()]
+		var s0 := sp.x + (sp.y - sp.x) * ((si / spans.size()) + 0.5) / ceilf(40.0 / spans.size())
 		var kk := 1
 		while kk < route.size() - 1 and float(acc[kk]) < s0:
 			kk += 1

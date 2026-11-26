@@ -748,6 +748,8 @@ func _views(ids: Array) -> Array:
 		if _model(id) in NO_VIEW or bool(mon._placed.get(id, {}).get("world", false)):
 			if _model(id) != "sewer":   # a route or a bridge: only what the frame shows
 				var vr: Dictionary = mv.pick(id)
+				if bool(vr.get("underground", false)):
+					continue   # an aqueduct with no arches drawn (underground all through the city)
 				if vr.has("eye"):
 					var fr := mv.frame_score(id, vr)
 					if not (fr.faults as Array).is_empty():
