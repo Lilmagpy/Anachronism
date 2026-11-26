@@ -294,6 +294,7 @@ static func _beam_z(k: Kit, z0: float, z1: float, y_top: float, x: float, w: flo
 static func _ceiling(k: Kit, x0: float, z0: float, x1: float, z1: float, y: float, bays_x: int, bays_z: int,
 		beam: float, deep: float, plank: Color, beam_col: Color, coffered := true) -> void:
 	_floor(k, x0, z0, x1, z1, y, plank, Kit.TIMBER, false)
+	beam_col = beam_col.lerp(plank, 0.5)   # F3 monuments: dark beams overhead rendered as black bands
 	for i in range(bays_x + 1):
 		var x := x0 + (x1 - x0) * i / bays_x
 		_span(k, x - beam * 0.5, y - deep, z0, x + beam * 0.5, y, z1, beam_col, Kit.TIMBER, true)

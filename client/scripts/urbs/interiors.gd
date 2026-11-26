@@ -28,6 +28,7 @@ static var _kind := ""
 static var _size := Vector2.ZERO
 static var _xf := Transform3D.IDENTITY
 static var _material: ShaderMaterial = null
+static var _roofed: ShaderMaterial = null   ## F3 monuments: with the bounced fill light
 
 ## The year the interiors are dressed for (frescoes, statues, tiers): set it from the game.
 static var year := -100
@@ -158,18 +159,23 @@ static func _attach(root: Node3D, r: Dictionary) -> void:
 	if _material == null:
 		_material = ShaderMaterial.new()
 		_material.shader = load("res://shaders/models.gdshader")
+		# F3 monuments: a roofed room's faces get the light bounced round it (fill_light);
+		# one under the open sky keeps the scene's own light
+		_roofed = _material.duplicate()
+		_roofed.set_shader_parameter("fill_light", FILL_EMIT)
+	var mat := _material if bool(r.get("open_sky", false)) else _roofed
 	var body := MeshInstance3D.new()
 	body.name = "Body"
 	body.mesh = r["mesh"]
 	body.scale = Vector3.ONE * Roman.MS
-	body.material_override = _material
+	body.material_override = mat
 	root.add_child(body)
 	if r["cover"] != null:
 		var cover := MeshInstance3D.new()
 		cover.name = "Cover"
 		cover.mesh = r["cover"]
 		cover.scale = Vector3.ONE * Roman.MS
-		cover.material_override = _material
+		cover.material_override = mat
 		root.add_child(cover)
 	for spec in r.get("statues", []):
 		root.add_child(_make_statue(spec))
@@ -218,6 +224,7 @@ static func _attach(root: Node3D, r: Dictionary) -> void:
 const FILL_SPACING := 14.0   ## metres between the fill lights over a room
 const FILL_ENERGY := 1.0
 const DOOR_ENERGY := 1.6
+const FILL_EMIT := 0.8        ## the bounce every face of a roofed interior gets (models.gdshader fill_light)
 
 
 ## The light a roofed room gets besides its lamps: what comes in at the door (or the compluvium,
