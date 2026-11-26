@@ -179,7 +179,7 @@ func _pick(id: String) -> Dictionary:
 			cost += 100.0   # the door (or the part of the front looked at) hidden
 		var near := is_near(eye)
 		if near:
-			cost += 30.0   # against a wall, a column, a house or a tree
+			cost += 60.0   # against a wall, a column, a house or a tree
 		var over := overfills(eye, face + right * lat, base, top, w)
 		if over:
 			cost += 30.0   # so close that the front overfills the frame
@@ -422,7 +422,16 @@ func is_free(p: Vector3, grow := 0.3) -> bool:
 ## Whether an eye at `p` stands against something: a monument, a house or a tree within
 ## NEAR_M (the picture then shows a wall or a column a step away).
 func is_near(p: Vector3) -> bool:
-	return not is_free(p, NEAR_M)
+	if not is_free(p, NEAR_M):
+		return true
+	# the routes (the Servian wall and its towers and bank, an aqueduct): their drawn meshes
+	for k in 8:
+		var a := TAU * (k + 0.37) / 8.0
+		var d := Vector3(cos(a), 0, sin(a)) * (NEAR_M + 1.5)   # _mesh_blocks stops 1.5 m short
+		for h in [0.0, -1.0]:
+			if _mesh_blocks(p + Vector3(0, h, 0), p + Vector3(0, h, 0) + d, "", true):
+				return true
+	return false
 
 
 var _drawn := {}   ## monument id -> its drawn box in its frame (UrbsMonuments._drawn_box)
@@ -523,7 +532,7 @@ static var _faces := {}   ## mesh instance id -> PackedVector3Array of its trian
 
 ## Whether a drawn triangle of another monument (its nearest level of detail, its columns too)
 ## lies across the line from `a` to the last 1.5 m before `b`. Pavings are walked on.
-func _mesh_blocks(a: Vector3, b: Vector3, own: String) -> bool:
+func _mesh_blocks(a: Vector3, b: Vector3, own: String, routes_only := false) -> bool:
 	var len := a.distance_to(b)
 	if len < 0.1:
 		return false
@@ -531,6 +540,8 @@ func _mesh_blocks(a: Vector3, b: Vector3, own: String) -> bool:
 	var seg := AABB(a, Vector3.ZERO).expand(end)
 	for mid in mons._nodes:
 		if mid == own or str(mons._placed.get(mid, {}).get("model", "")) in ["plaza", "road_paved", "lacus_curtius", "comitium"]:
+			continue
+		if routes_only and not bool(mons._placed.get(mid, {}).get("world", false)):
 			continue
 		var node: Node3D = mons._nodes[mid]
 		if not _mesh_box.has(mid):   # what it draws, steps and all (its bounds may stop at the podium)
