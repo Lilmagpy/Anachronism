@@ -185,8 +185,11 @@ def test_places_view_is_wired_into_the_view(content: Content) -> None:
         (-53, "curia_hostilia", "Curia Cornelia"),
         (-52, "curia_pompeia", "Curia Pompeia"),
         (-45, "curia_pompeia", "Curia Pompeia"),
-        (-44, "curia_iulia", "Curia Iulia"),
-        (-30, "curia_iulia", "Curia Iulia"),
+        # the Curia Iulia is a building site from 44 to its dedication in 29 (Dio 44.5.1-2,
+        # 51.22.1; Res Gestae 19): the Senate meets in temples meanwhile
+        (-44, "aedes_concordiae_forum", "Temple of Concord"),
+        (-30, "aedes_concordiae_forum", "Temple of Concord"),
+        (-29, "curia_iulia", "Curia Iulia"),
     ],
 )
 def test_the_senate_meets_in_the_house_of_the_year(

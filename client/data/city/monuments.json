@@ -864,7 +864,7 @@
 {
 "bearing_deg": 135,
 "built": {
-"by": "(F2: built.year is the dedication; it was -44, the year it was begun) begun by Caesar in 44 to replace the Curia Hostilia (Dio 44.5.2), continued by the triumvirs (Dio 45.17, 47.19); completed and dedicated by Octavian in 29 (Dio 51.22.1; Res Gestae 19.1)",
+"by": "(F2: built.year is the dedication; it was -44, the year it was begun) begun by Caesar in 44 to replace the Curia Hostilia (Dio 44.5.1-2), a building site until 29 (F3 monuments: nothing serves in it or enters it before), continued by the triumvirs (Dio 45.17, 47.19); completed and dedicated by Octavian in 29 (Dio 51.22.1; Res Gestae 19.1)",
 "certainty": "certain",
 "year": -29
 },
@@ -899,7 +899,7 @@
 "precision": "exact",
 "regio": 8,
 "sources": [
-"Dio 44.5.2",
+"Dio 44.5.1-2",
 "Dio 45.17",
 "Dio 51.22.1",
 "Res Gestae 19",

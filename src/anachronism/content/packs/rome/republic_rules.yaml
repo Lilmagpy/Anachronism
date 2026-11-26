@@ -116,8 +116,13 @@ republic_rules:
            sources: ["Pliny NH 34.26 (Sulla's rebuilding; unverified: passage not re-read)", "Cicero, De finibus 5.2 (the Curia seems smaller since it was made larger; unverified: passage not re-read)", "Dio 40.50.2-3 (the name Cornelia, given to Faustus Sulla's rebuilding after 52; unverified: passage not re-read)", "Platner-Ashby s.v. Curia Hostilia"]}
         - {monument: curia_pompeia, name: "Curia Pompeia", from_year: -52, to_year: -45, blurb: "The hall in Pompey's portico, where the Senate meets while the Curia lies burnt.",
            sources: ["Cicero, De divinatione 2.23 (unverified: passage not re-read)", "Plutarch, Brutus 14.1 (unverified: passage not re-read)", "Suetonius, Divus Iulius 80.4, 88 (unverified: passage not re-read)", "Dio 40.49.2 (the fire of 52; unverified: passage not re-read)"]}
-        - {monument: curia_iulia, name: "Curia Iulia", from_year: -44, while_building: true, blurb: "Caesar's new Curia, begun in 44 and dedicated by Octavian in 29.",
-           sources: ["Dio 44.5.2", "Dio 51.22.1", "Res Gestae 19.1", "Platner-Ashby s.v. Curia Iulia"]}
+        # F3 monuments: the Curia Iulia is a building site from 44 (begun by Caesar, Dio 44.5.1-2)
+        # until Octavian dedicates it in 29 (Res Gestae 19; Dio 51.22.1; Platner-Ashby s.v. Curia
+        # Iulia): the Senate meets in it only from 29; in between, in temples, Concord's among them
+        - {monument: aedes_concordiae_forum, name: "Temple of Concord", from_year: -44, to_year: -30, blurb: "With Caesar's Curia still a building site, the Senate meets in temples, Concord's at the foot of the Capitol among them.",
+           sources: ["Cicero, Philippics 2.19 and 2.112 (the Senate in the Temple of Concord, 44; unverified: passage not re-read)", "Platner-Ashby s.v. Concordia, Aedes (unverified: entry not re-read)"]}
+        - {monument: curia_iulia, name: "Curia Iulia", from_year: -29, blurb: "Caesar's new Curia, begun in 44 and dedicated by Octavian in 29.",
+           sources: ["Dio 44.5.1-2", "Dio 51.22.1", "Res Gestae 19", "Platner-Ashby s.v. Curia Iulia"]}
       rostra:
         - {monument: comitium, name: "The speakers' platform of the Comitium", to_year: -339, blurb: "A low platform between the Comitium and the Forum, before it was hung with the beaks of the Antiate ships.",
            sources: ["Platner-Ashby s.v. Rostra (a platform from the mid fifth century, raised after 390)"]}
