@@ -571,8 +571,8 @@
 {
 "bearing_deg": 196,
 "built": {
-"by": "archaic sanctuary with inscribed cippus (c. 500 BC), sacellum probably later 4th c. BC; black marble paving laid over it in the Caesarian reconstruction of the Comitium (c. 45 BC) (P&A); Festus 184L: 'niger lapis in comitio locum funestum significat', variously linked to Romulus's death or burial",
-"certainty": "probable",
+"by": "an archaic sanctuary under the black paving, its inscribed cippus dated about 500 BC, a tufa cone 5th century, the sacellum probably later 4th century (Platner-Ashby s.v. Sepulcrum Romuli; Niger Lapis); tradition made the place Romulus's death or burial (Festus 184L: niger lapis in comitio locum funestum significat); the black marble paving laid in the Caesarian reconstruction of the Comitium (about 45 BC, P&A)",
+"certainty": "traditional",
 "year": null
 },
 "english": "Black Stone (Niger Lapis) with the Volcanal",
@@ -716,9 +716,9 @@
 {
 "bearing_deg": 196,
 "built": {
-"by": "existed by 304 BC when Cn. Flavius set up a bronze aedicula of Concord on it (Pliny NH 33.19); earlier origin unknown",
+"by": "existed by 304 BC, when Cn. Flavius set up a bronze aedicula of Concord in Graecostasi, quae tunc supra comitium erat (Pliny NH 33.19, per Platner-Ashby s.v. Graecostasis, read): the year is that first mention, a terminus ante quem; earlier origin unknown",
 "certainty": "uncertain",
-"year": null
+"year": -304
 },
 "english": "Graecostasis",
 "footprint_m": {
@@ -756,9 +756,9 @@
 {
 "bearing_deg": 127,
 "built": {
-"by": "early; senators assembled before meetings (Varro LL 5.156; Festus 470L)",
+"by": "where the senators assembled before entering the curia (Varro LL 5.156: senaculum supra Graecostasim ubi aedes Concordiae et basilica Opimia; Val. Max. 2.2.6: antea senatus adsiduam stationem eo loci peragebat, qui hodieque senaculum appellatur, undated); P&A (s.v. Senacula, read): the original building must have been removed when Opimius enlarged the temple of Concord in 121 BC, so it stood before 121: that year is taken as a terminus ante quem",
 "certainty": "uncertain",
-"year": null
+"year": -121
 },
 "english": "Senaculum",
 "footprint_m": {
@@ -1473,8 +1473,8 @@
 {
 "bearing_deg": 294.7,
 "built": {
-"by": "dwelling of the Vestal Virgins; the cult is ascribed to Numa, but the earliest visible house remains date from the 2nd century BC (P&A)",
-"certainty": "uncertain",
+"by": "the dwelling of the Vestal Virgins, whose order tradition ascribes to Numa (Livy 1.20.3, not re-read here; Dion. Hal. 2.64-66), beside the temple of Vesta which the antiquarians attributed to Numa (Dion. Hal. 2.65-66; Plut. Numa 11; Platner-Ashby s.v. Vesta, Aedes, read); P&A s.v. Atrium Vestae: almost no remains of the house earlier than the 2nd century BC are visible",
+"certainty": "traditional",
 "year": null
 },
 "english": "House of the Vestals",
@@ -1502,7 +1502,11 @@
 "sources": [
 "Festus 333",
 "Gellius 1.12.9",
-"Platner-Ashby s.v. Atrium Vestae"
+"Platner-Ashby s.v. Atrium Vestae",
+"Livy 1.20.3",
+"Dion. Hal. 2.64-66",
+"Plut. Numa 11",
+"Platner-Ashby s.v. Vesta, Aedes (read)"
 ],
 "type": "house",
 "verified": "platner-ashby+pleiades"
@@ -1783,8 +1787,8 @@
 {
 "bearing_deg": 0,
 "built": {
-"by": "early; water where Castor and Pollux watered horses after Lake Regillus (Dion. Hal. 6.13)",
-"certainty": "uncertain",
+"by": "the spring of Juturna at the foot of the Palatine, where Castor and Pollux were seen watering their horses after the battle of Lake Regillus, 496 BC (Dion. Hal. 6.13; Ov. Fast. 1.706; Platner-Ashby s.v. Lacus Iuturnae, read): a spring of the earliest tradition, drawn from the first year; its basin is a later structure (P&A)",
+"certainty": "traditional",
 "year": null
 },
 "english": "Spring and shrine of Juturna",
@@ -2023,9 +2027,9 @@
 {
 "bearing_deg": 178,
 "built": {
-"by": "existed by 212 BC (Livy 25.7.12); restored and enlarged by the censors of 194 (Livy 34.44.5); magnificently rebuilt by C. Asinius Pollio (Suet. Aug. 29; Pliny NH 7.115), probably after 39 BC",
-"certainty": "probable",
-"year": null
+"by": "existed by 212 BC, when the Thurian hostages were held there (Livy 25.7.12, per Platner-Ashby s.v. Atrium Libertatis, read): the year is that first mention, a terminus ante quem; restored by the censors of 194 (Livy 34.44.5); magnificently rebuilt by C. Asinius Pollio (Suet. Aug. 29; Pliny NH 7.115), probably after 39 BC",
+"certainty": "uncertain",
+"year": -212
 },
 "english": "Atrium Libertatis",
 "events": [
@@ -2335,9 +2339,9 @@
 {
 "bearing_deg": 90,
 "built": {
-"by": "a round temple of Hercules in the Forum Boarium existed by 296 (Livy 10.23.3); a temple of Hercules Victor vowed 145 and dedicated 142 by L. Mummius (CIL I2 626 = VI 331, P&A), perhaps the same or a rebuilding",
+"by": "a round temple of Hercules in the Forum Boarium existed by 296 BC: the shrine of Pudicitia Patricia stood in foro Boario ad aedem rotundam Herculis (Livy 10.23.3, as quoted in Platner-Ashby s.v. Hercules Victor, Aedes, read); the year is that first mention, a terminus ante quem. The temple of Hercules Victor vowed by L. Mummius in 145 and dedicated in 142 (CIL I2 626) P&A places probably on the Caelian, not here",
 "certainty": "uncertain",
-"year": null
+"year": -296
 },
 "english": "Round Temple in the Forum Boarium (Hercules Victor)",
 "events": [
@@ -2382,9 +2386,9 @@
 {
 "bearing_deg": 343,
 "built": {
-"by": "temple of Portunus 'in portu Tiberino' near the Pons Aemilius, dedicated on 17 August (Varro LL 6.19; fasti); founding date unknown",
+"by": "temple of Portunus in portu Tiberino near the Pons Aemilius, dedicated on 17 August (Varro LL 6.19; fasti, per Platner-Ashby s.v. Portunium); no source gives a building date; standing when Varro wrote LL (about 43 BC); about 100 BC is the usual modern dating of the extant Ionic temple (its masonry), given by none of the sources read",
 "certainty": "uncertain",
-"year": null
+"year": -100
 },
 "english": "Temple of Portunus",
 "footprint_m": {
@@ -2787,9 +2791,9 @@
 {
 "bearing_deg": 90,
 "built": {
-"by": "temple of Cn. Domitius Ahenobarbus, vowed 42-38 BC (coin evidence) and perhaps built after 32; an earlier altar or temple existed by 206 (Livy 28.11.4; P&A)",
+"by": "an altar of Neptune in the Circus Flaminius is among the prodigies of 206 BC (Livy 28.11.4, per Platner-Ashby s.v. Neptunus, Aedes; P&A takes Dio fr. 57.60 to imply a temple): the year is that first mention, a terminus ante quem; the temple of Cn. Domitius Ahenobarbus was vowed 42-38 BC (coin) and perhaps built after 32, a rebuilding or a new temple (P&A)",
 "certainty": "uncertain",
-"year": null
+"year": -206
 },
 "english": "Temple of Neptune (Circus Flaminius)",
 "events": [
@@ -3497,9 +3501,9 @@
 {
 "bearing_deg": 139,
 "built": {
-"by": "originally the house of the orator Q. Hortensius Hortalus (d. 50), later Augustus's residence 'aedes Hortensianae' (Suet. Aug. 72); enlarged after the Apollo temple was built (Dio 49.15.5); the oak crown decreed 13 Jan 27 (Dio 53.16.4)",
+"by": "originally the house of the orator Q. Hortensius Hortalus, later Augustus's residence, aedes Hortensianae (Suet. Aug. 72); building date unknown: Hortensius died in 50 BC (Cicero Brutus 1, not re-read); the year is the start of his public life (95 BC), with which the game opens his ownership (republic_rules.yaml), the house standing at least from then; enlarged after the Apollo temple was built (Dio 49.15.5); the oak crown decreed 13 Jan 27 (Dio 53.16.4)",
 "certainty": "uncertain",
-"year": null
+"year": -95
 },
 "english": "House of Hortensius, later of Augustus",
 "footprint_m": {
@@ -3532,7 +3536,8 @@
 "Suetonius Aug. 72",
 "Dio 49.15.5",
 "Dio 53.16.4",
-"Platner-Ashby s.v. Domus Augusti (2)"
+"Platner-Ashby s.v. Domus Augusti (2)",
+"Cic. Brutus 1"
 ],
 "type": "house",
 "verified": "platner-ashby+pleiades"
@@ -3584,9 +3589,9 @@
 {
 "bearing_deg": 16,
 "built": {
-"by": "Pompey's house on the Carinae near the temple of Tellus (Cic. Har. Resp. 49), ornamented with pirate rostra (Cic. Phil. 2.68); building date unknown; passed to Antony after Pompey's death (Dio 48.38)",
+"by": "Pompey's house on the Carinae near the temple of Tellus (Suet. Gramm. 15; App. BC 2.126; Vell. 2.77; Cic. Har. Resp. 49, per Platner-Ashby s.v. Domus, Cn. Pompeius, read), ornamented with pirate rostra (Cic. Phil. 2.68); building date unknown: first read in De Haruspicum Responso (56 BC), but he lived there before he built his finer house by the theatre (Plut. Pomp. 40); the year is the one the game opens his ownership with (his first consulship, 70 BC: republic_rules.yaml), the house standing at least from then; passed to Antony after Pompey's death (Dio 48.38)",
 "certainty": "uncertain",
-"year": null
+"year": -70
 },
 "english": "House of Pompey on the Carinae",
 "footprint_m": {
@@ -3617,7 +3622,8 @@
 "Appian BC 2.126",
 "Dio 48.38",
 "Plut. Pompey 40",
-"Platner-Ashby s.v. Domus Cn. Pompei"
+"Platner-Ashby s.v. Domus Cn. Pompei",
+"Suet. Gramm. 15"
 ],
 "type": "house",
 "verified": "platner-ashby"
@@ -3662,9 +3668,9 @@
 {
 "bearing_deg": 16,
 "built": {
-"by": "P. Clodius Pulcher bought a Palatine house (that of Q. Seius, Cic. Dom. 115) and began building on part of Cicero's site after 58; price HS 14,800,000 (Pliny NH 36.103, not checked)",
+"by": "P. Clodius Pulcher intended to build, and apparently began, a house on part of the site of Cicero's house and that of his neighbour Q. Seius (Cic. Dom. 115-116, per Platner-Ashby s.v. Domus, Clodius, read): the year is that of the speech (57 BC), a terminus ante quem; Cicero's house was taken in 58",
 "certainty": "uncertain",
-"year": null
+"year": -57
 },
 "english": "House of Clodius on the Palatine",
 "footprint_m": {
@@ -4093,9 +4099,9 @@
 {
 "bearing_deg": 45,
 "built": {
-"by": "built between about 144/108 and the end of the Republic, near the tomb of Ser. Sulpicius Galba (CIL I2 695); called Horrea Sulpicia / Galbae (Hor. Carm. 4.12.18; Porph.)",
+"by": "warehouses beside the tomb of Ser. Sulpicius Galba, consul in 144 or 108 (CIL I2 695); about that time, or before the end of the republic, the horrea were built (Platner-Ashby s.v. Horrea Galbae, read); called Horrea Sulpicia (Hor. Carm. 4.12.18) or Galbae (Porph.)",
 "certainty": "uncertain",
-"year": null
+"year": -108
 },
 "english": "Horrea Galbae",
 "footprint_m": {
@@ -4226,9 +4232,9 @@
 {
 "bearing_deg": 270,
 "built": {
-"by": "Republican dockyard in the Campus Martius; date of foundation unknown (Platner-Ashby)",
+"by": "Republican dockyard in the Campus Martius; date of foundation unknown; first mention in 338 BC, the ships of Antium hauled up into the navalia at Rome (Livy 8.14.12, per Platner-Ashby s.v. Navalia, read): the year is that first mention, a terminus ante quem",
 "certainty": "uncertain",
-"year": null
+"year": -338
 },
 "english": "Naval dockyards",
 "footprint_m": {
@@ -4463,9 +4469,9 @@
 {
 "bearing_deg": 90,
 "built": {
-"by": "temple A of the Largo Argentina sacred area; identified by modern scholars, without ancient text, as Iuno Curritis; early 3rd-century BC phase on archaeological grounds",
+"by": "temple A of the Largo Argentina sacred area; no ancient text places or dates it; its first phase is dated to the early 3rd century BC on archaeological grounds (modern, not read); the identification with Juturna (C. Lutatius Catulus, 241 BC) or Iuno Curritis is a modern conjecture",
 "certainty": "uncertain",
-"year": null
+"year": -280
 },
 "english": "Temple A, Largo Argentina (probably Juno Curritis)",
 "footprint_m": {
@@ -4546,9 +4552,9 @@
 {
 "bearing_deg": 90,
 "built": {
-"by": "temple C of the Largo Argentina area, conventionally identified (modern) with Feronia (Livy 22.1.18; fasti, 13 November); date c. early 3rd century BC on archaeological grounds",
+"by": "temple C of the Largo Argentina area, conventionally identified (modern) with Feronia; dated about 300-290 BC on archaeological grounds (modern, not read); a temple of Feronia in the Campus Martius received gifts in 217 BC (Livy 22.1.18, per Platner-Ashby s.v. Feronia (lucus in Campo Martio), read), which P&A does not place here",
 "certainty": "uncertain",
-"year": null
+"year": -290
 },
 "english": "Temple C, Largo Argentina (Feronia?)",
 "footprint_m": {
@@ -4586,9 +4592,9 @@
 {
 "bearing_deg": 90,
 "built": {
-"by": "temple D of the Largo Argentina area; deity unknown, 2nd century BC (modern archaeological dating)",
+"by": "temple D of the Largo Argentina area; deity unknown; its first phase is dated to the early 2nd century BC on archaeological grounds (modern, not read); no ancient text. Not the temple of the Lares Permarini, which has its own record (lares_permarini, in porticu Minucia, dedicated 179: Livy 40.52.4)",
 "certainty": "uncertain",
-"year": null
+"year": -190
 },
 "english": "Temple D, Largo Argentina (identity unknown)",
 "footprint_m": {
@@ -4617,7 +4623,8 @@
 "precision": "exact",
 "regio": 9,
 "sources": [
-"archaeological identification; no ancient text"
+"archaeological identification; no ancient text",
+"Livy 40.52.4"
 ],
 "type": "temple",
 "verified": "pleiades"
@@ -7164,9 +7171,9 @@
 {
 "bearing_deg": 60,
 "built": {
-"by": "unknown; opened once a year on 15 June for the refuse of the temple of Vesta (Festus 344; Varro LL 6.32)",
+"by": "unknown; a gate on the Clivus Capitolinus opened once a year on 15 June for the refuse of the temple of Vesta (Festus 344, per Platner-Ashby s.v. Porta Stercoraria, read); the rite and its route down the Clivus Capitolinus are first described by Varro (LL 6.32, about 43 BC), the gate itself only by Festus: the year is Varro's, a terminus ante quem",
 "certainty": "uncertain",
-"year": null
+"year": -43
 },
 "english": "Porta Stercoraria",
 "footprint_m": {
@@ -7282,9 +7289,9 @@
 {
 "bearing_deg": 16,
 "built": {
-"by": "unknown; the heads of the senators killed in Sulla's proscriptions were set over it in 82 BC (Cic. Rosc. Am. 89)",
+"by": "unknown; the year is its first mention, a terminus ante quem: the heads of the senators killed in Sulla's proscriptions were set over it in 82 BC (Cic. Rosc. Am. 89, per Platner-Ashby s.v. Lacus Servilius, read)",
 "certainty": "uncertain",
-"year": null
+"year": -82
 },
 "english": "Lacus Servilius (fountain)",
 "footprint_m": {
@@ -7354,9 +7361,9 @@
 {
 "bearing_deg": 250,
 "built": {
-"by": "unknown; first mentioned among the prodigies of 106 BC (Obsequens 41), restored by Augustus (RG 19)",
+"by": "unknown; the year is its first mention, a terminus ante quem: among the prodigies of 106 BC (Obsequens 41, per Platner-Ashby s.v. Lares, Aedes, read); restored by Augustus (RG 19)",
 "certainty": "uncertain",
-"year": null
+"year": -106
 },
 "english": "Temple of the Lares",
 "geometry_source": "form assumed from date and type (no measured plan)",
@@ -7928,9 +7935,9 @@
 {
 "bearing_deg": 60,
 "built": {
-"by": "foundation date unknown; headquarters of the scribes and actors in the Second Punic War (Festus 333); restored by Augustus (RG 19)",
+"by": "foundation date unknown (Platner-Ashby s.v. Minerva, Aedes, read); first mentioned as the headquarters given to the scribes and actors during the Second Punic War (Festus 333, per P&A); the year 207 BC (the hymn of Livius Andronicus) is the usual reading of that passage and was not checked in Festus; restored by Augustus (RG 19)",
 "certainty": "uncertain",
-"year": null
+"year": -207
 },
 "english": "Temple of Minerva on the Aventine",
 "footprint_m": {
@@ -8369,9 +8376,9 @@
 {
 "bearing_deg": 210,
 "built": {
-"by": "unknown; standing in 211 BC (Livy 26.10.3)",
+"by": "unknown; the year is its first mention, a terminus ante quem: Hannibal advanced ad portam Collinam usque ad Herculis templum in 211 BC (Livy 26.10.3, as quoted in Platner-Ashby s.v. Hercules, Templum, read); nothing further is known",
 "certainty": "uncertain",
-"year": null
+"year": -211
 },
 "english": "Temple of Hercules outside the Porta Collina",
 "geometry_source": "form assumed from date and type (no measured plan)",
