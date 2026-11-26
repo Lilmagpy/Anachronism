@@ -38,11 +38,13 @@ References: **Pleiades** (CC BY 3.0; places within 3.5 km of the Forum with a pe
 | scene: F3 ground: 100 m stretches of a Tiber bank with a saw-toothed water line (all years) | 11 |
 | scene: F3 ground: surfaces within 5 cm of each other (paving, streets, quays, water) (all years) | 0 |
 | scene: F3 ground: ground missing where the camera can see it (all years) | 0 |
-| scene: F3 ground: terrace walls with nothing standing on the terrace (all years) | 11 |
+| scene: F3 ground: terrace walls with nothing standing on the terrace (all years) | 0 |
 | scene: F3 ground: platforms more than 1 m off the street or ground in front (all years) | 0 |
 | scene: F3 ground: steps that do not meet the ground at both ends (all years) | 0 |
 | scene: F3 ground: chunk edges where two levels of detail do not meet (all years) | 0 |
 | scene: F3 ground: stretches of street sunk under or floating over the ground (all years) | 38 |
+| scene: F3 ground: 100 m squares with walls footed above a level of detail's ground (all years) | 0 |
+| scene: F3 ground: 250 m squares with house or shop lots with meadow at their fronts (all years) | 0 |
 | scene (F3 houses): buildings of the fill interpenetrating (all years) | 0 |
 | scene (F3 houses): buildings of the fill inside a monument's solids (all years) | 0 |
 | scene (F3 houses): terrace, platform or clivus walls, steps or quays inside a building (all years) | 0 |
@@ -711,14 +713,14 @@ The repository has no modern elevation model; the ground is built from `topograp
 
 ## 3. Placement in the built scene
 
-| year | overlaps | floating | buried | houses_in_monuments | houses_on_streets | in_river | streets_through | part_overlaps | parts_floating | parts_sunk | coplanar | view_inside | view_misses | view_close | interior_voids | interior_figures | interior_missing | interior_starts | bank_sawtooth | zfight | ground_holes | empty_terraces | platform_steps | stair_ends | chunk_seams | streets_ground |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 509 BC | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 1 | 0 | 0 | 0 | 6 |
-| 390 BC | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 6 |
-| 264 BC | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 1 | 0 | 0 | 0 | 5 |
-| 133 BC | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 3 | 0 | 0 | 0 | 6 |
-| 44 BC | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 3 | 0 | 0 | 0 | 7 |
-| 27 BC | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 2 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 3 | 0 | 0 | 0 | 8 |
+| year | overlaps | floating | buried | houses_in_monuments | houses_on_streets | in_river | streets_through | part_overlaps | parts_floating | parts_sunk | coplanar | view_inside | view_misses | view_close | interior_voids | interior_figures | interior_missing | interior_starts | bank_sawtooth | zfight | ground_holes | empty_terraces | platform_steps | stair_ends | chunk_seams | streets_ground | wall_feet | meadow_fronts |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 509 BC | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 6 | 0 | 0 |
+| 390 BC | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 6 | 0 | 0 |
+| 264 BC | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 5 | 0 | 0 |
+| 133 BC | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 6 | 0 | 0 |
+| 44 BC | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 7 | 0 | 0 |
+| 27 BC | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 2 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 8 | 0 | 0 |
 
 **monuments whose solids overlap another standing monument**
 
@@ -741,14 +743,6 @@ The repository has no modern elevation model; the ground is built from `topograp
 - the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-1444, -1300) (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC)
 - the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-521, 261) (133 BC, 264 BC, 390 BC, 509 BC)
 - the water's edge turns more than 25 degrees within 2 m 7 times in the 100 m square near (-742, 145) (133 BC)
-
-**F3 ground: terrace walls with nothing standing on the terrace**
-
-- terrace walls across empty ground near (-3, -213): 19 m (133 BC)
-- terrace walls across empty ground near (-3, -213): 30 m (27 BC, 44 BC)
-- terrace walls across empty ground near (273, 147): 11 m (133 BC, 27 BC, 44 BC, 509 BC)
-- terrace walls across empty ground near (273, 147): 9 m (264 BC)
-- terrace walls across empty ground near (605, 46): 9 m (133 BC, 27 BC, 44 BC)
 
 **F3 ground: stretches of street sunk under or floating over the ground**
 

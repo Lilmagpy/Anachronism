@@ -81,12 +81,8 @@
    "buried": [],
    "chunk_seams": [],
    "coplanar": [],
-   "empty_terraces": [
-    "terrace walls across empty ground near (-3, -213): 19 m",
-    "terrace walls across empty ground near (273, 147): 11 m",
-    "terrace walls across empty ground near (605, 46): 9 m"
-   ],
-   "f3_ground_seconds": 69.062,
+   "empty_terraces": [],
+   "f3_ground_seconds": 277.42,
    "f3_houses": {
     "buildings": 19241,
     "counts": {
@@ -105,7 +101,7 @@
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 142.956,
+    "seconds": 155.7,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -123,7 +119,7 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 216.895,
+   "f3_monuments_seconds": 228.598,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -169,6 +165,7 @@
    "interior_missing": [],
    "interior_starts": [],
    "interior_voids": [],
+   "meadow_fronts": [],
    "overlaps": [
     "aedes_apollinis_medici overlaps porticus_octaviae by 3.0 m"
    ],
@@ -177,7 +174,7 @@
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 524.869,
+   "seconds": 756.288,
    "slopes": [
     {
      "drop": 1.94,
@@ -604,6 +601,7 @@
    ],
    "view_inside": [],
    "view_misses": [],
+   "wall_feet": [],
    "year": -133,
    "zfight": []
   },
@@ -615,10 +613,8 @@
    "buried": [],
    "chunk_seams": [],
    "coplanar": [],
-   "empty_terraces": [
-    "terrace walls across empty ground near (273, 147): 9 m"
-   ],
-   "f3_ground_seconds": 48.768,
+   "empty_terraces": [],
+   "f3_ground_seconds": 108.713,
    "f3_houses": {
     "buildings": 10368,
     "counts": {
@@ -637,7 +633,7 @@
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 101.889,
+    "seconds": 109.478,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -655,7 +651,7 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 158.352,
+   "f3_monuments_seconds": 131.154,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -692,13 +688,14 @@
    "interior_missing": [],
    "interior_starts": [],
    "interior_voids": [],
+   "meadow_fronts": [],
    "overlaps": [],
    "part_overlaps": [],
    "parts": 52794,
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 370.062,
+   "seconds": 381.724,
    "slopes": [
     {
      "drop": 1.94,
@@ -1014,6 +1011,7 @@
    "view_close": [],
    "view_inside": [],
    "view_misses": [],
+   "wall_feet": [],
    "year": -264,
    "zfight": []
   },
@@ -1024,12 +1022,8 @@
    "buried": [],
    "chunk_seams": [],
    "coplanar": [],
-   "empty_terraces": [
-    "terrace walls across empty ground near (-3, -213): 30 m",
-    "terrace walls across empty ground near (273, 147): 11 m",
-    "terrace walls across empty ground near (605, 46): 9 m"
-   ],
-   "f3_ground_seconds": 66.567,
+   "empty_terraces": [],
+   "f3_ground_seconds": 207.097,
    "f3_houses": {
     "buildings": 20357,
     "counts": {
@@ -1048,7 +1042,7 @@
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 116.71,
+    "seconds": 145.12,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -1066,7 +1060,7 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 202.781,
+   "f3_monuments_seconds": 268.743,
    "floating": [],
    "founded": [
     "aedes_apollinis_palatini on a 1.2 m foundation (temple_hexastyle_corinthian_marble)",
@@ -1125,6 +1119,7 @@
    "interior_missing": [],
    "interior_starts": [],
    "interior_voids": [],
+   "meadow_fronts": [],
    "overlaps": [
     "aedes_apollinis_medici overlaps porticus_octaviae by 3.0 m",
     "aedes_concordiae_forum overlaps tabularium by 3.7 m",
@@ -1135,7 +1130,7 @@
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 469.392,
+   "seconds": 730.412,
    "slopes": [
     {
      "drop": 1.21,
@@ -1723,6 +1718,7 @@
    "view_misses": [
     "area_sacra_argentina_a view from (-636, -309): sees 2 of 5 fa\u00e7ade points"
    ],
+   "wall_feet": [],
    "year": -27,
    "zfight": []
   },
@@ -1735,7 +1731,7 @@
    "chunk_seams": [],
    "coplanar": [],
    "empty_terraces": [],
-   "f3_ground_seconds": 36.916,
+   "f3_ground_seconds": 47.614,
    "f3_houses": {
     "buildings": 3984,
     "counts": {
@@ -1754,7 +1750,7 @@
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 98.407,
+    "seconds": 64.901,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -1772,7 +1768,7 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 46.676,
+   "f3_monuments_seconds": 28.192,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -1801,13 +1797,14 @@
    "interior_missing": [],
    "interior_starts": [],
    "interior_voids": [],
+   "meadow_fronts": [],
    "overlaps": [],
    "part_overlaps": [],
    "parts": 28819,
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 221.551,
+   "seconds": 162.666,
    "slopes": [
     {
      "drop": 1.94,
@@ -2028,6 +2025,7 @@
    "view_close": [],
    "view_inside": [],
    "view_misses": [],
+   "wall_feet": [],
    "year": -390,
    "zfight": []
   },
@@ -2038,12 +2036,8 @@
    "buried": [],
    "chunk_seams": [],
    "coplanar": [],
-   "empty_terraces": [
-    "terrace walls across empty ground near (-3, -213): 30 m",
-    "terrace walls across empty ground near (273, 147): 11 m",
-    "terrace walls across empty ground near (605, 46): 9 m"
-   ],
-   "f3_ground_seconds": 68.273,
+   "empty_terraces": [],
+   "f3_ground_seconds": 214.759,
    "f3_houses": {
     "buildings": 20707,
     "counts": {
@@ -2062,7 +2056,7 @@
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 117.884,
+    "seconds": 176.632,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -2080,7 +2074,7 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 204.333,
+   "f3_monuments_seconds": 286.291,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -2136,6 +2130,7 @@
    "interior_missing": [],
    "interior_starts": [],
    "interior_voids": [],
+   "meadow_fronts": [],
    "overlaps": [
     "aedes_apollinis_medici overlaps porticus_octaviae by 3.0 m",
     "aedes_concordiae_forum overlaps tabularium by 3.7 m",
@@ -2146,7 +2141,7 @@
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 465.668,
+   "seconds": 804.287,
    "slopes": [
     {
      "drop": 1.94,
@@ -2696,6 +2691,7 @@
    "view_misses": [
     "area_sacra_argentina_a view from (-636, -309): sees 2 of 5 fa\u00e7ade points"
    ],
+   "wall_feet": [],
    "year": -44,
    "zfight": []
   },
@@ -2707,10 +2703,8 @@
    "buried": [],
    "chunk_seams": [],
    "coplanar": [],
-   "empty_terraces": [
-    "terrace walls across empty ground near (273, 147): 11 m"
-   ],
-   "f3_ground_seconds": 39.564,
+   "empty_terraces": [],
+   "f3_ground_seconds": 32.274,
    "f3_houses": {
     "buildings": 2171,
     "counts": {
@@ -2729,7 +2723,7 @@
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 87.488,
+    "seconds": 56.286,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -2747,7 +2741,7 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 41.005,
+   "f3_monuments_seconds": 22.557,
    "floating": [],
    "founded": [
     "aedes_fortunae_matris_matutae on a 3.2 m foundation (temple_tetrastyle_ionic)",
@@ -2776,13 +2770,14 @@
    "interior_missing": [],
    "interior_starts": [],
    "interior_voids": [],
+   "meadow_fronts": [],
    "overlaps": [],
    "part_overlaps": [],
    "parts": 22902,
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 206.208,
+   "seconds": 129.149,
    "slopes": [
     {
      "drop": 3.23,
@@ -3003,6 +2998,7 @@
    "view_close": [],
    "view_inside": [],
    "view_misses": [],
+   "wall_feet": [],
    "year": -509,
    "zfight": []
   }
