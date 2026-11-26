@@ -728,7 +728,8 @@ static func _area(poly: PackedVector2Array) -> float:
 
 ## The `--at` street camera of every monument (monument_view.gd): inside a solid or a house, or
 ## not seeing the front (fewer than 3 of the 5 façade points in sight, or a monument, a house or
-## the ground across the line to the door, or standing more than 60° off the front axis).
+## the ground across the line to the door, or standing more than 60° off the front axis, or the
+## front out of the camera's frame at its tilt).
 func _views(ids: Array) -> Array:
 	var inside: Array = []
 	var misses: Array = []
@@ -764,6 +765,10 @@ func _views(ids: Array) -> Array:
 			var off := rad_to_deg(acos(clampf((-to.normalized()).dot(outward), -1.0, 1.0)))
 			if off > 60.0 and not bool(v.get("all_round", false)):   # a column has no front
 				why.append("stands %.0f° off the front axis" % off)
+		# the street camera's frame (70° high): the part of the front looked at must be in it
+		var a_t := rad_to_deg(atan2(target.y - eye.y, maxf(to.length(), 0.5)))
+		if absf(a_t - float(v.get("pitch", 3.0))) > 35.0:
+			why.append("the front %.0f° %s the middle of the frame (out of it)" % [absf(a_t - float(v.get("pitch", 3.0))), "above" if a_t > float(v.get("pitch", 3.0)) else "below"])
 		var block := _blocked(eye, target, id)
 		if block != "":
 			why.append("%s across the line to the front" % block)
