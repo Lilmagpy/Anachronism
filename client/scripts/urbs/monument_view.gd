@@ -24,6 +24,7 @@ const TURNS := [0.0, -20.0, 20.0, -35.0, 35.0, -55.0, 55.0, -80.0, 80.0, -110.0,
 const NEAR_M := 1.5      ## a camera nearer than this to a wall, a column or a house stands against it
 const FRAME_H := 64.0    ## the most of the street camera's 70° height a front may fill
 const FRAME_W := 104.0   ## the street camera's width (~104° at 16:9): a front (narrower than 60 m) wider than this is cut
+const ROUTES := ["wall", "aqueduct", "aqueduct_arcade", "road_paved", "quay"]   ## seen from beside a stretch
 const DISTS := [1.0, 0.7, 1.35, 0.45, 0.25, 2.0, 3.0]
 
 var mons: UrbsMonuments
@@ -46,6 +47,11 @@ func _ground(x: float, z: float) -> float:
 
 ## The pose that shows monument `id` best.
 func pick(id: String) -> Dictionary:
+	var model := str(mons.entry(id).get("model", ""))
+	if model in ROUTES or bool(mons._placed.get(id, {}).get("world", false)):
+		var rv := _pick_route(id, model)
+		if not rv.is_empty():
+			return rv
 	var v := _pick(id)
 	if int(v.get("seen", 5)) < 3 and not bool(v.get("open_air", false)):
 		# hidden behind its own terrace's walls from below: up on the terrace, before the building
@@ -58,6 +64,114 @@ func pick(id: String) -> Dictionary:
 
 
 var _on_terrace := false   ## a stand may be on the monument's own terrace (not in the building)
+var _frame: UrbsMonumentFrame = null
+var _whole := false        ## the whole front must fit the frame's width (a bridge's span)
+
+
+## What the street camera's frame shows from `pose` (UrbsMonumentFrame.score) and its "faults".
+func frame_score(id: String, pose: Dictionary) -> Dictionary:
+	if _frame == null:
+		_frame = UrbsMonumentFrame.new(self)
+	var eye: Vector3 = pose.eye
+	var t: Vector3 = pose.get("target", eye)
+	_frame.prepare(Vector2(t.x, t.z), maxf(eye.distance_to(t) + 80.0, 140.0))
+	var pts: Array = UrbsMonumentFrame.facade_points(pose.front) if pose.has("front") else []
+	var sc := _frame.score(id, eye, float(pose.facing), float(pose.get("pitch", 3.0)), pts)
+	sc["faults"] = UrbsMonumentFrame.faults(sc, is_thin(id))
+	return sc
+
+
+## A column, a statue, a small altar: narrower than 2.5 m (it fills little of any frame).
+func is_thin(id: String) -> bool:
+	var hf: Vector2 = mons._placed.get(id, {}).get("half", Vector2.ONE * 9.0)
+	return hf.x * 2.0 < 2.5
+
+
+## The best of `cands` (poses) by what the frame shows; when none passes, the same stands raised
+## 4, 8 and 12 m and looking down at the front (over the houses hemming a shrine in): [pose, score].
+func _best_framed(id: String, cands: Array) -> Array:
+	var best: Dictionary = {}
+	var best_sc: Dictionary = {}
+	var best_m := -INF
+	var thin := is_thin(id)
+	for ps: Dictionary in cands:
+		var sc := frame_score(id, ps)
+		var m := UrbsMonumentFrame.merit(sc, thin)
+		if m > best_m:
+			best_m = m
+			best = ps
+			best_sc = sc
+	if best.is_empty() or (best_sc.faults as Array).is_empty():
+		return [best, best_sc]
+	for ps: Dictionary in cands.slice(0, 5):
+		for up: float in [4.0, 8.0, 12.0]:
+			var p2 := ps.duplicate()
+			var e2: Vector3 = (ps.eye as Vector3) + Vector3(0, up, 0)
+			if not is_free(e2) or is_near(e2):
+				continue
+			var t: Vector3 = ps.target
+			if ps.has("front"):
+				var fr: Array = ps.front
+				t.y = (float(fr[1]) + float(fr[2])) * 0.5
+			var h := maxf(Vector2(t.x - e2.x, t.z - e2.z).length(), 0.5)
+			p2.eye = e2
+			p2.raised = up
+			p2.pitch = clampf(rad_to_deg(atan2(t.y - e2.y, h)), -30.0, 10.0)
+			var sc := frame_score(id, p2)
+			var m := UrbsMonumentFrame.merit(sc, thin) - up * 0.01   # the ground first, all else equal
+			if m > best_m:
+				best_m = m
+				best = p2
+				best_sc = sc
+	return [best, best_sc]
+
+
+## A route (the Servian wall, an aqueduct, a paved road, a quay): its side, from clear ground
+## 25 to 60 m off it, at the stretch (of ten along it) whose frame is best.
+func _pick_route(id: String, model: String) -> Dictionary:
+	var route: PackedVector2Array = mons._circuit().pos if model == "wall" else mons._routes.get(id, PackedVector2Array())
+	if route.size() < 2:
+		return {}
+	var acc: Array = [0.0]
+	for k in range(1, route.size()):
+		acc.append(float(acc[-1]) + route[k - 1].distance_to(route[k]))
+	var total: float = acc[-1]
+	var h := 12.0 if model.begins_with("aqueduct") else (10.0 if model == "wall" else (4.0 if model == "quay" else 1.5))
+	var best: Dictionary = {}
+	var best_m := -INF
+	for si in 10:
+		var s := total * (si + 0.5) / 10.0
+		var k := 1
+		while k < route.size() - 1 and float(acc[k]) < s:
+			k += 1
+		var a := route[k - 1]
+		var b := route[k]
+		var seg := maxf(float(acc[k]) - float(acc[k - 1]), 0.01)
+		var p := a.lerp(b, clampf((s - float(acc[k - 1])) / seg, 0.0, 1.0))
+		var tng := (b - a).normalized()
+		var nrm := Vector2(-tng.y, tng.x)
+		var g := _ground(p.x, p.y)
+		_load_lots(p, 120.0)
+		var cands: Array = []
+		for side: float in [1.0, -1.0]:
+			for d: float in [25.0, 40.0, 60.0]:
+				var st := p + nrm * side * d
+				var eye := Vector3(st.x, floor_at(Vector3(st.x, 0, st.y)) + EYE, st.y)
+				if not is_free(eye) or is_near(eye):
+					continue
+				var target := Vector3(p.x, g + h * 0.5, p.y)
+				var tl := target - eye
+				cands.append({"stand": Vector3(st.x, 0, st.y), "eye": eye, "facing": atan2(-tl.x, -tl.z), "open_air": false,
+					"seen": 5, "target": target, "all_round": false, "route": true,
+					"front": [Vector3(p.x, 0, p.y), g, g + h, minf(d * 1.2, 60.0), Vector3(nrm.x * side, 0, nrm.y * side)]})
+		if cands.is_empty():
+			continue
+		var r := _best_framed(id, cands)
+		var m := UrbsMonumentFrame.merit(r[1], false)
+		if m > best_m:
+			best_m = m
+			best = r[0]
+	return best
 
 
 ## Whether `p` is within the building itself (its placed half-size, in its frame), not its steps
@@ -75,6 +189,7 @@ func _pick(id: String) -> Dictionary:
 	var model := str(mons.entry(id).get("model", ""))
 	var p0: Dictionary = mons._placed.get(id, {})
 	var bridge := model.begins_with("bridge")
+	_whole = bridge
 	if bridge and p0.has("centre"):
 		# a bridge's front is its side, from the bank or the water: looked at from the middle
 		var side := door.basis.x
@@ -180,25 +295,33 @@ func _pick(id: String) -> Dictionary:
 		var near := is_near(eye)
 		if near:
 			cost += 60.0   # against a wall, a column, a house or a tree
-		var over := overfills(eye, face + right * lat, base, top, w, dist_drawn(id, eye))
+		var over := overfills(eye, face + right * lat, base, top, w, dist_drawn(id, eye), _whole)
 		if over:
 			cost += 30.0   # so close that the front overfills the frame
 		var tl: Vector3 = target - eye
 		var pose := {"stand": st, "eye": eye, "facing": atan2(-tl.x, -tl.z), "open_air": false, "seen": seen,
-			"target": target, "all_round": all_round, "front": [face + right * lat, base, top, w]}
+			"target": target, "all_round": all_round, "front": [face + right * lat, base, top, w, outward]}
 		ranked.append([cost, pose])
 		if cost < best_cost:
 			best_cost = cost
 			best = pose
-		if seen == 5 and off < 10.0 and lat == 0.0 and float(sd[3]) == 0.0 and absf(tilt - 3.0) <= 30.0 and not near and not over and not _mesh_blocks(eye, target, id):
-			return best
+		if seen == 5 and off < 10.0 and lat == 0.0 and float(sd[3]) == 0.0 and absf(tilt - 3.0) <= 30.0 and not near and not over \
+				and not _mesh_blocks(eye, target, id) and (frame_score(id, pose).faults as Array).is_empty():
+			return pose
 	# the best stands in order, the first whose line to the front no other monument's mesh crosses
 	# (a column of a porch, a cornice: the solids are coarser than what is drawn)
 	ranked.sort_custom(func(x, y): return float(x[0]) < float(y[0]))
-	for k in mini(ranked.size(), 40):
+	# of those, the dozen best judged by what the frame shows (the monument big, its front seen,
+	# nothing in the camera's face, no bank before it); raised over the houses if none passes
+	var cands: Array = []
+	for k in mini(ranked.size(), 60):
 		var ps: Dictionary = ranked[k][1]
 		if not _mesh_blocks(ps.eye, ps.target, id):
-			return ps
+			cands.append(ps)
+			if cands.size() >= 12:
+				break
+	if not cands.is_empty():
+		return _best_framed(id, cands)[0]
 	# none sees its door or upper front past the others: the part of the front each sees best (a
 	# point of the façade, nearest its middle first), looked at instead
 	var grid: Array = []
@@ -257,11 +380,11 @@ func _open_air(id: String, kind: String, d0: Vector3, outward: Vector3, p: Dicti
 ## Whether a front (its middle `face` at the ground, from `base` to `top`, `w` wide) seen from
 ## `eye` is bigger than the street camera's frame: taller than FRAME_H degrees, or wider than
 ## FRAME_W (a front wider than 60 m is framed in parts, so only its height counts).
-static func overfills(eye: Vector3, face: Vector3, base: float, top: float, w: float, d_body := INF) -> bool:
+static func overfills(eye: Vector3, face: Vector3, base: float, top: float, w: float, d_body := INF, whole := false) -> bool:
 	var d := maxf(minf(Vector2(face.x - eye.x, face.z - eye.z).length(), d_body), 0.5)
 	var ang_h := rad_to_deg(atan2(top - eye.y, d) - atan2(base - eye.y, d))
 	var ang_w := rad_to_deg(2.0 * atan(w * 0.5 / d))
-	return ang_h > FRAME_H or (w < 60.0 and ang_w > FRAME_W)
+	return ang_h > FRAME_H or ((w < 60.0 or whole) and ang_w > FRAME_W)
 
 
 ## How far `p` stands from monument `id`'s body (its placed half-size, on the ground plan, not

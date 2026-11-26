@@ -2687,6 +2687,7 @@ F3_MONUMENT_KINDS = [
     ("view_inside", "monuments whose --at street camera stands inside a solid or a house"),
     ("view_misses", "monuments whose --at street camera does not see the front"),
     ("view_close", "monuments whose --at street camera stands against something or too near"),
+    ("view_frame", "monuments whose --at frame is cluttered, banked, too small or misses the front"),
     ("interior_voids", "interiors with sight lines from the door that meet nothing (black)"),
     ("interior_figures", "interiors with figures through a wall or floor"),
     ("interior_missing", "enterable monuments with no interior"),

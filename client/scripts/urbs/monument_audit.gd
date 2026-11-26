@@ -21,6 +21,10 @@
 ##   view_inside      the `--at=<id>` street camera inside a solid (any monument's part)
 ##   view_close       the `--at=<id>` camera against something (a drawn part, a house or a tree
 ##                    within 1.5 m) or so near that the front overfills the frame
+##   view_frame       what the `--at=<id>` camera's frame shows (monument_frame.gd: a grid of sight
+##                    lines through it): over a quarter of it filled within 6 m by something
+##                    else, the sky half mostly bank, the monument too small, or under 60 % of its
+##                    front seen; routes and bridges too (from beside a stretch, from the bank)
 ##   view_misses      the `--at=<id>` camera not looking at its monument's front: standing
 ##                    behind or beside it, turned away from it, or with another monument between
 ## and `parts`: the number of parts checked.
@@ -66,7 +70,7 @@ func run(with_coplanar := true) -> Dictionary:
 		n += (parts[id] as Array).size()
 	_index(ids)
 	var out := {"parts": n, "part_overlaps": _part_overlaps(ids), "parts_floating": [], "parts_sunk": [],
-		"coplanar": [], "view_inside": [], "view_misses": [], "view_close": []}
+		"coplanar": [], "view_inside": [], "view_misses": [], "view_close": [], "view_frame": []}
 	for id in ids:
 		var fl := _floating(id)
 		if fl != "":
@@ -80,6 +84,7 @@ func run(with_coplanar := true) -> Dictionary:
 	out.view_inside = views[0]
 	out.view_misses = views[1]
 	out.view_close = views[2]
+	out.view_frame = views[3]
 	return out
 
 
@@ -737,11 +742,25 @@ func _views(ids: Array) -> Array:
 	var inside: Array = []
 	var misses: Array = []
 	var close: Array = []
+	var framed: Array = []
 	var mv := UrbsMonumentView.new(mon, height, fill)
 	for id in ids:
 		if _model(id) in NO_VIEW or bool(mon._placed.get(id, {}).get("world", false)):
+			if _model(id) != "sewer":   # a route or a bridge: only what the frame shows
+				var vr: Dictionary = mv.pick(id)
+				if vr.has("eye"):
+					var fr := mv.frame_score(id, vr)
+					if not (fr.faults as Array).is_empty():
+						framed.append("%s view from (%.0f, %.0f): %s" % [id, (vr.eye as Vector3).x, (vr.eye as Vector3).z, ", ".join(fr.faults)])
+				else:
+					framed.append("%s has no view" % id)
 			continue
 		var v: Dictionary = mv.pick(id)
+		# what the frame shows (UrbsMonumentFrame): clutter in the camera's face, a bank before
+		# it, the monument too small or its front unseen
+		var fs := mv.frame_score(id, v)
+		if not (fs.faults as Array).is_empty():
+			framed.append("%s view from (%.0f, %.0f): %s" % [id, (v.eye as Vector3).x, (v.eye as Vector3).z, ", ".join(fs.faults)])
 		var eye: Vector3 = v.eye
 		# inside a solid? (the parts round the eye whose closed run holds it), or a house
 		var cell := Vector2i(floori(eye.x / CELL), floori(eye.z / CELL))
@@ -795,7 +814,7 @@ func _views(ids: Array) -> Array:
 			why.append("a house or the ground across the line to the front")
 		if not why.is_empty():
 			misses.append("%s view from (%.0f, %.0f): %s" % [id, eye.x, eye.z, ", ".join(why)])
-	return [inside, misses, close]
+	return [inside, misses, close, framed]
 
 
 ## The monument a drawn part of which comes within NEAR_M of `p` ("" if none): short sight
