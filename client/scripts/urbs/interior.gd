@@ -105,7 +105,7 @@ class Holder extends Node3D:
 
 	# --- F2 play (begin): the spot where the place's action panel stands -----------------------
 	## The world point of the action panel inside: the Curia's floor before the tribunal, the
-	## temple's altar, the Circus' magistrates' box (pulvinar), the Rostra in the Forum, the
+	## temple's cella before the god (its altar outside on request), the Circus' magistrates' box (pulvinar), the Rostra in the Forum, the
 	## domus' tablinum, a basilica's tribunal; else a few metres ahead of where you come in.
 	## `spot` overrides the kind's default (a name of UrbsPlaces.SPOTS).
 	func action_spot(spot := "") -> Vector3:
@@ -122,6 +122,12 @@ class Holder extends Node3D:
 			"pulvinar":
 				if seats.has("pulvinar"):
 					return xf * ((seats["pulvinar"] as Transform3D).origin + Vector3(0, -0.4, 0))
+			"cella":   # F3 monuments: before the god, ahead of where the visitor comes in
+				if a.has("statue"):
+					var s0: Transform3D = result.get("spawn", Transform3D.IDENTITY)
+					var g: Vector3 = a["statue"]
+					var p := s0.origin.lerp(Vector3(g.x, s0.origin.y, g.z), 0.45)
+					return xf * Vector3(p.x, s0.origin.y - 0.4, p.z)
 			"altar":
 				if a.has("altar"):
 					return xf * ((a["altar"] as Vector3) + Vector3(0, 0.6, 0))

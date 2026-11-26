@@ -1,12 +1,12 @@
 {
  "counts": {
   "133 BC": {
-   "standing": 152,
-   "total": 152
+   "standing": 151,
+   "total": 151
   },
   "264 BC": {
-   "standing": 109,
-   "total": 109
+   "standing": 108,
+   "total": 108
   },
   "27 BC": {
    "building": 2,
@@ -15,8 +15,8 @@
    "total": 185
   },
   "390 BC": {
-   "standing": 73,
-   "total": 73
+   "standing": 72,
+   "total": 72
   },
   "44 BC": {
    "building": 3,
@@ -26,8 +26,8 @@
    "total": 175
   },
   "509 BC": {
-   "standing": 66,
-   "total": 66
+   "standing": 65,
+   "total": 65
   },
   "AD 120": {
    "burnt": 1,
@@ -40,7 +40,96 @@
    "total": 215
   }
  },
- "dates": [],
+ "dates": [
+  {
+   "id": "aedes_herculis_collina",
+   "issue": "no built year (uncertain) but drawn from 509 BC"
+  },
+  {
+   "id": "aedes_herculis_victoris",
+   "issue": "no built year (uncertain) but drawn from 509 BC"
+  },
+  {
+   "id": "aedes_larum",
+   "issue": "no built year (uncertain) but drawn from 509 BC"
+  },
+  {
+   "id": "aedes_minervae_aventine",
+   "issue": "no built year (uncertain) but drawn from 509 BC"
+  },
+  {
+   "id": "aedes_neptuni_flaminium",
+   "issue": "no built year (uncertain) but drawn from 509 BC"
+  },
+  {
+   "id": "aedes_portuni",
+   "issue": "no built year (uncertain) but drawn from 509 BC"
+  },
+  {
+   "id": "area_sacra_argentina_a",
+   "issue": "no built year (uncertain) but drawn from 509 BC"
+  },
+  {
+   "id": "area_sacra_argentina_c",
+   "issue": "no built year (uncertain) but drawn from 509 BC"
+  },
+  {
+   "id": "area_sacra_argentina_d",
+   "issue": "no built year (uncertain) but drawn from 509 BC"
+  },
+  {
+   "id": "atrium_libertatis",
+   "issue": "no built year (probable) but drawn from 509 BC"
+  },
+  {
+   "id": "atrium_vestae",
+   "issue": "no built year (uncertain) but drawn from 509 BC"
+  },
+  {
+   "id": "domus_clodii",
+   "issue": "no built year (uncertain) but drawn from 509 BC"
+  },
+  {
+   "id": "domus_hortensii_augusti",
+   "issue": "no built year (uncertain) but drawn from 509 BC"
+  },
+  {
+   "id": "domus_pompeii_carinae",
+   "issue": "no built year (uncertain) but drawn from 509 BC"
+  },
+  {
+   "id": "graecostasis",
+   "issue": "no built year (uncertain) but drawn from 509 BC"
+  },
+  {
+   "id": "horrea_galbae",
+   "issue": "no built year (uncertain) but drawn from 509 BC"
+  },
+  {
+   "id": "lacus_iuturnae",
+   "issue": "no built year (uncertain) but drawn from 509 BC"
+  },
+  {
+   "id": "lacus_servilius",
+   "issue": "no built year (uncertain) but drawn from 509 BC"
+  },
+  {
+   "id": "lapis_niger",
+   "issue": "no built year (probable) but drawn from 509 BC"
+  },
+  {
+   "id": "navalia",
+   "issue": "no built year (uncertain) but drawn from 509 BC"
+  },
+  {
+   "id": "porta_stercoraria",
+   "issue": "no built year (uncertain) but drawn from 509 BC"
+  },
+  {
+   "id": "senaculum",
+   "issue": "no built year (uncertain) but drawn from 509 BC"
+  }
+ ],
  "excluded": [
   {
    "key": "A#Adonidis_Aula",
@@ -6599,6 +6688,20 @@
    ]
   },
   {
+   "built": -100,
+   "id": "aedes_castoris_circo_flaminio",
+   "pa": "Castor, aedes, templum",
+   "pa_key": "Aedes_Castoris#in_Foro_Romano",
+   "pa_years": [
+    -499,
+    -340,
+    -300,
+    -117,
+    -82,
+    -27
+   ]
+  },
+  {
    "built": -179,
    "id": "aedes_dianae_circus_flaminius",
    "pa": "Diana, aedes",
@@ -8846,7 +8949,7 @@
    "monuments": 218,
    "streets": 30
   },
-  "date_issues": 0,
+  "date_issues": 22,
   "f3_awning_pole": 0,
   "f3_house_base": 0,
   "f3_house_house": 0,
@@ -8883,7 +8986,7 @@
   "scene_buried": 0,
   "scene_chunk_seams": 0,
   "scene_coplanar": 0,
-  "scene_empty_terraces": 0,
+  "scene_empty_terraces": 11,
   "scene_floating": 0,
   "scene_ground_holes": 0,
   "scene_houses_in_monuments": 0,
@@ -8893,7 +8996,6 @@
   "scene_interior_missing": 0,
   "scene_interior_starts": 0,
   "scene_interior_voids": 0,
-  "scene_meadow_fronts": 0,
   "scene_overlaps": 7,
   "scene_part_overlaps": 0,
   "scene_parts_floating": 0,
@@ -8902,9 +9004,9 @@
   "scene_stair_ends": 0,
   "scene_streets_ground": 38,
   "scene_streets_through": 0,
+  "scene_view_close": 4,
   "scene_view_inside": 0,
-  "scene_view_misses": 0,
-  "scene_wall_feet": 0,
+  "scene_view_misses": 2,
   "scene_zfight": 0
  },
  "topography": [
