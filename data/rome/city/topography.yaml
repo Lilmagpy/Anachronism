@@ -128,7 +128,12 @@ tiber:
   # river: the island comes out at (-639, 195), axis bearing 114 (checked in the engine), 31 m from the Wikipedia point
   # (41.89083, 12.47722 = (-669, 186), the seed above). The course point at the island is moved to
   # the new middle of the water, [41.8907, 12.4776]. # unverified
-  course: [[41.9335,12.4668],[41.9200,12.4672],[41.9060,12.4690],[41.9045,12.4675],[41.9026,12.4655],[41.9012,12.4630],[41.8990,12.4645],[41.8975,12.4665],[41.8955,12.4685],[41.8933,12.4707],[41.8915,12.4745],[41.8907,12.4776],[41.8890,12.4792],[41.8862,12.4772],[41.8833,12.4752],[41.8800,12.4718],[41.8754,12.4704],[41.8690,12.4700]]
+  course: [[41.9335,12.4668],[41.9200,12.4672],[41.9097,12.4692],[41.9060,12.4690],[41.9045,12.4675],[41.9026,12.4655],[41.9012,12.4630],[41.8990,12.4645],[41.8975,12.4665],[41.8955,12.4685],[41.8933,12.4707],[41.8915,12.4745],[41.8907,12.4776],[41.8890,12.4792],[41.8862,12.4772],[41.8833,12.4752],[41.8800,12.4718],[41.8754,12.4704],[41.8690,12.4700]]
+  # F3 round 4: [41.9097, 12.4692] added, a point on the modern river between Ponte Matteotti and
+  # Ponte Regina Margherita (about Ponte Nenni) # unverified: the course ran 1.5 km straight to
+  # [41.9060, 12.4690] and turned 42 degrees there with a 208 m segment after it, and the spline
+  # through them bent at a 25 m radius, under the river's half-width, folding the inner bank into a
+  # crease at (-1444, -1300); now the tightest bend there is 168 m.
   # U2: points 3-10 added to show the great westward bend round the Campus Martius (Platner-Ashby
   # s.v. Campus Martius: the plain lies "between the Capitoline, Quirinal, Pincian and the Tiber").
   # Positions are read off the modern river at its bridges (Ponte Cavour, Sant'Angelo, Vittorio

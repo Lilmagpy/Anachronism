@@ -242,6 +242,43 @@ static func water_level_at_s(s: float) -> float:
 	return lerpf(float(sm[0]), float(sm[1]), clampf(s / length(), 0.0, 1.0))
 
 
+## F3 round 4: how far `p` lies inside the island's water line (negative outside), measured to the
+## line itself (_island_shore_line): the first-order estimate (ISLAND_SHORE - r) / |grad r| went
+## wrong where r's gradient turns fast, at the narrow downstream point, and the shore drawn on it
+## zig-zagged there (509-133 BC, before the travertine prow).
+static func island_inside(p: Vector2) -> float:
+	if _shore_line.is_empty():
+		_shore_line = _island_shore_line()
+	var best := INF
+	for i in _shore_line.size():
+		var a := _shore_line[i]
+		var b := _shore_line[(i + 1) % _shore_line.size()]
+		best = minf(best, Geometry2D.get_closest_point_to_segment(p, a, b).distance_to(p))
+	return best if Geometry2D.is_point_in_polygon(p, _shore_line) else -best
+
+
+static var _shore_line := PackedVector2Array()
+
+
+## The island's water line (island_r == ISLAND_SHORE) as a polygon, 720 rays from its centre.
+static func _island_shore_line() -> PackedVector2Array:
+	var out := PackedVector2Array()
+	for k in 720:
+		var th := TAU * k / 720.0
+		var w := _island_dir * cos(th) + _island_n * sin(th)
+		var lo := 0.0
+		var hi := ISLAND_HALF_LONG * 1.5
+		for _it in 30:
+			var mid := (lo + hi) * 0.5
+			var q := _island_c + w * mid
+			if island_r(q.x, q.y) < ISLAND_SHORE:
+				lo = mid
+			else:
+				hi = mid
+		out.append(_island_c + w * (lo + hi) * 0.5)
+	return out
+
+
 ## Distance from the island's centre in island units: below 1 is on the island. The outline is a
 ## ship: an ellipse whose ends taper, the downstream end (the prow) more sharply.
 static func island_r(x: float, z: float) -> float:
@@ -416,8 +453,7 @@ static func carve(h: PackedFloat32Array, n: int, origin: float, cell: float) -> 
 			if r < 1.35:
 				# the island's shore the same way: a plane across its water line, then up to its top
 				var top := wl + ISLAND_RAISE * (1.0 - 0.15 * minf(r * r, 1.0))
-				var gr := Vector2(island_r(x + 1.0, z) - island_r(x - 1.0, z), island_r(x, z + 1.0) - island_r(x, z - 1.0)).length() * 0.5
-				var ei := (ISLAND_SHORE - r) / maxf(gr, 1e-4)   # metres inside the shore
+				var ei := island_inside(Vector2(x, z))   # metres inside the shore (F3 round 4: exact)
 				var ki := BANK_SLOPE.y * 1.1
 				var ih := wl + ki * clampf(ei, -BANK_BAND, BANK_BAND)
 				if ei > BANK_BAND:
