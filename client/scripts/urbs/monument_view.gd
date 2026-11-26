@@ -24,6 +24,7 @@ const TURNS := [0.0, -20.0, 20.0, -35.0, 35.0, -55.0, 55.0, -80.0, 80.0, -110.0,
 const NEAR_M := 1.5      ## a camera nearer than this to a wall, a column or a house stands against it
 const FRAME_H := 64.0    ## the most of the street camera's 70° height a front may fill
 const FRAME_W := 104.0   ## the street camera's width (~104° at 16:9): a front (narrower than 60 m) wider than this is cut
+const CITY_R := 2500.0   ## the drawn city's reach from its centre (a route's stretches are sought within it)
 const ROUTES := ["wall", "aqueduct", "aqueduct_arcade", "road_paved", "quay"]   ## seen from beside a stretch
 const DISTS := [1.0, 0.7, 1.35, 0.45, 0.25, 2.0, 3.0]
 
@@ -142,8 +143,21 @@ func _pick_route(id: String, model: String) -> Dictionary:
 	var h := 12.0 if model.begins_with("aqueduct") else (10.0 if model == "wall" else (4.0 if model == "quay" else 1.5))
 	var best: Dictionary = {}
 	var best_m := -INF
-	for si in 10:
-		var s := total * (si + 0.5) / 10.0
+	# the stretches inside the drawn city (an aqueduct's line runs out to its springs 30 km off)
+	var stations: Array = []
+	for si in 40:
+		var s0 := total * (si + 0.5) / 40.0
+		var kk := 1
+		while kk < route.size() - 1 and float(acc[kk]) < s0:
+			kk += 1
+		if route[kk].length() < CITY_R:
+			stations.append(s0)
+	if stations.size() > 10:
+		var picked: Array = []
+		for q in 10:
+			picked.append(stations[int(q * stations.size() / 10.0)])
+		stations = picked
+	for s: float in stations:
 		var k := 1
 		while k < route.size() - 1 and float(acc[k]) < s:
 			k += 1
@@ -525,7 +539,8 @@ func is_free(p: Vector3, grow := 0.3) -> bool:
 	# not at the foot of a terrace wall or a cut in the hill (the eye in the drawn bank)
 	var g := _ground(p.x, p.z)
 	for dv in [Vector2(2.5, 0), Vector2(-2.5, 0), Vector2(0, 2.5), Vector2(0, -2.5)]:
-		if _ground(p.x + dv.x, p.z + dv.y) - g > 1.5:
+		var gq := _ground(p.x + dv.x, p.z + dv.y)
+		if gq - g > 1.5 and gq > p.y - EYE - 0.5:   # (a raised stand looks over the bank)
 			return false
 	for t in _trees:   # not in a tree's crown
 		if p.distance_to(t.c) < float(t.r) + grow:
