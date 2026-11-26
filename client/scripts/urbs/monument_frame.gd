@@ -41,9 +41,14 @@ func _init(v: UrbsMonumentView) -> void:
 	mons = v.mons
 
 
+## Whether what is gathered already covers the circle of `r` round `c`.
+func covers(c: Vector2, r: float) -> bool:
+	return c.distance_to(_at) + r <= _r
+
+
 ## Gather what is drawn within `r` of `c` (the monuments' triangles, binned by CELL on the plan).
 func prepare(c: Vector2, r: float) -> void:
-	if c.distance_to(_at) < 1.0 and r <= _r:
+	if c.distance_to(_at) + r <= _r:   # inside what is gathered already (the audit gathers the city once)
 		return
 	_at = c
 	_r = r

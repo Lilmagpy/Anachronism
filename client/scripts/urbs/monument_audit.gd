@@ -744,6 +744,9 @@ func _views(ids: Array) -> Array:
 	var close: Array = []
 	var framed: Array = []
 	var mv := UrbsMonumentView.new(mon, height, fill)
+	mv._frame = UrbsMonumentFrame.new(mv)
+	mv._frame.prepare(Vector2.ZERO, FRAME_REACH)   # the city's drawn triangles once, not per monument
+	mv.frame_kept = true
 	for id in ids:
 		if _model(id) in NO_VIEW or bool(mon._placed.get(id, {}).get("world", false)):
 			if _model(id) != "sewer":   # a route or a bridge: only what the frame shows
@@ -904,6 +907,7 @@ class AuditUrbs extends Node3D:
 
 
 const RAY_M := 500.0
+const FRAME_REACH := 2400.0   ## how far from the Forum the frame check gathers what is drawn
 const ICELL := 4.0
 
 

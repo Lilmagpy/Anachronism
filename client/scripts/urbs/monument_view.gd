@@ -71,6 +71,7 @@ func pick(id: String) -> Dictionary:
 var _on_terrace := false   ## a stand may be on the monument's own terrace (not in the building)
 var _frame: UrbsMonumentFrame = null
 var _whole := false        ## the whole front must fit the frame's width (a bridge's span)
+var frame_kept := false    ## keep `_frame`'s gathering (the audit gathers the city once)
 
 
 ## What the street camera's frame shows from `pose` (UrbsMonumentFrame.score) and its "faults".
@@ -79,9 +80,14 @@ func frame_score(id: String, pose: Dictionary) -> Dictionary:
 		_frame = UrbsMonumentFrame.new(self)
 	var eye: Vector3 = pose.eye
 	var t: Vector3 = pose.get("target", eye)
-	_frame.prepare(Vector2(t.x, t.z), maxf(eye.distance_to(t) + 80.0, 140.0))
+	var c := Vector2(t.x, t.z)
+	var r := maxf(eye.distance_to(t) + 80.0, 140.0)
+	var fr := _frame
+	if frame_kept and not _frame.covers(c, r):
+		fr = UrbsMonumentFrame.new(self)   # (outside the gathered city: leave its gathering whole)
+	fr.prepare(c, r)
 	var pts: Array = UrbsMonumentFrame.facade_points(pose.front) if pose.has("front") else []
-	var sc := _frame.score(id, eye, float(pose.facing), float(pose.get("pitch", 3.0)), pts)
+	var sc := fr.score(id, eye, float(pose.facing), float(pose.get("pitch", 3.0)), pts)
 	sc["faults"] = UrbsMonumentFrame.faults(sc, is_thin(id))
 	return sc
 
