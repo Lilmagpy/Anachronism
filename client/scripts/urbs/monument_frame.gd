@@ -17,12 +17,12 @@ extends RefCounted
 
 const VFOV := 70.0           ## UrbsCamera.FOV_STREET (vertical)
 const ASPECT := 16.0 / 9.0
-const NEAR_M := 6.0
+const NEAR_M := 10.0
 const CELL := 4.0
-const NEAR_MAX := 0.25       ## more of the frame than this filled by something within NEAR_M fails
-const BANK_MAX := 0.45       ## more of the upper half than this ground fails
-const FILL_MIN := 0.04       ## less of the frame than this the monument fails (FILL_THIN for a column)
-const FILL_THIN := 0.02
+const NEAR_MAX := 0.15       ## more of the frame than this filled by something within NEAR_M fails
+const BANK_MAX := 0.22       ## more of the upper half than this ground (a bank, a hillside) fails
+const FILL_MIN := 0.025      ## less of the frame than this the monument fails (FILL_THIN for a column)
+const FILL_THIN := 0.005
 const FACADE_MIN := 0.6      ## fewer of the front's points than this seen fails
 const PAVINGS := ["plaza", "road_paved", "lacus_curtius", "comitium"]
 

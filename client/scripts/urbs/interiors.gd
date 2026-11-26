@@ -216,7 +216,7 @@ static func _attach(root: Node3D, r: Dictionary) -> void:
 
 # F3 monuments (begin) --------------------------------------------------------------------------
 const FILL_SPACING := 14.0   ## metres between the fill lights over a room
-const FILL_ENERGY := 0.7
+const FILL_ENERGY := 1.0
 const DOOR_ENERGY := 1.6
 
 

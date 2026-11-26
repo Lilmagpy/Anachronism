@@ -464,7 +464,7 @@ func _enter_interior_now(id: String) -> void:
 		environment.background_color = Color(0.04, 0.035, 0.03)
 		environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 		environment.ambient_light_color = Color(0.62, 0.56, 0.48)
-		environment.ambient_light_energy = 1.1   # F3 monuments: the light bounced round the room (0.6 left it black)
+		environment.ambient_light_energy = 1.4   # F3 monuments: the light bounced round the room (0.6 left it black)
 	var spawn := Transform3D(Basis.IDENTITY, Vector3(0, 1.7, 0))
 	if interior.has_method("spawn"):
 		spawn = interior.spawn()

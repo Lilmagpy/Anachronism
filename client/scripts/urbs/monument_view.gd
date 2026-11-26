@@ -83,6 +83,9 @@ func frame_score(id: String, pose: Dictionary) -> Dictionary:
 
 ## A column, a statue, a small altar: narrower than 2.5 m (it fills little of any frame).
 func is_thin(id: String) -> bool:
+	var model := str(mons._placed.get(id, {}).get("model", ""))
+	if model.begins_with("column") or model.begins_with("statue"):
+		return true
 	var hf: Vector2 = mons._placed.get(id, {}).get("half", Vector2.ONE * 9.0)
 	return hf.x * 2.0 < 2.5
 
