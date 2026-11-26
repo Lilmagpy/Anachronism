@@ -100,7 +100,7 @@ func _best_framed(id: String, cands: Array) -> Array:
 	var thin := is_thin(id)
 	for ps: Dictionary in cands:
 		var sc := frame_score(id, ps)
-		var m := UrbsMonumentFrame.merit(sc, thin) - (1.5 if bool(ps.get("over", false)) else 0.0)   # nor so near the front overfills it
+		var m := UrbsMonumentFrame.merit(sc, thin) - _rule_penalty(ps)
 		if m > best_m:
 			best_m = m
 			best = ps
@@ -122,12 +122,25 @@ func _best_framed(id: String, cands: Array) -> Array:
 			p2.raised = up
 			p2.pitch = clampf(rad_to_deg(atan2(t.y - e2.y, h)), -30.0, 10.0)
 			var sc := frame_score(id, p2)
-			var m := UrbsMonumentFrame.merit(sc, thin) - up * 0.01   # the ground first, all else equal
+			var m := UrbsMonumentFrame.merit(sc, thin) - _rule_penalty(p2) - up * 0.01   # the ground first, all else equal
 			if m > best_m:
 				best_m = m
 				best = p2
 				best_sc = sc
 	return [best, best_sc]
+
+
+## What the frame score does not see in a stand: the front overfilling the frame, the camera
+## beside or behind the front (over 60° off its axis), fewer than 3 of its 5 points in sight.
+static func _rule_penalty(ps: Dictionary) -> float:
+	var pen := 0.0
+	if bool(ps.get("over", false)):
+		pen += 1.5
+	if float(ps.get("off", 0.0)) > 60.0 and not bool(ps.get("all_round", false)):
+		pen += 1.5
+	if int(ps.get("seen", 5)) < 3:
+		pen += 1.5
+	return pen
 
 
 ## A route (the Servian wall, an aqueduct, a paved road, a quay): its side, from clear ground
@@ -317,7 +330,7 @@ func _pick(id: String) -> Dictionary:
 			cost += 30.0   # so close that the front overfills the frame
 		var tl: Vector3 = target - eye
 		var pose := {"stand": st, "eye": eye, "facing": atan2(-tl.x, -tl.z), "open_air": false, "seen": seen,
-			"target": target, "all_round": all_round, "front": [face + right * lat, base, top, w, outward], "over": over}
+			"target": target, "all_round": all_round, "front": [face + right * lat, base, top, w, outward], "over": over, "off": off}
 		ranked.append([cost, pose])
 		if cost < best_cost:
 			best_cost = cost
