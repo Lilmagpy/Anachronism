@@ -105,16 +105,20 @@ func _build(key: Vector2i, lod: int) -> void:
 
 ## F3: the twilight's light on the ground follows the sun (UrbsTerrain.set_sky_fill).
 var _fill := -1.0
+var _day := -1.0
 
 
 func _sky_fill() -> void:
 	var atm: Variant = get_parent().get("atmosphere") if get_parent() != null else null
 	if atm == null:
 		return
-	var f := UrbsTerrain.sky_fill_for(float(atm.get("elevation")))
-	if absf(f - _fill) > 0.001:
+	var el := float(atm.get("elevation"))
+	var f := UrbsTerrain.sky_fill_for(el)
+	var day := smoothstep(-4.0, 15.0, el)
+	if absf(f - _fill) > 0.001 or absf(day - _day) > 0.001:
 		_fill = f
-		UrbsTerrain.set_sky_fill(f)
+		_day = day
+		UrbsTerrain.set_sky_fill(f, day)
 
 
 ## F3: the terrace walls of a chunk wait for its houses: only the walls holding up a tread that
@@ -148,6 +152,7 @@ func _walls_for(key: Vector2i) -> void:
 func _process(_delta: float) -> void:
 	_walls_step()
 	_sky_fill()
+	UrbsTerrain.flush_built()
 	var started := Time.get_ticks_usec()
 	while not _wanted.is_empty():
 		var next: Array = _wanted.pop_front()
@@ -161,6 +166,7 @@ func load_all_now() -> void:
 	while not _wanted.is_empty():
 		var next: Array = _wanted.pop_front()
 		_build(next[1], next[2])
+	UrbsTerrain.flush_built()
 
 
 ## How many of the nearest chunks (within 600 m) are still to be built.

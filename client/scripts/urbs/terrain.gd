@@ -75,12 +75,18 @@ static var _terrace_w: PackedFloat32Array = PackedFloat32Array()   ## how much t
 static var _rural: PackedFloat32Array = PackedFloat32Array()       ## farmland weight, RURAL_CELL grid
 static var _map_col: PackedByteArray = PackedByteArray()          ## ground colour (rgb, sRGB) and farmland (a), MAP_N x MAP_N
 static var _map_w: PackedByteArray = PackedByteArray()            ## ground weights: grass, mud, dust, gravel
+static var _map_col0: PackedByteArray = PackedByteArray()         ## F3: the maps as computed, before mark_built
+static var _map_w0: PackedByteArray = PackedByteArray()
+static var _tex_col: ImageTexture = null
+static var _tex_w: ImageTexture = null
+static var _maps_dirty := false
 static var _urban: PackedFloat32Array = PackedFloat32Array()      ## 0..1 inside the Servian circuit (soft edge), MAP_N x MAP_N
 static var _circuit: PackedVector2Array = PackedVector2Array()
 static var _warp: FastNoiseLite = null
 static var _warp2: FastNoiseLite = null
 static var _material: ShaderMaterial = null
 static var _street_dc: PackedFloat32Array   ## F3: (during _compute) a street vertex's distance from its carriageway
+static var _day := 1.0                                           ## the sun to bounce (set_sky_fill)
 static var _sky_fill := 0.0                                      ## the twilight fill (set_sky_fill)
 static var _street_w: PackedFloat32Array = PackedFloat32Array()  ## street cuts' weight (while computing)
 static var _cover: PackedByteArray = PackedByteArray()          ## 1 under a paving, 2 well inside it (no ground drawn)
@@ -102,16 +108,18 @@ static func prepare() -> void:
 	var sig := _signature()
 	_built_year = year
 	if not _h.is_empty() and sig == _sig:
+		_reset_built()   # the same ground, but another year's houses mark it (mark_built)
 		return   # this year's ground is the same as the one already computed
 	_sig = sig
 	_material = null
 	# (the builders' own code is part of the key too, so an edit to them never reads a stale cache)
 	var code := FileAccess.get_file_as_string("res://scripts/urbs/terrain.gd") + FileAccess.get_file_as_string("res://scripts/urbs/tiber.gd")
 	var key := "%x" % hash(JSON.stringify(UrbsTiber.topography()) + FileAccess.get_file_as_string(STREETS_PATH) + FileAccess.get_file_as_string(UrbsTiber.MONUMENTS_PATH).md5_text() + CACHE_VERSION + sig + code.md5_text())
-	if _load_cache(key):
-		return
-	_compute()
-	_save_cache(key)
+	if not _load_cache(key):
+		_compute()
+		_save_cache(key)
+	_map_col0 = _map_col.duplicate()
+	_map_w0 = _map_w.duplicate()
 
 
 ## What the year changes in the ground: the platforms and pavings standing, the quays, and the
@@ -1304,10 +1312,15 @@ static func build(urbs: Node3D) -> Node3D:
 ## 10 m beyond) and carries collision (a heightmap body), the terrace walls and the full flora;
 ## lod 1 (25 m cells) the walls and the flora; lod 2 (50 m cells) the bare ground with far trees.
 ## Every chunk has a skirt dropped 4 m round its edge so neighbours of different detail show no cracks.
+## The grid step (in 5 m cells) the ground chunk `rect` is drawn with at `lod`.
+static func chunk_step(rect: Rect2, lod: int) -> int:
+	var near := rect.get_center().length() < NEAR_M
+	return (1 if near else 2) if lod <= 0 else (5 if lod == 1 else 10)
+
+
 static func build_chunk(rect: Rect2, lod: int) -> Node3D:
 	prepare()
-	var near := rect.get_center().length() < NEAR_M
-	var step := (1 if near else 2) if lod <= 0 else (5 if lod == 1 else 10)
+	var step := chunk_step(rect, lod)
 	var i0 := roundi((rect.position.x + HALF_M) / CELL_M)
 	var j0 := roundi((rect.position.y + HALF_M) / CELL_M)
 	var ci := maxi(roundi(rect.size.x / CELL_M), 1)
@@ -1742,14 +1755,89 @@ static func _rural_raw(x: float, z: float) -> float:
 	return lerpf(lerpf(_rural[k], _rural[k + 1], fx - i), lerpf(_rural[k + rn], _rural[k + rn + 1], fx - i), fz - j)
 
 
+## F3 round 3: the ground round the houses is trodden earth, never meadow. The fill marks each
+## chunk's houses and shops here as it lays them out (UrbsFill.floor_step): every map texel within
+## BUILT_REACH m of a lot takes the trodden-earth colour and weights, and the ground textures are
+## updated (flush_built, from UrbsChunks each frame). Before, a packed-earth apron 2.6 m wide was
+## laid round each lot as a mesh: the lanes between them stayed meadow (the meadow and the city
+## colours follow the Servian circuit, and the Campus was built up outside it), and the aprons of
+## neighbouring lots overlapped at their own angles in pale patches.
+const BUILT_REACH := 8.0   ## (a map texel is 10 m: its centre lies up to 7 m off a point it covers)
+const BUILT_EARTH := Color(0.60, 0.55, 0.45)
+
+
+static func mark_built(lots: Array) -> void:
+	if _map_col.is_empty():
+		return
+	for lot: Dictionary in lots:
+		var c: Vector2 = lot["c"]
+		var th := float(lot.get("th", 0.0))
+		var ax := Vector2(cos(th), -sin(th))
+		var az := Vector2(sin(th), cos(th))
+		var hx := float(lot.get("hx", 2.0))
+		var hz := float(lot.get("hz", 2.0))
+		var r := Vector2(hx, hz).length() + BUILT_REACH + MAP_CELL
+		var i0 := clampi(int(floor((c.x - r + HALF_M) / MAP_CELL)), 0, MAP_N - 1)
+		var i1 := clampi(int(ceil((c.x + r + HALF_M) / MAP_CELL)), 0, MAP_N - 1)
+		var j0 := clampi(int(floor((c.y - r + HALF_M) / MAP_CELL)), 0, MAP_N - 1)
+		var j1 := clampi(int(ceil((c.y + r + HALF_M) / MAP_CELL)), 0, MAP_N - 1)
+		for j in range(j0, j1 + 1):
+			for i in range(i0, i1 + 1):
+				var d := Vector2(-HALF_M + i * MAP_CELL, -HALF_M + j * MAP_CELL) - c
+				var e := maxf(absf(d.dot(ax)) - hx, absf(d.dot(az)) - hz)
+				var w := 1.0 - smoothstep(BUILT_REACH, BUILT_REACH + MAP_CELL * 0.6, e)
+				if w <= 0.0:
+					continue
+				var o := (j * MAP_N + i) * 4
+				var grass := float(_map_w[o]) / 255.0
+				if grass * w < 0.004:
+					continue   # already earth, mud, gravel or stone
+				for ch in 3:
+					var v := float(_map_col[o + ch]) / 255.0
+					_map_col[o + ch] = clampi(roundi(lerpf(v, BUILT_EARTH[ch], w * grass) * 255.0), 0, 255)
+				_map_col[o + 3] = clampi(roundi(float(_map_col[o + 3]) * (1.0 - w)), 0, 255)
+				_map_w[o] = clampi(roundi(grass * (1.0 - w) * 255.0), 0, 255)
+				_map_w[o + 2] = maxi(_map_w[o + 2], clampi(roundi(w * grass * 0.9 * 255.0), 0, 255))
+				_maps_dirty = true
+
+
+## The marked maps sent to the ground's textures (once a frame at most: UrbsChunks).
+static func flush_built() -> void:
+	if not _maps_dirty or _tex_col == null:
+		return
+	_maps_dirty = false
+	_tex_col.update(Image.create_from_data(MAP_N, MAP_N, false, Image.FORMAT_RGBA8, _map_col))
+	_tex_w.update(Image.create_from_data(MAP_N, MAP_N, false, Image.FORMAT_RGBA8, _map_w))
+
+
+static func _reset_built() -> void:
+	if _map_col0.is_empty():
+		return
+	_map_col = _map_col0.duplicate()
+	_map_w = _map_w0.duplicate()
+	_maps_dirty = true
+
+
+## F3: the ground's weights at (x, z) as the textures hold them (nearest texel): x grass, y mud,
+## z dust, w gravel or stone.
+static func ground_weights_at(x: float, z: float) -> Vector4:
+	prepare()
+	var i := clampi(roundi((x + HALF_M) / MAP_CELL), 0, MAP_N - 1)
+	var j := clampi(roundi((z + HALF_M) / MAP_CELL), 0, MAP_N - 1)
+	var o := (j * MAP_N + i) * 4
+	return Vector4(_map_w[o], _map_w[o + 1], _map_w[o + 2], _map_w[o + 3]) / 255.0
+
+
 ## F3: between sunset and night the ground (dark grass and earth, albedo about 0.1-0.2) fell
 ## under the tone mapper's toe and drew black while the stone round it stayed grey. The light of
 ## the twilight sky, which the sky's radiance gives the ground too faintly, is added back as a
 ## glow that follows the ground's own colour (compressed, so dark grass is lifted more than pale earth): `fill` 0 by day and at full night (UrbsChunks
 ## sets it from the sun's height).
-static func set_sky_fill(fill: float) -> void:
+static func set_sky_fill(fill: float, daylight := 1.0) -> void:
 	_sky_fill = fill
+	_day = daylight
 	_ground_material().set_shader_parameter("sky_fill", fill)
+	_ground_material().set_shader_parameter("day", daylight)
 
 
 ## The share of sky fill for the sun at `elevation` degrees (see set_sky_fill).
@@ -1773,6 +1861,8 @@ uniform float map_half = 2500.0;
 uniform float map_cell = 10.0;
 uniform float map_n = 501.0;
 uniform float sky_fill = 0.0;   // F3: the twilight sky's light on the ground (set_sky_fill)
+const float GROUND_BOUNCE = 0.22;   // F3 round 3: bounce light in the shade (see EMISSION)
+uniform float day = 1.0;             // F3 round 3: how much sun there is to bounce (set_sky_fill)
 float hash(vec3 p) { p = fract(p * 0.3183099 + 0.1); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
 float vnoise(vec3 x) {
 	vec3 i = floor(x); vec3 f = fract(x);
@@ -1846,7 +1936,10 @@ void fragment() {
 		vec4 fm = farm(wpos.xz);
 		vec3 fc = lin(fm.rgb) * (0.9 + 0.2 * (0.5 * mid + 0.5 * fine));
 		fc = mix(fc, lin(vec3(0.30, 0.33, 0.20)) * (0.85 + 0.3 * fine), fm.a);
-		col = mix(col, fc, rural * (1.0 - steep) * 0.85);
+		// F3 round 3: a field is drawn as a field or not at all: at the farmland's faint edge
+		// (weight 0.3, the Campus north of the city) its parcels showed as straight-edged shading
+		// a few per cent apart, read as seams across open meadow
+		col = mix(col, fc, smoothstep(0.1, 0.45, rural) * (1.0 - steep) * 0.85);
 	}
 	// cliffs and steep slopes: tufa, an even warm grey-brown with faint horizontal bedding
 	float bf = fract(wpos.y * 1.1 + big * 3.0);
@@ -1855,18 +1948,27 @@ void fragment() {
 	st *= 0.95 + 0.05 * smoothstep(0.0, 0.15, bf) * smoothstep(1.0, 0.85, bf);
 	col = mix(col, st, steep * 0.85);
 	ALBEDO = col;
-	// the fill lifts dark grass more than pale earth (pow 0.6), or green meadows stay black at dusk
-	EMISSION = pow(col, vec3(0.6)) * sky_fill;
+	// F3 round 3: the light bounced into the shade off the sunlit streets and walls, as the houses
+	// have their own (UrbsFillMeshes: col * 0.045-0.08): with the sky ambient alone the dark grass
+	// and earth in a building's shadow went near black (a grey ground of albedo 0.5 shows the
+	// ambient itself is fine: 96 in shade, 200 in sun), the tone mapper crushing their low blue.
+	// Like the twilight fill, it lifts dark grass more than pale earth (pow 0.6), and it follows
+	// the sun (`day`).
+	EMISSION = pow(col, vec3(0.6)) * (GROUND_BOUNCE * day + sky_fill);
 	ROUGHNESS = mix(1.0, 0.55, wm);
 	SPECULAR = mix(0.05, 0.3, wm);
 }
 """
 	_material = ShaderMaterial.new()
 	_material.shader = sh
-	_material.set_shader_parameter("ground_col", ImageTexture.create_from_image(Image.create_from_data(MAP_N, MAP_N, false, Image.FORMAT_RGBA8, _map_col)))
-	_material.set_shader_parameter("ground_w", ImageTexture.create_from_image(Image.create_from_data(MAP_N, MAP_N, false, Image.FORMAT_RGBA8, _map_w)))
+	_tex_col = ImageTexture.create_from_image(Image.create_from_data(MAP_N, MAP_N, false, Image.FORMAT_RGBA8, _map_col))
+	_tex_w = ImageTexture.create_from_image(Image.create_from_data(MAP_N, MAP_N, false, Image.FORMAT_RGBA8, _map_w))
+	_maps_dirty = false
+	_material.set_shader_parameter("ground_col", _tex_col)
+	_material.set_shader_parameter("ground_w", _tex_w)
 	_material.set_shader_parameter("map_half", HALF_M)
 	_material.set_shader_parameter("map_cell", MAP_CELL)
 	_material.set_shader_parameter("map_n", float(MAP_N))
 	_material.set_shader_parameter("sky_fill", _sky_fill)
+	_material.set_shader_parameter("day", _day)
 	return _material

@@ -50,7 +50,6 @@ const SHOP_DEPTH := 5.0
 const FOOTPATH := 1.25            ## = UrbsStreets.FOOTWAY_W: house fronts meet the back of the raised footway
 const KERB := 0.28                ## = UrbsStreets.KERB_W
 const FOOTWAY_H := 0.22           ## = UrbsStreets.FOOTWAY_H: floors of street fronts stand at least this high
-const APRON := 2.6                ## packed earth round a building lot, metres (covers a 5 m lane between two lots)
 const RIVER_CLEAR := 8.0          ## metres kept clear beyond the Tiber's half width (UrbsTerrain)
 const MAX_SLOPE := 0.8                ## steeper hillsides were built over on substructures (the Palatine over the Circus)
 const TREE_CLEAR := 1.0              ## F3: share of a tree's crown radius kept clear of a building
@@ -2048,67 +2047,16 @@ func rural_lots(parcels: Array) -> Array:
 	return list
 
 
-## Ground round the houses: a packed-earth apron 2.6 m wide round every building lot (enough to
-## pave the lanes between neighbours), draped over the terrain (the terrain draws the rest of the ground evenly; the earth is
-## not spread over the open hillsides). One mesh per chunk. True when done.
+## Ground round the houses: the terrain's trodden earth round every building lot (F3 round 3:
+## UrbsTerrain.mark_built; it was a packed-earth apron mesh per lot). True when done.
 func floor_step(node: Node3D, _key: Vector2i, lots: Array, _lod: int, _st: Dictionary, _deadline: int) -> bool:
-	var verts := PackedVector3Array()
-	var normals := PackedVector3Array()
-	var cols := PackedColorArray()
-	var idx := PackedInt32Array()
+	# F3 round 3: the ground round the houses is the terrain's own trodden earth (UrbsTerrain.mark_built),
+	# no longer a draped apron mesh per lot
+	var built: Array = []
 	for lot in lots:
-		var kind := str(lot["kind"])
-		if not (kind in ["insula", "casa", "domus", "taberna", "workshop", "horrea"]):
-			continue
-		var ax := _axes(lot)
-		var c: Vector2 = lot["c"]
-		var ex: Vector2 = ax[0] * (float(lot["hx"]) + APRON)
-		var ez: Vector2 = ax[1] * (float(lot["hz"]) + APRON)
-		var base := verts.size()
-		# a 4 x 4 grid draped on the terrain, so it follows terraces and slopes instead of cutting them
-		for b in 5:
-			for a in 5:
-				var qq: Vector2 = c + ex * (float(a) / 2.0 - 1.0) + ez * (float(b) / 2.0 - 1.0)
-				# F3: the outer ring dips under the grass, so the earth meets it without a step (its
-				# 7 cm edge cast a black line along every apron)
-				var rim := a == 0 or a == 4 or b == 0 or b == 4
-				verts.append(Vector3(qq.x, float(height.call(qq.x, qq.y)) + (-0.06 if rim else 0.07), qq.y))
-				normals.append(Vector3.UP)
-				cols.append(UrbsFillMeshes.EARTH)
-		for b in 4:
-			for a in 4:
-				var q0 := base + b * 5 + a
-				# not over the street, its kerb or its footway; F3: nor over a monument's paving or a
-				# platform (it lay at the same height as the paving: flicker), nor the river
-				var mid := (verts[q0] + verts[q0 + 6]) * 0.5
-				if _hazard(Vector2(mid.x, mid.z)) & (M_WALK | M_FOOT | M_WATER):
-					continue
-				idx.append_array([q0, q0 + 1, q0 + 6, q0, q0 + 6, q0 + 5])
-	if idx.is_empty():
-		return true
-	# wind every quad so its front is up whatever the lot's yaw
-	for t in range(0, idx.size(), 3):
-		var a := verts[idx[t]]
-		var b := verts[idx[t + 1]]
-		var d := verts[idx[t + 2]]
-		if (b - a).cross(d - a).y > 0.0:
-			var tmp := idx[t + 1]
-			idx[t + 1] = idx[t + 2]
-			idx[t + 2] = tmp
-	var arrays := []
-	arrays.resize(Mesh.ARRAY_MAX)
-	arrays[Mesh.ARRAY_VERTEX] = verts
-	arrays[Mesh.ARRAY_NORMAL] = normals
-	arrays[Mesh.ARRAY_COLOR] = cols
-	arrays[Mesh.ARRAY_INDEX] = idx
-	var mesh := ArrayMesh.new()
-	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-	var mi := MeshInstance3D.new()
-	mi.name = "Ground"
-	mi.mesh = mesh
-	mi.material_override = UrbsFillMeshes.material()
-	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	node.add_child(mi)
+		if str(lot["kind"]) in ["insula", "casa", "domus", "taberna", "workshop", "horrea"]:
+			built.append(lot)
+	UrbsTerrain.mark_built(built)
 	return true
 
 

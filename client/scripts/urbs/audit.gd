@@ -1200,6 +1200,13 @@ func _f3_check_life_once(life: UrbsLife, hour: float) -> void:
 #                    degrees in their normals (a step or a seam in the light)
 #   streets_ground   stretches of a street strip that sink under the ground mesh or float 0.5 m
 #                    above it
+#   wall_feet        terrace, substructure, retaining and clivus walls whose foot stands above the
+#                    drawn ground somewhere along either face, at each level of detail the wall is
+#                    drawn over (the 5, 25 and 50 m ground of lod 0, 1 and 2), by 100 m square
+#   meadow_fronts    house and shop lots with meadow (grass weight over 0.5 in the ground's
+#                    textures, as UrbsFill.floor_step marks them) 4 m out from the middle of a
+#                    side, off the streets and pavings
+#   (--urbs-audit-before: the two counted without the round-3 sinking and marking)
 # ---------------------------------------------------------------------------------------------
 
 const F3_ZF_M := 0.05
@@ -1220,6 +1227,8 @@ func _f3_ground() -> Dictionary:
 		"stair_ends": _f3_stair_ends(),
 		"chunk_seams": _f3_chunk_seams(),
 		"streets_ground": _f3_streets_ground(st),
+		"wall_feet": _f3_wall_feet(),
+		"meadow_fronts": _f3_meadow_fronts(),
 	}
 	res["f3_ground_seconds"] = (Time.get_ticks_msec() - t0) / 1000.0
 	return res
@@ -1793,6 +1802,106 @@ func _f3_steps_down(mid: String) -> bool:
 	var xf: Transform3D = _mon._xf.get(mid, node.global_transform)   # the monument's frame
 	var foot := xf * Vector3(0.0, sb.position.y, sb.end.z + 0.5)
 	return absf(foot.y - _f3_ground_y(foot.x, foot.z)) <= 0.4
+
+
+# --- wall feet ---
+
+func _f3_wall_feet() -> Array:
+	var out := []
+	if OS.get_cmdline_user_args().has("--urbs-audit-before"):
+		UrbsSite.sink_feet = false   # (to count what F3 round 3 fixes)
+	UrbsSite.wall_log = []
+	var root := Node3D.new()
+	get_root().add_child(root)
+	UrbsSite.build(root, _year, Callable(UrbsTerrain, "height_at"))
+	var keys := {}
+	for kx in range(-10, 10):
+		for kz in range(-10, 10):
+			if not UrbsSite.terrace_wall_segments(Rect2(Vector2(kx, kz) * 250.0, Vector2(250.0, 250.0))).is_empty():
+				keys[Vector2i(kx, kz)] = true
+	var with_near := {}
+	for key: Vector2i in keys:
+		for dx in range(-1, 2):
+			for dz in range(-1, 2):
+				with_near[key + Vector2i(dx, dz)] = true
+	var lf := _f3_lots(with_near.keys())
+	for key: Vector2i in keys:
+		var near: Array = []
+		for dx in range(-1, 2):
+			for dz in range(-1, 2):
+				near.append(key + Vector2i(dx, dz))
+		var uses := UrbsSite.wall_uses(lf[1], near)
+		for lod in [0, 1]:   # the walls are drawn with the chunks of lod 0 and 1
+			UrbsSite.build_chunk_walls(Rect2(Vector2(key) * 250.0, Vector2(250.0, 250.0)), lod, _year, uses)
+	var log: Array = UrbsSite.wall_log
+	UrbsSite.wall_log = null
+	UrbsSite.sink_feet = true
+	root.queue_free()
+	var bad := {}
+	var worst := {}
+	var where := {}
+	for w: Array in log:
+		var steps: Array = w[6]
+		if steps.is_empty():
+			steps = [1]
+		var d := UrbsSite.foot_deficit(w[0], w[1], w[2], float(w[5]), float(w[3]), float(w[4]), steps) - 0.3
+		if d > 0.05:
+			var mid: Vector2 = ((w[0] as Vector2) + (w[1] as Vector2)) * 0.5
+			var key := Vector2i(floori(mid.x / 100.0), floori(mid.y / 100.0))
+			bad[key] = int(bad.get(key, 0)) + 1
+			if d > float(worst.get(key, 0.0)):
+				worst[key] = d
+				where[key] = mid
+	var ks := bad.keys()
+	ks.sort()
+	for key: Vector2i in ks:
+		out.append("%d walls stand up to %.2f m above the drawn ground near %s" % [bad[key], worst[key], _f3_xy(where[key])])
+	return out
+
+
+# --- meadow round the houses ---
+
+func _f3_meadow_fronts() -> Array:
+	var out := []
+	var keys := {}
+	for kx in range(-10, 10):
+		for kz in range(-10, 10):
+			keys[Vector2i(kx, kz)] = true
+	var lf := _f3_lots([])
+	var fill: UrbsFill = lf[1]
+	var n := 0
+	var where := {}
+	for key: Vector2i in keys:
+		for rk in fill.regions_for_chunk(key):
+			while not fill.advance_region(rk, Time.get_ticks_usec() + 1000000000):
+				pass
+		var lots: Array = fill.lots_for_chunk(key)
+		if not OS.get_cmdline_user_args().has("--urbs-audit-before"):   # (round 3 counts the old ground too)
+			UrbsTerrain.mark_built(lots.filter(func(l: Dictionary) -> bool: return str(l["kind"]) in ["insula", "casa", "domus", "taberna", "workshop", "horrea"]))
+		for lot: Dictionary in lots:
+			if not str(lot["kind"]) in ["insula", "casa", "domus", "taberna", "workshop", "horrea"]:
+				continue
+			var lr := _lot_rect(lot)
+			var c: Vector2 = lr.c
+			if absf(c.x) > 2400.0 or absf(c.y) > 2400.0:
+				continue
+			for side: Vector2 in [lr.ax * (float(lr.hx) + 4.0), -lr.ax * (float(lr.hx) + 4.0), lr.az * (float(lr.hz) + 4.0), -lr.az * (float(lr.hz) + 4.0)]:
+				var p := c + side
+				var ns := _streets.nearest_street(p)
+				if not ns.is_empty() and float(ns.distance) < float(ns.half_width) + 1.5:
+					continue   # the street's own surface
+				if UrbsSite.platform_at(p.x, p.y) != "" or UrbsTerrain.covered_at(p.x, p.y):
+					continue
+				if UrbsTerrain.ground_weights_at(p.x, p.y).x > 0.5:
+					n += 1
+					var gk := Vector2i(floori(p.x / 250.0), floori(p.y / 250.0))
+					where[gk] = int(where.get(gk, 0)) + 1
+					break
+	var ks := where.keys()
+	ks.sort()
+	for gk: Vector2i in ks:
+		out.append("%d house and shop lots with meadow at their fronts in the 250 m square at %s" % [where[gk], _f3_xy(Vector2(gk) * 250.0 + Vector2(125, 125))])
+	return out
 
 
 # --- steps ---

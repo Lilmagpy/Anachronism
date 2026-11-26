@@ -162,6 +162,11 @@ static func parcel_to_world(angle: float, origin: Vector2, q: Vector2) -> Vector
 ## A mesh builder with one surface per UrbsMaterials name.
 class Mesher:
 	var surfaces := {}   ## name -> [verts, normals, uvs, indices]
+	## F3 round 3: the ground steps (UrbsTerrain.mesh_height_at) a wall's foot must reach below at
+	## every point along both its faces: the ground chunks draw the terrain with 5 m (lod 0), 25 m
+	## (lod 1) or 50 m (lod 2) quads, and a wall footed on the 5 m field hung over the coarser
+	## chunks' ground (264 BC, the Esquiline terraces seen from 250 m)
+	var sink_steps: Array = []
 
 	func _s(mat: String) -> Array:
 		if not surfaces.has(mat):
@@ -196,6 +201,13 @@ class Mesher:
 	## A wall block along a-b (ground points, x/z), `out` the face's outward direction (2D), its
 	## foot at ya0/yb0 and its top at ya1/yb1, `thick` metres deep behind the face.
 	func wall(mat: String, a: Vector2, b: Vector2, out: Vector2, ya0: float, ya1: float, yb0: float, yb1: float, thick: float) -> void:
+		if UrbsSite.sink_feet and not sink_steps.is_empty():
+			var drop := UrbsSite.foot_deficit(a, b, out, thick, ya0, yb0, sink_steps)
+			if drop > 0.0:
+				ya0 -= drop
+				yb0 -= drop
+		if UrbsSite.wall_log != null:
+			UrbsSite.wall_log.append([a, b, out, ya0, yb0, thick, sink_steps.duplicate()])
 		var o := out.normalized()
 		var n := Vector3(o.x, 0.0, o.y)
 		var ba := a - o * thick
@@ -243,6 +255,28 @@ class Mesher:
 
 
 ## The masonry of retaining walls in `year`.
+static var sink_feet := true      ## F3: (the audit turns it off to count what it fixes)
+static var wall_log: Variant = null   ## F3: an Array while the audit records the walls built
+
+
+## F3 round 3: how far a wall's foot (ya0 at a to yb0 at b, straight) stands above the drawn
+## ground anywhere along its front and back faces, plus 0.3 m of footing, for each ground step in
+## `steps`; 0 when it reaches below everywhere.
+static func foot_deficit(a: Vector2, b: Vector2, out: Vector2, thick: float, ya0: float, yb0: float, steps: Array) -> float:
+	var o := out.normalized()
+	var n := maxi(int(ceil(a.distance_to(b))), 1)
+	var worst := 0.0
+	for k in n + 1:
+		var t := float(k) / n
+		var p := a.lerp(b, t)
+		var foot := lerpf(ya0, yb0, t)
+		for off: float in [0.0, -thick]:
+			var q := p + o * off
+			for st: int in steps:
+				worst = maxf(worst, foot - (UrbsTerrain.mesh_height_at(q.x, q.y, st) - 0.3))
+	return worst
+
+
 static func wall_material(year: int) -> String:
 	return "opus_quadratum" if year < -200 else "opus_incertum"
 
@@ -254,6 +288,7 @@ static func build(parent: Node3D, year: int, height: Callable) -> Node3D:
 	root.name = "SiteWorks"
 	parent.add_child(root)
 	var m := Mesher.new()
+	m.sink_steps = [1, 5, 10]   # one mesh for the whole city, seen over every level of detail
 	_platform_walls(m, year, height)
 	_street_works(m, year, height)
 	_quays(m, year)
@@ -486,6 +521,7 @@ static func _down(p: Vector2) -> Vector2:
 ## something; under open ground the riser is left as a grassy bank).
 static func build_chunk_walls(rect: Rect2, lod: int, year: int, uses: Dictionary = {}) -> Node3D:
 	var m := Mesher.new()
+	m.sink_steps = [UrbsTerrain.chunk_step(rect, lod)]
 	var mat := wall_material(year)
 	var any := false
 	for w: Array in terrace_wall_segments(rect, uses):
