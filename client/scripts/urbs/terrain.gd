@@ -428,6 +428,17 @@ static func _dry_footings(h: PackedFloat32Array) -> void:
 		var c: Vector2 = pl["centre"]
 		var ax: Vector2 = pl["ax"]
 		var az: Vector2 = pl["az"]
+		# F3 round 4: a building wholly on the Tiber island (every corner of its plan FOOTING_GROW
+		# inside the island's shore) stands on the island's own raised ground, which its shore
+		# model draws; a footing there only pushed a square spit into the water past the shore
+		# (the Aedes Fauni's, 194 BC, at the island's downstream point: 8 m in from the shore,
+		# its footing reached 10 m out)
+		var on_island := true
+		for q: Vector2 in [Vector2(-1, -1), Vector2(1, -1), Vector2(-1, 1), Vector2(1, 1)]:
+			if UrbsTiber.island_inside(c + ax * half.x * q.x + az * half.y * q.y) < FOOTING_GROW:
+				on_island = false
+		if on_island:
+			continue
 		var r := half.length() + FOOTING_GROW
 		var reach := r + FOOTING_RISE / FOOTING_SLOPE + CELL_M
 		var turned := _monuments().entry(id).get("bearing_deg") == null or _monuments().entry(id).has("snap_to")
@@ -445,7 +456,12 @@ static func _dry_footings(h: PackedFloat32Array) -> void:
 				# whole circle), and the footing's own bank falling from it like the river's
 				var out := d.length() - r
 				if not turned:
-					out = maxf(absf(d.dot(ax)) - half.x, absf(d.dot(az)) - half.y) - FOOTING_GROW
+					# F3 round 4: round its corners (the distance to the plan, not the larger of the two
+					# axes' distances): a square corner standing out past the river's shore drew a
+					# notch in the water's edge (the Porticus Aemilia's end, 174 BC on)
+					var ex := maxf(absf(d.dot(ax)) - half.x, 0.0)
+					var ez := maxf(absf(d.dot(az)) - half.y, 0.0)
+					out = Vector2(ex, ez).length() - FOOTING_GROW
 				var top := _river_level[idx] + FOOTING_RISE - FOOTING_SLOPE * maxf(out, 0.0)
 				if top > h[idx]:
 					h[idx] = top
@@ -1838,6 +1854,7 @@ static func set_sky_fill(fill: float, daylight := 1.0) -> void:
 	_day = daylight
 	_ground_material().set_shader_parameter("sky_fill", fill)
 	_ground_material().set_shader_parameter("day", daylight)
+	UrbsSiteFlora.set_light(fill, daylight)   # F3 houses round 3: the trees get the same fill
 
 
 ## The share of sky fill for the sun at `elevation` degrees (see set_sky_fill).

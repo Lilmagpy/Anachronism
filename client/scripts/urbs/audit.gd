@@ -418,6 +418,7 @@ func _terrain() -> Array:
 #   tree_street      a tree standing in a carriageway
 #   tree_river       a tree standing in the river
 #   tree_wall        a tree's trunk or crown in the Servian wall
+#   shop_alone       a lean-to shop (taberna) with no building behind its back to lean on
 #   awning_pole      a shop awning whose poles stand over ground falling more than 0.8 m under the floor
 #   life_solid       a person, stall, cart, mule or litter (or a walker's or cart's lane) inside a
 #                    monument's solid or a building
@@ -430,7 +431,7 @@ const F3_NB := 24
 const F3_KEEP := 60
 const F3_BUILDINGS := ["insula", "domus", "casa", "taberna", "workshop", "horrea", "horti", "tomb", "farm"]
 const F3_KINDS := ["house_house", "house_monument", "house_wall", "house_street", "house_river", "house_base",
-	"awning_pole", "tree_building", "tree_street", "tree_river", "tree_wall", "life_solid", "stall_street", "lamp_smoke"]
+	"awning_pole", "shop_alone", "tree_building", "tree_street", "tree_river", "tree_wall", "life_solid", "stall_street", "lamp_smoke"]
 const F3_TOL := 0.2            ## interpenetration below this is two walls touching
 const F3_CART_HW := 1.05       ## half the width of an ox cart with its pair of oxen (life.gd)
 const F3_AWNING_OUT := 1.2     ## = UrbsFillParts.AWNING_OUT: awning poles stand on the footway
@@ -868,6 +869,33 @@ func _f3_check_houses() -> void:
 			_f3_note("house_river", float(wet), "%s %d of 9 points in the river" % [name_a, wet])
 		# --- an awning's poles: the ground at them no more than 0.8 m under the floor (the poles
 		# reach down a plinth's depth: over a falling alley they stood 5 m tall)
+		# --- a lean-to shop leans on a house: some building's walls within 1 m behind its back
+		if str(a.kind) == "taberna" and not (a.bands as Array).is_empty():
+			var g0: Dictionary = a.bands[0]
+			var azb: Vector2 = a.az
+			var axb: Vector2 = a.ax
+			var back := ((g0.c as Vector2) - ca).dot(azb) - float(g0.hz)
+			var along0 := ((g0.c as Vector2) - ca).dot(axb)
+			var leans := false
+			for t in [-0.6, 0.0, 0.6]:
+				var q: Vector2 = ca + azb * (back - 1.0) + axb * (along0 + t * float(g0.hx))
+				for k in _f3_near(q, 1.0):
+					var it: Dictionary = _f3_inst[k]
+					if k == i or str(it.kind) in ["taberna", "tomb", "farm", "horti"]:
+						continue
+					for o in it.bands:
+						if float(o.y0) - float(it.y) < 1.0 and _f3_inside(o, q, -0.3):
+							leans = true
+							break
+					if leans:
+						break
+				if leans:
+					break
+				if not _f3_mon_at(q, float(a.y) + 0.5, float(a.y) + 3.0, 0.5).is_empty() or _f3_fill._hazard(q) & UrbsFill.M_FOOT:
+					leans = true   # against a monument, a platform's wall or the site works
+					break
+			if not leans:
+				_f3_note("shop_alone", 1.0, "%s leans on no house" % name_a)
 		if _f3_has_awning(str(a.key)):
 			var az2: Vector2 = a.az
 			var ax2: Vector2 = a.ax

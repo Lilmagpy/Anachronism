@@ -548,6 +548,17 @@ static func _bake_far(node: Node3D, lists: Dictionary) -> void:
 	node.add_child(mi)
 
 
+## F3 round 3: the trees get the ground's bounce and twilight fill (UrbsTerrain.set_sky_fill calls
+## this), so they darken with the light without turning into black silhouettes at dusk.
+static func set_light(fill: float, daylight: float) -> void:
+	for name in ["foliage", "bark"]:
+		if UrbsMaterials.has(name):
+			var m: Variant = UrbsMaterials.get_material(name)
+			if m is ShaderMaterial:
+				(m as ShaderMaterial).set_shader_parameter("sky_fill", fill)
+				(m as ShaderMaterial).set_shader_parameter("day", daylight)
+
+
 static func _material(name: String, colour_fallback: bool) -> Material:
 	if UrbsMaterials.has(name):
 		return UrbsMaterials.get_material(name)

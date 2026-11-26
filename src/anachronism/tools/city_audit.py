@@ -2591,6 +2591,7 @@ F3_HOUSES_KINDS = [
     ("house_river", "buildings in the river"),
     ("house_base", "buildings whose floor is under the ground at the front or whose parts float"),
     ("awning_pole", "shop awnings on tall poles over ground falling away in front"),
+    ("shop_alone", "lean-to shops with no house behind them to lean on"),
     ("tree_building", "trees with their trunk inside a building or their crown through it"),
     ("tree_street", "trees in a carriageway"),
     ("tree_river", "trees in the river"),

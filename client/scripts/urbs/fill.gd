@@ -1012,6 +1012,7 @@ func _gen_street_lots() -> void:
 		_street_rows(si)
 	_footway_on = false
 	_on_clivus = false
+	_drop_marked_street_lots()
 	_bucket_street_lots()
 	count_stats = {"furniture": furniture_n}
 	for lot in _street_lots:
@@ -1171,6 +1172,7 @@ func _street_rows(si: int) -> void:
 			n += 1
 		# tabernae along the shop stretches; `placed` keeps the stretches of street they really took
 		var placed: Array[Vector2] = []
+		var shop_idx: Array[int] = []
 		s = 0.0
 		var item := 0
 		while s < length:
@@ -1192,6 +1194,7 @@ func _street_rows(si: int) -> void:
 					var tab := _make_lot("taberna:%d" % variant, Vector2(4.6, 5.2), pos, -mn, tw, dd, Color(_palette[_hash(sh, item, side + 21) % _palette.size()], _r(sh, item, side + 20)), 5.0 if variant != 4 else 7.5, "taberna")
 					if _add_street_lot(tab, sid, 0.2):
 						placed.append(Vector2(s, s + tw))
+						shop_idx.append(_street_lots.size() - 1)
 						_street_prop(mp, mn, hw, sh, item, side)
 			s += tw + (2.2 if _r(sh, item, side + 22) < 0.06 else 0.0)
 			item += 1
@@ -1252,6 +1255,11 @@ func _street_rows(si: int) -> void:
 					wide = float(small["hx"]) * 2.0
 			s += wide + (_r(sh, item, side + 29) * 1.8 + 0.4) if ok else 2.0
 			item += 1
+		# F3 round 3: a lean-to shop needs the house it leans on; where the house behind was not
+		# built (a clearance rule dropped it), the shop goes too (lone shops stood in the fields)
+		for k in shop_idx:
+			if not _leans_on_house(_street_lots[k]):
+				_street_lots[k]["drop"] = true
 
 
 ## F3: a house standing behind a row of shops shows no awnings or balconies of its own (they ran
@@ -1371,6 +1379,45 @@ func _add_street_lot(lot: Dictionary, own: String, margin: float, force_ok := fa
 	_street_hash[key].append(_street_lots.size())
 	_street_lots.append(lot)
 	return true
+
+
+## F3 round 3: whether a street house stands behind shop `shop`'s back (within 1 m, at its middle
+## and both ends).
+func _leans_on_house(shop: Dictionary) -> bool:
+	var ax: Array = _axes(shop)
+	var c: Vector2 = shop["c"]
+	for t in [-0.6, 0.0, 0.6]:
+		var q: Vector2 = c - (ax[1] as Vector2) * (float(shop["hz"]) + 0.8) + (ax[0] as Vector2) * (float(shop["hx"]) * t)
+		if _hazard(q) & M_FOOT and not (_hazard(q) & M_WATER):
+			return true   # against a monument, a platform's wall or the site works
+		var key := Vector2i(floori(q.x / 30.0), floori(q.y / 30.0))
+		for dx in range(-1, 2):
+			for dz in range(-1, 2):
+				for idx in _street_hash.get(key + Vector2i(dx, dz), []):
+					var o: Dictionary = _street_lots[idx]
+					if str(o["kind"]) in ["taberna", "prop", "furn", "tomb"] or o.has("drop"):
+						continue
+					var e := _env(o)
+					var r: Vector2 = q - (e["c"] as Vector2)
+					if absf(r.dot(e["ax"])) <= float(e["hx"]) + 0.6 and absf(r.dot(e["az"])) <= float(e["hz"]) + 0.6:
+						return true
+	return false
+
+
+## F3 round 3: remove the street lots marked "drop" and index the rest again.
+func _drop_marked_street_lots() -> void:
+	var kept: Array = []
+	for lot in _street_lots:
+		if not lot.has("drop"):
+			kept.append(lot)
+	_street_lots = kept
+	_street_hash = {}
+	for i in _street_lots.size():
+		var c: Vector2 = _street_lots[i]["c"]
+		var key := Vector2i(floori(c.x / 30.0), floori(c.y / 30.0))
+		if not _street_hash.has(key):
+			_street_hash[key] = []
+		_street_hash[key].append(i)
 
 
 func _bucket_street_lots() -> void:

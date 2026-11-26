@@ -35,14 +35,14 @@ References: **Pleiades** (CC BY 3.0; places within 3.5 km of the Forum with a pe
 | scene: interiors with figures through a wall or floor (all years) | 0 |
 | scene: enterable monuments with no interior (all years) | 0 |
 | scene: interiors whose visitor starts outside, against or facing a wall (all years) | 0 |
-| scene: F3 ground: 100 m stretches of a Tiber bank with a saw-toothed water line (all years) | 11 |
+| scene: F3 ground: 100 m stretches of a Tiber bank with a saw-toothed water line (all years) | 0 |
 | scene: F3 ground: surfaces within 5 cm of each other (paving, streets, quays, water) (all years) | 0 |
 | scene: F3 ground: ground missing where the camera can see it (all years) | 0 |
 | scene: F3 ground: terrace walls with nothing standing on the terrace (all years) | 0 |
 | scene: F3 ground: platforms more than 1 m off the street or ground in front (all years) | 0 |
 | scene: F3 ground: steps that do not meet the ground at both ends (all years) | 0 |
 | scene: F3 ground: chunk edges where two levels of detail do not meet (all years) | 0 |
-| scene: F3 ground: stretches of street sunk under or floating over the ground (all years) | 38 |
+| scene: F3 ground: stretches of street sunk under or floating over the ground (all years) | 0 |
 | scene: F3 ground: 100 m squares with walls footed above a level of detail's ground (all years) | 0 |
 | scene: F3 ground: 250 m squares with house or shop lots with meadow at their fronts (all years) | 0 |
 | scene (F3 houses): buildings of the fill interpenetrating (all years) | 0 |
@@ -715,12 +715,12 @@ The repository has no modern elevation model; the ground is built from `topograp
 
 | year | overlaps | floating | buried | houses_in_monuments | houses_on_streets | in_river | streets_through | part_overlaps | parts_floating | parts_sunk | coplanar | view_inside | view_misses | view_close | interior_voids | interior_figures | interior_missing | interior_starts | bank_sawtooth | zfight | ground_holes | empty_terraces | platform_steps | stair_ends | chunk_seams | streets_ground | wall_feet | meadow_fronts |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 509 BC | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 6 | 0 | 0 |
-| 390 BC | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 6 | 0 | 0 |
-| 264 BC | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 5 | 0 | 0 |
-| 133 BC | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 6 | 0 | 0 |
-| 44 BC | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 7 | 0 | 0 |
-| 27 BC | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 2 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 8 | 0 | 0 |
+| 509 BC | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 390 BC | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 264 BC | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 133 BC | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 44 BC | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 27 BC | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
 **monuments whose solids overlap another standing monument**
 
@@ -738,31 +738,6 @@ The repository has no modern elevation model; the ground is built from `topograp
 - aedes_mercurii camera at (-120, 730) so near that the front overfills the frame (27 BC, 44 BC)
 - aedes_minervae_aventine camera at (-234, 1168) so near that the front overfills the frame (133 BC)
 
-**F3 ground: 100 m stretches of a Tiber bank with a saw-toothed water line**
-
-- the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-1444, -1300) (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC)
-- the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-521, 261) (133 BC, 264 BC, 390 BC, 509 BC)
-- the water's edge turns more than 25 degrees within 2 m 7 times in the 100 m square near (-742, 145) (133 BC)
-
-**F3 ground: stretches of street sunk under or floating over the ground**
-
-- street clivus_capitolinus under the ground over 2 m (worst -0.00 m) near (-190, 69) (390 BC, 509 BC)
-- street clivus_suburanus under the ground over 2 m (worst 0.03 m) near (1140, -337) (390 BC, 509 BC)
-- street clivus_suburanus under the ground over 3 m (worst 0.05 m) near (1285, -356) (27 BC, 44 BC)
-- street via_flumentana under the ground over 3 m (worst 0.12 m) near (-418, 436) (264 BC, 390 BC, 509 BC)
-- street via_flumentana under the ground over 7 m (worst 0.11 m) near (-418, 436) (133 BC, 27 BC, 44 BC)
-- street via_lata under the ground over 2 m (worst 0.04 m) near (-223, -393) (133 BC, 27 BC, 44 BC)
-- street via_praenestina under the ground over 2 m (worst 0.00 m) near (1330, -363) (133 BC, 27 BC, 44 BC)
-- street via_praenestina under the ground over 2 m (worst 0.01 m) near (1330, -363) (264 BC)
-- street via_praenestina under the ground over 2 m (worst 0.03 m) near (1330, -363) (390 BC, 509 BC)
-- street via_sacra under the ground over 3 m (worst 0.00 m) near (267, 174) (133 BC, 264 BC, 27 BC, 44 BC)
-- street via_triumphi_campi under the ground over 3 m (worst 0.08 m) near (-628, 6) (133 BC, 27 BC, 44 BC)
-- street vicus_iugarius under the ground over 6 m (worst 0.09 m) near (-405, 132) (390 BC, 509 BC)
-- street vicus_iugarius under the ground over 6 m (worst 0.10 m) near (-411, 127) (133 BC, 264 BC, 27 BC, 44 BC)
-- street vicus_tuscus under the ground over 2 m (worst -0.00 m) near (-89, 295) (390 BC, 509 BC)
-- street vicus_tuscus under the ground over 2 m (worst 0.00 m) near (-89, 295) (264 BC)
-- street vicus_tuscus under the ground over 2 m (worst 0.03 m) near (-88, 290) (27 BC)
-
 **monuments on sloping ground, 27 BC** (47): each stands on a
 podium or foundation down to its lowest ground (monuments.gd), and where the ground
 falls more than 3 m on a terrace cut into the hill with retaining walls
@@ -770,7 +745,7 @@ falls more than 3 m on a terrace cut into the hill with retaining walls
 
 - aedes_apollinis_palatini on a 1.2 m foundation (temple_hexastyle_corinthian_marble)
 - aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)
-- aedes_faunus on a 1.2 m foundation (temple_tetrastyle_ionic)
+- aedes_faunus on a 1.5 m foundation (temple_tetrastyle_ionic)
 - aedes_felicitatis on a 2.4 m foundation (temple_tetrastyle_ionic)
 - aedes_fortunae_matris_matutae on a 3.8 m foundation (temple_tetrastyle_ionic)
 - aedes_herculis_collina on a 1.4 m foundation (temple_tuscan_small)
@@ -808,11 +783,11 @@ falls more than 3 m on a terrace cut into the hill with retaining walls
 - porta_pandana on a 1.2 m foundation (arch)
 - porta_salutaris on a 2.8 m foundation (servian_gate)
 - porta_sanqualis on a 1.1 m foundation (servian_gate)
-- porta_trigemina on a 5.1 m foundation (servian_gate)
+- porta_trigemina on a 5.4 m foundation (servian_gate)
 - porta_viminalis on a 1.2 m foundation (servian_gate)
-- porticus_aemilia on a 5.0 m foundation (long_hall)
+- porticus_aemilia on a 5.4 m foundation (long_hall)
 - porticus_catuli on a 2.1 m foundation (portico_enclosure)
-- salinae on a 4.4 m foundation (long_hall)
+- salinae on a 5.0 m foundation (long_hall)
 - tabularium on a 7.7 m foundation (tabularium)
 - theatrum_marcelli on a 5.1 m foundation (theatre_stone)
 
@@ -825,12 +800,12 @@ meshes (each mesh's triangles clipped into 1 m height bands).
 
 | year | buildings | house_house | house_monument | house_wall | house_street | house_river | house_base | awning_pole | tree_building | tree_street | tree_river | tree_wall | life_solid | stall_street | lamp_smoke |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 509 BC | 2171 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 390 BC | 3984 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 264 BC | 10368 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 133 BC | 19241 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 44 BC | 20707 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 27 BC | 20357 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 509 BC | 2173 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 390 BC | 3987 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 264 BC | 10371 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 133 BC | 19249 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 44 BC | 20713 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 27 BC | 20363 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
 ## 4. Time
 
