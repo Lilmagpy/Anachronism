@@ -269,13 +269,16 @@ func _apply_flags(flags: Dictionary) -> void:
 		"street":
 			var stand := spot
 			var facing := yaw
+			var pitch := float(flags.get("pitch", "3"))
 			if at != "" and not at.contains(","):
 				var view := monument_view(at)   # F3 monuments
 				stand = view.stand
 				if not yaw_set:
 					facing = float(view.facing)
+				if not flags.has("pitch"):
+					pitch = float(view.get("pitch", 3.0))   # F3 monuments: a raised stand looks down
 				height = maxf(height, (view.eye as Vector3).y - height_at(stand.x, stand.z))   # on a court's floor
-			cam.snap_street(stand, facing, maxf(height, UrbsCamera.EYE), deg_to_rad(float(flags.get("pitch", "3"))))
+			cam.snap_street(stand, facing, maxf(height, UrbsCamera.EYE), deg_to_rad(pitch))
 		"inside":
 			if at != "" and not at.contains(","):
 				_enter_interior_now(at)
@@ -460,8 +463,8 @@ func _enter_interior_now(id: String) -> void:
 		environment.background_mode = Environment.BG_COLOR
 		environment.background_color = Color(0.04, 0.035, 0.03)
 		environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-		environment.ambient_light_color = Color(0.55, 0.50, 0.44)
-		environment.ambient_light_energy = 0.6
+		environment.ambient_light_color = Color(0.62, 0.56, 0.48)
+		environment.ambient_light_energy = 1.1   # F3 monuments: the light bounced round the room (0.6 left it black)
 	var spawn := Transform3D(Basis.IDENTITY, Vector3(0, 1.7, 0))
 	if interior.has_method("spawn"):
 		spawn = interior.spawn()

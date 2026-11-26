@@ -210,9 +210,57 @@ static func _attach(root: Node3D, r: Dictionary) -> void:
 		light.omni_attenuation = 1.4
 		light.shadow_enabled = false
 		root.add_child(light)
+	if not bool(r.get("open_sky", false)):
+		_fill_light(root, body, r)
 
 
 # F3 monuments (begin) --------------------------------------------------------------------------
+const FILL_SPACING := 14.0   ## metres between the fill lights over a room
+const FILL_ENERGY := 0.7
+const DOOR_ENERGY := 1.6
+
+
+## The light a roofed room gets besides its lamps: what comes in at the door (or the compluvium,
+## the clerestory) and bounces off the walls and the floor, as soft shadowless lights over the
+## whole room at half its height, and a brighter one just inside the way in, where the visitor
+## starts; so no wall or floor of an interior is pure black at any hour (the lamps alone lit
+## the statue and left the room a black box).
+static func _fill_light(root: Node3D, body: MeshInstance3D, r: Dictionary) -> void:
+	if body.mesh == null:
+		return
+	var bb: AABB = body.transform * body.mesh.get_aabb()
+	var lo := bb.position
+	var hi := bb.end
+	var y := lo.y + clampf((hi.y - lo.y) * 0.6, 2.0, 12.0)
+	var nx := maxi(1, int(ceil((hi.x - lo.x) / FILL_SPACING)))
+	var nz := maxi(1, int(ceil((hi.z - lo.z) / FILL_SPACING)))
+	var reach := FILL_SPACING * 1.25 + (hi.y - lo.y) * 0.3
+	for i in nx:
+		for j in nz:
+			var light := OmniLight3D.new()
+			light.name = "Fill"
+			light.position = Vector3(lerpf(lo.x, hi.x, (i + 0.5) / nx), y, lerpf(lo.z, hi.z, (j + 0.5) / nz))
+			light.light_color = Color(1.0, 0.90, 0.76)
+			light.light_energy = FILL_ENERGY
+			light.light_specular = 0.0
+			light.omni_range = reach
+			light.omni_attenuation = 0.6
+			light.shadow_enabled = false
+			root.add_child(light)
+	# the daylight at the way in (behind the visitor's start, toward the door)
+	var sp: Transform3D = r.get("spawn", Transform3D.IDENTITY)
+	var door := OmniLight3D.new()
+	door.name = "Doorlight"
+	door.position = sp.origin + sp.basis.z * 1.5 + Vector3(0, 0.8, 0)
+	door.light_color = Color(1.0, 0.95, 0.86)
+	door.light_energy = DOOR_ENERGY
+	door.light_specular = 0.2
+	door.omni_range = 16.0
+	door.omni_attenuation = 0.9
+	door.shadow_enabled = false
+	root.add_child(door)
+
+
 static var _dome_mat: StandardMaterial3D = null
 static var _earth_mat: StandardMaterial3D = null
 
