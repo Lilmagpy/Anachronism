@@ -744,14 +744,18 @@ static func _shipsheds(out: Dictionary, d: Dictionary) -> void:
 	var w := maxf(float(d.w), 20.0)
 	var l := maxf(float(d.l), 20.0)
 	var h := maxf(float(d.h), 6.0)
-	var n := maxi(2, int(l / 8.0))
-	var bw := l / n
+	# F3 monuments: the slipways run back from the water (the front, +z), side by side along the
+	# frontage, each under its own gable, open at the water end and closed at the back (they ran
+	# along the frontage, so the river side showed one long closed board wall)
+	var n := maxi(2, int(w / 8.0))
+	var bw := w / n
 	k.box(Vector3.ZERO, Vector3(w, 0.3, l), Roman.EARTH_C, Kit.EARTH)
-	for i in n:   # a row of slipways, each under its own long gable roof, open at the water end
-		var z := -l / 2.0 + (i + 0.5) * bw
+	k.box(Vector3(0, 0.3, -l / 2.0 + 0.2), Vector3(w, h * 0.6, 0.35), Roman.WOOD, Kit.TIMBER)   # the back wall
+	for i in n:
+		var x := -w / 2.0 + (i + 0.5) * bw
 		for s: float in [-1.0, 1.0]:
-			k.box(Vector3(0, 0.3, z + s * bw * 0.45), Vector3(w, h * 0.6, 0.35), Roman.WOOD, Kit.TIMBER)
-		Roman._gable_x(k, Vector3(0, 0.3 + h * 0.6, z), w, bw, h * 0.4, 0.2, Roman.TERRA, Roman.WOOD, Kit.TIMBER, 0.12)
+			k.box(Vector3(x + s * bw * 0.45, 0.3, 0), Vector3(0.35, h * 0.6, l), Roman.WOOD, Kit.TIMBER)
+		Roman._gable_z(k, Vector3(x, 0.3 + h * 0.6, 0), l, bw, h * 0.4, 0.2, Roman.TERRA, Roman.WOOD, Kit.TIMBER, 0.12)
 	_add(out, k.finish())
 	_box_shape(out, Vector3(0, h * 0.5, 0), Vector3(w, h, l))
 
