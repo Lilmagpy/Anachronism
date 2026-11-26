@@ -3945,7 +3945,7 @@ monuments:
   location_confidence: low
   location_source: "F2: Platner-Ashby s.v. Castor, Aedes (in circo Flaminio, read): in circo Flaminio, Region IX (Fasti; Vitr. 4.8.4); no closer site in the sources; placed on the north side of the circus"
   location: "Circus Flaminius"
-  built: {year: null, certainty: uncertain, by: "unknown; dedicated 13 August (Fasti)"}
+  built: {year: -100, certainty: uncertain, by: "unknown; dedicated 13 August (Fasti); standing when Vitruvius wrote (4.8.4, about 25 BC) and drawn on the Via Anicia marble plan; about 100 BC is the usual modern dating, given by none of the sources read"}  # unverified year (F3 monuments: a null year drew it from 509 BC, before the Circus Flaminius of 221)
   sources: ["Platner-Ashby s.v. Castor, Aedes (read)", "Vitr. 4.8.4"]
   pleiades: null
   verified: platner-ashby
