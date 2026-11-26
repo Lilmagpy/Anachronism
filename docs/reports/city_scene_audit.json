@@ -73,18 +73,14 @@
  ],
  "years": {
   "-133": {
-   "bank_sawtooth": [
-    "the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-1444, -1300)",
-    "the water's edge turns more than 25 degrees within 2 m 7 times in the 100 m square near (-742, 145)",
-    "the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-521, 261)"
-   ],
+   "bank_sawtooth": [],
    "buried": [],
    "chunk_seams": [],
    "coplanar": [],
    "empty_terraces": [],
-   "f3_ground_seconds": 129.056,
+   "f3_ground_seconds": 173.863,
    "f3_houses": {
-    "buildings": 19240,
+    "buildings": 19248,
     "counts": {
      "awning_pole": 0,
      "house_base": 0,
@@ -101,7 +97,7 @@
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 96.316,
+    "seconds": 108.897,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -119,11 +115,11 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 93.57,
+   "f3_monuments_seconds": 99.995,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
-    "aedes_faunus on a 1.2 m foundation (temple_tetrastyle_ionic)",
+    "aedes_faunus on a 1.5 m foundation (temple_tetrastyle_ionic)",
     "aedes_felicitatis on a 2.4 m foundation (temple_tetrastyle_ionic)",
     "aedes_fortunae_matris_matutae on a 3.8 m foundation (temple_tetrastyle_ionic)",
     "aedes_herculis_collina on a 1.4 m foundation (temple_tuscan_small)",
@@ -152,10 +148,10 @@
     "porta_pandana on a 1.2 m foundation (arch)",
     "porta_salutaris on a 2.8 m foundation (servian_gate)",
     "porta_sanqualis on a 1.1 m foundation (servian_gate)",
-    "porta_trigemina on a 5.1 m foundation (servian_gate)",
+    "porta_trigemina on a 5.4 m foundation (servian_gate)",
     "porta_viminalis on a 1.2 m foundation (servian_gate)",
-    "porticus_aemilia on a 5.0 m foundation (long_hall)",
-    "salinae on a 4.4 m foundation (long_hall)"
+    "porticus_aemilia on a 5.4 m foundation (long_hall)",
+    "salinae on a 5.0 m foundation (long_hall)"
    ],
    "ground_holes": [],
    "houses_in_monuments": [],
@@ -170,11 +166,11 @@
     "aedes_apollinis_medici overlaps porticus_octaviae by 3.0 m"
    ],
    "part_overlaps": [],
-   "parts": 95758,
+   "parts": 95764,
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 378.628,
+   "seconds": 444.832,
    "slopes": [
     {
      "drop": 1.94,
@@ -189,8 +185,8 @@
      "z": -529.88
     },
     {
-     "drop": 1.21,
-     "ground": 8.77,
+     "drop": 1.46,
+     "ground": 8.35,
      "hx": 4.79,
      "hz": 7.2,
      "id": "aedes_faunus",
@@ -537,7 +533,7 @@
      "z": -439.97
     },
     {
-     "drop": 5.12,
+     "drop": 5.45,
      "ground": 11.52,
      "hx": 21.66,
      "hz": 13.0,
@@ -561,8 +557,8 @@
      "z": -1111.32
     },
     {
-     "drop": 4.97,
-     "ground": 11.4,
+     "drop": 5.44,
+     "ground": 11.42,
      "hx": 244.0,
      "hz": 30.5,
      "id": "porticus_aemilia",
@@ -573,8 +569,8 @@
      "z": 1389.15
     },
     {
-     "drop": 4.42,
-     "ground": 10.78,
+     "drop": 4.98,
+     "ground": 10.5,
      "hx": 10.5,
      "hz": 25.5,
      "id": "salinae",
@@ -587,14 +583,7 @@
    ],
    "stair_ends": [],
    "standing": 152,
-   "streets_ground": [
-    "street via_sacra under the ground over 3 m (worst 0.00 m) near (267, 174)",
-    "street vicus_iugarius under the ground over 6 m (worst 0.10 m) near (-411, 127)",
-    "street via_lata under the ground over 2 m (worst 0.04 m) near (-223, -393)",
-    "street via_flumentana under the ground over 7 m (worst 0.11 m) near (-418, 436)",
-    "street via_triumphi_campi under the ground over 3 m (worst 0.08 m) near (-628, 6)",
-    "street via_praenestina under the ground over 2 m (worst 0.00 m) near (1330, -363)"
-   ],
+   "streets_ground": [],
    "streets_through": [],
    "view_inside": [],
    "view_misses": [],
@@ -603,17 +592,14 @@
    "zfight": []
   },
   "-264": {
-   "bank_sawtooth": [
-    "the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-1444, -1300)",
-    "the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-521, 261)"
-   ],
+   "bank_sawtooth": [],
    "buried": [],
    "chunk_seams": [],
    "coplanar": [],
    "empty_terraces": [],
-   "f3_ground_seconds": 62.796,
+   "f3_ground_seconds": 65.471,
    "f3_houses": {
-    "buildings": 10367,
+    "buildings": 10370,
     "counts": {
      "awning_pole": 0,
      "house_base": 0,
@@ -630,7 +616,7 @@
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 61.341,
+    "seconds": 67.922,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -648,7 +634,7 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 52.366,
+   "f3_monuments_seconds": 59.009,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -673,9 +659,9 @@
     "porta_pandana on a 1.2 m foundation (arch)",
     "porta_salutaris on a 2.9 m foundation (servian_gate)",
     "porta_sanqualis on a 1.1 m foundation (servian_gate)",
-    "porta_trigemina on a 5.1 m foundation (servian_gate)",
+    "porta_trigemina on a 5.4 m foundation (servian_gate)",
     "porta_viminalis on a 1.2 m foundation (servian_gate)",
-    "salinae on a 4.4 m foundation (long_hall)"
+    "salinae on a 5.0 m foundation (long_hall)"
    ],
    "ground_holes": [],
    "houses_in_monuments": [],
@@ -688,11 +674,11 @@
    "meadow_fronts": [],
    "overlaps": [],
    "part_overlaps": [],
-   "parts": 53638,
+   "parts": 53644,
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 210.769,
+   "seconds": 230.518,
    "slopes": [
     {
      "drop": 1.94,
@@ -959,7 +945,7 @@
      "z": -439.97
     },
     {
-     "drop": 5.12,
+     "drop": 5.45,
      "ground": 11.52,
      "hx": 21.66,
      "hz": 13.0,
@@ -983,8 +969,8 @@
      "z": -1111.32
     },
     {
-     "drop": 4.42,
-     "ground": 10.78,
+     "drop": 4.98,
+     "ground": 10.5,
      "hx": 10.5,
      "hz": 25.5,
      "id": "salinae",
@@ -997,13 +983,7 @@
    ],
    "stair_ends": [],
    "standing": 109,
-   "streets_ground": [
-    "street via_sacra under the ground over 3 m (worst 0.00 m) near (267, 174)",
-    "street vicus_tuscus under the ground over 2 m (worst 0.00 m) near (-89, 295)",
-    "street vicus_iugarius under the ground over 6 m (worst 0.10 m) near (-411, 127)",
-    "street via_flumentana under the ground over 3 m (worst 0.12 m) near (-418, 436)",
-    "street via_praenestina under the ground over 2 m (worst 0.01 m) near (1330, -363)"
-   ],
+   "streets_ground": [],
    "streets_through": [],
    "view_inside": [],
    "view_misses": [],
@@ -1012,16 +992,14 @@
    "zfight": []
   },
   "-27": {
-   "bank_sawtooth": [
-    "the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-1444, -1300)"
-   ],
+   "bank_sawtooth": [],
    "buried": [],
    "chunk_seams": [],
    "coplanar": [],
    "empty_terraces": [],
-   "f3_ground_seconds": 142.613,
+   "f3_ground_seconds": 270.177,
    "f3_houses": {
-    "buildings": 20357,
+    "buildings": 20363,
     "counts": {
      "awning_pole": 0,
      "house_base": 0,
@@ -1038,7 +1016,7 @@
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 101.818,
+    "seconds": 182.921,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -1056,12 +1034,12 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 122.881,
+   "f3_monuments_seconds": 272.3,
    "floating": [],
    "founded": [
     "aedes_apollinis_palatini on a 1.2 m foundation (temple_hexastyle_corinthian_marble)",
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
-    "aedes_faunus on a 1.2 m foundation (temple_tetrastyle_ionic)",
+    "aedes_faunus on a 1.5 m foundation (temple_tetrastyle_ionic)",
     "aedes_felicitatis on a 2.4 m foundation (temple_tetrastyle_ionic)",
     "aedes_fortunae_matris_matutae on a 3.8 m foundation (temple_tetrastyle_ionic)",
     "aedes_herculis_collina on a 1.4 m foundation (temple_tuscan_small)",
@@ -1099,11 +1077,11 @@
     "porta_pandana on a 1.2 m foundation (arch)",
     "porta_salutaris on a 2.8 m foundation (servian_gate)",
     "porta_sanqualis on a 1.1 m foundation (servian_gate)",
-    "porta_trigemina on a 5.1 m foundation (servian_gate)",
+    "porta_trigemina on a 5.4 m foundation (servian_gate)",
     "porta_viminalis on a 1.2 m foundation (servian_gate)",
-    "porticus_aemilia on a 5.0 m foundation (long_hall)",
+    "porticus_aemilia on a 5.4 m foundation (long_hall)",
     "porticus_catuli on a 2.1 m foundation (portico_enclosure)",
-    "salinae on a 4.4 m foundation (long_hall)",
+    "salinae on a 5.0 m foundation (long_hall)",
     "tabularium on a 7.7 m foundation (tabularium)",
     "theatrum_marcelli on a 5.1 m foundation (theatre_stone)"
    ],
@@ -1122,11 +1100,11 @@
     "porticus_octaviae overlaps theatrum_marcelli by 2.8 m"
    ],
    "part_overlaps": [],
-   "parts": 142343,
+   "parts": 142349,
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 437.139,
+   "seconds": 867.326,
    "slopes": [
     {
      "drop": 1.21,
@@ -1153,8 +1131,8 @@
      "z": -529.88
     },
     {
-     "drop": 1.21,
-     "ground": 8.77,
+     "drop": 1.46,
+     "ground": 8.35,
      "hx": 4.79,
      "hz": 7.2,
      "id": "aedes_faunus",
@@ -1609,7 +1587,7 @@
      "z": -439.97
     },
     {
-     "drop": 5.12,
+     "drop": 5.45,
      "ground": 11.52,
      "hx": 21.66,
      "hz": 13.0,
@@ -1633,8 +1611,8 @@
      "z": -1111.32
     },
     {
-     "drop": 4.97,
-     "ground": 11.4,
+     "drop": 5.44,
+     "ground": 11.42,
      "hx": 244.0,
      "hz": 30.5,
      "id": "porticus_aemilia",
@@ -1657,8 +1635,8 @@
      "z": 258.05
     },
     {
-     "drop": 4.42,
-     "ground": 10.78,
+     "drop": 4.98,
+     "ground": 10.5,
      "hx": 10.5,
      "hz": 25.5,
      "id": "salinae",
@@ -1695,16 +1673,7 @@
    ],
    "stair_ends": [],
    "standing": 185,
-   "streets_ground": [
-    "street via_sacra under the ground over 3 m (worst 0.00 m) near (267, 174)",
-    "street vicus_tuscus under the ground over 2 m (worst 0.03 m) near (-88, 290)",
-    "street vicus_iugarius under the ground over 6 m (worst 0.10 m) near (-411, 127)",
-    "street clivus_suburanus under the ground over 3 m (worst 0.05 m) near (1285, -356)",
-    "street via_lata under the ground over 2 m (worst 0.04 m) near (-223, -393)",
-    "street via_flumentana under the ground over 7 m (worst 0.11 m) near (-418, 436)",
-    "street via_triumphi_campi under the ground over 3 m (worst 0.08 m) near (-628, 6)",
-    "street via_praenestina under the ground over 2 m (worst 0.00 m) near (1330, -363)"
-   ],
+   "streets_ground": [],
    "streets_through": [],
    "view_inside": [],
    "view_misses": [],
@@ -1713,17 +1682,14 @@
    "zfight": []
   },
   "-390": {
-   "bank_sawtooth": [
-    "the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-1444, -1300)",
-    "the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-521, 261)"
-   ],
+   "bank_sawtooth": [],
    "buried": [],
    "chunk_seams": [],
    "coplanar": [],
    "empty_terraces": [],
-   "f3_ground_seconds": 33.549,
+   "f3_ground_seconds": 37.072,
    "f3_houses": {
-    "buildings": 3983,
+    "buildings": 3986,
     "counts": {
      "awning_pole": 0,
      "house_base": 0,
@@ -1740,7 +1706,7 @@
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 50.346,
+    "seconds": 58.497,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -1758,7 +1724,7 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 20.651,
+   "f3_monuments_seconds": 22.18,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
@@ -1777,7 +1743,7 @@
     "porta_pandana on a 1.1 m foundation (arch)",
     "sacellum_carmentis on a 1.6 m foundation (aedicula)",
     "sacellum_volupiae on a 1.4 m foundation (aedicula)",
-    "salinae on a 4.4 m foundation (long_hall)"
+    "salinae on a 5.0 m foundation (long_hall)"
    ],
    "ground_holes": [],
    "houses_in_monuments": [],
@@ -1790,11 +1756,11 @@
    "meadow_fronts": [],
    "overlaps": [],
    "part_overlaps": [],
-   "parts": 29663,
+   "parts": 29669,
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 124.832,
+   "seconds": 141.338,
    "slopes": [
     {
      "drop": 1.94,
@@ -1989,8 +1955,8 @@
      "z": 290.05
     },
     {
-     "drop": 4.42,
-     "ground": 10.78,
+     "drop": 4.98,
+     "ground": 10.5,
      "hx": 10.5,
      "hz": 25.5,
      "id": "salinae",
@@ -2003,14 +1969,7 @@
    ],
    "stair_ends": [],
    "standing": 73,
-   "streets_ground": [
-    "street clivus_capitolinus under the ground over 2 m (worst -0.00 m) near (-190, 69)",
-    "street vicus_tuscus under the ground over 2 m (worst -0.00 m) near (-89, 295)",
-    "street vicus_iugarius under the ground over 6 m (worst 0.09 m) near (-405, 132)",
-    "street clivus_suburanus under the ground over 2 m (worst 0.03 m) near (1140, -337)",
-    "street via_flumentana under the ground over 3 m (worst 0.12 m) near (-418, 436)",
-    "street via_praenestina under the ground over 2 m (worst 0.03 m) near (1330, -363)"
-   ],
+   "streets_ground": [],
    "streets_through": [],
    "view_inside": [],
    "view_misses": [],
@@ -2019,16 +1978,14 @@
    "zfight": []
   },
   "-44": {
-   "bank_sawtooth": [
-    "the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-1444, -1300)"
-   ],
+   "bank_sawtooth": [],
    "buried": [],
    "chunk_seams": [],
    "coplanar": [],
    "empty_terraces": [],
-   "f3_ground_seconds": 148.432,
+   "f3_ground_seconds": 236.745,
    "f3_houses": {
-    "buildings": 20707,
+    "buildings": 20713,
     "counts": {
      "awning_pole": 0,
      "house_base": 0,
@@ -2045,7 +2002,7 @@
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 101.757,
+    "seconds": 164.911,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -2063,11 +2020,11 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 103.306,
+   "f3_monuments_seconds": 182.001,
    "floating": [],
    "founded": [
     "aedes_dei_fidii on a 1.9 m foundation (temple_tuscan_small)",
-    "aedes_faunus on a 1.2 m foundation (temple_tetrastyle_ionic)",
+    "aedes_faunus on a 1.5 m foundation (temple_tetrastyle_ionic)",
     "aedes_felicitatis on a 2.4 m foundation (temple_tetrastyle_ionic)",
     "aedes_fortunae_matris_matutae on a 3.8 m foundation (temple_tetrastyle_ionic)",
     "aedes_herculis_collina on a 1.4 m foundation (temple_tuscan_small)",
@@ -2103,11 +2060,11 @@
     "porta_pandana on a 1.2 m foundation (arch)",
     "porta_salutaris on a 2.8 m foundation (servian_gate)",
     "porta_sanqualis on a 1.1 m foundation (servian_gate)",
-    "porta_trigemina on a 5.1 m foundation (servian_gate)",
+    "porta_trigemina on a 5.4 m foundation (servian_gate)",
     "porta_viminalis on a 1.2 m foundation (servian_gate)",
-    "porticus_aemilia on a 5.0 m foundation (long_hall)",
+    "porticus_aemilia on a 5.4 m foundation (long_hall)",
     "porticus_catuli on a 2.1 m foundation (portico_enclosure)",
-    "salinae on a 4.4 m foundation (long_hall)",
+    "salinae on a 5.0 m foundation (long_hall)",
     "tabularium on a 7.7 m foundation (tabularium)",
     "theatrum_marcelli on a 5.1 m foundation (theatre_stone)"
    ],
@@ -2126,11 +2083,11 @@
     "porticus_octaviae overlaps theatrum_marcelli by 2.8 m"
    ],
    "part_overlaps": [],
-   "parts": 121529,
+   "parts": 121535,
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 424.852,
+   "seconds": 688.504,
    "slopes": [
     {
      "drop": 1.94,
@@ -2145,8 +2102,8 @@
      "z": -529.88
     },
     {
-     "drop": 1.21,
-     "ground": 8.77,
+     "drop": 1.46,
+     "ground": 8.35,
      "hx": 4.79,
      "hz": 7.2,
      "id": "aedes_faunus",
@@ -2577,7 +2534,7 @@
      "z": -439.97
     },
     {
-     "drop": 5.12,
+     "drop": 5.45,
      "ground": 11.52,
      "hx": 21.66,
      "hz": 13.0,
@@ -2601,8 +2558,8 @@
      "z": -1111.32
     },
     {
-     "drop": 4.97,
-     "ground": 11.4,
+     "drop": 5.44,
+     "ground": 11.42,
      "hx": 244.0,
      "hz": 30.5,
      "id": "porticus_aemilia",
@@ -2625,8 +2582,8 @@
      "z": 258.05
     },
     {
-     "drop": 4.42,
-     "ground": 10.78,
+     "drop": 4.98,
+     "ground": 10.5,
      "hx": 10.5,
      "hz": 25.5,
      "id": "salinae",
@@ -2663,15 +2620,7 @@
    ],
    "stair_ends": [],
    "standing": 175,
-   "streets_ground": [
-    "street via_sacra under the ground over 3 m (worst 0.00 m) near (267, 174)",
-    "street vicus_iugarius under the ground over 6 m (worst 0.10 m) near (-411, 127)",
-    "street clivus_suburanus under the ground over 3 m (worst 0.05 m) near (1285, -356)",
-    "street via_lata under the ground over 2 m (worst 0.04 m) near (-223, -393)",
-    "street via_flumentana under the ground over 7 m (worst 0.11 m) near (-418, 436)",
-    "street via_triumphi_campi under the ground over 3 m (worst 0.08 m) near (-628, 6)",
-    "street via_praenestina under the ground over 2 m (worst 0.00 m) near (1330, -363)"
-   ],
+   "streets_ground": [],
    "streets_through": [],
    "view_inside": [],
    "view_misses": [],
@@ -2680,17 +2629,14 @@
    "zfight": []
   },
   "-509": {
-   "bank_sawtooth": [
-    "the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-1444, -1300)",
-    "the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-521, 261)"
-   ],
+   "bank_sawtooth": [],
    "buried": [],
    "chunk_seams": [],
    "coplanar": [],
    "empty_terraces": [],
-   "f3_ground_seconds": 30.599,
+   "f3_ground_seconds": 31.676,
    "f3_houses": {
-    "buildings": 2170,
+    "buildings": 2172,
     "counts": {
      "awning_pole": 0,
      "house_base": 0,
@@ -2707,7 +2653,7 @@
      "tree_street": 0,
      "tree_wall": 0
     },
-    "seconds": 49.721,
+    "seconds": 53.522,
     "worst": {
      "awning_pole": [],
      "house_base": [],
@@ -2725,7 +2671,7 @@
      "tree_wall": []
     }
    },
-   "f3_monuments_seconds": 18.661,
+   "f3_monuments_seconds": 18.706,
    "floating": [],
    "founded": [
     "aedes_fortunae_matris_matutae on a 3.2 m foundation (temple_tetrastyle_ionic)",
@@ -2744,7 +2690,7 @@
     "porta_pandana on a 1.1 m foundation (arch)",
     "sacellum_carmentis on a 1.6 m foundation (aedicula)",
     "sacellum_volupiae on a 1.4 m foundation (aedicula)",
-    "salinae on a 4.4 m foundation (long_hall)"
+    "salinae on a 5.0 m foundation (long_hall)"
    ],
    "ground_holes": [],
    "houses_in_monuments": [],
@@ -2757,11 +2703,11 @@
    "meadow_fronts": [],
    "overlaps": [],
    "part_overlaps": [],
-   "parts": 23746,
+   "parts": 23752,
    "parts_floating": [],
    "parts_sunk": [],
    "platform_steps": [],
-   "seconds": 117.295,
+   "seconds": 114.858,
    "slopes": [
     {
      "drop": 3.23,
@@ -2956,8 +2902,8 @@
      "z": 290.05
     },
     {
-     "drop": 4.42,
-     "ground": 10.78,
+     "drop": 4.98,
+     "ground": 10.5,
      "hx": 10.5,
      "hz": 25.5,
      "id": "salinae",
@@ -2970,14 +2916,7 @@
    ],
    "stair_ends": [],
    "standing": 66,
-   "streets_ground": [
-    "street clivus_capitolinus under the ground over 2 m (worst -0.00 m) near (-190, 69)",
-    "street vicus_tuscus under the ground over 2 m (worst -0.00 m) near (-89, 295)",
-    "street vicus_iugarius under the ground over 6 m (worst 0.09 m) near (-405, 132)",
-    "street clivus_suburanus under the ground over 2 m (worst 0.03 m) near (1140, -337)",
-    "street via_flumentana under the ground over 3 m (worst 0.12 m) near (-418, 436)",
-    "street via_praenestina under the ground over 2 m (worst 0.03 m) near (1330, -363)"
-   ],
+   "streets_ground": [],
    "streets_through": [],
    "view_inside": [],
    "view_misses": [],
