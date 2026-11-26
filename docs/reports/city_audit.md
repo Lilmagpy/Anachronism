@@ -17,7 +17,7 @@ References: **Pleiades** (CC BY 3.0; places within 3.5 km of the Forum with a pe
 | orientation or size against the outline of the remains | 17 |
 | relations the sources fix, failed | 0 |
 | date issues | 0 |
-| scene: monuments whose solids overlap another standing monument (all years) | 13 |
+| scene: monuments whose solids overlap another standing monument (all years) | 7 |
 | scene: monuments whose base is more than 0.5 m above the ground under a corner (all years) | 0 |
 | scene: monuments whose base is more than 1 m below the ground under a corner (all years) | 0 |
 | scene: houses standing inside a monument's footprint (all years) | 0 |
@@ -25,18 +25,19 @@ References: **Pleiades** (CC BY 3.0; places within 3.5 km of the Forum with a pe
 | scene: monuments standing in the river (all years) | 0 |
 | scene: streets passing through a monument (all years) | 0 |
 | scene: monuments whose parts (real mesh pieces) run through another's (all years) | 0 |
-| scene: monuments with parts resting on nothing (all years) | 3 |
+| scene: monuments with parts resting on nothing (all years) | 0 |
 | scene: monuments with columns sunk into what they stand on (all years) | 0 |
-| scene: faces of two materials in one plane that can be seen (they flicker) (all years) | 14 |
-| scene: monuments whose --at street camera stands inside a solid or a house (all years) | 4 |
-| scene: monuments whose --at street camera does not see the front (all years) | 42 |
+| scene: faces of two materials in one plane that can be seen (they flicker) (all years) | 0 |
+| scene: monuments whose --at street camera stands inside a solid or a house (all years) | 0 |
+| scene: monuments whose --at street camera does not see the front (all years) | 0 |
 | scene: interiors with sight lines from the door that meet nothing (black) (all years) | 0 |
-| scene: interiors with figures through a wall or floor (all years) | 1 |
+| scene: interiors with figures through a wall or floor (all years) | 0 |
 | scene: enterable monuments with no interior (all years) | 0 |
+| scene: interiors whose visitor starts outside, against or facing a wall (all years) | 0 |
 | scene: F3 ground: 100 m stretches of a Tiber bank with a saw-toothed water line (all years) | 11 |
 | scene: F3 ground: surfaces within 5 cm of each other (paving, streets, quays, water) (all years) | 0 |
 | scene: F3 ground: ground missing where the camera can see it (all years) | 0 |
-| scene: F3 ground: terrace walls with nothing standing on the terrace (all years) | 11 |
+| scene: F3 ground: terrace walls with nothing standing on the terrace (all years) | 0 |
 | scene: F3 ground: platforms more than 1 m off the street or ground in front (all years) | 0 |
 | scene: F3 ground: steps that do not meet the ground at both ends (all years) | 0 |
 | scene: F3 ground: chunk edges where two levels of detail do not meet (all years) | 0 |
@@ -711,84 +712,26 @@ The repository has no modern elevation model; the ground is built from `topograp
 
 ## 3. Placement in the built scene
 
-| year | overlaps | floating | buried | houses_in_monuments | houses_on_streets | in_river | streets_through | part_overlaps | parts_floating | parts_sunk | coplanar | view_inside | view_misses | interior_voids | interior_figures | interior_missing | bank_sawtooth | zfight | ground_holes | empty_terraces | platform_steps | stair_ends | chunk_seams | streets_ground | wall_feet | meadow_fronts |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 509 BC | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 1 | 0 | 0 | 0 | 2 | 0 | 0 | 1 | 0 | 0 | 0 | 6 | 0 | 0 |
-| 390 BC | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 1 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 6 | 0 | 0 |
-| 264 BC | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 5 | 0 | 0 | 0 | 2 | 0 | 0 | 1 | 0 | 0 | 0 | 5 | 0 | 0 |
-| 133 BC | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 2 | 0 | 8 | 0 | 0 | 0 | 3 | 0 | 0 | 3 | 0 | 0 | 0 | 6 | 0 | 0 |
-| 44 BC | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 3 | 2 | 13 | 0 | 0 | 0 | 1 | 0 | 0 | 3 | 0 | 0 | 0 | 7 | 0 | 0 |
-| 27 BC | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 4 | 2 | 14 | 0 | 1 | 0 | 1 | 0 | 0 | 3 | 0 | 0 | 0 | 8 | 0 | 0 |
+| year | overlaps | floating | buried | houses_in_monuments | houses_on_streets | in_river | streets_through | part_overlaps | parts_floating | parts_sunk | coplanar | view_inside | view_misses | interior_voids | interior_figures | interior_missing | interior_starts | bank_sawtooth | zfight | ground_holes | empty_terraces | platform_steps | stair_ends | chunk_seams | streets_ground | wall_feet | meadow_fronts |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 509 BC | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 6 | 0 | 0 |
+| 390 BC | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 6 | 0 | 0 |
+| 264 BC | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 5 | 0 | 0 |
+| 133 BC | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 6 | 0 | 0 |
+| 44 BC | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 7 | 0 | 0 |
+| 27 BC | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 8 | 0 | 0 |
 
 **monuments whose solids overlap another standing monument**
 
 - aedes_apollinis_medici overlaps porticus_octaviae by 3.0 m (133 BC, 27 BC, 44 BC) - F3: the reconstructed corner of the Porticus Octaviae reaches the temple of Apollo beside it; drawn abutting (the portico's wing stops at the temple, yields_to, monument_clip.gd); the collision boxes still meet
 - aedes_concordiae_forum overlaps tabularium by 3.7 m (27 BC, 44 BC) - the Augustan temple of Concord was built against the substructure of the Tabularium, its cella under the Tabularium front (the remains); a 3 m contact is the real arrangement. F3: drawn abutting (the temple stops at the Tabularium's front, yields_to)
-- circus_maximus overlaps sacellum_murciae by 5.1 m (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC) - the shrine of Murcia stood inside the circus valley, by the turning post (Platner-Ashby s.v. Murcia, sacellum); not an error
 - porticus_octaviae overlaps theatrum_marcelli by 2.8 m (27 BC, 44 BC) - the portico and the theatre stood side by side with a narrow street between; 2.8 m is within the precision of the reconstructed portico corner (Pleiades outlines only its propylon)
-
-**monuments with parts resting on nothing**
-
-- porticus_octaviae 4 of 1406 parts rest on nothing, largest 1.5x0.6x0.7 m at (-548, -145) y 22.3-22.9 (its own frame (-59.0, 9.8, -65.1) to (-57.5, 10.4, -64.4)) (133 BC, 44 BC)
-- porticus_octaviae 4 of 1407 parts rest on nothing, largest 1.5x0.6x0.7 m at (-548, -145) y 22.3-22.9 (its own frame (-59.0, 9.8, -65.1) to (-57.5, 10.4, -64.4)) (27 BC)
-
-**faces of two materials in one plane that can be seen (they flicker)**
-
-- area_sacra_argentina_c: 12 coplanar face pairs, largest 0.2 m² (stucco_white/tegulae, facing x) at (-695.8, -249.8) y 20.4 (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC)
-- porticus_minucia_vetus: 12 coplanar face pairs, largest 0.4 m² (stucco_cream/stucco_white, facing x) at (-616.2, -290.1) y 19.7 (27 BC, 44 BC)
-- porticus_philippi: 22 coplanar face pairs, largest 0.4 m² (stucco_cream/stucco_white, facing x) at (-667.6, -133.2) y 18.4 (27 BC)
-- villa_publica: 17 coplanar face pairs, largest 0.4 m² (stucco_cream/stucco_white, facing z) at (-825.1, -691.8) y 18.0 (264 BC, 390 BC)
-- villa_publica: 19 coplanar face pairs, largest 0.4 m² (stucco_cream/stucco_white, facing z) at (-825.1, -691.8) y 18.0 (133 BC, 27 BC, 44 BC)
-
-**monuments whose --at street camera stands inside a solid or a house**
-
-- aedes_fortunae_equestris camera at (-781, -253) inside porticus_pompeiana (0.8x10.3x135.0 m at (-817, -288) y 12.4-22.7) (27 BC, 44 BC)
-- tabularium camera at (-91, -8) inside aedes_saturni (23.1x2.4x0.0 m at (-91, -9) y 10.5-12.9) (27 BC)
-- tabularium camera at (-98, -12) inside aedes_saturni (24.7x2.6x0.0 m at (-91, -10) y 10.5-13.1) (44 BC)
-
-**monuments whose --at street camera does not see the front**
-
-- aedes_concordiae_forum view from (-67, -34): stands 80° off the front axis (27 BC, 44 BC)
-- aedes_fortunae_equestris view from (-781, -253): porticus_pompeiana across the line to the door (27 BC, 44 BC)
-- aedes_pietatis view from (-468, 20): aedes_apollinis_medici across the line to the door (133 BC)
-- area_sacra_argentina_b view from (-674, -269): stands 80° off the front axis (27 BC, 44 BC)
-- basilica_iulia view from (49, 41): stands 80° off the front axis (44 BC)
-- columna_maenia view from (-50, -75): stands 110° off the front axis (133 BC)
-- comitium view from (15, -16): stands 110° off the front axis, rostra_republic across the line to the door (133 BC, 264 BC)
-- curia_iulia view from (36, -4): basilica_aemilia across the line to the door (27 BC)
-- domus_scauri view from (188, 260): stands 80° off the front axis (27 BC, 44 BC)
-- horrea_agrippiana view from (-71, 182): stands 80° off the front axis (27 BC)
-- porta_caelimontana view from (917, 614): stands 110° off the front axis (264 BC)
-- porta_flumentana view from (-588, 53): stands 110° off the front axis (133 BC, 264 BC, 27 BC, 44 BC)
-- porta_quirinalis view from (439, -1071): stands 80° off the front axis (264 BC)
-- porta_quirinalis view from (471, -1111): stands 80° off the front axis (133 BC, 27 BC, 44 BC)
-- porta_salutaris view from (159, -758): a house or the ground across the line to the door (133 BC, 27 BC, 44 BC)
-- porticus_catuli view from (-7, 244): stands 110° off the front axis (27 BC)
-- porticus_catuli view from (15, 243): stands 110° off the front axis (44 BC)
-- porticus_inter_lignarios view from (-465, 646): stands 110° off the front axis (133 BC, 27 BC, 44 BC)
-- sacellum_murciae view from (192, 914): a house or the ground across the line to the door (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC)
-- saepta_iulia view from (-413, -715): stands 80° off the front axis (27 BC, 44 BC)
-- tabularium view from (-91, -8): sees 2 of 5 façade points, aedes_saturni across the line to the door (27 BC)
-- tabularium view from (-98, -12): sees 2 of 5 façade points, aedes_saturni across the line to the door (44 BC)
-
-**interiors with figures through a wall or floor**
-
-- theatrum_pompei: 1 figures through a wall or floor, e.g. marble 2.8 m at (-920, -375) y 16.6 (27 BC)
 
 **F3 ground: 100 m stretches of a Tiber bank with a saw-toothed water line**
 
 - the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-1444, -1300) (133 BC, 264 BC, 27 BC, 390 BC, 44 BC, 509 BC)
 - the water's edge turns more than 25 degrees within 2 m 4 times in the 100 m square near (-521, 261) (133 BC, 264 BC, 390 BC, 509 BC)
 - the water's edge turns more than 25 degrees within 2 m 7 times in the 100 m square near (-742, 145) (133 BC)
-
-**F3 ground: terrace walls with nothing standing on the terrace**
-
-- terrace walls across empty ground near (-3, -213): 19 m (133 BC)
-- terrace walls across empty ground near (-3, -213): 30 m (27 BC, 44 BC)
-- terrace walls across empty ground near (273, 147): 11 m (133 BC, 27 BC, 44 BC)
-- terrace walls across empty ground near (273, 147): 14 m (509 BC)
-- terrace walls across empty ground near (273, 147): 9 m (264 BC)
-- terrace walls across empty ground near (605, 46): 9 m (133 BC, 27 BC, 44 BC)
 
 **F3 ground: stretches of street sunk under or floating over the ground**
 
@@ -809,7 +752,7 @@ The repository has no modern elevation model; the ground is built from `topograp
 - street vicus_tuscus under the ground over 2 m (worst 0.00 m) near (-89, 295) (264 BC)
 - street vicus_tuscus under the ground over 2 m (worst 0.03 m) near (-88, 290) (27 BC)
 
-**monuments on sloping ground, 27 BC** (45): each stands on a
+**monuments on sloping ground, 27 BC** (47): each stands on a
 podium or foundation down to its lowest ground (monuments.gd), and where the ground
 falls more than 3 m on a terrace cut into the hill with retaining walls
 (topography.yaml `F2 TERRACES`, `--terraces`); the figure is the fall that is left.
@@ -825,7 +768,7 @@ falls more than 3 m on a terrace cut into the hill with retaining walls
 - aedes_iunonis_monetae on a 1.7 m foundation (temple_tuscan_small)
 - aedes_larum on a 1.4 m foundation (temple_tuscan_small)
 - aedes_mentis on a 1.1 m foundation (temple_tetrastyle_ionic)
-- aedes_penatium on a 2.7 m foundation (temple_tuscan_small)
+- aedes_penatium on a 2.6 m foundation (temple_tuscan_small)
 - aedes_portuni on a 1.3 m foundation (temple_tetrastyle_ionic_travertine)
 - aedes_saturni on a 1.8 m foundation (temple_hexastyle_ionic)
 - aedes_veneris_erycinae_capitol on a 2.0 m foundation (temple_tetrastyle_ionic)
@@ -848,12 +791,14 @@ falls more than 3 m on a terrace cut into the hill with retaining walls
 - horrea_sempronia on a 1.5 m foundation (horrea)
 - macellum on a 1.5 m foundation (macellum)
 - nymphaeum_annibaldi on a 1.3 m foundation (basin)
-- porta_caelimontana on a 1.2 m foundation (servian_gate)
+- porta_caelimontana on a 1.4 m foundation (servian_gate)
+- porta_esquilina on a 1.3 m foundation (servian_gate)
 - porta_flumentana on a 6.5 m foundation (servian_gate)
 - porta_pandana on a 1.2 m foundation (arch)
-- porta_salutaris on a 2.7 m foundation (servian_gate)
+- porta_salutaris on a 2.8 m foundation (servian_gate)
 - porta_sanqualis on a 1.1 m foundation (servian_gate)
 - porta_trigemina on a 5.1 m foundation (servian_gate)
+- porta_viminalis on a 1.2 m foundation (servian_gate)
 - porticus_aemilia on a 5.0 m foundation (long_hall)
 - porticus_catuli on a 2.1 m foundation (portico_enclosure)
 - salinae on a 4.4 m foundation (long_hall)
@@ -871,10 +816,10 @@ meshes (each mesh's triangles clipped into 1 m height bands).
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | 509 BC | 2170 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | 390 BC | 3983 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 264 BC | 10368 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 133 BC | 19238 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 44 BC | 20706 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 27 BC | 20356 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 264 BC | 10367 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 133 BC | 19240 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 44 BC | 20707 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 27 BC | 20357 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
 ## 4. Time
 
