@@ -1952,9 +1952,9 @@ void fragment() {
 	// have their own (UrbsFillMeshes: col * 0.045-0.08): with the sky ambient alone the dark grass
 	// and earth in a building's shadow went near black (a grey ground of albedo 0.5 shows the
 	// ambient itself is fine: 96 in shade, 200 in sun), the tone mapper crushing their low blue.
-	// Like the twilight fill, it lifts dark grass more than pale earth (pow 0.6), and it follows
-	// the sun (`day`).
-	EMISSION = pow(col, vec3(0.6)) * (GROUND_BOUNCE * day + sky_fill);
+	// It lifts dark grass more than pale earth (pow 0.6) and follows the sun (`day`); the twilight
+	// fill lifts it more still (pow 0.4: the Campus meadows read near black at dusk with 0.6).
+	EMISSION = pow(col, vec3(0.6)) * GROUND_BOUNCE * day + pow(col, vec3(0.4)) * sky_fill;
 	ROUGHNESS = mix(1.0, 0.55, wm);
 	SPECULAR = mix(0.05, 0.3, wm);
 }

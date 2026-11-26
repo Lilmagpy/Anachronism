@@ -1652,10 +1652,9 @@ func _f3_empty_terraces() -> Array:
 			for dz in range(-1, 2):
 				near.append(key + Vector2i(dx, dz))
 		segs.append_array(UrbsSite.terrace_wall_segments(Rect2(Vector2(key) * 250.0, Vector2(250.0, 250.0)), UrbsSite.wall_uses(lf[1], near)))
-	var fps := []
-	for id in _mon.ids():
-		var r := _footprint(id)
-		if not r.is_empty() and _model(id) not in ["wall", "aqueduct", "sewer"]:
+	var fps := []   # the monuments as the wall filter and the fill see them (their drawn plans)
+	for r: Dictionary in _mon.oriented_footprints():
+		if _model(str(r.get("id", ""))) not in ["wall", "aqueduct", "sewer"]:
 			fps.append(r)
 	var empty := {}
 	var where := {}
