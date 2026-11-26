@@ -8,8 +8,9 @@ city; the client playthrough) and F2 (the city audit: nothing missing or misplac
 Pleiades and Platner-Ashby, nothing buried, floating or built over; the Republic played from
 the city's places with End Year and the year's moments); F3 (2026-11-25, D-305: the visual
 fix — ground, houses, monuments and interiors audited by code for every year and fixed) and a
-Windows version started and pictured on a Windows machine by CI (D-306). Left: the F3
-leftovers listed in D-305, sound, night, the Empire decision, U9 beyond the first slice, R6
+Windows version started and pictured on a Windows machine by CI (D-306). F3 round 2 merged
+2026-11-26 (houses and monuments checks all 0; D-305). Left: F3 round 3 (the list under
+"Open after round 2" in D-305), sound, night, the Empire decision, U9 beyond the first slice, R6
 balance by played chapters.
 
 Each phase ends at a **gate**: Claude stops, summarises, shows how to run it, lists known

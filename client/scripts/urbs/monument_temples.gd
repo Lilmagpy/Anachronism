@@ -449,7 +449,8 @@ static func _tuscan(mm: UrbsMonumentMesh, s: Dictionary, lod: int) -> void:
 	var over := 0.25 * h
 	var span := ex * 2.0
 	var rise := span * 0.2   # unverified: Vitruvius gives no pitch
-	Orders.roof(mm, -span * 0.5, span * 0.5, cz0 - over * 0.5, zcol + d * 0.5 + over * 0.5, ytop_e + 0.1, rise, over, lod, str(m.roof), 0.3)
+	# (F3: 5 cm inside the gables' back faces: flush with them, the tiles' end flickered on the tympanum)
+	Orders.roof(mm, -span * 0.5, span * 0.5, cz0 - over * 0.5 + 0.05, zcol + d * 0.5 + over * 0.5 - 0.05, ytop_e + 0.1, rise, over, lod, str(m.roof), 0.3)
 	# the front gable: a tympanum of timber faced with terracotta plaques, acroteria of
 	# terracotta statues (the quadriga on the Capitolium: Plin. NH 28.16, # unverified)
 	Orders.pediment(mm, -span * 0.5 - over * 0.5, span * 0.5 + over * 0.5, zcol + d * 0.5 + over, ytop_e + 0.1 - over * rise / (span * 0.5), true,

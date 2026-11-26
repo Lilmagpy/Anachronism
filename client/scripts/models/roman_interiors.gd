@@ -450,7 +450,11 @@ static func _temple(sz: Vector2, year: int, variant: String) -> Dictionary:
 		if deity == "Iuppiter" or deity == "":
 			anchors["statue"] = Vector3(cx, ph + bh, bz)
 			anchors["cella_door"] = Vector3(cx, ph, 0.0)
-			spawn_in = look(Vector3(cx, ph + EYE, -0.6), Vector3(cx, ph + 2.8, bz))
+			# past the leaves swung in (each reaches dw/2 into the cella), short of the offering table
+			var zin := -(wt * 0.5 + dw * 0.5 + 0.9)
+			if zin < bz + 4.4:   # a short cella: halfway between the door and the table
+				zin = (bz + 3.2 - wt * 0.5) * 0.5
+			spawn_in = look(Vector3(cx, ph + EYE, zin), Vector3(cx, ph + 2.8, bz))
 	# pronaos columns: front rows, flank rows
 	var nf := 6 if W >= 18.0 else 4
 	var rows := 3 if capit else (2 if W >= 18.0 else 1)
@@ -497,9 +501,10 @@ static func _temple(sz: Vector2, year: int, variant: String) -> Dictionary:
 	lights.append({"pos": Vector3(0, 2.4, za), "colour": Color(1.0, 0.6, 0.25), "energy": 3.0, "range": 12.0, "kind": "fire"})
 	anchors["altar"] = Vector3(0, 1.7, za)
 	anchors["temple_front"] = Vector3(0, ph, L * 0.5)
-	var spawn := look(Vector3(0, EYE, za + 7.0), Vector3(0, ph + hc * 0.5, 0.0))
+	var front := look(Vector3(0, EYE, za + 7.0), Vector3(0, ph + hc * 0.5, 0.0))
+	var spawn := spawn_in   # F3 monuments: the visitor starts in the cella, facing the god
 	var views := [
-		["front", spawn],
+		["front", front],
 		["altar", look(Vector3(5.0, EYE, za + 3.0), Vector3(0, 1.4, za))],
 		["pronaos", look(Vector3(0, ph + EYE, L * 0.5 - 1.0), Vector3(0, ph + 3.0, 0.0))],
 		["cella", spawn_in],
@@ -513,7 +518,7 @@ static func _temple(sz: Vector2, year: int, variant: String) -> Dictionary:
 		"Which of Juno and Minerva stood on which side is not in the passages read. # unverified",
 		"Terracotta painted statue of Jupiter in the early temple: Pliny NH 35.157 # unverified.",
 	]
-	return _pack(k, kc, lights, spawn, {"altar": spawn, "pronaos": views[2][1], "cella": spawn_in}, views, notes,
+	return _pack(k, kc, lights, spawn, {"altar": front, "pronaos": views[2][1], "cella": spawn_in}, views, notes,
 		{"anchors": anchors, "floor_y": ph})
 
 # ====================================================================================================
@@ -645,7 +650,7 @@ static func _curia(sz: Vector2, year: int, variant: String) -> Dictionary:
 	# ceiling: lacunaria (coffers) at height H, then the roof
 	_ceiling(kc, -hw, zt, hw, zf, fl + H, maxi(4, int(W / 2.2)), maxi(5, int(L / 2.2)), 0.4, 0.55, Color(0.55, 0.38, 0.22), WOOD_D, true)
 	kc.gable_roof(Vector3(0, fl + H, 0), L + 1.0, W + 1.0, W * 0.2, 0.8, 0.3, TILE_C, Kit.TILE, wallc, Kit.PLASTER, PI / 2.0)
-	var spawn := look(Vector3(0, fl + EYE, zf + 0.9), Vector3(0, fl + 2.4, zt))
+	var spawn := look(Vector3(0, fl + EYE, L * 0.5 - wt - dw * 0.5 - 1.2), Vector3(0, fl + 2.4, zt))   # F3: inside, past the leaves
 	var views := [
 		["door", spawn],
 		["bench_left", look(Vector3(-hw + 1.3, fl + 3 * rs + 1.1, zs0 + 3.0), Vector3(hw - 1.0, fl + 1.4, zs0 + 6.0))],
@@ -771,6 +776,9 @@ static func _basilica(sz: Vector2, year: int, variant := "") -> Dictionary:
 			_span(k, x - 0.5, yu, s * m * 0.5 - 0.5, x + 0.5, yr, s * m * 0.5 + 0.5, col, Kit.STONE)
 	for s: float in [-1.0, 1.0]:
 		_span(kc, -L * 0.5 + wt - cd, yr, s * m * 0.5 - 0.6, L * 0.5 - wt + cd, yr + 0.9, s * m * 0.5 + 0.6, WOOD_D, Kit.TIMBER)
+	# the nave's end walls go on up to the roof (the outer walls stop at the galleries' top)
+	for s: float in [-1.0, 1.0]:
+		_span(k, s * L * 0.5 - wt * 0.5, yu, -m * 0.5 - 0.6, s * L * 0.5 + wt * 0.5, yr + 0.9, m * 0.5 + 0.6, wallc, Kit.PLASTER)
 	# roofs: the nave gable, the aisles' sloping roofs, a plank ceiling over the aisle galleries
 	kc.gable_roof(Vector3(0, yr + 0.9, 0), L + 1.0, m + 3.0, m * 0.22, 0.6, 0.3, TILE_C, Kit.TILE, wallc, Kit.PLASTER)
 	for s: float in [-1.0, 1.0]:
@@ -850,16 +858,16 @@ static func _basilica(sz: Vector2, year: int, variant := "") -> Dictionary:
 		_lamp(lights, Vector3(cx, 2.6, zfront + 2.8), 1.1, 6.0)
 	_span(kc, -L * 0.5, 4.6, zfront + 0.6, L * 0.5, 4.9, zfront + sd + 0.3, TILE_C, Kit.TILE)
 	var gx0: float = pass_x[pass_x.size() / 2]
-	var spawn := look(Vector3(gx0, EYE, zfront + sd + 1.5), Vector3(gx0 - L * 0.2, 4.0, 0.0))
+	var spawn := look(Vector3(gx0, EYE, m * 0.5 - 2.5), Vector3(tx + tr, 3.0, 0.0))   # F3: in the nave, inside the colonnade
 	var views := [
-		["door", spawn],
+		["door", look(Vector3(gx0, EYE, zfront + sd + 1.5), Vector3(gx0 - L * 0.2, 4.0, 0.0))],
 		["nave", look(Vector3(L * 0.5 - 7.0, EYE, 0.0), Vector3(-L * 0.5 + 4.0, 3.0, 0.0))],
 		["gallery", look(Vector3(L * 0.15, yg + EYE, -(m * 0.5 + a * 0.5)), Vector3(-L * 0.2, yg + 1.5, m * 0.3))],
 		["tribunal", look(Vector3(tx + 3.0, 1.1 + EYE, 0.0), Vector3(L * 0.3, 4.0, 0.0))],
 		["shops", look(Vector3(-L * 0.5 + sw * 5.5 + 1.2, EYE, zfront + sd + 3.0), Vector3(-L * 0.5 + sw * 5.5, 1.1, zfront + sd - 1.2))],
 		["overview", look(Vector3(L * 0.1, W * 1.55, W * 1.1), Vector3(-L * 0.1, 3.0, 0.0))],
 	]
-	var seats := {"door": spawn, "nave": views[1][1], "gallery": views[2][1], "tribunal": views[3][1]}
+	var seats := {"door": views[0][1], "nave": views[1][1], "gallery": views[2][1], "tribunal": views[3][1]}
 	var notes := [
 		"Proportions: Vitruvius 5.1.4-5 (width 1/3 to 1/2 of length, aisle a third of the nave, column height = aisle width, upper columns 3/4, parapet 3/4 of them). Read.",
 		"Tribunal as a segment of a circle for the magistrates, apart from the merchants: Vitruvius 5.1.8 (his Fano basilica puts it mid-side; here at the end). Read; the placement is conjecture.",
@@ -1631,8 +1639,9 @@ static func _theatre(sz: Vector2, year: int, variant: String) -> Dictionary:
 	for sx: float in [-1.0, 1.0]:
 		k.box(Vector3(sx * ro * 0.5, y1, door_z), Vector3(3.2, 4.4, 0.15), Color(0.10, 0.07, 0.05), Kit.DARK, 0.0, true)
 	if year >= -32:
-		k.cylinder(Vector3(0, y1, zf0 - 0.5), 0.9, 1.4, marble, Kit.STONE, 8)
-		_statue("standing", Vector3(0, y1 + 1.4, zf0 - 0.5), 2.8, PI, "marble", "")    # Pompey's statue
+		var zs := zf0 + 1.5   # on the stage before the regia, clear of the podium of the scene
+		k.cylinder(Vector3(0, y1, zs), 0.9, 1.4, marble, Kit.STONE, 8)
+		_statue("standing", Vector3(0, y1 + 1.4, zs), 2.8, PI, "marble", "")    # Pompey's statue
 	# the stage roof, sloping down toward the audience
 	kc.quad(Vector3(-half - 1.0, ytop + 1.5, zw - 1.0), Vector3(half + 1.0, ytop + 1.5, zw - 1.0), Vector3(half + 1.0, y2 + pod2 + c2 * 0.6, zf0 + 1.0), Vector3(-half - 1.0, y2 + pod2 + c2 * 0.6, zf0 + 1.0), TILE_C, Kit.TILE, Vector3(0, -3, zw))
 	# the temple of Venus Victrix at the top of the cavea, facing the stage, and the shrines
@@ -2055,10 +2064,10 @@ static func _domus(sz: Vector2, year: int) -> Dictionary:
 	# the fauces and shops under flat roofs
 	kc.box(Vector3(0, hf + 1.6, zf - df * 0.5), Vector3(W + 0.8, 0.3, df + 0.6), TILE_C, Kit.TILE, 0.0, true)
 	lights.append({"pos": Vector3(gcx, 4.0, gcz), "colour": Color(1.0, 0.95, 0.85), "energy": 2.0, "range": 14.0, "kind": "sky"})
-	var spawn := look(Vector3(0, EYE, zf + 3.0), Vector3(0, 2.2, z_a1 - 3.0))
+	var spawn := look(Vector3(0, EYE, z_a0 - 0.8), Vector3(0, 2.4, z_a1 - td))   # F3: in the atrium
 	var views := [
-		["street", spawn],
-		["atrium", look(Vector3(0, EYE, z_a0 - 0.8), Vector3(0, 2.4, z_a1 - td))],
+		["street", look(Vector3(0, EYE, zf + 3.0), Vector3(0, 2.2, z_a1 - 3.0))],
+		["atrium", spawn],
 		["tablinum", look(Vector3(0, EYE, tz0 - 0.8), Vector3(0, 1.8, gz1))],
 		["peristyle", look(Vector3(gcx - 4.0, EYE, zt - pcw * 0.5), Vector3(gcx + 5.0, 1.2, zb + pcw + 1.5))],
 		["triclinium", look(Vector3(trx - trw * 0.3, EYE, trz + trl * 0.4), Vector3(trx, 0.8, trz - trl * 0.3))],
@@ -2306,10 +2315,10 @@ static func _insula(sz: Vector2, year: int) -> Dictionary:
 	kc.box(Vector3(0, ytop, (cz0 + cz1) * 0.5), Vector3(cx1 - cx0 - 2.0 * balc + 0.0, 0.0, 0.0), TILE_C, Kit.TILE, 0.0, true)
 	lights.append({"pos": Vector3(0, ys[2], (cz0 + cz1) * 0.5), "colour": Color(0.80, 0.88, 1.0), "energy": 3.4, "range": 22.0, "kind": "sky"})
 	# camera points
-	var spawn := look(Vector3(xl + 4.0, EYE, zf + 5.0), Vector3(xl + 8.0, 6.0, zf))
+	var spawn := look(Vector3(cx1 - 0.9, EYE, cz1 - 1.5), Vector3(cx0, 3.0, cz0))   # F3: under the balcony, by the entrance
 	var xm: float = (bays[1] + bays[2]) * 0.5
 	var views := [
-		["street", spawn],
+		["street", look(Vector3(xl + 4.0, EYE, zf + 5.0), Vector3(xl + 8.0, 6.0, zf))],
 		["taberna", look(Vector3(xm, EYE, zf - 0.8), Vector3(xm, 1.8, zb))],
 		["mezzanine", look(Vector3(xm, 2.75 + EYE, zb + 2.8), Vector3(xm, 2.8, zf - 0.5))],
 		["stair", look(Vector3(sx0 + 0.6, EYE, zb + 0.5), Vector3(sx0 + 0.6, 4.0, zf - 1.0))],

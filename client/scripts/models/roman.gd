@@ -1405,10 +1405,10 @@ static func _servian_gate(k: Kit) -> void:
 	_b(k, 0.6, yt, z0, pw + 0.6, 10.0, z1, c, m)
 	_arch(k, -pw - 0.6, -0.6, 4.2, yt, z0, z1, c, m, 8)
 	_arch(k, 0.6, pw + 0.6, 4.2, yt, z0, z1, c, m, 8)
-	for sx in [-1.0, 1.0]:
-		_b(k, sx * 9.0 - 4.4, 14.0, z0 - 0.4, sx * 9.0 + 4.4, 14.9, z1 + 0.4, c.lightened(0.06), m)
+	for sx in [-1.0, 1.0]:   # the towers' crowns, over the towers (x 9..17), not half over the gatehouse
+		_b(k, sx * 13.0 - 4.4, 14.0, z0 - 0.4, sx * 13.0 + 4.4, 14.9, z1 + 0.4, c.lightened(0.06), m)
 		for i in 4:
-			_b(k, sx * 9.0 - 4.0 + i * 2.2, 14.9, z1 - 0.2, sx * 9.0 - 3.0 + i * 2.2, 16.0, z1 + 0.4, c.lightened(0.08), m)
+			_b(k, sx * 13.0 - 4.0 + i * 2.2, 14.9, z1 - 0.2, sx * 13.0 - 3.0 + i * 2.2, 16.0, z1 + 0.4, c.lightened(0.08), m)
 	_b(k, -9.0, 10.0, z0, 9.0, 10.9, z1, c.lightened(0.06), m)
 	# the court: side walls and the inner gate
 	_b(k, -9.0, -1.0, -2.0, -8.2, 8.0, z0, c, m)

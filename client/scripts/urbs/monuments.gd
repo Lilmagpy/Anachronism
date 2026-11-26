@@ -802,34 +802,81 @@ func _street_openings(id: String, node: Node3D, centre: Vector2, yaw: float, hal
 			boxes.append({"xf": xf, "box": AABB(Vector3(-ln * 0.5 - 2.0, 0.0, -w), Vector3(ln + 4.0, 200.0, w * 2.0))})   # past the joints: no sliver left between two cuts
 	if boxes.is_empty():
 		return
-	UrbsMonumentClip.clip(node, boxes)
-	# and its solids part there (the walkers and the carts pass): a solid the street crosses is
-	# split along its length into the pieces either side of the street
+	# a corner a street passes within 8 m of is opened whole: a sliver of cornice was left resting on
+	# nothing between two cuts
 	var mxf: Transform3D = _xf.get(id, Transform3D(Basis(Vector3.UP, yaw), Vector3(centre.x, base_y, centre.y)))
 	var inv := mxf.affine_inverse()
+	var corners: Array = []
+	for sx: float in [-1.0, 1.0]:
+		for sz: float in [-1.0, 1.0]:
+			var cl := Vector3(sx * half.x, 0, sz * half.y)
+			for b in boxes:
+				var lp := (b.xf as Transform3D).affine_inverse() * (mxf * cl)
+				var bb: AABB = b.box
+				var dx := maxf(maxf(bb.position.x - lp.x, lp.x - bb.end.x), 0.0)
+				var dz := maxf(maxf(bb.position.z - lp.z, lp.z - bb.end.z), 0.0)
+				if Vector2(dx, dz).length() < 8.0:
+					corners.append({"xf": mxf, "box": AABB(Vector3(cl.x - 4.5, -50.0, cl.z - 4.5), Vector3(9.0, 200.0, 9.0))})
+					break
+	boxes.append_array(corners)
+	if UrbsMonumentClip.clip(node, boxes) == 0:
+		return
+	UrbsMonumentClip.drop_floating(node)
+	# and what is left hanging by the audit's own measure (a run cut short between two cuts)
+	var hang: Array = []
+	for fp in UrbsMonumentAudit.new(self, _height).floating_parts(id):
+		var lo: Vector3 = fp.lo
+		var hi: Vector3 = fp.hi
+		hang.append({"xf": mxf, "box": AABB(lo - Vector3.ONE * 0.01, hi - lo + Vector3.ONE * 0.02)})
+	if not hang.is_empty():
+		UrbsMonumentClip.clip(node, hang)
+	# and its solids part where a street crosses them (the walkers and the carts pass): a solid is
+	# cut along its length over the stretch the street's corridor covers on its middle line
 	var out: Array = []
 	for sb in _solids.get(id, []):
 		var pieces := [sb as AABB]
 		for b in boxes:
-			var cut := UrbsMonumentClip._aabb_under(inv * (b.xf as Transform3D), b.box)
 			var nxt: Array = []
 			for pc: AABB in pieces:
-				if not pc.intersects(cut):
+				var cut := _cut_span(pc, inv * (b.xf as Transform3D), b.box)
+				var ax := 0 if pc.size.x >= pc.size.z else 2
+				if cut.x >= cut.y:
 					nxt.append(pc)
 					continue
-				var ax := 0 if pc.size.x >= pc.size.z else 2
-				if cut.position[ax] > pc.position[ax]:
+				if cut.x > pc.position[ax]:
 					var a := pc
-					a.size[ax] = cut.position[ax] - pc.position[ax]
+					a.size[ax] = cut.x - pc.position[ax]
 					nxt.append(a)
-				if cut.end[ax] < pc.end[ax]:
+				if cut.y < pc.end[ax]:
 					var c := pc
-					c.position[ax] = cut.end[ax]
-					c.size[ax] = pc.end[ax] - cut.end[ax]
+					c.position[ax] = cut.y
+					c.size[ax] = pc.end[ax] - cut.y
 					nxt.append(c)
 			pieces = nxt
 		out.append_array(pieces)
 	_solids[id] = out
+
+
+## The stretch [lo, hi] along a solid's long axis (frame coordinates) that a cutting box (`t`
+## takes the box's frame into the solid's) covers on the solid's middle line; lo >= hi if none.
+static func _cut_span(pc: AABB, t: Transform3D, box: AABB) -> Vector2:
+	var ax := 0 if pc.size.x >= pc.size.z else 2
+	var mid := pc.get_center()
+	var inv := t.affine_inverse()
+	var lo := INF
+	var hi := -INF
+	var n := 64
+	for k in n + 1:
+		var p := mid
+		p[ax] = pc.position[ax] + pc.size[ax] * float(k) / n
+		var q := inv * p
+		if q.x >= box.position.x and q.x <= box.end.x and q.z >= box.position.z and q.z <= box.end.z:
+			lo = minf(lo, p[ax])
+			hi = maxf(hi, p[ax])
+	if lo == INF:
+		return Vector2(1, 0)
+	var step := pc.size[ax] / n
+	return Vector2(lo - step, hi + step)
 
 
 ## F3 monuments: the half extents in plan (x, z) of what a form draws at its nearest level of

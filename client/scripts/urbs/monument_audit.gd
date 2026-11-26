@@ -510,6 +510,10 @@ func _floating(id: String) -> String:
 					if olo.x <= hi.x and ohi.x >= lo.x and olo.y <= hi.y and ohi.y >= lo.y and olo.z <= hi.z and ohi.z >= lo.z:
 						held[q] = 1
 						queue.append(q)
+	_last_free = []
+	for k in n:
+		if held[k] == 0:
+			_last_free.append(ps[k])
 	var free := 0
 	var worst: Dictionary = {}
 	var vol := 0.0
@@ -525,6 +529,17 @@ func _floating(id: String) -> String:
 		return ""
 	return "%s %d of %d parts rest on nothing, largest %s (its own frame %s to %s)" % [id, free, n, _fmt(worst),
 		str((worst.lo as Vector3).snapped(Vector3.ONE * 0.1)), str((worst.hi as Vector3).snapped(Vector3.ONE * 0.1))]
+
+
+var _last_free: Array = []   ## the parts the last _floating call found resting on nothing
+
+
+## F3 monuments: the parts of monument `id` resting on nothing (as _floating judges them), each
+## {lo, hi} in its frame. UrbsMonuments uses it to drop what a cut left hanging.
+func floating_parts(id: String) -> Array:
+	parts[id] = _parts_of(id)
+	_floating(id)
+	return _last_free
 
 
 ## Columns sunk into what they stand on: the top of the highest part under the column's foot.
@@ -713,7 +728,8 @@ static func _area(poly: PackedVector2Array) -> float:
 
 ## The `--at` street camera of every monument (monument_view.gd): inside a solid or a house, or
 ## not seeing the front (fewer than 3 of the 5 façade points in sight, or a monument, a house or
-## the ground across the line to the door, or standing more than 60° off the front axis).
+## the ground across the line to the door, or standing more than 60° off the front axis, or the
+## front out of the camera's frame at its tilt).
 func _views(ids: Array) -> Array:
 	var inside: Array = []
 	var misses: Array = []
@@ -740,20 +756,24 @@ func _views(ids: Array) -> Array:
 		var outward := door.basis.z
 		outward.y = 0.0
 		outward = outward.normalized()
-		var target := door.origin
+		var target: Vector3 = v.get("target", door.origin)   # the part of the front it looks at
 		var to := Vector3(target.x - eye.x, 0, target.z - eye.z)
 		var why: Array = []
 		if int(v.seen) < 3:
 			why.append("sees %d of 5 façade points" % int(v.seen))
 		if to.length() > 0.5:
 			var off := rad_to_deg(acos(clampf((-to.normalized()).dot(outward), -1.0, 1.0)))
-			if off > 60.0:
+			if off > 60.0 and not bool(v.get("all_round", false)):   # a column has no front
 				why.append("stands %.0f° off the front axis" % off)
+		# the street camera's frame (70° high): the part of the front looked at must be in it
+		var a_t := rad_to_deg(atan2(target.y - eye.y, maxf(to.length(), 0.5)))
+		if absf(a_t - float(v.get("pitch", 3.0))) > 35.0:
+			why.append("the front %.0f° %s the middle of the frame (out of it)" % [absf(a_t - float(v.get("pitch", 3.0))), "above" if a_t > float(v.get("pitch", 3.0)) else "below"])
 		var block := _blocked(eye, target, id)
 		if block != "":
-			why.append("%s across the line to the door" % block)
+			why.append("%s across the line to the front" % block)
 		elif not mv.is_clear(eye, target, id):
-			why.append("a house or the ground across the line to the door")
+			why.append("a house or the ground across the line to the front")
 		if not why.is_empty():
 			misses.append("%s view from (%.0f, %.0f): %s" % [id, eye.x, eye.z, ", ".join(why)])
 	return [inside, misses]
@@ -825,8 +845,11 @@ const ICELL := 4.0
 ##                     interior any, under the open sky those below the horizon
 ##   interior_figures  statues and figures whose body a wall or floor passes through
 ##   interior_missing  enterable monuments with no interior (entering does nothing)
+##   interior_starts   where the visitor starts: outside the building (a roofed hall with no roof
+##                     overhead, or sight lines out to the open), against a wall, a pier or a door
+##                     leaf, or facing one rather than the room
 func interiors(year: int) -> Dictionary:
-	var out := {"interior_voids": [], "interior_figures": [], "interior_missing": []}
+	var out := {"interior_voids": [], "interior_figures": [], "interior_missing": [], "interior_starts": []}
 	var fake := AuditUrbs.new()
 	fake.monuments = mon
 	fake.ground = height
@@ -841,6 +864,7 @@ func interiors(year: int) -> Dictionary:
 			out.interior_missing.append("%s (%s) has no interior" % [id, str(mon.entry(id).get("type", ""))])
 			continue
 		var tris := PackedVector3Array()
+		var built := PackedVector3Array()   # the building alone, without the backdrop's sky and ground
 		for nm in ["Body", "Cover", "Ground", "Backdrop", "BackdropGround"]:
 			if node.has_node(nm):
 				var mi: MeshInstance3D = node.get_node(nm)
@@ -849,6 +873,8 @@ func interiors(year: int) -> Dictionary:
 				var xf := node.transform * mi.transform
 				for v in mi.mesh.get_faces():
 					tris.append(xf * v)
+					if not nm.begins_with("Backdrop"):
+						built.append(xf * v)
 		var grid := _tri_grid(tris)
 		var res: Dictionary = node.get("result")
 		var open_sky := bool(res.get("open_sky", false))
@@ -878,6 +904,13 @@ func interiors(year: int) -> Dictionary:
 		if not escaped.is_empty():
 			out.interior_voids.append("%s: %d of %d sight lines from the door meet nothing (yaw/pitch %s)" % [id, escaped.size(), n,
 				", ".join(escaped.slice(0, 8))])
+		var gods: Array = []   # [foot in world, radius]: a statue (with its base) ahead is what the room is for
+		for spec in res.get("statues", []):
+			gods.append([node.transform * (spec["foot"] as Vector3), maxf(2.2, float(spec["h"]) * 0.4)])
+		var halls := str(node.get("kind")) in ["temple", "curia", "basilica"]   # no court open to the sky by design
+		var start := _start_fault(built, _tri_grid(built), node.call("spawn"), bool(res.get("open_sky", false)), gods, halls)
+		if start != "":
+			out.interior_starts.append("%s: %s" % [id, start])
 		# figures: a wall through the body (the body's box: a third of its height across)
 		var bad := 0
 		var where := ""
@@ -899,6 +932,64 @@ func interiors(year: int) -> Dictionary:
 		node.free()
 	fake.free()
 	return out
+
+
+## What is wrong with where the visitor starts ("" for nothing): outside (under a roofed hall's
+## open sky, or with more than a quarter of the level sight lines leaving the building, or a
+## hall's (temple, curia, basilica) sky seen down the room: a gap under its roof), against something (within 0.5 m),
+## in a doorway (both sides within 2 m with the way ahead and behind open), or facing a wall,
+## a pier or a leaf (the way ahead closed within 4 m by anything but a statue and its base). `t`/`g` hold the building alone.
+func _start_fault(t: PackedVector3Array, g: Dictionary, spawn: Transform3D, open_sky: bool, gods := [], hall := false) -> String:
+	var eye := spawn.origin
+	var dir_of := func(yaw: float, pitch: float) -> Vector3:
+		var ya := deg_to_rad(yaw + 0.37)
+		var pa := deg_to_rad(pitch + 0.21)
+		var fw := spawn.basis * Vector3(-sin(ya), 0, -cos(ya))
+		fw.y = 0.0
+		if fw.length() < 0.001:
+			return Vector3.UP if pitch > 0.0 else Vector3.DOWN
+		return (fw.normalized() * cos(pa) + Vector3(0, sin(pa), 0)).normalized()
+	var ray := func(yaw: float, pitch: float) -> float:
+		return _first_hit(t, g, eye, dir_of.call(yaw, pitch))
+	var out_n := 0
+	var near := INF
+	for yaw in range(0, 360, 15):
+		var h: float = ray.call(float(yaw), 2.0)
+		near = minf(near, h)
+		if h == INF:
+			out_n += 1
+	if not open_sky and float(ray.call(0.0, 89.0)) == INF:
+		return "starts outside: no roof overhead"
+	if out_n > 5:   # an open door behind (up to 75° of a narrow cella's view) is not outside
+		return "starts outside: %d of 24 level sight lines leave the building" % out_n
+	if near < 0.5:
+		return "starts against something (%.2f m away)" % near
+	var left: float = ray.call(90.0, 0.0)
+	var right: float = ray.call(270.0, 0.0)
+	if left < 2.0 and right < 2.0 and float(ray.call(0.0, 0.0)) > 4.0 and float(ray.call(180.0, 0.0)) > 4.0:
+		return "starts in a doorway (sides %.1f and %.1f m)" % [left, right]
+	if hall and not open_sky:   # down the room, a roofed hall shows no sky (a gap under its roof, a missing wall)
+		var gaps := 0
+		for yaw: float in [-15.0, 0.0, 15.0]:
+			for pitch: float in [5.0, 12.0, 20.0]:
+				if float(ray.call(yaw, pitch)) == INF:
+					gaps += 1
+		if gaps > 0:
+			return "sees the sky down the room (%d of 9 sight lines)" % gaps
+	var ahead := INF
+	for yaw: float in [-12.0, 0.0, 12.0]:
+		var d: float = ray.call(yaw, -3.0)
+		if d < 4.0:
+			var hit: Vector3 = eye + (dir_of.call(yaw, -3.0) as Vector3) * d
+			for gd: Array in gods:
+				var foot: Vector3 = gd[0]
+				if Vector2(hit.x - foot.x, hit.z - foot.z).length() < float(gd[1]):
+					d = INF   # the god and the base: what the room is for
+					break
+		ahead = minf(ahead, d)
+	if ahead < 4.0:
+		return "starts facing something %.1f m ahead" % ahead
+	return ""
 
 
 ## Triangles (3 vertices each) by the ICELL cubes their boxes cover.
