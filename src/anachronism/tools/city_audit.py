@@ -2685,6 +2685,14 @@ SCENE_KINDS += [
     ("stair_ends", "F3 ground: steps that do not meet the ground at both ends"),
     ("chunk_seams", "F3 ground: chunk edges where two levels of detail do not meet"),
     ("streets_ground", "F3 ground: stretches of street sunk under or floating over the ground"),
+    (
+        "wall_feet",
+        "F3 ground: 100 m squares with walls footed above a level of detail's ground",
+    ),
+    (
+        "meadow_fronts",
+        "F3 ground: 250 m squares with house or shop lots with meadow at their fronts",
+    ),
 ]
 # F3 ground (end)
 
