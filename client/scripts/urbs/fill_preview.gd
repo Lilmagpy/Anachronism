@@ -51,6 +51,7 @@ func _run() -> void:
 	if flat and not tilt:
 		root.add_child(ground)
 	var streets := UrbsStreets.new()
+	streets.drawn_ground = not flat
 	streets.build(root, year, height)
 	var fill := UrbsFill.new()
 	var feet := UrbsFill.footprints_from_json(year)
