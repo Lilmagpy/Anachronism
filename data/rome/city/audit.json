@@ -1,12 +1,12 @@
 {
  "counts": {
   "133 BC": {
-   "standing": 151,
-   "total": 151
+   "standing": 145,
+   "total": 145
   },
   "264 BC": {
-   "standing": 108,
-   "total": 108
+   "standing": 97,
+   "total": 97
   },
   "27 BC": {
    "building": 2,
@@ -15,8 +15,8 @@
    "total": 185
   },
   "390 BC": {
-   "standing": 72,
-   "total": 72
+   "standing": 55,
+   "total": 55
   },
   "44 BC": {
    "building": 3,
@@ -26,8 +26,8 @@
    "total": 175
   },
   "509 BC": {
-   "standing": 65,
-   "total": 65
+   "standing": 48,
+   "total": 48
   },
   "AD 120": {
    "burnt": 1,
@@ -40,96 +40,7 @@
    "total": 215
   }
  },
- "dates": [
-  {
-   "id": "aedes_herculis_collina",
-   "issue": "no built year (uncertain) but drawn from 509 BC"
-  },
-  {
-   "id": "aedes_herculis_victoris",
-   "issue": "no built year (uncertain) but drawn from 509 BC"
-  },
-  {
-   "id": "aedes_larum",
-   "issue": "no built year (uncertain) but drawn from 509 BC"
-  },
-  {
-   "id": "aedes_minervae_aventine",
-   "issue": "no built year (uncertain) but drawn from 509 BC"
-  },
-  {
-   "id": "aedes_neptuni_flaminium",
-   "issue": "no built year (uncertain) but drawn from 509 BC"
-  },
-  {
-   "id": "aedes_portuni",
-   "issue": "no built year (uncertain) but drawn from 509 BC"
-  },
-  {
-   "id": "area_sacra_argentina_a",
-   "issue": "no built year (uncertain) but drawn from 509 BC"
-  },
-  {
-   "id": "area_sacra_argentina_c",
-   "issue": "no built year (uncertain) but drawn from 509 BC"
-  },
-  {
-   "id": "area_sacra_argentina_d",
-   "issue": "no built year (uncertain) but drawn from 509 BC"
-  },
-  {
-   "id": "atrium_libertatis",
-   "issue": "no built year (probable) but drawn from 509 BC"
-  },
-  {
-   "id": "atrium_vestae",
-   "issue": "no built year (uncertain) but drawn from 509 BC"
-  },
-  {
-   "id": "domus_clodii",
-   "issue": "no built year (uncertain) but drawn from 509 BC"
-  },
-  {
-   "id": "domus_hortensii_augusti",
-   "issue": "no built year (uncertain) but drawn from 509 BC"
-  },
-  {
-   "id": "domus_pompeii_carinae",
-   "issue": "no built year (uncertain) but drawn from 509 BC"
-  },
-  {
-   "id": "graecostasis",
-   "issue": "no built year (uncertain) but drawn from 509 BC"
-  },
-  {
-   "id": "horrea_galbae",
-   "issue": "no built year (uncertain) but drawn from 509 BC"
-  },
-  {
-   "id": "lacus_iuturnae",
-   "issue": "no built year (uncertain) but drawn from 509 BC"
-  },
-  {
-   "id": "lacus_servilius",
-   "issue": "no built year (uncertain) but drawn from 509 BC"
-  },
-  {
-   "id": "lapis_niger",
-   "issue": "no built year (probable) but drawn from 509 BC"
-  },
-  {
-   "id": "navalia",
-   "issue": "no built year (uncertain) but drawn from 509 BC"
-  },
-  {
-   "id": "porta_stercoraria",
-   "issue": "no built year (uncertain) but drawn from 509 BC"
-  },
-  {
-   "id": "senaculum",
-   "issue": "no built year (uncertain) but drawn from 509 BC"
-  }
- ],
+ "dates": [],
  "excluded": [
   {
    "key": "A#Adonidis_Aula",
@@ -4597,7 +4508,9 @@
    "key": "Vesta#aedes",
    "source": "platner",
    "targets": [
-    "aedes_vestae"
+    "aedes_vestae",
+    "atrium_vestae",
+    "porta_stercoraria"
    ],
    "title": "Vesta, aedes"
   },
@@ -6785,6 +6698,15 @@
    ]
   },
   {
+   "built": -207,
+   "id": "aedes_minervae_aventine",
+   "pa": "Minerva, Aedes",
+   "pa_key": "Aedes_Minervae.html",
+   "pa_years": [
+    -27
+   ]
+  },
+  {
    "built": -181,
    "id": "aedes_pietatis",
    "pa": "Pietas, aedes",
@@ -6970,6 +6892,26 @@
    ]
   },
   {
+   "built": -207,
+   "id": "aedes_minervae_aventine",
+   "pa": "Minerva, delubrum",
+   "pa_key": "M#Delubrum_Minervae",
+   "pa_years": [
+    -55
+   ]
+  },
+  {
+   "built": -206,
+   "id": "aedes_neptuni_flaminium",
+   "pa": "Neptunus, aedes, delubrum",
+   "pa_key": "Neptunus#aedes",
+   "pa_years": [
+    -100,
+    -38,
+    -27
+   ]
+  },
+  {
    "built": -378,
    "id": "porta_fontinalis",
    "pa": "Porta Fontinalis",
@@ -6986,6 +6928,24 @@
    "pa_years": [
     -578,
     -110
+   ]
+  },
+  {
+   "built": -280,
+   "id": "area_sacra_argentina_a",
+   "pa": "Iuturna, templum",
+   "pa_key": "Templum_Juturnae.html",
+   "pa_years": [
+    -82
+   ]
+  },
+  {
+   "built": -207,
+   "id": "aedes_minervae_aventine",
+   "pa": "Minerva, templum:*",
+   "pa_key": "Templum_Minervae.html",
+   "pa_years": [
+    -27
    ]
   },
   {
@@ -7054,6 +7014,15 @@
    "pa_years": [
     -27,
     -20
+   ]
+  },
+  {
+   "built": -70,
+   "id": "domus_pompeii_carinae",
+   "pa": "Cn. Pompeius",
+   "pa_key": "domus#Cn._Pompeius",
+   "pa_years": [
+    -55
    ]
   },
   {
@@ -8949,7 +8918,7 @@
    "monuments": 218,
    "streets": 30
   },
-  "date_issues": 22,
+  "date_issues": 0,
   "f3_awning_pole": 0,
   "f3_house_base": 0,
   "f3_house_house": 0,
