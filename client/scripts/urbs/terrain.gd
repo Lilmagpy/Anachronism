@@ -1938,8 +1938,8 @@ void fragment() {
 		fc = mix(fc, lin(vec3(0.30, 0.33, 0.20)) * (0.85 + 0.3 * fine), fm.a);
 		// F3 round 3: a field is drawn as a field or not at all: at the farmland's faint edge
 		// (weight 0.3, the Campus north of the city) its parcels showed as straight-edged shading
-		// a few per cent apart, read as seams across open meadow
-		col = mix(col, fc, smoothstep(0.1, 0.45, rural) * (1.0 - steep) * 0.85);
+		// a few per cent apart, read as seams across open meadow; there it is meadow now
+		col = mix(col, fc, smoothstep(0.32, 0.6, rural) * (1.0 - steep) * 0.85);
 	}
 	// cliffs and steep slopes: tufa, an even warm grey-brown with faint horizontal bedding
 	float bf = fract(wpos.y * 1.1 + big * 3.0);
