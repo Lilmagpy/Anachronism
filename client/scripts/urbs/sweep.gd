@@ -152,6 +152,10 @@ const FRAME_COLS := 15
 const FRAME_ROWS := 8
 const FRAME_MAX := 0.6
 const FRAME_MID_MAX := 0.1
+## and when more than MID_FAR_MAX of the middle third is filled within MID_FAR_M: a wall or a
+## plinth 6-10 m ahead filling the picture passed the 6 m test (s_900_-500_225, 44 BC).
+const MID_FAR_M := 12.0
+const MID_FAR_MAX := 0.6
 
 
 ## F3: where a street pose stands: `p` (already pushed out of the houses and monuments) when the
@@ -160,7 +164,7 @@ const FRAME_MID_MAX := 0.1
 ## side (UrbsMonumentView.is_clear: the ground, the monuments' solids, the wall's stones, the
 ## houses, the trees); else the nearest stand that does, on rings 1.5 m apart out to 90 m. The
 ## camera stood in the 1.4 m slot between two insulae looking at a side wall (-603, -499, 44 BC).
-## F3 round 4: the sight test is what is drawn (_frame_near): the monuments' own triangles (the
+## F3 round 4: the sight test is what is drawn (_frame_test): the monuments' own triangles (the
 ## Circus's barrier, a podium's mouldings), the houses down to their plinths on a slope, the trees'
 ## crowns. The plan rectangles and solid boxes passed six stands against a wall or the barrier.
 static func clear_stand(view: UrbsMonumentView, p: Vector2, yaw: float, pitch := -3.0) -> Vector2:
@@ -171,8 +175,8 @@ static func clear_stand(view: UrbsMonumentView, p: Vector2, yaw: float, pitch :=
 	_frame.prepare(p, 100.0)
 	_pitch = pitch
 	var eye0 := Vector3(p.x, view.floor_at(Vector3(p.x, 0.0, p.y)) + UrbsCamera.EYE, p.y)
-	var f0 := _frame_near(eye0, yaw, pitch)
-	print("SWEEP_FRAME asked (%.0f, %.0f): %.2f of the frame, %.2f of its middle within %.0f m" % [p.x, p.y, f0[0], f0[1], CLEAR_AHEAD])
+	var f0 := _frame_test(eye0, yaw, pitch, false)
+	print("SWEEP_FRAME asked (%.0f, %.0f): %.2f of the frame and %.2f of its middle within %.0f m, %.2f of its middle within %.0f m" % [p.x, p.y, f0[0], f0[1], CLEAR_AHEAD, f0[2], MID_FAR_M])
 	# the houses' envelopes (eaves, balconies, awnings and their poles): the eye stays out of them
 	_envs = []
 	if view.fill != null:
@@ -233,40 +237,64 @@ static func _plinths(view: UrbsMonumentView) -> void:
 		lot.y1 = maxf(float(lot.y1), hi + float(lot.y1) - view._ground(c.x, c.y))
 
 
-## F3 round 4: the share of the frame from `eye` (turned `yaw`, tilted `pitch_deg`) filled by
-## something drawn within CLEAR_AHEAD m, [whole frame, its middle third].
-static func _frame_near(eye: Vector3, yaw: float, pitch_deg: float) -> Array:
+## F3 round 4: what the street camera's frame from `eye` (turned `yaw`, tilted `pitch_deg`) shows
+## near (UrbsMonumentFrame.cast along FRAME_COLS x FRAME_ROWS lines; the floor below the horizon
+## not counted): [share of the frame within CLEAR_AHEAD m, share of its middle third within
+## CLEAR_AHEAD m, share of its middle third within MID_FAR_M, passes]. With `early` it stops at
+## the first line that fails it (the middle third first: most stands round the Circus failed).
+static func _frame_test(eye: Vector3, yaw: float, pitch_deg: float, early: bool) -> Array:
 	var basis := Basis(Vector3.UP, yaw) * Basis(Vector3.RIGHT, deg_to_rad(pitch_deg))
 	var ty := tan(deg_to_rad(UrbsMonumentFrame.VFOV * 0.5))
 	var tx := ty * UrbsMonumentFrame.ASPECT
+	var cols: Array = []
+	for i in FRAME_COLS:
+		cols.append(i)
+	cols.sort_custom(func(x: int, y: int) -> bool: return absf(x - (FRAME_COLS - 1) * 0.5) < absf(y - (FRAME_COLS - 1) * 0.5))
+	var n_mid := 0
+	for i: int in cols:
+		if absf(((i + 0.5) / FRAME_COLS) * 2.0 - 1.0) < 1.0 / 3.0:
+			n_mid += FRAME_ROWS
+	var n := FRAME_COLS * FRAME_ROWS
 	var near := 0
 	var mid := 0
-	var n_mid := 0
+	var mid_far := 0
 	var dbg := OS.has_environment("F3_FRAME_DEBUG")
 	var rows: Array = []
 	for j in FRAME_ROWS:
-		rows.append("")
-	for i in FRAME_COLS:
+		rows.append({})
+	var ok := true
+	for i: int in cols:
 		var u := ((i + 0.5) / FRAME_COLS) * 2.0 - 1.0
 		var in_mid := absf(u) < 1.0 / 3.0
 		for j in FRAME_ROWS:
 			var w := 1.0 - ((j + 0.5) / FRAME_ROWS) * 2.0
 			var d := (basis * Vector3(u * tx, w * ty, -1.0)).normalized()
-			var hit := _frame.cast(eye, d, CLEAR_AHEAD)
-			var full := str(hit[1]) != "" and float(hit[0]) < CLEAR_AHEAD and not (str(hit[1]) == "ground" and d.y < 0.0)
+			var reach := MID_FAR_M if in_mid else CLEAR_AHEAD
+			var hit := _frame.cast(eye, d, reach)
+			var t := float(hit[0])
+			var some := str(hit[1]) != "" and t < reach and not (str(hit[1]) == "ground" and d.y < 0.0)
 			if dbg:
-				rows[j] += (str(hit[1]).substr(0, 1) if str(hit[1]) != "" else ".") + ("%d" % mini(int(float(hit[0])), 9) if str(hit[1]) != "" else " ") + " "
-			if in_mid:
-				n_mid += 1
-			if full:
+				rows[j][i] = (str(hit[1]).substr(0, 1) + "%d" % mini(int(t), 9)) if some else ". "
+			if not some:
+				continue
+			if t < CLEAR_AHEAD:
 				near += 1
 				if in_mid:
 					mid += 1
+			if in_mid:
+				mid_far += 1
+			if near > FRAME_MAX * n or mid > FRAME_MID_MAX * n_mid or mid_far > MID_FAR_MAX * n_mid:
+				ok = false
+				if early:
+					return [float(near) / n, float(mid) / n_mid, float(mid_far) / n_mid, false]
 	if dbg:
-		print("FRAMEDBG eye %s lots %d" % [eye, _frame.view._lots.size()])
-		for r: String in rows:
-			print("FRAMEDBG " + r)
-	return [float(near) / (FRAME_COLS * FRAME_ROWS), float(mid) / maxi(n_mid, 1)]
+		print("FRAMEDBG eye %s" % eye)
+		for r: Dictionary in rows:
+			var line := ""
+			for i in FRAME_COLS:
+				line += str(r.get(i, "  ")) + " "
+			print("FRAMEDBG " + line)
+	return [float(near) / n, float(mid) / n_mid, float(mid_far) / n_mid, ok]
 
 
 static func _near_chunks(fill: UrbsFill, p: Vector2) -> Array:
@@ -317,41 +345,8 @@ static func _stand_ok(view: UrbsMonumentView, q: Vector2, yaw: float) -> bool:
 					return false
 	# F3 round 4: what is drawn within CLEAR_AHEAD m fills too much of the frame (the monuments'
 	# triangles, the houses to their plinths, the trees; the Circus's barrier 1 m off)
-	return _frame_ok(eye, yaw, _pitch)
+	return bool(_frame_test(eye, yaw, _pitch, true)[3])
 
-
-## F3 round 4: _frame_near's test, stopping at the first line that settles it (the middle third
-## first): most stands round the Circus failed, each over its 120 lines.
-static func _frame_ok(eye: Vector3, yaw: float, pitch_deg: float) -> bool:
-	var basis := Basis(Vector3.UP, yaw) * Basis(Vector3.RIGHT, deg_to_rad(pitch_deg))
-	var ty := tan(deg_to_rad(UrbsMonumentFrame.VFOV * 0.5))
-	var tx := ty * UrbsMonumentFrame.ASPECT
-	var cols: Array = []
-	for i in FRAME_COLS:
-		cols.append(i)
-	cols.sort_custom(func(x: int, y: int) -> bool: return absf(x - (FRAME_COLS - 1) * 0.5) < absf(y - (FRAME_COLS - 1) * 0.5))
-	var n_mid := 0
-	for i: int in cols:
-		if absf(((i + 0.5) / FRAME_COLS) * 2.0 - 1.0) < 1.0 / 3.0:
-			n_mid += 1
-	var near := 0
-	var mid := 0
-	for i: int in cols:
-		var u := ((i + 0.5) / FRAME_COLS) * 2.0 - 1.0
-		var in_mid := absf(u) < 1.0 / 3.0
-		for j in FRAME_ROWS:
-			var w := 1.0 - ((j + 0.5) / FRAME_ROWS) * 2.0
-			var d := (basis * Vector3(u * tx, w * ty, -1.0)).normalized()
-			var hit := _frame.cast(eye, d, CLEAR_AHEAD)
-			if str(hit[1]) != "" and float(hit[0]) < CLEAR_AHEAD and not (str(hit[1]) == "ground" and d.y < 0.0):
-				near += 1
-				if in_mid:
-					mid += 1
-					if mid > FRAME_MID_MAX * n_mid * FRAME_ROWS:
-						return false
-				if near > FRAME_MAX * FRAME_COLS * FRAME_ROWS:
-					return false
-	return true
 
 
 ## Whether a wall face of the site works (UrbsFill._works_grid, 2D) lies within `r` of `p`.
