@@ -14,6 +14,10 @@ varying vec4 owner;
 varying float scale;
 varying float shiny;
 varying float vary;   // per building, 0..1: no two identical models weather alike (D-281)
+// F3 monuments: light bounced round a roofed interior, added to every face (0 outside;
+// UrbsInteriors sets it on its own material), most to faces turned down, which the lit floor
+// lights, so no beam, coffer or roof timber overhead is pure black
+uniform float fill_light = 0.0;
 
 void vertex() {
 	local_pos = VERTEX;
@@ -162,6 +166,8 @@ void fragment() {
 	// ambient occlusion by height: darker at the foot, as if in each other's shadow
 	c *= mix(0.72, 1.0, smoothstep(0.0, 0.35, local_pos.y));
 	ALBEDO = c * 0.92;
+	// (the lit floor throws most of it up: a face turned down gets four times as much)
+	EMISSION = ALBEDO * fill_light * (1.0 + 3.0 * max(-normalize(local_normal).y, 0.0));
 	ROUGHNESS = id == 9 ? 0.4 : 0.88;
 	SPECULAR = id == 9 ? 0.5 : 0.1;
 	METALLIC = id == 9 ? 0.6 : 0.0;

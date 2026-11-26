@@ -158,6 +158,7 @@ static func _attach(root: Node3D, r: Dictionary) -> void:
 	if _material == null:
 		_material = ShaderMaterial.new()
 		_material.shader = load("res://shaders/models.gdshader")
+		_material.set_shader_parameter("fill_light", FILL_EMIT)   # F3 monuments
 	var body := MeshInstance3D.new()
 	body.name = "Body"
 	body.mesh = r["mesh"]
@@ -218,6 +219,9 @@ static func _attach(root: Node3D, r: Dictionary) -> void:
 const FILL_SPACING := 14.0   ## metres between the fill lights over a room
 const FILL_ENERGY := 1.0
 const DOOR_ENERGY := 1.6
+const FILL_EMIT := 0.8        ## the bounce every face of a roofed interior gets (models.gdshader fill_light)
+const CEIL_ENERGY := 2.4     ## the lights just under a ceiling (beams, coffers, roof timbers)
+const CEIL_DROP := 1.0       ## ... this far below the lowest of the roof and ceiling
 
 
 ## The light a roofed room gets besides its lamps: what comes in at the door (or the compluvium,
@@ -247,6 +251,29 @@ static func _fill_light(root: Node3D, body: MeshInstance3D, r: Dictionary) -> vo
 			light.omni_attenuation = 0.6
 			light.shadow_enabled = false
 			root.add_child(light)
+	# the ceiling: the light thrown up from the lit floor and walls onto the beams and coffers
+	# (lit only from the room's middle they stayed black bands, the tone curve crushing them)
+	var cover := root.get_node_or_null("Cover") as MeshInstance3D
+	if cover != null and cover.mesh != null:
+		var cb: AABB = cover.transform * cover.mesh.get_aabb()
+		var levels := [maxf(cb.position.y - CEIL_DROP, y)]
+		if cb.size.y > 8.0:   # a tall roof over a nave (the basilicas): its timbers too
+			levels.append(cb.position.y + cb.size.y * 0.55)
+		var cx := maxi(1, int(ceil(cb.size.x / FILL_SPACING)))
+		var cz := maxi(1, int(ceil(cb.size.z / FILL_SPACING)))
+		for cy: float in levels:
+			for i in cx:
+				for j in cz:
+					var up := OmniLight3D.new()
+					up.name = "CeilingFill"
+					up.position = Vector3(lerpf(cb.position.x, cb.end.x, (i + 0.5) / cx), cy, lerpf(cb.position.z, cb.end.z, (j + 0.5) / cz))
+					up.light_color = Color(1.0, 0.88, 0.72)
+					up.light_energy = CEIL_ENERGY
+					up.light_specular = 0.0
+					up.omni_range = FILL_SPACING * 1.1
+					up.omni_attenuation = 0.8
+					up.shadow_enabled = false
+					root.add_child(up)
 	# the daylight at the way in (behind the visitor's start, toward the door)
 	var sp: Transform3D = r.get("spawn", Transform3D.IDENTITY)
 	var door := OmniLight3D.new()

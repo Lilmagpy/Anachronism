@@ -1,8 +1,8 @@
 ## Urbs F3 (monuments): what the street camera's frame shows. A grid of sight lines through the
 ## frame (16 x 9 by default, the camera's 70-degree height and 16:9 width) is cast against
 ## everything drawn round the monument: its own meshes and its neighbours' (their nearest level of
-## detail, their columns too), the houses (their lots as boxes), the trees (their crowns) and the
-## ground. From what each line meets first:
+## detail, their columns too), the site works (platform parapets, the clivi's walls, the quays),
+## the houses (their lots as boxes), the trees (their crowns) and the ground. From what each line meets first:
 ##   near    the share of the frame filled by something other than the monument within NEAR_M
 ##           (a wall, a podium, a house or a tree in the camera's face; the floor below the
 ##           horizon does not count)
@@ -34,6 +34,8 @@ var _pave := PackedByteArray()        # per triangle: 1 for a paving (walked on:
 var _grid := {}                       # Vector2i cell -> PackedInt32Array of triangle indices
 var _at := Vector2(INF, INF)
 var _r := 0.0
+static var _site_year := 999999
+static var _site_v := PackedVector3Array()
 
 
 func _init(v: UrbsMonumentView) -> void:
@@ -84,21 +86,58 @@ func prepare(c: Vector2, r: float) -> void:
 					var hi := a.max(b).max(d)
 					if hi.x < area.position.x or lo.x > area.end.x or hi.z < area.position.y or lo.z > area.end.y:
 						continue
-					var k := _who.size()
-					_v.append(a)
-					_v.append(b)
-					_v.append(d)
-					_who.append(str(mid))
-					_pave.append(1 if paving else 0)
-					for gx in range(floori(lo.x / CELL), floori(hi.x / CELL) + 1):
-						for gz in range(floori(lo.z / CELL), floori(hi.z / CELL) + 1):
-							var key := Vector2i(gx, gz)
-							if not _grid.has(key):
-								_grid[key] = PackedInt32Array()
-							var arr: PackedInt32Array = _grid[key]
-							arr.append(k)
-							_grid[key] = arr
+					_add_tri(a, b, d, lo, hi, str(mid), paving)
 
+	# the site works (UrbsSite.build: platforms' substructure walls and parapets, the clivi's
+	# walls, the quays, the island's facing): drawn by the scene, not by a monument (sweep, 44 BC:
+	# the parapet of the Porta Viminalis' terrace at eye height hid the Ara Vermini)
+	var sv := _site_tris(view.height)
+	for i in range(0, sv.size(), 3):
+		var a: Vector3 = sv[i]
+		var b: Vector3 = sv[i + 1]
+		var d: Vector3 = sv[i + 2]
+		var lo := a.min(b).min(d)
+		var hi := a.max(b).max(d)
+		if hi.x < area.position.x or lo.x > area.end.x or hi.z < area.position.y or lo.z > area.end.y:
+			continue
+		_add_tri(a, b, d, lo, hi, "", false)
+
+
+## The site works' triangles for the year (built once a year, as UrbsSite.build lays them).
+static func _site_tris(height: Callable) -> PackedVector3Array:
+	if _site_year == UrbsTerrain.year:
+		return _site_v
+	_site_year = UrbsTerrain.year
+	_site_v = PackedVector3Array()
+	var m := UrbsSite.Mesher.new()
+	UrbsSite._platform_walls(m, UrbsTerrain.year, height)
+	UrbsSite._street_works(m, UrbsTerrain.year, height)
+	UrbsSite._quays(m, UrbsTerrain.year)
+	UrbsSite._island_facing(m, UrbsTerrain.year)
+	for mat: String in m.surfaces:
+		var sf: Array = m.surfaces[mat]
+		var vs: PackedVector3Array = sf[0]
+		var ix: PackedInt32Array = sf[3]
+		for i in ix.size():
+			_site_v.append(vs[ix[i]])
+	return _site_v
+
+
+func _add_tri(a: Vector3, b: Vector3, d: Vector3, lo: Vector3, hi: Vector3, who: String, paving: bool) -> void:
+	var k := _who.size()
+	_v.append(a)
+	_v.append(b)
+	_v.append(d)
+	_who.append(who)
+	_pave.append(1 if paving else 0)
+	for gx in range(floori(lo.x / CELL), floori(hi.x / CELL) + 1):
+		for gz in range(floori(lo.z / CELL), floori(hi.z / CELL) + 1):
+			var key := Vector2i(gx, gz)
+			if not _grid.has(key):
+				_grid[key] = PackedInt32Array()
+			var arr: PackedInt32Array = _grid[key]
+			arr.append(k)
+			_grid[key] = arr
 
 ## The first thing the line from `o` along unit `d` meets within `maxd`: [distance, kind, id];
 ## kind "mon" (id: the monument), "ground" (the ground, or a paving: id its monument), "house",
